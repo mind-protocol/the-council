@@ -1,0 +1,167 @@
+{
+  "base": "app9pb5Qr75gReb8t",
+  "tables": {
+    "Lieux": {
+      "id": "tbldrRcnkynVJZbUv",
+      "fields": {
+        "Nom": "fldDQyKr0rCSZ5oEk",
+        "Id": "fldlCLzcAAr0cjLSm",
+        "Région": "fldUnkurzQTt7LCya",
+        "Type": "fldLuyjsBNbbbYKUl",
+        "Jours de Port-Réal": "fldQwQy9aCRegSOa2",
+        "Maisons": "fldb0JMSowZzr3hh2",
+        "Personnages": "fldmR1ioGloMVBEQd",
+        "Événements": "fldDuBmVMQ0EnFNrl",
+        "Paroles": "fldd3nByWJAlFLjNK",
+        "Actes": "fldJHXAKDbV0LNIVU",
+        "Scènes": "fldOr9mFx8Al0EYe1",
+        "Contrôle": "fld6IDAztPLkwFUTZ"
+      }
+    },
+    "Maisons": {
+      "id": "tblUJg6l7PCZc52Go",
+      "fields": {
+        "Nom": "fldpehW69hYPFmw9U",
+        "Id": "fldHHVv5Kivf6mQVY",
+        "Devise": "fldM8ftQPnRHRFIRo",
+        "Blason": "fldwqNgUoZPTEuClk",
+        "Siège": "fldtM2KHlTrTy5GM7",
+        "Allégeance affichée": "fld8GJVO7dCorxCrx",
+        "Allégeance réelle": "fldY3kC7XsoxM8Moq",
+        "Or": "fldIwoR79JRy6fMDp",
+        "Revenus par lune": "fldSBHimymXjQHZpc",
+        "Levées dispo": "fldFGgrv4FUxWrgiw",
+        "Levées max": "fld7JL1kM8FAWhOYs",
+        "Statut": "fld3oaOZhB5saT7wx",
+        "Canon": "fldWR5QpkcXxua73a",
+        "Personnages": "fldiOf11kmXytbmbk",
+        "Monde": "fld4AYa8DHP3Ryikg",
+        "Lieux": "fldgMmv15I4AV8A1y",
+        "Suzerain": "fldUfMkBuGQAKncJf",
+        "From field: Suzerain": "fldtKPtLB8xoIF0BE"
+      }
+    },
+    "Personnages": {
+      "id": "tblWKf3ogxXbtrvqf",
+      "fields": {
+        "Nom": "flds9sPG8X19JqMKa",
+        "Id": "fldo7CGPqyUNo5CBp",
+        "Maison": "flddwE6o78Jkb69XB",
+        "Titre": "fld9BHc3tbGft3wm5",
+        "Naissance": "fldSSgbUKCtHg5DuV",
+        "Traits": "fld2mdBcokLiQYxsS",
+        "Objectifs": "fld4EvRmYszgXYvOt",
+        "Manière": "fldkL371THj6eB50Y",
+        "Physique": "fldVigJVNiLksPg3t",
+        "Portrait": "fldjpPeN2KV05MCPu",
+        "Prompt Ideogram": "fldS61fFriYuvui0d",
+        "État": "fldgHnzQnP5P3eHDQ",
+        "Lieu": "fldiVCCZLMAhPzzcv",
+        "Condition": "fld2wArKIHiR8S9UC",
+        "Relations": "fld7YpXEyyjLfA9tL",
+        "Événements": "fldk3fTClai7cmCUZ",
+        "Paroles": "fldq8fqikv7AVew1L",
+        "Actes": "fld6vDm3mk9G4ZFoW",
+        "Intentions": "fldNQBOjUu2GUnnLd",
+        "Scènes": "fldjwr4UbGxeDKZCi"
+      }
+    },
+    "Relations": {
+      "id": "tblFGgYEzjPmOkq5Z",
+      "fields": {
+        "Relation": "flddg8MtTJjXTR1Uy",
+        "Source": "fldhxFVibNPRo0oZ3",
+        "Cible": "fldXFzyevR1MqSJed",
+        "Opinion": "flds5F0rOVpTMGyYb",
+        "Liens": "fldaDFf8JmVAlJviH",
+        "Connue du joueur": "fldKZ4JqETTzbPw02"
+      }
+    },
+    "Événements": {
+      "id": "tblIjMwOSrnPoukr0",
+      "fields": {
+        "Titre": "fld8BuUu3TKTJJo4h",
+        "Id": "fldEk3poRnpJd9PO1",
+        "Date prévue": "fldU06mtFO5foTGNY",
+        "Type": "fldppmATC3S3apLGC",
+        "Importance": "fldUUaTLJ8SooMrcF",
+        "Description": "fldGjbNt4H1lLJ6PO",
+        "Lieu": "fldvl7Jd11ly7TXXT",
+        "Acteurs": "fldn6S3JJTUSth8og",
+        "Conditions de déviation": "fldtA2RFPzWSy1q01",
+        "Statut": "fldoVaZyj5lM66BGO",
+        "Effets": "fldhMdSwVlVIS3fsX",
+        "Infos": "fldBmI3n2XzQZZ90h"
+      }
+    },
+    "Infos": {
+      "id": "tblqmDVFjLRaQmXBA",
+      "fields": {
+        "Résumé": "fldkpa5js26HFPplS",
+        "Événement": "fldJAUAxIHDwbxByt",
+        "Version": "fldJzi6kBxPMmJukd",
+        "Source": "flddFf3kdrKvrKiIf",
+        "Fiabilité": "fldHaqjqXH2dHfBet",
+        "Date apprise": "fld2Ui1Joud67DZbB"
+      }
+    },
+    "Paroles": {
+      "id": "tbl5ApO4aCLL7Efur",
+      "fields": {
+        "Contenu": "fldFwSfvTCKUAoIm2",
+        "Date": "fld0mlBC9cNFJQnQR",
+        "Lieu": "fldtVpR4DmbHswyht",
+        "Locuteur": "fldpuVteMeIA7z2kD",
+        "Destinataires": "fldKwrtuIm3uRbqF2",
+        "Secret": "fldcpD3W54lsgzcvI",
+        "Scène": "fldS6R52dGGBExZzZ"
+      }
+    },
+    "Actes": {
+      "id": "tblZrDz4SR8n2aRF5",
+      "fields": {
+        "Description": "fldYPLaE7nbzcY1bo",
+        "Date": "fld3eRMf8OIGpATdv",
+        "Lieu": "fld8HR1h3WS9UK8us",
+        "Acteur": "fldkSGriMgdsswGFU",
+        "Témoins": "fldqH6SlrLiu193pV",
+        "Connu de": "fldNVR9LqIsMU5hLQ"
+      }
+    },
+    "Intentions": {
+      "id": "tbluTv3hOTehiidwE",
+      "fields": {
+        "Id": "fldL8zquVdKU7pxUN",
+        "Personnage": "fld6mpYXn7IUxuwGk",
+        "Pensées": "fldFwpU75W1VbUhX5",
+        "Intentions": "flddY0mCioaFjpCOq",
+        "MàJ": "fldsQw3f09siYbvKk"
+      }
+    },
+    "Monde": {
+      "id": "tbl1sDYmGuEGaByYj",
+      "fields": {
+        "Clé": "fldmHLcdQgCIkaMmH",
+        "Date": "fldjFd6YscDtlEef6",
+        "Phase": "fldJouaqrDvaUhsXP",
+        "Tension": "flduf59y8ZKuL8hVS",
+        "Déviations": "fldOKX2zUMf1oWhgW",
+        "Maison du joueur": "fldK0XJi8TcSAP0as"
+      }
+    },
+    "Scènes": {
+      "id": "tblwX4YKxbfN1zzjJ",
+      "fields": {
+        "Titre": "fldbxInkCJvRfZxZJ",
+        "Date": "fldS5ENbHUNAMt0aj",
+        "Lieu": "fldysiOP6j8LFNxnu",
+        "Participants": "fldvzw6LRev5wT0i1",
+        "Résumé": "fldTpKZfmduyWGBhU",
+        "Choix fait": "fld9RySTLOggsOSdR",
+        "Courante": "fldZVEMXoXFyR02K3",
+        "Beat en cours": "fldXVfvjjQJVirlVu",
+        "Choix proposés": "fldVxBnWvC4w5dSFb"
+      }
+    }
+  }
+}

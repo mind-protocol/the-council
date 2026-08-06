@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "jeu",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["serveur/serveur.js"],
+      "port": 3129
+    },
+    {
+      "name": "jeu-atelier",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["serveur/serveur.js"],
+      "port": 3130,
+      "autoPort": false
+    }
+  ]
+}

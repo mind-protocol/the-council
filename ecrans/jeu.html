@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Le Conseil</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/jeu.css">
+</head>
+<body>
+<div id="lateral" class="ferme">
+  <button id="lateral-bascule" title="Ouvrir le panneau">☰</button>
+  <div id="lateral-corps">
+    <div class="zone" id="zone-objectifs">
+      <div class="zone-titre">Vos desseins</div>
+      <div id="liste-objectifs"></div>
+    </div>
+    <div class="zone" id="zone-annales">
+      <div class="zone-titre">Les annales</div>
+      <div id="liste-annales"></div>
+    </div>
+    <div class="zone" id="zone-reglages">
+      <div class="zone-titre">Le narrateur</div>
+      <div id="zone-reglages-corps"></div>
+    </div>
+  </div>
+</div>
+
+<div id="scene">
+  <div id="bandeau">
+    <span id="date">—</span>
+    <span id="heure" hidden></span>
+    <span id="lieu">—</span>
+    <span id="jauge" title="Tension du royaume"><i></i></span>
+  </div>
+  <!-- le décor : quatre échelles d'une même guerre — le château où l'on est, la
+       ville qui l'entoure, le royaume où elle porte, le champ où elle se décide — et, en bandeau
+       dessous, qui est dans la salle. Les gens ne flottent pas autour de la
+       carte : ils sont rangés sous elle, comme une rangée de visages en face
+       de soi. -->
+  <div id="decor">
+    <div id="cartes">
+      <div id="plan"></div>
+      <div id="carte"></div>
+      <div id="ville"></div>
+      <div id="terrain"></div>
+      <div id="gens"></div>
+      <div id="desseins"></div>
+    </div>
+    <div id="acteurs"></div>
+  </div>
+
+</div>
+
+<div id="fil">
+  <div id="fil-corps"></div>
+  <div id="attente" class="pulse">La reine a parlé. Le monde en prend acte…</div>
+  <div id="fil-actions"></div>
+</div>
+
+<script src="/modules/bus.js"></script>
+<script src="/modules/attention.js"></script>
+<script src="/modules/entites.js"></script>
+<script src="/modules/galerie.js"></script>
+<script src="/modules/narration.js"></script>
+<script src="/modules/paroles.js"></script>
+<script src="/modules/gestes.js"></script>
+<script src="/modules/annales.js"></script>
+<script src="/modules/pensees.js"></script>
+<script src="/modules/actions.js"></script>
+<script src="/modules/geo.js"></script>
+<script src="/modules/loupe.js"></script>
+<script src="/modules/blasons.js"></script>
+<script src="/modules/jetons.js"></script>
+<script src="/modules/carte.js"></script>
+<script src="/modules/illustration.js"></script>
+<script src="/modules/plans.js"></script>
+<script src="/modules/plan.js"></script>
+<script src="/modules/terrain.js"></script>
+<script src="/modules/gens.js"></script>
+<script src="/modules/objectifs.js"></script>
+<script src="/modules/desseins.js"></script>
+<script src="/modules/reglages.js"></script>
+<script src="/modules/voix.js"></script>
+</body>
+</html>

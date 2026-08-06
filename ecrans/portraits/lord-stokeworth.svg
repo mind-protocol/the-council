@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Lord Stokeworth">
+  <title>Lord Stokeworth</title>
+  <defs>
+    <radialGradient id="bg-lord-stokeworth" cx="50%" cy="32%" r="80%">
+      <stop offset="0%" stop-color="#322a20"/>
+      <stop offset="55%" stop-color="#241d16"/>
+      <stop offset="100%" stop-color="#141009"/>
+    </radialGradient>
+    <clipPath id="clip-lord-stokeworth"><circle cx="64" cy="64" r="52"/></clipPath>
+  </defs>
+  <!-- anneau héraldique -->
+  <circle cx="64" cy="64" r="63" fill="#3f6b3a"/>
+  <circle cx="64" cy="64" r="57.5" fill="none" stroke="#ece8dc" stroke-width="7" stroke-dasharray="15.05 15.05"/>
+  <!-- disque intérieur -->
+  <circle cx="64" cy="64" r="52" fill="url(#bg-lord-stokeworth)" stroke="#7a6342" stroke-width="1.2"/>
+  <!-- buste -->
+  <g clip-path="url(#clip-lord-stokeworth)">
+    <rect x="57.5" y="62" width="13" height="28" rx="2" fill="#7d6853"/>
+    <path d="M16,128 C22,98 42,86 64,86 C86,86 106,98 112,128 Z" fill="#2c2620"/>
+    <path d="M30,106 C38,92 50,88 64,88 C78,88 90,92 98,106" fill="none" stroke="#ece8dc" stroke-width="2.4" opacity="0.9"/>
+    <ellipse cx="64" cy="54" rx="15.5" ry="18.5" fill="#7d6853"/>
+    <path d="M48,53 C46.5,33 54,26 64,26 C74,26 81.5,33 80,53 C78,43 72.5,39.5 64,39.5 C55.5,39.5 50,43 48,53 Z" fill="#9a948c"/>
+    <path d="M50,55 C50,73 55,82 64,82.5 C73,82 78,73 78,55 C75.5,66.5 70.5,70 64,70 C57.5,70 52.5,66.5 50,55 Z" fill="#9a948c"/>
+  </g>
+  <!-- badge de maison -->
+  <circle cx="64" cy="113" r="11.5" fill="#3f6b3a" stroke="#7a6342" stroke-width="1.2"/>
+  <g transform="translate(64 113)"><ellipse cx="0.5" cy="0.3" rx="4" ry="2.7" fill="#ece8dc"/><circle cx="-3.7" cy="-1.7" r="1.7" fill="#ece8dc"/><path d="M-1.5,2.8 L-1.5,5 M1,2.9 L1,5.1 M3,2.4 L3,4.6" stroke="#ece8dc" stroke-width="0.9" stroke-linecap="round"/></g>
+</svg>

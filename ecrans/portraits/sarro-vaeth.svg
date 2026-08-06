@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Sarro Vaeth">
+  <title>Sarro Vaeth</title>
+  <defs>
+    <radialGradient id="bg-sarro" cx="50%" cy="30%" r="82%">
+      <stop offset="0%" stop-color="#35271c"/>
+      <stop offset="55%" stop-color="#241a12"/>
+      <stop offset="100%" stop-color="#130d08"/>
+    </radialGradient>
+    <clipPath id="clip-sarro"><circle cx="64" cy="64" r="52"/></clipPath>
+  </defs>
+  <!-- anneau : gens de maison de Peyredragon, comme le mestre -->
+  <circle cx="64" cy="64" r="63" fill="#1d1a1c"/>
+  <circle cx="64" cy="64" r="57.5" fill="none" stroke="#a11f1f" stroke-width="7" stroke-dasharray="15.05 15.05"/>
+  <circle cx="64" cy="64" r="52" fill="url(#bg-sarro)" stroke="#7a6342" stroke-width="1.2"/>
+  <g clip-path="url(#clip-sarro)">
+    <rect x="58" y="63" width="12" height="26" rx="2" fill="#8d6f52"/>
+    <!-- tablier de cuir, brûlé à trois endroits -->
+    <path d="M20,128 C26,101 44,89 64,89 C84,89 102,101 108,128 Z" fill="#5a3d26"/>
+    <path d="M50,92 C50,110 52,122 54,128 L74,128 C76,122 78,110 78,92 C73,89.5 55,89.5 50,92 Z" fill="#6e4a2c"/>
+    <path d="M46,90 L64,99 L82,90" fill="none" stroke="#3d2a1a" stroke-width="2.2"/>
+    <circle cx="58" cy="108" r="3.1" fill="#241811"/><circle cx="58" cy="108" r="1.5" fill="#8a4b22" opacity="0.7"/>
+    <circle cx="70" cy="115" r="2.4" fill="#241811"/><circle cx="70" cy="115" r="1.1" fill="#8a4b22" opacity="0.7"/>
+    <circle cx="62" cy="121" r="2.8" fill="#241811"/><circle cx="62" cy="121" r="1.3" fill="#8a4b22" opacity="0.7"/>
+    <!-- tête : sec, cheveux ras, barbe courte roussie -->
+    <ellipse cx="64" cy="55" rx="14.8" ry="17.6" fill="#8d6f52"/>
+    <path d="M49.5,50 C49,37 54,31 64,31 C74,31 79,37 78.5,50 C76,41 70.5,38 64,38 C57.5,38 52,41 49.5,50 Z" fill="#5d5044"/>
+    <path d="M54,70 C57,75 60.5,77 64,77 C67.5,77 71,75 74,70 C73,78 69,81 64,81 C59,81 55,78 54,70 Z" fill="#6b5a45"/>
+    <!-- sourcils hauts d'un homme qui n'a pas dormi et regarde un plafond -->
+    <path d="M54,52 C56.5,49.8 60,49.8 62.5,52" fill="none" stroke="#2a2118" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M65.5,52 C68,49.8 71.5,49.8 74,52" fill="none" stroke="#2a2118" stroke-width="1.8" stroke-linecap="round"/>
+    <circle cx="58.2" cy="57.4" r="1.5" fill="#241c14"/>
+    <circle cx="69.8" cy="57.4" r="1.5" fill="#241c14"/>
+    <!-- sourcil droit brûlé plus court que l'autre : ça arrive, aux fosses -->
+    <path d="M70.5,50.6 L74.2,50.2" fill="none" stroke="#3d3226" stroke-width="1.1" stroke-linecap="round" opacity="0.8"/>
+  </g>
+  <!-- badge : écaille de dragon, et la flamme dessous -->
+  <circle cx="64" cy="113" r="11.5" fill="#191510" stroke="#7a6342" stroke-width="1.2"/>
+  <g transform="translate(64 113)">
+    <path d="M0,-7.5 C4.6,-7.5 6.8,-3.6 6.8,0.6 C6.8,4.6 3.8,7.4 0,7.4 C-3.8,7.4 -6.8,4.6 -6.8,0.6 C-6.8,-3.6 -4.6,-7.5 0,-7.5 Z" fill="#3a2a1c" stroke="#a86b2e" stroke-width="1"/>
+    <path d="M0,4.6 C-2.4,2.2 -2.8,-0.6 -1.4,-3.4 C-1.2,-1.6 -0.4,-1 0.4,-1.8 C1,-3 0.8,-4.4 0.2,-5.4 C3,-3.6 3.6,-0.4 2.4,2 C1.8,3.2 1,4.1 0,4.6 Z" fill="#d2802f"/>
+  </g>
+</svg>

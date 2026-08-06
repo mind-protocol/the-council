@@ -1,0 +1,115 @@
+<!-- ============================================================
+  TEMPLATE ÉCRAN DE SCÈNE — Le Conseil
+  Fragment HTML pour show_widget. Le MJ duplique et remplit les
+  emplacements marqués <!== SLOT: ... ==> (voir ecrans/README.md).
+  Attention : échapper les apostrophes dans les sendPrompt('...').
+============================================================= -->
+<div class="lc">
+<style>
+  .lc{
+    --lc-ink:#2b2119; --lc-muted:#7a6a55; --lc-paper:rgba(120,90,50,.07);
+    --lc-border:rgba(110,85,50,.35); --lc-accent:#a34a22; --lc-braise:#c9683a;
+    --lc-btn:rgba(120,90,50,.10); --lc-btn-hover:rgba(163,74,34,.14);
+    color:var(--lc-ink,#2b2119); font-family:Georgia,'Times New Roman',serif;
+    line-height:1.55; max-width:720px; margin:0 auto; padding:4px 2px;
+  }
+  @media (prefers-color-scheme: dark){
+    .lc{
+      --lc-ink:#e6dbc6; --lc-muted:#a8977c; --lc-paper:rgba(255,225,170,.05);
+      --lc-border:rgba(220,190,140,.25); --lc-accent:#e0824a; --lc-braise:#e8955f;
+      --lc-btn:rgba(255,225,170,.06); --lc-btn-hover:rgba(224,130,74,.16);
+    }
+  }
+  .lc-tete{display:flex; align-items:center; gap:12px; font-size:.82em;
+    color:var(--lc-muted); border-bottom:1px solid var(--lc-border);
+    padding-bottom:6px; margin-bottom:14px; letter-spacing:.04em;}
+  .lc-tete .lc-lieu{margin-left:auto; font-style:italic;}
+  .lc-jauge{width:70px; height:5px; border:1px solid var(--lc-border);
+    border-radius:3px; overflow:hidden; flex:none;}
+  .lc-jauge i{display:block; height:100%; background:linear-gradient(90deg,var(--lc-accent),var(--lc-braise));}
+  .lc-parle{display:flex; gap:16px; align-items:flex-start; margin-bottom:12px;}
+  .lc-portrait{width:120px; height:120px; flex:none; object-fit:cover;
+    border-radius:50% 50% 50% 50% / 46% 46% 54% 54%;
+    border:2px solid var(--lc-border); box-shadow:0 0 0 4px var(--lc-paper);}
+  .lc-nom{font-size:1.12em; font-weight:bold; letter-spacing:.03em; margin:2px 0 0;}
+  .lc-titre{font-size:.8em; color:var(--lc-muted); font-variant:small-caps;
+    letter-spacing:.08em; margin-bottom:8px;}
+  .lc-replique{font-size:1.05em; font-style:italic; border-left:3px solid var(--lc-accent);
+    padding:2px 0 2px 12px; margin:0;}
+  .lc-recit{background:var(--lc-paper); border:1px solid var(--lc-border);
+    border-radius:6px; padding:12px 16px; margin-bottom:16px; font-size:.95em;}
+  .lc-recit p{margin:0 0 .7em;} .lc-recit p:last-child{margin-bottom:0;}
+  .lc button{font:inherit; color:inherit; cursor:pointer; background:var(--lc-btn);
+    border:1px solid var(--lc-border); border-radius:5px; transition:background .15s;}
+  .lc button:hover{background:var(--lc-btn-hover); border-color:var(--lc-accent);}
+  .lc-pensee{font-style:italic; font-size:.92em; color:var(--lc-muted);
+    border-left:2px dotted var(--lc-braise); padding:2px 0 2px 12px; margin:0 0 16px;}
+  .lc-pensee::before{content:'⟡ '; color:var(--lc-braise);}
+  .lc-choix{display:flex; flex-direction:column; gap:8px; margin-bottom:12px;}
+  .lc-choix button{text-align:left; padding:9px 14px; font-size:.94em;}
+  .lc-choix button::before{content:'❧ '; color:var(--lc-accent);}
+  .lc-libre{display:flex; gap:8px; margin-bottom:16px;}
+  .lc-libre input{flex:1; font:inherit; font-size:.9em; color:inherit;
+    background:var(--lc-paper); border:1px solid var(--lc-border);
+    border-radius:5px; padding:8px 12px; min-width:0;}
+  .lc-libre input:focus{outline:none; border-color:var(--lc-accent);}
+  .lc-libre button{padding:8px 14px; font-size:.9em;}
+  .lc-modes{display:flex; gap:8px; justify-content:center;
+    border-top:1px solid var(--lc-border); padding-top:10px;}
+  .lc-modes button{padding:5px 12px; font-size:.78em; color:var(--lc-muted);
+    letter-spacing:.03em;}
+</style>
+
+  <div class="lc-tete">
+    <!-- SLOT: date (format « 3e jour de la 3e lune, 129 AC ») -->
+    <span>3e jour de la 3e lune, 129 AC</span>
+    <!-- SLOT: tension — largeur de la barre = etat/monde.json tension, en % -->
+    <span class="lc-jauge" title="Tension du royaume"><i style="width:35%"></i></span>
+    <!-- SLOT: lieu -->
+    <span class="lc-lieu">Donjon Rouge, Port-Réal</span>
+  </div>
+
+  <div class="lc-parle">
+    <!-- SLOT: locuteur — id du portrait (portraits/<id>.png), nom, titre -->
+    <img class="lc-portrait" src="portraits/otto-hightower.png" alt=""
+      onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 120%22%3E%3Crect width=%22120%22 height=%22120%22 fill=%22%23554433%22/%3E%3Ccircle cx=%2260%22 cy=%2246%22 r=%2222%22 fill=%22%23c9b795%22/%3E%3Cpath d=%22M18 120c4-30 22-42 42-42s38 12 42 42z%22 fill=%22%23c9b795%22/%3E%3C/svg%3E'">
+    <div>
+      <div class="lc-nom">Otto Hightower</div>
+      <div class="lc-titre">Main du Roi</div>
+      <!-- SLOT: réplique du locuteur -->
+      <p class="lc-replique">« Le royaume ne se gouverne pas avec des sentiments, mon seigneur. »</p>
+    </div>
+  </div>
+
+  <div class="lc-recit">
+    <!-- SLOT: narration (2 à 4 paragraphes max) -->
+    <p>La salle du Petit Conseil sent la cire froide et l'encre. Les boules de
+    marbre reposent devant chaque siège, immobiles comme des sentences.</p>
+    <p>La Main vous observe par-dessus ses papiers, attendant de savoir de quel
+    côté penche votre maison.</p>
+  </div>
+
+  <!-- SLOT: pensée du personnage joueur — 1-2 phrases d'intériorité (souvenir réel,
+       émotion, instinct) ; guide sans recommander ; rien que le personnage ne sache pas -->
+  <p class="lc-pensee">Père disait qu'un seigneur qui compte ses amis à voix haute n'en a déjà plus.</p>
+
+  <div class="lc-choix">
+    <!-- SLOT: 3 choix — texte seul, sans étiquette de ton ; garder le préfixe CHOIX: -->
+    <button onclick="sendPrompt('CHOIX: Assurer la Main de votre loyauté, sans rien promettre de précis')">Assurer la Main de votre loyauté, sans rien promettre de précis</button>
+    <button onclick="sendPrompt('CHOIX: Demander ce que la Couronne offre en échange de votre soutien')">Demander ce que la Couronne offre en échange de votre soutien</button>
+    <button onclick="sendPrompt('CHOIX: Rappeler froidement que votre maison a juré à Rhaenyra en 105')">Rappeler froidement que votre maison a juré à Rhaenyra en 105</button>
+  </div>
+
+  <div class="lc-libre">
+    <input id="lc-action" type="text" placeholder="Autre action ou réplique…"
+      onkeydown="if(event.key==='Enter')document.getElementById('lc-envoyer').click()">
+    <button id="lc-envoyer"
+      onclick="var v=document.getElementById('lc-action').value.trim(); if(v){sendPrompt('ACTION LIBRE: '+v);}">Agir</button>
+  </div>
+
+  <div class="lc-modes">
+    <button onclick="sendPrompt('MODE: play')">&#9654; Play</button>
+    <button onclick="sendPrompt('MODE: advance')">&#9193; Advance</button>
+    <button onclick="sendPrompt('MODE: advance-event')">&#9197; Avancer jusqu&rsquo;au prochain événement</button>
+  </div>
+</div>

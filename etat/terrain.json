@@ -1,0 +1,244 @@
+{
+  "_lisez_moi": "Le champ courant — la troisième échelle du décor. Vue du dessus : un corps est un semis de cercles, un cercle valant partout le même nombre d'hommes (par_cercle). Comme jetons.json, ce n'est PAS la vérité du monde : seulement ce que le joueur a vu ou qu'on lui a rapporté. Vider le fichier (ou retirer `id`) fait disparaître l'échelle. Format complet : docs/carte.md.",
+  "id": "cour-sacre-129-3-18",
+  "nom": "La cour de Peyredragon, le soir du sacre",
+  "quand": "129 AC — 3e lune, 18e jour, au soleil bas",
+  "echelle": "La cour : environ cent cinquante pas du Tambour à la muraille",
+  "lieu_id": "peyredragon",
+  "repere": [0, 0, 240, 160],
+  "par_cercle": 5,
+  "sol": [
+    {
+      "genre": "champ",
+      "points": [[14, 10], [226, 10], [228, 146], [12, 146]]
+    },
+    {
+      "genre": "champ",
+      "points": [[86, 0], [158, 0], [168, 14], [152, 26], [92, 26], [76, 14]],
+      "nom": "Le Tambour",
+      "etiq": [60, 12]
+    },
+    {
+      "genre": "champ",
+      "points": [[10, 146], [230, 146], [230, 158], [10, 158]],
+      "nom": "La muraille",
+      "etiq": [200, 155]
+    },
+    {
+      "genre": "village",
+      "points": [[14, 50], [50, 44], [58, 92], [16, 98]],
+      "nom": "Les cuisines",
+      "etiq": [34, 40]
+    },
+    {
+      "genre": "route",
+      "largeur": 8,
+      "points": [[26, 158], [42, 128], [64, 100], [94, 62], [118, 30]],
+      "nom": "L'allée de la porte",
+      "etiq": [26, 140],
+      "cap": 300
+    },
+    {
+      "genre": "champ",
+      "points": [[64, 104], [76, 104], [76, 114], [64, 114]],
+      "nom": "L'aiguade",
+      "etiq": [92, 110]
+    }
+  ],
+  "faits": [],
+  "corps": [
+    {
+      "id": "haute-table",
+      "genre": "convives",
+      "camp": "noir",
+      "nom": "La haute table",
+      "hommes": 10,
+      "centre": [120, 36],
+      "cap": 180,
+      "formation": "ligne",
+      "certitude": "sure",
+      "detail": "Vous, couronnée depuis ce matin. Votre fils aîné à votre droite, devant tous, et pas un mot de lui depuis la route de Sombreval. Corlys, Rhaenys, Gerardys et ses deux registres.",
+      "etiq": [0, -13]
+    },
+    {
+      "id": "banc-celtigar",
+      "genre": "convives",
+      "camp": "noir",
+      "nom": "Celtigar",
+      "hommes": 40,
+      "centre": [120, 56],
+      "cap": 180,
+      "formation": "ligne",
+      "certitude": "sure",
+      "detail": "Bartimos Celtigar s'est arrangé pour que son banc soit le plus près du vôtre. Il a juré trop fort et fait monter ses deux coffres pour qu'on les voie ouverts.",
+      "etiq": [0, 11]
+    },
+    {
+      "id": "banc-bar-emmon",
+      "genre": "convives",
+      "camp": "noir",
+      "nom": "Bar Emmon",
+      "hommes": 30,
+      "centre": [70, 62],
+      "cap": 180,
+      "formation": "ligne",
+      "certitude": "sure",
+      "detail": "Le jeune lord, quatorze ans peut-être quinze. Il a supplié pour jurer le premier et il a eu ce qu'il voulait ; la voix lui a cassé au milieu et il a repris deux fois.",
+      "etiq": [-16, -9]
+    },
+    {
+      "id": "banc-massey",
+      "genre": "convives",
+      "camp": "noir",
+      "nom": "Massey",
+      "hommes": 30,
+      "centre": [170, 62],
+      "cap": 180,
+      "formation": "ligne",
+      "certitude": "sure",
+      "detail": "Troisième à monter les marches, sans un mot de trop. Pierredanse tient le bec de Massey et regarde le Gosier.",
+      "etiq": [17, -9]
+    },
+    {
+      "id": "banc-staunton",
+      "genre": "convives",
+      "camp": "noir",
+      "nom": "Staunton",
+      "hommes": 25,
+      "centre": [70, 88],
+      "cap": 180,
+      "formation": "ligne",
+      "certitude": "sure",
+      "detail": "Arrivé ce matin après trois jours de silence, et tout le monde sur ces marches le savait. Il a bafouillé son serment en transpirant.",
+      "etiq": [-16, 9]
+    },
+    {
+      "id": "banc-darklyn",
+      "genre": "convives",
+      "camp": "noir",
+      "nom": "Sombreval",
+      "hommes": 20,
+      "centre": [170, 88],
+      "cap": 180,
+      "formation": "ligne",
+      "certitude": "sure",
+      "detail": "Le frère cadet de Gunthor Darklyn, en armure de voyage : il a juré au nom d'un homme resté enterrer ses morts. « Mon frère dit qu'il n'a pas eu besoin d'attendre le sacre pour savoir. »",
+      "etiq": [17, 9]
+    },
+    {
+      "id": "tables-ile-nord",
+      "genre": "convives",
+      "camp": "noir",
+      "nom": "L'île",
+      "hommes": 75,
+      "centre": [116, 100],
+      "cap": 180,
+      "formation": "ligne",
+      "certitude": "sure",
+      "detail": "Des tréteaux et des portes posées sur des barriques. Six cents personnes nourries aujourd'hui avec trois jours de préavis, et personne sur ce rocher n'a jamais rien mangé de mieux.",
+      "etiq": [0, -9]
+    },
+    {
+      "id": "tables-ile-sud",
+      "genre": "convives",
+      "camp": "noir",
+      "nom": "La garnison",
+      "hommes": 70,
+      "centre": [116, 116],
+      "cap": 180,
+      "formation": "ligne",
+      "certitude": "sure",
+      "detail": "Trois cents conversations qui ne parlent pas de vous — la première fois depuis six jours que vous entendez ça. C'est à ces tables-là que vous avez parlé ce matin, par-dessus la tête de vos vassaux.",
+      "etiq": [26, 2]
+    },
+    {
+      "id": "gens-de-sara",
+      "genre": "convives",
+      "camp": "noir",
+      "nom": "Sara",
+      "hommes": 46,
+      "centre": [46, 112],
+      "formation": "essaim",
+      "certitude": "sure",
+      "detail": "Cuisines, linge, feux, chambres, latrines : quarante-six personnes menées depuis avant l'arrivée de ser Robert par une femme de soixante ans sans nom de maison et sans titre. Elle en refusera un si on le lui offre devant du monde.",
+      "etiq": [6, -7]
+    },
+    {
+      "id": "daemon",
+      "genre": "convives",
+      "camp": "noir",
+      "nom": "Daemon",
+      "cercles": 1,
+      "centre": [196, 44],
+      "certitude": "sure",
+      "detail": "À son banc, à l'écart. C'est lui qui a voulu qu'on voie les prisonniers — au premier rang, même. Il a levé sa coupe de deux doigts quand Quince vous l'a dit, sans avoir l'air gêné une seconde. Il part demain à l'aube.",
+      "etiq": [10, -8]
+    },
+    {
+      "id": "orwyle",
+      "genre": "convives",
+      "camp": "vert",
+      "nom": "Orwyle",
+      "cercles": 1,
+      "centre": [182, 108],
+      "etat": "rendu",
+      "certitude": "sure",
+      "detail": "On lui a enfin donné une chaise, à trois tables de la vôtre. Il n'a toujours pas de lit pour la nuit. Il a reposé sa coupe sans boire et écrit trois lignes sur sa tablette de cire sans regarder ce qu'il écrivait — la quatrième fois aujourd'hui.",
+      "etiq": [12, 4]
+    },
+    {
+      "id": "seaux-de-quince",
+      "genre": "convoi",
+      "camp": "noir",
+      "nom": "Les deux seaux",
+      "cercles": 2,
+      "centre": [96, 124],
+      "cap": 160,
+      "formation": "file",
+      "etat": "ordre",
+      "certitude": "sure",
+      "detail": "Ser Robert n'a appelé personne : il a pris les seaux à l'aiguade lui-même, en a donné un à l'un de ses hommes, et traverse la cour entre les tables. Un castellan qui porte de l'eau, ça ne s'était jamais vu à Peyredragon.",
+      "etiq": [-14, 6]
+    },
+    {
+      "id": "gardes-de-quince",
+      "genre": "infanterie",
+      "camp": "noir",
+      "nom": "Les gardes",
+      "hommes": 30,
+      "centre": [120, 129],
+      "cap": 180,
+      "formation": "ligne",
+      "etat": "ordre",
+      "certitude": "sure",
+      "detail": "Daemon les voulait au premier rang ; le castellan les a mis au dernier, entre ses hommes, et les a fait désarmer trois fois.",
+      "etiq": [30, 0]
+    },
+    {
+      "id": "prisonniers-de-la-route",
+      "genre": "prisonniers",
+      "camp": "vert",
+      "nom": "Les quarante",
+      "hommes": 40,
+      "centre": [116, 139],
+      "cap": 0,
+      "formation": "ligne",
+      "etat": "rendu",
+      "certitude": "sure",
+      "detail": "Debout au fond depuis midi, cinq heures au soleil sans boire — puis l'eau, et le banquet qui s'est tu par tables. Onze de Rosby, neuf de Stokeworth : les hommes des deux maisons qui ne sont pas venues et qui ne vous ont pas répondu. Un garçon sans barbe, un vieux à jambe raide, et un assis par terre que deux autres tiennent debout.",
+      "etiq": [-20, 9]
+    },
+    {
+      "id": "willem-frey",
+      "genre": "prisonniers",
+      "camp": "vert",
+      "nom": "Ser Willem Frey",
+      "cercles": 1,
+      "centre": [148, 138],
+      "etat": "rendu",
+      "certitude": "sure",
+      "detail": "L'officier. Sixième fils, rien à lui que son cheval et il l'a perdu sur la route. Il a demandé trois fois à vous parler — pas pour supplier : il dit qu'il a quelque chose à dire qui regarde la reine, elle, et pas lui. Il tient son gobelet plein à deux mains et il n'a pas bu.",
+      "etiq": [16, 6]
+    }
+  ]
+}

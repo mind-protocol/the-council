@@ -1,0 +1,139 @@
+<!-- ============================================================
+  TEMPLATE CRÉATION DE MAISON — Le Conseil
+  Fragment HTML pour show_widget. Le MJ peut ajuster les options
+  (sièges, forces, faiblesses) marquées <!== SLOT: ... ==>.
+  Le bouton final envoie tout en un seul sendPrompt('CREATION: ...').
+============================================================= -->
+<div class="lc">
+<style>
+  .lc{
+    --lc-ink:#2b2119; --lc-muted:#7a6a55; --lc-paper:rgba(120,90,50,.07);
+    --lc-border:rgba(110,85,50,.35); --lc-accent:#a34a22; --lc-braise:#c9683a;
+    --lc-btn:rgba(120,90,50,.10); --lc-btn-hover:rgba(163,74,34,.14);
+    color:var(--lc-ink,#2b2119); font-family:Georgia,'Times New Roman',serif;
+    line-height:1.5; max-width:720px; margin:0 auto; padding:4px 2px;
+  }
+  @media (prefers-color-scheme: dark){
+    .lc{
+      --lc-ink:#e6dbc6; --lc-muted:#a8977c; --lc-paper:rgba(255,225,170,.05);
+      --lc-border:rgba(220,190,140,.25); --lc-accent:#e0824a; --lc-braise:#e8955f;
+      --lc-btn:rgba(255,225,170,.06); --lc-btn-hover:rgba(224,130,74,.16);
+    }
+  }
+  .lc h2{font-size:1.3em; letter-spacing:.05em; font-weight:normal;
+    font-variant:small-caps; text-align:center; margin:0 0 2px;}
+  .lc .lc-sous{text-align:center; color:var(--lc-muted); font-style:italic;
+    font-size:.85em; margin:0 0 18px;}
+  .lc fieldset{border:1px solid var(--lc-border); border-radius:6px;
+    background:var(--lc-paper); margin:0 0 14px; padding:10px 14px 14px;}
+  .lc legend{font-variant:small-caps; letter-spacing:.08em; font-size:.85em;
+    color:var(--lc-accent); padding:0 8px;}
+  .lc input[type=text], .lc textarea{width:100%; box-sizing:border-box;
+    font:inherit; font-size:.92em; color:inherit; background:transparent;
+    border:1px solid var(--lc-border); border-radius:5px; padding:7px 10px;}
+  .lc input[type=text]:focus, .lc textarea:focus{outline:none; border-color:var(--lc-accent);}
+  .lc textarea{resize:vertical; min-height:52px;}
+  .lc-cartes{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:8px;}
+  .lc-cartes label{display:block; border:1px solid var(--lc-border); border-radius:6px;
+    padding:9px 11px; cursor:pointer; font-size:.86em; transition:background .15s;}
+  .lc-cartes label:hover{background:var(--lc-btn-hover);}
+  .lc-cartes input, .lc-traits input{accent-color:var(--lc-accent,#a34a22); margin-right:6px;}
+  .lc-cartes b{display:block; font-size:1.05em; margin-bottom:3px;}
+  .lc-cartes small{color:var(--lc-muted); font-style:italic;}
+  .lc-cartes label:has(input:checked){border-color:var(--lc-accent);
+    background:var(--lc-btn); box-shadow:inset 0 0 0 1px var(--lc-accent);}
+  .lc-traits{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:4px 14px; font-size:.9em;}
+  .lc-traits label{cursor:pointer; padding:3px 2px;}
+  .lc-fonder{text-align:center; margin-top:6px;}
+  .lc-fonder button{font:inherit; color:inherit; cursor:pointer; background:var(--lc-btn);
+    border:1px solid var(--lc-accent); border-radius:6px; padding:10px 26px;
+    font-size:1.02em; font-variant:small-caps; letter-spacing:.08em; transition:background .15s;}
+  .lc-fonder button:hover{background:var(--lc-btn-hover);}
+  .lc-note{min-height:1.2em; text-align:center; font-size:.8em; font-style:italic;
+    color:var(--lc-braise); margin-top:8px;}
+</style>
+
+  <h2>Fonder votre maison</h2>
+  <p class="lc-sous">An 129 après la Conquête. Le roi Viserys décline, et chaque
+  maison devra bientôt choisir son camp.</p>
+
+  <fieldset>
+    <legend>Nom &amp; devise</legend>
+    <input type="text" id="cr-nom" placeholder="Nom de la maison (ex. Mervault)" style="margin-bottom:8px">
+    <input type="text" id="cr-devise" placeholder="Devise (ex. « La marée ne ment pas »)">
+  </fieldset>
+
+  <fieldset>
+    <legend>Siège</legend>
+    <div class="lc-cartes">
+      <!-- SLOT: 3-4 options de siège (value = résumé envoyé au MJ) -->
+      <label><input type="radio" name="cr-siege" value="donjon des terres de la Couronne, à deux jours de Port-Réal">
+        <b>Terres de la Couronne</b><small>Un donjon à deux jours de Port-Réal — près du trône, près du feu.</small></label>
+      <label><input type="radio" name="cr-siege" value="île fortifiée du Détroit, port franc et brumes">
+        <b>Île du Détroit</b><small>Un roc battu par les flots — les navires passent, l'or aussi.</small></label>
+      <label><input type="radio" name="cr-siege" value="fort du Conflans, au carrefour des rivières">
+        <b>Le Conflans</b><small>Un fort au carrefour des rivières — toutes les guerres y passent.</small></label>
+      <label><input type="radio" name="cr-siege" value="château du Bief, terres grasses et vergers">
+        <b>Le Bief</b><small>Des terres grasses et des vergers — la richesse qui attire l'envie.</small></label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Blason</legend>
+    <textarea id="cr-blason" placeholder="Description héraldique (ex. de sable au kraken d'argent, bordure de gueules)"></textarea>
+  </fieldset>
+
+  <fieldset>
+    <legend>Forces — choisissez-en deux</legend>
+    <div class="lc-traits" id="cr-forces">
+      <!-- SLOT: liste des forces (ajuster librement) -->
+      <label><input type="checkbox" value="flotte de guerre aguerrie">Flotte de guerre aguerrie</label>
+      <label><input type="checkbox" value="mines prospères">Mines prospères</label>
+      <label><input type="checkbox" value="lignée ancienne et respectée">Lignée ancienne et respectée</label>
+      <label><input type="checkbox" value="réseau d'informateurs">Réseau d'informateurs</label>
+      <label><input type="checkbox" value="chevalerie renommée">Chevalerie renommée</label>
+      <label><input type="checkbox" value="greniers pleins et terres fertiles">Greniers pleins, terres fertiles</label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Faiblesse — choisissez-en une</legend>
+    <div class="lc-traits">
+      <!-- SLOT: liste des faiblesses (ajuster librement) -->
+      <label><input type="radio" name="cr-faiblesse" value="dettes envers la Banque de Fer">Dettes envers la Banque de Fer</label>
+      <label><input type="radio" name="cr-faiblesse" value="un unique héritier, encore enfant">Un unique héritier, encore enfant</label>
+      <label><input type="radio" name="cr-faiblesse" value="réputation entachée par un vieux scandale">Réputation entachée</label>
+      <label><input type="radio" name="cr-faiblesse" value="vassaux frondeurs et jaloux">Vassaux frondeurs</label>
+    </div>
+  </fieldset>
+
+  <div class="lc-fonder">
+    <button onclick="crFonder()">Fonder la maison</button>
+    <div class="lc-note" id="cr-note"></div>
+  </div>
+
+<script>
+  function crVal(sel){var e=document.querySelector(sel);return e?e.value.trim():'';}
+  function crCoche(sel){return Array.from(document.querySelectorAll(sel+' input:checked')).map(function(i){return i.value;});}
+  // Limite : 2 forces maximum
+  document.querySelectorAll('#cr-forces input').forEach(function(c){
+    c.addEventListener('change',function(){
+      if(crCoche('#cr-forces').length>2) this.checked=false;
+    });
+  });
+  function crFonder(){
+    var nom=crVal('#cr-nom'), devise=crVal('#cr-devise'), blason=crVal('#cr-blason');
+    var siege=document.querySelector('input[name=cr-siege]:checked');
+    var faible=document.querySelector('input[name=cr-faiblesse]:checked');
+    var forces=crCoche('#cr-forces');
+    var note=document.getElementById('cr-note');
+    if(!nom||!siege||forces.length!==2||!faible){
+      note.textContent='Il manque : '+[!nom&&'le nom',!siege&&'le siège',forces.length!==2&&'deux forces',!faible&&'une faiblesse'].filter(Boolean).join(', ')+'.';
+      return;
+    }
+    note.textContent='';
+    sendPrompt('CREATION: maison='+nom+' | siege='+siege.value+' | devise='+(devise||'(aucune)')+' | blason='+(blason||'(à définir)')+' | forces='+forces.join(', ')+' | faiblesse='+faible.value);
+  }
+</script>
+</div>

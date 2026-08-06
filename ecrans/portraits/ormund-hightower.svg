@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Ormund Hightower">
+  <title>Ormund Hightower</title>
+  <defs>
+    <radialGradient id="bg-ormund-hightower" cx="50%" cy="32%" r="80%">
+      <stop offset="0%" stop-color="#322a20"/>
+      <stop offset="55%" stop-color="#241d16"/>
+      <stop offset="100%" stop-color="#141009"/>
+    </radialGradient>
+    <clipPath id="clip-ormund-hightower"><circle cx="64" cy="64" r="52"/></clipPath>
+  </defs>
+  <!-- anneau héraldique -->
+  <circle cx="64" cy="64" r="63" fill="#71716f"/>
+  <circle cx="64" cy="64" r="57.5" fill="none" stroke="#e9e7e1" stroke-width="7" stroke-dasharray="15.05 15.05"/>
+  <!-- disque intérieur -->
+  <circle cx="64" cy="64" r="52" fill="url(#bg-ormund-hightower)" stroke="#7a6342" stroke-width="1.2"/>
+  <!-- buste -->
+  <g clip-path="url(#clip-ormund-hightower)">
+    <rect x="57.5" y="62" width="13" height="28" rx="2" fill="#7d6853"/>
+    <path d="M10,128 C16,94 40,84 64,84 C88,84 112,94 118,128 Z" fill="#2c2620"/>
+    <path d="M26,104 C34,88 48,86 64,86 C80,86 94,88 102,104" fill="none" stroke="#e9e7e1" stroke-width="2.4" opacity="0.9"/>
+    <ellipse cx="64" cy="54" rx="15.5" ry="18.5" fill="#7d6853"/>
+    <path d="M48,53 C46.5,33 54,26 64,26 C74,26 81.5,33 80,53 C78,43 72.5,39.5 64,39.5 C55.5,39.5 50,43 48,53 Z" fill="#6b4e2e"/>
+    <path d="M50.5,56 C51,70 55,77 64,77.5 C73,77 77,70 77.5,56 C75,66 70.5,69.5 64,69.5 C57.5,69.5 53,66 50.5,56 Z" fill="#6b4e2e"/>
+  </g>
+  <!-- badge de maison -->
+  <circle cx="64" cy="113" r="11.5" fill="#191510" stroke="#7a6342" stroke-width="1.2"/>
+  <g transform="translate(64 113)"><path d="M-2.6,6 L-2.6,-2.6 L-1.5,-2.6 L-1.5,-1.4 L-0.6,-1.4 L-0.6,-2.6 L0.6,-2.6 L0.6,-1.4 L1.5,-1.4 L1.5,-2.6 L2.6,-2.6 L2.6,6 Z" fill="#e9e7e1"/><g transform="translate(0 -4.6) scale(0.55)"><path d="M0,-6.5 C2.2,-3.5 2.4,-0.5 0,2.5 C-2.4,-0.5 -2.2,-3.5 0,-6.5 Z" fill="#d97b2e"/></g></g>
+</svg>

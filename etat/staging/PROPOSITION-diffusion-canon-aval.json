@@ -1,0 +1,287 @@
+{
+  "genere_le": "2026-08-06 — session de travail moteur (non canonique)",
+  "avertissement": "Proposition ecrite a la main : ajoute la diffusion aux evenements canon en aval qui n'en avaient pas. Aucune empreinte d'etat n'est jointe VOLONTAIREMENT — ces entrees ne dependent d'aucune horloge courante, donc la garde de fraicheur n'a pas lieu de s'appliquer. Applique avec scripts/appliquer.py. Rien ne partira avant que l'evenement porteur ne passe 'resolu' : la diffusion d'un 'a-venir' est suspendue, celle d'un 'devie' ou 'annule' ne part jamais.",
+  "note": "Dates deduites des jours_de_pr (corbeau ~ /3). Les versions sont deformees a la source : ce sont des croyances, pas des faits. Deux evenements arrivent en DEUX temps a Peyredragon — une premiere nouvelle partielle et fausse, puis la confirmation : c'est la ou le brouillard se joue.",
+  "mutations_proposees": [
+    {
+      "table": "evenements",
+      "cible": "mort-lucerys",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "Premier mot, par le corbeau d'Accalmie : un dragon tombe, pas encore un fils mort.",
+      "valeur": {
+        "ou": "peyredragon",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 13
+        },
+        "canal": "corbeau",
+        "fiabilite": 55,
+        "version": "Corbeau d'Accalmie, sec et court : le prince Lucerys a quitté Accalmie dans l'orage et Arrax n'a pas reparu au-dessus de la baie des Naufrageurs. Lord Borros écrit qu'il ne sait rien de plus et qu'il n'a rien pu empêcher.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "mort-lucerys",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "La confirmation, quatre jours plus tard, et avec elle le nom d'Aemond.",
+      "valeur": {
+        "ou": "peyredragon",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 17
+        },
+        "canal": "temoin",
+        "fiabilite": 90,
+        "version": "Des pêcheurs de la baie des Naufrageurs ont ramené ce qu'on ramène. Vhagar attendait au-dessus des nuages. Le prince Aemond jure que la tempête l'a voulu et que son dragon ne lui obéissait plus — personne ne le croira jamais.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "mort-lucerys",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "Version verte : un accident regrettable, sous la plume de la cour.",
+      "valeur": {
+        "ou": "port-real",
+        "qui": [
+          "otto",
+          "alicent",
+          "aegon-ii",
+          "criston",
+          "larys",
+          "orwyle"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 11
+        },
+        "canal": "temoin",
+        "fiabilite": 80,
+        "version": "Le prince Aemond est rentré sur Vhagar avec du sang qui n'est pas le sien sur la selle. Il dit que le bâtard l'a provoqué au-dessus de la baie et que l'orage a fait le reste. La reine douairière n'a pas dit un mot depuis.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "mort-lucerys",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "Ce que le royaume retiendra, et qui condamne Aemond plus que la vérité.",
+      "valeur": {
+        "ou": "vivesaigues",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 20
+        },
+        "canal": "rumeur",
+        "fiabilite": 40,
+        "version": "On raconte partout qu'un enfant est parti en ambassade sous bannière de paix et qu'on l'a brûlé dans le ciel pour la peine. On ne dit plus le nom d'Aemond sans cracher, et on ne dit plus non aux corbeaux de Peyredragon aussi facilement.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "sac-sombreval",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "Première nouvelle : de la fumée sur l'horizon, et le pire qu'on suppose.",
+      "valeur": {
+        "ou": "peyredragon",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 6,
+          "jour": 2
+        },
+        "canal": "barque",
+        "fiabilite": 45,
+        "version": "Les barques de pêche rentrent avant l'heure : Sombreval brûle du côté du port et on entend les cloches depuis la mer. On ne sait pas si lord Gunthor tient encore la citadelle, ni combien sont sortis par la porte de terre.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "sac-sombreval",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "La confirmation, et la dette de la reine envers son premier vassal déclaré.",
+      "valeur": {
+        "ou": "peyredragon",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 6,
+          "jour": 4
+        },
+        "canal": "temoin",
+        "fiabilite": 90,
+        "version": "Des fuyards de Sombreval sont débarqués sur le rocher : la ville est pillée, la flotte brûlée sur ses amarres, et lord Gunthor Darklyn a été décapité sur son propre quai devant ses gens. Le premier homme qui a hissé vos couleurs est mort en les portant.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "sac-sombreval",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "Version verte : une justice, pas un sac.",
+      "valeur": {
+        "ou": "port-real",
+        "qui": [
+          "aegon-ii",
+          "otto",
+          "alicent",
+          "larys",
+          "orwyle"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 6,
+          "jour": 2
+        },
+        "canal": "corbeau",
+        "fiabilite": 75,
+        "version": "Ser Criston Cole écrit que Sombreval est reprise au nom du roi, que le traître a payé, et que les brûlés de la route royale sont vengés. Il ne dit rien du nombre de maisons vidées ni de ce que ses hommes ont emporté.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "sang-et-fromage",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "Le canal de Mysaria est le plus rapide, et c'est une nouvelle qui salit celle qui la reçoit.",
+      "valeur": {
+        "ou": "peyredragon",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 5,
+          "jour": 15
+        },
+        "canal": "corbeau",
+        "fiabilite": 75,
+        "version": "Dans le Donjon Rouge, un enfant a été égorgé sous les yeux de sa mère, qu'on a forcée à choisir lequel de ses fils mourrait. C'était Jaehaerys. Le royaume dira que l'ordre est venu de Peyredragon, et le royaume n'aura pas entièrement tort.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "sang-et-fromage",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "Là, personne n'apprend rien : ils y étaient. Reste ce que chacun en fait.",
+      "valeur": {
+        "ou": "port-real",
+        "qui": [
+          "alicent",
+          "otto",
+          "aegon-ii",
+          "aemond",
+          "criston",
+          "helaena",
+          "larys"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 5,
+          "jour": 12
+        },
+        "canal": "temoin",
+        "fiabilite": 100,
+        "version": "L'héritier du roi a été égorgé dans ses appartements, la reine Helaena tenue par les bras pendant qu'on la faisait choisir. Les portes étaient gardées. Quelqu'un les a ouvertes.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "prise-harrenhal",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "Une victoire sans bataille : la nouvelle voyage bien et vite.",
+      "valeur": {
+        "ou": "peyredragon",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 6,
+          "jour": 24
+        },
+        "canal": "corbeau",
+        "fiabilite": 85,
+        "version": "Le prince Daemon est entré dans Harrenhal sans un mort : ser Simon Strong a rendu la forteresse et lui a servi à souper. Le cœur du Conflans est tenu, et le prince y reste — il ne dit pas pour combien de temps.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "prise-harrenhal",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "Larys apprend qu'on lui a pris son siège — et il l'apprend comme tout le monde.",
+      "valeur": {
+        "ou": "port-real",
+        "qui": [
+          "larys",
+          "otto",
+          "criston",
+          "aegon-ii"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 6,
+          "jour": 24
+        },
+        "canal": "corbeau",
+        "fiabilite": 80,
+        "version": "Harrenhal est tombée sans un coup de hache. Le châtelain a ouvert les portes au prince Daemon. Lord Larys Strong apprend en même temps que le conseil que sa maison a rendu son siège sans le consulter.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "chute-otto",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "Changement de main chez l'ennemi : la plume cède à l'épée, et ça change tout pour la reine.",
+      "valeur": {
+        "ou": "peyredragon",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 7,
+          "jour": 8
+        },
+        "canal": "corbeau",
+        "fiabilite": 70,
+        "version": "Otto Hightower n'est plus la Main du roi : Aegon lui a retiré la chaîne et l'a donnée à Criston Cole. Ceux qui espéraient encore des lettres et des marchandages n'auront plus que des osts. On ne négocie pas avec le Faiseur de Rois.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "ralliement-trident",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "Bonne nouvelle qui arrive par morceaux, maison par maison, et non d'un bloc.",
+      "valeur": {
+        "ou": "peyredragon",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 6,
+          "jour": 6
+        },
+        "canal": "corbeau",
+        "fiabilite": 65,
+        "version": "Les serments du Trident arrivent par paquets et se contredisent sur les comptes : Blackwood se déclare et promet quinze cents lances, Bracken jure le contraire pour la seule raison que Blackwood a juré, et Vivesaigues garde le silence. Ce qui est sûr : le Conflans se battra chez lui.",
+        "livree": false
+      }
+    }
+  ],
+  "empreintes": {
+    "intentions": "b80aa7082160ab63848c6af957a8f2bdcbd7a3cc",
+    "evenements": "23cdef04ff9feef1c30cabb131259449e68d1f73",
+    "personnages": "c31f5942ebbec8ba467ab5fb97b928c60129e9ce",
+    "monde": "65ae1992dba0a91ed20778f19c8777cbfd856acf"
+  },
+  "applique_le": "2026-08-06T03:10:53"
+}

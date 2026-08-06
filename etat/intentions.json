@@ -1,0 +1,1887 @@
+[
+ {
+  "personnage_id": "gerardys",
+  "echelle": "scene",
+  "croyances": [
+   "La reine l'a surpris a ecrire pour lord Corlys et n'a rien demande : elle sait, elle se tait, et il ne sait pas ce que ce silence lui coutera",
+   "Il a jusqu'a midi pour porter ses questions, et il a reserve trois choix a la reine seule : le nom, la convocation, l'indemnite",
+   "Il contredit sa reine devant temoins pour la deuxieme fois en deux jours, et se couvre chaque fois derriere son office plutot que derriere son avis",
+   "Elle defait en huit minutes ce qu'elle vient de faire trancher : il ne defendra plus ses points, il fournira les FORMES qui laissent les deux versions vraies",
+   "La reine lui a demande ses suggestions pour la premiere fois : il les a donnees rangees et chiffrees, et il a ose demander pour lui un mandat sur les petites affaires - c'est le seul moment de la nuit ou il a demande quelque chose",
+   "Elle lui a donne un mandat general et il l'a retreci lui-meme devant temoin : sous vingt dragons et reparable, il decide ; le nom de la reine, une detention, une parole a une maison et ses fils ne seront jamais evidents"
+  ],
+  "ignore": [
+   "Qui a ouvert le coffre de l'archive, et par quelle galerie on y est entré",
+   "Ce que la reine veut faire savoir au royaume du feu de la route — elle n'a rien voulu dicter, et Sombreval a parlé avant elle"
+  ],
+  "intention": "Tenir l'ecrit de ce regne : borner son propre mandat pour durer, ecrire les regles des dragonniers avant midi, et faire partir Accalmie au vol du soir.",
+  "plan": [
+   {
+    "id": "gerardys-copies-deposition",
+    "quoi": "Expédier les dix-sept copies de la déposition de ser Steffon — la baie, le Conflans, le Val, Accalmie, et une pour Villevieille adressée à Ormund Hightower",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "dix-sept corbeaux",
+     "deux scribes jusqu'à l'aube"
+    ],
+    "si_bloque": "S'il manque des oiseaux, il sacrifie les copies du Val et du Nord — Jacaerys les portera de sa main s'il part.",
+    "accompli": "Dix-sept copies parties dans la nuit du 17."
+   },
+   {
+    "id": "gerardys-lire-rouleau",
+    "quoi": "Faire lire le rouleau des serments de 105 devant les bannerets, avant les serments du 18 (112 noms, 53 vivants, 19 à la cour d'Aegon)",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "l'accord de la reine",
+     "le rouleau monté de l'archive sans qu'il s'émiette"
+    ],
+    "si_bloque": "Si on lui refuse la parole, il en fait tirer des copies nominatives et les glisse aux mestres des bannerets — chacun lira son propre nom en privé.",
+    "accompli": "Rouleau de 105 lu devant les bannerets avant les serments du 18."
+   },
+   {
+    "id": "gerardys-coffre",
+    "quoi": "Retrouver qui a ouvert le coffre de l'archive — seul, sans en parler à ser Robert",
+    "etat": "en-cours",
+    "jours_restants": 4,
+    "depend_de": [],
+    "cout": [
+     "ses nuits",
+     "le silence d'un page qu'il paie en douceurs"
+    ],
+    "si_bloque": "S'il ne trouve rien, il fait murer la porte basse de l'archive et garde la seule clé — quitte à ce qu'on le lui reproche un jour."
+   },
+   {
+    "id": "gerardys-roukerie",
+    "quoi": "Tenir la roukerie : rien n'entre ni ne sort sans qu'il le sache, et il porte lui-même à la reine ce qui compte, avant quiconque",
+    "etat": "en-cours",
+    "jours_restants": null,
+    "depend_de": [],
+    "cout": [],
+    "si_bloque": "Si un pli lui échappe, il en tient registre plutôt que d'en faire scandale : la liste servira le jour où il faudra prouver quelque chose."
+   },
+   {
+    "id": "gerardys-former-jace",
+    "quoi": "Passer la matinee du 20 a former le prince a ce qui l'attend : les formes d'une audience, ce qu'un serment engage, comment on rapporte des termes scelles sans les avoir acceptes, et les pieges qu'on tend a un envoye jeune devant ses hommes",
+    "etat": "bloque",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "la matinee",
+     "les reponses des questions de midi, qui partiront avec des blancs signales",
+     "sa troisieme nuit sans dormir",
+     "les questions du corps a porter a midi, desormais reduites aux seules qui ne peuvent pas attendre, avec les blancs signales",
+     "le releve des sangs au registre du sept, repousse a ce soir"
+    ],
+    "si_bloque": "S'il s'endort ou s'embrouille, il donne au prince les pieces d'archive brutes plutot que son enseignement : le rouleau de 105, la deposition de ser Steffon, et deux exemples ecrits d'ambassades ratees. Il l'a deja decide.",
+    "accompli": "N'a pas eu lieu : le prince est descendu sous la Montagne. Si_bloque applique - le rouleau de 105, la deposition de ser Steffon et deux ambassades ratees mis de cote pour qu'il les lise seul."
+   },
+   {
+    "id": "gerardys-actes-protection",
+    "quoi": "Rediger TROIS actes de protection identiques, meme jour meme formule : Sombreval, le Repos-des-Freux, Rosby. Deux scribes leves (Wyl et Ossy). BLOQUE SUR LA FORMULE tant que la reine n'a pas dit ce que le mot protection contient.",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "deux scribes",
+     "la cire et les deux sceaux",
+     "trois porteurs, dont un seul est trouve (Denys pour Sombreval)"
+    ],
+    "si_bloque": "Si elle ne dicte pas le sens du mot avant la maree, il ecrit la formule la plus faible des trois - qu'ils sont a elle - parce que c'est la seule qu'il puisse defendre au registre si on la lui reproche plus tard, et il note en marge qu'elle n'a pas choisi.",
+    "accompli": "Formule la plus faible dictee aux scribes faute de reponse de la reine ; note de six mots en marge du registre constatant qu'elle n'a pas choisi. Deux exemplaires en cours, le troisieme attend. Porteurs : Denys pour Sombreval ; le Repos-des-Freux et Rosby n'en ont pas encore."
+   },
+   {
+    "id": "gerardys-affreter-coque",
+    "quoi": "Affreter une coque marchande aupres de Rulf Corne pour porter l'ambassade a Sombreval, plutot que de distraire une galere velaryonne en l'absence de lord Corlys",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "le loyer de la coque, a prendre sur quoi ? le compte n'est pas ouvert",
+     "un homme envoye au bourg avant la maree descendante"
+    ],
+    "si_bloque": "Si Rulf Corne demande a etre paye d'avance et que personne n'a d'or a lui donner, il engage le loyer sur la parole de la reine et le porte au registre comme dette - puis il le lui dira apres, ce qui est exactement ce qu'il reproche aux autres.",
+    "accompli": "Coque marchande affretee aupres de Rulf Corne plutot qu'une galere velaryonne ; appareillee a la maree descendante du 20 avec ser Steffon Darklyn et Denys Bar Emmon a bord."
+   },
+   {
+    "id": "gerardys-appel-cavaliers",
+    "quoi": "Rediger et faire crier l'appel aux sangs de Valyria, selon une portee que la reine n'a pas encore fixee (ile seule / ile et Lamarck / tout le royaume)",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "le crieur de la veille",
+     "un scribe pris sur les actes de protection",
+     "le troisieme acte retarde d'une heure"
+    ],
+    "si_bloque": "Si elle ne fixe pas la portee, il fait crier a l'ILE SEULE - la plus etroite - et le consigne comme une decision de mestre, parce qu'un appel qu'on elargit ensuite se peut, et un appel qu'on retire ne se peut pas.",
+    "accompli": "Crie a l'ile seule sur ordre de la reine, trois fois, en commencant par le quai. Les cinq conditions du rang n'ont pas ete fixees avant le depart du crieur ; il repondra aux postulants que la reine n'a pas encore dit."
+   },
+   {
+    "id": "gerardys-cinq-conditions",
+    "quoi": "SEPT DECRETS alignes et prets a signer ; DEUX BLANCS a remplir par la reine (les moutons, ser Willem Frey) et UNE LIGNE VIDE dans le decret des dragonniers : la bete est-elle pretee par la couronne ou donnee a l'homme.",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "redemander une troisieme fois quelque chose qu'il a deja pose deux fois"
+    ],
+    "si_bloque": "Si elle signe sans remplir la ligne de la propriete de la bete, il fait porter au registre, en marge, l'heure a laquelle il l'a avertie - comme il l'a fait pour la formule des actes de protection. Il n'ecrira JAMAIS la ligne a sa place : c'est du nom de la reine sur un papier, donc hors de son mandat par sa propre definition.",
+    "accompli": "Charte des dragonniers signee et scellee au matin du 20, avec la propriete de la bete tranchee (a lui) et le serment sans terme ni conge. Sunglass, Rulf Corne, Sara Poulain signes dans le meme mouvement ; moutons et Frey remplis apres coup."
+   },
+   {
+    "id": "gerardys-lettre-accalmie",
+    "quoi": "Ecrire et faire partir au vol du soir la lettre d'Accalmie en ouvrir-sans-conclure : trois lignes, sans chiffre ni nom, disant que la reine serait disposee a entendre ce que lord Borros souhaiterait de sa maison",
+    "etat": "en-cours",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "un corbeau sur les quatorze restants"
+    ],
+    "si_bloque": "Si la reine veut la relire et ne le fait pas avant le crepuscule, il la fait partir sans relecture et le consigne - il a decide cette nuit qu'un retard se paie plus cher qu'une phrase imparfaite."
+   },
+   {
+    "id": "gerardys-achat-moutons",
+    "quoi": "Acheter les moutons en trois fois, dans trois villages, a trois jours d'ecart, pour ne pas doubler le prix ; 240 dragons la lune si c'est bien mene",
+    "etat": "en-cours",
+    "jours_restants": 3,
+    "depend_de": [],
+    "cout": [
+     "240 a 350 dragons la lune",
+     "trois hommes envoyes separement"
+    ],
+    "si_bloque": "Si un village refuse de vendre ou si le prix s'envole quand meme, il achete moins et previent la reine QUE LES BETES SERONT COURTES A HUIT JOURS plutot que de requisitionner sans ordre - la requisition touche une parole donnee au petit peuple, donc hors de son mandat."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "La reine se lève de nouveau pour voler, ou monte à cheval, avant la fin de ses relevailles",
+    "alors": "Il se met physiquement en travers, devant témoins s'il faut, et exige que son refus soit consigné au registre.",
+    "une_fois": false
+   },
+   {
+    "si": "Un corbeau arrive porteur d'une nouvelle qui touche un des enfants de la reine",
+    "alors": "Il le lit avant elle, le porte lui-même, et fait apporter une chaise et du lait chaud avant de parler.",
+    "une_fois": false
+   }
+  ],
+  "attitude_joueur": "Dévotion inquiète : il la sert depuis l'enfance et redoute d'être celui qui lui apporte la nouvelle de trop. Il a conservé l'ultimatum d'Otto sous clé au registre plutôt que de le brûler — la clause du bas lui servira de preuve un jour.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 20
+  },
+  "mandat": {
+   "donne_le": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 19
+   },
+   "par": "rhaenyra",
+   "objet": "ecrire les regles du corps des porte-parole",
+   "echeance": "20e jour, midi",
+   "reserve_a_la_reine": [
+    "le nom du corps",
+    "le droit de se reunir sans convocation royale (corps ou guichet)",
+    "l'indemnite des porte-parole — question posee par Willa devant trois cents temoins et restee sans reponse"
+   ],
+   "note": "Il apportera les trois avec son avis sur chacune ; la reine tranche en une phrase."
+  }
+ },
+ {
+  "personnage_id": "robert-quince",
+  "echelle": "scene",
+  "croyances": [
+   "Ce qui touche un seigneur, une vie, un dragon ou une coque n'est PAS a lui — il l'a exclu de sa propre main et il s'y tiendra",
+   "Il est sorti de son mandat pour dire tout haut a la reine qu'elle faisait attendre son mestre ; elle l'a laisse parler, comme elle l'a laisse faire repeter ses ordres",
+   "On vient d'ouvrir une porte pour faire entrer des inconnus dans le chateau, ce qu'il tient depuis toujours pour la seule facon dont Peyredragon peut tomber - et c'est la reine qui l'a ordonne",
+   "Sa garnison est etalee comme jamais - six a la barbacane, dix sous la Montagne, quarante aux quais - et la muraille du levant est tenue par des vieux le jour meme ou l'on a crie a toute l'ile de monter",
+   "Il a propose de loger les dragonniers chez les onze veuves du bourg plutot que de batir ou de prendre : il sait que ce n'est pas noble et il l'a dit lui-meme",
+   "Il avait annonce les trois facons dont Frey pouvait sortir et c'est la pire des trois qui s'est produite ; il l'a dit a la reine sans triomphe et sans adoucir"
+  ],
+  "ignore": [
+   "Le tracé des sept galeries sous le rocher — le feuillet a disparu de l'archive avant qu'il ait pu le lire",
+   "Combien d'hommes de sa garnison ont de la famille dans les villages de la route royale"
+  ],
+  "intention": "Passer le jour du sacre sans qu'un couteau entre : garde doublée, coffres ouverts, et deux hommes au pied de l'escalier de la roukerie.",
+  "plan": [
+   {
+    "id": "quince-verrouillage",
+    "quoi": "Doubler la garde des quais et de la porte de mer, faire ouvrir malles et coffres des bannerets à l'entrée, sans exception annoncée",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "quarante hommes détournés des murs",
+     "l'humeur des bannerets"
+    ],
+    "si_bloque": "Si un banneret refuse qu'on ouvre son coffre, il le laisse entrer sans arme et lui met un homme au dos toute la journée.",
+    "accompli": "Portes ouvertes et malles fouillees depuis la deuxieme heure."
+   },
+   {
+    "id": "quince-guet-roukerie",
+    "quoi": "Poster deux hommes au pied de l'escalier de la roukerie, et ne pas le dire au mestre",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "deux hommes, et le mensonge par omission qu'il devra tenir"
+    ],
+    "si_bloque": "Si Gerardys s'en aperçoit et s'en offusque, il dit que l'ordre vient de la reine — et va aussitôt le lui faire accorder.",
+    "accompli": "Deux hommes au pied de l'escalier de la roukerie depuis le 18 ; le mestre ne l'a jamais su."
+   },
+   {
+    "id": "quince-galeries",
+    "quoi": "Faire descendre des hommes dans les galeries et en dresser le plan lui-même, à la craie, faute de carte",
+    "etat": "en-cours",
+    "jours_restants": 7,
+    "depend_de": [
+     "quince-verrouillage"
+    ],
+    "cout": [
+     "douze hommes, des torches, neuf jours"
+    ],
+    "si_bloque": "S'il perd un homme là-dessous, il fait murer les deux bouches qu'il connaît et déclare le reste inconnaissable."
+   },
+   {
+    "id": "quince-barbacane-postulants",
+    "quoi": "Recevoir les postulants a la barbacane, au bas du grand escalier : un par un, desarmes, comptes, redescendus le soir ; deux hommes au portillon, un scribe pour les noms ; provenance et proprietaire de chaque barque releves IL A REFUSE PUBLIQUEMENT la responsabilite du projet lui-meme : la file et la fouille sont a lui, ce qui se passe sous la Montagne ne l'est pas.",
+    "etat": "en-cours",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "six hommes retires des murs pour la duree de l'appel",
+     "un scribe qu'il n'a pas et qu'il prendra au mestre"
+    ],
+    "si_bloque": "Si la file depasse ce qu'il peut fouiller, il ferme le portillon a la nuit et fait camper le reste dehors sous garde plutot que d'en laisser entrer un seul non compte - meme si la reine attend, meme si la file grossit le lendemain."
+   },
+   {
+    "id": "quince-voix-en-bas",
+    "quoi": "Obtenir avant midi soit un homme qui parle au nom de la reine devant la file, soit le droit de fermer le portillon a midi et de renvoyer au lendemain",
+    "etat": "en-cours",
+    "jours_restants": 0,
+    "depend_de": [
+     "quince-barbacane-postulants"
+    ],
+    "cout": [
+     "demander quelque chose, ce qu'il ne fait jamais"
+    ],
+    "si_bloque": "Sans reponse a midi, il ferme le portillon de sa propre autorite et fait dire de revenir demain - il prefere une foule decue le matin a une foule qui a attendu debout toute la journee, et il assumera devant elle."
+   },
+   {
+    "id": "quince-tri-postulants",
+    "quoi": "Appliquer les cinq criteres au portillon - quatre verifiables ; poser la question de la peur NON au portillon mais au bas de l'escalier des fosses, seul a seul apres six heures d'attente, et ne pas inscrire ceux qui font demi-tour",
+    "etat": "en-cours",
+    "jours_restants": 0,
+    "depend_de": [
+     "quince-barbacane-postulants"
+    ],
+    "cout": [
+     "un homme poste en bas de l'escalier toute la journee"
+    ],
+    "si_bloque": "Si on lui reproche de trier sans mandat sur la peur, il repond qu'il n'a inscrit personne et qu'il n'y a donc rien a reprocher - et il ne donnera aucun nom, meme a la reine."
+   },
+   {
+    "id": "quince-liberer-frey",
+    "quoi": "Liberer ser Willem Frey en personne et rapporter a la reine CE QU'IL FAIT en sortant - redemande-t-il audience, demande-t-il un cheval, ou ne demande-t-il rien",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "une demi-heure prise sur la file de la barbacane"
+    ],
+    "si_bloque": "S'il ne demande rien et descend au port sans se retourner, ser Robert le fait suivre jusqu'a l'embarquement et note le nom de la coque - il ne le dira a la reine que si elle le demande, parce que faire suivre un homme libre n'est pas dans son mandat.",
+    "accompli": "Libere au matin du 20. N'a rien demande - la troisieme des trois issues annoncees. A demande a lire la page du registre a son nom et a compte les lignes vides. Parti au port sans se retourner. Ser Robert l'a fait suivre jusqu'a l'embarquement conformement a son si_bloque et NE DIRA LE NOM DE LA COQUE QUE SI LA REINE LE DEMANDE."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "On lui annonce que Caraxès ou Meleys quitte l'île",
+    "alors": "Il exige de la reine, devant témoin, un ordre répété mot pour mot, et fait consigner au registre qu'il a dit que trois cents hommes ne tiennent pas un rocher sans dragon.",
+    "une_fois": false
+   },
+   {
+    "si": "Un homme de sa garnison est pris à parler aux barques de pêche",
+    "alors": "Il le fait mettre aux fers sans en avertir la reine, et l'interroge lui-même une nuit entière.",
+    "une_fois": false
+   }
+  ],
+  "attitude_joueur": "Il a obtenu ce qu'il reclamait et il l'a redige lui-meme pour qu'il soit plus etroit que ce qu'on lui offrait. Il ne demandera plus la permission sur son domaine et rendra compte au registre chaque soir. Sur les quatre points exclus, il attendra la reine meme quand ce sera couteux — c'est le prix qu'il a choisi de payer.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 20
+  },
+  "mandat": {
+   "donne_le": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 19
+   },
+   "par": "rhaenyra",
+   "temoins": "trois cents personnes, cour du bas",
+   "decide_seul": [
+    "les murs",
+    "la porte de mer",
+    "les quais",
+    "le guet",
+    "les fers : qui entre, qui est fouille, qui est mis au cachot pour la nuit, ou dorment ses hommes et lesquels"
+   ],
+   "plafond": "50 dragons d'or par jour sans demander ; 200 si le feu est deja pris ; porte au registre le soir meme, chiffre par chiffre",
+   "exclu_volontairement": [
+    "un seigneur ou ce qui lui appartient",
+    "la vie de quiconque — prisonnier, homme de la garnison, pecheur",
+    "ce qui vole",
+    "ce qui flotte"
+   ],
+   "note": "Il a retreci lui-meme la parole trop large de la reine (« vous l'aurez ») et l'a fait ecrire. En l'absence de la reine sur les quatre points exclus, il ATTEND son retour, meme si cela coute."
+  }
+ },
+ {
+  "personnage_id": "steffon-darklyn",
+  "echelle": "orbite",
+  "croyances": [
+   "Le roi n'a pas changé d'héritière : il était là, il l'a entendu, et il l'a dit tout haut sur le quai devant cent témoins",
+   "La Garde Royale s'est déshonorée à Port-Réal en couronnant Aegon : le manteau blanc se lave par des actes, pas par des serments",
+   "Deux de ses treize morts sont tombés d'un couteau dans le dos, pas de la mer — il y avait des hommes d'Otto sur son navire",
+   "Sa maison est la première visée du royaume, et il en est loin",
+   "La reine l'a rappele dans l'escalier pour lui donner son conge de vive voix apres l'avoir laisse sortir sans un mot : il part autrement qu'il ne serait parti, et il le lui a dit"
+  ],
+  "ignore": [
+   "Ce que Sombreval a subi depuis son départ — dix jours de mer sans une nouvelle des siens"
+  ],
+  "intention": "Remettre la couronne, prêter le serment de la Garde à la reine devant les bannerets le 18 — et obtenir qu'on couvre Sombreval, où sa maison est nue.",
+  "plan": [
+   {
+    "id": "steffon-deposition",
+    "quoi": "Signer sa déposition, la faire contresigner, et la répéter mot pour mot devant les bannerets s'il le faut",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "son nom, et sa tête si les Verts gagnent"
+    ],
+    "si_bloque": "Si on lui dit que c'est inutile, il la fait lire par un autre — pour qu'on ne dise pas qu'un Darklyn plaide pour un Darklyn.",
+    "accompli": "Deposition dressee sur le quai le 17, signee et contresignee par deux capitaines braaviens."
+   },
+   {
+    "id": "steffon-serment-garde",
+    "quoi": "Prêter le serment de la Garde Royale à Rhaenyra au couronnement, à genoux, épée offerte, devant tous les bannerets",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [
+     "steffon-deposition"
+    ],
+    "cout": [
+     "la rupture définitive avec les six autres manteaux blancs"
+    ],
+    "si_bloque": "Si on remet son serment à plus tard, il le prête seul devant le mestre et fait consigner l'heure.",
+    "accompli": "Le serment n'a jamais ete pris : nul ne le lui a demande au sacre ni au banquet. Dans la nuit du 18 au 19, il l'a prete SEUL devant le mestre Gerardys, a genoux, epee posee, et a fait consigner l'heure au registre."
+   },
+   {
+    "id": "steffon-secours-sombreval",
+    "quoi": "Demander à la reine — ou à défaut à Corlys — des hommes ou des voiles pour Sombreval",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "une audience qu'il n'est pas sûr d'obtenir le jour d'un sacre"
+    ],
+    "si_bloque": "Si on le garde a Peyredragon, il ne redemande plus et cherche a se faire donner l'escorte de l'ambassade comme devoir de Garde plutot que comme faveur. Si on la lui refuse aussi, il ecrit a son frere par la premiere quille qui part, hors registre.",
+    "accompli": "Rouvert de sa propre initiative au matin du 20, en s'accrochant a la proposition du prince (Sombreval en premier). Demande non pas des hommes, mais D'ETRE DANS LA COQUE � formulation choisie pour ne rien couter a la reine. ACCORDE par la reine au matin du 20. Il part avec l'ambassade du prince. Il s'est lie lui-meme a trois jours a terre devant temoins."
+   },
+   {
+    "id": "steffon-noms-traitres",
+    "quoi": "Écrire les noms des deux hommes qui ont poignardé les siens en mer, et de qui ils tenaient leur solde",
+    "etat": "en-cours",
+    "jours_restants": 1,
+    "depend_de": [],
+    "cout": [
+     "se rappeler la traversée, ce qu'il évite depuis le quai"
+    ],
+    "si_bloque": "S'il ne remonte à personne, il donne les deux noms à Gerardys pour le registre et n'en parle plus."
+   },
+   {
+    "id": "steffon-trois-jours",
+    "quoi": "Tenir sa propre limite : trois jours a terre a Sombreval, pas quatre, et rapporter au prince des chiffres verifies de ses yeux (murs, porte de terre, grain, hommes reels de son frere)",
+    "etat": "en-attente",
+    "jours_restants": 1,
+    "depend_de": [
+     "steffon-secours-sombreval"
+    ],
+    "cout": [
+     "une journee de mer a l'aller et une au retour",
+     "son manteau blanc loin de la reine pendant six jours"
+    ],
+    "si_bloque": "Si Sombreval est assiege ou pris quand il arrive, il ne debarque pas et rentre le dire : il l'a promis en se liant a la difference d'un jour, et il tiendra la lettre de sa promesse meme si sa maison brule sous ses yeux. S'il apprend a terre que son frere est mort, la limite des trois jours saute et il le sait deja."
+   },
+   {
+    "id": "steffon-trois-meneurs",
+    "quoi": "Ramener de Sombreval trois hommes qui savent en commander d'autres, sur les quatre ou cinq que la place possede, et les livrer a Peyredragon le sixieme soir",
+    "etat": "en-attente",
+    "jours_restants": 1,
+    "depend_de": [
+     "steffon-trois-jours"
+    ],
+    "cout": [
+     "l'encadrement de la muraille qui s'est declaree la premiere pour la reine",
+     "l'accord de son frere Gunthor, qui n'a pas ete consulte"
+    ],
+    "si_bloque": "Si Gunthor refuse de se defaire de trois meneurs, il n'en prend que ceux qui viennent volontairement et rapporte le refus tel quel, sans l'adoucir. S'il n'y en a que quatre en tout, il en ramene deux et le dit : il a deja fait ecrire au registre ce que ce prelevement coute."
+   },
+   {
+    "id": "steffon-porte-de-terre",
+    "quoi": "Se tenir a la porte de terre de Sombreval a cote de Denys Bar Emmon au moment de l'entree, et faire passer l'acte scelle sous un pli ouvert adresse a l'intendant",
+    "etat": "en-attente",
+    "jours_restants": 1,
+    "depend_de": [
+     "steffon-trois-jours"
+    ],
+    "cout": [
+     "se servir de son nom pour forcer un office qu'il connait de l'interieur"
+    ],
+    "si_bloque": "Si l'intendant exige quand meme le pli scelle, il le lui refuse en personne et prend la responsabilite devant son frere - il prefere une querelle de maison a un acte de la reine ouvert par un intendant."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "Une nouvelle arrive que Sombreval est attaquée, assiégée ou pillée",
+    "alors": "Il demande son congé à la reine pour y aller — et s'il ne l'obtient pas, il le redemande devant la cour.",
+    "une_fois": true
+   },
+   {
+    "si": "Quelqu'un met en doute la parole d'un Darklyn devant lui",
+    "alors": "Il exige réparation sur l'heure, ce qui embarrasse tout le monde et le sert rarement.",
+    "une_fois": false
+   }
+  ],
+  "attitude_joueur": "Il a offert Sombreval comme premiere ambassade et rappele que Gunthor attend une garantie depuis quatre jours. Rien ne lui a ete accorde. Il demandera desormais a y aller lui-meme.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 20
+  }
+ },
+ {
+  "personnage_id": "daemon",
+  "echelle": "orbite",
+  "croyances": [
+   "Chaque jour d'attente renforce les Verts",
+   "La terreur est une arme d'économie : un exemple vaut dix batailles",
+   "Otto fera tuer Rhaenyra s'il en trouve l'occasion",
+   "Elle a volé et brûlé la première, sans lui et sans le prévenir : il en tire une fierté furieuse et un soupçon — elle n'a plus besoin qu'on la pousse",
+   "Elle a renvoye son corbeau gratuit fache et sans consigne : le recit qui partira vers Port-Real ne sera pas celui qu'il voulait"
+  ],
+  "ignore": [
+   "Que Mysaria vend déjà ailleurs ce qu'il lui achète",
+   "Ce que la reine répondra — il a joué la demande en public pour qu'elle ne puisse pas l'enterrer"
+  ],
+  "intention": "Poser la couronne de Viserys sur sa tête le 18, devant tous — puis partir sur Caraxès pour Harrenhal au matin du 19, licence en poche.",
+  "plan": [
+   {
+    "id": "daemon-couronner",
+    "quoi": "Revendiquer le geste de couronner la reine, et le faire devant les bannerets rassemblés",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "rien qu'il veuille payer — mais il ne supportera pas qu'on le lui reprenne"
+    ],
+    "si_bloque": "Si le geste va à un autre — un septon, Corlys — il ne dit rien sur le moment et part pour Harrenhal sans demander de licence.",
+    "accompli": "Couronne posee de sa main a midi le 18, sans un mot, tournee d'un quart pour aligner les sept pierres."
+   },
+   {
+    "id": "daemon-prisonniers",
+    "quoi": "Obtenir les quarante prisonniers de la route et l'officier vivant — demandé tout haut au banquet du sacre, devant la cour",
+    "etat": "bloque",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "la demande est faite, en public, le jour du sacre — elle ne peut plus être reprise"
+    ],
+    "si_bloque": "Elle l'a entendu devant trois cents personnes : si elle les épargne ou les rend, il n'en reparlera plus jamais, et il s'en souviendra.",
+    "accompli": "Elle les a affranchis contre allegeance devant la cour sans lui repondre. Conformement a ce qu'il avait annonce, il n'en a plus dit un mot et n'en dira plus jamais."
+   },
+   {
+    "id": "daemon-harrenhal",
+    "quoi": "Prendre Harrenhal. Le vol depuis Peyredragon est l'affaire d'une demi-journee sur Caraxes ; l'horloge ci-dessous compte la PRISE de la place, pas le trajet — il sera au-dessus des tours avant la nuit du 19.",
+    "etat": "en-cours",
+    "jours_restants": 1,
+    "depend_de": [],
+    "cout": [
+     "quarante hommes qu'il n'a pas encore, et l'île laissée sans dragon adulte"
+    ],
+    "si_bloque": "Si on lui refuse la licence, il part quand même en la faisant passer pour une reconnaissance de trois jours."
+   },
+   {
+    "id": "daemon-reponse-mysaria",
+    "quoi": "Attendre le retour de Mysaria sur la garnison de Simon Strong et les capitaines des manteaux d'or",
+    "etat": "en-cours",
+    "jours_restants": 2,
+    "depend_de": [],
+    "cout": [
+     "de l'or qu'il fait porter par barque, sans passer par la roukerie"
+    ],
+    "si_bloque": "Si rien ne vient, il tient la garnison de Harrenhal pour quarante vieillards et y va sur cette foi."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "La reine se range publiquement à l'avis de Corlys contre le sien",
+    "alors": "Il quitte la salle sans un mot et fait seller Caraxès dans l'heure — pas pour partir, pour qu'on le voie faire.",
+    "une_fois": false
+   },
+   {
+    "si": "Un des fils de Rhaenyra est blessé ou tué",
+    "alors": "Il abandonne tout plan en cours et cherche une vengeance disproportionnée sur les proches d'Otto ou d'Alicent, sans demander la permission à personne.",
+    "une_fois": true
+   }
+  ],
+  "attitude_joueur": "Parti au petit matin du 19 sur Caraxes sans qu'ils se soient parle depuis les quarante. Il a couronne sa femme et sa femme ne lui a pas repondu : il emporte les deux.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 19
+  },
+  "lieu_note": null
+ },
+ {
+  "personnage_id": "jacaerys",
+  "echelle": "scene",
+  "croyances": [
+   "Sa conduite peut laver le soupcon de batardise, mais pas un titre : un titre se donne, et ce qui se donne prouve qu'on avait besoin de le donner",
+   "Il a vu le sceau servir sous ses yeux pour la mission d'un garcon arrive la veille, le lendemain du jour ou on le lui a refuse a lui",
+   "Sa mere va faire monter des batards sur des dragons pour defendre une cause fondee sur le sang, et personne dans la salle n'a voulu dire tout haut ce que ca coutera - il l'a dit a leur place",
+   "Sa mere a repondu a sa question - dragonniers, un rang neuf donne a la valeur - mais l'a fait crier avant de le borner : il tient pour acquis que ce qui n'est pas ecrit ce matin ne le sera jamais",
+   "Sa mere ne lui a pas dit lequel des deux il devait etre : il a choisi seul, et il tient desormais pour acquis qu'une question posee deux fois sans reponse est une reponse",
+   "Il a trouve quelque chose dans la poche et a fait arreter tout le monde pour attendre sa mere plutot que d'y toucher - premier ordre de sa charge donne contre sa propre impatience"
+  ],
+  "ignore": [
+   "Ce qu'on dit de lui au conseil quand il n'est pas dans la salle"
+  ],
+  "intention": "Faire monter un cavalier sur Vermithor et sur Argent en onze jours, et faire de ce rang qu'il a arrache a sa mere quelque chose que ceux qui le porteront ne pourront pas lui reprocher plus tard.",
+  "plan": [
+   {
+    "id": "jace-vermax",
+    "quoi": "Faire soigner l'aile de Vermax — sept heures de vol en un jour, c'est trop pour un jeune dragon",
+    "etat": "en-cours",
+    "jours_restants": 1,
+    "depend_de": [],
+    "cout": [
+     "avouer au maître des fosses ce qu'il a fait voler à sa bête"
+    ],
+    "si_bloque": "Si Vermax boite encore dans trois jours, il le cache et vole moins bas pour qu'on ne le voie pas."
+   },
+   {
+    "id": "jace-veiller-luke",
+    "quoi": "Ne pas laisser envoyer Luke seul quelque part",
+    "etat": "en-cours",
+    "jours_restants": null,
+    "depend_de": [],
+    "cout": [],
+    "si_bloque": "S'il ne peut pas l'empêcher, il exige de partir le même jour que lui — pour que leur mère n'ait qu'une peur à la fois."
+   },
+   {
+    "id": "jace-question-du-nom",
+    "quoi": "Obtenir de sa mere, AVANT qu'on cherche un seul cavalier, ce qu'on donnera a celui qui reussira : un nom, une terre, une place, ou rien",
+    "etat": "fait",
+    "jours_restants": 1,
+    "depend_de": [],
+    "cout": [
+     "poser devant temoins une question dont la reponse le concerne lui aussi"
+    ],
+    "si_bloque": "Si elle ne repond pas, il tiendra pour acquis que la reponse est rien - et il le dira au premier de ces hommes qu'il rencontrera, parce qu'il refusera de le laisser l'apprendre comme lui l'a appris.",
+    "accompli": "Repondu par la reine : DRAGONNIERS DE LA MAISON, categorie neuve, pas chevalier. Premiere reponse obtenue depuis son entree. Les bornes du rang (siege, armes, heredite) restent ouvertes malgre sa demande expresse de les fixer avant de crier."
+   },
+   {
+    "id": "jace-charge-dragonniers",
+    "quoi": "Prendre la charge du projet des dragonniers : recevoir les postulants, juger qui approche les betes, et tenir le compte de ceux qui essaient - onze jours, le temps que Vermax se remette ET SE TENIR A PORTEE DE LA BETE A CHAQUE ESSAI, sur ordre de sa mere, sans dragon pour le couvrir pendant les onze premiers jours.",
+    "etat": "en-cours",
+    "jours_restants": 11,
+    "depend_de": [],
+    "cout": [
+     "l'ambassade du Val et du Nord, abandonnee de sa main",
+     "des morts qu'il aura envoyes lui-meme sous la Montagne",
+     "sa propre vie a chaque essai, sans Vermax, pendant onze jours"
+    ],
+    "si_bloque": "Si un postulant meurt devant lui, il ne le cache pas et le fait porter au registre avec son nom, meme si ca vide la file - il a passe sa vie a etre celui dont on ne dit pas les choses, et il ne le fera pas subir a ceux-la."
+   },
+   {
+    "id": "jace-poche-onzieme",
+    "quoi": "COMMANDER la descente a la onzieme galerie avant la maree haute : six hommes en bas, quatre en haut du puits dont un qui ne fait que compter les entrees ET LES SORTIES, deux hommes de fosse qui savent ce que sent une bete, corde et deux chandelles par homme, Merra Sath en tete et libre de s'arreter",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "dix gardes pris sur trois cents, dont six sous un plafond qui pleure",
+     "la muraille du levant laissee a des vieux et deux gamins",
+     "du temps pris sur les onze jours des fosses"
+    ],
+    "si_bloque": "Si la poche est deja pleine ou le plafond cede, il fait remonter tout le monde et ne redescend pas - il a promis a Merra qu'elle s'arreterait quand elle voudrait, et il s'appliquera la meme regle plutot que de perdre des hommes pour des formes qu'il n'a pas vues.",
+    "accompli": "Descente commandee et menee le 20. Eau de mer etablie par trois degustations croisees. NID TROUVE : squelette en anneau, cinq oeufs dont TROIS ENTIERS. Rien touche - la reine a ete appelee."
+   },
+   {
+    "id": "jace-sortir-les-trois",
+    "quoi": "Sortir les trois oeufs entiers de la poche avant qu'elle ne soit noyee, sans les casser et sans perdre un homme sous un plafond qui cede",
+    "etat": "en-attente",
+    "jours_restants": 1,
+    "depend_de": [],
+    "cout": [
+     "des hommes sous un plafond qui pleure de l'eau de mer",
+     "quatre jours au plus, peut-etre six"
+    ],
+    "si_bloque": "Si le plafond commence a ceder pendant le travail, il fait tout remonter et laisse les oeufs - il l'a promis a Merra pour elle et il se l'appliquera. Si sa mere ordonne de continuer quand meme, il descendra lui-meme a la place du dernier homme."
+   },
+   {
+    "id": "jace-couverture-eboulement",
+    "quoi": "Tenir trois jours la couverture de l'eboulement : gravats remontes de la quatrieme galerie, rumeur semee a deux hommes du bourg et non a la file, essais aux fosses poursuivis comme si de rien n'etait",
+    "etat": "en-cours",
+    "jours_restants": 3,
+    "depend_de": [],
+    "cout": [
+     "ses gardes qui mentent aux gens de l'ile",
+     "des gravats et une journee d'hommes"
+    ],
+    "si_bloque": "Si quelqu'un le prend en flagrant delit, il dit la verite sur l'heure et l'assume seul devant qui l'aura pris - il ne fera jamais porter le mensonge par un garde. ET IL N'A INVENTE AUCUN MORT : si on lui demande qui est blesse, il repond personne."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "Quelqu'un, à portée de son oreille, appelle Strong l'un de ses frères ou lui-même",
+    "alors": "Il relève l'insulte sur l'heure, publiquement, même quand il vaudrait cent fois mieux n'avoir rien entendu.",
+    "une_fois": false
+   },
+   {
+    "si": "On lui confie une mission précise avec une échéance",
+    "alors": "Il la tient à la lettre et rentre à l'heure dite, quoi qu'il lui en coûte — c'est sa façon de plaider sa naissance.",
+    "une_fois": false
+   }
+  ],
+  "attitude_joueur": "Il a obtenu plus qu'il n'esperait (le droit de nommer sa charge) et moins qu'il ne demandait (savoir s'il avait mal fait). Il tiendra le delai a la lettre, parce que tenir un delai est sa facon de plaider sa naissance. Il a remarque a la porte qu'on ne lui avait pas repondu, et il a decide de ne pas reposer la question.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 20
+  }
+ },
+ {
+  "personnage_id": "corlys",
+  "echelle": "orbite",
+  "croyances": [
+   "La guerre sera longue ; la flotte est l'arme qui nourrit et affame",
+   "La couronne est au quai : demain il y aura une reine couronnée au nom de qui un blocus n'est plus de la piraterie",
+   "Daemon fera tuer quelqu'un d'irremplaçable si on ne le bride pas",
+   "La clause de pardon d'Otto vise sa maison autant que celle de la reine : Rhaenys est une Targaryen et ses petits-fils héritent de Lamarck — on lui a mis un prix sous les yeux",
+   "Son petit-fils est rentré vivant d'une escapade que personne n'a punie : c'est ainsi qu'on perd des héritiers"
+  ],
+  "ignore": [
+   "Ce que la reine veut vraiment du Gosier — elle n'a jamais tranché, elle a dit « faites comme bon vous semble »",
+   "Que Bartimos Celtigar compte acheter au conseil la place que lui tient par la mer"
+  ],
+  "intention": "Faire du sacre du 18 un fait accompli devant témoins, puis appareiller le croissant du Gosier au lendemain — onze jours pour le fermer.",
+  "plan": [
+   {
+    "id": "corlys-compter-bannerets",
+    "quoi": "Recevoir les bannerets convoqués et les compter : qui vient en personne, qui envoie un fils, qui n'envoie rien",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "une nuit de quai et de politesses"
+    ],
+    "si_bloque": "Si trop peu viennent, il fait mouiller ses propres nefs en rade toutes bannières hautes, pour que la salle paraisse pleine vue de la mer.",
+    "accompli": "Quatre maisons de la baie placees ; quatre galeres en arc a cent toises ; Rosby et Stokeworth absents."
+   },
+   {
+    "id": "corlys-lucerys-lamarck",
+    "quoi": "Faire confirmer publiquement, de la bouche de la reine, que Lucerys hérite de Lamarck — réclamé tout haut au banquet, devant les bannerets, avant leur départ du lendemain",
+    "etat": "bloque",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "une parole publique qu'il devra demander le jour du sacre"
+    ],
+    "si_bloque": "Il a dit qu'il ne le demanderait pas trois fois : au troisième silence, il le fait écrire par un mestre et le garde signé dans son coffre, sans plus rien demander à la reine.",
+    "accompli": "Deux demandes publiques sans reponse : il a cesse de demander. Dans la nuit du 18, il a fait rediger la piece par le mestre Gerardys et la garde signee dans son coffre — c'est le feuillet que la reine l'a vu cacher."
+   },
+   {
+    "id": "corlys-gosier",
+    "quoi": "Appareiller le croissant du Gosier au lendemain du couronnement ; Lamarck en arsenal",
+    "etat": "en-cours",
+    "jours_restants": 10,
+    "depend_de": [
+     "corlys-compter-bannerets"
+    ],
+    "cout": [
+     "quatre-vingt-dix nefs, onze jours, et le grain de Lamarck pour tenir la mer"
+    ],
+    "si_bloque": "Si la reine lui refuse le blocus, il le fait à demi : il ferme le Gosier aux marchands sans toucher aux nefs de guerre, et appelle cela une police des mers."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "Lucerys est envoyé quelque part sur Arrax",
+    "alors": "Il exige une escorte de voiles sous la route de vol et des garanties écrites du seigneur qui le recevra — il l'obtiendra, ou il en fera un scandale de conseil.",
+    "une_fois": true
+   },
+   {
+    "si": "Daemon engage la flotte ou les hommes de Lamarck sans lui",
+    "alors": "Il rappelle ses capitaines par-dessus l'ordre de Daemon, et le dit à la reine une fois, froidement.",
+    "une_fois": false
+   }
+  ],
+  "attitude_joueur": "Il ne demandera plus. Il a maintenant un ecrit sur Lucerys et Lamarck, et il attendra le moment ou le produire coutera le plus cher a qui le contestera.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 19
+  }
+ },
+ {
+  "personnage_id": "rhaenys",
+  "echelle": "orbite",
+  "croyances": [
+   "La reine a volé trois jours après ses couches et versé le premier feu : le royaume dira que Peyredragon a commencé, et il n'aura pas tort",
+   "Sombreval s'est découvert avant le sacre : Gunthor Darklyn est la première cible du royaume et il faudra tenir la promesse de le couvrir",
+   "On traîne des scorpions sur les routes pour tuer des dragons, pas pour compter des murs",
+   "Meleys et elle valent n'importe quel champ de bataille — mais pas deux fois de suite au même endroit"
+  ],
+  "ignore": [
+   "Que Criston Cole ne prépare plus une tournée d'intimidation mais une vengeance, et que Sombreval est en tête de sa liste",
+   "Ce que la reine a promis, ou pas, à Gunthor Darklyn dans la cendre"
+  ],
+  "intention": "Arracher avant le sacre une garantie ferme pour Sombreval et Repos-des-Freux — et empêcher qu'on envoie un enfant porter une offre à Accalmie.",
+  "plan": [
+   {
+    "id": "rhaenys-garanties-cote",
+    "quoi": "Trois fois demandee, jamais accordee : elle a cesse de demander. Elle patrouille de sa propre autorite et le fait savoir a Sombreval et Repos-des-Freux sans passer par la reine.",
+    "etat": "bloque",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "qu'elle s'engage elle-même, et Meleys avec"
+    ],
+    "si_bloque": "Si le conseil ne donne rien, elle patrouille la côte de sa propre autorité et le fait savoir aux deux châteaux, sans passer par la reine."
+   },
+   {
+    "id": "rhaenys-baela-rhaena",
+    "quoi": "Faire venir Baela et Rhaena à Peyredragon avant que la baie ne se ferme",
+    "etat": "en-cours",
+    "jours_restants": 3,
+    "depend_de": [],
+    "cout": [
+     "une nef, et l'accord de Corlys qui les veut à Lamarck"
+    ],
+    "si_bloque": "Si on tarde, elle va les chercher elle-même sur Meleys, une à la fois."
+   },
+   {
+    "id": "rhaenys-patrouille",
+    "quoi": "Survoler la cote de la baie chaque jour de sa propre autorite — Sombreval, Repos-des-Freux, les petits chateaux — et le faire savoir aux deux qui comptent, sans passer par la reine",
+    "etat": "en-cours",
+    "jours_restants": null,
+    "depend_de": [],
+    "cout": [
+     "Meleys, qui n'est plus jeune"
+    ],
+    "si_bloque": "Si on lui interdit de voler, elle envoie ses capitaines longer la côte et rapporter ce qu'ils voient — plus lent, plus sûr, moins vu."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "On propose d'envoyer Lucerys ou Jacaerys porter un message chez un seigneur non déclaré",
+    "alors": "Elle s'y oppose à voix haute et propose d'y aller elle-même sur Meleys — un dragon adulte ne se fait pas abattre au-dessus d'un château.",
+    "une_fois": false
+   },
+   {
+    "si": "Une colonne verte est signalée à moins de deux jours de la côte de la baie",
+    "alors": "Elle décolle sans attendre l'ordre du conseil et va la voir de ses yeux, haut, puis revient avec des chiffres.",
+    "une_fois": false
+   }
+  ],
+  "attitude_joueur": "Elle a prevenu au lieu de demander, au bas des marches : « ce n'est pas une demande, cette fois ». Elle tient la garde de la baie comme une charge qu'elle s'est donnee, et elle ne sollicitera plus.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 19
+  }
+ },
+ {
+  "personnage_id": "lucerys",
+  "echelle": "royaume",
+  "croyances": [
+   "Il devra voler quelque part bientôt et il en a peur",
+   "Aemond n'a jamais pardonné l'œil",
+   "Jace est rentré couvert de gloire d'une désobéissance : c'est ce qu'on attend de lui aussi, et il n'en est pas capable"
+  ],
+  "ignore": [
+   "Que sa mère hésite précisément à l'envoyer, lui, à Accalmie",
+   "Que son grand-père se bat pour lui faire confirmer Lamarck devant les bannerets"
+  ],
+  "intention": "Ne décevoir personne, et ne pas être celui qu'on envoie seul.",
+  "plan": [
+   {
+    "id": "luke-arrax",
+    "quoi": "Voler chaque matin au-dessus de la baie pour se faire la main, et faire en sorte qu'on le voie rentrer",
+    "etat": "en-cours",
+    "jours_restants": null,
+    "depend_de": [],
+    "cout": [],
+    "si_bloque": "Si on le lui interdit à cause du sacre, il descend aux fosses et reste avec Arrax sans monter."
+   },
+   {
+    "id": "luke-comptes-lamarck",
+    "quoi": "Apprendre par cœur les comptes de Lamarck que son grand-père lui fait réciter",
+    "etat": "en-cours",
+    "jours_restants": 4,
+    "depend_de": [],
+    "cout": [
+     "ses soirées, et l'aveu qu'il n'y comprend rien"
+    ],
+    "si_bloque": "S'il se trompe encore, il demande à Jace de les lui faire réviser en cachette."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "On lui demande devant témoins s'il est prêt à voler quelque part",
+    "alors": "Il dit oui aussitôt, quoi qu'il pense — et va vomir ensuite là où personne ne le voit.",
+    "une_fois": false
+   }
+  ],
+  "attitude_joueur": "Il ferait n'importe quoi pour qu'elle n'ait pas l'air déçue, y compris ce qu'il ne peut pas faire.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 17
+  }
+ },
+ {
+  "personnage_id": "mysaria",
+  "echelle": "orbite",
+  "croyances": [
+   "Le chaos qui vient est la plus grande place de marché de sa vie",
+   "Le pli de Daemon lui demande la garnison de Harrenhal et les capitaines des manteaux d'or : autrement dit, on lui demande de préparer une prise",
+   "Quelque chose s'est passé sur la route de Sombreval — la ville est pleine de fuyards et la Garde a fermé la porte de la Gueule-du-Dieu",
+   "Larys Strong cherche déjà à la faire tuer ou acheter"
+  ],
+  "ignore": [
+   "Que c'est la reine elle-même qui a volé et brûlé la colonne, et non Daemon",
+   "Que Larys a déjà un nom et une adresse pour elle"
+  ],
+  "intention": "Répondre au pli de Daemon assez vite pour être payée, assez vaguement pour rester nécessaire — et vendre la panique avant qu'elle ne soit publique.",
+  "plan": [
+   {
+    "id": "mysaria-fuyards",
+    "quoi": "Écouter les fuyards de la route royale aux portes, recouper les versions, et vendre la première fiable au plus offrant",
+    "etat": "en-cours",
+    "jours_restants": 1,
+    "depend_de": [],
+    "cout": [
+     "trois filles postées aux portes, du vin pour les soldats"
+    ],
+    "si_bloque": "Si les récits ne concordent pas, elle vend les contradictions elles-mêmes : savoir que la cour ne sait pas vaut son prix."
+   },
+   {
+    "id": "mysaria-manteaux-dor",
+    "quoi": "Sonder trois capitaines des manteaux d'or, un par un, sans jamais nommer Daemon",
+    "etat": "en-cours",
+    "jours_restants": 3,
+    "depend_de": [],
+    "cout": [
+     "de l'or, et un nom qu'elle devra donner en gage à l'un d'eux"
+    ],
+    "si_bloque": "Si l'un d'eux la dénonce, elle le fait retrouver noyé et change de quartier la nuit même."
+   },
+   {
+    "id": "mysaria-harrenhal",
+    "quoi": "Faire vérifier la garnison de Simon Strong à Harrenhal par un homme qui remonte la Néra",
+    "etat": "en-cours",
+    "jours_restants": 7,
+    "depend_de": [],
+    "cout": [
+     "deux bourses, et douze jours de route pour son homme"
+    ],
+    "si_bloque": "Si son homme ne revient pas, elle vend à Daemon un chiffre plausible plutôt que rien — quarante hommes, des vieux — et prie qu'il soit vrai."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "Un homme de Larys Strong approche l'un de ses courriers",
+    "alors": "Elle coupe le fil, sacrifie le courrier, et fait porter à Larys un cadeau sans un mot.",
+    "une_fois": false
+   },
+   {
+    "si": "Daemon paraît en personne dans les terres de la Couronne",
+    "alors": "Elle exige de le voir seule, et double son prix.",
+    "une_fois": true
+   }
+  ],
+  "attitude_joueur": "La reine noire est une signature au bas d'un paiement, pas une souveraine. Elle la servira exactement tant qu'on la paiera — et un peu au-delà, par vieille rancune contre les Verts.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 17
+  }
+ },
+ {
+  "personnage_id": "gunthor-darklyn",
+  "echelle": "orbite",
+  "croyances": [
+   "L'honneur des Darklyn vaut plus que la peur des dragons verts",
+   "Ses douze corbeaux sont partis avec sa version : le royaume saura qu'une reine est descendue du ciel pour son vassal",
+   "Rhaenyra gagnera : elle a plus de dragons, la mer, et elle vient quand on l'appelle",
+   "On reviendra le chercher pour ce qu'il a fait, et plus vite qu'on ne le croit à Peyredragon"
+  ],
+  "ignore": [
+   "Que la reine n'a rien voulu dicter et que sa version, à lui, est plus flatteuse que le vrai — elle pourrait lui en tenir grief",
+   "Que sa ville est déjà nommée dans une expédition de vengeance qu'on prépare à Port-Réal"
+  ],
+  "intention": "Tenir ce qu'il a gagné : sa ville debout, ses morts relevés, et quarante prisonniers verts dans ses celliers dont il attend qu'on lui dise quoi faire.",
+  "plan": [
+   {
+    "id": "gunthor-sacre",
+    "quoi": "Aller jurer à Peyredragon le 18, en personne, bannière déployée",
+    "etat": "bloque",
+    "jours_restants": 1,
+    "depend_de": [],
+    "cout": [
+     "deux jours loin de sa ville, au pire moment"
+    ],
+    "si_bloque": "S'il ne peut pas quitter Sombreval, il envoie son fils avec la bannière et une lettre qui dit pourquoi.",
+    "accompli": "Retenu a Sombreval par ses morts et ses blesses. A envoye son FRERE avec la banniere."
+   },
+   {
+    "id": "gunthor-prisonniers",
+    "quoi": "Garder les quarante prisonniers et l'officier vivant, nourris et comptés, jusqu'à ce que la reine tranche",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "du grain qu'il n'a pas en trop, et six gardes qu'il n'a pas non plus"
+    ],
+    "si_bloque": "Si aucun ordre ne vient dans les quatre jours, il rend les hommes du rang contre rançon et garde l'officier — pour avoir quelque chose à offrir plus tard.",
+    "accompli": "Les quarante prisonniers ont ete remis et se tiennent au dernier rang des marches de Peyredragon."
+   },
+   {
+    "id": "gunthor-morts",
+    "quoi": "Relever ses morts, soigner les brûlés des deux camps, compter ce que la journée lui a coûté",
+    "etat": "en-cours",
+    "jours_restants": 1,
+    "depend_de": [],
+    "cout": [
+     "son septon, son mestre, et le silence sur le nombre"
+    ],
+    "si_bloque": "Si le compte est trop lourd à dire, il le fait écrire et l'envoie sans le lire à voix haute devant ses gens."
+   },
+   {
+    "id": "gunthor-fortifier",
+    "quoi": "Fortifier : réserves, chaînes du port, et la muraille de terre du côté de la route",
+    "etat": "en-cours",
+    "jours_restants": 20,
+    "depend_de": [
+     "gunthor-morts"
+    ],
+    "cout": [
+     "trois cents journées d'hommes, et l'or qu'il devait à Celtigar"
+    ],
+    "si_bloque": "S'il manque d'or ou d'hommes, il ferme le port et ne fortifie que la face de la route — il sait par où ils viendront."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "Une force verte est signalée à moins de trois jours de Sombreval",
+    "alors": "Il ferme la ville, rappelle ses gens des champs, et envoie un corbeau à Peyredragon réclamer l'aile qu'on lui a promise.",
+    "une_fois": false
+   }
+  ],
+  "attitude_joueur": "Dévouement absolu depuis qu'elle est descendue du ciel pour lui : il se tient pour son homme lige avant même le serment du sacre — et attend d'elle, en retour, qu'elle le couvre.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "otto",
+  "echelle": "orbite",
+  "croyances": [
+   "La guerre se gagnera par les serments, l'or et le temps, pas par les dragons",
+   "Un dragon a rompu la tête de la colonne de la route de Sombreval — on dit Caraxès, et c'est bien la manière de Daemon",
+   "Rhaenyra est encore couchée : c'est son mari qui a commencé la guerre, et cela peut se retourner contre elle devant tout le royaume",
+   "Les petites maisons de la Couronne céderont une à une si l'on isole les récalcitrantes",
+   "Son grand mestre est en mer avec des termes de paix qu'Alicent a arrachés à Aegon avant le feu — au pire moment, et il ne peut plus le rappeler"
+  ],
+  "ignore": [
+   "Que c'est Rhaenyra elle-même qui a volé, trois jours après ses couches, son héritier derrière elle",
+   "Que la couronne de Viserys est arrivée à Peyredragon et qu'on y couronne une reine demain",
+   "Que ser Steffon Darklyn a témoigné par écrit, devant témoins neutres, que le roi n'a jamais changé d'héritière"
+  ],
+  "intention": "Retourner le feu de la route contre Peyredragon devant tout le royaume — c'est Daemon qui a commencé — et vendre cher aux grands une guerre qu'il n'a pas l'intention de mener lui-même.",
+  "plan": [
+   {
+    "id": "otto-recit-du-feu",
+    "quoi": "Faire écrire par Orwyle le récit officiel du massacre de la route royale et l'expédier partout : Peyredragon a versé le premier sang, par le feu, sur des hommes en marche",
+    "etat": "en-cours",
+    "jours_restants": 1,
+    "depend_de": [],
+    "cout": [
+     "un scribe, faute d'Orwyle qui a pris la mer",
+     "vingt corbeaux"
+    ],
+    "si_bloque": "Si le scribe écrit trop plat, il y met le sceau du roi tel quel : un récit médiocre scellé vaut mieux qu'un beau récit en retard."
+   },
+   {
+    "id": "otto-isoler-sombreval",
+    "quoi": "Faire écrire à Rosby, Stokeworth et Hayford qu'un seul de leurs voisins a brûlé pour Rhaenyra, et qu'il brûlera seul",
+    "etat": "en-cours",
+    "jours_restants": 2,
+    "depend_de": [
+     "otto-recit-du-feu"
+    ],
+    "cout": [
+     "trois corbeaux et une menace qu'il devra tenir un jour"
+    ],
+    "si_bloque": "Si l'un d'eux ne répond pas, il ne lui envoie plus une lettre mais un chevalier avec vingt hommes."
+   },
+   {
+    "id": "otto-otages",
+    "quoi": "Dresser la liste des otages utiles parmi les maisons de la Couronne : fils cadets, pupilles, filles à marier",
+    "etat": "en-cours",
+    "jours_restants": 2,
+    "depend_de": [],
+    "cout": [
+     "le registre des pupilles, et la discrétion d'un mestre"
+    ],
+    "si_bloque": "Si la liste est trop courte, il fait convoquer les héritiers à la cour pour l'hommage — et ne les laisse pas repartir."
+   },
+   {
+    "id": "otto-accalmie",
+    "quoi": "Offres de mariage à Accalmie : une des filles de Borros Baratheon pour Aemond",
+    "etat": "en-cours",
+    "jours_restants": 7,
+    "depend_de": [],
+    "cout": [
+     "Aemond, qu'il faut convaincre, et neuf jours de route"
+    ],
+    "si_bloque": "Si Aemond refuse, il offre Daeron à sa place et n'en dit rien à Villevieille avant que ce soit fait."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "Il apprend que Rhaenyra a été couronnée reine avec la couronne de Viserys",
+    "alors": "Il fait proclamer sa déchéance, met un prix sur les têtes de Peyredragon, et retire l'offre de pardon aux siens.",
+    "une_fois": true
+   },
+   {
+    "si": "Aegon le contredit ou l'humilie en conseil devant Criston",
+    "alors": "Il cède sur la forme et resserre son emprise sur le trésor et les corbeaux — le seul pouvoir qu'il tienne vraiment.",
+    "une_fois": false
+   }
+  ],
+  "attitude_joueur": "Il ne parle plus d'une princesse à faire jurer mais d'une maison à briser — et il croit encore que c'est le mari qu'il faut briser d'abord.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "criston",
+  "echelle": "orbite",
+  "croyances": [
+   "La tête de sa colonne brûlée et onze cents hommes dispersés en une soirée : c'est la preuve qu'il fallait frapper avant, et non écrire",
+   "Toute clémence envers les Noirs est une faiblesse qui se paie en sang",
+   "Les vassaux de la Couronne acquis à Rhaenyra doivent être frappés avant de se lier entre eux",
+   "La plume d'Otto Hightower a coûté la vie à ces hommes"
+  ],
+  "ignore": [
+   "Qui montait le dragon sur la route — il croit Daemon, et sa haine ne demande pas mieux",
+   "Que Rhaenyra sera couronnée demain, avec la couronne de son père et le témoignage d'un manteau blanc"
+  ],
+  "intention": "Obtenir l'ost de la Couronne et Sombreval — non plus une tournée d'intimidation, une expédition de vengeance.",
+  "plan": [
+   {
+    "id": "criston-survivants",
+    "quoi": "Faire ramener les survivants de la colonne à Port-Réal et les montrer par les rues — les brûlés d'abord",
+    "etat": "en-cours",
+    "jours_restants": 1,
+    "depend_de": [],
+    "cout": [
+     "des chariots, trois jours de route, et l'accord de personne"
+    ],
+    "si_bloque": "Si on lui dit que c'est mauvais pour l'humeur de la ville, il les fait défiler quand même, un matin, sans en avertir le conseil."
+   },
+   {
+    "id": "criston-ost",
+    "quoi": "Lever l'ost de la Couronne : convocations aux maisons restées vertes, rassemblement sous les murs de Port-Réal",
+    "etat": "en-cours",
+    "jours_restants": 23,
+    "depend_de": [],
+    "cout": [
+     "l'or du trésor qu'Otto ne veut pas lâcher",
+     "quatre mille hommes et six semaines"
+    ],
+    "si_bloque": "Si Otto lui refuse l'or, il lève ce qu'il peut sur la seule Garde et les maisons du roi, et part avec quinze cents hommes plutôt que rien."
+   },
+   {
+    "id": "criston-forger-aegon",
+    "quoi": "Faire d'Aegon l'homme qui venge des paysans brûlés — et le lui répéter chaque matin",
+    "etat": "en-cours",
+    "jours_restants": null,
+    "depend_de": [],
+    "cout": [],
+    "si_bloque": "Si Aegon retourne aux fosses et au vin, il parle à Aemond à sa place et laisse la comparaison faire son travail."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "Aemond propose de répondre avec Vhagar",
+    "alors": "Il l'appuie sans réserve et cherche aussitôt à lier son ost à ce vol — un dragon devant, l'ost derrière.",
+    "une_fois": false
+   },
+   {
+    "si": "Otto propose des conditions ou une trêve à Peyredragon",
+    "alors": "Il s'y oppose devant Aegon en rappelant les brûlés de la route, et fait traîner les corbeaux qu'on lui confie.",
+    "une_fois": false
+   }
+  ],
+  "attitude_joueur": "Elle n'est plus une ligne sur sa carte : c'est elle, ou ce qu'il croit être elle, qui a brûlé ses hommes. Il ne parlera plus jamais de la faire jurer.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 17
+  }
+ },
+ {
+  "personnage_id": "aemond",
+  "echelle": "orbite",
+  "croyances": [
+   "Il aurait fait un meilleur roi qu'Aegon et chacun le sait tout bas",
+   "Un dragon noir a brûlé onze cents hommes du roi et personne n'a répondu : chaque heure de silence est une humiliation",
+   "Vhagar rend toute prudence superflue",
+   "Les fils Strong sont des bâtards et le royaume le sait"
+  ],
+  "ignore": [
+   "Qui montait ce dragon",
+   "Que Lucerys Velaryon partira bientôt seul, sur un jeune dragon, vers le sud"
+  ],
+  "intention": "Obtenir de voler — sur Sombreval, sur Peyredragon, sur n'importe quoi — avant que la honte ne s'installe.",
+  "plan": [
+   {
+    "id": "aemond-represailles",
+    "quoi": "Arracher au conseil l'autorisation de sortir Vhagar en représailles",
+    "etat": "en-cours",
+    "jours_restants": 1,
+    "depend_de": [],
+    "cout": [
+     "l'accord d'Aegon, que sa mère combattra"
+    ],
+    "si_bloque": "Si on le lui refuse, il vole quand même « pour voir », de plus en plus loin, jusqu'à ce qu'une occasion se présente d'elle-même."
+   },
+   {
+    "id": "aemond-accalmie",
+    "quoi": "Se faire donner l'ambassade d'Accalmie plutôt que la voir confiée à un mestre",
+    "etat": "en-cours",
+    "jours_restants": 2,
+    "depend_de": [],
+    "cout": [
+     "accepter le marché que son grand-père y attache"
+    ],
+    "si_bloque": "Si on la donne à un autre, il propose d'escorter l'émissaire sur Vhagar et transforme l'ambassade en démonstration."
+   },
+   {
+    "id": "aemond-criston",
+    "quoi": "Entretenir Criston Cole — le seul du conseil qui parle comme un homme",
+    "etat": "en-cours",
+    "jours_restants": null,
+    "depend_de": [],
+    "cout": [],
+    "si_bloque": "Si Criston se range derrière Otto, il s'en trouve un autre : la cour est pleine de gens qui veulent une guerre."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "Un des fils de Rhaenyra est signalé en vol, seul, quelque part au sud ou à l'est",
+    "alors": "Il monte Vhagar et va le chercher, avec ou sans ordre — et prétendra ensuite qu'il n'a pas voulu ce qui est arrivé.",
+    "une_fois": true
+   },
+   {
+    "si": "On le compare devant témoins à son frère Aegon, à son avantage",
+    "alors": "Il laisse dire, et s'en sert au conseil suivant.",
+    "une_fois": false
+   }
+  ],
+  "attitude_joueur": "Elle est la femme qui a fait de lui un borgne en ne punissant pas ses fils. Le reste — trône, serments, royaume — n'est que le décor de cette dette.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 17
+  }
+ },
+ {
+  "personnage_id": "larys",
+  "echelle": "royaume",
+  "croyances": [
+   "Le premier feu vient de Peyredragon : le royaume s'en souviendra plus longtemps qu'Otto ne le croit",
+   "L'information vaudra plus que les armées dans les lunes à venir"
+  ],
+  "ignore": [
+   "Que sa propre forteresse, Harrenhal, intéresse Daemon Targaryen depuis quatre jours",
+   "Qui montait le dragon sur la route de Sombreval — il est le seul à Port-Réal à ne pas conclure trop vite"
+  ],
+  "intention": "Placer des oreilles pendant que tous regardent le ciel, et se rendre indispensable à celui qui remplacera Otto.",
+  "plan": [
+   {
+    "id": "larys-oreilles-baie",
+    "quoi": "Placer une oreille dans chaque château de la baie — Rosby et Stokeworth d'abord, ils ont peur",
+    "etat": "en-cours",
+    "jours_restants": 6,
+    "depend_de": [],
+    "cout": [
+     "de l'or, et un service rendu à chacun"
+    ],
+    "si_bloque": "Si un château se ferme, il achète le mestre plutôt que le seigneur — un mestre lit tout et ne coûte presque rien."
+   },
+   {
+    "id": "larys-mysaria",
+    "quoi": "Serrer le réseau de la femme blanche sans le détruire : un canal qu'on tient vaut mieux qu'un canal qu'on coupe",
+    "etat": "en-cours",
+    "jours_restants": 4,
+    "depend_de": [],
+    "cout": [
+     "deux hommes patients, et le risque qu'elle le sache"
+    ],
+    "si_bloque": "S'il ne peut pas la tenir, il la laisse tranquille et la fait suivre — elle finira par le mener à Daemon."
+   }
+  ],
+  "declencheurs": [],
+  "attitude_joueur": "Une reine qui brûle avant d'être couronnée est une reine qui fera des erreurs — et les erreurs sont sa matière première.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 17
+  }
+ },
+ {
+  "personnage_id": "alicent",
+  "echelle": "orbite",
+  "croyances": [
+   "Si Rhaenyra l'emporte, ses enfants mourront",
+   "Le sang a coulé par le feu sur des hommes du roi : plus personne ne l'écoutera parler de conditions honorables",
+   "Une paix négociée reste possible tant qu'aucun enfant n'est mort",
+   "Viserys a bien changé d'avis sur son lit de mort"
+  ],
+  "ignore": [
+   "Que Rhaenyra sera couronnée demain avec la couronne de son père",
+   "Que son propre père a offert par écrit le pardon à quiconque de Peyredragon viendrait sans elle — elle n'a pas lu la clause du bas",
+   "Que son émissaire a débarqué à Peyredragon une heure avant le sacre et vient de demander tout haut s'il est un otage"
+  ],
+  "intention": "Sauver ce qui peut l'être : obtenir qu'Orwyle porte des termes avant que Criston et Aemond n'aient la parole pour de bon.",
+  "plan": [
+   {
+    "id": "alicent-termes-orwyle",
+    "quoi": "Obtenir d'Aegon qu'Orwyle porte des termes à Peyredragon — amnistie, Peyredragon et Lamarck confirmées",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "l'accord d'Aegon avant le vin du soir",
+     "affronter son père en conseil"
+    ],
+    "si_bloque": "Si Aegon refuse, elle écrit elle-même à Rhaenyra, de femme à femme, et fait porter le pli hors des corbeaux du roi.",
+    "accompli": "Obtenu avant le feu : Orwyle a quitte Port-Real le 14 et debarque a Peyredragon le 18."
+   },
+   {
+    "id": "alicent-garde-enfants",
+    "quoi": "Faire éloigner Helaena et les enfants des fenêtres du conseil, et doubler leur garde de nuit",
+    "etat": "en-cours",
+    "jours_restants": 1,
+    "depend_de": [],
+    "cout": [
+     "quatre hommes, et l'air d'une mère qui exagère"
+    ],
+    "si_bloque": "Si on lui dit que c'est excessif, elle paie la garde sur sa propre bourse et n'en parle plus."
+   },
+   {
+    "id": "alicent-aegon-matin",
+    "quoi": "Garder Aegon sous son influence matinale, avant le vin",
+    "etat": "en-cours",
+    "jours_restants": null,
+    "depend_de": [],
+    "cout": [],
+    "si_bloque": "S'il l'évite le matin, elle fait renvoyer ses compagnons de nuit un par un, sans jamais le lui dire."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "Un enfant de l'un des deux camps est tué",
+    "alors": "Elle cesse toute recherche de conditions et devient la voix la plus dure du conseil, pour ses seuls enfants.",
+    "une_fois": true
+   },
+   {
+    "si": "Otto est écarté du pouvoir",
+    "alors": "Elle tente de faire donner la Main à elle-même ou à un homme qu'elle tient, avant que Criston ne l'obtienne.",
+    "une_fois": true
+   }
+  ],
+  "attitude_joueur": "La sœur d'enfance est devenue la femme qui a brûlé des hommes en marche. Elle veut encore lui écrire — et sait déjà que ce sera tenu pour une trahison.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "aegon-ii",
+  "echelle": "royaume",
+  "croyances": [
+   "Le trône lui revient puisqu'il est couronné et oint",
+   "Quelqu'un a brûlé onze cents de ses hommes et son grand-père veut encore écrire des lettres"
+  ],
+  "ignore": [
+   "Que Rhaenyra sera couronnée demain",
+   "Ce qu'il a signé le 14 — il n'a pas lu la clause du bas"
+  ],
+  "intention": "Paraître roi, être vengé sans se déplacer, et qu'on cesse de lui parler comme à un enfant.",
+  "plan": [
+   {
+    "id": "aegon-exiger-vengeance",
+    "quoi": "Exiger publiquement qu'on réponde au feu de la route, sans savoir par quoi",
+    "etat": "en-cours",
+    "jours_restants": 2,
+    "depend_de": [],
+    "cout": [
+     "rien, et c'est bien le problème"
+    ],
+    "si_bloque": "Si le conseil l'enterre sous les chiffres, il va aux fosses de combat et boit jusqu'au soir."
+   },
+   {
+    "id": "aegon-largesses",
+    "quoi": "Multiplier apparitions et largesses en ville, pour être aimé de quelqu'un",
+    "etat": "en-cours",
+    "jours_restants": null,
+    "depend_de": [],
+    "cout": [],
+    "si_bloque": "Si le trésor lui est fermé, il donne ce qu'il a sur lui et rentre furieux contre Otto."
+   }
+  ],
+  "declencheurs": [],
+  "attitude_joueur": "Une sœur aînée qu'il n'a jamais aimée et dont on lui dit maintenant qu'elle a brûlé ses sujets : cela lui simplifie beaucoup les choses.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 17
+  }
+ },
+ {
+  "personnage_id": "orwyle",
+  "echelle": "royaume",
+  "croyances": [
+   "On lui a demande le genou en public puis renvoye dormir sur sa nef sous quatre hommes, en le nommant « ce messager » — il n'est plus l'ambassadeur de personne",
+   "Sa demande d'ecrire un recit juste est restee SANS REPONSE : personne ne lui a rien accorde et personne ne lui a rien interdit",
+   "Il a vu et compte de ses yeux quarante prisonniers debout au fond de la cour, et entendu un prince reclamer quatre cordes"
+  ],
+  "ignore": [
+   "Que Sombreval s'est déclarée avant le sacre et que Gunthor Darklyn a chargé dans la fumée",
+   "Qu'Otto attend de sa plume un récit de massacre qu'il n'a pas écrit et ne peut pas écrire"
+  ],
+  "intention": "Ecrire cette nuit, sur sa nef, deux recits de ce qu'il a vu — l'un montrable, l'autre cousu — et rentrer a Port-Real avec les deux, sans avoir rien jure a personne.",
+  "plan": [
+   {
+    "id": "orwyle-recit-juste",
+    "quoi": "Ecrire son recit — la reine ne lui a jamais repondu, donc son si_bloque s'applique : deux versions, une qu'il montrera et une cousue dans sa manche",
+    "etat": "bloque",
+    "jours_restants": 1,
+    "depend_de": [],
+    "cout": [
+     "l'avoir demandé sans mandat, debout, devant la cour noire — la Citadelle et Otto le sauront tous deux"
+    ],
+    "si_bloque": "Si on le lui refuse ou qu'on ne lui répond pas, il écrit quand même, en double : une version qu'il montrera et une qu'il coud dans sa manche."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "La reine ou Daemon le désigne comme otage, ou fait mine de le retenir",
+    "alors": "Il cesse de plaider les termes et ne parle plus que de sa personne et de son ordre — la Citadelle n'oublie pas ce qu'on fait à ses mestres.",
+    "une_fois": true
+   }
+  ],
+  "attitude_joueur": "Blesse d'une facon precise et froide : il n'a pas peur d'elle, il lui reproche une chose exacte — de ne pas avoir repondu. C'est le seul grief d'un homme dont le metier est de consigner. Il repart libre de sa plume par le seul fait qu'on ne lui a rien dit.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "helaena",
+  "echelle": "royaume",
+  "croyances": [
+   "Quelque chose de terrible vient pour ses enfants — elle l'a rêvé en insectes et en fil rouge",
+   "Rien de tout cela n'est de son fait"
+  ],
+  "ignore": [
+   "Tout ce que le conseil décide : on ne le lui dit pas, et elle n'écoute que ses rêves"
+  ],
+  "intention": "Tenir ses enfants près d'elle et loin des fenêtres du conseil.",
+  "plan": [
+   {
+    "id": "helaena-enfants",
+    "quoi": "Ne pas laisser ses trois enfants hors de la vue de leur nourrice, jamais",
+    "etat": "en-cours",
+    "jours_restants": null,
+    "depend_de": [],
+    "cout": [],
+    "si_bloque": "Si on les lui prend pour une cérémonie, elle compte les heures à voix haute jusqu'à ce qu'on les ramène."
+   }
+  ],
+  "declencheurs": [],
+  "attitude_joueur": "Inconnu — elle ne pense à Rhaenyra que comme au fil rouge de son rêve.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 17
+  }
+ },
+ {
+  "personnage_id": "lord-staunton",
+  "echelle": "royaume",
+  "croyances": [
+   "Une reine descend du ciel pour ses vassaux — Gunthor Darklyn l'a écrit à toute la baie, et l'aile rouge de Rhaenys passe au-dessus de ses tours chaque jour",
+   "Les Verts n'oseront pas s'aventurer si loin sur la côte"
+  ],
+  "ignore": [
+   "Que Repos-des-Freux est déjà sur une carte à Port-Réal, juste après Sombreval"
+  ],
+  "intention": "Se déclarer maintenant que Sombreval a été couverte — mais après lui, jamais avant.",
+  "plan": [
+   {
+    "id": "staunton-sacre",
+    "quoi": "Aller jurer au couronnement du 18 et y demander, devant témoins, la même aile qu'on a donnée à Sombreval",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "quatre jours de mer aller et retour, son château sans lui"
+    ],
+    "si_bloque": "S'il n'arrive pas à temps, il envoie son serment écrit et sa meilleure barque chargée de poisson salé.",
+    "accompli": "Arrive au matin du 18, dans les quatre maisons de la baie placees sur les marches."
+   },
+   {
+    "id": "staunton-murs",
+    "quoi": "Renforcer murs et réserves — il sent l'orage venir de Port-Réal",
+    "etat": "en-cours",
+    "jours_restants": 15,
+    "depend_de": [],
+    "cout": [
+     "tout ce qu'il a mis de côté depuis trois ans"
+    ],
+    "si_bloque": "S'il manque de pierre, il fait rentrer les récoltes et les troupeaux dans l'enceinte, et laisse les murs comme ils sont."
+   }
+  ],
+  "declencheurs": [],
+  "attitude_joueur": "Chaque voisin qui se déclare noir le rassure ; il attend de la reine une promesse chiffrée, pas un remerciement.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "bartimos-celtigar",
+  "echelle": "royaume",
+  "croyances": [
+   "La guerre se gagnera à l'or, et il en a plus que tous les autres vassaux de la baie réunis",
+   "Son île est imprenable sans flotte — et les Verts n'en ont pas dans la baie"
+  ],
+  "ignore": [
+   "Que Corlys Velaryon compte sur son or sans lui accorder la place qu'il croit acheter"
+  ],
+  "intention": "Porter son coffre au sacre et en sortir avec une place au premier rang du conseil.",
+  "plan": [
+   {
+    "id": "celtigar-coffre",
+    "quoi": "Débarquer un coffre d'or au quai de Peyredragon le 18, ouvert, devant tout le monde",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "dix mille dragons d'or, et une nef qu'il ne veut pas risquer de nuit"
+    ],
+    "si_bloque": "Si la mer est mauvaise, il envoie l'or par deux nefs et arrive exprès en retard, quand la salle est pleine.",
+    "accompli": "Arrive au quai le 17 avec DEUX coffres qu'il faut quatre hommes pour porter."
+   },
+   {
+    "id": "celtigar-ligne-dure",
+    "quoi": "Plaider qu'on prenne Port-Réal par la faim, et le dire assez fort pour qu'on s'en souvienne",
+    "etat": "en-cours",
+    "jours_restants": 0,
+    "depend_de": [
+     "celtigar-coffre"
+    ],
+    "cout": [
+     "l'inimitié de qui voudra négocier"
+    ],
+    "si_bloque": "Si on ne l'écoute pas, il en fait un grief et parle de ce que son or pourrait servir ailleurs."
+   }
+  ],
+  "declencheurs": [],
+  "attitude_joueur": "Il mesurera la reine à une seule aune : ce qu'elle lui rend pour ce qu'il apporte.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "lord-bar-emmon",
+  "echelle": "royaume",
+  "croyances": [
+   "Être des premiers déclarés lui vaudra l'éternelle faveur de la reine",
+   "La guerre sera courte et glorieuse"
+  ],
+  "ignore": [
+   "Que Sombreval l'a devancé de trois jours, et de beaucoup plus que trois jours"
+  ],
+  "intention": "Paraître au sacre avec ses trois navires armés, et se faire voir avant les autres.",
+  "plan": [
+   {
+    "id": "bar-emmon-navires",
+    "quoi": "Armer ses trois navires et les mener lui-même à Peyredragon pour le 18",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "tout ce qu'il a, et des hommes empruntés à ses pêcheurs"
+    ],
+    "si_bloque": "S'il n'a pas les hommes pour trois navires, il en arme deux et fait beaucoup de bruit.",
+    "accompli": "Arrive le 17, un jour d'avance, ses navires en rade."
+   },
+   {
+    "id": "bar-emmon-corlys",
+    "quoi": "Écrire à Corlys pour offrir ses services et sa connaissance des courants du Gosier",
+    "etat": "en-cours",
+    "jours_restants": 2,
+    "depend_de": [],
+    "cout": [
+     "un corbeau, et l'humilité de se proposer deux fois"
+    ],
+    "si_bloque": "S'il n'obtient pas de réponse, il aborde Corlys au quai le jour du sacre, devant témoins."
+   }
+  ],
+  "declencheurs": [],
+  "attitude_joueur": "Il cherchera à entraîner d'autres maisons avec lui : à plusieurs on paraît un parti, seul on paraît un fou.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "borros-baratheon",
+  "echelle": "royaume",
+  "croyances": [
+   "Un corbeau d'Otto Hightower est arrivé le dix-septième jour et son mestre le lui a lu deux fois : jurer à Aegon II ou être tenu pour traître — pas un mot d'une terre, d'un rang ni d'un mariage",
+   "Son père Boremund a parlé pour la femme au grand conseil et n'en a jamais rien rapporté à Accalmie : cette fois, Accalmie sera payée d'avance",
+   "Trois mille lances tiennent sous ses murs en douze jours, huit mille s'il vide les Terres de l'Orage — et aucun des deux camps ne gagne sans la route de l'orage"
+  ],
+  "ignore": [
+   "Qu'un dragon a brûlé la tête d'une colonne du roi sur la route de Sombreval le seizième jour — la rumeur remonte les Terres de l'Orage et l'atteindra vers le vingtième",
+   "Que Rhaenyra a été couronnée hier à Peyredragon avec la couronne de son père, et qu'un manteau blanc a témoigné par écrit pour elle",
+   "Que les deux camps s'apprêtent à venir marchander ses filles — on prépare à Port-Réal un mariage au nom d'Aemond, et on parle de lui à Peyredragon"
+  ],
+  "intention": "Ne rien répondre à Otto tant qu'on ne met pas deux noms sur la table : celui d'une de ses quatre filles et celui du prince qu'on lui donne. Faire compter ses lances entre-temps, pour que le prix monte.",
+  "plan": [
+   {
+    "id": "borros-rassembler-lances",
+    "quoi": "Faire rappeler ses bannerets et arrêter le compte de ce qu'Accalmie peut mettre en selle — trois mille lances sous les murs en douze jours — sans dire pour qui",
+    "etat": "en-cours",
+    "jours_restants": 12,
+    "depend_de": [],
+    "cout": [
+     "du grain qu'il faudra prendre aux villages avant la moisson",
+     "l'obligation de finir par choisir un camp devant des hommes rassemblés"
+    ],
+    "si_bloque": "Si ses bannerets traînent, il fait venir les trois plus riches à Accalmie pour un festin et leur fait honte à table, devant leurs fils."
+   },
+   {
+    "id": "borros-attendre-offres",
+    "quoi": "Ne répondre à aucun corbeau, de Port-Réal comme de Peyredragon, avant qu'un camp n'écrive le nom d'une de ses filles",
+    "etat": "en-cours",
+    "jours_restants": null,
+    "depend_de": [],
+    "cout": [
+     "passer pour lent, ce dont il ne se soucie pas"
+    ],
+    "si_bloque": "Si les deux camps se taisent une lune entière, il envoie son mestre à Port-Réal réclamer une place au conseil du roi — et fait dire dans sa salle qu'il l'a obtenue."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "Un émissaire de Peyredragon se présente à Accalmie — un pli, un chevalier, ou un dragon",
+    "alors": "Il le reçoit dans sa grande salle, ses quatre filles debout derrière lui, et exige qu'on nomme laquelle et pour qui avant d'écouter un mot du reste ; s'il n'y a pas de mariage dans l'offre, il fait raccompagner l'émissaire aux portes le jour même.",
+    "une_fois": false
+   }
+  ],
+  "attitude_joueur": "Il ne lui doit rien : elle ne lui a jamais écrit, et sa faction est celle pour laquelle son père a parlé sans jamais rien recevoir. Ce qu'elle obtiendra d'Accalmie se mesurera au contrat, pas au serment.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "jeyne-arryn",
+  "echelle": "royaume",
+  "croyances": [
+   "Un corbeau de Port-Réal, sept jours de vol, dit Viserys mort et Aegon couronné et oint — et ne dit rien de Rhaenyra : ce silence est la nouvelle",
+   "Son nom est au bas du rouleau de 105 ; elle avait sept ans et on lui tenait la main, mais le nom est le sien et le Val n'en connaît pas d'autre",
+   "Le Val ne se prend pas par la Porte Sanglante : six mille hommes en selle si elle vide les vallées, trois mille si elle veut garder les quatre passes tenues — et deux cousins Arryn qui se vendraient pour les Eyrié"
+  ],
+  "ignore": [
+   "Que la sommation d'Otto Hightower est partie le quatorzième jour pour tout le royaume : la sienne vole encore et la trouvera vers le vingt et unième",
+   "Que le premier sang est versé — un dragon a brûlé une colonne du roi sur la route de Sombreval le seizième jour",
+   "Que Rhaenyra a été couronnée hier, et qu'une déposition signée d'un manteau blanc est déjà en route pour les Eyrié"
+  ],
+  "intention": "Ne pas être la première à écrire. Tenir le Val fermé aux gens en armes, tenir ses cousins à vue, et attendre qu'on vienne lui demander sa parole plutôt que de l'offrir.",
+  "plan": [
+   {
+    "id": "jeyne-portes-du-val",
+    "quoi": "Fermer les quatre passes aux compagnies en armes et faire tenir registre de tout ce qui traverse le Val, dans les deux sens",
+    "etat": "en-cours",
+    "jours_restants": null,
+    "depend_de": [],
+    "cout": [
+     "cent hommes répartis aux passes, en permanence",
+     "les plaintes des marchands de Goëville, qu'elle entendra chaque lune"
+    ],
+    "si_bloque": "Si un seigneur du Val fait passer des hommes sans son congé, elle le convoque aux Eyrié et lui fait payer le péage en lances plutôt qu'en or."
+   },
+   {
+    "id": "jeyne-cousins",
+    "quoi": "Faire dresser par son mestre la liste de ses cousins Arryn, de ce que chacun tient en hommes et de ce que chacun doit — un camp finira par en acheter un contre elle",
+    "etat": "en-cours",
+    "jours_restants": 12,
+    "depend_de": [],
+    "cout": [
+     "son mestre pendant douze jours",
+     "l'aveu, écrit, qu'elle craint les siens plus que le Sud"
+    ],
+    "si_bloque": "Si la liste est trop longue, elle fait venir aux Eyrié les trois plus dangereux comme pupilles honorés, et les y garde."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "Un émissaire du sang du dragon se présente au Val et lui redemande, en personne, le serment de 105",
+    "alors": "Elle l'honore devant ses bannerets rassemblés, exige que la demande soit faite par écrit et scellée — et met son prix : un dragon et son cavalier pour garder le Val, faute de quoi son aide restera de l'encre et non des lances.",
+    "une_fois": true
+   }
+  ],
+  "attitude_joueur": "Une cousine spoliée, comme elle l'a été trois fois par ses propres oncles : elle penche pour elle sans l'aimer, et ne bougera pas avant qu'on le lui demande dans les formes.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "cregan-stark",
+  "echelle": "royaume",
+  "croyances": [
+   "Rien du Sud ne lui est parvenu depuis vingt jours : le dernier corbeau de Port-Réal parlait du roi comme d'un homme malade, et du royaume comme d'un royaume tranquille",
+   "L'hiver vient avant la guerre : les greniers de Winterfell, de Motte-la-Forêt et de Blancport ne portent pas encore le Nord jusqu'au printemps, et il le sait à la ligne près",
+   "Le serment de 105 fut prêté par son père Rickon, pas par lui ; un Stark tient la parole de son père, et fait dire ce qu'elle coûte — quatre mille lances sans toucher aux moissonneurs, le double s'il accepte de perdre un printemps"
+  ],
+  "ignore": [
+   "Que Viserys est mort et qu'Aegon II est couronné : le corbeau vole encore et ne touchera Winterfell que dans cinq jours",
+   "Que la sommation d'Otto Hightower — jurer à Aegon ou être tenu pour traître — est partie le quatorzième jour pour le Nord comme pour le reste",
+   "Qu'un dragon a brûlé une colonne du roi sur la route de Sombreval, et qu'une seconde reine a été couronnée hier à Peyredragon"
+  ],
+  "intention": "Passer l'hiver : compter le grain à la ligne, garnir le Mur avant que les cols ne se ferment, et n'engager aucun homme du Nord tant que personne n'est venu lui rappeler la parole de son père.",
+  "plan": [
+   {
+    "id": "cregan-greniers",
+    "quoi": "Relever et vérifier lui-même les registres des greniers — Winterfell, Motte-la-Forêt, Blancport — et acheter ce qui manque avant les premières neiges",
+    "etat": "en-cours",
+    "jours_restants": 25,
+    "depend_de": [],
+    "cout": [
+     "l'or de Winterfell, qui n'est pas celui du Sud",
+     "vingt-cinq jours de routes du Nord, à cheval",
+     "acheter aux Manderly, ce qui se saura"
+    ],
+    "si_bloque": "S'il manque du grain, il achète à Blancport au prix que les Manderly feront, et n'en dit rien à ses bannerets."
+   },
+   {
+    "id": "cregan-hiver-dabord",
+    "quoi": "Ne laisser partir au sud aucun homme dont le Nord aura besoin au printemps",
+    "etat": "en-cours",
+    "jours_restants": null,
+    "depend_de": [],
+    "cout": [],
+    "si_bloque": "Si un serment l'y oblige, il n'envoie que les hommes sans terre ni héritier — ceux dont la mort ne coûte pas une moisson — sous un vieux capitaine, et garde ses lances."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "Un émissaire de Peyredragon, du sang du dragon, vient à Winterfell rappeler le serment de 105",
+    "alors": "Il l'honore, mais pas avec le Nord entier : il promet les hommes sans terre, exige que l'hiver soit assuré d'abord, et demande une contrepartie écrite — une terre ou un mariage — avant qu'un seul loup passe le Neck.",
+    "une_fois": true
+   }
+  ],
+  "attitude_joueur": "Un nom au bas d'un rouleau que son père a signé — ni une amie, ni une cause. Ce qu'elle tirera du Nord dépendra de ce qu'elle demande, et de qui vient le demander.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "ormund-hightower",
+  "echelle": "royaume",
+  "croyances": [
+   "Un corbeau de son parent Otto, huit jours de vol, arrivé avant toute sommation générale : Viserys est mort, Aegon est couronné et oint, et Villevieille doit lever le Bief — le frère du roi est son écuyer et dort sous son toit",
+   "Le Bief ne marchera pas d'un bloc : Hautjardin est aux mains d'un enfant et la moitié des seigneurs de la Mander attendront de voir qui paie. Six mille hommes sous ses murs en une lune, neuf mille s'il vide les vallées — et vingt-cinq jours de route jusqu'à Port-Réal, à nourrir chaque jour",
+   "Villevieille ne doit pas brûler : la Citadelle et le Septuaire Étoilé valent plus que n'importe quel champ de bataille, et rien dans la ville ne répond aujourd'hui à un dragon"
+  ],
+  "ignore": [
+   "Que la sommation générale d'Otto est en route et ne le trouvera que le vingt-deuxième jour : il lève un ost sur une lettre de famille, pas sur un ordre du roi",
+   "Qu'un dragon a brûlé onze cents hommes du roi sur la route de Sombreval le seizième jour — la guerre est ouverte et son ost n'est pas levé",
+   "Que Rhaenyra a été couronnée hier, et qu'une copie de la déposition d'un manteau blanc lui est adressée nommément depuis Peyredragon"
+  ],
+  "intention": "Lever le plus grand ost du Bief et ne le mettre en marche que quand il sera nourri jusqu'à Port-Réal — vingt-cinq jours de route, pas un de moins. Rien ne part de Villevieille tant que la ville ne peut pas répondre à un dragon.",
+  "plan": [
+   {
+    "id": "ormund-lever-bief",
+    "quoi": "Convoquer les bannerets du Bief à Villevieille et arrêter le compte : six mille hommes sous les murs en une lune, neuf mille s'il vide les vallées de la Mander",
+    "etat": "en-cours",
+    "jours_restants": 26,
+    "depend_de": [],
+    "cout": [
+     "vingt mille dragons d'or la lune, sur le trésor de la Voix",
+     "le grain de la Mander et les chariots pour le porter",
+     "l'accord de seigneurs qui attendent de voir qui gagne"
+    ],
+    "si_bloque": "Si Hautjardin retient ses lances, il complète à l'or — reîtres et compagnies franches — et n'écrit pas à Otto que son ost est mêlé de soudards."
+   },
+   {
+    "id": "ormund-couvrir-villevieille",
+    "quoi": "Ne pas laisser le prince Daeron et Tessarion quitter Villevieille avant que l'ost soit en marche et la ville couverte",
+    "etat": "en-cours",
+    "jours_restants": null,
+    "depend_de": [],
+    "cout": [
+     "le grief du prince, qui a quinze ans et veut voir la guerre"
+    ],
+    "si_bloque": "Si Otto exige le prince et son dragon à Port-Réal, il les envoie — et fait consigner par la Citadelle qu'il l'a fait sous ordre et contre son avis."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "Peyredragon lui écrit ou lui envoie quelqu'un — une offre, une pièce d'archive, une menace — adressé nommément à lui plutôt qu'au roi",
+    "alors": "Il ne répond pas de sa main : il fait porter le pli intact à Otto Hightower, copie gardée à la Citadelle, et avance de dix jours le rassemblement de son ost — qu'on le sollicite lui prouve qu'on le craint.",
+    "une_fois": false
+   }
+  ],
+  "attitude_joueur": "Une prétendante, pas une reine : il ne lui écrira pas et ne la nommera pas ainsi. Mais si elle lui écrit, à lui, il en fera une pièce et une raison de marcher plus tôt.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 18
+  }
+ },
+ {
+  "personnage_id": "denys-bar-emmon",
+  "echelle": "royaume",
+  "croyances": [
+   "Son pere l'a offert a la reine comme on cede un bien, et il le sait sans amertume : trois fils, il en garde deux",
+   "Il ecrit mal et il l'a dit lui-meme a la reine deux fois plutot que de le laisser decouvrir"
+  ],
+  "ignore": [
+   "Que le mestre l'a choisi parce que son nom ne pese rien dans l'affaire, et non pour ses qualites",
+   "Ce que la reine repondra a lord Gunthor sur les hommes, alors qu'on le lui demandera des son arrivee"
+  ],
+  "intention": "Porter l'acte a Sombreval, le faire lire tout haut, et rapporter ce qu'il a vu sans l'embellir � parce que c'est la seule promesse qu'il a su faire.",
+  "plan": [
+   {
+    "id": "denys-porter-acte",
+    "quoi": "Embarquer avec l'ambassade, remettre l'acte de protection a lord Gunthor, le faire lire tout haut devant les gens de la place, puis relever de ses yeux le grain, la porte de terre et l'humeur du bourg CONSIGNE RECUE ET NOTEE DE SA MAIN : la cire ne se rompt qu'en presence de lord Gunthor en personne - ni mestre, ni intendant, ni capitaine. Deux plis : un ouvert pour l'intendant, l'acte scelle dessous.",
+    "etat": "en-attente",
+    "jours_restants": 1,
+    "depend_de": [],
+    "cout": [
+     "une place dans la coque",
+     "un homme qui ecrive, faute de quoi il devra tout retenir de tete"
+    ],
+    "si_bloque": "Si l'acte n'est pas ecrit a temps parce que la reine n'a pas tranche un ou trois, il part quand meme avec l'ambassade et se tait sur la protection plutot que de promettre de vive voix ce qu'il n'a pas sur papier. Si lord Gunthor le presse sur les hommes, il repond qu'il ne sait pas � et il le repondra platement, ce qui sera pris pour un non."
+   }
+  ],
+  "declencheurs": [],
+  "attitude_joueur": "reconnaissance stupefaite, et la peur de decevoir avant meme d'avoir commence",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 20
+  }
+ },
+ {
+  "personnage_id": "merra-sath",
+  "echelle": "royaume",
+  "croyances": [
+   "Personne ne l'a jamais crue quand elle a parle de son sang, et elle a cesse d'en parler il y a longtemps",
+   "Les gardes l'ont tatee a travers l'etoffe sans ouvrir : ils ne savent donc pas encore ce que c'est"
+  ],
+  "ignore": [
+   "Que la reine n'a fixe ni serment, ni solde, ni sort pour celui qui echoue",
+   "Qu'on la recevra dans la meme piece que la Table Peinte et non a la barbacane"
+  ],
+  "intention": "Guider la descente sans qu'on lui prenne ce qu'elle a trouve, et obtenir que son nom soit ecrit dans un registre - pas un titre, une ligne.",
+  "plan": [
+   {
+    "id": "merra-montrer",
+    "quoi": "Ouvrir le ballot devant la reine et personne d'autre, et demander a descendre sous la Montagne",
+    "etat": "fait",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "se dessaisir de la seule chose qu'elle possede",
+     "avouer ou elle l'a trouve"
+    ],
+    "si_bloque": "Si on veut le lui prendre avant qu'elle ait parle, elle ne se debat pas : elle le pose par terre, dit ou elle l'a trouve et repart sans rien demander - et ne reviendra pas, meme si on l'appelle.",
+    "accompli": "Montre sur les dalles devant la reine et cinq temoins. Elle a laisse l'objet sans un regard pour se lever, et a demande son nom au registre plutot qu'un dragon."
+   },
+   {
+    "id": "merra-guider",
+    "quoi": "Marcher devant les dix hommes du prince jusqu'a la poche de la onzieme galerie",
+    "etat": "en-cours",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "montrer a douze personnes l'endroit qu'elle a garde dix jours"
+    ],
+    "si_bloque": "Si on la double ou si quelqu'un passe devant elle dans le boyau, elle s'arrete et ne repart pas - le prince lui a dit qu'elle pouvait s'arreter quand elle voulait et elle l'a pris au mot."
+   },
+   {
+    "id": "merra-tailler-les-os",
+    "quoi": "Degager le squelette a la taille : gangue laissee sous l'os, remontee en blocs, remontage en haut. Huit jours avec quatre tailleurs et sa tante Dorsa pour la cage thoracique",
+    "etat": "en-attente",
+    "jours_restants": 1,
+    "depend_de": [],
+    "cout": [
+     "quatre tailleurs pris a l'obsidienne",
+     "sa tante, qui ignore encore qu'elle est montee ici"
+    ],
+    "si_bloque": "Si l'eau monte avant la fin, elle sauve LA TETE ET LE COU en priorite et abandonne le reste - c'est ce qui se reconnait de loin quand on n'y connait rien."
+   }
+  ],
+  "declencheurs": [],
+  "attitude_joueur": "mefiance sans hostilite ; elle attend d'etre volee et sera desarconnee si elle ne l'est pas",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 20
+  }
+ }
+]

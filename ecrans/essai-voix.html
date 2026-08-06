@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Le Conseil — banc d'essai des voix</title>
+<link rel="stylesheet" href="/jeu.css">
+</head>
+<body style="display:block;padding:20px">
+<!-- Banc d'essai du module de voix, hors partie : il charge voix.js seul, avec
+     un Bus minimal, pour vérifier bail, coupure et mise en avant sans ouvrir un
+     second client sur le flux du joueur. -->
+<div id="zone-reglages-corps"></div>
+<div id="fil-corps"></div>
+<script>
+window.Bus = { envoyer(){}, chronique(){ return null; } };
+</script>
+<script src="/modules/voix.js"></script>
+</body>
+</html>

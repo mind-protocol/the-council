@@ -1,0 +1,233 @@
+{
+  "_lisez_moi": "Ce que la table peinte PORTE — pas la vérité du monde, mais ce que le joueur croit tenir. Chaque marque a sa `certitude` (sure | rapportee | rumeur) et devrait pouvoir se justifier par une entrée d'info.json, une parole entendue en scène ou un ordre donné par le joueur. Format complet : docs/carte.md.",
+  "jetons": [
+    {
+      "id": "flotte-gosier",
+      "genre": "flotte",
+      "camp": "noir",
+      "nom": "Le blocus du Gosier",
+      "force": 90,
+      "unite": "voiles",
+      "point": [325.0, 403.5],
+      "detail": "En croissant sur le Gosier : pas une coque n'entre dans la baie sans congé. Port-Réal affamée en quelques lunes, sans une bataille.",
+      "certitude": "sure",
+      "statut": "actif"
+    },
+    {
+      "id": "hommes-lamarck",
+      "genre": "armee",
+      "camp": "noir",
+      "nom": "Les hommes de Marée-Haute",
+      "force": 3000,
+      "ou": "lamarck",
+      "detail": "Marins et soldats de pont : ils abordent, tiennent un quai, prennent une tour depuis la mer. Aucune chevalerie.",
+      "certitude": "sure",
+      "statut": "actif"
+    },
+    {
+      "id": "garnison-peyredragon",
+      "genre": "garnison",
+      "camp": "noir",
+      "nom": "La garnison de Peyredragon",
+      "force": 300,
+      "ou": "peyredragon",
+      "detail": "Trois cents hommes, quarante-deux chevaux dont neuf vaudraient une charge. Sept galeries donnant sur la mer.",
+      "certitude": "sure",
+      "statut": "actif"
+    },
+    {
+      "id": "dragons-peyredragon",
+      "genre": "dragon",
+      "camp": "noir",
+      "nom": "Les dragons de Peyredragon",
+      "force": 5,
+      "unite": "dragons montés",
+      "ou": "peyredragon",
+      "detail": "Caraxès, Syrax, Meleys, Vermax, Arrax — et les bêtes de la Montagne, que personne ne monte.",
+      "certitude": "sure",
+      "statut": "actif"
+    },
+    {
+      "id": "dragons-port-real",
+      "genre": "dragon",
+      "camp": "vert",
+      "nom": "Les dragons d'Aegon",
+      "force": 3,
+      "unite": "dragons",
+      "ou": "port-real",
+      "detail": "Vhagar, Sunfyre, Tessarion. Vhagar seule pèse plus que trois des nôtres.",
+      "certitude": "rapportee",
+      "statut": "actif"
+    },
+    {
+      "id": "ost-couronne",
+      "genre": "armee",
+      "camp": "vert",
+      "nom": "L'ost de la Couronne",
+      "force": 3500,
+      "ou": "port-real",
+      "detail": "Ce que la Couronne lève, au compte de Corlys. Aegon n'a pas d'or : trois cents dragons d'or par jour rien qu'à nourrir la ville.",
+      "certitude": "rapportee",
+      "statut": "actif"
+    },
+    {
+      "id": "colonne-rosby",
+      "genre": "armee",
+      "camp": "vert",
+      "nom": "La colonne de Rosby",
+      "force": 1200,
+      "ou": "rosby",
+      "detail": "Deux colonnes aux bannières de la Couronne, vues de Meleys : elles comptent les murs sans attaquer. Un inventaire, pas une marche. Daemon les dit à douze cents.",
+      "certitude": "rapportee",
+      "statut": "actif"
+    },
+    {
+      "id": "ost-hightower",
+      "genre": "armee",
+      "camp": "vert",
+      "nom": "Le Bief derrière Otto",
+      "force": 6000,
+      "ou": "villevieille",
+      "detail": "Six mille tout de suite, neuf mille en vidant les fermes — et sept cent mille dragons d'or contre les quarante mille du trésor de Peyredragon.",
+      "certitude": "rapportee",
+      "statut": "actif"
+    },
+    {
+      "id": "lances-sombreval",
+      "genre": "armee",
+      "camp": "noir",
+      "nom": "Les lances de Sombreval",
+      "force": 550,
+      "ou": "sombreval",
+      "detail": "Déclarée sans attendre le couronnement. Rhaenys les dit prêtes à sortir contre la colonne — quatre-vingts à cent lances, pas assez pour tenir une plaine.",
+      "certitude": "sure",
+      "statut": "actif"
+    },
+    {
+      "id": "hommes-daemon-harrenhal",
+      "genre": "camp",
+      "camp": "noir",
+      "nom": "Les quarante de Daemon",
+      "force": 40,
+      "ou": "harrenhal",
+      "detail": "Envoyés avant le conseil, sans que la reine l'ait su. Ils comptent les murs de Harrenhal et ce qu'il reste de garnison à ser Simon Strong.",
+      "certitude": "rapportee",
+      "statut": "actif"
+    }
+  ],
+  "traits": [
+    {
+      "id": "ultimatum-otto",
+      "genre": "menace",
+      "camp": "vert",
+      "nom": "L'ultimatum d'Otto",
+      "de": "port-real",
+      "vers": "peyredragon",
+      "detail": "Reconnaître Aegon et venir jurer en personne dans la quinzaine — au prix de l'attainder et de la confiscation de Peyredragon.",
+      "certitude": "sure",
+      "statut": "actif"
+    },
+    {
+      "id": "marche-colonne-rosby",
+      "genre": "marche",
+      "camp": "vert",
+      "nom": "La colonne sortie de Port-Réal",
+      "de": "port-real",
+      "vers": "rosby",
+      "avancement": 0.9,
+      "detail": "Sortie du Donjon Rouge, à hauteur de Rosby au dernier passage de Meleys.",
+      "certitude": "rapportee",
+      "statut": "actif"
+    },
+    {
+      "id": "cogues-du-bief",
+      "genre": "mer",
+      "camp": "vert",
+      "nom": "Six cogues du Bief",
+      "point_de": [303.0, 419.0],
+      "vers": "port-real",
+      "avancement": 0.45,
+      "detail": "Chargées pour Port-Réal, à deux jours des galères de Corlys. Personne ne sait encore qu'il y a un blocus.",
+      "certitude": "rapportee",
+      "statut": "actif"
+    },
+    {
+      "id": "serment-sombreval",
+      "genre": "serment",
+      "camp": "noir",
+      "nom": "Sombreval s'est déclarée",
+      "de": "sombreval",
+      "vers": "peyredragon",
+      "detail": "Gunthor Darklyn a hissé vos couleurs de son propre chef, sans attendre le couronnement.",
+      "certitude": "sure",
+      "statut": "actif"
+    },
+    {
+      "id": "serment-bar-emmon",
+      "genre": "serment",
+      "camp": "noir",
+      "nom": "L'offre de Bar Emmon",
+      "de": "sharp-point",
+      "vers": "peyredragon",
+      "detail": "Sa personne, ses trois nefs et son serment — et la faveur demandée d'être le premier à jurer.",
+      "certitude": "sure",
+      "statut": "actif"
+    },
+    {
+      "id": "corbeau-celtigar",
+      "genre": "corbeau",
+      "camp": "noir",
+      "nom": "Convocation à Celtigar",
+      "de": "peyredragon",
+      "vers": "griffes",
+      "detail": "Parti le 14 à l'aube : venir au couronnement et y prêter serment.",
+      "certitude": "sure",
+      "statut": "actif"
+    },
+    {
+      "id": "corbeau-bar-emmon",
+      "genre": "corbeau",
+      "camp": "noir",
+      "nom": "Convocation à Bar Emmon",
+      "de": "peyredragon",
+      "vers": "sharp-point",
+      "detail": "Parti le 14 à l'aube : venir au couronnement et y prêter serment.",
+      "certitude": "sure",
+      "statut": "actif"
+    },
+    {
+      "id": "corbeau-massey",
+      "genre": "corbeau",
+      "camp": "noir",
+      "nom": "Convocation à Massey",
+      "de": "peyredragon",
+      "vers": "pointe-massey",
+      "detail": "Parti le 14 à l'aube : venir au couronnement et y prêter serment.",
+      "certitude": "sure",
+      "statut": "actif"
+    },
+    {
+      "id": "corbeau-darklyn",
+      "genre": "corbeau",
+      "camp": "noir",
+      "nom": "Convocation à Sombreval",
+      "de": "peyredragon",
+      "vers": "sombreval",
+      "detail": "Parti le 14 à l'aube : venir au couronnement et y prêter serment.",
+      "certitude": "sure",
+      "statut": "actif"
+    },
+    {
+      "id": "corbeau-staunton",
+      "genre": "corbeau",
+      "camp": "noir",
+      "nom": "Convocation à Staunton",
+      "de": "peyredragon",
+      "vers": "repos-des-freux",
+      "detail": "Parti le 14 à l'aube : venir au couronnement et y prêter serment.",
+      "certitude": "sure",
+      "statut": "actif"
+    }
+  ],
+  "zones": []
+}

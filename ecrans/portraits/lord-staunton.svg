@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Lord Staunton">
+  <title>Lord Staunton</title>
+  <defs>
+    <radialGradient id="bg-lord-staunton" cx="50%" cy="32%" r="80%">
+      <stop offset="0%" stop-color="#322a20"/>
+      <stop offset="55%" stop-color="#241d16"/>
+      <stop offset="100%" stop-color="#141009"/>
+    </radialGradient>
+    <clipPath id="clip-lord-staunton"><circle cx="64" cy="64" r="52"/></clipPath>
+  </defs>
+  <!-- anneau héraldique -->
+  <circle cx="64" cy="64" r="63" fill="#24211d"/>
+  <circle cx="64" cy="64" r="57.5" fill="none" stroke="#e9e7e1" stroke-width="9" stroke-dasharray="11.29 11.29"/>
+  <!-- disque intérieur -->
+  <circle cx="64" cy="64" r="52" fill="url(#bg-lord-staunton)" stroke="#7a6342" stroke-width="1.2"/>
+  <!-- buste -->
+  <g clip-path="url(#clip-lord-staunton)">
+    <rect x="57.5" y="62" width="13" height="28" rx="2" fill="#7d6853"/>
+    <path d="M16,128 C22,98 42,86 64,86 C86,86 106,98 112,128 Z" fill="#2c2620"/>
+    <path d="M30,106 C38,92 50,88 64,88 C78,88 90,92 98,106" fill="none" stroke="#e9e7e1" stroke-width="2.4" opacity="0.9"/>
+    <ellipse cx="64" cy="54" rx="15.5" ry="18.5" fill="#7d6853"/>
+    <path d="M48.3,55 C47.2,42 49.6,36 54.8,33 C51.8,40 51,47.5 51.8,55 Z M79.7,55 C80.8,42 78.4,36 73.2,33 C76.2,40 77,47.5 76.2,55 Z" fill="#9a948c"/>
+    <path d="M50.5,56 C51,70 55,77 64,77.5 C73,77 77,70 77.5,56 C75,66 70.5,69.5 64,69.5 C57.5,69.5 53,66 50.5,56 Z" fill="#9a948c"/>
+  </g>
+  <!-- badge de maison -->
+  <circle cx="64" cy="113" r="11.5" fill="#191510" stroke="#7a6342" stroke-width="1.2"/>
+  <g transform="translate(64 113)"><path d="M-4,-4 H0 V0 H-4 Z M0,0 H4 V4 H0 Z" fill="#e9e7e1"/><path d="M0,-4 H4 V0 H0 Z M-4,0 H0 V4 H-4 Z" fill="#26231f"/></g>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Ser Steffon Darklyn">
+  <title>Ser Steffon Darklyn</title>
+  <defs>
+    <radialGradient id="bg-steffon" cx="50%" cy="32%" r="80%">
+      <stop offset="0%" stop-color="#322a20"/>
+      <stop offset="55%" stop-color="#241d16"/>
+      <stop offset="100%" stop-color="#141009"/>
+    </radialGradient>
+    <clipPath id="clip-steffon"><circle cx="64" cy="64" r="52"/></clipPath>
+  </defs>
+  <!-- anneau héraldique : Darklyn, fuselé de sable et d'or -->
+  <circle cx="64" cy="64" r="63" fill="#1c1a16"/>
+  <circle cx="64" cy="64" r="57.5" fill="none" stroke="#c9a227" stroke-width="7" stroke-dasharray="15.05 15.05"/>
+  <!-- disque intérieur -->
+  <circle cx="64" cy="64" r="52" fill="url(#bg-steffon)" stroke="#7a6342" stroke-width="1.2"/>
+  <!-- buste : manteau blanc sali de la Garde Royale -->
+  <g clip-path="url(#clip-steffon)">
+    <path d="M14,128 C20,97 40,85 64,85 C88,85 108,97 114,128 Z" fill="#cfc9bd"/>
+    <path d="M52,86 L64,128 L76,86 Z" fill="#8e8578"/>
+    <rect x="57" y="62" width="14" height="26" rx="2" fill="#7d6853"/>
+    <ellipse cx="64" cy="54" rx="15.5" ry="18.5" fill="#7d6853"/>
+    <path d="M49,68 C53,73 58,75 64,75 C70,75 75,73 79,68 C77,74 71,77 64,77 C57,77 51,74 49,68 Z" fill="#6b5947"/>
+    <path d="M47,50 C46,35 54,28 64,28 C74,28 82,35 81,50 C78,42 72,39 64,39 C56,39 50,42 47,50 Z" fill="#4a4038"/>
+    <path d="M42,92 C50,88 58,86 64,86 C70,86 78,88 86,92" fill="none" stroke="#c9a227" stroke-width="2" opacity="0.85"/>
+  </g>
+  <!-- badge de maison : les sept écus de Sombreval -->
+  <circle cx="64" cy="113" r="11.5" fill="#191510" stroke="#7a6342" stroke-width="1.2"/>
+  <g transform="translate(64 113)">
+    <path d="M-7,-4 L-3,-4 L-3,0 C-3,2 -5,3.5 -5,3.5 C-5,3.5 -7,2 -7,0 Z" fill="#c9a227"/>
+    <path d="M-2,-5 L2,-5 L2,-1 C2,1 0,2.5 0,2.5 C0,2.5 -2,1 -2,-1 Z" fill="#e8e4dc"/>
+    <path d="M3,-4 L7,-4 L7,0 C7,2 5,3.5 5,3.5 C5,3.5 3,2 3,0 Z" fill="#c9a227"/>
+  </g>
+</svg>

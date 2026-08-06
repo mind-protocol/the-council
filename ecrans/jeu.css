@@ -1,0 +1,1406 @@
+:root{
+  --ink:#2b2119; --muted:#7a6a55; --paper:rgba(120,90,50,.07);
+  --bord:rgba(110,85,50,.35); --accent:#a34a22; --braise:#c9683a;
+  --btn:rgba(120,90,50,.10); --btn-hover:rgba(163,74,34,.14); --fond:#f4eee2;
+  --fond-lateral:rgba(120,90,50,.05);
+  --pensee:#6d5590; --monde:#5d6b58; --sang:#8f1f1f; --vert:#3f7040;
+  --loge:#3d7b86;
+  /* échelle de la carte : carte.js la repose sur chaque <svg> selon son
+     cadrage. Ce défaut évite que les épaisseurs deviennent invalides si le
+     module n'a pas rendu. */
+  --k:1;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --ink:#e6dbc6; --muted:#a8977c; --paper:rgba(255,225,170,.05);
+    --bord:rgba(220,190,140,.25); --accent:#e0824a; --braise:#e8955f;
+    --btn:rgba(255,225,170,.06); --btn-hover:rgba(224,130,74,.16); --fond:#171310;
+    --fond-lateral:rgba(255,225,170,.03);
+    --pensee:#a68cc9; --monde:#8fa387; --sang:#d95050; --vert:#5d8f5d;
+    --loge:#63b3c1;
+  }
+}
+html,body{margin:0;height:100%;background:var(--fond);color:var(--ink);
+  font-family:Georgia,'Times New Roman',serif;line-height:1.6;font-size:19px;}
+/* la chronique d'abord et deux tiers, la scène ensuite sur le tiers restant */
+body{display:grid;grid-template-columns:auto minmax(0,2fr) minmax(340px,1fr);
+  overflow:hidden;}
+#fil{order:2;}
+#scene{order:3;}
+button{font:inherit;color:inherit;cursor:pointer;background:var(--btn);
+  border:1px solid var(--bord);border-radius:5px;transition:background .15s;}
+button:hover{background:var(--btn-hover);border-color:var(--accent);}
+.zone-titre{font-size:.72em;font-variant:small-caps;letter-spacing:.14em;color:var(--muted);
+  border-bottom:1px dotted var(--bord);padding-bottom:5px;margin-bottom:14px;}
+.pulse{animation:pulse 2.2s infinite;}
+@keyframes pulse{0%,100%{opacity:.45}50%{opacity:1}}
+
+/* ------- rail latéral, replié par défaut ------- */
+#lateral{height:100vh;box-sizing:border-box;overflow-y:auto;width:320px;
+  border-right:1px solid var(--bord);background:var(--fond-lateral);
+  padding:14px 18px 20px;transition:width .25s;}
+#lateral.ferme{width:54px;padding:14px 8px;overflow:hidden;}
+#lateral.ferme #lateral-corps{display:none;}
+#lateral-bascule{width:100%;padding:6px 0;font-size:.9em;color:var(--muted);margin-bottom:16px;}
+#lateral-corps{display:flex;flex-direction:column;gap:26px;}
+
+.objectif{font-size:.86em;border-left:3px solid var(--braise);padding:4px 0 4px 10px;
+  margin-bottom:10px;cursor:pointer;transition:color .2s,border-color .2s;}
+.objectif:hover{color:var(--accent);}
+.objectif.statut-accompli{border-left-color:var(--monde);color:var(--muted);text-decoration:line-through;}
+.objectif.statut-echoue{border-left-color:var(--sang);color:var(--muted);text-decoration:line-through;}
+.objectif-vide{font-size:.8em;font-style:italic;color:var(--muted);}
+.reglage{margin-bottom:14px;}
+.reglage-nom{font-size:.8em;color:var(--muted);margin-bottom:2px;}
+.reglage input[type=range]{width:100%;accent-color:var(--accent);height:20px;}
+.reglage-bornes{display:flex;justify-content:space-between;font-size:.68em;
+  color:var(--muted);font-style:italic;}
+body.sans-gestes .gestes{display:none;}
+.bouton-voix{width:100%;padding:5px 0;font-size:.78em;color:var(--muted);
+  background:var(--btn);border:1px solid var(--bord);border-radius:3px;
+  letter-spacing:.03em;cursor:pointer;transition:color .2s,border-color .2s;}
+.bouton-voix:hover:not(:disabled){background:var(--btn-hover);}
+.bouton-voix.actif{color:var(--accent);border-color:var(--accent);}
+.bouton-voix:disabled{opacity:.5;cursor:default;font-style:italic;}
+
+/* ------- la scène : bandeau, décor, narrateur, input ------- */
+#scene{height:100vh;box-sizing:border-box;display:flex;flex-direction:column;
+  overflow:hidden;padding:12px 26px 14px;gap:8px;}
+#bandeau{flex:none;display:flex;align-items:center;gap:14px;font-size:.8em;
+  color:var(--muted);letter-spacing:.04em;border-bottom:1px solid var(--bord);
+  padding-bottom:6px;}
+#lieu{font-style:italic;flex:1;}
+#jauge{width:80px;height:5px;border:1px solid var(--bord);border-radius:3px;overflow:hidden;flex:none;}
+#jauge i{display:block;height:100%;width:0;
+  background:linear-gradient(90deg,var(--accent),var(--braise));transition:width 1s;}
+
+#bulle-monde{flex:none;max-height:11vh;overflow-y:auto;}
+#bulle-monde:empty{display:none;}
+#bulle-monde .breve{margin:0;font-size:.86em;color:var(--muted);
+  border-left:3px solid var(--monde);padding:2px 0 2px 12px;}
+
+/* le décor : carte au centre, acteurs en couronne */
+#decor{flex:1 1 auto;min-height:0;position:relative;}
+#carte{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;}
+#carte svg{max-height:100%;max-width:100%;width:auto;height:auto;display:block;}
+#acteurs{position:absolute;inset:0;pointer-events:none;}
+.acteur{position:absolute;width:0;height:0;pointer-events:none;}
+.acteur .medaillon{position:absolute;left:50%;top:0;transform:translate(-50%,-50%);
+  width:110px;text-align:center;opacity:.5;filter:saturate(.55);pointer-events:auto;
+  transition:opacity .5s,filter .5s,transform .5s;}
+.acteur .medaillon svg{width:58px;height:58px;display:block;margin:0 auto;}
+.acteur .qui{display:block;font-size:.66em;color:var(--muted);line-height:1.2;margin-top:2px;}
+.acteur.parle .medaillon{opacity:1;filter:none;transform:translate(-50%,-50%) scale(1.08);}
+.acteur.parle .qui{color:var(--ink);}
+.acteur .bulle{display:none;}
+.acteur .bulle.pleine{display:block;position:absolute;left:50%;top:42px;
+  transform:translateX(-50%);width:230px;max-height:9.5em;overflow:hidden;
+  background:var(--fond);border:1px solid var(--bord);border-radius:10px;
+  padding:8px 12px;font-size:.78em;line-height:1.45;pointer-events:auto;z-index:3;}
+.acteur.parle .bulle.pleine{border-color:var(--accent);}
+.parole{font-style:italic;}
+
+#bulle-recit{flex:none;max-height:13vh;overflow-y:auto;background:var(--paper);
+  border:1px solid var(--bord);border-left:3px solid var(--monde);
+  border-radius:0 6px 6px 0;padding:7px 16px 9px;}
+#bulle-recit:has(#bulle-recit-corps:empty){display:none;}
+#bulle-recit .etiquette{font-size:.66em;font-variant:small-caps;letter-spacing:.14em;
+  color:var(--monde);}
+#bulle-recit .recit{margin:2px 0 0;border:none;background:none;padding:0;font-size:.9em;}
+#bulle-recit .recit p{margin:0;}
+#bulle-pensee{flex:none;max-height:10vh;overflow-y:auto;}
+#bulle-pensee:empty{display:none;}
+.pensee{font-style:italic;font-size:.86em;color:var(--pensee);
+  border-left:3px dotted var(--pensee);padding:2px 0 2px 12px;margin:0;}
+.pensee::before{content:'⟡ ';}
+#attente{display:none;flex:none;text-align:center;color:var(--muted);
+  font-style:italic;font-size:.82em;padding:2px 0;}
+#attente.actif{display:block;}
+
+/* ------- la barre : Parler / Agir / Attendre ------- */
+#fil-actions{flex:none;border-top:1px solid var(--bord);padding-top:8px;}
+#mode-input{display:flex;gap:6px;margin-bottom:7px;}
+#mode-input button{font-size:.78em;padding:4px 16px;border-radius:14px;color:var(--muted);}
+#mode-input #mode-dire.actif{color:var(--accent);border-color:var(--accent);background:var(--btn-hover);}
+#mode-input #mode-agir.actif{color:var(--monde);border-color:var(--monde);background:var(--paper);}
+#mode-input #mode-attendre.actif{color:var(--braise);border-color:var(--braise);background:var(--paper);}
+.libre{display:flex;gap:10px;align-items:flex-end;}
+.libre textarea{flex:1;font:inherit;font-size:.95em;color:inherit;background:var(--paper);
+  border:1px solid var(--bord);border-radius:8px;padding:10px 14px;min-width:0;
+  min-height:54px;max-height:22vh;resize:vertical;}
+.libre textarea:focus{outline:none;}
+.libre textarea.mode-dire{border-left:3px solid var(--accent);}
+.libre textarea.mode-dire:focus{border-color:var(--accent);}
+.libre textarea.mode-agir{border-left:3px solid var(--monde);font-style:italic;}
+.libre textarea.mode-agir:focus{border-color:var(--monde);}
+.libre button{padding:10px 20px;font-size:.95em;}
+/* l'heure de la fiction, contre le bouton d'envoi : quand on parle, on sait quand */
+.libre .envoi{display:flex;flex-direction:column;align-items:stretch;gap:4px;flex:none;}
+#heure-barre{font-size:.72em;color:var(--muted);letter-spacing:.04em;
+  text-align:center;white-space:nowrap;font-style:italic;}
+#attentes{display:none;gap:10px;flex-wrap:wrap;align-items:center;padding:6px 0 4px;}
+#attentes.actif{display:flex;}
+#attentes button{font-size:.88em;padding:9px 16px;font-style:italic;color:var(--muted);}
+#attentes button:hover{color:var(--ink);}
+#pause{display:none;border-color:var(--braise);color:var(--braise);font-style:normal;}
+/* dans la barre de modes : visible seulement tant qu'il reste du flux à jouer */
+#mode-input #pause{display:none;margin-left:auto;}
+#mode-input #pause.actif{display:inline-flex;align-items:center;}
+
+/* ------- la chronique, à gauche de la scène ------- */
+#fil{height:100vh;box-sizing:border-box;display:flex;flex-direction:column;
+  overflow:hidden;border-right:1px solid var(--bord);padding:14px 18px 16px;
+  background:var(--fond-lateral);}
+#fil-corps{flex:1;overflow-y:auto;padding-right:6px;}
+
+/* ------- « Vos desseins » : la cinquième échelle du décor ------- */
+#desseins{position:static;flex:1 1 auto;min-height:180px;display:flex;
+  flex-direction:column;}
+.desseins-corps{flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:4px;}
+.desseins-jour{font-size:.62em;font-style:italic;color:var(--muted);margin:0 0 12px;}
+.desseins-groupe{margin-bottom:16px;}
+.desseins-groupe-titre{font-size:.6em;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);border-bottom:1px dotted var(--bord);padding-bottom:3px;
+  margin-bottom:9px;}
+.dessein{border-left:2px solid var(--braise);padding:1px 0 4px 10px;margin-bottom:12px;
+  cursor:pointer;}
+.dessein:hover h3{color:var(--accent);}
+.dessein h3{margin:0;font-size:.74em;font-weight:600;line-height:1.35;}
+.dessein-marge{display:flex;flex-wrap:wrap;gap:2px 10px;margin-top:2px;
+  font-size:.58em;color:var(--muted);}
+.dessein-echeance.echeance-retard{color:var(--sang);}
+.dessein-echeance.echeance-urgent{color:var(--accent);}
+.dessein-echeance.echeance-proche{color:var(--braise);}
+.dessein-dit{margin:5px 0 0;font-size:.62em;color:var(--muted);line-height:1.45;}
+.dessein-point{display:inline-block;margin-top:5px;padding:1px 8px;font-size:.55em;
+  font-variant:small-caps;letter-spacing:.08em;color:var(--muted);opacity:0;
+  transition:opacity .15s,color .15s;}
+.dessein:hover .dessein-point,.dessein-point:focus,.dessein-point:disabled{opacity:1;}
+.dessein-point:hover{color:var(--accent);}
+.dessein-point:disabled{cursor:default;color:var(--muted);opacity:.55;}
+.dessein.statut-accompli{border-left-color:var(--monde);}
+.dessein.statut-echoue{border-left-color:var(--sang);}
+.dessein.statut-accompli h3,.dessein.statut-echoue h3{color:var(--muted);
+  text-decoration:line-through;font-weight:400;}
+/* comme « Les gens » : quand cette échelle est à l'écran, elle prend la place */
+#cartes:has(#desseins:not(.vue-off)){flex:1 1 auto;}
+.chr{font-size:.8em;margin:0 0 14px;padding-left:10px;border-left:2px solid var(--bord);}
+.chr-qui{font-variant:small-caps;letter-spacing:.05em;color:var(--braise);font-size:.9em;}
+.chr-replique{border-left-color:var(--accent);font-style:italic;}
+.chr-recit{border-left-color:var(--monde);color:var(--muted);}
+.chr-breve{border-left-color:var(--monde);color:var(--muted);font-size:.76em;}
+.chr-pensee{border-left-style:dotted;border-left-color:var(--pensee);color:var(--pensee);
+  font-style:italic;}
+.chr-vous{border-left-color:var(--pensee);}
+.chr-vous .chr-qui{color:var(--pensee);}
+.chr-evenement{border-left-color:var(--sang);}
+.chr-objectif{border-left-color:var(--braise);}
+
+/* ------- blocs : apparition, vieillissement, estompage ------- */
+.bloc{opacity:0;transform:translateY(6px);transition:opacity .7s,transform .7s,
+  border-color 1.2s,border-left-width 1.2s;}
+.bloc.vue{opacity:1;transform:none;}
+/* une fois dit, le texte s'efface — il ne se relit qu'au survol */
+.bloc.vue.estompe{opacity:.07;transition:opacity 2.4s;}
+#scene:hover .bloc.vue.estompe{opacity:.22;transition:opacity .5s;}
+.bloc.vue.estompe:hover,
+#scene:hover .bloc.vue.estompe:hover{opacity:1;transition:opacity .25s;}
+.bloc[data-age="1"]{border-left-width:2px !important;}
+.bloc[data-age="2"]{border-left-width:1px !important;}
+.bloc[data-age="3"], .bloc[data-age="4"]{border-left-width:1px !important;
+  border-left-color:var(--bord) !important;}
+
+/* ------- phrases, gestes, entités ------- */
+.phrase{border-bottom:1px dotted transparent;transition:border-color .25s,background .25s;}
+.phrase-wrap:hover .phrase{background:var(--paper);border-bottom-color:var(--braise);}
+.phrase.reagie{border-bottom:1px solid var(--accent);}
+.gestes{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 2px;}
+.geste-btn{font-size:.86em;font-style:italic;color:var(--muted);padding:5px 11px;
+  border-radius:8px;border-style:dashed;text-align:left;white-space:normal;}
+.geste-btn:hover{color:var(--ink);}
+.geste-fait{font-size:.8em;color:var(--braise);font-style:italic;}
+.entite{font-weight:bold;cursor:pointer;border-bottom:1px dotted transparent;
+  transition:border-color .2s,color .2s;}
+.entite:hover{color:var(--accent);border-bottom-color:var(--accent);}
+.pensee-amorce{opacity:.8;}
+.parole-vous::before{content:'Vous — ';font-style:normal;font-variant:small-caps;
+  color:var(--pensee);font-size:.85em;}
+.acte-vous{color:var(--monde);font-style:italic;}
+.evenement{border:1px solid var(--sang);border-left:3px solid var(--sang);
+  border-radius:0 6px 6px 0;padding:10px 14px;background:var(--paper);font-size:.86em;}
+.evenement::before{content:'✶ ';color:var(--sang);}
+.evenement button{margin-top:8px;padding:6px 12px;font-size:.9em;}
+.objectif-fil{border:1px dashed var(--braise);border-left:3px solid var(--braise);
+  border-radius:0 6px 6px 0;padding:10px 16px;background:var(--paper);font-size:.86em;}
+.objectif-fil span{font-variant:small-caps;letter-spacing:.05em;color:var(--braise);}
+.objectif-fil small{display:block;font-size:.85em;color:var(--muted);margin-top:4px;}
+.objectif-fil-accomplir{border-color:var(--monde);border-left-color:var(--monde);}
+.objectif-fil-accomplir span{color:var(--monde);}
+.objectif-fil-echouer{border-color:var(--sang);border-left-color:var(--sang);}
+.objectif-fil-echouer span{color:var(--sang);}
+
+/* ------- la table peinte (carte + son overlay) -------
+   La géométrie vient de geo.js, généré depuis les données du mod AGOT. Le
+   module pose --k sur le <svg> : le rapport entre le cadrage courant et la
+   carte entière. Toute épaisseur en dépend, pour que la vignette serrée sur
+   la baie et la grande table gardent le même grain de trait ; les corps de
+   texte suivent le font-size posé sur le <svg>, d'où les em. */
+.terre{fill:var(--paper);}
+.cote{fill:none;stroke:var(--bord);stroke-width:calc(1.4px * var(--k));
+  stroke-linejoin:round;}
+.lointain{fill:var(--paper);opacity:.4;}
+/* les régions : le même parchemin, séparées par un trait d'encre pâle */
+.region-terre{fill:var(--paper);stroke:var(--bord);
+  stroke-width:calc(.7px * var(--k));stroke-linejoin:round;}
+/* lacs et rivières navigables : creusés dans la terre, repeints en eau */
+.eaux{fill:var(--fond);stroke:var(--bord);stroke-width:calc(.35px * var(--k));
+  opacity:.85;}
+.region{font-family:inherit;font-size:1.15em;fill:var(--muted);opacity:.7;
+  font-variant:small-caps;letter-spacing:.18em;text-anchor:middle;}
+.mer-nom{font-family:inherit;font-size:.92em;fill:var(--muted);opacity:.55;
+  font-style:italic;text-anchor:middle;}
+.lieu-carte{cursor:pointer;}
+.lieu-carte .point{stroke:var(--fond);stroke-width:calc(1.1px * var(--k));}
+.allg-noir .point{fill:var(--sang);}
+.allg-vert .point{fill:var(--vert);}
+.allg-neutre .point{fill:var(--muted);}
+.lieu-carte .nom{font-family:inherit;font-size:1em;fill:var(--muted);
+  paint-order:stroke;stroke:var(--fond);stroke-width:calc(2.6px * var(--k));
+  stroke-linejoin:round;}
+.lieu-carte:hover .nom{fill:var(--ink);}
+.lieu-carte:hover .point{stroke:var(--accent);}
+.lieu-carte.ici .nom{fill:var(--ink);}
+.anneau{fill:none;stroke:var(--braise);stroke-width:calc(1.3px * var(--k));
+  animation:pulse 2.6s infinite;}
+#carte-legende{display:none;}
+#carte-approcher{position:absolute;bottom:2px;left:50%;transform:translateX(-50%);
+  padding:3px 12px;font-size:.66em;color:var(--muted);font-style:italic;z-index:4;}
+.leg::before{content:'● ';}
+.leg-noir::before{color:var(--sang);}
+.leg-vert::before{color:var(--vert);}
+.leg-neutre::before{color:var(--muted);}
+.leg-ici::before{content:'◍ ';color:var(--braise);}
+#table-peinte{position:fixed;inset:0;z-index:40;background:rgba(20,14,8,.55);
+  backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;}
+#table-peinte[hidden]{display:none;}
+#table-cadre{background:var(--fond);border:1px solid var(--bord);border-radius:10px;
+  box-shadow:0 0 0 6px var(--paper),0 18px 60px rgba(0,0,0,.5);
+  padding:14px 22px 12px;max-width:94vw;max-height:94vh;box-sizing:border-box;
+  display:flex;flex-direction:column;}
+#table-tete{display:flex;align-items:baseline;gap:16px;border-bottom:1px solid var(--bord);
+  padding-bottom:8px;margin-bottom:6px;}
+#table-titre{font-variant:small-caps;letter-spacing:.14em;color:var(--ink);}
+#table-date{flex:1;font-size:.78em;color:var(--muted);font-style:italic;}
+#table-fermer{font-size:.74em;padding:4px 12px;color:var(--muted);}
+#table-carte{flex:1;min-height:0;display:flex;justify-content:center;}
+#table-carte svg{height:calc(94vh - 118px);max-width:88vw;width:auto;}
+#table-legende{display:flex;gap:16px;justify-content:center;font-size:.7em;
+  color:var(--muted);padding-top:6px;border-top:1px dotted var(--bord);
+  flex-wrap:wrap;align-items:center;}
+#table-large{font-size:.74em;padding:4px 12px;color:var(--muted);}
+
+/* ------- la loupe : se pencher sur la carte -------
+   touch-action:none — sans quoi un glissé au doigt ferait défiler la page au
+   lieu de déplacer la carte. Le curseur dit ce qu'on peut faire : saisir. */
+.loupe{touch-action:none;-webkit-user-select:none;user-select:none;}
+.loupe svg{cursor:grab;}
+.loupe.loupe-tient svg{cursor:grabbing;}
+.leg-manuel{margin-left:auto;font-style:italic;opacity:.65;}
+
+/* ------- CE QUE LA TABLE PORTE : jetons, traits, zones -------
+   geo.js donne la géographie, jetons.js donne la guerre. Les pièces sont
+   dessinées dans une boîte locale de 10 unités puis posées par un transform :
+   à l'intérieur, tout s'écrit en unités locales (pas de var(--k)), et la
+   vignette serrée garde le grain exact de la grande table. Le camp donne la
+   couleur par `color`, dont héritent traits et glyphes. */
+.camp-noir{color:var(--sang);}
+.camp-vert{color:var(--vert);}
+.camp-neutre{color:var(--muted);}
+
+/* une région qui a choisi son camp — teinte lavée, jamais un aplat */
+svg .zone{fill:currentColor;opacity:.09;stroke:none;pointer-events:none;}
+
+/* les fils tendus : marches, routes de mer, corbeaux, attaques, serments */
+.trait{cursor:pointer;}
+.trait .fil{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;
+  opacity:.85;}
+.trait .fil-reste{opacity:.45;}
+.trait .fil-pointe{fill:currentColor;stroke:none;opacity:.85;}
+.trait .pointe-ouverte{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;}
+.trait .fil-marque{fill:var(--fond);stroke:currentColor;opacity:.9;}
+.trait .fil-marque.plein{fill:currentColor;}
+.trait:hover .fil,.trait:hover .fil-pointe{opacity:1;}
+.trait-corbeau{color:var(--muted);}
+.trait-serment{color:var(--braise);}
+.trait-querelle,.trait-attaque,.trait-menace{color:var(--sang);}
+.trait-mariage{color:var(--pensee);}
+
+/* les pièces posées */
+.jeton{cursor:pointer;}
+.jeton .jeton-fond{fill:var(--fond);opacity:.82;stroke:none;}
+.jeton .jeton-glyphe{fill:none;stroke:currentColor;stroke-width:1.15;
+  stroke-linecap:round;stroke-linejoin:round;}
+.jeton .jeton-ceinture{fill:none;stroke:currentColor;stroke-width:.7;
+  stroke-dasharray:1.6 1.6;opacity:.7;}
+.jeton .jeton-force{font-family:inherit;font-size:6.2px;fill:var(--ink);
+  text-anchor:middle;paint-order:stroke;stroke:var(--fond);stroke-width:1.8;
+  stroke-linejoin:round;}
+/* le nom vient sous le doigt : dix pièces nommées en clair feraient une
+   bouillie par-dessus les noms de places */
+.jeton .jeton-nom{font-family:inherit;font-size:6px;fill:var(--ink);
+  font-variant:small-caps;letter-spacing:.06em;text-anchor:middle;
+  paint-order:stroke;stroke:var(--fond);stroke-width:2.6;stroke-linejoin:round;
+  opacity:0;transition:opacity .18s;pointer-events:none;}
+.jeton .jeton-doute{font-family:inherit;font-size:6px;fill:currentColor;
+  opacity:.8;text-anchor:middle;}
+.jeton:hover .jeton-glyphe{stroke-width:1.5;}
+.jeton:hover .jeton-nom{opacity:1;}
+
+/* les têtes : où l'on CROIT que sont les gens. Une tête n'est pas une force —
+   elle ne pèse pas sur la table, elle se pose dessous, en retrait, et son nom
+   reste lisible parce que c'est toute l'information qu'elle porte. */
+.jeton-tete .jeton-fond{opacity:.5;}
+.jeton-tete .jeton-glyphe{stroke-width:1.35;opacity:.9;}
+.jeton .jeton-nom.toujours{opacity:.78;font-size:5.4px;font-variant:normal;
+  letter-spacing:.02em;stroke-width:2.2;}
+.jeton-tete:hover .jeton-nom.toujours{opacity:1;}
+
+/* la certitude se voit : une nouvelle rapportée pâlit, une rumeur se troue */
+.cert-rapportee{opacity:.82;}
+.cert-rumeur{opacity:.6;}
+.cert-rumeur .jeton-glyphe{stroke-dasharray:1.5 1.1;}
+
+/* ce qu'on vient de poser du doigt : la braise, puis plus rien de particulier */
+.jeton.neuve .jeton-glyphe{transform-box:fill-box;transform-origin:center;
+  animation:poser .7s cubic-bezier(.2,1.4,.5,1) both;}
+.jeton.neuve .jeton-fond{stroke:var(--braise);stroke-width:.7;
+  animation:pulse 2.4s ease-out 3;}
+@keyframes poser{0%{opacity:0;transform:scale(.3)}100%{opacity:1;transform:scale(1)}}
+.trait.neuve .fil,.trait.neuve .fil-pointe{animation:trait-neuf 1.4s ease-out both;}
+@keyframes trait-neuf{0%{opacity:0;stroke:var(--braise)}45%{opacity:1;stroke:var(--braise)}
+  100%{opacity:.85}}
+
+/* la légende ne nomme que ce qui est effectivement posé */
+.leg-sep{width:1px;height:.9em;background:var(--bord);display:inline-block;}
+.leg-marque{font-style:italic;}
+.leg-marque::before{content:'▸ ';font-style:normal;color:var(--muted);}
+
+/* ------- une démonstration dans le fil ------- */
+.chr-table{border-left-color:var(--braise);}
+.chr-carte{margin:8px 0 2px;border:1px solid var(--bord);border-radius:6px;
+  background:var(--paper);padding:4px 4px 2px;cursor:pointer;position:relative;
+  transition:border-color .2s;}
+.chr-carte:hover{border-color:var(--accent);}
+.chr-carte svg{display:block;width:100%;height:auto;}
+.chr-carte-ouvrir{position:absolute;right:8px;bottom:5px;font-size:.72em;
+  font-style:italic;color:var(--muted);}
+.chr-carte:hover .chr-carte-ouvrir{color:var(--accent);}
+.chr-vers-table{display:inline-block;margin-top:5px;font-size:.86em;font-style:italic;
+  color:var(--muted);cursor:pointer;border-bottom:1px dotted var(--bord);}
+.chr-vers-table::before{content:'✥ ';font-style:normal;color:var(--braise);}
+.chr-vers-table:hover{color:var(--accent);border-bottom-color:var(--accent);}
+
+@media (max-width:1100px){
+  body{grid-template-columns:auto minmax(0,1fr);}
+  #fil{display:none;}
+}
+
+#bulle-vous{flex:none;max-height:9vh;overflow-y:auto;border-left:3px solid var(--pensee);
+  padding:2px 0 2px 12px;font-size:.86em;font-style:italic;}
+#bulle-vous:empty{display:none;}
+
+/* ------- tenue du décor : les bulles restent dans la couronne ------- */
+#scene{gap:6px;}
+#bulle-monde{max-height:7vh;}
+#bulle-recit{max-height:9.5vh;}
+#bulle-pensee{max-height:7vh;}
+#bulle-vous{max-height:7vh;}
+/* bulle compacte, sous le médaillon en haut, au-dessus en bas */
+.acteur .bulle.pleine{width:212px;max-height:5.6em;top:40px;
+  -webkit-mask-image:linear-gradient(180deg,#000 74%,transparent);
+  mask-image:linear-gradient(180deg,#000 74%,transparent);}
+.acteur.bas .bulle.pleine{top:auto;bottom:44px;
+  -webkit-mask-image:none;mask-image:none;}
+
+/* une seule bulle à la fois : celle de qui parle. Le reste est dans la chronique. */
+.acteur .bulle.pleine{display:none;}
+.acteur.parle .bulle.pleine{display:block;max-height:7em;}
+
+/* La table occupe tout le décor : les conseillers se penchent DESSUS, ils ne
+   l'encerclent pas à distance. La vignette est cadrée sur la baie de la Néra
+   (voir CADRE_BAIE dans carte.js), donc elle reste lisible à cette taille. */
+#carte svg{max-width:100%;}
+
+/* =========================================================
+   GRAMMAIRE VISUELLE — chaque nature de texte a sa forme.
+   On ne lit pas un texte : on regarde une salle.
+   ========================================================= */
+
+/* --- LA PAROLE : une bulle, avec sa pointe vers celui qui parle --- */
+.acteur .bulle.pleine{
+  background:var(--fond);border:1.5px solid var(--bord);border-radius:16px;
+  padding:9px 14px 11px;box-shadow:0 3px 14px rgba(0,0,0,.14);
+  -webkit-mask-image:none;mask-image:none;overflow:visible;max-height:none;}
+.acteur.parle .bulle.pleine{border-color:var(--accent);}
+/* la pointe : deux triangles superposés (bord puis remplissage) */
+.acteur .bulle.pleine::before,
+.acteur .bulle.pleine::after{content:'';position:absolute;left:50%;
+  border:10px solid transparent;width:0;height:0;}
+.acteur .bulle.pleine::before{top:-20px;transform:translateX(-50%);
+  border-bottom-color:var(--bord);}
+.acteur.parle .bulle.pleine::before{border-bottom-color:var(--accent);}
+.acteur .bulle.pleine::after{top:-17px;transform:translateX(-50%);
+  border-bottom-color:var(--fond);}
+.acteur.bas .bulle.pleine::before{top:auto;bottom:-20px;
+  border-bottom-color:transparent;border-top-color:var(--bord);}
+.acteur.bas.parle .bulle.pleine::before{border-top-color:var(--accent);}
+.acteur.bas .bulle.pleine::after{top:auto;bottom:-17px;
+  border-bottom-color:transparent;border-top-color:var(--fond);}
+/* le nom coiffe la bulle ; la parole est droite, jamais en italique */
+.parole{font-style:normal;}
+.qui-parle{display:block;font-variant:small-caps;letter-spacing:.12em;
+  font-size:.74em;color:var(--accent);margin-bottom:3px;}
+.dit{display:block;font-size:1em;line-height:1.5;}
+.dit::before{content:'“';font-size:1.5em;line-height:0;color:var(--accent);
+  opacity:.55;margin-right:2px;vertical-align:-.18em;}
+.dit::after{content:'”';font-size:1.5em;line-height:0;color:var(--accent);
+  opacity:.55;margin-left:1px;vertical-align:-.35em;}
+
+/* --- LA NARRATION : de la prose, pas un encadré --- */
+#bulle-recit{background:none;border:none;border-left:none;padding:2px 0 4px;
+  max-height:12vh;text-align:center;}
+#bulle-recit .etiquette{display:inline-block;font-size:.6em;font-variant:small-caps;
+  letter-spacing:.3em;color:var(--muted);opacity:.7;}
+#bulle-recit .etiquette::before{content:'— ';}
+#bulle-recit .etiquette::after{content:' —';}
+#bulle-recit .recit{font-style:italic;font-size:.92em;color:var(--ink);opacity:.86;
+  max-width:62ch;margin:1px auto 0;line-height:1.55;}
+#bulle-recit .recit p::before{content:none;}
+
+/* --- LA DÉPÊCHE : ce qui vient du dehors, scellé et bref --- */
+#bulle-monde .breve{border-left:none;padding:0 0 0 26px;position:relative;
+  font-size:.8em;letter-spacing:.015em;color:var(--muted);font-style:normal;}
+#bulle-monde .breve::before{content:'✦';position:absolute;left:4px;top:0;
+  color:var(--monde);font-size:1.05em;}
+
+/* --- LA PENSÉE : un murmure, sans cadre --- */
+.pensee{border-left:none;padding:0 0 0 24px;position:relative;font-size:.88em;
+  color:var(--pensee);font-style:italic;opacity:.95;}
+.pensee::before{content:'⟡';position:absolute;left:4px;top:0;opacity:.8;}
+
+/* --- VOTRE VOIX : la même bulle, à votre couleur --- */
+#bulle-vous{border-left:none;padding:0;max-height:none;}
+#bulle-vous .parole-vous{display:inline-block;max-width:70ch;
+  background:var(--paper);border:1.5px solid var(--pensee);border-radius:16px;
+  padding:8px 16px 10px;font-style:normal;}
+#bulle-vous .parole-vous::before{content:none;}
+#bulle-vous .qui-parle{color:var(--pensee);}
+#bulle-vous .dit::before,#bulle-vous .dit::after{color:var(--pensee);}
+#bulle-vous .acte-vous{display:inline-block;padding:2px 0 2px 24px;position:relative;
+  color:var(--monde);font-style:italic;}
+#bulle-vous .acte-vous::before{content:'❖';position:absolute;left:2px;color:var(--monde);}
+
+/* --- LA CHRONIQUE : un registre, chaque nature reconnaissable au premier coup d'œil --- */
+.chr{border-left:none;padding:0 0 0 14px;position:relative;margin-bottom:16px;}
+.chr-qui{display:block;font-variant:small-caps;letter-spacing:.12em;font-size:.8em;
+  color:var(--accent);margin-bottom:1px;}
+.chr-replique{font-style:normal;color:var(--ink);}
+.chr-replique::before{content:'“';position:absolute;left:0;top:.55em;color:var(--accent);
+  font-size:1.4em;line-height:0;opacity:.6;}
+.chr-recit{font-style:italic;color:var(--muted);padding-left:0;text-align:center;
+  font-size:.78em;opacity:.9;}
+.chr-breve{font-style:normal;font-size:.74em;letter-spacing:.02em;color:var(--muted);}
+.chr-breve::before{content:'✦';position:absolute;left:0;color:var(--monde);font-size:.9em;}
+.chr-pensee{font-style:italic;color:var(--pensee);}
+.chr-pensee::before{content:'⟡';position:absolute;left:0;opacity:.8;font-size:.9em;}
+.chr-vous .chr-qui{color:var(--pensee);}
+.chr-vous::before{content:'“';position:absolute;left:0;top:.55em;color:var(--pensee);
+  font-size:1.4em;line-height:0;opacity:.7;}
+.chr-evenement{font-size:.82em;border-left:none;padding-left:14px;color:var(--ink);}
+.chr-evenement::before{content:'✶';position:absolute;left:0;color:var(--sang);}
+
+/* le cadre de la bulle reste intact (la pointe déborde) ; c'est la parole qui se plie */
+.acteur.parle .bulle.pleine{max-height:none;}
+.acteur .bulle.pleine .dit{max-height:6.2em;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,#000 76%,transparent);
+  mask-image:linear-gradient(180deg,#000 76%,transparent);}
+
+/* dans la chronique, un acte n'est pas une parole */
+.chr-acte{font-style:italic;color:var(--monde);}
+.chr-acte::before{content:'❖';color:var(--monde);font-size:.85em;top:0;}
+.chr-acte .chr-qui{color:var(--monde);}
+
+/* =========================================================
+   LA CHRONIQUE — un registre à gouttière : blason + carte.
+   ========================================================= */
+.chr{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;
+  align-items:start;padding:0;margin:0 0 14px;position:relative;
+  border-left:none;font-style:normal;text-align:left;}
+.chr::before{content:none !important;}
+.chr-icone{width:30px;height:30px;border-radius:50%;flex:none;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1;
+  border:1px solid var(--bord);background:var(--paper);color:var(--muted);}
+.chr-icone svg{width:100%;height:100%;display:block;}
+.chr-corps{min-width:0;}
+.chr-qui{display:block;font-variant:small-caps;letter-spacing:.12em;
+  font-size:.76em;margin:2px 0 1px;color:var(--muted);}
+.chr-texte{display:block;font-size:.8em;line-height:1.5;}
+
+/* la parole : une carte, le portrait en gouttière */
+.chr-replique .chr-icone{border-color:var(--accent);padding:0;background:var(--fond);}
+.chr-replique .chr-qui{color:var(--accent);}
+.chr-replique .chr-corps{background:var(--paper);border:1px solid var(--bord);
+  border-radius:12px;padding:5px 12px 7px;}
+.chr-replique .chr-texte::before{content:'“';color:var(--accent);opacity:.5;margin-right:1px;}
+.chr-replique .chr-texte::after{content:'”';color:var(--accent);opacity:.5;margin-left:1px;}
+
+/* votre voix : la même carte, à votre couleur */
+.chr-vous .chr-icone{border-color:var(--pensee);color:var(--pensee);}
+.chr-vous .chr-qui{color:var(--pensee);}
+.chr-vous .chr-corps{background:var(--paper);border:1px solid var(--pensee);
+  border-radius:12px;padding:5px 12px 7px;}
+.chr-vous .chr-texte::before{content:'“';color:var(--pensee);opacity:.6;}
+.chr-vous .chr-texte::after{content:'”';color:var(--pensee);opacity:.6;}
+/* un acte n'est pas une parole : pas de carte, pas de guillemets */
+.chr-acte .chr-icone{border-color:var(--monde);color:var(--monde);}
+.chr-acte .chr-qui{color:var(--monde);}
+.chr-acte .chr-corps{background:none;border:none;padding:0;}
+.chr-acte .chr-texte{font-style:italic;color:var(--monde);}
+.chr-acte .chr-texte::before,.chr-acte .chr-texte::after{content:none;}
+
+/* le récit : prose, sans carte */
+.chr-recit .chr-icone{color:var(--monde);border-style:dotted;}
+.chr-recit .chr-texte{font-style:italic;color:var(--muted);font-size:.78em;}
+
+/* la dépêche : brève et scellée */
+.chr-breve .chr-icone{color:var(--monde);}
+.chr-breve .chr-texte{font-size:.74em;letter-spacing:.015em;color:var(--muted);}
+
+/* la pensée : un murmure */
+.chr-pensee .chr-icone{color:var(--pensee);border-color:var(--pensee);border-style:dotted;}
+.chr-pensee .chr-texte{font-style:italic;color:var(--pensee);font-size:.78em;}
+
+/* l'événement : le monde frappe à la porte */
+.chr-evenement .chr-icone{color:var(--sang);border-color:var(--sang);}
+.chr-evenement .chr-corps{border-left:2px solid var(--sang);padding-left:10px;}
+.chr-evenement .chr-texte{font-size:.82em;}
+
+/* les desseins */
+.chr-objectif .chr-icone{color:var(--braise);border-color:var(--braise);}
+.chr-objectif .chr-qui{color:var(--braise);}
+.chr-objectif .chr-corps{border:1px dashed var(--braise);border-radius:10px;
+  padding:5px 12px 7px;background:var(--paper);}
+.chr-objectif-accomplir .chr-icone{color:var(--monde);border-color:var(--monde);}
+.chr-objectif-accomplir .chr-corps{border-color:var(--monde);}
+.chr-objectif-echouer .chr-icone{color:var(--sang);border-color:var(--sang);}
+.chr-objectif-echouer .chr-corps{border-color:var(--sang);}
+
+/* échelle du fil : une seule cascade, jamais de tailles qui se multiplient */
+.chr{font-size:1em;}
+.chr-qui{font-size:.7em;}
+.chr-texte{font-size:.78em;}
+.chr-recit .chr-texte{font-size:.76em;}
+.chr-breve .chr-texte{font-size:.74em;}
+.chr-pensee .chr-texte{font-size:.76em;}
+.chr-evenement .chr-texte{font-size:.8em;}
+.chr-objectif .chr-texte{font-size:.76em;}
+
+/* blasons en emoji : le cercle garde la couleur du genre, l'emoji porte le sens */
+.chr-icone{font-size:15px;font-family:"Segoe UI Emoji","Apple Color Emoji",
+  "Noto Color Emoji",sans-serif;line-height:1;background:var(--fond);}
+.chr-replique .chr-icone,.chr-vous .chr-icone{padding:0;}
+
+/* la scène parle la même signalétique que le fil */
+#bulle-monde .breve::before{content:'📨';font-size:.95em;top:1px;}
+.pensee::before{content:'💭';font-size:.9em;opacity:1;}
+#bulle-vous .acte-vous::before{content:'✋';font-size:.9em;}
+.evenement::before{content:'⚡ ';color:inherit;}
+#bulle-recit .etiquette::before{content:'🎭 ';}
+#bulle-recit .etiquette::after{content:none;}
+#bulle-monde .breve,.pensee,#bulle-vous .acte-vous{padding-left:28px;}
+
+/* =========================================================
+   DES ENTITÉS DISTINCTES — pas un fil, des objets posés :
+   une parole est une carte, une pensée une note bleue,
+   une dépêche un pli, un récit du vide entre les choses.
+   ========================================================= */
+:root{
+  --bleu-pensee:rgba(96,124,196,.13); --bleu-bord:rgba(96,124,196,.5);
+  --script:'Segoe Script','Ink Free','Bradley Hand','Brush Script MT',cursive;
+}
+@media (prefers-color-scheme: dark){
+  :root{--bleu-pensee:rgba(126,158,232,.16); --bleu-bord:rgba(150,180,240,.55);}
+}
+
+/* on respire : chaque entité est un objet, pas une ligne */
+.chr{margin:0 0 22px;align-items:start;}
+
+/* — LA PAROLE : une carte, plus grande, portrait à l'appui — */
+.chr-replique .chr-corps{background:var(--surface,var(--paper));border:1px solid var(--bord);
+  border-radius:14px;padding:8px 14px 10px;box-shadow:0 2px 8px rgba(0,0,0,.07);}
+.chr-replique .chr-texte{font-size:.88em;line-height:1.5;}
+.chr-vous .chr-corps{border-radius:14px;padding:8px 14px 10px;
+  box-shadow:0 2px 8px rgba(0,0,0,.07);}
+.chr-vous .chr-texte{font-size:.88em;line-height:1.5;}
+
+/* — LA PENSÉE : une note bleue, d'une autre main — */
+.chr-pensee .chr-corps{background:var(--bleu-pensee);border:1px solid var(--bleu-bord);
+  border-radius:18px 18px 18px 6px;padding:8px 15px 10px;}
+.chr-pensee .chr-texte{font-family:var(--script);font-size:.9em;font-style:normal;
+  line-height:1.45;color:var(--ink);opacity:.92;}
+.chr-pensee .chr-icone{border-color:var(--bleu-bord);background:var(--bleu-pensee);
+  border-style:solid;}
+
+/* — LA DÉPÊCHE : un pli qu'on vient d'ouvrir — */
+.chr-breve .chr-corps{background:var(--paper);border:1px solid var(--bord);
+  border-radius:3px;padding:7px 13px 8px;
+  border-top:2px solid var(--monde);}
+.chr-breve .chr-texte{font-size:.8em;}
+
+/* — L'ÉVÉNEMENT : une plaque qui alerte — */
+.chr-evenement .chr-corps{background:var(--paper);border:1px solid var(--sang);
+  border-left:4px solid var(--sang);border-radius:0 8px 8px 0;padding:8px 14px;}
+.chr-evenement .chr-texte{font-size:.86em;}
+
+/* — LE RÉCIT : pas un objet, le vide entre les objets — */
+.chr-recit{margin:6px 0 20px;}
+.chr-recit .chr-corps{background:none;border:none;padding:0 4px;}
+.chr-recit .chr-texte{font-size:.8em;font-style:italic;color:var(--muted);}
+
+/* — L'ACTE : un geste, sans cadre — */
+.chr-acte .chr-texte{font-size:.84em;}
+/* un acteur qui fait quelque chose : son médaillon se réveille sans s'illuminer comme s'il parlait */
+.acteur.agit .medaillon{opacity:.85;filter:saturate(.8);
+  transform:translate(-50%,-50%) scale(1.03);}
+
+/* la scène suit la même matière */
+.dit{font-size:1.1em;}
+.pensee{font-family:var(--script);font-style:normal;font-size:.95em;color:var(--ink);
+  background:var(--bleu-pensee);border:1px solid var(--bleu-bord);
+  border-radius:18px 18px 18px 6px;padding:7px 15px 8px 34px;display:inline-block;}
+.pensee::before{left:12px;top:7px;}
+
+/* le nom ne s'affiche qu'une fois : sous le portrait. La pointe dit qui parle. */
+.acteur .bulle .qui-parle{display:none;}
+
+/* la barre d'action vit dans le fil, sous la chronique */
+body{grid-template-columns:auto minmax(0,1fr) 430px;}
+#fil{padding:14px 16px 14px;}
+#fil-corps{min-height:0;}
+#fil #attente{flex:none;padding:4px 0 2px;font-size:.78em;}
+#fil #fil-actions{flex:none;border-top:1px solid var(--bord);padding:8px 0 0;margin-top:6px;}
+#fil #mode-input{gap:5px;margin-bottom:6px;}
+#fil #mode-input button{font-size:.72em;padding:4px 12px;}
+#fil .libre{gap:8px;}
+#fil .libre textarea{font-size:.86em;min-height:62px;padding:9px 12px;}
+#fil .libre button{padding:9px 14px;font-size:.86em;}
+#fil #attentes{gap:7px;padding:4px 0;}
+#fil #attentes button{font-size:.78em;padding:7px 12px;}
+@media (max-width:1100px){body{grid-template-columns:auto minmax(0,1fr);} #fil{display:flex;}}
+
+/* la pointe suit le médaillon, même quand la bulle a été recalée dans le décor */
+.acteur .bulle.pleine::before,
+.acteur .bulle.pleine::after{left:var(--pointe,50%);transform:translateX(-50%);}
+
+/* le fil au centre et large ; la carte à droite, la salle vue de loin */
+#fil{order:2;}
+#scene{order:3;}
+body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
+#bulle-recit{display:none;}
+
+/* =========================================================
+   ARRIVÉES — ce qui vient d'arriver se voit arriver.
+   (Rien ne s'anime au rejeu de l'historique.)
+   ========================================================= */
+@keyframes entree-fil{
+  from{opacity:0;transform:translateY(14px);}
+  to{opacity:1;transform:none;}
+}
+.chr.entre{animation:entree-fil .5s cubic-bezier(.22,.9,.3,1) both;}
+/* la gouttière arrive juste après le corps : le blason se pose */
+@keyframes pose-blason{
+  0%{opacity:0;transform:scale(.5);}
+  60%{opacity:1;transform:scale(1.12);}
+  100%{opacity:1;transform:none;}
+}
+.chr.entre .chr-icone{animation:pose-blason .45s ease-out .12s both;}
+
+/* la bulle éclot au-dessus de celui qui parle */
+@keyframes eclosion{
+  0%{opacity:0;transform:scale(.82);}
+  70%{opacity:1;transform:scale(1.03);}
+  100%{opacity:1;transform:none;}
+}
+.acteur .bulle.pleine.eclot{animation:eclosion .34s cubic-bezier(.3,1.4,.5,1) both;
+  transform-origin:50% 0;}
+.acteur.bas .bulle.pleine.eclot{transform-origin:50% 100%;}
+
+/* le médaillon de celui qui prend la parole se réveille */
+@keyframes reveil{
+  0%{box-shadow:0 0 0 0 var(--accent);}
+  100%{box-shadow:0 0 0 14px transparent;}
+}
+.acteur.parle .medaillon svg{border-radius:50%;animation:reveil .7s ease-out;}
+
+@media (prefers-reduced-motion: reduce){
+  .chr.entre,.chr.entre .chr-icone,.acteur .bulle.pleine.eclot,
+  .acteur.parle .medaillon svg{animation:none;}
+}
+
+/* la page de la carte ne porte plus de texte : la salle, rien que la salle */
+.acteur .bulle{display:none !important;}
+#bulle-monde,#bulle-vous,#bulle-pensee,#bulle-recit{display:none !important;}
+#decor{flex:1 1 auto;}
+.acteur .medaillon{opacity:.62;}
+.acteur.parle .medaillon{opacity:1;}
+/* le bouton d'un événement, dans le fil */
+.bouton-evenement{display:block;margin-top:9px;padding:6px 14px;font-size:.78em;
+  color:var(--sang);border-color:var(--sang);}
+
+/* =========================================================
+   ESPACE NÉGATIF DANS LE FIL — une colonne de lecture, du vide autour.
+   ========================================================= */
+#fil{padding:22px 28px 16px;}
+#fil-corps{padding:10px 12px 28px 4px;}
+/* la mesure de lecture est bornée et centrée : le reste est du silence */
+.chr{max-width:600px;margin:0 auto 34px;gap:14px;grid-template-columns:32px minmax(0,1fr);}
+.chr-corps{padding-top:1px;}
+.chr-replique .chr-corps,.chr-vous .chr-corps{padding:11px 18px 13px;}
+.chr-objectif .chr-corps{padding:11px 18px 13px;}
+.chr-breve .chr-corps{padding:10px 16px 11px;}
+.chr-evenement .chr-corps{padding:11px 18px 13px;}
+.chr-texte{line-height:1.62;}
+.chr-qui{margin:3px 0 3px;}
+/* le récit respire davantage : c'est lui qui sépare les scènes */
+.chr-recit{margin:14px auto 30px;}
+.chr-recit .chr-texte{line-height:1.66;}
+/* la barre d'écriture reprend la même mesure */
+#fil #fil-actions{max-width:600px;margin:10px auto 0;width:100%;padding-left:46px;
+  box-sizing:border-box;}
+#fil #attente{max-width:600px;margin:0 auto;}
+
+/* jalons de la chronique : le jour et le lieu, quand ils changent */
+.jalon{max-width:600px;margin:34px auto 26px;display:flex;align-items:center;gap:14px;
+  color:var(--muted);}
+.jalon::before,.jalon::after{content:'';flex:1;height:1px;background:var(--bord);}
+.jalon span{font-size:.66em;font-variant:small-caps;letter-spacing:.2em;white-space:nowrap;}
+#fil-corps > .jalon:first-child{margin-top:4px;}
+
+/* la colonne de lecture est portée par le conteneur : entrées, jalons et
+   composeur s'alignent alors par construction (plus d'écart de barre de défilement) */
+#fil-corps{max-width:600px;width:100%;margin:0 auto;padding:10px 0 28px;box-sizing:border-box;}
+.chr{max-width:none;margin:0 0 34px;}
+.jalon{max-width:none;margin:34px 0 26px;}
+#fil #fil-actions{max-width:600px;margin:10px auto 0;padding-left:46px;padding-right:0;}
+#fil #attente{max-width:600px;margin:0 auto;}
+
+/* =========================================================
+   REFONTE DU FIL — un seul système.
+   Le portrait, le nom et la couleur portent le sens ; les cadres s'effacent.
+   Deux surfaces pleines seulement : votre voix et vos pensées.
+   ========================================================= */
+
+/* remise à plat */
+.chr .chr-corps{background:none;border:none;box-shadow:none;padding:0;border-radius:0;}
+.chr .chr-icone{border:none;background:none;width:34px;height:34px;font-size:17px;}
+.chr{grid-template-columns:34px minmax(0,1fr);gap:13px;margin:0 0 26px;}
+.chr .chr-texte{font-size:.82em;line-height:1.6;}
+.chr .chr-qui{font-size:.68em;letter-spacing:.14em;margin:0 0 2px;}
+
+/* — la parole : un portrait, un nom, une phrase. Rien d'autre. — */
+.chr-replique .chr-icone{width:34px;height:34px;border-radius:50%;overflow:hidden;
+  box-shadow:0 0 0 1px var(--bord);}
+.chr-replique .chr-icone svg{width:100%;height:100%;}
+.chr-replique .chr-qui{color:var(--accent);}
+.chr-replique .chr-texte{font-size:.9em;color:var(--ink);}
+.chr-replique .chr-texte::before,.chr-replique .chr-texte::after{content:none;}
+
+/* — votre voix : la seule qui pose une surface — */
+.chr-vous .chr-corps{background:var(--paper);border-radius:12px;padding:9px 15px 11px;}
+.chr-vous .chr-qui{color:var(--pensee);}
+.chr-vous .chr-texte{font-size:.9em;color:var(--ink);}
+.chr-vous .chr-texte::before,.chr-vous .chr-texte::after{content:none;}
+.chr-vous .chr-icone{color:var(--pensee);}
+/* un acte n'a pas de surface : c'est un geste, pas une parole */
+.chr-acte .chr-corps{background:none;padding:0;}
+.chr-acte .chr-texte{font-style:italic;color:var(--monde);font-size:.86em;}
+.chr-acte .chr-icone{color:var(--monde);}
+
+/* — la pensée : la note bleue, harmonisée — */
+.chr-pensee .chr-corps{background:var(--bleu-pensee);border-radius:12px;
+  padding:9px 15px 11px;border:none;}
+.chr-pensee .chr-icone{color:var(--pensee);}
+.chr-pensee .chr-texte{font-family:var(--script);font-size:.92em;font-style:normal;
+  color:var(--ink);opacity:.92;line-height:1.5;}
+
+/* — le récit : de la prose, et c'est tout — */
+.chr-recit .chr-texte{font-style:italic;color:var(--muted);font-size:.84em;}
+.chr-recit .chr-icone{color:var(--monde);opacity:.55;}
+
+/* — la dépêche : un filet, pas une boîte — */
+.chr-breve .chr-corps{border-left:1px solid var(--bord);padding:1px 0 1px 13px;}
+.chr-breve .chr-texte{color:var(--muted);font-size:.8em;}
+.chr-breve .chr-icone{color:var(--monde);}
+
+/* — l'événement : le seul filet appuyé — */
+.chr-evenement .chr-corps{border-left:2px solid var(--sang);padding:1px 0 3px 13px;}
+.chr-evenement .chr-texte{font-size:.86em;color:var(--ink);}
+.chr-evenement .chr-icone{color:var(--sang);}
+
+/* — les desseins — */
+.chr-objectif .chr-corps{border-left:2px solid var(--braise);padding:1px 0 3px 13px;}
+.chr-objectif .chr-qui{color:var(--braise);}
+.chr-objectif .chr-texte{font-size:.84em;}
+.chr-objectif .chr-icone{color:var(--braise);}
+.chr-objectif-accomplir .chr-corps{border-left-color:var(--monde);}
+.chr-objectif-echouer .chr-corps{border-left-color:var(--sang);}
+
+/* les jalons se font plus discrets que les entrées qu'ils annoncent */
+.jalon{margin:30px 0 24px;}
+.jalon span{opacity:.75;}
+
+/* =========================================================
+   LE CONTENANT DU FIL — plus de boîte dans la boîte.
+   La zone de défilement occupe toute la colonne (sa barre va au bord),
+   c'est la LIGNE de lecture qui est bornée et centrée.
+   ========================================================= */
+#fil-corps{max-width:none;width:auto;margin:0;padding:10px 0 28px;
+  overflow-y:auto;overflow-x:hidden;scrollbar-gutter:stable;}
+.chr{max-width:600px;margin:0 auto 26px;}
+.jalon{max-width:600px;margin:30px auto 24px;}
+#fil > .zone-titre{max-width:600px;margin:0 auto 10px;width:100%;}
+#fil #fil-actions{width:100%;max-width:615px;margin:8px auto 0;
+  padding:9px 15px 0 47px;box-sizing:border-box;}
+#fil #attente{max-width:615px;margin:0 auto;}
+/* rien ne doit forcer la colonne à s'élargir */
+.chr,.chr *,.jalon{min-width:0;}
+.chr-texte{overflow-wrap:anywhere;}
+
+/* le titre suit la même mesure que les entrées (compense la gouttière de barre) */
+#fil > .zone-titre{max-width:615px;padding-right:15px;box-sizing:border-box;}
+
+/* le fil n'a plus de titre : la place revient au texte */
+#fil{padding-top:14px;}
+#fil-corps{padding-top:4px;}
+
+/* ce qu'on est en train d'entendre : la ligne se réveille et son blason bat.
+   Rien qui déborde de la gouttière — le fil rogne ce qui dépasse à gauche. */
+.chr-dit .chr-texte{color:var(--ink);}
+.chr-dit.chr-recit .chr-texte,.chr-dit.chr-breve .chr-texte,
+.chr-dit.chr-acte .chr-texte,.chr-dit.chr-pensee .chr-texte{opacity:1;}
+.chr-dit.chr-recit{opacity:1;}
+.chr-dit .chr-corps{border-color:var(--braise);}
+/* .chr.entre .chr-icone pose déjà une animation d'arrivée : il faut le même
+   poids pour la remplacer, sinon le battement ne part jamais. */
+.chr.chr-dit .chr-icone{border-color:var(--braise);
+  animation:battement 2.4s ease-in-out infinite;}
+@keyframes battement{
+  0%,100%{box-shadow:0 0 0 0 rgba(224,130,74,.5);}
+  50%{box-shadow:0 0 0 6px rgba(224,130,74,0);}
+}
+@media (prefers-reduced-motion:reduce){
+  .chr.chr-dit .chr-icone{animation:none;box-shadow:0 0 0 2px rgba(224,130,74,.45);}
+}
+
+/* les rôles : à côté du nom dans le fil, sous le nom sur la carte */
+.chr-role{display:inline;font-variant:normal;text-transform:none;font-style:italic;
+  letter-spacing:.02em;font-size:1.06em;color:var(--muted);}
+.chr-role::before{content:' · ';font-style:normal;}
+.acteur .qui .role{display:block;font-size:.8em;font-style:italic;color:var(--muted);
+  opacity:.85;line-height:1.15;margin-top:1px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+
+/* l'emblème de fonction, devant le rôle */
+.emb{font-style:normal;margin-right:5px;font-size:.95em;
+  font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;}
+.chr-role .emb{margin-left:1px;}
+
+/* la barre de défilement du fil se réduit à son seul indicateur */
+#fil-corps::-webkit-scrollbar{width:5px;}
+#fil-corps::-webkit-scrollbar-track{background:transparent;}
+#fil-corps::-webkit-scrollbar-button{display:none;height:0;width:0;}
+#fil-corps::-webkit-scrollbar-corner{background:transparent;}
+#fil-corps::-webkit-scrollbar-thumb{background:var(--bord);border-radius:3px;}
+#fil-corps::-webkit-scrollbar-thumb:hover{background:var(--braise);}
+/* la gouttière réservée est désormais fine : le composeur suit la même mesure */
+#fil #fil-actions{max-width:605px;padding-right:5px;}
+#fil #attente{max-width:605px;}
+
+#fil-corps::-webkit-scrollbar{width:5px;}
+#fil #fil-actions{max-width:605px;padding-right:5px;}
+
+/* ------- les annales : ce que l'Histoire retient (rouge et or) ------- */
+.chr-marque{position:relative;margin:22px 0;padding:0;}
+.chr-marque .chr-icone{color:#c9a227;border-color:#c9a227;}
+.chr-marque .chr-corps{background:none;border:none;padding:10px 0 12px;
+  border-top:2px solid transparent;border-bottom:2px solid transparent;
+  border-image:linear-gradient(90deg,var(--sang) 0%,#c9a227 55%,rgba(201,162,39,0) 100%) 1;}
+.marque-coiffe{display:block;font-size:.62em;font-variant:small-caps;
+  letter-spacing:.22em;color:#c9a227;margin-bottom:3px;}
+.chr-marque .chr-texte{font-size:.92em;color:var(--ink);}
+.chr-marque .chr-texte::before,.chr-marque .chr-texte::after{content:none;}
+.annale{font-size:.82em;border-left:3px solid #c9a227;padding:3px 0 3px 10px;
+  margin-bottom:10px;}
+.annale-quand{display:block;font-size:.74em;font-variant:small-caps;
+  letter-spacing:.1em;color:var(--muted);}
+.annale-quoi{color:var(--ink);}
+
+/* hors fiction : la question et sa réponse se tiennent en marge du récit */
+#mode-input #mode-question.actif{color:var(--muted);border-color:var(--muted);
+  background:var(--paper);}
+.libre textarea.mode-question{border-left:3px dashed var(--muted);font-style:normal;}
+.libre textarea.mode-question:focus{border-color:var(--muted);}
+.chr-question .chr-corps,.chr-reponse .chr-corps{border-left:1px dashed var(--bord);
+  padding:1px 0 2px 13px;}
+.chr-question .chr-qui,.chr-reponse .chr-qui{color:var(--muted);}
+.chr-question .chr-texte,.chr-reponse .chr-texte{font-size:.8em;color:var(--muted);}
+.chr-question .chr-icone,.chr-reponse .chr-icone{opacity:.75;}
+
+/* hors univers : la loge. Elle ne ressemble à rien d'autre dans le fil —
+   sans-serif, cadre plein, pas de filet dans la marge : on doit voir d'un
+   coup d'œil qu'on est sorti du récit et que rien de tout ça n'a eu lieu. */
+#mode-input #mode-meta.actif{color:var(--loge);border-color:var(--loge);
+  background:color-mix(in srgb,var(--loge) 12%,transparent);}
+.libre textarea.mode-meta{border-left:3px solid var(--loge);font-style:normal;
+  font-family:ui-sans-serif,system-ui,sans-serif;}
+.libre textarea.mode-meta:focus{border-color:var(--loge);}
+.chr-meta .chr-corps,.chr-coulisses .chr-corps{border-left:0;
+  border:1px solid color-mix(in srgb,var(--loge) 45%,transparent);border-radius:7px;
+  background:color-mix(in srgb,var(--loge) 7%,transparent);padding:7px 12px;margin:3px 0;}
+.chr-meta .chr-qui,.chr-coulisses .chr-qui{color:var(--loge);
+  font-variant:small-caps;letter-spacing:.1em;}
+.chr-meta .chr-texte,.chr-coulisses .chr-texte{font-size:.82em;
+  font-family:ui-sans-serif,system-ui,sans-serif;line-height:1.5;}
+.chr-meta .chr-icone,.chr-coulisses .chr-icone{opacity:.8;}
+
+/* une médaille idiote, décernée avec tout le sérieux qu'elle ne mérite pas */
+.medaille{display:block;margin:9px 0 2px;padding:9px 12px 10px;text-align:center;
+  border:1px dashed color-mix(in srgb,var(--loge) 55%,transparent);border-radius:7px;}
+.medaille-ruban{display:block;font-size:1.5em;line-height:1.2;}
+.medaille-titre{display:block;font-size:.78em;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--loge);margin-top:3px;
+  font-family:ui-sans-serif,system-ui,sans-serif;}
+.medaille-citation{display:block;font-size:.76em;color:var(--muted);margin-top:5px;
+  font-family:ui-sans-serif,system-ui,sans-serif;font-style:italic;}
+
+/* =========================================================
+   LA CARTE LOCALE — le château, salle par salle.
+   Deux échelles d'une même table : #plan (où je suis, qui est à trois
+   portes de moi) et #carte (où porte la guerre). Une bascule au-dessus du
+   décor ; les médaillons des acteurs se tiennent par-dessus les deux.
+   Le plan n'a qu'un cadrage : pas de --k ici, les épaisseurs sont en
+   unités du viewBox et suivent l'agrandissement du plan déplié.
+   ========================================================= */
+#plan{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;}
+#plan svg{max-height:100%;max-width:100%;width:auto;height:auto;display:block;cursor:pointer;}
+.vue-off{display:none !important;}
+#vue-bascule{position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:6;
+  display:flex;gap:3px;}
+#vue-bascule button{font-size:.6em;padding:3px 11px;color:var(--muted);
+  background:transparent;border-color:transparent;letter-spacing:.06em;}
+#vue-bascule button.actif{color:var(--ink);background:var(--btn);border-color:var(--bord);}
+#vue-bascule button:hover{color:var(--ink);}
+
+.plan{font-family:Georgia,'Times New Roman',serif;font-size:10px;}
+/* le dehors : la montagne au nord, la baie au sud */
+.plan .plan-roche{fill:var(--paper);}
+.plan .plan-mer{fill:var(--fond);stroke:var(--bord);stroke-width:.7;}
+/* le relief du dehors : crêtes de la montagne, houle de la baie */
+.plan .plan-arete{fill:none;stroke:var(--bord);stroke-width:.9;opacity:.3;
+  stroke-linejoin:round;stroke-linecap:round;}
+.plan .plan-vague{fill:none;stroke:var(--bord);stroke-width:.8;opacity:.42;
+  stroke-linecap:round;}
+/* la muraille, son crénelage et ses tours de guet */
+.plan .plan-mur{fill:none;stroke:var(--bord);stroke-width:2.8;stroke-linejoin:round;}
+.plan .plan-merlon{stroke:var(--bord);stroke-width:1.5;opacity:.8;}
+.plan .plan-guet{fill:var(--fond);stroke:var(--bord);stroke-width:1.6;}
+.plan .plan-dent{stroke:var(--bord);stroke-width:1.4;stroke-linecap:round;opacity:.85;}
+/* une salle : un parchemin de plus par étage d'emboîtement, d'où le fondu
+   naturel cour → salle → salle dans la salle (var(--paper) est translucide) */
+.plan-salle{cursor:pointer;}
+.plan-salle>circle,.plan-salle>rect,.plan-salle>path{
+  fill:var(--paper);stroke:var(--bord);stroke-width:1.1;stroke-linejoin:round;
+  transition:fill .15s,stroke .15s;}
+.plan-salle.fond>path{stroke:none;}
+/* pointillé : on monte ou on descend pour y aller (un plan est plat) */
+.plan-salle.etage>circle,.plan-salle.etage>rect{stroke-dasharray:3 2.5;}
+.plan-salle.dehors>rect,.plan-salle.dehors>path{opacity:.9;stroke-dasharray:4 2.5;}
+/* le pictogramme de la salle : ce qui reste quand les noms sautent, sur la
+   vignette étroite — un puits, un corbeau, sept branches, des flammes */
+.plan-orne{fill:none;stroke:var(--muted);stroke-width:.9;opacity:.55;
+  stroke-linejoin:round;stroke-linecap:round;pointer-events:none;}
+.plan-orne .plein{fill:var(--muted);stroke:none;opacity:.72;}
+.plan-detail{fill:none;stroke:var(--bord);stroke-width:.8;opacity:.5;pointer-events:none;}
+.plan-salle:hover .plan-orne{stroke:var(--accent);opacity:.85;}
+.plan-salle:hover .plan-orne .plein{fill:var(--accent);}
+.plan-salle.ici .plan-orne{stroke:var(--braise);opacity:.95;}
+.plan-salle.ici .plan-orne .plein{fill:var(--braise);opacity:.9;}
+.plan-nom{fill:var(--muted);text-anchor:middle;font-size:1em;
+  paint-order:stroke;stroke:var(--fond);stroke-width:2.6;stroke-linejoin:round;}
+.plan-salle.etage .plan-nom{font-size:.92em;}
+.plan-avec{fill:var(--braise);text-anchor:middle;font-size:.86em;font-style:italic;
+  paint-order:stroke;stroke:var(--fond);stroke-width:2.6;}
+.plan-salle:hover>circle,.plan-salle:hover>rect,.plan-salle:hover>path{
+  stroke:var(--accent);}
+.plan-salle:hover .plan-nom{fill:var(--ink);}
+/* la salle où l'on se tient : la braise, et elle respire */
+.plan-salle.ici>circle,.plan-salle.ici>rect,.plan-salle.ici>path{
+  stroke:var(--braise);stroke-width:2.2;stroke-dasharray:none;
+  animation:pulse 2.8s infinite;}
+.plan-salle.ici .plan-nom{fill:var(--ink);}
+.plan-large{fill:var(--muted);opacity:.6;text-anchor:middle;font-size:1.15em;
+  font-variant:small-caps;letter-spacing:.16em;}
+.plan-eau{fill:var(--muted);opacity:.5;text-anchor:middle;font-size:.95em;font-style:italic;}
+#plan-deplier{position:absolute;bottom:2px;left:50%;transform:translateX(-50%);
+  padding:3px 12px;font-size:.66em;color:var(--muted);font-style:italic;z-index:4;}
+
+/* le plan déplié : même cadre que la table peinte */
+#plan-large{position:fixed;inset:0;z-index:40;background:rgba(20,14,8,.55);
+  backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;}
+#plan-large[hidden]{display:none;}
+#plan-cadre{background:var(--fond);border:1px solid var(--bord);border-radius:10px;
+  box-shadow:0 0 0 6px var(--paper),0 18px 60px rgba(0,0,0,.5);
+  padding:14px 22px 12px;max-width:94vw;max-height:94vh;box-sizing:border-box;
+  display:flex;flex-direction:column;}
+#plan-tete{display:flex;align-items:baseline;gap:16px;border-bottom:1px solid var(--bord);
+  padding-bottom:8px;margin-bottom:6px;}
+#plan-titre{font-variant:small-caps;letter-spacing:.14em;color:var(--ink);}
+#plan-ou{flex:1;font-size:.78em;color:var(--muted);font-style:italic;}
+#plan-fermer{font-size:.74em;padding:4px 12px;color:var(--muted);}
+#plan-corps{flex:1;min-height:0;display:flex;justify-content:center;}
+#plan-corps svg{height:calc(94vh - 118px);max-width:88vw;width:auto;cursor:default;}
+#plan-legende{display:flex;gap:16px;justify-content:center;font-size:.7em;
+  color:var(--muted);padding-top:6px;border-top:1px dotted var(--bord);}
+#plan-legende .leg-note{font-style:italic;opacity:.75;}
+#plan-legende .leg-etage::before{content:'┄ ';color:var(--muted);}
+#plan-legende .leg-orne::before{content:'✦ ';color:var(--muted);opacity:.7;}
+
+/* ------- Penser : peser la situation, dans sa propre voix ------- */
+#mode-input #mode-penser.actif{color:var(--pensee);border-color:var(--pensee);
+  background:var(--paper);}
+.libre textarea.mode-penser{border-left:3px dotted var(--pensee);font-style:italic;}
+.libre textarea.mode-penser:focus{border-color:var(--pensee);}
+
+/* les emblèmes des boutons d'action ne rétrécissent pas avec le libellé */
+#mode-input button .emb,#btn-libre .emb,#attentes button .emb{font-size:1em;margin-right:5px;
+  vertical-align:-1px;}
+#mode-input button{display:inline-flex;align-items:center;}
+
+/* =========================================================
+   LES PRÉSENTS SOUS LA CARTE — plus de couronne.
+   En couronne, les médaillons flottaient sur la table et la mangeaient par
+   les bords ; l'ordre du flux était illisible. En bandeau sous les cartes,
+   ils font une rangée de visages en face de soi, la table garde toute sa
+   place, et l'ordre des présents est celui que le MJ a écrit.
+   ========================================================= */
+#decor{display:flex;flex-direction:column;gap:5px;position:static;}
+#cartes{flex:1 1 auto;min-height:0;position:relative;}
+#acteurs{position:static;inset:auto;flex:0 0 auto;
+  display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;
+  gap:4px 2px;padding:7px 2px 0;border-top:1px dotted var(--bord);}
+/* chaque présent : une colonne étroite, qui se serre quand la salle se remplit */
+.acteur{position:static;width:auto;height:auto;flex:0 1 94px;min-width:56px;}
+.acteur .medaillon{position:static;transform:none;width:100%;padding:0 1px;
+  box-sizing:border-box;opacity:.62;}
+.acteur .medaillon svg{width:52px;height:52px;}
+.acteur .qui{font-size:.6em;margin-top:3px;}
+.acteur .qui .role{-webkit-line-clamp:2;font-size:.85em;}
+/* le locuteur s'illumine sur place : plus de recentrage à compenser */
+.acteur.parle .medaillon{opacity:1;transform:scale(1.06);}
+.acteur.agit .medaillon{transform:scale(1.02);}
+/* Le silence se voit. Qui n'a rien dit depuis un moment s'estompe — la salle
+   telle qu'on la PERÇOIT, pas un registre de présence : il est toujours là,
+   il ne se fait plus remarquer, et il revient au premier mot. */
+.acteur .medaillon{transition:opacity .5s ease, transform .18s;}
+.acteur.froid .medaillon{opacity:.42;}
+.acteur.tres-froid .medaillon{opacity:.26;filter:grayscale(.5);}
+.acteur.parle .medaillon,.acteur:hover .medaillon{opacity:1;filter:none;}
+/* ceux qu'on ne montre plus faute de place : une pastille, les noms au survol */
+.acteur-reste{flex:0 1 62px;min-width:44px;align-self:center;cursor:default;}
+.acteur-reste .medaillon{opacity:.5;display:flex;align-items:center;
+  justify-content:center;min-height:52px;border:1px dotted var(--bord);
+  border-radius:999px;padding:6px 4px;}
+.acteur-reste .qui{margin:0;font-style:italic;}
+
+/* La table ne flotte plus au milieu d'un vide : une seule échelle est visible
+   à la fois, donc les deux calques peuvent reprendre le flux normal et #cartes
+   se serre sur la carte affichée. Le bloc carte + visages tient d'un seul
+   tenant, le vide restant passe au-dessus, sous le bandeau. */
+#cartes{flex:0 1 auto;min-height:0;display:flex;flex-direction:column;}
+#plan,#carte{position:static;flex:0 1 auto;min-height:0;}
+#decor{justify-content:flex-end;}
+/* la bascule coiffe la carte : posée en colonne, remontée en tête (le module
+   l'ajoute après les calques) */
+#vue-bascule{position:static;transform:none;order:-1;flex:none;margin:0 auto 3px;}
+
+/* =========================================================
+   L'ACTE — ce que vous faites laisse une marque rouge.
+   Une parole se dit, un acte s'imprime : lavis de sang, tranche vive,
+   et le sceau du geste dans la gouttière.
+   ========================================================= */
+:root{--rouge-acte:rgba(143,31,31,.09); --rouge-vif:#8f1f1f;}
+@media (prefers-color-scheme: dark){
+  :root{--rouge-acte:rgba(217,80,80,.13); --rouge-vif:#d95050;}
+}
+.chr-acte .chr-corps{background:var(--rouge-acte);border-left:3px solid var(--rouge-vif);
+  border-radius:0 12px 12px 0;padding:9px 16px 11px;}
+.chr-acte .chr-qui{color:var(--rouge-vif);letter-spacing:.16em;}
+.chr-acte .chr-texte{font-style:italic;color:var(--ink);font-size:.88em;opacity:.95;}
+.chr-acte .chr-texte::before,.chr-acte .chr-texte::after{content:none;}
+.chr-acte .chr-icone{color:var(--rouge-vif);
+  box-shadow:0 0 0 1px var(--rouge-vif) inset;border-radius:50%;
+  background:var(--rouge-acte);}
+
+/* le mode Agir porte la même couleur que la trace qu'il laisse */
+#mode-input #mode-agir.actif{color:var(--rouge-vif);border-color:var(--rouge-vif);
+  background:var(--rouge-acte);}
+.libre textarea.mode-agir{border-left:3px solid var(--rouge-vif);}
+.libre textarea.mode-agir:focus{border-color:var(--rouge-vif);}
+
+/* Une salle qui se remplit resserre ses visages plutôt que d'avaler la table :
+   à cinq, les médaillons rétrécissent ; à sept, le rôle s'efface et il ne reste
+   que le nom — la table doit rester la plus grande chose de la colonne. */
+#acteurs:has(.acteur:nth-child(5)) .acteur{flex-basis:78px;}
+#acteurs:has(.acteur:nth-child(5)) .medaillon svg{width:44px;height:44px;}
+#acteurs:has(.acteur:nth-child(7)) .acteur{flex-basis:64px;min-width:48px;}
+#acteurs:has(.acteur:nth-child(7)) .medaillon svg{width:37px;height:37px;}
+#acteurs:has(.acteur:nth-child(7)) .qui .role{display:none;}
+#acteurs:has(.acteur:nth-child(5)) .qui .role{-webkit-line-clamp:1;}
+
+/* La rose des vents du plan : une étoile creuse, sa branche nord pleine. */
+.plan-rose path{fill:none;stroke:var(--bord);stroke-width:1.1;stroke-linejoin:round;}
+.plan-rose .plan-rose-nord{fill:var(--muted);stroke:none;opacity:.7;}
+
+/* ---------------------------------------------------------------
+   LA PART DES COLONNES — la chronique ne sait pas quoi faire d'une
+   colonne plus large que sa mesure de lecture (600 px) : au-delà, elle
+   ne fabrique que de la marge, pendant que la table étouffe dans un
+   tiers d'écran. On rééquilibre : le fil garde sa mesure, le décor
+   prend le reste et la carte double de surface.
+   --------------------------------------------------------------- */
+@media (min-width:1101px){
+  body{grid-template-columns:auto minmax(0,1.25fr) minmax(340px,1fr);}
+}
+
+/* =========================================================
+   LE TERRAIN ET LA VILLE — le sol vu du dessus. Deux échelles, un seul dessin
+   (ecrans/modules/terrain.js est instancié deux fois) : d'où les sélecteurs
+   doublés #terrain/#ville ci-dessous.
+   Là-haut, une pièce est un symbole et garde sa taille à l'écran ; ici, un
+   homme occupe du SOL. Cercles et formations sont donc en unités du champ et
+   grossissent quand on approche — seuls les textes, leurs décalages et les
+   épaisseurs de trait suivent var(--k).
+   ========================================================= */
+#terrain,#ville{position:static;flex:0 1 auto;min-height:0;display:flex;
+  align-items:center;justify-content:center;flex-direction:column;position:relative;}
+#terrain svg,#ville svg{max-height:100%;max-width:100%;width:auto;height:auto;display:block;}
+#terrain-deployer,#ville-deployer{position:absolute;bottom:2px;left:50%;transform:translateX(-50%);
+  padding:3px 12px;font-size:.66em;color:var(--muted);font-style:italic;z-index:4;
+  background:var(--fond);}
+#terrain-legende-petite,#ville-legende-petite{display:none;}
+
+/* le pré : un fond un rien plus chaud que le parchemin, pour que le champ ne
+   se confonde pas avec la table peinte */
+.champ .pre{fill:var(--paper);}
+.sol-corps{fill:var(--paper);stroke:var(--bord);stroke-width:calc(.6px * var(--k));}
+.sol-route .sol-corps{fill:none;stroke:var(--muted);opacity:.30;stroke-linecap:round;
+  stroke-linejoin:round;}
+.sol-route .sol-bord{fill:none;stroke:var(--bord);opacity:.5;stroke-linecap:round;
+  stroke-linejoin:round;stroke-dasharray:calc(6px * var(--k)) calc(4px * var(--k));}
+/* la ville : de l'eau qu'on ne traverse pas, une grève, des murs, des quais */
+.sol-eau .sol-corps{fill:var(--fond);opacity:.30;stroke:var(--bord);
+  stroke-width:calc(.8px * var(--k));}
+.sol-eau .sol-nom,.sol-greve .sol-nom{opacity:.75;}
+.sol-greve .sol-corps{fill:var(--paper);opacity:.6;stroke:var(--bord);
+  stroke-dasharray:calc(3px * var(--k)) calc(3px * var(--k));}
+.sol-mur .sol-corps{fill:none;stroke:var(--ink);opacity:.7;stroke-linecap:square;
+  stroke-linejoin:miter;}
+.sol-mur .sol-bord{fill:none;stroke:var(--bord);opacity:.35;stroke-linejoin:miter;}
+.sol-quai .sol-corps{fill:none;stroke:var(--muted);opacity:.5;stroke-linecap:butt;}
+.sol-quai .sol-bord{fill:none;stroke:var(--bord);opacity:.45;stroke-linecap:butt;}
+.sol-riviere .sol-corps{fill:none;stroke:var(--fond);opacity:.9;stroke-linecap:round;}
+.sol-riviere .sol-bord{fill:none;stroke:var(--bord);opacity:.55;stroke-linecap:round;}
+.sol-haie .sol-corps{fill:none;stroke:var(--monde);opacity:.5;stroke-linecap:round;}
+.sol-haie .sol-bord{fill:none;stroke:none;}
+.sol-bois .sol-corps{fill:var(--monde);fill-opacity:.10;stroke:var(--monde);
+  stroke-opacity:.35;}
+.sol-bois .arbre{fill:var(--monde);fill-opacity:.28;stroke:var(--monde);
+  stroke-opacity:.45;stroke-width:calc(.5px * var(--k));}
+.sol-champ .sol-corps{fill:var(--paper);fill-opacity:.55;stroke:var(--bord);
+  stroke-opacity:.35;stroke-width:calc(.5px * var(--k));
+  stroke-dasharray:calc(3px * var(--k)) calc(3px * var(--k));}
+.sol-marais .sol-corps{fill:var(--fond);fill-opacity:.6;stroke:var(--bord);
+  stroke-dasharray:calc(2px * var(--k)) calc(4px * var(--k));}
+.sol-colline .sol-corps{fill:none;stroke:var(--muted);stroke-opacity:.32;
+  stroke-dasharray:calc(5px * var(--k)) calc(3px * var(--k));}
+.sol-colline .niveau{fill:none;stroke:var(--muted);stroke-opacity:.35;
+  stroke-width:calc(.6px * var(--k));stroke-dasharray:calc(4px * var(--k)) calc(3px * var(--k));}
+.sol-village .toit{fill:var(--paper);stroke:var(--muted);stroke-opacity:.6;
+  stroke-width:calc(.7px * var(--k));}
+.sol-nom{font-family:inherit;font-size:.92em;fill:var(--muted);font-style:italic;
+  text-anchor:middle;paint-order:stroke;stroke:var(--fond);
+  stroke-width:calc(2.4px * var(--k));stroke-linejoin:round;opacity:.85;}
+
+/* les corps : un cercle vaut toujours le même nombre d'hommes */
+.corps{cursor:pointer;}
+.corps .homme{fill:currentColor;fill-opacity:.34;stroke:currentColor;stroke-opacity:.85;}
+.corps-archers .homme,.corps-prisonniers .homme{fill-opacity:0;}
+.corps .monte{fill:currentColor;fill-opacity:.9;stroke:none;}
+.corps .dragon .aile{fill:currentColor;fill-opacity:.22;stroke:currentColor;stroke-opacity:.8;
+  stroke-linejoin:round;}
+.corps .dragon .echine{fill:currentColor;fill-opacity:.55;stroke:currentColor;stroke-opacity:.9;}
+.corps .dragon .queue{fill:none;stroke:currentColor;stroke-opacity:.8;stroke-linecap:round;}
+.corps .dragon .museau{fill:currentColor;fill-opacity:.8;stroke:none;}
+.corps:hover .dragon .aile{fill-opacity:.4;}
+.corps .cap{fill:none;stroke:currentColor;stroke-opacity:.55;stroke-linecap:round;
+  stroke-linejoin:round;}
+.corps:hover .homme{fill-opacity:.55;stroke-opacity:1;}
+.corps-prisonniers{color:var(--muted);}
+.corps-prisonniers .homme{stroke-dasharray:calc(1.6px * var(--k)) calc(1.2px * var(--k));}
+.etat-ebranle .homme{stroke-opacity:.65;}
+.etat-rompu .homme,.etat-fuite .homme{fill-opacity:.16;stroke-opacity:.6;}
+.etat-mort .homme{fill-opacity:.5;stroke:none;}
+.corps-nom{font-family:inherit;font-size:.92em;fill:var(--ink);
+  font-variant:small-caps;letter-spacing:.06em;paint-order:stroke;stroke:var(--fond);
+  stroke-width:calc(2.6px * var(--k));stroke-linejoin:round;}
+.corps-compte{font-variant:normal;fill:var(--muted);}
+
+/* ce qui est arrivé au sol */
+.brulure{fill:var(--ink);fill-opacity:.20;stroke:var(--ink);stroke-opacity:.35;
+  stroke-width:calc(.7px * var(--k));}
+.cendre{fill:var(--ink);fill-opacity:.45;stroke:none;}
+.mort{stroke:var(--sang);stroke-opacity:.65;stroke-linecap:round;}
+.fers{fill:none;stroke:var(--sang);stroke-opacity:.8;stroke-linecap:round;}
+.fait-nom{font-family:inherit;font-size:.86em;fill:var(--muted);font-style:italic;
+  text-anchor:middle;paint-order:stroke;stroke:var(--fond);
+  stroke-width:calc(2.4px * var(--k));stroke-linejoin:round;}
+
+.leg-cercle{font-style:italic;}
+.leg-cercle::before{content:'◌ ';font-style:normal;}
+
+/* le champ déployé */
+#terrain-large,#ville-large{position:fixed;inset:0;z-index:40;background:rgba(20,14,8,.55);
+  backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;}
+#terrain-large[hidden],#ville-large[hidden]{display:none;}
+#terrain-cadre,#ville-cadre{background:var(--fond);border:1px solid var(--bord);border-radius:10px;
+  box-shadow:0 0 0 6px var(--paper),0 18px 60px rgba(0,0,0,.5);
+  padding:14px 22px 12px;max-width:94vw;max-height:94vh;box-sizing:border-box;
+  display:flex;flex-direction:column;}
+#terrain-tete,#ville-tete{display:flex;align-items:baseline;gap:16px;border-bottom:1px solid var(--bord);
+  padding-bottom:8px;margin-bottom:6px;}
+#terrain-titre,#ville-titre{font-variant:small-caps;letter-spacing:.14em;color:var(--ink);}
+#terrain-quand,#ville-quand{flex:1;font-size:.78em;color:var(--muted);font-style:italic;}
+#terrain-fermer,#ville-fermer{font-size:.74em;padding:4px 12px;color:var(--muted);}
+#terrain-corps,#ville-corps{flex:1;min-height:0;display:flex;justify-content:center;}
+#terrain-corps svg,#ville-corps svg{height:calc(94vh - 118px);max-width:88vw;width:auto;}
+#terrain-legende,#ville-legende{display:flex;gap:16px;justify-content:center;font-size:.7em;
+  color:var(--muted);padding-top:6px;border-top:1px dotted var(--bord);
+  flex-wrap:wrap;align-items:center;}
+
+/* =========================================================
+   LA COULEUR DE LA TABLE — un lavis sur le parchemin.
+   Les régions gardent le grain du papier : leurs teintes sont posées en
+   TRANSPARENCE par-dessus, jamais en aplat. La mer est le seul fond franc,
+   parce qu'une côte qui ne sépare rien de rien ne se lit pas.
+   ========================================================= */
+:root{
+  --mer:#c3d2d6; --hautfond:#d6e1e2;
+  --t-nord:rgba(146,170,182,.26); --t-mur:rgba(200,218,228,.42);
+  --t-val:rgba(150,142,176,.24); --t-conflans:rgba(126,158,110,.26);
+  --t-fer:rgba(116,128,134,.30); --t-ouest:rgba(190,158,86,.26);
+  --t-couronne:rgba(178,124,96,.13); --t-bief:rgba(178,180,94,.28);
+  --t-orage:rgba(92,128,104,.28); --t-dorne:rgba(212,170,106,.32);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --mer:#141d24; --hautfond:#1d2a31;
+    --t-nord:rgba(130,158,178,.20); --t-mur:rgba(170,196,212,.26);
+    --t-val:rgba(142,130,178,.20); --t-conflans:rgba(112,150,104,.20);
+    --t-fer:rgba(122,136,146,.22); --t-ouest:rgba(190,156,84,.20);
+    --t-couronne:rgba(186,124,92,.12); --t-bief:rgba(176,176,90,.20);
+    --t-orage:rgba(88,128,102,.22); --t-dorne:rgba(206,164,100,.24);
+  }
+}
+.mer{fill:var(--mer);}
+.hautfond{fill:none;stroke:var(--hautfond);stroke-linejoin:round;}
+.terre{fill:var(--fond);}
+.eaux{fill:var(--mer);stroke:var(--hautfond);}
+.region-terre[data-region="the_north"]{fill:var(--t-nord);}
+.region-terre[data-region="the_wall"]{fill:var(--t-mur);}
+.region-terre[data-region="the_vale"]{fill:var(--t-val);}
+.region-terre[data-region="the_riverlands"]{fill:var(--t-conflans);}
+.region-terre[data-region="the_iron_islands"]{fill:var(--t-fer);}
+.region-terre[data-region="the_westerlands"]{fill:var(--t-ouest);}
+.region-terre[data-region="the_crownlands"]{fill:var(--t-couronne);}
+.region-terre[data-region="the_reach"]{fill:var(--t-bief);}
+.region-terre[data-region="the_stormlands"]{fill:var(--t-orage);}
+.region-terre[data-region="dorne"]{fill:var(--t-dorne);}
+.lointain{fill:var(--paper);opacity:.5;}
+/* le nom d'un lieu se détache maintenant sur de la couleur : son halo doit
+   être celui de la terre, pas celui de la page */
+.lieu-carte .nom{stroke:var(--fond);}
+
+/* ------- les bannières : les armes de qui tient la place ------- */
+.banniere .hampe{fill:none;stroke:var(--ink);stroke-width:.7;opacity:.55;
+  stroke-linecap:round;}
+.banniere .pli{fill:none;stroke:var(--ink);stroke-width:.6;opacity:.45;}
+.banniere .toile rect{shape-rendering:crispEdges;}
+.armes{pointer-events:none;}
+.lieu-carte:hover .banniere .pli{opacity:.9;stroke-width:.9;}
+
+/* Des convives ne sont pas des troupes : le rond est là (ils occupent du sol)
+   mais il est vide et sans poids — on doit voir d'un coup d'œil, dans une cour,
+   qui est en armes et qui tient une coupe. */
+.corps-convives .homme{fill-opacity:.10;stroke-opacity:.55;}
+.corps-convives:hover .homme{fill-opacity:.28;stroke-opacity:.9;}
+/* la ville : des gens qui ne sont pas des troupes, et des coques */
+.corps-gens .homme{fill-opacity:.14;stroke-opacity:.6;}
+.corps-gens:hover .homme{fill-opacity:.32;stroke-opacity:.95;}
+.corps .nef .coque{fill:currentColor;fill-opacity:.30;stroke:currentColor;
+  stroke-opacity:.85;stroke-linejoin:round;}
+.corps .nef .banc{stroke:currentColor;stroke-opacity:.7;
+  stroke-width:calc(.8px * var(--k));}
+.corps:hover .nef .coque{fill-opacity:.5;}
+
+/* =========================================================
+   LES GENS — la quatrième échelle du décor. Une carte porte des lieux,
+   celle-ci porte des visages : qui est qui, de quel côté, à quel titre.
+   Rien de plus que ce que la cour sait de la cour — ni position, ni
+   dessein. On la lit comme un armorial : par camp, puis par maison.
+   ========================================================= */
+#gens{position:static;flex:1 1 auto;min-height:220px;display:flex;flex-direction:column;
+  gap:6px;overflow:hidden;}
+.gens-barre{flex:none;display:flex;}
+.gens-barre input{flex:1;font:inherit;font-size:.72em;padding:4px 10px;
+  color:var(--ink);background:transparent;border:1px solid var(--bord);border-radius:3px;}
+.gens-barre input:focus{outline:none;border-color:var(--muted);}
+.gens-corps{flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:4px;}
+.gens-vide{font-size:.72em;color:var(--muted);font-style:italic;padding:6px 2px;}
+.gens-camp{margin-bottom:12px;}
+.gens-camp-titre{font-size:.6em;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);border-bottom:1px solid var(--bord);padding-bottom:2px;margin-bottom:6px;}
+.gens-camp.camp-noir .gens-camp-titre{color:var(--ink);}
+.gens-camp.camp-vert .gens-camp-titre{color:var(--rouge-vif);}
+.gens-maison{margin:0 0 8px;}
+.gens-maison-titre{font-size:.66em;font-style:italic;color:var(--muted);margin-bottom:3px;}
+.gens-rang{display:flex;flex-wrap:wrap;gap:4px 2px;}
+.gens-gars{flex:0 1 128px;min-width:104px;display:flex;flex-direction:column;
+  align-items:center;text-align:center;cursor:pointer;opacity:.66;
+  transition:opacity .15s,transform .15s;padding:2px 1px;}
+.gens-gars:hover{opacity:1;transform:scale(1.04);}
+.gens-gars svg{width:44px;height:44px;display:block;}
+.gens-dit{margin-top:2px;line-height:1.15;}
+.gens-dit b{display:block;font-size:.62em;font-weight:600;}
+.gens-dit small{display:block;font-size:.55em;color:var(--muted);}
+.gens-gars.gens-joueur{opacity:1;}
+.gens-gars.gens-joueur .gens-face{box-shadow:0 0 0 1px var(--muted);border-radius:50%;}
+/* la vue des gens n'est pas une carte : elle prend toute la colonne */
+#cartes:has(#gens:not(.vue-off)){flex:1 1 auto;}
+#gens{min-height:120px;}
+
+
+/* l'heure de la fiction, à côté de la date : un signe et un mot, pas un cadran */
+#heure{flex:none;color:var(--muted);font-size:.92em;letter-spacing:.02em;
+  white-space:nowrap;}

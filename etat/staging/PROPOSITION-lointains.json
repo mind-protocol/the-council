@@ -1,0 +1,283 @@
+{
+  "genere_le": "2026-08-06 — session de travail moteur (non canonique)",
+  "avertissement": "Proposition écrite à la main : promeut quatre seigneurs lointains de « dormant » à « actif » et leur crée une tête d'échelle « royaume ». Aucune empreinte d'état n'est jointe VOLONTAIREMENT — ces mutations ne dépendent d'aucune horloge courante, d'aucune date_maj et d'aucune nouvelle en vol : elles ne font qu'ouvrir quatre têtes neuves. La validation de l'applicateur suffit à les garder (cible existante dans personnages.json, refus si une tête existe déjà, refus du personnage joueur, ids d'étapes uniques, budgets de l'échelle). Applique avec scripts/appliquer.py.",
+  "note": "Ces quatre-là reçoivent DÉJÀ des nouvelles nommément dans les « diffusion » de evenements.json (20, 21, 24, 27, 28) et n'avaient pas de tête pour y réagir : seul un événement canon décidait pour eux. Les têtes ci-dessous sont donc des têtes d'AVANT-GUERRE, arrêtées au 18e jour de la 3e lune de 129. Délais calculés sur lieux.jours_de_pr, corbeau ≈ /3 : Accalmie 9 → 3 jours, Villevieille 25 → 8, Les Eyrié 20 → 7, Winterfell 40 → 13. Il en résulte que Borros seul a reçu la sommation d'Otto du 14e jour (arrivée le 17), que Jeyne, Cregan et Ormund ne l'ont pas encore, et qu'AUCUN des quatre ne sait rien du feu de la route royale ni du couronnement de Peyredragon — Cregan ignore même que Viserys est mort. Ce qui va leur tomber dessus est nommé dans leur « ignore » : quand la diffusion échoit, la boucle hors scène fait entrer la « version » dans leurs croyances et leurs déclencheurs s'arment. Chaque tête tient le budget « royaume » : 3 croyances, 2 étapes, 1 déclencheur. Aucune horloge courte — ces acteurs ne sont rafraîchis que sur des fenêtres de 5 jours et plus.",
+  "mutations_proposees": [
+    {
+      "table": "personnages",
+      "cible": "borros-baratheon",
+      "operation": "personnage",
+      "pourquoi": "Accalmie reçoit trois nouvelles nommément adressées entre le 20 et le 21 : sans tête, personne pour les recevoir.",
+      "champs": {
+        "etat": "actif"
+      }
+    },
+    {
+      "table": "intentions",
+      "operation": "tete_ajouter",
+      "pourquoi": "Tête d'avant-guerre : il a la sommation d'Otto depuis le 17 et rien d'autre. Il attend qu'on vienne marchander ses filles.",
+      "valeur": {
+        "personnage_id": "borros-baratheon",
+        "echelle": "royaume",
+        "croyances": [
+          "Un corbeau d'Otto Hightower est arrivé le dix-septième jour et son mestre le lui a lu deux fois : jurer à Aegon II ou être tenu pour traître — pas un mot d'une terre, d'un rang ni d'un mariage",
+          "Son père Boremund a parlé pour la femme au grand conseil et n'en a jamais rien rapporté à Accalmie : cette fois, Accalmie sera payée d'avance",
+          "Trois mille lances tiennent sous ses murs en douze jours, huit mille s'il vide les Terres de l'Orage — et aucun des deux camps ne gagne sans la route de l'orage"
+        ],
+        "ignore": [
+          "Qu'un dragon a brûlé la tête d'une colonne du roi sur la route de Sombreval le seizième jour — la rumeur remonte les Terres de l'Orage et l'atteindra vers le vingtième",
+          "Que Rhaenyra a été couronnée hier à Peyredragon avec la couronne de son père, et qu'un manteau blanc a témoigné par écrit pour elle",
+          "Que les deux camps s'apprêtent à venir marchander ses filles — on prépare à Port-Réal un mariage au nom d'Aemond, et on parle de lui à Peyredragon"
+        ],
+        "intention": "Ne rien répondre à Otto tant qu'on ne met pas deux noms sur la table : celui d'une de ses quatre filles et celui du prince qu'on lui donne. Faire compter ses lances entre-temps, pour que le prix monte.",
+        "plan": [
+          {
+            "id": "borros-rassembler-lances",
+            "quoi": "Faire rappeler ses bannerets et arrêter le compte de ce qu'Accalmie peut mettre en selle — trois mille lances sous les murs en douze jours — sans dire pour qui",
+            "etat": "en-cours",
+            "jours_restants": 12,
+            "depend_de": [],
+            "cout": [
+              "du grain qu'il faudra prendre aux villages avant la moisson",
+              "l'obligation de finir par choisir un camp devant des hommes rassemblés"
+            ],
+            "si_bloque": "Si ses bannerets traînent, il fait venir les trois plus riches à Accalmie pour un festin et leur fait honte à table, devant leurs fils."
+          },
+          {
+            "id": "borros-attendre-offres",
+            "quoi": "Ne répondre à aucun corbeau, de Port-Réal comme de Peyredragon, avant qu'un camp n'écrive le nom d'une de ses filles",
+            "etat": "en-cours",
+            "jours_restants": null,
+            "depend_de": [],
+            "cout": [
+              "passer pour lent, ce dont il ne se soucie pas"
+            ],
+            "si_bloque": "Si les deux camps se taisent une lune entière, il envoie son mestre à Port-Réal réclamer une place au conseil du roi — et fait dire dans sa salle qu'il l'a obtenue."
+          }
+        ],
+        "declencheurs": [
+          {
+            "si": "Un émissaire de Peyredragon se présente à Accalmie — un pli, un chevalier, ou un dragon",
+            "alors": "Il le reçoit dans sa grande salle, ses quatre filles debout derrière lui, et exige qu'on nomme laquelle et pour qui avant d'écouter un mot du reste ; s'il n'y a pas de mariage dans l'offre, il fait raccompagner l'émissaire aux portes le jour même.",
+            "une_fois": false
+          }
+        ],
+        "attitude_joueur": "Il ne lui doit rien : elle ne lui a jamais écrit, et sa faction est celle pour laquelle son père a parlé sans jamais rien recevoir. Ce qu'elle obtiendra d'Accalmie se mesurera au contrat, pas au serment.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 18
+        }
+      }
+    },
+    {
+      "table": "personnages",
+      "cible": "jeyne-arryn",
+      "operation": "personnage",
+      "pourquoi": "La déposition de ser Steffon lui arrive nommément le 24 et le canon lui prête une ambassade : il lui faut une tête pour y répondre autrement que par le rail.",
+      "champs": {
+        "etat": "actif"
+      }
+    },
+    {
+      "table": "intentions",
+      "operation": "tete_ajouter",
+      "pourquoi": "Sept jours de vol depuis Port-Réal : elle sait Aegon couronné, ignore la sommation d'Otto (qui la trouvera le 21) et tout le reste.",
+      "valeur": {
+        "personnage_id": "jeyne-arryn",
+        "echelle": "royaume",
+        "croyances": [
+          "Un corbeau de Port-Réal, sept jours de vol, dit Viserys mort et Aegon couronné et oint — et ne dit rien de Rhaenyra : ce silence est la nouvelle",
+          "Son nom est au bas du rouleau de 105 ; elle avait sept ans et on lui tenait la main, mais le nom est le sien et le Val n'en connaît pas d'autre",
+          "Le Val ne se prend pas par la Porte Sanglante : six mille hommes en selle si elle vide les vallées, trois mille si elle veut garder les quatre passes tenues — et deux cousins Arryn qui se vendraient pour les Eyrié"
+        ],
+        "ignore": [
+          "Que la sommation d'Otto Hightower est partie le quatorzième jour pour tout le royaume : la sienne vole encore et la trouvera vers le vingt et unième",
+          "Que le premier sang est versé — un dragon a brûlé une colonne du roi sur la route de Sombreval le seizième jour",
+          "Que Rhaenyra a été couronnée hier, et qu'une déposition signée d'un manteau blanc est déjà en route pour les Eyrié"
+        ],
+        "intention": "Ne pas être la première à écrire. Tenir le Val fermé aux gens en armes, tenir ses cousins à vue, et attendre qu'on vienne lui demander sa parole plutôt que de l'offrir.",
+        "plan": [
+          {
+            "id": "jeyne-portes-du-val",
+            "quoi": "Fermer les quatre passes aux compagnies en armes et faire tenir registre de tout ce qui traverse le Val, dans les deux sens",
+            "etat": "en-cours",
+            "jours_restants": null,
+            "depend_de": [],
+            "cout": [
+              "cent hommes répartis aux passes, en permanence",
+              "les plaintes des marchands de Goëville, qu'elle entendra chaque lune"
+            ],
+            "si_bloque": "Si un seigneur du Val fait passer des hommes sans son congé, elle le convoque aux Eyrié et lui fait payer le péage en lances plutôt qu'en or."
+          },
+          {
+            "id": "jeyne-cousins",
+            "quoi": "Faire dresser par son mestre la liste de ses cousins Arryn, de ce que chacun tient en hommes et de ce que chacun doit — un camp finira par en acheter un contre elle",
+            "etat": "en-cours",
+            "jours_restants": 12,
+            "depend_de": [],
+            "cout": [
+              "son mestre pendant douze jours",
+              "l'aveu, écrit, qu'elle craint les siens plus que le Sud"
+            ],
+            "si_bloque": "Si la liste est trop longue, elle fait venir aux Eyrié les trois plus dangereux comme pupilles honorés, et les y garde."
+          }
+        ],
+        "declencheurs": [
+          {
+            "si": "Un émissaire du sang du dragon se présente au Val et lui redemande, en personne, le serment de 105",
+            "alors": "Elle l'honore devant ses bannerets rassemblés, exige que la demande soit faite par écrit et scellée — et met son prix : un dragon et son cavalier pour garder le Val, faute de quoi son aide restera de l'encre et non des lances.",
+            "une_fois": true
+          }
+        ],
+        "attitude_joueur": "Une cousine spoliée, comme elle l'a été trois fois par ses propres oncles : elle penche pour elle sans l'aimer, et ne bougera pas avant qu'on le lui demande dans les formes.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 18
+        }
+      }
+    },
+    {
+      "table": "personnages",
+      "cible": "cregan-stark",
+      "operation": "personnage",
+      "pourquoi": "La nouvelle du couronnement lui est nommément adressée le 28 et le canon lui prête une ambassade : sans tête, le Nord ne répond à rien.",
+      "champs": {
+        "etat": "actif"
+      }
+    },
+    {
+      "table": "intentions",
+      "operation": "tete_ajouter",
+      "pourquoi": "Treize jours de vol : au 18, Winterfell ne sait pas encore que le roi est mort. Sa tête est entièrement tournée vers l'hiver, et c'est juste.",
+      "valeur": {
+        "personnage_id": "cregan-stark",
+        "echelle": "royaume",
+        "croyances": [
+          "Rien du Sud ne lui est parvenu depuis vingt jours : le dernier corbeau de Port-Réal parlait du roi comme d'un homme malade, et du royaume comme d'un royaume tranquille",
+          "L'hiver vient avant la guerre : les greniers de Winterfell, de Motte-la-Forêt et de Blancport ne portent pas encore le Nord jusqu'au printemps, et il le sait à la ligne près",
+          "Le serment de 105 fut prêté par son père Rickon, pas par lui ; un Stark tient la parole de son père, et fait dire ce qu'elle coûte — quatre mille lances sans toucher aux moissonneurs, le double s'il accepte de perdre un printemps"
+        ],
+        "ignore": [
+          "Que Viserys est mort et qu'Aegon II est couronné : le corbeau vole encore et ne touchera Winterfell que dans cinq jours",
+          "Que la sommation d'Otto Hightower — jurer à Aegon ou être tenu pour traître — est partie le quatorzième jour pour le Nord comme pour le reste",
+          "Qu'un dragon a brûlé une colonne du roi sur la route de Sombreval, et qu'une seconde reine a été couronnée hier à Peyredragon"
+        ],
+        "intention": "Passer l'hiver : compter le grain à la ligne, garnir le Mur avant que les cols ne se ferment, et n'engager aucun homme du Nord tant que personne n'est venu lui rappeler la parole de son père.",
+        "plan": [
+          {
+            "id": "cregan-greniers",
+            "quoi": "Relever et vérifier lui-même les registres des greniers — Winterfell, Motte-la-Forêt, Blancport — et acheter ce qui manque avant les premières neiges",
+            "etat": "en-cours",
+            "jours_restants": 25,
+            "depend_de": [],
+            "cout": [
+              "l'or de Winterfell, qui n'est pas celui du Sud",
+              "vingt-cinq jours de routes du Nord, à cheval",
+              "acheter aux Manderly, ce qui se saura"
+            ],
+            "si_bloque": "S'il manque du grain, il achète à Blancport au prix que les Manderly feront, et n'en dit rien à ses bannerets."
+          },
+          {
+            "id": "cregan-hiver-dabord",
+            "quoi": "Ne laisser partir au sud aucun homme dont le Nord aura besoin au printemps",
+            "etat": "en-cours",
+            "jours_restants": null,
+            "depend_de": [],
+            "cout": [],
+            "si_bloque": "Si un serment l'y oblige, il n'envoie que les hommes sans terre ni héritier — ceux dont la mort ne coûte pas une moisson — sous un vieux capitaine, et garde ses lances."
+          }
+        ],
+        "declencheurs": [
+          {
+            "si": "Un émissaire de Peyredragon, du sang du dragon, vient à Winterfell rappeler le serment de 105",
+            "alors": "Il l'honore, mais pas avec le Nord entier : il promet les hommes sans terre, exige que l'hiver soit assuré d'abord, et demande une contrepartie écrite — une terre ou un mariage — avant qu'un seul loup passe le Neck.",
+            "une_fois": true
+          }
+        ],
+        "attitude_joueur": "Un nom au bas d'un rouleau que son père a signé — ni une amie, ni une cause. Ce qu'elle tirera du Nord dépendra de ce qu'elle demande, et de qui vient le demander.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 18
+        }
+      }
+    },
+    {
+      "table": "personnages",
+      "cible": "ormund-hightower",
+      "operation": "personnage",
+      "pourquoi": "Il lève déjà l'ost du Bief pour les Verts et une copie de la déposition lui est adressée nommément le 27 : c'est le moteur vert du sud, il ne peut pas rester du décor.",
+      "champs": {
+        "etat": "actif"
+      }
+    },
+    {
+      "table": "intentions",
+      "operation": "tete_ajouter",
+      "pourquoi": "Il agit sur une lettre de famille arrivée avant la sommation générale (qui ne le trouvera que le 22) : il lève un ost sans savoir que la guerre a commencé.",
+      "valeur": {
+        "personnage_id": "ormund-hightower",
+        "echelle": "royaume",
+        "croyances": [
+          "Un corbeau de son parent Otto, huit jours de vol, arrivé avant toute sommation générale : Viserys est mort, Aegon est couronné et oint, et Villevieille doit lever le Bief — le frère du roi est son écuyer et dort sous son toit",
+          "Le Bief ne marchera pas d'un bloc : Hautjardin est aux mains d'un enfant et la moitié des seigneurs de la Mander attendront de voir qui paie. Six mille hommes sous ses murs en une lune, neuf mille s'il vide les vallées — et vingt-cinq jours de route jusqu'à Port-Réal, à nourrir chaque jour",
+          "Villevieille ne doit pas brûler : la Citadelle et le Septuaire Étoilé valent plus que n'importe quel champ de bataille, et rien dans la ville ne répond aujourd'hui à un dragon"
+        ],
+        "ignore": [
+          "Que la sommation générale d'Otto est en route et ne le trouvera que le vingt-deuxième jour : il lève un ost sur une lettre de famille, pas sur un ordre du roi",
+          "Qu'un dragon a brûlé onze cents hommes du roi sur la route de Sombreval le seizième jour — la guerre est ouverte et son ost n'est pas levé",
+          "Que Rhaenyra a été couronnée hier, et qu'une copie de la déposition d'un manteau blanc lui est adressée nommément depuis Peyredragon"
+        ],
+        "intention": "Lever le plus grand ost du Bief et ne le mettre en marche que quand il sera nourri jusqu'à Port-Réal — vingt-cinq jours de route, pas un de moins. Rien ne part de Villevieille tant que la ville ne peut pas répondre à un dragon.",
+        "plan": [
+          {
+            "id": "ormund-lever-bief",
+            "quoi": "Convoquer les bannerets du Bief à Villevieille et arrêter le compte : six mille hommes sous les murs en une lune, neuf mille s'il vide les vallées de la Mander",
+            "etat": "en-cours",
+            "jours_restants": 26,
+            "depend_de": [],
+            "cout": [
+              "vingt mille dragons d'or la lune, sur le trésor de la Voix",
+              "le grain de la Mander et les chariots pour le porter",
+              "l'accord de seigneurs qui attendent de voir qui gagne"
+            ],
+            "si_bloque": "Si Hautjardin retient ses lances, il complète à l'or — reîtres et compagnies franches — et n'écrit pas à Otto que son ost est mêlé de soudards."
+          },
+          {
+            "id": "ormund-couvrir-villevieille",
+            "quoi": "Ne pas laisser le prince Daeron et Tessarion quitter Villevieille avant que l'ost soit en marche et la ville couverte",
+            "etat": "en-cours",
+            "jours_restants": null,
+            "depend_de": [],
+            "cout": [
+              "le grief du prince, qui a quinze ans et veut voir la guerre"
+            ],
+            "si_bloque": "Si Otto exige le prince et son dragon à Port-Réal, il les envoie — et fait consigner par la Citadelle qu'il l'a fait sous ordre et contre son avis."
+          }
+        ],
+        "declencheurs": [
+          {
+            "si": "Peyredragon lui écrit ou lui envoie quelqu'un — une offre, une pièce d'archive, une menace — adressé nommément à lui plutôt qu'au roi",
+            "alors": "Il ne répond pas de sa main : il fait porter le pli intact à Otto Hightower, copie gardée à la Citadelle, et avance de dix jours le rassemblement de son ost — qu'on le sollicite lui prouve qu'on le craint.",
+            "une_fois": false
+          }
+        ],
+        "attitude_joueur": "Une prétendante, pas une reine : il ne lui écrira pas et ne la nommera pas ainsi. Mais si elle lui écrit, à lui, il en fera une pièce et une raison de marcher plus tôt.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 18
+        }
+      }
+    }
+  ],
+  "empreintes": {
+    "intentions": "b80aa7082160ab63848c6af957a8f2bdcbd7a3cc",
+    "evenements": "5224cc732c69aa19645354c3ebed62afe97dfc53",
+    "personnages": "c31f5942ebbec8ba467ab5fb97b928c60129e9ce",
+    "monde": "65ae1992dba0a91ed20778f19c8777cbfd856acf"
+  },
+  "applique_le": "2026-08-06T03:29:54"
+}

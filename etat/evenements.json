@@ -1,0 +1,1145 @@
+[
+  {
+    "id": "retour-orwyle",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 22
+    },
+    "type": "programme",
+    "importance": 75,
+    "description": "Le grand mestre Orwyle rentre à Port-Réal avec sa tablette de cire (le sacre et le discours mot pour mot, y compris « citoyens » et le silence sur Sombreval), les conditions refusées, et la réponse d'un mot de la reine : « Coucou. »",
+    "lieu_id": "port-real",
+    "acteurs": [
+      "orwyle",
+      "alicent",
+      "otto",
+      "aegon-ii",
+      "criston"
+    ],
+    "conditions": [
+      "si la reine le retient",
+      "si son navire est intercepté"
+    ],
+    "statut": "a-venir",
+    "effets": "Otto et Criston lisent l'insulte à voix haute dans la salle du trône et n'ont plus besoin de plaider contre Alicent ; le parti de la paix à Port-Réal est ruiné ; en revanche la cour verte apprend mot pour mot ce qu'une reine couronnée a promis au petit peuple"
+  },
+  {
+    "id": "cour-ouverte-jour-19",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 19
+    },
+    "type": "programme",
+    "importance": 55,
+    "description": "Cour ouverte proclamée le jour du sacre, restreinte à la ville une heure plus tard, puis rouverte à TOUT LE MONDE dans la foulée — trois cris successifs par le même caporal enroué. Douze hommes à la porte du jardin (huit pris sur la muraille de mer, quatre sur la roukerie et les cuisines) ; attente parquée dans la cour aux dragons ; Quince a prévenu qu'au-delà de deux cents personnes il ne répond plus de rien et comptera à voix haute. Gerardys monte deux pupitres et un registre vierge pour prendre par écrit les affaires de ceux qu'on ne pourra pas recevoir.",
+    "lieu_id": "peyredragon",
+    "acteurs": [
+      "rhaenyra",
+      "robert-quince",
+      "gerardys"
+    ],
+    "conditions": [
+      "si la reine ne peut pas tenir assise (Gerardys arrête tout s'il voit du sang traverser)",
+      "si la cour aux dragons dépasse deux cents personnes"
+    ],
+    "statut": "resolu",
+    "effets": "ce que la reine répondra au premier requérant fera jurisprudence et récit ; les gens venus de Lamarck et de Pointe-Aiguë seront à la porte du jardin, et la manière dont on les traitera se saura"
+  },
+  {
+    "id": "deposition-steffon",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 18
+    },
+    "type": "programme",
+    "importance": 65,
+    "description": "Sur ordre de la reine, Gerardys a fait consigner le témoignage de ser Steffon Darklyn en déposition signée sur le quai — contresignée par deux capitaines braaviens neutres — et en expédie dix-sept copies dans la nuit du 17 : la baie, le Conflans, le Val, Accalmie, et une pour Villevieille adressée au grand mestre Orwyle.",
+    "lieu_id": "peyredragon",
+    "acteurs": [
+      "gerardys",
+      "steffon-darklyn",
+      "orwyle"
+    ],
+    "conditions": [
+      "si des corbeaux sont interceptés",
+      "si les Verts obtiennent de ser Steffon un démenti par la contrainte sur sa maison"
+    ],
+    "statut": "resolu",
+    "effets": "la version noire de la mort de Viserys circule sous forme de pièce, non de propagande : niable mais non refaisable ; Orwyle reçoit personnellement une copie de la main d'un confrère",
+    "diffusion": [
+      {
+        "ou": "port-real",
+        "qui": [
+          "otto",
+          "orwyle",
+          "alicent",
+          "larys"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 19
+        },
+        "canal": "corbeau",
+        "fiabilite": 75,
+        "version": "Un manteau blanc, ser Steffon Darklyn, témoigne par écrit et sous contreseing braavien que le roi n'a jamais changé d'héritière sur son lit de mort. La pièce circule dans tout le royaume, et il faudra y répondre.",
+        "livree": true
+      },
+      {
+        "ou": "accalmie",
+        "qui": [
+          "borros-baratheon"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 21
+        },
+        "canal": "corbeau",
+        "fiabilite": 70,
+        "version": "Une déposition venue de Peyredragon, signée d'un chevalier de la Garde Royale et de deux capitaines braaviens, jure que Viserys n'a pas déshérité sa fille.",
+        "livree": false
+      },
+      {
+        "ou": "les-eyrie",
+        "qui": [
+          "jeyne-arryn"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 24
+        },
+        "canal": "corbeau",
+        "fiabilite": 70,
+        "version": "Peyredragon n'envoie pas des menaces mais une pièce d'archive : un manteau blanc jure que le roi n'a pas changé d'héritière. Au Val, cela pèse plus lourd qu'un dragon.",
+        "livree": false
+      },
+      {
+        "ou": "villevieille",
+        "qui": [
+          "ormund-hightower"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 27
+        },
+        "canal": "corbeau",
+        "fiabilite": 70,
+        "version": "Une copie de la déposition de Peyredragon arrive adressée nominativement à Ormund Hightower — on a voulu qu'il sache qu'on sait ce que sa maison a fait.",
+        "livree": false
+      }
+    ]
+  },
+  {
+    "id": "recit-darklyn-du-feu",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 17
+    },
+    "type": "programme",
+    "importance": 60,
+    "description": "La reine n'ayant rien voulu dicter, Gunthor Darklyn a fait écrire par son propre mestre le récit de la journée et l'a expédié par ses douze corbeaux dans la nuit du seizième jour : la version de Sombreval, dans les mots de Sombreval — une reine descendue du ciel pour sauver son vassal. Elle atteint la baie le 17, le Conflans et les Terres de l'Orage vers le 20.",
+    "lieu_id": "sombreval",
+    "acteurs": [
+      "gunthor-darklyn"
+    ],
+    "conditions": [
+      "si la reine avait dicté sa propre lettre",
+      "si un corbeau est intercepté"
+    ],
+    "statut": "resolu",
+    "effets": "La version de Sombreval a atteint la baie dès le 17 par barque de pêche : on y raconte que la reine est descendue au milieu des lances et a parlé aux hommes avant de brûler quoi que ce soit — plus flatteur que le vrai, et hors de son contrôle.",
+    "diffusion": [
+      {
+        "ou": "repos-des-freux",
+        "qui": [
+          "lord-staunton"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 17
+        },
+        "canal": "corbeau",
+        "fiabilite": 55,
+        "version": "Dans les mots de Sombreval : une reine est descendue du ciel au milieu des lances pour sauver son vassal, elle a parlé aux hommes avant de brûler quoi que ce soit, et elle viendra pour ceux qui l'appellent.",
+        "livree": true
+      },
+      {
+        "ou": "griffes",
+        "qui": [
+          "bartimos-celtigar"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 17
+        },
+        "canal": "barque",
+        "fiabilite": 55,
+        "version": "Le récit de Sombreval passe la baie par les barques de pêche : la reine a brûlé une colonne du roi pour un seul de ses vassaux, deux jours avant son propre sacre.",
+        "livree": true
+      },
+      {
+        "ou": "sharp-point",
+        "qui": [
+          "lord-bar-emmon"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 17
+        },
+        "canal": "barque",
+        "fiabilite": 55,
+        "version": "Le récit de Sombreval passe la baie par les barques de pêche : Gunthor Darklyn s'est déclaré le premier, et la reine est venue en personne le couvrir. Le premier déclaré a été le premier servi.",
+        "livree": true
+      },
+      {
+        "ou": "peyredragon",
+        "qui": [
+          "rhaenyra",
+          "gerardys",
+          "daemon",
+          "corlys",
+          "rhaenys"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 17
+        },
+        "canal": "rumeur",
+        "fiabilite": 40,
+        "version": "Le récit de Sombreval revient par les pêcheurs, embelli : la reine y descend au milieu des lances et parle aux hommes avant de brûler. Elle n'a pas dicté une ligne — c'est la version de Darklyn qui court, et elle a un jour d'avance sur la sienne.",
+        "livree": true
+      },
+      {
+        "ou": "vivesaigues",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 20
+        },
+        "canal": "corbeau",
+        "fiabilite": 45,
+        "version": "Au Conflans on lit la lettre de Sombreval : Peyredragon a du feu et l'emploie pour ses fidèles. On y ajoute, de bouche en bouche, que la colonne comptait trois mille hommes.",
+        "livree": true
+      }
+    ]
+  },
+  {
+    "id": "vol-rhaenyra-sombreval",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 16
+    },
+    "type": "programme",
+    "importance": 90,
+    "description": "La reine vole elle-même sur Syrax vers Sombreval — trois jours après ses couches, avec quatre heures de jour pour trois heures de vol — pour empêcher Gunthor Darklyn de sortir contre la colonne de 1200 hommes, ou s'interposer s'il est déjà sorti.",
+    "lieu_id": "sombreval",
+    "acteurs": [
+      "rhaenyra",
+      "gunthor-darklyn",
+      "jacaerys"
+    ],
+    "conditions": [
+      "si Darklyn est déjà sorti et engagé quand elle arrive",
+      "si son corps lâche en vol (relevailles de trois jours)",
+      "si elle descend à portée des deux scorpions de l'arrière-garde",
+      "si la nuit tombe avant qu'elle atteigne la côte"
+    ],
+    "statut": "resolu",
+    "effets": "Darklyn était déjà sorti. La reine a fait brûler la tête de la colonne royale (Vermax passant deux fois derrière elle), la colonne est rompue et dispersée dans les champs, Darklyn a chargé dans la fumée. Sombreval est sauvée ; une quarantaine de prisonniers verts, dont un officier ; la reine a mis pied à terre dans l'herbe brûlée, la ceinture de Gerardys trempée de sang. Le premier feu de la Danse est le sien.",
+    "diffusion": [
+      {
+        "ou": "sombreval",
+        "qui": [
+          "gunthor-darklyn"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 16
+        },
+        "canal": "temoin",
+        "fiabilite": 100,
+        "version": "Ils y étaient : la reine est descendue de Syrax dans la cendre, un dragon plus jeune passant deux fois derrière elle, et la tête de la colonne a brûlé.",
+        "livree": true
+      },
+      {
+        "ou": "peyredragon",
+        "qui": [
+          "daemon",
+          "corlys",
+          "gerardys",
+          "robert-quince",
+          "lucerys"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 16
+        },
+        "canal": "temoin",
+        "fiabilite": 95,
+        "version": "La reine et l'héritier sont rentrés de nuit aux lanternes des galères : la colonne est rompue, Sombreval sauvée, quarante prisonniers verts aux mains de Darklyn. Elle a saigné en vol et ne l'a pas dit.",
+        "livree": true
+      },
+      {
+        "ou": "rosby",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 16
+        },
+        "canal": "temoin",
+        "fiabilite": 55,
+        "version": "Des cavaliers rompus arrivent par la route au crépuscule : un dragon est tombé sur la tête de la colonne, il y en avait peut-être deux, on parle de centaines de morts et personne ne sait nommer les cavaliers.",
+        "livree": true
+      },
+      {
+        "ou": "port-real",
+        "qui": [
+          "otto",
+          "criston",
+          "aemond",
+          "alicent",
+          "aegon-ii",
+          "orwyle",
+          "larys"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 17
+        },
+        "canal": "corbeau",
+        "fiabilite": 40,
+        "version": "Corbeau de Rosby : un dragon a rompu la tête de la colonne royale sur la route de Sombreval. On dit Caraxès. Le nombre des morts enfle d'heure en heure et nul ne nomme le cavalier avec certitude.",
+        "livree": true
+      },
+      {
+        "ou": "port-real",
+        "qui": [
+          "mysaria"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 17
+        },
+        "canal": "rumeur",
+        "fiabilite": 25,
+        "version": "La ville se remplit de fuyards. On dit que Daemon Targaryen a brûlé une armée entière, que le ciel était rouge jusqu'à Rosby, et la Garde a fait fermer la porte de la Gueule-du-Dieu.",
+        "livree": true
+      },
+      {
+        "ou": "accalmie",
+        "qui": [
+          "borros-baratheon"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 20
+        },
+        "canal": "rumeur",
+        "fiabilite": 30,
+        "version": "On raconte aux Terres de l'Orage que les dragons de Peyredragon ont brûlé une armée du roi sur la route de Sombreval, et que la guerre a commencé sans que personne n'ait rien déclaré.",
+        "livree": true
+      }
+    ]
+  },
+  {
+    "id": "vol-rhaenys-recuperer-jace",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 16
+    },
+    "type": "programme",
+    "importance": 65,
+    "description": "Sur un « allez-y » que la reine n'a pas précisé, Rhaenys a choisi d'aller chercher Jacaerys à Sombreval sur Meleys, avec un crochet haut sur la route de Rosby pour voir si les colonnes de la Couronne ont des archers ou seulement des yeux. Gerardys l'a consigné au registre comme un ordre de la reine.",
+    "lieu_id": "sombreval",
+    "acteurs": [
+      "rhaenys",
+      "jacaerys",
+      "gunthor-darklyn"
+    ],
+    "conditions": [
+      "si Jacaerys est déjà reparti quand elle arrive",
+      "si les colonnes de la Couronne ont des scorpions ou des archers en nombre"
+    ],
+    "statut": "resolu",
+    "effets": "Rhaenys n'a pas ramené Jacaerys (Meleys l'a doublé au-dessus de la baie, il rentre une heure derrière) mais rapporte deux choses : Sombreval a acclamé Vermax sur ses remparts et Darklyn a fait sonner ses cloches ; et sur la route royale entre Rosby et Sombreval, la colonne de la Couronne est passée de 300 à 1200 hommes en deux jours, avec des chariots — dont deux portant des scorpions"
+  },
+  {
+    "id": "vol-jacaerys-sombreval",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 16
+    },
+    "type": "programme",
+    "importance": 70,
+    "description": "Jacaerys, parti sans ordre deux heures avant l'aube, doit paraître sur Vermax au-dessus de Sombreval au lever du jour pour montrer qu'un dragon noir couvre Gunthor Darklyn — et rentrer avant midi.",
+    "lieu_id": "sombreval",
+    "acteurs": [
+      "jacaerys",
+      "gunthor-darklyn"
+    ],
+    "conditions": [
+      "si quelqu'un le rattrape ou le rappelle avant Sombreval",
+      "si les colonnes de la Couronne aperçues à hauteur de Rosby ont des archers et sont plus près que prévu",
+      "si Vermax, jeune, ne tient pas le vol de retour"
+    ],
+    "statut": "resolu",
+    "effets": "Réussi : Sombreval a acclamé Vermax sur ses remparts, Darklyn a fait sonner ses cloches, trois tours de ville à hauteur d'homme. Jacaerys est rentré à Peyredragon peu après midi, une heure derrière Meleys. Contrecoup : les Verts savent désormais qu'un dragon noir couvre Sombreval, et que l'héritier de Rhaenyra vole seul et bas."
+  },
+  {
+    "id": "conseil-extraordinaire",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 15
+    },
+    "type": "programme",
+    "importance": 60,
+    "description": "Sur l'ordre de la reine, des pages courent le château et une barque file vers la rade : le conseil noir est convoqué en session extraordinaire au crépuscule, pour l'ultimatum d'Otto. Corlys remonte de son navire, Jace quitte la bibliothèque, Rhaenys ne rentrera de patrouille qu'à la nuit ; on est allé chercher Daemon sur la Montagne.",
+    "lieu_id": "peyredragon",
+    "acteurs": [
+      "rhaenyra",
+      "daemon",
+      "corlys",
+      "rhaenys",
+      "jacaerys"
+    ],
+    "conditions": [
+      "si un convoqué ne peut être trouvé à temps"
+    ],
+    "statut": "resolu",
+    "effets": "conseil tenu au crépuscule dans la Chambre de la Table Peinte : Corlys et Jacaerys présents dès l'ouverture, Rhaenys arrivée à la nuit au retour de patrouille, Daemon monté de la Montagne en dernier. La réponse à l'ultimatum se décide devant tous."
+  },
+  {
+    "id": "verrouillage-peyredragon",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 18
+    },
+    "type": "programme",
+    "importance": 40,
+    "description": "Ordre accordé à ser Robert Quince : garde doublée aux quais et à la porte de mer, malles et coffres des bannerets ouverts à l'entrée sans exception, le jour du couronnement.",
+    "lieu_id": "peyredragon",
+    "acteurs": [
+      "robert-quince",
+      "bartimos-celtigar",
+      "lord-bar-emmon",
+      "gunthor-darklyn"
+    ],
+    "conditions": [
+      "si la reine revient sur l'autorisation de fouiller les bagages d'un lord"
+    ],
+    "statut": "resolu",
+    "effets": "ce qu'on entre dans le château est connu ; un banneret fouillé peut s'en trouver humilié et le faire savoir"
+  },
+  {
+    "id": "escorte-couronne",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 17
+    },
+    "type": "programme",
+    "importance": 70,
+    "description": "Ordre de Corlys au conseil du 13 : deux galères rapides partent au-devant du navire de ser Steffon Darklyn et escortent la couronne de Viserys jusqu'aux quais de Peyredragon.",
+    "lieu_id": "peyredragon",
+    "acteurs": [
+      "corlys"
+    ],
+    "conditions": [
+      "si le navire de ser Steffon a été intercepté ou perdu en mer",
+      "si les galères manquent le rendez-vous"
+    ],
+    "statut": "resolu",
+    "effets": "Réussi mais cher : la caraque de ser Steffon est arrivée éclopée (misaine en écharpe, bordé de fortune), 13 morts sur 32 partis — trois manteaux blancs tués à la porte de la Boue, deux retournés en mer, un noyé, neuf marins perdus dans le détroit. La couronne de Jaehaerys (cercle d'or, sept pierres) est à Peyredragon, remise sur le quai devant les bannerets et les marchands étrangers."
+  },
+  {
+    "id": "convocation-bannerets",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 17
+    },
+    "type": "programme",
+    "importance": 55,
+    "description": "Corbeaux de convocation partis de Peyredragon le 14 à l'aube (dictés par Corlys) vers Celtigar, Bar Emmon, Massey, Sombreval et Repos-des-Freux : venir au couronnement et y prêter serment. Les réponses et les arrivées se font attendre jusqu'à la veille.",
+    "lieu_id": "peyredragon",
+    "acteurs": [
+      "corlys",
+      "bartimos-celtigar",
+      "lord-bar-emmon",
+      "gunthor-darklyn",
+      "lord-staunton"
+    ],
+    "conditions": [
+      "si le couronnement est déplacé ou annulé"
+    ],
+    "statut": "resolu",
+    "effets": "Sont venus au 17e jour : Bar Emmon (un jour trop tôt), Celtigar (deux coffres d'or), Massey. N'ont pas répondu : Repos-des-Freux (Staunton), Rosby, Stokeworth. Sombreval est retenue chez elle par ses morts et ses blessés."
+  },
+  {
+    "id": "pli-daemon-mysaria",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 15
+    },
+    "type": "programme",
+    "importance": 45,
+    "description": "Le pli scellé sans armes remis par Daemon à un page le soir du 13 atteint Port-Réal : consignes à Mysaria — vérifier la garnison de Simon Strong à Harrenhal, sonder les capitaines des manteaux d'or.",
+    "lieu_id": "port-real",
+    "acteurs": [
+      "daemon",
+      "mysaria"
+    ],
+    "conditions": [
+      "si le porteur est intercepté par les gens de Larys Strong"
+    ],
+    "statut": "resolu",
+    "effets": "Mysaria met ses gens au travail ; un fil relie de nouveau Daemon à Port-Réal, à l'insu de la reine"
+  },
+  {
+    "id": "patrouille-meleys",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 14
+    },
+    "type": "programme",
+    "importance": 35,
+    "description": "Rhaenys tient sa parole : Meleys survole la côte de la baie chaque jour — Sombreval, Repos-des-Freux, les petits châteaux qui reçoivent les corbeaux d'Otto voient passer l'aile rouge.",
+    "lieu_id": "peyredragon",
+    "acteurs": [
+      "rhaenys",
+      "gunthor-darklyn",
+      "lord-staunton"
+    ],
+    "conditions": [],
+    "statut": "resolu",
+    "effets": "les vassaux de la côte hésitent moins à se déclarer noirs ; les Verts apprennent qu'un dragon garde la baie"
+  },
+  {
+    "id": "couronnement-rhaenyra",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 18
+    },
+    "type": "canon",
+    "importance": 95,
+    "description": "Rhaenyra, relevée de couches, est couronnée reine à Peyredragon avec la couronne de Viserys apportée par Ser Steffon Darklyn ; le conseil noir se forme.",
+    "lieu_id": "peyredragon",
+    "acteurs": [
+      "rhaenyra",
+      "daemon",
+      "corlys",
+      "rhaenys"
+    ],
+    "conditions": [],
+    "statut": "resolu",
+    "effets": "Couronnée à midi sur le grand escalier, dos à la mer, avec la couronne de Jaehaerys apportée par ser Steffon et posée par Daemon. Formule non canonique : le serment de garnison de ser Robert Quince (« Tenez-vous ce qui vous est confié ? — Je le tiens. — Contre qui ? — Contre quiconque »), repris par 400 voix. Lecture préalable du rouleau de 105 (112 noms, dont les 19 aujourd'hui à Port-Réal). Sept dragons en couronne autour de l'île sur l'initiative de Rhaenys. Témoins : 4 maisons de la baie, 11 équipages étrangers, 40 prisonniers verts, et le grand mestre Orwyle en invité.",
+    "diffusion": [
+      {
+        "ou": "port-real",
+        "qui": [
+          "otto",
+          "aegon-ii",
+          "alicent",
+          "criston",
+          "aemond",
+          "larys",
+          "orwyle"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 19
+        },
+        "canal": "corbeau",
+        "fiabilite": 80,
+        "version": "Rhaenyra s'est fait couronner reine à Peyredragon avec la couronne de Jaehaerys, celle que portait Viserys, apportée par un chevalier de la Garde Royale. Les bannerets de la baie ont juré devant elle.",
+        "livree": true
+      },
+      {
+        "ou": "rosby",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 19
+        },
+        "canal": "rumeur",
+        "fiabilite": 60,
+        "version": "Il y a deux rois maintenant, et l'un des deux est une reine, avec la couronne du vieux roi et des dragons à trois heures de vol d'ici.",
+        "livree": true
+      },
+      {
+        "ou": "accalmie",
+        "qui": [
+          "borros-baratheon"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 21
+        },
+        "canal": "corbeau",
+        "fiabilite": 70,
+        "version": "Peyredragon a couronné sa reine. Les deux camps écriront désormais à Accalmie comme on écrit à un homme dont on a besoin.",
+        "livree": false
+      },
+      {
+        "ou": "winterfell",
+        "qui": [
+          "cregan-stark"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 28
+        },
+        "canal": "corbeau",
+        "fiabilite": 65,
+        "version": "La fille de Viserys a été couronnée sur son rocher. Le serment de 105 fut prêté par le père de Cregan Stark, et on le lui rappellera.",
+        "livree": false
+      }
+    ]
+  },
+  {
+    "id": "exigence-serments-verts",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 14
+    },
+    "type": "canon",
+    "importance": 80,
+    "description": "Otto Hightower expédie des corbeaux à toutes les maisons de la Couronne et du royaume : jurer à Aegon II, ou être tenu pour traître.",
+    "lieu_id": "port-real",
+    "acteurs": [
+      "otto",
+      "aegon-ii"
+    ],
+    "conditions": [],
+    "statut": "resolu",
+    "effets": "chaque maison de la Couronne doit se positionner ; ouvre la première scène du joueur"
+  },
+  {
+    "id": "emissaire-jacaerys",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 4
+    },
+    "type": "canon",
+    "importance": 60,
+    "description": "Jacaerys s'envole sur Vermax pour Les Eyrié puis Winterfell, quérir le Val et le Nord au nom de sa mère.",
+    "lieu_id": "peyredragon",
+    "acteurs": [
+      "jacaerys",
+      "jeyne-arryn",
+      "cregan-stark"
+    ],
+    "conditions": [
+      "si le conseil noir choisit une autre stratégie d'alliances"
+    ],
+    "statut": "a-venir",
+    "effets": "à terme : pacte du Val et pacte de l'Hiver acquis aux Noirs"
+  },
+  {
+    "id": "emissaire-lucerys",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 4
+    },
+    "type": "canon",
+    "importance": 60,
+    "description": "Lucerys s'envole sur Arrax pour Accalmie, porter l'offre de Rhaenyra à Borros Baratheon.",
+    "lieu_id": "peyredragon",
+    "acteurs": [
+      "lucerys",
+      "borros-baratheon"
+    ],
+    "conditions": [
+      "si Accalmie s'est déjà déclarée avant l'envoi",
+      "si Rhaenyra est convaincue d'envoyer un émissaire moins vulnérable"
+    ],
+    "statut": "a-venir",
+    "effets": "Lucerys arrive à Accalmie en même temps qu'Aemond, venu offrir un mariage au nom des Verts"
+  },
+  {
+    "id": "mort-lucerys",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 9
+    },
+    "type": "canon",
+    "importance": 95,
+    "description": "Au-dessus de la baie des Naufrageurs, dans l'orage, Vhagar fond sur Arrax : Lucerys meurt. Aemond n'a peut-être pas voulu — nul ne le croira.",
+    "lieu_id": "accalmie",
+    "acteurs": [
+      "aemond",
+      "lucerys",
+      "borros-baratheon"
+    ],
+    "conditions": [
+      "si emissaire-lucerys a été dévié",
+      "si Aemond n'est pas à Accalmie ce jour-là"
+    ],
+    "statut": "a-venir",
+    "effets": "point de non-retour : monde.tension → 90 ; phase → guerre-ouverte ; Rhaenyra brisée de deuil ; Daemon promet 'un fils pour un fils'",
+    "diffusion": [
+      {
+        "ou": "peyredragon",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 13
+        },
+        "canal": "corbeau",
+        "fiabilite": 55,
+        "version": "Corbeau d'Accalmie, sec et court : le prince Lucerys a quitté Accalmie dans l'orage et Arrax n'a pas reparu au-dessus de la baie des Naufrageurs. Lord Borros écrit qu'il ne sait rien de plus et qu'il n'a rien pu empêcher.",
+        "livree": false
+      },
+      {
+        "ou": "peyredragon",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 17
+        },
+        "canal": "temoin",
+        "fiabilite": 90,
+        "version": "Des pêcheurs de la baie des Naufrageurs ont ramené ce qu'on ramène. Vhagar attendait au-dessus des nuages. Le prince Aemond jure que la tempête l'a voulu et que son dragon ne lui obéissait plus — personne ne le croira jamais.",
+        "livree": false
+      },
+      {
+        "ou": "port-real",
+        "qui": [
+          "otto",
+          "alicent",
+          "aegon-ii",
+          "criston",
+          "larys",
+          "orwyle"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 11
+        },
+        "canal": "temoin",
+        "fiabilite": 80,
+        "version": "Le prince Aemond est rentré sur Vhagar avec du sang qui n'est pas le sien sur la selle. Il dit que le bâtard l'a provoqué au-dessus de la baie et que l'orage a fait le reste. La reine douairière n'a pas dit un mot depuis.",
+        "livree": false
+      },
+      {
+        "ou": "vivesaigues",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 20
+        },
+        "canal": "rumeur",
+        "fiabilite": 40,
+        "version": "On raconte partout qu'un enfant est parti en ambassade sous bannière de paix et qu'on l'a brûlé dans le ciel pour la peine. On ne dit plus le nom d'Aemond sans cracher, et on ne dit plus non aux corbeaux de Peyredragon aussi facilement.",
+        "livree": false
+      }
+    ]
+  },
+  {
+    "id": "sang-et-fromage",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 5,
+      "jour": 12
+    },
+    "type": "canon",
+    "importance": 90,
+    "description": "Deux hommes payés par Daemon — un garde-rat et un boucher — pénètrent le Donjon Rouge et égorgent le petit Jaehaerys sous les yeux d'Helaena, forcée de choisir.",
+    "lieu_id": "port-real",
+    "acteurs": [
+      "daemon",
+      "mysaria",
+      "helaena"
+    ],
+    "conditions": [
+      "si mort-lucerys a été dévié",
+      "si la sécurité du Donjon Rouge a été alertée d'une infiltration"
+    ],
+    "statut": "a-venir",
+    "effets": "Helaena sombre ; Port-Réal bascule dans la peur ; les Verts exécutent et purgent ; toute voie de paix est morte",
+    "diffusion": [
+      {
+        "ou": "peyredragon",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 5,
+          "jour": 15
+        },
+        "canal": "corbeau",
+        "fiabilite": 75,
+        "version": "Dans le Donjon Rouge, un enfant a été égorgé sous les yeux de sa mère, qu'on a forcée à choisir lequel de ses fils mourrait. C'était Jaehaerys. Le royaume dira que l'ordre est venu de Peyredragon, et le royaume n'aura pas entièrement tort.",
+        "livree": false
+      },
+      {
+        "ou": "port-real",
+        "qui": [
+          "alicent",
+          "otto",
+          "aegon-ii",
+          "aemond",
+          "criston",
+          "helaena",
+          "larys"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 5,
+          "jour": 12
+        },
+        "canal": "temoin",
+        "fiabilite": 100,
+        "version": "L'héritier du roi a été égorgé dans ses appartements, la reine Helaena tenue par les bras pendant qu'on la faisait choisir. Les portes étaient gardées. Quelqu'un les a ouvertes.",
+        "livree": false
+      }
+    ]
+  },
+  {
+    "id": "ralliement-trident",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 6,
+      "jour": 1
+    },
+    "type": "canon",
+    "importance": 65,
+    "description": "L'essentiel des seigneurs du Trident — Tully hésitant à part — se déclare pour Rhaenyra ; le Conflans devient le champ de bataille terrestre.",
+    "lieu_id": "vivesaigues",
+    "acteurs": [],
+    "conditions": [],
+    "statut": "a-venir",
+    "effets": "front terrestre ouvert dans le Conflans",
+    "diffusion": [
+      {
+        "ou": "peyredragon",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 6,
+          "jour": 6
+        },
+        "canal": "corbeau",
+        "fiabilite": 65,
+        "version": "Les serments du Trident arrivent par paquets et se contredisent sur les comptes : Blackwood se déclare et promet quinze cents lances, Bracken jure le contraire pour la seule raison que Blackwood a juré, et Vivesaigues garde le silence. Ce qui est sûr : le Conflans se battra chez lui.",
+        "livree": false
+      }
+    ]
+  },
+  {
+    "id": "prise-harrenhal",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 6,
+      "jour": 20
+    },
+    "type": "canon",
+    "importance": 75,
+    "description": "Daemon, sur Caraxès, prend Harrenhal sans coup férir : Ser Simon Strong rend la forteresse. Les Noirs tiennent le cœur du Conflans.",
+    "lieu_id": "harrenhal",
+    "acteurs": [
+      "daemon",
+      "larys"
+    ],
+    "conditions": [
+      "si Daemon est retenu ailleurs par un autre front"
+    ],
+    "statut": "a-venir",
+    "effets": "base d'opérations noire au centre du royaume ; humiliation stratégique pour Otto ; Larys perd son siège ancestral",
+    "diffusion": [
+      {
+        "ou": "peyredragon",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 6,
+          "jour": 24
+        },
+        "canal": "corbeau",
+        "fiabilite": 85,
+        "version": "Le prince Daemon est entré dans Harrenhal sans un mort : ser Simon Strong a rendu la forteresse et lui a servi à souper. Le cœur du Conflans est tenu, et le prince y reste — il ne dit pas pour combien de temps.",
+        "livree": false
+      },
+      {
+        "ou": "port-real",
+        "qui": [
+          "larys",
+          "otto",
+          "criston",
+          "aegon-ii"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 6,
+          "jour": 24
+        },
+        "canal": "corbeau",
+        "fiabilite": 80,
+        "version": "Harrenhal est tombée sans un coup de hache. Le châtelain a ouvert les portes au prince Daemon. Lord Larys Strong apprend en même temps que le conseil que sa maison a rendu son siège sans le consulter.",
+        "livree": false
+      }
+    ]
+  },
+  {
+    "id": "chute-otto",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 7,
+      "jour": 5
+    },
+    "type": "canon",
+    "importance": 70,
+    "description": "Aegon II, furieux des lenteurs de son grand-père, retire la Main à Otto Hightower et la donne à Criston Cole. La stratégie verte passe de la plume à l'épée.",
+    "lieu_id": "port-real",
+    "acteurs": [
+      "aegon-ii",
+      "otto",
+      "criston"
+    ],
+    "conditions": [
+      "si les serments et achats d'Otto ont produit des succès visibles avant cette date"
+    ],
+    "statut": "a-venir",
+    "effets": "Criston Main du Roi ; doctrine verte : châtier les vassaux noirs de la Couronne un par un",
+    "diffusion": [
+      {
+        "ou": "peyredragon",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 7,
+          "jour": 8
+        },
+        "canal": "corbeau",
+        "fiabilite": 70,
+        "version": "Otto Hightower n'est plus la Main du roi : Aegon lui a retiré la chaîne et l'a donnée à Criston Cole. Ceux qui espéraient encore des lettres et des marchandages n'auront plus que des osts. On ne négocie pas avec le Faiseur de Rois.",
+        "livree": false
+      }
+    ]
+  },
+  {
+    "id": "sac-sombreval",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 6,
+      "jour": 1
+    },
+    "type": "canon",
+    "importance": 90,
+    "description": "DÉVIÉ EN AMONT (feu royal du 16e jour de la 3e lune) : ce n'est plus une campagne d'intimidation mais une expédition de vengeance. Criston Cole marche sur Sombreval avec l'ost de la Couronne pour venger les brûlés de la route royale — la ville est pillée, la flotte brûlée, lord Gunthor Darklyn décapité pour trahison, et l'on fera dire aux septons que c'est le prix du feu de dragon sur des hommes du roi.",
+    "lieu_id": "sombreval",
+    "acteurs": [
+      "criston",
+      "gunthor-darklyn"
+    ],
+    "conditions": [
+      "si les Darklyn ont juré à Aegon II avant la marche",
+      "si un dragon noir garde Sombreval"
+    ],
+    "statut": "a-venir",
+    "effets": "maison darklyn → tombée ; terreur chez tous les seigneurs de la Couronne ; l'ost vert continue vers Repos-des-Freux",
+    "diffusion": [
+      {
+        "ou": "peyredragon",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 6,
+          "jour": 2
+        },
+        "canal": "barque",
+        "fiabilite": 45,
+        "version": "Les barques de pêche rentrent avant l'heure : Sombreval brûle du côté du port et on entend les cloches depuis la mer. On ne sait pas si lord Gunthor tient encore la citadelle, ni combien sont sortis par la porte de terre.",
+        "livree": false
+      },
+      {
+        "ou": "peyredragon",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 6,
+          "jour": 4
+        },
+        "canal": "temoin",
+        "fiabilite": 90,
+        "version": "Des fuyards de Sombreval sont débarqués sur le rocher : la ville est pillée, la flotte brûlée sur ses amarres, et lord Gunthor Darklyn a été décapité sur son propre quai devant ses gens. Le premier homme qui a hissé vos couleurs est mort en les portant.",
+        "livree": false
+      },
+      {
+        "ou": "port-real",
+        "qui": [
+          "aegon-ii",
+          "otto",
+          "alicent",
+          "larys",
+          "orwyle"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 6,
+          "jour": 2
+        },
+        "canal": "corbeau",
+        "fiabilite": 75,
+        "version": "Ser Criston Cole écrit que Sombreval est reprise au nom du roi, que le traître a payé, et que les brûlés de la route royale sont vengés. Il ne dit rien du nombre de maisons vidées ni de ce que ses hommes ont emporté.",
+        "livree": false
+      }
+    ]
+  },
+  {
+    "id": "bataille-repos-des-freux",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 9,
+      "jour": 5
+    },
+    "type": "canon",
+    "importance": 90,
+    "description": "Rhaenys et Meleys volent au secours de Repos-des-Freux assiégé — et tombent dans le piège de Criston : Sunfyre et Vhagar les attendent. Rhaenys meurt en dragon ; Aegon II, carbonisé, est tiré des décombres à demi mort.",
+    "lieu_id": "repos-des-freux",
+    "acteurs": [
+      "rhaenys",
+      "criston",
+      "aegon-ii",
+      "aemond",
+      "lord-staunton"
+    ],
+    "conditions": [
+      "si sac-sombreval a été dévié",
+      "si Rhaenys n'est pas envoyée seule"
+    ],
+    "statut": "a-venir",
+    "effets": "rhaenys → morte ; aegon-ii → grièvement brûlé, écarté ; Aemond devient Protecteur du Royaume ; maison staunton → tombée"
+  },
+  {
+    "id": "bataille-du-gosier",
+    "date_prevue": {
+      "annee": 130,
+      "lune": 1,
+      "jour": 10
+    },
+    "type": "canon",
+    "importance": 90,
+    "description": "La flotte des Trois Filles force le Gosier ; Jacaerys tombe du ciel, percé de carreaux au-dessus de la bataille. Lamarck est ravagée dans la foulée.",
+    "lieu_id": "lamarck",
+    "acteurs": [
+      "jacaerys",
+      "corlys"
+    ],
+    "conditions": [
+      "si le blocus du Gosier a été levé ou renforcé autrement",
+      "si Jacaerys ne combat pas en première ligne"
+    ],
+    "statut": "a-venir",
+    "effets": "jacaerys → mort ; blocus noir brisé un temps ; Corlys endeuillé vacille ; Rhaenyra n'a plus d'héritier adulte"
+  },
+  {
+    "id": "chute-port-real",
+    "date_prevue": {
+      "annee": 130,
+      "lune": 5,
+      "jour": 1
+    },
+    "type": "canon",
+    "importance": 95,
+    "description": "Les portes de Port-Réal s'ouvrent sans siège : les Noirs prennent la ville, Rhaenyra s'assied enfin sur le Trône de Fer — qui la coupe à chaque audience.",
+    "lieu_id": "port-real",
+    "acteurs": [
+      "rhaenyra",
+      "daemon",
+      "alicent",
+      "helaena"
+    ],
+    "conditions": [
+      "si l'équilibre militaire a été bouleversé avant (dragons verts intacts, Couronne unie derrière Aegon)"
+    ],
+    "statut": "a-venir",
+    "effets": "port-real → contrôle targaryen-noir ; Alicent et Helaena captives ; Aegon II exfiltré en secret ; le règne dur de Rhaenyra commence"
+  },
+  {
+    "id": "corbeau-rambton",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 20
+    },
+    "type": "programme",
+    "importance": 15,
+    "description": "Le corbeau portant le jugement de borne scelle atteint ser Manfryd Rambton, pres de Rosby. Onze ans de lettres pour un doigt de cire : le premier acte de justice rendu par la reine couronnee.",
+    "lieu_id": "rosby",
+    "acteurs": [
+      "manfryd-rambton",
+      "gerardys"
+    ],
+    "conditions": [
+      "le sceau de la reine est appose avant le depart des corbeaux du matin"
+    ],
+    "statut": "resolu",
+    "effets": [
+      "Rambton tient un jugement scelle de la main de Rhaenyra",
+      "une petite maison des terres de la Couronne doit quelque chose a la reine"
+    ]
+  },
+  {
+    "id": "corbeau-brune",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 20
+    },
+    "type": "programme",
+    "importance": 45,
+    "description": "Le corbeau de la reine atteint ser Roderick Brune a Cracfosse : la levee des trois cents est acceptee, le fer et le sel promis. Reste a les charger et a trouver une coque — deux jours de mer.",
+    "lieu_id": "cracfosse",
+    "acteurs": [
+      "roderick-brune",
+      "gerardys",
+      "rhaenyra"
+    ],
+    "conditions": [
+      "le corbeau part au matin du 19"
+    ],
+    "statut": "resolu",
+    "effets": [
+      "Brune commence a rassembler les trois cents hommes de la Pointe",
+      "la promesse de fer engage l'armurerie de ser Robert Quince (240 fers en reserve pour 300 hommes) et une coque de lord Corlys"
+    ]
+  }
+]
