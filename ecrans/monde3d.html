@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Port-Réal — le monde en volume</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --encre: #e8e0d0; --fond: #0b0e12; --or: #c9a227; --sourdine: #8d8676; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--fond); color: var(--encre);
+    font: 13px/1.5 "Iowan Old Style", Georgia, serif; overflow: hidden; }
+  canvas { display: block; }
+  #monde { position: fixed; inset: 0; }
+
+  #barre {
+    position: fixed; top: 12px; left: 12px; z-index: 5; width: 228px;
+    background: rgba(9,12,16,.78); border: 1px solid #2b2f36; border-radius: 3px;
+    padding: 10px 12px 12px; backdrop-filter: blur(6px);
+  }
+  #barre h1 { margin: 0 0 2px; font-size: 15px; font-weight: normal; letter-spacing: .04em; }
+  #barre .sous { color: var(--sourdine); font-size: 11px; margin-bottom: 9px; }
+  .titre { color: var(--or); font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+    margin: 11px 0 5px; border-bottom: 1px solid #24282e; padding-bottom: 3px; }
+  label { display: block; cursor: pointer; padding: 1px 0; color: #cfc8b8; }
+  label input { margin-right: 6px; vertical-align: -1px; accent-color: var(--or); }
+  .vues { display: flex; flex-wrap: wrap; gap: 4px; }
+  .vues button {
+    flex: 1 1 46%; background: #171b21; color: #cfc8b8; border: 1px solid #2b2f36;
+    border-radius: 2px; padding: 4px 2px; font: inherit; font-size: 11px; cursor: pointer;
+  }
+  .vues button:hover { border-color: var(--or); color: #fff; }
+  #brume { width: 100%; accent-color: var(--or); margin-top: 4px; }
+  #compte { color: var(--sourdine); font-size: 11px; margin-top: 9px; white-space: pre-line;
+    font-variant-numeric: tabular-nums; }
+  #aide { position: fixed; bottom: 10px; left: 12px; z-index: 5; color: var(--sourdine); font-size: 11px; }
+
+  #chargement {
+    position: fixed; inset: 0; z-index: 9; display: flex; align-items: center;
+    justify-content: center; flex-direction: column; gap: 10px; background: #0b0e12;
+    transition: opacity .6s; text-align: center;
+  }
+  #chargement .quoi { color: var(--sourdine); font-size: 12px; min-height: 1.5em; }
+  #chargement.parti { opacity: 0; pointer-events: none; }
+
+  #etiquettes { position: fixed; inset: 0; z-index: 3; pointer-events: none; }
+  #etiquettes span {
+    position: absolute; transform: translate(-50%, -100%); white-space: nowrap;
+    font-size: 11px; color: #f2ead8; text-shadow: 0 1px 3px #000, 0 0 10px rgba(0,0,0,.9);
+    letter-spacing: .04em; padding-bottom: 4px;
+  }
+  #etiquettes span[data-genre="forteresse"], #etiquettes span[data-genre="monument"] {
+    font-size: 13px; color: #f6e9c4; letter-spacing: .08em;
+  }
+  #etiquettes span::after {
+    content: ""; position: absolute; left: 50%; bottom: -6px; width: 1px; height: 6px;
+    background: rgba(201,162,39,.75);
+  }
+  /* ce qu'il y a sous le curseur (modules/monde/survol.js) : le métier du toit
+     désigné, le nom d'une porte, la pièce qu'on montre. Une réponse à une
+     question, dans une boîte, au curseur — pas un nom planté dans la ville. */
+  .monde-survol {
+    position: absolute; z-index: 4; pointer-events: none;
+    display: flex; flex-direction: column; gap: 1px; max-width: 220px;
+    padding: 4px 8px; border: 1px solid rgba(232,201,138,.22); border-radius: 3px;
+    background: rgba(12,14,18,.82); box-shadow: 0 2px 10px rgba(0,0,0,.55);
+  }
+  .monde-survol b {
+    color: #f2ead8; font-weight: 500; font-size: 11px; letter-spacing: .04em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .monde-survol i {
+    color: var(--sourdine); font-style: italic; font-size: 10px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+</style>
+</head>
+<body>
+
+<div id="monde"></div>
+<div id="etiquettes"></div>
+
+<div id="barre">
+  <h1 id="titre-lieu">Port-Réal</h1>
+  <div class="sous" id="sous-lieu">le monde en volume — 1 unité = 1 m</div>
+  <div class="titre">La localisation</div>
+  <select id="lieu"></select>
+  <div class="titre">Les couches</div>
+  <div id="couches"></div>
+  <div class="titre">Les vues</div>
+  <div class="vues" id="vues"></div>
+  <div class="titre">La brume</div>
+  <input type="range" id="brume" min="0" max="300" value="92">
+  <div id="compte"></div>
+</div>
+
+<div id="aide">glisser : tourner · molette : approcher · ZQSD ou flèches : marcher · déplacer : clic droit, molette enfoncée, maj+glisser, ou deux doigts</div>
+
+<div id="chargement">
+  <div>Port-Réal se lève…</div>
+  <div class="quoi" id="chargement-quoi"></div>
+</div>
+
+<script type="module">
+// Le banc d'essai : il n'assemble rien lui-même. Tout le monde est dans
+// /modules/monde/, un module par matière, et cette page ne fait que l'ouvrir,
+// le régler et le montrer — exactement ce que fera l'échelle « la ville » du
+// décor quand elle prendra la suite.
+import { ouvrir } from "/modules/monde/monde.js";
+
+const quoi = document.getElementById("chargement-quoi");
+
+// ---- la localisation --------------------------------------------------------
+// Le serveur tient la liste : la page ne connaît aucun lieu par son nom, elle
+// ne fait que lire `?lieu=`. Ajouter une localisation, c'est donc une entrée
+// dans LIEUX3D côté serveur et trois JSON dans monde/ — rien ici.
+const CHOIX = await fetch("/monde/lieux").then((r) => r.json())
+  .catch(() => ({ defaut: "port-real", lieux: [] }));
+const demande = new URLSearchParams(location.search).get("lieu");
+const LIEU = CHOIX.lieux.find((l) => l.id === demande)
+  || CHOIX.lieux.find((l) => l.id === CHOIX.defaut) || null;
+
+const select = document.getElementById("lieu");
+for (const l of CHOIX.lieux) {
+  const o = document.createElement("option");
+  o.value = l.id; o.textContent = l.nom;
+  o.selected = LIEU && l.id === LIEU.id;
+  select.appendChild(o);
+}
+// On recharge au lieu de reconstruire : la scène tient 500 000 volumes et un
+// relief de 300 000 points ; les défaire proprement coûte plus cher qu'un F5.
+select.onchange = () => { location.search = "?lieu=" + encodeURIComponent(select.value); };
+
+if (LIEU) {
+  document.title = LIEU.nom + " — le monde en volume";
+  document.getElementById("titre-lieu").textContent = LIEU.nom;
+  document.getElementById("sous-lieu").textContent = LIEU.sous;
+  document.querySelector("#chargement div").textContent = LIEU.nom + " se lève…";
+}
+
+const monde = await ouvrir({
+  hote: document.getElementById("monde"),
+  etiquettes: document.getElementById("etiquettes"),
+  source: (LIEU && LIEU.source) || "/monde",
+  dire: (t) => { quoi.textContent = t; },
+}).catch((e) => { quoi.textContent = "manque : " + e.message; throw e; });
+
+// Le banc d'essai expose son monde : c'est un atelier, on veut pouvoir le
+// palper depuis la console (`atelier.foule.compte`, `atelier.heure(...)`).
+// La page de jeu, elle, n'expose rien.
+globalThis.atelier = monde;
+
+// ---- les couches -----------------------------------------------------------
+const hote = document.getElementById("couches");
+for (const c of monde.couches) {
+  const l = document.createElement("label");
+  const b = document.createElement("input");
+  // Une couche peut naître ÉTEINTE : la foule coûte le graphe des rues et des
+  // cellules de corps, on ne les charge que si on la demande.
+  b.type = "checkbox"; b.checked = !c.eteinte;
+  b.onchange = () => {
+    c.objets.forEach((o) => { o.visible = b.checked; });
+    if (c.noms && monde.reperes) monde.reperes.montrer(b.checked);
+  };
+  c.objets.forEach((o) => { o.visible = b.checked; });
+  l.append(b, document.createTextNode(c.nom));
+  hote.appendChild(l);
+}
+
+// ---- les vues --------------------------------------------------------------
+const vues = document.getElementById("vues");
+for (const [nom, loc, but] of monde.VUES) {
+  const b = document.createElement("button");
+  b.textContent = nom;
+  b.onclick = () => monde.camera.vers(loc, but);
+  vues.appendChild(b);
+}
+// La septième « vue » n'en est pas une : c'est un mode. On la met au même
+// endroit parce que c'est là que le regard se choisit — et le bouton dit ce
+// qu'il fera, jamais où l'on est.
+const pied = document.createElement("button");
+pied.textContent = "À pied (F)";
+pied.onclick = () => {
+  if (monde.camera.apied) monde.camera.survoler();
+  else monde.camera.marcher([monde.camera.cible.x, monde.camera.cible.y]);
+};
+monde.camera.surMode((a) => { pied.textContent = a ? "Reprendre l'air (F)" : "À pied (F)"; });
+vues.appendChild(pied);
+
+// ---- la brume, à la main : c'est le réglage qui décide de l'échelle ---------
+document.getElementById("brume").oninput = (e) => {
+  monde.scene.fog.density = Number(e.target.value) / 1e6;
+};
+
+// ---- le compte -------------------------------------------------------------
+const compte = document.getElementById("compte");
+let t0 = performance.now(), images = 0;
+monde.demarrer(() => {
+  images++;
+  const t = performance.now();
+  if (t - t0 < 500) return;
+  const ips = Math.round(images * 1000 / (t - t0));
+  images = 0; t0 = t;
+  const [nx, ny, res] = monde.compte.relief;
+  compte.textContent =
+    monde.compte.batiments.toLocaleString("fr") + " bâtiments · " +
+    monde.compte.troncons.toLocaleString("fr") + " tronçons\n" +
+    nx + " × " + ny + " points de relief (" + res + " m)\n" +
+    Math.round(monde.camera.altitude) + " m d'altitude · " +
+    monde.rendu.info.render.calls + " appels · " + ips + " images/s" +
+    (monde.foule && monde.foule.visible
+      ? "\n" + monde.foule.compte.dessines.toLocaleString("fr") + " points · "
+        + monde.foule.compte.dehors.toLocaleString("fr") + " dehors · "
+        + "1 sur " + monde.foule.compte.grain
+      : "");
+});
+
+// le premier regard appartient au lieu : Port-Réal se prend du fleuve,
+// Peyredragon depuis la rade — c'est le serveur qui le dit, avec sa `vue`.
+// `?echelle=ville|chateau|salle` demande une des trois hauteurs de regard que
+// le lieu déclare ; un nom inconnu ou un lieu qui n'en a pas retombe sur `vue`.
+const ECHELLE = new URLSearchParams(location.search).get("echelle");
+monde.camera.vers(...(
+  (ECHELLE && LIEU && LIEU.vues && LIEU.vues[ECHELLE])
+  || (LIEU && LIEU.vue) || [[9200, -2600, 2600], [2900, 1700, 40]]));
+// Le voile s'en va — et on ne s'en remet pas à la seule règle CSS. Constaté :
+// la classe est bien posée, `#chargement.parti { opacity: 0 }` est bien parsée,
+// et l'opacité calculée reste à 1 ; le monde tournait derrière un rideau noir.
+// Un style en ligne l'emporte sur la cascade, et `display: none` après la
+// transition retire le voile du flux au lieu de le laisser transparent devant
+// la scène — sans quoi il continue d'avaler la souris.
+const voile = document.getElementById("chargement");
+voile.classList.add("parti");
+voile.style.opacity = "0";
+voile.style.pointerEvents = "none";
+setTimeout(() => { voile.style.display = "none"; }, 700);
+window.__monde = monde;    // banc d'essai : de quoi tripoter depuis la console
+</script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+{
+  "genere_le": "2026-08-06T18:46:36",
+  "empreintes": {
+    "intentions": "1e5a35355aea7f51d29388868f386d0d09522825",
+    "evenements": "0c360668062ebadbd04d68c670774d93d75f0af2",
+    "personnages": "f265ab7e9352d28b1a070862867c5eaca3fcff51",
+    "monde": "bf60f286872d020961effa63f1d9ee8e06528116",
+    "info": "845bceb0b9c113737a6099615b1ba4b23793ad6b",
+    "actes": "91098709cdf6f23490fc1e86b802a1bec8b0df2d",
+    "paroles": "d90a8774e2e2916709c7b30ff2e1033dd1149d8e",
+    "annales": "779d2214c2aeabed12984581aa1a042c918bd908"
+  },
+  "note_mj": "Rafraichissement des deux tetes en retard (mysaria, criston), boucle hors scene du 129.3.18 au 129.3.21 : nouvelles absorbees, deux etapes a echeance tombees, ce qu'elles produisent mis en diffusion.",
+  "mutations_proposees": [
+    {
+      "table": "intentions",
+      "cible": "criston",
+      "operation": "ignore_retirer",
+      "valeur": "Que Rhaenyra sera couronnée demain, avec la couronne de son père et le témoignage d'un manteau blanc",
+      "pourquoi": "le corbeau de Peyredragon est arrive a Port-Real le 129.3.19 (couronnement-rhaenyra #0, deja livree)"
+    },
+    {
+      "table": "intentions",
+      "cible": "criston",
+      "operation": "croyance_ajouter",
+      "valeur": "Le corbeau du dix-neuvieme : elle s'est fait couronner a Peyredragon de la couronne de Jaehaerys, celle que portait Viserys, apportee par un chevalier de la Garde Royale — un des siens, qui a jure devant elle avec les bannerets de la baie. Ce n'est plus une pretendante, c'est un parjure en armes.",
+      "pourquoi": "absorption de la nouvelle livree le 19"
+    },
+    {
+      "table": "intentions",
+      "cible": "criston",
+      "operation": "etape",
+      "etape": "criston-survivants",
+      "champs": {
+        "etat": "fait",
+        "jours_restants": 0,
+        "accompli": "Les chariots sont entres par la porte des Dieux au matin du vingt-et-unieme, les brules devant, decouverts. Il les a fait mener au pas d'homme de la porte jusqu'au Cul-de-Puce, puis devant la Fosse Dragon, et il n'en a averti personne au conseil."
+      }
+    },
+    {
+      "table": "intentions",
+      "cible": "criston",
+      "operation": "etape",
+      "etape": "criston-ost",
+      "champs": {
+        "jours_restants": 22
+      }
+    },
+    {
+      "table": "intentions",
+      "cible": "criston",
+      "operation": "tete",
+      "champs": {
+        "intention": "Se servir des brules pour arracher a Otto l'or de l'ost — et faire dire tout haut, dans la meme semaine, que la femme couronnee a Peyredragon est celle qui les a brules.",
+        "attitude_joueur": "Elle s'est couronnee huit jours apres avoir brule ses hommes : il tient les deux faits ensemble et ne les separera plus. Il ne parlera plus jamais de la faire jurer, et il n'acceptera aucune treve qui ne passe par elle.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 21
+        }
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "couronnement-rhaenyra",
+      "operation": "diffusion_ajouter",
+      "valeur": {
+        "ou": "port-real",
+        "qui": [
+          "mysaria"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 20
+        },
+        "canal": "rumeur",
+        "fiabilite": 45,
+        "version": "Dans les tavernes du Cul-de-Puce : la fille de Viserys s'est mise une couronne sur la tete a Peyredragon, seule, sans septon, et c'est celle du vieux roi — un manteau blanc la lui aurait portee dans un sac. On ne s'accorde ni sur le manteau blanc ni sur le nombre de seigneurs a genoux.",
+        "livree": true
+      },
+      "pourquoi": "la nouvelle est publique dans la ville depuis le corbeau du 19 ; elle vit de ces tavernes"
+    },
+    {
+      "table": "intentions",
+      "cible": "mysaria",
+      "operation": "croyance_ajouter",
+      "valeur": "La fille de Viserys s'est couronnee a Peyredragon avec la couronne du vieux roi — la ville le dit depuis le vingtieme, mal, et sans s'accorder sur le manteau blanc. Il y a maintenant deux acheteurs pour tout, et c'est la seule chose qui compte.",
+      "pourquoi": "rumeur du 20 absorbee"
+    },
+    {
+      "table": "intentions",
+      "cible": "mysaria",
+      "operation": "etape",
+      "etape": "mysaria-fuyards",
+      "champs": {
+        "etat": "fait",
+        "jours_restants": 0,
+        "accompli": "Trois jours aux portes, du vin pour les soldats. Les recits ne s'accordent sur rien sauf trois choses : le dragon est venu de la mer et non du fleuve, la tete de colonne a brule en une seule passe, et la Garde a ferme la Gueule-du-Dieu avant midi. Elle a vendu ces trois lignes deux fois — une bourse d'un homme qui ne s'est pas nomme, et une copie partie pour Peyredragon, ou elle est due."
+      }
+    },
+    {
+      "table": "intentions",
+      "cible": "mysaria",
+      "operation": "etape",
+      "etape": "mysaria-manteaux-dor",
+      "champs": {
+        "jours_restants": 2
+      }
+    },
+    {
+      "table": "intentions",
+      "cible": "mysaria",
+      "operation": "etape",
+      "etape": "mysaria-harrenhal",
+      "champs": {
+        "jours_restants": 6
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "vol-rhaenyra-sombreval",
+      "operation": "diffusion_ajouter",
+      "valeur": {
+        "ou": "peyredragon",
+        "qui": [
+          "daemon"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 24
+        },
+        "canal": "barque",
+        "fiabilite": 75,
+        "version": "De la Ver Blanc, sans signature et sans un mot de politesse, trois lignes contre paiement : le dragon est venu de la mer et non du fleuve ; la tete de colonne a brule en une seule passe ; la Garde a ferme la Gueule-du-Dieu avant midi et la ville est pleine de fuyards qu'on ne nourrit pas. En marge : la ville dit Caraxes, et elle n'a pas corrige.",
+        "livree": false
+      },
+      "pourquoi": "ce qu'elle vient de vendre voyage — et arrive chez son commanditaire en trois jours de barque"
+    },
+    {
+      "table": "intentions",
+      "cible": "mysaria",
+      "operation": "tete",
+      "champs": {
+        "intention": "Se faire payer les trois lignes avant qu'elles ne soient publiques, et tenir les manteaux d'or en reserve — maintenant qu'il y a deux couronnes, on peut vendre a l'une la peur de l'autre.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 21
+        }
+      }
+    }
+  ],
+  "applique_le": "2026-08-06T18:46:42"
+}

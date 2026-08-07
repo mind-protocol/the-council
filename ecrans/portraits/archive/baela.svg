@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Baela Targaryen">
+  <title>Baela Targaryen</title>
+  <defs>
+    <radialGradient id="bg-baela" cx="50%" cy="32%" r="80%">
+      <stop offset="0%" stop-color="#322a20"/>
+      <stop offset="55%" stop-color="#241d16"/>
+      <stop offset="100%" stop-color="#141009"/>
+    </radialGradient>
+    <clipPath id="clip-baela"><circle cx="64" cy="64" r="52"/></clipPath>
+  </defs>
+  <!-- anneau héraldique -->
+  <circle cx="64" cy="64" r="63" fill="#1d1a1c"/>
+  <circle cx="64" cy="64" r="57.5" fill="none" stroke="#a11f1f" stroke-width="7" stroke-dasharray="15.05 15.05"/>
+  <!-- disque intérieur -->
+  <circle cx="64" cy="64" r="52" fill="url(#bg-baela)" stroke="#7a6342" stroke-width="1.2"/>
+  <!-- buste -->
+  <g clip-path="url(#clip-baela)">
+    <rect x="57.5" y="62" width="13" height="28" rx="2" fill="#7d6853"/>
+    <path d="M22,128 C27,100 46,89 64,89 C82,89 101,100 106,128 Z" fill="#2c2620"/>
+    <path d="M34,108 C42,94 52,91 64,91 C76,91 86,94 94,108" fill="none" stroke="#a11f1f" stroke-width="2.4" opacity="0.9"/>
+    <ellipse cx="64" cy="54" rx="15.5" ry="18.5" fill="#7d6853"/>
+    <path d="M48,53 C46.5,33 54,26 64,26 C74,26 81.5,33 80,53 C78,43 72.5,39.5 64,39.5 C55.5,39.5 50,43 48,53 Z" fill="#dcd6df"/>
+  </g>
+  <!-- badge de maison -->
+  <circle cx="64" cy="113" r="11.5" fill="#191510" stroke="#7a6342" stroke-width="1.2"/>
+  <g transform="translate(64 113)"><path d="M0,-6.5 C2.2,-3.5 2.4,-0.5 0,2.5 C-2.4,-0.5 -2.2,-3.5 0,-6.5 Z" fill="#b32626"/><g transform="translate(-4.4 1.2) scale(0.62)"><path d="M0,-6.5 C2.2,-3.5 2.4,-0.5 0,2.5 C-2.4,-0.5 -2.2,-3.5 0,-6.5 Z" fill="#b32626"/></g><g transform="translate(4.4 1.2) scale(0.62)"><path d="M0,-6.5 C2.2,-3.5 2.4,-0.5 0,2.5 C-2.4,-0.5 -2.2,-3.5 0,-6.5 Z" fill="#b32626"/></g></g>
+</svg>

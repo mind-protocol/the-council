@@ -107,7 +107,10 @@ function ChampVu(o) {
   function unSol(s, i, k) {
     const g = GENRES_SOL[s.genre] || {};
     const cl = "sol sol-" + esc(s.genre || "champ");
-    const t = s.nom ? "<title>" + esc(s.nom) + "</title>" : "";
+    // Le survol dit ce que la pièce est, et — pour une rue — POURQUOI elle
+    // existe : une ville se lit mieux quand chaque tracé porte son motif.
+    const titre = [s.nom, s.detail].filter(Boolean).join(" — ");
+    const t = titre ? "<title>" + esc(titre) + "</title>" : "";
 
     if (g.bande) {
       // un chemin de terre n'a pas d'angles droits, mais un mur si : on ne
@@ -120,9 +123,16 @@ function ChampVu(o) {
         "</g>";
     }
     if (g.semis) {                    // un hameau : quelques toits posés de biais
+      // Un point peut porter plus que sa place : [x, y, angle, largeur]. Un
+      // hameau se contente de [x, y] et reçoit le biais du hasard — mais dans
+      // une VILLE, une maison n'est pas posée au hasard : elle a sa façade sur
+      // la rue. On tire donc toujours les deux valeurs (pour ne pas décaler le
+      // hasard des cartes déjà écrites), et le point les remplace s'il les dit.
       const r = graine("v" + i);
       return '<g class="' + cl + '">' + t + (s.points || []).map((p) => {
-        const c = 3 + r() * 2.4, a = (r() * 40 - 20).toFixed(0);
+        const alea = 3 + r() * 2.4, biais = r() * 40 - 20;
+        const c = p.length > 3 ? +p[3] : alea;
+        const a = (p.length > 2 ? +p[2] : biais).toFixed(0);
         return '<rect class="toit" x="' + (p[0] - c / 2).toFixed(1) + '" y="' +
           (p[1] - c / 2).toFixed(1) + '" width="' + c.toFixed(1) + '" height="' +
           (c * .78).toFixed(1) + '" transform="rotate(' + a + " " + p[0] + " " + p[1] + ')"/>';
@@ -364,6 +374,38 @@ function ChampVu(o) {
     return s + "</g>";
   }
 
+  // ---- les acteurs : qui est où ------------------------------------------
+  // Un corps dit combien d'hommes tiennent un endroit ; un acteur dit QUI s'y
+  // trouve. Une tache d'encre de sa couleur, ses initiales dedans, et rien
+  // d'autre : à cette échelle, un homme ne mérite pas un portrait, mais savoir
+  // que Rulf Corne est au quai et le mestre à la roukerie vaut tous les mots.
+  // Même brouillard que le reste : n'y figure que ce que le joueur sait.
+  // Ils sont vingt dans le même château : on ne les empile pas. Qui partage une
+  // place se range en couronne autour d'elle, dans l'ordre du fichier.
+  function poserActeurs(liste, k) {
+    const tas = new Map();
+    liste.forEach((a) => {
+      const p = a.ou || a.centre || [0, 0];
+      const cle = Math.round(p[0] / 4) + "|" + Math.round(p[1] / 4);
+      if (!tas.has(cle)) tas.set(cle, []);
+      tas.get(cle).push(a);
+    });
+    const places = [];
+    tas.forEach((gr, cle) => {
+      const p = gr[0].ou || gr[0].centre || [0, 0];
+      const c = Taches.couronne(gr.length, 3.5 * k, cle);
+      gr.forEach((a, i) => places.push([a, [p[0] + c[i][0], p[1] + c[i][1]]]));
+    });
+    return places;
+  }
+
+  function unActeur(a, p, k) {
+    const r = (a.taille || 1) * 3.5 * k;
+    const cl = "acteur camp-" + esc(a.camp || "neutre") + " cert-" + esc(a.certitude || "sure");
+    return '<g transform="translate(' + p[0].toFixed(1) + "," + p[1].toFixed(1) + ')">' +
+      Taches.marque(a, r, .9 * k, cl) + "</g>";
+  }
+
   // ---- ce qui est arrivé au sol -------------------------------------------
   function unFait(f, i, k) {
     const [x, y] = f.centre || [0, 0];
@@ -431,6 +473,8 @@ function ChampVu(o) {
     (champ.sol || []).forEach((x, i) => { s += unSol(x, i, k); });
     (champ.faits || []).forEach((x, i) => { s += unFait(x, i, k); });
     (champ.corps || []).forEach((x) => { s += unCorps(x, k, parCercle()); });
+    // les gens par-dessus les troupes : un homme se tient AU MILIEU des siens
+    poserActeurs(champ.acteurs || [], k).forEach(([a, p]) => { s += unActeur(a, p, k); });
     // les noms du sol par-dessus tout : ils situent, ils ne se cachent pas
     (champ.sol || []).forEach((x) => {
       if (!x.nom || !x.etiq) return;
@@ -447,7 +491,9 @@ function ChampVu(o) {
       const n = NOM_GENRE[c.genre] || "Gens de pied";
       if (vus.indexOf(n) === -1) vus.push(n);
     });
-    return '<span class="leg leg-noir">Noirs</span>' +
+    const gens = (champ.acteurs || []).length;
+    return (gens ? '<span class="leg-marque">' + gens + " visages — initiales sur la tache</span>" : "") +
+      '<span class="leg leg-noir">Noirs</span>' +
       '<span class="leg leg-vert">Verts</span>' +
       '<span class="leg leg-neutre">Sans parti</span>' +
       '<span class="leg-sep"></span>' +
@@ -462,6 +508,14 @@ function ChampVu(o) {
       hote.addEventListener("click", (e) => {
         if (window.Loupe && Loupe.aGlisse(hote)) return;
         if (e.detail > 1) return;
+        const q = e.target.closest(".acteur");
+        if (q) {
+          if (window.Entites && q.dataset.nom) {
+            Entites.penser(q.dataset.id || q.dataset.nom, "personnage", q.dataset.nom);
+          }
+          if (apres) apres();
+          return;
+        }
         const g = e.target.closest(".corps");
         if (g) {
           if (window.Entites && g.dataset.nom) {
@@ -573,7 +627,7 @@ function ChampVu(o) {
       // Un champ qui APPARAÎT en cours de partie, c'est la guerre qui prend le
       // décor : on y bascule. Au premier chargement, non — le joueur retrouve
       // l'échelle qu'il avait laissée. Un champ peut aussi refuser de s'imposer.
-      if (change && !amorce && champ && champ.basculer !== false &&
+      if (change && !amorce && champ && champ.basculer !== false && o.echelle !== false &&
           window.Plan && Plan.montrer) {
         Plan.montrer(P);
       }
@@ -581,8 +635,12 @@ function ChampVu(o) {
     }).catch(() => {});
   }
 
-  if (window.Plan && Plan.echelle) {
-    Plan.echelle({ id: P, nom: o.nom, hote: P, ordre: o.ordre, dispo: existe });
+  if (window.Plan && Plan.echelle && o.echelle !== false) {
+    // `eclipse` : une autre échelle rend celle-ci inutile là où elle existe — le
+    // croquis de la ville s'efface devant le monde en volume, et revient de
+    // lui-même dans un lieu qui n'a pas de relief modelé.
+    Plan.echelle({ id: P, nom: o.nom, hote: P, ordre: o.ordre,
+                   dispo: () => existe() && !(o.eclipse && o.eclipse()) });
   }
 
   window.addEventListener("DOMContentLoaded", () => {
@@ -595,7 +653,7 @@ function ChampVu(o) {
 
 // Le champ : une bataille, un siège, une cour où deux partis se font face.
 window.Terrain = ChampVu({
-  id: "terrain", route: "/terrain", nom: "Le terrain", ordre: 3,
+  id: "terrain", route: "/terrain", nom: "Le terrain", ordre: 3.5, echelle: false,
   vide: "Le champ", sujet: "le champ",
   quitter: "Quitter le champ", deployer: "Déployer le champ…",
 });
@@ -604,7 +662,8 @@ window.Terrain = ChampVu({
 // rade, avec chaque corps posé là où il se trouve VRAIMENT. Le château dit qui
 // est à trois portes de moi ; la ville dit ce qu'il y a hors les murs.
 window.Ville = ChampVu({
-  id: "ville", route: "/ville", nom: "La ville", ordre: 1.5,
+  id: "ville", route: "/ville", nom: "La ville", ordre: 2,
   vide: "La ville", sujet: "la ville",
   quitter: "Quitter la ville", deployer: "Déployer la ville…",
+  eclipse: () => !!(window.Ville3D && Ville3D.offert()),
 });

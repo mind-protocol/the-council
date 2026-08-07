@@ -41,6 +41,10 @@ window.Carte = (() => {
   };
   const ANCRE = { g: "end", d: "start", c: "middle" };
 
+  // En deçà de cette part du royaume dans le cadre, la carte porte aussi ses
+  // bourgs. Au-dessus, elle ne garde que les places qui décident.
+  const SEUIL_BOURGS = .46;
+
   // Les mers n'ont pas de contour dans l'état : leurs noms sont posés à la main,
   // dans le repère de geo.js.
   const MERS = [
@@ -77,11 +81,62 @@ window.Carte = (() => {
   let cadreVignette = "baie", vueVignette = null;
   let cadreTable = null, vueTable = null;
 
-  const marques = () => ({
+  // ---- les filtres ---------------------------------------------------------
+  // Une table qui porte tout à la fois ne se lit plus : les osts, les plis, les
+  // serments et les gens se marchent dessus au-dessus des mêmes places. Chaque
+  // famille s'allume et s'éteint, et le choix tient dans localStorage — on
+  // revient au tour suivant avec la table qu'on avait laissée.
+  const FILTRES = (window.Jetons && Jetons.FILTRES) || [];
+  // On garde les filtres ÉTEINTS, jamais les allumés. Garder la liste des
+  // allumés paraît plus naturel et c'est un piège : le jour où l'on ajoute une
+  // famille, elle est absente de toutes les listes déjà enregistrées, donc
+  // éteinte pour tous ceux qui jouaient avant — une fonction neuve invisible
+  // exactement chez les gens qui l'attendaient. La liste des éteints n'a pas ce
+  // défaut : ce qu'on ne connaît pas est allumé.
+  let eteints = new Set();
+  try {
+    const off = JSON.parse(localStorage.getItem("conseil-filtres-eteints") || "null");
+    if (Array.isArray(off)) eteints = new Set(off);
+    // L'ancien format (la liste des allumés) est JETÉ, pas converti : le
+    // convertir reviendrait à déduire « éteint » de « absent de la liste », et
+    // c'est précisément le défaut qu'on répare — une famille née après le
+    // dernier réglage se retrouverait éteinte pour tous. Le joueur reperd au
+    // pire un filtre qu'il avait coupé, et le récupère d'un clic.
+    try { localStorage.removeItem("conseil-filtres-carte"); } catch (e) {}
+  } catch (e) {}
+  const actifs = {
+    has: (id) => !eteints.has(id),
+    add: (id) => eteints.delete(id),
+  };
+
+  function basculerFiltre(id) {
+    if (eteints.has(id)) eteints.delete(id); else eteints.add(id);
+    try {
+      localStorage.setItem("conseil-filtres-eteints", JSON.stringify([...eteints]));
+      localStorage.removeItem("conseil-filtres-carte");
+    } catch (e) {}
+    redessiner();
+  }
+  const barreFiltres = () => FILTRES.map((f) =>
+    '<button class="filtre-carte' + (actifs.has(f.id) ? " actif" : "") +
+    '" data-filtre="' + f.id + '" title="Montrer ou cacher">' +
+    esc(f.nom) + "</button>").join("");
+
+  // Une affaire tenue seule : l'id d'un pli ou d'un incident. Tant qu'il est
+  // posé, les filtres ne s'appliquent plus — on a demandé CETTE chose-là, on ne
+  // va pas la cacher parce que sa famille est éteinte.
+  let seul = null;
+
+  const brutes = () => ({
     jetons: etat.jetons.concat(ephemeres.jetons),
     traits: etat.traits.concat(ephemeres.traits),
     zones: etat.zones.concat(ephemeres.zones),
   });
+  const marques = () => {
+    if (!window.Jetons) return { jetons: [], traits: [], zones: [] };
+    const m = Jetons.filtrer(brutes(), seul ? null : actifs);
+    return seul ? Jetons.isoler(m, seul) : m;
+  };
 
   // ---- cadrage -------------------------------------------------------------
   // Un cadrage est nommé ("baie", "westeros"), donné en clair ([x,y,l,h]), ou
@@ -150,13 +205,35 @@ window.Carte = (() => {
       if (G.fonds[nom]) s += '<path class="lointain" d="' + G.fonds[nom] + '"/>';
     });
     s += '<path class="terre" d="' + G.terre + '"/>';
+    // Le relief passe SOUS les teintes de région : c'est une ombre du sol, pas
+    // une couche d'information. Deux bandes seulement — là où le pays se
+    // soulève, là où il devient infranchissable.
+    if (G.relief) {
+      if (G.relief.collines) s += '<path class="relief-collines" d="' + G.relief.collines + '"/>';
+      if (G.relief.montagnes) s += '<path class="relief-montagnes" d="' + G.relief.montagnes + '"/>';
+    }
     G.regions.forEach((r) => {
       s += '<path class="region-terre" data-region="' + esc(r.id) + '" d="' +
         r.d + '"><title>' + esc(r.nom) + "</title></path>";
     });
     if (window.Jetons) s += Jetons.zones(m.zones);
+    // Le réseau entier, navigable ou non : c'est lui qui donne son grain au
+    // pays entre deux places. Les provinces d'eau (`eaux`) se peignent
+    // par-dessus, elles sont plus larges et plus franches.
+    if (G.rivieres) {
+      s += '<path class="rivieres" d="' + G.rivieres +
+        '" stroke-width="' + (0.5 * c.ech).toFixed(3) + '"/>';
+    }
     if (G.eaux) s += '<path class="eaux" d="' + G.eaux + '"/>';
     s += '<path class="cote" d="' + G.terre + '"/>';
+    // Les grandes routes, par-dessus la côte : une chaussée longe le rivage,
+    // elle ne passe pas dessous. Le réseau du mod en compte mille ; on n'a
+    // gardé que celles qui portent un nom, et elles suivent le tracé réel.
+    (G.routes || []).forEach((r) => {
+      s += '<path class="route" data-route="' + esc(r.id) + '" d="' + r.d +
+        '" stroke-width="' + (1.15 * c.ech).toFixed(3) + '"><title>' +
+        esc(r.nom) + "</title></path>";
+    });
 
     if (o.grand) {
       G.regions.forEach((r) => {
@@ -192,6 +269,27 @@ window.Carte = (() => {
       });
       serres[a.id] = d < 17 * c.ech;
     });
+
+    // Les bourgs — les étapes du chemin. Ils n'existent dans aucune table de
+    // l'état : ni allégeance, ni bannière, ni pièce de guerre, et rien à
+    // penser dessus. Ils ne servent qu'à situer une route et une distance, et
+    // n'apparaissent donc qu'à la loupe : au royaume entier, ils feraient
+    // trente noms de plus par-dessus les dix places qui décident.
+    if (G.bourgs && c.ech <= SEUIL_BOURGS) {
+      const marge = 2 * c.ech;
+      G.bourgs.forEach((b) => {
+        const [x, y] = b.p;
+        if (x < c.x + marge || x > c.x + c.l - marge ||
+            y < c.y + marge || y > c.y + c.h - marge) return;
+        const dx = 3 * c.ech;
+        const large = b.nom.length * 3.4 * c.ech;
+        if (x + dx + large > c.x + c.l - marge) return;
+        s += '<g class="bourg"><circle cx="' + x + '" cy="' + y + '" r="' +
+          (1.5 * c.ech).toFixed(2) + '"/><text x="' + (x + dx).toFixed(1) +
+          '" y="' + (y + 1.1 * c.ech).toFixed(1) + '">' + esc(b.nom) +
+          "</text></g>";
+      });
+    }
 
     etat.lieux.forEach((l) => {
       const p = G.lieux[l.id];
@@ -258,6 +356,35 @@ window.Carte = (() => {
         if (o.fond && (e.target.closest("svg") || e.target.id === "carte-approcher")) o.fond();
       });
     }
+    // Le survol d'un incident réveille sa famille : les fils de propagation et
+    // ce qu'on pense qu'il gagnera, qui restent invisibles le reste du temps.
+    // `mouseover` bubble (contrairement à `mouseenter`) : une seule paire
+    // d'écoutants sur l'hôte suffit, et elle survit aux redessins de la loupe.
+    if (!hote.dataset.brancheIncidents) {
+      hote.dataset.brancheIncidents = "1";
+      // On BASCULE la classe sur le dessin en place au lieu de redessiner : un
+      // redessin ôterait de sous le curseur la pièce même qu'on survole, le
+      // navigateur enverrait aussitôt un `mouseout`, et la table clignoterait
+      // sans fin. Le module garde l'éveil de son côté, pour que le prochain
+      // redessin (loupe, nouvelle scène) le retrouve sans qu'on y pense.
+      const suivre = (e) => {
+        // une affaire tenue reste ouverte : le survol ne la referme pas
+        if (seul) return;
+        const g = e.target.closest && e.target.closest("[data-incident]");
+        const id = g ? g.dataset.incident : null;
+        if (window.Jetons && !Jetons.eveiller(id)) return;
+        hote.querySelectorAll("[data-incident]").forEach((n) =>
+          n.classList.toggle("eveille", !!id && n.dataset.incident === id));
+      };
+      hote.addEventListener("mouseover", suivre);
+      hote.addEventListener("mouseout", (e) => {
+        // sortir vers une autre pièce du MÊME incident ne l'éteint pas
+        const vers = e.relatedTarget;
+        if (vers && hote.contains(vers) && vers.closest &&
+            vers.closest("[data-incident]")) return;
+        suivre({ target: hote });
+      });
+    }
     if (window.Loupe) Loupe.brancher(hote, o.loupe);
   }
 
@@ -286,10 +413,131 @@ window.Carte = (() => {
     const m = marques();
     const p = window.Jetons ? Jetons.legende(m) : "";
     return LEGENDE_BASE + (p ? '<span class="leg-sep"></span>' + p : "") +
+      (FILTRES.length ? '<span class="leg-sep"></span>' +
+        '<span class="filtres-carte">' + barreFiltres() + "</span>" : "") +
       (manuel ? MANUEL : "");
   }
 
+  // Les filtres vivent dans deux légendes (la vignette, la grande table) et le
+  // HTML des deux est refait à chaque redessin : un seul écoutant, par
+  // délégation, sur le document.
+  if (!window.__filtresCarte) {
+    window.__filtresCarte = true;
+    document.addEventListener("click", (e) => {
+      const b = e.target.closest && e.target.closest(".filtre-carte");
+      if (!b) return;
+      e.stopPropagation();
+      basculerFiltre(b.dataset.filtre);
+    }, true);
+  }
+
   const vbDe = (c) => [c.x, c.y, c.l, c.h];
+
+  // ---- le registre : les affaires en cours, une par ligne ------------------
+  // Une table de quarante marques ne se lit pas en cherchant à l'œil. Les plis
+  // et les incidents sont des AFFAIRES — elles ont un état, une date, un
+  // compte — et une affaire se tient en liste avant de se regarder sur la
+  // carte. Cliquer une ligne ne fait qu'une chose, et c'est la bonne : ne
+  // garder que celle-là sur la table, cadrée dessus.
+  // La couche carte a ses propres ids (`repaire-aux-corneilles`) là où l'état a
+  // les siens (`repos-des-freux`) : `alias` fait le pont, et il faut le
+  // comparer sans casse — il est écrit en toutes lettres dans lieux.json.
+  const nomLieu = (id) => {
+    if (!id) return "";
+    const k = String(id).toLowerCase();
+    const l = etat.lieux.find((x) => x.id.toLowerCase() === k ||
+      (x.alias || []).some((a) => String(a).toLowerCase() === k));
+    return l ? l.nom.split(" (")[0] : id;
+  };
+  const jours = (n) => n == null ? "" : n <= 0 ? "ce jour"
+    : n === 1 ? "hier" : n + " j";
+
+  function registre() {
+    const J = window.Jetons;
+    if (!J) return "";
+    const tout = brutes().jetons;
+    const plis = tout.filter((j) => j.genre === "pli");
+    const incidents = tout.filter((j) => j.genre === "incident");
+    const desseins = tout.filter((j) => j.genre === "dessein");
+    if (!plis.length && !incidents.length && !desseins.length) return "";
+
+    const ligne = (id, cl, titre, ou, droite, etiq) =>
+      '<button class="reg-ligne ' + cl + (seul === id ? " tenu" : "") +
+      '" data-seul="' + esc(id) + '"><span class="reg-marque"></span>' +
+      '<span class="reg-corps"><span class="reg-titre">' + esc(titre) + "</span>" +
+      (ou ? '<span class="reg-ou">' + esc(ou) + "</span>" : "") + "</span>" +
+      '<span class="reg-droite">' + esc(droite || "") + "</span>" +
+      (etiq ? '<span class="reg-etiq">' + esc(etiq) + "</span>" : "") + "</button>";
+
+    let s = "";
+    // Le plan EN TÊTE : c'est la seule part de ce registre qui demande une
+    // décision ce soir. Le reste est du constat, et le constat peut attendre.
+    if (desseins.length) {
+      s += '<div class="reg-titre-groupe">Le plan</div>';
+      // Par échéance : ce qui est échu ou tombe demain d'abord. Ce qui n'a pas
+      // de date passe en dernier — un dessein sans échéance n'est pas décidé.
+      desseins.slice().sort((a, b) =>
+        (a.dans == null ? 999 : a.dans) - (b.dans == null ? 999 : b.dans))
+        .forEach((p) => {
+          s += ligne(p.id, "reg-dessein geste-" + (p.quoi || "tenir"),
+            p.nom || J.NOM_GESTE[p.quoi] || "Un dessein",
+            [J.NOM_GESTE[p.quoi], nomLieu(p.ou)].filter(Boolean).join(" · "),
+            p.dans == null ? "" : p.dans <= 0 ? "échu" : "J−" + p.dans,
+            p.par ? "sur " + p.par : "sur personne");
+        });
+    }
+    if (plis.length) {
+      s += '<div class="reg-titre-groupe">Les plis</div>';
+      // Ce qui n'est pas parti d'abord : c'est la seule part de cette liste
+      // sur laquelle le joueur peut encore quelque chose ce soir.
+      const rang = { redige: 0, attente: 1, muet: 2, parti: 3 };
+      plis.slice().sort((a, b) =>
+        (rang[a.etat] == null ? 9 : rang[a.etat]) -
+        (rang[b.etat] == null ? 9 : rang[b.etat])).forEach((p) => {
+        const et = J.ETATS[p.etat];
+        s += ligne(p.id, "reg-pli etat-" + (p.etat || "parti"), p.nom || "Un pli",
+          nomLieu(p.ou), jours(p.jours), et ? et.nom : "");
+      });
+    }
+    if (incidents.length) {
+      s += '<div class="reg-titre-groupe">Ce qui se propage</div>';
+      // Par ce que ça pèse EN TOUT, pas par ce que le foyer a pris : c'est
+      // l'ordre dans lequel ces affaires vous tombent dessus.
+      const pese = (i) => (i.ames || 0) +
+        (i.propage || []).reduce((n, r) => n + ((r && r.ames) || 0), 0);
+      incidents.slice().sort((a, b) => pese(b) - pese(a)).forEach((i) => {
+        const d = J.deplier({ jetons: [i], traits: [] });
+        const foyer = d.jetons[0] || {};
+        const gagnes = (i.propage || []).length;
+        const ou = nomLieu(i.ou) || "hors des places";
+        s += ligne(i.id, "reg-incident feu-" + (i.feu || "vif"), i.nom || "Un incident",
+          ou + (gagnes ? " → " + gagnes + " endroits" : ""),
+          "~" + (foyer.total || i.ames || 0),
+          (foyer.total && foyer.jours)
+            ? "~" + Math.round(foyer.total / foyer.jours) + "/jour" : "");
+      });
+    }
+    return '<div class="reg-tete">Le registre' +
+      (seul ? '<button id="reg-tout">Tout revoir</button>' : "") + "</div>" + s;
+  }
+
+  function tenir(id) {
+    seul = (seul === id) ? null : id;
+    // Demander un incident, c'est demander à voir sa toile : on ne va pas la
+    // lui cacher derrière un survol alors qu'il vient de cliquer son nom.
+    if (window.Jetons) Jetons.eveiller(seul);
+    // Tenir une affaire, c'est aussi la regarder : la table se cadre dessus,
+    // et se repose sur le royaume quand on la relâche.
+    cadreTable = seul ? "auto" : "westeros";
+    vueTable = null;
+    cadreVignette = seul ? "auto" : "baie";
+    vueVignette = null;
+    ["carte", "table-carte"].forEach((h) => {
+      const n = document.getElementById(h);
+      if (n && window.Loupe) Loupe.oublier(n);
+    });
+    redessiner();
+  }
 
   // ---- la grande table (overlay) -----------------------------------------
   function batirOverlay() {
@@ -303,10 +551,16 @@ window.Carte = (() => {
       '<span id="table-date"></span>' +
       '<button id="table-large" title="Voir tout le royaume">Le royaume entier</button>' +
       '<button id="table-fermer" title="Refermer">Quitter la table</button></div>' +
-      '<div id="table-carte"></div>' +
+      '<div id="table-corps"><div id="table-liste"></div>' +
+      '<div id="table-carte"></div></div>' +
       '<div id="table-legende"></div></div>';
     document.body.appendChild(ov);
     ov.addEventListener("click", (e) => { if (e.target === ov) fermerTable(); });
+    ov.addEventListener("click", (e) => {
+      if (e.target.closest("#reg-tout")) return tenir(seul);
+      const l = e.target.closest(".reg-ligne");
+      if (l) tenir(l.dataset.seul);
+    });
     ov.querySelector("#table-fermer").addEventListener("click", fermerTable);
     ov.querySelector("#table-large").addEventListener("click", (e) => {
       e.stopPropagation();
@@ -322,6 +576,10 @@ window.Carte = (() => {
     const ov = document.getElementById("table-peinte");
     ov.querySelector("#table-date").textContent = dateEnClair(etat.date);
     ov.querySelector("#table-legende").innerHTML = legende(true);
+    const liste = ov.querySelector("#table-liste");
+    const reg = registre();
+    liste.innerHTML = reg;
+    liste.hidden = !reg;
     const conteneur = ov.querySelector("#table-carte");
     if (window.Loupe && spec) Loupe.oublier(conteneur);
     poserTable(conteneur);
@@ -329,7 +587,7 @@ window.Carte = (() => {
       apres: fermerTable,
       loupe: {
         vue: () => vueTable || vbDe(cadre(cadreTable || "westeros")),
-        bornes, min: 45,
+        bornes, min: 22,
         poser: (vb) => { vueTable = vb; poserTable(conteneur); },
         reposer: () => { vueTable = null; poserTable(conteneur); },
       },
@@ -345,6 +603,18 @@ window.Carte = (() => {
     if (ov && window.Loupe) Loupe.oublier(ov.querySelector("#table-carte"));
     cadreTable = null;
     vueTable = null;
+    // Une affaire tenue ne survit pas à la fermeture de la table : on ne
+    // rouvre pas sur un royaume amputé sans se rappeler pourquoi. Le redessin
+    // vient APRÈS l'escamotage, sinon il rouvre la table qu'on ferme.
+    if (seul) {
+      seul = null;
+      if (window.Jetons) Jetons.eveiller(null);
+      cadreVignette = "baie";
+      vueVignette = null;
+      const h = document.getElementById("carte");
+      if (h && window.Loupe) Loupe.oublier(h);
+      dessiner();
+    }
   }
 
   // ---- la table au centre du plateau -------------------------------------
@@ -362,12 +632,15 @@ window.Carte = (() => {
     if (!conteneur) return;
     conteneur.innerHTML = svgCarte(cadre(vueVignette || cadreVignette)) +
       '<div id="carte-legende">' + legende() + "</div>" +
+      // la vignette n'a pas la place d'une légende, mais elle a celle des
+      // filtres : c'est là qu'on regarde la table les trois quarts du temps.
+      '<div id="carte-filtres">' + barreFiltres() + "</div>" +
       '<button id="carte-approcher">S\'approcher de la table…</button>';
     brancher(conteneur, {
       fond: () => ouvrirTable(),
       loupe: {
         vue: () => vueVignette || vbDe(cadre(cadreVignette)),
-        bornes, min: 45,
+        bornes, min: 22,
         poser: (vb) => { vueVignette = vb; poserVignette(conteneur); },
         reposer: () => { vueVignette = null; poserVignette(conteneur); },
       },
@@ -437,6 +710,14 @@ window.Carte = (() => {
       });
     });
     neuves = nouvelles;
+    // Un conseiller qui pose son doigt sur un filtre éteint montrerait du vide :
+    // ce qu'on montre rallume sa famille, et le joueur la rééteindra s'il veut.
+    if (window.Jetons) {
+      FILTRES.forEach((f) => {
+        const seulF = Jetons.filtrer(seul, new Set([f.id]));
+        if (seulF.jetons.length || seulF.traits.length || seulF.zones.length) actifs.add(f.id);
+      });
+    }
     // « auto » se calcule sur ce qu'on MONTRE, pas sur tout ce que la table
     // porte : un doigt sur le Gosier ne doit pas rouvrir le royaume entier.
     let spec = montre.cadre || "auto";
@@ -461,11 +742,11 @@ window.Carte = (() => {
   // Une vignette autonome, pour le fil : la carte réduite au geste qu'on montre.
   function miniature(montre, opts) {
     const o = opts || {};
-    const m = {
+    const m = Jetons.deplier({
       jetons: (etat.jetons || []).concat(montre.jetons || []),
       traits: (etat.traits || []).concat(montre.traits || []),
       zones: (etat.zones || []).concat(montre.zones || []),
-    };
+    });
     const seul = { jetons: montre.jetons || [], traits: montre.traits || [],
                    zones: montre.zones || [] };
     const c = cadre(montre.cadre && montre.cadre !== "garder" ? montre.cadre : "auto", seul);
@@ -510,5 +791,6 @@ window.Carte = (() => {
   });
 
   return { illustrer, miniature, effacer, ouvrir: ouvrirTable, fermer: fermerTable,
-           rafraichir, redessiner, cadre, svg: svgCarte, marques, viser, deviser };
+           rafraichir, redessiner, cadre, svg: svgCarte, marques, viser, deviser,
+           registre, tenir };
 })();

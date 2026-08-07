@@ -1359,7 +1359,7 @@
    "physique": "La cinquantaine, large, avant-bras nus jusqu au coude et luisants de sel, tablier qu elle n a pas eu le temps d essuyer.",
    "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, grey harbour light, broad weathered fisherwoman in her fifties, bare salt-sheened forearms, work apron, level unimpressed gaze"
   },
-  "etat": "dormant",
+  "etat": "actif",
   "lieu_id": "peyredragon",
   "condition": "libre"
  },
@@ -1391,7 +1391,7 @@
    "physique": "Soixante ans passes, une jambe qui traine, chapeau de cuir tenu a deux mains, gros livre recousu deux fois sous le bras.",
    "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, wet harbour light, old lame harbourmaster, leather hat held at his belly, thick water-swollen ledger under one arm, patient unbribable eyes"
   },
-  "etat": "dormant",
+  "etat": "actif",
   "lieu_id": "peyredragon",
   "condition": "libre"
  },
@@ -1427,7 +1427,7 @@
    "physique": "Quarante-quatre ans, seche, robe grise usee aux coudes, mains rouges ; l'etoile a sept branches en bois au cou, pas en argent.",
    "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, nursery candlelight, lean septa in her forties, worn grey robes, red working hands, plain wooden seven-pointed star, blunt steady gaze"
   },
-  "etat": "dormant",
+  "etat": "actif",
   "lieu_id": "peyredragon",
   "condition": "libre"
  },
@@ -1463,7 +1463,7 @@
    "physique": "Trente-trois ans, brune, mise soignee et volontairement quelconque ; se tient toujours a un pas et demi, jamais dans le champ.",
    "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, dim chamber light, dark-haired woman of thirty-three, deliberately plain fine clothes, watchful discreet expression, standing slightly aside"
   },
-  "etat": "dormant",
+  "etat": "actif",
   "lieu_id": "peyredragon",
   "condition": "libre"
  },
@@ -1531,7 +1531,7 @@
    "physique": "La cinquantaine, crane rase, avant-bras couverts de cicatrices luisantes qui ne sont pas des brulures de forge ; sent le soufre a trente pas.",
    "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, sulphurous cave light, shaven-headed dragonkeeper in his fifties, forearms covered in glossy scars, low unhurried stare"
   },
-  "etat": "dormant",
+  "etat": "actif",
   "lieu_id": "peyredragon",
   "condition": "libre"
  },
@@ -1563,7 +1563,7 @@
    "physique": "Trente-huit ans, petites coupures noires cicatrisees sur les mains et les avant-bras, un eclat d'obsidienne monte en pendentif au cou.",
    "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, lamplit stone, woman of thirty-eight, hands and forearms scored with fine healed black cuts, obsidian shard pendant, exacting mistrustful gaze"
   },
-  "etat": "dormant",
+  "etat": "actif",
   "lieu_id": "peyredragon",
   "condition": "libre"
  },
@@ -1595,7 +1595,7 @@
    "physique": "La cinquantaine, mains blanches jusqu aux poignets et fendillees comme de la vieille peinture, tenues ecartees du corps par habitude.",
    "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, flat marsh light, salt-worker in his fifties, hands white and cracked to the wrist held away from his body, blunt honest face"
   },
-  "etat": "dormant",
+  "etat": "actif",
   "lieu_id": "peyredragon",
   "condition": "libre"
  },
@@ -1635,7 +1635,7 @@
   "id": "merra-sath",
   "nom": "Merra Sath",
   "maison_id": null,
-  "titre": "Tailleuse d'obsidienne des galeries de Peyredragon",
+  "titre": "Repond des galeries de Peyredragon",
   "naissance": 98,
   "etat": "actif",
   "lieu_id": "peyredragon",
@@ -1659,5 +1659,682 @@
   "portrait": {
    "fichier": null
   }
+ },
+ {
+  "id": "aurore-inchauspe",
+  "nom": "Aurore Inchauspé",
+  "titre": "Maîtresse de la voix de la reine",
+  "maison_id": "targaryen-noir",
+  "lieu_id": "peyredragon",
+  "etat": "actif",
+  "condition": "sain",
+  "maniere": "Parle en formules qu'elle pèse avant de les lâcher ; tient tête aux mestres sans élever le ton.",
+  "traits": [
+   "lettrée",
+   "obstinée",
+   "sait ce qu'une phrase vaut"
+  ],
+  "objectifs": [],
+  "_note": "Fiche créée pour combler un manque : le siège existait dans joueurs.json sans personnage. Lieu et manière tirés de ses actes des 23e et 24e jours, rien d'inventé au-delà."
+ },
+ {
+  "id": "marlo-vasse",
+  "nom": "Marlo Vasse",
+  "titre": "Le Peigne, maître du chantier de bris",
+  "maison_id": null,
+  "lieu_id": "port-real",
+  "etat": "actif",
+  "condition": "sain",
+  "maniere": "Compte avant de parler ; dit les choses par leur prix et leur poids.",
+  "traits": [
+   "pratique",
+   "discret",
+   "compte juste"
+  ],
+  "objectifs": [],
+  "_note": "Fiche créée pour combler un manque : le siège existait dans joueurs.json sans personnage. Lieu tiré de sa tache d'acteur sur la carte de Port-Réal (l'aire de bris)."
+ },
+ {
+  "id": "hann-bourbe",
+  "nom": "Hann Bourbe",
+  "maison_id": null,
+  "titre": "Associe de Marlo, homme du chantier de la vase depuis trente ans",
+  "naissance": 73,
+  "traits": [
+   "stable",
+   "lent a decider",
+   "loyal faute d ailleurs",
+   "inquiet"
+  ],
+  "objectifs": [
+   {
+    "but": "Faire tourner l aire de bris comme si rien ne changeait",
+    "priorite": 1
+   },
+   {
+    "but": "Tenir le guet hors de l aire",
+    "priorite": 2
+   },
+   {
+    "but": "Que Marlo redevienne l homme qu il etait avant la bourse",
+    "priorite": 3
+   }
+  ],
+  "maniere": "Tourne autour d un probleme avant de le couper. Dit ce qui l inquiete a la troisieme phrase, jamais a la premiere.",
+  "portrait": {
+   "fichier": null,
+   "physique": "Cinquante-six ans, epaules lourdes, dos qui ne se redresse plus tout a fait, sciure dans la barbe grise.",
+   "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, timber yard at dusk, heavy-shouldered man in his fifties, grey sawdust beard, slow patient gaze, worn wool"
+  },
+  "etat": "actif",
+  "lieu_id": "port-real",
+  "condition": "libre"
+ },
+ {
+  "id": "nel-bec",
+  "nom": "Nel Bec",
+  "maison_id": null,
+  "titre": "Gamine de la greve, entre la Gadoue et le Boyau",
+  "naissance": 118,
+  "traits": [
+   "invisible",
+   "affamee",
+   "exacte",
+   "sans attache"
+  ],
+  "objectifs": [
+   {
+    "but": "Rester utile a Marlo, parce que c est ce qui la garde au sec",
+    "priorite": 1
+   },
+   {
+    "but": "Manger deux fois le jour",
+    "priorite": 2
+   },
+   {
+    "but": "Savoir avant les autres",
+    "priorite": 3
+   }
+  ],
+  "maniere": "Ne regarde jamais franchement. Mache en parlant. Donne le fait d abord et le prix apres, ou pas du tout.",
+  "portrait": {
+   "fichier": null,
+   "physique": "Onze ans, menue, pieds nus meme au froid, un sac toujours plus plein que la veille. Ne s assied jamais au milieu d une piece : toujours sur une marche.",
+   "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, harbour steps at night, small barefoot girl of eleven, oversized sack, sidelong watchful eyes, ragged layered clothes"
+  },
+  "etat": "actif",
+  "lieu_id": "port-real",
+  "condition": "libre"
+ },
+ {
+  "id": "mag-la-gaffe",
+  "nom": "Mag la Gaffe",
+  "maison_id": null,
+  "titre": "Tenanciere de La Gaffe, sous l arche de la porte de la Gadoue",
+  "naissance": 99,
+  "traits": [
+   "ne repete rien",
+   "rapide",
+   "protectrice de sa salle",
+   "sans camp"
+  ],
+  "objectifs": [
+   {
+    "but": "Tenir La Gaffe ouverte avant le marche",
+    "priorite": 1
+   },
+   {
+    "but": "N avoir jamais a choisir un camp devant temoin",
+    "priorite": 2
+   },
+   {
+    "but": "Que sa reputation de ne rien repeter reste son seul bien",
+    "priorite": 3
+   }
+  ],
+  "maniere": "Essuie ce qui est deja propre quand elle dit quelque chose d important. Ne pose jamais de question ; enonce ce qu elle a vu et laisse l autre en faire ce qu il veut.",
+  "portrait": {
+   "fichier": null,
+   "physique": "Trente ans, avant-bras de portefaix, tablier, une gaffe de batelier accrochee derriere le comptoir et qui a servi.",
+   "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, low tavern under an arch, woman of thirty, strong forearms, apron, boat hook on the wall behind, level unimpressed gaze"
+  },
+  "etat": "actif",
+  "lieu_id": "port-real",
+  "condition": "libre"
+ },
+ {
+  "id": "waltyr-poix",
+  "nom": "Waltyr Poix",
+  "maison_id": null,
+  "titre": "Sergent du Guet a la porte de la Gadoue",
+  "naissance": 85,
+  "traits": [
+   "venal",
+   "prudent",
+   "jamais brutal",
+   "pere de six"
+  ],
+  "objectifs": [
+   {
+    "but": "Toucher des deux mains sans que ni l une ni l autre l apprenne",
+    "priorite": 1
+   },
+   {
+    "but": "Passer la Danse en fonction",
+    "priorite": 2
+   },
+   {
+    "but": "Que l aine boiteux ne manque de rien",
+    "priorite": 3
+   }
+  ],
+  "maniere": "Ne dit jamais oui : il dit ce qu il ne verra pas. Parle du temps avant de parler d argent, toujours.",
+  "portrait": {
+   "fichier": null,
+   "physique": "Quarante-quatre ans, epaissi, manteau du Guet propre aux epaules et use aux coudes, se tient a l ombre de l arche par habitude.",
+   "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, city gate shadow, thickset watchman in his forties, city watch cloak, careful evasive eyes, hands behind back"
+  },
+  "etat": "actif",
+  "lieu_id": "port-real",
+  "condition": "libre"
+ },
+ {
+  "id": "ollo-marran",
+  "nom": "Ollo Marran",
+  "maison_id": null,
+  "titre": "Commis du bureau des roles, au port",
+  "naissance": 102,
+  "traits": [
+   "peureux",
+   "exact",
+   "reconnaissant",
+   "fuyant"
+  ],
+  "objectifs": [
+   {
+    "but": "Garder sa place",
+    "priorite": 1
+   },
+   {
+    "but": "Que son frere Doss n apprenne jamais ce qui passe sous sa plume",
+    "priorite": 2
+   },
+   {
+    "but": "Ne jamais rien devoir par ecrit",
+    "priorite": 3
+   }
+  ],
+  "maniere": "Devance la question qu on va lui poser et y repond avant, comme son frere � mais en baissant la voix la ou Doss la leve.",
+  "portrait": {
+   "fichier": null,
+   "physique": "Vingt-sept ans, doigts tachés d encre, col propre tenu comme une preuve, regarde la porte quand on lui parle.",
+   "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, harbour registry office, young clerk of twenty-seven, ink-stained fingers, careful clean collar, eyes toward the door"
+  },
+  "etat": "actif",
+  "lieu_id": "port-real",
+  "condition": "libre"
+ },
+ {
+  "id": "sirel-quintaine",
+  "nom": "Sirel Quintaine",
+  "maison_id": null,
+  "titre": "Marchande du Crochet, quatre marches ; preteuse sur gage",
+  "naissance": 76,
+  "traits": [
+   "patiente",
+   "sait le prix de tout",
+   "sans loyaute",
+   "souriante"
+  ],
+  "objectifs": [
+   {
+    "but": "Rentrer dans ses onze dragons � ou mieux, garder la coque en gage",
+    "priorite": 1
+   },
+   {
+    "but": "Savoir qui achete quoi dans cette ville",
+    "priorite": 2
+   },
+   {
+    "but": "Ne choisir un camp qu apres tout le monde",
+    "priorite": 3
+   }
+  ],
+  "maniere": "Choisit toujours le lieu de la rencontre, et le dit comme une faveur. Sourit en reclamant.",
+  "portrait": {
+   "fichier": null,
+   "physique": "Cinquante-trois ans, mise soignee sans etre riche, un anneau par marche qu elle tient, et l habitude de compter la monnaie d autrui du regard.",
+   "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, market stall at midday, poised woman in her fifties, neat modest dress, several plain rings, appraising smile"
+  },
+  "etat": "actif",
+  "lieu_id": "port-real",
+  "condition": "libre"
+ },
+ {
+  "id": "doye-rouelle",
+  "nom": "Doye Rouelle",
+  "maison_id": null,
+  "titre": "Veuve du Culpucier ; une charrette a vendre",
+  "naissance": 74,
+  "traits": [
+   "obstinee",
+   "fiere",
+   "affamee",
+   "droite"
+  ],
+  "objectifs": [
+   {
+    "but": "Tirer onze cerfs de la charrette",
+    "priorite": 1
+   },
+   {
+    "but": "Ne rien demander a personne",
+    "priorite": 2
+   },
+   {
+    "but": "Ne pas baisser une seule fois",
+    "priorite": 3
+   }
+  ],
+  "maniere": "Annonce son prix et se tait. Ne repete pas, ne marchande pas, ne s excuse pas d avoir faim.",
+  "portrait": {
+   "fichier": null,
+   "physique": "Cinquante-cinq ans, assise a cote de la charrette du lever au milieu du jour, chale double, mains sur les genoux.",
+   "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, poor quarter street, seated widow of fifty-five, doubled shawl, hands on knees beside a cart, unmoving dignity"
+  },
+  "etat": "actif",
+  "lieu_id": "port-real",
+  "condition": "libre"
+ },
+ {
+  "id": "hallis-roon",
+  "nom": "Hallis Roon",
+  "maison_id": null,
+  "titre": "Sergent d'appel de la seconde compagnie de la colonne royale ; prisonnier a Peyredragon",
+  "naissance": 95,
+  "traits": [
+   "obstine",
+   "scrupuleux",
+   "taciturne",
+   "brule"
+  ],
+  "objectifs": [
+   {
+    "but": "Finir l'appel — dire a cent quatre-vingt-onze familles ou sont leurs hommes. Tant que ce n'est pas fait, il ne jure a personne",
+    "priorite": 1
+   },
+   {
+    "but": "Que le chiffre de trois mille ne survive pas a ses cent quatre-vingt-onze : trois mille fait de son compte une invention",
+    "priorite": 2
+   },
+   {
+    "but": "Qu'il reste des hommes qui n'aient pas dit oui, sinon dans dix ans on dira que la colonne etait contente",
+    "priorite": 3
+   }
+  ],
+  "maniere": "Parle peu et lentement, en distinguant toujours ce qu'il sait de ce qu'il suppose ; refuse net une conclusion trop commode, meme quand elle l'arrange. Touche sa brulure au cou sans s'en apercevoir.",
+  "portrait": {
+   "fichier": null,
+   "physique": "Trente-quatre ans, tres grand, brulure mal guerie sur tout le cote gauche du cou qui descend sous le col. Huit jours de cave.",
+   "prompt_ideogram": "oil painting portrait, dark fantasy, GoT style, muted colors, single lamp in a black rock cellar, very tall gaunt sergeant of thirty-four, badly healing burn scar along the left side of the neck, straw dust, steady unimpressed gaze"
+  },
+  "etat": "actif",
+  "lieu_id": "peyredragon",
+  "condition": "prisonnier"
+ },
+ {
+  "id": "le-sanglier",
+  "nom": "Le Sanglier",
+  "maison_id": null,
+  "titre": "Sergent au role et gardien des regles de Peyredragon",
+  "naissance": 79,
+  "traits": [
+   "boiteux",
+   "exact",
+   "onze-ans-au-role",
+   "n-ecrit-que-ce-qu-il-entend"
+  ],
+  "objectifs": [
+   {
+    "but": "Que le livre ne quitte pas la Table Peinte : ce qui se decide hors de sa presence n'est pas decide",
+    "priorite": 1
+   },
+   {
+    "but": "Savoir qui nourrit et paie les deux coureurs qu'on lui a pris",
+    "priorite": 2
+   },
+   {
+    "but": "Voir si une chambre dans les murs change quelque chose a une jambe",
+    "priorite": 3
+   }
+  ],
+  "maniere": "Ne se leve pas, et le dit. Relit le role tout haut a sept heures chaque matin. Refuse un homme sans dire pourquoi. Deux temoins concordants valent son oreille, et leurs deux noms vont en marge.",
+  "portrait": {
+   "fichier": null,
+   "physique": "La cinquantaine, jambe raide qu'il ne plie plus, assis sous la voute de la porte du Dragon derriere un role use aux coins ; quinze ans de baraques sur le visage.",
+   "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, gatehouse lamplight, seated lame sergeant in his fifties, worn ledger under his hands, level unhurried gaze"
+  },
+  "etat": "actif",
+  "lieu_id": "peyredragon",
+  "condition": "libre"
+ },
+ {
+  "id": "wend",
+  "nom": "Wend",
+  "maison_id": null,
+  "titre": "Homme de la porte de mer ; porte les mots de ser Robert Quince",
+  "naissance": 99,
+  "traits": [
+   "exact",
+   "sans-familiarite",
+   "ne-sait-pas-dire-a-moitie"
+  ],
+  "objectifs": [
+   {
+    "but": "Avoir la phrase exacte avant de redescendre au bourg",
+    "priorite": 1
+   },
+   {
+    "but": "Porter ce qu'on lui donne a porter, mot pour mot",
+    "priorite": 2
+   }
+  ],
+  "maniere": "Parle depuis la porte, en regardant le mur. Ne demande qu'une fois, et ne rattrape pas si on ne repond pas.",
+  "portrait": {
+   "fichier": null,
+   "physique": "La trentaine, sec, dos a la porte, les mains le long du corps ; l'air de quelqu'un qui n'a jamais eu a decider.",
+   "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, doorway shadow, wiry man of thirty, hands at his sides, careful uncertain gaze"
+  },
+  "etat": "actif",
+  "lieu_id": "peyredragon",
+  "condition": "libre"
+ },
+ {
+  "id": "ordo-sarnes",
+  "nom": "Ordo Sarnes",
+  "maison_id": null,
+  "titre": "Pecheur ; parle pour ceux du banc de l'est",
+  "naissance": 84,
+  "traits": [
+   "plat",
+   "exact",
+   "ne-detourne-pas-les-yeux",
+   "sans-prix"
+  ],
+  "objectifs": [
+   {
+    "but": "Rapporter exactement ce que les pecheurs lui ont dit, sans y ajouter ni retrancher",
+    "priorite": 1
+   },
+   {
+    "but": "Que le banc de l'est se rouvre",
+    "priorite": 2
+   },
+   {
+    "but": "Savoir avant, si l'on doit lever des hommes",
+    "priorite": 3
+   }
+  ],
+  "maniere": "Recite ses affaires du meme ton plat, dans l'ordre, sans savoir laquelle pese. A refuse de chiffrer sa propre journee, et on a ecrit NON CHARGE.",
+  "portrait": {
+   "fichier": null,
+   "physique": "La quarantaine, mains fendues par le sel, immobile quand les autres bougent ; le seul des cinq qui ait continue de regarder la reine en face.",
+   "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, grey harbour light, still fisherman of forty-five, salt-split hands, flat unflinching gaze"
+  },
+  "etat": "actif",
+  "lieu_id": "peyredragon",
+  "condition": "libre"
+ },
+ {
+  "id": "tobb",
+  "nom": "Tobb",
+  "maison_id": null,
+  "titre": "Coureur de la reine ; de la Claie",
+  "naissance": 113,
+  "traits": [
+   "seize-ans",
+   "rapide",
+   "parle-de-travers-quand-il-a-peur"
+  ],
+  "objectifs": [
+   {
+    "but": "Ne pas faire honte a sa mere",
+    "priorite": 1
+   },
+   {
+    "but": "Comprendre ce qu'on attend de lui avant qu'on ne le lui redemande",
+    "priorite": 2
+   }
+  ],
+  "maniere": "Dit les choses trop vite et de travers, puis se corrige tout seul. Trouve un lieu sur une carte du bout du doigt avant qu'on ait fini la phrase.",
+  "portrait": {
+   "fichier": null,
+   "physique": "Seize ans, maigre, pieds nus jusqu'au genou de boue de greve, fils de la brasseuse du bourg.",
+   "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, harbour dusk, lean boy of sixteen, mud to the knee, quick startled eyes"
+  },
+  "etat": "dormant",
+  "lieu_id": "peyredragon",
+  "condition": "libre"
+ },
+ {
+  "id": "nesse",
+  "nom": "Nesse",
+  "maison_id": null,
+  "titre": "Coureuse de la reine ; porteuse de sel, du Marais",
+  "naissance": 101,
+  "traits": [
+   "endurante",
+   "ne-sait-pas-lire",
+   "le-dit-tout-haut"
+  ],
+  "objectifs": [
+   {
+    "but": "Tenir la distance qu'on lui donne, et la tenir mieux qu'un cheval",
+    "priorite": 1
+   },
+   {
+    "but": "Apprendre ce que dit le livre qu'elle ne peut pas lire",
+    "priorite": 2
+   }
+  ],
+  "maniere": "Dit ce qui la desavantage sans qu'on le lui demande, une fois, et n'y revient pas. « Je n'etais jamais montee. »",
+  "portrait": {
+   "fichier": null,
+   "physique": "Vingt-huit ans, epaules de porteuse, sel seche dans les plis du cou et des mains, charrette laissee en bas.",
+   "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, stone stair light, strong woman of twenty-eight, salt-dried hands, steady plain gaze"
+  },
+  "etat": "actif",
+  "lieu_id": "peyredragon",
+  "condition": "libre"
+ },
+ {
+  "id": "meliss-la-claie",
+  "nom": "Meliss",
+  "maison_id": null,
+  "titre": "Tient la Claie, l'auberge du bourg de Peyredragon",
+  "naissance": 79,
+  "traits": [
+   "froide",
+   "compte-sans-y-penser",
+   "trace-ses-propres-lignes"
+  ],
+  "objectifs": [
+   {
+    "but": "Que ce qui se DIT chez elle reste a ses clients",
+    "priorite": 1
+   },
+   {
+    "but": "Du sel au prix du marais, et la paix avec la garnison",
+    "priorite": 2
+   },
+   {
+    "but": "Que ses fils ne servent pas en cachette d'elle",
+    "priorite": 3
+   }
+  ],
+  "maniere": "Donne ce qu'elle a vu sans qu'on le demande, du meme ton que le reste, en ramassant une chope. Prend l'argent sans remercier et fait porter a manger.",
+  "portrait": {
+   "fichier": null,
+   "physique": "La cinquantaine, tablier, chope vide toujours dans une main ; se tient dans l'embrasure plutot que dans la salle.",
+   "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, tavern doorway, innkeeper in her fifties, apron, empty tankard in hand, cool measuring gaze"
+  },
+  "etat": "dormant",
+  "lieu_id": "peyredragon",
+  "condition": "libre"
+ },
+ {
+  "id": "sabbe",
+  "nom": "Sabbe",
+  "maison_id": null,
+  "titre": "Homme du bourg ; paye en pieces neuves",
+  "naissance": 89,
+  "traits": [
+   "etranger-au-bourg",
+   "soulage-qu-on-le-dise",
+   "observateur"
+  ],
+  "objectifs": [
+   {
+    "but": "Meriter qu'on lui ait dit devant tous pourquoi c'etait lui",
+    "priorite": 1
+   },
+   {
+    "but": "Savoir combien ne sont pas d'ici, et lequel des quatre les autres ecoutent",
+    "priorite": 2
+   }
+  ],
+  "maniere": "Ecoute plus qu'il ne parle, et repond a la question posee. Un homme qu'on soupconne en silence finit par le meriter — il l'a compris avant qu'on le lui dise.",
+  "portrait": {
+   "fichier": null,
+   "physique": "La quarantaine, arrive depuis peu, vetements trop propres pour un quai ; pieces neuves au fond de la bourse.",
+   "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, tavern lamplight, man of forty, too-clean clothes, attentive guarded gaze"
+  },
+  "etat": "actif",
+  "lieu_id": "port-real",
+  "condition": "en mer depuis le 23e a la premiere lumiere ; attendu a Port-Real le 27e au matin"
+ },
+ {
+  "id": "ren",
+  "nom": "Ren",
+  "maison_id": null,
+  "titre": "Fils cadet de Meliss ; de la Claie",
+  "naissance": 115,
+  "traits": [
+   "quatorze-ans",
+   "se-trahit-des-mains",
+   "franc"
+  ],
+  "objectifs": [
+   {
+    "but": "Dire lui-meme a sa mere ce qu'on lui demande",
+    "priorite": 1
+   },
+   {
+    "but": "Ne pas avoir l'air d'un enfant a qui l'on confie quelque chose",
+    "priorite": 2
+   }
+  ],
+  "maniere": "Met la main sur le manche de son couteau a poisson quand on le nomme, s'en rend compte, et la retire trop vite.",
+  "portrait": {
+   "fichier": null,
+   "physique": "Quatorze ans, couteau a poisson a la ceinture, mains encore de gamin, la meme facon que sa mere de ne pas bouger les yeux.",
+   "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, harbour dusk, boy of fourteen, fish-knife at belt, wary steady eyes"
+  },
+  "etat": "actif",
+  "lieu_id": "port-real",
+  "condition": "en mer depuis le 23e a la premiere lumiere ; attendu a Port-Real le 27e au matin"
+ },
+ {
+  "id": "kerra-des-claies",
+  "nom": "Kerra",
+  "maison_id": null,
+  "titre": "Femme de la troisieme claie ; tient la porte au tambour de pierre",
+  "naissance": 94,
+  "traits": [
+   "dure",
+   "protege-les-siens",
+   "range-les-gens-sans-qu-on-le-lui-demande"
+  ],
+  "objectifs": [
+   {
+    "but": "Que sa fille n'apprenne pas a compter tout haut devant qui il ne faut pas",
+    "priorite": 1
+   },
+   {
+    "but": "Que le bourg entre en ordre, et que les retardataires n'entrent pas",
+    "priorite": 2
+   }
+  ],
+  "maniere": "Pose son couteau avant de parler. A ferme la bouche de sa fille avec la main quand la petite s'est mise a compter, et n'a rien explique.",
+  "portrait": {
+   "fichier": null,
+   "physique": "La trentaine avancee, bras nus de claie, couteau a ecailler pose devant elle ; se tient a la porte plutot qu'au milieu.",
+   "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, drying-rack light, hard woman of thirty-five, bare forearms, scaling knife set down, guarded gaze"
+  },
+  "etat": "dormant",
+  "lieu_id": "peyredragon",
+  "condition": "libre"
+ },
+ {
+  "id": "sella",
+  "nom": "Sella",
+  "maison_id": null,
+  "titre": "Enfant du bourg de Peyredragon",
+  "naissance": 119,
+  "traits": [
+   "dix-ans",
+   "compte-tout-haut",
+   "n-a-pas-encore-appris-a-se-taire"
+  ],
+  "objectifs": [
+   {
+    "but": "Continuer de compter",
+    "priorite": 1
+   }
+  ],
+  "maniere": "Compte tout haut ce qu'elle voit, et ne comprend pas encore pourquoi on lui ferme la bouche.",
+  "portrait": {
+   "fichier": null,
+   "physique": "Dix ans, mains de claie deja, se tient contre la jambe de sa mere.",
+   "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, drying-rack light, girl of ten, small work-marked hands, open counting gaze"
+  },
+  "etat": "dormant",
+  "lieu_id": "peyredragon",
+  "condition": "libre"
+ },
+ {
+  "id": "alarra-rosby",
+  "nom": "Alarra Rosby",
+  "maison_id": null,
+  "titre": "Dame de Rosby ; nee a Pierredanse",
+  "naissance": 93,
+  "traits": [
+   "franche",
+   "meprise-la-prudence-de-son-mari",
+   "sans-demande"
+  ],
+  "objectifs": [
+   {
+    "but": "Voir Rhaenyra une heure, seule, sans rien lui demander",
+    "priorite": 1
+   },
+   {
+    "but": "Repartir avant qu'on ne fasse d'elle une lettre",
+    "priorite": 2
+   },
+   {
+    "but": "Verifier de ses yeux ce qu'on dit du feu de la route",
+    "priorite": 3
+   }
+  ],
+  "maniere": "Ne demande rien, et le dit d'entree pour qu'on ne cherche pas. Parle de la reine comme d'une fille de quatorze ans, en sachant que c'est faux.",
+  "portrait": {
+   "fichier": null,
+   "physique": "La trentaine avancee, manteau retourne pour cacher les armes de sa maison, arrivee sur une barque de peche volee a son frere.",
+   "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, sea light, noblewoman of thirty-six, cloak turned inside out, direct unasking gaze"
+  },
+  "etat": "actif",
+  "lieu_id": "peyredragon",
+  "condition": "libre"
  }
 ]

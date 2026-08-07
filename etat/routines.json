@@ -1,0 +1,692 @@
+{
+  "_": "Les journees du chateau. Voir scripts/presence.py. Une bande = {de, a, salle, lieu} en minutes 0-1439 ; les bandes d'un modele pavent la journee entiere. Le jeton @dortoir se remplace par le `dortoir` de la personne (ou celui du modele), @poste par son `poste`. Ce fichier est technique, hors docs/schema.md, comme presence.json et horloges.json.",
+  "__destination": "UNE BANDE N'EST PAS UNE POSITION, C'EST UNE DESTINATION. A l'heure dite, l'homme PART vers cette salle ; il y arrive au bout du chemin (etat/chemins.json), et entre les deux il est dans l'escalier, ou on peut le croiser. Une routine qui poserait les gens d'autorite a l'heure ronde ne serait qu'un teleport de plus, a trois heures d'intervalle.",
+  "peremption_minutes": 240,
+  "modeles": {
+    "reine": {
+      "nom": "Le jour d'une reine",
+      "dortoir": {
+        "salle": "appartements-reine",
+        "lieu": "Vos appartements, Peyredragon"
+      },
+      "bandes": [
+        {
+          "de": 0,
+          "a": 330,
+          "salle": "@dortoir"
+        },
+        {
+          "de": 330,
+          "a": 480,
+          "salle": "table-peinte",
+          "lieu": "Chambre de la Table Peinte, Peyredragon"
+        },
+        {
+          "de": 480,
+          "a": 660,
+          "salle": "grande-salle",
+          "lieu": "Grande salle, Peyredragon"
+        },
+        {
+          "de": 660,
+          "a": 780,
+          "salle": "@dortoir"
+        },
+        {
+          "de": 780,
+          "a": 1020,
+          "salle": "table-peinte",
+          "lieu": "Chambre de la Table Peinte, Peyredragon"
+        },
+        {
+          "de": 1020,
+          "a": 1140,
+          "salle": "grande-salle",
+          "lieu": "Grande salle, Peyredragon"
+        },
+        {
+          "de": 1140,
+          "a": 1440,
+          "salle": "@dortoir"
+        }
+      ]
+    },
+    "noble-jeune": {
+      "nom": "Le jour d'un prince",
+      "dortoir": {
+        "salle": "appartements-reine",
+        "lieu": "Vos appartements, Peyredragon"
+      },
+      "bandes": [
+        {
+          "de": 0,
+          "a": 390,
+          "salle": "@dortoir"
+        },
+        {
+          "de": 390,
+          "a": 600,
+          "salle": "fosses",
+          "lieu": "Fosses aux dragons, Peyredragon"
+        },
+        {
+          "de": 600,
+          "a": 720,
+          "salle": "cour",
+          "lieu": "La cour, Peyredragon"
+        },
+        {
+          "de": 720,
+          "a": 840,
+          "salle": "grande-salle",
+          "lieu": "Grande salle, Peyredragon"
+        },
+        {
+          "de": 840,
+          "a": 1080,
+          "salle": "cour",
+          "lieu": "La cour, Peyredragon"
+        },
+        {
+          "de": 1080,
+          "a": 1200,
+          "salle": "grande-salle",
+          "lieu": "Grande salle, Peyredragon"
+        },
+        {
+          "de": 1200,
+          "a": 1440,
+          "salle": "@dortoir"
+        }
+      ]
+    },
+    "dame-de-compagnie": {
+      "nom": "Le jour d'une dame de la maison",
+      "dortoir": {
+        "salle": "appartements-reine",
+        "lieu": "Appartements de la reine, Peyredragon"
+      },
+      "bandes": [
+        {
+          "de": 0,
+          "a": 300,
+          "salle": "@dortoir"
+        },
+        {
+          "de": 300,
+          "a": 660,
+          "salle": "@dortoir"
+        },
+        {
+          "de": 660,
+          "a": 780,
+          "salle": "grande-salle",
+          "lieu": "Grande salle, Peyredragon"
+        },
+        {
+          "de": 780,
+          "a": 1140,
+          "salle": "@dortoir"
+        },
+        {
+          "de": 1140,
+          "a": 1440,
+          "salle": "@dortoir"
+        }
+      ]
+    },
+    "septa": {
+      "nom": "Le jour d'une septa",
+      "dortoir": {
+        "salle": "appartements-reine",
+        "lieu": "Appartements de la reine, Peyredragon"
+      },
+      "bandes": [
+        {
+          "de": 0,
+          "a": 300,
+          "salle": "@dortoir"
+        },
+        {
+          "de": 300,
+          "a": 420,
+          "salle": "septuaire",
+          "lieu": "Le septuaire, Peyredragon"
+        },
+        {
+          "de": 420,
+          "a": 660,
+          "salle": "@dortoir"
+        },
+        {
+          "de": 660,
+          "a": 780,
+          "salle": "septuaire",
+          "lieu": "Le septuaire, Peyredragon"
+        },
+        {
+          "de": 780,
+          "a": 1140,
+          "salle": "@dortoir"
+        },
+        {
+          "de": 1140,
+          "a": 1260,
+          "salle": "septuaire",
+          "lieu": "Le septuaire, Peyredragon"
+        },
+        {
+          "de": 1260,
+          "a": 1440,
+          "salle": "@dortoir"
+        }
+      ]
+    },
+    "castellan": {
+      "nom": "Le jour d'un castellan",
+      "dortoir": {
+        "salle": "tambour-de-pierre",
+        "lieu": "Tambour de Pierre, Peyredragon"
+      },
+      "bandes": [
+        {
+          "de": 0,
+          "a": 270,
+          "salle": "@dortoir"
+        },
+        {
+          "de": 270,
+          "a": 420,
+          "salle": "cour",
+          "lieu": "La cour, Peyredragon"
+        },
+        {
+          "de": 420,
+          "a": 720,
+          "salle": "porte-dragon",
+          "lieu": "Chemin de ronde, Peyredragon"
+        },
+        {
+          "de": 720,
+          "a": 840,
+          "salle": "grande-salle",
+          "lieu": "Grande salle, Peyredragon"
+        },
+        {
+          "de": 840,
+          "a": 1140,
+          "salle": "cour",
+          "lieu": "La cour, Peyredragon"
+        },
+        {
+          "de": 1140,
+          "a": 1290,
+          "salle": "porte-de-mer",
+          "lieu": "Porte de mer, Peyredragon"
+        },
+        {
+          "de": 1290,
+          "a": 1440,
+          "salle": "@dortoir"
+        }
+      ]
+    },
+    "port": {
+      "nom": "Le jour d'un homme du port",
+      "dortoir": {
+        "salle": "porte-de-mer",
+        "lieu": "Porte de mer, Peyredragon"
+      },
+      "bandes": [
+        {
+          "de": 0,
+          "a": 300,
+          "salle": "@dortoir"
+        },
+        {
+          "de": 300,
+          "a": 420,
+          "salle": "quai",
+          "lieu": "Le quai, Peyredragon"
+        },
+        {
+          "de": 420,
+          "a": 720,
+          "salle": "porte-de-mer",
+          "lieu": "Porte de mer, Peyredragon"
+        },
+        {
+          "de": 720,
+          "a": 1020,
+          "salle": "quai",
+          "lieu": "Le quai, Peyredragon"
+        },
+        {
+          "de": 1020,
+          "a": 1260,
+          "salle": "porte-de-mer",
+          "lieu": "Porte de mer, Peyredragon"
+        },
+        {
+          "de": 1260,
+          "a": 1440,
+          "salle": "@dortoir"
+        }
+      ]
+    },
+    "dragonnier": {
+      "nom": "Le jour d'un homme des fosses",
+      "dortoir": {
+        "salle": "fosses",
+        "lieu": "Fosses aux dragons, Peyredragon"
+      },
+      "bandes": [
+        {
+          "de": 0,
+          "a": 270,
+          "salle": "@dortoir"
+        },
+        {
+          "de": 270,
+          "a": 720,
+          "salle": "fosses",
+          "lieu": "Fosses aux dragons, Peyredragon"
+        },
+        {
+          "de": 720,
+          "a": 810,
+          "salle": "cour",
+          "lieu": "La cour, Peyredragon"
+        },
+        {
+          "de": 810,
+          "a": 1200,
+          "salle": "fosses",
+          "lieu": "Fosses aux dragons, Peyredragon"
+        },
+        {
+          "de": 1200,
+          "a": 1440,
+          "salle": "@dortoir"
+        }
+      ]
+    },
+    "galeries": {
+      "nom": "Le jour d'un tailleur de verredragon",
+      "dortoir": {
+        "salle": "bourg",
+        "lieu": "Le bourg sous les murs, Peyredragon"
+      },
+      "bandes": [
+        {
+          "de": 0,
+          "a": 330,
+          "salle": "@dortoir"
+        },
+        {
+          "de": 330,
+          "a": 720,
+          "salle": "galeries",
+          "lieu": "Onzieme galerie, quatre-vingts pas sous la mer"
+        },
+        {
+          "de": 720,
+          "a": 810,
+          "salle": "cour",
+          "lieu": "La cour, Peyredragon"
+        },
+        {
+          "de": 810,
+          "a": 1170,
+          "salle": "galeries",
+          "lieu": "Onzieme galerie, quatre-vingts pas sous la mer"
+        },
+        {
+          "de": 1170,
+          "a": 1440,
+          "salle": "@dortoir"
+        }
+      ]
+    },
+    "bourg": {
+      "nom": "Le jour du bourg",
+      "dortoir": {
+        "salle": "bourg",
+        "lieu": "Le bourg sous les murs, Peyredragon"
+      },
+      "bandes": [
+        {
+          "de": 0,
+          "a": 270,
+          "salle": "@dortoir"
+        },
+        {
+          "de": 270,
+          "a": 480,
+          "salle": "quai",
+          "lieu": "Le quai, Peyredragon"
+        },
+        {
+          "de": 480,
+          "a": 1140,
+          "salle": "bourg",
+          "lieu": "Le bourg sous les murs, Peyredragon"
+        },
+        {
+          "de": 1140,
+          "a": 1440,
+          "salle": "@dortoir"
+        }
+      ]
+    },
+    "hote": {
+      "nom": "Le jour d'un hote de la maison",
+      "dortoir": {
+        "salle": "tambour-de-pierre",
+        "lieu": "Chambre d'hote, Tambour de Pierre, Peyredragon"
+      },
+      "bandes": [
+        {
+          "de": 0,
+          "a": 360,
+          "salle": "@dortoir"
+        },
+        {
+          "de": 360,
+          "a": 660,
+          "salle": "roukerie",
+          "lieu": "La roukerie, Peyredragon"
+        },
+        {
+          "de": 660,
+          "a": 780,
+          "salle": "grande-salle",
+          "lieu": "Grande salle, Peyredragon"
+        },
+        {
+          "de": 780,
+          "a": 1080,
+          "salle": "archives",
+          "lieu": "L'archive, Peyredragon"
+        },
+        {
+          "de": 1080,
+          "a": 1200,
+          "salle": "grande-salle",
+          "lieu": "Grande salle, Peyredragon"
+        },
+        {
+          "de": 1200,
+          "a": 1440,
+          "salle": "@dortoir"
+        }
+      ]
+    },
+    "poste": {
+      "nom": "Un homme a son poste",
+      "dortoir": {
+        "salle": "tambour-de-pierre",
+        "lieu": "Corps de garde, Peyredragon"
+      },
+      "bandes": [
+        {
+          "de": 0,
+          "a": 300,
+          "salle": "@dortoir"
+        },
+        {
+          "de": 300,
+          "a": 1260,
+          "salle": "@poste"
+        },
+        {
+          "de": 1260,
+          "a": 1440,
+          "salle": "@dortoir"
+        }
+      ]
+    },
+    "captif": {
+      "nom": "Un homme aux fers",
+      "dortoir": {
+        "salle": "cachots",
+        "lieu": "Cellier bas du Tambour de Pierre, Peyredragon"
+      },
+      "bandes": [
+        {
+          "de": 0,
+          "a": 1440,
+          "salle": "@dortoir"
+        }
+      ]
+    },
+    "conseil": {
+      "nom": "Le jour d'un homme du conseil",
+      "_": "Ceux qui siegent : la table peinte est leur poste, on les y trouve toute la journee sauf au repas.",
+      "dortoir": {
+        "salle": "tambour-de-pierre",
+        "lieu": "Chambre haute, Tambour de Pierre"
+      },
+      "bandes": [
+        {
+          "de": 0,
+          "a": 330,
+          "salle": "@dortoir"
+        },
+        {
+          "de": 330,
+          "a": 720,
+          "salle": "table-peinte",
+          "lieu": "Chambre de la Table Peinte, Peyredragon"
+        },
+        {
+          "de": 720,
+          "a": 810,
+          "salle": "grande-salle",
+          "lieu": "Grande salle, Peyredragon"
+        },
+        {
+          "de": 810,
+          "a": 1140,
+          "salle": "table-peinte",
+          "lieu": "Chambre de la Table Peinte, Peyredragon"
+        },
+        {
+          "de": 1140,
+          "a": 1260,
+          "salle": "grande-salle",
+          "lieu": "Grande salle, Peyredragon"
+        },
+        {
+          "de": 1260,
+          "a": 1440,
+          "salle": "@dortoir"
+        }
+      ]
+    },
+    "mestre": {
+      "nom": "Le jour d'un mestre",
+      "_": "Un mestre n'est pas un conseiller assis : les corbeaux partent au jour et rentrent au soir, et c'est lui qui les leve et les recoit. Entre les deux il siege, et l'apres-midi il ecrit.",
+      "dortoir": {
+        "salle": "roukerie",
+        "lieu": "La roukerie, Peyredragon"
+      },
+      "bandes": [
+        {
+          "de": 0,
+          "a": 300,
+          "salle": "@dortoir"
+        },
+        {
+          "de": 300,
+          "a": 420,
+          "salle": "roukerie",
+          "lieu": "La roukerie, Peyredragon"
+        },
+        {
+          "de": 420,
+          "a": 720,
+          "salle": "table-peinte",
+          "lieu": "Chambre de la Table Peinte, Peyredragon"
+        },
+        {
+          "de": 720,
+          "a": 810,
+          "salle": "grande-salle",
+          "lieu": "Grande salle, Peyredragon"
+        },
+        {
+          "de": 810,
+          "a": 1020,
+          "salle": "archives",
+          "lieu": "L'archive, Peyredragon"
+        },
+        {
+          "de": 1020,
+          "a": 1140,
+          "salle": "table-peinte",
+          "lieu": "Chambre de la Table Peinte, Peyredragon"
+        },
+        {
+          "de": 1140,
+          "a": 1260,
+          "salle": "roukerie",
+          "lieu": "La roukerie, Peyredragon"
+        },
+        {
+          "de": 1260,
+          "a": 1440,
+          "salle": "@dortoir"
+        }
+      ]
+    },
+    "ombre": {
+      "nom": "Une ombre, du lever au coucher",
+      "dortoir": {
+        "salle": "bourg",
+        "lieu": "Le bourg sous les murs, Peyredragon"
+      },
+      "bandes": [
+        {
+          "de": 0,
+          "a": 330,
+          "salle": "@dortoir"
+        },
+        {
+          "de": 330,
+          "a": 1140,
+          "salle": "@suit"
+        },
+        {
+          "de": 1140,
+          "a": 1440,
+          "salle": "@dortoir"
+        }
+      ]
+    }
+  },
+  "gens": {
+    "rhaenyra": {
+      "modele": "reine"
+    },
+    "jacaerys": {
+      "modele": "noble-jeune"
+    },
+    "elyn-sarnes": {
+      "modele": "dame-de-compagnie"
+    },
+    "septa-marlow": {
+      "modele": "septa"
+    },
+    "robert-quince": {
+      "modele": "castellan"
+    },
+    "rulf-corne": {
+      "modele": "port",
+      "dortoir": {
+        "salle": "bourg",
+        "lieu": "Le bourg sous les murs, Peyredragon"
+      }
+    },
+    "wend": {
+      "modele": "port"
+    },
+    "sarro-vaeth": {
+      "modele": "dragonnier"
+    },
+    "merra-sath": {
+      "modele": "galeries"
+    },
+    "dorsa-sath": {
+      "modele": "galeries"
+    },
+    "willa-sechoirs": {
+      "modele": "bourg"
+    },
+    "ordo-sarnes": {
+      "modele": "bourg"
+    },
+    "meliss-la-claie": {
+      "modele": "bourg"
+    },
+    "vieux-pecheur": {
+      "modele": "bourg"
+    },
+    "aurore-inchauspe": {
+      "modele": "hote"
+    },
+    "garde-levant": {
+      "modele": "poste",
+      "poste": {
+        "salle": "grand-escalier",
+        "lieu": "Le grand escalier, Peyredragon"
+      }
+    },
+    "hobb-treize-pas": {
+      "modele": "captif"
+    },
+    "prisonnier-wat": {
+      "modele": "captif"
+    },
+    "le-sanglier": {
+      "modele": "poste",
+      "poste": {
+        "salle": "porte-dragon",
+        "lieu": "Sous la voute de la porte du Dragon, Peyredragon"
+      },
+      "dortoir": {
+        "salle": "baraques",
+        "lieu": "Les baraques, hors les murs, Peyredragon"
+      }
+    },
+    "gerardys": {
+      "modele": "mestre"
+    },
+    "rhaenys": {
+      "modele": "conseil"
+    },
+    "lucerys": {
+      "modele": "conseil",
+      "dortoir": {
+        "salle": "appartements-reine",
+        "lieu": "Les appartements de la reine, Peyredragon"
+      }
+    },
+    "tobb": {
+      "modele": "ombre",
+      "suit": "aurore-inchauspe",
+      "dortoir": {
+        "salle": "bourg",
+        "lieu": "Le bourg sous les murs, Peyredragon"
+      }
+    },
+    "nesse": {
+      "modele": "ombre",
+      "suit": "rhaenyra",
+      "dortoir": {
+        "salle": "bourg",
+        "lieu": "Le bourg sous les murs, Peyredragon"
+      }
+    }
+  }
+}

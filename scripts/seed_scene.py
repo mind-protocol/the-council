@@ -36,16 +36,6 @@ scene = {
          "texte": "Jace se tient droit, trop droit — il attend que vous le regardiez pour proposer quelque chose qu'il a répété cette nuit. La couronne de votre père est en mer, quelque part entre les manteaux blancs en fuite et vos quais."},
         {"type": "pensee", "delai_s": 5,
          "texte": "Harrenhal — c'est là qu'un millier de seigneurs ont écarté Rhaenys parce qu'elle portait jupon, et Daemon me l'offre comme un présent de deuil. Sous mes doigts la table est froide, froide comme le petit front de Visenya."},
-        {"type": "choix", "delai_s": 4,
-         "choix": [
-             {"id": "couronnement-d-abord",
-              "texte": "La couronne d'abord. Qu'on me couronne devant dieux et hommes — ensuite le royaume saura à qui parler. Convoquez mes bannerets."},
-             {"id": "lacher-daemon-harrenhal",
-              "texte": "Dix jours, pas un de plus. Prends Caraxès, prends Harrenhal — et rapporte-moi une victoire, pas une guerre nouvelle."},
-             {"id": "fausses-negociations",
-              "texte": "Otto veut des corbeaux ? Il en aura. Écrivons-lui des réponses assez douces pour l'endormir — pendant que la flotte se déploie sans bruit."},
-         ],
-         "placeholder_libre": "Autre chose — vos mots à vous…"},
     ],
 }
 

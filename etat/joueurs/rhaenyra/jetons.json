@@ -1,0 +1,931 @@
+{
+ "_lisez_moi": "Ce que la table peinte PORTE — pas la vérité du monde, mais ce que le joueur croit tenir. Chaque marque a sa `certitude` (sure | rapportee | rumeur) et devrait pouvoir se justifier par une entrée d'info.json, une parole entendue en scène ou un ordre donné par le joueur. Format complet : docs/carte.md.",
+ "jetons": [
+  {
+   "id": "flotte-gosier",
+   "genre": "flotte",
+   "camp": "noir",
+   "nom": "Le blocus du Gosier",
+   "force": 90,
+   "unite": "voiles",
+   "point": [
+    325.0,
+    403.5
+   ],
+   "detail": "En croissant sur le Gosier : pas une coque n'entre dans la baie sans congé. Port-Réal affamée en quelques lunes, sans une bataille.",
+   "certitude": "sure",
+   "statut": "actif"
+  },
+  {
+   "id": "hommes-lamarck",
+   "genre": "armee",
+   "camp": "noir",
+   "nom": "Les hommes de Marée-Haute",
+   "force": 3000,
+   "ou": "lamarck",
+   "detail": "Marins et soldats de pont : ils abordent, tiennent un quai, prennent une tour depuis la mer. Aucune chevalerie.",
+   "certitude": "sure",
+   "statut": "actif"
+  },
+  {
+   "id": "garnison-peyredragon",
+   "genre": "garnison",
+   "camp": "noir",
+   "nom": "La garnison de Peyredragon",
+   "force": 300,
+   "ou": "peyredragon",
+   "detail": "Trois cents hommes, quarante-deux chevaux dont neuf vaudraient une charge. Sept galeries donnant sur la mer.",
+   "certitude": "sure",
+   "statut": "actif"
+  },
+  {
+   "id": "dragons-peyredragon",
+   "genre": "dragon",
+   "camp": "noir",
+   "nom": "Les dragons de Peyredragon",
+   "force": 5,
+   "unite": "dragons montés",
+   "ou": "peyredragon",
+   "detail": "Caraxès, Syrax, Meleys, Vermax, Arrax — et les bêtes de la Montagne, que personne ne monte.",
+   "certitude": "sure",
+   "statut": "actif"
+  },
+  {
+   "id": "dragons-port-real",
+   "genre": "dragon",
+   "camp": "vert",
+   "nom": "Les dragons d'Aegon",
+   "force": 3,
+   "unite": "dragons",
+   "ou": "port-real",
+   "detail": "Vhagar, Sunfyre, Tessarion. Vhagar seule pèse plus que trois des nôtres.",
+   "certitude": "rapportee",
+   "statut": "actif"
+  },
+  {
+   "id": "ost-couronne",
+   "genre": "armee",
+   "camp": "vert",
+   "nom": "L'ost de la Couronne",
+   "force": 3500,
+   "ou": "port-real",
+   "detail": "Ce que la Couronne lève, au compte de Corlys. Aegon n'a pas d'or : trois cents dragons d'or par jour rien qu'à nourrir la ville.",
+   "certitude": "rapportee",
+   "statut": "actif"
+  },
+  {
+   "id": "colonne-rosby",
+   "genre": "armee",
+   "camp": "vert",
+   "nom": "La colonne de Rosby",
+   "force": 1200,
+   "ou": "rosby",
+   "detail": "Deux colonnes aux bannières de la Couronne, vues de Meleys : elles comptent les murs sans attaquer. Un inventaire, pas une marche. Daemon les dit à douze cents.",
+   "certitude": "rapportee",
+   "statut": "actif"
+  },
+  {
+   "id": "ost-hightower",
+   "genre": "armee",
+   "camp": "vert",
+   "nom": "Le Bief derrière Otto",
+   "force": 6000,
+   "ou": "villevieille",
+   "detail": "Six mille tout de suite, neuf mille en vidant les fermes — et sept cent mille dragons d'or contre les quarante mille du trésor de Peyredragon.",
+   "certitude": "rapportee",
+   "statut": "actif"
+  },
+  {
+   "id": "lances-sombreval",
+   "genre": "armee",
+   "camp": "noir",
+   "nom": "Les lances de Sombreval",
+   "force": 550,
+   "ou": "sombreval",
+   "detail": "Déclarée sans attendre le couronnement. Rhaenys les dit prêtes à sortir contre la colonne — quatre-vingts à cent lances, pas assez pour tenir une plaine.",
+   "certitude": "sure",
+   "statut": "actif"
+  },
+  {
+   "id": "hommes-daemon-harrenhal",
+   "genre": "camp",
+   "camp": "noir",
+   "nom": "Les quarante de Daemon",
+   "force": 40,
+   "ou": "harrenhal",
+   "detail": "Envoyés avant le conseil, sans que la reine l'ait su. Ils comptent les murs de Harrenhal et ce qu'il reste de garnison à ser Simon Strong.",
+   "certitude": "rapportee",
+   "statut": "actif"
+  },
+  {
+   "id": "incident-feu-route",
+   "genre": "incident",
+   "camp": "neutre",
+   "feu": "vif",
+   "nom": "Le feu de la route",
+   "point": [
+    277.5,
+    403.0
+   ],
+   "ames": 400,
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 16
+   },
+   "certitude": "rapportee",
+   "statut": "actif",
+   "contenu": "On ne dit pas que la reine a brûlé des soldats : on dit qu'elle a brûlé des hommes qui rentraient chez eux. On ne l'appelle ni bataille, ni représaille, ni justice — on dit le feu de la route, et l'on ne nomme ni un roi ni une reine dans la même phrase.",
+   "detail": "Rapporté par Aurore Inchauspé devant le conseil, six haltes en deux jours de route.",
+   "propage": [
+    {
+     "ou": "rosby",
+     "ames": 600,
+     "date": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 17
+     },
+     "certitude": "rapportee",
+     "note": "À l'auberge du gué, chez Hanna. Elle donne le nom, la salle et le jour."
+    },
+    {
+     "ou": "stokeworth",
+     "ames": 400,
+     "date": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 18
+     },
+     "certitude": "rapportee",
+     "note": "Perrin le charron, qui roule ses futailles : il ne saurait pas dire qui a brûlé qui, et il n'est pas le seul."
+    },
+    {
+     "ou": "sombreval",
+     "ames": 2000,
+     "date": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 16
+     },
+     "certitude": "sure",
+     "note": "Ils l'ont vu de leurs murs."
+    },
+    {
+     "ou": "port-real",
+     "ames": 3000,
+     "date": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 19
+     },
+     "certitude": "rumeur",
+     "note": "La colonne en est sortie ; ce qui en reste y est rentré."
+    }
+   ],
+   "risque": [
+    {
+     "ou": "accalmie",
+     "ames": 1200,
+     "note": "Le valet d'Accalmie parlait déjà de l'acte de la reine ; le feu suit toujours l'acte."
+    },
+    {
+     "ou": "sweetport-sound",
+     "ames": 500,
+     "note": "Par les capitaines, à la première marée."
+    },
+    {
+     "ou": "lamarck",
+     "ames": 800,
+     "note": "Un jour de mer. Rien ne l'arrête."
+    }
+   ]
+  },
+  {
+   "id": "incident-sacre",
+   "genre": "incident",
+   "camp": "neutre",
+   "feu": "couve",
+   "nom": "Le sacre de Peyredragon",
+   "ou": "peyredragon",
+   "ames": 900,
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 18
+   },
+   "certitude": "sure",
+   "statut": "actif",
+   "contenu": "Reçue reine sur le grand escalier face à la mer, sur le serment de garnison, avec la couronne de Viserys — non pas ointe. Quatre cents voix ont répondu avec elle.",
+   "detail": "Parti de la même côte que le feu, à un jour d'écart. Une seule des deux nouvelles est arrivée sur la route.",
+   "propage": [
+    {
+     "ou": "sombreval",
+     "ames": 500,
+     "date": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 19
+     },
+     "certitude": "sure"
+    },
+    {
+     "ou": "sharp-point",
+     "ames": 150,
+     "date": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 19
+     },
+     "certitude": "rapportee",
+     "note": "Bar Emmon a répondu : il vient."
+    }
+   ],
+   "risque": [
+    {
+     "ou": "rosby",
+     "ames": 600,
+     "note": "La dépêche du mestre y arrive demain, le couronnement en dernière ligne."
+    },
+    {
+     "ou": "griffes",
+     "ames": 400,
+     "note": "Si Celtigar répond."
+    }
+   ]
+  },
+  {
+   "id": "incident-quarante",
+   "genre": "incident",
+   "camp": "neutre",
+   "feu": "vif",
+   "nom": "Les quarante vivants",
+   "ou": "peyredragon",
+   "ames": 1200,
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 19
+   },
+   "certitude": "sure",
+   "statut": "actif",
+   "contenu": "Douze cents hommes en armes marchaient sur Sombreval sans l'avoir déclaré, et quarante en sont vivants et nourris. Le bourg ne retient ni le feu ni la colonne : il retient les quarante, parce que c'est le seul chiffre qu'on puisse aller compter soi-même.",
+   "detail": "Crié sur le quai et aux séchoirs, aux deux marées. Trente-huit sont repartis vers leurs villages avec un serment.",
+   "propage": [],
+   "risque": [
+    {
+     "ou": "rosby",
+     "ames": 600,
+     "note": "Trente-huit hommes rentrent chez eux à pied, et ils ont une histoire."
+    },
+    {
+     "ou": "stokeworth",
+     "ames": 400,
+     "note": "Même route, même récit."
+    },
+    {
+     "ou": "port-real",
+     "ames": 2000,
+     "note": "C'est là qu'on les avait levés."
+    }
+   ]
+  },
+  {
+   "id": "incident-dragonniers",
+   "genre": "incident",
+   "camp": "neutre",
+   "feu": "vif",
+   "nom": "Les dragonniers",
+   "ou": "peyredragon",
+   "ames": 800,
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 20
+   },
+   "certitude": "sure",
+   "statut": "actif",
+   "contenu": "Un rang qui n'avait jamais existé dans les Sept Couronnes, donné à la valeur et non à la naissance : que ceux de l'île en qui coule le sang de Valyria, hommes et femmes, se présentent à la barbacane.",
+   "detail": "Crié sur l'île le 20e jour. Trois cents petites gens l'ont entendu de leurs oreilles.",
+   "propage": [],
+   "risque": [
+    {
+     "ou": "sharp-point",
+     "ames": 200,
+     "note": "Par les équipages, dès qu'une coque repart."
+    },
+    {
+     "ou": "sombreval",
+     "ames": 500,
+     "note": "Ils ont juré les premiers ; ils l'apprendront les premiers."
+    },
+    {
+     "ou": "port-real",
+     "ames": 1500,
+     "note": "Là-bas, ce ne sera pas une charte : ce sera une preuve."
+    }
+   ]
+  },
+  {
+   "id": "pli-rosby-gerardys",
+   "genre": "pli",
+   "camp": "noir",
+   "ou": "rosby",
+   "nom": "La dépêche du mestre à Rosby",
+   "etat": "parti",
+   "certitude": "sure",
+   "statut": "actif",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 20
+   },
+   "contenu": "Trois lignes : douze cents hommes en armes marchaient sur Sombreval sans la bannière du roi, la reine les a arrêtés, elle sera couronnée le dix-huitième jour — le couronnement en dernière ligne.",
+   "detail": "Partie au vol du soir du 20e jour, de la main de Gerardys, sans qu'on la lui demande. Elle arrive avant la lettre d'Aurore, qui est meilleure."
+  },
+  {
+   "id": "pli-lamarck",
+   "genre": "pli",
+   "camp": "noir",
+   "ou": "lamarck",
+   "nom": "La lettre d'Aurore",
+   "canal": "lettre",
+   "etat": "parti",
+   "certitude": "sure",
+   "statut": "actif",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 21
+   },
+   "contenu": "Rhaenyra Targaryen a été sacrée reine le dix-huitième jour de la troisième lune. Six jours plus tôt, douze cents hommes en armes marchaient sur Sombreval sans la bannière du roi. Elle les a arrêtés.",
+   "detail": "Partie au premier vol."
+  },
+  {
+   "id": "pli-sombreval",
+   "genre": "pli",
+   "camp": "noir",
+   "ou": "sombreval",
+   "nom": "La lettre d'Aurore",
+   "canal": "lettre",
+   "etat": "parti",
+   "certitude": "sure",
+   "statut": "actif",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 21
+   },
+   "contenu": "Rhaenyra Targaryen a été sacrée reine le dix-huitième jour de la troisième lune. Six jours plus tôt, douze cents hommes en armes marchaient sur Sombreval sans la bannière du roi. Elle les a arrêtés.",
+   "detail": "Partie au premier vol."
+  },
+  {
+   "id": "pli-pointe-aigue",
+   "genre": "pli",
+   "camp": "noir",
+   "ou": "sharp-point",
+   "nom": "La lettre d'Aurore",
+   "canal": "lettre",
+   "etat": "parti",
+   "certitude": "sure",
+   "statut": "actif",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 21
+   },
+   "contenu": "Rhaenyra Targaryen a été sacrée reine le dix-huitième jour de la troisième lune. Six jours plus tôt, douze cents hommes en armes marchaient sur Sombreval sans la bannière du roi. Elle les a arrêtés.",
+   "detail": "Partie au premier vol."
+  },
+  {
+   "id": "pli-rosby",
+   "genre": "pli",
+   "camp": "noir",
+   "ou": "rosby",
+   "nom": "La lettre d'Aurore",
+   "canal": "lettre",
+   "etat": "redige",
+   "certitude": "sure",
+   "statut": "actif",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 21
+   },
+   "contenu": "Rhaenyra Targaryen a été sacrée reine le dix-huitième jour de la troisième lune. Six jours plus tôt, douze cents hommes en armes marchaient sur Sombreval sans la bannière du roi. Elle les a arrêtés.\n\nCes douze cents hommes ont traversé vos terres sans vous demander, messire, et sans vous avertir. La reine a fait ce que vous n'aviez pas les hommes de faire.",
+   "detail": "Deux plis pour la même place, et pas le même : la dépêche de trois lignes du mestre, partie au vol du soir du 20 — et celle-ci, qui n'est pas partie."
+  },
+  {
+   "id": "pli-stokeworth",
+   "genre": "pli",
+   "camp": "noir",
+   "ou": "stokeworth",
+   "nom": "La lettre d'Aurore",
+   "canal": "lettre",
+   "etat": "redige",
+   "certitude": "sure",
+   "statut": "actif",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 21
+   },
+   "contenu": "Rhaenyra Targaryen a été sacrée reine le dix-huitième jour de la troisième lune. Six jours plus tôt, douze cents hommes en armes marchaient sur Sombreval sans la bannière du roi. Elle les a arrêtés.\n\nIls étaient nourris à vos dépens depuis Port-Réal. La reine ne vous demandera ni grain ni bêtes cette lune."
+  },
+  {
+   "id": "pli-accalmie",
+   "genre": "pli",
+   "camp": "noir",
+   "ou": "accalmie",
+   "nom": "La lettre d'Aurore",
+   "canal": "lettre",
+   "etat": "redige",
+   "certitude": "sure",
+   "statut": "actif",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 21
+   },
+   "contenu": "Rhaenyra Targaryen a été sacrée reine le dix-huitième jour de la troisième lune. Six jours plus tôt, douze cents hommes en armes marchaient sur Sombreval sans la bannière du roi. Elle les a arrêtés."
+  },
+  {
+   "id": "pli-repos-des-freux",
+   "genre": "pli",
+   "camp": "noir",
+   "ou": "repaire-aux-corneilles",
+   "nom": "La lettre d'Aurore",
+   "canal": "lettre",
+   "etat": "redige",
+   "certitude": "sure",
+   "statut": "actif",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 21
+   },
+   "contenu": "Rhaenyra Targaryen a été sacrée reine le dix-huitième jour de la troisième lune. Six jours plus tôt, douze cents hommes en armes marchaient sur Sombreval sans la bannière du roi. Elle les a arrêtés."
+  },
+  {
+   "id": "pli-orwyle",
+   "genre": "pli",
+   "camp": "vert",
+   "ou": "port-real",
+   "nom": "Ce qu'Orwyle a lu tout haut",
+   "canal": "oral",
+   "etat": "remis",
+   "ames": 19,
+   "certitude": "rumeur",
+   "statut": "actif",
+   "contenu": "Rhaenyra Targaryen a été sacrée reine le dix-huitième jour de la troisième lune. Six jours plus tôt, douze cents hommes en armes marchaient sur Sombreval sans la bannière du roi. Elle les a arrêtés.",
+   "detail": "Le grand mestre Orwyle, témoin oculaire du sacre. Lu devant dix-neuf membres de la cour — non envoyé, pas de copie nominative. Ce qui se déplace là n'est pas un feuillet : ce sont des gens, d'Aegon vers elle."
+  },
+  {
+   "id": "pli-jacaerys-winterfell",
+   "genre": "pli",
+   "camp": "noir",
+   "ou": "winterfell",
+   "nom": "La parole du prince Jacaerys",
+   "canal": "dragon",
+   "etat": "redige",
+   "ames": 2,
+   "certitude": "sure",
+   "statut": "actif",
+   "contenu": "Une promesse de la reine, portée de sa bouche et non sous un sceau.",
+   "detail": "Décidé, pas parti : le prince est encore sur l'île. Deux personnes l'entendront là-bas, et rien n'en sera écrit."
+  },
+  {
+   "id": "dessein-quatorze",
+   "genre": "dessein",
+   "quoi": "parler",
+   "camp": "noir",
+   "ou": "peyredragon",
+   "nom": "Dire la règle aux quatorze",
+   "certitude": "sure",
+   "statut": "actif",
+   "par": "le prince Jacaerys",
+   "echeance": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 22
+   },
+   "detail": "Il a écrit la règle sous ses cinq phrases, mot pour mot, en vous la faisant répéter deux fois sur la part qui touche les siens. Il la leur dit demain matin."
+  },
+  {
+   "id": "dessein-greves",
+   "genre": "dessein",
+   "quoi": "guetter",
+   "camp": "noir",
+   "ou": "peyredragon",
+   "nom": "La barque de la crique",
+   "certitude": "sure",
+   "statut": "actif",
+   "echeance": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 22
+   },
+   "detail": "Quatre nuits qu'elle va à terre après le changement de garde. Vous avez refusé de la saisir pour ne pas perdre celui qui vient la voir — et personne n'a la charge des grèves."
+  },
+  {
+   "id": "dessein-borros",
+   "genre": "dessein",
+   "quoi": "guetter",
+   "camp": "noir",
+   "ou": "accalmie",
+   "nom": "Savoir ce que Borros demande",
+   "certitude": "sure",
+   "statut": "actif",
+   "echeance": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 24
+   },
+   "detail": "On a relu votre acte tout haut dans sa salle, Otto présent, et il s'est arrêté sur « une ville qui a prêté serment ». Votre corbeau se posera après lui. Ce qui vous manque n'est pas ses lances : c'est sa demande."
+  },
+  {
+   "id": "dessein-nord",
+   "genre": "dessein",
+   "quoi": "parler",
+   "camp": "noir",
+   "ou": "winterfell",
+   "nom": "Porter la parole au Nord",
+   "certitude": "sure",
+   "statut": "actif",
+   "par": "le prince Jacaerys",
+   "echeance": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30
+   },
+   "detail": "Quarante jours de route, treize de corbeau. Pour avoir ces hommes avant la cinquième lune, quelqu'un de votre sang doit partir avant la fin de celle-ci."
+  },
+  {
+   "id": "dessein-val",
+   "genre": "dessein",
+   "quoi": "parler",
+   "camp": "noir",
+   "ou": "les-eyrie",
+   "nom": "Demander sa parole à Jeyne Arryn",
+   "certitude": "sure",
+   "statut": "actif",
+   "detail": "Elle n'écrira jamais la première. Spoliée trois fois par ses oncles, elle attend qu'on vienne la lui demander dans les formes, scellée. Personne n'est désigné pour y aller."
+  },
+  {
+   "id": "dessein-trente-huit",
+   "genre": "dessein",
+   "quoi": "parler",
+   "camp": "noir",
+   "ou": "rosby",
+   "nom": "Dire aux trente-huit ce qu'ils racontent",
+   "certitude": "sure",
+   "statut": "actif",
+   "echeance": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 23
+   },
+   "detail": "Ils rentrent à pied dans les villages du gué. C'est le seul récit qui coure dans l'autre sens que le feu, et personne ne leur a dit quoi en faire."
+  },
+  {
+   "id": "pli-prive-jeyne",
+   "genre": "pli",
+   "camp": "noir",
+   "ou": "les-eyrie",
+   "nom": "La lettre privee a Jeyne Arryn",
+   "etat": "parti",
+   "certitude": "sure",
+   "statut": "actif",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 23
+   },
+   "contenu": "De sa main, cachet prive. Rien sur le Val, rien sur la guerre : elle lui retire le Votre Grace et lui demande de repondre si elle a froid.",
+   "detail": "Sept jours de vol. Rien n en reviendra avant la 4e lune, et un silence sera lisible ici."
+  },
+  {
+   "id": "pli-prive-alicent",
+   "genre": "pli",
+   "camp": "noir",
+   "ou": "port-real",
+   "nom": "La lettre privee a Alicent",
+   "etat": "parti",
+   "certitude": "sure",
+   "statut": "actif",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 23
+   },
+   "contenu": "De sa main, cachet prive. Elle avoue le feu du 16, ne demande rien, n offre rien - et sait qu Otto la lira.",
+   "detail": "Deux jours de vol. Elle arrive dans la maison qui fait proclamer sa decheance."
+  },
+  {
+   "id": "oreille-meliss",
+   "genre": "oreille",
+   "camp": "noir",
+   "ou": "peyredragon",
+   "nom": "Meliss, a la Claie",
+   "certitude": "sure",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 22
+   },
+   "donne": "ce qui mouille, ce qui decharge, ce qui ne descend pas - vu de sa porte",
+   "prix": "du sel au prix du marais, la liste des quinze jours le matin ou on la cloue, la paix avec la garnison - et une visite par lune SANS RAISON",
+   "detail": "La ligne, c'est elle qui l'a tracee : ce qui se DIT chez elle est a ses clients et ne sera jamais demande. Elle ne note rien, n'envoie personne, ne change rien a sa salle. Premier rapport donne sans qu'on le demande : dix-neuf dans la salle, quatre inconnus, deux arrives la veille qui payent en pieces neuves.",
+   "statut": "actif"
+  },
+  {
+   "id": "oreille-sabbe",
+   "genre": "oreille",
+   "camp": "noir",
+   "ou": "port-real",
+   "nom": "Sabbe, a Port-Real",
+   "certitude": "rapportee",
+   "etat": "nouee",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 22
+   },
+   "donne": "ce qu'il aura garde dans sa tete — il ne sait pas lire, rien ne s'ecrit",
+   "prix": "rien encore - on lui a dit DEVANT TOUS pourquoi c'etait lui, et c'est le paiement",
+   "detail": "Parti a la maree du 23 avec sa corde, attendu la-bas vers le 26. Elle sait ou elle l'a envoye ; elle ne sait pas s'il y est.",
+   "statut": "actif"
+  },
+  {
+   "id": "oreille-ren",
+   "genre": "oreille",
+   "camp": "noir",
+   "ou": "port-real",
+   "nom": "Ren, a Port-Real",
+   "certitude": "rapportee",
+   "etat": "nouee",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 22
+   },
+   "donne": "six signes comptes sur six doigts — quatorze ans, et il ne sait pas lire non plus",
+   "prix": "sa mere prevenue par lui, pas par la reine",
+   "detail": "Parti a la maree du matin du 23 avec le poisson, comme tous les mois. C'est le trajet ordinaire qui le protege.",
+   "statut": "actif"
+  }
+ ],
+ "traits": [
+  {
+   "id": "ultimatum-otto",
+   "genre": "menace",
+   "camp": "vert",
+   "nom": "L'ultimatum d'Otto",
+   "de": "port-real",
+   "vers": "peyredragon",
+   "detail": "Reconnaître Aegon et venir jurer en personne dans la quinzaine — au prix de l'attainder et de la confiscation de Peyredragon.",
+   "certitude": "sure",
+   "statut": "actif"
+  },
+  {
+   "id": "marche-colonne-rosby",
+   "genre": "marche",
+   "camp": "vert",
+   "nom": "La colonne sortie de Port-Réal",
+   "de": "port-real",
+   "vers": "rosby",
+   "avancement": 0.9,
+   "detail": "Sortie du Donjon Rouge, à hauteur de Rosby au dernier passage de Meleys.",
+   "certitude": "rapportee",
+   "statut": "actif"
+  },
+  {
+   "id": "cogues-du-bief",
+   "genre": "mer",
+   "camp": "vert",
+   "nom": "Six cogues du Bief",
+   "point_de": [
+    303.0,
+    419.0
+   ],
+   "vers": "port-real",
+   "avancement": 0.45,
+   "detail": "Chargées pour Port-Réal, à deux jours des galères de Corlys. Personne ne sait encore qu'il y a un blocus.",
+   "certitude": "rapportee",
+   "statut": "actif"
+  },
+  {
+   "id": "serment-sombreval",
+   "genre": "serment",
+   "camp": "noir",
+   "nom": "Sombreval s'est déclarée",
+   "de": "sombreval",
+   "vers": "peyredragon",
+   "detail": "Gunthor Darklyn a hissé vos couleurs de son propre chef, sans attendre le couronnement.",
+   "certitude": "sure",
+   "statut": "actif"
+  },
+  {
+   "id": "serment-bar-emmon",
+   "genre": "serment",
+   "camp": "noir",
+   "nom": "L'offre de Bar Emmon",
+   "de": "sharp-point",
+   "vers": "peyredragon",
+   "detail": "Sa personne, ses trois nefs et son serment — et la faveur demandée d'être le premier à jurer.",
+   "certitude": "sure",
+   "statut": "actif"
+  },
+  {
+   "id": "corbeau-celtigar",
+   "genre": "corbeau",
+   "camp": "noir",
+   "nom": "Convocation à Celtigar",
+   "de": "peyredragon",
+   "vers": "griffes",
+   "detail": "Parti le 14 à l'aube : venir au couronnement et y prêter serment.",
+   "certitude": "sure",
+   "statut": "actif",
+   "etat": "attente",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 19
+   }
+  },
+  {
+   "id": "corbeau-bar-emmon",
+   "genre": "corbeau",
+   "camp": "noir",
+   "nom": "Convocation à Bar Emmon",
+   "de": "peyredragon",
+   "vers": "sharp-point",
+   "detail": "Parti le 14 à l'aube : venir au couronnement et y prêter serment.",
+   "certitude": "sure",
+   "statut": "actif",
+   "etat": "confirme",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 17
+   }
+  },
+  {
+   "id": "corbeau-massey",
+   "genre": "corbeau",
+   "camp": "noir",
+   "nom": "Convocation à Massey",
+   "de": "peyredragon",
+   "vers": "pointe-massey",
+   "detail": "Parti le 14 à l'aube : venir au couronnement et y prêter serment.",
+   "certitude": "sure",
+   "statut": "actif",
+   "etat": "attente",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 17
+   }
+  },
+  {
+   "id": "corbeau-darklyn",
+   "genre": "corbeau",
+   "camp": "noir",
+   "nom": "Convocation à Sombreval",
+   "de": "peyredragon",
+   "vers": "sombreval",
+   "detail": "Parti le 14 à l'aube : venir au couronnement et y prêter serment.",
+   "certitude": "sure",
+   "statut": "actif",
+   "etat": "confirme",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 17
+   }
+  },
+  {
+   "id": "corbeau-staunton",
+   "genre": "corbeau",
+   "camp": "noir",
+   "nom": "Convocation à Staunton",
+   "de": "peyredragon",
+   "vers": "repaire-aux-corneilles",
+   "detail": "Parti le 14 à l'aube : venir au couronnement et y prêter serment.",
+   "certitude": "sure",
+   "statut": "actif",
+   "etat": "muet",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 17
+   }
+  },
+  {
+   "id": "lettre-aurore-lamarck",
+   "genre": "corbeau",
+   "camp": "noir",
+   "de": "peyredragon",
+   "vers": "lamarck",
+   "nom": "La lettre d'Aurore",
+   "etat": "parti",
+   "certitude": "sure",
+   "statut": "actif",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 21
+   },
+   "sens": "gauche",
+   "pli_id": "pli-lamarck"
+  },
+  {
+   "id": "lettre-aurore-sombreval",
+   "genre": "corbeau",
+   "camp": "noir",
+   "de": "peyredragon",
+   "vers": "sombreval",
+   "nom": "La lettre d'Aurore",
+   "etat": "parti",
+   "certitude": "sure",
+   "statut": "actif",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 21
+   },
+   "sens": "gauche",
+   "pli_id": "pli-sombreval"
+  },
+  {
+   "id": "lettre-aurore-pointe-aigue",
+   "genre": "corbeau",
+   "camp": "noir",
+   "de": "peyredragon",
+   "vers": "sharp-point",
+   "nom": "La lettre d'Aurore",
+   "etat": "parti",
+   "certitude": "sure",
+   "statut": "actif",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 21
+   },
+   "sens": "gauche",
+   "pli_id": "pli-pointe-aigue"
+  },
+  {
+   "id": "vol-jacaerys-nord",
+   "genre": "vol",
+   "camp": "noir",
+   "de": "peyredragon",
+   "vers": "winterfell",
+   "nom": "Le prince Jacaerys porte la parole de la reine",
+   "certitude": "sure",
+   "statut": "actif",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 21
+   },
+   "pli_id": "pli-jacaerys-winterfell",
+   "plan": true
+  },
+  {
+   "id": "corbeau-prive-jeyne",
+   "genre": "corbeau",
+   "camp": "noir",
+   "nom": "Lettre privee aux Eyries",
+   "de": "peyredragon",
+   "vers": "les-eyrie",
+   "certitude": "sure",
+   "statut": "actif",
+   "etat": "attente",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 23
+   },
+   "detail": "Parti au matin du 23. Attendu le 30."
+  },
+  {
+   "id": "corbeau-prive-alicent",
+   "genre": "corbeau",
+   "camp": "noir",
+   "nom": "Lettre privee a Port-Real",
+   "de": "peyredragon",
+   "vers": "port-real",
+   "certitude": "sure",
+   "statut": "actif",
+   "etat": "attente",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 23
+   },
+   "detail": "Parti au matin du 23. Attendu le 25."
+  }
+ ],
+ "zones": []
+}

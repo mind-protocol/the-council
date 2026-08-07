@@ -1,0 +1,127 @@
+{
+ "archivee_le": "20260807-131351",
+ "par": "MJ moteur (session hors navigateur)",
+ "motif": "Siege OCCUPE avec une entree dans intentions.json — faute GRAVE signalee par tick.py --verifier. La tete d'un siege occupe appartient au joueur : la laisser revient a jouer Aurore a la place de sa joueuse. Elle etait de plus PERIMEE — son etape voix-proclamation-route-de-sombreval portait encore 1 jour restant alors que les sept lettres ont ete signees le 21 et sont arrivees a cinq places le 22 : le moteur allait rejouer ce que la joueuse avait deja fait en scene.",
+ "a_reprendre_si": "Aurore quitte son siege. Passer alors par scripts/sieges.py, et RELIRE ce plan avant de le remettre : les etapes 1 et 2 sont accomplies, la 5 (releve des encres) est la seule encore vivante telle quelle.",
+ "monde_a_l_archivage": {
+  "annee": 129,
+  "lune": 3,
+  "jour": 23,
+  "minute": 716
+ },
+ "tete": {
+  "personnage_id": "aurore-inchauspe",
+  "echelle": "scene",
+  "croyances": [
+   "La version de Sombreval a quatre jours d'avance sur celle de la reine, et a Vivesaigues elle compte deja trois mille morts au lieu de douze cents",
+   "On ne dement pas un chiffre, on le remplace : il faut une phrase plus courte a retenir que celle de lord Darklyn",
+   "Cette table la prendra pour une marchande tant qu'elle n'aura pas donne un chiffre avant une image",
+   "Le livre des encres dit ou l'on ecrit beaucoup avant que quiconque sache pourquoi : Repos-des-Freux a triple sa ration en deux lunes, et personne a ce conseil ne le sait",
+   "Son pere continue de livrer les roukeries de Port-Real, et elle n'a aucun moyen de le lui faire cesser sans ruiner La Noiseraie"
+  ],
+  "ignore": [
+   "Que le prince Daemon entretient deja sa propre bouche a Port-Real, et qu'elle marchera un jour sur ses plates-bandes",
+   "Que le corbeau d'Accalmie n'est jamais parti, et que lord Borros lira donc sa proclamation avant d'avoir recu l'offre de la reine",
+   "Ce que la reine a reellement vu sur la route de Sombreval : personne ne le lui a raconte, et la reine n'a rien voulu dicter a quiconque"
+  ],
+  "intention": "Faire exister une charge que cette table trouve vulgaire, en la payant d'avance d'un service qu'aucun d'eux ne peut rendre : rattraper les quatre jours d'avance de la lettre de Sombreval avant que le chiffre de trois mille ne devienne le vrai.",
+  "plan": [
+   {
+    "id": "voix-faire-accepter-la-charge",
+    "quoi": "Obtenir de la reine, devant le conseil et tout haut, que la charge existe : un nom, un budget et le droit de donner des ordres a des porteurs. Demande chiffree : 3 000 dragons pour la premiere lune sur les 40 000 de la cassette, quatre corbeaux sur les quatorze qui restent, aucun homme d'armes, aucune coque de plus.",
+    "etat": "en-cours",
+    "jours_restants": 0,
+    "depend_de": [],
+    "cout": [
+     "un quart d'heure pris sur l'ordre du jour du conseil",
+     "3 000 dragons sur 40 000",
+     "quatre corbeaux sur quatorze",
+     "l'accord de la reine dit tout haut, et non ecrit apres coup"
+    ],
+    "si_bloque": "Si on lui refuse le titre, elle prend l'ouvrage sans le titre et le paie sur l'or de sa propre maison — niable, sans autorite sur personne, et elle sait en l'acceptant qu'on le lui rappellera comme une dette."
+   },
+   {
+    "id": "voix-proclamation-route-de-sombreval",
+    "quoi": "Faire partir la proclamation sur le feu de la route de Sombreval : quatre corbeaux particuliers ecrits un par un (Sombreval, Pointe-Aigue, l'Ile-aux-Pinces, Repos-des-Freux), un cinquieme a Port-Real pour preempter, un acte scelle porte a Rosby par un cavalier nomme, et le heraut au bourg le soir meme.",
+    "etat": "en-cours",
+    "jours_restants": 1,
+    "depend_de": [
+     "voix-faire-accepter-la-charge"
+    ],
+    "cout": [
+     "quatre corbeaux",
+     "un cavalier nomme, cinq jours de route pour Rosby",
+     "la cire et le sceau de la reine",
+     "une phrase que la reine accepte de signer de son nom"
+    ],
+    "si_bloque": "Si la reine ne signe rien, elle fait crier au bourg le seul chiffre verifiable — douze cents hommes, quarante prisonniers vivants — sans nommer la reine. Un chiffre nu vaut mieux qu'un silence, et un chiffre nu ne se retracte pas."
+   },
+   {
+    "id": "voix-six-chanteurs",
+    "quoi": "Placer six chanteurs sur les coques louees en rade : deux vers le Conflans par Sombreval, deux vers le Bec de Massey, deux vers les Terres de l'Orage, avec une complainte de neuf couplets ou le chiffre de douze cents tombe sur la rime.",
+    "etat": "en-cours",
+    "jours_restants": 4,
+    "depend_de": [
+     "voix-faire-accepter-la-charge"
+    ],
+    "cout": [
+     "600 dragons pour la lune",
+     "six places dans les onze coques louees, a demander a Rulf Corne",
+     "quatre lunes avant qu'une seule chanson revienne"
+    ],
+    "si_bloque": "Si on ne lui donne pas les places, elle en envoie deux a pied vers le Conflans et garde les quatre pour la baie : portee de moitie, delai double, et elle le dit au lieu de le cacher."
+   },
+   {
+    "id": "voix-la-chaire",
+    "quoi": "Obtenir par septa Marlow que la phrase de l'acte soit reprise en chaire a Peyredragon, a Pointe-Aigue et a Sweetport Sound — en sachant qu'aucun septon ne la lira sans y ajouter la sienne.",
+    "etat": "en-cours",
+    "jours_restants": 6,
+    "depend_de": [
+     "voix-proclamation-route-de-sombreval"
+    ],
+    "cout": [
+     "l'accord de septa Marlow, qui ne s'achete pas",
+     "300 dragons d'aumone et de cire",
+     "la phrase que chaque septon ajoutera et qu'elle ne pourra pas retirer"
+    ],
+    "si_bloque": "Si la Foi de la baie se tait, elle achete les crieurs de trois places de marche : plus court, moins profond, et a recommencer chaque lune."
+   },
+   {
+    "id": "voix-releve-des-encres",
+    "quoi": "Faire venir de La Noiseraie le releve des livraisons d'encre des deux dernieres lunes, roukerie par roukerie, et le lire comme une carte : trois fois la ration ordinaire quelque part veut dire qu'on y ecrit trois fois plus, donc qu'on y prepare quelque chose. Ne dit jamais quoi — seulement ou, et depuis quand.",
+    "etat": "en-cours",
+    "jours_restants": 8,
+    "depend_de": [],
+    "cout": [
+     "un pli a son pere, qui repondra ou ne repondra pas — deux jours d'aller, deux de retour par barque",
+     "le livre de comptes de sa maison, qui n'a jamais quitte La Noiseraie",
+     "que son frere accepte de copier trente-neuf lignes sans demander pourquoi"
+    ],
+    "si_bloque": "Si son pere refuse le livre — et il refusera si on lui laisse entendre que la reine le lira —, elle se rabat sur ce qu'elle sait de tete des quatre dernieres livraisons qu'elle a signees elle-meme : quatre roukeries au lieu de trente-neuf, et sans les dates, ce qui ote au releve tout ce qui en faisait un avertissement."
+   }
+  ],
+  "declencheurs": [
+   {
+    "si": "Un seigneur ou un envoye cite tout haut, contre la reine, une clause d'un acte qu'elle a fait sceller",
+    "alors": "Elle ne dement pas : elle fait relire l'acte en entier par un heraut au meme endroit, en comptant sur ce qu'une lecture complete est plus ennuyeuse qu'une citation.",
+    "une_fois": false
+   },
+   {
+    "si": "Quelqu'un exige tout haut qu'elle cesse de livrer l'encre a Port-Real",
+    "alors": "Elle repond par le chiffre — ce que cela coute a sa maison et en combien de jours la Couronne saurait d'ou vient la coupure — puis propose l'inverse : continuer de livrer, et rapporter ce que les commandes disent. Elle ne demande pas la permission de continuer.",
+    "une_fois": false
+   },
+   {
+    "si": "Un envoye de la reine part porter une offre a un seigneur (Jacaerys, Lucerys, un heraut)",
+    "alors": "Elle exige de lui donner par ecrit, en trois phrases, ce qu'il devra dire du feu de la route s'il en est presse — et refuse de le laisser partir sans.",
+    "une_fois": false
+   }
+  ],
+  "attitude_joueur": "Elle a ete elevee chez cinq maisons qui vont devoir choisir et n'a jamais rien eu a elle : elle sert la reine comme on tient un contrat, avec exactitude et sans devotion, et elle attend le jour ou l'on decouvrira que son pere livre toujours l'autre camp.",
+  "date_maj": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 21
+  }
+ }
+}

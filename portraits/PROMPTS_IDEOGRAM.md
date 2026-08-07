@@ -1,6 +1,11 @@
 # Prompts Ideogram — Portraits « Le Conseil » (129 AC)
 
-Générer en **1:1**, style **Realistic**. Pour chaque personnage : coller le **STYLE BLOCK** ci-dessous, suivi du prompt du personnage. Enregistrer le résultat sous `portraits/<id>.png`.
+> Fichier ENGENDRÉ depuis `etat/personnages.json` (champ `portrait.prompt_ideogram`).
+> Ne pas éditer ici : corriger la fiche, puis relancer la génération.
+
+Générer en **1:1**, style **Realistic**. Coller le STYLE BLOCK, puis le prompt du personnage.
+Enregistrer sous `portraits/<id>.png` — **l'id exact, sans suffixe de maison**.
+Puis `python scripts/medaillons.py --vraiment` pour le brancher à l'écran.
 
 ## STYLE BLOCK (à préfixer à chaque prompt)
 
@@ -10,157 +15,163 @@ Painted character portrait, classical oil painting on aged canvas, dark fantasy 
 
 ---
 
-## aegon-ii — Aegon II Targaryen
+# À GÉNÉRER — 18 portraits manquants
+
+## gerardys — Mestre Gerardys
+
+*53 ans, maigre, dos voûté par les escaliers de la roukerie, chaîne à sept métaux, doigts tachés d'encre et de fiente de corbeau.*
 
 ```
-A 22-year-old king with shoulder-length silver-gold hair and violet eyes, handsome but soft and slightly dissolute features, petulant sullen expression, wearing a black and gold doublet with dark green accents and a Valyrian steel crown set with square-cut rubies, a golden dragon clasp at his shoulder.
+dark fantasy oil painting portrait, muted colors, candlelight, thin stooped maester in his fifties, close-cropped grey hair, anxious intelligent eyes, grey wool robes, heavy maester chain of many metals, ink-stained fingers holding a sealed parchment
 ```
 
-## alicent-hightower — Alicent Hightower
+## steffon-darklyn — Ser Steffon Darklyn
+
+*33 ans, cheveux bruns coupés court, visage creusé par dix jours de mer, manteau blanc taché de sel et de goudron.*
 
 ```
-An elegant 41-year-old queen dowager with long auburn hair pinned up, hazel eyes, a beautiful but careworn and watchful face, wearing a rich dark green gown with silver embroidery, a seven-pointed star pendant at her throat, hands composed, poised and tense.
+dark fantasy oil painting portrait, muted colors, grey sea light, knight of the kingsguard in his thirties, short dark hair, gaunt exhausted face, white cloak stained with salt and tar, white enameled armor, holding a small oaken casket
 ```
 
-## otto-hightower — Otto Hightower
+## robert-quince — Ser Robert Quince
+
+*45 ans, énorme, rouge de visage, cuir bouilli et maille qui bâille aux flancs, trousseau de clés à la ceinture.*
 
 ```
-A stern statesman in his sixties with thinning grey hair and a short grey beard, sharp calculating eyes, gaunt austere face, wearing sober grey-green robes with a white stone tower embroidered at the breast and the heavy linked chain of office of the Hand of the King across his shoulders.
+dark fantasy oil painting portrait, muted colors, torchlight, enormously fat knight in his forties, red sweating face, short beard, boiled leather and straining mail, iron keyring at his belt, phlegmatic steady expression
 ```
 
-## criston-cole — Criston Cole
+## prisonnier-wat — Wat du hameau au gue
+
+*Vingt-trois ans, sec, brule au bras gauche, suie dans les plis du cou ; regarde les gens en face.*
 
 ```
-A knight in his late forties with black hair greying at the temples, dark eyes, a strong handsome weathered face with a hard bitter set to the jaw, wearing white enameled plate armor and the long white cloak of the Kingsguard Lord Commander, the haft of a spiked morningstar visible at his shoulder.
+dark fantasy oil painting portrait, muted colors, torchlight, lean young peasant levy in soot-stained homespun, burned left forearm, direct unflinching gaze, no armour
 ```
 
-## aemond-targaryen — Aemond Targaryen
+## aldon-hask — Aldon Hask
+
+*Quarante et un ans, maigre, doigts taches d'encre et gerces de sel, tablette de comptage usee jusqu'au bois clair.*
 
 ```
-A tall lean 19-year-old prince with long straight silver hair, one piercing violet eye, a black leather eyepatch covering his left eye with a glint of star sapphire beneath, sharp angular ambitious face, wearing black leather and a dark green doublet with silver thread, a longsword pommel visible.
+dark fantasy oil painting portrait, muted colors, grey harbour light, lean middle-aged clerk in worn wool, ink-stained chapped hands, worn wooden tally board, quiet unresentful stare
 ```
 
-## larys-strong — Larys Strong
+## roderick-brune — Ser Roderick Brune
+
+*Trente-quatre ans, taille moyenne, cotte reprisee de trois mains differentes, nez casse deux fois.*
 
 ```
-A soft-featured lord in his mid-thirties with thin brown hair, heavy-lidded knowing eyes and a faint enigmatic smile, wearing rich but understated dark robes with subtle embroidery, both hands resting on the ornate silver head of a walking cane, an air of quiet secrets.
+dark fantasy oil painting portrait, muted colors, grey coastal light, weathered lesser knight in much-mended gambeson, twice-broken nose, direct practical gaze, no finery
 ```
 
-## rhaenyra-targaryen — Rhaenyra Targaryen
+## gormon-sunglass — Lord Gormon Sunglass
+
+*Quarante-neuf ans, sec, cheveux gris coupes court, etoile a sept branches en verre file au col.*
 
 ```
-A 32-year-old queen with long silver-gold hair worn loose, deep violet eyes, a proud once-radiant beauty grown fuller and heavier after six pregnancies, imperious guarded expression, wearing a black velvet gown with blood-red accents, Valyrian jewelry, a red three-headed dragon brooch.
+dark fantasy oil painting portrait, muted colors, chapel candlelight, austere grey-haired lord, spun-glass seven-pointed star at the collar, grave scrupulous expression
 ```
 
-## daemon-targaryen — Daemon Targaryen
+## manfryd-rambton — Ser Manfryd Rambton
+
+*Cinquante et un ans, epaules tombantes, surcot propre et demode, tient toujours un rouleau sous le bras.*
 
 ```
-A dangerous 48-year-old prince with short silver-gold hair, pale lilac eyes, a lean weathered face with a wry mocking half-smile, wearing dark steel and black leather armor with a crimson half-cape, the dragonbone and Valyrian steel hilt of a slender longsword rising over his shoulder.
+dark fantasy oil painting portrait, muted colors, dim hall light, stooped ageing landed knight in clean outdated surcoat, rolled parchment under one arm, patient stubborn face
 ```
 
-## corlys-velaryon — Corlys Velaryon
+## denys-bar-emmon — Denys Bar Emmon
+
+*Dix-neuf ans, sec, brule par le sel jusque sous les yeux ; mains de matelot et habits de fils de seigneur qui ne vont pas ensemble.*
 
 ```
-A 76-year-old sea lord with deep brown skin and long silver-white locs bound with silver rings, weathered face carved by decades of salt wind, proud unbroken gaze, wearing teal and dark blue seafarer's finery with a silver seahorse brooch, driftwood-and-silver chain across his chest.
+dark fantasy oil painting portrait, muted colors, overcast sea light, lean salt-burned youth of nineteen, sailor hands, ill-fitting fine clothes, awkward downcast eyes
 ```
 
-## rhaenys-targaryen — Rhaenys Targaryen
+## willa-sechoirs — Willa des Sechoirs
+
+*La cinquantaine, large, avant-bras nus jusqu au coude et luisants de sel, tablier qu elle n a pas eu le temps d essuyer.*
 
 ```
-A regal 74-year-old noblewoman, black hair of her Baratheon mother now streaked heavily with silver-white, sharp commanding eyes, a strong handsome face marked by pride and old grief, wearing a gown of deep sea-blue and Targaryen red, a pale red dragon pendant, the bearing of a queen who was denied a throne.
+dark fantasy oil painting portrait, muted colors, grey harbour light, broad weathered fisherwoman in her fifties, bare salt-sheened forearms, work apron, level unimpressed gaze
 ```
 
-## jacaerys-velaryon — Jacaerys Velaryon
+## rulf-corne — Rulf Corne
+
+*Soixante ans passes, une jambe qui traine, chapeau de cuir tenu a deux mains, gros livre recousu deux fois sous le bras.*
 
 ```
-An earnest 15-year-old prince with curly brown hair and brown eyes, a snub nose and open honest face carrying an early weight of duty, wearing a black doublet with red trim and a silver seahorse pendant, the young heir to the throne, serious beyond his years.
+dark fantasy oil painting portrait, muted colors, wet harbour light, old lame harbourmaster, leather hat held at his belly, thick water-swollen ledger under one arm, patient unbribable eyes
 ```
 
-## mysaria — Mysaria
+## septa-marlow — Septa Marlow
+
+*Quarante-quatre ans, seche, robe grise usee aux coudes, mains rouges ; l'etoile a sept branches en bois au cou, pas en argent.*
 
 ```
-A strikingly pale woman in her forties from the Free Cities, skin white as milk, long straight black hair, dark shrewd almond eyes and a small knowing smile, wearing layered silks in white and dark plum with a silver worm-like torque, elegance concealing a spymistress's menace.
+dark fantasy oil painting portrait, muted colors, nursery candlelight, lean septa in her forties, worn grey robes, red working hands, plain wooden seven-pointed star, blunt steady gaze
 ```
 
-## helaena-targaryen — Helaena Targaryen
+## elyn-sarnes — Elyn Sarnes
+
+*Trente-trois ans, brune, mise soignee et volontairement quelconque ; se tient toujours a un pas et demi, jamais dans le champ.*
 
 ```
-A gentle 20-year-old queen with long silver-gold hair loosely braided, soft violet eyes with a distant dreaming gaze, a sweet round pleasant face, wearing a pale green gown with delicate embroidery and a slender golden circlet, an air of quiet otherworldly serenity.
+dark fantasy oil painting portrait, muted colors, dim chamber light, dark-haired woman of thirty-three, deliberately plain fine clothes, watchful discreet expression, standing slightly aside
 ```
 
-## lucerys-velaryon — Lucerys Velaryon
+## nourrice-tya — Tya
+
+*Vingt-sept ans, large, du bourg sous les murs ; tablier propre, cheveux sous un linge, jamais assise.*
 
 ```
-A slight 14-year-old boy with wavy brown hair and warm brown eyes, a boyish gentle face with a hint of worry, wearing a sea-green and black doublet with a small silver seahorse clasp, a young prince promised to Driftmark, more thoughtful than bold.
+dark fantasy oil painting portrait, muted colors, warm hearth light, sturdy young wet-nurse of twenty-seven, clean apron, hair bound in cloth, calm incurious face
 ```
 
-## baela-targaryen — Baela Targaryen
+## sarro-vaeth — Sarro Vaeth
+
+*La cinquantaine, crane rase, avant-bras couverts de cicatrices luisantes qui ne sont pas des brulures de forge ; sent le soufre a trente pas.*
 
 ```
-A fierce 13-year-old girl with brown skin and short wild silver curls, bright violet eyes full of daring, a sharp fearless grin, wearing a black riding doublet with dark red accents and a small dragon-shaped silver pin, a dragonrider's restless spirit.
+dark fantasy oil painting portrait, muted colors, sulphurous cave light, shaven-headed dragonkeeper in his fifties, forearms covered in glossy scars, low unhurried stare
 ```
 
-## rhaena-targaryen — Rhaena Targaryen
+## dorsa-sath — Dorsa Sath
+
+*Trente-huit ans, petites coupures noires cicatrisees sur les mains et les avant-bras, un eclat d'obsidienne monte en pendentif au cou.*
 
 ```
-A graceful 13-year-old girl with brown skin and long silver hair in fine braids, gentle violet eyes, a delicate composed face, wearing a burgundy and black court gown with silver thread and a dragon-egg pendant, gentler and more courtly than her twin.
+dark fantasy oil painting portrait, muted colors, lamplit stone, woman of thirty-eight, hands and forearms scored with fine healed black cuts, obsidian shard pendant, exacting mistrustful gaze
 ```
 
-## grand-mestre-orwyle — Grand Mestre Orwyle
+## doss-marran — Doss Marran
+
+*La cinquantaine, mains blanches jusqu aux poignets et fendillees comme de la vieille peinture, tenues ecartees du corps par habitude.*
 
 ```
-A soft-spoken elderly maester in his sixties with a bald crown, wispy white beard and mild diplomatic grey eyes, wearing voluminous grey scholar's robes, the heavy chain of many metals of a Grand Maester coiled around his neck, ink-stained fingers, a conciliatory careful expression.
+dark fantasy oil painting portrait, muted colors, flat marsh light, salt-worker in his fifties, hands white and cracked to the wrist held away from his body, blunt honest face
 ```
 
-## lord-rosby — Lord Rosby
+## hobb-treize-pas — Hobb du hameau au gue
+
+*Vingt ans a peine, maigre, epaule ecorchee contre le mur du cellier ; regarde les gens comme on regarde arriver le temps.*
 
 ```
-A thin nervous middle-aged lord with sparse greying hair and a sickly pallor, anxious darting eyes, wearing a cream-colored doublet trimmed with ermine and three red chevrons embroidered at the breast, fingers worrying at a signet ring, a cautious man caught between two dragons.
-```
-
-## lord-stokeworth — Lord Stokeworth
-
-```
-A portly middle-aged lord with a ruddy face, thick greying brown beard and worried eyes, wearing a green wool doublet with a white lamb holding a golden goblet embroidered at the breast, gold rings on plump fingers, prosperous, cautious and eager to please.
-```
-
-## lord-darklyn — Lord Darklyn
-
-```
-A proud dark-haired lord in his forties from an ancient port town, trimmed black beard, steady defiant grey eyes, wearing black and gold brocade with crossed white swords on a sable field at the breast, a heavy gold chain, the old arrogance of a house that once hosted kings.
-```
-
-## lord-staunton — Lord Staunton
-
-```
-A stern square-jawed lord in his fifties with iron-grey hair cropped short and a hard suspicious stare, wearing practical dark grey and black checkered wool over mail, a black-and-grey enamel brooch, a border lord's wariness, more soldier than courtier.
-```
-
-## lord-celtigar — Lord Celtigar
-
-```
-An aged gaunt lord with pale skin and thin white hair betraying old Valyrian blood, shrewd pale eyes and a miser's pinched mouth, wearing a white and deep red robe with small red crabs embroidered along the collar, a ruby-set ring, the sharp-tongued master of Claw Isle.
-```
-
-## lord-bar-emmon — Lord Bar Emmon
-
-```
-A weathered middle-aged sea lord with wind-tanned skin, salt-and-pepper hair and beard, frank open blue eyes, wearing a deep blue doublet with a leaping silver swordfish embroidered at the breast and a grey sealskin half-cloak, a plain-spoken lord of a small salt-sprayed keep.
+dark fantasy oil painting portrait, muted colors, cellar lamplight, gaunt youth of twenty, scraped shoulder, anxious open face
 ```
 
 ---
 
-## Maison du joueur — Prompt template
+# DÉJÀ PEINTS — 31
 
-Pour un personnage créé en cours de partie, préfixer le STYLE BLOCK puis remplir :
+`aegon-ii`, `alicent`, `otto`, `criston`, `aemond`, `larys`, `helaena`, `orwyle`, `rhaenyra`, `daemon`, `corlys`, `rhaenys`, `jacaerys`, `lucerys`, `mysaria`, `lord-rosby`, `lord-stokeworth`, `gunthor-darklyn`, `lord-staunton`, `bartimos-celtigar`, `lord-bar-emmon`, `daeron`, `baela`, `rhaena`, `aegon-le-jeune`, `viserys-le-jeune`, `cregan-stark`, `jeyne-arryn`, `borros-baratheon`, `jason-lannister`, `ormund-hightower`
 
-```
-A {age}-year-old {sexe} of a noble house of Westeros, {traits}, wearing court attire in the colors of their house with the house sigil embroidered at the breast, bearing befitting their station.
-```
+---
 
-Variables :
-- `{age}` : âge en 129 AC (ex. `25`)
-- `{sexe}` : `man` / `woman` / `youth` / `girl`
-- `{traits}` : physique + expression + un attribut signature, en anglais (ex. `long black hair, grey eyes, a scar across the left brow, a bronze falcon clasp`)
+# SANS DESCRIPTION — 1
 
-Exemple complet : `A 25-year-old woman of a noble house of Westeros, long black hair, storm-grey eyes, a guarded intelligent expression, wearing court attire in the colors of their house with the house sigil embroidered at the breast, a bronze falcon clasp, bearing befitting their station.`
+Ces fiches n'ont ni `physique` ni `prompt_ideogram` : il faut d'abord les écrire
+dans `etat/personnages.json`. Ce sont des gens nés en cours de partie.
+
+- `merra-sath` — Merra Sath

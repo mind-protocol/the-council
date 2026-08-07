@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Cregan Stark">
+  <title>Cregan Stark</title>
+  <defs>
+    <radialGradient id="bg-cregan-stark" cx="50%" cy="32%" r="80%">
+      <stop offset="0%" stop-color="#322a20"/>
+      <stop offset="55%" stop-color="#241d16"/>
+      <stop offset="100%" stop-color="#141009"/>
+    </radialGradient>
+    <clipPath id="clip-cregan-stark"><circle cx="64" cy="64" r="52"/></clipPath>
+  </defs>
+  <!-- anneau héraldique -->
+  <circle cx="64" cy="64" r="63" fill="#5c6065"/>
+  <circle cx="64" cy="64" r="57.5" fill="none" stroke="#e0e3e5" stroke-width="7" stroke-dasharray="15.05 15.05"/>
+  <!-- disque intérieur -->
+  <circle cx="64" cy="64" r="52" fill="url(#bg-cregan-stark)" stroke="#7a6342" stroke-width="1.2"/>
+  <!-- buste -->
+  <g clip-path="url(#clip-cregan-stark)">
+    <path d="M45,46 C44,29 55,24 64,24 C73,24 84,29 83,46 L84,72 C84,80 78,83 73,82 L55,82 C50,83 44,80 44,72 Z" fill="#4a3526"/>
+    <rect x="57.5" y="62" width="13" height="28" rx="2" fill="#7d6853"/>
+    <path d="M10,128 C16,94 40,84 64,84 C88,84 112,94 118,128 Z" fill="#2c2620"/>
+    <path d="M26,128 L30,102 L36,110 L42,98 L49,108 L56,96 L64,104 L72,96 L79,108 L86,98 L92,110 L98,102 L102,128 Z" fill="#726c64"/>
+    <ellipse cx="64" cy="54" rx="15.5" ry="18.5" fill="#7d6853"/>
+    <path d="M48,53 C46.5,33 54,26 64,26 C74,26 81.5,33 80,53 C78,43 72.5,39.5 64,39.5 C55.5,39.5 50,43 48,53 Z" fill="#4a3526"/>
+    <path d="M50,55 C50,73 55,82 64,82.5 C73,82 78,73 78,55 C75.5,66.5 70.5,70 64,70 C57.5,70 52.5,66.5 50,55 Z" fill="#4a3526"/>
+  </g>
+  <!-- badge de maison -->
+  <circle cx="64" cy="113" r="11.5" fill="#191510" stroke="#7a6342" stroke-width="1.2"/>
+  <g transform="translate(64 113)"><path d="M-4.4,-1 L-3.4,-5.6 L-1.6,-3 L1.6,-3 L3.4,-5.6 L4.4,-1 L1.8,4.8 L0,6 L-1.8,4.8 Z" fill="#e0e3e5"/></g>
+</svg>

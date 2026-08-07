@@ -53,7 +53,9 @@ window.Illustration = (() => {
 
   // Ce que tout item peut porter : `montre`. Appelé par paroles.js et gestes.js.
   function poser(el, it) {
-    if (!it.montre || vide(it.montre) || !window.Carte) return;
+    // Une main sur la carte, rechargée du passé, ne repose rien : la table
+    // montre l'état d'aujourd'hui, pas ce qu'on y désignait il y a trois jours.
+    if (!it.montre || vide(it.montre) || !window.Carte || Bus.enArchive()) return;
     attacher(el, Carte.illustrer(marquesDe(it.montre)));
   }
 

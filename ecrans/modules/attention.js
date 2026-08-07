@@ -11,14 +11,19 @@ window.Attention = (() => {
       g.texte + "</button>").join("");
   }
 
+  // Les appuis du MJ : **ce qui pèse** dans une phrase se rend en gras d'appui.
+  // Écrit à la main, jamais automatique — voir CLAUDE.md, « Ton ».
+  const appuis = (s) => s.replace(/\*\*(\S(?:[^*]*\S)?)\*\*/g,
+    '<b class="appui">$1</b>');
+
   function html(texte, meta) {
     const loc = (meta && meta.locuteur_id) || "";
     const btns = boutons(meta && meta.extras);
     const wrap = (ph, fin) =>
       '<span class="phrase-wrap"><span class="phrase" data-loc="' + loc + '">' + ph +
       "</span>" + (fin && btns ? '<span class="gestes">' + btns + "</span>" : "") + "</span>";
-    if (texte.indexOf("<") !== -1) return wrap(texte, true);
-    const phs = texte.split(/(?<=[.!?…»])\s+/);
+    if (texte.indexOf("<") !== -1) return wrap(appuis(texte), true);
+    const phs = appuis(texte).split(/(?<=[.!?…»])\s+/);
     return phs.map((ph, i) => wrap(ph, i === phs.length - 1)).join(" ");
   }
 

@@ -72,7 +72,7 @@
 
   // Quelqu'un vient de parler ou de faire : il est là, et il est frais.
   function toucher(id) {
-    if (!id) return;
+    if (!id || Bus.enArchive()) return;
     if (!window.Presents[id]) entrer(id);
     entendu.set(id, ++compteur);
     dessiner();
@@ -106,12 +106,10 @@
   let parle = null;
   let pose = "";                   // les visages actuellement montés, dans l'ordre
 
-  // Le silence se voit : qui n'a rien dit depuis longtemps s'estompe. C'est la
-  // salle telle qu'on la perçoit, pas un registre de présence.
-  function froideur(slot, id) {
-    const froid = compteur - (entendu.get(id) || 0);
-    slot.classList.toggle("froid", froid > 4 && froid <= 12);
-    slot.classList.toggle("tres-froid", froid > 12);
+  // Les présents restent pleinement visibles tant qu'ils sont là : le silence
+  // ne délave plus les visages.
+  function froideur(slot) {
+    slot.classList.remove("froid", "tres-froid");
   }
 
   function dessiner() {
@@ -171,6 +169,8 @@
   ["geste", "table"].forEach((t) => Bus.enregistrer(t, (it) => toucher(it.acteur_id)));
 
   window.activerLocuteur = (id) => {
+    // Le passé rechargé ne fait entrer personne : la salle est celle de MAINTENANT.
+    if (Bus.enArchive()) return;
     parle = id;
     if (id && !window.Presents[id]) entrer(id);
     document.querySelectorAll(".acteur").forEach((a) => a.classList.remove("parle"));
@@ -190,4 +190,55 @@
 
   // Changement de scène : la salle se vide. Le fil, lui, garde tout.
   Bus.enregistrer("effacer", () => { parle = null; vider(); });
+
+  // ---- le rapprochement avec la présence du monde --------------------------
+  // Se tenir dans une pièce est un fait du MONDE ; le flux, lui, est cloisonné
+  // par audience. Un PNJ que deux scènes se partagent — le mestre, appelé chez
+  // l'une alors qu'il était debout chez l'autre — restait donc affiché dans les
+  // deux salles à la fois, une par écran : aucun `sortent` ne peut l'ôter des
+  // deux, puisqu'il porte forcément une audience.
+  //
+  // `/presence` dit qui partage VRAIMENT notre pièce (et rien de plus : où sont
+  // les autres ne descend pas jusqu'ici). Elle ÔTE et elle AJOUTE.
+  //
+  // Elle a longtemps servi à ôter seulement, au motif qu'entrer était l'affaire
+  // du flux — mais le flux ne nomme que ceux qui parlent. Un conseil de neuf en
+  // affichait six : le mestre debout au fond, Lucerys qui n'avait rien dit,
+  // Nesse à la porte n'existaient nulle part à l'écran alors qu'on les voyait de
+  // ses yeux. Une salle n'est pas la liste de ceux qui ont pris la parole.
+  //
+  // Ce qui vient de la présence entre donc SANS bruit : pas de compteur de
+  // fraîcheur touché, pas de médaillon qui s'illumine — ils sont là, ils se
+  // taisent, et ils s'estompent naturellement dans la pastille « et N autres ».
+  // On n'ôte, à l'inverse, que ceux que la présence connaît et place ailleurs :
+  // un pêcheur de passage, absent du fichier, garde son visage.
+  async function rapprocher() {
+    try {
+      const d = await (await fetch("/presence")).json();
+      if (!d || !d.connue) return;                  // partie seule, ou pièce inconnue
+      const ici = new Set((d.avec || []).map((x) => x.id));
+      const moi = window.Moi && window.Moi.personnage_id;
+      if (moi) ici.add(moi);
+      // ceux que la salle porte et que le flux n'a pas nommés
+      (d.avec || []).forEach((x) => {
+        if (window.Presents[x.id]) return;
+        entrer({ id: x.id, nom: x.nom }, true);
+      });
+      dessiner();
+      Object.keys(window.Presents).forEach((id) => {
+        if (ici.has(id)) return;
+        // Inconnu de la présence : on ne tranche pas, le flux a raison.
+        if (!(d.connus || []).includes(id)) return;
+        sortir(id);
+      });
+    } catch (e) {}
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    rapprocher();
+    setInterval(rapprocher, 20000);
+  });
+  // Un changement de salle est le moment où l'on se trompe : on rapproche là,
+  // en plus du battement régulier.
+  ["salle", "effacer"].forEach((t) => Bus.enregistrer(t, () => setTimeout(rapprocher, 300)));
 })();

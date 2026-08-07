@@ -53,6 +53,38 @@ sinon n'importe quelle faute de frappe corrompt l'etat en silence.
 
     {table: "monde", operation: "monde", champs: {date|tension|phase}}
 
+    {table: "activites", cible: <activite_id>, operation: ...}   (les mains)
+        mesure     + mesure: <mesure_id>, champs: {valeur|reliquat}  ENTIERS SEULS
+        seuil      + seuil:  <seuil_id>,  champs: {franchi_le}
+        activite   + champs: {mandat|porteur|dernier_rapport|date_maj|salle}
+        Le reste d'une activite (quoi, rythme, plancher, plafond, depend_de,
+        libelle des seuils) s'ecrit a la main : ce sont des choix de conception,
+        pas des mutations de partie.
+
+    {table: "plis", cible: <pli_id>, operation: ...}   (le courrier)
+        pli         + champs: {etat|main|attendu_le|canal|scelle|porte}
+        Un pli remis, ouvert ou retenu DOIT avoir une main : c'est tout
+        l'interet de la table (docs/plis.md). Un pli en route n'en a pas.
+    {table: "plis", operation: "pli_ajouter", valeur: <objet pli complet>}
+        Requiert id, canal, porte, de, pour, vers, parti_le, attendu_le, etat.
+        `porte` est le texte FIGE au depart : on ne le relit pas a l'arrivee.
+
+    {table: "jetons", cible: <incident_id>, operation: ...}   (la rumeur)
+        incident_propage  + valeur: {ou, date, certitude, contenu, ames?,
+                                     depuis?, note?}
+            AJOUTE un endroit gagne a l'incident (docs/carte.md). `contenu` est
+            OBLIGATOIRE et non vide : c'est ce qui se dit LA-BAS, deforme. Le
+            tick propose le saut avec contenu null — le lot est refuse tant que
+            le MJ n'a pas ecrit la prose. Une machine ne fabrique pas de
+            brouillard. La certitude doit avoir DECRU d'au moins un cran par
+            rapport au foyer : rien ne devient plus vrai en se repetant.
+        incident          + champs: {feu|certitude|statut|ames|contenu|detail}
+
+    {table: "lieux", cible: <lieu_id>, operation: "roukerie",
+     champs: {<lieu_id d'origine>: <entier >= 0>}}
+        Le stock de corbeaux. Un oiseau ne vole que vers la ou il est ne :
+        ecrire de A vers B consomme lieux[A].roukerie[B].
+
 Chaque mutation accepte un champ libre "pourquoi", ignore a l'application mais
 precieux a la relecture.
 
@@ -84,7 +116,7 @@ except ImportError:     # doublon de secours, a retoucher AVEC celui de tick.py
     BUDGETS = {
         "scene":   {"acteurs": 5,  "croyances": 6, "etapes": 5,
                     "declencheurs": 3},
-        "orbite":  {"acteurs": 10, "croyances": 5, "etapes": 4,
+        "orbite":  {"acteurs": 12, "croyances": 5, "etapes": 4,
                     "declencheurs": 2},
         "royaume": {"acteurs": None, "croyances": 3, "etapes": 2,
                     "declencheurs": 1},
@@ -104,6 +136,22 @@ CHAMPS_TETE_REQUIS = ("personnage_id", "echelle", "croyances", "intention",
 CHAMPS_EVENEMENT = ("statut", "effets", "date_prevue", "importance")
 CHAMPS_PERSO = ("lieu_id", "condition", "etat")
 CHAMPS_MONDE = ("date", "tension", "phase")
+# les mains : seul tick.py pose valeur/reliquat, seul le MJ pose le reste
+CHAMPS_MESURE = ("valeur", "reliquat")
+CHAMPS_SEUIL = ("franchi_le",)
+CHAMPS_ACTIVITE = ("mandat", "porteur", "dernier_rapport", "date_maj", "salle")
+# le courrier (docs/plis.md)
+CANAUX_PLI = ("corbeau", "cavalier", "barque")
+ETATS_PLI = ("en-route", "remis", "ouvert", "retenu", "perdu", "intercepte")
+ETATS_PLI_EN_MAIN = ("remis", "ouvert", "retenu")
+CHAMPS_PLI = ("etat", "main", "attendu_le", "canal", "scelle", "porte")
+CHAMPS_PLI_REQUIS = ("id", "canal", "porte", "de", "pour", "vers",
+                     "parti_le", "attendu_le", "etat")
+# la rumeur : un incident de la table de guerre (docs/carte.md)
+CERTITUDES = ("sure", "rapportee", "rumeur")
+FEUX = ("vif", "couve", "eteint")
+CHAMPS_INCIDENT = ("feu", "certitude", "statut", "ames", "contenu", "detail")
+CHAMPS_PROPAGE_REQUIS = ("ou", "date", "certitude", "contenu")
 
 OPERATIONS = {
     "intentions": ("etape", "etape_ajouter", "tete", "tete_ajouter",
@@ -112,21 +160,86 @@ OPERATIONS = {
     "evenements": ("diffusion_livree", "diffusion_ajouter", "evenement"),
     "personnages": ("personnage",),
     "monde": ("monde",),
+    "activites": ("mesure", "seuil", "activite"),
+    "plis": ("pli", "pli_ajouter"),
+    "lieux": ("roukerie",),
+    "jetons": ("incident_propage", "incident"),
 }
+
+
+def rang_certitude(valeur):
+    """sure=2, rapportee=1, rumeur=0. Inconnu -> rapportee."""
+    try:
+        return len(CERTITUDES) - 1 - CERTITUDES.index(valeur)
+    except ValueError:
+        return 1
+
+
+def liste_jetons(table):
+    """jetons.json a une racine {jetons, traits, zones} ; on rend les pieces."""
+    return table.get("jetons", []) if isinstance(table, dict) else table
 
 
 # ------------------------------------------------------------------ lecture
 
-def lire(nom):
-    chemin = os.path.join(ETAT, nom + ".json")
+# Les tables qui appartiennent a UN JOUEUR, pas au monde. Elles ne decrivent
+# pas ce qui est : elles decrivent ce qu'un joueur CROIT. A deux, les partager
+# revient a donner la table de guerre de la reine a sa maitresse de la voix —
+# elles vivent donc dans etat/joueurs/<personnage_id>/.
+CROYANCES = ("jetons", "vues", "objectifs")
+
+
+def chemin_table(nom, joueur=None):
+    """Le fichier d'une table — dans le dossier du joueur si c'en est une.
+
+    Meme regle que scripts/ajouter.py, et meme refus bruyant : une fois la
+    racine archivee, ecrire une croyance sans dire A QUI reviendrait a la
+    poser dans un fichier fantome que le jeu ne relira jamais. C'est
+    exactement le bug qu'on vient de corriger — on ne le laisse pas revenir.
+    """
+    if nom in CROYANCES:
+        if joueur:
+            p = os.path.join(ETAT, "joueurs", joueur, nom + ".json")
+            if os.path.isfile(p):
+                return p
+        p = os.path.join(ETAT, nom + ".json")
+        if os.path.isfile(p):
+            return p
+        if joueur:
+            sys.exit(
+                "pas de {}.json pour le joueur '{}', et plus de repli a la "
+                "racine.\nVerifiez etat/joueurs/{}/ : le --joueur est-il le "
+                "bon personnage_id ?".format(nom, joueur, joueur))
+        sys.exit(
+            "{}.json n'existe plus a la racine : cette table appartient a un "
+            "joueur.\nPrecisez a qui vous ecrivez : --joueur <personnage_id>."
+            .format(nom))
+    return os.path.join(ETAT, nom + ".json")
+
+
+def lire(nom, joueur=None):
+    chemin = chemin_table(nom, joueur)
     if not os.path.isfile(chemin):
-        sys.exit("etat/{}.json absent".format(nom))
+        sys.exit("{} absent".format(chemin))
     with io.open(chemin, encoding="utf-8") as f:
         return json.load(f)
 
 
-def empreinte(nom):
-    chemin = os.path.join(ETAT, nom + ".json")
+def liste_activites(table):
+    """activites.json a une racine {activites: [...]} ; on rend la liste."""
+    return table.get("activites", []) if isinstance(table, dict) else table
+
+
+def liste_plis(table):
+    """plis.json a une racine {plis: [...]} ; on rend la liste."""
+    return table.get("plis", []) if isinstance(table, dict) else table
+
+
+def empreinte(nom, joueur=None):
+    # Le sceau doit porter sur le fichier qu'on va REELLEMENT ecrire : sceller
+    # la racine tout en ecrivant dans le dossier du joueur ne garde rien.
+    chemin = (chemin_table(nom, joueur) if nom in CROYANCES
+              else os.path.join(ETAT, nom + ".json"))
     if not os.path.isfile(chemin):
         return None
     with io.open(chemin, "rb") as f:
@@ -235,6 +348,15 @@ def valider(mutations, tables):
     tetes = par_id(tables["intentions"], "personnage_id")
     evenements = par_id(tables["evenements"])
     personnages = par_id(tables["personnages"])
+    activites = par_id(liste_activites(tables["activites"]))
+    plis = par_id(liste_plis(tables["plis"]))
+    incidents = par_id([j for j in liste_jetons(tables["jetons"])
+                        if isinstance(j, dict) and j.get("genre") == "incident"])
+    lieux = par_id(tables["lieux"])
+    # alias compris : la couche carte impose ses propres ids (docs/schema.md)
+    for lieu in tables["lieux"]:
+        for alias in lieu.get("alias") or []:
+            lieux.setdefault(alias, lieu)
     joueur = (tables.get("journal") or {}).get("personnage_joueur_id")
     # tous les ids d'etapes du fichier — grossit au fil du lot, pour qu'une
     # etape ajoutee deux fois dans la meme proposition soit refusee aussi.
@@ -379,6 +501,226 @@ def valider(mutations, tables):
                 avant = {c: ev.get(c) for c in champs}
                 apres = dict(champs)
 
+        # --- activites (les mains)
+        elif table == "activites":
+            act = activites.get(cible)
+            if act is None:
+                faute(i, "aucune activite {!r}".format(cible))
+                continue
+            if op == "mesure":
+                mes = next((x for x in (act.get("mesure") or [])
+                            if x.get("id") == m.get("mesure")), None)
+                if mes is None:
+                    faute(i, "aucune mesure {!r} dans {}".format(
+                        m.get("mesure"), cible))
+                    continue
+                mauvais = [c for c in champs if c not in CHAMPS_MESURE]
+                if mauvais:
+                    faute(i, "champs de mesure interdits : {} (seuls {} se "
+                             "posent par mutation)".format(
+                                 ", ".join(mauvais), "/".join(CHAMPS_MESURE)))
+                    continue
+                pasentier = [c for c in champs
+                             if not isinstance(champs[c], int)]
+                if pasentier:
+                    faute(i, "{} doit etre un entier — les mains ne "
+                             "connaissent pas les flottants".format(
+                                 ", ".join(pasentier)))
+                    continue
+                avant = {c: mes.get(c) for c in champs}
+                apres = dict(champs)
+            elif op == "seuil":
+                seuil = next((s for s in (act.get("seuils") or [])
+                              if s.get("id") == m.get("seuil")), None)
+                if seuil is None:
+                    faute(i, "aucun seuil {!r} dans {}".format(
+                        m.get("seuil"), cible))
+                    continue
+                mauvais = [c for c in champs if c not in CHAMPS_SEUIL]
+                if mauvais:
+                    faute(i, "champs de seuil interdits : {}".format(
+                        ", ".join(mauvais)))
+                    continue
+                avant = {c: seuil.get(c) for c in champs}
+                apres = dict(champs)
+            else:
+                mauvais = [c for c in champs if c not in CHAMPS_ACTIVITE]
+                if mauvais:
+                    faute(i, "champs d'activite interdits : {}".format(
+                        ", ".join(mauvais)))
+                    continue
+                avant = {c: act.get(c) for c in champs}
+                apres = dict(champs)
+
+        # --- plis (le courrier)
+        elif table == "plis":
+            if op == "pli_ajouter":
+                v = m.get("valeur")
+                if not isinstance(v, dict):
+                    faute(i, "pli a ajouter : 'valeur' doit etre l'objet pli")
+                    continue
+                manquants = [c for c in CHAMPS_PLI_REQUIS if not v.get(c)]
+                if manquants:
+                    faute(i, "pli a ajouter incomplet, il manque : {}".format(
+                        ", ".join(manquants)))
+                    continue
+                if cible is not None and cible != v["id"]:
+                    faute(i, "'cible' {!r} ne correspond pas a l'id {!r}".format(
+                        cible, v["id"]))
+                    continue
+                if v["id"] in plis:
+                    faute(i, "un pli {} existe deja — patche-le".format(v["id"]))
+                    continue
+                if v["canal"] not in CANAUX_PLI:
+                    faute(i, "canal {!r} hors {}".format(v["canal"], CANAUX_PLI))
+                    continue
+                if v["etat"] not in ETATS_PLI:
+                    faute(i, "etat {!r} hors {}".format(v["etat"], ETATS_PLI))
+                    continue
+                for champ in ("de", "pour"):
+                    if v[champ] not in personnages:
+                        faute(i, "{} inconnu : {!r}".format(champ, v[champ]))
+                        break
+                else:
+                    if v["vers"] not in lieux:
+                        faute(i, "'vers' inconnu : {!r}".format(v["vers"]))
+                        continue
+                    if v.get("depuis") and v["depuis"] not in lieux:
+                        faute(i, "'depuis' inconnu : {!r}".format(v["depuis"]))
+                        continue
+                    if not date_lisible(v["parti_le"]) or \
+                            not date_lisible(v["attendu_le"]):
+                        faute(i, "parti_le / attendu_le illisibles (attendu "
+                                 "{annee, lune, jour} d'entiers)")
+                        continue
+                    if v["etat"] in ETATS_PLI_EN_MAIN and not v.get("main"):
+                        faute(i, "un pli {} doit avoir une 'main' : dis qui "
+                                 "l'a".format(v["etat"]))
+                        continue
+                    if v.get("main") and v["main"] not in personnages:
+                        faute(i, "'main' inconnue : {!r}".format(v["main"]))
+                        continue
+                    plis[v["id"]] = v
+                    plan.append({"n": i, "mutation": m, "avant": None,
+                                 "apres": {"pli_ajoute": v["id"],
+                                           "vers": v["vers"],
+                                           "attendu_le": v["attendu_le"]}})
+                continue
+            pli = plis.get(cible)
+            if pli is None:
+                faute(i, "aucun pli {!r}".format(cible))
+                continue
+            mauvais = [c for c in champs if c not in CHAMPS_PLI]
+            if mauvais:
+                faute(i, "champs de pli interdits : {}".format(
+                    ", ".join(mauvais)))
+                continue
+            if "etat" in champs and champs["etat"] not in ETATS_PLI:
+                faute(i, "etat {!r} hors {}".format(champs["etat"], ETATS_PLI))
+                continue
+            if "canal" in champs and champs["canal"] not in CANAUX_PLI:
+                faute(i, "canal {!r} hors {}".format(champs["canal"], CANAUX_PLI))
+                continue
+            if "main" in champs and champs["main"] is not None \
+                    and champs["main"] not in personnages:
+                faute(i, "'main' inconnue : {!r}".format(champs["main"]))
+                continue
+            if "attendu_le" in champs and not date_lisible(champs["attendu_le"]):
+                faute(i, "attendu_le illisible")
+                continue
+            # un pli en main doit avoir une main, apres coup comme avant
+            etat_apres = champs.get("etat", pli.get("etat"))
+            main_apres = champs.get("main", pli.get("main"))
+            if etat_apres in ETATS_PLI_EN_MAIN and not main_apres:
+                faute(i, "{} sans 'main' — un pli est toujours dans la main de "
+                         "quelqu'un, et ce n'est pas forcement le 'pour'"
+                         .format(etat_apres))
+                continue
+            avant = {c: pli.get(c) for c in champs}
+            apres = dict(champs)
+
+        # --- jetons : les incidents seulement (la rumeur)
+        elif table == "jetons":
+            inc = incidents.get(cible)
+            if inc is None:
+                faute(i, "aucun incident {!r} dans jetons.json (genre "
+                         "'incident')".format(cible))
+                continue
+            if op == "incident":
+                mauvais = [c for c in champs if c not in CHAMPS_INCIDENT]
+                if mauvais:
+                    faute(i, "champs d'incident interdits : {}".format(
+                        ", ".join(mauvais)))
+                    continue
+                if "feu" in champs and champs["feu"] not in FEUX:
+                    faute(i, "feu {!r} hors {}".format(champs["feu"], FEUX))
+                    continue
+                if "certitude" in champs and champs["certitude"] not in CERTITUDES:
+                    faute(i, "certitude {!r} hors {}".format(
+                        champs["certitude"], CERTITUDES))
+                    continue
+                avant = {c: inc.get(c) for c in champs}
+                apres = dict(champs)
+            else:   # incident_propage
+                v = m.get("valeur")
+                if not isinstance(v, dict):
+                    faute(i, "'valeur' doit etre l'endroit gagne")
+                    continue
+                manquants = [c for c in CHAMPS_PROPAGE_REQUIS if not v.get(c)]
+                if manquants:
+                    faute(i, "saut incomplet, il manque : {} — 'contenu' est ce "
+                             "qui se dit LA-BAS, deforme, et c'est a toi de "
+                             "l'ecrire".format(", ".join(manquants)))
+                    continue
+                if v["ou"] not in lieux:
+                    faute(i, "lieu inconnu : {!r}".format(v["ou"]))
+                    continue
+                if not date_lisible(v["date"]):
+                    faute(i, "date illisible")
+                    continue
+                if v["certitude"] not in CERTITUDES:
+                    faute(i, "certitude {!r} hors {}".format(v["certitude"],
+                                                             CERTITUDES))
+                    continue
+                if rang_certitude(v["certitude"]) >= rang_certitude(
+                        inc.get("certitude")):
+                    faute(i, "certitude {!r} pas moins sure que le foyer ({!r}) "
+                             "— rien ne devient plus vrai en se repetant".format(
+                                 v["certitude"], inc.get("certitude")))
+                    continue
+                deja = [x.get("ou") if isinstance(x, dict) else x
+                        for x in (inc.get("propage") or [])]
+                if v["ou"] in deja:
+                    faute(i, "{} a deja pris pour cet incident".format(v["ou"]))
+                    continue
+                apres = {"propage": "+ {} ({}) le {}".format(
+                    v["ou"], v["certitude"], v["date"].get("jour"))}
+
+        # --- lieux (la roukerie, et rien d'autre)
+        elif table == "lieux":
+            lieu = lieux.get(cible)
+            if lieu is None:
+                faute(i, "aucun lieu {!r}".format(cible))
+                continue
+            if not champs:
+                faute(i, "roukerie : aucun champ — rien a poser")
+                continue
+            souci = None
+            for origine, nb in champs.items():
+                if origine not in lieux:
+                    souci = "lieu d'origine inconnu : {!r}".format(origine)
+                elif not isinstance(nb, int) or isinstance(nb, bool) or nb < 0:
+                    souci = ("stock vers {} : entier positif attendu, {!r} "
+                             "recu".format(origine, nb))
+                if souci:
+                    break
+            if souci:
+                faute(i, souci)
+                continue
+            stock = lieu.get("roukerie") or {}
+            avant = {c: stock.get(c) for c in champs}
+            apres = dict(champs)
+
         # --- personnages
         elif table == "personnages":
             perso = personnages.get(cible)
@@ -419,6 +761,14 @@ def appliquer(plan, tables):
     tetes = par_id(tables["intentions"], "personnage_id")
     evenements = par_id(tables["evenements"])
     personnages = par_id(tables["personnages"])
+    activites = par_id(liste_activites(tables["activites"]))
+    plis = par_id(liste_plis(tables["plis"]))
+    incidents = par_id([j for j in liste_jetons(tables["jetons"])
+                        if isinstance(j, dict) and j.get("genre") == "incident"])
+    lieux = par_id(tables["lieux"])
+    for lieu in tables["lieux"]:
+        for alias in lieu.get("alias") or []:
+            lieux.setdefault(alias, lieu)
 
     for ligne in plan:
         m = ligne["mutation"]
@@ -455,6 +805,33 @@ def appliquer(plan, tables):
                 ev.setdefault("diffusion", []).append(m["valeur"])
             else:
                 ev.update(champs)
+        elif table == "activites":
+            act = activites[cible]
+            if op == "mesure":
+                mes = next(x for x in act["mesure"]
+                           if x.get("id") == m.get("mesure"))
+                mes.update(champs)
+            elif op == "seuil":
+                seuil = next(s for s in act["seuils"]
+                             if s.get("id") == m.get("seuil"))
+                seuil.update(champs)
+            else:
+                act.update(champs)
+        elif table == "plis":
+            if op == "pli_ajouter":
+                neuf = m["valeur"]
+                liste_plis(tables["plis"]).append(neuf)
+                plis[neuf["id"]] = neuf
+            else:
+                plis[cible].update(champs)
+        elif table == "jetons":
+            inc = incidents[cible]
+            if op == "incident_propage":
+                inc.setdefault("propage", []).append(m["valeur"])
+            else:
+                inc.update(champs)
+        elif table == "lieux":
+            lieux[cible].setdefault("roukerie", {}).update(champs)
         elif table == "personnages":
             personnages[cible].update(champs)
         else:
@@ -463,9 +840,9 @@ def appliquer(plan, tables):
     return touchees
 
 
-def ecrire(nom, donnees):
+def ecrire(nom, donnees, joueur=None):
     """Ecriture atomique : fichier temporaire puis remplacement."""
-    chemin = os.path.join(ETAT, nom + ".json")
+    chemin = chemin_table(nom, joueur)
     temporaire = chemin + ".tmp"
     with io.open(temporaire, "w", encoding="utf-8", newline="\r\n") as f:
         json.dump(donnees, f, ensure_ascii=False, indent=2)
@@ -500,6 +877,10 @@ def main():
                    help="ecrire pour de bon (sans quoi : blanc)")
     a.add_argument("--forcer", action="store_true",
                    help="passer outre les empreintes et le deja-applique")
+    a.add_argument("--joueur", default=None,
+                   help="personnage_id du joueur dont on ecrit les croyances "
+                        "(jetons, vues, objectifs). Requis des que la racine "
+                        "est archivee.")
     args = a.parse_args()
 
     chemin = args.proposition
@@ -518,9 +899,17 @@ def main():
         sys.exit("proposition deja appliquee le {} — --forcer pour recommencer."
                  .format(prop["applique_le"]))
 
+    # A QUI sont les croyances de ce lot : --joueur prime, sinon celui que
+    # tick.py a inscrit dans la proposition au moment du calcul. Les deux
+    # scripts doivent sceller et ecrire le MEME fichier.
+    joueur = args.joueur or prop.get("joueur")
+    if args.joueur and prop.get("joueur") and args.joueur != prop["joueur"]:
+        sys.exit("REFUS : proposition calculee pour '{}', vous appliquez avec "
+                 "--joueur '{}'.".format(prop["joueur"], args.joueur))
+
     # garde 1 : l'etat n'a pas bouge depuis le calcul
     derives = [nom for nom, sceau in (prop.get("empreintes") or {}).items()
-               if empreinte(nom) != sceau]
+               if empreinte(nom, joueur) != sceau]
     if derives:
         message = ("l'etat a change depuis le calcul de cette proposition : {}. "
                    "Un autre ecrivain est passe — relance le tick."
@@ -531,7 +920,32 @@ def main():
 
     # journal n'est jamais mutable : il sert a proteger la tete du joueur.
     tables = {nom: lire(nom) for nom in
-              ("intentions", "evenements", "personnages", "monde", "journal")}
+              ("intentions", "evenements", "personnages", "monde", "journal",
+               "lieux")}
+    # plis.json est facultatif : une partie d'avant le courrier tourne encore
+    if os.path.isfile(os.path.join(ETAT, "plis.json")):
+        tables["plis"] = lire("plis")
+    else:
+        tables["plis"] = {"plis": []}
+    if isinstance(tables["plis"], dict):
+        tables["plis"].setdefault("plis", [])
+    # jetons.json : la table de guerre, ou vivent les incidents (la rumeur).
+    # C'est une CROYANCE : elle appartient au joueur, pas au monde. Sans
+    # --joueur et sans repli racine, chemin_table refuse bruyamment plutot que
+    # d'ecrire dans un fichier que le jeu ne relira jamais.
+    # On ne resout le chemin QUE si le lot y touche : une proposition sans
+    # incident ne doit pas reclamer un --joueur dont elle n'a que faire.
+    if any(m.get("table") == "jetons" for m in mutations):
+        tables["jetons"] = lire("jetons", joueur)
+    else:
+        racine_jetons = os.path.join(ETAT, "jetons.json")
+        tables["jetons"] = (lire("jetons") if os.path.isfile(racine_jetons)
+                            else {"jetons": []})
+    # activites.json est facultatif : une partie sans mains tourne tres bien
+    tables["activites"] = (lire("activites")
+                           if os.path.isfile(
+                               os.path.join(ETAT, "activites.json"))
+                           else {"activites": []})
 
     # garde 2 : tout valider avant de rien ecrire
     plan, erreurs = valider(mutations, tables)
@@ -552,7 +966,7 @@ def main():
     # garde 3 : ecriture atomique, puis marquage de la proposition
     touchees = appliquer(plan, tables)
     for nom in sorted(touchees):
-        ecrire(nom, tables[nom])
+        ecrire(nom, tables[nom], joueur)
     prop["applique_le"] = datetime.now().isoformat(timespec="seconds")
     with io.open(chemin, "w", encoding="utf-8", newline="\r\n") as f:
         json.dump(prop, f, ensure_ascii=False, indent=2)

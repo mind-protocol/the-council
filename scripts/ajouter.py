@@ -38,15 +38,30 @@ TABLES = {
 def chemin(table, joueur=None):
     """Le fichier de la table — dans le dossier du joueur s'il y en a un.
 
-    Les croyances (vues, jetons, objectifs) appartiennent a un joueur : a deux,
-    elles vivent dans etat/joueurs/<id>/. Repli sur etat/ si ce dossier n'existe
-    pas encore, pour qu'une partie seule ne voie aucune difference.
+    Les croyances (vues, objectifs) appartiennent a un joueur : a deux, elles
+    vivent dans etat/joueurs/<id>/. Repli sur etat/ tant que ce fichier racine
+    existe, pour qu'une partie seule ne voie aucune difference.
+
+    Une fois la racine archivee, ce repli n'a plus de fichier a ouvrir : mieux
+    vaut refuser bruyamment que d'ecrire une croyance dans un fichier fantome
+    que personne ne relira jamais. Un --joueur mal orthographie tombe ici aussi,
+    et c'est tant mieux — c'est exactement le meme bug.
     """
     if joueur:
         p = os.path.join(racine, "etat", "joueurs", joueur, table + ".json")
         if os.path.exists(p):
             return p
-    return os.path.join(racine, "etat", table + ".json")
+    p = os.path.join(racine, "etat", table + ".json")
+    if os.path.exists(p):
+        return p
+    if joueur:
+        raise SystemExit(
+            "pas de %s.json pour le joueur '%s', et plus de repli a la racine.\n"
+            "Verifiez etat/joueurs/%s/ : le --joueur est-il le bon personnage_id ?"
+            % (table, joueur, joueur))
+    raise SystemExit(
+        "%s.json n'existe plus a la racine : cette table appartient a un joueur.\n"
+        "Precisez a qui vous ecrivez : --joueur <personnage_id>." % table)
 
 
 def ecrire_atomique(p, donnees):

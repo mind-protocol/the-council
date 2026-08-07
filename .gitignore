@@ -1,2 +1,28 @@
 .env
 etat/inbox/*.json
+__pycache__/
+*.pyc
+
+# Les textures ambientCG (CC0) : engendrées comme le reste de monde/, jamais
+# versionnées — 158 Mo de JPG qui resteraient dans l'historique pour toujours.
+# Retéléchargement : scripts/monde/textures.py
+monde/textures/
+.claude/settings.local.json
+
+# Le monde 3D : 1,2 Go de sortie de `scripts/monde/`, entierement regenerable.
+# Ce qui est DECIDE en jeu vit dans etat/corps.json, jamais ici — c'est tout
+# l'interet du contrat d'affectation.
+monde/
+
+# Captures : mp3 et images d'illustration, hors du jeu lui-meme.
+captures/
+
+# Le monde ENGENDRÉ : 1,2 Go de bâti, de graphe, de corps et de terrain, tout
+# entier reproductible par scripts/monde/ et scripts/materialisation/. Le mettre
+# dans l'historique, c'est le mettre pour toujours. Ce qui est DÉCIDÉ en jeu ne
+# vit pas là — il vit dans etat/corps.json (voir docs/corps.md).
+monde/
+
+# Les captures de travail : 120 Mo de PNG et de MP3 d'ambiance, sources
+# externes, régénérables ou reçues. Même raison.
+captures/

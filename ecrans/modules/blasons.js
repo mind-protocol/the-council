@@ -38,6 +38,11 @@ window.Blasons = (() => {
     "maison-massey": { champ: [E.argent], charge: "spirales", email: E.gueules },
     "maison-strong": { champ: [E.azur, E.gueules, E.sinople], partition: "pal3" },
     "maison-baratheon": { champ: [E.or], charge: "cerf", email: E.sable },
+    // Créée en jeu : la maison d'Aurore, anoblie tard, riche d'encre et non
+    // d'épée. Trois noix posées deux et une — la charge la plus modeste de la
+    // baie, et c'est le propos.
+    "maison-inchauspe": { champ: [E.or], charge: "noix", email: E.sable,
+      note: "Trois noix de sable posées deux et une, sur champ d'or" },
     // sièges sur la carte, maisons absentes de l'état — armes canoniques
     "maison-tully": { champ: [E.gueules, E.azur], partition: "pal2", charge: "truite", email: E.argent },
     "maison-arryn": { champ: [E.delave], charge: "faucon", email: E.argent },
@@ -80,6 +85,11 @@ window.Blasons = (() => {
       '<circle cx="1.4" cy="-2.9" r="1.5" stroke="none"/>' +
       '<path d="M-2.8 2.4-4 3.4" fill="none" stroke-linecap="round"/>',
     loup: '<path d="M-2.8-1.6-2.2-4l1.8 1.4h1.6L3-4l.6 2.4c0 2.2-1.4 3.6-3.2 3.6s-3.2-1.4-3.2-3.6z" stroke="none"/>',
+    // trois noix, deux et une : des ovales un rien pointus du haut, et le pli
+    // qui les partage — c'est tout ce qui reste d'une noix à douze pixels.
+    noix: '<path d="M-2.1-3.9c1.6.2 1.9 1.5 1.5 2.5-.4 1-2.6 1-3 0-.4-1-.1-2.3 1.5-2.5z" stroke="none"/>' +
+      '<path d="M2.1-3.9c1.6.2 1.9 1.5 1.5 2.5-.4 1-2.6 1-3 0-.4-1-.1-2.3 1.5-2.5z" stroke="none"/>' +
+      '<path d="M0 .3c1.6.2 1.9 1.5 1.5 2.5-.4 1-2.6 1-3 0-.4-1-.1-2.3 1.5-2.5z" stroke="none"/>',
   };
 
   const esc = (s) => String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");

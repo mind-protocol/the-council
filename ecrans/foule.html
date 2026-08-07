@@ -1,0 +1,316 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>La foule — Port-Réal en accéléré</title>
+<!--
+  Une page d'ESSAI, hors du jeu : un point par habitant, la journée en accéléré,
+  et un journal de ce qui s'est passé. Elle ne touche ni au flux ni à l'inbox —
+  on peut l'ouvrir pendant qu'une partie tourne.
+
+  Elle est en 2D vue du dessus et sans three.js à dessein : ce qu'on veut juger
+  ici, ce n'est pas le rendu, c'est le MOUVEMENT — est-ce que les gens suivent
+  les rues, est-ce que les heures de pointe existent, est-ce que la file du
+  puits se forme à six heures. Un point coloré suffit à le voir, et n'importe
+  quelle erreur de position saute aux yeux au lieu de se cacher derrière une
+  silhouette.
+-->
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #0b0d10; color: #cfd6de;
+         font: 13px/1.45 ui-sans-serif, system-ui, sans-serif; overflow: hidden; }
+  #toile { position: fixed; inset: 0; }
+  .panneau { position: fixed; top: 12px; left: 12px; width: 290px; padding: 12px 14px;
+             background: #12161bee; border: 1px solid #2a323c; border-radius: 8px;
+             backdrop-filter: blur(6px); }
+  h1 { margin: 0 0 2px; font-size: 15px; font-weight: 600; letter-spacing: .01em; }
+  .sous { margin: 0 0 10px; color: #7d8896; font-size: 11.5px; }
+  .horloge { font: 600 30px/1.1 ui-monospace, monospace; color: #e8c37a;
+             letter-spacing: .02em; margin: 2px 0 1px; }
+  .jour { color: #7d8896; font-size: 11.5px; margin-bottom: 10px; }
+  label { display: block; margin: 9px 0 3px; color: #93a0af; font-size: 11.5px; }
+  input[type=range] { width: 100%; accent-color: #e8c37a; }
+  button { background: #1c232c; color: #cfd6de; border: 1px solid #333d49;
+           border-radius: 5px; padding: 5px 10px; font: inherit; cursor: pointer; }
+  button:hover { background: #232c37; }
+  button.actif { background: #e8c37a; color: #14181d; border-color: #e8c37a; }
+  .rangee { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 11.5px; }
+  td { padding: 1px 0; color: #93a0af; }
+  td.n { text-align: right; color: #cfd6de; font-variant-numeric: tabular-nums; }
+  .pastille { display: inline-block; width: 8px; height: 8px; border-radius: 2px;
+              margin-right: 6px; vertical-align: 1px; }
+  .note { margin-top: 10px; padding-top: 9px; border-top: 1px solid #232b34;
+          color: #6b7683; font-size: 11px; }
+  #etat { color: #7d8896; font-size: 11px; margin-top: 6px; min-height: 15px; }
+</style>
+
+<canvas id="toile"></canvas>
+
+<div class="panneau">
+  <h1>La foule</h1>
+  <p class="sous">Port-Réal, un point par habitant</p>
+  <div class="horloge" id="heure">—</div>
+  <div class="jour" id="jour"></div>
+
+  <label>Vitesse — <span id="vlabel">60 min/s</span></label>
+  <input type="range" id="vitesse" min="0" max="7" step="1" value="4">
+
+  <label>Rayon chargé — <span id="rlabel">400 m</span></label>
+  <input type="range" id="rayon" min="250" max="1000" step="250" value="400">
+
+  <div class="rangee">
+    <button id="pause">Pause</button>
+    <button id="journal">Journal</button>
+    <button id="verser">Verser</button>
+  </div>
+
+  <table id="compte"></table>
+  <div class="note" id="note"></div>
+  <div id="etat"></div>
+</div>
+
+<script type="module">
+import * as G from "/modules/monde/gens.js";
+import * as J from "/modules/monde/journee.js";
+
+const SOURCE = "/monde";
+const toile = document.getElementById("toile");
+const ctx = toile.getContext("2d");
+const dire = (t) => document.getElementById("etat").textContent = t;
+
+// La couleur dit CE QU'ON FAIT, pas qui l'on est : c'est la seule chose qu'on
+// cherche à juger ici. Un coup d'œil doit suffire à voir si la ville dort, si
+// elle marche, ou si elle fait la queue.
+const COULEUR = {
+  chez:        "#39424e",   // il est chez lui : sourd, il fait le fond
+  route:       "#e8c37a",   // en rue : c'est ce qu'on veut voir bouger
+  "sur-place": "#7fb2e5",   // arrivé — la file du puits, l'étal, l'atelier
+};
+const NOM = { chez: "chez eux", route: "en rue", "sur-place": "sur place" };
+
+// --- l'état de la page ------------------------------------------------------
+let table, manif, voirie, rangs;
+let cellules = [];
+let minute = 5 * 60;          // on ouvre avant l'aube : on voit la ville s'éveiller
+let jour = 3;
+let enMarche = true;
+let vitesse = 60;             // minutes de jeu par seconde réelle
+let rayon = 400;
+let centre = { x: 2700, y: 1200 };
+let echelle = 0.9;
+const POS = { x: 0, y: 0, z: 0, quoi: "chez", vers: null };
+const VITESSES = [1, 5, 15, 30, 60, 180, 600, 1800];
+
+// --- le journal -------------------------------------------------------------
+// On ne journalise PAS une position par image : ce serait des millions de
+// lignes qui ne disent rien. On journalise les CHANGEMENTS d'état — untel part
+// de chez lui vers le puits, untel y arrive, untel rentre. C'est ce qu'on veut
+// relire pour juger une journée, et ça tient dans quelques milliers de lignes.
+const journal = [];
+const dernier = new Map();     // "cellule:index" -> dernier état vu
+let versees = 0;
+
+function noter(cel, k, p, min) {
+  const clef = cel.clef + ":" + k;
+  const avant = dernier.get(clef);
+  const etat = p.quoi + ":" + (p.vers || "");
+  if (avant === etat) return;
+  dernier.set(clef, etat);
+  if (avant === undefined) return;    // la première vue n'est pas un événement
+  journal.push({
+    jour, minute: Math.round(min), heure: horloge(min),
+    cellule: cel.clef, i: k,
+    role: cel.roles_index[cel.role[k]],
+    age: cel.age_sexe[k] & 0x7f, femme: !!(cel.age_sexe[k] & 0x80),
+    bat: cel.bat[k], quoi: p.quoi, vers: p.vers || null,
+    x: Math.round(p.x * 10) / 10, y: Math.round(p.y * 10) / 10,
+  });
+}
+
+let enVol = false;
+async function verser() {
+  if (!journal.length) return dire("rien à verser");
+  if (enVol) return;
+  enVol = true;
+  const lot = journal.splice(0, journal.length);
+  try {
+    const r = await fetch("/foule/journal", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ lignes: lot }),
+    });
+    const j = await r.json().catch(() => ({}));
+    versees += lot.length;
+    dire(j.fichier ? `${versees.toLocaleString("fr")} lignes → ${j.fichier}`
+                   : "versement refusé");
+  } catch (e) {
+    // on remet le lot devant : un serveur qui hoquette ne doit pas manger une
+    // matinée d'observation
+    journal.unshift(...lot);
+    dire("versement impossible : " + e.message);
+  } finally { enVol = false; }
+}
+
+// --- le temps ---------------------------------------------------------------
+const horloge = (m) => {
+  const t = ((m % 1440) + 1440) % 1440;
+  return String(Math.floor(t / 60)).padStart(2, "0") + "h"
+       + String(Math.floor(t % 60)).padStart(2, "0");
+};
+
+// --- la vue -----------------------------------------------------------------
+function dimensionner() {
+  const d = window.devicePixelRatio || 1;
+  toile.width = innerWidth * d; toile.height = innerHeight * d;
+  ctx.setTransform(d, 0, 0, d, 0, 0);
+}
+addEventListener("resize", dimensionner);
+dimensionner();
+
+const versEcran = (x, y) => [
+  (x - centre.x) * echelle + innerWidth / 2,
+  (y - centre.y) * -echelle + innerHeight / 2,   // y du monde vers le haut
+];
+
+function dessinerVoirie() {
+  if (!voirie) return;
+  for (const a of voirie.aretes) {
+    const t = a.trace;
+    ctx.strokeStyle = a.genre === "artere" ? "#2e3843"
+                    : a.genre === "rue" ? "#262e38" : "#1d242c";
+    ctx.lineWidth = Math.max(0.6, (a.largeur_m || 2) * echelle * 0.5);
+    ctx.beginPath();
+    for (let i = 0; i < t.length; i++) {
+      const [X, Y] = versEcran(t[i][0], t[i][1]);
+      i ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y);
+    }
+    ctx.stroke();
+  }
+}
+
+function image() {
+  ctx.fillStyle = "#0b0d10";
+  ctx.fillRect(0, 0, innerWidth, innerHeight);
+  dessinerVoirie();
+
+  const compte = { chez: 0, route: 0, "sur-place": 0 };
+  const r = Math.max(1, echelle * 0.9);
+  // Un seul objet de position pour toute l'image : `ou()` le remplit au lieu
+  // d'en allouer un par habitant. À quarante mille corps par image, c'est la
+  // différence entre sept images par seconde et soixante.
+  const p = POS;
+  for (const cel of cellules) {
+    for (let k = 0; k < cel.n; k++) {
+      J.ou(cel, k, jour, minute, voirie, rangs, p);
+      compte[p.quoi]++;
+      noter(cel, k, p, minute);
+      // on ne dessine pas les dormeurs un par un quand on est loin : à cette
+      // échelle ils font un aplat, et ils coûtent le plus gros du budget
+      if (p.quoi === "chez" && echelle < 0.35) continue;
+      const [X, Y] = versEcran(p.x, p.y);
+      if (X < -20 || Y < -20 || X > innerWidth + 20 || Y > innerHeight + 20) continue;
+      ctx.fillStyle = COULEUR[p.quoi];
+      ctx.fillRect(X - r / 2, Y - r / 2, r, r);
+    }
+  }
+  return compte;
+}
+
+function tableau(c) {
+  const total = c.chez + c.route + c["sur-place"];
+  document.getElementById("compte").innerHTML = Object.keys(NOM).map((q) =>
+    `<tr><td><span class="pastille" style="background:${COULEUR[q]}"></span>${NOM[q]}</td>`
+    + `<td class="n">${c[q].toLocaleString("fr")}</td></tr>`).join("")
+    + `<tr><td>dehors</td><td class="n">${total ? Math.round((total - c.chez) / total * 100) : 0} %</td></tr>`;
+  document.getElementById("note").textContent =
+    `${cellules.length} cellules · ${total.toLocaleString("fr")} corps · `
+    + `${journal.length} lignes en attente`;
+}
+
+// --- la boucle --------------------------------------------------------------
+// Un intervalle, PAS requestAnimationFrame : celui-ci s'arrête net dès que
+// l'onglet passe en arrière-plan, et cette page est un instrument de mesure
+// qu'on laisse justement tourner pendant qu'on travaille ailleurs. Une journée
+// entière observée en accéléré ne doit pas se figer parce qu'on a changé de
+// fenêtre. Trente images par seconde suffisent largement à juger un mouvement.
+let precedent = performance.now();
+function tour() {
+  const t = performance.now();
+  const dt = Math.min(0.25, (t - precedent) / 1000);
+  precedent = t;
+  if (enMarche) {
+    minute += dt * vitesse;
+    if (minute >= 1440) { minute -= 1440; jour++; dernier.clear(); }
+  }
+  document.getElementById("heure").textContent = horloge(minute);
+  document.getElementById("jour").textContent =
+    `jour ${jour} — ${["lune","mardi","mercredi","jeudi","vendredi","samedi","dimanche"][jour % 7]}`;
+  tableau(image());
+  // Le versement appartient à la BOUCLE, pas à la notation : appelé depuis
+  // `noter()`, il partait au milieu du parcours de la cellule, pendant qu'on
+  // écrivait encore dans le tableau qu'il était en train de vider. Ici, on est
+  // entre deux images, le journal est au repos, et le seuil se relit à chaque
+  // tour. À soixante fois la vitesse réelle, une matinée produit quarante mille
+  // lignes : les garder en mémoire pour le plaisir de cliquer un bouton n'a
+  // aucun intérêt.
+  if (journal.length >= 4000) verser();
+}
+
+// --- les commandes ----------------------------------------------------------
+document.getElementById("vitesse").oninput = (e) => {
+  vitesse = VITESSES[+e.target.value];
+  // en minutes de JEU par seconde réelle : « 60× » ne veut rien dire quand une
+  // journée entière tient en vingt-quatre secondes
+  document.getElementById("vlabel").textContent = vitesse + " min/s";
+};
+document.getElementById("rayon").oninput = async (e) => {
+  rayon = +e.target.value;
+  document.getElementById("rlabel").textContent = rayon + " m";
+  await recharger();
+};
+document.getElementById("pause").onclick = (e) => {
+  enMarche = !enMarche;
+  e.target.textContent = enMarche ? "Pause" : "Reprendre";
+  e.target.classList.toggle("actif", !enMarche);
+};
+document.getElementById("verser").onclick = verser;
+document.getElementById("journal").onclick = () => {
+  const d = journal.slice(-12).map((l) =>
+    `${l.heure} ${l.role} ${l.quoi}${l.vers ? " → " + l.vers : ""}`).join("\n");
+  dire(d ? "dernières lignes en console" : "journal vide");
+  console.log(journal.slice(-40));
+};
+
+// glisser pour déplacer, molette pour approcher
+let prise = null;
+toile.onpointerdown = (e) => (prise = { x: e.clientX, y: e.clientY, c: { ...centre } });
+toile.onpointerup = () => (prise = null);
+toile.onpointermove = async (e) => {
+  if (!prise) return;
+  centre.x = prise.c.x - (e.clientX - prise.x) / echelle;
+  centre.y = prise.c.y + (e.clientY - prise.y) / echelle;
+};
+toile.onpointerleave = async () => { if (prise) { prise = null; await recharger(); } };
+toile.onwheel = (e) => {
+  e.preventDefault();
+  echelle = Math.max(0.08, Math.min(6, echelle * (e.deltaY < 0 ? 1.15 : 0.87)));
+};
+setInterval(() => { if (!prise) recharger(); }, 1500);
+
+async function recharger() {
+  const avant = cellules.map((c) => c.clef).join();
+  cellules = await G.autour(centre.x, centre.y, rayon, SOURCE);
+  if (cellules.map((c) => c.clef).join() !== avant)
+    dire(`${cellules.length} cellules chargées`);
+}
+
+// --- l'ouverture ------------------------------------------------------------
+(async () => {
+  dire("chargement…");
+  [manif, table] = await Promise.all([G.manifeste(SOURCE), J.table(SOURCE)]);
+  rangs = J.rangs(manif);
+  voirie = await J.voirie(SOURCE);
+  await recharger();
+  dire(`${voirie.noeuds.size} carrefours, ${manif.total.toLocaleString("fr")} corps au total`);
+  setInterval(tour, 33);
+})();
+</script>

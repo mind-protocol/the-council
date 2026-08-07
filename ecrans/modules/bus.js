@@ -68,25 +68,16 @@ window.Bus = (() => {
     rendus[type] = precedent ? (it, ctx)=>{ precedent(it, ctx); fn(it, ctx); } : fn;
   }
 
-  // Un emblème pour la fonction de chacun, lu dans son titre. L'ordre compte :
-  // du plus précis au plus général.
-  const EMBLEMES = [
-    [/mestre|maester|cha[iî]ne de/i, "📜"],
-    [/mar[ée]es|flotte|navire|nef|amiral|serpent de mer/i, "⚓"],
-    [/h[ée]riti[eè]re?\b|prince de peyredragon/i, "👑"],
-    [/reine|roi\b|couronn[ée]|trône/i, "👑"],
-    [/dragon|cavali[eè]re?\s+d|vol\b|patrouille|aile|montagne/i, "🐉"],
-    [/consort|[ée]poux|[ée]pouse|mari\b/i, "💍"],
-    [/castellan|capitaine|garde|chevalier|\bser\b|[ée]p[ée]e|arm/i, "⚔️"],
-    [/chuchoteur|espion|secret|ombre/i, "👁️"],
-    [/main du roi|intendant|conseil|chancelier/i, "🗝️"],
-    [/septon|foi\b|dieux|silencieuse/i, "🕯️"],
-    [/page\b|servante|valet|cuisin/i, "🕯️"],
-    [/lord|dame\b|sire\b|seigneur/i, "🏰"],
-  ];
+  // Un emblème pour la fonction de chacun, lu dans son titre. La table vit
+  // dans `taches.js` — c'est elle qui pose aussi les signes sur le plan du
+  // château, et un homme doit porter le même à côté de son nom et sur la carte.
+  // Le repli local ne sert qu'au cas où le module n'est pas chargé (l'atelier
+  // des voix, par exemple), et un titre non reconnu garde son point.
   function embleme(titre){
     if(!titre) return "";
-    for(const [motif, e] of EMBLEMES){ if(motif.test(titre)) return e; }
+    if(window.Taches && Taches.office){
+      return Taches.office({ titre }) || "•";
+    }
     return "•";
   }
 
@@ -129,13 +120,67 @@ window.Bus = (() => {
   // Un jalon dans la chronique quand le jour ou le lieu change : sans repère,
   // cent entrées se ressemblent.
   let dernierRepere = "";
-  function jalon(texte){
+  function jalon(texte, classe){
     const zone = $("fil-corps");
     if(!zone) return;
     const d = document.createElement("div");
-    d.className = "jalon";
+    d.className = "jalon" + (classe ? " " + classe : "");
     d.innerHTML = "<span>" + texte + "</span>";
     zone.appendChild(d);
+  }
+
+  // ---- le temps qui passe et le lieu qui change ------------------------
+  // Deux repères seulement, et jamais pour rien : une durée notable écoulée,
+  // un changement de lieu. Le reste (la minute qui avance pendant qu'on parle)
+  // se lit dans le bandeau, pas dans le fil.
+  const SEUIL_SAUT = 45; // minutes : en deçà, on est encore dans la même scène
+  const minutesAbsolues = (d) => d ? ((((d.annee || 0) * 12 + (d.lune || 0)) * 30
+    + (d.jour || 0)) * 1440 + (typeof d.minute === "number" ? d.minute : 0)) : null;
+
+  // « trois heures plus tard », « le lendemain », « deux lunes plus tard ».
+  // `jourChange` : quelques heures qui passent minuit ne se disent pas comme
+  // quelques heures dans l'après-midi — on nomme alors le jour où l'on tombe.
+  function texteEcoule(delta, date, jourChange){
+    const heure = (date && typeof date.minute === "number") ? ", " + montre(date.minute) : "";
+    const jours = Math.floor(delta / 1440);
+    if(jours >= 30){
+      const lunes = Math.round(jours / 30);
+      return (lunes === 1 ? "une lune plus tard" : lunes + " lunes plus tard") + heure;
+    }
+    if(jours >= 1){
+      if(jours === 1) return "le lendemain" + heure;
+      if(jours === 2) return "le surlendemain" + heure;
+      return jours + " jours plus tard" + heure;
+    }
+    const heures = Math.round(delta / 60);
+    const suite = jourChange && date ? heure + " — " + date.jour + "e jour" : heure;
+    if(heures <= 1) return "une heure plus tard" + suite;
+    return heures + " heures plus tard" + suite;
+  }
+
+  let derniereMinute = null;
+  let dernierLieu = "";
+  function reperes(it){
+    const date = it.date || dateAtteinte;
+    const abs = minutesAbsolues(it.date);
+    const lieu = $("lieu").textContent;
+    // Le tout premier repère pose le décor en entier : on ne sait pas d'où l'on vient.
+    if(derniereMinute === null && !dernierRepere){
+      dernierRepere = texteDate(date) + " · " + lieu;
+      jalon(dernierRepere);
+      derniereMinute = abs; dernierLieu = lieu;
+      return;
+    }
+    if(abs !== null && derniereMinute !== null && abs - derniereMinute >= SEUIL_SAUT){
+      const jourChange = Math.floor(abs / 1440) !== Math.floor(derniereMinute / 1440);
+      jalon(texteEcoule(abs - derniereMinute, it.date, jourChange), "jalon-temps");
+    }
+    if(abs !== null) derniereMinute = abs;
+    if(lieu && lieu !== "—" && lieu !== dernierLieu){
+      // Un changement de lieu se dit avec sa date : on a pu voyager pour y venir.
+      jalon(lieu + " · " + texteDate(date), "jalon-lieu");
+      dernierLieu = lieu;
+    }
   }
 
   // Quand une réplique se dit à voix haute, l'item suivant attend la fin de la
@@ -158,8 +203,41 @@ window.Bus = (() => {
 
   // Peindre un item : bandeau, jalon, jauge, puis le module qui sait le rendre.
   // Séparé de `jouerItem` pour qu'on puisse rendre hors file.
+  // ---- le passé, à la demande ------------------------------------------
+  // Le serveur ne sert qu'une fenêtre du fil. Quand le joueur remonte la
+  // chronique jusqu'en haut, on redescend la tranche d'avant et on l'insère
+  // au-dessus. Ces items-là sont du PASSÉ REJOUÉ : ils n'ont rien à dire à la
+  // salle, à la carte, au bandeau ni à la voix. `enArchive` est le drapeau que
+  // les modules consultent pour se taire (galerie, gestes, annales).
+  let enArchive = false;
+  let ancreArchive = null;
+  // Ce qui laisse une trace lisible dans la chronique, et rien d'autre. Un
+  // `salle`, un `effacer`, un `objectif` ou une `table` rejoués défigureraient
+  // le présent : on ne les redescend pas.
+  const ARCHIVABLES = { replique:1, geste:1, recit:1, breve:1, pensee:1, vous:1,
+    reecrit:1, question:1, reponse:1, meta:1, coulisses:1, run:1, marque:1 };
+
   function rendre(it, instant){
-    if(it.date){ dateAtteinte = it.date; $("date").textContent = texteDate(it.date); }
+    if(enArchive){
+      if(!ARCHIVABLES[it.type]) return;
+      const fn = rendus[it.type];
+      instantCourant = true;
+      if(fn) fn(it, {preparer, poster, envoyer, instant:true});
+      instantCourant = false;
+      return;
+    }
+    // Un changement de scène vide l'écran : le repère suivant repose le décor
+    // en entier plutôt que d'annoncer un écoulement depuis un fil effacé.
+    if(it.type === "effacer"){ dernierRepere = ""; derniereMinute = null; dernierLieu = ""; }
+    if(it.date){
+      dateAtteinte = it.date;
+      $("date").textContent = texteDate(it.date);
+      // L'horloge de la PARTIE, publiée une fois pour toutes : le décor en
+      // volume (ville3d) la lit pour savoir où sont les gens à cette
+      // minute-là. Il n'en tient aucune : deux horloges, c'est une partie qui
+      // diverge.
+      window.Horloge = it.date;
+    }
     // `salle` nomme la salle du plan local (plan.js) quand l'en-tête ne suffit
     // pas à la deviner ; elle vaut jusqu'au prochain changement de lieu.
     if(it.lieu){ $("lieu").textContent = it.lieu; delete $("lieu").dataset.salle; }
@@ -170,12 +248,7 @@ window.Bus = (() => {
     if(it.date && typeof it.date.minute === "number"){
       poserHeure(montre(it.date.minute) + (it.moment ? " · " + it.moment : ""), it.date.minute);
     } else if(it.moment) poserHeure(it.moment);
-    if(it.date || it.lieu || it.moment){
-      const repere = texteDate(it.date || dateAtteinte) +
-        (moment ? " · " + moment : "") +
-        (($("lieu").textContent && $("lieu").textContent !== "—") ? " · " + $("lieu").textContent : "");
-      if(repere !== dernierRepere){ dernierRepere = repere; jalon(repere); }
-    }
+    if(it.date || it.lieu || it.moment) reperes(it);
     if(typeof it.tension === "number") document.querySelector("#jauge i").style.width = it.tension + "%";
     const fn = rendus[it.type];
     instantCourant = !!instant;
@@ -199,6 +272,42 @@ window.Bus = (() => {
     }
   }
 
+  // Le plus ancien index de flux qu'on tienne à l'écran. null tant que rien
+  // n'est chargé ; 0 quand on est remonté jusqu'au premier jour de la partie.
+  let plusVieuxTenu = null;
+  let chargeEnCours = false;
+
+  async function remonter(){
+    if(chargeEnCours || plusVieuxTenu === null || plusVieuxTenu <= 0) return;
+    chargeEnCours = true;
+    const zone = $("fil-corps");
+    try{
+      const r = await fetch("/scene?avant=" + plusVieuxTenu);
+      const s = await r.json();
+      const vieux = s.items || [];
+      if(vieux.length){
+        // On rattrape le défilement à la main : sans ça, insérer mille pixels
+        // au-dessus jetterait le joueur au bas de ce qu'il était en train de lire.
+        const h0 = zone.scrollHeight, s0 = zone.scrollTop;
+        enArchive = true;
+        ancreArchive = zone.firstChild;
+        try{ for(const it of vieux) rendre(it, true); }
+        finally{ enArchive = false; ancreArchive = null; }
+        zone.scrollTop = s0 + (zone.scrollHeight - h0);
+      }
+      plusVieuxTenu = s.debut || 0;
+    }catch(e){ /* on réessaiera au prochain défilement */ }
+    chargeEnCours = false;
+  }
+
+  // Le geste : arriver en haut de la chronique appelle la tranche d'avant.
+  window.addEventListener("DOMContentLoaded", ()=>{
+    const zone = $("fil-corps");
+    if(zone) zone.addEventListener("scroll", ()=>{
+      if(zone.scrollTop < 120) remonter();
+    });
+  });
+
   let prochainSondage = null;
   async function sonderMaintenant(){
     if(prochainSondage){ clearTimeout(prochainSondage); prochainSondage = null; }
@@ -215,9 +324,19 @@ window.Bus = (() => {
       const r = await fetch("/scene");
       const s = await r.json();
       const items = s.items || [];
-      if(items.length > consommes){
-        const nouveaux = items.slice(consommes);
-        consommes = items.length;
+      // Le serveur ne sert qu'une fenêtre du fil et dit, avec `debut`, combien
+      // de lignes il a coupées en tête. Le curseur reste donc compté sur le flux
+      // entier : sans ça, la fenêtre glissant à chaque nouvel item, `consommes`
+      // resterait collé à sa longueur et plus rien ne se jouerait.
+      const debut = s.debut || 0;
+      const total = debut + items.length;
+      if(consommes < debut) consommes = debut;
+      // La tranche la plus ancienne qu'on ait à l'écran : point de départ du
+      // chargement à rebours quand le joueur remonte lire.
+      if(plusVieuxTenu === null) plusVieuxTenu = debut;
+      if(total > consommes){
+        const nouveaux = items.slice(consommes - debut);
+        consommes = total;
         $("attente").classList.remove("actif");
         // Au rejeu de l'historique, l'ordre du fichier fait foi : on ne trie
         // rien, sinon toutes les paroles du joueur remonteraient en tête.
@@ -281,6 +400,14 @@ window.Bus = (() => {
       (window.Attention ? Attention.html(texte, {}) : texte) + "</span></div>";
     // au rejeu de l'historique, rien ne s'anime : tout est déjà arrivé.
     if(!instantCourant) d.classList.add("entre");
+    // Le passé rechargé s'insère AU-DESSUS, devant la même ancre : les items
+    // arrivant dans l'ordre, l'ordre est gardé. Et on ne touche pas au défilement
+    // — c'est l'appelant qui le rattrape, une fois la tranche entière posée.
+    if(enArchive){
+      zone.insertBefore(d, ancreArchive);
+      if(window.Entites) Entites.traiter(d);
+      return d;
+    }
     // si le joueur est remonté lire, on ne le ramène pas de force en bas
     const enBas = zone.scrollHeight - zone.scrollTop - zone.clientHeight < 90;
     zone.appendChild(d);
@@ -327,5 +454,6 @@ window.Bus = (() => {
 
   // rendus est exposé pour prévisualiser un item sans toucher au flux :
   //   Bus.rendus.salle(item, {preparer:Bus.preparer, poster(){}, envoyer(){}, instant:true})
-  return {enregistrer, preparer, poster, envoyer, chronique, rendus, sonderMaintenant, embleme, rendre};
+  return {enregistrer, preparer, poster, envoyer, chronique, rendus, sonderMaintenant,
+    embleme, rendre, enArchive: ()=>enArchive};
 })();

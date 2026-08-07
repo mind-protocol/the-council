@@ -72,7 +72,8 @@ window.Entites = (() => {
       ph.dataset.entOk = "1";
       Array.from(ph.childNodes).forEach((n) => {
         if (n.nodeType === 3) envelopper(n);
-        else if (n.nodeType === 1 && n.tagName === "I") {
+        // un nom pris dans un appui (**gras**) ou une incise reste cliquable
+        else if (n.nodeType === 1 && (n.tagName === "I" || n.classList.contains("appui"))) {
           Array.from(n.childNodes).forEach((nn) => { if (nn.nodeType === 3) envelopper(nn); });
         }
       });

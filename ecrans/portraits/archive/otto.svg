@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Otto Hightower">
+  <title>Otto Hightower</title>
+  <defs>
+    <radialGradient id="bg-otto" cx="50%" cy="32%" r="80%">
+      <stop offset="0%" stop-color="#322a20"/>
+      <stop offset="55%" stop-color="#241d16"/>
+      <stop offset="100%" stop-color="#141009"/>
+    </radialGradient>
+    <clipPath id="clip-otto"><circle cx="64" cy="64" r="52"/></clipPath>
+  </defs>
+  <!-- anneau héraldique -->
+  <circle cx="64" cy="64" r="63" fill="#71716f"/>
+  <circle cx="64" cy="64" r="57.5" fill="none" stroke="#e9e7e1" stroke-width="7" stroke-dasharray="15.05 15.05"/>
+  <!-- disque intérieur -->
+  <circle cx="64" cy="64" r="52" fill="url(#bg-otto)" stroke="#7a6342" stroke-width="1.2"/>
+  <!-- buste -->
+  <g clip-path="url(#clip-otto)">
+    <rect x="57.5" y="62" width="13" height="28" rx="2" fill="#7d6853"/>
+    <path d="M16,128 C22,98 42,86 64,86 C86,86 106,98 112,128 Z" fill="#2c2620"/>
+    <path d="M30,106 C38,92 50,88 64,88 C78,88 90,92 98,106" fill="none" stroke="#e9e7e1" stroke-width="2.4" opacity="0.9"/>
+    <ellipse cx="64" cy="54" rx="15.5" ry="18.5" fill="#7d6853"/>
+    <path d="M48.3,55 C47.2,42 49.6,36 54.8,33 C51.8,40 51,47.5 51.8,55 Z M79.7,55 C80.8,42 78.4,36 73.2,33 C76.2,40 77,47.5 76.2,55 Z" fill="#9a948c"/>
+    <path d="M50,55 C50,73 55,82 64,82.5 C73,82 78,73 78,55 C75.5,66.5 70.5,70 64,70 C57.5,70 52.5,66.5 50,55 Z" fill="#9a948c"/>
+    <path d="M46,95 Q64,105 82,95" fill="none" stroke="#d3a933" stroke-width="3" stroke-dasharray="5 3" opacity="0.95"/>
+  </g>
+  <!-- badge de maison -->
+  <circle cx="64" cy="113" r="11.5" fill="#191510" stroke="#7a6342" stroke-width="1.2"/>
+  <g transform="translate(64 113)"><path d="M-2.6,6 L-2.6,-2.6 L-1.5,-2.6 L-1.5,-1.4 L-0.6,-1.4 L-0.6,-2.6 L0.6,-2.6 L0.6,-1.4 L1.5,-1.4 L1.5,-2.6 L2.6,-2.6 L2.6,6 Z" fill="#e9e7e1"/><g transform="translate(0 -4.6) scale(0.55)"><path d="M0,-6.5 C2.2,-3.5 2.4,-0.5 0,2.5 C-2.4,-0.5 -2.2,-3.5 0,-6.5 Z" fill="#d97b2e"/></g></g>
+</svg>

@@ -1,0 +1,369 @@
+{
+  "activites": [
+    {
+      "id": "vivres-peyredragon",
+      "quoi": "Ce que l'ile a dans ses celliers : la maisonnee, la garnison, et ce que la guerre a fait monter de bouches",
+      "porteur": {
+        "type": "lieu",
+        "id": "peyredragon"
+      },
+      "lieu_id": "peyredragon",
+      "mandat": null,
+      "mesure": [
+        {
+          "id": "jours-de-vivres",
+          "quoi": "jours de vivres pour la maisonnee et la garnison au rythme actuel",
+          "valeur": 83,
+          "unite": "jours",
+          "rythme": {
+            "par": -1
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": 240,
+          "depend_de": []
+        }
+      ],
+      "seuils": [
+        {
+          "id": "cellier-court",
+          "mesure_id": "jours-de-vivres",
+          "quand": "sous",
+          "valeur": 30,
+          "promeut": "orbite",
+          "affaire": "Un mois de vivres, et personne dont ce soit la charge. Acheter au prix de la guerre, rationner, ou renvoyer des bouches sur le continent.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": null,
+      "date_maj": "129.3.22"
+    },
+    {
+      "id": "recrutement-peyredragon",
+      "quoi": "Ce qui s'inscrit sous la voute de la porte du Dragon, et ce qu'on doit a ceux qui s'y sont inscrits",
+      "porteur": {
+        "type": "personnage",
+        "id": "le-sanglier"
+      },
+      "lieu_id": "peyredragon",
+      "mandat": null,
+      "mesure": [
+        {
+          "id": "hommes-au-role",
+          "quoi": "hommes marques au role, en sus de la garnison de ser Robert",
+          "valeur": 21,
+          "unite": "hommes",
+          "rythme": {
+            "par": 3,
+            "jours": 2
+          },
+          "reliquat": 1,
+          "plancher": 0,
+          "plafond": 400,
+          "depend_de": [
+            "vivres-peyredragon.jours-de-vivres"
+          ]
+        },
+        {
+          "id": "solde-due",
+          "quoi": "cerfs dus aux hommes marques et non payes",
+          "valeur": 6,
+          "unite": "cerfs",
+          "rythme": {
+            "par": 6
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": null,
+          "depend_de": []
+        }
+      ],
+      "seuils": [
+        {
+          "id": "solde-intenable",
+          "mesure_id": "solde-due",
+          "quand": "sur",
+          "valeur": 2000,
+          "promeut": "scene",
+          "affaire": "On ne peut plus payer ce qui a ete promis sous la voute : trouver l'or, ou renvoyer des hommes deja armes qui savent ou sont les armes.",
+          "franchi_le": null
+        },
+        {
+          "id": "file-tarie",
+          "mesure_id": "hommes-au-role",
+          "quand": "sous",
+          "valeur": 1,
+          "promeut": "orbite",
+          "affaire": "Plus personne ne se presente sous la voute. Le Sanglier en connait la raison et la donnera en un nombre, sans la commenter.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": {
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 22,
+          "minute": 574
+        },
+        "a": "rhaenyra",
+        "par": "le-sanglier",
+        "quoi": "24 au role dont 4 du Marais du sud et 6 du bourg ; 6 seulement ont les jambes ; 300 cerfs de solde dus. Chiffres donnes sans arrondi et verifies au role avant d etre dits.",
+        "fiabilite": "sure"
+      },
+      "date_maj": "129.3.22"
+    },
+    {
+      "id": "marais-sud-peyredragon",
+      "quoi": "Le sel que tirent les vingt et un hommes du marais du sud",
+      "porteur": {
+        "type": "personnage",
+        "id": "doss-marran"
+      },
+      "lieu_id": "peyredragon",
+      "mandat": null,
+      "mesure": [
+        {
+          "id": "muids-de-sel",
+          "quoi": "muids de sel en reserve au bourg",
+          "valeur": 12,
+          "unite": "muids",
+          "rythme": {
+            "par": 1,
+            "jours": 2
+          },
+          "reliquat": 1,
+          "plancher": 0,
+          "plafond": 40,
+          "depend_de": []
+        }
+      ],
+      "seuils": [
+        {
+          "id": "plus-de-sel",
+          "mesure_id": "muids-de-sel",
+          "quand": "sous",
+          "valeur": 3,
+          "promeut": "orbite",
+          "affaire": "Plus de sel au bourg : ce qu'on peche pourrit sur place, et Doss Marran parlera de ses vingt et un hommes avant de parler du sel.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": null,
+      "date_maj": "129.3.22"
+    },
+    {
+      "id": "sechoirs-peyredragon",
+      "quoi": "Ce que les sechoirs du bourg mettent de cote, tant qu'ils ont du sel et du fil",
+      "porteur": {
+        "type": "personnage",
+        "id": "willa-sechoirs"
+      },
+      "lieu_id": "peyredragon",
+      "mandat": null,
+      "mesure": [
+        {
+          "id": "poisson-seche",
+          "quoi": "muids de poisson seche en reserve, ce qui tiendra si le port se ferme",
+          "valeur": 32,
+          "unite": "muids",
+          "rythme": {
+            "par": 2
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": 200,
+          "depend_de": [
+            "marais-sud-peyredragon.muids-de-sel"
+          ]
+        }
+      ],
+      "seuils": [
+        {
+          "id": "sechoirs-a-l-arret",
+          "mesure_id": "poisson-seche",
+          "quand": "sous",
+          "valeur": 10,
+          "promeut": "orbite",
+          "affaire": "Les sechoirs n'ont plus rien a ecouler : le bourg cesse de vendre, et ce qui nourrissait l'ile en sus des celliers cesse d'arriver.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": null,
+      "date_maj": "129.3.22"
+    },
+    {
+      "id": "port-peyredragon",
+      "quoi": "Garder le port en etat de travailler pendant qu'on fait la guerre avec",
+      "porteur": {
+        "type": "personnage",
+        "id": "rulf-corne"
+      },
+      "lieu_id": "peyredragon",
+      "mandat": null,
+      "mesure": [
+        {
+          "id": "nefs-en-etat",
+          "quoi": "nefs du port en etat de prendre la mer sous trois jours",
+          "valeur": 9,
+          "unite": "nefs",
+          "rythme": {
+            "par": 1,
+            "jours": 4
+          },
+          "reliquat": 1,
+          "plancher": 0,
+          "plafond": 14,
+          "depend_de": []
+        }
+      ],
+      "seuils": [
+        {
+          "id": "port-a-sec",
+          "mesure_id": "nefs-en-etat",
+          "quand": "sous",
+          "valeur": 4,
+          "promeut": "orbite",
+          "affaire": "Moins de quatre coques en etat : ce qui doit partir de l'ile ne partira pas quand on le voudra, et Rulf le sait depuis huit jours.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": null,
+      "date_maj": "129.3.22"
+    },
+    {
+      "id": "coureurs-de-la-reine",
+      "quoi": "Ce que les deux jetons de plomb portent d'un bout de l'ile a l'autre : les courses confiees, et ce qu'il reste de jambes pour les porter",
+      "porteur": {
+        "type": "personnage",
+        "id": "nesse"
+      },
+      "lieu_id": "peyredragon",
+      "mandat": "Office cree et borne par la reine le 22e jour de la 3e lune 129 (livre Les regles internes du gouvernement, TROISIEME OFFICE) : que sa parole arrive telle qu'elle l'a dite ; passage partout, a toute heure, sans attendre derriere aucune porte ; aucun ecrit qu'on ne leur ait remis devant temoin ; nourris a sa table, payes sur sa bourse au tarif fixe par le sergent au role ; deux jetons de plomb, et le castellan apporte le troisieme avec la main qui le tient.",
+      "mesure": [
+        {
+          "id": "courses-en-attente",
+          "quoi": "courses confiees aux deux jetons et pas encore portees",
+          "valeur": 2,
+          "unite": "courses",
+          "rythme": {
+            "par": 1,
+            "jours": 2
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": null,
+          "depend_de": []
+        },
+        {
+          "id": "jours-de-jambes",
+          "quoi": "jours de course qu'il reste aux deux avant que l'un des deux ne tienne plus, faute de releve",
+          "valeur": 14,
+          "unite": "jours",
+          "rythme": {
+            "par": -1
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": 30,
+          "depend_de": []
+        }
+      ],
+      "seuils": [
+        {
+          "id": "courses-en-souffrance",
+          "mesure_id": "courses-en-attente",
+          "quand": "sur",
+          "valeur": 6,
+          "promeut": "orbite",
+          "affaire": "Nesse monte dire lesquelles des paroles de la reine ne sont pas parties, sans rien autour, et JE N'EN SAIS RIEN pour le reste : il faut un troisieme jeton de plomb - celui que le castellan a ordre d'apporter avec la main qui le tient - ou renoncer a des paroles deja donnees.",
+          "franchi_le": null
+        },
+        {
+          "id": "jambes-usees",
+          "mesure_id": "jours-de-jambes",
+          "quand": "sous",
+          "valeur": 3,
+          "promeut": "orbite",
+          "affaire": "Le garcon boite et le cache pour ne pas etre renvoye au role ; sa mere le dira avant lui. Donner du repos et perdre la moitie des courses du jour, ou lever un troisieme coureur contre la regle des deux jetons.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": null,
+      "date_maj": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 23
+      }
+    },
+    {
+      "id": "bris-coque-du-quinze",
+      "quoi": "Demonter la coque de commerce echouee le 15 sur la vase, avant que la vive-eau du 27 la reprenne",
+      "porteur": {
+        "type": "personnage",
+        "id": "hann-bourbe"
+      },
+      "lieu_id": "port-real",
+      "mandat": "Hann tient l'aire et les six hommes. Depuis le 23e jour : halage a l'elingue par la greve basse, jamais par la porte ; et interdiction de rien descendre aux chantiers du quai avant que Marlo y soit alle lui-meme.",
+      "mesure": [
+        {
+          "id": "bois-descendu",
+          "quoi": "Valeur du bois, du fer et du cordage deja descendus a terre (1 dragon d'or = 210 cerfs)",
+          "unite": "cerfs",
+          "valeur": 1150,
+          "rythme": {
+            "par": 210,
+            "jours": 1
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": 1890,
+          "depend_de": []
+        },
+        {
+          "id": "jours-avant-vive-eau",
+          "quoi": "Jours avant la grande maree qui disperse ce qui reste",
+          "unite": "jours",
+          "valeur": 4,
+          "rythme": {
+            "par": -1,
+            "jours": 1
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": null,
+          "depend_de": []
+        }
+      ],
+      "seuils": [
+        {
+          "id": "vive-eau-arrivee",
+          "mesure_id": "jours-avant-vive-eau",
+          "quand": "sous",
+          "valeur": 1,
+          "promeut": "orbite",
+          "affaire": "La grande maree est sur la coque et il reste du bois dessus : Hann veut savoir si l'on sacrifie une nuit d'hommes a tout descendre en catastrophe, ou si l'on laisse la mer prendre le reste.",
+          "franchi_le": null
+        },
+        {
+          "id": "coque-epuisee",
+          "mesure_id": "bois-descendu",
+          "quand": "sur",
+          "valeur": 1850,
+          "promeut": "orbite",
+          "affaire": "La coque est videe : Hann vient dire ce qu'elle a rendu au total, et demander ce qu'on fait des six hommes maintenant qu'il n'y a plus rien sur l'aire.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 23
+      },
+      "date_maj": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 23
+      }
+    }
+  ]
+}

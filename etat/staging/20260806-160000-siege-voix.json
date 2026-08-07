@@ -1,0 +1,748 @@
+{
+  "genere_le": "2026-08-06T16:00:00",
+  "auteur": "agent — conception du siege « la voix de la reine » (second joueur : Aurore Inchauspe)",
+  "doc": "docs/siege-voix.md",
+  "note": "PROPOSITION, PAS UN TICK. Ecrite a la main, sans horloge calculee : pas d'empreintes, la garde de fraicheur ne s'applique donc pas. Elle suppose UN choix deja fait par le joueur : la proclamation part en VERSION B (justice sur des hommes en armes). Les versions A et C sont dans docs/siege-voix.md, pretes a coller — si le joueur choisit autrement, remplace les diffusions 8 a 16 avant d'appliquer. NE PAS LANCER TEL QUEL SANS AVOIR LU.",
+  "ordre_d_application": [
+    "1. Coller a la main : 'maison_a_ajouter' dans etat/maisons.json, 'lieu_a_ajouter' dans etat/lieux.json, 'personnage_a_ajouter' dans etat/personnages.json. Le vocabulaire de appliquer.py ne cree ni maison, ni lieu, ni personnage ; sans ce collage la mutation 1 sera refusee pour 'personnage inconnu'.",
+    "2. python scripts/appliquer.py 20260806-160000-siege-voix.json  (blanc)",
+    "3. python scripts/appliquer.py 20260806-160000-siege-voix.json --vraiment",
+    "4. Coller a la main 'objectifs_a_ajouter' dans etat/objectifs.json et 'info_a_ajouter' dans etat/info.json (tables hors vocabulaire de mutation).",
+    "5. python scripts/tick.py --verifier"
+  ],
+  "maison_a_ajouter": {
+    "id": "maison-inchauspe",
+    "nom": "Maison Inchauspé",
+    "devise": "Rien ne s'écrit sans nous",
+    "blason": "D'or à trois noix de sable posées deux et une",
+    "siege_id": "la-noiseraie",
+    "suzerain_id": null,
+    "allegeance_affichee": "neutre",
+    "allegeance_reelle": "neutre",
+    "or": 22000,
+    "revenus_lune": 1400,
+    "levees_dispo": 40,
+    "levees_max": 60,
+    "statut": "intacte",
+    "canon": false
+  },
+  "lieu_a_ajouter": {
+    "id": "la-noiseraie",
+    "nom": "La Noiseraie",
+    "region": "terres-couronne",
+    "type": "chateau",
+    "controle_id": "maison-inchauspe",
+    "jours_de_pr": 2
+  },
+  "personnage_a_ajouter": {
+    "id": "aurore-inchauspe",
+    "nom": "Aurore Inchauspé",
+    "maison_id": "maison-inchauspe",
+    "titre": "Fille aînée de la maison Inchauspé, de La Noiseraie ; tient le livre des encres pour son père",
+    "naissance": 100,
+    "traits": [
+      "affable",
+      "calculatrice",
+      "déracinée",
+      "insolente"
+    ],
+    "objectifs": [
+      {
+        "but": "Faire de sa maison une maison qu'on ne peut plus renvoyer aux comptes — être à la table, pas dans le livre",
+        "priorite": 1
+      },
+      {
+        "but": "Que La Noiseraie ne soit brûlée par aucun des deux camps, ce qui suppose de n'être jamais tout à fait à l'un",
+        "priorite": 2
+      },
+      {
+        "but": "Savoir avant tout le monde où l'on écrit beaucoup, et ce que cela veut dire",
+        "priorite": 3
+      }
+    ],
+    "maniere": "Appelle les grands par le nom que leur nourrice leur donnait, et glisse un chiffre exact au milieu d'une gentillesse. Ne hausse jamais la voix ; quand on la coupe, elle reprend à la même syllabe.",
+    "portrait": {
+      "fichier": "ecrans/portraits/aurore-inchauspe.svg",
+      "physique": "Vingt-neuf ans, petite et droite, mise coûtant plus cher que son rang ; l'index et le majeur droits bruns jusqu'à la deuxième phalange, tache que le brou ne lâche pas.",
+      "prompt_ideogram": "oil painting portrait, dark fantasy, GoT style, muted colors, cold hall light, small upright woman of twenty-nine, expensively plain merchant's finery above her station, right index and middle fingers stained walnut-brown to the knuckle, warm smile that does not reach the eyes, ledger clasp at her belt"
+    },
+    "etat": "dormant",
+    "lieu_id": "la-noiseraie",
+    "condition": "libre"
+  },
+  "mutations_proposees": [
+    {
+      "table": "intentions",
+      "operation": "tete_ajouter",
+      "pourquoi": "La titulaire entre en scene : tete pleine, echelle 'scene'. Ses cinq etapes SONT ses agents — Denys a Sombreval, Willa au bourg, les six chanteurs, la chaire par septa Marlow, et le releve des encres qui n'appartient qu'a elle.",
+      "valeur": {
+        "personnage_id": "aurore-inchauspe",
+        "echelle": "scene",
+        "croyances": [
+          "La version de Sombreval a quatre jours d'avance sur celle de la reine, et a Vivesaigues elle compte deja trois mille morts au lieu de douze cents",
+          "On ne dement pas un chiffre, on le remplace : il faut une phrase plus courte a retenir que celle de lord Darklyn",
+          "Cette table la prendra pour une marchande tant qu'elle n'aura pas donne un chiffre avant une image",
+          "Le livre des encres dit ou l'on ecrit beaucoup avant que quiconque sache pourquoi : Repos-des-Freux a triple sa ration en deux lunes, et personne a ce conseil ne le sait",
+          "Son pere continue de livrer les roukeries de Port-Real, et elle n'a aucun moyen de le lui faire cesser sans ruiner La Noiseraie"
+        ],
+        "ignore": [
+          "Que le prince Daemon entretient deja sa propre bouche a Port-Real, et qu'elle marchera un jour sur ses plates-bandes",
+          "Que le corbeau d'Accalmie n'est jamais parti, et que lord Borros lira donc sa proclamation avant d'avoir recu l'offre de la reine",
+          "Ce que la reine a reellement vu sur la route de Sombreval : personne ne le lui a raconte, et la reine n'a rien voulu dicter a quiconque"
+        ],
+        "intention": "Faire exister une charge que cette table trouve vulgaire, en la payant d'avance d'un service qu'aucun d'eux ne peut rendre : rattraper les quatre jours d'avance de la lettre de Sombreval avant que le chiffre de trois mille ne devienne le vrai.",
+        "plan": [
+          {
+            "id": "voix-faire-accepter-la-charge",
+            "quoi": "Obtenir de la reine, devant le conseil et tout haut, que la charge existe : un nom, un budget et le droit de donner des ordres a des porteurs. Demande chiffree : 3 000 dragons pour la premiere lune sur les 40 000 de la cassette, quatre corbeaux sur les quatorze qui restent, aucun homme d'armes, aucune coque de plus.",
+            "etat": "en-cours",
+            "jours_restants": 0,
+            "depend_de": [],
+            "cout": [
+              "un quart d'heure pris sur l'ordre du jour du conseil",
+              "3 000 dragons sur 40 000",
+              "quatre corbeaux sur quatorze",
+              "l'accord de la reine dit tout haut, et non ecrit apres coup"
+            ],
+            "si_bloque": "Si on lui refuse le titre, elle prend l'ouvrage sans le titre et le paie sur l'or de sa propre maison — niable, sans autorite sur personne, et elle sait en l'acceptant qu'on le lui rappellera comme une dette."
+          },
+          {
+            "id": "voix-proclamation-route-de-sombreval",
+            "quoi": "Faire partir la proclamation sur le feu de la route de Sombreval : quatre corbeaux particuliers ecrits un par un (Sombreval, Pointe-Aigue, l'Ile-aux-Pinces, Repos-des-Freux), un cinquieme a Port-Real pour preempter, un acte scelle porte a Rosby par un cavalier nomme, et le heraut au bourg le soir meme.",
+            "etat": "en-cours",
+            "jours_restants": 1,
+            "depend_de": [
+              "voix-faire-accepter-la-charge"
+            ],
+            "cout": [
+              "quatre corbeaux",
+              "un cavalier nomme, cinq jours de route pour Rosby",
+              "la cire et le sceau de la reine",
+              "une phrase que la reine accepte de signer de son nom"
+            ],
+            "si_bloque": "Si la reine ne signe rien, elle fait crier au bourg le seul chiffre verifiable — douze cents hommes, quarante prisonniers vivants — sans nommer la reine. Un chiffre nu vaut mieux qu'un silence, et un chiffre nu ne se retracte pas."
+          },
+          {
+            "id": "voix-six-chanteurs",
+            "quoi": "Placer six chanteurs sur les coques louees en rade : deux vers le Conflans par Sombreval, deux vers le Bec de Massey, deux vers les Terres de l'Orage, avec une complainte de neuf couplets ou le chiffre de douze cents tombe sur la rime.",
+            "etat": "en-cours",
+            "jours_restants": 4,
+            "depend_de": [
+              "voix-faire-accepter-la-charge"
+            ],
+            "cout": [
+              "600 dragons pour la lune",
+              "six places dans les onze coques louees, a demander a Rulf Corne",
+              "quatre lunes avant qu'une seule chanson revienne"
+            ],
+            "si_bloque": "Si on ne lui donne pas les places, elle en envoie deux a pied vers le Conflans et garde les quatre pour la baie : portee de moitie, delai double, et elle le dit au lieu de le cacher."
+          },
+          {
+            "id": "voix-la-chaire",
+            "quoi": "Obtenir par septa Marlow que la phrase de l'acte soit reprise en chaire a Peyredragon, a Pointe-Aigue et a Sweetport Sound — en sachant qu'aucun septon ne la lira sans y ajouter la sienne.",
+            "etat": "en-cours",
+            "jours_restants": 6,
+            "depend_de": [
+              "voix-proclamation-route-de-sombreval"
+            ],
+            "cout": [
+              "l'accord de septa Marlow, qui ne s'achete pas",
+              "300 dragons d'aumone et de cire",
+              "la phrase que chaque septon ajoutera et qu'elle ne pourra pas retirer"
+            ],
+            "si_bloque": "Si la Foi de la baie se tait, elle achete les crieurs de trois places de marche : plus court, moins profond, et a recommencer chaque lune."
+          },
+          {
+            "id": "voix-releve-des-encres",
+            "quoi": "Faire venir de La Noiseraie le releve des livraisons d'encre des deux dernieres lunes, roukerie par roukerie, et le lire comme une carte : trois fois la ration ordinaire quelque part veut dire qu'on y ecrit trois fois plus, donc qu'on y prepare quelque chose. Ne dit jamais quoi — seulement ou, et depuis quand.",
+            "etat": "en-cours",
+            "jours_restants": 9,
+            "depend_de": [],
+            "cout": [
+              "un pli a son pere, qui repondra ou ne repondra pas — deux jours d'aller, deux de retour par barque",
+              "le livre de comptes de sa maison, qui n'a jamais quitte La Noiseraie",
+              "que son frere accepte de copier trente-neuf lignes sans demander pourquoi"
+            ],
+            "si_bloque": "Si son pere refuse le livre — et il refusera si on lui laisse entendre que la reine le lira —, elle se rabat sur ce qu'elle sait de tete des quatre dernieres livraisons qu'elle a signees elle-meme : quatre roukeries au lieu de trente-neuf, et sans les dates, ce qui ote au releve tout ce qui en faisait un avertissement."
+          }
+        ],
+        "declencheurs": [
+          {
+            "si": "Un seigneur ou un envoye cite tout haut, contre la reine, une clause d'un acte qu'elle a fait sceller",
+            "alors": "Elle ne dement pas : elle fait relire l'acte en entier par un heraut au meme endroit, en comptant sur ce qu'une lecture complete est plus ennuyeuse qu'une citation.",
+            "une_fois": false
+          },
+          {
+            "si": "Quelqu'un exige tout haut qu'elle cesse de livrer l'encre a Port-Real",
+            "alors": "Elle repond par le chiffre — ce que cela coute a sa maison et en combien de jours la Couronne saurait d'ou vient la coupure — puis propose l'inverse : continuer de livrer, et rapporter ce que les commandes disent. Elle ne demande pas la permission de continuer.",
+            "une_fois": false
+          },
+          {
+            "si": "Un envoye de la reine part porter une offre a un seigneur (Jacaerys, Lucerys, un heraut)",
+            "alors": "Elle exige de lui donner par ecrit, en trois phrases, ce qu'il devra dire du feu de la route s'il en est presse — et refuse de le laisser partir sans.",
+            "une_fois": false
+          }
+        ],
+        "attitude_joueur": "Elle a ete elevee chez cinq maisons qui vont devoir choisir et n'a jamais rien eu a elle : elle sert la reine comme on tient un contrat, avec exactitude et sans devotion, et elle attend le jour ou l'on decouvrira que son pere livre toujours l'autre camp.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 21
+        }
+      }
+    },
+    {
+      "table": "personnages",
+      "cible": "aurore-inchauspe",
+      "operation": "personnage",
+      "champs": {
+        "etat": "actif",
+        "lieu_id": "peyredragon"
+      },
+      "pourquoi": "Elle entre en scene et debarque au quai de Peyredragon : dormante -> active, coherent avec sa tete d'intentions."
+    },
+    {
+      "table": "personnages",
+      "cible": "septa-marlow",
+      "operation": "personnage",
+      "champs": {
+        "etat": "actif"
+      },
+      "pourquoi": "La chaire devient un canal : la septa cesse d'etre du decor de la nurserie et pese sur ce qui se dit au bourg."
+    },
+    {
+      "table": "intentions",
+      "operation": "tete_ajouter",
+      "pourquoi": "Tete d'orbite pour la septa promue : elle est le canal de la Foi, et elle ajoutera toujours sa phrase.",
+      "valeur": {
+        "personnage_id": "septa-marlow",
+        "echelle": "orbite",
+        "croyances": [
+          "La reine a fait bruler des hommes deux jours avant d'etre couronnee, et personne dans cette maison n'a encore ose lui demander ce qu'elle en pense",
+          "Les septons de la baie sont neuf a portee de barque, ils se connaissent tous, et pas un ne lira une phrase de reine sans y coudre la sienne",
+          "La reine douairiere est une Hightower : si Villevieille parle la premiere aux petites gens, la baie suivra Villevieille",
+          "Elle n'a pas encore eu a choisir entre la Foi et cette maison, et ce jour-la elle choisira les deux petits"
+        ],
+        "ignore": [
+          "Que la charge de la voix de la reine se sert d'elle comme d'un canal, et non comme d'une conscience",
+          "Que la femme qui vient de lui demander la chaire vend son encre aux roukeries des deux camps"
+        ],
+        "intention": "Porter la phrase de la reine dans les septs de la baie parce qu'elle croit qu'il vaut mieux qu'on l'y entende de sa bouche que de celle de Villevieille — et y ajouter, sans le cacher a personne, l'avertissement qu'elle juge du : que le feu n'a pas ete donne aux hommes pour trancher leurs querelles.",
+        "plan": [
+          {
+            "id": "marlow-porter-la-phrase",
+            "quoi": "Obtenir des neuf septons de la baie qu'ils lisent la phrase de l'acte en chaire : trois barques, neuf visites, et une aumone de cire qu'elle refusera d'appeler un paiement",
+            "etat": "en-cours",
+            "jours_restants": 6,
+            "depend_de": [],
+            "cout": [
+              "300 dragons d'aumone et de cire",
+              "trois jours de barque dans la baie",
+              "ses matinees, prises sur les lecons des deux petits"
+            ],
+            "si_bloque": "Si les septons refusent de lire une phrase de reine, elle lit la sienne au sept de Peyredragon seulement, et laisse dire que la baie s'est tue — elle ne mentira pas sur l'etendue."
+          },
+          {
+            "id": "marlow-les-deux-petits",
+            "quoi": "Tenir aux deux plus jeunes princes des journees d'enfants pendant qu'on fait la guerre au-dessus d'eux",
+            "etat": "en-cours",
+            "jours_restants": null,
+            "depend_de": [],
+            "cout": [],
+            "si_bloque": "Si on lui prend ses matinees pour la chaire, elle rend la chaire avant de rendre les lecons, et le dit a la reine en face."
+          }
+        ],
+        "declencheurs": [
+          {
+            "si": "On lui demande de lire en chaire une phrase qu'elle tient pour un mensonge",
+            "alors": "Elle la lit mot pour mot, puis ajoute la sienne dans la meme respiration — et previent la veille qu'elle le fera.",
+            "une_fois": false
+          }
+        ],
+        "attitude_joueur": "Elle a eleve ses fils et elle tutoie la reine quand elles sont seules : elle servira cette charge tant qu'on ne lui demande pas de mentir, et elle a deja decide de la phrase qu'elle ajoutera.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 21
+        }
+      }
+    },
+    {
+      "table": "intentions",
+      "cible": "denys-bar-emmon",
+      "operation": "etape_ajouter",
+      "pourquoi": "Premier agent, deja en route : il porte l'acte a Sombreval et le fait lire tout haut. On lui ajoute le RETOUR, qui est la moitie du metier — rapporter les mots exacts qu'on a repetes la-bas.",
+      "valeur": {
+        "id": "voix-denys-rapporter-les-mots",
+        "quoi": "Apres la lecture publique de l'acte a Sombreval, relever de ses yeux ce que les gens de la place en ont retenu : le chiffre qu'ils redisent, le nom qu'ils donnent aux hommes brules, et si l'on dit la reine ou le dragon. Le rapporter sans l'embellir a la voix de la reine, de vive voix, faute de savoir ecrire.",
+        "etat": "en-cours",
+        "jours_restants": 3,
+        "depend_de": [
+          "denys-porter-acte"
+        ],
+        "cout": [
+          "deux jours de barque au retour",
+          "un homme qui ecrive sous sa dictee, faute de quoi il devra tout retenir de tete"
+        ],
+        "si_bloque": "S'il ne trouve personne pour ecrire, il apprend par coeur les trois phrases qu'il a entendues le plus souvent et ne rapporte que celles-la — exactes, et incompletes, sans dire lesquelles manquent."
+      }
+    },
+    {
+      "table": "intentions",
+      "cible": "willa-sechoirs",
+      "operation": "etape_ajouter",
+      "pourquoi": "Deuxieme agent : le bourg sous les murs, canal de retour immediat. Elle parle fort et compte avant d'opiner — c'est exactement le public de proximite et la mesure de ce qui prend.",
+      "valeur": {
+        "id": "voix-willa-crier-au-bourg",
+        "quoi": "Faire crier la proclamation aux sechoirs et sur le quai le soir meme, aux deux marees, puis rapporter le lendemain quel chiffre le bourg redit de lui-meme — et lequel il a remplace",
+        "etat": "en-cours",
+        "jours_restants": 2,
+        "depend_de": [],
+        "cout": [
+          "deux soirs pris sur son propre ouvrage, a la journee",
+          "que quelqu'un reponde enfin a sa question sur l'indemnite des porte-parole"
+        ],
+        "si_bloque": "Si on lui demande encore de donner ses journees pour rien, elle le fait quand meme cette fois-ci, le dit tout haut la ou on l'entend, et envoie quelqu'un d'autre la prochaine."
+      }
+    },
+    {
+      "table": "intentions",
+      "cible": "rulf-corne",
+      "operation": "etape_ajouter",
+      "pourquoi": "Troisieme agent : les onze coques etrangeres louees en rade sont onze equipages qui repartent vers onze ports. Le canal le plus rapide vers l'etranger, et le seul qui ne passe par aucun registre de mestre.",
+      "valeur": {
+        "id": "voix-rulf-onze-coques",
+        "quoi": "Remettre a chacun des onze capitaines etrangers une copie de l'acte dans sa langue quand il appareille, et inscrire au livre a quel port chaque copie va — sans que le livre sorte de ses mains",
+        "etat": "en-cours",
+        "jours_restants": 3,
+        "depend_de": [],
+        "cout": [
+          "onze copies, soit deux scribes une journee, la cire et l'encre",
+          "que la reine tienne le loyer promis ce matin sur les neuf coques"
+        ],
+        "si_bloque": "Si les copies ne sont pas pretes quand la maree tourne, il ne retient aucune coque : elles partent sans, il le note a la date, et il ne le repete pas."
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "vol-rhaenyra-sombreval",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "PROCLAMATION version B, corbeau particulier a Sombreval. Peyredragon->Sombreval : 1 jour de vol.",
+      "valeur": {
+        "ou": "sombreval",
+        "qui": [
+          "gunthor-darklyn"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 22
+        },
+        "canal": "corbeau",
+        "fiabilite": 85,
+        "version": "Acte de la reine, scelle : douze cents hommes en armes marchaient sans declaration sur une ville qui avait prete serment. Ils ont ete sommes et ils n'ont pas repondu. Quarante d'entre eux sont vivants et nourris. Ce n'etait pas une represaille : c'etait la loi tenue par le seul moyen qui restait.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "vol-rhaenyra-sombreval",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "PROCLAMATION version B, corbeau particulier a Pointe-Aigue (5 jours de PR ; 1 jour de vol depuis Peyredragon).",
+      "valeur": {
+        "ou": "pointe-aigue",
+        "qui": [
+          "lord-bar-emmon"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 22
+        },
+        "canal": "corbeau",
+        "fiabilite": 85,
+        "version": "Acte de la reine, scelle, et une ligne de plus pour lui seul : votre fils Denys a porte cet acte a Sombreval de sa main et l'y a fait lire tout haut. Douze cents hommes en armes, sans declaration, sur une ville qui avait prete serment.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "vol-rhaenyra-sombreval",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "PROCLAMATION version B, corbeau particulier a l'Ile-aux-Pinces.",
+      "valeur": {
+        "ou": "ile-aux-pinces",
+        "qui": [
+          "bartimos-celtigar"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 22
+        },
+        "canal": "corbeau",
+        "fiabilite": 85,
+        "version": "Acte de la reine, scelle : douze cents hommes en armes sans declaration sur une ville qui avait prete serment ; quarante prisonniers vivants. La reine ajoute que les serments pretes le dix-huitieme jour valent protection, et que la protection se paie de ce qui vient d'etre fait.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "vol-rhaenyra-sombreval",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "PROCLAMATION version B, corbeau particulier a Repos-des-Freux (3 jours de PR).",
+      "valeur": {
+        "ou": "repos-des-freux",
+        "qui": [
+          "lord-staunton"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 22
+        },
+        "canal": "corbeau",
+        "fiabilite": 85,
+        "version": "Acte de la reine, scelle : douze cents hommes en armes sans declaration sur une ville qui avait prete serment, quarante prisonniers vivants. Vous etes a trois jours de Port-Real par la route ; l'acte dit ce qui arrive a une colonne qui ne repond pas quand on la somme.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "vol-rhaenyra-sombreval",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "PROCLAMATION version B — PREEMPTION : les Verts la recoivent de la main de la reine avant de l'avoir de leurs propres yeux. Peyredragon->Port-Real : 4 jours de route, 1 jour de vol.",
+      "valeur": {
+        "ou": "port-real",
+        "qui": [
+          "otto",
+          "criston",
+          "larys",
+          "aegon-ii"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 22
+        },
+        "canal": "corbeau",
+        "fiabilite": 85,
+        "version": "Acte scelle de Peyredragon, adresse a la cour : la reine reconnait le feu de la route, le chiffre a douze cents, nomme quarante prisonniers vivants et nourris, et demande par quel acte une colonne de douze cents hommes marchait sans declaration sur une ville qui avait prete serment. La question est posee par ecrit, et copie en est partie ailleurs.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "vol-rhaenyra-sombreval",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "PROCLAMATION version B — l'acte scelle porte par un homme nomme et lu tout haut, canal le plus fiable et le plus lent : Rosby, 5 jours de cavalier depuis le quai de Peyredragon. Rosby n'a ni repondu ni paru au sacre.",
+      "valeur": {
+        "ou": "rosby",
+        "qui": [
+          "lord-rosby"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 26
+        },
+        "canal": "cavalier",
+        "fiabilite": 90,
+        "version": "Un homme nomme s'est presente a la porte, a rompu la cire devant lord Rosby en personne et a lu l'acte tout haut dans la cour, devant ceux qui y etaient : douze cents hommes en armes, sans declaration, sur une ville qui avait prete serment ; quarante prisonniers vivants et nourris ; et une derniere ligne qui dit que la reine n'a pas encore compte Rosby parmi ceux qui n'ont pas repondu.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "vol-rhaenyra-sombreval",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "PROCLAMATION version B — le heraut au bourg sous les murs, le soir meme. Portee : une ville. Retour immediat par Willa.",
+      "valeur": {
+        "ou": "peyredragon",
+        "qui": [
+          "willa-sechoirs",
+          "rulf-corne",
+          "doss-marran",
+          "ordo-sarnes",
+          "dorsa-sath"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 21
+        },
+        "canal": "temoin",
+        "fiabilite": 80,
+        "version": "Crie aux deux marees sur le quai et aux sechoirs : douze cents hommes en armes marchaient sur Sombreval sans l'avoir declare ; quarante sont vivants et on les nourrit. Le bourg retient surtout les quarante vivants, parce que c'est le chiffre qu'on peut aller compter.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "vol-rhaenyra-sombreval",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "PROCLAMATION version B a Accalmie : 9 jours de PR, corbeau ~3 jours. C'EST CELLE QUI SE RETOURNERA — voir l'echo du 30.",
+      "valeur": {
+        "ou": "accalmie",
+        "qui": [
+          "borros-baratheon"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 24
+        },
+        "canal": "corbeau",
+        "fiabilite": 85,
+        "version": "Acte scelle de la reine de Peyredragon : marcher en armes sans declaration sur une ville qui a prete serment appelle le feu ; douze cents hommes, quarante prisonniers vivants. Lord Borros la recoit avant toute offre et avant tout envoye, alors qu'un Hightower est chez lui depuis le dix-septieme jour.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "vol-rhaenyra-sombreval",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "PROCLAMATION version B — les six chanteurs partis a la maree du 21, portee royaume, tres lent, jamais revocable. Onze jours pour le Conflans.",
+      "valeur": {
+        "ou": "vivesaigues",
+        "qui": null,
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 2
+        },
+        "canal": "rumeur",
+        "fiabilite": 30,
+        "version": "Une complainte de neuf couplets court les auberges du Trident : on y sommait des hommes en armes qui ne repondaient pas, et le feu tombait. Le chiffre de douze cents y est chante, mais il n'est pas au refrain — c'est la fumee qui est au refrain.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "vol-rhaenyra-sombreval",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "ECHO 1 (dix jours) — LA CHANSON CHANTEE DE TRAVERS, et elle revient par la route meme d'ou Aurore l'a rapportee : l'auberge du gue de Rosby, chez Hanna. Deux syllabes de moins se chantent mieux : 'douze cents lances sans banniere' devient 'trois mille hommes sans sepulture', et rejoint le chiffre de la lettre de Darklyn.",
+      "valeur": {
+        "ou": "rosby",
+        "qui": [
+          "lord-rosby"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 1
+        },
+        "canal": "rumeur",
+        "fiabilite": 20,
+        "version": "A l'auberge du gue, chez Hanna, on chante desormais la complainte des neuf couplets — mais pas celle qui a ete ecrite : au lieu de douze cents lances sans banniere, on chante trois mille hommes sans sepulture, et un couplet que personne n'a compose dit que la reine est restee dans la cendre a regarder. Hanna dit qu'on la lui a apprise, et qu'elle ne sait plus par qui.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "vol-rhaenyra-sombreval",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "ECHO 2 (huit jours) — LE SEPTON QUI AJOUTE SA MORALE. La chaire sert la reine a moitie : on retient qu'elle avait le droit ET qu'elle est a craindre. La phrase remonte la route de Stokeworth par Perrin le charron, qui roule les futailles d'encre de La Noiseraie — le meme homme qu'Aurore a cite au conseil.",
+      "valeur": {
+        "ou": "stokeworth",
+        "qui": [
+          "lord-stokeworth"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 29
+        },
+        "canal": "rumeur",
+        "fiabilite": 50,
+        "version": "La phrase de l'acte a ete lue en chaire a Pointe-Aigue et a Sweetport Sound, mot pour mot — puis suivie de celle du septon : que les Sept n'ont pas donne le feu aux hommes pour trancher leurs querelles, et que ce qui a brule une armee brulera un jour un champ de ble. Perrin le charron la rapporte a Stokeworth en une seule phrase, les deux cousues ensemble, et personne ne sait plus laquelle vient de la reine.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "vol-rhaenyra-sombreval",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "ECHO 3 (neuf jours) — LE SEIGNEUR QUI CITE L'ACTE CONTRE ELLE. Borros retourne la clause devant Otto, six jours avant que Lucerys ne se pose a Accalmie. Voir aussi info_a_ajouter : le joueur l'apprend le 3e jour de la 4e lune.",
+      "valeur": {
+        "ou": "accalmie",
+        "qui": [
+          "borros-baratheon",
+          "otto"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 30
+        },
+        "canal": "temoin",
+        "fiabilite": 95,
+        "version": "Lord Borros a fait relire l'acte tout haut dans sa grande salle, devant lord Otto Hightower et ses gens, et s'est arrete sur la clause : une ville qui a prete serment. Il a demande, tout haut, quelle ville des Terres de l'Orage a prete serment a Rhaenyra — et ce que la reine ferait d'une colonne de sa maison a lui marchant vers Sombreval. Personne n'a repondu, et l'acte est reste ouvert sur la table.",
+        "livree": false
+      }
+    }
+  ],
+  "objectifs_a_ajouter": [
+    {
+      "id": "obj-voix-charge-acceptee",
+      "titre": "Faire exister la charge devant le conseil",
+      "description": "Un office qui n'existe dans aucun usage, demande a une table ou l'on compte des nefs, par une maison qui vend de l'encre et ne leve pas quarante hommes. Il faut en sortir avec trois choses dites tout haut par la reine : un nom, 3 000 dragons sur les 40 000, et quatre corbeaux sur les quatorze qui restent. Sans le nom, on peut vous renvoyer d'un mot ; sans les corbeaux, vous ne pouvez rien faire partir plus vite qu'une barque.",
+      "source_id": "vous-meme",
+      "date_donne": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 21
+      },
+      "echeance": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 21
+      },
+      "statut": "en-cours"
+    },
+    {
+      "id": "obj-voix-dire-le-feu",
+      "titre": "Dire enfin le feu de la route de Sombreval",
+      "description": "Cinq jours que le royaume en parle et pas une ligne n'est partie de Peyredragon : la reine n'a rien voulu dicter, et lord Darklyn a fait ecrire sa version des le soir meme. Il faut une phrase que la reine accepte de signer, et il faut qu'elle parte avant le vol du soir.",
+      "source_id": "gerardys",
+      "date_donne": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 21
+      },
+      "echeance": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 22
+      },
+      "statut": "en-cours"
+    },
+    {
+      "id": "obj-voix-rattraper-trois-mille",
+      "titre": "Rattraper les trois mille",
+      "description": "La lettre de Sombreval est au Conflans depuis le vingtieme jour et elle y compte trois mille morts au lieu de douze cents. On ne dement pas un chiffre, on le remplace : il faut que douze cents soit dans une bouche du Trident avant que trois mille ne soit dans toutes.",
+      "source_id": "gerardys",
+      "date_donne": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 21
+      },
+      "echeance": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 5
+      },
+      "statut": "en-cours"
+    },
+    {
+      "id": "obj-voix-la-bouche-de-jace",
+      "titre": "Donner au prince les mots qu'il portera au Nord",
+      "description": "Jacaerys s'envole pour Les Eyrie et Winterfell : quand on le pressera sur le feu de la route devant les hommes de lord Cregan, il aura ou non trois phrases apprises. Sept jours de vol, aucun corbeau pour le rattraper, et il a dix-huit ans.",
+      "source_id": "jacaerys",
+      "date_donne": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 21
+      },
+      "echeance": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 4
+      },
+      "statut": "en-cours"
+    },
+    {
+      "id": "obj-voix-l-encre-des-deux-camps",
+      "titre": "Repondre de l'encre de son pere",
+      "description": "La Noiseraie livre les roukeries de Port-Real comme celles de la baie, et le conseil l'a dit tout haut. Trois issues, toutes couteuses : couper, et ruiner sa maison en designant qui a coupe ; continuer sans le dire, et attendre qu'on le decouvre ; ou obtenir de la reine qu'elle ordonne elle-meme de continuer — ce qui met la reine dans la faute a la place de la maison. Rien ne se decide sans que quelqu'un a cette table le sache.",
+      "source_id": "rhaenys",
+      "date_donne": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 21
+      },
+      "echeance": null,
+      "statut": "en-cours"
+    },
+    {
+      "id": "obj-voix-payer-les-siens",
+      "titre": "Payer ceux qui portent",
+      "description": "Six chanteurs a 100 dragons la lune, trois crieurs a la journee, 300 dragons d'aumone et de cire pour la chaire, la cire et les copies. Ser Robert prend deja 50 dragons par jour sur la meme cassette et la reine n'a pas encore repondu a Willa sur l'indemnite des porte-parole. Ce qui n'est pas paye au terme partira louer sa voix ailleurs, et emportera ce qu'il sait.",
+      "source_id": "vous-meme",
+      "date_donne": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 21
+      },
+      "echeance": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 21
+      },
+      "statut": "en-cours"
+    }
+  ],
+  "info_a_ajouter": [
+    {
+      "id": "info-echo-gue-de-rosby",
+      "evenement_id": "vol-rhaenyra-sombreval",
+      "version": "Aurore Inchauspe, de vive voix devant le conseil, rapportant la route qu'elle vient de faire : a l'auberge du gue de Rosby, chez Hanna, on ne dit pas que la reine a brule des soldats. On dit qu'elle a brule des hommes qui rentraient chez eux. Elle donne le nom, la salle et le jour ; elle ne dit pas si c'est vrai.",
+      "source": "temoin",
+      "fiabilite": 85,
+      "date_apprise": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 21
+      }
+    },
+    {
+      "id": "info-echo-sacre-distance",
+      "evenement_id": "couronnement-rhaenyra",
+      "version": "Aurore Inchauspe, de vive voix : sur deux jours de route par Rosby et Stokeworth, personne ne lui a parle du couronnement. On lui a parle du feu. Les deux nouvelles sont parties de la meme cote a un jour d'ecart ; une seule est arrivee. Elle donne les six endroits ou elle s'est arretee et ce qu'on y disait ; elle n'en conclut rien.",
+      "source": "temoin",
+      "fiabilite": 85,
+      "date_apprise": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 21
+      }
+    },
+    {
+      "id": "info-echo-nom-de-la-chose",
+      "evenement_id": "vol-rhaenyra-sombreval",
+      "version": "Aurore Inchauspe, de vive voix : sur la route on n'appelle pas la chose. Ni bataille, ni represaille, ni justice — on dit le feu de la route, et l'on ne nomme ni un roi ni une reine dans la meme phrase. Perrin le charron, qui roule ses futailles de Stokeworth, dit qu'il ne saurait pas dire qui a brule qui, et qu'il n'est pas le seul.",
+      "source": "temoin",
+      "fiabilite": 80,
+      "date_apprise": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 21
+      }
+    },
+    {
+      "id": "info-encre-des-roukeries",
+      "evenement_id": null,
+      "version": "Aurore Inchauspe, de vive voix, en posant la commande sur la table : la roukerie de Peyredragon a pris cette lune le double de sa ration ordinaire, et elle l'a portee elle-meme. Elle ajoute, sans qu'on le lui demande, que Repos-des-Freux a triple la sienne en deux lunes. Elle ne dit pas ce que cela veut dire.",
+      "source": "temoin",
+      "fiabilite": 90,
+      "date_apprise": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 21
+      }
+    },
+    {
+      "id": "info-borros-cite-l-acte",
+      "evenement_id": "vol-rhaenyra-sombreval",
+      "version": "Un capitaine de Sweetport Sound rapporte au quai ce qu'un valet d'Accalmie a raconte a terre : lord Borros a fait relire l'acte de la reine tout haut dans sa salle devant lord Otto Hightower, s'est arrete sur les mots une ville qui a prete serment, et a demande quelle ville des Terres de l'Orage avait prete serment a Rhaenyra. On dit qu'il a ri. On ne sait pas ce qu'Otto Hightower a repondu.",
+      "source": "rumeur",
+      "fiabilite": 55,
+      "date_apprise": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 3
+      }
+    }
+  ],
+  "applique_le": "2026-08-06T14:56:47"
+}

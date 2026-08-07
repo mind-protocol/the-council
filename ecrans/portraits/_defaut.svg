@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Portrait inconnu">
+  <title>Portrait inconnu</title>
+  <defs>
+    <radialGradient id="bg-defaut-{{CLE}}" cx="50%" cy="32%" r="80%">
+      <stop offset="0%" stop-color="{{TEINTE_FOND}}"/>
+      <stop offset="55%" stop-color="#201c17"/>
+      <stop offset="100%" stop-color="#12100c"/>
+    </radialGradient>
+    <clipPath id="clip-defaut-{{CLE}}"><circle cx="64" cy="64" r="52"/></clipPath>
+  </defs>
+  <!-- anneau neutre : personne dont on ne connaît ni les armes ni le visage.
+       Sa teinte est tirée du nom : deux inconnus ne se confondent pas. -->
+  <circle cx="64" cy="64" r="63" fill="#1d1a1c"/>
+  <circle cx="64" cy="64" r="57.5" fill="none" stroke="{{TEINTE}}" stroke-width="5" stroke-dasharray="3 6" stroke-linecap="round" opacity="0.7"/>
+  <!-- disque intérieur -->
+  <circle cx="64" cy="64" r="52" fill="url(#bg-defaut-{{CLE}})" stroke="{{TEINTE_SOMBRE}}" stroke-width="1.2"/>
+  <!-- buste de profil, sans traits : une ombre qu'on n'a pas encore regardée -->
+  <g clip-path="url(#clip-defaut-{{CLE}})">
+    <path d="M10,128 C16,98 40,86 64,86 C88,86 112,98 118,128 Z" fill="{{TEINTE_SOMBRE}}"/>
+    <path d="M46,96 C52,90 58,88 64,88 C70,88 76,90 82,96 L82,128 L46,128 Z" fill="{{TEINTE_ETOFFE}}"/>
+    <rect x="57" y="66" width="14" height="24" rx="4" fill="{{TEINTE_CHAIR}}"/>
+    <path d="M46,54 C46,40 54,32 64,32 C74,32 82,40 82,54 C82,68 74,78 64,78 C54,78 46,68 46,54 Z" fill="{{TEINTE_CHAIR}}"/>
+    <path d="M46,50 C47,37 55,30 64,30 C73,30 81,37 82,50 C78,42 72,39 64,39 C56,39 50,42 46,50 Z" fill="{{TEINTE_ETOFFE}}"/>
+    <path d="M40,128 C42,110 50,100 64,100 C78,100 86,110 88,128" fill="none" stroke="#2f2a24" stroke-width="1.6" opacity="0.7"/>
+  </g>
+</svg>

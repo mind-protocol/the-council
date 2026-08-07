@@ -1,0 +1,150 @@
+{
+  "titre": "Conversion des coureurs de la reine : deux tetes en mains",
+  "date_calcul": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 23,
+    "horodatage_reel": "20260807-025557"
+  },
+  "a_la_main": {
+    "activites_a_inserer": [
+      {
+        "id": "coureurs-de-la-reine",
+        "quoi": "Ce que les deux jetons de plomb portent d'un bout de l'ile a l'autre : les courses confiees, et ce qu'il reste de jambes pour les porter",
+        "porteur": {
+          "type": "personnage",
+          "id": "nesse"
+        },
+        "lieu_id": "peyredragon",
+        "mandat": "Office cree et borne par la reine le 22e jour de la 3e lune 129 (livre Les regles internes du gouvernement, TROISIEME OFFICE) : que sa parole arrive telle qu'elle l'a dite ; passage partout, a toute heure, sans attendre derriere aucune porte ; aucun ecrit qu'on ne leur ait remis devant temoin ; nourris a sa table, payes sur sa bourse au tarif fixe par le sergent au role ; deux jetons de plomb, et le castellan apporte le troisieme avec la main qui le tient.",
+        "mesure": [
+          {
+            "id": "courses-en-attente",
+            "quoi": "courses confiees aux deux jetons et pas encore portees",
+            "valeur": 2,
+            "unite": "courses",
+            "rythme": {
+              "par": 1,
+              "jours": 2
+            },
+            "reliquat": 0,
+            "plancher": 0,
+            "plafond": null,
+            "depend_de": []
+          },
+          {
+            "id": "jours-de-jambes",
+            "quoi": "jours de course qu'il reste aux deux avant que l'un des deux ne tienne plus, faute de releve",
+            "valeur": 14,
+            "unite": "jours",
+            "rythme": {
+              "par": -1
+            },
+            "reliquat": 0,
+            "plancher": 0,
+            "plafond": 30,
+            "depend_de": []
+          }
+        ],
+        "seuils": [
+          {
+            "id": "courses-en-souffrance",
+            "mesure_id": "courses-en-attente",
+            "quand": "sur",
+            "valeur": 6,
+            "promeut": "orbite",
+            "affaire": "Nesse monte dire lesquelles des paroles de la reine ne sont pas parties, sans rien autour, et JE N'EN SAIS RIEN pour le reste : il faut un troisieme jeton de plomb - celui que le castellan a ordre d'apporter avec la main qui le tient - ou renoncer a des paroles deja donnees.",
+            "franchi_le": null
+          },
+          {
+            "id": "jambes-usees",
+            "mesure_id": "jours-de-jambes",
+            "quand": "sous",
+            "valeur": 3,
+            "promeut": "orbite",
+            "affaire": "Le garcon boite et le cache pour ne pas etre renvoye au role ; sa mere le dira avant lui. Donner du repos et perdre la moitie des courses du jour, ou lever un troisieme coureur contre la regle des deux jetons.",
+            "franchi_le": null
+          }
+        ],
+        "dernier_rapport": null,
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 23
+        }
+      }
+    ],
+    "intentions_a_supprimer": ["tobb", "nesse"],
+    "personnages_a_retoucher": [
+      {
+        "id": "tobb",
+        "champs": {
+          "traits": [
+            "infatigable",
+            "bavard avec sa mere",
+            "connait chaque sentier de l ile",
+            "parle a sa mere tous les soirs a l auberge de la Claie ; la reine le savait et l a pris quand meme"
+          ],
+          "objectifs": [
+            {
+              "but": "Que sa mere sache qu il sert la reine et non qu il a ete pris",
+              "priorite": 1
+            },
+            {
+              "but": "N etre jamais renvoye au role pour un mot perdu : revenir le demander plutot que l inventer",
+              "priorite": 2
+            }
+          ],
+          "maniere": "Repete l ordre avant de partir, trop vite, et se trompe d un mot sur trois quand il est content. Porte un jeton de plomb frappe d un trait en travers, et le montre plus qu il ne faudrait."
+        }
+      },
+      {
+        "id": "nesse",
+        "champs": {
+          "traits": [
+            "endurante",
+            "silencieuse",
+            "compte les jours",
+            "ne sait pas lire, et l a dit tout haut a la reine",
+            "n etait jamais montee au chateau avant le 22e jour de la 3e lune"
+          ],
+          "objectifs": [
+            {
+              "but": "Ne plus porter de muid sur la nuque a quarante ans",
+              "priorite": 1
+            },
+            {
+              "but": "N avoir pas a avouer deux fois qu elle ne sait pas lire",
+              "priorite": 2
+            }
+          ],
+          "maniere": "Ne repete rien, ne demande rien, et revient toujours avec la reponse exacte et rien autour. JE N EN SAIS RIEN est une phrase complete - on le lui a dit en propres termes, et elle s en sert."
+        }
+      }
+    ]
+  },
+  "verifications": [
+    "etat/routines.json : tobb {modele: ombre, suit: aurore-inchauspe} et nesse {modele: ombre, suit: rhaenyra}, dortoir au bourg. Leur position vient de la, pas d'intentions.json : rien ne casse. scripts/presence.py ne lit jamais intentions.json.",
+    "scripts/tick.py --verifier, controle 'actif sans tete ni mains' (l. ~638-660) : un actif est legitime s'il est porteur d'activite OU s'il a une routine. tobb comme nesse ont une routine ; nesse devient en plus porteuse. Aucun avertissement attendu apres suppression des deux tetes.",
+    "Aucune etape de plan et aucun declencheur d'intentions.json ne cite tobb ni nesse. (Le seul hit du grep sur 'nesse' dans les declencheurs est le mot 'jeunesse' chez elyn-sarnes.)",
+    "Aucun cout d'etape n'est de la forme {mesure, quantite} nulle part dans intentions.json : aucune adresse de mesure a reparer, et rien ne pointera dans le vide en creant coureurs-de-la-reine.",
+    "etat/evenements.json : 'coureurs-convoques' (22e jour, minute 700) les cite dans acteurs[], statut resolu. Un evenement resolu ne relit aucune tete : inoffensif.",
+    "etat/books.json : le TROISIEME OFFICE du livre 'regles-du-gouvernement' (salle table-peinte) porte tout le detail de l'office - objectif, autorite, ce qu'ils ne peuvent pas, compensation, les deux jetons de plomb. C'est la memoire durable de la charge ; elle survit intacte a la suppression des tetes.",
+    "etat/actes.json : 'acte-deux-coureurs' (22e, minute 577) et 'acte-mandat-de-la-porte' (22e, minute 682, la regle de la porte de la Table Peinte ou les gardes croisent les piques devant Tobb). etat/paroles.json : 'parole-346' (le Sanglier avertit de la mere aubergiste ; la reine prend les deux quand meme). Tous conserves, aucune dependance a une entree d'intentions.",
+    "etat/presence.json : tobb et nesse y figurent (tobb porte-dragon 'gelee', nesse en 'ombre' suivant la reine aux cachots). Recalcule par presence.py depuis routines.json : rien a toucher.",
+    "ecrans/modules/galerie.js : la seule occurrence est un commentaire de code mentionnant Nesse ; aucun id en dur.",
+    "etat/joueurs.json ne rattache ni tobb ni nesse a un MJ second : ils restent au principal, avant comme apres."
+  ],
+  "notes_mj": [
+    "PORTEUR : nesse, et non peyredragon ni tobb. Une activite portee par un lieu ne remonte rien a personne, et ce chiffre-ci n'a d'interet que dit a la reine ; nesse est celle des deux qui est physiquement pres d'elle (routines : ombre suivant rhaenyra, quand tobb suit aurore-inchauspe), elle 'compte les jours' (trait) et 'revient toujours avec la reponse exacte et rien autour' (maniere) : c'est la bouche qui donnera un chiffre juste sans le commenter. Tobb, lui, est le corps qui s'use - il apparait dans l'affaire du seuil 'jambes-usees', ce qui suffit a le tenir dans la partie sans lui couter une tete.",
+    "PAR QUELLE BOUCHE LE CHIFFRE ATTEINT LE JOUEUR (le test de docs/activites.md) : courses-en-attente -> Nesse le dit debout, en une ligne, quand elle rapporte ('trois ne sont pas parties') ; jours-de-jambes -> par un empechement, le jour ou la reine veut une reponse le jour meme et n'a plus de jambes pour l'aller-retour. Les deux passent.",
+    "VALEURS DE DEPART, assumees et modifiables : 2 courses en attente au 23e jour (l'office a un jour et demi) ; 14 jours de jambes avant qu'un des deux ne lache, faute de releve - Nesse a onze ans de sel dans les jambes, Tobb seize ans et 'infatigable', mais ils sont deux pour toute une ile.",
+    "LE RYTHME EST UN NET, PAS UNE PRODUCTION : {par: 1, jours: 2} sur courses-en-attente veut dire que le chateau confie une course de plus tous les deux jours que deux paires de jambes n'en portent. Si la reine allege (delegations, corbeaux, un mandat au castellan), remets 'par' a 0 ou -1 - c'est la le vrai levier du joueur, et il est arithmetique.",
+    "PAS DE depend_de : la tentation etait de geler courses-en-attente sur jours-de-jambes, mais depend_de GELE la mesure. Des jambes mortes font MONTER la file, pas s'arreter. Laisse [].",
+    "LES DEUX SEUILS PROMEUVENT 'orbite' ET PAS 'scene' : le budget scene est deja a 9 pour 5. Si l'un saute, nesse recoit une tete d'orbite (1 intention, 1-2 etapes, 0-1 declencheur), pas davantage. Note que tick.py --verifier exige qu'un seuil avec franchi_le pose corresponde a une tete reellement ecrite a l'echelle dite : ecrire la tete le jour du franchissement, pas apres.",
+    "date_maj : le fichier etat/activites.json existant utilise la forme courte en chaine ('129.3.22') pour toutes ses entrees, la ou la proposition ci-dessus donne l'objet {annee, lune, jour} demande. tick.py ne lit pas date_maj des activites (verifier_activites ne le controle pas) : les deux passent, mais pour l'homogeneite du fichier le MJ peut preferer \"129.3.23\".",
+    "APRES APPLICATION, le budget scene descend de 9 a 7 actifs (restent : robert-quince, jacaerys, lucerys, aurore-inchauspe, le-sanglier, elyn-sarnes, alarra-rosby). Toujours au-dessus de 5 : deux autres conversions ou retrogradations seront necessaires.",
+    "CE QUI EST PERDU VOLONTAIREMENT : les croyances 'il porte un jeton de plomb que personne d'autre ne porte' et 'sa seule charge est que la parole arrive telle qu'elle l'a dite' ne sont pas recopiees dans personnages.json - elles sont deja ecrites, mot pour mot et de facon opposable, dans le TROISIEME OFFICE du livre des regles, que le joueur peut ouvrir. Les recopier serait tenir la meme chose a deux endroits.",
+    "PROPRIETE : ce fichier ne contient aucune mutation applicable par scripts/appliquer.py (il n'a ni operation de suppression de tete, ni operation de creation d'activite). Tout le bloc a_la_main se colle a la main : l'objet activite sous la cle 'activites' de etat/activites.json, la suppression des deux entrees de etat/intentions.json, les trois champs par personnage dans etat/personnages.json. Rien n'a ete ecrit dans etat/ par cette tache."
+  ]
+}

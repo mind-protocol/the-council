@@ -7,7 +7,7 @@
     if (it.acteur_id && window.activerLocuteur) window.activerLocuteur(it.acteur_id);
     const p = window.Gens ? Gens.qui(it.acteur_id)
       : (window.Presents || {})[it.acteur_id] || { nom: it.acteur_id };
-    const zone = document.getElementById("act-" + it.acteur_id);
+    const zone = Bus.enArchive() ? null : document.getElementById("act-" + it.acteur_id);
     if (zone) {
       zone.classList.add("agit");
       setTimeout(() => zone.classList.remove("agit"), 4000);

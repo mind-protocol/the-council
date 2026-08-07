@@ -16,6 +16,7 @@ window.Plan = (() => {
   const P = window.Plans || {};
   let plan = null;          // le plan du lieu où se trouve le joueur
   let salleId = null;       // la salle courante, devinée du bandeau
+  let lieuId = null;        // le château où l'on est, même sans plan dessiné
   let vue = null;           // "chateau" | "royaume"
 
   const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
@@ -144,6 +145,85 @@ window.Plan = (() => {
       " v" + nb(t * 1.2));
     return s;
   };
+  // les communs : trois paillasses alignées, tête contre le mur
+  O.paillasses = (x, y, t) => [-1, 0, 1].map((k) => {
+    const cx = x + k * t * 1.5;
+    return '<rect x="' + nb(cx - t * .55) + '" y="' + nb(y - t * .5) +
+      '" width="' + nb(t * 1.1) + '" height="' + nb(t) + '" rx="' + nb(t * .3) + '"/>' +
+      p("M" + nb(cx - t * .55) + "," + nb(y - t * .16) + " h" + nb(t * 1.1));
+  }).join("");
+  // les chambres d'hôtes : un lit à quenouilles, vu du dessus
+  O.lit = (x, y, t) => '<rect x="' + nb(x - t * .7) + '" y="' + nb(y - t) +
+    '" width="' + nb(t * 1.4) + '" height="' + nb(t * 2) + '" rx="' + nb(t * .25) + '"/>' +
+    p("M" + nb(x - t * .7) + "," + nb(y - t * .42) + " h" + nb(t * 1.4)) +
+    [-1, 1].map((k) => cer(x + k * t * .7, y - t, t * .2, true) +
+      cer(x + k * t * .7, y + t, t * .2, true)).join("");
+  // les baraques : deux toiles tendues, hors les murs
+  O.toiles = (x, y, t) => [-1, 1].map((k) => {
+    const cx = x + k * t * .85;
+    return p("M" + nb(cx - t * .62) + "," + nb(y + t * .5) + " L" + nb(cx) + "," +
+      nb(y - t * .62) + " L" + nb(cx + t * .62) + "," + nb(y + t * .5) + " Z") +
+      p("M" + nb(cx) + "," + nb(y - t * .62) + " V" + nb(y + t * .5));
+  }).join("");
+  // les cuisines : le chaudron sur son trépied
+  O.chaudron = (x, y, t) => p("M" + nb(x - t * .8) + "," + nb(y - t * .3) +
+    " a" + nb(t * .8) + "," + nb(t * .8) + " 0 0 0 " + nb(t * 1.6) + ",0 Z") +
+    p("M" + nb(x - t * .9) + "," + nb(y - t * .3) + " h" + nb(t * 1.8)) +
+    [-1, 1].map((k) => p("M" + nb(x + k * t * .45) + "," + nb(y + t * .42) +
+      " L" + nb(x + k * t * .8) + "," + nb(y + t * .9))).join("");
+  // le cellier : trois tonneaux de bout
+  O.tonneaux = (x, y, t) => [-1, 0, 1].map((k) =>
+    cer(x + k * t * .95, y, t * .42) +
+    p("M" + nb(x + k * t * .95 - t * .42) + "," + nb(y) + " h" + nb(t * .84))).join("");
+  // la forge : l'enclume
+  O.enclume = (x, y, t) => p("M" + nb(x - t) + "," + nb(y - t * .5) + " h" + nb(t * 2) +
+    " l" + nb(-t * .5) + "," + nb(t * .5) + " h" + nb(-t) + " Z") +
+    p("M" + nb(x - t * .25) + "," + nb(y) + " v" + nb(t * .5)) +
+    p("M" + nb(x - t * .7) + "," + nb(y + t * .5) + " h" + nb(t * .9));
+  // le chemin de ronde : trois créneaux
+  O.creneaux = (x, y, t) => {
+    let s = p("M" + nb(x - t) + "," + nb(y + t * .4) + " h" + nb(t * 2));
+    for (let k = -1; k <= 1; k++) {
+      s += p("M" + nb(x + k * t * .66 - t * .22) + "," + nb(y + t * .4) +
+        " v" + nb(-t * .7) + " h" + nb(t * .44) + " v" + nb(t * .7));
+    }
+    return s;
+  };
+  // l'officine : la fiole du mestre
+  O.fiole = (x, y, t) => p("M" + nb(x - t * .28) + "," + nb(y - t * .9) +
+    " v" + nb(t * .5) + " l" + nb(-t * .45) + "," + nb(t * .9) +
+    " a" + nb(t * .6) + "," + nb(t * .6) + " 0 0 0 " + nb(t * 1.46) + ",0" +
+    " l" + nb(-t * .45) + "," + nb(-t * .9) + " v" + nb(-t * .5) + " Z") +
+    p("M" + nb(x - t * .45) + "," + nb(y - t * .9) + " h" + nb(t * .9));
+  // la chambre des enfants : le berceau
+  O.berceau = (x, y, t) => p("M" + nb(x - t * .85) + "," + nb(y - t * .35) +
+    " h" + nb(t * 1.7) + " a" + nb(t * .85) + "," + nb(t * .7) + " 0 0 1 " +
+    nb(-t * 1.7) + ",0 Z") +
+    p("M" + nb(x - t) + "," + nb(y + t * .55) + " q" + nb(t) + "," + nb(t * .45) +
+      " " + nb(t * 2) + ",0");
+  // la salle froide : le cierge qu'on veille
+  O.cierge = (x, y, t) => p("M" + nb(x - t * .3) + "," + nb(y + t * .9) +
+    " v" + nb(-t * 1.2) + " h" + nb(t * .6) + " v" + nb(t * 1.2) + " Z") +
+    p("M" + nb(x) + "," + nb(y - t * .3) + " q" + nb(t * .35) + "," + nb(-t * .4) +
+      " 0," + nb(-t * .75) + " q" + nb(-t * .35) + "," + nb(t * .35) + " 0," + nb(t * .75), true);
+  // les étuves : la cuve et sa vapeur
+  O.cuve = (x, y, t) => p("M" + nb(x - t * .8) + "," + nb(y + t * .1) +
+    " a" + nb(t * .8) + "," + nb(t * .65) + " 0 0 0 " + nb(t * 1.6) + ",0 Z") +
+    [-1, 0, 1].map((k) => p("M" + nb(x + k * t * .5) + "," + nb(y - t * .2) +
+      " q" + nb(t * .3) + "," + nb(-t * .35) + " 0," + nb(-t * .7))).join("");
+  // les lices : la quintaine
+  O.quintaine = (x, y, t) => p("M" + nb(x) + "," + nb(y + t) + " v" + nb(-t * 1.8)) +
+    p("M" + nb(x - t * .8) + "," + nb(y - t * .8) + " h" + nb(t * 1.6)) +
+    cer(x + t * .8, y - t * .45, t * .25, true) +
+    p("M" + nb(x - t * .8) + "," + nb(y - t * .8) + " v" + nb(t * .45));
+  // la grève : deux coques retournées
+  O.coques = (x, y, t) => [-1, 1].map((k) => p("M" + nb(x + k * t * .8 - t * .6) +
+    "," + nb(y + t * .35) + " a" + nb(t * .6) + "," + nb(t * .5) + " 0 0 1 " +
+    nb(t * 1.2) + ",0 Z")).join("");
+  // l'antichambre : le banc où l'on attend
+  O.banc = (x, y, t) => p("M" + nb(x - t) + "," + nb(y - t * .2) + " h" + nb(t * 2)) +
+    [-1, 1].map((k) => p("M" + nb(x + k * t * .75) + "," + nb(y - t * .2) +
+      " v" + nb(t * .7))).join("");
   // l'archive : un rouleau
   O.rouleau = (x, y, t) => cer(x - t * .8, y, t * .38) + cer(x + t * .8, y, t * .38) +
     p("M" + nb(x - t * .8) + "," + nb(y - t * .38) + " h" + nb(t * 1.6));
@@ -217,10 +297,14 @@ window.Plan = (() => {
   // devinée — et la densité des noms suit la même mesure : une petite carte ne
   // porte que les salles maîtresses et celle où l'on se tient (les autres gardent
   // forme, infobulle et clic), une grande les porte toutes sans qu'ils se
-  // marchent dessus. Seuil relevé à l'essai : au-delà de 360 px de large, les
-  // trente et une étiquettes tiennent sans une seule collision.
+  // marchent dessus. Seuil mesuré, pas deviné : on projette les boîtes de tous
+  // les noms (corps × 1.13 d'interligne, ~0.52 de chasse moyenne) et on cherche
+  // le recouvrement. À 360 px les étiquettes se chevauchaient déjà à quatre
+  // endroits sur le plan de dix-sept salles — le seuil était faux depuis le
+  // début. À 520 px, les trente-quatre étiquettes des vingt salles tiennent
+  // sans une seule collision. Une salle ajoutée = refaire la mesure.
   const CIBLE = { petit: 9.8, grand: 11.5 };   // px réels visés
-  const SEUIL_TOUS = 360;                      // px réels
+  const SEUIL_TOUS = 520;                      // px réels
 
   function nomSalle(s, v) {
     if (!v.tous && !s.cle && s.id !== salleId) return "";
@@ -232,18 +316,105 @@ window.Plan = (() => {
       t += '<text class="plan-nom" x="' + x + '" y="' + (y + i * h).toFixed(1) + '">' +
         esc(l) + "</text>";
     });
-    // Quand la carte a la place d'écrire : qui est là avec vous, sous le nom.
-    if (v.tous && s.id === salleId) {
-      // « Ser Robert Quince » se dit Robert, pas Ser : le titre saute d'abord.
-      const gens = Object.keys(window.Presents || {}).map((k) =>
-        Presents[k].nom.replace(/^(ser|lord|dame|dama|mestre|prince(sse)?|reine|roi)\s+/i, "")
-          .split(/[ ,]/)[0]);
-      if (gens.length) {
-        t += '<text class="plan-avec" x="' + x + '" y="' +
-          (y + lignes.length * h + 1).toFixed(1) + '">' + esc(gens.join(" · ")) + "</text>";
-      }
-    }
     return t;
+  }
+
+  // ---- qui est où ----------------------------------------------------------
+  // Le plan disait où l'on est ; il dit maintenant AVEC QUI, et à trois portes
+  // de qui. Chaque homme suivi par `/presence` pose une tache d'encre de sa
+  // couleur, ses initiales dedans, dans la salle où il se tient. Ceux qui
+  // partagent une salle se rangent en couronne — c'est là tout le dessin.
+  //
+  // Ce n'est pas une trahison du brouillard : ce sont ses gens, dans ses murs,
+  // dont l'office dit l'endroit. Le serveur en retire les personnages des autres
+  // joueurs tant qu'ils ne sont pas sous les yeux ; nous n'affichons que ce
+  // qu'il nous donne, et rien pour les salles d'un autre château.
+  let places = {};        // id → { nom, salle, lieu, ici }
+
+  function centreSalle(s) {
+    const f = s.forme || {};
+    if (f.c) return [f.c[0], f.c[1]];
+    if (f.r) return [f.r[0] + f.r[2] / 2, f.r[1] + f.r[3] / 2];
+    // un tracé libre : la moyenne de ses points, faute de mieux
+    const n = String(f.d || "").match(/-?\d+(\.\d+)?/g);
+    if (n && n.length >= 4) {
+      const xs = [], ys = [];
+      for (let i = 0; i + 1 < n.length; i += 2) { xs.push(+n[i]); ys.push(+n[i + 1]); }
+      return [(Math.min(...xs) + Math.max(...xs)) / 2, (Math.min(...ys) + Math.max(...ys)) / 2];
+    }
+    return s.etiq ? [s.etiq[0], s.etiq[1] - 4] : [0, 0];
+  }
+
+  // De la place qu'a la salle dépend la taille des taches : une couronne de
+  // douze visages ne tient pas dans un cabinet. On rétrécit plutôt que de
+  // déborder — un plan illisible ne dit plus rien.
+  function rayonSalle(s, n) {
+    const f = s.forme || {};
+    const d = f.c ? f.c[2] * 2 : f.r ? Math.min(f.r[2], f.r[3]) : 26;
+    const large = Math.max(11, Math.min(26, d * .40));
+    return Math.max(4, Math.min(6.6, large / Math.max(1.5, Math.sqrt(n) * 1.35)));
+  }
+
+  function gensDuPlan() {
+    if (!plan || !window.Taches) return "";
+    const parSalle = new Map();
+    const vus = new Set();
+    const poser = (id, p) => {
+      if (vus.has(id) || !p.salle) return;
+      if (!plan.salles.some((s) => s.id === p.salle)) return;   // un autre château
+      vus.add(id);
+      if (!parSalle.has(p.salle)) parSalle.set(p.salle, []);
+      parSalle.get(p.salle).push(Object.assign({ id }, p));
+    };
+    // D'abord LA SALLE OÙ L'ON EST : quelqu'un dont le visage est au bandeau est
+    // là, on le voit de ses yeux, et cela prime sur tout fichier. `presence` ne
+    // tient que les gens qu'une routine ou une scène a posés quelque part — un
+    // conseil de douze n'y met que ceux qu'on a nommés, et la Table Peinte
+    // paraissait vide de dix personnes qui y parlaient depuis une heure.
+    if (salleId) {
+      Object.keys(window.Presents || {}).forEach((id) => {
+        const f = (window.Gens && Gens.qui) ? Gens.qui(id) : {};
+        // Le titre de circonstance qu'une scène donne à quelqu'un (« de La
+        // Noiseraie ») ne dit pas son office : le registre reste en second
+        // recours pour le signe, sans écraser ce que la salle affiche.
+        poser(id, { nom: (Presents[id] || {}).nom || f.nom || id,
+                    titre: (Presents[id] || {}).titre || f.titre || "",
+                    office: f.titre || "",
+                    salle: salleId, ici: true,
+                    joueur: !!(window.Moi && Moi.personnage_id === id) });
+      });
+    }
+    Object.keys(places).forEach((id) => poser(id, places[id]));
+    let s = "";
+    parSalle.forEach((gens, sid) => {
+      const salle = plan.salles.find((x) => x.id === sid);
+      gens.sort((a, b) => (b.joueur ? 1 : 0) - (a.joueur ? 1 : 0) ||
+        String(a.id).localeCompare(String(b.id)));
+      Taches.distinguer(gens);      // deux Targaryen ne font pas deux fois RT
+      const [cx, cy] = centreSalle(salle);
+      const r = rayonSalle(salle, gens.length);
+      const c = Taches.couronne(gens.length, r, sid);
+      s += '<g class="plan-gens" data-salle="' + esc(sid) + '">' + gens.map((g, i) =>
+        '<g transform="translate(' + (cx + c[i][0]).toFixed(1) + "," +
+        (cy + c[i][1]).toFixed(1) + ')">' +
+        Taches.marque({ id: g.id, nom: g.nom, initiales: g.initiales,
+                        titre: g.titre || "",
+                        ou_dit: salle.nom, joueur: g.joueur },
+          r, .9, g.ici ? "ici" : "") + "</g>").join("") + "</g>";
+    });
+    return s;
+  }
+
+  function chargerPlaces() {
+    return fetch("/presence").then((r) => r.json()).then((d) => {
+      if (!d || !d.connue || !d.places) return;
+      const moi = (window.Moi && window.Moi.personnage_id) || null;
+      places = d.places;
+      if (moi && places[moi]) places[moi].joueur = true;
+      dessiner();
+      const ov = document.getElementById("plan-large");
+      if (ov && !ov.hidden) ouvrir();
+    }).catch(() => {});
   }
 
   // La rose des vents : le plan est orienté (le levant est à droite, le
@@ -285,6 +456,7 @@ window.Plan = (() => {
     s += '<path class="plan-mur" d="' + plan.mur + '"/>' + crenelage(plan.guet);
     (plan.guet || []).forEach((g) => { s += guet(g); });
     plan.salles.filter((x) => !x.fond).forEach((x) => { s += salle(x); });
+    s += gensDuPlan();
 
     if (v.tous) {
       (plan.etiquettes || []).forEach((e) => {
@@ -315,6 +487,13 @@ window.Plan = (() => {
   }
 
   function brancher(racine, apres) {
+    racine.querySelectorAll(".tache-gens").forEach((g) => {
+      g.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (window.Entites) Entites.penser(g.dataset.id, "personnage", g.dataset.nom);
+        if (apres) apres();
+      });
+    });
     racine.querySelectorAll(".plan-salle").forEach((g) => {
       g.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -339,6 +518,7 @@ window.Plan = (() => {
       '<div id="plan-legende"><span class="leg leg-ici">Vous êtes ici</span>' +
       '<span class="leg-etage">Un autre étage : au sommet, ou sous la roche</span>' +
       '<span class="leg-orne">Le signe dit ce qu\'on y fait</span>' +
+      '<span class="leg-gens">Une tache, deux lettres : qui s\'y tient</span>' +
       '<span class="leg-note">Une salle où l\'on songe, en la touchant du doigt</span></div></div>';
     document.body.appendChild(ov);
     ov.addEventListener("click", (e) => { if (e.target === ov) fermer(); });
@@ -425,12 +605,13 @@ window.Plan = (() => {
   // ---- les échelles du décor -----------------------------------------------
   // Le décor empile plusieurs cartes dans #cartes et n'en montre qu'une. Chacune
   // s'inscrit ici avec son hôte et le moment où elle a quelque chose à montrer :
-  // le château seulement là où l'on a un plan, le terrain seulement quand il y a
-  // un champ. Le royaume, lui, est toujours là — c'est le repli.
+  // les livres seulement s'il y en a, la ville seulement là où elle est modelée.
+  // Le royaume, lui, est toujours là — c'est le repli.
+  //
+  // Le plan par étage a été retiré : tout ce qui est local passe par le volume
+  // (ville3d.js — « Le quartier », « Vous »).
   const ECHELLES = [
-    { id: "chateau", nom: "Le château", hote: "plan", ordre: 1,
-      dispo: () => !!plan, reparu: verifier },
-    { id: "royaume", nom: "Le royaume", hote: "carte", ordre: 2, dispo: () => true },
+    { id: "royaume", nom: "Le royaume", hote: "carte", ordre: 1, dispo: () => true },
   ];
   function echelle(def) {
     if (ECHELLES.some((e) => e.id === def.id)) return;
@@ -446,9 +627,16 @@ window.Plan = (() => {
     const dispo = offertes();
     let choisie = dispo.find((e) => e.id === vue) || dispo.find((e) => e.id === "royaume") || dispo[0];
     if (!choisie) return;
+    // Deux échelles peuvent PARTAGER un hôte — la ville et le château en volume
+    // sont le même monde vu de deux hauteurs, et le bâtir deux fois coûterait
+    // deux fois un demi-million de volumes. On masque donc par hôte et non par
+    // entrée : sans quoi la seconde entrée rendrait invisible ce que la première
+    // vient de découvrir, selon leur ordre dans le tableau.
+    const montres = new Set(ECHELLES.filter((e) => e.hote === choisie.hote)
+                                    .map((e) => e.hote));
     ECHELLES.forEach((e) => {
       const h = document.getElementById(e.hote);
-      if (h) h.classList.toggle("vue-off", e !== choisie);
+      if (h) h.classList.toggle("vue-off", !montres.has(e.hote));
     });
     document.querySelectorAll("#vue-bascule button").forEach((b) => {
       b.classList.toggle("actif", b.dataset.vue === choisie.id);
@@ -504,12 +692,28 @@ window.Plan = (() => {
   }
 
   // ---- le lieu où l'on se trouve ------------------------------------------
+  // Un en-tête qui bouge, c'est parfois une salle voisine — parfois un autre
+  // château. Le second cas ne se voit pas dans le texte du bandeau (« Grande
+  // salle » ne dit pas laquelle) : seul `/carte` sait où est le joueur. On le
+  // relit donc à chaque changement d'en-tête, étranglé pour qu'une tranche de
+  // dix items ne fasse qu'une requête.
+  let relu = 0, prevuCarte = null;
+  function relireCarte() {
+    if (prevuCarte) return;
+    const attente = Math.max(0, 1000 - (Date.now() - relu));
+    prevuCarte = setTimeout(() => {
+      prevuCarte = null; relu = Date.now(); charger();
+    }, attente);
+  }
+
   function relire() {
     const avant = salleId;
     salleId = deviner();
     if (salleId !== avant) dessiner();
     const ov = document.getElementById("plan-large");
     if (ov && !ov.hidden && salleId !== avant) ouvrir();
+    relireCarte();
+    chargerPlaces();
     // une scène qui change, c'est souvent une salle qui se remplit ou se vide :
     // le bandeau des présents prend ou rend de la hauteur au décor, et la carte
     // n'a plus la même taille qu'à son tracé.
@@ -518,7 +722,15 @@ window.Plan = (() => {
 
   function charger() {
     fetch("/carte").then((r) => r.json()).then((d) => {
-      const p = P[d.joueur_lieu_id];
+      // Un lieu peut porter PLUSIEURS plans — un par point de vue. Le plan
+      // n'est pas un relevé d'architecte : c'est la ville telle qu'on la tient
+      // dans la tête quand on y vit. Le Port-Réal d'une reine qui a grandi au
+      // Donjon Rouge et celui d'un brise-coques de la vase n'ont ni le même
+      // centre, ni la même échelle, ni les mêmes lieux — et aucun des deux ne
+      // ment. `<lieu>@<personnage>` d'abord, `<lieu>` ensuite : strictement
+      // additif, un siège sans plan propre garde exactement celui d'avant.
+      const p = P[d.joueur_lieu_id + "@" + d.joueur_id] || P[d.joueur_lieu_id];
+      lieuId = d.joueur_lieu_id || null;
       if (p === plan) return;
       plan = p || null;
       salleId = deviner();
@@ -536,13 +748,31 @@ window.Plan = (() => {
     // On ne valide pas l'échelle gardée ici : elle peut appartenir à un module
     // qui n'a pas encore ses données (le terrain arrive par le réseau).
     // `appliquerVue` retombe sur le royaume tant qu'elle n'est pas offerte.
-    if (!vue) vue = "chateau";
+    // Le premier regard d'une partie neuve est celui du personnage : on est
+    // DANS la pièce. Le plan d'ensemble reste à un onglet de là.
+    if (!vue) vue = "salles";
     // tant qu'aucun plan n'est trouvé pour le lieu du joueur, le royaume tient
     // le décor : deux cartes empilées vaudraient moins qu'une.
     appliquerVue();
     charger();
+    chargerPlaces();
+    // La salle se remplit et se vide au fil des items, pas au rythme de
+    // `/presence` : qui entre doit apparaître sur le plan dans la seconde, sans
+    // quoi la Table Peinte reste à quatre visages pendant qu'il en parle douze.
+    // Groupé : une tranche de flux pousse dix items d'affilée.
+    if (window.Bus && Bus.enregistrer) {
+      let prevu = null;
+      const bientot = () => {
+        if (prevu) return;
+        prevu = setTimeout(() => { prevu = null; dessiner(); }, 250);
+      };
+      ["salle", "effacer", "replique", "geste", "table", "recit"]
+        .forEach((t) => Bus.enregistrer(t, bientot));
+    }
     surveiller();
     setInterval(charger, 60000);
+    // la maisonnée bouge plus vite que la carte : on la relit souvent
+    setInterval(chargerPlaces, 15000);
     // Le bandeau est reposé par le bus à chaque item porteur d'un `lieu` :
     // on suit ce texte plutôt que d'intercepter le flux, qui n'a qu'un rendu
     // par type et appartient déjà à d'autres modules.
@@ -551,5 +781,8 @@ window.Plan = (() => {
       childList: true, characterData: true, subtree: true, attributes: true });
   });
 
-  return { ouvrir, fermer, relire, montrer, echelle, rebattre };
+  // où l'on est, pour qui a besoin de le savoir sans redeviner l'en-tête de
+  // lieu : la salle courante, et le château qui la contient.
+  return { ouvrir, fermer, relire, montrer, echelle, rebattre,
+           salle: () => salleId, chateau: () => lieuId };
 })();

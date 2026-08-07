@@ -1,0 +1,123 @@
+{
+  "_lisez_moi": "PROPOSITION — les étapes du registre « L'emploi des moyens » posées sur la table de guerre. À APPLIQUER À LA MAIN par le MJ principal dans etat/joueurs/rhaenyra/jetons.json, liste `jetons` : scripts/appliquer.py ne sait toucher aux jetons que pour les incidents, son vocabulaire est fermé. Rien n'a été écrit dans etat/ par cette session. Les ids de lieux sont vérifiés ; les `quoi` sont pris dans l'enum de docs/carte.md.",
+  "propose_le": { "annee": 129, "lune": 3, "jour": 23 },
+  "par": "session des registres",
+  "cible": "etat/joueurs/rhaenyra/jetons.json → jetons[]",
+
+  "a_completer": [
+    {
+      "_pourquoi": "Le porteur existe depuis ce soir : la charge des grèves de nuit a été donnée. Un dessein sans `par` s'affiche « sur personne », et ce n'est plus vrai.",
+      "id": "dessein-greves",
+      "champs": { "par": "Rulf Corne" }
+    },
+    {
+      "_pourquoi": "Sans `par` ni `echeance`, il se lit comme un reproche — et c'en est un tant que la course n'est pas tranchée. À compléter APRÈS le conseil du 23e, quand les deux abandons auront été nommés.",
+      "id": "dessein-val",
+      "champs": { "par": "à nommer au conseil du 23e", "echeance": { "annee": 129, "lune": 3, "jour": 23 } }
+    }
+  ],
+
+  "a_poser_maintenant": [
+    {
+      "_pourquoi": "Six jours d'attente, quatre demandes de ser Steffon, rien accordé. La réponse est due et elle tombe sur quelqu'un.",
+      "id": "dessein-darklyn",
+      "genre": "dessein", "quoi": "parler", "camp": "noir", "ou": "sombreval",
+      "nom": "Répondre à Darklyn sur ses quarante",
+      "certitude": "sure", "statut": "actif",
+      "par": "ser Steffon",
+      "echeance": { "annee": 129, "lune": 3, "jour": 23 },
+      "detail": "Quarante prisonniers verts dans ses celliers depuis six jours. Ce qu'on lui accorde sera lu par Staunton et par les hésitantes avant d'être lu par lui."
+    },
+    {
+      "_pourquoi": "Cent âmes vivent du banc, trente et une barques n'y travaillent plus, et quinze jours ont été promis devant trente personnes.",
+      "id": "dessein-banc-est",
+      "genre": "dessein", "quoi": "evacuer", "camp": "noir", "ou": "peyredragon",
+      "nom": "Rendre le banc de l'est aux barques",
+      "certitude": "sure", "statut": "actif",
+      "par": "Rulf Corne",
+      "echeance": { "annee": 129, "lune": 3, "jour": 23 },
+      "detail": "Onze coques mouillées depuis six jours. Si elles ne peuvent se déhaler, on paie les trente et une barques au compte d'Ordo Sarnes et la somme est criée avec la liste."
+    },
+    {
+      "_pourquoi": "Quatre-vingt-dix voiles et trois mille hommes tenus par un homme sans prix convenu : c'est le point unique le plus lourd de la maison.",
+      "id": "dessein-prix-corlys",
+      "genre": "dessein", "quoi": "parler", "camp": "noir", "ou": "lamarck",
+      "nom": "Faire dire son prix au Serpent de Mer",
+      "certitude": "sure", "statut": "actif",
+      "par": "la reine",
+      "echeance": { "annee": 129, "lune": 3, "jour": 23 },
+      "detail": "Il ne demande plus rien. Un prix qu'on n'a pas fixé se fixe au pire moment, par celui qui le porte."
+    },
+    {
+      "_pourquoi": "Une offre nette et chiffrée, reçue et sans réponse — un second Darklyn en train de se faire.",
+      "id": "dessein-celtigar",
+      "genre": "dessein", "quoi": "parler", "camp": "noir", "ou": "ile-aux-pinces",
+      "nom": "Répondre à Celtigar",
+      "certitude": "sure", "statut": "actif",
+      "par": "la reine",
+      "echeance": { "annee": 129, "lune": 3, "jour": 23 },
+      "detail": "Cent vingt mille contre une place au premier rang. Accepter froisse ceux qui ont donné leur sang ; refuser froisse celui qui paie. Ne rien dire froisse les deux."
+    },
+    {
+      "_pourquoi": "Le renseignement est mandaté depuis ce soir, et il a une cible unique. Le dessein le rend visible sur la table plutôt que dans un livre privé.",
+      "id": "dessein-portes-port-real",
+      "genre": "dessein", "quoi": "guetter", "camp": "noir", "ou": "port-real",
+      "nom": "Qui tient chaque porte, et à qui il le doit",
+      "certitude": "sure", "statut": "actif",
+      "par": "Aurore Inchauspé",
+      "echeance": { "annee": 129, "lune": 3, "jour": 26 },
+      "detail": "Sept portes, deux mille manteaux d'or, et une question jamais posée : lui obéissent-ils ENCORE ? Un nom d'officier vivant, en charge, et de qui il tient son poste."
+    },
+    {
+      "_pourquoi": "On ne fabrique pas une absence qu'on ne saurait pas constater. Sans cette ligne, la clef neuve du premier verrou reste un vœu.",
+      "id": "dessein-vhagar",
+      "genre": "dessein", "quoi": "guetter", "camp": "noir", "ou": "port-real",
+      "nom": "Où dort Vhagar",
+      "certitude": "sure", "statut": "actif",
+      "par": "Aurore Inchauspé",
+      "echeance": { "annee": 129, "lune": 3, "jour": 26 },
+      "detail": "Une fois la semaine, et non quand on y pensera. Ce n'est pas ce qu'elle vaut qu'on cherche : c'est où elle est."
+    },
+    {
+      "_pourquoi": "Écrit de sa main au deuxième feuillet le 21e, et laissé là : il part le 31e et rien n'est écrit de ce qu'il portera.",
+      "id": "dessein-licence-jacaerys",
+      "genre": "dessein", "quoi": "parler", "camp": "noir", "ou": "peyredragon",
+      "nom": "Sceller ce que Jacaerys peut promettre",
+      "certitude": "sure", "statut": "actif",
+      "par": "la reine et mestre Gerardys",
+      "echeance": { "annee": 129, "lune": 3, "jour": 30 },
+      "detail": "À qui, jusqu'où, et ses trois refus. La mesure n'est pas le parchemin : c'est le garçon capable de les réciter sans le lire."
+    }
+  ],
+
+  "a_poser_apres_le_conseil_du_23": [
+    {
+      "_pourquoi": "C'est une parole de la reine devant le conseil puis devant le bourg. Elle ne se pose sur la table qu'une fois dite — un dessein n'est pas une intention, c'est une affaire close qui attend son exécution.",
+      "id": "dessein-nommer-le-feu",
+      "genre": "dessein", "quoi": "parler", "camp": "noir", "ou": "peyredragon",
+      "nom": "Nommer le feu de la route",
+      "certitude": "sure", "statut": "actif",
+      "par": "la reine",
+      "echeance": { "annee": 129, "lune": 3, "jour": 23 },
+      "detail": "Le compte exact, dit la première, devant le conseil puis répété au bourg. Deux auditoires qui ne se recoupent pas."
+    },
+    {
+      "_pourquoi": "La ronde des voiles est un leurre autant qu'un mouvement réel. Elle ne se pose qu'une fois le capitaine nommé et prévenu qu'il porte un leurre — sinon il croira à un ordre stupide.",
+      "id": "dessein-ronde-des-voiles",
+      "genre": "dessein", "quoi": "tenir", "camp": "noir", "ou": "peyredragon",
+      "nom": "La ronde des voiles",
+      "certitude": "sure", "statut": "actif",
+      "par": "à nommer — un capitaine",
+      "echeance": { "annee": 129, "lune": 3, "jour": 24 },
+      "detail": "Se montrer à trois ou quatre points de la baie le même jour, sans débarquer nulle part. Leur réponse se compte en semaines de marche, la nôtre en journées de vent."
+    }
+  ],
+
+  "_notes": [
+    "Les `quoi` employés sont tous dans l'enum : parler, guetter, evacuer, tenir.",
+    "Aucun `ou` inventé : peyredragon, sombreval, lamarck, ile-aux-pinces, port-real sont dans lieux.json.",
+    "`evacuer` pour le banc de l'est est le moins mauvais du vocabulaire fermé — il s'agit de libérer un mouillage, pas d'évacuer des gens. À rebaptiser si le MJ principal préfère.",
+    "Les deux desseins du second lot attendent une décision du joueur : les poser avant serait décider à sa place.",
+    "Rien n'a été posé pour le verrou du sol : personne ne tient sa mesure, et un dessein sans porteur y serait un mensonge de plus."
+  ]
+}

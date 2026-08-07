@@ -1,0 +1,71 @@
+{
+ "titre": "LES LETTRES PERSONNELLES — « etre reine ne veut pas dire la fin de nos lettres »",
+ "auteur": "session de conception (MJ non-principal) — A RELIRE ET A JOUER PAR LA SESSION QUI TIENT LA SALLE",
+ "date_calcul": {"annee": 129, "lune": 3, "jour": 23},
+ "avertissement": "Rien n'a ete ecrit dans etat/ ni pousse au flux : la partie tourne en ce moment dans l'autre session (Rhaenyra est au bourg, taverne, 6h26, deux actions en inbox non traitees). Ces textes sont prets a partir des que la reine sera devant de la cire.",
+
+ "intention_du_joueur": "Un mot personnel a chacun de ceux que la couronne a coupes d'elle, disant que d'etre reine ne met pas fin a leur correspondance.",
+
+ "geste_a_jouer_avant_tout": "Ce n'est pas un envoi, c'est une seance : la reine remonte a la roukerie ou fait monter de quoi ecrire, elle ecrit de sa main (c'est tout le sens du geste — une main de mestre annule la lettre), elle scelle, et Gerardys lache les oiseaux un par un. Les corbeaux de Peyredragon ne sont pas comptes dans lieux.json (roukerie: null) : si la session principale veut la contrainte, c'est le moment de poser le stock.",
+
+ "lettres": [
+  {
+   "pour": "alarra-rosby",
+   "canal": "aucun — elle debarque au quai ce matin meme",
+   "note_mj": "NE PAS ENVOYER. La barque de Pierredanse accoste a 6h45 (evenement arrivee-alarra-rosby). Une lettre croiserait la femme. Ce qui doit etre dit se dira de vive voix — et c'est la phrase a lui donner en scene, pas sur un papier.",
+   "texte": null
+  },
+
+  {
+   "pour": "jeyne-arryn",
+   "vers": "les-eyrie",
+   "canal": "corbeau",
+   "jours_de_route": 7,
+   "attendu_le": {"annee": 129, "lune": 3, "jour": 30},
+   "scelle": "cachet prive, pas le sceau de la couronne",
+   "porte": "Jeyne,\n\nOn m'ecrira desormais Votre Grace. Toi, non.\n\nNous avions sept ans et neuf ans quand on nous a fait mettre nos noms au bas du meme rouleau, et je crois que ni l'une ni l'autre ne savait ce qu'on signait. Je le sais maintenant. Je ne t'ecris pas pour te le rappeler.\n\nJe t'ecris parce que je viens de compter les gens a qui je peux ecrire sans qu'on me reponde par un chiffre, et que la liste tient sur une main.\n\nNe me reponds rien sur le Val. Reponds-moi si tu as froid.\n\nRhaenyra",
+   "note_mj": "Le piege du mode est ici : Jeyne LIRA une demande politique la ou il n'y en a pas, parce que rien d'autre ne lui arrive. Son intention actuelle est de ne pas etre la premiere a ecrire — cette lettre la met precisement dans la position dont elle se garde. Sa reponse, si elle vient, sera lente et sur un tout autre sujet que le Val : c'est ca, la reussite."
+  },
+
+  {
+   "pour": "alicent",
+   "vers": "port-real",
+   "canal": "corbeau",
+   "jours_de_route": 2,
+   "attendu_le": {"annee": 129, "lune": 3, "jour": 25},
+   "scelle": "cachet prive",
+   "porte": "Alicent,\n\nJ'ai brule des hommes sur la route de Sombreval. Tu l'as appris avant de recevoir ceci et tu ne t'es pas trompee sur ce que ca dit de moi.\n\nJe ne demande rien et je n'offre rien. Ton pere lira cette lettre avant toi ou apres toi, cela m'est egal : il n'y trouvera rien a vendre.\n\nNous avons ete deux filles dans le meme jardin. Cela n'excuse rien, cela ne sauvera personne, et je refuse pourtant de faire comme si cela n'avait pas eu lieu.\n\nSi tu ne reponds pas, je le comprendrai. Si tu reponds, ecris de ta main.\n\nRhaenyra",
+   "note_mj": "CECI N'EST PAS UNE LETTRE PERSONNELLE, quoi qu'en dise son texte — c'est l'acte le plus lourd de la journee. A jouer en sachant ce qu'il coute : (1) Otto la lira, c'est certain, et sa tete actuelle dit qu'il fait proclamer une decheance — il y verra une faiblesse a exploiter, ou une preuve a montrer ; (2) elle contredit le feu du 16 aux yeux de qui la lira de travers ; (3) Daemon, s'il l'apprend, ne le prendra pas comme une tendresse. Rien de tout cela n'est une raison de ne pas l'envoyer — c'est la matiere de trois scenes. Mais l'envoyer sans que la reine ait pese ces trois-la, c'est escamoter."
+  },
+
+  {
+   "pour": "mysaria",
+   "vers": "port-real",
+   "canal": "corbeau",
+   "note_mj": "A ECARTER de cette fournee. Mysaria n'est pas une amie : sa premiere ligne d'objectifs est de vendre ses secrets au prix fort, et un mot personnel de la reine EST une marchandise. Lui ecrire « nos lettres continuent » lui donne gratuitement ce qu'elle facture. Si la reine veut lui ecrire, que ce soit un ordre, pas une confidence.",
+   "texte": null
+  }
+ ],
+
+ "ceux_qui_sont_dans_la_maison": {
+  "principe": "On n'ecrit pas a qui dort a vingt pas. Meme phrase, mais dite — et elle coute plus cher dite qu'ecrite.",
+  "elyn-sarnes": "Elle tient deja les lettres privees : lui dire que la correspondance reprend, c'est lui donner du travail et une place. Elle repondra par ce qu'elle a vu, pas par ce qu'elle en pense. Sa tete neuve porte un declencheur qui s'armera sur Alarra.",
+  "septa-marlow": "Elle tutoie la reine quand elles sont seules. Lui dire ca devant temoin la mettrait en faute ; le lui dire seule, elle repondra par une verite sur son corps ou sur ses fils, parce que c'est sa maniere.",
+  "gerardys": "C'est LUI qui lachera les oiseaux. Le geste a jouer : la reine lui met dans la main trois plis qu'il n'a pas ecrits et qu'il ne lira pas. Sa tete dit qu'il veut que rien n'entre ni ne sorte de la roukerie sans qu'il le sache — il obeira, et il tordra sa chaine."
+ },
+
+ "a_ecrire_dans_etat_si_les_lettres_partent": [
+  "etat/plis.json : un pli par lettre (canal corbeau, scelle 'cachet prive', porte = le TEXTE FIGE ci-dessus, de: rhaenyra, pour: <id>, vers: <lieu_id>, depuis: peyredragon, parti_le, attendu_le, etat: 'en-route', main: null)",
+  "etat/paroles.json : une entree par lettre — locuteur rhaenyra, destinataire <id>, temoins ['gerardys'] pour l'acte de remise. Une lettre est une parole qui a une date de peremption.",
+  "etat/actes.json : UN acte, 'la reine rouvre sa correspondance privee', temoins ['gerardys'], connu_de restreint",
+  "etat/jetons.json : un jeton 'pli' par destinataire sur sa place, etat 'parti' — et le trait 'corbeau' qui dit la route. L'etat ne bouge que quand la reine APPREND ce qu'il est devenu ; un 'muet' qui dure est une information.",
+  "evenements.json : un 'programme' par lettre a sa date d'arrivee, avec sa diffusion — dont l'entree qui remonte au joueur",
+  "lieux.json roukerie : si la session principale pose enfin le stock de corbeaux, ces trois envois le mordent"
+ ],
+
+ "notes_mj": [
+  "La phrase du joueur — « etre reine ne veut pas dire la fin de nos lettres » — ne doit apparaitre telle quelle dans AUCUNE des trois. Une reine qui ecrit la meme phrase a trois personnes n'ecrit a personne. Chacune la dit autrement, ou ne la dit pas et la prouve.",
+  "Voix tenue : phrases courtes, aucune sentence, aucune justification qui s'etale. Elle tranche vite et laisse traîner ce qui la gene. Les lettres sont volontairement plus courtes qu'on ne les attendrait.",
+  "Le vrai cout du geste n'est pas l'encre : c'est qu'a partir d'aujourd'hui elle ATTEND des reponses. Trois silences, c'est une scene."
+ ]
+}

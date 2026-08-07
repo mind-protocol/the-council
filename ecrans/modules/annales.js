@@ -27,7 +27,10 @@
   window.addEventListener("DOMContentLoaded", rendreListe);
 
   Bus.enregistrer("marque", (it) => {
-    annales.push({ date: it.date, titre: it.titre || it.texte });
+    // Une marque rechargée du passé est plus ANCIENNE que tout ce qu'on tient :
+    // elle prend la tête de la liste, sinon le rail la donnerait pour récente.
+    const a = { date: it.date, titre: it.titre || it.texte };
+    if (Bus.enArchive()) annales.unshift(a); else annales.push(a);
     rendreListe();
     const d = Bus.chronique("chr-marque", null, it.texte, { avatar: "⚜" });
     if (!d) return;

@@ -1,0 +1,112 @@
+{
+  "_lisez_moi": "Le champ de Port-Réal — un terrain par ville, servi avant etat/terrain.json quand le joueur s'y tient (voir /terrain dans serveur/serveur.js). Ce champ-ci est celui de Marlo Vasse : l'aire de bris de la vase et sa cabane, hors la porte de la Gadoue. Comme toute carte du jeu, ce n'est PAS la vérité du monde — c'est ce que le Peigne voit de ses yeux à basse mer. Format complet : docs/carte.md.",
+  "id": "chantier-de-la-vase-129-3-23",
+  "nom": "Le chantier de bris de la vase",
+  "quand": "129 AC — 3e lune, 23e jour, basse mer",
+  "echelle": "De la porte de la Gadoue à la laisse : quatre cents pas",
+  "lieu_id": "port-real",
+  "basculer": false,
+  "repere": [0, 0, 240, 140],
+  "par_cercle": 1,
+
+  "sol": [
+    { "genre": "mur", "points": [[6, 12], [236, 12]], "largeur": 4,
+      "nom": "Le mur de Port-Réal", "etiq": [120, 6], "cap": 90 },
+    { "genre": "mur", "points": [[112, 12], [132, 12]], "largeur": 8,
+      "nom": "La porte de la Gadoue", "etiq": [150, 8] },
+
+    { "genre": "greve", "points": [[6, 52], [236, 46], [236, 118], [6, 126]],
+      "nom": "La vase", "etiq": [34, 112] },
+    { "genre": "eau", "points": [[6, 118], [236, 110], [236, 140], [6, 140]],
+      "nom": "La Néra, à basse mer", "etiq": [118, 134] },
+    { "genre": "haie", "points": [[6, 96], [70, 92], [140, 88], [236, 80]], "largeur": 2,
+      "nom": "La laisse de vive-eau — dans quatre jours", "etiq": [186, 74] },
+
+    { "genre": "route", "points": [[122, 16], [114, 28], [100, 40], [84, 50], [74, 60]],
+      "largeur": 5, "nom": "La rampe des tanneurs", "etiq": [104, 50] },
+    { "genre": "champ", "points": [[78, 60], [152, 58], [154, 102], [80, 104]],
+      "nom": "L'aire de bris", "etiq": [116, 108] },
+    { "genre": "quai", "points": [[152, 62], [188, 76]], "largeur": 4,
+      "nom": "Le vieux quai de bois", "etiq": [172, 60] },
+
+    { "genre": "mur", "points": [[16, 22], [66, 22]], "largeur": 2.2,
+      "nom": "La cabane du Peigne", "etiq": [41, 16], "cap": 90 },
+    { "genre": "mur", "points": [[66, 22], [66, 50]], "largeur": 2.2 },
+    { "genre": "mur", "points": [[66, 50], [16, 50]], "largeur": 2.2 },
+    { "genre": "mur", "points": [[16, 50], [16, 22]], "largeur": 2.2 },
+    { "genre": "mur", "points": [[44, 22], [44, 50]], "largeur": 1.8 },
+    { "genre": "mur", "points": [[16, 38], [44, 38]], "largeur": 1.8 },
+    { "genre": "mur", "points": [[16, 41], [16, 47]], "largeur": 5.5,
+      "nom": "La porte, qui ne ferme pas à clef", "etiq": [8, 56] },
+
+    { "genre": "champ", "points": [[17, 23], [43, 23], [43, 37], [17, 37]],
+      "nom": "La salle basse — le banc, la table, le coffre dessous", "etiq": [30, 33] },
+    { "genre": "colline", "points": [[17, 23], [43, 23], [43, 29], [17, 29]],
+      "nom": "La soupente, au-dessus : il y dort", "etiq": [30, 20] },
+    { "genre": "champ", "points": [[17, 39], [43, 39], [43, 49], [17, 49]],
+      "nom": "La souillarde — le feu, la marmite des vingt-deux", "etiq": [30, 45] },
+    { "genre": "champ", "points": [[45, 23], [65, 23], [65, 49], [45, 49]],
+      "nom": "L'appentis aux outils — râteaux, maillets, chaînes", "etiq": [55, 38] },
+
+    { "genre": "champ", "points": [[72, 22], [96, 22], [96, 38], [72, 38]],
+      "nom": "Le tas de bordage", "etiq": [84, 18] },
+    { "genre": "haie", "points": [[146, 26], [188, 26]], "largeur": 2.4,
+      "nom": "Le séchoir à cordages", "etiq": [167, 22] },
+    { "genre": "colline", "points": [[196, 30], [214, 28], [218, 42], [200, 44]],
+      "nom": "La fosse à clous et l'enclume", "etiq": [207, 50] }
+  ],
+
+  "faits": [
+    { "genre": "feu", "centre": [96, 74], "rayon": 4,
+      "nom": "Le brasier de l'aire", "etiq": [96, 84] }
+  ],
+
+  "corps": [
+    { "id": "marlo-vasse-champ", "genre": "gens", "camp": "noir", "nom": "Vous",
+      "hommes": 1, "cercles": 1, "centre": [28, 56], "formation": "tas",
+      "certitude": "sure", "etiq": [-4, 10],
+      "detail": "Devant la porte de la cabane, la vase jusqu'à la cheville. D'ici on voit l'aire entière et la porte de la Gadoue d'un seul coup d'œil — c'est pour ça qu'elle est bâtie là." },
+
+    { "id": "hommes-de-l-aire", "genre": "gens", "camp": "neutre",
+      "nom": "Les hommes de la coque", "hommes": 6, "centre": [110, 74],
+      "formation": "essaim", "certitude": "sure", "etiq": [0, -10],
+      "detail": "Six dessus, Hann au maillet. Vingt-deux bouches au chantier en tout ; les autres sont au bois et aux fers." },
+
+    { "id": "coque-du-quinze", "genre": "nef", "camp": "neutre",
+      "nom": "La coque du quinze", "hommes": 0, "cercles": 1,
+      "centre": [120, 82], "cap": 104, "etat": "rompu", "certitude": "sure",
+      "etiq": [8, 12],
+      "detail": "Couchée sur le flanc, à demi dépecée. Si elle est encore là à la vive-eau, on perd le bois." },
+
+    { "id": "peigneurs-de-greve", "genre": "gens", "camp": "neutre",
+      "nom": "Les peigneurs de grève", "hommes": 30, "centre": [198, 98],
+      "formation": "essaim", "certitude": "rapportee", "etiq": [0, 12],
+      "detail": "Les gosses de Nel, entre la Gadoue et le Boyau. Trente environ — de sa bouche à elle, jamais comptés." },
+
+    { "id": "poste-de-la-gadoue", "genre": "infanterie", "camp": "vert",
+      "nom": "Le poste de la Gadoue", "hommes": 6, "centre": [124, 20],
+      "formation": "tas", "etat": "ordre", "certitude": "sure", "etiq": [12, -4],
+      "detail": "Six manteaux d'or à la première cloche, Waltyr Poix dessus. Compté trois matins de suite : six, six, six." },
+
+    { "id": "file-de-la-gadoue", "genre": "gens", "camp": "neutre",
+      "nom": "La file des charrettes", "hommes": 24, "centre": [150, 26],
+      "formation": "file", "cap": 290, "certitude": "sure", "etiq": [10, 10],
+      "detail": "Le poisson qui monte à la ville. On ne fouille pas les paniers avant la deuxième cloche." }
+  ],
+
+  "acteurs": [
+    { "id": "marlo-vasse", "nom": "Marlo Vasse", "titre": "Le Peigne, maître du chantier",
+      "ou": [28, 56], "camp": "noir", "certitude": "sure", "joueur": true,
+      "teinte": "#5a6b52", "ou_dit": "Devant sa cabane" },
+    { "id": "hann-bourbe", "nom": "Hann Bourbe", "titre": "Trente ans de coques",
+      "ou": [110, 74], "camp": "neutre", "certitude": "sure",
+      "ou_dit": "Sur la coque du quinze" },
+    { "id": "nel-bec", "nom": "Nel Bec", "titre": "Grattelle de la grève",
+      "ou": [198, 98], "camp": "neutre", "certitude": "rapportee",
+      "ou_dit": "À la vase, quelque part vers le Boyau" },
+    { "id": "waltyr-poix", "nom": "Waltyr Poix", "titre": "Sergent du Guet",
+      "ou": [124, 20], "camp": "vert", "certitude": "sure",
+      "ou_dit": "À la porte de la Gadoue" }
+  ],
+  "_acteurs_lisez_moi": "Quatre visages seulement, et c'est le compte juste : ce sont les gens que le Peigne touche de la main à basse mer. Nel est `rapportee` — on la trouve, on ne sait pas où. Personne du Donjon Rouge n'a rien à faire sur cette carte."
+}

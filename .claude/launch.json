@@ -4,15 +4,46 @@
     {
       "name": "jeu",
       "runtimeExecutable": "node",
-      "runtimeArgs": ["serveur/serveur.js"],
+      "runtimeArgs": [
+        "serveur/serveur.js"
+      ],
       "port": 3129
     },
     {
       "name": "jeu-atelier",
       "runtimeExecutable": "node",
-      "runtimeArgs": ["serveur/serveur.js"],
+      "runtimeArgs": [
+        "serveur/serveur.js"
+      ],
       "port": 3130,
       "autoPort": false
+    },
+    {
+      "name": "jeu-verif",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "serveur/serveur.js"
+      ],
+      "port": 3132,
+      "autoPort": false
+    },
+    {
+      "name": "foule",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "serveur/serveur.js"
+      ],
+      "port": 3131,
+      "url": "http://localhost:3131"
+    },
+    {
+      "name": "jeu-plan",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "serveur/serveur.js"
+      ],
+      "port": 3133,
+      "autoPort": true
     }
   ]
 }

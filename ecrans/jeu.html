@@ -18,6 +18,10 @@
       <div class="zone-titre">Les annales</div>
       <div id="liste-annales"></div>
     </div>
+    <div class="zone" id="zone-retrospective">
+      <div class="zone-titre">Rétrospective</div>
+      <div id="liste-retrospective"></div>
+    </div>
     <div class="zone" id="zone-reglages">
       <div class="zone-titre">Le narrateur</div>
       <div id="zone-reglages-corps"></div>
@@ -31,6 +35,12 @@
     <span id="heure" hidden></span>
     <span id="lieu">—</span>
     <span id="jauge" title="Tension du royaume"><i></i></span>
+    <!-- Le siège : qui l'on incarne, et par où l'on en change. Caché tant qu'il
+         n'y a qu'un siège au roster — une partie seule n'a rien à choisir. -->
+    <span id="siege" hidden>
+      <button id="siege-bouton" type="button" aria-haspopup="true" aria-expanded="false"></button>
+      <div id="siege-liste" hidden></div>
+    </span>
   </div>
   <!-- le décor : quatre échelles d'une même guerre — le château où l'on est, la
        ville qui l'entoure, le royaume où elle porte, le champ où elle se décide — et, en bandeau
@@ -39,12 +49,16 @@
        de soi. -->
   <div id="decor">
     <div id="cartes">
-      <div id="plan"></div>
+      <!-- retirés du décor : le plan par étage et le champ. Les hôtes restent
+           pour les modules qui les cherchent, mais ils ne s'affichent plus. -->
+      <div id="plan" class="vue-off"></div>
       <div id="carte"></div>
       <div id="ville"></div>
-      <div id="terrain"></div>
+      <div id="ville3d"></div>
+      <div id="terrain" class="vue-off"></div>
       <div id="gens"></div>
       <div id="desseins"></div>
+      <div id="books"></div>
     </div>
     <div id="acteurs"></div>
   </div>
@@ -73,13 +87,17 @@
 <script src="/modules/jetons.js"></script>
 <script src="/modules/carte.js"></script>
 <script src="/modules/illustration.js"></script>
+<script src="/modules/taches.js"></script>
 <script src="/modules/plans.js"></script>
 <script src="/modules/plan.js"></script>
 <script src="/modules/terrain.js"></script>
+<script src="/modules/ville3d.js"></script>
 <script src="/modules/gens.js"></script>
 <script src="/modules/objectifs.js"></script>
 <script src="/modules/desseins.js"></script>
+<script src="/modules/books.js"></script><script src="/modules/retrospective.js"></script>
 <script src="/modules/reglages.js"></script>
+<script src="/modules/sieges.js"></script>
 <script src="/modules/voix.js"></script>
 </body>
 </html>

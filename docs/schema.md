@@ -57,6 +57,10 @@ Ne stocker que les relations significatives (~40-60 au départ).
 - `controle_id` → maisons
 - `jours_de_pr` — jours de voyage depuis Port-Réal (délai corbeaux ≈ /3)
 - `alias` — [] autres ids désignant le même lieu. La couche carte (`ecrans/modules/geo.js`, généré depuis le mod AGOT) impose ses propres ids ; personnages et événements en emploient d'autres. Les deux sont valides, la résolution passe par `alias`.
+- `roukerie` — {} facultatif : {<lieu_id d'origine>: <nombre>} — les corbeaux détenus ici, classés par le lieu où ils sont nés (un corbeau ne vole que vers là). Écrire vers B en consomme un ; on n'en regagne qu'à ce que B en renvoie. Voir `etat/plis.json` et `docs/plis.md`.
+
+### plis.json (le courrier — un objet qui fait la route)
+Rien n'atteint personne sans porteur. Champs : `id`, `canal` ("corbeau" | "cavalier" | "barque"), `scelle`, `porte` (le TEXTE FIGÉ au départ — un papier arrive périmé, jamais relu), `de`, `pour`, `vers` (lieu_id), `depuis` (lieu_id, facultatif), `parti_le`, `attendu_le`, `etat` ("en-route" | "remis" | "ouvert" | "retenu" | "perdu" | "intercepte"), `main` (qui l'a EN CE MOMENT — le mestre à la remise, jamais le `pour`). Format complet et délais : `docs/plis.md`. Coexiste avec `evenements.diffusion` pendant la transition.
 
 ### evenements.json (la file — cœur du moteur)
 - `id, date_prevue, type` — "canon" | "emergent" | "programme"
@@ -137,14 +141,54 @@ Budgets par échelle — tenus à la main, vérifiés par `scripts/tick.py --ver
 | échelle | qui | croyances | étapes | déclencheurs | simulé |
 |---|---|---|---|---|---|
 | `scene` | dans la salle ou sur le point d'y entrer (~5 max) | 4-6 | 3-5 | 1-3 | à chaque battement |
-| `orbite` | pèse sur la partie sans être en scène (~10 max) | 3-5 | 2-4 | 1-2 | à chaque tick |
+| `orbite` | pèse sur la partie sans être en scène (~12 max) | 3-5 | 2-4 | 1-2 | à chaque tick |
 | `royaume` | moteur lointain de la Danse | 1-3 | 1-2 | 0-1 | rafraîchi sur les fenêtres ≥ 5 jours |
+
+Ces plafonds mesurent l'ATTENTION du MJ par tick, pas la taille du fichier : une tête coûte de relire des croyances, peser des déclencheurs et réécrire une intention. Les monter ne donne pas de la capacité, ça donne la même simulation en moins bien faite — au-delà, la boucle hors scène se joue en apparence. Un acteur qui n'a rien à décider n'a pas besoin d'une tête : donne-lui des mains (`activites.json`), qui ne sont jamais budgétées, et un seuil la lui rendra le jour où son affaire mord.
 
 Un acteur `royaume` garde droit à UN déclencheur : sans lui il serait sourd au joueur, ce qui contredit la boucle hors scène. C'est même le seul endroit où l'on peut encore l'atteindre entre deux rafraîchissements.
 
 Une échelle règle le RAFRAÎCHISSEMENT (croyances relues, horloges décomptées, déclencheurs pesés), jamais les échéances : une étape d'acteur `royaume` dont l'horloge tombe dans la fenêtre se produit quand même, et `tick.py` la rend marquée `malgre_saut`. Un coffre d'or promis pour demain arrive demain, même si la tête de celui qui l'apporte n'a pas été repassée en revue.
 
 La provenance d'une croyance ne vit PAS ici : elle vit dans `evenements.diffusion`. Ici, seulement la tête.
+
+### activites.json (les mains — ce qui avance sans qu'on décide)
+Une entrée par affaire qui court. Orthogonal à `intentions.json` : la tête dit ce qu'un acteur veut et décide, les mains disent où en sont ses affaires. Un acteur peut avoir les deux (Daemon), une tête seule (un intrigant), ou des mains seules (un sergent recruteur). **Aucun budget** : c'est de l'arithmétique, simulée à chaque tick AVANT tout le reste. Le personnage joueur n'a pas de tête, mais il a des mains.
+- `id` — kebab-case (`recrutement-peyredragon`, `radoub-flotte-velaryon`)
+- `quoi` — l'affaire, en clair
+- `porteur` — {`type`: "personnage" | "maison" | "lieu", `id`}. `id` peut être `null` : une affaire sans porteur tourne quand même, et personne n'en rend compte.
+- `lieu_id` — où ça se passe
+- (pas de champ de position : où se tient le porteur est décidé par `etat/routines.json`
+  et calculé par `scripts/presence.py`. Une activité ne duplique jamais une position.)
+- `mandat` — `null`, ou 1 ligne : ce que le joueur a confié, et depuis quand
+- `mesure` — [] les compteurs (ci-dessous) ; 1 à 3, jamais plus
+- `seuils` — [] les franchissements (ci-dessous)
+- `dernier_rapport` — date du dernier compte rendu monté au joueur
+- `date_maj`
+
+Compteur de `mesure` :
+- `id` — kebab-case, unique dans l'activité. Adressable de l'extérieur par `<activite_id>.<mesure_id>` : c'est cette adresse qu'un `cout` d'étape de plan cite.
+- `quoi` — ce qu'on compte ; `unite` — "hommes", "jours", "muids", "nefs", "cerfs"
+- `valeur` — entier : l'état VRAI, jamais montré tel quel au joueur
+- `rythme` — {`par`: entier signé, `jours`: entier > 0, omis = 1} : « `par` unités tous les `jours` jours »
+- `reliquat` — entier dans [0, `rythme.jours`[ : le reste de la division, reporté. **Tout est en entiers, jamais en flottants.** Posé par `tick.py`, jamais à la main.
+- `plancher` / `plafond` — bornes ; `null` = court librement
+- `depend_de` — [] adresses d'autres mesures qui GÈLENT celle-ci quand elles sont à leur plancher (on ne lève pas d'hommes qu'on ne peut pas nourrir)
+
+Décompte, pour `n` jours écoulés : `total = par * n + reliquat` ; `valeur += total // jours` ; `reliquat = total % jours` ; puis bornage. Exact et sans dérive, quelle que soit la découpe des ticks.
+
+Seuil de `seuils` :
+- `id` ; `mesure_id` — la mesure surveillée
+- `quand` — "sous" | "sur" ; `valeur` — le point de bascule
+- `promeut` — "orbite" | "scene" : l'échelle du porteur au franchissement. S'il a déjà une tête à cette échelle ou au-dessus, rien ne bouge — l'affaire entre dans ses croyances.
+- `affaire` — 1 ligne : la bifurcation qui monte au joueur, écrite À FROID comme un `si_bloque`. Seul texte du fichier que le joueur entendra un jour.
+- `franchi_le` — date, ou `null`. Repasse à `null` quand la mesure revient du bon côté : un seuil retombe, et le porteur redescend.
+
+Un franchissement ne produit JAMAIS un menu : il donne (ou étoffe) la tête du porteur, et la scène sort ensuite des deux autres boucles.
+
+**La valeur d'une mesure est la vérité ; le rapport est une croyance.** Un porteur peut mentir sur son propre compteur — jugé à chaque rapport d'après sa `maniere`, jamais inscrit dans le fichier. Ce fichier ne contient que le vrai. Une activité dont le porteur est mort, absent ou fâché ne remonte rien, et le joueur découvre le chiffre trop tard.
+
+**Aucun rendu** : le joueur ne voit jamais un compteur, seulement quelqu'un qui lui dit un chiffre. Une activité ne s'écrit que si son résultat doit atteindre le joueur — par un chiffre dit en scène, un `cout` qui rend un plan impossible, une ligne du matin, ou une crise. Note de conception : `docs/activites.md`.
 
 ## Registres d'IDs (OBLIGATOIRES — tout fichier utilise exactement ces IDs)
 
