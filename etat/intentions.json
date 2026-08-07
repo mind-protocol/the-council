@@ -976,15 +976,15 @@
     "croyances": [
       "Le chaos qui vient est la plus grande place de marché de sa vie",
       "Le pli de Daemon lui demande la garnison de Harrenhal et les capitaines des manteaux d'or : autrement dit, on lui demande de préparer une prise",
-      "Quelque chose s'est passé sur la route de Sombreval — la ville est pleine de fuyards et la Garde a fermé la porte de la Gueule-du-Dieu",
       "Larys Strong cherche déjà à la faire tuer ou acheter",
-      "La fille de Viserys s'est couronnee a Peyredragon avec la couronne du vieux roi — la ville le dit depuis le vingtieme, mal, et sans s'accorder sur le manteau blanc. Il y a maintenant deux acheteurs pour tout, et c'est la seule chose qui compte."
+      "La fille de Viserys s'est couronnee a Peyredragon avec la couronne du vieux roi — la ville le dit depuis le vingtieme, mal, et sans s'accorder sur le manteau blanc. Il y a maintenant deux acheteurs pour tout, et c'est la seule chose qui compte.",
+      "Deux crieurs sur trois places le vingt-troisieme, et le chiffre change d'une place a l'autre : le roi paie pour des tetes de Peyredragon, enfants compris. Ce qui se vend maintenant n'est plus la nouvelle — c'est le texte exact et le nom du heraut."
     ],
     "ignore": [
       "Que c'est la reine elle-même qui a volé et brûlé la colonne, et non Daemon",
       "Que Larys a déjà un nom et une adresse pour elle"
     ],
-    "intention": "Se faire payer les trois lignes avant qu'elles ne soient publiques, et tenir les manteaux d'or en reserve — maintenant qu'il y a deux couronnes, on peut vendre a l'une la peur de l'autre.",
+    "intention": "Vendre a Peyredragon le texte exact de la proclamation, avec les trois chiffres et le nom du heraut, avant que la rumeur ne le pourrisse — et tenir ses manteaux d'or en reserve, maintenant qu'un prix crie fait de chacun de ses courriers un homme qui peut la vendre.",
     "plan": [
       {
         "id": "mysaria-fuyards",
@@ -1033,11 +1033,11 @@
         "une_fois": true
       }
     ],
-    "attitude_joueur": "La reine noire est une signature au bas d'un paiement, pas une souveraine. Elle la servira exactement tant qu'on la paiera — et un peu au-delà, par vieille rancune contre les Verts.",
+    "attitude_joueur": "Un prix sur des tetes double le tarif de tout ce qui va vers Peyredragon, et double le risque avec. Elle continue de servir la reine noire, plus cher, et commence a compter qui de ses gens sait ou elle dort.",
     "date_maj": {
       "annee": 129,
       "lune": 3,
-      "jour": 21
+      "jour": 25
     }
   },
   {
@@ -1045,13 +1045,13 @@
     "echelle": "royaume",
     "croyances": [
       "L'honneur des Darklyn vaut plus que la peur des dragons verts",
-      "Ses douze corbeaux sont partis avec sa version : le royaume saura qu'une reine est descendue du ciel pour son vassal",
-      "L'acte scelle de la reine ne compte pas ses morts, ne demande ni represailles ni justice, et dit que quarante sont vivants : elle l'a couvert sans le nommer, et sa version a lui tient encore"
+      "L'acte scelle de la reine ne compte pas ses morts, ne demande ni represailles ni justice, et dit que quarante sont vivants : elle l'a couvert sans le nommer, et sa version a lui tient encore",
+      "Le roi a fait ecrire le nom de sa ville dans la proclamation, avec une ligne pour Sombreval seule : rebelle, et son seigneur avec elle. Ses douze corbeaux sont partis avant celui-la et ne pesent plus rien."
     ],
     "ignore": [
-      "Que sa ville est déjà nommée dans une expédition de vengeance qu'on prépare à Port-Réal"
+      "Qu'une expedition se prepare deja a Port-Real pour lui reprendre sa ville, et que ser Criston Cole en a la charge"
     ],
-    "intention": "Tenir ce qu'il a gagné : sa ville debout, ses morts relevés, et quarante prisonniers verts dans ses celliers dont il attend qu'on lui dise quoi faire.",
+    "intention": "Sa version ne le couvre plus : il lui faut d'elle, par ecrit et vite, ce qu'elle n'a encore dit a personne — que Sombreval est a elle et qu'elle la defendra. En attendant, relever ses murs plutot que ses morts.",
     "plan": [
       {
         "id": "gunthor-sacre",
@@ -1076,14 +1076,26 @@
         ],
         "si_bloque": "Si aucun ordre ne vient dans les quatre jours, il rend les hommes du rang contre rançon et garde l'officier — pour avoir quelque chose à offrir plus tard.",
         "accompli": "Les quarante prisonniers ont ete remis et se tiennent au dernier rang des marches de Peyredragon."
+      },
+      {
+        "id": "gunthor-ecrit-de-la-reine",
+        "quoi": "Ecrire a Peyredragon et demander un ecrit : que la reine nomme Sombreval dans un acte scelle, comme le roi vient de la nommer dans le sien",
+        "etat": "en-cours",
+        "jours_restants": 2,
+        "depend_de": [],
+        "cout": [
+          "un corbeau, et dire tout haut pour la premiere fois qu'il a peur",
+          "l'aveu que ses douze corbeaux n'ont pas suffi"
+        ],
+        "si_bloque": "Si rien ne vient d'elle avant la quinzaine, il ne renie pas — il fait passer sa femme et son fils cadet a Peyredragon par la premiere quille. Pas en otages : en gage de ce qu'il attend."
       }
     ],
     "declencheurs": [],
-    "attitude_joueur": "Dévouement absolu depuis qu'elle est descendue du ciel pour lui : il se tient pour son homme lige avant même le serment du sacre — et attend d'elle, en retour, qu'elle le couvre.",
+    "attitude_joueur": "Devouement intact, et pour la premiere fois une exigence dedans : elle l'a couvert sans le nommer, et le roi vient de le nommer, lui. Il attend d'elle le meme encre.",
     "date_maj": {
       "annee": 129,
       "lune": 3,
-      "jour": 22
+      "jour": 25
     }
   },
   {
@@ -1098,7 +1110,8 @@
     ],
     "ignore": [
       "Qu'Orwyle a ecrit DEUX recits sur sa nef et que celui qu'il montre n'est pas celui qu'il a cousu dans sa manche",
-      "Que sa propre fille cherche deja par quelle quille ecrire a Rhaenyra hors des corbeaux du roi"
+      "Que sa propre fille cherche deja par quelle quille ecrire a Rhaenyra hors des corbeaux du roi",
+      "Que sa fille a recu de la main de Rhaenyra une lettre privee, ouverte et portee par Larys Strong — et que le Pied-Bot ne la lui a pas donnee"
     ],
     "intention": "Il ne s'agit plus de retourner le feu contre le mari : la femme s'est couronnee et a brule elle-meme. Faire proclamer sa decheance par le roi avant que la question ecrite de l'acte ne trouve des oreilles dans la baie - et payer des tetes plutot que des osts.",
     "plan": [
@@ -1295,14 +1308,14 @@
     "echelle": "royaume",
     "croyances": [
       "Le premier feu vient de Peyredragon : le royaume s'en souviendra plus longtemps qu'Otto ne le croit",
-      "L'information vaudra plus que les armées dans les lunes à venir",
-      "Elle a vole elle-meme et elle repond par ecrit : ce n'est pas une reine qui fera les erreurs qu'il attendait. En revanche son grand mestre est rentre avec quelque chose qu'il n'a pas pose sur la table"
+      "Elle a vole elle-meme et elle repond par ecrit : ce n'est pas une reine qui fera les erreurs qu'il attendait. En revanche son grand mestre est rentre avec quelque chose qu'il n'a pas pose sur la table",
+      "La reine noire ecrit a la reine douairiere de sa propre main, sans rien demander — et il est le seul homme du conseil a le savoir. Une lettre qu'on rend decachetee a celle qu'elle vise vaut deux fois ce qu'elle vaudrait posee sur la table de la Main."
     ],
     "ignore": [
       "Que sa propre forteresse, Harrenhal, intéresse Daemon Targaryen depuis quatre jours",
       "Que Harrenhal est tombee le 23 au matin et que ser Simon Strong l'a rendue contre une charge promise au nom de la reine — il l'apprendra le 27"
     ],
-    "intention": "Placer des oreilles pendant que tous regardent le ciel, et se rendre indispensable à celui qui remplacera Otto.",
+    "intention": "Placer des oreilles pendant que tous regardent le ciel, et se rendre indispensable a celui qui remplacera Otto — en commencant par sa fille, qui lui doit desormais une lettre qu'il aurait pu vendre.",
     "plan": [
       {
         "id": "larys-oreilles-baie",
@@ -1332,7 +1345,7 @@
     "date_maj": {
       "annee": 129,
       "lune": 3,
-      "jour": 17
+      "jour": 25
     }
   },
   {
@@ -1341,14 +1354,14 @@
     "croyances": [
       "Si Rhaenyra l'emporte, ses enfants mourront",
       "Une paix négociée reste possible tant qu'aucun enfant n'est mort",
-      "Ses termes ont ete refuses d'un seul mot, son envoye traite en ce messager et escorte a sa nef - et son pere l'a appris avant elle, parce qu'il tient les corbeaux",
       "Rhaenyra a fait porter de l'eau a quarante prisonniers du roi devant six cents temoins et les a renvoyes vivants : Orwyle les a comptes de ses yeux, un par un",
-      "Les enfants ne sont pas nommes dans la proclamation — elle a obtenu cela et rien d'autre. « Et sa lignee » les couvre, et elle l'a compris en l'entendant lire tout haut"
+      "Les enfants ne sont pas nommes dans la proclamation — elle a obtenu cela et rien d'autre. « Et sa lignee » les couvre, et elle l'a compris en l'entendant lire tout haut",
+      "Rhaenyra lui a ecrit de sa main, cachet prive : elle avoue le feu sans se defendre, ne demande rien, n'offre rien, dit que son pere n'y trouvera rien a vendre, et refuse de faire comme si le jardin n'avait pas eu lieu. C'est Larys Strong qui la lui a portee, decachetee, et non son pere."
     ],
     "ignore": [
       "Que son propre père a offert par écrit le pardon à quiconque de Peyredragon viendrait sans elle — elle n'a pas lu la clause du bas"
     ],
-    "intention": "Les termes sont morts et son pere va faire proclamer une decheance : elle n'a plus qu'une voie, sa propre main et une quille qui ne soit a personne - pendant qu'aucun enfant n'est encore mort.",
+    "intention": "Repondre de sa main, et trouver d'abord une quille qui ne soit ni au roi, ni a son pere, ni au Pied-Bot — maintenant qu'elle sait ce que devient un corbeau au Donjon Rouge.",
     "plan": [
       {
         "id": "alicent-termes-orwyle",
@@ -1385,9 +1398,9 @@
       },
       {
         "id": "alicent-de-femme-a-femme",
-        "quoi": "Ecrire elle-meme a Rhaenyra, de sa main, et faire porter le pli hors des corbeaux du roi",
+        "quoi": "Repondre de sa main, puisqu'on le lui a demande de sa main — et faire porter le pli hors des corbeaux du roi : la voie du corbeau est brulee, le Pied-Bot lit tout ce qui se pose au Donjon Rouge",
         "etat": "en-cours",
-        "jours_restants": 1,
+        "jours_restants": 2,
         "depend_de": [],
         "cout": [
           "une quille qui ne soit ni au roi ni a son pere",
@@ -1408,11 +1421,11 @@
         "une_fois": true
       }
     ],
-    "attitude_joueur": "Elle a plaide une derniere fois en conseil et n'a obtenu que la disparition de trois noms sous un mot. Elle ne plaidera plus la : tout ce qui lui reste passe par sa propre main et par une quille qui ne soit a personne.",
+    "attitude_joueur": "Elle ne demande rien et n'offre rien : c'est la premiere chose depuis le jardin qui ne soit pas une manoeuvre. Elle lui doit une reponse ecrite, et elle ne sait pas encore ce qu'elle y mettra.",
     "date_maj": {
       "annee": 129,
       "lune": 3,
-      "jour": 23
+      "jour": 25
     }
   },
   {
@@ -1424,7 +1437,7 @@
       "Il a parle et on a ecrit ce qu'il a dit : c'est donc lui qui gouverne"
     ],
     "ignore": [],
-    "intention": "Paraître roi, être vengé sans se déplacer, et qu'on cesse de lui parler comme à un enfant.",
+    "intention": "Paraitre roi, etre venge sans se deplacer, et qu'on cesse de lui parler comme a un enfant — en commencant par payer de sa main le premier homme qui viendra le prendre au mot.",
     "plan": [
       {
         "id": "aegon-exiger-vengeance",
@@ -1446,6 +1459,18 @@
         "depend_de": [],
         "cout": [],
         "si_bloque": "Si le trésor lui est fermé, il donne ce qu'il a sur lui et rentre furieux contre Otto."
+      },
+      {
+        "id": "aegon-le-premier-reclamant",
+        "quoi": "Recevoir lui-meme, sans Otto et sans la Main dans la salle, le premier homme qui viendra reclamer la prime qu'il a criee — et le payer devant temoins, parce qu'un roi qu'on croit sur parole est un roi",
+        "etat": "en-cours",
+        "jours_restants": 5,
+        "depend_de": [],
+        "cout": [
+          "de l'or du tresor qu'Otto tient et qu'il n'a pas demande",
+          "que l'homme apporte quelque chose qui ressemble a ce qu'on a promis de payer"
+        ],
+        "si_bloque": "Si le tresor se ferme devant lui, il paie sur sa propre cassette, mal et trop peu, fait donner des coups au premier officier qui lui dit non — puis descend aux fosses de combat et boit jusqu'au soir."
       }
     ],
     "declencheurs": [],
@@ -1453,7 +1478,7 @@
     "date_maj": {
       "annee": 129,
       "lune": 3,
-      "jour": 23
+      "jour": 25
     }
   },
   {
@@ -1463,7 +1488,8 @@
       "On lui a demande le genou en public puis renvoye dormir sur sa nef sous quatre hommes, en le nommant « ce messager » — il n'est plus l'ambassadeur de personne",
       "Sa demande d'ecrire un recit juste est restee SANS REPONSE : personne ne lui a rien accorde et personne ne lui a rien interdit",
       "Il a vu et compte de ses yeux quarante prisonniers debout au fond de la cour, et entendu un prince reclamer quatre cordes",
-      "La Main attend de sa plume un recit de massacre qu'il n'a pas vu et ne peut pas ecrire - et elle fera recopier son texte par un scribe pour y mettre ce qui manque, sous le sceau du roi"
+      "La Main attend de sa plume un recit de massacre qu'il n'a pas vu et ne peut pas ecrire - et elle fera recopier son texte par un scribe pour y mettre ce qui manque, sous le sceau du roi",
+      "Un corbeau s'est pose le vingt-cinquieme avec un cachet prive et non le sceau du roi, adresse a la reine douairiere — et c'est lord Larys qui l'a pris a la roukerie. Il l'a vu et n'a rien dit ; sa manche est toujours cousue."
     ],
     "ignore": [
       "Que Sombreval s'est déclarée avant le sacre et que Gunthor Darklyn a chargé dans la fumée"
@@ -1494,7 +1520,7 @@
     "date_maj": {
       "annee": 129,
       "lune": 3,
-      "jour": 22
+      "jour": 25
     }
   },
   {
@@ -1502,12 +1528,13 @@
     "echelle": "royaume",
     "croyances": [
       "Quelque chose de terrible vient pour ses enfants — elle l'a rêvé en insectes et en fil rouge",
-      "Rien de tout cela n'est de son fait"
+      "Rien de tout cela n'est de son fait",
+      "L'escalier de service qui monte aux chambres d'enfants n'a personne dessus la nuit — elle l'a vu de ses yeux en comptant les marches, et le fil rouge de son reve y descend."
     ],
     "ignore": [
       "Tout ce que le conseil décide : on ne le lui dit pas, et elle n'écoute que ses rêves"
     ],
-    "intention": "Tenir ses enfants près d'elle et loin des fenêtres du conseil.",
+    "intention": "Tenir ses enfants pres d'elle et loin des fenetres du conseil — et faire fermer la porte par ou son reve descend, meme si elle doit s'asseoir devant elle-meme.",
     "plan": [
       {
         "id": "helaena-enfants",
@@ -1517,6 +1544,18 @@
         "depend_de": [],
         "cout": [],
         "si_bloque": "Si on les lui prend pour une cérémonie, elle compte les heures à voix haute jusqu'à ce qu'on les ramène."
+      },
+      {
+        "id": "helaena-la-porte-de-service",
+        "quoi": "Demander qu'on mure ou qu'on garde la porte de l'escalier de service qui donne sur les chambres d'enfants — elle ne dit pas pourquoi, elle dit seulement que c'est par la",
+        "etat": "en-cours",
+        "jours_restants": 3,
+        "depend_de": [],
+        "cout": [
+          "qu'on la prenne au serieux une fois, et personne ne la prend au serieux",
+          "deux hommes de la garde de la reine douairiere, qui sont deja comptes ailleurs"
+        ],
+        "si_bloque": "Si on ne lui repond rien, elle va s'asseoir elle-meme en haut de cet escalier, la nuit, les trois enfants dans son lit derriere elle — et on la trouve la au matin sans qu'elle explique."
       }
     ],
     "declencheurs": [],
@@ -1524,7 +1563,7 @@
     "date_maj": {
       "annee": 129,
       "lune": 3,
-      "jour": 17
+      "jour": 25
     }
   },
   {
@@ -1533,12 +1572,12 @@
     "croyances": [
       "Une reine descend du ciel pour ses vassaux — Gunthor Darklyn l'a écrit à toute la baie, et l'aile rouge de Rhaenys passe au-dessus de ses tours chaque jour",
       "Les Verts n'oseront pas s'aventurer si loin sur la côte",
-      "L'acte de la reine lui rappelle par ecrit qu'il est a trois jours de Port-Real par la route, et dit ce qui arrive a une colonne qui ne repond pas quand on la somme - il n'a pas demande qu'on le lui rappelle"
+      "Les deux textes tiennent sur sa table en meme temps : celui de la reine, qui lui rappelle par ecrit qu'il est a trois jours de Port-Real par la route, et celui du roi, qui somme toute maison ayant jure le dix-huitieme de s'en delier dans la quinzaine. Il a jure le dix-huitieme, debout, dans les quatre maisons de la baie."
     ],
     "ignore": [
       "Que Repos-des-Freux est déjà sur une carte à Port-Réal, juste après Sombreval"
     ],
-    "intention": "Se déclarer maintenant que Sombreval a été couverte — mais après lui, jamais avant.",
+    "intention": "Il a jure, et le roi vient de poser une horloge dessus : tenir sans renier, mais obtenir de Peyredragon un chiffre ecrit avant que la quinzaine ne tombe. Chaque voisin qui se declare avant lui le rassure encore ; aucun ne le couvre.",
     "plan": [
       {
         "id": "staunton-sacre",
@@ -1562,14 +1601,26 @@
           "tout ce qu'il a mis de côté depuis trois ans"
         ],
         "si_bloque": "S'il manque de pierre, il fait rentrer les récoltes et les troupeaux dans l'enceinte, et laisse les murs comme ils sont."
+      },
+      {
+        "id": "staunton-quinzaine",
+        "quoi": "Ne rien repondre au roi et ne rien renier — mais arracher a Peyredragon, avant que la quinzaine ne tombe, un ecrit chiffre qui dise ce qu'on lui envoie s'il est attaque, et en combien de jours",
+        "etat": "en-cours",
+        "jours_restants": 15,
+        "depend_de": [],
+        "cout": [
+          "un corbeau a Peyredragon, et l'aveu ecrit qu'il a peur",
+          "quinze jours pendant lesquels son nom est sous un texte du roi"
+        ],
+        "si_bloque": "Si rien ne vient de Peyredragon avant la quinzaine echue, il ne renie pas — il cesse d'ecrire, ferme ses portes et fait rentrer recoltes et troupeaux dans l'enceinte : muet dans les deux sens, et que chacun en pense ce qu'il veut."
       }
     ],
     "declencheurs": [],
-    "attitude_joueur": "Chaque voisin qui se déclare noir le rassure ; il attend de la reine une promesse chiffrée, pas un remerciement.",
+    "attitude_joueur": "Il attendait d'elle une promesse chiffree et n'a recu qu'un rappel de distance. Maintenant qu'un texte du roi le somme nommement, ce n'est plus une preference : c'est une facture qu'il vient presenter.",
     "date_maj": {
       "annee": 129,
       "lune": 3,
-      "jour": 18
+      "jour": 25
     }
   },
   {
@@ -1578,12 +1629,12 @@
     "croyances": [
       "La guerre se gagnera à l'or, et il en a plus que tous les autres vassaux de la baie réunis",
       "Son île est imprenable sans flotte — et les Verts n'en ont pas dans la baie",
-      "L'acte scelle lui dit tout net que les serments du dix-huit valent protection et que la protection se paie de ce qui vient d'etre fait - c'est une facture, et il sait lire une facture"
+      "Le roi a fait crier un prix sur des tetes sans dire sur quoi il est gage, et somme toute maison ayant jure le dix-huitieme de s'en delier dans la quinzaine. Une prime qu'on crie avant de la gager est un poste de depense sans coffre en face : la Couronne n'a plus d'or, et lui en a."
     ],
     "ignore": [
       "Que Corlys Velaryon compte sur son or sans lui accorder la place qu'il croit acheter"
     ],
-    "intention": "Porter son coffre au sacre et en sortir avec une place au premier rang du conseil.",
+    "intention": "Faire valoir ses deux coffres pendant que le roi crie des primes qu'il ne peut pas payer : obtenir de Peyredragon, par ecrit, la place qu'il croit avoir achetee — avant que la quinzaine ne fasse de lui un rebelle nomme.",
     "plan": [
       {
         "id": "celtigar-coffre",
@@ -1610,14 +1661,25 @@
         ],
         "si_bloque": "Si on ne l'écoute pas, il en fait un grief et parle de ce que son or pourrait servir ailleurs.",
         "accompli": "Plaide le 19 en pleine grande salle de Peyredragon - Port-Real par la faim, cinq cents charretees la lune dont quatre cinquiemes par le Gosier. Le blocus a ete refuse EN PUBLIC le meme jour. Son si_bloque s'applique : il en fait un grief et fait remettre a la reine, hors registre, ce que son or sait - la Banque de Fer, et le facteur braavien Prendahl mouille en rade."
+      },
+      {
+        "id": "celtigar-la-facture",
+        "quoi": "Faire porter a Peyredragon le compte exact de ce qu'il a deja verse — deux coffres, dix mille dragons — et demander en retour, par ecrit, la place au premier rang du conseil qu'il tient pour achetee",
+        "etat": "en-cours",
+        "jours_restants": 4,
+        "depend_de": [],
+        "cout": [
+          "un corbeau, et l'aveu devant la reine qu'il a compte ce qu'il donnait"
+        ],
+        "si_bloque": "Si on ne lui repond pas par ecrit, il cesse d'avancer de l'or et se met a en preter — au meme camp, a interet, et en le faisant savoir."
       }
     ],
     "declencheurs": [],
-    "attitude_joueur": "Il mesurera la reine à une seule aune : ce qu'elle lui rend pour ce qu'il apporte.",
+    "attitude_joueur": "Elle lui a envoye une facture ; il en renvoie une. Tant que le compte penche de son cote, il tient — et il tiendra le livre lui-meme.",
     "date_maj": {
       "annee": 129,
       "lune": 3,
-      "jour": 18
+      "jour": 25
     }
   },
   {
@@ -2476,112 +2538,124 @@
     "personnage_id": "alarra-rosby",
     "echelle": "scene",
     "croyances": [
-      "On dit sur la baie que la reine a brule cent hommes sur la route de Sombreval, et que la moitie etaient des charretiers - il en passait de Rosby ce jour-la",
-      "Son mari ne declarera rien tant qu'un dragon ne sera pas au-dessus de ses toits, et il a raison, et elle le meprise d'avoir raison",
-      "Elle est partie de Pierredanse sans le dire a son frere, sur une barque de peche a lui : il l'apprendra en trois jours au plus",
-      "La Rhaenyra qu'elle a connue a quatorze ans lui pretait ses chevaux et mentait mal ; elle sait que cette femme-la n'existe plus et vient quand meme le verifier",
-      "Une dame de Rosby debarquant a Peyredragon en guerre ouverte est un fait politique quoi qu'elle en dise - elle a retourne son manteau pour n'en pas montrer les chevrons"
+      "QUARANTE ET UN HOMMES DE ROSBY manquent a l appel du seizieme - manquants et non morts, et quarante et une familles l ignorent. Elle le tient d Aurore Inchauspe, avec la reserve du sergent d appel.",
+      "Onze femmes sont deja venues a la porte de Rosby depuis le 18e ; son mari a fait dire qu on ne recevait plus, ce qu elle juge lache",
+      "L hote de Port-Real installe chez elle depuis le 19e n a pas de nom, ecrit de la main gauche, et a demande a table combien Rosby pouvait lever avant la fin de la lune : son mari ne signera rien mais ne dira pas non",
+      "Un homme qui parle comme les gens d en haut a questionne les cuisines de Peyredragon sur son identite - donc on la regarde ici aussi",
+      "Aurore Inchauspe a ecrit a quatorze maisons de la baie et ne sait pas encore que la moitie de ses lettres s adressent au mauvais destinataire",
+      "La Rhaenyra qu elle a connue a quatorze ans n existe plus ; elle veut lire son visage sur le seizieme avant de decider ce qu elle en pense"
     ],
     "ignore": [
       "Que le nom de Rosby a deja ete prononce a la table de cette reine, et dans quel sens",
-      "Que trois etrangers sont descendus au bourg cette semaine et qu'on suit une barque a la crique des Ronces - on la prendra peut-etre pour l'une d'eux"
+      "Que la reine a interdit a Aurore de lui promettre autre chose qu une seule chose : qu elle ne serait pas rendue",
+      "Le temoignage des deux passages, et qu Aurore le tient sous silence jusqu au 28e au soir"
     ],
-    "intention": "Voir Rhaenyra une heure, seule, sans rien lui demander - et repartir avant qu'on ne fasse d'elle une lettre.",
+    "intention": "Obtenir les quarante et un noms ce soir et les faire lire a voix haute devant la porte de Rosby, sans le nom de la reine dessus - et attendre que la reine la fasse chercher, sans jamais le demander.",
     "plan": [
       {
-        "id": "alarra-debarquer",
-        "quoi": "Descendre au quai de Peyredragon avec la maree du matin et donner son nom de jeune fille - Massey - et non celui de son mari",
+        "id": "alarra-recoit-les-noms",
+        "quoi": "Recevoir d Aurore, ce soir apres le souper dans la chambre bleue, les quarante et un noms de sa main ; en faire deux copies, en garder une",
         "etat": "en-cours",
         "jours_restants": 0,
         "depend_de": [],
         "cout": [
-          "une barque de peche de Pierredanse et son batelier",
-          "la maree du matin du 23",
-          "son manteau retourne"
+          "qu Aurore monte avant la nuit",
+          "de l encre et deux heures"
         ],
-        "si_bloque": "Si on ne la laisse pas monter au chateau, elle ne se reclame de personne et n'invoque aucun titre : elle s'assied sur ses malles au bout du quai et attend la journee entiere, en vue de tous."
+        "si_bloque": "Si Aurore ne vient pas ce soir, elle attend le lendemain sans relancer - et si rien ne vient le 27e, elle considere le marche rompu, reprend sa regle du silence et prepare son depart."
       },
       {
-        "id": "alarra-ne-rien-demander",
-        "quoi": "Tenir sa regle : raconter, ecouter, ne rien reclamer - ni protection, ni or, ni promesse pour Rosby",
+        "id": "alarra-fait-lire-les-noms-a-rosby",
+        "quoi": "Envoyer la seconde copie a Rosby par un homme a elle, a son intendant, avec ordre de la lire A VOIX HAUTE DEVANT LA PORTE, sans le nom de la reine dessus",
+        "etat": "a-venir",
+        "jours_restants": 2,
+        "depend_de": [
+          "alarra-recoit-les-noms"
+        ],
+        "cout": [
+          "un batelier de Pierredanse",
+          "un homme a elle qui accepte de porter ca sous le nez de l hote"
+        ],
+        "si_bloque": "Si elle ne trouve personne, elle ira elle-meme - ce qui met fin a son sejour et la remet sous le meme toit que l hote."
+      },
+      {
+        "id": "alarra-relit-les-quatorze",
+        "quoi": "Lire les quatorze lettres d Aurore, dire pour chacune ce qui cloche (destinataire, calendrier, tournures), et glisser un mot de sa main signe de son nom de femme mariee dans TROIS enveloppes",
+        "etat": "a-venir",
+        "jours_restants": 1,
+        "depend_de": [
+          "alarra-recoit-les-noms"
+        ],
+        "cout": [
+          "qu Aurore lui apporte les quatorze"
+        ],
+        "si_bloque": "Si Aurore ne les monte pas, elle ne reclame rien : elle tient sa part quand on tient la sienne, et pas avant."
+      },
+      {
+        "id": "alarra-attend-detre-mandee",
+        "quoi": "Attendre que la reine la fasse chercher - une heure, seule - sans jamais le demander, ni par lettre ni par intermediaire",
         "etat": "en-cours",
         "jours_restants": null,
-        "depend_de": [
-          "alarra-debarquer"
-        ],
+        "depend_de": [],
         "cout": [
-          "tenir sa langue sur les trois enfants de son mari qui dorment a Rosby"
+          "ne pas ceder a l envie de faire porter un mot"
         ],
-        "si_bloque": "Si la reine lui demande ce qu'elle veut, elle repond rien et le tient - jusqu'au jour ou l'on prononcera devant elle le mot feu et le nom de Rosby dans la meme phrase."
-      },
-      {
-        "id": "alarra-repartir",
-        "quoi": "Reprendre la barque et rentrer a Pierredanse avant que son frere ou son mari n'apprennent ou elle est allee",
-        "etat": "en-cours",
-        "jours_restants": 3,
-        "depend_de": [
-          "alarra-debarquer"
-        ],
-        "cout": [
-          "trois jours",
-          "que la reine ne lui donne rien a porter"
-        ],
-        "si_bloque": "Si la reine lui demande de rester, elle reste - et elle dit tout haut, une fois, ce que cela coutera a son mari, puis n'en reparle plus."
+        "si_bloque": "Si la reine ne l a pas fait chercher au soir du 27e, elle reprend sa barque et rentre a Pierredanse avec la malle, sans un mot de reproche et sans laisser d adresse."
       }
     ],
     "declencheurs": [
       {
-        "si": "On prononce devant elle le mot feu et le nom de Rosby dans la meme phrase",
-        "alors": "Elle rompt sa regle sur-le-champ et demande, devant qui se trouve la, ce qu'on compte faire de Rosby - sans baisser la voix.",
-        "une_fois": true
+        "si": "On lui demande d ouvrir la seconde malle, ou l on y touche sans elle",
+        "alors": "Elle refuse en face, resangle, et fait porter la malle a bord de la barque le soir meme - meme si elle reste, elle."
       },
       {
-        "si": "Quelqu'un de cette maison lui propose de porter un mot, un pli ou un message a Rosby ou a Pierredanse",
-        "alors": "Elle refuse, et va le dire a la reine elle-meme avant la fin du jour.",
-        "une_fois": false
+        "si": "Elle apprend qui a questionne les cuisines sur son identite",
+        "alors": "Elle avance son depart d une journee et le dit a Aurore avant de partir, parce qu elle lui doit ca."
       },
       {
-        "si": "On la traite en envoyee de son mari, ou on la fait attendre comme une solliciteuse",
-        "alors": "Elle redescend au quai sans un mot et fait larguer - elle n'est pas venue quemander.",
-        "une_fois": true
+        "si": "La reine la fait chercher",
+        "alors": "Elle vient sans rien emporter, ne demande rien, et lui donne LES TROIS MAISONS OU C EST LA DAME QUI TIENT - de sa bouche a elle, et a personne d autre."
       }
     ],
-    "attitude_joueur": "Elle ne voit pas une reine : elle voit une fille de quatorze ans qui lui pretait ses chevaux. Elle sait que c'est faux, et c'est exactement ce qu'elle vient verifier.",
+    "attitude_joueur": "Estime nee d un mensonge rattrape. Lui doit une dette qu elle a elle-meme provoquee en demandant. Ne la craint pas et ne la flatte pas.",
     "date_maj": {
       "annee": 129,
       "lune": 3,
-      "jour": 23
+      "jour": 25,
+      "minute": 1077
     }
   },
   {
     "personnage_id": "hann-bourbe",
     "echelle": "orbite",
     "croyances": [
-      "Le chantier a tenu trente ans parce que personne d'important n'a jamais eu de raison d'y venir � et il y en a un, maintenant",
-      "Le chantier du bout arme deux galeres de guerre pour la pleine lune : Marlo les a comptees de ses yeux, de nuit",
-      "Ne pas savoir ou va Marlo est ce qu'il a recu de mieux, et il ne le demandera pas",
-      "Onze dragons a Sirel Quintaine : elle a laisse courir deux fois, elle ne laissera pas courir la troisieme"
+      "MARLO A ANNULE SA PROPRE VENTE ET M A DONNE UN CHIFFRE QUE JE N AVAIS PAS : les chantiers du quai paient un tiers de plus depuis le sacre. Je ne sors pas du chantier, je n ai pas les prix, et il le sait — mais c est la premiere fois qu il m explique un ordre au lieu de le donner",
+      "IL EST RENTRE AVEC DEUX INCONNUS ET UNE CORDE NEUVE, il ne m a dit ni d ou ni pourquoi, et il me les a donnes pour le travail. Un homme de quarante ans sans metier annonce et un gamin de quatorze : ce ne sont pas des bras qu on trouve sur l aire",
+      "Le lot dort sous l auvent six jours et tout depend d un NOM que Marlo n a pas. Si le nom ne vient pas, on vend au moins-disant et on aura perdu la semaine",
+      "IL NE M A PAS REPONDU DEVANT LES HOMMES ET IL M A DESIGNE DU MENTON quand Wat lui a crie la traverse fendue. Trente ans qu il repondait le premier. Ou bien il me fait confiance, ou bien il a la tete ailleurs — et les deux se ressemblent de dos",
+      "IL NE L A PAS PAYEE ET ELLE EST REPARTIE CONTENTE, avec sa feuille sous le manteau, en me saluant au passage — ce qu elle n avait jamais fait. Je ne comprends pas ce qui s est joue la, et c est la deuxieme fois en deux jours"
     ],
     "ignore": [
       "D ou vient la bourse, que la Merette remonte a Peyredragon, et ou va Marlo quand il part"
     ],
-    "intention": "Tenir l aire seul, faire comme si de rien n etait, et ne jamais vendre une planche au chantier du bout.",
+    "intention": "Tenir l aire, recaler le mat sur des des avant la nuit, et faire travailler les deux nouveaux sans leur demander d ou ils viennent — puisque c est ce qu on lui demande.",
     "plan": [
       {
         "id": "hann-le-mat-a-la-maree",
         "quoi": "Descendre le mat a la maree du matin du 25 avec six bras (Wat et les deux freres compris)",
-        "etat": "en-cours",
-        "jours_restants": 1,
+        "etat": "fait",
+        "jours_restants": 0,
         "depend_de": [],
         "cout": [
           "six bras une maree, et le noeud qu il est seul a savoir faire"
         ],
-        "si_bloque": "Si le mat resiste encore, il scie a la base le 26 et perd la moitie du bois : la vive-eau du 27 ne se negocie pas."
+        "si_bloque": "Si le mat resiste encore, il scie a la base le 26 et perd la moitie du bois : la vive-eau du 27 ne se negocie pas.",
+        "accompli": "Fait a la maree du matin du 25e. Six bras, le noeud du premier coup. Wat a pris la corde dans la jambe et boite."
       },
       {
         "id": "hann-vendre-aux-trois-marches",
         "quoi": "Ecouler membrures et bordes aux Trois-Marches, quatre cerfs de moins la piece, sans nommer personne",
-        "etat": "en-cours",
+        "etat": "annule",
         "jours_restants": 3,
         "depend_de": [
           "hann-le-mat-a-la-maree"
@@ -2589,7 +2663,8 @@
         "cout": [
           "environ deux dragons perdus sur le lot"
         ],
-        "si_bloque": "Si les Trois-Marches n ont pas de quoi payer, il stocke sous l auvent plutot que d aller au bout � c est un ordre, et il le tiendra."
+        "si_bloque": "Si les Trois-Marches n ont pas de quoi payer, il stocke sous l auvent plutot que d aller au bout � c est un ordre, et il le tiendra.",
+        "accompli": "ANNULE PAR MARLO le 25e a 16h23 avant execution : le lot ne part plus aux Trois-Marches. Remplace par : tout sous l auvent, bache et cale, jusqu a la pleine lune. Hann doit recaler le mat sur des des, trop lourd pour les traverses six jours."
       }
     ],
     "declencheurs": [
@@ -2606,8 +2681,8 @@
     "date_maj": {
       "annee": 129,
       "lune": 3,
-      "jour": 24,
-      "minute": 473
+      "jour": 26,
+      "minute": 570
     }
   },
   {
@@ -2650,38 +2725,57 @@
   },
   {
     "personnage_id": "sirel-quintaine",
-    "echelle": "orbite",
+    "echelle": "scene",
     "croyances": [
       "Onze dragons d'or, avec l'interet, contre la coque du chantier — et le chantier vaut trois fois la dette",
-      "Marlo a de l'or depuis le vingt et un : la Gadoue le dit, et la Gadoue se trompe rarement sur l'or",
-      "La ville choisira dans la lune ; celui qui a choisi avant paie le prix de son empressement"
+      "La ville choisira dans la lune ; celui qui a choisi avant paie le prix de son empressement",
+      "IL DORMAIT A NEUF HEURES PASSEES, un jour ouvre, sur son propre chantier. Ou bien il a veille pour quelque chose, ou bien il se defait. Les deux se paient au meme prix chez un debiteur",
+      "IL NE M A PAS PAYE ET IL M A DONNE MIEUX : une part sur un lot que je vais placer moi-meme, avec sa feuille et son nom. Le gage me reste, l interet court, et ma creance diminue par mon propre travail. C est exactement ce que je voulais et ce n est pas moi qui l ai propose — voila ce qui me gene",
+      "IL A REFUSE DE DIRE POURQUOI RIEN NE SE VEND AVANT LA PLEINE LUNE, devant ses hommes, sans une seconde d hesitation. Un homme qui embargo son propre bois six jours dans une ville ou les chantiers arment sait quelque chose sur une date. J AI TARIFE SON SILENCE AU CINQUIEME, faute de pouvoir l acheter",
+      "Il tenait un devis en colonnes, ecrit de sa main : portees, essences, etats, un prix par ligne. Ce n est pas un ramasseur de bois qui ecrit ca. Quelque chose a change chez cet homme en une lune, et je ne sais pas quoi"
     ],
     "ignore": [
       "Que l'or vient de Peyredragon"
     ],
-    "intention": "Rentrer dans ses onze dragons — ou, mieux, ne pas rentrer dedans et garder la coque en gage.",
+    "intention": "Placer ce lot au meilleur prix pour toucher son cinquieme et resorber sa creance par le travail d autrui — et comprendre en chemin ce que Marlo sait qui vaut six jours d embargo.",
     "plan": [
       {
         "id": "sirel-la-relance",
         "quoi": "Aller relancer Marlo sur l'aire, devant ses hommes, maintenant qu'on dit qu'il a de l'or",
-        "etat": "en-cours",
-        "jours_restants": 2,
+        "etat": "fait",
+        "jours_restants": 0,
         "depend_de": [],
         "cout": [
           "une matinee de marche perdue"
         ],
-        "si_bloque": "S'il paie tout, elle prend l'or en souriant et cherche aussitot par ou le reprendre en interet."
+        "si_bloque": "S'il paie tout, elle prend l'or en souriant et cherche aussitot par ou le reprendre en interet.",
+        "accompli": "Fait le 26e au matin. N a PAS obtenu son argent et a obtenu mieux : une commission au cinquieme sur un lot qu elle place elle-meme, le gage conserve, l interet qui court. Elle repart avec le devis de Marlo dans son manteau."
       },
       {
         "id": "sirel-l-oreille",
         "quoi": "Savoir d'ou vient l'or, en payant deux commis et une fille de la Gadoue",
-        "etat": "en-cours",
+        "etat": "suspendu",
         "jours_restants": 9,
         "depend_de": [],
         "cout": [
           "un demi-dragon en petites bouches"
         ],
-        "si_bloque": "Si elle ne trouve pas, elle en deduit que c'est gros, et double le prix de son silence."
+        "si_bloque": "Si elle ne trouve pas, elle en deduit que c'est gros, et double le prix de son silence.",
+        "accompli": "SANS OBJET POUR L INSTANT : il n a pas paye, donc rien ne prouve qu il soit paye par quelqu un. Elle cesse de depenser un demi-dragon en petites bouches pour trouver d ou vient son or — c est precisement ce que le contrat lui a achete sans qu elle le voie."
+      },
+      {
+        "id": "sirel-placer-le-lot",
+        "quoi": "Faire le tour de Port-Real avec le devis de Marlo pour trouver QUI ACHETE DU BOIS EN CE MOMENT et a quel prix — quais, chantiers, entrepots — livraison apres la pleine lune",
+        "etat": "en-cours",
+        "jours_restants": 3,
+        "depend_de": [
+          "sirel-la-relance"
+        ],
+        "cout": [
+          "quatre marches a delaisser trois jours",
+          "dire le nom de Marlo Vasse a des gens qui ne le connaissaient pas"
+        ],
+        "si_bloque": "Si personne ne veut d un bois livrable seulement dans six jours, elle ira au chantier du bout, qui est le seul assez presse pour attendre — et elle apprendra la, avant Marlo, pour qui l on arme."
       }
     ],
     "declencheurs": [
@@ -2694,7 +2788,8 @@
     "date_maj": {
       "annee": 129,
       "lune": 3,
-      "jour": 23
+      "jour": 26,
+      "minute": 570
     }
   },
   {
@@ -2821,7 +2916,7 @@
     "ignore": [
       "Que Marlo est alle voir le chantier de ses yeux"
     ],
-    "intention": "Tenir La Gaffe ouverte avant le marche et n'avoir jamais a choisir un camp devant temoin.",
+    "intention": "Tenir La Gaffe ouverte avant le marche, n'avoir jamais a choisir un camp devant temoin — et savoir avant tout le monde quelle est la date des quatre, parce que ce qu'on sait sans l'avoir demande ne se paie pas.",
     "plan": [
       {
         "id": "mag-ouvrir-avant-le-marche",
@@ -2833,6 +2928,18 @@
           "ne pas dormir entre la troisieme heure et midi"
         ],
         "si_bloque": "Si on lui demande officiellement qui boit chez elle, elle ferme deux jours en pretextant le feu, et ne denonce personne."
+      },
+      {
+        "id": "mag-la-date-des-quatre",
+        "quoi": "Savoir quelle est la date des quatre du chantier du bout, sans demander a personne : compter ce qu'ils paient, ecouter qui les rejoint, et attendre qu'ils se trompent en parlant fort",
+        "etat": "en-cours",
+        "jours_restants": 3,
+        "depend_de": [],
+        "cout": [
+          "trois nuits sans dormir avant midi",
+          "ne rien noter, donc tout tenir de tete"
+        ],
+        "si_bloque": "Si l'un des quatre s'apercoit qu'elle ecoute, elle sert une tournee a la maison et ne les regarde plus de la soiree — et elle ne le dira a Marlo qu'apres leur depart, quand ca ne coute plus rien a personne."
       }
     ],
     "declencheurs": [
@@ -2845,43 +2952,45 @@
     "date_maj": {
       "annee": 129,
       "lune": 3,
-      "jour": 24
+      "jour": 25
     }
   },
   {
     "personnage_id": "sabbe",
-    "echelle": "orbite",
+    "echelle": "scene",
     "croyances": [
-      "La reine ne nous a pas envoyes regarder Port-Real : elle nous a envoyes trouver UN HOMME, et elle l'a nomme",
-      "Marlo Vasse, dit le Peigne, maitre d'un chantier de bris ; la reine le connait depuis longtemps et ne nous a pas dit d'ou",
-      "Le signe est a nous, pas a lui : on se tient au puits, MANCHE GAUCHE RETROUSSEE, et c'est LUI qui vient",
-      "Ma corde se vend mal et lentement : c'est exactement pourquoi je peux trainer trois jours sur une place sans qu'on s'en etonne",
-      "On m'a dit devant tous pourquoi c'etait moi. Je n'ai pas l'intention de leur donner tort"
+      "La reine nous a envoyes trouver UN HOMME et elle l a nomme : Marlo Vasse, dit le Peigne, maitre d un chantier de bris. Elle le connait depuis longtemps et ne nous a pas dit d ou, ni a quoi il ressemble",
+      "JE N AI PAS NOMME DE METIER et il ne l a pas releve -- ce qui veut dire qu il l a note. Un homme de quarante ans sans metier est un homme qui cache d ou il vient, et celui-la compte trop bien pour ne pas le savoir",
+      "IL M A DONNE A UN AUTRE. « Ils sont a toi pour le travail, tu leur dis quoi faire » : je reponds desormais a Hann Bourbe et non a lui, ce qui m eloigne de l homme que je dois joindre",
+      "IL M A CHARGE D UNE QUESTION POUR ELLE : le 21e on lui a pose DOUZE DRAGONS sans un mot. Si c est elle, qu elle le fasse dire ; sinon, elle voudra savoir qui d autre le paie pour la meme chose. JE NE SAVAIS PAS QU IL Y AVAIT EU UNE PREMIERE BOURSE",
+      "IL DOIT DOUZE DRAGONS ET DEMI A UNE MARCHANDE ET IL NE LES A PAS PAYES CE MATIN — alors qu il a mon or et un autre sac dans son coffre. Il n a pas touche a ce qu on lui a donne. Elle a demande pourquoi rien ne se vend avant la pleine lune et IL N A PAS REPONDU",
+      "IL A SU QUE J ETAIS SORTI ET IL N A RIEN DEMANDE DE CE QUE J AVAIS DIT. Une seule regle : le lui dire AVANT, et il l a justifiee au lieu de l imposer — « pour savoir ou sont mes hommes quand on me demande ou ils sont ». Je n avais pas prevu d etre traite comme un homme a lui"
     ],
     "ignore": [
       "Que Marlo a deja recu douze dragons d'or d'un inconnu le 21e jour, et qu'il ne sait pas de qui",
       "Que Marlo a une date a vendre et cherche A QUI la vendre",
       "Que la reine a dormi jusqu'a midi le 24 et n'a arme personne derriere eux"
     ],
-    "intention": "Trouver Marlo Vasse au Culpucier, lui remettre l'or et la parole de la reine, et rentrer a Peyredragon vivant pour le dire de sa bouche.",
+    "intention": "Rester manoeuvre sur l aire, se faire oublier apres avoir ete vu revenir du quai, et VOIR DE SES YEUX si cet homme livre vraiment sa premiere feuille au prochain passage.",
     "plan": [
       {
         "id": "sabbe-traversee",
         "quoi": "Traversee Peyredragon -> Port-Real par barque et cavalier, avec Ren et la bourse",
-        "etat": "en-cours",
-        "jours_restants": 3,
+        "etat": "fait",
+        "jours_restants": 0,
         "depend_de": [],
         "cout": [
           "quatre jours",
           "ne pas ouvrir la bourse en route"
         ],
-        "si_bloque": "Si la barque est fouillee, il jette la bourse a l'eau avant les papiers, parce qu'il n'a pas de papiers."
+        "si_bloque": "Si la barque est fouillee, il jette la bourse a l'eau avant les papiers, parce qu'il n'a pas de papiers.",
+        "accompli": "Debarques a Port-Real au matin du 25e. Arrivee POSEE (godfix du 25e, voir monde.deviations) et non produite par l'horloge : l'etape courait jusqu'au 27e. La bourse n'a pas ete ouverte."
       },
       {
         "id": "sabbe-tenir-le-puits",
         "quoi": "Se tenir au puits du Culpucier, manche gauche retroussee, chaque matin a la meme heure, en vendant sa corde",
-        "etat": "prevu",
-        "jours_restants": 4,
+        "etat": "en-cours",
+        "jours_restants": 3,
         "depend_de": [
           "sabbe-traversee"
         ],
@@ -2889,7 +2998,51 @@
           "une place ou l'on ne peut pas s'asseoir",
           "trois jours d'attente au plus"
         ],
-        "si_bloque": "Au quatrieme matin sans personne, il envoie REN seul faire le tour des chantiers de bris demander du travail — un gamin qui cherche de l'ouvrage ne se remarque pas — et lui tient la corde."
+        "si_bloque": "Au quatrieme matin sans personne, il envoie REN seul faire le tour des chantiers de bris demander du travail — un gamin qui cherche de l'ouvrage ne se remarque pas — et lui tient la corde.",
+        "accompli": "Poste pris le 25e a 14h10, sans attendre le lendemain : un homme qui vient d'arriver va d'abord voir la place qu'il devra tenir."
+      },
+      {
+        "id": "sabbe-eprouver-le-peigne",
+        "quoi": "Verifier que cet homme est bien Marlo Vasse AVANT de lui remettre l or et la parole de la reine : d abord par le prix de sa corde ici meme, ensuite en prenant le travail et en ecoutant comment ses hommes le nomment sur l aire",
+        "etat": "fait",
+        "jours_restants": 0,
+        "depend_de": [
+          "sabbe-tenir-le-puits"
+        ],
+        "cout": [
+          "porter du bois comme un homme de quarante ans qui n en a pas porte depuis dix ans",
+          "ne pas nommer la reine tant que ce n est pas sur"
+        ],
+        "si_bloque": "Si le prix sonne faux, il prend le travail QUAND MEME -- on ne refuse pas une place d ou l on voit tout -- et ne sort jamais la bourse. Il ecrira au bout de trois jours en confiant le pli au fil cire du troisieme dolent.",
+        "accompli": "PREMIERE MOITIE FAITE le 25e a 15h45 : l epreuve du prix est passee, et largement. Reste la seconde -- entendre comment ses hommes le nomment sur l aire. SECONDE MOITIE EN COURS depuis le 25e a 15h56 : il descend au chantier de la vase derriere Marlo, les mains vides, pour entendre comment ses six hommes le nomment. ACHEVE le 25e a 16h27 : un homme de l aire l a nomme tout haut. Plus aucun doute sur l identite."
+      },
+      {
+        "id": "sabbe-le-moment-seul",
+        "quoi": "Trouver Marlo Vasse SEUL — avant l aube, ou a la releve du matin — et lui remettre l or et la parole de la reine hors de portee des vingt-deux bouches de l aire",
+        "etat": "fait",
+        "jours_restants": 0,
+        "depend_de": [
+          "sabbe-eprouver-le-peigne"
+        ],
+        "cout": [
+          "s ecarter du travail qu on lui a donne, donc se faire remarquer de Hann Bourbe"
+        ],
+        "si_bloque": "Si trois jours passent sans un moment seul, il glisse le pli dans la cabane du Peigne et repart : une bourse laissee vaut mieux qu une bourse trouvee sur lui.",
+        "accompli": "Fait la nuit du 26e, un peu apres minuit, sous l auvent : Marlo etait seul avec une chandelle. Or remis, parole rendue, reponse obtenue en cinq points. Aucun temoin."
+      },
+      {
+        "id": "sabbe-faire-remonter-la-reponse",
+        "quoi": "Faire remonter a Peyredragon la reponse de Marlo ET la question des douze dragons du 21e -- par le fil cire du troisieme dolent au depart de la Merette, faute de pouvoir la porter lui-meme",
+        "etat": "fait",
+        "jours_restants": 0,
+        "depend_de": [
+          "sabbe-le-moment-seul"
+        ],
+        "cout": [
+          "ne sait pas ecrire : il lui faut une main, ou un porteur de confiance sur la coque"
+        ],
+        "si_bloque": "S il ne trouve ni main ni porteur, il garde tout dans sa tete et attend le prochain passage : il a ete choisi pour sa memoire, pas pour sa plume.",
+        "accompli": "Fait le 26e avant le jour : ne sachant pas ecrire, il est descendu au quai et a donne la reponse en cinq points ET la question des douze dragons A L HOMME DE LA MERETTE, de vive voix, avant la maree. Rien perdu, rien arrange. Remonte vers la sixieme heure, a l ouvrage a l appel. On l a vu revenir du quai."
       }
     ],
     "declencheurs": [
@@ -2902,52 +3055,56 @@
         "alors": "Il s'avance et prend tout sur lui : il a quarante ans, l'autre en a quatorze."
       }
     ],
-    "attitude_joueur": "reconnaissance nette et sans chaleur ; il fera exactement ce qui a ete dit et rien de plus",
+    "attitude_joueur": "reconnaissance nette et sans chaleur, doublee d une mefiance de metier : il prendra la place offerte et fera le travail, mais rien ne sortira de sa ceinture avant qu il soit sur",
     "date_maj": {
       "annee": 129,
       "lune": 3,
-      "jour": 24
+      "jour": 26,
+      "minute": 603
     }
   },
   {
     "personnage_id": "ren",
-    "echelle": "orbite",
+    "echelle": "scene",
     "croyances": [
       "La reine ne nous a pas envoyes regarder Port-Real : elle nous a envoyes trouver UN HOMME, et elle l'a nomme",
       "Marlo Vasse, dit le Peigne, maitre d'un chantier de bris ; la reine le connait depuis longtemps et ne nous a pas dit d'ou",
-      "Le signe est a nous, pas a lui : on se tient au puits, MANCHE GAUCHE RETROUSSEE, et c'est LUI qui vient",
-      "Ma mere sait ou je suis et pourquoi : je le lui ai dit moi-meme, dans notre cuisine, et c'est la reine qui l'a voulu ainsi",
-      "Mon poisson est ma raison de trainer. Un gamin qui vend mal du poisson n'interesse personne"
+      "Il nous a donne du travail dans un chantier de bris : c est exactement ce que je devais aller demander de porte en porte. Je n ai plus a mentir sur rien",
+      "DOUZE SOUS LA JOURNEE, NOURRI MATIN ET SOIR, et la semaine due entiere alors que je n ai pas travaille une heure. Personne ne m a jamais paye un jour d avance. J ai demande quand est le matin et il a repondu sans se moquer",
+      "DEMAIN JE NE PORTE PLUS : je marche la ville deux jours pour ECOUTER CE QUI EST CASSE, sans jamais demander qui construit, sans promettre, sans dire son nom. DOUZE SOUS PAR JOUR QUAND MEME, nourri avant et apres — marcher pour lui EST du travail, il l a dit sans que j aie a le demander deux fois",
+      "Si l on me demande pour qui je marche, je reponds LES CHANTIERS DE LA NERA — jamais son nom — et je dois rapporter LA TETE QUE LES GENS FONT en entendant ce nom-la"
     ],
     "ignore": [
       "Que la moitie de la ville cherche a savoir qui paie en pieces neuves",
       "Ce que Sabbe fera si l'un des deux est pris"
     ],
-    "intention": "Ne pas avoir l'air d'un enfant a qui l'on confie quelque chose, et rentrer avec la reponse.",
+    "intention": "Faire ce travail-la mieux que n importe qui l aurait fait, parce que c est le premier qu on lui donne et qu il a compris qu ici on paie ce qu on promet.",
     "plan": [
       {
         "id": "ren-traversee",
         "quoi": "Suivre Sabbe sans jamais marcher a cote de lui : ils ne se connaissent pas en public",
-        "etat": "en-cours",
-        "jours_restants": 3,
+        "etat": "fait",
+        "jours_restants": 0,
         "depend_de": [],
         "cout": [
           "ne parler a personne pendant quatre jours"
         ],
-        "si_bloque": "S'il perd Sabbe, il revient au puits et attend la, parce que c'est le seul endroit dont ils aient convenu."
+        "si_bloque": "S'il perd Sabbe, il revient au puits et attend la, parce que c'est le seul endroit dont ils aient convenu.",
+        "accompli": "A suivi Sabbe sans marcher a cote de lui une seule fois, et n'a parle a personne. Arrivee posee au 25e (godfix)."
       },
       {
         "id": "ren-les-chantiers",
         "quoi": "Faire le tour des chantiers de bris en demandant de l'ouvrage, si le puits n'a rien donne",
-        "etat": "prevu",
-        "jours_restants": 8,
+        "etat": "fait",
+        "jours_restants": 0,
         "depend_de": [
           "ren-traversee"
         ],
         "cout": [
           "se faire renvoyer huit fois"
         ],
-        "si_bloque": "Il met la main au manche de son couteau a poisson quand on le nomme, s'en rend compte, et la retire trop vite. Un homme attentif le remarquera."
+        "si_bloque": "Il met la main au manche de son couteau a poisson quand on le nomme, s'en rend compte, et la retire trop vite. Un homme attentif le remarquera.",
+        "accompli": "Commence deux jours trop tot et SANS ORDRE, le 25e a 15h31 : il a traverse la place et aborde un homme portant corde et scie. Il a demande un chantier de bris, puis nomme LE PEIGNE, a voix normale, dans un quartier qui a faim. ABOUTI AUTREMENT QUE PREVU, le 25e a 15h32 : il n a pas eu a faire le tour des chantiers -- le maitre de l un d eux s est nomme devant lui et l a embauche sur place. Sa couverture est desormais VRAIE."
       }
     ],
     "declencheurs": [
@@ -2956,11 +3113,92 @@
         "alors": "Il dit la verite — de l'ile — parce que c'est ce qu'on lui a fait repeter deux fois, mot pour mot."
       }
     ],
-    "attitude_joueur": "il veut qu'elle apprenne qu'il a bien fait, et il a peur qu'elle ait oublie son nom",
+    "attitude_joueur": "fierte qu il essaie de ne pas montrer, et la peur d avoir mal fait quand meme ; il obeira a Marlo vite et bien pour que ca se voie",
     "date_maj": {
       "annee": 129,
       "lune": 3,
-      "jour": 24
+      "jour": 26,
+      "minute": 603
+    }
+  },
+  {
+    "personnage_id": "lord-rosby",
+    "echelle": "royaume",
+    "croyances": [
+      "Deux textes vont se poser sur sa table en trente-six heures : la proclamation du roi, arrivee la premiere, qui somme toute maison ayant jure le dix-huitieme de s'en delier dans la quinzaine — et l'acte scelle de la reine, qu'un cavalier doit lire tout haut dans sa cour demain.",
+      "Il n'a jure ni a l'un ni a l'autre le dix-huitieme, et c'est la seule chose qui le tienne encore debout.",
+      "Sa femme est a Peyredragon et il ne l'y a pas envoyee : ce que Port-Real en conclura, il ne peut pas l'empecher."
+    ],
+    "ignore": [
+      "Que sa femme est arrivee a Peyredragon de sa propre autorite et qu'elle refusera d'y porter le moindre pli pour lui",
+      "Que Larys Strong a deja designe Rosby comme le premier chateau ou placer une oreille"
+    ],
+    "intention": "Ne rien signer tant que les deux textes ne sont pas lus, et faire dire partout qu'il n'a jure a personne — pendant que sa femme, qu'il n'a pas envoyee, est assise chez la reine noire.",
+    "plan": [
+      {
+        "id": "rosby-ne-rien-signer",
+        "quoi": "Recevoir le cavalier de la reine devant le moins de temoins possible, l'ecouter lire, ne rien repondre par ecrit, et le renvoyer avec du vin et rien d'autre",
+        "etat": "en-cours",
+        "jours_restants": 1,
+        "depend_de": [],
+        "cout": [
+          "que personne de sa maison ne parle du corbeau du roi arrive la veille"
+        ],
+        "si_bloque": "Si le cavalier exige une reponse ecrite devant sa cour, il ecrit qu'il tient sa maison a la disposition du trone — sans preciser lequel."
+      }
+    ],
+    "declencheurs": [
+      {
+        "si": "Un homme du roi ou de la reine se presente a Rosby avec des lances plutot qu'avec un pli",
+        "alors": "Il ouvre ses portes au premier arrive et jure a celui-la : sa forteresse est un peage sur la route royale, pas un chateau.",
+        "une_fois": false
+      }
+    ],
+    "attitude_joueur": "Il ne la deteste pas et ne la sert pas : il compte les jours et les cavaliers. Sa femme chez elle est un fait qu'il subit.",
+    "date_maj": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 25
+    }
+  },
+  {
+    "personnage_id": "lord-stokeworth",
+    "echelle": "royaume",
+    "croyances": [
+      "La proclamation du roi somme toute maison ayant jure le dix-huitieme de s'en delier dans la quinzaine — et lui n'a pas jure.",
+      "Neuf de ses hommes ont dormi dans les fosses de Peyredragon et en sont ressortis vivants, genoux ployes. Le texte qu'on vient de lui envoyer ne le sait pas, et il n'a pas l'intention de le lui apprendre.",
+      "Tant qu'aucun des deux camps ne lui demande d'hommes, il n'a rien a decider."
+    ],
+    "ignore": [
+      "Que ses neuf hommes ont jure en leur propre nom et que trois d'entre eux le racontent deja au village"
+    ],
+    "intention": "Ne rien decider, ne rien ecrire, et faire rentrer les neuf discretement avant que quelqu'un a Port-Real n'apprenne d'ou ils reviennent.",
+    "plan": [
+      {
+        "id": "stokeworth-les-neuf",
+        "quoi": "Faire revenir les neuf hommes un par un, par la route de terre et non par le port, et leur faire dire qu'ils rentrent d'un pelerinage",
+        "etat": "en-cours",
+        "jours_restants": 6,
+        "depend_de": [],
+        "cout": [
+          "six jours",
+          "la parole de neuf hommes qu'il ne tient pas"
+        ],
+        "si_bloque": "Si l'un d'eux parle avant d'etre rentre, il le desavoue tout haut et ecrit a Port-Real le premier, pour que la nouvelle vienne de lui."
+      }
+    ],
+    "declencheurs": [
+      {
+        "si": "Un officier du roi vient compter ses lances a Stokeworth",
+        "alors": "Il en montre les deux tiers et fait passer le reste pour des paysans — il n'a jamais su dire non en face.",
+        "une_fois": false
+      }
+    ],
+    "attitude_joueur": "Il n'a d'opinion sur elle que celle-ci : elle a renvoye ses hommes vivants quand elle pouvait les pendre. Cela ne vaut pas un serment, mais cela vaut de ne pas ecrire contre elle.",
+    "date_maj": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 25
     }
   }
 ]

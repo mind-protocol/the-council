@@ -187,14 +187,24 @@ window.Bus = (() => {
   // phrase : sinon le fil parle par-dessus la salle. Une fois la voix éteinte,
   // le délai écrit n'a plus de raison d'être long — on écourte.
   let attenteVoix = false;
+  // La voix ne peut pas prendre la salle en otage. `speechSynthesis` avale son
+  // `onend` (onglet en arrière-plan, longue tirade), un son qui ne se termine
+  // jamais laisse la promesse en suspens — et la file se fige pour de bon :
+  // le joueur ne voit plus rien arriver jusqu'à ce qu'il recharge la page.
+  // On borne donc l'attente : au-delà, on reprend la lecture sans la voix.
+  const ATTENTE_VOIX_MAX = 25000;
   function planifier(ms){
     const p = window.Voix && Voix.enAttente();
     if(!p){ minuterie = setTimeout(()=>jouerItem(false), ms); return; }
     attenteVoix = true;
-    p.then(()=>{
+    let repris = false;
+    const reprendre = (ecourte)=>{
+      if(repris) return; repris = true;
       attenteVoix = false;
-      minuterie = setTimeout(()=>jouerItem(false), Math.min(ms, 1200));
-    });
+      minuterie = setTimeout(()=>jouerItem(false), ecourte ? Math.min(ms, 1200) : 0);
+    };
+    p.then(()=>reprendre(true), ()=>reprendre(true));
+    setTimeout(()=>reprendre(false), ATTENTE_VOIX_MAX);
   }
 
   // Ce qui vient du joueur : ses mots ne font jamais la queue derrière le monde
@@ -215,7 +225,10 @@ window.Bus = (() => {
   // `salle`, un `effacer`, un `objectif` ou une `table` rejoués défigureraient
   // le présent : on ne les redescend pas.
   const ARCHIVABLES = { replique:1, geste:1, recit:1, breve:1, pensee:1, vous:1,
-    reecrit:1, question:1, reponse:1, meta:1, coulisses:1, run:1, marque:1 };
+    reecrit:1, question:1, reponse:1, meta:1, coulisses:1, run:1, marque:1,
+    // Un bloc de suites déjà tranché se relit comme une décision prise ; celui
+    // qui ne l'était pas se rouvre, et c'est bien : l'offre tient toujours.
+    suites:1 };
 
   function rendre(it, instant){
     if(enArchive){
@@ -260,7 +273,11 @@ window.Bus = (() => {
     if(!file.length) return;
     const it = file.shift();
     minuterie = null;
-    rendre(it, instant);
+    // Un item qui lève à la peinture ne doit pas emporter la file avec lui :
+    // sans ce garde, la chaîne s'arrête net et plus rien ne se joue — même les
+    // items suivants, pourtant sains, attendent un rechargement de la page.
+    try{ rendre(it, instant); }
+    catch(e){ console.error("item injouable", it && it.type, e); }
     if(file.length){
       if(instant){ jouerItem(true); }
       else{
@@ -317,11 +334,24 @@ window.Bus = (() => {
   // Deux sondages qui se croisent liraient le même bout de flux : chacun le
   // trouverait neuf, et la scène se jouerait deux fois.
   let enSondage = false;
+  let dernierSondage = Date.now();
+  // Un `fetch` n'a pas de délai de garde : la promesse reste en suspens tant que
+  // la couche réseau n'a pas tranché. Derrière un tunnel, une connexion tombée
+  // sans être fermée proprement ne tranche jamais — `enSondage` reste armé, la
+  // ligne qui reprogramme le sondage n'est jamais atteinte, et la boucle est
+  // morte pour de bon : le joueur ne voit plus rien arriver jusqu'à ce qu'il
+  // recharge la page. En local la connexion ne tombe pas, donc rien ne se voit.
+  const SONDAGE_MAX = 12000;
   async function sonder(){
     if(enSondage){ return; }
     enSondage = true;
+    dernierSondage = Date.now();
     try{
-      const r = await fetch("/scene");
+      const coupe = new AbortController();
+      const chien = setTimeout(()=>coupe.abort(), SONDAGE_MAX);
+      let r;
+      try{ r = await fetch("/scene", {signal: coupe.signal}); }
+      finally{ clearTimeout(chien); }
       const s = await r.json();
       const items = s.items || [];
       // Le serveur ne sert qu'une fenêtre du fil et dit, avec `debut`, combien

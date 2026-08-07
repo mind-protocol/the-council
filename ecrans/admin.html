@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Régie — Le Conseil</title>
+<style>
+  :root {
+    --fond: #14110e; --fond2: #1c1815; --bord: #3a3128; --texte: #e6ddd0;
+    --pale: #9a8f80; --or: #c8a44a; --rouge: #c05a44; --vert: #6f8f5e;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fond); color: var(--texte);
+    font: 14px/1.45 "Iowan Old Style", Georgia, serif; }
+  header { display: flex; align-items: baseline; gap: 1.2rem; flex-wrap: wrap;
+    padding: .8rem 1.2rem; border-bottom: 1px solid var(--bord); background: var(--fond2); }
+  header h1 { font-size: 1rem; margin: 0; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--or); font-weight: normal; }
+  header .date { color: var(--pale); }
+  header .avert { margin-left: auto; color: var(--rouge); font-size: .8rem;
+    letter-spacing: .05em; text-transform: uppercase; }
+  nav { display: flex; gap: .3rem; padding: .5rem 1.2rem 0; border-bottom: 1px solid var(--bord); }
+  nav button { background: none; border: 1px solid transparent; border-bottom: none;
+    color: var(--pale); padding: .4rem .9rem; font: inherit; cursor: pointer; }
+  nav button.actif { color: var(--or); border-color: var(--bord); background: var(--fond2); }
+  main { padding: 1.2rem; }
+  section { display: none; } section.actif { display: block; }
+  h2 { font-size: .85rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--pale); font-weight: normal; margin: 1.6rem 0 .5rem; }
+  h2:first-child { margin-top: 0; }
+  h2 .compte { color: var(--or); }
+  h2 .deborde { color: var(--rouge); }
+  table { border-collapse: collapse; width: 100%; }
+  th { text-align: left; font-weight: normal; font-size: .72rem; color: var(--pale);
+    letter-spacing: .08em; text-transform: uppercase; padding: .3rem .6rem;
+    border-bottom: 1px solid var(--bord); }
+  td { padding: .35rem .6rem; border-bottom: 1px solid #241f1a; vertical-align: top; }
+  tr:hover td { background: #1a1613; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .chaud { color: var(--rouge); }
+  .froid { color: var(--pale); }
+  .quoi { color: var(--pale); font-size: .88rem; }
+  .nom { color: var(--texte); }
+  .siege { color: var(--or); }
+  .alertes { border: 1px solid var(--bord); background: var(--fond2); padding: .6rem .9rem; }
+  .alertes div { padding: .12rem 0; font-size: .88rem; }
+  .alertes .grave { color: var(--rouge); }
+  .alertes .tiede { color: var(--or); }
+  .vide { color: var(--pale); font-style: italic; }
+  .jour { color: var(--or); font-variant-numeric: tabular-nums; }
+  .fam { font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--pale); }
+  .barre { height: 4px; background: #2a241e; margin-top: .25rem; }
+  .barre i { display: block; height: 100%; background: var(--vert); }
+  .barre i.court { background: var(--rouge); }
+  footer { padding: 1rem 1.2rem; color: var(--pale); font-size: .8rem; }
+  button.recharger { background: none; border: 1px solid var(--bord); color: var(--pale);
+    padding: .25rem .7rem; font: inherit; cursor: pointer; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Régie</h1>
+  <span class="date" id="date"></span>
+  <button class="recharger" onclick="charger()">Relire l'état</button>
+  <span class="avert">Envers du décor — jamais sous les yeux du joueur</span>
+</header>
+<nav>
+  <button data-onglet="tetes" class="actif">Les têtes</button>
+  <button data-onglet="calendrier">Le calendrier</button>
+  <button data-onglet="activites">Les activités</button>
+</nav>
+<main>
+  <section id="tetes" class="actif"></section>
+  <section id="calendrier"></section>
+  <section id="activites"></section>
+</main>
+<footer id="pied"></footer>
+<script>
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s == null ? "" : s)
+  .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+document.querySelectorAll("nav button").forEach((b) => b.onclick = () => {
+  document.querySelectorAll("nav button").forEach((x) => x.classList.remove("actif"));
+  document.querySelectorAll("main section").forEach((x) => x.classList.remove("actif"));
+  b.classList.add("actif");
+  $("#" + b.dataset.onglet).classList.add("actif");
+});
+
+function rendreTetes(d) {
+  let h = "";
+  if (d.alertes.length) {
+    h += '<h2>Ce qui cloche</h2><div class="alertes">' + d.alertes
+      .map((a) => '<div class="' + a.gravite + '">' + esc(a.texte) + "</div>").join("") + "</div>";
+  }
+  const groupes = d.groupes.concat(
+    d.hors_echelle.length ? [{ echelle: "hors échelle", budget: null, tetes: d.hors_echelle }] : []);
+  groupes.forEach((g) => {
+    const deborde = g.budget && g.tetes.length > g.budget;
+    h += '<h2>' + esc(g.echelle) + ' <span class="' + (deborde ? "deborde" : "compte") + '">'
+      + g.tetes.length + (g.budget ? " / ~" + g.budget : "") + "</span></h2>";
+    if (!g.tetes.length) { h += '<p class="vide">personne</p>'; return; }
+    h += "<table><tr><th>Qui</th><th>Où</th><th>Intention</th>"
+      + '<th class="num">Étapes</th><th class="num">Prochaine</th>'
+      + '<th class="num">Décl.</th><th class="num">Relue</th><th>Attitude</th></tr>';
+    g.tetes.forEach((t) => {
+      const vieille = t.age_maj !== null && t.age_maj >= 3 && t.echelle !== "royaume";
+      h += "<tr><td>" + (t.siege ? '<span class="siege">◆ </span>' : "")
+        + '<span class="nom">' + esc(t.nom) + "</span></td>"
+        + '<td class="froid">' + esc(t.lieu) + "</td>"
+        + '<td class="quoi">' + esc(t.intention) + "</td>"
+        + '<td class="num">' + t.etapes + " / " + t.etapes_total
+        + (t.sans_horloge ? ' <span class="chaud">(' + t.sans_horloge + " sans h.)</span>" : "") + "</td>"
+        + '<td class="num">' + (t.prochaine === null ? '<span class="froid">—</span>'
+          : '<span class="' + (t.prochaine <= 1 ? "chaud" : "jour") + '">' + t.prochaine + " j</span>") + "</td>"
+        + '<td class="num froid">' + t.declencheurs + "</td>"
+        + '<td class="num ' + (vieille ? "chaud" : "froid") + '">'
+        + (t.age_maj === null ? "—" : t.age_maj + " j") + "</td>"
+        + '<td class="quoi">' + esc(t.attitude) + "</td></tr>";
+      if (t.prochaine !== null)
+        h += '<tr><td></td><td colspan="7" class="quoi">↳ ' + esc(t.prochaine_quoi) + "</td></tr>";
+    });
+    h += "</table>";
+  });
+  $("#tetes").innerHTML = h;
+}
+
+function rendreCalendrier(d) {
+  const fen = d.echeances.filter((e) => e.jours <= 30);
+  let h = '<h2>Les trente prochains jours <span class="compte">' + fen.length + "</span></h2>";
+  if (!fen.length) { h += '<p class="vide">rien ne tombe</p>'; }
+  else {
+    h += "<table><tr><th>Quand</th><th>Quoi</th><th>Sur qui</th><th>Où</th><th></th></tr>";
+    let dernier = null;
+    fen.forEach((e) => {
+      if (e.jours !== dernier) {
+        dernier = e.jours;
+        const q = e.jours < 0 ? "EN RETARD de " + (-e.jours) + " j"
+          : e.jours === 0 ? "AUJOURD'HUI" : "dans " + e.jours + " j";
+        h += '<tr><td colspan="5" class="' + (e.jours <= 0 ? "chaud" : "jour")
+          + '" style="padding-top:.7rem">' + q + "</td></tr>";
+      }
+      h += '<tr><td class="fam">' + esc(e.famille) + "</td>"
+        + '<td class="quoi">' + esc(e.quoi) + "</td>"
+        + '<td class="froid">' + esc(e.qui || "") + "</td>"
+        + '<td class="froid">' + esc(e.lieu || "") + "</td>"
+        + '<td class="froid num">' + esc(e.etat || e.bloque || (e.importance ? "imp. " + e.importance : "")) + "</td></tr>";
+    });
+    h += "</table>";
+  }
+  const loin = d.echeances.filter((e) => e.jours > 30);
+  if (loin.length) {
+    h += '<h2>Plus loin <span class="compte">' + loin.length + "</span></h2><table>";
+    loin.forEach((e) => {
+      h += '<tr><td class="num jour">' + e.jours + ' j</td><td class="fam">' + esc(e.famille)
+        + '</td><td class="quoi">' + esc(e.quoi) + '</td><td class="froid">' + esc(e.qui || "") + "</td></tr>";
+    });
+    h += "</table>";
+  }
+  $("#calendrier").innerHTML = h;
+}
+
+function rendreActivites(d) {
+  let h = '<h2>Où en sont les choses <span class="compte">' + d.activites.length + "</span></h2>";
+  if (!d.activites.length) { $("#activites").innerHTML = h + '<p class="vide">aucune activité</p>'; return; }
+  h += "<table><tr><th>Mesure</th><th class=\"num\">Valeur</th><th class=\"num\">Rythme</th>"
+    + '<th class="num">Seuil dans</th><th>Ce que ça devient</th><th>Porteur</th>'
+    + '<th>Mandat</th><th class="num">Rapport</th></tr>';
+  d.activites.forEach((a) => {
+    h += '<tr><td colspan="8" class="fam" style="padding-top:.7rem;color:var(--or)">'
+      + esc(a.id) + ' — <span class="quoi">' + esc(a.quoi) + "</span></td></tr>";
+    a.mesures.forEach((m) => {
+      const court = m.jours_avant_seuil !== null && m.jours_avant_seuil <= 15;
+      h += '<tr><td class="quoi">' + esc(m.quoi) + "</td>"
+        + '<td class="num nom">' + esc(m.valeur) + " " + esc(m.unite) + "</td>"
+        + '<td class="num froid">' + (m.par > 0 ? "+" : "") + m.par + " / j</td>"
+        + '<td class="num ' + (court ? "chaud" : "jour") + '">'
+        + (m.jours_avant_seuil === null ? '<span class="froid">—</span>' : m.jours_avant_seuil + " j") + "</td>"
+        + '<td class="quoi">' + esc(m.seuil) + "</td>"
+        + '<td class="' + (a.sans_porteur ? "chaud" : "froid") + '">' + esc(a.porteur) + "</td>"
+        + '<td class="froid">' + esc(a.mandat || "— sans mandat") + "</td>"
+        + '<td class="num ' + (a.rapport_age === null || a.rapport_age >= 3 ? "chaud" : "froid") + '">'
+        + (a.dernier_rapport
+          ? esc(a.dernier_rapport) + (a.rapport_age === null ? "" : " (" + a.rapport_age + " j)")
+            + (a.rapport_a ? " → " + esc(a.rapport_a) : "")
+          : "jamais dit") + "</td></tr>";
+    });
+    a.franchis.forEach((s) => {
+      h += '<tr><td colspan="8" class="chaud">⚑ seuil franchi le ' + esc(s.le)
+        + (s.promeut ? " → " + esc(s.promeut) : "") + " : " + esc(s.affaire) + "</td></tr>";
+    });
+  });
+  h += "</table>";
+  $("#activites").innerHTML = h;
+}
+
+async function charger() {
+  const r = await fetch("/admin/donnees", { cache: "no-store" });
+  const d = await r.json();
+  if (d.erreur) { $("#pied").textContent = "erreur : " + d.erreur; return; }
+  $("#date").textContent = d.date_texte
+    + (d.tension === null ? "" : " · tension " + d.tension)
+    + (d.phase ? " · " + d.phase : "");
+  rendreTetes(d); rendreCalendrier(d); rendreActivites(d);
+  const hs = Object.keys(d.horloges || {})
+    .map((k) => k + " " + d.horloges[k].jour + "." + String(Math.floor(d.horloges[k].minute / 60)).padStart(2, "0")
+      + "h" + String(d.horloges[k].minute % 60).padStart(2, "0")).join("  ·  ");
+  $("#pied").textContent = "Horloges des sièges : " + hs + "   —   relu à "
+    + new Date().toLocaleTimeString("fr-FR");
+}
+charger();
+</script>
+</body>
+</html>

@@ -608,9 +608,14 @@ window.Plan = (() => {
   // les livres seulement s'il y en a, la ville seulement là où elle est modelée.
   // Le royaume, lui, est toujours là — c'est le repli.
   //
-  // Le plan par étage a été retiré : tout ce qui est local passe par le volume
-  // (ville3d.js — « Le quartier », « Vous »).
+  // Le plan par étage répond à « où suis-je, et qui est à trois portes de moi ».
+  // Il n'est offert que là où le lieu courant a un plan dessiné (plans.js) : le
+  // volume (ville3d.js — « Le quartier », « Vous ») montre le même château vu
+  // d'en haut, mais pas les salles.
   const ECHELLES = [
+    // ordre 0.5 et non 0 : le tri lit `ordre || 9`, un zéro se retrouverait en queue.
+    { id: "chateau", nom: "Le château", hote: "plan", ordre: 0.5,
+      dispo: () => !!plan, reparu: () => dessiner() },
     { id: "royaume", nom: "Le royaume", hote: "carte", ordre: 1, dispo: () => true },
   ];
   function echelle(def) {

@@ -1286,6 +1286,38 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
 .chr-run .chr-texte{font-size:.8em;color:var(--muted);font-style:italic;}
 .chr-run .chr-icone{opacity:.75;}
 
+/* =========================================================
+   LES SUITES — ce qui s'offre après un « laisser faire ».
+   Des lignes qu'on coche, pas des boutons de menu : sobres, alignées,
+   sans relief tant qu'on n'y a pas posé la main.
+   ========================================================= */
+.chr-suites .chr-texte{font-variant:small-caps;letter-spacing:.09em;
+  color:var(--muted);font-size:.82em;}
+.suites{margin:10px 0 2px;}
+.suites-liste{display:flex;flex-direction:column;gap:1px;}
+.suite{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;
+  padding:7px 10px;background:none;border:0;border-left:2px solid transparent;
+  color:var(--ink);font:inherit;font-size:.84em;cursor:pointer;border-radius:0 4px 4px 0;}
+.suite:hover:not(:disabled){background:color-mix(in srgb,var(--ink) 5%,transparent);}
+.suite-coche{flex:0 0 auto;width:11px;height:11px;margin-top:.32em;
+  border:1px solid color-mix(in srgb,var(--ink) 40%,transparent);border-radius:2px;}
+/* une exclusive se signale ronde : on n'en prend qu'une */
+.suite-exclusive .suite-coche{border-radius:50%;}
+.suite.prise{border-left-color:var(--braise);
+  background:color-mix(in srgb,var(--braise) 9%,transparent);}
+.suite.prise .suite-coche{background:var(--braise);
+  border-color:var(--braise);}
+.suite-detail{display:block;font-size:.86em;color:var(--muted);margin-top:2px;}
+.suite:disabled{cursor:default;}
+.suite.laissee{opacity:.4;text-decoration:line-through;
+  text-decoration-color:color-mix(in srgb,var(--ink) 35%,transparent);}
+.suites-pied{display:flex;gap:8px;align-items:center;margin-top:9px;}
+.suites-tenir,.suites-ecarter{padding:5px 12px;font-size:.76em;}
+.suites-tenir{color:var(--braise);border-color:var(--braise);}
+.suites-tenir:disabled{opacity:.35;cursor:default;}
+.suites-ecarter{color:var(--muted);border-color:color-mix(in srgb,var(--ink) 25%,transparent);}
+.suites-verdict{font-size:.76em;color:var(--muted);font-style:italic;}
+
 /* une médaille idiote, décernée avec tout le sérieux qu'elle ne mérite pas */
 .medaille{display:block;margin:9px 0 2px;padding:9px 12px 10px;text-align:center;
   border:1px dashed color-mix(in srgb,var(--loge) 55%,transparent);border-radius:7px;}
@@ -1601,9 +1633,15 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
    temps qu'on la lise. D'où le fond : elle doit se lire par-dessus n'importe
    quel toit sans qu'on aille chercher le contraste. */
 .monde-survol{position:absolute;z-index:4;pointer-events:none;
-  display:flex;flex-direction:column;gap:1px;max-width:220px;
+  display:flex;flex-direction:row;align-items:center;gap:7px;max-width:240px;
   padding:4px 8px;border:1px solid rgba(232,201,138,.22);border-radius:3px;
   background:rgba(12,14,18,.82);box-shadow:0 2px 10px rgba(0,0,0,.55);}
+\* le signe de l'espèce : une forge, une taverne, une roukerie se reconnaissent
+   avant d'être lues. Il ne se souligne pas — c'est un <u> parce qu'il fallait
+   une balise, pas parce que c'est un lien. */
+.monde-survol u{text-decoration:none;font-size:15px;line-height:1;flex:0 0 auto;
+  filter:saturate(.75);}
+.monde-survol div{display:flex;flex-direction:column;gap:1px;min-width:0;}
 .monde-survol b{color:#f2ead8;font-weight:500;font-size:11px;letter-spacing:.04em;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .monde-survol i{color:var(--muted);font-style:italic;font-size:10px;opacity:.9;

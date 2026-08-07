@@ -166,6 +166,12 @@ window.Plans = {
         orne: ["table6", 324, 228, 7],
         alias: ["salle du levant"], motifs: ["salle du levant", "levant"] },
 
+      { id: "caves", nom: "Les caves", etage: "dessous",
+        forme: { r: [200, 258, 74, 22, 4] }, etiq: [237, 271],
+        lignes: ["Les caves"],
+        quoi: "Sous la grande salle : on y a logé les quarante de la colonne prise sur la route de Sombreval.",
+        alias: ["les caves"], motifs: ["cave", "caves", "les quarante"] },
+
       { id: "archives", nom: "L'archive", etage: "dessous",
         forme: { r: [290, 230, 50, 20, 4] }, etiq: [320, 243],
         lignes: ["L'archive"],

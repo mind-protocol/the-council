@@ -54,8 +54,17 @@ function portraitDefaut(nom) {
 // projette en pièces de carte — et la fait vieillir, parce que le sel n'est pas
 // la position, c'est son âge.
 const JOURS_PAR_LUNE = 30, LUNES_PAR_AN = 12;
-const jourAbsolu = (d) => d && d.annee != null
-  ? ((d.annee * LUNES_PAR_AN + (d.lune - 1)) * JOURS_PAR_LUNE) + (d.jour - 1) : null;
+// Les dates s'écrivent de deux façons dans l'état : le triplet partout, et la
+// forme courte « 129.3.22 » dans `activites.json`. On accepte les deux plutôt
+// que de laisser une régie muette sur la moitié des fichiers.
+const jourAbsolu = (d) => {
+  if (typeof d === "string") {
+    const m = /^(\d+)\.(\d+)\.(\d+)$/.exec(d.trim());
+    d = m ? { annee: +m[1], lune: +m[2], jour: +m[3] } : null;
+  }
+  return d && d.annee != null
+    ? ((d.annee * LUNES_PAR_AN + (d.lune - 1)) * JOURS_PAR_LUNE) + (d.jour - 1) : null;
+};
 
 // Une nouvelle ne reste pas fraîche : de semaine en semaine, ce qu'on tenait
 // pour sûr redevient un on-dit, puis se perd. Au-delà, on ne montre plus rien —
@@ -181,7 +190,10 @@ function audienceCourante(siegeId, depuis) {
           const it = JSON.parse(l);
           if (it.type !== "effacer") return;
           // La scene d'un tiers ne dit rien de l'endroit ou celui-ci se trouve.
-          if (it.pour && siegeId && it.pour !== siegeId) return;
+          // `pour` peut nommer PLUSIEURS oreilles (une piece partagee, une
+          // messe basse) : on y est concerne des qu'on y figure.
+          if (it.pour && siegeId && (Array.isArray(it.pour)
+                ? it.pour.indexOf(siegeId) === -1 : it.pour !== siegeId)) return;
           pour = it.pour || (it.commun ? "commun" : null);
         } catch (e) {}
       });
@@ -595,6 +607,202 @@ function serviceMonde(req, res, chemin) {
   return envoyer(res, 404, JSON.stringify({ erreur: quoi }));
 }
 
+// ---- la régie : ce que le MJ voit et que le joueur ne voit jamais ----------
+// `/admin` n'est pas une échelle du décor : c'est l'envers. On y lit les têtes,
+// les échéances et les mesures — c'est-à-dire tout ce que le brouillard cache.
+// Aucune écriture, jamais : un seul écrivain reste la règle, et cette page ne
+// l'est pas. Elle relit l'état à chaque requête, sans cache : à deux MJ, un
+// cache d'une minute est un mensonge d'une minute.
+function dateCourte(d) {
+  if (!d) return "";
+  if (typeof d === "string") return d;
+  // `dernier_rapport` est tantôt une date nue, tantôt un rapport complet qui
+  // porte la sienne. On ne veut pas d'un « undefined.undefined » à l'écran :
+  // une régie qui affiche du bruit ne se relit plus.
+  if (d.date) return dateCourte(d.date);
+  if (d.annee == null) return "";
+  return d.annee + "." + d.lune + "." + d.jour;
+}
+function regie() {
+  const lire = (f, defaut) => {
+    try { return JSON.parse(fs.readFileSync(path.join(RACINE, "etat", f), "utf-8")); }
+    catch (e) { return defaut; }
+  };
+  const monde = lire("monde.json", {});
+  const aujourdhui = jourAbsolu(monde.date) || 0;
+  const dans = (d) => { const n = jourAbsolu(d); return n === null ? null : n - aujourdhui; };
+
+  const gens = {};
+  (lire("personnages.json", []) || []).forEach((p) => { gens[p.id] = p; });
+  const lieux = {};
+  (lire("lieux.json", []) || []).forEach((l) => { lieux[l.id] = l; });
+  const nom = (id) => (gens[id] && gens[id].nom) || id;
+  const ouEst = (id) => {
+    const p = gens[id];
+    if (!p || !p.lieu_id) return "";
+    return (lieux[p.lieu_id] && lieux[p.lieu_id].nom) || p.lieu_id;
+  };
+
+  // ---- 1. les têtes -------------------------------------------------------
+  const intentions = lire("intentions.json", []) || [];
+  const sieges = lire("joueurs.json", null);
+  const listeSieges = (sieges && (sieges.sieges || sieges)) || [];
+  const occupes = new Set((Array.isArray(listeSieges) ? listeSieges : [])
+    .filter((s) => s && s.occupe).map((s) => s.personnage_id));
+  const tousSieges = (Array.isArray(listeSieges) ? listeSieges : [])
+    .map((s) => s && s.personnage_id).filter(Boolean);
+
+  const tetes = intentions.map((t) => {
+    const plan = t.plan || [];
+    const encours = plan.filter((e) => e.etat !== "fait" && e.etat !== "abandonne");
+    // La prochaine horloge qui tombe : c'est le tri par défaut, parce que
+    // c'est la seule question qu'on se pose avant un tick.
+    let prochaine = null, prochaineQuoi = "";
+    encours.forEach((e) => {
+      if (typeof e.jours_restants !== "number") return;
+      if (prochaine === null || e.jours_restants < prochaine) {
+        prochaine = e.jours_restants; prochaineQuoi = e.quoi || e.id || "";
+      }
+    });
+    const age = dans(t.date_maj);
+    return {
+      id: t.personnage_id,
+      nom: nom(t.personnage_id),
+      echelle: t.echelle || "?",
+      lieu: ouEst(t.personnage_id) || t.lieu_note || "",
+      intention: t.intention || "",
+      date_maj: dateCourte(t.date_maj),
+      age_maj: age === null ? null : -age,
+      etapes: encours.length,
+      etapes_total: plan.length,
+      sans_horloge: encours.filter((e) => typeof e.jours_restants !== "number").length,
+      prochaine, prochaine_quoi: prochaineQuoi,
+      declencheurs: (t.declencheurs || []).length,
+      attitude: t.attitude_joueur || "",
+      mandat: t.mandat || null,
+      siege: occupes.has(t.personnage_id),
+    };
+  });
+  const BUDGETS = { scene: 5, orbite: 20, royaume: null };
+  const groupes = ["scene", "orbite", "royaume"].map((e) => ({
+    echelle: e, budget: BUDGETS[e],
+    tetes: tetes.filter((t) => t.echelle === e)
+      .sort((a, b) => (a.prochaine === null) - (b.prochaine === null)
+        || (a.prochaine - b.prochaine) || (b.age_maj - a.age_maj)),
+  }));
+  const horsEchelle = tetes.filter((t) => !BUDGETS.hasOwnProperty(t.echelle));
+
+  // Les deux fautes symétriques : un siège occupé qui garde une tête (on le
+  // joue à sa place), un siège vacant qui n'en a pas (il dort sans qu'on le voie).
+  const avecTete = new Set(intentions.map((t) => t.personnage_id));
+  const alertes = [];
+  tousSieges.forEach((id) => {
+    if (occupes.has(id) && avecTete.has(id))
+      alertes.push({ gravite: "grave", texte: nom(id) + " : siège OCCUPÉ et pourtant une tête dans intentions.json" });
+    if (!occupes.has(id) && !avecTete.has(id))
+      alertes.push({ gravite: "grave", texte: nom(id) + " : siège VACANT et aucune tête — il dort pendant qu'on regarde ailleurs" });
+  });
+  groupes.forEach((g) => {
+    if (g.budget && g.tetes.length > g.budget)
+      alertes.push({ gravite: "tiede", texte: "échelle « " + g.echelle + " » : " + g.tetes.length + " têtes pour ~" + g.budget });
+  });
+  tetes.forEach((t) => {
+    if (t.age_maj !== null && t.age_maj >= 3 && t.echelle !== "royaume")
+      alertes.push({ gravite: "tiede", texte: t.nom + " : tête non relue depuis " + t.age_maj + " jours" });
+    if (t.etapes && t.sans_horloge === t.etapes)
+      alertes.push({ gravite: "tiede", texte: t.nom + " : aucune étape n'a d'horloge — rien ne tombera jamais" });
+  });
+
+  // ---- 2. le calendrier ---------------------------------------------------
+  const echeances = [];
+  (lire("evenements.json", []) || []).forEach((e) => {
+    if (e.statut === "resolu" || e.statut === "annule" || e.statut === "devie") return;
+    const j = dans(e.date_prevue);
+    if (j === null) return;
+    echeances.push({
+      jours: j, quoi: e.description || e.id, famille: e.type === "canon" ? "canon" : "événement",
+      qui: (e.acteurs || []).map(nom).join(", "), importance: e.importance || null,
+      lieu: e.lieu_id ? ((lieux[e.lieu_id] && lieux[e.lieu_id].nom) || e.lieu_id) : "",
+    });
+  });
+  intentions.forEach((t) => {
+    (t.plan || []).forEach((e) => {
+      if (e.etat === "fait" || e.etat === "abandonne") return;
+      if (typeof e.jours_restants !== "number") return;
+      echeances.push({
+        jours: e.jours_restants, quoi: e.quoi || e.id, famille: "étape",
+        qui: nom(t.personnage_id), echelle: t.echelle,
+        bloque: (e.depend_de || []).length ? "dépend de " + (e.depend_de || []).join(", ") : "",
+      });
+    });
+  });
+  (((lire("plis.json", {}) || {}).plis) || []).forEach((p) => {
+    if (p.etat === "remis" || p.etat === "confirme" || p.etat === "perdu") return;
+    const j = dans(p.attendu_le);
+    if (j === null) return;
+    echeances.push({
+      jours: j, quoi: p.porte || p.id, famille: "pli",
+      qui: nom(p.de) + " → " + nom(p.pour), etat: p.etat || "",
+      lieu: p.vers ? ((lieux[p.vers] && lieux[p.vers].nom) || p.vers) : "",
+    });
+  });
+  echeances.sort((a, b) => a.jours - b.jours);
+
+  // ---- 3. les activités ---------------------------------------------------
+  const activites = (((lire("activites.json", {}) || {}).activites) || []).map((a) => {
+    const mesures = (a.mesure || []).map((m) => {
+      const par = (m.rythme && typeof m.rythme.par === "number") ? m.rythme.par : 0;
+      // Le seuil le plus proche dans le temps, à ce rythme-là. C'est le
+      // seul chiffre qui compte : dans combien de jours ça devient une affaire.
+      let jours = null, seuilQui = "";
+      (a.seuils || []).filter((s) => s.mesure_id === m.id).forEach((s) => {
+        if (s.franchi_le || !par) return;
+        const ecart = (s.quand === "sous") ? (m.valeur - s.valeur) : (s.valeur - m.valeur);
+        const vitesse = (s.quand === "sous") ? -par : par;
+        if (vitesse <= 0) return;
+        const d = Math.ceil(ecart / vitesse);
+        if (d < 0) return;
+        if (jours === null || d < jours) { jours = d; seuilQui = s.affaire || s.id; }
+      });
+      return { id: m.id, quoi: m.quoi, valeur: m.valeur, unite: m.unite || "",
+        par, jours_avant_seuil: jours, seuil: seuilQui };
+    });
+    return {
+      id: a.id, quoi: a.quoi,
+      porteur: a.porteur ? (a.porteur.type === "lieu"
+        ? ((lieux[a.porteur.id] && lieux[a.porteur.id].nom) || a.porteur.id)
+        : nom(a.porteur.id)) : "— personne",
+      sans_porteur: !a.porteur || a.porteur.type === "lieu",
+      mandat: a.mandat || null,
+      dernier_rapport: a.dernier_rapport ? dateCourte(a.dernier_rapport) : null,
+      // Le brouillard s'applique au RAPPORT, pas au calcul : ce qui compte
+      // n'est pas la mesure mais depuis quand personne ne l'a dite au joueur.
+      rapport_age: a.dernier_rapport ? (() => {
+        const j = dans(a.dernier_rapport && a.dernier_rapport.date
+          ? a.dernier_rapport.date : a.dernier_rapport);
+        return j === null ? null : -j;
+      })() : null,
+      rapport_a: (a.dernier_rapport && a.dernier_rapport.a) ? nom(a.dernier_rapport.a) : "",
+      date_maj: dateCourte(a.date_maj),
+      mesures,
+      franchis: (a.seuils || []).filter((s) => s.franchi_le)
+        .map((s) => ({ affaire: s.affaire || s.id, promeut: s.promeut || "", le: dateCourte(s.franchi_le) })),
+    };
+  });
+  activites.forEach((a) => a.mesures.forEach((m) => {
+    if (m.jours_avant_seuil !== null && m.jours_avant_seuil <= 10)
+      alertes.push({ gravite: "tiede", texte: a.id + " : seuil atteint dans " + m.jours_avant_seuil + " jours (" + m.quoi + ")" });
+  }));
+
+  return {
+    date: monde.date || null, date_texte: dateCourte(monde.date),
+    tension: monde.tension == null ? null : monde.tension, phase: monde.phase || "",
+    horloges: lire("horloges.json", {}),
+    groupes, hors_echelle: horsEchelle, alertes,
+    echeances, activites,
+  };
+}
+
 http
   .createServer((req, res) => {
     const url = req.url.split("?")[0];
@@ -771,6 +979,13 @@ http
       // qu'il ne prenne la place de l'échelle « la ville ». Elle ne consomme ni
       // le flux ni l'inbox : on peut l'ouvrir pendant qu'une partie tourne.
       if (url === "/monde3d") return fichierStatique(res, "monde3d.html", "text/html; charset=utf-8");
+      // La régie — l'envers du décor. Elle montre ce que le joueur ne doit
+      // jamais voir : à n'ouvrir qu'hors de sa vue. Lecture seule de bout en bout.
+      if (url === "/admin") return fichierStatique(res, "admin.html", "text/html; charset=utf-8");
+      if (url === "/admin/donnees") {
+        try { return envoyer(res, 200, JSON.stringify(regie())); }
+        catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
+      }
       // La foule : une page d'essai, un point par habitant, la journée en
       // accéléré. Hors du jeu — elle ne lit ni le flux ni l'inbox.
       if (url === "/foule") return fichierStatique(res, "foule.html", "text/html; charset=utf-8");
@@ -1434,7 +1649,13 @@ http
                   // rendu muette une joueuse qui parlait pourtant a trois pieds
                   // de l'autre — six repliques tapees pour personne. On consulte
                   // donc `presence.json` en PREMIER : meme piece, parole
-                  // publique. (Meme regle dans `scripts/append_flux.py`.)
+                  // entendue de la piece. (Meme regle dans `scripts/append_flux.py`.)
+                  //
+                  // ENTENDUE DE LA PIECE, PAS DU FICHIER. Rendre ici un `{}` —
+                  // « pas de pour », donc public — donnait la parole de la reine
+                  // et de sa maitresse de la voix au troisieme siege, qui se
+                  // tenait a deux lieues de la. On nomme donc les oreilles :
+                  // celles qui sont dans la salle, et elles seules.
                   (function () {
                     const moi = siege && siege.personnage_id;
                     const l = roster();
@@ -1443,9 +1664,12 @@ http
                         const pr = JSON.parse(fs.readFileSync(
                           path.join(RACINE, "etat", "presence.json"), "utf-8")).presence || {};
                         const ici = pr[moi] && pr[moi].lieu;
-                        if (ici && l.some((j) => j.personnage_id !== moi
-                              && pr[j.personnage_id] && pr[j.personnage_id].lieu === ici)) {
-                          return {};
+                        const voisins = !ici ? [] : l
+                          .filter((j) => j.personnage_id !== moi
+                              && pr[j.personnage_id] && pr[j.personnage_id].lieu === ici)
+                          .map((j) => j.personnage_id);
+                        if (voisins.length) {
+                          return { pour: [moi].concat(voisins).sort() };
                         }
                       } catch (e) {}
                     }

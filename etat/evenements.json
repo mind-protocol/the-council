@@ -1704,7 +1704,7 @@
     "canal": "corbeau",
     "fiabilite": 90,
     "version": "Copie de la proclamation, adressee a toutes les maisons de la Couronne : quiconque a prete serment le dix-huitieme jour est somme de s'en delier dans la quinzaine. Il l'a recue trois jours apres l'acte de la reine, et les deux tiennent sur sa table en meme temps.",
-    "livree": false
+    "livree": true
    },
    {
     "ou": "ile-aux-pinces",
@@ -1719,7 +1719,7 @@
     "canal": "corbeau",
     "fiabilite": 90,
     "version": "Copie de la proclamation. Ce qu'il en retient est d'ordre comptable : une prime sur des tetes est un poste de depense, et un poste de depense se lit dans les livres d'une banque.",
-    "livree": false
+    "livree": true
    },
    {
     "ou": "rosby",
@@ -1734,7 +1734,7 @@
     "canal": "corbeau",
     "fiabilite": 90,
     "version": "Copie de la proclamation, arrivee un jour AVANT le cavalier de la reine qui doit lire son acte tout haut dans la cour. Lord Rosby aura donc les deux textes en trente-six heures, et devra decider lequel il a recu le premier.",
-    "livree": false
+    "livree": true
    },
    {
     "ou": "stokeworth",
@@ -1749,7 +1749,7 @@
     "canal": "corbeau",
     "fiabilite": 90,
     "version": "Copie de la proclamation. Neuf de ses hommes ont dormi dans les fosses de Peyredragon et en sont ressortis vivants et genoux ployes : il le sait, et le texte qu'on vient de lui envoyer ne le sait pas.",
-    "livree": false
+    "livree": true
    },
    {
     "ou": "peyredragon",
@@ -1827,7 +1827,7 @@
     "canal": "corbeau",
     "fiabilite": 90,
     "version": "Copie de la proclamation, avec une ligne ajoutee pour Sombreval seule : la ville est nommee comme rebelle et son seigneur avec elle. Ser Steffon Darklyn y est encore, en ambassade pour la reine, quand l'oiseau se pose.",
-    "livree": false
+    "livree": true
    }
   ]
  },
@@ -1910,8 +1910,8 @@
    "devie si le pli est intercepte a la roukerie du Donjon Rouge et remis a Otto avant Alicent",
    "annule si le corbeau est perdu"
   ],
-  "statut": "a-venir",
-  "effets": "la lettre entre dans les croyances d Alicent (et, selon la deviation, d Otto) ; toute reponse cree un pli en sens inverse",
+  "statut": "resolu",
+  "effets": "NON DEVIE — le pli n'est PAS remis a Otto. Le corbeau se pose a la roukerie du Donjon Rouge peu apres none ; le cachet est prive et non le sceau de la couronne, et c'est precisement ce qui le fait remarquer. Grand mestre Orwyle, rentre depuis le 22, le voit passer et ne dit rien. Larys Strong le prend, l'ouvre, le lit, et le porte lui-meme a la reine douairiere — decachete, sans s'en excuser. Il ne fait pas une piece a montrer d'une lettre qu'il peut faire valoir deux fois : une fois aupres d'elle, qui sait desormais qu'il la lui a apportee plutot que de la donner a son pere ; une fois plus tard, aupres de qui remplacera Otto. Fonde sur l'etat : les trois plis anterieurs adresses a Alicent portent tous main=larys, sa croyance dit que l'information vaut plus que les armees, et son intention est de se rendre indispensable au successeur de la Main. Otto ignore que la lettre existe. Alicent l'a lue seule et ne l'a montree a personne.",
   "diffusion": [
    {
     "ou": "port-real",
@@ -1926,7 +1926,7 @@
     "canal": "corbeau",
     "fiabilite": 100,
     "version": "De la main de Rhaenyra, cachet prive : elle avoue le feu du 16 sans se defendre, ne demande rien, n offre rien, dit que son pere n y trouvera rien a vendre, et refuse de faire comme si le jardin n avait pas eu lieu. Elle ne l appelle pas Votre Grace et ne se fait pas appeler ainsi.",
-    "livree": false
+    "livree": true
    }
   ]
  },
@@ -2479,5 +2479,20 @@
   ],
   "statut": "programme",
   "effets": "Marlo peut etre joint sans que personne ait ecrit son nom. Si nul ne vient en trois matins, Ren descend aux chantiers et le hasard remplace le signe."
+ },
+ {
+  "id": "terme-du-silence-daurore",
+  "date_prevue": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 28,
+   "minute": 1140
+  },
+  "type": "programme",
+  "importance": 55,
+  "statut": "programme",
+  "description": "LE TERME DU SILENCE D AURORE. Le 25e a 15h25, a la Table Peinte et sans temoin, la reine a accorde a Aurore de garder une chose apprise, a DEUX CONDITIONS : un terme annonce par AURORE elle-meme, et la remontee immediate si la chose met quelqu un en danger cette semaine (Aurore ne juge pas, elle signale, la reine juge). AURORE A DIT LE VINGT-HUITIEME ; LA REINE A PRECISE AU SOIR et a ecrit 28 a la craie sur le bord de bois de la Table Peinte, dans la marge des marees. AU SOIR DU 28e AURORE DOIT PARLER, en sachant ou en ne sachant pas. CE QU ELLE TIENT : le temoignage de Hallis Roon sur LES DEUX PASSAGES du 16e - la grande bete sur la route et les chariots, la petite deux fois, basse, sur les hommes couches dans les champs, c est la qu on a crie et pas avant. CE QU ELLE ESPERE AVANT LE TERME : le croisement du livre des morts et du livre du port avec Rulf Corne le 26e au matin, et les premieres reponses des 37 lettres.",
+  "effets": [],
+  "conditions": []
  }
 ]

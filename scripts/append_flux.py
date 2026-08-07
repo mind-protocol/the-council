@@ -27,6 +27,9 @@ DUREES = {
     "effacer": 0, "question": 0, "reponse": 0, "pensee": 0,
     # Les coulisses sont hors univers : l'horloge de la fiction n'y touche pas.
     "meta": 0, "coulisses": 0,
+    # Les suites d'un « laisser faire » : une main tendue au joueur, pas un
+    # geste dans la fiction. Personne ne l'entend, l'horloge n'y touche pas.
+    "suites": 0,
 }
 
 JOURS_PAR_LUNE = 30
@@ -98,7 +101,7 @@ def avancer(date, minutes):
 # — la date jusqu'a laquelle le monde est acquis pour tout le monde. C'est cette
 # date-la, et pas une autre, que le tick doit voir : il travaille en jours sur ce
 # qui est commun, la scene travaille en minutes sur ce qui est prive.
-BARRIERE_MINUTES = 1440  # un joueur ne devance jamais l'autre de plus d'un jour
+BARRIERE_MINUTES = 2880  # un joueur ne devance jamais l'autre de plus de deux jours
 
 
 def minute_absolue(d):
@@ -296,73 +299,29 @@ monde["date"].setdefault("minute", 0)
 # tout le monde voit avance tout le monde).
 sieges = [j["personnage_id"] for j in roster()]
 
-# --- l'audience se DEDUIT de la piece -------------------------------------
-# Deux joueuses dans la meme piece s'entendent. Ce n'est pas une option de mise
-# en scene, c'est de la physique : il ne devrait donc RIEN y avoir a declarer.
-# Tant que l'audience se declarait a la main, il suffisait qu'une session pousse
-# `--pour <sa joueuse>` pendant une scene commune pour que l'autre n'entende
-# plus rien — sans erreur, sans ligne perdue, juste une femme presente et muette
-# a l'ecran d'en face. C'est arrive, et aucune vigilance ne l'aurait evite.
+# --- l'audience se DECLARE, jamais ne se devine ----------------------------
+# On a essaye de la DEDUIRE de `presence.json` : deux sieges situes dans la meme
+# piece s'entendaient d'office, et un `--pour <siege>` etait silencieusement
+# elargi a ses voisins. C'etait joli sur le papier et faux a l'ecran : une
+# presence perimee, une salle mal nommee, un lieu commun a deux etages, et la
+# tranche d'une session tombait chez le joueur d'en face. Le symptome est
+# toujours le meme — des messages qui s'affichent partout — et il ne se voit
+# jamais du cote qui l'a cause.
 #
-# `etat/presence.json` sait deja qui se tient ou, et il le sait pour tout le
-# monde a la fois (c'est un fait du monde, pas une mise en scene privee). On s'en
-# sert : si le siege vise partage sa piece avec un autre siege, la scene est
-# commune DE FAIT et l'on ignore le `--pour` trop etroit.
+# Donc : `--pour X` veut dire X, et rien d'autre. Une scene commune se dit
+# `--pour tous` ; une piece partagee se dit `--messe-basse a,b`. Ce que le MJ
+# n'a pas declare ne s'entend pas.
 #
-# L'apartee reste possible, mais elle doit etre voulue item par item : un `pour`
-# pose sur l'item lui-meme l'emporte toujours (voir plus bas). On ne chuchote
-# pas par accident.
-_presence_lue = lire_presence()
-# Ou chacun se tient VRAIMENT a l'heure qu'il est : l'exception si elle tient
-# encore, sinon sa journee, sinon le chemin qu'il est en train de faire. Une
-# entree perimee ne doit plus partager de piece avec personne.
-_resolu_lu = {}
-if calcul_presence:
-    try:
-        _resolu_lu = calcul_presence.resoudre(presence=_presence_lue)
-    except Exception:
-        _resolu_lu = {}
-
-
-def _piece_de(pid):
-    """La piece d'un siege, {salle, lieu} — ou None s'il n'est nulle part de sur."""
-    ou = _resolu_lu.get(pid)
-    if ou:
-        # En chemin, on n'est dans la piece de personne : on est dans l'escalier.
-        if ou.get("etat") == "en-chemin":
-            return None
-        return {"salle": ou.get("salle"), "lieu": ou.get("lieu")}
-    p = _presence_lue.get(pid)
-    return {"salle": p.get("salle"), "lieu": p.get("lieu")} if p else None
-
-
-# Une messe basse dit explicitement qui entend : elle passe devant la piece.
 # CE QUI N'EST PAS DANS LA FICTION N'EST PAS DANS LA PIECE. Une question, une
 # reponse, une pensee, une remarque de coulisses ne se disent a personne : elles
-# n'ont pas lieu dans la salle, elles ne coutent pas une minute, et partager une
-# piece avec quelqu'un ne lui donne aucun droit dessus. La regle de deduction
-# ci-dessous vaut pour ce qui se joue, jamais pour ce qui se pense.
+# n'ont pas lieu dans la salle et ne coutent pas une minute. Elles restent
+# privees au siege vise meme quand la scene, elle, est commune.
 HORS_FICTION = {"question", "reponse", "pensee", "meta", "coulisses"}
 pour_hors_fiction = pour if pour in sieges else None
 
 if messe_basse:
     pour = messe_basse if len(messe_basse) > 1 else messe_basse[0]
     explicite = True
-elif pour in sieges:
-    _ma_piece = _piece_de(pour)
-    _voisins = [s for s in sieges
-                if s != pour and _ma_piece and _piece_de(s)
-                and meme_piece(_piece_de(s), _ma_piece)]
-    if _voisins:
-        sys.stderr.write(
-            "AVIS : %s partage sa piece avec %s (%s) -- la scene est commune de "
-            "fait, le --pour est ignore pour ce qui se joue. Le hors-fiction "
-            "(question, reponse, pensee, meta, coulisses) lui reste prive.\n"
-            "Pour chuchoter en scene : --messe-basse <ids>.\n"
-            % (pour, ", ".join(_voisins),
-               _ma_piece.get("lieu") or _ma_piece.get("salle")))
-        pour = None
-        explicite = True
 
 mien = pour if pour in sieges else None
 horloges = lire_horloges(monde["date"]) if sieges else {}
@@ -422,7 +381,7 @@ def reclamer_un_run(retarde, demandeur, ecart):
             % retarde)
 
 
-# --- la barriere d'un jour ------------------------------------------------
+# --- la barriere de deux jours --------------------------------------------
 # Sans elle, une joueuse apprendrait une nouvelle avant qu'elle ne soit arrivee
 # a l'autre, et le brouillard s'effondrerait par le temps au lieu de
 # l'information. On refuse, et l'on n'ecrit rien du tout.
@@ -724,6 +683,16 @@ with io.open(chemin, "a", encoding="utf-8") as f:
                     date[k] = it["date"][k]
             if "minute" in it["date"]:
                 date["minute"] = it["date"]["minute"]
+        # UN `pour` D'ITEM NE COMPREND PAS LES MOTS-CLES. « tous », « commun »,
+        # « - » sont des mots de la LIGNE DE COMMANDE : ecrits dans l'item, ils
+        # y restent tels quels, et le serveur cherche alors un siege qui
+        # s'appelle « tous ». Il n'en trouve aucun — l'item n'est servi a
+        # personne, sur aucun ecran, sans une erreur nulle part. On les traduit
+        # ici, la ou ils veulent dire quelque chose : pas d'audience du tout.
+        if it.get("pour") in ("tous", "commun", "-"):
+            del it["pour"]
+            if it.get("type") == "effacer":
+                it["commun"] = True
         # L'audience s'estampille a l'ecriture : elle est portee par chaque
         # item, jamais recalculee a la lecture. Un `pour` deja pose sur l'item
         # l'emporte — c'est l'apartee dans une scene commune.
