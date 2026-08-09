@@ -44,6 +44,15 @@
       ],
       "port": 3133,
       "autoPort": true
+    },
+    {
+      "name": "jeu-nappe",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "serveur/serveur.js"
+      ],
+      "port": 3141,
+      "autoPort": false
     }
   ]
 }

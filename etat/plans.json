@@ -1,0 +1,207 @@
+{
+ "_note": "LES PLANS D'EN FACE — la vérité, jamais montrée au joueur. Même garde qu'intentions.json : ce qui est ici ne doit fuiter ni dans une réplique, ni dans une carte, ni dans une brève. Ce que le joueur CROIT de ces plans vit ailleurs et par siège — etat/joueurs/<id>/jetons.json et vues.json — avec sa certitude qui se délave. Un verrou d'ici ne devient une croyance chez nous que par une entrée de diffusion arrivée à échéance, comme tout le reste. Format objet et non tableaux de cellules : on calcule dessus, le cahier n'en est qu'une vue possible. Plages réservées : 70000-79999 pour les plans qui ne sont pas les nôtres.",
+ "plans": [
+  {
+   "id": "hightower",
+   "maison_id": "maison-hightower",
+   "camp": "vert",
+   "titre": "L'ost, l'or et la tour",
+   "plage": "71000-71999",
+   "ouverture": {
+    "ce_que_ce_plan_rend_vrai": "Aegon reste roi assez longtemps pour que le Bief arrive, et la maison Hightower paie cette guerre sans qu'on la fasse chez elle.",
+    "leurs_piliers": [
+     "que la tour ne brûle pas",
+     "que le Bief marche d'un bloc",
+     "que le roi tienne jusqu'à ce qu'on arrive"
+    ],
+    "ce_qu_ils_livrent": "Six mille hommes comptés sous les murs de Villevieille en une lune, puis vingt-cinq jours de route jusqu'à Port-Réal — nourris, pas un jour de moins.",
+    "ce_qu_ils_demandent": "L'or de la Couronne pour les vivres, et que le roi cesse de vider la bourse en primes criées.",
+    "ce_qu_ils_ne_garantissent_pas": "Le temps que mettront les seigneurs de la Mander à se décider. Et rien, absolument rien, contre un dragon posé sur Villevieille.",
+    "ferme_quand": "L'ost est devant Port-Réal — ou Villevieille est menacée, et alors il ne part plus jamais.",
+    "ce_qu_on_en_sait_de_source": "Têtes d'ormund-hightower (maj 129.3.27), otto (129.3.27), aegon-ii (129.3.27), alicent (129.3.25), aemond (129.3.17) ; maisons.json ; canons 7.5 et 6.1 et leurs conditions."
+   },
+   "etats_cibles": [
+    {
+     "id": "71000",
+     "quoi": "Six mille hommes comptés sous les murs de Villevieille",
+     "vrai_quand": "Les bannerets du Bief ont répondu et le compte est arrêté par écrit.",
+     "echeance": {"annee": 129, "lune": 4, "jour": 24},
+     "source": "étape en cours d'ormund-hightower, 26 jours restants au 129.3.28",
+     "sert": ["71100"]
+    },
+    {
+     "id": "71100",
+     "quoi": "L'ost nourri pour vingt-cinq jours de route, sans toucher aux greniers de la ville",
+     "vrai_quand": "Vingt-cinq jours de vivres pour six mille hommes sont en magasin, et Villevieille mange comme avant.",
+     "echeance": null,
+     "source": "intention d'Ormund : « ne le mettre en marche que quand il sera nourri jusqu'à Port-Réal »",
+     "sert": ["71300"]
+    },
+    {
+     "id": "71200",
+     "quoi": "Villevieille capable de répondre à un dragon",
+     "vrai_quand": "Daeron et Tessarion sont encore dans la ville le jour où l'ost s'ébranle.",
+     "echeance": null,
+     "source": "étape sans horloge d'Ormund + sa croyance sur la Citadelle et le Septuaire Étoilé",
+     "sert": ["71000", "71100"]
+    },
+    {
+     "id": "71300",
+     "quoi": "Aegon tient jusqu'à l'arrivée du Bief",
+     "vrai_quand": "La déchéance de Rhaenyra est proclamée par le roi, et des têtes ont été payées plutôt que des batailles livrées.",
+     "echeance": {"annee": 129, "lune": 7, "jour": 5},
+     "source": "intention d'Otto + canon 7.5 (Aegon écarte son grand-père des lenteurs)",
+     "sert": []
+    }
+   ],
+   "verrous": [
+    {
+     "id": "71001",
+     "quoi": "Le Bief ne marche pas d'un bloc",
+     "bloque": ["71000"],
+     "vrai_aujourdhui": "Hautjardin est aux mains d'un enfant et la moitié des seigneurs de la Mander attendront de voir qui paie.",
+     "source": "croyance d'Ormund",
+     "leve_quand": "Le compte est arrêté par écrit et les bannerets ont juré devant témoin.",
+     "portee_pour_nous": "on peut le savoir"
+    },
+    {
+     "id": "71002",
+     "quoi": "Ormund lève un ost sur une lettre de famille, et ignore que la guerre est ouverte",
+     "bloque": ["71000", "71100"],
+     "vrai_aujourdhui": "Il ignore le feu de la route royale du seizième jour, il ignore que Rhaenyra a été couronnée, et la sommation générale d'Otto ne l'a pas encore trouvé. Il lève six mille hommes sur une affaire de famille, à la vitesse d'une affaire de famille.",
+     "source": "trois entrées `ignore` de sa tête",
+     "leve_quand": "La sommation d'Otto arrive, ou n'importe quelle nouvelle du feu — et alors sa lenteur devient une faute qu'on lui reprochera.",
+     "portee_pour_nous": "on peut le savoir, et c'est le verrou le plus cher du plan : chaque jour où il l'ignore est un jour gagné"
+    },
+    {
+     "id": "71003",
+     "quoi": "Rien dans Villevieille ne répond à un dragon",
+     "bloque": ["71000", "71100"],
+     "vrai_aujourdhui": "La Citadelle et le Septuaire Étoilé valent plus que n'importe quel champ de bataille, et la ville n'a que Tessarion. Tant que c'est vrai, Daeron ne part pas — donc l'ost part sans dragon, ou ne part pas.",
+     "source": "croyance et étape sans horloge d'Ormund",
+     "leve_quand": "Un second dragon vert est posté à Villevieille, ou la menace de vol est écartée.",
+     "portee_pour_nous": "le joueur peut AGIR dessus — un dragon montré au sud immobilise Daeron sans un homme perdu"
+    },
+    {
+     "id": "71004",
+     "quoi": "La même bourse est réclamée trois fois",
+     "bloque": ["71100", "71300"],
+     "vrai_aujourdhui": "Sept cent mille dragons au coffre, vingt mille de revenu par lune. Otto veut payer des têtes plutôt que des osts ; Ormund veut vingt-cinq jours de vivres pour six mille hommes ; et Criston doit arracher à Otto l'or de l'ost avant de marcher sur Sombreval. Aucun des trois n'a écrit son chiffre devant les deux autres.",
+     "source": "maisons.json (or 700000, revenus_lune 20000, levees_dispo 6000) + intention d'Otto + condition du canon 6.1",
+     "leve_quand": "Un seul homme arrête la dépense pour les trois, et les deux autres s'inclinent.",
+     "portee_pour_nous": "on peut le savoir — et une prime criée sans gage se sait vite"
+    },
+    {
+     "id": "71005",
+     "quoi": "Aegon s'impatiente des lenteurs de son grand-père",
+     "bloque": ["71300"],
+     "vrai_aujourdhui": "Il veut être vengé sans se déplacer, et payer de sa main le premier homme qui viendra prendre la prime au mot. Le cinquième jour de la septième lune, il écarte Otto si les achats n'ont rien produit de visible.",
+     "source": "tête d'aegon-ii + canon 7.5 et sa condition",
+     "leve_quand": "Les serments et achats d'Otto produisent un succès visible avant cette date.",
+     "portee_pour_nous": "on peut le savoir, et on peut l'aggraver : rien de visible n'arrive si rien ne se laisse acheter"
+    },
+    {
+     "id": "71006",
+     "quoi": "Peyredragon sait écrire à Ormund nommément",
+     "bloque": [],
+     "vrai_aujourdhui": "La déposition de ser Steffon Darklyn lui est arrivée adressée à son nom, et il l'a compris ainsi : on a voulu qu'il sache qu'on sait ce que sa maison a fait. Son déclencheur est armé sur exactement ce geste.",
+     "source": "croyance d'Ormund + son déclencheur",
+     "leve_quand": "—",
+     "portee_pour_nous": "LE JOUEUR PEUT AGIR : c'est la seule porte ouverte de ce plan, et elle est déjà entrebâillée"
+    }
+   ],
+   "clefs": [
+    {
+     "id": "71010",
+     "quoi": "Payer des têtes plutôt que des osts",
+     "ouvre": ["71300"],
+     "principe": "Une tête coûte moins qu'une campagne et arrive plus vite. Otto le tient depuis le début et ne l'a jamais dit ainsi devant le roi.",
+     "prix": "L'or de la bourse, et le crédit du roi si la prime est criée sans gage.",
+     "porteur": "otto"
+    },
+    {
+     "id": "71011",
+     "quoi": "Nourrir avant de marcher",
+     "ouvre": ["71100"],
+     "principe": "Vingt-cinq jours de route, pas un de moins. Un ost qui part affamé n'arrive pas — Ormund le sait et ne cédera pas dessus.",
+     "prix": "Le temps, et la même bourse que 71010.",
+     "porteur": "ormund-hightower",
+     "note": "71010 et 71011 s'excluent sur la bourse : c'est la tension G01 de ce plan."
+    },
+    {
+     "id": "71012",
+     "quoi": "Le mariage d'Accalmie",
+     "ouvre": ["71300"],
+     "principe": "Une des filles de Borros Baratheon pour Aemond : des cavaliers sans avoir à les payer.",
+     "prix": "Aemond, et l'exclusivité — Borros ne se donne qu'une fois.",
+     "porteur": "otto",
+     "echeance": {"annee": 129, "lune": 4, "jour": 9}
+    },
+    {
+     "id": "71013",
+     "quoi": "Les otages utiles des maisons de la Couronne",
+     "ouvre": ["71300"],
+     "principe": "Fils cadets, pupilles, filles à marier : on tient une maison par ce qu'elle a laissé dehors.",
+     "prix": "Le jour où on s'en sert, on perd toutes les maisons qui hésitaient.",
+     "porteur": "otto"
+    },
+    {
+     "id": "71014",
+     "quoi": "Garder le dragon à la maison",
+     "ouvre": ["71200"],
+     "principe": "Tessarion vaut plus posée sur Villevieille que volante ailleurs, tant que la ville n'a rien d'autre.",
+     "prix": "L'ost marche sans couverture aérienne sur vingt-cinq jours de route.",
+     "porteur": "ormund-hightower"
+    }
+   ],
+   "actions": [
+    {"id": "71020", "quoi": "Convoquer les bannerets du Bief à Villevieille et arrêter le compte", "realise": ["71001"], "office": "ormund-hightower", "moyens": ["la parole de la tour", "l'or de la maison"], "cout": "une lune, et ce que coûte de nourrir six mille hommes assemblés", "depend_de": [], "preuve": "Six mille hommes comptés sous les murs, et le compte écrit", "jour_du": {"annee": 129, "lune": 4, "jour": 24}, "etat": "en cours", "source": "étape en cours, 26 jours restants"},
+    {"id": "71021", "quoi": "Retenir le prince Daeron et Tessarion à Villevieille jusqu'au départ de l'ost", "realise": ["71014"], "office": "ormund-hightower", "moyens": ["l'autorité de la tour sur la ville"], "cout": "néant en or ; l'ost marchera sans dragon", "depend_de": [], "preuve": "Daeron est encore dans la ville le jour où l'ost s'ébranle", "jour_du": null, "etat": "en cours", "source": "étape sans horloge — et c'est pourquoi elle ne tombera jamais toute seule"},
+    {"id": "71022", "quoi": "Faire écrire par Orwyle le récit officiel du massacre de la route royale, et l'expédier partout", "realise": ["71300"], "office": "otto", "moyens": ["le grand mestre", "les corbeaux du roi"], "cout": "néant, sauf le crédit d'Orwyle", "depend_de": [], "preuve": "Le récit lu hors de Port-Réal, et repris", "jour_du": {"annee": 129, "lune": 3, "jour": 28}, "etat": "bloquée", "source": "étape `bloque` de la tête d'Otto"},
+    {"id": "71023", "quoi": "Dresser la liste des otages utiles parmi les maisons de la Couronne", "realise": ["71013"], "office": "otto", "moyens": ["les archives du Donjon Rouge", "Larys"], "cout": "une journée de clerc", "depend_de": [], "preuve": "La liste, nom par nom, avec ce que chaque maison a laissé dehors", "jour_du": {"annee": 129, "lune": 3, "jour": 29}, "etat": "en cours", "source": "étape en cours, 1 jour restant"},
+    {"id": "71024", "quoi": "Porter à Accalmie une offre de mariage : une fille de Borros pour Aemond", "realise": ["71012"], "office": "otto", "moyens": ["un émissaire", "la parole du roi"], "cout": "l'exclusivité — Borros ne se donne qu'une fois", "depend_de": [], "preuve": "La réponse de Borros, par écrit", "jour_du": {"annee": 129, "lune": 4, "jour": 2}, "etat": "en cours", "source": "étape en cours, 5 jours restants"},
+    {"id": "71025", "quoi": "Amasser vingt-cinq jours de vivres pour six mille hommes sans toucher aux greniers de la ville", "realise": ["71011"], "office": "ormund-hightower", "moyens": ["l'or de la maison", "la Mander"], "cout": "à chiffrer — et c'est la moitié de la tension 71004", "depend_de": ["71020"], "preuve": "Les magasins pleins, comptés, et le prix du grain à Villevieille inchangé", "jour_du": null, "etat": "à faire", "source": "déduite de son intention ; aucune étape ne la porte encore, et c'est un trou de son plan"},
+    {"id": "71026", "quoi": "Arrêter la dépense pour les trois — primes, vivres, or de l'ost", "realise": ["71004"], "office": "à désigner", "moyens": ["la bourse de la maison"], "cout": "que deux des trois s'inclinent", "depend_de": [], "preuve": "Un chiffre écrit devant les trois", "jour_du": null, "etat": "à faire", "source": "personne ne le porte — c'est le trou central de ce plan"},
+    {"id": "71027", "quoi": "Recevoir lui-même, sans Otto dans la salle, le premier homme qui viendra réclamer la prime", "realise": ["71010"], "office": "aegon-ii", "moyens": ["la bourse du roi"], "cout": "l'or, et le fait qu'Otto l'apprendra après", "depend_de": [], "preuve": "L'homme payé de sa main", "jour_du": {"annee": 129, "lune": 4, "jour": 3}, "etat": "en cours", "source": "étape en cours d'Aegon, 5 jours restants"},
+    {"id": "71028", "quoi": "Faire proclamer la déchéance de Rhaenyra par le roi", "realise": ["71300"], "office": "otto", "moyens": ["le roi", "le grand mestre"], "cout": "néant en or ; la question écrite de l'acte reste sans réponse", "depend_de": ["71022"], "preuve": "La proclamation lue et expédiée", "jour_du": null, "etat": "à faire", "source": "son intention en toutes lettres : « avant que la question écrite de l'acte ne trouve des oreilles dans la baie »"},
+    {"id": "71029", "quoi": "Arracher à Otto l'or de l'ost avant de marcher sur Sombreval", "realise": [], "office": "criston", "moyens": ["les brûlés de la route"], "cout": "une semaine, et l'humiliation d'Otto en public", "depend_de": [], "preuve": "L'or versé, ou l'ost qui part sans", "jour_du": {"annee": 129, "lune": 6, "jour": 1}, "etat": "en cours", "source": "condition du canon 6.1 : « retardé tant que Criston n'a pas arraché à Otto l'or de l'ost »", "note": "Criston n'est pas Hightower : il est le troisième réclamant de la bourse, et c'est ce qui rend 71004 insoluble."}
+   ],
+   "tensions": [
+    {
+     "id": "H01",
+     "monnaie": "l'or de la maison",
+     "demande": "Les primes d'Otto (71010) + vingt-cinq jours de vivres pour six mille hommes (71011) + l'or de l'ost que Criston veut arracher (71029).",
+     "existe": "700 000 dragons au coffre, 20 000 de revenu par lune.",
+     "ecart": "Aucun des trois n'a écrit son chiffre devant les deux autres. Le premier servi le sera parce qu'il aura crié le plus fort — et Aegon paie déjà de sa main sans passer par Otto.",
+     "quand_ca_se_voit": "Le premier jour où l'on demande les vivres et où la bourse a déjà servi.",
+     "ce_qui_tombe": "Les vivres, parce que ce sont les seuls qui se voient plus tard. Et alors l'ost part quand même, affamé — ou ne part pas."
+    },
+    {
+     "id": "H02",
+     "monnaie": "le temps",
+     "demande": "Aegon veut être vengé maintenant ; Ormund ne marche pas avant une lune plus vingt-cinq jours.",
+     "existe": "Le canon 7.5 dit qu'Aegon écarte son grand-père le cinquième jour de la septième lune.",
+     "ecart": "Trois lunes entre ce que le roi veut et ce que le Bief peut.",
+     "quand_ca_se_voit": "129.7.5",
+     "ce_qui_tombe": "Otto. Et le plan de la maison perd sa tête à Port-Réal juste avant que son ost arrive."
+    }
+   ],
+   "resonance": [
+    {"lien": "servi par", "notre_affaire": "Guet des osts verts (31000)", "leur_piece": "71000 · 71002", "pourquoi": "Notre H1 dit déjà : « si Ormund est à moins de douze jours, je cesse de plaider l'attente ». Son horloge de 26 jours et son ignorance sont exactement ce que ce guet doit mesurer."},
+    {"lien": "attendu par", "notre_affaire": "Contrôle naval (22000)", "leur_piece": "71100", "pourquoi": "Un ost qui doit être nourri vingt-cinq jours dépend de ce qui remonte la Mander et la côte. Ce qu'on ferme sur l'eau se paie dans leurs magasins."},
+    {"lien": "sert", "notre_affaire": "Fenêtre de mer (35000)", "leur_piece": "71300", "pourquoi": "Notre fenêtre se compte à rebours d'un jour d'entrée ; leur 71300 dit jusqu'à quand Aegon tient. Les deux horloges courent l'une contre l'autre."},
+    {"lien": "porte ouverte", "notre_affaire": "à ouvrir", "leur_piece": "71006", "pourquoi": "Le déclencheur d'Ormund est armé sur une lettre adressée nommément à lui. Peyredragon l'a déjà fait une fois sans le vouloir."}
+   ],
+   "ce_que_ca_engendre_chez_nous": [
+    {"type": "observer", "sujet": "la date où la sommation d'Otto atteint Villevieille", "pourquoi": "71002 — chaque jour d'ignorance d'Ormund est un jour gagné, et on ne sait pas combien il en reste", "vers": "31000"},
+    {"type": "interroger", "sujet": "ce que la bourse d'Otto a déjà payé, et sur quel gage", "pourquoi": "71004 — une prime criée sans gage se sait, et c'est ce qui départage les trois réclamants", "vers": "31000"},
+    {"type": "eprouver", "sujet": "ce qu'un dragon montré au sud fait à Daeron", "pourquoi": "71003 — c'est le seul verrou d'en face sur lequel le joueur agit sans perdre un homme", "vers": "à ouvrir"},
+    {"type": "decision", "sujet": "écrire à Ormund nommément, ou s'en abstenir", "pourquoi": "71006 — son déclencheur est armé exactement là-dessus ; ce n'est pas une activité, c'est une parole de la reine", "vers": "la table"}
+   ],
+   "a_verifier": [
+    "L'`ignore` d'Ormund dit que la sommation d'Otto « ne le trouvera que le vingt-deuxième jour », et sa tête est à jour au 129.3.27. Ou bien il s'agit du vingt-deuxième jour de la QUATRIÈME lune, ou bien cette entrée est périmée de six jours. Le plan repose sur 71002 : il faut trancher avant de calculer dessus.",
+    "Sa croyance sur le Bief est coupée en base : « Six mill… ». Le chiffre exact des hommes que la Mander donnerait manque."
+   ]
+  }
+ ]
+}

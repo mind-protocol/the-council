@@ -147,17 +147,19 @@ body.sans-gestes .gestes{display:none;}
   font-style:italic;font-size:.82em;padding:2px 0;}
 #attente.actif{display:block;}
 
-/* ------- la barre : Parler / Agir / Attendre ------- */
+/* ------- la barre : Parler / Agir / Penser / … ------- */
 #fil-actions{flex:none;border-top:1px solid var(--bord);padding-top:8px;}
 #mode-input{display:flex;gap:6px;margin-bottom:7px;}
 #mode-input button{font-size:.78em;padding:4px 16px;border-radius:14px;color:var(--muted);}
 #mode-input #mode-dire.actif{color:var(--accent);border-color:var(--accent);background:var(--btn-hover);}
 #mode-input #mode-agir.actif{color:var(--monde);border-color:var(--monde);background:var(--paper);}
-#mode-input #mode-attendre.actif{color:var(--braise);border-color:var(--braise);background:var(--paper);}
-.libre{display:flex;gap:10px;align-items:flex-end;}
-.libre textarea{flex:1;font:inherit;font-size:.95em;color:inherit;background:var(--paper);
+/* le champ prend toute la largeur de la colonne ; le bouton d'envoi et ses
+   fanions passent dessous, alignés à droite — on écrit à l'aise, pas dans
+   une fente contre un bouton. */
+.libre{display:flex;flex-direction:column;gap:7px;align-items:stretch;}
+.libre textarea{width:100%;font:inherit;font-size:.95em;color:inherit;background:var(--paper);
   border:1px solid var(--bord);border-radius:8px;padding:10px 14px;min-width:0;
-  min-height:54px;max-height:22vh;resize:vertical;}
+  min-height:104px;max-height:34vh;resize:vertical;}
 .libre textarea:focus{outline:none;}
 .libre textarea.mode-dire{border-left:3px solid var(--accent);}
 .libre textarea.mode-dire:focus{border-color:var(--accent);}
@@ -165,7 +167,8 @@ body.sans-gestes .gestes{display:none;}
 .libre textarea.mode-agir:focus{border-color:var(--monde);}
 .libre button{padding:10px 20px;font-size:.95em;}
 /* l'heure de la fiction, contre le bouton d'envoi : quand on parle, on sait quand */
-.libre .envoi{display:flex;flex-direction:column;align-items:stretch;gap:4px;flex:none;}
+.libre .envoi{display:flex;flex-direction:row;align-items:center;justify-content:flex-end;
+  gap:8px;flex:none;}
 #heure-barre{font-size:.72em;color:var(--muted);letter-spacing:.04em;
   text-align:center;white-space:nowrap;font-style:italic;}
 /* Améliorer : un fanion sous le bouton d'envoi, pas un mode. Éteint, il ne
@@ -181,20 +184,30 @@ body.sans-gestes .gestes{display:none;}
 .chr-brouillon .chr-texte{opacity:.55;font-style:italic;}
 .chr-ameliore .chr-texte{transition:opacity .4s;}
 
-#attentes{display:none;gap:10px;flex-wrap:wrap;align-items:center;padding:6px 0 4px;}
-#attentes.actif{display:flex;}
-#attentes button{font-size:.88em;padding:9px 16px;font-style:italic;color:var(--muted);}
-#attentes button:hover{color:var(--ink);}
 #pause{display:none;border-color:var(--braise);color:var(--braise);font-style:normal;}
 /* dans la barre de modes : visible seulement tant qu'il reste du flux à jouer */
 #mode-input #pause{display:none;margin-left:auto;}
 #mode-input #pause.actif{display:inline-flex;align-items:center;}
 
 /* ------- la chronique, à gauche de la scène ------- */
-#fil{height:100vh;box-sizing:border-box;display:flex;flex-direction:column;
+#fil{position:relative;height:100vh;box-sizing:border-box;display:flex;
+  flex-direction:column;
   overflow:hidden;border-right:1px solid var(--bord);padding:14px 18px 16px;
   background:var(--fond-lateral);}
-#fil-corps{flex:1;overflow-y:auto;padding-right:6px;}
+#fil-corps{flex:1;overflow-y:auto;padding-right:22px;}
+
+/* les jalons du joueur : sauter de sa propre parole à la suivante */
+#fil-reperes{position:absolute;right:4px;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:4px;z-index:3;}
+#fil-reperes.vide{display:none;}
+#fil-reperes button{width:20px;height:20px;padding:0;line-height:1;
+  font-size:.72em;color:var(--muted);background:var(--fond-lateral);
+  border:1px solid var(--bord);border-radius:4px;cursor:pointer;opacity:.45;
+  transition:opacity .2s,color .2s,border-color .2s;}
+#fil-reperes button:hover{opacity:1;color:var(--pensee);border-color:var(--pensee);}
+.chr-vise{animation:vise 1.2s ease-out;}
+@keyframes vise{from{background:color-mix(in srgb,var(--pensee) 22%,transparent);}
+  to{background:transparent;}}
 
 /* ------- « Vos desseins » : la cinquième échelle du décor ------- */
 #desseins{position:static;flex:1 1 auto;min-height:180px;display:flex;
@@ -243,21 +256,78 @@ body.sans-gestes .gestes{display:none;}
 .book-onglet{display:flex;flex-direction:column;align-items:flex-start;gap:1px;
   padding:4px 9px;text-align:left;border-radius:4px 4px 0 0;background:var(--btn);}
 .book-onglet-titre{font-size:.62em;line-height:1.25;}
+/* L'emblème : on cherche une forme avant de lire un mot. Il reste discret —
+   c'est un signe sur une tranche, pas une icône d'application. */
+.book-onglet-embleme{margin-right:5px;font-size:1.15em;line-height:1;
+  filter:saturate(.75);}
+.book-embleme{margin-right:7px;font-size:1.1em;}
 .book-onglet-ou{font-size:.5em;font-style:italic;color:var(--muted);
   letter-spacing:.04em;}
 .book-onglet.actif{background:var(--btn-hover);border-color:var(--book-teinte,var(--accent));}
 .book-onglet.actif .book-onglet-titre{color:var(--book-teinte,var(--accent));}
 /* la tranche du volume, teintée par son genre : on reconnaît un carnet d'un
-   registre au coin de l'œil, avant d'avoir lu l'onglet */
-.book-onglet{border-bottom:2px solid var(--book-teinte,transparent);}
+   registre au coin de l'œil, avant d'avoir lu l'onglet.
+   Le contour entier porte la couleur du volume — trente onglets gris se
+   ressemblent tous, trente onglets cerclés chacun de sa teinte se retrouvent
+   à la place qu'on leur connaît. La tranche du bas reste plus épaisse : c'est
+   le dos du livre. */
+.book-onglet{border:1px solid var(--book-teinte,var(--bord));
+  border-bottom-width:2px;opacity:.86;transition:opacity .15s;}
+.book-onglet:hover{opacity:1;}
+.book-onglet.actif{opacity:1;}
 .books-tranche + .book{border-left-color:var(--book-teinte,var(--accent));}
+/* Les coffrets, et ce qu'il y a dedans. Deux tranches, et l'œil doit voir du
+   premier coup laquelle est laquelle : celle du haut porte les boîtes ET les
+   volumes qui traînent à côté ; celle du dessous n'est que le contenu de la
+   boîte ouverte, en retrait, sans bordure du bas. */
+.books-coffrets{border-bottom-style:solid;}
+.books-dedans{margin-left:14px;margin-top:-4px;border-bottom:none;
+  padding-bottom:2px;}
+.books-dedans .book-onglet{padding:3px 8px;background:none;}
+.books-dedans + .book{border-left-color:var(--book-teinte,var(--accent));}
+/* Un coffret n'est pas un volume : il a un couvercle. Une seconde tranche en
+   haut de l'onglet, comme une boîte vue de trois quarts — on doit voir qu'on
+   ouvre quelque chose, et non qu'on tourne une page. */
+.book-onglet.book-coffret{border-top-width:3px;border-radius:3px;
+  background:color-mix(in srgb,var(--book-teinte) 9%,var(--btn));}
+.book-onglet.book-coffret .book-onglet-titre{font-weight:600;}
+.book-onglet.book-coffret.ouvert{background:color-mix(in srgb,var(--book-teinte) 18%,var(--btn-hover));}
+/* La carte du coffret : la liste de ce qu'il contient, une ligne par volume,
+   et chaque ligne s'ouvre. C'est une main tendue, donc ça doit se voir. */
+.book-coffret-table td{cursor:pointer;transition:color .12s,background .12s;}
+.book-coffret-ligne:hover td{background:var(--btn-hover);
+  color:var(--book-teinte,var(--accent));}
+.book-coffret-ligne:focus{outline:none;}
+.book-coffret-ligne:focus td{background:var(--btn-hover);}
+.book-coffret-signe{width:1.6em;font-size:1.25em;line-height:1;
+  padding-right:6px !important;}
+.book-coffret-nom{white-space:nowrap;color:var(--ink) !important;}
+.book-coffret-mot{font-style:italic;}
 .book{margin-bottom:20px;border-left:2px solid var(--book-teinte,var(--braise));
   padding:1px 0 4px 10px;}
 .book h3{margin:0;font-size:.74em;font-weight:600;line-height:1.35;}
+/* le titre et sa main droite : le bouton de recopie tient sur la même ligne,
+   discret tant qu'on ne le cherche pas */
+.book-tete{display:flex;align-items:baseline;gap:10px;}
+.book-tete h3{flex:1 1 auto;min-width:0;}
+.book-copier{flex:0 0 auto;font:inherit;font-size:.54em;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);background:none;cursor:pointer;
+  border:1px solid var(--bord);border-radius:3px;padding:3px 8px;opacity:.55;
+  transition:opacity .15s,color .15s,border-color .15s;}
+.book-copier:hover{opacity:1;color:var(--book-teinte,var(--accent));
+  border-color:var(--book-teinte,var(--accent));}
+.book-copier.fait{opacity:1;color:var(--book-teinte,var(--accent));
+  border-color:var(--book-teinte,var(--accent));}
 .book-genre{margin-left:8px;font-size:.62em;font-weight:400;font-variant:small-caps;
   letter-spacing:.12em;color:var(--book-teinte,var(--muted));white-space:nowrap;}
 .book-sous-titre{font-size:.58em;font-style:italic;color:var(--muted);margin-top:2px;}
 .book-table-enveloppe{margin-top:8px;overflow-x:auto;}
+/* Le titre d'un tableau, quand un volume en porte plusieurs : une affaire a ses
+   états cibles, ses verrous, ses clefs et ses actions, et l'œil doit savoir sur
+   laquelle des quatre grilles il vient de tomber. */
+.book-table-titre{margin-top:18px;font-size:.72em;letter-spacing:.06em;
+  color:var(--braise,#b4763a);border-bottom:1px solid rgba(180,118,58,.28);padding-bottom:3px;}
+.book-table-titre:first-of-type{margin-top:10px;}
 .book-table{border-collapse:collapse;width:100%;font-size:.6em;line-height:1.45;}
 .book-table th{text-align:left;font-weight:600;font-variant:small-caps;
   letter-spacing:.08em;color:var(--braise);border-bottom:1px solid var(--bord);
@@ -269,7 +339,37 @@ body.sans-gestes .gestes{display:none;}
 .book-table tr td:first-child{color:var(--ink);white-space:pre-line;
   min-width:8em;}
 .book-note{margin-top:4px;font-style:italic;opacity:.75;}
+/* Un RENVOI : un numéro cité dans une cellule, qui mène à la ligne qui le
+   définit — souvent dans un autre volume. On ne l'accroche que s'il mène
+   quelque part : un numéro resté en texte nu est un renvoi mort, et c'est une
+   information qu'on ne cache pas. */
+/* Souligné en `text-decoration` et non en bordure : une bordure grandit la
+   boîte du bouton d'un pixel, et trois renvois dans une cellule qui se replie
+   écartent les lignes du tableau. */
+.book-renvoi{font:inherit;line-height:inherit;vertical-align:baseline;
+  color:var(--book-teinte,var(--accent));background:none;border:0;
+  padding:0;margin:0;cursor:pointer;font-variant-numeric:tabular-nums;
+  text-decoration:underline dotted;text-underline-offset:2px;}
+.book-renvoi:hover,.book-renvoi:focus{outline:none;color:var(--ink);
+  text-decoration-style:solid;}
+/* La ligne où l'on vient d'atterrir se signale un instant : une grille de
+   quarante lignes ne dit pas d'elle-même laquelle on était venu chercher. */
+.book-vise td{animation:book-vise 2.4s ease-out;}
+@keyframes book-vise{
+  0%{background:rgba(180,118,58,.32);}
+  55%{background:rgba(180,118,58,.16);}
+  100%{background:transparent;}
+}
 .book-page{margin:8px 0 0;font-size:.62em;color:var(--muted);line-height:1.5;white-space:pre-line;}
+/* Une page qui est un DESSIN — un levé au pas, un plan de salle, un arbre de
+   parenté. La feuille garde sa propre couleur (le parchemin des scripts qui
+   l'engendrent) : c'est un objet posé dans le volume, pas une illustration de
+   l'interface. Elle déborde en largeur plutôt que de se laisser écraser. */
+.book-figure{margin:10px 0 0;padding:0;}
+.book-figure svg{display:block;width:100%;height:auto;border:1px solid var(--bord);
+  border-radius:3px;}
+.book-figure figcaption{margin-top:4px;font-size:.56em;font-style:italic;
+  color:var(--muted);line-height:1.45;}
 /* un registre ouvert et vierge : les colonnes réglées, et l'attente dite */
 .book-attente{font-style:italic;opacity:.7;}
 /* le carnet du joueur : hors fiction, donc sans la teinte d'un genre du monde */
@@ -689,6 +789,33 @@ svg .zone{fill:currentColor;opacity:.09;stroke:none;pointer-events:none;}
 .chr-carte-ouvrir{position:absolute;right:8px;bottom:5px;font-size:.72em;
   font-style:italic;color:var(--muted);}
 .chr-carte:hover .chr-carte-ouvrir{color:var(--accent);}
+/* Un volume tendu à bout de bras. Il n'est PAS cliquable, et ça se voit : pas
+   de survol, pas d'affordance, aucune suite. On vous montre une page, on ne
+   vous donne pas le livre — c'est la différence avec « passer », et le joueur
+   doit la sentir sans qu'on la lui explique. D'où la feuille légèrement de
+   travers et le bord de tranche teinté : un objet dans une main, pas un
+   panneau de l'interface. */
+.chr-livre{margin:9px 0 3px;padding:8px 10px 7px;background:var(--paper);
+  border:1px solid var(--bord);border-left:2px solid var(--book-teinte,var(--braise));
+  border-radius:3px;transform:rotate(-.25deg);}
+.chr-livre-titre{font-size:.72em;font-weight:600;line-height:1.3;}
+.chr-livre-sous-titre{margin-top:2px;font-size:.56em;font-style:italic;color:var(--muted);}
+.chr-livre-corps{margin-top:2px;}
+.chr-livre-corps .book-page{font-size:.6em;}
+.chr-livre-corps .book-table{font-size:.58em;}
+.chr-livre-reste{margin-top:7px;padding-top:5px;border-top:1px dotted var(--bord);
+  font-size:.55em;font-style:italic;color:var(--muted);}
+/* Présenté : il l'a posé ouvert devant vous, et il le garde. Le volume se
+   redresse (on ne tend plus le bras, on pose), et le bouton tourne UNE page —
+   c'est un geste, pas une navigation. Il n'y en a qu'un d'ouvert à la fois. */
+.chr-livre-ouvert{transform:none;box-shadow:0 1px 0 var(--bord),0 6px 14px -10px #000;}
+.chr-livre-tourner{margin-top:8px;font:inherit;font-size:.55em;letter-spacing:.06em;
+  font-variant:small-caps;color:var(--muted);background:transparent;cursor:pointer;
+  border:1px solid var(--bord);border-radius:3px;padding:3px 9px;
+  transition:color .2s,border-color .2s;}
+.chr-livre-tourner:hover:not(:disabled){color:var(--accent);border-color:var(--accent);}
+.chr-livre-tourner:disabled{opacity:.55;cursor:default;font-style:italic;}
+.chr-livre-fin{margin-top:7px;font-size:.55em;font-style:italic;color:var(--muted);opacity:.75;}
 .chr-vers-table{display:inline-block;margin-top:5px;font-size:.86em;font-style:italic;
   color:var(--muted);cursor:pointer;border-bottom:1px dotted var(--bord);}
 .chr-vers-table::before{content:'✥ ';font-style:normal;color:var(--braise);}
@@ -986,10 +1113,8 @@ body{grid-template-columns:auto minmax(0,1fr) 430px;}
 #fil #mode-input{gap:5px;margin-bottom:6px;}
 #fil #mode-input button{font-size:.72em;padding:4px 12px;}
 #fil .libre{gap:8px;}
-#fil .libre textarea{font-size:.86em;min-height:62px;padding:9px 12px;}
+#fil .libre textarea{font-size:.86em;min-height:96px;padding:9px 12px;}
 #fil .libre button{padding:9px 14px;font-size:.86em;}
-#fil #attentes{gap:7px;padding:4px 0;}
-#fil #attentes button{font-size:.78em;padding:7px 12px;}
 @media (max-width:1100px){body{grid-template-columns:auto minmax(0,1fr);} #fil{display:flex;}}
 
 /* la pointe suit le médaillon, même quand la bulle a été recalée dans le décor */
@@ -1096,29 +1221,90 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
 
 /* remise à plat */
 .chr .chr-corps{background:none;border:none;box-shadow:none;padding:0;border-radius:0;}
-.chr .chr-icone{border:none;background:none;width:34px;height:34px;font-size:17px;}
-.chr{grid-template-columns:34px minmax(0,1fr);gap:13px;margin:0 0 26px;}
+/* La gouttière du fil : un visage doit s'y reconnaître sans qu'on le cherche.
+   À 34px on lisait une pastille, pas une tête — la gouttière passe à 64px.
+   Les entrées qui n'ont pas de portrait (récit, brève, pensée) gardent leur
+   emblème à sa taille : il se centre dans la case plus large, il ne gonfle
+   pas avec elle. */
+.chr .chr-icone{border:none;background:none;width:64px;height:64px;font-size:17px;}
+.chr{grid-template-columns:64px minmax(0,1fr);gap:13px;margin:0 0 26px;}
 .chr .chr-texte{font-size:.82em;line-height:1.6;}
 .chr .chr-qui{font-size:.68em;letter-spacing:.14em;margin:0 0 2px;}
 
 /* — la parole : un portrait, un nom, une phrase. Rien d'autre. — */
-.chr-replique .chr-icone{width:34px;height:34px;border-radius:50%;overflow:hidden;
+.chr-replique .chr-icone{width:64px;height:64px;border-radius:50%;overflow:hidden;
   box-shadow:0 0 0 1px var(--bord);}
 .chr-replique .chr-icone svg{width:100%;height:100%;}
 .chr-replique .chr-qui{color:var(--accent);}
 .chr-replique .chr-texte{font-size:.9em;color:var(--ink);}
 .chr-replique .chr-texte::before,.chr-replique .chr-texte::after{content:none;}
 
-/* — votre voix : la seule qui pose une surface — */
-.chr-vous .chr-corps{background:var(--paper);border-radius:12px;padding:9px 15px 11px;}
-.chr-vous .chr-qui{color:var(--pensee);}
-.chr-vous .chr-texte{font-size:.9em;color:var(--ink);}
+/* — votre voix : la seule qui pose une surface, et elle se voit —
+   Dans un fil où tout le reste est posé à plat, la parole du joueur doit se
+   repérer d'un coup d'œil quand on remonte : une surface teintée à SA couleur,
+   une tranche pleine à gauche, et un peu de relief. C'est le repère de lecture
+   de la chronique — on cherche toujours « qu'est-ce que j'ai dit, moi ». */
+:root{--vous-fond:rgba(109,85,144,.12); --vous-bord:rgba(109,85,144,.55);}
+@media (prefers-color-scheme:dark){
+  :root{--vous-fond:rgba(166,140,201,.16); --vous-bord:rgba(166,140,201,.6);}
+}
+.chr-vous .chr-corps{background:var(--vous-fond);border-radius:12px;
+  padding:10px 16px 12px;border-left:3px solid var(--vous-bord);
+  box-shadow:0 2px 10px -6px rgba(0,0,0,.45);}
+.chr-vous .chr-qui{color:var(--pensee);font-weight:600;opacity:1;}
+.chr-vous .chr-texte{font-size:.94em;color:var(--ink);}
 .chr-vous .chr-texte::before,.chr-vous .chr-texte::after{content:none;}
 .chr-vous .chr-icone{color:var(--pensee);}
 /* un acte n'a pas de surface : c'est un geste, pas une parole */
 .chr-acte .chr-corps{background:none;padding:0;}
 .chr-acte .chr-texte{font-style:italic;color:var(--monde);font-size:.86em;}
 .chr-acte .chr-icone{color:var(--monde);}
+
+/* =========================================================
+   CE QUI N'A PAS ENCORE ÉTÉ LU — la marque vit dans ce navigateur.
+   Un joueur qui revient après une absence doit voir, sans compter, où sa
+   lecture s'était arrêtée : un point sur le portrait, un fond à peine tiède.
+   Rien ne clignote — ça s'éteint tout seul une fois l'entrée survolée.
+
+   Une barre pleine sur toute la hauteur de l'entrée hurlait : elle doublait la
+   tranche des bulles, dépassait des textes courts et coupait la colonne en
+   deux. Le point se repère du coin de l'œil et ne dessine rien.
+   ========================================================= */
+.chr.neuf{position:relative;}
+.chr.neuf .chr-icone{position:relative;}
+.chr.neuf .chr-icone::after{content:'';position:absolute;right:4px;top:4px;
+  width:8px;height:8px;border-radius:50%;background:var(--braise);
+  box-shadow:0 0 0 2px var(--fond);}
+/* les entrées qui posent déjà une surface (pensée, votre voix) gardent la
+   leur : on ne les repeint pas, le point suffit à les signaler.
+   Le fond est un CALQUE derrière le texte, pas un rembourrage : rembourrer la
+   case d'une grille la décale (on l'a mesuré : 15px à gauche, 7 en haut), et
+   une marque de lecture qui fait sauter la ligne qu'on lit est pire que pas de
+   marque du tout. Là, rien ne bouge — c'est de la peinture. */
+.chr.neuf:not(.chr-pensee):not(.chr-vous) .chr-corps{position:relative;}
+.chr.neuf:not(.chr-pensee):not(.chr-vous) .chr-corps::before{content:'';
+  position:absolute;left:-14px;right:-14px;top:-8px;bottom:-10px;z-index:-1;
+  border-radius:12px;background:rgba(201,104,58,.07);pointer-events:none;}
+.chr.neuf .chr-icone{filter:none;opacity:1;}
+.chr.neuf .chr-qui{color:var(--braise);}
+
+/* La lecture en cours : cinq secondes de survol, et la marque s'éteint pendant
+   ces cinq secondes-là au lieu de sauter à la fin. Le joueur voit sa lecture
+   être prise en compte — et s'il retire la main, tout se rallume d'un coup,
+   ce qui dit sans un mot que le compte est reparti de zéro.
+   Uniquement de la couleur et de l'opacité : rien qui touche à la mise en page. */
+@keyframes lecture-fond{ from{opacity:1;} to{opacity:0;} }
+@keyframes lecture-point{ from{opacity:1;transform:scale(1);}
+  to{opacity:0;transform:scale(.4);} }
+@keyframes lecture-nom{ from{color:var(--braise);} to{color:var(--muted);} }
+.chr.neuf.lecture:not(.chr-pensee):not(.chr-vous) .chr-corps::before{
+  animation:lecture-fond 5s linear forwards;}
+.chr.neuf.lecture .chr-icone::after{animation:lecture-point 5s linear forwards;}
+.chr.neuf.lecture .chr-qui{animation:lecture-nom 5s linear forwards;}
+/* la main retirée : on se rallume franchement, sans traîner */
+.chr .chr-qui{transition:color .25s;}
+.chr .chr-corps::before{transition:opacity .25s;}
+.chr .chr-icone::after{transition:opacity .25s,transform .25s;}
 
 /* — la pensée : la note bleue, harmonisée — */
 .chr-pensee .chr-corps{background:var(--bleu-pensee);border-radius:12px;
@@ -1204,6 +1390,61 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
   .chr.chr-dit .chr-icone{animation:none;box-shadow:0 0 0 2px rgba(224,130,74,.45);}
 }
 
+/* ── LA FLÈCHE DU FIL : du neuf plus bas (modules/defilement.js)
+   Le joueur remonté dans la chronique n'est jamais ramené en bas de force ; la
+   flèche est le seul endroit où on le lui propose, avec le compte de ce qu'il
+   n'a pas vu. #fil est le repère de position. */
+#fil-vers-bas{position:absolute;right:22px;bottom:96px;z-index:6;
+  display:none;align-items:center;gap:6px;padding:5px 10px 5px 11px;
+  font-family:inherit;font-size:.76em;letter-spacing:.04em;
+  color:var(--fond,#12100e);background:var(--braise);
+  border:0;border-radius:14px;cursor:pointer;
+  box-shadow:0 3px 14px rgba(0,0,0,.45);opacity:0;transform:translateY(6px);
+  transition:opacity .2s,transform .2s;}
+#fil-vers-bas.visible{display:flex;opacity:.94;transform:translateY(0);}
+#fil-vers-bas:hover{opacity:1;}
+#fil-vers-bas svg{width:13px;height:13px;display:block;fill:none;
+  stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.fil-bas-compte{font-variant-numeric:tabular-nums;font-weight:600;}
+
+/* ── LE BOUTON DE VOIX : une ligne, un bouton (modules/voix.js)
+   Cliquer le fait dire, recliquer l'arrête. Il doit SE VOIR sans qu'on le
+   cherche : un rond cerclé, à droite du corps de la bulle. Pâle et discret ne
+   marchait pas — à 35 % d'opacité sur ce fond, personne ne le trouvait.
+   Flotté, donc aucun positionnement absolu et rien à changer aux bulles. */
+.voix-bouton{float:right;margin:0 0 4px 12px;padding:0;display:inline-flex;
+  align-items:center;justify-content:center;gap:3px;
+  width:24px;height:24px;box-sizing:border-box;
+  background:var(--btn);border:1px solid var(--bord);border-radius:50%;
+  cursor:pointer;color:var(--muted);opacity:.85;
+  transition:opacity .18s,color .18s,background .18s,border-color .18s;}
+.voix-bouton:hover{opacity:1;color:var(--accent);border-color:var(--accent);
+  background:var(--btn-hover);}
+.voix-bouton:focus-visible{outline:1px solid var(--accent);outline-offset:2px;opacity:1;}
+.voix-bouton svg{width:13px;height:13px;display:block;fill:currentColor;
+  stroke:currentColor;stroke-width:1.6;stroke-linecap:round;}
+.voix-bouton svg .onde{fill:none;opacity:.5;}
+
+/* on cherche la voix : trois points, parce qu'une synthèse prend des secondes */
+.voix-bouton.attend{opacity:1;cursor:default;color:var(--accent);
+  border-color:var(--accent);}
+.voix-bouton.attend i{width:3px;height:3px;border-radius:50%;background:currentColor;
+  display:block;animation:voix-point 1.1s ease-in-out infinite;}
+.voix-bouton.attend i:nth-child(2){animation-delay:.16s;}
+.voix-bouton.attend i:nth-child(3){animation-delay:.32s;}
+@keyframes voix-point{0%,70%,100%{opacity:.25;transform:translateY(0);}
+  35%{opacity:1;transform:translateY(-2px);}}
+
+/* on l'entend : braise pleine, ondes qui battent — un clic de plus l'arrête */
+.voix-bouton.dit{opacity:1;color:var(--braise);border-color:var(--braise);
+  box-shadow:0 0 0 3px rgba(224,130,74,.14);}
+.voix-bouton.dit svg .onde{animation:voix-onde 1.5s ease-in-out infinite;}
+.voix-bouton.dit svg .onde2{animation-delay:.25s;}
+@keyframes voix-onde{0%,100%{opacity:.2;}50%{opacity:1;}}
+@media (prefers-reduced-motion:reduce){
+  .voix-bouton.attend i,.voix-bouton.dit svg .onde{animation:none;opacity:.8;}
+}
+
 /* les rôles : à côté du nom dans le fil, sous le nom sur la carte */
 .chr-role{display:inline;font-variant:normal;text-transform:none;font-style:italic;
   letter-spacing:.02em;font-size:1.06em;color:var(--muted);}
@@ -1285,6 +1526,48 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
 .chr-run .chr-qui{color:#9a7bd0;font-variant:small-caps;letter-spacing:.1em;}
 .chr-run .chr-texte{font-size:.8em;color:var(--muted);font-style:italic;}
 .chr-run .chr-icone{opacity:.75;}
+
+/* l'intervention divine : une main par-dessus le monde. Or pâle, cadre plein
+   et liseré à gauche — ni le récit, ni la loge : ici on ne commente pas la
+   partie, on la corrige, et ce qui est écrit là fait foi. */
+#mode-input #mode-intervention.actif{color:#e0b95a;border-color:#e0b95a;
+  background:color-mix(in srgb,#e0b95a 12%,transparent);}
+.libre textarea.mode-intervention{border-left:3px double #e0b95a;font-style:normal;
+  font-family:ui-sans-serif,system-ui,sans-serif;}
+.libre textarea.mode-intervention:focus{border-color:#e0b95a;}
+.chr-intervention .chr-corps,.chr-reparation .chr-corps{border-left:3px solid #e0b95a;
+  border-radius:0 7px 7px 0;background:color-mix(in srgb,#e0b95a 8%,transparent);
+  padding:7px 12px;margin:3px 0;}
+.chr-intervention .chr-qui,.chr-reparation .chr-qui{color:#e0b95a;
+  font-variant:small-caps;letter-spacing:.1em;}
+.chr-intervention .chr-texte,.chr-reparation .chr-texte{font-size:.82em;
+  font-family:ui-sans-serif,system-ui,sans-serif;line-height:1.5;}
+.chr-intervention .chr-icone,.chr-reparation .chr-icone{opacity:.85;}
+/* ce qui a été touché : la liste courte de ce qui, désormais, fait foi */
+.reparation-touche{margin:6px 0 0;padding-left:16px;list-style:"— ";}
+.reparation-touche li{font-size:.78em;color:var(--muted);line-height:1.45;
+  font-family:ui-sans-serif,system-ui,sans-serif;}
+
+/* l'atelier de chanson : hors univers comme la loge, mais à l'encre du
+   parchemin — une fiche posée sur la table, pas une réplique */
+#mode-input #mode-composer.actif{color:#c8a24a;border-color:#c8a24a;
+  background:color-mix(in srgb,#c8a24a 12%,transparent);}
+.libre textarea.mode-composer{border-left:3px solid #c8a24a;font-style:normal;
+  font-family:ui-sans-serif,system-ui,sans-serif;}
+.libre textarea.mode-composer:focus{border-color:#c8a24a;}
+.chr-composer .chr-corps{border-left:1px solid #c8a24a;padding:1px 0 2px 13px;}
+.chr-composer .chr-qui{color:#c8a24a;font-variant:small-caps;letter-spacing:.1em;}
+.chr-composer .chr-texte{font-size:.8em;color:var(--muted);font-style:italic;}
+.chr-chanson .chr-corps{border-left:0;
+  border:1px solid color-mix(in srgb,#c8a24a 45%,transparent);border-radius:7px;
+  background:color-mix(in srgb,#c8a24a 7%,transparent);padding:7px 12px;margin:3px 0;}
+.chr-chanson .chr-qui{color:#c8a24a;font-variant:small-caps;letter-spacing:.1em;}
+.chr-chanson .chr-texte{font-size:.82em;
+  font-family:ui-sans-serif,system-ui,sans-serif;line-height:1.5;}
+.chanson-style{margin-top:6px;font-size:.74em;color:var(--muted);
+  font-family:ui-monospace,monospace;line-height:1.4;}
+.chanson-fichier{margin-top:5px;font-size:.72em;color:#c8a24a;opacity:.85;
+  font-family:ui-monospace,monospace;}
 
 /* =========================================================
    LES SUITES — ce qui s'offre après un « laisser faire ».
@@ -1403,6 +1686,13 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
   stroke:var(--braise);stroke-width:2.2;stroke-dasharray:none;
   animation:pulse 2.8s infinite;}
 .plan-salle.ici .plan-nom{fill:var(--ink);}
+/* la salle qu'on vient de chercher des yeux : un halo d'accent, le temps de la
+   trouver. Elle s'éteint seule — c'est de l'attention, pas une position. */
+.plan-salle.vise>circle,.plan-salle.vise>rect,.plan-salle.vise>path{
+  stroke:var(--accent);stroke-width:2;}
+.plan-salle.vise .plan-nom{fill:var(--ink);}
+.plan-salle.vise .plan-orne{stroke:var(--accent);opacity:.9;}
+.plan-salle.vise .plan-orne .plein{fill:var(--accent);}
 .plan-large{fill:var(--muted);opacity:.6;text-anchor:middle;font-size:1.15em;
   font-variant:small-caps;letter-spacing:.16em;}
 .plan-eau{fill:var(--muted);opacity:.5;text-anchor:middle;font-size:.95em;font-style:italic;}
@@ -1437,7 +1727,7 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
 .libre textarea.mode-penser:focus{border-color:var(--pensee);}
 
 /* les emblèmes des boutons d'action ne rétrécissent pas avec le libellé */
-#mode-input button .emb,#btn-libre .emb,#attentes button .emb{font-size:1em;margin-right:5px;
+#mode-input button .emb,#btn-libre .emb{font-size:1em;margin-right:5px;
   vertical-align:-1px;}
 #mode-input button{display:inline-flex;align-items:center;}
 
@@ -1529,7 +1819,7 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
    prend le reste et la carte double de surface.
    --------------------------------------------------------------- */
 @media (min-width:1101px){
-  body{grid-template-columns:auto minmax(0,1.25fr) minmax(340px,1fr);}
+  body{grid-template-columns:auto minmax(0,1fr) minmax(620px,1.15fr);}
 }
 
 /* =========================================================
@@ -1859,14 +2149,18 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
 .gens-maison{margin:0 0 8px;}
 .gens-maison-titre{font-size:.66em;font-style:italic;color:var(--muted);margin-bottom:3px;}
 .gens-rang{display:flex;flex-wrap:wrap;gap:4px 2px;}
-.gens-gars{flex:0 1 128px;min-width:104px;display:flex;flex-direction:column;
+.gens-gars{flex:0 1 150px;min-width:136px;display:flex;flex-direction:column;
   align-items:center;text-align:center;cursor:pointer;opacity:.66;
   transition:opacity .15s,transform .15s;padding:2px 1px;}
 .gens-gars:hover{opacity:1;transform:scale(1.04);}
-.gens-gars svg{width:44px;height:44px;display:block;}
+/* le visage porte la vue : on reconnaît une cour à ses têtes, pas à ses
+   légendes. Trois fois la mesure d'avant (44px) — la fiche s'élargit d'autant
+   pour ne pas rogner le nom. */
+.gens-gars svg{width:132px;height:132px;display:block;}
 .gens-dit{margin-top:2px;line-height:1.15;}
 .gens-dit b{display:block;font-size:.62em;font-weight:600;}
 .gens-dit small{display:block;font-size:.55em;color:var(--muted);}
+.gens-dit small .emb{margin-right:3px;font-size:1.05em;}
 .gens-gars.gens-joueur{opacity:1;}
 .gens-gars.gens-joueur .gens-face{box-shadow:0 0 0 1px var(--muted);border-radius:50%;}
 /* la vue des gens n'est pas une carte : elle prend toute la colonne */
@@ -1877,6 +2171,15 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
 /* l'heure de la fiction, à côté de la date : un signe et un mot, pas un cadran */
 #heure{flex:none;color:var(--muted);font-size:.92em;letter-spacing:.02em;
   white-space:nowrap;}
+
+/* L'écart de front entre les deux joueurs : une pastille minuscule à côté de
+   l'heure, verte si l'on devance, ambrée si l'on traîne. Elle n'apparaît qu'au
+   delà de cinq heures — le reste du temps, la barre n'a rien de plus. */
+.ecart{flex:none;font-size:.74em;font-weight:600;letter-spacing:.03em;
+  padding:1px 6px;border-radius:9px;white-space:nowrap;line-height:1.5;
+  border:1px solid transparent;}
+.ecart.avance{color:#7fc98a;border-color:rgba(127,201,138,.35);background:rgba(127,201,138,.10);}
+.ecart.retard{color:#d9a05b;border-color:rgba(217,160,91,.35);background:rgba(217,160,91,.10);}
 
 /* ------- rétrospective : l'album de la partie, en plein écran ------- */
 .retro-ouvrir{width:100%;padding:8px 6px;font-size:.82em;margin-bottom:8px;}
@@ -1983,3 +2286,377 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
 .monde-marque.genre-dragon b{color:#e9b98a;letter-spacing:.08em;}
 .monde-marque.genre-incident{border-left-color:rgba(214,120,80,.7);}
 .monde-marque.genre-incident b{color:#eec0a0;}
+
+/* =========================================================
+   LA BARRE D'ÉCRITURE PREND TOUTE LA COLONNE.
+   La chronique garde sa mesure de lecture (600 px) parce qu'on la LIT ;
+   le composeur, lui, on y écrit — le brider à la même largeur ne laissait
+   qu'une fente au milieu d'une colonne large. Il s'étale d'un bord à l'autre.
+   ========================================================= */
+#fil #fil-actions{max-width:none;width:100%;margin:8px 0 0;
+  padding:9px 0 0;box-sizing:border-box;}
+#fil #attente{max-width:none;margin:0;}
+
+/* =========================================================
+   LES PRÉSENTS EN COLONNE, CONTRE LE FIL.
+   Sous la carte, ils étaient à l'autre bout de l'écran : on lisait une
+   réplique à droite et l'on cherchait le visage tout à gauche. Rangés
+   verticalement le long de la chronique, le locuteur qui s'illumine est à
+   hauteur de la ligne qu'on lit — et la carte récupère toute sa colonne.
+   ========================================================= */
+body{grid-template-columns:auto auto minmax(0,2fr) minmax(300px,1fr);}
+#acteurs{order:1;height:100vh;box-sizing:border-box;
+  position:static;inset:auto;
+  display:flex;flex-direction:column;flex-wrap:nowrap;
+  align-items:stretch;justify-content:flex-start;
+  gap:6px;width:104px;padding:16px 8px;
+  border-top:none;border-right:1px solid var(--bord);
+  overflow-y:auto;overflow-x:hidden;}
+/* la colonne disparaît quand la salle est vide : pas de gouttière fantôme */
+#acteurs:empty{display:none;}
+/* la bascule de tri. Elle porte `pointer-events` à elle seule — la colonne,
+   elle, laisse passer les clics.
+   Elle est le DERNIER enfant du DOM — les seuils de densité du CSS comptent
+   les enfants de #acteurs et un bouton en tête les décalerait tous — mais
+   `order:-1` la remonte en TÊTE de colonne, là où on la voit. */
+.acteurs-tri{flex:0 0 auto;order:-1;align-self:stretch;width:auto;
+  pointer-events:auto;cursor:pointer;
+  background:var(--fond2,rgba(255,255,255,.06));
+  border:1px solid var(--braise,var(--bord));border-radius:4px;
+  color:var(--ink);font:inherit;font-size:.6em;letter-spacing:.06em;
+  text-transform:uppercase;padding:5px 4px;margin-bottom:4px;
+  white-space:nowrap;transition:background .2s,color .2s;}
+.acteurs-tri:hover{background:var(--braise,var(--accent));color:#111;}
+#acteurs::-webkit-scrollbar{width:0;}
+
+/* chaque présent : une case de hauteur libre, le visage puis le nom dessous.
+   Plus de `flex-basis` — c'était la mesure d'une rangée horizontale. */
+#acteurs .acteur{flex:0 0 auto;width:auto;min-width:0;}
+#acteurs .acteur .medaillon{width:100%;padding:0;}
+#acteurs .acteur .medaillon svg{width:48px;height:48px;}
+#acteurs .acteur .qui{font-size:.58em;margin-top:2px;
+  overflow-wrap:anywhere;}
+#acteurs .acteur-reste{flex:0 0 auto;align-self:stretch;}
+#acteurs .acteur-reste .medaillon{min-height:0;padding:5px 4px;}
+
+/* Une salle pleine se serre en hauteur, pas en largeur : la colonne a la
+   place d'un visage, jamais celle de douze en grand. */
+#acteurs:has(.acteur:nth-child(6)) .acteur .medaillon svg{width:40px;height:40px;}
+#acteurs:has(.acteur:nth-child(6)) .acteur .qui .role{display:none;}
+#acteurs:has(.acteur:nth-child(8)){gap:3px;}
+#acteurs:has(.acteur:nth-child(8)) .acteur .medaillon svg{width:34px;height:34px;}
+
+/* le décor n'a plus de bandeau à porter : la carte prend toute la hauteur */
+#decor{justify-content:stretch;}
+#decor #cartes{flex:1 1 auto;}
+
+/* À l'étroit, le fil s'efface déjà : les visages le suivent, ils n'ont pas de
+   sens sans la chronique en face. */
+@media (max-width:1100px){
+  body{grid-template-columns:auto minmax(0,1fr);}
+  #acteurs{display:none;}
+}
+
+/* =========================================================
+   LES PRÉSENTS AU-DESSUS DE LA CASE D'ÉCRITURE.
+   En colonne le long du fil, ils mangeaient une gouttière entière et
+   poussaient la chronique vers la droite. Posés en rangée juste au-dessus
+   du composeur, on voit à qui l'on parle à l'instant où l'on tape, et la
+   grille retombe à trois colonnes : le rail, le décor, le fil.
+   ========================================================= */
+body{grid-template-columns:auto minmax(0,1fr) minmax(620px,1.15fr);}
+#acteurs{order:0;position:static;inset:auto;height:auto;width:auto;
+  display:flex;flex-direction:row;flex-wrap:nowrap;
+  align-items:flex-end;justify-content:flex-start;
+  gap:8px;padding:4px 0 7px;margin:0;
+  border-right:none;border-bottom:1px solid var(--bord);
+  overflow-x:auto;overflow-y:hidden;}
+#acteurs::-webkit-scrollbar{height:0;}
+#acteurs .acteur{flex:0 0 auto;width:auto;text-align:center;}
+#acteurs .acteur .medaillon{width:auto;}
+#acteurs .acteur .medaillon svg{width:42px;height:42px;}
+#acteurs .acteur .qui{font-size:.56em;margin-top:2px;max-width:76px;
+  overflow-wrap:anywhere;}
+#acteurs .acteur-reste{align-self:center;}
+/* une salle pleine se serre en largeur : les visages rétrécissent, le rôle
+   s'efface, mais la rangée ne passe jamais à la ligne. */
+#acteurs:has(.acteur:nth-child(7)) .acteur .medaillon svg{width:34px;height:34px;}
+#acteurs:has(.acteur:nth-child(7)) .acteur .qui .role{display:none;}
+#acteurs:has(.acteur:nth-child(10)){gap:5px;}
+#acteurs:has(.acteur:nth-child(10)) .acteur .medaillon svg{width:28px;height:28px;}
+@media (max-width:1100px){
+  body{grid-template-columns:auto minmax(0,1fr);}
+  #acteurs{display:flex;}
+}
+
+/* =========================================================
+   LES PRÉSENTS : DE NOUVEAU UNE COLONNE, À GAUCHE DU TEXTE — AVEC LES TITRES.
+   La rangée au-dessus du composeur perdait les rôles dès qu'on était plus de
+   six, et les visages s'éloignaient de la réplique qu'on lit. Colonne contre
+   la chronique, le locuteur illuminé est à hauteur de sa ligne, et chacun
+   garde son titre : c'est ce qui dit à qui l'on parle.
+   ========================================================= */
+body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
+#acteurs{order:1;position:static;inset:auto;height:100vh;box-sizing:border-box;
+  display:flex;flex-direction:column;flex-wrap:nowrap;
+  align-items:stretch;justify-content:flex-start;
+  gap:7px;width:118px;padding:16px 9px;margin:0;
+  border-bottom:none;border-right:1px solid var(--bord);
+  overflow-y:auto;overflow-x:hidden;}
+#acteurs .acteur{flex:0 0 auto;width:auto;text-align:center;}
+#acteurs .acteur .medaillon{width:100%;padding:0;}
+#acteurs .acteur .medaillon svg{width:46px;height:46px;}
+#acteurs .acteur .qui{font-size:.58em;margin-top:3px;max-width:none;
+  overflow-wrap:anywhere;}
+/* le titre ne s'efface plus : une salle pleine serre les visages, pas les rôles */
+#acteurs .acteur .qui .role{display:block;font-size:.9em;opacity:.75;
+  font-style:italic;line-height:1.25;}
+#acteurs .acteur-reste{align-self:stretch;}
+#acteurs:has(.acteur:nth-child(7)) .acteur .medaillon svg{width:38px;height:38px;}
+#acteurs:has(.acteur:nth-child(10)){gap:4px;}
+#acteurs:has(.acteur:nth-child(10)) .acteur .medaillon svg{width:32px;height:32px;}
+@media (max-width:1100px){
+  body{grid-template-columns:auto minmax(0,1fr);}
+  #acteurs{display:none;}
+}
+
+/* un visage qu'on peut interpeller se sait cliquable : la main, et le
+   médaillon qui se réchauffe sous le curseur. */
+#acteurs .acteur.adressable{cursor:pointer;}
+#acteurs .acteur.adressable .medaillon{transition:transform .12s,filter .12s;}
+#acteurs .acteur.adressable:hover .medaillon{transform:translateY(-1px);
+  filter:brightness(1.12);}
+#acteurs .acteur.adressable:active .medaillon{transform:none;}
+
+/* =========================================================
+   LA LIGNE DU FIL, UNE FOIS LE PORTRAIT AGRANDI.
+   Une tête de 64px à côté d'un nom de 10px et d'une bulle collée en haut,
+   c'était deux objets posés l'un près de l'autre, pas une ligne. Trois
+   corrections, et rien de plus :
+     • le visage porte un cerclage chaud au lieu d'un trait sec ;
+     • le nom et la bulle s'appuient au MILIEU du portrait, pas à son sommet,
+       et la bulle pointe vers lui ;
+     • les entrées SANS portrait (récit, brève, pensée) ne laissent plus une
+       case vide de 64px : leur emblème tient dans un petit disque centré.
+   ========================================================= */
+
+/* — le visage — */
+.chr-replique .chr-icone,.chr-vous .chr-icone,.chr-acte .chr-icone{
+  border:none;background:var(--fond);
+  box-shadow:0 0 0 1px var(--bord),0 0 0 4px rgba(0,0,0,.05),
+             0 2px 7px rgba(0,0,0,.16);
+  transition:box-shadow .25s,transform .25s;}
+.chr-replique .chr-icone svg,.chr-vous .chr-icone svg,.chr-acte .chr-icone svg{
+  width:100%;height:100%;display:block;}
+/* celui qui vient de parler : le cerclage s'allume, sans bondir */
+.chr.chr-dit .chr-icone{
+  box-shadow:0 0 0 1px var(--braise),0 0 0 5px rgba(201,104,58,.14),
+             0 3px 10px rgba(0,0,0,.2);}
+
+/* — la ligne s'équilibre sur le milieu du visage — */
+.chr{align-items:start;gap:15px;}
+.chr-replique,.chr-vous,.chr-acte{margin-bottom:30px;}
+.chr-replique .chr-corps,.chr-vous .chr-corps,.chr-acte .chr-corps{
+  padding-top:9px;}
+
+/* — la bulle pointe vers celui qui parle — */
+.chr-replique .chr-corps{position:relative;background:var(--paper);
+  border:1px solid var(--bord);border-radius:3px 14px 14px 14px;
+  padding:7px 15px 9px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.chr-replique .chr-corps::before{content:'';position:absolute;
+  left:-7px;top:16px;width:12px;height:12px;transform:rotate(45deg);
+  background:var(--paper);border-left:1px solid var(--bord);
+  border-bottom:1px solid var(--bord);}
+.chr-replique .chr-qui{margin:0 0 3px;}
+
+/* — les entrées sans visage : un disque discret, pas un trou — */
+.chr-recit .chr-icone,.chr-breve .chr-icone,.chr-pensee .chr-icone,
+.chr-evenement .chr-icone,.chr-marque .chr-icone,.chr-objectif .chr-icone,
+.chr-question .chr-icone,.chr-reponse .chr-icone,.chr-coulisses .chr-icone,
+.chr-meta .chr-icone,.chr-run .chr-icone,.chr-intervention .chr-icone,
+.chr-reparation .chr-icone{
+  width:30px;height:30px;margin:6px auto 0;font-size:15px;
+  border:1px solid var(--bord);border-radius:50%;background:var(--paper);}
+.chr-recit .chr-icone,.chr-breve .chr-icone{border-style:dotted;}
+
+/* — « Les gens » rangés par rencontre — */
+.gens-barre{gap:5px;align-items:stretch;}
+.gens-tri{flex:none;cursor:pointer;font:inherit;font-size:.6em;
+  letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;
+  padding:4px 9px;border-radius:3px;color:var(--ink);
+  background:rgba(255,255,255,.06);border:1px solid var(--braise);
+  transition:background .2s,color .2s;}
+.gens-tri:hover{background:var(--braise);color:#111;}
+/* le nom de la salle porte plus que celui d'une maison : c'est un repère de
+   mémoire, pas une étiquette. On le pose droit, en petites capitales. */
+.gens-salle .gens-maison-titre{font-style:normal;font-variant:small-caps;
+  letter-spacing:.1em;color:var(--ink);opacity:.8;
+  border-bottom:1px dotted var(--bord);padding-bottom:2px;}
+.gens-jamais{margin-top:14px;opacity:.55;}
+.gens-jamais .gens-maison-titre{font-style:italic;}
+
+/* — les visages de « Les gens » ne sont plus délavés — */
+/* Ils étaient à 66% d'opacité pour faire ressortir le personnage joué : à
+   44px la nuance passait, à 132px on lit une galerie de fantômes. Tout le
+   monde est plein ; c'est le cerclage, et lui seul, qui distingue le joueur. */
+.gens-gars{opacity:1;}
+.gens-gars:hover{transform:scale(1.03);}
+.gens-gars .gens-face{border-radius:50%;box-shadow:0 0 0 1px var(--bord),
+  0 2px 6px rgba(0,0,0,.14);transition:box-shadow .2s;}
+.gens-gars:hover .gens-face{box-shadow:0 0 0 1px var(--braise),
+  0 3px 9px rgba(0,0,0,.2);}
+.gens-gars.gens-joueur .gens-face{box-shadow:0 0 0 2px var(--braise),
+  0 0 0 5px rgba(201,104,58,.16),0 3px 9px rgba(0,0,0,.2);}
+
+/* ── LA NAPPE ─────────────────────────────────────────────────────────────
+   La toile blanche jetée sur la table peinte, et les pièces de bois qu'on y
+   pousse. Seule échelle du décor que le joueur écrit lui-même : d'où le curseur
+   qui dit « on peut prendre » partout, et la craie plutôt que l'encre. */
+#nappe{position:relative;}
+.np-toile{width:100%;display:block;border-radius:3px;cursor:crosshair;
+  touch-action:none;user-select:none;}
+.np-fond{fill:#efe7d6;}
+.np-craie{stroke:#b9ad92;stroke-width:2;stroke-dasharray:9 7;}
+.np-bord{fill:#8a7f66;font-size:17px;letter-spacing:2px;font-family:Georgia,serif;}
+.np .np-corps{stroke:#4a4033;stroke-width:2;}
+.np{cursor:grab;}
+.np-tenue .np-corps{stroke:#b4763a;stroke-width:3.4;}
+.np-texte,.np-vide{text-anchor:middle;font-family:Georgia,serif;font-size:13px;fill:#2f2a22;}
+.np-vide{fill:#8a7f66;font-style:italic;}
+/* la forme AVANT la couleur : les teintes ne font que confirmer la silhouette */
+.np-affaire .np-corps{fill:#efe4cb;}
+.np-etat    .np-corps{fill:#e6ddc6;}
+.np-verrou  .np-corps{fill:#3a3230;}
+.np-verrou  .np-texte,.np-verrou .np-vide{fill:#f0e6d6;}
+.np-clef    .np-corps{fill:#e9dcc0;}
+.np-action  .np-corps{fill:#efe9db;}
+.np-moyen   .np-corps{fill:#dfe6df;}
+.np-office  .np-corps{fill:#dcdfe9;stroke-width:3.6;}
+.np-deplier{position:absolute;right:6px;bottom:6px;font-size:.62em;
+  background:rgba(20,16,12,.72);color:var(--parchemin,#e8ddc5);border:1px solid #6b5f4a;
+  border-radius:3px;padding:2px 7px;cursor:pointer;}
+#nappe-large{position:fixed;inset:0;background:rgba(10,8,6,.86);z-index:60;
+  display:flex;align-items:center;justify-content:center;padding:2vh 2vw;}
+#nappe-large[hidden]{display:none;}
+.np-cadre{width:100%;max-width:1500px;position:relative;}
+.np-barre{display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap;}
+.np-outil{width:44px;height:30px;padding:0;background:rgba(30,24,18,.6);
+  border:1px solid #6b5f4a;border-radius:3px;cursor:pointer;}
+.np-outil svg{width:100%;height:100%;}
+.np-outil path{fill:#e6ddc6;stroke:#4a4033;stroke-width:3;}
+.np-outil.actif{border-color:#b4763a;background:rgba(180,118,58,.24);}
+.np-aide{font-size:.58em;color:var(--muted,#9b8d70);margin-left:6px;}
+.np-vider{margin-left:auto;font-size:.6em;background:rgba(30,24,18,.6);
+  color:var(--parchemin,#e8ddc5);border:1px solid #6b5f4a;border-radius:3px;
+  padding:3px 9px;cursor:pointer;}
+.np-grande{max-height:88vh;}
+/* la grande toile : l'établi à gauche — ce qui est déjà écrit dans les livres —,
+   la nappe à droite. On ne recopie rien : on prend une pièce et on la pose. */
+.np-corps-large{display:flex;gap:10px;align-items:flex-start;}
+.np-corps-large .np-toile{flex:1;min-width:0;}
+.np-stocks{flex:0 0 244px;max-height:88vh;overflow-y:auto;
+  background:rgba(20,16,12,.55);border:1px solid #4a4033;border-radius:3px;padding:6px;}
+.np-cherche{width:100%;box-sizing:border-box;margin-bottom:6px;font-size:.62em;
+  background:rgba(10,8,6,.7);color:var(--parchemin,#e8ddc5);
+  border:1px solid #6b5f4a;border-radius:3px;padding:4px 6px;font-family:inherit;}
+.np-groupe{font-size:.55em;letter-spacing:.08em;color:var(--braise,#b4763a);
+  margin:8px 0 3px;border-bottom:1px solid rgba(180,118,58,.25);}
+.np-stock{display:block;width:100%;text-align:left;font-size:.6em;line-height:1.25;
+  margin-bottom:2px;padding:3px 5px;cursor:pointer;border-radius:2px;
+  border:1px solid transparent;border-left:3px solid #6b5f4a;
+  background:rgba(40,32,24,.5);color:var(--parchemin,#e8ddc5);font-family:inherit;}
+.np-stock:hover{background:rgba(60,48,34,.7);}
+.np-stock.pret{border-color:#b4763a;background:rgba(180,118,58,.26);}
+.np-stock b{color:var(--muted,#9b8d70);font-size:.9em;}
+.np-s-etat{border-left-color:#c9bda0;}
+.np-s-verrou{border-left-color:#3a3230;}
+.np-s-clef{border-left-color:#c2ac7e;}
+.np-s-action{border-left-color:#8a7f66;}
+.np-s-moyen{border-left-color:#6f9a7a;}
+.np-s-office{border-left-color:#7a86ad;}
+.np-s-affaire{border-left-color:#b4763a;}
+.np-rien{font-size:.6em;color:var(--muted,#9b8d70);font-style:italic;padding:6px 2px;}
+/* porter au registre : le seul endroit d'où la toile écrit dans les livres.
+   Barre discrète sous les outils, et qui n'apparaît que sur une pièce de craie
+   écrite — pas de formulaire permanent pour un geste occasionnel. */
+.np-porter{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:6px;
+  padding:5px 8px;border:1px solid #6b5f4a;border-left:3px solid var(--braise,#b4763a);
+  border-radius:3px;background:rgba(30,24,18,.6);font-size:.6em;}
+.np-porter-non{color:var(--muted,#9b8d70);font-style:italic;border-left-color:#6b5f4a;}
+.np-p-quoi{color:var(--parchemin,#e8ddc5);}
+.np-porter select,.np-porter input{font-size:1em;font-family:inherit;padding:3px 5px;
+  background:rgba(10,8,6,.7);color:var(--parchemin,#e8ddc5);
+  border:1px solid #6b5f4a;border-radius:2px;}
+.np-p-parent{width:170px;}
+.np-p-office{width:110px;}
+.np-p-moyens{width:150px;}
+.np-p-ok{font-size:1em;font-family:inherit;padding:3px 12px;cursor:pointer;
+  border:1px solid var(--braise,#b4763a);border-radius:2px;
+  background:rgba(180,118,58,.24);color:var(--parchemin,#e8ddc5);}
+.np-p-dit{color:var(--braise,#b4763a);font-style:italic;}
+
+/* --- demandes : un conseiller demande, on répond sur place ------------------
+   Attaché sous une réplique ou un geste, jamais au bas du fil : ce n'est pas
+   le MJ qui propose, c'est un homme qui attend une réponse. D'où le liseré à
+   gauche, qui rattache le bloc à celui qui parle. Tenu SERRÉ : c'est une note
+   en marge d'une parole, pas un formulaire — il ne doit jamais peser plus que
+   ce qui vient d'être dit. */
+.demande{margin:6px 0 2px;padding:5px 0 5px 8px;font-size:.9em;
+  border-left:2px solid color-mix(in srgb,var(--braise) 45%,transparent);}
+.demande.close{border-left-color:color-mix(in srgb,var(--ink) 18%,transparent);}
+.demande-quoi{font-size:.88em;line-height:1.35;}
+.demande-menus{font-size:.72em;color:var(--muted);margin-top:1px;font-style:italic;}
+.demande-voies{display:flex;flex-direction:column;gap:0;margin-top:5px;}
+.demande-voie{display:flex;gap:7px;align-items:flex-start;width:100%;text-align:left;
+  padding:3px 6px;background:none;border:0;border-left:2px solid transparent;
+  color:inherit;font:inherit;font-size:.88em;line-height:1.3;cursor:pointer;}
+.demande-voie:hover:not(:disabled){background:color-mix(in srgb,var(--ink) 5%,transparent);
+  border-left-color:var(--braise);}
+.demande-num{flex:0 0 auto;width:13px;height:13px;margin-top:.18em;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:.66em;
+  color:var(--muted);border:1px solid color-mix(in srgb,var(--ink) 28%,transparent);}
+.demande-voie:hover .demande-num{color:var(--braise);border-color:var(--braise);}
+.demande-detail{display:block;font-size:.84em;color:var(--muted);margin-top:1px;}
+.demande-voie:disabled{cursor:default;opacity:.45;}
+.demande-pied{display:flex;gap:6px;align-items:center;margin-top:5px;flex-wrap:wrap;}
+.demande-oui,.demande-non,.demande-expliquer{padding:2px 8px;font-size:.72em;}
+.demande-oui{color:var(--braise);border-color:var(--braise);}
+.demande-non{color:var(--muted);border-color:color-mix(in srgb,var(--ink) 25%,transparent);}
+/* Expliquer ne tranche rien, mais il doit se VOIR : en lien discret à gauche,
+   on ne le trouvait pas et l'on tapait « explique » dans le champ libre. */
+.demande-expliquer{color:var(--muted);
+  border-color:color-mix(in srgb,var(--ink) 25%,transparent);}
+.demande-expliquer:hover:not(:disabled){color:var(--ink);border-color:var(--ink);}
+.demande-expliquer:disabled{opacity:.4;cursor:default;}
+/* Le champ libre : discret tant qu'on n'y touche pas, mais toujours là — les
+   boutons ne sont qu'un raccourci, la vraie réponse est souvent « oui, mais ». */
+.demande-libre{margin-top:4px;}
+.demande-champ{width:100%;padding:2px 0;font:inherit;font-size:.8em;color:var(--ink);
+  background:none;border:0;border-bottom:1px solid transparent;outline:none;}
+.demande-champ::placeholder{color:var(--muted);opacity:.65;font-style:italic;}
+.demande-champ:hover{border-bottom-color:color-mix(in srgb,var(--ink) 15%,transparent);}
+.demande-champ:focus{border-bottom-color:var(--braise);}
+.demande.close .demande-libre{display:none;}
+.demande-verdict{font-size:.72em;color:var(--muted);font-style:italic;}
+
+/* --- ce qui vient d'être porté au registre --------------------------------
+   Le mestre repose sa plume : ce qui s'est décidé est écrit quelque part, et
+   le joueur peut aller le vérifier. Discret — c'est une trace, pas un
+   événement : la scène ne s'arrête pas pour l'annoncer. */
+.ecrits{display:flex;flex-direction:column;gap:1px;margin-top:5px;}
+.ecrit{display:block;width:100%;text-align:left;padding:3px 8px;
+  background:none;border:0;border-left:2px solid color-mix(in srgb,var(--ink) 18%,transparent);
+  color:inherit;font:inherit;cursor:pointer;}
+.ecrit:hover:not(:disabled){border-left-color:var(--braise);
+  background:color-mix(in srgb,var(--ink) 5%,transparent);}
+.ecrit-titre{display:block;font-size:.82em;}
+.ecrit:hover:not(:disabled) .ecrit-titre{color:var(--braise);}
+.ecrit-quoi{display:block;font-size:.76em;color:var(--muted);margin-top:1px;}
+.ecrit-sans-lien{cursor:default;opacity:.7;}
+.ecrit-introuvable{opacity:.5;text-decoration:line-through;}
+/* L'entrée de chronique elle-même : une plume qu'on repose, pas un événement. */
+.chr-ecrit{color:var(--muted);}
+.chr-ecrit::before{content:'✒';color:var(--muted);font-size:.85em;top:0;}
+.chr-ecrit .chr-texte{font-style:italic;font-size:.8em;color:var(--muted);}
+.chr-ecrit .chr-texte::before,.chr-ecrit .chr-texte::after{content:none;}
+.chr-ecrit .chr-corps{background:none;border:none;padding:0;}

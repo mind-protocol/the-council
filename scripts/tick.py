@@ -49,6 +49,12 @@ from datetime import datetime
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# Les pensees (docs/travaux.md). Module a part parce que c'est une arithmetique
+# a soi, avec ses propres chiffres a regler ; branche ici parce que c'est le
+# tick qui la fait tourner, en meme temps que les mains et les absents.
+import travaux as mod_travaux
+
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ETAT = os.path.join(RACINE, "etat")
 STAGING = os.path.join(ETAT, "staging")
@@ -63,8 +69,8 @@ ECHELLES = ("scene", "orbite", "royaume")
 # de la 3e lune, a l'ouverture du siege de Port-Real. Une seconde base a jouer,
 # c'est une seconde poignee de gens qui pesent sans etre en scene ; les tenir en
 # 'royaume' les rendrait sourds au joueur, ce qui est precisement le contraire
-# de ce qu'on veut d'un reseau. docs/schema.md dit toujours ~12 et ne se
-# modifie pas : c'est ici que la partie fait foi.
+# de ce qu'on veut d'un reseau. docs/schema.md porte desormais le meme chiffre,
+# et dit lui-meme que cette table fait foi en cas d'ecart.
 BUDGETS = {
     "scene":   {"acteurs": 5,  "croyances": 6, "etapes": 5, "declencheurs": 3},
     "orbite":  {"acteurs": 20, "croyances": 5, "etapes": 4, "declencheurs": 2},
@@ -197,13 +203,23 @@ class Etat(object):
         self.intentions = charger("intentions", [])
         # Qui a une place dans la journee du chateau (etat/routines.json).
         self.routines = set((charger("routines", {}) or {}).get("gens") or {})
-        # Les mains. Fichier absent = pas d'activites, et rien ne casse.
-        brut = charger("activites", {})
-        self.activites = brut.get("activites", []) if isinstance(brut, dict) else brut
+        # Les mains. Fichier absent = pas d'mains, et rien ne casse.
+        brut = charger("mains", {})
+        self.mains = brut.get("mains", []) if isinstance(brut, dict) else brut
         # Les livres poses dans les salles ou portes par quelqu'un (docs/books.md).
         # Fichier absent = pas de livres, et rien ne casse.
         brut = charger("books", [])
         self.books = brut.get("books", []) if isinstance(brut, dict) else brut
+        # Les coffrets ou l'on range les volumes (docs/books.md). Une boite
+        # donne sa place a ce qu'elle contient ; fichier absent = pas de
+        # boites, et les livres gardent chacun la leur.
+        brut = charger("boites", [])
+        self.boites = brut.get("boites", []) if isinstance(brut, dict) else brut
+        # Les pensees. Le milieu de la chaine entre les mains et la tete :
+        # ce qu'un homme a touche, et ce que ca lui a appris (docs/travaux.md).
+        # Fichier absent = personne ne travaille, et rien ne casse.
+        brut = charger("travaux", {})
+        self.travaux = brut.get("travaux", []) if isinstance(brut, dict) else brut
         # Le grand livre et la memoire verbale : sources possibles d'un savoir.
         self.actes = charger("actes", [])
         self.paroles = charger("paroles", [])
@@ -258,11 +274,11 @@ class Etat(object):
 
         self.perso_par_id = {p.get("id"): p for p in self.personnages
                              if p.get("id")}
-        # index des mesures par adresse <activite_id>.<mesure_id> : c'est ce
+        # index des mesures par adresse <main_id>.<mesure_id> : c'est ce
         # que cite un `cout` d'etape de plan, et ce qui rend le si_bloque
         # arithmetique au lieu d'etre juge au doigt mouille.
         self.mesure_par_adresse = {}
-        for act in self.activites:
+        for act in self.mains:
             for mes in act.get("mesure") or []:
                 if act.get("id") and mes.get("id"):
                     self.mesure_par_adresse[
@@ -485,7 +501,7 @@ def seuil_franchi(mesure_valeur, seuil):
 
 TABLES_MUTABLES = ("intentions", "evenements", "personnages", "monde",
                    "info", "actes", "paroles", "jetons", "annales",
-                   "activites", "plis", "lieux")
+                   "mains", "plis", "lieux")
 
 
 # Les tables qui appartiennent a UN JOUEUR (voir scripts/appliquer.py). Le
@@ -661,10 +677,10 @@ def verifier_intentions(e, r):
                                                     ech_dite))
 
     # actifs sans tete NI mains. Un actif sans tete n'est plus une anomalie
-    # depuis activites.json : c'est un homme qui n'a rien a decider et dont
+    # depuis mains.json : c'est un homme qui n'a rien a decider et dont
     # l'affaire tourne toute seule. Ce qui reste faux, c'est l'actif qui n'a
     # ni l'un ni l'autre — celui-la est un dormant qui s'ignore.
-    porteurs = {(a.get("porteur") or {}).get("id") for a in e.activites
+    porteurs = {(a.get("porteur") or {}).get("id") for a in e.mains
                 if (a.get("porteur") or {}).get("type") == "personnage"}
     # Un temoin est un porteur legitime SANS tete : il n'a pas de projet, il a
     # vu quelque chose et il le raconte. Ne rien lui reprocher pour autant.
@@ -685,7 +701,7 @@ def verifier_intentions(e, r):
                    "personnage actif sans tete, ni mains, ni temoignage, ni "
                    "place dans la journee — "
                    "donne-lui une entree dans intentions.json (il decide) ou "
-                   "dans activites.json (son affaire tourne seule), ou repasse-"
+                   "dans mains.json (son affaire tourne seule), ou repasse-"
                    "le dormant")
 
     # ids d'etapes dupliques
@@ -1080,9 +1096,14 @@ def verifier_personnages(e, r):
                    "lieu_id inconnu : {!r}".format(lid))
 
 
-CLES_BOOK = {"id", "lieu_id", "salle_id", "acteur_id", "prive",
-             "titre", "sous_titre", "type", "couleur",
-             "colonnes", "lignes", "pages"}
+CLES_BOOK = {"id", "lieu_id", "salle_id", "acteur_id", "boite", "prive",
+             "lecteurs", "titre", "sous_titre", "type", "couleur", "embleme",
+             "date_maj", "colonnes", "lignes", "pages", "tables"}
+
+# Un coffret : etat/boites.json. Ni genre, ni colonnes, ni pages — une boite
+# ne se lit pas, elle se pose et elle s'ouvre.
+CLES_BOITE = {"id", "lieu_id", "salle_id", "acteur_id", "prive", "lecteurs",
+              "titre", "sous_titre", "couleur", "embleme"}
 
 # Les genres de volume connus de ecrans/modules/books.js. Un type inventé ne
 # casse rien — le livre s'affiche sans teinte — mais il ne donne pas la couleur
@@ -1098,7 +1119,8 @@ def verifier_books(e, r):
     Une cle inventee ne fait pas d'erreur a l'ecran : elle est ignoree en
     silence, et le MJ croit avoir ecrit quelque chose qui n'existe pas.
     """
-    vus, titres = set(), {}
+    vus, titres, emblemes = set(), {}, {}
+    coffrets = set(c.get("id") for c in e.boites if isinstance(c, dict))
     for livre in e.books:
         bid = livre.get("id")
         etiq = "book {}".format(bid or "?")
@@ -1119,9 +1141,26 @@ def verifier_books(e, r):
             titres.setdefault(titre, bid)
 
         pose, porte = livre.get("salle_id"), livre.get("acteur_id")
-        if not pose and not porte:
-            r.dire("grave", etiq, "ni salle_id ni acteur_id : ce livre n'est "
-                                  "nulle part, il ne s'affichera jamais")
+        # Range dans un coffret : c'est LUI qui donne la place. Le volume n'a
+        # donc plus de place a lui — et s'il en garde une, ce n'est pas un
+        # doublon inoffensif : le serveur la remplace en silence, et l'on croit
+        # avoir pose un registre la ou il n'est pas.
+        boite = livre.get("boite")
+        if boite:
+            if boite not in coffrets:
+                r.dire("grave", etiq, "boite inconnue : {!r} — ce livre n'est "
+                                      "nulle part, il ne s'affichera jamais"
+                                      .format(boite))
+            propres = [k for k in ("salle_id", "acteur_id", "lieu_id", "prive")
+                       if livre.get(k)]
+            if propres:
+                r.dire("grave", etiq,
+                       "range dans une boite ET {} : la boite donne la place, "
+                       "ces cles-la sont ecrasees en silence (voir docs/books.md)"
+                       .format(", ".join(propres)))
+        elif not pose and not porte:
+            r.dire("grave", etiq, "ni salle_id ni acteur_id ni boite : ce livre "
+                                  "n'est nulle part, il ne s'affichera jamais")
         if pose and porte:
             r.dire("grave", etiq, "salle_id ET acteur_id : un livre est pose "
                                   "ou porte, jamais les deux")
@@ -1133,6 +1172,48 @@ def verifier_books(e, r):
             r.dire("avertissement", etiq,
                    "salle_id sans lieu_id : le livre suivra le joueur de "
                    "chateau en chateau")
+
+        # `prive` sans porteur ne reserve rien : un volume pose n'a pas de
+        # proprietaire, et il s'ouvre a QUICONQUE entre dans le chateau. C'est
+        # le piege silencieux du format — on marque un registre secret, on le
+        # croit ferme, et les deux sieges de la maison le lisent. Le seul verrou
+        # d'un volume pose, c'est `lecteurs`.
+        lect = livre.get("lecteurs")
+        if livre.get("prive") and not porte and not lect:
+            r.dire("grave", etiq,
+                   "prive sans acteur_id : un volume pose n'a pas de porteur, "
+                   "donc ce prive ne ferme RIEN — tout le chateau l'ouvre. "
+                   "Nomme ses lecteurs (voir docs/books.md)")
+        if lect is not None:
+            if not isinstance(lect, list) or not lect:
+                r.dire("grave", etiq,
+                       "lecteurs doit etre une liste non vide d'ids ; vide ou "
+                       "mal formee, elle est ignoree et le livre s'ouvre a tous")
+            else:
+                for qui in lect:
+                    if not e.perso_par_id.get(qui):
+                        r.dire("grave", etiq,
+                               "lecteurs : personnage inconnu {!r}".format(qui))
+
+        # L'emblème et la teinte : on reconnaît un volume à sa forme avant de
+        # lire son titre. Un livre neuf qui n'en a pas se noie dans trente
+        # onglets gris — ce n'est pas une faute d'affichage, c'est une étagère
+        # qu'on ne sait plus lire. Deux volumes sous le même signe se
+        # confondent, ce qui est exactement le contraire du service rendu.
+        emb = livre.get("embleme")
+        if not emb:
+            r.dire("avertissement", etiq,
+                   "sans embleme : son onglet ne se reconnaitra qu'a la lecture")
+        elif emb in emblemes:
+            r.dire("avertissement", etiq,
+                   "meme embleme {!r} que {!r} : deux onglets qu'on confondra"
+                   .format(emb, emblemes[emb]))
+        else:
+            emblemes[emb] = bid
+        if not livre.get("couleur"):
+            r.dire("avertissement", etiq,
+                   "sans couleur : il prendra la teinte de son genre, comme "
+                   "tous ceux du meme type")
 
         genre = livre.get("type")
         if genre is not None and str(genre).lower() not in TYPES_BOOK:
@@ -1146,35 +1227,149 @@ def verifier_books(e, r):
             r.dire("grave", etiq, "cles hors format, ignorees a l'ecran : {} "
                                   "(voir docs/books.md)".format(", ".join(inconnues)))
 
-        colonnes = livre.get("colonnes") or []
-        lignes = livre.get("lignes") or []
-        if lignes and not colonnes:
-            r.dire("avertissement", etiq, "des lignes sans colonnes : le tableau "
-                                          "s'affichera sans en-tete")
-        for n, ligne in enumerate(lignes, 1):
-            cellules = ligne if isinstance(ligne, list) else (ligne or {}).get("cellules")
-            if cellules is None:
-                r.dire("grave", etiq, "ligne {} sans `cellules`".format(n))
-                continue
-            if colonnes and len(cellules) != len(colonnes):
-                r.dire("grave", etiq,
-                       "ligne {} : {} cellules pour {} colonnes"
-                       .format(n, len(cellules), len(colonnes)))
-        if not lignes and not (livre.get("pages") or []) and not colonnes:
+        # Un volume porte SOIT un tableau (colonnes/lignes), SOIT plusieurs
+        # (tables[]). Une affaire en a plusieurs : ses etats cibles, ses verrous,
+        # ses clefs et ses actions n'ont pas les memes colonnes.
+        tables = livre.get("tables")
+        if tables is not None and not isinstance(tables, list):
+            r.dire("grave", etiq, "`tables` doit etre une liste de tableaux")
+            tables = []
+        if tables and (livre.get("colonnes") or livre.get("lignes")):
+            r.dire("grave", etiq, "`tables` ET `colonnes`/`lignes` : le second "
+                                  "couple ne sera pas affiche, choisissez")
+        sections = ([{"titre": (t or {}).get("titre", ""),
+                      "colonnes": (t or {}).get("colonnes") or [],
+                      "lignes": (t or {}).get("lignes") or []} for t in (tables or [])]
+                    or [{"titre": "", "colonnes": livre.get("colonnes") or [],
+                         "lignes": livre.get("lignes") or []}])
+        total = 0
+        for s_i, sec in enumerate(sections, 1):
+            ou = etiq if len(sections) == 1 else etiq + " tableau {}{}".format(
+                s_i, " « " + sec["titre"] + " »" if sec["titre"] else "")
+            colonnes, lignes = sec["colonnes"], sec["lignes"]
+            total += len(lignes)
+            if lignes and not colonnes:
+                r.dire("avertissement", ou, "des lignes sans colonnes : le tableau "
+                                            "s'affichera sans en-tete")
+            for n, ligne in enumerate(lignes, 1):
+                cellules = ligne if isinstance(ligne, list) else (ligne or {}).get("cellules")
+                if cellules is None:
+                    r.dire("grave", ou, "ligne {} sans `cellules`".format(n))
+                    continue
+                if colonnes and len(cellules) != len(colonnes):
+                    r.dire("grave", ou,
+                           "ligne {} : {} cellules pour {} colonnes"
+                           .format(n, len(cellules), len(colonnes)))
+        if not total and not (livre.get("pages") or [])                 and not any(s["colonnes"] for s in sections):
             r.dire("note", etiq, "livre vide : ni colonnes, ni lignes, ni pages")
 
 
-def verifier_activites(e, r):
+def verifier_boites(e, r):
+    """Les coffrets : ce qui les rend vides, doubles, ou ouverts a tous.
+
+    Une boite ne se lit pas, elle se pose : ce qu'on verifie ici, c'est
+    qu'elle est QUELQUE PART, qu'on la reconnait d'un coup d'oeil, et qu'elle
+    ferme bien ce qu'elle a l'air de fermer.
+    """
+    vus, emblemes = set(), {}
+    dedans = {}
+    for livre in e.books:
+        b = livre.get("boite")
+        if b:
+            dedans.setdefault(b, []).append(livre.get("id"))
+
+    for boite in e.boites:
+        bid = boite.get("id")
+        etiq = "boite {}".format(bid or "?")
+        if not bid:
+            r.dire("grave", etiq, "coffret sans id")
+            continue
+        if bid in vus:
+            r.dire("grave", etiq, "deux coffrets portent cet id")
+        vus.add(bid)
+        if not (boite.get("titre") or "").strip():
+            r.dire("grave", etiq, "coffret sans titre : son onglet sera muet")
+
+        pose, porte = boite.get("salle_id"), boite.get("acteur_id")
+        if not pose and not porte:
+            r.dire("grave", etiq, "ni salle_id ni acteur_id : ce coffret n'est "
+                                  "nulle part, et rien de ce qu'il contient "
+                                  "ne s'affichera")
+        if pose and porte:
+            r.dire("grave", etiq, "salle_id ET acteur_id : un coffret est pose "
+                                  "ou porte, jamais les deux")
+        if porte and not e.perso_par_id.get(porte):
+            r.dire("grave", etiq, "acteur_id inconnu : {!r}".format(porte))
+        if pose and boite.get("lieu_id") and not e.lieu(boite["lieu_id"]):
+            r.dire("grave", etiq,
+                   "lieu_id inconnu : {!r}".format(boite["lieu_id"]))
+        if pose and not boite.get("lieu_id"):
+            r.dire("avertissement", etiq,
+                   "salle_id sans lieu_id : le coffret suivra le joueur de "
+                   "chateau en chateau")
+
+        lect = boite.get("lecteurs")
+        if boite.get("prive") and not porte and not lect:
+            r.dire("grave", etiq,
+                   "prive sans acteur_id : un coffret pose n'a pas de porteur, "
+                   "donc ce prive ne ferme RIEN — tout le chateau l'ouvre. "
+                   "Nomme ses lecteurs (voir docs/books.md)")
+        if lect is not None:
+            if not isinstance(lect, list) or not lect:
+                r.dire("grave", etiq,
+                       "lecteurs doit etre une liste non vide d'ids ; vide ou "
+                       "mal formee, elle est ignoree et le coffret s'ouvre a tous")
+            else:
+                for qui in lect:
+                    if not e.perso_par_id.get(qui):
+                        r.dire("grave", etiq,
+                               "lecteurs : personnage inconnu {!r}".format(qui))
+
+        emb = boite.get("embleme")
+        if not emb:
+            r.dire("avertissement", etiq,
+                   "sans embleme : son onglet ne se reconnaitra qu'a la lecture")
+        elif emb in emblemes:
+            r.dire("avertissement", etiq,
+                   "meme embleme {!r} que {!r} : deux onglets qu'on confondra"
+                   .format(emb, emblemes[emb]))
+        else:
+            emblemes[emb] = bid
+
+        inconnues = sorted(set(boite) - CLES_BOITE)
+        if inconnues:
+            r.dire("grave", etiq, "cles hors format, ignorees a l'ecran : {} "
+                                  "(voir docs/books.md)".format(", ".join(inconnues)))
+
+        combien = len(dedans.get(bid, []))
+        if not combien:
+            r.dire("avertissement", etiq,
+                   "coffret vide : aucun livre ne le nomme — il ne s'affichera "
+                   "pas, et c'est peut-etre un rangement laisse en chemin")
+        elif combien == 1:
+            r.dire("note", etiq,
+                   "un seul volume dedans : une boite d'un volume est un onglet "
+                   "de plus, pas un rangement")
+
+    for bid in sorted(dedans):
+        if bid not in vus:
+            r.dire("grave", "boite {}".format(bid),
+                   "{} livre(s) s'y rangent, et elle n'existe pas dans "
+                   "etat/boites.json : ils sont nulle part"
+                   .format(len(dedans[bid])))
+
+
+def verifier_mains(e, r):
     """Les mains : ce qui empeche l'arithmetique d'etre juste."""
     vus = set()
-    for act in e.activites:
+    for act in e.mains:
         aid = act.get("id")
-        etiq = "activite {}".format(aid or "?")
+        etiq = "main {}".format(aid or "?")
         if not aid:
-            r.dire("grave", etiq, "activite sans id")
+            r.dire("grave", etiq, "main sans id")
             continue
         if aid in vus:
-            r.dire("grave", etiq, "id d'activite en double")
+            r.dire("grave", etiq, "id d'main en double")
         vus.add(aid)
 
         p = act.get("porteur") or {}
@@ -1198,7 +1393,7 @@ def verifier_activites(e, r):
 
         mesures = act.get("mesure") or []
         if not mesures:
-            r.dire("grave", etiq, "aucune mesure — une activite sans compteur "
+            r.dire("grave", etiq, "aucune mesure — une main sans compteur "
                                   "ne produit rien et ne sert a rien")
         if len(mesures) > 3:
             r.dire("avertissement", etiq,
@@ -1213,7 +1408,7 @@ def verifier_activites(e, r):
                 r.dire("grave", sous, "mesure sans id")
                 continue
             if mid in ids_mesure:
-                r.dire("grave", sous, "id de mesure en double dans l'activite")
+                r.dire("grave", sous, "id de mesure en double dans l'main")
             ids_mesure.add(mid)
 
             if not isinstance(mes.get("valeur"), int):
@@ -1246,7 +1441,7 @@ def verifier_activites(e, r):
             sid = seuil.get("id")
             sous = "{} / seuil {}".format(etiq, sid or "?")
             if seuil.get("mesure_id") not in ids_mesure:
-                r.dire("grave", sous, "mesure_id inconnu dans cette activite : "
+                r.dire("grave", sous, "mesure_id inconnu dans cette main : "
                                       "{!r}".format(seuil.get("mesure_id")))
             if seuil.get("quand") not in ("sous", "sur"):
                 r.dire("grave", sous, "'quand' doit valoir 'sous' ou 'sur'")
@@ -1602,6 +1797,45 @@ def verifier_sieges(e, r):
                "est marque vacant".format(e.joueur))
 
 
+def verifier_audiences(e, r):
+    """A plusieurs, aucun item du flux ne doit etre sans audience.
+
+    Un `pour` absent ne veut pas dire « pour tout le monde » : il veut dire
+    « rien n'a ete declare ». Le serveur ne sert plus ces items-la passe le
+    seuil (la ligne ou le dernier joueur s'est assis), donc ils ne fuitent
+    plus — mais ils DISPARAISSENT, ce qui est un bug silencieux d'une autre
+    espece : le MJ croit avoir pousse une scene que personne ne lit. On le dit
+    ici, pendant que c'est encore reparable.
+    """
+    if len(e.sieges_occupes) < 2:
+        return
+    seuil = 0
+    for j in e.sieges:
+        seuil = max(seuil, j.get("depuis") or 0)
+    chemin = os.path.join(RACINE, "etat", "flux.jsonl")
+    orphelins = []
+    try:
+        with io.open(chemin, encoding="utf-8") as f:
+            for i, ligne in enumerate(f):
+                if not ligne.strip() or i < seuil:
+                    continue
+                try:
+                    it = json.loads(ligne)
+                except Exception:
+                    continue
+                if not it.get("pour"):
+                    orphelins.append(i)
+    except Exception:
+        return
+    if orphelins:
+        r.dire("grave", "flux",
+               "{} items du flux sans `pour` apres la ligne {} — ils ne sont "
+               "servis a personne. Lignes : {}{}".format(
+                   len(orphelins), seuil,
+                   ", ".join(str(n) for n in orphelins[:8]),
+                   "…" if len(orphelins) > 8 else ""))
+
+
 def verifier_affectations(e, r):
     """Les adresses physiques donnees en jeu tiennent-elles encore ?
 
@@ -1638,13 +1872,17 @@ def verifier(e):
     verifier_intentions(e, r)
     verifier_evenements(e, r)
     verifier_personnages(e, r)
-    verifier_activites(e, r)
+    verifier_mains(e, r)
+    mod_travaux.verifier_travaux(e.travaux, e.personnages, e.intentions,
+                                 e.aujourdhui, r.dire)
     verifier_books(e, r)
+    verifier_boites(e, r)
     verifier_plis(e, r)
     verifier_couts_chiffres(e, r)
     verifier_rumeurs(e, r)
     verifier_croyances_sans_porteur(e, r)
     verifier_affectations(e, r)
+    verifier_audiences(e, r)
     r.imprimer()
     # Les 'note' sont informatives : elles ne font pas echouer l'audit. La
     # croyance sans porteur crie fort sur l'etat d'avant la refonte, et ce
@@ -1660,13 +1898,13 @@ def calculer(e, cible, restriction, joueur=None):
     jours = fin - e.aujourdhui
     fenetre = {"de": e.date, "a": cible, "jours": jours}
 
-    # --- LES MAINS D'ABORD (docs/schema.md : activites.json)
-    # La boucle des activites tourne AVANT celle des absents, parce que sa
+    # --- LES MAINS D'ABORD (docs/schema.md : mains.json)
+    # La boucle des mains tourne AVANT celle des absents, parce que sa
     # sortie est son entree : un `cout` d'etape qui cite une adresse de mesure
     # se verifie contre la valeur d'APRES decompte, pas celle d'avant.
     mesures_apres = {}       # adresse -> valeur apres la fenetre
-    activites, franchissements = [], []
-    for act in e.activites:
+    mains, franchissements = [], []
+    for act in e.mains:
         aid = act.get("id")
         absent = porteur_absent(e, act)
         lignes = []
@@ -1712,7 +1950,7 @@ def calculer(e, cible, restriction, joueur=None):
                 if est == etait:
                     continue
                 franchissements.append({
-                    "activite_id": aid,
+                    "main_id": aid,
                     "seuil": seuil.get("id"),
                     "adresse": adresse,
                     "sens": "franchi" if est else "retombe",
@@ -1724,7 +1962,7 @@ def calculer(e, cible, restriction, joueur=None):
                     "affaire": seuil.get("affaire"),
                     "date": cible,
                 })
-        activites.append({
+        mains.append({
             "id": aid,
             "quoi": act.get("quoi"),
             "porteur": act.get("porteur"),
@@ -1980,13 +2218,13 @@ def calculer(e, cible, restriction, joueur=None):
     # Rien de narratif : ce qu'une etape tombee PRODUIT, c'est au MJ de l'ecrire
     # a la main dans ce meme fichier avant de lancer scripts/appliquer.py.
     mutations = []
-    for a in activites:
+    for a in mains:
         for m in a["mesures"]:
             if m["apres"] == m["avant"] and \
                     m["reliquat_apres"] == 0 and "gelee_par" not in m:
                 continue
             mutations.append({
-                "table": "activites",
+                "table": "mains",
                 "cible": a["id"],
                 "operation": "mesure",
                 "mesure": m["adresse"].split(".", 1)[1],
@@ -1999,8 +2237,8 @@ def calculer(e, cible, restriction, joueur=None):
             })
     for f in franchissements:
         mutations.append({
-            "table": "activites",
-            "cible": f["activite_id"],
+            "table": "mains",
+            "cible": f["main_id"],
             "operation": "seuil",
             "seuil": f["seuil"],
             "champs": {"franchi_le": cible if f["sens"] == "franchi" else None},
@@ -2060,6 +2298,14 @@ def calculer(e, cible, restriction, joueur=None):
             "pourquoi": "nouvelle parvenue le {}".format(fmt(n["date"])),
         })
 
+    # --- LES PENSEES : ce que chacun a touche, et s'il a de quoi parler.
+    # Apres les mains (dont elle peut lire les mesures) et avant la salle, dont
+    # elle est l'entree : un conseiller qui n'a rien touche n'a rien a dire, et
+    # la boucle d'election doit le savoir avant d'elire qui que ce soit.
+    pensees, mut_pensees = mod_travaux.calculer_travaux(
+        getattr(e, "travaux", []), e.aujourdhui, jours)
+    mutations.extend(mut_pensees)
+
     return {
         "genere_le": datetime.now().isoformat(timespec="seconds"),
         "joueur": joueur,
@@ -2067,8 +2313,9 @@ def calculer(e, cible, restriction, joueur=None):
         "avertissement": "Proposition — le MJ arbitre et applique lui-meme "
                          "dans etat/*.json. Ce fichier n'est pas de l'etat.",
         "fenetre": fenetre,
-        "activites": activites,
+        "mains": mains,
         "seuils_franchis": franchissements,
+        "travaux": pensees,
         "acteurs_simules": [t.get("personnage_id") for t in simules],
         "acteurs_sautes_royaume": sorted(
             t.get("personnage_id") for t in sautes),
@@ -2104,10 +2351,10 @@ def resumer(prop, chemin):
               " quand meme, marquees 'malgre saut')")
 
     # Les mains d'abord — c'est l'ordre de la boucle, et l'ordre de lecture.
-    if prop.get("activites"):
+    if prop.get("mains"):
         print("\nLes mains ({}) — ou en sont les choses :".format(
-            len(prop["activites"])))
-        for a in prop["activites"]:
+            len(prop["mains"])))
+        for a in prop["mains"]:
             p = a.get("porteur") or {}
             qui = p.get("id") or "personne"
             print("  {:<26} ({}{})".format(
@@ -2125,16 +2372,40 @@ def resumer(prop, chemin):
                     m["adresse"], fleche, m.get("unite") or "",
                     "— " + " ; ".join(notes) if notes else ""))
 
+    # Les pensees ensuite : c'est l'entree de la salle. On lit qui a de quoi
+    # parler AVANT d'elire qui parle — sinon on elit celui qui n'a rien.
+    if prop.get("travaux"):
+        parlent = [t for t in prop["travaux"] if t["verdict"] == "parle"]
+        bossent = [t for t in prop["travaux"] if t["verdict"] != "parle"]
+        print("\nLes pensees — qui a quelque chose a dire ({}/{}) :".format(
+            len(parlent), len(prop["travaux"])))
+        for t in parlent:
+            quoi = ("CONCLUSION MURE — ecris-la de SA main"
+                    if t["conclusion_mure"] else
+                    "{} pensee(s) neuve(s)".format(t["pensees_neuves"]))
+            print("  [{}] {:<18} {}".format(t["excitation"], t["qui"],
+                                            t["affaire"]))
+            print("       {}{}{}".format(
+                quoi, " · DU AUJOURD'HUI" if t["due"] else "",
+                " · EN RETARD, il le dit lui-meme" if t["en_retard"] else ""))
+        if bossent:
+            print("  Les autres travaillent et se taisent : {}".format(
+                ", ".join(sorted(set(t["qui"] for t in bossent)))))
+        steriles = [t for t in prop["travaux"] if t.get("sterile")]
+        if steriles:
+            print("  SANS SOURCE, ne produiront rien : {}".format(
+                ", ".join(t["id"] for t in steriles)))
+
     if prop.get("seuils_franchis"):
         print("\nSEUILS ({}) :".format(len(prop["seuils_franchis"])))
         for s in prop["seuils_franchis"]:
             if s["sens"] == "retombe":
                 print("  [retombe] {}.{} — la crise est close, redescends le"
-                      " porteur d'echelle".format(s["activite_id"], s["seuil"]))
+                      " porteur d'echelle".format(s["main_id"], s["seuil"]))
                 continue
             p = s.get("porteur") or {}
             print("  [FRANCHI] {}.{} — {} {} {} (valeur {})".format(
-                s["activite_id"], s["seuil"], s["adresse"], s["quand"],
+                s["main_id"], s["seuil"], s["adresse"], s["quand"],
                 s["borne"], s["valeur"]))
             if p.get("type") == "personnage" and p.get("id"):
                 print("      porteur : {} -> promouvoir en '{}'".format(

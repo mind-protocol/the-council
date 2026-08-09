@@ -12,6 +12,62 @@ window.Bus = (() => {
   let dateAtteinte = null;
 
   const $ = (id) => document.getElementById(id);
+
+  // ---- ce que le joueur a déjà lu -------------------------------------
+  // La marque de lecture vit dans CE navigateur, pas dans l'état : elle dit ce
+  // que cet œil-là a vu passer, et deux joueurs sur deux écrans n'ont pas la
+  // même. C'est un curseur haut sur l'index du flux — au-delà, c'est neuf.
+  // Première visite : on ne teinte pas trois cents lignes d'historique en
+  // « non lu », on prend le fil tel qu'il est comme déjà lu.
+  const CLE_LU = "leconseil.lu";
+  const cleLu = () => CLE_LU + (document.body.dataset.siege ? "." + document.body.dataset.siege : "");
+  let luJusqua = null;      // null = pas encore de marque : on la posera au premier sondage
+  function chargerLu(){
+    try{ const v = localStorage.getItem(cleLu()); luJusqua = v === null ? null : +v; }
+    catch(e){ luJusqua = null; }
+  }
+  function poserLu(i){
+    if(luJusqua !== null && i <= luJusqua) return;
+    luJusqua = i;
+    try{ localStorage.setItem(cleLu(), String(i)); }catch(e){}
+    compterNeuf();
+  }
+  // Le compte des non-lues, publié sur le corps : le rail et le titre peuvent
+  // s'en servir sans rien savoir du fil.
+  function compterNeuf(){
+    const n = document.querySelectorAll("#fil-corps .chr.neuf").length;
+    document.body.dataset.neuf = n ? String(n) : "";
+  }
+
+  // Une entrée ne se marque lue qu'au SURVOL, et seulement si la main y reste
+  // cinq secondes. Passer devant ne compte pas : il faut s'y arrêter. C'est le
+  // geste le plus proche de « je suis en train de la lire » qu'un navigateur
+  // sache voir — et il ne se déclenche jamais tout seul pendant qu'on est
+  // ailleurs, ce que le défilement, lui, faisait.
+  const DELAI_LU = 5000;
+  document.addEventListener("mouseover", (e)=>{
+    const d = e.target.closest && e.target.closest("#fil-corps .chr.neuf");
+    if(!d || d._lecture) return;
+    // `lecture` porte l'animation de cinq secondes : la marque s'éteint PENDANT
+    // que le compte tourne, au lieu de disparaître d'un coup à la fin.
+    d.classList.add("lecture");
+    d._lecture = setTimeout(()=>{
+      d._lecture = null;
+      if(!d.classList.contains("neuf")) return;
+      d.classList.remove("neuf");
+      d.classList.remove("lecture");
+      poserLu(+d.dataset.i);
+      compterNeuf();
+    }, DELAI_LU);
+  });
+  document.addEventListener("mouseout", (e)=>{
+    const d = e.target.closest && e.target.closest("#fil-corps .chr");
+    if(!d || !d._lecture) return;
+    // un aller-retour à l'intérieur de l'entrée n'est pas une sortie
+    if(e.relatedTarget && d.contains(e.relatedTarget)) return;
+    clearTimeout(d._lecture); d._lecture = null;
+    d.classList.remove("lecture");
+  });
   // L'heure vient de `monde.date.minute`, tenue par scripts/append_flux.py :
   // chaque item porte l'heure a laquelle il se produit. Voir docs/schema.md.
   const texteDate = (d) => d ? d.annee + " AC — " + d.lune + "e lune, " + d.jour + "e jour" : "—";
@@ -54,6 +110,26 @@ window.Bus = (() => {
       if(!h) return;
       h.hidden = !texte;
       h.textContent = texte;
+    });
+  }
+
+  // L'ÉCART DE FRONT, à côté de l'heure : un « + » quand ce joueur devance
+  // l'autre de plus de cinq heures, un « − » quand il traîne. Le serveur ne
+  // l'envoie qu'au-delà du seuil ; en deçà, rien ne s'affiche — c'est un signal
+  // de synchronisation, pas un compteur qu'on regarde tourner.
+  let ecartCourant = null;
+  function poserEcart(min){
+    ecartCourant = min;
+    [$("ecart"), $("ecart-barre")].forEach((e)=>{
+      if(!e) return;
+      if(typeof min !== "number"){ e.hidden = true; e.textContent = ""; return; }
+      const h = Math.round(Math.abs(min) / 60);
+      e.hidden = false;
+      e.textContent = (min > 0 ? "+" : "−") + h + "h";
+      e.classList.toggle("avance", min > 0);
+      e.classList.toggle("retard", min < 0);
+      e.title = (min > 0 ? "Vous devancez l'autre siège de " : "Vous traînez sur l'autre siège de ")
+        + h + " heures de jeu";
     });
   }
 
@@ -226,11 +302,17 @@ window.Bus = (() => {
   // le présent : on ne les redescend pas.
   const ARCHIVABLES = { replique:1, geste:1, recit:1, breve:1, pensee:1, vous:1,
     reecrit:1, question:1, reponse:1, meta:1, coulisses:1, run:1, marque:1,
+    // Une réparation se relit : c'est elle qui dit ce qui fait foi désormais.
+    intervention:1, reparation:1,
     // Un bloc de suites déjà tranché se relit comme une décision prise ; celui
     // qui ne l'était pas se rouvre, et c'est bien : l'offre tient toujours.
     suites:1 };
 
+  // L'index de l'item en cours de peinture, pour que `chronique` sache s'il est
+  // en deçà ou au-delà de la marque de lecture. Posé par `sonder`/`remonter`.
+  let indexCourant = null;
   function rendre(it, instant){
+    indexCourant = (typeof it._i === "number") ? it._i : null;
     if(enArchive){
       if(!ARCHIVABLES[it.type]) return;
       const fn = rendus[it.type];
@@ -302,6 +384,8 @@ window.Bus = (() => {
       const r = await fetch("/scene?avant=" + plusVieuxTenu);
       const s = await r.json();
       const vieux = s.items || [];
+      const d0 = s.debut || 0;
+      vieux.forEach((it, i)=>{ it._i = d0 + i; });
       if(vieux.length){
         // On rattrape le défilement à la main : sans ça, insérer mille pixels
         // au-dessus jetterait le joueur au bas de ce qu'il était en train de lire.
@@ -353,6 +437,7 @@ window.Bus = (() => {
       try{ r = await fetch("/scene", {signal: coupe.signal}); }
       finally{ clearTimeout(chien); }
       const s = await r.json();
+      poserEcart(typeof s.ecart === "number" ? s.ecart : null);
       const items = s.items || [];
       // Le serveur ne sert qu'une fenêtre du fil et dit, avec `debut`, combien
       // de lignes il a coupées en tête. Le curseur reste donc compté sur le flux
@@ -360,6 +445,9 @@ window.Bus = (() => {
       // resterait collé à sa longueur et plus rien ne se jouerait.
       const debut = s.debut || 0;
       const total = debut + items.length;
+      items.forEach((it, i)=>{ it._i = debut + i; });
+      // Première visite dans ce navigateur : le fil déjà là n'est pas « non lu ».
+      if(luJusqua === null) poserLu(total - 1);
       if(consommes < debut) consommes = debut;
       // La tranche la plus ancienne qu'on ait à l'écran : point de départ du
       // chargement à rebours quand le joueur remonte lire.
@@ -409,6 +497,7 @@ window.Bus = (() => {
     "chr-evenement":"⚡", "chr-vous":"🗣️", "chr-acte":"✋",
     "chr-objectif":"🎯", "chr-objectif-accomplir":"✅", "chr-objectif-echouer":"❌",
     "chr-question":"❓", "chr-reponse":"💡",
+    "chr-intervention":"✨", "chr-reparation":"🪡",
   };
   function chronique(classe, qui, texte, opts){
     const zone = $("fil-corps");
@@ -420,6 +509,14 @@ window.Bus = (() => {
     if(cl.indexOf("chr-acte") !== -1) blason = BLASONS["chr-acte"];
     const d = document.createElement("div");
     d.className = "chr " + cl;
+    // Non lue : au-delà de la marque de ce navigateur. Ses propres paroles ne
+    // comptent pas — on n'a pas à se relire soi-même.
+    if(indexCourant !== null){
+      d.dataset.i = indexCourant;
+      if(luJusqua !== null && indexCourant > luJusqua && cl.indexOf("chr-vous") === -1){
+        d.classList.add("neuf");
+      }
+    }
     d.innerHTML =
       '<span class="chr-icone">' + (o.avatar || blason) + "</span>" +
       '<div class="chr-corps">' +
@@ -433,6 +530,8 @@ window.Bus = (() => {
     // Le passé rechargé s'insère AU-DESSUS, devant la même ancre : les items
     // arrivant dans l'ordre, l'ordre est gardé. Et on ne touche pas au défilement
     // — c'est l'appelant qui le rattrape, une fois la tranche entière posée.
+    // le compte se fait après l'insertion — d n'est pas encore dans le DOM
+    if(d.classList.contains("neuf")) Promise.resolve().then(compterNeuf);
     if(enArchive){
       zone.insertBefore(d, ancreArchive);
       if(window.Entites) Entites.traiter(d);
@@ -449,8 +548,6 @@ window.Bus = (() => {
 
   // Délégation : les contrôles sont bâtis par actions.js, après ce module.
   document.addEventListener("click", (e)=>{
-    const b = e.target.closest("[data-attente]");
-    if(b){ poster({type:"mode", texte:b.dataset.attente}); return; }
     if(e.target.closest("#pause")){
       couper();
       poster({type:"pause", texte:"le joueur coupe la scène en cours"});
@@ -479,7 +576,7 @@ window.Bus = (() => {
       l.classList.toggle("ferme");
       bascule.title = l.classList.contains("ferme") ? "Ouvrir le panneau" : "Replier le panneau";
     };
-    identifier().then(sonder);
+    identifier().then(()=>{ chargerLu(); sonder(); });
   });
 
   // rendus est exposé pour prévisualiser un item sans toucher au flux :

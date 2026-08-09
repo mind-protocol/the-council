@@ -41,14 +41,42 @@ Un tableau, un objet par livre. Rien d'autre à la racine.
 | `lieu_id` | le château où il se trouve (`lieux.json`). Obligatoire pour un livre posé. |
 | `salle_id` | la salle où il est POSÉ (`ecrans/modules/plans.js`). |
 | `acteur_id` | ou la personne qui le PORTE (`personnages.json`). **`salle_id` ou `acteur_id`, jamais les deux.** |
-| `prive` | `true` : un carnet que son porteur ne montre à personne — seul le joueur qui le porte le voit. |
+| `boite` | ou le COFFRET où il est rangé (`etat/boites.json`). C'est alors la boîte qui donne la place : le volume n'a ni `salle_id`, ni `acteur_id`, ni `lieu_id`, ni `prive` à lui. Voir « Les boîtes » plus bas. |
+| `prive` | `true` : un carnet que son porteur ne montre à personne — seul le joueur qui le porte le voit. **Sans `acteur_id` il ne veut rien dire** : un volume posé n'a pas de porteur, donc pas de propriétaire à qui le réserver. C'est `lecteurs` qu'il lui faut. |
+| `lecteurs` | [] les seuls qui puissent l'ouvrir (`personnages.json`). Ça ne DONNE rien — le volume garde ses règles de lieu — ça retire : qui n'y est pas nommé ne le voit pas, et le serveur ne le lui envoie pas. Pour le registre où vivent les noms, posé sur une table où deux sièges entrent. |
 | `titre` | ce qui s'affiche sur l'onglet. |
 | `sous_titre` | une ligne : de quelle main, ouvert quand, devant qui. |
 | `type` | facultatif — le genre du volume (voir la table ci-dessous). Il écrit son mot en petites capitales à côté du titre et **préremplit la teinte** de la tranche et de l'onglet. |
 | `couleur` | facultatif — pour forcer la teinte contre celle du type. N'importe quelle couleur CSS (`#8a6a1f`, `var(--sang)`). À réserver au volume qui ne ressemble à aucun autre : sans elle, le type suffit. |
 | `colonnes` | [] les en-têtes du tableau. |
 | `lignes` | [] `{cellules: [...], note}` — **autant de cellules que de colonnes**, sinon le tableau se décale. `note` pend sous la dernière colonne, en marge. |
-| `pages` | [] du texte suivi, affiché sous le tableau. Un livre peut n'avoir que des pages. |
+| `tables` | [] **plusieurs tableaux dans un même volume** : `{titre, colonnes, lignes}`. Exclusif avec `colonnes`/`lignes` — l'un ou l'autre, jamais les deux. Le `titre` s'affiche au-dessus de sa grille. |
+| `pages` | [] du texte suivi, affiché sous les tableaux. Un livre peut n'avoir que des pages. |
+
+## Un volume à plusieurs tableaux — `tables`
+
+Un **registre** n'a qu'un tableau : c'est une seule sorte de chose, rangée. Une
+**affaire** en a plusieurs, et pas par confort — ses états cibles se jugent à
+leur preuve, ses verrous à ce qui les lèverait, ses clefs à leur prix, ses
+actions à leur office et à leur échéance. Ce ne sont pas les mêmes colonnes, et
+les entasser dans une grille commune obligerait à une colonne fourre-tout —
+c'est-à-dire à l'endroit où l'on cesse d'écrire ce qui gêne.
+
+```json
+{
+  "id": "affaire-vierge-01",
+  "tables": [
+    { "titre": "🏰 L'OUVERTURE", "colonnes": ["Le champ", "Ce qu'on y écrit"],
+      "lignes": [{ "cellules": ["LE NOM", "…"] }] },
+    { "titre": "🎯 LES ÉTATS CIBLES", "colonnes": ["N°", "L'état"], "lignes": [] }
+  ]
+}
+```
+
+`colonnes`/`lignes` reste la forme courte du volume qui n'a qu'un tableau ;
+**les deux ensemble sont une faute** — le second couple ne s'affiche pas, et le
+vérificateur le dit. Un tableau vide (colonnes réglées, aucune ligne) s'affiche
+quand même : il dit où l'on n'a pas encore écrit.
 
 ## Les genres — `type`
 
@@ -82,6 +110,70 @@ n'existe pas. `tick.py --verifier` les signale.
 - **Porté** (`acteur_id`) : il suit son porteur. Le sien est toujours à portée ;
   celui d'un autre ne s'ouvre que s'il est dans la salle — et jamais s'il est
   `prive`.
+- **Réservé** (`lecteurs`) : par-dessus les deux règles précédentes, et sans
+  jamais les desserrer. Le carnet des yeux reste posé sur la Table Peinte et ne
+  quitte pas la chambre ; simplement, deux personnes seulement l'y ouvrent.
+
+**Le tri se fait au SERVEUR, pas à l'écran.** `GET /books` ne sert à chaque
+siège que ce qu'il peut ouvrir : ses carnets, ce qui est posé ou porté dans le
+château où il se trouve, et rien de ce qui nomme d'autres `lecteurs`. Ce qui
+n'est pas montré n'est pas non plus envoyé — un brouillard qui ne tient que
+dans l'affichage s'ouvre avec la console du navigateur. Corollaire : **sans
+jeton de siège, l'étagère est close** (`{books: [], siege: false}`), et la page
+le dit au lieu d'annoncer qu'il n'y a rien à lire.
+
+## Les boîtes — `etat/boites.json`
+
+Vingt registres posés sur la même table donnent vingt onglets, et vingt onglets
+ne se lisent plus : on ne cherche plus un volume, on balaie une rangée. Une
+**boîte** est la réponse, et c'est un objet du monde comme le reste — un
+coffret sur la Table Peinte, une layette qu'on porte sous le bras. On la pose
+où l'on pose un livre, on l'ouvre, on y prend un volume.
+
+Un tableau, un objet par coffret, rien d'autre à la racine.
+
+```json
+[
+  {
+    "id": "boite-gouvernement",
+    "lieu_id": "peyredragon",
+    "salle_id": "table-peinte",
+    "titre": "Le gouvernement",
+    "sous_titre": "Qui tient quoi, à quoi on le juge, de quoi on dispose.",
+    "embleme": "⚜️",
+    "couleur": "var(--book-regle)"
+  }
+]
+```
+
+Ses clés — il n'y en a pas d'autres : `id`, `lieu_id`, `salle_id`, `acteur_id`,
+`prive`, `lecteurs`, `titre`, `sous_titre`, `embleme`, `couleur`. Elles ont
+exactement le sens qu'elles ont sur un livre. Pas de `type` (une boîte n'a pas
+de genre), pas de `colonnes`, de `lignes` ni de `pages` : **une boîte ne se lit
+pas, elle s'ouvre.**
+
+**Une boîte donne sa PLACE à ce qu'elle contient.** Un volume s'y range en
+portant `boite: "<id>"`, et il perd alors toute place à lui : ni `salle_id`, ni
+`acteur_id`, ni `lieu_id`, ni `prive` — il prend ceux du coffret. C'est ce qui
+rend le rangement utile : on descend vingt registres à la roukerie en déplaçant
+une boîte, et l'on ferme vingt volumes d'un coup en fermant le couvercle. Le
+seul verrou qui reste au volume est `lecteurs`, et il **s'ajoute** à celui de la
+boîte — un coffret peut fermer plus que le volume, jamais moins.
+
+La résolution se fait au SERVEUR, avant le tri du brouillard, pour la raison qui
+vaut partout ici : un volume rangé n'a plus de place propre, donc un tri qui ne
+regarderait que le livre le laisserait passer à tout le monde.
+
+À l'écran, la tranche du haut mêle **les coffrets et les volumes qui traînent à
+côté** — une table de travail porte des boîtes ET des registres posés dessus, et
+rien n'oblige à ranger. Un coffret prend le rang de son volume le plus frais ;
+l'ouvrir déplie une seconde tranche, celle de son contenu. Une boîte vide ne
+s'affiche pas.
+
+Ce que dit `tick.py --verifier` : coffret nulle part, sans titre, sans emblème,
+emblèmes doublés, `prive` sans porteur, `boite` qui ne renvoie à rien, volume
+qui garde une place à lui en plus de sa boîte, coffret vide ou d'un seul volume
+(un coffret d'un volume est un onglet de plus, pas un rangement).
 
 ## Les notes du joueur — le volume qui n'est pas du monde
 

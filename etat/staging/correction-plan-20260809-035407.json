@@ -1,0 +1,150 @@
+{
+  "quoi": "Plan de la Prise de Port-Réal — six numéros cités qui n'existent dans aucune colonne N°, et deux actions correctives écrites mais raccordées à rien. Proposition seule : rien n'a été écrit dans etat/books.json. À appliquer par le MJ principal avec `python scripts/corriger_plan.py etat/staging/correction-plan-20260809-035407.json --vraiment`.",
+  "etabli_le": "2026-08-09 03:54",
+  "par": "agent — lecture seule sur etat/, écriture dans etat/staging/ uniquement",
+  "corrections": [
+    {
+      "livre": "affaire-entree-armee-port-real",
+      "table": "⚔️ Actions",
+      "numero": "25120",
+      "colonne": "🗝️ Réalise",
+      "avant": "25110",
+      "apres": "25100",
+      "pourquoi": "25110 n'existe dans aucune colonne N° du plan. L'action « ⏱️ Chronométrer cent hommes sous notre propre arche » mesure exactement ce que décrit 🎯 25100 « Le temps de passage est connu et tenu » (mesuré et non deviné), lequel est dans la même affaire et n'est servi par rien. Correction retenue par le joueur.",
+      "certitude": "sure"
+    },
+    {
+      "livre": "affaire-entree-armee-port-real",
+      "table": "⚔️ Actions",
+      "numero": "25121",
+      "colonne": "🗝️ Réalise",
+      "avant": "25110",
+      "apres": "25100",
+      "pourquoi": "Même numéro fantôme, même cible. « 🐎 Chronométrer six chevaux et deux chariots » est la seconde mesure du temps de passage — 🎯 25100.",
+      "certitude": "sure"
+    },
+    {
+      "livre": "affaire-entree-armee-port-real",
+      "table": "⚔️ Actions",
+      "numero": "25122",
+      "colonne": "🗝️ Réalise",
+      "avant": "25110",
+      "apres": "25100",
+      "pourquoi": "Même numéro fantôme, même cible. « 🧮 Calculer le temps de passage de chaque vague » pose le calcul sur le chiffre mesuré : c'est la clôture de 🎯 25100.",
+      "certitude": "sure"
+    },
+    {
+      "livre": "affaire-entree-armee-port-real",
+      "table": "⚔️ Actions",
+      "numero": "25123",
+      "colonne": "🗝️ Réalise",
+      "avant": "25112",
+      "apres": "25025",
+      "pourquoi": "25112 n'existe nulle part. Cible trouvée dans la MÊME affaire, et le recoupement est textuel, non deviné : 🗝️ 25025 « Le compte à la porte » dit « Un homme sous chaque arche, une planche, une tranche de cent, l'heure notée. Il ne se bat pas, il ne commande pas, il compte » ; ⚔️ 25123 dit « Deux hommes, une planche chacun, une tranche de cent, l'heure. Leur seul devoir est de compter : ils ne se battent pas, ils ne commandent pas ». Le prix de la clef (« Deux hommes retirés du rang ») est le coût de l'action, et sa preuve attendue (« Deux planches rendues le soir ») est la preuve de l'action (« Deux noms, deux planches »). De plus 25025 est aujourd'hui une clef RETENUE qu'aucune action ne réalise, et 25123 la seule action orpheline de l'affaire : les deux trous se referment l'un l'autre. La colonne attend une clef, ce que 25025 est — au contraire de 25100, qui est un état. À trancher par le MJ : c'est la seule correction de ce lot que le joueur n'a pas explicitement retenue.",
+      "certitude": "hypothese"
+    },
+    {
+      "livre": "affaire-entree-armee-port-real",
+      "table": "🗝️ Clefs",
+      "numero": "25026",
+      "colonne": "🔓 Ouvre",
+      "avant": "25201",
+      "apres": "25200",
+      "pourquoi": "25201 n'existe pas ; 🎯 25200 « Aucun rang rompu, aucune maison entrée » existe dans la même affaire et n'est bloqué par aucun verrou. La clef « Les trois degrés sous les jets » règle exactement ce que 25200 rend vrai (« sous les projectiles la colonne avance ou décroche, mais ne franchit aucun seuil »). Hypothèse d'un chiffre de trop, retenue par le joueur.",
+      "certitude": "hypothese"
+    },
+    {
+      "livre": "affaire-entree-armee-port-real",
+      "table": "🗝️ Clefs",
+      "numero": "25027",
+      "colonne": "🔓 Ouvre",
+      "avant": "25202",
+      "apres": "25200",
+      "pourquoi": "25202 n'existe pas. « La peine dite d'avance » sert le même état 🎯 25200 : la peine lue d'avance est ce qui tient le rang sous les jets. Hypothèse d'un chiffre de trop, retenue par le joueur.",
+      "certitude": "hypothese"
+    },
+    {
+      "livre": "affaire-ravitaillement-ville-coupee",
+      "table": "⚔️ Actions",
+      "numero": "13324",
+      "colonne": "🗝️ Réalise",
+      "avant": "—",
+      "apres": "13311",
+      "pourquoi": "L'action « 🕳️ Nommer l'exécutant de ce cahier » était écrite sans rien réaliser, pendant que le verrou 🔒 13302 « Ce cahier n'a pas d'exécutant » n'avait aucune clef. On raccorde l'action à la clef 🗝️ 13311, créée pour ce verrou dans la liste `ajouts` de cette proposition. À appliquer APRÈS l'ajout — le script s'en charge dans l'ordre.",
+      "certitude": "sure"
+    },
+    {
+      "livre": "affaire-tenue-de-la-capitale",
+      "table": "⚔️ Actions",
+      "numero": "42423",
+      "colonne": "🗝️ Réalise",
+      "avant": "—",
+      "apres": "42411",
+      "pourquoi": "Même défaut, même remède : l'action « 🕳️ Nommer l'exécutant de ce cahier » est raccordée à la clef 🗝️ 42411, créée pour le verrou 🔒 42402 « Ce cahier n'a pas d'exécutant » dans la liste `ajouts`.",
+      "certitude": "sure"
+    }
+  ],
+  "ajouts": [
+    {
+      "livre": "affaire-ravitaillement-ville-coupee",
+      "table": "🗝️ Clefs",
+      "numero": "13311",
+      "pourquoi": "🔒 13302 « Ce cahier n'a pas d'exécutant » (Ravitaillement et ordre public de la ville coupée) bloque quatre états et n'a aucune clef. Numérotation : la convention du plan donne à un second verrou d'un même bloc la clef suivante de la série — 4301→4310 et 4302→4311, 7001→7010 et 7002→7011. Ici 13301→13310 existe déjà, donc 13302→13311. Le numéro est libre : aucune occurrence dans etat/books.json. — reciblee sur le cahier : les clefs soeurs 13310 et 42410 y vivent, pas dans plan-clefs ; colonnes remappees (prix et ce-que-cela-ferme separes, pas de colonne Affaire).",
+      "certitude": "sure",
+      "ligne": [
+        "**13311**",
+        "🪶 Un homme entier, dans la ville, et qui ne porte que ce cahier",
+        "13302",
+        "Un exécutant ne porte qu'une chaîne : Bry tient les cuisines de Peyredragon depuis ce matin et ne tiendra pas les marchés de Port-Réal. Mieux vaut un homme de petit rang qui sera là tous les matins qu'un grand nom resté sur le rocher. On le nomme quarante-cinq jours avant l'entrée, pour qu'il ait le temps d'apprendre la ville avant d'y entrer.",
+        "Un homme entier soixante jours, soustrait de nos gens, et un office de plus à ouvrir au registre",
+        "Ferme le partage du cahier entre deux titulaires déjà pris, et l'idée qu'on le tienne depuis Peyredragon.",
+        "Un nom au registre des offices avant J−45, et le même homme aux quatre marchés au matin de J+1",
+        "retenue"
+      ]
+    },
+    {
+      "livre": "affaire-tenue-de-la-capitale",
+      "table": "🗝️ Clefs",
+      "numero": "42411",
+      "pourquoi": "🔒 42402 « Ce cahier n'a pas d'exécutant » (Tenue de la capitale la première lune) bloque cinq états et n'a aucune clef. Même convention : 42401→42410 existe, donc 42402→42411. Numéro libre : aucune occurrence dans etat/books.json. — reciblee sur le cahier : les clefs soeurs 13310 et 42410 y vivent, pas dans plan-clefs ; colonnes remappees (prix et ce-que-cela-ferme separes, pas de colonne Affaire).",
+      "certitude": "sure",
+      "ligne": [
+        "**42411**",
+        "🪶 Un homme à demeure dans la ville, non un cahier porté de loin",
+        "42402",
+        "Trente matins de suite à Port-Réal ne se tiennent pas depuis Peyredragon. Ce qu'il faut n'est pas un conseiller de plus, c'est une présence quotidienne : un homme qui n'a que ce cahier, qui dort dans la ville, et à qui l'on écrit un office au registre au lieu de le lui dire à la table.",
+        "Un homme entier trente jours au moins, nommé dès J−45, et un office à ouvrir pour les vivres, l'or, les gens et les jours",
+        "Ferme la tenue de la capitale par un titulaire qui sera ailleurs.",
+        "Un nom au registre des offices avant J−45, et cet homme dans la ville chaque matin de J+1 à J+30",
+        "retenue"
+      ]
+    }
+  ],
+  "non_corrige": [
+    {
+      "livre": "affaire-isolement-du-donjon",
+      "table": "⚔️ Actions",
+      "numero": "12120",
+      "nom": "📐 Obtenir le relevé des issues et le tour du rocher",
+      "colonne": "⛓️ Dépend de",
+      "valeur_actuelle": "30000",
+      "pourquoi": "AUCUNE CIBLE SÛRE — laissé tel quel, à trancher à la main. 30000 est la plage de l'affaire « Relevé des murs, portes et garnison de Port-Réal » (docs/decoupage.md, ENABLERS), mais cette affaire N'A PAS DE CAHIER OUVERT dans etat/books.json : aucune pièce du plan ne porte un numéro 30xxx, ni état, ni verrou, ni clef, ni action. Il n'y a donc rien vers quoi repointer. Le chiffre est d'ailleurs employé partout ailleurs dans les cahiers comme une ADRESSE D'AFFAIRE ou de personne — « À dame Aurore (30000) », « Marlo Vasse (→ 30000) », « 30000 a levé des murs, pas des greniers » — et non comme un numéro de pièce ; cette cellule-ci est la seule à le poser dans une colonne de lien. Deux issues possibles, et c'est un arbitrage de MJ : ouvrir le cahier 30000 et lui écrire un état cible (le relevé des issues signé), ce que réclament au moins six autres affaires ; ou vider la cellule et écrire la dépendance en clair ailleurs.",
+      "certitude": "à trancher"
+    },
+    {
+      "livre": "affaire-deplacement-armee",
+      "table": "⚔️ Actions",
+      "numero": "20075",
+      "nom": "🐎 Compter les chevaux qu'on emmène et ceux qu'on laisse",
+      "colonne": "⛓️ Dépend de",
+      "valeur_actuelle": "20030",
+      "pourquoi": "AUCUNE CIBLE SÛRE — laissé tel quel, à trancher à la main. 20030 n'existe nulle part, et la place qu'il occupe dans la numérotation de l'affaire est celle d'un TROISIÈME VERROU du bloc 200xx (les verrous y sont 20010 et 20020, les clefs 20040 et 20050, les actions 20070 et suivantes) : le numéro manquant n'est donc pas un chiffre de trop dans un numéro existant, c'est une pièce qui n'a jamais été écrite. Aucune des pièces de l'affaire ne s'impose : ni 20101/20102 (le débarquement et les chevaux sur la grève), ni 20220 (ce que l'ost mange), ni 20120 (le quai de Sombreval) ne sont ce dont le comptage des chevaux dépend au sens où les autres cellules « Dépend de » l'entendent — elles pointent des actions qui doivent avoir rendu. Deviner ici reviendrait à inventer une chaîne. Deux issues : écrire le verrou 20030 qui manque (rien n'est écrit sur les chevaux qu'on emmène, et aucun maître d'écurie n'est au registre — l'office de 20075 est justement « À DÉSIGNER »), ou vider la cellule.",
+      "certitude": "à trancher"
+    }
+  ],
+  "remarques": [
+    "Les deux nouvelles clefs sont écrites dans le registre à plat `plan-clefs`, comme demandé. À noter pour l'arbitrage : leurs sœurs de bloc — 🗝️ 13310 et 🗝️ 42410 — ne sont PAS dans `plan-clefs`, elles vivent dans la table « 🗝️ Clefs » de leur cahier d'affaire. Les mettre dans `plan-clefs` suffit au graphe (la colonne « 🏰 Affaire » les rattache, et `couverture.py` les lira comme appartenant à l'affaire), mais un lecteur du cahier ne les verra pas dans la table des clefs de ce cahier. Si le MJ préfère l'autre adresse, il faut réécrire la ligne aux colonnes du cahier : « 💰 Le prix » et « 🚪 Ce que cela ferme » y sont deux colonnes séparées, « ⚖️ Décision » remplace « ⚖️ Retenue », et il n'y a pas de colonne « 🏰 Affaire ».",
+    "Après application, `python scripts/couverture.py` doit être relancé : c'est lui qui refait les blocs calculés (« Ce qui pend », « Les trous », les liens dérivés) en tête de chaque cahier. Cette proposition ne touche à aucun de ces blocs.",
+    "Ce que l'application doit faire disparaître : les deux renvois dans le vide 25110 et 25112 signalés par `etat_du_plan.py`, le trou « 🗝️ clef retenue qu'aucune action ne réalise » sur 25025, et le trou « 🔒 verrou qu'aucune clef n'ouvre » sur 13302 et 42402. Restent au rapport les deux renvois 12120→30000 et 20075→20030, laissés exprès."
+  ]
+}

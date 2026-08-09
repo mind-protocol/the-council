@@ -9,8 +9,11 @@
 // le bus repose à chaque item porteur d'un `lieu`. Un plan reconnaît les siens
 // par ses `motifs`. Rien à tenir à jour à la main, rien à réécrire dans le flux.
 //
-// Cliquer une salle = un moment de pensée, même canal que les entités du fil :
-// on y songe, on n'y va pas. Se déplacer se dit, ça ne se clique pas.
+// Cliquer une salle, c'est s'y rendre : l'action part comme si le joueur l'avait
+// écrite dans le champ libre (« Se rendre à … »), en mode Agir — le MJ la joue
+// comme n'importe quel déplacement, avec sa durée et ses rencontres. Cliquer la
+// salle où l'on se tient déjà n'est pas un déplacement : c'est un moment de
+// pensée, comme les entités du fil.
 "use strict";
 window.Plan = (() => {
   const P = window.Plans || {};
@@ -447,7 +450,8 @@ window.Plan = (() => {
 
     const salle = (sa) => '<g class="plan-salle' + (sa.etage ? " etage" : "") +
       (sa.dehors ? " dehors" : "") + (sa.fond ? " fond" : "") +
-      (sa.id === salleId ? " ici" : "") + '" data-id="' + esc(sa.id) +
+      (sa.id === salleId ? " ici" : "") + (sa.id === viseId ? " vise" : "") +
+      '" data-id="' + esc(sa.id) +
       '" data-nom="' + esc(sa.nom) + '"><title>' + esc(sa.nom) +
       (sa.quoi ? " — " + esc(sa.quoi) : "") + "</title>" +
       forme(sa) + details(sa) + orne(sa) + nomSalle(sa, v) + "</g>";
@@ -486,6 +490,17 @@ window.Plan = (() => {
     brancher(hote, apres);
   }
 
+  // Se rendre quelque part : la même ligne que si le joueur l'avait tapée dans
+  // le champ libre, en mode Agir — le serveur l'inscrit au flux, le MJ la joue.
+  function aller(nom) {
+    if (!window.Bus || !Bus.poster) return;
+    Bus.poster({ type: "libre", mode: "agir", texte: "Se rendre à " + nom + "." });
+    setTimeout(() => Bus.sonderMaintenant && Bus.sonderMaintenant(), 120);
+  }
+
+  // `apres` non nul = le plan déplié. Sur la vignette, une salle touchée déplie
+  // la carte au lieu de mettre le personnage en marche : le geste est trop petit
+  // et trop serré pour engager une traversée du château.
   function brancher(racine, apres) {
     racine.querySelectorAll(".tache-gens").forEach((g) => {
       g.addEventListener("click", (e) => {
@@ -497,7 +512,14 @@ window.Plan = (() => {
     racine.querySelectorAll(".plan-salle").forEach((g) => {
       g.addEventListener("click", (e) => {
         e.stopPropagation();
-        if (window.Entites) Entites.penser(g.dataset.id, "salle", g.dataset.nom);
+        const id = g.dataset.id, nom = g.dataset.nom;
+        if (!apres) { ouvrir(); return; }
+        // là où l'on est déjà, il n'y a rien à traverser : on y songe.
+        if (id === salleId) {
+          if (window.Entites) Entites.penser(id, "salle", nom);
+        } else {
+          aller(nom);
+        }
         if (apres) apres();
       });
     });
@@ -519,7 +541,7 @@ window.Plan = (() => {
       '<span class="leg-etage">Un autre étage : au sommet, ou sous la roche</span>' +
       '<span class="leg-orne">Le signe dit ce qu\'on y fait</span>' +
       '<span class="leg-gens">Une tache, deux lettres : qui s\'y tient</span>' +
-      '<span class="leg-note">Une salle où l\'on songe, en la touchant du doigt</span></div></div>';
+      '<span class="leg-note">Toucher une salle du doigt, c\'est s\'y rendre</span></div></div>';
     document.body.appendChild(ov);
     ov.addEventListener("click", (e) => { if (e.target === ov) fermer(); });
     ov.querySelector("#plan-fermer").addEventListener("click", fermer);
@@ -688,6 +710,38 @@ window.Plan = (() => {
     appliquerVue();
   }
 
+  // ---- viser : un nom cliqué dans le fil, montré sur le plan ---------------
+  // Le joueur clique « ser Robert » ou « la roukerie » : le décor revient au
+  // château et la salle s'allume le temps qu'on la trouve des yeux. C'est de
+  // l'attention, pas un déplacement — rien n'est décidé, rien n'est consommé.
+  let viseId = null, viseFin = null;
+
+  // Où est cette salle, ou l'homme qu'on cherche ? La présence tient les gens
+  // que les scènes ont posés ; les présents de la salle courante, eux, sont là
+  // par définition — on les voit de ses yeux.
+  function ouEst(cible) {
+    if (!plan) return null;
+    const connue = (id) => (id && plan.salles.some((s) => s.id === id)) ? id : null;
+    if (cible.salle) return connue(cible.salle);
+    if (!cible.personnage) return null;
+    const p = places[cible.personnage];
+    return connue(p && p.salle) ||
+      (window.Presents && Presents[cible.personnage] ? connue(salleId) : null);
+  }
+
+  function viser(cible) {
+    const sid = ouEst(cible);
+    if (!sid) return false;
+    montrer("chateau");
+    viseId = sid;
+    clearTimeout(viseFin);
+    // la braise du regard s'éteint seule : passé un temps, la salle redevient
+    // une salle parmi les autres et « vous êtes ici » retrouve le monopole.
+    viseFin = setTimeout(() => { viseId = null; dessiner(); }, 8000);
+    dessiner();
+    return true;
+  }
+
   // ---- le fil : les salles distinctives deviennent cliquables -------------
   function offrirEntites() {
     if (!plan || !window.Entites || !Entites.ajouter) return;
@@ -788,6 +842,6 @@ window.Plan = (() => {
 
   // où l'on est, pour qui a besoin de le savoir sans redeviner l'en-tête de
   // lieu : la salle courante, et le château qui la contient.
-  return { ouvrir, fermer, relire, montrer, echelle, rebattre,
+  return { ouvrir, fermer, relire, montrer, echelle, rebattre, viser,
            salle: () => salleId, chateau: () => lieuId };
 })();

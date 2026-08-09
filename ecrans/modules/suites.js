@@ -1,4 +1,9 @@
-// suites.js — « ce qui s'offre ensuite », au bas d'un « Laisser faire ».
+// suites.js — « ce qui s'offre ensuite ».
+//
+// Au bas d'un « Laisser faire », mais aussi au bout d'une pensée ou d'une
+// réponse au mode Question : partout où le joueur reprend la main sans savoir
+// où elle en est. Le bloc ne coûte pas une minute et n'engage rien tant que
+// rien n'est coché.
 //
 // Quand le MJ rend la bride, il ne rend pas une page blanche : il pose deux à
 // cinq suites possibles, telles que le personnage les voit. Le joueur en coche

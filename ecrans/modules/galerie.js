@@ -1,9 +1,11 @@
-// galerie.js — les acteurs en bandeau SOUS le décor (la carte, le plan).
+// galerie.js — les acteurs en COLONNE, le long du fil, à sa gauche.
 // Chaque acteur a son médaillon rond ; le locuteur s'illumine.
-// Ils étaient jadis répartis en couronne autour de la carte, ce qui les faisait
-// flotter et mangeait la table par les bords. Rangés dessous, ils forment une
-// rangée de visages en face de soi et l'ordre du flux est enfin lisible : la
-// mise en place est celle du CSS (flex), il n'y a plus rien à calculer ici.
+// Ils furent d'abord en couronne autour de la carte (ils flottaient et mangeaient
+// la table par les bords), puis en bandeau sous elle — mais la carte est à
+// l'autre bout de l'écran : on lisait une réplique à droite et l'on cherchait le
+// visage tout à gauche. Rangés contre la chronique, le locuteur illuminé est à
+// hauteur de la ligne qu'on lit. La mise en place est celle du CSS (flex en
+// colonne), il n'y a rien à calculer ici.
 //
 // La salle ne se déclare pas seulement, elle SE CONSTATE. Un item `salle` est
 // rare — le MJ en pousse un par changement de lieu — alors que la scène, elle,
@@ -78,12 +80,24 @@
     dessiner();
   }
 
-  // Qui se montre : les MAX derniers entendus. Le reste passe dans la pastille,
-  // sans disparaître de la salle — il n'est pas sorti, on ne le voit plus.
+  // Deux façons de ranger les visages, au choix du joueur :
+  //   « salle »   — l'ordre où ils sont entrés, qui ne bouge pas sous l'œil ;
+  //   « récents » — le dernier qui a parlé en tête, puis les autres en
+  //                 descendant. La colonne se réordonne à chaque battement,
+  //                 mais on retrouve d'un coup d'œil qui vient de dire quoi.
+  // Qui est GARDÉ à l'écran ne change pas d'un mode à l'autre : ce sont
+  // toujours les MAX derniers entendus, le reste dans la pastille.
+  const CLE_TRI = "conseil.gens.tri";
+  // Par défaut : les récents. Une colonne qui suit la conversation vaut mieux
+  // qu'un ordre d'arrivée qu'on a oublié dix répliques plus tôt.
+  let tri = "recents";
+  try { tri = localStorage.getItem(CLE_TRI) || "recents"; } catch (e) {}
+
   function montres() {
     const rangs = ordre.slice().sort((a, b) => entendu.get(b) - entendu.get(a));
     const gardes = new Set(rangs.slice(0, MAX));
-    return { visibles: ordre.filter((id) => gardes.has(id)),
+    const suite = tri === "recents" ? rangs : ordre;
+    return { visibles: suite.filter((id) => gardes.has(id)),
              tus: ordre.filter((id) => !gardes.has(id)) };
   }
 
@@ -96,10 +110,19 @@
     slot.id = "act-" + p.id;
     // pas de bulle ici : la parole vit dans le fil, la salle montre les gens.
     slot.innerHTML =
-      '<div class="medaillon" id="med-' + p.id + '" title="' + esc(p.titre || "") + '">' +
+      '<div class="medaillon" id="med-' + p.id + '" title="Parler à ' + esc(p.nom) +
+      (p.titre ? " — " + esc(p.titre) : "") + '">' +
       (p.portrait_svg || "") + '<span class="qui">' + esc(p.nom) +
       (p.titre ? '<small class="role"><i class="emb">' + Bus.embleme(p.titre) + "</i>" +
         esc(p.titre) + "</small>" : "") + "</span></div>";
+    // Un visage est une adresse : cliquer dessus ouvre la parole vers lui —
+    // le mode passe à Parler, la case s'amorce de son nom, et le joueur écrit
+    // la suite. Rien ne part de ce clic seul.
+    slot.classList.add("adressable");
+    slot.title = "Parler à " + (p.nom || p.id);
+    slot.addEventListener("click", () => {
+      if (window.Barre && Barre.adresser) Barre.adresser(p.nom || p.id);
+    });
     return slot;
   }
 
@@ -145,6 +168,27 @@
         tus.length + " autres</span></div>";
       z.appendChild(chip);
     }
+    z.appendChild(bascule());
+  }
+
+  // Le bouton se pose EN DERNIER : les règles de densité du CSS comptent les
+  // enfants de #acteurs (`:has(.acteur:nth-child(6))`) et un bouton en tête
+  // décalerait tous les seuils d'un cran.
+  function bascule() {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "acteurs-tri";
+    b.textContent = tri === "recents" ? "↕ récents" : "↕ salle";
+    b.title = tri === "recents"
+      ? "Rangés du dernier entendu au plus ancien — cliquer pour l'ordre de la salle"
+      : "Rangés dans l'ordre où ils sont entrés — cliquer pour les plus récents";
+    b.addEventListener("click", () => {
+      tri = tri === "recents" ? "salle" : "recents";
+      try { localStorage.setItem(CLE_TRI, tri); } catch (e) {}
+      pose = "";
+      dessiner();
+    });
+    return b;
   }
 
   Bus.enregistrer("salle", (it) => {

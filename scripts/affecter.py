@@ -6,7 +6,17 @@
     python scripts/affecter.py --chercher --usage taverne --pres-de 1772,2789
     python scripts/affecter.py --chercher --usage chateau-archives --monde peyredragon
     python scripts/affecter.py --affecter lieu:la-gaffe 1554 --vraiment
-    python scripts/affecter.py --affecter salle:archive 812 --monde peyredragon --vraiment
+    python scripts/affecter.py --affecter salle:archives piece:archives --monde peyredragon --vraiment
+
+UNE SALLE SE VISE PAR SA PIÈCE, pas par un bâtiment. Les intérieurs engendrés
+(`monde/<monde>.interieurs.json`) portent une pièce creuse par salle du plan,
+sous l'id du plan : cette prise-là survit à une régénération, un index de
+bâtiment non. Le 24e, huit salles de Peyredragon pointaient vers des bâtiments
+disparus — et comme l'affectation recopie les mètres, `--entre` et `--rayon`
+répondaient encore, sur une carte fantôme. Une salle que le monde a creusée n'a
+d'ailleurs plus besoin d'affectation du tout : `--ou salle:cachots` répond seul.
+On n'en écrit une que pour ce que le plan ne creuse pas (une taverne, un
+chantier) ou pour porter un `nom`, une `note`, un `visible`.
     python scripts/affecter.py --ou lieu:la-gaffe
     python scripts/affecter.py --entre lieu:la-gaffe personnage:marlo-vasse
     python scripts/affecter.py --defaire lieu:la-gaffe --vraiment
@@ -104,6 +114,41 @@ def charger_bati(monde=DEFAUT_MONDE):
     return _MONDES[monde]
 
 
+_PIECES = {}
+
+
+def charger_pieces(monde=DEFAUT_MONDE):
+    """Les intérieurs engendrés d'un monde : une pièce creuse par salle du plan.
+
+    C'est la prise JUSTE pour une salle. Un bâtiment du bourg n'est pas une
+    salle du château — l'index n'y renvoyait que faute de mieux, et il pointait
+    dans le vide dès la première régénération. Une pièce, elle, porte l'id du
+    plan : elle survit à la graine parce qu'elle ne dépend pas d'elle.
+    """
+    monde = monde or DEFAUT_MONDE
+    if monde not in _PIECES:
+        f = os.path.join(RACINE, "monde", "%s.interieurs.json" % monde)
+        try:
+            d = json.load(io.open(f, encoding="utf-8"))
+            _PIECES[monde] = {s["id"]: s for s in d.get("salles", [])}
+        except (OSError, ValueError, KeyError):
+            _PIECES[monde] = {}
+    return _PIECES[monde]
+
+
+def fiche_piece(monde, pid):
+    """La même forme qu'un bâtiment, pour que tout le reste ne change pas."""
+    s = charger_pieces(monde).get(pid)
+    if not s:
+        return None
+    x, y, z = s["centre"]
+    return {"monde": monde, "bat": None, "piece": pid,
+            "x": x, "y": y, "z": s.get("sol_z", z),
+            "usage": "pièce", "quartier": s.get("nom", pid),
+            "etages": 0, "facade_m": s.get("long_m", 0.0),
+            "porte": (x, y)}
+
+
 def monde_de(entree):
     """Le monde d'une affectation. Absent = portreal : les neuf affectations
     écrites avant que Peyredragon soit joignable restent justes telles quelles."""
@@ -148,11 +193,20 @@ def fiche_bati(bati, C, i, monde=DEFAUT_MONDE):
         "bat": i, "x": b[C["x"]], "y": b[C["y"]], "z": b[C["z"]],
         "usage": b[C["usage"]], "quartier": b[C["quartier"]],
         "etages": b[C["etages"]], "facade_m": b[C["facade_m"]],
-        "porte": (b[C["porte_x"]], b[C["porte_y"]]),
+        # Tous les mondes n'ont pas de porte dans leur bâti — le bourg de
+        # Peyredragon n'en porte pas. À défaut, la porte est le corps lui-même.
+        "porte": (b[C["porte_x"]], b[C["porte_y"]]) if "porte_x" in C
+                 else (b[C["x"]], b[C["y"]]),
     }
 
 
 def dire_bati(f):
+    if f.get("piece"):
+        m = "" if f.get("monde", DEFAUT_MONDE) == DEFAUT_MONDE else " [%s]" % f["monde"]
+        return ("  pièce « %s »%s — %s\n"
+                "  x %.1f  y %.1f  z %.1f  %.1f m de long"
+                % (f["piece"], m, f["quartier"],
+                   f["x"], f["y"], f["z"], f["facade_m"]))
     # Le monde ne se dit que s'il n'est pas celui d'où l'on vient : la sortie
     # de Port-Réal doit rester mot pour mot ce qu'elle était.
     m = "" if f.get("monde", DEFAUT_MONDE) == DEFAUT_MONDE else " [%s]" % f["monde"]
@@ -171,10 +225,20 @@ def position(L, clef):
     a = L["affectations"].get(clef)
     if a:
         m = monde_de(a)
+        if a.get("piece"):
+            f = fiche_piece(m, a["piece"])
+            return (f, "pièce engendrée") if f else (None, "pièce disparue")
         bati, C = charger_bati(m)
         f = fiche_bati(bati, C, a.get("bat"), m)
         return (f, "affectation") if f else (None, "affectation morte")
     genre, _, ident = clef.partition(":")
+    if genre == "salle":
+        # Une salle du plan a déjà ses mètres si le monde l'a creusée : on ne
+        # demande pas d'affectation pour lire ce qui est engendré.
+        for m in _bati.mondes():
+            f = fiche_piece(m, ident)
+            if f:
+                return (f, "pièce engendrée")
     if genre == "personnage":
         aid = next((k for k, v in L["liens"].items() if v == ident), None)
         if aid:
@@ -187,6 +251,29 @@ def position(L, clef):
                          "etages": 0, "facade_m": 0.0,
                          "porte": (g["x"], g["y"])}, "corps prêté")
     return (None, None)
+
+
+def adresse(clef, L=None):
+    """LE résolveur, celui que tout le monde doit appeler. (x, y, z) ou None.
+
+    Il essaie dans l'ordre : l'affectation (pièce, puis bâtiment), le corps
+    prêté, la pièce engendrée du même id. Il ne lit JAMAIS le `xyz` recopié
+    dans `etat/corps.json` — cette copie n'est là que pour que `--verifier`
+    compare, et un cache qui répond encore quand la cible est morte est
+    exactement ce qui a fabriqué la carte fantôme du 24e. Une adresse morte
+    rend None ; personne n'a le droit d'en tirer un chiffre.
+
+    On accepte `salle:archives` comme `archives` — les appelants n'avaient pas
+    tous la même convention, et c'est de là que venait la moitié des trous.
+    """
+    L = L if L is not None else charger_liens()
+    essais = [clef] if ":" in clef else ["salle:" + clef, "lieu:" + clef,
+                                         "personnage:" + clef]
+    for c in essais:
+        f, _ = position(L, c)
+        if f:
+            return (f["x"], f["y"], f["z"])
+    return None
 
 
 def corps_par_id(aid):
@@ -289,6 +376,15 @@ def verifier(L, bati=None, C=None):
                         "(mondes présents : %s)"
                         % (clef, m, ", ".join(_bati.mondes()) or "aucun"))
             continue
+        connus = identifiants(genre)
+        if a.get("piece"):
+            if not fiche_piece(m, a["piece"]):
+                maux.append("[%s] pièce « %s » absente des intérieurs de « %s » "
+                            "— le monde ne l'a pas creusée"
+                            % (clef, a["piece"], m))
+            if connus is not None and ident not in connus:
+                maux.append("[%s] plus aucun %s de cet id" % (clef, genre))
+            continue
         try:
             bati, C = _bati.charger(m)
         except _bati.MondeInconnu as e:
@@ -343,6 +439,15 @@ def main():
               % (len(bati), len(A), len(L["liens"])))
         for clef, v in sorted(A.items()):
             m = monde_de(v)
+            if v.get("piece"):
+                f = fiche_piece(m, v["piece"])
+                vu = v.get("visible")
+                marque = ("  [vu de tous]" if vu is True else
+                          "  [vu de %s]" % ", ".join(vu) if isinstance(vu, list) else "")
+                print("   %-34s -> pièce %-14s (%s) %s%s"
+                      % (clef, v["piece"], m,
+                         f["quartier"] if f else "** non creusée **", marque))
+                continue
             bt, Ct = charger_bati(m)
             f = fiche_bati(bt, Ct, v.get("bat", -1), m)
             vu = v.get("visible")
@@ -449,11 +554,43 @@ def main():
         if connus is not None and ident not in connus:
             sortir("  aucun %s de cet id : %s — écris-le d'abord dans sa table."
                    % (genre, ident))
+        # Une salle se vise par sa PIÈCE quand le monde l'a creusée : c'est la
+        # seule cible qui survive à une régénération, puisqu'elle porte l'id du
+        # plan et non un index de graine.
+        pid = cible[6:] if cible.startswith("piece:") else cible
+        if fiche_piece(monde, pid):
+            fp = fiche_piece(monde, pid)
+            print(dire_bati(fp))
+            print("  -> %s prendrait cette pièce." % clef)
+            if not vraiment:
+                print("  (rien écrit — ajoute --vraiment)")
+                return
+            entree = dict(L["affectations"].get(clef) or {})
+            entree.pop("bat", None)
+            entree.pop("usage", None)
+            entree["piece"] = pid
+            entree["xyz"] = [round(fp["x"], 1), round(fp["y"], 1),
+                             round(fp["z"], 1)]
+            if monde == DEFAUT_MONDE:
+                entree.pop("monde", None)
+            else:
+                entree["monde"] = monde
+            nom = (opt("--nom") or [None])[0]
+            if nom: entree["nom"] = nom
+            note = (opt("--note") or [None])[0]
+            if note: entree["note"] = note
+            v = visibilite_demandee(a)
+            if v is not None: entree["visible"] = v
+            L["affectations"][clef] = entree
+            ecrire(LIENS, L)
+            print("  écrit dans etat/corps.json")
+            return
         try:
             i = int(cible)
         except ValueError:
-            sortir("  la cible est un index de bâtiment (un entier). "
-                   "Trouve-le avec --chercher.")
+            sortir("  la cible est un index de bâtiment (un entier), ou une "
+                   "pièce des intérieurs (`piece:<id>`). "
+                   "Trouve-la avec --chercher.")
         f = fiche_bati(bati, C, i, monde)
         if not f: sortir("  aucun bâtiment d'index %d dans « %s »." % (i, monde))
         # Deux endroits de la fiction peuvent légitimement tomber sur le même

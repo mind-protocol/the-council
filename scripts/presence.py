@@ -510,8 +510,15 @@ def main():
     print("Peyredragon, jour %d, %s\n" % (quand["jour"], heure(quand["minute"])))
     par_salle = {}
     for pid, ou in resoudre(quand).items():
+        # UNE EXCEPTION PEUT POSER QUELQU'UN HORS DU PLAN. `clerc-coll` est au
+        # « grenier du bourg », qui existe dans la fiction et pas dans
+        # etat/chemins.json : sa salle est nulle. On ne s'en cache pas — on
+        # l'affiche sous son lieu, avec la mention. Trier None avec du texte
+        # faisait tomber la regie entiere pour un seul homme mal range.
         cle = ou["salle"] if ou["etat"] == "arrete" else \
             "~ %s -> %s" % (ou["de"], ou["vers"])
+        if not cle:
+            cle = "(hors plan) %s" % (ou.get("lieu") or "?")
         par_salle.setdefault(cle, []).append((N.get(pid, pid), ou))
     for cle in sorted(par_salle):
         gens = par_salle[cle]

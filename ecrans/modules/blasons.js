@@ -43,6 +43,11 @@ window.Blasons = (() => {
     // baie, et c'est le propos.
     "maison-inchauspe": { champ: [E.or], charge: "noix", email: E.sable,
       note: "Trois noix de sable posées deux et une, sur champ d'or" },
+    // Créée en jeu : la maison de Nicolas Reynolds, petits seigneurs de
+    // Pierrefitte. Une équerre et son fil à plomb — les deux outils qui disent
+    // si une chose est droite, et rien qui tranche.
+    "maison-reynolds": { champ: [E.sinople], charge: "equerre", email: E.or,
+      note: "De sinople à l'équerre d'or, un fil à plomb pendu de son angle" },
     // sièges sur la carte, maisons absentes de l'état — armes canoniques
     "maison-tully": { champ: [E.gueules, E.azur], partition: "pal2", charge: "truite", email: E.argent },
     "maison-arryn": { champ: [E.delave], charge: "faucon", email: E.argent },
@@ -87,6 +92,12 @@ window.Blasons = (() => {
     loup: '<path d="M-2.8-1.6-2.2-4l1.8 1.4h1.6L3-4l.6 2.4c0 2.2-1.4 3.6-3.2 3.6s-3.2-1.4-3.2-3.6z" stroke="none"/>',
     // trois noix, deux et une : des ovales un rien pointus du haut, et le pli
     // qui les partage — c'est tout ce qui reste d'une noix à douze pixels.
+    // l'équerre du charpentier, posée sur son angle, et le fil à plomb qui
+    // pend dedans : deux traits pleins et un fil, c'est tout ce qui reste d'un
+    // outil de mesure à douze pixels.
+    equerre: '<path d="M-3.2-3.9h1.5v5.3h4.9v1.5h-6.4z" stroke="none"/>' +
+      '<path d="M.9-3.9V-1.3" fill="none" stroke-width=".5" stroke-linecap="round"/>' +
+      '<path d="M.9-1.1-.15-.1.9.9 1.95-.1z" stroke="none"/>',
     noix: '<path d="M-2.1-3.9c1.6.2 1.9 1.5 1.5 2.5-.4 1-2.6 1-3 0-.4-1-.1-2.3 1.5-2.5z" stroke="none"/>' +
       '<path d="M2.1-3.9c1.6.2 1.9 1.5 1.5 2.5-.4 1-2.6 1-3 0-.4-1-.1-2.3 1.5-2.5z" stroke="none"/>' +
       '<path d="M0 .3c1.6.2 1.9 1.5 1.5 2.5-.4 1-2.6 1-3 0-.4-1-.1-2.3 1.5-2.5z" stroke="none"/>',

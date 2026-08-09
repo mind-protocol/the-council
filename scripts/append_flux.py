@@ -8,7 +8,7 @@
 # monde.date.minute de sa duree. Le MJ n'ecrit que "duree" (en minutes) quand
 # elle sort de l'ordinaire ; sinon le defaut du type s'applique. Au passage de
 # 1440 minutes, le jour s'incremente. Voir docs/schema.md.
-import json, io, os, re, sys
+import json, io, os, re, sys, hashlib, tempfile, unicodedata
 
 racine = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 chemin = os.path.join(racine, "etat", "flux.jsonl")
@@ -27,9 +27,15 @@ DUREES = {
     "effacer": 0, "question": 0, "reponse": 0, "pensee": 0,
     # Les coulisses sont hors univers : l'horloge de la fiction n'y touche pas.
     "meta": 0, "coulisses": 0,
+    # L'intervention divine : on repare le fil par-dessus la fiction. Hors
+    # univers de bout en bout — l'horloge n'y touche pas.
+    "intervention": 0, "reparation": 0,
     # Les suites d'un « laisser faire » : une main tendue au joueur, pas un
     # geste dans la fiction. Personne ne l'entend, l'horloge n'y touche pas.
     "suites": 0,
+    # L'atelier de chanson : on compose SUR la partie, jamais dedans. Hors
+    # univers comme les coulisses, et sans une minute de fiction.
+    "composer": 0, "chanson": 0,
 }
 
 JOURS_PAR_LUNE = 30
@@ -71,6 +77,136 @@ def portrait(pid, nom=None):
     ):
         svg = svg.replace(marque, valeur)
     return svg
+
+
+def empreinte_du_dessin(nom):
+    """Fige la feuille SANS la coller dans le flux, et rend son nom fige.
+
+    Un leve au pas pese deux cent mille signes. L'inliner dans l'item — comme on
+    fait des portraits — mettrait ce poids dans CHAQUE ligne qui le montre, et
+    le fil est append-only : on ne le reprend jamais. On copie donc le dessin
+    sous un nom qui porte l'empreinte de son contenu, et l'item ne garde que ce
+    nom ; le serveur l'inline au service (voir inlinerFigure dans serveur.js).
+
+    Meme contenu, meme empreinte, meme fichier : montrer dix fois la meme feuille
+    ne fait pas dix copies. Et une feuille refaite demain porte une empreinte
+    neuve, donc n'ecrase pas celle qu'on a montree — ce que le joueur a vu ce
+    jour-la reste ce qu'il a vu.
+    """
+    dossier = os.path.join(racine, "ecrans", "dessins")
+    source = os.path.join(dossier, str(nom))
+    if not os.path.exists(source):
+        sys.stderr.write("append_flux : dessin introuvable — %s\n" % source)
+        return nom
+    brut = io.open(source, "rb").read()
+    sceau = hashlib.sha1(brut).hexdigest()[:8]
+    base, ext = os.path.splitext(os.path.basename(str(nom)))
+    # Deja empreinte (on remontre la meme page) : rien a copier.
+    if re.match(r"^[0-9a-f]{8}$", base.rsplit(".", 1)[-1] if "." in base else ""):
+        return nom
+    fige = "%s.%s%s" % (base, sceau, ext)
+    cible = os.path.join(dossier, fige)
+    if not os.path.exists(cible):
+        with io.open(cible, "wb") as f:
+            f.write(brut)
+    return fige
+
+
+def toucher_le_livre(lid, quand):
+    """Estampe `date_maj` : ce volume vient de servir, il remonte sur la table.
+
+    L'etagere se range du plus frais au plus ancien (voir books.js). Sans cette
+    estampe, la fraicheur dependrait de la discipline du MJ — et un registre
+    qu'on vient de tendre en plein conseil resterait enfoui au meme rang
+    qu'hier. Montrer un volume est le signal le plus sur qu'il compte MAINTENANT.
+
+    Fenetre etroite : on relit et on reecrit dans la meme milliseconde, parce
+    qu'a deux MJ books.json a deux plumes.
+    """
+    p = os.path.join(racine, "etat", "books.json")
+    try:
+        with io.open(p, encoding="utf-8") as f:
+            books = json.load(f)
+        b = next((x for x in books if x.get("id") == lid), None)
+        if not b:
+            return
+        b["date_maj"] = dict(quand)
+        d = os.path.dirname(p)
+        fd, tmp = tempfile.mkstemp(dir=d, suffix=".tmp")
+        with io.open(fd, "w", encoding="utf-8") as f:
+            json.dump(books, f, ensure_ascii=False, indent=2)
+            f.write("\n")
+        os.replace(tmp, p)
+    except Exception as e:
+        sys.stderr.write("append_flux : date_maj non posee sur %s (%s)\n" % (lid, e))
+
+
+def extrait_du_livre(montre):
+    """Ce qu'on laisse voir d'un volume — GELE a la seconde ou on le montre.
+
+    MONTRER N'EST PAS DONNER. Un homme qui tend son registre a bout de bras ne
+    lache pas son registre : le joueur voit la page, pas le volume. On resout
+    donc l'extrait ICI, a l'ecriture, et le fil n'en garde qu'une citation. Le
+    front ne va jamais relire books.json pour un item passe — sans quoi une
+    ligne corrigee trois jours plus tard changerait retroactivement ce qu'on a
+    montre au joueur, et ce serait lui mentir sur ce qu'il a vu.
+
+    C'est l'inverse exact du choix fait pour la carte (illustration.js refuse de
+    reposer les pieces d'une scene passee : la table dit l'etat d'aujourd'hui).
+    Une table est un tableau de bord, un extrait est une piece a conviction.
+
+    `montre` : {livre, page?, lignes?, mention?}. Sans precision, on prend la
+    premiere page, ou les trois premieres lignes d'un registre.
+    """
+    lid = montre.get("livre")
+    if not lid or "extrait" in montre:
+        return
+    p = os.path.join(racine, "etat", "books.json")
+    try:
+        with io.open(p, encoding="utf-8") as f:
+            books = json.load(f)
+    except Exception:
+        return
+    b = next((x for x in books if x.get("id") == lid), None)
+    if not b:
+        sys.stderr.write("append_flux : aucun livre « %s » — rien de montre.\n" % lid)
+        return
+
+    e = {"titre": b.get("titre"), "sous_titre": b.get("sous_titre"),
+         "type": b.get("type"), "couleur": b.get("couleur")}
+
+    pages = b.get("pages") or []
+    lignes = b.get("lignes") or []
+    if montre.get("lignes") is not None or (lignes and montre.get("page") is None):
+        # Un registre : on montre des LIGNES, avec leurs colonnes pour qu'elles
+        # veuillent dire quelque chose. Un chiffre sans son en-tete n'est pas un
+        # extrait, c'est un nombre.
+        indices = montre.get("lignes")
+        if indices is None:
+            indices = list(range(min(3, len(lignes))))
+        e["colonnes"] = b.get("colonnes") or []
+        e["lignes"] = [lignes[i] for i in indices if 0 <= i < len(lignes)]
+        e["total_lignes"] = len(lignes)
+        e["indices"] = indices
+    elif pages:
+        n = montre.get("page") or 0
+        if not (0 <= n < len(pages)):
+            sys.stderr.write("append_flux : « %s » n'a pas de page %d.\n" % (lid, n))
+            n = 0
+        page = pages[n]
+        if isinstance(page, dict) and page.get("figure"):
+            e["figure"] = empreinte_du_dessin(page["figure"])
+            e["legende"] = page.get("legende")
+        else:
+            e["texte"] = page
+        e["page"] = n
+        e["total_pages"] = len(pages)
+    else:
+        e["texte"] = None      # un volume encore vierge : c'est une information
+
+    if montre.get("mention"):
+        e["mention"] = montre["mention"]
+    montre["extrait"] = e
 
 
 def format_heure(minute):
@@ -246,7 +382,16 @@ if "--pour" in args:
     explicite = True
     args = args[:i] + args[i + 2:]
     if pour in ("tous", "commun", "-"):
-        pour = None
+        # UNE SCENE COMMUNE SE NOMME, ELLE NE SE TAIT PAS. Ecrire le commun par
+        # ABSENCE de `pour` etait la faille : un item sans audience retombait
+        # dans le cas « rien n'a ete declare », que le serveur servait a tout le
+        # monde — y compris a un siege qui n'etait pas dans la salle, et pour
+        # toujours, puisqu'une audience commune ne se referme jamais d'elle-meme.
+        # On enumere donc les oreilles occupees. « Commun » devient un tableau
+        # comme un autre, et plus un trou dans lequel tout tombe.
+        assis = [j.get("personnage_id") for j in roster()
+                 if j.get("occupe") and j.get("personnage_id")]
+        pour = sorted(assis) if len(assis) > 1 else None
 
 # LA MESSE BASSE. Optionnelle, et c'est tout l'interet : par defaut on parle a
 # la piece (voir plus bas — l'audience se deduit de `presence.json`). Chuchoter
@@ -316,7 +461,8 @@ sieges = [j["personnage_id"] for j in roster()]
 # reponse, une pensee, une remarque de coulisses ne se disent a personne : elles
 # n'ont pas lieu dans la salle et ne coutent pas une minute. Elles restent
 # privees au siege vise meme quand la scene, elle, est commune.
-HORS_FICTION = {"question", "reponse", "pensee", "meta", "coulisses"}
+HORS_FICTION = {"question", "reponse", "pensee", "meta", "coulisses",
+                "composer", "chanson", "intervention", "reparation"}
 pour_hors_fiction = pour if pour in sieges else None
 
 if messe_basse:
@@ -662,6 +808,85 @@ def suivre_presence(it, quand):
         retirer(x.get("id") if isinstance(x, dict) else x)
 
 
+# QUI EST CET HOMME ? — l'avis des acteurs sans fiche.
+#
+# Un id neuf dans un item, c'est presque toujours l'une de deux choses : une
+# figure de passage qu'on ne reverra pas (tres bien), ou QUELQU'UN QUI EXISTAIT
+# DEJA, sous un autre id, et qu'on vient de dedoubler sans le savoir. Le 25e de
+# la troisieme lune, « wat-duhamel » a ete pousse dans les caves alors que Wat du
+# hameau au gue etait aux geoles depuis huit jours, dans les annales, avec un
+# frere mort — et trois ecritures d'etat ont ete bati dessus avant qu'on s'en
+# apercoive.
+#
+# Le script ne refuse rien : il NOMME les homonymes possibles, une fois, au
+# moment ou l'on pousse. C'est tout ce qu'il fallait.
+def avis_acteurs_inconnus(items):
+    try:
+        with io.open(os.path.join(racine, "etat", "personnages.json"),
+                     encoding="utf-8") as f:
+            gens = json.load(f)
+    except Exception:
+        return
+    gens = gens if isinstance(gens, list) else gens.get("personnages", [])
+    connus, par_mot = set(), {}
+    for p in gens:
+        pid = p.get("id")
+        if not pid:
+            continue
+        connus.add(pid)
+        for mot in re.split(r"[^a-zA-Z0-9]+", sans_accents_simple(
+                (p.get("nom") or "") + " " + pid)):
+            if len(mot) >= 3:
+                par_mot.setdefault(mot, []).append(
+                    "%s (%s)" % (p.get("nom") or pid, pid))
+
+    vus_ici, signales = [], set()
+    for it in items:
+        for cle in ("locuteur_id", "acteur_id"):
+            if it.get(cle):
+                vus_ici.append(it[cle])
+        for clef in ("presents", "entrent"):
+            for p in (it.get(clef) or []):
+                pid = p.get("id") if isinstance(p, dict) else p
+                if pid:
+                    vus_ici.append(pid)
+
+    for pid in vus_ici:
+        if not pid or pid in connus or pid in signales or pid == "vous":
+            continue
+        signales.add(pid)
+        proches = []
+        for mot in re.split(r"[^a-zA-Z0-9]+", sans_accents_simple(pid)):
+            if len(mot) >= 3:
+                for cand in par_mot.get(mot, []):
+                    if cand not in proches:
+                        proches.append(cand)
+        sys.stderr.write(
+            "AVIS : « %s » n'a pas de fiche dans personnages.json.\n" % pid)
+        if proches:
+            sys.stderr.write(
+                "  Deja au monde sous un nom proche : %s\n"
+                "  Verifiez que ce n'est pas le meme homme avant d'ecrire l'etat.\n"
+                % ", ".join(proches[:4]))
+        else:
+            sys.stderr.write(
+                "  Aucun homonyme connu. Figure de passage : rien a faire.\n"
+                "  S'il doit durer, creez sa fiche (et lisez d'abord :"
+                " python scripts/dossier.py --sur %s).\n"
+                % re.split(r"[^a-zA-Z0-9]+", pid)[0])
+
+
+def sans_accents_simple(t):
+    t = unicodedata.normalize("NFD", t)
+    return "".join(c for c in t if unicodedata.category(c) != "Mn").lower()
+
+
+try:
+    avis_acteurs_inconnus(items)
+except Exception:
+    pass  # un avis ne doit jamais empecher une poussee
+
+
 with io.open(chemin, "a", encoding="utf-8") as f:
     for it in items:
         # raccourci : {"presents": ["daemon", ...]} avec ids simples → inline les SVG
@@ -676,6 +901,12 @@ with io.open(chemin, "a", encoding="utf-8") as f:
             if gens and isinstance(gens[0], dict) and "portrait_svg" not in gens[0]:
                 for p in gens:
                     p["portrait_svg"] = portrait(p["id"], p.get("nom"))
+        # `montre: {livre: "…"}` — quelqu'un tend un volume ouvert sur une page.
+        # On y colle la citation maintenant : voir extrait_du_livre.
+        if isinstance(it.get("montre"), dict) and it["montre"].get("livre"):
+            extrait_du_livre(it["montre"])
+            # Un volume qu'on vient de tendre remonte sur le dessus de la pile.
+            toucher_le_livre(it["montre"]["livre"], date)
         # Un item peut porter sa propre date (saut de temps narre) : on la suit.
         if isinstance(it.get("date"), dict):
             for k in ("annee", "lune", "jour"):
@@ -690,9 +921,18 @@ with io.open(chemin, "a", encoding="utf-8") as f:
         # personne, sur aucun ecran, sans une erreur nulle part. On les traduit
         # ici, la ou ils veulent dire quelque chose : pas d'audience du tout.
         if it.get("pour") in ("tous", "commun", "-"):
-            del it["pour"]
-            if it.get("type") == "effacer":
-                it["commun"] = True
+            # Meme regle qu'en ligne de commande : on NOMME les oreilles. Le mot
+            # « tous » ecrit dans un item ne veut rien dire pour le serveur ; le
+            # supprimer purement et simplement rendait l'item public, ce qui est
+            # pire — c'est la faille qu'on ferme.
+            assis = sorted(j.get("personnage_id") for j in roster()
+                           if j.get("occupe") and j.get("personnage_id"))
+            if len(assis) > 1:
+                it["pour"] = assis
+            else:
+                del it["pour"]
+                if it.get("type") == "effacer":
+                    it["commun"] = True
         # L'audience s'estampille a l'ecriture : elle est portee par chaque
         # item, jamais recalculee a la lecture. Un `pour` deja pose sur l'item
         # l'emporte — c'est l'apartee dans une scene commune.

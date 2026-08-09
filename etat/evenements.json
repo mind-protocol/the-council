@@ -131,7 +131,7 @@
     "canal": "corbeau",
     "fiabilite": 70,
     "version": "Une copie de la déposition de Peyredragon arrive adressée nominativement à Ormund Hightower — on a voulu qu'il sache qu'on sait ce que sa maison a fait.",
-    "livree": false
+    "livree": true
    }
   ]
  },
@@ -449,7 +449,7 @@
     "canal": "cavalier",
     "fiabilite": 90,
     "version": "Un homme nomme s'est presente a la porte, a rompu la cire devant lord Rosby en personne et a lu l'acte tout haut dans la cour, devant ceux qui y etaient : douze cents hommes en armes, sans declaration, sur une ville qui avait prete serment ; quarante prisonniers vivants et nourris ; et une derniere ligne qui dit que la reine n'a pas encore compte Rosby parmi ceux qui n'ont pas repondu.",
-    "livree": false
+    "livree": true
    },
    {
     "ou": "peyredragon",
@@ -823,7 +823,7 @@
     "canal": "corbeau",
     "fiabilite": 65,
     "version": "La fille de Viserys a été couronnée sur son rocher. Le serment de 105 fut prêté par le père de Cregan Stark, et on le lui rappellera.",
-    "livree": false
+    "livree": true
    },
    {
     "ou": "port-real",
@@ -1137,7 +1137,7 @@
     "canal": "corbeau",
     "fiabilite": 80,
     "version": "Harrenhal est tombée sans un coup de hache. Le châtelain a ouvert les portes au prince Daemon. Lord Larys Strong apprend en même temps que le conseil que sa maison a rendu son siège sans le consulter.",
-    "livree": false
+    "livree": true
    }
   ]
  },
@@ -1470,7 +1470,7 @@
   "conditions": [
    "Quelqu'un que la reine peut nommer sans froisser Rulf sur ses coques ni Willa sur son bourg"
   ],
-  "statut": "a-venir",
+  "statut": "resolu",
   "effets": [
    "Nommee : une page d'office de moins a rendre vide au conseil",
    "Non nommee : trois registres sous la voute et aucun office par-dessus, dit devant le conseil"
@@ -1575,7 +1575,7 @@
    "La reine designe quelqu'un, ou descend elle-meme",
    "Ser Robert l'apprend par la bouche de la reine, ou par la rumeur de sa propre garnison"
   ],
-  "statut": "a-venir",
+  "statut": "resolu",
   "effets": [
    "Wat l'apprend d'une bouche choisie, ou par un geolier qui ne sait pas le dire",
    "Si ser Robert l'apprend autrement, une deuxieme decision du regne prise sans lui et sans trace"
@@ -1596,9 +1596,9 @@
    "rhaenyra"
   ],
   "conditions": [],
-  "statut": "a-venir",
+  "statut": "resolu",
   "effets": [
-   "Ce qu'on a vu a la crique arrive a la reine — ou n'arrive pas, et personne ne le lui rappelle"
+   "Le rapport N'EST PAS ARRIVE et personne ne l'a rappele a la reine : l'homme poste a la crique des ronces n'est pas rentre, et il y a deux jours que nul ne s'en inquiete"
   ]
  },
  {
@@ -1625,7 +1625,7 @@
   "conditions": [
    "Chaque office pourvu d'ici la est un siege de plus a cette table ; chaque office laisse vacant se voit"
   ],
-  "statut": "a-venir",
+  "statut": "resolu",
   "effets": [
    "Le gouvernement du regne se montre tel qu'il est, devant ceux qui devront lui obeir"
   ]
@@ -1766,7 +1766,7 @@
     "canal": "rumeur",
     "fiabilite": 55,
     "version": "Rapporte au quai par une coque de commerce qui a quitte Port-Real le 24 : on a crie sur les places qu'elle n'est plus rien et qu'on paie pour sa tete. Le chiffre qu'on repete au bourg est dix mille dragons, et personne a bord ne l'a entendu de ses oreilles — mais tous savent que les enfants sont dedans.",
-    "livree": false
+    "livree": true
    },
    {
     "ou": "peyredragon",
@@ -1781,7 +1781,7 @@
     "canal": "barque",
     "fiabilite": 90,
     "version": "De la Ver Blanc, contre paiement, le texte recopie mot pour mot avec les trois chiffres exacts et le nom du heraut — et une ligne en marge : ce n'est pas Otto qui a voulu y mettre les enfants.",
-    "livree": false
+    "livree": true
    },
    {
     "ou": "accalmie",
@@ -1796,7 +1796,7 @@
     "canal": "corbeau",
     "fiabilite": 85,
     "version": "Copie de la proclamation, arrivee trois jours APRES l'acte scelle de la reine. Lord Borros aura donc lu, dans cet ordre : une question posee par ecrit sans rien demander, puis une decheance qui met un prix sur des tetes d'enfants.",
-    "livree": false
+    "livree": true
    },
    {
     "ou": "harrenhal",
@@ -1811,7 +1811,7 @@
     "canal": "corbeau",
     "fiabilite": 80,
     "version": "Sa femme et ses fils sont dechus et leurs tetes ont un prix. Le texte ne le nomme pas separement : il est dedans, comme les autres, sans mention particuliere.",
-    "livree": false
+    "livree": true
    },
    {
     "ou": "sombreval",
@@ -1853,7 +1853,7 @@
    "annule si la porte de mer est fermee a toute embarcation etrangere ce matin-la",
    "devie si on la prend pour l'une des trois inconnus du bourg et qu'on la retient au quai : elle attend la journee entiere assise sur ses malles, en vue de tous, et le bourg en parle avant le chateau"
   ],
-  "statut": "a-venir",
+  "statut": "resolu",
   "effets": "alarra-rosby.lieu_id -> peyredragon ; entree info.json (temoin, fiabilite 90) ; le nom de Rosby entre dans la maison par une porte qui n'est pas politique",
   "diffusion": [
    {
@@ -1870,7 +1870,7 @@
     "canal": "temoin",
     "fiabilite": 90,
     "version": "Un garcon du quai, envoye par Rulf : une barque de Pierredanse a accoste hors du tour, avec deux malles et une dame qui dit s'appeler Massey et demande SI LA REINE EST LEVEE - pas si la reine la recevra. Rulf ajoute qu'elle a paye le batelier de sa main et qu'il est reparti tout de suite.",
-    "livree": false
+    "livree": true
    },
    {
     "ou": "rosby",
@@ -1885,7 +1885,7 @@
     "canal": "rumeur",
     "fiabilite": 45,
     "version": "On dit a Pierredanse que sa femme a pris une barque et qu'on l'a vue debarquer a Peyredragon. On ne dit pas ce qu'elle y est allee faire, et c'est ce qui se raconte le mieux.",
-    "livree": false
+    "livree": true
    }
   ]
  },
@@ -1991,7 +1991,7 @@
    "la relevee de la garnison (quatre-vingts hommes) finit a six heures et demie — le rassemblement tombe dedans",
    "annule si la reine ne redescend pas ou contremande avant l aube"
   ],
-  "statut": "a-venir",
+  "statut": "resolu",
   "effets": "le tarif dit ce matin-la devient le tarif du bourg et ne redescendra pas ; le desordre de la relevee est une fenetre pour faire entrer autre chose avec"
  },
  {
@@ -2011,7 +2011,7 @@
    "wend"
   ],
   "conditions": [],
-  "statut": "a-venir",
+  "statut": "resolu",
   "effets": "Wend appliquera a la lettre la consigne ecrite par Rulf ; toute divergence avec l intention de la reine se verra a l aube"
  },
  {
@@ -2034,7 +2034,7 @@
    "annule ou reporte si la reine ne redescend pas au bourg ce soir",
    "la reine est attendue au chateau ; une sortie de nuit de plus sera remarquee"
   ],
-  "statut": "a-venir",
+  "statut": "resolu",
   "effets": "la reine obtient un nom de coque et des dates ; premier fil dur entre le faux ordre de la reine, les pieces neuves non frappees a Port-Real et la barque de la crique des Ronces"
  },
  {
@@ -2098,7 +2098,7 @@
    "echoue si le peseur a compris avant et embarque : il y a onze coques a la maree du soir",
    "le bourg verra un homme emmene : la raison devra etre dite, ou elle s'inventera"
   ],
-  "statut": "a-venir",
+  "statut": "resolu",
   "effets": "le peseur empeche ; les claies apprennent le vol le lendemain au Tambour, de la bouche de la reine ; Willa doit avoir un successeur a proposer"
  },
  {
@@ -2120,8 +2120,8 @@
   "conditions": [
    "la septa Marlow peut refuser, ou poser ses conditions — elle est franche et n'a pas ete consultee"
   ],
-  "statut": "a-venir",
-  "effets": "une seconde main qui saura ecrire dans quelques annees ; et une enfant du bourg qui circule dans le chateau tous les jours"
+  "statut": "resolu",
+  "effets": "La septa Marlow a pris l'enfant sans avoir ete prevenue, parce qu'on ne renvoie pas une petite de dix ans a la porte du septuaire — et elle le dira a la reine en face, comme elle fait tout"
  },
  {
   "id": "dorsa-repond-combien-de-temps",
@@ -2142,7 +2142,7 @@
   "conditions": [
    "Dorsa est mefiante et fiere de son metier : elle corrigera les mots avant de repondre, et elle a un prix (elle a deja demande sa niece Merra devant temoins)"
   ],
-  "statut": "a-venir",
+  "statut": "resolu",
   "effets": "un delai chiffre a comparer a celui de Criston Cole vers Sombreval, que personne a Peyredragon ne connait"
  },
  {
@@ -2165,7 +2165,7 @@
    "un scorpion sur la cote rend l'affaire irreversible",
    "si le vent ne tient pas, le retour glisse"
   ],
-  "statut": "a-venir",
+  "statut": "resolu",
   "effets": "deux chateaux couverts par une princesse et non par la Couronne ; le royaume apprend que Peyredragon protege par la main de Rhaenys, pas par la parole de la reine"
  },
  {
@@ -2256,7 +2256,7 @@
   "conditions": [
    "si personne n'est poste, la galerie est ouverte a qui sait deja qu'il y a trois oeufs dedans"
   ],
-  "statut": "a-venir",
+  "statut": "resolu",
   "effets": "la onzieme gardee, ou non"
  },
  {
@@ -2301,8 +2301,8 @@
    "si le peseur pris ce soir est de la meme affaire, son absence peut deja les avoir prevenus",
    "la route du nord n'appartient a personne : ce qui a debarque le 16 peut n'avoir jamais eu besoin de repartir par la mer"
   ],
-  "statut": "a-venir",
-  "effets": "la seule echeance dure et datee de toute l'affaire ; quatre jours pour decider si l'on ferme le canal ou si l'on s'en sert"
+  "statut": "resolu",
+  "effets": "SURVENU A SA DATE, LE 27e, ET PERSONNE AU CHATEAU NE LE SAIT. La Merette a mouille a la maree du soir, patron Ollo Marran, chaux et barriques vides comme les six fois d'avant - rythme tenu, rien de bouge au poste sous la pointe. MAITRE RULF L'A VUE, COMPTEE ET PORTEE A SON CAHIER DES SORTIES. Mais on ne l'a pas fait monter au chateau ce jour-la, et le cahier est reste dans ses mains : la seule echeance dure et datee de toute l'affaire est tombee juste, et l'information n'a pas franchi les cent trente marches. Les quatre jours pour decider si l'on ferme le canal ou si l'on s'en sert ont commence a courir sans que la reine le sache."
  },
  {
   "id": "le-peseur-pris-et-garde-chez-rulf",
@@ -2426,7 +2426,7 @@
     "canal": "rumeur",
     "fiabilite": 45,
     "version": "On rapporte de la baie que la femme couronnee a Peyredragon a refuse tout haut de fermer le Gosier, et qu'elle l'a fait pour plaire a des pecheurs. Otto n'en croira pas le motif ; Larys n'en croira pas la source, et cherchera qui avait interet a la faire courir.",
-    "livree": false
+    "livree": true
    }
   ]
  },
@@ -2490,9 +2490,248 @@
   },
   "type": "programme",
   "importance": 55,
-  "statut": "programme",
-  "description": "LE TERME DU SILENCE D AURORE. Le 25e a 15h25, a la Table Peinte et sans temoin, la reine a accorde a Aurore de garder une chose apprise, a DEUX CONDITIONS : un terme annonce par AURORE elle-meme, et la remontee immediate si la chose met quelqu un en danger cette semaine (Aurore ne juge pas, elle signale, la reine juge). AURORE A DIT LE VINGT-HUITIEME ; LA REINE A PRECISE AU SOIR et a ecrit 28 a la craie sur le bord de bois de la Table Peinte, dans la marge des marees. AU SOIR DU 28e AURORE DOIT PARLER, en sachant ou en ne sachant pas. CE QU ELLE TIENT : le temoignage de Hallis Roon sur LES DEUX PASSAGES du 16e - la grande bete sur la route et les chariots, la petite deux fois, basse, sur les hommes couches dans les champs, c est la qu on a crie et pas avant. CE QU ELLE ESPERE AVANT LE TERME : le croisement du livre des morts et du livre du port avec Rulf Corne le 26e au matin, et les premieres reponses des 37 lettres.",
+  "statut": "resolu",
+  "description": "LE TERME DU SILENCE D AURORE. Le 25e a 15h25, a la Table Peinte et sans temoin, la reine a accorde a Aurore de garder une chose apprise, a DEUX CONDITIONS : un terme annonce par AURORE elle-meme, et la remontee immediate si la chose met quelqu un en danger cette semaine (Aurore ne juge pas, elle signale, la reine juge). AURORE A DIT LE VINGT-HUITIEME ; LA REINE A PRECISE AU SOIR et a ecrit 28 a la craie sur le bord de bois de la Table Peinte, dans la marge des marees. AU SOIR DU 28e AURORE DOIT PARLER, en sachant ou en ne sachant pas. CE QU ELLE TIENT : le temoignage de Hallis Roon sur LES DEUX PASSAGES du 16e - la grande bete sur la route et les chariots, la petite deux fois, basse, sur les hommes couches dans les champs, c est la qu on a crie et pas avant. CE QU ELLE ESPERE AVANT LE TERME : le croisement du livre des morts et du livre du port avec Rulf Corne le 26e au matin, et les premieres reponses des 37 lettres. || TENU LE 28e A 16h47, DEUX HEURES AVANT L'ECHEANCE, dans la petite salle du levant et sans temoin. Aurore a rendu les deux passages du 16e. LA REINE A REFUSE L'INNOCENCE et a ordonne le silence sans terme ; voir `acte-rhaenyra-garde-le-feu-pour-elle-28e`.",
   "effets": [],
   "conditions": []
+ },
+ {
+  "id": "les-trois-chansons-du-26",
+  "date_prevue": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 26,
+   "minute": 420
+  },
+  "type": "programme",
+  "statut": "programme",
+  "importance": 22,
+  "lieu_id": "peyredragon",
+  "acteurs": [
+   "alys-grive",
+   "rhaenyra"
+  ],
+  "description": "AVANT LE CONSEIL, DANS LES APPARTEMENTS DE LA REINE. Alys Grive, bardesse de la maison, engagee il y a TROIS JOURS et chargee de proposer regulierement des chansons a la reine, monte avec son rebec dans son sac et TROIS PROPOSITIONS, pas une de plus. Elle les pose l'une apres l'autre, dit pour chacune ou on la chanterait, qui la reprendrait, et CE QU'ELLE COUTE — elle dit le prix avant qu'on le lui demande, c'est sa maniere. Elle ne demande rien d'autre qu'un choix : une chanson commandee est une chanson ecrite quelque part, et son office ne l'est pas encore. LES TROIS : (1) LA CHAISE DE SARA — la femme qui a tenu les comptes onze ans sans titre, qu'on vient d'asseoir a la table ; se chante aux cuisines, monte toute seule ; le prix est qu'elle nomme une vivante et que toute la maison y lira une faveur. (2) LA REINE QUI N'A PAS BRULE — reponse au feu de la route, la retenue plutot que la flamme ; se chante sur les quais et jusqu'au bourg ; le prix est qu'elle AVOUE le feu pour pouvoir le retourner. (3) LA MAREE N'ATTEND PAS SA GRACE — une chanson de quai, drue et moqueuse, ou la couronne arrive apres la mer ; se chante a la garnison et au port ; le prix est qu'on rit d'elle, et que c'est exactement ce qui la fait aimer. Si la reine ne la recoit pas, elle laisse les trois titres a l'huissier et va les essayer aux cuisines.",
+  "conditions": [
+   "la reine refuse de le recevoir avant le conseil",
+   "le conseil est avance"
+  ],
+  "effets": [
+   "Une chanson commandee, ou aucune",
+   "Si commande : l'office du barde entre au registre des offices"
+  ]
+ },
+ {
+  "id": "quince-bouche-la-route-du-sel",
+  "date_prevue": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 31,
+   "minute": 420
+  },
+  "type": "programme",
+  "statut": "programme",
+  "importance": 48,
+  "lieu_id": "peyredragon",
+  "acteurs": [
+   "robert-quince",
+   "aurore-inchauspe"
+  ],
+  "description": "SER ROBERT BOUCHE LE TROU DE LA ROUTE DU SEL. Ordre du 28e a 9h52 : il a trouve que le vide sous le plancher des barques n'est pas une cachette mais l'endroit ou tout le monde regarde (trois barques ouvertes, toutes le meme, tous les hommes de mer le savent). Il ne le FERME pas - cela nourrit quarante familles - il donne aux porteurs de la reine UNE PLACE QUE LES PECHEURS N'ONT PAS. Trois jours a compter du 28e. IL REND COMPTE A DAME AURORE, PAS A LA REINE : Aurore doit l'avoir des le soir du 28e, la reine le lieu au matin du 29e. CONDITIONS D'ECHEC : s'il ne trouve pas de place tenable, la route continue de tenir uniquement parce que personne n'a fouille a Port-Real, et le premier homme du port qui cherche la trouve.",
+  "effets": "Si tenu : la route du sel cesse d'etre le premier endroit ou l'on fouille. Si echoue : le premier controle serieux au port de Port-Real l'ouvre."
+ },
+ {
+  "id": "hask-chiffre-la-deuxieme-voie",
+  "date_prevue": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 29,
+   "minute": 420
+  },
+  "type": "programme",
+  "statut": "programme",
+  "importance": 38,
+  "lieu_id": "peyredragon",
+  "acteurs": [
+   "aldon-hask",
+   "rulf-corne",
+   "rhaenyra"
+  ],
+  "description": "HASK RAPPORTE AU LEVER DES ROLES DU 29e. La reine a refuse d'entendre ses trois voies (remplacantes de la ligne de credit Celtigar fermee le 28e a 7h) et lui a dit de prendre CELLE QU'IL PRENDRAIT SI C'ETAIT SON OR, en ne remontant que si l'une d'elles coute une parole de la reine. IL A ANNONCE LA DEUXIEME sans dire laquelle c'est, et descend au bourg a midi la chiffrer avec Rulf Corne. LA REINE IGNORE CE QU'ELLE A APPROUVE. Il ne remonte pas avant le 29e a sept heures.",
+  "effets": "La caisse recupere ou non un recours sous trente jours ; la reine l'apprendra apres coup."
+ },
+ {
+  "id": "marna-livre-deux-portes",
+  "date_prevue": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 29,
+   "minute": 420
+  },
+  "type": "programme",
+  "statut": "programme",
+  "importance": 72,
+  "lieu_id": "peyredragon",
+  "acteurs": [
+   "marna",
+   "rhaenyra"
+  ],
+  "description": "MARNA LIVRE LES DEUX PORTES SURES (la porte du Roi, la Gadoue), heure par heure, avec les jours ou c'est faux. La Vieille porte est a moitie : deux lunes de lettres de plus, trois jours, ou elle dira qu'elle ne l'aura pas. CONDITION D'ECHEC MATERIELLE ET DECISIVE : LA REINE LUI A REPRIS MALLE ET CHEMISE deux minutes apres lui avoir donne la charge, et ne les lui a pas rendues. SANS SES LETTRES ELLE NE PEUT RIEN LIVRER - si rien n'est rendu d'ici la, l'echeance de sept heures tombe a vide.",
+  "effets": "Si tenu : faire entrer des hommes dans Port-Real sans les manteaux d'or, donc sans Daemon."
+ },
+ {
+  "id": "le-braavien-repart-a-la-lune-pleine",
+  "date_prevue": {
+   "annee": 129,
+   "lune": 4,
+   "jour": 1,
+   "minute": 1200
+  },
+  "type": "programme",
+  "statut": "programme",
+  "importance": 68,
+  "lieu_id": "peyredragon",
+  "acteurs": [
+   "rhaenyra",
+   "aurore-inchauspe"
+  ],
+  "description": "LA QUATRIEME COQUE LEVE L'ANCRE A LA LUNE PLEINE ET L'HOMME DE LA BANQUE DE FER PART AVEC CE QU'IL A ECRIT : le compte des murs de Peyredragon, et la reponse a la question qu'il a posee deux fois - EST-CE QUE LA REINE PAIE LES SIENS. La Banque ne pretera pas avant une lune pleine tenue sur Port-Real, et ce rapport decide s'il y aura une suite. DEVIATION POSSIBLE, FENETRE COURTE : les deux rameurs pris a la crique se sont offerts a le livrer LE SOIR DU 28e a la releve ; passe minuit du 28e l'occasion est perdue. La reine a ecarte les deux voies sans trancher. || MISE A JOUR 28e 13h05 : LES DEUX VOIES ONT ETE ECARTEES A 13h05 SANS DECISION. Sauf ordre avant minuit, il repart avec son rapport. || 28e 16h38 : L'AFFAIRE EST REMISE A AURORE INCHAUSPE, entiere et sans condition - « c'est votre metier, ce n'est pas le mien ; vous avez jusqu'a minuit et vous n'avez a me demander la permission de rien ». La reine ne tranchera pas. Ce qui se decide avant minuit se decide dans la session d'Aurore.",
+  "effets": "S'il repart librement : le rapport part sans qu'on sache ce qu'il dit. S'il est pris : on sait, et Braavos le sait aussi."
+ },
+ {
+  "id": "hask-le-cout-du-premier-mois",
+  "date_prevue": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 29,
+   "minute": 420
+  },
+  "type": "programme",
+  "statut": "programme",
+  "importance": 45,
+  "lieu_id": "peyredragon",
+  "acteurs": [
+   "aldon-hask",
+   "rhaenyra"
+  ],
+  "description": "HASK REND LE VENTRE AU LEVER DES ROLES DU 29e : ce que coute le PREMIER MOIS pour nourrir deux cent mille bouches dans une ville qu'on vient de prendre et d'assieger - et OU IL LE PREND.",
+  "effets": "Chiffre le vrai prix de l'entree ; peut rendre la prise insoutenable sans recette neuve."
+ },
+ {
+  "id": "les-trois-depots-dans-les-granges-de-gunthor",
+  "date_prevue": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 29,
+   "minute": 600
+  },
+  "type": "programme",
+  "statut": "programme",
+  "importance": 52,
+  "lieu_id": "sombreval",
+  "acteurs": [
+   "gerardys",
+   "rhaenyra"
+  ],
+  "description": "LORD GUNTHOR APPREND QU'ON A PRIS SES GRANGES. Gerardys eclate le train de vivres en trois depots (deux hameaux de la cote, l'abbaye de Pointe-Aigue) pour que cinquante charrettes sur un quai n'annoncent pas ou l'ost debarque ; LE PREMIER CHARROI EST PARTI LE 28e AU MATIN SANS L'ACCORD DE LA REINE. Les trois depots sont sur les terres de Gunthor Darklyn, qui attend d'elle une garantie depuis huit jours. Il l'apprendra le 29e par son intendant, sauf si la reine prend les devants (demande `granges-de-gunthor`).",
+  "effets": "Selon la voie : un banneret menage et une garantie enfin donnee, ou un banneret qui apprend qu'on dispose de ses biens sans lui la semaine ou l'on debarque chez lui."
+ },
+ {
+  "id": "alys-casse-la-rime-du-troisieme-couplet",
+  "date_prevue": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 31,
+   "minute": 1200
+  },
+  "type": "programme",
+  "statut": "programme",
+  "importance": 40,
+  "lieu_id": "peyredragon",
+  "acteurs": [
+   "alys-grive"
+  ],
+  "description": "ALYS CASSE LA RIME. Faute d'ordre de la reine (les quatre voies refusees le 28e a 13h20), la bardesse tranche seule : elle accroche au troisieme couplet de la chanson du feu - celui qui dit TROIS MILLE et qu'on retient parce qu'il rime - une suite bete, rime facile et laide, pour rendre le couplet ridicule a chanter devant des hommes. TROIS SOIRS aux sechoirs et au bourg, a compter du 28e au soir. COMPTE DE BOUCHES rendu chaque matin (2 le 27e, 11 le 28e au matin). LIMITE QU'ELLE A ELLE-MEME POSEE : cela fait taire trois mille SANS mettre douze cents dans une bouche - quinze a vingt jours, et il faudra autre chose. CE QUE CA NE REGLE PAS : la chanson est deja partie avec deux bouches etrangeres a l'ile (un patron de Lamarck, un homme d'une coque en rade) ; le Conflans la chantera de toute facon.",
+  "effets": "Si tenu : le troisieme couplet meurt sur l'ile en trois soirs. Ne change rien a ce qui est deja parti par mer, ni au chiffre de trois mille dans le Conflans."
+ },
+ {
+  "id": "la-barque-de-wat-et-hobb",
+  "date_prevue": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 29,
+   "minute": 300
+  },
+  "type": "programme",
+  "statut": "programme",
+  "importance": 58,
+  "lieu_id": "peyredragon",
+  "acteurs": [
+   "prisonnier-wat",
+   "hobb-treize-pas",
+   "robert-quince",
+   "aurore-inchauspe",
+   "rhaenyra"
+  ],
+  "description": "WAT ET HOBB PARTENT POUR PORT-REAL AVEC LA LISTE. Accorde le 28e a 16h44 sur le blanc-seing donne a Aurore. UNE BARQUE DE PECHE (pas une des onze coques : elle ne se remarque pas et n'est a personne), douze jours de vivres, donnee par ser Robert avant la nuit du 28e. ILS NE PARTENT PAS AU NOM DE LA REINE : ils portent la feuille, la remettent au maitre du port de la Gadoue qui la clouera (Rulf l'a garanti), et reviennent - s'ils sont pris ils n'ont rien a trahir. CONDITION POSEE PAR LA REINE : elle dira A WAT ELLE-MEME, CE SOIR ET AVANT QU'IL EMBARQUE, que son frere Rennic est mort le 16e (deuxieme file, pas de corps) - le nom est sur la liste qu'il va porter. Si elle ne le fait pas, il l'apprendra en entendant clouer la feuille. || 28e 17h21 : WAT SAIT. La reine le lui a dit elle-meme. IL A PRIS LA CHOSE SUR LUI - c'est lui qui clouera la feuille, pas Hobb. Condition qu'il a posee et qu'on lui a accordee : VOIR LE NOM DE SON FRERE ECRIT DE LA MAIN DE LA REINE AVANT DE MONTER DANS LA BARQUE. Si ce n'est pas fait avant le depart, la promesse tombe devant lui.",
+  "effets": "La liste des 189 est clouee dans Port-Real par des hommes du peuple et non par un heraut. Si Wat apprend la mort de son frere autrement, la Couronne perd les deux hommes et la liste avec eux."
+ },
+ {
+  "id": "la-reine-dit-rennic-a-wat",
+  "date_prevue": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 28,
+   "minute": 1200
+  },
+  "type": "programme",
+  "statut": "resolu",
+  "importance": 50,
+  "lieu_id": "peyredragon",
+  "acteurs": [
+   "rhaenyra",
+   "prisonnier-wat"
+  ],
+  "description": "LA REINE DIT A WAT QUE SON FRERE EST MORT. Elle s'y est engagee devant Aurore le 28e a 16h44 : elle-meme, pas un autre, ce soir, AVANT L'EMBARQUEMENT. Elle porte ce fait depuis le 21e au soir sans l'avoir dit. Wat est celui qui lui a demande, au cellier le 19e, si elle les avait vus avant de descendre - et a qui elle avait repondu sans se derober. DETTE ANCIENNE : c'est elle qui avait fait chercher le sort de Rennic. || TENU LE 28e A 17h21, dans la cour des communs, presque nuit, sans temoin. Elle l'a dit sans detour et sans demander pardon. RESTE DU : ecrire le nom de Rennic de sa main sur la liste et le lui montrer AVANT l'embarquement - voir `acte-rhaenyra-ecrira-le-nom-de-rennic-28e`.",
+  "effets": "Tenue : la seule promesse personnelle qu'elle ait faite a un homme du peuple est honoree en main propre. Non tenue : il l'apprend a Port-Real, par une feuille qu'il aura portee lui-meme."
+ },
+ {
+  "id": "combien-dhommes-ont-vu-la-route",
+  "date_prevue": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 29,
+   "minute": 1200
+  },
+  "type": "programme",
+  "statut": "programme",
+  "importance": 66,
+  "lieu_id": "peyredragon",
+  "acteurs": [
+   "aurore-inchauspe",
+   "rhaenyra"
+  ],
+  "description": "COMBIEN D'HOMMES VIVANTS ONT VU LA ROUTE DE SOMBREVAL LE 16e. Seule commande de la reine a Aurore apres la revelation des deux passages, le 28e a 16h58 : PAS LES NOMS - LE NOMBRE, ET S'IL AUGMENTE. Rendu au soir du 29e ; si le nombre monte, on reveille la reine. RAISON, dite par elle : le royaume croit qu'il y avait UNE bete sur cette route ; le jour ou deux hommes disent qu'il y en avait DEUX, on ne cherchera pas laquelle a tue, on demandera pourquoi la reine a menti sur le compte. REGLE PERMANENTE POSEE EN MEME TEMPS : Aurore ne donne JAMAIS le nom d'une source a la reine - ce qu'ils disent, jamais qui ils sont.",
+  "effets": "Mesure la duree de vie du silence sur les deux passages. Si le nombre monte, la version publique du feu devient intenable et c'est le CHIFFRE, non le prince, qui l'emporte."
+ },
+ {
+  "id": "prog-chanson-1240-sort-au-bourg",
+  "type": "programme",
+  "date_prevue": {
+   "annee": 129,
+   "lune": 3,
+   "jour": 30
+  },
+  "statut": "programme",
+  "titre": "La chanson des mille deux cent quarante sort au bourg",
+  "description": "Retenue deux jours sur ordre d'Aurore, la chanson d'Alys Grive descend au bourg par les filles de service, puis passe aux barques de la Nera (Pel et Barbeau). VERDICT LE MATIN DU 1er : si on la reprend sans qu'on la leur ait apprise, elle est vivante ; sinon Alys l'enterre et en ecrit une autre.",
+  "porteur": "alys-grive",
+  "conditions": [
+   "Alys reste en charge et n'est pas empechee",
+   "personne de la maison ne la porte"
+  ],
+  "effets": [
+   "la version 'mille deux cent quarante' entre en concurrence avec la chanson du feu sur son propre air"
+  ]
  }
 ]

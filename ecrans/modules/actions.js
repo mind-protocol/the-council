@@ -1,5 +1,6 @@
-// actions.js — la barre unique du joueur : Parler / Agir / Attendre.
-// Le temps n'a plus de zone à part : attendre est une action comme les autres.
+// actions.js — la barre unique du joueur : Parler / Agir / Penser / Question /
+// Coulisses / Laisser faire / Composer. Plus de mode « Attendre » : lâcher la
+// bride au MJ fait passer le temps mieux qu'un bouton d'avance.
 "use strict";
 (() => {
   window.addEventListener("DOMContentLoaded", () => {
@@ -10,7 +11,6 @@
       '<button id="mode-agir"><i class="emb">✋</i>Agir</button>' +
       '<button id="mode-penser" title="Peser la situation : ce que vous savez, ce qui s\'offre, ce que ça coûte">' +
       '<i class="emb">💭</i>Penser</button>' +
-      '<button id="mode-attendre"><i class="emb">⏳</i>Attendre</button>' +
       '<button id="mode-question" title="Hors fiction : demander une précision">' +
       '<i class="emb">❓</i>Question</button>' +
       // Hors univers pour de bon : on parle de la partie, pas dedans. Ni le
@@ -21,6 +21,18 @@
       // dans sa manière. L'instruction est facultative — sans elle, il improvise.
       '<button id="mode-run" title="Laisser le MJ jouer votre personnage — instruction facultative">' +
       '<i class="emb">🎭</i>Laisser faire</button>' +
+      // La main par-dessus le monde : on ne joue plus, on RÉPARE. Ici le MJ
+      // sort de son rôle — plus de canon, plus de brouillard, plus rien
+      // d'acquis : le joueur est propriétaire de sa partie et peut la changer
+      // sans limites. Hors univers, hors horloge, mais l'état, lui, bouge.
+      '<button id="mode-intervention" title="Intervention divine : le MJ sort de son rôle ' +
+      'et modifie la partie sans limites — réparer, développer, changer ce qui a été joué">' +
+      '<i class="emb">✨</i>Intervention</button>' +
+      // PAS DE BOUTON « Composer ». Une chanson n'est plus une commande hors
+      // univers : c'est une AFFAIRE DE LA MAISON. On l'obtient en la demandant
+      // au barde, en scène, avec ce que ça coûte — et l'atelier (concept,
+      // paroles Suno, prompt musical, .md ouvert au bloc-notes) reste le même
+      // côté MJ, seulement il est declenché par un ordre et non par un mode.
       // Toujours à portée dès qu'il reste du flux à jouer : parler n'interrompt
       // plus la scène, seul ce bouton l'arrête.
       '<button id="pause" class="pulse"><i class="emb">⏸️</i>Couper</button></div>' +
@@ -32,29 +44,24 @@
       // qu'elle aurait dû sortir de sa bouche. Ce n'est pas un mode — c'est un
       // filtre sur ce qu'on vient d'écrire, et il ne change ni le sens ni le
       // temps qui passe.
-      '<div class="envoi"><span id="heure-barre" hidden></span>' +
+      '<div class="envoi"><span id="heure-barre" hidden></span><span id="ecart-barre" class="ecart" hidden></span>' +
       '<button id="ameliorer" title="Le MJ reformule vos mots dans la langue du récit — ' +
       'sans fautes, sans changer ce que vous voulez dire"><i class="emb">✒️</i>' +
       'Améliorer</button>' +
-      '<button id="btn-libre"><i class="emb">💬</i>Parler</button></div></div>' +
-      '<div id="attentes">' +
-      '<button data-attente="avance"><i class="emb">⏱️</i>Un moment passe</button>' +
-      '<button data-attente="avance-evenement"><i class="emb">⏭️</i>' +
-      'Jusqu\'à ce que quelque chose arrive</button></div>';
+      '<button id="btn-libre"><i class="emb">💬</i>Parler</button></div></div>';
 
     const champ = document.getElementById("champ-libre");
     const btn = document.getElementById("btn-libre");
     const libre = zone.querySelector(".libre");
-    const attentes = document.getElementById("attentes");
     const inter = document.getElementById("mode-input");
     const boutons = {
       dire: document.getElementById("mode-dire"),
       agir: document.getElementById("mode-agir"),
       penser: document.getElementById("mode-penser"),
-      attendre: document.getElementById("mode-attendre"),
       question: document.getElementById("mode-question"),
       meta: document.getElementById("mode-meta"),
       run: document.getElementById("mode-run"),
+      intervention: document.getElementById("mode-intervention"),
     };
     const AMORCES = {
       dire: "Vos prochaines paroles…",
@@ -63,6 +70,7 @@
       question: "Ce que vous voulez éclaircir — hors de la scène…",
       meta: "Hors univers : la partie, le casting, une médaille à décerner…",
       run: "Une consigne, ou rien — et l'on vous joue comme on vous connaît…",
+      intervention: "Ce qu'il faut redresser, développer, ou changer — rien n'est verrouillé…",
     };
     const ENVOIS = {
       dire: '<i class="emb">💬</i>Parler',
@@ -71,6 +79,7 @@
       question: '<i class="emb">❓</i>Demander',
       meta: '<i class="emb">🎬</i>Commenter',
       run: '<i class="emb">🎭</i>Laisser faire',
+      intervention: '<i class="emb">✨</i>Intervenir',
     };
     let mode = "dire";
 
@@ -96,15 +105,11 @@
       mode = m;
       inter.dataset.mode = m;
       Object.keys(boutons).forEach((k) => boutons[k].classList.toggle("actif", k === m));
-      const attente = m === "attendre";
-      libre.style.display = attente ? "none" : "flex";
-      attentes.classList.toggle("actif", attente);
-      if (!attente) {
-        champ.className = "mode-" + m;
-        champ.placeholder = AMORCES[m];
-        btn.innerHTML = ENVOIS[m];
-        champ.focus();
-      }
+      libre.style.display = "flex";
+      champ.className = "mode-" + m;
+      champ.placeholder = AMORCES[m];
+      btn.innerHTML = ENVOIS[m];
+      champ.focus();
       marquerAm();
     }
     Object.keys(boutons).forEach((k) => (boutons[k].onclick = () => basculer(k)));
@@ -125,16 +130,40 @@
       if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); btn.click(); }
     };
     basculer("dire");
+
+    // ---- parler à quelqu'un d'un clic ------------------------------------
+    // Un visage dans la colonne des présents est une adresse : cliquer dessus
+    // ouvre la parole vers lui. On n'envoie rien — on prépare la phrase et on
+    // rend la main au joueur, curseur en place. C'est une commodité de saisie,
+    // jamais une action : rien ne part tant qu'il n'a pas écrit.
+    window.Barre = {
+      adresser(nom) {
+        if (!nom) return;
+        if (mode !== "dire" && mode !== "agir") basculer("dire");
+        const v = champ.value;
+        const deja = new RegExp("^\\s*" + String(nom).replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\s*,");
+        if (!deja.test(v)) champ.value = nom + ", " + v.replace(/^\s+/, "");
+        champ.focus();
+        const n = champ.value.length;
+        champ.setSelectionRange(n, n);
+      },
+    };
   });
 
-  // La parole du joueur, relue depuis le flux. À deux, la même ligne se lit
-  // « Vous » chez celui qui l'a dite et au nom du personnage chez l'autre —
-  // et son médaillon s'illumine, parce que parler c'est être là.
+  // La parole du joueur, relue depuis le flux. Elle porte le NOM du personnage,
+  // pas « Vous » : dans le fil, une ligne de Rhaenyra doit se lire comme celle
+  // de n'importe qui d'autre — c'est la même salle et la même chronique. À deux,
+  // celle de l'autre siège prend son nom à lui, et son médaillon s'illumine,
+  // parce que parler c'est être là.
   Bus.enregistrer("vous", (it) => {
-    let qui = "Vous";
+    const nomDe = (id) => {
+      const s = (window.Sieges || []).find((x) => x.personnage_id === id);
+      return (s && s.nom) || (window.Moi && window.Moi.personnage_id === id
+        && window.Moi.nom) || null;
+    };
+    let qui = (it.joueur_id && nomDe(it.joueur_id))
+      || (window.Moi && window.Moi.nom) || "Vous";
     if (it.joueur_id && window.Moi && it.joueur_id !== window.Moi.personnage_id) {
-      const s = (window.Sieges || []).find((x) => x.personnage_id === it.joueur_id);
-      qui = (s && s.nom) || it.joueur_id;
       if (window.activerLocuteur) window.activerLocuteur(it.joueur_id);
     }
     const entree = Bus.chronique(
@@ -178,6 +207,29 @@
   Bus.enregistrer("run", (it) =>
     Bus.chronique("chr-run", "Vous laissez faire",
       it.texte || "Sans consigne — on vous joue comme on vous connaît."));
+  // L'atelier de chanson. La commande du joueur, puis la fiche rendue : titre,
+  // ce que ça raconte, et le fichier .md qu'on vient d'ouvrir au bloc-notes.
+  Bus.enregistrer("composer", (it) =>
+    Bus.chronique("chr-composer", "À composer",
+      it.texte || "Sans consigne — on choisit ce qui mérite d'être chanté."));
+  Bus.enregistrer("chanson", (it) => {
+    const entree = Bus.chronique("chr-chanson", it.titre || "Chanson", it.texte || "");
+    if (!entree) return;
+    const corps = entree.querySelector(".chr-corps");
+    if (it.style) {
+      const s = document.createElement("div");
+      s.className = "chanson-style";
+      s.textContent = it.style;
+      corps.appendChild(s);
+    }
+    if (it.fichier) {
+      const f = document.createElement("div");
+      f.className = "chanson-fichier";
+      f.textContent = it.fichier;
+      corps.appendChild(f);
+    }
+  });
+
   Bus.enregistrer("coulisses", (it) => {
     const entree = Bus.chronique("chr-coulisses", it.qui || "Le MJ", it.texte);
     // Une médaille se voit : titre en capitales, ruban, et la citation dessous.
@@ -190,6 +242,27 @@
       m.querySelector(".medaille-titre").textContent = it.medaille;
       if (it.citation) m.querySelector(".medaille-citation").textContent = it.citation;
       entree.querySelector(".chr-corps").appendChild(m);
+    }
+  });
+
+  // L'intervention divine : la demande du joueur, puis ce que le MJ a
+  // réellement redressé. Ces deux-là ne sont pas des coulisses — on n'y
+  // commente pas la partie, on la CORRIGE : l'état bouge derrière.
+  Bus.enregistrer("intervention", (it) =>
+    Bus.chronique("chr-intervention", "Intervention", it.texte));
+  Bus.enregistrer("reparation", (it) => {
+    const entree = Bus.chronique("chr-reparation", it.qui || "Le fil est repris", it.texte);
+    // Ce qui a été touché se dit en clair : le joueur doit savoir ce qui,
+    // désormais, fait foi — sinon il rejoue sur une mémoire périmée.
+    if (entree && it.touche && it.touche.length) {
+      const l = document.createElement("ul");
+      l.className = "reparation-touche";
+      it.touche.forEach((t) => {
+        const li = document.createElement("li");
+        li.textContent = t;
+        l.appendChild(li);
+      });
+      entree.querySelector(".chr-corps").appendChild(l);
     }
   });
 

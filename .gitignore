@@ -26,3 +26,18 @@ monde/
 # Les captures de travail : 120 Mo de PNG et de MP3 d'ambiance, sources
 # externes, régénérables ou reçues. Même raison.
 captures/
+
+# Le cache de synthèse vocale : 118 Mo de wav engendrés réplique par réplique
+# par serveur/voix.js. Il vaut de l'argent, pas de l'historique — il se remplit
+# tout seul en jouant, et le perdre ne coûte qu'une resynthèse. Les auditions
+# de voix, elles, restent versionnées : voix/*.mp3.
+voix/cache/
+
+# Les PDF de travail : 76 Mo de documents de préparation, reçus et non produits
+# par le dépôt. Même raison que les captures.
+docs/*.pdf
+
+# Les chansons rendues : les mp3 et m4a sortis de Suno, et ce qui traîne à côté.
+# Ce qui est du dépôt, ce sont les fiches de musiques/ — concept, paroles et
+# prompt — d'où chaque rendu se refait.
+chansons/

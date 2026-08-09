@@ -68,6 +68,14 @@ while :; do
       continue
     fi
     echo "NOUVELLE ACTION : $base"
+    # CE QUI A BOUGE PENDANT QUE J'ATTENDAIS. La veille est une alarme qui ne
+    # sert a rien si l'on oublie de la lire ; le guetteur, lui, est rearme a
+    # chaque tour par construction. On la lui accroche donc ici : elle tombe
+    # dans le meme souffle que l'action du joueur, au seul moment ou le MJ
+    # regarde a coup sur. Sans ca, la memoire de conversation reste sur un etat
+    # que l'autre session a modifie sous les pieds — c'est arrive toute une
+    # soiree, et le monde joue n'existait plus.
+    python scripts/veille.py "$(basename "$DOSSIER")" 2>/dev/null || true
     for g in "$DOSSIER"/*.json; do
       echo "== $g"
       cat "$g"

@@ -206,6 +206,55 @@ window.Ville3D = (function () {
     }
   }
 
+  // ---- viser : un bâtiment cliqué dans le fil, vu d'en haut ------------------
+  // Même geste que sur la table peinte, une échelle plus bas : on garde la
+  // hauteur et l'inclinaison écrites pour « le quartier », et on TRANSLATE le
+  // regard sur le toit demandé. Le joueur reste maître de la caméra ensuite.
+  let visee = null;
+
+  // Les mètres d'une chose de la fiction : le dedans d'abord (une salle creusée
+  // sait où est sa dalle), l'affectation ensuite (`scripts/affecter.py`).
+  function ouEst(cible) {
+    const coupe = String(cible).split(":");
+    const genre = coupe[0], id = coupe.slice(1).join(":");
+    const piece = (genre === "salle" && monde && monde.salle) ? monde.salle(id) : null;
+    if (piece && piece.centre) {
+      return [piece.centre[0], piece.centre[1],
+              piece.sol_z != null ? piece.sol_z : piece.centre[2]];
+    }
+    const a = affectations[cible];
+    // Des mètres d'un autre monde ne sont pas une erreur de quelques pas.
+    if (!a || (a.monde && lieuId && a.monde !== lieuId)) return null;
+    return (Array.isArray(a.xyz) && a.xyz.length >= 3) ? a.xyz : null;
+  }
+
+  function poserVisee() {
+    const d = def();
+    if (!monde || !visee || !d) return false;
+    const ou = ouEst(visee);
+    const v = (d.vues && d.vues.chateau) || d.vue;
+    if (!ou || !v || !v[0] || !v[1]) return false;
+    monde.camera.vers([0, 1, 2].map((i) => v[0][i] - v[1][i] + ou[i]), ou.slice());
+    if (vous) vous.montrer(true);
+    if (noms) noms.montrer(true);
+    return true;
+  }
+
+  // `cible` : "salle:<id>" ou "lieu:<id>". Faux si ce lieu n'a pas de volume,
+  // ou pas de hauteur de regard écrite pour le quartier — l'appelant se rabat
+  // alors sur le plan dessiné, qui lui existe toujours.
+  function viser(cible) {
+    const d = def();
+    if (!d || !((d.vues || {}).chateau)) return false;
+    visee = cible;
+    if (window.Plan && Plan.montrer) Plan.montrer("chateau3d");
+    // L'onglet peut n'avoir jamais été bâti : `reparu` s'en charge et pose sa
+    // vue par défaut, on repasse derrière lui une fois le monde levé.
+    if (monde) return poserVisee();
+    Promise.resolve(ouverture).then(() => setTimeout(poserVisee, 60));
+    return true;
+  }
+
   // ---- l'onglet paraît, l'onglet s'en va -------------------------------------
   function reparu(nom) {
     derniere = nom || derniere;
@@ -587,5 +636,5 @@ window.Ville3D = (function () {
     setInterval(relire, 60000);
   });
 
-  return { offert, relire, monde: () => monde };
+  return { offert, relire, viser, monde: () => monde };
 })();

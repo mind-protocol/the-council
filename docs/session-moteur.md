@@ -55,7 +55,7 @@ parce qu'elles ne cassent rien — elles font juste mentir le monde en silence.
   le 129.3.23 avec des nouvelles datées du 129.6.24 — trois lunes de retard.
   *Le test : `date_prevue` et les dates de `diffusion` racontent-elles la même histoire ?*
 - **L'arriéré de fiches.** Des personnages qui vivent dans le flux, les têtes et les
-  activités sans exister dans `personnages.json`. Onze d'un coup le 7 août.
+  mains sans exister dans `personnages.json`. Onze d'un coup le 7 août.
 - **Les têtes orphelines** : sur un siège occupé, sur un personnage `dormant`, ou en retard
   de plusieurs jours.
 - **Les budgets d'échelle** qui débordent après un afflux de croyances.

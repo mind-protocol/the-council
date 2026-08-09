@@ -12,7 +12,7 @@ Le jeu s'affiche dans une page servie par `serveur/serveur.js` (port 3129, entr�
 node serveur/serveur.js
 ```
 
-Au bas du fil, une barre permanente : **Parler**, **Agir**, **Attendre**, **Question** (hors fiction), **Penser** (peser la situation, gratuit), **Coulisses** (hors univers), **Laisser faire** (le MJ tient votre personnage). Pas de menus d'options : on écrit ce qu'on veut.
+Au bas du fil, une barre permanente : **Parler**, **Agir**, **Question** (hors fiction), **Penser** (peser la situation, gratuit), **Coulisses** (hors univers), **Laisser faire** (le MJ tient votre personnage). Pas de menus d'options : on écrit ce qu'on veut.
 
 ## Comment ça tourne
 
@@ -25,7 +25,7 @@ Au bas du fil, une barre permanente : **Parler**, **Agir**, **Attendre**, **Ques
 ## Structure
 
 - `CLAUDE.md` — manuel du MJ, chargé par Claude à chaque session.
-- `docs/schema.md` — source de vérité du format des données (ne jamais le modifier). Autres notes de conception à côté : `carte.md`, `books.md`, `corps.md`, `activites.md`, `plis.md`, `journees.md`.
+- `docs/schema.md` — source de vérité du format des données (ne jamais le modifier). Autres notes de conception à côté : `carte.md`, `books.md`, `corps.md`, `mains.md`, `plis.md`, `journees.md`.
 - `etat/*.json` — l'état du monde : monde, maisons, personnages, relations, lieux, événements, info (ce que le joueur sait), paroles, actes, intentions (têtes des PNJ — jamais montrées), annales, journal.
 - `ecrans/` — la page de jeu (`jeu.html`, `jeu.css`) découpée en modules JS (`ecrans/modules/`, un type d'item = un module), les portraits et les templates de widgets.
 - `serveur/serveur.js` — sert la page, le flux, les entités, et reçoit les actions du joueur.

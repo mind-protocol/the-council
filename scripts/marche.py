@@ -27,6 +27,9 @@ et l'on ne touche plus au gros fichier. Le cache se refait avec `--cache`.
 """
 import io, json, math, os, sys, heapq, collections
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import affecter  # LE resolveur d'adresses : on ne relit plus `xyz` a la main
+
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GRAPHE = os.path.join(RACINE, "monde", "portreal.graph.json")
 RUES = os.path.join(RACINE, "monde", "portreal.rues.json")
@@ -142,14 +145,14 @@ def plus_proche(C, x, y):
 def ou_est(C, clef):
     """Un repère du monde, ou une chose affectée (`lieu:`, `salle:`…)."""
     if ":" in clef:
+        xyz = affecter.adresse(clef)
+        if not xyz:
+            sortir("  %s n'a pas d'adresse physique (scripts/affecter.py)." % clef)
         try:
             A = json.load(io.open(CORPS, encoding="utf-8")).get("affectations") or {}
         except (OSError, ValueError):
             A = {}
-        e = A.get(clef)
-        if not e or not e.get("xyz"):
-            sortir("  %s n'a pas d'adresse physique (scripts/affecter.py)." % clef)
-        return e["xyz"][0], e["xyz"][1], (e.get("nom") or clef)
+        return xyz[0], xyz[1], ((A.get(clef) or {}).get("nom") or clef)
     nid = C["reperes"].get(clef)
     if not nid:
         proches = [n for n in C["reperes"] if clef.lower() in n.lower()]

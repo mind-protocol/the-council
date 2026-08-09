@@ -1,0 +1,2387 @@
+{
+  "genere_le": "2026-08-09T07:05:12",
+  "joueur": null,
+  "empreintes": {
+    "intentions": "fe6df9b33528ee6bcfef4cf507360fac8b6bb159",
+    "evenements": "5c7e565ab651c1f2e7cc3ea228e702811a0ced72",
+    "personnages": "35a0d0bc329fa546226072d57d198d988701d8a4",
+    "monde": "aab3b373a0fc4e1a882349113dd393ca0aa2df9c",
+    "info": "840d7b968bd9c1995bdd5895690b4bd84a3455ba",
+    "actes": "1beaea4847f8da391865af847b22428d20744e5a",
+    "paroles": "7659026f04b79faff8973c81e51060017e53c5c6",
+    "annales": "380da4d7fbf0a6b57d31787fd6492c7b776b14ec",
+    "activites": "d41ec08c4476e8fcf71bc9fa7ca9154d9d48bd88",
+    "plis": "44c29980d3bbafc2056b8b464235ed7e784f04e8",
+    "lieux": "779d4a7049f345afccca606957027aad14fccd19"
+  },
+  "avertissement": "Proposition — le MJ arbitre et applique lui-meme dans etat/*.json. Ce fichier n'est pas de l'etat.",
+  "fenetre": {
+    "de": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 27,
+      "minute": 1266
+    },
+    "a": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 27
+    },
+    "jours": 0
+  },
+  "activites": [
+    {
+      "id": "vivres-peyredragon",
+      "quoi": "Ce que l'ile a dans ses celliers : la maisonnee, la garnison, et ce que la guerre a fait monter de bouches",
+      "porteur": {
+        "type": "lieu",
+        "id": "peyredragon"
+      },
+      "porteur_absent": false,
+      "mandat": null,
+      "mesures": [
+        {
+          "adresse": "vivres-peyredragon.jours-de-vivres",
+          "quoi": "jours de vivres pour la maisonnee et la garnison au rythme actuel",
+          "unite": "jours",
+          "avant": 83,
+          "apres": 83,
+          "reliquat_apres": 0
+        }
+      ]
+    },
+    {
+      "id": "recrutement-peyredragon",
+      "quoi": "Ce qui s'inscrit sous la voute de la porte du Dragon, et ce qu'on doit a ceux qui s'y sont inscrits",
+      "porteur": {
+        "type": "personnage",
+        "id": "le-sanglier"
+      },
+      "porteur_absent": false,
+      "mandat": null,
+      "mesures": [
+        {
+          "adresse": "recrutement-peyredragon.hommes-au-role",
+          "quoi": "hommes marques au role, en sus de la garnison de ser Robert",
+          "unite": "hommes",
+          "avant": 21,
+          "apres": 21,
+          "reliquat_apres": 1
+        },
+        {
+          "adresse": "recrutement-peyredragon.solde-due",
+          "quoi": "cerfs dus aux hommes marques et non payes",
+          "unite": "cerfs",
+          "avant": 6,
+          "apres": 6,
+          "reliquat_apres": 0
+        }
+      ]
+    },
+    {
+      "id": "marais-sud-peyredragon",
+      "quoi": "Le sel que tirent les vingt et un hommes du marais du sud",
+      "porteur": {
+        "type": "personnage",
+        "id": "doss-marran"
+      },
+      "porteur_absent": false,
+      "mandat": null,
+      "mesures": [
+        {
+          "adresse": "marais-sud-peyredragon.muids-de-sel",
+          "quoi": "muids de sel en reserve au bourg",
+          "unite": "muids",
+          "avant": 12,
+          "apres": 12,
+          "reliquat_apres": 1
+        }
+      ]
+    },
+    {
+      "id": "sechoirs-peyredragon",
+      "quoi": "Ce que les sechoirs du bourg mettent de cote, tant qu'ils ont du sel et du fil",
+      "porteur": {
+        "type": "personnage",
+        "id": "willa-sechoirs"
+      },
+      "porteur_absent": false,
+      "mandat": null,
+      "mesures": [
+        {
+          "adresse": "sechoirs-peyredragon.poisson-seche",
+          "quoi": "muids de poisson seche en reserve, ce qui tiendra si le port se ferme",
+          "unite": "muids",
+          "avant": 32,
+          "apres": 32,
+          "reliquat_apres": 0
+        }
+      ]
+    },
+    {
+      "id": "port-peyredragon",
+      "quoi": "Garder le port en etat de travailler pendant qu'on fait la guerre avec",
+      "porteur": {
+        "type": "personnage",
+        "id": "rulf-corne"
+      },
+      "porteur_absent": false,
+      "mandat": null,
+      "mesures": [
+        {
+          "adresse": "port-peyredragon.nefs-en-etat",
+          "quoi": "nefs du port en etat de prendre la mer sous trois jours",
+          "unite": "nefs",
+          "avant": 9,
+          "apres": 9,
+          "reliquat_apres": 1
+        }
+      ]
+    },
+    {
+      "id": "coureurs-de-la-reine",
+      "quoi": "Ce que les deux jetons de plomb portent d'un bout de l'ile a l'autre : les courses confiees, et ce qu'il reste de jambes pour les porter",
+      "porteur": {
+        "type": "personnage",
+        "id": "nesse"
+      },
+      "porteur_absent": false,
+      "mandat": "Office cree et borne par la reine le 22e jour de la 3e lune 129 (livre Les regles internes du gouvernement, TROISIEME OFFICE) : que sa parole arrive telle qu'elle l'a dite ; passage partout, a toute heure, sans attendre derriere aucune porte ; aucun ecrit qu'on ne leur ait remis devant temoin ; nourris a sa table, payes sur sa bourse au tarif fixe par le sergent au role ; deux jetons de plomb, et le castellan apporte le troisieme avec la main qui le tient.",
+      "mesures": [
+        {
+          "adresse": "coureurs-de-la-reine.courses-en-attente",
+          "quoi": "courses confiees aux deux jetons et pas encore portees",
+          "unite": "courses",
+          "avant": 2,
+          "apres": 2,
+          "reliquat_apres": 0
+        },
+        {
+          "adresse": "coureurs-de-la-reine.jours-de-jambes",
+          "quoi": "jours de course qu'il reste aux deux avant que l'un des deux ne tienne plus, faute de releve",
+          "unite": "jours",
+          "avant": 14,
+          "apres": 14,
+          "reliquat_apres": 0
+        }
+      ]
+    },
+    {
+      "id": "bris-coque-du-quinze",
+      "quoi": "Demonter la coque de commerce echouee le 15 sur la vase, avant que la vive-eau du 27 la reprenne",
+      "porteur": {
+        "type": "personnage",
+        "id": "hann-bourbe"
+      },
+      "porteur_absent": false,
+      "mandat": "Hann tient l'aire et les six hommes. Depuis le 23e jour : halage a l'elingue par la greve basse, jamais par la porte ; et interdiction de rien descendre aux chantiers du quai avant que Marlo y soit alle lui-meme.",
+      "mesures": [
+        {
+          "adresse": "bris-coque-du-quinze.bois-descendu",
+          "quoi": "Valeur du bois, du fer et du cordage deja descendus a terre (1 dragon d'or = 210 cerfs)",
+          "unite": "cerfs",
+          "avant": 1150,
+          "apres": 1150,
+          "reliquat_apres": 0
+        },
+        {
+          "adresse": "bris-coque-du-quinze.jours-avant-vive-eau",
+          "quoi": "Jours avant la grande maree qui disperse ce qui reste",
+          "unite": "jours",
+          "avant": 4,
+          "apres": 4,
+          "reliquat_apres": 0
+        }
+      ]
+    }
+  ],
+  "seuils_franchis": [],
+  "acteurs_simules": [
+    "gerardys",
+    "robert-quince",
+    "steffon-darklyn",
+    "daemon",
+    "jacaerys",
+    "corlys",
+    "rhaenys",
+    "lucerys",
+    "mysaria",
+    "otto",
+    "criston",
+    "alicent",
+    "orwyle",
+    "sarro-vaeth",
+    "rulf-corne",
+    "septa-marlow",
+    "le-sanglier",
+    "elyn-sarnes",
+    "alarra-rosby",
+    "hann-bourbe",
+    "nel-bec",
+    "sirel-quintaine",
+    "doye-rouelle",
+    "sabbe",
+    "ren",
+    "alys-grive",
+    "sara",
+    "aldon-hask",
+    "marna"
+  ],
+  "acteurs_sautes_royaume": [
+    "aegon-ii",
+    "aemond",
+    "bartimos-celtigar",
+    "borros-baratheon",
+    "cregan-stark",
+    "denys-bar-emmon",
+    "dorsa-sath",
+    "doss-marran",
+    "gunthor-darklyn",
+    "helaena",
+    "jeyne-arryn",
+    "larys",
+    "lord-bar-emmon",
+    "lord-rosby",
+    "lord-staunton",
+    "lord-stokeworth",
+    "mag-la-gaffe",
+    "merra-sath",
+    "ollo-marran",
+    "ordo-sarnes",
+    "ormund-hightower",
+    "waltyr-poix",
+    "wend",
+    "willa-sechoirs"
+  ],
+  "postures_permanentes": 13,
+  "evenements_a_resoudre": [
+    {
+      "id": "retour-de-la-merette",
+      "date": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      },
+      "type": "programme",
+      "importance": 70,
+      "description": "LA MERETTE REMONTE A PEYREDRAGON. Coque de Port-Real, patron declare OLLO MARRAN, trente-deux pieds, une voile, pas de pont ; chaux et barriques vides ; RYTHME DE SIX JOURS TENU DEPUIS LA FIN DE L'AUTOMNE (quatre lunes), donc INSTALLE AVANT LA MORT DE VISERYS. Partie le 21 au soir : au rythme, elle est due le 27. LA REINE ET RULF LE SAVENT DEPUIS LE SOIR DU 23 ; personne d'autre.",
+      "lieu_id": "peyredragon",
+      "acteurs": [
+        "ollo-marran",
+        "rulf-corne",
+        "rhaenyra"
+      ],
+      "conditions": [
+        "si l'on a bouge quoi que ce soit au poste sous la pointe, ils sauront qu'on sait et ne reviendront pas",
+        "si le peseur pris ce soir est de la meme affaire, son absence peut deja les avoir prevenus",
+        "la route du nord n'appartient a personne : ce qui a debarque le 16 peut n'avoir jamais eu besoin de repartir par la mer"
+      ],
+      "diffusion": [],
+      "en_retard": false
+    }
+  ],
+  "nouvelles_a_livrer": [
+    {
+      "evenement_id": "vol-rhaenyra-sombreval",
+      "diffusion_index": 11,
+      "date": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 26
+      },
+      "canal": "cavalier",
+      "fiabilite": 90,
+      "version": "Un homme nomme s'est presente a la porte, a rompu la cire devant lord Rosby en personne et a lu l'acte tout haut dans la cour, devant ceux qui y etaient : douze cents hommes en armes, sans declaration, sur une ville qui avait prete serment ; quarante prisonniers vivants et nourris ; et une derniere ligne qui dit que la reine n'a pas encore compte Rosby parmi ceux qui n'ont pas repondu.",
+      "ou": "rosby",
+      "qui": [
+        "lord-rosby"
+      ],
+      "qui_deduit": false,
+      "touche_joueur": false,
+      "en_retard": true
+    },
+    {
+      "evenement_id": "decheance-de-rhaenyra",
+      "diffusion_index": 6,
+      "date": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 26
+      },
+      "canal": "rumeur",
+      "fiabilite": 55,
+      "version": "Rapporte au quai par une coque de commerce qui a quitte Port-Real le 24 : on a crie sur les places qu'elle n'est plus rien et qu'on paie pour sa tete. Le chiffre qu'on repete au bourg est dix mille dragons, et personne a bord ne l'a entendu de ses oreilles — mais tous savent que les enfants sont dedans.",
+      "ou": "peyredragon",
+      "qui": [
+        "ordo-sarnes",
+        "willa-sechoirs",
+        "rulf-corne"
+      ],
+      "qui_deduit": false,
+      "touche_joueur": true,
+      "en_retard": true
+    },
+    {
+      "evenement_id": "decheance-de-rhaenyra",
+      "diffusion_index": 7,
+      "date": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 26
+      },
+      "canal": "barque",
+      "fiabilite": 90,
+      "version": "De la Ver Blanc, contre paiement, le texte recopie mot pour mot avec les trois chiffres exacts et le nom du heraut — et une ligne en marge : ce n'est pas Otto qui a voulu y mettre les enfants.",
+      "ou": "peyredragon",
+      "qui": [
+        "mysaria"
+      ],
+      "qui_deduit": false,
+      "touche_joueur": true,
+      "en_retard": true
+    },
+    {
+      "evenement_id": "deposition-steffon",
+      "diffusion_index": 3,
+      "date": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      },
+      "canal": "corbeau",
+      "fiabilite": 70,
+      "version": "Une copie de la déposition de Peyredragon arrive adressée nominativement à Ormund Hightower — on a voulu qu'il sache qu'on sait ce que sa maison a fait.",
+      "ou": "villevieille",
+      "qui": [
+        "ormund-hightower"
+      ],
+      "qui_deduit": false,
+      "touche_joueur": false,
+      "en_retard": false
+    },
+    {
+      "evenement_id": "prise-harrenhal",
+      "diffusion_index": 1,
+      "date": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      },
+      "canal": "corbeau",
+      "fiabilite": 80,
+      "version": "Harrenhal est tombée sans un coup de hache. Le châtelain a ouvert les portes au prince Daemon. Lord Larys Strong apprend en même temps que le conseil que sa maison a rendu son siège sans le consulter.",
+      "ou": "port-real",
+      "qui": [
+        "larys",
+        "otto",
+        "criston",
+        "aegon-ii"
+      ],
+      "qui_deduit": false,
+      "touche_joueur": false,
+      "en_retard": false
+    },
+    {
+      "evenement_id": "decheance-de-rhaenyra",
+      "diffusion_index": 8,
+      "date": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      },
+      "canal": "corbeau",
+      "fiabilite": 85,
+      "version": "Copie de la proclamation, arrivee trois jours APRES l'acte scelle de la reine. Lord Borros aura donc lu, dans cet ordre : une question posee par ecrit sans rien demander, puis une decheance qui met un prix sur des tetes d'enfants.",
+      "ou": "accalmie",
+      "qui": [
+        "borros-baratheon"
+      ],
+      "qui_deduit": false,
+      "touche_joueur": false,
+      "en_retard": false
+    },
+    {
+      "evenement_id": "decheance-de-rhaenyra",
+      "diffusion_index": 9,
+      "date": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      },
+      "canal": "corbeau",
+      "fiabilite": 80,
+      "version": "Sa femme et ses fils sont dechus et leurs tetes ont un prix. Le texte ne le nomme pas separement : il est dedans, comme les autres, sans mention particuliere.",
+      "ou": "harrenhal",
+      "qui": [
+        "daemon"
+      ],
+      "qui_deduit": false,
+      "touche_joueur": false,
+      "en_retard": false
+    },
+    {
+      "evenement_id": "blocus-refuse-en-public",
+      "diffusion_index": 4,
+      "date": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      },
+      "canal": "rumeur",
+      "fiabilite": 45,
+      "version": "On rapporte de la baie que la femme couronnee a Peyredragon a refuse tout haut de fermer le Gosier, et qu'elle l'a fait pour plaire a des pecheurs. Otto n'en croira pas le motif ; Larys n'en croira pas la source, et cherchera qui avait interet a la faire courir.",
+      "ou": "port-real",
+      "qui": [
+        "otto",
+        "larys"
+      ],
+      "qui_deduit": false,
+      "touche_joueur": false,
+      "en_retard": false
+    }
+  ],
+  "nouvelles_conditionnelles": [],
+  "bouches": [
+    {
+      "personnage_id": "gerardys",
+      "echelle": "orbite",
+      "de": "peyredragon",
+      "vers": "port-real",
+      "source": "etape",
+      "indice": "Ouvrir une route vers Port-Real qui ne passe par aucune roukerie : nom d un patron de barque a salaisons de Sombreval, obtenu par Wend aupres de ser Robert a la porte de mer  [lieu seulement cite — verifie qu'il y va]",
+      "date": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      },
+      "apporte": [
+        "Il a oublie les oeufs dans les trois versions de la lettre alors que c'etait tout son motif, et ne s'en est apercu qu'un quart d'heure plus tard : il ne se voit plus se tromper au moment ou il le fait, et il l'a dit a la reine avant qu'on le decouvre ; et il est parti se coucher avec quelque chose a dire qu'il n'a pas dit, arrete sur le seuil trois secondes sans se retourner."
+      ],
+      "deja_su_sur_place": [
+        {
+          "croyance": "Elle lui a donne un mandat general et il l'a retreci lui-meme devant temoin : sous vingt dragons et reparable, il decide ; le nom de la reine, une detention, une parole a une maison et ses fils ne seront jamais evidents",
+          "su_par": [
+            "hann-bourbe",
+            "sabbe"
+          ]
+        },
+        {
+          "croyance": "La reine a annonce les oeufs a deux cents personnes qui ont des barques : dans huit a quinze jours toutes les cotes le sauront, et chaque lettre ecrite avant midi est devenue fausse par omission",
+          "su_par": [
+            "aemond",
+            "otto"
+          ]
+        },
+        {
+          "croyance": "Il s'est offert lui-meme comme envoye a Accalmie en disant qu'il ne le conseillait pas : neuf jours de mer, et pendant neuf jours la reine n'aurait plus personne pour ecrire, dater, garder et lui dire non",
+          "su_par": [
+            "hann-bourbe",
+            "orwyle"
+          ]
+        },
+        {
+          "croyance": "Cinq des onze pages sont dues a midi : trois portent un office VACANT et deux un office tenu par quelqu'un sans titre — pas d'intendant depuis onze ans, Sara sans titre ni gages. On lui demande d'ecrire des charges dont personne ne tient le nom.",
+          "su_par": [
+            "orwyle",
+            "ren",
+            "waltyr-poix"
+          ]
+        }
+      ],
+      "tetes_sur_place": [
+        "aegon-ii",
+        "aemond",
+        "alicent",
+        "criston",
+        "doye-rouelle",
+        "hann-bourbe",
+        "helaena",
+        "larys",
+        "mag-la-gaffe",
+        "mysaria",
+        "nel-bec",
+        "ollo-marran",
+        "orwyle",
+        "otto",
+        "ren",
+        "sabbe",
+        "sirel-quintaine",
+        "waltyr-poix"
+      ],
+      "arrive_chez_le_joueur": false
+    },
+    {
+      "personnage_id": "ollo-marran",
+      "echelle": "royaume",
+      "de": "port-real",
+      "vers": "peyredragon",
+      "source": "evenement",
+      "indice": "retour-de-la-merette",
+      "date": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      },
+      "apporte": [
+        "Sa place l'a sorti du sel du marais du sud, et il n'y retournera pas",
+        "Marlo n'a jamais rien exige de lui — c'est exactement ce qui l'inquiete"
+      ],
+      "deja_su_sur_place": [
+        {
+          "croyance": "Le role du dix-neuf est faux et c'est lui qui l'a laisse faux : une coque sans nom, venue de Villevieille, deux hommes d'armes a bord",
+          "su_par": [
+            "dorsa-sath",
+            "doss-marran",
+            "ordo-sarnes",
+            "willa-sechoirs"
+          ]
+        }
+      ],
+      "tetes_sur_place": [
+        "alarra-rosby",
+        "aldon-hask",
+        "alys-grive",
+        "corlys",
+        "daemon",
+        "denys-bar-emmon",
+        "dorsa-sath",
+        "doss-marran",
+        "elyn-sarnes",
+        "gerardys",
+        "jacaerys",
+        "le-sanglier",
+        "lucerys",
+        "marna",
+        "merra-sath",
+        "ordo-sarnes",
+        "rhaenys",
+        "robert-quince",
+        "rulf-corne",
+        "sara",
+        "sarro-vaeth",
+        "septa-marlow",
+        "steffon-darklyn",
+        "wend",
+        "willa-sechoirs"
+      ],
+      "arrive_chez_le_joueur": true
+    }
+  ],
+  "rumeurs_qui_sautent": [],
+  "rumeurs_immobiles": [],
+  "plis_remis": [
+    {
+      "id": "pli-vol-rhaenyra-sombreval-12-lord-rosby",
+      "canal": "cavalier",
+      "de": "rhaenyra",
+      "pour": "lord-rosby",
+      "vers": "rosby",
+      "attendu_le": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 26
+      },
+      "scelle": true,
+      "main": null,
+      "porte": "Un homme nomme s'est presente a la porte, a rompu la cire devant lord Rosby en personne et a lu l'acte tout haut dans la cour, devant ceux qui y etaient : douze cents hommes en armes, sans declaration, sur une ville qui avait prete serment ; quarante prisonniers vivants et nourris ; et une derniere ligne qui dit que la reine n'a pas encore compte Rosby parmi ceux qui n'ont pas repondu.",
+      "en_retard": true,
+      "probleme": "aucun destinataire naturel a rosby — dis dans quelle main le pli tombe"
+    },
+    {
+      "id": "pli-deposition-steffon-4-ormund-hightower",
+      "canal": "corbeau",
+      "de": "gerardys",
+      "pour": "ormund-hightower",
+      "vers": "villevieille",
+      "attendu_le": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      },
+      "scelle": true,
+      "main": null,
+      "porte": "Une copie de la déposition de Peyredragon arrive adressée nominativement à Ormund Hightower — on a voulu qu'il sache qu'on sait ce que sa maison a fait.",
+      "en_retard": false,
+      "probleme": "aucun destinataire naturel a villevieille — dis dans quelle main le pli tombe"
+    }
+  ],
+  "plis_encore_en_route": [
+    {
+      "id": "pli-couronnement-rhaenyra-4-cregan-stark",
+      "canal": "corbeau",
+      "de": "rhaenyra",
+      "pour": "cregan-stark",
+      "vers": "winterfell",
+      "attendu_le": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 28
+      },
+      "scelle": true,
+      "jours_encore": 1
+    },
+    {
+      "id": "pli-prive-jeyne-arryn",
+      "canal": "corbeau",
+      "de": "rhaenyra",
+      "pour": "jeyne-arryn",
+      "vers": "les-eyrie",
+      "attendu_le": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 30
+      },
+      "scelle": true,
+      "jours_encore": 3
+    },
+    {
+      "id": "pli-mort-lucerys-1-gerardys",
+      "canal": "corbeau",
+      "de": "aemond",
+      "pour": "gerardys",
+      "vers": "peyredragon",
+      "attendu_le": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 13
+      },
+      "scelle": true,
+      "jours_encore": 16
+    },
+    {
+      "id": "pli-sang-et-fromage-1-gerardys",
+      "canal": "corbeau",
+      "de": "daemon",
+      "pour": "gerardys",
+      "vers": "peyredragon",
+      "attendu_le": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 15
+      },
+      "scelle": true,
+      "jours_encore": 48
+    },
+    {
+      "id": "pli-sac-sombreval-1-gerardys",
+      "canal": "barque",
+      "de": "criston",
+      "pour": "gerardys",
+      "vers": "peyredragon",
+      "attendu_le": {
+        "annee": 129,
+        "lune": 6,
+        "jour": 2
+      },
+      "scelle": true,
+      "jours_encore": 65
+    },
+    {
+      "id": "pli-sac-sombreval-3-aegon-ii",
+      "canal": "corbeau",
+      "de": "criston",
+      "pour": "aegon-ii",
+      "vers": "port-real",
+      "attendu_le": {
+        "annee": 129,
+        "lune": 6,
+        "jour": 2
+      },
+      "scelle": true,
+      "jours_encore": 65
+    },
+    {
+      "id": "pli-sac-sombreval-3-otto",
+      "canal": "corbeau",
+      "de": "criston",
+      "pour": "otto",
+      "vers": "port-real",
+      "attendu_le": {
+        "annee": 129,
+        "lune": 6,
+        "jour": 2
+      },
+      "scelle": true,
+      "jours_encore": 65
+    },
+    {
+      "id": "pli-sac-sombreval-3-alicent",
+      "canal": "corbeau",
+      "de": "criston",
+      "pour": "alicent",
+      "vers": "port-real",
+      "attendu_le": {
+        "annee": 129,
+        "lune": 6,
+        "jour": 2
+      },
+      "scelle": true,
+      "jours_encore": 65
+    },
+    {
+      "id": "pli-sac-sombreval-3-larys",
+      "canal": "corbeau",
+      "de": "criston",
+      "pour": "larys",
+      "vers": "port-real",
+      "attendu_le": {
+        "annee": 129,
+        "lune": 6,
+        "jour": 2
+      },
+      "scelle": true,
+      "jours_encore": 65
+    },
+    {
+      "id": "pli-sac-sombreval-3-orwyle",
+      "canal": "corbeau",
+      "de": "criston",
+      "pour": "orwyle",
+      "vers": "port-real",
+      "attendu_le": {
+        "annee": 129,
+        "lune": 6,
+        "jour": 2
+      },
+      "scelle": true,
+      "jours_encore": 65
+    },
+    {
+      "id": "pli-ralliement-trident-1-gerardys",
+      "canal": "corbeau",
+      "de": "gerardys",
+      "pour": "gerardys",
+      "vers": "peyredragon",
+      "attendu_le": {
+        "annee": 129,
+        "lune": 6,
+        "jour": 6
+      },
+      "scelle": true,
+      "jours_encore": 69
+    },
+    {
+      "id": "pli-prise-harrenhal-1-gerardys",
+      "canal": "corbeau",
+      "de": "daemon",
+      "pour": "gerardys",
+      "vers": "peyredragon",
+      "attendu_le": {
+        "annee": 129,
+        "lune": 6,
+        "jour": 24
+      },
+      "scelle": true,
+      "jours_encore": 87
+    },
+    {
+      "id": "pli-prise-harrenhal-2-larys",
+      "canal": "corbeau",
+      "de": "daemon",
+      "pour": "larys",
+      "vers": "port-real",
+      "attendu_le": {
+        "annee": 129,
+        "lune": 6,
+        "jour": 24
+      },
+      "scelle": true,
+      "jours_encore": 87
+    },
+    {
+      "id": "pli-prise-harrenhal-2-otto",
+      "canal": "corbeau",
+      "de": "daemon",
+      "pour": "otto",
+      "vers": "port-real",
+      "attendu_le": {
+        "annee": 129,
+        "lune": 6,
+        "jour": 24
+      },
+      "scelle": true,
+      "jours_encore": 87
+    },
+    {
+      "id": "pli-prise-harrenhal-2-criston",
+      "canal": "corbeau",
+      "de": "daemon",
+      "pour": "criston",
+      "vers": "port-real",
+      "attendu_le": {
+        "annee": 129,
+        "lune": 6,
+        "jour": 24
+      },
+      "scelle": true,
+      "jours_encore": 87
+    },
+    {
+      "id": "pli-prise-harrenhal-2-aegon-ii",
+      "canal": "corbeau",
+      "de": "daemon",
+      "pour": "aegon-ii",
+      "vers": "port-real",
+      "attendu_le": {
+        "annee": 129,
+        "lune": 6,
+        "jour": 24
+      },
+      "scelle": true,
+      "jours_encore": 87
+    },
+    {
+      "id": "pli-chute-otto-1-gerardys",
+      "canal": "corbeau",
+      "de": "aegon-ii",
+      "pour": "gerardys",
+      "vers": "peyredragon",
+      "attendu_le": {
+        "annee": 129,
+        "lune": 7,
+        "jour": 8
+      },
+      "scelle": true,
+      "jours_encore": 101
+    }
+  ],
+  "etapes_qui_tombent": [
+    {
+      "personnage_id": "gerardys",
+      "echelle": "orbite",
+      "etape": "gerardys-cinq-dernieres-pages",
+      "quoi": "Rendre les CINQ DERNIERES pages d'offices a midi, promises avant le conseil du 23 — dont trois offices vacants et deux tenus par des gens sans titre",
+      "cout": [
+        "etre reveille : il dort depuis l'aube et personne n'a ordonne qu'on le reveille",
+        "un nom sur la charge des greves, qu'il ne peut pas donner lui-meme",
+        "que maitre Rulf monte, sans quoi l'office de la porte s'ecrit sans celui qui le tient"
+      ],
+      "si_bloque": "S'il n'est pas reveille a temps, il ecrit les cinq pages au reveil et les DATE DE L'HEURE VRAIE, sans antidater : le retard reste au registre, et il porte les pages telles quelles au conseil du 23, vacances comprises.",
+      "jours_restants": 0,
+      "date_estimee": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      }
+    },
+    {
+      "personnage_id": "gerardys",
+      "echelle": "orbite",
+      "etape": "gerardys-route-des-salaisons",
+      "quoi": "Ouvrir une route vers Port-Real qui ne passe par aucune roukerie : nom d un patron de barque a salaisons de Sombreval, obtenu par Wend aupres de ser Robert a la porte de mer",
+      "cout": [
+        "Wend, deja parti",
+        "un quart d heure de ser Robert"
+      ],
+      "si_bloque": "Si aucune coque ne convient, il prend la route de Lamarck par les marchands de sel — deux jours de plus, et il ne le fait pas peser sur le conseil.",
+      "jours_restants": 0,
+      "date_estimee": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      }
+    },
+    {
+      "personnage_id": "robert-quince",
+      "echelle": "scene",
+      "etape": "quince-barbacane-postulants",
+      "quoi": "Recevoir les postulants a la barbacane, au bas du grand escalier : un par un, desarmes, comptes, redescendus le soir ; deux hommes au portillon, un scribe pour les noms ; provenance et proprietaire de chaque barque releves IL A REFUSE PUBLIQUEMENT la responsabilite du projet lui-meme : la file et la fouille sont a lui, ce qui se passe sous la Montagne ne l'est pas.",
+      "cout": [
+        "six hommes retires des murs pour la duree de l'appel",
+        "un scribe qu'il n'a pas et qu'il prendra au mestre"
+      ],
+      "si_bloque": "Si la file depasse ce qu'il peut fouiller, il ferme le portillon a la nuit et fait camper le reste dehors sous garde plutot que d'en laisser entrer un seul non compte - meme si la reine attend, meme si la file grossit le lendemain.",
+      "jours_restants": 0,
+      "date_estimee": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      }
+    },
+    {
+      "personnage_id": "robert-quince",
+      "echelle": "scene",
+      "etape": "quince-refus-parole",
+      "quoi": "REFUSER de porter aux soixante sans metier le mot qu'on ne leur a pas redit depuis midi : cela touche une parole donnee, qu'il a retranchee de son mandat de sa propre main",
+      "cout": [
+        "laisser soixante personnes sans reponse sur le chemin qu'il garde"
+      ],
+      "si_bloque": "Si la reine ne dit rien et qu'ils sont encore la a la nuit, il les fait descendre dormir AVEC EGARDS et sans leur promettre quoi que ce soit - et il fait noter au registre l'heure a laquelle il les a renvoyes sans reponse.",
+      "jours_restants": 0,
+      "date_estimee": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      }
+    },
+    {
+      "personnage_id": "robert-quince",
+      "echelle": "scene",
+      "etape": "quince-porter-les-trois",
+      "quoi": "Faire porter au prince, sous la Montagne, les trois nouvelles d'un coup par le meme homme : les oeufs annonces, la foule qui lui est confiee, et la regle sur la perte du dragon",
+      "cout": [
+        "un homme detache du sentier",
+        "et l'ordre dans lequel le garcon va les recevoir"
+      ],
+      "si_bloque": "Si le prince remonte de lui-meme avant que l'homme ne descende, il lui dit les trois lui-meme, dans le meme ordre, et sans rien adoucir.",
+      "jours_restants": 0,
+      "date_estimee": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      }
+    },
+    {
+      "personnage_id": "rulf-corne",
+      "echelle": "orbite",
+      "etape": "rulf-monte-au-chateau",
+      "quoi": "Monter au chateau quand on l'y appelle — et repondre a la demande d'Aurore : avertir avant tout appareillage",
+      "cout": [
+        "une matinee prise sur le quai, un jour de maree",
+        "qu'on vienne le chercher : la porte de la salle est gardee avec ordre de ne deranger personne"
+      ],
+      "si_bloque": "Si personne ne descend le chercher, il ne monte pas : il tient sa maree, il note l'heure a laquelle on ne l'a pas demande, et le cahier des sorties reste dans ses mains.",
+      "jours_restants": 0,
+      "date_estimee": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      }
+    },
+    {
+      "personnage_id": "le-sanglier",
+      "echelle": "scene",
+      "etape": "sanglier-prix-de-la-journee",
+      "quoi": "Fixer et faire tenir le prix d'une journee de coureur, et faire dire qui les nourrit et qui les paie",
+      "cout": [
+        "l accord de Hask sur la ligne, qu il est alle chercher lui-meme"
+      ],
+      "si_bloque": "Si la ligne ne tient pas, il paie les coureurs sur le role et va voir Hask le soir meme pour trouver ou la reprendre — il ne retire aucun nom et n en fait pas une affaire de conseil.",
+      "jours_restants": 0,
+      "date_estimee": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      }
+    },
+    {
+      "personnage_id": "alarra-rosby",
+      "echelle": "scene",
+      "etape": "alarra-recoit-les-noms",
+      "quoi": "Recevoir d Aurore, ce soir apres le souper dans la chambre bleue, les quarante et un noms de sa main ; en faire deux copies, en garder une",
+      "cout": [
+        "qu Aurore monte avant la nuit",
+        "de l encre et deux heures"
+      ],
+      "si_bloque": "Si Aurore ne vient pas ce soir, elle attend le lendemain sans relancer - et si rien ne vient le 27e, elle considere le marche rompu, reprend sa regle du silence et prepare son depart.",
+      "jours_restants": 0,
+      "date_estimee": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      }
+    },
+    {
+      "personnage_id": "sara",
+      "echelle": "scene",
+      "etape": "sara-maison-tourne-seule",
+      "quoi": "Regler la maison du jour — feux, vivres, couchages, paie — sans en rapporter un seul mot avant le soir",
+      "cout": [
+        "rien qu elle n ait deja"
+      ],
+      "si_bloque": "Si un poste manque, elle le prend sur un autre et le dit au passe le soir.",
+      "jours_restants": 0,
+      "date_estimee": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      }
+    },
+    {
+      "personnage_id": "marna",
+      "echelle": "scene",
+      "etape": "marna-consentement",
+      "quoi": "Repondre au maitre des roles sur le consentement d'ecrire a son frere",
+      "cout": [
+        "dire oui a une chose qui met son frere au milieu"
+      ],
+      "si_bloque": "Si on la presse sans rien lui expliquer, elle dit oui — c'est la seule facon qu'elle connaisse de rester pres de lui.",
+      "jours_restants": 0,
+      "date_estimee": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      }
+    },
+    {
+      "personnage_id": "merra-sath",
+      "echelle": "royaume",
+      "etape": "merra-guider",
+      "quoi": "Marcher devant les dix hommes du prince jusqu'a la poche de la onzieme galerie",
+      "cout": [
+        "montrer a douze personnes l'endroit qu'elle a garde dix jours"
+      ],
+      "si_bloque": "Si on la double ou si quelqu'un passe devant elle dans le boyau, elle s'arrete et ne repart pas - le prince lui a dit qu'elle pouvait s'arreter quand elle voulait et elle l'a pris au mot.",
+      "jours_restants": 0,
+      "date_estimee": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 27
+      },
+      "malgre_saut": true
+    }
+  ],
+  "etapes_qui_avancent": [
+    {
+      "personnage_id": "gerardys",
+      "echelle": "orbite",
+      "etape": "gerardys-coffre",
+      "quoi": "Retrouver qui a ouvert le coffre de l'archive — seul, sans en parler à ser Robert",
+      "cout": [
+        "ses nuits",
+        "le silence d'un page qu'il paie en douceurs"
+      ],
+      "si_bloque": "S'il ne trouve rien, il fait murer la porte basse de l'archive et garde la seule clé — quitte à ce qu'on le lui reproche un jour.",
+      "jours_restants": 3,
+      "jours_restants_apres": 3
+    },
+    {
+      "personnage_id": "gerardys",
+      "echelle": "orbite",
+      "etape": "gerardys-la-nuit-entiere",
+      "quoi": "DORT depuis 15h57, plus tot que prevu - la reine l'a envoye se coucher avant le corbeau et avant les representants. Il s'est dedit sur un point : POUR UN CORBEAU, QU'ON LE REVEILLE.",
+      "cout": [
+        "laisser la couronne une nuit sans personne qui juge, date et garde"
+      ],
+      "si_bloque": "Si on le reveille malgre tout, il se leve et il ecrit - il ne refusera jamais - MAIS IL NE SE FIERA PLUS A SON PROPRE JUGEMENT et se contentera de consigner ce qu'on lui dicte, sans conseiller. S'il ne dort pas cette nuit, il commettra demain une faute qu'il ne verra pas, et il l'a annonce.",
+      "jours_restants": 1,
+      "jours_restants_apres": 1
+    },
+    {
+      "personnage_id": "robert-quince",
+      "echelle": "scene",
+      "etape": "quince-galeries",
+      "quoi": "Faire descendre des hommes dans les galeries et en dresser le plan lui-même, à la craie, faute de carte",
+      "cout": [
+        "douze hommes, des torches, neuf jours"
+      ],
+      "si_bloque": "S'il perd un homme là-dessous, il fait murer les deux bouches qu'il connaît et déclare le reste inconnaissable.",
+      "jours_restants": 6,
+      "jours_restants_apres": 6
+    },
+    {
+      "personnage_id": "robert-quince",
+      "echelle": "scene",
+      "etape": "quince-garder-le-sentier",
+      "quoi": "Garder le sentier des tailleurs contre deux cents personnes a qui l'on vient d'annoncer de la richesse a cinquante pas : six hommes ce soir, douze demain, une palissade sous trois jours MANDAT ELARGI A TOUTE LA GESTION DE LA FOULE. Date inventee et annoncee devant la reine avant emploi : LA LUNE PROCHAINE - loin, vague, et faux puisque les caisses remontent dans deux jours.",
+      "cout": [
+        "six a douze hommes de plus sur une garnison deja etalee a quatre endroits",
+        "du bois et des bras pour la palissade"
+      ],
+      "si_bloque": "S'il est pris en defaut sur la date quand les caisses sortiront dans deux jours, il l'assume seul devant la file et ne met pas la reine en cause - il l'a annoncee devant elle avant de s'en servir, et c'est tout ce qu'il voulait.",
+      "jours_restants": 2,
+      "jours_restants_apres": 2
+    },
+    {
+      "personnage_id": "steffon-darklyn",
+      "echelle": "orbite",
+      "etape": "steffon-noms-traitres",
+      "quoi": "Écrire les noms des deux hommes qui ont poignardé les siens en mer, et de qui ils tenaient leur solde",
+      "cout": [
+        "se rappeler la traversée, ce qu'il évite depuis le quai"
+      ],
+      "si_bloque": "S'il ne remonte à personne, il donne les deux noms à Gerardys pour le registre et n'en parle plus.",
+      "jours_restants": 1,
+      "jours_restants_apres": 1
+    },
+    {
+      "personnage_id": "daemon",
+      "echelle": "orbite",
+      "etape": "daemon-convoquer-le-trident",
+      "quoi": "Une fois la place à lui, faire porter aux seigneurs du Trident — Blackwood, Vance, Piper, Mouton, et Tully en dernier — la sommation de venir à Harrenhal reconnaître la reine",
+      "cout": [
+        "la roukerie de Harrenhal, si elle a encore des oiseaux",
+        "des cavaliers qu'il n'a pas : quarante hommes ne portent pas quinze plis"
+      ],
+      "si_bloque": "Si les corbeaux manquent, il vole lui-même de château en château sur Caraxès, ce qui vaut convocation et menace à la fois — et lui prend trois semaines au lieu de dix jours.",
+      "jours_restants": 9,
+      "jours_restants_apres": 9
+    },
+    {
+      "personnage_id": "daemon",
+      "echelle": "orbite",
+      "etape": "daemon-ecrire-a-la-reine",
+      "quoi": "N'écrire à Peyredragon qu'une fois Harrenhal prise, et alors en une seule ligne, pour qu'elle apprenne le fait et non l'intention",
+      "cout": [
+        "rien — sinon d'être le premier des deux à rompre le silence"
+      ],
+      "si_bloque": "Si elle écrit la première, il répond le jour même et beaucoup trop longuement, puis fait brûler le brouillon et n'envoie que trois lignes.",
+      "jours_restants": 3,
+      "jours_restants_apres": 3
+    },
+    {
+      "personnage_id": "jacaerys",
+      "echelle": "scene",
+      "etape": "jace-vermax",
+      "quoi": "Faire soigner l'aile de Vermax — sept heures de vol en un jour, c'est trop pour un jeune dragon",
+      "cout": [
+        "avouer au maître des fosses ce qu'il a fait voler à sa bête"
+      ],
+      "si_bloque": "Si Vermax boite encore dans trois jours, il le cache et vole moins bas pour qu'on ne le voie pas.",
+      "jours_restants": 1,
+      "jours_restants_apres": 1
+    },
+    {
+      "personnage_id": "jacaerys",
+      "echelle": "scene",
+      "etape": "jace-charge-dragonniers",
+      "quoi": "Prendre la charge du projet des dragonniers : recevoir les postulants, juger qui approche les betes, et tenir le compte de ceux qui essaient - onze jours, le temps que Vermax se remette ET SE TENIR A PORTEE DE LA BETE A CHAQUE ESSAI, sur ordre de sa mere, sans dragon pour le couvrir pendant les onze premiers jours.",
+      "cout": [
+        "l'ambassade du Val et du Nord, abandonnee de sa main",
+        "des morts qu'il aura envoyes lui-meme sous la Montagne",
+        "sa propre vie a chaque essai, sans Vermax, pendant onze jours"
+      ],
+      "si_bloque": "Si un postulant meurt devant lui, il ne le cache pas et le fait porter au registre avec son nom, meme si ca vide la file - il a passe sa vie a etre celui dont on ne dit pas les choses, et il ne le fera pas subir a ceux-la.",
+      "jours_restants": 10,
+      "jours_restants_apres": 10
+    },
+    {
+      "personnage_id": "jacaerys",
+      "echelle": "scene",
+      "etape": "jace-couverture-eboulement",
+      "quoi": "Tenir trois jours la couverture de l'eboulement : gravats remontes de la quatrieme galerie, rumeur semee a deux hommes du bourg et non a la file, essais aux fosses poursuivis comme si de rien n'etait",
+      "cout": [
+        "ses gardes qui mentent aux gens de l'ile",
+        "des gravats et une journee d'hommes"
+      ],
+      "si_bloque": "Si quelqu'un le prend en flagrant delit, il dit la verite sur l'heure et l'assume seul devant qui l'aura pris - il ne fera jamais porter le mensonge par un garde. ET IL N'A INVENTE AUCUN MORT : si on lui demande qui est blesse, il repond personne.",
+      "jours_restants": 2,
+      "jours_restants_apres": 2
+    },
+    {
+      "personnage_id": "rhaenys",
+      "echelle": "orbite",
+      "etape": "rhaenys-baela-rhaena",
+      "quoi": "Faire venir Baela et Rhaena à Peyredragon avant que la baie ne se ferme",
+      "cout": [
+        "une nef, et l'accord de Corlys qui les veut à Lamarck"
+      ],
+      "si_bloque": "Si on tarde, elle va les chercher elle-même sur Meleys, une à la fois.",
+      "jours_restants": 2,
+      "jours_restants_apres": 2
+    },
+    {
+      "personnage_id": "lucerys",
+      "echelle": "orbite",
+      "etape": "luke-comptes-lamarck",
+      "quoi": "Apprendre par cœur les comptes de Lamarck que son grand-père lui fait réciter",
+      "cout": [
+        "ses soirées, et l'aveu qu'il n'y comprend rien"
+      ],
+      "si_bloque": "S'il se trompe encore, il demande à Jace de les lui faire réviser en cachette plutôt que d'être repris devant son grand-père.",
+      "jours_restants": 2,
+      "jours_restants_apres": 2
+    },
+    {
+      "personnage_id": "lucerys",
+      "echelle": "orbite",
+      "etape": "luke-se-rendre-utile",
+      "quoi": "Se faire donner une charge à Peyredragon — n'importe laquelle : porter aux fosses, tenir la file des postulants dragonniers pour Jace, compter quelque chose",
+      "cout": [
+        "demander, ce qu'il ne sait pas faire sans avoir l'air de quémander"
+      ],
+      "si_bloque": "Si personne ne lui donne rien, il s'attache aux pas de Jace et fait le travail sans qu'on le lui ait confié — et se tait quand un autre en est remercié.",
+      "jours_restants": 1,
+      "jours_restants_apres": 1
+    },
+    {
+      "personnage_id": "mysaria",
+      "echelle": "orbite",
+      "etape": "mysaria-manteaux-dor",
+      "quoi": "Sonder trois capitaines des manteaux d'or, un par un, sans jamais nommer Daemon",
+      "cout": [
+        "de l'or, et un nom qu'elle devra donner en gage à l'un d'eux"
+      ],
+      "si_bloque": "Si l'un d'eux la dénonce, elle le fait retrouver noyé et change de quartier la nuit même.",
+      "jours_restants": 1,
+      "jours_restants_apres": 1
+    },
+    {
+      "personnage_id": "mysaria",
+      "echelle": "orbite",
+      "etape": "mysaria-harrenhal",
+      "quoi": "Faire vérifier la garnison de Simon Strong à Harrenhal par un homme qui remonte la Néra",
+      "cout": [
+        "deux bourses, et douze jours de route pour son homme"
+      ],
+      "si_bloque": "Si son homme ne revient pas, elle vend à Daemon un chiffre plausible plutôt que rien — quarante hommes, des vieux — et prie qu'il soit vrai.",
+      "jours_restants": 5,
+      "jours_restants_apres": 5
+    },
+    {
+      "personnage_id": "otto",
+      "echelle": "orbite",
+      "etape": "otto-otages",
+      "quoi": "Dresser la liste des otages utiles parmi les maisons de la Couronne : fils cadets, pupilles, filles à marier",
+      "cout": [
+        "le registre des pupilles, et la discrétion d'un mestre"
+      ],
+      "si_bloque": "Si la liste est trop courte, il fait convoquer les héritiers à la cour pour l'hommage — et ne les laisse pas repartir.",
+      "jours_restants": 1,
+      "jours_restants_apres": 1
+    },
+    {
+      "personnage_id": "otto",
+      "echelle": "orbite",
+      "etape": "otto-accalmie",
+      "quoi": "Offres de mariage à Accalmie : une des filles de Borros Baratheon pour Aemond",
+      "cout": [
+        "Aemond, qu'il faut convaincre, et neuf jours de route"
+      ],
+      "si_bloque": "Si Aemond refuse, il offre Daeron à sa place et n'en dit rien à Villevieille avant que ce soit fait.",
+      "jours_restants": 6,
+      "jours_restants_apres": 6
+    },
+    {
+      "personnage_id": "criston",
+      "echelle": "orbite",
+      "etape": "criston-ost",
+      "quoi": "Lever l'ost de la Couronne : convocations aux maisons restées vertes, rassemblement sous les murs de Port-Réal",
+      "cout": [
+        "l'or du trésor qu'Otto ne veut pas lâcher",
+        "quatre mille hommes et six semaines"
+      ],
+      "si_bloque": "Si Otto lui refuse l'or, il lève ce qu'il peut sur la seule Garde et les maisons du roi, et part avec quinze cents hommes plutôt que rien.",
+      "jours_restants": 21,
+      "jours_restants_apres": 21
+    },
+    {
+      "personnage_id": "alicent",
+      "echelle": "orbite",
+      "etape": "alicent-garde-enfants",
+      "quoi": "Faire éloigner Helaena et les enfants des fenêtres du conseil, et doubler leur garde de nuit",
+      "cout": [
+        "quatre hommes, et l'air d'une mère qui exagère"
+      ],
+      "si_bloque": "Si on lui dit que c'est excessif, elle paie la garde sur sa propre bourse et n'en parle plus.",
+      "jours_restants": 1,
+      "jours_restants_apres": 1
+    },
+    {
+      "personnage_id": "alicent",
+      "echelle": "orbite",
+      "etape": "alicent-de-femme-a-femme",
+      "quoi": "Repondre de sa main, puisqu'on le lui a demande de sa main — et faire porter le pli hors des corbeaux du roi : la voie du corbeau est brulee, le Pied-Bot lit tout ce qui se pose au Donjon Rouge",
+      "cout": [
+        "une quille qui ne soit ni au roi ni a son pere",
+        "que personne de la cour ne la voie ecrire"
+      ],
+      "si_bloque": "Si elle ne trouve pas de porteur sur, elle garde le pli ecrit et le porte sur elle - et il finira par etre trouve.",
+      "jours_restants": 2,
+      "jours_restants_apres": 2
+    },
+    {
+      "personnage_id": "sarro-vaeth",
+      "echelle": "orbite",
+      "etape": "sarro-extraire-oeufs",
+      "quoi": "Emballer les trois oeufs dans du sable chauffe en haut et descendu chaud, remonter lentement, et les poser sur le brasero deja allume sans varier leur temperature",
+      "cout": [
+        "deux caisses, du sable, de la toile, un feu tenu en haut",
+        "deux jours sur les quatre avant que la poche soit noyee"
+      ],
+      "si_bloque": "Si le sable arrive froid ou s'il faut remonter vite, il en remonte UN SEUL correctement plutot que trois mal, et laisse les deux autres dans la poche EN LE DISANT TOUT HAUT.",
+      "jours_restants": 1,
+      "jours_restants_apres": 1
+    },
+    {
+      "personnage_id": "sarro-vaeth",
+      "echelle": "orbite",
+      "etape": "sarro-nourrir-les-betes",
+      "quoi": "Tenir les fosses pendant que les essais de cavaliers commencent, avec huit jours de moutons",
+      "cout": [
+        "67 moutons pour huit jours, et rien apres"
+      ],
+      "si_bloque": "S'il n'a plus de quoi nourrir, il le dit a la reine AVANT que les betes ne sortent chasser elles-memes - et si on ne l'ecoute pas, il previent le bourg de rentrer ses troupeaux, sans permission.",
+      "jours_restants": 7,
+      "jours_restants_apres": 7
+    },
+    {
+      "personnage_id": "rulf-corne",
+      "echelle": "orbite",
+      "etape": "rulf-ouvrage",
+      "quoi": "Obtenir de l'ouvrage regulier pour ses hommes plutot que des reglements a la piece",
+      "cout": [
+        "ses equipages, qui partiront ailleurs s'ils ne mangent pas"
+      ],
+      "si_bloque": "S'il n'obtient rien, il loue ses coques a qui paie, y compris a des gens qu'il ne connait pas.",
+      "jours_restants": 1,
+      "jours_restants_apres": 1
+    },
+    {
+      "personnage_id": "rulf-corne",
+      "echelle": "orbite",
+      "etape": "voix-rulf-onze-coques",
+      "quoi": "Remettre a chacun des onze capitaines etrangers une copie de l'acte dans sa langue quand il appareille, et inscrire au livre a quel port chaque copie va — sans que le livre sorte de ses mains",
+      "cout": [
+        "onze copies, soit deux scribes une journee, la cire et l'encre",
+        "que la reine tienne le loyer promis ce matin sur les neuf coques"
+      ],
+      "si_bloque": "Si les copies ne sont pas pretes quand la maree tourne, il ne retient aucune coque : elles partent sans, il le note a la date, et il ne le repete pas.",
+      "jours_restants": 2,
+      "jours_restants_apres": 2
+    },
+    {
+      "personnage_id": "septa-marlow",
+      "echelle": "orbite",
+      "etape": "marlow-porter-la-phrase",
+      "quoi": "Obtenir des neuf septons de la baie qu'ils lisent la phrase de l'acte en chaire : trois barques, neuf visites, et une aumone de cire qu'elle refusera d'appeler un paiement",
+      "cout": [
+        "300 dragons d'aumone et de cire",
+        "trois jours de barque dans la baie",
+        "ses matinees, prises sur les lecons des deux petits"
+      ],
+      "si_bloque": "Si les septons refusent de lire une phrase de reine, elle lit la sienne au sept de Peyredragon seulement, et laisse dire que la baie s'est tue — elle ne mentira pas sur l'etendue.",
+      "jours_restants": 6,
+      "jours_restants_apres": 6
+    },
+    {
+      "personnage_id": "le-sanglier",
+      "echelle": "scene",
+      "etape": "sanglier-office-de-la-porte",
+      "quoi": "Obtenir que la page d'office de la porte soit ecrite avec les trois registres dedans, et un nom sur chacun",
+      "cout": [
+        "que maitre Rulf monte et accepte que son cahier devienne un registre du chateau"
+      ],
+      "si_bloque": "Si Rulf ne monte pas, il fait ecrire son propre role seul et laisse les deux autres lignes vides : il ne parlera pas a la place d'un autre homme.",
+      "jours_restants": 1,
+      "jours_restants_apres": 1
+    },
+    {
+      "personnage_id": "le-sanglier",
+      "echelle": "scene",
+      "etape": "sanglier-bec-de-fer",
+      "quoi": "Suivre Bec-de-Fer, sergent a Port-Real et frere de Marna : etre assis dans la chambre pendant que Marna lui ecrit, ne porter en marge que ce qui est dit, et rendre compte a Aurore",
+      "cout": [
+        "le consentement de Marna",
+        "une route qui ne passe pas par un corbeau — Gerardys s en occupe"
+      ],
+      "si_bloque": "Si Marna refuse d ecrire, il ne la force pas : il va lui-meme au quai entendre les patrons de Sombreval, et cherche un second nom au lieu d insister.",
+      "jours_restants": 1,
+      "jours_restants_apres": 1
+    },
+    {
+      "personnage_id": "elyn-sarnes",
+      "echelle": "scene",
+      "etape": "elyn-d-ou-sort-aurore",
+      "quoi": "Savoir d'ou vient Aurore Inchauspe sans jamais le lui demander : par la lingerie, les cuisines, et le batelier qui l'a debarquee",
+      "cout": [
+        "quatre jours de patience",
+        "deux pieces au batelier, prises sur sa propre bourse et non sur la cassette"
+      ],
+      "si_bloque": "Si rien ne remonte, elle ne fabrique rien : elle dit a la reine QU'ELLE N'A RIEN TROUVE, ce qui pour elle est un renseignement en soi.",
+      "jours_restants": 4,
+      "jours_restants_apres": 4
+    },
+    {
+      "personnage_id": "elyn-sarnes",
+      "echelle": "scene",
+      "etape": "elyn-les-trois-voix",
+      "quoi": "Nommer les trois femmes qui baissent la voix, et savoir laquelle parle au bourg",
+      "cout": [
+        "six jours",
+        "ne pas les faire renvoyer, sinon elle n'entendra plus rien"
+      ],
+      "si_bloque": "Si l'une d'elles est renvoyee avant qu'elle n'ait fini, elle laisse partir la piste plutot que d'alerter les deux autres.",
+      "jours_restants": 6,
+      "jours_restants_apres": 6
+    },
+    {
+      "personnage_id": "hann-bourbe",
+      "echelle": "scene",
+      "etape": "hann-vendre-le-borde",
+      "quoi": "Ecouler les deux rouleaux de borde aux Trois-Marches EN TROIS FOIS sur quatre jours, a neuf cerfs le rouleau, sans nommer personne — les membrures et le mat restent baches",
+      "cout": [
+        "quatre matinees de charrette",
+        "le risque du coup du rouleau entame : seize cerfs au lieu de dix-huit"
+      ],
+      "si_bloque": "Si les Trois-Marches n ont pas de quoi payer trois fois de suite, il stocke le reste sous l auvent et le dit le soir meme — il ne va pas au bout du quai, c est un ordre et il le tiendra.",
+      "jours_restants": 1,
+      "jours_restants_apres": 1
+    },
+    {
+      "personnage_id": "sirel-quintaine",
+      "echelle": "orbite",
+      "etape": "sirel-placer-le-lot",
+      "quoi": "Faire le tour de Port-Real avec le devis de Marlo pour trouver QUI ACHETE DU BOIS EN CE MOMENT et a quel prix — quais, chantiers, entrepots — livraison apres la pleine lune",
+      "cout": [
+        "quatre marches a delaisser trois jours",
+        "dire le nom de Marlo Vasse a des gens qui ne le connaissaient pas"
+      ],
+      "si_bloque": "Si personne ne veut d un bois livrable seulement dans six jours, elle ira au chantier du bout, qui est le seul assez presse pour attendre — et elle apprendra la, avant Marlo, pour qui l on arme.",
+      "jours_restants": 3,
+      "jours_restants_apres": 3
+    },
+    {
+      "personnage_id": "doye-rouelle",
+      "echelle": "orbite",
+      "etape": "doye-vendre",
+      "quoi": "Rester assise a cote de la charrette et refuser toute offre sous onze cerfs",
+      "cout": [
+        "ne rien manger de chaud en attendant"
+      ],
+      "si_bloque": "Au bout de onze jours sans acheteur, elle brulera les ridelles pour se chauffer et vendra les deux roues separement, ce qui lui rapportera cinq cerfs en tout.",
+      "jours_restants": 11,
+      "jours_restants_apres": 11
+    },
+    {
+      "personnage_id": "sabbe",
+      "echelle": "orbite",
+      "etape": "sabbe-tenir-le-puits",
+      "quoi": "Se tenir au puits du Culpucier, manche gauche retroussee, chaque matin a la meme heure, en vendant sa corde",
+      "cout": [
+        "une place ou l'on ne peut pas s'asseoir",
+        "trois jours d'attente au plus"
+      ],
+      "si_bloque": "Au quatrieme matin sans personne, il envoie REN seul faire le tour des chantiers de bris demander du travail — un gamin qui cherche de l'ouvrage ne se remarque pas — et lui tient la corde.",
+      "jours_restants": 3,
+      "jours_restants_apres": 3
+    },
+    {
+      "personnage_id": "aldon-hask",
+      "echelle": "scene",
+      "etape": "hask-un-seul-livre",
+      "quoi": "Ramener maison, role et Grand Plan a un seul livre de comptes tenu par lui",
+      "cout": [
+        "deux soirs et l acces au cahier de Rulf"
+      ],
+      "si_bloque": "Il recopie ce qu il n obtient pas et le fait confirmer par deux bouches, sans en saisir le conseil.",
+      "jours_restants": 2,
+      "jours_restants_apres": 2
+    }
+  ],
+  "etapes_en_attente": [],
+  "declencheurs_a_evaluer": [
+    {
+      "personnage_id": "gerardys",
+      "echelle": "orbite",
+      "si": "La reine se lève de nouveau pour voler, ou monte à cheval, avant la fin de ses relevailles",
+      "alors": "Il se met physiquement en travers, devant témoins s'il faut, et exige que son refus soit consigné au registre.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "gerardys",
+      "echelle": "orbite",
+      "si": "Un corbeau arrive porteur d'une nouvelle qui touche un des enfants de la reine",
+      "alors": "Il le lit avant elle, le porte lui-même, et fait apporter une chaise et du lait chaud avant de parler.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "robert-quince",
+      "echelle": "scene",
+      "si": "On lui annonce que Caraxès ou Meleys quitte l'île",
+      "alors": "Il exige de la reine, devant témoin, un ordre répété mot pour mot, et fait consigner au registre qu'il a dit que trois cents hommes ne tiennent pas un rocher sans dragon.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "robert-quince",
+      "echelle": "scene",
+      "si": "Un homme de sa garnison est pris à parler aux barques de pêche",
+      "alors": "Il le fait mettre aux fers sans en avertir la reine, et l'interroge lui-même une nuit entière.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "steffon-darklyn",
+      "echelle": "orbite",
+      "si": "Une nouvelle arrive que Sombreval est attaquée, assiégée ou pillée",
+      "alors": "Il demande son congé à la reine pour y aller — et s'il ne l'obtient pas, il le redemande devant la cour.",
+      "une_fois": true
+    },
+    {
+      "personnage_id": "steffon-darklyn",
+      "echelle": "orbite",
+      "si": "Quelqu'un met en doute la parole d'un Darklyn devant lui",
+      "alors": "Il exige réparation sur l'heure, ce qui embarrasse tout le monde et le sert rarement.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "daemon",
+      "echelle": "orbite",
+      "si": "Un des fils de Rhaenyra est blessé ou tué",
+      "alors": "Il abandonne tout plan en cours et cherche une vengeance disproportionnée sur les proches d'Otto ou d'Alicent, sans demander la permission à personne — un enfant pour un enfant, par des hommes payés et non par son épée.",
+      "une_fois": true
+    },
+    {
+      "personnage_id": "daemon",
+      "echelle": "orbite",
+      "si": "La reine lui donne un ordre écrit qui contredit ce qu'il a déjà commencé",
+      "alors": "Il l'exécute à la lettre et jusqu'à l'absurde, pour que le résultat prouve qu'elle avait tort — et il garde la lettre.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "jacaerys",
+      "echelle": "scene",
+      "si": "Quelqu'un, à portée de son oreille, appelle Strong l'un de ses frères ou lui-même",
+      "alors": "Il relève l'insulte sur l'heure, publiquement, même quand il vaudrait cent fois mieux n'avoir rien entendu.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "jacaerys",
+      "echelle": "scene",
+      "si": "On lui confie une mission précise avec une échéance",
+      "alors": "Il la tient à la lettre et rentre à l'heure dite, quoi qu'il lui en coûte — c'est sa façon de plaider sa naissance.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "corlys",
+      "echelle": "orbite",
+      "si": "Lucerys est envoyé quelque part sur Arrax",
+      "alors": "Il exige une escorte de voiles sous la route de vol et des garanties écrites du seigneur qui le recevra — il l'obtiendra, ou il en fera un scandale de conseil.",
+      "une_fois": true
+    },
+    {
+      "personnage_id": "corlys",
+      "echelle": "orbite",
+      "si": "Daemon engage la flotte ou les hommes de Lamarck sans lui",
+      "alors": "Il rappelle ses capitaines par-dessus l'ordre de Daemon, et le dit à la reine une fois, froidement.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "rhaenys",
+      "echelle": "orbite",
+      "si": "On propose d'envoyer Lucerys ou Jacaerys porter un message chez un seigneur non déclaré",
+      "alors": "Elle s'y oppose à voix haute et propose d'y aller elle-même sur Meleys — un dragon adulte ne se fait pas abattre au-dessus d'un château.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "rhaenys",
+      "echelle": "orbite",
+      "si": "Une colonne verte est signalée à moins de deux jours de la côte de la baie",
+      "alors": "Elle décolle sans attendre l'ordre du conseil et va la voir de ses yeux, haut, puis revient avec des chiffres.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "lucerys",
+      "echelle": "orbite",
+      "si": "On lui demande devant témoins s'il est prêt à voler quelque part",
+      "alors": "Il dit oui aussitôt, quoi qu'il pense — et va vomir ensuite là où personne ne le voit.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "lucerys",
+      "echelle": "orbite",
+      "si": "On l'envoie porter un message, seul, à un seigneur qui n'a pas encore choisi son camp",
+      "alors": "Il part sans discuter, apprend son texte par cœur, et refuse toute escorte qui le ferait passer pour un enfant — c'est le seul point sur lequel il tiendra tête à Corlys.",
+      "une_fois": true
+    },
+    {
+      "personnage_id": "mysaria",
+      "echelle": "orbite",
+      "si": "Un homme de Larys Strong approche l'un de ses courriers",
+      "alors": "Elle coupe le fil, sacrifie le courrier, et fait porter à Larys un cadeau sans un mot.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "mysaria",
+      "echelle": "orbite",
+      "si": "Daemon paraît en personne dans les terres de la Couronne",
+      "alors": "Elle exige de le voir seule, et double son prix.",
+      "une_fois": true
+    },
+    {
+      "personnage_id": "otto",
+      "echelle": "orbite",
+      "si": "Aegon le contredit ou l'humilie en conseil devant Criston",
+      "alors": "Il cède sur la forme et resserre son emprise sur le trésor et les corbeaux — le seul pouvoir qu'il tienne vraiment.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "criston",
+      "echelle": "orbite",
+      "si": "Aemond propose de répondre avec Vhagar",
+      "alors": "Il l'appuie sans réserve et cherche aussitôt à lier son ost à ce vol — un dragon devant, l'ost derrière.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "criston",
+      "echelle": "orbite",
+      "si": "Otto propose des conditions ou une trêve à Peyredragon",
+      "alors": "Il s'y oppose devant Aegon en rappelant les brûlés de la route, et fait traîner les corbeaux qu'on lui confie.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "alicent",
+      "echelle": "orbite",
+      "si": "Un enfant de l'un des deux camps est tué",
+      "alors": "Elle cesse toute recherche de conditions et devient la voix la plus dure du conseil, pour ses seuls enfants.",
+      "une_fois": true
+    },
+    {
+      "personnage_id": "alicent",
+      "echelle": "orbite",
+      "si": "Otto est écarté du pouvoir",
+      "alors": "Elle tente de faire donner la Main à elle-même ou à un homme qu'elle tient, avant que Criston ne l'obtienne.",
+      "une_fois": true
+    },
+    {
+      "personnage_id": "orwyle",
+      "echelle": "orbite",
+      "si": "La reine ou Daemon le désigne comme otage, ou fait mine de le retenir",
+      "alors": "Il cesse de plaider les termes et ne parle plus que de sa personne et de son ordre — la Citadelle n'oublie pas ce qu'on fait à ses mestres.",
+      "une_fois": true
+    },
+    {
+      "personnage_id": "sarro-vaeth",
+      "echelle": "orbite",
+      "si": "Un postulant est blesse ou tue lors d'un essai sous la Montagne",
+      "alors": "Il arrete tous les essais du jour de sa propre autorite et fait remonter tout le monde, meme si le prince s'y oppose - les fosses sont a lui.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "septa-marlow",
+      "echelle": "orbite",
+      "si": "La reine passe une deuxieme journee entiere sans manger, ou remonte les cent trente marches deux fois dans la meme nuit",
+      "alors": "Elle entre sans se faire annoncer, la tutoie, et lui dit devant temoin ce que personne d'autre n'ose : qu'elle se tue et que ses fils le voient.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "septa-marlow",
+      "echelle": "orbite",
+      "si": "On demande a Marlow de lire en chaire une phrase qui justifie le feu du 16",
+      "alors": "Elle rend la charge de la voix plutot que de la lire, et va le dire a la reine en face avant que quiconque ne le lui rapporte.",
+      "une_fois": true
+    },
+    {
+      "personnage_id": "le-sanglier",
+      "echelle": "scene",
+      "si": "On lui ordonne d'effacer ou de refaire une entree du role apres coup",
+      "alors": "Il obeit, et il ecrit a la marge la date et le nom de qui l'a ordonne",
+      "une_fois": null
+    },
+    {
+      "personnage_id": "elyn-sarnes",
+      "echelle": "scene",
+      "si": "Quelqu'un - meme un office de la reine, meme Aurore - demande a voir les lettres privees de la reine",
+      "alors": "Elle refuse, note le nom et l'heure, et le dit a la reine le soir, seule, sans commentaire.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "elyn-sarnes",
+      "echelle": "scene",
+      "si": "Une femme d'enfance ou de jeunesse de la reine se presente au chateau",
+      "alors": "Elle va la voir AVANT la reine, sous un pretexte de logement, pour savoir ce qu'elle vient chercher - et elle dira ensuite a la reine qu'elle y est allee.",
+      "une_fois": false
+    },
+    {
+      "personnage_id": "alarra-rosby",
+      "echelle": "scene",
+      "si": "On lui demande d ouvrir la seconde malle, ou l on y touche sans elle",
+      "alors": "Elle refuse en face, resangle, et fait porter la malle a bord de la barque le soir meme - meme si elle reste, elle.",
+      "une_fois": null
+    },
+    {
+      "personnage_id": "alarra-rosby",
+      "echelle": "scene",
+      "si": "Elle apprend qui a questionne les cuisines sur son identite",
+      "alors": "Elle avance son depart d une journee et le dit a Aurore avant de partir, parce qu elle lui doit ca.",
+      "une_fois": null
+    },
+    {
+      "personnage_id": "alarra-rosby",
+      "echelle": "scene",
+      "si": "La reine la fait chercher",
+      "alors": "Elle vient sans rien emporter, ne demande rien, et lui donne LES TROIS MAISONS OU C EST LA DAME QUI TIENT - de sa bouche a elle, et a personne d autre.",
+      "une_fois": null
+    },
+    {
+      "personnage_id": "hann-bourbe",
+      "echelle": "scene",
+      "si": "Un homme du Guet ou un inconnu vient poser des questions sur l aire",
+      "alors": "Il repond la verite ordinaire — une coque echouee le quinze, du bois qu on vend — et n envoie prevenir Marlo que le soir, jamais sur le moment",
+      "une_fois": null
+    },
+    {
+      "personnage_id": "hann-bourbe",
+      "echelle": "scene",
+      "si": "Marlo ne reparait pas de trois jours",
+      "alors": "Il continue comme si de rien n etait et ne cherche personne : c est exactement ce qu on lui a demande",
+      "une_fois": null
+    },
+    {
+      "personnage_id": "nel-bec",
+      "echelle": "orbite",
+      "si": "Quelqu'un demande apres Marlo par son nom dans le Culpucier",
+      "alors": "Elle court le lui dire avant la fin du jour, et marchande le fait avant de le dire.",
+      "une_fois": null
+    },
+    {
+      "personnage_id": "sirel-quintaine",
+      "echelle": "orbite",
+      "si": "Marlo paie la dette d'un coup",
+      "alors": "Elle comprend qu'il est paye par quelqu'un et se met a chercher par qui, serieusement.",
+      "une_fois": null
+    },
+    {
+      "personnage_id": "doye-rouelle",
+      "echelle": "orbite",
+      "si": "On lui propose autre chose que de l'argent — du bois, du travail, de la nourriture",
+      "alors": "Elle ecoute jusqu'au bout sans interrompre, et accepte si la somme des choses vaut onze et qu'elle n'a rien a demander.",
+      "une_fois": null
+    },
+    {
+      "personnage_id": "sabbe",
+      "echelle": "orbite",
+      "si": "Un homme s'arrete au puits et nomme la reine le premier",
+      "alors": "Il ne repond pas et retrousse l'autre manche : c'est le second signe, et il attend que l'homme se nomme.",
+      "une_fois": null
+    },
+    {
+      "personnage_id": "sabbe",
+      "echelle": "orbite",
+      "si": "Le Guet interroge Ren",
+      "alors": "Il s'avance et prend tout sur lui : il a quarante ans, l'autre en a quatorze.",
+      "une_fois": null
+    },
+    {
+      "personnage_id": "ren",
+      "echelle": "orbite",
+      "si": "Quelqu'un lui demande d'ou il vient",
+      "alors": "Il dit la verite — de l'ile — parce que c'est ce qu'on lui a fait repeter deux fois, mot pour mot.",
+      "une_fois": null
+    },
+    {
+      "personnage_id": "alys-grive",
+      "echelle": "orbite",
+      "si": "la reine, ou quiconque en son nom, lui recorrige un vers apres coup",
+      "alors": "elle chante la version corrigee une fois, puis reprend la sienne et ne le dit pas",
+      "une_fois": null
+    },
+    {
+      "personnage_id": "alys-grive",
+      "echelle": "orbite",
+      "si": "on lui rapporte qu'une chanson d'un autre camp court sur le feu du seize",
+      "alors": "elle va l'apprendre en entier avant d'ecrire la sienne, meme s'il faut descendre au port payer un homme",
+      "une_fois": null
+    },
+    {
+      "personnage_id": "sara",
+      "echelle": "scene",
+      "si": "La reine tranche une affaire de maison a sa place",
+      "alors": "Elle la reprend a sa charge en une phrase, sans reproche, et la refait tenir",
+      "une_fois": null
+    },
+    {
+      "personnage_id": "aldon-hask",
+      "echelle": "scene",
+      "si": "Quelqu un au conseil annonce un cout sans dire qui le porte",
+      "alors": "Il le porte a voix haute, avec la ligne, avant que la reine ait a poser la question",
+      "une_fois": null
+    },
+    {
+      "personnage_id": "marna",
+      "echelle": "scene",
+      "si": "Quelqu'un lui demande EN FACE, sans menace, ce qu'elle recopie et pour qui",
+      "alors": "Elle dit tout, y compris le prix et la nuit de remise — et elle donne la seule chose qu'elle ait : l'heure et l'endroit ou l'on prend",
+      "une_fois": null
+    },
+    {
+      "personnage_id": "marna",
+      "echelle": "scene",
+      "si": "On la menace, ou on menace son frere",
+      "alors": "Elle se ferme et ne rend plus rien — elle a onze ans d'habitude a ne pas parler de lui",
+      "une_fois": null
+    },
+    {
+      "personnage_id": "marna",
+      "echelle": "scene",
+      "si": "Elle apprend que le plan de la reine passe par son frere",
+      "alors": "Elle cesse de copier d'elle-meme, sans le dire, et la remise manquee mettra son frere en danger sans que personne le sache",
+      "une_fois": null
+    }
+  ],
+  "tetes_a_rafraichir": [
+    {
+      "personnage_id": "gerardys",
+      "echelle": "orbite",
+      "date_maj": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 22
+      },
+      "retard_apres_fenetre": 5
+    },
+    {
+      "personnage_id": "robert-quince",
+      "echelle": "scene",
+      "date_maj": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 25
+      },
+      "retard_apres_fenetre": 2
+    },
+    {
+      "personnage_id": "daemon",
+      "echelle": "orbite",
+      "date_maj": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 23
+      },
+      "retard_apres_fenetre": 4
+    },
+    {
+      "personnage_id": "jacaerys",
+      "echelle": "scene",
+      "date_maj": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 25
+      },
+      "retard_apres_fenetre": 2
+    },
+    {
+      "personnage_id": "otto",
+      "echelle": "orbite",
+      "date_maj": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 23
+      },
+      "retard_apres_fenetre": 4
+    },
+    {
+      "personnage_id": "criston",
+      "echelle": "orbite",
+      "date_maj": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 23
+      },
+      "retard_apres_fenetre": 4
+    },
+    {
+      "personnage_id": "rulf-corne",
+      "echelle": "orbite",
+      "date_maj": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 22
+      },
+      "retard_apres_fenetre": 5
+    },
+    {
+      "personnage_id": "septa-marlow",
+      "echelle": "orbite",
+      "date_maj": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 23
+      },
+      "retard_apres_fenetre": 4
+    },
+    {
+      "personnage_id": "le-sanglier",
+      "echelle": "scene",
+      "date_maj": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 25
+      },
+      "retard_apres_fenetre": 2
+    },
+    {
+      "personnage_id": "elyn-sarnes",
+      "echelle": "scene",
+      "date_maj": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 25
+      },
+      "retard_apres_fenetre": 2
+    },
+    {
+      "personnage_id": "alarra-rosby",
+      "echelle": "scene",
+      "date_maj": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 25,
+        "minute": 1077
+      },
+      "retard_apres_fenetre": 2
+    },
+    {
+      "personnage_id": "nel-bec",
+      "echelle": "orbite",
+      "date_maj": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 23
+      },
+      "retard_apres_fenetre": 4
+    },
+    {
+      "personnage_id": "doye-rouelle",
+      "echelle": "orbite",
+      "date_maj": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 23,
+        "minute": 1008
+      },
+      "retard_apres_fenetre": 4
+    }
+  ],
+  "mutations_proposees": [
+    {
+      "table": "activites",
+      "cible": "recrutement-peyredragon",
+      "operation": "mesure",
+      "mesure": "hommes-au-role",
+      "champs": {
+        "valeur": 21,
+        "reliquat": 1
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "activites",
+      "cible": "marais-sud-peyredragon",
+      "operation": "mesure",
+      "mesure": "muids-de-sel",
+      "champs": {
+        "valeur": 12,
+        "reliquat": 1
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "activites",
+      "cible": "port-peyredragon",
+      "operation": "mesure",
+      "mesure": "nefs-en-etat",
+      "champs": {
+        "valeur": 9,
+        "reliquat": 1
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "gerardys",
+      "operation": "etape",
+      "etape": "gerardys-coffre",
+      "champs": {
+        "jours_restants": 3
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "gerardys",
+      "operation": "etape",
+      "etape": "gerardys-la-nuit-entiere",
+      "champs": {
+        "jours_restants": 1
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "robert-quince",
+      "operation": "etape",
+      "etape": "quince-galeries",
+      "champs": {
+        "jours_restants": 6
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "robert-quince",
+      "operation": "etape",
+      "etape": "quince-garder-le-sentier",
+      "champs": {
+        "jours_restants": 2
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "steffon-darklyn",
+      "operation": "etape",
+      "etape": "steffon-noms-traitres",
+      "champs": {
+        "jours_restants": 1
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "daemon",
+      "operation": "etape",
+      "etape": "daemon-convoquer-le-trident",
+      "champs": {
+        "jours_restants": 9
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "daemon",
+      "operation": "etape",
+      "etape": "daemon-ecrire-a-la-reine",
+      "champs": {
+        "jours_restants": 3
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "jacaerys",
+      "operation": "etape",
+      "etape": "jace-vermax",
+      "champs": {
+        "jours_restants": 1
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "jacaerys",
+      "operation": "etape",
+      "etape": "jace-charge-dragonniers",
+      "champs": {
+        "jours_restants": 10
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "jacaerys",
+      "operation": "etape",
+      "etape": "jace-couverture-eboulement",
+      "champs": {
+        "jours_restants": 2
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "rhaenys",
+      "operation": "etape",
+      "etape": "rhaenys-baela-rhaena",
+      "champs": {
+        "jours_restants": 2
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "lucerys",
+      "operation": "etape",
+      "etape": "luke-comptes-lamarck",
+      "champs": {
+        "jours_restants": 2
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "lucerys",
+      "operation": "etape",
+      "etape": "luke-se-rendre-utile",
+      "champs": {
+        "jours_restants": 1
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "mysaria",
+      "operation": "etape",
+      "etape": "mysaria-manteaux-dor",
+      "champs": {
+        "jours_restants": 1
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "mysaria",
+      "operation": "etape",
+      "etape": "mysaria-harrenhal",
+      "champs": {
+        "jours_restants": 5
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "otto",
+      "operation": "etape",
+      "etape": "otto-otages",
+      "champs": {
+        "jours_restants": 1
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "otto",
+      "operation": "etape",
+      "etape": "otto-accalmie",
+      "champs": {
+        "jours_restants": 6
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "criston",
+      "operation": "etape",
+      "etape": "criston-ost",
+      "champs": {
+        "jours_restants": 21
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "alicent",
+      "operation": "etape",
+      "etape": "alicent-garde-enfants",
+      "champs": {
+        "jours_restants": 1
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "alicent",
+      "operation": "etape",
+      "etape": "alicent-de-femme-a-femme",
+      "champs": {
+        "jours_restants": 2
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "sarro-vaeth",
+      "operation": "etape",
+      "etape": "sarro-extraire-oeufs",
+      "champs": {
+        "jours_restants": 1
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "sarro-vaeth",
+      "operation": "etape",
+      "etape": "sarro-nourrir-les-betes",
+      "champs": {
+        "jours_restants": 7
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "rulf-corne",
+      "operation": "etape",
+      "etape": "rulf-ouvrage",
+      "champs": {
+        "jours_restants": 1
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "rulf-corne",
+      "operation": "etape",
+      "etape": "voix-rulf-onze-coques",
+      "champs": {
+        "jours_restants": 2
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "septa-marlow",
+      "operation": "etape",
+      "etape": "marlow-porter-la-phrase",
+      "champs": {
+        "jours_restants": 6
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "le-sanglier",
+      "operation": "etape",
+      "etape": "sanglier-office-de-la-porte",
+      "champs": {
+        "jours_restants": 1
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "le-sanglier",
+      "operation": "etape",
+      "etape": "sanglier-bec-de-fer",
+      "champs": {
+        "jours_restants": 1
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "elyn-sarnes",
+      "operation": "etape",
+      "etape": "elyn-d-ou-sort-aurore",
+      "champs": {
+        "jours_restants": 4
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "elyn-sarnes",
+      "operation": "etape",
+      "etape": "elyn-les-trois-voix",
+      "champs": {
+        "jours_restants": 6
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "hann-bourbe",
+      "operation": "etape",
+      "etape": "hann-vendre-le-borde",
+      "champs": {
+        "jours_restants": 1
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "sirel-quintaine",
+      "operation": "etape",
+      "etape": "sirel-placer-le-lot",
+      "champs": {
+        "jours_restants": 3
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "doye-rouelle",
+      "operation": "etape",
+      "etape": "doye-vendre",
+      "champs": {
+        "jours_restants": 11
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "sabbe",
+      "operation": "etape",
+      "etape": "sabbe-tenir-le-puits",
+      "champs": {
+        "jours_restants": 3
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "intentions",
+      "cible": "aldon-hask",
+      "operation": "etape",
+      "etape": "hask-un-seul-livre",
+      "champs": {
+        "jours_restants": 2
+      },
+      "pourquoi": "0 jour(s) ecoule(s)"
+    },
+    {
+      "table": "plis",
+      "cible": "pli-vol-rhaenyra-sombreval-12-lord-rosby",
+      "operation": "pli",
+      "champs": {
+        "etat": "remis",
+        "main": "lord-rosby"
+      },
+      "pourquoi": "arrive a rosby le 129.3.26"
+    },
+    {
+      "table": "plis",
+      "cible": "pli-deposition-steffon-4-ormund-hightower",
+      "operation": "pli",
+      "champs": {
+        "etat": "remis",
+        "main": "ormund-hightower"
+      },
+      "pourquoi": "arrive a villevieille le 129.3.27"
+    },
+    {
+      "table": "evenements",
+      "cible": "vol-rhaenyra-sombreval",
+      "operation": "diffusion_livree",
+      "index": 11,
+      "pourquoi": "nouvelle parvenue le 129.3.26"
+    },
+    {
+      "table": "evenements",
+      "cible": "decheance-de-rhaenyra",
+      "operation": "diffusion_livree",
+      "index": 6,
+      "pourquoi": "nouvelle parvenue le 129.3.26"
+    },
+    {
+      "table": "evenements",
+      "cible": "decheance-de-rhaenyra",
+      "operation": "diffusion_livree",
+      "index": 7,
+      "pourquoi": "nouvelle parvenue le 129.3.26"
+    },
+    {
+      "table": "evenements",
+      "cible": "deposition-steffon",
+      "operation": "diffusion_livree",
+      "index": 3,
+      "pourquoi": "nouvelle parvenue le 129.3.27"
+    },
+    {
+      "table": "evenements",
+      "cible": "prise-harrenhal",
+      "operation": "diffusion_livree",
+      "index": 1,
+      "pourquoi": "nouvelle parvenue le 129.3.27"
+    },
+    {
+      "table": "evenements",
+      "cible": "decheance-de-rhaenyra",
+      "operation": "diffusion_livree",
+      "index": 8,
+      "pourquoi": "nouvelle parvenue le 129.3.27"
+    },
+    {
+      "table": "evenements",
+      "cible": "decheance-de-rhaenyra",
+      "operation": "diffusion_livree",
+      "index": 9,
+      "pourquoi": "nouvelle parvenue le 129.3.27"
+    },
+    {
+      "table": "evenements",
+      "cible": "blocus-refuse-en-public",
+      "operation": "diffusion_livree",
+      "index": 4,
+      "pourquoi": "nouvelle parvenue le 129.3.27"
+    }
+  ],
+  "applique_le": "2026-08-09T07:06:06"
+}

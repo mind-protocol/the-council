@@ -1,0 +1,83 @@
+{
+  "personnage_id": "nicolas-reynolds",
+  "echelle": "orbite",
+  "croyances": [
+    "La liste des vingt-deux charges qu'il a écrite ici en 127 est encore à l'archive et n'a jamais été relue : onze charges n'avaient personne dessus, et le travail se faisait quand même — par des gens sans titre, sans gages et sans droit de dire non.",
+    "Pierrefitte ne survit pas à un siège de dix jours : trois jours de Port-Réal, cent quarante-quatre hommes debout, et des murs de manoir. Ce qui sauve sa sœur n'est pas une armée, c'est que la reine ait besoin d'eux.",
+    "Il connaît la porte de la Néra par ses écritures et non par ouï-dire : il a compté la douane du fleuve en 128, et il sait à quelle heure les registres y sont faux — après vêpres, tout ce qui monte est vrai le lendemain, et personne n'a menti.",
+    "Une maison ne tombe pas par manque d'hommes, mais parce que personne ne sait à quoi on le juge. Il l'a vu à Lamarck : deux chantiers se volaient les mêmes charpentiers, chacun de parfaite bonne foi.",
+    "Aldon Hask lui doit d'avoir gardé sa place aux comptes en 128 — l'erreur venait du rôle, pas de sa main. Hask le sait ; lui tient que ça ne se rappelle pas."
+  ],
+  "ignore": [
+    "Que la reine a nommé une intendante le 20e de cette lune et un maître des deniers le 26e : sa liste de 127 est périmée, et par le bon côté.",
+    "Que le premier sang de cette guerre a été versé par la reine elle-même sur la route de Sombreval le 16e — sa sœur a déclaré en croyant se ranger derrière une héritière lésée."
+  ],
+  "intention": "Faire remettre la déclaration de Pierrefitte en main qui la scelle, puis se faire donner de quoi travailler ici — non pas un titre, mais le droit de descendre voir et d'écrire ce qu'il voit.",
+  "plan": [
+    {
+      "id": "reynolds-remettre-la-declaration",
+      "quoi": "Remettre la déclaration de sa sœur et le compte des cent quarante-quatre à quelqu'un qui tient un sceau, sans la laisser sur une pile",
+      "etat": "en-cours",
+      "jours_restants": 0,
+      "depend_de": [],
+      "cout": [
+        "être reçu par quelqu'un qui scelle",
+        "une demi-journée d'attente"
+      ],
+      "si_bloque": "Il la laisse au mestre CONTRE REÇU DATÉ, de sa main, et il reste sur le quai à compter ce qui entre jusqu'à ce qu'on vienne le chercher."
+    },
+    {
+      "id": "reynolds-retrouver-sa-liste",
+      "quoi": "Retrouver à l'archive la liste des vingt-deux charges laissée en 127, et la relire avant d'en parler à quiconque",
+      "etat": "en-cours",
+      "jours_restants": 1,
+      "depend_de": [
+        "reynolds-remettre-la-declaration"
+      ],
+      "cout": [
+        "l'accord de qui garde l'archive",
+        "une demi-journée"
+      ],
+      "si_bloque": "Il la refait de mémoire et de ses pieds en deux jours, et la seconde version est plus dure que la première."
+    },
+    {
+      "id": "reynolds-compter-de-ses-pieds",
+      "quoi": "Descendre au bourg et au port avant de dire un seul chiffre : qui est payé, qui n'est sur aucun livre, et combien d'hommes font deux journées dans la même",
+      "etat": "en-cours",
+      "jours_restants": 3,
+      "depend_de": [],
+      "cout": [
+        "deux jours",
+        "qu'on ne le prenne pas pour un espion des Verts"
+      ],
+      "si_bloque": "Il s'en tient à ce que les registres disent, le sait, et l'écrit en tête de sa page pour que celui qui la lira sache ce qu'elle vaut."
+    },
+    {
+      "id": "reynolds-ne-jamais-juger-l-homme",
+      "quoi": "Ne jamais écrire ce que vaut un homme, seulement si sa charge est tenable — un homme qu'on juge cesse de dire où ça casse",
+      "etat": "en-cours",
+      "jours_restants": null,
+      "depend_de": [],
+      "cout": [],
+      "si_bloque": "Posture permanente : rien ne la bloque. S'il y contrevient une fois, il le dit tout haut au battement suivant et rectifie."
+    }
+  ],
+  "declencheurs": [
+    {
+      "si": "On lui donne une charge écrite, avec la mesure à laquelle on le jugera",
+      "alors": "Il la fait borner sur-le-champ — ce qu'il peut, ce qu'il ne peut pas, à qui il rend compte — et ne sort pas de la salle avant que ce soit écrit et daté.",
+      "une_fois": false
+    },
+    {
+      "si": "On lui demande de dire si un homme est bon ou mauvais, plutôt que si sa charge est tenable",
+      "alors": "Il refuse net et rend la question retournée : il donne le chiffre de la charge, jamais le jugement de l'homme.",
+      "une_fois": false
+    }
+  ],
+  "attitude_joueur": "La reine lui a fait écrire quelque chose il y a deux ans et ne l'a jamais lu. Il ne lui en veut pas — il tient que ce n'est pas d'elle que ça vient — et il compte bien le lui faire lire cette fois.",
+  "date_maj": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 28
+  }
+}

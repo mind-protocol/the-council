@@ -141,10 +141,12 @@ Budgets par échelle — tenus à la main, vérifiés par `scripts/tick.py --ver
 | échelle | qui | croyances | étapes | déclencheurs | simulé |
 |---|---|---|---|---|---|
 | `scene` | dans la salle ou sur le point d'y entrer (~5 max) | 4-6 | 3-5 | 1-3 | à chaque battement |
-| `orbite` | pèse sur la partie sans être en scène (~12 max) | 3-5 | 2-4 | 1-2 | à chaque tick |
+| `orbite` | pèse sur la partie sans être en scène (~20 max) | 3-5 | 2-4 | 1-2 | à chaque tick |
 | `royaume` | moteur lointain de la Danse | 1-3 | 1-2 | 0-1 | rafraîchi sur les fenêtres ≥ 5 jours |
 
-Ces plafonds mesurent l'ATTENTION du MJ par tick, pas la taille du fichier : une tête coûte de relire des croyances, peser des déclencheurs et réécrire une intention. Les monter ne donne pas de la capacité, ça donne la même simulation en moins bien faite — au-delà, la boucle hors scène se joue en apparence. Un acteur qui n'a rien à décider n'a pas besoin d'une tête : donne-lui des mains (`activites.json`), qui ne sont jamais budgétées, et un seuil la lui rendra le jour où son affaire mord.
+Ces plafonds mesurent l'ATTENTION du MJ par tick, pas la taille du fichier : une tête coûte de relire des croyances, peser des déclencheurs et réécrire une intention. Les monter ne donne pas de la capacité, ça donne la même simulation en moins bien faite — au-delà, la boucle hors scène se joue en apparence. Un acteur qui n'a rien à décider n'a pas besoin d'une tête : donne-lui des mains (`mains.json`), qui ne sont jamais budgétées, et un seuil la lui rendra le jour où son affaire mord.
+
+Le plafond d'`orbite` est passé de 12 à 20 le 23e jour de la 3e lune, à l'ouverture du siège de Port-Réal : une seconde base à jouer, c'est une seconde poignée de gens qui pèsent sans être en scène, et les tenir en `royaume` les rendrait sourds au joueur. **La table exécutable est celle de `scripts/tick.py`** — quand les deux divergent, c'est elle qui fait foi et ce tableau-ci qui est en retard.
 
 Un acteur `royaume` garde droit à UN déclencheur : sans lui il serait sourd au joueur, ce qui contredit la boucle hors scène. C'est même le seul endroit où l'on peut encore l'atteindre entre deux rafraîchissements.
 
@@ -152,14 +154,14 @@ Une échelle règle le RAFRAÎCHISSEMENT (croyances relues, horloges décomptée
 
 La provenance d'une croyance ne vit PAS ici : elle vit dans `evenements.diffusion`. Ici, seulement la tête.
 
-### activites.json (les mains — ce qui avance sans qu'on décide)
+### mains.json (les mains — ce qui avance sans qu'on décide)
 Une entrée par affaire qui court. Orthogonal à `intentions.json` : la tête dit ce qu'un acteur veut et décide, les mains disent où en sont ses affaires. Un acteur peut avoir les deux (Daemon), une tête seule (un intrigant), ou des mains seules (un sergent recruteur). **Aucun budget** : c'est de l'arithmétique, simulée à chaque tick AVANT tout le reste. Le personnage joueur n'a pas de tête, mais il a des mains.
 - `id` — kebab-case (`recrutement-peyredragon`, `radoub-flotte-velaryon`)
 - `quoi` — l'affaire, en clair
 - `porteur` — {`type`: "personnage" | "maison" | "lieu", `id`}. `id` peut être `null` : une affaire sans porteur tourne quand même, et personne n'en rend compte.
 - `lieu_id` — où ça se passe
 - (pas de champ de position : où se tient le porteur est décidé par `etat/routines.json`
-  et calculé par `scripts/presence.py`. Une activité ne duplique jamais une position.)
+  et calculé par `scripts/presence.py`. Une main ne duplique jamais une position.)
 - `mandat` — `null`, ou 1 ligne : ce que le joueur a confié, et depuis quand
 - `mesure` — [] les compteurs (ci-dessous) ; 1 à 3, jamais plus
 - `seuils` — [] les franchissements (ci-dessous)
@@ -167,7 +169,7 @@ Une entrée par affaire qui court. Orthogonal à `intentions.json` : la tête di
 - `date_maj`
 
 Compteur de `mesure` :
-- `id` — kebab-case, unique dans l'activité. Adressable de l'extérieur par `<activite_id>.<mesure_id>` : c'est cette adresse qu'un `cout` d'étape de plan cite.
+- `id` — kebab-case, unique dans la main. Adressable de l'extérieur par `<main_id>.<mesure_id>` : c'est cette adresse qu'un `cout` d'étape de plan cite, et c'est la clef que `scripts/tick.py` et `scripts/mesures.py` résolvent. Une adresse écrite sous l'ancienne forme ne résout pas — elle est signalée morte, elle n'échoue pas.
 - `quoi` — ce qu'on compte ; `unite` — "hommes", "jours", "muids", "nefs", "cerfs"
 - `valeur` — entier : l'état VRAI, jamais montré tel quel au joueur
 - `rythme` — {`par`: entier signé, `jours`: entier > 0, omis = 1} : « `par` unités tous les `jours` jours »
@@ -186,9 +188,53 @@ Seuil de `seuils` :
 
 Un franchissement ne produit JAMAIS un menu : il donne (ou étoffe) la tête du porteur, et la scène sort ensuite des deux autres boucles.
 
-**La valeur d'une mesure est la vérité ; le rapport est une croyance.** Un porteur peut mentir sur son propre compteur — jugé à chaque rapport d'après sa `maniere`, jamais inscrit dans le fichier. Ce fichier ne contient que le vrai. Une activité dont le porteur est mort, absent ou fâché ne remonte rien, et le joueur découvre le chiffre trop tard.
+**La valeur d'une mesure est la vérité ; le rapport est une croyance.** Un porteur peut mentir sur son propre compteur — jugé à chaque rapport d'après sa `maniere`, jamais inscrit dans le fichier. Ce fichier ne contient que le vrai. Une main dont le porteur est mort, absent ou fâché ne remonte rien, et le joueur découvre le chiffre trop tard.
 
-**Aucun rendu** : le joueur ne voit jamais un compteur, seulement quelqu'un qui lui dit un chiffre. Une activité ne s'écrit que si son résultat doit atteindre le joueur — par un chiffre dit en scène, un `cout` qui rend un plan impossible, une ligne du matin, ou une crise. Note de conception : `docs/activites.md`.
+**Aucun rendu** : le joueur ne voit jamais un compteur, seulement quelqu'un qui lui dit un chiffre. Un compte ne s'écrit que si son résultat doit atteindre le joueur — par un chiffre dit en scène, un `cout` qui rend un plan impossible, une ligne du matin, ou une crise. Note de conception : `docs/mains.md`.
+
+### travaux.json (les pensées — ce qu'un homme a appris aujourd'hui)
+Le milieu de la chaîne. Les mains (`mains.json`) comptent sans avoir d'opinion ; la tête (`intentions.json`) veut et décide ; **ceci dit ce qu'un homme a TOUCHÉ et ce que ça lui a appris**. Sans ce milieu, une réplique de conseiller n'a pas d'amont : elle se fabrique au moment de l'écrire, à partir de ce qui vient d'être dit dans la salle. **Jamais montré au joueur**, comme `intentions.json`. Tourne au tick, après les mains et avant la salle — sa sortie est l'entrée de la boucle d'élection.
+
+Chaîne : **une source touchée → du travail → des pensées datées → une conclusion mûre → un message.**
+
+- `id` — kebab-case, unique (`sanglier-six-noms`)
+- `qui` — un `personnages.id`
+- `affaire` — ce qu'il cherche, dans ses mots
+- `echeance` — {annee, lune, jour}, ou `null` pour un travail continu
+- `etat` — "en cours" | "mur" | "rendu" | "abandonne"
+- `excitation` — entier 0..6, recalculé par le tick, jamais à la main
+- `dernier_travail` — le dernier jour où il a touché une source
+- `livre` — l'`id` du cahier de `books.json` où sa conclusion ira
+- `sources` — [] ce qu'il PEUT aller toucher : {`quoi` en clair, `genre`: "gens" | "registre" | "chose" | "pli", `cout_jours`}
+- `pensees` — [] {`date`, **`source` obligatoire**, `texte`, `servie`}
+- `conclusion` — `null` tant qu'elle n'est pas écrite
+
+**PAS DE SOURCE, PAS DE PENSÉE.** Une pensée naît de quelque chose que l'homme a réellement touché ce jour-là — même règle que les croyances des absents, qui ne changent que par une `diffusion` arrivée. Une pensée sans `source` est refusée par `tick.py --verifier`.
+
+`servie: true` se pose sur une pensée portée à la table : sans elle, un homme se ré-excite chaque matin sur ce qu'il a déjà raconté hier.
+
+Excitation, chiffres à l'essai (bloc unique en tête de `scripts/travaux.py`) : **+2** par pensée neuve jamais servie, **+3** quand une conclusion mûrit, **+1** si l'échéance tombe, **−1** par jour sans source neuve ; plafond **6**. **Sous 3, il ne parle pas : il travaille** — et travailler est une action visible, souvent un départ. Il reste éligible au geste. Deux travaux par journée d'homme, pas plus.
+
+**La machine dit qu'une conclusion est mûre, elle ne l'écrit jamais.** Le texte est de la main de celui qui tient la charge, et il part dans son cahier de `books.json`, où le joueur peut le lire — les pensées en cours, elles, restent cachées. Même garde que le `contenu: null` d'une rumeur qui saute. Note de conception : `docs/travaux.md`.
+
+### plans.json (les plans d'en face — JAMAIS montré au joueur)
+
+La vérité du camp adverse, à côté de `intentions.json` et sous la même garde : ce qui est ici ne fuite ni dans une réplique, ni dans une carte, ni dans une brève. Ce que le joueur en CROIT vit ailleurs et par siège — `etat/joueurs/<id>/jetons.json` et `vues.json`, avec leur `certitude` qui se délave. **Un verrou d'ici ne devient une croyance chez nous que par une entrée de `diffusion` arrivée à échéance**, comme tout le reste.
+
+Format **objet**, et non tableaux de cellules : on calcule dessus, le cahier de `books.json` n'en serait qu'une vue. Plages de numéros réservées : **70000-79999** pour ce qui n'est pas à nous.
+
+- `id` · `maison_id` · `camp` · `titre` · `plage`
+- `ouverture` — ce que ce plan rend vrai, leurs piliers, ce qu'ils livrent, ce qu'ils demandent, ce qu'ils ne garantissent pas, fermé quand, **et `ce_qu_on_en_sait_de_source`** : les têtes et les canons d'où chaque pièce est tirée.
+- `etats_cibles[]` — `id` · `quoi` · `vrai_quand` · `echeance` · **`source`** · `sert[]`
+- `verrous[]` — `id` · `quoi` · `bloque[]` · `vrai_aujourdhui` · `source` · `leve_quand` · **`portee_pour_nous`** : `on peut le savoir` | `on peut agir dessus` | `seule la parole du souverain` | `hors de portée`. C'est ce champ qui trie, et il n'y a pas de cinquième valeur.
+- `clefs[]` — `id` · `quoi` · `ouvre[]` · `principe` · `prix` · `porteur`
+- `actions[]` — `id` · `quoi` · `realise[]` · `office` · `moyens[]` · `cout` · `depend_de[]` · `preuve` · `jour_du` · `etat` · `source`
+- `tensions[]` — `id` · `monnaie` · `demande` · `existe` · `ecart` · `quand_ca_se_voit` · `ce_qui_tombe`
+- `resonance[]` — `lien` · `notre_affaire` · `leur_piece` · `pourquoi`
+- `ce_que_ca_engendre_chez_nous[]` — `type` · `sujet` · `pourquoi` · `vers`
+- `a_verifier[]` — ce qui n'a pas été tranché, en toutes lettres
+
+**Toute pièce porte sa `source`.** Une pièce sans source a été inventée et non dérivée : c'est le seul contrôle qui rende ce fichier honnête. Une action sans titulaire s'écrit `à désigner` — c'est un résultat, pas un oubli. Note de conception : `docs/plans-den-face.md`.
 
 ## Registres d'IDs (OBLIGATOIRES — tout fichier utilise exactement ces IDs)
 

@@ -1,0 +1,40 @@
+{
+ "_note": "LES LIENS TISSÉS À LA MAIN. Les objets sont écrits dans leurs tables ; ce fichier ne porte que ce qui les RELIE et qui n'a de place nulle part ailleurs. Treize mécanismes portent déjà des liens (réalise, dépend de, bloque, ouvre, sert, révèle, répond, dévie, promeut…) et le projecteur les lit là où ils sont — on ne les recopie pas ici. Deux natures seulement n'avaient aucun domicile : `equilibre`, qui n'existait nulle part, et `contredit`, qui vivait en tableau et jamais en arête, si bien qu'on ne pouvait pas demander « qu'est-ce qui contredit ceci ? ». Une arête d'ici vaut exactement autant qu'une arête d'un cahier : `scripts/tisser.py` les verse dans le même tissu.",
+ "_format": "de · vers · nature · qui (la main qui l'a tissée) · quand · pourquoi. Pour un lien qui traverse le brouillard, deux champs de plus : `visible_par` (les sièges qui peuvent le savoir) et `route` (par quoi ils l'apprennent, en combien de jours, déformé comment). Un lien sans route est un lien que le joueur ne pourra jamais découvrir : c'est licite pour ce qui est déjà chez nous, jamais pour ce qui vient d'en face.",
+ "liens": [
+  {
+   "de": "28021",
+   "vers": "plan-moyens:M12",
+   "nature": "equilibre",
+   "qui": "le MJ",
+   "quand": {"annee": 129, "lune": 3, "jour": 28},
+   "pourquoi": "OSSY, de Rosby-le-Bas, vingt-deux ans, ancien commis au taillage — pris au registre le 27e avant le souper, deux dragons la lune. M12 porte cent quarante-trois demandes sur un seul mestre et personne n'avait relié l'homme au goulot qu'il décharge. La ressource était là depuis deux jours ; c'est l'arête qui manquait."
+  },
+  {
+   "de": "32023",
+   "vers": "plan-moyens:M12",
+   "nature": "equilibre",
+   "qui": "le MJ",
+   "quand": {"annee": 129, "lune": 3, "jour": 28},
+   "pourquoi": "La plume qu'on fait nommer et assermenter pour écrire sous dictée. Second déchargement de M12, proposé indépendamment du premier et par un autre office — deux hommes ont vu le même trou sans se parler."
+  },
+  {
+   "de": "71010",
+   "vers": "71011",
+   "nature": "contredit",
+   "qui": "le MJ",
+   "quand": {"annee": 129, "lune": 3, "jour": 28},
+   "pourquoi": "Tension H01 du plan Hightower, portée en arête : payer des têtes (Otto) et nourrir avant de marcher (Ormund) tirent sur la même bourse — sept cent mille dragons, vingt mille de revenu par lune. Aucun des deux n'a écrit son chiffre devant l'autre."
+  },
+  {
+   "de": "71029",
+   "vers": "71011",
+   "nature": "contredit",
+   "qui": "le MJ",
+   "quand": {"annee": 129, "lune": 3, "jour": 28},
+   "pourquoi": "Le troisième réclamant, et c'est le canon qui le pose : « retardé tant que Criston n'a pas arraché à Otto l'or de l'ost ». Il ne sait pas qu'il concurrence les vivres d'Ormund, et Ormund ne sait pas qu'il existe.",
+   "visible_par": [],
+   "route": "Aucune. Ce qui se dispute dans le conseil vert ne remonte à Peyredragon que si quelqu'un le rapporte — et personne ne le fait aujourd'hui."
+  }
+ ]
+}

@@ -55,7 +55,7 @@ function portraitDefaut(nom) {
 // la position, c'est son âge.
 const JOURS_PAR_LUNE = 30, LUNES_PAR_AN = 12;
 // Les dates s'écrivent de deux façons dans l'état : le triplet partout, et la
-// forme courte « 129.3.22 » dans `activites.json`. On accepte les deux plutôt
+// forme courte « 129.3.22 » dans `mains.json`. On accepte les deux plutôt
 // que de laisser une régie muette sur la moitié des fichiers.
 const jourAbsolu = (d) => {
   if (typeof d === "string") {
@@ -120,6 +120,26 @@ function cheminEtat(nom, siege) {
   return fs.existsSync(racineNom) ? racineNom : null;
 }
 
+// Une page de livre peut être une FIGURE et non du texte : un levé au pas, un
+// plan de salle, un arbre de parenté. Le dessin vit dans `ecrans/dessins/` —
+// engendré par un script (plan_leves.py et ses frères), jamais tapé à la main —
+// et la page ne porte que son nom de fichier. On l'inline au service, comme les
+// portraits : la page du jeu ne charge aucune ressource, et un dessin effacé du
+// disque laisse une page vide plutôt qu'une image cassée.
+//
+// Le nom de fichier ne peut pas sortir du dossier : pas de séparateur, pas de
+// remontée. Un livre est une donnée de jeu comme une autre, et une donnée de
+// jeu ne choisit pas quel fichier le serveur ouvre.
+function inlinerFigure(page) {
+  if (!page || typeof page !== "object" || !page.figure || page.figure_svg) return;
+  const nom = String(page.figure);
+  if (!/^[\w.-]+\.svg$/.test(nom) || nom.includes("..")) return;
+  try {
+    const p = path.join(RACINE, "ecrans", "dessins", nom);
+    if (fs.existsSync(p)) page.figure_svg = fs.readFileSync(p, "utf-8");
+  } catch (e) {}
+}
+
 // Les notes du joueur — un carnet HORS FICTION. Ce n'est pas un livre du monde
 // et ce n'est pas une croyance : personne dans la salle ne l'écrit, aucun PNJ
 // ne le lit, le MJ n'y touche pas. Du texte brut, gardé tel quel, un fichier
@@ -152,6 +172,37 @@ function dateDe(siege) {
     if (h && h[siege.personnage_id]) return h[siege.personnage_id];
   } catch (e) {}
   return monde;
+}
+
+// L'ÉCART DE FRONT — de combien ce joueur devance ou traîne sur l'autre.
+// À deux, les horloges divergent : l'un tient un conseil de trois heures
+// pendant que l'autre traverse la cour. Tant que l'écart reste petit, personne
+// n'a besoin de le savoir ; passé quelques heures, une scène commune devient
+// impossible sans que l'un des deux le sache, et c'est ce que dit le signe.
+// Rend un nombre de minutes signé (positif = en avance), ou null.
+const ECART_SEUIL = 300; // 5 heures
+function absolues(d) {
+  if (!d) return null;
+  return ((((d.annee || 0) * 12 + (d.lune || 0)) * 30 + (d.jour || 0)) * 1440)
+    + (typeof d.minute === "number" ? d.minute : 0);
+}
+function ecartDe(siege) {
+  const l = roster();
+  if (!siege || !l || l.length < 2) return null;
+  let h;
+  try { h = JSON.parse(fs.readFileSync(path.join(RACINE, "etat", "horloges.json"), "utf-8")); }
+  catch (e) { return null; }
+  const mien = absolues(h && h[siege.personnage_id]);
+  if (mien === null) return null;
+  // On se compare aux sièges OCCUPÉS : un siège vacant avance au fil du monde
+  // et n'a personne devant l'écran à qui l'écart voudrait dire quelque chose.
+  const autres = l.filter((j) => j.personnage_id !== siege.personnage_id && j.occupe !== false)
+    .map((j) => absolues(h && h[j.personnage_id])).filter((m) => m !== null);
+  if (!autres.length) return null;
+  // Le plus grand écart en valeur absolue : c'est celui qui gêne.
+  let pire = 0;
+  autres.forEach((m) => { if (Math.abs(mien - m) > Math.abs(pire)) pire = mien - m; });
+  return Math.abs(pire) >= ECART_SEUIL ? pire : null;
 }
 
 // L'audience de la scene ouverte, lue dans le flux : le dernier `effacer`
@@ -188,7 +239,20 @@ function audienceCourante(siegeId, depuis) {
       .forEach((l) => {
         try {
           const it = JSON.parse(l);
-          if (it.type !== "effacer") return;
+          // UNE SCENE COMMUNE NE SE REFERME PAS TOUTE SEULE. Ne relire que les
+          // `effacer` laissait « commun » en place indefiniment : le MJ rouvre
+          // la scene privee d'un joueur avec une `salle` ou une simple replique
+          // `--pour <lui>`, jamais avec un second `effacer`. L'audience restait
+          // donc commune des heures apres, et tout ce que ce joueur TAPAIT
+          // repartait sans `pour` — donc public, donc sur l'ecran du troisieme
+          // siege, qui n'avait jamais mis les pieds dans cette salle.
+          // Un item nominativement adresse a ce joueur seul REETABLIT donc son
+          // audience privee. On exige un `pour` scalaire : un tableau est une
+          // messe basse a l'interieur d'une scene, pas une scene nouvelle.
+          if (it.type !== "effacer") {
+            if (siegeId && it.pour === siegeId) pour = siegeId;
+            return;
+          }
           // La scene d'un tiers ne dit rien de l'endroit ou celui-ci se trouve.
           // `pour` peut nommer PLUSIEURS oreilles (une piece partagee, une
           // messe basse) : on y est concerne des qu'on y figure.
@@ -665,7 +729,7 @@ function regie() {
       }
     });
     const age = dans(t.date_maj);
-    return {
+  return {
       id: t.personnage_id,
       nom: nom(t.personnage_id),
       echelle: t.echelle || "?",
@@ -748,8 +812,8 @@ function regie() {
   });
   echeances.sort((a, b) => a.jours - b.jours);
 
-  // ---- 3. les activités ---------------------------------------------------
-  const activites = (((lire("activites.json", {}) || {}).activites) || []).map((a) => {
+  // ---- 3. les mains ---------------------------------------------------
+  const mains = (((lire("mains.json", {}) || {}).mains) || []).map((a) => {
     const mesures = (a.mesure || []).map((m) => {
       const par = (m.rythme && typeof m.rythme.par === "number") ? m.rythme.par : 0;
       // Le seuil le plus proche dans le temps, à ce rythme-là. C'est le
@@ -789,17 +853,28 @@ function regie() {
         .map((s) => ({ affaire: s.affaire || s.id, promeut: s.promeut || "", le: dateCourte(s.franchi_le) })),
     };
   });
-  activites.forEach((a) => a.mesures.forEach((m) => {
+  mains.forEach((a) => a.mesures.forEach((m) => {
     if (m.jours_avant_seuil !== null && m.jours_avant_seuil <= 10)
       alertes.push({ gravite: "tiede", texte: a.id + " : seuil atteint dans " + m.jours_avant_seuil + " jours (" + m.quoi + ")" });
   }));
 
+  // LE TISSU — calcule en Python par `tisser.py` + `evaluer.py --json`.
+  // La regie ne recalcule rien : elle relit et elle dit l'AGE. Un graphe de
+  // la veille affiche comme l'etat du jour serait le meme mensonge que le
+  // cache d'une minute que cette page refuse deja.
+  let tissu = null;
+  try {
+    const pt = path.join(RACINE, "etat", "staging", "tissu", "evaluation.json");
+    tissu = JSON.parse(fs.readFileSync(pt, "utf-8"));
+    tissu.calcule_il_y_a_s = Math.round((Date.now() - fs.statSync(pt).mtimeMs) / 1000);
+  } catch (e) { tissu = null; }
   return {
+    tissu,
     date: monde.date || null, date_texte: dateCourte(monde.date),
     tension: monde.tension == null ? null : monde.tension, phase: monde.phase || "",
     horloges: lire("horloges.json", {}),
     groupes, hors_echelle: horsEchelle, alertes,
-    echeances, activites,
+    echeances, mains,
   };
 }
 
@@ -1334,14 +1409,101 @@ http
       }
       // Les livres : des objets posés dans les salles — un registre, un livre
       // de comptes, un rôle d'équipage. Chacun porte du JSON qu'on consulte à
-      // la main. On les sert tous ; c'est la page qui ne montre que ceux de la
-      // salle où le joueur se tient.
+      // la main.
+      //
+      // On les servait TOUS, en laissant à la page le soin de n'en montrer que
+      // ce qui est à portée. À un joueur, c'était une commodité ; à trois
+      // sièges, c'est une fuite : le carnet privé de la reine, celui de Marlo
+      // et tout ce qui traîne à Port-Réal partaient sur le fil d'Aurore, où
+      // l'on n'a qu'à ouvrir la console pour les lire. Le brouillard ne se
+      // tient pas dans l'affichage, il se tient à la porte — donc ici.
+      //
+      // Trois coupes, et pas une de plus (la salle, elle, reste à la page : un
+      // registre de maison se consulte de tout le château) :
+      //   — un carnet `prive` n'est qu'à son porteur ;
+      //   — un volume à `lecteurs` n'est qu'à ceux qui y sont nommés ;
+      //   — ce qui est posé ou porté dans un AUTRE château ne descend pas.
+      //
+      // Et l'étagère se FERME à qui n'a pas de siège. Le repli sur le
+      // personnage-joueur du journal est bon quand on joue seul ; dès qu'il y a
+      // un roster, il veut dire qu'une URL nue — un lien de tunnel qui traîne,
+      // un cookie perdu — ouvre le carnet de la reine. On rend alors la liste
+      // vide et l'on dit pourquoi (`siege: false`), plutôt que de laisser la
+      // page annoncer qu'il n'y a rien à lire.
       if (url === "/books") {
         try {
-          const books = JSON.parse(fs.readFileSync(path.join(RACINE, "etat", "books.json"), "utf-8"));
-          return envoyer(res, 200, JSON.stringify({ books: Array.isArray(books) ? books : [] }));
+          const brut = JSON.parse(fs.readFileSync(path.join(RACINE, "etat", "books.json"), "utf-8"));
+          const tous = Array.isArray(brut) ? brut : [];
+          const siege = qui(req, url);
+          let moi = (siege && siege.personnage_id) || null;
+          if (!moi && roster()) {
+            return envoyer(res, 200, JSON.stringify({ books: [], boites: [], siege: false }));
+          }
+          if (!moi) {
+            try {
+              moi = JSON.parse(fs.readFileSync(path.join(RACINE, "etat", "journal.json"), "utf-8"))
+                .personnage_joueur_id || null;
+            } catch (e) {}
+          }
+          // Où est chacun : c'est la fiche qui le dit, jamais le livre.
+          const ou = {};
+          try {
+            JSON.parse(fs.readFileSync(path.join(RACINE, "etat", "personnages.json"), "utf-8"))
+              .forEach((p) => { ou[p.id] = p.lieu_id || null; });
+          } catch (e) {}
+          const ici = moi ? (ou[moi] || null) : null;
+          // Les BOÎTES (etat/boites.json) : un coffret posé sur une table ou
+          // porté sous le bras, où l'on range des volumes. Une boîte donne sa
+          // PLACE à ce qu'elle contient — un volume rangé n'a plus de salle,
+          // plus de porteur, plus de `prive` à lui : il prend ceux du coffret,
+          // et l'on déplace vingt registres en déplaçant une boîte. On résout
+          // ici, AVANT le tri : sans quoi un volume rangé n'aurait plus de
+          // place du tout, et le brouillard le laisserait passer partout.
+          let boites = [];
+          try {
+            const bb = JSON.parse(fs.readFileSync(
+              path.join(RACINE, "etat", "boites.json"), "utf-8"));
+            if (Array.isArray(bb)) boites = bb;
+          } catch (e) {}
+          const coffret = new Map(boites.map((c) => [c.id, c]));
+          tous.forEach((b) => {
+            const c = b.boite && coffret.get(b.boite);
+            if (!c) return;
+            b.lieu_id = c.lieu_id || null;
+            b.salle_id = c.salle_id || null;
+            b.acteur_id = c.acteur_id || null;
+            b.prive = !!c.prive;
+            // `lecteurs` ne se remplace pas, il s'ajoute : un coffret peut
+            // fermer plus que le volume, jamais moins.
+            if (Array.isArray(c.lecteurs) && c.lecteurs.length) {
+              b.lecteurs = (Array.isArray(b.lecteurs) && b.lecteurs.length)
+                ? b.lecteurs.filter((q) => c.lecteurs.indexOf(q) !== -1)
+                : c.lecteurs.slice();
+            }
+          });
+          // Le château d'un volume : celui où il est posé, ou celui où se
+          // trouve l'homme qui le porte — sa fiche d'abord, le `lieu_id` du
+          // livre à défaut (un porteur sans fiche reste où on l'a écrit).
+          const chateau = (b) => (b.acteur_id && ou[b.acteur_id] !== undefined)
+            ? ou[b.acteur_id] : (b.lieu_id || null);
+          const liste = tous.filter((b) => {
+            // `lecteurs` ne donne rien, il retire : le volume garde ses règles
+            // de lieu, mais qui n'y est pas nommé ne l'ouvre pas.
+            if (Array.isArray(b.lecteurs) && b.lecteurs.length
+                && b.lecteurs.indexOf(moi) === -1) return false;
+            if (b.acteur_id && b.acteur_id === moi) return true;
+            if (b.prive && b.acteur_id) return false;
+            const ch = chateau(b);
+            return !ch || !ici || ch === ici;
+          });
+          liste.forEach((b) => (b.pages || []).forEach(inlinerFigure));
+          // On ne descend que les coffrets dont il reste quelque chose à
+          // ouvrir : une boîte vide sur l'étagère est un onglet qui ment.
+          const gardees = new Set(liste.map((b) => b.boite).filter(Boolean));
+          return envoyer(res, 200, JSON.stringify({
+            books: liste, boites: boites.filter((c) => gardees.has(c.id)) }));
         } catch (e) {
-          return envoyer(res, 200, JSON.stringify({ books: [] }));
+          return envoyer(res, 200, JSON.stringify({ books: [], boites: [] }));
         }
       }
       // Les notes du joueur : le seul volume de l'étagère qui ne soit pas du
@@ -1354,6 +1516,21 @@ http
           return envoyer(res, 200, JSON.stringify({ texte }));
         } catch (e) {
           return envoyer(res, 200, JSON.stringify({ texte: "" }));
+        }
+      }
+      // LA NAPPE. Les pièces de bois posées sur la table peinte : ce que le
+      // conseil a disposé de ses mains. Ce n'est pas une croyance et ce n'est
+      // pas un livre — c'est un MEUBLE, partagé par tous ceux qui entrent dans
+      // la salle. D'où un seul fichier, et non un par siège : deux personnes
+      // penchées sur la même table voient les mêmes pièces, sinon ce n'est plus
+      // une table, ce sont deux tables qui se ressemblent.
+      if (url === "/nappe") {
+        try {
+          const f = path.join(RACINE, "etat", "nappe.json");
+          const d = fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, "utf-8")) : {};
+          return envoyer(res, 200, JSON.stringify({ pieces: d.pieces || [] }));
+        } catch (e) {
+          return envoyer(res, 200, JSON.stringify({ pieces: [] }));
         }
       }
       // Les plis : ce qui est parti par écrit, et où ça en est. Le décor s'en
@@ -1482,8 +1659,21 @@ http
             // compte six. Un tableau n'est ni public ni prive a une seule
             // oreille, et il ne doit surtout pas retomber dans le cas « pas de
             // pour » — qui, lui, veut dire que tout le monde entend.
-            items = items.filter((it) => !it.pour
-              || (Array.isArray(it.pour) ? it.pour.indexOf(moi) !== -1 : it.pour === moi));
+            // UN ITEM SANS `pour` N'EST PLUS PUBLIC PASSÉ L'ÈRE MULTI-JOUEURS.
+            // C'est le verrou de lecture, et il ferme la faille par en bas :
+            // même si un jour une plume réécrit un item sans audience — un
+            // script à venir, une main dans le fichier —, il ne partira chez
+            // personne au lieu de partir chez tout le monde.
+            //
+            // Le seuil se calcule tout seul : la ligne où le DERNIER joueur
+            // s'est assis. Avant elle, un `pour` absent veut dire « il n'y
+            // avait qu'une table » et reste lisible par les anciens (leur
+            // propre `depuis` fait déjà le tri). Après elle, un `pour` absent
+            // est un bug, et un bug ne se diffuse pas.
+            const seuil = roster().reduce((m, j) => Math.max(m, j.depuis || 0), 0);
+            items = items.filter((it, k) => it.pour
+              ? (Array.isArray(it.pour) ? it.pour.indexOf(moi) !== -1 : it.pour === moi)
+              : depuis + k < seuil);
           }
           // Le flux est append-only et ne cesse de grossir : au bout de
           // quelques heures de partie, chaque sondage retransmet des milliers
@@ -1502,7 +1692,15 @@ http
           if (!(fin >= 0)) fin = total;
           const debut = Math.max(0, fin - MAX_FIL);
           items = items.slice(debut, fin);
-          return envoyer(res, 200, JSON.stringify({ items, debut, total }));
+          // Un volume montré en scène : sa page peut être un dessin. Le flux
+          // n'en garde que le NOM — un levé pèse deux cent mille signes, et
+          // trente lignes qui le portent feraient un fil illisible à charger.
+          // Le nom est empreinté (voir append_flux.py) : la feuille de ce
+          // jour-là ne bouge plus, même si le dessin est refait demain.
+          items.forEach((it) => {
+            if (it.montre && it.montre.extrait) inlinerFigure(it.montre.extrait);
+          });
+          return envoyer(res, 200, JSON.stringify({ items, debut, total, ecart: ecartDe(qui(req, url)) }));
         } catch (e) {
           return envoyer(res, 200, JSON.stringify({ items: [], debut: 0 }));
         }
@@ -1516,8 +1714,8 @@ http
           const d = JSON.parse(corps);
           // une phrase plus longue que le bail : le lecteur le renouvelle en route
           if (d.renouveler) return envoyer(res, 200, JSON.stringify({ ok: voix.bail(d.client_id) }));
-          const r = await voix.dire(d.locuteur_id, d.texte, d.client_id);
-          if (r.audio) return envoyer(res, 200, r.audio, "audio/mpeg");
+          const r = await voix.dire(d.locuteur_id, d.texte, d.client_id, d.rejouer);
+          if (r.audio) return envoyer(res, 200, r.audio, r.mime || "audio/mpeg");
           return envoyer(res, r.code, JSON.stringify({ erreur: r.erreur }));
         } catch (e) {
           return envoyer(res, 500, JSON.stringify({ erreur: String(e) }));
@@ -1576,6 +1774,142 @@ http
       return;
     }
 
+    // La main qui pousse une pièce. On écrit tout le plateau d'un coup : une
+    // nappe fait quelques dizaines de pièces, et une écriture partielle
+    // demanderait une identité stable pour chacune — ce qu'une pièce de bois
+    // qu'on ramasse et qu'on repose n'a pas.
+    if (req.method === "POST" && url === "/nappe") {
+      let corps = "";
+      req.on("data", (c) => (corps += c));
+      req.on("end", () => {
+        try {
+          const { pieces } = JSON.parse(corps);
+          if (!Array.isArray(pieces)) throw new Error("pieces manquantes");
+          const f = path.join(RACINE, "etat", "nappe.json");
+          fs.writeFileSync(f, JSON.stringify({ pieces }, null, 2), "utf-8");
+          return envoyer(res, 200, JSON.stringify({ ok: true }));
+        } catch (e) {
+          return envoyer(res, 400, JSON.stringify({ erreur: String(e.message || e) }));
+        }
+      });
+      return;
+    }
+
+    // PORTER AU REGISTRE. La nappe lit les livres ; ce point d'entrée est le seul
+    // par où elle y écrit. Une pièce de craie qu'on ne porte pas au registre
+    // n'existe pas : au prochain conseil, personne ne la retrouve. On écrit donc
+    // DEUX FOIS, comme partout ailleurs — la ligne dans l'affaire, la même dans
+    // le registre transversal, avec la colonne Affaire renseignée.
+    //
+    // Le numéro n'est pas donné par le client : il se calcule ici, dans la plage
+    // de l'affaire, selon la forme. Un état prend la centaine libre suivante ;
+    // un verrou, une clef, une action prennent leur rang dans la centaine de
+    // leur parent. C'est la règle de numérotation, et elle n'est pas négociable
+    // depuis une page web.
+    if (req.method === "POST" && url === "/piece") {
+      let corps = "";
+      req.on("data", (c) => (corps += c));
+      req.on("end", () => {
+        try {
+          const d = JSON.parse(corps);
+          const f = path.join(RACINE, "etat", "books.json");
+          const livres = JSON.parse(fs.readFileSync(f, "utf-8"));
+          const nu = (t) => String(t == null ? "" : t).replace(/\*\*/g, "")
+            .replace(/\s+/g, " ").trim();
+          // les emblemes sortent du nom de colonne : au-dela de U+2000 il n'y a
+          // plus de lettre francaise, seulement des signes et des paires hautes
+          const sansEmoji = (t) => nu(t).replace(/[\u2000-\uFFFF]/g, "").trim();
+          const GENRES = { etat: /états? cibles?/i, verrou: /verrous?/i,
+                           clef: /clefs?/i, action: /actions?/i };
+          const REGISTRE = { etat: "plan-etats-cibles", verrou: "plan-verrous",
+                             clef: "plan-clefs", action: "plan-actions" };
+          const PARENT = { etat: /sert/i, verrou: /bloque/i, clef: /ouvre/i,
+                           action: /réalise|realise/i };
+          if (!GENRES[d.genre]) throw new Error("forme inconnue : " + d.genre);
+          if (!nu(d.texte)) throw new Error("une pièce sans nom ne se porte pas");
+          if (d.genre !== "etat" && !/^\d{3,6}$/.test(String(d.parent || "").trim()))
+            throw new Error("il faut le numéro de ce qu'elle sert");
+
+          const aff = livres.find((b) => b.id === d.affaire);
+          if (!aff || !Array.isArray(aff.tables)) throw new Error("affaire inconnue");
+
+          // la plage, prise à la ligne LA PLAGE de l'ouverture
+          let plage = 0;
+          (aff.tables[0].lignes || []).forEach((l) => {
+            const c = (l.cellules || []).map(nu);
+            if (/LA PLAGE/i.test(sansEmoji(c[0] || ""))) {
+              const m = (c[1] || "").match(/\d{3,6}/);
+              if (m) plage = +m[0];
+            }
+          });
+          // repli sur le sous-titre : un cahier vierge porte sa plage là, et la
+          // case de l'ouverture n'est remplie qu'à l'ouverture de l'affaire.
+          if (!plage) {
+            const m = String(aff.sous_titre || "").match(/[Pp]lage\s+(\d{3,6})/);
+            if (m) plage = +m[1];
+          }
+          if (!plage) throw new Error("cette affaire n'a pas de plage : ni dans " +
+            "son ouverture, ni dans son sous-titre");
+
+          // tout ce qui est déjà pris, dans l'affaire comme dans les registres
+          const pris = new Set();
+          livres.forEach((b) => (b.tables || [{ colonnes: b.colonnes, lignes: b.lignes }])
+            .forEach((t) => (t.lignes || []).forEach((l) => {
+              const c = (l.cellules || l || []).map(nu);
+              const m = (c[0] || "").match(/^\d{3,6}$/);
+              if (m) pris.add(+m[0]);
+            })));
+
+          let num = 0;
+          if (d.genre === "etat") {
+            for (let n = plage; n < plage + 1000; n += 100) if (!pris.has(n)) { num = n; break; }
+          } else {
+            const base = Math.floor(+d.parent / 100) * 100;
+            const bornes = { verrou: [1, 9], clef: [10, 19], action: [20, 99] }[d.genre];
+            for (let i = bornes[0]; i <= bornes[1]; i++)
+              if (!pris.has(base + i)) { num = base + i; break; }
+          }
+          if (!num) throw new Error("plus de numéro libre pour cette forme");
+
+          // la ligne, remplie par NOM de colonne : les tableaux n'ont pas tous
+          // les mêmes, et un remplissage par rang écrirait de travers
+          const valeurs = [
+            [/^n°$/i, "**" + num + "**"],
+            [PARENT[d.genre], d.parent ? String(d.parent) : "—"],
+            [/office/i, nu(d.office) || (d.genre === "action" ? "**SANS OFFICE**" : "")],
+            [/moyens/i, nu(d.moyens)],
+            [/affaire/i, nu(aff.titre)],
+          ];
+          const ligne = (cols) => cols.map((c, i) => {
+            if (i === 1) return nu(d.texte);
+            const t = sansEmoji(c);
+            const v = valeurs.find((x) => x[0].test(t));
+            return v ? v[1] : "";
+          });
+
+          const dans = (livre) => {
+            const t = (livre.tables || []).find((x) => GENRES[d.genre].test(sansEmoji(x.titre)));
+            if (!t) return false;
+            t.lignes = (t.lignes || []).filter((l) =>
+              (l.cellules || []).some((c) => nu(c)));   // on chasse les lignes vides du patron
+            t.lignes.push({ cellules: ligne(t.colonnes || []) });
+            return true;
+          };
+          if (!dans(aff)) throw new Error("l'affaire n'a pas de tableau pour cette forme");
+          const reg = livres.find((b) => b.id === REGISTRE[d.genre]);
+          if (reg) {
+            reg.lignes = reg.lignes || [];
+            reg.lignes.push({ cellules: ligne(reg.colonnes || []) });
+          }
+          fs.writeFileSync(f, JSON.stringify(livres, null, 2), "utf-8");
+          return envoyer(res, 200, JSON.stringify({ num: String(num), affaire: nu(aff.titre) }));
+        } catch (e) {
+          return envoyer(res, 400, JSON.stringify({ erreur: String(e.message || e) }));
+        }
+      });
+      return;
+    }
+
     if (req.method === "POST" && url === "/action") {
       let corps = "";
       req.on("data", (c) => (corps += c));
@@ -1606,7 +1940,8 @@ http
           // n'existe que dans le navigateur et disparaît au premier rechargement.
           // « Laisser faire » se poste même vide : l'absence de consigne EST la
           // consigne — on joue le personnage comme on le connaît.
-          if (action.type === "libre" && ((action.texte || "").trim() || action.mode === "run")) {
+          if (action.type === "libre" && ((action.texte || "").trim() ||
+              action.mode === "run" || action.mode === "composer")) {
             // Une question est hors fiction : elle ne devient jamais une parole
             // prononcée par le personnage. Les coulisses le sont plus encore :
             // on y parle DE la partie, et rien de ce qui s'y dit n'a eu lieu.
@@ -1624,6 +1959,15 @@ http
               // `vous`, à sa place et devant tout le monde.
               : action.mode === "run"
               ? Object.assign({ type: "run", texte: action.texte || "", delai_s: 0 }, prive)
+              // L'atelier : on compose SUR la partie. Rien n'entre dans la
+              // fiction, personne ne l'entend, l'horloge ne bouge pas.
+              // La main par-dessus le monde : on ne joue pas, on répare. Rien
+              // de ce qui se dit ici n'a été prononcé dans la salle — mais ce
+              // qu'on y demande change le fil et l'état pour de bon.
+              : action.mode === "intervention"
+              ? Object.assign({ type: "intervention", texte: action.texte, delai_s: 0 }, prive)
+              : action.mode === "composer"
+              ? Object.assign({ type: "composer", texte: action.texte || "", delai_s: 0 }, prive)
               : Object.assign(
                   { type: "vous", mode: action.mode || "dire", texte: action.texte, delai_s: 0,
                     joueur_id: siege ? siege.personnage_id : undefined,
@@ -1674,9 +2018,19 @@ http
                       } catch (e) {}
                     }
                     const a = audienceCourante(moi || null, (siege && siege.depuis) || 0);
-                    if (a === "commun") return {};
+                    // À PLUSIEURS, AUCUNE SORTIE NE REND UN ITEM MUET. Un `{}`
+                    // écrit ici est un item sans audience, et un item sans
+                    // audience finissait chez tout le monde. Même le commun se
+                    // NOMME : la liste des sièges occupés, jamais une absence.
+                    const tous = () => (l || []).filter((j) => j.occupe && j.personnage_id)
+                      .map((j) => j.personnage_id).sort();
+                    if (!moi || !l || l.length < 2) return {};
+                    if (a === "commun") return { pour: tous() };
                     if (a) return { pour: a };
-                    return (moi && l && l.length > 1) ? { pour: moi } : {};
+                    // Audience inconnue : on se ferme sur l'auteur. C'est le
+                    // seul défaut sûr — au pire il se parle à lui-même, jamais
+                    // il ne parle au camp d'en face.
+                    return { pour: moi };
                   })());
             fs.appendFileSync(path.join(RACINE, "etat", "flux.jsonl"),
               JSON.stringify(item) + "\n", "utf-8");

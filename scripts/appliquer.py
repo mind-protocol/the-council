@@ -53,11 +53,11 @@ sinon n'importe quelle faute de frappe corrompt l'etat en silence.
 
     {table: "monde", operation: "monde", champs: {date|tension|phase}}
 
-    {table: "activites", cible: <activite_id>, operation: ...}   (les mains)
+    {table: "mains", cible: <main_id>, operation: ...}   (les mains)
         mesure     + mesure: <mesure_id>, champs: {valeur|reliquat}  ENTIERS SEULS
         seuil      + seuil:  <seuil_id>,  champs: {franchi_le}
-        activite   + champs: {mandat|porteur|dernier_rapport|date_maj|salle}
-        Le reste d'une activite (quoi, rythme, plancher, plafond, depend_de,
+        main   + champs: {mandat|porteur|dernier_rapport|date_maj|salle}
+        Le reste d'une main (quoi, rythme, plancher, plafond, depend_de,
         libelle des seuils) s'ecrit a la main : ce sont des choix de conception,
         pas des mutations de partie.
 
@@ -139,7 +139,7 @@ CHAMPS_MONDE = ("date", "tension", "phase")
 # les mains : seul tick.py pose valeur/reliquat, seul le MJ pose le reste
 CHAMPS_MESURE = ("valeur", "reliquat")
 CHAMPS_SEUIL = ("franchi_le",)
-CHAMPS_ACTIVITE = ("mandat", "porteur", "dernier_rapport", "date_maj", "salle")
+CHAMPS_MAIN = ("mandat", "porteur", "dernier_rapport", "date_maj", "salle")
 # le courrier (docs/plis.md)
 CANAUX_PLI = ("corbeau", "cavalier", "barque")
 ETATS_PLI = ("en-route", "remis", "ouvert", "retenu", "perdu", "intercepte")
@@ -160,7 +160,7 @@ OPERATIONS = {
     "evenements": ("diffusion_livree", "diffusion_ajouter", "evenement"),
     "personnages": ("personnage",),
     "monde": ("monde",),
-    "activites": ("mesure", "seuil", "activite"),
+    "mains": ("mesure", "seuil", "main"),
     "plis": ("pli", "pli_ajouter"),
     "lieux": ("roukerie",),
     "jetons": ("incident_propage", "incident"),
@@ -225,9 +225,9 @@ def lire(nom, joueur=None):
         return json.load(f)
 
 
-def liste_activites(table):
-    """activites.json a une racine {activites: [...]} ; on rend la liste."""
-    return table.get("activites", []) if isinstance(table, dict) else table
+def liste_mains(table):
+    """mains.json a une racine {mains: [...]} ; on rend la liste."""
+    return table.get("mains", []) if isinstance(table, dict) else table
 
 
 def liste_plis(table):
@@ -348,7 +348,7 @@ def valider(mutations, tables):
     tetes = par_id(tables["intentions"], "personnage_id")
     evenements = par_id(tables["evenements"])
     personnages = par_id(tables["personnages"])
-    activites = par_id(liste_activites(tables["activites"]))
+    mains = par_id(liste_mains(tables["mains"]))
     plis = par_id(liste_plis(tables["plis"]))
     incidents = par_id([j for j in liste_jetons(tables["jetons"])
                         if isinstance(j, dict) and j.get("genre") == "incident"])
@@ -501,11 +501,11 @@ def valider(mutations, tables):
                 avant = {c: ev.get(c) for c in champs}
                 apres = dict(champs)
 
-        # --- activites (les mains)
-        elif table == "activites":
-            act = activites.get(cible)
+        # --- mains (les mains)
+        elif table == "mains":
+            act = mains.get(cible)
             if act is None:
-                faute(i, "aucune activite {!r}".format(cible))
+                faute(i, "aucune main {!r}".format(cible))
                 continue
             if op == "mesure":
                 mes = next((x for x in (act.get("mesure") or [])
@@ -544,9 +544,9 @@ def valider(mutations, tables):
                 avant = {c: seuil.get(c) for c in champs}
                 apres = dict(champs)
             else:
-                mauvais = [c for c in champs if c not in CHAMPS_ACTIVITE]
+                mauvais = [c for c in champs if c not in CHAMPS_MAIN]
                 if mauvais:
-                    faute(i, "champs d'activite interdits : {}".format(
+                    faute(i, "champs d'main interdits : {}".format(
                         ", ".join(mauvais)))
                     continue
                 avant = {c: act.get(c) for c in champs}
@@ -761,7 +761,7 @@ def appliquer(plan, tables):
     tetes = par_id(tables["intentions"], "personnage_id")
     evenements = par_id(tables["evenements"])
     personnages = par_id(tables["personnages"])
-    activites = par_id(liste_activites(tables["activites"]))
+    mains = par_id(liste_mains(tables["mains"]))
     plis = par_id(liste_plis(tables["plis"]))
     incidents = par_id([j for j in liste_jetons(tables["jetons"])
                         if isinstance(j, dict) and j.get("genre") == "incident"])
@@ -805,8 +805,8 @@ def appliquer(plan, tables):
                 ev.setdefault("diffusion", []).append(m["valeur"])
             else:
                 ev.update(champs)
-        elif table == "activites":
-            act = activites[cible]
+        elif table == "mains":
+            act = mains[cible]
             if op == "mesure":
                 mes = next(x for x in act["mesure"]
                            if x.get("id") == m.get("mesure"))
@@ -941,11 +941,11 @@ def main():
         racine_jetons = os.path.join(ETAT, "jetons.json")
         tables["jetons"] = (lire("jetons") if os.path.isfile(racine_jetons)
                             else {"jetons": []})
-    # activites.json est facultatif : une partie sans mains tourne tres bien
-    tables["activites"] = (lire("activites")
+    # mains.json est facultatif : une partie sans mains tourne tres bien
+    tables["mains"] = (lire("mains")
                            if os.path.isfile(
-                               os.path.join(ETAT, "activites.json"))
-                           else {"activites": []})
+                               os.path.join(ETAT, "mains.json"))
+                           else {"mains": []})
 
     # garde 2 : tout valider avant de rien ecrire
     plan, erreurs = valider(mutations, tables)

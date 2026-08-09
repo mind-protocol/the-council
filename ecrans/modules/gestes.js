@@ -17,6 +17,8 @@
     if (window.Gens) Gens.marquer(entree, it.acteur_id);
     // un geste peut être une main sur la carte : les pièces suivent
     if (window.Illustration) Illustration.poser(entree, it);
+    // et s'il DEMANDE quelque chose, on peut lui repondre sur place
+    if (window.Demandes) Demandes.poser(entree, it);
     // un geste n'est pas une parole : c'est le chroniqueur qui le dit, pas l'acteur.
     if (window.Voix) Voix.dire("narrateur", it.texte, ctx, entree);
   });

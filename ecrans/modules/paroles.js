@@ -14,6 +14,8 @@
     if (window.Gens) Gens.marquer(entree, it.locuteur_id);
     // s'il montre en même temps qu'il parle, sa main pose sur la table peinte
     if (window.Illustration) Illustration.poser(entree, it);
+    // et s'il DEMANDE quelque chose, on peut lui repondre sur place
+    if (window.Demandes) Demandes.poser(entree, it);
     // et la réplique se dit, si le joueur a laissé les voix ouvertes
     if (window.Voix) Voix.dire(it.locuteur_id, it.texte, ctx, entree);
   });

@@ -66,12 +66,20 @@
 <nav>
   <button data-onglet="tetes" class="actif">Les têtes</button>
   <button data-onglet="calendrier">Le calendrier</button>
-  <button data-onglet="activites">Les activités</button>
+  <button data-onglet="mains">Les mains</button>
+  <button data-onglet="tissu">Le tissu</button>
+  <button data-onglet="maison">La maison</button>
+  <button data-onglet="travail">Le travail</button>
+  <button data-onglet="enface">En face</button>
 </nav>
 <main>
   <section id="tetes" class="actif"></section>
   <section id="calendrier"></section>
-  <section id="activites"></section>
+  <section id="mains"></section>
+  <section id="tissu"></section>
+  <section id="maison"></section>
+  <section id="travail"></section>
+  <section id="enface"></section>
 </main>
 <footer id="pied"></footer>
 <script>
@@ -160,12 +168,12 @@ function rendreCalendrier(d) {
 }
 
 function rendreActivites(d) {
-  let h = '<h2>Où en sont les choses <span class="compte">' + d.activites.length + "</span></h2>";
-  if (!d.activites.length) { $("#activites").innerHTML = h + '<p class="vide">aucune activité</p>'; return; }
+  let h = '<h2>Où en sont les choses <span class="compte">' + d.mains.length + "</span></h2>";
+  if (!d.mains.length) { $("#mains").innerHTML = h + '<p class="vide">aucune main</p>'; return; }
   h += "<table><tr><th>Mesure</th><th class=\"num\">Valeur</th><th class=\"num\">Rythme</th>"
     + '<th class="num">Seuil dans</th><th>Ce que ça devient</th><th>Porteur</th>'
     + '<th>Mandat</th><th class="num">Rapport</th></tr>';
-  d.activites.forEach((a) => {
+  d.mains.forEach((a) => {
     h += '<tr><td colspan="8" class="fam" style="padding-top:.7rem;color:var(--or)">'
       + esc(a.id) + ' — <span class="quoi">' + esc(a.quoi) + "</span></td></tr>";
     a.mesures.forEach((m) => {
@@ -190,7 +198,148 @@ function rendreActivites(d) {
     });
   });
   h += "</table>";
-  $("#activites").innerHTML = h;
+  $("#mains").innerHTML = h;
+}
+
+
+function rendreTissu(d) {
+  const t = d.tissu;
+  const e = document.getElementById('tissu');
+  if (!t) {
+    e.innerHTML = '<h2>Le tissu</h2><div class="alertes"><div class="tiede">' +
+      'Aucun tissu calcule. Lancer : python scripts/tisser.py --ecrire ' +
+      'puis python scripts/evaluer.py --json</div></div>';
+    return;
+  }
+  const age = t.calcule_il_y_a_s;
+  const vieux = age > 3600;
+  let h = '<h2>Le tissu</h2>';
+  h += '<div class="alertes"><div class="' + (vieux ? 'tiede' : '') + '">' +
+       t.noeuds + ' noeuds, ' + t.aretes + ' aretes — calcule il y a ' +
+       (age < 90 ? age + ' s' : Math.round(age / 60) + ' min') +
+       (vieux ? ' — A RECALCULER' : '') + '</div></div>';
+
+  h += '<h2>Les goulots</h2><table><tr><th>demandes</th><th>noeud</th><th></th></tr>';
+  (t.goulots || []).forEach(function (g) {
+    h += '<tr><td>' + g.demandes + '</td><td>' + g.noeud + '</td><td>' +
+         (g.quoi || '') + (g.sature ? ' <b>SATURE</b>' : '') + '</td></tr>';
+  });
+  h += '</table>';
+
+  h += '<h2>Les pressions sans contre-arete</h2>';
+  (t.desequilibres || []).forEach(function (x) {
+    h += '<div class="alertes"><div class="grave">' + x.noeud + ' — ' +
+         (x.quoi || '') + '</div><div>' + x.consommateurs +
+         ' consommateurs, aucun producteur</div>';
+    (x.candidats || []).forEach(function (c) {
+      h += '<div class="tiede">candidat non relie : ' + c.id + ' — ' +
+           (c.quoi || '') + '</div>';
+    });
+    h += '</div>';
+  });
+
+  h += '<h2>Ce qui ne tombe sur personne</h2><div class="alertes"><div>' +
+       t.vacantes + ' actions a designer</div><div>' +
+       (t.sourds || []).length + ' tetes sans declencheur</div><div>' +
+       t.murs_sans_route + ' verrous d\'en face sans route de fuite</div></div>';
+
+  const F = (t.force || []).filter(function (x) { return x.questions > 0; });
+  if (F.length) {
+    h += '<h2>La force narrative <span class="compte">' +
+         F.reduce(function (a, x) { return a + x.questions; }, 0) +
+         ' questions sur ' + F.length + ' têtes</span></h2>' +
+         '<table><tr><th>force</th><th>questions</th><th>qui</th>' +
+         '<th>échelle</th><th>actions</th><th>critiques</th><th>goulot</th></tr>';
+    F.forEach(function (x) {
+      h += '<tr><td>' + x.force + '</td><td>' + x.questions + '</td><td>' +
+           esc(x.qui) + '</td><td>' + esc(x.echelle || '') + '</td><td>' +
+           x.actions + '</td><td>' + (x.critiques || '') + '</td><td>' +
+           (x.goulots || []).map(function (g) {
+             return esc(g.split(':').pop()); }).join(' ') + '</td></tr>';
+    });
+    h += '</table>';
+  }
+
+  (t.critique || []).forEach(function (c) {
+    h += '<h2>Le chemin critique — ' + c.maillons + ' maillons</h2><table>';
+    c.chaine.forEach(function (x) {
+      h += '<tr><td>' + x.id + '</td><td>' + (x.quoi || '') + '</td></tr>';
+    });
+    h += '</table>';
+  });
+  e.innerHTML = h;
+}
+
+function rendreMaison(d) {
+  const t = (d.tissu || {}).presence, e = document.getElementById('maison');
+  if (!t) { e.innerHTML = '<h2>La maison</h2><div class="alertes"><div class="tiede">Aucun tissu.</div></div>'; return; }
+  if (t.erreur) { e.innerHTML = '<h2>La maison</h2><div class="alertes"><div class="grave">' + esc(t.erreur) + '</div></div>'; return; }
+  let h = '<h2>Où est chacun <span class="compte">' + (t.salles || []).length + ' salles</span></h2><table>';
+  (t.salles || []).forEach(function (s) {
+    h += '<tr><td>' + esc(s.salle) + '</td><td>' + s.gens.map(esc).join(', ') + '</td></tr>';
+  });
+  h += '</table>';
+  if ((t.en_chemin || []).length) {
+    h += '<h2>Dans les escaliers <span class="compte">' + t.en_chemin.length +
+         '</span></h2><table>';
+    t.en_chemin.forEach(function (x) {
+      h += '<tr><td>' + esc(x.qui) + '</td><td>' + esc(x.de) + ' → ' + esc(x.vers) + '</td></tr>';
+    });
+    h += '</table>';
+  } else {
+    h += '<div class="alertes"><div>Personne dans les escaliers à cette minute.</div></div>';
+  }
+  e.innerHTML = h;
+}
+
+function rendreTravail(d) {
+  const t = d.tissu || {}, e = document.getElementById('travail');
+  let h = '<h2>Qui doit une journée <span class="compte">' +
+          (t.convocations || []).length + '</span></h2>';
+  (t.convocations || []).forEach(function (c) {
+    h += '<div class="alertes"><div><b>' + esc(c.qui) + '</b></div>';
+    (c.motifs || []).forEach(function (m) { h += '<div class="tiede">' + esc(m) + '</div>'; });
+    h += '</div>';
+  });
+  h += '<h2>Qui a quelque chose à dire <span class="compte">' +
+       (t.travaux || []).filter(function (x) { return x.verdict === 'parle'; }).length +
+       ' / ' + (t.travaux || []).length + '</span></h2>' +
+       '<table><tr><th>exc.</th><th>verdict</th><th>qui</th><th>affaire</th><th>pensées</th></tr>';
+  (t.travaux || []).forEach(function (x) {
+    h += '<tr><td>' + x.excitation + '</td><td>' + esc(x.verdict) + '</td><td>' +
+         esc(x.qui) + '</td><td>' + esc(x.affaire || '') +
+         (x.en_retard ? ' <b>EN RETARD</b>' : (x.due ? ' <b>DÛ</b>' : '')) +
+         '</td><td>' + x.pensees + '</td></tr>';
+  });
+  h += '</table>';
+  e.innerHTML = h;
+}
+
+function rendreEnFace(d) {
+  const P = (d.tissu || {}).en_face || [], e = document.getElementById('enface');
+  if (!P.length) { e.innerHTML = '<h2>En face</h2><div class="alertes"><div class="tiede">Aucun plan adverse écrit.</div></div>'; return; }
+  let h = '';
+  P.forEach(function (p) {
+    h += '<h2>' + esc(p.titre) + ' <span class="compte">' + esc(p.id) + '</span></h2>';
+    h += '<table><tr><th>verrou</th><th>portée pour nous</th><th></th></tr>';
+    (p.verrous || []).forEach(function (v) {
+      h += '<tr><td>' + esc(v.id) + '</td><td>' + esc(v.portee) + '</td><td>' +
+           esc(v.quoi) + '</td></tr>';
+    });
+    h += '</table>';
+    if ((p.engendre || []).length) {
+      h += '<h2>Ce que ça engendre chez nous</h2>';
+      p.engendre.forEach(function (x) {
+        h += '<div class="alertes"><div><b>[' + esc(x.type) + ']</b> ' +
+             esc(x.sujet) + '</div><div class="tiede">' + esc(x.pourquoi) + '</div></div>';
+      });
+    }
+    (p.tensions || []).forEach(function (x) {
+      h += '<div class="alertes"><div class="grave">' + esc(x.id) + ' — ' +
+           esc(x.monnaie) + '</div><div>' + esc(x.ecart) + '</div></div>';
+    });
+  });
+  e.innerHTML = h;
 }
 
 async function charger() {
@@ -201,6 +350,8 @@ async function charger() {
     + (d.tension === null ? "" : " · tension " + d.tension)
     + (d.phase ? " · " + d.phase : "");
   rendreTetes(d); rendreCalendrier(d); rendreActivites(d);
+  rendreTissu(d);
+  rendreMaison(d); rendreTravail(d); rendreEnFace(d);
   const hs = Object.keys(d.horloges || {})
     .map((k) => k + " " + d.horloges[k].jour + "." + String(Math.floor(d.horloges[k].minute / 60)).padStart(2, "0")
       + "h" + String(d.horloges[k].minute % 60).padStart(2, "0")).join("  ·  ");

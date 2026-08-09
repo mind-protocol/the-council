@@ -22,6 +22,12 @@
       <div class="zone-titre">Rétrospective</div>
       <div id="liste-retrospective"></div>
     </div>
+    <!-- la voix : le seul interrupteur qui coupe une dépense. Éteint, aucune
+         phrase ne part au serveur — donc aucun appel à Deepgram. -->
+    <div class="zone" id="zone-voix">
+      <div class="zone-titre">La voix</div>
+      <div id="zone-voix-corps"></div>
+    </div>
     <div class="zone" id="zone-reglages">
       <div class="zone-titre">Le narrateur</div>
       <div id="zone-reglages-corps"></div>
@@ -33,6 +39,7 @@
   <div id="bandeau">
     <span id="date">—</span>
     <span id="heure" hidden></span>
+    <span id="ecart" class="ecart" hidden></span>
     <span id="lieu">—</span>
     <span id="jauge" title="Tension du royaume"><i></i></span>
     <!-- Le siège : qui l'on incarne, et par où l'on en change. Caché tant qu'il
@@ -43,10 +50,9 @@
     </span>
   </div>
   <!-- le décor : quatre échelles d'une même guerre — le château où l'on est, la
-       ville qui l'entoure, le royaume où elle porte, le champ où elle se décide — et, en bandeau
-       dessous, qui est dans la salle. Les gens ne flottent pas autour de la
-       carte : ils sont rangés sous elle, comme une rangée de visages en face
-       de soi. -->
+       ville qui l'entoure, le royaume où elle porte, le champ où elle se décide.
+       Qui est dans la salle n'est plus ici : les présents tiennent leur propre
+       colonne, à gauche du fil (voir #acteurs, plus bas). -->
   <div id="decor">
     <div id="cartes">
       <!-- retiré du décor : le champ. Son hôte reste pour les modules qui le
@@ -59,11 +65,15 @@
       <div id="gens"></div>
       <div id="desseins"></div>
       <div id="books"></div>
+      <div id="nappe" class="vue-off"></div>
     </div>
-    <div id="acteurs"></div>
   </div>
 
 </div>
+
+<!-- les présents : une colonne de visages à gauche du texte, avec leur titre.
+     Le locuteur qui s'illumine est à hauteur de la ligne qu'on lit. -->
+<div id="acteurs"></div>
 
 <div id="fil">
   <div id="fil-corps"></div>
@@ -82,6 +92,8 @@
 <script src="/modules/pensees.js"></script>
 <script src="/modules/actions.js"></script>
 <script src="/modules/suites.js"></script>
+<script src="/modules/demandes.js"></script>
+<script src="/modules/ecrits.js"></script>
 <script src="/modules/geo.js"></script>
 <script src="/modules/loupe.js"></script>
 <script src="/modules/blasons.js"></script>
@@ -94,11 +106,15 @@
 <script src="/modules/terrain.js"></script>
 <script src="/modules/ville3d.js"></script>
 <script src="/modules/gens.js"></script>
+<!-- le carnet de rencontres : il lit le fil, il range « Les gens » -->
+<script src="/modules/vus.js"></script>
 <script src="/modules/objectifs.js"></script>
 <script src="/modules/desseins.js"></script>
-<script src="/modules/books.js"></script><script src="/modules/retrospective.js"></script>
+<script src="/modules/nappe.js"></script><script src="/modules/books.js"></script><script src="/modules/retrospective.js"></script>
+<script src="/modules/reperes.js"></script>
 <script src="/modules/reglages.js"></script>
 <script src="/modules/sieges.js"></script>
+<script src="/modules/defilement.js"></script>
 <script src="/modules/voix.js"></script>
 </body>
 </html>

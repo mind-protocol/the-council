@@ -654,11 +654,16 @@ window.Carte = (() => {
   const VISEE_PART = .5;           // au plus la moitié du royaume dans le cadre
   let vueAvantVisee = null, viseEnCours = null;
 
-  function viser(id) {
+  // `opts.tenir` : le cadrage RESTE. Un survol se repose de lui-même, un clic
+  // non — le joueur a demandé à voir la place, elle ne doit pas lui filer sous
+  // les yeux au premier mouvement de souris.
+  function viser(id, opts) {
+    const tenir = !!(opts && opts.tenir);
     const hote = document.getElementById("carte");
     // le royaume n'est pas l'échelle affichée : on ne bascule pas le décor sous
-    // les yeux du joueur pour un simple survol
-    if (!hote || hote.classList.contains("vue-off")) return false;
+    // les yeux du joueur pour un simple survol. Un clic, lui, a le droit de la
+    // rappeler — c'est à l'appelant de l'avoir fait avant.
+    if (!hote || (!tenir && hote.classList.contains("vue-off"))) return false;
     const p = window.Jetons && Jetons.position(id);
     if (!p) return false;
     if (viseEnCours === null) vueAvantVisee = vueVignette;
@@ -672,6 +677,9 @@ window.Carte = (() => {
       Math.max(min, Math.min(v, min + etendue - taille));
     vueVignette = [borner(p[0] - l / 2, b[0], b[2], l),
                    borner(p[1] - h / 2, b[1], b[3], h), l, h];
+    // Tenir, c'est faire de ce cadrage le NOUVEAU repos : un survol qui suivra
+    // reviendra ici et non à l'ancienne vue, qui n'a plus cours.
+    if (tenir) { vueAvantVisee = vueVignette; viseEnCours = null; }
     poserVignette(hote);
     return true;
   }
