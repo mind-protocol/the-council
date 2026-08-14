@@ -159,6 +159,8 @@ function main() {
   const corps = lire("corps.json", { affectations: {} });
   const joueurs = lire("joueurs.json", []);
   const bataille = lire("bataille.json", null);
+  const presence = (lire("presence.json", { presence: {} }) || {}).presence || {};
+  const persos = lire("personnages.json", []);
 
   if (!bataille || !bataille.debut) {
     process.stdout.write("Aucune bataille datée (etat/bataille.json). Rien à croiser.\n");
@@ -195,24 +197,64 @@ function main() {
       "  Recuisez : node scripts/monde/sac.js --sortie portreal.sac\n");
   process.stdout.write("\n");
 
+  // OÙ EST CET HOMME, EN MÈTRES — et l'on DÉDUIT sans jamais INVENTER.
+  //
+  // La règle d'avant refusait tout ce qui n'était pas une marche : « un siège
+  // qui n'a jamais marché n'a pas de mètres ». Prudent, et trop : elle
+  // confondait deviner et déduire. Personne ne sait où est un homme dont le
+  // jeu ne dit rien — mais quand `presence` dit qu'il est au Culpucier et que
+  // `corps.json` dit où est le Culpucier, sa position n'est pas une invention,
+  // c'est une lecture. La refuser, c'est rendre la moitié du monde aveugle à
+  // une bataille qui se passe à cent pas.
+  //
+  // Trois prises, de la plus précise à la plus large, et l'on dit toujours
+  // laquelle a servi — parce qu'un homme situé à sa SALLE n'est pas situé au
+  // mètre près, et que le MJ doit pouvoir en tenir compte.
+  // LES MÈTRES D'UN MONDE NE VALENT PAS DANS L'AUTRE, et c'est le premier bug
+  // que ce pont a produit : Rhaenyra, à Peyredragon, « trouvait une maison
+  // noircie » de la bataille de Port-Réal. Sa Table Peinte est en [4459, 2099]
+  // DANS L'ESPACE DE PEYREDRAGON, et ces mètres-là tombent par hasard au milieu
+  // de Port-Réal. Le doc d'`affecter.py` le dit déjà : « l'unicité porte sur la
+  // PAIRE (monde, bat) ». Une position sans son monde n'est pas une position.
+  // Le monde de la bataille : celui du sac, à défaut celui qu'on a demandé.
+  const cible = (bataille && bataille.sac) || o.lieu || "portreal";
+  const meme = (v) => ((v && v.monde) || "portreal").replace(/-/g, "") ===
+                      String(cible).replace(/-/g, "");
+  const ou = (pid) => {
+    const a = corps.affectations;
+    const p = presence[pid] || {};
+    const direct = a["personnage:" + pid];
+    if (direct && direct.xyz && meme(direct)) return { xyz: direct.xyz, par: "ses pas" };
+    const salle = p.salle && (a["salle:" + p.salle] || a["lieu:" + p.salle]);
+    if (salle && salle.xyz && meme(salle))
+      return { xyz: salle.xyz, par: "la salle où il se tient (" + p.salle + ")" };
+    const f = (Array.isArray(persos) ? persos : persos.personnages || [])
+      .find((x) => x && x.id === pid);
+    const lieu = f && f.lieu_id && a["lieu:" + f.lieu_id];
+    if (lieu && lieu.xyz && meme(lieu))
+      return { xyz: lieu.xyz, par: "son lieu (" + f.lieu_id + ")" };
+    return null;
+  };
+
   for (const s of sieges) {
-    const aff = corps.affectations["personnage:" + s.personnage_id];
-    // SANS POSITION, PAS DE PERCEPTION — et l'on ne devine pas. Un siège qui
-    // n'a jamais marché n'a pas de mètres ; lui en inventer reviendrait à
-    // décider qu'il était quelque part, ce qui est très exactement ce que ce
-    // script ne doit pas faire.
-    if (!aff || !aff.xyz) {
-      process.stdout.write("— " + s.nom + " : aucune position en mètres " +
-        "(il n'a pas encore marché). Rien ne peut lui parvenir.\n\n");
+    const trouve = ou(s.personnage_id);
+    if (!trouve) {
+      process.stdout.write("— " + s.nom + " : aucune position en mètres, et rien " +
+        "dans presence ni corps.json d'où la déduire. Rien ne peut lui parvenir.\n\n");
       continue;
     }
+    const aff = { xyz: trouve.xyz };
     // L'heure de SON siège, qui n'est pas forcément celle du monde.
     const h = horloges[s.personnage_id] || {};
     const jour = o.jour !== null ? o.jour : (h.jour !== undefined ? h.jour : d0.jour);
     const minute = o.minute !== null ? o.minute
                  : (h.minute !== undefined ? h.minute : d0.minute);
 
-    process.stdout.write("— " + s.nom + "  (jour " + jour + ", " + HEURE(minute) + ")\n");
+    // On DIT par quoi il est situé : « ses pas » vaut le mètre, « la salle où
+    // il se tient » vaut la pièce, et la différence change ce qu'on peut lui
+    // faire percevoir sans mentir.
+    process.stdout.write("— " + s.nom + "  (jour " + jour + ", " + HEURE(minute) +
+      ", situé par " + trouve.par + ")\n");
 
     if (o.balayage) {
       // CE QUI VA TOMBER, ET QUAND. Le MJ prépare son tour : il veut savoir
