@@ -65,10 +65,17 @@
     "nom": "Nicolas",
     "role": "second",
     "pnj": [
-      "yohanna-reynolds"
+      "yohanna-reynolds",
+      "sarn-vieux-sang",
+      "bren-racine-grise",
+      "ygga-main-de-pierre",
+      "toll-oeil-noir",
+      "wenna-la-nommeuse"
     ],
     "occupe": false,
-    "note": "Siege cree le 28e j., 3e lune, an 129. VACANT pour l'instant : il a donc une tete dans intentions.json et le monde le joue comme n'importe quel absent. Pour s'y asseoir : python scripts/sieges.py --asseoir nicolas-reynolds --vraiment (la tete part alors dans etat/archive/tetes/)."
+    "note": "Siege cree le 28e j., 3e lune, an 129 ; deplace a Barralfond le 3e j., 4e lune. VACANT : il a une tete dans intentions.json et le monde le joue comme un absent. Barralfond ne vit vraiment que quand on s'y assoit — python scripts/sieges.py --asseoir nicolas-reynolds --vraiment. Ses cinq architectes touchent au MOTEUR, jamais a l'etat joue.",
+    "lieu": "barralfond",
+    "salle": "la-souche"
   },
   {
     "jeton": "corneille-guet-9042",

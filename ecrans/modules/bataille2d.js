@@ -1315,7 +1315,7 @@ window.Bataille2d = (() => {
       // Ce qu'il fait RÉELLEMENT sous les pieds, en mètres par seconde. Les
       // allures (`MARCHE`, `CHARGE`, `FUITE`) ne sont que des consignes ; cette
       // valeur-ci les rattrape à `ACCEL` près, et elle part de l'arrêt.
-      vit: 0,
+      vit: 0, pousse: false,
       // DE QUELLE MAIN IL TIENT. Tiré une fois, à la naissance, comme l'arme :
       // une main qui changerait d'un battement à l'autre ferait sauter le fer
       // d'un côté à l'autre du corps vingt fois par seconde. Un sur dix est
@@ -2151,6 +2151,8 @@ window.Bataille2d = (() => {
     const vit = h.vit || 0;
     h.vit = vit < v ? Math.min(v, vit + accel * dt)
                     : Math.max(v, vit - FREIN_PIED * dt);
+    // Il a poussé ce battement : `soldat` ne le freinera pas au suivant.
+    h.pousse = true;
     const pas = Math.min(h.vit * dt, d);
     h.x += (dx / d) * pas; h.y += (dy / d) * pas;
     return d - pas;
@@ -3098,12 +3100,25 @@ window.Bataille2d = (() => {
     tourner(h, dt);
     // ET L'ERRE RETOMBE QUAND PLUS RIEN NE POUSSE. Un homme qui cesse de
     // marcher — il est entré en mêlée, il souffle, il attend — ne passe par
-    // aucun `versLe` ce battement-là : sans cette ligne, sa vitesse resterait
-    // en réserve et il repartirait à pleine allure trois secondes plus tard,
-    // depuis l'arrêt. On freine donc d'abord, et `versLe` relance ensuite s'il
-    // y a lieu : quand il marche pour de bon, la rampe rattrape sa consigne
-    // dans le même battement et l'on n'a rien perdu.
-    if (h.vit) h.vit = Math.max(0, h.vit - FREIN_PIED * dt);
+    // aucun `versLe` ce battement-là, et sans ce freinage sa vitesse resterait
+    // en réserve : il repartirait à pleine allure, depuis l'arrêt, trois
+    // secondes plus tard.
+    //
+    // ⚠ SEULEMENT S'IL N'A PAS POUSSÉ, ET C'EST TOUTE L'AFFAIRE. La première
+    // écriture freinait à chaque battement en pariant que `versLe` relancerait
+    // dans le même : « la rampe rattrape sa consigne ». Elle ne la rattrape
+    // pas — la rampe monte à `ACCEL` (1,4) et le frein descend à `FREIN_PIED`
+    // (3,0), qui est plus grand PAR CONSTRUCTION puisqu'on s'arrête mieux
+    // qu'on ne part. Le solde était donc négatif à chaque tour et la vitesse
+    // de tout le monde s'effondrait vers zéro. Mesuré : mille sept cents
+    // hommes qui n'atteignent jamais la porte, zéro contact, zéro blessé, la
+    // porte seulement `abimee` au bout de dix minutes. Une bataille qui n'a
+    // pas eu lieu.
+    //
+    // Le drapeau se lit AVANT d'être remis à faux, donc il porte l'état du
+    // battement précédent — un pas de retard, et aucune horloge à comparer.
+    if (!h.pousse && h.vit) h.vit = Math.max(0, h.vit - FREIN_PIED * dt);
+    h.pousse = false;
     // On repart libre à chaque pas : seul celui qui est effectivement sur sa
     // trace, plus bas, se redéclarera sur voie. Sans cette remise à zéro, un
     // homme qui quitte la colonne pour la mêlée garde une tangente périmée et

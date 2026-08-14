@@ -793,4 +793,93 @@ window.Plans = {
         alias: [], motifs: ["le mouillage", "mouillage des mortes"] },
     ],
   },
+
+  // ===========================================================================
+  // BARRALFOND — la ville sous l'arbre, au nord du Mur.
+  //
+  // Ce n'est pas un château : c'est un barral et ce qu'on a creusé dedans. Le
+  // plan est donc celui d'un ARBRE vu de dessus — le tronc creux au milieu, les
+  // salles posées sur les racines qui en partent, la clairière tout autour.
+  //
+  // Les Premiers Hommes qui vivent là travaillent le GRAIN DE LA RÉALITÉ : ce
+  // qui est gravé sous l'écorce fait la loi de ce qui existe. Chaque salle donne
+  // accès à une nappe différente de ce grain, et c'est à ça qu'elle sert — on ne
+  // pose pas la même question au Lit des Racines et à l'Arbre des Âges, parce
+  // qu'on n'y a pas les mêmes choses sous la main.
+  // ===========================================================================
+  barralfond: {
+    nom: "Barralfond",
+    viewBox: "0 0 420 340",
+
+    // Le nord est gelé, le sud est la forêt d'où l'on vient. Ni l'un ni l'autre
+    // ne se clique.
+    fonds: [
+      { classe: "plan-roche", d: "M0,0 L420,0 L420,38 Q330,64 246,46 Q160,26 88,52 Q42,68 0,44 Z" },
+      { classe: "plan-vase", d: "M0,300 Q112,288 214,298 Q318,308 420,292 L420,340 L0,340 Z" },
+    ],
+    // Pas de muraille : le bourrelet de racines, qui fait le tour et qu'on
+    // enjambe. Il tient le même rôle — dedans, dehors.
+    mur: "M52,96 L126,72 L256,68 L352,90 L384,156 L368,240 L296,272 L142,276 L58,248 L36,172 Z",
+    guet: [[52, 96], [126, 72], [256, 68], [352, 90], [384, 156],
+           [368, 240], [296, 272], [142, 276], [58, 248], [36, 172]],
+    decor: [
+      { classe: "plan-arete", d: "M20,40 L46,16 L72,38" },
+      { classe: "plan-arete", d: "M88,46 L122,10 L156,40" },
+      { classe: "plan-arete", d: "M172,28 L200,6 L228,30" },
+      { classe: "plan-arete", d: "M248,40 L280,14 L312,38" },
+      { classe: "plan-arete", d: "M328,42 L356,20 L386,44" },
+      { classe: "plan-vague", d: "M18,312 q16,-6 32,0 q16,6 32,0 q16,-6 32,0" },
+      { classe: "plan-vague", d: "M158,308 q16,-6 32,0 q16,6 32,0 q16,-6 32,0" },
+      { classe: "plan-vague", d: "M296,304 q16,-6 32,0 q16,6 32,0 q16,-6 32,0" },
+    ],
+    etiquettes: [
+      { x: 112, y: 24, texte: "Le Mur, à trente lieues", classe: "plan-large" },
+      { x: 126, y: 328, texte: "La forêt hantée", classe: "plan-large" },
+    ],
+    rose: [386, 306, 14],
+
+    salles: [
+      { id: "clairiere", nom: "La clairière", fond: true,
+        forme: { d: "M52,96 L126,72 L256,68 L352,90 L384,156 L368,240 L296,272 L142,276 L58,248 L36,172 Z" },
+        etiq: [96, 132], lignes: ["La clairière"],
+        quoi: "Les huttes, le feu, et tout ce qui entre. On y croise tout le monde une fois par jour, et c'est là qu'on apprend ce que les autres ont trouvé.",
+        orne: ["arbres", 92, 216, 8],
+        alias: [], motifs: ["la clairiere", "clairière", "les huttes"] },
+
+      { id: "la-souche", nom: "La Souche", cle: true,
+        forme: { c: [204, 160, 50] }, etiq: [204, 148],
+        lignes: ["La Souche"],
+        quoi: "Le tronc creux, le cœur de l'arbre. Toutes les affaires ouvertes y sont gravées : ce qu'on veut atteindre, ce qui l'empêche, ce qui le lèverait. On y vient savoir pourquoi on travaille.",
+        orne: ["rouleau", 204, 192, 7],
+        alias: ["la Souche"], motifs: ["la souche", "le tronc", "tronc creux"] },
+
+      { id: "arbre-des-ages", nom: "L'Arbre des Âges", cle: true, etage: "sommet",
+        forme: { c: [204, 56, 30] }, etiq: [204, 50],
+        lignes: ["L'Arbre", "des Âges"],
+        quoi: "On monte aux branches, et chaque anneau du bois porte un état passé du monde. Tout ce que la maison a déjà tenté s'y relit : la forme qu'on avait prise, et ce qu'il en est resté.",
+        orne: ["etoile", 204, 76, 6],
+        alias: ["l'Arbre des Âges"], motifs: ["arbre des ages", "les ages", "les anneaux"] },
+
+      { id: "etabli", nom: "L'Établi", cle: true,
+        forme: { r: [292, 118, 100, 58, 10] }, etiq: [342, 142],
+        lignes: ["L'Établi"],
+        quoi: "Les outils, la lumière, et la matière ouverte devant soi. C'est ici que la chose se fait — et qu'elle se rend finie, éprouvée, avec sa ligne au cahier déjà écrite.",
+        orne: ["enclume", 342, 160, 7],
+        alias: ["l'Établi"], motifs: ["l'etabli", "etabli", "l'établi"] },
+
+      { id: "lit-des-racines", nom: "Le Lit des Racines", cle: true, etage: "dessous",
+        forme: { r: [30, 186, 118, 64, 14] }, etiq: [89, 210],
+        lignes: ["Le Lit", "des Racines"],
+        quoi: "Trois toises sous terre, la nappe entière se touche : de n'importe quel fil on remonte à tout ce qui s'y accroche. C'est ici qu'on trouve ce que personne n'avait vu.",
+        orne: ["colimacon", 89, 236, 7],
+        alias: ["le Lit des Racines"], motifs: ["lit des racines", "les racines", "la nappe"] },
+
+      { id: "bassin-noir", nom: "Le Bassin noir", etage: "dessous",
+        forme: { c: [318, 238, 32] }, etiq: [318, 232],
+        lignes: ["Le Bassin", "noir"],
+        quoi: "Une eau qui ne bouge pas, où l'on jette ce qu'on vient de changer pour voir ce que ça donne. Ce qui en ressort est tenu, et l'on sait de combien.",
+        orne: ["cuve", 318, 256, 6],
+        alias: ["le Bassin noir"], motifs: ["bassin noir", "le bassin"] },
+    ],
+  },
 };
