@@ -83,6 +83,9 @@ ETAPES = [
     dict(id="degager", script="degager_voirie.py", nom="Le dégagement",
          pourquoi="sortir l'axe des rues des façades",
          veut=["graph.json", "bati.json"], donne=["graph.json"], minutes=2),
+    dict(id="rues", script="rues.py", nom="Les rues",
+         pourquoi="la surface du graphe, seule, pour ceux qui marchent",
+         veut=["graph.json"], donne=["rues.json"], minutes=1),
     dict(id="peupler", script="peupler.py", nom="Les corps",
          pourquoi="quatre cent mille habitants, chacun dans une maison",
          veut=["bati.json"], donne=["gens.json", "gens/"], minutes=4,
@@ -238,7 +241,7 @@ def lancer(e, prefixe, lieu, pose, sec):
     # Chaque script a sa façon de nommer le lieu, et l'uniformiser serait
     # toucher à onze fichiers pour une cosmétique : on s'adapte ici.
     if lieu != "port-real":
-        cmd += (["--lieu", lieu] if e["id"] == "plan" else [lieu])
+        cmd += (["--lieu", lieu] if e["id"] in ("plan", "rues") else [lieu])
     if sec:
         return ("sec", " ".join(cmd[1:])), None
 
