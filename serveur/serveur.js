@@ -5252,7 +5252,26 @@ http
           const pres = repereProche(lieu, x, y);
           // Devant chez quelqu'un, on dit chez qui — pas ce que c'est.
           const devant = autour.connus[0] || autour.gros;
-          const dit = (pres ? "À " + pres.a + " pas de " + pres.nom : "Dans la ville") +
+          // « de » S'ÉLIDE, et cette phrase-là est sous les yeux du joueur : elle
+          // va dans `presence.lieu`, c'est-à-dire dans le bandeau, et dans le sac
+          // que lit le MJ. Les repères portent leur article — « Le Donjon Rouge »,
+          // « La porte de Fer » —, d'où « à 263 pas de La porte de Fer » tant
+          // qu'on collait « de » devant sans regarder.
+          // `les` AVANT `le` dans l'alternation : une regex essaie ses branches
+          // de gauche à droite, et « le » mordait dans « Les casernes » — d'où
+          // « du s casernes du guet ». C'est la faute qu'on ne voit qu'en
+          // essayant les vrais noms de la table.
+          const dePlace = (nom) => {
+            const s = String(nom || "").trim();
+            const m = s.match(/^(les|la|le|l')\s*/i);
+            // Pas d'article du tout : « de » s'élide quand même devant voyelle.
+            if (!m) return (/^[aeiouyàâéèêîïôöûü]/i.test(s) ? "d'" : "de ") + s;
+            const reste = s.slice(m[0].length);
+            const a = m[1].toLowerCase();
+            return (a === "le" ? "du " : a === "les" ? "des " :
+                    a === "la" ? "de la " : "de l'") + reste;
+          };
+          const dit = (pres ? "À " + pres.a + " pas " + dePlace(pres.nom) : "Dans la ville") +
             (devant ? ", devant " + (devant.nom || metier(devant.usage)) : "");
           if (pid) {
             corpsJson.affectations["personnage:" + pid] = {
