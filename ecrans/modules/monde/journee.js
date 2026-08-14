@@ -479,6 +479,24 @@ function surLaVoie(tr, avance, cote, largeur, p) {
   }
 }
 
+// --- les stations d'une halte ----------------------------------------------
+// Où se tient un badaud à sa n-ième station, en écart au point d'arrivée. Rien
+// n'est stocké : la station se tire du hachage, exactement comme les heures.
+// Les deux bouts valent zéro — voir la note dans `ou()` : c'est la porte.
+//
+// Deux tampons de module plutôt qu'un couple de tableaux neufs : la fonction
+// est appelée deux fois par corps et par passe, soit huit cent mille fois pour
+// Port-Réal, et une allocation par appel se paie en ramassage de miettes —
+// c'est-à-dire en images sautées, ce qu'on est précisément en train de corriger.
+const _st0 = [0, 0], _st1 = [0, 0];
+function station(id, jour, i, N, etendue, o) {
+  if (i <= 0 || i >= N) { o[0] = 0; o[1] = 0; return o; }
+  const a = melange(id, 13 + i * 2, jour) * 6.283;
+  const r = Math.sqrt(melange(id, 11 + i * 2, jour)) * etendue;
+  o[0] = Math.cos(a) * r; o[1] = Math.sin(a) * r;
+  return o;
+}
+
 /**
  * Où est ce corps à cette minute — la fonction pure, le cœur du module.
  * Rend {x, y, z, quoi} : "chez" (à son adresse), "route" (en chemin),
@@ -570,17 +588,29 @@ export function ou(cel, k, jour, minute, v, rangs, out) {
       // la minute, le tiers d'un homme qui marche.
       const pas = 1.5 + etendue / 14;
       const s = (minute - e.debut) / pas, n = Math.floor(s), f = s - n;
+      // ON ARRIVE PAR LA PORTE, ET L'ON REPART PAR ELLE. La première station et
+      // la dernière ne sont pas tirées au sort : ce sont le bout du chemin.
+      //
+      // Sans ça, la minute où l'on cesse de marcher, le badaud saute d'un coup
+      // à la station qu'on lui a tirée — jusqu'à CINQUANTE-CINQ MÈTRES au grand
+      // marché, puisque c'est l'étendue de la place — et il ressaute d'autant
+      // en sens inverse quand il repart. Mesuré sur trois mille corps : c'est le
+      // plus gros saut visible de la foule, et le seul que l'extrapolation du
+      // dessin ne puisse pas rattraper — elle lisse une vitesse, pas un
+      // changement d'endroit.
+      //
+      // `N` est le nombre de stations que la halte contient. Aux deux bouts, la
+      // station vaut zéro, c'est-à-dire le point d'arrivée exactement : on entre
+      // sur la place, on flâne, on revient à la porte avant de reprendre la rue.
+      const N = Math.max(1, Math.floor((e.fin - e.debut) / pas));
       // Adouci aux deux bouts : on ralentit en arrivant à l'étal et l'on
       // repart sans à-coup. Une interpolation droite donnerait un défilé de
       // points à vitesse constante, ce qui est l'autre façon de ne pas faire
       // une foule.
       const u = f * f * (3 - 2 * f);
-      const ax = melange(id, 13 + n * 2, jour) * 6.283,
-            ar = Math.sqrt(melange(id, 11 + n * 2, jour)) * etendue,
-            bx = melange(id, 15 + n * 2, jour) * 6.283,
-            br = Math.sqrt(melange(id, 13 + n * 2, jour)) * etendue;
-      const x0 = Math.cos(ax) * ar, y0 = Math.sin(ax) * ar,
-            x1 = Math.cos(bx) * br, y1 = Math.sin(bx) * br;
+      station(id, jour, n, N, etendue, _st0);
+      station(id, jour, n + 1, N, etendue, _st1);
+      const x0 = _st0[0], y0 = _st0[1], x1 = _st1[0], y1 = _st1[1];
       p.x = q[0] + x0 + (x1 - x0) * u;
       p.y = q[1] + y0 + (y1 - y0) * u;
       // La dérivée de l'adouci : `u = f²(3-2f)` donc `du/df = 6f(1-f)`, et `f`

@@ -356,7 +356,28 @@ window.Foule2d = (() => {
   // Le nuage PARTIEL est publié à chaque tranche : on dessine ce qu'on a. Un
   // compteur qui monte pendant deux secondes vaut mieux qu'un compteur juste
   // qui arrive après le gel.
-  const BUDGET = 9;                    // millisecondes par image
+  // LE BUDGET SUIT L'IMAGE, IL NE LA COMMANDE PAS.
+  //
+  // Neuf millisecondes fixes étaient neuf millisecondes prises À QUELQU'UN : le
+  // plan, la chronique et le reste de la page se partagent les seize
+  // millisecondes d'une image, et la foule en mangeait plus de la moitié. Coût
+  // mesuré en régime chaud, cadrage ville entière : 12,5 ms de médiane par
+  // image pour cette seule couche, avec des queues à 21 ms — c'est-à-dire une
+  // image sur cinq perdue, et une foule qui avance par à-coups alors que son
+  // calcul, lui, est parfaitement continu.
+  //
+  // On mesure donc l'image RÉELLE (l'écart entre deux passages de `image()`) et
+  // l'on rend au dessin ce qu'il lui faut : quand l'image dépasse, la tranche
+  // maigrit ; quand elle respire, elle regrossit. La foule met alors un peu plus
+  // longtemps à se remplir, ce qui ne se voit pas — elle se remplit déjà par
+  // vagues —, et elle cesse de faire sauter tout ce qui est autour.
+  const BUDGET_MAX = 9, BUDGET_MIN = 2;
+  let BUDGET = BUDGET_MAX;
+  function doser(ecart) {
+    if (!ecart || ecart > 400) return;   // un onglet revenu au premier plan
+    if (ecart > 20) BUDGET = Math.max(BUDGET_MIN, BUDGET - 1);
+    else if (ecart < 15) BUDGET = Math.min(BUDGET_MAX, BUDGET + 0.5);
+  }
   let travail = null;                  // la tranche en cours, s'il y en a une
 
   function calculer(complet) {
@@ -395,13 +416,20 @@ window.Foule2d = (() => {
         const k = t.k++;
         // ON REGARDE L'HORLOGE SOUVENT, et c'est tout le sujet. Une personne
         // ne coûte rien la deuxième fois — mais la PREMIÈRE, sa journée se
-        // calcule et ses chemins se cherchent sur le graphe. Mille personnes
-        // d'affilée, au premier passage, c'est trois secondes : le budget de
-        // neuf millisecondes ne veut plus rien dire, et la page gèle malgré
-        // lui. Toutes les trente-deux, la lecture de l'horloge est
-        // indolore (une nanoseconde contre le calcul qu'elle borne) et le
-        // dépassement reste de l'ordre de ce qu'un seul chemin coûte.
-        if (!complet && (++garde & 31) === 0 && performance.now() - t0 > BUDGET) {
+        // calcule et ses chemins se cherchent sur le graphe.
+        //
+        // TOUTES LES TRENTE-DEUX, C'ÉTAIT TRENTE-DEUX DE TROP. Le raisonnement
+        // tenait (la lecture de l'horloge est indolore, on l'espace) mais il
+        // comptait sur des corps de coût comparable : au premier passage, trente-
+        // deux journées froides d'affilée coûtent des dizaines de millisecondes,
+        // et le budget ne veut plus rien dire. Mesuré à l'ouverture : des images
+        // à 65 et 83 ms — quatre à cinq images perdues d'un coup, et c'est le
+        // hoquet le plus visible du module.
+        //
+        // Toutes les quatre, le dépassement retombe à l'ordre d'UN chemin, et
+        // les cent mille lectures d'horloge que coûte une passe complète se
+        // comptent en trois millisecondes sur la passe entière.
+        if (!complet && (++garde & 3) === 0 && performance.now() - t0 > BUDGET) {
           t.cout += performance.now() - t0;
           publier(t, false, false);
           return;
@@ -567,7 +595,14 @@ window.Foule2d = (() => {
   // Une ville en pause n'est pas une ville vide : c'est une ville arrêtée sur
   // une minute, et cette minute-là a ses habitants dans ses rues.
   let sale = true;
+  let avantImage = 0;
   function image() {
+    // Ce que la DERNIÈRE image a réellement coûté, tout compris — la foule, le
+    // plan, la chronique, le navigateur. C'est le seul chiffre qui dise si l'on
+    // a de la place pour calculer, et c'est lui qui règle la tranche.
+    const t0i = performance.now();
+    if (avantImage) doser(t0i - avantImage);
+    avantImage = t0i;
     horloge();
     // L'HEURE S'AFFICHE MÊME QUAND ON NE PEINT RIEN. Une carte repliée n'a pas
     // de largeur, donc pas de dessin — mais l'horloge, elle, tourne quand même,
@@ -751,7 +786,7 @@ window.Foule2d = (() => {
       toile: toile ? [toile.width, toile.height] : null,
       vue: vueDe && vueDe(),
       metresParPixel: rep ? +(1 / rep.k).toFixed(2) : null,
-      periode: PERIODE, pret: !!voirie, plafond: MAX_ECRAN,
+      periode: PERIODE, budget: +BUDGET.toFixed(1), pret: !!voirie, plafond: MAX_ECRAN,
       partiel: !!travail, tronque: !!nuage.tronque,
     };
   }
