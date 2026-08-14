@@ -338,6 +338,124 @@ def _index_voies(rues):
     return segs, grille
 
 
+# ---------------------------------------------------------------------------
+# LES TRONÇONS SE RECHAÎNENT EN RUES — sans quoi il n'y a pas de front
+# ---------------------------------------------------------------------------
+# Un front de rue, c'est une RUE, pas un morceau de graphe. Or `rues.json` en
+# compte QUARANTE-CINQ MILLE CENT CINQUANTE ET UN pour une ville de cinq
+# kilomètres sur trois et demi : `portes.py` coupe chaque arête de surface à
+# l'abscisse de chacune de ses portes — c'est ce qu'il doit faire, une porte
+# donne sur la rue devant elle — et `coudre.py` en fait autant aux entrées et
+# aux porches. Ce qui reste est un confetti par maison.
+#
+# CE QUE ÇA COÛTAIT, mesuré : groupés par tronçon, 33 049 fronts sur 38 575 ne
+# portaient QU'UNE SEULE maison, et 8,4 % du bâti seulement atteignait les trois
+# maisons qu'exige `MITOYENS_MIN`. La mitoyenneté ne pouvait donc pas se
+# produire : elle n'avait pas de rue où se produire. Ce n'était pas un seuil mal
+# réglé, c'était la clef de regroupement.
+#
+# ON RECHAÎNE DONC AVANT DE GROUPER. Deux tronçons se suivent quand ils se
+# touchent à un nœud où RIEN D'AUTRE n'aboutit (un vrai carrefour en a trois),
+# qu'ils sont de la même classe, et que la rue ne casse pas d'angle. Une chaîne
+# est alors une rue au sens où un passant l'entend : une longueur, un côté, un
+# rang de façades.
+#
+# Ça ne déplace rien tout seul : chaque maison reste posée sur SON tronçon, avec
+# le cap de ce tronçon-là — une rue qui tourne garde ses maisons qui tournent.
+# Seuls le GROUPEMENT et l'abscisse changent d'échelle.
+ANGLE_CHAINE = 30.       # au-delà, ce n'est plus la même rue mais un tournant
+
+
+def _chainer(segs):
+    """Recoud les tronçons en rues. Rend de quoi passer de l'un à l'autre.
+
+    `par_seg[e]` = (chaîne, offset du tronçon dans la chaîne, sens ±1) ;
+    `longueur[c]`, `classe[c]` ; `situer(c, S)` rend (tronçon, abscisse locale).
+    """
+    # Qui aboutit où. Les coordonnées de `rues.json` sont écrites au décimètre :
+    # la clef est donc exacte, comme dans `journee.js`.
+    clef = lambda x, y: (round(x * 10), round(y * 10))
+    bouts = {}
+    for e, (x1, y1, x2, y2, cap, g, lg) in enumerate(segs):
+        bouts.setdefault(clef(x1, y1), []).append((e, 0))
+        bouts.setdefault(clef(x2, y2), []).append((e, 1))
+
+    def suivant(e, bout):
+        """Le tronçon qui prolonge `e` par ce bout-là, ou None."""
+        x1, y1, x2, y2, cap, g, lg = segs[e]
+        n = clef(x2, y2) if bout == 1 else clef(x1, y1)
+        ici = bouts.get(n, ())
+        if len(ici) != 2:            # un carrefour, un cul-de-sac : la rue s'arrête
+            return None
+        f, bf = ici[0] if ici[0][0] != e else ici[1]
+        if f == e or segs[f][5] != g:
+            return None
+        # L'angle se mesure dans le SENS DE PARCOURS : le tronçon suivant est
+        # pris à l'endroit s'il nous présente son début, à l'envers sinon.
+        cf = segs[f][4] + (180. if bf == 1 else 0.)
+        ce = cap + (180. if bout == 0 else 0.)
+        if abs((cf - ce + 180.) % 360. - 180.) > ANGLE_CHAINE:
+            return None
+        return f, bf
+
+    par_seg, longueur, classe, ordre = {}, {}, {}, {}
+    cid = 0
+    for e0 in range(len(segs)):
+        if e0 in par_seg:
+            continue
+        # Remonter jusqu'au début de la rue, puis la parcourir d'un bout à
+        # l'autre. On garde une garde de boucle : une rue en anneau (ça existe,
+        # une place ronde) se refermerait sinon sur elle-même sans fin.
+        debut, sens, vus = e0, 1, {e0}
+        while True:
+            pr = suivant(debut, 0 if sens > 0 else 1)
+            if pr is None:
+                break
+            f, bf = pr
+            if f in vus:
+                break
+            vus.add(f)
+            # On arrive par le bout `bf` de `f` : il se parcourt donc vers
+            # l'autre bout, c'est-à-dire à l'endroit si l'on est entré par sa
+            # fin, à l'envers si l'on est entré par son début.
+            debut, sens = f, (1 if bf == 1 else -1)
+        suite, off = [], 0.
+        e, s = debut, sens
+        vus = set()
+        while e is not None and e not in vus:
+            vus.add(e)
+            par_seg[e] = (cid, off, s)
+            suite.append((off, e))
+            off += segs[e][6]
+            nx = suivant(e, 1 if s > 0 else 0)
+            if nx is None:
+                break
+            f, bf = nx
+            e, s = f, (1 if bf == 0 else -1)
+        longueur[cid] = off
+        classe[cid] = segs[debut][5]
+        ordre[cid] = suite
+        cid += 1
+
+    def situer(c, S):
+        suite = ordre[c]
+        S = min(max(S, 0.), longueur[c])
+        lo, hi = 0, len(suite) - 1
+        while lo < hi:                       # le dernier tronçon dont l'offset ≤ S
+            mi = (lo + hi + 1) // 2
+            if suite[mi][0] <= S:
+                lo = mi
+            else:
+                hi = mi - 1
+        off, e = suite[lo]
+        lg = segs[e][6]
+        d = min(max(S - off, 0.), lg)
+        return e, (d if par_seg[e][2] > 0 else lg - d)
+
+    return {"par_seg": par_seg, "longueur": longueur, "classe": classe,
+            "ordre": ordre, "situer": situer, "n": cid}
+
+
 def _voie_de_la_porte(px, py, segs, grille):
     """Le tronçon de voie le plus proche du point : (rang, abscisse, côté).
 
@@ -407,8 +525,9 @@ def redresser(source, rues):
         return poses
     ipx, ipy = col.index("porte_x"), col.index("porte_y")
     segs, grille = _index_voies(rues)
+    ch = _chainer(segs)
 
-    fronts = {}                       # (tronçon, côté) → les maisons qui y donnent
+    fronts = {}                       # (rue, côté) → les maisons qui y donnent
     orphelins = 0
     for k, r in enumerate(source["bati"]):
         px, py = r[ipx], r[ipy]
@@ -432,14 +551,18 @@ def redresser(source, rues):
         # le corps doit s'y projeter positivement, d'où ce signe-ci et pas
         # l'autre.
         cote = 1. if ((r[iy] - ay) * ex - (r[ix] - ax) * ey) >= 0 else -1.
-        fronts.setdefault((e, cote), []).append((k, s))
+        # ON GROUPE PAR RUE, PAS PAR TRONÇON. Le côté et l'abscisse passent dans
+        # le repère de la CHAÎNE : un tronçon pris à l'envers a sa gauche du
+        # côté droit de la rue, et l'oublier mêlerait les deux fronts.
+        cid, off, sens = ch["par_seg"][e]
+        S = off + (s if sens > 0 else lg_ - s)
+        fronts.setdefault((cid, cote * sens), []).append((k, S))
 
     tournes = deplaces = mitoyens = 0
     somme = 0.
-    for (e, cote), gens in fronts.items():
-        x1, y1, x2, y2, cap, classe, lg = segs[e]
-        ux, uy = (x2 - x1) / lg, (y2 - y1) / lg
-        nx, ny = -uy * cote, ux * cote          # la normale qui s'éloigne de la rue
+    for (cid, cote), gens in fronts.items():
+        lg = ch["longueur"][cid]
+        classe = ch["classe"][cid]
         bord = LARGEUR_VOIE.get(classe, 2.3) / 2. + TROTTOIR.get(classe, .5)
 
         abscisses = (_mitoyenner(source, gens, lg, ifa, icat)
@@ -451,7 +574,14 @@ def redresser(source, rues):
 
         for k, _ in gens:
             r = source["bati"][k]
-            s = abscisses[k]
+            # De l'abscisse de RUE au tronçon qui la porte : c'est là qu'une
+            # maison serrée contre sa voisine peut glisser dans le tronçon d'à
+            # côté — elle ne quitte pas sa rue pour autant.
+            e, s = ch["situer"](cid, abscisses[k])
+            x1, y1, x2, y2, cap, _cl, lg_e = segs[e]
+            c = cote * ch["par_seg"][e][2]      # le côté vu du tronçon
+            ux, uy = (x2 - x1) / lg_e, (y2 - y1) / lg_e
+            nx, ny = -uy * c, ux * c            # la normale qui s'éloigne de la rue
             # 3. la ligne de front est celle des FAÇADES, pas celle des centres :
             # chacune recule de sa propre demi-profondeur derrière le même bord.
             # Un recul commun aux centres remettrait les grosses dans la rue, ou
@@ -461,12 +591,12 @@ def redresser(source, rues):
             cy = y1 + uy * s + ny * recul
             # Le cap : la façade suit la rue, et la PROFONDEUR s'éloigne d'elle
             # — c'est-à-dire que l'axe local des y vaut la normale sortante.
-            neuf = math.degrees(math.atan2(uy * cote, ux * cote))
+            neuf = math.degrees(math.atan2(uy * c, ux * c))
             somme += abs((neuf - poses[k][2] + 90.) % 180. - 90.)
             tournes += 1
             # ON NE PLAFONNE QUE LE MOUVEMENT PERPENDICULAIRE. Le long de la
             # rue, une maison peut glisser tant qu'elle veut — c'est le rang
-            # qui se serre, et il ne quitte pas le tronçon. En travers, passé
+            # qui se serre, et il ne quitte pas la rue. En travers, passé
             # RECUL_MAX, la voie trouvée n'est pas la sienne : on la tourne
             # sans la déraciner.
             # Et l'on mesure le déplacement de la FAÇADE, pas celui du centre :
@@ -483,6 +613,8 @@ def redresser(source, rues):
 
     degages = (_degager(source, poses, segs, grille, ifa, ipr)
                if RECTIFICATION in ("plein", "filet") else 0)
+    print("  voirie %d tronçons rechaînés en %d rues, %d fronts"
+          % (len(segs), ch["n"], len(fronts)))
     print("  bati %d/%d façades alignées, %d reposées, %d mitoyennes, "
           "%d dégagées, %d sans voie, écart moyen %.1f°"
           % (tournes, len(poses), deplaces, mitoyens, degages, orphelins,
@@ -918,10 +1050,20 @@ def _du_plan(p):
     return (p[0] * CARTE_MU, (300 - p[1]) * CARTE_MU)
 
 
-def remparts():
-    """La courtine en polyligne, les portes en tours. Carte absente : rien."""
-    chem = os.path.join(RACINE, "etat", "villes", "port-real.json")
+def remparts(lieu):
+    """La courtine en polyligne, les portes en tours. Carte absente : rien.
+
+    LA CARTE EST CELLE DU LIEU, et il a fallu qu'on voie un trou dans le mur
+    pour s'en apercevoir : le chemin était écrit en dur sur « port-real », de
+    sorte que le plan de Peyredragon portait la muraille de Port-Réal — neuf
+    kilomètres et demi de courtine et sept portes nommées sur une île qui n'en
+    a aucune. Un lieu sans carte de ville n'a pas de rempart dessiné, et c'est
+    la bonne réponse : le château de Peyredragon est servi en maillage.
+    """
+    chem = os.path.join(RACINE, "etat", "villes", lieu + ".json")
     if not os.path.exists(chem):
+        print("  rempart  pas de carte de ville pour « %s » : aucune courtine"
+              % lieu)
         return {}
     with open(chem, encoding="utf-8") as f:
         murs = [s for s in (json.load(f).get("sol") or [])
@@ -1352,7 +1494,7 @@ def cuire(lieu):
         "cote": chemin(eau),
         "niveaux": niveaux,
         "voies": voies(r),
-        "rempart": remparts(),
+        "rempart": remparts(lieu),
         "bati": bati(b, r),
         "types": types(b),
         "masque": ecrire_masque(b, prefixe, round((nx - 1) * pas),
