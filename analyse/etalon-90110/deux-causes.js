@@ -21,6 +21,12 @@ const RACINE = path.resolve(__dirname, "..", "..");
 const MODULES = path.join(RACINE, "ecrans", "modules");
 const A = process.argv.slice(2);
 const SANS_COUCHES = A.includes("--sans-couches");
+// `4-envie` ne se debranche PAS : bataille2d.js l.1458 appelle
+// window.Envie.temperament sans garde, au dressage, avant le premier pas.
+// `3-interpretation` se debranche : l.3451 est gardee (`if (window.Interpretation
+// && e)`) et l.4557 passe par `chef.l3`, qui n'existe pas sans la couche. C'est
+// donc le SEUL des deux bras qui se mesure, et il mesure les initiatives.
+const SANS_INTERPRETATION = A.includes("--sans-interpretation");
 const PORTE_OUVERTE = A.includes("--porte-ouverte");
 const HOMMES = +((A.find((x) => x.startsWith("--hommes=")) || "").split("=")[1]) || 1700;
 const DUREE = +((A.find((x) => x.startsWith("--duree=")) || "").split("=")[1]) || 600;
@@ -46,7 +52,9 @@ const CHAINE = ["bataille/hasard.js", "bataille/mesures.js",
                 "bataille2d.js"];
 const HAUTES = ["survival-stack/4-envie.js", "survival-stack/3-interpretation.js"];
 
-for (const f of (SANS_COUCHES ? CHAINE.filter((x) => !HAUTES.includes(x)) : CHAINE)) {
+const RETIREES = SANS_COUCHES ? HAUTES
+               : SANS_INTERPRETATION ? ["survival-stack/3-interpretation.js"] : [];
+for (const f of CHAINE.filter((x) => !RETIREES.includes(x))) {
   let src = fs.readFileSync(path.join(MODULES, f), "utf8");
   if (PORTE_OUVERTE && f === "bataille2d.js") {
     const avant = src;
@@ -74,6 +82,7 @@ if (!B) throw new Error("bataille2d ne s'est pas pose");
   const q = (k) => par[k] || 0;
   console.log(JSON.stringify({
     variante: SANS_COUCHES ? "sans-couches-hautes"
+            : SANS_INTERPRETATION ? "sans-3-interpretation"
             : PORTE_OUVERTE ? "porte-ouverte-essai=true" : "tel-quel",
     hommes: HOMMES, duree_s: DUREE,
     les_quatre: {

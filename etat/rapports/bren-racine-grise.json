@@ -5,48 +5,76 @@
    "heure": "5h00",
    "duree": 120,
    "lieu": "clairiere",
-   "quoi": "Borne la question de l'Equerre avant de descendre : la peinture ne lit que h.etat et h.camp, une couche qui conduit reecrit h.etat, et les cinq libelles passent par branches. Pose la forme de ce qu'il faut chercher — non pas un affichage de plus, mais un fait de la stack qui SURVIVE a un echantillonnage instantane, la vue etant prise toutes les trente secondes.",
-   "resultat": "Critere de recherche arrete : duree de vie du fait > intervalle entre deux ecritures concurrentes. Ce n'est pas une question de filtre mais de rythme."
+   "quoi": "Bren repasse au sec la liste des onze qu'il avait dressee la veille, et note que les renvois d'Ygga ont bouge : 5-qui-conduit.js, window.QuiConduit, h.l1.pilote devenu h.l1.corpsAgi",
+   "resultat": "Onze fonctions, mais quatorze ecritures d'etat : dresser en porte trois et piller deux. C'est quatorze qu'il faut descendre, pas onze."
   },
   {
    "heure": "7h06",
-   "duree": 175,
+   "duree": 90,
    "lieu": "lit-des-racines",
-   "quoi": "Descend la nappe des ecritures de decision dans bataille2d.js : toutes les poses de h.branche, et la portee exacte du bloc de la couche 1.",
-   "resultat": "27 ecritures de h.branche — 5 de la couche (l.3043, 3048, 3068, 3080, 3090), 22 de la cascade. Le bloc l.3025-3097 est ENTIEREMENT dans if (h.revoirCorps <= 0) (l.2958), refermé par le else l.3098 : les cinq libelles ne s'ecrivent qu'au battement de l'oeil, la cascade les reecrit au battement suivant."
+   "quoi": "Descente aux quatorze ecritures, relevees a l'heure : dresser 1780·1810·1818, tomber 2832, achever 2872, rompre 2921, envoyerAuDonjon 3895, courirAuDonjon 3929, ouvrirDeDedans 4060, envoyerCoureur 4617, rendreCoureur 4724, rallier 4833, piller 6519·6540",
+   "resultat": "Le fichier a grossi de quatre lignes pendant la descente meme (7013 puis 7017) : tous les nombres ci-dessus sont dates du 3e au matin."
   },
   {
-   "heure": "10h05",
+   "heure": "8h36",
+   "duree": 84,
+   "lieu": "lit-des-racines",
+   "quoi": "Premiere question de l'Equerre — laquelle lit la couche : `grep h.l1|h.l2|h.l3|h.l4|BatailleCorps|QuiConduit` sur tout bataille2d.js, puis lecture de chaque corps de fonction",
+   "resultat": "UNE seule sur onze : `rallier` l.4832. Et c'est le seul acces a `h.l1` de tout le fichier hors `soldat()` — il n'y a pas de second cas cache. `window.QuiConduit` n'y parait nulle part : l'arbitre d'Ygga est charge et jamais appele."
+  },
+  {
+   "heure": "10h00",
    "duree": 60,
    "lieu": "lit-des-racines",
-   "quoi": "Chiffre la dilution : oeil() l.1165 (0,10 + 2,9·R·R, corrige de la vivacite et de la fatigue) contre PAS l.663.",
-   "resultat": "Oeil moyen ~0,9 s contre un pas de 0,05 s : un libelle de corps vit un battement sur dix-huit. Une vue prise a l'instant en voit un dix-huitieme — c'est le chiffre qui manquait a 90230, et il montre qu'elargir le filtre l.6567 ne reparerait rien."
+   "quoi": "Deuxieme question — laquelle ecrit un drapeau : recherche de `corpsAgi` sur ecrans/, scripts/, serveur/",
+   "resultat": "Zero sur onze. Le champ n'est ecrit qu'en deux points, l.3083 et l.3142, tous deux DANS le bloc de la couche de `soldat()`. Aucune transition exterieure n'y touche."
   },
   {
-   "heure": "11h05",
-   "duree": 55,
+   "heure": "11h00",
+   "duree": 60,
    "lieu": "lit-des-racines",
-   "quoi": "Remonte le chemin de la vue deposee jusqu'au MJ et compte toutes les traces de corpsAgi dans le depot.",
-   "resultat": "capture.js l.277 embarque Bataille2d.etat() ENTIER dans la legende : une ligne ajoutee dans etat() part au MJ sans qu'on ouvre peindre() ni la capture. corpsAgi n'a que deux ecritures (l.3038, l.3097), toutes deux dans le bloc de l'oeil, et deux lectures (fiche l.6870, carte-ville.js l.499) — aucune ne quitte l'ecran."
+   "quoi": "Troisieme question — ce que ca coute : Bren place chaque etat produit par les onze en regard de l'ordre des aiguillages de la cascade",
+   "resultat": "Huit des onze ne coutent RIEN. Le bloc de la couche (2983-3145) est AVANT tous les aiguillages — deroute l.3182, coureur l.3227, rentre l.3233, pille l.3603 — donc l'homme qu'elles deplacent repasse par la couche au battement suivant et son drapeau se reecrit. Ce n'est pas un trou, c'est un ordre de lecture."
   },
   {
    "heure": "12h05",
    "duree": 55,
    "lieu": "la-souche",
-   "quoi": "Grave le verrou 90250 et le leve-verrou de 90240, puis porte au parloir a l'Equerre et a Toll le plus petit changement de 90211, avec la correction de sa propre formule sur viser().",
-   "resultat": "Rendu : une ligne dans etat() l.6617, deux nombres et non un. Correction dite une fois — la ligne 91008 du registre disait deja le vrai, la faute etait dans sa bouche."
+   "quoi": "Bren remonte dire a l'Equerre que trois de ses onze tombent — dresser n'est pas une transition mais la pose initiale, avant le premier battement, quand `h.l1` n'existe pas encore",
+   "resultat": "Onze ramenees a huit vraies transitions, dont deux seulement portent un trou. La liste du matin etait juste de nombre et fausse de nature."
   },
   {
    "heure": "13h05",
-   "duree": 120,
+   "duree": 95,
    "lieu": "lit-des-racines",
-   "quoi": "Commence la nappe des onze transitions hors soldat() (90340) pour donner sa hauteur au plancher : lesquelles lisent deja la couche.",
-   "resultat": "Premiere tenue : rallier l.4787 lit h.l1.jambes hors de soldat() et n'ecrit aucun drapeau — une decision de la stack invisible a tout compte fonde sur corpsAgi. Les dix autres restent a descendre."
+   "quoi": "Le trou de Wenna cherche sur les deux restantes : `tomber` et `achever`. Lecture des sorties hautes de `soldat()` et recherche de toute ecriture de `h.l1` dans le depot entier",
+   "resultat": "Le meme trou, et en pire. `soldat()` sort l.2972 sur `blesse` et l.2971 sur `mort`, avant `observer()` l.2987 — et RIEN n'efface `h.l1` : la seule ecriture du champ dans tout le depot est `corps-adapt.js` l.362, dans `observer()`. L'homme qui tombe garde sa derniere sortie de couche, et son `corpsAgi`, jusqu'au matin."
+  },
+  {
+   "heure": "14h40",
+   "duree": 80,
+   "lieu": "lit-des-racines",
+   "quoi": "Combien d'hommes ce gel concerne, mesure sur les dix vues deposees de `etat/vues/nicolas-reynolds.json` plutot que suppose",
+   "resultat": "173 blesses sur 2550 corps a 1812 s (169 a 1542 s : ils s'accumulent). `moraleMoyenne` l.6673 n'ecarte que `mort` — les blesses de l'assaut entrent dans la moyenne avec un `reflexe` gele. Un compte de `corpsAgi` bati sur le meme filtre les compterait pareil."
+  },
+  {
+   "heure": "16h00",
+   "duree": 60,
+   "lieu": "lit-des-racines",
+   "quoi": "Bren eprouve le mot « plancher » de 90250 contre ce qu'il vient de trouver",
+   "resultat": "Il ne tient plus. Un plancher n'est honnete que si toutes les erreurs vont dans le meme sens ; le gel se fait au corps-a-corps, la ou l'alarme est haute et ou la couche prend le plus souvent la main, donc il penche vers `corpsAgi = true`. Le compte est mine par le bas (planté|ballants, rallier) ET gonfle par le haut."
+  },
+  {
+   "heure": "17h00",
+   "duree": 60,
+   "lieu": "lit-des-racines",
+   "quoi": "Gravure : 90340 reecrit avec les quatorze ecritures et la reponse aux trois questions, et l'empechement neuf porte en verrou 90260",
+   "resultat": "Deux lignes au registre. Et un reste non grave, garde en pensee : trois des cinq branches de jambes retirent un homme de `deroute` sans toucher `compte.fuyards`."
   }
  ],
  "travaux": [
   {
-   "travail_id": "affaire-migrer-la-bataille-vers-la-stack",
+   "travail_id": "lit-des-racines",
    "dernier_travail": {
     "annee": 129,
     "lune": 4,
@@ -59,8 +87,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "bataille2d.js l.2958-3098, l.1165, l.663 — descendu au Lit des Racines",
-     "texte": "Le plus petit changement de 90211 est UNE LIGNE dans etat() (l.6617) qui compte h.l1.corpsAgi sur les hommes qui ont une l1, et rien d'autre n'est a ouvrir : capture.js l.277 embarque Bataille2d.etat() entier dans la legende. Ce n'est pas par les cinq libelles, et c'est une affaire de RYTHME et non de filtre : branche est reecrit par qui decide a chaque battement (27 ecritures, 22 de la cascade), les cinq de la couche ne s'ecrivent qu'au battement de l'oeil (~0,9 s contre un pas de 0,05 s), donc un libelle de corps vit un battement sur dix-huit et une vue instantanee en voit un dix-huitieme. corpsAgi n'est ecrit que dans le bloc de l'oeil : il tient toute la periode, c'est le seul fait de la stack du fichier dont la duree de vie depasse un battement."
+     "source": "ecrans/modules/bataille2d.js, ordre des aiguillages de soldat()",
+     "texte": "Huit des onze transitions ne coutent rien au plancher, et la raison est un ordre de lecture, pas une intention : le bloc de la couche (2983-3145) passe AVANT deroute l.3182, coureur l.3227, rentre l.3233 et pille l.3603. L'homme qu'elles deplacent est donc reobserve au battement suivant et son drapeau se reecrit. Le verrou 90340 les mettait toutes les onze au meme rang : elles n'y sont pas."
     },
     {
      "date": {
@@ -68,8 +96,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "verrou 90220 relu contre bataille2d.js l.6870",
-     "texte": "La ligne doit rendre DEUX nombres : les corpsAgi SUR les hommes qui portent une l1. Le repli !!(h.l1 && h.l1.corpsAgi) de la fiche l.6870 rend zero aussi bien pour une armee sans stack que pour un corps qui n'a rien pris — exactement la faute de moraleMoyenne, qui rend -1 dans les deux cas. On la referait a l'identique en la copiant."
+     "source": "ecrans/modules/bataille2d.js l.1780, 1810, 1818",
+     "texte": "Les trois ecritures de `dresser` ne sont pas des transitions : c'est la pose initiale, avant le premier battement, quand `h.l1` n'existe pas encore. Elles n'ont rien a lire, rien a ecrire et rien a couter. Trois des onze de ma propre liste tombent — je les avais comptees par la forme (`h.etat = `) et non par ce qu'elles font."
     },
     {
      "date": {
@@ -77,8 +105,44 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "1-corps.js l.1024 et l.1528 ; bataille2d.js l.3032, 3095",
-     "texte": "JAMBES porte sept mots, la cascade en branche cinq. Le commentaire l.3095 n'excuse que `planté` — « le corps n'a rien a dire » — mais `dérobade` tombe lui aussi dans la cascade, sans etre nomme nulle part. Ce n'est pas un verrou aujourd'hui (rien ne le conduit, donc le drapeau a faux est juste), c'est une adresse pour 90312 : le sixieme mot est un oubli silencieux, pas un choix ecrit."
+     "source": "ecrans/modules/bataille/corps-adapt.js l.362, seule ecriture de h.l1 du depot",
+     "texte": "`h.l1` n'est ecrit qu'a un seul endroit dans tout le depot, et cet endroit est DANS `observer()`. Rien ne l'efface, rien ne le perime, rien ne le date. C'est ce qui transforme une sortie de `soldat()` en gel definitif : il n'y a pas de mecanisme d'oubli a chercher, il n'y en a jamais eu."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "ecrans/modules/bataille2d.js l.4832 et survival-stack/1-corps.js l.1182-1190",
+     "texte": "`rallier` teste `h.l1.jambes === \"fuite\"` la ou son propre commentaire promet `INTERDIT_JAMBES`. La constante existe bien (1-corps.js l.1185) et interdit a un fuyard de passer a recul, ruee, derobade ou serrer — mais elle n'interdit PAS `sidération`. Un homme fige de terreur passe donc le test et se retrouve remis en `forme`. Le commentaire dit plus que le code ; la couche, elle, dit moins que le commentaire."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "ecrans/modules/bataille2d.js l.3081-3138, branches recul, serrer et ruee",
+     "texte": "`sidération` et `fuite` sont gardees par `h.etat !== \"deroute\"` ; `recul`, `serrer` et `ruee` ne le sont pas. Un homme en deroute dont les jambes disent l'une des trois est repose en `tient` ou `melee` sans que `compte.fuyards` bouge, sans `compte.rallies++` et sans `noter(\"ralliement\")`. C'est un ralliement par la couche que rien n'enregistre — le jumeau exact du trou de `rallier` de 90250, mais de l'autre cote. Non observe dans les dix vues (fuyards 0, aucun deroute) : personne n'a rompu cette nuit-la, donc le cas n'a pas eu lieu, ce qui n'est pas la meme chose qu'il n'existe pas."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "ecrans/modules/bataille2d.js, recherche de window.QuiConduit",
+     "texte": "L'arbitre d'Ygga est charge par `jeu.html` et n'est appele de nulle part : `QuiConduit` ne parait pas une fois dans les 7 017 lignes de `bataille2d.js`. C'est l'etat voulu — observation — mais il faut le dire avec le reste : aucune des onze transitions ne pourrait ecrire un drapeau par emplacement aujourd'hui, puisque rien ne demande encore a l'arbitre qui tient la main."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "wc -l sur bataille2d.js, deux fois dans la meme matinee",
+     "texte": "Le fichier est passe de 7 013 a 7 017 lignes pendant que j'y descendais. Tout renvoi grave aujourd'hui porte donc une heure autant qu'un numero — c'est la lecon que 90220 avait apprise a midi le 3e, et elle vaut deux fois quand plusieurs mains ecrivent le meme jour."
     }
    ],
    "conclusion": null
@@ -88,44 +152,44 @@
   {
    "livre": "affaire-migrer-la-bataille-vers-la-stack",
    "table": "🔒 Verrous",
-   "ligne": "90250",
+   "ligne": "90340",
+   "colonne": "🔎 La preuve",
+   "valeur": "⚠ Descendu entierement le 3e de la 4e lune, et le compte de onze est a corriger. **Onze fonctions, QUATORZE ecritures d'etat** — lignes relevees le 129.4.3 au matin, le fichier ayant gagne quatre lignes pendant la descente meme (7 013 → 7 017) : `dresser` 1780·1810·1818, `tomber` 2832, `achever` 2872, `rompre` 2921, `envoyerAuDonjon` 3895, `courirAuDonjon` 3929, `ouvrirDeDedans` 4060, `envoyerCoureur` 4617, `rendreCoureur` 4724, `rallier` 4833, `piller` 6519·6540. **(1) LAQUELLE LIT LA COUCHE : une seule.** `rallier` l.4832 — et c'est le SEUL acces a `h.l1` de tout le fichier hors `soldat()`, verifie par recherche de `h.l1|h.l2|h.l3|h.l4|BatailleCorps|QuiConduit`. `window.QuiConduit` n'y parait pas une fois : l'arbitre est charge et jamais appele. **(2) LAQUELLE ECRIT UN DRAPEAU : aucune, zero sur onze.** `corpsAgi` n'est ecrit qu'en l.3083 et l.3142, tous deux DANS le bloc de la couche de `soldat()`. **(3) CE QUE CA COUTE : huit des onze ne coutent RIEN, et c'est le fait neuf.** Le bloc de la couche (2983-3145) passe AVANT tous les aiguillages de la cascade — `deroute` l.3182, `coureur` l.3227, `rentre` l.3233, `pille` l.3603 : l'homme qu'elles deplacent est reobserve au battement suivant et son drapeau se reecrit. **Trois font exception, pour deux raisons differentes.** `dresser` (1780·1810·1818) **n'est pas une transition** : c'est la pose initiale, avant le premier battement, quand `h.l1` n'existe pas — rien a lire, rien a ecrire, rien a compter ; trois des onze tombent. Restent `tomber` l.2832 → `blesse` et `achever` l.2872 → `mort`, et **la se trouve le trou de Wenna** : `soldat()` sort l.2972 sur `blesse` et l.2971 sur `tete`, AVANT `observer()` l.2987 ; or rien n'efface `h.l1` — sa seule ecriture dans tout le depot est `bataille/corps-adapt.js` l.362, dans `observer()`. Un homme qui tombe garde jusqu'au matin la sortie de couche de son dernier coup d'oeil, `corpsAgi` compris. Porte neuf en 🔒 90260, avec sa mesure. ⚠ Renvois mis a jour : `5-qui-conduit.js`, `window.QuiConduit`, `h.l1.pilote` → `h.l1.corpsAgi`."
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Verrous",
+   "ligne": "90260",
    "colonne": "🔒 N°",
-   "valeur": "**90250**"
+   "valeur": "**90260**"
   },
   {
    "livre": "affaire-migrer-la-bataille-vers-la-stack",
    "table": "🔒 Verrous",
-   "ligne": "90250",
+   "ligne": "90260",
    "colonne": "🔒 Le verrou",
-   "valeur": "**`corpsAgi` ne compte qu'un PLANCHER** — la couche 1 conduit deux fois hors du drapeau, et la vue lira « cascade » la ou la stack a conduit"
+   "valeur": "**Un homme cesse d'etre observe a l'instant ou il tombe, et sa derniere sortie de couche reste comptee jusqu'au matin** — donc le compte de la stack n'est PAS un plancher : il est mine par le bas et gonfle par le haut"
   },
   {
    "livre": "affaire-migrer-la-bataille-vers-la-stack",
    "table": "🔒 Verrous",
-   "ligne": "90250",
+   "ligne": "90260",
    "colonne": "🎯 Bloque",
    "valeur": "90200"
   },
   {
    "livre": "affaire-migrer-la-bataille-vers-la-stack",
    "table": "🔒 Verrous",
-   "ligne": "90250",
+   "ligne": "90260",
    "colonne": "🔎 La preuve",
-   "valeur": "Descendu au Lit des Racines le 3e, compte sur le disque. (1) `h.brasMorts = (b === \"ballants\")`, `bataille2d.js` l.3032, est pose AVANT les cinq branches et hors d'elles : un homme dont les jambes disent `planté` — qui « ne prend rien a dessein », l.3095 — finit a `h.l1.corpsAgi = false` l.3097 alors que la couche vient de lui retirer les bras. `frapper()` sort des l.2647 sur `if (h.brasMorts) return`, et `survival-stack/1-corps.js` l.1528 nomme le cas mot pour mot : « planté|ballants — Il est planté là, les bras tombés, et il ne se défend plus. » La stack conduit, le drapeau dit non. (2) `rallier` l.4787 lit `h.l1.jambes` hors de `soldat()` et n'ecrit aucun drapeau : le fuyard que la couche refuse de rallier est une decision de la stack qui n'apparait dans aucun compte. Tout releve fonde sur `corpsAgi` est donc un PLANCHER, et doit se dire tel au MJ au lieu de se lire comme un taux. Se leverait sans rien inventer : `survival-stack/5-qui-conduit.js` l.324 rend deja `{jambes, bras}`, chacun avec sa `main` nommee (`corps`, `ordre`, …) — le drapeau doit etre par EMPLACEMENT, de la forme de l'arbitre d'Ygga (⚔️ 90311), et non un booleen pour tout l'homme. Tant qu'il reste booleen, l'observation et l'arbitre diront deux choses differentes des le premier cran de 90312."
-  },
-  {
-   "livre": "affaire-migrer-la-bataille-vers-la-stack",
-   "table": "🔒 Verrous",
-   "ligne": "90240",
-   "colonne": "🔎 La preuve",
-   "valeur": "L'etat cible demande qu'on VOIE la ligne ceder ; ce qui part au MJ est une image plus une legende — `ecrans/modules/capture.js` l.270 et l.276-293. Les deux toiles saisies sont `.cv-foule` et `.cv-bataille`, l.192. Ce qui peint un homme est `couleurDe(h)`, `bataille2d.js` l.5528-5531 : `h.etat` et `h.camp`, rien d'autre. Compte sur le fichier : `h.l1` y parait treize fois — l.3025, 3026, 3038, 3097, 4787, 6618, 6866-6875 — et pas une seule entre l.4787 et l.6618, intervalle qui contient `peindre()` (l.5599) et tous ses aides. AUCUNE trace de la couche 1 dans la peinture. Et quand la couche 1 conduit, elle s'exprime en REECRIVANT `h.etat` — l.3042 `tient`, l.3068 `tient`, l.3080 `tient`, l.3090 `melee` — donc dans le meme mot que la cascade : un homme sidere par son corps est peint, compte dans `etats` et compte dans `assaut` exactement comme un homme que sa tete tient en ligne. Aucun cadrage, aucune cadence, aucune couche de plus n'y changeront rien : la separation n'existe pas dans la donnee que la vue transporte. ⚠ CE QUI LE LEVERAIT, descendu le 3e pour ⚔️ 90211 et rapporte a Toll : UNE LIGNE dans `etat()` (l.6617, a cote de `moraleMoyenne`) qui compte `h.l1.corpsAgi` SUR les hommes qui portent une `l1` — DEUX nombres et non un, sinon une armee sans stack et un corps qui ne prend rien rendent le meme zero, ce qui est la faute de 90220 refaite. Rien d'autre a ouvrir : `capture.js` l.277 embarque `Bataille2d.etat()` ENTIER dans la legende, donc le compte part au MJ sans toucher `peindre()`, ni la capture, ni une couche de plus. Et ce n'est PAS par les cinq libelles : `branche` est reecrit par qui decide a chaque battement (27 ecritures, dont 22 de la cascade), tandis que les cinq de la couche ne s'ecrivent qu'au battement de l'OEIL — tout le bloc l.3025-3097 est dans `if (h.revoirCorps <= 0)` (l.2958, referme par le `else` l.3098), et `oeil()` l.1165 vaut environ 0,9 s contre `PAS` = 0,05 s (l.663). Un libelle de corps vit donc UN battement sur dix-huit, et une vue prise a l'instant en voit un dix-huitieme : c'est le chiffre qui manquait a 🔒 90230 — « deux hommes sur 1460 » n'est pas un defaut de filtre mais une dilution, et elargir le filtre l.6567 ne reparerait rien. `corpsAgi`, lui, n'est ecrit que DANS le bloc de l'oeil (l.3038 et l.3097) : il tient toute la periode de l'oeil, et c'est le seul fait de la stack de ce fichier dont la duree de vie depasse un battement, donc le seul qu'une vue instantanee echantillonne sans biais. Ce que ce compte ne dit pas encore est porte neuf en 🔒 90250."
+   "valeur": "Descendu au Lit des Racines le 3e de la 4e lune, en repassant les onze transitions de 🔒 90340. **LE MECANISME, en deux lignes de code et rien de plus.** `soldat()` sort l.2972 sur `if (h.etat === \"blesse\")` et l.2971 sur `if (h.tete)`, c'est-a-dire AVANT l'appel a `observer()` l.2987 — c'est le trou que Wenna a montre. Et `h.l1` n'a **qu'une seule ecriture dans tout le depot** : `ecrans/modules/bataille/corps-adapt.js` l.362, a l'interieur d'`observer()`. Rien ne l'efface, rien ne le date, rien ne le perime. Un homme que `tomber` l.2832 met en `blesse`, ou qu'`achever` l.2872 met en `mort`, conserve donc jusqu'au matin la sortie de couche de son dernier coup d'oeil — `jambes`, `bras`, `reflexe`, `emprise` et `corpsAgi` — alors qu'il n'est plus regarde par personne. **COMBIEN, mesure et non suppose** : `etat/vues/nicolas-reynolds.json`, dix vues de 1 542 s a 1 812 s — **173 blesses sur 2 550 corps** a la derniere (169 a la premiere : ils s'accumulent toute la nuit). `moraleMoyenne` l.6673 n'ecarte que `mort` : les blesses de l'assaut entrent dans la moyenne avec un `reflexe` gele depuis leur chute, et un compte de `corpsAgi` bati sur le meme filtre les compterait de meme. Le releve `branches` l.6619 ecarte `mort` et `deroute`, pas `blesse` non plus. **CE QUE CA CASSE, ET C'EST LE MOT DE 🔒 90250.** « Plancher » n'est honnete que si toutes les erreurs vont dans le meme sens. Or le gel se produit au corps-a-corps — c'est la qu'on tombe —, c'est-a-dire la ou l'alarme est haute et ou la couche prend le plus souvent la main : la population gelee **penche vers `corpsAgi = true`**. Le compte est donc mine par le bas (`planté|ballants` l.3073-3142, `rallier` l.4832) ET gonfle par le haut, et l'on ne peut plus le dire « au moins tant » au MJ. **CE QUI LE LEVERAIT** : deux gestes, aucun n'invente rien. Poser `h.l1 = null` dans `tomber` et dans `achever` — un homme qui ne sera plus jamais regarde n'a pas de sortie de couche, et `null` est deja la valeur que tout releve sait lire (`h.l1 ? … : null`, l.6921-6930). Et ecarter `blesse` au meme titre que `mort` dans `moraleMoyenne` l.6673. Tant que ni l'un ni l'autre n'est fait, tout nombre de la vue qui se fonde sur `h.l1` melange des decisions de l'instant et des decisions d'il y a une heure, sans que rien dans la vue ne dise lesquelles."
   }
  ],
  "_depeche": {
   "session": "94ce2586-d2cf-56a1-8bec-3ed550d30aad",
   "date_jeu": "129.4.3",
-  "jetons": 2010347,
-  "secondes": 456
+  "jetons": 2377428,
+  "secondes": 425
  },
  "_cahier_verse": true
 }

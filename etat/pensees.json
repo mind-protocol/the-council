@@ -18673,6 +18673,90 @@
    "texte": "LA GARDE MUETTE EST LE PIÈGE LE PLUS PROPRE DES DOUZE. `if (window.BatailleCorps)` et `if (window.Interpretation && e)` : ôte un fichier de la liste `CHAINE`, et la nuit cuit sans la couche, sans une erreur, sans une ligne d'écran. Le contre-exemple est dans le même fichier — `window.Envie.temperament` l. 1431 n'est pas gardé : la couche absente, le four meurt sur-le-champ, et c'est la bonne manière. La forme qui tient est donc déjà écrite ici : une dépendance qu'on peut retirer en silence doit être inscrite au manifeste, une dépendance qui casse bruyamment n'en a pas besoin.",
    "salle": "clairiere",
    "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/bataille2d.js, ordre des aiguillages de soldat()",
+   "texte": "Huit des onze transitions ne coutent rien au plancher, et la raison est un ordre de lecture, pas une intention : le bloc de la couche (2983-3145) passe AVANT deroute l.3182, coureur l.3227, rentre l.3233 et pille l.3603. L'homme qu'elles deplacent est donc reobserve au battement suivant et son drapeau se reecrit. Le verrou 90340 les mettait toutes les onze au meme rang : elles n'y sont pas.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/bataille2d.js l.1780, 1810, 1818",
+   "texte": "Les trois ecritures de `dresser` ne sont pas des transitions : c'est la pose initiale, avant le premier battement, quand `h.l1` n'existe pas encore. Elles n'ont rien a lire, rien a ecrire et rien a couter. Trois des onze de ma propre liste tombent — je les avais comptees par la forme (`h.etat = `) et non par ce qu'elles font.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/bataille/corps-adapt.js l.362, seule ecriture de h.l1 du depot",
+   "texte": "`h.l1` n'est ecrit qu'a un seul endroit dans tout le depot, et cet endroit est DANS `observer()`. Rien ne l'efface, rien ne le perime, rien ne le date. C'est ce qui transforme une sortie de `soldat()` en gel definitif : il n'y a pas de mecanisme d'oubli a chercher, il n'y en a jamais eu.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/bataille2d.js l.4832 et survival-stack/1-corps.js l.1182-1190",
+   "texte": "`rallier` teste `h.l1.jambes === \"fuite\"` la ou son propre commentaire promet `INTERDIT_JAMBES`. La constante existe bien (1-corps.js l.1185) et interdit a un fuyard de passer a recul, ruee, derobade ou serrer — mais elle n'interdit PAS `sidération`. Un homme fige de terreur passe donc le test et se retrouve remis en `forme`. Le commentaire dit plus que le code ; la couche, elle, dit moins que le commentaire.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/bataille2d.js l.3081-3138, branches recul, serrer et ruee",
+   "texte": "`sidération` et `fuite` sont gardees par `h.etat !== \"deroute\"` ; `recul`, `serrer` et `ruee` ne le sont pas. Un homme en deroute dont les jambes disent l'une des trois est repose en `tient` ou `melee` sans que `compte.fuyards` bouge, sans `compte.rallies++` et sans `noter(\"ralliement\")`. C'est un ralliement par la couche que rien n'enregistre — le jumeau exact du trou de `rallier` de 90250, mais de l'autre cote. Non observe dans les dix vues (fuyards 0, aucun deroute) : personne n'a rompu cette nuit-la, donc le cas n'a pas eu lieu, ce qui n'est pas la meme chose qu'il n'existe pas.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/bataille2d.js, recherche de window.QuiConduit",
+   "texte": "L'arbitre d'Ygga est charge par `jeu.html` et n'est appele de nulle part : `QuiConduit` ne parait pas une fois dans les 7 017 lignes de `bataille2d.js`. C'est l'etat voulu — observation — mais il faut le dire avec le reste : aucune des onze transitions ne pourrait ecrire un drapeau par emplacement aujourd'hui, puisque rien ne demande encore a l'arbitre qui tient la main.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "wc -l sur bataille2d.js, deux fois dans la meme matinee",
+   "texte": "Le fichier est passe de 7 013 a 7 017 lignes pendant que j'y descendais. Tout renvoi grave aujourd'hui porte donc une heure autant qu'un numero — c'est la lecon que 90220 avait apprise a midi le 3e, et elle vaut deux fois quand plusieurs mains ecrivent le meme jour.",
+   "salle": "clairiere",
+   "affaire": null
   }
  ]
 }
