@@ -936,10 +936,20 @@ function direGens(g) {
 // « halls », des « arcades », des « seuils » — qui ne sont des repères pour
 // personne : « à 190 pas de Arcade de Le marché aux poissons » ne situe rien
 // et se lit mal. On les écarte ici plutôt que de les corriger à l'affichage.
-const REPERES_VRAIS = new Set(["porte", "quai-amont", "quai-aval", "donjon",
+const REPERES_VRAIS = new Set([
+  // Port-Réal — sept portes, trois collines, et ce qu'on voit de loin.
+  "porte", "quai-amont", "quai-aval", "donjon",
   "fosse", "septuaire", "guilde", "casernes", "grand-marche", "marche-chevaux",
   "marche-poissons", "bureau-port", "aire-bris", "sommet-visenya",
-  "sommet-aegon", "sommet-rhaenys"]);
+  "sommet-aegon", "sommet-rhaenys",
+  // Peyredragon — les treize. La liste est courte parce que l'île l'est : sur
+  // trois cents mètres de château, la forge et les cuisines SONT ce qu'on
+  // nomme en levant la tête, là où à Port-Réal ce ne serait qu'une maison de
+  // plus. Aucun « seuil » ni « cour » ici : les treize nœuds nommés du graphe
+  // sont treize repères, et c'est pour ça qu'on peut tous les prendre.
+  "roukerie", "hotes", "garnison", "corps-de-garde", "ecuries", "forge",
+  "cuisines", "grande-salle", "retrait", "tambour", "quai", "dragonmont",
+]);
 
 function repereProche(lieu, x, y) {
   const g = graphePieton(lieu);

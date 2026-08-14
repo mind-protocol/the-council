@@ -392,12 +392,22 @@ def redresser(source, rues):
     """
     col = source["_colonnes"]
     icap = col.index("cap")
-    ipx, ipy = col.index("porte_x"), col.index("porte_y")
     ix, iy = col.index("x"), col.index("y")
     ifa, ipr, icat = col.index("facade_m"), col.index("profondeur_m"), col.index("cat")
+    poses = [[r[ix], r[iy], r[icap] or 0.] for r in source["bati"]]
+    # PAS DE PORTE SUR RUE, PAS DE REDRESSEMENT. Tout ce qui suit part du côté
+    # où la maison ouvre : sans cette colonne, on ne sait pas de quel côté est
+    # son devant, et la « rectifier » reviendrait à la faire pivoter au hasard.
+    # Un semis qui n'a pas de porte est un semis qui a été posé à la main
+    # (Peyredragon, soixante-sept maisons) : il borde déjà sa rue, on le laisse
+    # où il est. Le plan se cuit, simplement sans cette passe-là.
+    if "porte_x" not in col or "porte_y" not in col:
+        print("  bâti sans porte sur rue : le semis est posé tel quel, "
+              "sans redressement")
+        return poses
+    ipx, ipy = col.index("porte_x"), col.index("porte_y")
     segs, grille = _index_voies(rues)
 
-    poses = [[r[ix], r[iy], r[icap] or 0.] for r in source["bati"]]
     fronts = {}                       # (tronçon, côté) → les maisons qui y donnent
     orphelins = 0
     for k, r in enumerate(source["bati"]):
@@ -1272,6 +1282,47 @@ def ecrire_masque(b, prefixe, larg, haut):
             "fichier": prefixe + ".masque.bin"}
 
 
+# ---------------------------------------------------------------------------
+# LE BÂTI N'A PAS TOUJOURS LES MÊMES COLONNES, et c'est légitime
+# ---------------------------------------------------------------------------
+# Port-Réal est semé par `densifier.py` puis complété par `usages.py`, qui lui
+# donne `cat`, `toit` et la porte sur rue. Peyredragon est bâti par
+# `peyredragon.py` — soixante-sept maisons d'un bourg sous les murs, pas
+# quarante-cinq mille — et n'a jamais eu besoin de ces colonnes-là.
+#
+# On les COMPLÈTE ici plutôt que de les exiger. Deux raisons : réécrire
+# `bati.json` déplacerait des rangs, et le rang est l'adresse par laquelle le
+# jeu tient ses lieux (`scripts/affecter.py`) ; et un plan de château n'a pas à
+# attendre qu'on lui invente un cadastre pour se laisser dessiner.
+#
+# `porte_x`/`porte_y` restent absentes quand elles le sont, et `redresser` s'en
+# accommode : aligner soixante-sept maisons sur une rue qu'elles bordent déjà
+# ne rendrait rien de plus qu'un déplacement qu'on n'a pas demandé.
+FAMILLES = {
+    "maison": "habitat", "taudis": "habitat", "cabane": "habitat",
+    "manse": "habitat", "maison-officier": "habitat",
+}
+
+
+def completer_bati(source):
+    col = source["_colonnes"]
+    if "cat" in col:
+        return
+    iusg = col.index("usage") if "usage" in col else None
+    # La table des familles de `usages.py` fait foi quand elle est là ; la
+    # petite table ci-dessus ne sert qu'aux usages qu'elle ne connaît pas.
+    familles = dict(FAMILLES)
+    for u, t in (source.get("_types") or {}).items():
+        if isinstance(t, dict) and t.get("cat"):
+            familles[u] = t["cat"]
+    col.append("cat")
+    for r in source["bati"]:
+        u = r[iusg] if iusg is not None else None
+        r.append(familles.get(u, "habitat"))
+    print("  bâti sans « cat » : colonne dérivée de l'usage pour %d bâtiments"
+          % len(source["bati"]))
+
+
 def cuire(lieu):
     prefixe = PREFIXES.get(lieu)
     if not prefixe:
@@ -1280,6 +1331,7 @@ def cuire(lieu):
     t = lire(os.path.join("monde", prefixe + ".terrain.json"))
     r = lire(os.path.join("monde", prefixe + ".rues.json"))
     b = lire(os.path.join("monde", prefixe + ".bati.json"))
+    completer_bati(b)
     nx, ny, pas = t["nx"], t["ny"], t["res_m"]
 
     eau = coudre(segments(t["eau"], nx, ny, .5, pas))
