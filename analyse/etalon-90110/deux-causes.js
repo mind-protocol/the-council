@@ -28,6 +28,13 @@ const SANS_COUCHES = A.includes("--sans-couches");
 // donc le SEUL des deux bras qui se mesure, et il mesure les initiatives.
 const SANS_INTERPRETATION = A.includes("--sans-interpretation");
 const PORTE_OUVERTE = A.includes("--porte-ouverte");
+// --graine=N — CE BRAS NE MESURE PAS UNE CAUSE, IL MESURE LE BRUIT. Les quatre
+// comptes sont lus sur UNE cuisson, donc sur un seul tirage de l'urne : sans
+// savoir de combien ils remuent quand RIEN ne change sauf la graine, aucun
+// ecart entre deux cuissons ne se lit. On ne decrete pas un seuil de lecture,
+// on le mesure. La graine est remplacee dans la source de `hasard.js` avant le
+// eval : `semerGraine()` (bataille2d.js l.1465) la relit au dressage.
+const GRAINE = ((A.find((x) => x.startsWith("--graine=")) || "").split("=")[1]) || "";
 const HOMMES = +((A.find((x) => x.startsWith("--hommes=")) || "").split("=")[1]) || 1700;
 const DUREE = +((A.find((x) => x.startsWith("--duree=")) || "").split("=")[1]) || 600;
 const PAS = 1 / 20;
@@ -56,6 +63,11 @@ const RETIREES = SANS_COUCHES ? HAUTES
                : SANS_INTERPRETATION ? ["survival-stack/3-interpretation.js"] : [];
 for (const f of CHAINE.filter((x) => !RETIREES.includes(x))) {
   let src = fs.readFileSync(path.join(MODULES, f), "utf8");
+  if (GRAINE && f === "bataille/hasard.js") {
+    const avant = src;
+    src = src.replace("const GRAINE = 20161219;", "const GRAINE = " + GRAINE + ";");
+    if (src === avant) throw new Error("la graine n'a pas ete trouvee — la mesure mentirait");
+  }
   if (PORTE_OUVERTE && f === "bataille2d.js") {
     const avant = src;
     src = src.replace("const PORTE_OUVERTE_ESSAI = false;",
@@ -84,7 +96,7 @@ if (!B) throw new Error("bataille2d ne s'est pas pose");
     variante: SANS_COUCHES ? "sans-couches-hautes"
             : SANS_INTERPRETATION ? "sans-3-interpretation"
             : PORTE_OUVERTE ? "porte-ouverte-essai=true" : "tel-quel",
-    hommes: HOMMES, duree_s: DUREE,
+    hommes: HOMMES, duree_s: DUREE, graine: GRAINE || 20161219,
     les_quatre: {
       "ordres deformes": q("ordre-deforme"),
       "declencheurs tombes": q("declencheur-tombe"),

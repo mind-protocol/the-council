@@ -178,6 +178,43 @@ console.log("\n  LA PRISE DE LA COUCHE 2 — " + new Date(0).toISOString().slice
       avant === apres, avant);
 }
 
+// ── 6. CE QUE LE RALLIEMENT LIT MAINTENANT (⚔️ 90312, premier cran) ──────────
+// `rallier()` lisait `h.l1.jambes === "fuite"` — le MOT de la couche 1. Il lit
+// désormais `h.conduit` : QUI tient les jambes, et il ne rallie que sur
+// « ordre ». Les trois cas ci-dessous sont exactement les trois où l'ancienne
+// question et la nouvelle ne répondent pas la même chose. C'est la seule
+// raison d'être de cette section : montrer l'écart, pas le cacher.
+{
+  const h = homme({ etat: "deroute", l1: { jambes: "fuite", bras: "garde", emprise: 0.9 } });
+  A.observer(h, monde(F(5, "garde", 2, 0)), 0.5);
+  dit("son corps le fait courir : il ne se rallie pas — comme hier",
+      h.conduit === "corps",
+      "conduit « " + h.conduit + " »  — « " + h.conduitPhrase + " »");
+}
+{
+  // MÊME HOMME, MÊME FUITE, MAIS UN ORDRE TENU À LA LETTRE. La barre monte à
+  // 1,00 et aucune prétention bornée ne la franchit : l'ordre garde ses jambes,
+  // donc il rentre. LE VIEUX TEST LE REFUSAIT — il ne lisait que le mot, et le
+  // mot disait encore « fuite ». C'est le cas que ce cran ajoute au monde.
+  const h = homme({ etat: "deroute", l3: { lettre: 1 },
+                    l1: { jambes: "fuite", bras: "garde", emprise: 0.9 } });
+  A.observer(h, monde(F(5, "garde", 2, 0)), 0.5);
+  dit("l'ordre a repris ses jambes malgré la fuite : il se rallie — nouveau",
+      h.conduit === "ordre",
+      "conduit « " + h.conduit + " »  — « " + h.conduitPhrase + " »");
+}
+{
+  // ET L'ÉCART DANS L'AUTRE SENS. Un homme au repos que l'ENVIE tient : son
+  // corps ne dit plus « fuite », donc le vieux test le remettait en formation.
+  // Il est parti pour une maison. Un chef à portée ne ramène pas un pillard.
+  const h = homme({ etat: "deroute", l4: 0.9,
+                    l1: { jambes: "planté", bras: "garde", emprise: 0.1 } });
+  A.observer(h, monde(F(5, "garde", 2, 0)), 0.5);
+  dit("l'envie tient ses jambes : il ne se rallie pas — nouveau",
+      h.conduit === "envie",
+      "conduit « " + h.conduit + " »  — « " + h.conduitPhrase + " »");
+}
+
 console.log("\n  " + (ko ? "✗ " + ko + " cas tombés sur " + (ok + ko)
                           : "✓ " + ok + " cas, tous tenus") + "\n");
 process.exit(ko ? 1 : 0);

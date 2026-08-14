@@ -437,7 +437,7 @@
         "annee": 129,
         "lune": 4,
         "jour": 3,
-        "minute": 764
+        "minute": 779
       }
     },
     "wenna-la-nommeuse": {
@@ -457,7 +457,7 @@
         "annee": 129,
         "lune": 4,
         "jour": 3,
-        "minute": 773
+        "minute": 779
       }
     }
   },
@@ -466,7 +466,7 @@
       "annee": 129,
       "lune": 4,
       "jour": 3,
-      "minute": 776
+      "minute": 782
     },
     "gens": {
       "aurore-inchauspe": {
@@ -500,10 +500,22 @@
         "source": "routine"
       },
       "alarra-rosby": {
-        "salle": "grande-salle",
-        "lieu": "Grande salle, Peyredragon",
-        "etat": "arrete",
-        "source": "routine"
+        "salle": "tambour-de-pierre",
+        "lieu": null,
+        "etat": "en-chemin",
+        "source": "routine",
+        "de": "grande-salle",
+        "vers": "archives",
+        "vers_lieu": "L'archive, Peyredragon",
+        "prochaine": "archives",
+        "route": [
+          "grande-salle",
+          "tambour-de-pierre",
+          "archives"
+        ],
+        "franchi": 1,
+        "pas": 0.0,
+        "arrive_dans": 6
       },
       "aldon-hask": {
         "salle": "grande-salle",
@@ -513,9 +525,22 @@
       },
       "alicent": {
         "salle": "appartements-royaux",
-        "lieu": "Les appartements royaux, donjon de Maegor",
-        "etat": "arrete",
-        "source": "routine"
+        "lieu": null,
+        "etat": "en-chemin",
+        "source": "routine",
+        "de": "appartements-royaux",
+        "vers": "bois-des-dieux-port-real",
+        "vers_lieu": "Le bois des dieux, Donjon Rouge",
+        "prochaine": "donjon-de-maegor",
+        "route": [
+          "appartements-royaux",
+          "donjon-de-maegor",
+          "cour-donjon-rouge",
+          "bois-des-dieux-port-real"
+        ],
+        "franchi": 0,
+        "pas": 0.5,
+        "arrive_dans": 10
       },
       "alys-grive": {
         "salle": "cuisines",
@@ -530,16 +555,39 @@
         "source": "scene"
       },
       "corlys": {
-        "salle": "grande-salle",
-        "lieu": "Grande salle, Peyredragon",
-        "etat": "arrete",
-        "source": "routine"
+        "salle": "tambour-de-pierre",
+        "lieu": null,
+        "etat": "en-chemin",
+        "source": "routine",
+        "de": "grande-salle",
+        "vers": "archives",
+        "vers_lieu": "L'archive, Peyredragon",
+        "prochaine": "archives",
+        "route": [
+          "grande-salle",
+          "tambour-de-pierre",
+          "archives"
+        ],
+        "franchi": 1,
+        "pas": 0.0,
+        "arrive_dans": 6
       },
       "criston": {
         "salle": "salle-du-trone",
-        "lieu": "La salle du Trone, Donjon Rouge",
-        "etat": "arrete",
-        "source": "routine"
+        "lieu": null,
+        "etat": "en-chemin",
+        "source": "routine",
+        "de": "salle-du-trone",
+        "vers": "cour-donjon-rouge",
+        "vers_lieu": "La cour du Donjon Rouge",
+        "prochaine": "cour-donjon-rouge",
+        "route": [
+          "salle-du-trone",
+          "cour-donjon-rouge"
+        ],
+        "franchi": 0,
+        "pas": 0.667,
+        "arrive_dans": 1
       },
       "daemon": {
         "salle": "grande-salle",
@@ -548,10 +596,22 @@
         "source": "routine"
       },
       "denys-bar-emmon": {
-        "salle": "grande-salle",
-        "lieu": "Grande salle, Peyredragon",
-        "etat": "arrete",
-        "source": "routine"
+        "salle": "tambour-de-pierre",
+        "lieu": null,
+        "etat": "en-chemin",
+        "source": "routine",
+        "de": "grande-salle",
+        "vers": "archives",
+        "vers_lieu": "L'archive, Peyredragon",
+        "prochaine": "archives",
+        "route": [
+          "grande-salle",
+          "tambour-de-pierre",
+          "archives"
+        ],
+        "franchi": 1,
+        "pas": 0.0,
+        "arrive_dans": 6
       },
       "dorsa-sath": {
         "salle": "cour",
@@ -572,22 +632,61 @@
         "source": "gelee"
       },
       "elyn-sarnes": {
-        "salle": "grande-salle",
-        "lieu": "Grande salle, Peyredragon",
-        "etat": "arrete",
-        "source": "routine"
+        "salle": "tambour-de-pierre",
+        "lieu": null,
+        "etat": "en-chemin",
+        "source": "routine",
+        "de": "grande-salle",
+        "vers": "appartements-reine",
+        "vers_lieu": "Appartements de la reine, Peyredragon",
+        "prochaine": "appartements-reine",
+        "route": [
+          "grande-salle",
+          "tambour-de-pierre",
+          "appartements-reine"
+        ],
+        "franchi": 1,
+        "pas": 0.0,
+        "arrive_dans": 7
       },
       "garde-levant": {
         "salle": "grand-escalier",
-        "lieu": "Le grand escalier, Peyredragon",
-        "etat": "arrete",
-        "source": "routine"
+        "lieu": null,
+        "etat": "en-chemin",
+        "source": "routine",
+        "de": "grand-escalier",
+        "vers": "baraques",
+        "vers_lieu": null,
+        "prochaine": "quai",
+        "route": [
+          "grand-escalier",
+          "quai",
+          "bourg",
+          "baraques"
+        ],
+        "franchi": 0,
+        "pas": 0.222,
+        "arrive_dans": 16
       },
       "garde-tour": {
         "salle": "table-peinte",
-        "lieu": "Chambre de la Table Peinte, Peyredragon",
-        "etat": "arrete",
-        "source": "routine"
+        "lieu": null,
+        "etat": "en-chemin",
+        "source": "routine",
+        "de": "table-peinte",
+        "vers": "baraques",
+        "vers_lieu": null,
+        "prochaine": "tambour-de-pierre",
+        "route": [
+          "table-peinte",
+          "tambour-de-pierre",
+          "cour",
+          "porte-dragon",
+          "baraques"
+        ],
+        "franchi": 0,
+        "pas": 0.25,
+        "arrive_dans": 15
       },
       "gerardys": {
         "salle": "grande-salle",
@@ -602,8 +701,8 @@
         "source": "routine"
       },
       "guet-du-mur": {
-        "salle": "porte-de-fer",
-        "lieu": "Au pied du mur du levant",
+        "salle": "baraques",
+        "lieu": null,
         "etat": "arrete",
         "source": "routine"
       },
@@ -620,16 +719,41 @@
         "source": "routine"
       },
       "hann-bourbe": {
-        "salle": "le-feu-de-l-aire",
-        "lieu": "Le feu de l'aire, chantier de la vase",
-        "etat": "arrete",
-        "source": "routine"
+        "salle": "chantier-de-la-vase",
+        "lieu": null,
+        "etat": "en-chemin",
+        "source": "routine",
+        "de": "le-feu-de-l-aire",
+        "vers": "la-carcasse",
+        "vers_lieu": "La carcasse, chantier de la vase",
+        "prochaine": "la-carcasse",
+        "route": [
+          "le-feu-de-l-aire",
+          "chantier-de-la-vase",
+          "la-carcasse"
+        ],
+        "franchi": 1,
+        "pas": 0.5,
+        "arrive_dans": 1
       },
       "helaena": {
         "salle": "bois-des-dieux-port-real",
-        "lieu": "Le bois des dieux, Donjon Rouge",
-        "etat": "arrete",
-        "source": "routine"
+        "lieu": null,
+        "etat": "en-chemin",
+        "source": "routine",
+        "de": "bois-des-dieux-port-real",
+        "vers": "chambre-helaena",
+        "vers_lieu": "La chambre de la reine Helaena, Maegor",
+        "prochaine": "cour-donjon-rouge",
+        "route": [
+          "bois-des-dieux-port-real",
+          "cour-donjon-rouge",
+          "donjon-de-maegor",
+          "chambre-helaena"
+        ],
+        "franchi": 0,
+        "pas": 0.5,
+        "arrive_dans": 10
       },
       "hobb-treize-pas": {
         "salle": "cachots",
@@ -651,9 +775,23 @@
       },
       "kerra-des-claies": {
         "salle": "appartements-reine",
-        "lieu": "La porte des appartements de la reine, Peyredragon",
-        "etat": "arrete",
-        "source": "routine"
+        "lieu": null,
+        "etat": "en-chemin",
+        "source": "routine",
+        "de": "appartements-reine",
+        "vers": "baraques",
+        "vers_lieu": null,
+        "prochaine": "tambour-de-pierre",
+        "route": [
+          "appartements-reine",
+          "tambour-de-pierre",
+          "cour",
+          "porte-dragon",
+          "baraques"
+        ],
+        "franchi": 0,
+        "pas": 0.286,
+        "arrive_dans": 14
       },
       "l-homme-de-la-merette": {
         "salle": "la-merette",
@@ -698,10 +836,22 @@
         "source": "routine"
       },
       "marna": {
-        "salle": "grande-salle",
-        "lieu": "Grande salle, Peyredragon",
-        "etat": "arrete",
-        "source": "routine"
+        "salle": "tambour-de-pierre",
+        "lieu": null,
+        "etat": "en-chemin",
+        "source": "routine",
+        "de": "grande-salle",
+        "vers": "appartements-reine",
+        "vers_lieu": "Appartements de la reine, Peyredragon",
+        "prochaine": "appartements-reine",
+        "route": [
+          "grande-salle",
+          "tambour-de-pierre",
+          "appartements-reine"
+        ],
+        "franchi": 1,
+        "pas": 0.0,
+        "arrive_dans": 7
       },
       "maron-sec": {
         "salle": "bourg",
@@ -759,9 +909,20 @@
       },
       "otto": {
         "salle": "salle-du-trone",
-        "lieu": "La salle du Trone, Donjon Rouge",
-        "etat": "arrete",
-        "source": "routine"
+        "lieu": null,
+        "etat": "en-chemin",
+        "source": "routine",
+        "de": "salle-du-trone",
+        "vers": "tour-de-la-main",
+        "vers_lieu": "La tour de la Main, Donjon Rouge",
+        "prochaine": "tour-de-la-main",
+        "route": [
+          "salle-du-trone",
+          "tour-de-la-main"
+        ],
+        "franchi": 0,
+        "pas": 0.667,
+        "arrive_dans": 1
       },
       "page-couloir": {
         "salle": "appartements-reine",
@@ -800,10 +961,22 @@
         "source": "routine"
       },
       "ren": {
-        "salle": "le-feu-de-l-aire",
-        "lieu": "Le feu de l'aire, chantier de la vase",
-        "etat": "arrete",
-        "source": "routine"
+        "salle": "chantier-de-la-vase",
+        "lieu": null,
+        "etat": "en-chemin",
+        "source": "routine",
+        "de": "le-feu-de-l-aire",
+        "vers": "la-carcasse",
+        "vers_lieu": "La carcasse, chantier de la vase",
+        "prochaine": "la-carcasse",
+        "route": [
+          "le-feu-de-l-aire",
+          "chantier-de-la-vase",
+          "la-carcasse"
+        ],
+        "franchi": 1,
+        "pas": 0.5,
+        "arrive_dans": 1
       },
       "rhaenys": {
         "salle": "grande-salle",
@@ -812,22 +985,10 @@
         "source": "routine"
       },
       "robert-quince": {
-        "salle": "tambour-de-pierre",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "table-peinte",
-        "vers": "grande-salle",
-        "vers_lieu": "Grande salle, Peyredragon",
-        "prochaine": "grande-salle",
-        "route": [
-          "table-peinte",
-          "tambour-de-pierre",
-          "grande-salle"
-        ],
-        "franchi": 1,
-        "pas": 0.0,
-        "arrive_dans": 2
+        "salle": "grande-salle",
+        "lieu": "Grande salle, Peyredragon",
+        "etat": "arrete",
+        "source": "routine"
       },
       "ruff-le-cordier": {
         "salle": "quais-de-la-nera",
@@ -842,10 +1003,22 @@
         "source": "routine"
       },
       "sabbe": {
-        "salle": "le-feu-de-l-aire",
-        "lieu": "Le feu de l'aire, chantier de la vase",
-        "etat": "arrete",
-        "source": "routine"
+        "salle": "chantier-de-la-vase",
+        "lieu": null,
+        "etat": "en-chemin",
+        "source": "routine",
+        "de": "le-feu-de-l-aire",
+        "vers": "la-carcasse",
+        "vers_lieu": "La carcasse, chantier de la vase",
+        "prochaine": "la-carcasse",
+        "route": [
+          "le-feu-de-l-aire",
+          "chantier-de-la-vase",
+          "la-carcasse"
+        ],
+        "franchi": 1,
+        "pas": 0.5,
+        "arrive_dans": 1
       },
       "sara": {
         "salle": "table-peinte",
@@ -867,9 +1040,22 @@
       },
       "septa-marlow": {
         "salle": "septuaire",
-        "lieu": "Le septuaire, Peyredragon",
-        "etat": "arrete",
-        "source": "routine"
+        "lieu": null,
+        "etat": "en-chemin",
+        "source": "routine",
+        "de": "septuaire",
+        "vers": "appartements-reine",
+        "vers_lieu": "Appartements de la reine, Peyredragon",
+        "prochaine": "cour",
+        "route": [
+          "septuaire",
+          "cour",
+          "tambour-de-pierre",
+          "appartements-reine"
+        ],
+        "franchi": 0,
+        "pas": 0.667,
+        "arrive_dans": 11
       },
       "sirel-quintaine": {
         "salle": "etal-de-sirel",
