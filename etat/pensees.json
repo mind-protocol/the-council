@@ -18637,6 +18637,42 @@
    "texte": "Le relevé `branches` fabrique ses clefs en coupant au premier « à » ou « — », pour retirer les compléments chiffrés. Tout libellé qui emploie ces signes en prose y perd sa fin : « nez à nez, il attend le nombre » devient « nez », et « sidéré — son corps ne répond plus » devient « sidéré », donc perd la marque « son corps » qui est la seule chose rendant la couche comptable dans la vue. Un nom se conçoit avec le hachoir qui le coupera : la marque d'origine passe en tête.",
    "salle": "clairiere",
    "affaire": null
+  },
+  {
+   "qui": "sarn-vieux-sang",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "scripts/monde/sac.js l. 605-606 et l. 629-630, recoupé sur etat/monde.json",
+   "texte": "LE RÉGLAGE QUI CASSE LA COMPARAISON N'EST PAS DANS LE CODE, IL EST DANS L'ÉTAT DU MONDE. `sac.js` lit `jour0`/`min0` en direct sur la route `/carte`, donc sur `etat/monde.json` — aujourd'hui 129/4/3, minute 721. La journée écrite de chaque habitant en dépend, et la tournée recrute les fuyards d'après elle : à 8h les rues sont pleines, à 2h elles sont vides. Personne n'a besoin de toucher une ligne pour qu'une cuisson cesse d'être comparable à celle de la veille — il suffit que la partie ait avancé. C'est le seul des douze dont l'état dérive tout seul, et c'est pour ça qu'il ne se répare pas en l'inscrivant : l'inscrire dit POURQUOI deux chiffres diffèrent, il faut le FIXER (une option `--heure`) pour qu'ils cessent de différer.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "sarn-vieux-sang",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "les cinq manifestes de monde/essai.*.json, comparés champ à champ",
+   "texte": "LE MANIFESTE N'EST PAS UNE IDENTITÉ, C'EST UNE ÉTIQUETTE DE TAILLE. Il grave six choses — porte, hommes, duree_s, pas_s, tolerance_m, tranche_s — et les trois cuissons de 1 700 hommes / 600 s les portent identiques, tout en rendant 253 257, 82 167 et 294 274 images. Deux fichiers dont les six champs d'identité concordent ne racontent donc PAS la même nuit, et rien dans le fichier n'avertit du contraire. C'est pire qu'une absence de trace : c'est une trace qui affirme l'égalité là où il n'y en a pas, et c'est exactement ce qui a fait poser à Toll un étalon sur trois cuissons mortes.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "sarn-vieux-sang",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/bataille2d.js l. 2961 et l. 3406, croisé avec sac.js l. 100-107",
+   "texte": "LA GARDE MUETTE EST LE PIÈGE LE PLUS PROPRE DES DOUZE. `if (window.BatailleCorps)` et `if (window.Interpretation && e)` : ôte un fichier de la liste `CHAINE`, et la nuit cuit sans la couche, sans une erreur, sans une ligne d'écran. Le contre-exemple est dans le même fichier — `window.Envie.temperament` l. 1431 n'est pas gardé : la couche absente, le four meurt sur-le-champ, et c'est la bonne manière. La forme qui tient est donc déjà écrite ici : une dépendance qu'on peut retirer en silence doit être inscrite au manifeste, une dépendance qui casse bruyamment n'en a pas besoin.",
+   "salle": "clairiere",
+   "affaire": null
   }
  ]
 }

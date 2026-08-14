@@ -1,246 +1,247 @@
 {
-  "qui": "wenna-la-nommeuse",
-  "journal": [
-    {
-      "heure": "7h02",
-      "duree": 45,
-      "lieu": "la-souche",
-      "quoi": "Wenna ouvre les trois vues déposées et compte les régimes au lieu de les croire",
-      "resultat": "Rhaenyra +0,97→+0,91 (8 vues, 11h27Z) ; Marlo null sur 10 vues (19h46Z, 572 s, 0 mort, verrou 900 pv intact) ; Nicolas −0,94→−0,92 (10 vues, 21h14Z, 172 blessés)"
-    },
-    {
-      "heure": "7h47",
-      "duree": 55,
-      "lieu": "la-souche",
-      "quoi": "Elle remonte les deux formules dans les anneaux plutôt que de les deviner",
-      "resultat": "2d3350c : moyenne de `h.morale`, née à 1, bornée [0,1] (l.600, 1176, 1195). 745c8eb : moyenne de `h.l1.reflexe`, [−1,1], −1 au repos. Un seul nom pour les deux"
-    },
-    {
-      "heure": "8h42",
-      "duree": 70,
-      "lieu": "la-souche",
-      "quoi": "Elle cherche qui n'a pas de `h.l1` et se trouve compté quand même",
-      "resultat": "`soldat()` sort avant `observer()` pour `mort` (2941), `blesse` (2945) et `tete` (2948) ; le filtre l.6617 n'écarte que `mort` : blessés et têtes entrent au dénominateur à −1 exact, jamais mesurés"
-    },
-    {
-      "heure": "9h52",
-      "duree": 50,
-      "lieu": "la-souche",
-      "quoi": "Elle poursuit le null de Marlo au lieu de le porter en quatrième quantité",
-      "resultat": "`1-corps.js` l.556-568 : `apaise` absent d'une branche de retour, contagion NaN, réflexe NaN définitif — 116 hommes sur 604, et la signature « 600 s, zéro mort, verrou intact » est mot pour mot les dix vues de Marlo. Corrigé l.569"
-    },
-    {
-      "heure": "10h42",
-      "duree": 48,
-      "lieu": "la-souche",
-      "quoi": "Elle cherche un nom libre pour la moyenne de réflexe et bute sur la couche 2",
-      "resultat": "`alarme` est pris (`2-reflexion.js` l.87) et porte la convention INVERSE ; l.82-84 déclare la règle de la maison non négociable. La couche 1 est seule à l'envers — verrou neuf"
-    },
-    {
-      "heure": "11h30",
-      "duree": 30,
-      "lieu": "la-souche",
-      "quoi": "Elle grave les trois noms, les écartés et la raison, en action 90221",
-      "resultat": "`moraleMoyenne` gelé, `reflexeMoyen` posé, `sansCorps` posé ; `alarmeMoyenne`, `peurMoyenne`, `sansStack`, `sansL1`, `hommesMesures` écartés avec leur motif"
-    },
-    {
-      "heure": "13h00",
-      "duree": 75,
-      "lieu": "la-souche",
-      "quoi": "Elle prend le 90230 par les libellés et non par la mécanique de Bren",
-      "resultat": "Le relevé coupe au premier « à » ou « — » (l.6569). Quatre libellés sur cinq portent la marque « son corps » ; le cinquième la met après un tiret (l.3043) et entre sous « sidéré », décapité. Témoin : la clef « nez » = `\"nez à nez, il attend le nombre\"` (l.3328)"
-    },
-    {
-      "heure": "14h15",
-      "duree": 40,
-      "lieu": "la-souche",
-      "quoi": "Elle recompte les hommes que la stack conduit dans les dix vues de Nicolas",
-      "resultat": "UN, pas deux sur 1460 : `\"son corps est parti en avant, seul\"` = 1 ; la seconde clef comptée (`nez`) est de la cascade. Correction de nom gravée en 90231"
-    },
-    {
-      "heure": "14h55",
-      "duree": 45,
-      "lieu": "la-souche",
-      "quoi": "Elle ouvre le verrou 90380 et le rend à l'Équerre par le parloir",
-      "resultat": "Verrou gravé avec ses deux conséquences datées : `reflexion-adapt.js` nourrira `alarme` depuis `reflexe` sans négation, et le seul nombre de la stack qui part au MJ se lit déjà à l'envers"
-    }
-  ],
-  "travaux": [
-    {
-      "travail_id": "affaire-migrer-la-bataille-vers-la-stack",
-      "dernier_travail": {
-        "annee": 129,
-        "lune": 4,
-        "jour": 3
-      },
-      "pensees": [
-        {
-          "date": {
-            "annee": 129,
-            "lune": 4,
-            "jour": 3
-          },
-          "source": "etat/vues/*.json et git show 2d3350c / 745c8eb",
-          "texte": "Les trois régimes de `moraleMoyenne` sont trois DATES, pas trois calculs concurrents : la jauge `h.morale` [0,1] jusqu'au 745c8eb, la moyenne de `h.l1.reflexe` [-1,1] après. Un champ déposé garde le nom qu'il avait le soir où il est parti ; renommer en amont ne rattrape rien en aval. D'où la règle : un nom qui a été déposé se gèle, la nouvelle grandeur prend un nom neuf."
-        },
-        {
-          "date": {
-            "annee": 129,
-            "lune": 4,
-            "jour": 3
-          },
-          "source": "bataille2d.js l.2941-2948 et l.6617",
-          "texte": "Le troisième contenu de `moraleMoyenne` n'est pas une mesure du tout : c'est le repli `-1` des hommes que la couche n'a jamais regardés. `soldat()` sort avant `observer()` pour `blesse` et pour `tete`, le filtre de la vue n'écarte que `mort` : 172 blessés et toutes les têtes sont publiés au calme parfait. Le dépôt écrit donc l'ABSENCE en nombre plausible et la PANNE en `null` — l'inverse de ce qu'il faut, et c'est le vrai défaut, pas le nom."
-        },
-        {
-          "date": {
-            "annee": 129,
-            "lune": 4,
-            "jour": 3
-          },
-          "source": "survival-stack/1-corps.js l.556-568 et etat/vues/marlo-vasse.json",
-          "texte": "Le `null` de Marlo n'est pas une quatrième quantité : c'est la moyenne de réflexe avec au moins un réflexe qui n'est pas un nombre — une moyenne n'a pas d'anticorps, un homme sur 1741 suffit. La panne est déjà avouée et corrigée dans la couche (`apaise` manquant sur la branche sans voisin), et sa signature écrite là-bas — 600 s, zéro mort, verrou intact — est mot pour mot ce que ses dix vues montrent."
-        },
-        {
-          "date": {
-            "annee": 129,
-            "lune": 4,
-            "jour": 3
-          },
-          "source": "survival-stack/2-reflexion.js l.82-94 contre 1-corps.js l.92",
-          "texte": "La maison a déjà une convention écrite et elle se dit non négociable : tous les signaux dans [-1,1], nommés du côté favorable en +1. Les couches 2, 3, 4 la tiennent ; la couche 1 nomme `reflexe` du côté de la glande et vaut -1 au repos. C'est la même grandeur physique que `alarme`, en miroir. Une faute de convention ne se rattrape pas dans l'adaptateur : elle se corrige dans le nom, sinon le troisième appelant l'oublie."
-        },
-        {
-          "date": {
-            "annee": 129,
-            "lune": 4,
-            "jour": 3
-          },
-          "source": "bataille2d.js l.6569, l.3043, l.3328 et etat/vues/nicolas-reynolds.json",
-          "texte": "Le relevé `branches` fabrique ses clefs en coupant au premier « à » ou « — », pour retirer les compléments chiffrés. Tout libellé qui emploie ces signes en prose y perd sa fin : « nez à nez, il attend le nombre » devient « nez », et « sidéré — son corps ne répond plus » devient « sidéré », donc perd la marque « son corps » qui est la seule chose rendant la couche comptable dans la vue. Un nom se conçoit avec le hachoir qui le coupera : la marque d'origine passe en tête."
-        }
-      ],
-      "conclusion": null
-    }
-  ],
-  "cahier2": [
-    {
-      "livre": "affaire-migrer-la-bataille-vers-la-stack",
-      "table": "⚔️ Actions — chacune remonte, ou elle sort",
-      "ligne": "90221",
-      "colonne": "⚔️ N°",
-      "valeur": "**90221**"
-    },
-    {
-      "livre": "affaire-migrer-la-bataille-vers-la-stack",
-      "table": "⚔️ Actions — chacune remonte, ou elle sort",
-      "ligne": "90221",
-      "colonne": "⚔️ L'action",
-      "valeur": "Nommer les trois quantités que `moraleMoyenne` porte sous un seul nom, avec les écartés et la raison, et trancher ce qu'est le `null`"
-    },
-    {
-      "livre": "affaire-migrer-la-bataille-vers-la-stack",
-      "table": "⚔️ Actions — chacune remonte, ou elle sort",
-      "ligne": "90221",
-      "colonne": "⬆️ Réalise",
-      "valeur": "90220 90200"
-    },
-    {
-      "livre": "affaire-migrer-la-bataille-vers-la-stack",
-      "table": "⚔️ Actions — chacune remonte, ou elle sort",
-      "ligne": "90221",
-      "colonne": "🪶 L'office",
-      "valeur": "Wenna la Nommeuse"
-    },
-    {
-      "livre": "affaire-migrer-la-bataille-vers-la-stack",
-      "table": "⚔️ Actions — chacune remonte, ou elle sort",
-      "ligne": "90221",
-      "colonne": "📅 Jour dû",
-      "valeur": "J−3"
-    },
-    {
-      "livre": "affaire-migrer-la-bataille-vers-la-stack",
-      "table": "⚔️ Actions — chacune remonte, ou elle sort",
-      "ligne": "90221",
-      "colonne": "✅ État",
-      "valeur": "fait — le 3e, constaté sur le disque et dans les anneaux, non décrété. **TROIS QUANTITÉS, TROIS NOMS ; UN NOM NE SE PARTAGE PAS.** ① **`moraleMoyenne`** — la jauge de rupture : moyenne de `h.morale`, née à 1 (`2d3350c:bataille2d.js` l.600), bornée [0,1] (l.1176, l.1195), 1 intacte, 0 il rompt. C'est le **+0,97 → +0,91** de `etat/vues/rhaenyra.json` (8 vues, 11h27Z, code d'avant `745c8eb` du 14 à 22h11). **Ce nom reste à cette quantité et se GÈLE** : huit vues déposées le portent déjà, on ne renomme pas ce qui est parti — on interdit de le réemployer. ② **`reflexeMoyen`** — moyenne de `h.l1.reflexe`, [−1, 1], **−1 AU REPOS** (`1-corps.js` l.92, l.1272-1273). C'est le **−0,94 → −0,92** de `etat/vues/nicolas-reynolds.json` (10 vues, 21h14Z). Écartés : **`alarmeMoyenne`** — que le commentaire l.6614 emploie déjà — REFUSÉ, `alarme` est pris par la couche 2 (`2-reflexion.js` l.87) et porte la convention INVERSE (« +1 tout est calme ») : publier −0,94 sous ce mot fait lire « le fer est sur eux » d'une armée au repos → 🔒 90380 ; **`peurMoyenne`**, **`tensionMoyenne`** — REFUSÉS, `peur()` (l.6641) nomme déjà les habitants, et la couche 1 mesure une glande et un temps de charge, pas un sentiment ; **`moraleMoyenne`** — REFUSÉ, voir ①, et le sens s'inverse (1 = bien contre −1 = bien). ③ **`sansCorps`** — le compte des vivants de l'assaut sans `h.l1`. **Ce n'est pas une mesure, c'est une absence**, et elle est aujourd'hui écrite `−1` au milieu de la moyenne : `soldat()` sort avant `observer()` pour `blesse` (l.2945) et pour `tete` (l.2948), tandis que le filtre l.6617 n'écarte que `mort` — les **172 blessés** du relevé de Nicolas et toutes les têtes de l'assaut entrent donc au dénominateur au calme parfait **sans avoir jamais été regardés**. Écartés : `sansStack` (la stack est un dossier, pas un organe qu'un homme a ou n'a pas), `sansL1` (nom de champ, pas nom de fait — illisible pour qui reçoit la vue), `hommesMesures` (dit ce qu'on a fait, pas ce qui manque, et ne se lit pas sans le total). **LE `null` DE MARLO N'EST PAS UNE QUATRIÈME CHOSE : C'EST ② EMPOISONNÉE.** Une moyenne n'a pas d'anticorps — un `reflexe` NaN sur 1741 suffit. `1-corps.js` l.556-568 porte l'aveu ET la signature : `apaise` absent d'une branche de retour, contagion NaN, réflexe NaN définitif, 116 hommes sur 604 ; « une bataille de six cents secondes rendait ZÉRO mort et un verrou intact » — c'est-à-dire, mot pour mot, les dix vues de `marlo-vasse.json` : 572 s, 0 mort, verrou 900 pv, `fuyards` 0. Corrigé depuis (l.569), la panne ne peut plus revenir **par cette branche**. **CE QU'IL FAUT EN RETENIR, ET QUI EST LE VRAI DÉFAUT DERRIÈRE LE NOM : le dépôt publie l'ABSENCE en silence (−1, un nombre plausible) et la PANNE en clair (`null`).** C'est l'inverse de ce qu'il faut : une absence doit se voir, une panne doit se compter."
-    },
-    {
-      "livre": "affaire-migrer-la-bataille-vers-la-stack",
-      "table": "⚔️ Actions — chacune remonte, ou elle sort",
-      "ligne": "90231",
-      "colonne": "⚔️ N°",
-      "valeur": "**90231**"
-    },
-    {
-      "livre": "affaire-migrer-la-bataille-vers-la-stack",
-      "table": "⚔️ Actions — chacune remonte, ou elle sort",
-      "ligne": "90231",
-      "colonne": "⚔️ L'action",
-      "valeur": "Rendre les libellés de la couche 1 comptables dans la vue : la marque d'origine passe en tête du libellé"
-    },
-    {
-      "livre": "affaire-migrer-la-bataille-vers-la-stack",
-      "table": "⚔️ Actions — chacune remonte, ou elle sort",
-      "ligne": "90231",
-      "colonne": "⬆️ Réalise",
-      "valeur": "90230 90200"
-    },
-    {
-      "livre": "affaire-migrer-la-bataille-vers-la-stack",
-      "table": "⚔️ Actions — chacune remonte, ou elle sort",
-      "ligne": "90231",
-      "colonne": "🪶 L'office",
-      "valeur": "Wenna la Nommeuse · Ygga Main-de-Pierre"
-    },
-    {
-      "livre": "affaire-migrer-la-bataille-vers-la-stack",
-      "table": "⚔️ Actions — chacune remonte, ou elle sort",
-      "ligne": "90231",
-      "colonne": "📅 Jour dû",
-      "valeur": "J−3"
-    },
-    {
-      "livre": "affaire-migrer-la-bataille-vers-la-stack",
-      "table": "⚔️ Actions — chacune remonte, ou elle sort",
-      "ligne": "90231",
-      "colonne": "✅ État",
-      "valeur": "nommé le 3e, reste à graver par le Fer — **OUI, UN NOM EST POUR QUELQUE CHOSE DANS LE 🔒 90230, ET C'EST LE MIEN.** Le relevé `branches` fabrique ses clefs en coupant chaque libellé **au premier « à » ou « — »** (`bataille2d.js` l.6569), pour retirer les compléments chiffrés du genre « à 40 pas » — sans quoi chaque homme ferait sa propre ligne. Quatre des cinq libellés de la couche 1 commencent par **« son corps »** (l.3048, 3068, 3080, 3090) : c'est la seule marque qui les rende comptables dans la vue, et personne d'autre dans le fichier ne l'emploie. Le cinquième, `\"sidéré — son corps ne répond plus\"` (l.3043), porte sa marque **APRÈS un tiret cadratin** : il entre dans la vue sous la clef **« sidéré »**, décapité — et le geste le plus lisible de la couche devient incomptable, sans que rien ne prévienne. **Témoin sur le disque, même mécanique, autre victime** : la clef **« nez »**, présente dans six des dix vues de `etat/vues/nicolas-reynolds.json`, est `\"nez à nez, il attend le nombre\"` (l.3328) coupé au « à ». **CORRECTION DE NOM, ET ELLE NE TOUCHE PAS AU RELEVÉ : la marque d'origine passe EN TÊTE** → `\"son corps ne répond plus, il est sidéré\"`. **Règle pour les libellés à venir** : aucun libellé de couche ne met sa marque d'origine après un « — » ni un « à » ; ce qui doit être compté se dit avant la première ponctuation. Écarté : préfixer d'un marqueur technique (`[l1] sidéré`) — REFUSÉ, un relevé qui part au MJ n'est pas un journal de compilation, et « son corps » dit déjà l'origine en français. Écarté aussi : changer le hachoir pour qu'il ne coupe que devant un chiffre — c'est du fer, pas du nom, et cela laisserait quand même le libellé mentir sur son auteur ; à faire en plus, pas à la place. ⚠ **ET LE COMPTE N'EST PAS DEUX HOMMES SUR 1460, C'EST UN** : `\"son corps est parti en avant, seul\"` = 1 dans les dix vues de Nicolas, et la seconde clef comptée (`nez`) appartient à la cascade, pas à la stack."
-    },
-    {
-      "livre": "affaire-migrer-la-bataille-vers-la-stack",
-      "table": "🔒 Verrous",
-      "ligne": "90380",
-      "colonne": "🔒 N°",
-      "valeur": "**90380**"
-    },
-    {
-      "livre": "affaire-migrer-la-bataille-vers-la-stack",
-      "table": "🔒 Verrous",
-      "ligne": "90380",
-      "colonne": "🔒 Le verrou",
-      "valeur": "**La couche 1 est seule à l'envers de la convention de la maison** — `reflexe` est nommé du côté de la glande (−1 au repos), tous les autres signaux de la stack du côté favorable (+1)"
-    },
-    {
-      "livre": "affaire-migrer-la-bataille-vers-la-stack",
-      "table": "🔒 Verrous",
-      "ligne": "90380",
-      "colonne": "🎯 Bloque",
-      "valeur": "90300 90200"
-    },
-    {
-      "livre": "affaire-migrer-la-bataille-vers-la-stack",
-      "table": "🔒 Verrous",
-      "ligne": "90380",
-      "colonne": "🔎 La preuve",
-      "valeur": "Constaté le 3e en nommant les trois quantités de 🔒 90220, et non supposé. `survival-stack/2-reflexion.js` l.82-84 écrit la règle de la maison et la déclare **non négociable** : « Tous dans [−1, 1], tous nommés du côté favorable en +1 — la convention est celle des couches 3 et 4 […] : un signal qui s'inverse d'une couche à l'autre est une faute qu'on ne retrouve jamais. » Or `1-corps.js` pose `reflexe` à **−1 au repos** (l.92 « le zéro juste tient toujours : reflexe −1,00 » ; l.1272-1273, un corps sans réflexe est posé à −1) et +1 quand le fer est sur lui — soit **exactement le miroir de `alarme`** (`2-reflexion.js` l.87 : « +1 tout est calme · −1 le fer est sur lui »), qui est la MÊME grandeur physique vue de la couche 2. Deux conséquences datées, pas craintes. ① `bataille/reflexion-adapt.js` **reste à écrire** (🔒 90370) et devra bâtir `alarme` : le geste naturel est de le nourrir depuis `h.l1.reflexe`, et **sans négation la couche 2 lira le calme comme la terreur** sur ses neuf clauses (l.126-127, 156, 178, 204-207) — une bataille entière décidée à l'envers, et rien qui jette. ② Le seul nombre de la stack qui parte au MJ le porte déjà : `etat/vues/nicolas-reynolds.json` publie **−0,94**, qui dit une armée AU REPOS et se lit spontanément comme une armée aux abois. Se lèverait **en nommant la grandeur du côté favorable dans la couche 1 aussi** — un `calme` = −`reflexe`, ou `reflexe` renommé et retourné à sa source — **et jamais en écrivant la conversion dans l'adaptateur** : une convention qu'on rattrape en route est celle qu'on oublie au troisième appelant. À trancher AVANT la première ligne de `reflexion-adapt.js`."
-    }
-  ],
-  "_depeche": {
-    "session": "6dfc61da-2a2e-5250-a76c-5be7a28d3638",
-    "date_jeu": "129.4.3",
-    "jetons": 2005688,
-    "secondes": 532
+ "qui": "wenna-la-nommeuse",
+ "journal": [
+  {
+   "heure": "7h02",
+   "duree": 45,
+   "lieu": "la-souche",
+   "quoi": "Wenna ouvre les trois vues déposées et compte les régimes au lieu de les croire",
+   "resultat": "Rhaenyra +0,97→+0,91 (8 vues, 11h27Z) ; Marlo null sur 10 vues (19h46Z, 572 s, 0 mort, verrou 900 pv intact) ; Nicolas −0,94→−0,92 (10 vues, 21h14Z, 172 blessés)"
+  },
+  {
+   "heure": "7h47",
+   "duree": 55,
+   "lieu": "la-souche",
+   "quoi": "Elle remonte les deux formules dans les anneaux plutôt que de les deviner",
+   "resultat": "2d3350c : moyenne de `h.morale`, née à 1, bornée [0,1] (l.600, 1176, 1195). 745c8eb : moyenne de `h.l1.reflexe`, [−1,1], −1 au repos. Un seul nom pour les deux"
+  },
+  {
+   "heure": "8h42",
+   "duree": 70,
+   "lieu": "la-souche",
+   "quoi": "Elle cherche qui n'a pas de `h.l1` et se trouve compté quand même",
+   "resultat": "`soldat()` sort avant `observer()` pour `mort` (2941), `blesse` (2945) et `tete` (2948) ; le filtre l.6617 n'écarte que `mort` : blessés et têtes entrent au dénominateur à −1 exact, jamais mesurés"
+  },
+  {
+   "heure": "9h52",
+   "duree": 50,
+   "lieu": "la-souche",
+   "quoi": "Elle poursuit le null de Marlo au lieu de le porter en quatrième quantité",
+   "resultat": "`1-corps.js` l.556-568 : `apaise` absent d'une branche de retour, contagion NaN, réflexe NaN définitif — 116 hommes sur 604, et la signature « 600 s, zéro mort, verrou intact » est mot pour mot les dix vues de Marlo. Corrigé l.569"
+  },
+  {
+   "heure": "10h42",
+   "duree": 48,
+   "lieu": "la-souche",
+   "quoi": "Elle cherche un nom libre pour la moyenne de réflexe et bute sur la couche 2",
+   "resultat": "`alarme` est pris (`2-reflexion.js` l.87) et porte la convention INVERSE ; l.82-84 déclare la règle de la maison non négociable. La couche 1 est seule à l'envers — verrou neuf"
+  },
+  {
+   "heure": "11h30",
+   "duree": 30,
+   "lieu": "la-souche",
+   "quoi": "Elle grave les trois noms, les écartés et la raison, en action 90221",
+   "resultat": "`moraleMoyenne` gelé, `reflexeMoyen` posé, `sansCorps` posé ; `alarmeMoyenne`, `peurMoyenne`, `sansStack`, `sansL1`, `hommesMesures` écartés avec leur motif"
+  },
+  {
+   "heure": "13h00",
+   "duree": 75,
+   "lieu": "la-souche",
+   "quoi": "Elle prend le 90230 par les libellés et non par la mécanique de Bren",
+   "resultat": "Le relevé coupe au premier « à » ou « — » (l.6569). Quatre libellés sur cinq portent la marque « son corps » ; le cinquième la met après un tiret (l.3043) et entre sous « sidéré », décapité. Témoin : la clef « nez » = `\"nez à nez, il attend le nombre\"` (l.3328)"
+  },
+  {
+   "heure": "14h15",
+   "duree": 40,
+   "lieu": "la-souche",
+   "quoi": "Elle recompte les hommes que la stack conduit dans les dix vues de Nicolas",
+   "resultat": "UN, pas deux sur 1460 : `\"son corps est parti en avant, seul\"` = 1 ; la seconde clef comptée (`nez`) est de la cascade. Correction de nom gravée en 90231"
+  },
+  {
+   "heure": "14h55",
+   "duree": 45,
+   "lieu": "la-souche",
+   "quoi": "Elle ouvre le verrou 90380 et le rend à l'Équerre par le parloir",
+   "resultat": "Verrou gravé avec ses deux conséquences datées : `reflexion-adapt.js` nourrira `alarme` depuis `reflexe` sans négation, et le seul nombre de la stack qui part au MJ se lit déjà à l'envers"
   }
+ ],
+ "travaux": [
+  {
+   "travail_id": "affaire-migrer-la-bataille-vers-la-stack",
+   "dernier_travail": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "pensees": [
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "etat/vues/*.json et git show 2d3350c / 745c8eb",
+     "texte": "Les trois régimes de `moraleMoyenne` sont trois DATES, pas trois calculs concurrents : la jauge `h.morale` [0,1] jusqu'au 745c8eb, la moyenne de `h.l1.reflexe` [-1,1] après. Un champ déposé garde le nom qu'il avait le soir où il est parti ; renommer en amont ne rattrape rien en aval. D'où la règle : un nom qui a été déposé se gèle, la nouvelle grandeur prend un nom neuf."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "bataille2d.js l.2941-2948 et l.6617",
+     "texte": "Le troisième contenu de `moraleMoyenne` n'est pas une mesure du tout : c'est le repli `-1` des hommes que la couche n'a jamais regardés. `soldat()` sort avant `observer()` pour `blesse` et pour `tete`, le filtre de la vue n'écarte que `mort` : 172 blessés et toutes les têtes sont publiés au calme parfait. Le dépôt écrit donc l'ABSENCE en nombre plausible et la PANNE en `null` — l'inverse de ce qu'il faut, et c'est le vrai défaut, pas le nom."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "survival-stack/1-corps.js l.556-568 et etat/vues/marlo-vasse.json",
+     "texte": "Le `null` de Marlo n'est pas une quatrième quantité : c'est la moyenne de réflexe avec au moins un réflexe qui n'est pas un nombre — une moyenne n'a pas d'anticorps, un homme sur 1741 suffit. La panne est déjà avouée et corrigée dans la couche (`apaise` manquant sur la branche sans voisin), et sa signature écrite là-bas — 600 s, zéro mort, verrou intact — est mot pour mot ce que ses dix vues montrent."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "survival-stack/2-reflexion.js l.82-94 contre 1-corps.js l.92",
+     "texte": "La maison a déjà une convention écrite et elle se dit non négociable : tous les signaux dans [-1,1], nommés du côté favorable en +1. Les couches 2, 3, 4 la tiennent ; la couche 1 nomme `reflexe` du côté de la glande et vaut -1 au repos. C'est la même grandeur physique que `alarme`, en miroir. Une faute de convention ne se rattrape pas dans l'adaptateur : elle se corrige dans le nom, sinon le troisième appelant l'oublie."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "bataille2d.js l.6569, l.3043, l.3328 et etat/vues/nicolas-reynolds.json",
+     "texte": "Le relevé `branches` fabrique ses clefs en coupant au premier « à » ou « — », pour retirer les compléments chiffrés. Tout libellé qui emploie ces signes en prose y perd sa fin : « nez à nez, il attend le nombre » devient « nez », et « sidéré — son corps ne répond plus » devient « sidéré », donc perd la marque « son corps » qui est la seule chose rendant la couche comptable dans la vue. Un nom se conçoit avec le hachoir qui le coupera : la marque d'origine passe en tête."
+    }
+   ],
+   "conclusion": null
+  }
+ ],
+ "cahier2": [
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "⚔️ Actions — chacune remonte, ou elle sort",
+   "ligne": "90221",
+   "colonne": "⚔️ N°",
+   "valeur": "**90221**"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "⚔️ Actions — chacune remonte, ou elle sort",
+   "ligne": "90221",
+   "colonne": "⚔️ L'action",
+   "valeur": "Nommer les trois quantités que `moraleMoyenne` porte sous un seul nom, avec les écartés et la raison, et trancher ce qu'est le `null`"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "⚔️ Actions — chacune remonte, ou elle sort",
+   "ligne": "90221",
+   "colonne": "⬆️ Réalise",
+   "valeur": "90220 90200"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "⚔️ Actions — chacune remonte, ou elle sort",
+   "ligne": "90221",
+   "colonne": "🪶 L'office",
+   "valeur": "Wenna la Nommeuse"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "⚔️ Actions — chacune remonte, ou elle sort",
+   "ligne": "90221",
+   "colonne": "📅 Jour dû",
+   "valeur": "J−3"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "⚔️ Actions — chacune remonte, ou elle sort",
+   "ligne": "90221",
+   "colonne": "✅ État",
+   "valeur": "fait — le 3e, constaté sur le disque et dans les anneaux, non décrété. **TROIS QUANTITÉS, TROIS NOMS ; UN NOM NE SE PARTAGE PAS.** ① **`moraleMoyenne`** — la jauge de rupture : moyenne de `h.morale`, née à 1 (`2d3350c:bataille2d.js` l.600), bornée [0,1] (l.1176, l.1195), 1 intacte, 0 il rompt. C'est le **+0,97 → +0,91** de `etat/vues/rhaenyra.json` (8 vues, 11h27Z, code d'avant `745c8eb` du 14 à 22h11). **Ce nom reste à cette quantité et se GÈLE** : huit vues déposées le portent déjà, on ne renomme pas ce qui est parti — on interdit de le réemployer. ② **`reflexeMoyen`** — moyenne de `h.l1.reflexe`, [−1, 1], **−1 AU REPOS** (`1-corps.js` l.92, l.1272-1273). C'est le **−0,94 → −0,92** de `etat/vues/nicolas-reynolds.json` (10 vues, 21h14Z). Écartés : **`alarmeMoyenne`** — que le commentaire l.6614 emploie déjà — REFUSÉ, `alarme` est pris par la couche 2 (`2-reflexion.js` l.87) et porte la convention INVERSE (« +1 tout est calme ») : publier −0,94 sous ce mot fait lire « le fer est sur eux » d'une armée au repos → 🔒 90380 ; **`peurMoyenne`**, **`tensionMoyenne`** — REFUSÉS, `peur()` (l.6641) nomme déjà les habitants, et la couche 1 mesure une glande et un temps de charge, pas un sentiment ; **`moraleMoyenne`** — REFUSÉ, voir ①, et le sens s'inverse (1 = bien contre −1 = bien). ③ **`sansCorps`** — le compte des vivants de l'assaut sans `h.l1`. **Ce n'est pas une mesure, c'est une absence**, et elle est aujourd'hui écrite `−1` au milieu de la moyenne : `soldat()` sort avant `observer()` pour `blesse` (l.2945) et pour `tete` (l.2948), tandis que le filtre l.6617 n'écarte que `mort` — les **172 blessés** du relevé de Nicolas et toutes les têtes de l'assaut entrent donc au dénominateur au calme parfait **sans avoir jamais été regardés**. Écartés : `sansStack` (la stack est un dossier, pas un organe qu'un homme a ou n'a pas), `sansL1` (nom de champ, pas nom de fait — illisible pour qui reçoit la vue), `hommesMesures` (dit ce qu'on a fait, pas ce qui manque, et ne se lit pas sans le total). **LE `null` DE MARLO N'EST PAS UNE QUATRIÈME CHOSE : C'EST ② EMPOISONNÉE.** Une moyenne n'a pas d'anticorps — un `reflexe` NaN sur 1741 suffit. `1-corps.js` l.556-568 porte l'aveu ET la signature : `apaise` absent d'une branche de retour, contagion NaN, réflexe NaN définitif, 116 hommes sur 604 ; « une bataille de six cents secondes rendait ZÉRO mort et un verrou intact » — c'est-à-dire, mot pour mot, les dix vues de `marlo-vasse.json` : 572 s, 0 mort, verrou 900 pv, `fuyards` 0. Corrigé depuis (l.569), la panne ne peut plus revenir **par cette branche**. **CE QU'IL FAUT EN RETENIR, ET QUI EST LE VRAI DÉFAUT DERRIÈRE LE NOM : le dépôt publie l'ABSENCE en silence (−1, un nombre plausible) et la PANNE en clair (`null`).** C'est l'inverse de ce qu'il faut : une absence doit se voir, une panne doit se compter."
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "⚔️ Actions — chacune remonte, ou elle sort",
+   "ligne": "90231",
+   "colonne": "⚔️ N°",
+   "valeur": "**90231**"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "⚔️ Actions — chacune remonte, ou elle sort",
+   "ligne": "90231",
+   "colonne": "⚔️ L'action",
+   "valeur": "Rendre les libellés de la couche 1 comptables dans la vue : la marque d'origine passe en tête du libellé"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "⚔️ Actions — chacune remonte, ou elle sort",
+   "ligne": "90231",
+   "colonne": "⬆️ Réalise",
+   "valeur": "90230 90200"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "⚔️ Actions — chacune remonte, ou elle sort",
+   "ligne": "90231",
+   "colonne": "🪶 L'office",
+   "valeur": "Wenna la Nommeuse · Ygga Main-de-Pierre"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "⚔️ Actions — chacune remonte, ou elle sort",
+   "ligne": "90231",
+   "colonne": "📅 Jour dû",
+   "valeur": "J−3"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "⚔️ Actions — chacune remonte, ou elle sort",
+   "ligne": "90231",
+   "colonne": "✅ État",
+   "valeur": "nommé le 3e, reste à graver par le Fer — **OUI, UN NOM EST POUR QUELQUE CHOSE DANS LE 🔒 90230, ET C'EST LE MIEN.** Le relevé `branches` fabrique ses clefs en coupant chaque libellé **au premier « à » ou « — »** (`bataille2d.js` l.6569), pour retirer les compléments chiffrés du genre « à 40 pas » — sans quoi chaque homme ferait sa propre ligne. Quatre des cinq libellés de la couche 1 commencent par **« son corps »** (l.3048, 3068, 3080, 3090) : c'est la seule marque qui les rende comptables dans la vue, et personne d'autre dans le fichier ne l'emploie. Le cinquième, `\"sidéré — son corps ne répond plus\"` (l.3043), porte sa marque **APRÈS un tiret cadratin** : il entre dans la vue sous la clef **« sidéré »**, décapité — et le geste le plus lisible de la couche devient incomptable, sans que rien ne prévienne. **Témoin sur le disque, même mécanique, autre victime** : la clef **« nez »**, présente dans six des dix vues de `etat/vues/nicolas-reynolds.json`, est `\"nez à nez, il attend le nombre\"` (l.3328) coupé au « à ». **CORRECTION DE NOM, ET ELLE NE TOUCHE PAS AU RELEVÉ : la marque d'origine passe EN TÊTE** → `\"son corps ne répond plus, il est sidéré\"`. **Règle pour les libellés à venir** : aucun libellé de couche ne met sa marque d'origine après un « — » ni un « à » ; ce qui doit être compté se dit avant la première ponctuation. Écarté : préfixer d'un marqueur technique (`[l1] sidéré`) — REFUSÉ, un relevé qui part au MJ n'est pas un journal de compilation, et « son corps » dit déjà l'origine en français. Écarté aussi : changer le hachoir pour qu'il ne coupe que devant un chiffre — c'est du fer, pas du nom, et cela laisserait quand même le libellé mentir sur son auteur ; à faire en plus, pas à la place. ⚠ **ET LE COMPTE N'EST PAS DEUX HOMMES SUR 1460, C'EST UN** : `\"son corps est parti en avant, seul\"` = 1 dans les dix vues de Nicolas, et la seconde clef comptée (`nez`) appartient à la cascade, pas à la stack."
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Verrous",
+   "ligne": "90380",
+   "colonne": "🔒 N°",
+   "valeur": "**90380**"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Verrous",
+   "ligne": "90380",
+   "colonne": "🔒 Le verrou",
+   "valeur": "**La couche 1 est seule à l'envers de la convention de la maison** — `reflexe` est nommé du côté de la glande (−1 au repos), tous les autres signaux de la stack du côté favorable (+1)"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Verrous",
+   "ligne": "90380",
+   "colonne": "🎯 Bloque",
+   "valeur": "90300 90200"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Verrous",
+   "ligne": "90380",
+   "colonne": "🔎 La preuve",
+   "valeur": "Constaté le 3e en nommant les trois quantités de 🔒 90220, et non supposé. `survival-stack/2-reflexion.js` l.82-84 écrit la règle de la maison et la déclare **non négociable** : « Tous dans [−1, 1], tous nommés du côté favorable en +1 — la convention est celle des couches 3 et 4 […] : un signal qui s'inverse d'une couche à l'autre est une faute qu'on ne retrouve jamais. » Or `1-corps.js` pose `reflexe` à **−1 au repos** (l.92 « le zéro juste tient toujours : reflexe −1,00 » ; l.1272-1273, un corps sans réflexe est posé à −1) et +1 quand le fer est sur lui — soit **exactement le miroir de `alarme`** (`2-reflexion.js` l.87 : « +1 tout est calme · −1 le fer est sur lui »), qui est la MÊME grandeur physique vue de la couche 2. Deux conséquences datées, pas craintes. ① `bataille/reflexion-adapt.js` **reste à écrire** (🔒 90370) et devra bâtir `alarme` : le geste naturel est de le nourrir depuis `h.l1.reflexe`, et **sans négation la couche 2 lira le calme comme la terreur** sur ses neuf clauses (l.126-127, 156, 178, 204-207) — une bataille entière décidée à l'envers, et rien qui jette. ② Le seul nombre de la stack qui parte au MJ le porte déjà : `etat/vues/nicolas-reynolds.json` publie **−0,94**, qui dit une armée AU REPOS et se lit spontanément comme une armée aux abois. Se lèverait **en nommant la grandeur du côté favorable dans la couche 1 aussi** — un `calme` = −`reflexe`, ou `reflexe` renommé et retourné à sa source — **et jamais en écrivant la conversion dans l'adaptateur** : une convention qu'on rattrape en route est celle qu'on oublie au troisième appelant. À trancher AVANT la première ligne de `reflexion-adapt.js`."
+  }
+ ],
+ "_depeche": {
+  "session": "6dfc61da-2a2e-5250-a76c-5be7a28d3638",
+  "date_jeu": "129.4.3",
+  "jetons": 2005688,
+  "secondes": 532
+ },
+ "_cahier_verse": true
 }

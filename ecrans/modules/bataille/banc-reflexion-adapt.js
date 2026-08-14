@@ -135,10 +135,15 @@ console.log("\n  LA PRISE DE LA COUCHE 2 — " + new Date(0).toISOString().slice
   const scene = monde(F(4, "garde", 3, 0, { etat: "colonne" }));
   const a = A.observer(h, scene, 0.5);
   for (let i = 0; i < 12; i++) A.observer(h, scene, 0.5);
+  // ET ON REGARDE LA DENT DE SCIE : douze battements plus tard, l'attente doit
+  // etre EPUISEE et le rester, pas rebondir parce que la couche a change d'avis.
+  const b = A.observer(h, scene, 0.5).attend;
+  A.observer(h, scene, 0.5);
   dit("l'horloge d'attente s'épuise, et c'est ce fichier qui la tient",
-      a.attend > 0.2 && h.l2.attend < a.attend - 0.2,
-      "attend " + a.attend.toFixed(2) + " → " + h.l2.attend.toFixed(2)
-      + " après " + h.l2etat.attendDepuis.toFixed(1) + " s");
+      a.attend > 0.2 && b < a.attend - 0.2 && Math.abs(h.l2.attend - b) < 0.05,
+      "attend " + a.attend.toFixed(2) + " → " + b.toFixed(2) + " → "
+      + h.l2.attend.toFixed(2) + "  (sans dent de scie, "
+      + h.l2etat.attendDepuis.toFixed(1) + " s d'attente)");
 }
 {
   // L'hystérésis : `deja` sort de sa propre sortie d'avant, PAS de `h.recule`.

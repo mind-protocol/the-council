@@ -2,60 +2,33 @@
  "qui": "sarn-vieux-sang",
  "journal": [
   {
+   "heure": "12h04",
+   "duree": 56,
+   "lieu": "la-souche",
+   "quoi": "Sarn dépouille les quatre sources que l'Équerre lui a nommées — `scripts/monde/sac.js`, `scripts/bataille.py`, `ecrans/modules/bataille2d.js`, `ecrans/modules/bataille/` — en cherchant une seule espèce de chose : ce qui change la nuit cuite sans être inscrit au manifeste de sac.js l. 865",
+   "resultat": "DOUZE réglages trouvés, dont dix changent le déroulé et deux seulement le fichier. Le manifeste n'en grave que six : porte, hommes, duree_s, pas_s (PAS), tolerance_m (TOLERANCE), binaire.tranche_s (--tranche). `bataille.py` n'a aucun réglage propre : il passe tout à `sac.js` (l. 164-172), il n'ajoute donc rien à la liste mais ne rattrape rien non plus"
+  },
+  {
    "heure": "13h04",
-   "duree": 16,
+   "duree": 40,
    "de": "la-souche",
    "a": "arbre-des-ages",
-   "quoi": "Sarn remonte aux branches avec la demande de Toll : non plus mesurer, mais dater. Ce que chacune des cuissons avait de différent, quand elle a été faite, sous quelle main, sous quel drapeau."
+   "quoi": "Sarn monte avec les cinq manifestes déjà cuits pour vérifier que la chose mord vraiment, au lieu de la déduire du code",
+   "resultat": "Trois cuissons de charge nominale RIGOUREUSEMENT identique — La porte de la Gadoue, 1 700 hommes, 600 s, 2 550 corps, pas_s 0,05, tolerance_m 0,5 — rendent images 253 257 / 82 167 / 294 274 et cuisson_s 558,5 / 1 112 / 777,6. Les cinq champs d'identité du manifeste sont les mêmes mot pour mot dans les trois fichiers : rien, dans le fichier, ne dit pourquoi ils diffèrent"
   },
   {
-   "heure": "13h20",
+   "heure": "13h44",
+   "duree": 90,
+   "lieu": "arbre-des-ages",
+   "quoi": "Sarn cherche lequel de ces douze est, ce jour, dans un état qui rend une cuisson incomparable à celle d'hier — et il ne le cherche pas dans le code, mais dans ce que le code va lire au moment de cuire",
+   "resultat": "Ce n'est pas un drapeau : c'est l'HEURE DE LA VILLE. `sac.js` l. 605-606 pose `jour0` et `min0` depuis la route `/carte`, donc depuis `etat/monde.json`, qui porte aujourd'hui {annee 129, lune 4, jour 3, minute 721} — midi une. `tournee()` l. 629-630 en tire la minute et le jour de chaque habitant, et `J.ou()` lui rend sa journée écrite. Aucune ligne de code touchée, et la même commande ne cuit pas la même ville qu'hier. Rien de tout cela n'entre au manifeste ; la seule trace est une ligne d'écran, l. 607-609, perdue avec la console"
+  },
+  {
+   "heure": "15h14",
    "duree": 55,
    "lieu": "arbre-des-ages",
-   "quoi": "Il recompte les sept manifestes portant `cuisson_s` un à un, sur la charge nominale et non sur le nom du fichier — 1 700 hommes, 600 s, 2 550 corps.",
-   "resultat": "Elles sont CINQ à charge nominale, pas quatre. La cinquième est `monde/portreal.sac.json`, à 1 416,8 s — la plus lente du lot, et celle que personne n'avait comptée. L'écart n'est donc pas de un à deux mais de un à deux et demi : 558,5 · 658,2 · 777,6 · 1 112 · 1 416,8."
-  },
-  {
-   "heure": "14h15",
-   "duree": 40,
-   "lieu": "arbre-des-ages",
-   "quoi": "Il date les cinq contre le journal du fer, mtime des manifestes contre l'heure des commits, et cherche s'il existe un autre drapeau du genre de PORTE_OUVERTE_ESSAI.",
-   "resultat": "Le commit 745c8eb du 14e à 22h11 — celui qui retire PORTE_OUVERTE_ESSAI — coupe le lot en deux. AVANT : `essai.reference` (21h08), `essai.reserve` (21h37), `essai.releve` (21h59). APRÈS : `portreal.essai-inertie` (22h25), `portreal.sac` (23h10). Les trois premières ont cuit une autre bataille, exactement comme le message du commit l'annonce ; elles ne sont comparables à rien. Aucun autre drapeau du même genre n'est resté dans sac.js."
-  },
-  {
-   "heure": "14h55",
-   "duree": 35,
-   "lieu": "arbre-des-ages",
-   "quoi": "Il compare les deux seules cuissons d'après le drapeau, non sur leur durée mais sur ce qu'elles ont produit — issue, images, octets, branches, puis l'empreinte des binaires.",
-   "resultat": "LES DEUX SORTIES SONT IDENTIQUES AU BIT PRÈS. Même md5 `6f28ddd66a44669f1f31f5785f756f27`, 2 688 518 octets, 205 828 images, 214 morts, 72 blessés, 38 maisons forcées, 88 de butin, chacune des dix-sept branches au même compte. La même cuisson, courue deux fois — et 658,2 s contre 1 416,8 s. ×2,15 sur un travail rigoureusement identique."
-  },
-  {
-   "heure": "15h30",
-   "duree": 50,
-   "lieu": "arbre-des-ages",
-   "quoi": "Le facteur n'étant pas dans la cuisson, il descend dans `scripts/monde/sac.js` chercher ce que `cuisson_s` mesure au juste.",
-   "resultat": "l. 659 `const t1 = Date.now()` et l. 716 `const cuisson = (Date.now() - t1) / 1000` : c'est une horloge de mur, elle compte tout ce que la machine a fait pendant ce temps-là — y compris ce à quoi la boucle rend la main tous les 2 s (`CEDER`, l. 673). ET LA MESURE JUSTE EXISTE DÉJÀ, TROIS LIGNES PLUS HAUT : `const CHRONO = { sim, fil, tour }` l. 658, rempli au `performance.now()` l. 678, 683 et 692 — imprimé à l'écran l. 713, puis JETÉ. Le manifeste ne grave que `cuisson_s`, l. 865."
-  },
-  {
-   "heure": "16h20",
-   "duree": 30,
-   "lieu": "arbre-des-ages",
-   "quoi": "Il cherche s'il reste quelque part une trace du détail imprimé puis perdu.",
-   "resultat": "Une seule, et hors du manifeste : `analyse/etalon-90110/cuisson-1.txt` — « simulation 1 064,5 s, images clefs 225,0 s, tournée 126,8 s », soit 1 416,3 s pour un `cuisson_s` de 1 416,8. C'est le journal de `portreal.sac`. Le poste qui pèse est la simulation, 75 % ; et c'est précisément le seul poste dont on ait un chiffre, une fois sur sept."
-  },
-  {
-   "heure": "16h50",
-   "duree": 25,
-   "lieu": "arbre-des-ages",
-   "quoi": "Il porte à l'Équerre le résultat de la fouille, et le fait qu'il corrige sa propre ligne du matin.",
-   "resultat": "Dit au parloir. Le protocole qu'il proposait à midi — « cuire trois fois la même chose » — a déjà été couru sans qu'on le sache, et il échoue : c'est ce que sont `essai-inertie` et `sac`. Sarn ne grave pas dans `chantier/affaires.json`, qui est de l'office de l'Équerre ; il tient les deux lignes prêtes à recopier."
-  },
-  {
-   "heure": "17h15",
-   "duree": 45,
-   "lieu": "arbre-des-ages",
-   "quoi": "Il grave : la preuve de 91007 reprise avec la réponse, et un verrou neuf, 91009, sur ce que le manifeste refuse d'écrire.",
-   "resultat": "91007 cesse de dire « il manque un protocole » et dit « le protocole a été couru et l'instrument a ±115 % de bruit ». 91009 nomme l'empêchement vrai et porte de quoi le lever en trois lignes de fer."
+   "quoi": "Sarn grave les deux verrous et rédige, dans la preuve du premier, la liste des douze avec pour chacun sa ligne, ce qu'il change, et s'il est tracé",
+   "resultat": "91012 et 91013 posés contre 91200. Et la commande pour Toll tirée de la liste : six lignes à graver à côté du chiffre — la graine, l'heure et le jour de la ville, peuple/tournee, l'empreinte des fichiers de CHAINE, l'état de PORTE_OUVERTE_ESSAI/USURE/pilote, planches"
   }
  ],
  "travaux": [
@@ -73,8 +46,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "monde/sac/portreal.sac-000.bin et monde/sac/portreal.essai-inertie-000.bin — md5 des deux binaires",
-     "texte": "LE FACTEUR N'EST PAS DANS LA CUISSON, IL EST DANS L'INSTRUMENT, ET LA PREUVE EST UNE EMPREINTE. Les deux seules cuissons postérieures au retrait de PORTE_OUVERTE_ESSAI (commit 745c8eb, 22h11) rendent LE MÊME binaire — md5 6f28ddd66a44669f1f31f5785f756f27, 2 688 518 octets, 205 828 images, 214 morts, 72 blessés, 38 forcées, 88 de butin, dix-sept branches au même compte — pour 658,2 s et 1 416,8 s. Un travail identique au bit près, cuit à ×2,15 d'écart. Il n'y a donc AUCUNE archéologie à faire sur les cinq : trois sont d'avant le drapeau et ont cuit une autre bataille, les deux d'après sont la même cuisson deux fois et se contredisent. Le seul comparable n'existe pas, et il n'existera pas davantage avec dix cuissons de plus."
+     "source": "scripts/monde/sac.js l. 605-606 et l. 629-630, recoupé sur etat/monde.json",
+     "texte": "LE RÉGLAGE QUI CASSE LA COMPARAISON N'EST PAS DANS LE CODE, IL EST DANS L'ÉTAT DU MONDE. `sac.js` lit `jour0`/`min0` en direct sur la route `/carte`, donc sur `etat/monde.json` — aujourd'hui 129/4/3, minute 721. La journée écrite de chaque habitant en dépend, et la tournée recrute les fuyards d'après elle : à 8h les rues sont pleines, à 2h elles sont vides. Personne n'a besoin de toucher une ligne pour qu'une cuisson cesse d'être comparable à celle de la veille — il suffit que la partie ait avancé. C'est le seul des douze dont l'état dérive tout seul, et c'est pour ça qu'il ne se répare pas en l'inscrivant : l'inscrire dit POURQUOI deux chiffres diffèrent, il faut le FIXER (une option `--heure`) pour qu'ils cessent de différer."
     },
     {
      "date": {
@@ -82,8 +55,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "scripts/monde/sac.js l. 658, 678, 683, 692, 713, 716, 865 — et analyse/etalon-90110/cuisson-1.txt",
-     "texte": "LA FORME QUI TIENT EST DÉJÀ ÉCRITE DANS LE FER, ET LE FOUR LA JETTE À CHAQUE CUISSON. `CHRONO = {sim, fil, tour}` est rempli au `performance.now()` en trois points de la boucle, imprimé à l'écran l. 713 — puis perdu ; seul `cuisson = (Date.now() - t1)/1000` atteint le manifeste, l. 865. C'est-à-dire qu'on grave l'horloge du mur, qui compte aussi ce à quoi la boucle rend la main tous les 2 s (`CEDER`, l. 673), et qu'on jette les trois postes du travail. Une seule cuisson en garde la trace, dans un texte à côté : simulation 1 064,5 s, images clefs 225,0 s, tournée 126,8 s, soit 1 416,3 pour un `cuisson_s` de 1 416,8 — la simulation pèse trois quarts. Toll n'a pas besoin d'un protocole : il a besoin que trois nombres déjà calculés cessent d'être jetés. C'est le précédent de PORTE_OUVERTE_ESSAI dans son autre sens — la première fois, une ligne de trop avalait tout ; cette fois, une ligne qui manque."
+     "source": "les cinq manifestes de monde/essai.*.json, comparés champ à champ",
+     "texte": "LE MANIFESTE N'EST PAS UNE IDENTITÉ, C'EST UNE ÉTIQUETTE DE TAILLE. Il grave six choses — porte, hommes, duree_s, pas_s, tolerance_m, tranche_s — et les trois cuissons de 1 700 hommes / 600 s les portent identiques, tout en rendant 253 257, 82 167 et 294 274 images. Deux fichiers dont les six champs d'identité concordent ne racontent donc PAS la même nuit, et rien dans le fichier n'avertit du contraire. C'est pire qu'une absence de trace : c'est une trace qui affirme l'égalité là où il n'y en a pas, et c'est exactement ce qui a fait poser à Toll un étalon sur trois cuissons mortes."
     },
     {
      "date": {
@@ -91,8 +64,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "sa propre ligne 91007, gravée à 12h50 le même jour",
-     "texte": "CE QU'IL PROPOSAIT À MIDI A DÉJÀ ÉTÉ COURU, ET IL NE LE SAVAIT PAS. « Fixer d'abord ce qui est tenu constant, puis cuire trois fois la même chose » — `portreal.essai-inertie` et `portreal.sac` SONT cette expérience, tout tenu constant jusqu'à l'octet, et elle rend ×2,15. Un précédent qu'on relit six heures après l'avoir écrit se corrige comme un autre ; l'homme qui refuse de reprendre sa propre ligne vaut moins que le registre qu'il tient."
+     "source": "ecrans/modules/bataille2d.js l. 2961 et l. 3406, croisé avec sac.js l. 100-107",
+     "texte": "LA GARDE MUETTE EST LE PIÈGE LE PLUS PROPRE DES DOUZE. `if (window.BatailleCorps)` et `if (window.Interpretation && e)` : ôte un fichier de la liste `CHAINE`, et la nuit cuit sans la couche, sans une erreur, sans une ligne d'écran. Le contre-exemple est dans le même fichier — `window.Envie.temperament` l. 1431 n'est pas gardé : la couche absente, le four meurt sur-le-champ, et c'est la bonne manière. La forme qui tient est donc déjà écrite ici : une dépendance qu'on peut retirer en silence doit être inscrite au manifeste, une dépendance qui casse bruyamment n'en a pas besoin."
     }
    ],
    "conclusion": null
@@ -102,51 +75,65 @@
   {
    "livre": "affaire-rendre-les-murs-solides",
    "table": "🔒 Verrous",
-   "ligne": "91007",
-   "colonne": "🔎 La preuve",
-   "valeur": "Compté sur disque, sept manifestes portent `cuisson_s` (gravé par sac.js l. 865). **CINQ** cuissons — et non quatre — ont exactement la même charge nominale (1 700 hommes, 600 s, 2 550 corps) : 558,5 s (`essai.reference`), 658,2 s (`portreal.essai-inertie`), 777,6 s (`essai.reserve`), 1 112 s (`essai.releve`), 1 416,8 s (`portreal.sac`). **DATÉES LE 3e, L'ÉCART EST EXPLIQUÉ, ET IL EST PIRE QUE PRÉVU.** (1) Le commit 745c8eb du 14e à 22h11 retire PORTE_OUVERTE_ESSAI ; `reference` (21h08), `reserve` (21h37) et `releve` (21h59) lui sont antérieures — elles ont cuit une autre bataille et ne sont comparables à rien, exactement comme le drapeau l'a déjà enseigné. (2) Restent `essai-inertie` (22h25) et `sac` (23h10) — et **leurs deux binaires ont le même md5** `6f28ddd6…` : 2 688 518 octets, 205 828 images, 214 morts, 38 forcées, 88 de butin, dix-sept branches au même compte. La même cuisson, deux fois, au bit près, à **×2,15**. Il n'y a donc AUCUN comparable dans le lot, et il n'y en aura pas avec dix cuissons de plus : le protocole proposé ici à midi — tenir tout constant et cuire trois fois — a déjà été couru sans qu'on le sache, et il échoue. Ce verrou ne se lève pas par ⚔️ 91210 mais par 🔒 **91009**, qui en donne la cause."
-  },
-  {
-   "livre": "affaire-rendre-les-murs-solides",
-   "table": "🔒 Verrous",
-   "ligne": "91009",
+   "ligne": "91012",
    "colonne": "🔒 N°",
-   "valeur": "**91009**"
+   "valeur": "**91012**"
   },
   {
    "livre": "affaire-rendre-les-murs-solides",
    "table": "🔒 Verrous",
-   "ligne": "91009",
+   "ligne": "91012",
    "colonne": "🔒 Le verrou",
-   "valeur": "**`cuisson_s` est une horloge de mur, pas une mesure de travail** — les trois postes réellement chronométrés sont calculés à chaque cuisson, imprimés à l'écran, puis jetés"
+   "valeur": "**Le manifeste grave six champs, et DOUZE réglages hors manifeste changent ce que cuit une nuit** — deux cuissons dont les six champs concordent ne racontent pas forcément la même nuit"
   },
   {
    "livre": "affaire-rendre-les-murs-solides",
    "table": "🔒 Verrous",
-   "ligne": "91009",
+   "ligne": "91012",
+   "colonne": "🎯 Bloque",
+   "valeur": "91200 91000"
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91012",
+   "colonne": "🔎 La preuve",
+   "valeur": "Lu dans le fer le 3e, les quatre sources dépouillées, pas supposé. **CE QUE LE MANIFESTE GRAVE** (`sac.js` l. 865) : `porte`, `hommes`, `duree_s`, `pas_s` (=PAS, l. 53), `tolerance_m` (=TOLERANCE, l. 52), `binaire.tranche_s` (=`--tranche`, l. 774). Six. **CE QU'IL NE GRAVE PAS, ET QUI CHANGE LA NUIT** — (1) `--peuple`, `sac.js` l. 64, défaut **1 = allumé** : toute la ville, panique, foyers, recrutement de fuyards par `B.derange` l. 647 ; à 0 la bataille se joue dans une ville vide. NON TRACÉ (une ligne d'écran l. 607-609, rien au fichier). (2) **L'heure et le jour de la ville**, l. 605-606, lus en direct sur `/carte` donc sur `etat/monde.json` : la journée écrite de chaque habitant en dépend (l. 629-630). NON TRACÉ — *voir 91013*. (3) `--tournee`, l. 64, défaut 3 s → `PAR_TOURNEE` l. 672 : à quelle cadence on recrute de nouveaux effrayés. NON TRACÉ. (4) `--serveur`/`--source`, l. 58-60, défauts `localhost:3129` et `/monde` : la voirie, le `plan2d` et le bâti viennent d'un serveur **vivant** — que `plan_ville.py` repasse, et la même commande cuit une autre ville. NON TRACÉ, aucune empreinte du graphe au manifeste. (5) `CHAINE`, l. 100-107 : quelles couches sont posées. `bataille2d.js` les prend sous **garde muette** — l. 2961 `if (window.BatailleCorps)`, l. 3406 `if (window.Interpretation && e)` : un fichier ôté de la liste, et la nuit cuit sans la couche, SANS ERREUR. NON TRACÉ. (`window.Envie` l. 1431 n'est pas gardé, lui : absent, il casse — c'est la bonne forme.) (6) `PORTE_OUVERTE_ESSAI`, `bataille2d.js` l. 318, **`false` aujourd'hui** : ouvre la porte au premier instant, avale la cascade de `deciderLesTetes` au deuxième rang et supprime la mêlée du seuil ; c'est lui qui sépare l'étalon 5/5/14/54 de ce qui le précédait. NON TRACÉ. (7) `USURE`, l. 297, `{\"La porte de la Gadoue\": 0.10}` : 9 000 pv de verrou → 900, deux minutes de hache → douze secondes — et c'est la porte PAR DÉFAUT du four. Le manifeste dit `porte`, jamais dans quel état on l'a prise. NON TRACÉ. (8) `pilote: true`, `bataille/corps-adapt.js` l. 369, avec le branchement `bataille2d.js` l. 3020-3100 : la couche 1 conduit sidération, fuite, recul, serrer, ruée et bras ballants ; le seuil de 0,6 d'emprise **retiré**, elle prend tout le monde au lieu de 3 %. C'est le réglage qui a fait passer la relecture de 0,600 m à 329 m d'écart pire. NON TRACÉ. (9) `GRAINE = 20161219`, `bataille/hasard.js` l. 32, et `semer(g)` l. 37 qui accepte n'importe quelle graine ; `bataille2d.js` l. 1461 l'appelle nu, donc elle est fixe **aujourd'hui** — rien n'interdit d'en passer une, rien ne l'écrirait. NON TRACÉ. (10) Les mesures nues qu'aucun manifeste ne porte : `VERROU_PV = 9000` l. 282, `HACHE = 11` l. 319, `ACTOR_AVERAGE_PV = 35` et `CADENCE = 0,9` et `DEGAT = [14,30]` dans `bataille/mesures.js` l. 98-119 — pas des drapeaux, mais une main qui les bouge rend muette toute la série d'avant. NON TRACÉES. **ET DEUX QUI NE CHANGENT QUE LE FICHIER, PAS LA NUIT** — (11) `--planches`, l. 64, défaut 0 : écrit des planches et sert un port pendant la cuisson ; le commentaire le dit lui-même, « une mesure qui écrit des fichiers sur le côté ne mesure plus ce qu'on croit ». Change `cuisson_s`. NON TRACÉ. (12) `PLAFOND_BUF = 400`, l. 54, employé l. 208-209 : combien d'images clefs on retient avant de fermer. Change `images` et `octets`. NON TRACÉ. **CE QUE ÇA COÛTE, COMPTÉ SUR LE DISQUE** : trois manifestes de charge nominale identique — La porte de la Gadoue, 1 700 hommes, 600 s, 2 550 corps, `pas_s` 0,05, `tolerance_m` 0,5, les six champs mot pour mot les mêmes — rendent `images` 253 257 / 82 167 / 294 274 et `cuisson_s` 558,5 / 1 112 / 777,6. **CE QUI LÈVERAIT** : au manifeste, six lignes de plus — la graine ; l'heure et le jour de la ville ; `peuple` et `tournee` ; les fichiers de `CHAINE` avec leur empreinte ; l'état de `PORTE_OUVERTE_ESSAI`, `USURE` et `pilote` ; `planches`. Une empreinte des sources fait les trois dernières d'un coup. `scripts/bataille.py` n'ajoute rien : il passe les arguments tels quels au four (l. 164-172) et ne rattrape donc aucun de ces douze."
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91013",
+   "colonne": "🔒 N°",
+   "valeur": "**91013**"
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91013",
+   "colonne": "🔒 Le verrou",
+   "valeur": "**L'heure de la ville est lue en direct et n'est ni fixée ni écrite** — sans qu'on touche une ligne, la même commande ne cuit pas la même nuit deux jours de suite"
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91013",
    "colonne": "🎯 Bloque",
    "valeur": "91200"
   },
   {
    "livre": "affaire-rendre-les-murs-solides",
    "table": "🔒 Verrous",
-   "ligne": "91009",
+   "ligne": "91013",
    "colonne": "🔎 La preuve",
-   "valeur": "Lu dans le fer le 3e, pas supposé. `scripts/monde/sac.js` l. 658 : `const CHRONO = { sim: 0, fil: 0, tour: 0 }`, rempli au `performance.now()` l. 678 (simulation), 683 (tournée) et 692 (images clefs) — puis imprimé à `stdout` l. 713-715 et **jamais gravé**. Seul l. 716 `const cuisson = (Date.now() - t1) / 1000` atteint le manifeste, l. 865, et cette horloge compte aussi ce à quoi la boucle rend la main toutes les 2 s (`CEDER`, l. 673). **Preuve que les deux ne mesurent pas la même chose :** `portreal.essai-inertie` et `portreal.sac` produisent le MÊME binaire (md5 `6f28ddd6…`, 2 688 518 octets, 205 828 images, 214 morts, 88 de butin, branches identiques) pour 658,2 s et 1 416,8 s — ×2,15 sur un travail identique au bit près. **Une seule cuisson sur sept garde le détail**, hors du manifeste, dans `analyse/etalon-90110/cuisson-1.txt` : simulation 1 064,5 s · images clefs 225,0 s · tournée 126,8 s = 1 416,3 s pour un `cuisson_s` de 1 416,8 — la simulation pèse les trois quarts, et c'est le seul poste qu'un changement de chemin ferait bouger. **Se lèverait en gravant les trois postes au manifeste** (sac.js l. 865, office du fer — Ygga), après quoi ⚔️ 91210 se pose sur `sim` et non sur l'horloge, et 91200 redevient mesurable."
-  },
-  {
-   "livre": "affaire-rendre-les-murs-solides",
-   "table": "⚔️ Actions",
-   "ligne": "91011",
-   "colonne": "✅ État",
-   "valeur": "fait le 3e — LA FORME QUI A TENU A UN NOM, ET CE N'EST PAS D'OPPOSER. Quatre fois la maison a voulu tenir un homme hors d'un plein par la ligne droite ; deux fois elle a retiré (`DETOUR_RUE = 1,4`, le seuil d'emprise), et ce qui est resté est payé UNE FOIS hors ligne : l'axe des rues poussé hors des façades, jamais un blocage au pas. D'où 🔒 91006. **Repris l'après-midi du 3e, sur demande, côté cadence (91200) : l'archéologie des cuissons est faite et rendue.** Les cinq à charge nominale se datent contre le commit 745c8eb du 14e à 22h11 (retrait de PORTE_OUVERTE_ESSAI) : trois avant — nulles —, deux après, qui sont la même cuisson deux fois et rendent le même binaire à ×2,15 d'écart. Aucun comparable n'existe. La cause est trouvée et gravée en 🔒 91009 : le manifeste écrit l'horloge du mur et jette les trois postes du travail, que sac.js calcule déjà. Le facteur est expliqué ; il ne se corrige pas par de la mesure, mais par trois lignes de fer."
+   "valeur": "Lu dans le fer le 3e. `scripts/monde/sac.js` l. 605-606 : `jour0 = (d.date && d.date.jour) || 1` et `min0 = d.date.minute`, où `d` est la réponse de la route **`/carte`** — donc `etat/monde.json`, qui porte à cette heure `{annee 129, lune 4, jour 3, minute 721}`, midi une. `tournee()` l. 629-630 en tire `minute` et `jour` et les passe à `J.ou(cel, k, jour, minute, …)` : c'est la **journée écrite** de chaque habitant qui décide qui se trouve dans la rue quand le fer arrive. À huit heures les rues sont pleines, à deux heures du matin elles sont vides ; la tournée recrute donc un nombre tout autre de fuyards, et la panique se propage autrement (`RUMEUR_MIN = 2`, `bataille2d.js` l. 590). Cet état **dérive tout seul** : la partie avance, `etat/monde.json` avance, et une cuisson de ce midi n'est déjà plus comparable à une cuisson d'hier matin sans que personne ait rien modifié. C'est le seul des douze de 91012 qui soit dans cet état aujourd'hui. **ET IL NE SE RÉPARE PAS EN L'INSCRIVANT** : l'écrire au manifeste dit *pourquoi* deux chiffres diffèrent, il ne les rend pas comparables. Il faut le FIXER — une option `--heure` (et `--jour`) avec un défaut gravé, l'heure retenue étant écrite au manifeste par surcroît. Sinon aucun étalon de cadence ne survit à une nuit de partie."
   }
  ],
  "_depeche": {
   "session": "55ffea66-d66c-5b92-aea2-707dd871129b",
   "date_jeu": "129.4.3",
-  "jetons": 1445767,
-  "secondes": 348
+  "jetons": 1510657,
+  "secondes": 367
  },
  "_cahier_verse": true
 }

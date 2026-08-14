@@ -671,10 +671,14 @@ window.Bataille2d = (() => {
   // ---- l'état ---------------------------------------------------------------
   let toile = null, ctx = null, hote = null, vueDe = null, source = "/monde";
   let plan = null, J = null, voirie = null;
-  // LE BÂTI — le masque des toits, chargé par `enterrer()`. Il dit d'un point
-  // s'il est sous une maison, et c'est la seule chose de la bataille qui sache
-  // où sont les murs. Nul tant qu'il n'a pas été chargé : voir `libreEn`.
-  let bati = null, sousToit = null;
+  // LE MASQUE DES TOITS, chargé par `enterrer()`. Il dit d'un point s'il est
+  // sous une maison, et c'est la seule chose de la bataille qui sache où sont
+  // les murs. Nul tant qu'il n'a pas été chargé : voir `libreEn`.
+  // ⚠ PAS `bati` : LE NOM EST DÉJÀ PRIS l. 6429 par le bâti qu'on PILLE, et le
+  // four l'a dit tout de suite — « Identifier 'bati' has already been declared ».
+  // Troisième collision de nom dans cette IIFE de six mille lignes après `corps`
+  // et `semer`, et la seule qui se soit vue avant de tourner.
+  let sousToit = null;
   let boucle = 0, marche = false, dernier = 0, reste = 0;
   let temps = 0;              // secondes écoulées de bataille
 
@@ -908,9 +912,9 @@ window.Bataille2d = (() => {
   // Un point est-il franchissable ? Hors du bâti, oui — le sol de cette
   // bataille n'a pas d'autre obstacle que les maisons, et le dire ainsi vaut
   // mieux que de laisser croire à une géométrie qu'on n'a pas.
-  // ⚠ ON NE L'APPELLE QUE SI `bati` EST LÀ. Sans masque, la bonne réponse
+  // ⚠ ON NE L'APPELLE QUE SI `sousToit` EST LÀ. Sans masque, la bonne réponse
   // n'est pas « c'est libre » mais « on ne sait pas », et c'est à l'appelant
-  // de la porter : `soldat()` passe `bati ? libreEn : null`.
+  // de la porter : `soldat()` passe `sousToit ? libreEn : null`.
   const libreEn = (x, y) => !sousToit(x, y);
 
   // ===========================================================================
@@ -3004,11 +3008,11 @@ window.Bataille2d = (() => {
         // pose, `h.l2` l'est dans la foulee, au meme coup d'oeil et avec le
         // meme `dt`. Les 3 et 4 restent aux rythmes qui sont les leurs.
         //
-        // `bati ? libreEn : null` : sans le masque du bati, la retraite est
+        // `sousToit ? libreEn : null` : sans le masque des toits, la retraite est
         // INCONNUE et non ouverte. C'est le pourvoyeur qui porte la nuance.
         if (window.BatailleReflexion)
           window.BatailleReflexion.observer(
-            h, { autour, temps, pese, libre: bati ? libreEn : null }, ecoule);
+            h, { autour, temps, pese, libre: sousToit ? libreEn : null }, ecoule);
         h.revoirCorps = oeil(h); h.dtCorps = 0;
         // ---- LA DIFFUSION DU CHEF ----------------------------------------
         // Un chef a portee doit faire redescendre l'alarme, et le savoir coute
@@ -6384,9 +6388,9 @@ window.Bataille2d = (() => {
     // donnée : un point derrière soi est franchissable ou il ne l'est pas.
     // On le garde donc, et `sousToit` est désormais la seule réponse de la
     // maison à cette question-là. Tant qu'il n'a pas été chargé — pas de plan,
-    // pas de `fetch`, four sans serveur —, `bati` reste nul et les appelants
+    // pas de `fetch`, four sans serveur —, `sousToit` reste nul et les appelants
     // doivent rendre « on ne sait pas », JAMAIS « c'est libre ».
-    bati = masque; sousToit = dedans;
+    sousToit = dedans;
     let n = 0;
     for (const [, nd] of voirie.noeuds) {
       for (const l of nd.liens) {

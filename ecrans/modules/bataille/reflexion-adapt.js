@@ -94,7 +94,6 @@
   const PORTEE_BRAS  = 2.2;   // `PORTEE` de la bataille : au-delà, il ne touche pas
   const SEUL_A       = 10;    // « personne à dix pas », le −1 d'`epaule`
   const ATTENTE_S    = 5;     // l'horloge de `depuis` : au-delà, un homme entre
-  const SEUIL_ATTEND = 0.35;  // le même que `idee()` dans la couche
   const REPLI_MS     = 1.3;   // `MARCHE` : on ne recule pas au pas de course
   const SONDE_S      = 3;     // « la distance de trois secondes »
   const SONDE_PAS    = 4;     // combien d'échantillons le long d'une sonde
@@ -180,16 +179,32 @@
     // La couche est pure : elle ne tient ni horloge ni mémoire. Les deux
     // choses qui se souviennent vivent donc ici, comme `h.l1etat` pour la
     // couche 1.
-    const e = h.l2etat || (h.l2etat = { attendDepuis: 0, attendait: false });
+    const e = h.l2etat || (h.l2etat = { attendDepuis: 0 });
 
     const pvMax = h.pvMax || 25;
     const avant = h.l2;
+    const dMen = men ? Math.hypot(men.x - h.x, men.y - h.y) : Infinity;
+    const nombre = bornes((amis + 1 - ennemis) / 3);
 
-    // L'HORLOGE D'ATTENTE. `depuis` est le temps déjà passé à attendre le
-    // nombre, normalisé sur cinq secondes : passé ce délai un homme entre,
-    // gagnant ou non. Elle se remet à zéro dès qu'il a cessé d'attendre — on
-    // ne cumule pas deux attentes séparées par un assaut.
-    if (e.attendait) e.attendDepuis += dt; else e.attendDepuis = 0;
+    // ── L'HORLOGE D'ATTENTE, ET LE BASSIN A PRIS SA PREMIÈRE ÉCRITURE ────────
+    // `depuis` est le temps déjà passé à attendre le nombre, normalisé sur cinq
+    // secondes : passé ce délai un homme entre, gagnant ou non.
+    //
+    // ⚠ ELLE ÉTAIT ARMÉE PAR LA SORTIE DE LA COUCHE — « il tourne tant que
+    // `attend` dépasse 0,35 » —, ET C'EST UNE BOUCLE. À cinq secondes `attend`
+    // retombe sous le seuil, l'horloge se remettait à zéro, donc `attend`
+    // remontait au battement suivant, donc l'horloge repartait : une dent de
+    // scie au rythme de l'œil, un homme qui entre et ressort de son attente
+    // vingt fois par minute. Mesuré : 0,72 → 0,43 → 0,72, sans que rien n'ait
+    // bougé autour de lui.
+    //
+    // UNE HORLOGE SE TIENT SUR LE MONDE, JAMAIS SUR L'AVIS QU'ELLE NOURRIT.
+    // Ce qui dure ici n'est pas une opinion, c'est une SITUATION : il est en
+    // infériorité et il n'est pas encore au fer. Tant qu'elle dure, le compteur
+    // monte ; qu'il touche l'ennemi ou que le nombre tourne, il retombe — et
+    // pour de bonnes raisons, pas parce que la couche a changé d'avis.
+    if (nombre < 0 && dMen > PORTEE_BRAS) e.attendDepuis += dt;
+    else e.attendDepuis = 0;
 
     const cap = vers(0, 0, h.fx || 0, h.fy || 0);
     const versLui = men ? vers(h.x, h.y, men.x, men.y) : null;
@@ -206,7 +221,7 @@
     const degage = Math.min(parLeBati, parLesCorps);
 
     const s = {
-      nombre:  bornes((amis + 1 - ennemis) / 3),
+      nombre,
       alarme:  bornes(1 - 2 * Math.min(1, menForce * 1.35)),
       entame:  bornes(2 * Math.max(0, h.pv) / pvMax - 1),
       frais:   bornes(2 * (h.souffle == null ? 1 : h.souffle) - 1),
@@ -223,11 +238,10 @@
     };
 
     const r = R2.pas(s);
-    e.attendait = r.attend > SEUIL_ATTEND;
     // CE QUI SERT À LA LOUPE ET À RIEN D'AUTRE : de quoi relire une décision
     // sans avoir à refaire le balayage. Trois nombres, pas les onze signaux.
     r.degage = degage;
-    r.aPortee = men ? Math.hypot(men.x - h.x, men.y - h.y) <= PORTEE_BRAS : false;
+    r.aPortee = dMen <= PORTEE_BRAS;
     r.depuis = e.attendDepuis;
     h.l2 = r;
 
