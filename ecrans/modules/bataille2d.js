@@ -671,6 +671,10 @@ window.Bataille2d = (() => {
   // ---- l'état ---------------------------------------------------------------
   let toile = null, ctx = null, hote = null, vueDe = null, source = "/monde";
   let plan = null, J = null, voirie = null;
+  // LE BÂTI — le masque des toits, chargé par `enterrer()`. Il dit d'un point
+  // s'il est sous une maison, et c'est la seule chose de la bataille qui sache
+  // où sont les murs. Nul tant qu'il n'a pas été chargé : voir `libreEn`.
+  let bati = null, sousToit = null;
   let boucle = 0, marche = false, dernier = 0, reste = 0;
   let temps = 0;              // secondes écoulées de bataille
 
@@ -900,6 +904,14 @@ window.Bataille2d = (() => {
     const dx = p.x - cx, dy = p.y - cy, d = Math.hypot(dx, dy) || 1;
     return [dx / d, dy / d];
   }
+
+  // Un point est-il franchissable ? Hors du bâti, oui — le sol de cette
+  // bataille n'a pas d'autre obstacle que les maisons, et le dire ainsi vaut
+  // mieux que de laisser croire à une géométrie qu'on n'a pas.
+  // ⚠ ON NE L'APPELLE QUE SI `bati` EST LÀ. Sans masque, la bonne réponse
+  // n'est pas « c'est libre » mais « on ne sait pas », et c'est à l'appelant
+  // de la porter : `soldat()` passe `bati ? libreEn : null`.
+  const libreEn = (x, y) => !sousToit(x, y);
 
   // ===========================================================================
   // L'ORDRE DE BATAILLE
@@ -6336,6 +6348,16 @@ window.Bataille2d = (() => {
       const k = j * masque.nx + i;
       return (masque.bits[k >> 3] >> (k & 7)) & 1;
     };
+    // LE MASQUE NE SERT PLUS QU'AUX RUES, ET IL ÉTAIT LE SEUL À SAVOIR OÙ SONT
+    // LES MURS. Il vivait en variable locale de cette fonction, le temps de
+    // pénaliser les arêtes enterrées, puis il était jeté. Or 🔒 90350 — « aucun
+    // homme ne sait s'il a une retraite » — se lève avec exactement cette
+    // donnée : un point derrière soi est franchissable ou il ne l'est pas.
+    // On le garde donc, et `sousToit` est désormais la seule réponse de la
+    // maison à cette question-là. Tant qu'il n'a pas été chargé — pas de plan,
+    // pas de `fetch`, four sans serveur —, `bati` reste nul et les appelants
+    // doivent rendre « on ne sait pas », JAMAIS « c'est libre ».
+    bati = masque; sousToit = dedans;
     let n = 0;
     for (const [, nd] of voirie.noeuds) {
       for (const l of nd.liens) {

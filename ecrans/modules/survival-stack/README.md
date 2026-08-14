@@ -312,7 +312,7 @@ reste donc le cinquième fichier et non la cinquième couche.
   ne se disputent rien : elles rendent chacune sa sortie et ignorent qu'il y en a
   d'autres. Écarté aussi `orchestrateur`, jargon qui dirige alors qu'ici rien ne
   dirige.
-- `5-la-main.js` — dit qui a gagné, pas ce qui sort. Et « la main » est déjà le
+- `5-qui-conduit.js` — dit qui a gagné, pas ce qui sort. Et « la main » est déjà le
   mot de la maison pour un office (« la main d'Ygga », le Fer) : deux sens pour un
   mot dans le même chantier, et l'on relit deux fois chaque phrase.
 

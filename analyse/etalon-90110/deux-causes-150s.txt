@@ -1,1 +1,49 @@
 ### variante: tel-quel
+  "ordres deformes": 3,
+  "declencheurs tombes": 5,
+  "initiatives": 4,
+  "coureurs": 47
+ },
+ "faits_total": 172,
+ "charge_s": 0.9,
+ "cuisson_s": 92.3,
+ "par_quoi": {
+  "porte-abimee": 1,
+  "corps-ferme": 1,
+  "corps-sourd": 1,
+  "corps-versatile": 1,
+  "ordre": 20,
+  "coureur-part": 47,
+  "coureur-arrive": 47,
+  "ordre-deforme": 3,
+  "contact": 1,
+  "premier-sang": 1,
+  "porte-cede": 1,
+  "declencheur-tombe": 5,
+  "porte-enfoncee": 1,
+  "blesse": 31,
+  "chef-tombe": 2,
+  "escouade-rompt": 3,
+  "banniere-tombe": 1,
+  "initiative": 4,
+  "banniere-relevee": 1
+ }
+}
+### variante: --sans-couches
+(node:9296) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/reyno/le-conseil2/ecrans/modules/monde/journee.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\C:\Users\reyno\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+<anonymous_script>:1431
+    h.envie = window.Envie.temperament((opts && opts.corps) || null,
+                           ^
+
+TypeError: Cannot read properties of undefined (reading 'temperament')
+    at homme (eval at <anonymous> (C:\Users\reyno\le-conseil2\analyse\etalon-90110\deux-causes.js:57:12), <anonymous>:1431:28)
+    at dresser (eval at <anonymous> (C:\Users\reyno\le-conseil2\analyse\etalon-90110\deux-causes.js:57:12), <anonymous>:1628:19)
+    at Object.rejouer (eval at <anonymous> (C:\Users\reyno\le-conseil2\analyse\etalon-90110\deux-causes.js:57:12), <anonymous>:6241:5)
+    at C:\Users\reyno\le-conseil2\analyse\etalon-90110\deux-causes.js:67:5
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.17.0
+### variante: --porte-ouverte
