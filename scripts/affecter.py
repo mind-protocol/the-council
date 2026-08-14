@@ -75,6 +75,9 @@ Peyredragon n'ont rien à voir l'un avec l'autre.
 """
 import io, json, math, os, sys, tempfile
 
+# La console de Windows est en cp1252 et le script parle avec des flèches.
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RACINE, "scripts", "monde"))
 import bati as _bati                                # le lecteur unique du bâti
@@ -414,6 +417,90 @@ def verifier(L, bati=None, C=None):
     return maux
 
 
+def reancrer(L, monde, vraiment):
+    """Remettre chaque affectation sur le bâtiment qui est À SA POSITION.
+
+    LE RANG N'EST PAS UNE ADRESSE DURABLE, et c'est écrit depuis toujours :
+    « le rang n'est stable que tant que bati.json n'est pas réengendré ». Le
+    28e, le monde a été refait — quarante-huit mille bâtiments devenus
+    quarante-cinq mille — et les quatorze affectations ont glissé avec. La
+    porte de Fer désignait une échoppe à trois kilomètres.
+
+    LES MÈTRES, EUX, TIENNENT. `--affecter` écrit `xyz` en même temps que le
+    rang, précisément pour ce jour-là : la position est la vraie adresse, le
+    rang n'en est qu'un raccourci. On relit donc la position et l'on redonne
+    le rang.
+
+    ON CHERCHE D'ABORD LE BON MÉTIER. Une affectation dit ce qu'elle attend
+    (`usage`) : le corps de garde de la porte de Fer est un corps de garde.
+    Prendre le plus proche TOUT COURT, c'est risquer de nommer « porte de
+    Fer » la maison d'à côté parce qu'elle est à deux mètres de moins. On
+    prend donc le plus proche DU MÉTIER ATTENDU dans un rayon raisonnable, et
+    l'on ne retombe sur le plus proche tout court qu'à défaut — en le disant.
+    """
+    bati, C = charger_bati(monde)
+    ix, iy, iu = C["x"], C["y"], C["usage"]
+    # 150 m, et le chiffre a été MESURÉ, pas choisi. Douze des quatorze
+    # affectations retrouvent leur métier à moins de 102 m ; la treizième — la
+    # table de change du Culpucier — le retrouve à 136, et à 120 elle serait
+    # retombée sur l'échoppe posée à trois mètres. Un lieu nommé « Le change »
+    # que le jeu rapporterait comme une échoppe serait faux DANS LA FICTION,
+    # là où cent trente-six mètres ne sont qu'un semis qui a glissé. Mieux vaut
+    # le bon métier un peu déplacé que le mauvais métier pile sur le point.
+    RAYON = 150.0
+    A = L["affectations"]
+    lignes, change = [], 0
+    for clef in sorted(A):
+        v = A[clef]
+        if not isinstance(v, dict) or v.get("bat") is None:
+            continue
+        if monde_de(v) != monde:
+            continue
+        xyz = v.get("xyz")
+        if not xyz:
+            lignes.append(("  %-34s pas de mètres écrits : on ne peut pas la "
+                           "replacer" % clef, None))
+            continue
+        attendu = v.get("usage")
+        best_u = best_t = None
+        for i, r in enumerate(bati):
+            d = math.hypot(r[ix] - xyz[0], r[iy] - xyz[1])
+            if best_t is None or d < best_t[0]:
+                best_t = (d, i)
+            if attendu and r[iu] == attendu and (best_u is None or d < best_u[0]):
+                best_u = (d, i)
+        choix, par = (best_u, "métier") if (best_u and best_u[0] <= RAYON) else (best_t, "position")
+        if not choix:
+            continue
+        d, i = choix
+        avant = v["bat"]
+        note = ""
+        if par == "position" and attendu:
+            note = "  ** aucun %s à moins de %d m : pris au plus proche (%s) **" % (
+                attendu, RAYON, bati[i][iu])
+        if i == avant:
+            lignes.append(("  %-34s bat %-6d inchangé (%.0f m)" % (clef, i, d), None))
+            continue
+        change += 1
+        lignes.append(("  %-34s bat %-6d -> %-6d  %.0f m, par %s%s"
+                       % (clef, avant, i, d, par, note), (clef, i)))
+    for txt, _ in lignes:
+        print(txt)
+    print()
+    if not change:
+        print("  rien à replacer : tout est déjà en place.")
+        return
+    if not vraiment:
+        print("  %d affectations à replacer. Rien n'est écrit." % change)
+        print("  → python scripts/affecter.py --reancrer --vraiment")
+        return
+    for _, maj in lignes:
+        if maj:
+            A[maj[0]]["bat"] = maj[1]
+    ecrire(LIENS, L)
+    print("  %d affectations replacées dans %s." % (change, LIENS))
+
+
 def main():
     a = sys.argv[1:]
     def opt(nom, n=1):
@@ -462,6 +549,11 @@ def main():
         print("  python scripts/affecter.py --chercher --usage taverne "
               "--pres-de 1772,2789")
         return
+
+    # --- replacer -----------------------------------------------------------
+    # Avant tout le reste : c'est une réparation, elle ne se mêle à rien.
+    if "--reancrer" in a:
+        return reancrer(L, monde, vraiment)
 
     # --- consulter ----------------------------------------------------------
     if opt("--bati"):
