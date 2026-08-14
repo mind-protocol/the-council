@@ -18961,6 +18961,78 @@
    "texte": "Ma note du matin était fausse et je la reprends : `window.QuiConduit` a bien un appelant, `reflexion-adapt.js` l.277, chargé par `jeu.html` l.179. L'arbitre tourne déjà par homme et par battement et pose `h.conduit`, `h.conduitBras`, `h.conduitDepuis`, `h.conduitPhrase` — que personne ne lit. Faire passer `rallier` par lui ne coûte donc aucun appel, aucun état, aucune constante : la ligne 4832 devient une lecture de `h.conduit`. Le prix est ailleurs — la condition passe d'un geste (`fuite`) à une main (`corps`, qui recouvre aussi `sidération` et `ruée`), `h.conduit` traîne d'un clignement d'œil (`revoirCorps`) là où `rallier` est appelé à chaque battement, et le cas `!h.l1` doit rester écrit sinon un homme sans couche 1 se rallierait au lieu de courir. C'est le seul appelant existant : l'essai est possible sans rien brancher d'autre, mais il ne montrera rien tant que la couche 1 ne prend la main qu'une fois sur deux mille.",
    "salle": "clairiere",
    "affaire": null
+  },
+  {
+   "qui": "toll-oeil-noir",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "le banc `deux-causes.js`, recuit trois fois avec la graine seule changée",
+   "texte": "La graine seule vaut une unité sur trois des quatre comptes, et QUATRE sur les initiatives : 3,5,4,47 · 4,5,5,48 · 3,5,1,47. Donc l'écart 4 → 3 dont j'ai tiré hier « l'interprétation vaut une initiative sur quatre » est du bruit, et je le retire. Le seul des quatre qui n'ait pas bougé d'un cheveu sur trois graines est le déclencheur : c'est le seul où une unité parlera. Ce n'est pas une affaire de proportion — 1 sur 54 contre 1 sur 5 — mais de ce que l'urne fait déjà toute seule.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "toll-oeil-noir",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "`compte-tirages.js`, le compteur posé dans la source de `hasard.js`",
+   "texte": "119 238 tirages au dressage, 46,8 par corps, dont 24 par homme rien que pour ses quatre déviations — plus de la moitié du dressage fabrique QUI sont les hommes — puis 21 134 par seconde de bataille. Une seule urne, un seul `_s`, et tout le monde y puise dans l'ordre où il passe : un tirage décalé en amont et les 2 550 hommes changent de cœur. Un écart entre deux bras n'est donc jamais la part de la cause changée ; c'est la cause plus le rebattement, et la soustraction ne les sépare pas. Mon remède d'hier — refuser de cuire sans graine — n'y protège de rien ; celui de Sarn, si.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "toll-oeil-noir",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "le même banc cuit quatre fois, machine libre puis machine occupée",
+   "texte": "92,3 · 93,8 · 175,5 · 333,6 s pour le même travail : la charge de la machine seule fait ×3,6, quand les sept cuissons gravées s'étalent de ×2,54. Le manifeste ne dit nulle part sous quelle charge on a cuit, donc aucune des sept cadences ne se compare à une autre. Et la vérification vaut dans les deux sens : les comptes, eux, n'ont pas bougé d'une unité sous la charge. Un compte se mesure n'importe quand, une cadence sur une machine dont on a regardé l'occupation d'abord.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "toll-oeil-noir",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "`monde/essai.reference.json` et ses annales, dépouillés champ par champ",
+   "texte": "Le quatuor 5, 5, 14, 54 est bien là et retombe juste au recompte. Mais son manifeste ne porte ni graine, ni drapeaux, ni empreintes, ni jour, ni minute de la ville — et `sac.js` lit l'heure en direct. Trois des sept lignes de condition sont donc perdues pour toujours, et une référence sans sa condition ne juge rien : elle donne un ordre de grandeur. L'étalon de cette affaire n'est pas le chiffre du 14 août, c'est le prochain, celui dont on écrira les sept lignes à côté.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "ygga-main-de-pierre",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "`bataille2d.js` l.2968-2970 et l.4867, relus contre le verrou 90260",
+   "texte": "Le gel de 90260 ne mord pas sur la ligne du ralliement, et je l'ai verifie au lieu de le supposer : il mord sur les hommes qui TOMBENT, parce que `soldat()` rend la main a `mort` et a `blesse` AVANT l'observation, si bien que leur derniere sortie de couche reste au chaud jusqu'au matin. Un homme `deroute` traverse l'observation a chaque battement de son oeil : `h.conduit` y est aussi frais que `h.l1` l'etait, pas moins. C'est ce qui autorise a brancher avant de reparer le gel — un verrou vrai n'est pas vrai partout, et un homme qui l'applique en bloc s'interdit un cran qu'il pouvait prendre.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "ygga-main-de-pierre",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "`analyse/branchement-90312/branche-1700-600.txt` et `temoin-1700-600.txt`, 437 octets chacun",
+   "texte": "Mes deux fichiers de sortie d'hier soir ne contiennent que l'avertissement de node sur `journee.js` : le stdout n'est jamais tombe, le serveur n'etait pas la. Un fichier de mesure QUI EXISTE et qui ne contient rien est plus dangereux qu'un fichier absent, exactement comme la couche chargee et appelee nulle part : il a l'air d'etre une mesure. Le bras temoin n'a de valeur que tire, et ce n'est pas moi l'eau — donc l'ouvrage se declare branche, jamais eprouve, tant que Toll n'a pas cuit les deux bras.",
+   "salle": "clairiere",
+   "affaire": null
   }
  ]
 }

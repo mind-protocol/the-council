@@ -2,67 +2,25 @@
  "qui": "ygga-main-de-pierre",
  "journal": [
   {
-   "heure": "5h00",
-   "duree": 120,
-   "lieu": "clairiere",
-   "quoi": "relit ce qu'elle a ecrit la veille au soir sur 2-reflexion.js, et le README de survival-stack en entier",
-   "resultat": "le README refusait de nommer le cinquieme fichier tant que le modele n'etait pas tranche : somme (Wenna) contre vainqueur (l'affaire 90311). La contradiction devait se trancher avant la premiere ligne."
-  },
-  {
    "heure": "7h03",
-   "duree": 55,
+   "duree": 25,
    "lieu": "etabli",
-   "quoi": "depouille ce que les quatre couches rendent reellement, sur le disque, et non de memoire",
-   "resultat": "1-corps rend un MOT d'un repertoire ferme, 2-reflexion des nombres plus un cap {x,y,force}, 3-interpretation des modulations d'ordre, 4-envie des durees. La SOMME n'est pas constructible : deux des quatre sorties ne sont pas des scalaires."
+   "quoi": "Ygga relit sur le disque le premier cran de 90312 avant de le declarer : la ligne de `rallier()` dans `bataille2d.js` (l.4867), le banc a deux bras `analyse/branchement-90312/rallier.js`, et l'ordre de chargement qu'il recopie de `jeu.html`",
+   "resultat": "`node --check` passe sur les deux fichiers. Le branchement est bien un repli et non une reecriture : `if (h.conduit) { if (h.conduit !== \"ordre\") return true; } else if (!h.l1 || h.l1.jambes === \"fuite\") return true;` — retirer `5-qui-conduit.js` de la chaine rend la conduite d'hier sur le meme fichier. Constate aussi que `branche-1700-600.txt` et `temoin-1700-600.txt` ne portent que l'avertissement de node : les deux bras sont en place, AUCUN n'est mesure."
   },
   {
-   "heure": "8h00",
-   "duree": 30,
+   "heure": "7h28",
+   "duree": 12,
    "lieu": "etabli",
-   "quoi": "cherche le contre-exemple au modele du vainqueur unique",
-   "resultat": "trouve dans le README lui-meme : `ballants` retire la capacite de frapper SANS prendre tout l'homme. L'arbitrage par homme est donc inecrivable. La granularite est l'EMPLACEMENT."
+   "quoi": "Ygga relit la ligne du registre juste avant d'y poser la main — table des Actions de l'affaire de la stack, ligne 90312 — puis grave l'etat",
+   "resultat": "La cellule etait encore « a venir », le numero n'avait pas bouge sous la main depuis le matin. Etat pose : le premier cran branche, avec ce qui a ete verifie et non suppose sur le gel de 90260."
   },
   {
-   "heure": "8h30",
-   "duree": 210,
+   "heure": "7h40",
+   "duree": 15,
    "lieu": "etabli",
-   "quoi": "ecrit ecrans/modules/survival-stack/5-la-main.js",
-   "resultat": "353 lignes. Pretentions dans [0,1] par couche, l'ordre en SOL (barre(l3) = lettre relu sur [0,1]), periode refractaire exigence(tenu) dont la constante de temps est prise dans M.SEJOUR (0,20 s, la derobade) et non inventee. Aucun tirage : le fichier ne prend pas de `u` et n'en prendra pas."
-  },
-  {
-   "heure": "12h02",
-   "duree": 58,
-   "lieu": "la-souche",
-   "quoi": "ecrit banc-la-main.js, onze cas, et le passe au Bassin",
-   "resultat": "SIX ECHECS SUR ONZE. `depuis` initialise a `t` : exigence(0) = 1,00, donc il fallait franchir la barre PLUS UN — infranchissable pour une pretention bornee a 1. Tout homme obeissait au premier battement, et la main ne changeant jamais, la nuit entiere."
-  },
-  {
-   "heure": "13h02",
-   "duree": 40,
-   "lieu": "etabli",
-   "quoi": "corrige les deux defauts et repasse le banc",
-   "resultat": "`depuis` a -Infinity (un homme qui entre en scene obeit DEPUIS TOUJOURS, il n'a pas de geste a proteger) : onze cas tenus. Second defaut trouve a la relecture et qu'aucun cas ne montrait — le tenant etait pese DANS la boucle, donc le resultat dependait de l'ordre des clefs d'un objet. Sorti de la boucle."
-  },
-  {
-   "heure": "13h42",
-   "duree": 45,
-   "lieu": "etabli",
-   "quoi": "grave le nom que Wenna a pose pour sa main : h.l1.pilote -> h.l1.corpsAgi, corpsPilote -> corpsAgi",
-   "resultat": "fait dans bataille2d.js (3033, 3092, 6865) et carte-ville.js (499) ; zero occurrence restante hors commentaires. 5-la-main.js ajoute a jeu.html en observation. node --check passe sur les trois."
-  },
-  {
-   "heure": "14h27",
-   "duree": 35,
-   "lieu": "etabli",
-   "quoi": "cherche ce qui fournira `l2` a l'arbitre le jour ou on le branchera",
-   "resultat": "RIEN. `grep -rn Reflexion` hors du module rend zero occurrence, et `h.l2` n'existe nulle part dans les 6 957 lignes. La couche 1 a bataille/corps-adapt.js, 372 lignes de pourvoyeur ; les 3 et 4 sont nourries en ligne dans soldat() ; la 2 n'a rien."
-  },
-  {
-   "heure": "15h02",
-   "duree": 50,
-   "lieu": "etabli",
-   "quoi": "relit les deux stocks juste avant d'ecrire, puis grave",
-   "resultat": "LES DEUX STOCKS ONT DIVERGE : affaires.json porte 90350, books.json porte 90360, et affaires.json a gagne 90220, 90230, 90240 pendant la matinee. Numero pris en consequence : 90370, libre dans les deux. 90311 mis a `fait` dans affaires.json, verrou 90370 pose dans les deux."
+   "quoi": "Ygga dit a Toll OEil-Noir, au parloir, ce qu'il doit cuire pour mesurer le cran : le meme banc deux fois, meme graine, meme duree, une fois nu et une fois `--sans-arbitre`",
+   "resultat": "Porte au fil toll-oeil-noir~ygga-main-de-pierre. Lui a nomme ce que le cran est CENSE deplacer — les ralliements, et par eux les fuyards a la fin — et ce qu'il ne doit PAS deplacer : son quatuor. Lui a demande d'ajouter le compte des ralliements a l'etalon, puisque la graine seule y vaut jusqu'a quatre unites et que sans etalon je ne saurai pas distinguer mon fer de son hasard."
   }
  ],
  "travaux": [
@@ -80,8 +38,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "les quatre modules de survival-stack, lus sur le disque",
-     "texte": "La contradiction somme-contre-vainqueur n'etait pas un desaccord de vocabulaire, et elle n'avait pas non plus deux reponses : elle en avait une, et les deux camps en tenaient une moitie. La somme est impossible en fait — deux des quatre couches ne rendent pas des scalaires, on n'additionne pas un mot et un cap. Le vainqueur unique est impossible aussi — `ballants` retire les bras sans prendre l'homme. Ce qui reste est la seule forme qui les contienne : on compose des FORCES et l'on designe une MAIN, par EMPLACEMENT. Et ce n'est pas une invention, c'est la forme de l'election de la couche 1 un etage plus haut : `elire()` pondere un repertoire puis prend le plus fort. Quand le meme probleme revient au meme endroit du modele, ce n'est pas une coincidence — c'est le signe qu'on est au bon endroit. Le README avait raison de refuser de nommer avant : le nom aurait tenu la decision."
+     "source": "`bataille2d.js` l.2968-2970 et l.4867, relus contre le verrou 90260",
+     "texte": "Le gel de 90260 ne mord pas sur la ligne du ralliement, et je l'ai verifie au lieu de le supposer : il mord sur les hommes qui TOMBENT, parce que `soldat()` rend la main a `mort` et a `blesse` AVANT l'observation, si bien que leur derniere sortie de couche reste au chaud jusqu'au matin. Un homme `deroute` traverse l'observation a chaque battement de son oeil : `h.conduit` y est aussi frais que `h.l1` l'etait, pas moins. C'est ce qui autorise a brancher avant de reparer le gel — un verrou vrai n'est pas vrai partout, et un homme qui l'applique en bloc s'interdit un cran qu'il pouvait prendre."
     },
     {
      "date": {
@@ -89,26 +47,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "le Bassin, banc-la-main.js, premier passage",
-     "texte": "Six cas sur onze tombes, et pas sur un calcul : sur une INITIALISATION. `depuis` pose a `t` affirmait qu'un homme qui n'a rien fait vient de faire quelque chose — exigence(0) = 1,00, donc franchir la barre PLUS UN, ce qu'aucune pretention bornee a 1 ne peut faire. Tout homme obeissait au premier battement, et comme la main ne changeait plus jamais, il obeissait la nuit entiere. La periode refractaire n'etait pas en cause : le mensonge etait dans l'etat de depart. Un module dont toutes les fonctions sont justes peut etre entierement faux par la valeur qu'il se donne a la premiere seconde, et c'est le genre de defaut que seul un banc qui commence a t=0 fait sortir. Deuxieme lecon du meme jour : le second defaut — le tenant pese DANS la boucle, donc un resultat qui depend de l'ordre des clefs d'un objet — n'a ete montre par AUCUN des onze cas. Il s'est vu a la relecture. Un banc vert ne dit pas qu'un fichier est juste, il dit que les cas qu'on a su imaginer passent."
-    },
-    {
-     "date": {
-      "annee": 129,
-      "lune": 4,
-      "jour": 3
-     },
-     "source": "grep sur ecrans/, scripts/, serveur/ — la couche 2 et ses appelants",
-     "texte": "Une couche chargee par jeu.html et appelee nulle part est plus dangereuse qu'une couche absente, parce qu'elle a l'air d'etre la. `2-reflexion.js` est ecrite, relue, eprouvee, citee dans le README et dans l'affaire — et `Reflexion` rend zero occurrence hors du module, `h.l2` n'existe pas dans les 6 957 lignes. Ce qui manque n'est pas la couche : c'est le POURVOYEUR. La couche 1 en a un de 372 lignes qui lui batit angles, voisins, stimuli et l'horloge de l'oeil ; les couches 3 et 4 sont nourries en ligne dans soldat() ; la 2 n'a rien du tout. Consequence a mesurer et non a supposer : `prendReflexion(undefined)` rend 0, donc la couche ne pretend jamais a rien, donc l'arbitre branche demain conduirait exactement ce que la cascade conduit deja. On aurait un cinquieme fichier, un banc vert, et pas un homme qui se conduise autrement. Le verrou 90350 — `degage` absent — en est un cas particulier : il manque UN signal, ici il manque le pourvoyeur entier."
-    },
-    {
-     "date": {
-      "annee": 129,
-      "lune": 4,
-      "jour": 3
-     },
-     "source": "chantier/affaires.json et etat/books.json, relus a une heure d'intervalle",
-     "texte": "Relire juste avant d'ecrire m'a evite la faute une deuxieme fois, mais ce que la relecture a montre est pire que ce contre quoi je me protegeais : LES DEUX STOCKS NE PORTENT PAS LES MEMES VERROUS. affaires.json a 90350 et pas 90360 ; books.json a 90360 et pas 90350. Et entre ma lecture du matin et ma pose, affaires.json a gagne 90220, 90230, 90240 que books.json n'a pas. Ce n'est pas une divergence de contenu, c'est une divergence de NUMEROTATION : deux hommes qui prennent chacun le suivant dans leur propre stock finiront par poser deux verrous differents sous le meme numero, et ce jour-la personne ne saura lequel est le vrai. J'ai pris 90370, libre dans les deux, et je n'ai reconcilie ni l'un ni l'autre — affaires.json est la gravure de l'Equerre, et une fusion faite d'une main tierce est pire que la divergence qu'elle repare."
+     "source": "`analyse/branchement-90312/branche-1700-600.txt` et `temoin-1700-600.txt`, 437 octets chacun",
+     "texte": "Mes deux fichiers de sortie d'hier soir ne contiennent que l'avertissement de node sur `journee.js` : le stdout n'est jamais tombe, le serveur n'etait pas la. Un fichier de mesure QUI EXISTE et qui ne contient rien est plus dangereux qu'un fichier absent, exactement comme la couche chargee et appelee nulle part : il a l'air d'etre une mesure. Le bras temoin n'a de valeur que tire, et ce n'est pas moi l'eau — donc l'ouvrage se declare branche, jamais eprouve, tant que Toll n'a pas cuit les deux bras."
     }
    ],
    "conclusion": null
@@ -118,16 +58,16 @@
   {
    "livre": "affaire-migrer-la-bataille-vers-la-stack",
    "table": "⚔️ Actions — chacune remonte, ou elle sort",
-   "ligne": "90311",
+   "ligne": "90312",
    "colonne": "✅ État",
-   "valeur": "fait — `survival-stack/5-la-main.js`, 353 lignes, chargé par `jeu.html` en observation ; banc `banc-la-main.js`, **11 cas, tous tenus**. Tranche la contradiction que le README refusait de nommer : **la somme n'est pas constructible** — la couche 1 rend un MOT, la 2 des nombres et un cap, la 3 des modulations, la 4 des durées ; on n'additionne pas « fuite » et 0,42. **Et le vainqueur unique est faux aussi** : `ballants` retire les bras sans prendre l'homme. D'où la forme — arbitrage **par emplacement** (jambes, bras), chaque couche posant une **prétention** dans [0, 1] composée de ses propres nombres, la plus forte prend. **L'ordre n'est pas un prétendant, c'est le sol** : `barre(l3)` = `lettre` relu sur [0, 1], donc 0,50 pour l'homme ordinaire, et l'appelant retombe dans la cascade quand personne ne la franchit — c'est ce qui rend 90312 progressif. **Aucun tirage** : le départage se fait par comparaison et par période réfractaire `exigence(tenu)`, dont la constante de temps est prise dans `M.SEJOUR` (0,20 s, la dérobade) et non inventée. Le Bassin a pris **6 cas sur 11** au premier passage : `depuis` initialisé à `t` faisait croire à chaque homme que son ordre venait de prendre la main, donc `exigence(0)` à 1,00, donc barre + 1 — infranchissable, tout homme obéissait la nuit entière. Corrigé en `-Infinity` : un homme qui entre en scène obéit depuis toujours, il n'a pas de geste à protéger. Second défaut trouvé à la relecture et qu'aucun de mes cas ne montrait : le tenant était pesé DANS la boucle, donc le résultat dépendait de l'ordre des clefs d'un objet. Sorti de la boucle. Gravé au passage : `h.l1.pilote` → `h.l1.corpsAgi` et `corpsPilote` → `corpsAgi` — le nom posé par Wenna (90320), la main du Fer, `bataille2d.js` et `carte-ville.js`."
+   "valeur": "**en cours — PREMIER CRAN BRANCHÉ le 3e, non encore éprouvé.** `rallier()` (`bataille2d.js` l.4867) était le SEUL accès à `h.l1` de tout le fichier hors de `soldat()` — quatorze appels vivants aux couches, un seul ici (relevé de Bren, le 3e) : un appelant unique, déjà écrit, qui lisait déjà la couche en direct. C'est l'essai le moins cher qui existe, donc c'est par lui qu'on commence la dépose, et non par la nappe. **CE QUI CHANGE EST LA QUESTION, PAS LA RÉPONSE :** on lisait le MOT de la couche 1 — « est-ce qu'il dit fuite ? » ; on demande maintenant à l'arbitre QUI TIENT SES JAMBES ce battement-ci. Un homme se rallie quand l'ordre les a reprises, et pas autrement — c'est la définition du ralliement, et le mot que `5-qui-conduit.js` rend déjà. **`!== \"ordre\"` et non `=== \"corps\"`,** parce que deux cas que `h.l1.jambes` ne savait pas écrire s'y ajoutent : l'homme que la RÉFLEXION tient se raisonne pour sortir (le rallier serait le renvoyer en ligne à l'instant où il décide de n'y pas rester), et l'homme que l'ENVIE tient a lâché la colonne pour une maison. Aucun des deux n'obéit ; aucun des deux ne se rallie. **LE GEL DE 🔒 90260 NE MORD PAS SUR CETTE LIGNE — vérifié, non supposé :** il mord sur les hommes qui TOMBENT, `soldat()` rendant la main à `mort` (l.2968) et à `blessé` (l.2970) AVANT l'observation, si bien que leur dernière sortie de couche reste au chaud jusqu'au matin ; un homme `déroute`, lui, traverse l'observation à chaque battement de son œil, et `h.conduit` y est aussi frais que `h.l1` l'était. C'est pourquoi je branche avant de réparer le gel. **LE BRAS TÉMOIN EST LE MÊME FICHIER, AUCUNE LIGNE N'EST RÉÉCRITE :** le branchement porte son propre repli — sans `h.conduit`, la ligne retombe sur le vieux test —, donc retirer `5-qui-conduit.js` de la chaîne rend exactement la conduite d'hier, et non une reconstitution de la conduite d'hier. Banc : `analyse/branchement-90312/rallier.js`, décor repris de `analyse/etalon-90110/deux-causes.js` à la virgule près, `--sans-arbitre` pour le témoin ; il refuse de tourner si l'arbitre est là quand il ne devrait pas, et l'ancre du relevé lève au lieu de mentir si elle a bougé. `node --check` passe sur les deux fichiers. **CE QUI RESTE, ET IL EST NOMMÉ :** rien n'est cuit — mes deux sorties du 3e au soir ne portent que l'avertissement de node, le serveur n'était pas levé. Demandé à Toll au parloir le 3e : les deux bras, même graine, même durée, et **le compte des RALLIEMENTS ajouté à l'étalon 90110** — c'est le seul compte que ce cran est censé déplacer (avec les fuyards à la fin), il n'est pas dans le quatuor, et la graine seule y vaut jusqu'à quatre unités sur les initiatives. Le quatuor, lui, doit rester immobile : s'il bouge, j'ai tort."
   }
  ],
  "_depeche": {
   "session": "b201dc5e-fcb6-5cd3-aa5a-cc75fd1a078b",
   "date_jeu": "129.4.3",
-  "jetons": 3481770,
-  "secondes": 716
+  "jetons": 736226,
+  "secondes": 153
  },
  "_cahier_verse": true
 }

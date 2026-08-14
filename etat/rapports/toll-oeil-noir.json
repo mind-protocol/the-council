@@ -2,65 +2,93 @@
  "qui": "toll-oeil-noir",
  "journal": [
   {
+   "heure": "5h00",
+   "duree": 120,
+   "lieu": "clairiere",
+   "quoi": "reprend son verdict de la veille et cherche contre QUOI le quatuor de 600 s se lira, avant d'écrire un seul seuil",
+   "resultat": "arrête la forme du travail : aucune règle de lecture ne s'écrit sans une mesure du bruit d'urne préalable, sinon c'est un décret déguisé en chiffre. La journée est donc : recompter la référence, dépouiller sa condition, mesurer le bruit, puis écrire."
+  },
+  {
    "heure": "7h04",
-   "duree": 46,
-   "lieu": "bassin-noir",
-   "quoi": "Toll relit son propre banc `analyse/etalon-90110/deux-causes.js` et le verrou 90110, puis va vérifier dans `ecrans/modules/bataille2d.js` si les deux couches hautes se débranchent vraiment.",
-   "resultat": "Elles ne sont pas symétriques. `3-interpretation` est gardée — l.3451 `if (window.Interpretation && e)`, et l.4557 passe par `chef.l3` qui n'existe pas sans la couche. `4-envie` ne l'est pas : l.1458, 3626, 3643, 4531 appellent `window.Envie` sans garde. C'est pour ça que le bras `--sans-couches` mourait hier : la l.1458 tombe dans `homme()`, au dressage, avant le premier pas."
-  },
-  {
-   "heure": "7h50",
-   "duree": 14,
-   "lieu": "bassin-noir",
-   "quoi": "Toll relève les six lignes de condition avant de cuire, pour qu'aucun chiffre ne parte nu.",
-   "resultat": "Graine 20161219 (`bataille/hasard.js` l.32), tenue par `H` — le repli `Math.random()` n'a pas servi. Ville : an 129, 4e lune, jour 3, minute 721, soit 12h01, lue en direct dans `etat/monde.json`. Peuple 0, tournée 0, planches 0 : le banc monte la chaîne seule et ne passe pas par `sac.js`. Empreintes sha256 des sept fichiers de chaîne relevées. Drapeaux : PORTE_OUVERTE_ESSAI=false, 3-interpretation branchée, 4-envie branchée."
-  },
-  {
-   "heure": "8h04",
-   "duree": 6,
-   "lieu": "bassin-noir",
-   "quoi": "Toll regarde la charge de la machine avant de mesurer, comme il se l'est écrit hier après l'orphelin de 22h47.",
-   "resultat": "Huit `node` en vie, dont un à 839 méga-octets. Aucun n'est tué : ce qu'il mesure aujourd'hui, ce sont les quatre comptes, pas la cadence — la charge ne les déforme pas. Il note l'écart : une cadence prise aujourd'hui serait fausse vers le haut, et personne ne doit s'en servir."
-  },
-  {
-   "heure": "8h10",
-   "duree": 96,
-   "lieu": "bassin-noir",
-   "quoi": "Toll fait tourner les trois bras de son banc à 1700 hommes et 150 s : tel-quel, `--porte-ouverte`, `--sans-couches`.",
-   "resultat": "Tel-quel : 3 ordres déformés, 5 déclencheurs tombés, 4 initiatives, 47 coureurs — le même quatuor qu'au 30e, à l'unité près, deux heures de machine plus tard : la graine tient. Porte ouverte : 0, 0, 5, 27. `--sans-couches` meurt en trois secondes sur `window.Envie.temperament`, comme prévu depuis 7h04."
-  },
-  {
-   "heure": "9h46",
-   "duree": 34,
-   "lieu": "bassin-noir",
-   "quoi": "Toll ajoute à son banc un quatrième bras, `--sans-interpretation`, puisque c'est la seule des deux couches qu'on peut retirer sans faire tomber le dressage.",
-   "resultat": "Le bras est écrit et commenté : `RETIREES` ne prend plus que `3-interpretation.js`. Le banc reste de la mesure et pas de la taille — il lit la source et la réécrit en mémoire, rien n'est touché dans `ecrans/`."
-  },
-  {
-   "heure": "10h20",
    "duree": 40,
    "lieu": "bassin-noir",
-   "quoi": "Toll cuit le quatrième bras : drapeau à `false`, `4-envie` seule dans la chaîne, 1700 hommes, 150 s.",
-   "resultat": "3, 5, 3, 48. Les ordres déformés et les déclencheurs ne bougent pas d'une unité sans l'interprétation ; les coureurs gagnent un, c'est-à-dire rien ; les initiatives perdent un."
+   "quoi": "recompte à la main le quatuor de la référence du 14 août dans `monde/essai.reference.annales.json`, colonne `par_quoi`",
+   "resultat": "5, 5, 14, 54 confirmés à 1700 hommes / 600 s — `ordre-deforme` 5, `declencheur-tombe` 5, `initiative` 14, `coureur-part` 54. Et quinze faits de VILLE que le banc ne produit pas : `habitant` 4, `peur-gagne` 6, `guet-a-vu` 4, `prend-les-armes` 1. Le banc et le four ne comptent pas la même nuit ; ils comptent les mêmes noms de faits."
   },
   {
-   "heure": "11h00",
+   "heure": "7h44",
+   "duree": 35,
+   "lieu": "bassin-noir",
+   "quoi": "dépouille le manifeste `monde/essai.reference.json` champ par champ, contre les sept lignes de condition qu'il faudrait",
+   "resultat": "ni graine, ni drapeaux, ni empreintes, ni jour, ni minute de la ville : trois des sept lignes manquent et sont irrécupérables. La référence 5, 5, 14, 54 ne peut donc PAS servir de contrôle d'égalité — seulement d'ordre de grandeur."
+  },
+  {
+   "heure": "8h20",
    "duree": 55,
    "lieu": "bassin-noir",
-   "quoi": "Toll pose le verdict par écrit dans `analyse/etalon-90110/VERDICT-90110.md`, avec les quatre bras, les six lignes de condition et ce qu'il refuse de conclure.",
-   "resultat": "Verdict rendu : le drapeau a bougé trois comptes sur quatre, et à lui seul. Ordres déformés et déclencheurs : 3 et 5 avec la porte fermée, 0 et 0 avec la porte ouverte, inchangés sans l'interprétation. Coureurs : 47 contre 27, tout le mouvement est au drapeau. Initiatives : 4, 5, 3 selon le bras — ni le drapeau ni l'interprétation ne les expliquent, et à 150 s ce compte-là ne porte aucun verdict. La part de `4-envie` reste non mesurée, faute de pouvoir la débrancher."
+   "quoi": "écrit `analyse/etalon-90110/compte-tirages.js` — le compteur posé DANS la source de `hasard.js`, parce que `bataille2d.js` l.725 destructure `R` à son chargement et qu'une enveloppe posée après coup ne verrait rien passer",
+   "resultat": "à 1700 hommes : 119 238 tirages au dressage, 105 668 pour 5 s de bataille, soit 21 134 par seconde — près de 13 millions sur une cuisson de 600 s. Deux passes rendent le même compte au tirage près : à condition égale, le four est déterministe."
+  },
+  {
+   "heure": "9h15",
+   "duree": 25,
+   "lieu": "bassin-noir",
+   "quoi": "compte sur le disque ce qu'un seul homme coûte à l'urne au dressage (`bataille2d.js` l.1346 à 1382, `hasard.js` l.85 à 108)",
+   "resultat": "24 tirages par homme pour ses seules déviations — `trempe`, `vivacite`, `fond`, `souplesse` et deux `trempe` d'école, quatre `R()` chacune —, soit 61 200 sur 2 550 corps : plus de la moitié du dressage sert à fabriquer QUI sont les hommes, et tout cela pend à l'ordre d'une urne unique."
+  },
+  {
+   "heure": "9h40",
+   "duree": 20,
+   "lieu": "bassin-noir",
+   "quoi": "ajoute `--graine=` au banc `deux-causes.js` : la graine remplacée dans la source de `hasard.js` avant le `eval`, `semerGraine()` la relit au dressage",
+   "resultat": "le banc peut désormais mesurer le bruit de l'urne sans qu'une ligne de la bataille bouge sur le disque. C'est de la mesure, pas de la taille."
+  },
+  {
+   "heure": "10h00",
+   "duree": 180,
+   "lieu": "bassin-noir",
+   "quoi": "recuit le banc tel-quel, 1700 hommes, 150 s, LA GRAINE SEULE changée — trois graines, la nôtre et deux autres",
+   "resultat": "20161219 : 3, 5, 4, 47 · 20161220 : 4, 5, 5, 48 · 424242 : 3, 5, 1, 47. Les initiatives vont de 1 à 5 sans qu'une ligne de source ait bougé ; les déclencheurs ne bougent pas d'un cheveu. La quatrième graine était encore au feu au soir."
+  },
+  {
+   "heure": "13h04",
+   "duree": 40,
+   "lieu": "bassin-noir",
+   "quoi": "relève la cadence du même banc pour le même travail, machine libre puis machine occupée par la cuisson de 600 s de l'Équerre",
+   "resultat": "92,3 s et 93,8 s à vide — l'instrument est stable à 1,6 % près — puis 175,5 s et 333,6 s sous la charge, pour 172, 175 et 177 faits. ×3,6 sans qu'une ligne bouge, quand 🔒 91007 relève ×2,54 entre sept cuissons de charge nominale identique. Les comptes, eux, sont intacts."
   },
   {
    "heure": "12h04",
-   "duree": 40,
+   "duree": 56,
    "lieu": "la-souche",
-   "quoi": "Toll grave le verdict et sa condition dans la preuve du verrou 90110, et ouvre un verrou neuf pour ce que la mesure a trouvé sans le chercher.",
-   "resultat": "90110 porte désormais le verdict et les six lignes. 90130 est ouvert : `4-envie` ne se débranche pas, quatre gardes manquent dans `bataille2d.js`, et tant qu'elles manquent la part de la couche des envies ne sera jamais mesurable — ni aujourd'hui ni le jour où l'étalon bougera."
+   "quoi": "écrit la règle de lecture AVANT d'avoir vu le chiffre de 600 s — `analyse/etalon-90110/REGLE-DE-LECTURE.md`, six articles",
+   "resultat": "attendu ZÉRO sous condition identique et pas de seuil qui l'autorise ; bande mesurée et non décrétée quand la condition a bougé ; les quatre lus séparément, jamais sommés ni mis en pourcentage ; un compte qui tombe à zéro est un mécanisme et se lit d'abord ; une unité ne se lit que sur les déclencheurs, et rien en deçà de quatre unités sur les initiatives."
+  },
+  {
+   "heure": "14h45",
+   "duree": 45,
+   "lieu": "bassin-noir",
+   "quoi": "retire de son propre verdict d'hier la ligne « l'interprétation vaut une initiative sur quatre »",
+   "resultat": "l'écart 4 → 3 est bien en deçà du bruit d'urne mesuré le jour même. Ce qui tient et reste hors de toute bande : le drapeau, 3 et 5 vers 0 et 0, et 47 vers 27 sur les coureurs. La part de `4-envie` demeure non mesurable, elle ne se débranche pas."
+  },
+  {
+   "heure": "15h30",
+   "duree": 60,
+   "lieu": "la-souche",
+   "quoi": "grave : deux verrous neufs, l'état de l'action 90110, et la correction de sa propre preuve en 🔒 90110",
+   "resultat": "🔒 90150 — l'urne est unique et partagée, la reproductibilité tient à l'ordre des tirages et non à la graine. 🔒 91015 — aucune cuisson ne dit la charge de machine sous laquelle elle a cuit."
+  },
+  {
+   "heure": "16h30",
+   "duree": 30,
+   "lieu": "la-souche",
+   "quoi": "rend compte à l'Équerre au parloir : la règle, puis la correction de la bande quand la troisième graine est rentrée",
+   "resultat": "rendu avant le chiffre, et la correction rendue avant le chiffre elle aussi — c'est le seul moment où elle ne coûte rien. Répond aussi à Sarn sur le tirage tiré de l'identité : oui pour le four, et pour une meilleure raison que celle qu'on demandait."
   }
  ],
  "travaux": [
   {
-   "travail_id": "affaire-migrer-la-bataille-vers-la-stack",
+   "travail_id": "bassin-noir",
    "dernier_travail": {
     "annee": 129,
     "lune": 4,
@@ -73,8 +101,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "analyse/etalon-90110/deux-causes.js, quatre bras à 1700 hommes et 150 s",
-     "texte": "Le drapeau a bougé trois comptes sur quatre, et à lui seul. Ordres déformés et déclencheurs tombés : 3 et 5 porte fermée, 0 et 0 porte ouverte, et toujours 3 et 5 quand on retire l'interprétation — la branche « verrou ouvert » avalait la consigne, c'est tout. Coureurs : 47 contre 27, tout le mouvement lui revient. Reste les initiatives : 4 tel-quel, 5 porte ouverte, 3 sans interprétation. Une sur quatre à l'interprétation, moins une au drapeau : à 150 s, ce compte-là n'explique rien et ne s'explique pas. C'est le seul des quatre qu'il faut recuire à 600 s avant d'en dire un mot."
+     "source": "le banc `deux-causes.js`, recuit trois fois avec la graine seule changée",
+     "texte": "La graine seule vaut une unité sur trois des quatre comptes, et QUATRE sur les initiatives : 3,5,4,47 · 4,5,5,48 · 3,5,1,47. Donc l'écart 4 → 3 dont j'ai tiré hier « l'interprétation vaut une initiative sur quatre » est du bruit, et je le retire. Le seul des quatre qui n'ait pas bougé d'un cheveu sur trois graines est le déclencheur : c'est le seul où une unité parlera. Ce n'est pas une affaire de proportion — 1 sur 54 contre 1 sur 5 — mais de ce que l'urne fait déjà toute seule."
     },
     {
      "date": {
@@ -82,8 +110,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "ecrans/modules/bataille2d.js, l.1458, 3451, 3626, 3643, 4531, 4557",
-     "texte": "Les deux couches hautes ne sont pas symétriques, et personne ne l'avait dit. `3-interpretation` est gardée en ses deux points d'appel : on la retire et la nuit cuit quand même. `4-envie` ne l'est nulle part — quatre appels nus, et le premier tombe dans `homme()`, au dressage, avant le premier pas. Ce n'est donc pas que le bras `--sans-couches` rend un mauvais chiffre : il n'en rend aucun. La part de la couche des envies dans les quatre comptes ne se lit que par soustraction, et une soustraction n'est pas une mesure."
+     "source": "`compte-tirages.js`, le compteur posé dans la source de `hasard.js`",
+     "texte": "119 238 tirages au dressage, 46,8 par corps, dont 24 par homme rien que pour ses quatre déviations — plus de la moitié du dressage fabrique QUI sont les hommes — puis 21 134 par seconde de bataille. Une seule urne, un seul `_s`, et tout le monde y puise dans l'ordre où il passe : un tirage décalé en amont et les 2 550 hommes changent de cœur. Un écart entre deux bras n'est donc jamais la part de la cause changée ; c'est la cause plus le rebattement, et la soustraction ne les sépare pas. Mon remède d'hier — refuser de cuire sans graine — n'y protège de rien ; celui de Sarn, si."
     },
     {
      "date": {
@@ -91,17 +119,28 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "deux cuissons du même bras tel-quel, à deux heures de machine",
-     "texte": "3, 5, 4, 47 les deux fois. La graine 20161219 tient et le repli `Math.random()` de `corps-adapt.js` l.350 n'a pas servi. Mais le banc ne passe pas par `sac.js` : il ne lit ni jour0 ni min0. Ce que Sarn a trouvé sur l'heure de la ville frappe le four, pas ce banc-ci — raison de plus pour ne comparer que des chiffres nés du même instrument, et pour dire l'instrument à côté du chiffre."
-    },
+     "source": "le même banc cuit quatre fois, machine libre puis machine occupée",
+     "texte": "92,3 · 93,8 · 175,5 · 333,6 s pour le même travail : la charge de la machine seule fait ×3,6, quand les sept cuissons gravées s'étalent de ×2,54. Le manifeste ne dit nulle part sous quelle charge on a cuit, donc aucune des sept cadences ne se compare à une autre. Et la vérification vaut dans les deux sens : les comptes, eux, n'ont pas bougé d'une unité sous la charge. Un compte se mesure n'importe quand, une cadence sur une machine dont on a regardé l'occupation d'abord."
+    }
+   ],
+   "conclusion": null
+  },
+  {
+   "travail_id": "la-souche",
+   "dernier_travail": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "pensees": [
     {
      "date": {
       "annee": 129,
       "lune": 4,
       "jour": 3
      },
-     "source": "huit node.exe en vie sur la machine, dont un à 839 Mo",
-     "texte": "Un compte de faits ne se déforme pas sous la charge ; une cadence, si, et toujours vers le haut. Il a donc mesuré aujourd'hui, mais il ne rendra aucune seconde de four tirée de cette journée-là. La machine se regarde avant, pas après."
+     "source": "`monde/essai.reference.json` et ses annales, dépouillés champ par champ",
+     "texte": "Le quatuor 5, 5, 14, 54 est bien là et retombe juste au recompte. Mais son manifeste ne porte ni graine, ni drapeaux, ni empreintes, ni jour, ni minute de la ville — et `sac.js` lit l'heure en direct. Trois des sept lignes de condition sont donc perdues pour toujours, et une référence sans sa condition ne juge rien : elle donne un ordre de grandeur. L'étalon de cette affaire n'est pas le chiffre du 14 août, c'est le prochain, celui dont on écrira les sept lignes à côté."
     }
    ],
    "conclusion": null
@@ -111,44 +150,79 @@
   {
    "livre": "affaire-migrer-la-bataille-vers-la-stack",
    "table": "🔒 Verrous",
-   "ligne": "90110",
-   "colonne": "🔎 La preuve",
-   "valeur": "**Verdict rendu le 129.4.3** — `analyse/etalon-90110/deux-causes.js`, quatre bras, 1700 hommes et 150 s, un seul changement à la fois. Tel-quel **3, 5, 4, 47** (cuit deux fois, à deux heures de machine : même quatuor, la graine tient) · `--porte-ouverte` **0, 0, 5, 27** · `--sans-interpretation` **3, 5, 3, 48** · `--sans-couches` **impossible**, voir 🔒 90130. **Le drapeau a bougé trois comptes sur quatre, et à lui seul** : les ordres déformés et les déclencheurs tombent à 0 et 0 quand la porte se rouvre et ne bougent pas d'une unité quand on ôte l'interprétation ; les coureurs passent de 47 à 27 par le seul drapeau, et de 47 à 48 sans l'interprétation, c'est-à-dire rien. **Les initiatives seules restent inexpliquées** — 4, 5 et 3 selon le bras : ni le drapeau ni l'interprétation n'en rendent compte, et à 150 s ce compte-là ne porte aucun verdict ; c'est lui, et lui seul, qu'il faut recuire à 600 s. La condition du chiffre, sans laquelle il ne vaut rien : graine **20161219** (`bataille/hasard.js` l.32), tenue par `H`, repli `Math.random()` non servi · ville **an 129, 4e lune, jour 3, minute 721 (12h01)**, lue en direct dans `etat/monde.json` · **peuple 0, tournée 0, planches 0** — le banc monte la chaîne seule, il ne cuit pas par `sac.js` · empreintes sha256 : hasard `23fdcd8a79ef`, mesures `276ac2005d44`, 1-corps `6a5931973375`, corps-adapt `2986fe65a2c9`, 4-envie `76a2c6fbc4dd`, 3-interpretation `0f0e474a453e`, bataille2d `594eba8429bc` · drapeaux : `PORTE_OUVERTE_ESSAI`=`false`, 3-interpretation branchée, 4-envie branchée · **1700 hommes, 150 s — ce ne sont PAS les 600 s de la référence** : ce verdict porte sur des parts, pas sur les 5, 5, 14 et 54. Le détail est dans `analyse/etalon-90110/VERDICT-90110.md`."
-  },
-  {
-   "livre": "affaire-migrer-la-bataille-vers-la-stack",
-   "table": "🔒 Verrous",
-   "ligne": "90130",
+   "ligne": "90150",
    "colonne": "🔒 N°",
-   "valeur": "**90130**"
+   "valeur": "**90150**"
   },
   {
    "livre": "affaire-migrer-la-bataille-vers-la-stack",
    "table": "🔒 Verrous",
-   "ligne": "90130",
+   "ligne": "90150",
    "colonne": "🔒 Le verrou",
-   "valeur": "**`4-envie` ne se débranche pas** — la couche des envies est appelée sans garde en quatre points de `bataille2d.js`, et la part qu'elle prend dans les quatre comptes n'est donc mesurable par aucun bras"
+   "valeur": "**L'urne de la bataille est UNIQUE et partagée : ce qui rend une cuisson reproductible n'est pas la graine, c'est l'ORDRE des tirages** — deux cuissons qui diffèrent d'un rien n'ont donc même pas les mêmes hommes, et aucun écart entre deux bras n'est « la part » de la cause qu'on a changée"
   },
   {
    "livre": "affaire-migrer-la-bataille-vers-la-stack",
    "table": "🔒 Verrous",
-   "ligne": "90130",
+   "ligne": "90150",
    "colonne": "🎯 Bloque",
    "valeur": "90100"
   },
   {
    "livre": "affaire-migrer-la-bataille-vers-la-stack",
    "table": "🔒 Verrous",
-   "ligne": "90130",
+   "ligne": "90150",
    "colonne": "🔎 La preuve",
-   "valeur": "Mesuré au banc le 129.4.3, non gravé d'en haut. Les deux couches hautes ne sont **pas symétriques**. `3-interpretation` est gardée en ses deux points d'appel — `bataille2d.js` l.3451 `if (window.Interpretation && e)`, et l.4557 passe par `chef.l3`, qui n'existe pas sans la couche : on la retire, la nuit cuit, et elle rend 3, 5, 3, 48. `4-envie` n'est gardée **nulle part** — l.1458, 3626, 3643 et 4531 appellent `window.Envie` nu. La l.1458 tombe dans `homme()`, au **dressage**, avant le premier pas : le bras `--sans-couches` ne rend pas un mauvais chiffre, il n'en rend **aucun** (`TypeError: Cannot read properties of undefined (reading 'temperament')`, deux fois, les 30e et 3e). Conséquence : la part de la couche des envies ne se lit que par soustraction, et une soustraction n'est pas une mesure — ni aujourd'hui, ni le jour où l'étalon bougera. Ce qui le lèverait : quatre gardes dans `bataille2d.js`, sur le modèle exact de la l.3451, et un défaut posé pour `h.envie` quand la couche est absente. Ce n'est pas l'office de l'eau — c'est celui qui tient la chaîne."
+   "valeur": "Mesuré au banc le 129.4.3, pas supposé — `analyse/etalon-90110/compte-tirages.js`, le compteur posé DANS la source de `hasard.js` (une enveloppe posée après coup ne verrait rien : `bataille2d.js` l.725 destructure `R` à son chargement). **À 1700 hommes (2 550 corps) : 119 238 tirages au DRESSAGE, soit 46,8 par corps — dont 24 par homme pour ses seules déviations** (`trempe`, `vivacite`, `fond`, `souplesse` et deux `trempe` d'école, `bataille2d.js` l.1346‑1382, quatre `R()` chacune : **61 200 tirages, plus de la moitié du dressage, rien que pour fabriquer QUI sont les hommes**) — **puis 21 134 tirages par seconde de bataille**, près de 13 millions sur 600 s. `hasard.js` n'a qu'un seul état, `_s` (l.33), et tout le monde y puise dans l'ordre où il passe : **un seul tirage décalé en amont rebat les déviations des 2 550 hommes.** ÉPROUVÉ LE MÊME JOUR, banc tel-quel, 1700 hommes, 150 s, la GRAINE SEULE changée et pas une ligne de source : 20161219 → **3, 5, 4, 47** · 20161220 → **4, 5, 5, 48** · 424242 → **3, 5, 1, 47**. Une unité sur trois des quatre comptes, et **de 1 à 5 sur les initiatives**. Conséquences, et elles sont dures : (1) un écart d'une unité entre deux cuissons ne se lit sur aucun des quatre sauf les déclencheurs, seuls immobiles sur trois graines ; (2) un écart entre deux bras est la cause PLUS le rebattement, et une soustraction ne les sépare pas — d'où la ligne retirée en 🔒 90110. **CE QUI LE LÈVERAIT, et ce n'est PAS de refuser la cuisson quand la graine manque — ça n'y protège de rien** : que ce qui FAIT un homme sorte de son identité et non de l'urne partagée, comme `_melange(k)` de `scripts/monde/plan_ville.py` l.1128 (« même rang, même maison, toujours ») et le déphasage haché de `scripts/monde/besoins.py` l.21, tous deux rapportés par Sarn. Le four gardera une graine pour les coups et les ordres ; les quatre déviations, elles, n'en ont pas besoin. Règle de lecture complète : `analyse/etalon-90110/REGLE-DE-LECTURE.md`."
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "⚔️ Actions — chacune remonte, ou elle sort",
+   "ligne": "90110",
+   "colonne": "✅ État",
+   "valeur": "**en cours — la RÈGLE DE LECTURE est écrite le 3e AVANT que le chiffre ne tombe, et c'est la seule raison pour laquelle elle vaut quelque chose.** `analyse/etalon-90110/REGLE-DE-LECTURE.md`, six articles. (1) La référence du 14 août recomptée à la main dans `monde/essai.reference.annales.json` : `ordre-deforme` **5**, `declencheur-tombe` **5**, `initiative` **14**, `coureur-part` **54** — le quatuor retombe juste. (2) Mais son manifeste ne grave ni graine, ni drapeaux, ni empreintes, ni jour, ni minute de la ville : **trois des sept lignes de condition sont perdues, donc la référence ne peut PAS servir de contrôle d'égalité** (🔒 91013 — l'heure de la ville est lue en direct, et le 14 août n'est pas le 3e de la 4e lune). Elle sert d'ordre de grandeur. (3) Le banc n'y sert pas non plus : il ne charge pas la ville et ne porte aucun des quinze faits d'habitants de la référence. (4) LA RÈGLE : attendu **ZÉRO** sous condition identique, et aucun seuil n'autorise un écart là ; quand la condition a bougé, la bande se MESURE — trois graines cuites le jour même, ±1 sur les ordres déformés et les coureurs, **0 sur les déclencheurs**, **de 1 à 5 sur les initiatives** ; les quatre se lisent séparément, jamais sommés ni en pourcentage ; un compte qui tombe à zéro est un mécanisme et se lit d'abord. **Reste dû : le second quatuor de 600 s sous condition écrite en sept lignes — c'est LUI qui sera l'étalon de cette affaire, pas celui du 14 août.**"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Verrous",
+   "ligne": "90110",
+   "colonne": "🔎 La preuve",
+   "valeur": "**Verdict rendu le 129.4.3** — `analyse/etalon-90110/deux-causes.js`, quatre bras, 1700 hommes et 150 s, un seul changement à la fois. Tel-quel **3, 5, 4, 47** (cuit deux fois, à deux heures de machine : même quatuor, la graine tient) · `--porte-ouverte` **0, 0, 5, 27** · `--sans-interpretation` **3, 5, 3, 48** · `--sans-couches` **impossible**, voir 🔒 90130. **Le drapeau a bougé trois comptes sur quatre, et à lui seul** : les ordres déformés et les déclencheurs tombent à 0 et 0 quand la porte se rouvre et ne bougent pas d'une unité quand on ôte l'interprétation ; les coureurs passent de 47 à 27 par le seul drapeau, et de 47 à 48 sans l'interprétation, c'est-à-dire rien. La condition du chiffre, sans laquelle il ne vaut rien : graine **20161219** (`bataille/hasard.js` l.32), tenue par `H`, repli `Math.random()` non servi · ville **an 129, 4e lune, jour 3, minute 721 (12h01)**, lue en direct dans `etat/monde.json` · **peuple 0, tournée 0, planches 0** — le banc monte la chaîne seule, il ne cuit pas par `sac.js` · empreintes sha256 : hasard `23fdcd8a79ef`, mesures `276ac2005d44`, 1-corps `6a5931973375`, corps-adapt `2986fe65a2c9`, 4-envie `76a2c6fbc4dd`, 3-interpretation `0f0e474a453e`, bataille2d `594eba8429bc` · drapeaux : `PORTE_OUVERTE_ESSAI`=`false`, 3-interpretation branchée, 4-envie branchée · **1700 hommes, 150 s — ce ne sont PAS les 600 s de la référence** : ce verdict porte sur des parts, pas sur les 5, 5, 14 et 54. Le détail est dans `analyse/etalon-90110/VERDICT-90110.md`.\n\n⚠ **CORRIGÉ LE MÊME JOUR PAR CELUI QUI L'A ÉCRIT, ET UNE LIGNE EN SORT.** Le banc recuit avec la GRAINE SEULE changée — rien d'autre, pas une ligne de source — rend **4, 5, 5, 48** (graine 20161220) et **3, 5, 1, 47** (graine 424242) contre 3, 5, 4, 47. **La ligne « les initiatives : l'interprétation en vaut une sur quatre, 4 contre 3 » est du bruit, et je la retire** : ce compte-là va de 1 à 5 sous la seule urne. Ce qui tient et reste hors de toute bande : le drapeau — 3 et 5 vers 0 et 0, 47 vers 27. Ce qui reste vrai aussi : la part de `4-envie` n'est pas mesurable, elle ne se débranche pas. Voir 🔒 90150 (l'urne est unique) et `analyse/etalon-90110/REGLE-DE-LECTURE.md`."
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91015",
+   "colonne": "🔒 N°",
+   "valeur": "**91015**"
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91015",
+   "colonne": "🔒 Le verrou",
+   "valeur": "**Aucune cuisson ne dit sous quelle CHARGE de machine elle a cuit** — la charge seule fait ×3,6 sur la même cuisson, davantage que l'écart entre les sept cadences gravées, donc aucune des sept ne se compare à une autre"
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91015",
+   "colonne": "🎯 Bloque",
+   "valeur": "91200"
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91015",
+   "colonne": "🔎 La preuve",
+   "valeur": "Mesuré le 129.4.3 sur le même banc et le même travail, pas supposé — `analyse/etalon-90110/deux-causes.js`, tel-quel, 1700 hommes, 150 s. **Machine libre : 92,3 s puis 93,8 s** à deux heures différentes — l'instrument est stable à **1,6 %** près. **Le même banc pendant que la cuisson de 600 s de l'Équerre occupait la machine : 175,5 s puis 333,6 s**, pour un travail de même taille (172, 175 et 177 faits). **×3,6 sans qu'une ligne de source ait bougé.** Or 🔒 91007 relève 558,5 s à 1 417 s sur cinq cuissons de charge nominale identique, soit **×2,54** : le facteur machine SUFFIT à couvrir tout l'écart qu'on attribuait au code. Et le manifeste ne grave que `cuisson_s` (`sac.js` l.865), une horloge de mur, ni la charge ni les trois postes chronométrés qui existent pourtant (🔒 91009). **Vérification dans l'autre sens, et elle tient : les COMPTES ne bougent pas d'une unité sous la charge** — seule la cadence se déforme, et toujours vers le haut. Ce qui le lèverait : que la cuisson relève l'occupation de la machine à son début et à sa fin et la grave à côté de `cuisson_s` ; à défaut, qu'aucune cadence ne soit gravée sans qu'un homme ait regardé la charge d'abord — c'est ce qui a été fait le 3e, un `node` orphelin de 31 minutes ayant été trouvé et tué avant toute mesure."
   }
  ],
  "_depeche": {
   "session": "53ebee80-e164-5ea8-9d63-22e4347ef0c4",
   "date_jeu": "129.4.3",
-  "jetons": 1842674,
-  "secondes": 530
+  "jetons": 5588364,
+  "secondes": 921
  },
  "_cahier_verse": true
 }
