@@ -99,6 +99,14 @@ function planter(base) {
 // courtes et lisibles valent mieux qu'un chargeur qui aurait l'air malin.
 const CHAINE = ["bataille/hasard.js", "bataille/mesures.js",
                 "survival-stack/1-corps.js", "bataille/corps-adapt.js",
+                // La couche 4 CONDUIT, elle : l'envie de butin et ce qu'un chef
+                // supporte de silence sortent d'elle et de nulle part ailleurs
+                // depuis qu'`APPETIT` et `SILENCE` sont déposés. Elle doit donc
+                // être chargée avant `bataille2d.js`, et non après.
+                "survival-stack/4-envie.js",
+                // La couche 3 n'est qu'en observation, mais elle est lue par
+                // `soldat()` à chaque battement : elle doit être posée avant.
+                "survival-stack/3-interpretation.js",
                 "bataille2d.js"];
 
 /** Charger la bataille, qui n'est pas un module ES mais une suite de scripts. */
@@ -260,6 +268,10 @@ const D_ = (s) => (/^[aàâeéèêiîoôuûyh]/i.test(s || "") ? "d'" + s : "de 
 const DIRE = {
   "contact":          () => "les deux fers se touchent pour la première fois",
   "premier-sang":     (f) => "le premier mort de la journée, " + (LE_CAMP[f.camp] || ""),
+  // Ce qu'on savait d'elle avant que la nuit commence, et qui n'a jamais été
+  // réparé. La ligne se lit au matin comme un reproche, et c'en est un.
+  "porte-abimee":     (f) => "« " + f.porte + " » est mangée — il lui reste " +
+                             f.part + " % de son bois, et personne ne l'ignorait",
   "porte-cede":       (f) => "« " + f.porte + " » commence à céder",
   "porte-enfoncee":   (f) => "« " + f.porte + " » est enfoncée",
   // LE NOM EST LA RAISON D'ÊTRE DE CETTE LIGNE. Elle disait « le chef de la
@@ -355,10 +367,17 @@ const DIRE = {
   // objet, sa distance, sa réserve ; ici on ne sait que le recopier. `phrase`
   // arrive donc toute faite, et `ordre` — le verbe nu — reste pour les sacs
   // cuits avant que les compléments existent.
+  // ON DIT QUAND PERSONNE NE POUVAIT L'ENTENDRE. Un ordre à une aile dont
+  // toutes les escouades sont sourdes de naissance meurt dans la bouche du
+  // chef : il ne se transmet pas, il n'est pas perdu en chemin, il n'a
+  // simplement jamais eu de destinataire. Sans cette incise, le dépouillement
+  // compte quinze ordres donnés là où douze pouvaient arriver — et l'on
+  // s'étonne ensuite qu'une aile n'ait rien fait de la nuit.
   "ordre":            (f) => (f.chef || "la tête") + " ordonne à sa " +
                              RANG((f.rang || 0) + 1) + " aile " +
                              D_(f.phrase || VERBE(f.ordre)) +
-                             " — il lui reste " + Math.round(f.force * 100) + " % de ses hommes",
+                             " — il lui reste " + Math.round(f.force * 100) + " % de ses hommes" +
+                             (f.sourd ? ", et pas un homme de cette aile ne peut l'entendre" : ""),
   "coureur-part":     (f) => "un coureur part de la " + RANG((f.rang || 0) + 1) +
                              " aile " + DE(f.chef) +
                              " pour la " + RANG(f.vers + 1) + " escouade" +
@@ -366,6 +385,14 @@ const DIRE = {
   "coureur-arrive":   (f) => "le coureur atteint la " + RANG(f.vers + 1) +
                              " escouade" +
                              (f.phrase ? " — il apporte : " + f.phrase : ""),
+  // L'ORDRE QUI N'A PLUS DE DESTINATAIRE. Le coureur est arrivé ; c'est
+  // l'escouade qui n'existe plus — sous cinq hommes, elle cesse d'être un
+  // repère. Personne n'est tombé, rien n'a été intercepté, et pourtant l'ordre
+  // est perdu : c'est le seul cas où la chaîne casse par le bas.
+  "ordre-sans-personne": (f) => "le coureur arrive et ne trouve plus personne — " +
+                             "la " + RANG(f.vers + 1) + " escouade a fondu, et " +
+                             (f.phrase ? "« " + f.phrase + " »" : "l'ordre") +
+                             " ne sera jamais porté à personne",
   "coureur-tombe":    (f) => "le coureur tombe en chemin — la " + RANG(f.vers + 1) +
                              " escouade n'aura jamais su qu'on lui disait " +
                              D_(f.phrase || VERBE(f.ordre)),
@@ -827,7 +854,13 @@ async function main() {
              // Comment la nuit s'est décidée quand ce n'est pas la hache qui
              // l'a décidée : le roi versé, ou la salle du Donjon qui a tranché.
              arret: fin.arret, donjon: fin.donjon,
-             etats: fin.etats },
+             etats: fin.etats,
+             // PAR QUELLE RÈGLE CHACUN EN EST LÀ, au dernier instant. `etats`
+             // dit ce qu'ils font, et ne dit rien : « forme » recouvre la
+             // réserve laissée en arrière, celui qui attend sa place au seuil
+             // et celui dont le repère a fondu. C'est la ligne qu'on lit quand
+             // on se demande pourquoi un cinquième d'un corps avance seul.
+             branches: fin.branches },
     annales: { fichier: nom + ".annales.json", faits: faits.length },
     cuisson_s: +cuisson.toFixed(1),
   };

@@ -12,8 +12,18 @@ construite.**
 ## 1. L'assaut est SOURD par construction
 
 Criston a retiré les cors, les couleurs et la chaîne **pour que ce soit
-réaliste**. Il a donc rendu son propre corps injoignable. Un ordre met vingt
-secondes à traverser par coureur, et **le coureur peut être déclaré mort.**
+réaliste**. Il a donc rendu son propre corps injoignable.
+
+> **Mesuré, et ce n'était pas ça.** Un ordre ne met pas vingt secondes à
+> traverser : un coureur va du chef d'une aile à une escouade de la même aile,
+> **six mètres et quatre secondes en médiane**, et il n'est jamais déclaré mort
+> de la nuit. La chaîne ne casse pas par le porteur — elle casse **par le
+> destinataire** : sous cinq hommes une escouade cesse d'être un repère, le
+> coureur n'a plus où aller, et l'ordre s'évapore sans une ligne. Sur
+> `essai.reference`, les quatre seuls ordres perdus de la nuit sont les quatre
+> exemplaires du **repli de Cole**, portés vers son aile en train de fondre.
+> Le corps de Criston n'est pas sourd : il est joignable tant qu'il tient, et
+> injoignable exactement au moment où il aurait fallu le rappeler.
 
 ## 2. La défense est LENTE par construction
 
@@ -42,6 +52,16 @@ Les deux autres coûtent des hommes ; **celui-là coûte l'année suivante.**
 Deux heures, et elles n'ont pas le même sujet. La porte n'occupe que la
 première.
 
+> ⚠⚠ **ET LES CUISSONS D'AVANT LE 14 AOÛT NE VALENT RIEN.** `PORTE_OUVERTE_ESSAI`
+> était resté à `true` : la porte du four s'ouvrait à l'instant zéro. Ce n'était
+> pas un raccourci de deux minutes, c'était la doctrine entière — la branche
+> « verrou ouvert » est au deuxième rang de la cascade des têtes et avale la
+> consigne, l'appui, le déclencheur et le `sans piller` de tous les corps de
+> cette porte. Personne ne désignait de front à la Gadoue, la garnison ne se
+> resserrait jamais sur la brèche, et les annales sortaient avec **zéro
+> `ordre-deforme`, zéro `declencheur-tombe`, une seule `initiative` et sept
+> coureurs**. Drapeau retiré, la même nuit rend 5, 5, 14 et 54.
+>
 > ⚠ **Cette table est la forme VOULUE, pas la cuisson.** `--duree 600` cuit
 > **dix minutes** de bataille, pas deux heures : tout ce qui suit s'y produit
 > comprimé d'un facteur douze. Pour obtenir la nuit telle qu'elle est écrite

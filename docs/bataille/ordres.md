@@ -46,7 +46,7 @@ tête veut quelque chose de précis, la bannière ne lui sert plus à rien et il
 faut un homme.* La précision se paie en portage, et le portage peut tomber.
 
 **Le coureur porte une COPIE, et il l'abîme.** On compte ses mètres — doublés
-quand il traverse du monde. Tous les `EPREUVE_M` = 80 m, il perd une
+quand il traverse du monde. Tous les `EPREUVE_M` = **35 m**, il perd une
 subordonnée, et toujours dans le même ordre :
 
 > `interdit` → `declencheur` → `marge` → `objet` → *(le verbe survit toujours)*
@@ -54,9 +54,21 @@ subordonnée, et toujours dans le même ordre :
 Une phrase perd ses subordonnées avant son verbe. Les nombres, eux, ne
 disparaissent pas d'un coup : ils s'arrondissent d'abord, et de travers.
 
-> Cole envoie : **suivre Vantre à 265 pas sans piller**.
-> L'homme court 180 m dans la presse ; il arrive avec : **suivre Vantre**.
-> L'aile pillera, parce que personne ne lui a dit de ne pas le faire.
+> Vantre envoie à sa deuxième aile : **appuyer la 1re aile à 80 pas**.
+> L'homme part au déploiement, les ailes sont encore étalées ; il arrive
+> avec : **appuyer la 1re aile**. Elle se collera ou elle traînera, au
+> jugé, parce que personne ne lui a dit à combien.
+
+⚠ **C'EST UN PHÉNOMÈNE DE DÉPLOIEMENT, ET RIEN D'AUTRE.** Mesuré sur
+`essai.reference` (1 700 hommes, 600 s) : cinquante trajets appariés, **distance
+médiane 6,4 m**, cinq seulement au-dessus des 35 m, et **quarante-sept des
+cinquante départs ont lieu avant la trentième seconde**. La raison est
+structurelle : un coureur ne traverse pas la ville, il va du chef d'une aile à
+une escouade de CETTE aile. Tant que le corps est étalé sur sa position de
+départ, ça fait de vrais mètres ; dès qu'il s'est resserré sur sa porte, le chef
+et ses escouades sont à six mètres l'un de l'autre et plus rien ne s'abîme de la
+nuit. Un trajet de 627 m existe pourtant dans le lot — le cas long EXISTE, il
+n'a simplement jamais été cherché.
 
 **Le déclencheur ne se transmet pas — il attend.** `{declencheur: {porte}}` met
 l'ordre en réserve dans la tête de l'escouade, qui se remet à regarder. Le jour
@@ -65,6 +77,20 @@ eu à penser à elle. C'est le seul ordre de toute la nuit qui ne puisse pas se
 perdre — **à condition qu'elle voie la chose arriver** (`VUE_DECLENCHEUR`,
 160 m). Une escouade à qui l'on nomme une porte qu'elle ne peut pas voir
 attendra la nuit entière, et elle aura raison.
+
+> **Mesuré, et ça a demandé deux corrections.** La Gadoue cède à 154,25 s et
+> cinq escouades partent à **154,30 s** — cinq centièmes de seconde, sans un
+> homme sur les routes. Mais c'étaient les cinq de Cole, seul corps déployé à
+> 109 m de sa porte : Cranche est à 214 m de la sienne, Vantre et les gueux
+> plus loin encore, et **pas un de leurs déclencheurs ne tombait de la nuit**.
+> L'ordre partait en réserve, l'aile gardait le `tenir` de son déploiement, et
+> elle n'avait aucun moyen d'approcher ce qu'on lui avait nommé.
+>
+> La réserve reçoit donc maintenant **son objet et sa marge en même temps que
+> son déclencheur**, et elle prend la posture d'attente qui va avec : elle SUIT
+> la première aile à quatre-vingt-dix pas, ce qui la porte à portée de vue du
+> seuil sans la mettre dans la presse. Le mécanisme n'a pas changé — il avait
+> un défaut de géométrie, pas de principe.
 
 **On n'envoie un ordre qu'une fois.** C'est la règle « rien ne remonte » lue à
 l'envers : la tête ne sait pas que son aile a dérivé, donc elle ne la rappelle
@@ -89,12 +115,28 @@ Il descend un escalier de trois marches et s'arrête à la première qui le port
 3. **Son tempérament** — l'humeur de son corps, lue pour ce qu'elle dit du
    silence. C'est la définition même d'un homme qu'on a cessé de commander.
 
-| Humeur | Attend | Puis fait |
+| Corps | Attend (médiane) | Puis fait |
 |---|---|---|
-| — (ordinaire) | 25 s | il avance |
-| `ferme` | 60 s | il tient, indéfiniment |
-| `versatile` | 150 s | il décroche |
-| `sourd` | jamais | il continue son premier ordre jusqu'au bout |
+| Cole, Vantre (ordinaires) | 25 s | il avance |
+| Cranche, l'aile ferme | 56 s | il tient, indéfiniment |
+| Petit Wend, le versatile | 129 s | il décroche |
+| les faux gueux, le sourd | jamais | il continue son premier ordre jusqu'au bout |
+
+⚠ **CE N'EST PLUS UN TABLEAU, ET LA MÉDIANE N'EST PLUS LA VALEUR.** `SILENCE`
+est déposé : ce qu'un chef supporte de silence se demande à
+[`survival-stack/4-envie.js`](../../ecrans/modules/survival-stack/4-envie.js),
+**homme par homme**, avec son tempérament et ce qu'il a autour de lui. Les
+chiffres ci-dessus sont les médianes de chaque corps, calibrées sur l'ancien
+tableau ; l'écart interdécile va du simple au sextuple, et surtout **les signaux
+du moment déplacent le centre** : un chef dont la bannière est à terre et dont
+l'aile a fondu ne tient plus que quatre secondes là où il en tenait vingt-cinq.
+Un homme abandonné décide vite, ce qu'un seuil en secondes ne pouvait pas dire.
+
+Même histoire pour `APPETIT`, le tableau du pillage, parti au même endroit — et
+il était **cassé en silence** depuis que `humeur` a été dissoute dans la couche
+du corps : indexé sur un champ qui n'existait plus, il rendait la valeur
+« ordinaire » pour tout le monde. Cranche pillait comme les autres, et le corps
+de Petit Wend ne se dissolvait plus. `BRULE` avait la même fêlure.
 
 **Être sous sa bannière, c'est n'être pas seul** : le compteur du silence ne
 monte que pour ceux qu'on a réellement perdus de vue. Ce test doit passer AVANT
@@ -104,12 +146,25 @@ tenir au bout d'une minute, sa porte ne tombait plus, et rien ne disait pourquoi
 
 ## 4. Ce que les annales en disent
 
-Trois faits neufs, tous au niveau 3, aspect `commandement` :
+Quatre faits, tous au niveau 3, aspect `commandement` :
 
 - `ordre-deforme` — ce que le coureur vient de perdre, et ce qu'il portera
 - `declencheur-tombe` — l'escouade qui n'attendait que ça
 - `initiative` — le chef qui décide seul, **avec son motif** : sans lui on relit
   au matin une armée qui désobéit sans qu'on sache jamais pourquoi
+- `ordre-sans-personne` — **le coureur arrive et ne trouve plus personne.** Sous
+  cinq hommes, une escouade cesse d'être un repère : le porteur n'a plus de
+  destination, il rentre dans la colonne, et l'ordre s'évapore. C'était un
+  `return` muet — 54 coureurs partis, 50 arrivés, zéro fait pour expliquer les
+  quatre. Les quatre portaient **le repli de Criston Cole**, à 403,3 s, vers les
+  escouades de son aile en train de fondre. *L'ordre de retraite d'un corps qui
+  s'effondre se perd parce que le corps s'effondre* — c'est le meilleur fait de
+  la nuit, et il n'était écrit nulle part.
+
+Et le fait `ordre` porte désormais **`sourd`** quand aucune escouade de l'aile
+ne peut l'entendre : la tête des faux gueux ordonne comme les autres, et sa
+parole meurt dans sa bouche. Trois lignes sur quinze, dans la première cuisson.
+La tête, elle, n'en saura jamais rien — c'est « rien ne remonte ».
 
 Et `ordre`, `coureur-part`, `coureur-arrive`, `coureur-tombe` portent désormais
 la phrase entière au lieu du verbe nu.

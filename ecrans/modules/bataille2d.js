@@ -69,6 +69,21 @@ window.Bataille2d = (() => {
   const MARCHE      = 1.3;    // en colonne, sans se presser
   const CHARGE      = 3.0;    // les trente derniers mètres
   const FUITE       = 3.6;    // on court mieux quand on a peur
+  // ---- ET AUCUNE DE CES ALLURES NE SE PREND D'UN COUP -----------------------
+  // Les trois du dessus sont des vitesses de CROISIÈRE, et rien ne disait
+  // comment on y arrivait : un homme à l'arrêt était à trois mètres par seconde
+  // à l'image suivante, ce qui est un départ de sprinteur en armure. Ça se
+  // voyait sur le plan sans qu'on sache le nommer — des lignes qui claquent
+  // d'une allure à l'autre, une charge sans élan, une halte sans erre.
+  //
+  // 1,4 m/s² pour lancer quatre-vingts kilos d'homme et trente de fer : la
+  // charge (3,0) se prend en un peu plus de deux secondes et sur trois mètres,
+  // ce qui est le bon ordre pour des gens chargés. Le freinage est deux fois
+  // plus vif, parce que planter ses talons ne demande aucun élan — c'est
+  // l'asymétrie du corps, pas un réglage de confort, et c'est elle qui fait
+  // qu'une charge se prépare tandis qu'une halte est immédiate.
+  const ACCEL       = 1.4;    // m/s², avant la souplesse et le souffle
+  const FREIN_PIED  = 3.0;    // m/s² — on s'arrête bien mieux qu'on ne part
   // L'homme moyen : ce que porte quiconque n'a pas d'arme du tableau. Il vit
   // dans `bataille/mesures.js` avec le tableau lui-même — les deux se lisent
   // l'un contre l'autre, donc ils ne se séparent pas.
@@ -266,14 +281,47 @@ window.Bataille2d = (() => {
   // est la première décision d'un assaut.
   const VERROU_PV   = 9000;
 
-  // ⚠ ESSAI, ET ELLE DOIT REPASSER À `false`. La porte du four s'ouvre au
-  // premier instant : on saute les deux minutes de hache pour aller voir tout
-  // de suite ce qu'on est en train de régler, c'est-à-dire la mêlée. Les trois
-  // autres portes restent fermées — elles servent de témoin, et l'on voit ainsi
-  // dans la même cuisson une porte forcée et une porte franchie.
-  const PORTE_OUVERTE_ESSAI = true;
+  // CE QU'IL RESTE DE BOIS À CHAQUE PORTE, et ce n'est pas un réglage de
+  // difficulté : c'est l'état d'un ouvrage qu'on a laissé vieillir. La Gadoue
+  // est la porte du port — celle par où passent les charrettes du chantier de
+  // la Vase, le sel, et tout ce qui entre en ville par l'eau. Elle travaille
+  // tous les jours, personne ne l'a referrée depuis des années, et le Guet le
+  // sait : c'est écrit dans les demandes de réfection que le sergent Waltyr
+  // Poix envoie au Donjon et que personne ne lit.
+  //
+  // NEUF CENTS POINTS AU LIEU DE NEUF MILLE. Deux minutes de sept haches
+  // deviennent DOUZE SECONDES. Ce n'est pas un détail d'ambiance : c'est
+  // l'exercice entier qui se déplace, parce que la première porte tombe avant
+  // que quiconque ait eu le temps d'y penser — la mesure que le rapport
+  // portera au matin sera prise sur une porte qui n'existait déjà plus.
+  const USURE = { "La porte de la Gadoue": 0.10 };
+
+  // ⚠ ESSAI — REPASSÉE À `false`, ET VOICI CE QU'ELLE COÛTAIT. La porte du four
+  // s'ouvrait au premier instant, pour sauter les deux minutes de hache et
+  // aller voir la mêlée. Le raccourci n'était pas neutre : il ne retirait pas
+  // deux minutes, il retirait la doctrine.
+  //
+  // La branche « verrou ouvert » est au DEUXIÈME rang de la cascade de
+  // `deciderLesTetes`, juste après le repli. Elle avale donc tout ce qui est
+  // en dessous, et pour toutes les ailes du corps à la fois : la consigne
+  // d'avant-nuit de Petit Wend (« à deux cents pas de Cole »), l'appui de la
+  // deuxième aile, le déclencheur de la troisième, et le `sans piller`. Les
+  // deux corps de la porte principale recevaient un `avancer` nu, identique
+  // d'un bout de la nuit à l'autre — donc jamais réémis, donc une tête muette
+  // pendant quatre minutes d'affilée.
+  //
+  // Et plus bas, deux fonctions sortent sur `etat === "ouvert"` : personne ne
+  // désigne de front à cette porte-là (`frontDUnVerrou`), et la garnison ne se
+  // resserre jamais sur la brèche (`verrouQuiCede`). La mêlée sept contre sept
+  // dans le seuil — le morceau qu'on était allé chercher — n'avait pas lieu à
+  // la porte qu'on regardait.
+  const PORTE_OUVERTE_ESSAI = false;
   const HACHE       = 11;     // pv de porte par homme au contact et par seconde
-  const FRONT_PORTE = 7;      // combien tiennent de front dans six mètres
+  // Les quatre mesures du commandement vivent dans `bataille/mesures.js` avec
+  // leur source : ce sont des faits sur des yeux et sur une largeur de porte,
+  // pas des réglages, et elles ne se touchent pas pour obtenir un comportement.
+  const { FRONT_PORTE, VUE_BANNIERE, DELAI_BANN, VUE_DECLENCHEUR } =
+    window.BatailleMesures;
 
   // CE QUE COÛTE DE TENIR UNE HACHE SUR UN SEUIL DÉFENDU. La riposte du poste :
   // les gardes du seuil frappent par-dessus et à travers ce qui vient au bois —
@@ -312,7 +360,6 @@ window.Bataille2d = (() => {
   // La morale ne se règle pas non plus : elle dit qu'un homme rompt quand ceux
   // qu'il touche du coude tombent, pas quand un compteur global baisse.
   const VUE_MORT    = 18;     // on voit tomber jusque-là
-  const CHOC        = 0.085;  // ce que coûte un mort proche
   // ÊTRE À DEMI SAIGNÉ COÛTE PAR SECONDE, ET IL FAUT LIRE CE CHIFFRE AVEC `PV`.
   // Cette usure s'applique tant qu'un homme est sous la moitié de ses points.
   // Ce qui compte n'est pas le nombre de secondes qu'il y passe, c'est la PART
@@ -325,8 +372,6 @@ window.Bataille2d = (() => {
   //
   // Le facteur `ENDURANCE` qui divisait ce chiffre a été retiré avec les trois
   // cents points de vie — voir le pavé de `PV` en tête de fichier.
-  const SANG        = 0.35;
-  const REPRISE     = 0.012;  // la morale remonte quand rien ne se passe
 
   // ROMPT — C'EST LUI QUI FAIT DURER UNE BATAILLE, ET PAS LES POINTS DE VIE.
   //
@@ -346,7 +391,8 @@ window.Bataille2d = (() => {
   // parce qu'on reste. C'est le prix d'une bataille qu'on peut regarder : plus
   // de fer, moins de fuite. Remettre .30 rend la nuit plus vraisemblable et
   // deux fois plus courte, et c'est cette ligne-ci qu'on retouche.
-  const ROMPT       = 0.15;
+  // `ROMPT` déposé : ce qui fait durer une bataille est maintenant la montée
+  // de l'alarme et l'emprise du corps, pas un seuil sur une jauge.
 
   // --- le commandement -------------------------------------------------------
   // L'ORDRE DESCEND, ET RIEN NE REMONTE. C'est la règle de tout le reste du
@@ -366,19 +412,17 @@ window.Bataille2d = (() => {
   // plus qu'à la vitesse d'un homme qui court dans une presse.
   const PAR_ESC      = 20;    // hommes par escouade — l'unité qui pense
   const ESC_PAR_AILE = 5;     // escouades par aile — l'unité qu'on commande
-  const VUE_BANNIERE = 110;   // jusqu'où l'on distingue laquelle est levée
-  const DELAI_BANN   = 3.5;   // le temps de la voir, d'y croire, et de s'y mettre
+  // `VUE_BANNIERE` et `DELAI_BANN` sont dans `bataille/mesures.js`, avec
+  // `VUE_DECLENCHEUR` et `FRONT_PORTE` — voir la destructuration plus haut.
   const COURSE       = 3.2;   // un homme qui porte un ordre ne flâne pas
   const DELIBERE     = [6, 14]; // ce que la tête met à changer d'avis
   const RELEVE       = 25;    // le temps qu'on met à relever une bannière
-  const CHOC_BANN    = 0.20;  // ce que coûte la voir tomber — à TOUTE l'aile
-  const TIENT_BANN   = 2.6;   // la morale remonte mieux sous une bannière debout
+  // `CHOC_BANN` → le stimulus `signeTombe` ; `TIENT_BANN` → `M.APAISE_BANN`.
   const RALLIE_M     = 15;    // jusqu'où un chef rattrape un homme qui part
-  const RALLIE_TAUX  = 0.10;  // et à quelle vitesse il le ramène
   // Le seuil de RETOUR au combat, plus haut que celui de rupture (0,30). C'est
   // la même hystérésis que la peur des habitants, et pour la même raison : sans
   // elle, un homme rallié rompt au pas suivant et l'armée clignote.
-  const RALLIE_SEUIL = 0.48;
+  // `RALLIE_SEUIL` déposé : voir `rallier`, qui lit désormais le corps.
   // Être « au donjon », c'est être dans sa cour — pas dans la même ville. Le
   // rayon est celui de l'anneau des quatre-vingts, plus la portée d'une arme :
   // au-delà, on marche encore vers lui.
@@ -444,9 +488,7 @@ window.Bataille2d = (() => {
   // qu'il faut jouer des coudes — ce qui est exactement le partage qu'on veut.
   const EPREUVE_M = 35;
 
-  // Jusqu'où l'on voit tomber la chose qu'on attend. Plus loin qu'une bannière,
-  // parce qu'une porte qu'on enfonce fait un bruit qu'une bannière ne fait pas.
-  const VUE_DECLENCHEUR = 160;
+  // `VUE_DECLENCHEUR` — dans `bataille/mesures.js`.
 
   // COMBIEN DE TEMPS UN CHEF ATTEND AVANT DE S'INVENTER UN ORDRE. Ce n'est pas
   // un quatrième réglage d'humeur : c'est la MÊME humeur, lue pour ce qu'elle
@@ -457,9 +499,14 @@ window.Bataille2d = (() => {
   // Le sourd n'y figure pas par oubli : il ne compte pas le silence, parce que
   // pour lui il n'y a jamais eu autre chose. Il exécute son premier ordre
   // jusqu'au bout de la nuit, et c'est ce qui était déjà écrit de lui.
-  const SILENCE = { "-": 25, ferme: 60, versatile: 150, sourd: Infinity };
-  // Ce qu'il fait alors, s'il n'a ni consigne ni intention à quoi se raccrocher.
-  const DE_SOI_MEME = { "-": "avancer", ferme: "tenir", versatile: "repli" };
+  // `SILENCE` est déposé : ce que chacun supporte de silence se demande
+  // maintenant à `survival-stack/4-envie.js`, homme par homme et d'après ce
+  // qu'il a autour de lui. Voir `initiative()`.
+  // Ce qu'il fait alors, s'il n'a ni consigne ni intention à quoi se raccrocher,
+  // vient de `survival-stack/3-interpretation.js` : c'est le cas limite de
+  // l'interprétation — la lettre a fini de s'user, et il reste un homme.
+  // `DE_SOI_MEME`, indexé sur une `humeur` que la couche 1 avait dissoute, est
+  // déposé avec elle.
   // Et ce qu'une intention devient quand l'ordre qui la portait est devenu
   // impossible — l'aile qu'on devait suivre n'existe plus, la porte est tombée.
   const DE_LINTENTION = { entrer: "avancer", couvrir: "tenir", durer: "repli" };
@@ -524,11 +571,9 @@ window.Bataille2d = (() => {
   // chacune se paie. Le ferme meurt sur place au lieu de reculer ; le sourd ne
   // reçoit jamais l'ordre qui l'aurait sauvé ; le versatile n'est jamais là où
   // on l'attend.
-  const PLANCHER_FERME   = ROMPT + 0.04;  // il ne passera pas sous le seuil
-  const ROMPT_VERSATILE  = 0.44;          // il part bien avant les autres
-  const REPRISE_VERSATILE = 3.2;          // et il revient bien plus vite
-  const REPRISE_HUMEUR = (h) =>
-    h.humeur === "versatile" ? REPRISE_VERSATILE : 1;
+  // LES TROIS PLANCHERS D'`humeur` SONT DÉPOSÉS. Ils vivent maintenant dans
+  // `ECOLE_CORPS` — dressage, vécu, surdité, fond —, c'est-à-dire dans des
+  // grandeurs d'homme au lieu de trois exceptions câblées dans `survie()`.
 
   // --- la peur ---------------------------------------------------------------
   // Elle a sa propre physique, et elle ne ressemble pas à celle des soldats.
@@ -1236,6 +1281,22 @@ window.Bataille2d = (() => {
     return h.repos;
   }
 
+  // CE QU'UN CORPS DONNE À SES HOMMES — le tableau qui remplace `humeur`,
+  // et qui se lit ligne à ligne contre lui.
+  const ECOLE_CORPS = {
+    cranche:     { dressage: 0.70, vecu: 0.60, sourd: 0 },      // « ferme »
+    gueux:       { dressage: -0.30, vecu: -0.20, sourd: 0.85 }, // « sourd »
+    bleusailles: { dressage: -0.60, vecu: -0.70, sourd: 0 },    // « versatile »
+    cole:        { dressage: 0.30, vecu: 0.20, sourd: 0 },
+    vantre:      { dressage: 0.10, vecu: 0.00, sourd: 0 },
+  };
+  const ECOLE_GARDE = { dressage: 0.45, vecu: 0.25, sourd: 0 };
+  const ECOLE = (opts, camp, quoi) => {
+    if (camp === "garde") return ECOLE_GARDE[quoi];
+    const e = ECOLE_CORPS[(opts && opts.corps) || ""];
+    return e ? e[quoi] : (quoi === "sourd" ? 0 : -0.15);
+  };
+
   function homme(camp, x, y, opts) {
     const arme = armeDe(camp, opts);
     const h = {
@@ -1251,6 +1312,10 @@ window.Bataille2d = (() => {
       // n'est plus un vecteur d'affichage : c'est lui que `frapper` lit pour
       // savoir si le coup peut partir, et pour savoir d'où on le reçoit.
       fx: 0, fy: 0, cx: 0, cy: 0, w: 0,
+      // Ce qu'il fait RÉELLEMENT sous les pieds, en mètres par seconde. Les
+      // allures (`MARCHE`, `CHARGE`, `FUITE`) ne sont que des consignes ; cette
+      // valeur-ci les rattrape à `ACCEL` près, et elle part de l'arrêt.
+      vit: 0,
       // DE QUELLE MAIN IL TIENT. Tiré une fois, à la naissance, comme l'arme :
       // une main qui changerait d'un battement à l'autre ferait sauter le fer
       // d'un côté à l'autre du corps vingt fois par seconde. Un sur dix est
@@ -1280,8 +1345,26 @@ window.Bataille2d = (() => {
       // La GARNISON est une troupe payee, dressee et qui a deja tenu un
       // seuil ; l'ASSAUT est ce qu'on a ramasse. Chacun tire ensuite sa
       // deviation autour de la sienne, comme les cinq autres.
-      dressage: (camp === "garde" ? 0.45 : -0.15) + trempe() * 0.4,
-      vecu:     (camp === "garde" ? 0.25 : -0.25) + trempe() * 0.4,
+      // ---- CE QUE `humeur` DISAIT, ÉCRIT DANS LA COUCHE 1 ---------------
+      // `humeur` était un mot qui commandait trois planchers de morale :
+      // « ferme » ne descend jamais sous un seuil, « sourd » ne rompt
+      // jamais, « versatile » rompt tôt et revient vite. Trois exceptions
+      // câblées dans `survie()`, chacune avec sa constante.
+      //
+      // Les trois se disent dans la couche 1, et PAS AU MÊME ENDROIT —
+      // c'est même ce qui prouve qu'elles n'étaient pas la même chose :
+      //
+      //   FERME     → du dressage et du vécu. Cranche tient parce que ses
+      //               hommes ont appris à tenir. Plus de plancher.
+      //   SOURD     → une fermeture du CANAL SOCIAL, pas un courage —
+      //               donc `sourd`, sur la perception.
+      //   VERSATILE → un FOND court : il rompt tôt ET se reprend vite,
+      //               une seule grandeur pour deux effets opposés.
+      //
+      // Le corps donne le milieu, l'homme donne l'écart.
+      dressage: ECOLE(opts, camp, "dressage") + trempe() * 0.35,
+      vecu:     ECOLE(opts, camp, "vecu") + trempe() * 0.35,
+      sourd:    ECOLE(opts, camp, "sourd"),
       revoir: oeil(), revoirRepos: oeil(),
       // CINQUIÈME DÉVIATION — LA CARCASSE. C'était le dernier endroit du modèle
       // où deux hommes étaient interchangeables : le courage, l'œil,
@@ -1298,7 +1381,7 @@ window.Bataille2d = (() => {
       // battement — meme faute que `semer` ce matin, et c'est la deuxieme
       // fois qu'une IIFE de six mille lignes cache une collision de nom.
       recu: [], l1: null, l1etat: null, revoirCorps: 0,
-      pv: 0, pvMax: 0, morale: 1, etat: "colonne", cible: null,
+      pv: 0, pvMax: 0, etat: "colonne", cible: null,
       prochain: entre(0, arme.cadence),         // les coups ne tombent pas en chœur
       escouade: (opts && opts.escouade) || 0,
       aile: (opts && opts.aile) || 0,
@@ -1316,7 +1399,6 @@ window.Bataille2d = (() => {
       // l'œil, ce qu'un nom seul ne dit jamais.
       role: (opts && opts.role) || null,
       corps: (opts && opts.corps) || null,
-      humeur: (opts && opts.humeur) || null,
       // HORS DE LA CHAÎNE. Il est du camp de l'assaut, il occupe une place, il
       // encaisse les coups — mais il n'appartient à aucune escouade et à aucune
       // aile. Sans ce drapeau, les quarante hommes de la charrette gonflent
@@ -1339,6 +1421,15 @@ window.Bataille2d = (() => {
     // référence à laquelle un seuil ait le droit de se comparer.
     h.pvMax = window.BatailleMesures.pvDUnHomme(opts && opts.pvMoyen);
     h.pv = h.pvMax;
+    // CE QU'IL VEUT, ET QU'IL APPORTE DE CHEZ LUI. Deux traits tirés une fois,
+    // jamais recalculés : sa convoitise et sa docilité. Ils remplacent les deux
+    // tableaux par humeur — `APPETIT` et `SILENCE` —, où tous les hommes d'un
+    // corps voulaient exactement la même chose à la troisième décimale près.
+    // L'humeur décale maintenant le centre au lieu de dicter la valeur, si bien
+    // qu'un homme de Cranche peut être plus cupide qu'un homme de Petit Wend :
+    // rare, et possible. Voir `survival-stack/4-envie.js`.
+    h.envie = window.Envie.temperament((opts && opts.corps) || null,
+                                       () => cloche(-1, 1));
     return h;
   }
 
@@ -1428,11 +1519,27 @@ window.Bataille2d = (() => {
         // À REMETTRE À `false` : sans elle, une bataille cuite raconte un
         // assaut qui n'a jamais eu à forcer quoi que ce soit.
         const ouverte = PORTE_OUVERTE_ESSAI && rep.nom === porte.nom;
+        // L'USURE FIXE LE `max`, PAS SEULEMENT LES POINTS — et c'est la seule
+        // façon de l'écrire qui ne mente pas. Baisser `pv` en gardant un `max`
+        // de neuf mille ferait annoncer « elle commence à céder » à la seconde
+        // zéro, avant qu'un homme l'ait touchée : le seuil est à la MOITIÉ, et
+        // la moitié de quoi, sinon de ce que cette porte-là tient ? Une porte
+        // abîmée est une porte entière en moins bon bois — elle se fend au
+        // milieu de ce qu'elle vaut, comme les autres.
+        const usure = USURE[rep.nom] || 1;
+        const pv = Math.round(VERROU_PV * usure);
         verrous.push(v = { nom: rep.nom, porte: rep,
-                           pv: ouverte ? 0 : VERROU_PV, max: VERROU_PV,
+                           pv: ouverte ? 0 : pv, max: pv, usure,
                            etat: ouverte ? "ouvert" : "ferme",
                            par: ouverte ? "essai" : null,
                            x: rep.x, y: rep.y, frappeurs: 0 });
+        // ON LE DIT AU DÉPART, comme on dit qu'un corps est sourd. Sans cette
+        // ligne, on relit au matin une porte tombée quatre fois trop vite et
+        // l'on cherche le défaut dans le four, qui n'y sera pour rien.
+        if (usure !== 1)
+          noter("porte-abimee", rep.x, rep.y,
+                { clef: "abimee:" + rep.nom,
+                  dit: { porte: rep.nom, part: Math.round(usure * 100) } });
       }
       return v;
     };
@@ -1507,8 +1614,14 @@ window.Bataille2d = (() => {
                          // moyen d'apprendre le contraire.
                          vu: null,
                          // Le sourd l'est dès le départ, et pour toujours.
-                         sourde: c.humeur === "sourd",
-                         sourd_ne: c.humeur === "sourd" });
+                         // LA SURDITÉ VIENT DE L'ÉCOLE DU CORPS, pas du mot
+                         // `humeur` : c'est le MÊME `sourd` que la couche 1
+                         // lit sur la perception. Il n'y a aucune raison
+                         // qu'un homme soit sourd aux signes par un chemin et
+                         // son escouade sourde aux ordres par un autre — deux
+                         // pièces pour un fait, c'est deux modèles.
+                         sourde: ECOLE({ corps: c.id }, "assaut", "sourd") > 0.5,
+                         sourd_ne: ECOLE({ corps: c.id }, "assaut", "sourd") > 0.5 });
 
       for (let i = 0; i < places.length; i++) {
         const e = Math.floor(i / PAR);
@@ -1712,6 +1825,34 @@ window.Bataille2d = (() => {
     // plan. Tout ce qui concerne un homme passe par le sien.
     entree = porte;
     verrou = verrous.find((v) => v.nom === porte.nom) || verrous[0] || null;
+
+    // ---- ET ILS REGARDENT QUELQUE PART ---------------------------------------
+    // ON NE VOYAIT AUCUNE ARME AVANT QUE LA TROUPE NE BOUGE, et la cause n'est
+    // pas dans le dessin : `fx, fy` naissent à zéro, `tourner` rend la main tout
+    // de suite quand il n'y a pas de cap voulu (`!h.cx && !h.cy`), et seul
+    // `versLe` en pose un — c'est-à-dire seulement quand on marche. Un homme
+    // qui tient son poste depuis le début n'avait donc PAS DE CAP DU TOUT, ce
+    // qui est faux de toute façon : une garnison rangée devant une porte
+    // regarde la porte, elle n'attend pas d'avoir marché pour savoir où est
+    // l'ennemi. Le fer invisible n'était que le symptôme visible de ce trou.
+    //
+    // Chacun se tourne vers SA porte — celle de son escouade, pas la principale.
+    // Les deux camps la regardent donc, chacun de son côté du seuil : c'est
+    // exactement la figure de départ, et l'on obtient une haie de lances qui
+    // pointe dans le bon sens avant le premier pas.
+    //
+    // On pose `cx, cy` autant que `fx, fy` : le cap VOULU et le cap TENU. Sans
+    // le premier, `tourner` ferait revenir le second à zéro au battement
+    // suivant, et les armes disparaîtraient une seconde fois.
+    for (const h of hommes) {
+      const p = h.entree || porte;
+      if (!p) continue;
+      const dx = p.x - h.x, dy = p.y - h.y, d = Math.hypot(dx, dy);
+      if (d < .01) continue;
+      h.cx = dx / d; h.cy = dy / d;
+      h.fx = h.cx;   h.fy = h.cy;   h.w = 0;
+    }
+
     majCompte();
   }
 
@@ -1985,7 +2126,32 @@ window.Bataille2d = (() => {
     if (h.presse) v /= 1 + FREIN_PRESSE * h.presse;
     // Et l'on ne court pas à vide : un homme à bout ne charge plus, il avance.
     if (h.souffle !== undefined) v *= vigueur(h);
-    const pas = Math.min(v * dt, d);
+    // ---- ET LES JAMBES ONT UNE MASSE, ELLES AUSSI ---------------------------
+    // Tout ce qui précède ne calcule plus une vitesse : ça calcule une vitesse
+    // VOULUE. Un homme de quatre-vingts kilos avec trente de fer sur le dos ne
+    // passe pas de l'arrêt à la charge en une image — il lui faut deux bonnes
+    // secondes et une dizaine de pas, et c'est ce que tout le monde a vu qui
+    // manquait : des lignes qui démarraient et s'arrêtaient au trait.
+    //
+    // Même forme que pour le fer (`tourner`), et pour la même raison : une
+    // borne sur la DÉRIVÉE, jamais sur la valeur. `h.vit` est ce qu'il fait
+    // réellement ; il rattrape ce qu'on lui demande à `ACCEL` près.
+    //
+    // DÉMARRER COÛTE PLUS CHER QUE S'ARRÊTER, et l'écart est franc : on plante
+    // les talons bien plus vite qu'on ne lance quatre-vingts kilos. C'est ce
+    // qui donne la bonne asymétrie — une charge se prépare, une halte est
+    // immédiate — et ça évite qu'une ligne qui reçoit l'ordre de tenir continue
+    // sur son erre pendant deux secondes.
+    //
+    // ⚠ `ACCEL` porte la souplesse ET la vigueur, alors que `v` porte déjà la
+    // vigueur. Ce n'est pas un doublon : l'une dit à quelle vitesse il finit
+    // par aller, l'autre en combien de temps il y arrive. Un homme vidé est
+    // lent ET long à se mettre en route, ce qui n'est pas la même infirmité.
+    const accel = ACCEL * (h.souplesse || 1) * vigueur(h);
+    const vit = h.vit || 0;
+    h.vit = vit < v ? Math.min(v, vit + accel * dt)
+                    : Math.max(v, vit - FREIN_PIED * dt);
+    const pas = Math.min(h.vit * dt, d);
     h.x += (dx / d) * pas; h.y += (dy / d) * pas;
     return d - pas;
   }
@@ -2473,6 +2639,10 @@ window.Bataille2d = (() => {
   const PLAFOND_DOS = 0.97;
 
   function frapper(h, o, dt) {
+    // LES BRAS TOMBÉS NE FRAPPENT PAS. C'est la seule prise de la couche 1 qui
+    // RETIRE une capacité au lieu de dicter une conduite : l'homme continue de
+    // faire ce que sa tête a décidé, il ne peut simplement plus s'en servir.
+    if (h.brasMorts) return;
     // Il VEUT regarder celui qu'il frappe — un homme au contact ne se tourne
     // pas dans le sens de sa marche, il se tourne vers le fer. Mais il ne s'y
     // tourne pas d'un coup : on pose le CAP, `tourner` fait le reste au pas que
@@ -2608,10 +2778,14 @@ window.Bataille2d = (() => {
     // applique le CHOC plus bas le fait deja : on ne rebalaie pas, on se
     // greffe. Le cri porte, donc c'est l'ouie â€” le seul canal qui traverse un
     // dos tourne.
-    autour(o.x, o.y, 6, (v) => {
+    // LE RAYON EST CELUI DE `VUE_MORT`, ET C'EST LA DEPOSE DE `CHOC` QUI L'A
+    // TRANCHE : on voyait tomber a dix-huit metres pour la morale et a six pour
+    // la couche. Un seul oeil, un seul rayon.
+    autour(o.x, o.y, VUE_MORT, (v) => {
       if (v === o || !v.recu || v.recu.length >= 8) return;
+      if (v.camp !== o.camp) return;
       const d = Math.hypot(v.x - o.x, v.y - o.y);
-      if (d > 6) return;
+      if (d > VUE_MORT) return;
       v.recu.push(Object.assign(
         window.Corps.voisinTombe(d, Math.cos(Math.atan2(o.y - v.y, o.x - v.x)), true),
         { t: temps }));
@@ -2641,22 +2815,11 @@ window.Bataille2d = (() => {
       if (window.Son) Son.dire({ famille: "cri-mort", x: o.x, y: o.y, force: 0.95 });
       achever(o);
     }
-    // LE CHOC EST LOCAL, et c'est toute la différence entre une morale qui
-    // veut dire quelque chose et une jauge d'armée. Un homme ne sait pas
-    // combien des siens sont tombés à l'autre bout de la ville ; il sait que
-    // celui qui était à sa gauche n'y est plus.
-    // ET LE CHOC S'ÉTEINT AVEC LA DISTANCE. Sans dégressivité, un mort au
-    // milieu d'une presse touche cent hommes au même prix qu'il touche son
-    // voisin de coude : dix-huit morts suffisaient à faire rompre cinquante
-    // hommes en vingt secondes, ce qui n'est pas une armée mais une rumeur.
-    // Un homme qui hurle par terre ne rassure personne : le choc est le même
-    // qu'il soit mort ou blessé, et c'est la seule chose que le voisin voit.
-    autour(o.x, o.y, VUE_MORT, (h) => {
-      if (h.etat === "mort" || h.etat === "blesse" || h.camp !== o.camp) return;
-      const d = Math.hypot(h.x - o.x, h.y - o.y);
-      h.morale = Math.max(0, h.morale -
-        CHOC * (1 - d / VUE_MORT) * (h.chef ? .5 : 1));
-    });
+    // ON NE VOIT PLUS TOMBER DEUX FOIS. `CHOC` frappait la morale a dix-huit
+    // metres ; le stimulus `voisinTombe` etait emis a six, dans `frapper`. Deux
+    // rayons pour un seul oeil, donc deux modeles de la vue — et la depose de
+    // `morale` tranche : il n'en reste qu'un, et c'est `VUE_MORT`, qui portait
+    // la mesure. Le stimulus est donc emis LA-BAS avec ce rayon-ci.
     // Le premier sang de la journée, et la tête d'une escouade : deux faits
     // qu'on ne peut pas reconstituer après coup, et qui datent la bataille.
     noter("premier-sang", o.x, o.y, { clef: "premier-sang", dit: { camp: o.camp } });
@@ -2705,53 +2868,71 @@ window.Bataille2d = (() => {
     }
   }
 
-  function survie(h, dt) {
-    // TOUT S'ARRÊTE, ET ÇA NE SE REPREND PAS. Quand la charrette a versé, il
-    // n'y a plus rien autour de quoi rallier : ni la morale qui remonte, ni le
-    // plancher du corps ferme, ni un chef à quinze mètres. C'est la seule
-    // chose de tout le module qui passe par-dessus une humeur, et c'est voulu
-    // — un corps qui ne rompt pas est un corps qui a une raison de tenir.
-    if (arret && h.camp === "assaut") {
-      h.morale = 0;
-      if (h.etat !== "deroute") { h.etat = "deroute"; compte.fuyards++; }
-      return;
-    }
-    // Celui qui rentre a cessé d'avoir une morale : il ne peut plus rompre
-    // puisqu'il n'est plus en ligne.
-    if (h.etat === "rentre") return;
-    // La morale reste entre zéro et un, et pas seulement pour la propreté : un
-    // homme à −0,4 met une minute à repasser au-dessus du seuil quand le calme
-    // revient, et l'on voit une armée qui ne se reprend jamais sans comprendre
-    // pourquoi.
-    // LA MORALE AVAIT UN BAS ET PAS DE HAUT. Elle ne tombait que des morts
-    // qu'on voit — c'est-à-dire par en dessous, et rien ne la tenait par au-
-    // dessus. Un homme qui a sa bannière debout dans son champ se reprend deux
-    // fois et demie plus vite : ce n'est pas un bonus, c'est le seul mécanisme
-    // par lequel un commandement PROTÈGE ses hommes au lieu de les déplacer.
-    if (h.pv < h.pvMax * .5) h.morale = Math.max(0, h.morale - SANG * dt);
-    else h.morale = Math.min(1, h.morale +
-      REPRISE * dt * (sousLaBanniere(h) ? TIENT_BANN : 1) * REPRISE_HUMEUR(h));
-    // L'HUMEUR DU CORPS, ET C'EST ICI QU'ELLE MORD. Elle était posée sur chaque
-    // homme, portée par les six corps, exportée dans l'ordre de bataille — et
-    // lue nulle part : les six corps étaient géométriquement distincts et
-    // comportementalement identiques. Une mise en place qui ne veut rien dire.
-    //
-    //   ferme  — un PLANCHER de morale, jamais sous le seuil. Cranche ne rompt
-    //            pas, et c'est le seul point fixe qu'un lecteur ait dans toute
-    //            la nuit. Ses hommes meurent ; ils ne partent pas.
-    //   sourd  — ne rompt pas davantage, mais pour la raison inverse : il
-    //            n'écoute rien, ni un ordre ni un mort. les faux gueux avance au
-    //            cantique et il avancera jusqu'au bout.
-    //   versatile — rompt TÔT et se reprend VITE. Tam reflue de cinquante pas
-    //            et revient, trois fois. C'est lui qui alimente la peur des
-    //            habitants, et c'est pour ça qu'il est collé à la ville.
-    const seuil = h.humeur === "versatile" ? ROMPT_VERSATILE : ROMPT;
-    if (h.humeur === "ferme" || h.humeur === "sourd")
-      h.morale = Math.max(h.morale, PLANCHER_FERME);
-    if (h.morale < seuil && h.etat !== "deroute") {
-      h.etat = "deroute";
-      compte.fuyards++;
-    }
+  // ═══ ROMPRE — LE SEUL ENDROIT PAR OÙ L'ON PART ═══════════════════════════
+  // Trois lignes différentes basculaient un homme en `deroute`, chacune avec sa
+  // copie de `compte.fuyards++`, et AUCUNE ne prévenait les voisins. Or « les
+  // siens s'en vont » est, de tout le répertoire de la couche 1, le plus
+  // puissant déclencheur de fuite qui existe — et c'est la contagion elle-même :
+  //
+  //   ce n'est pas COMBIEN sont partis, c'est QUELLE PROPORTION VIENT DE
+  //   PARTIR. Trois hommes qui s'en vont d'un groupe de quatre est une
+  //   catastrophe ; les mêmes trois d'un groupe de trente n'est rien.
+  //
+  // Sans ce stimulus, une ligne ne se défaisait pas EN VAGUE : chacun rompait
+  // dans son coin, quand son propre compteur passait sous le seuil. La
+  // propagation de proche en proche — celle qu'on voit sur tous les champs et
+  // qu'on n'obtenait par aucun réglage — sort d'ici et de nulle part ailleurs.
+  //
+  // LE RAYON EST CELUI DE `VUE_MORT`, ET C'EST DÉLIBÉRÉ : on voit un homme
+  // partir aussi loin qu'on le voit tomber. Deux rayons pour un même œil
+  // seraient deux modèles de la vue. `voisinTombe` a été aligné dessus lors de
+  // la dépose de `CHOC`.
+  function rompre(h) {
+    if (h.etat === "deroute") return;
+    h.etat = "deroute";
+    compte.fuyards++;
+    if (!window.Corps) return;
+    // Ses camarades encore en ligne, et lui qui vient d'en sortir. On compte
+    // dans le même balayage que l'on notifie — la proportion se calcule sur
+    // ceux qui restent, plus un.
+    const vus = [];
+    autour(h.x, h.y, VUE_MORT, (v) => {
+      if (v === h || v.camp !== h.camp || !v.recu || v.recu.length >= 8) return;
+      if (v.etat === "mort" || v.etat === "blesse" || v.etat === "deroute") return;
+      if ((v.x - h.x) ** 2 + (v.y - h.y) ** 2 > VUE_MORT * VUE_MORT) return;
+      vus.push(v);
+    });
+    for (const v of vus)
+      v.recu.push(Object.assign(window.Corps.voisinPart(1, vus.length + 1),
+                                { t: temps }));
+  }
+
+  // ═══ CE QUI RESTE DE `survie()` — ET C'EST UN FAIT DU MONDE ══════════════
+  // TOUT LE RESTE A ÉTÉ DÉPOSÉ. `morale`, `ROMPT`, `CHOC`, `SANG`, `REPRISE`,
+  // `PLANCHER_FERME` et les trois planchers d'`humeur` disaient ce que la
+  // couche 1 dit mieux : un homme rompt quand son corps prend la main, et le
+  // corps prend la main par une glande qui monte en trois secondes et retombe
+  // en quarante-cinq. Deux modèles qui décidaient de la même chose ne se
+  // départageaient jamais ; on n'en garde qu'un.
+  //
+  // Ce qui subsiste ici n'est PAS une peur : c'est la charrette qui a versé.
+  // Quand il n'y a plus rien autour de quoi rallier, ça ne se négocie avec
+  // aucune humeur et aucune glande — c'est le monde qui a changé, pas l'homme.
+  // C'est la seule chose de tout le module qui passe par-dessus une conduite,
+  // et c'est pour ça qu'elle survit à la dépose.
+  // CE QUI TOMBE ET QUI SE VOIT DE LOIN — la banniere abattue, la porte cedee.
+  // `CHOC_BANN` retirait vingt centiemes de morale a toute l'aile ; le stimulus
+  // fait la meme chose par le bon bout, en passant par l'oeil : il decroit avec
+  // la distance, il s'habitue, et un homme qui regarde ailleurs ne le voit pas.
+  function signeQuiTombe(h, x, y) {
+    if (!window.Corps || !h.recu || h.recu.length >= 8) return;
+    h.recu.push(Object.assign(
+      window.Corps.signeTombe(Math.hypot(h.x - x, h.y - y), VUE_BANNIERE),
+      { t: temps }));
+  }
+
+  function survie(h) {
+    if (arret && h.camp === "assaut") rompre(h);
   }
 
   function soldat(h, dt) {
@@ -2763,7 +2944,7 @@ window.Bataille2d = (() => {
     // La tête ne se bat pas, ne marche pas, ne rompt pas. Elle décide, et son
     // pas de simulation se résume à ça.
     if (h.tete) return;
-    survie(h, dt);
+    survie(h);
     // ---- LA COUCHE 1 TOURNE ICI, ET ELLE NE CONDUIT RIEN -------------------
     // Mode observation : elle calcule, on la mesure, `soldat()` continue sur sa
     // cascade. Au rythme de l'OEIL de l'homme et non a 20 Hz â€” 2 550 cerveaux
@@ -2776,9 +2957,138 @@ window.Bataille2d = (() => {
         const ecoule = Math.min(3, (h.dtCorps || 0) + dt);
         window.BatailleCorps.observer(h, {
           autour, temps, nuit: true, degatTypique: (DEGAT[0] + DEGAT[1]) / 2,
-          pese,
+          // Un porte-bannière ne porte un SIGNE que si sa hampe est encore
+          // debout. Couchée, il n'est plus qu'un homme — et c'est la chute
+          // elle-même qui est le stimulus, pas son absence.
+          banniereDebout: (o) => {
+            const a = ailleDe(o);
+            return !!(a && a.banniere && a.banniere.debout);
+          },
+          pese, apaise: apaiseDe,
         }, ecoule);
         h.revoirCorps = oeil(h); h.dtCorps = 0;
+        // ---- LA DIFFUSION DU CHEF ----------------------------------------
+        // Un chef a portee doit faire redescendre l'alarme, et le savoir coute
+        // un balayage a quinze metres. Le faire PAR HOMME serait deux mille
+        // cinq cents balayages ; on le fait donc PAR CHEF — il y en a un par
+        // escouade, soit cent vingt-cinq. Vingt fois moins, pour le meme fait.
+        //
+        // C'est la meme inversion que les foyers : quand un fait est rare et
+        // ses temoins nombreux, c'est le fait qui parle, pas les temoins qui
+        // cherchent.
+        if ((h.chef || h.capitaine) && h.etat !== "deroute" &&
+            h.etat !== "mort" && h.etat !== "blesse") {
+          autour(h.x, h.y, RALLIE_M, (o) => {
+            if (o === h || o.camp !== h.camp) return;
+            if ((o.x - h.x) ** 2 + (o.y - h.y) ** 2 > RALLIE_M * RALLIE_M) return;
+            o.chefVu = temps;
+          });
+        }
+        // ---- LE BRANCHEMENT PROGRESSIF, PREMIERE TRANCHE ------------------
+        // ON N'ATTEND PAS LES COUCHES 2, 3 ET 4 : elles existent deja, sous une
+        // autre forme. La cascade de `soldat()` EST la tete — elle execute des
+        // ordres, calcule des cibles, poursuit un but —, et `emprise` dit
+        // exactement de combien le corps la couvre. Il n'y avait donc rien a
+        // attendre, et le plan « on observe jusqu'a ce que tout soit ecrit »
+        // etait une erreur : on ne verifie pas une couche en la regardant
+        // calculer a cote.
+        //
+        // DEUX ETATS POUR COMMENCER, ET DEUX SEULEMENT. `sidération` et
+        // `fuite` : les deux que la cascade ne sait pas produire pour ces
+        // raisons-la, les deux qui se voient d'un coup d'oeil sur le plan, et
+        // les deux dont on peut sortir sans rien casser. Le recul, le
+        // resserrement et la ruee viendront quand ceux-ci auront tenu.
+        //
+        // ET SEULEMENT QUAND LE CORPS A VRAIMENT LA MAIN. Sous ce seuil, la
+        // tete conduit et la couche se contente d'exister — ce qui est le cas
+        // le plus frequent, et c'est voulu.
+        // ⚠ PLUS DE SEUIL, PLUS DE DRAPEAU — LA COUCHE CONDUIT.
+        // `pilote` et `emprise > 0,60` etaient le garde-fou de la premiere
+        // passe : la couche existait A COTE de la morale, et les deux
+        // decidaient de la meme chose. On garde les deux « au cas ou », et
+        // l'on herite du pire des deux sans plus savoir lequel produit quoi.
+        //
+        // Ce que le seuil protegeait — l'emballement du gregarisme, qui est une
+        // retroaction positive — est desormais borne par `c.social` : le niveau
+        // ambiant auquel on s'habitue, dont seul le DEPASSEMENT passe. Une
+        // ligne uniformement tendue ne transmet plus rien ; un seul homme qui
+        // craque a l'instant transmet tout.
+        //
+        // `emprise` n'a pas disparu pour autant : elle agit DANS l'election,
+        // par `SOUS_EMPRISE` — fuir, se figer et se ruer demandent que le corps
+        // ait la main. Un homme calme ne part donc pas en courant, et ce n'est
+        // plus un seuil pose dehors qui l'en empeche, c'est le modele.
+        //
+        // La tete et le roi restent hors couche : ils ne se battent pas.
+        if (h.l1 && !h.tete && !h.roi) {
+          const g = h.l1.jambes, b = h.l1.bras;
+          // LES BRAS D'ABORD, parce qu'ils ne rendent pas la main. Un homme dont
+          // le corps a laissé tomber les bras ne frappe plus, quoi que sa tête
+          // décide par ailleurs — c'est le seul endroit où la couche 1 agit
+          // SANS prendre tout l'homme, et c'est justement ce qu'on veut : elle
+          // retire une capacité, elle ne dicte pas une conduite.
+          h.brasMorts = (b === "ballants");
+          h.l1.pilote = true;   // pour la bulle de survol, plus pour la conduite
+
+          if (g === "sidération" && h.etat !== "deroute") {
+            // Il s'arrête net, au milieu d'un geste qu'il ne finit pas.
+            h.etat = "tient"; h.cible = null;
+            h.branche = "sidéré — son corps ne répond plus";
+            return;
+          }
+          if (g === "fuite" && h.etat !== "deroute") {
+            rompre(h);
+            h.branche = "son corps a rompu avant sa tête";
+            noter("escouade-rompt", h.x, h.y, { clef: "corps-" + (h.escouade || 0) });
+            return;
+          }
+          if (g === "recul") {
+            // ON RECULE FACE À EUX, et l'on emprunte le geste que la cascade
+            // sait déjà faire — `versLe` avec le cap posé à l'envers, donc
+            // ralenti de moitié par la marche arrière. On ne réécrit rien.
+            const men = ennemiProche(h, RAYON_LOCAL) || h.cible;
+            if (men) {
+              const dx = h.x - men.x, dy = h.y - men.y, n = Math.hypot(dx, dy) || 1;
+              let bx = h.x + dx / n * RECUL_M, by = h.y + dy / n * RECUL_M;
+              if (h.cercle && h.cercle.amis) {
+                bx = (bx + h.cercle.ax) / 2; by = (by + h.cercle.ay) / 2;
+              }
+              versLe(h, bx, by, MARCHE, dt);
+              h.cx = -dx / n; h.cy = -dy / n;
+              if (!h.brasMorts && Math.hypot(men.x - h.x, men.y - h.y) <= portee(h)) {
+                h.cible = men; frapper(h, men, dt);
+              }
+              h.etat = "tient"; h.branche = "son corps cède le pas";
+              return;
+            }
+          }
+          if (g === "serrer" && h.cercle && h.cercle.amis) {
+            // REFERMER LE TROU — `serrer()` existe déjà dans ce fichier et fait
+            // exactement ça : chercher l'épaule sans se coller. La couche 1 ne
+            // fait que le DÉCIDER, là où la cascade ne le décidait qu'en
+            // décrochant.
+            serrer(h, h.cercle, dt);
+            const menace = ennemiProche(h, portee(h));
+            if (menace && !h.brasMorts) { h.cible = menace; frapper(h, menace, dt); }
+            h.etat = "tient"; h.branche = "son corps cherche l'épaule";
+            return;
+          }
+          if (g === "ruée") {
+            const proie = proieProche(h, 14);
+            if (proie) {
+              versLe(h, proie.x, proie.y, CHARGE, dt);
+              if (!h.brasMorts && Math.hypot(proie.x - h.x, proie.y - h.y) <= portee(h)) {
+                h.cible = proie; frapper(h, proie, dt);
+              }
+              h.etat = "melee"; h.branche = "son corps est parti en avant, seul";
+              return;
+            }
+          }
+          // `planté` ne prend rien : c'est justement l'état où le corps n'a rien
+          // à dire, donc la tête garde la main. On le laisse tomber dans la
+          // cascade, et c'est ce qui fait que le branchement reste progressif.
+          h.l1.pilote = false;
+        }
       } else h.dtCorps = (h.dtCorps || 0) + dt;
     }
     // LE FER SUIT, IL NE SAUTE PAS. On fait tourner l'arme vers le cap voulu au
@@ -2786,6 +3096,14 @@ window.Bataille2d = (() => {
     // — et c'est très bien ainsi : un homme qui change d'avis a son fer encore
     // tourné vers l'affaire précédente, ce qui est exactement ce qu'on cherche.
     tourner(h, dt);
+    // ET L'ERRE RETOMBE QUAND PLUS RIEN NE POUSSE. Un homme qui cesse de
+    // marcher — il est entré en mêlée, il souffle, il attend — ne passe par
+    // aucun `versLe` ce battement-là : sans cette ligne, sa vitesse resterait
+    // en réserve et il repartirait à pleine allure trois secondes plus tard,
+    // depuis l'arrêt. On freine donc d'abord, et `versLe` relance ensuite s'il
+    // y a lieu : quand il marche pour de bon, la rampe rattrape sa consigne
+    // dans le même battement et l'on n'a rien perdu.
+    if (h.vit) h.vit = Math.max(0, h.vit - FREIN_PIED * dt);
     // On repart libre à chaque pas : seul celui qui est effectivement sur sa
     // trace, plus bas, se redéclarera sur voie. Sans cette remise à zéro, un
     // homme qui quitte la colonne pour la mêlée garde une tangente périmée et
@@ -2811,9 +3129,21 @@ window.Bataille2d = (() => {
       const [nx, ny] = dehors(sienne);
       const bx = sienne.x + nx * 400, by = sienne.y + ny * 400;
       if (h.noeud === undefined) {
-        h.v = FUITE; h.surRue = false; h.arc = null; h.venu = null; h.s = 0;
+        h.v = h.vit || 0; h.surRue = false; h.arc = null; h.venu = null; h.s = 0;
         h.noeud = noeudProche(h.x, h.y);
       }
+      // ON NE ROMPT PAS À PLEINE COURSE NON PLUS. `marcher` avance sur le
+      // réseau de rues à `h.v`, qui était posé à `FUITE` une fois pour toutes
+      // au moment où l'homme craque — donc un homme qui cédait passait de
+      // l'arrêt à trois mètres soixante entre deux images, ce qui est
+      // exactement le défaut qu'on vient de corriger de l'autre côté. On y
+      // remet la même rampe, en repartant de l'erre qu'il avait : celui qui
+      // rompt alors qu'il chargeait déjà file tout de suite, celui qui rompt
+      // à l'arrêt met ses deux secondes à s'arracher — et c'est lui qu'on
+      // rattrape.
+      h.v = Math.min(FUITE, (h.v || 0) +
+                     ACCEL * (h.souplesse || 1) * vigueur(h) * dt);
+      h.vit = h.v;
       // Hors les murs il n'y a plus de rue, et c'est vrai : `marcher` rend
       // faux, on finit en rase campagne comme il se doit.
       if (!marcher(h, dt, bx, by, false)) versLe(h, bx, by, FUITE, dt);
@@ -2904,7 +3234,7 @@ window.Bataille2d = (() => {
         // contact, et c'est ce qu'on a vu : des hommes plantés à un mètre d'un
         // ennemi, sans un geste, parce que la branche qui les tenait ne
         // contenait aucun moyen de frapper.
-        if (Math.hypot(men.x - h.x, men.y - h.y) <= ALLONGE + .6) {
+        if (Math.hypot(men.x - h.x, men.y - h.y) <= portee(h)) {
           h.cible = men; frapper(h, men, dt);
         }
         // ON SE RETIRE EN LE REGARDANT, ET C'EST CE QUI PAIE. Le cap posé à
@@ -3039,17 +3369,59 @@ window.Bataille2d = (() => {
     // c'est exactement là que la chaîne de commandement devient une histoire.
     const ordre = (e && e.ordre) || ORDRE_NU;
 
+    // ---- LA COUCHE 3, EN OBSERVATION ---------------------------------------
+    // ELLE NE CONDUIT RIEN, et c'est la première passe telle que le README la
+    // demande : on la fait tourner à côté de la cascade, on la lit sous le
+    // doigt, et on la conteste homme par homme sur une vraie nuit avant de lui
+    // donner quoi que ce soit à décider.
+    //
+    // ELLE EST PAR HOMME, ET C'EST TOUT LE CHANGEMENT D'ÉCHELLE. L'ordre se lit
+    // sur l'escouade — vingt hommes, une phrase —, mais la manière de le tenir
+    // est à chacun : vingt hommes, une phrase, vingt manières. C'est la seule
+    // dépense de ce branchement, et c'est aussi tout ce qu'on vient y chercher.
+    //
+    // Au rythme de son œil, pas à vingt fois la seconde : `oeil(h)` est déjà
+    // l'horloge de la couche 1, et une manière de tenir un ordre ne se révise
+    // pas plus vite qu'on ne s'aperçoit de ce qui a changé.
+    if (window.Interpretation && e) {
+      h.revoirL3 = (h.revoirL3 || 0) - dt;
+      if (h.revoirL3 <= 0) {
+        h.revoirL3 = oeil(h);
+        const c = h.cercle, a3 = ailes[e.aile];
+        h.l3 = window.Interpretation.pas(ordre, {
+          docile: h.envie ? h.envie.docile : 0,
+          alarme: c ? Math.max(-1, 1 - (c.ennemis || 0) * 0.7) : 1,
+          epaule: c ? Math.min(1, (c.amis || 0) / 4 * 2 - 1) : 0,
+          frais: h.souffle != null ? h.souffle * 2 - 1 : 0,
+          vu: (a3 && a3.banniere.debout && sousLaBanniere(h)) ? 1 : -1,
+          // Depuis combien de temps il n'a rien reçu, rapporté à la minute :
+          // +1 l'ordre vient de tomber, −1 il date d'une heure. C'est le même
+          // compteur que celui de l'initiative, lu autrement — là il décide,
+          // ici il use.
+          depuis: Math.max(-1, 1 - (e.depuis || 0) / 60),
+        });
+      }
+    }
+
+    // POURQUOI IL FAIT CE QU'IL FAIT, ET NON PAS SEULEMENT CE QU'IL FAIT.
+    // `branche` était renseignée pour la garde et pour elle seule ; l'assaillant
+    // traversait cette machine entière sans jamais dire par quelle règle il
+    // était passé. On voyait donc « forme » — l'état d'arrêt — sur la moitié
+    // d'un corps, et rien au monde ne distinguait la réserve qu'on a laissée
+    // en arrière de l'homme qui attend sa place au seuil, de celui qui cherche
+    // l'entrée de la rue, ou de celui qui vide une maison. Quatre causes, un
+    // seul mot, et pas de diagnostic possible à l'œil.
     if (ordre.verbe === "repli") {
       // Un décrochement n'est pas une déroute : on s'en va en ordre, moins
       // vite, et l'on peut encore recevoir un ordre. C'est la différence entre
       // une armée qui recule et une armée qui n'existe plus.
-      h.etat = "repli";
+      h.etat = "repli"; h.branche = "il décroche en ordre";
       const [nx, ny] = dehors(h.entree);
       versLe(h, h.entree.x + nx * 220, h.entree.y + ny * 220, MARCHE, dt);
       return;
     }
     if (ordre.verbe === "tenir") {
-      h.etat = "forme";
+      h.etat = "forme"; h.branche = "il tient — c'est l'ordre qu'il a reçu";
       if (h.poste) versLe(h, h.poste[0], h.poste[1], MARCHE, dt);
       return;
     }
@@ -3076,7 +3448,7 @@ window.Bataille2d = (() => {
       // corrigera au pas suivant — c'est elle qui a le droit de décider, pas la
       // machine du soldat.
       if (!c) {
-        h.etat = "forme";
+        h.etat = "forme"; h.branche = "il ne suit plus personne — son repère a fondu";
         if (h.poste) versLe(h, h.poste[0], h.poste[1], MARCHE, dt);
         return;
       }
@@ -3087,6 +3459,9 @@ window.Bataille2d = (() => {
       const bx = c[0] + nx * marge - ny * q, by = c[1] + ny * marge + nx * q;
       const d = Math.hypot(bx - h.x, by - h.y);
       h.etat = d > 8 ? "colonne" : "forme";
+      h.branche = (ordre.verbe === "appuyer" ? "il appuie" : "il suit") +
+                  (d > 8 ? ", il rejoint sa marge" : ", il y est — à " +
+                   enPas(marge) + " pas");
       if (d > 3) versLe(h, bx, by, MARCHE, dt);
       return;
     }
@@ -3103,7 +3478,7 @@ window.Bataille2d = (() => {
       // nombre décide — c'est-à-dire l'inverse d'un siège.
       if (h.front) {
         if (d < ALLONGE + 1.2) {
-          h.etat = "assaut"; verrou.pv -= HACHE * dt;
+          h.etat = "assaut"; h.branche = "il cogne la porte"; verrou.pv -= HACHE * dt;
           // ET LE SEUIL REND LES COUPS. Tenir une hache sous un poste garni
           // coûte des hommes : la riposte se partage entre les sept du front,
           // donc plus ils sont nombreux à cogner, moins chacun encaisse — ce
@@ -3128,15 +3503,15 @@ window.Bataille2d = (() => {
           // vingt minutes. Or c'est exactement le sujet de l'heure creuse.
           verrou.coup = temps;
         }
-        else { h.etat = "colonne"; versLe(h, verrou.x, verrou.y,
-                                          d > 40 ? MARCHE : CHARGE, dt); }
+        else { h.etat = "colonne"; h.branche = "il monte relever une hache";
+               versLe(h, verrou.x, verrou.y, d > 40 ? MARCHE : CHARGE, dt); }
       } else if (d > 14) {
-        h.etat = "colonne";
+        h.etat = "colonne"; h.branche = "il marche sur la porte";
         versLe(h, verrou.x, verrou.y, d > 40 ? MARCHE : CHARGE, dt);
       } else {
         // Ceux qui attendent leur tour ne piétinent pas sur le seuil : ils se
         // rangent en arc devant, et c'est de là qu'ils voient tomber les leurs.
-        h.etat = "forme";
+        h.etat = "forme"; h.branche = "il attend sa place au seuil";
         const a = (h.escouade / Math.max(1, escouades.length)) * Math.PI - Math.PI / 2;
         const [nx, ny] = dehors(h.entree);
         versLe(h, verrou.x + (nx * Math.cos(a) - ny * Math.sin(a)) * 9,
@@ -3156,24 +3531,54 @@ window.Bataille2d = (() => {
     // Petit Wend le versatile s'arrête devant tout, et son corps se dissout dans
     // les trois cents premiers mètres. les faux gueux le sourd ne pille pas : il
     // brûle, ce qui prend moins de temps et ne rapporte rien.
-    if (h.etat === "pille") { piller(h, dt); return; }
+    if (h.etat === "pille") { h.branche = "il vide une maison"; piller(h, dt); return; }
     // « SANS PILLER » — et c'est le seul interdit qui morde vraiment, parce
     // qu'il porte sur la seule chose qu'un homme fasse sans qu'on lui dise.
     // C'est aussi le premier complément qu'un coureur oublie : celui qui
     // arrive essoufflé n'a jamais interdit quoi que ce soit.
-    if (bati && APPETIT[h.humeur || "-"] > 0 && !h.chef && !h.front &&
-        !interdit(ordre, "piller")) {
-      // On ne quitte pas la colonne à chaque pas : un jet par seconde, tiré de
-      // l'appétit. Sans ça, tout le monde s'arrête au premier pas et l'armée
-      // n'avance jamais d'un mètre.
+    //
+    // L'ENVIE SE DEMANDE À LA COUCHE 4, ET ELLE NE SE LIT PLUS DANS UN TABLEAU.
+    // `APPETIT[h.humeur]` avait deux défauts, dont le second était grave : tous
+    // les hommes d'un corps voulaient la même chose à la troisième décimale, et
+    // — depuis que `humeur` a été dissoute dans la couche 1 — le champ n'existe
+    // plus sur un homme, si bien que la ligne lisait « — » pour TOUT LE MONDE.
+    // Cranche pillait comme les autres et Petit Wend ne se dissolvait plus,
+    // sans qu'aucune erreur ne soit levée nulle part.
+    //
+    // ON CHERCHE LA MAISON D'ABORD, ET C'EST L'INVERSE D'AVANT. La convoitise
+    // n'existe pas sans objet : un homme au milieu d'un champ ne veut rien, et
+    // ce n'est pas « faiblement » — c'est rien. On regarde donc ce qu'il a sous
+    // la main, puis on demande à la couche ce qu'il en pense.
+    if (bati && !h.chef && !h.front) {
+      // On ne quitte pas la colonne à chaque pas : un jet par seconde, sinon
+      // tout le monde s'arrête au premier et l'armée n'avance jamais d'un mètre.
       h.tente = (h.tente || 0) - dt;
       if (h.tente <= 0) {
         h.tente = 1;
-        if (R() < APPETIT[h.humeur || "-"]) {
-          const b = maisonLibre(h.x, h.y, PORTEE_MAISON);
-          if (b >= 0) {
+        const b = maisonLibre(h.x, h.y, PORTEE_MAISON);
+        if (b >= 0) {
+          const c = h.cercle;
+          h.l4 = window.Envie.butin({
+            cupide: h.envie ? h.envie.cupide : 0,
+            porte: 1,
+            // Ce qu'il touche du coude, jamais un compte global : la règle du
+            // README, et de toute façon la seule chose qu'il puisse savoir.
+            calme: c ? Math.max(-1, 1 - (c.ennemis || 0) * 0.7) : 1,
+            frais: h.souffle != null ? h.souffle * 2 - 1 : 0,
+            tenu: sousLaBanniere(h) ? 1 : -1,
+            // « SANS PILLER » RETIENT, IL N'EMPÊCHE PLUS. C'est un changement
+            // de forme assumé : la clause divise l'envie par six au lieu de la
+            // fermer, si bien qu'un homme très cupide à qui l'on a dit désobéit
+            // parfois — ce qui est la définition même d'un désir gratuit, et ce
+            // que le tableau ne pouvait pas dire. Elle reste le seul mot du
+            // vocabulaire qui morde sur une envie, et le premier qu'un coureur
+            // essoufflé oublie en chemin.
+            defendu: interdit(ordre, "piller") ? 1 : -1,
+          });
+          if (R() < window.Envie.tauxDeButin(h.l4)) {
             bati.etat[b] = 1; bati.forcees++;      // on la réserve en y allant
             h.maison = b; h.etat = "pille";
+            h.branche = "il quitte la colonne pour une maison";
             h.reste_pille = cloche(PILLE_S[0], PILLE_S[1]);
             return;
           }
@@ -3184,7 +3589,8 @@ window.Bataille2d = (() => {
     // --- la porte est tombée : on remonte vers le donjon -----------------
     tracerVersDonjon(e);
     h.etat = "colonne";
-    if (!e.trace) { versLe(h, objectif.x, objectif.y, MARCHE, dt); return; }
+    if (!e.trace) { h.branche = "il marche au donjon, sans rue pour l'y mener";
+                    versLe(h, objectif.x, objectif.y, MARCHE, dt); return; }
     const tr = e.trace;
     // ON GAGNE LE RAIL AVANT DE MONTER DESSUS.
     //
@@ -3201,8 +3607,15 @@ window.Bataille2d = (() => {
     // arrivé. La colonne s'engouffre par la porte au lieu d'y apparaître.
     if (!h.surRail) {
       const q0 = surTrace(tr, 0);
-      if (Math.hypot(q0[0] - h.x, q0[1] - h.y) > 2.5) {
+      const d0 = Math.hypot(q0[0] - h.x, q0[1] - h.y);
+      if (d0 > 2.5) {
         h.etat = "colonne";
+        // ON DIT LA DISTANCE, PARCE QUE C'EST ELLE QUI FAIT LE BOUCHON. Toute
+        // une colonne doit passer par CE point-ci, à deux mètres cinquante
+        // près, et la séparation repousse ceux qui s'y pressent. Un homme qui
+        // piétine à quinze mètres de l'entrée de la rue depuis trois minutes se
+        // lit ici, et nulle part ailleurs.
+        h.branche = "il cherche l'entrée de la rue, à " + enPas(d0) + " pas";
         versLe(h, q0[0], q0[1], MARCHE, dt);
         return;
       }
@@ -3249,6 +3662,8 @@ window.Bataille2d = (() => {
     // La tangente sert à la séparation : sur une voie, on ne se pousse que
     // vers l'avant ou vers l'arrière (voir `pousser`).
     h.surVoie = true; h.tx = q[3]; h.ty = -q[2];
+    h.branche = "il tient la rue — " + enPas(Math.max(0, tr.long - h.avance)) +
+                " pas du donjon";
     // ON ARRIVE QUAND ON EST ARRIVÉ, PAS QUAND LA TRACE S'ÉPUISE. Le test
     // portait sur la seule longueur parcourue : une escouade dont l'A* rendait
     // une trace dégénérée — vide, ou d'un mètre — avait `avance >= long - 1`
@@ -3262,7 +3677,7 @@ window.Bataille2d = (() => {
     // soit vraie — être près du donjon.
     if (h.avance >= tr.long - 1 &&
         (objectif.x - h.x) ** 2 + (objectif.y - h.y) ** 2 < AU_DONJON ** 2) {
-      h.etat = "arrive";
+      h.etat = "arrive"; h.branche = "il est au donjon";
       noter("assaut-au-donjon", h.x, h.y, { clef: "au-donjon" });
     }
   }
@@ -3560,7 +3975,7 @@ window.Bataille2d = (() => {
         const dx = h.x - objectif.x, dy = h.y - objectif.y;
         const d = Math.hypot(dx, dy) || 1;
         h.poste = [objectif.x + dx / d * 30, objectif.y + dy / d * 30];
-        h.morale = Math.max(0, h.morale - CHOC_BANN);
+        signeQuiTombe(h, objectif.x, objectif.y);
       }
       return;
     }
@@ -3684,6 +4099,10 @@ window.Bataille2d = (() => {
       // Les ailes de SON corps, et pas une de plus.
       const sien = ailes.filter((a) => a.corps === tete.corps);
       const cons = (CORPS.find((x) => x.id === tete.corps) || {}).consigne;
+      // Celles qui peuvent encore tenir un rôle. Sous quatre dixièmes, une aile
+      // décroche (branche du dessus) : elle ne presse plus, elle n'appuie plus,
+      // et elle ne doit plus occuper la place dans le compte.
+      const vifs = sien.filter((x) => forceDe(x) >= 0.4);
       for (const a of sien) {
         let veut;
         if (forceDe(a) < 0.4) veut = ordreDe("repli", { intention: "durer" });
@@ -3706,15 +4125,53 @@ window.Bataille2d = (() => {
         // attend que la porte cède, elle le verra elle-même, et personne
         // n'aura à lui porter quoi que ce soit à la minute où ça compte.
         // C'est le seul ordre de toute la nuit qui ne puisse pas se perdre.
-        else if (a === sien[0])
+        // LES RÔLES SE COMPTENT SUR LES AILES ENCORE DEBOUT, ET C'EST LA
+        // RELÈVE. Ils se comptaient sur le rang de déploiement : quand la
+        // première aile avait fondu, personne ne prenait sa place — la deuxième
+        // continuait d'« appuyer » un mort et les suivantes tenaient leur
+        // position pour la nuit. Cinquante-sept pour cent de l'armée à l'arrêt,
+        // douze hommes sur la porte, et quatre cent trente-cinq qui rompent.
+        //
+        // ON A ESSAYÉ DE LES FAIRE SUIVRE, ET C'ÉTAIT PIRE. Toutes les ailes en
+        // colonne derrière la première : l'immobilité tombait de 57 à 18 %,
+        // mais `suivre` n'ouvre pas le droit de cogner (voir
+        // `frontDUnVerrou`) — la Gadoue ne tombait plus du tout, les morts
+        // passaient de 113 à 32 et les fuyards de 435 à ZÉRO. On avait rendu
+        // la nuit calme, ce qui est l'inverse du sujet. Mesuré, puis jeté.
+        //
+        // Ce qui manquait n'était pas du mouvement, c'était un ESCALIER : la
+        // deuxième aile devient la première quand la première n'existe plus.
+        // Une aile sous quatre dixièmes est déjà en repli par la branche du
+        // dessus — on la retire donc du compte des rôles, et tout le monde
+        // monte d'un cran sans qu'on ait rien à écrire de plus.
+        else if (a === vifs[0])
           veut = cons ? ordreDe(cons.verbe, cons)
                       : ordreDe("avancer", { intention: "entrer",
                                              interdit: ["piller"] });
-        else if (a === sien[1])
-          veut = ordreDe("appuyer", { objet: { aile: sien[0].id }, marge: 60,
+        else if (a === vifs[1])
+          veut = ordreDe("appuyer", { objet: { aile: vifs[0].id }, marge: 60,
                                       intention: "couvrir" });
-        else if (a === sien[2] && tete.verrou)
-          veut = ordreDe("avancer", { intention: "entrer",
+        // ELLE SUIT EN ATTENDANT, ET C'EST CE QUI LA REND JOIGNABLE. L'ordre
+        // portait le déclencheur seul : il partait en réserve, l'aile gardait
+        // le `tenir` de son déploiement, et elle ne bougeait plus d'un pas de
+        // la nuit. Or « quand la porte cède » DEMANDE DE LA VOIR CÉDER, à cent
+        // soixante mètres. Une aile plantée à deux cent quatorze — c'est le
+        // déploiement de Cranche, de Vantre et des gueux — n'était jamais en
+        // vue de la porte qu'on venait de lui nommer.
+        //
+        // Mesuré sur `essai.reference` : la Gadoue cède à 154,25 s et cinq
+        // escouades partent à 154,30 s — celles de Cole, le SEUL corps déployé
+        // à cent neuf mètres de sa porte. La porte du Roi cède à 389,7 s, la
+        // Vieille Porte à 474,9 : pas un déclencheur ne tombe. Le mécanisme
+        // était juste, il n'avait qu'un défaut de géométrie.
+        //
+        // On lui donne donc l'objet et la marge en même temps que la réserve :
+        // elle suit la première aile à cent vingt pas, ce qui la porte à portée
+        // de vue du seuil sans la mettre dans la presse — et le jour où la
+        // porte cède, elle est là pour entrer.
+        else if (a === vifs[2] && tete.verrou)
+          veut = ordreDe("avancer", { objet: { aile: vifs[0].id }, marge: 90,
+                                      intention: "entrer",
                                       declencheur: { porte: tete.verrou.nom } });
         else veut = ordreDe("tenir", { intention: "couvrir" });
         // On ne redit pas ce qui est déjà dit : c'est la PHRASE qu'on compare,
@@ -3729,6 +4186,20 @@ window.Bataille2d = (() => {
                        // tableau, et il ne dit ni à qui elle est ni où elle est.
                        rang: a.rang,
                        ordre: veut.verbe, phrase: dire(veut),
+                       // PERSONNE NE POUVAIT L'ENTENDRE, et il fallait que la
+                       // ligne le dise. La tête des faux gueux ordonne comme
+                       // les autres — on lui a retiré les cors, `transmettre`
+                       // sort sur `sourd_ne` au pas suivant, et l'ordre meurt
+                       // dans sa bouche. Trois lignes sur quinze, dans la
+                       // première cuisson : au dépouillement on lisait quinze
+                       // ordres donnés pour douze qui pouvaient arriver.
+                       //
+                       // La tête, elle, n'en sait rien et n'en saura jamais
+                       // rien — c'est « rien ne remonte ». Ce champ n'est donc
+                       // pas ce qu'elle croit : c'est ce que le lecteur des
+                       // annales a le droit de savoir, et lui seul.
+                       sourd: escouades.every(
+                         (e) => e.aile !== a.id || e.sourd_ne) || undefined,
                        force: +forceDe(a).toFixed(2) } });
       }
     }
@@ -3920,7 +4391,18 @@ window.Bataille2d = (() => {
   function recevoir(e, o) {
     const n = copie(o);
     e.depuis = 0;
-    if (n.declencheur) { e.attente = n; return; }
+    if (n.declencheur) {
+      e.attente = n;
+      // ET ELLE PREND SA POSTURE D'ATTENTE. Un ordre à déclencheur ne disait
+      // rien de ce qu'on fait EN ATTENDANT : l'escouade gardait son ordre
+      // précédent, qui est le `tenir` de son déploiement, et attendait de voir
+      // céder une porte qu'elle n'avait aucun moyen d'approcher. Quand l'ordre
+      // désigne quelqu'un, on tient la place qu'il dit — c'est la même phrase,
+      // avec son verbe d'attente au lieu de son verbe d'entrée.
+      if (n.objet) e.ordre = { verbe: "suivre", objet: n.objet, marge: n.marge,
+                               intention: n.intention, n: n.n };
+      return;
+    }
     e.attente = null;
     e.ordre = n;
   }
@@ -3965,16 +4447,33 @@ window.Bataille2d = (() => {
     for (const e of escouades) {
       const a = ailes[e.aile];
       if (!a) continue;
-      const seuil = SILENCE[e.humeur || "-"] !== undefined
-        ? SILENCE[e.humeur || "-"] : SILENCE["-"];
       // Un ordre devient PÉRIMÉ quand son objet a disparu du monde. Ça ne
       // s'attend pas : ça se constate au pas où ça arrive.
       const perime = !!(e.ordre && e.ordre.objet && !centreObjet(e.ordre.objet));
-      if (!perime && e.depuis < seuil) continue;
       // Il faut quelqu'un pour décider. Une escouade sans chef ne s'invente
-      // rien du tout — elle continue, et c'est déjà écrit ailleurs.
+      // rien du tout — elle continue, et c'est déjà écrit ailleurs. ON LE
+      // CHERCHE AVANT LE SEUIL, désormais : c'est SA patience qu'on mesure, et
+      // non celle d'un tableau. Le déplacement ne change rien au compte — une
+      // escouade sans chef sortait déjà juste après.
       const chef = chefDe(e.id);
       if (!chef) { e.depuis = 0; continue; }
+      // CE QU'IL SUPPORTE DE SILENCE — demandé à la couche 4, homme par homme.
+      // `SILENCE[e.humeur]` donnait un seuil en secondes qui ne savait rien de
+      // ce qui se passait autour : un chef dont la bannière est à terre et dont
+      // l'aile a fondu attendait ses soixante secondes exactement comme un
+      // chef dont la nuit était calme. Ici, les deux ne tiennent pas pareil.
+      const c = chef.cercle;
+      const seuil = window.Envie.silenceTenu(window.Envie.patience({
+        docile: chef.envie ? chef.envie.docile : 0,
+        signe: (a.banniere.debout && sousLaBanniere(chef)) ? 1 : -1,
+        entier: forceDe(a) * 2 - 1,
+        sur: perime ? -1 : 1,
+        alarme: c ? Math.max(-1, 1 - (c.ennemis || 0) * 0.7) : 1,
+        // Le sourd de naissance ne compte pas le silence : il n'y a jamais eu
+        // autre chose pour lui, donc il porte son premier ordre jusqu'au bout.
+        jamaisEntendu: !!e.sourd_ne,
+      }));
+      if (!perime && e.depuis < seuil) continue;
 
       const cons = (CORPS.find((x) => x.id === e.corps) || {}).consigne;
       let neuf = null, motif = null;
@@ -3986,7 +4485,12 @@ window.Bataille2d = (() => {
         neuf = ordreDe(cons.verbe, cons);
         motif = "sans nouvelles depuis " + Math.round(e.depuis) + " s";
       } else {
-        neuf = ordreDe(DE_SOI_MEME[e.humeur || "-"] || "tenir",
+        // SA MANIÈRE DÉCIDE, ET C'EST LA COUCHE 3 QUI LA TIENT. On la lui
+        // demande sur le chef, parce que c'est lui qui décide, et l'on retombe
+        // sur « tenir » s'il n'a pas encore été observé — un homme sans
+        // manière connue ne s'invente rien.
+        neuf = ordreDe((chef.l3 && window.Interpretation.deSoiMeme(chef.l3))
+                       || "tenir",
                        { intention: e.ordre && e.ordre.intention });
         motif = perime ? "son objet a disparu"
                        : "sans nouvelles depuis " + Math.round(e.depuis) + " s";
@@ -4067,7 +4571,29 @@ window.Bataille2d = (() => {
   function courir(h, dt) {
     const e = escouades[h.chez];
     const but = centreDe(h.chez);
-    if (!e || !but) { rendreCoureur(h); return; }
+    // CELUI QUI ARRIVE ET NE TROUVE PLUS PERSONNE. C'était un `return` muet, et
+    // c'est le troisième trou de la même famille que les deux qu'on a déjà
+    // bouchés : l'homme est réabsorbé dans la colonne, son ordre disparaît, et
+    // pas une ligne nulle part.
+    //
+    // Mesuré sur `essai.reference` : 54 coureurs partis, 50 arrivés, ZÉRO
+    // `coureur-tombe`. Les quatre manquants portaient tous « décrocher » à
+    // 403,3 s, vers les escouades de la deuxième aile de Cole — celle qui était
+    // en train de fondre. `centreDe` rend `null` sous cinq hommes : l'escouade
+    // n'était plus un repère, le coureur n'avait plus de destination, et le
+    // dernier ordre que Criston Cole ait donné de la nuit n'est jamais arrivé
+    // nulle part.
+    //
+    // C'est le fait le plus intéressant de la nuit et il n'était pas écrit :
+    // l'ordre de repli d'un corps qui s'effondre se perd PARCE QUE le corps
+    // s'effondre. On l'écrit.
+    if (!e || !but) {
+      noter("ordre-sans-personne", h.x, h.y,
+            { dit: { vers: h.chez, ordre: h.porte && h.porte.verbe,
+                     phrase: dire(h.porte) } });
+      rendreCoureur(h);
+      return;
+    }
     const avant = { x: h.x, y: h.y };
     const d = versLe(h, but[0], but[1], COURSE, dt);
     // CE QU'IL PERD EN CHEMIN. On compte ses mètres, et double quand il traverse
@@ -4149,7 +4675,7 @@ window.Bataille2d = (() => {
         for (const h of hommes)
           if (h.camp === "assaut" && !h.tete && h.aile === a.id &&
               h.etat !== "mort" && h.etat !== "blesse")
-            h.morale = Math.max(0, h.morale - CHOC_BANN);
+            signeQuiTombe(h, a.banniere.x, a.banniere.y);
         // Le corps et le rang, comme pour les ordres : une bannière appartient
         // à quelqu'un, et « l'aile n° 13 » n'appartient à personne.
         noter("banniere-tombe", a.banniere.x, a.banniere.y,
@@ -4180,6 +4706,30 @@ window.Bataille2d = (() => {
   }
 
   /** Voit-il sa bannière ? C'est ce qui le fait tenir. */
+  // CE QUI LE FAIT REDESCENDRE PLUS VITE — le poste 3 de la depose.
+  //
+  // `TIENT_BANN` et `rallier` sont les deux SEULS mecanismes par lesquels un
+  // commandement protege ses hommes au lieu de les deplacer. Ils vivaient dans
+  // `morale`, qui va disparaitre ; ils passent donc a la couche 1, et par la
+  // seule porte qui leur convienne : la constante de DESCENTE de l'alarme.
+  //
+  // On ne transporte pas le ralliement lui-meme — ramener un homme qui court
+  // est un acte d'AUTORITE, donc de la couche 3, et `rallier()` reste ou il
+  // est. Ce qui monte ici est la simple PRESENCE : un chef qu'on voit encore
+  // debout a quinze metres.
+  //
+  // `chefVu` est estampe par le chef lui-meme (voir la diffusion dans
+  // `soldat`). On le tient pour vrai le temps d'un coup d'oeil ; au-dela, il
+  // n'est plus la, et c'est exactement ce qu'on veut dire.
+  const CHEF_FRAIS = 3;
+  function apaiseDe(h) {
+    let a = 1;
+    if (sousLaBanniere(h)) a *= window.Corps.M.APAISE_BANN;
+    if (h.chefVu != null && temps - h.chefVu < CHEF_FRAIS)
+      a *= window.Corps.M.APAISE_CHEF;
+    return a;
+  }
+
   function sousLaBanniere(h) {
     const a = ailleDe(h);
     if (!a || !a.banniere.debout) return false;
@@ -4201,8 +4751,20 @@ window.Bataille2d = (() => {
       chef = o;
     });
     if (!chef) return false;
-    h.morale = Math.min(1, h.morale + RALLIE_TAUX * dt);
-    if (h.morale < RALLIE_SEUIL) return true;
+    // ⚠ IL REVIENT QUAND SON CORPS NE LE FAIT PLUS COURIR — et pas quand une
+    // jauge repasse un seuil. C'est la depose de `RALLIE_TAUX` et de
+    // `RALLIE_SEUIL`, et elle ne coute AUCUNE constante neuve : la couche 1
+    // porte deja les deux moitiees de ce que ces deux nombres disaient.
+    //
+    //   la VITESSE du retour — c'est `apaise` : la presence de ce chef-ci fait
+    //     retomber son alarme quatre fois plus vite (45 s deviennent 12).
+    //   l'HYSTERESIS — c'est `INTERDIT_JAMBES` : on ne sort d'une fuite que par
+    //     `planté`, jamais par un recul ni une ruee. Le seuil de retour plus
+    //     haut que le seuil de rupture etait la meme idee, ecrite a la main.
+    //
+    // Et l'on garde ce qui faisait la valeur de ce mecanisme : un fuyard court
+    // plus vite qu'un chef, donc la fenetre se referme en quelques secondes.
+    if (!h.l1 || h.l1.jambes === "fuite") return true;
     h.etat = "forme";
     compte.fuyards--;
     compte.rallies++;
@@ -4732,7 +5294,17 @@ window.Bataille2d = (() => {
       if (v) { v.n++; v.x += h.x; v.y += h.y; }
       else cases.set(c, { n: 1, x: h.x, y: h.y });
     }
-    for (const v of cases.values()) Son.fond("pas", v.n, v.x / v.n, v.y / v.n);
+    // DEUX VERSEMENTS, PAS UN — et le second est celui qui fait la foule. Les
+    // pieds nourrissent le grave ; les GORGES nourrissent le medium, et c'est
+    // de là que sort le grain de murmure. Sans cette ligne, la bande des voix
+    // ne recevait que les cris non élus — c'est-à-dire presque rien —, et une
+    // mêlée de dix-sept cents hommes n'avait pas une seule gorge dedans.
+    // La moitié : à tout instant, tout le monde ne crie pas.
+    for (const v of cases.values()) {
+      const x = v.x / v.n, y = v.y / v.n;
+      Son.fond("pas", v.n, x, y);
+      Son.fond("houle", v.n / 2, x, y);
+    }
   }
 
   function avancer(dtReel) {
@@ -4876,14 +5448,14 @@ window.Bataille2d = (() => {
     const clef = hex + q;
     let v = _teintes.get(clef);
     if (v) return v;
-    const n = parseInt(hex.slice(1), 16);
+    const rgb = lire(hex);                       // hex OU rgb(…) — voir `lire`
     const f = q / 8 * .25;                       // au plus un quart
-    const c = (d) => {
-      const x = (n >> d) & 255;
+    const c = (i) => {
+      const x = rgb[i];
       return Math.max(0, Math.min(255, Math.round(f > 0 ? x + (255 - x) * f
                                                         : x * (1 + f))));
     };
-    v = "rgb(" + c(16) + "," + c(8) + "," + c(0) + ")";
+    v = "rgb(" + c(0) + "," + c(1) + "," + c(2) + ")";
     _teintes.set(clef, v);
     return v;
   }
@@ -4942,13 +5514,34 @@ window.Bataille2d = (() => {
   // Tirer une teinte vers le gris de son propre niveau : on perd la saturation,
   // on garde la clarté — donc la couleur reste reconnaissable et le point
   // s'éteint. `k` va de 0 (intacte) à 1 (gris pur).
+  // ---- LIRE UNE COULEUR, QUELLE QUE SOIT SA FORME ---------------------------
+  // ELLES ÉTAIENT DEUX À S'ÉCRIRE ET UNE SEULE À SE LIRE, et ça a mis les
+  // fuyards en noir. `delaver` rend du `rgb(…)` ; `eclaircir` faisait
+  // `parseInt(couleur.slice(1), 16)`, ce qui vaut `parseInt("gb(115,57,49)")`,
+  // c'est-à-dire NaN — et `(NaN >> 16) & 255` vaut zéro sur les trois canaux.
+  // Tout homme délavé (le repli, la déroute) et pourvu d'assez de trempe pour
+  // que l'éclaircissement s'arme sortait donc en `rgb(0,0,0)`. Ceux dont la
+  // trempe était sous un seizième y échappaient par le court-circuit `if (!q)`,
+  // d'où un défaut qui avait l'air capricieux et ne l'était pas.
+  //
+  // On lit donc les deux formes au même endroit, une fois pour toutes. Tant que
+  // la seule entrée était l'hexadécimal du tableau, `slice(1)` suffisait ; dès
+  // que deux fonctions se sont enchaînées, il fallait ceci.
+  function lire(c) {
+    if (c[0] === "#") {
+      const n = parseInt(c.slice(1), 16);
+      return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+    }
+    const m = c.match(/-?\d+/g);
+    return m ? [+m[0], +m[1], +m[2]] : [0, 0, 0];
+  }
+
   const _delaves = new Map();
   function delaver(hex, k) {
     const clef = hex + k;
     let v = _delaves.get(clef);
     if (v) return v;
-    const n = parseInt(hex.slice(1), 16);
-    const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    const [r, g, b] = lire(hex);
     const gris = Math.round(r * .299 + g * .587 + b * .114);
     const m = (x) => Math.round(x + (gris - x) * k);
     v = "rgb(" + m(r) + "," + m(g) + "," + m(b) + ")";
@@ -5604,6 +6197,14 @@ window.Bataille2d = (() => {
 
   function basculer() {
     if (!hommes.length) rejouer();
+    // OUVRIR L'OREILLE ICI, ET NULLE PART AILLEURS. Aucun navigateur ne laisse
+    // une page faire du bruit sans qu'on l'ait touchée — il faut donc un geste,
+    // et celui-ci est le bon : c'est le seul du jeu qui déclenche à coup sûr ce
+    // qu'on veut entendre. Un bouton « son » à part serait une case à cocher de
+    // plus, et un éveil au chargement de la page ne marcherait tout simplement
+    // pas. On suspend en même temps qu'on suspend l'assaut : une bataille en
+    // pause ne gronde pas.
+    if (window.Son) { if (marche) Son.dormir(); else Son.eveiller(); }
     marche = !marche;
     dernier = performance.now();
     if (barre) {
@@ -5825,14 +6426,17 @@ window.Bataille2d = (() => {
   // caractères, pas des mesures. Cranche ne s'arrête jamais parce que c'est
   // Cranche ; Petit Wend s'arrête devant tout parce que ce sont des enfants qui
   // n'ont jamais rien eu.
-  const APPETIT = {
-    "-": 0.030,            // les corps sans humeur — la troupe ordinaire
-    ferme: 0,              // Cranche : il arrive, et c'est tout ce qu'il fait
-    sourd: 0.012,          // les faux gueux : il ne pille pas, il brûle
-    versatile: 0.075,      // Petit Wend : le corps se dissout en chemin
-  };
+  // `APPETIT` est déposé : l'envie de butin se demande à la couche 4, avec le
+  // tempérament de l'homme et ce qu'il a sous la main. Voir la branche du
+  // pillage dans `soldat()`.
   // les faux gueux brûle au lieu d'emporter — plus vite, et il ne reste rien.
-  const BRULE = { sourd: 0.75, "-": FEU, ferme: 0, versatile: 0.10 };
+  // MÊME CASSE SILENCIEUSE QUE `APPETIT`, ET ON LA RÉPARE AU PASSAGE : ce
+  // tableau était indexé sur `h.humeur`, champ dissous dans la couche 1 et
+  // absent des hommes depuis. Il rendait donc `FEU` pour tout le monde — les
+  // faux gueux, dont le personnage entier est qu'ils BRÛLENT au lieu
+  // d'emporter, mettaient le feu six pour cent du temps comme n'importe qui.
+  // On s'indexe sur le corps, seule clef qui existe encore.
+  const BRULE = { gueux: 0.75, cranche: 0, bleusailles: 0.10 };
 
   /** Forcer une maison : y aller, y rester, en ressortir. */
   function piller(h, dt) {
@@ -5847,7 +6451,7 @@ window.Bataille2d = (() => {
     // ON RESSORT. Le butin est celui de la maison, pas du temps passé — un
     // taudis fouillé une minute reste un taudis.
     bati.butin += bati.val[b];
-    const brule = R() < (BRULE[h.humeur || "-"] ?? FEU);
+    const brule = R() < (BRULE[h.corps] ?? FEU);
     bati.etat[b] = brule ? 3 : 2;
     if (brule) {
       bati.brulees++;
@@ -5931,8 +6535,26 @@ window.Bataille2d = (() => {
     if (!hommes.length) return { dressee: false, temps: 0, marche: false };
     const par = {};
     for (const h of hommes) par[h.etat] = (par[h.etat] || 0) + 1;
+    // COMBIEN, ET POUR QUELLE RAISON. `par` compte les états, et un état ne dit
+    // rien : « forme » recouvre la réserve qu'on a laissée en arrière, l'homme
+    // qui attend sa place au seuil et celui dont le repère a fondu. Le relevé
+    // par branche est la seule façon de répondre à « pourquoi seulement un
+    // cinquième de ce corps avance-t-il », sans pointer les hommes un par un.
+    // On coupe le complément chiffré des libellés — « à 40 pas » — sinon
+    // chaque homme fait sa propre ligne et l'on ne compte plus rien.
+    const branches = {};
+    for (const h of hommes) {
+      if (h.camp !== "assaut" || h.tete || h.hors) continue;
+      if (h.etat === "mort" || h.etat === "deroute") continue;
+      const b = (h.branche || "sans branche").split(/ (?:à|—) /)[0];
+      branches[b] = (branches[b] || 0) + 1;
+    }
     return {
       temps: +temps.toFixed(1), marche,
+      // Rangé du plus nombreux au moins nombreux : la première ligne est ce
+      // que fait l'armée, quoi qu'on ait cru lui ordonner.
+      branches: Object.fromEntries(
+        Object.entries(branches).sort((a, b) => b[1] - a[1])),
       porte: entree && entree.nom, objectif: objectif && objectif.nom,
       verrou: verrou && { etat: verrou.etat, pv: Math.round(verrou.pv) },
       // Les quatre portes, chacune avec son compte : c'est le relevé qui dit
@@ -5969,8 +6591,11 @@ window.Bataille2d = (() => {
         for (const p of paniques) v[p.etat] = (v[p.etat] || 0) + 1;
         return v;
       })(),
+      // `moraleMoyenne` est devenue l'alarme moyenne : la jauge a disparu, ce
+      // qu'on mesure est la glande. Elle vit sur [−1, 1] et non sur [0, 1] —
+      // qui lit ce chiffre doit le savoir.
       moraleMoyenne: +(hommes.filter((h) => h.camp === "assaut" && h.etat !== "mort")
-        .reduce((s, h, _, l) => s + h.morale / l.length, 0)).toFixed(2),
+        .reduce((s, h, _, l) => s + ((h.l1 ? h.l1.reflexe : -1) / l.length), 0)).toFixed(2),
     };
   }
 
@@ -6198,14 +6823,38 @@ window.Bataille2d = (() => {
         // morale, même souffle, et l'un part quand l'autre reste. Ce n'est pas
         // un bug, c'est sa trempe, et il faut pouvoir le vérifier.
         branche: h.branche || null,
+        // ---- CE QUE LA COUCHE 3 EN DIT, à côté de ce que la cascade a fait.
+        // `branche` dit par quelle RÈGLE il en est là ; `maniere` dit comment
+        // il tiendrait son ordre s'il décidait lui-même. Les deux côte à côte
+        // sous le doigt : c'est toute la première passe du branchement, et
+        // c'est ce qui permet de contester la couche avant de lui confier quoi
+        // que ce soit. Rien ici ne pilote — voir `soldat()`.
+        maniere: h.l3 ? h.l3.maniere : null,
+        l3: h.l3 ? { place: +h.l3.place.toFixed(2), serre: +h.l3.serre.toFixed(2),
+                     hate: +h.l3.hate.toFixed(2), lettre: +h.l3.lettre.toFixed(2) }
+                  : null,
+        // Ce qu'il veut, et que personne ne lui a demandé : sa convoitise du
+        // moment, quand il a eu une maison sous la main. Voir la couche 4.
+        envie: h.l4 != null ? +h.l4.toFixed(2) : null,
+        // ---- CE QUE SON CORPS DIT, A COTE DE CE QUE SA TETE A DECIDE -------
+        // Le branchement progressif commence ICI, et il ne coute rien : la
+        // couche 1 tourne deja pour chaque homme, on la MONTRE. Survoler
+        // n'importe qui donne les deux lignes cote a cote — ce que la cascade a
+        // choisi, et ce que le corps aurait fait. On voit donc la couche
+        // travailler dans une vraie bataille avant qu'elle ne conduise quoi que
+        // ce soit, et l'on peut la contester homme par homme.
+        corpsDit: h.l1 ? h.l1.jambes + " · " + h.l1.bras : null,
+        corpsPhrase: h.l1 ? h.l1.phrase : null,
+        reflexe: h.l1 ? +h.l1.reflexe.toFixed(2) : null,
+        empriseCorps: h.l1 ? +h.l1.emprise.toFixed(2) : null,
+        corpsPilote: !!(h.l1 && h.l1.pilote),
         pv: h.pv != null ? Math.max(0, Math.round(h.pv)) : null,
         pvMax: h.pvMax != null ? Math.round(h.pvMax) : null,
         entame: h.pv != null && h.pv < h.pvMax * SEUIL_RECUL,
-        morale: h.morale != null ? +h.morale.toFixed(2) : null,
-        rompt: h.humeur === "versatile" ? ROMPT_VERSATILE : ROMPT,
+        reflexe: h.l1 ? +h.l1.reflexe.toFixed(2) : null,
+        emprise: h.l1 ? +h.l1.emprise.toFixed(2) : null,
         souffle: h.souffle != null ? +h.souffle.toFixed(2) : null,
         soufflant: !!h.repos,
-        humeur: h.humeur || null,
         // Le cercle est celui de SON dernier battement — la même mesure que
         // celle sur laquelle il vient de décider, pas un recomptage qui
         // pourrait dire autre chose que ce qu'il a vu.

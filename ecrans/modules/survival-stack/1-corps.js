@@ -26,7 +26,7 @@
 // branche « cède le pas » ne contenait aucun moyen de frapper.
 //
 // SON EMPRISE N'EST PAS UNE PRIORITÉ. Elle ne passe pas en premier parce qu'elle
-// porte le numéro 1 : elle passe en premier quand l'réflexe est haute, parce que
+// porte le numéro 1 : elle passe en premier quand le réflexe est haut, parce que
 // la peur suspend la délibération pour de vrai. C'est une FONCTION, pas un rang.
 // ─────────────────────────────────────────────────────────────────────────────
 //
@@ -40,7 +40,7 @@
 //     tait completement quand il ne se passe rien — c'est le test le plus
 //     important de tous, et il passe.
 //   · L'réflexe monte en 3,0 s et retombe en 45,0 s : rapport de QUINZE. On
-//     s'réflexe quinze fois plus vite qu'on ne se calme, et l'hysteresis qu'on
+//     s'alarme quinze fois plus vite qu'on ne se calme, et l'hysteresis qu'on
 //     ecrivait a la main ailleurs sort d'ici toute seule.
 //   · integrite(30 pv, coup de 22) et integrite(300 pv, coup de 220) rendent le
 //     MEME nombre. Le seuil qui a coute une journee ne peut plus se reproduire.
@@ -48,28 +48,82 @@
 //     produit tient, la moyenne aurait laisse un homme courir a moitie.
 //   · Aucune arete interdite dans les quatre ecoles.
 //
-// CE QUI A ETE TROUVE, ET QUI N'ETAIT PAS PREVU :
+// ─────────────────────────────────────────────────────────────────────────────
+// LA PASSE SUIVANTE — ET ELLE A INVALIDE LA PRECEDENTE
 //
-//   1. UN HOMME AU CONTACT MEURT AVANT D'AVOIR PEUR. Mesure : A1, pris par
-//      deux frappeurs, tombe a 1,5 s ; A2, a un contre un, a 3,6 s. La
-//      constante de montee de l'réflexe est de 3,0 s. Donc la couche 1 est
-//      calibree pour un combat que le modele de degats n'autorise pas — a
-//      trente points de vie contre vingt-deux de degat moyen, la psychologie
-//      n'a pas le temps d'exister. Ce n'est pas un defaut de cette couche :
-//      c'est une contradiction entre deux parties du jeu, et il faudra
-//      trancher laquelle a raison.
+// Le banc ne tournait plus (`C.appui` avait disparu avec la v2 du gregarisme) :
+// tous les chiffres ci-dessus dataient de la v1. En le reparant, on a trouve la
+// faute qui les expliquait TOUS.
 //
-//   2. LES APPELS COURT-CIRCUITENT LA GLANDE. Ils lisent `s.menace`, qui est
-//      instantane, au lieu de lire l'réflexe, qui est ce que le corps RESSENT.
-//      Consequence mesuree : au banc, un conscrit est sideré des le premier
-//      battement et un autre part en ruee a zero seconde — sans aucune montee.
-//      La glande ne sert donc qu'a `emprise`, alors qu'elle devrait porter tout
-//      le reste. C'est la meme faute que `force = max(0, réflexe)` : une couche
-//      qui contourne sa propre memoire.
+//   LA LATENCE ETAIT UN FILTRE ET DEVAIT ETRE UNE LIGNE A RETARD. Un stimulus
+//   emis a `t` etait teste contre `t + latence`, donc toujours rejete, et
+//   l'appelant ne le representait jamais. **Aucun stimulus n'a jamais atteint
+//   le reflexe depuis l'ecriture du fichier.** Le detail est a l'etape 1 de
+//   `pas()`.
 //
-//   3. LE DRESSAGE N'ORDONNE RIEN — pour l'instant. B1 et C1 echouent tous
-//      deux, mais pour la raison 1 : personne ne rompt parce que tout le monde
-//      meurt. Les deux tests sont donc SANS VERDICT, et non pas negatifs.
+// Ce qui tombe avec elle — trois conclusions de conception tirees d'une
+// tuyauterie percee, et il faut le dire parce qu'on a failli refaire le modele
+// de degats pour rien :
+//
+//   · « Un homme au contact meurt avant d'avoir peur » : faux. On a fait durer
+//     un duel jusqu'a 32,7 s, l'alarme ne bougeait pas d'un centieme. Ce
+//     n'etait pas une question de duree.
+//   · « Le conscrit deroute a 0,0 s a cause d'un stimulus » : faux, il n'en
+//     recevait aucun — c'est `couverture` seule.
+//   · « Le modele de degats et la couche 1 se contredisent » : ils ne se
+//     contredisaient pas, ils ne se parlaient pas.
+//
+// DEUX AUTRES CORRECTIONS, chacune justifiee a son endroit :
+//
+//   LE DECOURS (voir `M.DECOURS`). Un coup durait un battement — 6 % du cycle —
+//   pour charger une glande de 3 s. L'equilibre du reflexe est la moyenne du
+//   rapport cyclique : il valait −0,35 QUELLE QUE SOIT la duree du combat. Il
+//   faut 17 % du cycle pour franchir zero.
+//
+//   LA PRE-HABITUATION (voir `prehabituer`). `hab = vecu` par l'identite mettait
+//   le veteran a 0,90 d'habituation : saillance d'un coup recu 0,076, soit une
+//   surdite. B1 ne mesurait pas le dressage.
+//
+// CE QUE LA MESURE DIT MAINTENANT :
+//
+//   B1 — LE DRESSAGE ORDONNE ENFIN. conscrit 0,0 s · guet 5,7 s · soldat et
+//     veteran ne rompent pas. C1 passe pour les deux premiers. C'etait « sans
+//     verdict » depuis l'origine.
+//   A3 — le zero juste tient toujours : reflexe −1,00, emprise 0,00 apres 30 s
+//     de calme. Le decours n'a donc pas ramene de plancher par la porte de
+//     derriere, ce qui etait le risque.
+//   Aucune arete interdite, dans les quatre ecoles.
+//   L'ordre des ecoles sort juste sur le plateau de reflexe, a duel egal :
+//     conscrit −0,02 · soldat −0,19 · veteran −0,32.
+//
+// PUIS LA DYSREGULATION (voir `SOUS_EMPRISE`), qui a regle le defaut principal :
+// `emprise` sortait vers les couches 2, 3 et 4 et n'agissait JAMAIS sur les
+// gestes de la couche elle-meme. Un conscrit rompait donc a 0,0 s, sans un
+// stimulus, avec `emprise 0,00` — un geste de corps elu pendant que le corps ne
+// tenait rien du volant.
+//
+//   Mesure apres : il rompt a 5,7 s, et le releve montre enfin un ARC — coup
+//   recu a 1 s, derobade, il tient, la glande monte de −1,00 a −0,16, l'emprise
+//   atteint 0,78, ET ALORS il s'en va. Une rupture CAUSEE, au lieu d'une
+//   rupture instantanee.
+//   A3 tient toujours (−1,00 / 0,00 au repos) : la porte (c) n'a pas ramene de
+//   plancher elle non plus.
+//   PRIX A PAYER, ET IL EST REEL : le guet ne rompt plus du tout, donc B1 a
+//   perdu un cran de resolution. Deux ecoles sur quatre ordonnent, contre une
+//   seule avant la passe — c'est un gain, mais pas celui qu'on esperait.
+//
+// CE QUI RESTE OUVERT :
+//
+//   1. LE PLATEAU RESTE SOUS ZERO en duel de nuit (−0,02 pour le conscrit).
+//      Reste a trancher si c'est juste — un homme frappe une fois toutes les
+//      six secondes, la nuit, avec la vue a un tiers — ou s'il manque un
+//      stimulus de presence au contact. Ne pas regler : chercher ce qu'on a
+//      oublie de modeliser (regle 1).
+//   2. C2 NE MESURE PAS CE QU'IL CROIT. Il compare A1 SEUL, qui fait face a
+//      DEUX frappeurs, a A2 ACCOMPAGNE, qui n'en a qu'UN : deux hommes
+//      differents dans deux situations differentes. Le chiffre qui en sort ne
+//      dit rien de la contagion, ni dans un sens ni dans l'autre. C'est le banc
+//      qu'il faut refaire, pas le modele.
 // ─────────────────────────────────────────────────────────────────────────────
 "use strict";
 (() => {
@@ -117,6 +171,7 @@
     DECOURS: {
       "coup reçu": 2.5, "coup frôlé": 1.5, "voisin à terre": 3,
       "les siens s'en vont": 2, "quelqu'un derrière": 1, "fer qui vient": 0.15,
+      "le signe tombe": 4,
     },
     DECOURS_DEFAUT: 1,
 
@@ -133,6 +188,22 @@
     //
     // L'habituation atténue ; elle n'abolit jamais. Le plafond est le fait.
     SOURD_MAX: 0.55,
+
+    // --- CE QUI FAIT REDESCENDRE PLUS VITE, ET QUI N'EST PAS DE SOI ----------
+    // Les deux chiffres viennent de `bataille2d`, dont ils sont la traduction
+    // exacte — c'est le poste 3 de la depose, et le seul honnete : on ne
+    // reinvente pas un nombre quand celui qu'on remplace en a deja un.
+    //
+    //   `TIENT_BANN = 2,6` — « la morale remonte mieux sous une banniere
+    //     debout ». Il MULTIPLIAIT LA REPRISE, jamais le niveau : il se
+    //     transpose donc tel quel sur la constante de descente.
+    //   Pour le chef, `RALLIE_TAUX / REPRISE` vaut 8,3 — mais ce huit-la mesure
+    //     une MAIN TENDUE a un homme qui part deja, pas une presence. On garde
+    //     son ORDRE (un chef a quinze metres pese plus qu'un drapeau a cent
+    //     dix) sans recopier son chiffre, qui dirait autre chose.
+    APAISE_BANN: 2.6,
+    APAISE_CHEF: 4,
+    APAISE_MAX: 5,        // l'asymptote : au mieux six fois plus vite, jamais plus
 
     // --- les distances du corps ---
     EPAULE_M: 0.55,    // largeur d'un homme en armes
@@ -373,7 +444,7 @@
 
   // ---- CE QU'UN VOISIN MONTRE ------------------------------------------------
   // LA TABLE EST LE SYSTEME, et elle ne dit pas ce qu'il ressent : elle dit ce
-  // qu'on VOIT de lui. Positif = signe d'réflexe. C'est la seule chose que le
+  // qu'on VOIT de lui. Positif = signe d'alarme. C'est la seule chose que le
   // corps ait le droit de lire chez un autre, et ca suffit — c'est meme
   // exactement ce qu'un homme lit vraiment d'un voisin dans le noir : sa
   // silhouette qui recule, ses bras qui tombent, son immobilite.
@@ -405,6 +476,45 @@
   // Sans cette table, l'ouie couvrait tout ce que la nuit retirait a la vue, et
   // une ligne de nuit se comportait exactement comme une ligne de jour. Mesure :
   // la contagion ne bougeait pas d'un centieme entre les deux.
+  // ---- CE QU'UNE FORME PORTE, en plus de ce qu'elle fait ------------------
+  // UNE BANNIÈRE EST UNE FORME COMME UNE AUTRE, simplement plus grande et
+  // plus loin — et c'est ce qui permet de la faire entrer sans lui écrire
+  // une mécanique à elle. Le corps ne sait pas ce qu'est une bannière : il
+  // voit une chose haute et immobile au-dessus des têtes, et il a appris que
+  // tant qu'elle est là, les siens sont là.
+  //
+  // C'EST LE SEUL MOYEN QUE LE COMMANDEMENT AIT DE **PROTÉGER**. Tout le
+  // reste de ce qu'un chef fait — ordonner, placer, envoyer — DÉPLACE des
+  // hommes ; la bannière et sa présence sont les deux seules choses qui les
+  // TIENNENT. Déposer la morale sans elles retirerait au commandement sa
+  // moitié la plus utile, et personne ne s'en apercevrait avant trois
+  // cuissons.
+  //
+  // ET ELLES PASSENT PAR LES CANAUX COMME LE RESTE : la nuit mange la
+  // bannière, le vacarme mange le chef. Une troupe de nuit dans le bruit est
+  // une troupe sans commandement, et l'on n'a pas eu à l'écrire.
+  const PORTE = {
+    "bannière":         -1,     // debout : rien ne rassure autant
+    "chef":             -0.85,  // il est là, et il n'a rien à dire pour ça
+    "bannière à terre":  0.95,  // et rien n'alarme autant qu'elle qui tombe
+  };
+  // Une épaule se sent au coude ; une hampe se voit d'un bout du rang à
+  // l'autre. Deux échelles, deux portées.
+  // ⚠ QUARANTE METRES COUVRAIENT UNE AILE ENTIERE, et c'etait le defaut.
+  // Mesure : zero fuyard sur une cuisson complete, et la porte meme plus
+  // enfoncee — chaque escouade ayant son porte-banniere, personne n'etait
+  // jamais loin d'une, donc plus rien ne passait des voisins nulle part.
+  //
+  // LA VALEUR DIT CE QUE CA VAUT, LA PORTEE DIT COMBIEN D'HOMMES Y ONT
+  // DROIT — et c'est la seconde qui etait trop genereuse. Une hampe rassure
+  // ceux qui l'ont AU-DESSUS d'eux, pas une aile de deux cents hommes ; on
+  // la ramene a ce qu'un rang serre couvre. Sa chute, elle, se voit de loin
+  // et garde sa portee : on ne voit pas la banniere qu'on a, on voit celle
+  // qui tombe.
+  const PORTEE_SIGNE = { "bannière": 15, "bannière à terre": 40, "chef": 8 };
+  // Le chef s'entend ; la hampe, non.
+  const SIGNE_AUDIBLE = { "chef": 0.8, "bannière": 0, "bannière à terre": 0.3 };
+
   const AUDIBLE = {
     "fuite": 1, "ruée": 0.9, "ballants": 0.3, "recul": 0.2,
     "planté": 0, "serrer": 0.15, "dérobade": 0, "sidération": 0,
@@ -413,7 +523,7 @@
 
   // LA PEUR PESE PLUS QUE LE CALME, et ce n'est pas une opinion : un homme qui
   // rompt en entraine quatre, quatre hommes fermes n'en retiennent pas un qui
-  // rompt. Le poids d'un voisin est donc multiplie par ce qu'il montre d'réflexe.
+  // rompt. Le poids d'un voisin est donc multiplie par ce qu'il montre d'alarme.
   const PANIQUE = 2.5;
 
   /**
@@ -422,7 +532,7 @@
    * une ligne de jour d'une ligne de nuit, et la v1 le sautait entierement.
    *
    * Rend { contagion, imitation } :
-   *   contagion — l'réflexe qu'on prend des autres, sur [-1, 1]
+   *   contagion — l'alarme qu'on prend des autres, sur [-1, 1]
    *   imitation — pour chaque geste, la part des voisins qui le font. Le corps
    *     copie sans decider, et c'est LA MEME MESURE qui sert aux deux : on lit
    *     une fois ce qu'ils font, on s'en sert pour trembler et pour suivre.
@@ -443,8 +553,26 @@
 
   const signes = (voisins, ctx) => {
     const imitation = {};
-    if (!voisins || !voisins.length) return { contagion: -1, imitation };
+    // ⚠ `apaise` SUR LES DEUX SORTIES, ET IL MANQUAIT SUR CELLE-CI. Un homme
+    // sans un voisin sortait par cette ligne, donc sans le champ ; l'appelant
+    // multipliait alors par `undefined`, la contagion passait a NaN, et le
+    // reflexe avec elle — DEFINITIVEMENT, puisqu'un NaN ne redescend jamais.
+    //
+    // Mesure : 116 hommes sur 604 avaient un reflexe qui n'etait pas un
+    // nombre ; leur election retombait sur `courant`, c'est-a-dire `plante`,
+    // pour toute la nuit. Une bataille de six cents secondes rendait ZERO mort
+    // et un verrou intact — et l'on a d'abord accuse la depose de `morale`,
+    // puis l'election de `sideration`.
+    //
+    // Un champ absent sur UNE branche de retour est la panne la plus chere de
+    // toute la seance, et la moins visible : rien n'a jete, rien n'a prevenu.
+    if (!voisins || !voisins.length)
+      return { contagion: -1, imitation, apaise: 1 };
     let somme = 0, poids = 0;
+    // Ce que les signes autour de lui apaisent, de 1 (rien) à 0 (une hampe
+    // debout à trois pas). Le PLUS FORT gagne : on ne cumule pas deux
+    // bannières, on se rassure de la meilleure.
+    let apaise = 1;
     for (const v of voisins) {
       if (!v.ami) continue;
       // On le voit (ou pas). Le cap relatif sert de `deFace` : ce qui est
@@ -470,23 +598,75 @@
       // l'oreille, et seulement pour la part qui en fait. De nuit il ne reste
       // que le bruit — donc on sait qu'un homme court, on ne sait pas qu'un
       // autre a baissé les bras.
-      const bruit = Math.max(AUDIBLE[v.jambes] || 0, AUDIBLE[v.bras] || 0);
-      const per = Math.max(vu, entendu * bruit) * pres(v.distance, M.COUDE_M);
+      // CE QU'IL PORTE PRIME SUR CE QU'IL FAIT, et se lit de plus loin. Une
+      // hampe debout n'est pas un geste : c'est un FAIT, et il rassure même
+      // quand celui qui la tient recule.
+      const porte = v.porte || null;
+      const bruit = porte ? (SIGNE_AUDIBLE[porte] || 0)
+                          : Math.max(AUDIBLE[v.jambes] || 0, AUDIBLE[v.bras] || 0);
+      // ⚠ CE QUE « SOURD » VEUT DIRE, ET CE N'EST PAS UN DRESSAGE. Le corps
+      // des faux gueux « n'écoute rien, ni un ordre ni un mort : il avance au
+      // cantique et il avancera jusqu'au bout ». Ce n'est ni du courage ni de
+      // l'entraînement — c'est une FERMETURE DU CANAL SOCIAL. Il voit tomber
+      // son voisin comme n'importe qui ; ça ne lui fait rien.
+      //
+      // Elle vit donc sur la perception et pas dans les acquis : un homme
+      // sourd n'a pas appris à tenir, il n'entend pas ce qui fait partir les
+      // autres. C'est la différence entre un vétéran et un fanatique, et le
+      // modèle ne savait pas la dire tant que tout passait par le dressage.
+      const echelle = porte ? (PORTEE_SIGNE[porte] || M.COUDE_M) : M.COUDE_M;
+      const per = Math.max(vu, entendu * bruit) * pres(v.distance, echelle);
       if (per <= 0.001) continue;
-      const lu = Math.max(LISIBLE[v.jambes] == null ? 0 : LISIBLE[v.jambes],
-                          LISIBLE[v.bras] == null ? -1 : LISIBLE[v.bras]);
+      const lu = porte ? PORTE[porte]
+                       : Math.max(LISIBLE[v.jambes] == null ? 0 : LISIBLE[v.jambes],
+                                  LISIBLE[v.bras] == null ? -1 : LISIBLE[v.bras]);
       // Ce qu'il montre, ce qu'il montre DEPUIS COMBIEN DE TEMPS, et de combien
       // sa peur pese plus que son calme. Les trois se multiplient.
       const neuf = 1 + INITIATEUR * Math.exp(-(v.depuis == null ? 9 : v.depuis) / NEUF_S);
+      // ⚠ UN SIGNE N'EST PAS UN VOISIN, ET IL NE VOTE PAS. Première version :
+      // la bannière entrait dans la moyenne pondérée comme un homme, avec sa
+      // lecture de −1 et sa portée de quarante mètres. Tout homme de la
+      // formation en avait donc une dans sa liste, en permanence, et elle
+      // DILUAIT le pic de n'importe quel fuyard : mesure faite, 95 morts et
+      // ZÉRO fuyard sur une cuisson entière. Plus personne ne rompait, jamais.
+      //
+      // C'est la même faute que `LISIBLE` épinglant la contagion à −0,4, mais
+      // par le haut : une source constante, maximale et omniprésente écrase
+      // toute variation — et la contagion est une DÉRIVÉE, donc elle meurt.
+      //
+      // Un signe est un CONTEXTE, pas un pair. Il ne dit pas « voilà ce qui se
+      // passe », il dit « voilà ce sur quoi tu peux compter ». Il module donc
+      // ce que les hommes transmettent, au lieu de s'y ajouter — et il garde
+      // son percept : il passe par les canaux, la nuit le mange, le vacarme
+      // mange le chef.
+      if (porte) { apaise = Math.min(apaise, 1 + lu * per); continue; }
       const w = per * neuf * (1 + PANIQUE * Math.max(0, lu));
       somme += lu * w; poids += w;
-      for (const g of [v.jambes, v.bras])
+      // UN SIGNE NE S'IMITE PAS : on ne « fait » pas une bannière. Il rassure
+      // ou il alarme, il n'entraîne aucun geste.
+      if (!porte) for (const g of [v.jambes, v.bras])
         if (g) imitation[g] = (imitation[g] || 0) + per * neuf;
     }
     let tot = 0;
     for (const g in imitation) tot = Math.max(tot, imitation[g]);
     for (const g in imitation) imitation[g] /= (tot || 1);
-    return { contagion: poids > 0 ? somme / poids : -1, imitation };
+    // ⚠ LA SURDITÉ S'APPLIQUE AU RÉSULTAT, PAS AUX POIDS — et la première
+    // version l'avait mise sur `per`, donc au numérateur ET au dénominateur
+    // d'une moyenne pondérée. Un gain uniforme s'y SIMPLIFIE : mesure faite,
+    // la contagion valait +0,97 pour un homme ouvert comme pour un sourd à
+    // 0,85. La fermeture ne changeait rien du tout, et rien à la lecture ne
+    // le disait.
+    //
+    // ET ELLE NE TOUCHE QUE LA CONTAGION, PAS L'IMITATION. C'est une
+    // distinction plus fine que ce qu'on avait en tête, et elle est plus
+    // vraie : le fanatique IMITE SANS S'ÉMOUVOIR. Il marche avec les autres,
+    // il se resserre avec eux, il fait ce qu'ils font — il n'est simplement
+    // pas remué par leur peur. Un corps qui avance au cantique n'est pas un
+    // corps isolé, c'est un corps que rien n'atteint.
+    const sourd = Math.max(0, Math.min(1, (ctx && ctx.sourd) || 0));
+    const brut = poids > 0 ? somme / poids : -1;
+    return { contagion: -1 + (1 - sourd) * (brut + 1), imitation,
+             apaise: Math.max(0, Math.min(1, apaise)) };
   };
 
   // ---- LA MENACE -----------------------------------------------------------
@@ -541,7 +721,7 @@
   // revers → réflexe plus haute.
   const surdite = (reflexe) => Math.pow(Math.max(0, (reflexe + 1) / 2), 2);
 
-  // LE TUNNEL — le champ visuel se rétrécit sous l'réflexe. La boucle la plus
+  // LE TUNNEL — le champ visuel se rétrécit sous le réflexe. La boucle la plus
   // vicieuse et la plus vraie : peur → on ne voit plus partir les coups → on est
   // surpris → peur. Un homme qui commence à avoir peur devient OBJECTIVEMENT
   // plus facile à tuer, ce qui justifie sa peur.
@@ -635,6 +815,27 @@
     soudainete: Math.max(0, vient),
   });
 
+  // 7. LE SIGNE QUI TOMBE — vue. LE SEUL STIMULUS QUI PORTE LOIN, et il fallait
+  // qu'il existe : une banniere abattue se voit d'un bout a l'autre d'une aile,
+  // la ou tout le reste du repertoire tient dans les six metres du coude.
+  //
+  // Il vient de `CHOC_BANN` — « ce que coute la voir tomber, a TOUTE l'aile » —
+  // et c'est la seule piece du modele de morale qui n'avait aucun equivalent
+  // ici. La deposer sans l'ecrire aurait retire au commandement sa
+  // VULNERABILITE : un etat-major qu'on ne peut plus frapper.
+  //
+  // Sa portee est passee en argument et non ecrite ici : ce n'est pas une
+  // mesure du corps, c'est une propriete de la CHOSE qu'on regarde — une
+  // banniere se voit a cent dix metres, un homme a six.
+  const signeTombe = (d, portee) => ({
+    quoi: "le signe tombe", canal: "vue", deFace: 1,
+    // Lineaire et non en 1/(1+x²) : une banniere ne se voit pas « un peu
+    // moins » de loin, elle se voit ou elle ne se voit pas, et entre les deux
+    // c'est la certitude qui s'effrite, pas la taille.
+    force: Math.max(0, 1 - d / (portee || 110)),
+    soudainete: 1,
+  });
+
   // ===========================================================================
   // L'HABITUATION — double processus, et c'est ce qui fait le vétéran
   // ===========================================================================
@@ -673,6 +874,29 @@
   const saillance = (st, ctx, hab) =>
     Math.max(0, st.force) * Math.max(0, st.soudainete)
     * gain(st.canal, ctx, st.deFace) * (1 - Math.min(1, hab || 0));
+
+  // ⚠ L'ARMEMENT N'EST PAS LA SAILLANCE — DEUX QUESTIONS, DEUX MESURES.
+  //
+  //   la saillance répond à « EST-CE QUE ÇA FAIT SURSAUTER ? » — c'est une
+  //     question de glande, et la soudaineté y a toute sa place ;
+  //   l'armement répond à « EST-CE QUE ÇA ARME UNE PARADE ? » — et ce n'en est
+  //     pas une.
+  //
+  // Les confondre a rendu `parer` inélisible, et le fichier se contredisait
+  // déjà tout seul : le commentaire de `ferQuiVient` dit à la fois que sa
+  // soudaineté est faible PAR DÉFINITION (« ce qu'on voit venir ne fait pas
+  // sursauter ») et que « ça arme une parade ». Les deux ne tiennent ensemble
+  // que si l'armement ne passe pas par la soudaineté.
+  //
+  // Mesure, de jour, un fer qui part à 0,15 s : force 0,682 × soudaineté 0,322
+  // = saillance 0,164, donc un appel de parade à −0,67 — battu par la garde
+  // (0,126 contre 0,274). Sans la soudaineté, le même fer arme à 0,509.
+  //
+  // Un homme voit très bien venir le coup qu'il pare : c'est même la seule
+  // façon de parer. Ce qu'il ne fait pas, c'est sursauter.
+  const armement = (st, ctx, hab) =>
+    Math.max(0, st.force) * gain(st.canal, ctx, st.deFace)
+    * (1 - Math.min(1, hab || 0));
 
   // CE QU'IL RESTE D'UN STIMULUS APRÈS COUP — la décroissance du sursaut.
   // Pure : elle ne lit que deux dates et une durée, exactement comme le test de
@@ -725,14 +949,49 @@
   // chose », jamais « ou j'en suis » :
   //
   //   LES PICS — la saillance du stimulus le plus fort de ce battement ;
-  //   LA CONTAGION — l'réflexe que les autres MONTRENT. C'est le seul signal
+  //   LA CONTAGION — l'alarme que les autres MONTRENT. C'est le seul signal
   //     continu qui parle d'eveil et non de situation, et il a sa place ici :
   //     la panique se prend au niveau de l'activation, pas seulement du choix.
-  const activer = (reflexe, cible, dt) => {
+  const activer = (reflexe, cible, dt, fond, apaise) => {
     const a = reflexe == null ? -1 : reflexe;
-    // Deux constantes de temps : on s'réflexe en quelques secondes, on se calme
+    // ET LA DESCENTE EST PERSONNELLE. C'est ce que `humeur: "versatile"` disait
+    // dans la bataille — « il rompt TÔT et se reprend VITE ; Tam reflue de
+    // cinquante pas et revient, trois fois ». La reprise n'est pas du courage :
+    // c'est la vitesse à laquelle une décharge retombe, et elle suit le FOND,
+    // comme le souffle. Celui qui en a se vide moins vite et se refait plus
+    // vite — un seul chiffre, deux effets opposés, comme dans un corps.
+    //
+    // La MONTÉE, elle, ne se négocie pas : une glande est une glande, et
+    // personne n'a d'adrénaline lente.
+    // Deux constantes de temps : on s'alarme en quelques secondes, on se calme
     // en une minute. L'asymetrie est le fait, pas les valeurs.
-    const tau = cible > a ? M.MONTEE_S : M.DESCENTE_S;
+    const f = fond == null ? 1 : Math.max(0.4, Math.min(1.8, fond));
+    // ET IL Y A UNE SECONDE MOITIE, QUI NE VIENT PAS DE LUI. `fond` est ce
+    // qu'un homme a DANS le ventre ; `apaise` est ce qu'il a SOUS LES YEUX —
+    // sa banniere encore debout, son chef a portee de voix. Meme effet, deux
+    // sources, et il fallait les deux : sans la seconde, la depose de `morale`
+    // retirerait au commandement le seul moyen qu'il ait de PROTEGER ses
+    // hommes au lieu de les deplacer.
+    //
+    // ⚠ CE N'EST PAS UN PLANCHER, et c'est la seule chose a verifier ici. Ca
+    // ne touche PAS la cible : un homme sous sa banniere a exactement aussi
+    // peur qu'un autre du meme coup. Il s'en remet plus vite, c'est tout —
+    // c'est une constante de temps, donc l'appareil, et non un terme ajoute a
+    // ce qu'il ressent. `TIENT_BANN` disait deja exactement cela : il
+    // multipliait la REPRISE de la morale, jamais son niveau.
+    // ⚠ ON SATURE, ON N'ECRETE PAS — et la premiere version de cette ligne
+    // etait un `Math.min(4, …)`, c'est-a-dire precisement la faute que le
+    // README nomme. Mesure : sous sa banniere ET avec son chef a quinze
+    // metres, un homme se calmait exactement aussi vite qu'avec le chef seul.
+    // La banniere ne servait a rien des qu'un chef etait la, non pas parce que
+    // le modele le dit, mais parce que la borne avait mange le produit.
+    //
+    // L'asymptote est le fait a defendre, pas le plafond : quoi qu'un homme
+    // ait sous les yeux, une glande ne se vide pas instantanement. Six fois
+    // plus vite au maximum — quarante-cinq secondes qui deviennent sept ou
+    // huit — et l'on s'en approche sans jamais y toucher.
+    const ap = 1 + M.APAISE_MAX * sature((Math.max(1, apaise || 1) - 1) / M.APAISE_MAX, 1);
+    const tau = cible > a ? M.MONTEE_S : M.DESCENTE_S / (f * ap);
     return a + (cible - a) * (1 - Math.exp(-dt / tau));
   };
 
@@ -827,9 +1086,25 @@
   const appels = (s, top) => {
     const im = (g, v) => v + IMITE * (1 - Math.abs(v)) *
                          (((s.imitation && s.imitation[g]) || 0) * 2 - 1);
-    // `top` est le stimulus le plus saillant du battement : c'est LUI qui arme
-    // les gestes brefs. Les gestes longs, eux, viennent des niveaux.
-    const q = top ? top.quoi : null, sal = top ? top.saillance : 0;
+    // ⚠ UN GESTE BREF S'ARME SUR SON PROPRE STIMULUS, PAS SUR LE PLUS FORT.
+    //
+    // Ces trois appels lisaient `top.quoi` — c'est-à-dire « mon stimulus
+    // était-il le plus bruyant du battement ? ». La faute était invisible tant
+    // que `ferQuiVient` n'était pas émis ; elle est sortie à la minute où on
+    // l'a branché sur la vraie bataille.
+    //
+    // Mesure : de nuit, un fer qui part à deux dixièmes rend une saillance de
+    // 0,04 — la vue tombe à un tiers, et sa SOUDAINETÉ vaut 0,25 par
+    // définition (ce qu'on voit venir ne fait pas sursauter). N'importe quel
+    // contact le couvre. `parer` ne pouvait donc JAMAIS être élu : son appel
+    // valait −1 en permanence, et l'on aurait pu retirer le geste du fichier
+    // sans que rien ne change.
+    //
+    // C'est la même erreur de forme que la latence-filtre : un `max` posé là où
+    // il fallait une adresse. On garde donc les saillances PAR STIMULUS, et
+    // chaque geste bref va chercher la sienne. Le `top` reste ce qu'il est —
+    // ce qui tient l'homme —, mais il ne sert plus qu'à la glande.
+    const de = (quoi) => (top && top.par && top.par[quoi]) || 0;
     return {
       // Appelé par l'ABSENCE de menace — c'est le seul geste dont l'appel soit
       // une négation, et c'est ce qui en fait le repos.
@@ -841,18 +1116,41 @@
       "serrer":     im("serrer", melange([[-s.coude, 1.2], [-s.appui, 1], [s.menace, 0.8]])),
       // Le seul geste armé par un ÉVÉNEMENT et par lui seul : il répond à un
       // coup, pas à une situation.
-      "dérobade":   (q === "coup frôlé" || q === "coup reçu" ? sal : 0) * 2 - 1,
+      "dérobade":   Math.max(de("coup frôlé"), de("coup reçu")) * 2 - 1,
       // Appelée par la contagion d'abord, la menace ensuite — et IMPOSSIBLE sans
       // issue. On multiplie au lieu de moyenner : être acculé ne rend pas la
       // fuite moins souhaitable, il la rend irréalisable. Une moyenne aurait
       // laissé un homme au pied d'un mur courir à moitié.
-      "fuite":      ((melange([[q === "les siens s'en vont" ? sal * 2 - 1 : -1, 1.2],
+      "fuite":      ((melange([[de("les siens s'en vont") * 2 - 1, 1.2],
                                [s.menace, 1], [-s.appui, 0.8]]) + 1)
                      * (s.issue + 1) / 2) - 1,
       "ruée":       im("ruée", melange([[s.menace, 1], [-s.issue, 1], [s.souffle, 0.8]])),
       // SE FIGER N'EST APPELÉ PAR RIEN DE PROPRE : il n'a pas de déclencheur. Il
       // gagne quand les cinq autres sont faibles, ce qui EST sa définition.
-      "sidération": im("sidération", s.menace),
+      //
+      // ⚠ ET LA LIGNE DISAIT L'INVERSE DE CE COMMENTAIRE. Elle lisait `menace`,
+      // c'est-à-dire LE SIGNAL LE PLUS FORT DU MODÈLE : un homme au contact
+      // maximal portait donc un appel de sidération à +1,00 en permanence. Ce
+      // n'était pas « ce qui reste quand rien ne sort », c'était le favori.
+      //
+      // Mesure, au fer, débordé, entamé, dos dégagé — le pire cas ordinaire :
+      // sidération 0,754 contre fuite 0,486 et recul 0,415. Les hommes ne
+      // fuyaient pas parce qu'ils se figeaient, et la dépose de `morale` l'a
+      // rendu visible d'un coup : zéro fuyard sur six cents secondes et
+      // quatre-vingt-quinze morts.
+      //
+      // ZÉRO N'EST PAS UNE CONSTANTE RÉGLÉE, c'est le point neutre de
+      // l'échelle : ni appelé, ni repoussé. C'est la seule écriture qui dise
+      // « pas de déclencheur » sans en inventer un.
+      //
+      // ET LE MÉCANISME QU'ON VOULAIT EST INTACT, c'est même le test : un
+      // conscrit acculé, dont la fuite est annulée par `issue` et le recul
+      // interdit par la presse, se fige toujours — parce que les autres sont à
+      // zéro, pas parce qu'on l'a poussé. C'est l'écrasement de foule, et il
+      // sort du modèle au lieu d'une branche.
+      //
+      // L'imitation reste : on se fige aussi parce que le rang se fige.
+      "sidération": im("sidération", 0),
       // ⚠ LA GARDE EST LE REPOS DES BRAS, comme `planté` est celui des jambes,
       // et elle etait appelee par la seule menace — donc a −1 des qu'aucun
       // ennemi n'etait proche. Un homme EN MARCHE, loin de tout, avait donc un
@@ -864,7 +1162,7 @@
       // qui en porte une, menace ou pas, et la menace ne fait que le renforcer.
       "garde":      im("garde", melange([[0.5, 1], [s.menace, 1]])),
       "frapper":    s.aPortee ? im("frapper", s.menace) : -1,
-      "parer":      (q === "fer qui vient" ? sal : 0) * 2 - 1,
+      "parer":      de("fer qui vient") * 2 - 1,
       // ET `ballants` DEMANDE QUE TOUT AILLE MAL A LA FOIS. En moyenne, il
       // suffisait qu'un seul des trois termes soit defavorable pour qu'il
       // passe devant une garde a −1. En PRODUIT, un homme qui a encore du
@@ -893,6 +1191,47 @@
   const INTERDIT_BRAS = {
     // On ne repasse jamais du bras mort au coup porté sans repasser par la garde.
     "ballants": new Set(["frapper", "parer"]),
+  };
+
+  // ===========================================================================
+  // LA PORTE (c) : LA DYSRÉGULATION — quels gestes exigent que le corps AIT LA MAIN
+  // ===========================================================================
+  // LE FICHIER SE CONTREDISAIT ICI, ET IL FAUT DIRE COMMENT ON TRANCHE.
+  //
+  //   Le réflexe déclare : « il n'entre dans aucun appel, et il ne doit jamais y
+  //   entrer » — sinon il redevient la barre de morale, un scalaire qui résume
+  //   tout et décide tout.
+  //   Le relevé du banc déclare l'inverse : « les appels court-circuitent la
+  //   glande », puisqu'ils lisent `menace`, instantané, au lieu de ce que le
+  //   corps RESSENT.
+  //
+  // La mesure départage, et elle dit quelque chose de plus precis que les deux :
+  // le conscrit rompt a 0,0 s, sans un stimulus, **avec `emprise` a 0,00**. Un
+  // geste de corps elu pendant que le corps ne tient rien du volant.
+  //
+  // Le fautif n'etait donc pas que les appels ignorent la glande. C'est
+  // qu'`emprise` SORT de la couche vers les trois autres et n'agit JAMAIS a
+  // l'interieur d'elle-meme. On l'applique ou elle manquait, et l'on n'ajoute
+  // aucun terme aux appels : le reflexe ne choisit toujours rien, il decide
+  // seulement de combien le repertoire du corps a le droit de s'exprimer.
+  //
+  // CE QUI JUSTIFIE LA LISTE, ET ELLE EST COURTE. Fuir, se figer, se ruer sont
+  // les trois gestes dont le NOM MEME est « le corps a pris la main ». Un homme
+  // calme, meme mal dresse, ne part pas en courant : il reste plante, mal a
+  // l'aise. Les autres ne sont pas ici — tenir, se resserrer, garder, frapper,
+  // parer, rompre d'un pas sont des gestes qu'on fait tres bien de sang-froid,
+  // et la derobade est une adresse avant d'etre une panique.
+  //
+  // `ballants` n'y est pas non plus, et c'est le cas limite qui montre la
+  // regle : il a un moteur qui n'est PAS la peur — l'epuisement. Un homme a
+  // bout laisse tomber les bras en toute lucidite, et le lui interdire serait
+  // faire dire a l'emprise autre chose que ce qu'elle dit.
+  //
+  // La ruee est a 0,7 et non a 1 : on charge aussi sur ordre, et de sang-froid.
+  const SOUS_EMPRISE = { "fuite": 1, "sidération": 1, "ruée": 0.7 };
+  const dysregule = (geste, empr) => {
+    const b = SOUS_EMPRISE[geste];
+    return b == null ? 1 : (1 - b) + b * Math.max(0, Math.min(1, empr));
   };
 
   // PORTE (b) : L'EXÉCUTION. Il reçoit le stimulus et ne peut pas répondre —
@@ -948,6 +1287,7 @@
     }
     const ctx = {
       reflexe: c.reflexe, nuit: p.nuit, presse: p.presse, bras: c.bras,
+      sourd: c.sourd || 0,
       vacarme: vacarme(p.presse, s.ennemisProches),
     };
 
@@ -983,8 +1323,11 @@
       const brut = sg.contagion;
       c.social = c.social == null ? brut
         : c.social + (brut - c.social) * (1 - Math.exp(-dt / M.AMBIANT_S));
+      // L'APAISEMENT MULTIPLIE LE SURSAUT, il ne le décale pas : sous une
+      // bannière debout, ce qui passe des autres passe moins fort — et ce
+      // n'est pas la même chose que d'avoir moins peur soi-même.
       s.contagion = Math.max(-1, Math.min(1,
-        2 * Math.max(0, (brut - c.social) / M.SURSAUT_SOCIAL) - 1));
+        2 * Math.max(0, (brut - c.social) / M.SURSAUT_SOCIAL) * sg.apaise - 1));
       s.appui = couverture(p.voisins);
       s.coude = coude(p.voisins);
       // LES DEUX SORTIES POSTURALES. Elles ne participent a AUCUNE election :
@@ -1044,11 +1387,23 @@
     const restants = [];
     for (const st of c.attente) {
       if (p.t + 1e-9 < (st.t || 0) + LATENCE[st.canal]) { restants.push(st); continue; }
-      const sal = saillance(st, ctx, c.hab[st.canal]);
-      c.hab[st.canal] = habituer(c.hab[st.canal], sal, dt);
+      // L'accoutumance D'AVANT ce stimulus : les deux mesures doivent lire la
+      // meme, sinon l'armement paie une habituation que le stimulus vient de
+      // creer lui-meme.
+      const habAvant = c.hab[st.canal];
+      const sal = saillance(st, ctx, habAvant);
+      c.hab[st.canal] = habituer(habAvant, sal, dt);
       touches.add(st.canal);
-      if (!frais || sal > frais.saillance)
-        frais = { quoi: st.quoi, saillance: sal, canal: st.canal };
+      // `par` : la saillance de CHAQUE stimulus de ce battement, a son nom. Le
+      // `max` reste pour la glande ; les gestes brefs, eux, vont chercher le
+      // leur. Voir la note dans `appels`.
+      if (!frais) frais = { quoi: st.quoi, saillance: sal, canal: st.canal, par: {} };
+      // `par` porte l'ARMEMENT, pas la saillance : ce qui arme un geste bref
+      // n'est pas ce qui fait sursauter. Voir `armement`.
+      frais.par[st.quoi] = Math.max(frais.par[st.quoi] || 0,
+                                    armement(st, ctx, habAvant));
+      if (sal > frais.saillance)
+        { frais.quoi = st.quoi; frais.saillance = sal; frais.canal = st.canal; }
       // L'écho ne garde qu'un stimulus par canal : le plus fort de ceux qui
       // sonnent encore. On ne les somme pas — deux coups ne font pas deux fois
       // peur, c'est le plus violent qui tient l'homme.
@@ -1086,13 +1441,18 @@
     // garde : s'il casse, c'est qu'un plancher est revenu par cette porte.
     const cible = Math.max(top ? top.saillance * 2 - 1 : -1,
                            s.contagion == null ? -1 : s.contagion);
-    c.reflexe = activer(c.reflexe, cible, dt);
+    c.reflexe = activer(c.reflexe, cible, dt, c.fond, p.apaise);
 
     // --- 3. l'élection, piste par piste ------------------------------------
     // `frais`, PAS `top` : les gestes brefs répondent au coup de ce battement.
     // Voir la note des deux sorties à l'étape 1 — c'est la moitié de la
     // correction du décours, et c'est celle qui se voit le moins.
     const ap = appels(s, frais), ac = acquis(c);
+    // DE COMBIEN LE CORPS TIENT LE VOLANT — et il le tient d'abord sur SES
+    // PROPRES gestes. C'est le même nombre qu'on rend aux couches 2, 3 et 4 ;
+    // il n'y a pas deux emprises, il y en avait une qui ne s'appliquait qu'au
+    // dehors. Voir `SOUS_EMPRISE`.
+    const empr = emprise(c.reflexe, c);
     const elire = (liste, courant, interdits) => {
       // LES DEUX MOITIÉS REVIENNENT SUR [0, 1] AVANT DE SE MULTIPLIER, et ce
       // n'est pas un détail d'échelle : sur [−1, 1], deux négatifs donneraient
@@ -1101,7 +1461,7 @@
       let quoi = courant, fort = -1;
       const table = {};
       for (const g of liste) {
-        const v = ((ap[g] + 1) / 2) * ((ac[g] + 1) / 2);
+        const v = ((ap[g] + 1) / 2) * ((ac[g] + 1) / 2) * dysregule(g, empr);
         table[g] = v;
         if (interdits[courant] && interdits[courant].has(g)) continue;
         if (liste === JAMBES && !possible(g, s, ctx)) continue;
@@ -1138,7 +1498,7 @@
 
     return {
       jambes: c.jambes, bras: c.bras, reflexe: c.reflexe,
-      emprise: emprise(c.reflexe, c),
+      emprise: empr,
       // Ou le corps veut se porter, et ou il veut faire face. Le premier ne
       // sert que pendant `serrer`, le second tout le temps.
       ouverture: s.ouverture, alignement: s.alignement,
@@ -1191,13 +1551,13 @@
   // ===========================================================================
   const API = { M, sature, part, melange, pres, logUnif,
                 integrite, souffle, couverture, ouverture, alignement, coude,
-                signes, LISIBLE, AUDIBLE,
+                signes, LISIBLE, AUDIBLE, PORTE, PORTEE_SIGNE,
                 menace, issue,
                 LATENCE, vacarme, surdite, tunnel, gain,
-                coupRecu, coupFrole, ferQuiVient, voisinTombe, voisinPart, dansLeDos,
-                habituer, prehabituer, saillance, resonne, activer, emprise,
+                coupRecu, coupFrole, ferQuiVient, voisinTombe, voisinPart, dansLeDos, signeTombe,
+                habituer, prehabituer, saillance, armement, resonne, activer, emprise,
                 JAMBES, BRAS, acquis, appels, INTERDIT_JAMBES, INTERDIT_BRAS,
-                possible, coupler, pas, phrase, PHRASES };
+                possible, SOUS_EMPRISE, dysregule, coupler, pas, phrase, PHRASES };
 
   // Il doit tourner dans node SEUL, sans faux navigateur : c'est la condition
   // pour qu'on puisse le mesurer au lieu de le regarder.

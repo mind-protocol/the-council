@@ -59,10 +59,13 @@ const NIVEAUX = [
   { n: 2, nom: "ce qu'un rapport retient",
     dit: "ce qu'un clerc à tablette de cire aurait su écrire au matin",
     quoi: ["porte-cede", "chef-tombe", "escouade-rompt", "guet-a-vu",
-           "maison-brulee", "corps-ferme", "corps-sourd", "corps-versatile"] },
+           "maison-brulee", "corps-ferme", "corps-sourd", "corps-versatile",
+           // L'état d'un ouvrage AVANT qu'on le frappe : ça n'a tué personne,
+           // et ça décide de l'heure à laquelle la ville tombe.
+           "porte-abimee"] },
   { n: 3, nom: "la nuit telle qu'elle s'est jouée",
     dit: "les ordres, les coureurs, les bannières, la peur qui court",
-    quoi: ["ordre", "coureur-part", "coureur-arrive", "coureur-tombe",
+    quoi: ["ordre", "coureur-part", "coureur-arrive", "coureur-tombe", "ordre-sans-personne",
            "ordre-deforme", "declencheur-tombe", "initiative",
            "escouade-sourde", "escouade-reprise", "nouveau-chef",
            "banniere-tombe", "banniere-relevee", "ralliement",
@@ -79,7 +82,7 @@ const ASPECTS = {
   commandement: {
     nom: "La chaîne de commandement",
     dit: "qui ordonne, qui transmet, qui n'entend plus rien",
-    quoi: ["ordre", "coureur-part", "coureur-arrive", "coureur-tombe",
+    quoi: ["ordre", "coureur-part", "coureur-arrive", "coureur-tombe", "ordre-sans-personne",
            // Ce que la chaîne fait quand elle ne marche pas : elle s'abîme,
            // elle attend, ou elle se passe de tête. Les trois sont ici, avec
            // le reste, parce que c'est le même sujet.
@@ -101,12 +104,13 @@ const ASPECTS = {
     nom: "Ce qui se sait",
     dit: "l'information qui circule — ou qui tombe en chemin",
     quoi: ["guet-a-vu", "rumeur-gagne", "peur-gagne", "roi-averti",
-           "coureur-part", "coureur-arrive", "coureur-tombe", "ordre-deforme",
+           "coureur-part", "coureur-arrive", "coureur-tombe", "ordre-sans-personne", "ordre-deforme",
            "escouade-sourde", "escouade-reprise"] },
   ouvrages: {
     nom: "Les ouvrages",
     dit: "les portes, et par où l'on entre",
-    quoi: ["porte-cede", "porte-enfoncee", "porte-ouverte", "donjon-ouvert"] },
+    quoi: ["porte-abimee", "porte-cede", "porte-enfoncee", "porte-ouverte",
+           "donjon-ouvert"] },
   issue: {
     nom: "L'issue",
     dit: "comment la nuit s'est décidée",

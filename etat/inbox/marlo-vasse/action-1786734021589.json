@@ -1,0 +1,112 @@
+{
+  "type": "vue",
+  "fichier": "etat/vues/marlo-vasse-1786734021583.webp",
+  "index": "etat/vues/marlo-vasse.json",
+  "montre": "cette vue montre : la vue du joueur — plus serrée que la fenêtre demandée",
+  "heure": "12h00",
+  "large_en_metres": 21,
+  "metres_par_pixel": 0.04,
+  "couches": [
+    "foule",
+    "bataille"
+  ],
+  "bataille": {
+    "temps": 1058.2,
+    "marche": true,
+    "branches": {
+      "il tient": 1078,
+      "il suit, il y est": 98,
+      "il appuie, il rejoint sa marge": 80,
+      "il tient la rue": 51,
+      "entamé, il cède le pas": 42,
+      "il cherche l'entrée de la rue,": 12,
+      "au contact": 6,
+      "débordé, il cède le pas": 5,
+      "il décroche en ordre": 5,
+      "il reprend son souffle": 4,
+      "il vide une maison": 3,
+      "il cogne la porte": 2,
+      "il suit, il rejoint sa marge": 2,
+      "nez": 1
+    },
+    "porte": "La porte de la Gadoue",
+    "objectif": "Le Donjon Rouge",
+    "verrou": {
+      "etat": "ouvert",
+      "pv": 0
+    },
+    "portes": [
+      {
+        "nom": "La porte de la Gadoue",
+        "etat": "ouvert",
+        "pv": 0,
+        "par": "essai"
+      },
+      {
+        "nom": "La porte de Fer",
+        "etat": "ouvert",
+        "pv": 0,
+        "par": "hache"
+      },
+      {
+        "nom": "La porte du Roi",
+        "etat": "ouvert",
+        "pv": 0,
+        "par": "hache"
+      },
+      {
+        "nom": "La Vieille Porte",
+        "etat": "ouvert",
+        "pv": 0,
+        "par": "hache"
+      }
+    ],
+    "arret": null,
+    "donjon": {
+      "averti": 1041.5499999996005,
+      "tranche": false,
+      "tenir": 1188.6,
+      "ouvrir": 1163.7,
+      "anneau": "tenu"
+    },
+    "assaut": 1383,
+    "garde": 428,
+    "morts": 267,
+    "blesses": 74,
+    "fuyards": 393,
+    "etats": {
+      "mort": 267,
+      "deroute": 393,
+      "blesse": 74,
+      "repli": 3,
+      "forme": 1174,
+      "commande": 5,
+      "colonne": 125,
+      "coureur": 6,
+      "melee": 7,
+      "pille": 3,
+      "tient": 493
+    },
+    "faits": 489,
+    "sac": {
+      "maisons": 45691,
+      "forcees": 72,
+      "brulees": 11,
+      "butin": 319
+    },
+    "ville": {
+      "paniques": 652,
+      "foyers": 60,
+      "barre": 4,
+      "terre": 63,
+      "fuite": 99,
+      "rentre": 451,
+      "arme": 17,
+      "contre": 18
+    },
+    "moraleMoyenne": 0.87
+  },
+  "joueur_id": "marlo-vasse",
+  "recu_a": "2026-08-14T19:00:21.589Z",
+  "_": "Une vue de la carte, centrée sur le joueur, telle qu'il l'a sous les yeux. OUVREZ LE FICHIER : c'est une image, et elle dit d'un coup d'œil ce que trois cents lignes de relevé disent mal — où la ligne a cédé, de quel côté la panique court, à combien de pas de la porte il se tient. Hors fiction : ce n'est ni une parole, ni un acte, ni une minute. Rien à écrire dans l'état, rien à répondre au joueur — c'est pour VOS yeux. Les dix dernières vues sont gardées en rotation et listées dans `index`, la plus récente en tête : les précédentes disent le MOUVEMENT, c'est-à-dire de quel côté ça se déplace, ce qu'une vue seule ne peut pas dire."
+}

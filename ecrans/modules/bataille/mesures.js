@@ -187,8 +187,52 @@
   }
 
   // ===========================================================================
+  // CE QUE LE COMMANDEMENT DOIT AU MONDE PHYSIQUE
+  // ===========================================================================
+  // ELLES VIENNENT DE `bataille2d.js`, ET ELLES SONT ICI PARCE QU'AUCUNE N'EST
+  // UN RÉGLAGE. Ce sont quatre faits sur des yeux, des oreilles et une largeur
+  // de porte : de combien loin on distingue une bannière levée, le temps qu'un
+  // homme met à la voir et à s'y mettre, de combien loin on voit céder un
+  // battant, et combien d'hommes tiennent de front dans six mètres.
+  //
+  // LE TEST DE L'EN-TÊTE LEUR EST APPLIQUÉ, UNE PAR UNE : *si une autre
+  // grandeur du modèle double, celle-ci doit-elle bouger ?* Non pour les
+  // quatre — doubler les points de vie, l'effectif ou la durée de la nuit ne
+  // change ni la portée d'un œil ni la largeur d'un seuil. Elles ont donc le
+  // droit d'être des nombres.
+  //
+  // ET ELLES NE SE RÈGLENT JAMAIS POUR OBTENIR UN COMPORTEMENT. Si une porte
+  // ne tombe pas, on ne monte pas `FRONT_PORTE` à douze : on cherche pourquoi
+  // sept hommes n'y suffisent pas. C'est la seule discipline qui distingue une
+  // mesure d'un bouton, et c'est la raison d'être de ce fichier.
+
+  /** Jusqu'où l'on distingue LAQUELLE des bannières est levée. Un drapeau se
+   *  voit de bien plus loin ; ce qu'on mesure ici est le moment où l'on peut
+   *  lire le signal, de nuit, par-dessus des têtes. */
+  const VUE_BANNIERE = 110;
+
+  /** Le temps de la voir, d'y croire, et de s'y mettre. C'est un temps de
+   *  réaction de groupe, pas de celui d'un homme — il faut que le chef lève la
+   *  tête, tranche, et que son rang le suive. */
+  const DELAI_BANN = 3.5;
+
+  /** Jusqu'où l'on voit tomber la chose qu'on attend. Plus loin qu'une
+   *  bannière, parce qu'une porte qu'on enfonce fait un bruit qu'une bannière
+   *  ne fait pas — c'est un seuil de vue ET d'ouïe, et c'est pour ça qu'il est
+   *  plus généreux. */
+  const VUE_DECLENCHEUR = 160;
+
+  /** Combien tiennent de front dans six mètres, une hache à la main. C'est la
+   *  largeur de la porte, et c'est la seule chose qui compte dans tout
+   *  l'assaut : trois cents hommes ne valent pas trois cents, ils valent sept à
+   *  la fois. Sans ce compte, le nombre décide — c'est-à-dire l'inverse d'un
+   *  siège. */
+  const FRONT_PORTE = 7;
+
+  // ===========================================================================
   const API = { ACTOR_AVERAGE_PV, ECART_PV, pvDUnHomme,
-                ALLONGE, CADENCE, DEGAT, ARMES, ARME_NUE, enFace, peutFrapper, RAD };
+                ALLONGE, CADENCE, DEGAT, ARMES, ARME_NUE, enFace, peutFrapper, RAD,
+                VUE_BANNIERE, DELAI_BANN, VUE_DECLENCHEUR, FRONT_PORTE };
   if (typeof module !== "undefined" && module.exports) module.exports = API;
   if (typeof window !== "undefined") window.BatailleMesures = API;
 })();

@@ -29,13 +29,20 @@
 //    performance. Cent `AudioBufferSourceNode` simultanés ne coûtent rien ;
 //    c'est l'oreille qui plafonne, pas le processeur.
 //
-// 3. CE QUI N'EST PAS JOUÉ N'EST PAS PERDU : ÇA PASSE DANS LA NAPPE. C'est le
+// 3. CE QUI N'EST PAS JOUÉ N'EST PAS PERDU : ÇA PASSE DANS LE FOND. C'est le
 //    point de conception, et il rend le problème trivial. Les événements non
-//    élus incrémentent la densité de la nappe au lieu de disparaître.
-//    L'énergie se conserve : sous le seuil de résolution, un son devient de la
-//    texture — ce qui est littéralement ce qu'est une foule. Pas de
-//    troncature, pas de « on a laissé tomber les autres » : une seule grandeur
-//    qui bascule d'un canal à l'autre.
+//    élus incrémentent une DENSITÉ au lieu de disparaître. L'énergie se
+//    conserve : sous le seuil de résolution, un son devient de la texture —
+//    ce qui est littéralement ce qu'est une foule. Pas de troncature, pas de
+//    « on a laissé tomber les autres » : une seule grandeur qui bascule d'un
+//    canal à l'autre.
+//
+//    CE QUE CETTE DENSITÉ ALLUME A CHANGÉ, et c'est le seul revirement de ce
+//    fichier. Elle pilotait trois bandes de bruit filtré ; ça sonnait comme
+//    une ventilation, on a corrigé deux fois, et le défaut n'était pas dans le
+//    réglage mais dans le matériau — une foule n'est pas du bruit qu'on filtre.
+//    Elle pilote désormais un DÉBIT DE GRAINS de vraies gorges (`grainer`).
+//    La règle est intacte, le canal a changé.
 //
 // 4. L'OREILLE EST AU PERSONNAGE, PAS À LA CAMÉRA. Le zoom est un œil, pas un
 //    corps. Si le mix se resserrait quand la vue approche, on fabriquerait une
@@ -148,7 +155,6 @@ window.Son = (() => {
   let ctx = null;                       // le contexte audio, créé au premier éveil
   let bus = null, stress = null, limiteur = null, maitre = null;
   let bruitBuffer = null;               // une seconde de bruit blanc, réutilisée partout
-  let nappe = null;                     // { grave, medium, aigu } → { gain, filtre }
   let horloge = null;                   // le battement d'ordonnancement
   let eveille = false;
 
@@ -216,34 +222,74 @@ window.Son = (() => {
     const d = bruitBuffer.getChannelData(0);
     for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
 
-    batirNappe();
     return true;
   }
 
-  // LA NAPPE. Elle ne se joue pas depuis un fichier bouclé — une boucle se
-  // reconnaît à la troisième écoute, et surtout elle ne répond à rien. Trois
-  // bandes de bruit filtré dont la densité et la brillance suivent le compte
-  // d'événements non élus : elle bouge avec le modèle, à la tranche près.
-  function batirNappe() {
-    const bandes = {
-      grave:  { f: 110,  q: 0.8, g: 0.32 },   // la masse, les pieds, le bâti qui renvoie
-      medium: { f: 520,  q: 0.9, g: 0.22 },   // les gorges
-      aigu:   { f: 3200, q: 0.7, g: 0.09 },   // le fer au loin
-    };
-    nappe = {};
-    for (const [nom, b] of Object.entries(bandes)) {
-      const src = ctx.createBufferSource();
-      src.buffer = bruitBuffer; src.loop = true;
-      // Chaque bande relit le bruit à sa propre vitesse : sans ça, les trois
-      // sont corrélées et l'on entend une seule couleur au lieu d'un champ.
-      src.playbackRate.value = 0.7 + Math.random() * 0.6;
-      const filtre = ctx.createBiquadFilter();
-      filtre.type = "bandpass"; filtre.frequency.value = b.f; filtre.Q.value = b.q;
-      const gain = ctx.createGain(); gain.gain.value = 0;
-      src.connect(filtre); filtre.connect(gain); gain.connect(bus);
-      src.start();
-      nappe[nom] = { gain, filtre, plafond: b.g, base: b.f };
-    }
+  // ───────────────────────────────────────────────────────────────────────────
+  // IL N'Y A PLUS DE NAPPE — retirée le 14 août, à l'oreille.
+  //
+  // Elle a existé, elle était défendable sur le papier, et elle sonnait mal.
+  // Trois bandes de bruit filtré, même respirantes, même à Q bas : ça reste du
+  // bruit à large bande, et l'oreille appelle ça une ventilation. On a corrigé
+  // deux fois — Q, modulation lente — et le défaut n'était pas là : il était
+  // dans le matériau. Une foule n'est pas du bruit qu'on filtre, c'est mille
+  // gorges et mille pieds. La seule façon d'en faire une est d'en semer les
+  // morceaux, et c'est `grainer()` qui le fait.
+  //
+  // CE QU'ON PERD, ET IL FAUT LE DIRE : la décision 3 du haut de ce fichier —
+  // « ce qui n'est pas joué passe dans la nappe » — n'est plus tenue par une
+  // bande continue. Elle l'est par le GRAIN, dont le débit sort de la même
+  // densité. C'est la même conservation ; le canal a changé, pas la règle.
+  // `densite` continue donc d'être tenue à jour : elle ne pilote plus un gain,
+  // elle pilote un débit de grains.
+  //
+  // Ce qui reste franchement muet : le grave (les pieds, la masse) et l'aigu
+  // (le fer au loin). Le jour où l'on voudra les rendre, ce sera par des
+  // grains eux aussi — des pas enregistrés, des chocs lointains —, jamais en
+  // rallumant une bande.
+
+  // ---- LE GRAIN — la foule est faite de gorges, pas de bruit ----------------
+  // Un morceau de murmure, pris au hasard dans un des fichiers de `houle`, à
+  // une hauteur et une position de départ tirées. Trois de ces grains qui se
+  // chevauchent font une foule ; du bruit filtré n'en fera jamais une.
+  //
+  // Ça ne passe PAS par l'élection et ça n'a pas de position : le grain est la
+  // texture elle-même. Son débit sort de la densité — c'est la version
+  // audible de « ce qui n'est pas joué s'épaissit ».
+  let grainDu = 0, grains = 0, avecGrain = true;
+  function grainer(maintenant) {
+    const banque = cris.houle;
+    if (!avecGrain || !banque || !banque.length) return;
+    const d = densite.medium;
+    if (d < 0.4) return;
+    // De un à huit grains par seconde selon l'épaisseur. Au-delà, ils se
+    // recouvrent complètement et l'on n'ajoute plus que du volume.
+    const parSeconde = Math.min(8, 0.8 + d * 0.9);
+    if (maintenant - grainDu < 1 / parSeconde) return;
+    grainDu = maintenant; grains++;
+
+    const buf = banque[(Math.random() * banque.length) | 0];
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    // Large dispersion de hauteur : c'est ce qui empêche de reconnaître les
+    // deux seuls fichiers dont on dispose.
+    src.playbackRate.value = 0.72 + Math.random() * 0.55;
+    const duree = 0.25 + Math.random() * 0.5;
+    const debut = Math.random() * Math.max(0.01, buf.duration - duree);
+
+    // Une enveloppe douce aux deux bouts : un grain coupé net fait un clic, et
+    // huit clics par seconde, c'est un moteur.
+    const g = ctx.createGain();
+    const pic = 0.5 * Math.min(1, d / 8);
+    g.gain.setValueAtTime(0.0001, maintenant);
+    g.gain.exponentialRampToValueAtTime(Math.max(0.0002, pic), maintenant + duree * 0.35);
+    g.gain.exponentialRampToValueAtTime(0.0001, maintenant + duree);
+
+    const pan = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
+    if (pan) pan.pan.value = Math.random() * 1.6 - 0.8;
+    src.connect(g);
+    if (pan) { g.connect(pan); pan.connect(bus); } else g.connect(bus);
+    src.start(maintenant, debut, duree + 0.05);
   }
 
   // ───────────────────────────────────────────────────────────────────────────
@@ -305,7 +351,24 @@ window.Son = (() => {
   // Un coup paré et un coup qui touche ne sont pas deux fichiers : ce sont deux
   // points de ce plan, et tout ce qu'il y a entre les deux existe aussi.
   // ───────────────────────────────────────────────────────────────────────────
-  const MODES = [1, 1.83, 2.71, 3.94, 5.21];   // rapports inharmoniques d'une plaque
+  // ⚠ POURQUOI ÇA SONNAIT COMME DU VERRE. Cinq SINUS purs à des rapports
+  // inharmoniques, avec une décroissance d'un demi-seconde : c'est la recette
+  // exacte d'un verre, d'un carillon, d'un glockenspiel. Trois erreurs
+  // empilées, et aucune n'était un réglage :
+  //
+  //   · UN SINUS PUR N'EST PAS DU MÉTAL. Un mode d'acier réel est un
+  //     RÉSONATEUR — une bande étroite excitée par du bruit —, pas une raie.
+  //     C'est la largeur de bande qui fait entendre « acier » plutôt que
+  //     « cloche ». On excite donc des bandpass à Q élevé, jamais des sinus.
+  //   · TROP LONG. Une lame qui en heurte une autre sonne 80 à 200 ms, pas une
+  //     demi-seconde. Un demi-seconde, c'est un verre à pied.
+  //   · TROP HAUT. On montait à 3 000 Hz de fondamental ; une lame ou une
+  //     plaque d'armure vit entre 600 et 1 800 Hz. Le suraigu est du cristal.
+  //
+  // Et un ajout qui fait beaucoup : les modes d'un objet frappé GLISSENT vers
+  // le bas en s'éteignant (la raideur chute avec l'amplitude). Sans ce glissé,
+  // même juste par ailleurs, un choc reste synthétique.
+  const MODES = [1, 1.71, 2.46, 3.62];         // rapports inharmoniques d'une plaque
 
   function fer(quand, ev) {
     const c = chaine(ev.x, ev.y, ev.metal > 0.5 ? "fer" : "chair", quand);
@@ -317,40 +380,59 @@ window.Son = (() => {
     // Le fondamental monte avec la brillance et se disperse d'un coup à
     // l'autre : deux lames ne sonnent jamais pareil, et c'est ce qui empêche
     // le filtre en peigne sans qu'on ait à le corriger après coup.
-    const f0 = (420 + 2600 * metal) * (0.82 + Math.random() * 0.36);
-    const duree = (0.04 + 0.55 * metal * metal) * (0.7 + 0.6 * force);
+    const f0 = (330 + 1150 * metal) * (0.78 + Math.random() * 0.44);
+    const duree = (0.03 + 0.17 * metal * metal) * (0.7 + 0.6 * force);
 
     // Le transitoire : six millisecondes de bruit, c'est l'attaque. Sans lui on
     // entend une cloche ; avec lui on entend un choc.
     const bruit = ctx.createBufferSource();
     bruit.buffer = bruitBuffer;
     bruit.playbackRate.value = 0.8 + Math.random() * 0.5;
+    // ET IL PORTE PLUS QUE LES MODES. Un choc d'acier, c'est aux deux tiers du
+    // transitoire large bande ; la résonance n'est que la queue. Tant que le
+    // rapport était inverse, on entendait la queue — c'est-à-dire la cloche.
     const gb = ctx.createGain();
-    gb.gain.setValueAtTime(0.5 * force, t);
-    gb.gain.exponentialRampToValueAtTime(0.0001, t + 0.006 + 0.02 * (1 - metal));
+    gb.gain.setValueAtTime(0.8 * force, t);
+    gb.gain.exponentialRampToValueAtTime(0.0001, t + 0.011 + 0.03 * (1 - metal));
     const passe = ctx.createBiquadFilter();
     passe.type = metal > 0.5 ? "highpass" : "lowpass";
     passe.frequency.value = metal > 0.5 ? 1200 : 700;
     bruit.connect(passe); passe.connect(gb); gb.connect(c.entree);
     bruit.start(t, Math.random() * 0.5); bruit.stop(t + 0.08);
 
-    // Les modes. Le nombre de partiels tenus décroît avec la chair : un coup
-    // dans un corps n'a pas de résonance, il a un thud.
-    const combien = 1 + Math.round(4 * metal);
+    // Les modes, en RÉSONATEURS et non en sinus. Une seule source de bruit,
+    // large et brève, excite trois ou quatre bandes étroites : c'est la
+    // définition physique d'un objet métallique frappé, et c'est ce qui fait
+    // entendre « acier » là où des sinus faisaient entendre « verre ».
+    // Le nombre de bandes tenues décroît avec la chair : un coup dans un corps
+    // n'a pas de résonance, il a un thud.
+    const combien = 1 + Math.round(3 * metal);
+    const corde = ctx.createBufferSource();
+    corde.buffer = bruitBuffer;
+    corde.playbackRate.value = 0.9 + Math.random() * 0.35;
+    corde.start(t, Math.random() * 0.5);
+    corde.stop(t + duree + 0.05);
     for (let i = 0; i < combien; i++) {
-      const o = ctx.createOscillator();
-      o.type = "sine";
-      o.frequency.value = f0 * MODES[i] * (0.995 + Math.random() * 0.01);
+      const bande = ctx.createBiquadFilter();
+      bande.type = "bandpass";
+      const f = f0 * MODES[i] * (0.98 + Math.random() * 0.04);
+      bande.frequency.setValueAtTime(f, t);
+      // LE GLISSÉ. La raideur d'une plaque chute avec l'amplitude : ses modes
+      // descendent de quelques pour cent pendant qu'ils s'éteignent. C'est
+      // inaudible en soi et c'est ce qui distingue un choc d'un bip.
+      bande.frequency.exponentialRampToValueAtTime(f * 0.93, t + duree);
+      // Q élevé pour tenir la note, mais pas au point d'en faire une raie :
+      // au-delà de 60 on retombe sur le sinus qu'on vient de retirer.
+      bande.Q.value = 14 + 22 * metal;
       const g = ctx.createGain();
-      const amp = (0.35 * force) / (1 + i * 1.4);
+      const amp = (0.5 * force) / (1 + i * 1.2);
       // Les partiels aigus s'éteignent les premiers — c'est ce qui fait qu'un
       // choc « s'assombrit » en mourant au lieu de baisser de volume.
-      const dm = duree / (1 + i * 0.5);
+      const dm = duree / (1 + i * 0.55);
       g.gain.setValueAtTime(0.0001, t);
       g.gain.exponentialRampToValueAtTime(Math.max(0.0002, amp), t + 0.002);
       g.gain.exponentialRampToValueAtTime(0.0001, t + dm);
-      o.connect(g); g.connect(c.entree);
-      o.start(t); o.stop(t + dm + 0.02);
+      corde.connect(bande); bande.connect(g); g.connect(c.entree);
     }
     return true;
   }
@@ -483,29 +565,21 @@ window.Son = (() => {
       fenetre = { voix: 0, nappe: 0, hors: 0, t: maintenant };
     }
     compte = { voix: 0, nappe: 0, hors: 0 };
-    reglerNappe(maintenant);
+    reglerFond(maintenant);
+    grainer(maintenant);
   }
 
-  // La nappe suit les constantes de l'adrénaline, pas celles de l'affichage :
-  // elle monte en une seconde et redescend en huit. C'est ce qui fait qu'une
-  // ville qui vient de se taire continue de gronder — et c'est vrai.
-  function reglerNappe(maintenant) {
-    for (const [nom, n] of Object.entries(nappe)) {
-      // Une densité de dix événements par tranche donne à peu près le plein :
-      // au-delà, l'oreille ne distingue plus « beaucoup » de « énormément »,
-      // et une saturation douce vaut mieux qu'un écrêtage.
-      const cible = n.plafond * Math.tanh(densite[nom] / 6);
-      const courant = n.gain.gain.value;
-      const tau = cible > courant ? M.MONTEE / 3 : M.DESCENTE / 3;
-      n.gain.gain.setTargetAtTime(cible, maintenant, tau);
-      // La brillance monte avec la densité : une foule qui s'échauffe monte
-      // dans les aigus avant de monter en volume.
-      n.filtre.frequency.setTargetAtTime(
-        n.base * (1 + 0.35 * Math.tanh(densite[nom] / 8)), maintenant, 0.6);
-      densite[nom] *= 0.55;   // la densité elle-même a de l'inertie
-    }
-    // La surdité de stress. Seize kilohertz au calme, deux à la panique : le
-    // dos cesse d'exister — ce qui est exactement le point.
+  // Ce qui reste de l'ancien `reglerNappe` : la densité, qui n'allume plus une
+  // bande mais nourrit le débit des grains, et la surdité de stress, qui est
+  // la seule chose du module à agir sur TOUT ce qui sort.
+  //
+  // L'inertie est celle de l'adrénaline, pas celle de l'affichage : ce qui
+  // s'épaissit vite met huit secondes à retomber. C'est ce qui fait qu'une
+  // ville qui vient de se taire continue de bruire — et c'est vrai.
+  function reglerFond(maintenant) {
+    for (const nom of Object.keys(densite)) densite[nom] *= 0.55;
+    // Seize kilohertz au calme, deux à la panique : le dos cesse d'exister,
+    // ce qui est exactement le point.
     stress.frequency.setTargetAtTime(
       16000 * Math.pow(0.14, surdite(oreille.alarme)), maintenant, 0.8);
   }
@@ -633,7 +707,7 @@ window.Son = (() => {
     eveille,
     voix: debit.voix, nappe: debit.nappe, hors: debit.hors,   // par seconde, pour l'œil
     cumul: { ...cumul },                                       // depuis l'éveil, pour la preuve
-    vivants, budget: budgetVoix(),
+    vivants, grains, budget: budgetVoix(),
     densite: { ...densite },
     alarme: oreille.alarme,
     // Ce que l'alarme FAIT, et non ce qu'elle vaut : le banc d'essai doit
@@ -644,6 +718,14 @@ window.Son = (() => {
     cris: Object.fromEntries(Object.entries(cris).map(([k, v]) => [k, v.length])),
   });
 
+  /**
+   * Le grain de foule — le seul fond qui reste. `grain(false)` laisse le champ
+   * entièrement muet entre les coups : plus une seule source continue, rien
+   * que les événements élus. C'est l'état le plus sec du module, et il est
+   * parfaitement jouable — une nuit de ville n'est pas bruyante.
+   */
+  const reglerGrain = (v) => { avecGrain = v !== false; return avecGrain; };
+
   return { eveiller, dormir, oreille: poserOreille, suivre, dire, fond,
-           volume: reglerVolume, etat, M };
+           grain: reglerGrain, volume: reglerVolume, etat, M };
 })();

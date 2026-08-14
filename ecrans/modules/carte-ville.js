@@ -28,6 +28,11 @@ window.CarteVille = (() => {
   // L'emprise du plan : elle borne le recul de la molette (deux fois) et dit
   // ce qui est « hors du plan » quand on clique dans la marge.
   let base = null;
+  // ET LE PLANCHER, QUI EST SON PENDANT : jusqu'où la molette approche, en
+  // mètres de large. Deux crans sous les 30 m d'origine (1,18 par cran), parce
+  // qu'un homme n'est plus un point depuis qu'il porte un fer à son allonge —
+  // voir le pavé de la molette.
+  const PLANCHER = 21;
   let source = null;        // la racine du monde servi ("/monde", "/monde/x")
   let moi = null;           // où se tient le joueur, en mètres
   // Le glissé en cours. Il vivait dans `brancher()` ; le survol a besoin de
@@ -486,6 +491,17 @@ window.CarteVille = (() => {
     // poste — donc elle n'apprend rien à qui regarde une ligne se défaire.
     l.push([MOTS_ETAT[s.etat] || esc(s.etat), null]);
     if (s.branche) l.push(["<i>" + esc(s.branche) + "</i>", null]);
+    // CE QUE SON CORPS DIT, A COTE DE CE QUE SA TETE A DECIDE. Les deux lignes
+    // ensemble sont tout l'interet : on lit d'un coup d'oeil quand la couche 1
+    // est d'accord avec la cascade et quand elle ne l'est pas — et le jour ou
+    // elle prend la main, on voit LEQUEL des deux a conduit.
+    if (s.corpsDit)
+      l.push([(s.corpsPilote ? "<b>le corps conduit</b> — " : "son corps : ") +
+              esc(s.corpsDit),
+              s.reflexe != null ? "réflexe " + String(s.reflexe).replace(".", ",") : null]);
+    if (s.empriseCorps != null)
+      l.push(["emprise du corps " + String(s.empriseCorps).replace(".", ","),
+              s.empriseCorps > 0.6 ? "il a la main" : null]);
     // Ce qu'il porte, et jusqu'où ça va. L'allonge est la moitié qui compte :
     // c'est elle qui dit qui, de lui ou de son vis-à-vis, touchera le premier.
     if (s.arme)
@@ -611,6 +627,7 @@ window.CarteVille = (() => {
       const clef = "bat:" + s.quoi + ":" + (s.nom || "") + ":" + s.etat +
                    ":" + (s.branche || "") +
                    ":" + (s.ordre || "") + ":" + (s.vivants || "") +
+                   ":" + (s.corpsDit || "") + ":" + cran(s.empriseCorps) +
                    ":" + s.pv + ":" + cran(s.morale) + ":" + cran(s.souffle) +
                    ":" + s.amis + "/" + s.ennemis;
       if (clef !== bulleType) {
@@ -825,7 +842,15 @@ window.CarteVille = (() => {
       // On descend à 30 m, soit la largeur d'une place : la maison prend deux
       // cents pixels, la venelle se traverse à l'œil, et l'on est encore loin
       // de la précision réelle du semis. En deçà on regarderait des traits.
-      const l = Math.max(30, Math.min(base[2] * 2, vue[2] * k));
+      //
+      // PUIS DEUX CRANS DE PLUS, PARCE QU'IL Y A DÉSORMAIS QUELQUE CHOSE À
+      // REGARDER À CETTE ÉCHELLE-LÀ. Le plancher de 30 m datait d'un temps où
+      // un homme était un point : l'approcher davantage n'aurait montré qu'un
+      // carré plus gros. Depuis que chacun porte un fer dessiné à son allonge
+      // vraie, la rue à 21 m de large donne l'homme à vingt pixels et sa lance
+      // à cent — on voit enfin une haie de pointes se tourner, ce qui est
+      // exactement ce que le modèle calcule et qu'on ne pouvait pas voir.
+      const l = Math.max(PLANCHER, Math.min(base[2] * 2, vue[2] * k));
       const r = l / vue[2];
       vue = [mx - (mx - vue[0]) * r, my - (my - vue[1]) * r, l, vue[3] * r];
       cadrer();
@@ -1079,7 +1104,7 @@ window.CarteVille = (() => {
       barre("On ne sait pas où vous êtes : ce lieu n'a pas d'adresse.");
       return;
     }
-    const l = Math.max(30, Math.min(base[2] * 2, LARGEUR_CENTRER));
+    const l = Math.max(PLANCHER, Math.min(base[2] * 2, LARGEUR_CENTRER));
     // On garde la proportion du volet : la hauteur se déduit, elle ne se
     // choisit pas, sinon le plan se déforme au premier clic.
     const ht = l * (vue[3] / vue[2]);

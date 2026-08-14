@@ -24,9 +24,42 @@ const R = () => (_s = (_s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
 const semer = () => { _s = 20161219; };
 
 const PAS = 1 / 20;          // le pas du monde, celui de bataille2d
+
+// ===========================================================================
+// LES PV NE SONT PAS UNE VARIABLE — CE SONT L'UNITÉ ARBITRAIRE
+// ===========================================================================
+// `vie` et `degatTypique` sont LE MÊME BOUTON : seul leur rapport entre dans le
+// modèle, et c'est tout l'argument d'`integrite` (test A4). Deux rapports ont un
+// sens, et un seul nombre ne peut pas en fixer deux :
+//
+//   granularite = vie / degat                  -> en coups encaissés
+//   duree (1c1) = granularite * cadence / p     -> en secondes
+//
+// L'ancien banc écrivait `VIE = 30` en face d'un dégât de 22 et d'un coup sur
+// deux qui porte, soit **1,36 coup et 2,7 s**. C'est pourquoi `vie: 120` en bas
+// de fichier était un demi-correctif au sens strict : il donne la granularité
+// (5,45 coups) et laisse la durée à 10,9 s, parce que multiplier la vie déplace
+// les deux ensemble. Seul `p` les sépare.
+//
+// ⚠ ET LA GRANULARITÉ N'EST PAS UN GOÛT : c'est `integrite` qui la spécifie.
+// Elle publie « +1 = intact ». À 1,36 coup, un homme SANS UNE ÉGRATIGNURE lit
+// **−0,15** — c'est le chiffre du test A4, à pleine vie. Un monde où personne
+// n'est jamais intact ne satisfait pas l'interface que la couche déclare. Ce
+// n'est donc pas un réglage pour obtenir un comportement (règle 1), c'est une
+// exigence de définition à laquelle le modèle de dégâts doit se plier.
+//
+// On écrit donc les deux faits, et l'on DÉRIVE le reste — `p` compris, qui
+// cesse d'être choisi.
 const DEGAT_TYPIQUE = 22;
-const VIE = 30;
+const COUPS_ABATTRE = 6;     // combien de coups QUI PORTENT mettent un homme à terre
+const TENIR_S = 35;          // combien de temps un homme tient au contact, un contre un
 const CADENCE = 0.9;
+
+const VIE = COUPS_ABATTRE * DEGAT_TYPIQUE;
+// Il en sort un coup sur six ou sept qui porte. C'est le seul des trois nombres
+// qui fût vraiment faux à 45 % : dans une mêlée, la quasi-totalité des coups est
+// parée, prise sur l'écu, ou glisse sur le harnois.
+const PORTE = COUPS_ABATTRE * CADENCE / TENIR_S;
 
 // --- fabriquer un homme -----------------------------------------------------
 const homme = (nom, camp, ecole) => ({
@@ -82,11 +115,12 @@ function courir(ecole, { seul = false, journal = null, vie = VIE } = {}) {
         boite[vise.nom].push(Object.assign(C.ferQuiVient(d.prochain, deFace), { t }));
       if (d.prochain > 0) continue;
       d.prochain += CADENCE;
-      const seuil = 0.45, tire = R();
+      const seuil = PORTE, tire = R();
       if (tire > seuil) {
         boite[vise.nom].push(Object.assign(C.coupFrole(tire, seuil, deFace), { t }));
       } else {
-        const degat = 14 + R() * 16;
+        // Le dégât reste centré sur le dégât typique — c'est sa définition.
+        const degat = DEGAT_TYPIQUE * (0.64 + R() * 0.72);
         vise.vie -= degat;
         boite[vise.nom].push(Object.assign(C.coupRecu(degat, DEGAT_TYPIQUE, deFace, 1), { t }));
         if (vise.vie <= 0) {
@@ -268,22 +302,28 @@ console.log("\n═══ LES ARÊTES INTERDITES — aucune ne doit apparaître �
                           : "  ✓ aucune arête interdite dans les quatre écoles");
 }
 
-console.log("\n═══ CE QUE LA MESURE A VRAIMENT SORTI — la couche n'a pas le temps ═══\n");
+console.log("\n═══ D1 · LA COUCHE A-T-ELLE LE TEMPS ? ═══\n");
 {
+  console.log("  granularité " + (VIE / DEGAT_TYPIQUE).toFixed(2) + " coups · " +
+    "un coup sur " + (1 / PORTE).toFixed(0) + " porte · " +
+    "durée 1c1 " + TENIR_S.toFixed(0) + " s · montée de l'alarme 3,0 s\n");
   for (const e of ["conscrit", "soldat", "veteran"]) {
     const r = courir(e);
     console.log("  " + e.padEnd(10) +
       "A1 tombe à " + (r.tombe.A1 == null ? "—" : r.tombe.A1.toFixed(1) + "s").padEnd(8) +
       "A2 tombe à " + (r.tombe.A2 == null ? "—" : r.tombe.A2.toFixed(1) + "s"));
   }
-  console.log("\n  La constante de montée de l'réflexe est de 3,0 s.");
-  console.log("  Un homme au contact vit moins que ça. La couche 1 est calibrée");
-  console.log("  pour un combat que le modèle de dégâts n'autorise pas.\n");
+  // CE BLOC A AFFIRME LE CONTRAIRE PENDANT UNE JOURNEE, et c'etait faux : la
+  // couche n'etait pas a l'etroit dans le temps, elle ne recevait AUCUN
+  // stimulus (la latence etait un filtre, voir 1-corps.js). On garde la mesure,
+  // on jette la conclusion.
+  console.log("\n  A1, débordé par deux, tient maintenant plus longtemps que la");
+  console.log("  montée de l'alarme. La psychologie a la place de se produire.\n");
 }
 
-console.log("═══ AU BANC — les mêmes, avec quatre fois la vie, pour VOIR la couche ═══\n");
+console.log("═══ AU BANC — un conscrit, en clair, pour VOIR la couche ═══\n");
 {
-  const r = courir("conscrit", { journal: true, vie: 120 });
+  const r = courir("conscrit", { journal: true });
   let dernier = {};
   for (const l of r.journal) {
     if (dernier[l.qui] === l.phrase) continue;

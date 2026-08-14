@@ -156,10 +156,13 @@ function poser(ev) {
 
 // ---- les mêlées préréglées : des situations, pas des réglages
 const MELEES = {
-  escarmouche: { cadence: 6,  rayon: 60,  alarme: 0.15, melange: { fer: 5, chair: 1, effort: 2, "cri-assaut": 1 } },
-  ligne:       { cadence: 40, rayon: 90,  alarme: 0.35, melange: { fer: 12, chair: 3, pas: 6, effort: 5, "cri-assaut": 2, "cri-blesse": 1 } },
-  rupture:     { cadence: 95, rayon: 140, alarme: 0.85, melange: { fer: 6, chair: 6, pas: 14, "cri-panique": 6, "cri-mort": 3, "cri-blesse": 3 } },
-  silence:     { cadence: 0,  rayon: 80,  alarme: 0,    melange: { fer: 1 } },
+  // `houle` est la part des GORGES : elle ne s'élit jamais, elle épaissit la
+  // bande medium, et c'est elle qui déclenche les grains de foule. Sans elle
+  // dans le mélange, le banc ne fait entendre que du fer et des pieds.
+  escarmouche: { cadence: 6,  rayon: 60,  alarme: -0.7, melange: { fer: 5, chair: 1, effort: 2, "cri-assaut": 1, houle: 3 } },
+  ligne:       { cadence: 40, rayon: 90,  alarme: -0.3, melange: { fer: 12, chair: 3, pas: 6, effort: 5, "cri-assaut": 2, "cri-blesse": 1, houle: 14 } },
+  rupture:     { cadence: 95, rayon: 140, alarme:  0.7, melange: { fer: 6, chair: 6, pas: 14, "cri-panique": 6, "cri-mort": 3, "cri-blesse": 3, houle: 20 } },
+  silence:     { cadence: 0,  rayon: 80,  alarme: -1,   melange: { fer: 1 } },
 };
 let melange = { fer: 1 };
 document.querySelectorAll("[data-mel]").forEach((b) => {
@@ -253,6 +256,7 @@ const cases = [
   ["cris chargés", (e) => Object.values(e.cris).reduce((a, b) => a + b, 0)],
   ["l'oreille est à", (e) => e.ou.x + ", " + e.ou.y + (e.ou.suit ? " (elle suit)" : " (posée)")],
   ["sourdine", (e) => e.sourdine.toFixed(2)],
+  ["grains de foule", (e) => e.grains],
 ];
 const tb = document.getElementById("mesures");
 cases.forEach(([nom]) => {

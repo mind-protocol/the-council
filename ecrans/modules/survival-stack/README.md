@@ -144,6 +144,32 @@ n'a pas encore écrite.
 - [ ] `4-envie.js`
 - [ ] l'arbitre
 
-Rien de tout ceci n'est encore branché sur le jeu. `bataille2d.js` continue de
-tourner sur sa cascade ; on ne remplacera rien tant que les quatre couches ne
-seront pas mesurées côte à côte.
+## Le branchement est PROGRESSIF, et il ne se mérite pas
+
+**On n'attend pas que les quatre couches soient écrites.** Ce fut la première
+intention, et c'était une erreur : elle promettait de ne rien montrer dans le
+jeu avant la fin de tout, donc de ne jamais rien vérifier là où ça compte. On ne
+valide pas une couche en la regardant calculer à côté.
+
+**Les couches 2, 3 et 4 existent déjà, sous une autre forme.** La cascade de
+`soldat()` dans `bataille2d.js` EST la tête : elle exécute des ordres, calcule
+des cibles, poursuit un but. C'est exactement le travail des trois couches
+hautes, écrit autrement. Et `emprise` dit de combien le corps la couvre — donc
+l'arbitre existe déjà lui aussi, et il n'y a rien à attendre.
+
+Le branchement se fait donc **état par état**, et chacun se juge sur une
+cuisson avant qu'on passe au suivant :
+
+1. **Voir avant de conduire.** La couche tourne pour chaque homme et s'affiche
+   sous le doigt, à côté de ce que la tête a décidé. Coût nul, risque nul, et
+   l'on peut la contester homme par homme dans une vraie bataille.
+2. **Conduire un état, puis deux.** Au-dessus d'un seuil d'emprise, le geste du
+   corps remplace celui de la cascade — pour cet état-là et rien d'autre. On
+   commence par ce qui se voit d'un coup d'œil sur le plan et se retire sans
+   rien casser.
+3. **Élargir**, en mesurant à chaque cran ce que ça change au compte des morts
+   et des fuyards.
+4. **Remplacer la cascade** morceau par morceau, quand les couches hautes
+   arriveront — et non l'inverse.
+
+Le seuil d'emprise est le bouton : le baisser donne plus de place au corps.
