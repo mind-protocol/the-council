@@ -407,7 +407,7 @@
         "annee": 129,
         "lune": 4,
         "jour": 3,
-        "minute": 758
+        "minute": 770
       }
     },
     "bren-racine-grise": {
@@ -417,7 +417,7 @@
         "annee": 129,
         "lune": 4,
         "jour": 3,
-        "minute": 761
+        "minute": 773
       }
     },
     "ygga-main-de-pierre": {
@@ -447,7 +447,7 @@
         "annee": 129,
         "lune": 4,
         "jour": 3,
-        "minute": 746
+        "minute": 767
       }
     },
     "nicolas-reynolds": {
@@ -457,7 +457,7 @@
         "annee": 129,
         "lune": 4,
         "jour": 3,
-        "minute": 764
+        "minute": 773
       }
     }
   },
@@ -466,7 +466,7 @@
       "annee": 129,
       "lune": 4,
       "jour": 3,
-      "minute": 767
+      "minute": 776
     },
     "gens": {
       "aurore-inchauspe": {
@@ -812,10 +812,22 @@
         "source": "routine"
       },
       "robert-quince": {
-        "salle": "table-peinte",
-        "lieu": "Chambre de la reine, Peyredragon",
-        "etat": "arrete",
-        "source": "scene"
+        "salle": "tambour-de-pierre",
+        "lieu": null,
+        "etat": "en-chemin",
+        "source": "routine",
+        "de": "table-peinte",
+        "vers": "grande-salle",
+        "vers_lieu": "Grande salle, Peyredragon",
+        "prochaine": "grande-salle",
+        "route": [
+          "table-peinte",
+          "tambour-de-pierre",
+          "grande-salle"
+        ],
+        "franchi": 1,
+        "pas": 0.0,
+        "arrive_dans": 2
       },
       "ruff-le-cordier": {
         "salle": "quais-de-la-nera",
@@ -836,10 +848,10 @@
         "source": "routine"
       },
       "sara": {
-        "salle": "grande-salle",
-        "lieu": "Grande salle, Peyredragon",
+        "salle": "table-peinte",
+        "lieu": "La chambre de la Table Peinte, Peyredragon",
         "etat": "arrete",
-        "source": "routine"
+        "source": "scene"
       },
       "sarn-vieux-sang": {
         "salle": "la-souche",

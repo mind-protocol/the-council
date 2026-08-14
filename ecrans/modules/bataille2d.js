@@ -4829,7 +4829,43 @@ window.Bataille2d = (() => {
     //
     // Et l'on garde ce qui faisait la valeur de ce mecanisme : un fuyard court
     // plus vite qu'un chef, donc la fenetre se referme en quelques secondes.
-    if (!h.l1 || h.l1.jambes === "fuite") return true;
+    // ⚔️ 90312 — LE PREMIER CRAN DU BRANCHEMENT, ET IL N'EN FAIT QU'UN.
+    //
+    // C'ETAIT LE SEUL ACCES A `h.l1` DE TOUT CE FICHIER HORS DE `soldat()`
+    // (releve par Bren le 3e : quatorze appels vivants aux couches, un seul
+    // ici). Un appelant unique, deja ecrit, qui lisait deja la couche en
+    // direct : c'est l'essai le moins cher qui existe, et c'est pour ca qu'on
+    // commence par lui et non par la nappe de `soldat()`.
+    //
+    // CE QUI CHANGE EST LA QUESTION, PAS LA REPONSE. On lisait le MOT de la
+    // couche 1 — « est-ce qu'il dit fuite ? ». On demande maintenant a
+    // l'arbitre QUI TIENT SES JAMBES ce battement-ci. Un homme se rallie
+    // quand l'ordre les a reprises, et pas autrement : c'est la definition du
+    // ralliement, et c'est le mot que `5-qui-conduit.js` rend deja.
+    //
+    // POURQUOI `!== "ordre"` ET NON `=== "corps"`. Les deux traduisent le
+    // vieux test, et la difference porte sur deux cas que `h.l1.jambes` ne
+    // savait pas ecrire. Un homme dont la REFLEXION tient les jambes est en
+    // train de se raisonner pour sortir : le rallier serait le renvoyer en
+    // ligne au moment precis ou il decide de n'y pas rester. Un homme que
+    // l'ENVIE tient a lache la colonne pour une maison — un chef a portee ne
+    // le ramene pas davantage. Aucun des deux n'obeit ; aucun des deux ne se
+    // rallie.
+    //
+    // ⚠ LE GEL DE 🔒 90260 NE TOUCHE PAS CETTE LIGNE, et je l'ai verifie
+    // plutot que suppose. Il mord sur les hommes qui TOMBENT — `soldat()`
+    // rend la main a `mort` (l.2968) et a `blesse` (l.2970) AVANT l'observation,
+    // donc leur derniere sortie de couche reste au chaud jusqu'au matin. Un
+    // homme `deroute`, lui, traverse l'observation a chaque battement de son
+    // oeil : `h.conduit` est ici aussi frais que `h.l1` l'etait, pas moins.
+    // C'est pourquoi je branche avant de reparer le gel.
+    //
+    // SANS L'ARBITRE, LE VIEUX TEST. Ce n'est pas une politesse : c'est le bras
+    // temoin de la mesure. Retirer `5-qui-conduit.js` de la chaine rend
+    // exactement la conduite d'hier, sur le meme fichier, sans reecrire une
+    // ligne — voir `analyse/branchement-90312/`.
+    if (h.conduit) { if (h.conduit !== "ordre") return true; }
+    else if (!h.l1 || h.l1.jambes === "fuite") return true;
     h.etat = "forme";
     compte.fuyards--;
     compte.rallies++;

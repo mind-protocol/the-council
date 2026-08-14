@@ -2,33 +2,46 @@
  "qui": "sarn-vieux-sang",
  "journal": [
   {
-   "heure": "12h04",
-   "duree": 56,
-   "lieu": "la-souche",
-   "quoi": "Sarn dépouille les quatre sources que l'Équerre lui a nommées — `scripts/monde/sac.js`, `scripts/bataille.py`, `ecrans/modules/bataille2d.js`, `ecrans/modules/bataille/` — en cherchant une seule espèce de chose : ce qui change la nuit cuite sans être inscrit au manifeste de sac.js l. 865",
-   "resultat": "DOUZE réglages trouvés, dont dix changent le déroulé et deux seulement le fichier. Le manifeste n'en grave que six : porte, hommes, duree_s, pas_s (PAS), tolerance_m (TOLERANCE), binaire.tranche_s (--tranche). `bataille.py` n'a aucun réglage propre : il passe tout à `sac.js` (l. 164-172), il n'ajoute donc rien à la liste mais ne rattrape rien non plus"
-  },
-  {
    "heure": "13h04",
-   "duree": 40,
-   "de": "la-souche",
-   "a": "arbre-des-ages",
-   "quoi": "Sarn monte avec les cinq manifestes déjà cuits pour vérifier que la chose mord vraiment, au lieu de la déduire du code",
-   "resultat": "Trois cuissons de charge nominale RIGOUREUSEMENT identique — La porte de la Gadoue, 1 700 hommes, 600 s, 2 550 corps, pas_s 0,05, tolerance_m 0,5 — rendent images 253 257 / 82 167 / 294 274 et cuisson_s 558,5 / 1 112 / 777,6. Les cinq champs d'identité du manifeste sont les mêmes mot pour mot dans les trois fichiers : rien, dans le fichier, ne dit pourquoi ils diffèrent"
-  },
-  {
-   "heure": "13h44",
-   "duree": 90,
-   "lieu": "arbre-des-ages",
-   "quoi": "Sarn cherche lequel de ces douze est, ce jour, dans un état qui rend une cuisson incomparable à celle d'hier — et il ne le cherche pas dans le code, mais dans ce que le code va lire au moment de cuire",
-   "resultat": "Ce n'est pas un drapeau : c'est l'HEURE DE LA VILLE. `sac.js` l. 605-606 pose `jour0` et `min0` depuis la route `/carte`, donc depuis `etat/monde.json`, qui porte aujourd'hui {annee 129, lune 4, jour 3, minute 721} — midi une. `tournee()` l. 629-630 en tire la minute et le jour de chaque habitant, et `J.ou()` lui rend sa journée écrite. Aucune ligne de code touchée, et la même commande ne cuit pas la même ville qu'hier. Rien de tout cela n'entre au manifeste ; la seule trace est une ligne d'écran, l. 607-609, perdue avec la console"
-  },
-  {
-   "heure": "15h14",
    "duree": 55,
    "lieu": "arbre-des-ages",
-   "quoi": "Sarn grave les deux verrous et rédige, dans la preuve du premier, la liste des douze avec pour chacun sa ligne, ce qu'il change, et s'il est tracé",
-   "resultat": "91012 et 91013 posés contre 91200. Et la commande pour Toll tirée de la liste : six lignes à graver à côté du chiffre — la graine, l'heure et le jour de la ville, peuple/tournee, l'empreinte des fichiers de CHAINE, l'état de PORTE_OUVERTE_ESSAI/USURE/pilote, planches"
+   "quoi": "Sarn dépouille scripts/monde/plan_ville.py (2 104 lignes) et scripts/monde/besoins.py (648 lignes) au peigne, cherchant ce qui y date une sortie : datetime, time.time, strftime, utcnow.",
+   "resultat": "ABSENCE ÉTABLIE, ET C'EST LA RÉPONSE. Aucune des deux cuissons ne touche une horloge : plan_ville.py n'importe qu'argparse, json, math, os, sys ; besoins.py que json, io, os, math, sys, defaultdict. Le balayage de tout scripts/monde/ ne rend que peyredragon.py (affichage d'un chrono), pipeline.py (durée d'étape) et planches.py (une légende d'image) — aucun des trois n'écrit dans monde/."
+  },
+  {
+   "heure": "14h00",
+   "duree": 70,
+   "lieu": "arbre-des-ages",
+   "quoi": "Sarn cherche alors OÙ l'heure est inscrite chez eux, puisqu'elle ne l'est pas en sortie : il remonte la table des BESOINS et le consommateur de cette table.",
+   "resultat": "L'HEURE EST INSCRITE EN ENTRÉE, PAS EN SORTIE. besoins.py l.120 : heures=[375, 720, 1110] — des minutes du jour, gravées dans la source. l.128 : heures=[400]. Trente lignes de besoins, chacune avec son heure écrite à la main. Le consommateur la reçoit en ARGUMENT : journee.js expose ou(cel, k, jour, minute, voirie, rangs, P), fonction pure — même couple (jour, minute), même position, toujours. C'est sac.js lui-même qui l'appelle ainsi, l.658."
+  },
+  {
+   "heure": "15h10",
+   "duree": 50,
+   "lieu": "arbre-des-ages",
+   "quoi": "Sarn cherche le geste jumeau pour le hasard, à cause de ce que Toll a trouvé à corps-adapt.js l.350.",
+   "resultat": "MÊME FORME, ET ELLE EST COMMENTÉE. plan_ville.py l.1128-1136, _melange(k) : « Un petit générateur déterministe : même rang, même maison, toujours » — la graine sort du RANG du bâtiment, donc de son identité, jamais d'une horloge. Zéro import de random dans les deux fichiers. Leur remède n'est pas de refuser quand la graine manque : c'est de n'avoir jamais de graine à manquer."
+  },
+  {
+   "heure": "16h00",
+   "duree": 65,
+   "lieu": "arbre-des-ages",
+   "quoi": "Sarn éprouve la transposition au four : il relit sac.js aux trois endroits où l'heure entre, se lit et devrait s'écrire.",
+   "resultat": "ELLE SE TRANSPOSE, ET C'EST TROIS LIGNES. (1) sac.js l.64, l'objet des réglages — y déclarer jour et minute, à côté de planches, port, tranche, peuple, tournee. (2) sac.js l.614-615, où jour0 = (d.date && d.date.jour) || 1 et min0 = ... : 480 : prendre l'argument s'il est donné, et REFUSER de cuire si /carte ne répond rien — la règle même que Toll réclame pour la graine. (3) sac.js l.848, la ligne du manifeste porte: o.porte, hommes: o.hommes, duree_s: o.duree, pas_s: PAS — y graver jour et minute. Deux champs de plus au manifeste, et 91012 en perd deux de ses douze réglages hors manifeste."
+  },
+  {
+   "heure": "17h05",
+   "duree": 40,
+   "lieu": "arbre-des-ages",
+   "quoi": "Sarn cherche ce qui EMPÊCHE la transposition, plutôt que ce qui la permet — et trouve autre chose en chemin, en lisant comment sac.js prend ses réglages.",
+   "resultat": "UN EMPÊCHEMENT ET UN PRÉCÉDENT. L'empêchement : chez eux la sortie se refait à l'identique depuis les fichiers de monde/, il n'y a donc rien à inscrire ; le four prend son heure SUR LE FIL, d'un serveur qui lit un etat/ qui bouge (serveur/serveur.js l.3006, la route /carte). Il doit donc l'ÉCRIRE et pas seulement la lire. Le trouvé en chemin : sac.js l.68, if (c in o) o[c] = ... — un réglage inconnu est avalé sans un mot. --graine 7 ne fait rien aujourd'hui, en silence. Le précédent du refus existe pourtant à trois cents mètres : plan_ville.py l.2070, argparse avec choices=('plein','filet','aucun'), qui arrête AVANT la cuisson sur une valeur inconnue."
+  },
+  {
+   "heure": "17h45",
+   "duree": 15,
+   "lieu": "arbre-des-ages",
+   "quoi": "Sarn descend le précédent à la Souche et le grave : le verrou 91014, et l'appoint du 3e à l'action 91011.",
+   "resultat": "Rendu à l'Équerre au parloir avec les lignes exactes de sac.js. Ygga n'a plus de forme à inventer, et Toll a son précédent de refus."
   }
  ],
  "travaux": [
@@ -46,8 +59,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "scripts/monde/sac.js l. 605-606 et l. 629-630, recoupé sur etat/monde.json",
-     "texte": "LE RÉGLAGE QUI CASSE LA COMPARAISON N'EST PAS DANS LE CODE, IL EST DANS L'ÉTAT DU MONDE. `sac.js` lit `jour0`/`min0` en direct sur la route `/carte`, donc sur `etat/monde.json` — aujourd'hui 129/4/3, minute 721. La journée écrite de chaque habitant en dépend, et la tournée recrute les fuyards d'après elle : à 8h les rues sont pleines, à 2h elles sont vides. Personne n'a besoin de toucher une ligne pour qu'une cuisson cesse d'être comparable à celle de la veille — il suffit que la partie ait avancé. C'est le seul des douze dont l'état dérive tout seul, et c'est pour ça qu'il ne se répare pas en l'inscrivant : l'inscrire dit POURQUOI deux chiffres diffèrent, il faut le FIXER (une option `--heure`) pour qu'ils cessent de différer."
+     "source": "scripts/monde/plan_ville.py et scripts/monde/besoins.py, dépouillés au peigne",
+     "texte": "LA FORME QUI A TENU N'EST PAS DE FIGER L'HEURE : C'EST DE N'EN LIRE AUCUNE. On me demandait comment les deux cuissons de la maison DATENT leur sortie. Elles ne la datent pas. 2 104 + 648 lignes, aucun datetime, aucun time.time, aucun strftime ; plan_ville.py n'importe qu'argparse/json/math/os/sys, besoins.py que json/io/os/math/sys. Sur tout scripts/monde/, les seuls appels à l'horloge sont peyredragon.py (affichage), pipeline.py (durée d'étape) et planches.py (légende) — aucun n'écrit dans monde/. L'heure est inscrite EN ENTRÉE et non en sortie : besoins.py l.120, heures=[375, 720, 1110], des minutes du jour gravées dans la source, trente lignes de besoins chacune avec la sienne. Le consommateur la reçoit en ARGUMENT — journee.js, ou(cel, k, jour, minute, ...), fonction pure. Même geste pour le hasard, et il est commenté : plan_ville.py l.1128, _melange(k), « même rang, même maison, toujours » — la graine sort de l'identité de la chose, jamais d'une horloge, et random n'est importé nulle part. CE QUI RÉPOND À TOLL : leur remède contre le repli muet n'est pas de refuser quand la graine manque, c'est de n'avoir jamais de graine à manquer."
     },
     {
      "date": {
@@ -55,8 +68,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "les cinq manifestes de monde/essai.*.json, comparés champ à champ",
-     "texte": "LE MANIFESTE N'EST PAS UNE IDENTITÉ, C'EST UNE ÉTIQUETTE DE TAILLE. Il grave six choses — porte, hommes, duree_s, pas_s, tolerance_m, tranche_s — et les trois cuissons de 1 700 hommes / 600 s les portent identiques, tout en rendant 253 257, 82 167 et 294 274 images. Deux fichiers dont les six champs d'identité concordent ne racontent donc PAS la même nuit, et rien dans le fichier n'avertit du contraire. C'est pire qu'une absence de trace : c'est une trace qui affirme l'égalité là où il n'y en a pas, et c'est exactement ce qui a fait poser à Toll un étalon sur trois cuissons mortes."
+     "source": "scripts/monde/sac.js l.64, 614-615, 848 ; serveur/serveur.js l.3006",
+     "texte": "ELLE SE TRANSPOSE EN TROIS LIGNES DE sac.js, ET UNE SEULE CHOSE NE SE TRANSPOSE PAS. Les trois : (1) l.64, déclarer jour et minute dans l'objet des réglages, à côté de planches/port/tranche/peuple/tournee ; (2) l.614-615, là où jour0 = (d.date && d.date.jour) || 1 et min0 = ... : 480, prendre l'argument s'il est donné et refuser de cuire s'il manque ET que /carte ne répond rien ; (3) l.848, graver jour et minute au manifeste à côté de porte/hommes/duree_s/pas_s — deux champs de plus, et 91012 perd deux de ses douze réglages hors manifeste. CE QUI NE SE TRANSPOSE PAS : chez eux la sortie se refait à l'identique depuis les fichiers de monde/, il n'y a donc rien à inscrire ; le four prend son heure sur le fil, du serveur (serveur.js l.3006, route /carte) qui lit un etat/ qui bouge. Il doit donc l'ÉCRIRE, pas seulement la lire — sinon elle dérive encore le jour où quelqu'un compare deux manifestes."
     },
     {
      "date": {
@@ -64,8 +77,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "ecrans/modules/bataille2d.js l. 2961 et l. 3406, croisé avec sac.js l. 100-107",
-     "texte": "LA GARDE MUETTE EST LE PIÈGE LE PLUS PROPRE DES DOUZE. `if (window.BatailleCorps)` et `if (window.Interpretation && e)` : ôte un fichier de la liste `CHAINE`, et la nuit cuit sans la couche, sans une erreur, sans une ligne d'écran. Le contre-exemple est dans le même fichier — `window.Envie.temperament` l. 1431 n'est pas gardé : la couche absente, le four meurt sur-le-champ, et c'est la bonne manière. La forme qui tient est donc déjà écrite ici : une dépendance qu'on peut retirer en silence doit être inscrite au manifeste, une dépendance qui casse bruyamment n'en a pas besoin."
+     "source": "scripts/monde/sac.js l.68 confronté à scripts/monde/plan_ville.py l.2067-2072",
+     "texte": "LE PRÉCÉDENT DU REFUS EXISTE, ET IL EST À TROIS CENTS MÈTRES DU FOUR. Toll demande que le four refuse de cuire quand la graine n'est pas tenue. plan_ville.py sait déjà refuser : l.2067-2072, argparse déclare --lieu, --sortie et --rectifier avec choices=('plein','filet','aucun') — une valeur inconnue arrête AVANT la cuisson, et un drapeau inconnu aussi. sac.js fait l'inverse, l.65-68 : une boucle à la main sur process.argv, et if (c in o) — un réglage qu'il ne connaît pas est AVALÉ SANS UN MOT. --graine 7 passé au four aujourd'hui ne fait rien du tout, en silence, et personne ne le saura. C'est la même famille que 91013 et que le Math.random() de corps-adapt.js l.350 : une condition de cuisson qu'on ne vérifie pas. Gravé en verrou 91014."
     }
    ],
    "conclusion": null
@@ -75,65 +88,44 @@
   {
    "livre": "affaire-rendre-les-murs-solides",
    "table": "🔒 Verrous",
-   "ligne": "91012",
+   "ligne": "91014",
    "colonne": "🔒 N°",
-   "valeur": "**91012**"
+   "valeur": "**91014**"
   },
   {
    "livre": "affaire-rendre-les-murs-solides",
    "table": "🔒 Verrous",
-   "ligne": "91012",
+   "ligne": "91014",
    "colonne": "🔒 Le verrou",
-   "valeur": "**Le manifeste grave six champs, et DOUZE réglages hors manifeste changent ce que cuit une nuit** — deux cuissons dont les six champs concordent ne racontent pas forcément la même nuit"
+   "valeur": "**Le four n'a pas de porte : ses réglages ne sont pas déclarés, et un réglage inconnu est avalé sans un mot** — tout drapeau qu'on ajoutera pour tenir l'heure ou la graine sera ignoré en silence s'il est mal frappé"
   },
   {
    "livre": "affaire-rendre-les-murs-solides",
    "table": "🔒 Verrous",
-   "ligne": "91012",
-   "colonne": "🎯 Bloque",
-   "valeur": "91200 91000"
-  },
-  {
-   "livre": "affaire-rendre-les-murs-solides",
-   "table": "🔒 Verrous",
-   "ligne": "91012",
-   "colonne": "🔎 La preuve",
-   "valeur": "Lu dans le fer le 3e, les quatre sources dépouillées, pas supposé. **CE QUE LE MANIFESTE GRAVE** (`sac.js` l. 865) : `porte`, `hommes`, `duree_s`, `pas_s` (=PAS, l. 53), `tolerance_m` (=TOLERANCE, l. 52), `binaire.tranche_s` (=`--tranche`, l. 774). Six. **CE QU'IL NE GRAVE PAS, ET QUI CHANGE LA NUIT** — (1) `--peuple`, `sac.js` l. 64, défaut **1 = allumé** : toute la ville, panique, foyers, recrutement de fuyards par `B.derange` l. 647 ; à 0 la bataille se joue dans une ville vide. NON TRACÉ (une ligne d'écran l. 607-609, rien au fichier). (2) **L'heure et le jour de la ville**, l. 605-606, lus en direct sur `/carte` donc sur `etat/monde.json` : la journée écrite de chaque habitant en dépend (l. 629-630). NON TRACÉ — *voir 91013*. (3) `--tournee`, l. 64, défaut 3 s → `PAR_TOURNEE` l. 672 : à quelle cadence on recrute de nouveaux effrayés. NON TRACÉ. (4) `--serveur`/`--source`, l. 58-60, défauts `localhost:3129` et `/monde` : la voirie, le `plan2d` et le bâti viennent d'un serveur **vivant** — que `plan_ville.py` repasse, et la même commande cuit une autre ville. NON TRACÉ, aucune empreinte du graphe au manifeste. (5) `CHAINE`, l. 100-107 : quelles couches sont posées. `bataille2d.js` les prend sous **garde muette** — l. 2961 `if (window.BatailleCorps)`, l. 3406 `if (window.Interpretation && e)` : un fichier ôté de la liste, et la nuit cuit sans la couche, SANS ERREUR. NON TRACÉ. (`window.Envie` l. 1431 n'est pas gardé, lui : absent, il casse — c'est la bonne forme.) (6) `PORTE_OUVERTE_ESSAI`, `bataille2d.js` l. 318, **`false` aujourd'hui** : ouvre la porte au premier instant, avale la cascade de `deciderLesTetes` au deuxième rang et supprime la mêlée du seuil ; c'est lui qui sépare l'étalon 5/5/14/54 de ce qui le précédait. NON TRACÉ. (7) `USURE`, l. 297, `{\"La porte de la Gadoue\": 0.10}` : 9 000 pv de verrou → 900, deux minutes de hache → douze secondes — et c'est la porte PAR DÉFAUT du four. Le manifeste dit `porte`, jamais dans quel état on l'a prise. NON TRACÉ. (8) `pilote: true`, `bataille/corps-adapt.js` l. 369, avec le branchement `bataille2d.js` l. 3020-3100 : la couche 1 conduit sidération, fuite, recul, serrer, ruée et bras ballants ; le seuil de 0,6 d'emprise **retiré**, elle prend tout le monde au lieu de 3 %. C'est le réglage qui a fait passer la relecture de 0,600 m à 329 m d'écart pire. NON TRACÉ. (9) `GRAINE = 20161219`, `bataille/hasard.js` l. 32, et `semer(g)` l. 37 qui accepte n'importe quelle graine ; `bataille2d.js` l. 1461 l'appelle nu, donc elle est fixe **aujourd'hui** — rien n'interdit d'en passer une, rien ne l'écrirait. NON TRACÉ. (10) Les mesures nues qu'aucun manifeste ne porte : `VERROU_PV = 9000` l. 282, `HACHE = 11` l. 319, `ACTOR_AVERAGE_PV = 35` et `CADENCE = 0,9` et `DEGAT = [14,30]` dans `bataille/mesures.js` l. 98-119 — pas des drapeaux, mais une main qui les bouge rend muette toute la série d'avant. NON TRACÉES. **ET DEUX QUI NE CHANGENT QUE LE FICHIER, PAS LA NUIT** — (11) `--planches`, l. 64, défaut 0 : écrit des planches et sert un port pendant la cuisson ; le commentaire le dit lui-même, « une mesure qui écrit des fichiers sur le côté ne mesure plus ce qu'on croit ». Change `cuisson_s`. NON TRACÉ. (12) `PLAFOND_BUF = 400`, l. 54, employé l. 208-209 : combien d'images clefs on retient avant de fermer. Change `images` et `octets`. NON TRACÉ. **CE QUE ÇA COÛTE, COMPTÉ SUR LE DISQUE** : trois manifestes de charge nominale identique — La porte de la Gadoue, 1 700 hommes, 600 s, 2 550 corps, `pas_s` 0,05, `tolerance_m` 0,5, les six champs mot pour mot les mêmes — rendent `images` 253 257 / 82 167 / 294 274 et `cuisson_s` 558,5 / 1 112 / 777,6. **CE QUI LÈVERAIT** : au manifeste, six lignes de plus — la graine ; l'heure et le jour de la ville ; `peuple` et `tournee` ; les fichiers de `CHAINE` avec leur empreinte ; l'état de `PORTE_OUVERTE_ESSAI`, `USURE` et `pilote` ; `planches`. Une empreinte des sources fait les trois dernières d'un coup. `scripts/bataille.py` n'ajoute rien : il passe les arguments tels quels au four (l. 164-172) et ne rattrape donc aucun de ces douze."
-  },
-  {
-   "livre": "affaire-rendre-les-murs-solides",
-   "table": "🔒 Verrous",
-   "ligne": "91013",
-   "colonne": "🔒 N°",
-   "valeur": "**91013**"
-  },
-  {
-   "livre": "affaire-rendre-les-murs-solides",
-   "table": "🔒 Verrous",
-   "ligne": "91013",
-   "colonne": "🔒 Le verrou",
-   "valeur": "**L'heure de la ville est lue en direct et n'est ni fixée ni écrite** — sans qu'on touche une ligne, la même commande ne cuit pas la même nuit deux jours de suite"
-  },
-  {
-   "livre": "affaire-rendre-les-murs-solides",
-   "table": "🔒 Verrous",
-   "ligne": "91013",
+   "ligne": "91014",
    "colonne": "🎯 Bloque",
    "valeur": "91200"
   },
   {
    "livre": "affaire-rendre-les-murs-solides",
    "table": "🔒 Verrous",
-   "ligne": "91013",
+   "ligne": "91014",
    "colonne": "🔎 La preuve",
-   "valeur": "Lu dans le fer le 3e. `scripts/monde/sac.js` l. 605-606 : `jour0 = (d.date && d.date.jour) || 1` et `min0 = d.date.minute`, où `d` est la réponse de la route **`/carte`** — donc `etat/monde.json`, qui porte à cette heure `{annee 129, lune 4, jour 3, minute 721}`, midi une. `tournee()` l. 629-630 en tire `minute` et `jour` et les passe à `J.ou(cel, k, jour, minute, …)` : c'est la **journée écrite** de chaque habitant qui décide qui se trouve dans la rue quand le fer arrive. À huit heures les rues sont pleines, à deux heures du matin elles sont vides ; la tournée recrute donc un nombre tout autre de fuyards, et la panique se propage autrement (`RUMEUR_MIN = 2`, `bataille2d.js` l. 590). Cet état **dérive tout seul** : la partie avance, `etat/monde.json` avance, et une cuisson de ce midi n'est déjà plus comparable à une cuisson d'hier matin sans que personne ait rien modifié. C'est le seul des douze de 91012 qui soit dans cet état aujourd'hui. **ET IL NE SE RÉPARE PAS EN L'INSCRIVANT** : l'écrire au manifeste dit *pourquoi* deux chiffres diffèrent, il ne les rend pas comparables. Il faut le FIXER — une option `--heure` (et `--jour`) avec un défaut gravé, l'heure retenue étant écrite au manifeste par surcroît. Sinon aucun étalon de cadence ne survit à une nuit de partie."
+   "valeur": "Lu dans le fer le 3e, pas supposé. `scripts/monde/sac.js` l.65-68 : une boucle à la main sur `process.argv`, et `if (c in o) o[c] = ...`. Un drapeau qui n'est pas déjà une clef de l'objet des réglages n'est ni pris, ni signalé — il est SAUTÉ. `--graine 7` passé au four aujourd'hui ne fait rien du tout, en silence. Même chose pour toute valeur aberrante : rien ne la contrôle. **LE PRÉCÉDENT DU REFUS EXISTE ET IL EST DANS LA MAISON** — `scripts/monde/plan_ville.py` l.2067-2072 : `argparse` déclare `--lieu`, `--sortie`, `--rectifier` avec `choices=('plein','filet','aucun')` ; une valeur inconnue OU un drapeau inconnu arrêtent le programme AVANT la cuisson, avec le message. C'est exactement la forme que Toll réclame pour la graine (`corps-adapt.js` l.350) et que 🔒 91013 réclame pour l'heure : les deux se posent au même endroit, `sac.js` l.64-68, et non chacune dans son coin. Ce qui lèverait : déclarer les réglages du four — nom, type, valeurs admises, obligatoire ou non — et sortir en erreur sur l'inconnu comme sur le manquant."
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "⚔️ Actions",
+   "ligne": "91011",
+   "colonne": "✅ État",
+   "valeur": "fait le 3e — LA FORME QUI A TENU A UN NOM, ET CE N'EST PAS D'OPPOSER. Quatre fois la maison a voulu tenir un homme hors d'un plein par la ligne droite ; deux fois elle a retiré (`DETOUR_RUE = 1,4`, le seuil d'emprise), et ce qui est resté est payé UNE FOIS hors ligne : l'axe des rues poussé hors des façades, jamais un blocage au pas. D'où 🔒 91006. **Repris l'après-midi du 3e, sur demande, côté cadence (91200) : l'archéologie des cuissons est faite et rendue.** Les cinq à charge nominale se datent contre le commit 745c8eb du 14e à 22h11 (retrait de PORTE_OUVERTE_ESSAI) : trois avant — nulles —, deux après, qui sont la même cuisson deux fois et rendent le même binaire à ×2,15 d'écart. Aucun comparable n'existe. La cause est trouvée et gravée en 🔒 91009 : le manifeste écrit l'horloge du mur et jette les trois postes du travail, que sac.js calcule déjà. Le facteur est expliqué ; il ne se corrige pas par de la mesure, mais par trois lignes de fer. **REPRIS UNE TROISIÈME FOIS LE 3e AU SOIR, SUR LA DEMANDE DE L'ÉQUERRE, POUR 🔒 91013 — ET LA QUESTION ÉTAIT MAL POSÉE.** On me demandait comment `plan_ville.py` et `besoins.py` DATENT leur sortie : ILS NE LA DATENT PAS. 2 104 + 648 lignes dépouillées, aucun `datetime`, aucun `time.time`, aucun `strftime` ; sur tout `scripts/monde/`, les seuls appels à l'horloge sont un affichage (`peyredragon.py`), une durée d'étape (`pipeline.py`) et une légende d'image (`planches.py`) — aucun n'écrit dans `monde/`. **LA FORME QUI A TENU EST DE N'EN LIRE AUCUNE.** L'heure est écrite EN ENTRÉE : `besoins.py` l.120, `heures=[375, 720, 1110]`, des minutes du jour gravées dans la source, une par ligne de besoin ; et le consommateur la reçoit en ARGUMENT — `journee.js`, `ou(cel, k, jour, minute, …)`, fonction pure, appelée ainsi par `sac.js` l.658. Même geste pour le hasard, et il est commenté : `plan_ville.py` l.1128, `_melange(k)`, « même rang, même maison, toujours » — la graine sort de l'identité de la chose ; `random` n'est importé nulle part. **ELLE SE TRANSPOSE AU FOUR, EN TROIS LIGNES** : `sac.js` l.64 (déclarer `jour` et `minute` dans les réglages), l.614-615 (là où `jour0 = (d.date && d.date.jour) || 1` et le repli muet à 480 : prendre l'argument, et refuser de cuire s'il manque et que `/carte` ne répond rien), l.848 (graver `jour` et `minute` au manifeste à côté de `porte`/`hommes`/`duree_s`/`pas_s` — 🔒 91012 y perd deux de ses douze). **CE QUI NE SE TRANSPOSE PAS, et il faut le dire à Ygga avant qu'elle écrive** : chez eux la sortie se refait à l'identique depuis les fichiers de `monde/`, il n'y a donc rien à inscrire ; le four prend son heure SUR LE FIL, du serveur (`serveur.js` l.3006, route `/carte`) qui lit un `etat/` qui bouge. Il doit donc l'ÉCRIRE et pas seulement la lire. Trouvé en chemin et gravé en 🔒 91014 : `sac.js` l.68 avale tout réglage inconnu sans un mot, quand `plan_ville.py` l.2070 refuse déjà de cuire sur une valeur inconnue — le précédent de refus que Toll cherche pour la graine est dans la maison."
   }
  ],
  "_depeche": {
   "session": "55ffea66-d66c-5b92-aea2-707dd871129b",
   "date_jeu": "129.4.3",
-  "jetons": 1510657,
-  "secondes": 367
+  "jetons": 1174702,
+  "secondes": 265
  },
  "_cahier_verse": true
 }
