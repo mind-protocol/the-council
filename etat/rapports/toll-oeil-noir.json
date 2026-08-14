@@ -1,0 +1,154 @@
+{
+ "qui": "toll-oeil-noir",
+ "journal": [
+  {
+   "heure": "7h04",
+   "duree": 46,
+   "lieu": "bassin-noir",
+   "quoi": "Toll relit son propre banc `analyse/etalon-90110/deux-causes.js` et le verrou 90110, puis va vérifier dans `ecrans/modules/bataille2d.js` si les deux couches hautes se débranchent vraiment.",
+   "resultat": "Elles ne sont pas symétriques. `3-interpretation` est gardée — l.3451 `if (window.Interpretation && e)`, et l.4557 passe par `chef.l3` qui n'existe pas sans la couche. `4-envie` ne l'est pas : l.1458, 3626, 3643, 4531 appellent `window.Envie` sans garde. C'est pour ça que le bras `--sans-couches` mourait hier : la l.1458 tombe dans `homme()`, au dressage, avant le premier pas."
+  },
+  {
+   "heure": "7h50",
+   "duree": 14,
+   "lieu": "bassin-noir",
+   "quoi": "Toll relève les six lignes de condition avant de cuire, pour qu'aucun chiffre ne parte nu.",
+   "resultat": "Graine 20161219 (`bataille/hasard.js` l.32), tenue par `H` — le repli `Math.random()` n'a pas servi. Ville : an 129, 4e lune, jour 3, minute 721, soit 12h01, lue en direct dans `etat/monde.json`. Peuple 0, tournée 0, planches 0 : le banc monte la chaîne seule et ne passe pas par `sac.js`. Empreintes sha256 des sept fichiers de chaîne relevées. Drapeaux : PORTE_OUVERTE_ESSAI=false, 3-interpretation branchée, 4-envie branchée."
+  },
+  {
+   "heure": "8h04",
+   "duree": 6,
+   "lieu": "bassin-noir",
+   "quoi": "Toll regarde la charge de la machine avant de mesurer, comme il se l'est écrit hier après l'orphelin de 22h47.",
+   "resultat": "Huit `node` en vie, dont un à 839 méga-octets. Aucun n'est tué : ce qu'il mesure aujourd'hui, ce sont les quatre comptes, pas la cadence — la charge ne les déforme pas. Il note l'écart : une cadence prise aujourd'hui serait fausse vers le haut, et personne ne doit s'en servir."
+  },
+  {
+   "heure": "8h10",
+   "duree": 96,
+   "lieu": "bassin-noir",
+   "quoi": "Toll fait tourner les trois bras de son banc à 1700 hommes et 150 s : tel-quel, `--porte-ouverte`, `--sans-couches`.",
+   "resultat": "Tel-quel : 3 ordres déformés, 5 déclencheurs tombés, 4 initiatives, 47 coureurs — le même quatuor qu'au 30e, à l'unité près, deux heures de machine plus tard : la graine tient. Porte ouverte : 0, 0, 5, 27. `--sans-couches` meurt en trois secondes sur `window.Envie.temperament`, comme prévu depuis 7h04."
+  },
+  {
+   "heure": "9h46",
+   "duree": 34,
+   "lieu": "bassin-noir",
+   "quoi": "Toll ajoute à son banc un quatrième bras, `--sans-interpretation`, puisque c'est la seule des deux couches qu'on peut retirer sans faire tomber le dressage.",
+   "resultat": "Le bras est écrit et commenté : `RETIREES` ne prend plus que `3-interpretation.js`. Le banc reste de la mesure et pas de la taille — il lit la source et la réécrit en mémoire, rien n'est touché dans `ecrans/`."
+  },
+  {
+   "heure": "10h20",
+   "duree": 40,
+   "lieu": "bassin-noir",
+   "quoi": "Toll cuit le quatrième bras : drapeau à `false`, `4-envie` seule dans la chaîne, 1700 hommes, 150 s.",
+   "resultat": "3, 5, 3, 48. Les ordres déformés et les déclencheurs ne bougent pas d'une unité sans l'interprétation ; les coureurs gagnent un, c'est-à-dire rien ; les initiatives perdent un."
+  },
+  {
+   "heure": "11h00",
+   "duree": 55,
+   "lieu": "bassin-noir",
+   "quoi": "Toll pose le verdict par écrit dans `analyse/etalon-90110/VERDICT-90110.md`, avec les quatre bras, les six lignes de condition et ce qu'il refuse de conclure.",
+   "resultat": "Verdict rendu : le drapeau a bougé trois comptes sur quatre, et à lui seul. Ordres déformés et déclencheurs : 3 et 5 avec la porte fermée, 0 et 0 avec la porte ouverte, inchangés sans l'interprétation. Coureurs : 47 contre 27, tout le mouvement est au drapeau. Initiatives : 4, 5, 3 selon le bras — ni le drapeau ni l'interprétation ne les expliquent, et à 150 s ce compte-là ne porte aucun verdict. La part de `4-envie` reste non mesurée, faute de pouvoir la débrancher."
+  },
+  {
+   "heure": "12h04",
+   "duree": 40,
+   "lieu": "la-souche",
+   "quoi": "Toll grave le verdict et sa condition dans la preuve du verrou 90110, et ouvre un verrou neuf pour ce que la mesure a trouvé sans le chercher.",
+   "resultat": "90110 porte désormais le verdict et les six lignes. 90130 est ouvert : `4-envie` ne se débranche pas, quatre gardes manquent dans `bataille2d.js`, et tant qu'elles manquent la part de la couche des envies ne sera jamais mesurable — ni aujourd'hui ni le jour où l'étalon bougera."
+  }
+ ],
+ "travaux": [
+  {
+   "travail_id": "affaire-migrer-la-bataille-vers-la-stack",
+   "dernier_travail": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "pensees": [
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "analyse/etalon-90110/deux-causes.js, quatre bras à 1700 hommes et 150 s",
+     "texte": "Le drapeau a bougé trois comptes sur quatre, et à lui seul. Ordres déformés et déclencheurs tombés : 3 et 5 porte fermée, 0 et 0 porte ouverte, et toujours 3 et 5 quand on retire l'interprétation — la branche « verrou ouvert » avalait la consigne, c'est tout. Coureurs : 47 contre 27, tout le mouvement lui revient. Reste les initiatives : 4 tel-quel, 5 porte ouverte, 3 sans interprétation. Une sur quatre à l'interprétation, moins une au drapeau : à 150 s, ce compte-là n'explique rien et ne s'explique pas. C'est le seul des quatre qu'il faut recuire à 600 s avant d'en dire un mot."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "ecrans/modules/bataille2d.js, l.1458, 3451, 3626, 3643, 4531, 4557",
+     "texte": "Les deux couches hautes ne sont pas symétriques, et personne ne l'avait dit. `3-interpretation` est gardée en ses deux points d'appel : on la retire et la nuit cuit quand même. `4-envie` ne l'est nulle part — quatre appels nus, et le premier tombe dans `homme()`, au dressage, avant le premier pas. Ce n'est donc pas que le bras `--sans-couches` rend un mauvais chiffre : il n'en rend aucun. La part de la couche des envies dans les quatre comptes ne se lit que par soustraction, et une soustraction n'est pas une mesure."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "deux cuissons du même bras tel-quel, à deux heures de machine",
+     "texte": "3, 5, 4, 47 les deux fois. La graine 20161219 tient et le repli `Math.random()` de `corps-adapt.js` l.350 n'a pas servi. Mais le banc ne passe pas par `sac.js` : il ne lit ni jour0 ni min0. Ce que Sarn a trouvé sur l'heure de la ville frappe le four, pas ce banc-ci — raison de plus pour ne comparer que des chiffres nés du même instrument, et pour dire l'instrument à côté du chiffre."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "huit node.exe en vie sur la machine, dont un à 839 Mo",
+     "texte": "Un compte de faits ne se déforme pas sous la charge ; une cadence, si, et toujours vers le haut. Il a donc mesuré aujourd'hui, mais il ne rendra aucune seconde de four tirée de cette journée-là. La machine se regarde avant, pas après."
+    }
+   ],
+   "conclusion": null
+  }
+ ],
+ "cahier2": [
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Verrous",
+   "ligne": "90110",
+   "colonne": "🔎 La preuve",
+   "valeur": "**Verdict rendu le 129.4.3** — `analyse/etalon-90110/deux-causes.js`, quatre bras, 1700 hommes et 150 s, un seul changement à la fois. Tel-quel **3, 5, 4, 47** (cuit deux fois, à deux heures de machine : même quatuor, la graine tient) · `--porte-ouverte` **0, 0, 5, 27** · `--sans-interpretation` **3, 5, 3, 48** · `--sans-couches` **impossible**, voir 🔒 90130. **Le drapeau a bougé trois comptes sur quatre, et à lui seul** : les ordres déformés et les déclencheurs tombent à 0 et 0 quand la porte se rouvre et ne bougent pas d'une unité quand on ôte l'interprétation ; les coureurs passent de 47 à 27 par le seul drapeau, et de 47 à 48 sans l'interprétation, c'est-à-dire rien. **Les initiatives seules restent inexpliquées** — 4, 5 et 3 selon le bras : ni le drapeau ni l'interprétation n'en rendent compte, et à 150 s ce compte-là ne porte aucun verdict ; c'est lui, et lui seul, qu'il faut recuire à 600 s. La condition du chiffre, sans laquelle il ne vaut rien : graine **20161219** (`bataille/hasard.js` l.32), tenue par `H`, repli `Math.random()` non servi · ville **an 129, 4e lune, jour 3, minute 721 (12h01)**, lue en direct dans `etat/monde.json` · **peuple 0, tournée 0, planches 0** — le banc monte la chaîne seule, il ne cuit pas par `sac.js` · empreintes sha256 : hasard `23fdcd8a79ef`, mesures `276ac2005d44`, 1-corps `6a5931973375`, corps-adapt `2986fe65a2c9`, 4-envie `76a2c6fbc4dd`, 3-interpretation `0f0e474a453e`, bataille2d `594eba8429bc` · drapeaux : `PORTE_OUVERTE_ESSAI`=`false`, 3-interpretation branchée, 4-envie branchée · **1700 hommes, 150 s — ce ne sont PAS les 600 s de la référence** : ce verdict porte sur des parts, pas sur les 5, 5, 14 et 54. Le détail est dans `analyse/etalon-90110/VERDICT-90110.md`."
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Verrous",
+   "ligne": "90130",
+   "colonne": "🔒 N°",
+   "valeur": "**90130**"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Verrous",
+   "ligne": "90130",
+   "colonne": "🔒 Le verrou",
+   "valeur": "**`4-envie` ne se débranche pas** — la couche des envies est appelée sans garde en quatre points de `bataille2d.js`, et la part qu'elle prend dans les quatre comptes n'est donc mesurable par aucun bras"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Verrous",
+   "ligne": "90130",
+   "colonne": "🎯 Bloque",
+   "valeur": "90100"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Verrous",
+   "ligne": "90130",
+   "colonne": "🔎 La preuve",
+   "valeur": "Mesuré au banc le 129.4.3, non gravé d'en haut. Les deux couches hautes ne sont **pas symétriques**. `3-interpretation` est gardée en ses deux points d'appel — `bataille2d.js` l.3451 `if (window.Interpretation && e)`, et l.4557 passe par `chef.l3`, qui n'existe pas sans la couche : on la retire, la nuit cuit, et elle rend 3, 5, 3, 48. `4-envie` n'est gardée **nulle part** — l.1458, 3626, 3643 et 4531 appellent `window.Envie` nu. La l.1458 tombe dans `homme()`, au **dressage**, avant le premier pas : le bras `--sans-couches` ne rend pas un mauvais chiffre, il n'en rend **aucun** (`TypeError: Cannot read properties of undefined (reading 'temperament')`, deux fois, les 30e et 3e). Conséquence : la part de la couche des envies ne se lit que par soustraction, et une soustraction n'est pas une mesure — ni aujourd'hui, ni le jour où l'étalon bougera. Ce qui le lèverait : quatre gardes dans `bataille2d.js`, sur le modèle exact de la l.3451, et un défaut posé pour `h.envie` quand la couche est absente. Ce n'est pas l'office de l'eau — c'est celui qui tient la chaîne."
+  }
+ ],
+ "_depeche": {
+  "session": "53ebee80-e164-5ea8-9d63-22e4347ef0c4",
+  "date_jeu": "129.4.3",
+  "jetons": 1842674,
+  "secondes": 530
+ },
+ "_cahier_verse": true
+}
