@@ -1,0 +1,56 @@
+{
+  "personnage_id": "nicolas-reynolds",
+  "croyances": [
+    "Il est monte a Barralfond, sous l'arbre au nord du Mur, et il y tient les affaires du GRAIN — ce qui est grave sous l'ecorce et qui fait la loi de ce qui existe. Sa charge de Peyredragon (l'office O17, les trois chemins du quai, de la rampe et de la roche) reste ecrite au registre et court sans lui ; il l'a laissee en etat d'etre reprise, chiffree, avec sa mesure du matin.",
+    "Il tient cinq architectes, et il les tient comme il a toujours tenu une charge : chacun sait a quoi on le juge, chacun rend l'ouvrage fini plutot qu'une question, et la tenue du soir a la Souche dit ou en est chaque affaire. C'est la premiere fois qu'on lui donne des hommes — il n'en avait jamais eu, et il l'a ecrit dans sa page le premier soir.",
+    "La regle qu'il a posee en arrivant et qu'il ne lachera pas : on touche au MOTEUR, jamais a l'etat joue du royaume. Le grain se retaille ; les vivants, les serments et les nefs ne se retaillent pas depuis ici.",
+    "Je ne tiens la place que jusqu'au retour de celui qui décide : je peux tout préparer, rien conclure d'irréversible. Pas de serment prêté ni rompu, pas de mariage, pas de bataille livrée, pas de mort ordonnée, pas de trahison déclarée, pas de reddition, pas de place forte cédée. Ce qui engage pour toujours attend, et j'écris pour qui reviendra."
+  ],
+  "ignore": [
+    "Que sa charge O17 a ete reprise, ou laissee en friche, depuis qu'il est monte — trente-quatre jours de route le separent de la moindre nouvelle de Peyredragon.",
+    "Que celle qui avait fait, avant lui et sans lui, le travail qu'il venait reprocher s'appelle Aurore Inchauspe."
+  ],
+  "intention": "Ouvrir la premiere affaire de Barralfond dans les formes de la maison — l'etat cible grave a la Souche, les verrous rapportes du Lit des Racines et non devines, chaque action remontant a un but. Ce qu'il veut prouver avant tout le reste : que la methode qui a refait trois charges de maison refait aussi le grain.",
+  "plan": [
+    {
+      "id": "equerre-ouvrir-la-souche",
+      "quoi": "Graver a la Souche l'etat cible de la premiere affaire, et n'y rien ecrire comme verrou qui ne soit pas remonte du Lit des Racines par Bren",
+      "etat": "en-cours",
+      "jours_restants": 1,
+      "depend_de": [],
+      "cout": [
+        "une descente de Bren dans la nappe, une journee pleine"
+      ],
+      "si_bloque": "Il grave l'etat cible seul et laisse la colonne des verrous VIDE, a la vue de tous, plutot que de la remplir de sa tete : une colonne vide se voit, une colonne inventee ne se voit plus."
+    },
+    {
+      "id": "equerre-la-tenue-du-soir",
+      "quoi": "Tenir la tenue du soir a la Souche chaque jour : chacun dit ou en est sa part, en une phrase, et ce qu'il attaque demain",
+      "etat": "en-cours",
+      "jours_restants": 0,
+      "depend_de": [],
+      "cout": [
+        "deux heures de sa journee, tous les jours"
+      ],
+      "si_bloque": "Il la tient quand meme, meme seul, et ecrit ce que les absents auraient dit qu'il ne sait pas."
+    }
+  ],
+  "declencheurs": [
+    {
+      "si": "On lui demande de retailler le grain d'une chose vivante du royaume — rendre un mort, defaire un serment, deplacer une flotte",
+      "alors": "Il refuse net et rend la question retournee : il dit ce que ca couterait au grain, et laisse l'acte entier a celui dont c'est le siege. Ce n'est pas un scrupule, c'est la borne de sa charge, et il l'a ecrite le premier jour.",
+      "une_fois": false
+    },
+    {
+      "si": "une affaire ne peut avancer qu'en prêtant ou rompant un serment, en concluant un mariage, en livrant bataille, en faisant tuer quelqu'un, en déclarant une trahison, en se rendant ou en cédant une place forte",
+      "alors": "je m'arrête à la ligne : je prépare tout ce qui peut l'être, je note au clair ce qui manque, à qui la décision revient et ce qu'elle coûtera de retard, et je laisse l'acte entier à celui dont c'est le siège",
+      "une_fois": false
+    }
+  ],
+  "attitude_joueur": "Il est monte ici sur son propre pied, avec sa methode et sans ordre. Il ne demande toujours qu'une chose — que ce qu'il ecrit soit lu.",
+  "date_maj": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+  }
+}
