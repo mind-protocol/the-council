@@ -24,6 +24,7 @@ window.Ville3D = (function () {
   const HOTE = "ville3d";
 
   let LIEUX = null;      // ce que le serveur offre en volume
+  let DEFAUT = null;     // le monde par défaut, quand le lieu n'en déclare aucun
   let lieuId = null;     // où se tient le joueur
   let monde = null;      // ouvert une seule fois, au premier affichage
   let ouverture = null;  // la promesse de chargement, pour ne pas ouvrir deux fois
@@ -46,7 +47,21 @@ window.Ville3D = (function () {
   let dernierOu = null;     // ses mètres, à l'image précédente
   let trajet = null;        // un voyage en cours : {de, vers, t0}
 
-  const def = () => (LIEUX && lieuId) ? LIEUX.find((l) => l.id === lieuId) : null;
+  // Le lieu du joueur, ou LA VILLE QUI LE CONTIENT. On se tient dans un
+  // bâtiment (`le-grenier`) et le monde en volume est bâti par ville
+  // (`port-real`) : sans ce repli, entrer chez soi faisait disparaître les
+  // trois hauteurs de la rangée. `contient` est déclaré côté serveur, à côté
+  // des vues — on ne devine aucune appartenance ici.
+  // Et si RIEN ne déclare la chose — un bâtiment neuf, un serveur qui n'a pas
+  // encore été relancé —, on retombe sur le monde par défaut plutôt que de
+  // fermer les trois onglets. Une ville approximative se corrige d'un coup
+  // d'œil ; une rangée qui perd trois boutons se cherche une demi-heure.
+  const def = () => {
+    if (!LIEUX || !lieuId) return null;
+    return LIEUX.find((l) => l.id === lieuId) ||
+           LIEUX.find((l) => (l.contient || []).indexOf(lieuId) >= 0) ||
+           LIEUX.find((l) => l.id === DEFAUT) || null;
+  };
   const offert = () => !!def();
 
   // ---- le voile de chargement ------------------------------------------------
@@ -608,6 +623,7 @@ window.Ville3D = (function () {
 
   fetch("/monde/lieux").then((r) => r.json()).then((d) => {
     LIEUX = d.lieux || [];
+    DEFAUT = d.defaut || null;
     if (window.Plan && Plan.rebattre) Plan.rebattre();
   }).catch(() => { LIEUX = []; });
 
@@ -616,7 +632,12 @@ window.Ville3D = (function () {
   // restent à un clic, mais elles cessent d'occuper la rangée — le plan et le
   // royaume sont ce qu'on regarde vingt fois par scène, pas la rade.
   const ECHELLES = [
-    { id: "ville3d", nom: "La ville", vue: "ville", ordre: 2, repli: true },
+    // « En volume », et non plus « La ville » : depuis `carte-ville.js`, la
+    // ville se lit d'abord EN PLAN — c'est ce qu'on lui demande (où est la rue,
+    // combien de pas jusqu'à la porte) et c'est ce qui se voit la nuit. Les
+    // deux onglets portaient le même nom au même ordre. Le relief reste offert,
+    // parce qu'il est juste et que Peyredragon n'a pas de plan 2D du tout.
+    { id: "ville3d", nom: "En volume", vue: "ville", ordre: 2.2, repli: true },
     { id: "chateau3d", nom: "Le quartier", vue: "chateau", ordre: 3, repli: true },
     // Et la troisième hauteur : une pièce dans le cadre, à hauteur d'homme.
     // C'est la seule où les gens de la salle se voient — plus haut, ils sont

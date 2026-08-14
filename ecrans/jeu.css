@@ -4318,3 +4318,305 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 .book-idee-cite{white-space:nowrap;color:var(--ink);}
 .book-idee-signe{margin-right:3px;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;}
 .book-idee-cite i{font-style:italic;}
+
+/* =========================================================
+   LA VILLE EN PLAN — carte-ville.js
+   Une carte se lit à toute heure : pas d'éclairage, pas de nuit, pas de
+   caméra. Les couleurs sont celles d'une carte dessinée à la main — papier,
+   encre sépia, eau pâle —, et elles se retournent en sombre sans se
+   décolorer, parce qu'on joue le soir et que l'écran est sombre.
+   ========================================================= */
+:root{
+  --cv-sol:#efe7d6; --cv-eau:#b9d2d9; --cv-eau-trait:#8fb0ba;
+  --cv-niveau:rgba(150,120,70,.30);
+  --cv-bati:#d9cbb0; --cv-bati-trait:rgba(110,85,50,.45);
+  /* la chaussée : de la terre battue plus sombre que le sol, jamais de l'encre */
+  --cv-voie:#a8926d;
+  /* le rempart : de la pierre grise, plus froide que tout le reste du plan —
+     c'est ce qui le détache d'un tissu qui est entièrement chaud. */
+  --cv-mur:#8a8378; --cv-mur-tour:#a9a196;
+  /* les deux bouts de l'échelle des types : ce vers quoi on éclaircit et ce
+     vers quoi on assombrit. Jamais du blanc ni du noir purs — une carte
+     peinte n'a ni l'un ni l'autre. */
+  --cv-lum:#fbf3e0; --cv-nuit:#6b543a;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --cv-sol:#1b1712; --cv-eau:#1d2c33; --cv-eau-trait:#33555f;
+    --cv-niveau:rgba(220,190,140,.16);
+    --cv-bati:#2e2820; --cv-bati-trait:rgba(220,190,140,.22);
+    --cv-voie:#6d5c42;
+    --cv-mur:#6a6459; --cv-mur-tour:#847d70;
+    --cv-lum:#8a7856; --cv-nuit:#120f0b;
+  }
+}
+#ville2d{position:absolute;inset:0;overflow:hidden;}
+
+/* — LA FOULE — une toile par-dessus le plan, et rien qui prenne la souris :
+     on doit pouvoir glisser la carte à travers les gens. — */
+.cv-foule{position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;}
+.cv-foule-barre{position:absolute;left:10px;bottom:10px;z-index:3;
+  display:flex;align-items:center;gap:.5em;
+  padding:.3em .6em;border-radius:3px;
+  background:color-mix(in srgb,var(--cv-sol) 88%,transparent);
+  border:1px solid var(--cv-bati-trait);
+  font-size:.85em;color:var(--ink);user-select:none;}
+.cv-foule-barre button{background:none;border:0;cursor:pointer;
+  color:var(--ink);font-size:1.05em;line-height:1;padding:.1em .25em;}
+.cv-foule-barre button:hover{color:var(--braise);}
+/* L'heure au chiffre fixe : sans chasse fixe, la barre tressaute à chaque
+   minute qui passe, et l'œil suit le sautillement au lieu de l'heure. */
+.cv-f-heure{font-variant-numeric:tabular-nums;font-weight:600;min-width:3.6em;}
+.cv-f-compte{opacity:.6;font-variant-numeric:tabular-nums;}
+.cv-foule-barre.marche .cv-f-heure{color:var(--braise);}
+/* — LA BATAILLE — la même discipline que la foule, à l'autre coin : les deux
+     barres ne se marchent pas dessus, et l'on voit d'un coup d'œil laquelle
+     des deux horloges tourne (celle de la ville, ou celle de l'assaut). — */
+.cv-bataille{position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;}
+.cv-bat-barre{position:absolute;right:10px;bottom:10px;z-index:3;
+  display:flex;align-items:center;gap:.5em;
+  padding:.3em .6em;border-radius:3px;
+  background:color-mix(in srgb,var(--cv-sol) 88%,transparent);
+  border:1px solid var(--cv-bati-trait);
+  font-size:.85em;color:var(--ink);user-select:none;}
+.cv-bat-barre button{background:none;border:0;cursor:pointer;
+  color:var(--ink);font-size:1.05em;line-height:1;padding:.1em .25em;}
+.cv-bat-barre button:hover{color:var(--braise);}
+.cv-b-etat{font-variant-numeric:tabular-nums;opacity:.85;}
+/* — LE PLEIN ÉCRAN — le seul bouton du plan qui ne parle pas de la fiction :
+     il se tient dans le coin, à peine visible, et ne se réveille qu'au survol
+     de la carte. — */
+.cv-plein{position:absolute;right:10px;top:10px;z-index:3;
+  width:1.9em;height:1.9em;padding:0;line-height:1;cursor:pointer;
+  border:1px solid var(--cv-bati-trait);border-radius:3px;
+  background:color-mix(in srgb,var(--cv-sol) 88%,transparent);
+  color:var(--ink);font-size:.95em;opacity:.35;transition:opacity .15s;}
+#ville2d:hover .cv-plein{opacity:.85;}
+.cv-plein:hover{opacity:1;color:var(--braise);}
+/* En plein écran, l'hôte n'a plus de parent pour lui donner un fond : sans
+   ceci le navigateur peint du noir derrière un plan qui, lui, est clair. */
+#ville2d:fullscreen{background:var(--cv-sol);}
+#ville2d:fullscreen .cv-plein{opacity:.85;}
+.cv-bat-barre.marche .cv-b-etat{color:var(--braise);opacity:1;}
+/* Une carte se tire à la main : le glissé doit déplacer la ville, jamais
+   surligner « LE CULPUCIER » en bleu. Les noms du plan ne se sélectionnent pas,
+   et seuls les repères prennent la souris. */
+#cv-svg{width:100%;height:100%;display:block;cursor:grab;touch-action:none;
+  user-select:none;-webkit-user-select:none;}
+#cv-svg text{user-select:none;-webkit-user-select:none;}
+.cv-quartier,.cv-ici text{pointer-events:none;}
+#cv-svg.cv-tire{cursor:grabbing;}
+.cv-sol{fill:var(--cv-sol);}
+.cv-eau{fill:var(--cv-eau);stroke:var(--cv-eau-trait);
+  stroke-width:calc(2px * var(--mpp,1));}
+.cv-niveau{fill:none;stroke:var(--cv-niveau);
+  stroke-width:calc(1.1px * var(--mpp,1));}
+
+/* — le bâti — les traits d'abord, la couleur ensuite : à cette échelle, un
+   contour de maison est plus lisible qu'un aplat de plus.
+
+   LA FAMILLE DONNE LA TEINTE, LE TYPE DONNE LA CLARTÉ. Trente-sept couleurs
+   franches ne se lisent pas ; trente-sept nuances de neuf teintes, si — l'œil
+   range d'abord par couleur (voilà l'artisanat, voilà les nuisances) puis
+   distingue dedans (la forge est plus sombre que la boulangerie). C'est le
+   rangement d'un plan cadastral, et il tient sans légende.
+
+   Une famille pose `--tf` ; un type pose `--lum` (vers la lumière) ou `--nuit`
+   (vers l'ombre), en pourcentage. Un type qu'on n'a pas nommé garde la couleur
+   nue de sa famille — un oubli s'y voit à peine, et jamais comme une faute. — */
+.cv-bati path{
+  fill:color-mix(in srgb,
+    color-mix(in srgb, var(--tf,var(--cv-bati)) calc(100% - var(--lum,0%)),
+              var(--cv-lum) var(--lum,0%)) calc(100% - var(--nuit,0%)),
+    var(--cv-nuit) var(--nuit,0%));
+  stroke:var(--cv-bati-trait);stroke-width:calc(.5px * var(--mpp,1));}
+
+/* LES NEUF FAMILLES — des couleurs propres, pas des accents dilués.
+   Ce qu'il y avait ici mélangeait les couleurs d'interface du jeu à 62-88 % de
+   beige : douze pour cent de teinte, autant dire rien, et neuf familles qui
+   tenaient toutes dans le même mouchoir. Une carte n'a pas à emprunter la
+   palette d'une interface — un plan cadastral choisit ses couleurs pour
+   qu'elles se DISTINGUENT, et il les désature pour qu'elles cohabitent.
+   D'où celles-ci : franches en teinte, sourdes en saturation, et rangées de
+   sorte que deux familles voisines sur le plan ne soient jamais voisines en
+   couleur. La clarté de chaque type se pose ensuite par-dessus, et il lui
+   reste enfin de la place. */
+.cv-b-habitat{--tf:#d9cbb0;}          /* le beige de la ville, la référence */
+.cv-b-artisanat{--tf:#c08a5e;}        /* brique cuite — ce qui a un feu */
+.cv-b-commerce{--tf:#d6a93f;}         /* ocre d'or — ce qui se vend */
+.cv-b-plaisir{--tf:#b05a72;}          /* lie-de-vin */
+.cv-b-service{--tf:#7fa08c;}          /* vert d'eau — l'auberge, l'étuve */
+.cv-b-civique{--tf:#8fa04e;}          /* vert-de-gris — le bien commun */
+.cv-b-culte{--tf:#8c93bd;}            /* gris-bleu de pierre */
+.cv-b-institution{--tf:#a8443c;}      /* rouge sombre — le pouvoir */
+.cv-b-nuisance{--tf:#6f6350;}         /* boue — ce qu'on met au vent d'aval */
+/* La nuit, les mêmes teintes rabattues : on garde le RANG des couleurs (la
+   brique reste chaude, le culte reste froid) et l'on baisse tout d'un ton.
+   Reprendre la palette du jour sur un fond noir donnerait neuf lampions. */
+@media (prefers-color-scheme: dark){
+  .cv-b-habitat{--tf:#2e2820;}
+  .cv-b-artisanat{--tf:#5c3e29;}
+  .cv-b-commerce{--tf:#6b5423;}
+  .cv-b-plaisir{--tf:#5a2e39;}
+  .cv-b-service{--tf:#3a4f45;}
+  .cv-b-civique{--tf:#454f28;}
+  .cv-b-culte{--tf:#42465c;}
+  .cv-b-institution{--tf:#5e2622;}
+  .cv-b-nuisance{--tf:#3a352c;}
+}
+
+/* les trente-sept types. HABITAT — c'est la seule échelle sociale du plan, et
+   elle se lit toute seule : le Culpucier s'assombrit, la ville haute pâlit. */
+.cv-u-cabane{--nuit:26%;}
+.cv-u-taudis{--nuit:16%;}
+.cv-u-maison{}                       /* le milieu, la couleur nue */
+.cv-u-maison-officier{--lum:12%;}
+.cv-u-manse{--lum:26%;}
+/* COMMERCE — de l'échoppe au comptoir de change */
+.cv-u-chantier-bois{--nuit:22%;}
+.cv-u-entrepot{--nuit:14%;}
+.cv-u-marche-quartier{--lum:16%;}
+.cv-u-change{--lum:26%;}
+/* ARTISANAT — ce qui chauffe est sombre, ce qui blanchit est clair */
+.cv-u-forge{--nuit:18%;}
+.cv-u-corderie{--nuit:8%;}
+.cv-u-voilerie{--lum:8%;}
+.cv-u-boulangerie{--lum:14%;}
+.cv-u-moulin{--lum:24%;}
+/* NUISANCE — plus c'est sale, plus c'est sombre */
+.cv-u-poterie{--lum:10%;}
+.cv-u-tannerie{--nuit:10%;}
+.cv-u-abattoir{--nuit:20%;}
+.cv-u-fosse-vidange{--nuit:28%;}
+/* PLAISIR, SERVICE */
+.cv-u-bordel{--lum:18%;}
+.cv-u-ecurie{--nuit:16%;}
+.cv-u-etuve{--lum:16%;}
+/* CIVIQUE — le puits est le mobilier de la rue, la geôle son fond */
+.cv-u-puits{--lum:20%;}
+.cv-u-grenier{--nuit:12%;}
+.cv-u-geole{--nuit:24%;}
+/* INSTITUTION — les vingt bâtiments qu'on cherche du regard */
+.cv-u-fosse-dragons{--nuit:14%;}
+.cv-u-caserne{--nuit:22%;}
+.cv-u-vieux-septuaire{--lum:14%;}
+.cv-u-guilde-alchimistes{--lum:24%;}
+.cv-u-bureau-port{--lum:30%;}
+
+/* — LES VOIES ONT UNE LARGEUR, ET C'EST ELLE QUI LES COURBE.
+     Une rue peinte au trait fin garde tous ses coudes ; peinte à sa largeur
+     réelle avec des jointures rondes, elle les perd — la chaussée s'arrondit
+     d'elle-même à chaque angle, comme une vraie. On les écrit donc en MÈTRES
+     (dans un SVG, un `px` de CSS est une unité du plan, et le plan est en
+     mètres), avec un plancher en pixels APPARENTS pour qu'une ruelle de deux
+     mètres ne disparaisse pas quand on s'éloigne : `max()` prend le plus large
+     des deux, la vraie largeur de près, le trait lisible de loin.
+     Elles sont TRANSPARENTES et passent SOUS le bâti : ce qui se voit d'une
+     rue, c'est ce que les façades lui laissent. — */
+.cv-voie{fill:none;stroke:var(--cv-voie);
+  stroke-linecap:round;stroke-linejoin:round;}
+.cv-v-ruelle{stroke-width:max(2.5px, calc(.9px * var(--mpp,1)));opacity:.42;}
+.cv-v-abord{stroke-width:max(4px, calc(1px * var(--mpp,1)));opacity:.42;}
+.cv-v-escalier{stroke-width:max(2px, calc(1.2px * var(--mpp,1)));opacity:.6;
+  stroke-linecap:butt;
+  stroke-dasharray:max(1.6px, calc(3px * var(--mpp,1)))
+                   max(1.2px, calc(2px * var(--mpp,1)));}
+.cv-v-rue{stroke-width:max(4px, calc(1.2px * var(--mpp,1)));opacity:.5;}
+.cv-v-quai{stroke-width:max(8px, calc(2.2px * var(--mpp,1)));
+  stroke:var(--loge);opacity:.55;}
+.cv-v-artere{stroke-width:max(10px, calc(2.8px * var(--mpp,1)));
+  stroke:var(--accent);opacity:.6;}
+
+/* — L'ENCEINTE — le seul trait du plan qui ne pâlit jamais.
+   Six mètres de courtine, épaisseur RÉELLE : c'est un mur qu'on longe, pas un
+   contour de dessin. Le `max` ne l'empêche que de disparaître au recul, où
+   six mètres tombent sous le pixel — et là, il devient le dessin de la ville.
+   Les tours des sept portes sont pleines, un ton plus clair : sur un plan, une
+   porte se cherche des yeux, et deux pastilles la trouvent plus vite qu'un nom. */
+.cv-courtine{fill:none;stroke:var(--cv-mur);
+  stroke-width:max(6px, calc(2.2px * var(--mpp,1)));
+  stroke-linecap:round;stroke-linejoin:round;}
+.cv-tour{fill:var(--cv-mur-tour);stroke:var(--cv-mur);
+  stroke-width:calc(.6px * var(--mpp,1));}
+
+/* — ce qui se lit — les textes gardent une taille APPARENTE constante :
+     écrits en mètres, ils grandiraient avec la carte. — */
+.cv-quartier{fill:var(--muted);text-anchor:middle;letter-spacing:.14em;
+  text-transform:uppercase;opacity:.55;pointer-events:none;
+  font-family:inherit;}
+.cv-repere circle{fill:var(--accent);stroke:var(--cv-sol);
+  stroke-width:calc(1.5px * var(--mpp,1));cursor:pointer;}
+.cv-repere text{fill:var(--ink);font-size:calc(11px * var(--mpp,1));
+  paint-order:stroke;stroke:var(--cv-sol);stroke-width:calc(3px * var(--mpp,1));
+  cursor:pointer;}
+.cv-repere:hover circle{fill:var(--braise);}
+
+/* — vous êtes ici : l'or du joueur, le même que sur toutes les cartes — */
+.cv-ici-halo{fill:var(--or-joueur);opacity:.16;}
+.cv-ici-point{fill:var(--or-joueur);stroke:var(--cv-sol);
+  stroke-width:calc(2px * var(--mpp,1));}
+.cv-ici text{fill:var(--or-joueur);text-anchor:middle;
+  font-size:calc(13px * var(--mpp,1));paint-order:stroke;
+  stroke:var(--cv-sol);stroke-width:calc(3px * var(--mpp,1));}
+
+/* — LES TROIS PALIERS. C'est ici, et nulle part ailleurs, que se décide ce
+     qu'on voit à quelle distance : le JS ne fait que poser la classe. — */
+/* La toile fine s'éteint bien avant le bâti : voir `grain()` dans
+   carte-ville.js — une maison de loin fait masse, une ruelle de loin fait
+   voile. Elle s'estompe d'abord, puis disparaît. */
+.cv-sans-toile .cv-v-ruelle,.cv-sans-toile .cv-v-abord,
+.cv-sans-toile .cv-v-escalier{display:none;}
+/* Le cran d'avant : elle est encore là, mais elle a cessé de crier. C'est ce
+   qui évite le clignotement d'une couche qui s'éteint d'un coup. */
+.cv-toile-pale .cv-v-ruelle{opacity:.16;}
+.cv-toile-pale .cv-v-abord{opacity:.16;}
+.cv-toile-pale .cv-v-escalier{opacity:.3;}
+/* Et la rue elle-même s'allège dès qu'on recule : de loin, ce qui doit porter
+   la ville, c'est la masse du bâti et les six artères — pas les trois mille
+   quatre cents rues, qui à cette distance ne se distinguent plus les unes des
+   autres et ne font qu'un quadrillage. */
+.cv-sans-toile .cv-v-rue{opacity:.3;}
+/* LE BÂTI RESTE, C'EST SON CONTOUR QUI PART. On cachait de loin tout ce qui
+   n'était pas une institution, et c'était juste tant qu'une maison était un
+   rectangle gris de rien : quarante mille contours à un demi-pixel font du
+   bruit, pas une ville. Mais depuis que chaque type a sa couleur, l'aplat DIT
+   quelque chose de loin — et même mieux que de près : c'est à pleine page qu'on
+   voit le Culpucier s'assombrir et la ville haute pâlir. On ôte donc le trait,
+   qui ne portait rien, et l'on garde la masse, qui porte tout. */
+.cv-loin .cv-bati path{stroke:none;}
+.cv-loin .cv-repere text{display:none;}
+.cv-moyen .cv-v-ruelle{opacity:.2;}
+.cv-pres .cv-quartier{opacity:.2;}
+
+/* — LA MARCHE — l'itinéraire, et la barre qui le mène.
+     Une balade se pilote à trois boutons : partir, l'allure, renoncer. Tout
+     le reste est sur la carte. — */
+.cv-route-trait{fill:none;stroke:var(--or-joueur);opacity:.85;
+  stroke-width:calc(3px * var(--mpp,1));stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-dasharray:calc(7px * var(--mpp,1)) calc(5px * var(--mpp,1));}
+.cv-route-but{fill:none;stroke:var(--or-joueur);
+  stroke-width:calc(2.5px * var(--mpp,1));}
+.cv-barre{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);
+  display:none;align-items:center;gap:12px;z-index:7;
+  padding:7px 12px;border-radius:7px;
+  background:var(--fond);border:1px solid var(--bord);
+  box-shadow:0 3px 14px rgba(0,0,0,.22);font-size:.74em;}
+.cv-barre.ouverte{display:flex;}
+.cv-barre .cv-dit{color:var(--muted);}
+.cv-barre button{padding:3px 9px;line-height:1.4;}
+.cv-aller{font-size:1.1em;min-width:34px;}
+.cv-reste{display:flex;flex-direction:column;line-height:1.25;color:var(--ink);}
+.cv-reste small{color:var(--muted);font-size:.86em;}
+.cv-allure{display:flex;align-items:center;gap:5px;color:var(--muted);}
+.cv-allure b{color:var(--ink);min-width:26px;text-align:center;}
+.cv-renoncer{color:var(--muted);}
+
+/* La barre ne se rebâtit plus à chaque image (voir carte-ville.js) : ses nœuds
+   sont tous là en permanence, et l'on n'allume que ce qui a lieu d'être. */
+.cv-reste i{font-style:normal;color:var(--muted);}
+.cv-barre .cv-dit{display:none;}
+.cv-barre.un-mot .cv-dit{display:inline;}
+.cv-barre.un-mot > :not(.cv-dit){display:none;}
