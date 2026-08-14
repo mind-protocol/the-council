@@ -86172,17 +86172,17 @@
     ]
    },
    {
-    "titre": "🎯 Les états cibles — les trois, ou rien",
+    "titre": "🎯 États cibles — les trois, ou rien",
     "colonnes": [
-     "🔢",
+     "🎯 N°",
      "🎯 L'état cible",
-     "📏 À quoi on le voit",
+     "📏 La preuve",
      "📅 Jour dû"
     ],
     "lignes": [
      {
       "cellules": [
-       "🎯 90100",
+       "**90100**",
        "**La bataille a du sens en cuisson**",
        "`python scripts/bataille.py --cuire` rend une nuit dont les comptes tiennent debout et se reproduisent : ordres déformés, déclencheurs tombés, initiatives, coureurs. La référence du 14 août est **5, 5, 14 et 54** — un écart se dit et s'explique, il ne s'arrondit pas.",
        "J−6"
@@ -86190,7 +86190,7 @@
      },
      {
       "cellules": [
-       "🎯 90200",
+       "**90200**",
        "**La bataille est visible sur l'interface**",
        "La nuit cuite se regarde dans le jeu, pas seulement dans un sac : on voit la ligne céder, la panique courir, la rue bouchonner. Ce que la vue de bataille dépose au MJ toutes les trente secondes doit montrer la même chose que ce que la stack a décidé.",
        "J−3"
@@ -86198,7 +86198,7 @@
      },
      {
       "cellules": [
-       "🎯 90300",
+       "**90300**",
        "**Rien ne tourne hors de la stack**",
        "Aucune décision d'homme ne sort plus de la cascade de `soldat()`. `bataille2d.js` ne garde que le sol, le temps et le rendu ; tout ce qui pense est dans `survival-stack/`.",
        "J−0"
@@ -86207,76 +86207,100 @@
     ]
    },
    {
-    "titre": "🔒 Les verrous — deux connus, le reste attend Bren",
+    "titre": "🔒 Verrous",
     "colonnes": [
-     "🔢",
+     "🔒 N°",
      "🔒 Le verrou",
-     "🎯 Il tient quoi",
-     "🔎 D'où on le sait"
+     "🎯 Bloque",
+     "🔎 La preuve"
     ],
     "lignes": [
      {
       "cellules": [
-       "🔒 90310",
+       "**90310**",
        "**Il manque `2-reflexion.js`**, et l'arbitre avec",
-       "🎯 90300",
+       "90300",
        "Compté sur le disque : `survival-stack/` porte `1-corps`, `3-interpretation`, `4-envie`. La deuxième couche et l'arbitre n'existent pas. La cascade ne peut pas être retirée tant que rien ne tient leur place."
       ]
      },
      {
       "cellules": [
-       "🔒 90320",
-       "**Les trois couches écrites ne conduisent rien**",
-       "🎯 90300",
-       "`jeu.html` charge les trois ; `bataille2d.js` ne les cite que dans ses commentaires (l. 503, 506, 1430) et n'appelle que `window.Envie.temperament`. Chargé n'est pas branché."
+       "**90320**",
+       "**La cascade de `soldat()` décide encore de tout ce que les couches ne conduisent pas** — ce n'est plus « chargé n'est pas branché », c'est « branché à moitié, et hors de la stack »",
+       "90300",
+       "⚠ Corrigé le 3e sur le disque, par Bren et Wenna : la formule « elles ne conduisent rien, seul `window.Envie.temperament` est appelé » était fausse. `bataille2d.js` l. 3035–3092 : `h.l1.jambes` conduit `sidération`, `fuite`, `recul`, `serrer`, `ruée`, et `h.brasMorts` retire les bras. `window.Interpretation.pas` est appelé l. 3406, `deSoiMeme` l. 4507, et la couche 4 conduit le pillage l. 3593. Le drapeau `pilote` et le seuil d'emprise 0,60 sont tombés (l. 3007–3022). Deux couches sur trois conduisent déjà ; `planté` ne prend rien à dessein. Et le branchement ne vit PAS dans `survival-stack/` : il est dans `ecrans/modules/bataille/corps-adapt.js`, 372 lignes, chargé par `jeu.html` l. 164, que ce volume ne nommait nulle part. Ce qui reste vrai et qui EST le verrou : tout le reste de la décision d'homme sort encore de la cascade, et l'étape 3 — élargir en mesurant à chaque cran — n'est pas commencée."
       ]
      },
      {
       "cellules": [
-       "—",
-       "*(le reste est vide exprès)*",
-       "🎯 90100 · 🎯 90200",
-       "Un verrou gravé d'ici serait un trou mécanique, et un trou mécanique ne vaut rien. Cette colonne se remplit quand Bren remonte du Lit des Racines avec les accroches réelles de `soldat()` — pas avant."
+       "**90110**",
+       "**L'étalon 5, 5, 14 et 54 confond deux causes** — le drapeau retiré et les couches hautes branchées sont tombés dans le même anneau",
+       "90100",
+       "Lu dans l'anneau, non gravé d'en haut. `git show --stat 745c8eb` : **un seul commit** met `PORTE_OUVERTE_ESSAI` à `false`, écrit `3-interpretation.js` et `4-envie.js`, et les branche dans `bataille2d.js` (l. 3406, 3593, 4481, 4507). Aucune cuisson ne se tient entre les deux. Or `initiative` est notée l. 4519, **neuf lignes après** que `Interpretation.deSoiMeme` a choisi l'ordre neuf l. 4507 : deux des quatre comptes sont pour partie l'ouvrage des couches hautes, pas du seul drapeau. Tant que la référence n'aura pas été cuite une fois avec les couches 3 et 4 débranchées, aucun écart ne pourra « se dire et s'expliquer » — il n'y aura que deux causes et un seul chiffre."
+      ]
+     },
+     {
+      "cellules": [
+       "**90330**",
+       "**Deux modèles de peur décident en même temps** — la couche est branchée, l'ancien n'est pas déposé",
+       "90300",
+       "Étalon posé dans `ecrans/modules/bataille/corps-adapt.js` l.150 : **2801 lignes de code** hors commentaires avant le refacto. Mesuré le 3e jour de la 4e lune — `grep -vE '^\\s*(//|/\\*|\\*)' … | wc -l` — : **2980**, soit **+179**. `morale`, `ROMPT`, `CHOC`, `SANG`, `REPRISE`, `PLANCHER_FERME`, `survie()` décident encore à côté de `h.l1`. Deux modèles qui disent la même chose avec des pièces différentes ne se départagent jamais : on hérite du pire des deux sans savoir lequel produit quoi."
+      ]
+     },
+     {
+      "cellules": [
+       "**90340**",
+       "**Onze transitions d'état d'un homme ne passent pas par `soldat()`**",
+       "90300",
+       "Descendu au Lit des Racines. `soldat()` (l.2940–3698) n'a qu'un seul appelant, l.5374. Mais onze fonctions posent `h.etat` en dehors d'elle : `dresser` 1753·1783·1791, `tomber` 2805, `achever` 2845, `rompre` 2894, `envoyerAuDonjon` 3845, `courirAuDonjon` 3879, `ouvrirDeDedans` 4010, `envoyerCoureur` 4567, `rendreCoureur` 4674, `rallier` 4783, `piller` 6459·6480. Retirer la cascade ne les emporte pas — et `rallier` LIT déjà `h.l1.jambes` (l.4782), donc la couche conduit déjà hors cascade, à un endroit que le plan ne regarde pas."
+      ]
+     },
+     {
+      "cellules": [
+       "**90120**",
+       "**Une couche neuve qui tire son hasard ailleurs casse la reproductibilité, et ça s'est déjà produit**",
+       "90100",
+       "`corps-adapt.js` l.182–194 : la couche appelait `Math.random()`. Sous le seuil de 0,6 d'emprise — 3 % des hommes — la relecture du four tenait : écart pire **0,600 m**, **3** états faux sur 2,19 M. Le seuil retiré, elle conduit tout le monde : écart pire **329 m**, **931 172** états faux. Corrigé par `window.BatailleHasard`, mais rien n'oblige `2-reflexion.js` ni l'arbitre à en faire autant : le trou se rouvre à chaque couche écrite."
       ]
      }
     ]
    },
    {
-    "titre": "⚔️ Les actions — chacune remonte, ou elle sort",
+    "titre": "⚔️ Actions — chacune remonte, ou elle sort",
     "colonnes": [
-     "🔢",
+     "⚔️ N°",
      "⚔️ L'action",
-     "⬆️ Elle remonte à",
-     "🪶 Qui la tient",
-     "📅",
+     "⬆️ Réalise",
+     "🪶 L'office",
+     "📅 Jour dû",
      "✅ État"
     ],
     "lignes": [
      {
       "cellules": [
-       "⚔️ 90010",
+       "**90010**",
        "Descendre la nappe de `soldat()` : chaque décision qu'elle prend, ce qui l'appelle, et à quelle couche elle appartiendrait",
-       "🔒 90320 → 🎯 90300",
+       "90320 90300",
        "Bren Racine-Grise",
        "J−7",
-       "en cours"
+       "fait"
       ]
      },
      {
       "cellules": [
-       "⚔️ 90011",
+       "**90011**",
        "Relire les anneaux : ce qui a déjà été tenté sur cette cascade, la forme retenue, ce qu'il en est resté",
-       "🎯 90300",
+       "90300",
        "Sarn Vieux-Sang",
        "J−7",
-       "en cours"
+       "fait"
       ]
      },
      {
       "cellules": [
-       "⚔️ 90110",
+       "**90110**",
        "Cuire `--cuire` sur la référence et poser les quatre comptes comme étalon, avant qu'on touche à quoi que ce soit",
-       "🎯 90100",
+       "90100",
        "Toll Œil-Noir",
        "J−6",
        "à venir"
@@ -86284,9 +86308,9 @@
      },
      {
       "cellules": [
-       "⚔️ 90210",
+       "**90210**",
        "Faire que la nuit cuite se regarde dans le jeu, et non seulement dans le sac",
-       "🎯 90200",
+       "90200",
        "Ygga Main-de-Pierre",
        "J−4",
        "à venir"
@@ -86294,9 +86318,9 @@
      },
      {
       "cellules": [
-       "⚔️ 90211",
+       "**90211**",
        "Vérifier que ce que la vue dépose montre bien ce que la stack a décidé, sur une nuit entière",
-       "🎯 90200",
+       "90200",
        "Toll Œil-Noir",
        "J−3",
        "à venir"
@@ -86304,19 +86328,19 @@
      },
      {
       "cellules": [
-       "⚔️ 90310",
+       "**90310**",
        "Écrire `2-reflexion.js` — la couche qui manque entre le corps et l'interprétation",
-       "🔒 90310",
+       "90310",
        "Ygga Main-de-Pierre",
        "J−3",
-       "à venir"
+       "fait — `survival-stack/2-reflexion.js`, 236 lignes, chargé par `jeu.html` en observation. Rend `tient`, `attend`, `appui` et un cap `issue`. Éprouvé au Bassin sur sept cas : bornes [−1,1] tenues, cap unitaire ou nul. Les six morceaux de la couche 2 éparpillés dans `soldat()` y sont ramassés, dont la duplication 3053-3057 / 3222-3271 réunie en une seule fonction. Ne conduit rien tant que 90311 n'est pas écrit."
       ]
      },
      {
       "cellules": [
-       "⚔️ 90311",
+       "**90311**",
        "Écrire l'arbitre : qui, du corps ou de la tête, tient la main sur un geste donné",
-       "🔒 90310",
+       "90310",
        "Ygga Main-de-Pierre",
        "J−2",
        "à venir"
@@ -86324,9 +86348,9 @@
      },
      {
       "cellules": [
-       "⚔️ 90312",
+       "**90312**",
        "Retirer la cascade de `soldat()` morceau par morceau, en cuisant à chaque cran",
-       "🎯 90300",
+       "90300",
        "Ygga Main-de-Pierre · Toll Œil-Noir",
        "J−1",
        "à venir"
@@ -86334,12 +86358,12 @@
      },
      {
       "cellules": [
-       "⚔️ 90320",
-       "Nommer les couches et les seuils, avec les mots écartés, et refaire le README de `survival-stack`",
-       "🎯 90300",
+       "**90320**",
+       "Nommer les couches et les seuils, avec les mots écartés, et refaire le README de `survival-stack` — **fait le 3e** : README réécrit ; `emprise` gardé, `SOUS_EMPRISE` gardé, « seuil d'emprise » enterré (le bouton n'existe plus), `pilote` → **`corpsAgi`** posé pour la main d'Ygga ; le cinquième fichier laissé sans nom exprès → 🔒 90330",
+       "90300",
        "Wenna la Nommeuse",
        "J−0",
-       "à venir"
+       "fait"
       ]
      }
     ]

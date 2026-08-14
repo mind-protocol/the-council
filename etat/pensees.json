@@ -17905,6 +17905,222 @@
    "texte": "Deuxième fois qu'elle me rend le refrain sans qu'on le lui apprenne, et cette fois PROPRE, après avoir entendu la chute laide à côté. C'est la mesure que je retenais à l'essai : une gorge qui rend le chant, et qui le rend non contaminé, vaut mieux qu'un compte de quatorze au château. La clef 66011 n'est plus à étudier : elle est retenue.",
    "salle": "bourg",
    "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/bataille2d.js, l.3025-3093",
+   "texte": "Le verrou 90320 est faux. Il dit « les trois couches ecrites ne conduisent rien » et cite trois commentaires. Or `h.l1.jambes` conduit deja `sideration`, `fuite`, `recul`, `serrer` et `ruee`, `h.brasMorts` retire les bras, la couche 4 conduit le pillage par `Envie.tauxDeButin` (l.3593), et le drapeau `pilote` comme le seuil d'emprise 0,60 sont tombes. Seule la couche 3 est encore en observation. Un verrou grave d'en haut passe toutes les verifications et il ment : c'est exactement le genre de faute qu'aucune machine ne trouve.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "compte de lignes de bataille2d.js contre l'etalon de corps-adapt.js l.150",
+   "texte": "2801 a l'etalon, 2980 aujourd'hui : +179. Le test est ecrit noir sur blanc dans le depot — « un poste qui fait grossir `bataille2d` est une greffe, quel que soit le discours autour » — et personne ne l'a repasse depuis. On a branche trois couches sans deposer un seul mecanisme ancien : `morale`, `ROMPT`, `CHOC`, `SANG`, `REPRISE`, `PLANCHER_FERME` et `survie()` decident encore a cote de `h.l1`. Deux modeles qui disent la meme chose avec des pieces differentes ne se departagent jamais.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "relevé des ecritures de h.etat dans bataille2d.js",
+   "texte": "Retirer la cascade de `soldat()` ne suffira pas a vider la tete du fichier. Onze fonctions posent l'etat d'un homme en dehors d'elle, et l'une — `rallier` — lit deja `h.l1`. L'action 90312 vise la cascade seule ; elle laisserait ces onze-la dehors, et l'etat cible 90300 serait declare tenu alors qu'il ne le serait pas.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/bataille/corps-adapt.js, l.105-126",
+   "texte": "La couche 2 n'est pas a ecrire de zero : `proieProche` EST une couche 2 complete — des options dans une monnaie unique, un cout au carre, un budget de souffle, un refus. A deplacer, pas a reecrire. Ce qui manque vraiment est l'ATTENTE : la couche 1 lache par horloge, la couche 2 doit lacher par dementi. C'est la seule piece entierement neuve, et Ygga doit le savoir avant de commencer 90310.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/jeu.html l.163-170 et ecrans/modules/bataille/corps-adapt.js",
+   "texte": "Le branchement ne vit pas dans `survival-stack/` mais dans `bataille/corps-adapt.js`, que le volume ne nomme nulle part. Wenna nommera les couches en 90320 : qu'elle nomme aussi celle-ci, sinon le plan continuera de decrire une pile a quatre etages en ignorant la prise qui la tient.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "README.md de survival-stack, dernière ligne, contre bataille2d.js l. 3006",
+   "texte": "Le README finissait sur « le seuil d'emprise est le bouton : le baisser donne plus de place au corps ». Le code porte l'inverse en majuscules : PLUS DE SEUIL, PLUS DE DRAPEAU. `pilote` et `emprise > 0,60` ont été retirés ensemble parce que la couche décidait À CÔTÉ de la cascade et qu'on héritait du pire des deux sans savoir lequel produisait quoi. Un document qui garde un bouton supprimé ne fait pas perdre du temps : il fait remettre la faute. C'est la contradiction la plus chère du fichier, et c'est celle qui se voyait le moins, parce qu'elle était en dernière ligne.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "bataille2d.js, l. 3035-3092, 3406, 4507 — appels réels, non commentaires",
+   "texte": "L'affaire affirme que les trois couches écrites ne conduisent rien et que le seul appel réel est `window.Envie.temperament`. C'est faux ce matin. La couche 1 conduit six gestes — sidération, fuite, recul, serrer, ruée, bras morts — et `Interpretation.pas` puis `deSoiMeme` sont appelés pour de bon. Deux couches sur trois conduisent. Le verrou 90320 tient toujours par sa moitié — la cascade n'est pas retirée — mais sa preuve était datée, et une preuve datée fait travailler quelqu'un sur un chantier qui n'existe plus.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "README règle de forme, contre l'action 90311 de l'affaire",
+   "texte": "Le cinquième fichier a deux métiers écrits par deux mains : une SOMME qui compose les quatre sorties sans en préférer aucune, ou une MAIN qui désigne laquelle du corps ou de la tête l'emporte sur ce geste. Le mot `arbitre` a caché le désaccord parce qu'il penche déjà vers la seconde : un arbitre départage. Ygga doit l'écrire à J−2 ; si l'on ne tranche pas avant, on écrira la pièce deux fois. C'est pour ça que je ne l'ai pas nommé aujourd'hui — un nom posé trop tôt fait tenir la décision, et personne ne la revoit.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "en-tête de 3-interpretation.js, contre la règle « aucune dépendance à bataille2d.js »",
+   "texte": "La couche 3 compte les clauses d'un ordre dans l'ordre exact où la transmission les arrache, et cette liste est celle de `bataille2d.js`. Aucun `require` ne le déclare, donc la règle passe. Mais si la liste bouge là-bas, la couche mesure autre chose que ce qu'elle croit et aucun test ne casse. Une dépendance qu'aucune ligne ne déclare est plus dangereuse qu'une dépendance déclarée, et la seule arme qu'on ait contre elle est de l'écrire. Je l'ai écrite sous la règle, pas à sa place.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "les en-têtes de 1-corps.js, 3-interpretation.js et 4-envie.js",
+   "texte": "Les trois en-têtes sont excellents et à jour — ils portent leurs mesures, leurs erreurs corrigées et le prix payé. C'est le README seul qui a menti, et il a menti parce qu'il est le seul document que personne ne relit en modifiant le code : on touche un fichier, on corrige son en-tête, on ne remonte jamais au sommaire. Un README doit donc porter sa date de relecture et le nom de qui l'a relu, sinon on ne sait pas de quand date son mensonge. J'ai mis les deux en tête du nouveau.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "sarn-vieux-sang",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "anneau 745c8eb, git show --stat et le diff de bataille2d.js",
+   "texte": "Le drapeau PORTE_OUVERTE_ESSAI mis a false, l'ecriture de 3-interpretation.js et 4-envie.js, et leur branchement dans la cascade sont TOMBES DANS LE MEME ANNEAU. L'etalon 5, 5, 14 et 54 a ete lu apres les trois d'un coup. On ne sait donc pas quelle main a donne quoi — et `initiative` est notee l. 4519, neuf lignes apres que Interpretation.deSoiMeme choisit l'ordre neuf l. 4507. Deux des quatre comptes sont pour partie l'ouvrage des couches qu'on dit inertes.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "sarn-vieux-sang",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/bataille/corps-adapt.js, en-tete l. 30-47 et l. 182-193",
+   "texte": "CE QUI A ETE TENTE PUIS RETIRE, avec son prix mesure : le drapeau `pilote` et le seuil de 0,6 d'emprise. Garde-fou de premiere passe — la couche 1 ne conduisait que les 3 % d'hommes les plus emprises, et la relecture du four tenait : ecart pire 0,600 m, 3 etats faux sur 2,19 M. Le seuil retire, elle conduit tout le monde : ecart pire 329 m, 931 172 etats faux. La cause n'etait pas la depose mais un `Math.random()` qui contournait la graine de hasard.js — la depose a REVELE le defaut, elle ne l'a pas cree. Le seuil est ensuite requalifie : « pas un bouton a regler, une piece a jeter », son remplacant etant `c.social` (derive +0,13, 86 % de calmes). Aujourd'hui l'en-tete dit encore `pilote: false`, l'API rend `pilote: true`, et bataille2d ne s'en sert plus que pour la bulle de survol. Le garde-fou est mort et l'ecrit ne l'a pas appris.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "sarn-vieux-sang",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "corps-adapt.js l. 143-158, recompte a la main a la Souche",
+   "texte": "LA FORME QUI AVAIT TENU a un nom et un etalon, et les deux existent deja : ON REMPLACE, ON NE GREFFE PAS — « un poste qui fait grossir bataille2d est une greffe, quel que soit le discours autour ». Le controle qui ne se laisse pas raconter : lignes de code hors commentaires et vides. 2801 avant le refactor, 2982 le jour ou on l'a ecrit, 2980 ce matin. Il devait BAISSER a chaque poste ; il a monte de 181 et rendu 2. C'est l'etalon de 90300, il est gratuit, et l'affaire ne le porte pas — elle porte 6 957 lignes, qui comptent les commentaires et ne mesurent rien.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "sarn-vieux-sang",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "survival-stack/README.md l. 147-175, confronte a bataille2d.js",
+   "texte": "CE QU'IL EN EST RESTE, et c'est l'inverse de ce que l'affaire croit. Attendre les quatre couches fut la premiere intention et fut declaree erreur le jour meme : « on ne valide pas une couche en la regardant calculer a cote » — et « l'arbitre existe deja lui aussi », c'est `emprise`. Sur le disque : la couche 1 est deposee et ne conduit pas (h.l1 sort aux annales l. 6864-6870, rien d'autre) ; la couche 3 CONDUIT (l. 4507) ; la couche 4 CONDUIT (butin l. 3593, patience l. 4481). Le verrou 90320 est donc faux : les couches ne sont pas inertes, elles sont branchees a l'envers de la doctrine — celles qui conduisent n'ont jamais passe le cran « voir », et celle qu'on regarde ne conduit rien. Le README porte encore 3-interpretation et 4-envie non coches : trois ecrits qui ne disent pas la meme chose que le bois, c'est le vrai desordre de cette affaire, et il est de la main de Wenna.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "ygga-main-de-pierre",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/bataille2d.js et ecrans/jeu.html, comptés à la main",
+   "texte": "Le verrou 90320 est périmé et il fait perdre du temps à qui le lit : quatorze appels vivants aux couches, pas un seul `temperament` isolé. La couche 4 conduit déjà le pillage et le seuil d'initiative, la couche 1 conduit sept réflexes. Ce qui reste vrai du verrou, c'est la couche 3 seule — elle calcule à chaque pas et n'est lue qu'en un point, l. 4507, pour le chef d'escouade et seulement quand il n'a ni objet périmé ni consigne de corps. Un verrou qu'on ne recompte pas devient un mensonge tranquille : il passe toutes les vérifications, puisqu'il a son numéro et sa chaîne.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "ygga-main-de-pierre",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "la cascade soldat(), l. 2542-2585 et 3222-3271",
+   "texte": "`decider()` fait céder le pas sur le seul compte local et ne regarde jamais derrière. Un homme dos à un mur recule dans le mur ; une escouade coincée au fond d'une rue se disperse en poussant sur de la pierre. Or un homme acculé se bat, et plus dur qu'un homme libre de partir — pas par courage, par arithmétique : fuir sans issue coûte le dos, et le dos est ce qui tue. La férocité du désespoir n'est pas un trait à tirer au sort, c'est ce que rend une recherche d'issue qui échoue. C'est la règle n°1 du README appliquée : le comportement manque parce qu'il manque une branche au modèle, pas parce qu'un chiffre est mal réglé.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "ygga-main-de-pierre",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "l'épreuve au Bassin, sept cas sous node",
+   "texte": "Le défaut trouvé n'était pas dans un calcul mais dans l'ORDRE des tests du mot lisible — la chose qui n'a aucun effet sur la conduite, et que j'aurais pu ne pas éprouver. Un module dont tous les nombres sont justes peut mentir à celui qui le regarde travailler, et c'est par ce mot-là qu'on jugera la couche avant de lui donner la main. Ce qui ne conduit rien mérite d'être éprouvé autant que le reste, parce que c'est justement ce par quoi on décidera de brancher.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "ygga-main-de-pierre",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "chantier/affaires.json, écrit deux fois en une heure",
+   "texte": "Le registre bouge sous la main pendant qu'on y écrit : entre ma lecture du matin et ma pose, la table des verrous était passée de trois lignes à sept, et mon numéro était déjà pris. Relire juste avant d'écrire, et jamais reposer un fichier entier sur une lecture d'il y a une heure.",
+   "salle": "clairiere",
+   "affaire": null
   }
  ]
 }

@@ -417,7 +417,7 @@
         "annee": 129,
         "lune": 4,
         "jour": 3,
-        "minute": 282
+        "minute": 723
       }
     },
     "ygga-main-de-pierre": {
@@ -427,7 +427,7 @@
         "annee": 129,
         "lune": 4,
         "jour": 3,
-        "minute": 282
+        "minute": 726
       }
     },
     "toll-oeil-noir": {
@@ -457,7 +457,7 @@
         "annee": 129,
         "lune": 4,
         "jour": 3,
-        "minute": 721
+        "minute": 726
       }
     }
   },
@@ -466,7 +466,7 @@
       "annee": 129,
       "lune": 4,
       "jour": 3,
-      "minute": 721
+      "minute": 730
     },
     "gens": {
       "aurore-inchauspe": {
@@ -488,21 +488,10 @@
         "source": "scene"
       },
       "aegon-ii": {
-        "salle": "salle-du-trone",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "salle-du-trone",
-        "vers": "cour-donjon-rouge",
-        "vers_lieu": "La cour du Donjon Rouge",
-        "prochaine": "cour-donjon-rouge",
-        "route": [
-          "salle-du-trone",
-          "cour-donjon-rouge"
-        ],
-        "franchi": 0,
-        "pas": 0.333,
-        "arrive_dans": 2
+        "salle": "cour-donjon-rouge",
+        "lieu": "La cour du Donjon Rouge",
+        "etat": "arrete",
+        "source": "routine"
       },
       "aemond": {
         "salle": "fosse-aux-dragons",
@@ -518,8 +507,8 @@
           "cour-donjon-rouge"
         ],
         "franchi": 0,
-        "pas": 0.042,
-        "arrive_dans": 23
+        "pas": 0.417,
+        "arrive_dans": 14
       },
       "alarra-rosby": {
         "salle": "grande-salle",
@@ -528,22 +517,10 @@
         "source": "routine"
       },
       "aldon-hask": {
-        "salle": "table-peinte",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "table-peinte",
-        "vers": "grande-salle",
-        "vers_lieu": "Grande salle, Peyredragon",
-        "prochaine": "tambour-de-pierre",
-        "route": [
-          "table-peinte",
-          "tambour-de-pierre",
-          "grande-salle"
-        ],
-        "franchi": 0,
-        "pas": 0.125,
-        "arrive_dans": 9
+        "salle": "grande-salle",
+        "lieu": "Grande salle, Peyredragon",
+        "etat": "arrete",
+        "source": "routine"
       },
       "alicent": {
         "salle": "appartements-royaux",
@@ -561,7 +538,7 @@
         "salle": "la-souche",
         "lieu": "La Souche, le tronc creux, Barralfond",
         "etat": "arrete",
-        "source": "gelee"
+        "source": "scene"
       },
       "corlys": {
         "salle": "grande-salle",
@@ -576,22 +553,10 @@
         "source": "routine"
       },
       "daemon": {
-        "salle": "table-peinte",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "table-peinte",
-        "vers": "grande-salle",
-        "vers_lieu": "Grande salle, Peyredragon",
-        "prochaine": "tambour-de-pierre",
-        "route": [
-          "table-peinte",
-          "tambour-de-pierre",
-          "grande-salle"
-        ],
-        "franchi": 0,
-        "pas": 0.125,
-        "arrive_dans": 9
+        "salle": "grande-salle",
+        "lieu": "Grande salle, Peyredragon",
+        "etat": "arrete",
+        "source": "routine"
       },
       "denys-bar-emmon": {
         "salle": "grande-salle",
@@ -600,21 +565,10 @@
         "source": "routine"
       },
       "dorsa-sath": {
-        "salle": "galeries",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "galeries",
-        "vers": "cour",
-        "vers_lieu": "La cour, Peyredragon",
-        "prochaine": "cour",
-        "route": [
-          "galeries",
-          "cour"
-        ],
-        "franchi": 0,
-        "pas": 0.111,
-        "arrive_dans": 8
+        "salle": "cour",
+        "lieu": "La cour, Peyredragon",
+        "etat": "arrete",
+        "source": "routine"
       },
       "doss-marran": {
         "salle": "bourg",
@@ -647,22 +601,10 @@
         "source": "routine"
       },
       "gerardys": {
-        "salle": "table-peinte",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "table-peinte",
-        "vers": "grande-salle",
-        "vers_lieu": "Grande salle, Peyredragon",
-        "prochaine": "tambour-de-pierre",
-        "route": [
-          "table-peinte",
-          "tambour-de-pierre",
-          "grande-salle"
-        ],
-        "franchi": 0,
-        "pas": 0.125,
-        "arrive_dans": 9
+        "salle": "grande-salle",
+        "lieu": "Grande salle, Peyredragon",
+        "etat": "arrete",
+        "source": "routine"
       },
       "gib-le-geolier": {
         "salle": "cachots",
@@ -683,40 +625,16 @@
         "source": "routine"
       },
       "hallis-roon": {
-        "salle": "cachots",
+        "salle": "grande-salle",
         "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "cachots",
-        "vers": "grande-salle",
-        "vers_lieu": null,
-        "prochaine": "tambour-de-pierre",
-        "route": [
-          "cachots",
-          "tambour-de-pierre",
-          "grande-salle"
-        ],
-        "franchi": 0,
-        "pas": 0.2,
-        "arrive_dans": 6
+        "etat": "arrete",
+        "source": "routine"
       },
       "hann-bourbe": {
-        "salle": "la-cale",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "la-cale",
-        "vers": "le-feu-de-l-aire",
-        "vers_lieu": "Le feu de l'aire, chantier de la vase",
-        "prochaine": "chantier-de-la-vase",
-        "route": [
-          "la-cale",
-          "chantier-de-la-vase",
-          "le-feu-de-l-aire"
-        ],
-        "franchi": 0,
-        "pas": 0.5,
-        "arrive_dans": 2
+        "salle": "le-feu-de-l-aire",
+        "lieu": "Le feu de l'aire, chantier de la vase",
+        "etat": "arrete",
+        "source": "routine"
       },
       "helaena": {
         "salle": "bois-des-dieux-port-real",
@@ -737,21 +655,10 @@
         "source": "perime"
       },
       "jacaerys": {
-        "salle": "cour",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "cour",
-        "vers": "grande-salle",
-        "vers_lieu": "Grande salle, Peyredragon",
-        "prochaine": "grande-salle",
-        "route": [
-          "cour",
-          "grande-salle"
-        ],
-        "franchi": 0,
-        "pas": 0.5,
-        "arrive_dans": 1
+        "salle": "grande-salle",
+        "lieu": "Grande salle, Peyredragon",
+        "etat": "arrete",
+        "source": "routine"
       },
       "kerra-des-claies": {
         "salle": "appartements-reine",
@@ -766,38 +673,16 @@
         "source": "routine"
       },
       "larys": {
-        "salle": "tour-de-la-main",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "tour-de-la-main",
-        "vers": "petit-conseil",
-        "vers_lieu": "La chambre du petit conseil, Donjon Rouge",
-        "prochaine": "petit-conseil",
-        "route": [
-          "tour-de-la-main",
-          "petit-conseil"
-        ],
-        "franchi": 0,
-        "pas": 0.25,
-        "arrive_dans": 3
+        "salle": "petit-conseil",
+        "lieu": "La chambre du petit conseil, Donjon Rouge",
+        "etat": "arrete",
+        "source": "routine"
       },
       "le-facteur-braavien": {
-        "salle": "bourg",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "bourg",
-        "vers": "quai",
-        "vers_lieu": "À bord de la quatrième coque, en rade de Peyredragon",
-        "prochaine": "quai",
-        "route": [
-          "bourg",
-          "quai"
-        ],
-        "franchi": 0,
-        "pas": 0.2,
-        "arrive_dans": 4
+        "salle": "quai",
+        "lieu": "À bord de la quatrième coque, en rade de Peyredragon",
+        "etat": "arrete",
+        "source": "routine"
       },
       "le-garcon-aux-manches-longues": {
         "salle": "bourg",
@@ -812,22 +697,10 @@
         "source": "scene"
       },
       "lucerys": {
-        "salle": "table-peinte",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "table-peinte",
-        "vers": "grande-salle",
-        "vers_lieu": "Grande salle, Peyredragon",
-        "prochaine": "tambour-de-pierre",
-        "route": [
-          "table-peinte",
-          "tambour-de-pierre",
-          "grande-salle"
-        ],
-        "franchi": 0,
-        "pas": 0.125,
-        "arrive_dans": 9
+        "salle": "grande-salle",
+        "lieu": "Grande salle, Peyredragon",
+        "etat": "arrete",
+        "source": "routine"
       },
       "mag-la-gaffe": {
         "salle": "la-gaffe",
@@ -860,39 +733,16 @@
         "source": "routine"
       },
       "merra-sath": {
-        "salle": "galeries",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "galeries",
-        "vers": "cour",
-        "vers_lieu": "La cour, Peyredragon",
-        "prochaine": "cour",
-        "route": [
-          "galeries",
-          "cour"
-        ],
-        "franchi": 0,
-        "pas": 0.111,
-        "arrive_dans": 8
+        "salle": "cour",
+        "lieu": "La cour, Peyredragon",
+        "etat": "arrete",
+        "source": "routine"
       },
       "nel-bec": {
-        "salle": "greve-basse",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "greve-basse",
-        "vers": "porte-de-la-gadoue",
-        "vers_lieu": "La porte de la Gadoue, Port-Real",
-        "prochaine": "chantier-de-la-vase",
-        "route": [
-          "greve-basse",
-          "chantier-de-la-vase",
-          "porte-de-la-gadoue"
-        ],
-        "franchi": 0,
-        "pas": 0.333,
-        "arrive_dans": 8
+        "salle": "porte-de-la-gadoue",
+        "lieu": "La porte de la Gadoue, Port-Real",
+        "etat": "arrete",
+        "source": "routine"
       },
       "ollo-marran": {
         "salle": "bureau-du-port",
@@ -907,22 +757,10 @@
         "source": "routine"
       },
       "orwyle": {
-        "salle": "petit-conseil",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "petit-conseil",
-        "vers": "salle-du-trone",
-        "vers_lieu": "La salle du Trone, Donjon Rouge",
-        "prochaine": "tour-de-la-main",
-        "route": [
-          "petit-conseil",
-          "tour-de-la-main",
-          "salle-du-trone"
-        ],
-        "franchi": 0,
-        "pas": 0.25,
-        "arrive_dans": 6
+        "salle": "salle-du-trone",
+        "lieu": "La salle du Trone, Donjon Rouge",
+        "etat": "arrete",
+        "source": "routine"
       },
       "ossy": {
         "salle": "roukerie",
@@ -973,40 +811,16 @@
         "source": "routine"
       },
       "ren": {
-        "salle": "la-cale",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "la-cale",
-        "vers": "le-feu-de-l-aire",
-        "vers_lieu": "Le feu de l'aire, chantier de la vase",
-        "prochaine": "chantier-de-la-vase",
-        "route": [
-          "la-cale",
-          "chantier-de-la-vase",
-          "le-feu-de-l-aire"
-        ],
-        "franchi": 0,
-        "pas": 0.5,
-        "arrive_dans": 2
+        "salle": "le-feu-de-l-aire",
+        "lieu": "Le feu de l'aire, chantier de la vase",
+        "etat": "arrete",
+        "source": "routine"
       },
       "rhaenys": {
-        "salle": "table-peinte",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "table-peinte",
-        "vers": "grande-salle",
-        "vers_lieu": "Grande salle, Peyredragon",
-        "prochaine": "tambour-de-pierre",
-        "route": [
-          "table-peinte",
-          "tambour-de-pierre",
-          "grande-salle"
-        ],
-        "franchi": 0,
-        "pas": 0.125,
-        "arrive_dans": 9
+        "salle": "grande-salle",
+        "lieu": "Grande salle, Peyredragon",
+        "etat": "arrete",
+        "source": "routine"
       },
       "robert-quince": {
         "salle": "table-peinte",
@@ -1021,58 +835,22 @@
         "source": "routine"
       },
       "rulf-corne": {
-        "salle": "porte-de-mer",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "porte-de-mer",
-        "vers": "quai",
-        "vers_lieu": "Le quai, Peyredragon",
-        "prochaine": "greve",
-        "route": [
-          "porte-de-mer",
-          "greve",
-          "quai"
-        ],
-        "franchi": 0,
-        "pas": 0.5,
-        "arrive_dans": 4
+        "salle": "quai",
+        "lieu": "Le quai, Peyredragon",
+        "etat": "arrete",
+        "source": "routine"
       },
       "sabbe": {
-        "salle": "la-cale",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "la-cale",
-        "vers": "le-feu-de-l-aire",
-        "vers_lieu": "Le feu de l'aire, chantier de la vase",
-        "prochaine": "chantier-de-la-vase",
-        "route": [
-          "la-cale",
-          "chantier-de-la-vase",
-          "le-feu-de-l-aire"
-        ],
-        "franchi": 0,
-        "pas": 0.5,
-        "arrive_dans": 2
+        "salle": "le-feu-de-l-aire",
+        "lieu": "Le feu de l'aire, chantier de la vase",
+        "etat": "arrete",
+        "source": "routine"
       },
       "sara": {
-        "salle": "table-peinte",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "table-peinte",
-        "vers": "grande-salle",
-        "vers_lieu": "Grande salle, Peyredragon",
-        "prochaine": "tambour-de-pierre",
-        "route": [
-          "table-peinte",
-          "tambour-de-pierre",
-          "grande-salle"
-        ],
-        "franchi": 0,
-        "pas": 0.125,
-        "arrive_dans": 9
+        "salle": "grande-salle",
+        "lieu": "Grande salle, Peyredragon",
+        "etat": "arrete",
+        "source": "routine"
       },
       "sarn-vieux-sang": {
         "salle": "la-souche",
@@ -1081,21 +859,10 @@
         "source": "gelee"
       },
       "sarro-vaeth": {
-        "salle": "fosses",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "fosses",
-        "vers": "cour",
-        "vers_lieu": "La cour, Peyredragon",
-        "prochaine": "cour",
-        "route": [
-          "fosses",
-          "cour"
-        ],
-        "franchi": 0,
-        "pas": 0.167,
-        "arrive_dans": 5
+        "salle": "cour",
+        "lieu": "La cour, Peyredragon",
+        "etat": "arrete",
+        "source": "routine"
       },
       "septa-marlow": {
         "salle": "septuaire",
@@ -1110,22 +877,10 @@
         "source": "routine"
       },
       "steffon-darklyn": {
-        "salle": "table-peinte",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "table-peinte",
-        "vers": "grande-salle",
-        "vers_lieu": "Grande salle, Peyredragon",
-        "prochaine": "tambour-de-pierre",
-        "route": [
-          "table-peinte",
-          "tambour-de-pierre",
-          "grande-salle"
-        ],
-        "franchi": 0,
-        "pas": 0.125,
-        "arrive_dans": 9
+        "salle": "grande-salle",
+        "lieu": "Grande salle, Peyredragon",
+        "etat": "arrete",
+        "source": "routine"
       },
       "tobb": {
         "salle": "bourg",
@@ -1158,22 +913,10 @@
         "source": "routine"
       },
       "wend": {
-        "salle": "porte-de-mer",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "porte-de-mer",
-        "vers": "quai",
-        "vers_lieu": "Le quai, Peyredragon",
-        "prochaine": "greve",
-        "route": [
-          "porte-de-mer",
-          "greve",
-          "quai"
-        ],
-        "franchi": 0,
-        "pas": 0.5,
-        "arrive_dans": 4
+        "salle": "quai",
+        "lieu": "Le quai, Peyredragon",
+        "etat": "arrete",
+        "source": "routine"
       },
       "wenna-la-nommeuse": {
         "salle": "la-souche",
@@ -1191,7 +934,7 @@
         "salle": "la-souche",
         "lieu": "La Souche, le tronc creux, Barralfond",
         "etat": "arrete",
-        "source": "gelee"
+        "source": "scene"
       }
     }
   }

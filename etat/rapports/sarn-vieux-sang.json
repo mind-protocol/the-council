@@ -1,0 +1,168 @@
+{
+ "qui": "sarn-vieux-sang",
+ "journal": [
+  {
+   "heure": "5h00",
+   "duree": 120,
+   "lieu": "clairiere",
+   "quoi": "Sarn attend le jour et retourne ce que l'Equerre a dit a la Souche : l'action 90011 est a lui, relire les anneaux de la cascade de soldat() et de la migration vers survival-stack/.",
+   "resultat": "Il part avec une seule question et non trois : non pas ce qui a ete fait, mais ce qui a ete fait PUIS DEFAIT, et pourquoi."
+  },
+  {
+   "heure": "7h05",
+   "duree": 60,
+   "lieu": "arbre-des-ages",
+   "quoi": "Il compte les anneaux du depot : vingt et un en tout, et quatre seulement touchent bataille2d.js — 2d3350c, bb4f387, 745c8eb, 88433a9. Il lit les quatre corps de message en entier.",
+   "resultat": "L'arbre est jeune : toute l'histoire de cette migration tient en trois jours et deux mains. Rien ne s'est perdu par l'age ; ce qui manque a ete ecarte volontairement."
+  },
+  {
+   "heure": "8h05",
+   "duree": 75,
+   "lieu": "arbre-des-ages",
+   "quoi": "Il ouvre 745c8eb au grain — `git show --stat` et le diff de bataille2d.js.",
+   "resultat": "Le meme anneau met `PORTE_OUVERTE_ESSAI` a `false`, ECRIT `3-interpretation.js` et `4-envie.js`, ET les branche dans la cascade (l. 3406, 3593, 4481, 4507). Le drapeau retire et les deux couches hautes branchees sont tombes ensemble. Aucune cuisson ne se tient entre les deux."
+  },
+  {
+   "heure": "9h20",
+   "duree": 70,
+   "lieu": "arbre-des-ages",
+   "quoi": "Il remonte de l'anneau au bois vivant : ou naissent les quatre comptes de l'etalon dans bataille2d.js.",
+   "resultat": "`declencheur-tombe` l. 4326, `initiative` l. 4519, `ordre-deforme` l. 4623. L'initiative est notee neuf lignes apres que `window.Interpretation.deSoiMeme` a choisi l'ordre neuf (l. 4507) : les 14 initiatives sont pour partie l'ouvrage de la couche 3, non le seul effet du drapeau retire."
+  },
+  {
+   "heure": "10h30",
+   "duree": 90,
+   "lieu": "arbre-des-ages",
+   "quoi": "Il cherche dans le bois les cicatrices — ce qui a ete pose puis arrache — en depouillant les en-tetes de `bataille/corps-adapt.js`, `survival-stack/README.md` et `survival-stack/1-corps.js`.",
+   "resultat": "Trouve, et ecrit noir sur blanc en tete de corps-adapt.js : le drapeau `pilote` et le seuil de 0,6 d'emprise, garde-fou de premiere passe (la couche 1 ne conduisait que 3 % des hommes). RETIRES : la couche conduit tout le monde, ecart pire de 0,600 m a 329 m, de 3 etats faux sur 2,19 M a 931 172. La faute n'etait pas la couche mais un `Math.random()` qui contournait la graine de `hasard.js` — une bataille rejouable a l'identique, defaite par un seul appel. Le fichier tranche : « le seuil de 0,6 n'est pas un bouton a regler : c'est une piece a jeter »."
+  },
+  {
+   "heure": "12h04",
+   "duree": 56,
+   "lieu": "la-souche",
+   "quoi": "Il redescend au volume pose a la Souche et confronte l'affaire a ce que le bois dit : il recompte lui-meme, `grep -vE '^\\s*(//|/\\*|\\*)' | grep -vE '^\\s*$' | wc -l`, comme corps-adapt.js l'ordonne.",
+   "resultat": "2980 lignes de code. La reference d'avant le refactor est 2801, et le fichier notait 2982 le jour ou on l'a ecrit. Le compte devait BAISSER a chaque poste : il a monte de 181 et n'a rendu que 2. Les 6 957 lignes de l'affaire comptent les commentaires et ne mesurent rien. Note aussi : le verrou 90320 est faux sur le disque — la couche 3 conduit (l. 4507), la couche 4 conduit (l. 3593, l. 4481) ; seule la couche 1 est deposee sans conduire."
+  },
+  {
+   "heure": "13h04",
+   "duree": 110,
+   "lieu": "arbre-des-ages",
+   "quoi": "Il verifie que le precedent n'a pas ete invente par lui : etat present du garde-fou dans le bois.",
+   "resultat": "L'en-tete de corps-adapt.js dit `pilote` a `false` ; l'API l. 369 rend `pilote: true` ; bataille2d.js l. 3033 pose le drapeau « pour la bulle de survol, plus pour la conduite ». Le garde-fou est mort pour la conduite et l'en-tete ne l'a pas appris. La forme qui avait tenu porte son nom en tete du meme fichier : ON REMPLACE, ON NE GREFFE PAS."
+  },
+  {
+   "heure": "14h54",
+   "duree": 96,
+   "lieu": "arbre-des-ages",
+   "quoi": "Il taille sa ligne de verrou contre l'etat 90100 et la passe au test de la maison : si tout le reste etait acquis et que ceci restait vrai, l'affaire tiendrait-elle ?",
+   "resultat": "Non. 90100 se juge sur « un ecart se dit et s'explique » : un etalon qui confond deux causes ne permet d'expliquer aucun ecart. Le verrou est ecrit, et il n'est pas grave d'en haut — il est compte sur le disque, dans un anneau."
+  },
+  {
+   "heure": "16h30",
+   "duree": 30,
+   "lieu": "arbre-des-ages",
+   "quoi": "Il envoie sa ligne a l'Equerre par le parloir : le seuil retire et son prix mesure, l'etalon de lignes qui existait deja, et le mot greffe.",
+   "resultat": "Rendu. Sarn ne taille pas le fer ; il a pose le precedent avant qu'on le lui demande, comme il l'avait dit."
+  }
+ ],
+ "travaux": [
+  {
+   "travail_id": "affaire-migrer-la-bataille-vers-la-stack",
+   "dernier_travail": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "pensees": [
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "anneau 745c8eb, git show --stat et le diff de bataille2d.js",
+     "texte": "Le drapeau PORTE_OUVERTE_ESSAI mis a false, l'ecriture de 3-interpretation.js et 4-envie.js, et leur branchement dans la cascade sont TOMBES DANS LE MEME ANNEAU. L'etalon 5, 5, 14 et 54 a ete lu apres les trois d'un coup. On ne sait donc pas quelle main a donne quoi — et `initiative` est notee l. 4519, neuf lignes apres que Interpretation.deSoiMeme choisit l'ordre neuf l. 4507. Deux des quatre comptes sont pour partie l'ouvrage des couches qu'on dit inertes."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "ecrans/modules/bataille/corps-adapt.js, en-tete l. 30-47 et l. 182-193",
+     "texte": "CE QUI A ETE TENTE PUIS RETIRE, avec son prix mesure : le drapeau `pilote` et le seuil de 0,6 d'emprise. Garde-fou de premiere passe — la couche 1 ne conduisait que les 3 % d'hommes les plus emprises, et la relecture du four tenait : ecart pire 0,600 m, 3 etats faux sur 2,19 M. Le seuil retire, elle conduit tout le monde : ecart pire 329 m, 931 172 etats faux. La cause n'etait pas la depose mais un `Math.random()` qui contournait la graine de hasard.js — la depose a REVELE le defaut, elle ne l'a pas cree. Le seuil est ensuite requalifie : « pas un bouton a regler, une piece a jeter », son remplacant etant `c.social` (derive +0,13, 86 % de calmes). Aujourd'hui l'en-tete dit encore `pilote: false`, l'API rend `pilote: true`, et bataille2d ne s'en sert plus que pour la bulle de survol. Le garde-fou est mort et l'ecrit ne l'a pas appris."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "corps-adapt.js l. 143-158, recompte a la main a la Souche",
+     "texte": "LA FORME QUI AVAIT TENU a un nom et un etalon, et les deux existent deja : ON REMPLACE, ON NE GREFFE PAS — « un poste qui fait grossir bataille2d est une greffe, quel que soit le discours autour ». Le controle qui ne se laisse pas raconter : lignes de code hors commentaires et vides. 2801 avant le refactor, 2982 le jour ou on l'a ecrit, 2980 ce matin. Il devait BAISSER a chaque poste ; il a monte de 181 et rendu 2. C'est l'etalon de 90300, il est gratuit, et l'affaire ne le porte pas — elle porte 6 957 lignes, qui comptent les commentaires et ne mesurent rien."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "survival-stack/README.md l. 147-175, confronte a bataille2d.js",
+     "texte": "CE QU'IL EN EST RESTE, et c'est l'inverse de ce que l'affaire croit. Attendre les quatre couches fut la premiere intention et fut declaree erreur le jour meme : « on ne valide pas une couche en la regardant calculer a cote » — et « l'arbitre existe deja lui aussi », c'est `emprise`. Sur le disque : la couche 1 est deposee et ne conduit pas (h.l1 sort aux annales l. 6864-6870, rien d'autre) ; la couche 3 CONDUIT (l. 4507) ; la couche 4 CONDUIT (butin l. 3593, patience l. 4481). Le verrou 90320 est donc faux : les couches ne sont pas inertes, elles sont branchees a l'envers de la doctrine — celles qui conduisent n'ont jamais passe le cran « voir », et celle qu'on regarde ne conduit rien. Le README porte encore 3-interpretation et 4-envie non coches : trois ecrits qui ne disent pas la meme chose que le bois, c'est le vrai desordre de cette affaire, et il est de la main de Wenna."
+    }
+   ],
+   "conclusion": null
+  }
+ ],
+ "cahier2": [
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Les verrous — deux connus, le reste attend Bren",
+   "ligne": "🔒 90110",
+   "colonne": "🔢",
+   "valeur": "🔒 90110"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Les verrous — deux connus, le reste attend Bren",
+   "ligne": "🔒 90110",
+   "colonne": "🔒 Le verrou",
+   "valeur": "**L'étalon 5, 5, 14 et 54 confond deux causes** — le drapeau retiré et les couches hautes branchées sont tombés dans le même anneau"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Les verrous — deux connus, le reste attend Bren",
+   "ligne": "🔒 90110",
+   "colonne": "🎯 Il tient quoi",
+   "valeur": "🎯 90100"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Les verrous — deux connus, le reste attend Bren",
+   "ligne": "🔒 90110",
+   "colonne": "🔎 D'où on le sait",
+   "valeur": "Lu dans l'anneau, non gravé d'en haut. `git show --stat 745c8eb` : **un seul commit** met `PORTE_OUVERTE_ESSAI` à `false`, écrit `3-interpretation.js` et `4-envie.js`, et les branche dans `bataille2d.js` (l. 3406, 3593, 4481, 4507). Aucune cuisson ne se tient entre les deux. Or `initiative` est notée l. 4519, **neuf lignes après** que `Interpretation.deSoiMeme` a choisi l'ordre neuf l. 4507 : deux des quatre comptes sont pour partie l'ouvrage des couches hautes, pas du seul drapeau. Tant que la référence n'aura pas été cuite une fois avec les couches 3 et 4 débranchées, aucun écart ne pourra « se dire et s'expliquer » — il n'y aura que deux causes et un seul chiffre."
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Les verrous — deux connus, le reste attend Bren",
+   "ligne": "🔒 90320",
+   "colonne": "🔎 D'où on le sait",
+   "valeur": "⚠ Recompté sur le disque le 3e, et la ligne était fausse : le seul appel n'est **pas** `window.Envie.temperament`. La couche 3 **conduit** — `Interpretation.deSoiMeme` choisit l'ordre neuf, l. 4507. La couche 4 **conduit** — `Envie.butin`/`tauxDeButin` déclenchent le pillage l. 3576-3593, `Envie.patience` fixe le seuil l. 4481. La couche 1 est la seule qui ne conduise pas : `h.l1` ne sort qu'aux annales, l. 6864-6870. Le verrou tient donc, mais à l'envers de ce qui est écrit : **celles qui conduisent n'ont jamais passé le cran « voir » du README, et celle qu'on regarde ne conduit rien.** Le garde-fou qui tenait la couche 1 — drapeau `pilote` + seuil de 0,6 d'emprise — a été retiré puis rendu muet : en-tête de `corps-adapt.js` `false`, API l. 369 `true`, l. 3033 « plus pour la conduite »."
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "⚔️ Les actions — chacune remonte, ou elle sort",
+   "ligne": "⚔️ 90011",
+   "colonne": "✅ État",
+   "valeur": "fait — anneaux rendus le 3e : le seuil de 0,6 et son prix (0,600 m → 329 m, 931 172 états faux), l'étalon de dépose qui existait déjà (2801 → 2980 lignes de code, il devait baisser), et 🔒 90110"
+  }
+ ],
+ "_depeche": {
+  "session": "55ffea66-d66c-5b92-aea2-707dd871129b",
+  "date_jeu": "129.4.3",
+  "jetons": 1553424,
+  "secondes": 356
+ },
+ "_cahier_verse": true
+}

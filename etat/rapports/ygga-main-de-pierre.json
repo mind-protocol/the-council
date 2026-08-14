@@ -1,0 +1,118 @@
+{
+  "qui": "ygga-main-de-pierre",
+  "journal": [
+    {
+      "heure": "7h03",
+      "duree": 42,
+      "lieu": "établi",
+      "quoi": "Ouvre le dépôt et va vérifier de ses yeux le fait dur que l'Équerre a posé en tête : les trois couches chargées par `ecrans/jeu.html` ne conduiraient rien, `bataille2d.js` ne les citant qu'en commentaires et n'appelant que `window.Envie.temperament`.",
+      "resultat": "FAUX, et périmé de beaucoup. Compté sur le disque : 7 appels `window.Corps.*`, 2 `window.Interpretation.*`, 4 `window.Envie.*`, 1 `window.BatailleCorps.observer` — quatorze, tous dans des chemins exécutés. La couche 4 CONDUIT (le pillage par `Envie.butin`/`tauxDeButin` l. 3576 et 3593, le seuil d'initiative par `Envie.silenceTenu` l. 4481) ; la couche 1 conduit sept réflexes. Seules 1 et 3 sont en observation pure. Le verrou 90320 décrit un état du dépôt qui n'existe plus."
+    },
+    {
+      "heure": "7h45",
+      "duree": 55,
+      "lieu": "établi",
+      "quoi": "Descend la cascade `soldat()` (l. 2940 à 3698, 758 lignes, une cascade plate de retours précoces où la première branche qui matche prend l'homme) et relève, branche par branche, ce qui relèverait de la deuxième couche.",
+      "resultat": "Six morceaux, éparpillés, et pas un ne dit qu'il est le même travail : `decider()` 2542-2585 (céder le pas ou non) ; le cap de recul 3222-3271, DUPLIQUÉ à l'identique en 3053-3057 dans la branche `recul` de la couche 1 — deux écritures d'une seule idée, et c'est ainsi qu'on les fait diverger sans le voir ; la patience 3313-3326 ; `serrer()` 2416-2429 ; la fuite en déroute 3128-3166 ; le choix de rue 3623-3636. Relevé aussi que `h.alarme`, `h.peur` et `h.moral` n'existent plus — l'alarme se lit uniquement par `h.l1.reflexe` et `h.l1.emprise` — et que l'emplacement `h.l2` est libre."
+    },
+    {
+      "heure": "8h40",
+      "duree": 95,
+      "lieu": "établi",
+      "quoi": "Écrit `ecrans/modules/survival-stack/2-reflexion.js` (⚔️ 90310), la couche qui manquait entre le corps et l'interprétation, dans le moule des trois autres : fonctions pures, tout dans [−1,1], toute borne par `tanh` et jamais un `Math.min` posé après coup, un mot lisible sous le doigt sans effet sur la conduite.",
+      "resultat": "236 lignes. Elle rend trois nombres — `tient` (tenir ou céder le pas), `attend` (retenir son coup et laisser venir le nombre), `appui` (chercher l'épaule du voisin ou prendre du champ pour envelopper) — plus `issue`, un cap unitaire assorti d'une `force`. Les six morceaux de la cascade y sont ramassés sous une seule question, et la duplication 3053/3222 est réunie en une seule fonction. Le mélange du cap n'est plus une moitié fixe : il suit l'alarme, de 0,35 (un homme calme se replie sur les siens, en ordre) à 0,90 (un homme paniqué ne regarde plus que ce qu'il fuit) — le même code rend le repli et l'éventail de déroute."
+    },
+    {
+      "heure": "10h15",
+      "duree": 27,
+      "lieu": "établi",
+      "quoi": "Éprouve la couche au Bassin sous `node`, sept cas posés à la main, et vérifie que les bornes tiennent et que le module fait ce pour quoi il a été écrit.",
+      "resultat": "Bornes [−1,1] tenues sur les trois nombres, cap unitaire ou nul dans les sept cas. La preuve de sa raison d'être : à situation identique — infériorité, le fer sur lui — l'homme acculé rend `tient` = +0,38 quand l'homme qui a une retraite ouverte rend −0,80. Il se bat, et sa phrase le dit : « il n'a nulle part où aller, alors il se bat »."
+    },
+    {
+      "heure": "10h42",
+      "duree": 18,
+      "lieu": "établi",
+      "quoi": "Corrige le défaut que l'épreuve a montré, puis branche la couche en observation dans `ecrans/jeu.html`, après 3-interpretation.js et avant bataille2d.js.",
+      "resultat": "Le cas 5 — en infériorité, intact, calme — rendait « il cède le pas sans lâcher » alors que `attend` valait +0,69 : le repli mou était testé avant la patience dans `idee()`, et le module décrivait ainsi l'homme le plus délibéré du champ comme un homme qui lâche. Ordre inversé, motif écrit dans le code pour qu'on ne le remette pas à l'endroit. Chargée, en observation : elle calcule et ne conduit rien tant que l'arbitre n'existe pas."
+    },
+    {
+      "heure": "11h00",
+      "duree": 38,
+      "lieu": "établi",
+      "quoi": "Porte au registre de l'affaire le verrou que l'ouvrage a fait apparaître, et qu'aucun compte de graphe n'aurait trouvé.",
+      "resultat": "Verrou posé. Collision au passage : un autre avait pris 90330 pendant que j'écrivais (« Deux modèles de peur décident en même temps ») — j'ai renuméroté le mien en 90350 et vérifié qu'il ne double pas le sien : lui parle de deux modèles concurrents, moi d'un signal qui n'existe pas. Rien de son écriture n'a été perdu."
+    }
+  ],
+  "travaux": [
+    {
+      "travail_id": "etabli",
+      "dernier_travail": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 3
+      },
+      "pensees": [
+        {
+          "date": {
+            "annee": 129,
+            "lune": 4,
+            "jour": 3
+          },
+          "source": "ecrans/modules/bataille2d.js et ecrans/jeu.html, comptés à la main",
+          "texte": "Le verrou 90320 est périmé et il fait perdre du temps à qui le lit : quatorze appels vivants aux couches, pas un seul `temperament` isolé. La couche 4 conduit déjà le pillage et le seuil d'initiative, la couche 1 conduit sept réflexes. Ce qui reste vrai du verrou, c'est la couche 3 seule — elle calcule à chaque pas et n'est lue qu'en un point, l. 4507, pour le chef d'escouade et seulement quand il n'a ni objet périmé ni consigne de corps. Un verrou qu'on ne recompte pas devient un mensonge tranquille : il passe toutes les vérifications, puisqu'il a son numéro et sa chaîne."
+        },
+        {
+          "date": {
+            "annee": 129,
+            "lune": 4,
+            "jour": 3
+          },
+          "source": "la cascade soldat(), l. 2542-2585 et 3222-3271",
+          "texte": "`decider()` fait céder le pas sur le seul compte local et ne regarde jamais derrière. Un homme dos à un mur recule dans le mur ; une escouade coincée au fond d'une rue se disperse en poussant sur de la pierre. Or un homme acculé se bat, et plus dur qu'un homme libre de partir — pas par courage, par arithmétique : fuir sans issue coûte le dos, et le dos est ce qui tue. La férocité du désespoir n'est pas un trait à tirer au sort, c'est ce que rend une recherche d'issue qui échoue. C'est la règle n°1 du README appliquée : le comportement manque parce qu'il manque une branche au modèle, pas parce qu'un chiffre est mal réglé."
+        },
+        {
+          "date": {
+            "annee": 129,
+            "lune": 4,
+            "jour": 3
+          },
+          "source": "l'épreuve au Bassin, sept cas sous node",
+          "texte": "Le défaut trouvé n'était pas dans un calcul mais dans l'ORDRE des tests du mot lisible — la chose qui n'a aucun effet sur la conduite, et que j'aurais pu ne pas éprouver. Un module dont tous les nombres sont justes peut mentir à celui qui le regarde travailler, et c'est par ce mot-là qu'on jugera la couche avant de lui donner la main. Ce qui ne conduit rien mérite d'être éprouvé autant que le reste, parce que c'est justement ce par quoi on décidera de brancher."
+        },
+        {
+          "date": {
+            "annee": 129,
+            "lune": 4,
+            "jour": 3
+          },
+          "source": "chantier/affaires.json, écrit deux fois en une heure",
+          "texte": "Le registre bouge sous la main pendant qu'on y écrit : entre ma lecture du matin et ma pose, la table des verrous était passée de trois lignes à sept, et mon numéro était déjà pris. Relire juste avant d'écrire, et jamais reposer un fichier entier sur une lecture d'il y a une heure."
+        }
+      ],
+      "conclusion": null
+    }
+  ],
+  "cahier2": [
+    {
+      "livre": "affaire-migrer-la-bataille-vers-la-stack",
+      "table": "⚔️ Les actions — chacune remonte, ou elle sort",
+      "ligne": "90310",
+      "colonne": "✅ État",
+      "valeur": "fait — `survival-stack/2-reflexion.js`, 236 lignes, chargé par `jeu.html` en observation. Rend `tient`, `attend`, `appui` et un cap `issue`. Éprouvé au Bassin sur sept cas : bornes [−1,1] tenues, cap unitaire ou nul. Les six morceaux de la couche 2 éparpillés dans `soldat()` y sont ramassés, dont la duplication 3053-3057 / 3222-3271 réunie en une seule fonction. Ne conduit rien tant que ⚔️ 90311 n'est pas écrit."
+    },
+    {
+      "livre": "affaire-migrer-la-bataille-vers-la-stack",
+      "table": "🔒 Les verrous",
+      "ligne": "90320",
+      "colonne": "🔎 D'où on le sait",
+      "valeur": "**Recompté sur le disque le 3e jour de la 4e lune, et le verrou était périmé.** `bataille2d.js` porte **quatorze appels vivants** aux couches, tous dans des chemins exécutés : 7 `window.Corps.*` (2734, 2755, 2792, 2908, 2932…), 1 `BatailleCorps.observer` (2960), 4 `window.Envie.*` (1431, 3576, 3593, 4481), 2 `window.Interpretation.*` (3406, 4507). **La couche 4 conduit** — le pillage sort de `Envie.butin`/`tauxDeButin`, le seuil d'initiative de `Envie.silenceTenu` ; **la couche 1 conduit** sept réflexes (sidération, fuite, recul, serrer, ruée, bras morts). Ce qui reste vrai, et qui est tout ce que ce verrou devrait dire : **la couche 3 calcule à chaque pas et n'est lue qu'en un seul point** (4507), pour le seul chef d'escouade, et seulement dans la branche sans objet périmé ni consigne de corps. Reste mort par ailleurs : `apaiseDe()` 4740-4746, jamais exécuté (`corps-adapt.js` l. 349 écrit `apaise: 1` en dur), et `h.l1.pilote` 3025/3092, décoratif."
+    }
+  ],
+  "_depeche": {
+    "session": "b201dc5e-fcb6-5cd3-aa5a-cc75fd1a078b",
+    "date_jeu": "129.4.3",
+    "jetons": 1386413,
+    "secondes": 567
+  }
+}

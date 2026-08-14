@@ -1,0 +1,159 @@
+{
+ "qui": "bren-racine-grise",
+ "journal": [
+  {
+   "heure": "5h00",
+   "duree": 120,
+   "lieu": "clairiere",
+   "quoi": "Bren ouvre le volume *Migrer la bataille vers la stack* pose a la Souche et releve ce qui porte son nom",
+   "resultat": "Une seule action a lui : 90010, descendre la nappe de `soldat()`. Deux verrous graves d'en haut (90310, 90320), et la colonne laissee vide expres pour lui. Trois etats cibles, dont 90200 que personne n'a encore verrouille."
+  },
+  {
+   "heure": "7h00",
+   "duree": 6,
+   "de": "la-souche",
+   "a": "lit-des-racines",
+   "quoi": "Il descend",
+   "resultat": "Arrive avec le volume et l'adresse du fichier."
+  },
+  {
+   "heure": "7h06",
+   "duree": 294,
+   "lieu": "lit-des-racines",
+   "quoi": "Descente ligne a ligne de `soldat()` dans `ecrans/modules/bataille2d.js`, l.2940 a 3698",
+   "resultat": "758 lignes, 24 sorties nommees, chacune posant `h.etat` et `h.branche`. L'ordre est fixe : mort/blesse/tete, couche 1, fer et erre, deroute, coureur, rentre, tenir-a-sa-vie (entame/deborde), souffle, patience et contact, poste tenu, ordre d'escouade (repli/tenir/suivre/appuyer), verrou de porte, pillage, rail vers le donjon. Et surtout : l.3025-3093, la couche 1 CONDUIT deja cinq gestes."
+  },
+  {
+   "heure": "12h00",
+   "duree": 5,
+   "de": "lit-des-racines",
+   "a": "la-souche",
+   "quoi": "Il remonte pour compter",
+   "resultat": ""
+  },
+  {
+   "heure": "12h05",
+   "duree": 55,
+   "lieu": "la-souche",
+   "quoi": "Il passe le seul controle qui ne se laisse pas raconter — le compte de lignes de code de `bataille2d.js` contre l'etalon pose dans `corps-adapt.js` l.150",
+   "resultat": "2801 lignes a l'etalon, **2980 mesurees ce jour** : +179. Trois couches branchees, rien de depose. Le refacto fait grossir le fichier qu'il devait vider."
+  },
+  {
+   "heure": "13h00",
+   "duree": 5,
+   "de": "la-souche",
+   "a": "lit-des-racines",
+   "quoi": "Il redescend finir la nappe",
+   "resultat": ""
+  },
+  {
+   "heure": "13h05",
+   "duree": 175,
+   "lieu": "lit-des-racines",
+   "quoi": "Il remonte les appelants : ce qui appelle `soldat()`, et ce qui decide d'un homme sans passer par elle",
+   "resultat": "UN seul appelant direct, l.5374, dans la boucle du pas. Mais ONZE fonctions posent `h.etat` hors de la cascade : `dresser` 1753/1783/1791, `tomber` 2805, `achever` 2845, `rompre` 2894, `envoyerAuDonjon` 3845, `courirAuDonjon` 3879, `ouvrirDeDedans` 4010, `envoyerCoureur` 4567, `rendreCoureur` 4674, `rallier` 4783, `piller` 6459/6480. Celui que personne n'attendait : `rallier` lit deja `h.l1.jambes` (l.4782) — la couche conduit hors cascade, la ou le plan ne regarde pas."
+  },
+  {
+   "heure": "16h00",
+   "duree": 60,
+   "lieu": "lit-des-racines",
+   "quoi": "Il ouvre `ecrans/modules/bataille/corps-adapt.js`, 372 lignes, que le volume ne nomme nulle part",
+   "resultat": "C'est la prise entre la bataille et la couche 1, chargee par `jeu.html` l.164, hors de `survival-stack/`. Elle porte un ordre de depose complet, poste par poste, et l'aveu du hasard : `Math.random()` dans la couche, ecart de relecture passe de 0,600 m et 3 etats faux a **329 m et 931 172 etats faux** le jour ou le seuil d'emprise est tombe."
+  },
+  {
+   "heure": "17h00",
+   "duree": 60,
+   "lieu": "lit-des-racines",
+   "quoi": "Il grave sa part : trois verrous neufs dans `chantier/affaires.json`, et corrige celui qui mentait",
+   "resultat": "90330 (deux modeles de peur decident en meme temps, +179 lignes), 90340 (onze transitions hors `soldat()`), 90120 (le hasard d'une couche neuve casse la cuisson reproductible). Le titre de la table est repris : ce n'est plus « le reste attend Bren ». 90200 reste sans verrou, et il le dit plutot que d'en inventer un : il n'a pas descendu la vue."
+  }
+ ],
+ "travaux": [
+  {
+   "travail_id": "affaire-migrer-la-bataille-vers-la-stack",
+   "dernier_travail": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "pensees": [
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "ecrans/modules/bataille2d.js, l.3025-3093",
+     "texte": "Le verrou 90320 est faux. Il dit « les trois couches ecrites ne conduisent rien » et cite trois commentaires. Or `h.l1.jambes` conduit deja `sideration`, `fuite`, `recul`, `serrer` et `ruee`, `h.brasMorts` retire les bras, la couche 4 conduit le pillage par `Envie.tauxDeButin` (l.3593), et le drapeau `pilote` comme le seuil d'emprise 0,60 sont tombes. Seule la couche 3 est encore en observation. Un verrou grave d'en haut passe toutes les verifications et il ment : c'est exactement le genre de faute qu'aucune machine ne trouve."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "compte de lignes de bataille2d.js contre l'etalon de corps-adapt.js l.150",
+     "texte": "2801 a l'etalon, 2980 aujourd'hui : +179. Le test est ecrit noir sur blanc dans le depot — « un poste qui fait grossir `bataille2d` est une greffe, quel que soit le discours autour » — et personne ne l'a repasse depuis. On a branche trois couches sans deposer un seul mecanisme ancien : `morale`, `ROMPT`, `CHOC`, `SANG`, `REPRISE`, `PLANCHER_FERME` et `survie()` decident encore a cote de `h.l1`. Deux modeles qui disent la meme chose avec des pieces differentes ne se departagent jamais."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "relevé des ecritures de h.etat dans bataille2d.js",
+     "texte": "Retirer la cascade de `soldat()` ne suffira pas a vider la tete du fichier. Onze fonctions posent l'etat d'un homme en dehors d'elle, et l'une — `rallier` — lit deja `h.l1`. L'action 90312 vise la cascade seule ; elle laisserait ces onze-la dehors, et l'etat cible 90300 serait declare tenu alors qu'il ne le serait pas."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "ecrans/modules/bataille/corps-adapt.js, l.105-126",
+     "texte": "La couche 2 n'est pas a ecrire de zero : `proieProche` EST une couche 2 complete — des options dans une monnaie unique, un cout au carre, un budget de souffle, un refus. A deplacer, pas a reecrire. Ce qui manque vraiment est l'ATTENTE : la couche 1 lache par horloge, la couche 2 doit lacher par dementi. C'est la seule piece entierement neuve, et Ygga doit le savoir avant de commencer 90310."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "ecrans/jeu.html l.163-170 et ecrans/modules/bataille/corps-adapt.js",
+     "texte": "Le branchement ne vit pas dans `survival-stack/` mais dans `bataille/corps-adapt.js`, que le volume ne nomme nulle part. Wenna nommera les couches en 90320 : qu'elle nomme aussi celle-ci, sinon le plan continuera de decrire une pile a quatre etages en ignorant la prise qui la tient."
+    }
+   ],
+   "conclusion": "La nappe de `soldat()` est remontee entiere : 758 lignes, 24 sorties, un seul appelant direct, onze decideurs hors cascade. La colonne des verrous n'est plus vide — 90330, 90340, 90120 — et 90320 est corrige, parce qu'il mentait. Ce que la descente change au plan : le branchement est DEJA fait et partiel, il vit hors de `survival-stack/`, aucun mecanisme ancien n'a ete depose, et le fichier a grossi de 179 lignes au lieu de maigrir. L'action 90010 est faite."
+  }
+ ],
+ "cahier2": [
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "⚔️ Les actions — chacune remonte, ou elle sort",
+   "ligne": "90010",
+   "colonne": "✅ État",
+   "valeur": "faite"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Les verrous",
+   "ligne": "90320",
+   "colonne": "🔒 Le verrou",
+   "valeur": "**La couche 1 conduit déjà cinq gestes, et son garde-fou a été retiré** — ce n'est plus « chargé n'est pas branché », c'est « branché à moitié, et hors de la stack »"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Les verrous",
+   "ligne": "90320",
+   "colonne": "🔎 D'où on le sait",
+   "valeur": "Descendu au Lit des Racines. `bataille2d.js` l.3025–3093 : `h.l1.jambes` conduit `sidération`, `fuite`, `recul`, `serrer`, `ruée`, et `h.brasMorts` retire les bras. Le drapeau `pilote` et le seuil d'emprise 0,60 sont tombés (l.3007–3022). La couche 4 conduit le pillage (l.3593, `Envie.tauxDeButin`) ; seule la couche 3 tourne encore en observation (l.3401). Et le branchement ne vit pas dans `survival-stack/` : il est dans `ecrans/modules/bataille/corps-adapt.js`, 372 lignes, chargé par `jeu.html` l.164, que ce volume ne nommait nulle part."
+  }
+ ],
+ "_depeche": {
+  "session": "94ce2586-d2cf-56a1-8bec-3ed550d30aad",
+  "date_jeu": "129.4.3",
+  "jetons": 1793788,
+  "secondes": 313
+ },
+ "_cahier_verse": true
+}
