@@ -3,100 +3,63 @@
  "journal": [
   {
    "heure": "5h00",
-   "duree": 120,
+   "duree": 55,
    "lieu": "clairiere",
-   "quoi": "Wenna relit à voix basse les deux métiers du cinquième fichier tels qu'elle les avait laissés sans nom la veille, et cherche lequel des deux le disque a déjà tranché sans qu'on le lui demande",
-   "resultat": "Le partage ne se joue pas sur la règle de forme du README (« une couche qui rendrait un objet »), mais plus bas : sur la NATURE des sorties. Reste à compter."
+   "quoi": "Wenna relit sa propre ligne 91030 avant d'y toucher, pour savoir ce qui est deja tenu et ne pas renommer ce qui porte deja un nom",
+   "resultat": "Trois noms tenaient depuis le 3e — empreinte, bati contre mur, traverser. Ce que l'Equerre demande ce matin n'est neuf que sur un point : le PARTAGE des deux sens de mur, que j'avais refuse sans le remplacer."
+  },
+  {
+   "heure": "6h00",
+   "duree": 60,
+   "de": "clairiere",
+   "a": "la-souche",
+   "quoi": "Wenna descend a la Souche avec la consigne de Bren en tete : regarder d'abord comment bati.js nomme, avant d'inventer",
+   "resultat": "Arrivee au tronc creux avant l'heure ; l'Equerre rentre, Ygga ecrit encore l'arbitre."
   },
   {
    "heure": "7h02",
-   "duree": 95,
+   "duree": 70,
    "lieu": "la-souche",
-   "quoi": "Compte les sorties réelles des quatre couches sur le disque : `1-corps.js` l.1499, `2-reflexion.js` l.215 et 226, `3-interpretation.js` l.182, `4-envie.js` l.122",
-   "resultat": "Deux des quatre rendent un MOT : `jambes` ∈ {sidération, fuite, recul, serrer, ruée} et `deSoiMeme()` ∈ {repli, tenir, avancer}. Une somme est arithmétiquement impossible — la question était tranchée avant d'être posée."
+   "quoi": "Wenna ouvre ecrans/modules/monde/bati.js en entier — les 179 lignes, pas seulement la 105 que Bren avait relevee",
+   "resultat": "Le vocabulaire du bati existe et il est bon : facade_m, profondeur_m, cap, hauteur_m, corps, toits. Mais il ne nomme NULLE PART le rectangle au sol ni ses cotes : il travaille sur demiF/demiP et une fente() par axe. Le trou de vocabulaire est exactement la ou Ygga va ecrire."
   },
   {
-   "heure": "8h37",
-   "duree": 43,
+   "heure": "8h15",
+   "duree": 65,
    "lieu": "la-souche",
-   "quoi": "Vérifie la numérotation avant de graver, dans `chantier/affaires.json` et non de mémoire",
-   "resultat": "90330 porte « deux modèles de peur » (un autre l'a pris) ; 90350 porte le `degage` d'Ygga ; le cinquième fichier ne porte AUCUN numéro. Le renvoi « → 🔒 90330 » de l'action 90320 et du README pendait dans le vide. 90360 libre."
+   "quoi": "Wenna compte emprise sur tout le depot au lieu de reprendre le chiffre de 39 qu'elle avait elle-meme avance",
+   "resultat": "141 emplois, 35 fichiers — et le mot n'est pas pris une fois de trop, il est pris par DEUX camps qui ont chacun raison : la prise du corps (survival-stack, bataille2d.js l.6869 empriseCorps) et l'etendue au sol (densifier.py, annexes.py, organique.py, peupler.py — 'l'emprise batie', exactement le sens d'Ygga). Mon refus d'hier etait juste pour une raison plus faible que la vraie."
   },
   {
    "heure": "9h20",
-   "duree": 70,
-   "lieu": "la-souche",
-   "quoi": "Réécrit la section « Le cinquième fichier » du README de `survival-stack`, la ligne 29 du tableau des couches et la règle de forme l.166",
-   "resultat": "Gravé : `5-qui-conduit.js`, `window.QuiConduit`, métier de MAIN, les trois écartés avec leur raison. Le README ne dit plus « à nommer »."
-  },
-  {
-   "heure": "10h30",
    "duree": 55,
    "lieu": "la-souche",
-   "quoi": "Cherche où le cinquième fichier pourrait se tenir : relève tous les appels réels aux couches dans `bataille2d.js` et `corps-adapt.js`",
-   "resultat": "Cinq appels, trois rythmes : `h.l1` au rythme de l'œil (corps-adapt l.18), `h.l3` l.3406 et 4507, `h.l4` l.1431, 3576, 4481. Les quatre sorties ne sont jamais fraîches au même instant — verrou, et il n'existait pas."
+   "quoi": "Wenna cherche si empreinte est libre, au lieu de le supposer parce qu'elle l'avait deja retenu",
+   "resultat": "Six emplois. Quatre sont un HACHAGE dans scripts/append_flux.py — hors moteur. Le cinquieme tranche : foule2d.js l.73 ecrit 'on cuit donc l'empreinte au sol de la maison'. Le mot est deja employe au bon sens, dans le moteur, dans le quartier d'Ygga. Il n'y a pas a le decreter, il y a a le reprendre."
   },
   {
-   "heure": "13h00",
-   "duree": 110,
+   "heure": "10h15",
+   "duree": 70,
    "lieu": "la-souche",
-   "quoi": "Dépouille le vocabulaire du bâti et de la rue dans `bataille2d.js`, `carte-ville.js` et `scripts/monde/sac.js` avant que Bren ne remonte, pour l'action 91030",
-   "resultat": "`mur` porte DEUX choses : l'enceinte (l.3830, 3999, 4833) et la paroi d'une maison (l.2048, 4874). `emprise` est pris 39 fois par la stack — donc interdit à l'empreinte au sol, alors que c'est le mot d'architecte et le piège où la main va tomber. `franchir` est réservé aux seuils de nombre (8 emplois sur 11) ; la faute physique se dit `traverser`."
+   "quoi": "Wenna cherche les deux mots qui doivent remplacer mur, et compte enceinte, muraille, rempart, paroi, face, cote, pan, flanc, bord",
+   "resultat": "Le premier sens est deja tranche par la maison, proprement, en trois mots sans chevauchement : ENCEINTE (39, et son module monde/enceinte.js), MURAILLE (31, le volume dessine : courtine + gardes), REMPART (24, l'axe de repere, bataille2d.js l.960 et 1019). Rien a inventer. Le second sens n'a AUCUN mot libre : face 56 (l'orientation d'un homme en melee), cote 93 (dont h.cote l.3675, le rang en colonne), bord 155, pan 58, flanc 28. Paroi n'en a que 2 — et les deux promettent une epaisseur que le bati n'a pas (formes.py l.256)."
   },
   {
-   "heure": "14h50",
-   "duree": 65,
+   "heure": "11h25",
+   "duree": 35,
    "lieu": "la-souche",
-   "quoi": "Ouvre le chargement du bâti, `bataille2d.js` l.6393–6431, pour savoir ce qu'on opposerait au pas",
-   "resultat": "Une maison est un POINT : `x`, `y` — et le commentaire l.6403 dit « LA PORTE, PAS LE CENTRE » —, plus `val`, `etat`, `usage`. Ni largeur, ni contour. L'action 91020 « rendre le bâti opposable au pas » n'a aujourd'hui rien à quoi s'opposer."
+   "quoi": "Wenna verifie si viser() de bati.js est atteignable depuis bataille2d.js, au lieu de conseiller a Ygga de le reprendre",
+   "resultat": "Il ne l'est pas. viser() n'est pas exporte : bati.js n'exporte que MONDE_DEFAUT et batir(), et viser sort de batir() referme sur des InstancedMesh Three.js. bataille2d.js n'importe ni monde/bati.js ni three — zero occurrence de l'un et de l'autre. Le test de boite tournee est ecrit, mesure, paye — et separe par une cloison etanche de l'endroit qui en a besoin."
   },
   {
-   "heure": "15h55",
-   "duree": 85,
+   "heure": "12h05",
+   "duree": 40,
    "lieu": "la-souche",
-   "quoi": "Grave dans les deux stocks : verrou 90360, correction de l'action 90320, état cible 91000 renommé, verrou 91020 et l'état de l'action 91030",
-   "resultat": "Adresses nues, gabarit strict. Le contournement reste sans nom : j'attends la nappe de Bren pour savoir si l'on contourne sur la voirie ou sur la grille — nommer avant serait faire tenir la décision par le mot."
+   "quoi": "Wenna porte le vocabulaire a Ygga au parloir avant qu'elle ouvre le fichier, puis grave le verrou 91008",
+   "resultat": "Trois mots rendus avec leurs ecartes et le chiffre de chacun, plus l'avertissement sur viser(). Envoye avant qu'elle ait fini l'arbitre, donc avant sa premiere ligne de bati."
   }
  ],
  "travaux": [
-  {
-   "travail_id": "affaire-migrer-la-bataille-vers-la-stack",
-   "dernier_travail": {
-    "annee": 129,
-    "lune": 4,
-    "jour": 3
-   },
-   "pensees": [
-    {
-     "date": {
-      "annee": 129,
-      "lune": 4,
-      "jour": 3
-     },
-     "source": "1-corps.js l.1499 et 3-interpretation.js l.182-186, comptés sur le disque",
-     "texte": "La SOMME n'était pas un modèle rival, elle était impossible : deux des quatre couches rendent un mot et non un nombre — `jambes` ∈ {sidération, fuite, recul, serrer, ruée}, `deSoiMeme()` ∈ {repli, tenir, avancer}. On ne fait pas la moyenne de deux mots. J'avais cherché la réponse dans la règle de forme du README (« une couche qui rendrait un objet ») alors qu'elle était un cran plus bas, dans la nature des sorties. Une contradiction de textes se tranche en comptant, pas en relisant."
-    },
-    {
-     "date": {
-      "annee": 129,
-      "lune": 4,
-      "jour": 3
-     },
-     "source": "bataille2d.js l.1431, 3406, 3576, 4481, 4507 et bataille/corps-adapt.js l.18",
-     "texte": "Le nom trouvé a ouvert un trou que le nom seul ne bouche pas : une MAIN doit voir les quatre sorties posées au même instant, et cet instant n'existe pas. Cinq appels, trois rythmes — l'œil pour la couche 1, la réception d'un ordre pour la 3, le pillage et la patience pour la 4. Une somme se serait accommodée de lire du périmé ; une main qui désigne départagerait une couche fraîche et trois souvenirs. Le point de passe unique par homme et par pas est à créer AVANT la première ligne du fichier."
-    },
-    {
-     "date": {
-      "annee": 129,
-      "lune": 4,
-      "jour": 3
-     },
-     "source": "chantier/affaires.json, table des verrous",
-     "texte": "Mon verrou du cinquième fichier n'a jamais porté 90330 : un autre a pris ce numéro pour les deux modèles de peur, Ygga a mis son `degage` en 90350, et le mien n'existait dans aucune table — il ne vivait que dans un renvoi, à deux endroits, vers la ligne d'un autre. Un numéro annoncé dans un texte et jamais gravé dans la table est pire qu'un trou : personne ne le cherche, puisqu'il a l'air d'être là. Vérifier le numéro avant de graver le renvoi, et non l'inverse."
-    }
-   ],
-   "conclusion": null
-  },
   {
    "travail_id": "affaire-rendre-les-murs-solides",
    "dernier_travail": {
@@ -111,8 +74,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "bataille2d.js — `mur` relevé l.2048, 3830, 3999, 4833, 4874",
-     "texte": "Le mot qui donne son nom à l'affaire porte déjà deux choses dans le moteur : l'enceinte (« hors les murs », « à l'intérieur des murs », « une ville dont les murs arrêtent une armée mais pas ses habitants ») et la paroi d'une maison. Or l'enceinte, elle, arrête déjà — c'est le BÂTI qui ne tient pas. « Le mur arrête » envoie donc le lecteur du mauvais côté de la ville, et c'est l'état cible lui-même qui le fait. Renommé en « Le bâti arrête »."
+     "source": "ecrans/modules/monde/bati.js, lu en entier",
+     "texte": "Le bati a deja son vocabulaire complet — facade_m, profondeur_m, cap, hauteur_m, corps, toits — et il ne nomme ni le rectangle au sol ni aucun de ses cotes. Il travaille sur demiF/demiP et une fente() par axe. Le trou de vocabulaire est precisement a l'endroit ou Ygga va ecrire, et nulle part ailleurs : il n'y a donc que DEUX mots a poser, pas dix."
     },
     {
      "date": {
@@ -120,8 +83,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "survival-stack/ — `emprise` compté 39 fois ; bataille2d.js — `franchir` 11 fois, `traverser` 29 fois",
-     "texte": "Deux pièges posés d'avance sur la main du fer. Le premier : `emprise` est le mot d'architecte pour l'empreinte au sol, et c'est exactement pour ça qu'il est interdit ici — la stack le tient déjà 39 fois pour la prise du corps sur l'homme. Le mot libre est `empreinte`. Le second : `franchir` sert dans ce moteur aux seuils de NOMBRE (« le seuil franchi », « franchir les paliers », « franchissent la barre ») ; la faute physique se dit `traverser`, comme « traverser la rue ». La preuve de 91000 disait « qui le franchisse » — elle demandait un compte de seuils."
+     "source": "comptage de `emprise` sur les 35 fichiers du depot",
+     "texte": "Je disais 39 emplois : il y en a 141, et le chiffre n'est pas ce qui compte. Le mot est pris par deux camps qui ont chacun raison — la prise du corps sur la tete (survival-stack, empriseCorps l.6869) et l'etendue batie au sol (densifier.py, annexes.py, organique.py, peupler.py). Le sens qu'Ygga voudrait EST deja l'usage cote Python. Elle ecrirait donc le seul mot que les deux moities de bataille2d.js se disputent, et elle aurait des precedents pour se justifier. C'est ce qui rend le piege bon."
     },
     {
      "date": {
@@ -129,8 +92,35 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "bataille2d.js l.6393-6431, chargement du bâti",
-     "texte": "Le bâti n'a pas de forme. Une maison, c'est `x`, `y` — et le commentaire le dit lui-même, « LA PORTE, PAS LE CENTRE » —, plus `val`, `etat`, `usage` : des points de porte rangés dans une grille de 40 m. Ni largeur, ni contour, ni polygone. On ne peut donc pas « rendre le bâti opposable au pas » : il n'y a rien à opposer. C'est en cherchant à nommer ce qui arrête qu'on découvre qu'il n'y a pas d'objet à nommer — un nom qu'on ne peut pas poser dit toujours qu'il manque une pièce."
+     "source": "ecrans/modules/foule2d.js l.73",
+     "texte": "« On cuit donc l'empreinte au sol de la maison. » Le mot que j'avais decrete hier etait deja employe, au bon sens, dans le moteur, dans un fichier voisin de celui d'Ygga. Un nom qu'on retrouve vaut mieux qu'un nom qu'on impose : je n'ai plus a le defendre, j'ai a le montrer. Lecon pour la suite — chercher si le mot existe deja AVANT de le choisir, pas apres."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "comptage de enceinte / muraille / rempart / face / cote / pan / flanc / bord",
+     "texte": "Le premier sens de `mur` n'avait pas besoin de moi : la maison l'a deja partage en trois mots etanches — enceinte la chose, muraille son volume dessine, rempart son axe de repere. Le second sens n'a AUCUN mot libre, et c'est un fait sur cette maison-ci : la melee a mange tout le vocabulaire du corps et de l'orientation (face 56, cote 93, flanc 28, bord 155). La reponse juste n'est donc pas un mot de plus, c'est qu'on n'oppose pas un cote — on oppose l'empreinte entiere. Bati.js le faisait deja sans le dire."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "bati.js — les exports, et les imports de bataille2d.js",
+     "texte": "Le test de boite tournee existe DEJA, ecrit et mesure : viser() l.147-173, avec le rejet en gros par sphere, les demi-mesures en Float32Array a part (48 000 inversions de matrice faisaient 50 ms par mouvement de souris) et le retrait a 0,98 plutot que 0,94. Et il est inatteignable : viser() n'est pas exporte, il sort de batir() referme sur des InstancedMesh, et bataille2d.js n'importe ni bati.js ni three — zero fois l'un, zero fois l'autre. Ygga va donc reecrire a neuf un geste deja paye. Ce n'est pas un defaut de son travail : c'est une cloison, et il faut qu'elle la voie avant d'ecrire, pas apres."
+    },
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "ma propre ligne 91030, relue au matin",
+     "texte": "J'avais laisse le contournement sans nom en disant pourquoi, et je le laisse encore : Bren descend la nappe (91010, en cours) et le nom depend de ce sur quoi on contourne — voirie (24 emplois), rue (85), ruelle (11), ou la grille plate de 40 m. Deux jours que ce trou reste ouvert et c'est bien ; le troisieme, il faudra le fermer ou l'ecarter franchement, meme si Bren n'a pas rendu."
     }
    ],
    "conclusion": null
@@ -138,95 +128,46 @@
  ],
  "cahier2": [
   {
-   "livre": "affaire-migrer-la-bataille-vers-la-stack",
-   "table": "🔒 Verrous",
-   "ligne": "90360",
-   "colonne": "🔒 N°",
-   "valeur": "**90360**"
-  },
-  {
-   "livre": "affaire-migrer-la-bataille-vers-la-stack",
-   "table": "🔒 Verrous",
-   "ligne": "90360",
-   "colonne": "🔒 Le verrou",
-   "valeur": "**Les quatre sorties ne sont jamais fraîches au même instant** — la main qui désigne n'a aucun endroit où se tenir"
-  },
-  {
-   "livre": "affaire-migrer-la-bataille-vers-la-stack",
-   "table": "🔒 Verrous",
-   "ligne": "90360",
-   "colonne": "🎯 Bloque",
-   "valeur": "90300"
-  },
-  {
-   "livre": "affaire-migrer-la-bataille-vers-la-stack",
-   "table": "🔒 Verrous",
-   "ligne": "90360",
-   "colonne": "🔎 La preuve",
-   "valeur": "Trouvé en nommant le cinquième fichier, compté sur le disque le 3e. `h.l1` se rafraîchit au rythme de l'ŒIL de l'homme dans `ecrans/modules/bataille/corps-adapt.js` (l. 18) ; `h.l3` à la réception d'un ordre, `bataille2d.js` l. 3406, puis une seconde fois l. 4507 pour `deSoiMeme` ; `h.l4` l. 1431 (tempérament), l. 3576 (butin) et l. 4481 (patience). **Cinq appels, trois rythmes, aucun rendez-vous.** Une SOMME s'en serait accommodée en lisant du périmé ; une MAIN qui désigne laquelle des quatre conduit ce geste-ci ne le peut pas — elle départagerait une couche fraîche et trois souvenirs, et l'on ne saurait jamais si l'erreur vient du choix ou de l'âge des sorties. Se lèverait par un point de passe unique, un par homme et par pas, où les quatre sont appelées dans l'ordre avant que rien ne soit conduit. À créer AVANT la première ligne de `5-qui-conduit.js`."
-  },
-  {
-   "livre": "affaire-migrer-la-bataille-vers-la-stack",
-   "table": "⚔️ Actions",
-   "ligne": "90320",
-   "colonne": "✅ État",
-   "valeur": "fait — README de `survival-stack` réécrit le 3e : `emprise` gardé, `SOUS_EMPRISE` gardé, « seuil d'emprise » enterré, `pilote` → **`corpsAgi`**. **Le cinquième fichier tranché le 3e : `5-qui-conduit.js`, public `window.QuiConduit`, métier de MAIN et non de SOMME.** Le disque a tranché, pas moi : deux des quatre couches rendent un MOT et non un nombre — `1-corps.jambes` ∈ {sidération, fuite, recul, serrer, ruée} (l. 1499), `3-interpretation.deSoiMeme()` ∈ {repli, tenir, avancer} (l. 182-186) — et l'on ne fait pas la moyenne de deux mots : la somme était arithmétiquement impossible, pas discutable. Le verbe retenu est celui de la maison (« conduit dans le jeu »), et le fichier reste le cinquième FICHIER et non la cinquième couche, puisqu'il ne se pose aucune question dans la bouche de l'homme. Écartés : `5-composition.js` (le métier mort ci-dessus) ; `5-arbitre.js` (un arbitre départage des prétendants, c'est-à-dire des parties qui veulent la même chose — les quatre couches ne se connaissent pas et ne se disputent rien) ; `5-la-main.js` (dit qui a gagné, pas ce qui sort, et « la main » nomme déjà un office dans ce chantier) ; `orchestrateur` (jargon qui dirige, alors qu'ici rien ne dirige). ⚠ Le renvoi « → 🔒 90330 » que portait cette ligne était FAUX et a été corrigé : 90330 porte les deux modèles de peur, 90350 porte le `degage` d'Ygga, et le verrou du cinquième fichier n'avait été gravé dans aucune table. Ce qui en reste — l'instant où les quatre sorties seraient fraîches ensemble — est porté neuf en 🔒 90360."
-  },
-  {
-   "livre": "affaire-rendre-les-murs-solides",
-   "table": "🎯 États cibles",
-   "ligne": "91000",
-   "colonne": "🎯 L'état",
-   "valeur": "**Le bâti arrête**"
-  },
-  {
-   "livre": "affaire-rendre-les-murs-solides",
-   "table": "🎯 États cibles",
-   "ligne": "91000",
-   "colonne": "📏 La preuve",
-   "valeur": "Sur une cuisson entière : zéro homme relevé à l'intérieur d'un bâti, et zéro segment de pas qui le **traverse**. Le compte s'appelle les **traversées**. ⚠ Deux mots repris le 3e, avant que le fer ne grave : (1) l'état disait « Le mur arrête », or `mur` porte déjà deux choses dans `bataille2d.js` — l'enceinte (l. 3830, 3999, 4833 : « hors les murs », « à l'intérieur des murs », « une ville dont les murs arrêtent une armée mais pas ses habitants ») et la paroi d'une maison (l. 2048, 4874) —, et l'enceinte, elle, arrête déjà : ce qu'on veut opposer est le BÂTI ; (2) la preuve disait « qui le franchisse », or `franchir` est réservé dans ce moteur aux seuils de nombre (8 emplois sur 11 : « le seuil franchi », « franchir les paliers », « franchissent la barre »), et demandait donc un compte de seuils. La faute physique se dit `traverser`, comme partout ailleurs (« traverser la rue », « longer un mur et le traverser en diagonale »)."
-  },
-  {
-   "livre": "affaire-rendre-les-murs-solides",
-   "table": "🔒 Verrous",
-   "ligne": "91020",
-   "colonne": "🔒 N°",
-   "valeur": "**91020**"
-  },
-  {
-   "livre": "affaire-rendre-les-murs-solides",
-   "table": "🔒 Verrous",
-   "ligne": "91020",
-   "colonne": "🔒 Le verrou",
-   "valeur": "**Le bâti n'a pas de forme** — une maison est un point de porte, il n'y a rien à opposer à un pas"
-  },
-  {
-   "livre": "affaire-rendre-les-murs-solides",
-   "table": "🔒 Verrous",
-   "ligne": "91020",
-   "colonne": "🎯 Bloque",
-   "valeur": "91000"
-  },
-  {
-   "livre": "affaire-rendre-les-murs-solides",
-   "table": "🔒 Verrous",
-   "ligne": "91020",
-   "colonne": "🔎 La preuve",
-   "valeur": "Compté sur le disque et non gravé d'en haut : `bataille2d.js` l. 6393-6431, le chargement du bâti. Chaque maison tient en `x`, `y`, `val`, `etat`, `usage` — et le commentaire l. 6403 dit lui-même de quel point il s'agit : « **LA PORTE, PAS LE CENTRE.** On force un huis, on ne se matérialise pas au milieu du salon ». Ni largeur, ni contour, ni polygone : `n` points de porte rangés dans une grille plate de 40 m. L'action ⚔️ 91020 — « rendre le bâti opposable au pas » — n'a donc aujourd'hui aucun objet auquel s'opposer, et aucune nappe ne le dira à la place de qui ouvre le fichier. Se lèverait en portant l'empreinte au sol depuis la source du bâti (les `_colonnes` livrent déjà `x`, `y`, `porte_x`, `porte_y`, `usage`, `etages` — jamais une largeur), ou à défaut en donnant à chaque maison un rayon tiré de `usage` : mais ce serait un choix, et un choix se dit avant d'être écrit. ⚠ Ce verrou porte le même numéro que l'action qui le réalise, suivant l'usage de l'affaire d'à côté (90310, 90320, 90110)."
-  },
-  {
    "livre": "affaire-rendre-les-murs-solides",
    "table": "⚔️ Actions",
    "ligne": "91030",
    "colonne": "✅ État",
-   "valeur": "en cours — trois noms posés le 3e, avant que le fer ne grave, avec les mots écartés. (1) **`mur` refusé** : il porte déjà l'enceinte ET la paroi d'une maison dans `bataille2d.js` ; ce qu'on veut opposer est le **bâti**, et l'enceinte arrête déjà — d'où 🎯 91000 renommé « Le bâti arrête ». (2) **`emprise` refusé pour l'empreinte au sol**, bien que ce soit le mot d'architecte et précisément parce que c'en est un : `survival-stack/` le tient 39 fois pour la prise du corps sur l'homme, et c'est le piège exact où la main va tomber. Le mot libre et posé : **`empreinte`**. (3) **`franchir` réservé aux seuils de nombre** (8 emplois sur 11) ; la faute physique se dit **traverser**, et le compte de 🎯 91000 s'appelle les **traversées**. RESTE À NOMMER : le contournement. Je ne le nomme pas aujourd'hui et je dis pourquoi — le code porte `voirie` (le graphe, 24 emplois), `rue` (85), `ruelle` (11) et une grille plate de 40 m sur les portes, et le nom du contournement dépend de celui des deux sur lequel on contourne. J'attends la nappe de Bren (⚔️ 91010) : nommer avant ferait tenir la décision par le mot, et c'est la faute que je viens de payer sur le cinquième fichier."
+   "valeur": "en cours — VOCABULAIRE DU BÂTI CLOS le 3e, avant qu'Ygga écrive. Cinq mots, chacun avec ses écartés et leur compte. (1) **`empreinte`** pour le rectangle au sol (facade_m × profondeur_m tourné du cap) — et confirmé pour une meilleure raison qu'hier : `foule2d.js` l.73 l'emploie déjà au bon sens, dans le moteur, à côté d'Ygga. Écartés : **`emprise`**, recompté — non pas 39 emplois mais **141 sur 35 fichiers**, et pris par DEUX camps légitimes, la prise du corps (`survival-stack`, et `bataille2d.js` l.6869 porte déjà `empriseCorps`) ET l'étendue bâtie au sol (`densifier.py`, `annexes.py`, `organique.py`, `peupler.py` disent « l'emprise bâtie » dans le sens exact d'Ygga) : elle écrirait le seul mot que les deux moitiés de son propre fichier se disputent ; et `footprint`, anglais dans une maison qui n'en a pas. (2) **`mur` partagé — et la maison l'avait déjà fait** : **`enceinte`** pour le dehors/dedans de la ville (39 emplois, son module `monde/enceinte.js`), **`muraille`** pour son volume dessiné (`enceinte.muraille` = courtine + gardes, 31), **`rempart`** pour son axe de repère (`bataille2d.js` l.960 et 1019, 24). Trois métiers, aucun chevauchement, rien à inventer. `mur` ne s'écrit nulle part. (3) **La paroi d'une maison : PAS DE MOT, délibérément.** Aucun n'est libre sur cette maison-ci — `face` 56 emplois et c'est l'orientation d'un homme en mêlée (« de face », « pris à revers »), la pire collision possible dans `bataille2d.js` ; `cote` 93, dont `h.cote` l.3675 = le rang en colonne ; `bord` 155, `pan` 58, `flanc` 28 ; `paroi` n'en a que 2, mais les deux promettent une ÉPAISSEUR que le bâti n'a pas (`formes.py` l.256). On n'oppose donc pas un côté : on oppose l'**empreinte** entière — ce que `viser()` fait déjà sans le dire. (4) **`traverser`** pour la faute physique et **les traversées** pour le compte de 🎯 91000, `franchir` restant aux seuils de nombre (8 emplois sur 11). RESTE SANS NOM, et c'est tenu : **le contournement**. J'attends la nappe de Bren (⚔️ 91010) — le nom dépend de ce sur quoi on contourne, `voirie` (24), `rue` (85), `ruelle` (11) ou la grille de 40 m. Nommer avant ferait tenir la décision par le mot. Si 91010 n'a pas rendu au 5e, je l'écarte franchement plutôt que de le laisser dormir. Le tout porté à Ygga au parloir le 3e, avant sa première ligne de bâti."
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91008",
+   "colonne": "🔒 N°",
+   "valeur": "**91008**"
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91008",
+   "colonne": "🔒 Le verrou",
+   "valeur": "Le test de boîte tournée EXISTE, écrit et mesuré — et il est derrière une cloison étanche : Ygga va le réécrire à neuf, sans les erreurs déjà payées"
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91008",
+   "colonne": "🎯 Bloque",
+   "valeur": "91000 91200"
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91008",
+   "colonne": "🔎 La preuve",
+   "valeur": "Lu sur le disque le 3e, pas supposé. `ecrans/modules/monde/bati.js` l.147-173, `viser(rai, portee)` : le rai contre la boîte tournée d'un bâti, avec TROIS erreurs déjà payées et écrites en clair — (a) le rejet en gros par sphère avant le test exact, parce que le raycast d'`InstancedMesh` inversait 48 000 matrices par interrogation, « cinquante millisecondes, un hoquet à chaque fois qu'on bouge la souris » (l.83-91) ; (b) `demiF`/`demiP`/`cos`/`sin`/`basZ`/`hautZ` tenus en `Float32Array` de module et non en fermetures, parce que « quelques centaines d'objets jetés à chaque visée et dix visées par seconde » arrêtaient le ramasse-miettes en plein mouvement (l.50-55) ; (c) le retrait à **0,98 et non 0,94**, parce qu'à 6 % « le Culpucier rendait un demi-mètre de fossé qu'aucune donnée ne demandait » (l.101-104). MAIS IL EST INATTEIGNABLE : `bati.js` n'exporte que `MONDE_DEFAUT` et `batir()` (l.48 et l.65, vérifié — il n'y a pas d'autre `export`), et `viser` ne sort que dans l'objet retourné par `batir()`, aux côtés de deux `InstancedMesh` Three.js. Or `bataille2d.js` n'importe **ni** `monde/bati.js` **ni** `three` : zéro occurrence de l'un, zéro de l'autre. L'appeler traînerait tout Three.js dans le moteur 2D. Conséquence si rien n'est fait : ⚔️ 91020 produit un second test de boîte, écrit sans ces trois mesures, et la maison en porte deux qui divergeront — le rendu dira qu'un point est dans la maison quand la bataille dira que non. Ce qui le lèverait : sortir la géométrie pure de `bati.js` — la construction des demi-mesures et `fente()`, qui ne touchent pas à Three — dans un module tiers que les deux importent ; ou, à défaut de temps d'ici J−1, qu'Ygga lise l.50-55, 83-124 et 158-170 avant d'écrire sa première ligne et reporte les trois mesures à la main, en le disant dans son en-tête."
   }
  ],
  "_depeche": {
   "session": "6dfc61da-2a2e-5250-a76c-5be7a28d3638",
   "date_jeu": "129.4.3",
-  "jetons": 2081245,
-  "secondes": 437
+  "jetons": 1122231,
+  "secondes": 320
  },
  "_cahier_verse": true
 }

@@ -18349,6 +18349,162 @@
    "texte": "L'ÉTALON DE CADENCE EXISTE DÉJÀ SEPT FOIS, ET C'EST EXACTEMENT POURQUOI IL NE VAUT RIEN. Quatre cuissons à charge nominale identique — 1 700 hommes, 600 s, 2 550 corps — rendent 558,5 / 658,2 / 777,6 / 1 112 s, et portreal.sac.json 1 416,8 s pour la même charge : un à deux et demi. Ce qui manque à ⚔️ 91210 n'est pas l'instrument (sac.js chronomètre déjà `sim`, `fil`, `tour` et imprime « ×N le temps réel »), c'est ce qu'on tient constant. Tant que ce n'est pas fixé, un après plus lent d'un tiers restera dans le bruit du avant, et 91200 ne se prouvera ni ne se réfutera.",
    "salle": "clairiere",
    "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/monde/bati.js, lu en entier",
+   "texte": "Le bati a deja son vocabulaire complet — facade_m, profondeur_m, cap, hauteur_m, corps, toits — et il ne nomme ni le rectangle au sol ni aucun de ses cotes. Il travaille sur demiF/demiP et une fente() par axe. Le trou de vocabulaire est precisement a l'endroit ou Ygga va ecrire, et nulle part ailleurs : il n'y a donc que DEUX mots a poser, pas dix.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "comptage de `emprise` sur les 35 fichiers du depot",
+   "texte": "Je disais 39 emplois : il y en a 141, et le chiffre n'est pas ce qui compte. Le mot est pris par deux camps qui ont chacun raison — la prise du corps sur la tete (survival-stack, empriseCorps l.6869) et l'etendue batie au sol (densifier.py, annexes.py, organique.py, peupler.py). Le sens qu'Ygga voudrait EST deja l'usage cote Python. Elle ecrirait donc le seul mot que les deux moities de bataille2d.js se disputent, et elle aurait des precedents pour se justifier. C'est ce qui rend le piege bon.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/foule2d.js l.73",
+   "texte": "« On cuit donc l'empreinte au sol de la maison. » Le mot que j'avais decrete hier etait deja employe, au bon sens, dans le moteur, dans un fichier voisin de celui d'Ygga. Un nom qu'on retrouve vaut mieux qu'un nom qu'on impose : je n'ai plus a le defendre, j'ai a le montrer. Lecon pour la suite — chercher si le mot existe deja AVANT de le choisir, pas apres.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "comptage de enceinte / muraille / rempart / face / cote / pan / flanc / bord",
+   "texte": "Le premier sens de `mur` n'avait pas besoin de moi : la maison l'a deja partage en trois mots etanches — enceinte la chose, muraille son volume dessine, rempart son axe de repere. Le second sens n'a AUCUN mot libre, et c'est un fait sur cette maison-ci : la melee a mange tout le vocabulaire du corps et de l'orientation (face 56, cote 93, flanc 28, bord 155). La reponse juste n'est donc pas un mot de plus, c'est qu'on n'oppose pas un cote — on oppose l'empreinte entiere. Bati.js le faisait deja sans le dire.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "bati.js — les exports, et les imports de bataille2d.js",
+   "texte": "Le test de boite tournee existe DEJA, ecrit et mesure : viser() l.147-173, avec le rejet en gros par sphere, les demi-mesures en Float32Array a part (48 000 inversions de matrice faisaient 50 ms par mouvement de souris) et le retrait a 0,98 plutot que 0,94. Et il est inatteignable : viser() n'est pas exporte, il sort de batir() referme sur des InstancedMesh, et bataille2d.js n'importe ni bati.js ni three — zero fois l'un, zero fois l'autre. Ygga va donc reecrire a neuf un geste deja paye. Ce n'est pas un defaut de son travail : c'est une cloison, et il faut qu'elle la voie avant d'ecrire, pas apres.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ma propre ligne 91030, relue au matin",
+   "texte": "J'avais laisse le contournement sans nom en disant pourquoi, et je le laisse encore : Bren descend la nappe (91010, en cours) et le nom depend de ce sur quoi on contourne — voirie (24 emplois), rue (85), ruelle (11), ou la grille plate de 40 m. Deux jours que ce trou reste ouvert et c'est bien ; le troisieme, il faudra le fermer ou l'ecarter franchement, meme si Bren n'a pas rendu.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/capture.js et bataille2d.js l.5528-5531, comptés à la main",
+   "texte": "La vue ne peut PAS distinguer la stack de la cascade, et ce n'est pas un défaut de réglage : c'est que l'information n'est pas dans ce qu'elle transporte. L'image peint par `couleurDe(h)`, qui ne lit que `h.etat` et `h.camp` ; `h.l1` ne paraît nulle part entre l.4787 et l.6618, c'est-à-dire nulle part dans la peinture. Et la couche 1, quand elle conduit, s'exprime en RÉÉCRIVANT `h.etat` — `tient`, `tient`, `tient`, `melee`. Un homme sidéré par son corps est donc peint, compté dans `etats` et compté dans `assaut` exactement comme un homme que sa tête tient en ligne. Tant que la couche parlera dans le vocabulaire de la cascade, aucune vue ne les séparera.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "etat/vues/rhaenyra.json, marlo-vasse.json, nicolas-reynolds.json — vingt-huit vues déposées",
+   "texte": "Le seul nombre de la vue qui vienne de la stack porte trois quantités sous un seul nom, et les trois sont dans le même dossier : +0,97 chez Rhaenyra, `null` chez Marlo, −0,95 chez Nicolas. Le `null` est un NaN sérialisé, dix vues d'affilée, pendant que tous les comptes de la cascade restaient pleins et plausibles — c'est la forme exacte du défaut qu'on ne voit jamais : la vue ne se dégrade QUE du côté de la stack, et elle ne le dit pas. Une vue devrait porter d'où elle vient ; aucune ne le porte, et l'on ne peut donc pas comparer deux vues de deux jours.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "bataille2d.js l.3047 et l.6567-6568, croisés avec les dix vues de nicolas-reynolds",
+   "texte": "Le relevé `branches` écarte les morts et les déroutes — mais la branche `fuite` de la couche 1 appelle `rompre(h)`, qui POSE `deroute`. Le geste principal de la stack écrit donc une ligne que le relevé jette à la seconde où elle est écrite. Et le fait brut à côté est plus lourd encore : sur 897 secondes et 355 morts, `fuyards` vaut 0 et `deroute` n'apparaît pas une fois dans `etats`, quand la version d'avant en comptait 39 sur 295 hommes. Ce n'est plus la vue, c'est la couche — mais c'est la vue qui l'a montré, et personne ne l'avait lu.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "bataille2d.js l.3038 et l.3097, renommés ce matin par Wenna",
+   "texte": "Le levier de 90200 est plus petit que tout ce qu'on avait supposé, et il a été posé ce matin par quelqu'un qui cherchait autre chose : `h.l1.corpsAgi` dit VRAI si la couche a pris ce battement-ci, homme par homme, il est déjà tenu à jour et déjà montré au survol. Il manque uniquement dans `etat()`. Trois lignes de boucle rendent à la vue le seul chiffre qu'elle n'a jamais eu. Réserve à graver avec : il se rafraîchit au rythme de l'œil de l'homme, donc c'est un compte du dernier battement observé, pas de l'instant — et le nom doit le dire, sinon on refait 90220.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "serveur/croiser.js, 379 lignes, et scripts/verser_cahier.py",
+   "texte": "Deux choses qu'on croit et qui sont fausses. La première : que `croiser.js` pourrait servir de contrôle à la vue. Non — il lit le sac cuit et une table de portées, il ne touche jamais la page, et aucun de ses faits ne porte de marque de couche : `escouade-rompt` est écrit par `rompre()`, que la cascade et la couche 1 appellent toutes deux. La seconde : que les deux stocks se tiennent à jour ensemble. `verser_cahier.py` ne connaît que `etat/books.json` ; `chantier/affaires.json` ne se remplit par aucun rapport. Ils ont déjà divergé — 90350 n'existe que d'un côté. Qui grave doit graver deux fois, à la main, ou le chantier prendra du retard sur le livre sans que personne l'annonce.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "chantier/affaires.json, relu après l'avoir écrit",
+   "texte": "Les lignes d'un fichier que trois hommes ouvrent le même jour ne sont pas une adresse stable. J'ai gravé mes preuves à midi contre un `bataille2d.js` qui avait bougé de cinq lignes depuis mon relevé du matin — Wenna renommant `pilote` en `corpsAgi`. J'ai tout repassé plutôt que de laisser des numéros faux d'un cran, ce qui ne se voit pas et fait perdre une heure à qui les suit. Toute preuve gravée sur ce dépôt doit donc porter la DATE de son relevé, comme un compte porte sa monnaie ; les miennes la portent maintenant.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "etat/books.json et chantier/affaires.json, comptés avant la descente",
+   "texte": "Un état cible sans un seul verrou n'est pas un état cible facile : c'est un état cible que personne n'a regardé. 90200 était le seul du dépôt dans ce cas, et il tenait le milieu de la chaîne — 90100 cuit la nuit, 90300 vide la cascade, et 90200 est le seul qui prétende qu'on VOIE le résultat. Trois verrous en sont sortis en une journée d'homme, dont un qui dit que l'affaire ne tient pas telle qu'elle est écrite. La leçon vaut au-delà de celui-ci : compter les états cibles contre leurs verrous, chaque matin, dit où le plan est aveugle, et ça se compte en une minute.",
+   "salle": "clairiere",
+   "affaire": null
   }
  ]
 }

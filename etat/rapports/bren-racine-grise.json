@@ -2,58 +2,72 @@
  "qui": "bren-racine-grise",
  "journal": [
   {
+   "heure": "5h00",
+   "duree": 115,
+   "lieu": "clairiere",
+   "quoi": "Ouvre les deux stocks avant de descendre et compte les états cibles contre les verrous qui les nomment, pour savoir où il va et non ce qu'on lui dit.",
+   "resultat": "90100 porte deux verrous, 90300 en porte quatre au livre et cinq au chantier — les deux stocks ont déjà divergé d'une ligne, 90350 n'existe qu'au chantier. 90200 en porte zéro dans les deux. C'est le seul état cible du dépôt entier dont aucun homme n'a écrit ce qui l'empêche : personne n'avait ouvert la vue."
+  },
+  {
    "heure": "7h06",
-   "duree": 40,
-   "lieu": "lit-des-racines",
-   "quoi": "Il ouvre le volume neuf de l'Équerre et lit l'affaire des murs de bout en bout, les trois états cibles, les six actions, et la colonne des verrous laissée vide exprès.",
-   "resultat": "Son office est 91010 et il est seul à le porter : ce qu'il remonte remplit la colonne. Les adresses de départ données par l'Équerre — bati.etat, bati.forcees, l. 1504, 3567, 3594, et la phrase de la l. 581 — sont justes mais partielles."
-  },
-  {
-   "heure": "7h46",
-   "duree": 95,
-   "lieu": "lit-des-racines",
-   "quoi": "Il descend la nappe du déplacement dans ecrans/modules/bataille2d.js — six mille neuf cent cinquante-sept lignes — et relève une par une toutes les écritures de position d'un homme.",
-   "resultat": "Neuf, et neuf seulement : l. 2041 (butée de séparation), 2056 et 2059 (pousser), 2157 (versLe), 3675 (rail de colonne), 3870 (messager), 4919, 4920 et 4935 (marcher). Aucune ne nomme `bati`. Vingt-deux appels de versLe, tous en ligne droite."
-  },
-  {
-   "heure": "9h21",
    "duree": 70,
    "lieu": "lit-des-racines",
-   "quoi": "Il remonte de chargerBati (l. 6390-6434) jusqu'à la source : monde/portreal.bati.json, ses colonnes, et ce qu'en font les autres modules du dépôt.",
-   "resultat": "Le fichier porte seize colonnes pour 45 691 bâtis, dont facade_m, profondeur_m et cap — l'emprise au sol. Le client de bataille n'en retient que quatre (porte_x, porte_y, usage, etages) et jette le reste. La boîte tournée est déjà construite sur ces trois colonnes dans ecrans/modules/monde/bati.js l. 105-119 et relief.js l. 208."
+   "quoi": "Descend `ecrans/modules/capture.js` en entier, 399 lignes, pour savoir ce qui PART au MJ et non ce qu'on croit qui part.",
+   "resultat": "Ce qui part est un couple : une image, et une légende. L'image est la rastérisation du plan SVG plus deux toiles saisies au vol, `.cv-foule` et `.cv-bataille` (l.192). La légende est `legende()` (l.276-293), et tout son contenu de bataille tient en un seul appel : `Bataille2d.etat()`. Il n'y a donc que deux portes par lesquelles la stack pourrait se montrer, et je les ai suivies toutes les deux."
   },
   {
-   "heure": "10h31",
-   "duree": 55,
+   "heure": "8h16",
+   "duree": 84,
    "lieu": "lit-des-racines",
-   "quoi": "Il examine la branche de colonne (l. 3604-3698) et la fonction surTrace, pour savoir comment un homme tient la rue quand il la tient.",
-   "resultat": "Le rail n'est pas un déplacement mais un PLACEMENT ABSOLU : h.x = q[0] + q[2]·cote·demi. Même forme chez le messager (l. 3870) et dans marcher (l. 4935). Toute opposition écrite comme correction incrémentale y est silencieusement effacée au battement suivant."
+   "quoi": "Suit la première porte : `etat()` dans `bataille2d.js`, l.6554-6620, champ par champ, et remonte chaque champ à ce qui l'écrit.",
+   "resultat": "Onze champs sur douze sont de la cascade, sans exception : `assaut`, `garde`, `morts`, `blesses`, `fuyards` sortent de `compte`, `etats` compte `h.etat`, `ville` compte `p.etat` de la couche de peur, qui n'est pas dans `survival-stack/`. Deux seuls portent une trace de la stack : le relevé `branches`, qui recopie `h.branche`, et `moraleMoyenne`, l.6617, qui est la moyenne de `h.l1.reflexe`. Les deux sont cassés comme preuve, chacun à sa façon — ce sont les verrous 90230 et 90220."
   },
   {
-   "heure": "11h26",
-   "duree": 34,
+   "heure": "9h40",
+   "duree": 76,
    "lieu": "lit-des-racines",
-   "quoi": "Il compte les appels de J.chemin dans le module et suit marcher() et choisirLien jusqu'au fond.",
-   "resultat": "Deux appels de chemin dans tout le module (l. 1987, 3860), tous deux vers le Donjon. Repli, retour au poste, verrou de rue, coureur d'ordre et pillage vont tout droit. marcher() n'est pas un chemin : choisirLien (l. 4891) descend glouton de carrefour en carrefour vers le plus proche du but, sans se retourner."
+   "quoi": "Ouvre les vues RÉELLEMENT déposées — `etat/vues/*.json`, trois sièges, vingt-huit vues — au lieu de raisonner sur le code seul.",
+   "resultat": "Le champ `moraleMoyenne` porte trois régimes incompatibles sous un nom unique : +0,97 puis +0,91 chez Rhaenyra pendant que les morts vont de 13 à 39 ; `null` sur les dix vues de Marlo, de 342 s à 572 s, c'est-à-dire un NaN sérialisé en silence ; −0,93 puis −0,95 chez Nicolas pendant que les morts vont de 235 à 355. Les vues de Rhaenyra n'ont même pas de champ `branches` — c'est du code d'avant, et rien dans le fichier ne le dit. Les nombres de midi que l'Équerre m'a donnés sont ceux de Marlo, et son chiffre de morale n'est pas −0,99 : il est vide."
+  },
+  {
+   "heure": "10h56",
+   "duree": 64,
+   "lieu": "lit-des-racines",
+   "quoi": "Suit la seconde porte, l'image : cherche ce qui décide de la couleur d'un point sur la toile `.cv-bataille`.",
+   "resultat": "`couleurDe(h)`, l.5528-5531 : `DELAVES[h.etat]`, puis `TEINTE[h.etat] || TEINTE[h.camp]`. Rien d'autre. Compté sur tout le fichier : `h.l1` paraît treize fois, aux lignes 3025, 3026, 3038, 3097, 4787, 6618 et 6866-6875, et pas UNE seule entre 4787 et 6618 — intervalle qui contient `peindre()` (l.5599) et tous ses aides. L'image ne porte pas un bit qui vienne de la stack. C'est 90240, et c'est le verrou que l'Équerre m'avait demandé de dire si je le trouvais : la vue ne peut PAS distinguer les deux."
   },
   {
    "heure": "12h05",
-   "duree": 30,
+   "duree": 55,
    "lieu": "la-souche",
-   "quoi": "Il grave les cinq verrous 91001 à 91005 dans chantier/affaires.json ET etat/books.json, gabarit strict, adresses nues en gras dans la colonne N°, numéros nus dans Bloque.",
-   "resultat": "Cinq lignes dans chaque stock, relues après pose et identiques des deux côtés. Le damier tient."
+   "quoi": "Rend à l'Équerre, puis grave les trois verrous 90220, 90230 et 90240 dans le stock du chantier, de sa main, gabarit strict.",
+   "resultat": "`chantier/affaires.json` passe de sept verrous à dix pour cette affaire. Relève au passage que `verser_cahier.py` ne connaît que `etat/books.json` : le second stock ne se remplit par aucun rapport, il s'écrit à la main ou il ne s'écrit pas. Les lignes citées ont été relevées de nouveau après le repas — le fichier avait bougé de cinq lignes dans la matinée, Wenna ayant renommé `pilote` en `corpsAgi` — et les preuves ont été rafraîchies plutôt que laissées fausses d'un cran."
   },
   {
-   "heure": "12h35",
-   "duree": 25,
-   "lieu": "la-souche",
-   "quoi": "Il porte son rapport au parloir, appelants nommés un par un avec leur adresse.",
-   "resultat": "Rapport remis. Le verrou 91003 — le placement qui efface la butée — est signalé nommément comme celui qui mordra la première tentative d'Ygga."
+   "heure": "13h05",
+   "duree": 95,
+   "lieu": "lit-des-racines",
+   "quoi": "Cherche le plus petit changement qui rendrait la vue capable de trancher, parce qu'un verrou qu'on pose sans savoir à quoi il se lève est une moitié de travail.",
+   "resultat": "Il est déjà sur le disque et il date de ce matin. `h.l1.corpsAgi` — posé vrai l.3038 quand la couche prend le battement, remis faux l.3097 quand l'homme retombe dans la cascade — est exactement le bit qui manque, il est tenu à jour homme par homme, et il est déjà montré dans la bulle de survol l.6874. Il n'est nulle part dans `etat()`. Trois lignes de boucle, pas une couche de plus, pas une cadence à changer."
+  },
+  {
+   "heure": "14h40",
+   "duree": 90,
+   "lieu": "lit-des-racines",
+   "quoi": "Descend `serveur/croiser.js` en entier pour vérifier que le second chemin — ce qu'un marcheur perçoit d'une nuit cuite — ne dément pas ce qu'il vient d'écrire.",
+   "resultat": "Il ne le dément pas, il est étranger. `croiser.js` ne lit pas la page du tout : il lit `monde/<sac>.sac.annales.json` et une table de portées de trente-huit lignes. Aucun de ses faits ne porte de marque de couche — `escouade-rompt` est écrit par `rompre()`, que la cascade ET la couche 1 appellent toutes deux, et rien dans le fait ne dit laquelle. Ce chemin-là ne peut donc pas servir de contrôle à l'autre, et le noter ici évite qu'on l'espère."
+  },
+  {
+   "heure": "16h10",
+   "duree": 55,
+   "lieu": "lit-des-racines",
+   "quoi": "Porte le levier à Toll Œil-Noir par le parloir, sans toucher à sa ligne 90211.",
+   "resultat": "Envoyé, avec la réserve qui va avec : `corpsAgi` se rafraîchit au rythme de `oeil(h)`, donc un compte serait celui du dernier battement OBSERVÉ et non de l'instant. Sur trente secondes cela ne gêne pas ; qui lit le nombre doit le savoir, et le nom doit le dire — sinon on refait 90220 avec un autre champ. L'action 90211 reste marquée « à venir » et c'est à lui de la clore : je ne pose pas l'état d'un office qui n'est pas le mien."
   }
  ],
  "travaux": [
   {
-   "travail_id": "affaire-rendre-les-murs-solides",
+   "travail_id": "lit-des-racines",
    "dernier_travail": {
     "annee": 129,
     "lune": 4,
@@ -66,8 +80,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "monde/portreal.bati.json, colonnes ; ecrans/modules/bataille2d.js l. 6390-6434",
-     "texte": "Le probleme n'est pas qu'on traverse les murs, c'est qu'il n'y a pas de murs. L'emprise au sol existe dans la donnee — facade_m, profondeur_m, cap, pour 45 691 batis — et bataille2d.js la jette au chargement, quatre colonnes retenues sur seize, avec un commentaire qui l'assume. Chez lui un bati EST un point de porte. Et la boite tournee est deja construite sur ces trois colonnes-la dans ecrans/modules/monde/bati.js l.105 : rien a inventer, tout a rebrancher."
+     "source": "ecrans/modules/capture.js et bataille2d.js l.5528-5531, comptés à la main",
+     "texte": "La vue ne peut PAS distinguer la stack de la cascade, et ce n'est pas un défaut de réglage : c'est que l'information n'est pas dans ce qu'elle transporte. L'image peint par `couleurDe(h)`, qui ne lit que `h.etat` et `h.camp` ; `h.l1` ne paraît nulle part entre l.4787 et l.6618, c'est-à-dire nulle part dans la peinture. Et la couche 1, quand elle conduit, s'exprime en RÉÉCRIVANT `h.etat` — `tient`, `tient`, `tient`, `melee`. Un homme sidéré par son corps est donc peint, compté dans `etats` et compté dans `assaut` exactement comme un homme que sa tête tient en ligne. Tant que la couche parlera dans le vocabulaire de la cascade, aucune vue ne les séparera."
     },
     {
      "date": {
@@ -75,8 +89,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "ecrans/modules/bataille2d.js, releve exhaustif des ecritures de position",
-     "texte": "La nappe du deplacement est etroite, et c'est une bonne nouvelle pour Ygga : neuf ecritures de position dans tout le module (2041, 2056, 2059, 2157, 3675, 3870, 4919, 4920, 4935), pas une de plus, et versLe seul porte vingt-et-un des vingt-deux deplacements libres. Ce n'est pas une nappe a assainir, c'est un goulot a instrumenter."
+     "source": "etat/vues/rhaenyra.json, marlo-vasse.json, nicolas-reynolds.json — vingt-huit vues déposées",
+     "texte": "Le seul nombre de la vue qui vienne de la stack porte trois quantités sous un seul nom, et les trois sont dans le même dossier : +0,97 chez Rhaenyra, `null` chez Marlo, −0,95 chez Nicolas. Le `null` est un NaN sérialisé, dix vues d'affilée, pendant que tous les comptes de la cascade restaient pleins et plausibles — c'est la forme exacte du défaut qu'on ne voit jamais : la vue ne se dégrade QUE du côté de la stack, et elle ne le dit pas. Une vue devrait porter d'où elle vient ; aucune ne le porte, et l'on ne peut donc pas comparer deux vues de deux jours."
     },
     {
      "date": {
@@ -84,8 +98,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "ecrans/modules/bataille2d.js l. 3675-3676, 3870, 4935",
-     "texte": "Le piege qui mordra la premiere tentative : sur le rail, l'homme est POSE et non deplace. Une butee ecrite comme correction incrementale — la forme qu'a deja la separation l.2041 — sera effacee au battement suivant sans erreur ni trace, pour tous ceux qui tiennent la rue. Donc l'opposition ne peut pas s'ecrire en aval du mouvement : elle doit s'ecrire dans le CHOIX du point vise, ou dans surTrace."
+     "source": "bataille2d.js l.3047 et l.6567-6568, croisés avec les dix vues de nicolas-reynolds",
+     "texte": "Le relevé `branches` écarte les morts et les déroutes — mais la branche `fuite` de la couche 1 appelle `rompre(h)`, qui POSE `deroute`. Le geste principal de la stack écrit donc une ligne que le relevé jette à la seconde où elle est écrite. Et le fait brut à côté est plus lourd encore : sur 897 secondes et 355 morts, `fuyards` vaut 0 et `deroute` n'apparaît pas une fois dans `etats`, quand la version d'avant en comptait 39 sur 295 hommes. Ce n'est plus la vue, c'est la couche — mais c'est la vue qui l'a montré, et personne ne l'avait lu."
     },
     {
      "date": {
@@ -93,8 +107,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "ecrans/modules/bataille2d.js, comptage des appels de J.chemin et lecture de choisirLien l. 4891",
-     "texte": "« La rue mene » n'a aujourd'hui aucun mecanisme sauf vers le Donjon : deux appels de J.chemin dans tout le module, tous deux du seuil a l'objectif. Le reste vise en droite ligne. Et marcher(), qu'on prend pour un chemin parce qu'il suit le graphe de voirie, est un descendeur glouton — le voisin le plus proche du but, sans demi-tour : il se coince derriere un pate de maisons par construction, ce qui est exactement le cas d'epreuve de 91100."
+     "source": "bataille2d.js l.3038 et l.3097, renommés ce matin par Wenna",
+     "texte": "Le levier de 90200 est plus petit que tout ce qu'on avait supposé, et il a été posé ce matin par quelqu'un qui cherchait autre chose : `h.l1.corpsAgi` dit VRAI si la couche a pris ce battement-ci, homme par homme, il est déjà tenu à jour et déjà montré au survol. Il manque uniquement dans `etat()`. Trois lignes de boucle rendent à la vue le seul chiffre qu'elle n'a jamais eu. Réserve à graver avec : il se rafraîchit au rythme de l'œil de l'homme, donc c'est un compte du dernier battement observé, pas de l'instant — et le nom doit le dire, sinon on refait 90220."
     },
     {
      "date": {
@@ -102,8 +116,48 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "ecrans/modules/bataille2d.js l. 6416-6430 (casier) et l. 6487 (maisonLibre)",
-     "texte": "L'index spatial du bati existe mais ne repond pas a la question qu'on va lui poser. Il range chaque maison en maille de 40 m au point de sa PORTE, pas de son emprise : une maison de 17 m de facade sur 26 de profondeur deborde sur des casiers ou elle n'est pas rangee. maisonLibre n'y cherche qu'une porte proche, jamais un recouvrement. Le rebatir au bon rayon est precisement la depense qui menace 91200 — vingt pas par seconde, neuf mille cinq cents hommes."
+     "source": "serveur/croiser.js, 379 lignes, et scripts/verser_cahier.py",
+     "texte": "Deux choses qu'on croit et qui sont fausses. La première : que `croiser.js` pourrait servir de contrôle à la vue. Non — il lit le sac cuit et une table de portées, il ne touche jamais la page, et aucun de ses faits ne porte de marque de couche : `escouade-rompt` est écrit par `rompre()`, que la cascade et la couche 1 appellent toutes deux. La seconde : que les deux stocks se tiennent à jour ensemble. `verser_cahier.py` ne connaît que `etat/books.json` ; `chantier/affaires.json` ne se remplit par aucun rapport. Ils ont déjà divergé — 90350 n'existe que d'un côté. Qui grave doit graver deux fois, à la main, ou le chantier prendra du retard sur le livre sans que personne l'annonce."
+    }
+   ],
+   "conclusion": null
+  },
+  {
+   "travail_id": "la-souche",
+   "dernier_travail": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "pensees": [
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "chantier/affaires.json, relu après l'avoir écrit",
+     "texte": "Les lignes d'un fichier que trois hommes ouvrent le même jour ne sont pas une adresse stable. J'ai gravé mes preuves à midi contre un `bataille2d.js` qui avait bougé de cinq lignes depuis mon relevé du matin — Wenna renommant `pilote` en `corpsAgi`. J'ai tout repassé plutôt que de laisser des numéros faux d'un cran, ce qui ne se voit pas et fait perdre une heure à qui les suit. Toute preuve gravée sur ce dépôt doit donc porter la DATE de son relevé, comme un compte porte sa monnaie ; les miennes la portent maintenant."
+    }
+   ],
+   "conclusion": null
+  },
+  {
+   "travail_id": "clairiere",
+   "dernier_travail": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "pensees": [
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "etat/books.json et chantier/affaires.json, comptés avant la descente",
+     "texte": "Un état cible sans un seul verrou n'est pas un état cible facile : c'est un état cible que personne n'a regardé. 90200 était le seul du dépôt dans ce cas, et il tenait le milieu de la chaîne — 90100 cuit la nuit, 90300 vide la cascade, et 90200 est le seul qui prétende qu'on VOIE le résultat. Trois verrous en sont sortis en une journée d'homme, dont un qui dit que l'affaire ne tient pas telle qu'elle est écrite. La leçon vaut au-delà de celui-ci : compter les états cibles contre leurs verrous, chaque matin, dit où le plan est aveugle, et ça se compte en une minute."
     }
    ],
    "conclusion": null
@@ -111,46 +165,95 @@
  ],
  "cahier2": [
   {
-   "livre": "affaire-rendre-les-murs-solides",
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
    "table": "🔒 Verrous",
-   "ligne": "91001",
-   "colonne": "🔒 Le verrou",
-   "valeur": "Une maison est un POINT : son emprise au sol est lue, puis jetée au chargement"
+   "ligne": "90220",
+   "colonne": "🔒 N°",
+   "valeur": "**90220**"
   },
   {
-   "livre": "affaire-rendre-les-murs-solides",
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
    "table": "🔒 Verrous",
-   "ligne": "91002",
+   "ligne": "90220",
    "colonne": "🔒 Le verrou",
-   "valeur": "Les neuf écritures de position ne consultent jamais le bâti"
+   "valeur": "**`moraleMoyenne` porte trois quantites differentes sous un seul nom** — le seul nombre de la vue qui vienne de la stack ne se lit pas"
   },
   {
-   "livre": "affaire-rendre-les-murs-solides",
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
    "table": "🔒 Verrous",
-   "ligne": "91003",
-   "colonne": "🔒 Le verrou",
-   "valeur": "Sur le rail, l'homme est POSÉ et non déplacé : une butée y serait effacée au battement suivant"
+   "ligne": "90220",
+   "colonne": "🎯 Bloque",
+   "valeur": "90200"
   },
   {
-   "livre": "affaire-rendre-les-murs-solides",
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
    "table": "🔒 Verrous",
-   "ligne": "91004",
-   "colonne": "🔒 Le verrou",
-   "valeur": "Il n'existe de chemin par les rues que vers le Donjon ; toute autre visée va tout droit"
+   "ligne": "90220",
+   "colonne": "🔎 La preuve",
+   "valeur": "`bataille2d.js` l.6617 (lignes relevees le 129.4.3 vers midi ; le fichier a deja bouge de cinq lignes ce matin) : la valeur est la moyenne de `h.l1.reflexe`, qui vit sur [-1, 1] et vaut -1 AU REPOS — `survival-stack/1-corps.js` l.92, « le zero juste tient toujours : reflexe -1,00 », et l.1272-1273, un corps sans reflexe est pose a -1. Le NOM est reste celui de la jauge deposee, qui vivait sur [0, 1] et ou 1 valait bien. Les vues DEPOSEES portent trois regimes sous ce seul nom : `etat/vues/rhaenyra.json` rend +0,97 puis +0,91 quand les morts vont de 13 a 39 ; `etat/vues/marlo-vasse.json` rend `null` sur ses dix vues, de 342 s a 572 s — un NaN serialise en silence, pendant que tous les comptes de la cascade restaient pleins et plausibles ; `etat/vues/nicolas-reynolds.json` rend -0,93 puis -0,95 quand les morts vont de 235 a 355. Rien dans la vue ne dit lequel des trois on lit. Deux defauts de plus dans le meme calcul : le repli `h.l1 ? h.l1.reflexe : -1` rend exactement -1 quand AUCUN homme n'a de couche, donc une armee sans stack et une armee parfaitement calme rendent le meme chiffre ; et l'amplitude est nulle a l'usage — 277 secondes et 120 morts de plus font bouger le nombre de 0,02."
   },
   {
-   "livre": "affaire-rendre-les-murs-solides",
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
    "table": "🔒 Verrous",
-   "ligne": "91005",
+   "ligne": "90230",
+   "colonne": "🔒 N°",
+   "valeur": "**90230**"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Verrous",
+   "ligne": "90230",
    "colonne": "🔒 Le verrou",
-   "valeur": "La grille du bâti est rangée sur les portes : elle ne sait pas répondre « qu'y a-t-il de plein ici »"
+   "valeur": "**Le seul canal ou la stack se nomme dans la vue, `branches`, ecarte par construction les hommes dont la stack vient de decider**"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Verrous",
+   "ligne": "90230",
+   "colonne": "🎯 Bloque",
+   "valeur": "90200"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Verrous",
+   "ligne": "90230",
+   "colonne": "🔎 La preuve",
+   "valeur": "Cinq libelles seulement disent qu'un corps a pris la main : `bataille2d.js` l.3043, 3048, 3068, 3080, 3090 — « sidere », « son corps a rompu avant sa tete », « son corps cede le pas », « son corps cherche l'epaule », « son corps est parti en avant, seul ». Ils passent dans la vue par le releve `branches`, l.6565-6571, qui ecarte l.6567-6568 tout homme qui n'est pas de l'assaut, toute tete, tout `hors`, et tout homme `mort` ou `deroute`. Or la branche `fuite` appelle `rompre(h)` l.3047, qui pose `h.etat = \"deroute\"` l.2894 : la decision la plus lourde de la couche 1 — le corps rompt avant la tete — ecrit une branche qui n'est JAMAIS comptee, a la seconde ou elle est ecrite. Mesure sur les dix vues de `etat/vues/nicolas-reynolds.json`, de 620 s a 897 s et 355 morts : `fuyards` 0, aucun `deroute` dans `etats`, et deux hommes sur 1460 portant un libelle « son corps », a la derniere vue seulement. La stack tient donc dans la vue par deux points sur mille cinq cents, et son geste principal par zero."
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Verrous",
+   "ligne": "90240",
+   "colonne": "🔒 N°",
+   "valeur": "**90240**"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Verrous",
+   "ligne": "90240",
+   "colonne": "🔒 Le verrou",
+   "valeur": "**L'image ne lit RIEN de la stack** : la vue ne PEUT PAS distinguer ce que la stack a decide de ce que la cascade a decide, et c'est l'image qui porte l'etat cible"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Verrous",
+   "ligne": "90240",
+   "colonne": "🎯 Bloque",
+   "valeur": "90200"
+  },
+  {
+   "livre": "affaire-migrer-la-bataille-vers-la-stack",
+   "table": "🔒 Verrous",
+   "ligne": "90240",
+   "colonne": "🔎 La preuve",
+   "valeur": "L'etat cible demande qu'on VOIE la ligne ceder ; ce qui part au MJ est une image plus une legende — `ecrans/modules/capture.js` l.270 et l.276-293. Les deux toiles saisies sont `.cv-foule` et `.cv-bataille`, l.192. Ce qui peint un homme est `couleurDe(h)`, `bataille2d.js` l.5528-5531 : `h.etat` et `h.camp`, rien d'autre. Compte sur le fichier : `h.l1` y parait treize fois — l.3025, 3026, 3038, 3097, 4787, 6618, 6866-6875 — et pas une seule entre l.4787 et l.6618, intervalle qui contient `peindre()` (l.5599) et tous ses aides. AUCUNE trace de la couche 1 dans la peinture. Et quand la couche 1 conduit, elle s'exprime en REECRIVANT `h.etat` — l.3042 `tient`, l.3068 `tient`, l.3080 `tient`, l.3090 `melee` — donc dans le meme mot que la cascade : un homme sidere par son corps est peint, compte dans `etats` et compte dans `assaut` exactement comme un homme que sa tete tient en ligne. Aucun cadrage, aucune cadence, aucune couche de plus n'y changeront rien : la separation n'existe pas dans la donnee que la vue transporte."
   }
  ],
  "_depeche": {
   "session": "94ce2586-d2cf-56a1-8bec-3ed550d30aad",
   "date_jeu": "129.4.3",
-  "jetons": 1287609,
-  "secondes": 257
+  "jetons": 4838622,
+  "secondes": 661
  },
  "_cahier_verse": true
 }
