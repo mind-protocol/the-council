@@ -92,6 +92,18 @@ VILLE = os.path.join(RACINE, "etat", "villes", "port-real.json")
 
 GENRES = ("lieu", "salle", "personnage", "acteur", "livre")
 
+# LE RAYON DE RÉANCRAGE, ET IL EST PARTAGÉ. `reancrer` l'emploie pour choisir
+# le bâtiment du bon métier le plus proche des mètres écrits ; `verifier`
+# l'emploie pour savoir ce qu'il a le droit de reprocher. Deux chiffres
+# différents aux deux endroits, et le contrôle condamne ce que la réparation
+# vient de faire — c'est très exactement ce qui est arrivé.
+#
+# 150 m, et il a été MESURÉ, pas choisi : douze des quatorze affectations
+# retrouvent leur métier à moins de 102 m, la treizième — la table de change du
+# Culpucier — à 136, et à 120 elle serait retombée sur l'échoppe posée à trois
+# mètres.
+RAYON_REANCRAGE = 150.0
+
 # Deux genres NOMMENT le bâtiment lui-même : un bâtiment est un endroit, et un
 # seul. Les autres sont DEDANS — un livre, un homme, un jeton de la table
 # partagent sans conflit le toit qui les abrite, et c'est le cas normal.
@@ -225,16 +237,24 @@ def position(L, clef):
     """Les mètres d'une chose, ET le monde où ils sont comptés. Une affectation
     d'abord ; sinon, pour un personnage, le corps que `corps.py` lui a prêté —
     les deux tables disent la même sorte de vérité et se lisent ensemble."""
+    genre, _, ident = clef.partition(":")
     a = L["affectations"].get(clef)
     if a:
         m = monde_de(a)
         if a.get("piece"):
             f = fiche_piece(m, a["piece"])
-            return (f, "pièce engendrée") if f else (None, "pièce disparue")
-        bati, C = charger_bati(m)
-        f = fiche_bati(bati, C, a.get("bat"), m)
-        return (f, "affectation") if f else (None, "affectation morte")
-    genre, _, ident = clef.partition(":")
+            if f or genre != "personnage":
+                return (f, "pièce engendrée") if f else (None, "pièce disparue")
+        else:
+            bati, C = charger_bati(m)
+            f = fiche_bati(bati, C, a.get("bat"), m)
+            if f or genre != "personnage":
+                return (f, "affectation") if f else (None, "affectation morte")
+        # UN HOMME EN MARCHE N'A PAS D'ADRESSE, et le serveur lui en écrit une
+        # quand même : `personnage:<id>` sans `bat`, juste ses mètres de
+        # l'instant. Elle ne résout donc rien — mais dead-ender ici revenait à
+        # dire qu'il n'habite nulle part parce qu'il est sorti. On retombe sur
+        # son corps, qui est son domicile.
     if genre == "salle":
         # Une salle du plan a déjà ses mètres si le monde l'a creusée : on ne
         # demande pas d'affectation pour lire ce qui est engendré.
@@ -253,6 +273,19 @@ def position(L, clef):
                          "usage": g["usage"], "quartier": g["quartier"],
                          "etages": 0, "facade_m": 0.0,
                          "porte": (g["x"], g["y"])}, "corps prêté")
+        # `corps.py --loger` écrit dans `corps`, pas dans `liens` : un corps
+        # CRÉÉ est une adresse aussi bonne qu'un corps emprunté, et l'oublier
+        # ici faisait répondre « n'a pas d'adresse physique » à un homme qu'on
+        # venait de loger. Les trois tables se lisent ensemble ou aucune.
+        c = next((x for x in L.get("corps", [])
+                  if x.get("personnage_id") == ident), None)
+        if c:
+            m = c.get("monde") or DEFAUT_MONDE
+            return ({"monde": m,
+                     "bat": c.get("bat"), "x": c["x"], "y": c["y"], "z": c["z"],
+                     "usage": c.get("usage", ""), "quartier": c.get("quartier", ""),
+                     "etages": 0, "facade_m": 0.0,
+                     "porte": (c["x"], c["y"])}, "corps créé")
     return (None, None)
 
 
@@ -394,6 +427,12 @@ def verifier(L, bati=None, C=None):
             maux.append("[%s] %s" % (clef, e))
             continue
         i = a.get("bat")
+        # Le serveur écrit la position d'un marcheur en `personnage:<id>`, sans
+        # `bat` : ce n'est pas une affectation qui aurait perdu sa cible, c'est
+        # un homme entre deux portes. Le signaler à chaque pas ferait crier le
+        # vérificateur pour tout le monde qui bouge.
+        if genre == "personnage" and i is None:
+            continue
         if not isinstance(i, int) or i < 0 or i >= len(bati):
             maux.append("[%s] bâtiment %r hors du monde engendré « %s » — il a "
                         "ete regenere, ou l'index est faux" % (clef, i, m))
@@ -407,13 +446,31 @@ def verifier(L, bati=None, C=None):
         if attendu and bati[i][C["usage"]] != attendu:
             maux.append("[%s] le bâtiment %d est devenu un %s, il était un %s"
                         % (clef, i, bati[i][C["usage"]], attendu))
+        # LES MÈTRES ÉCRITS SONT L'INTENTION, LE RANG N'EST QU'UN CACHE — et
+        # c'est ce qui décide de ce qu'on a le droit de reprocher ici.
+        #
+        # Ce contrôle comparait `xyz` à la position du bâtiment avec un seuil de
+        # deux mètres. Or `reancrer` ne réécrit JAMAIS `xyz` — délibérément :
+        # sans quoi chaque régénération re-ancrerait sur le voisin d'à côté,
+        # puis sur le voisin du voisin, et l'adresse dériverait au hasard de
+        # cent cinquante mètres par passage sans que personne le voie. Le prix
+        # de ce choix est qu'une affectation replacée garde un écart résiduel —
+        # et le contrôle le dénonçait comme une panne. Quatorze alertes qui ne
+        # s'éteignaient plus, dans un relevé que `tick.py --verifier` lit à
+        # chaque début de session : la seule chose qu'un tel avertissement
+        # enseigne est de ne plus lire les avertissements.
+        #
+        # On ne se plaint donc que lorsque la résolution est MAUVAISE : plus
+        # rien du bon métier à portée. Le résidu d'un réancrage réussi se lit
+        # où il doit se lire — dans `--reancrer`, qui l'imprime en clair.
         xyz = a.get("xyz")
-        if xyz and math.hypot(bati[i][C["x"]] - xyz[0],
-                              bati[i][C["y"]] - xyz[1]) > 2.0:
-            maux.append("[%s] le bâtiment %d a bougé de %.0f m depuis "
-                        "l'affectation — l'etiquette du decor ment"
-                        % (clef, i, math.hypot(bati[i][C["x"]] - xyz[0],
-                                               bati[i][C["y"]] - xyz[1])))
+        if xyz:
+            d = math.hypot(bati[i][C["x"]] - xyz[0], bati[i][C["y"]] - xyz[1])
+            if d > RAYON_REANCRAGE:
+                maux.append("[%s] le bâtiment %d est à %.0f m des mètres "
+                            "écrits, et plus rien du bon métier n'est à portée "
+                            "— l'adresse est perdue, il faut la reposer à la "
+                            "main" % (clef, i, d))
     return maux
 
 
@@ -431,6 +488,15 @@ def reancrer(L, monde, vraiment):
     rang n'en est qu'un raccourci. On relit donc la position et l'on redonne
     le rang.
 
+    ET L'ON NE RÉÉCRIT PAS `xyz`. C'est le point qui a manqué de se perdre : il
+    serait tentant de recaler les mètres sur le bâtiment qu'on vient de choisir,
+    ce qui ferait taire `--verifier` d'un coup. Ce serait échanger un faux
+    avertissement contre une dérive muette — chaque régénération ancrerait sur
+    le voisin, puis sur le voisin du voisin, et au bout de quatre passages la
+    Gaffe serait à trois rues de la porte sans qu'une seule ligne l'ait dit.
+    L'intention ne bouge pas ; c'est le contrôle qui a appris à ne se plaindre
+    que du vrai (voir `verifier`).
+
     ON CHERCHE D'ABORD LE BON MÉTIER. Une affectation dit ce qu'elle attend
     (`usage`) : le corps de garde de la porte de Fer est un corps de garde.
     Prendre le plus proche TOUT COURT, c'est risquer de nommer « porte de
@@ -440,14 +506,12 @@ def reancrer(L, monde, vraiment):
     """
     bati, C = charger_bati(monde)
     ix, iy, iu = C["x"], C["y"], C["usage"]
-    # 150 m, et le chiffre a été MESURÉ, pas choisi. Douze des quatorze
-    # affectations retrouvent leur métier à moins de 102 m ; la treizième — la
-    # table de change du Culpucier — le retrouve à 136, et à 120 elle serait
-    # retombée sur l'échoppe posée à trois mètres. Un lieu nommé « Le change »
-    # que le jeu rapporterait comme une échoppe serait faux DANS LA FICTION,
-    # là où cent trente-six mètres ne sont qu'un semis qui a glissé. Mieux vaut
-    # le bon métier un peu déplacé que le mauvais métier pile sur le point.
-    RAYON = 150.0
+    # Un lieu nommé « Le change » que le jeu rapporterait comme une échoppe
+    # serait faux DANS LA FICTION, là où cent trente-six mètres ne sont qu'un
+    # semis qui a glissé. Mieux vaut le bon métier un peu déplacé que le mauvais
+    # métier pile sur le point. (Le chiffre est en tête de fichier : `verifier`
+    # s'en sert aussi, et il faut qu'ils disent la même chose.)
+    RAYON = RAYON_REANCRAGE
     A = L["affectations"]
     lignes, change = [], 0
     for clef in sorted(A):

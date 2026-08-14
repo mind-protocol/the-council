@@ -178,7 +178,15 @@ window.Combat = (() => {
       .then((d) => {
         envoi = false;
         if (!d) return;
-        if (d.date) date = d.date;
+        if (d.date) {
+          date = d.date;
+          // L'HEURE EST DICTÉE PAR LA CARTE. Pendant un combat, ce n'est plus
+          // le fil qui publie l'heure : c'est ici qu'elle avance, et le bandeau
+          // du joueur doit la suivre — sans quoi il lit l'heure du départ
+          // pendant qu'on enfonce une porte. Le MJ garde le transport
+          // (arrêter, relancer, accélérer), plus la montre.
+          if (window.Bus && Bus.heureDeLaCarte) Bus.heureDeLaCarte(d.date.minute);
+        }
         rafraichir();
       })
       .catch(() => { envoi = false; });
@@ -261,6 +269,36 @@ window.Combat = (() => {
   // autre session tient ouverte : on OBSERVE l'hôte et l'on repose le bouton
   // s'il a disparu. Même résultat, aucune ligne chez le voisin — et le jour où
   // les deux plumes se rejoignent, ces quinze lignes se remplacent par l'appel.
+  // ---- ce que le MJ peut, et ce qu'il ne peut plus -------------------------
+  // TROIS BOUTONS, PAS UNE MONTRE. L'heure est dictée par la carte : elle
+  // avance ici, en temps réel, et c'est elle qui paie les minutes au serveur.
+  // Le MJ ne la POSE plus — il la conduit, et rien d'autre :
+  //
+  //     {"type":"horloge","action":"pause"}
+  //     {"type":"horloge","action":"marche"}
+  //     {"type":"horloge","action":"vitesse","vitesse":5}
+  //
+  // C'est volontairement pauvre. Le jour où l'on pourrait écrire « il est
+  // maintenant six heures » depuis le fil, on aurait deux horloges qui se
+  // contredisent au milieu d'une bataille — et l'une des deux serait celle sur
+  // laquelle le joueur a fondé sa décision de tenir ou de fuir.
+  //
+  // Un ordre qui arrive alors qu'aucune scène ne court ne fait rien : on ne
+  // lance pas un combat depuis le fil, c'est le joueur qui tient la position.
+  if (window.Bus && Bus.enregistrer) {
+    Bus.enregistrer("horloge", (it) => {
+      if (!ouvert) return;
+      if (it.action === "pause") court = false;
+      else if (it.action === "marche") {
+        if (!court) { court = true; derniereImage = 0; tic(); }
+      } else if (it.action === "vitesse") {
+        const v = +it.vitesse;
+        if (isFinite(v)) vitesse = Math.max(1, Math.min(10, Math.round(v)));
+      }
+      rafraichir();
+    });
+  }
+
   function veiller() {
     entree();
     const h = hote();

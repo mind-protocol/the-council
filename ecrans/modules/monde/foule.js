@@ -344,7 +344,11 @@ export async function poser(scene, o = {}) {
         let ici = 0;
         for (let k = 0; k < cel.n; k += g.sur) {
           J.ou(cel, k, jour, minute, v, rangs, P);
-          if (P.quoi === "chez") continue;
+          // « differe » ne peut pas tomber ici — c'est la réponse de `ou()` à
+          // qui a posé une échéance sur les chemins neufs, et la 3D n'en pose
+          // pas. On l'écarte quand même : ce corps-là n'a PAS de position, et
+          // le dessiner le poserait à l'origine du monde, au large de la Néra.
+          if (P.quoi === "chez" || P.quoi === "differe") continue;
           dehors += g.sur;
           if (P.quoi === "sur-place") ici += g.sur;
           // Arrêté SOUS UN TOIT : il n'est pas plus visible que celui qui dort

@@ -623,6 +623,19 @@ window.Bus = (() => {
 
   // rendus est exposé pour prévisualiser un item sans toucher au flux :
   //   Bus.rendus.salle(item, {preparer:Bus.preparer, poster(){}, envoyer(){}, instant:true})
+  // L'HEURE VIENT DE LA CARTE PENDANT UNE BALADE OU UN COMBAT, et c'est une
+  // exception assumée à « une seule heure, une seule source ». La règle
+  // ordinaire est bonne : le fil publie, le bandeau suit, et deux publiants
+  // feraient diverger la partie. Mais dans ces deux modes-là c'est LA CARTE
+  // QUI TIENT L'HORLOGE — elle avance en temps réel, elle paie les minutes au
+  // serveur, et le MJ n'a plus que le transport : arrêter, relancer, accélérer.
+  // Sans ce guichet, on marchait quarante minutes avec un bandeau figé à
+  // l'heure du départ : deux heures différentes sur le même écran.
+  //
+  // Ça reste UN seul publiant à la fois — le fil quand on joue une scène, la
+  // carte quand on marche —, jamais les deux en même temps.
+  const heureDeLaCarte = (min) => poserHeure(montre(min), min);
+
   return {enregistrer, preparer, poster, envoyer, chronique, rendus, sonderMaintenant,
-    embleme, rendre, enArchive: ()=>enArchive};
+    embleme, rendre, heureDeLaCarte, enArchive: ()=>enArchive};
 })();

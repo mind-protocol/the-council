@@ -114,11 +114,26 @@ const INSTANT_S = 30;
 // --- le sac, chargé une fois -------------------------------------------------
 let _cache = null;
 
-function clefFichiers(racine, lieu) {
-  const a = path.join(racine, "monde", lieu + ".sac.annales.json");
-  const b = path.join(racine, "etat", "bataille.json");
+// C'EST `etat/bataille.json` QUI NOMME LE SAC, PAS LE LIEU. Le `lieu` qui
+// arrive ici est l'identifiant du monde 3D — « port-real » —, et le fichier
+// cuit s'appelle `portreal.sac.annales.json` : le tiret. On construisait le
+// chemin depuis le lieu, donc on cherchait `port-real.sac.annales.json`, qui
+// n'existe pas ; `charger` attrapait l'erreur et rendait `null`. Résultat : une
+// bataille datée, un joueur qui la traverse, et RIEN — pas un bruit, pas une
+// trace, pas un message d'erreur. Le seul défaut qui ne se voit jamais est
+// celui qui rend la même chose que le cas normal.
+//
+// Le champ `sac` existait depuis le début et n'était lu par personne. Il fait
+// désormais foi ; le lieu ne sert que de dernier recours, et l'absence du
+// fichier se dit tout haut (voir `charger`) au lieu de se taire.
+function clefFichiers(racine, nom) {
+  const a = path.join(racine, "monde", nom + ".sac.annales.json");
   const mt = (f) => { try { return fs.statSync(f).mtimeMs; } catch (e) { return 0; } };
-  return { a, b, sceau: mt(a) + ":" + mt(b) };
+  return { a, sceau: mt(a) };
+}
+
+function fichierEtat(racine) {
+  return path.join(racine, "etat", "bataille.json");
 }
 
 /**
@@ -135,20 +150,37 @@ function clefFichiers(racine, lieu) {
  * cuite n'est pas une bataille en cours tant qu'un MJ ne l'a pas datée.
  */
 function charger(racine, lieu) {
-  const { a, b, sceau } = clefFichiers(racine, lieu || "portreal");
-  if (_cache && _cache.sceau === sceau) return _cache.sac;
+  const b = fichierEtat(racine);
+  const mtEtat = (() => { try { return fs.statSync(b).mtimeMs; } catch (e) { return 0; } })();
+  if (!mtEtat) { _cache = { sceau: "0", sac: null }; return null; }
+  let etat = null;
+  try { etat = JSON.parse(fs.readFileSync(b, "utf-8")); } catch (e) { etat = null; }
+  if (!etat || !etat.debut || typeof etat.debut.minute !== "number") return null;
+
+  // Le sac nommé dans l'état ; à défaut le lieu, débarrassé de ses tirets —
+  // « port-real » et « portreal » désignent la même ville, et un fichier cuit
+  // ne porte pas les tirets de l'identifiant de monde.
+  const nom = etat.sac || String(lieu || "portreal").replace(/-/g, "");
+  const { a, sceau } = clefFichiers(racine, nom);
+  const clef = nom + ":" + sceau + ":" + mtEtat;
+  if (_cache && _cache.sceau === clef) return _cache.sac;
+
   let sac = null;
   try {
-    const etat = JSON.parse(fs.readFileSync(b, "utf-8"));
-    if (etat && etat.debut && typeof etat.debut.minute === "number") {
-      const ann = JSON.parse(fs.readFileSync(a, "utf-8"));
-      if (ann && Array.isArray(ann.detail)) {
-        sac = { debut: etat.debut, faits: ann.detail, lieu: lieu || "portreal" };
-        eteindre(sac.faits);
-      }
+    const ann = JSON.parse(fs.readFileSync(a, "utf-8"));
+    if (ann && Array.isArray(ann.detail)) {
+      sac = { debut: etat.debut, faits: ann.detail, lieu: lieu || "portreal", nom };
+      eteindre(sac.faits);
     }
   } catch (e) { sac = null; }
-  _cache = { sceau, sac };
+  // ON LE DIT QUAND ON NE TROUVE PAS. Une bataille datée dont le sac est
+  // introuvable est une faute de MJ — un nom mal tapé, un sac jamais cuit — et
+  // elle se répare en dix secondes SI on l'apprend. Sans cette ligne, elle se
+  // joue comme une nuit tranquille et l'on cherche l'erreur ailleurs.
+  if (!sac && (!_cache || _cache.sceau !== clef))
+    console.error("croiser : bataille datée, mais monde/" + nom +
+                  ".sac.annales.json est illisible ou absent — rien ne sera perçu.");
+  _cache = { sceau: clef, sac };
   return sac;
 }
 
@@ -189,9 +221,27 @@ function eteindre(faits) {
   }
 }
 
-/** Les minutes absolues d'une date de partie — jours et minutes suffisent. */
-const enMinutes = (d) => (d && typeof d.jour === "number"
-  ? d.jour * 1440 + (d.minute || 0) : null);
+/**
+ * Les minutes absolues d'une date de partie.
+ *
+ * LA LUNE COMPTE, ET ELLE NE COMPTAIT PAS. On additionnait `jour * 1440 +
+ * minute` et rien d'autre : une bataille datée du 3e jour tombait donc le 3e
+ * jour de CHAQUE lune et de chaque année, indéfiniment. Personne ne s'en
+ * serait aperçu tout de suite — la première nuit se joue juste, et c'est la
+ * deuxième lune qui rejoue l'assaut trente jours plus tard, sans que rien
+ * n'explique pourquoi la porte tombe une seconde fois.
+ *
+ * `ref` sert aux dates écrites à l'ancienne, qui n'ont que `jour` et `minute` :
+ * on les lit alors dans la lune où l'on se trouve, qui est ce que le MJ voulait
+ * dire en tapant `--dater 3 1200`. Les nouvelles portent leur lune (voir
+ * `scripts/bataille.py --dater`) et n'ont pas besoin de ce filet.
+ */
+const enMinutes = (d, ref) => {
+  if (!d || typeof d.jour !== "number") return null;
+  const a = typeof d.annee === "number" ? d.annee : (ref && ref.annee) || 0;
+  const l = typeof d.lune === "number" ? d.lune : (ref && ref.lune) || 1;
+  return ((a * 12 + l) * 30 + d.jour) * 1440 + (d.minute || 0);
+};
 
 /**
  * Ce qu'on perçoit d'ici, maintenant.
@@ -206,7 +256,7 @@ const enMinutes = (d) => (d && typeof d.jour === "number"
 function autour(racine, lieu, x, y, date) {
   const sac = charger(racine, lieu);
   if (!sac) return null;
-  const now = enMinutes(date), t0 = enMinutes(sac.debut);
+  const now = enMinutes(date), t0 = enMinutes(sac.debut, date);
   if (now === null || t0 === null) return null;
   // Secondes écoulées depuis le premier pas de la bataille.
   const ecoule = (now - t0) * 60;
@@ -307,4 +357,23 @@ function dire(f, d, comment, depuis, dx, dy) {
   return o;
 }
 
-module.exports = { autour, charger, PORTEES, ARRETENT };
+module.exports = { autour, charger, PORTEES, ARRETENT, enMinutes };
+
+// ---------------------------------------------------------------------------
+// EN LIGNE DE COMMANDE — pour que le MJ puisse poser la question sans passer
+// par un navigateur et sans qu'on réécrive la table des portées ailleurs.
+//
+//     node serveur/croiser.js <lieu> <x> <y> <annee> <lune> <jour> <minute>
+//
+// Rend le même objet que `autour()`, en JSON, sur la sortie standard.
+// C'est ce qu'appelle `scripts/bataille.py --maintenant`. La doctrine est
+// celle du four, qui importe `bataille2d.js` plutôt que de le refaire : deux
+// implémentations d'une même perception, ce sont deux brouillards, et l'on
+// passe ses soirées à chercher lequel ment.
+if (require.main === module) {
+  const [lieu, x, y, annee, lune, jour, minute] = process.argv.slice(2);
+  const racine = path.dirname(__dirname);
+  const r = autour(racine, lieu, +x, +y,
+                   { annee: +annee, lune: +lune, jour: +jour, minute: +minute });
+  process.stdout.write(JSON.stringify(r));
+}

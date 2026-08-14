@@ -301,7 +301,41 @@ export async function voirie(source = "/monde") {
     A.liens.push({ vers: cb, arete: a, cout, sens: 1 });
     B.liens.push({ vers: ca, arete: a, cout, sens: -1 });
   }
-  _voirie = { noeuds, aretes };
+  // --- QUI COMMUNIQUE AVEC QUI ----------------------------------------------
+  // La voirie de surface de Port-Réal n'est pas d'un seul tenant : mesuré ici,
+  // CENT SOIXANTE-QUINZE morceaux — un grand de 42 003 carrefours, la ville, et
+  // cent soixante-quatorze miettes totalisant 2 376 nœuds : des seuils, des
+  // arcades, des cours qui ne mènent nulle part. C'est le même constat que
+  // `scripts/marche.py` fait de son côté, et qu'il corrige depuis longtemps.
+  //
+  // POURQUOI ÇA COÛTE SI CHER DE NE PAS LE SAVOIR. Un A* qui vise une adresse
+  // injoignable ne renonce pas : il épuise le graphe entier avant de conclure.
+  // Mesuré : 268 à 359 MILLISECONDES par appel — vingt images perdues d'un coup
+  // — pour finir par tracer la ligne droite qu'on aurait pu tracer tout de
+  // suite. Ces appels-là étaient la totalité des grosses pointes du module, et
+  // aucun budget par tranche ne pouvait les rattraper, puisqu'un seul suffit.
+  //
+  // Un parcours en profondeur, une fois par lieu, et l'on répond en comparant
+  // deux entiers. Ce qui reste injoignable l'est toujours et se rend en ligne
+  // droite comme avant : on ne change RIEN à ce qui se dessine, seulement au
+  // temps qu'il faut pour le dire.
+  const comp = new Map();
+  let n = 0;
+  for (const depart of noeuds.keys()) {
+    if (comp.has(depart)) continue;
+    const pile = [depart];
+    comp.set(depart, n);
+    while (pile.length) {
+      const x = pile.pop();
+      for (const l of noeuds.get(x).liens) {
+        if (comp.has(l.vers)) continue;
+        comp.set(l.vers, n);
+        pile.push(l.vers);
+      }
+    }
+    n++;
+  }
+  _voirie = { noeuds, aretes, comp };
   return _voirie;
 }
 
@@ -379,10 +413,42 @@ class Tas {
  * parcourir une polyligne de trente points soixante fois par seconde et par
  * personne. Mesuré : quatre cents millisecondes par image, contre vingt.
  */
+// LE CHEMIN NEUF EST LA SEULE CHOSE CHÈRE DE TOUT LE MODULE, et il l'est
+// beaucoup : mesuré sur vingt mille corps de Port-Réal à froid, cent trente-cinq
+// appels — sept pour mille — portent QUATRE-VINGT-SEPT POUR CENT du temps, et le
+// plus lourd coûte VINGT-HUIT MILLISECONDES à lui seul, c'est-à-dire près de
+// deux images à soixante hertz.
+//
+// Aucun budget relevé APRÈS COUP ne rattrape ça : quand un seul corps coûte plus
+// qu'une image entière, on peut regarder l'horloge aussi souvent qu'on veut, le
+// mal est déjà fait quand on la lit. Ce qui se règle, c'est le moment où l'on
+// cesse d'EN COMMENCER un.
+//
+// L'appelant pose donc une ÉCHÉANCE, pas un compte. Un compte serait le mauvais
+// levier — mesuré : plafonné à un chemin neuf par tranche, le nuage tombait à
+// quatre-vingt-six personnes, parce que l'écrasante majorité des A* sont
+// minuscules et qu'on les interdisait avec les gros. Avec une échéance, les
+// petits passent tous et le premier gros ferme la porte derrière lui : le
+// dépassement d'une image est borné à UN chemin, et l'on ne renonce à rien.
+//
+// Ce qui est refusé n'est pas perdu : on rend `null`, l'appelant repassera, et
+// le chemin sera en cache la fois d'après — pour le reste de la partie.
+//
+// Sans échéance (le défaut), rien ne change : c'est ce qu'il faut à qui demande
+// une réponse juste tout de suite, comme `presents()` pour des témoins.
+let _echeance = 0;
+export function quotaChemins(ms) {
+  _echeance = (ms === undefined || ms === null) ? 0 : performance.now() + ms;
+}
+
 export function chemin(v, depart, arrivee, clef) {
   const cache = _chemins.get(clef);
   if (cache) return cache;
+  if (_echeance && performance.now() > _echeance) return null;
   const a = proche(v, depart[0], depart[1]), b = proche(v, arrivee[0], arrivee[1]);
+  // Deux morceaux de voirie qui ne se touchent pas : inutile de chercher, la
+  // réponse est la ligne droite, et la chercher coûte un tiers de seconde.
+  const joignable = !v.comp || v.comp.get(a) === v.comp.get(b);
   const but = v.noeuds.get(b).xyz;
   const vus = new Map([[a, 0]]), venu = new Map();
   // Un TAS, pas un tableau retrié à chaque pas : avec `sort()` dans la boucle,
@@ -395,7 +461,7 @@ export function chemin(v, depart, arrivee, clef) {
     return Math.hypot(p[0] - but[0], p[1] - but[1]);
   };
   let trouve = false;
-  while (file.taille()) {
+  while (joignable && file.taille()) {
     const id = file.tirer();
     if (id === b) { trouve = true; break; }
     const g = vus.get(id);
@@ -407,18 +473,30 @@ export function chemin(v, depart, arrivee, clef) {
       file.pousser(gv + h(l.vers), l.vers);
     }
   }
-  const pts = [depart];
+  // LA LARGEUR VOYAGE AVEC LE CHEMIN, un chiffre par point. Elle est dans
+  // l'arête depuis toujours — deux mètres pour une ruelle, quatorze pour une
+  // artère — et elle mourait ici : la polyligne ne gardait que des points, si
+  // bien que tout ce qui marche dessus devait inventer sa propre demi-largeur.
+  // C'est de là que venait la colonne de bataille en ruban : deux files
+  // exactement parallèles, à un mètre quarante de l'axe, dans une rue qui en
+  // fait huit. Le tableau coûte quatre octets par point et rend la question
+  // décidable sans reparcourir la voirie.
+  const pts = [depart], lar = [0];
   if (trouve) {
     const suite = [];
     for (let id = b; venu.has(id); id = venu.get(id).de) {
       const { lien } = venu.get(id);
       const t = lien.arete.trace;
-      suite.push(lien.sens > 0 ? t : t.slice().reverse());
+      suite.push({ t: lien.sens > 0 ? t : t.slice().reverse(),
+                   l: lien.arete.largeur_m || 0 });
     }
     suite.reverse();
-    for (const t of suite) for (const p of t) pts.push(p);
+    for (const s of suite) for (const p of s.t) { pts.push(p); lar.push(s.l); }
   }
-  pts.push(arrivee);
+  pts.push(arrivee); lar.push(lar[lar.length - 1]);
+  // Les deux bouts sont des points RAJOUTÉS — la porte visée, l'adresse — et
+  // n'appartiennent à aucune arête : ils héritent de leur voisine.
+  lar[0] = lar[1] !== undefined ? lar[1] : 0;
   // La SOMME CUMULÉE des tronçons, calculée une fois avec le chemin. Sans elle,
   // placer un marcheur à mi-parcours c'est reparcourir la polyligne depuis son
   // premier point, pour chaque marcheur et à chaque image : mesuré, cent huit
@@ -426,7 +504,8 @@ export function chemin(v, depart, arrivee, clef) {
   const cum = new Float64Array(pts.length);
   for (let i = 1; i < pts.length; i++)
     cum[i] = cum[i - 1] + Math.hypot(pts[i][0] - pts[i-1][0], pts[i][1] - pts[i-1][1]);
-  const trace = { pts, cum, long: cum[cum.length - 1] };
+  const trace = { pts, cum, lar: Float32Array.from(lar),
+                  long: cum[cum.length - 1] };
   _chemins.set(clef, trace);
   return trace;
 }
@@ -534,6 +613,12 @@ export function ou(cel, k, jour, minute, v, rangs, out) {
     if (minute < e.debut - trajet) continue;          // pas encore parti
     if (minute >= e.fin + trajet) continue;           // déjà rentré
     const tr = cheminBat(v, chez, e.bat);
+    // LE CHEMIN N'EST PAS ENCORE TRACÉ, et l'appelant a dit qu'il n'avait plus le
+    // temps d'en tracer un ce coup-ci. On ne ment pas sur sa position — on dit
+    // qu'on ne sait pas encore, et c'est au dessin de le laisser de côté une
+    // passe. À la suivante, le chemin est en cache et il reprend sa place.
+    if (!tr) { p.quoi = "differe"; p.vers = e.service; p.bat = e.bat;
+               p.x = p.y = p.z = 0; p.vx = p.vy = 0; return p; }
     const cote = melange(id, 7, jour) < 0.5 ? -1 : 1;
     const larg = 3;
     // ON MARCHE À SON PAS, ON NE COURT PAS POUR TENIR L'HORAIRE.

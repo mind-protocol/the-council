@@ -270,11 +270,26 @@ RECUL_MAX = 8.0
 
 # LA MITOYENNETÉ SE DÉCLENCHE À LA DENSITÉ, jamais partout. On mesure, par
 # tronçon de rue et par côté, ce que les façades occupent de sa longueur. Aux
-# deux tiers, on est dans un pâté de maisons : les murs se touchent, et c'est
-# ainsi que se bâtit une ville qui n'a plus de place. En dessous, on est dans
-# un faubourg : les maisons gardent leur écart, et les serrer serait un
+# deux cinquièmes, on est dans un pâté de maisons : les murs se touchent, et
+# c'est ainsi que se bâtit une ville qui n'a plus de place. En dessous, on est
+# dans un faubourg : les maisons gardent leur écart, et les serrer serait un
 # mensonge sur ce qu'on peut passer entre elles.
-DENSITE_MITOYENNE = 0.62
+#
+# LE CHIFFRE A ÉTÉ BALAYÉ, pas choisi. Il valait deux tiers ; on a mesuré, à
+# chaque seuil, combien de maisons finissent avec un vrai mur partagé et de
+# combien on déplace le semis pour l'obtenir :
+#
+#     seuil   maisons avec mur   déplacement médian
+#      0,62        36 %               3,56 m
+#      0,50        38 %               4,49 m
+#      0,40        39 %               4,96 m      ← ici
+#      0,30        40 %               5,20 m
+#      0,10        40 %               5,28 m      (plus rien à gagner)
+#
+# La courbe se couche à 0,30 : en dessous, on déplace des maisons pour rien.
+# On s'arrête juste avant, là où les trois points gagnés valent encore le mètre
+# et demi de déplacement qu'ils coûtent.
+DENSITE_MITOYENNE = 0.40
 MITOYENS_MIN = 3
 
 # JUSQU'OÙ ON RECTIFIE — et ce réglage n'est pas un confort, c'est la ligne de
@@ -316,6 +331,41 @@ COLLE = .05
 # de silhouettes qu'ils ont fini par faire. Un compteur et pas une clef de la
 # sortie : le plan servi au client garde exactement la forme qu'il attend.
 COMPTE = [0]
+
+# Où chaque maison a fini par se poser, et lesquelles un monument a avalées.
+# `bati()` le sait — il redresse la ville entière contre ses rues — et
+# `enseignes()` en a besoin pour poser sa marque sur la porte REDRESSÉE et non
+# sur celle du semis, qui est ailleurs de plusieurs mètres. Rectifier deux fois
+# coûterait la moitié de la cuisson ; on garde donc le résultat au passage,
+# comme COMPTE, et pour la même raison : ce n'est pas une clef de la sortie.
+POSES = [None, frozenset()]
+
+# --- la mitoyenneté, telle qu'elle a été RÉSOLUE ---------------------------
+# `_mitoyenner` range les façades d'un front bord à bord. Deux choses en
+# sortent, dont le dessin a besoin et que les colonnes du semis ne portent pas :
+#
+#   LARGEURS  la façade EFFECTIVE de chaque maison. Quand un front est plus
+#             chargé que long, on ne peut pas y mettre tout le monde à sa
+#             largeur : on comprime, au prorata. C'était la seule autre issue —
+#             l'ancienne était de les répartir à égalité EN LES LAISSANT SE
+#             RECOUVRIR, en comptant sur la soudure pour n'en faire qu'un front.
+#             Or `souder` refuse de fondre deux propriétaires (« c'est la
+#             mitoyenneté, pas une raison de n'en faire qu'une »), et refuse
+#             avec raison. Les deux passes se contredisaient, et le résultat
+#             était vingt-trois mille maisons qui se traversaient.
+#
+#   COLLES    de quel côté chaque maison a un voisin au contact — (gauche,
+#             droite) dans son repère local. C'est ce qui permet au dessin de
+#             garder le MUR MITOYEN DROIT : un pan coupé, un trapèze ou un
+#             pignon de guingois sur un mur qu'on partage, ce n'est pas une
+#             maison de plus, c'est un trou entre deux maisons.
+LARGEURS = [{}]
+COLLES = [{}]
+
+# Les formes qui rongent le flanc : on les interdit du côté d'un mur partagé.
+# Les autres (pleine, té, équerre, cour, croix) gardent leurs bords x = ±f
+# francs sur tout ou partie de la profondeur — c'est-à-dire un vrai mur mitoyen.
+RONGENT_LE_FLANC = ("angle", "trapeze", "biais")
 
 
 def _index_voies(rues):
@@ -456,6 +506,93 @@ def _chainer(segs):
             "ordre": ordre, "situer": situer, "n": cid}
 
 
+def _ligne_de_front(ch, segs, cid, cote, bord):
+    """La polyligne des FAÇADES : l'axe de la rue décalé de `bord`, d'un côté.
+
+    POURQUOI ELLE EXISTE, ET C'EST TOUT LE SUJET. On rangeait les maisons bord à
+    bord SUR L'AXE de la rue — des abscisses contiguës sur la ligne médiane —,
+    puis on les dessinait cinq à quinze mètres plus loin, chacune décalée le
+    long de la normale de SON tronçon. Or deux voisines de rang tombent souvent
+    sur deux tronçons différents : mesuré, trois degrés et demi d'écart d'angle
+    en médiane, et trois mètres vingt-neuf d'écart entre les deux. Des abscisses
+    contiguës sur l'axe ne sont plus contiguës une fois décalées — elles ne le
+    restent que sur une rue droite. D'où vingt et un pour cent de murs mitoyens
+    là où l'on en déclarait cinquante-huit.
+
+    On range donc sur la ligne où les maisons se touchent VRAIMENT : celle de
+    leurs façades. Deux voisines y partagent un mur par construction, courbe
+    comprise.
+
+    L'ONGLET EST PLAFONNÉ. Dans un virage serré, la ligne décalée du côté
+    intérieur se replie sur elle-même et le point d'onglet part à l'infini :
+    on borne son allongement, quitte à mordre un peu dans le coin. Un carrefour
+    n'est de toute façon pas un endroit où l'on bâtit au cordeau.
+    """
+    axe = []
+    for _off, e in ch["ordre"][cid]:
+        x1, y1, x2, y2, _cap, _g, _lg = segs[e]
+        a, b = (((x1, y1), (x2, y2)) if ch["par_seg"][e][2] > 0
+                else ((x2, y2), (x1, y1)))
+        if not axe:
+            axe.append(a)
+        if abs(b[0] - axe[-1][0]) > 1e-9 or abs(b[1] - axe[-1][1]) > 1e-9:
+            axe.append(b)
+    if len(axe) < 2:
+        return None
+
+    dirs = []
+    for i in range(len(axe) - 1):
+        dx, dy = axe[i + 1][0] - axe[i][0], axe[i + 1][1] - axe[i][1]
+        L = math.hypot(dx, dy)
+        dirs.append((dx / L, dy / L) if L > 1e-9
+                    else (dirs[-1] if dirs else (1., 0.)))
+
+    def normale(u):
+        return (-u[1] * cote, u[0] * cote)
+
+    pts = []
+    for i, p in enumerate(axe):
+        if i == 0:
+            n, k = normale(dirs[0]), 1.
+        elif i == len(axe) - 1:
+            n, k = normale(dirs[-1]), 1.
+        else:
+            a, b = normale(dirs[i - 1]), normale(dirs[i])
+            mx, my = a[0] + b[0], a[1] + b[1]
+            L = math.hypot(mx, my)
+            if L < 1e-6:                       # demi-tour : pas d'onglet possible
+                n, k = a, 1.
+            else:
+                n = (mx / L, my / L)
+                k = 1. / max(n[0] * a[0] + n[1] * a[1], .35)
+        pts.append((p[0] + n[0] * bord * k, p[1] + n[1] * bord * k))
+
+    cum = [0.]
+    for i in range(len(pts) - 1):
+        cum.append(cum[-1] + math.hypot(pts[i + 1][0] - pts[i][0],
+                                        pts[i + 1][1] - pts[i][1]))
+    return pts, cum
+
+
+def _sur_ligne(pts, cum, t):
+    """Le point et la direction locale, à l'abscisse curviligne `t`."""
+    t = min(max(t, 0.), cum[-1])
+    lo, hi = 0, len(cum) - 2
+    while lo < hi:
+        mi = (lo + hi + 1) // 2
+        if cum[mi] <= t:
+            lo = mi
+        else:
+            hi = mi - 1
+    L = cum[lo + 1] - cum[lo]
+    dx = pts[lo + 1][0] - pts[lo][0]
+    dy = pts[lo + 1][1] - pts[lo][1]
+    if L < 1e-9:
+        return pts[lo], (1., 0.)
+    q = (t - cum[lo]) / L
+    return (pts[lo][0] + dx * q, pts[lo][1] + dy * q), (dx / L, dy / L)
+
+
 def _voie_de_la_porte(px, py, segs, grille):
     """Le tronçon de voie le plus proche du point : (rang, abscisse, côté).
 
@@ -513,6 +650,9 @@ def redresser(source, rues):
     ix, iy = col.index("x"), col.index("y")
     ifa, ipr, icat = col.index("facade_m"), col.index("profondeur_m"), col.index("cat")
     poses = [[r[ix], r[iy], r[icap] or 0.] for r in source["bati"]]
+    # On repart à vide : une seconde cuisson dans le même processus (les essais,
+    # `--rectifier` comparé) hériterait sinon des mitoyennetés de la première.
+    LARGEURS[0], COLLES[0] = {}, {}
     # PAS DE PORTE SUR RUE, PAS DE REDRESSEMENT. Tout ce qui suit part du côté
     # où la maison ouvre : sans cette colonne, on ne sait pas de quel côté est
     # son devant, et la « rectifier » reviendrait à la faire pivoter au hasard.
@@ -565,14 +705,71 @@ def redresser(source, rues):
         classe = ch["classe"][cid]
         bord = LARGEUR_VOIE.get(classe, 2.3) / 2. + TROTTOIR.get(classe, .5)
 
-        abscisses = (_mitoyenner(source, gens, lg, ifa, icat)
-                     if RECTIFICATION == "plein" else None)
-        if abscisses is not None:
-            mitoyens += len(gens)
+        # LA LIGNE OÙ ILS SE TOUCHENT. On range sur la façade, pas sur l'axe —
+        # voir `_ligne_de_front`. Sa longueur n'est pas celle de l'axe (plus
+        # longue à l'extérieur d'un virage, plus courte à l'intérieur), et c'est
+        # elle qui décide combien de maisons tiennent dans le front.
+        front = (_ligne_de_front(ch, segs, cid, cote, bord)
+                 if RECTIFICATION == "plein" else None)
+        if front is not None:
+            fpts, fcum = front
+            lgf = fcum[-1]
+            # Les abscisses du semis sont comptées sur l'axe : on les reporte au
+            # prorata sur la façade, sinon le rang partirait d'un bout.
+            gensf = [(k, s * lgf / lg if lg > 1e-9 else s) for k, s in gens]
         else:
-            abscisses = {k: s for k, s in gens}
+            fpts = fcum = None
+            lgf, gensf = lg, gens
+
+        abscisses = (_mitoyenner(source, gensf, lgf, ifa, icat)
+                     if RECTIFICATION == "plein" else None)
+        range_ = abscisses is not None
+        if range_:
+            mitoyens += len(gens)
+            # « Gauche » et « droite » se lisent dans le repère de la maison, et
+            # le cap vaut la direction du front FOIS LE CÔTÉ : d'un côté de la
+            # rue, l'ordre des abscisses est celui du repère local ; de l'autre,
+            # il est inversé. Sans ce retournement, on interdit le pan coupé du
+            # mauvais bord et l'équerre s'adosse au vide.
+            if cote < 0:
+                for k in abscisses:
+                    if k in COLLES[0]:
+                        g, d = COLLES[0][k]
+                        COLLES[0][k] = (d, g)
+        else:
+            abscisses = {k: s for k, s in gensf}
 
         for k, _ in gens:
+            # --- la pose sur la ligne de façade -----------------------------
+            if fpts is not None:
+                r = source["bati"][k]
+                (fx, fy), (wx, wy) = _sur_ligne(fpts, fcum, abscisses[k])
+                nx, ny = -wy * cote, wx * cote     # la normale qui s'éloigne
+                neuf = math.degrees(math.atan2(wy * cote, wx * cote))
+                cx = fx + nx * (r[ipr] or 4) / 2.
+                cy = fy + ny * (r[ipr] or 4) / 2.
+                somme += abs((neuf - poses[k][2] + 90.) % 180. - 90.)
+                tournes += 1
+                # LE GARDE-FOU NE S'APPLIQUE PAS DANS UN RANG, et c'est la
+                # dernière pièce du puzzle. `RECUL_MAX` existe pour ne pas
+                # déraciner une maison vers une rue qui n'est pas la sienne — un
+                # doute qui a un sens quand on la déplace seule. Dans un front
+                # RANGÉ, le doute est levé : le test de densité a établi que ces
+                # maisons-là forment un pâté, et l'ordre du rang est celui du
+                # semis. Laisser sur place les trente pour cent que le plafond
+                # refusait, c'était trouer chaque rangée — mesuré, quarante-cinq
+                # pour cent des paires de voisines seulement avaient bougé
+                # toutes les deux, et le mur mitoyen n'existait que pour
+                # celles-là. Là où les deux bougent, l'écart médian est nul.
+                if range_ or abs((poses[k][0] - fx) * nx +
+                                 (poses[k][1] - fy) * ny
+                                 - (r[ipr] or 4) / 2.) <= RECUL_MAX:
+                    poses[k] = [cx, cy, neuf]
+                    deplaces += 1
+                else:
+                    poses[k][2] = neuf
+                continue
+            # --- l'ancien chemin, pour `aucun` et `filet` -------------------
             r = source["bati"][k]
             # De l'abscisse de RUE au tronçon qui la porte : c'est là qu'une
             # maison serrée contre sa voisine peut glisser dans le tronçon d'à
@@ -611,15 +808,172 @@ def redresser(source, rues):
             else:
                 poses[k][2] = neuf
 
+    # L'ORDRE COMPTE, ET IL EST CELUI-CI. On démêle d'abord — sinon `_degager`
+    # sort du pavé des maisons encore encastrées les unes dans les autres, et il
+    # les y remet en les poussant. On dégage ensuite, parce que la rue est plus
+    # sacrée que l'écart entre deux murs : une maison dans la chaussée se voit,
+    # dix centimètres de mur partagé non. Puis on redémêle une fois, pour
+    # reprendre le peu que le dégagement a réenchevêtré.
+    meles = 0
+    if RECTIFICATION == "plein":
+        _desenchevetrer(source, poses, ifa, ipr)
     degages = (_degager(source, poses, segs, grille, ifa, ipr)
                if RECTIFICATION in ("plein", "filet") else 0)
+    if RECTIFICATION == "plein":
+        # HUIT PASSES, ET LE CHIFFRE EST MESURÉ. La séparation converge
+        # géométriquement — 15 900 paires après le dégagement, 13 900 à deux
+        # passes, 11 000 à quatre, 7 900 à six —, et chaque passe coûte six
+        # dixièmes de seconde sur quarante-cinq mille maisons. On s'arrête là où
+        # la médiane passe sous le décimètre : en dessous, on déplace des
+        # maisons pour un défaut qu'aucune échelle du plan ne rend.
+        meles = _desenchevetrer(source, poses, ifa, ipr, passes=8)
     print("  voirie %d tronçons rechaînés en %d rues, %d fronts"
           % (len(segs), ch["n"], len(fronts)))
     print("  bati %d/%d façades alignées, %d reposées, %d mitoyennes, "
           "%d dégagées, %d sans voie, écart moyen %.1f°"
           % (tournes, len(poses), deplaces, mitoyens, degages, orphelins,
              somme / tournes if tournes else 0.))
+    print("  chevauchements restants : %d paires" % meles)
     return poses
+
+
+def _desenchevetrer(source, poses, ifa, ipr, passes=4):
+    """Sépare les maisons qui se traversent — celles que la ROTATION a mêlées.
+
+    LE RANG NE SUFFIT PAS, ET C'EST LA MESURE QUI LE DIT. Ranger les façades
+    bord à bord (`_mitoyenner`) règle le front, et le front seulement : de
+    vingt-trois mille paisqui se traversaient on tombe à vingt mille. Le reste
+    ne vient pas du rang, il vient du geste d'avant — on TOURNE chaque maison
+    pour la mettre face à sa rue, vingt-six degrés en moyenne, et une maison
+    qu'on fait pivoter sur son centre entre dans ses voisines. Le semis, lui,
+    était propre : vingt et un centimètres de pénétration maximale sur
+    quarante-cinq mille maisons. Tout le mal est né du redressement.
+
+    Deux maisons mêlées ne sont jamais sur le même front — celles-là se
+    touchent exactement, et un contact n'est pas un chevauchement. Ce sont les
+    maisons de COIN, et les maisons DOS À DOS de deux rues parallèles : chacune
+    a été alignée sur sa rue à elle, sans que personne regarde l'autre.
+
+    ON ÉCARTE, ON NE TOURNE PAS. Le cap vient d'être calculé et il est juste :
+    la façade suit sa rue. On pousse donc chacune de la moitié de ce qui les
+    sépare, le long de l'axe le plus court — celui qui coûte le moins de
+    mouvement. Quelques passes suffisent : écarter deux maisons peut en toucher
+    une troisième, mais l'enchevêtrement est peu profond et ça converge.
+
+    Ce qui reste après ces passes est du chevauchement PROFOND — une halle et
+    une masure qu'on ne peut pas séparer sans en jeter une hors de sa rue. On
+    les laisse, on les compte, et on le dit.
+    """
+    R = source["bati"]
+    n = len(poses)
+    dem = [((R[k][ifa] or 4) / 2., (R[k][ipr] or 4) / 2.) for k in range(n)]
+    for k in range(n):
+        if k in LARGEURS[0]:
+            dem[k] = (LARGEURS[0][k] / 2., dem[k][1])
+
+    def quad(k):
+        x, y, cap = poses[k]
+        a = math.radians(cap)
+        ca, sa = math.cos(a), math.sin(a)
+        hf, hp = dem[k]
+        return [(x + dx * ca - dy * sa, y + dx * sa + dy * ca)
+                for dx, dy in ((-hf, -hp), (hf, -hp), (hf, hp), (-hf, hp))]
+
+    def separer(A, B):
+        """L'axe et la profondeur du chevauchement, ou None s'ils sont libres."""
+        best, axe = 1e9, None
+        for poly in (A, B):
+            for i in range(4):
+                x1, y1 = poly[i]
+                x2, y2 = poly[(i + 1) % 4]
+                nx, ny = -(y2 - y1), (x2 - x1)
+                L = math.hypot(nx, ny)
+                if L < 1e-9:
+                    continue
+                nx /= L
+                ny /= L
+                pa = [px * nx + py * ny for px, py in A]
+                pb = [px * nx + py * ny for px, py in B]
+                o = min(max(pa), max(pb)) - max(min(pa), min(pb))
+                if o <= 0.:
+                    return None
+                if o < best:
+                    best, axe = o, (nx, ny)
+        return best, axe
+
+    # UNE PASSE DE PLUS, QUI NE POUSSE PAS. Sans elle, on rend le compte tel
+    # qu'il était AU DÉBUT de la dernière passe — c'est-à-dire avant la dernière
+    # correction —, et le chiffre imprimé est faux d'un tiers. Le tour à vide
+    # coûte trois dixièmes de seconde et dit la vérité.
+    MAILLE_S = 24.
+    reste = 0
+    for tour in range(passes + 1):
+        dernier = (tour == passes)
+        qs = [quad(k) for k in range(n)]
+        bb = [(min(p[0] for p in q), min(p[1] for p in q),
+               max(p[0] for p in q), max(p[1] for p in q)) for q in qs]
+        g = {}
+        for k, (x0, y0, x1, y1) in enumerate(bb):
+            for i in range(int(x0 // MAILLE_S), int(x1 // MAILLE_S) + 1):
+                for j in range(int(y0 // MAILLE_S), int(y1 // MAILLE_S) + 1):
+                    g.setdefault((i, j), []).append(k)
+        pousse = [[0., 0.] for _ in range(n)]
+        vus = set()
+        reste = 0
+        for ks in g.values():
+            for u in range(len(ks)):
+                for v in range(u + 1, len(ks)):
+                    a, b = (ks[u], ks[v]) if ks[u] < ks[v] else (ks[v], ks[u])
+                    if (a, b) in vus:
+                        continue
+                    vus.add((a, b))
+                    A, B = bb[a], bb[b]
+                    if A[2] < B[0] or B[2] < A[0] or A[3] < B[1] or B[3] < A[1]:
+                        continue
+                    s = separer(qs[a], qs[b])
+                    if s is None:
+                        continue
+                    prof, (nx, ny) = s
+                    reste += 1
+                    # Le sens : de A vers B, lu sur les centres. Sans ce test on
+                    # les pousse une fois sur deux l'une DANS l'autre.
+                    dx = poses[b][0] - poses[a][0]
+                    dy = poses[b][1] - poses[a][1]
+                    if dx * nx + dy * ny < 0:
+                        nx, ny = -nx, -ny
+                    # UNE MAISON DE RANG NE BOUGE PAS, et c'est ce qui décide
+                    # s'il y aura des murs. Deux fronts qui se font dos ont des
+                    # maisons qui se traversent ; les écarter toutes deux, c'est
+                    # tirer chacune hors de sa rangée, et la rangée était le
+                    # seul endroit où un mur mitoyen existait. Mesuré : en
+                    # poussant tout le monde, on retombait à vingt-sept pour
+                    # cent de murs. Celle qui est dans un rang tient donc sa
+                    # place, et c'est l'autre qui s'écarte — de tout l'écart.
+                    ra, rb = a in COLLES[0], b in COLLES[0]
+                    if ra and rb:
+                        continue          # deux rangs : on n'y touche pas
+                    h = prof + 0.02 if (ra or rb) else prof / 2. + 0.02
+                    if not ra:
+                        pousse[a][0] -= nx * h
+                        pousse[a][1] -= ny * h
+                    if not rb:
+                        pousse[b][0] += nx * h
+                        pousse[b][1] += ny * h
+        if not reste or dernier:
+            break
+        # ON PLAFONNE LE PAS. Une maison prise entre trois voisines reçoit trois
+        # poussées qui s'additionnent, et elle part à l'autre bout de l'îlot au
+        # premier tour. Un mètre par passe, et la convergence fait le reste.
+        for k in range(n):
+            px, py = pousse[k]
+            L = math.hypot(px, py)
+            if L < 1e-9:
+                continue
+            if L > 1.:
+                px, py = px / L, py / L
+            poses[k][0] += px
+            poses[k][1] += py
+    return reste
 
 
 def _degager(source, poses, segs, grille, ifa, ipr, passes=3):
@@ -702,21 +1056,31 @@ def _mitoyenner(source, gens, lg, ifa, icat):
         return None
     ordre = sorted(gens, key=lambda ks: ks[1])
     out = {}
-    if total <= lg:
-        # Ça rentre : on colle le rang et on le centre sur ce qu'il occupait,
-        # pour que les maisons ne migrent pas vers un bout du tronçon.
-        depart = min(max((sum(s for _, s in ordre) / len(ordre)) - total / 2., 0.),
-                     lg - total)
-        c = depart
-        for k, _ in ordre:
-            out[k] = c + largeurs[k] / 2.
-            c += largeurs[k]
-        return out
-    # Ça déborde : on répartit à égalité sur toute la longueur. Les murs se
-    # recouvrent un peu, la soudure en fera un front continu — ce qui est
-    # exactement ce qu'on voulait montrer.
+
+    # COMBIEN DE PLACE CHACUN A DROIT. Ça rentre, ou ça ne rentre pas — et dans
+    # le second cas on COMPRIME au prorata au lieu de laisser les murs se
+    # traverser. Une rue trop chargée fait des maisons étroites ; c'est ce que
+    # fait une vraie ville sans place, et c'est la seule réponse qui laisse un
+    # front continu SANS demander à la soudure de fondre deux propriétaires.
+    serre = min(1., lg / total)
+    prises = {k: largeurs[k] * serre for k, _ in ordre}
+
+    depart = (0. if serre < 1. else
+              min(max((sum(s for _, s in ordre) / len(ordre)) - total / 2., 0.),
+                  lg - total))
+    c = depart
+    for k, _ in ordre:
+        out[k] = c + prises[k] / 2.
+        c += prises[k]
+
+    # Ce que le dessin doit savoir et que le semis ne dit pas : la largeur
+    # retenue, et de quel côté on touche. Le premier du rang n'a personne à sa
+    # gauche, le dernier personne à sa droite — et « gauche » est ici le sens
+    # des abscisses croissantes du front, qui est aussi celui du repère local
+    # une fois la maison tournée face à sa rue.
     for i, (k, _) in enumerate(ordre):
-        out[k] = lg * (i + .5) / len(ordre)
+        LARGEURS[0][k] = prises[k]
+        COLLES[0][k] = (i > 0, i < len(ordre) - 1)
     return out
 
 
@@ -855,7 +1219,7 @@ def _annexes(f, p, ann, mur=0.):
     return out
 
 
-def _pieces(f, p, k, cat, ann=(0., 0., 0.), mur=0.):
+def _pieces(f, p, k, cat, ann=(0., 0., 0.), mur=0., colle=(False, False)):
     """Les morceaux convexes d'un bâtiment, en repère local (façade sur x).
 
     Rend une liste de polygones inscrits dans [-f, f] × [-p, p], plus les
@@ -863,14 +1227,29 @@ def _pieces(f, p, k, cat, ann=(0., 0., 0.), mur=0.):
     formes pleines, deux ou trois pour les équerres et les cours — l'union s'en
     charge, et elle recoud aussi les annexes puisqu'elles appartiennent au même
     bâtiment.
+
+    LE MUR QU'ON PARTAGE RESTE DROIT. `colle` dit de quel côté il y a un voisin
+    au contact. De ce côté-là, deux choses sont interdites : les formes qui
+    rongent le flanc (pan coupé, trapèze, biais), parce qu'un mur mitoyen taillé
+    en biseau ouvre un vide entre deux maisons qui sont censées se toucher ; et
+    l'appentis de flanc, qui s'en irait dans la maison d'à côté. Ce n'est pas un
+    raffinement de dessin : sans ça, ranger les façades bord à bord ne suffit
+    pas — on aligne les centres et les murs continuent de se croiser.
     """
-    sup = _annexes(f, p, ann, mur)
+    cg, cd = colle
+    # L'appentis de flanc ne sort que du côté libre. Le fond, lui, ne gêne
+    # personne : il donne sur le cœur d'îlot.
+    sup = _annexes(f, p, (ann[0], 0. if cg else ann[1], 0. if cd else ann[2]), mur)
     d = _melange(k)
     # Une cabane de quatre mètres n'a pas d'aile en retour : on ne découpe que
     # ce qui est assez grand pour que la découpe se voie.
     if f < 3. or p < 3.:
         return [_quad(-f, f, -p, p)] + sup
     poids = FORMES.get(cat) or FORMES["habitat"]
+    if cg or cd:
+        poids = {n: v for n, v in poids.items() if n not in RONGENT_LE_FLANC}
+        if not poids:
+            poids = {"pleine": 1.}
     # Une cour ou une croix demandent de la place : sur une petite parcelle on
     # les rend au rectangle plutôt que de fabriquer des slivers illisibles.
     petit = f < 7. or p < 7.
@@ -904,7 +1283,13 @@ def _pieces(f, p, k, cat, ann=(0., 0., 0.), mur=0.):
         g = d(.42, .62)                           # profondeur du corps sur rue
         w = d(.34, .54)                           # largeur de l'aile
         corps = _quad(-f, f, -p, -p + 2 * p * g)
-        if d() < .5:
+        # L'AILE VA CONTRE LE VOISIN, quand il n'y en a qu'un : c'est de ce
+        # côté-là qu'un mur plein sur toute la profondeur a un sens, et c'est
+        # ainsi qu'on bâtit — on s'adosse au mur qui est déjà debout. Adossée du
+        # mauvais côté, l'équerre laisse un renfoncement sur le mur partagé et
+        # un pignon nu sur la cour.
+        gauche = cg if cg != cd else d() < .5
+        if gauche:
             return [corps, _quad(-f, -f + 2 * f * w, -p, p)] + sup
         return [corps, _quad(f - 2 * f * w, f, -p, p)] + sup
     if forme == "te":                             # corps sur rue + appentis au fond
@@ -1184,6 +1569,7 @@ def bati(source, rues):
     poses = redresser(source, rues)
     COMPTE[0] = len(poses)
     mons, avale = monuments(source, poses)
+    POSES[0], POSES[1] = poses, frozenset(avale)
 
     # Une maison rend un ou plusieurs morceaux convexes (`_pieces`), posés dans
     # le plan par son centre et son cap. Les morceaux d'une même maison se
@@ -1205,7 +1591,12 @@ def bati(source, rues):
         x, y, cap = poses[k]
         a = math.radians(cap)
         ca, sa = math.cos(a), math.sin(a)
-        f, p = (r[ifa] or 4) / 2., (r[ipr] or 4) / 2.
+        # LA FAÇADE RETENUE EST CELLE DU RANG, pas celle du semis : sur un front
+        # plus chargé que long, `_mitoyenner` a comprimé tout le monde au
+        # prorata pour que les murs se touchent au lieu de se traverser.
+        f = (LARGEURS[0].get(k) or r[ifa] or 4) / 2.
+        p = (r[ipr] or 4) / 2.
+        colle = COLLES[0].get(k) or (False, False)
         nom = r[icat] or "habitat"
         # La FORME suit la catégorie (une institution a des cours, une cabane
         # non), mais le GROUPE suit le type : c'est lui qui portera la couleur,
@@ -1215,7 +1606,7 @@ def bati(source, rues):
         prop = par_prop.setdefault(u, [])
         ann = ((r[iaf] or 0.), (r[iag] or 0.), (r[iad] or 0.)) if iaf is not None             else (0., 0., 0.)
         mur = (r[imu] or 0.) if imu is not None else 0.
-        for piece in _pieces(f, p, k, nom, ann, mur):
+        for piece in _pieces(f, p, k, nom, ann, mur, colle):
             cat.append([(x + dx * ca - dy * sa, y + dx * sa + dy * ca)
                         for dx, dy in piece])
             prop.append(k)
@@ -1278,7 +1669,15 @@ def bati(source, rues):
                 lignes.append(coins[ks[0]])
                 continue
             lignes.extend(souder(coins, vois, ks))
-        out[cat] = chemin(lignes, dec=0, ferme=True)
+        # LE DÉCIMÈTRE, ET PAS LE MÈTRE. Le bâti s'écrivait arrondi à l'unité —
+        # ce qui était sans conséquence tant que les maisons flottaient, et
+        # ruineux depuis qu'on les range bord à bord : un mur mitoyen calé au
+        # centimètre voit chacun de ses sommets sauter d'un demi-mètre à
+        # l'écriture, et la rue qu'on venait de rendre continue se rouvre en
+        # trous d'un mètre. On a mesuré la façade au centimètre pour la perdre
+        # à l'impression. Le décimètre coûte quelques centaines de kilo-octets
+        # et vaut un demi-pixel à l'échelle la plus serrée du client.
+        out[cat] = chemin(lignes, dec=1, ferme=True)
     return out
 
 
@@ -1303,6 +1702,11 @@ def types(source):
         u = r[iusg] or r[icat] or "habitat"
         e = n.setdefault(u, {"cat": r[icat] or "habitat", "n": 0,
                              "nom": (noms.get(u) or {}).get("nom") or u})
+        # L'enseigne se range AVEC le type, pas dans une table à part : la carte
+        # a déjà celle-ci sous la main pour la teinte et le nom au survol, et
+        # deux tables qui se répondent finissent toujours par diverger.
+        if u in MARQUES:
+            e["signe"] = MARQUES[u]
         e["n"] += 1
     # Du plus commun au plus rare : c'est l'ordre du DESSIN, et ce qui est
     # écrit en premier passe dessous. Les trente et un mille maisons font le
@@ -1310,6 +1714,98 @@ def types(source):
     # l'inverse — sinon le seul bureau du maître de port disparaît sous la
     # ville entière.
     return {u: n[u] for u in sorted(n, key=lambda u: -n[u]["n"])}
+
+
+# --- les enseignes ----------------------------------------------------------
+# UNE VILLE OÙ TOUT SE RESSEMBLE NE SE LIT PAS DE PRÈS. Le bâti se colore par
+# type, ce qui suffit à voir qu'un pâté n'est pas de l'habitat — mais pas à
+# savoir si c'est la forge ou la tannerie, et c'est justement la question qu'on
+# se pose quand on approche à trente mètres. On pose donc une marque sur la
+# PORTE de chaque bâtiment qui n'est pas un logis.
+#
+# Sur la porte, et pas au milieu du toit : une enseigne pend sur la rue, du
+# côté par où l'on entre. C'est aussi ce qui la rend utile — elle dit d'un coup
+# d'œil par quelle venelle on aborde la maison.
+#
+# ON NE MARQUE PAS LES LOGIS. Trente mille maisons, six mille taudis : les
+# marquer, c'est du confetti, et ça noierait les six cent soixante autres qui
+# sont tout l'intérêt de la couche. Un logis se lit à sa teinte, comme avant.
+LOGIS = {"maison", "taudis", "cabane", "manse", "maison-officier"}
+
+# Ce que porte chaque type. Un type absent de cette table n'a pas d'enseigne —
+# c'est le repli, et il est silencieux : une ville qui sème un usage neuf ne
+# casse rien, elle n'a simplement pas de marque tant qu'on ne lui en donne pas.
+MARQUES = {
+    "echoppe": "🪧", "taverne": "🍺", "boulangerie": "🍞", "forge": "🔨",
+    "puits": "🪣", "entrepot": "📦", "brasserie": "🛢", "bordel": "🌹",
+    "ecurie": "🐎", "auberge": "🛏", "tannerie": "🐄", "chantier-bois": "🪵",
+    "septuaire-quartier": "⭐", "teinturerie": "🎨", "etuve": "♨",
+    "poterie": "🏺", "abattoir": "🔪", "moulin": "⚙", "fosse-vidange": "🕳",
+    "corps-de-garde": "🛡", "marche-quartier": "🧺", "donjon-rouge": "🏰",
+    "corderie": "🪢", "change": "🪙", "voilerie": "⛵", "grenier": "🌾",
+    "caserne": "⚔", "geole": "⛓", "guilde-alchimistes": "⚗",
+    "fosse-dragons": "🐉", "vieux-septuaire": "⭐", "bureau-port": "⚓",
+}
+
+
+def enseignes(source):
+    """Où est la porte de chaque bâtiment marquable, par type.
+
+    Rend `{<type>: "x,y x,y …"}` au décimètre — une chaîne plutôt qu'un tableau
+    de couples, parce que six mille six cents points en JSON structuré pèsent
+    trois fois le même semis écrit en clair, et que le navigateur découpe une
+    chaîne aussi vite qu'il lit un tableau.
+
+    LA PORTE SUIT SA MAISON. `redresser` a reposé toute la ville contre ses
+    rues : la porte du semis n'est plus devant la façade dessinée. On ramène
+    donc la porte dans le repère de sa maison d'origine (son décalage au centre,
+    tourné du cap d'origine), puis on la repose avec la pose redressée. Sans ce
+    tour, une enseigne sur deux tomberait dans la rue d'à côté.
+    """
+    col = source["_colonnes"]
+    ix, iy, icap = col.index("x"), col.index("y"), col.index("cap")
+    ifa, ipr = col.index("facade_m"), col.index("profondeur_m")
+    iusg, icat = col.index("usage"), col.index("cat")
+    if "porte_x" not in col or "porte_y" not in col:
+        return {}
+    ipx, ipy = col.index("porte_x"), col.index("porte_y")
+    poses, avale = POSES[0], POSES[1]
+    out = {}
+    for k, r in enumerate(source["bati"]):
+        u = r[iusg] or r[icat] or "habitat"
+        if u in LOGIS or u not in MARQUES or k in avale:
+            continue
+        px, py = r[ipx], r[ipy]
+        if px is None or py is None:
+            continue
+        x0, y0, c0 = r[ix], r[iy], math.radians(r[icap] or 0.)
+        dx, dy = px - x0, py - y0
+        # dans le repère de la maison…
+        lx = dx * math.cos(c0) + dy * math.sin(c0)
+        ly = -dx * math.sin(c0) + dy * math.cos(c0)
+        # LA PORTE DU SEMIS N'EST PAS SUR LE MUR : c'est le point de la RUE où
+        # elle débouche, ce que `portes.py` doit faire — une porte donne sur la
+        # voie devant elle, et c'est par là qu'on chiffre un itinéraire.
+        # Mesuré sur les 6 660 bâtiments marquables : la médiane tombe à 5,7 m
+        # au-delà du rectangle, et le neuvième décile à 17 m. Une enseigne
+        # posée là flotte au milieu de la chaussée, et dans une venelle elle
+        # pend devant la maison d'en face — elle dirait le contraire du vrai.
+        #
+        # On la ramène donc CONTRE SON MUR : la porte garde son abscisse le
+        # long de la façade (c'est bien là qu'on entre), et sa profondeur est
+        # ramenée juste en deçà du mur de devant. L'enseigne tombe alors dans
+        # la silhouette dessinée, du côté par où l'on aborde la maison.
+        f = (r[ifa] or 4) / 2.
+        p = (r[ipr] or 4) / 2.
+        lx = max(-.7 * f, min(.7 * f, lx))
+        ly = (.6 * p) if ly >= 0 else (-.6 * p)
+        # …puis dans le repère de la maison redressée.
+        x1, y1, c1 = poses[k] if poses else (x0, y0, r[icap] or 0.)
+        a = math.radians(c1)
+        out.setdefault(u, []).append("%.1f,%.1f" % (
+            x1 + lx * math.cos(a) - ly * math.sin(a),
+            y1 + lx * math.sin(a) + ly * math.cos(a)))
+    return {u: " ".join(v) for u, v in out.items()}
 
 
 def _croisent(A, B):
@@ -1413,8 +1909,68 @@ def masque(source, larg_m, haut_m):
     return bits, nx, ny, pose
 
 
-def ecrire_masque(b, prefixe, larg, haut):
+def graver_courtine(bits, nx, ny, lieu):
+    """Le rempart dans le masque — et les portes laissées ouvertes.
+
+    POURQUOI ÇA MANQUAIT, ET CE QUE ÇA COÛTAIT. Le masque ne gravait que
+    `bati`. La courtine était DESSINÉE (on la voit sur le plan) mais elle
+    n'était inscrite nulle part : ni la foule ni la bataille ne savaient qu'elle
+    est solide. Les hommes la traversaient — pas par un défaut de trajectoire,
+    mais parce que pour eux elle n'existait pas. Neuf kilomètres et demi de
+    muraille qui ne tiennent rien, dans un jeu dont c'est le sujet.
+
+    LES SEPT PORTES RESTENT DES TROUS, et c'est le seul point délicat : dans la
+    carte d'origine, les tronçons de mur portent `largeur: null` et les portes
+    `largeur: 6`. On grave les premiers et l'on saute les secondes. Sans ça la
+    ville devient imprenable et l'assaut piétine dehors pour toujours.
+    """
+    chem = os.path.join(RACINE, "etat", "villes", lieu + ".json")
+    if not os.path.exists(chem):
+        return 0
+    with open(chem, encoding="utf-8") as f:
+        murs = [s for s in (json.load(f).get("sol") or [])
+                if s.get("genre") == "mur" and s.get("largeur") is None]
+    if not murs:
+        return 0
+    demi = MUR_E / 2.
+    pose = 0
+    for s in murs:
+        pts = [_du_plan(p) for p in s["points"]]
+        for (ax, ay), (bx, by) in zip(pts, pts[1:]):
+            lx, ly = bx - ax, by - ay
+            lg = math.hypot(lx, ly)
+            if lg < 1e-6:
+                continue
+            ux, uy = lx / lg, ly / lg          # le long du mur
+            # La boîte du segment, élargie de la demi-épaisseur.
+            i0 = max(0, int((min(ax, bx) - demi) / MASQUE_PAS))
+            i1 = min(nx - 1, int((max(ax, bx) + demi) / MASQUE_PAS) + 1)
+            j0 = max(0, int((min(ay, by) - demi) / MASQUE_PAS))
+            j1 = min(ny - 1, int((max(ay, by) + demi) / MASQUE_PAS) + 1)
+            for j in range(j0, j1 + 1):
+                cy = (j + .5) * MASQUE_PAS - ay
+                for i in range(i0, i1 + 1):
+                    cx = (i + .5) * MASQUE_PAS - ax
+                    # projection sur le segment, bornée à ses deux bouts
+                    t = cx * ux + cy * uy
+                    if t < 0. or t > lg:
+                        continue
+                    # distance perpendiculaire
+                    if abs(-cx * uy + cy * ux) > demi:
+                        continue
+                    k = j * nx + i
+                    if not (bits[k >> 3] >> (k & 7)) & 1:
+                        pose += 1
+                    bits[k >> 3] |= 1 << (k & 7)
+    return pose
+
+
+def ecrire_masque(b, prefixe, larg, haut, lieu=None):
     bits, nx, ny, pose = masque(b, larg, haut)
+    mur = graver_courtine(bits, nx, ny, lieu) if lieu else 0
+    if mur:
+        print("  masque      + %d m² de courtine (les portes restent ouvertes)"
+              % mur)
     chem = os.path.join(RACINE, "monde", prefixe + ".masque.bin")
     with open(chem, "wb") as f:
         f.write(bits)
@@ -1495,10 +2051,13 @@ def cuire(lieu):
         "niveaux": niveaux,
         "voies": voies(r),
         "rempart": remparts(lieu),
+        # `bati` D'ABORD : c'est lui qui redresse la ville, et `enseignes` pose
+        # ses marques sur le résultat de ce redressement (voir POSES).
         "bati": bati(b, r),
         "types": types(b),
+        "enseignes": enseignes(b),
         "masque": ecrire_masque(b, prefixe, round((nx - 1) * pas),
-                                round((ny - 1) * pas)),
+                                round((ny - 1) * pas), lieu),
         "reperes": reperes(r),
         "quartiers": quartiers(b),
     }
@@ -1534,6 +2093,10 @@ def main():
             print("  bati %-20s %-12s %7d signes, %5d silhouettes"
                   % (u, t["cat"], len(d["bati"][u]), n))
     print("  %d silhouettes pour %d bâtiments semés" % (silhouettes, COMPTE[0]))
+    ens = sum(s.count(",") for s in d["enseignes"].values())
+    print("  %d enseignes sur %d types marqués (%d types sans marque)"
+          % (ens, len(d["enseignes"]),
+             sum(1 for u in d["types"] if u not in d["enseignes"])))
     print("  %d reperes, %d quartiers" % (len(d["reperes"]), len(d["quartiers"])))
 
 

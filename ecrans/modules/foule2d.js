@@ -248,6 +248,10 @@ window.Foule2d = (() => {
   // jamais attribuer de témoins à un fait daté, ce qui est tout l'usage.
   function presents(x, y, rayon, quand) {
     if (!G || !J || !voirie || !cellules.length) return null;
+    // ON NE DIFFÈRE RIEN ICI. Le dessin peut se permettre d'attendre une passe ;
+    // un compte de témoins, non — il doit être juste du premier coup, quel que
+    // soit le plafond que la dernière tranche de dessin a laissé derrière elle.
+    J.quotaChemins();
     const R = rayon || PORTEE_GENS, R2 = R * R;
     const min = (quand === undefined || quand === null) ? minute : quand;
     const maille = (manif && manif.cellule_m) || 250;
@@ -256,6 +260,16 @@ window.Foule2d = (() => {
     // PORTE derrière laquelle il est. « 12 à la taverne » se joue ; « 12
     // portefaix » ne dit pas où aller frapper.
     const portes = new Map();
+    // CE QU'ILS FONT, et pas seulement ce qu'ils sont. Le verbe était calculé
+    // à chaque corps — `p.quoi` dit où il est, `p.vers` où il va, et
+    // `Bataille2d.derange` y écrit « fuite » ou « ronde » — puis jeté au profit
+    // d'un compte par métier. Dix portefaix qui FUIENT se lisaient donc « 10
+    // portefaix », mot pour mot comme dix portefaix qui vont au travail : le
+    // MJ recevait une rue paisible au milieu d'un assaut.
+    //
+    // On le garde, rangé par verbe puis par métier — « fuient : 6 portefaix,
+    // 2 servantes » se joue, « 8 personnes » ne se joue pas.
+    const font = new Map();
     let nRue = 0, nPlace = 0, nToit = 0, nChez = 0;
     const p = {};
     for (const cel of cellules) {
@@ -292,8 +306,45 @@ window.Foule2d = (() => {
           portes.set(s, (portes.get(s) || 0) + 1);
         }
         t.set(m, (t.get(m) || 0) + 1);
+        // Le verbe, tiré des deux mêmes champs qui viennent de décider la
+        // colonne. `fuite` et `ronde` d'abord parce que ce sont les seuls que
+        // la bataille écrit, et les seuls qu'on ne pardonnerait pas de perdre.
+        const verbe = p.vers === "fuite" ? "fuient"
+          : p.vers === "ronde" ? "en ronde"
+          : p.quoi === "chez" ? "chez eux"
+          : p.quoi === "route" ? "en chemin vers " + (p.vers || "quelque part")
+          : "à " + (p.vers || "l'abri");
+        let f = font.get(verbe);
+        if (!f) font.set(verbe, f = new Map());
+        f.set(m, (f.get(m) || 0) + 1);
       }
     }
+    // ---- CEUX QUI SONT EN ARMES -------------------------------------------
+    // ILS NE SONT PAS DANS LES CELLULES, et c'est pour ça qu'on ne les voyait
+    // pas. La boucle ci-dessus parcourt les corps de `journee.js` — les
+    // habitants, leur journée, leurs services. Les combattants d'une bataille
+    // vivent dans un tout autre tableau, chez `bataille2d`, et aucune ligne ne
+    // les regardait : un marcheur passait à vingt pas de deux cents hommes
+    // rangés devant une porte et rapportait « 426 chez eux ».
+    //
+    // On les compte donc à part, par CAMP et par ÉTAT — c'est ce qui distingue
+    // une garde qui tient d'une garde qui rompt, et c'est la seule chose qu'un
+    // homme voit vraiment quand il arrive sur une rue en armes. On ne les
+    // verse ni dans `croises` ni dans `metiers` : un piquier n'est pas un
+    // portefaix, et les fondre rendrait les deux illisibles.
+    const armes = new Map();      // "camp/état" -> compte
+    let nArmes = 0;
+    if (window.Bataille2d && Bataille2d.troupe) {
+      for (const h of (Bataille2d.troupe() || [])) {
+        if (!h || h.etat === "mort") continue;
+        const dx = h.x - x, dy = h.y - y;
+        if (dx * dx + dy * dy > R2) continue;
+        nArmes++;
+        const cle = (h.camp === "garde" ? "garde" : "assaut") + "/" + h.etat;
+        armes.set(cle, (armes.get(cle) || 0) + 1);
+      }
+    }
+
     const trier = (t) => [...t.entries()].sort((a, b) => b[1] - a[1]);
     // Ceux qu'on croise sont ceux de la rue ET ceux de la place : c'est le
     // même geste — on passe devant eux et ils lèvent la tête.
@@ -304,6 +355,15 @@ window.Foule2d = (() => {
       // ce qu'on RENCONTRE
       rue: nRue, place: nPlace, croises: nRue + nPlace,
       metiers: trier(croises),
+      // CE QU'ILS FONT — du plus nombreux au plus rare, chaque verbe avec le
+      // détail des métiers qui s'y trouvent. C'est la seule ligne qui dise une
+      // ACTION plutôt qu'un état, et donc la seule dont un récit puisse partir.
+      font: [...font.entries()]
+        .map(([v, m]) => [v, [...m.entries()].sort((a, b) => b[1] - a[1]),
+                          [...m.values()].reduce((s, n) => s + n, 0)])
+        .sort((a, b) => b[2] - a[2]),
+      // CEUX QUI SONT EN ARMES, à part du reste — voir plus haut.
+      en_armes: nArmes, armes: trier(armes),
       // ce qu'on peut aller CHERCHER, et par quelle porte
       toit: nToit, portes: trier(portes), metiers_toit: trier(toit),
       // l'ambiance, et rien de plus
@@ -398,13 +458,25 @@ window.Foule2d = (() => {
                     Math.abs(travail.minute - minute) > 1))
       travail = null;
     if (!travail) {
-      travail = { ic: 0, k: 0, n: 0, tas: new Map(), dedans: [],
+      // `n` est tout ce qui est à l'écran (c'est lui qui bute sur le plafond),
+      // `dh` seulement ce qui est sous le ciel — la barre distingue les deux.
+      travail = { ic: 0, k: 0, n: 0, dh: 0, tas: new Map(), dedans: [],
                   sceau, minute, cout: 0 };
     }
     const t = travail;
     const L = toile.width, H = toile.height;
     const t0 = performance.now();
     let garde = 0;
+    // ON NE COMMENCE PAS UN CHEMIN NEUF APRÈS L'ÉCHÉANCE DE LA TRANCHE. Voir la
+    // note de `chemin()` dans journee.js : un seul A* à froid coûte jusqu'à
+    // vingt-huit millisecondes, et ils arrivent en grappes — les voisins d'une
+    // même cellule vont aux mêmes endroits. Sans cette borne, quatre d'affilée
+    // tombent dans la même tranche et l'image passe à cent millisecondes :
+    // mesuré à l'ouverture de l'échelle. Avec, le dépassement est borné à un
+    // seul chemin. En régime chaud elle ne sert à rien — tout est en cache et
+    // rien n'est différé. Le passage `complet` (rafraichir) la lève : là on veut
+    // la vérité tout de suite, quitte à geler une fois.
+    J.quotaChemins(complet ? null : BUDGET);
     // CEUX QUI SONT DEDANS COMPTENT AUSSI. La 3D les écartait, et elle avait
     // raison : un point posé au milieu d'un bâtiment y est noyé dans la pierre.
     // UN PLAN EST UNE COUPE — on voit très bien qui est dans quelle maison, et
@@ -432,6 +504,7 @@ window.Foule2d = (() => {
         if (!complet && (++garde & 3) === 0 && performance.now() - t0 > BUDGET) {
           t.cout += performance.now() - t0;
           publier(t, false, false);
+          rendreLesChemins();
           return;
         }
         // `t.minute` et non `minute` : un nuage doit être d'un SEUL instant.
@@ -439,6 +512,9 @@ window.Foule2d = (() => {
         // heure et son début à une autre — invisible sur un piéton, mais c'est
         // par là que les points se mettent à sauter.
         J.ou(cel, k, jour, t.minute, voirie, rangs, P);
+        // Avant tout le reste : un corps différé n'a pas de position du tout, et
+        // la bataille ne doit pas lui en inventer une à l'origine du monde.
+        if (P.quoi === "differe") continue;
         // LE DROIT DE VETO DE LA BATAILLE. La journée écrite dit où cet homme
         // DEVRAIT être ; s'il y a du fer dans sa rue, il n'y est pas. On ne
         // salit pas `journee.js` pour autant — c'est la couche du dessus qui
@@ -448,7 +524,9 @@ window.Foule2d = (() => {
         // la couche de peur avance ses fuyards elle-même, et les extrapoler en
         // plus les ferait courir deux fois.
         if (window.Bataille2d && Bataille2d.derange(cel, k, P)) { P.vx = 0; P.vy = 0; }
-        if (P.quoi === "chez") continue;
+        // « chez » ne se dessine pas ; « differe » ne se dessine pas ENCORE —
+        // son chemin n'est pas tracé, il entrera au nuage suivant.
+        if (P.quoi === "chez" || P.quoi === "differe") continue;
         // ON DÉGAGE TOUT CE QUI EST SOUS LE CIEL — le piéton en chemin comme
         // le badaud du marché. Voir `aCiel` : c'est le toit qui décide, pas
         // le fait de marcher.
@@ -459,7 +537,7 @@ window.Foule2d = (() => {
         t.n++;
         if (t.n >= MAX_ECRAN) {
           t.cout += performance.now() - t0; espacer(t);
-          publier(t, true, true); travail = null; return;
+          publier(t, true, true); travail = null; rendreLesChemins(); return;
         }
         // Et l'on peint avec la même règle qu'on dégage : celui qui fuit était
         // compté sous un toit alors qu'il est accroupi au milieu de la rue —
@@ -469,6 +547,7 @@ window.Foule2d = (() => {
         if (!ciel) {
           t.dedans.push(P.x, P.y, P.vx || 0, P.vy || 0);
         } else {
+          t.dh++;
           const c = TEINTES[P.vers] || DEFAUT;
           let tas = t.tas.get(c);
           if (!tas) t.tas.set(c, tas = []);
@@ -480,7 +559,16 @@ window.Foule2d = (() => {
     t.cout += performance.now() - t0; espacer(t);
     publier(t, t.n >= MAX_ECRAN, true);
     travail = null;
+    rendreLesChemins();
   }
+
+  // ON NE LAISSE JAMAIS UNE ÉCHÉANCE DERRIÈRE SOI. `journee.js` est un module,
+  // donc UNE instance pour toute la page : la 3D (`monde/foule.js`) et les
+  // témoins de `presents()` s'en servent aussi. Une échéance oubliée serait une
+  // échéance PASSÉE pour eux, et tous leurs chemins neufs reviendraient `null`
+  // sans qu'aucun d'eux ait rien demandé — une foule 3D qui se vide, et personne
+  // pour faire le lien avec le plan 2D qu'on venait de fermer.
+  function rendreLesChemins() { if (J) J.quotaChemins(); }
 
   // Ce que la tranche a coûté EN TOUT, images comprises. Mesuré depuis
   // `image()`, on ne voyait que le dernier morceau — neuf millisecondes — et
@@ -508,9 +596,9 @@ window.Foule2d = (() => {
   function publier(t, tronque, fini) {
     if (!fini && entier) return;
     entier = !!fini;
-    nuage = { tas: t.tas, dedans: t.dedans, total: t.n, tronque,
+    nuage = { tas: t.tas, dedans: t.dedans, total: t.n, dh: t.dh, tronque,
               partiel: !fini, minute: t.minute };
-    compter(t.n, tronque);
+    compter(t.dh, t.n - t.dh, tronque);
   }
 
   function peindre() {
@@ -659,15 +747,34 @@ window.Foule2d = (() => {
   // c'est ce chiffre-là qui veut dire quelque chose. On ne le réécrit que
   // lorsqu'il a franchement bougé — un nombre qui change à chaque image ne se
   // lit pas, il clignote.
-  let dehors = 0;
-  function compter(n, tronque) {
+  // « DEHORS » NE VOULAIT PAS DIRE DEHORS. Le compteur affichait `t.n`, qui est
+  // TOUT ce que le cadrage contient — et depuis qu'on dessine aussi les gens
+  // sous leur toit (un plan est une coupe), c'était en grande partie des gens
+  // chez eux. D'où cinq cent dix-huit annoncés « dehors » pour une vingtaine de
+  // marcheurs visibles dans la rue : les cinq cents autres étaient là, pâles,
+  // posés sur leurs maisons, et personne ne les compte comme des passants.
+  //
+  // Les deux nombres n'ont pas le même sens et ne servent pas à la même chose —
+  // c'est écrit en tête de `presents()` : dehors est de la RENCONTRE, dedans
+  // n'est que de l'ambiance. On les dit donc séparément.
+  let dernierDh = -1, dernierDd = -1;
+  function compter(dh, dd, tronque) {
     if (!compte) return;
-    if (!tronque && Math.abs(n - dehors) <= Math.max(40, dehors * .04)) return;
-    dehors = n;
+    // Un nombre qui change à chaque image ne se lit pas, il clignote : on ne
+    // réécrit que s'il a franchement bougé. LE PLANCHER ÉTAIT À QUARANTE, ce
+    // qui convenait aux dix-huit mille de la pleine ville et gelait tout à
+    // l'échelle de la rue — de vingt à cinquante passants, aucun changement
+    // n'était jamais « franc ». Il suit maintenant l'ordre de grandeur.
+    const fige = (a, b) => Math.abs(a - b) <= Math.max(2, b * .04);
+    if (!tronque && fige(dh, dernierDh) && fige(dd, dernierDd)) return;
+    dernierDh = dh; dernierDd = dd;
     // « et plus » : on a cessé de compter avant la fin. Mieux vaut le dire que
     // laisser croire que la ville tient en dix-huit mille personnes.
-    compte.textContent = n
-      ? n.toLocaleString("fr-FR") + (tronque ? " et plus" : "") + " dehors" : "";
+    const n = (v) => v.toLocaleString("fr-FR");
+    compte.textContent = (dh || dd)
+      ? n(dh) + " dehors" + (dd ? " · " + n(dd) + " sous un toit" : "") +
+        (tronque ? " et plus" : "")
+      : "";
   }
 
   function basculer() {
@@ -756,7 +863,22 @@ window.Foule2d = (() => {
   // ils étaient à l'écran : le plan bouge sous une foule immobile, et l'on voit
   // des habitants traverser les murs. `requestAnimationFrame` ne rattrape rien
   // ici — en pause, il n'y a pas d'image suivante.
-  function recadrer() { ajuster(); peindre(); }
+  // ET C'EST AUSSI RECOMPTER. Le nuage est trié À L'ÉCRAN (`calculer` écarte
+  // tout ce qui tombe hors de la toile, et c'est ce tri qui donne le compte) ;
+  // le dessin, lui, écarte au cadrage COURANT à chaque image. Tant que
+  // recadrer ne salissait pas, les deux se séparaient dès qu'on approchait :
+  // la barre annonçait les cinq cents personnes du cadrage d'avant pendant
+  // qu'on en voyait vingt dans la rue où l'on venait de descendre. En marche
+  // ça se rattrapait à la première période ; EN PAUSE, jamais — et l'horloge
+  // démarre en pause. Un chiffre faux qui ne se corrige pas est pire que pas
+  // de chiffre.
+  // Le repeint attend l'image, le retaillage non — même raison que dans
+  // `bataille2d` : `carte-ville` appelle ceci depuis `pointermove`, qui n'est
+  // pas cadencé sur l'écran, et l'on repeignait donc la foule entière plusieurs
+  // fois par image affichée pendant qu'on tire le plan. `sale` reste posé tout
+  // de suite : c'est un drapeau que la prochaine image consomme une seule fois,
+  // quel que soit le nombre de mouvements de souris qui l'ont levé.
+  function recadrer() { ajuster(); sale = true; if (!boucle) peindre(); }
 
   // Reprendre l'heure, basculer, changer de salle : autant de raisons de
   // replacer tout le monde avant la prochaine image.
@@ -781,7 +903,8 @@ window.Foule2d = (() => {
     return {
       cellules: cellules.length, corps,
       heure: hhmm(Math.floor(minute)), minute, jour, marche,
-      dehors: nuage.total, points: nuage.dedans.length / 4 +
+      dehors: nuage.dh || 0, aEcran: nuage.total,
+      points: nuage.dedans.length / 4 +
         [...nuage.tas.values()].reduce((n, t) => n + t.length / 4, 0),
       toile: toile ? [toile.width, toile.height] : null,
       vue: vueDe && vueDe(),

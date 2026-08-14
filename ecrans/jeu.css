@@ -2124,6 +2124,27 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
   font-family:ui-sans-serif,system-ui,sans-serif;line-height:1.5;}
 .chr-meta .chr-icone,.chr-coulisses .chr-icone{opacity:.8;}
 
+/* — LE MIROIR DE DÉBOGAGE : la vue de la carte qui vient de partir au MJ.
+     Elle se range avec le hors-fiction (même encre de loge que les coulisses)
+     parce qu'elle n'a pas eu lieu dans la partie — mais en RAYÉ, pour qu'on ne
+     la confonde pas une seconde avec une illustration de scène. C'est un outil
+     posé dans le fil, pas une image du récit.
+     La vignette est bridée en hauteur : quatre vues à pleine largeur dans une
+     colonne de chronique et l'on ne retrouve plus ce qu'on lisait. Un clic
+     l'ouvre en grand, un second la referme. */
+.chr-vue .chr-corps{border-left:0;border-radius:7px;padding:7px 12px;margin:3px 0;
+  border:1px dashed color-mix(in srgb,var(--loge) 55%,transparent);
+  background:color-mix(in srgb,var(--loge) 6%,transparent);}
+.chr-vue .chr-qui{color:var(--loge);font-variant:small-caps;letter-spacing:.1em;}
+.chr-vue .chr-texte{font-size:.78em;font-family:ui-sans-serif,system-ui,sans-serif;
+  opacity:.85;}
+.vue-image{display:block;width:100%;max-height:190px;object-fit:contain;
+  object-position:center;margin:6px 0 3px;border-radius:3px;cursor:zoom-in;
+  background:var(--cv-sol);}
+.vue-image.grande{max-height:none;cursor:zoom-out;}
+.vue-legende{font-size:.72em;font-family:ui-sans-serif,system-ui,sans-serif;
+  opacity:.6;font-variant-numeric:tabular-nums;}
+
 /* les rênes lâchées : un liseré discret, jamais une réplique — on doit voir
    d'un coup d'œil que ce qui suit a été joué à la place du joueur */
 #mode-input #mode-run.actif{color:#9a7bd0;border-color:#9a7bd0;
@@ -4375,31 +4396,83 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
      des deux horloges tourne (celle de la ville, ou celle de l'assaut). — */
 .cv-bataille{position:absolute;inset:0;width:100%;height:100%;
   pointer-events:none;}
+/* — LE BAS DU PLAN EST UN RAIL, et il était disputé par trois barres qui ne se
+     voyaient pas : la marche au centre (`.cv-barre`), le combat au centre lui
+     aussi (`.cv-combat-barre`), et celle-ci à droite. Elle n'avait pas de
+     `nowrap` : à cinq mesures, sa ligne passait sur deux hauteurs, s'élargissait
+     vers la gauche et venait se poser sur « Vous y êtes ». On lisait « 21 en
+     fuite » à cheval sur « 1 dehors ».
+     Deux règles suffisent : elle ne se plie plus, et elle MONTE d'un cran dès
+     qu'une barre centrale s'ouvre. `:has()` le fait sans une ligne de JS — et
+     sans toucher au module du voisin. — */
 .cv-bat-barre{position:absolute;right:10px;bottom:10px;z-index:3;
-  display:flex;align-items:center;gap:.5em;
+  display:flex;align-items:center;gap:.5em;white-space:nowrap;
   padding:.3em .6em;border-radius:3px;
   background:color-mix(in srgb,var(--cv-sol) 88%,transparent);
   border:1px solid var(--cv-bati-trait);
-  font-size:.85em;color:var(--ink);user-select:none;}
+  font-size:.85em;color:var(--ink);user-select:none;
+  transition:bottom .18s;}
+#ville2d:has(.cv-barre.ouverte) .cv-bat-barre,
+#ville2d:has(.cv-combat-barre.ouverte) .cv-bat-barre{bottom:3.1rem;}
 .cv-bat-barre button{background:none;border:0;cursor:pointer;
   color:var(--ink);font-size:1.05em;line-height:1;padding:.1em .25em;}
 .cv-bat-barre button:hover{color:var(--braise);}
-.cv-b-etat{font-variant-numeric:tabular-nums;opacity:.85;}
+.cv-b-etat{font-variant-numeric:tabular-nums;opacity:.85;
+  display:flex;align-items:baseline;gap:.55em;}
+/* L'heure d'abord — c'est elle qu'on cherche quand on revient à l'écran. */
+.cv-b-h{font-weight:600;opacity:1;letter-spacing:.01em;}
+/* Le rapport de force : le seul chiffre qui décide de la nuit. Les deux
+   nombres portent, le mot qui les sépare s'efface. */
+.cv-b-force{opacity:.55;}
+.cv-b-force b{font-weight:600;opacity:1;color:var(--ink);}
+.cv-b-porte{opacity:.8;}
+/* Les pertes suivent l'affaire, elles ne la décident pas : plus petites, et
+   séparées du reste par un filet plutôt que par un point de plus. */
+.cv-b-pertes{opacity:.62;font-size:.92em;
+  padding-left:.55em;
+  border-left:1px solid color-mix(in srgb,var(--cv-bati-trait) 60%,transparent);}
 /* — LE PLEIN ÉCRAN — le seul bouton du plan qui ne parle pas de la fiction :
      il se tient dans le coin, à peine visible, et ne se réveille qu'au survol
      de la carte. — */
-.cv-plein{position:absolute;right:10px;top:10px;z-index:3;
-  width:1.9em;height:1.9em;padding:0;line-height:1;cursor:pointer;
+/* — L'ÉCHELLE DU COIN. Trois boutons s'y sont posés l'un après l'autre, chacun
+     calculant sa hauteur dans SON `em` — et comme `.cv-tenir` écrit en .72rem
+     et les icônes en .95em, « dix pixels plus deux virgule cinq em » ne veut
+     pas la même chose d'un bouton à l'autre. Ils se sont recouverts, et c'était
+     inévitable.
+     On compte donc en REM, qui est le même pour tout le monde, et l'on tient
+     l'échelle ici : un barreau par bouton, dans l'ordre où on les a posés. Le
+     prochain qui vient prend `--cv-coin-4`. — */
+:root{--cv-coin-1:10px;
+      --cv-coin-2:calc(10px + 2.2rem);
+      --cv-coin-3:calc(10px + 4.4rem);}
+.cv-plein,.cv-centrer{position:absolute;right:10px;z-index:3;
+  width:1.9rem;height:1.9rem;padding:0;line-height:1;cursor:pointer;
   border:1px solid var(--cv-bati-trait);border-radius:3px;
   background:color-mix(in srgb,var(--cv-sol) 88%,transparent);
-  color:var(--ink);font-size:.95em;opacity:.35;transition:opacity .15s;}
-#ville2d:hover .cv-plein{opacity:.85;}
-.cv-plein:hover{opacity:1;color:var(--braise);}
+  color:var(--ink);font-size:.95rem;opacity:.35;transition:opacity .15s;}
+.cv-plein{top:var(--cv-coin-1);}
+/* — CENTRER SUR SOI — sous le plein écran, même discrétion. Il porte l'or du
+     joueur et non l'encre du décor : c'est le seul bouton de la carte qui
+     parle de QUELQU'UN, et l'œil doit pouvoir le trouver sans le chercher. — */
+.cv-centrer{top:var(--cv-coin-2);color:var(--or-joueur);}
+#ville2d:hover .cv-plein,#ville2d:hover .cv-centrer{opacity:.85;}
+.cv-plein:hover,.cv-centrer:hover{opacity:1;color:var(--braise);}
+/* Sans adresse en mètres, il n'y a personne à centrer : le bouton reste là —
+   pour qu'on sache qu'il existe — mais il ne fait plus semblant. */
+.cv-centrer:disabled{cursor:default;opacity:.18;color:var(--ink);}
+#ville2d:hover .cv-centrer:disabled{opacity:.25;}
+.cv-centrer:disabled:hover{color:var(--ink);}
 /* En plein écran, l'hôte n'a plus de parent pour lui donner un fond : sans
    ceci le navigateur peint du noir derrière un plan qui, lui, est clair. */
 #ville2d:fullscreen{background:var(--cv-sol);}
-#ville2d:fullscreen .cv-plein{opacity:.85;}
-.cv-bat-barre.marche .cv-b-etat{color:var(--braise);opacity:1;}
+#ville2d:fullscreen .cv-plein,#ville2d:fullscreen .cv-centrer{opacity:.85;}
+/* En marche, c'est L'HEURE qui s'allume et rien d'autre : c'est elle qui
+   tourne. Toute la ligne en braise, et la hiérarchie qu'on vient d'établir
+   s'effondrait — les nombres du rapport de force reprenaient l'encre du décor
+   pendant que les éclopés passaient en rouge. */
+.cv-bat-barre .cv-b-etat{opacity:.85;}
+.cv-bat-barre.marche .cv-b-etat{opacity:1;}
+.cv-bat-barre.marche .cv-b-h{color:var(--braise);}
 /* Une carte se tire à la main : le glissé doit déplacer la ville, jamais
    surligner « LE CULPUCIER » en bleu. Les noms du plan ne se sélectionnent pas,
    et seuls les repères prennent la souris. */
@@ -4546,14 +4619,66 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 .cv-quartier{fill:var(--muted);text-anchor:middle;letter-spacing:.14em;
   text-transform:uppercase;opacity:.55;pointer-events:none;
   font-family:inherit;}
-.cv-repere circle{fill:var(--accent);stroke:var(--cv-sol);
+/* LE RAYON EN PIXELS APPARENTS, PAS EN MÈTRES. Il était écrit `r="11"` dans le
+   dessin, donc onze MÈTRES : neuf pixels quand on voit la ville, soixante-dix
+   quand on est dans la rue — le gros point rouge qui finissait par couvrir ce
+   qu'il désigne. Comme tous les traits de ce plan, il se divise par l'échelle
+   et garde une taille constante à l'œil. Même chose pour l'écart du nom, qui
+   se pose désormais en CSS puisque le texte est planté sur le point même. */
+.cv-repere circle{fill:var(--accent);stroke:var(--cv-sol);r:calc(5.5px * var(--mpp,1));
   stroke-width:calc(1.5px * var(--mpp,1));cursor:pointer;}
 .cv-repere text{fill:var(--ink);font-size:calc(11px * var(--mpp,1));
   paint-order:stroke;stroke:var(--cv-sol);stroke-width:calc(3px * var(--mpp,1));
+  transform:translate(calc(10px * var(--mpp,1)), calc(4px * var(--mpp,1)));
   cursor:pointer;}
 .cv-repere:hover circle{fill:var(--braise);}
 
-/* — vous êtes ici : l'or du joueur, le même que sur toutes les cartes — */
+/* — la bulle de survol : le type du bâtiment, à sa propre couleur.
+     Elle remplace le `<title>` du navigateur, qui mettait une seconde à venir
+     et s'habillait du système. Fond et encre sont posés en ligne par le module
+     (la teinte est lue sur le chemin survolé) ; ici on ne règle que la forme,
+     et surtout : PAS DE TRANSITION. Une bulle qui s'estompe est une bulle en
+     retard, et c'est précisément ce qu'on voulait quitter. — */
+.cv-bulle{position:absolute;left:0;top:0;z-index:4;pointer-events:none;
+  padding:.22em .5em;border-radius:3px;white-space:nowrap;
+  border:1px solid color-mix(in srgb,var(--cv-bati-trait) 70%,transparent);
+  box-shadow:0 1px 4px rgba(0,0,0,.28);
+  font-size:.82em;line-height:1.35;letter-spacing:.02em;
+  user-select:none;will-change:transform;}
+
+/* — LA FICHE D'UN HOMME. La bulle des maisons prend la couleur du métier
+     qu'elle nomme ; celle-ci n'en prend aucune — elle ne nomme pas un toit,
+     elle nomme quelqu'un, et le fond doit rester le même qu'on survole un
+     chef de corps ou un blessé. Elle passe donc sur l'encre du décor, et la
+     seule couleur qu'elle porte est celle du chiffre. — */
+.cv-bulle-bat{padding:.34em .6em;
+  background:color-mix(in srgb,var(--cv-sol) 94%,#000);
+  color:var(--ink);}
+.cv-bulle-bat span{display:block;}
+/* La première ligne est l'identité : elle porte seule, et les suivantes
+   s'effacent derrière elle — sinon six lignes de même poids se lisent comme
+   une liste, et l'on ne sait plus qui on regarde. */
+.cv-bulle-bat span:first-child{font-size:1.06em;letter-spacing:.01em;}
+.cv-bulle-bat span+span{opacity:.72;}
+.cv-bulle-bat em{font-style:normal;opacity:.85;
+  color:var(--braise);margin-left:.5em;}
+.cv-bulle-bat i{font-style:italic;opacity:.9;}
+.cv-bulle-bat sup{font-size:.72em;vertical-align:.35em;}
+
+/* — les enseignes : une marque de métier sur la porte, aux fortes approches.
+     DÉSATURÉES, ET CE N'EST PAS UN DÉTAIL. Un emoji sort en couleurs pleines
+     et modernes ; posé sur un plan à l'encre, il hurle et il date la page. Le
+     `grayscale` les rend à la teinte du plan, l'opacité les remet derrière les
+     noms et les repères, qui restent ce par quoi on se retrouve. La taille est
+     écrite en mètres × --mpp, comme tout le reste ici : constante à l'œil,
+     quelle que soit l'approche. */
+.cv-enseignes{pointer-events:none;}
+.cv-enseigne{font-size:calc(15px * var(--mpp,1));text-anchor:middle;
+  dominant-baseline:central;filter:grayscale(1) contrast(.8);opacity:.78;}
+
+/* — vous êtes ici : l'or du joueur, le même que sur toutes les cartes.
+     Base commune ; le vrai rendu est plus bas, sous `.cv-ici-pres`, qui est
+     désormais posée à toute approche. — */
 .cv-ici-halo{fill:var(--or-joueur);opacity:.16;}
 .cv-ici-point{fill:var(--or-joueur);stroke:var(--cv-sol);
   stroke-width:calc(2px * var(--mpp,1));}
@@ -4588,7 +4713,30 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 .cv-loin .cv-bati path{stroke:none;}
 .cv-loin .cv-repere text{display:none;}
 .cv-moyen .cv-v-ruelle{opacity:.2;}
-.cv-pres .cv-quartier{opacity:.2;}
+/* UN NOM DE QUARTIER S'EFFACE À MESURE, IL NE SAUTE PAS D'UN PALIER À L'AUTRE.
+   Il est écrit en MÈTRES — jusqu'à 96 de corps, pour que « La ville » pèse plus
+   que « Le bourg de la Gadoue » —, donc son corps apparent double à chaque fois
+   qu'on approche de moitié : 69 px quand on voit un quartier, 157 puis 317 en
+   descendant vers la rue. Le palier fixe à 20 % laissait donc traîner un mot de
+   trois cents pixels en travers du plan, pâle mais énorme.
+   L'opacité se calcule maintenant SUR L'ÉCHELLE elle-même : pleine tant qu'on
+   lit la ville, elle décroît sur toute la descente et atteint zéro pile au
+   moment où l'on entre dans la rue. Rien à écrire en JavaScript — `--mpp` est
+   déjà là pour tous les traits de ce plan, et c'est la même idée. */
+.cv-pres .cv-quartier{
+  opacity:clamp(0, calc((var(--mpp,1) - .3) / .9 * .2), .2);}
+/* — DANS LA RUE, L'APPAREIL DE LA CARTE S'EN VA. Un nom de quartier est écrit
+     en mètres (jusqu'à 96 de corps, pour que « La ville » pèse plus que « Le
+     bourg de la Gadoue ») : à pleine page c'est juste, à deux cents mètres de
+     large c'est une enseigne de trois cents pixels couchée en travers du plan.
+     Et un repère qui pointe la porte de la Gadoue ne sert plus à rien quand on
+     voit la porte. Les deux s'effacent donc, et les enseignes prennent le
+     relais au même seuil : à cette distance, ce qu'on cherche n'est plus par
+     où l'on traverse la ville, c'est quelle maison est la forge.
+     Un fondu, pas une coupure — une couche qui disparaît net d'un cran de
+     molette se remarque, et l'on ne veut pas qu'elle se remarque. — */
+.cv-quartier,.cv-reperes{transition:opacity .18s;}
+.cv-rue .cv-quartier,.cv-rue .cv-reperes{opacity:0;pointer-events:none;}
 
 /* — LA MARCHE — l'itinéraire, et la barre qui le mène.
      Une balade se pilote à trois boutons : partir, l'allure, renoncer. Tout
@@ -4620,3 +4768,92 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 .cv-barre .cv-dit{display:none;}
 .cv-barre.un-mot .cv-dit{display:inline;}
 .cv-barre.un-mot > :not(.cv-dit){display:none;}
+/* Une rue qui ne mène nulle part est un renseignement ; des jambes qui
+   s'arrêtent d'elles-mêmes sont un événement. Même barre, même sobriété — mais
+   l'or du joueur au lieu du gris, pour qu'on ne confonde pas les deux du coin
+   de l'œil. La couleur ne dit rien de ce qu'on a croisé : c'est au MJ. */
+.cv-barre.halte{border-color:var(--or-joueur);}
+.cv-barre.halte .cv-dit{color:var(--or-joueur);}
+
+/* =========================================================
+   TENIR LA POSITION — le combat, qui est la balade dont
+   l'horloge est décrochée des jambes (ecrans/modules/combat.js).
+   Écrit en fin de fichier à dessein : le bloc est autonome, il
+   n'a rien à reprendre plus haut, et il ne gêne personne.
+   ========================================================= */
+
+/* L'entrée. Elle se tient sous le plein écran, dans le même coin et de la
+   même encre : ce sont les deux boutons du plan qui ne parlent pas de la
+   fiction, ils se ressemblent et ils se font petits. */
+/* (Troisième barreau de l'échelle du coin — voir `--cv-coin-1` plus haut.
+   Le bouton se pose depuis `combat.js` ; seule sa hauteur se décide ici.) */
+.cv-tenir{position:absolute;right:10px;top:var(--cv-coin-3);z-index:3;
+  padding:.22em .6em;line-height:1.3;cursor:pointer;
+  border:1px solid var(--cv-bati-trait);border-radius:3px;
+  background:color-mix(in srgb,var(--cv-sol) 88%,transparent);
+  color:var(--ink);font:inherit;font-size:.72rem;
+  opacity:.3;transition:opacity .15s;}
+#ville2d:hover .cv-tenir{opacity:.8;}
+.cv-tenir:hover{opacity:1;color:var(--braise);}
+
+/* La barre. Au centre bas — la foule tient la gauche, la bataille la droite,
+   et une scène qu'on joue mérite le milieu. Fermée, elle n'existe pas. */
+.cv-combat-barre{position:absolute;left:50%;bottom:10px;z-index:4;
+  transform:translateX(-50%);display:none;align-items:center;gap:.7em;
+  padding:.36em .7em;border-radius:4px;
+  border:1px solid var(--cv-bati-trait);
+  background:color-mix(in srgb,var(--cv-sol) 94%,transparent);
+  font-size:.78rem;color:var(--ink);}
+.cv-combat-barre.ouverte{display:flex;}
+.cv-combat-barre button{background:none;border:0;cursor:pointer;
+  color:inherit;font:inherit;padding:0 .2em;opacity:.75;}
+.cv-combat-barre button:hover{opacity:1;color:var(--braise);}
+
+/* L'heure du monde, et le temps de fiction écoulé. Chiffres tabulaires : une
+   horloge dont les chiffres sautent de largeur à chaque seconde se lit mal,
+   et c'est la seule chose de cette barre qu'on regarde vraiment. */
+.cv-cb-heure{font-variant-numeric:tabular-nums;font-weight:600;min-width:3.6em;}
+.cv-cb-ecoule{font-variant-numeric:tabular-nums;opacity:.6;min-width:4em;}
+/* Quand ça tourne, l'heure prend la braise — c'est le seul signal que la barre
+   se permette. Elle ne dit JAMAIS ce qu'on perçoit : le récit est au MJ. */
+.cv-combat-barre.marche .cv-cb-heure{color:var(--braise);}
+.cv-cb-retirer{opacity:.55;}
+
+/* =========================================================
+   VOUS, AU 1:1 — à TOUTE approche. Le point fait 0,55 m
+   d'épaules et rien d'autre ; c'est le halo, mesuré en
+   pixels d'écran, qui le rend trouvable de loin.
+   ========================================================= */
+
+/* Le halo : jaune franc et large. Il ne décore pas — il porte, à lui seul,
+   tout le travail de repérage, puisque le point ne grossit plus jamais pour
+   s'en charger. Deux cercles concentriques en un seul trait : un fond doux,
+   un liseré net qui donne le point exact. */
+.cv-ici-pres .cv-ici-halo{
+  fill:#f5c518;opacity:.28;
+  stroke:#f5c518;stroke-opacity:.85;
+  /* en mètres, corrigé de l'échelle : un liseré d'épaisseur constante à l'œil */
+  stroke-width:calc(var(--mpp,1) * 1.5px);
+  paint-order:stroke fill;}
+
+/* Le point, lui, ne bouge plus : il fait la taille d'un homme et c'est tout
+   ce qu'on lui demande. Pas de contour — à cette échelle un liseré doublerait
+   sa largeur et le mensonge reviendrait par la porte. */
+.cv-ici-pres .cv-ici-point{
+  fill:#fff3b0;stroke:none;}
+
+/* Le nom se serre contre le halo au lieu de flotter à vingt-six mètres, et il
+   se met à la taille de ce qu'on lit de près. */
+.cv-ici-pres text{
+  font-size:calc(var(--mpp,1) * 11px);}
+
+/* Il bat, lentement. Un point d'un demi-mètre sur une carte qui en fait cinq
+   mille se perd dès qu'on quitte l'écran des yeux ; deux secondes de
+   respiration suffisent à le retrouver sans qu'il attire l'œil en permanence.
+   Coupé pour qui préfère l'immobilité — c'est une aide, pas un effet. */
+@keyframes cv-ici-battre{
+  0%,100%{opacity:.28;}
+  50%{opacity:.5;}}
+.cv-ici-pres .cv-ici-halo{animation:cv-ici-battre 2.4s ease-in-out infinite;}
+@media (prefers-reduced-motion:reduce){
+  .cv-ici-pres .cv-ici-halo{animation:none;}}

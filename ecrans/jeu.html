@@ -153,8 +153,24 @@
 <!-- la bataille : une lunette posée sur le plan, comme la foule. Elle n'écrit
      rien dans l'état et ne coûte pas une minute de partie — le jour où une
      bataille comptera, c'est le MJ qui l'écrira. -->
+<!-- le hasard de la bataille, détaché : reproductible, testable, et AVANT elle
+     — c'est un script classique et non un module ES, donc l'ordre compte. -->
+<script src="/modules/son.js"></script>
+<script src="/modules/bataille/hasard.js"></script>
+<script src="/modules/bataille/mesures.js"></script>
+<!-- la couche du corps, et sa prise sur la bataille. En observation :
+     elle calcule et se fait mesurer, elle ne conduit rien. -->
+<script src="/modules/survival-stack/1-corps.js"></script>
+<script src="/modules/bataille/corps-adapt.js"></script>
 <script src="/modules/bataille2d.js"></script>
 <script src="/modules/carte-ville.js"></script>
+<!-- tenir sa position pendant que le temps passe : la balade dont l'horloge
+     est décrochée des jambes. Après carte-ville, dont il lit la position. -->
+<script src="/modules/combat.js"></script>
+<!-- ce que le joueur a sous les yeux, envoyé au MJ pendant une bataille : le
+     plan, la foule et le fer composés en une image, centrée sur lui, déposée
+     dans etat/vues/. Après les trois couches qu'elle empile. -->
+<script src="/modules/capture.js"></script>
 <script src="/modules/gens.js"></script>
 <!-- le carnet de rencontres : il lit le fil, il range « Les gens » -->
 <script src="/modules/vus.js"></script>

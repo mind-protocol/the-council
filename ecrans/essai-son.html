@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Le Conseil — banc d'essai de l'oreille</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin:0; background:#14110d; color:#e8ddc8; font:14px/1.5 Georgia,serif; }
+  .cadre { display:flex; gap:18px; padding:18px; align-items:flex-start; flex-wrap:wrap; }
+  canvas { background:#1d1913; border:1px solid #3b3125; cursor:crosshair; touch-action:none; }
+  .colonne { width:330px; }
+  h1 { font-size:18px; margin:0 0 4px; font-weight:normal; letter-spacing:.02em; }
+  p.note { color:#9b8e78; font-size:12px; margin:0 0 14px; }
+  fieldset { border:1px solid #3b3125; margin:0 0 12px; padding:10px 12px; }
+  legend { color:#c9a227; font-size:12px; padding:0 6px; }
+  label { display:flex; align-items:center; gap:8px; margin:5px 0; font-size:13px; }
+  label span:first-child { width:120px; color:#b9ac95; }
+  input[type=range] { flex:1; }
+  b.val { width:44px; text-align:right; color:#c9a227; font-variant-numeric:tabular-nums; }
+  button { background:#2b241a; color:#e8ddc8; border:1px solid #4d4132;
+           padding:5px 9px; margin:2px; font:13px Georgia,serif; cursor:pointer; }
+  button:hover { background:#3a3123; }
+  button.gros { background:#5a4415; border-color:#c9a227; padding:8px 14px; }
+  table.mesures { width:100%; border-collapse:collapse; font-size:12px; }
+  table.mesures td { padding:2px 0; border-bottom:1px solid #2a231a; }
+  table.mesures td:last-child { text-align:right; color:#c9a227; font-variant-numeric:tabular-nums; }
+</style>
+</head>
+<body>
+<div class="cadre">
+
+  <div>
+    <h1>Le banc d'essai de l'oreille</h1>
+    <p class="note">
+      L'oreille est au centre. <b>Clic</b> = un événement là où l'on clique
+      (famille choisie ci-contre). Les cercles marquent 50, 100, 200 et 300 m.
+    </p>
+    <canvas id="champ" width="640" height="640"></canvas>
+    <p class="note" id="lecture">—</p>
+  </div>
+
+  <div class="colonne">
+    <button class="gros" id="eveil">Ouvrir l'oreille</button>
+    <p class="note">
+      Rien ne sonne avant ce bouton : aucun navigateur ne laisse une page
+      faire du bruit sans qu'on l'ait touchée.
+    </p>
+
+    <fieldset>
+      <legend>Ce qu'on pose au clic</legend>
+      <div id="familles"></div>
+      <label><span>force</span><input type="range" id="force" min="0" max="1" step="0.05" value="0.7"><b class="val" id="v-force">0.70</b></label>
+      <label><span>metal</span><input type="range" id="metal" min="0" max="1" step="0.05" value="1"><b class="val" id="v-metal">1.00</b></label>
+      <p class="note" style="margin:6px 0 0">
+        <b>metal</b> 1 = fer contre fer, 0 = fer dans la chair. Glisse-le
+        doucement en frappant : c'est le continuum que des échantillons ne
+        donnent pas.
+      </p>
+    </fieldset>
+
+    <fieldset>
+      <legend>L'état de celui qui écoute</legend>
+      <label><span>alarme</span><input type="range" id="alarme" min="-1" max="1" step="0.02" value="-1"><b class="val" id="v-alarme">-1.00</b></label>
+      <p class="note" style="margin:2px 0 0">
+        Sur <b>[−1, 1]</b> comme toute la pile : −1 = un homme au calme,
+        +1 = un homme paniqué. Monte-la pendant une mêlée — le rayon audible se
+        resserre et les aigus tombent. C'est la surdité de stress, la même
+        formule que <code>survival-stack/1-corps.js</code> : le dos cesse
+        d'exister.
+      </p>
+      <label><span>volume</span><input type="range" id="volume" min="0" max="1" step="0.02" value="0.8"><b class="val" id="v-volume">0.80</b></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>La mêlée — un générateur d'événements</legend>
+      <label><span>hommes/s</span><input type="range" id="cadence" min="0" max="120" step="1" value="0"><b class="val" id="v-cadence">0</b></label>
+      <label><span>rayon (m)</span><input type="range" id="rayon" min="10" max="300" step="5" value="80"><b class="val" id="v-rayon">80</b></label>
+      <div>
+        <button data-mel="escarmouche">Escarmouche</button>
+        <button data-mel="ligne">Ligne qui tient</button>
+        <button data-mel="rupture">La ligne cède</button>
+        <button data-mel="silence">Silence</button>
+      </div>
+      <p class="note" style="margin:6px 0 0">
+        Pousse la cadence au-delà de 30 : les voix se ferment, tout le reste
+        passe dans la nappe, et le grondement monte sans qu'aucun son ne soit
+        perdu.
+      </p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Ce que l'oreille fait</legend>
+      <table class="mesures"><tbody id="mesures"></tbody></table>
+    </fieldset>
+  </div>
+</div>
+
+<script src="/modules/son.js"></script>
+<script>
+"use strict";
+const FAMILLES = ["fer", "chair", "pas", "effort", "cri-assaut", "cri-blesse", "cri-mort", "cri-panique"];
+let famille = "fer";
+const ECHELLE = 1.0;                 // 1 px = 1 m, cadré sur 640 m de côté
+const cv = document.getElementById("champ"), cx = cv.getContext("2d");
+const C = { x: cv.width / 2, y: cv.height / 2 };
+const versMonde = (px, py) => ({ x: (px - C.x) / ECHELLE, y: (py - C.y) / ECHELLE });
+const marques = [];                  // les points récents, pour qu'on voie ce qu'on entend
+
+// ---- les boutons de famille
+const bf = document.getElementById("familles");
+FAMILLES.forEach((f) => {
+  const b = document.createElement("button");
+  b.textContent = f; b.dataset.f = f;
+  b.onclick = () => { famille = f; peindreBoutons(); };
+  bf.appendChild(b);
+});
+function peindreBoutons() {
+  bf.querySelectorAll("button").forEach((b) => {
+    b.style.borderColor = b.dataset.f === famille ? "#c9a227" : "#4d4132";
+    b.style.color = b.dataset.f === famille ? "#f0d98a" : "#e8ddc8";
+  });
+}
+peindreBoutons();
+
+// ---- les curseurs
+const lier = (id, f) => {
+  const e = document.getElementById(id), v = document.getElementById("v-" + id);
+  const maj = () => { v.textContent = (+e.value).toFixed(id === "cadence" || id === "rayon" ? 0 : 2); f(+e.value); };
+  e.oninput = maj; maj();
+};
+lier("force", () => {});
+lier("metal", () => {});
+lier("volume", (v) => Son.volume(v));
+lier("alarme", (v) => Son.oreille({ alarme: v }));
+lier("cadence", () => {});
+lier("rayon", () => {});
+const lu = (id) => +document.getElementById(id).value;
+
+document.getElementById("eveil").onclick = async () => {
+  const ok = await Son.eveiller();
+  document.getElementById("eveil").textContent = ok ? "L'oreille est ouverte" : "Pas de moteur audio";
+  Son.oreille({ x: 0, y: 0, alarme: lu("alarme") });
+};
+
+// ---- le clic : un événement, là, maintenant
+cv.addEventListener("pointerdown", (e) => {
+  const r = cv.getBoundingClientRect();
+  const p = versMonde(e.clientX - r.left, e.clientY - r.top);
+  poser({ famille, x: p.x, y: p.y, force: lu("force"), metal: lu("metal") });
+});
+function poser(ev) {
+  Son.dire(ev);
+  marques.push({ ...ev, t: performance.now() });
+  if (marques.length > 400) marques.splice(0, 200);
+}
+
+// ---- les mêlées préréglées : des situations, pas des réglages
+const MELEES = {
+  escarmouche: { cadence: 6,  rayon: 60,  alarme: 0.15, melange: { fer: 5, chair: 1, effort: 2, "cri-assaut": 1 } },
+  ligne:       { cadence: 40, rayon: 90,  alarme: 0.35, melange: { fer: 12, chair: 3, pas: 6, effort: 5, "cri-assaut": 2, "cri-blesse": 1 } },
+  rupture:     { cadence: 95, rayon: 140, alarme: 0.85, melange: { fer: 6, chair: 6, pas: 14, "cri-panique": 6, "cri-mort": 3, "cri-blesse": 3 } },
+  silence:     { cadence: 0,  rayon: 80,  alarme: 0,    melange: { fer: 1 } },
+};
+let melange = { fer: 1 };
+document.querySelectorAll("[data-mel]").forEach((b) => {
+  b.onclick = () => {
+    const m = MELEES[b.dataset.mel];
+    melange = m.melange;
+    for (const [id, v] of [["cadence", m.cadence], ["rayon", m.rayon], ["alarme", m.alarme]]) {
+      const e = document.getElementById(id); e.value = v; e.oninput();
+    }
+  };
+});
+function tirerFamille() {
+  const total = Object.values(melange).reduce((a, b) => a + b, 0);
+  let r = Math.random() * total;
+  for (const [f, p] of Object.entries(melange)) { r -= p; if (r <= 0) return f; }
+  return "fer";
+}
+
+// Le générateur. Il ne simule rien : il produit des événements au débit demandé,
+// répartis dans un disque. C'est assez pour entendre la bascule voix → nappe.
+let dette = 0, precedent = performance.now();
+function engendrer(t) {
+  const dt = (t - precedent) / 1000; precedent = t;
+  dette += lu("cadence") * dt;
+  const R = lu("rayon");
+  while (dette >= 1) {
+    dette -= 1;
+    const a = Math.random() * 6.2832, d = R * Math.sqrt(Math.random());
+    const f = tirerFamille();
+    poser({
+      famille: f, x: Math.cos(a) * d, y: Math.sin(a) * d,
+      force: 0.35 + Math.random() * 0.6,
+      metal: f === "chair" ? 0.15 : 0.7 + Math.random() * 0.3,
+    });
+  }
+}
+
+// ---- le dessin : on doit VOIR ce qu'on entend, sinon on règle à l'aveugle
+const COULEUR = {
+  fer: "#c9d4dd", chair: "#b06a4a", pas: "#7d6f58", effort: "#8fa06a",
+  "cri-assaut": "#e0b040", "cri-blesse": "#d07030", "cri-mort": "#a03028",
+  "cri-panique": "#e04a4a",
+};
+function peindre(t) {
+  cx.fillStyle = "#1d1913"; cx.fillRect(0, 0, cv.width, cv.height);
+
+  // Les anneaux de portée, tels que l'alarme les resserre. On les redessine à
+  // chaque image parce qu'ils BOUGENT avec l'état de l'homme — c'est la moitié
+  // de ce que ce banc doit montrer. La sourdine vient du module lui-même :
+  // recopier la formule ici, c'est se donner un dessin qui peut mentir.
+  const s = Son.etat().sourdine;
+  const portees = [["cri", 300], ["pas", 90], ["fer", 120], ["chair", 60]];
+  cx.setLineDash([4, 5]);
+  for (const [nom, p] of portees) {
+    const r = p * (1 - 0.45 * s) * ECHELLE;
+    cx.strokeStyle = "#3b3125"; cx.lineWidth = 1;
+    cx.beginPath(); cx.arc(C.x, C.y, r, 0, 6.2832); cx.stroke();
+    cx.fillStyle = "#5c5140"; cx.font = "11px Georgia";
+    cx.fillText(nom + " " + Math.round(p * (1 - 0.45 * s)) + " m", C.x + 4, C.y - r + 12);
+  }
+  cx.setLineDash([]);
+
+  // Les événements récents. Ils s'éteignent en une seconde et demie — ce qui
+  // reste à l'écran est à peu près ce qui reste dans l'oreille.
+  for (const m of marques) {
+    const age = (t - m.t) / 1500;
+    if (age > 1) continue;
+    cx.globalAlpha = 1 - age;
+    cx.fillStyle = COULEUR[m.famille] || "#888";
+    cx.beginPath();
+    cx.arc(C.x + m.x * ECHELLE, C.y + m.y * ECHELLE, 2 + 5 * (1 - age) * (m.force || 0.5), 0, 6.2832);
+    cx.fill();
+  }
+  cx.globalAlpha = 1;
+
+  // L'oreille.
+  cx.strokeStyle = "#c9a227"; cx.lineWidth = 2;
+  cx.beginPath(); cx.arc(C.x, C.y, 6, 0, 6.2832); cx.stroke();
+}
+
+// ---- le compte rendu
+const cases = [
+  ["voix élues /s", (e) => e.voix + " (max " + e.budget + "/tranche)"],
+  ["versé à la nappe /s", (e) => e.nappe],
+  ["hors de portée /s", (e) => e.hors],
+  ["depuis l'éveil", (e) => e.cumul.voix + " élues · " + e.cumul.nappe + " nappe"],
+  ["voix vivantes", (e) => e.vivants],
+  ["densité grave", (e) => e.densite.grave.toFixed(1)],
+  ["densité medium", (e) => e.densite.medium.toFixed(1)],
+  ["densité aigu", (e) => e.densite.aigu.toFixed(1)],
+  ["cris chargés", (e) => Object.values(e.cris).reduce((a, b) => a + b, 0)],
+  ["l'oreille est à", (e) => e.ou.x + ", " + e.ou.y + (e.ou.suit ? " (elle suit)" : " (posée)")],
+  ["sourdine", (e) => e.sourdine.toFixed(2)],
+];
+const tb = document.getElementById("mesures");
+cases.forEach(([nom]) => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = "<td>" + nom + "</td><td>—</td>";
+  tb.appendChild(tr);
+});
+function rendreCompte() {
+  const e = Son.etat();
+  cases.forEach(([, f], i) => { tb.children[i].children[1].textContent = f(e); });
+  document.getElementById("lecture").textContent = e.eveille
+    ? "élues " + e.voix + " · nappe " + e.nappe + " · hors " + e.hors
+    : "l'oreille est fermée";
+}
+
+function boucle(t) { engendrer(t); peindre(t); requestAnimationFrame(boucle); }
+requestAnimationFrame(boucle);
+setInterval(rendreCompte, 120);
+</script>
+</body>
+</html>

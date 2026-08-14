@@ -1,0 +1,95 @@
+{
+  "type": "vue",
+  "fichier": "etat/vues/marlo-vasse-1786714954509.webp",
+  "index": "etat/vues/marlo-vasse.json",
+  "montre": "cette vue montre : la vue du joueur — plus serrée que la fenêtre demandée",
+  "heure": "12h00",
+  "large_en_metres": 39,
+  "metres_par_pixel": 0.05,
+  "couches": [
+    "foule",
+    "bataille"
+  ],
+  "bataille": {
+    "temps": 224.6,
+    "marche": true,
+    "porte": "La porte de la Gadoue",
+    "objectif": "Le Donjon Rouge",
+    "verrou": {
+      "etat": "ouvert",
+      "pv": 0
+    },
+    "portes": [
+      {
+        "nom": "La porte de la Gadoue",
+        "etat": "ouvert",
+        "pv": 0,
+        "par": "essai"
+      },
+      {
+        "nom": "La porte de Fer",
+        "etat": "ferme",
+        "pv": 9000,
+        "par": null
+      },
+      {
+        "nom": "La porte du Roi",
+        "etat": "ferme",
+        "pv": 7678,
+        "par": null
+      },
+      {
+        "nom": "La Vieille Porte",
+        "etat": "ferme",
+        "pv": 9000,
+        "par": null
+      }
+    ],
+    "arret": null,
+    "donjon": {
+      "averti": null,
+      "tranche": false,
+      "tenir": 0,
+      "ouvrir": 0,
+      "anneau": "tenu"
+    },
+    "assaut": 1737,
+    "garde": 802,
+    "morts": 2,
+    "blesses": 1,
+    "fuyards": 3,
+    "etats": {
+      "repli": 165,
+      "deroute": 3,
+      "mort": 2,
+      "colonne": 396,
+      "forme": 1169,
+      "commande": 5,
+      "tient": 804,
+      "assaut": 2,
+      "pille": 3,
+      "blesse": 1
+    },
+    "faits": 97,
+    "sac": {
+      "maisons": 45691,
+      "forcees": 22,
+      "brulees": 0,
+      "butin": 144
+    },
+    "ville": {
+      "paniques": 2640,
+      "foyers": 70,
+      "rentre": 1628,
+      "terre": 876,
+      "arme": 11,
+      "fuite": 87,
+      "contre": 36,
+      "barre": 2
+    },
+    "moraleMoyenne": 1
+  },
+  "joueur_id": "marlo-vasse",
+  "recu_a": "2026-08-14T13:42:34.511Z",
+  "_": "Une vue de la carte, centrée sur le joueur, telle qu'il l'a sous les yeux. OUVREZ LE FICHIER : c'est une image, et elle dit d'un coup d'œil ce que trois cents lignes de relevé disent mal — où la ligne a cédé, de quel côté la panique court, à combien de pas de la porte il se tient. Hors fiction : ce n'est ni une parole, ni un acte, ni une minute. Rien à écrire dans l'état, rien à répondre au joueur — c'est pour VOS yeux. Les dix dernières vues sont gardées en rotation et listées dans `index`, la plus récente en tête : les précédentes disent le MOUVEMENT, c'est-à-dire de quel côté ça se déplace, ce qu'une vue seule ne peut pas dire."
+}

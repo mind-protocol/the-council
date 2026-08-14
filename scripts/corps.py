@@ -216,7 +216,12 @@ def incarner(G, C, L, vraiment, lieu):
     P = json.load(io.open(PERSOS, encoding="utf-8"))
     liste = P if isinstance(P, list) else P.get("personnages", [])
     pris = set(L["liens"])
-    deja = set(L["liens"].values())
+    # Un corps CRÉÉ compte comme un corps. Ne regarder que `liens` faisait
+    # reproposer à l'appariement les grands qu'on venait de loger au Donjon
+    # Rouge — et un « oui » y aurait collé le roi dans le corps d'un chef de
+    # feu de quarante ans.
+    deja = (set(L["liens"].values())
+            | {c.get("personnage_id") for c in L.get("corps", [])})
     gens = list(tous(G))            # une passe de lecture, pas une par acteur
 
     voulus = [p for p in liste
@@ -382,8 +387,19 @@ def main():
     if opt("--ou"):
         pid = opt("--ou")[0]
         aids = [k for k, v in L["liens"].items() if v == pid]
+        # Un corps CRÉÉ (`--loger`) est une adresse au même titre qu'un corps
+        # emprunté (`--lier`) : ne lire que `liens` faisait répondre « aucune
+        # adresse » à un homme logé la minute d'avant.
+        for c in L.get("corps", []):
+            if c.get("personnage_id") == pid:
+                print("  %s — %s (%s, %s), bâtiment %s" %
+                      (pid, c.get("role") or "?", c.get("usage", "?"),
+                       c.get("quartier", "?"), c.get("bat")))
+                print("  x %.1f  y %.1f  z %.1f   (corps créé)"
+                      % (c["x"], c["y"], c["z"]))
         if not aids:
-            print("  %s n'a pas de corps — aucune adresse dans Port-Réal." % pid)
+            if not any(c.get("personnage_id") == pid for c in L.get("corps", [])):
+                print("  %s n'a pas de corps — aucune adresse dans Port-Réal." % pid)
             return
         for aid in aids:
             g = par_identifiant(G, C, aid)
@@ -453,6 +469,24 @@ def main():
         pid = L["liens"].pop(aid)
         ecrire(LIENS, L)
         print("  %s n'a plus de corps." % pid)
+        return
+
+    # --- déloger : l'inverse de --loger, qui manquait ------------------------
+    # `--delier` défait un corps EMPRUNTÉ ; rien ne défaisait un corps CRÉÉ, et
+    # `--loger` refuse de rouvrir un dossier existant. Déménager un grand — le
+    # Donjon Rouge a changé d'index à la régénération et les six royaux se sont
+    # retrouvés dans une échoppe — obligeait donc à éditer le JSON à la main.
+    if opt("--deloger"):
+        pid = opt("--deloger")[0]
+        vise = [c for c in L["corps"] if c.get("personnage_id") == pid]
+        if not vise: sortir("  %s n'a pas de corps créé." % pid)
+        if not vraiment:
+            print("  %s perdrait son corps au bâtiment %s (ajoute --vraiment)"
+                  % (pid, vise[0].get("bat")))
+            return
+        L["corps"] = [c for c in L["corps"] if c.get("personnage_id") != pid]
+        ecrire(LIENS, L)
+        print("  %s n'a plus de corps créé." % pid)
         return
 
     # --- promouvoir : un corps devient un personnage -------------------------

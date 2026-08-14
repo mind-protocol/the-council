@@ -89,12 +89,25 @@ function planter(base) {
   globalThis.fetch = (u, o) => vrai(/^https?:/.test(u) ? u : base + u, o);
 }
 
-/** Charger `bataille2d.js`, qui n'est pas un module ES mais un script. */
+// LA CHAÎNE DE LA BATAILLE, DANS L'ORDRE, et c'est le même ordre que dans
+// `ecrans/jeu.html`. Ce ne sont pas des modules ES mais des scripts qui
+// s'assignent à `window.<Nom>` : chacun a donc besoin que le précédent soit
+// déjà posé, exactement comme des balises `<script>` successives.
+//
+// AJOUTER UN MORCEAU DÉCOUPÉ, C'EST TOUCHER LES DEUX LISTES. Il n'y a pas de
+// résolution de dépendances ici et il ne faut pas en écrire une : deux listes
+// courtes et lisibles valent mieux qu'un chargeur qui aurait l'air malin.
+const CHAINE = ["bataille/hasard.js", "bataille/mesures.js",
+                "survival-stack/1-corps.js", "bataille/corps-adapt.js",
+                "bataille2d.js"];
+
+/** Charger la bataille, qui n'est pas un module ES mais une suite de scripts. */
 function chargerBataille() {
-  const src = fs.readFileSync(path.join(MODULES, "bataille2d.js"), "utf8");
-  // Il s'assigne à `window.Bataille2d` : on l'évalue tel quel, sans y toucher.
-  // eslint-disable-next-line no-eval
-  (0, eval)(src);
+  for (const f of CHAINE) {
+    const src = fs.readFileSync(path.join(MODULES, f), "utf8");
+    // eslint-disable-next-line no-eval
+    (0, eval)(src);
+  }
   if (!globalThis.window.Bataille2d) throw new Error("bataille2d ne s'est pas posé");
   return globalThis.window.Bataille2d;
 }
@@ -236,6 +249,14 @@ const AILE = (i) => ["de tête", "de gauche", "de droite"][i] || "n° " + (i + 1
 // c'est la seule façon de s'y retrouver quand six corps en ont chacun quatre.
 const DE = (nom) => (nom ? "de " + nom : "");
 
+// Le verbe nu, pour les sacs cuits avant que les ordres soient des phrases.
+const VERBE = (v) => ({ avancer: "marcher", tenir: "tenir", repli: "décrocher",
+                        suivre: "suivre", appuyer: "appuyer" }[v] || v || "?");
+
+// « ordonne à sa 2e aile de appuyer » — l'élision se perd dès qu'on colle une
+// phrase engendrée derrière une préposition. Elle se remet ici, une fois.
+const D_ = (s) => (/^[aàâeéèêiîoôuûyh]/i.test(s || "") ? "d'" + s : "de " + s);
+
 const DIRE = {
   "contact":          () => "les deux fers se touchent pour la première fois",
   "premier-sang":     (f) => "le premier mort de la journée, " + (LE_CAMP[f.camp] || ""),
@@ -264,6 +285,36 @@ const DIRE = {
   "guet-a-vu":        (f) => "un homme du guet s'est avancé jusqu'à voir : " +
                              f.hommes + " hommes en armes",
   "assaut-au-donjon": () => "le premier assaillant atteint le Donjon Rouge",
+
+  // --- LES DEUX FINS QUI NE PASSENT PAS PAR LE VERROU ----------------------
+  // Elles ne se lisent pas comme le reste, et il ne faut pas qu'elles s'y
+  // fondent : une porte enfoncée est le résultat de trois mille points de
+  // hache, une porte ouverte est le résultat d'une conversation.
+  // Celui qui n'est pas arrivé. Personne, à sa porte, ne saura qu'il est tombé
+  // — et personne au Donjon ne saura qu'on lui avait envoyé quelqu'un.
+  "messager-tombe":   (f) => "l'homme parti de « " + f.porte + " » n'ira pas" +
+                             " plus loin — il courait depuis " +
+                             Math.round(f.depuis) + " secondes, et il lui" +
+                             " restait " + f.reste + " pas",
+  "roi-averti":       (f) => "au Donjon Rouge, on apprend que « " + f.porte +
+                             " » cède — " + Math.round(f.depuis / 60) +
+                             " minutes après qu'elle a commencé, et " + f.pas +
+                             " pas plus loin",
+  "donjon-tranche":   (f) => f.par + " a tranché : aucune porte ne s'ouvrira" +
+                             (f.contre ? " — " + f.contre + " avait les chiffres" : ""),
+  // Plus une porte debout : ce qui restait à ouvrir était le Donjon lui-même,
+  // et l'anneau s'est retiré dans la cour au lieu de la défendre.
+  "donjon-ouvert":    (f) => "le Donjon Rouge s'ouvre — " + f.par + " l'a" +
+                             " emporté sur " + f.contre + ", et les " + f.hommes +
+                             " de l'anneau rentrent sans qu'on croise un fer",
+  "porte-ouverte":    (f) => "« " + f.porte + " » s'ouvre de l'intérieur, sans" +
+                             " un coup de hache — " + f.par + " l'a emporté",
+  "roi-tombe":        (f) => f.nom + " verse sous les siens — la charrette est" +
+                             " passée sous la déroute, et tout s'arrête",
+
+  // Un habitant qui a un nom, et ce qu'il fait quand ça lui arrive. Sa conduite
+  // est écrite dans la mise en place : on ne la décide pas ici, on la rapporte.
+  "habitant":         (f) => f.nom + " — " + f.fait,
   "maison-brulee":    (f) => "une maison brûle" +
                              (f.corps ? " — des hommes " + DE(f.corps) : ""),
 
@@ -300,19 +351,41 @@ const DIRE = {
   // n° 17 » ne se lit pas : ni qui parle, ni à qui. Six corps qui ne
   // s'accordent pas ne valent quelque chose dans le document que si l'on voit
   // lequel vient de faire quoi.
+  // UN ORDRE EST UNE PHRASE, ET C'EST LE MODULE QUI L'ÉCRIT. Il connaît son
+  // objet, sa distance, sa réserve ; ici on ne sait que le recopier. `phrase`
+  // arrive donc toute faite, et `ordre` — le verbe nu — reste pour les sacs
+  // cuits avant que les compléments existent.
   "ordre":            (f) => (f.chef || "la tête") + " ordonne à sa " +
-                             RANG((f.rang || 0) + 1) + " aile de " +
-                             ({ avancer: "marcher", tenir: "tenir",
-                                repli: "décrocher" }[f.ordre] || f.ordre) +
+                             RANG((f.rang || 0) + 1) + " aile " +
+                             D_(f.phrase || VERBE(f.ordre)) +
                              " — il lui reste " + Math.round(f.force * 100) + " % de ses hommes",
   "coureur-part":     (f) => "un coureur part de la " + RANG((f.rang || 0) + 1) +
                              " aile " + DE(f.chef) +
-                             " pour la " + RANG(f.vers + 1) + " escouade",
-  "coureur-arrive":   (f) => "le coureur atteint la " + RANG(f.vers + 1) + " escouade",
+                             " pour la " + RANG(f.vers + 1) + " escouade" +
+                             (f.phrase ? " — « " + f.phrase + " »" : ""),
+  "coureur-arrive":   (f) => "le coureur atteint la " + RANG(f.vers + 1) +
+                             " escouade" +
+                             (f.phrase ? " — il apporte : " + f.phrase : ""),
   "coureur-tombe":    (f) => "le coureur tombe en chemin — la " + RANG(f.vers + 1) +
-                             " escouade n'aura jamais su qu'on lui disait de " +
-                             ({ avancer: "marcher", tenir: "tenir",
-                                repli: "décrocher" }[f.ordre] || f.ordre),
+                             " escouade n'aura jamais su qu'on lui disait " +
+                             D_(f.phrase || VERBE(f.ordre)),
+
+  // --- CE QUI S'ABÎME, CE QUI ATTEND, CE QU'ON S'INVENTE --------------------
+  // Les trois faits que la chaîne de commandement ne savait pas dire, et sans
+  // lesquels on relisait au matin une armée qui désobéit sans motif.
+  "ordre-deforme":    (f) => "le coureur perd " +
+                             ({ interdit: "la réserve qu'on y avait mise",
+                                declencheur: "l'heure à laquelle il fallait le faire",
+                                marge: "la distance exacte",
+                                objet: "le nom de celui qu'il fallait suivre"
+                               }[f.perdu] || f.perdu) +
+                             " — il portera : " + f.phrase,
+  "declencheur-tombe": (f) => "la " + RANG(f.escouade + 1) +
+                             " escouade n'attendait que ça — personne n'a eu à" +
+                             " le lui dire : « " + f.phrase + " »",
+  "initiative":       (f) => "faute d'ordre, la " + RANG(f.escouade + 1) +
+                             " escouade " + DE(f.chef) + " décide seule " +
+                             D_(f.phrase) + " — " + f.motif,
   "escouade-sourde":  (f) => "la " + RANG(f.escouade + 1) + " escouade n'entend plus rien — " +
                              "elle continue de " + ({ avancer: "marcher", tenir: "tenir",
                                repli: "décrocher" }[f.ordre] || f.ordre),
@@ -389,6 +462,18 @@ function lesTemoins(tt) {
 function raconter(f) {
   const d = DIRE[f.quoi];
   let s = HEURE(f.t) + " — " + f.ou + " — " + (d ? d(f) : f.quoi);
+  // DEVANT CHEZ QUI. Le lieu dit où dans la ville ; le nom dit chez qui, et
+  // c'est celui-là qu'on ira trouver le lendemain. On ne le répète pas quand le
+  // fait EST déjà celui de cette personne — « Nonne la lavandière — trois
+  // enfants… · devant chez Nonne la lavandière » ne se lit pas.
+  //
+  // ET JAMAIS DEUX FOIS LE MÊME NOM DANS LA MÊME LIGNE. « le Portier l'a
+  // emporté sur Ser Merryn Coutre, à 25 pas de chez Ser Merryn Coutre » est
+  // exactement le genre de phrase qui fait passer un document pour une sortie
+  // de machine — et c'est le four qui l'a produite au premier essai.
+  if (f.pres && f.quoi !== "habitant" && !s.includes(f.pres))
+    s += (f.pres_pas ? ", à " + f.pres_pas + " pas de chez " : ", devant chez ") +
+         f.pres;
   // LA QUEUE DE TÉMOINS EST LA MOITIÉ UTILE DE LA LIGNE. Sans elle on lit un
   // compte rendu ; avec elle on lit une piste — et « personne dans la rue »
   // est une information au moins aussi bonne que trois noms, parce qu'elle dit
@@ -739,6 +824,9 @@ async function main() {
     issue: { morts: fin.morts, blesses: fin.blesses, fuyards: fin.fuyards,
              assaut: fin.assaut, garde: fin.garde,
              verrou: fin.verrou, portes: fin.portes, sac: fin.sac,
+             // Comment la nuit s'est décidée quand ce n'est pas la hache qui
+             // l'a décidée : le roi versé, ou la salle du Donjon qui a tranché.
+             arret: fin.arret, donjon: fin.donjon,
              etats: fin.etats },
     annales: { fichier: nom + ".annales.json", faits: faits.length },
     cuisson_s: +cuisson.toFixed(1),
@@ -751,6 +839,13 @@ async function main() {
   // tuyauterie — un lecteur le charge pour savoir où sont les octets ; les
   // annales sont un DOCUMENT, qu'un être humain ouvre et lit d'un bout à
   // l'autre. Les mélanger, c'est obliger le second à charger la première.
+  //
+  // ELLES SORTENT COMPLÈTES, ET C'EST VOULU. On ne filtre pas au four : une
+  // cuisson coûte des minutes, et l'on n'oserait plus changer d'avis sur ce
+  // qu'on veut lire. `scripts/monde/annales.js` en tire des vues — par niveau
+  // (du tournant au moindre râle) et par aspect (le commandement, la ville, le
+  // fer, les ouvrages) — pour le prix d'une lecture, autant de fois qu'on veut.
+  // Ce fichier-ci reste la source ; les vues vont dans `exports/`.
   const parQuoi = {};
   for (const f of faits) parQuoi[f.quoi] = (parQuoi[f.quoi] || 0) + 1;
   const annales = {

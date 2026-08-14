@@ -585,12 +585,33 @@ const LIEU3D_DEFAUT = "port-real";
 // proche nœud DE LA GRANDE, sans quoi un but posé sur un îlot rend « pas de
 // chemin » pour une ville entière qui en a un.
 // ===========================================================================
+// ===========================================================================
+// DEBUG — LE MIROIR DU NARRATEUR.  ⚠ À RETIRER ⚠
+//
+// Mettre à `false` (ou supprimer les vingt lignes qui s'en servent, cherchez
+// DEBUG_MARCHE_AU_FIL) rend le jeu à sa règle. Tant que c'est `true`, chaque
+// pas de balade ou de combat est ÉCRIT DANS LE FIL DU JOUEUR en plus d'être
+// envoyé au MJ — on voit passer, en direct, exactement ce que le narrateur
+// reçoit.
+//
+// CE QUE ÇA VIOLE, ET IL FAUT LE SAVOIR : « la page ne dit jamais ce qu'on
+// perçoit, le récit est au MJ ». Ici elle le dit, et elle dit même le brut —
+// `croise`, que le joueur ne doit jamais voir en temps normal parce que c'est
+// la matière que le MJ va mettre en scène. C'est un outil de mise au point,
+// pas une fonctionnalité : on regarde la tuyauterie pendant qu'on la règle.
+const DEBUG_MARCHE_AU_FIL = true;
+
 const VITESSES = {          // mètres par minute, à pied, dans une ville
   artere: 78, rue: 72, ruelle: 62, quai: 68, abord: 62, escalier: 26,
 };
 const _rues = { cle: null, g: null };
 // Le reste de minute d'une marche en cours, par siege. Voir `/marche`.
 const _resteMarche = {};
+// L'INSTANT DE DEMARRAGE DE CE SERVEUR. Il sert de signature aux tampons de
+// balade (`etat/marches/`) : un tampon signe d'un autre demarrage est une
+// promenade que plus personne ne finira — on la ferme au lieu de s'y ajouter.
+// Voir `/marche`.
+const SESSION_SERVEUR = Date.now();
 
 function graphePieton(lieu) {
   const d = LIEUX3D[lieu] || LIEUX3D[LIEU3D_DEFAUT];
@@ -727,8 +748,19 @@ function batiIndex(lieu) {
   const [ix, iy, ifa, ipr, iet] =
     [C("x"), C("y"), C("facade_m"), C("profondeur_m"), C("etages")];
   const [iu, iq, icat] = [C("usage"), C("quartier"), C("cat")];
+  // LA PORTE ET L'EMPRISE, qu'on ne chargeait pas. Chaque bâtiment de la ville
+  // cuite porte une porte (`porte_x`, `porte_y`) qui tombe SUR la voirie — à
+  // zéro mètre du graphe piéton, mesuré. C'est ce qui permet d'aller « chez le
+  // tanneur » au lieu d'aller au pixel qu'on a touché : voir `butProche`.
+  const [ipx, ipy] = [C("porte_x"), C("porte_y")];
   const n = src.bati.length;
   const xs = new Float32Array(n), ys = new Float32Array(n);
+  const px = new Float32Array(n), py = new Float32Array(n);
+  // Le rayon d'encombrement : la demi-diagonale de l'emprise. Il sert à savoir
+  // si un clic est POSÉ SUR la maison ou à côté d'elle, ce qu'un simple « la
+  // plus proche » ne dit pas — une halle de trente mètres et une masure de six
+  // ne se ratent pas de la même façon.
+  const ray = new Float32Array(n);
   const aire = new Float32Array(n), et = new Uint8Array(n);
   const usages = [], quartiers = [], cats = [];
   const iu8 = new Uint8Array(n), iq8 = new Uint8Array(n), ic8 = new Uint8Array(n);
@@ -742,6 +774,11 @@ function batiIndex(lieu) {
   for (let k = 0; k < n; k++) {
     const r = src.bati[k];
     xs[k] = r[ix]; ys[k] = r[iy];
+    // Sans porte écrite, on retombe sur le centre : c'est faux de quelques
+    // mètres et ça ne casse rien, alors qu'un NaN casserait le Dijkstra.
+    px[k] = isFinite(r[ipx]) ? r[ipx] : r[ix];
+    py[k] = isFinite(r[ipy]) ? r[ipy] : r[iy];
+    ray[k] = Math.hypot(r[ifa] || 8, r[ipr] || 8) / 2;
     aire[k] = (r[ifa] || 0) * (r[ipr] || 0);
     et[k] = Math.min(255, r[iet] || 1);
     iu8[k] = tab(usages, r[iu] || "");
@@ -752,10 +789,63 @@ function batiIndex(lieu) {
     if (!l) grille.set(g, l = []);
     l.push(k);
   }
-  const i = { xs, ys, aire, et, iu8, iq8, ic8, usages, quartiers, cats, grille, PAS };
+  const i = { xs, ys, px, py, ray, aire, et, iu8, iq8, ic8,
+              usages, quartiers, cats, grille, PAS };
   _bati.cle = cle;
   _bati.i = i;
   return i;
+}
+
+// ---------------------------------------------------------------------------
+// OÙ L'ON VA QUAND ON A CLIQUÉ LÀ.
+//
+// UN CLIC N'EST PAS UN POINT, C'EST UNE INTENTION. On envoyait au chemin les
+// mètres exacts du pixel touché, et l'itinéraire finissait par un segment droit
+// de la dernière rue jusqu'à ce pixel — à travers les murs s'il le fallait.
+// Pire : ce qu'on annonçait au joueur était le plus proche des VINGT-CINQ
+// repères de la ville, c'est-à-dire, la plupart du temps, un nom à trois cents
+// mètres de l'endroit visé. On cliquait la taverne et la barre disait « La
+// porte de Fer ».
+//
+// Or la ville cuite sait exactement où l'on entre : chaque bâtiment porte sa
+// porte, et ces portes tombent SUR le graphe piéton (médiane mesurée : zéro
+// mètre). Un clic posé sur une maison devient donc « la porte de cette
+// maison-là », ce qui est à la fois précis, atteignable, et la seule chose
+// qu'un homme puisse vouloir dire en montrant une maison du doigt.
+//
+// ON NE SNAPPE QUE SI L'ON EST DESSUS. Accrocher au plus proche dans un rayon
+// fixe rendrait impossible d'aller sur une place ou un quai : tout point de la
+// ville a une maison à vingt mètres. Le test est donc l'EMPRISE — on est sur le
+// bâtiment, à une marge près — ce qui recouvre exactement ce que le survol
+// montre déjà sous le curseur. Ce qu'on voit est où l'on va.
+const MARGE_CLIC = 6;      // mètres de pardon : le doigt tremble, le zoom ment
+
+function butProche(lieu, x, y) {
+  const b = batiIndex(lieu);
+  const R = 40;                       // au-delà, aucune emprise ne peut mordre
+  const cx = (x / b.PAS) | 0, cy = (y / b.PAS) | 0;
+  const port = Math.ceil(R / b.PAS);
+  let best = -1, marge = Infinity;
+  for (let i = cx - port; i <= cx + port; i++) {
+    for (let j = cy - port; j <= cy + port; j++) {
+      const l = b.grille.get(i + "," + j);
+      if (!l) continue;
+      for (const k of l) {
+        const d = Math.hypot(b.xs[k] - x, b.ys[k] - y);
+        // De combien on déborde de l'emprise : négatif = on est dessus. Entre
+        // deux maisons qui se touchent, celle dont on déborde le moins.
+        const m = d - b.ray[k];
+        if (m < marge && m <= MARGE_CLIC) { marge = m; best = k; }
+      }
+    }
+  }
+  if (best < 0) return null;
+  return {
+    bat: best, x: b.px[best], y: b.py[best],
+    usage: b.usages[b.iu8[best]], cat: b.cats[b.ic8[best]],
+    quartier: b.quartiers[b.iq8[best]],
+    aire: Math.round(b.aire[best]), etages: b.et[best],
+  };
 }
 
 // Ce qu'on a sous les yeux à un pas donné. On rend les plus PROCHES, et l'on
@@ -921,6 +1011,32 @@ function direGens(g) {
     // se joue ; « 12 portefaix » ne dit pas où frapper.
     sous_toit: g.toit | 0,
     portes: portes.join(", ") || null,
+    // CEUX QUI SONT EN ARMES. Ligne à part, et en TÊTE de ce qu'on rapporte :
+    // deux cents hommes rangés devant une porte ne sont pas un détail de la
+    // rue, c'est la rue. Ils manquaient entièrement — le marcheur passait à
+    // vingt pas d'eux et rapportait le compte des gens qui dormaient.
+    //
+    // Par camp et par état, parce que c'est tout ce qu'on voit d'un coup d'œil
+    // et que ça décide de ce qu'on fait : « 180 garde/tient » est un mur, « 40
+    // garde/deroute » est une porte perdue, et l'on ne s'approche pas des deux
+    // de la même façon.
+    en_armes: g.en_armes | 0,
+    armes: (Array.isArray(g.armes) ? g.armes : []).slice(0, 6)
+      .map(([c, n]) => n + " " + String(c).replace("/", " ")).join(" · ") || null,
+    // CE QU'ILS FONT — la seule ligne qui porte une ACTION et non un état, et
+    // celle dont un récit peut partir. « fuient : 6 portefaix, 2 servantes »
+    // se joue ; « 8 personnes en rue » ne se joue pas, et c'était pourtant
+    // tout ce qui remontait quand la ville se vidait sous les armes.
+    //
+    // QUATRE VERBES AU PLUS, comme les rôles : au-delà on ne décrit plus une
+    // rue, on en fait l'inventaire — et l'inventaire est très exactement le
+    // mur de texte que le tunnel interdit.
+    font: (Array.isArray(g.font) ? g.font : []).slice(0, ROLES_DITS)
+      .map(([v, par, n]) => n + " " + v + " (" +
+        par.slice(0, 3).map(([m, k]) => k + " " + String(m).replace(/-/g, " "))
+           .join(", ") + ")")
+      .join(" · ") || null,
+    detail_font: Array.isArray(g.font) ? g.font : [],
     // L'AMBIANCE, et rien de plus. Ne jamais lire ce chiffre comme une foule :
     // c'est le nombre de gens qui dorment derrière les murs qu'on longe.
     chez_eux: g.chez | 0,
@@ -2538,6 +2654,11 @@ http
       if (url === "/jeu.css") return fichierStatique(res, "jeu.css", "text/css; charset=utf-8");
       // banc d'essai des voix : ne consomme pas le flux, donc ne double personne
       if (url === "/essai-voix") return fichierStatique(res, "essai-voix.html", "text/html; charset=utf-8");
+      if (url === "/essai-son") return fichierStatique(res, "essai-son.html", "text/html; charset=utf-8");
+      // La vue de débug de la couche du corps (`modules/survival-stack/`) : un
+      // combat d'essai à gauche, le journal complet à droite. Elle ne touche à
+      // RIEN — ni état, ni flux, ni horloge : c'est un banc, pas une partie.
+      if (url === "/bataille") return fichierStatique(res, "bataille.html", "text/html; charset=utf-8");
       // Un module, ou un module d'une famille : `/modules/monde/relief.js`. Un
       // seul cran de sous-dossier, et rien qui ressemble à un chemin remontant.
       const m = url.match(/^\/modules\/(?:([a-z0-9_-]+)\/)?([a-z0-9_-]+\.js)$/);
@@ -2651,7 +2772,12 @@ http
             return envoyer(res, 400, JSON.stringify({ erreur: "de/vers" }));
           const lieu = q.get("lieu") || LIEU3D_DEFAUT;
           const g = graphePieton(lieu);
-          const a = noeudProche(g, ax, ay), b = noeudProche(g, bx, by);
+          // LE BUT EST UNE PORTE QUAND ON A CLIQUÉ SUR UNE MAISON. Voir
+          // `butProche` : c'est là qu'est la règle, et c'est elle qui rend un
+          // clic précis sans obliger le joueur à viser au mètre.
+          const cible = butProche(lieu, bx, by);
+          const [vx, vy] = cible ? [cible.x, cible.y] : [bx, by];
+          const a = noeudProche(g, ax, ay), b = noeudProche(g, vx, vy);
           const r = (a < 0 || b < 0) ? null : cheminPieton(g, a, b);
           if (!r) return envoyer(res, 200, JSON.stringify({ chemin: null }));
           const points = r.route.map((i) => [g.xs[i], g.ys[i]]);
@@ -2659,15 +2785,34 @@ http
           // cliqué jusqu'à la rue, et de la rue jusqu'au but. Sans ces deux
           // segments, la marque saute au premier carrefour venu.
           points.unshift([ax, ay]);
-          points.push([bx, by]);
+          points.push([vx, vy]);
           let m = 0;
           for (let i = 1; i < points.length; i++)
             m += Math.hypot(points[i][0] - points[i - 1][0],
                             points[i][1] - points[i - 1][1]);
+          // CE QU'ON ANNONCE EST CE QU'ON A VISÉ. Le repère le plus proche
+          // reste rendu — il situe dans la ville —, mais il ne fait plus office
+          // de destination : quand on a cliqué une maison, c'est elle le but,
+          // avec son métier et son quartier. Un nommé de la partie
+          // (`corps.json`) l'emporte sur son métier : on ne va pas « chez un
+          // charpentier » quand on va chez Marlo.
+          let nomme = null;
+          if (cible) {
+            try {
+              const aff = JSON.parse(fs.readFileSync(
+                path.join(RACINE, "etat", "corps.json"), "utf-8")).affectations || {};
+              for (const cle in aff)
+                if (aff[cle] && aff[cle].bat === cible.bat)
+                  { nomme = { cle, nom: aff[cle].nom || cle }; break; }
+            } catch (e) { nomme = null; }
+          }
           return envoyer(res, 200, JSON.stringify({
             chemin: { points, metres: Math.round(m),
                       minutes: Math.round(r.minutes * 10) / 10 },
-            vers: repereProche(lieu, bx, by),
+            vers: repereProche(lieu, vx, vy),
+            but: cible ? Object.assign({}, cible, {
+              nom: nomme ? nomme.nom : null, cle: nomme ? nomme.cle : null,
+            }) : null,
           }));
         } catch (e) {
           return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) }));
@@ -2719,6 +2864,23 @@ http
         if (!types[ext]) return envoyer(res, 404, JSON.stringify({ erreur: nom }));
         try {
           const corps = fs.readFileSync(path.join(RACINE, "ecrans", "textures", nom));
+          res.writeHead(200, { "Content-Type": types[ext], "Cache-Control": "public, max-age=86400" });
+          return res.end(corps);
+        } catch (e) { return envoyer(res, 404, JSON.stringify({ erreur: nom })); }
+      }
+      // Les cris. Les seuls fichiers sonores du jeu : tout le reste du son de
+      // bataille est synthétisé dans `ecrans/modules/son.js`. Ils vivent hors
+      // d'`ecrans/` parce qu'ils ne sont pas un écran — d'où la racine à part.
+      // Même garde que les planches (`basename`, un nom ne remonte jamais d'un
+      // cran), et le même cache d'une journée : ils ne changent jamais.
+      if (url.startsWith("/sons/cris/")) {
+        const nom = path.basename(decodeURIComponent(url.slice("/sons/cris/".length)));
+        const ext = path.extname(nom).toLowerCase();
+        const types = { ".mp3": "audio/mpeg", ".ogg": "audio/ogg", ".wav": "audio/wav",
+                        ".json": "application/json; charset=utf-8" };
+        if (!types[ext]) return envoyer(res, 404, JSON.stringify({ erreur: nom }));
+        try {
+          const corps = fs.readFileSync(path.join(RACINE, "sons", "cris", nom));
           res.writeHead(200, { "Content-Type": types[ext], "Cache-Control": "public, max-age=86400" });
           return res.end(corps);
         } catch (e) { return envoyer(res, 404, JSON.stringify({ erreur: nom })); }
@@ -4915,6 +5077,133 @@ http
     // le `programme` daté, le pli qui part. Un calendrier que le MJ ne voit pas
     // n'est pas un calendrier, c'est un pense-bête ; et le joueur qui inscrit
     // « voir Rulf à sept heures » a le droit qu'on le lui tienne.
+    // UNE VUE DE LA CARTE, POUR QUE LE MJ VOIE CE QUI SE PASSE.
+    //
+    // Pendant une bataille, il est aveugle au seul moment où ça compte. Il a
+    // l'état et les annales du sac — mais où la ligne a cédé, de quel côté la
+    // panique court, quelle rue bouchonne, à combien de pas de la porte est
+    // l'homme qu'on lui fait jouer : ça se voit d'un coup d'œil et ça se
+    // raconte mal. La page compose donc régulièrement le plan, la foule et la
+    // bataille en une image centrée sur le joueur, et la dépose ici.
+    //
+    // UN CHEMIN STABLE, ET UN MOT DANS L'INBOX. `etat/vues/<siège>.png` est
+    // écrasé à chaque fois — c'est un miroir posé sur la table, toujours à la
+    // même place. Mais un miroir que personne ne regarde ne sert à rien : le
+    // MJ ne va pas ouvrir un fichier dont rien ne lui dit qu'il a changé. On
+    // dépose donc aussi, comme pour toute action du joueur, une entrée dans
+    // `etat/inbox/<siège>/` qui porte le CHEMIN et la légende. Son guetteur
+    // sonne, il ouvre l'image, il voit la bataille.
+    //
+    // L'ENTRÉE PORTE LE LIEN, JAMAIS L'IMAGE. Quarante kilo-octets de base64
+    // par ping rendraient l'inbox illisible, et le MJ lit ses fichiers d'un
+    // bloc : il n'a besoin que de savoir où regarder.
+    //
+    // Le rythme est celui des captures (`CADENCE` dans `capture.js`) : si le
+    // guetteur sonne trop souvent au goût du MJ, c'est là qu'on l'espace, pas
+    // ici. Et comme le MJ lit TOUS ses fichiers d'inbox en une fois, plusieurs
+    // pings accumulés pendant qu'il écrivait se lisent ensemble — seul le
+    // dernier compte, puisque le PNG est le même fichier écrasé.
+    //
+    // La légende est écrite À CÔTÉ, en JSON, et pas dessinée dans l'image :
+    // une échelle et une heure incrustées dans des pixels ne se citent pas,
+    // alors qu'un `metres_par_pixel` se relit et se calcule.
+    if (req.method === "POST" && url === "/vue") {
+      let corps = "";
+      req.on("data", (c) => (corps += c));
+      req.on("end", () => {
+        try {
+          const { image, meta } = JSON.parse(corps);
+          const m = /^data:image\/(png|jpeg|webp);base64,([A-Za-z0-9+/=]+)$/
+            .exec(image || "");
+          if (!m) throw new Error("ce n'est pas une image png, jpeg ou webp");
+          const ext = m[1] === "jpeg" ? "jpg" : m[1];
+          const siege = qui(req, url);
+          const nom = (siege && siege.personnage_id) || "sans-siege";
+          const dossier = path.join(RACINE, "etat", "vues");
+          fs.mkdirSync(dossier, { recursive: true });
+          const octets = Buffer.from(m[2], "base64");
+          // Une borne, parce qu'un client peut poster ce qu'il veut. Une vue
+          // compressée pèse une dizaine de kilo-octets ; au-delà d'un méga,
+          // c'est autre chose et l'on n'en veut pas.
+          if (octets.length > 1048576) throw new Error("vue trop lourde");
+
+          // UNE ROTATION DE DIX, PAS UN FICHIER ÉCRASÉ. Une bataille se lit
+          // dans son MOUVEMENT — la ligne qui recule de trente mètres entre
+          // deux vues dit ce qu'aucune vue seule ne dit. Dix vues à trente
+          // secondes font cinq minutes de recul, et à dix kilo-octets pièce
+          // c'est cent kilo-octets en tout : moins qu'une seule vue en PNG.
+          const GARDE = 10;
+          const fichier = nom + "-" + Date.now() + "." + ext;
+          fs.writeFileSync(path.join(dossier, fichier), octets);
+          // L'index d'abord, le ménage ensuite : on ne supprime un fichier
+          // qu'après avoir écrit la liste qui ne le mentionne plus, sinon un
+          // MJ qui lit entre les deux ouvre un chemin qui n'existe déjà plus.
+          const jindex = path.join(dossier, nom + ".json");
+          let vues = [];
+          try { vues = JSON.parse(fs.readFileSync(jindex, "utf-8")).vues || []; }
+          catch (e) {}
+          vues.unshift({
+            fichier: "etat/vues/" + fichier,
+            octets: octets.length,
+            ...(meta && typeof meta === "object" ? meta : {}),
+          });
+          const jetees = vues.slice(GARDE);
+          vues = vues.slice(0, GARDE);
+          fs.writeFileSync(jindex, JSON.stringify({
+            _: "Les " + GARDE + " dernières vues de la carte envoyées par la " +
+               "page de ce siège, la plus RÉCENTE en tête. Une toutes les " +
+               "trente secondes tant qu'une bataille est dressée ; le guetteur " +
+               "sonne à chaque fois. Ouvrez `vues[0].fichier` pour voir où l'on " +
+               "en est, et les suivantes pour voir d'où l'on vient.",
+            vues,
+          }, null, 2), "utf-8");
+          for (const v of jetees) {
+            try { fs.unlinkSync(path.join(RACINE, v.fichier)); } catch (e) {}
+          }
+          // Le guetteur du MJ sonne, comme pour toute action du joueur.
+          try {
+            const boite = siege
+              ? path.join(RACINE, "etat", "inbox", siege.personnage_id)
+              : path.join(RACINE, "etat", "inbox");
+            fs.mkdirSync(boite, { recursive: true });
+            const m = (meta && typeof meta === "object") ? meta : {};
+            fs.writeFileSync(path.join(boite, "action-" + Date.now() + ".json"),
+              JSON.stringify({
+                type: "vue",
+                fichier: "etat/vues/" + fichier,
+                index: "etat/vues/" + nom + ".json",
+                montre: m.montre || null,
+                heure: m.heure || null,
+                large_en_metres: m.large_en_metres || null,
+                metres_par_pixel: m.metres_par_pixel || null,
+                couches: m.couches || null,
+                bataille: m.bataille || null,
+                joueur_id: siege ? siege.personnage_id : null,
+                recu_a: new Date().toISOString(),
+                _: "Une vue de la carte, centrée sur le joueur, telle qu'il " +
+                   "l'a sous les yeux. OUVREZ LE FICHIER : c'est une image, " +
+                   "et elle dit d'un coup d'œil ce que trois cents lignes de " +
+                   "relevé disent mal — où la ligne a cédé, de quel côté la " +
+                   "panique court, à combien de pas de la porte il se tient. " +
+                   "Hors fiction : ce n'est ni une parole, ni un acte, ni une " +
+                   "minute. Rien à écrire dans l'état, rien à répondre au " +
+                   "joueur — c'est pour VOS yeux. Les dix dernières vues sont " +
+                   "gardées en rotation et listées dans `index`, la plus " +
+                   "récente en tête : les précédentes disent le MOUVEMENT, " +
+                   "c'est-à-dire de quel côté ça se déplace, ce qu'une vue " +
+                   "seule ne peut pas dire.",
+              }, null, 2), "utf-8");
+          } catch (e) { /* l'image est écrite : le ping n'est pas vital */ }
+          return envoyer(res, 200, JSON.stringify(
+            { ecrit: "etat/vues/" + fichier, octets: octets.length,
+              gardees: vues.length }));
+        } catch (e) {
+          return envoyer(res, 400, JSON.stringify({ erreur: String(e.message || e) }));
+        }
+      });
+      return;
+    }
+
     if (req.method === "POST" && url === "/agenda") {
       let corps = "";
       req.on("data", (c) => (corps += c));
@@ -5174,12 +5463,70 @@ http
     // navigateur : la montre avance, la position s'écrit, et le MJ reçoit ce
     // qu'on vient de longer.
     //
-    // UN SEUL FICHIER D'INBOX POUR TOUTE LA BALADE. Un pas tous les vingt
-    // mètres fait cinquante fichiers pour un kilomètre, donc cinquante réveils
-    // du guetteur pour une seule balade : le MJ serait tiré de son siège à
-    // chaque pâté de maisons. On empile donc les pas dans le premier fichier
-    // `marche-*.json` que le MJ n'a pas encore consommé. Il se réveille une
-    // fois, lit la trace entière, et raconte la promenade d'un bloc.
+    // UN SEUL FICHIER D'INBOX POUR TOUTE LA BALADE, ET IL N'Y ARRIVE QU'À LA
+    // FIN. Un pas tous les vingt mètres fait cinquante fichiers pour un
+    // kilomètre, donc cinquante réveils du guetteur pour une seule balade : le
+    // MJ serait tiré de son siège à chaque pâté de maisons. Empiler les pas
+    // dans un fichier de l'inbox ne suffisait pas à l'éviter — le guetteur
+    // sonne dès qu'un fichier NOUVEAU paraît, c'est-à-dire au PREMIER tronçon,
+    // pour un sac d'un seul pas, après quoi les pas suivants s'ajoutaient à un
+    // fichier que le MJ était censé avoir lu et supprimé. On accumule donc la
+    // balade HORS de l'inbox, dans `etat/marches/<siège>.json`, et on ne la
+    // DÉPLACE dans l'inbox qu'une fois close : arrivée, ou arrêt en chemin.
+    // Le MJ se réveille une fois, lit la trace entière, et raconte la
+    // promenade d'un bloc.
+    // OÙ JE SUIS, ET RIEN D'AUTRE. La marque sur la carte EST la vraie
+    // position — mais `/marche` ne l'écrivait que tous les vingt mètres, parce
+    // que c'est le grain du RÉCIT qu'on envoie au MJ. Entre deux rapports, et
+    // surtout quand le joueur met en pause ou renonce, la position persistée
+    // traînait jusqu'à vingt mètres derrière ce qu'il avait sous les yeux — et
+    // c'est elle que lisent la perception, `--entre`, les coûts d'étape et le
+    // prochain `croise`.
+    //
+    // On sépare donc les deux, parce que ce sont deux besoins différents : le
+    // récit est cher et se rationne, la position est trois nombres et ne coûte
+    // rien. Cette route N'AVANCE PAS LA MONTRE et n'écrit aucun pas — les
+    // minutes se paient toujours sur `/marche`, et une position ne se paie pas.
+    if (req.method === "POST" && url === "/ou") {
+      let corps = "";
+      req.on("data", (c) => (corps += c));
+      req.on("end", () => {
+        try {
+          const p = JSON.parse(corps);
+          const siege = qui(req, url);
+          const pid = siege && siege.personnage_id;
+          const x = +p.x, y = +p.y;
+          if (!pid) return envoyer(res, 200, JSON.stringify({ ok: false, erreur: "sans siège" }));
+          if (!isFinite(x) || !isFinite(y))
+            return envoyer(res, 400, JSON.stringify({ erreur: "x/y" }));
+          const f = path.join(RACINE, "etat", "corps.json");
+          let L = { liens: {}, affectations: {} };
+          try { L = JSON.parse(fs.readFileSync(f, "utf-8")); } catch (e) {}
+          L.affectations = L.affectations || {};
+          const cle = "personnage:" + pid;
+          // ON FUSIONNE au lieu de remplacer : l'entrée peut porter un `nom`,
+          // une `note` ou un `visible` qu'on n'a aucune raison d'effacer parce
+          // que quelqu'un a fait trois pas.
+          const avant = L.affectations[cle] || {};
+          L.affectations[cle] = Object.assign({}, avant, {
+            xyz: [Math.round(x * 10) / 10, Math.round(y * 10) / 10, 0],
+            // LE PRÉFIXE, PAS L'IDENTIFIANT DE LIEU. `affecter.py` et
+            // `bati.py` cherchent `monde/<monde>.bati.json` : écrire
+            // « port-real » leur fait chercher un fichier qui n'existe pas,
+            // et l'affectation devient illisible pour tout ce qui la relit.
+            // C'est la même prise que `/marche` deux cents lignes plus bas.
+            monde: (LIEUX3D[p.lieu || LIEU3D_DEFAUT] || {}).prefixe ||
+                   p.lieu || LIEU3D_DEFAUT,
+            note: p.note || avant.note || "en marche",
+          });
+          fs.writeFileSync(f, JSON.stringify(L, null, 2), "utf-8");
+          return envoyer(res, 200, JSON.stringify({ ok: true }));
+        } catch (e) {
+          return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) }));
+        }
+      });
+      return;
+    }
     if (req.method === "POST" && url === "/marche") {
       let corps = "";
       req.on("data", (c) => (corps += c));
@@ -5256,7 +5603,15 @@ http
           const nommes = new Map();
           for (const cle in corpsJson.affectations) {
             const a = corpsJson.affectations[cle];
-            if (a && a.bat != null) nommes.set(a.bat, { cle, nom: a.nom || cle });
+            // PAS DE NOM, PAS DE NOM — on ne se rabat SURTOUT pas sur la clef.
+            // Une affectation sans `nom` rendait « devant
+            // lieu:place-du-puits-culpucier », c'est-à-dire un identifiant nu
+            // dans une phrase que le joueur lit au bandeau (elle part dans
+            // `presence.lieu`) et que le MJ reçoit dans son sac. Sans nom, on
+            // laisse le métier parler : « devant un puits » est vrai, lisible,
+            // et n'invente rien. Le jour où quelqu'un baptise l'endroit
+            // (`affecter.py --nom`), il reprend son nom tout seul.
+            if (a && a.bat != null) nommes.set(a.bat, { cle, nom: a.nom || null });
           }
           const autour = batiAutour(lieu, x, y, 45, 4, nommes);
           const pres = repereProche(lieu, x, y);
@@ -5284,9 +5639,14 @@ http
           const dit = (pres ? "À " + pres.a + " pas " + dePlace(pres.nom) : "Dans la ville") +
             (devant ? ", devant " + (devant.nom || metier(devant.usage)) : "");
           if (pid) {
+            // Le MONDE d'une affectation est le préfixe du bâti engendré
+            // (`portreal`), jamais l'id du lieu (`port-real`) : `affecter.py`
+            // ouvre `monde/<monde>.bati.json`, et écrire l'id du lieu ici
+            // faisait planter la liste des affectations sur un fichier absent.
+            const pref = (LIEUX3D[lieu] && LIEUX3D[lieu].prefixe) || lieu;
             corpsJson.affectations["personnage:" + pid] = {
               xyz: [Math.round(x * 10) / 10, Math.round(y * 10) / 10, 0],
-              monde: lieu, note: p.fin ? "arrivé" : "en marche",
+              monde: pref, note: p.fin ? "arrivé" : "en marche",
             };
             ecrire("corps.json", corpsJson);
             const presence = lire("presence.json", { presence: {} });
@@ -5330,21 +5690,100 @@ http
             croise: croiser.autour(RACINE, lieu, x, y, date),
             fin: !!p.fin,
           };
+          // ⚠ DEBUG — voir DEBUG_MARCHE_AU_FIL en tête de fichier. On écrit
+          // dans le fil du joueur ce qui part au MJ, tel quel. `pour: [pid]`
+          // le garde privé à ce siège ; `duree: 0` parce que la montre a déjà
+          // été avancée dix lignes plus haut et qu'on ne la paie pas deux fois.
+          if (DEBUG_MARCHE_AU_FIL && pid) {
+            const c = pas.croise || {};
+            const nb = (t) => (Array.isArray(t) ? t.length : 0);
+            const perçus = [].concat(c.vu || [], c.entendu || [], c.traces || [])
+              .slice(0, 4)
+              .map((f) => "· " + (f.comment || "?") + " — " + (f.quoi || "?") +
+                          (f.nom ? " (" + f.nom + ")" : "") +
+                          (f.pas != null ? ", " + f.pas + " pas" : ""));
+            const lignes = [
+              "▣ " + (p.combat ? "COMBAT" : "BALADE") + " — " + pas.ou,
+              pas.metres + " m, " + pas.minutes + " min" +
+                (pas.quartier ? " — " + pas.quartier : ""),
+              pas.longe && pas.longe.length ? "longe : " + pas.longe.join(" ; ") : null,
+              pas.tissu ? "tissu : " + pas.tissu : null,
+              pas.gens && pas.gens.en_armes
+                ? "EN ARMES : " + pas.gens.en_armes +
+                  (pas.gens.armes ? " — " + pas.gens.armes : "") : null,
+              pas.gens && pas.gens.font ? "font : " + pas.gens.font : null,
+              pas.gens && pas.gens.metiers
+                ? "croise : " + pas.gens.croises + " — " + pas.gens.metiers : null,
+              (nb(c.vu) + nb(c.entendu) + nb(c.traces))
+                ? "PERÇU (" + nb(c.vu) + " vu / " + nb(c.entendu) + " entendu / " +
+                  nb(c.traces) + " traces) :\n" + perçus.join("\n")
+                : null,
+            ].filter(Boolean);
+            try {
+              fs.appendFileSync(path.join(RACINE, "etat", "flux.jsonl"),
+                JSON.stringify({ type: "breve", texte: lignes.join("\n"),
+                                 // LA DATE, et ce n'est pas du décor : le
+                                 // bandeau du fil n'écrit l'heure QUE sur un
+                                 // item qui en porte une. Sans elle, on marche
+                                 // quarante minutes, la carte avance, et le
+                                 // bandeau reste à l'heure du départ — deux
+                                 // heures différentes sur le même écran, ce
+                                 // qui est exactement ce que `bus.js` dit
+                                 // vouloir éviter.
+                                 date,
+                                 pour: [pid], delai_s: 0, duree: 0,
+                                 debug: true }) + "\n", "utf-8");
+            } catch (e) { /* le debug ne casse jamais la marche */ }
+          }
           const dossier = pid
             ? path.join(RACINE, "etat", "inbox", pid)
             : path.join(RACINE, "etat", "inbox");
-          fs.mkdirSync(dossier, { recursive: true });
-          const ouvert = fs.readdirSync(dossier)
-            .filter((f) => /^marche-\d+\.json$/.test(f)).sort();
-          let nom = ouvert.length ? ouvert[ouvert.length - 1] : null;
+          // Le tampon de la balade en cours, hors de l'inbox pour ne pas
+          // réveiller le guetteur avant l'arrivée. Sans roster il n'y a pas
+          // d'id de siège : le sac de la partie seule s'appelle
+          // `_sans-siege.json`, l'underscore le distinguant d'un vrai id.
+          const tampons = path.join(RACINE, "etat", "marches");
+          fs.mkdirSync(tampons, { recursive: true });
+          const tampon = path.join(tampons, (pid || "_sans-siege") + ".json");
+          // DÉPOSER = fermer le sac dans l'inbox et oublier le tampon. C'est le
+          // seul geste qui réveille le MJ, et il n'arrive qu'une fois par
+          // balade. `_session` et `_touche_a` sont de la tuyauterie du tampon :
+          // on les retire, le sac que lit le MJ garde exactement son format.
+          const deposer = (s) => {
+            delete s._session;
+            delete s._touche_a;
+            fs.mkdirSync(dossier, { recursive: true });
+            fs.writeFileSync(path.join(dossier, "marche-" + Date.now() + ".json"),
+              JSON.stringify(s, null, 2), "utf-8");
+            try { fs.unlinkSync(tampon); } catch (e) {}
+          };
           let sac = null;
-          if (nom) {
-            try { sac = JSON.parse(fs.readFileSync(path.join(dossier, nom), "utf-8")); }
-            catch (e) { sac = null; }
+          try { sac = JSON.parse(fs.readFileSync(tampon, "utf-8")); }
+          catch (e) { sac = null; }
+          // UNE BALADE ABANDONNÉE NE MANGE PAS LA SUIVANTE. Le joueur qui
+          // renonce ou ferme l'onglet laisse un tampon que rien ne fermera
+          // jamais. Plutôt qu'une expiration savante : si le sac trouvé porte
+          // la signature d'un AUTRE démarrage du serveur, ou si son dernier
+          // pas remonte à plus de cinq minutes réelles — on marche un tronçon
+          // toutes les quelques secondes, cinq minutes est une éternité en
+          // chemin —, c'est une autre promenade. On la ferme vers l'inbox
+          // telle qu'elle est, puis on en ouvre une neuve : rien n'est perdu,
+          // le MJ reçoit la balade interrompue avec ses pas et son `fini`
+          // resté faux, ce qui lui dit précisément qu'elle a été abandonnée.
+          if (sac && Array.isArray(sac.pas)) {
+            const vieux = Date.now() - (+sac._touche_a || 0) > 5 * 60 * 1000;
+            if (sac._session !== SESSION_SERVEUR || vieux) {
+              deposer(sac);
+              sac = null;
+            }
           }
           if (!sac || !Array.isArray(sac.pas)) {
-            nom = "marche-" + Date.now() + ".json";
-            sac = { type: "marche", joueur_id: pid, lieu,
+            // « combat » quand l'homme TIENT SA POSITION au lieu de marcher :
+            // même route, même sac, même horloge — mais le MJ doit savoir s'il
+            // lit une promenade ou dix minutes passées devant une porte qu'on
+            // enfonce. Sans ce mot, il recevrait quarante pas de zéro mètre et
+            // devrait le deviner. Voir ecrans/modules/combat.js.
+            sac = { type: p.combat ? "combat" : "marche", joueur_id: pid, lieu,
                     depart: pas.ou, recu_a: new Date().toISOString(), pas: [] };
           }
           sac.pas.push(pas);
@@ -5359,9 +5798,67 @@ http
           // foulée, sinon le guetteur attendrait une arrivée qui ne viendra
           // plus.
           const arret = !!(pas.croise && pas.croise.arret);
-          sac.fini = !!p.fin || arret;
+          // `arret` FERME UNE BALADE, PAS UN COMBAT. Ce qui se lève en chemin
+          // coupe les jambes de qui marche — c'est la règle, et elle est bonne.
+          // Mais celui qui TIENT SA POSITION est déjà arrêté : lui dire de
+          // s'arrêter n'a aucun sens, et fermer son sac au premier « la porte
+          // cède » clôturait la scène à la minute où elle commençait. Pire,
+          // `combat.js` ne lit pas `arret` et continuait de ticker : le serveur
+          // rouvrait un sac, que le fait suivant refermait, et l'on obtenait un
+          // fichier par tic — le déluge exact que le tampon existe pour éviter.
+          //
+          // En combat, un fait qui arrêterait un marcheur n'est donc pas une
+          // fin : c'est une nouvelle, et elle part en tranche par la règle
+          // au-dessus.
+          sac.fini = !!p.fin || (arret && !p.combat);
           if (arret) sac.arret = pas.croise.vu[0] || true;
-          fs.writeFileSync(path.join(dossier, nom), JSON.stringify(sac, null, 2), "utf-8");
+          // ÇA SE RACONTE PENDANT, PAS APRÈS. C'était le concept, et le tampon
+          // — qui n'a pas tort de protéger le guetteur — le perdait en route :
+          // un homme qui voit une porte céder à quarante pas le faisait savoir
+          // dix minutes plus tard, à l'arrivée. Une scène qui se joue en
+          // différé n'est pas une scène ; le joueur attend devant un plan muet
+          // pendant que le MJ ne sait rien.
+          //
+          // La conciliation n'est pas « tamponner OU diffuser », c'est
+          // DIFFUSER CE QUI EST UNE NOUVELLE ET TAMPONNER CE QUI N'EN EST PAS
+          // UNE. On dépose donc dès qu'un pas PERÇOIT quelque chose — vu,
+          // entendu, ou trouvé par terre —, que l'homme marche ou qu'il tienne
+          // sa position. Une promenade tranquille ne réveille toujours le MJ
+          // qu'une fois, à l'arrivée : c'est le silence qui se tamponne, pas
+          // la bataille.
+          //
+          // AVEC UN PLANCHER D'UNE MINUTE DE FICTION, sinon on retombe très
+          // exactement dans le mal que le tampon vient de guérir : quarante
+          // tics bruyants feraient quarante fichiers et quarante sonneries.
+          // Le plancher se compte sur l'horloge du jeu et non sur la montre
+          // réelle, parce que c'est ×N qui décide de la seconde des deux.
+          const percu = pas.croise &&
+            ((pas.croise.vu || []).length || (pas.croise.entendu || []).length ||
+             (pas.croise.traces || []).length);
+          const clefMin = date ? ((date.annee * 12 + date.lune) * 30 + date.jour) * 1440
+                               + date.minute : 0;
+          const versee = !sac.fini && percu &&
+                         clefMin - (+sac._verse_a || 0) >= 1;
+          if (versee) {
+            sac._verse_a = clefMin;
+            // On dépose une TRANCHE : ce qui est parti est parti, et la suite
+            // s'accumule dans un sac neuf. Le MJ lit donc la scène par
+            // morceaux dans l'ordre, jamais deux fois la même ligne. `suite`
+            // lui dit que ce sac n'est pas un début — sans quoi il croirait
+            // que l'homme vient d'arriver à chaque tranche.
+            const tranche = sac;
+            sac = { type: sac.type, joueur_id: pid, lieu, depart: pas.ou,
+                    recu_a: new Date().toISOString(), pas: [],
+                    _verse_a: clefMin, suite: true };
+            deposer(tranche);
+          }
+          if (sac.fini) {
+            deposer(sac);
+          } else {
+            sac._session = SESSION_SERVEUR;
+            sac._touche_a = Date.now();
+            fs.writeFileSync(tampon, JSON.stringify(sac, null, 2), "utf-8");
+          }
           return envoyer(res, 200, JSON.stringify({ date, ou: dit, autour,
                                                     pas: sac.pas.length, arret }));
         } catch (e) {
