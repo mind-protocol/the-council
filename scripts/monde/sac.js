@@ -107,6 +107,15 @@ const CHAINE = ["bataille/hasard.js", "bataille/mesures.js",
                 // La couche 3 n'est qu'en observation, mais elle est lue par
                 // `soldat()` à chaque battement : elle doit être posée avant.
                 "survival-stack/3-interpretation.js",
+                // LA COUCHE 2, SON POURVOYEUR ET LA MAIN. Le four ne les
+                // chargeait pas : `jeu.html` les avait, cette liste-ci non, et
+                // deux listes qu'on ne touche pas ensemble sont deux listes qui
+                // divergent en silence. Une couche absente du four est une
+                // couche qu'aucune cuisson ne mesure — c'est-a-dire une couche
+                // dont on ne saura jamais rien.
+                "survival-stack/2-reflexion.js",
+                "survival-stack/5-qui-conduit.js",
+                "bataille/reflexion-adapt.js",
                 "bataille2d.js"];
 
 /** Charger la bataille, qui n'est pas un module ES mais une suite de scripts. */

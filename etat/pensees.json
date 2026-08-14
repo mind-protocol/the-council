@@ -18541,6 +18541,102 @@
    "texte": "CE QU'IL PROPOSAIT À MIDI A DÉJÀ ÉTÉ COURU, ET IL NE LE SAVAIT PAS. « Fixer d'abord ce qui est tenu constant, puis cuire trois fois la même chose » — `portreal.essai-inertie` et `portreal.sac` SONT cette expérience, tout tenu constant jusqu'à l'octet, et elle rend ×2,15. Un précédent qu'on relit six heures après l'avoir écrit se corrige comme un autre ; l'homme qui refuse de reprendre sa propre ligne vaut moins que le registre qu'il tient.",
    "salle": "clairiere",
    "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "bataille2d.js l.2958-3098, l.1165, l.663 — descendu au Lit des Racines",
+   "texte": "Le plus petit changement de 90211 est UNE LIGNE dans etat() (l.6617) qui compte h.l1.corpsAgi sur les hommes qui ont une l1, et rien d'autre n'est a ouvrir : capture.js l.277 embarque Bataille2d.etat() entier dans la legende. Ce n'est pas par les cinq libelles, et c'est une affaire de RYTHME et non de filtre : branche est reecrit par qui decide a chaque battement (27 ecritures, 22 de la cascade), les cinq de la couche ne s'ecrivent qu'au battement de l'oeil (~0,9 s contre un pas de 0,05 s), donc un libelle de corps vit un battement sur dix-huit et une vue instantanee en voit un dix-huitieme. corpsAgi n'est ecrit que dans le bloc de l'oeil : il tient toute la periode, c'est le seul fait de la stack du fichier dont la duree de vie depasse un battement.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "verrou 90220 relu contre bataille2d.js l.6870",
+   "texte": "La ligne doit rendre DEUX nombres : les corpsAgi SUR les hommes qui portent une l1. Le repli !!(h.l1 && h.l1.corpsAgi) de la fiche l.6870 rend zero aussi bien pour une armee sans stack que pour un corps qui n'a rien pris — exactement la faute de moraleMoyenne, qui rend -1 dans les deux cas. On la referait a l'identique en la copiant.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "1-corps.js l.1024 et l.1528 ; bataille2d.js l.3032, 3095",
+   "texte": "JAMBES porte sept mots, la cascade en branche cinq. Le commentaire l.3095 n'excuse que `planté` — « le corps n'a rien a dire » — mais `dérobade` tombe lui aussi dans la cascade, sans etre nomme nulle part. Ce n'est pas un verrou aujourd'hui (rien ne le conduit, donc le drapeau a faux est juste), c'est une adresse pour 90312 : le sixieme mot est un oubli silencieux, pas un choix ecrit.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "etat/vues/*.json et git show 2d3350c / 745c8eb",
+   "texte": "Les trois régimes de `moraleMoyenne` sont trois DATES, pas trois calculs concurrents : la jauge `h.morale` [0,1] jusqu'au 745c8eb, la moyenne de `h.l1.reflexe` [-1,1] après. Un champ déposé garde le nom qu'il avait le soir où il est parti ; renommer en amont ne rattrape rien en aval. D'où la règle : un nom qui a été déposé se gèle, la nouvelle grandeur prend un nom neuf.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "bataille2d.js l.2941-2948 et l.6617",
+   "texte": "Le troisième contenu de `moraleMoyenne` n'est pas une mesure du tout : c'est le repli `-1` des hommes que la couche n'a jamais regardés. `soldat()` sort avant `observer()` pour `blesse` et pour `tete`, le filtre de la vue n'écarte que `mort` : 172 blessés et toutes les têtes sont publiés au calme parfait. Le dépôt écrit donc l'ABSENCE en nombre plausible et la PANNE en `null` — l'inverse de ce qu'il faut, et c'est le vrai défaut, pas le nom.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "survival-stack/1-corps.js l.556-568 et etat/vues/marlo-vasse.json",
+   "texte": "Le `null` de Marlo n'est pas une quatrième quantité : c'est la moyenne de réflexe avec au moins un réflexe qui n'est pas un nombre — une moyenne n'a pas d'anticorps, un homme sur 1741 suffit. La panne est déjà avouée et corrigée dans la couche (`apaise` manquant sur la branche sans voisin), et sa signature écrite là-bas — 600 s, zéro mort, verrou intact — est mot pour mot ce que ses dix vues montrent.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "survival-stack/2-reflexion.js l.82-94 contre 1-corps.js l.92",
+   "texte": "La maison a déjà une convention écrite et elle se dit non négociable : tous les signaux dans [-1,1], nommés du côté favorable en +1. Les couches 2, 3, 4 la tiennent ; la couche 1 nomme `reflexe` du côté de la glande et vaut -1 au repos. C'est la même grandeur physique que `alarme`, en miroir. Une faute de convention ne se rattrape pas dans l'adaptateur : elle se corrige dans le nom, sinon le troisième appelant l'oublie.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "bataille2d.js l.6569, l.3043, l.3328 et etat/vues/nicolas-reynolds.json",
+   "texte": "Le relevé `branches` fabrique ses clefs en coupant au premier « à » ou « — », pour retirer les compléments chiffrés. Tout libellé qui emploie ces signes en prose y perd sa fin : « nez à nez, il attend le nombre » devient « nez », et « sidéré — son corps ne répond plus » devient « sidéré », donc perd la marque « son corps » qui est la seule chose rendant la couche comptable dans la vue. Un nom se conçoit avec le hachoir qui le coupera : la marque d'origine passe en tête.",
+   "salle": "clairiere",
+   "affaire": null
   }
  ]
 }

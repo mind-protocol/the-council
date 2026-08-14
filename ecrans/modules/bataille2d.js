@@ -1393,6 +1393,17 @@ window.Bataille2d = (() => {
       // battement — meme faute que `semer` ce matin, et c'est la deuxieme
       // fois qu'une IIFE de six mille lignes cache une collision de nom.
       recu: [], l1: null, l1etat: null, revoirCorps: 0,
+      // LA COUCHE 2 ET SA TRACE. `l2` est ce que `2-reflexion.js` a rendu au
+      // dernier coup d'oeil ; `l2etat` est ce que la couche ne tient pas
+      // elle-meme (l'horloge d'attente), tenu par `bataille/reflexion-adapt.js`
+      // comme `l1etat` l'est par `corps-adapt.js`.
+      // `conduit` est LE SEUL CHAMP QUE LA PEINTURE POURRA LIRE pour distinguer
+      // un homme que sa stack conduit d'un homme que la cascade conduit : un
+      // mot du meme genre que `etat`, pose au meme rythme, et que personne ne
+      // lit encore. Voir la trace, tout en bas de `reflexion-adapt.js`.
+      l2: null, l2etat: null,
+      conduit: null, conduitDepuis: 0, conduitBras: null, conduitPhrase: null,
+      conduitEtat: null,
       pv: 0, pvMax: 0, etat: "colonne", cible: null,
       prochain: entre(0, arme.cadence),         // les coups ne tombent pas en chœur
       escouade: (opts && opts.escouade) || 0,
@@ -2980,6 +2991,24 @@ window.Bataille2d = (() => {
           },
           pese, apaise: apaiseDe,
         }, ecoule);
+        // ---- ET LA COUCHE 2 DANS LE MEME BATTEMENT ------------------------
+        // ELLE ETAIT CHARGEE ET APPELEE NULLE PART (🔒 90370). Son pourvoyeur
+        // est `bataille/reflexion-adapt.js`, jumeau de `corps-adapt.js` : il
+        // batit les onze signaux depuis ce que la bataille tient deja, et pose
+        // `h.l2`. Il ne conduit rien — aucune conduite ne change, l'etalon du
+        // four ne peut pas bouger.
+        //
+        // ICI ET PAS AILLEURS, PARCE QUE C'EST LE SEUL INSTANT OU DEUX SORTIES
+        // SONT FRAICHES ENSEMBLE. 🔒 90360 dit qu'il n'existe aucun rendez-vous
+        // des quatre couches ; celui-ci en donne deux — `h.l1` vient d'etre
+        // pose, `h.l2` l'est dans la foulee, au meme coup d'oeil et avec le
+        // meme `dt`. Les 3 et 4 restent aux rythmes qui sont les leurs.
+        //
+        // `bati ? libreEn : null` : sans le masque du bati, la retraite est
+        // INCONNUE et non ouverte. C'est le pourvoyeur qui porte la nuance.
+        if (window.BatailleReflexion)
+          window.BatailleReflexion.observer(
+            h, { autour, temps, pese, libre: bati ? libreEn : null }, ecoule);
         h.revoirCorps = oeil(h); h.dtCorps = 0;
         // ---- LA DIFFUSION DU CHEF ----------------------------------------
         // Un chef a portee doit faire redescendre l'alarme, et le savoir coute
