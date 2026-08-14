@@ -86423,5 +86423,252 @@
   ],
   "lieu_id": "barralfond",
   "salle_id": "la-souche"
+ },
+ {
+  "id": "affaire-rendre-les-murs-solides",
+  "titre": "Rendre les murs solides",
+  "sous_titre": "🧭 Deuxième affaire de **BARRALFOND**, tenue par NICOLAS REYNOLDS, l'Équerre. Ouverte à la Souche le 3e jour de la 4e lune, an 129, à midi. Plage 91000 à 91999. Porte sur le MOTEUR ; ne touche rien de `etat/`.",
+  "type": "plan",
+  "embleme": "🧱",
+  "couleur": "#7a6a58",
+  "lieu_id": "barralfond",
+  "salle_id": "la-souche",
+  "tenu_par": "nicolas-reynolds",
+  "office": "Le grain — ce qui est gravé sous l'écorce, et qui fait la loi de ce qui existe",
+  "pages": [
+   "AFFAIRE OUVERTE À LA SOUCHE, LE 3e JOUR DE LA 4e LUNE, AN 129, À MIDI.\n\n**CE QU'ON VEUT.** Qu'un homme cesse de traverser le bâti. Le mur arrête, la rue mène, et le chemin d'un homme contourne ce qui est plein au lieu de passer au travers.\n\n**POURQUOI C'EST PLUS GRAVE QUE ÇA N'EN A L'AIR.** Tout ce qu'on lit sur la vue de bataille suppose que le bâti tienne : la ligne qui cède, la rue qui bouchonne, la panique qui court d'une porte à l'autre. Un homme qui traverse un mur ne fait pas seulement une faute d'image — il rend faux le compte de la foule, la vitesse de la panique, et le temps qu'un assaut met à atteindre une porte. **Chaque chiffre de l'affaire 90000 repose là-dessus.**\n\n**LE PIÈGE, ET IL EST NOMMÉ D'AVANCE.** Un chemin qui contourne coûte cher, et la tentation sera de le payer en cadence. D'où 🎯 91200, posé à égalité avec les deux autres : l'étalon de cadence se prend **avant** qu'on touche à quoi que ce soit, sinon on ne saura jamais ce qu'on a perdu.",
+   "**LA COLONNE DES VERROUS EST VIDE, ET ELLE LE RESTE JUSQU'À CE QUE BREN REMONTE.**\n\nC'est la leçon de l'affaire d'à côté, payée le jour même : j'y avais gravé deux verrous d'en haut, et les deux étaient faux — « les couches ne conduisent rien » alors qu'elles en conduisent quatorze, et un compte de lignes qui ne comptait que des commentaires. Un verrou gravé depuis la Souche est un trou mécanique, et un trou mécanique ne vaut rien.\n\nCe que je sais et qui n'est PAS un verrou, seulement une adresse pour Bren : `bataille2d.js` connaît déjà le bâti — il le compte, il le force, il le brûle (`bati.etat`, `bati.forcees`, l. 1504, 3567, 3594) —, et il porte l. 581 la phrase « on fuit par la rue, parce qu'il y a des murs ». Le bâti est donc **connu du code sans lui être opposé**. Où exactement, c'est à lui de le dire."
+  ],
+  "tables": [
+   {
+    "titre": "🏰 Ouverture de l'Affaire",
+    "colonnes": [
+     "🧱 Le champ",
+     "✍️ Ce qu'on y écrit",
+     "📖 La règle du champ",
+     "✅ Rempli ?"
+    ],
+    "lignes": [
+     {
+      "cellules": [
+       "🏷️ **LE NOM**",
+       "Rendre les murs solides",
+       "Le sujet dont on traite, **jamais la solution**.",
+       "**oui**"
+      ]
+     },
+     {
+      "cellules": [
+       "🎯 **L'OBJET**",
+       "Qu'un homme cesse de traverser le bâti. Le mur arrête, la rue mène, et le chemin d'un homme contourne ce qui est plein au lieu de passer au travers.",
+       "Ce qu'on veut obtenir, en une phrase, mesurable.",
+       "**oui**"
+      ]
+     },
+     {
+      "cellules": [
+       "🧭 **POURQUOI MAINTENANT**",
+       "Les soldats se moquent des murs. Tout ce qui se lit sur la vue de bataille — la ligne qui cède, la rue qui bouchonne, la panique qui court — suppose que le bâti tienne. Tant qu'on le traverse, chaque chiffre de foule et d'assaut porte une erreur qu'on ne sait pas mesurer.",
+       "Ce qui rend l'affaire urgente aujourd'hui et pas hier.",
+       "**oui**"
+      ]
+     },
+     {
+      "cellules": [
+       "🪶 **QUI LA TIENT**",
+       "Nicolas Reynolds, l'Équerre",
+       "Un nom, jamais un office vacant.",
+       "**oui**"
+      ]
+     },
+     {
+      "cellules": [
+       "📏 **À QUOI ON LA JUGE**",
+       "Sur une cuisson : **zéro traversée de bâti** relevée, et une nuit qui reste jouable — le coût du chemin ne doit pas faire tomber la cadence sous ce qu'elle est aujourd'hui.",
+       "Le chiffre qui dira que c'est fait. Pas un avis.",
+       "**oui**"
+      ]
+     },
+     {
+      "cellules": [
+       "⚠️ **CE QU'ELLE NE TOUCHE PAS**",
+       "Rien de `etat/`. Et rien de l'affaire 90000 : la stack décide de ce qu'un homme VEUT, celle-ci de ce que le sol lui PERMET. Deux sujets, deux cahiers.",
+       "La borne, écrite avant de commencer.",
+       "**oui**"
+      ]
+     }
+    ]
+   },
+   {
+    "titre": "🎯 États cibles",
+    "colonnes": [
+     "🎯 N°",
+     "🎯 L'état",
+     "📏 La preuve",
+     "📅 Jour dû"
+    ],
+    "lignes": [
+     {
+      "cellules": [
+       "**91000**",
+       "**Le mur arrête**",
+       "Sur une cuisson entière : zéro homme relevé à l'intérieur d'un bâti plein, et zéro segment de pas qui le franchisse.",
+       "J−0"
+      ]
+     },
+     {
+      "cellules": [
+       "**91100**",
+       "**La rue mène**",
+       "Un homme qui vise un point derrière un pâté de maisons y arrive par la rue, et le compte de ceux qui n'arrivent jamais ne monte pas.",
+       "J−2"
+      ]
+     },
+     {
+      "cellules": [
+       "**91200**",
+       "**Ça reste jouable**",
+       "La cadence de cuisson ne tombe pas sous celle d'aujourd'hui, mesurée avant qu'on touche à quoi que ce soit.",
+       "J−1"
+      ]
+     }
+    ]
+   },
+   {
+    "titre": "🔒 Verrous",
+    "colonnes": [
+     "🔒 N°",
+     "🔒 Le verrou",
+     "🎯 Bloque",
+     "🔎 La preuve"
+    ],
+    "lignes": []
+   },
+   {
+    "titre": "⚔️ Actions",
+    "colonnes": [
+     "⚔️ N°",
+     "⚔️ L'action",
+     "⬆️ Réalise",
+     "🪶 L'office",
+     "📅 Jour dû",
+     "✅ État"
+    ],
+    "lignes": [
+     {
+      "cellules": [
+       "**91010**",
+       "Descendre la nappe du déplacement : par où passe un pas, ce qui le borne aujourd'hui, et où le bâti est connu du code sans être opposé",
+       "91000 91100",
+       "Bren Racine-Grise",
+       "J−4",
+       "en cours"
+      ]
+     },
+     {
+      "cellules": [
+       "**91011**",
+       "Relire les anneaux : ce qui a déjà été tenté sur les murs et le chemin, la forme retenue, ce qu'il en est resté",
+       "91000",
+       "Sarn Vieux-Sang",
+       "J−4",
+       "à venir"
+      ]
+     },
+     {
+      "cellules": [
+       "**91210**",
+       "Poser l'étalon de cadence AVANT tout changement : combien coûte une nuit aujourd'hui",
+       "91200",
+       "Toll Œil-Noir",
+       "J−3",
+       "à venir"
+      ]
+     },
+     {
+      "cellules": [
+       "**91020**",
+       "Rendre le bâti opposable au pas, et faire contourner",
+       "91000 91100",
+       "Ygga Main-de-Pierre",
+       "J−1",
+       "à venir"
+      ]
+     },
+     {
+      "cellules": [
+       "**91021**",
+       "Compter les traversées sur une cuisson entière, avant et après, avec la cadence",
+       "91000 91200",
+       "Toll Œil-Noir",
+       "J−0",
+       "à venir"
+      ]
+     },
+     {
+      "cellules": [
+       "**91030**",
+       "Nommer ce qui sort : le mur, le pas, le contournement — avec les mots écartés",
+       "91000",
+       "Wenna la Nommeuse",
+       "J−0",
+       "à venir"
+      ]
+     }
+    ]
+   },
+   {
+    "titre": "🪶 Les offices — qui écrit où",
+    "colonnes": [
+     "🪶 L'office",
+     "👤 Qui le tient",
+     "📁 Ce qu'il écrit"
+    ],
+    "lignes": [
+     {
+      "cellules": [
+       "**La nappe**",
+       "Bren Racine-Grise",
+       "Il rapporte ; ce qu'il remonte remplit la colonne des verrous."
+      ]
+     },
+     {
+      "cellules": [
+       "**Les anneaux**",
+       "Sarn Vieux-Sang",
+       "Il rapporte le précédent."
+      ]
+     },
+     {
+      "cellules": [
+       "**Le fer**",
+       "Ygga Main-de-Pierre",
+       "`ecrans/modules/bataille2d.js`, `ecrans/modules/bataille/`, `scripts/monde/sac.js`"
+      ]
+     },
+     {
+      "cellules": [
+       "**L'eau**",
+       "Toll Œil-Noir",
+       "`scripts/bataille.py`, ce qui cuit et ce qui mesure"
+      ]
+     },
+     {
+      "cellules": [
+       "**Les noms**",
+       "Wenna la Nommeuse",
+       "Les README, les en-têtes, les noms publics"
+      ]
+     },
+     {
+      "cellules": [
+       "**L'Équerre**",
+       "Nicolas Reynolds",
+       "`chantier/affaires.json` — lui seul grave à la Souche"
+      ]
+     }
+    ]
+   }
+  ]
  }
 ]
