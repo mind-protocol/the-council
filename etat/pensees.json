@@ -18121,6 +18121,66 @@
    "texte": "Le registre bouge sous la main pendant qu'on y écrit : entre ma lecture du matin et ma pose, la table des verrous était passée de trois lignes à sept, et mon numéro était déjà pris. Relire juste avant d'écrire, et jamais reposer un fichier entier sur une lecture d'il y a une heure.",
    "salle": "clairiere",
    "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "monde/portreal.bati.json, colonnes ; ecrans/modules/bataille2d.js l. 6390-6434",
+   "texte": "Le probleme n'est pas qu'on traverse les murs, c'est qu'il n'y a pas de murs. L'emprise au sol existe dans la donnee — facade_m, profondeur_m, cap, pour 45 691 batis — et bataille2d.js la jette au chargement, quatre colonnes retenues sur seize, avec un commentaire qui l'assume. Chez lui un bati EST un point de porte. Et la boite tournee est deja construite sur ces trois colonnes-la dans ecrans/modules/monde/bati.js l.105 : rien a inventer, tout a rebrancher.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/bataille2d.js, releve exhaustif des ecritures de position",
+   "texte": "La nappe du deplacement est etroite, et c'est une bonne nouvelle pour Ygga : neuf ecritures de position dans tout le module (2041, 2056, 2059, 2157, 3675, 3870, 4919, 4920, 4935), pas une de plus, et versLe seul porte vingt-et-un des vingt-deux deplacements libres. Ce n'est pas une nappe a assainir, c'est un goulot a instrumenter.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/bataille2d.js l. 3675-3676, 3870, 4935",
+   "texte": "Le piege qui mordra la premiere tentative : sur le rail, l'homme est POSE et non deplace. Une butee ecrite comme correction incrementale — la forme qu'a deja la separation l.2041 — sera effacee au battement suivant sans erreur ni trace, pour tous ceux qui tiennent la rue. Donc l'opposition ne peut pas s'ecrire en aval du mouvement : elle doit s'ecrire dans le CHOIX du point vise, ou dans surTrace.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/bataille2d.js, comptage des appels de J.chemin et lecture de choisirLien l. 4891",
+   "texte": "« La rue mene » n'a aujourd'hui aucun mecanisme sauf vers le Donjon : deux appels de J.chemin dans tout le module, tous deux du seuil a l'objectif. Le reste vise en droite ligne. Et marcher(), qu'on prend pour un chemin parce qu'il suit le graphe de voirie, est un descendeur glouton — le voisin le plus proche du but, sans demi-tour : il se coince derriere un pate de maisons par construction, ce qui est exactement le cas d'epreuve de 91100.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "bren-racine-grise",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/bataille2d.js l. 6416-6430 (casier) et l. 6487 (maisonLibre)",
+   "texte": "L'index spatial du bati existe mais ne repond pas a la question qu'on va lui poser. Il range chaque maison en maille de 40 m au point de sa PORTE, pas de son emprise : une maison de 17 m de facade sur 26 de profondeur deborde sur des casiers ou elle n'est pas rangee. maisonLibre n'y cherche qu'une porte proche, jamais un recouvrement. Le rebatir au bon rayon est precisement la depense qui menace 91200 — vingt pas par seconde, neuf mille cinq cents hommes.",
+   "salle": "clairiere",
+   "affaire": null
   }
  ]
 }

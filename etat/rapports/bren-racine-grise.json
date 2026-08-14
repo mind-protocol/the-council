@@ -2,75 +2,58 @@
  "qui": "bren-racine-grise",
  "journal": [
   {
-   "heure": "5h00",
-   "duree": 120,
-   "lieu": "clairiere",
-   "quoi": "Bren ouvre le volume *Migrer la bataille vers la stack* pose a la Souche et releve ce qui porte son nom",
-   "resultat": "Une seule action a lui : 90010, descendre la nappe de `soldat()`. Deux verrous graves d'en haut (90310, 90320), et la colonne laissee vide expres pour lui. Trois etats cibles, dont 90200 que personne n'a encore verrouille."
-  },
-  {
-   "heure": "7h00",
-   "duree": 6,
-   "de": "la-souche",
-   "a": "lit-des-racines",
-   "quoi": "Il descend",
-   "resultat": "Arrive avec le volume et l'adresse du fichier."
-  },
-  {
    "heure": "7h06",
-   "duree": 294,
+   "duree": 40,
    "lieu": "lit-des-racines",
-   "quoi": "Descente ligne a ligne de `soldat()` dans `ecrans/modules/bataille2d.js`, l.2940 a 3698",
-   "resultat": "758 lignes, 24 sorties nommees, chacune posant `h.etat` et `h.branche`. L'ordre est fixe : mort/blesse/tete, couche 1, fer et erre, deroute, coureur, rentre, tenir-a-sa-vie (entame/deborde), souffle, patience et contact, poste tenu, ordre d'escouade (repli/tenir/suivre/appuyer), verrou de porte, pillage, rail vers le donjon. Et surtout : l.3025-3093, la couche 1 CONDUIT deja cinq gestes."
+   "quoi": "Il ouvre le volume neuf de l'Équerre et lit l'affaire des murs de bout en bout, les trois états cibles, les six actions, et la colonne des verrous laissée vide exprès.",
+   "resultat": "Son office est 91010 et il est seul à le porter : ce qu'il remonte remplit la colonne. Les adresses de départ données par l'Équerre — bati.etat, bati.forcees, l. 1504, 3567, 3594, et la phrase de la l. 581 — sont justes mais partielles."
   },
   {
-   "heure": "12h00",
-   "duree": 5,
-   "de": "lit-des-racines",
-   "a": "la-souche",
-   "quoi": "Il remonte pour compter",
-   "resultat": ""
+   "heure": "7h46",
+   "duree": 95,
+   "lieu": "lit-des-racines",
+   "quoi": "Il descend la nappe du déplacement dans ecrans/modules/bataille2d.js — six mille neuf cent cinquante-sept lignes — et relève une par une toutes les écritures de position d'un homme.",
+   "resultat": "Neuf, et neuf seulement : l. 2041 (butée de séparation), 2056 et 2059 (pousser), 2157 (versLe), 3675 (rail de colonne), 3870 (messager), 4919, 4920 et 4935 (marcher). Aucune ne nomme `bati`. Vingt-deux appels de versLe, tous en ligne droite."
+  },
+  {
+   "heure": "9h21",
+   "duree": 70,
+   "lieu": "lit-des-racines",
+   "quoi": "Il remonte de chargerBati (l. 6390-6434) jusqu'à la source : monde/portreal.bati.json, ses colonnes, et ce qu'en font les autres modules du dépôt.",
+   "resultat": "Le fichier porte seize colonnes pour 45 691 bâtis, dont facade_m, profondeur_m et cap — l'emprise au sol. Le client de bataille n'en retient que quatre (porte_x, porte_y, usage, etages) et jette le reste. La boîte tournée est déjà construite sur ces trois colonnes dans ecrans/modules/monde/bati.js l. 105-119 et relief.js l. 208."
+  },
+  {
+   "heure": "10h31",
+   "duree": 55,
+   "lieu": "lit-des-racines",
+   "quoi": "Il examine la branche de colonne (l. 3604-3698) et la fonction surTrace, pour savoir comment un homme tient la rue quand il la tient.",
+   "resultat": "Le rail n'est pas un déplacement mais un PLACEMENT ABSOLU : h.x = q[0] + q[2]·cote·demi. Même forme chez le messager (l. 3870) et dans marcher (l. 4935). Toute opposition écrite comme correction incrémentale y est silencieusement effacée au battement suivant."
+  },
+  {
+   "heure": "11h26",
+   "duree": 34,
+   "lieu": "lit-des-racines",
+   "quoi": "Il compte les appels de J.chemin dans le module et suit marcher() et choisirLien jusqu'au fond.",
+   "resultat": "Deux appels de chemin dans tout le module (l. 1987, 3860), tous deux vers le Donjon. Repli, retour au poste, verrou de rue, coureur d'ordre et pillage vont tout droit. marcher() n'est pas un chemin : choisirLien (l. 4891) descend glouton de carrefour en carrefour vers le plus proche du but, sans se retourner."
   },
   {
    "heure": "12h05",
-   "duree": 55,
+   "duree": 30,
    "lieu": "la-souche",
-   "quoi": "Il passe le seul controle qui ne se laisse pas raconter — le compte de lignes de code de `bataille2d.js` contre l'etalon pose dans `corps-adapt.js` l.150",
-   "resultat": "2801 lignes a l'etalon, **2980 mesurees ce jour** : +179. Trois couches branchees, rien de depose. Le refacto fait grossir le fichier qu'il devait vider."
+   "quoi": "Il grave les cinq verrous 91001 à 91005 dans chantier/affaires.json ET etat/books.json, gabarit strict, adresses nues en gras dans la colonne N°, numéros nus dans Bloque.",
+   "resultat": "Cinq lignes dans chaque stock, relues après pose et identiques des deux côtés. Le damier tient."
   },
   {
-   "heure": "13h00",
-   "duree": 5,
-   "de": "la-souche",
-   "a": "lit-des-racines",
-   "quoi": "Il redescend finir la nappe",
-   "resultat": ""
-  },
-  {
-   "heure": "13h05",
-   "duree": 175,
-   "lieu": "lit-des-racines",
-   "quoi": "Il remonte les appelants : ce qui appelle `soldat()`, et ce qui decide d'un homme sans passer par elle",
-   "resultat": "UN seul appelant direct, l.5374, dans la boucle du pas. Mais ONZE fonctions posent `h.etat` hors de la cascade : `dresser` 1753/1783/1791, `tomber` 2805, `achever` 2845, `rompre` 2894, `envoyerAuDonjon` 3845, `courirAuDonjon` 3879, `ouvrirDeDedans` 4010, `envoyerCoureur` 4567, `rendreCoureur` 4674, `rallier` 4783, `piller` 6459/6480. Celui que personne n'attendait : `rallier` lit deja `h.l1.jambes` (l.4782) — la couche conduit hors cascade, la ou le plan ne regarde pas."
-  },
-  {
-   "heure": "16h00",
-   "duree": 60,
-   "lieu": "lit-des-racines",
-   "quoi": "Il ouvre `ecrans/modules/bataille/corps-adapt.js`, 372 lignes, que le volume ne nomme nulle part",
-   "resultat": "C'est la prise entre la bataille et la couche 1, chargee par `jeu.html` l.164, hors de `survival-stack/`. Elle porte un ordre de depose complet, poste par poste, et l'aveu du hasard : `Math.random()` dans la couche, ecart de relecture passe de 0,600 m et 3 etats faux a **329 m et 931 172 etats faux** le jour ou le seuil d'emprise est tombe."
-  },
-  {
-   "heure": "17h00",
-   "duree": 60,
-   "lieu": "lit-des-racines",
-   "quoi": "Il grave sa part : trois verrous neufs dans `chantier/affaires.json`, et corrige celui qui mentait",
-   "resultat": "90330 (deux modeles de peur decident en meme temps, +179 lignes), 90340 (onze transitions hors `soldat()`), 90120 (le hasard d'une couche neuve casse la cuisson reproductible). Le titre de la table est repris : ce n'est plus « le reste attend Bren ». 90200 reste sans verrou, et il le dit plutot que d'en inventer un : il n'a pas descendu la vue."
+   "heure": "12h35",
+   "duree": 25,
+   "lieu": "la-souche",
+   "quoi": "Il porte son rapport au parloir, appelants nommés un par un avec leur adresse.",
+   "resultat": "Rapport remis. Le verrou 91003 — le placement qui efface la butée — est signalé nommément comme celui qui mordra la première tentative d'Ygga."
   }
  ],
  "travaux": [
   {
-   "travail_id": "affaire-migrer-la-bataille-vers-la-stack",
+   "travail_id": "affaire-rendre-les-murs-solides",
    "dernier_travail": {
     "annee": 129,
     "lune": 4,
@@ -83,8 +66,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "ecrans/modules/bataille2d.js, l.3025-3093",
-     "texte": "Le verrou 90320 est faux. Il dit « les trois couches ecrites ne conduisent rien » et cite trois commentaires. Or `h.l1.jambes` conduit deja `sideration`, `fuite`, `recul`, `serrer` et `ruee`, `h.brasMorts` retire les bras, la couche 4 conduit le pillage par `Envie.tauxDeButin` (l.3593), et le drapeau `pilote` comme le seuil d'emprise 0,60 sont tombes. Seule la couche 3 est encore en observation. Un verrou grave d'en haut passe toutes les verifications et il ment : c'est exactement le genre de faute qu'aucune machine ne trouve."
+     "source": "monde/portreal.bati.json, colonnes ; ecrans/modules/bataille2d.js l. 6390-6434",
+     "texte": "Le probleme n'est pas qu'on traverse les murs, c'est qu'il n'y a pas de murs. L'emprise au sol existe dans la donnee — facade_m, profondeur_m, cap, pour 45 691 batis — et bataille2d.js la jette au chargement, quatre colonnes retenues sur seize, avec un commentaire qui l'assume. Chez lui un bati EST un point de porte. Et la boite tournee est deja construite sur ces trois colonnes-la dans ecrans/modules/monde/bati.js l.105 : rien a inventer, tout a rebrancher."
     },
     {
      "date": {
@@ -92,8 +75,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "compte de lignes de bataille2d.js contre l'etalon de corps-adapt.js l.150",
-     "texte": "2801 a l'etalon, 2980 aujourd'hui : +179. Le test est ecrit noir sur blanc dans le depot — « un poste qui fait grossir `bataille2d` est une greffe, quel que soit le discours autour » — et personne ne l'a repasse depuis. On a branche trois couches sans deposer un seul mecanisme ancien : `morale`, `ROMPT`, `CHOC`, `SANG`, `REPRISE`, `PLANCHER_FERME` et `survie()` decident encore a cote de `h.l1`. Deux modeles qui disent la meme chose avec des pieces differentes ne se departagent jamais."
+     "source": "ecrans/modules/bataille2d.js, releve exhaustif des ecritures de position",
+     "texte": "La nappe du deplacement est etroite, et c'est une bonne nouvelle pour Ygga : neuf ecritures de position dans tout le module (2041, 2056, 2059, 2157, 3675, 3870, 4919, 4920, 4935), pas une de plus, et versLe seul porte vingt-et-un des vingt-deux deplacements libres. Ce n'est pas une nappe a assainir, c'est un goulot a instrumenter."
     },
     {
      "date": {
@@ -101,8 +84,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "relevé des ecritures de h.etat dans bataille2d.js",
-     "texte": "Retirer la cascade de `soldat()` ne suffira pas a vider la tete du fichier. Onze fonctions posent l'etat d'un homme en dehors d'elle, et l'une — `rallier` — lit deja `h.l1`. L'action 90312 vise la cascade seule ; elle laisserait ces onze-la dehors, et l'etat cible 90300 serait declare tenu alors qu'il ne le serait pas."
+     "source": "ecrans/modules/bataille2d.js l. 3675-3676, 3870, 4935",
+     "texte": "Le piege qui mordra la premiere tentative : sur le rail, l'homme est POSE et non deplace. Une butee ecrite comme correction incrementale — la forme qu'a deja la separation l.2041 — sera effacee au battement suivant sans erreur ni trace, pour tous ceux qui tiennent la rue. Donc l'opposition ne peut pas s'ecrire en aval du mouvement : elle doit s'ecrire dans le CHOIX du point vise, ou dans surTrace."
     },
     {
      "date": {
@@ -110,8 +93,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "ecrans/modules/bataille/corps-adapt.js, l.105-126",
-     "texte": "La couche 2 n'est pas a ecrire de zero : `proieProche` EST une couche 2 complete — des options dans une monnaie unique, un cout au carre, un budget de souffle, un refus. A deplacer, pas a reecrire. Ce qui manque vraiment est l'ATTENTE : la couche 1 lache par horloge, la couche 2 doit lacher par dementi. C'est la seule piece entierement neuve, et Ygga doit le savoir avant de commencer 90310."
+     "source": "ecrans/modules/bataille2d.js, comptage des appels de J.chemin et lecture de choisirLien l. 4891",
+     "texte": "« La rue mene » n'a aujourd'hui aucun mecanisme sauf vers le Donjon : deux appels de J.chemin dans tout le module, tous deux du seuil a l'objectif. Le reste vise en droite ligne. Et marcher(), qu'on prend pour un chemin parce qu'il suit le graphe de voirie, est un descendeur glouton — le voisin le plus proche du but, sans demi-tour : il se coince derriere un pate de maisons par construction, ce qui est exactement le cas d'epreuve de 91100."
     },
     {
      "date": {
@@ -119,41 +102,55 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "ecrans/jeu.html l.163-170 et ecrans/modules/bataille/corps-adapt.js",
-     "texte": "Le branchement ne vit pas dans `survival-stack/` mais dans `bataille/corps-adapt.js`, que le volume ne nomme nulle part. Wenna nommera les couches en 90320 : qu'elle nomme aussi celle-ci, sinon le plan continuera de decrire une pile a quatre etages en ignorant la prise qui la tient."
+     "source": "ecrans/modules/bataille2d.js l. 6416-6430 (casier) et l. 6487 (maisonLibre)",
+     "texte": "L'index spatial du bati existe mais ne repond pas a la question qu'on va lui poser. Il range chaque maison en maille de 40 m au point de sa PORTE, pas de son emprise : une maison de 17 m de facade sur 26 de profondeur deborde sur des casiers ou elle n'est pas rangee. maisonLibre n'y cherche qu'une porte proche, jamais un recouvrement. Le rebatir au bon rayon est precisement la depense qui menace 91200 — vingt pas par seconde, neuf mille cinq cents hommes."
     }
    ],
-   "conclusion": "La nappe de `soldat()` est remontee entiere : 758 lignes, 24 sorties, un seul appelant direct, onze decideurs hors cascade. La colonne des verrous n'est plus vide — 90330, 90340, 90120 — et 90320 est corrige, parce qu'il mentait. Ce que la descente change au plan : le branchement est DEJA fait et partiel, il vit hors de `survival-stack/`, aucun mecanisme ancien n'a ete depose, et le fichier a grossi de 179 lignes au lieu de maigrir. L'action 90010 est faite."
+   "conclusion": null
   }
  ],
  "cahier2": [
   {
-   "livre": "affaire-migrer-la-bataille-vers-la-stack",
-   "table": "⚔️ Les actions — chacune remonte, ou elle sort",
-   "ligne": "90010",
-   "colonne": "✅ État",
-   "valeur": "faite"
-  },
-  {
-   "livre": "affaire-migrer-la-bataille-vers-la-stack",
-   "table": "🔒 Les verrous",
-   "ligne": "90320",
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91001",
    "colonne": "🔒 Le verrou",
-   "valeur": "**La couche 1 conduit déjà cinq gestes, et son garde-fou a été retiré** — ce n'est plus « chargé n'est pas branché », c'est « branché à moitié, et hors de la stack »"
+   "valeur": "Une maison est un POINT : son emprise au sol est lue, puis jetée au chargement"
   },
   {
-   "livre": "affaire-migrer-la-bataille-vers-la-stack",
-   "table": "🔒 Les verrous",
-   "ligne": "90320",
-   "colonne": "🔎 D'où on le sait",
-   "valeur": "Descendu au Lit des Racines. `bataille2d.js` l.3025–3093 : `h.l1.jambes` conduit `sidération`, `fuite`, `recul`, `serrer`, `ruée`, et `h.brasMorts` retire les bras. Le drapeau `pilote` et le seuil d'emprise 0,60 sont tombés (l.3007–3022). La couche 4 conduit le pillage (l.3593, `Envie.tauxDeButin`) ; seule la couche 3 tourne encore en observation (l.3401). Et le branchement ne vit pas dans `survival-stack/` : il est dans `ecrans/modules/bataille/corps-adapt.js`, 372 lignes, chargé par `jeu.html` l.164, que ce volume ne nommait nulle part."
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91002",
+   "colonne": "🔒 Le verrou",
+   "valeur": "Les neuf écritures de position ne consultent jamais le bâti"
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91003",
+   "colonne": "🔒 Le verrou",
+   "valeur": "Sur le rail, l'homme est POSÉ et non déplacé : une butée y serait effacée au battement suivant"
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91004",
+   "colonne": "🔒 Le verrou",
+   "valeur": "Il n'existe de chemin par les rues que vers le Donjon ; toute autre visée va tout droit"
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91005",
+   "colonne": "🔒 Le verrou",
+   "valeur": "La grille du bâti est rangée sur les portes : elle ne sait pas répondre « qu'y a-t-il de plein ici »"
   }
  ],
  "_depeche": {
   "session": "94ce2586-d2cf-56a1-8bec-3ed550d30aad",
   "date_jeu": "129.4.3",
-  "jetons": 1793788,
-  "secondes": 313
+  "jetons": 1287609,
+  "secondes": 257
  },
  "_cahier_verse": true
 }

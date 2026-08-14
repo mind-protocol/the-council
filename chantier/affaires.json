@@ -457,7 +457,48 @@
             "🎯 Bloque",
             "🔎 La preuve"
           ],
-          "lignes": []
+          "lignes": [
+            {
+              "cellules": [
+                "**91001**",
+                "Une maison est un POINT : son emprise au sol est lue, puis jetée au chargement",
+                "91000",
+                "`monde/portreal.bati.json` porte 16 colonnes pour 45 691 bâtis, dont `facade_m`, `profondeur_m` et `cap` — l'emprise. `chargerBati` (bataille2d.js l. 6390-6434) n'en retient que quatre (`porte_x`, `porte_y`, `usage`, `etages`) et l'écrit : « le reste ne sert pas à enfoncer un huis ». Le module n'a donc aucune surface à opposer : chez lui un bâti EST un point de porte. La boîte tournée est pourtant déjà construite sur ces trois colonnes-là, ailleurs dans le dépôt — `ecrans/modules/monde/bati.js` l. 105-119, et `relief.js` l. 208."
+              ]
+            },
+            {
+              "cellules": [
+                "**91002**",
+                "Les neuf écritures de position ne consultent jamais le bâti",
+                "91000",
+                "La position d'un homme n'est écrite qu'en neuf points de bataille2d.js : l. 2041 (butée), 2056 et 2059 (`pousser`), 2157 (`versLe`), 3675 (rail de colonne), 3870 (messager), 4919, 4920 et 4935 (`marcher`). Aucune ne nomme `bati`. Les quatre endroits où `bati` touche au mouvement — l. 1504, 3567, 3594, 6463 — le comptent, le forcent, le brûlent et vont à sa porte ; pas un ne le franchit ni ne l'arrête. Un seul goulot : `versLe` porte 21 des 22 déplacements libres."
+              ]
+            },
+            {
+              "cellules": [
+                "**91003**",
+                "Sur le rail, l'homme est POSÉ et non déplacé : une butée y serait effacée au battement suivant",
+                "91000",
+                "l. 3675-3676 — `h.x = q[0] + q[2] * h.cote * demi` : un homme en colonne n'avance pas, on le pose à son `avance` sur la trace. Même forme l. 3870 (messager) et 4935 (`marcher`). Toute opposition écrite comme correction de position — la forme de la butée, `h.x += …` l. 2041 — est donc muette pour ceux-là, sans erreur ni trace. Or le rail est aujourd'hui la seule chose qui tienne un homme hors des murs, et il ne couvre que trois branches des vingt-deux qui déplacent."
+              ]
+            },
+            {
+              "cellules": [
+                "**91004**",
+                "Il n'existe de chemin par les rues que vers le Donjon ; toute autre visée va tout droit",
+                "91100",
+                "`J.chemin(voirie, …)` n'est appelé que deux fois dans tout le module — l. 1987 et 3860 — et toujours d'une porte vers `objectif`. Le reste vise en ligne droite par `versLe` : repli (l. 3243, 3435), retour au poste (3184, 3375, 3440, 3467), verrou de rue (3522-3532), coureur d'ordre (4613), pillage jusqu'à 26 m (6463, qui pose `h.surVoie = false` avant de partir). Seule la déroute passe par `marcher()`, qui n'est pas un chemin mais une descente gloutonne de carrefour en carrefour : `choisirLien` (l. 4891) prend le voisin le plus proche du but et se borne à ne pas faire demi-tour."
+              ]
+            },
+            {
+              "cellules": [
+                "**91005**",
+                "La grille du bâti est rangée sur les portes : elle ne sait pas répondre « qu'y a-t-il de plein ici »",
+                "91200",
+                "`chargerBati` case chaque bâti dans une maille de 40 m au point de sa PORTE (l. 6416-6430 : `casier(i)` sur `x[i]/y[i]`, qui valent `porte_x/porte_y`). Une maison de 17 m de façade sur 26 m de profondeur déborde donc sur des casiers où elle n'est pas rangée, et `maisonLibre` (l. 6487) n'y cherche qu'une porte proche — jamais un recouvrement. L'index qui existe ne sert pas la question du plein ; le rebâtir au bon rayon est exactement la dépense qui menace la cadence, à vingt pas par seconde et neuf mille cinq cents hommes."
+              ]
+            }
+          ]
         },
         {
           "titre": "⚔️ Actions",
