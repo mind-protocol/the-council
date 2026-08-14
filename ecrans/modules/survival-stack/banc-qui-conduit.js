@@ -1,21 +1,21 @@
-// banc-la-main.js — l'épreuve du Bassin pour `5-la-main.js`.
+// banc-qui-conduit.js — l'épreuve du Bassin pour `5-qui-conduit.js`.
 //
 // Neuf cas, et chacun est un homme qu'on peut se figurer. On ne mesure pas des
 // décimales : on demande QUI tient la main, et l'on vérifie que c'est celui
 // qu'on nommerait en regardant la scène. Un banc qui ne se raconte pas ne
 // prouve rien.
 //
-//   node ecrans/modules/survival-stack/banc-la-main.js
+//   node ecrans/modules/survival-stack/banc-qui-conduit.js
 "use strict";
-const Main = require("./5-la-main.js");
+const QuiConduit = require("./5-qui-conduit.js");
 
 let echecs = 0, n = 0;
 function cas(titre, couches, attendu, opts) {
   n++;
   const e = {}; const t0 = (opts && opts.t) || 0;
-  let r = Main.pas(couches, e, t0);
+  let r = QuiConduit.pas(couches, e, t0);
   // Un second battement, pour que la période réfractaire ait un état à tenir.
-  if (opts && opts.puis) r = Main.pas(opts.puis, e, t0 + (opts.dt || 1.0));
+  if (opts && opts.puis) r = QuiConduit.pas(opts.puis, e, t0 + (opts.dt || 1.0));
   const ok = r.jambes.main === attendu.jambes
           && (attendu.bras == null || r.bras.main === attendu.bras);
   if (!ok) echecs++;
@@ -27,11 +27,11 @@ function cas(titre, couches, attendu, opts) {
     + (attendu.bras ? " bras=" + attendu.bras : ""));
 }
 
-console.log("\nTENUE_MIN = " + Main.TENUE_MIN.toFixed(2) + " s"
+console.log("\nTENUE_MIN = " + QuiConduit.TENUE_MIN.toFixed(2) + " s"
   + "   (la plus courte durée de geste du répertoire du corps)");
-console.log("exigence(0) = " + Main.exigence(0).toFixed(2)
-  + "   exigence(TENUE_MIN) = " + Main.exigence(Main.TENUE_MIN).toFixed(2)
-  + "   exigence(1 s) = " + Main.exigence(1).toFixed(2) + "\n");
+console.log("exigence(0) = " + QuiConduit.exigence(0).toFixed(2)
+  + "   exigence(TENUE_MIN) = " + QuiConduit.exigence(QuiConduit.TENUE_MIN).toFixed(2)
+  + "   exigence(1 s) = " + QuiConduit.exigence(1).toFixed(2) + "\n");
 
 // ── 1 ─ L'ORDINAIRE, ET IL DOIT ÊTRE L'ORDINAIRE ────────────────────────────
 // Un homme qui va bien, dans une troupe qui va bien. Son corps n'a rien à dire,

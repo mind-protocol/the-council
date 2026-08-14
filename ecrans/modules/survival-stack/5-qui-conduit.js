@@ -1,4 +1,4 @@
-// 5-la-main.js — le cinquième fichier. IL NE PENSE PAS, IL DÉPARTAGE.
+// 5-qui-conduit.js — le cinquième fichier. IL NE PENSE PAS, IL DÉPARTAGE.
 //
 //   sa question : aucune. Il ne s'en pose pas, et c'est ce qui le distingue
 //                 des quatre couches.
@@ -349,5 +349,5 @@
   const API = { TENUE_MIN, exigence, barre, demi,
                 prendCorps, prendReflexion, prendEnvie, elire, pas, phrase };
   if (typeof module !== "undefined" && module.exports) module.exports = API;
-  if (typeof window !== "undefined") window.LaMain = API;
+  if (typeof window !== "undefined") window.QuiConduit = API;
 })();
