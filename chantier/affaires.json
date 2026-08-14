@@ -6,18 +6,17 @@
  ],
  "affaires": [
   {
-   "id": "affaire-le-corps-conduit-un-etat",
-   "titre": "Le corps conduit un état",
+   "id": "affaire-migrer-la-bataille-vers-la-stack",
+   "titre": "Migrer la bataille vers la stack",
    "sous_titre": "🧭 Première affaire de **BARRALFOND**, tenue par NICOLAS REYNOLDS, l'Équerre. Ouverte à la Souche le 3e jour de la 4e lune, an 129. Plage 90000 à 90999. Porte sur le MOTEUR ; ne touche rien de `etat/`.",
    "type": "plan",
-   "embleme": "🪵",
+   "embleme": "🌳",
    "couleur": "#8a6f4a",
-   "salle_id": "la-souche",
    "tenu_par": "nicolas-reynolds",
    "office": "Le grain — ce qui est gravé sous l'écorce, et qui fait la loi de ce qui existe",
    "pages": [
-    "AFFAIRE OUVERTE À LA SOUCHE, LE 3e JOUR DE LA 4e LUNE, AN 129.\n\n**CE QU'ON VEUT.** Qu'un homme de bataille prenne son geste, pour au moins un état, de la couche corps et non de la cascade de `soldat()` — et que la nuit rende les mêmes comptes.\n\n**POURQUOI ÇA N'A PAS ÉTÉ FAIT.** Parce que la première intention était d'attendre que les quatre couches soient écrites avant de rien montrer dans le jeu — donc de ne jamais rien vérifier là où ça compte. Le README l'a corrigé le 3e ; rien n'a bougé depuis.\n\n**LE CHIFFRE QUI JUGE.** Quatre comptes, sur `essai.reference` : **5 ordres déformés, 5 déclencheurs tombés, 14 initiatives, 54 coureurs**. Ce sont ceux que la même nuit rend depuis qu'on a retiré `PORTE_OUVERTE_ESSAI`. Si l'état branché les déplace, on dit de combien et pourquoi ; on ne les arrondit pas.",
-    "**LA COLONNE DES VERROUS EST VIDE, ET C'EST LE POINT DE L'AFFAIRE.**\n\nUn verrou gravé d'en haut, sans être descendu, est un **trou mécanique** : ça se détecte, ça se compte, et ça ne vaut rien. Le verrou qui déplace quelque chose — *ça suppose que la cascade est appelée une fois par homme et par tick*, *personne n'a vérifié ce que `emprise` vaut quand l'aile fond* — ne se trouve qu'en travaillant, sous terre, une journée pleine.\n\nDonc : Bren descend, et la colonne se remplit de ce qu'il rapporte. Si personne ne descend, la colonne reste vide **à la vue de tous**, et l'affaire se voit pour ce qu'elle est — un souhait. C'est préférable à une colonne pleine qu'on croirait vraie."
+    "AFFAIRE OUVERTE À LA SOUCHE, LE 3e JOUR DE LA 4e LUNE, AN 129.\n\n**CE QU'ON VEUT.** Que `bataille2d.js` finisse sa migration vers le format en couches, et complètement : plus une seule décision d'homme qui sorte de la cascade de `soldat()`. Trois choses ensemble, jamais deux sur trois — **la bataille a du sens quand on la cuit**, **elle se voit sur l'interface**, **et rien n'y tourne hors de la stack**.\n\n**OÙ ON EN EST, COMPTÉ SUR LE DISQUE ET NON DE MÉMOIRE.** `survival-stack/` porte trois couches : `1-corps.js` (93 ko), `3-interpretation.js`, `4-envie.js`. Il manque `2-reflexion.js` et l'arbitre. `jeu.html` charge les trois écrites. Et `bataille2d.js` — **6 957 lignes** — ne les cite que dans ses commentaires : le seul appel réel est `window.Envie.temperament`. La stack est chargée et ne conduit rien.\n\n**L'ÉTALON.** Quatre comptes sur la référence, depuis qu'on a retiré `PORTE_OUVERTE_ESSAI` : **5 ordres déformés, 5 déclencheurs tombés, 14 initiatives, 54 coureurs**. Toute la migration se juge contre eux. Un écart se dit et s'explique ; il ne s'arrondit pas.",
+    "**POURQUOI ON NE RETIRE PAS LA CASCADE EN PREMIER.**\n\nParce qu'elle fait aujourd'hui le travail des trois couches hautes, et qu'on n'a pas de quoi la remplacer : il manque la deuxième et l'arbitre. Retirer d'abord, c'est se retrouver avec une bataille qui ne décide plus rien et un étalon qu'on ne peut plus comparer à quoi que ce soit.\n\nL'ordre est donc : **cuire pour fixer l'étalon** (90100), **voir** (90200), **puis remplacer morceau par morceau en cuisant à chaque cran** (90300). C'est la marche que le README de `survival-stack` s'est écrite à lui-même le 3e — « on ne valide pas une couche en la regardant calculer à côté » — et personne ne l'a suivie depuis.\n\n**LA COLONNE DES VERROUS PORTE DEUX LIGNES ET S'ARRÊTE LÀ.** Les deux sont comptées sur le disque. Le reste attend que Bren remonte du Lit des Racines : un verrou gravé d'en haut est un trou mécanique, et un trou mécanique ne vaut rien."
    ],
    "tables": [
     {
@@ -32,7 +31,7 @@
       {
        "cellules": [
         "🏷️ **LE NOM**",
-        "Le corps conduit un état",
+        "Migrer la bataille vers la stack",
         "Le sujet dont on traite, **jamais la solution**.",
         "**oui**"
        ]
@@ -40,7 +39,7 @@
       {
        "cellules": [
         "🎯 **L'OBJET**",
-        "Faire qu'au moins UN état d'un homme de bataille soit conduit par la couche corps plutôt que par la cascade de `soldat()`, sans que la nuit rende d'autres comptes.",
+        "Terminer la migration de `bataille2d.js` vers le format en couches, **complètement** : plus une décision d'homme qui sorte de la cascade.",
         "Ce qu'on veut obtenir, en une phrase, mesurable.",
         "**oui**"
        ]
@@ -48,7 +47,7 @@
       {
        "cellules": [
         "🧭 **POURQUOI MAINTENANT**",
-        "Le README de `survival-stack` a changé d'avis le 3e : on n'attend plus les quatre couches, on branche état par état. Rien n'a été branché depuis.",
+        "La stack a trois couches écrites sur cinq (`1-corps`, `3-interpretation`, `4-envie`), `jeu.html` les charge déjà, et **rien ne s'en sert** : les 6 957 lignes de `bataille2d.js` décident encore de tout. Une stack chargée qui ne conduit rien est un coût sans contrepartie.",
         "Ce qui rend l'affaire urgente aujourd'hui et pas hier.",
         "**oui**"
        ]
@@ -64,7 +63,7 @@
       {
        "cellules": [
         "📏 **À QUOI ON LA JUGE**",
-        "Une cuisson de `essai.reference` qui rend les mêmes quatre comptes qu'au 3e — **5, 5, 14 et 54** — avec l'état conduit par le corps. Un écart se dit, il ne s'arrondit pas.",
+        "Les trois états cibles ensemble, et pas deux sur trois : la cuisson a du sens, l'interface la montre, et rien ne tourne hors de la stack.",
         "Le chiffre qui dira que c'est fait. Pas un avis.",
         "**oui**"
        ]
@@ -72,7 +71,7 @@
       {
        "cellules": [
         "⚠️ **CE QU'ELLE NE TOUCHE PAS**",
-        "Rien de `etat/`. Le grain se retaille ; les vivants, les serments et les nefs ne se retaillent pas depuis ici.",
+        "Rien de `etat/`. Le grain se retaille ; les vivants, les serments et les nefs ne se retaillent pas depuis ici. `etat/bataille.json` — la décision de MJ qui fait tomber une bataille dans la partie — reste au siège de la reine.",
         "La borne, écrite avant de commencer.",
         "**oui**"
        ]
@@ -80,59 +79,71 @@
      ]
     },
     {
-     "titre": "🎯 Les états cibles",
+     "titre": "🎯 Les états cibles — les trois, ou rien",
      "colonnes": [
       "🔢",
       "🎯 L'état cible",
-      "🧭 Ce qu'il sert",
       "📏 À quoi on le voit",
       "📅 Jour dû"
      ],
      "lignes": [
       {
        "cellules": [
-        "🎯 90000",
-        "**Un état conduit par le corps**",
-        "L'objet de l'affaire",
-        "Sur une cuisson : le geste de cet état vient de la couche corps, et les quatre comptes ne bougent pas",
-        "J−0"
-       ]
-      },
-      {
-       "cellules": [
         "🎯 90100",
-        "**La couche se voit avant de conduire**",
-        "90000 — on ne branche pas ce qu'on n'a pas regardé tourner",
-        "Sous le doigt, pour un homme : ce que la couche aurait décidé, à côté de ce que la cascade a décidé",
-        "J−4"
+        "**La bataille a du sens en cuisson**",
+        "`python scripts/bataille.py --cuire` rend une nuit dont les comptes tiennent debout et se reproduisent : ordres déformés, déclencheurs tombés, initiatives, coureurs. La référence du 14 août est **5, 5, 14 et 54** — un écart se dit et s'explique, il ne s'arrondit pas.",
+        "J−6"
        ]
       },
       {
        "cellules": [
         "🎯 90200",
-        "**Le seuil d'emprise est un bouton**",
-        "90000 — se retirer doit coûter un geste, pas un commit",
-        "Baisser le seuil donne plus de place au corps, le remonter le retire entièrement",
-        "J−2"
+        "**La bataille est visible sur l'interface**",
+        "La nuit cuite se regarde dans le jeu, pas seulement dans un sac : on voit la ligne céder, la panique courir, la rue bouchonner. Ce que la vue de bataille dépose au MJ toutes les trente secondes doit montrer la même chose que ce que la stack a décidé.",
+        "J−3"
+       ]
+      },
+      {
+       "cellules": [
+        "🎯 90300",
+        "**Rien ne tourne hors de la stack**",
+        "Aucune décision d'homme ne sort plus de la cascade de `soldat()`. `bataille2d.js` ne garde que le sol, le temps et le rendu ; tout ce qui pense est dans `survival-stack/`.",
+        "J−0"
        ]
       }
      ]
     },
     {
-     "titre": "🔒 Les verrous — VIDE TANT QUE BREN N'EST PAS REMONTÉ",
+     "titre": "🔒 Les verrous — deux connus, le reste attend Bren",
      "colonnes": [
       "🔢",
       "🔒 Le verrou",
       "🎯 Il tient quoi",
-      "🔎 Qui l'a rapporté, et d'où"
+      "🔎 D'où on le sait"
      ],
      "lignes": [
       {
        "cellules": [
+        "🔒 90310",
+        "**Il manque `2-reflexion.js`**, et l'arbitre avec",
+        "🎯 90300",
+        "Compté sur le disque : `survival-stack/` porte `1-corps`, `3-interpretation`, `4-envie`. La deuxième couche et l'arbitre n'existent pas. La cascade ne peut pas être retirée tant que rien ne tient leur place."
+       ]
+      },
+      {
+       "cellules": [
+        "🔒 90320",
+        "**Les trois couches écrites ne conduisent rien**",
+        "🎯 90300",
+        "`jeu.html` charge les trois ; `bataille2d.js` ne les cite que dans ses commentaires (l. 503, 506, 1430) et n'appelle que `window.Envie.temperament`. Chargé n'est pas branché."
+       ]
+      },
+      {
+       "cellules": [
         "—",
-        "*(rien)*",
-        "🎯 90000",
-        "**Cette colonne est vide exprès.** Un verrou écrit d'ici serait un trou mécanique, et un trou mécanique ne vaut rien. Elle se remplit quand Bren remonte du Lit des Racines avec les accroches réelles de `soldat()` — pas avant. Une colonne vide se voit ; une colonne inventée ne se voit plus."
+        "*(le reste est vide exprès)*",
+        "🎯 90100 · 🎯 90200",
+        "Un verrou gravé d'ici serait un trou mécanique, et un trou mécanique ne vaut rien. Cette colonne se remplit quand Bren remonte du Lit des Racines avec les accroches réelles de `soldat()` — pas avant."
        ]
       }
      ]
@@ -144,7 +155,6 @@
       "⚔️ L'action",
       "⬆️ Elle remonte à",
       "🪶 Qui la tient",
-      "📍 Où",
       "📅",
       "✅ État"
      ],
@@ -152,11 +162,10 @@
       {
        "cellules": [
         "⚔️ 90010",
-        "Descendre la nappe de `soldat()` et remonter TOUTES les accroches, adresses comprises",
-        "🎯 90000 (par les verrous qu'elle produira)",
+        "Descendre la nappe de `soldat()` : chaque décision qu'elle prend, ce qui l'appelle, et à quelle couche elle appartiendrait",
+        "🔒 90320 → 🎯 90300",
         "Bren Racine-Grise",
-        "Le Lit des Racines",
-        "J−5",
+        "J−7",
         "en cours"
        ]
       },
@@ -164,64 +173,78 @@
        "cellules": [
         "⚔️ 90011",
         "Relire les anneaux : ce qui a déjà été tenté sur cette cascade, la forme retenue, ce qu'il en est resté",
-        "🎯 90000",
+        "🎯 90300",
         "Sarn Vieux-Sang",
-        "L'Arbre des Âges",
-        "J−5",
+        "J−7",
         "en cours"
        ]
       },
       {
        "cellules": [
-        "⚔️ 90020",
-        "Afficher sous le doigt ce que la couche corps aurait décidé, à côté de la décision de la cascade",
-        "🎯 90100",
-        "Ygga Main-de-Pierre",
-        "L'Établi",
-        "J−4",
-        "à venir"
-       ]
-      },
-      {
-       "cellules": [
-        "⚔️ 90021",
-        "Cuire `essai.reference` avec l'affichage en place et vérifier que les quatre comptes ne bougent pas",
+        "⚔️ 90110",
+        "Cuire `--cuire` sur la référence et poser les quatre comptes comme étalon, avant qu'on touche à quoi que ce soit",
         "🎯 90100",
         "Toll Œil-Noir",
-        "Le Bassin noir",
+        "J−6",
+        "à venir"
+       ]
+      },
+      {
+       "cellules": [
+        "⚔️ 90210",
+        "Faire que la nuit cuite se regarde dans le jeu, et non seulement dans le sac",
+        "🎯 90200",
+        "Ygga Main-de-Pierre",
         "J−4",
         "à venir"
        ]
       },
       {
        "cellules": [
-        "⚔️ 90030",
-        "Poser le seuil d'emprise en bouton, et brancher UN état au-dessus du seuil",
-        "🎯 90200 → 🎯 90000",
+        "⚔️ 90211",
+        "Vérifier que ce que la vue dépose montre bien ce que la stack a décidé, sur une nuit entière",
+        "🎯 90200",
+        "Toll Œil-Noir",
+        "J−3",
+        "à venir"
+       ]
+      },
+      {
+       "cellules": [
+        "⚔️ 90310",
+        "Écrire `2-reflexion.js` — la couche qui manque entre le corps et l'interprétation",
+        "🔒 90310",
         "Ygga Main-de-Pierre",
-        "L'Établi",
+        "J−3",
+        "à venir"
+       ]
+      },
+      {
+       "cellules": [
+        "⚔️ 90311",
+        "Écrire l'arbitre : qui, du corps ou de la tête, tient la main sur un geste donné",
+        "🔒 90310",
+        "Ygga Main-de-Pierre",
         "J−2",
         "à venir"
        ]
       },
       {
        "cellules": [
-        "⚔️ 90031",
-        "Cuire l'état branché et rendre les quatre comptes, avec la cause si l'un d'eux bouge",
-        "🎯 90000",
-        "Toll Œil-Noir",
-        "Le Bassin noir",
+        "⚔️ 90312",
+        "Retirer la cascade de `soldat()` morceau par morceau, en cuisant à chaque cran",
+        "🎯 90300",
+        "Ygga Main-de-Pierre · Toll Œil-Noir",
         "J−1",
         "à venir"
        ]
       },
       {
        "cellules": [
-        "⚔️ 90040",
-        "Nommer l'état branché et le seuil, avec les deux mots écartés, et écrire court dans le README de `survival-stack`",
-        "🎯 90000",
+        "⚔️ 90320",
+        "Nommer les couches et les seuils, avec les mots écartés, et refaire le README de `survival-stack`",
+        "🎯 90300",
         "Wenna la Nommeuse",
-        "La Souche",
         "J−0",
         "à venir"
        ]
@@ -240,14 +263,14 @@
        "cellules": [
         "**Les anneaux**",
         "Sarn Vieux-Sang",
-        "Rien du dépôt. Il rapporte, il ne taille pas."
+        "Il rapporte le précédent ; il ne taille pas."
        ]
       },
       {
        "cellules": [
         "**La nappe**",
         "Bren Racine-Grise",
-        "Rien du dépôt. Ce qu'il rapporte va à la colonne des verrous."
+        "Il rapporte les accroches ; ce qu'il remonte va à la colonne des verrous."
        ]
       },
       {
@@ -261,7 +284,7 @@
        "cellules": [
         "**L'eau**",
         "Toll Œil-Noir",
-        "`scripts/bataille.py`, ce qui cuit et ce qui mesure — jamais ce qu'il mesure"
+        "`scripts/bataille.py`, `scripts/monde/sac.js` — ce qui cuit et ce qui mesure, jamais ce qu'il mesure"
        ]
       },
       {
@@ -280,7 +303,9 @@
       }
      ]
     }
-   ]
+   ],
+   "lieu_id": "barralfond",
+   "salle_id": "la-souche"
   }
  ]
 }

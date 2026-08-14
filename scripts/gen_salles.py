@@ -74,9 +74,71 @@ FIN = (
 # des fenetres.
 SANS_JOUR = "window, windows, daylight, sky, sunlight, sun, outdoors"
 
+# Barralfond : pas de maconnerie du tout. Un barral geant creuse et ce qu'on a
+# taille dedans, au nord du Mur — bois pale, seve rouge, os, bronze et neige. Le
+# bloc d'interieur du chateau y peindrait de la pierre noire et des voutes ; on
+# lui en donne un a lui, et le negatif refuse la pierre.
+BOIS = (
+    "Highly detailed photorealistic interior hollowed from the living trunk of a "
+    "colossal pale weirwood tree, walls of bone-white grained wood weeping red sap, "
+    "no masonry and no cut stone anywhere, lit by low fires and horn lanterns, cold "
+    "northern light from a gap far above, muted palette of bone, red and moss, fine "
+    "grain and carving detail, empty with no people. "
+)
+RACINE_SOUS = (
+    "Highly detailed photorealistic underground chamber among the living roots of a "
+    "colossal tree, pale roots the thickness of columns crossing overhead and "
+    "underfoot, packed black earth, no masonry and no cut stone, no windows and no "
+    "daylight whatsoever, lit only by horn lanterns, darkness swallowing the far end, "
+    "muted palette, fine grain detail, empty with no people. "
+)
+NEIGE = (
+    "Highly detailed photorealistic view, dark fantasy far north beyond a great wall "
+    "of ice, flat grey snow light, frost and bare black trees, muted palette, fine "
+    "material detail, no people. "
+)
+SANS_PIERRE = "cut stone, masonry, brick, castle wall, arches, vaulting, columns of stone"
+
 # Peyredragon : pierre volcanique noire, maconnerie valyrienne, mer dure.
 # Une entree ici = une salle qui peut avoir sa vue. L'id est celui de plans.js.
 SALLES = {
+    # ---- Barralfond, au nord du Mur ---------------------------------------
+    "clairiere": (NEIGE,
+        "a clearing in a snowbound northern forest around the base of a colossal pale "
+        "weirwood, low turf and hide huts ringed by a raised bank of exposed roots, a "
+        "communal fire pit with a bronze cauldron, drying racks, carved bone markers "
+        "standing in the snow, red leaves fallen on white ground"),
+    "la-souche": (BOIS,
+        "the hollow heart of a colossal weirwood trunk, a wide round chamber of "
+        "bone-white wood with red sap running in the grain, the inner walls covered "
+        "floor to roof with carved lines and tallies, a great flat stump used as a "
+        "work table at the centre, low fire, carved wooden stools",
+        SANS_PIERRE),
+    "arbre-des-ages": (BOIS,
+        "a platform high in the branches of a colossal pale weirwood, built of lashed "
+        "timber among bone-white limbs and red leaves, a great cut cross-section of "
+        "trunk mounted upright showing hundreds of growth rings scored with marks, "
+        "cold grey sky and snow forest far below",
+        SANS_PIERRE),
+    "etabli": (BOIS,
+        "a woodworker's workshop hollowed into a pale tree trunk, a long scarred bench "
+        "under a row of horn lanterns, bronze gouges and bone awls racked on the wall, "
+        "shavings and red sap on the floor, a half-carved panel clamped on the bench, "
+        "a small forge glowing at the far end",
+        SANS_PIERRE),
+    "lit-des-racines": (RACINE_SOUS,
+        "a low earthen chamber deep under a great tree, pale roots the thickness of "
+        "columns crossing overhead and running away into darkness in every direction, "
+        "knotted cords strung between roots as markers, a single horn lantern set on "
+        "the packed earth, cold damp air",
+        SANS_JOUR + ", " + SANS_PIERRE),
+    "bassin-noir": (RACINE_SOUS,
+        "a perfectly still round pool of black water under the roots of a great tree, "
+        "the water like dark glass reflecting pale roots overhead, a rim of smooth "
+        "worn wood around it, notched tally sticks laid on the rim, one lantern "
+        "doubled in the reflection",
+        SANS_JOUR + ", " + SANS_PIERRE),
+
     "table-peinte": (STYLE,
         "the round chamber at the top of a black stone keep, a colossal carved wooden "
         "table filling the floor, shaped as a whole continent with painted hills, rivers "
