@@ -1,0 +1,595 @@
+{
+  "qui": "alicent",
+  "activation": {
+    "tache": {
+      "id": "etape:alicent-aegon-matin",
+      "quoi": "Garder Aegon sous son influence matinale, avant le vin",
+      "creee": false
+    },
+    "issue": "avance",
+    "activites": [
+      {
+        "id": "act:alicent:1",
+        "ordre": 1,
+        "temps": {
+          "debut_s": 147060.0,
+          "duree_s": 120,
+          "fin_s": 147180.0
+        },
+        "action": {
+          "verbe": "ordonner",
+          "quoi": "Mettre son voile devant ses femmes et envoyer celle dont l'oncle porte le drap du Crochet dire aux cuisines que le premier pichet du roi attendra son congé, non par défense mais parce que la reine douairière déjeune avec son fils ; faire monter en même temps pain, miel et eau coupée",
+          "cibles": [
+            "pers:alicent",
+            "etape:alicent-aegon-matin"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:alicent",
+            "relation": "s'habille et parle dans le couloir de sa maison, au Donjon Rouge",
+            "vers": "port-real",
+            "duree_s": 120
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "port-real",
+            "mode": "parcourt"
+          },
+          {
+            "ref": "pers:alicent",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "etape:alicent-aegon-matin",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "alicent-qui-ecrit-aux-femmes",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:alicent:1:1",
+            "type": "communication",
+            "cible": "port-real",
+            "avant": null,
+            "apres": "La parole de la reine douairière descend aux cuisines par une de ses femmes : le premier pichet du roi attendra son congé, parce qu'elle déjeune avec son fils. Le mot est donné comme une civilité de mère, non comme une interdiction ; rien de la lettre ni du charretier n'est confié avec.",
+            "portee": "communication",
+            "source_refs": [
+              "pers:alicent",
+              "port-real"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:alicent:1:2",
+            "type": "objet_produit",
+            "cible": "pers:alicent",
+            "avant": null,
+            "apres": "Voilée, un plateau aux mains : pain de la veille recuit, un pot de miel, une aiguière d'eau coupée. Aucune coupe à vin dessus.",
+            "portee": "monde",
+            "source_refs": [
+              "pers:alicent"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 4.0,
+        "quoi": "Mettre son voile devant ses femmes et envoyer celle dont l'oncle porte le drap du Crochet dire aux cuisines que le premier pichet du roi attendra son congé, non par défense mais parce que la reine douairière déjeune avec son fils ; faire monter en même temps pain, miel et eau coupée",
+        "source": "alicent-qui-ecrit-aux-femmes, etape:alicent-aegon-matin, pers:alicent, port-real",
+        "resultat": "communication: La parole de la reine douairière descend aux cuisines par une de ses femmes : le premier pichet du roi attendra son congé, parce qu'elle déjeune avec son fils. Le mot est donné comme une civilité de mère, non comme une interdiction ; rien de la lettre ni du charretier n'est confié avec. · objet_produit: Voilée, un plateau aux mains : pain de la veille recuit, un pot de miel, une aiguière d'eau coupée. Aucune coupe à vin dessus.",
+        "preuve": null
+      },
+      {
+        "id": "act:alicent:2",
+        "ordre": 2,
+        "temps": {
+          "debut_s": 147180.0,
+          "duree_s": 240,
+          "fin_s": 147420.0
+        },
+        "action": {
+          "verbe": "monter",
+          "quoi": "Monter seule, plateau aux mains, jusqu'aux appartements du roi",
+          "cibles": [
+            "port-real",
+            "pers:alicent"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:alicent",
+            "relation": "couloir puis escalier tournant du Donjon Rouge, jusqu'à la porte du roi",
+            "vers": "port-real",
+            "duree_s": 240
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "port-real",
+            "mode": "parcourt"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "etape:alicent-aegon-matin",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "pers:alicent",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:alicent:2:1",
+            "type": "deplacement",
+            "cible": "pers:alicent",
+            "avant": "Voilée, un plateau aux mains : pain de la veille recuit, un pot de miel, une aiguière d'eau coupée. Aucune coupe à vin dessus.",
+            "apres": "Devant la porte des appartements du roi, seule, voilée, plateau aux mains, essoufflée par l'escalier",
+            "portee": "monde",
+            "source_refs": [
+              "port-real",
+              "pers:alicent"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:alicent:2:2",
+            "type": "observation",
+            "cible": "port-real",
+            "avant": "La parole de la reine douairière descend aux cuisines par une de ses femmes : le premier pichet du roi attendra son congé, parce qu'elle déjeune avec son fils. Le mot est donné comme une civilité de mère, non comme une interdiction ; rien de la lettre ni du charretier n'est confié avec.",
+            "apres": "À la porte du roi veille un valet de chambre assis contre le mur, et non un garde ; les bottes du roi sont dehors, non nettoyées. Nul pichet n'est encore monté à cette heure : le mot des cuisines a tenu, ou n'a pas eu besoin de tenir.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "port-real"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 8.0,
+        "quoi": "Monter seule, plateau aux mains, jusqu'aux appartements du roi",
+        "source": "etape:alicent-aegon-matin, pers:alicent, port-real",
+        "resultat": "deplacement: Devant la porte des appartements du roi, seule, voilée, plateau aux mains, essoufflée par l'escalier · observation: À la porte du roi veille un valet de chambre assis contre le mur, et non un garde ; les bottes du roi sont dehors, non nettoyées. Nul pichet n'est encore monté à cette heure : le mot des cuisines a tenu, ou n'a pas eu besoin de tenir.",
+        "preuve": null
+      },
+      {
+        "id": "act:alicent:3",
+        "ordre": 3,
+        "temps": {
+          "debut_s": 147420.0,
+          "duree_s": 90,
+          "fin_s": 147510.0
+        },
+        "action": {
+          "verbe": "entrer",
+          "quoi": "Frapper elle-même et pousser la porte du roi sans attendre que le valet aille demander s'il dort",
+          "cibles": [
+            "port-real",
+            "pers:alicent"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:alicent",
+            "relation": "seuil franchi, porte poussée de l'épaule libre",
+            "vers": "port-real",
+            "duree_s": 90
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "port-real",
+            "mode": "voit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:alicent",
+            "mode": "intention"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:alicent:3:1",
+            "type": "fait",
+            "cible": "pers:alicent",
+            "avant": "Devant la porte des appartements du roi, seule, voilée, plateau aux mains, essoufflée par l'escalier",
+            "apres": "Entrée dans la chambre du roi avant qu'aucun message n'ait pu être porté : le valet s'est levé trop tard et n'a rien dit contre la reine douairière",
+            "portee": "monde",
+            "source_refs": [
+              "port-real",
+              "pers:alicent"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:alicent:3:2",
+            "type": "observation",
+            "cible": "port-real",
+            "avant": "À la porte du roi veille un valet de chambre assis contre le mur, et non un garde ; les bottes du roi sont dehors, non nettoyées. Nul pichet n'est encore monté à cette heure : le mot des cuisines a tenu, ou n'a pas eu besoin de tenir.",
+            "apres": "Dans la chambre : le roi est éveillé, assis au bord du lit, habillé de la veille, la bouche pâteuse et l'œil mauvais ; il est seul, la pièce sent le vin froid mais aucune coupe n'est pleine. Il ne chasse pas sa mère.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "port-real"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 3.0,
+        "quoi": "Frapper elle-même et pousser la porte du roi sans attendre que le valet aille demander s'il dort",
+        "source": "pers:alicent, port-real",
+        "resultat": "fait: Entrée dans la chambre du roi avant qu'aucun message n'ait pu être porté : le valet s'est levé trop tard et n'a rien dit contre la reine douairière · observation: Dans la chambre : le roi est éveillé, assis au bord du lit, habillé de la veille, la bouche pâteuse et l'œil mauvais ; il est seul, la pièce sent le vin froid mais aucune coupe n'est pleine. Il ne chasse pas sa mère.",
+        "preuve": null
+      },
+      {
+        "id": "act:alicent:4",
+        "ordre": 4,
+        "temps": {
+          "debut_s": 147510.0,
+          "duree_s": 330,
+          "fin_s": 147840.0
+        },
+        "action": {
+          "verbe": "nourrir",
+          "quoi": "Poser le plateau, rompre le pain, l'enduire de miel, verser l'eau coupée et faire manger le roi sans dire un mot de la nuit, des compagnons ni de Rhaenyra",
+          "cibles": [
+            "port-real",
+            "etape:alicent-aegon-matin"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:alicent",
+            "relation": "assise près de lui, service de sa propre main puis silence tenu",
+            "vers": "port-real",
+            "duree_s": 330
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "port-real",
+            "mode": "parle"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "etape:alicent-aegon-matin",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "pers:alicent",
+            "mode": "intention"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:alicent:4:1",
+            "type": "progression_tache",
+            "cible": "etape:alicent-aegon-matin",
+            "avant": "en-cours",
+            "apres": "Matin du 28e tenu : le roi a mangé du pain et bu de l'eau coupée avant tout vin, et parlé seul à seule avec sa mère un quart d'heure durant. L'étape n'est pas achevée — elle se rejoue chaque matin, et rien n'est acquis sur les matins suivants.",
+            "portee": "monde",
+            "source_refs": [
+              "port-real",
+              "etape:alicent-aegon-matin"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:alicent:4:2",
+            "type": "observation",
+            "cible": "port-real",
+            "avant": "Dans la chambre : le roi est éveillé, assis au bord du lit, habillé de la veille, la bouche pâteuse et l'œil mauvais ; il est seul, la pièce sent le vin froid mais aucune coupe n'est pleine. Il ne chasse pas sa mère.",
+            "apres": "Nourri, le roi se détend et devient bavard comme il l'est à jeun : il se plaint d'être fait signer debout, entre deux portes, et dit que son grand-père lui présente les pages « déjà pliées »",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "port-real"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 11.0,
+        "quoi": "Poser le plateau, rompre le pain, l'enduire de miel, verser l'eau coupée et faire manger le roi sans dire un mot de la nuit, des compagnons ni de Rhaenyra",
+        "source": "etape:alicent-aegon-matin, pers:alicent, port-real",
+        "resultat": "progression_tache: Matin du 28e tenu : le roi a mangé du pain et bu de l'eau coupée avant tout vin, et parlé seul à seule avec sa mère un quart d'heure durant. L'étape n'est pas achevée — elle se rejoue chaque matin, et rien n'est acquis sur les matins suivants. · observation: Nourri, le roi se détend et devient bavard comme il l'est à jeun : il se plaint d'être fait signer debout, entre deux portes, et dit que son grand-père lui présente les pages « déjà pliées »",
+        "preuve": null
+      },
+      {
+        "id": "act:alicent:5",
+        "ordre": 5,
+        "temps": {
+          "debut_s": 147840.0,
+          "duree_s": 240,
+          "fin_s": 148080.0
+        },
+        "action": {
+          "verbe": "interroger",
+          "quoi": "Lui demander d'une voix douce ce que son grand-père lui a fait signer touchant le pardon offert à ceux de Peyredragon, et ce qu'il y avait au bas de la page",
+          "cibles": [
+            "port-real",
+            "alicent-affaires-ouvertes"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:alicent",
+            "relation": "question posée à voix basse, reprise deux fois, sans nommer Rhaenyra",
+            "vers": "port-real",
+            "duree_s": 240
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "port-real",
+            "mode": "entend"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "alicent-affaires-ouvertes",
+            "mode": "intention"
+          },
+          {
+            "ref": "pers:alicent",
+            "mode": "croyance"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:alicent:5:1",
+            "type": "observation",
+            "cible": "port-real",
+            "avant": "Nourri, le roi se détend et devient bavard comme il l'est à jeun : il se plaint d'être fait signer debout, entre deux portes, et dit que son grand-père lui présente les pages « déjà pliées »",
+            "apres": "Le roi confirme de sa bouche qu'une offre de pardon aux gens de Peyredragon existe par écrit, qu'il l'a signée de sa main et fait sceller, sur présentation de la Main. C'est la première fois qu'elle en tient l'existence d'une autre bouche que celle de son père.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "port-real"
+            ],
+            "preuve_refs": [],
+            "certitude": "rapporte"
+          },
+          {
+            "id": "res:act:alicent:5:2",
+            "type": "observation",
+            "cible": "port-real",
+            "avant": "Le roi confirme de sa bouche qu'une offre de pardon aux gens de Peyredragon existe par écrit, qu'il l'a signée de sa main et fait sceller, sur présentation de la Main. C'est la première fois qu'elle en tient l'existence d'une autre bouche que celle de son père.",
+            "apres": "Repris deux fois sur le bas de la page, le roi ne sait pas dire ce qui y était écrit : il se rappelle le pli, la cire et la place de sa signature, non les lignes du dessous, qu'il n'a pas lues. La clause du bas demeure inconnue d'elle comme de lui.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "port-real"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:alicent:5:3",
+            "type": "observation",
+            "cible": "pers:alicent",
+            "avant": "Entrée dans la chambre du roi avant qu'aucun message n'ait pu être porté : le valet s'est levé trop tard et n'a rien dit contre la reine douairière",
+            "apres": "Elle sort avec ceci, et rien de plus : la Main fait signer le roi sur des pages déjà pliées, debout, sans lecture haute ; ce qui est promis au nom d'Aegon n'a été lu que d'Otto. La seule voie vers le texte est la copie de chancellerie, non le souvenir du roi.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "port-real",
+              "pers:alicent"
+            ],
+            "preuve_refs": [],
+            "certitude": "deduit"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 8.0,
+        "quoi": "Lui demander d'une voix douce ce que son grand-père lui a fait signer touchant le pardon offert à ceux de Peyredragon, et ce qu'il y avait au bas de la page",
+        "source": "alicent-affaires-ouvertes, pers:alicent, port-real",
+        "resultat": "observation: Le roi confirme de sa bouche qu'une offre de pardon aux gens de Peyredragon existe par écrit, qu'il l'a signée de sa main et fait sceller, sur présentation de la Main. C'est la première fois qu'elle en tient l'existence d'une autre bouche que celle de son père. · observation: Repris deux fois sur le bas de la page, le roi ne sait pas dire ce qui y était écrit : il se rappelle le pli, la cire et la place de sa signature, non les lignes du dessous, qu'il n'a pas lues. La clause du bas demeure inconnue d'elle comme de lui. · observation: Elle sort avec ceci, et rien de plus : la Main fait signer le roi sur des pages déjà pliées, debout, sans lecture haute ; ce qui est promis au nom d'Aegon n'a été lu que d'Otto. La seule voie vers le texte est la copie de chancellerie, non le souvenir du roi.",
+        "preuve": null
+      }
+    ],
+    "suite": "Elle sort avant que le pichet ne monte, sachant l'offre réelle et signée, et son texte toujours illisible pour elle : il lui faut la page elle-même, par une main qui ne soit ni celle d'Otto ni celle du Pied-Bot. Le charretier part au jour du 30e ; rien ne partira pour Peyredragon avant son retour.",
+    "reveils_suivants": [],
+    "budget_energie": 34,
+    "budget_secondes": 1020,
+    "energie_depensee": 34.0
+  },
+  "mutations_proposees": [
+    {
+      "resultat_id": "res:act:alicent:5:1",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "alicent",
+      "valeur": "L'offre de pardon aux gens de Peyredragon existe par écrit, signée de la main d'Aegon et scellée : le roi le lui a dit lui-même, à jeun, dans sa chambre, le matin du 28e."
+    },
+    {
+      "resultat_id": "res:act:alicent:5:3",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "alicent",
+      "valeur": "Son père fait signer le roi debout, sur des pages déjà pliées, sans lecture haute : ce qui est promis au nom d'Aegon n'est connu que d'Otto. Pour savoir ce qu'on a promis, il faut la page, non le souvenir du roi."
+    },
+    {
+      "resultat_id": "res:act:alicent:5:2",
+      "table": "intentions",
+      "operation": "ignore_retirer",
+      "cible": "alicent",
+      "valeur": "Que son propre père a offert par écrit le pardon à quiconque de Peyredragon viendrait sans elle — elle n'a pas lu la clause du bas"
+    },
+    {
+      "resultat_id": "res:act:alicent:5:2",
+      "table": "intentions",
+      "operation": "ignore_ajouter",
+      "cible": "alicent",
+      "valeur": "Ce que dit la clause du bas de l'offre de pardon — à qui elle s'étend, et si les enfants y sont couverts. Elle sait désormais que cette clause existe et que le roi l'ignore aussi."
+    },
+    {
+      "resultat_id": "res:act:alicent:5:1",
+      "table": "books",
+      "operation": "affaire_ajouter",
+      "cible": "affaire-ce-quon-fait-signer-au-roi",
+      "valeur": {
+        "titre": "Ce qu'on fait signer au roi, et ce qu'il y a au bas de la page"
+      }
+    }
+  ],
+  "mutations_rejetees": [
+    {
+      "mutation": {
+        "resultat_id": "res:act:alicent:4:1",
+        "table": "intentions",
+        "operation": "etape",
+        "cible": "alicent-aegon-matin",
+        "champs": {
+          "etat": "en-cours",
+          "quoi": "Garder Aegon sous son influence matinale, avant le vin — tenu le matin du 28e : pain, miel et eau coupée portés de sa main avant le premier pichet"
+        }
+      },
+      "erreur": "mutation 5 : aucune tete pour 'alicent-aegon-matin'"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:alicent:5:3",
+        "table": "intentions",
+        "operation": "etape_ajouter",
+        "cible": "alicent",
+        "valeur": "Se faire mettre sous les yeux la copie de chancellerie de l'offre de pardon, entière et jusqu'au bas, sans passer par Otto ni par le Pied-Bot"
+      },
+      "erreur": "mutation 6 : etape a ajouter incomplete (id et quoi requis)"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:alicent:5:2",
+        "table": "books",
+        "operation": "affaire_action_ajouter",
+        "cible": "affaire-ce-quon-fait-signer-au-roi",
+        "valeur": [
+          "Interroger le roi à jeun sur l'offre de pardon",
+          "faite",
+          "129-3-28",
+          "Le roi confirme avoir signé et fait sceller ; il ne sait pas ce que dit le bas de la page, il ne l'a pas lu. Otto lui présente les pages déjà pliées, debout."
+        ]
+      },
+      "erreur": "mutation 8 : affaire inconnue : 'affaire-ce-quon-fait-signer-au-roi'"
+    }
+  ],
+  "_activation": {
+    "session": "3d040d68-ac6c-4080-be97-5f12b7a5d12f",
+    "session_narrateur": "3d040d68-ac6c-4080-be97-5f12b7a5d12f",
+    "session_pnj": "485c9516-b67d-4452-91b0-d3d6473b03a7",
+    "cree_le": "2026-08-10T07:50:09.733816+02:00",
+    "front": "aurore-inchauspe",
+    "present_secondes": 147060.0,
+    "importance": 0.344485,
+    "budget": 34,
+    "budget_secondes": 1020,
+    "system_prompt": "# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS\n\nTu es le maître du jeu local d'un monde vivant, pas un assistant administratif\net pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa\nmatière, les personnes qui s'y trouvent, les usages de Westeros et les\nconséquences du temps qui passe.\n\n## Le monde\n\nNous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de\nViserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra\nTargaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie\npeut diverger du récit connu : le dossier de l'activation fait autorité sur ce\nqui s'est réellement produit ici.\n\nDate présente : 28e jour de la 3e lune de l'an 129 après la\nConquête.\nLieu présent : Salle inconnue.\nActeur appelé : Alicent Hightower.\nAffaire qui exerce maintenant une pression sur lui : Garder Aegon sous son influence matinale, avant le vin.\n\nL'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,\nsituée dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,\nfaire autre chose d'accessible depuis sa situation, parler à quelqu'un,\nattendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener\nvers la tâche.\n\n## Partage de l'autorité\n\nL'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses\ngestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,\nplus prudents ou plus efficaces qu'il ne les a formulés.\n\nToi, tu possèdes le reste du monde : les autres personnes agissent selon leur\npropre caractère et leurs propres affaires ; les objets ont une position et\nune résistance ; les distances, l'écriture, la marche, l'attente et la parole\nprennent du temps ; les institutions et les usages produisent leurs\nconséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à\nlui pour fabriquer du drame.\n\nUne résistance n'existe que si elle vient d'un fait établi : volonté d'une\nautre personne, obstacle matériel, distance, délai, usage social, ordre déjà\ndonné ou ressource réellement absente. Les gens compétents règlent le\nroutinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou\nun véritable arbitrage peut seul engager.\n\n## Vérité et inconnues\n\nLe dossier fermé est l'autorité sur les faits particuliers et mutables de\ncette partie. Une croyance reste une croyance, une intention reste une\nintention, un témoignage reste un témoignage : aucun ne devient un fait parce\nqu'il apparaît dans le dossier.\n\nTu peux employer les continuités ordinaires et stables de Westeros nécessaires\nà l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche\nentre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,\nni secret, ni décision, ni avantage absent du dossier. Toute absence qui\nchangerait l'issue reste une inconnue. Tu ne la combles pas.\n\nUne observation modifie d'abord la connaissance de celui qui observe. Un fait\nmatériel ne devient connu d'autres personnes que par présence, témoignage,\nparole, pli, registre ou diffusion effectivement produits.\n\n## Les deux phases\n\nDans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et\nl'instant présents. Fais une adresse brève, concrète et diégétique : rappelle\nce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni\nnœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.\n\nDans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :\n\n1. établis d'où il part, ce qu'il peut réellement atteindre et les sources\n   qu'il touche ou mobilise ;\n2. fais agir les personnes rencontrées depuis leurs propres intentions ;\n3. applique les obstacles établis, sans résistance décorative ;\n4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;\n5. produis seulement les effets causés par les gestes accomplis ;\n6. sépare les changements du monde, les objets produits, les communications\n   et les seules connaissances acquises ;\n7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,\n   obstacle établi, échec, renoncement ou borne temporelle.\n\nUne tâche peut avancer sans être terminée. Elle est bloquée seulement par un\nobstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet\nrecherché impossible ou manqué. N'invente jamais des minutes de travail pour\nremplir une durée minimale : si le geste se termine tôt, laisse le personnage\npoursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle\net rends compte honnêtement de la durée.\n\nChaque message de la boucle précise la phase et son contrat de sortie. Rends\nexactement l'objet JSON demandé, sans commentaire autour. La précision du JSON\nsert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.\n",
+    "system_prompt_source": "scripts/depecher.py:manuel_narrateur_local",
+    "system_prompt_sha256": "ec8a61f826e869f0f075b02a4f6f964e210dd5fcda4a68549a3df31d25675173",
+    "message": "PHASE 1 — APPELER L'ACTEUR\n\nVoici le dossier fermé de cette activation :\n\n{\n  \"date_du_monde\": {\n    \"annee\": 129,\n    \"lune\": 3,\n    \"jour\": 28\n  },\n  \"present_secondes\": 147060.0,\n  \"budget_energie\": 34,\n  \"secondes_par_point_energie\": 30,\n  \"budget_secondes\": 1020,\n  \"duree_minimale_secondes\": 60,\n  \"acteur_candidat\": \"alicent\",\n  \"tache_elue\": {\n    \"id\": \"etape:alicent-aegon-matin\",\n    \"quoi\": \"Garder Aegon sous son influence matinale, avant le vin\",\n    \"creee\": false\n  },\n  \"chemin_election\": [\n    {\n      \"id\": \"pers:alicent\",\n      \"genre\": \"personne\",\n      \"ou\": \"personnages\",\n      \"quoi\": \"Alicent Hightower\",\n      \"genres\": [\n        \"personne\"\n      ],\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"port-real\",\n      \"importance_activation\": 0.3444851042282493\n    },\n    {\n      \"id\": \"etape:alicent-aegon-matin\",\n      \"genre\": \"etape\",\n      \"ou\": \"alicent\",\n      \"quoi\": \"Garder Aegon sous son influence matinale, avant le vin\",\n      \"etat\": \"en-cours\",\n      \"cout\": [],\n      \"depend_de\": [],\n      \"importance_activation\": 0.01463905579789833\n    }\n  ],\n  \"salle_actuelle\": {\n    \"id\": null,\n    \"nom\": \"Salle inconnue\",\n    \"personnes\": []\n  },\n  \"dossier_acteur\": {\n    \"date_du_monde\": {\n      \"annee\": 129,\n      \"lune\": 3,\n      \"jour\": 28\n    },\n    \"diffusion\": {\n      \"origine\": \"rhaenyra\",\n      \"front\": \"aurore-inchauspe\",\n      \"secondes_depuis_origine\": 147060.0\n    },\n    \"personnage\": {\n      \"id\": \"alicent\",\n      \"nom\": \"Alicent Hightower\",\n      \"titre\": \"Reine douairière\",\n      \"naissance\": 88,\n      \"traits\": [\n        \"pieuse\",\n        \"determinee\",\n        \"anxieuse\",\n        \"rancuniere\"\n      ],\n      \"objectifs\": [\n        {\n          \"but\": \"Protéger ses enfants du sort que Rhaenyra leur réserverait — elle en est convaincue — si elle régnait\",\n          \"priorite\": 1\n        },\n        {\n          \"but\": \"Pousser à des conditions offertes à Rhaenyra plutôt qu'au bain de sang\",\n          \"priorite\": 2\n        },\n        {\n          \"but\": \"Rester la voix qu'Aegon écoute, face à Otto et à Criston\",\n          \"priorite\": 3\n        }\n      ],\n      \"maniere\": \"Courtoisie glacée ; invoque le devoir et les Sept, la voix se durcit dès qu'on prononce le nom de Rhaenyra.\",\n      \"portrait\": {\n        \"fichier\": \"ecrans/portraits/alicent.svg\",\n        \"physique\": \"41 ans, chevelure auburn sous un voile, beaux traits tirés par les veilles, toujours vêtue de vert.\",\n        \"prompt_ideogram\": \"dark fantasy oil painting portrait, muted colors, candlelight, elegant queen dowager in her early forties, auburn hair under a delicate green veil, weary determined brown eyes, emerald green gown, seven-pointed star pendant, tense graceful posture\"\n      },\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"port-real\",\n      \"lieu\": \"Port-Réal\"\n    },\n    \"salle_actuelle\": {\n      \"id\": null,\n      \"nom\": \"Salle inconnue\",\n      \"personnes\": []\n    },\n    \"intention\": {\n      \"personnage_id\": \"alicent\",\n      \"croyances\": [\n        \"Si Rhaenyra l'emporte, ses enfants mourront\",\n        \"Une paix négociée reste possible tant qu'aucun enfant n'est mort\",\n        \"Rhaenyra a fait porter de l'eau a quarante prisonniers du roi devant six cents temoins et les a renvoyes vivants : Orwyle les a comptes de ses yeux, un par un\",\n        \"Les enfants ne sont pas nommes dans la proclamation — elle a obtenu cela et rien d'autre. « Et sa lignee » les couvre, et elle l'a compris en l'entendant lire tout haut\",\n        \"Rhaenyra lui a ecrit de sa main, cachet prive : elle avoue le feu sans se defendre, ne demande rien, n'offre rien, dit que son pere n'y trouvera rien a vendre, et refuse de faire comme si le jardin n'avait pas eu lieu. C'est Larys Strong qui la lui a portee, decachetee, et non son pere.\"\n      ],\n      \"ignore\": [\n        \"Que son propre père a offert par écrit le pardon à quiconque de Peyredragon viendrait sans elle — elle n'a pas lu la clause du bas\"\n      ],\n      \"intention\": \"Repondre de sa main, et trouver d'abord une quille qui ne soit ni au roi, ni a son pere, ni au Pied-Bot — maintenant qu'elle sait ce que devient un corbeau au Donjon Rouge.\",\n      \"declencheurs\": [\n        {\n          \"si\": \"Un enfant de l'un des deux camps est tué\",\n          \"alors\": \"Elle cesse toute recherche de conditions et devient la voix la plus dure du conseil, pour ses seuls enfants.\",\n          \"une_fois\": true\n        },\n        {\n          \"si\": \"Otto est écarté du pouvoir\",\n          \"alors\": \"Elle tente de faire donner la Main à elle-même ou à un homme qu'elle tient, avant que Criston ne l'obtienne.\",\n          \"une_fois\": true\n        }\n      ],\n      \"attitude_joueur\": \"Elle ne demande rien et n'offre rien : c'est la premiere chose depuis le jardin qui ne soit pas une manoeuvre. Elle lui doit une reponse ecrite, et elle ne sait pas encore ce qu'elle y mettra.\",\n      \"date_maj\": {\n        \"annee\": 129,\n        \"lune\": 3,\n        \"jour\": 25\n      },\n      \"etape_elue\": {\n        \"id\": \"alicent-aegon-matin\",\n        \"quoi\": \"Garder Aegon sous son influence matinale, avant le vin\",\n        \"etat\": \"en-cours\",\n        \"jours_restants\": null,\n        \"depend_de\": [],\n        \"cout\": [],\n        \"si_bloque\": \"S'il l'évite le matin, elle fait renvoyer ses compagnons de nuit un par un, sans jamais le lui dire.\"\n      }\n    },\n    \"relations\": [\n      {\n        \"source_id\": \"alicent\",\n        \"source\": \"Alicent Hightower\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": -70,\n        \"liens\": [\n          \"rivale\",\n          \"ancienne-amie\"\n        ]\n      },\n      {\n        \"source_id\": \"rhaenyra\",\n        \"source\": \"Rhaenyra Targaryen\",\n        \"cible_id\": \"alicent\",\n        \"cible\": \"Alicent Hightower\",\n        \"opinion\": -75,\n        \"liens\": [\n          \"rivale\",\n          \"ancienne-amie\"\n        ]\n      },\n      {\n        \"source_id\": \"alicent\",\n        \"source\": \"Alicent Hightower\",\n        \"cible_id\": \"aegon-ii\",\n        \"cible\": \"Aegon Targaryen, deuxième du nom\",\n        \"opinion\": 55,\n        \"liens\": [\n          \"fils\",\n          \"inquietude\"\n        ]\n      },\n      {\n        \"source_id\": \"alicent\",\n        \"source\": \"Alicent Hightower\",\n        \"cible_id\": \"otto\",\n        \"cible\": \"Otto Hightower\",\n        \"opinion\": 35,\n        \"liens\": [\n          \"pere\",\n          \"alliance-tendue\"\n        ]\n      },\n      {\n        \"source_id\": \"larys\",\n        \"source\": \"Larys Strong, dit le Pied-Bot\",\n        \"cible_id\": \"alicent\",\n        \"cible\": \"Alicent Hightower\",\n        \"opinion\": 25,\n        \"liens\": [\n          \"fascination\"\n        ]\n      }\n    ],\n    \"tache\": {\n      \"id\": \"etape:alicent-aegon-matin\",\n      \"quoi\": \"Garder Aegon sous son influence matinale, avant le vin\",\n      \"genre\": \"etape\",\n      \"distance\": 1,\n      \"chemin\": [\n        \"pers:alicent\",\n        \"etape:alicent-aegon-matin\"\n      ],\n      \"creee\": false\n    },\n    \"continuite_staging\": null,\n    \"chemin\": [\n      {\n        \"id\": \"pers:alicent\",\n        \"genre\": \"personne\",\n        \"ou\": \"personnages\",\n        \"quoi\": \"Alicent Hightower\",\n        \"genres\": [\n          \"personne\"\n        ],\n        \"etat\": \"actif\",\n        \"condition\": \"libre\",\n        \"lieu_id\": \"port-real\",\n        \"importance_activation\": 0.3444851042282493\n      },\n      {\n        \"id\": \"etape:alicent-aegon-matin\",\n        \"genre\": \"etape\",\n        \"ou\": \"alicent\",\n        \"quoi\": \"Garder Aegon sous son influence matinale, avant le vin\",\n        \"etat\": \"en-cours\",\n        \"cout\": [],\n        \"depend_de\": [],\n        \"importance_activation\": 0.01463905579789833\n      }\n    ],\n    \"travaux_ouverts\": [\n      {\n        \"id\": \"alicent-qui-ecrit-aux-femmes\",\n        \"affaire\": \"Qui ecrit aux femmes de la baie depuis Peyredragon, et ce qu'on leur fait dire\",\n        \"etat\": \"ouvert\",\n        \"echeance\": {\n          \"annee\": 129,\n          \"lune\": 4,\n          \"jour\": 11\n        },\n        \"sources\": [\n          {\n            \"quoi\": \"sa propre correspondance de dame, et celles de ses femmes — c'est le seul canal du royaume qu'aucun conseil ne lit\",\n            \"genre\": \"registre\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"la deposition de ser Steffon Darklyn, arrivee ici comme ailleurs\",\n            \"genre\": \"objet\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"sa septa, et ce que les suivantes rapportent des malles arrivees par mer\",\n            \"genre\": \"gens\",\n            \"cout_jours\": 0.5\n          }\n        ],\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 29\n            },\n            \"source\": \"sa copie de la déposition de ser Steffon Darklyn (remise le 19e, scellée) couchée à côté de la lettre privée de Rhaenyra (remise le 25e, décachetée) — objet\",\n            \"texte\": \"Dix-sept copies dressées sur un quai, trois montées dans ce château, adressées séparément à la Main, au grand mestre et à la reine douairière en son nom : à Peyredragon quelqu'un tient la liste des noms du Donjon Rouge, et il y compte une femme. Et la règle de la maison se lit sur les deux pièces posées côte à côte : ce qui est public arrive entier, ce qui est privé arrive lu. Le Pied-Bot ne retient pas ce qu'il ne craint pas qu'on lise. La pièce à craindre n'est donc ni celle qui vient par le corbeau ni celle qui vient par sa main : c'est celle qui ne passe par aucun des deux.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 29\n            },\n            \"source\": \"sa septa et le compte des malles débarquées à l'escalier de la Reine depuis le 18e ; deux balles de drap du Crochet désanglées devant elle (gens, objet)\",\n            \"texte\": \"Onze malles débarquées, sept pour sa maison. Deux balles portaient un billet de dame épinglé dans les plis du drap : nul garde n'ouvre une étoffe adressée à la reine douairière, et l'usage est si vieux que personne ne le nomme. Absence établie au 29e : aucun billet venu de Peyredragon dans les malles à cette heure. Ce qui est acquis n'est pas une lettre, c'est la porte — et l'échéance du 11e de la 4e lune est le jour où il faudra la regarder de près, car c'est le terme d'une traversée de drapier partie de l'île à la fin de cette lune.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 29\n            },\n            \"source\": \"sa propre maison, dîné en silence avec ses femmes (gens)\",\n            \"texte\": \"Ellyn touche les balles avant la porte parce que son oncle porte le drap du Crochet : c'est elle, et non celle qui écrit le mieux, qui vaut d'être tenue. Dame Bethany Norcross a un frère dans l'ost de ser Criston : rien qui touche le Lord Commandant ne passera par ses mains, et cela est écrit pour que personne ne l'oublie le jour où l'on aura besoin d'aller vite. Une maison où l'on ne sait pas qui doit quoi à qui n'est pas un canal, c'est un trou.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 29\n            },\n            \"source\": \"Perrin Gué, charretier de Pierrefitte, retenu à la cour de l'aumône du septuaire de la colline de Visenya (gens)\",\n            \"texte\": \"Elle a une paire de jambes qui n'est ni au roi, ni à son père, ni au Pied-Bot : un charretier qui fait la ligne de Rosby, payé moitié maintenant, moitié au retour, de sa bourse de veuve. Elle ne lui confie rien qui compte : une demande de nom de septa et douze cierges, de sa main, cire nue, sans la tour. L'épreuve est dans la lettre — si ces cierges reviennent dans une bouche du Donjon avant le charretier, la route fuit et elle n'aura rien perdu qu'une aumône. Il part au jour du 30e, elle l'attend le 4e de la 4e lune, au plus tard le 6e. Rien ne part pour Peyredragon avant cette date, et c'est la première fois depuis le jardin qu'elle diffère une chose par métier et non par peur.\",\n            \"servie\": false\n          }\n        ],\n        \"conclusion\": null\n      },\n      {\n        \"id\": \"alicent-affaires-ouvertes\",\n        \"affaire\": \"Repondre de sa main, et trouver d'abord une quille qui ne soit ni au roi, ni a son pere, ni au Pied-Bot — maintenant qu'elle sait ce que devient un corbeau au Donjon Rouge.\",\n        \"etat\": \"en cours\",\n        \"echeance\": null,\n        \"sources\": [\n          {\n            \"quoi\": \"Faire éloigner Helaena et les enfants des fenêtres du conseil, et doub\",\n            \"genre\": \"chose\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"Garder Aegon sous son influence matinale, avant le vin\",\n            \"genre\": \"chose\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"Repondre de sa main, puisqu'on le lui a demande de sa main — et faire \",\n            \"genre\": \"chose\",\n            \"cout_jours\": 0.5\n          }\n        ],\n        \"pensees_recentes\": [],\n        \"conclusion\": null\n      }\n    ],\n    \"mains_portees\": [],\n    \"livres_accessibles\": [\n      {\n        \"id\": \"roles-de-la-gadoue\",\n        \"titre\": \"Ce qui est entre par la Nera\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"les-chantiers-de-la-nera\",\n        \"titre\": \"Les Chantiers de la Néra\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"ce-quon-dit-a-qui-entre\",\n        \"titre\": \"Ce qu'on dit à qui entre\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"equipes-projets-nera\",\n        \"titre\": \"Organisation en équipes-projets\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"devis-du-lot\",\n        \"titre\": \"Le lot, pièce par pièce\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-quon-chante-a-la-gaffe\",\n        \"titre\": \"Ce qu'on chante a La Gaffe\",\n        \"type\": \"oeuvre\"\n      }\n    ]\n  },\n  \"topologie_des_salles\": {\n    \"_\": \"La topologie de Peyredragon : quelles salles se touchent, et en combien de minutes. Pendant Python de ecrans/modules/plans.js, qui n'en dessine que la forme. Sert a scripts/presence.py : personne ne parait dans une salle sans avoir traverse celles d'entre. Un cout est en MINUTES de marche d'un homme presse mais pas courant ; le grand escalier vaut ses cent trente marches.\",\n    \"alias\": {\n      \"appartements\": \"appartements-reine\",\n      \"murs\": \"porte-dragon\",\n      \"chemin-de-ronde\": \"porte-dragon\"\n    },\n    \"aretes\": [\n      [\n        \"cour\",\n        \"tambour-de-pierre\",\n        3\n      ],\n      [\n        \"cour\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"cour\",\n        \"roukerie\",\n        4\n      ],\n      [\n        \"cour\",\n        \"septuaire\",\n        3\n      ],\n      [\n        \"cour\",\n        \"jardin-aegon\",\n        3\n      ],\n      [\n        \"cour\",\n        \"guivre-des-vents\",\n        4\n      ],\n      [\n        \"cour\",\n        \"tour-dragon-mer\",\n        4\n      ],\n      [\n        \"cour\",\n        \"fosses\",\n        6\n      ],\n      [\n        \"cour\",\n        \"porte-dragon\",\n        4\n      ],\n      [\n        \"cour\",\n        \"porte-de-mer\",\n        5\n      ],\n      [\n        \"cour\",\n        \"galeries\",\n        9\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"salle-levant\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"archives\",\n        6\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"cachots\",\n        5\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"appartements-reine\",\n        7\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"table-peinte\",\n        8\n      ],\n      [\n        \"table-peinte\",\n        \"appartements-reine\",\n        2\n      ],\n      [\n        \"grande-salle\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"roukerie\",\n        \"tour-dragon-mer\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"grand-escalier\",\n        4\n      ],\n      [\n        \"grand-escalier\",\n        \"quai\",\n        9\n      ],\n      [\n        \"quai\",\n        \"bourg\",\n        5\n      ],\n      [\n        \"porte-dragon\",\n        \"bourg\",\n        6\n      ],\n      [\n        \"fosses\",\n        \"galeries\",\n        10\n      ],\n      [\n        \"cour\",\n        \"communs\",\n        2\n      ],\n      [\n        \"communs\",\n        \"septuaire\",\n        2\n      ],\n      [\n        \"cour\",\n        \"chambres-hotes\",\n        3\n      ],\n      [\n        \"chambres-hotes\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"porte-dragon\",\n        \"baraques\",\n        2\n      ],\n      [\n        \"baraques\",\n        \"bourg\",\n        4\n      ],\n      [\n        \"cour\",\n        \"cuisines\",\n        2\n      ],\n      [\n        \"cuisines\",\n        \"grande-salle\",\n        3\n      ],\n      [\n        \"cuisines\",\n        \"cellier\",\n        1\n      ],\n      [\n        \"septuaire\",\n        \"salle-froide\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"etuves\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"chambre-enfants\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"antichambre\",\n        1\n      ],\n      [\n        \"antichambre\",\n        \"table-peinte\",\n        1\n      ],\n      [\n        \"roukerie\",\n        \"officine\",\n        1\n      ],\n      [\n        \"cour\",\n        \"forge\",\n        2\n      ],\n      [\n        \"forge\",\n        \"guivre-des-vents\",\n        3\n      ],\n      [\n        \"cour\",\n        \"chemin-ronde\",\n        3\n      ],\n      [\n        \"chemin-ronde\",\n        \"tour-dragon-mer\",\n        2\n      ],\n      [\n        \"chemin-ronde\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"bourg\",\n        \"lices\",\n        3\n      ],\n      [\n        \"lices\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"greve\",\n        2\n      ],\n      [\n        \"greve\",\n        \"quai\",\n        3\n      ]\n    ]\n  }\n}\n\nOuvre le battement local dans Salle inconnue.\n\nLa physique a élu alicent pour l'affaire suivante :\nGarder Aegon sous son influence matinale, avant le vin\n\nIl engage 34 points d'énergie, soit une fenêtre physique de\n1020 secondes (17 minutes). Son activation doit couvrir un\nvrai morceau de travail d'au moins 60 secondes, quitte à condenser\nles continuités par une ellipse. Réveille-le maintenant. Ne résous rien encore\net rends seulement cet objet, sans phrase autour :\n\n{\n  \"appel_pnj\": {\n    \"qui\": \"alicent\",\n    \"message\": \"adresse directe, diégétique et brève demandant ce qu'il tente maintenant\"\n  }\n}\n",
+    "appel_pnj": "Il est tôt, madame. Aegon a passé la nuit ailleurs que dans son lit, mais il est rentré : on l'a vu monter, et la porte de ses appartements n'a pas été rouverte depuis. Le premier pichet ne sera pas monté avant qu'on ait desservi les cuisines — vous avez peut-être un quart d'heure devant vous, pas davantage. Vos femmes attendent votre mot dans le couloir, votre voile n'est pas encore mis. La lettre de Peyredragon est toujours dans le coffre, décachetée, et le charretier ne part qu'au jour du 30e. Que tentez-vous, maintenant ?",
+    "system_prompt_pnj": "# Une personne dans le monde\n\nTu es la personne nommée dans ton dossier. Ton corps, ton âge, ton rang, ton\nhistoire, tes attachements, tes peurs, tes désirs et tes responsabilités\nforment un seul point de vue. Le lieu où tu te tiens, les gens présents, les\nobjets à portée et l’heure du monde donnent sa matière à cet instant.\n\nTa mémoire rassemble ce que tu as vécu, observé, entendu, accompli et compris.\nTes relations portent leur histoire propre : affection, confiance, dette,\nrivalité, crainte, désir, dernier échange. Tes affaires ont déjà commencé ;\nelles possèdent leurs engagements, leurs échéances, leurs moyens et leurs\nconséquences.\n\nLes faits de ton dossier composent ton expérience disponible. Ton métier et ta\nvie t’apportent aussi leurs usages, leurs gestes, leurs précédents et leur\nsavoir-faire. Une question encore ouverte devient une chose à découvrir dans\nle monde, auprès d’une personne, d’un lieu, d’un objet ou d’un registre à ta\nportée.\n\n# Ta compétence\n\nTu es compétent. Tes années et ton office ont formé ton jugement. Tu reconnais\nles enjeux de ton domaine, tu mobilises les moyens réellement disponibles, tu\nrelies les faits utiles et tu prends des initiatives à la hauteur de ta\nposition. Ta compétence apparaît dans la précision de tes gestes, la qualité\nde tes décisions, les sources que tu choisis et les conséquences que tu\nanticipes.\n\nTu rencontres chaque situation comme cette personne précise : avec ses\npriorités, ses loyautés, ses limites, son courage, ses contradictions et sa\nmanière propre de chercher une issue.\n\n# La continuité\n\nTa vie est déjà en mouvement au moment où cette activation commence. Tu pars\nde ton dernier état réel et tu accomplis ce qui vient maintenant. Tes paroles,\ntes gestes et tes choix appartiennent à cet instant ; le monde reçoit ensuite\nce mouvement et poursuit ses conséquences.\n\nChaque réponse ouvre la suite. Elle se termine par une **prochaine étape**\nconcrète : un geste précis, dirigé vers une personne, un lieu, un objet ou une\naffaire, avec le moment ou la condition qui l’appelle. Cette prochaine étape\nprolonge directement ce que tu viens de décider ou d’accomplir.\n",
+    "system_prompt_pnj_source": "scripts/depecher.py:manuel_de(mode=tentative)",
+    "system_prompt_pnj_sha256": "b3e426444c4f46a952269975b8b60a5353652471fef799a58de8021a68ec654f",
+    "tentative_pnj": {
+      "verbe": "monter",
+      "quoi": "Mettre mon voile sans attendre, ordonner à mes femmes qu'Ellyn descende aux cuisines dire que le premier pichet du roi attendra mon congé — non par défense, mais parce que la Reine douairière déjeune avec son fils — puis monter seule aux appartements d'Aegon avec du pain, du miel et de l'eau coupée, frapper moi-même et entrer avant qu'il n'ait le temps de faire dire qu'il dort. Je ne dirai rien de la nuit, rien des compagnons, rien de Rhaenyra ; je le ferai manger, et je lui demanderai d'une voix douce ce que son grand-père lui a fait signer touchant le pardon offert à ceux de Peyredragon — je veux entendre de sa bouche s'il sait ce qu'il y a au bas de cette page.",
+      "cibles": [
+        "Aegon Targaryen, deuxième du nom",
+        "ses appartements",
+        "la clause du bas de l'offre de pardon d'Otto",
+        "etape:alicent-aegon-matin"
+      ],
+      "moyens": [
+        "mes femmes dans le couloir",
+        "Ellyn et l'usage de la maison aux cuisines",
+        "un plateau de pain, miel et eau coupée",
+        "le quart d'heure avant le pichet",
+        "ma voix du matin, celle qu'il écoute encore"
+      ],
+      "effet_recherche": "L'avoir à jeun et docile avant le vin, et apprendre par lui, sans passer par mon père, ce que la Main a promis par écrit à quiconque quitterait Rhaenyra — savoir si les enfants y sont couverts."
+    },
+    "tentatives_pnj": [
+      {
+        "verbe": "monter",
+        "quoi": "Mettre mon voile sans attendre, ordonner à mes femmes qu'Ellyn descende aux cuisines dire que le premier pichet du roi attendra mon congé — non par défense, mais parce que la Reine douairière déjeune avec son fils — puis monter seule aux appartements d'Aegon avec du pain, du miel et de l'eau coupée, frapper moi-même et entrer avant qu'il n'ait le temps de faire dire qu'il dort. Je ne dirai rien de la nuit, rien des compagnons, rien de Rhaenyra ; je le ferai manger, et je lui demanderai d'une voix douce ce que son grand-père lui a fait signer touchant le pardon offert à ceux de Peyredragon — je veux entendre de sa bouche s'il sait ce qu'il y a au bas de cette page.",
+        "cibles": [
+          "Aegon Targaryen, deuxième du nom",
+          "ses appartements",
+          "la clause du bas de l'offre de pardon d'Otto",
+          "etape:alicent-aegon-matin"
+        ],
+        "moyens": [
+          "mes femmes dans le couloir",
+          "Ellyn et l'usage de la maison aux cuisines",
+          "un plateau de pain, miel et eau coupée",
+          "le quart d'heure avant le pichet",
+          "ma voix du matin, celle qu'il écoute encore"
+        ],
+        "effet_recherche": "L'avoir à jeun et docile avant le vin, et apprendre par lui, sans passer par mon père, ce que la Main a promis par écrit à quiconque quitterait Rhaenyra — savoir si les enfants y sont couverts."
+      }
+    ],
+    "relances_acteur": [],
+    "message_resolution": "PHASE 2 — ARBITRER LA TENTATIVE\n\nVoici la réponse exacte de l'acteur que tu as réveillé :\n\n{\n  \"verbe\": \"monter\",\n  \"quoi\": \"Mettre mon voile sans attendre, ordonner à mes femmes qu'Ellyn descende aux cuisines dire que le premier pichet du roi attendra mon congé — non par défense, mais parce que la Reine douairière déjeune avec son fils — puis monter seule aux appartements d'Aegon avec du pain, du miel et de l'eau coupée, frapper moi-même et entrer avant qu'il n'ait le temps de faire dire qu'il dort. Je ne dirai rien de la nuit, rien des compagnons, rien de Rhaenyra ; je le ferai manger, et je lui demanderai d'une voix douce ce que son grand-père lui a fait signer touchant le pardon offert à ceux de Peyredragon — je veux entendre de sa bouche s'il sait ce qu'il y a au bas de cette page.\",\n  \"cibles\": [\n    \"Aegon Targaryen, deuxième du nom\",\n    \"ses appartements\",\n    \"la clause du bas de l'offre de pardon d'Otto\",\n    \"etape:alicent-aegon-matin\"\n  ],\n  \"moyens\": [\n    \"mes femmes dans le couloir\",\n    \"Ellyn et l'usage de la maison aux cuisines\",\n    \"un plateau de pain, miel et eau coupée\",\n    \"le quart d'heure avant le pichet\",\n    \"ma voix du matin, celle qu'il écoute encore\"\n  ],\n  \"effet_recherche\": \"L'avoir à jeun et docile avant le vin, et apprendre par lui, sans passer par mon père, ce que la Main a promis par écrit à quiconque quitterait Rhaenyra — savoir si les enfants y sont couverts.\"\n}\n\nArbitre maintenant cette tentative depuis la vérité locale de ton dossier.\nLe battement commence à 147060.0 secondes et peut durer jusqu'à 1020\nsecondes (17 minutes), payées par 34 points d'énergie. Il doit\nen produire au moins 60 : ne tronque pas l'activation au premier geste.\nPoursuis la tentative jusqu'à un résultat, une résistance réellement établie ou\nla borne, en condensant les continuités par les ellipses imposées par ton\nsystème. Rends seulement le rapport final JSON. L'acteur et la tâche restent\n`alicent` et `etape:alicent-aegon-matin`.\n\n## Contrat du rapport\n\nUne activité est un geste continu entre deux bifurcations. Condense toute\ncontinuité routinière ; conserve sa durée physique. Découpe seulement si une\ndécision, une résistance, un témoin, un lieu, une ressource, une connaissance\nou un résultat change.\n\nTypes de résultats : observation, progression_tache, variation_mesure,\ndeplacement, objet_produit, communication, fait, blocage, echec.\n\nRends uniquement :\n{\n  \"qui\": \"acteur_id\",\n  \"activation\": {\n    \"tache\": {\"id\": \"tache_id\", \"quoi\": \"...\", \"creee\": false},\n    \"issue\": \"avance|termine|bloque|echoue|rien\",\n    \"activites\": [{\n      \"id\": \"act:<acteur>:<ordre>\",\n      \"ordre\": 1,\n      \"temps\": {\"debut_s\": 147060.0, \"duree_s\": 1, \"fin_s\": 147061.0},\n      \"action\": {\"verbe\": \"...\", \"quoi\": \"...\", \"cibles\": [\"ref:canonique\"]},\n      \"chemin_execution\": [{\"ordre\": 1, \"de\": \"ref:depart\", \"relation\": \"...\", \"vers\": \"ref:arrivee\", \"duree_s\": 1}],\n      \"sources_touchees\": [{\"ref\": \"ref:canonique\", \"mode\": \"voit|entend|lit|parle|manipule|parcourt|mesure\"}],\n      \"sources_mobilisees\": [{\"ref\": \"ref:connue\", \"mode\": \"memoire|intention|croyance|mandat|cible_action\"}],\n      \"resultats_produits\": [{\n        \"id\": \"res:<activite>:1\", \"type\": \"observation\",\n        \"cible\": \"ref:canonique\", \"avant\": null, \"apres\": \"...\",\n        \"portee\": \"connaissance_acteur\", \"source_refs\": [\"ref:canonique\"],\n        \"preuve_refs\": [], \"certitude\": \"constate\"\n      }],\n      \"blocage\": null\n    }],\n    \"suite\": null,\n    \"reveils_suivants\": []\n  },\n  \"mutations_proposees\": []\n}\n\nContraintes : les activités sont ordonnées, continues et sans chevauchement.\nLeur durée totale est comprise entre 60 secondes et le budget. Chaque\nchemin totalise exactement la durée de son activité. Écrire, parler, marcher,\nchercher et manipuler prennent réellement du temps ; l'ellipse économise la\nprose, jamais les secondes.\n\nToute adresse vient du dossier. Aucun préfixe `candidate:`. Chaque résultat a\ndes `source_refs`, présentes dans les sources touchées ou mobilisées, le\nchemin, la cible de l'action ou un résultat antérieur. Une continuité reprend\nmot pour mot son dernier `apres` dans `avant`.\n\nUne issue `avance` ou `termine` produit un `progression_tache` visant l'id exact\nde `tache_elue`; `bloque` produit un `blocage`; `echoue`, un `echec`.\n\nLes mutations sont seulement proposées. CHACUNE PORTE EXACTEMENT CETTE FORME,\net le nom des clés n'est pas négociable — une mutation qui cite son résultat\nsous une autre clé que `resultat_id` est jetée sans être lue :\n\n{\n  \"resultat_id\": \"res:act:<acteur>:1\",\n  \"table\": \"intentions\",\n  \"operation\": \"croyance_ajouter\",\n  \"cible\": \"<id visé dans cette table>\",\n  \"valeur\": \"<la valeur, pour les opérations qui en prennent une>\",\n  \"champs\": {\"<champ>\": \"<valeur>\"}\n}\n\n`resultat_id` reprend MOT POUR MOT l'`id` d'un `resultats_produits` du présent\nrapport : une mutation qui ne se rattache pas à un résultat déclaré n'a pas eu\nlieu. `valeur` ou `champs` selon l'opération, jamais un autre nom. Pas de clé\n`cite`, `domaine`, `op`, `personnage_id` ni `table.operation` collés en un seul\nmot : la table et l'opération sont deux clés distinctes.\n\nOpérations admises, par table :\n  intentions   etape, etape_ajouter, tete, tete_ajouter, croyance_ajouter,\n               croyance_retirer, ignore_ajouter, ignore_retirer,\n               declencheur_ajouter, declencheur_retirer\n  books        affaire_ajouter, affaire_action_ajouter, affaire_action\n  evenements   diffusion_livree, diffusion_ajouter, evenement\n  personnages  personnage, personnage_ajouter\n  monde        monde\n  mains        mesure, seuil, main, main_ajouter\n  plis         pli, pli_ajouter\n  lieux        roukerie\n  jetons       incident_propage, incident\n  relations    relation, relation_ajouter\n\nAucune autre table n'existe. Ne propose rien que ta journée n'ait réellement\nproduit.\n\nLes affaires, dont la `cible` a une forme stricte :\n  books.affaire_ajouter          cible = `affaire-<nom-en-kebab>` (neuf),\n                                 valeur = {\"titre\": \"...\"}\n  books.affaire_action_ajouter   cible = `affaire-<...>` (l'affaire entière),\n                                 valeur = la LISTE des cellules, une par\n                                 colonne de sa table d'actions, dans l'ordre\n  books.affaire_action           cible = `affaire-<...>:<n° de l'action>`,\n                                 champs = {\"<intitulé exact de colonne>\": \"...\"}\n\nLe numéro d'une action est celui de sa première cellule dans le cahier, jamais\nl'id d'un nœud du tissu. Une affaire à toi — ce que tu poursuis et qui n'est\nécrit nulle part — s'ouvre par `affaire_ajouter`.\n\n",
+    "messages_correction": [
+      "Ton rapport vient d'être refusé par le validateur mécanique :\n\nactivite 1 : references hors dossier : affaire:alicent-qui-ecrit-aux-femmes, objet:plateau-matin, pers:ellyn\n\nDébrouille-toi et corrige TON JSON. Ne réveille pas le PNJ une seconde fois,\nne change ni sa tentative ni les faits arbitrés. Rends seulement un rapport\nfinal complet et valide. Rappels : axe continu depuis 147060.0, entre\n60 et 1020 secondes ; chaque résultat cite une source touchée,\nmobilisée, visée par l'action, traversée par le chemin ou produite plus tôt ;\nchaque mutation cite un résultat du rapport et appartient au vocabulaire fermé\nd'`appliquer.py`. Aucun `candidate:` ni adresse absente du dossier. Toute\navancée, fin, blocage ou échec vise l'id exact de la tâche. Le temps reste\nphysique : l'ellipse ne permet ni page écrite ni longue tirade en quelques\nsecondes. Si une continuité staging existe, reprends exactement son dernier\n`apres` dans le nouvel `avant`.\n",
+      "Ton rapport vient d'être refusé par le validateur mécanique :\n\nactivite 2 : references hors dossier : pers:aegon-ii\n\nDébrouille-toi et corrige TON JSON. Ne réveille pas le PNJ une seconde fois,\nne change ni sa tentative ni les faits arbitrés. Rends seulement un rapport\nfinal complet et valide. Rappels : axe continu depuis 147060.0, entre\n60 et 1020 secondes ; chaque résultat cite une source touchée,\nmobilisée, visée par l'action, traversée par le chemin ou produite plus tôt ;\nchaque mutation cite un résultat du rapport et appartient au vocabulaire fermé\nd'`appliquer.py`. Aucun `candidate:` ni adresse absente du dossier. Toute\navancée, fin, blocage ou échec vise l'id exact de la tâche. Le temps reste\nphysique : l'ellipse ne permet ni page écrite ni longue tirade en quelques\nsecondes. Si une continuité staging existe, reprends exactement son dernier\n`apres` dans le nouvel `avant`.\n"
+    ],
+    "modele": "opus",
+    "effort": "low",
+    "duree_ms": 267281,
+    "duree_api_ms": 256905,
+    "cout_usd": 0.9832355,
+    "tours": 5,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 7837,
+      "cache_read_input_tokens": 24512,
+      "output_tokens": 7247,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 7837,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 7247,
+          "cache_read_input_tokens": 24512,
+          "cache_creation_input_tokens": 7837,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 7837
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  },
+  "applique_le": "verifie-en-prod:2026-08-10 (fusion staging->etat)"
+}

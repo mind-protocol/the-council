@@ -14,14 +14,16 @@
 //   • qui parle ou qui agit EST là — son médaillon apparaît de lui-même ;
 //   • `entrent` / `sortent` sur n'importe quel item font entrer ou sortir
 //     quelqu'un sans redéclarer toute la salle ;
-//   • une salle pleine ne mange pas la table : au-delà de MAX visages, les plus
-//     longtemps silencieux passent dans une pastille « et N autres » — et en
-//     ressortent au premier mot qu'ils disent.
+//   • TOUT LE MONDE EST MONTRÉ. La salle affichait naguère huit visages au
+//     plus, les plus longtemps silencieux passant dans une pastille « et N
+//     autres » — mais un conseil de douze en cachait quatre, et l'on ne savait
+//     plus devant qui l'on parlait. La colonne défile (overflow-y) et le CSS
+//     resserre les médaillons quand elle se remplit : c'est la place qui cède,
+//     jamais la liste.
 "use strict";
 (() => {
   window.Presents = {};
 
-  const MAX = 8;                   // au-delà, la rangée avale la carte
   let compteur = 0;                // battements écoulés
   const entendu = new Map();       // id → dernier battement où on l'a entendu
   const bruts = new Map();         // ce que l'item a écrit, avant complétion
@@ -85,8 +87,8 @@
   //   « récents » — le dernier qui a parlé en tête, puis les autres en
   //                 descendant. La colonne se réordonne à chaque battement,
   //                 mais on retrouve d'un coup d'œil qui vient de dire quoi.
-  // Qui est GARDÉ à l'écran ne change pas d'un mode à l'autre : ce sont
-  // toujours les MAX derniers entendus, le reste dans la pastille.
+  // Dans les deux cas, tout le monde reste à l'écran : le tri range, il ne
+  // retranche pas.
   const CLE_TRI = "conseil.gens.tri";
   // Par défaut : les récents. Une colonne qui suit la conversation vaut mieux
   // qu'un ordre d'arrivée qu'on a oublié dix répliques plus tôt.
@@ -95,26 +97,33 @@
 
   function montres() {
     const rangs = ordre.slice().sort((a, b) => entendu.get(b) - entendu.get(a));
-    const gardes = new Set(rangs.slice(0, MAX));
-    const suite = tri === "recents" ? rangs : ordre;
-    return { visibles: suite.filter((id) => gardes.has(id)),
-             tus: ordre.filter((id) => !gardes.has(id)) };
+    return { visibles: tri === "recents" ? rangs : ordre.slice() };
   }
 
   const esc = (s) => String(s == null ? "" : s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
 
+  // Le portrait, son anneau d'office et l'emblème de l'angle sont dessinés par
+  // `visage.js` — la même main que pour la chronique. Ce qui vivait ici (le
+  // recadrage de la fenêtre, la teinte du rôle) y a été porté : deux visages du
+  // même homme à trente centimètres l'un de l'autre ne doivent pas sortir de
+  // deux codes différents.
   function medaillon(p) {
     const slot = document.createElement("div");
     slot.className = "acteur";
     slot.id = "act-" + p.id;
     // pas de bulle ici : la parole vit dans le fil, la salle montre les gens.
+    //
+    // L'OFFICE SE LIT SUR LE VISAGE, PAS SOUS LUI. Le titre écrit en toutes
+    // lettres sous le nom coûtait deux lignes par tête et se lisait mal à cette
+    // taille ; son emblème, posé assez grand dans l'angle du portrait, se
+    // reconnaît d'un coup d'œil et ne prend aucune place. Le titre complet
+    // reste dans l'infobulle du médaillon, pour qui veut le mot exact.
     slot.innerHTML =
       '<div class="medaillon" id="med-' + p.id + '" title="Parler à ' + esc(p.nom) +
       (p.titre ? " — " + esc(p.titre) : "") + '">' +
-      (p.portrait_svg || "") + '<span class="qui">' + esc(p.nom) +
-      (p.titre ? '<small class="role"><i class="emb">' + Bus.embleme(p.titre) + "</i>" +
-        esc(p.titre) + "</small>" : "") + "</span></div>";
+      Visage.html(p, { classe: "med-rond" }) +
+      '<span class="qui">' + esc(p.nom) + "</span></div>";
     // Un visage est une adresse : cliquer dessus ouvre la parole vers lui —
     // le mode passe à Parler, la case s'amorce de son nom, et le joueur écrit
     // la suite. Rien ne part de ce clic seul.
@@ -138,8 +147,8 @@
   function dessiner() {
     const z = zone();
     if (!z) return;
-    const { visibles, tus } = montres();
-    const veut = visibles.join("|") + (tus.length ? "|+" + tus.length : "");
+    const { visibles } = montres();
+    const veut = visibles.join("|");
     // Une réplique sur deux ne change PAS qui est là : rebâtir la rangée à
     // chaque battement rechargerait huit portraits SVG et couperait net
     // l'illumination du locuteur. On ne remonte les visages que s'ils bougent.
@@ -160,20 +169,54 @@
       if (id === parle) slot.classList.add("parle");
       z.appendChild(slot);
     });
-    if (tus.length) {
-      const chip = document.createElement("div");
-      chip.className = "acteur acteur-reste";
-      chip.title = tus.map((id) => (window.Presents[id] || {}).nom || id).join(", ");
-      chip.innerHTML = '<div class="medaillon"><span class="qui">et ' +
-        tus.length + " autres</span></div>";
-      z.appendChild(chip);
-    }
     z.appendChild(bascule());
+    z.appendChild(fleche());
+    jauger();
+    // La colonne vient d'être rebâtie : les pastilles étaient dans le DOM
+    // qu'on a jeté. On les repose tout de suite plutôt que d'attendre le
+    // prochain guet — sinon un visage qui entre éteint la salle cinq secondes.
+    if (typeof poser === "function") poser();
   }
 
-  // Le bouton se pose EN DERNIER : les règles de densité du CSS comptent les
-  // enfants de #acteurs (`:has(.acteur:nth-child(6))`) et un bouton en tête
-  // décalerait tous les seuils d'un cran.
+  // La flèche du bas — le seul indice qu'il reste du monde sous la pliure.
+  // La barre de défilement est masquée (une gouttière grise le long d'une
+  // colonne de 118px mangeait un visage sur deux), et sans elle rien ne disait
+  // qu'on pouvait descendre. Elle est `sticky` : elle reste collée au bord bas
+  // pendant qu'on défile, et s'éteint quand on touche le fond.
+  let barre = null;
+  function fleche() {
+    barre = document.createElement("div");
+    barre.className = "acteurs-bas";
+    barre.textContent = "▾";
+    barre.title = "Descendre — il y a d'autres présents";
+    barre.addEventListener("click", () => {
+      const z = zone();
+      if (z) z.scrollBy({ top: Math.round(z.clientHeight * 0.7), behavior: "smooth" });
+    });
+    return barre;
+  }
+
+  // Reste-t-il quelque chose en dessous ? Deux pixels de marge : un fond
+  // atteint au demi-pixel près ne doit pas garder la flèche allumée.
+  function jauger() {
+    const z = zone();
+    if (!z) return;
+    const reste = z.scrollHeight - z.clientHeight - z.scrollTop > 2;
+    z.classList.toggle("peut-descendre", reste);
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const z = zone();
+    if (!z) return;
+    z.addEventListener("scroll", jauger, { passive: true });
+    // La colonne change de hauteur sans qu'on ait redessiné : une fenêtre
+    // qu'on étire, un titre qui passe sur deux lignes quand la police charge.
+    if (window.ResizeObserver) new ResizeObserver(jauger).observe(z);
+    window.addEventListener("resize", jauger);
+  });
+
+  // Le bouton se pose EN DERNIER (avant la seule flèche) : il porte `order:-1`
+  // pour remonter en tête de colonne, et rien du CSS ne compte plus les enfants.
   function bascule() {
     const b = document.createElement("button");
     b.type = "button";
@@ -253,7 +296,7 @@
   //
   // Ce qui vient de la présence entre donc SANS bruit : pas de compteur de
   // fraîcheur touché, pas de médaillon qui s'illumine — ils sont là, ils se
-  // taisent, et ils s'estompent naturellement dans la pastille « et N autres ».
+  // taisent, et ils descendent d'eux-mêmes au bas de la colonne.
   // On n'ôte, à l'inverse, que ceux que la présence connaît et place ailleurs :
   // un pêcheur de passage, absent du fichier, garde son visage.
   async function rapprocher() {
@@ -278,9 +321,57 @@
     } catch (e) {}
   }
 
+  // ---- la pastille verte : cet homme est DEHORS, en ce moment --------------
+  // Un dépêché (`scripts/depecher.py`) vit sa journée dans sa propre session,
+  // avec un budget de minutes ; `/depeches` dit lesquelles tournent encore.
+  // Le joueur voyait jusqu'ici une salle immobile sans savoir si l'on avait
+  // envoyé quelqu'un ou si plus rien ne venait : la pastille répond à ça, et à
+  // rien d'autre — pas de durée écrite, pas de compte à rebours à l'écran, la
+  // minute restante vit dans l'infobulle pour qui la cherche.
+  //
+  // Elle ne se pose que sur les visages DÉJÀ montés : on n'ajoute personne à la
+  // salle parce qu'il travaille, et on ne dit pas au joueur qu'un absent qu'il
+  // ne voit pas est en train d'être joué.
+  const dehors = new Map();        // id → secondes restantes
+
+  function poser() {
+    document.querySelectorAll("#acteurs .acteur").forEach((slot) => {
+      const id = slot.id.replace(/^act-/, "");
+      // Sur le VISAGE : c'est lui qui épouse le portrait (et qui porte déjà
+      // l'emblème d'office dans l'autre coin). Accrochée au médaillon, la
+      // pastille flottait dans la marge du nom.
+      const hote = slot.querySelector(".visage") || slot.querySelector(".medaillon");
+      if (!hote) return;
+      const reste = dehors.get(id);
+      let p = hote.querySelector(".depeche");
+      if (reste == null) { if (p) p.remove(); return; }
+      if (!p) {
+        p = document.createElement("span");
+        p.className = "depeche";
+        hote.appendChild(p);
+      }
+      p.title = "Il est sorti — on l'attend (encore " +
+        Math.max(1, Math.round(reste / 60)) + " min)";
+    });
+  }
+
+  async function guetter() {
+    try {
+      const d = await (await fetch("/depeches")).json();
+      dehors.clear();
+      (d && d.dehors || []).forEach((x) => dehors.set(x.id, x.reste));
+    } catch (e) { dehors.clear(); }
+    poser();
+  }
+
   window.addEventListener("DOMContentLoaded", () => {
     rapprocher();
     setInterval(rapprocher, 20000);
+    // Une dépêche dure des minutes, mais elle rentre d'un coup : cinq secondes
+    // est le pas qui fait que la pastille s'éteint pendant qu'on regarde, et
+    // non trois battements après le retour de l'homme.
+    guetter();
+    setInterval(guetter, 5000);
   });
   // Un changement de salle est le moment où l'on se trompe : on rapproche là,
   // en plus du battement régulier.

@@ -1,0 +1,492 @@
+{
+  "qui": "rulf-corne",
+  "activation": {
+    "tache": {
+      "id": "22036",
+      "quoi": "🧑‍✈️ Faire le rôle des dix-neuf pilotes de la Néra",
+      "creee": false
+    },
+    "issue": "avance",
+    "activites": [
+      {
+        "id": "act:rulf-corne:1",
+        "ordre": 1,
+        "temps": {
+          "debut_s": 100985.079,
+          "duree_s": 360,
+          "fin_s": 101345.079
+        },
+        "action": {
+          "verbe": "interroger",
+          "quoi": "Couper la remontée du vieux pêcheur au bas du bourg, cahier fermé sous le bras, et lui demander non pas des pilotes mais qui de l'autre rive vient encore acheter, vendre ou saler ici, en posant devant lui les dates du 24e au 27e",
+          "cibles": [
+            "salle:bourg",
+            "pers:vieux-pecheur"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "salle:bourg",
+            "relation": "traverse_sur_place",
+            "vers": "salle:bourg",
+            "duree_s": 360
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:vieux-pecheur",
+            "mode": "parle"
+          },
+          {
+            "ref": "salle:bourg",
+            "mode": "parcourt"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "livre:ce-qui-sort-de-ma-main",
+            "mode": "memoire"
+          },
+          {
+            "ref": "22036",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "pers:rulf-corne",
+            "mode": "intention"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:rulf-corne:1:1",
+            "type": "observation",
+            "cible": "pers:vieux-pecheur",
+            "avant": null,
+            "apres": "Le vieux remonte sans avoir mouillé parce qu'il n'a pas trouvé où vendre : ses acheteurs de l'autre rive, dit-il, ne sont plus descendus au bourg depuis le 24e. Avant cela ils venaient à la petite eau, deux ou trois par semaine, et repartaient le soir même. Il ne sait aucun nom d'homme qui mène une coque ; il connaît des figures et des bourses, pas des quilles.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "pers:vieux-pecheur"
+            ],
+            "preuve_refs": [],
+            "certitude": "rapporte"
+          },
+          {
+            "id": "res:act:rulf-corne:1:2",
+            "type": "fait",
+            "cible": "22036",
+            "avant": null,
+            "apres": "La date que la bouche du vieux me rend est la mienne : le 24e. Le jour où l'autre rive a cessé de descendre au bourg est le jour où la première des quatre nefs est entrée dans la roche de nuit. Je ne joins pas les deux dans mon cahier — je les pose l'une sous l'autre, et je note qu'elles sont la même date.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "res:act:rulf-corne:1:1",
+              "livre:ce-qui-sort-de-ma-main"
+            ],
+            "preuve_refs": [],
+            "certitude": "infere"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 12.0,
+        "quoi": "Couper la remontée du vieux pêcheur au bas du bourg, cahier fermé sous le bras, et lui demander non pas des pilotes mais qui de l'autre rive vient encore acheter, vendre ou saler ici, en posant devant lui les dates du 24e au 27e",
+        "source": "22036, livre:ce-qui-sort-de-ma-main, pers:rulf-corne, pers:vieux-pecheur, salle:bourg",
+        "resultat": "observation: Le vieux remonte sans avoir mouillé parce qu'il n'a pas trouvé où vendre : ses acheteurs de l'autre rive, dit-il, ne sont plus descendus au bourg depuis le 24e. Avant cela ils venaient à la petite eau, deux ou trois par semaine, et repartaient le soir même. Il ne sait aucun nom d'homme qui mène une coque ; il connaît des figures et des bourses, pas des quilles. · fait: La date que la bouche du vieux me rend est la mienne : le 24e. Le jour où l'autre rive a cessé de descendre au bourg est le jour où la première des quatre nefs est entrée dans la roche de nuit. Je ne joins pas les deux dans mon cahier — je les pose l'une sous l'autre, et je note qu'elles sont la même date.",
+        "preuve": null
+      },
+      {
+        "id": "act:rulf-corne:2",
+        "ordre": 2,
+        "temps": {
+          "debut_s": 101345.079,
+          "duree_s": 180,
+          "fin_s": 101525.079
+        },
+        "action": {
+          "verbe": "marcher",
+          "quoi": "Remonter la boue du bourg jusqu'aux claies de Willa, jambe traînante, de manière que le vieux soit hors de portée d'oreille avant que la seconde bouche s'ouvre",
+          "cibles": [
+            "salle:bourg"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "salle:bourg",
+            "relation": "traverse_sur_place",
+            "vers": "salle:bourg",
+            "duree_s": 180
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "salle:bourg",
+            "mode": "parcourt"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:rulf-corne",
+            "mode": "intention"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:rulf-corne:2:1",
+            "type": "deplacement",
+            "cible": "pers:rulf-corne",
+            "avant": null,
+            "apres": "Aux séchoirs, au haut du bourg, hors de portée de voix du bas où le vieux vide son panier.",
+            "portee": "monde",
+            "source_refs": [
+              "salle:bourg"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 6.0,
+        "quoi": "Remonter la boue du bourg jusqu'aux claies de Willa, jambe traînante, de manière que le vieux soit hors de portée d'oreille avant que la seconde bouche s'ouvre",
+        "source": "pers:rulf-corne, salle:bourg",
+        "resultat": "deplacement: Aux séchoirs, au haut du bourg, hors de portée de voix du bas où le vieux vide son panier.",
+        "preuve": null
+      },
+      {
+        "id": "act:rulf-corne:3",
+        "ordre": 3,
+        "temps": {
+          "debut_s": 101525.079,
+          "duree_s": 540,
+          "fin_s": 102065.079
+        },
+        "action": {
+          "verbe": "interroger",
+          "quoi": "Prendre Willa des Séchoirs à ses claies, cahier fermé, et lui faire dire qui de l'autre rive a payé du sel, une claie ou une place au séchoir depuis la 2e lune — et pour le compte de quel bord",
+          "cibles": [
+            "pers:willa-sechoirs",
+            "22036"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "salle:bourg",
+            "relation": "traverse_sur_place",
+            "vers": "salle:bourg",
+            "duree_s": 540
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:willa-sechoirs",
+            "mode": "parle"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "res:act:rulf-corne:1:1",
+            "mode": "memoire"
+          },
+          {
+            "ref": "livre:ce-qui-sort-de-ma-main",
+            "mode": "memoire"
+          },
+          {
+            "ref": "22036",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:rulf-corne:3:1",
+            "type": "observation",
+            "cible": "pers:willa-sechoirs",
+            "avant": null,
+            "apres": "Willa tient un compte de claies, pas de noms : elle marque à la craie qui paie et pour combien de jours. Depuis la 2e lune, trois places de séchoir ont été payées par des hommes qu'elle dit de l'autre rive, et une quatrième le 25e au matin — celle-là payée en pièces neuves par un homme qui a dit venir de la Grive-Grise. Elle n'a jamais demandé son nom et ne le donnera pas puisqu'elle ne l'a pas. Les trois autres n'ont pas reparu depuis le 24e.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "pers:willa-sechoirs"
+            ],
+            "preuve_refs": [],
+            "certitude": "rapporte"
+          },
+          {
+            "id": "res:act:rulf-corne:3:2",
+            "type": "fait",
+            "cible": "22036",
+            "avant": null,
+            "apres": "Un bord touché sans un nom : un homme de la Grive-Grise, coque de Dolf Menne de Sombreval, était à terre au bourg le 25e au matin, alors que sa nef était entrée aux hangars la nuit précédente sans congé. Ce n'est pas un pilote nommé, c'est une case de ma colonne vide qui cesse d'être vide : au moins un des huit se trouve du bord des quatre nefs de la roche. Les huit restent sans nom.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "res:act:rulf-corne:3:1",
+              "res:act:rulf-corne:1:2"
+            ],
+            "preuve_refs": [],
+            "certitude": "infere"
+          },
+          {
+            "id": "res:act:rulf-corne:3:3",
+            "type": "blocage",
+            "cible": "22036",
+            "avant": null,
+            "apres": "La bouche du bourg ne porte pas de noms de pilotes : ni le vieux ni Willa n'ont jamais eu besoin d'en savoir un. Le nom des huit ne se prendra pas ici — il faut une bouche de l'autre rive, ou un homme qui monte à bord des quatre nefs de la roche, et ni l'un ni l'autre n'est de mon office.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "res:act:rulf-corne:1:1",
+              "res:act:rulf-corne:3:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 18.0,
+        "quoi": "Prendre Willa des Séchoirs à ses claies, cahier fermé, et lui faire dire qui de l'autre rive a payé du sel, une claie ou une place au séchoir depuis la 2e lune — et pour le compte de quel bord",
+        "source": "22036, livre:ce-qui-sort-de-ma-main, pers:willa-sechoirs, res:act:rulf-corne:1:1",
+        "resultat": "observation: Willa tient un compte de claies, pas de noms : elle marque à la craie qui paie et pour combien de jours. Depuis la 2e lune, trois places de séchoir ont été payées par des hommes qu'elle dit de l'autre rive, et une quatrième le 25e au matin — celle-là payée en pièces neuves par un homme qui a dit venir de la Grive-Grise. Elle n'a jamais demandé son nom et ne le donnera pas puisqu'elle ne l'a pas. Les trois autres n'ont pas reparu depuis le 24e. · fait: Un bord touché sans un nom : un homme de la Grive-Grise, coque de Dolf Menne de Sombreval, était à terre au bourg le 25e au matin, alors que sa nef était entrée aux hangars la nuit précédente sans congé. Ce n'est pas un pilote nommé, c'est une case de ma colonne vide qui cesse d'être vide : au moins un des huit se trouve du bord des quatre nefs de la roche. Les huit restent sans nom. · blocage: La bouche du bourg ne porte pas de noms de pilotes : ni le vieux ni Willa n'ont jamais eu besoin d'en savoir un. Le nom des huit ne se prendra pas ici — il faut une bouche de l'autre rive, ou un homme qui monte à bord des quatre nefs de la roche, et ni l'un ni l'autre n'est de mon office.",
+        "preuve": null
+      },
+      {
+        "id": "act:rulf-corne:4",
+        "ordre": 4,
+        "temps": {
+          "debut_s": 102065.079,
+          "duree_s": 420,
+          "fin_s": 102485.079
+        },
+        "action": {
+          "verbe": "ecrire",
+          "quoi": "Ouvrir le cahier sur une pierre plate au haut du bourg, dos tourné, et porter de ma main la deuxième main du rôle : la date du 24e des deux bouches, le bord touché du 25e, et le compte des huit toujours sans nom",
+          "cibles": [
+            "22036",
+            "livre:ce-qui-sort-de-ma-main"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "salle:bourg",
+            "relation": "traverse_sur_place",
+            "vers": "salle:bourg",
+            "duree_s": 420
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "livre:ce-qui-sort-de-ma-main",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "res:act:rulf-corne:1:2",
+            "mode": "memoire"
+          },
+          {
+            "ref": "res:act:rulf-corne:3:2",
+            "mode": "memoire"
+          },
+          {
+            "ref": "res:act:rulf-corne:3:3",
+            "mode": "memoire"
+          },
+          {
+            "ref": "22036",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:rulf-corne:4:1",
+            "type": "progression_tache",
+            "cible": "22036",
+            "avant": "en cours — rôle ouvert et daté du 28e de la 3e lune, an 129 : onze des dix-neuf pilotes nommés, dont deux hors de service ; bord d'appartenance vide pour les onze et déclaré vide ; huit inconnus de toute page et de toute bouche de cette rade, comptés tels quels. Reste à établir le bord, ce qui ne se fait pas depuis ce quai.",
+            "apres": "en cours — deuxième main portée au bourg le 28e de la 3e lune, an 129 : onze pilotes toujours seuls nommés, dont deux hors de service ; les huit restent sans nom, la bouche du bourg n'en porte aucun. Un bord touché sans nom : un homme de la Grive-Grise à terre au bourg le 25e au matin. Deux bouches indépendantes donnent la même date d'arrêt, le 24e, pour toute descente de l'autre rive au bourg. Le nom des huit demande une bouche de l'autre rive ou un homme monté à bord des quatre nefs de la roche : hors de mon office.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:rulf-corne:3:2",
+              "res:act:rulf-corne:1:2",
+              "res:act:rulf-corne:3:3"
+            ],
+            "preuve_refs": [
+              "livre:ce-qui-sort-de-ma-main"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:rulf-corne:4:2",
+            "type": "objet_produit",
+            "cible": "livre:ce-qui-sort-de-ma-main",
+            "avant": null,
+            "apres": "Deuxième colonne du rôle, de ma main : en face des huit, non plus un blanc mais une ligne datée — l'autre rive a cessé de descendre le 24e, et l'un des leurs était à terre le 25e sous le bord de la Grive-Grise. Aucune page n'est sortie de chez moi, le cahier n'a pas été montré, ni au vieux ni à Willa.",
+            "portee": "monde",
+            "source_refs": [
+              "livre:ce-qui-sort-de-ma-main",
+              "res:act:rulf-corne:4:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:rulf-corne:4:3",
+            "type": "fait",
+            "cible": "pers:rulf-corne",
+            "avant": "Le rôle est écrit de ma main dans mon cahier, à la Porte de mer, et aucune page n'est sortie de chez moi. La ligne montera au château demain à sept heures, comme les autres.",
+            "apres": "Le rôle a sa deuxième main, écrite debout au bourg sur une pierre plate. Ce qui monte au château à sept heures montera avec la date du 24e dessus : c'est du commandement du quai, pas du mien, mais je ne garderai pas sept heures une chose qui se rend en trois lignes.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:rulf-corne:4:1",
+              "res:act:rulf-corne:4:2"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 14.0,
+        "quoi": "Ouvrir le cahier sur une pierre plate au haut du bourg, dos tourné, et porter de ma main la deuxième main du rôle : la date du 24e des deux bouches, le bord touché du 25e, et le compte des huit toujours sans nom",
+        "source": "22036, livre:ce-qui-sort-de-ma-main, res:act:rulf-corne:1:2, res:act:rulf-corne:3:2, res:act:rulf-corne:3:3",
+        "resultat": "progression_tache: en cours — deuxième main portée au bourg le 28e de la 3e lune, an 129 : onze pilotes toujours seuls nommés, dont deux hors de service ; les huit restent sans nom, la bouche du bourg n'en porte aucun. Un bord touché sans nom : un homme de la Grive-Grise à terre au bourg le 25e au matin. Deux bouches indépendantes donnent la même date d'arrêt, le 24e, pour toute descente de l'autre rive au bourg. Le nom des huit demande une bouche de l'autre rive ou un homme monté à bord des quatre nefs de la roche : hors de mon office. · objet_produit: Deuxième colonne du rôle, de ma main : en face des huit, non plus un blanc mais une ligne datée — l'autre rive a cessé de descendre le 24e, et l'un des leurs était à terre le 25e sous le bord de la Grive-Grise. Aucune page n'est sortie de chez moi, le cahier n'a pas été montré, ni au vieux ni à Willa. · fait: Le rôle a sa deuxième main, écrite debout au bourg sur une pierre plate. Ce qui monte au château à sept heures montera avec la date du 24e dessus : c'est du commandement du quai, pas du mien, mais je ne garderai pas sept heures une chose qui se rend en trois lignes.",
+        "preuve": [
+          "livre:ce-qui-sort-de-ma-main"
+        ]
+      }
+    ],
+    "suite": "La ligne monte au château à sept heures avec la date du 24e. Ensuite : le nom des huit ne se prend pas dans ce bourg — il faut une bouche de l'autre rive, ou l'accord du commandement du quai pour approcher les hommes des quatre nefs entrées dans la roche.",
+    "reveils_suivants": [],
+    "budget_energie": 60,
+    "budget_secondes": 1800,
+    "energie_depensee": 50.0
+  },
+  "mutations_proposees": [],
+  "mutations_rejetees": [
+    {
+      "mutation": {
+        "operation": "intentions.croyance_ajouter",
+        "cible": "rulf-corne",
+        "valeur": "L'autre rive a cessé de descendre au bourg le 24e — deux bouches séparées, le vieux pêcheur et Willa des Séchoirs, me donnent la même date sans s'être parlé ; c'est la nuit où la première des quatre nefs est entrée dans la roche.",
+        "resultat_ref": "res:act:rulf-corne:1:2"
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "operation": "intentions.croyance_ajouter",
+        "cible": "rulf-corne",
+        "valeur": "Un homme de la Grive-Grise a payé une place au séchoir de Willa le 25e au matin, en pièces neuves, sans donner de nom : au moins un des huit pilotes inconnus est du bord des nefs entrées aux hangars.",
+        "resultat_ref": "res:act:rulf-corne:3:2"
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "operation": "intentions.etape_ajouter",
+        "cible": "rulf-corne",
+        "valeur": "Demander au commandement du quai — Aldon Hask, depuis le 27e — s'il autorise qu'on approche les hommes des quatre nefs de la roche pour le nom des huit ; sans quoi le rôle reste à onze.",
+        "resultat_ref": "res:act:rulf-corne:3:3"
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "operation": "plis.pli_ajouter",
+        "cible": "22036",
+        "valeur": "Trois lignes de la main de Rulf Corne, à monter au château à sept heures le 28e : rôle des pilotes de la Néra, deuxième main — onze nommés, huit sans nom, l'autre rive arrêtée de descendre au bourg depuis le 24e, un homme de la Grive-Grise à terre le 25e.",
+        "resultat_ref": "res:act:rulf-corne:4:2"
+      },
+      "erreur": "resultat_id absent du rapport"
+    }
+  ],
+  "_activation": {
+    "session": "b268e3c2-615d-4017-baec-d74b140785b2",
+    "session_narrateur": "b268e3c2-615d-4017-baec-d74b140785b2",
+    "session_pnj": "e20ad8a3-ad81-485c-8ec8-2905afcaf694",
+    "cree_le": "2026-08-09T23:41:59.929137+02:00",
+    "front": "aurore-inchauspe",
+    "present_secondes": 100985.079,
+    "importance": 0.605819,
+    "budget": 60,
+    "budget_secondes": 1800,
+    "system_prompt": "# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS\n\nTu es le maître du jeu local d'un monde vivant, pas un assistant administratif\net pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa\nmatière, les personnes qui s'y trouvent, les usages de Westeros et les\nconséquences du temps qui passe.\n\n## Le monde\n\nNous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de\nViserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra\nTargaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie\npeut diverger du récit connu : le dossier de l'activation fait autorité sur ce\nqui s'est réellement produit ici.\n\nDate présente : 28e jour de la 3e lune de l'an 129 après la\nConquête.\nLieu présent : Le bourg sous les murs, Peyredragon.\nActeur appelé : Rulf Corne.\nAffaire qui exerce maintenant une pression sur lui : 🧑‍✈️ Faire le rôle des dix-neuf pilotes de la Néra.\n\nL'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,\nsituée dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,\nfaire autre chose d'accessible depuis sa situation, parler à quelqu'un,\nattendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener\nvers la tâche.\n\n## Partage de l'autorité\n\nL'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses\ngestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,\nplus prudents ou plus efficaces qu'il ne les a formulés.\n\nToi, tu possèdes le reste du monde : les autres personnes agissent selon leur\npropre caractère et leurs propres affaires ; les objets ont une position et\nune résistance ; les distances, l'écriture, la marche, l'attente et la parole\nprennent du temps ; les institutions et les usages produisent leurs\nconséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à\nlui pour fabriquer du drame.\n\nUne résistance n'existe que si elle vient d'un fait établi : volonté d'une\nautre personne, obstacle matériel, distance, délai, usage social, ordre déjà\ndonné ou ressource réellement absente. Les gens compétents règlent le\nroutinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou\nun véritable arbitrage peut seul engager.\n\n## Vérité et inconnues\n\nLe dossier fermé est l'autorité sur les faits particuliers et mutables de\ncette partie. Une croyance reste une croyance, une intention reste une\nintention, un témoignage reste un témoignage : aucun ne devient un fait parce\nqu'il apparaît dans le dossier.\n\nTu peux employer les continuités ordinaires et stables de Westeros nécessaires\nà l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche\nentre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,\nni secret, ni décision, ni avantage absent du dossier. Toute absence qui\nchangerait l'issue reste une inconnue. Tu ne la combles pas.\n\nUne observation modifie d'abord la connaissance de celui qui observe. Un fait\nmatériel ne devient connu d'autres personnes que par présence, témoignage,\nparole, pli, registre ou diffusion effectivement produits.\n\n## Les deux phases\n\nDans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et\nl'instant présents. Fais une adresse brève, concrète et diégétique : rappelle\nce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni\nnœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.\n\nDans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :\n\n1. établis d'où il part, ce qu'il peut réellement atteindre et les sources\n   qu'il touche ou mobilise ;\n2. fais agir les personnes rencontrées depuis leurs propres intentions ;\n3. applique les obstacles établis, sans résistance décorative ;\n4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;\n5. produis seulement les effets causés par les gestes accomplis ;\n6. sépare les changements du monde, les objets produits, les communications\n   et les seules connaissances acquises ;\n7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,\n   obstacle établi, échec, renoncement ou borne temporelle.\n\nUne tâche peut avancer sans être terminée. Elle est bloquée seulement par un\nobstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet\nrecherché impossible ou manqué. N'invente jamais des minutes de travail pour\nremplir une durée minimale : si le geste se termine tôt, laisse le personnage\npoursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle\net rends compte honnêtement de la durée.\n\nChaque message de la boucle précise la phase et son contrat de sortie. Rends\nexactement l'objet JSON demandé, sans commentaire autour. La précision du JSON\nsert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.\n",
+    "system_prompt_source": "scripts/depecher.py:manuel_narrateur_local",
+    "system_prompt_sha256": "c54b76c1e0982335e0357579c0cda7301972b10d903f14c2c8bd5b2b2a9cb265",
+    "message": "PHASE 1 — APPELER L'ACTEUR\n\nVoici le dossier fermé de cette activation :\n\n{\n  \"date_du_monde\": {\n    \"annee\": 129,\n    \"lune\": 3,\n    \"jour\": 28\n  },\n  \"present_secondes\": 100985.079,\n  \"budget_energie\": 60,\n  \"secondes_par_point_energie\": 30,\n  \"budget_secondes\": 1800,\n  \"duree_minimale_secondes\": 60,\n  \"acteur_candidat\": \"rulf-corne\",\n  \"tache_elue\": {\n    \"id\": \"22036\",\n    \"quoi\": \"🧑‍✈️ Faire le rôle des dix-neuf pilotes de la Néra\",\n    \"creee\": false\n  },\n  \"chemin_election\": [\n    {\n      \"id\": \"pers:rulf-corne\",\n      \"genre\": \"personne\",\n      \"ou\": \"personnages\",\n      \"quoi\": \"Rulf Corne\",\n      \"genres\": [\n        \"personne\"\n      ],\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"importance_activation\": 0.6058192618887083\n    },\n    {\n      \"id\": \"22036\",\n      \"genre\": \"action\",\n      \"ou\": \"affaire-controle-naval\",\n      \"quoi\": \"🧑‍✈️ Faire le rôle des dix-neuf pilotes de la Néra\",\n      \"lieu\": \"Le quai de Peyredragon, mon livre ouvert et non prêté\",\n      \"etat\": \"à faire\",\n      \"importance_activation\": 0.03309809422102888\n    }\n  ],\n  \"salle_actuelle\": {\n    \"id\": \"bourg\",\n    \"nom\": \"Le bourg sous les murs, Peyredragon\",\n    \"personnes\": [\n      {\n        \"id\": \"dorsa-sath\",\n        \"nom\": \"Dorsa Sath\"\n      },\n      {\n        \"id\": \"doss-marran\",\n        \"nom\": \"Doss Marran\"\n      },\n      {\n        \"id\": \"meliss-la-claie\",\n        \"nom\": \"Meliss\"\n      },\n      {\n        \"id\": \"merra-sath\",\n        \"nom\": \"Merra Sath\"\n      },\n      {\n        \"id\": \"nesse\",\n        \"nom\": \"Nesse\"\n      },\n      {\n        \"id\": \"ordo-sarnes\",\n        \"nom\": \"Ordo Sarnes\"\n      },\n      {\n        \"id\": \"rulf-corne\",\n        \"nom\": \"Rulf Corne\"\n      },\n      {\n        \"id\": \"tobb\",\n        \"nom\": \"Tobb\"\n      },\n      {\n        \"id\": \"vieux-pecheur\",\n        \"nom\": \"vieux-pecheur\"\n      },\n      {\n        \"id\": \"willa-sechoirs\",\n        \"nom\": \"Willa des Sechoirs\"\n      }\n    ]\n  },\n  \"dossier_acteur\": {\n    \"date_du_monde\": {\n      \"annee\": 129,\n      \"lune\": 3,\n      \"jour\": 28\n    },\n    \"diffusion\": {\n      \"origine\": \"rhaenyra\",\n      \"front\": \"aurore-inchauspe\",\n      \"secondes_depuis_origine\": 100985.079\n    },\n    \"personnage\": {\n      \"id\": \"rulf-corne\",\n      \"nom\": \"Rulf Corne\",\n      \"titre\": \"Maitre de port de Peyredragon depuis vingt-deux ans\",\n      \"naissance\": 66,\n      \"traits\": [\n        \"meticuleux\",\n        \"incorruptible\",\n        \"taciturne\",\n        \"proprietaire-de-son-livre\",\n        \"debrouillard\",\n        \"conciliant\"\n      ],\n      \"objectifs\": [\n        {\n          \"but\": \"Que son livre reste a lui et soit tenu juste\",\n          \"priorite\": 1\n        },\n        {\n          \"but\": \"Savoir avant tout le monde ce qui entre et sort de la rade\",\n          \"priorite\": 2\n        }\n      ],\n      \"maniere\": \"Parle lentement et ne repete jamais ; donne la date avant le fait. N'a jamais prete son livre a personne, pas meme a un prince. Se debrouille seul : comble les trous sans demander, tranche le routinier a sa main et en rend compte au passe, et ne fait remonter que ce qui engage la parole du maitre, coute un homme ou de l or, ou contredit un ordre anterieur. Competent : sur son domaine il en sait plus que son maitre et le montre — apporte le precedent, le chiffre et l avis qu il defend, au lieu d une question ; ne demande jamais ce qu il peut aller chercher lui-meme ; tient son cahier d affaire et en ecrit la conclusion de sa main. OUVRE PAR : ce qui est a flot et ce qu'on peut en faire. Ce qui manque a la liste vient apres. DEUXIEME PHRASE, toujours : ce que c'est (nomme par ce qu'il fait, jamais par son etiquette), ce que ca change pour la reine, et a quoi ca sert dans ses trois piliers — ouvrir la porte du dedans, n'etre pas attaque, rallier la ville.\",\n      \"portrait\": {\n        \"fichier\": null,\n        \"physique\": \"Soixante ans passes, une jambe qui traine, chapeau de cuir tenu a deux mains, gros livre recousu deux fois sous le bras.\",\n        \"prompt_ideogram\": \"dark fantasy oil painting portrait, muted colors, wet harbour light, old lame harbourmaster, leather hat held at his belly, thick water-swollen ledger under one arm, patient unbribable eyes\"\n      },\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"lieu\": \"Peyredragon\"\n    },\n    \"salle_actuelle\": {\n      \"id\": \"bourg\",\n      \"nom\": \"Le bourg sous les murs, Peyredragon\",\n      \"personnes\": [\n        {\n          \"id\": \"dorsa-sath\",\n          \"nom\": \"Dorsa Sath\"\n        },\n        {\n          \"id\": \"doss-marran\",\n          \"nom\": \"Doss Marran\"\n        },\n        {\n          \"id\": \"meliss-la-claie\",\n          \"nom\": \"Meliss\"\n        },\n        {\n          \"id\": \"merra-sath\",\n          \"nom\": \"Merra Sath\"\n        },\n        {\n          \"id\": \"nesse\",\n          \"nom\": \"Nesse\"\n        },\n        {\n          \"id\": \"ordo-sarnes\",\n          \"nom\": \"Ordo Sarnes\"\n        },\n        {\n          \"id\": \"rulf-corne\",\n          \"nom\": \"Rulf Corne\"\n        },\n        {\n          \"id\": \"tobb\",\n          \"nom\": \"Tobb\"\n        },\n        {\n          \"id\": \"vieux-pecheur\",\n          \"nom\": \"vieux-pecheur\"\n        },\n        {\n          \"id\": \"willa-sechoirs\",\n          \"nom\": \"Willa des Sechoirs\"\n        }\n      ]\n    },\n    \"intention\": {\n      \"personnage_id\": \"rulf-corne\",\n      \"croyances\": [\n        \"Il refuse un appareillage et n'en repond qu'a la reine ; il tient l'ordre de chargement du quai\",\n        \"Il avertit la veille au soir, avant la nuit, de tout appareillage du lendemain - porte par un coureur de la reine\",\n        \"La charge des greves est a lui, avec l'or et l'ordre ecrit — sept jours apres qu'on la lui a fait faire sans titre, et il n'a pas oublie les sept jours\",\n        \"On a parle de sa porte tout un jour au chateau sans le faire descendre chercher : son office s'ecrit sans lui, et le cahier des sorties est la seule chose qu'il tienne encore en propre\",\n        \"La Merette est revenue le 27e au soir, a sa date, septieme passage du rythme de six jours - il l'a portee au cahier, et le cahier n'est pas monte au chateau parce qu'on ne l'a pas fait chercher\"\n      ],\n      \"ignore\": [\n        \"Ce que la reine compte faire des onze coques quand la guerre viendra vraiment\"\n      ],\n      \"intention\": \"Garder le port en etat de travailler pendant qu'on fait la guerre autour.\",\n      \"declencheurs\": [],\n      \"date_maj\": {\n        \"annee\": 129,\n        \"lune\": 3,\n        \"jour\": 28\n      },\n      \"etape_elue\": null\n    },\n    \"relations\": [\n      {\n        \"source_id\": \"nicolas-reynolds\",\n        \"source\": \"Nicolas Lesster Reynolds\",\n        \"cible_id\": \"rulf-corne\",\n        \"cible\": \"Rulf Corne\",\n        \"opinion\": 45,\n        \"liens\": [\n          \"l'a compté en 127\",\n          \"lui doit sa page corrigée et vingt-trois lignes\"\n        ]\n      },\n      {\n        \"source_id\": \"rulf-corne\",\n        \"source\": \"Rulf Corne\",\n        \"cible_id\": \"nicolas-reynolds\",\n        \"cible\": \"Nicolas Lesster Reynolds\",\n        \"opinion\": 25,\n        \"liens\": [\n          \"a écrit ce qu'il pouvait faire sans le lui dire\",\n          \"le seul a lui avoir lu une page avant de la rendre\",\n          \"lui a prete son nom le 28e\"\n        ]\n      }\n    ],\n    \"tache\": {\n      \"id\": \"22036\",\n      \"quoi\": \"🧑‍✈️ Faire le rôle des dix-neuf pilotes de la Néra\",\n      \"genre\": \"action\",\n      \"distance\": 1,\n      \"chemin\": [\n        \"pers:rulf-corne\",\n        \"22036\"\n      ],\n      \"creee\": false\n    },\n    \"continuite_staging\": {\n      \"tache_id\": \"22036\",\n      \"acteur\": \"rulf-corne\",\n      \"issue\": \"avance\",\n      \"rapport\": \"etat/staging/activations/20260809-215857-107470-rulf-corne.json\",\n      \"present_secondes\": 87180.0,\n      \"fin_secondes\": 94980.0,\n      \"empreinte_canonique\": \"af06b5e0f368dd2282cff326dfe9eafb776d6ef3\",\n      \"reprendre_a\": 98580.0,\n      \"suspendue\": false,\n      \"etat_cibles\": {\n        \"ce-qui-sort-de-ma-main\": {\n          \"type\": \"observation\",\n          \"apres\": \"Onze années de congés relues : le livre ne connaît pas un pilote de la Néra comme pilote, il ne connaît que des hommes qui ont pris ou rendu une coque chez nous. Sept noms seulement sortent des pages avec la date où ils ont touché mon quai.\",\n          \"resultat_id\": \"res:act:rulf-corne:1:1\"\n        },\n        \"22036\": {\n          \"type\": \"progression_tache\",\n          \"apres\": \"en cours — rôle ouvert et daté du 28e de la 3e lune, an 129 : onze des dix-neuf pilotes nommés, dont deux hors de service ; bord d'appartenance vide pour les onze et déclaré vide ; huit inconnus de toute page et de toute bouche de cette rade, comptés tels quels. Reste à établir le bord, ce qui ne se fait pas depuis ce quai.\",\n          \"resultat_id\": \"res:act:rulf-corne:6:1\"\n        },\n        \"rulf-corne\": {\n          \"type\": \"fait\",\n          \"apres\": \"Le rôle est écrit de ma main dans mon cahier, à la Porte de mer, et aucune page n'est sortie de chez moi. La ligne montera au château demain à sept heures, comme les autres.\",\n          \"resultat_id\": \"res:act:rulf-corne:6:2\"\n        }\n      },\n      \"activites\": [\n        {\n          \"quoi\": \"Poser le livre sur le banc de la Porte de mer, faire tenir la lanterne à Wend, et remonter les congés de sortie de l'an 118 à l'an 129 en ne retenant que les coques passées par l'embouchure de la Néra\",\n          \"resultat\": \"observation: Onze années de congés relues : le livre ne connaît pas un pilote de la Néra comme pilote, il ne connaît que des hommes qui ont pris ou rendu une coque chez nous. Sept noms seulement sortent des pages avec la date où ils ont touché mon quai.\"\n        },\n        {\n          \"quoi\": \"Écrire les sept noms un par un avec leur date de dernier passage, et buter sur ce que la page ne dit pas : ni le bord qu'ils servent aujourd'hui, ni s'ils sont vivants\",\n          \"resultat\": \"objet_produit: Première colonne du rôle : sept pilotes nommés et datés de ma main, dernier passage compris entre l'an 121 et l'an 128. Colonne du bord laissée vide pour les sept : mon livre n'inscrit pas à qui un homme obéit. · fait: Douze des dix-neuf ne peuvent pas venir du livre : ils n'ont jamais eu à prendre congé chez moi. Ce trou-là ne se comble pas au papier, il se comble à la bouche des hommes.\"\n        },\n        {\n          \"quoi\": \"Fermer le livre sur lui-même, le laisser sous la garde de Wend, et descendre par la grève jusqu'au quai avant que les patrons ne rentrent\",\n          \"resultat\": \"deplacement: quai\"\n        },\n        {\n          \"quoi\": \"Prendre mon second puis les quatre patrons encore à quai un par un, hors de portée l'un de l'autre, et leur faire nommer les hommes qui mènent une coque par l'embouchure de la Néra\",\n          \"resultat\": \"observation: Quatre noms de plus, donnés séparément et concordants sur trois d'entre eux ; deux de mes sept sont corrigés — l'un mort depuis deux hivers, l'autre ne monte plus. Onze nommés en tout, dont deux hors de service. Le bord n'est sûr pour aucun : on me donne où l'homme habite, pas qui le paie. · fait: Huit des dix-neuf ne sont connus de personne à ce banc. Aucune de mes pages, aucune bouche de cette rade ne les porte : ce sont des hommes de l'autre rive, et l'autre rive n'est pas mon o…\"\n        },\n        {\n          \"quoi\": \"Remonter de la grève à la Porte de mer avant que la lanterne ne serve plus à rien\",\n          \"resultat\": \"deplacement: porte-de-mer\"\n        },\n        {\n          \"quoi\": \"Porter au cahier la première main du rôle : onze pilotes nommés, deux hors de service, colonne du bord vide et dite vide, huit inconnus comptés en toutes lettres — puis fermer le livre quand la lanterne cesse de valoir une ligne\",\n          \"resultat\": \"progression_tache: en cours — rôle ouvert et daté du 28e de la 3e lune, an 129 : onze des dix-neuf pilotes nommés, dont deux hors de service ; bord d'appartenance vide pour les onze et déclaré vide ; huit inconnus de toute page et de toute bouche de cette rade, comptés tels quels. Reste à établir le bord, ce qui ne se fait pas depuis ce quai. · fait: Le rôle est écrit de ma main dans mon cahier, à la Porte de mer, et aucune page n'est sortie de chez moi. La ligne montera au château demain à sep…\"\n        }\n      ],\n      \"suite\": \"Reprendre au banc demain 29e à l'ouverture, après la ligne montée au château à sept heures : établir le bord des onze nommés, ce qui demande une source de l'autre rive et non de ce quai.\"\n    },\n    \"chemin\": [\n      {\n        \"id\": \"pers:rulf-corne\",\n        \"genre\": \"personne\",\n        \"ou\": \"personnages\",\n        \"quoi\": \"Rulf Corne\",\n        \"genres\": [\n          \"personne\"\n        ],\n        \"etat\": \"actif\",\n        \"condition\": \"libre\",\n        \"lieu_id\": \"peyredragon\",\n        \"importance_activation\": 0.6058192618887083\n      },\n      {\n        \"id\": \"22036\",\n        \"genre\": \"action\",\n        \"ou\": \"affaire-controle-naval\",\n        \"quoi\": \"🧑‍✈️ Faire le rôle des dix-neuf pilotes de la Néra\",\n        \"lieu\": \"Le quai de Peyredragon, mon livre ouvert et non prêté\",\n        \"etat\": \"à faire\",\n        \"importance_activation\": 0.03309809422102888\n      }\n    ],\n    \"travaux_ouverts\": [\n      {\n        \"id\": \"rulf-livre-de-marees\",\n        \"affaire\": \"Les nuits ou la mer laisse traverser, sur la lune prochaine\",\n        \"etat\": \"mur\",\n        \"echeance\": {\n          \"annee\": 129,\n          \"lune\": 3,\n          \"jour\": 29\n        },\n        \"sources\": [\n          {\n            \"quoi\": \"son livre de marees, vingt-deux ans dedans\",\n            \"genre\": \"registre\",\n            \"cout_jours\": 3\n          }\n        ],\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"messire Nicolas Reynolds, dans ma cabane a la nuit tombante\",\n            \"texte\": \"Il n'a pas demande le livre : il a demande un compte, et j'ai cru qu'il demandait le livre parce que c'est ce que je crains depuis vingt-deux ans. Ce qu'il lui fallait, mon cahier le porte deja tout entier — je l'ai rendu sans qu'une page sorte de chez moi. La seule chose que ni lui ni moi ne pouvons trancher est celle que j'ai portee hier sans savoir a qui la porter : ce qui s'ecrit et ce qui ne s'ecrit pas dans cette maison. Elle a maintenant un homme dessus, et je la lui ai mise dans la main ce soir.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"mon livre de marees, la 4e lune reprise le soir sur une date qu'on m'a nommee et que je n'avais pas posee moi-meme : la nuit du 1er au 2e\",\n            \"texte\": \"J'avais compte les nuits qui cachent et pas les nuits qui portent. La nuit du 1er au 2e est la fin de la grande eau : pleine mer a une heure dix, plus de sept pieds de vingt-deux heures trente a quatre heures. Les onze quilles sortent, betes comprises, en une seule fois. Le choix que je disais sans troisieme porte — les hommes caches sans leurs betes, ou les betes a decouvert — n'a jamais eu que deux branches parce que je n'avais interroge que mes huit nuits de morte-eau. Une question qu'on ne pose pas soi-meme vaut mieux qu'une reponse qu'on se donne.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"les quatre nuits des nefs des hangars remises contre l'eau du 1er, et le mot de ser Robert sur six jours sans toucher le quai\",\n            \"texte\": \"Elles n'ont pas touche mon quai parce qu'elles n'y viennent pas : elles entrent dans la roche au plein de l'eau. Six jours d'absence au quai n'est pas un fait, c'est un trou dans le livre de celui qui regarde. Et la meme eau qui nous porte le 1er les porte aussi : celui qui a choisi les 24e au 27e lit cette eau comme moi, et il sera encore sur l'eau cette nuit-la.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"ma propre page d'office relue apres avoir rendu le chiffre, et le nom d'Aldon Hask au commandement du quai depuis le 27e\",\n            \"texte\": \"Je tiens l'eau, l'ordre de sortie de la rade et le congé ; je ne tiens pas les bouches. Vingt-deux ans que je fais l'ordre de chargement faute de quelqu'un pour le faire, et il y a quelqu'un depuis hier. Je lui ai envoye mes tirants avant qu'il les demande : ce n'est pas rendre ma charge, c'est cesser de faire la sienne.\",\n            \"servie\": false\n          }\n        ],\n        \"conclusion\": \"LA DATE QU'ON ME NOMME D'ABORD. La nuit du 1er au 2e jour de la 4e lune : la mer laisse traverser, et elle laisse tout traverser. Pleine mer a une heure dix du matin — la mer recule de cinquante minutes par jour et le 27e au soir elle etait a vingt-deux heures quarante — et la barre donne plus de sept pieds de vingt-deux heures trente au 1er jusqu'a quatre heures au 2e : cinq heures et demie d'eau franche, sans fourchette autour, parce que c'est de la geometrie et non du temps qu'il fait. C'est la fin de la grande eau, le plein etant aux 28e et 29e de cette lune-ci. Les onze quilles sortent, la Ventrue a huit pieds quatre et le Boeuf a huit pieds sept comprises. Hommes et betes ensemble, en une seule fois, sur onze coques et non neuf : c'est la seule nuit de cette fenetre qui efface le choix des sept jours. Elle le paie d'un seul prix, et il est entier — cette eau est ouverte a tout ce qui flotte. Sur quatorze ans de mes entrees, pas une coque n'est descendue de Port-Real une nuit de morte-eau ; a la grande eau elles descendent quand elles veulent. On ne part pas cache le 1er : on part vu, et on part avec tout. Prochaine grande eau ensuite, les 13e et 14e, puis les 28e et 29e.\\n\\nSI L'ON VEUT LA NUIT QUI CACHE. Les seuils des hangars sont a sec du 5e au 8e et du 20e au 23e : mes huit nuits de morte-eau, ou la barre refuse sept pieds a tout le monde et ou nul ne remonte a Port-Real par l'eau pendant qu'on embarque. Cinq sont utiles, celles ou l'on charge encore au jour et ou l'on touche la barre avant qu'il fasse grand jour de l'autre cote : les 6e, 7e et 8e, puis les 21e et 22e. Le 6e ne sert pas a traverser, il sert a former, et une seule nuit suffit — j'en avais compte quatre, c'etait un compte de sot pose sans demander a celui qui sait. Donc la premiere nuit qui cache est celle du 7e au 8e, six jours apres celle qu'on me nomme. Elle est exposee : sur vingt-deux ans, le nord-est qui s'assied et ne bouge plus commence dans les dix premiers jours de la lune quinze fois sur vingt-deux, et apres le quinzieme jour trois fois. Les deux sur lesquelles je parierais sont les 21e et 22e. Laquelle des cinq tombera ne se sait que trois jours avant, par personne, moi compris. Et ces nuits-la, aucun cheval ne part : chargees d'hommes neuf de nos onze coques tiennent sous sept pieds, chargees de chevaux pas une, parce qu'un cheval avec son eau et son avoine de six jours enfonce d'un pied et demi a deux pieds de plus qu'un plein de gens — la Bonne-Attente, six pieds onze avec des hommes, neuf pieds deux avec les betes, les deux chiffres de ma main dans la meme annee.\\n\\nCE QUE VALENT CES CINQ NUITS. Quatre utiles en moyenne sur vingt-deux 4e lunes, six la meilleure annee, deux en 115, en 119 et en 124. Moins la nuit de formation, moins une ou deux que le vent prendra : il reste deux ou trois nuits utiles a la 4e lune, et non cinq. J'ai dit huit journees sur dix devant tout le monde le 26e, de memoire ; mes trois tranches en donnent six et demie, et l'ecart entre la 3e lune et la 4e est de moins d'une journee sur dix. Attendre une lune ne rend presque rien, et c'est moi qui plaidais l'attente. Je me suis trompe, du mauvais cote, et je le corrige avant qu'on batisse dessus.\\n\\nL'HOMME. Corbe Trill, soixante et onze ans, a la quille depuis l'an 121, seul de cette cote a avoir mene une coque par-dessus cette barre de nuit et a petite eau ; les deux autres sont a Port-Real, du mauvais cote. Il n'enseigne pas a l'oeil : la barre de nuit se prend sur deux alignements de feux a terre et sur le bruit du ressac quand on a le banc par le travers, un aveugle la passerait. Il a choisi lui-meme ses deux hommes et pas ceux que j'aurais donnes — Wenn Sarre, vingt-quatre ans, la meilleure vue de mes onze, et Kell Ordouve, patron de la barque a salaisons, qui passe cette barre de nuit depuis six ans sans l'avoir dit a personne. Il refuse Orsy Bec, mon second, parce qu'Orsy lit tout haut. Ses alignements sont de l'an 118 et un feu deplace de dix toises fait mentir un alignement : le leve de la barre que je fais deja avec la Mouette y repond, et c'est le meme leve que celui du controle naval — ni un homme ni un jour de plus, et il sert trois cahiers. Une chose n'est pas a moi : il donne ses marques de bouche a oreille, jamais sur une page, et il ne le negociera pas. Ce qui s'ecrit ou non dans cette maison n'est pas ma charge ; je l'ai portee le 28e au soir a celui dont c'est la charge depuis ce jour-la, et j'attends un oui ou un non avant la nuit du 6e. Apres, il sera trop tard pour former qui que ce soit.\\n\\nCE QUI N'EST PAS DE MON OFFICE ET QUE JE DIS QUAND MEME. Quatre nefs sont entrees aux hangars de la roche les 24e, 25e, 26e et 27e, chacune au plein de l'eau et chacune de nuit alors que l'eau etait tout aussi pleine en plein jour ; aucun conge de sortie pour aucune ; le dernier conge ecrit pour une coque entrant aux hangars est de l'an 120, neuvieme lune — neuf ans rien, puis quatre en quatre nuits. Trois sont nommees : la Grive-Grise a Dolf Menne de Sombreval, la Main-Verte a Corren Bald de Lamarck, le Trois-Quarts a Yorren Sac du Gosier. La quatrieme, personne au banc ne l'a vue de jour, elle n'a pas mouille dans ma rade, aucun pavillon lisible : je ne la nommerai pas et je n'inventerai pas a qui elle est. Ce que l'eau dit tout de meme : elle a pris la plus haute des quatre nuits, donc la plus enfoncee, donc elle est entree chargee. C'est tout ce que j'ai, et je le donne tel quel. Enfin, l'ordre d'embarquement — qui monte, sur quelle coque, dans quel ordre — est au commandement du quai depuis le 27e et non a moi. Je tiens l'eau, la sortie de la rade et le conge ; les bouches et les betes par quille, c'est lui, et je lui ai envoye mes onze tirants sans attendre qu'il les demande.\"\n      }\n    ],\n    \"mains_portees\": [\n      {\n        \"id\": \"port-peyredragon\",\n        \"quoi\": \"Garder le port en etat de travailler pendant qu'on fait la guerre avec\",\n        \"lieu_id\": \"peyredragon\",\n        \"mandat\": null,\n        \"mesure\": [\n          {\n            \"id\": \"nefs-en-etat\",\n            \"quoi\": \"nefs du port en etat de prendre la mer sous trois jours\",\n            \"valeur\": 9,\n            \"unite\": \"nefs\",\n            \"rythme\": {\n              \"par\": 1,\n              \"jours\": 4\n            },\n            \"reliquat\": 2,\n            \"plancher\": 0,\n            \"plafond\": 14,\n            \"depend_de\": []\n          }\n        ],\n        \"seuils\": [\n          {\n            \"id\": \"port-a-sec\",\n            \"mesure_id\": \"nefs-en-etat\",\n            \"quand\": \"sous\",\n            \"valeur\": 4,\n            \"promeut\": \"orbite\",\n            \"affaire\": \"Moins de quatre coques en etat : ce qui doit partir de l'ile ne partira pas quand on le voudra, et Rulf le sait depuis huit jours.\",\n            \"franchi_le\": null\n          }\n        ],\n        \"date_maj\": \"129.3.22\"\n      }\n    ],\n    \"livres_accessibles\": [\n      {\n        \"id\": \"registre-des-plis-mort-du-pere\",\n        \"titre\": \"Ce qui est parti depuis la mort du père\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ou-trouver-les-gens\",\n        \"titre\": \"Où trouver les gens, et à quelle heure\",\n        \"type\": \"memento\"\n      },\n      {\n        \"id\": \"regles-du-gouvernement\",\n        \"titre\": \"Les règles internes du gouvernement\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"registre-des-offices\",\n        \"titre\": \"Le registre des offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"manuel-des-yeux\",\n        \"titre\": \"Ce qu'on dit aux yeux\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"epopee-de-la-reine\",\n        \"titre\": \"L'épopée de la reine\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"registre-des-charges\",\n        \"titre\": \"Le registre des charges\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"nos-moyens\",\n        \"titre\": \"Nos moyens d'action\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"registre-des-dits-aurore\",\n        \"titre\": \"Ce qui est dit, et a qui\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-qui-sort-de-ma-main\",\n        \"titre\": \"Ce qui sort de ma main\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-je-propose\",\n        \"titre\": \"Ce que je propose\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"roue-des-journees\",\n        \"titre\": \"Les journées du royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"role-des-bannieres\",\n        \"titre\": \"Le rôle des bannières\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"repertoire-davant\",\n        \"titre\": \"Ce que je chantais avant\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"ce-qui-pend\",\n        \"titre\": \"Ce qui pend\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-quon-cherche-a-obtenir\",\n        \"titre\": \"Ce qu'on cherche à obtenir\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-etats-cibles\",\n        \"titre\": \"Les états cibles\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-verrous\",\n        \"titre\": \"Les verrous\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-clefs\",\n        \"titre\": \"Les clefs\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-actions\",\n        \"titre\": \"Les actions\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-moyens\",\n        \"titre\": \"Les moyens\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-offices\",\n        \"titre\": \"Les offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"guide-des-affaires\",\n        \"titre\": \"Comment on ouvre une affaire\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"la-boite-et-la-nappe\",\n        \"titre\": \"La boîte et la nappe\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"affaire-vierge-01\",\n        \"titre\": \"L'entrée sans bataille\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-04\",\n        \"titre\": \"Affaire vierge — IV\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-06\",\n        \"titre\": \"Entrée du Donjon Rouge — REMPLACÉ\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ralliement-population\",\n        \"titre\": \"Retournement des maisons hésitantes des terres de la Couronne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-controle-naval\",\n        \"titre\": \"Contrôle naval\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-au-donjon\",\n        \"titre\": \"L'entrée au Donjon\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-siege-sur-le-trone\",\n        \"titre\": \"Siège sur le Trône\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-deplacement-armee\",\n        \"titre\": \"Déplacement de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-logistique-transport\",\n        \"titre\": \"Logistique de transport de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-armee-port-real\",\n        \"titre\": \"Entrée et déploiement de l'ost dans les rues\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-opinion-populaire-port-real\",\n        \"titre\": \"Retournement de l'opinion populaire dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-proclamation-au-royaume\",\n        \"titre\": \"Proclamation de la reine au royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-guet-des-osts-verts\",\n        \"titre\": \"Guet des osts verts\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-isolement-du-donjon\",\n        \"titre\": \"Isolement du Donjon Rouge\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-jour-dentree\",\n        \"titre\": \"Le jour d'entrée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-veille-des-hypotheses\",\n        \"titre\": \"Ce qui ferait renoncer\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-transmission-des-ordres\",\n        \"titre\": \"Ce qui part, et par où\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-compte-mobilisable\",\n        \"titre\": \"État chiffré de ce qui est mobilisable\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-financement-campagne\",\n        \"titre\": \"Financement de la campagne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-emploi-des-dragons\",\n        \"titre\": \"Emploi des dragons au-dessus de Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ambassade-nord-val-blancport\",\n        \"titre\": \"Ambassade du Nord, du Val et de Blancport\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fermeture-route-nord\",\n        \"titre\": \"Fermeture de la route terrestre du nord\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-defense-peyredragon\",\n        \"titre\": \"Défense de Peyredragon pendant l'absence de l'ost\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fenetre-de-mer\",\n        \"titre\": \"Fenêtre de mer et de saison\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-homme-de-linterieur\",\n        \"titre\": \"L'homme de l'intérieur\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-protection-du-secret\",\n        \"titre\": \"La protection du secret\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ravitaillement-ville-coupee\",\n        \"titre\": \"Ravitaillement et ordre public de la ville coupée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-tenue-de-la-capitale\",\n        \"titre\": \"Tenue de la capitale la première lune\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-blesses-morts-prisonniers\",\n        \"titre\": \"Blessés, morts et prisonniers\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-repli-si-entree-echoue\",\n        \"titre\": \"Conduite du repli si l'entrée échoue\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-surete-personne-reine\",\n        \"titre\": \"Sûreté de la personne de la reine\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-commandement-chaine-ordres\",\n        \"titre\": \"Commandement et chaîne d'ordres pendant l'opération\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"qui-entre-chez-la-reine\",\n        \"titre\": \"Qui entre chez la reine\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"affaire-presence-a-port-real\",\n        \"titre\": \"Une présence à demeure dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"les-vingt-deux-charges-127\",\n        \"titre\": \"Les vingt-deux charges de cette maison, comptées en l'an 127\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-j-apporte\",\n        \"titre\": \"Ce que j'apporte\",\n        \"type\": \"registre\"\n      }\n    ]\n  },\n  \"topologie_des_salles\": {\n    \"_\": \"La topologie de Peyredragon : quelles salles se touchent, et en combien de minutes. Pendant Python de ecrans/modules/plans.js, qui n'en dessine que la forme. Sert a scripts/presence.py : personne ne parait dans une salle sans avoir traverse celles d'entre. Un cout est en MINUTES de marche d'un homme presse mais pas courant ; le grand escalier vaut ses cent trente marches.\",\n    \"alias\": {\n      \"appartements\": \"appartements-reine\",\n      \"murs\": \"porte-dragon\",\n      \"chemin-de-ronde\": \"porte-dragon\"\n    },\n    \"aretes\": [\n      [\n        \"cour\",\n        \"tambour-de-pierre\",\n        3\n      ],\n      [\n        \"cour\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"cour\",\n        \"roukerie\",\n        4\n      ],\n      [\n        \"cour\",\n        \"septuaire\",\n        3\n      ],\n      [\n        \"cour\",\n        \"jardin-aegon\",\n        3\n      ],\n      [\n        \"cour\",\n        \"guivre-des-vents\",\n        4\n      ],\n      [\n        \"cour\",\n        \"tour-dragon-mer\",\n        4\n      ],\n      [\n        \"cour\",\n        \"fosses\",\n        6\n      ],\n      [\n        \"cour\",\n        \"porte-dragon\",\n        4\n      ],\n      [\n        \"cour\",\n        \"porte-de-mer\",\n        5\n      ],\n      [\n        \"cour\",\n        \"galeries\",\n        9\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"salle-levant\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"archives\",\n        6\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"cachots\",\n        5\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"appartements-reine\",\n        7\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"table-peinte\",\n        8\n      ],\n      [\n        \"table-peinte\",\n        \"appartements-reine\",\n        2\n      ],\n      [\n        \"grande-salle\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"roukerie\",\n        \"tour-dragon-mer\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"grand-escalier\",\n        4\n      ],\n      [\n        \"grand-escalier\",\n        \"quai\",\n        9\n      ],\n      [\n        \"quai\",\n        \"bourg\",\n        5\n      ],\n      [\n        \"porte-dragon\",\n        \"bourg\",\n        6\n      ],\n      [\n        \"fosses\",\n        \"galeries\",\n        10\n      ],\n      [\n        \"cour\",\n        \"communs\",\n        2\n      ],\n      [\n        \"communs\",\n        \"septuaire\",\n        2\n      ],\n      [\n        \"cour\",\n        \"chambres-hotes\",\n        3\n      ],\n      [\n        \"chambres-hotes\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"porte-dragon\",\n        \"baraques\",\n        2\n      ],\n      [\n        \"baraques\",\n        \"bourg\",\n        4\n      ],\n      [\n        \"cour\",\n        \"cuisines\",\n        2\n      ],\n      [\n        \"cuisines\",\n        \"grande-salle\",\n        3\n      ],\n      [\n        \"cuisines\",\n        \"cellier\",\n        1\n      ],\n      [\n        \"septuaire\",\n        \"salle-froide\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"etuves\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"chambre-enfants\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"antichambre\",\n        1\n      ],\n      [\n        \"antichambre\",\n        \"table-peinte\",\n        1\n      ],\n      [\n        \"roukerie\",\n        \"officine\",\n        1\n      ],\n      [\n        \"cour\",\n        \"forge\",\n        2\n      ],\n      [\n        \"forge\",\n        \"guivre-des-vents\",\n        3\n      ],\n      [\n        \"cour\",\n        \"chemin-ronde\",\n        3\n      ],\n      [\n        \"chemin-ronde\",\n        \"tour-dragon-mer\",\n        2\n      ],\n      [\n        \"chemin-ronde\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"bourg\",\n        \"lices\",\n        3\n      ],\n      [\n        \"lices\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"greve\",\n        2\n      ],\n      [\n        \"greve\",\n        \"quai\",\n        3\n      ]\n    ]\n  }\n}\n\nOuvre le battement local dans Le bourg sous les murs, Peyredragon.\n\nLa physique a élu rulf-corne pour l'affaire suivante :\n🧑‍✈️ Faire le rôle des dix-neuf pilotes de la Néra\n\nIl engage 60 points d'énergie, soit une fenêtre physique de\n1800 secondes (30 minutes). Son activation doit couvrir un\nvrai morceau de travail d'au moins 60 secondes, quitte à condenser\nles continuités par une ellipse. Réveille-le maintenant. Ne résous rien encore\net rends seulement cet objet, sans phrase autour :\n\n{\n  \"appel_pnj\": {\n    \"qui\": \"rulf-corne\",\n    \"message\": \"adresse directe, diégétique et brève demandant ce qu'il tente maintenant\"\n  }\n}\n",
+    "appel_pnj": "Rulf, le bourg s'est réveillé avant toi : les claies de Willa sont déjà sorties, Tobb bat la boue devant l'étal des Sath, et le vieux pêcheur remonte de la grève sans avoir mouillé. Ton cahier est sous ton bras, refermé sur la première main du rôle — onze pilotes nommés, deux hors de service, la colonne du bord vide et dite vide, huit hommes que ni ta page ni aucune bouche d'ici ne porte. La ligne doit monter au château à sept heures, et ce que tu cherches maintenant n'est pas sur ce quai : il est de l'autre rive. Ici, autour de toi, il y a des gens qui vendent, salent et rentrent du poisson, et certains d'entre eux traversent. Qu'est-ce que tu tentes, là, maintenant ?",
+    "system_prompt_pnj": "# Une personne dans le monde\n\nTu es la personne nommée dans ton dossier. Ton corps, ton âge, ton rang, ton\nhistoire, tes attachements, tes peurs, tes désirs et tes responsabilités\nforment un seul point de vue. Le lieu où tu te tiens, les gens présents, les\nobjets à portée et l’heure du monde donnent sa matière à cet instant.\n\nTa mémoire rassemble ce que tu as vécu, observé, entendu, accompli et compris.\nTes relations portent leur histoire propre : affection, confiance, dette,\nrivalité, crainte, désir, dernier échange. Tes affaires ont déjà commencé ;\nelles possèdent leurs engagements, leurs échéances, leurs moyens et leurs\nconséquences.\n\nLes faits de ton dossier composent ton expérience disponible. Ton métier et ta\nvie t’apportent aussi leurs usages, leurs gestes, leurs précédents et leur\nsavoir-faire. Une question encore ouverte devient une chose à découvrir dans\nle monde, auprès d’une personne, d’un lieu, d’un objet ou d’un registre à ta\nportée.\n\n# Ta compétence\n\nTu es compétent. Tes années et ton office ont formé ton jugement. Tu reconnais\nles enjeux de ton domaine, tu mobilises les moyens réellement disponibles, tu\nrelies les faits utiles et tu prends des initiatives à la hauteur de ta\nposition. Ta compétence apparaît dans la précision de tes gestes, la qualité\nde tes décisions, les sources que tu choisis et les conséquences que tu\nanticipes.\n\nTu rencontres chaque situation comme cette personne précise : avec ses\npriorités, ses loyautés, ses limites, son courage, ses contradictions et sa\nmanière propre de chercher une issue.\n\n# La continuité\n\nTa vie est déjà en mouvement au moment où cette activation commence. Tu pars\nde ton dernier état réel et tu accomplis ce qui vient maintenant. Tes paroles,\ntes gestes et tes choix appartiennent à cet instant ; le monde reçoit ensuite\nce mouvement et poursuit ses conséquences.\n\nChaque réponse ouvre la suite. Elle se termine par une **prochaine étape**\nconcrète : un geste précis, dirigé vers une personne, un lieu, un objet ou une\naffaire, avec le moment ou la condition qui l’appelle. Cette prochaine étape\nprolonge directement ce que tu viens de décider ou d’accomplir.\n",
+    "system_prompt_pnj_source": "scripts/depecher.py:manuel_de(mode=tentative)",
+    "system_prompt_pnj_sha256": "b3e426444c4f46a952269975b8b60a5353652471fef799a58de8021a68ec654f",
+    "tentative_pnj": {
+      "verbe": "interroger",
+      "quoi": "Prendre à part le vieux pêcheur qui remonte sans avoir mouillé, puis Willa des Séchoirs, chacun hors de portée de l'autre, et leur demander non pas des noms de pilotes mais qui, de l'autre rive, vient acheter, vendre ou saler ici — et qui les mène. Le cahier reste fermé sous mon bras : je ne montre pas une page, je pose des dates. Le sel et le poisson traversent quand les congés ne traversent pas ; huit hommes que mon livre ignore ont forcément payé quelqu'un d'ici, une fois, pour du sel, une claie ou une place au séchoir.",
+      "cibles": [
+        "vieux-pecheur",
+        "Willa des Sechoirs",
+        "affaire 22036 — rôle des dix-neuf pilotes de la Néra"
+      ],
+      "moyens": [
+        "mon cahier fermé et les onze noms déjà datés de ma main",
+        "vingt-deux ans de figures connues au bourg",
+        "la manière de prendre les gens un par un, comme les quatre patrons hier",
+        "l'heure avant sept heures, avant que la ligne monte"
+      ],
+      "effet_recherche": "Combler par la bouche des gens de la grève ce que la page ne porte pas : des noms, ou au moins des bords, pour tout ou partie des huit inconnus de l'autre rive — et savoir si l'autre rive vient encore chez nous depuis le 24e."
+    },
+    "tentatives_pnj": [
+      {
+        "verbe": "interroger",
+        "quoi": "Prendre à part le vieux pêcheur qui remonte sans avoir mouillé, puis Willa des Séchoirs, chacun hors de portée de l'autre, et leur demander non pas des noms de pilotes mais qui, de l'autre rive, vient acheter, vendre ou saler ici — et qui les mène. Le cahier reste fermé sous mon bras : je ne montre pas une page, je pose des dates. Le sel et le poisson traversent quand les congés ne traversent pas ; huit hommes que mon livre ignore ont forcément payé quelqu'un d'ici, une fois, pour du sel, une claie ou une place au séchoir.",
+        "cibles": [
+          "vieux-pecheur",
+          "Willa des Sechoirs",
+          "affaire 22036 — rôle des dix-neuf pilotes de la Néra"
+        ],
+        "moyens": [
+          "mon cahier fermé et les onze noms déjà datés de ma main",
+          "vingt-deux ans de figures connues au bourg",
+          "la manière de prendre les gens un par un, comme les quatre patrons hier",
+          "l'heure avant sept heures, avant que la ligne monte"
+        ],
+        "effet_recherche": "Combler par la bouche des gens de la grève ce que la page ne porte pas : des noms, ou au moins des bords, pour tout ou partie des huit inconnus de l'autre rive — et savoir si l'autre rive vient encore chez nous depuis le 24e."
+      }
+    ],
+    "relances_acteur": [],
+    "message_resolution": "PHASE 2 — ARBITRER LA TENTATIVE\n\nVoici la réponse exacte de l'acteur que tu as réveillé :\n\n{\n  \"verbe\": \"interroger\",\n  \"quoi\": \"Prendre à part le vieux pêcheur qui remonte sans avoir mouillé, puis Willa des Séchoirs, chacun hors de portée de l'autre, et leur demander non pas des noms de pilotes mais qui, de l'autre rive, vient acheter, vendre ou saler ici — et qui les mène. Le cahier reste fermé sous mon bras : je ne montre pas une page, je pose des dates. Le sel et le poisson traversent quand les congés ne traversent pas ; huit hommes que mon livre ignore ont forcément payé quelqu'un d'ici, une fois, pour du sel, une claie ou une place au séchoir.\",\n  \"cibles\": [\n    \"vieux-pecheur\",\n    \"Willa des Sechoirs\",\n    \"affaire 22036 — rôle des dix-neuf pilotes de la Néra\"\n  ],\n  \"moyens\": [\n    \"mon cahier fermé et les onze noms déjà datés de ma main\",\n    \"vingt-deux ans de figures connues au bourg\",\n    \"la manière de prendre les gens un par un, comme les quatre patrons hier\",\n    \"l'heure avant sept heures, avant que la ligne monte\"\n  ],\n  \"effet_recherche\": \"Combler par la bouche des gens de la grève ce que la page ne porte pas : des noms, ou au moins des bords, pour tout ou partie des huit inconnus de l'autre rive — et savoir si l'autre rive vient encore chez nous depuis le 24e.\"\n}\n\nArbitre maintenant cette tentative depuis la vérité locale de ton dossier.\nLe battement commence à 100985.079 secondes et peut durer jusqu'à 1800\nsecondes (30 minutes), payées par 60 points d'énergie. Il doit\nen produire au moins 60 : ne tronque pas l'activation au premier geste.\nPoursuis la tentative jusqu'à un résultat, une résistance réellement établie ou\nla borne, en condensant les continuités par les ellipses imposées par ton\nsystème. Rends seulement le rapport final JSON. L'acteur et la tâche restent\n`rulf-corne` et `22036`.\n\n## Contrat du rapport\n\nUne activité est un geste continu entre deux bifurcations. Condense toute\ncontinuité routinière ; conserve sa durée physique. Découpe seulement si une\ndécision, une résistance, un témoin, un lieu, une ressource, une connaissance\nou un résultat change.\n\nTypes de résultats : observation, progression_tache, variation_mesure,\ndeplacement, objet_produit, communication, fait, blocage, echec.\n\nRends uniquement :\n{\n  \"qui\": \"acteur_id\",\n  \"activation\": {\n    \"tache\": {\"id\": \"tache_id\", \"quoi\": \"...\", \"creee\": false},\n    \"issue\": \"avance|termine|bloque|echoue|rien\",\n    \"activites\": [{\n      \"id\": \"act:<acteur>:<ordre>\",\n      \"ordre\": 1,\n      \"temps\": {\"debut_s\": 100985.079, \"duree_s\": 1, \"fin_s\": 100986.079},\n      \"action\": {\"verbe\": \"...\", \"quoi\": \"...\", \"cibles\": [\"ref:canonique\"]},\n      \"chemin_execution\": [{\"ordre\": 1, \"de\": \"ref:depart\", \"relation\": \"...\", \"vers\": \"ref:arrivee\", \"duree_s\": 1}],\n      \"sources_touchees\": [{\"ref\": \"ref:canonique\", \"mode\": \"voit|entend|lit|parle|manipule|parcourt|mesure\"}],\n      \"sources_mobilisees\": [{\"ref\": \"ref:connue\", \"mode\": \"memoire|intention|croyance|mandat|cible_action\"}],\n      \"resultats_produits\": [{\n        \"id\": \"res:<activite>:1\", \"type\": \"observation\",\n        \"cible\": \"ref:canonique\", \"avant\": null, \"apres\": \"...\",\n        \"portee\": \"connaissance_acteur\", \"source_refs\": [\"ref:canonique\"],\n        \"preuve_refs\": [], \"certitude\": \"constate\"\n      }],\n      \"blocage\": null\n    }],\n    \"suite\": null,\n    \"reveils_suivants\": []\n  },\n  \"mutations_proposees\": []\n}\n\nContraintes : les activités sont ordonnées, continues et sans chevauchement.\nLeur durée totale est comprise entre 60 secondes et le budget. Chaque\nchemin totalise exactement la durée de son activité. Écrire, parler, marcher,\nchercher et manipuler prennent réellement du temps ; l'ellipse économise la\nprose, jamais les secondes.\n\nToute adresse vient du dossier. Aucun préfixe `candidate:`. Chaque résultat a\ndes `source_refs`, présentes dans les sources touchées ou mobilisées, le\nchemin, la cible de l'action ou un résultat antérieur. Une continuité reprend\nmot pour mot son dernier `apres` dans `avant`.\n\nUne issue `avance` ou `termine` produit un `progression_tache` visant l'id exact\nde `tache_elue`; `bloque` produit un `blocage`; `echoue`, un `echec`.\n\nLes mutations sont seulement proposées et chacune cite un résultat. Opérations\nadmises : intentions(etape, etape_ajouter, tete, tete_ajouter,\ncroyance_ajouter, croyance_retirer, ignore_ajouter, ignore_retirer,\ndeclencheur_ajouter, declencheur_retirer) ; evenements(diffusion_livree,\ndiffusion_ajouter, evenement) ; personnages(personnage, personnage_ajouter) ;\nmonde(monde) ; mains(mesure, seuil, main, main_ajouter) ; plis(pli,\npli_ajouter) ; lieux(roukerie) ; relations(relation, relation_ajouter).\n\n",
+    "messages_correction": [],
+    "modele": "opus",
+    "effort": "low",
+    "duree_ms": 100224,
+    "duree_api_ms": 96365,
+    "cout_usd": 0.5369470000000001,
+    "tours": 3,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 2374,
+      "cache_read_input_tokens": 20904,
+      "output_tokens": 6109,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 2374,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 6109,
+          "cache_read_input_tokens": 20904,
+          "cache_creation_input_tokens": 2374,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 2374
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  }
+}

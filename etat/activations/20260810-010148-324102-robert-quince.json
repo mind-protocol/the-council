@@ -1,0 +1,744 @@
+{
+  "qui": "robert-quince",
+  "activation": {
+    "tache": {
+      "id": "29021",
+      "quoi": "📉 Dire à sept heures le nombre des DISPONIBLES, et celui de ceux qui c",
+      "creee": false
+    },
+    "issue": "avance",
+    "activites": [
+      {
+        "id": "act:robert-quince:1",
+        "ordre": 1,
+        "temps": {
+          "debut_s": 105100.6,
+          "duree_s": 90,
+          "fin_s": 105190.6
+        },
+        "action": {
+          "verbe": "reprendre",
+          "quoi": "Adossé au montant du battant du levant, il souffle jusqu'à pouvoir parler d'une phrase entière sans la couper, s'en excuse d'un mot, et fait déplier le rôle par Torr, tenu à deux mains à hauteur de sa vue, la page des huit postes en premier.",
+          "cibles": [
+            "garde-levant",
+            "quince-fouille-des-coques"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "tambour-de-pierre",
+            "relation": "se_tient_au_battant",
+            "vers": "tambour-de-pierre",
+            "duree_s": 90
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "quince-fouille-des-coques",
+            "mode": "manipule"
+          },
+          {
+            "ref": "garde-levant",
+            "mode": "parle"
+          },
+          {
+            "ref": "tambour-de-pierre",
+            "mode": "voit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:robert-quince",
+            "mode": "intention"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:robert-quince:1:1",
+            "type": "observation",
+            "cible": "tambour-de-pierre",
+            "avant": null,
+            "apres": "La salle ne s'est pas vidée : Corlys Velaryon et Rhaenys parlent bas près de l'âtre, Daemon va et vient, Denys Bar Emmon, Alarra Rosby, Aldon Hask et Sara Poulain attendent debout. Aucun d'eux n'a été convoqué pour un compte de garnison ; personne ne demande le chiffre. Le castellan constate qu'en parlant maintenant, il parle sans qu'on le lui ait demandé, devant des gens qui ne siégeront pas tous à la Table Peinte.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "tambour-de-pierre"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:robert-quince:1:2",
+            "type": "fait",
+            "cible": "garde-levant",
+            "avant": null,
+            "apres": "Torr a quitté le battant et tient le rôle déplié à deux mains devant le castellan, la page des huit postes au-dessus. La porte du levant n'est plus tenue par personne tant qu'il tient la page.",
+            "portee": "monde",
+            "source_refs": [
+              "garde-levant",
+              "quince-fouille-des-coques"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 3.0,
+        "quoi": "Adossé au montant du battant du levant, il souffle jusqu'à pouvoir parler d'une phrase entière sans la couper, s'en excuse d'un mot, et fait déplier le rôle par Torr, tenu à deux mains à hauteur de sa vue, la page des huit postes en premier.",
+        "source": "garde-levant, pers:robert-quince, quince-fouille-des-coques, tambour-de-pierre",
+        "resultat": "observation: La salle ne s'est pas vidée : Corlys Velaryon et Rhaenys parlent bas près de l'âtre, Daemon va et vient, Denys Bar Emmon, Alarra Rosby, Aldon Hask et Sara Poulain attendent debout. Aucun d'eux n'a été convoqué pour un compte de garnison ; personne ne demande le chiffre. Le castellan constate qu'en parlant maintenant, il parle sans qu'on le lui ait demandé, devant des gens qui ne siégeront pas tous à la Table Peinte. · fait: Torr a quitté le battant et tient le rôle déplié à deux mains devant le castellan, la page des huit postes au-dessus. La porte du levant n'est plus tenue par personne tant qu'il tient la page.",
+        "preuve": null
+      },
+      {
+        "id": "act:robert-quince:2",
+        "ordre": 2,
+        "temps": {
+          "debut_s": 105190.6,
+          "duree_s": 210,
+          "fin_s": 105400.6
+        },
+        "action": {
+          "verbe": "dire",
+          "quoi": "Il ouvre non par le manque mais par ce qui a tenu — la porte de mer a tenu toute la nuit, onze coques ouvertes, rien n'est sorti — puis dit le nombre tout haut, ligne à ligne et une seule fois : cent dix-neuf sous sa main, un prêté de sa main au maître de port, cent dix-huit tenus par les huit postes, les quais et le guet, cinq de marge dont trois rendus par le poste marché et repris à la première alerte ; donc un homme sous son propre plancher de cent vingt, et c'est lui qui l'y a mis.",
+          "cibles": [
+            "29021",
+            "corlys",
+            "rhaenys",
+            "daemon",
+            "tambour-de-pierre"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "tambour-de-pierre",
+            "relation": "parle_dans",
+            "vers": "tambour-de-pierre",
+            "duree_s": 210
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "quince-fouille-des-coques",
+            "mode": "lit"
+          },
+          {
+            "ref": "corlys",
+            "mode": "parle"
+          },
+          {
+            "ref": "rhaenys",
+            "mode": "parle"
+          },
+          {
+            "ref": "daemon",
+            "mode": "parle"
+          },
+          {
+            "ref": "tambour-de-pierre",
+            "mode": "parle"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "29021",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "pers:robert-quince",
+            "mode": "croyance"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:robert-quince:2:1",
+            "type": "communication",
+            "cible": "tambour-de-pierre",
+            "avant": null,
+            "apres": "Le chiffre est dit tout haut au Tambour de Pierre, avant sept heures et hors de la Table Peinte, devant Corlys Velaryon, Rhaenys Targaryen, Daemon Targaryen, Denys Bar Emmon, Alarra Rosby, Aldon Hask, Sara Poulain et Torr : 119 sous la main, 1 prêté, 118 tenus, 5 de marge dont 3 conditionnels, 1 homme sous le plancher de cent vingt, avec la raison attachée et l'aveu que le castellan l'y a mis lui-même. Huit personnes le savent qui ne le savaient pas.",
+            "portee": "monde",
+            "source_refs": [
+              "tambour-de-pierre",
+              "quince-fouille-des-coques"
+            ],
+            "preuve_refs": [
+              "quince-fouille-des-coques"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:robert-quince:2:2",
+            "type": "observation",
+            "cible": "daemon",
+            "avant": null,
+            "apres": "Daemon a cessé d'aller et venir le temps du chiffre, a dit qu'un homme de moins sur cent vingt ne se compte pas quand ce qui garde le rocher a des ailes, et a repris sa marche sans donner d'ordre. Le castellan ne relève pas et ne se défend pas.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "daemon"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 7.0,
+        "quoi": "Il ouvre non par le manque mais par ce qui a tenu — la porte de mer a tenu toute la nuit, onze coques ouvertes, rien n'est sorti — puis dit le nombre tout haut, ligne à ligne et une seule fois : cent dix-neuf sous sa main, un prêté de sa main au maître de port, cent dix-huit tenus par les huit postes, les quais et le guet, cinq de marge dont trois rendus par le poste marché et repris à la première alerte ; donc un homme sous son propre plancher de cent vingt, et c'est lui qui l'y a mis.",
+        "source": "29021, corlys, daemon, pers:robert-quince, quince-fouille-des-coques, rhaenys, tambour-de-pierre",
+        "resultat": "communication: Le chiffre est dit tout haut au Tambour de Pierre, avant sept heures et hors de la Table Peinte, devant Corlys Velaryon, Rhaenys Targaryen, Daemon Targaryen, Denys Bar Emmon, Alarra Rosby, Aldon Hask, Sara Poulain et Torr : 119 sous la main, 1 prêté, 118 tenus, 5 de marge dont 3 conditionnels, 1 homme sous le plancher de cent vingt, avec la raison attachée et l'aveu que le castellan l'y a mis lui-même. Huit personnes le savent qui ne le savaient pas. · observation: Daemon a cessé d'aller et venir le temps du chiffre, a dit qu'un homme de moins sur cent vingt ne se compte pas quand ce qui garde le rocher a des ailes, et a repris sa marche sans donner d'ordre. Le castellan ne relève pas et ne se défend pas.",
+        "preuve": [
+          "quince-fouille-des-coques"
+        ]
+      },
+      {
+        "id": "act:robert-quince:3",
+        "ordre": 3,
+        "temps": {
+          "debut_s": 105400.6,
+          "duree_s": 120,
+          "fin_s": 105520.6
+        },
+        "action": {
+          "verbe": "dire",
+          "quoi": "Sans s'arrêter, il nomme les deux choses qui peuvent remuer ce nombre avant le point du jour : les six hommes que maître Rulf Corne peut lever sur sa seule parole — auquel cas le chiffre dit ce matin serait faux de sept avant midi — et le nom du patron qui a traîné à lever son plancher, non compté au rôle faute de nom, que la porte de mer doit rapporter à la première marée.",
+          "cibles": [
+            "29021",
+            "tambour-de-pierre"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "tambour-de-pierre",
+            "relation": "parle_dans",
+            "vers": "tambour-de-pierre",
+            "duree_s": 120
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "quince-fouille-des-coques",
+            "mode": "lit"
+          },
+          {
+            "ref": "tambour-de-pierre",
+            "mode": "parle"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "29021",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "pers:robert-quince",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:robert-quince:3:1",
+            "type": "communication",
+            "cible": "tambour-de-pierre",
+            "avant": "Le chiffre est dit tout haut au Tambour de Pierre, avant sept heures et hors de la Table Peinte, devant Corlys Velaryon, Rhaenys Targaryen, Daemon Targaryen, Denys Bar Emmon, Alarra Rosby, Aldon Hask, Sara Poulain et Torr : 119 sous la main, 1 prêté, 118 tenus, 5 de marge dont 3 conditionnels, 1 homme sous le plancher de cent vingt, avec la raison attachée et l'aveu que le castellan l'y a mis lui-même. Huit personnes le savent qui ne le savaient pas.",
+            "apres": "Au chiffre dit tout haut s'ajoutent, devant les mêmes témoins, les deux écarts possibles avant midi : les six hommes levables par le maître de port sur sa seule parole, et un refus non compté faute de nom, dont le nom doit être rapporté de la porte de mer à la première marée. Le chiffre est désormais public avec sa marge d'erreur nommée.",
+            "portee": "monde",
+            "source_refs": [
+              "tambour-de-pierre",
+              "quince-fouille-des-coques"
+            ],
+            "preuve_refs": [
+              "quince-fouille-des-coques"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 4.0,
+        "quoi": "Sans s'arrêter, il nomme les deux choses qui peuvent remuer ce nombre avant le point du jour : les six hommes que maître Rulf Corne peut lever sur sa seule parole — auquel cas le chiffre dit ce matin serait faux de sept avant midi — et le nom du patron qui a traîné à lever son plancher, non compté au rôle faute de nom, que la porte de mer doit rapporter à la première marée.",
+        "source": "29021, pers:robert-quince, quince-fouille-des-coques, tambour-de-pierre",
+        "resultat": "communication: Au chiffre dit tout haut s'ajoutent, devant les mêmes témoins, les deux écarts possibles avant midi : les six hommes levables par le maître de port sur sa seule parole, et un refus non compté faute de nom, dont le nom doit être rapporté de la porte de mer à la première marée. Le chiffre est désormais public avec sa marge d'erreur nommée.",
+        "preuve": [
+          "quince-fouille-des-coques"
+        ]
+      },
+      {
+        "id": "act:robert-quince:4",
+        "ordre": 4,
+        "temps": {
+          "debut_s": 105520.6,
+          "duree_s": 180,
+          "fin_s": 105700.6
+        },
+        "action": {
+          "verbe": "poser",
+          "quoi": "Tourné vers l'âtre, s'adressant au Serpent de Mer et à la princesse Rhaenys, il dit ce dont il ne répond pas : la quatrième coque braavienne est à quarante brasses depuis neuf jours, n'a jamais touché son quai, n'a jamais été ouverte, sa barque bouge la nuit ; la mesure écrite de maître Rulf le vingt-deuxième fait remonter toute coque de plus de cinq jours sans commercer, celle-là devait monter le vingt-quatrième, et le maître de port n'en répond que demain soir, un jour après la marée. Il ajoute que ce qui flotte est l'un des quatre points qu'il s'est retirés de sa propre main : il ne peut ni la voir ni l'arrêter, et il le pose devant ceux qui en ont le droit.",
+          "cibles": [
+            "corlys",
+            "rhaenys",
+            "quince-fouille-des-coques"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "tambour-de-pierre",
+            "relation": "parle_dans",
+            "vers": "tambour-de-pierre",
+            "duree_s": 180
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "corlys",
+            "mode": "parle"
+          },
+          {
+            "ref": "rhaenys",
+            "mode": "parle"
+          },
+          {
+            "ref": "quince-fouille-des-coques",
+            "mode": "lit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:robert-quince",
+            "mode": "mandat"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:robert-quince:4:1",
+            "type": "communication",
+            "cible": "corlys",
+            "avant": null,
+            "apres": "Corlys Velaryon et Rhaenys Targaryen savent qu'une quatrième coque braavienne mouille à quarante brasses depuis neuf jours sans avoir jamais accosté ni été ouverte, que sa barque bouge la nuit, qu'elle aurait dû être signalée le vingt-quatrième selon la mesure écrite du maître de port, et que le castellan s'est lui-même interdit de la toucher parce qu'elle flotte.",
+            "portee": "monde",
+            "source_refs": [
+              "corlys",
+              "rhaenys",
+              "quince-fouille-des-coques"
+            ],
+            "preuve_refs": [
+              "quince-fouille-des-coques"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 6.0,
+        "quoi": "Tourné vers l'âtre, s'adressant au Serpent de Mer et à la princesse Rhaenys, il dit ce dont il ne répond pas : la quatrième coque braavienne est à quarante brasses depuis neuf jours, n'a jamais touché son quai, n'a jamais été ouverte, sa barque bouge la nuit ; la mesure écrite de maître Rulf le vingt-deuxième fait remonter toute coque de plus de cinq jours sans commercer, celle-là devait monter le vingt-quatrième, et le maître de port n'en répond que demain soir, un jour après la marée. Il ajoute que ce qui flotte est l'un des quatre points qu'il s'est retirés de sa propre main : il ne peut ni la voir ni l'arrêter, et il le pose devant ceux qui en ont le droit.",
+        "source": "corlys, pers:robert-quince, quince-fouille-des-coques, rhaenys",
+        "resultat": "communication: Corlys Velaryon et Rhaenys Targaryen savent qu'une quatrième coque braavienne mouille à quarante brasses depuis neuf jours sans avoir jamais accosté ni été ouverte, que sa barque bouge la nuit, qu'elle aurait dû être signalée le vingt-quatrième selon la mesure écrite du maître de port, et que le castellan s'est lui-même interdit de la toucher parce qu'elle flotte.",
+        "preuve": [
+          "quince-fouille-des-coques"
+        ]
+      },
+      {
+        "id": "act:robert-quince:5",
+        "ordre": 5,
+        "temps": {
+          "debut_s": 105700.6,
+          "duree_s": 300,
+          "fin_s": 106000.6
+        },
+        "action": {
+          "verbe": "repondre",
+          "quoi": "Il tient debout sous les questions du Serpent de Mer, qui ne prend pas la chose par le nombre mais par la coque : depuis quand elle est mouillée exactement, à quel relèvement, si elle a viré sur son ancre, combien de fois sa barque a été vue et par qui, et qui a écrit la mesure des cinq jours. Le castellan répond par ce qu'il a mesuré — neuf jours, la lunette de la barbacane au soleil couchant, le guetteur interrogé jour par jour, la charge des grèves écrite — et dit clairement les trois choses qu'il ignore : le pavillon exact qu'elle a montré en arrivant, ce qu'elle a dans sa cale, et si les deux coques repeintes sans équipage lui répondent.",
+          "cibles": [
+            "corlys",
+            "rhaenys"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "tambour-de-pierre",
+            "relation": "parle_dans",
+            "vers": "tambour-de-pierre",
+            "duree_s": 300
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "corlys",
+            "mode": "entend"
+          },
+          {
+            "ref": "rhaenys",
+            "mode": "entend"
+          },
+          {
+            "ref": "quince-fouille-des-coques",
+            "mode": "lit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:robert-quince",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:robert-quince:5:1",
+            "type": "observation",
+            "cible": "corlys",
+            "avant": null,
+            "apres": "Le Serpent de Mer n'a rien ordonné et n'a rien promis. Il a demandé le relèvement, la durée, le nombre de fois où la barque a été vue et le nom de celui qui a écrit la règle des cinq jours ; il a relevé de lui-même qu'une coque qui ne vire pas sur son ancre en neuf jours de mouillage n'est pas tenue seulement par son ancre. Il a dit qu'il verrait la rade avant l'étale. Le castellan ne sait pas s'il en fera davantage.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "corlys"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:robert-quince:5:2",
+            "type": "observation",
+            "cible": "rhaenys",
+            "avant": null,
+            "apres": "Rhaenys n'a posé qu'une question, sur qui répond de la coque et à quelle heure, et a noté tout haut que la réponse arrive un jour après la marée. Elle n'a rien engagé.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "rhaenys"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:robert-quince:5:3",
+            "type": "observation",
+            "cible": "quince-fouille-des-coques",
+            "avant": null,
+            "apres": "Interrogé, le castellan constate trois inconnues qu'il n'avait pas écrites : le pavillon montré à l'arrivée de la braavienne, sa cargaison déclarée, et le lien éventuel entre elle et les deux coques repeintes sans équipage. Aucune des trois n'est dans son rôle ni dans le cahier de la porte de mer.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "corlys",
+              "quince-fouille-des-coques"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 10.0,
+        "quoi": "Il tient debout sous les questions du Serpent de Mer, qui ne prend pas la chose par le nombre mais par la coque : depuis quand elle est mouillée exactement, à quel relèvement, si elle a viré sur son ancre, combien de fois sa barque a été vue et par qui, et qui a écrit la mesure des cinq jours. Le castellan répond par ce qu'il a mesuré — neuf jours, la lunette de la barbacane au soleil couchant, le guetteur interrogé jour par jour, la charge des grèves écrite — et dit clairement les trois choses qu'il ignore : le pavillon exact qu'elle a montré en arrivant, ce qu'elle a dans sa cale, et si les deux coques repeintes sans équipage lui répondent.",
+        "source": "corlys, pers:robert-quince, quince-fouille-des-coques, rhaenys",
+        "resultat": "observation: Le Serpent de Mer n'a rien ordonné et n'a rien promis. Il a demandé le relèvement, la durée, le nombre de fois où la barque a été vue et le nom de celui qui a écrit la règle des cinq jours ; il a relevé de lui-même qu'une coque qui ne vire pas sur son ancre en neuf jours de mouillage n'est pas tenue seulement par son ancre. Il a dit qu'il verrait la rade avant l'étale. Le castellan ne sait pas s'il en fera davantage. · observation: Rhaenys n'a posé qu'une question, sur qui répond de la coque et à quelle heure, et a noté tout haut que la réponse arrive un jour après la marée. Elle n'a rien engagé. · observation: Interrogé, le castellan constate trois inconnues qu'il n'avait pas écrites : le pavillon montré à l'arrivée de la braavienne, sa cargaison déclarée, et le lien éventuel entre elle et les deux coques repeintes sans équipage. Aucune des trois n'est dans son rôle ni dans le cahier de la porte de mer.",
+        "preuve": null
+      },
+      {
+        "id": "act:robert-quince:6",
+        "ordre": 6,
+        "temps": {
+          "debut_s": 106000.6,
+          "duree_s": 150,
+          "fin_s": 106150.6
+        },
+        "action": {
+          "verbe": "ordonner",
+          "quoi": "Il ne demande pas ce qu'il peut aller chercher : il donne à Torr, mot pour mot et à faire répéter, deux choses à porter à la porte de mer avec le rôle — le nom du patron qui a traîné, rapporté avant sept heures ; et le pavillon et la cargaison déclarés par la quatrième braavienne à son arrivée, cherchés au cahier d'entrée. Torr répète les deux ordres.",
+          "cibles": [
+            "garde-levant"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "tambour-de-pierre",
+            "relation": "parle_a",
+            "vers": "tambour-de-pierre",
+            "duree_s": 150
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "garde-levant",
+            "mode": "parle"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:robert-quince",
+            "mode": "mandat"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:robert-quince:6:1",
+            "type": "communication",
+            "cible": "garde-levant",
+            "avant": "Torr a quitté le battant et tient le rôle déplié à deux mains devant le castellan, la page des huit postes au-dessus. La porte du levant n'est plus tenue par personne tant qu'il tient la page.",
+            "apres": "Torr porte deux ordres répétés mot pour mot, à remettre à la porte de mer : le nom du patron qui a traîné, avant sept heures ; et le pavillon et la cargaison déclarés par la quatrième coque braavienne, cherchés au cahier d'entrée. Il n'est pas encore parti : le rôle reste entre ses mains le temps que le castellan écrive.",
+            "portee": "monde",
+            "source_refs": [
+              "garde-levant",
+              "res:act:robert-quince:5:3"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 5.0,
+        "quoi": "Il ne demande pas ce qu'il peut aller chercher : il donne à Torr, mot pour mot et à faire répéter, deux choses à porter à la porte de mer avec le rôle — le nom du patron qui a traîné, rapporté avant sept heures ; et le pavillon et la cargaison déclarés par la quatrième braavienne à son arrivée, cherchés au cahier d'entrée. Torr répète les deux ordres.",
+        "source": "garde-levant, pers:robert-quince",
+        "resultat": "communication: Torr porte deux ordres répétés mot pour mot, à remettre à la porte de mer : le nom du patron qui a traîné, avant sept heures ; et le pavillon et la cargaison déclarés par la quatrième coque braavienne, cherchés au cahier d'entrée. Il n'est pas encore parti : le rôle reste entre ses mains le temps que le castellan écrive.",
+        "preuve": null
+      },
+      {
+        "id": "act:robert-quince:7",
+        "ordre": 7,
+        "temps": {
+          "debut_s": 106150.6,
+          "duree_s": 330,
+          "fin_s": 106480.6
+        },
+        "action": {
+          "verbe": "ecrire",
+          "quoi": "Assis enfin, le rôle à plat sur le coffre près du battant, il écrit de sa main la conclusion du soir, chiffre par chiffre : le nombre dit, l'heure, le lieu et les noms de ceux qui l'ont entendu ; la mention qu'il l'a dit hors de la Table Peinte et avant sept heures, de son propre chef ; les deux écarts possibles avant midi ; et en dessous les trois inconnues nouvelles de la braavienne. Puis il rend le rôle à Torr et le renvoie à la porte de mer.",
+          "cibles": [
+            "29021",
+            "quince-fouille-des-coques",
+            "ce-qui-sort-de-ma-main"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "tambour-de-pierre",
+            "relation": "ecrit_dans",
+            "vers": "tambour-de-pierre",
+            "duree_s": 330
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "quince-fouille-des-coques",
+            "mode": "manipule"
+          },
+          {
+            "ref": "ce-qui-sort-de-ma-main",
+            "mode": "manipule"
+          },
+          {
+            "ref": "garde-levant",
+            "mode": "parle"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "29021",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "pers:robert-quince",
+            "mode": "mandat"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:robert-quince:7:1",
+            "type": "objet_produit",
+            "cible": "quince-fouille-des-coques",
+            "avant": "Le rôle porte en outre Elder en retranché, prêté au maître de port, sur la ligne des six levables par le maître de port, avec la mention que ces sept-là font l'écart possible entre le chiffre dit et le chiffre vrai. Cent dix-neuf sous la main, cent dix-huit tenus, un homme sous le plancher de cent vingt.",
+            "apres": "Le rôle porte en outre, écrit de la main du castellan, l'heure et le lieu où le chiffre a été dit tout haut la seconde fois, la liste des huit témoins du Tambour de Pierre, et trois lignes d'inconnues attachées à la quatrième braavienne : pavillon montré à l'arrivée, cargaison déclarée, lien éventuel avec les deux coques repeintes sans équipage. Le rôle est rendu à Torr, qui l'emporte à la porte de mer.",
+            "portee": "monde",
+            "source_refs": [
+              "quince-fouille-des-coques",
+              "res:act:robert-quince:5:3"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:robert-quince:7:2",
+            "type": "progression_tache",
+            "cible": "29021",
+            "avant": "Le chiffre de demain sept heures est arrêté et démontrable ligne à ligne sur le rôle : 119 sous la main, 1 prêté, 118 tenus, 5 de marge dont 3 conditionnels, 1 sous le plancher. Il n'est pas encore dit à la Table Peinte ; il est dit tout haut une première fois à la porte de mer, devant un témoin, et il reste exposé aux six hommes que le maître de port peut lever cette nuit.",
+            "apres": "Le chiffre a été dit tout haut une seconde fois, au Tambour de Pierre, avant sept heures et hors de la Table Peinte, devant Corlys Velaryon, Rhaenys Targaryen, Daemon Targaryen, Denys Bar Emmon, Alarra Rosby, Aldon Hask, Sara Poulain et Torr, avec sa raison attachée et ses deux écarts nommés, puis porté au registre de la main du castellan avec l'heure, le lieu et les témoins. Il n'a pas encore été dit à la Table Peinte à sept heures : la tâche n'est pas accomplie, mais le chiffre ne pourra plus y être découvert ni marchandé. Il reste exposé aux six hommes levables par le maître de port et au nom manquant du patron.",
+            "portee": "monde",
+            "source_refs": [
+              "29021",
+              "res:act:robert-quince:2:1",
+              "res:act:robert-quince:3:1",
+              "ce-qui-sort-de-ma-main"
+            ],
+            "preuve_refs": [
+              "ce-qui-sort-de-ma-main",
+              "quince-fouille-des-coques"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 11.0,
+        "quoi": "Assis enfin, le rôle à plat sur le coffre près du battant, il écrit de sa main la conclusion du soir, chiffre par chiffre : le nombre dit, l'heure, le lieu et les noms de ceux qui l'ont entendu ; la mention qu'il l'a dit hors de la Table Peinte et avant sept heures, de son propre chef ; les deux écarts possibles avant midi ; et en dessous les trois inconnues nouvelles de la braavienne. Puis il rend le rôle à Torr et le renvoie à la porte de mer.",
+        "source": "29021, ce-qui-sort-de-ma-main, garde-levant, pers:robert-quince, quince-fouille-des-coques",
+        "resultat": "objet_produit: Le rôle porte en outre, écrit de la main du castellan, l'heure et le lieu où le chiffre a été dit tout haut la seconde fois, la liste des huit témoins du Tambour de Pierre, et trois lignes d'inconnues attachées à la quatrième braavienne : pavillon montré à l'arrivée, cargaison déclarée, lien éventuel avec les deux coques repeintes sans équipage. Le rôle est rendu à Torr, qui l'emporte à la porte de mer. · progression_tache: Le chiffre a été dit tout haut une seconde fois, au Tambour de Pierre, avant sept heures et hors de la Table Peinte, devant Corlys Velaryon, Rhaenys Targaryen, Daemon Targaryen, Denys Bar Emmon, Alarra Rosby, Aldon Hask, Sara Poulain et Torr, avec sa raison attachée et ses deux écarts nommés, puis porté au registre de la main du castellan avec l'heure, le lieu et les témoins. Il n'a pas encore été dit à la Table Peinte à sept heures : la tâche n'est pas accomplie, mais le chiffre ne pourra plus y être découvert ni marchandé. Il reste exposé aux six hommes levables par le maître de port et au nom manquant du patron.",
+        "preuve": [
+          "ce-qui-sort-de-ma-main",
+          "quince-fouille-des-coques"
+        ]
+      }
+    ],
+    "suite": "Le chiffre reste à dire à la Table Peinte à sept heures, à huit minutes de marche : c'est là seulement que la tâche s'achève. Torr part vers la porte de mer avec deux ordres et le rôle ; le nom du patron et ce que porte le cahier d'entrée sur la braavienne doivent revenir avant sept heures. Corlys Velaryon a dit qu'il verrait la rade avant l'étale, sans rien promettre. L'heure prise chez le maître de port, après l'étale, reste ouverte.",
+    "reveils_suivants": [],
+    "budget_energie": 46,
+    "budget_secondes": 1380,
+    "energie_depensee": 46.0
+  },
+  "mutations_proposees": [],
+  "mutations_rejetees": [
+    {
+      "mutation": {
+        "operation": "intentions.croyance_ajouter",
+        "cible": "robert-quince",
+        "valeur": "Un chiffre dit d'avance, hors de la salle où on en décide, ne se marchande plus : il a dit les cent dix-huit tenus et l'homme sous son plancher au Tambour de Pierre devant huit témoins avant sept heures, de son propre chef, et l'a porté au registre avec l'heure et les noms.",
+        "resultat": "res:act:robert-quince:7:2"
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "operation": "intentions.ignore_ajouter",
+        "cible": "robert-quince",
+        "valeur": "Le pavillon montré à l'arrivée par la quatrième coque braavienne, sa cargaison déclarée, et si les deux coques repeintes sans équipage lui répondent",
+        "resultat": "res:act:robert-quince:5:3"
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "operation": "intentions.etape_ajouter",
+        "cible": "robert-quince",
+        "valeur": "Dire le nombre à la Table Peinte à sept heures, après avoir reçu de la porte de mer le nom du patron et ce que porte le cahier d'entrée sur la braavienne.",
+        "resultat": "res:act:robert-quince:7:2"
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "operation": "evenements.evenement",
+        "cible": "tambour-de-pierre",
+        "valeur": "Avant l'aube du 28e jour de la 3e lune de l'an 129, le castellan de Peyredragon dit tout haut au Tambour de Pierre l'état de sa garnison — cent dix-neuf sous sa main, cent dix-huit tenus, un homme sous son plancher de cent vingt — et signale devant Corlys Velaryon et Rhaenys Targaryen une coque braavienne mouillée depuis neuf jours sans avoir accosté.",
+        "resultat": "res:act:robert-quince:2:1"
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "operation": "relations.relation_ajouter",
+        "cible": "corlys",
+        "valeur": "Corlys Velaryon → Ser Robert Quince : l'a entendu dire son propre manque avant qu'on le lui demande, et l'a interrogé sur la rade",
+        "resultat": "res:act:robert-quince:5:1"
+      },
+      "erreur": "resultat_id absent du rapport"
+    }
+  ],
+  "_activation": {
+    "session": "dbd632fe-57ce-4e77-ab0c-be8ff6cc74f8",
+    "session_narrateur": "dbd632fe-57ce-4e77-ab0c-be8ff6cc74f8",
+    "session_pnj": "8f5e7930-80c6-4906-bfec-d4bfc3551d8e",
+    "cree_le": "2026-08-10T01:01:48.323828+02:00",
+    "front": "aurore-inchauspe",
+    "present_secondes": 105100.6,
+    "importance": 0.463658,
+    "budget": 46,
+    "budget_secondes": 1380,
+    "system_prompt": "# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS\n\nTu es le maître du jeu local d'un monde vivant, pas un assistant administratif\net pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa\nmatière, les personnes qui s'y trouvent, les usages de Westeros et les\nconséquences du temps qui passe.\n\n## Le monde\n\nNous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de\nViserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra\nTargaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie\npeut diverger du récit connu : le dossier de l'activation fait autorité sur ce\nqui s'est réellement produit ici.\n\nDate présente : 28e jour de la 3e lune de l'an 129 après la\nConquête.\nLieu présent : Tambour de Pierre, Peyredragon.\nActeur appelé : Ser Robert Quince.\nAffaire qui exerce maintenant une pression sur lui : 📉 Dire à sept heures le nombre des DISPONIBLES, et celui de ceux qui c.\n\nL'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,\nsituée dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,\nfaire autre chose d'accessible depuis sa situation, parler à quelqu'un,\nattendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener\nvers la tâche.\n\n## Partage de l'autorité\n\nL'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses\ngestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,\nplus prudents ou plus efficaces qu'il ne les a formulés.\n\nToi, tu possèdes le reste du monde : les autres personnes agissent selon leur\npropre caractère et leurs propres affaires ; les objets ont une position et\nune résistance ; les distances, l'écriture, la marche, l'attente et la parole\nprennent du temps ; les institutions et les usages produisent leurs\nconséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à\nlui pour fabriquer du drame.\n\nUne résistance n'existe que si elle vient d'un fait établi : volonté d'une\nautre personne, obstacle matériel, distance, délai, usage social, ordre déjà\ndonné ou ressource réellement absente. Les gens compétents règlent le\nroutinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou\nun véritable arbitrage peut seul engager.\n\n## Vérité et inconnues\n\nLe dossier fermé est l'autorité sur les faits particuliers et mutables de\ncette partie. Une croyance reste une croyance, une intention reste une\nintention, un témoignage reste un témoignage : aucun ne devient un fait parce\nqu'il apparaît dans le dossier.\n\nTu peux employer les continuités ordinaires et stables de Westeros nécessaires\nà l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche\nentre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,\nni secret, ni décision, ni avantage absent du dossier. Toute absence qui\nchangerait l'issue reste une inconnue. Tu ne la combles pas.\n\nUne observation modifie d'abord la connaissance de celui qui observe. Un fait\nmatériel ne devient connu d'autres personnes que par présence, témoignage,\nparole, pli, registre ou diffusion effectivement produits.\n\n## Les deux phases\n\nDans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et\nl'instant présents. Fais une adresse brève, concrète et diégétique : rappelle\nce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni\nnœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.\n\nDans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :\n\n1. établis d'où il part, ce qu'il peut réellement atteindre et les sources\n   qu'il touche ou mobilise ;\n2. fais agir les personnes rencontrées depuis leurs propres intentions ;\n3. applique les obstacles établis, sans résistance décorative ;\n4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;\n5. produis seulement les effets causés par les gestes accomplis ;\n6. sépare les changements du monde, les objets produits, les communications\n   et les seules connaissances acquises ;\n7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,\n   obstacle établi, échec, renoncement ou borne temporelle.\n\nUne tâche peut avancer sans être terminée. Elle est bloquée seulement par un\nobstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet\nrecherché impossible ou manqué. N'invente jamais des minutes de travail pour\nremplir une durée minimale : si le geste se termine tôt, laisse le personnage\npoursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle\net rends compte honnêtement de la durée.\n\nChaque message de la boucle précise la phase et son contrat de sortie. Rends\nexactement l'objet JSON demandé, sans commentaire autour. La précision du JSON\nsert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.\n",
+    "system_prompt_source": "scripts/depecher.py:manuel_narrateur_local",
+    "system_prompt_sha256": "658b936c918a36ff24d6dedcdd056940d01a1b1c52ae655d0fcf5696d27bb01e",
+    "message": "PHASE 1 — APPELER L'ACTEUR\n\nVoici le dossier fermé de cette activation :\n\n{\n  \"date_du_monde\": {\n    \"annee\": 129,\n    \"lune\": 3,\n    \"jour\": 28\n  },\n  \"present_secondes\": 105100.6,\n  \"budget_energie\": 46,\n  \"secondes_par_point_energie\": 30,\n  \"budget_secondes\": 1380,\n  \"duree_minimale_secondes\": 60,\n  \"acteur_candidat\": \"robert-quince\",\n  \"tache_elue\": {\n    \"id\": \"29021\",\n    \"quoi\": \"📉 Dire à sept heures le nombre des DISPONIBLES, et celui de ceux qui c\",\n    \"creee\": false\n  },\n  \"chemin_election\": [\n    {\n      \"id\": \"pers:robert-quince\",\n      \"genre\": \"personne\",\n      \"ou\": \"personnages\",\n      \"quoi\": \"Ser Robert Quince\",\n      \"genres\": [\n        \"personne\"\n      ],\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"importance_activation\": 0.46365760821008545\n    },\n    {\n      \"id\": \"29021\",\n      \"genre\": \"action\",\n      \"ou\": \"affaire-defense-peyredragon\",\n      \"quoi\": \"📉 Dire à sept heures le nombre des DISPONIBLES, et celui de ceux qui c\",\n      \"lieu\": \"Table Peinte, à sept heures\",\n      \"etat\": \"**en cours**\",\n      \"importance_activation\": 0.019652538661385457\n    }\n  ],\n  \"salle_actuelle\": {\n    \"id\": \"tambour-de-pierre\",\n    \"nom\": \"Tambour de Pierre, Peyredragon\",\n    \"personnes\": [\n      {\n        \"id\": \"alarra-rosby\",\n        \"nom\": \"Alarra Rosby\"\n      },\n      {\n        \"id\": \"aldon-hask\",\n        \"nom\": \"Aldon Hask\"\n      },\n      {\n        \"id\": \"corlys\",\n        \"nom\": \"Corlys Velaryon, le Serpent de Mer\"\n      },\n      {\n        \"id\": \"daemon\",\n        \"nom\": \"Daemon Targaryen\"\n      },\n      {\n        \"id\": \"denys-bar-emmon\",\n        \"nom\": \"Denys Bar Emmon\"\n      },\n      {\n        \"id\": \"rhaenys\",\n        \"nom\": \"Rhaenys Targaryen, la Reine Qui Ne Fut Jamais\"\n      },\n      {\n        \"id\": \"sara\",\n        \"nom\": \"Sara Poulain\"\n      },\n      {\n        \"id\": \"robert-quince\",\n        \"nom\": \"Ser Robert Quince\"\n      },\n      {\n        \"id\": \"garde-levant\",\n        \"nom\": \"Torr\"\n      }\n    ]\n  },\n  \"dossier_acteur\": {\n    \"date_du_monde\": {\n      \"annee\": 129,\n      \"lune\": 3,\n      \"jour\": 28\n    },\n    \"diffusion\": {\n      \"origine\": \"rhaenyra\",\n      \"front\": \"aurore-inchauspe\",\n      \"secondes_depuis_origine\": 105100.6\n    },\n    \"personnage\": {\n      \"id\": \"robert-quince\",\n      \"nom\": \"Ser Robert Quince\",\n      \"titre\": \"Castellan de Peyredragon, capitaine de la garnison\",\n      \"naissance\": 84,\n      \"traits\": [\n        \"loyal\",\n        \"placide\",\n        \"prudent\",\n        \"obstine\",\n        \"debrouillard\",\n        \"conciliant\"\n      ],\n      \"objectifs\": [\n        {\n          \"but\": \"Tenir Peyredragon — murailles, portes, garnison — quoi qu'il advienne au-dehors\",\n          \"priorite\": 1\n        },\n        {\n          \"but\": \"Que la reine n'ait jamais à répéter un ordre deux fois\",\n          \"priorite\": 2\n        },\n        {\n          \"but\": \"Ne pas mourir bêtement pour une querelle de dragons\",\n          \"priorite\": 3\n        }\n      ],\n      \"maniere\": \"Parle peu, répète l'ordre reçu mot pour mot avant de sortir ; souffle en montant les marches et s'en excuse. Se debrouille seul : comble les trous sans demander, tranche le routinier a sa main et en rend compte au passe, et ne fait remonter que ce qui engage la parole du maitre, coute un homme ou de l or, ou contredit un ordre anterieur. Competent : sur son domaine il en sait plus que son maitre et le montre — apporte le precedent, le chiffre et l avis qu il defend, au lieu d une question ; ne demande jamais ce qu il peut aller chercher lui-meme ; tient son cahier d affaire et en ecrit la conclusion de sa main. OUVRE PAR : ce qui a tenu — la porte, le mur, le quai — et ce que cela ouvre a la reine. Le chiffre qui manque vient en deuxieme ou troisieme phrase, jamais en premiere. DEUXIEME PHRASE, toujours : ce que c'est (nomme par ce qu'il fait, jamais par son etiquette), ce que ca change pour la reine, et a quoi ca sert dans ses trois piliers — ouvrir la porte du dedans, n'etre pas attaque, rallier la ville. REPRIS, IL NE SE DEFEND PAS : une phrase pour dire qu'il avait tort, puis ce qu'il fait, ce qu'il prend sur lui, et la date a laquelle on saura. Aucune explication du passe, aucune justification que personne n'a demandee. Et il n'ouvre jamais sur un manque : il entre avec ce qu'il a fait ou trouve depuis hier, ou il se tait et va chercher.\",\n      \"portrait\": {\n        \"fichier\": \"ecrans/portraits/robert-quince.svg\",\n        \"physique\": \"45 ans, énorme, rouge de visage, cuir bouilli et maille qui bâille aux flancs, trousseau de clés à la ceinture.\",\n        \"prompt_ideogram\": \"dark fantasy oil painting portrait, muted colors, torchlight, enormously fat knight in his forties, red sweating face, short beard, boiled leather and straining mail, iron keyring at his belt, phlegmatic steady expression\"\n      },\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"lieu\": \"Peyredragon\"\n    },\n    \"salle_actuelle\": {\n      \"id\": \"tambour-de-pierre\",\n      \"nom\": \"Tambour de Pierre, Peyredragon\",\n      \"personnes\": [\n        {\n          \"id\": \"alarra-rosby\",\n          \"nom\": \"Alarra Rosby\"\n        },\n        {\n          \"id\": \"aldon-hask\",\n          \"nom\": \"Aldon Hask\"\n        },\n        {\n          \"id\": \"corlys\",\n          \"nom\": \"Corlys Velaryon, le Serpent de Mer\"\n        },\n        {\n          \"id\": \"daemon\",\n          \"nom\": \"Daemon Targaryen\"\n        },\n        {\n          \"id\": \"denys-bar-emmon\",\n          \"nom\": \"Denys Bar Emmon\"\n        },\n        {\n          \"id\": \"rhaenys\",\n          \"nom\": \"Rhaenys Targaryen, la Reine Qui Ne Fut Jamais\"\n        },\n        {\n          \"id\": \"sara\",\n          \"nom\": \"Sara Poulain\"\n        },\n        {\n          \"id\": \"robert-quince\",\n          \"nom\": \"Ser Robert Quince\"\n        },\n        {\n          \"id\": \"garde-levant\",\n          \"nom\": \"Torr\"\n        }\n      ]\n    },\n    \"intention\": {\n      \"personnage_id\": \"robert-quince\",\n      \"croyances\": [\n        \"Il decide seul dans la muraille de ce qui ne coute ni un mort ni la parole de la reine, detient douze heures, et PEUT LA REVEILLER A TOUTE HEURE - celui qui l'arrete a tort\",\n        \"Cent vingt hommes plancher, ecrit, sous lequel personne ne descend - la reine comprise ; il doit dire le nombre tout haut CHAQUE MATIN A SEPT HEURES\",\n        \"Sa regle de la porte a ete defaite par la reine SIX HEURES apres l avoir accordee, dans les formes, et il l a dit tout haut : la prochaine fois qu il tranchera seul a trois heures du matin, il pensera UNE SECONDE DE PLUS a ce qu'elle en dira\",\n        \"Ne pas connaitre un visage ne l'autorise plus a rien : l'inconnu se fouille et il entre. Ce qui l'autorise est ce qu'on PORTE - arme cachee, pli sans temoin, refus de dire d'ou l'on vient\",\n        \"La liste de ceux qui passent est a la reine et dans le livre, non a sa memoire ; dame Aurore Inchauspe y est inscrite et il est alle le dire lui-meme a ses deux hommes, mot pour mot\",\n        \"Il a donne Elder au maitre de port et il est a cent dix-neuf, un sous son propre plancher, de son plein gre - il devra l'expliquer demain a sept heures\"\n      ],\n      \"ignore\": [\n        \"Le tracé des sept galeries sous le rocher — le feuillet a disparu de l'archive avant qu'il ait pu le lire\",\n        \"Combien d'hommes de sa garnison ont de la famille dans les villages de la route royale\"\n      ],\n      \"intention\": \"Tenir le plancher de cent vingt et s'asseoir a une table ou il n'a jamais decide : dire le nombre tout haut chaque matin a sept heures, avant qu'il ne soit bas.\",\n      \"declencheurs\": [\n        {\n          \"si\": \"On lui annonce que Caraxès ou Meleys quitte l'île\",\n          \"alors\": \"Il exige de la reine, devant témoin, un ordre répété mot pour mot, et fait consigner au registre qu'il a dit que trois cents hommes ne tiennent pas un rocher sans dragon.\",\n          \"une_fois\": false\n        },\n        {\n          \"si\": \"Un homme de sa garnison est pris à parler aux barques de pêche\",\n          \"alors\": \"Il le fait mettre aux fers sans en avertir la reine, et l'interroge lui-même une nuit entière.\",\n          \"une_fois\": false\n        }\n      ],\n      \"attitude_joueur\": \"Il a obtenu ce qu'il reclamait et il l'a redige lui-meme pour qu'il soit plus etroit que ce qu'on lui offrait. Il ne demandera plus la permission sur son domaine et rendra compte au registre chaque soir. Sur les quatre points exclus, il attendra la reine meme quand ce sera couteux — c'est le prix qu'il a choisi de payer.\",\n      \"mandat\": {\n        \"donne_le\": {\n          \"annee\": 129,\n          \"lune\": 3,\n          \"jour\": 19\n        },\n        \"par\": \"rhaenyra\",\n        \"temoins\": \"trois cents personnes, cour du bas\",\n        \"decide_seul\": [\n          \"les murs\",\n          \"la porte de mer\",\n          \"les quais\",\n          \"le guet\",\n          \"les fers : qui entre, qui est fouille, qui est mis au cachot pour la nuit, ou dorment ses hommes et lesquels\"\n        ],\n        \"plafond\": \"50 dragons d'or par jour sans demander ; 200 si le feu est deja pris ; porte au registre le soir meme, chiffre par chiffre\",\n        \"exclu_volontairement\": [\n          \"un seigneur ou ce qui lui appartient\",\n          \"la vie de quiconque — prisonnier, homme de la garnison, pecheur\",\n          \"ce qui vole\",\n          \"ce qui flotte\"\n        ],\n        \"note\": \"Il a retreci lui-meme la parole trop large de la reine (« vous l'aurez ») et l'a fait ecrire. En l'absence de la reine sur les quatre points exclus, il ATTEND son retour, meme si cela coute.\"\n      },\n      \"date_maj\": {\n        \"annee\": 129,\n        \"lune\": 3,\n        \"jour\": 28\n      },\n      \"etape_elue\": null\n    },\n    \"relations\": [\n      {\n        \"source_id\": \"nicolas-reynolds\",\n        \"source\": \"Nicolas Lesster Reynolds\",\n        \"cible_id\": \"robert-quince\",\n        \"cible\": \"Ser Robert Quince\",\n        \"opinion\": 20,\n        \"liens\": [\n          \"l'a compté en 127\"\n        ]\n      },\n      {\n        \"source_id\": \"robert-quince\",\n        \"source\": \"Ser Robert Quince\",\n        \"cible_id\": \"nicolas-reynolds\",\n        \"cible\": \"Nicolas Lesster Reynolds\",\n        \"opinion\": 10,\n        \"liens\": [\n          \"l'homme qui posait des questions en 127\"\n        ]\n      }\n    ],\n    \"tache\": {\n      \"id\": \"29021\",\n      \"quoi\": \"📉 Dire à sept heures le nombre des DISPONIBLES, et celui de ceux qui c\",\n      \"genre\": \"action\",\n      \"distance\": 1,\n      \"chemin\": [\n        \"pers:robert-quince\",\n        \"29021\"\n      ],\n      \"creee\": false\n    },\n    \"continuite_staging\": {\n      \"tache_id\": \"29021\",\n      \"acteur\": \"robert-quince\",\n      \"issue\": \"avance\",\n      \"rapport\": \"etat/staging/activations/20260809-230841-082556-robert-quince.json\",\n      \"present_secondes\": 98280.0,\n      \"fin_secondes\": 99480.0,\n      \"empreinte_canonique\": \"b274399d62a992ab0c93e6a544a4375f5de88b59\",\n      \"reprendre_a\": 103080.0,\n      \"suspendue\": false,\n      \"etat_cibles\": {\n        \"quince-fouille-des-coques\": {\n          \"type\": \"objet_produit\",\n          \"apres\": \"Le rôle porte en outre Elder en retranché, prêté au maître de port, sur la ligne des six levables par le maître de port, avec la mention que ces sept-là font l'écart possible entre le chiffre dit et le chiffre vrai. Cent dix-neuf sous la main, cent dix-huit tenus, un homme sous le plancher de cent vingt.\",\n          \"resultat_id\": \"res:act:robert-quince:4:1\"\n        },\n        \"pers:wend\": {\n          \"type\": \"communication\",\n          \"apres\": \"Wend sait que le castellan est à un homme sous son propre plancher et qu'il compte le dire ainsi, sans l'arrondir.\",\n          \"resultat_id\": \"res:act:robert-quince:5:2\"\n        },\n        \"29021\": {\n          \"type\": \"progression_tache\",\n          \"apres\": \"Le chiffre de demain sept heures est arrêté et démontrable ligne à ligne sur le rôle : 119 sous la main, 1 prêté, 118 tenus, 5 de marge dont 3 conditionnels, 1 sous le plancher. Il n'est pas encore dit à la Table Peinte ; il est dit tout haut une première fois à la porte de mer, devant un témoin, et il reste exposé aux six hommes que le maître de port peut lever cette nuit.\",\n          \"resultat_id\": \"res:act:robert-quince:5:1\"\n        },\n        \"porte-de-mer\": {\n          \"type\": \"fait\",\n          \"apres\": \"L'ordre en vigueur à la porte de mer nomme désormais la chose par ce qu'elle fait : fouille de ce qui accoste. Le mouillage de la pointe est déclaré non fouillé, et Wend l'a répété mot pour mot.\",\n          \"resultat_id\": \"res:act:robert-quince:6:1\"\n        }\n      },\n      \"activites\": [\n        {\n          \"quoi\": \"Debout au battant, sans le faire entrer ni s'asseoir, il pose à Wend trois questions et pas plus, dans l'ordre : combien de coques ouvertes depuis la nuit du vingt-septième, ce qui en est sorti, et si un patron a refusé de lever son plancher.\",\n          \"resultat\": \"observation: Wend répond aux trois questions : depuis la nuit du vingt-septième, aucune coque nouvelle ouverte — rien n'a accosté au quai depuis l'aube, les seules coques touchées restent les onze de la nuit ; rien n'est sorti, ni lettre, ni arme, ni étranger. · observation: À la troisième question, Wend hésite : un patron, ce matin, a traîné, a parlé de sa cargaison, a fini par lever son plancher quand on a insisté. Il n'a jamais dit non. Wend ne sait pas son nom.\"\n        },\n        {\n          \"quoi\": \"Il tranche la règle à sa main plutôt que de la garder en tête : un refus n'est un refus que dit tout haut, et un refus sans nom ne se compte pas. Il retourne le rôle et écrit au dos, sous les neuf, une dixième ligne barrée d'avance : « un plancher levé en tra…\",\n          \"resultat\": \"variation_mesure: neuf refus comptés ; une dixième ligne écrite au dos du rôle mais non comptée, faute de nom et faute de refus dit tout haut · communication: Ordre donné à Wend : prendre le nom du patron à la première marée demain, et le rapporter avant sept heures. Wend répète l'ordre.\"\n        },\n        {\n          \"quoi\": \"Debout, le rôle appuyé sur le montant du battant, il porte les trois hommes rendus aux murs par la marche des quarante pas entre la barbacane et la porte du Dragon, et écrit la condition à côté, de sa main : rendus tant que la nuit reste calme, repris à la pr…\",\n          \"resultat\": \"objet_produit: Trois hommes rendus portés au rôle avec leur condition écrite en regard : conditionnels, repris à la première alerte, un homme marchant entre barbacane et porte du Dragon. La marge du rocher est écrite à cinq, dont trois conditionnels.\"\n        },\n        {\n          \"quoi\": \"Il porte Elder en retranché — prêté au maître de port, de son plein gré — et le range sur la même ligne que les six hommes que Rulf Corne peut lever sur sa seule parole, avec le rappel écrit que toute nuit où ces six sont pris, le chiffre de sept heures est f…\",\n          \"resultat\": \"objet_produit: Le rôle porte en outre Elder en retranché, prêté au maître de port, sur la ligne des six levables par le maître de port, avec la mention que ces sept-là font l'écart possible entre le chiffre dit et le chiffre vrai. Cent dix-neuf sous la main, cent dix-huit tenus, un homme sous le plancher de cent vingt.\"\n        },\n        {\n          \"quoi\": \"Devant Wend, au battant, il dit tout haut, ligne à ligne, le nombre qu'il dira demain à sept heures : cent dix-neuf sous sa main, un prêté, cent dix-huit tenus par les huit postes, les quais et le guet, cinq de marge dont trois conditionnels — donc un homme s…\",\n          \"resultat\": \"progression_tache: Le chiffre de demain sept heures est arrêté et démontrable ligne à ligne sur le rôle : 119 sous la main, 1 prêté, 118 tenus, 5 de marge dont 3 conditionnels, 1 sous le plancher. Il n'est pas encore dit à la Table Peinte ; il est dit tout haut une première fois à la porte de mer, devant un témoin, et il reste exposé aux six hommes que le maître de port peut lever cette nuit. · communication: Wend sait que le castellan est à un homme sous son propre plancher et qu'il compte le …\"\n        },\n        {\n          \"quoi\": \"Avant que Wend s'en aille, il lui fait répéter ce qui vaut cette nuit : la fouille est celle de ce qui accoste, non celle de la rade ; le mouillage de la pointe n'est pas fouillé et ne sera plus dit fouillé. Wend répète mot pour mot.\",\n          \"resultat\": \"fait: L'ordre en vigueur à la porte de mer nomme désormais la chose par ce qu'elle fait : fouille de ce qui accoste. Le mouillage de la pointe est déclaré non fouillé, et Wend l'a répété mot pour mot.\"\n        }\n      ],\n      \"suite\": \"Le nom du patron manque encore ; Wend doit le rapporter à la première marée. L'heure prise chez le maître de port, demain après l'étale, reste la seule chose qui pourrait défaire l'ordre des priorités. Le chiffre sera dit demain à sept heures, à la Table Peinte.\"\n    },\n    \"chemin\": [\n      {\n        \"id\": \"pers:robert-quince\",\n        \"genre\": \"personne\",\n        \"ou\": \"personnages\",\n        \"quoi\": \"Ser Robert Quince\",\n        \"genres\": [\n          \"personne\"\n        ],\n        \"etat\": \"actif\",\n        \"condition\": \"libre\",\n        \"lieu_id\": \"peyredragon\",\n        \"importance_activation\": 0.46365760821008545\n      },\n      {\n        \"id\": \"29021\",\n        \"genre\": \"action\",\n        \"ou\": \"affaire-defense-peyredragon\",\n        \"quoi\": \"📉 Dire à sept heures le nombre des DISPONIBLES, et celui de ceux qui c\",\n        \"lieu\": \"Table Peinte, à sept heures\",\n        \"etat\": \"**en cours**\",\n        \"importance_activation\": 0.019652538661385457\n      }\n    ],\n    \"travaux_ouverts\": [\n      {\n        \"id\": \"quince-fouille-des-coques\",\n        \"affaire\": \"Ce que Wend trouve dans les coques, depuis la nuit du vingt-septieme\",\n        \"etat\": \"mur\",\n        \"echeance\": {\n          \"annee\": 129,\n          \"lune\": 3,\n          \"jour\": 28\n        },\n        \"sources\": [\n          {\n            \"quoi\": \"Wend, a la porte de mer, chaque matin\",\n            \"genre\": \"gens\",\n            \"cout_jours\": 0.25\n          },\n          {\n            \"quoi\": \"la barque a salaisons, fouillee de ses mains\",\n            \"genre\": \"chose\",\n            \"cout_jours\": 0.5\n          }\n        ],\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"la lunette de la barbacane au soleil couchant, le guetteur interrogé jour par jour ; et la mesure écrite de la charge des grèves\",\n            \"texte\": \"La quatrième coque braavienne est à quarante brasses depuis NEUF jours, n'a jamais touché mon quai, n'a jamais été ouverte, et sa barque bouge la nuit. Deux autres, repeintes, payées, sans équipage, ne bougent pas — et une coque sans équipage est la seule espèce qui puisse en prendre un en une nuit. La règle de maître Rulf, écrite de sa main le vingt-deuxième, fait remonter à la reine toute coque de plus de cinq jours sans commercer : la braavienne aurait dû monter le vingt-quatrième, et il répond d'elle demain SOIR, un jour après la marée. Le trou n'est pas dans ce que je fouille mal, il est dans ce que je n'ai pas le droit de toucher et dont un autre répond trop tard.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"la grille des caves basses à cinq heures moins dix, et le garde à qui j'ai demandé pourquoi au lieu de crier\",\n            \"texte\": \"J'ai ordonné la sortie de Hallis Roon ce matin en passant devant sa grille, et à cinq heures il était encore derrière. Le garde attendait un écrit et il avait raison : j'ai mis des hommes aux fers pour avoir suivi un mot lancé à travers une grille. La faute est à moi, elle est réparée en un quart d'heure — écrit, signé, l'heure notée, porté au rôle sous mes yeux — et la règle que j'en tire est contre moi : un ordre que je donne en marchant n'est pas un ordre, et je ne saurai jamais lesquels des miens sont restés sans effet parce que je n'ai pas ralenti. Ceux qui touchent un homme s'écrivent, maintenant, tous.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"Wend, à la porte de mer, dernier jour de la lune, sa page écrite de sa main devant moi\",\n            \"texte\": \"Onze ans qu'il tient la porte sans que personne ait écrit ce qu'il a le droit de refuser. Sa charge est bornée ce soir, par lui, avant la fin de la lune comme il était demandé, et ce qu'il a écrit lui-même est plus étroit que ce que j'allais lui donner — le même geste que le mien le vingt-deuxième, et je ne l'y ai pas poussé. Demain il sera le seul homme de ce rocher capable de dire ce qui est sorti, parce qu'il aura la seule page qui le porte. Une charge non bornée la veille d'un embarquement, c'est un homme dont on découvre après coup qu'il n'était tenu à rien.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"l'ordre de la nuit donné à la relève du soir et répété mot pour mot par trois chefs de poste, et mon propre compte\",\n            \"texte\": \"Tout ce qui monte à bord s'ouvre à TERRE, avant d'être hissé : c'est le quai, il est à moi, et cela déplace la fouille de l'endroit où elle est impossible à celui où elle est gratuite. Payé avec les trois hommes que le poste marché m'a rendus ce matin, pas un pris aux huit postes critiques : la marge du rocher reste à cinq. Je suis à cent dix-neuf et je le dirai à sept heures avec sa raison attachée, parce qu'un nombre dit sans ce qui le remue ment une fois par semaine. Quatorze cerfs dépensés, portés chiffre par chiffre.\",\n            \"servie\": false\n          }\n        ],\n        \"conclusion\": \"CE QUE WEND TROUVE DANS LES COQUES : RIEN, ET C'EST MA FAUTE, PAS LA SIENNE. IL OUVRE CE QUI ARRIVE. CE QUI COMPTE EST CE QUI PART.\\n\\n**Les trois chiffres, arrêtés le 28e au soir, avant la marée du matin.** Seize coques ouvertes depuis la nuit du vingt-septième — onze par Wend à la porte de mer, six hommes pris sur mes murs, quarante-quatre heures d'homme, ni lettre ni arme ni étranger ; cinq de mes mains sur le quai. **Les seize accostaient.** Douze appareillent à la marée : nos onze quilles, dont une entière à l'intendance, et la barque à salaisons de Sombreval. **Ouvertes parmi les douze : aucune.** Le livre de la porte de mer a onze ans et n'a jamais porté qu'une colonne, celle de ce qui entre ; la seconde a été tracée ce matin et sa première ligne s'écrit cette nuit. J'ai fouillé une nuit entière dans le sens où l'on ne perd rien.\\n\\n**Et la liste de ce qui part n'existait sur aucun livre de ce château.** Il a fallu que maître Rulf me la lise et que je l'écrive de ma main. On ne peut pas manquer une coque qu'on n'a jamais comptée.\\n\\n**LE PRIX DE VOIR, ET C'EST UNE HEURE, PAS UNE SOMME.** Coque vide : un homme, une lanterne, un quart d'heure. À demi chargée : deux hommes, deux heures. Chargée : aucun prix ne l'ouvre, six cents sacs valent toutes les cachettes du monde. Donc trois heures d'homme cette nuit achètent onze cales, et tout le coffre du maître des deniers n'en achète plus une après le premier sac. **La seule heure bon marché de tout le calendrier est entre ce soir et le point du jour** — elle ne se représente ni au quatrième jour ni au huitième à deux mille deux cent cinq.\\n\\n**CE QUI NE SERA PAS VU, NOMMÉ, ET CE QUI EN EST À MOI.** *La coque de l'intendance* : elle prend les salaisons au point du jour et ne s'ouvre plus jamais ; elle ne peut être vue que vide et que cette nuit — mais une coque à flot est **ce qui flotte**, l'un des quatre points que je me suis retirés de ma propre main. Trois lignes sont montées chez la reine ce soir avec la solution de repli écrite dessous. Je ne l'ai pas réveillée, elle est blessée, et c'est écrit comme un choix. *La quatrième coque braavienne* : neuf jours à quarante brasses, jamais accostée, jamais ouverte, sa barque bouge la nuit ; la mesure écrite du maître de port fait remonter toute coque de plus de cinq jours sans commercer, celle-là devait monter le vingt-quatrième. *Les deux coques repeintes, payées, sans équipage* : elles ne partent pas, donc personne ne les regarde, et une coque sans équipage est la seule qui puisse en prendre un en une nuit ; on répond d'elles demain SOIR, un jour après la marée. **Si l'on n'en veut qu'une : la braavienne.** C'est la seule que je ne peux ni voir ni arrêter.\\n\\n**CE QUE J'AI CHANGÉ, ET QUI NE COÛTE PERSONNE.** Tout ce qui monte à bord s'ouvre **à terre, sur le quai, avant d'être hissé** — le quai est à moi, cela déplace la fouille de l'endroit où elle est impossible à celui où elle est gratuite. La colonne des sorties est tenue à partir de cette nuit. Le compte des refus est écrit chaque nuit et relu chaque semaine — neuf pour la première nuit, en onze ans. La charge de Wend est bornée ce soir, dernier jour de la lune, **de sa main et plus étroite que ce que j'allais lui donner**. La nuit est payée avec les trois hommes que le poste marché entre la barbacane et la porte du Dragon m'a rendus : pas un retiré des huit postes critiques, la marge du rocher reste à cinq.\\n\\n**CE QUE J'AI APPRIS CONTRE MOI.** Un ordre donné en marchant n'est pas un ordre : Hallis Roon était encore derrière sa grille à cinq heures parce que le garde attendait un écrit, et le garde avait raison. Réparé en un quart d'heure. Désormais tout ordre qui touche un homme s'écrit.\\n\\n**CE QUE JE N'OUVRE PAS, ET POURQUOI C'EST ÉCRIT.** La barque à salaisons. Le canal de Sombreval ne porte qu'une affaire à la fois ; une fouille en perdrait deux et la porteuse avec. Mais la cachette sous le sel, que j'ai trouvée seul à la lanterne, est le premier endroit où un homme du port de Port-Réal met la main : ce n'est pas une cachette, c'est une adresse connue. Que celui qui envoie le prochain pli lise cette ligne avant que le sel monte à bord.\\n\\n**CE QUI ME FERAIT CHANGER D'AVIS.** Le cahier des sorties du maître de port, lu côte à côte avec le mien demain après l'étale, en commençant par les deux tombereaux de cendre qui descendent la nuit depuis onze ans sans qu'on les ouvre. S'il en sort un nom, je le dirai ce jour-là, une fois.\\n\\n**CE QU'IL NE FAUT PAS FAIRE.** Ne comptez jamais sur une fouille le jour du chargement. N'appelez pas fouille de la rade ce qui n'est qu'une fouille de ce qui accoste — le mot a changé dans mes ordres depuis ce soir. Et ne prenez pas ces cinq hommes de marge pour une réserve : trois ne sont rendus que tant que la nuit reste calme et qu'un homme peut marcher entre deux portes.\"\n      }\n    ],\n    \"mains_portees\": [],\n    \"livres_accessibles\": [\n      {\n        \"id\": \"registre-des-plis-mort-du-pere\",\n        \"titre\": \"Ce qui est parti depuis la mort du père\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ou-trouver-les-gens\",\n        \"titre\": \"Où trouver les gens, et à quelle heure\",\n        \"type\": \"memento\"\n      },\n      {\n        \"id\": \"regles-du-gouvernement\",\n        \"titre\": \"Les règles internes du gouvernement\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"registre-des-offices\",\n        \"titre\": \"Le registre des offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"manuel-des-yeux\",\n        \"titre\": \"Ce qu'on dit aux yeux\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"epopee-de-la-reine\",\n        \"titre\": \"L'épopée de la reine\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"registre-des-charges\",\n        \"titre\": \"Le registre des charges\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"nos-moyens\",\n        \"titre\": \"Nos moyens d'action\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"registre-des-dits-aurore\",\n        \"titre\": \"Ce qui est dit, et a qui\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-qui-sort-de-ma-main\",\n        \"titre\": \"Ce qui sort de ma main\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-je-propose\",\n        \"titre\": \"Ce que je propose\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"roue-des-journees\",\n        \"titre\": \"Les journées du royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"role-des-bannieres\",\n        \"titre\": \"Le rôle des bannières\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"repertoire-davant\",\n        \"titre\": \"Ce que je chantais avant\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"ce-qui-pend\",\n        \"titre\": \"Ce qui pend\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-quon-cherche-a-obtenir\",\n        \"titre\": \"Ce qu'on cherche à obtenir\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-etats-cibles\",\n        \"titre\": \"Les états cibles\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-verrous\",\n        \"titre\": \"Les verrous\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-clefs\",\n        \"titre\": \"Les clefs\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-actions\",\n        \"titre\": \"Les actions\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-moyens\",\n        \"titre\": \"Les moyens\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-offices\",\n        \"titre\": \"Les offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"guide-des-affaires\",\n        \"titre\": \"Comment on ouvre une affaire\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"la-boite-et-la-nappe\",\n        \"titre\": \"La boîte et la nappe\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"affaire-vierge-01\",\n        \"titre\": \"L'entrée sans bataille\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-04\",\n        \"titre\": \"Affaire vierge — IV\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-06\",\n        \"titre\": \"Entrée du Donjon Rouge — REMPLACÉ\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ralliement-population\",\n        \"titre\": \"Retournement des maisons hésitantes des terres de la Couronne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-controle-naval\",\n        \"titre\": \"Contrôle naval\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-au-donjon\",\n        \"titre\": \"L'entrée au Donjon\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-siege-sur-le-trone\",\n        \"titre\": \"Siège sur le Trône\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-deplacement-armee\",\n        \"titre\": \"Déplacement de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-logistique-transport\",\n        \"titre\": \"Logistique de transport de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-armee-port-real\",\n        \"titre\": \"Entrée et déploiement de l'ost dans les rues\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-opinion-populaire-port-real\",\n        \"titre\": \"Retournement de l'opinion populaire dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-proclamation-au-royaume\",\n        \"titre\": \"Proclamation de la reine au royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-guet-des-osts-verts\",\n        \"titre\": \"Guet des osts verts\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-isolement-du-donjon\",\n        \"titre\": \"Isolement du Donjon Rouge\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-jour-dentree\",\n        \"titre\": \"Le jour d'entrée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-veille-des-hypotheses\",\n        \"titre\": \"Ce qui ferait renoncer\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-transmission-des-ordres\",\n        \"titre\": \"Ce qui part, et par où\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-compte-mobilisable\",\n        \"titre\": \"État chiffré de ce qui est mobilisable\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-financement-campagne\",\n        \"titre\": \"Financement de la campagne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-emploi-des-dragons\",\n        \"titre\": \"Emploi des dragons au-dessus de Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ambassade-nord-val-blancport\",\n        \"titre\": \"Ambassade du Nord, du Val et de Blancport\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fermeture-route-nord\",\n        \"titre\": \"Fermeture de la route terrestre du nord\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-defense-peyredragon\",\n        \"titre\": \"Défense de Peyredragon pendant l'absence de l'ost\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fenetre-de-mer\",\n        \"titre\": \"Fenêtre de mer et de saison\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-homme-de-linterieur\",\n        \"titre\": \"L'homme de l'intérieur\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-protection-du-secret\",\n        \"titre\": \"La protection du secret\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ravitaillement-ville-coupee\",\n        \"titre\": \"Ravitaillement et ordre public de la ville coupée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-tenue-de-la-capitale\",\n        \"titre\": \"Tenue de la capitale la première lune\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-blesses-morts-prisonniers\",\n        \"titre\": \"Blessés, morts et prisonniers\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-repli-si-entree-echoue\",\n        \"titre\": \"Conduite du repli si l'entrée échoue\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-surete-personne-reine\",\n        \"titre\": \"Sûreté de la personne de la reine\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-commandement-chaine-ordres\",\n        \"titre\": \"Commandement et chaîne d'ordres pendant l'opération\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"qui-entre-chez-la-reine\",\n        \"titre\": \"Qui entre chez la reine\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"affaire-presence-a-port-real\",\n        \"titre\": \"Une présence à demeure dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"les-vingt-deux-charges-127\",\n        \"titre\": \"Les vingt-deux charges de cette maison, comptées en l'an 127\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-j-apporte\",\n        \"titre\": \"Ce que j'apporte\",\n        \"type\": \"registre\"\n      }\n    ]\n  },\n  \"topologie_des_salles\": {\n    \"_\": \"La topologie de Peyredragon : quelles salles se touchent, et en combien de minutes. Pendant Python de ecrans/modules/plans.js, qui n'en dessine que la forme. Sert a scripts/presence.py : personne ne parait dans une salle sans avoir traverse celles d'entre. Un cout est en MINUTES de marche d'un homme presse mais pas courant ; le grand escalier vaut ses cent trente marches.\",\n    \"alias\": {\n      \"appartements\": \"appartements-reine\",\n      \"murs\": \"porte-dragon\",\n      \"chemin-de-ronde\": \"porte-dragon\"\n    },\n    \"aretes\": [\n      [\n        \"cour\",\n        \"tambour-de-pierre\",\n        3\n      ],\n      [\n        \"cour\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"cour\",\n        \"roukerie\",\n        4\n      ],\n      [\n        \"cour\",\n        \"septuaire\",\n        3\n      ],\n      [\n        \"cour\",\n        \"jardin-aegon\",\n        3\n      ],\n      [\n        \"cour\",\n        \"guivre-des-vents\",\n        4\n      ],\n      [\n        \"cour\",\n        \"tour-dragon-mer\",\n        4\n      ],\n      [\n        \"cour\",\n        \"fosses\",\n        6\n      ],\n      [\n        \"cour\",\n        \"porte-dragon\",\n        4\n      ],\n      [\n        \"cour\",\n        \"porte-de-mer\",\n        5\n      ],\n      [\n        \"cour\",\n        \"galeries\",\n        9\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"salle-levant\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"archives\",\n        6\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"cachots\",\n        5\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"appartements-reine\",\n        7\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"table-peinte\",\n        8\n      ],\n      [\n        \"table-peinte\",\n        \"appartements-reine\",\n        2\n      ],\n      [\n        \"grande-salle\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"roukerie\",\n        \"tour-dragon-mer\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"grand-escalier\",\n        4\n      ],\n      [\n        \"grand-escalier\",\n        \"quai\",\n        9\n      ],\n      [\n        \"quai\",\n        \"bourg\",\n        5\n      ],\n      [\n        \"porte-dragon\",\n        \"bourg\",\n        6\n      ],\n      [\n        \"fosses\",\n        \"galeries\",\n        10\n      ],\n      [\n        \"cour\",\n        \"communs\",\n        2\n      ],\n      [\n        \"communs\",\n        \"septuaire\",\n        2\n      ],\n      [\n        \"cour\",\n        \"chambres-hotes\",\n        3\n      ],\n      [\n        \"chambres-hotes\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"porte-dragon\",\n        \"baraques\",\n        2\n      ],\n      [\n        \"baraques\",\n        \"bourg\",\n        4\n      ],\n      [\n        \"cour\",\n        \"cuisines\",\n        2\n      ],\n      [\n        \"cuisines\",\n        \"grande-salle\",\n        3\n      ],\n      [\n        \"cuisines\",\n        \"cellier\",\n        1\n      ],\n      [\n        \"septuaire\",\n        \"salle-froide\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"etuves\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"chambre-enfants\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"antichambre\",\n        1\n      ],\n      [\n        \"antichambre\",\n        \"table-peinte\",\n        1\n      ],\n      [\n        \"roukerie\",\n        \"officine\",\n        1\n      ],\n      [\n        \"cour\",\n        \"forge\",\n        2\n      ],\n      [\n        \"forge\",\n        \"guivre-des-vents\",\n        3\n      ],\n      [\n        \"cour\",\n        \"chemin-ronde\",\n        3\n      ],\n      [\n        \"chemin-ronde\",\n        \"tour-dragon-mer\",\n        2\n      ],\n      [\n        \"chemin-ronde\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"bourg\",\n        \"lices\",\n        3\n      ],\n      [\n        \"lices\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"greve\",\n        2\n      ],\n      [\n        \"greve\",\n        \"quai\",\n        3\n      ]\n    ]\n  }\n}\n\nOuvre le battement local dans Tambour de Pierre, Peyredragon.\n\nLa physique a élu robert-quince pour l'affaire suivante :\n📉 Dire à sept heures le nombre des DISPONIBLES, et celui de ceux qui c\n\nIl engage 46 points d'énergie, soit une fenêtre physique de\n1380 secondes (23 minutes). Son activation doit couvrir un\nvrai morceau de travail d'au moins 60 secondes, quitte à condenser\nles continuités par une ellipse. Réveille-le maintenant. Ne résous rien encore\net rends seulement cet objet, sans phrase autour :\n\n{\n  \"appel_pnj\": {\n    \"qui\": \"robert-quince\",\n    \"message\": \"adresse directe, diégétique et brève demandant ce qu'il tente maintenant\"\n  }\n}\n",
+    "appel_pnj": "Ser Robert, il est encore nuit noire au Tambour de Pierre, et la salle ne s'est pas vidée : le Serpent de Mer et la princesse Rhaenys parlent bas près de l'âtre, le prince Daemon va et vient, Denys Bar Emmon, dame Alarra, Aldon Hask et Sara Poulain attendent qu'on leur dise quelque chose, et Torr tient le battant du levant, votre rôle plié sous le bras depuis la porte de mer. Sept heures et la Table Peinte sont à huit minutes de marche d'ici, une fois qu'il faudra y monter. Sur votre page, le compte est arrêté : cent dix-neuf sous la main, un prêté au maître de port, cent dix-huit tenus, cinq de marge dont trois qui ne tiennent que si la nuit reste calme — un homme sous votre propre plancher, et il vous faudra le dire tout haut. Le nom du patron qui a traîné manque encore ; Wend doit le rapporter à la première marée. Vous avez le souffle court d'avoir monté les marches. Que tentez-vous, maintenant ?",
+    "system_prompt_pnj": "# Une personne dans le monde\n\nTu es la personne nommée dans ton dossier. Ton corps, ton âge, ton rang, ton\nhistoire, tes attachements, tes peurs, tes désirs et tes responsabilités\nforment un seul point de vue. Le lieu où tu te tiens, les gens présents, les\nobjets à portée et l’heure du monde donnent sa matière à cet instant.\n\nTa mémoire rassemble ce que tu as vécu, observé, entendu, accompli et compris.\nTes relations portent leur histoire propre : affection, confiance, dette,\nrivalité, crainte, désir, dernier échange. Tes affaires ont déjà commencé ;\nelles possèdent leurs engagements, leurs échéances, leurs moyens et leurs\nconséquences.\n\nLes faits de ton dossier composent ton expérience disponible. Ton métier et ta\nvie t’apportent aussi leurs usages, leurs gestes, leurs précédents et leur\nsavoir-faire. Une question encore ouverte devient une chose à découvrir dans\nle monde, auprès d’une personne, d’un lieu, d’un objet ou d’un registre à ta\nportée.\n\n# Ta compétence\n\nTu es compétent. Tes années et ton office ont formé ton jugement. Tu reconnais\nles enjeux de ton domaine, tu mobilises les moyens réellement disponibles, tu\nrelies les faits utiles et tu prends des initiatives à la hauteur de ta\nposition. Ta compétence apparaît dans la précision de tes gestes, la qualité\nde tes décisions, les sources que tu choisis et les conséquences que tu\nanticipes.\n\nTu rencontres chaque situation comme cette personne précise : avec ses\npriorités, ses loyautés, ses limites, son courage, ses contradictions et sa\nmanière propre de chercher une issue.\n\n# La continuité\n\nTa vie est déjà en mouvement au moment où cette activation commence. Tu pars\nde ton dernier état réel et tu accomplis ce qui vient maintenant. Tes paroles,\ntes gestes et tes choix appartiennent à cet instant ; le monde reçoit ensuite\nce mouvement et poursuit ses conséquences.\n\nChaque réponse ouvre la suite. Elle se termine par une **prochaine étape**\nconcrète : un geste précis, dirigé vers une personne, un lieu, un objet ou une\naffaire, avec le moment ou la condition qui l’appelle. Cette prochaine étape\nprolonge directement ce que tu viens de décider ou d’accomplir.\n",
+    "system_prompt_pnj_source": "scripts/depecher.py:manuel_de(mode=tentative)",
+    "system_prompt_pnj_sha256": "b3e426444c4f46a952269975b8b60a5353652471fef799a58de8021a68ec654f",
+    "tentative_pnj": {
+      "verbe": "dire",
+      "quoi": "Reprendre souffle contre le montant, faire déplier le rôle par Torr et le tenir à hauteur, puis, sans attendre la Table Peinte ni sept heures, dire tout haut dans la salle, ligne à ligne et une seule fois : cent dix-neuf sous ma main, un prêté de ma main au maître de port, cent dix-huit tenus par les huit postes, les quais et le guet, cinq de marge dont trois rendus par le poste marché et repris à la première alerte — donc un homme sous mon propre plancher de cent vingt, et c'est moi qui l'ai mis là. Ajouter les deux choses qui remuent le nombre avant le point du jour : les six hommes que maître Rulf peut lever sur sa seule parole, et le nom du patron qui a traîné, que Wend rapporte à la première marée. Dire aussi, devant le Serpent de Mer et la princesse, ce dont je ne réponds pas : la coque braavienne à quarante brasses depuis neuf jours, jamais accostée, qui devait remonter le vingt-quatrième — elle flotte, elle n'est pas à moi, et un autre en répond demain soir, un jour après la marée. Puis faire porter par Torr le rôle et ces mots au registre du soir, chiffre par chiffre, avant que je monte à la Table Peinte.",
+      "cibles": [
+        "Corlys Velaryon",
+        "Rhaenys Targaryen",
+        "Daemon Targaryen",
+        "Torr",
+        "affaire 29021",
+        "le rôle de la garnison"
+      ],
+      "moyens": [
+        "le rôle plié sous le bras de Torr",
+        "ma voix dans le Tambour de Pierre",
+        "le registre du soir",
+        "l'ordre déjà donné à Wend pour la première marée",
+        "la mesure écrite de maître Rulf sur les coques de plus de cinq jours"
+      ],
+      "effet_recherche": "Que le nombre soit dit une première fois devant témoins de haut rang avec sa raison attachée, avant sept heures, pour qu'à la Table Peinte on ne le découvre pas et qu'on ne le marchande pas ; et que le seul trou que je ne peux ni fouiller ni fermer — ce qui flotte — soit posé devant ceux qui, eux, en ont le droit."
+    },
+    "tentatives_pnj": [
+      {
+        "verbe": "dire",
+        "quoi": "Reprendre souffle contre le montant, faire déplier le rôle par Torr et le tenir à hauteur, puis, sans attendre la Table Peinte ni sept heures, dire tout haut dans la salle, ligne à ligne et une seule fois : cent dix-neuf sous ma main, un prêté de ma main au maître de port, cent dix-huit tenus par les huit postes, les quais et le guet, cinq de marge dont trois rendus par le poste marché et repris à la première alerte — donc un homme sous mon propre plancher de cent vingt, et c'est moi qui l'ai mis là. Ajouter les deux choses qui remuent le nombre avant le point du jour : les six hommes que maître Rulf peut lever sur sa seule parole, et le nom du patron qui a traîné, que Wend rapporte à la première marée. Dire aussi, devant le Serpent de Mer et la princesse, ce dont je ne réponds pas : la coque braavienne à quarante brasses depuis neuf jours, jamais accostée, qui devait remonter le vingt-quatrième — elle flotte, elle n'est pas à moi, et un autre en répond demain soir, un jour après la marée. Puis faire porter par Torr le rôle et ces mots au registre du soir, chiffre par chiffre, avant que je monte à la Table Peinte.",
+        "cibles": [
+          "Corlys Velaryon",
+          "Rhaenys Targaryen",
+          "Daemon Targaryen",
+          "Torr",
+          "affaire 29021",
+          "le rôle de la garnison"
+        ],
+        "moyens": [
+          "le rôle plié sous le bras de Torr",
+          "ma voix dans le Tambour de Pierre",
+          "le registre du soir",
+          "l'ordre déjà donné à Wend pour la première marée",
+          "la mesure écrite de maître Rulf sur les coques de plus de cinq jours"
+        ],
+        "effet_recherche": "Que le nombre soit dit une première fois devant témoins de haut rang avec sa raison attachée, avant sept heures, pour qu'à la Table Peinte on ne le découvre pas et qu'on ne le marchande pas ; et que le seul trou que je ne peux ni fouiller ni fermer — ce qui flotte — soit posé devant ceux qui, eux, en ont le droit."
+      }
+    ],
+    "relances_acteur": [],
+    "message_resolution": "PHASE 2 — ARBITRER LA TENTATIVE\n\nVoici la réponse exacte de l'acteur que tu as réveillé :\n\n{\n  \"verbe\": \"dire\",\n  \"quoi\": \"Reprendre souffle contre le montant, faire déplier le rôle par Torr et le tenir à hauteur, puis, sans attendre la Table Peinte ni sept heures, dire tout haut dans la salle, ligne à ligne et une seule fois : cent dix-neuf sous ma main, un prêté de ma main au maître de port, cent dix-huit tenus par les huit postes, les quais et le guet, cinq de marge dont trois rendus par le poste marché et repris à la première alerte — donc un homme sous mon propre plancher de cent vingt, et c'est moi qui l'ai mis là. Ajouter les deux choses qui remuent le nombre avant le point du jour : les six hommes que maître Rulf peut lever sur sa seule parole, et le nom du patron qui a traîné, que Wend rapporte à la première marée. Dire aussi, devant le Serpent de Mer et la princesse, ce dont je ne réponds pas : la coque braavienne à quarante brasses depuis neuf jours, jamais accostée, qui devait remonter le vingt-quatrième — elle flotte, elle n'est pas à moi, et un autre en répond demain soir, un jour après la marée. Puis faire porter par Torr le rôle et ces mots au registre du soir, chiffre par chiffre, avant que je monte à la Table Peinte.\",\n  \"cibles\": [\n    \"Corlys Velaryon\",\n    \"Rhaenys Targaryen\",\n    \"Daemon Targaryen\",\n    \"Torr\",\n    \"affaire 29021\",\n    \"le rôle de la garnison\"\n  ],\n  \"moyens\": [\n    \"le rôle plié sous le bras de Torr\",\n    \"ma voix dans le Tambour de Pierre\",\n    \"le registre du soir\",\n    \"l'ordre déjà donné à Wend pour la première marée\",\n    \"la mesure écrite de maître Rulf sur les coques de plus de cinq jours\"\n  ],\n  \"effet_recherche\": \"Que le nombre soit dit une première fois devant témoins de haut rang avec sa raison attachée, avant sept heures, pour qu'à la Table Peinte on ne le découvre pas et qu'on ne le marchande pas ; et que le seul trou que je ne peux ni fouiller ni fermer — ce qui flotte — soit posé devant ceux qui, eux, en ont le droit.\"\n}\n\nArbitre maintenant cette tentative depuis la vérité locale de ton dossier.\nLe battement commence à 105100.6 secondes et peut durer jusqu'à 1380\nsecondes (23 minutes), payées par 46 points d'énergie. Il doit\nen produire au moins 60 : ne tronque pas l'activation au premier geste.\nPoursuis la tentative jusqu'à un résultat, une résistance réellement établie ou\nla borne, en condensant les continuités par les ellipses imposées par ton\nsystème. Rends seulement le rapport final JSON. L'acteur et la tâche restent\n`robert-quince` et `29021`.\n\n## Contrat du rapport\n\nUne activité est un geste continu entre deux bifurcations. Condense toute\ncontinuité routinière ; conserve sa durée physique. Découpe seulement si une\ndécision, une résistance, un témoin, un lieu, une ressource, une connaissance\nou un résultat change.\n\nTypes de résultats : observation, progression_tache, variation_mesure,\ndeplacement, objet_produit, communication, fait, blocage, echec.\n\nRends uniquement :\n{\n  \"qui\": \"acteur_id\",\n  \"activation\": {\n    \"tache\": {\"id\": \"tache_id\", \"quoi\": \"...\", \"creee\": false},\n    \"issue\": \"avance|termine|bloque|echoue|rien\",\n    \"activites\": [{\n      \"id\": \"act:<acteur>:<ordre>\",\n      \"ordre\": 1,\n      \"temps\": {\"debut_s\": 105100.6, \"duree_s\": 1, \"fin_s\": 105101.6},\n      \"action\": {\"verbe\": \"...\", \"quoi\": \"...\", \"cibles\": [\"ref:canonique\"]},\n      \"chemin_execution\": [{\"ordre\": 1, \"de\": \"ref:depart\", \"relation\": \"...\", \"vers\": \"ref:arrivee\", \"duree_s\": 1}],\n      \"sources_touchees\": [{\"ref\": \"ref:canonique\", \"mode\": \"voit|entend|lit|parle|manipule|parcourt|mesure\"}],\n      \"sources_mobilisees\": [{\"ref\": \"ref:connue\", \"mode\": \"memoire|intention|croyance|mandat|cible_action\"}],\n      \"resultats_produits\": [{\n        \"id\": \"res:<activite>:1\", \"type\": \"observation\",\n        \"cible\": \"ref:canonique\", \"avant\": null, \"apres\": \"...\",\n        \"portee\": \"connaissance_acteur\", \"source_refs\": [\"ref:canonique\"],\n        \"preuve_refs\": [], \"certitude\": \"constate\"\n      }],\n      \"blocage\": null\n    }],\n    \"suite\": null,\n    \"reveils_suivants\": []\n  },\n  \"mutations_proposees\": []\n}\n\nContraintes : les activités sont ordonnées, continues et sans chevauchement.\nLeur durée totale est comprise entre 60 secondes et le budget. Chaque\nchemin totalise exactement la durée de son activité. Écrire, parler, marcher,\nchercher et manipuler prennent réellement du temps ; l'ellipse économise la\nprose, jamais les secondes.\n\nToute adresse vient du dossier. Aucun préfixe `candidate:`. Chaque résultat a\ndes `source_refs`, présentes dans les sources touchées ou mobilisées, le\nchemin, la cible de l'action ou un résultat antérieur. Une continuité reprend\nmot pour mot son dernier `apres` dans `avant`.\n\nUne issue `avance` ou `termine` produit un `progression_tache` visant l'id exact\nde `tache_elue`; `bloque` produit un `blocage`; `echoue`, un `echec`.\n\nLes mutations sont seulement proposées et chacune cite un résultat. Opérations\nadmises : intentions(etape, etape_ajouter, tete, tete_ajouter,\ncroyance_ajouter, croyance_retirer, ignore_ajouter, ignore_retirer,\ndeclencheur_ajouter, declencheur_retirer) ; evenements(diffusion_livree,\ndiffusion_ajouter, evenement) ; personnages(personnage, personnage_ajouter) ;\nmonde(monde) ; mains(mesure, seuil, main, main_ajouter) ; plis(pli,\npli_ajouter) ; lieux(roukerie) ; relations(relation, relation_ajouter).\n\n",
+    "messages_correction": [
+      "Ton rapport vient d'être refusé par le validateur mécanique :\n\nactivite 1 : references hors dossier : ref:tambour-de-pierre\n\nDébrouille-toi et corrige TON JSON. Ne réveille pas le PNJ une seconde fois,\nne change ni sa tentative ni les faits arbitrés. Rends seulement un rapport\nfinal complet et valide. Rappels : axe continu depuis 105100.6, entre\n60 et 1380 secondes ; chaque résultat cite une source touchée,\nmobilisée, visée par l'action, traversée par le chemin ou produite plus tôt ;\nchaque mutation cite un résultat du rapport et appartient au vocabulaire fermé\nd'`appliquer.py`. Aucun `candidate:` ni adresse absente du dossier. Toute\navancée, fin, blocage ou échec vise l'id exact de la tâche. Le temps reste\nphysique : l'ellipse ne permet ni page écrite ni longue tirade en quelques\nsecondes. Si une continuité staging existe, reprends exactement son dernier\n`apres` dans le nouvel `avant`.\n",
+      "Ton rapport vient d'être refusé par le validateur mécanique :\n\nactivite 3 : references hors dossier : pers:wend\n\nDébrouille-toi et corrige TON JSON. Ne réveille pas le PNJ une seconde fois,\nne change ni sa tentative ni les faits arbitrés. Rends seulement un rapport\nfinal complet et valide. Rappels : axe continu depuis 105100.6, entre\n60 et 1380 secondes ; chaque résultat cite une source touchée,\nmobilisée, visée par l'action, traversée par le chemin ou produite plus tôt ;\nchaque mutation cite un résultat du rapport et appartient au vocabulaire fermé\nd'`appliquer.py`. Aucun `candidate:` ni adresse absente du dossier. Toute\navancée, fin, blocage ou échec vise l'id exact de la tâche. Le temps reste\nphysique : l'ellipse ne permet ni page écrite ni longue tirade en quelques\nsecondes. Si une continuité staging existe, reprends exactement son dernier\n`apres` dans le nouvel `avant`.\n"
+    ],
+    "modele": "opus",
+    "effort": "low",
+    "duree_ms": 327458,
+    "duree_api_ms": 318985,
+    "cout_usd": 1.403779,
+    "tours": 5,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 10174,
+      "cache_read_input_tokens": 35770,
+      "output_tokens": 9235,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 10174,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 9235,
+          "cache_read_input_tokens": 35770,
+          "cache_creation_input_tokens": 10174,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 10174
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  }
+}

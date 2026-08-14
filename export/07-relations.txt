@@ -1,0 +1,298 @@
+AURORE — ses relations
+======================
+
+--- Ce qu'elle pense des autres (0) -------------------------------------
+
+(rien)
+
+--- Ce que les autres pensent d'elle (0) --------------------------------
+
+(rien)
+
+--- Liens de la table (etat/liens.json) ---------------------------------
+
+{
+  "de": "11038",
+  "vers": "plan-moyens:M16",
+  "nature": "equilibre",
+  "qui": "le MJ",
+  "quand": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 29
+  },
+  "visible_par": [
+    "rhaenyra"
+  ],
+  "pourquoi": "Faire rouvrir le quai de Sombreval AJOUTE un mouillage a la table au lieu d'en consommer un — l'action ne coute pas M16, elle se paie en coques. M16 portait 44 demandes et zero producteur, et c'est le moyen de Rulf Corne, qui est en scene chez Aurore a la maree du matin : la bouche existe sans qu'on la fabrique."
+}
+
+{
+  "de": "71001",
+  "vers": "71000",
+  "nature": "route",
+  "qui": "le MJ",
+  "quand": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 29
+  },
+  "visible_par": [
+    "rhaenyra",
+    "aurore-inchauspe"
+  ],
+  "route": {
+    "canal": "coque",
+    "par": "l'homme de Villevieille de Rulf Corne — celui qui porte des choses aux mestres de la Citadelle, donne au quai de Peyredragon le 24e de la 3e lune",
+    "arrive": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 14
+    },
+    "jours": 16,
+    "fiabilite": 55,
+    "deforme_comment": "Ce qui est vrai : la moitie des seigneurs de la Mander attendent de voir qui paie, et Hautjardin est aux mains d'un enfant. Ce qui arrivera : « le Bief refuse de marcher pour Aegon ». UNE ATTENTE DEVIENDRA UN REFUS, et l'on se croira plus fort qu'on ne l'est. Personne ne dira le nom de l'enfant de Hautjardin, qui est pourtant toute l'affaire.",
+    "source": "journal d'Aurore, le quai du 24e (Rulf Corne, ses deux hommes de confiance) + lieux.json, Villevieille a 25 jours de Port-Real"
+  },
+  "pourquoi": "Route de fuite du verrou 71001 (on peut le savoir). Sans arete ici, evaluer.py --murs le compte comme un mur invisible."
+}
+
+{
+  "de": "71002",
+  "vers": "71000",
+  "nature": "route",
+  "qui": "le MJ",
+  "quand": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 29
+  },
+  "visible_par": [
+    "rhaenyra",
+    "aurore-inchauspe"
+  ],
+  "route": {
+    "canal": "coque",
+    "par": "le meme homme, au voyage suivant — et c'est un SILENCE qu'il rapporte : on leve des hommes a Villevieille pour une affaire de famille, et l'on n'y parle ni du feu de la route royale ni d'un couronnement",
+    "arrive": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 19
+    },
+    "jours": 21,
+    "fiabilite": 70,
+    "deforme_comment": "C'est le verrou le plus cher du plan et sa route est la plus traitre, parce qu'on apprend une IGNORANCE par une ABSENCE. Ce qui arrivera : « le Bief est lent ». Ce qui est vrai : le Bief n'est pas lent, il n'est pas prevenu — et le jour ou il l'est, sa lenteur devient une faute qu'on lui reproche et il double le pas. Croire a la lenteur fera compter au joueur des jours qu'il n'a pas.",
+    "source": "les trois entrees `ignore` de la tete d'Ormund + le canal du 71001"
+  },
+  "pourquoi": "Route de fuite du verrou 71002 (on peut le savoir). Sans arete ici, evaluer.py --murs le compte comme un mur invisible."
+}
+
+{
+  "de": "71003",
+  "vers": "71200",
+  "nature": "route",
+  "qui": "le MJ",
+  "quand": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 29
+  },
+  "visible_par": [
+    "rhaenyra",
+    "aurore-inchauspe"
+  ],
+  "route": {
+    "canal": "corbeau",
+    "par": "la ligne de roukerie de l'office du Grand Mestre — celle qu'Aurore a lue le 28e au soir a la barbacane et bornee a six mains ; ce qui passe entre mestres de la Citadelle passe par la",
+    "arrive": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 12
+    },
+    "jours": 14,
+    "fiabilite": 45,
+    "deforme_comment": "ROUTE AFFAIBLIE LE 29e, ET C'EST L'ENNEMI QUI L'A FAIT. Ormund a remonte la deposition jusqu'a la main de Gerardys et en a tire que la chaine porte tout : « ils ont un confrere dans chaque tour du Bief, et chaque corbeau qui vole chez moi se pose sur le poing d'un mestre ». Il garde desormais ses copies sous SON sceau et convoque par cavaliers. Ce qui nous parvient encore par la ligne de roukerie n'est donc plus ce qu'il ecrit : c'est seulement ce que les mestres se disent entre eux — plus lent de quatre jours, et sans aucune piece a l'appui. On saura toujours que Daeron ne bouge pas ; on ne saura plus pourquoi, et l'on conclura d'autant plus volontiers a un ordre d'Otto la ou il y a une peur.",
+    "source": "journal d'Aurore, la barbacane du 28e (la ligne de roukerie, l'office du Grand Mestre, six mains) + croyance et etape sans horloge d'Ormund | journee d'Ormund du 129.3.29 (travaux : ormund-par-quelle-main, 7 pensees versees) — sa decision arretee le soir du 29e",
+    "delai_jours": 14
+  },
+  "pourquoi": "Route de fuite du verrou 71003 (le joueur peut AGIR dessus). Sans arete ici, evaluer.py --murs le compte comme un mur invisible."
+}
+
+{
+  "de": "71004",
+  "vers": "71100",
+  "nature": "route",
+  "qui": "le MJ",
+  "quand": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 29
+  },
+  "visible_par": [
+    "rhaenyra",
+    "aurore-inchauspe"
+  ],
+  "route": {
+    "canal": "rumeur",
+    "par": "chez Nesse, la salle derriere la salle ou parlent LES SECONDS — un second de coque venu de Port-Real, par Mig le coureur d'amarres ou par Nesse la mere elle-meme",
+    "arrive": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+    },
+    "jours": 5,
+    "fiabilite": 45,
+    "deforme_comment": "La route la plus rapide et la plus sale, et c'est ecrit dans la portee du verrou : une prime criee sans gage se sait vite. Le chiffre enflera — on dira mille dragons pour une tete, on dira que le roi paie de sa main (vrai), on dira que des hommes ont ete payes (faux, aucun ne l'a ete). CE QUI EST VRAI SOUS LA RUMEUR EST LE GAGE QUI MANQUE : trois hommes tirent sur la meme bourse et aucun n'a ecrit son chiffre devant les deux autres.",
+    "source": "journal d'Aurore, le quai du 24e (chez Nesse, les seconds, Mig) + maisons.json (or 700000, revenus_lune 20000) + les deux aretes `contredit` 71010/71029"
+  },
+  "pourquoi": "Route de fuite du verrou 71004 (on peut le savoir). Sans arete ici, evaluer.py --murs le compte comme un mur invisible."
+}
+
+{
+  "de": "71005",
+  "vers": "71300",
+  "nature": "route",
+  "qui": "le MJ",
+  "quand": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 29
+  },
+  "visible_par": [
+    "rhaenyra",
+    "aurore-inchauspe"
+  ],
+  "route": {
+    "canal": "lettre",
+    "par": "les dames de la Baie — vingt ans de correspondance dans la seconde malle d'Alarra Rosby, et les trois enveloppes ou elle a accepte d'ecrire de sa main, signees de son nom de femme mariee",
+    "arrive": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 9
+    },
+    "jours": 11,
+    "fiabilite": 60,
+    "deforme_comment": "Les femmes de la cour ecrivent la brouille, jamais l'echeance. Ce qui arrivera : « le roi et sa Main se sont querelles devant temoins ». Ce qui est vrai et qui ne passera par aucune lettre : LA DATE — le cinquieme jour de la septieme lune, Aegon ecarte Otto si les achats n'ont rien produit de visible. Une brouille se console ; une date se compte. Le joueur croira a une humeur et manquera une horloge.",
+    "source": "journal d'Aurore, la soiree du 25e (la seconde malle d'Alarra, vingt ans de lettres des dames de la Baie, les trois enveloppes) + tete d'aegon-ii et canon 7.5"
+  },
+  "pourquoi": "Route de fuite du verrou 71005 (on peut le savoir, et on peut l'aggraver). Sans arete ici, evaluer.py --murs le compte comme un mur invisible."
+}
+
+{
+  "de": "71006",
+  "vers": "71000",
+  "nature": "route",
+  "qui": "le MJ",
+  "quand": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 29
+  },
+  "visible_par": [
+    "rhaenyra",
+    "aurore-inchauspe"
+  ],
+  "route": {
+    "canal": "deja su",
+    "par": "la deposition de ser Steffon Darklyn, partie de cette maison et adressee au nom d'Ormund — c'est nous qui l'avons ecrite, il n'y a rien a apprendre",
+    "arrive": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 28
+    },
+    "jours": 0,
+    "fiabilite": 100,
+    "deforme_comment": "Rien, du cote de ce que nous savons : ce verrou est notre propre geste, et le joueur le tient deja. CE QUE AUCUNE ROUTE NE LUI APPRENDRA, c'est ce que le geste a produit la-bas — Ormund l'a compris comme « on a voulu que je sache qu'on sait ce que ma maison a fait », et son declencheur est arme sur exactement ce geste. Un declencheur ne s'annonce pas. Ecrire a Ormund nommement une seconde fois se paiera sans qu'on ait ete prevenu du prix.",
+    "source": "croyance d'Ormund et son declencheur + la deposition de ser Steffon Darklyn (actes de cette maison). Meme cas que 76005 : un verrou que le joueur savait AVANT qu'on l'ecrive, ecrit ici pour ne plus y revenir tous les trois jours."
+  },
+  "pourquoi": "Route de fuite du verrou 71006 (LE JOUEUR PEUT AGIR). Sans arete ici, evaluer.py --murs le compte comme un mur invisible."
+}
+
+{
+  "de": "pers:aurore-inchauspe",
+  "vers": "pers:larys",
+  "nature": "route",
+  "qui": "le MJ",
+  "quand": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 29
+  },
+  "visible_par": [
+    "larys"
+  ],
+  "route": {
+    "canal": "coque",
+    "par": "les dix copies de l'avis de quai (acte-aurore-avis-de-quai-dix-copies-28e), verifiees de la main d'Aurore sous la bache le 28e au soir, en trois liasses par date de depart, mises a bord par Rulf Corne lui-meme",
+    "arrive": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 2
+    },
+    "jours": 4,
+    "fiabilite": 90,
+    "deforme_comment": "La piece arrive INTACTE — c'est ce qui la rend dangereuse. Ce qui se deforme n'est pas le document mais sa LECTURE : Aurore l'a fait pour que mille onze familles cessent de croire leurs hommes morts ; a Port-Real il dira que le feu de la reine a tue bien moins qu'on ne le pretend, signe d'un sergent du roi. Le meme papier sert les deux camps, et le second ne l'a pas paye.",
+    "source": "actes.json (l'avis de quai, dix copies, la ligne des mille onze, signature de Hallis Roon) + plan hightower 71022, `bloquee` : le recit officiel d'Orwyle attend exactement une piece de ce genre"
+  },
+  "pourquoi": "MIROIR DANS L'AUTRE SENS. Premiere route sortante de la partie : jusqu'ici onze routes entraient vers le joueur et aucune n'en sortait. Arme le premier declencheur de Larys."
+}
+
+{
+  "de": "pers:alys-grive",
+  "vers": "pers:larys",
+  "nature": "route",
+  "qui": "le MJ",
+  "quand": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 29
+  },
+  "visible_par": [
+    "larys"
+  ],
+  "route": {
+    "canal": "chanson",
+    "par": "« Mille deux cent quarante » (acte-alys-chante-mille-deux-cent-quarante-28e) — sortie a l'interieur des murs deux jours avant sa descente au bourg ; la fille au chaudron a repondu le refrain apres une seule ecoute. Elle descend au bourg le 30e, et le bourg touche onze equipages etrangers.",
+    "arrive": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 11
+    },
+    "jours": 13,
+    "fiabilite": 35,
+    "deforme_comment": "Une chanson est le seul objet du jeu qui traverse un mur tout seul et qu'aucun sceau ne rattrape. Le chiffre tiendra — c'est ce qui se chante le mieux — et le reste partira : on chantera le nombre sans la colonne, et selon les bouches ce sera le compte des morts de la reine ou celui de ses vivants. CE QUE LARYS ENTENDRA N'EST PAS LA CHANSON, C'EST QU'UN CHIFFRE EXACT SE CHANTE : une chanson qui porte un chiffre est une chanson commandee, et il ne cherchera pas le chanteur, il cherchera qui paie.",
+    "source": "actes.json (acte-aurore-engage-chanteurs le 23e sur sa bourse propre, acte-aurore-air-au-pied, la chanson chantee aux cuisines le 28e) + la croyance de Larys : « on fait courir dans la baie... il ne croit pas la source et cherche a qui la rumeur profite »"
+  },
+  "pourquoi": "Seconde route sortante. Elle n'arme aucun declencheur a elle seule : elle CONFIRME au bout de treize jours ce que la premiere lui aura fait chercher. C'est la difference entre une fuite et une preuve."
+}
+
+{
+  "de": "pers:alarra-rosby",
+  "vers": "pers:alicent",
+  "nature": "route",
+  "qui": "le MJ",
+  "quand": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 29
+  },
+  "visible_par": [
+    "alicent"
+  ],
+  "route": {
+    "canal": "lettre",
+    "par": "les neuf lettres qu'Alarra Rosby a retournees face en l'air le 28e et qu'elle enverra — ecrites AUX FEMMES, c'est sa doctrine propre : jamais le mot coalition ni ligue, sept signatures la meme semaine, un fait qui appartient au destinataire",
+    "arrive": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 11
+    },
+    "delai_jours": 13,
+    "jours": 13,
+    "fiabilite": 50,
+    "deforme_comment": "Ce qui part est une correspondance de dames sur des morts et des vivants ; ce qui arrive a la reine douairiere est qu'ON ECRIT AUX FEMMES DE LA BAIE DEPUIS PEYREDRAGON, en nombre et la meme semaine. Le contenu comptera moins que le fait : Alicent tient elle-meme le seul canal que ce royaume ne lit pas, et elle reconnaitra sa propre arme dans la main d'une autre.",
+    "source": "journal d'Aurore, la soiree du 25e et le 28e (les neuf lettres, la doctrine d'Alarra) + croyance de Larys sur la lettre de main a main"
+  },
+  "pourquoi": "LIEN, PAS DECLENCHEUR. Alicent etait injoignable : aucun chemin d'aretes ne menait jusqu'a elle depuis le joueur, alors qu'elle est a Port-Real comme Otto. Cette route est la premiere, et elle nourrit son affaire."
+}
+

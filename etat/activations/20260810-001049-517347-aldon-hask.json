@@ -1,0 +1,630 @@
+{
+  "qui": "aldon-hask",
+  "activation": {
+    "tache": {
+      "id": "22047",
+      "quoi": "✂️ Arrêter la répartition des quilles, blocus contre transport",
+      "creee": false
+    },
+    "issue": "avance",
+    "activites": [
+      {
+        "id": "act:aldon-hask:1",
+        "ordre": 1,
+        "temps": {
+          "debut_s": 102164.177,
+          "duree_s": 95.0,
+          "fin_s": 102259.177
+        },
+        "action": {
+          "verbe": "remettre",
+          "quoi": "Il traverse les trois pas qui le séparent de la porte, sort l'ordre de sa manche et le met dans la main de Torr en disant la chose au clair et bas : daté, signé de sa main de maître des deniers ; la liste nominative des quatre cent cinquante hommes de la première vague avancée de sept jours, faite cette nuit ; clause expresse qu'aucune solde ne sort de la cassette avant réception de la liste ; qu'on le porte au maître des rôles où qu'il travaille en bas, et que le porteur revienne dire de sa bouche à quelle heure il l'a remis.",
+          "cibles": [
+            "garde-levant"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:aldon-hask",
+            "relation": "traverse",
+            "vers": "tambour-de-pierre",
+            "duree_s": 15.0
+          },
+          {
+            "ordre": 2,
+            "de": "pers:aldon-hask",
+            "relation": "parle_et_remet",
+            "vers": "garde-levant",
+            "duree_s": 80.0
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "garde-levant",
+            "mode": "parle"
+          },
+          {
+            "ref": "tambour-de-pierre",
+            "mode": "parcourt"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "hask-ce-que-tout-coutera",
+            "mode": "memoire"
+          },
+          {
+            "ref": "pers:aldon-hask",
+            "mode": "mandat"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:aldon-hask:1:1",
+            "type": "fait",
+            "cible": "hask-ce-que-tout-coutera",
+            "avant": "L'ordre est toujours dans sa main, non remis, dans la cour de Peyredragon à 97230 s. Il n'a pas atteint le maître des rôles ; sa remise reste suspendue à la localisation de l'homme.",
+            "apres": "L'ordre signé pour le maître des rôles est sorti de la manche d'Aldon Hask et se trouve dans la main de Torr, à la porte de la chambre haute. Il n'est plus promené par Aldon ; il n'est pas non plus remis à son destinataire.",
+            "portee": "monde",
+            "source_refs": [
+              "garde-levant",
+              "pers:aldon-hask",
+              "hask-ce-que-tout-coutera"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:aldon-hask:1:2",
+            "type": "communication",
+            "cible": "garde-levant",
+            "avant": null,
+            "apres": "Torr a entendu, d'Aldon Hask lui-même, les trois choses attachées au pli : la liste des quatre cent cinquante nominatifs faite cette nuit, aucune solde avant réception, et l'heure de remise à rapporter de vive voix.",
+            "portee": "monde",
+            "source_refs": [
+              "garde-levant"
+            ],
+            "preuve_refs": [
+              "res:act:aldon-hask:1:1"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 3.167,
+        "quoi": "Il traverse les trois pas qui le séparent de la porte, sort l'ordre de sa manche et le met dans la main de Torr en disant la chose au clair et bas : daté, signé de sa main de maître des deniers ; la liste nominative des quatre cent cinquante hommes de la première vague avancée de sept jours, faite cette nuit ; clause expresse qu'aucune solde ne sort de la cassette avant réception de la liste ; qu'on le porte au maître des rôles où qu'il travaille en bas, et que le porteur revienne dire de sa bouche à quelle heure il l'a remis.",
+        "source": "garde-levant, hask-ce-que-tout-coutera, pers:aldon-hask, tambour-de-pierre",
+        "resultat": "fait: L'ordre signé pour le maître des rôles est sorti de la manche d'Aldon Hask et se trouve dans la main de Torr, à la porte de la chambre haute. Il n'est plus promené par Aldon ; il n'est pas non plus remis à son destinataire. · communication: Torr a entendu, d'Aldon Hask lui-même, les trois choses attachées au pli : la liste des quatre cent cinquante nominatifs faite cette nuit, aucune solde avant réception, et l'heure de remise à rapporter de vive voix.",
+        "preuve": [
+          "res:act:aldon-hask:1:1"
+        ]
+      },
+      {
+        "id": "act:aldon-hask:2",
+        "ordre": 2,
+        "temps": {
+          "debut_s": 102259.177,
+          "duree_s": 70.0,
+          "fin_s": 102329.177
+        },
+        "action": {
+          "verbe": "entendre",
+          "quoi": "Torr ne bouge pas de la porte. Il tient le pli contre sa cuirasse et dit ce qu'il en est : il ne quitte pas ce seuil tant que le conseil siège, et il n'a personne sous la main à qui le donner sans ouvrir la porte. Il le portera lui-même en bas à la relève, et l'heure de remise sera rapportée. Aldon ne discute pas le seuil d'un garde ; il tient que la clause de solde fait le travail à la place de la vitesse.",
+          "cibles": [
+            "garde-levant"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "garde-levant",
+            "relation": "repond",
+            "vers": "pers:aldon-hask",
+            "duree_s": 70.0
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "garde-levant",
+            "mode": "entend"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:aldon-hask",
+            "mode": "intention"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:aldon-hask:2:1",
+            "type": "observation",
+            "cible": "hask-ce-que-tout-coutera",
+            "avant": "L'ordre signé pour le maître des rôles est sorti de la manche d'Aldon Hask et se trouve dans la main de Torr, à la porte de la chambre haute. Il n'est plus promené par Aldon ; il n'est pas non plus remis à son destinataire.",
+            "apres": "Le pli reste à la porte, sur la personne de Torr, qui ne quitte pas son seuil tant que le conseil siège : il descendra à la relève, dont Aldon ignore l'heure exacte. La remise au maître des rôles est différée d'un délai que le garde seul commande.",
+            "portee": "monde",
+            "source_refs": [
+              "garde-levant",
+              "res:act:aldon-hask:1:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:aldon-hask:2:2",
+            "type": "observation",
+            "cible": "pers:aldon-hask",
+            "avant": null,
+            "apres": "Aldon sait que la liste de la première vague ne peut plus être tenue pour faite « cette nuit » : le pli attend une relève. Il tient que la clause — aucune solde avant réception — porte l'ordre même en retard.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "garde-levant",
+              "res:act:aldon-hask:2:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "juge"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 2.333,
+        "quoi": "Torr ne bouge pas de la porte. Il tient le pli contre sa cuirasse et dit ce qu'il en est : il ne quitte pas ce seuil tant que le conseil siège, et il n'a personne sous la main à qui le donner sans ouvrir la porte. Il le portera lui-même en bas à la relève, et l'heure de remise sera rapportée. Aldon ne discute pas le seuil d'un garde ; il tient que la clause de solde fait le travail à la place de la vitesse.",
+        "source": "garde-levant, pers:aldon-hask",
+        "resultat": "observation: Le pli reste à la porte, sur la personne de Torr, qui ne quitte pas son seuil tant que le conseil siège : il descendra à la relève, dont Aldon ignore l'heure exacte. La remise au maître des rôles est différée d'un délai que le garde seul commande. · observation: Aldon sait que la liste de la première vague ne peut plus être tenue pour faite « cette nuit » : le pli attend une relève. Il tient que la clause — aucune solde avant réception — porte l'ordre même en retard.",
+        "preuve": null
+      },
+      {
+        "id": "act:aldon-hask:3",
+        "ordre": 3,
+        "temps": {
+          "debut_s": 102329.177,
+          "duree_s": 150.0,
+          "fin_s": 102479.177
+        },
+        "action": {
+          "verbe": "declarer",
+          "quoi": "Il revient d'un pas vers la table et parle bas, la somme d'abord, sans qu'on l'ait interrogé : les quatre quilles du guet du large ne coûtent pas un dragon de plus. Elles se prennent sur les dix-huit jours d'affrètement déjà payés et inemployés sur onze coques ; la ligne est déjà déplacée, un pli est parti au quai pour maître Rulf, et la réponse des patrons — oui ou non — revient avant la marée par son garçon, de sa bouche si c'est non.",
+          "cibles": [
+            "22047",
+            "tambour-de-pierre"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "garde-levant",
+            "relation": "revient_vers",
+            "vers": "tambour-de-pierre",
+            "duree_s": 12.0
+          },
+          {
+            "ordre": 2,
+            "de": "pers:aldon-hask",
+            "relation": "adresse",
+            "vers": "tambour-de-pierre",
+            "duree_s": 138.0
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "tambour-de-pierre",
+            "mode": "parle"
+          },
+          {
+            "ref": "corlys",
+            "mode": "parle"
+          },
+          {
+            "ref": "daemon",
+            "mode": "parle"
+          },
+          {
+            "ref": "rhaenys",
+            "mode": "parle"
+          },
+          {
+            "ref": "alarra-rosby",
+            "mode": "parle"
+          },
+          {
+            "ref": "sara",
+            "mode": "parle"
+          },
+          {
+            "ref": "denys-bar-emmon",
+            "mode": "parle"
+          },
+          {
+            "ref": "robert-quince",
+            "mode": "parle"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "22047",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "hask-ce-que-tout-coutera",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:aldon-hask:3:1",
+            "type": "progression_tache",
+            "cible": "22047",
+            "avant": "La demande d'arrêt de la répartition des quilles est sortie de sa main et court vers le quai par porteur : quatre quilles sur les dix-huit jours déjà payés, en franchise, réponse — oui ou non — attendue avant la marée par le même garçon. Rien n'est encore obtenu ni refusé ; la ligne reste ouverte jusqu'au retour d'ossy.",
+            "apres": "L'affaire des quatre quilles est désormais posée devant le conseil réuni : coût nul déclaré, gage nommé — les dix-huit jours inemployés sur onze coques —, ligne déjà déplacée, demande partie au quai, réponse attendue avant la marée. Ce n'est plus une démarche privée du maître des deniers : le point est dit à la table et le Serpent de Mer l'a entendu. Rien n'est encore obtenu des patrons.",
+            "portee": "monde",
+            "source_refs": [
+              "22047",
+              "tambour-de-pierre"
+            ],
+            "preuve_refs": [
+              "res:act:aldon-hask:3:2"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:aldon-hask:3:2",
+            "type": "communication",
+            "cible": "tambour-de-pierre",
+            "avant": null,
+            "apres": "Les huit personnes de la chambre haute savent, par la bouche du maître des deniers, que quatre quilles pour le guet du large ne coûtent rien de plus et pendent au mot des patrons à la marée.",
+            "portee": "monde",
+            "source_refs": [
+              "tambour-de-pierre",
+              "corlys",
+              "daemon",
+              "rhaenys"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 5.0,
+        "quoi": "Il revient d'un pas vers la table et parle bas, la somme d'abord, sans qu'on l'ait interrogé : les quatre quilles du guet du large ne coûtent pas un dragon de plus. Elles se prennent sur les dix-huit jours d'affrètement déjà payés et inemployés sur onze coques ; la ligne est déjà déplacée, un pli est parti au quai pour maître Rulf, et la réponse des patrons — oui ou non — revient avant la marée par son garçon, de sa bouche si c'est non.",
+        "source": "22047, alarra-rosby, corlys, daemon, denys-bar-emmon, hask-ce-que-tout-coutera, rhaenys, robert-quince, sara, tambour-de-pierre",
+        "resultat": "progression_tache: L'affaire des quatre quilles est désormais posée devant le conseil réuni : coût nul déclaré, gage nommé — les dix-huit jours inemployés sur onze coques —, ligne déjà déplacée, demande partie au quai, réponse attendue avant la marée. Ce n'est plus une démarche privée du maître des deniers : le point est dit à la table et le Serpent de Mer l'a entendu. Rien n'est encore obtenu des patrons. · communication: Les huit personnes de la chambre haute savent, par la bouche du maître des deniers, que quatre quilles pour le guet du large ne coûtent rien de plus et pendent au mot des patrons à la marée.",
+        "preuve": [
+          "res:act:aldon-hask:3:2"
+        ]
+      },
+      {
+        "id": "act:aldon-hask:4",
+        "ordre": 4,
+        "temps": {
+          "debut_s": 102479.177,
+          "duree_s": 120.0,
+          "fin_s": 102599.177
+        },
+        "action": {
+          "verbe": "chiffrer",
+          "quoi": "Puis les deux mesures, et non une, comme il l'a décidé à quatre heures : ce que l'attente coûte — quarante-huit dragons les sept jours, presque rien ; et les journées de ville tenue — deux cent soixante et onze, qui descendent d'une par jour. Il ajoute la phrase qui va avec, sans la commenter : le jour d'entrée ne se décide pas sur son feuillet.",
+          "cibles": [
+            "tambour-de-pierre",
+            "hask-ce-que-tout-coutera"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:aldon-hask",
+            "relation": "adresse",
+            "vers": "tambour-de-pierre",
+            "duree_s": 120.0
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "tambour-de-pierre",
+            "mode": "parle"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "hask-ce-que-tout-coutera",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:aldon-hask:4:1",
+            "type": "variation_mesure",
+            "cible": "hask-ce-que-tout-coutera",
+            "avant": null,
+            "apres": "Les deux mesures du matin sont dites à voix haute pour la première fois devant le conseil : coût de l'attente, quarante-huit dragons les sept jours ; journées de ville tenue, deux cent soixante et onze, décroissant d'une par jour. Le chiffre unique de quatre cent trente dragons pour sept jours, avancé plus tôt à la table, est publiquement remplacé par celui qui l'avait donné.",
+            "portee": "monde",
+            "source_refs": [
+              "hask-ce-que-tout-coutera",
+              "tambour-de-pierre"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:aldon-hask:4:2",
+            "type": "communication",
+            "cible": "tambour-de-pierre",
+            "avant": "Les huit personnes de la chambre haute savent, par la bouche du maître des deniers, que quatre quilles pour le guet du large ne coûtent rien de plus et pendent au mot des patrons à la marée.",
+            "apres": "Les huit personnes de la chambre haute savent en outre que l'argument d'argent pour hâter l'entrée est retiré par celui qui l'avait fourni : attendre ne coûte presque rien, et le jour d'entrée ne se décide plus sur le feuillet du maître des deniers.",
+            "portee": "monde",
+            "source_refs": [
+              "tambour-de-pierre",
+              "res:act:aldon-hask:4:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 4.0,
+        "quoi": "Puis les deux mesures, et non une, comme il l'a décidé à quatre heures : ce que l'attente coûte — quarante-huit dragons les sept jours, presque rien ; et les journées de ville tenue — deux cent soixante et onze, qui descendent d'une par jour. Il ajoute la phrase qui va avec, sans la commenter : le jour d'entrée ne se décide pas sur son feuillet.",
+        "source": "hask-ce-que-tout-coutera, tambour-de-pierre",
+        "resultat": "variation_mesure: Les deux mesures du matin sont dites à voix haute pour la première fois devant le conseil : coût de l'attente, quarante-huit dragons les sept jours ; journées de ville tenue, deux cent soixante et onze, décroissant d'une par jour. Le chiffre unique de quatre cent trente dragons pour sept jours, avancé plus tôt à la table, est publiquement remplacé par celui qui l'avait donné. · communication: Les huit personnes de la chambre haute savent en outre que l'argument d'argent pour hâter l'entrée est retiré par celui qui l'avait fourni : attendre ne coûte presque rien, et le jour d'entrée ne se décide plus sur le feuillet du maître des deniers.",
+        "preuve": null
+      },
+      {
+        "id": "act:aldon-hask:5",
+        "ordre": 5,
+        "temps": {
+          "debut_s": 102599.177,
+          "duree_s": 210.0,
+          "fin_s": 102809.177
+        },
+        "action": {
+          "verbe": "repondre",
+          "quoi": "Corlys Velaryon relève la seule chose qui le regarde : les quilles ne sont pas une ligne de compte, ce sont des coques, et le guet du large veut savoir lesquelles, d'où elles sortent et qui commande dessus — ce qu'un pli au quai n'obtient pas. Aldon ne se défend pas : d'une phrase, il a chiffré le prix et non le service, la désignation des quatre coques et de leurs patrons ne lui appartient pas ; il donne ce qu'il tient — maître Rulf dépositaire, les onze coques, les dix-huit jours en franchise, l'heure de la marée. Puis il tire son cahier et écrit sous la ligne des quilles la question du Serpent de Mer telle qu'elle a été posée, pour l'avoir prête quand la réponse du quai remontera.",
+          "cibles": [
+            "corlys",
+            "22047"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "corlys",
+            "relation": "interpelle",
+            "vers": "pers:aldon-hask",
+            "duree_s": 55.0
+          },
+          {
+            "ordre": 2,
+            "de": "pers:aldon-hask",
+            "relation": "repond",
+            "vers": "corlys",
+            "duree_s": 80.0
+          },
+          {
+            "ordre": 3,
+            "de": "pers:aldon-hask",
+            "relation": "ecrit",
+            "vers": "ce-qui-sort-de-ma-main",
+            "duree_s": 75.0
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "corlys",
+            "mode": "entend"
+          },
+          {
+            "ref": "ce-qui-sort-de-ma-main",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "22047",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:aldon-hask:5:1",
+            "type": "observation",
+            "cible": "corlys",
+            "avant": null,
+            "apres": "Corlys Velaryon tient que la franchise obtenue des patrons ne désigne ni les quatre coques ni leurs équipages, et que le guet du large ne se monte pas sur une ligne de compte. La question de la désignation et du commandement est posée à la table et reste sans réponse.",
+            "portee": "monde",
+            "source_refs": [
+              "corlys",
+              "res:act:aldon-hask:3:2"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:aldon-hask:5:2",
+            "type": "objet_produit",
+            "cible": "ce-qui-sort-de-ma-main",
+            "avant": null,
+            "apres": "Sous la ligne des quatre quilles, de la main d'Aldon Hask : la question du Serpent de Mer recopiée telle que posée — quelles coques, d'où, sous quel commandement — datée de l'heure, en attente du retour du quai.",
+            "portee": "monde",
+            "source_refs": [
+              "ce-qui-sort-de-ma-main",
+              "res:act:aldon-hask:5:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:aldon-hask:5:3",
+            "type": "observation",
+            "cible": "pers:aldon-hask",
+            "avant": null,
+            "apres": "Aldon sait que sa demande au quai, même accordée, ne suffit pas à faire le guet du large : il manque la désignation des coques et de leurs patrons, qui n'est pas de son office. Il ignore qui la fera et quand.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "res:act:aldon-hask:5:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 7.0,
+        "quoi": "Corlys Velaryon relève la seule chose qui le regarde : les quilles ne sont pas une ligne de compte, ce sont des coques, et le guet du large veut savoir lesquelles, d'où elles sortent et qui commande dessus — ce qu'un pli au quai n'obtient pas. Aldon ne se défend pas : d'une phrase, il a chiffré le prix et non le service, la désignation des quatre coques et de leurs patrons ne lui appartient pas ; il donne ce qu'il tient — maître Rulf dépositaire, les onze coques, les dix-huit jours en franchise, l'heure de la marée. Puis il tire son cahier et écrit sous la ligne des quilles la question du Serpent de Mer telle qu'elle a été posée, pour l'avoir prête quand la réponse du quai remontera.",
+        "source": "22047, ce-qui-sort-de-ma-main, corlys",
+        "resultat": "observation: Corlys Velaryon tient que la franchise obtenue des patrons ne désigne ni les quatre coques ni leurs équipages, et que le guet du large ne se monte pas sur une ligne de compte. La question de la désignation et du commandement est posée à la table et reste sans réponse. · objet_produit: Sous la ligne des quatre quilles, de la main d'Aldon Hask : la question du Serpent de Mer recopiée telle que posée — quelles coques, d'où, sous quel commandement — datée de l'heure, en attente du retour du quai. · observation: Aldon sait que sa demande au quai, même accordée, ne suffit pas à faire le guet du large : il manque la désignation des coques et de leurs patrons, qui n'est pas de son office. Il ignore qui la fera et quand.",
+        "preuve": null
+      }
+    ],
+    "suite": "Trois fils ouverts sur la même heure : le pli pour le maître des rôles attend la relève de Torr à la porte de la chambre haute, avec l'heure de remise à rapporter de vive voix ; la réponse de maître Rulf sur les quatre quilles en franchise et sur les six cents dragons de cautions doit revenir du quai avant la marée par le garçon ; et la question du Serpent de Mer — quelles coques, sous quel commandement — reste posée à la table, hors du domaine du maître des deniers.",
+    "reveils_suivants": [],
+    "budget_energie": 42,
+    "budget_secondes": 1260,
+    "energie_depensee": 21.5
+  },
+  "mutations_proposees": [],
+  "mutations_rejetees": [
+    {
+      "mutation": {
+        "domaine": "intentions",
+        "operation": "croyance_ajouter",
+        "cible": "aldon-hask",
+        "valeur": "Un pli mis dans la main d'un homme de garde part quand sa garde finit, pas quand on le lui donne : ce qui tient l'ordre en retard, c'est la clause de solde et non la vitesse du porteur.",
+        "resultat": "res:act:aldon-hask:2:2"
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "domaine": "intentions",
+        "operation": "ignore_ajouter",
+        "cible": "aldon-hask",
+        "valeur": "Quelles quatre coques feront le guet du large, d'où elles sortent et qui commande dessus",
+        "resultat": "res:act:aldon-hask:5:3"
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "domaine": "intentions",
+        "operation": "etape",
+        "cible": "aldon-hask",
+        "valeur": "Attendre le retour du garçon du quai avant la marée et porter la réponse — oui ou non — à la table, avec la question du Serpent de Mer déjà écrite sous la ligne des quilles.",
+        "resultat": "res:act:aldon-hask:5:2"
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "domaine": "evenements",
+        "operation": "evenement",
+        "cible": "tambour-de-pierre",
+        "valeur": "Au conseil de la chambre haute, le maître des deniers déclare les quatre quilles du guet du large à coût nul sur les dix-huit jours déjà payés, puis retire l'argument d'argent qui hâtait l'entrée : quarante-huit dragons les sept jours d'attente, deux cent soixante et onze journées de ville tenue. Corlys Velaryon oppose que la désignation des coques et du commandement reste entière.",
+        "resultat": "res:act:aldon-hask:3:1"
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "domaine": "plis",
+        "operation": "pli_ajouter",
+        "cible": "garde-levant",
+        "valeur": "Ordre signé d'Aldon Hask au maître des rôles — liste nominative de la première vague avancée de sept jours, aucune solde avant réception. Remis en main de Torr à 102259 s, à la porte de la chambre haute ; non descendu, départ à la relève, heure de remise à rapporter de vive voix.",
+        "resultat": "res:act:aldon-hask:2:1"
+      },
+      "erreur": "resultat_id absent du rapport"
+    }
+  ],
+  "_activation": {
+    "session": "c5232db1-8d6f-458e-876f-166fcaec7143",
+    "session_narrateur": "c5232db1-8d6f-458e-876f-166fcaec7143",
+    "session_pnj": "665dfd20-138c-4fb1-88fd-057aa33f8a1d",
+    "cree_le": "2026-08-10T00:10:49.517141+02:00",
+    "front": "aurore-inchauspe",
+    "present_secondes": 102164.177,
+    "importance": 0.424129,
+    "budget": 42,
+    "budget_secondes": 1260,
+    "system_prompt": "# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS\n\nTu es le maître du jeu local d'un monde vivant, pas un assistant administratif\net pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa\nmatière, les personnes qui s'y trouvent, les usages de Westeros et les\nconséquences du temps qui passe.\n\n## Le monde\n\nNous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de\nViserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra\nTargaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie\npeut diverger du récit connu : le dossier de l'activation fait autorité sur ce\nqui s'est réellement produit ici.\n\nDate présente : 28e jour de la 3e lune de l'an 129 après la\nConquête.\nLieu présent : Chambre haute, Tambour de Pierre.\nActeur appelé : Aldon Hask.\nAffaire qui exerce maintenant une pression sur lui : ✂️ Arrêter la répartition des quilles, blocus contre transport.\n\nL'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,\nsituée dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,\nfaire autre chose d'accessible depuis sa situation, parler à quelqu'un,\nattendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener\nvers la tâche.\n\n## Partage de l'autorité\n\nL'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses\ngestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,\nplus prudents ou plus efficaces qu'il ne les a formulés.\n\nToi, tu possèdes le reste du monde : les autres personnes agissent selon leur\npropre caractère et leurs propres affaires ; les objets ont une position et\nune résistance ; les distances, l'écriture, la marche, l'attente et la parole\nprennent du temps ; les institutions et les usages produisent leurs\nconséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à\nlui pour fabriquer du drame.\n\nUne résistance n'existe que si elle vient d'un fait établi : volonté d'une\nautre personne, obstacle matériel, distance, délai, usage social, ordre déjà\ndonné ou ressource réellement absente. Les gens compétents règlent le\nroutinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou\nun véritable arbitrage peut seul engager.\n\n## Vérité et inconnues\n\nLe dossier fermé est l'autorité sur les faits particuliers et mutables de\ncette partie. Une croyance reste une croyance, une intention reste une\nintention, un témoignage reste un témoignage : aucun ne devient un fait parce\nqu'il apparaît dans le dossier.\n\nTu peux employer les continuités ordinaires et stables de Westeros nécessaires\nà l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche\nentre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,\nni secret, ni décision, ni avantage absent du dossier. Toute absence qui\nchangerait l'issue reste une inconnue. Tu ne la combles pas.\n\nUne observation modifie d'abord la connaissance de celui qui observe. Un fait\nmatériel ne devient connu d'autres personnes que par présence, témoignage,\nparole, pli, registre ou diffusion effectivement produits.\n\n## Les deux phases\n\nDans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et\nl'instant présents. Fais une adresse brève, concrète et diégétique : rappelle\nce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni\nnœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.\n\nDans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :\n\n1. établis d'où il part, ce qu'il peut réellement atteindre et les sources\n   qu'il touche ou mobilise ;\n2. fais agir les personnes rencontrées depuis leurs propres intentions ;\n3. applique les obstacles établis, sans résistance décorative ;\n4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;\n5. produis seulement les effets causés par les gestes accomplis ;\n6. sépare les changements du monde, les objets produits, les communications\n   et les seules connaissances acquises ;\n7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,\n   obstacle établi, échec, renoncement ou borne temporelle.\n\nUne tâche peut avancer sans être terminée. Elle est bloquée seulement par un\nobstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet\nrecherché impossible ou manqué. N'invente jamais des minutes de travail pour\nremplir une durée minimale : si le geste se termine tôt, laisse le personnage\npoursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle\net rends compte honnêtement de la durée.\n\nChaque message de la boucle précise la phase et son contrat de sortie. Rends\nexactement l'objet JSON demandé, sans commentaire autour. La précision du JSON\nsert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.\n",
+    "system_prompt_source": "scripts/depecher.py:manuel_narrateur_local",
+    "system_prompt_sha256": "5559e71793b65167570d4bf75ec25170eed5bf6d0bcb14ad878eb5c749d6f2f7",
+    "message": "PHASE 1 — APPELER L'ACTEUR\n\nVoici le dossier fermé de cette activation :\n\n{\n  \"date_du_monde\": {\n    \"annee\": 129,\n    \"lune\": 3,\n    \"jour\": 28\n  },\n  \"present_secondes\": 102164.177,\n  \"budget_energie\": 42,\n  \"secondes_par_point_energie\": 30,\n  \"budget_secondes\": 1260,\n  \"duree_minimale_secondes\": 60,\n  \"acteur_candidat\": \"aldon-hask\",\n  \"tache_elue\": {\n    \"id\": \"22047\",\n    \"quoi\": \"✂️ Arrêter la répartition des quilles, blocus contre transport\",\n    \"creee\": false\n  },\n  \"chemin_election\": [\n    {\n      \"id\": \"pers:aldon-hask\",\n      \"genre\": \"personne\",\n      \"ou\": \"personnages\",\n      \"quoi\": \"Aldon Hask\",\n      \"genres\": [\n        \"personne\"\n      ],\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"importance_activation\": 0.4241292368674301\n    },\n    {\n      \"id\": \"22047\",\n      \"genre\": \"action\",\n      \"ou\": \"affaire-controle-naval\",\n      \"quoi\": \"✂️ Arrêter la répartition des quilles, blocus contre transport\",\n      \"lieu\": \"La Table Peinte\",\n      \"etat\": \"**en cours**\",\n      \"importance_activation\": 0.01793605629476102\n    }\n  ],\n  \"salle_actuelle\": {\n    \"id\": \"tambour-de-pierre\",\n    \"nom\": \"Chambre haute, Tambour de Pierre\",\n    \"personnes\": [\n      {\n        \"id\": \"alarra-rosby\",\n        \"nom\": \"Alarra Rosby\"\n      },\n      {\n        \"id\": \"aldon-hask\",\n        \"nom\": \"Aldon Hask\"\n      },\n      {\n        \"id\": \"corlys\",\n        \"nom\": \"Corlys Velaryon, le Serpent de Mer\"\n      },\n      {\n        \"id\": \"daemon\",\n        \"nom\": \"Daemon Targaryen\"\n      },\n      {\n        \"id\": \"denys-bar-emmon\",\n        \"nom\": \"Denys Bar Emmon\"\n      },\n      {\n        \"id\": \"rhaenys\",\n        \"nom\": \"Rhaenys Targaryen, la Reine Qui Ne Fut Jamais\"\n      },\n      {\n        \"id\": \"sara\",\n        \"nom\": \"Sara Poulain\"\n      },\n      {\n        \"id\": \"robert-quince\",\n        \"nom\": \"Ser Robert Quince\"\n      },\n      {\n        \"id\": \"garde-levant\",\n        \"nom\": \"Torr\"\n      }\n    ]\n  },\n  \"dossier_acteur\": {\n    \"date_du_monde\": {\n      \"annee\": 129,\n      \"lune\": 3,\n      \"jour\": 28\n    },\n    \"diffusion\": {\n      \"origine\": \"rhaenyra\",\n      \"front\": \"aurore-inchauspe\",\n      \"secondes_depuis_origine\": 102164.177\n    },\n    \"personnage\": {\n      \"id\": \"aldon-hask\",\n      \"nom\": \"Aldon Hask\",\n      \"titre\": \"Maitre des deniers de la reine (26e j., 3e lune, terme au dernier jour de la 4e lune) ; ancien sous-clerc aux comptes de la cour de Viserys I\",\n      \"naissance\": 66,\n      \"traits\": [\n        \"meticuleux\",\n        \"efface\",\n        \"exact\",\n        \"incorruptible\",\n        \"patient\",\n        \"debrouillard\",\n        \"conciliant\"\n      ],\n      \"objectifs\": [\n        {\n          \"but\": \"Que ses comptes soient justes, meme quand personne ne les lit\",\n          \"priorite\": 1\n        },\n        {\n          \"but\": \"Ne rien demander a personne — on l'a laisse sur ce rocher une fois\",\n          \"priorite\": 2\n        }\n      ],\n      \"maniere\": \"Parle bas, en chiffres ronds, et donne toujours la somme avant le commentaire. Ne dit jamais qu une depense est impossible : il dit sur quelle ligne il la prend et ce qu elle repousse, et il a deja deplace la ligne quand il l annonce. Rancunier de memoire mais pas de main : il se souvient de qui l a fait attendre, et paie quand meme le jour dit. Se debrouille seul : comble les trous sans demander, tranche le routinier a sa main et en rend compte au passe, et ne fait remonter que ce qui engage la parole du maitre, coute un homme ou de l or, ou contredit un ordre anterieur. Quand il voit un empechement, il apporte la sortie dans la meme bouche et l a deja commencee : jamais un cout nu, jamais un renvoi a la reine. Competent : sur son domaine il en sait plus que son maitre et le montre — apporte le precedent, le chiffre et l avis qu il defend, au lieu d une question ; ne demande jamais ce qu il peut aller chercher lui-meme ; tient son cahier d affaire et en ecrit la conclusion de sa main.  DEUXIEME PHRASE, toujours : ce que c'est (nomme par ce qu'il fait, jamais par son etiquette), ce que ca change pour la reine, et a quoi ca sert dans ses trois piliers — ouvrir la porte du dedans, n'etre pas attaque, rallier la ville. OUVRE PAR : CE QU'IL ACHETE, ou ce qu'il vient de rendre possible — jamais par l'etat de la caisse. Le solde se lit a sept heures avec les roles et n'a rien a faire dans sa bouche devant la reine : un maitre des deniers qui annonce ce qu'il a est un compteur ; celui qui dit ce qu'il en fait est un officier. Quand un chiffre monte a la table, il est DANS la phrase qui dit ce qu'on en fait. REPRIS, IL NE SE DEFEND PAS : une phrase pour dire qu'il avait tort, puis ce qu'il fait, ce qu'il prend sur lui, et la date a laquelle on saura. Aucune explication du passe, aucune justification que personne n'a demandee. Et il n'ouvre jamais sur un manque : il entre avec ce qu'il a fait ou trouve depuis hier, ou il se tait et va chercher.\",\n      \"portrait\": {\n        \"fichier\": null,\n        \"physique\": \"Soixante-trois ans, propre, une manche lustree au coude droit a force d'ecrire dessus.\",\n        \"prompt_ideogram\": \"dark fantasy oil painting portrait, muted colors, grey harbour light, lean middle-aged clerk in worn wool, ink-stained chapped hands, worn wooden tally board, quiet unresentful stare\"\n      },\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"lieu\": \"Peyredragon\"\n    },\n    \"salle_actuelle\": {\n      \"id\": \"tambour-de-pierre\",\n      \"nom\": \"Chambre haute, Tambour de Pierre\",\n      \"personnes\": [\n        {\n          \"id\": \"alarra-rosby\",\n          \"nom\": \"Alarra Rosby\"\n        },\n        {\n          \"id\": \"aldon-hask\",\n          \"nom\": \"Aldon Hask\"\n        },\n        {\n          \"id\": \"corlys\",\n          \"nom\": \"Corlys Velaryon, le Serpent de Mer\"\n        },\n        {\n          \"id\": \"daemon\",\n          \"nom\": \"Daemon Targaryen\"\n        },\n        {\n          \"id\": \"denys-bar-emmon\",\n          \"nom\": \"Denys Bar Emmon\"\n        },\n        {\n          \"id\": \"rhaenys\",\n          \"nom\": \"Rhaenys Targaryen, la Reine Qui Ne Fut Jamais\"\n        },\n        {\n          \"id\": \"sara\",\n          \"nom\": \"Sara Poulain\"\n        },\n        {\n          \"id\": \"robert-quince\",\n          \"nom\": \"Ser Robert Quince\"\n        },\n        {\n          \"id\": \"garde-levant\",\n          \"nom\": \"Torr\"\n        }\n      ]\n    },\n    \"intention\": {\n      \"personnage_id\": \"aldon-hask\",\n      \"croyances\": [\n        \"Il est maitre des deniers depuis ce matin, et il a signe\",\n        \"Les comptes de la maison lui ont ete verses par Sara le meme jour : il tient desormais un seul livre et non deux\",\n        \"Une depense refusee est une depense mal placee : il y a presque toujours une ligne, et c est son metier de la trouver avant qu on la lui demande\"\n      ],\n      \"ignore\": [\n        \"Ce que couteront reellement les journees de coureurs sur une lune pleine\"\n      ],\n      \"intention\": \"Ne jamais renvoyer une depense a la reine : dire la somme, dire la ligne, dire ce qu elle repousse, et avoir deja deplace la ligne quand il l annonce.\",\n      \"declencheurs\": [\n        {\n          \"si\": \"Quelqu un au conseil annonce un cout sans dire qui le porte\",\n          \"alors\": \"Il le porte a voix haute, avec la ligne, avant que la reine ait a poser la question\"\n        }\n      ],\n      \"attitude_joueur\": \"Il l a vue le prendre sans le connaitre ; il rend cette confiance en ne lui presentant jamais un probleme d argent nu.\",\n      \"date_maj\": {\n        \"annee\": 129,\n        \"lune\": 3,\n        \"jour\": 26\n      },\n      \"etape_elue\": null\n    },\n    \"relations\": [\n      {\n        \"source_id\": \"aldon-hask\",\n        \"source\": \"Aldon Hask\",\n        \"cible_id\": \"nicolas-reynolds\",\n        \"cible\": \"Nicolas Lesster Reynolds\",\n        \"opinion\": 55,\n        \"liens\": [\n          \"lui doit sa place aux comptes, an 128\"\n        ]\n      },\n      {\n        \"source_id\": \"nicolas-reynolds\",\n        \"source\": \"Nicolas Lesster Reynolds\",\n        \"cible_id\": \"aldon-hask\",\n        \"cible\": \"Aldon Hask\",\n        \"opinion\": 40,\n        \"liens\": [\n          \"ancien-collegue\"\n        ]\n      }\n    ],\n    \"tache\": {\n      \"id\": \"22047\",\n      \"quoi\": \"✂️ Arrêter la répartition des quilles, blocus contre transport\",\n      \"genre\": \"action\",\n      \"distance\": 1,\n      \"chemin\": [\n        \"pers:aldon-hask\",\n        \"22047\"\n      ],\n      \"creee\": false\n    },\n    \"continuite_staging\": {\n      \"tache_id\": \"22047\",\n      \"acteur\": \"aldon-hask\",\n      \"issue\": \"avance\",\n      \"rapport\": \"etat/staging/activations/20260809-225638-184267-aldon-hask.json\",\n      \"present_secondes\": 96120.0,\n      \"fin_secondes\": 97230.0,\n      \"empreinte_canonique\": \"96fb5a53c5ed110a9e3260ff9b880466be772510\",\n      \"reprendre_a\": 100830.0,\n      \"suspendue\": false,\n      \"etat_cibles\": {\n        \"hask-ce-que-tout-coutera\": {\n          \"type\": \"fait\",\n          \"apres\": \"L'ordre est toujours dans sa main, non remis, dans la cour de Peyredragon à 97230 s. Il n'a pas atteint le maître des rôles ; sa remise reste suspendue à la localisation de l'homme.\",\n          \"resultat_id\": \"res:act:aldon-hask:6:1\"\n        },\n        \"ossy\": {\n          \"type\": \"deplacement\",\n          \"apres\": \"ossy hors de la roukerie, en route vers le quai\",\n          \"resultat_id\": \"res:act:aldon-hask:2:2\"\n        },\n        \"roukerie\": {\n          \"type\": \"observation\",\n          \"apres\": \"La marche de quatre minutes qu'il comptait faire n'existe pas : il écrivait déjà dans la roukerie. Les quatre minutes ne sont pas gagnées, elles n'ont jamais été dues.\",\n          \"resultat_id\": \"res:act:aldon-hask:3:1\"\n        },\n        \"22047\": {\n          \"type\": \"progression_tache\",\n          \"apres\": \"La demande d'arrêt de la répartition des quilles est sortie de sa main et court vers le quai par porteur : quatre quilles sur les dix-huit jours déjà payés, en franchise, réponse — oui ou non — attendue avant la marée par le même garçon. Rien n'est encore obtenu ni refusé ; la ligne reste ouverte jusqu'au retour d'ossy.\",\n          \"resultat_id\": \"res:act:aldon-hask:4:2\"\n        },\n        \"aldon-hask\": {\n          \"type\": \"deplacement\",\n          \"apres\": \"Aldon Hask dans la cour de Peyredragon, l'ordre pour le maître des rôles dans sa manche\",\n          \"resultat_id\": \"res:act:aldon-hask:5:1\"\n        }\n      },\n      \"activites\": [\n        {\n          \"quoi\": \"Debout, sur le coin de la table du mestre, il écrit à maître Rulf, au quai, deux lignes courtes et un pied. La première : trois cents dragons de lune d'affrètement dus entiers et non discutés, onze coques payées qui ne travaillent que douze jours, dix-huit jo…\",\n          \"resultat\": \"objet_produit: Un pli de la main d'Aldon Hask, adressé à maître Rulf au quai : chiffre des dix-huit jours inemployés sur onze coques, demande de quatre quilles en franchise pour le guet du large, clause de refus à rapporter par le porteur, et demande de confirmation écrite sur les six cents dragons de cautions.\"\n        },\n        {\n          \"quoi\": \"Il plie, appelle ossy près de la porte, lui met le pli dans la main et lui dit la seule chose qui compte : au quai, avant la marée, et si la réponse est non, revenir le dire de sa bouche. Il lui fait répéter les deux mots — avant la marée, et le non se rappor…\",\n          \"resultat\": \"communication: ossy est parti de la roukerie à 96480 s, porteur du pli d'Aldon Hask, par la cour puis le grand escalier vers le quai — treize minutes de marche pressée à l'aller. Le pli n'est pas encore remis et la réponse n'est pas connue. · deplacement: ossy hors de la roukerie, en route vers le quai\"\n        },\n        {\n          \"quoi\": \"Il se retourne pour monter à la roukerie porter l'ordre au maître des rôles et s'arrête sur le seuil : il y est. C'est le cabinet du mestre, il y écrit depuis l'aube. Il demande à Gerardys, qui trie ses tubes, si le maître des rôles est passé ici cette nuit. …\",\n          \"resultat\": \"observation: La marche de quatre minutes qu'il comptait faire n'existe pas : il écrivait déjà dans la roukerie. Les quatre minutes ne sont pas gagnées, elles n'ont jamais été dues. · observation: Le maître des rôles n'est pas à la roukerie et Gerardys ne l'y a pas vu cette nuit. Sa position exacte reste inconnue d'Aldon : il sait seulement, de sa propre page, qu'il travaille en bas.\"\n        },\n        {\n          \"quoi\": \"Il ne cherche pas un homme les mains vides. Il reprend la plume et écrit l'ordre destiné au maître des rôles, court, daté, signé de sa main de maître des deniers : la liste nominative des quatre cent cinquante hommes de la première vague, avancée de sept jour…\",\n          \"resultat\": \"objet_produit: Ordre écrit et signé d'Aldon Hask, destiné au maître des rôles : liste nominative de la première vague avancée de sept jours, à faire cette nuit ; clause expresse qu'aucune solde ne sera versée avant réception. Le pli est dans sa main, non remis. · progression_tache: La demande d'arrêt de la répartition des quilles est sortie de sa main et court vers le quai par porteur : quatre quilles sur les dix-huit jours déjà payés, en franchise, réponse — oui ou non — attendue avant la maré…\"\n        },\n        {\n          \"quoi\": \"Il salue Gerardys de la tête, met l'ordre dans sa manche et descend de la roukerie à la cour — quatre minutes, l'allure d'un homme de soixante-trois ans qui ne court pas mais ne s'arrête pas.\",\n          \"resultat\": \"deplacement: Aldon Hask dans la cour de Peyredragon, l'ordre pour le maître des rôles dans sa manche\"\n        },\n        {\n          \"quoi\": \"Dans la cour, il s'arrête au premier homme de service et demande où travaille le maître des rôles ce matin. Il tient l'ordre à la main, prêt à le remettre. Sa fenêtre se ferme sur cette question posée : il est dans la cour, l'ordre n'est pas remis, et il ne s…\",\n          \"resultat\": \"fait: L'ordre est toujours dans sa main, non remis, dans la cour de Peyredragon à 97230 s. Il n'a pas atteint le maître des rôles ; sa remise reste suspendue à la localisation de l'homme.\"\n        }\n      ],\n      \"suite\": \"Deux fils ouverts sur la même heure : le retour du quai avec la réponse sur les quatre quilles en franchise et sur les six cents dragons de cautions ; et la remise en main propre de l'ordre au maître des rôles, dont Aldon ignore encore dans quelle salle d'en bas il travaille.\"\n    },\n    \"chemin\": [\n      {\n        \"id\": \"pers:aldon-hask\",\n        \"genre\": \"personne\",\n        \"ou\": \"personnages\",\n        \"quoi\": \"Aldon Hask\",\n        \"genres\": [\n          \"personne\"\n        ],\n        \"etat\": \"actif\",\n        \"condition\": \"libre\",\n        \"lieu_id\": \"peyredragon\",\n        \"importance_activation\": 0.4241292368674301\n      },\n      {\n        \"id\": \"22047\",\n        \"genre\": \"action\",\n        \"ou\": \"affaire-controle-naval\",\n        \"quoi\": \"✂️ Arrêter la répartition des quilles, blocus contre transport\",\n        \"lieu\": \"La Table Peinte\",\n        \"etat\": \"**en cours**\",\n        \"importance_activation\": 0.01793605629476102\n      }\n    ],\n    \"travaux_ouverts\": [\n      {\n        \"id\": \"hask-ce-que-tout-coutera\",\n        \"affaire\": \"Ce que l'entreprise entiere coutera, et non ce qu'elle a coute\",\n        \"etat\": \"mur\",\n        \"echeance\": {\n          \"annee\": 129,\n          \"lune\": 3,\n          \"jour\": 28\n        },\n        \"sources\": [\n          {\n            \"quoi\": \"ses trois lignes, relues une nuit entiere\",\n            \"genre\": \"registre\",\n            \"cout_jours\": 1\n          },\n          {\n            \"quoi\": \"son clerc, repris aux geoles avant le souper\",\n            \"genre\": \"gens\",\n            \"cout_jours\": 0.5\n          }\n        ],\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"le verrou de mon volume qui porte, de ma main, que cette caisse n'a aucune recette\",\n            \"texte\": \"Il se leve ce soir, et pas comme je l'avais prevu : je l'avais ecrit levable en vendant la recette d'une ville que nous n'avons pas. Il se leve parce que la recette etait la depuis onze jours sous ma chandelle. Ce que ca change au-dela du chiffre : les trois voies que j'ai ouvertes ce matin — la franchise aux patrons, l'assignation sur les douanes, le Guet paye moitie en droit — se paient toutes sur la ville prise, et je disais ne pouvoir la vendre qu'une fois. J'ai maintenant de quoi n'en vendre aucune avant l'entree. Je les garde toutes les trois pour apres, ou elles valent le double.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"les deux mesures du matin, choisies a quatre heures pour la lecture des roles\",\n            \"texte\": \"Je ne dirai plus un chiffre le matin, j'en dirai deux, et c'est le premier changement de forme de ce cahier depuis qu'il existe. Ce que l'attente coute par lune, qui est presque rien ; et le nombre de journees de ville tenue, qui est deux cent soixante et onze et qui descend d'une par jour. Un seul chiffre laissait croire que hater l'entree menageait la caisse. Deux disent la verite d'un coup : attendre est gratuit, entrer est cher, et le jour d'entree ne se decide pas sur mon feuillet.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"le feuillet a sept postes recopie au propre a cinq heures\",\n            \"texte\": \"Quatre fautes en trois jours et toutes la meme : deux cents betes contre vingt-neuf, trente prisonniers contre dix-neuf, mille trente de solde le jour ou il en faut trois cent quatre-vingt-six, et zero de recette le jour ou il en entrait deux mille. Les trois premieres etaient des tetes que je n'avais pas touchees. La quatrieme est pire : c'est une chose que j'ai deduite d'un savoir juste, les comptes du roi, applique a une maison qui n'est plus le roi. Un homme se trompe la ou il n'est pas alle voir ; un vieux clerc se trompe la ou il croit savoir d'avance.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"au parloir, pendant que je relisais mes lignes\",\n            \"texte\": \"On m'a ouvert un guichet et on m'a demande d'en regler la forme avant qu'on s'en serve. Ce que j'ai pose vaut aussi pour mon office : une question sans date n'a pas de reponse, un je ne sais pas se rend avec une fourchette et une heure, et trois interruptions par journee est la borne au-dela de laquelle je perds une affaire entiere, jamais la moitie d'une. J'ai aussi appris par la que mon feuillet de sept heures avait ete lu avec le chiffre de midi, et que dame Aurore ecrivait trois lettres a l'aube : sans ce guichet je l'aurais su demain soir, apres le quai.\",\n            \"servie\": false\n          }\n        ],\n        \"conclusion\": \"CE QUE L'ENTREPRISE ENTIERE COUTERA — refait dans la nuit du vingt-huitieme, de ma main, sur mes trois lignes relues d'un bout a l'autre, le registre des entrees de la cassette, le livre des droits de quai de maitre Rulf et les greniers de Rosby. Cette page remplace celle de la nuit derniere, qui a tenu six heures. Elle la remplace par le fond et non par le detail : ce cahier a ete tenu trois jours sur une phrase fausse, et la phrase est de moi.\\n\\n**CE QUI EST FAUX ET QUE J'AI ECRIT LE VINGT-SIXIEME : cette caisse n'a aucune recette.** Le Tresor est a Port-Real, les douanes sont a Port-Real, et c'est vrai. Mais j'ai ajoute que les fermes rendaient a Port-Real, et c'est vrai des fermes de la Couronne, pas de celles de cette ile. Depuis le dix-septieme, le receveur de Peyredragon ne porte plus rien au Tresor : il pose. Huit cent trente-trois dragons sont entres a la cassette en onze versements et je les avais mis au compte de ma propre erreur de comptage. **Notre rupture avec Port-Real a fabrique une recette, et le seul homme de cette maison qui devait la voir est celui qui a ecrit qu'elle n'existait pas.**\\n\\n**LE CHIFFRE, ET IL EST DOUBLE DESORMAIS.** Deux mille cinq cents dragons la lune au role des fermes de l'ile ; **je n'en signe que deux mille**, parce que dix jours ne font pas un quartier et que les fermes tombent aux quartiers. Je provisionne la depense au plus cher et je compte la recette au plus bas — la meme regle prise par les deux bouts. Contre cela : mille deux cent trente-neuf la lune de depense a compter de l'embarquement de demain, mille huit cent dix-sept au quatrieme jour, deux mille deux cent cinq au huitieme. **AVANT L'ENTREE, CETTE CAISSE MONTE PENDANT HUIT JOURS, PUIS PERD DEUX CENT CINQ DRAGONS LA LUNE.** Une caisse qui perd deux cents dragons la lune n'a plus de date. **Sept jours d'attente coutent quarante-huit dragons ; j'en ai compte quatre cent trente ce matin devant la table pour les memes sept jours.** Toute la raison d'argent de hater l'entree vient de mourir, et elle etait de ma main. Le jour d'entree se decidera sur les coques, sur la mer et sur les hommes ; il ne se decide plus sur mon feuillet.\\n\\n**LA DENT, ET IL Y EN A UNE.** Cette recette est payee par les hommes qui embarquent demain : la dime sort des barques, les fermes sortent des hameaux, et nous prenons les unes et les autres. Onze quilles louees sont onze quilles qui ne pechent plus. Apres l'entree je ne compte donc que la moitie, **mille dragons la lune contre quatre mille trois cent onze de depense — trois mille trois cent onze de perte nette.** La recette monte quand nous attendons et tombe le jour ou nous partons : les deux courbes se croisent du mauvais cote, exactement quand la depense double.\\n\\n**DEUX CENT SOIXANTE ET ONZE JOURNEES, ET NON QUATRE CENT TREIZE.** Cautions rendues comprises — maitre Rulf a signe ce soir que six cents des mille deux cents etaient bloques chez nous-memes et non chez des tiers. **Le chiffre baisse de cent quarante-deux le jour ou je trouve de l'argent, et il n'a rien perdu : les quatre cent treize comptaient la caisse au tarif de l'attente, et l'attente est devenue gratuite.** Le seul nombre qui mesure encore quelque chose est celui d'apres l'entree. Ce n'est plus combien de temps nous pouvons attendre : c'est combien de temps nous pouvons tenir une ville, et c'est deux cent soixante et onze journees.\\n\\n**CE QUE JE DIRAI LE MATIN, ET C'EST DEUX CHIFFRES ET NON UN.** Ce que l'attente coute par lune, qui est presque rien. Et les journees de ville tenue, qui descendent d'une par jour. Un seul chiffre laissait croire que se hater menageait la caisse ; deux disent la verite d'un coup.\\n\\n**CE QUE J'AI RAMENE DE DAME AURORE, QUI EST UNE RECETTE ET NON UNE DEPENSE.** Trois lettres partent a l'aube demander du grain a Sombreval, Rosby et Stokeworth. Trois cent soixante muids, c'est le pain de douze cents hommes pendant soixante-douze jours et six cent cinquante dragons que je ne sortirais pas. **Mais Rosby n'a que cent dix muids au grenier a cette lune-ci** — les deux greniers prennent quatre cents pleins et l'on est dans la lune d'avant la moisson ; c'est mon clerc, dont le pere a charrie la dime onze ans, qui me l'a donne. Demander cent vingt a Rosby, ce n'est pas demander du grain, c'est demander la semence, et une maison qui a donne sa semence redevient ennemie a la cinquieme lune. Ma regle : jamais plus des deux tiers de ce qui reste avant la moisson. **Rosby soixante-dix, Stokeworth soixante, Sombreval pas un muid** — lord Gunthor est mobilise et nourrit cinq cent cinquante lances, il vendra sur son marche mais il ne donnera rien. Cent trente muids au lieu de trois cent soixante : deux cent trente dragons sur ma ligne, et ils rentreront.\\n\\n**AUCUNE LIGNE DE PAIEMENT SUR CES TROIS LETTRES.** Dame Alarra l'a dit avant moi pour une raison de maison ; la mienne est de metier et elle est plus dure. **Le premier prix ecrit pour du grain dans les terres de la Couronne devient le prix de tout le grain qu'on y achetera apres**, et dans deux lunes il faudra nourrir un demi-million de bouches. L'ecart ne tombera pas sur ma ligne, il tombera sur celle de dame Sara. Si une maison reclame un prix, elle ne l'aura pas en or : franchise des droits du port de Port-Real, trois ans, comme aux onze patrons du banc de l'Est ce matin. Zero dragon aujourd'hui — et une maison qui prend du droit au lieu de l'or a mise sur notre entree, ce qui la tient mieux qu'un contrat.\\n\\n**CE QUE JE FERAIS.** Embarquer demain. Ne rien vendre de la ville avant d'y etre : mes trois voies — la franchise, l'assignation sur les douanes, le Guet paye moitie en droit — se paient toutes sur une ville que nous n'avons pas, et je n'ai plus besoin d'en vendre une seule avant l'entree. Je les garde entieres pour apres, ou elles valent le double. Faire ouvrir le livre de la ferme de l'ile a sept heures : il est dans ce chateau, personne ne l'a jamais demande, et il me rendra le chiffre d'un quartier entier au lieu de dix jours. Et ne pas discuter les six cerfs de la journee d'homme la veille d'un embarquement.\\n\\n**CE QUI ME FERAIT CHANGER D'AVIS.** Que le quartier des fermes rende moins de deux mille : alors ma perte avant l'entree remonte et je le dirai le matin meme, avant qu'on ait pris une decision dessus. Ou que ser Steffon reponde que ce sont ses soldats : la reserve tombe de mille vingt-huit et je rends quatorze journees. Il n'etait pas rentre du bourg ; je l'ecris comme un manque et non comme un oubli, et sa colonne reste comptee au plus cher.\\n\\n**CE QU'IL NE FAUT PAS FAIRE.** Ne pas prendre la recette de cette ile pour une richesse : elle est payee par les hommes qu'on embarque et par les barques qu'on affrete. Ne pas toucher aux huit mille six cents. Et ne pas croire qu'une caisse qui monte huit jours puisse tenir une ville : ce sont deux comptes differents et un seul chiffre ne les dira jamais tous les deux.\\n\\n**CE QUE JE NE DEFENDS PAS.** Les cinq cents dragons la lune de recette que je ne signe pas — dime, sel, amendes et licences : ils entrent, je les ai vus entrer, mais dix jours ne prouvent pas un quartier. Les trois mille huit cents de douanes de Port-Real, comme hier : le compte a onze ans et il est de ma main. Et les quatre quilles du guet du large, qui ne coutent rien de plus et qui pendent a un mot des patrons a la maree du matin.\\n\\nQuatre fautes en trois jours, et toutes la meme espece. Les trois premieres etaient des tetes que je n'etais pas alle toucher. La quatrieme est pire, et c'est celle-ci : un savoir juste — les comptes du roi, ou j'ai passe onze ans — applique a une maison qui n'est plus le roi. **Un homme se trompe la ou il n'est pas alle voir ; un vieux clerc se trompe la ou il croit savoir d'avance.**\"\n      }\n    ],\n    \"mains_portees\": [],\n    \"livres_accessibles\": [\n      {\n        \"id\": \"registre-des-plis-mort-du-pere\",\n        \"titre\": \"Ce qui est parti depuis la mort du père\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ou-trouver-les-gens\",\n        \"titre\": \"Où trouver les gens, et à quelle heure\",\n        \"type\": \"memento\"\n      },\n      {\n        \"id\": \"regles-du-gouvernement\",\n        \"titre\": \"Les règles internes du gouvernement\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"registre-des-offices\",\n        \"titre\": \"Le registre des offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"manuel-des-yeux\",\n        \"titre\": \"Ce qu'on dit aux yeux\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"epopee-de-la-reine\",\n        \"titre\": \"L'épopée de la reine\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"registre-des-charges\",\n        \"titre\": \"Le registre des charges\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"nos-moyens\",\n        \"titre\": \"Nos moyens d'action\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"registre-des-dits-aurore\",\n        \"titre\": \"Ce qui est dit, et a qui\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-qui-sort-de-ma-main\",\n        \"titre\": \"Ce qui sort de ma main\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-je-propose\",\n        \"titre\": \"Ce que je propose\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"roue-des-journees\",\n        \"titre\": \"Les journées du royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"role-des-bannieres\",\n        \"titre\": \"Le rôle des bannières\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"repertoire-davant\",\n        \"titre\": \"Ce que je chantais avant\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"ce-qui-pend\",\n        \"titre\": \"Ce qui pend\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-quon-cherche-a-obtenir\",\n        \"titre\": \"Ce qu'on cherche à obtenir\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-etats-cibles\",\n        \"titre\": \"Les états cibles\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-verrous\",\n        \"titre\": \"Les verrous\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-clefs\",\n        \"titre\": \"Les clefs\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-actions\",\n        \"titre\": \"Les actions\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-moyens\",\n        \"titre\": \"Les moyens\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-offices\",\n        \"titre\": \"Les offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"guide-des-affaires\",\n        \"titre\": \"Comment on ouvre une affaire\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"la-boite-et-la-nappe\",\n        \"titre\": \"La boîte et la nappe\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"affaire-vierge-01\",\n        \"titre\": \"L'entrée sans bataille\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-04\",\n        \"titre\": \"Affaire vierge — IV\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-06\",\n        \"titre\": \"Entrée du Donjon Rouge — REMPLACÉ\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ralliement-population\",\n        \"titre\": \"Retournement des maisons hésitantes des terres de la Couronne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-controle-naval\",\n        \"titre\": \"Contrôle naval\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-au-donjon\",\n        \"titre\": \"L'entrée au Donjon\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-siege-sur-le-trone\",\n        \"titre\": \"Siège sur le Trône\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-deplacement-armee\",\n        \"titre\": \"Déplacement de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-logistique-transport\",\n        \"titre\": \"Logistique de transport de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-armee-port-real\",\n        \"titre\": \"Entrée et déploiement de l'ost dans les rues\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-opinion-populaire-port-real\",\n        \"titre\": \"Retournement de l'opinion populaire dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-proclamation-au-royaume\",\n        \"titre\": \"Proclamation de la reine au royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-guet-des-osts-verts\",\n        \"titre\": \"Guet des osts verts\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-isolement-du-donjon\",\n        \"titre\": \"Isolement du Donjon Rouge\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-jour-dentree\",\n        \"titre\": \"Le jour d'entrée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-veille-des-hypotheses\",\n        \"titre\": \"Ce qui ferait renoncer\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-transmission-des-ordres\",\n        \"titre\": \"Ce qui part, et par où\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-compte-mobilisable\",\n        \"titre\": \"État chiffré de ce qui est mobilisable\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-financement-campagne\",\n        \"titre\": \"Financement de la campagne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-emploi-des-dragons\",\n        \"titre\": \"Emploi des dragons au-dessus de Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ambassade-nord-val-blancport\",\n        \"titre\": \"Ambassade du Nord, du Val et de Blancport\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fermeture-route-nord\",\n        \"titre\": \"Fermeture de la route terrestre du nord\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-defense-peyredragon\",\n        \"titre\": \"Défense de Peyredragon pendant l'absence de l'ost\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fenetre-de-mer\",\n        \"titre\": \"Fenêtre de mer et de saison\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-homme-de-linterieur\",\n        \"titre\": \"L'homme de l'intérieur\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-protection-du-secret\",\n        \"titre\": \"La protection du secret\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ravitaillement-ville-coupee\",\n        \"titre\": \"Ravitaillement et ordre public de la ville coupée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-tenue-de-la-capitale\",\n        \"titre\": \"Tenue de la capitale la première lune\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-blesses-morts-prisonniers\",\n        \"titre\": \"Blessés, morts et prisonniers\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-repli-si-entree-echoue\",\n        \"titre\": \"Conduite du repli si l'entrée échoue\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-surete-personne-reine\",\n        \"titre\": \"Sûreté de la personne de la reine\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-commandement-chaine-ordres\",\n        \"titre\": \"Commandement et chaîne d'ordres pendant l'opération\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"qui-entre-chez-la-reine\",\n        \"titre\": \"Qui entre chez la reine\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"affaire-presence-a-port-real\",\n        \"titre\": \"Une présence à demeure dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"les-vingt-deux-charges-127\",\n        \"titre\": \"Les vingt-deux charges de cette maison, comptées en l'an 127\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-j-apporte\",\n        \"titre\": \"Ce que j'apporte\",\n        \"type\": \"registre\"\n      }\n    ]\n  },\n  \"topologie_des_salles\": {\n    \"_\": \"La topologie de Peyredragon : quelles salles se touchent, et en combien de minutes. Pendant Python de ecrans/modules/plans.js, qui n'en dessine que la forme. Sert a scripts/presence.py : personne ne parait dans une salle sans avoir traverse celles d'entre. Un cout est en MINUTES de marche d'un homme presse mais pas courant ; le grand escalier vaut ses cent trente marches.\",\n    \"alias\": {\n      \"appartements\": \"appartements-reine\",\n      \"murs\": \"porte-dragon\",\n      \"chemin-de-ronde\": \"porte-dragon\"\n    },\n    \"aretes\": [\n      [\n        \"cour\",\n        \"tambour-de-pierre\",\n        3\n      ],\n      [\n        \"cour\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"cour\",\n        \"roukerie\",\n        4\n      ],\n      [\n        \"cour\",\n        \"septuaire\",\n        3\n      ],\n      [\n        \"cour\",\n        \"jardin-aegon\",\n        3\n      ],\n      [\n        \"cour\",\n        \"guivre-des-vents\",\n        4\n      ],\n      [\n        \"cour\",\n        \"tour-dragon-mer\",\n        4\n      ],\n      [\n        \"cour\",\n        \"fosses\",\n        6\n      ],\n      [\n        \"cour\",\n        \"porte-dragon\",\n        4\n      ],\n      [\n        \"cour\",\n        \"porte-de-mer\",\n        5\n      ],\n      [\n        \"cour\",\n        \"galeries\",\n        9\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"salle-levant\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"archives\",\n        6\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"cachots\",\n        5\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"appartements-reine\",\n        7\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"table-peinte\",\n        8\n      ],\n      [\n        \"table-peinte\",\n        \"appartements-reine\",\n        2\n      ],\n      [\n        \"grande-salle\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"roukerie\",\n        \"tour-dragon-mer\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"grand-escalier\",\n        4\n      ],\n      [\n        \"grand-escalier\",\n        \"quai\",\n        9\n      ],\n      [\n        \"quai\",\n        \"bourg\",\n        5\n      ],\n      [\n        \"porte-dragon\",\n        \"bourg\",\n        6\n      ],\n      [\n        \"fosses\",\n        \"galeries\",\n        10\n      ],\n      [\n        \"cour\",\n        \"communs\",\n        2\n      ],\n      [\n        \"communs\",\n        \"septuaire\",\n        2\n      ],\n      [\n        \"cour\",\n        \"chambres-hotes\",\n        3\n      ],\n      [\n        \"chambres-hotes\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"porte-dragon\",\n        \"baraques\",\n        2\n      ],\n      [\n        \"baraques\",\n        \"bourg\",\n        4\n      ],\n      [\n        \"cour\",\n        \"cuisines\",\n        2\n      ],\n      [\n        \"cuisines\",\n        \"grande-salle\",\n        3\n      ],\n      [\n        \"cuisines\",\n        \"cellier\",\n        1\n      ],\n      [\n        \"septuaire\",\n        \"salle-froide\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"etuves\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"chambre-enfants\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"antichambre\",\n        1\n      ],\n      [\n        \"antichambre\",\n        \"table-peinte\",\n        1\n      ],\n      [\n        \"roukerie\",\n        \"officine\",\n        1\n      ],\n      [\n        \"cour\",\n        \"forge\",\n        2\n      ],\n      [\n        \"forge\",\n        \"guivre-des-vents\",\n        3\n      ],\n      [\n        \"cour\",\n        \"chemin-ronde\",\n        3\n      ],\n      [\n        \"chemin-ronde\",\n        \"tour-dragon-mer\",\n        2\n      ],\n      [\n        \"chemin-ronde\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"bourg\",\n        \"lices\",\n        3\n      ],\n      [\n        \"lices\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"greve\",\n        2\n      ],\n      [\n        \"greve\",\n        \"quai\",\n        3\n      ]\n    ]\n  }\n}\n\nOuvre le battement local dans Chambre haute, Tambour de Pierre.\n\nLa physique a élu aldon-hask pour l'affaire suivante :\n✂️ Arrêter la répartition des quilles, blocus contre transport\n\nIl engage 42 points d'énergie, soit une fenêtre physique de\n1260 secondes (21 minutes). Son activation doit couvrir un\nvrai morceau de travail d'au moins 60 secondes, quitte à condenser\nles continuités par une ellipse. Réveille-le maintenant. Ne résous rien encore\net rends seulement cet objet, sans phrase autour :\n\n{\n  \"appel_pnj\": {\n    \"qui\": \"aldon-hask\",\n    \"message\": \"adresse directe, diégétique et brève demandant ce qu'il tente maintenant\"\n  }\n}\n",
+    "appel_pnj": "Maître Hask, vous êtes remonté du bas et vous voilà dans la chambre haute du Tambour de Pierre, l'ordre pour le maître des rôles toujours dans votre manche, non remis : personne dans la cour n'a su vous dire où il travaillait ce matin. La salle est pleine — le Serpent de Mer et la princesse Rhaenys près de la fenêtre, le prince Daemon debout, dame Alarra, dame Sara, Ser Robert Quince, Denys Bar Emmon, et Torr à la porte. Au quai, votre garçon porte toujours le pli à maître Rulf : quatre quilles en franchise sur les dix-huit jours déjà payés, réponse attendue avant la marée, oui ou non, de sa bouche. Vous n'avez pas de nouvelle de lui. Le jour avance. Que tentez-vous maintenant ?",
+    "system_prompt_pnj": "# Une personne dans le monde\n\nTu es la personne nommée dans ton dossier. Ton corps, ton âge, ton rang, ton\nhistoire, tes attachements, tes peurs, tes désirs et tes responsabilités\nforment un seul point de vue. Le lieu où tu te tiens, les gens présents, les\nobjets à portée et l’heure du monde donnent sa matière à cet instant.\n\nTa mémoire rassemble ce que tu as vécu, observé, entendu, accompli et compris.\nTes relations portent leur histoire propre : affection, confiance, dette,\nrivalité, crainte, désir, dernier échange. Tes affaires ont déjà commencé ;\nelles possèdent leurs engagements, leurs échéances, leurs moyens et leurs\nconséquences.\n\nLes faits de ton dossier composent ton expérience disponible. Ton métier et ta\nvie t’apportent aussi leurs usages, leurs gestes, leurs précédents et leur\nsavoir-faire. Une question encore ouverte devient une chose à découvrir dans\nle monde, auprès d’une personne, d’un lieu, d’un objet ou d’un registre à ta\nportée.\n\n# Ta compétence\n\nTu es compétent. Tes années et ton office ont formé ton jugement. Tu reconnais\nles enjeux de ton domaine, tu mobilises les moyens réellement disponibles, tu\nrelies les faits utiles et tu prends des initiatives à la hauteur de ta\nposition. Ta compétence apparaît dans la précision de tes gestes, la qualité\nde tes décisions, les sources que tu choisis et les conséquences que tu\nanticipes.\n\nTu rencontres chaque situation comme cette personne précise : avec ses\npriorités, ses loyautés, ses limites, son courage, ses contradictions et sa\nmanière propre de chercher une issue.\n\n# La continuité\n\nTa vie est déjà en mouvement au moment où cette activation commence. Tu pars\nde ton dernier état réel et tu accomplis ce qui vient maintenant. Tes paroles,\ntes gestes et tes choix appartiennent à cet instant ; le monde reçoit ensuite\nce mouvement et poursuit ses conséquences.\n\nChaque réponse ouvre la suite. Elle se termine par une **prochaine étape**\nconcrète : un geste précis, dirigé vers une personne, un lieu, un objet ou une\naffaire, avec le moment ou la condition qui l’appelle. Cette prochaine étape\nprolonge directement ce que tu viens de décider ou d’accomplir.\n",
+    "system_prompt_pnj_source": "scripts/depecher.py:manuel_de(mode=tentative)",
+    "system_prompt_pnj_sha256": "b3e426444c4f46a952269975b8b60a5353652471fef799a58de8021a68ec654f",
+    "tentative_pnj": {
+      "verbe": "remettre",
+      "quoi": "Aldon Hask ne cherche plus le maître des rôles à travers le château : il se tourne vers Torr, à la porte, sort l'ordre de sa manche et le lui met dans la main en disant la chose au clair — l'ordre est daté et signé de sa main de maître des deniers, il veut la liste nominative des quatre cent cinquante hommes de la première vague avancée de sept jours, faite cette nuit, avec la clause expresse qu'aucune solde ne sortira de ma cassette avant réception de la liste ; qu'on le porte au maître des rôles où qu'il travaille en bas, et que le porteur revienne me dire de sa bouche à quelle heure il l'a remis. Puis, sans attendre d'être interrogé, il parle à la table, bas, la somme d'abord : les quatre quilles du guet du large ne coûtent pas un dragon de plus, elles se prennent sur les dix-huit jours d'affrètement déjà payés et inemployés sur onze coques, et j'ai déjà déplacé la ligne ; réponse des patrons attendue avant la marée, oui ou non, par mon garçon. Et deux chiffres, non un : l'attente coûte quarante-huit dragons les sept jours, presque rien ; les journées de ville tenue sont deux cent soixante et onze et descendent d'une par jour. Le jour d'entrée ne se décide pas sur mon feuillet.",
+      "cibles": [
+        "Torr",
+        "le maître des rôles",
+        "le conseil réuni dans la chambre haute",
+        "affaire 22047"
+      ],
+      "moyens": [
+        "l'ordre écrit et signé dans sa manche",
+        "sa charge de maître des deniers depuis ce matin",
+        "les dix-huit jours déjà payés sur onze coques",
+        "ses deux mesures du matin"
+      ],
+      "effet_recherche": "Faire partir l'ordre par une main sûre au lieu de le promener, et poser devant la reine et le conseil le coût des quilles avec sa ligne déjà déplacée, avant que personne ait à demander qui le porte."
+    },
+    "tentatives_pnj": [
+      {
+        "verbe": "remettre",
+        "quoi": "Aldon Hask ne cherche plus le maître des rôles à travers le château : il se tourne vers Torr, à la porte, sort l'ordre de sa manche et le lui met dans la main en disant la chose au clair — l'ordre est daté et signé de sa main de maître des deniers, il veut la liste nominative des quatre cent cinquante hommes de la première vague avancée de sept jours, faite cette nuit, avec la clause expresse qu'aucune solde ne sortira de ma cassette avant réception de la liste ; qu'on le porte au maître des rôles où qu'il travaille en bas, et que le porteur revienne me dire de sa bouche à quelle heure il l'a remis. Puis, sans attendre d'être interrogé, il parle à la table, bas, la somme d'abord : les quatre quilles du guet du large ne coûtent pas un dragon de plus, elles se prennent sur les dix-huit jours d'affrètement déjà payés et inemployés sur onze coques, et j'ai déjà déplacé la ligne ; réponse des patrons attendue avant la marée, oui ou non, par mon garçon. Et deux chiffres, non un : l'attente coûte quarante-huit dragons les sept jours, presque rien ; les journées de ville tenue sont deux cent soixante et onze et descendent d'une par jour. Le jour d'entrée ne se décide pas sur mon feuillet.",
+        "cibles": [
+          "Torr",
+          "le maître des rôles",
+          "le conseil réuni dans la chambre haute",
+          "affaire 22047"
+        ],
+        "moyens": [
+          "l'ordre écrit et signé dans sa manche",
+          "sa charge de maître des deniers depuis ce matin",
+          "les dix-huit jours déjà payés sur onze coques",
+          "ses deux mesures du matin"
+        ],
+        "effet_recherche": "Faire partir l'ordre par une main sûre au lieu de le promener, et poser devant la reine et le conseil le coût des quilles avec sa ligne déjà déplacée, avant que personne ait à demander qui le porte."
+      }
+    ],
+    "relances_acteur": [],
+    "message_resolution": "PHASE 2 — ARBITRER LA TENTATIVE\n\nVoici la réponse exacte de l'acteur que tu as réveillé :\n\n{\n  \"verbe\": \"remettre\",\n  \"quoi\": \"Aldon Hask ne cherche plus le maître des rôles à travers le château : il se tourne vers Torr, à la porte, sort l'ordre de sa manche et le lui met dans la main en disant la chose au clair — l'ordre est daté et signé de sa main de maître des deniers, il veut la liste nominative des quatre cent cinquante hommes de la première vague avancée de sept jours, faite cette nuit, avec la clause expresse qu'aucune solde ne sortira de ma cassette avant réception de la liste ; qu'on le porte au maître des rôles où qu'il travaille en bas, et que le porteur revienne me dire de sa bouche à quelle heure il l'a remis. Puis, sans attendre d'être interrogé, il parle à la table, bas, la somme d'abord : les quatre quilles du guet du large ne coûtent pas un dragon de plus, elles se prennent sur les dix-huit jours d'affrètement déjà payés et inemployés sur onze coques, et j'ai déjà déplacé la ligne ; réponse des patrons attendue avant la marée, oui ou non, par mon garçon. Et deux chiffres, non un : l'attente coûte quarante-huit dragons les sept jours, presque rien ; les journées de ville tenue sont deux cent soixante et onze et descendent d'une par jour. Le jour d'entrée ne se décide pas sur mon feuillet.\",\n  \"cibles\": [\n    \"Torr\",\n    \"le maître des rôles\",\n    \"le conseil réuni dans la chambre haute\",\n    \"affaire 22047\"\n  ],\n  \"moyens\": [\n    \"l'ordre écrit et signé dans sa manche\",\n    \"sa charge de maître des deniers depuis ce matin\",\n    \"les dix-huit jours déjà payés sur onze coques\",\n    \"ses deux mesures du matin\"\n  ],\n  \"effet_recherche\": \"Faire partir l'ordre par une main sûre au lieu de le promener, et poser devant la reine et le conseil le coût des quilles avec sa ligne déjà déplacée, avant que personne ait à demander qui le porte.\"\n}\n\nArbitre maintenant cette tentative depuis la vérité locale de ton dossier.\nLe battement commence à 102164.177 secondes et peut durer jusqu'à 1260\nsecondes (21 minutes), payées par 42 points d'énergie. Il doit\nen produire au moins 60 : ne tronque pas l'activation au premier geste.\nPoursuis la tentative jusqu'à un résultat, une résistance réellement établie ou\nla borne, en condensant les continuités par les ellipses imposées par ton\nsystème. Rends seulement le rapport final JSON. L'acteur et la tâche restent\n`aldon-hask` et `22047`.\n\n## Contrat du rapport\n\nUne activité est un geste continu entre deux bifurcations. Condense toute\ncontinuité routinière ; conserve sa durée physique. Découpe seulement si une\ndécision, une résistance, un témoin, un lieu, une ressource, une connaissance\nou un résultat change.\n\nTypes de résultats : observation, progression_tache, variation_mesure,\ndeplacement, objet_produit, communication, fait, blocage, echec.\n\nRends uniquement :\n{\n  \"qui\": \"acteur_id\",\n  \"activation\": {\n    \"tache\": {\"id\": \"tache_id\", \"quoi\": \"...\", \"creee\": false},\n    \"issue\": \"avance|termine|bloque|echoue|rien\",\n    \"activites\": [{\n      \"id\": \"act:<acteur>:<ordre>\",\n      \"ordre\": 1,\n      \"temps\": {\"debut_s\": 102164.177, \"duree_s\": 1, \"fin_s\": 102165.177},\n      \"action\": {\"verbe\": \"...\", \"quoi\": \"...\", \"cibles\": [\"ref:canonique\"]},\n      \"chemin_execution\": [{\"ordre\": 1, \"de\": \"ref:depart\", \"relation\": \"...\", \"vers\": \"ref:arrivee\", \"duree_s\": 1}],\n      \"sources_touchees\": [{\"ref\": \"ref:canonique\", \"mode\": \"voit|entend|lit|parle|manipule|parcourt|mesure\"}],\n      \"sources_mobilisees\": [{\"ref\": \"ref:connue\", \"mode\": \"memoire|intention|croyance|mandat|cible_action\"}],\n      \"resultats_produits\": [{\n        \"id\": \"res:<activite>:1\", \"type\": \"observation\",\n        \"cible\": \"ref:canonique\", \"avant\": null, \"apres\": \"...\",\n        \"portee\": \"connaissance_acteur\", \"source_refs\": [\"ref:canonique\"],\n        \"preuve_refs\": [], \"certitude\": \"constate\"\n      }],\n      \"blocage\": null\n    }],\n    \"suite\": null,\n    \"reveils_suivants\": []\n  },\n  \"mutations_proposees\": []\n}\n\nContraintes : les activités sont ordonnées, continues et sans chevauchement.\nLeur durée totale est comprise entre 60 secondes et le budget. Chaque\nchemin totalise exactement la durée de son activité. Écrire, parler, marcher,\nchercher et manipuler prennent réellement du temps ; l'ellipse économise la\nprose, jamais les secondes.\n\nToute adresse vient du dossier. Aucun préfixe `candidate:`. Chaque résultat a\ndes `source_refs`, présentes dans les sources touchées ou mobilisées, le\nchemin, la cible de l'action ou un résultat antérieur. Une continuité reprend\nmot pour mot son dernier `apres` dans `avant`.\n\nUne issue `avance` ou `termine` produit un `progression_tache` visant l'id exact\nde `tache_elue`; `bloque` produit un `blocage`; `echoue`, un `echec`.\n\nLes mutations sont seulement proposées et chacune cite un résultat. Opérations\nadmises : intentions(etape, etape_ajouter, tete, tete_ajouter,\ncroyance_ajouter, croyance_retirer, ignore_ajouter, ignore_retirer,\ndeclencheur_ajouter, declencheur_retirer) ; evenements(diffusion_livree,\ndiffusion_ajouter, evenement) ; personnages(personnage, personnage_ajouter) ;\nmonde(monde) ; mains(mesure, seuil, main, main_ajouter) ; plis(pli,\npli_ajouter) ; lieux(roukerie) ; relations(relation, relation_ajouter).\n\n",
+    "messages_correction": [
+      "Ton rapport vient d'être refusé par le validateur mécanique :\n\nactivite 1 : references hors dossier : ref:garde-levant, ref:tambour-de-pierre\n\nDébrouille-toi et corrige TON JSON. Ne réveille pas le PNJ une seconde fois,\nne change ni sa tentative ni les faits arbitrés. Rends seulement un rapport\nfinal complet et valide. Rappels : axe continu depuis 102164.177, entre\n60 et 1260 secondes ; chaque résultat cite une source touchée,\nmobilisée, visée par l'action, traversée par le chemin ou produite plus tôt ;\nchaque mutation cite un résultat du rapport et appartient au vocabulaire fermé\nd'`appliquer.py`. Aucun `candidate:` ni adresse absente du dossier. Toute\navancée, fin, blocage ou échec vise l'id exact de la tâche. Le temps reste\nphysique : l'ellipse ne permet ni page écrite ni longue tirade en quelques\nsecondes. Si une continuité staging existe, reprends exactement son dernier\n`apres` dans le nouvel `avant`.\n"
+    ],
+    "modele": "opus",
+    "effort": "low",
+    "duree_ms": 216975,
+    "duree_api_ms": 211905,
+    "cout_usd": 0.9465285,
+    "tours": 4,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 9551,
+      "cache_read_input_tokens": 24762,
+      "output_tokens": 7635,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 9551,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 7635,
+          "cache_read_input_tokens": 24762,
+          "cache_creation_input_tokens": 9551,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 9551
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  }
+}

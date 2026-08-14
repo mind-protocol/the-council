@@ -1,0 +1,53 @@
+AURORE INCHAUSPÉ — la fiche
+===========================
+
+--- Personnage (etat/personnages.json) ----------------------------------
+
+{
+  "id": "aurore-inchauspe",
+  "nom": "Aurore Inchauspé",
+  "titre": "Maîtresse de la voix de la reine",
+  "maison_id": "maison-targaryen-noir",
+  "lieu_id": "peyredragon",
+  "etat": "actif",
+  "condition": "libre",
+  "maniere": "Parle en formules qu'elle pèse avant de les lâcher ; tient tête aux mestres sans élever le ton.",
+  "traits": [
+    "lettrée",
+    "obstinée",
+    "sait ce qu'une phrase vaut"
+  ],
+  "objectifs": [],
+  "_note": "Fiche créée pour combler un manque : le siège existait dans joueurs.json sans personnage. Lieu et manière tirés de ses actes des 23e et 24e jours, rien d'inventé au-delà."
+}
+
+--- Sa maison (etat/maisons.json) ---------------------------------------
+
+{
+  "id": "maison-targaryen-noir",
+  "nom": "Targaryen (branche noire)",
+  "devise": "Feu et Sang",
+  "blason": "Dragon tricéphale de gueules sur champ de sable, écartelé aux armes des Arryn et des Velaryon (armes personnelles de Rhaenyra)",
+  "siege_id": "peyredragon",
+  "suzerain_id": null,
+  "allegeance_affichee": "noir",
+  "allegeance_reelle": "noir",
+  "or": 39998,
+  "revenus_lune": 2500,
+  "levees_dispo": 1200,
+  "levees_max": 1600,
+  "statut": "intacte",
+  "canon": true
+}
+
+--- Son lieu (etat/lieux.json) ------------------------------------------
+
+{
+  "id": "peyredragon",
+  "nom": "Peyredragon",
+  "region": "Baie de la Néra",
+  "type": "chateau",
+  "controle_id": "maison-targaryen-noir",
+  "jours_de_pr": 4
+}
+

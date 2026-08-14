@@ -1,0 +1,162 @@
+[  0.001s] boucle.demarrage         · sec=False · une_fois=True · heartbeat_s=5.0 · parallele=1
+[  0.002s] cycle.depart            
+[  0.006s] horloge.lecture         
+[  0.007s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=145680.0
+[  0.008s] graphe.lecture          
+[  0.030s] graphe.charge            · noeuds=1849 · aretes=4857
+[  0.031s] diffusion.importance    
+[  0.133s] importance.clusters      · lieux=17 · motifs_max=79 · actifs=1535
+[  0.137s] energie.polarites_horloge · moyenne_minute=67000586.5 · ecart_max_minutes=1823.5 · emetteurs=1 · absorbeurs=106 · neutres=0
+[  0.143s] energie.transfert_horloge · transfere=46.939 · propositions=1090 · acteurs=107
+[  0.146s] energie.graphe           · dt_s=33217.608 · integration=1.0 · noeuds=1849 · energises=1048 · total=4825.572 · pic=pers:rhaenyra · maximum=100.0
+[  0.147s] diffusion.calendrier    
+[  0.160s] calendrier.etape_sans_horloge · acteur=gerardys · etapes_en_cours=3 · avec_horloge=2
+[  0.161s] calendrier.etape_sans_horloge · acteur=daemon · etapes_en_cours=2 · avec_horloge=1
+[  0.162s] calendrier.etape_sans_horloge · acteur=jacaerys · etapes_en_cours=4 · avec_horloge=3
+[  0.162s] calendrier.etape_sans_horloge · acteur=rhaenys · etapes_en_cours=2 · avec_horloge=1
+[  0.163s] calendrier.etape_sans_horloge · acteur=lucerys · etapes_en_cours=4 · avec_horloge=2
+[  0.163s] calendrier.etape_sans_horloge · acteur=criston · etapes_en_cours=2 · avec_horloge=1
+[  0.164s] calendrier.etape_sans_horloge · acteur=alicent · etapes_en_cours=3 · avec_horloge=2
+[  0.166s] calendrier.etape_sans_horloge · acteur=aegon-ii · etapes_en_cours=2 · avec_horloge=1
+[  0.167s] calendrier.etape_sans_horloge · acteur=helaena · etapes_en_cours=2 · avec_horloge=1
+[  0.168s] calendrier.etape_sans_horloge · acteur=borros-baratheon · etapes_en_cours=2 · avec_horloge=1
+[  0.169s] calendrier.etape_sans_horloge · acteur=jeyne-arryn · etapes_en_cours=2 · avec_horloge=1
+[  0.169s] calendrier.etape_sans_horloge · acteur=cregan-stark · etapes_en_cours=2 · avec_horloge=1
+[  0.170s] calendrier.etape_sans_horloge · acteur=ormund-hightower · etapes_en_cours=2 · avec_horloge=1
+[  0.171s] calendrier.etape_sans_horloge · acteur=wend · etapes_en_cours=1 · avec_horloge=0
+[  0.172s] calendrier.etape_sans_horloge · acteur=septa-marlow · etapes_en_cours=1 · avec_horloge=0
+[  0.173s] calendrier.etape_sans_horloge · acteur=alarra-rosby · etapes_en_cours=2 · avec_horloge=1
+[  0.174s] calendrier.etape_sans_horloge · acteur=nel-bec · etapes_en_cours=1 · avec_horloge=0
+[  0.175s] calendrier.etape_sans_horloge · acteur=waltyr-poix · etapes_en_cours=1 · avec_horloge=0
+[  0.175s] calendrier.etape_sans_horloge · acteur=lord-rosby · etapes_en_cours=3 · avec_horloge=2
+[  0.176s] calendrier.etape_sans_horloge · acteur=maris-baratheon · etapes_en_cours=2 · avec_horloge=1
+[  0.178s] energie.calculee         · acteurs=33 · maximum=100.0
+[  0.184s] selection.elue           · acteur=gerardys · energie=100.0 · tache=41022 · energie_tache=7.048 · budget_energie=100 · budget_s=3000 · flux_horloge=absorbe · ecart_horloge_min=-604.5 · horloge_pj=rhaenyra
+[  0.185s] acteur.choisi            · acteur=gerardys · energie=100.0 · importance=1.0 · budget=100
+[  0.186s] tache.choisie            · id=41022 · distance=1 · creee=False · energie=7.048
+ACTIVATION  gerardys  energie 100.00 · budget 100 (50 min)  importance 1.000
+  tache 41022 · distance 1 · 📜 Écrire le rôle des passages
+  front aurore-inchauspe · +145680.0s depuis rhaenyra
+[  0.187s] rotation.acteurs_reserves · tour=20 · acteurs=['aldon-hask', 'alys-grive', 'gerardys', 'le-sanglier', 'robert-quince', 'rulf-corne', 'steffon-darklyn']
+[  0.188s] selection.lot            · nombre=1 · parallele=1
+[  0.189s] energie.reservee         · acteur=gerardys · valeur=100.0 · plafond=100
+[  0.212s] appel.dossier            · acteur=gerardys · tache=41022
+[  0.289s] appel.systeme_narrateur  · acteur=gerardys · caracteres=4781
+[  0.289s] appel.systeme_pnj        · acteur=gerardys · caracteres=2146
+[  0.290s] appel.ouverture          · acteur=gerardys · caracteres=30507 · budget_energie=100 · budget_secondes=3000
+[  0.299s] cli.depart               · acteur=narrateur-local:table-peinte · session=9c4e42a6-c210-4294-8d0b-4e69fa91d567 · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[  3.071s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[  3.950s] cli.rate_limit_event     · sous_type=None
+[  6.156s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.ouverture · secondes=5.0
+[  9.713s] cli.texte                · contenu={ "appel_pnj": { "qui": "gerardys", "message": "Mestre, il est midi passé de peu à la Table Peinte, et la salle est pleine : la reine, le prince Daemon, la princesse Rhaenys, le j…
+[ 11.164s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.ouverture · secondes=10.0
+[ 11.285s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[ 11.372s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[ 11.375s] cli.resultat             · erreur=False · duree_ms=8595 · cout=0.205512 · entree=2 · sortie=354 · caracteres=814
+[ 12.912s] narrateur.reveille_pnj   · acteur=gerardys · caracteres=749
+[ 13.056s] cli.depart               · acteur=gerardys · session=9735c327-4a73-4647-aea1-72423d537064 · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[ 15.966s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[ 16.620s] cli.rate_limit_event     · sous_type=None
+[ 18.943s] cli.heartbeat            · acteur=gerardys · phase=pnj.tentative · secondes=5.0
+[ 19.287s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 19.290s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 19.300s] cli.assistant            · bloc=thinking
+[ 23.945s] cli.heartbeat            · acteur=gerardys · phase=pnj.tentative · secondes=10.0
+[ 28.947s] cli.heartbeat            · acteur=gerardys · phase=pnj.tentative · secondes=15.0
+[ 33.948s] cli.heartbeat            · acteur=gerardys · phase=pnj.tentative · secondes=20.0
+[ 34.222s] cli.texte                · contenu=Je me lève, chaîne serrée dans le poing, et je pose les cinq pages devant la reine avant qu'on me les demande — en commençant par le moins grave. { "tentative": { "verbe": "rendre…
+[ 36.754s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[ 36.757s] cli.resultat             · erreur=False · duree_ms=20998 · cout=0.15657000000000001 · entree=2 · sortie=1036 · caracteres=2335
+[ 38.086s] pnj.tentative_valide     · acteur=gerardys · verbe=rendre · caracteres=1829
+[ 38.089s] narrateur.arbitrage      · acteur=gerardys · caracteres=6561 · passage=1
+[ 38.092s] cli.depart               · acteur=narrateur-local:table-peinte · session=9c4e42a6-c210-4294-8d0b-4e69fa91d567 · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[ 40.734s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[ 43.327s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 43.984s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=5.0
+[ 44.734s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 46.183s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 47.575s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 48.989s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=10.0
+[ 49.737s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 51.149s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 52.617s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 53.990s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=15.0
+[ 54.842s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 56.153s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 58.238s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 58.993s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=20.0
+[ 59.627s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 61.042s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 62.497s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 63.982s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 64.035s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=25.1
+[ 65.317s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 66.742s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 68.100s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 69.038s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=30.1
+[ 69.511s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 70.973s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 71.692s] cli.assistant            · bloc=thinking
+[ 74.051s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=35.1
+[ 79.064s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=40.1
+[ 84.070s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=45.1
+[ 89.075s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=50.1
+[ 94.080s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=55.1
+[ 99.085s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=60.1
+[104.090s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=65.1
+[109.098s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=70.1
+[114.100s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=75.1
+[119.106s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=80.1
+[124.111s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=85.1
+[129.117s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=90.1
+[134.134s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=95.2
+[139.148s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=100.2
+[144.157s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=105.2
+[149.167s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=110.2
+[154.183s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=115.2
+[154.498s] cli.texte                · contenu={ "qui": "gerardys", "activation": { "tache": {"id": "41022", "quoi": "📜 Écrire le rôle des passages", "creee": false}, "issue": "avance", "activites": [ { "id": "act:gerardys:1",…
+[154.518s] cli.rate_limit_event     · sous_type=None
+[156.760s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[156.909s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[156.915s] cli.resultat             · erreur=False · duree_ms=116418 · cout=0.30248150000000007 · entree=2 · sortie=10455 · caracteres=20990
+[158.393s] rapport.extraction       · acteur=gerardys · essai=1
+[158.406s] rapport.refuse           · acteur=gerardys · essai=1 · erreur=activite 1 : references hors dossier : croyance:gerardys:cinq-pages-dues-a-midi, int:gerardys
+[158.421s] narrateur.corrige        · acteur=gerardys · essai=2 · caracteres=933
+[158.439s] cli.depart               · acteur=narrateur-local:table-peinte · session=9c4e42a6-c210-4294-8d0b-4e69fa91d567 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[160.830s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[163.603s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=5.0
+[163.863s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[165.646s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[167.400s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[168.608s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=10.0
+[168.806s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[170.959s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[171.711s] cli.assistant            · bloc=thinking
+[173.624s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=15.0
+[178.629s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=20.0
+[183.640s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=25.0
+[188.646s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=30.0
+[193.653s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=35.1
+[198.656s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=40.1
+[203.669s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=45.1
+[208.675s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=50.1
+[213.687s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=55.1
+[218.688s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=60.1
+[223.697s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=65.1
+[228.712s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=70.1
+[233.715s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=75.1
+[238.720s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=80.1
+[243.119s] cli.texte                · contenu={ "qui": "gerardys", "activation": { "tache": {"id": "41022", "quoi": "📜 Écrire le rôle des passages", "creee": false}, "issue": "avance", "activites": [ { "id": "act:gerardys:1",…
+[243.127s] cli.rate_limit_event     · sous_type=None
+[243.739s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=85.1
+[244.997s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[245.158s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[245.161s] cli.resultat             · erreur=False · duree_ms=84568 · cout=0.3493275 · entree=2 · sortie=9194 · caracteres=20913
+[246.704s] rapport.extraction       · acteur=gerardys · essai=2
+[246.740s] rapport.mutations_ecartees · acteur=gerardys · nombre=5
+[246.764s] rapport.valide           · acteur=gerardys · depense=100.0 · activites=6 · corrections=1
+[246.769s] rapport.depose           · acteur=gerardys · fichier=etat/staging/activations/20260810-074028-373554-gerardys.json
+[246.771s] acteur.energie.debitee   · acteur=gerardys · avant=100.0 · energie=100.0 · duree_monde_s=3000 · apres=0.0
+[246.772s] continuite.enregistree   · acteur=gerardys · tache=41022 · issue=avance · suspendue=False · fin_s=148680.0 · reprendre_a=152280.0 · cibles=10
+[246.773s] cycle.termine            · acteur=gerardys · rapport=etat/staging/activations/20260810-074028-373554-gerardys.json
+[246.786s] cycle.lot.termine        · reussies=1 · annulees=0

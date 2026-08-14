@@ -39,7 +39,7 @@ import unicodedata
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ETAT = os.path.join(RACINE, "etat")
-TISSU = os.path.join(ETAT, "staging", "tissu")
+TISSU = os.path.join(ETAT, "tissu")
 
 # ------------------------------------------------------------- les chiffres
 SATURATION = 20      # au-dela, un noeud est dit sature
@@ -91,23 +91,50 @@ def sortantes(A):
 # --------------------------------------------------------------- 1. goulots
 
 def goulots(A, N, dire):
+    """UNE UNITE N'EST PAS UN GOULOT, et c'est la faute qu'on vient de retirer.
+
+    `tisser.py` sort du flou un cout chiffre en prose (« douze hommes ») en le
+    pointant vers `unite:homme` : la dimension de ce qu'il mange, jamais le
+    stock ou il puise. Comptee ici, elle affichait 139 demandes et se lisait
+    comme un goulot au meme rang que M12 — alors qu'une unite n'a ni capacite,
+    ni producteur, ni titulaire : rien ne peut la saturer et rien ne peut la
+    soulager. Le chiffre etait vrai et ne mesurait rien, ce qui est pire qu'un
+    chiffre faux : il masquait les vrais goulots en tete de liste.
+
+    Les dimensions se rendent quand meme, plus bas et sous leur nom : « 139
+    couts se comptent en hommes » est un fait utile — il dit qu'aucun moyen de
+    la table ne porte les bras, et donc qu'il en manque un.
+    """
     ent = entrantes(A)
-    lignes = []
+    lignes, dimensions = [], []
     for nid, arcs in ent.items():
         noeud = N.get(nid)
-        if not noeud or noeud["genre"] not in ("moyen", "office", "unite",
-                                               "personne", "mesure"):
+        if not noeud:
             continue
         conso = [a for a in arcs if a["nature"] in ("coute", "coute_chiffre")]
         if len(conso) < RARE:
             continue
+        if noeud["genre"] == "unite":
+            dimensions.append((len(conso), nid, noeud))
+            continue
+        if noeud["genre"] not in ("moyen", "office", "personne", "mesure"):
+            continue
         lignes.append((len(conso), len(arcs), nid, noeud))
     lignes.sort(reverse=True)
+    dimensions.sort(reverse=True)
     dire("LES GOULOTS — ce qui est demande plus que le reste")
     for n, tot, nid, noeud in lignes[:14]:
         marque = "  SATURE" if n >= SATURATION else ""
         dire("  {:>4} demandes  {:<34} {}{}".format(
             n, nid[:34], (noeud["quoi"] or "")[:34], marque))
+    if dimensions:
+        dire("")
+        dire("  EN QUOI CA SE COMPTE — des dimensions, pas des stocks.")
+        dire("  Un chiffre eleve ici ne dit pas qu'on manque : il dit qu'aucun")
+        dire("  moyen de la table ne porte cette unite-la.")
+        for n, nid, noeud in dimensions[:8]:
+            dire("    {:>4} couts se comptent en {}".format(
+                n, (noeud["quoi"] or nid)[:30]))
     return lignes
 
 
@@ -249,50 +276,73 @@ def orphelins(A, N, dire):
 
 def murs(dire):
     """Un verrou d'en face sans route de fuite est un mur invisible : il bloque
-    et le joueur ne saura jamais pourquoi."""
+    et le joueur ne saura jamais pourquoi. `portee_pour_nous` dit ce qu'on
+    pourrait en faire APRES l'avoir appris ; ce n'est pas une route."""
     brut = charger("plans", {})
     plans = brut.get("plans", []) if isinstance(brut, dict) else brut
+    liens = charger("liens", [])
+
+    def route_effective(route):
+        if isinstance(route, dict):
+            return bool(route.get("canal") or route.get("par") or route.get("etapes"))
+        t = str(route or "").strip().lower()
+        return bool(t) and not t.startswith(("aucune", "aucun", "néant", "neant"))
+
     sans, avec = [], []
     for p in plans:
         for v in p.get("verrous") or []:
-            (avec if v.get("portee_pour_nous") else sans).append((p["id"], v))
+            routes = [l for l in liens if isinstance(l, dict)
+                      and v.get("id") in (l.get("de"), l.get("vers"))
+                      and route_effective(l.get("route"))]
+            ligne = {"plan": p.get("id"), "id": v.get("id"),
+                     "quoi": v.get("quoi"),
+                     "portee": v.get("portee_pour_nous"),
+                     "routes": routes}
+            (avec if routes else sans).append(ligne)
     dire("LES MURS INVISIBLES — verrous d'en face sans route de fuite")
-    dire("  {} verrous, {} portent une portee, {} n'en portent pas".format(
+    dire("  {} verrous, {} ont une route effective, {} n'en ont aucune".format(
         len(avec) + len(sans), len(avec), len(sans)))
-    for pid, v in sans[:10]:
-        dire("    {:<12} {} — {}".format(pid, v["id"], (v["quoi"] or "")[:48]))
-    if avec:
-        dire("")
-        dire("  PAR PORTEE :")
-        c = collections.Counter(v["portee_pour_nous"].split(" —")[0]
-                                for _, v in avec)
-        for k, n in c.most_common():
-            dire("    {:<28} {}".format(k[:28], n))
+    for v in sans[:10]:
+        dire("    {:<12} {} — {}".format(
+            v["plan"], v["id"], (v["quoi"] or "")[:48]))
     return sans
 
 
 # ----------------------------------------------------------- 6. les sourds
 
 def sourds(dire):
+    """Qui n'a aucun declencheur — donc qui ne repondra jamais au joueur.
+
+    Groupe par QUARTIER et non plus par echelle : un sourd que le joueur peut
+    atteindre en dix minutes est une faute a reparer aujourd'hui, un sourd a
+    l'autre bout du royaume est une economie. L'echelle melangeait les deux.
+    """
     it = charger("intentions", [])
+    dedans = set()
+    try:
+        import presence as mod_presence
+        dedans = set((mod_presence.quartier().get("dedans") or {}))
+    except Exception:
+        pass
     par = collections.defaultdict(lambda: [0, 0])
     muets = []
     for t in it:
-        e = (t.get("echelle") or "?").strip()
+        pid = t.get("personnage_id")
+        e = "quartier" if pid in dedans else "au loin"
         par[e][0] += 1
         if t.get("declencheurs"):
             par[e][1] += 1
         else:
-            muets.append((e, t.get("personnage_id")))
+            muets.append((e, pid))
     dire("LES SOURDS — qui ne reagira jamais a ce que le joueur fait")
-    for e in ("scene", "orbite", "royaume"):
+    for e in ("quartier", "au loin"):
         n, d = par.get(e, [0, 0])
         if n:
             dire("  {:<9} {}/{} ont un declencheur   ({} sourds)".format(
                 e, d, n, n - d))
     dire("")
     for e, pid in sorted(muets)[:14]:
-        dire("    [{:<7}] {}".format(e, pid))
+        dire("    [{:<8}] {}".format(e, pid))
     return muets
 
 
@@ -318,7 +368,12 @@ def portees(dire):
 # Un acteur ne merite qu'on lui fasse penser quelque chose que dans la mesure
 # ou le graphe le met en position de peser. Tout est ici, en un bloc, pour
 # qu'on les bouge sans lire le code — et ils sont a l'essai.
-POIDS_ECHELLE = {"scene": 6, "orbite": 3, "royaume": 1}
+# L'ECHELLE EST SUPPRIMEE, et c'est une mesure qui l'a tuee : en retirant
+# POIDS_ECHELLE, le classement des dix premiers ne bougeait quasiment pas.
+# L'echelle ne mesurait rien que les aretes ne disent mieux — elle recopiait a
+# la main ce que le tissu calcule, et se contredisait avec lui six fois sur
+# quinze. Ce qui la remplace n'est pas un autre poids : c'est le QUARTIER
+# (qui le joueur peut atteindre) et le CREUX (le temps qu'il lui reste).
 POIDS_ACTION = 1          # par action tenue, plafonne
 PLAFOND_ACTIONS = 12
 POIDS_CRITIQUE = 5        # par action sur le chemin critique — le plus lourd
@@ -327,7 +382,18 @@ POIDS_DECLENCHEUR = 2     # un homme arme pour reagir au joueur
 PLAFOND_CROYANCES = 5
 
 # Combien de questions on lui pose dans les creux de sa boucle.
-PALIERS = ((40, 5), (20, 3), (10, 1), (0, 0))
+#
+# EN RANGS, PAS EN SEUILS. Les paliers en valeur absolue — (40,5) (20,3)
+# (10,1) — etaient calibres sur une population de cinquante-trois tetes de
+# mediane 7 : une salle de douze acteurs tombait a zero question pour tout le
+# monde. Le budget devient donc proportionnel a la SALLE, et non a la taille du
+# monde : il est stable si le casting double ou fond de moitie.
+QUANTILES = ((0.10, 5), (0.30, 3), (0.60, 1), (1.00, 0))
+
+# Sous ce nombre d'eligibles, les quantiles degenerent — un huis clos a quatre
+# donnerait 5 questions a l'un et 0 aux trois autres. On retombe alors sur une
+# regle plate : les trois plus forts ont 3 questions, les autres 1.
+PLANCHER_QUANTILES = 6
 
 
 def force_narrative(A, N, dire, joueur=None):
@@ -373,45 +439,94 @@ def force_narrative(A, N, dire, joueur=None):
     for d, c in sorted((prof(n, set()) for n in sor), reverse=True)[:5]:
         sur_critique.update(c)
 
+    # LE QUARTIER ET LES CREUX. C'est ici que la force cesse de decider seule :
+    # elle REPARTIT un budget de temps existant, elle n'en fabrique pas. Un
+    # homme hors quartier n'a pas de journee ; un homme dont la journee est
+    # pavee de bandes fermees n'a pas de creux. Ni l'un ni l'autre ne pense, si
+    # fort soit-il — et c'est ca, le cout d'un mandat : on l'occupe.
+    creux_de, motif = {}, {}
+    try:
+        import presence as mod_presence
+        q = mod_presence.quartier()
+        rout, chem, _ = mod_presence.charger()
+        chat = mod_presence.Chateau(chem)
+        pj, fiches = mod_presence.joueurs(), (rout.get("gens") or {})
+        motif.update(q.get("dehors") or {})
+        for pid in q.get("dedans") or {}:
+            c = mod_presence.creux(pid, rout, chat)
+            if c:
+                creux_de[pid] = c
+            # Un muet se dit POURQUOI il est muet, sinon on repare la mauvaise
+            # chose : un siege occupe est normal, une journee fermee est un
+            # choix, une fiche manquante est une faute.
+            elif pid in pj:
+                motif[pid] = "siege occupe"
+            elif pid not in fiches:
+                motif[pid] = "sans routine"
+            else:
+                motif[pid] = "journee fermee"
+    except Exception as e:
+        dire("  (quartier indisponible : {})".format(str(e)[:80]))
+
     lignes = []
     for pid, t in tetes.items():
         acts = tenu.get(pid, [])
         crit = sum(1 for a in acts if a in sur_critique)
         gou = [m for m in porte.get(pid, []) if m in satures]
-        f = (POIDS_ECHELLE.get((t.get("echelle") or "").strip(), 0)
-             + POIDS_ACTION * min(len(acts), PLAFOND_ACTIONS)
+        f = (POIDS_ACTION * min(len(acts), PLAFOND_ACTIONS)
              + POIDS_CRITIQUE * crit
              + (POIDS_MOYEN_SATURE if gou else 0)
              + POIDS_DECLENCHEUR * len(t.get("declencheurs") or [])
              + min(len(t.get("croyances") or []), PLAFOND_CROYANCES))
-        budget = next(q for seuil, q in PALIERS if f >= seuil)
-        lignes.append({"qui": pid, "force": f, "questions": budget,
-                       "echelle": t.get("echelle"), "actions": len(acts),
-                       "critiques": crit, "goulots": gou,
-                       "declencheurs": len(t.get("declencheurs") or [])})
+        cx = creux_de.get(pid) or []
+        lignes.append({"qui": pid, "force": f, "questions": 0,
+                       "actions": len(acts), "critiques": crit, "goulots": gou,
+                       "declencheurs": len(t.get("declencheurs") or []),
+                       "creux": cx,
+                       "creux_total": sum(x["minutes"] for x in cx),
+                       "hors_quartier": motif.get(pid),
+                       "questions_posees": []})
     lignes.sort(key=lambda x: -x["force"])
 
-    dire("LA FORCE NARRATIVE — ce que chacun pese, et ce qu'on lui paie")
-    dire("  Le budget d'inference ne se decide pas : il se mesure. Un homme")
-    dire("  qu'aucune arete ne met en position ne merite aucune question.")
+    # Le budget se calcule sur les SEULS eligibles — ceux qui ont un creux.
+    eligibles = [l for l in lignes if l["creux"]]
+    n = len(eligibles)
+    for rang, l in enumerate(eligibles):
+        if n < PLANCHER_QUANTILES:
+            l["questions"] = 3 if rang < 3 else 1
+        else:
+            part = (rang + 1) / float(n)
+            l["questions"] = next(q for seuil, q in QUANTILES if part <= seuil)
+        # UNE QUESTION CONSOMME UN CREUX, avec sa salle : une question posee a
+        # la roukerie n'a pas les memes sources qu'une posee au bourg. On lui
+        # donne ses plus longues plages, rendues dans l'ordre de la journee.
+        pris = sorted(l["creux"], key=lambda c: -c["minutes"])[:l["questions"]]
+        l["questions_posees"] = sorted(pris, key=lambda c: c["de"])
+
+    dire("LA FORCE NARRATIVE — ce que chacun pese, et le temps qu'il lui reste")
+    dire("  La force ne cree pas de creux : un homme fort et occupe ne pense")
+    dire("  pas. Elle repartit un budget de temps que la journee a deja dit.")
     dire("")
-    dire("  {:>4} {:>3}  {:<20} {:<8} {:>4} {:>5} {:>5}  {}".format(
-        "for", "q", "qui", "echelle", "act", "crit", "decl", "goulot"))
+    dire("  {:>4} {:>3} {:>6}  {:<22} {:>4} {:>5} {:>5}  {}".format(
+        "for", "q", "creux", "qui", "act", "crit", "decl", "goulot"))
     for l in lignes[:18]:
-        dire("  {:>4} {:>3}  {:<20} {:<8} {:>4} {:>5} {:>5}  {}".format(
-            l["force"], l["questions"], l["qui"][:20], l["echelle"] or "?",
-            l["actions"], l["critiques"], l["declencheurs"],
+        dire("  {:>4} {:>3} {:>6}  {:<22} {:>4} {:>5} {:>5}  {}".format(
+            l["force"], l["questions"],
+            l["creux_total"] or ("—" + (l["hors_quartier"] or "")[:5]),
+            l["qui"][:22], l["actions"], l["critiques"], l["declencheurs"],
             ", ".join(g.split(":")[-1] for g in l["goulots"])))
-    dire("  ...")
-    for l in lignes[-4:]:
-        dire("  {:>4} {:>3}  {:<20} {:<8} {:>4} {:>5} {:>5}".format(
-            l["force"], l["questions"], l["qui"][:20], l["echelle"] or "?",
-            l["actions"], l["critiques"], l["declencheurs"]))
     total = sum(l["questions"] for l in lignes)
     servis = sum(1 for l in lignes if l["questions"])
+    muets = [l for l in lignes if not l["creux"]]
     dire("")
-    dire("  {} questions au total, sur {} tetes servies (sur {}).".format(
-        total, servis, len(lignes)))
+    dire("  {} questions au total, sur {} tetes servies (sur {} eligibles,"
+         " {} tetes).".format(total, servis, n, len(lignes)))
+    if muets:
+        forts = [l for l in sorted(muets, key=lambda x: -x["force"])[:5]]
+        dire("  Sans creux, donc muets ce jour : {} — dont {}.".format(
+            len(muets), ", ".join("%s (%s)" % (l["qui"][:16],
+                                               l["hors_quartier"] or "tete sans corps")
+                                  for l in forts)))
     return lignes
 
 
@@ -435,8 +550,26 @@ def pour_la_regie(A, N, muet):
         gens = charger("personnages", [])
         noms = {g.get("id"): (g.get("nom") or g.get("id"))
                 for g in gens if isinstance(g, dict)}
+        journal = charger("journal", {})
+        joueur = journal.get("personnage_joueur_id") if isinstance(journal, dict) else None
+        _routines, chemins, _exceptions = mod_presence.charger()
+        chateau = mod_presence.Chateau(chemins)
+        salle_joueur = (ou.get(joueur) or {}).get("salle") if joueur else None
         arretes, chemin = collections.defaultdict(list), []
+        acteurs = []
         for pid, o in ou.items():
+            distance = None
+            salle = o.get("salle")
+            # Zéro n'est une vraie distance que si les deux salles sont la
+            # même. Chateau.chemin rend aussi zéro pour un trajet inconnu :
+            # on exige donc que les deux extrémités soient dans la topologie.
+            if (o.get("etat") == "arrete" and salle_joueur and salle
+                    and chateau.connait(salle_joueur) and chateau.connait(salle)):
+                distance = chateau.duree(salle_joueur, salle)
+            acteurs.append({"id": pid, "qui": noms.get(pid, pid),
+                             "salle": salle, "lieu": o.get("lieu"),
+                             "etat": o.get("etat"), "source": o.get("source"),
+                             "distance_joueur_minutes": distance})
             if o.get("etat") == "arrete":
                 cle = o.get("salle") or ("(hors plan) %s" % (o.get("lieu") or "?"))
                 arretes[cle].append(noms.get(pid, pid))
@@ -444,6 +577,9 @@ def pour_la_regie(A, N, muet):
                 chemin.append({"qui": noms.get(pid, pid), "de": o.get("de"),
                                "vers": o.get("vers")})
         out["presence"] = {
+            "joueur_id": joueur,
+            "joueur_salle": salle_joueur,
+            "acteurs": sorted(acteurs, key=lambda x: x["qui"]),
             "salles": [{"salle": k, "gens": sorted(v)}
                        for k, v in sorted(arretes.items())],
             "en_chemin": sorted(chemin, key=lambda x: x["qui"]),
@@ -451,27 +587,45 @@ def pour_la_regie(A, N, muet):
     except Exception as e:
         out["presence"] = {"erreur": str(e)[:120]}
 
-    # --- QUI A QUELQUE CHOSE A DIRE CE MATIN, et qui doit une journee.
+    # --- LE QUARTIER ET LES CREUX, a la place des convocations. `travaux.json`
+    # et son excitation ont disparu : ce n'etait pas un compteur qui disait qui
+    # a quelque chose a dire, c'etait sa journee. Un homme qui a du temps dans
+    # une salle ou il y a des sources pense ; les autres travaillent.
     try:
-        import travaux as mod_travaux
-        import convoquer as mod_convoquer
-        monde = charger("monde", {})
-        date = monde.get("date") or {"annee": 0, "lune": 1, "jour": 1}
-        auj = mod_travaux.jour_absolu(date) or 0
-        trav = mod_travaux.lire_travaux()
-        lignes, _mut = mod_travaux.calculer_travaux(trav, auj, 0)
-        out["travaux"] = [{"qui": l["qui"], "affaire": l["affaire"],
-                           "excitation": l["excitation"], "verdict": l["verdict"],
-                           "pensees": l["pensees"], "due": l["due"],
-                           "en_retard": l["en_retard"]} for l in lignes]
-        conv = mod_convoquer.convoquer(trav, auj, False)
-        out["convocations"] = [{"qui": q, "motifs": m,
-                                "affaires": [t.get("affaire") for t in siens]}
-                               for q, siens, m in conv]
+        import presence as mod_presence
+        q = mod_presence.quartier()
+        rout, chem, _ = mod_presence.charger()
+        chat = mod_presence.Chateau(chem)
+        noms_p = {g.get("id"): (g.get("nom") or g.get("id"))
+                  for g in charger("personnages", []) if isinstance(g, dict)}
+        lignes = []
+        for pid, d in (q.get("dedans") or {}).items():
+            cx = mod_presence.creux(pid, rout, chat)
+            if not cx:
+                continue
+            lignes.append({"qui": pid, "nom": noms_p.get(pid, pid),
+                           "salle": d.get("salle"),
+                           "minutes_du_joueur": d.get("minutes"),
+                           "par": d.get("par"),
+                           "creux_total": sum(x["minutes"] for x in cx),
+                           "creux": cx})
+        lignes.sort(key=lambda x: -x["creux_total"])
+        out["quartier"] = {
+            "ancres": [{"qui": a["qui"], "salle": a["salle"],
+                        "minute": (a.get("quand") or {}).get("minute")}
+                       for a in q.get("ancres") or []],
+            "rayon_minutes": mod_presence.RAYON_MINUTES,
+            "dedans": len(q.get("dedans") or {}),
+            # La liste, et pas seulement le compte : c'est elle qui remplace le
+            # champ `echelle` cote serveur, pour grouper les tetes a l'ecran.
+            "gens": sorted(q.get("dedans") or {}),
+            "dehors": [{"qui": k, "nom": noms_p.get(k, k), "motif": v}
+                       for k, v in sorted((q.get("dehors") or {}).items())],
+        }
+        out["creux"] = lignes
     except Exception as e:
-        out["travaux"] = []
-        out["convocations"] = [{"qui": "erreur", "motifs": [str(e)[:120]],
-                                "affaires": []}]
+        out["quartier"] = {"erreur": str(e)[:160]}
+        out["creux"] = []
 
     # --- LE CAMP D'EN FACE : ce que ses verrous engendrent chez nous.
     brut = charger("plans", {})
@@ -536,6 +690,7 @@ def main():
                                      for x in cc]}
                          for dd, cc in ch[:1]],
             "murs_sans_route": len(mu),
+            "murs": mu,
             "sourds": [{"echelle": e, "qui": q} for e, q in so],
             "force": force_narrative(A, N, muet),
         }

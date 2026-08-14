@@ -1,0 +1,1361 @@
+[  0.001s] boucle.demarrage         · sec=False · une_fois=False · heartbeat_s=5.0 · parallele=4
+[  0.002s] cycle.depart            
+[  0.007s] horloge.lecture         
+[  0.009s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=147060.0
+[  0.010s] graphe.lecture          
+[  0.038s] graphe.charge            · noeuds=1849 · aretes=4857
+[  0.039s] diffusion.importance    
+[  0.191s] importance.clusters      · lieux=17 · motifs_max=79 · actifs=1535
+[  0.195s] energie.polarites_horloge · moyenne_minute=67000592.25 · ecart_max_minutes=1840.75 · emetteurs=1 · absorbeurs=106 · neutres=0
+[  0.201s] energie.transfert_horloge · transfere=46.93 · propositions=1090 · acteurs=107
+[  0.202s] energie.graphe           · dt_s=1380.0 · integration=0.958765 · noeuds=1849 · energises=1048 · total=4821.449 · pic=pers:rhaenyra · maximum=100.0
+[  0.203s] diffusion.calendrier    
+[  0.215s] calendrier.etape_sans_horloge · acteur=gerardys · etapes_en_cours=3 · avec_horloge=2
+[  0.216s] calendrier.etape_sans_horloge · acteur=daemon · etapes_en_cours=2 · avec_horloge=1
+[  0.216s] calendrier.etape_sans_horloge · acteur=jacaerys · etapes_en_cours=4 · avec_horloge=3
+[  0.217s] calendrier.etape_sans_horloge · acteur=rhaenys · etapes_en_cours=2 · avec_horloge=1
+[  0.217s] calendrier.etape_sans_horloge · acteur=lucerys · etapes_en_cours=4 · avec_horloge=2
+[  0.218s] calendrier.etape_sans_horloge · acteur=criston · etapes_en_cours=2 · avec_horloge=1
+[  0.218s] calendrier.etape_sans_horloge · acteur=alicent · etapes_en_cours=3 · avec_horloge=2
+[  0.219s] calendrier.etape_sans_horloge · acteur=aegon-ii · etapes_en_cours=2 · avec_horloge=1
+[  0.220s] calendrier.etape_sans_horloge · acteur=helaena · etapes_en_cours=2 · avec_horloge=1
+[  0.220s] calendrier.etape_sans_horloge · acteur=borros-baratheon · etapes_en_cours=2 · avec_horloge=1
+[  0.221s] calendrier.etape_sans_horloge · acteur=jeyne-arryn · etapes_en_cours=2 · avec_horloge=1
+[  0.221s] calendrier.etape_sans_horloge · acteur=cregan-stark · etapes_en_cours=2 · avec_horloge=1
+[  0.222s] calendrier.etape_sans_horloge · acteur=ormund-hightower · etapes_en_cours=2 · avec_horloge=1
+[  0.222s] calendrier.etape_sans_horloge · acteur=wend · etapes_en_cours=1 · avec_horloge=0
+[  0.222s] calendrier.etape_sans_horloge · acteur=septa-marlow · etapes_en_cours=1 · avec_horloge=0
+[  0.223s] calendrier.etape_sans_horloge · acteur=alarra-rosby · etapes_en_cours=2 · avec_horloge=1
+[  0.223s] calendrier.etape_sans_horloge · acteur=nel-bec · etapes_en_cours=1 · avec_horloge=0
+[  0.224s] calendrier.etape_sans_horloge · acteur=waltyr-poix · etapes_en_cours=1 · avec_horloge=0
+[  0.224s] calendrier.etape_sans_horloge · acteur=lord-rosby · etapes_en_cours=3 · avec_horloge=2
+[  0.225s] calendrier.etape_sans_horloge · acteur=maris-baratheon · etapes_en_cours=2 · avec_horloge=1
+[  0.227s] energie.calculee         · acteurs=33 · maximum=95.877
+[  0.227s] selection.rejetee        · acteur=gerardys · energie=95.877 · raison=deja_passe_dans_rotation · tour=20
+[  0.231s] selection.rejetee        · acteur=rulf-corne · energie=48.75 · raison=deja_passe_dans_rotation · tour=20
+[  0.232s] selection.rejetee        · acteur=robert-quince · energie=38.146 · raison=deja_passe_dans_rotation · tour=20
+[  0.237s] selection.rejetee        · acteur=aldon-hask · energie=33.145 · raison=deja_passe_dans_rotation · tour=20
+[  0.237s] selection.rejetee        · acteur=le-sanglier · energie=28.838 · raison=deja_passe_dans_rotation · tour=20
+[  0.238s] selection.rejetee        · acteur=steffon-darklyn · energie=28.238 · raison=deja_passe_dans_rotation · tour=20
+[  0.246s] selection.elue           · acteur=otto · energie=50.586 · tache=71022 · energie_tache=6.429 · budget_energie=50 · budget_s=1500 · flux_horloge=absorbe · ecart_horloge_min=-651.25 · horloge_pj=marlo-vasse
+[  0.247s] acteur.choisi            · acteur=otto · energie=50.586 · importance=0.49742 · budget=50
+[  0.248s] tache.choisie            · id=71022 · distance=1 · creee=False · energie=6.429
+ACTIVATION  otto  energie 50.59 · budget 50 (25 min)  importance 0.497
+  tache 71022 · distance 1 · Faire écrire par Orwyle le récit officiel du massacre de la route roya
+  front aurore-inchauspe · +147060.0s depuis rhaenyra
+[  0.248s] selection.elue           · acteur=alicent · energie=34.332 · tache=etape:alicent-aegon-matin · energie_tache=1.451 · budget_energie=34 · budget_s=1020 · flux_horloge=absorbe · ecart_horloge_min=-651.25 · horloge_pj=marlo-vasse
+[  0.249s] acteur.choisi            · acteur=alicent · energie=34.332 · importance=0.344485 · budget=34
+[  0.249s] tache.choisie            · id=etape:alicent-aegon-matin · distance=1 · creee=False · energie=1.451
+ACTIVATION  alicent  energie 34.33 · budget 34 (17 min)  importance 0.344
+  tache etape:alicent-aegon-matin · distance 1 · Garder Aegon sous son influence matinale, avant le vin
+  front aurore-inchauspe · +147060.0s depuis rhaenyra
+[  0.250s] selection.elue           · acteur=jacaerys · energie=24.958 · tache=33425 · energie_tache=3.03 · budget_energie=24 · budget_s=720 · flux_horloge=absorbe · ecart_horloge_min=-610.25 · horloge_pj=rhaenyra
+[  0.250s] acteur.choisi            · acteur=jacaerys · energie=24.958 · importance=0.246381 · budget=24
+[  0.251s] tache.choisie            · id=33425 · distance=1 · creee=False · energie=3.03
+ACTIVATION  jacaerys  energie 24.96 · budget 24 (12 min)  importance 0.246
+  tache 33425 · distance 1 · 📦 Prendre les deux paquets de dame Alys Grive
+  front aurore-inchauspe · +147060.0s depuis rhaenyra
+[  0.251s] selection.elue           · acteur=orwyle · energie=24.885 · tache=activation:orwyle:9b1146dadef7 · energie_tache=24.885 · budget_energie=24 · budget_s=720 · flux_horloge=absorbe · ecart_horloge_min=-651.25 · horloge_pj=marlo-vasse
+[  0.252s] acteur.choisi            · acteur=orwyle · energie=24.885 · importance=0.241335 · budget=24
+[  0.252s] tache.choisie            · id=activation:orwyle:9b1146dadef7 · distance=0 · creee=True · energie=24.885
+ACTIVATION  orwyle  energie 24.88 · budget 24 (12 min)  importance 0.241
+  tache activation:orwyle:9b1146dadef7 · distance 0 · Rester le seul homme des deux camps a avoir vu les deux, et le rester par ecrit : consigner sans se 
+  front aurore-inchauspe · +147060.0s depuis rhaenyra
+[  0.253s] rotation.acteurs_reserves · tour=20 · acteurs=['aldon-hask', 'alicent', 'alys-grive', 'gerardys', 'jacaerys', 'le-sanglier', 'orwyle', 'otto', 'robert-quince', 'rulf-corne', 'steffon-darklyn']
+[  0.254s] selection.lot            · nombre=4 · parallele=4
+[  0.255s] energie.reservee         · acteur=otto · valeur=50.586 · plafond=50
+[  0.255s] energie.reservee         · acteur=alicent · valeur=34.332 · plafond=34
+[  0.256s] energie.reservee         · acteur=jacaerys · valeur=24.958 · plafond=24
+[  0.256s] energie.reservee         · acteur=orwyle · valeur=24.885 · plafond=24
+[  0.272s] appel.dossier            · acteur=otto · tache=71022
+[  0.272s] appel.dossier            · acteur=alicent · tache=etape:alicent-aegon-matin
+[  0.272s] appel.dossier            · acteur=jacaerys · tache=33425
+[  0.273s] appel.dossier            · acteur=orwyle · tache=activation:orwyle:9b1146dadef7
+[  0.408s] appel.systeme_narrateur  · acteur=orwyle · caracteres=4904
+[  0.410s] appel.systeme_narrateur  · acteur=alicent · caracteres=4783
+[  0.411s] appel.systeme_narrateur  · acteur=jacaerys · caracteres=4780
+[  0.411s] appel.systeme_narrateur  · acteur=otto · caracteres=4796
+[  0.411s] appel.systeme_pnj        · acteur=orwyle · caracteres=2146
+[  0.415s] appel.systeme_pnj        · acteur=alicent · caracteres=2146
+[  0.417s] appel.systeme_pnj        · acteur=jacaerys · caracteres=2146
+[  0.418s] appel.systeme_pnj        · acteur=otto · caracteres=2146
+[  0.419s] appel.ouverture          · acteur=orwyle · caracteres=11131 · budget_energie=24 · budget_secondes=720
+[  0.421s] appel.ouverture          · acteur=alicent · caracteres=18648 · budget_energie=34 · budget_secondes=1020
+[  0.422s] appel.ouverture          · acteur=jacaerys · caracteres=25049 · budget_energie=24 · budget_secondes=720
+[  0.423s] appel.ouverture          · acteur=otto · caracteres=21262 · budget_energie=50 · budget_secondes=1500
+[  0.437s] cli.depart               · acteur=narrateur-local:inconnue · session=539f3352-56a9-479e-bd9a-b3eaa8a13cf6 · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[  0.437s] cli.depart               · acteur=narrateur-local:inconnue · session=3d040d68-ac6c-4080-be97-5f12b7a5d12f · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[  0.438s] cli.depart               · acteur=narrateur-local:cour · session=87e173f9-9683-4e9f-b6e3-a6eec96acc9d · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[  0.439s] cli.depart               · acteur=narrateur-local:inconnue · session=7462589f-250c-474a-a6f8-bfb4a9e73a21 · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[  3.463s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[  3.542s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[  3.593s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[  3.686s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[  3.785s] cli.rate_limit_event     · sous_type=None
+[  4.207s] cli.rate_limit_event     · sous_type=None
+[  4.252s] cli.rate_limit_event     · sous_type=None
+[  4.253s] cli.rate_limit_event     · sous_type=None
+[  6.654s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.ouverture · secondes=5.0
+[  6.654s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.ouverture · secondes=5.0
+[  6.655s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.ouverture · secondes=5.0
+[  6.668s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.ouverture · secondes=5.0
+[  9.387s] cli.texte                · contenu={ "appel_pnj": { "qui": "jacaerys", "message": "Vous remontez des fosses, prince, et la cour vous prend au passage : le vent de mer, les pavés encore humides, un valet qui travers…
+[  9.579s] cli.texte                · contenu=```json { "appel_pnj": { "qui": "orwyle", "message": "Grand Mestre, la cabine est basse et l'air sent le goudron chaud ; par le hublot, la lumière a viré au gris de fin d'après-mi…
+[ 10.742s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[ 10.867s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[ 10.870s] cli.resultat             · erreur=False · duree_ms=7610 · cout=0.176665 · entree=2 · sortie=252 · caracteres=579
+[ 10.937s] cli.texte                · contenu={ "appel_pnj": { "qui": "otto", "message": "Le jour baisse sur le cabinet de la Main, messire, et vos quatre affaires vous attendent à plat sur la table : l'extrait du maître du p…
+[ 11.659s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.ouverture · secondes=10.0
+[ 11.660s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.ouverture · secondes=10.0
+[ 11.660s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.ouverture · secondes=10.0
+[ 11.664s] narrateur.reveille_pnj   · acteur=jacaerys · caracteres=514
+[ 11.686s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.ouverture · secondes=10.0
+[ 11.800s] cli.depart               · acteur=jacaerys · session=fc92b99f-15a5-463d-abbd-d81d772e31ee · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[ 11.982s] cli.texte                · contenu={ "appel_pnj": { "qui": "alicent", "message": "Il est tôt, madame. Aegon a passé la nuit ailleurs que dans son lit, mais il est rentré : on l'a vu monter, et la porte de ses appar…
+[ 12.321s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[ 12.445s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[ 12.488s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[ 12.490s] cli.resultat             · erreur=False · duree_ms=9279 · cout=0.116296 · entree=2 · sortie=284 · caracteres=636
+[ 12.698s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[ 12.702s] cli.resultat             · erreur=False · duree_ms=9227 · cout=0.16089399999999998 · entree=2 · sortie=320 · caracteres=748
+[ 14.030s] narrateur.reveille_pnj   · acteur=orwyle · caracteres=561
+[ 14.093s] cli.depart               · acteur=orwyle · session=54ba4c50-175c-4cea-a4c3-c39fa321316d · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[ 14.256s] narrateur.reveille_pnj   · acteur=otto · caracteres=687
+[ 14.323s] cli.depart               · acteur=otto · session=e9bc8830-dce1-486c-a78a-1151b557e11f · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[ 14.877s] cli.rate_limit_event     · sous_type=None
+[ 14.956s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[ 16.665s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.ouverture · secondes=15.0
+[ 16.701s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[ 16.764s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[ 16.865s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[ 16.868s] cli.resultat             · erreur=False · duree_ms=13496 · cout=0.148067 · entree=2 · sortie=264 · caracteres=595
+[ 16.932s] cli.rate_limit_event     · sous_type=None
+[ 17.163s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[ 17.682s] cli.rate_limit_event     · sous_type=None
+[ 17.908s] cli.heartbeat            · acteur=jacaerys · phase=pnj.tentative · secondes=5.0
+[ 18.345s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 18.408s] narrateur.reveille_pnj   · acteur=alicent · caracteres=531
+[ 18.485s] cli.depart               · acteur=alicent · session=485c9516-b67d-4452-91b0-d3d6473b03a7 · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[ 19.054s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 19.060s] cli.assistant            · bloc=thinking
+[ 19.598s] cli.outil                · nom=Bash · entree={"command": "cat ./livres/ce-que-je-propose.txt 2>/dev/null | head -60", "description": "Lire ce que propose Alys Grive"}
+[ 19.935s] cli.heartbeat            · acteur=orwyle · phase=pnj.tentative · secondes=5.0
+[ 20.060s] cli.heartbeat            · acteur=otto · phase=pnj.tentative · secondes=5.0
+[ 20.379s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[ 21.504s] cli.rate_limit_event     · sous_type=None
+[ 21.758s] cli.resultat_outil       · erreur=False · contenu=══════════════════════════════════════════════════════════════════════════ Ce que je propose [ce-que-je-propose] De la main d'Alys Grive, bardesse de la maison — tenu à jour le 28…
+[ 22.909s] cli.heartbeat            · acteur=jacaerys · phase=pnj.tentative · secondes=10.0
+[ 24.228s] cli.heartbeat            · acteur=alicent · phase=pnj.tentative · secondes=5.0
+[ 24.942s] cli.heartbeat            · acteur=orwyle · phase=pnj.tentative · secondes=10.0
+[ 25.071s] cli.heartbeat            · acteur=otto · phase=pnj.tentative · secondes=10.0
+[ 25.278s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 26.646s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 27.556s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 27.558s] cli.assistant            · bloc=thinking
+[ 27.913s] cli.heartbeat            · acteur=jacaerys · phase=pnj.tentative · secondes=15.0
+[ 29.234s] cli.heartbeat            · acteur=alicent · phase=pnj.tentative · secondes=10.0
+[ 29.947s] cli.heartbeat            · acteur=orwyle · phase=pnj.tentative · secondes=15.0
+[ 30.079s] cli.heartbeat            · acteur=otto · phase=pnj.tentative · secondes=15.0
+[ 31.107s] cli.texte                · contenu={ "tentative": { "verbe": "convoquer", "quoi": "Faire venir Orwyle au cabinet, seul, et lui dicter le récit du massacre de la route royale pendant qu'il l'écrit de sa main devant …
+[ 32.918s] cli.heartbeat            · acteur=jacaerys · phase=pnj.tentative · secondes=20.0
+[ 33.512s] cli.texte                · contenu={ "tentative": { "verbe": "consigner", "quoi": "Je rédige, en douze minutes et de ma propre main, non pas le récit que la Main attend, mais un feuillet strictement descriptif de c…
+[ 33.971s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[ 33.983s] cli.resultat             · erreur=False · duree_ms=17049 · cout=0.07558200000000001 · entree=2 · sortie=730 · caracteres=1714
+[ 34.169s] cli.texte                · contenu={ "tentative": { "verbe": "monter", "quoi": "Mettre mon voile sans attendre, ordonner à mes femmes qu'Ellyn descende aux cuisines dire que le premier pichet du roi attendra mon co…
+[ 34.236s] cli.heartbeat            · acteur=alicent · phase=pnj.tentative · secondes=15.0
+[ 34.951s] cli.heartbeat            · acteur=orwyle · phase=pnj.tentative · secondes=20.0
+[ 35.083s] cli.heartbeat            · acteur=otto · phase=pnj.tentative · secondes=20.0
+[ 35.084s] pnj.tentative_valide     · acteur=otto · verbe=convoquer · caracteres=1388
+[ 35.085s] narrateur.arbitrage      · acteur=otto · caracteres=6695 · passage=1
+[ 35.085s] cli.depart               · acteur=narrateur-local:inconnue · session=7462589f-250c-474a-a6f8-bfb4a9e73a21 · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[ 35.836s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[ 35.842s] cli.resultat             · erreur=False · duree_ms=15751 · cout=0.062956 · entree=2 · sortie=711 · caracteres=1604
+[ 35.880s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[ 35.884s] cli.resultat             · erreur=False · duree_ms=19390 · cout=0.04696 · entree=2 · sortie=810 · caracteres=1899
+[ 37.187s] pnj.tentative_valide     · acteur=alicent · verbe=monter · caracteres=1277
+[ 37.188s] narrateur.arbitrage      · acteur=alicent · caracteres=6615 · passage=1
+[ 37.189s] cli.depart               · acteur=narrateur-local:inconnue · session=3d040d68-ac6c-4080-be97-5f12b7a5d12f · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[ 37.194s] pnj.tentative_valide     · acteur=orwyle · verbe=consigner · caracteres=1355
+[ 37.195s] narrateur.arbitrage      · acteur=orwyle · caracteres=6696 · passage=1
+[ 37.195s] cli.depart               · acteur=narrateur-local:inconnue · session=539f3352-56a9-479e-bd9a-b3eaa8a13cf6 · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[ 37.810s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[ 37.922s] cli.heartbeat            · acteur=jacaerys · phase=pnj.tentative · secondes=25.0
+[ 39.907s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[ 40.100s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[ 40.880s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=5.0
+[ 41.161s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 42.286s] cli.texte                · contenu=**Je monte. Par le Tambour** — je passe l'eau sur mes mains avant de toucher ce qu'une femme m'a laissé de sa main ; on ne prend pas des paquets d'une dame avec les écailles d'Arg…
+[ 42.499s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 42.923s] cli.heartbeat            · acteur=jacaerys · phase=pnj.tentative · secondes=30.0
+[ 43.108s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=5.0
+[ 43.291s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 43.344s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=5.0
+[ 43.432s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 43.909s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 44.714s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[ 44.719s] cli.resultat             · erreur=False · duree_ms=29959 · cout=0.142185 · entree=4 · sortie=1372 · caracteres=2257
+[ 44.793s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 45.165s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 45.324s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 45.885s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=10.0
+[ 46.191s] pnj.tentative_valide     · acteur=jacaerys · verbe=monter · caracteres=876
+[ 46.191s] narrateur.arbitrage      · acteur=jacaerys · caracteres=6194 · passage=1
+[ 46.192s] cli.depart               · acteur=narrateur-local:cour · session=87e173f9-9683-4e9f-b6e3-a6eec96acc9d · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[ 46.239s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 46.600s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 47.447s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 48.006s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 48.113s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=10.0
+[ 48.337s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 48.349s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=10.0
+[ 48.912s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 49.102s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[ 49.409s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 49.717s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 50.269s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 50.816s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 50.890s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=15.0
+[ 51.129s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 51.479s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 51.680s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 51.931s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=5.0
+[ 52.303s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 52.913s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 53.098s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 53.118s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=15.0
+[ 53.304s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 53.361s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=15.0
+[ 53.743s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 54.326s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 54.503s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 54.733s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 55.111s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 55.896s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=20.1
+[ 55.914s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 56.169s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 56.595s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 56.755s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 56.938s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=10.0
+[ 57.627s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 57.643s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 57.761s] cli.assistant            · bloc=thinking
+[ 57.894s] cli.assistant            · bloc=thinking
+[ 57.935s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 58.130s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=20.0
+[ 58.367s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=20.0
+[ 59.020s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 59.373s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 60.486s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 60.790s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 60.900s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=25.1
+[ 61.880s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 61.942s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=15.0
+[ 62.260s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 63.136s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=25.0
+[ 63.254s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 63.372s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=25.0
+[ 63.970s] cli.assistant            · bloc=thinking
+[ 64.323s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 65.727s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 65.906s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=30.1
+[ 66.948s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=20.0
+[ 67.156s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 68.148s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=30.0
+[ 68.378s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=30.0
+[ 68.607s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 69.979s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 70.918s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=35.1
+[ 71.550s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 71.953s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=25.0
+[ 72.839s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 73.154s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=35.1
+[ 73.383s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=35.0
+[ 74.253s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 75.681s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 75.923s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=40.1
+[ 76.958s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=30.0
+[ 77.077s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 78.159s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=40.1
+[ 78.389s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=40.0
+[ 78.489s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 79.901s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 80.929s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=45.1
+[ 81.313s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 81.963s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=35.0
+[ 82.731s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 82.739s] cli.assistant            · bloc=thinking
+[ 83.184s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=45.1
+[ 83.402s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=45.1
+[ 85.938s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=50.1
+[ 86.979s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=40.1
+[ 88.191s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=50.1
+[ 88.411s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=50.1
+[ 90.940s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=55.1
+[ 91.990s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=45.1
+[ 93.196s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=55.1
+[ 93.411s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=55.1
+[ 95.945s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=60.1
+[ 96.993s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=50.1
+[ 98.199s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=60.1
+[ 98.418s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=60.1
+[100.951s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=65.1
+[101.998s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=55.1
+[103.200s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=65.1
+[103.419s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=65.1
+[105.966s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=70.1
+[107.004s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=60.1
+[108.201s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=70.1
+[108.422s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=70.1
+[110.967s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=75.1
+[111.860s] cli.texte                · contenu=```json { "qui": "orwyle", "activation": { "tache": { "id": "activation:orwyle:9b1146dadef7", "quoi": "Rester le seul homme des deux camps a avoir vu les deux, et le rester par ec…
+[111.902s] cli.rate_limit_event     · sous_type=None
+[112.011s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=65.1
+[113.211s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=75.1
+[113.433s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=75.1
+[114.003s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[114.167s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[114.169s] cli.resultat             · erreur=False · duree_ms=74289 · cout=0.1902555 · entree=2 · sortie=6134 · caracteres=12399
+[115.476s] rapport.extraction       · acteur=orwyle · essai=1
+[115.483s] rapport.refuse           · acteur=orwyle · essai=1 · erreur=activite 1 : references hors dossier : croyance:orwyle:genou-demande-en-public, croyance:orwyle:main-attend-recit-de-massacre, croyance:orwyle:quarante-prisonniers-debout, croyance:orwyle:requete-sans-reponse, obj:encrier, obj:feuillet-commence
+[115.485s] narrateur.corrige        · acteur=orwyle · essai=2 · caracteres=1083
+[115.487s] cli.depart               · acteur=narrateur-local:inconnue · session=539f3352-56a9-479e-bd9a-b3eaa8a13cf6 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[115.974s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=80.1
+[117.015s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=70.1
+[118.171s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[118.216s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=80.1
+[120.601s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[120.652s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=5.0
+[120.979s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=85.1
+[121.906s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[122.023s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=75.1
+[123.221s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=85.1
+[123.341s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[123.435s] cli.texte                · contenu={ "qui": "otto", "activation": { "tache": {"id": "71022", "quoi": "Faire écrire par Orwyle le récit officiel du massacre de la route roya", "creee": false}, "issue": "avance", "ac…
+[123.450s] cli.rate_limit_event     · sous_type=None
+[124.731s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[125.021s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[125.226s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[125.229s] cli.resultat             · erreur=False · duree_ms=87963 · cout=0.22086650000000002 · entree=2 · sortie=7267 · caracteres=14969
+[125.657s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=10.0
+[125.981s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=90.1
+[125.983s] rapport.extraction       · acteur=otto · essai=1
+[125.988s] rapport.refuse           · acteur=otto · essai=1 · erreur=activite 1 : references hors dossier : salle:cabinet-de-la-main
+[125.990s] narrateur.corrige        · acteur=otto · essai=2 · caracteres=903
+[125.991s] cli.depart               · acteur=narrateur-local:inconnue · session=7462589f-250c-474a-a6f8-bfb4a9e73a21 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[126.145s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[127.030s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=80.1
+[127.557s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[128.101s] cli.texte                · contenu={ "qui": "alicent", "activation": { "tache": {"id": "etape:alicent-aegon-matin", "quoi": "Garder Aegon sous son influence matinale, avant le vin", "creee": false}, "issue": "avanc…
+[128.109s] cli.rate_limit_event     · sous_type=None
+[128.224s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=90.1
+[128.391s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[128.981s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[129.773s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[130.018s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[130.020s] cli.resultat             · erreur=False · duree_ms=90374 · cout=0.2263045 · entree=2 · sortie=7533 · caracteres=15068
+[130.384s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[130.664s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=15.0
+[131.015s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=5.0
+[131.085s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[131.363s] cli.texte                · contenu={ "qui": "jacaerys", "activation": { "tache": {"id": "33425", "quoi": "📦 Prendre les deux paquets de dame Alys Grive", "creee": false}, "issue": "avance", "activites": [ { "id": "…
+[131.375s] cli.rate_limit_event     · sous_type=None
+[131.509s] rapport.extraction       · acteur=alicent · essai=1
+[131.511s] rapport.refuse           · acteur=alicent · essai=1 · erreur=activite 1 : references hors dossier : affaire:alicent-qui-ecrit-aux-femmes, objet:plateau-matin, pers:ellyn
+[131.512s] narrateur.corrige        · acteur=alicent · essai=2 · caracteres=948
+[131.512s] cli.depart               · acteur=narrateur-local:inconnue · session=3d040d68-ac6c-4080-be97-5f12b7a5d12f · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[131.797s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[131.805s] cli.assistant            · bloc=thinking
+[132.032s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=85.1
+[132.499s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[133.087s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[133.213s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[133.215s] cli.resultat             · erreur=False · duree_ms=84522 · cout=0.209373 · entree=2 · sortie=6880 · caracteres=11528
+[134.112s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[134.621s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[134.665s] rapport.extraction       · acteur=jacaerys · essai=1
+[134.667s] rapport.refuse           · acteur=jacaerys · essai=1 · erreur=activite 1 : references hors dossier : action:33425, lieu:cour, lieu:tambour-de-pierre
+[134.667s] narrateur.corrige        · acteur=jacaerys · essai=2 · caracteres=925
+[134.668s] cli.depart               · acteur=narrateur-local:cour · session=87e173f9-9683-4e9f-b6e3-a6eec96acc9d · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[135.665s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=20.0
+[136.024s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=10.0
+[136.235s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[136.546s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=5.0
+[137.603s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[137.667s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[139.159s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[139.680s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=5.0
+[139.687s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[140.013s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[140.671s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=25.1
+[140.975s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[141.028s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=15.0
+[141.369s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[141.521s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[141.576s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=10.0
+[141.724s] cli.assistant            · bloc=thinking
+[142.737s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[143.447s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[143.456s] cli.assistant            · bloc=thinking
+[144.066s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[144.687s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=10.0
+[145.472s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[145.672s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=30.1
+[146.028s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=20.0
+[146.588s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=15.0
+[146.883s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[148.300s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[149.692s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=15.0
+[149.708s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[150.677s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=35.1
+[151.040s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=25.0
+[151.151s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[151.594s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=20.1
+[152.538s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[152.550s] cli.assistant            · bloc=thinking
+[154.704s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=20.0
+[155.683s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=40.1
+[156.045s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=30.0
+[156.633s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=25.1
+[159.711s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=25.0
+[160.688s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=45.1
+[161.049s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=35.0
+[161.647s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=30.1
+[164.714s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=30.0
+[165.702s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=50.1
+[166.051s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=40.0
+[166.653s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=35.1
+[169.717s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=35.0
+[170.706s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=55.1
+[171.056s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=45.0
+[171.656s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=40.1
+[174.727s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=40.0
+[175.517s] cli.texte                · contenu=```json { "qui": "orwyle", "activation": { "tache": { "id": "activation:orwyle:9b1146dadef7", "quoi": "Rester le seul homme des deux camps a avoir vu les deux, et le rester par ec…
+[175.534s] cli.rate_limit_event     · sous_type=None
+[175.711s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=60.1
+[176.065s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=50.1
+[176.662s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=45.1
+[177.723s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[177.834s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[177.837s] cli.resultat             · erreur=False · duree_ms=59933 · cout=0.2189085 · entree=2 · sortie=5840 · caracteres=11824
+[179.106s] rapport.extraction       · acteur=orwyle · essai=2
+[179.111s] rapport.refuse           · acteur=orwyle · essai=2 · erreur=activite 1 : references hors dossier : obj:feuillet-premier, obj:plume, pers:main-du-roi, salle:cabine-de-la-nef
+[179.113s] narrateur.corrige        · acteur=orwyle · essai=3 · caracteres=951
+[179.115s] cli.depart               · acteur=narrateur-local:inconnue · session=539f3352-56a9-479e-bd9a-b3eaa8a13cf6 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[179.730s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=45.1
+[181.070s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=55.1
+[181.631s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[181.667s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=50.1
+[184.153s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=5.0
+[184.477s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[184.736s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=50.1
+[184.756s] cli.texte                · contenu={ "qui": "jacaerys", "activation": { "tache": {"id": "33425", "quoi": "📦 Prendre les deux paquets de dame Alys Grive", "creee": false}, "issue": "avance", "activites": [ { "id": "…
+[184.799s] cli.rate_limit_event     · sous_type=None
+[186.076s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=60.1
+[186.673s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=55.1
+[186.968s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[187.064s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[187.065s] cli.resultat             · erreur=False · duree_ms=49702 · cout=0.2103435 · entree=2 · sortie=5121 · caracteres=11311
+[187.083s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[187.199s] cli.assistant            · bloc=thinking
+[188.346s] rapport.extraction       · acteur=jacaerys · essai=2
+[188.349s] rapport.refuse           · acteur=jacaerys · essai=2 · erreur=activite 4 : references hors dossier : les deux paquets de dame Alys Grive
+[188.349s] narrateur.corrige        · acteur=jacaerys · essai=3 · caracteres=913
+[188.350s] cli.depart               · acteur=narrateur-local:cour · session=87e173f9-9683-4e9f-b6e3-a6eec96acc9d · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[189.158s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=10.0
+[190.795s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[191.081s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=65.1
+[191.136s] cli.texte                · contenu={ "qui": "otto", "activation": { "tache": {"id": "71022", "quoi": "Faire écrire par Orwyle le récit officiel du massacre de la route roya", "creee": false}, "issue": "avance", "ac…
+[191.154s] cli.rate_limit_event     · sous_type=None
+[191.677s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=60.1
+[192.640s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[192.752s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[192.754s] cli.resultat             · erreur=False · duree_ms=64644 · cout=0.245608 · entree=2 · sortie=6408 · caracteres=13931
+[193.350s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[193.351s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[193.362s] cli.assistant            · bloc=thinking
+[193.362s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=5.0
+[194.101s] rapport.extraction       · acteur=otto · essai=2
+[194.112s] rapport.refuse           · acteur=otto · essai=2 · erreur=activite 3 : references hors dossier : pers:orwyle
+[194.116s] narrateur.corrige        · acteur=otto · essai=3 · caracteres=890
+[194.120s] cli.depart               · acteur=narrateur-local:inconnue · session=7462589f-250c-474a-a6f8-bfb4a9e73a21 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[194.160s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=15.0
+[196.577s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[196.691s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=65.1
+[198.363s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=10.0
+[199.007s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[199.173s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=20.0
+[199.173s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=5.0
+[199.724s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[199.736s] cli.assistant            · bloc=thinking
+[201.695s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=70.2
+[203.368s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=15.0
+[204.175s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=10.0
+[204.175s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=25.0
+[206.697s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=75.2
+[208.382s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=20.0
+[208.428s] cli.texte                · contenu={ "qui": "alicent", "activation": { "tache": {"id": "etape:alicent-aegon-matin", "quoi": "Garder Aegon sous son influence matinale, avant le vin", "creee": false}, "issue": "avanc…
+[208.445s] cli.rate_limit_event     · sous_type=None
+[209.179s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=30.0
+[209.179s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=15.0
+[210.228s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[210.315s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[210.317s] cli.resultat             · erreur=False · duree_ms=76490 · cout=0.27409700000000004 · entree=2 · sortie=7453 · caracteres=15606
+[211.596s] rapport.extraction       · acteur=alicent · essai=2
+[211.599s] rapport.refuse           · acteur=alicent · essai=2 · erreur=activite 2 : references hors dossier : pers:aegon-ii
+[211.600s] narrateur.corrige        · acteur=alicent · essai=3 · caracteres=892
+[211.601s] cli.depart               · acteur=narrateur-local:inconnue · session=3d040d68-ac6c-4080-be97-5f12b7a5d12f · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[213.405s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=25.0
+[214.168s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[214.184s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=20.0
+[214.185s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=35.0
+[216.554s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[216.629s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=5.0
+[217.950s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[218.406s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=30.0
+[219.187s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=25.0
+[219.187s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=40.0
+[220.065s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[221.634s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=10.0
+[222.183s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[223.410s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=35.0
+[223.596s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[224.189s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=30.0
+[224.189s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=45.0
+[225.010s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[226.425s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[226.638s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=15.0
+[227.139s] cli.assistant            · bloc=thinking
+[228.416s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=40.1
+[229.032s] cli.texte                · contenu=```json { "qui": "orwyle", "activation": { "tache": { "id": "activation:orwyle:9b1146dadef7", "quoi": "Rester le seul homme des deux camps a avoir vu les deux, et le rester par ec…
+[229.102s] cli.rate_limit_event     · sous_type=None
+[229.194s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=50.0
+[229.195s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=35.0
+[231.011s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[231.177s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[231.179s] cli.resultat             · erreur=False · duree_ms=49772 · cout=0.1953725 · entree=2 · sortie=4908 · caracteres=11365
+[231.645s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=20.0
+[232.472s] rapport.extraction       · acteur=orwyle · essai=3
+[232.663s] mutations.ecrites        · nombre=3 · tables=books,intentions
+[232.666s] rapport.mutations_ecartees · acteur=orwyle · nombre=3
+[232.670s] rapport.valide           · acteur=orwyle · depense=24.0 · activites=3 · corrections=2
+[232.674s] rapport.depose           · acteur=orwyle · fichier=etat/staging/activations/20260810-074915-786145-orwyle.json
+[233.422s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=45.1
+[233.667s] cli.texte                · contenu={ "qui": "jacaerys", "activation": { "tache": {"id": "33425", "quoi": "📦 Prendre les deux paquets de dame Alys Grive", "creee": false}, "issue": "avance", "activites": [ { "id": "…
+[233.686s] cli.rate_limit_event     · sous_type=None
+[234.200s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=40.0
+[236.650s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=25.0
+[238.428s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=50.1
+[239.204s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=45.0
+[239.640s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[239.803s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[239.805s] cli.resultat             · erreur=False · duree_ms=49258 · cout=0.187518 · entree=2 · sortie=4770 · caracteres=11105
+[241.107s] rapport.extraction       · acteur=jacaerys · essai=3
+[241.156s] mutations.reparees       · acteur=jacaerys · nombre=1
+[241.438s] mutations.ecrites        · nombre=3 · tables=intentions,personnages
+[241.441s] rapport.mutations_ecartees · acteur=jacaerys · nombre=1
+[241.477s] rapport.valide           · acteur=jacaerys · depense=24.0 · activites=6 · corrections=2
+[241.482s] rapport.depose           · acteur=jacaerys · fichier=etat/staging/activations/20260810-074924-593005-jacaerys.json
+[241.655s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=30.0
+[244.209s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=50.0
+[246.660s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=35.0
+[249.215s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=55.1
+[251.662s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=40.0
+[251.992s] cli.texte                · contenu={ "qui": "otto", "activation": { "tache": {"id": "71022", "quoi": "Faire écrire par Orwyle le récit officiel du massacre de la route roya", "creee": false}, "issue": "avance", "ac…
+[252.011s] cli.rate_limit_event     · sous_type=None
+[253.757s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[253.907s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[253.909s] cli.resultat             · erreur=False · duree_ms=57581 · cout=0.2280855 · entree=2 · sortie=5900 · caracteres=14387
+[254.220s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=60.1
+[255.269s] rapport.extraction       · acteur=otto · essai=3
+[255.436s] mutations.ecrites        · nombre=3 · tables=intentions
+[255.439s] rapport.mutations_ecartees · acteur=otto · nombre=1
+[255.445s] rapport.valide           · acteur=otto · depense=48.0 · activites=5 · corrections=2
+[255.448s] rapport.depose           · acteur=otto · fichier=etat/staging/activations/20260810-074938-560648-otto.json
+[256.671s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=45.1
+[261.676s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=50.1
+[266.683s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=55.1
+[271.687s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=60.1
+[276.693s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=65.1
+[281.698s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=70.1
+[283.237s] cli.texte                · contenu={ "qui": "alicent", "activation": { "tache": {"id": "etape:alicent-aegon-matin", "quoi": "Garder Aegon sous son influence matinale, avant le vin", "creee": false}, "issue": "avanc…
+[283.248s] cli.rate_limit_event     · sous_type=None
+[284.996s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[285.110s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[285.114s] cli.resultat             · erreur=False · duree_ms=71170 · cout=0.271811 · entree=2 · sortie=7247 · caracteres=15800
+[286.399s] rapport.extraction       · acteur=alicent · essai=3
+[286.612s] mutations.ecrites        · nombre=5 · tables=books,intentions
+[286.615s] rapport.mutations_ecartees · acteur=alicent · nombre=3
+[286.618s] rapport.valide           · acteur=alicent · depense=34.0 · activites=5 · corrections=2
+[286.621s] rapport.depose           · acteur=alicent · fichier=etat/staging/activations/20260810-075009-734087-alicent.json
+[286.622s] acteur.energie.debitee   · acteur=otto · avant=50.586 · energie=48.0 · duree_monde_s=1440 · apres=2.586
+[286.623s] budget.inutilise         · acteur=otto · montant=2.0 · budget=50 · utilise=48.0
+[286.623s] continuite.enregistree   · acteur=otto · tache=71022 · issue=avance · suspendue=False · fin_s=148500.0 · reprendre_a=152100.0 · cibles=2
+[286.624s] cycle.termine            · acteur=otto · rapport=etat/staging/activations/20260810-074938-560648-otto.json
+[286.624s] acteur.energie.debitee   · acteur=alicent · avant=34.332 · energie=34.0 · duree_monde_s=1020 · apres=0.332
+[286.625s] continuite.enregistree   · acteur=alicent · tache=etape:alicent-aegon-matin · issue=avance · suspendue=False · fin_s=148080.0 · reprendre_a=151680.0 · cibles=3
+[286.625s] cycle.termine            · acteur=alicent · rapport=etat/staging/activations/20260810-075009-734087-alicent.json
+[286.625s] acteur.energie.debitee   · acteur=jacaerys · avant=24.958 · energie=24.0 · duree_monde_s=720 · apres=0.958
+[286.626s] continuite.enregistree   · acteur=jacaerys · tache=33425 · issue=avance · suspendue=False · fin_s=147780.0 · reprendre_a=151380.0 · cibles=4
+[286.627s] cycle.termine            · acteur=jacaerys · rapport=etat/staging/activations/20260810-074924-593005-jacaerys.json
+[286.627s] acteur.energie.debitee   · acteur=orwyle · avant=24.885 · energie=24.0 · duree_monde_s=720 · apres=0.885
+[286.628s] continuite.enregistree   · acteur=orwyle · tache=activation:orwyle:9b1146dadef7 · issue=avance · suspendue=False · fin_s=147780.0 · reprendre_a=151380.0 · cibles=2
+[286.628s] cycle.termine            · acteur=orwyle · rapport=etat/staging/activations/20260810-074915-786145-orwyle.json
+[286.639s] cycle.lot.termine        · reussies=4 · annulees=0
+[286.642s] cycle.depart            
+[286.643s] horloge.lecture         
+[286.663s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=147180.0
+[286.664s] graphe.lecture          
+[286.687s] graphe.charge            · noeuds=1849 · aretes=4857
+[286.688s] diffusion.importance    
+[286.871s] importance.clusters      · lieux=17 · motifs_max=79 · actifs=1535
+[286.877s] energie.polarites_horloge · moyenne_minute=67000592.75 · ecart_max_minutes=1842.25 · emetteurs=1 · absorbeurs=106 · neutres=0
+[286.879s] energie.transfert_horloge · transfere=46.929 · propositions=1090 · acteurs=107
+[286.881s] energie.graphe           · dt_s=120.0 · integration=0.242142 · noeuds=1849 · energises=1048 · total=4723.926 · pic=pers:rhaenyra · maximum=100.0
+[286.881s] diffusion.calendrier    
+[286.894s] calendrier.etape_sans_horloge · acteur=gerardys · etapes_en_cours=3 · avec_horloge=2
+[286.895s] calendrier.etape_sans_horloge · acteur=daemon · etapes_en_cours=2 · avec_horloge=1
+[286.895s] calendrier.etape_sans_horloge · acteur=jacaerys · etapes_en_cours=4 · avec_horloge=3
+[286.896s] calendrier.etape_sans_horloge · acteur=rhaenys · etapes_en_cours=2 · avec_horloge=1
+[286.896s] calendrier.etape_sans_horloge · acteur=lucerys · etapes_en_cours=4 · avec_horloge=2
+[286.897s] calendrier.etape_sans_horloge · acteur=criston · etapes_en_cours=2 · avec_horloge=1
+[286.897s] calendrier.etape_sans_horloge · acteur=alicent · etapes_en_cours=3 · avec_horloge=2
+[286.898s] calendrier.etape_sans_horloge · acteur=aegon-ii · etapes_en_cours=2 · avec_horloge=1
+[286.898s] calendrier.etape_sans_horloge · acteur=helaena · etapes_en_cours=2 · avec_horloge=1
+[286.898s] calendrier.etape_sans_horloge · acteur=borros-baratheon · etapes_en_cours=2 · avec_horloge=1
+[286.899s] calendrier.etape_sans_horloge · acteur=jeyne-arryn · etapes_en_cours=2 · avec_horloge=1
+[286.899s] calendrier.etape_sans_horloge · acteur=cregan-stark · etapes_en_cours=2 · avec_horloge=1
+[286.899s] calendrier.etape_sans_horloge · acteur=ormund-hightower · etapes_en_cours=2 · avec_horloge=1
+[286.900s] calendrier.etape_sans_horloge · acteur=wend · etapes_en_cours=1 · avec_horloge=0
+[286.900s] calendrier.etape_sans_horloge · acteur=septa-marlow · etapes_en_cours=1 · avec_horloge=0
+[286.900s] calendrier.etape_sans_horloge · acteur=alarra-rosby · etapes_en_cours=2 · avec_horloge=1
+[286.901s] calendrier.etape_sans_horloge · acteur=nel-bec · etapes_en_cours=1 · avec_horloge=0
+[286.901s] calendrier.etape_sans_horloge · acteur=waltyr-poix · etapes_en_cours=1 · avec_horloge=0
+[286.902s] calendrier.etape_sans_horloge · acteur=lord-rosby · etapes_en_cours=3 · avec_horloge=2
+[286.902s] calendrier.etape_sans_horloge · acteur=maris-baratheon · etapes_en_cours=2 · avec_horloge=1
+[286.904s] energie.calculee         · acteurs=33 · maximum=96.875
+[286.905s] selection.rejetee        · acteur=gerardys · energie=96.875 · raison=deja_passe_dans_rotation · tour=20
+[286.905s] selection.rejetee        · acteur=rulf-corne · energie=48.75 · raison=deja_passe_dans_rotation · tour=20
+[286.905s] selection.rejetee        · acteur=robert-quince · energie=38.146 · raison=deja_passe_dans_rotation · tour=20
+[286.906s] selection.rejetee        · acteur=aldon-hask · energie=33.145 · raison=deja_passe_dans_rotation · tour=20
+[286.906s] selection.rejetee        · acteur=le-sanglier · energie=28.838 · raison=deja_passe_dans_rotation · tour=20
+[286.906s] selection.rejetee        · acteur=steffon-darklyn · energie=28.238 · raison=deja_passe_dans_rotation · tour=20
+[286.911s] selection.rejetee        · acteur=otto · energie=14.209 · raison=deja_passe_dans_rotation · tour=20
+[286.912s] selection.rejetee        · acteur=alys-grive · energie=12.956 · raison=deja_passe_dans_rotation · tour=20
+[286.912s] selection.borne          · acteur=alicent · energie=8.565 · seuil=10.0
+[286.913s] selection.elue           · acteur=aemond · energie=22.831 · tache=etape:aemond-accalmie · energie_tache=1.669 · budget_energie=22 · budget_s=660 · flux_horloge=absorbe · ecart_horloge_min=-651.75 · horloge_pj=marlo-vasse
+[286.913s] acteur.choisi            · acteur=aemond · energie=22.831 · importance=0.219537 · budget=22
+[286.913s] tache.choisie            · id=etape:aemond-accalmie · distance=1 · creee=False · energie=1.669
+ACTIVATION  aemond  energie 22.83 · budget 22 (11 min)  importance 0.220
+  tache etape:aemond-accalmie · distance 1 · Se faire donner l'ambassade d'Accalmie plutôt que la voir confiée à un
+  front aurore-inchauspe · +147180.0s depuis rhaenyra
+[286.914s] selection.elue           · acteur=mysaria · energie=18.206 · tache=6023 · energie_tache=3.768 · budget_energie=18 · budget_s=540 · flux_horloge=absorbe · ecart_horloge_min=-651.75 · horloge_pj=marlo-vasse
+[286.914s] acteur.choisi            · acteur=mysaria · energie=18.206 · importance=0.176179 · budget=18
+[286.914s] tache.choisie            · id=6023 · distance=1 · creee=False · energie=3.768
+ACTIVATION  mysaria  energie 18.21 · budget 18 (9 min)  importance 0.176
+  tache 6023 · distance 1 · 👂 Relever le ton des rues, sans rien y mettre
+  front aurore-inchauspe · +147180.0s depuis rhaenyra
+[286.914s] rotation.acteurs_reserves · tour=20 · acteurs=['aemond', 'aldon-hask', 'alicent', 'alys-grive', 'gerardys', 'jacaerys', 'le-sanglier', 'mysaria', 'orwyle', 'otto', 'robert-quince', 'rulf-corne', 'steffon-darklyn']
+[286.915s] selection.lot            · nombre=2 · parallele=4
+[286.915s] energie.reservee         · acteur=aemond · valeur=22.831 · plafond=22
+[286.915s] energie.reservee         · acteur=mysaria · valeur=18.206 · plafond=18
+[286.923s] appel.dossier            · acteur=aemond · tache=etape:aemond-accalmie
+[286.923s] appel.dossier            · acteur=mysaria · tache=6023
+[287.053s] appel.systeme_narrateur  · acteur=aemond · caracteres=4805
+[287.053s] appel.systeme_narrateur  · acteur=mysaria · caracteres=4783
+[287.054s] appel.systeme_pnj        · acteur=aemond · caracteres=2146
+[287.054s] appel.systeme_pnj        · acteur=mysaria · caracteres=2146
+[287.055s] appel.ouverture          · acteur=aemond · caracteres=12471 · budget_energie=22 · budget_secondes=660
+[287.055s] appel.ouverture          · acteur=mysaria · caracteres=13484 · budget_energie=18 · budget_secondes=540
+[287.059s] cli.depart               · acteur=narrateur-local:inconnue · session=4a008a89-8aee-4d55-bf02-c4faa27db8e3 · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[287.059s] cli.depart               · acteur=narrateur-local:inconnue · session=0f87a8f2-91d2-432d-93ee-0d0230d26b24 · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[289.859s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[289.898s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[290.648s] cli.rate_limit_event     · sous_type=None
+[291.918s] cli.rate_limit_event     · sous_type=None
+[292.940s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.ouverture · secondes=5.0
+[293.001s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.ouverture · secondes=5.0
+[297.533s] cli.texte                · contenu={ "appel_pnj": { "qui": "mysaria", "message": "La lumière tombe déjà oblique sur les toits, dame Mysaria, et vous n'êtes plus à l'abri d'aucun mur : rien qu'une femme en soie blan…
+[297.942s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.ouverture · secondes=10.0
+[298.005s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.ouverture · secondes=10.0
+[298.976s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[299.145s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[299.148s] cli.resultat             · erreur=False · duree_ms=9506 · cout=0.127646 · entree=2 · sortie=306 · caracteres=690
+[299.844s] cli.texte                · contenu=```json { "appel_pnj": { "qui": "aemond", "message": "Prince Aemond. La porte de l'antichambre est close, et derrière elle votre grand-père fait lire à voix haute la liste des pli…
+[300.706s] narrateur.reveille_pnj   · acteur=mysaria · caracteres=626
+[300.789s] cli.depart               · acteur=mysaria · session=4bae9ef5-bc1a-44f6-8f30-077f0a231407 · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[301.378s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[301.625s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[301.655s] cli.resultat             · erreur=False · duree_ms=11935 · cout=0.12090899999999999 · entree=2 · sortie=209 · caracteres=466
+[302.947s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.ouverture · secondes=15.0
+[302.948s] narrateur.reveille_pnj   · acteur=aemond · caracteres=391
+[302.999s] cli.depart               · acteur=aemond · session=5cd76b3d-a83c-434f-a666-339a44f86670 · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[303.611s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[304.224s] cli.rate_limit_event     · sous_type=None
+[305.343s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[305.662s] cli.rate_limit_event     · sous_type=None
+[306.031s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[306.034s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[306.041s] cli.assistant            · bloc=thinking
+[306.771s] cli.outil                · nom=Bash · entree={"command": "sed -n 1,60p ./livres/ce-quon-chante-a-la-gaffe.txt"}
+[306.956s] cli.outil                · nom=Bash · entree={"command": "sed -n 1,40p ./livres/ce-quon-dit-a-qui-entre.txt"}
+[307.148s] cli.heartbeat            · acteur=mysaria · phase=pnj.tentative · secondes=5.0
+[307.584s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[308.291s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[308.296s] cli.assistant            · bloc=thinking
+[308.665s] cli.resultat_outil       · erreur=False · contenu=══════════════════════════════════════════════════════════════════════════ Ce qu'on dit à qui entre [ce-quon-dit-a-qui-entre] Aux Chantiers de la Néra, sur l'établi, ouvert. Quato…
+[308.700s] cli.resultat_outil       · erreur=False · contenu=══════════════════════════════════════════════════════════════════════════ Ce qu'on chante a La Gaffe [ce-quon-chante-a-la-gaffe] Trois chansons de Hobb Sole, dit Trois-Doigts. Ri…
+[308.753s] cli.heartbeat            · acteur=aemond · phase=pnj.tentative · secondes=5.0
+[309.085s] cli.outil                · nom=Bash · entree={"command": "cd /mnt/user-data 2>/dev/null || cd .; ls livres 2>/dev/null; head -40 ./livres/affaire-ce-quon-fait-signer-au-roi.txt 2>/dev/null", "description": "Consulter l'étagè…
+[310.945s] cli.resultat_outil       · erreur=False · contenu=affaire-ce-quon-fait-signer-au-roi.txt affaire-le-double-feuillet-dorwyle.txt ce-quon-chante-a-la-gaffe.txt ce-quon-dit-a-qui-entre.txt devis-du-lot.txt equipes-projets-nera.txt l…
+[311.471s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[312.149s] cli.heartbeat            · acteur=mysaria · phase=pnj.tentative · secondes=10.0
+[312.180s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[312.182s] cli.assistant            · bloc=thinking
+[313.197s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[313.757s] cli.heartbeat            · acteur=aemond · phase=pnj.tentative · secondes=10.0
+[313.955s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[313.956s] cli.assistant            · bloc=thinking
+[317.152s] cli.heartbeat            · acteur=mysaria · phase=pnj.tentative · secondes=15.0
+[318.763s] cli.heartbeat            · acteur=aemond · phase=pnj.tentative · secondes=15.0
+[322.157s] cli.heartbeat            · acteur=mysaria · phase=pnj.tentative · secondes=20.0
+[323.763s] cli.heartbeat            · acteur=aemond · phase=pnj.tentative · secondes=20.0
+[324.492s] cli.texte                · contenu=Le pli n'est pas encore nommé. Un mestre porte des mots ; moi, je porte Vhagar au-dessus du toit de Borros Baratheon — et ses quatre filles à marier. Que Grand-père écrive mon nom…
+[327.169s] cli.heartbeat            · acteur=mysaria · phase=pnj.tentative · secondes=25.0
+[327.239s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[327.243s] cli.resultat             · erreur=False · duree_ms=22165 · cout=0.0590445 · entree=4 · sortie=938 · caracteres=1528
+[327.996s] cli.texte                · contenu=La Gaffe, alors. Pas les places : là on crie, et un cri ne dit que le prix qu'on l'a payé. À La Gaffe, Trois-Doigts chantera ce soir, et quarante hommes chanteront avec lui — c'es…
+[328.551s] pnj.tentative_valide     · acteur=aemond · verbe=entrer · caracteres=924
+[328.553s] narrateur.arbitrage      · acteur=aemond · caracteres=6256 · passage=1
+[328.554s] cli.depart               · acteur=narrateur-local:inconnue · session=4a008a89-8aee-4d55-bf02-c4faa27db8e3 · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[330.449s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[330.451s] cli.resultat             · erreur=False · duree_ms=27019 · cout=0.09397149999999999 · entree=1111 · sortie=1224 · caracteres=2193
+[331.144s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[331.674s] pnj.tentative_valide     · acteur=mysaria · verbe=écouter · caracteres=1123
+[331.675s] narrateur.arbitrage      · acteur=mysaria · caracteres=6430 · passage=1
+[331.676s] cli.depart               · acteur=narrateur-local:inconnue · session=0f87a8f2-91d2-432d-93ee-0d0230d26b24 · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[333.581s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[334.136s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[334.440s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=5.0
+[334.985s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[336.466s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[337.049s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[337.401s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=5.0
+[337.966s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[338.577s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[339.358s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[339.445s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=10.0
+[339.969s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[340.767s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[341.468s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[342.186s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[342.408s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=10.0
+[342.849s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[343.863s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[344.455s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=15.0
+[344.475s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[345.071s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[345.712s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[346.479s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[347.080s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[347.421s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=15.0
+[348.244s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[348.490s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[349.368s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[349.461s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=20.0
+[349.913s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[350.799s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[351.325s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[352.191s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[352.432s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=20.0
+[352.912s] cli.assistant            · bloc=thinking
+[353.456s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[354.478s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=25.1
+[354.845s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[356.316s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[357.437s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=25.0
+[357.754s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[359.257s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[359.485s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=30.1
+[360.558s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[360.583s] cli.assistant            · bloc=thinking
+[362.442s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=30.0
+[364.490s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=35.1
+[367.447s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=35.1
+[369.495s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=40.1
+[372.454s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=40.1
+[374.501s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=45.1
+[377.460s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=45.1
+[379.506s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=50.1
+[382.463s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=50.1
+[384.512s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=55.1
+[387.469s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=55.1
+[389.517s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=60.1
+[392.474s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=60.1
+[394.522s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=65.1
+[397.479s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=65.1
+[399.525s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=70.1
+[402.484s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=70.1
+[404.533s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=75.1
+[405.842s] cli.texte                · contenu=```json { "qui": "aemond", "activation": { "tache": { "id": "etape:aemond-accalmie", "quoi": "Se faire donner l'ambassade d'Accalmie plutôt que la voir confiée à un mestre", "cree…
+[405.885s] cli.rate_limit_event     · sous_type=None
+[407.492s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=75.1
+[407.884s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[407.991s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[407.992s] cli.resultat             · erreur=False · duree_ms=77054 · cout=0.194633 · entree=2 · sortie=6397 · caracteres=12341
+[409.303s] rapport.extraction       · acteur=aemond · essai=1
+[409.305s] rapport.refuse           · acteur=aemond · essai=1 · erreur=activite 1 : references hors dossier : obj:pli-accalmie, pers:mestre-de-la-liste, pers:otto-hightower, salle:antichambre-table-des-sceaux, salle:corridor-antichambre
+[409.307s] narrateur.corrige        · acteur=aemond · essai=2 · caracteres=1004
+[409.309s] cli.depart               · acteur=narrateur-local:inconnue · session=4a008a89-8aee-4d55-bf02-c4faa27db8e3 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[412.064s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[412.496s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.resolution · secondes=80.1
+[414.023s] cli.texte                · contenu={ "qui": "mysaria", "activation": { "tache": {"id": "6023", "quoi": "👂 Relever le ton des rues, sans rien y mettre", "creee": false}, "issue": "avance", "activites": [ { "id": "ac…
+[414.036s] cli.rate_limit_event     · sous_type=None
+[414.425s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=5.0
+[414.468s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[415.737s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[415.850s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[415.852s] cli.resultat             · erreur=False · duree_ms=81990 · cout=0.193612 · entree=2 · sortie=6280 · caracteres=11221
+[415.892s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[417.303s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[417.321s] rapport.extraction       · acteur=mysaria · essai=1
+[417.323s] rapport.refuse           · acteur=mysaria · essai=1 · erreur=activite 1 : references hors dossier : lieu:la-gadoue, lieu:la-gaffe, lieu:port-real, pers:marlo-vasse
+[417.324s] narrateur.corrige        · acteur=mysaria · essai=2 · caracteres=941
+[417.324s] cli.depart               · acteur=narrateur-local:inconnue · session=0f87a8f2-91d2-432d-93ee-0d0230d26b24 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[418.713s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[419.439s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=10.0
+[419.891s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[420.122s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[421.594s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[421.611s] cli.assistant            · bloc=thinking
+[422.280s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[422.340s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=5.0
+[423.694s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[424.450s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=15.0
+[425.114s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[426.519s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[427.346s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=10.0
+[428.109s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[428.120s] cli.assistant            · bloc=thinking
+[429.457s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=20.0
+[432.350s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=15.0
+[434.461s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=25.0
+[437.358s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=20.0
+[439.466s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=30.0
+[442.362s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=25.0
+[444.472s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=35.1
+[447.367s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=30.0
+[449.478s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=40.1
+[452.372s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=35.0
+[454.482s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=45.1
+[457.379s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=40.0
+[459.487s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=50.1
+[462.382s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=45.0
+[463.938s] cli.texte                · contenu=```json { "qui": "aemond", "activation": { "tache": { "id": "etape:aemond-accalmie", "quoi": "Se faire donner l'ambassade d'Accalmie plutôt que la voir confiée à un mestre", "cree…
+[463.948s] cli.rate_limit_event     · sous_type=None
+[464.499s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=55.1
+[466.122s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[466.226s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[466.228s] cli.resultat             · erreur=False · duree_ms=54398 · cout=0.20993650000000003 · entree=2 · sortie=5384 · caracteres=11441
+[467.388s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=50.1
+[467.499s] rapport.extraction       · acteur=aemond · essai=2
+[467.502s] rapport.refuse           · acteur=aemond · essai=2 · erreur=activite 4 : references hors dossier : pers:aegon-ii
+[467.505s] narrateur.corrige        · acteur=aemond · essai=3 · caracteres=891
+[467.507s] cli.depart               · acteur=narrateur-local:inconnue · session=4a008a89-8aee-4d55-bf02-c4faa27db8e3 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[469.384s] cli.texte                · contenu={ "qui": "mysaria", "activation": { "tache": {"id": "6023", "quoi": "👂 Relever le ton des rues, sans rien y mettre", "creee": false}, "issue": "avance", "activites": [ { "id": "ac…
+[469.396s] cli.rate_limit_event     · sous_type=None
+[469.851s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[471.612s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[471.690s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[471.693s] cli.resultat             · erreur=False · duree_ms=52125 · cout=0.1988255 · entree=2 · sortie=4984 · caracteres=10869
+[472.116s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[472.121s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[472.131s] cli.assistant            · bloc=thinking
+[472.393s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=55.1
+[472.396s] rapport.extraction       · acteur=mysaria · essai=2
+[472.498s] mutations.ecrites        · nombre=2 · tables=intentions
+[472.500s] rapport.mutations_ecartees · acteur=mysaria · nombre=1
+[472.506s] rapport.valide           · acteur=mysaria · depense=18.0 · activites=3 · corrections=1
+[472.509s] rapport.depose           · acteur=mysaria · fichier=etat/staging/activations/20260810-075315-622395-mysaria.json
+[472.550s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=5.0
+[477.552s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=10.0
+[482.556s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=15.0
+[487.561s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=20.0
+[492.564s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=25.0
+[497.567s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=30.0
+[502.571s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=35.0
+[507.576s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=40.0
+[512.582s] cli.heartbeat            · acteur=narrateur-local:inconnue · phase=narrateur.correction · secondes=45.0
+[513.856s] cli.texte                · contenu=```json { "qui": "aemond", "activation": { "tache": { "id": "etape:aemond-accalmie", "quoi": "Se faire donner l'ambassade d'Accalmie plutôt que la voir confiée à un mestre", "cree…
+[513.868s] cli.rate_limit_event     · sous_type=None
+[515.574s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[515.673s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[515.675s] cli.resultat             · erreur=False · duree_ms=46014 · cout=0.1887335 · entree=2 · sortie=4826 · caracteres=11440
+[517.025s] rapport.extraction       · acteur=aemond · essai=3
+[517.192s] mutations.ecrites        · nombre=2 · tables=intentions
+[517.194s] rapport.mutations_ecartees · acteur=aemond · nombre=1
+[517.201s] rapport.valide           · acteur=aemond · depense=18.667 · activites=4 · corrections=2
+[517.205s] rapport.depose           · acteur=aemond · fichier=etat/staging/activations/20260810-075400-317650-aemond.json
+[517.206s] acteur.energie.debitee   · acteur=aemond · avant=22.831 · energie=18.667 · duree_monde_s=560 · apres=4.164
+[517.206s] budget.inutilise         · acteur=aemond · montant=3.333 · budget=22 · utilise=18.667
+[517.207s] continuite.enregistree   · acteur=aemond · tache=etape:aemond-accalmie · issue=avance · suspendue=False · fin_s=147740.0 · reprendre_a=151340.0 · cibles=2
+[517.207s] cycle.termine            · acteur=aemond · rapport=etat/staging/activations/20260810-075400-317650-aemond.json
+[517.208s] acteur.energie.debitee   · acteur=mysaria · avant=18.206 · energie=18.0 · duree_monde_s=540 · apres=0.206
+[517.209s] continuite.enregistree   · acteur=mysaria · tache=6023 · issue=avance · suspendue=False · fin_s=147720.0 · reprendre_a=151320.0 · cibles=4
+[517.210s] cycle.termine            · acteur=mysaria · rapport=etat/staging/activations/20260810-075315-622395-mysaria.json
+[517.224s] cycle.lot.termine        · reussies=2 · annulees=0
+[517.227s] cycle.depart            
+[517.227s] horloge.lecture         
+[517.239s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=148080.0
+[517.240s] graphe.lecture          
+[517.270s] graphe.charge            · noeuds=1849 · aretes=4857
+[517.271s] diffusion.importance    
+[517.453s] importance.clusters      · lieux=17 · motifs_max=79 · actifs=1535
+[517.458s] energie.polarites_horloge · moyenne_minute=67000596.5 · ecart_max_minutes=1853.5 · emetteurs=1 · absorbeurs=106 · neutres=0
+[517.461s] energie.transfert_horloge · transfere=46.924 · propositions=1090 · acteurs=107
+[517.463s] energie.graphe           · dt_s=900.0 · integration=0.875 · noeuds=1849 · energises=1048 · total=4808.283 · pic=pers:rhaenyra · maximum=100.0
+[517.463s] diffusion.calendrier    
+[517.476s] calendrier.etape_sans_horloge · acteur=gerardys · etapes_en_cours=3 · avec_horloge=2
+[517.477s] calendrier.etape_sans_horloge · acteur=daemon · etapes_en_cours=2 · avec_horloge=1
+[517.478s] calendrier.etape_sans_horloge · acteur=jacaerys · etapes_en_cours=4 · avec_horloge=3
+[517.478s] calendrier.etape_sans_horloge · acteur=rhaenys · etapes_en_cours=2 · avec_horloge=1
+[517.479s] calendrier.etape_sans_horloge · acteur=lucerys · etapes_en_cours=4 · avec_horloge=2
+[517.483s] calendrier.etape_sans_horloge · acteur=criston · etapes_en_cours=2 · avec_horloge=1
+[517.483s] calendrier.etape_sans_horloge · acteur=alicent · etapes_en_cours=3 · avec_horloge=2
+[517.484s] calendrier.etape_sans_horloge · acteur=aegon-ii · etapes_en_cours=2 · avec_horloge=1
+[517.484s] calendrier.etape_sans_horloge · acteur=helaena · etapes_en_cours=2 · avec_horloge=1
+[517.485s] calendrier.etape_sans_horloge · acteur=borros-baratheon · etapes_en_cours=2 · avec_horloge=1
+[517.485s] calendrier.etape_sans_horloge · acteur=jeyne-arryn · etapes_en_cours=2 · avec_horloge=1
+[517.486s] calendrier.etape_sans_horloge · acteur=cregan-stark · etapes_en_cours=2 · avec_horloge=1
+[517.486s] calendrier.etape_sans_horloge · acteur=ormund-hightower · etapes_en_cours=2 · avec_horloge=1
+[517.487s] calendrier.etape_sans_horloge · acteur=wend · etapes_en_cours=1 · avec_horloge=0
+[517.487s] calendrier.etape_sans_horloge · acteur=septa-marlow · etapes_en_cours=1 · avec_horloge=0
+[517.488s] calendrier.etape_sans_horloge · acteur=alarra-rosby · etapes_en_cours=2 · avec_horloge=1
+[517.488s] calendrier.etape_sans_horloge · acteur=nel-bec · etapes_en_cours=1 · avec_horloge=0
+[517.489s] calendrier.etape_sans_horloge · acteur=waltyr-poix · etapes_en_cours=1 · avec_horloge=0
+[517.489s] calendrier.etape_sans_horloge · acteur=lord-rosby · etapes_en_cours=3 · avec_horloge=2
+[517.490s] calendrier.etape_sans_horloge · acteur=maris-baratheon · etapes_en_cours=2 · avec_horloge=1
+[517.491s] energie.calculee         · acteurs=33 · maximum=99.609
+[517.492s] selection.rejetee        · acteur=gerardys · energie=99.609 · raison=deja_passe_dans_rotation · tour=20
+[517.492s] selection.rejetee        · acteur=rulf-corne · energie=48.75 · raison=deja_passe_dans_rotation · tour=20
+[517.493s] selection.rejetee        · acteur=otto · energie=46.038 · raison=deja_passe_dans_rotation · tour=20
+[517.493s] selection.rejetee        · acteur=robert-quince · energie=38.146 · raison=deja_passe_dans_rotation · tour=20
+[517.494s] selection.rejetee        · acteur=aldon-hask · energie=33.145 · raison=deja_passe_dans_rotation · tour=20
+[517.494s] selection.rejetee        · acteur=alicent · energie=31.111 · raison=deja_passe_dans_rotation · tour=20
+[517.495s] selection.rejetee        · acteur=le-sanglier · energie=28.838 · raison=deja_passe_dans_rotation · tour=20
+[517.495s] selection.rejetee        · acteur=steffon-darklyn · energie=28.239 · raison=deja_passe_dans_rotation · tour=20
+[517.496s] selection.rejetee        · acteur=jacaerys · energie=22.684 · raison=deja_passe_dans_rotation · tour=20
+[517.496s] selection.rejetee        · acteur=orwyle · energie=22.611 · raison=deja_passe_dans_rotation · tour=20
+[517.497s] selection.rejetee        · acteur=aemond · energie=20.498 · raison=deja_passe_dans_rotation · tour=20
+[517.497s] selection.rejetee        · acteur=mysaria · energie=15.956 · raison=deja_passe_dans_rotation · tour=20
+[517.498s] selection.rejetee        · acteur=alys-grive · energie=12.956 · raison=deja_passe_dans_rotation · tour=20
+[517.498s] selection.borne          · acteur=willa-sechoirs · energie=7.544 · seuil=10.0
+[517.498s] rotation.nouveau_tour    · tour=21
+[517.499s] selection.rejetee        · acteur=gerardys · energie=99.609 · raison=repos_acteur · reprendre_a=149580.0
+[517.502s] selection.rejetee        · acteur=otto · energie=46.038 · raison=repos_acteur · reprendre_a=149400.0
+[517.506s] selection.elue           · acteur=rulf-corne · energie=48.75 · tache=35023 · energie_tache=5.525 · budget_energie=48 · budget_s=1440 · flux_horloge=absorbe · ecart_horloge_min=-614.5 · horloge_pj=rhaenyra
+[517.507s] acteur.choisi            · acteur=rulf-corne · energie=48.75 · importance=0.479702 · budget=48
+[517.507s] tache.choisie            · id=35023 · distance=1 · creee=False · energie=5.525
+ACTIVATION  rulf-corne  energie 48.75 · budget 48 (24 min)  importance 0.480
+  tache 35023 · distance 1 · 🐎 Chronométrer une traversée chargée
+  front aurore-inchauspe · +148080.0s depuis rhaenyra
+[517.508s] selection.elue           · acteur=robert-quince · energie=38.146 · tache=10022 · energie_tache=4.34 · budget_energie=38 · budget_s=1140 · flux_horloge=absorbe · ecart_horloge_min=-614.5 · horloge_pj=rhaenyra
+[517.508s] acteur.choisi            · acteur=robert-quince · energie=38.146 · importance=0.377477 · budget=38
+[517.508s] tache.choisie            · id=10022 · distance=1 · creee=False · energie=4.34
+ACTIVATION  robert-quince  energie 38.15 · budget 38 (19 min)  importance 0.377
+  tache 10022 · distance 1 · 🧱 Écrire ce que tient le poste du nœud
+  front aurore-inchauspe · +148080.0s depuis rhaenyra
+[517.509s] rotation.acteurs_reserves · tour=21 · acteurs=['robert-quince', 'rulf-corne']
+[517.509s] selection.lot            · nombre=2 · parallele=2
+[517.512s] energie.reservee         · acteur=rulf-corne · valeur=48.75 · plafond=48
+[517.512s] energie.reservee         · acteur=robert-quince · valeur=38.146 · plafond=38
+[517.522s] appel.dossier            · acteur=rulf-corne · tache=35023
+[517.522s] appel.dossier            · acteur=robert-quince · tache=10022
+[517.605s] appel.systeme_narrateur  · acteur=robert-quince · caracteres=4781
+[517.606s] appel.systeme_narrateur  · acteur=rulf-corne · caracteres=4765
+[517.607s] appel.systeme_pnj        · acteur=robert-quince · caracteres=2146
+[517.607s] appel.systeme_pnj        · acteur=rulf-corne · caracteres=2146
+[517.608s] appel.ouverture          · acteur=robert-quince · caracteres=31980 · budget_energie=38 · budget_secondes=1140
+[517.608s] appel.ouverture          · acteur=rulf-corne · caracteres=41221 · budget_energie=48 · budget_secondes=1440
+[517.612s] cli.depart               · acteur=narrateur-local:porte-dragon · session=bcd883a0-797e-4fe1-aec1-40c81bf1b219 · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[517.612s] cli.depart               · acteur=narrateur-local:quai · session=c4ed0727-e83d-49a4-842a-adfefbd83a23 · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[520.304s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[520.463s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[521.161s] cli.rate_limit_event     · sous_type=None
+[521.254s] cli.rate_limit_event     · sous_type=None
+[523.415s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.ouverture · secondes=5.0
+[523.496s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.ouverture · secondes=5.0
+[527.567s] cli.texte                · contenu=```json { "appel_pnj": { "qui": "rulf-corne", "message": "Rulf, le jour baisse sur le quai et la marée du 29e recule déjà de cinquante minutes. Le feuillet est parti par le coureu…
+[527.916s] cli.texte                · contenu={ "appel_pnj": { "qui": "robert-quince", "message": "Le vent de mer sèche déjà l'encre avant qu'elle prenne, ser. Vous êtes au chemin de ronde, entre la porte du Dragon et la barb…
+[528.417s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.ouverture · secondes=10.0
+[528.499s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.ouverture · secondes=10.0
+[528.864s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[529.122s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[529.124s] cli.resultat             · erreur=False · duree_ms=9048 · cout=0.252885 · entree=2 · sortie=328 · caracteres=727
+[530.072s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[530.193s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[530.195s] cli.resultat             · erreur=False · duree_ms=9943 · cout=0.21066800000000002 · entree=2 · sortie=313 · caracteres=689
+[530.652s] narrateur.reveille_pnj   · acteur=rulf-corne · caracteres=648
+[530.781s] cli.depart               · acteur=rulf-corne · session=aae9ffb6-c74d-40ef-a164-25b1d4bb5ed4 · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[531.731s] narrateur.reveille_pnj   · acteur=robert-quince · caracteres=619
+[531.901s] cli.depart               · acteur=robert-quince · session=6b1a0849-8e9a-4de3-b120-afa2d51ce409 · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[533.700s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[534.153s] cli.rate_limit_event     · sous_type=None
+[534.473s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[535.684s] cli.rate_limit_event     · sous_type=None
+[536.765s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[536.949s] cli.heartbeat            · acteur=rulf-corne · phase=pnj.tentative · secondes=5.0
+[537.811s] cli.heartbeat            · acteur=robert-quince · phase=pnj.tentative · secondes=5.0
+[538.302s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[539.466s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[540.840s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[541.950s] cli.heartbeat            · acteur=rulf-corne · phase=pnj.tentative · secondes=10.0
+[542.247s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[542.815s] cli.heartbeat            · acteur=robert-quince · phase=pnj.tentative · secondes=10.0
+[542.946s] cli.assistant            · bloc=thinking
+[546.954s] cli.heartbeat            · acteur=rulf-corne · phase=pnj.tentative · secondes=15.0
+[547.832s] cli.heartbeat            · acteur=robert-quince · phase=pnj.tentative · secondes=15.0
+[551.958s] cli.heartbeat            · acteur=rulf-corne · phase=pnj.tentative · secondes=20.0
+[552.833s] cli.heartbeat            · acteur=robert-quince · phase=pnj.tentative · secondes=20.0
+[556.963s] cli.heartbeat            · acteur=rulf-corne · phase=pnj.tentative · secondes=25.0
+[557.690s] cli.texte                · contenu=Le jour ne rendra pas ce qu'il prend. Deux choses tiennent dans cette demi-heure, et elles tiennent ensemble : ma ligne blanche, et une marque qui ne se relève qu'à cette lumière-…
+[557.839s] cli.heartbeat            · acteur=robert-quince · phase=pnj.tentative · secondes=25.0
+[558.491s] cli.texte                · contenu={ "tentative": { "verbe": "écrire", "quoi": "Debout au parapet, entre la porte du Dragon et la barbacane, j'ouvre mon cahier et j'écris la charge du poste du nœud comme j'ai fait …
+[559.848s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[559.855s] cli.resultat             · erreur=False · duree_ms=26500 · cout=0.163034 · entree=2 · sortie=1421 · caracteres=2379
+[560.588s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[560.595s] cli.resultat             · erreur=False · duree_ms=26425 · cout=0.128478 · entree=2 · sortie=1338 · caracteres=3042
+[561.143s] pnj.tentative_valide     · acteur=rulf-corne · verbe=clore · caracteres=1095
+[561.144s] narrateur.arbitrage      · acteur=rulf-corne · caracteres=6416 · passage=1
+[561.145s] cli.depart               · acteur=narrateur-local:quai · session=c4ed0727-e83d-49a4-842a-adfefbd83a23 · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[561.859s] pnj.tentative_valide     · acteur=robert-quince · verbe=écrire · caracteres=2640
+[561.860s] narrateur.arbitrage      · acteur=robert-quince · caracteres=7968 · passage=1
+[561.861s] cli.depart               · acteur=narrateur-local:porte-dragon · session=bcd883a0-797e-4fe1-aec1-40c81bf1b219 · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[564.522s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[565.202s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[567.141s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=5.0
+[567.750s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[568.266s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.resolution · secondes=5.0
+[569.180s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[570.627s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[571.986s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[572.147s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=10.0
+[573.270s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.resolution · secondes=10.0
+[573.399s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[574.816s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[576.946s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[577.150s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=15.0
+[578.275s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.resolution · secondes=15.0
+[578.407s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[579.814s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[581.225s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[582.156s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=20.0
+[583.294s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.resolution · secondes=20.0
+[583.362s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[584.759s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[586.250s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[586.905s] cli.assistant            · bloc=thinking
+[587.162s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=25.0
+[588.300s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.resolution · secondes=25.0
+[592.168s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=30.0
+[593.306s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.resolution · secondes=30.0
+[597.172s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=35.0
+[598.312s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.resolution · secondes=35.0
+[602.177s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=40.0
+[603.315s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.resolution · secondes=40.1
+[607.183s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=45.0
+[608.329s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.resolution · secondes=45.1
+[612.188s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=50.1
+[613.333s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.resolution · secondes=50.1
+[617.193s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=55.1
+[618.345s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.resolution · secondes=55.1
+[622.209s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=60.1
+[623.353s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.resolution · secondes=60.1
+[627.217s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=65.1
+[628.356s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.resolution · secondes=65.1
+[632.230s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=70.1
+[633.369s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.resolution · secondes=70.1
+[637.236s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=75.1
+[638.382s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.resolution · secondes=75.1
+[642.241s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=80.1
+[643.386s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.resolution · secondes=80.1
+[644.630s] cli.texte                · contenu={ "qui": "robert-quince", "activation": { "tache": {"id": "10022", "quoi": "🧱 Écrire ce que tient le poste du nœud", "creee": false}, "issue": "avance", "activites": [ { "id": "ac…
+[644.646s] cli.rate_limit_event     · sous_type=None
+[646.626s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[646.792s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[646.795s] cli.resultat             · erreur=False · duree_ms=81942 · cout=0.216096 · entree=2 · sortie=6751 · caracteres=13506
+[647.247s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=85.1
+[648.330s] rapport.extraction       · acteur=robert-quince · essai=1
+[648.332s] rapport.refuse           · acteur=robert-quince · essai=1 · erreur=activite 1 : references hors dossier : mandat:robert-quince:129-3-19, objet:cahier-de-quince, pers:wend, poste:noeud-porte-dragon
+[648.333s] narrateur.corrige        · acteur=robert-quince · essai=2 · caracteres=969
+[648.334s] cli.depart               · acteur=narrateur-local:porte-dragon · session=bcd883a0-797e-4fe1-aec1-40c81bf1b219 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[650.765s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[652.253s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=90.1
+[653.056s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[653.349s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.correction · secondes=5.0
+[654.408s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[656.522s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[657.254s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=95.1
+[657.934s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[658.357s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.correction · secondes=10.0
+[659.351s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[660.758s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[662.184s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[662.194s] cli.assistant            · bloc=thinking
+[662.255s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=100.1
+[663.360s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.correction · secondes=15.0
+[667.235s] cli.texte                · contenu=```json { "qui": "rulf-corne", "activation": { "tache": {"id": "35023", "quoi": "🐎 Chronométrer une traversée chargée", "creee": false}, "issue": "avance", "activites": [ { "id": …
+[667.244s] cli.rate_limit_event     · sous_type=None
+[667.295s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=105.2
+[668.364s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.correction · secondes=20.0
+[669.116s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[669.220s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[669.223s] cli.resultat             · erreur=False · duree_ms=105158 · cout=0.2792055 · entree=2 · sortie=9475 · caracteres=22653
+[670.656s] rapport.extraction       · acteur=rulf-corne · essai=1
+[670.660s] rapport.refuse           · acteur=rulf-corne · essai=1 · erreur=activite 1 : references hors dossier : garçon du patron des paniers
+[670.661s] narrateur.corrige        · acteur=rulf-corne · essai=2 · caracteres=907
+[670.662s] cli.depart               · acteur=narrateur-local:quai · session=c4ed0727-e83d-49a4-842a-adfefbd83a23 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[673.369s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.correction · secondes=25.0
+[673.440s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[675.723s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=5.0
+[676.528s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[677.943s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[678.375s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.correction · secondes=30.0
+[679.384s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[680.736s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=10.0
+[680.764s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[682.178s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[683.380s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.correction · secondes=35.0
+[683.590s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[685.005s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[685.741s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=15.0
+[687.183s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[688.386s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.correction · secondes=40.0
+[688.598s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[690.007s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[690.746s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=20.0
+[691.420s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[692.889s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[692.895s] cli.assistant            · bloc=thinking
+[693.391s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.correction · secondes=45.0
+[695.749s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=25.0
+[698.396s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.correction · secondes=50.0
+[700.750s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=30.0
+[703.407s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.correction · secondes=55.1
+[705.755s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=35.0
+[708.414s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.correction · secondes=60.1
+[710.761s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=40.0
+[710.806s] cli.texte                · contenu={ "qui": "robert-quince", "activation": { "tache": {"id": "10022", "quoi": "🧱 Écrire ce que tient le poste du nœud", "creee": false}, "issue": "avance", "activites": [ { "id": "ac…
+[710.814s] cli.rate_limit_event     · sous_type=None
+[712.819s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[713.110s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[713.112s] cli.resultat             · erreur=False · duree_ms=62671 · cout=0.2390385 · entree=2 · sortie=6234 · caracteres=13561
+[713.417s] cli.heartbeat            · acteur=narrateur-local:porte-dragon · phase=narrateur.correction · secondes=65.1
+[714.479s] rapport.extraction       · acteur=robert-quince · essai=2
+[714.555s] mutations.ecrites        · nombre=2 · tables=intentions
+[714.558s] rapport.mutations_ecartees · acteur=robert-quince · nombre=3
+[714.586s] rapport.valide           · acteur=robert-quince · depense=38.0 · activites=4 · corrections=1
+[714.590s] rapport.depose           · acteur=robert-quince · fichier=etat/staging/activations/20260810-075717-702578-robert-quince.json
+[715.764s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=45.0
+[720.775s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=50.1
+[725.778s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=55.1
+[730.786s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=60.1
+[735.789s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=65.1
+[740.802s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=70.1
+[745.806s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=75.1
+[750.809s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=80.1
+[755.815s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=85.1
+[760.821s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=90.1
+[765.829s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=95.1
+[770.832s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=100.1
+[775.570s] cli.texte                · contenu=```json { "qui": "rulf-corne", "activation": { "tache": {"id": "35023", "quoi": "🐎 Chronométrer une traversée chargée", "creee": false}, "issue": "avance", "activites": [ { "id": …
+[775.577s] cli.rate_limit_event     · sous_type=None
+[775.843s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=105.1
+[777.653s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[777.742s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[777.745s] cli.resultat             · erreur=False · duree_ms=104529 · cout=0.37304200000000004 · entree=2 · sortie=10456 · caracteres=21845
+[779.211s] rapport.extraction       · acteur=rulf-corne · essai=2
+[779.213s] rapport.refuse           · acteur=rulf-corne · essai=2 · erreur=activite 4 : references hors dossier : vieux-pecheur
+[779.214s] narrateur.corrige        · acteur=rulf-corne · essai=3 · caracteres=892
+[779.215s] cli.depart               · acteur=narrateur-local:quai · session=c4ed0727-e83d-49a4-842a-adfefbd83a23 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[782.047s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[784.230s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=5.0
+[784.459s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[785.838s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[787.258s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[788.010s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[788.020s] cli.assistant            · bloc=thinking
+[789.235s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=10.0
+[794.247s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=15.0
+[799.253s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=20.0
+[804.258s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=25.0
+[809.263s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=30.0
+[814.269s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=35.0
+[819.274s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=40.0
+[824.279s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=45.1
+[829.285s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=50.1
+[834.290s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=55.1
+[839.295s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=60.1
+[844.310s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=65.1
+[849.313s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=70.1
+[854.318s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=75.1
+[859.331s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=80.1
+[864.335s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=85.1
+[869.341s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=90.1
+[872.717s] cli.texte                · contenu=```json { "qui": "rulf-corne", "activation": { "tache": {"id": "35023", "quoi": "🐎 Chronométrer une traversée chargée", "creee": false}, "issue": "avance", "activites": [ { "id": …
+[872.737s] cli.rate_limit_event     · sous_type=None
+[874.346s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=95.1
+[874.964s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[875.061s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[875.064s] cli.resultat             · erreur=False · duree_ms=93360 · cout=0.365737 · entree=2 · sortie=9575 · caracteres=22331
+[876.535s] rapport.extraction       · acteur=rulf-corne · essai=3
+[876.538s] rapport.refuse           · acteur=rulf-corne · essai=3 · erreur=duree physique invalide : 2040 s (minimum=60, plafond=1440)
+[876.598s] activation.annulee       · acteur=rulf-corne · raison=RuntimeError · erreur=duree physique invalide : 2040 s (minimum=60, plafond=1440)
+[876.599s] acteur.energie.debitee   · acteur=robert-quince · avant=38.146 · energie=38.0 · duree_monde_s=1140 · apres=0.146
+[876.601s] continuite.enregistree   · acteur=robert-quince · tache=10022 · issue=avance · suspendue=False · fin_s=149220.0 · reprendre_a=152820.0 · cibles=3
+[876.603s] cycle.termine            · acteur=robert-quince · rapport=etat/staging/activations/20260810-075717-702578-robert-quince.json
+[876.625s] cycle.lot.termine        · reussies=1 · annulees=1
+[876.625s] cycle.depart            
+[876.626s] horloge.lecture         
+[876.628s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=149100.0
+[876.630s] graphe.lecture          
+[876.666s] graphe.charge            · noeuds=1849 · aretes=4857
+[876.667s] diffusion.importance    
+[876.838s] importance.clusters      · lieux=17 · motifs_max=79 · actifs=1535
+[876.842s] energie.polarites_horloge · moyenne_minute=67000600.75 · ecart_max_minutes=1866.25 · emetteurs=1 · absorbeurs=106 · neutres=0
+[876.844s] energie.transfert_horloge · transfere=46.917 · propositions=1090 · acteurs=107
+[876.845s] energie.graphe           · dt_s=1020.0 · integration=0.905268 · noeuds=1849 · energises=1048 · total=4820.335 · pic=pers:rhaenyra · maximum=100.0
+[876.846s] diffusion.calendrier    
+[876.855s] calendrier.etape_sans_horloge · acteur=gerardys · etapes_en_cours=3 · avec_horloge=2
+[876.856s] calendrier.etape_sans_horloge · acteur=daemon · etapes_en_cours=2 · avec_horloge=1
+[876.856s] calendrier.etape_sans_horloge · acteur=jacaerys · etapes_en_cours=4 · avec_horloge=3
+[876.856s] calendrier.etape_sans_horloge · acteur=rhaenys · etapes_en_cours=2 · avec_horloge=1
+[876.857s] calendrier.etape_sans_horloge · acteur=lucerys · etapes_en_cours=4 · avec_horloge=2
+[876.857s] calendrier.etape_sans_horloge · acteur=criston · etapes_en_cours=2 · avec_horloge=1
+[876.858s] calendrier.etape_sans_horloge · acteur=alicent · etapes_en_cours=3 · avec_horloge=2
+[876.858s] calendrier.etape_sans_horloge · acteur=aegon-ii · etapes_en_cours=2 · avec_horloge=1
+[876.859s] calendrier.etape_sans_horloge · acteur=helaena · etapes_en_cours=2 · avec_horloge=1
+[876.860s] calendrier.etape_sans_horloge · acteur=borros-baratheon · etapes_en_cours=2 · avec_horloge=1
+[876.861s] calendrier.etape_sans_horloge · acteur=jeyne-arryn · etapes_en_cours=2 · avec_horloge=1
+[876.862s] calendrier.etape_sans_horloge · acteur=cregan-stark · etapes_en_cours=2 · avec_horloge=1
+[876.863s] calendrier.etape_sans_horloge · acteur=ormund-hightower · etapes_en_cours=2 · avec_horloge=1
+[876.864s] calendrier.etape_sans_horloge · acteur=wend · etapes_en_cours=1 · avec_horloge=0
+[876.866s] calendrier.etape_sans_horloge · acteur=septa-marlow · etapes_en_cours=1 · avec_horloge=0
+[876.867s] calendrier.etape_sans_horloge · acteur=alarra-rosby · etapes_en_cours=2 · avec_horloge=1
+[876.868s] calendrier.etape_sans_horloge · acteur=nel-bec · etapes_en_cours=1 · avec_horloge=0
+[876.869s] calendrier.etape_sans_horloge · acteur=waltyr-poix · etapes_en_cours=1 · avec_horloge=0
+[876.870s] calendrier.etape_sans_horloge · acteur=lord-rosby · etapes_en_cours=3 · avec_horloge=2
+[876.871s] calendrier.etape_sans_horloge · acteur=maris-baratheon · etapes_en_cours=2 · avec_horloge=1
+[876.873s] energie.calculee         · acteurs=33 · maximum=99.963
+[876.875s] selection.rejetee        · acteur=gerardys · energie=99.963 · raison=repos_acteur · reprendre_a=149580.0
+[876.876s] selection.rejetee        · acteur=otto · energie=50.154 · raison=repos_acteur · reprendre_a=149400.0
+[876.880s] selection.elue           · acteur=rulf-corne · energie=48.75 · tache=35023 · energie_tache=5.525 · budget_energie=48 · budget_s=1440 · flux_horloge=absorbe · ecart_horloge_min=-618.75 · horloge_pj=rhaenyra
+[876.881s] acteur.choisi            · acteur=rulf-corne · energie=48.75 · importance=0.479702 · budget=48
+[876.881s] tache.choisie            · id=35023 · distance=1 · creee=False · energie=5.525
+ACTIVATION  rulf-corne  energie 48.75 · budget 48 (24 min)  importance 0.480
+  tache 35023 · distance 1 · 🐎 Chronométrer une traversée chargée
+  front aurore-inchauspe · +149100.0s depuis rhaenyra
+[876.882s] rotation.acteurs_reserves · tour=21 · acteurs=['robert-quince', 'rulf-corne']
+[876.883s] selection.lot            · nombre=1 · parallele=1
+[876.884s] energie.reservee         · acteur=rulf-corne · valeur=48.75 · plafond=48
+[876.914s] appel.dossier            · acteur=rulf-corne · tache=35023
+[876.994s] appel.systeme_narrateur  · acteur=rulf-corne · caracteres=4765
+[876.995s] appel.systeme_pnj        · acteur=rulf-corne · caracteres=2146
+[876.996s] appel.ouverture          · acteur=rulf-corne · caracteres=41221 · budget_energie=48 · budget_secondes=1440
+[877.001s] cli.depart               · acteur=narrateur-local:quai · session=f92b194a-5801-463c-a033-1961d1f517ef · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[879.642s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[881.352s] cli.rate_limit_event     · sous_type=None
+[882.927s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.ouverture · secondes=5.0
+[887.940s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.ouverture · secondes=10.0
+[888.795s] cli.texte                · contenu={ "appel_pnj": { "qui": "rulf-corne", "message": "Rulf, le jour tombe sur le quai et ton feuillet est parti au château sans réponse encore. La barque des paniers est amarrée, rete…
+[890.964s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[891.074s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[891.075s] cli.resultat             · erreur=False · duree_ms=11784 · cout=0.25249 · entree=2 · sortie=315 · caracteres=701
+[892.635s] narrateur.reveille_pnj   · acteur=rulf-corne · caracteres=634
+[892.816s] cli.depart               · acteur=rulf-corne · session=1d0a5f1b-7e09-451c-aa09-8145a0d425b1 · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[895.253s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[895.559s] cli.rate_limit_event     · sous_type=None
+[898.519s] cli.heartbeat            · acteur=rulf-corne · phase=pnj.tentative · secondes=5.0
+[903.524s] cli.heartbeat            · acteur=rulf-corne · phase=pnj.tentative · secondes=10.0
+[908.530s] cli.heartbeat            · acteur=rulf-corne · phase=pnj.tentative · secondes=15.0
+[912.805s] cli.texte                · contenu={ "tentative": { "verbe": "fermer", "quoi": "Rulf profite du dernier quart d'heure de jour pour clore la ligne restée en blanc : il fait remonter les paniers à la corne du quai, l…
+[913.535s] cli.heartbeat            · acteur=rulf-corne · phase=pnj.tentative · secondes=20.0
+[915.110s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[915.117s] cli.resultat             · erreur=False · duree_ms=20184 · cout=0.1515 · entree=2 · sortie=963 · caracteres=2283
+[916.396s] pnj.tentative_valide     · acteur=rulf-corne · verbe=fermer · caracteres=1802
+[916.396s] narrateur.arbitrage      · acteur=rulf-corne · caracteres=7127 · passage=1
+[916.397s] cli.depart               · acteur=narrateur-local:quai · session=f92b194a-5801-463c-a033-1961d1f517ef · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[918.847s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[922.223s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[922.285s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=5.0
+[924.456s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[926.073s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[927.294s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=10.0
+[927.984s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[929.402s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[930.817s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[932.224s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[932.300s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=15.0
+[933.639s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[935.052s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[936.478s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[936.491s] cli.assistant            · bloc=thinking
+[937.308s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=20.1
+[942.311s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=25.1
+[947.316s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=30.1
+[952.321s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=35.1
+[957.326s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=40.1
+[962.332s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=45.1
+[967.344s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=50.1
+[972.350s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=55.1
+[977.355s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=60.1
+[982.369s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=65.1
+[987.372s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=70.1
+[992.378s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=75.1
+[997.384s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=80.1
+[1002.396s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=85.1
+[1007.400s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=90.1
+[1010.903s] cli.texte                · contenu={ "qui": "rulf-corne", "activation": { "tache": {"id": "35023", "quoi": "🐎 Chronométrer une traversée chargée", "creee": false}, "issue": "avance", "activites": [ { "id": "act:rul…
+[1010.958s] cli.rate_limit_event     · sous_type=None
+[1012.027s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[1012.146s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[1012.149s] cli.resultat             · erreur=False · duree_ms=93636 · cout=0.23686700000000002 · entree=2 · sortie=7668 · caracteres=15988
+[1012.406s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.resolution · secondes=95.2
+[1013.636s] rapport.extraction       · acteur=rulf-corne · essai=1
+[1013.638s] rapport.refuse           · acteur=rulf-corne · essai=1 · erreur=activite 1 : references hors dossier : doss-marran
+[1013.638s] narrateur.corrige        · acteur=rulf-corne · essai=2 · caracteres=890
+[1013.639s] cli.depart               · acteur=narrateur-local:quai · session=f92b194a-5801-463c-a033-1961d1f517ef · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[1016.526s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[1018.661s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=5.0
+[1023.097s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[1023.666s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=10.0
+[1024.593s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[1026.035s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[1026.038s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[1026.051s] cli.assistant            · bloc=thinking
+[1028.668s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=15.0
+[1033.669s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=20.0
+[1038.675s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=25.0
+[1043.681s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=30.0
+[1048.686s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=35.0
+[1053.688s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=40.0
+[1058.703s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=45.0
+[1063.710s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=50.1
+[1068.714s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=55.1
+[1073.720s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=60.1
+[1078.725s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=65.1
+[1083.725s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=70.1
+[1088.288s] cli.texte                · contenu={ "qui": "rulf-corne", "activation": { "tache": {"id": "35023", "quoi": "🐎 Chronométrer une traversée chargée", "creee": false}, "issue": "avance", "activites": [ { "id": "act:rul…
+[1088.297s] cli.rate_limit_event     · sous_type=None
+[1088.729s] cli.heartbeat            · acteur=narrateur-local:quai · phase=narrateur.correction · secondes=75.1
+[1090.381s] cli.systeme              · sous_type=post_turn_summary · modele=None · outils=0
+[1090.500s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[1090.502s] cli.resultat             · erreur=False · duree_ms=74187 · cout=0.26548550000000004 · entree=2 · sortie=6873 · caracteres=15709
+[1091.847s] rapport.extraction       · acteur=rulf-corne · essai=2
+[1091.933s] mutations.ecrites        · nombre=3 · tables=intentions
+[1091.935s] rapport.mutations_ecartees · acteur=rulf-corne · nombre=2
+[1091.957s] rapport.valide           · acteur=rulf-corne · depense=48.0 · activites=4 · corrections=1
+[1091.960s] rapport.depose           · acteur=rulf-corne · fichier=etat/staging/activations/20260810-080335-073134-rulf-corne.json
+[1091.961s] acteur.energie.debitee   · acteur=rulf-corne · avant=48.75 · energie=48.0 · duree_monde_s=1440 · apres=0.75
+[1091.962s] continuite.enregistree   · acteur=rulf-corne · tache=35023 · issue=avance · suspendue=False · fin_s=150540.0 · reprendre_a=154140.0 · cibles=9
+[1091.962s] cycle.termine            · acteur=rulf-corne · rapport=etat/staging/activations/20260810-080335-073134-rulf-corne.json
+[1091.973s] cycle.lot.termine        · reussies=1 · annulees=0

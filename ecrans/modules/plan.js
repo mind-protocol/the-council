@@ -21,6 +21,7 @@ window.Plan = (() => {
   let salleId = null;       // la salle courante, devinée du bandeau
   let lieuId = null;        // le château où l'on est, même sans plan dessiné
   let vue = null;           // "chateau" | "royaume"
+  let vueActive = null;     // celle qu'on a réellement sous les yeux
 
   const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
   // sans accents ni casse : « Néra » et « nera » désignent la même chose
@@ -33,13 +34,21 @@ window.Plan = (() => {
   // Règle : le PREMIER motif rencontré gagne, pas le plus long — un en-tête
   // nomme la salle puis la situe (« L'archive, trois étages sous la salle du
   // levant » est l'archive, pas la salle du levant). À égalité, le plus long.
+  // La salle que /presence déclare — le repli quand l'en-tête ne dit rien du
+  // château où l'on est. C'est le cas d'un siège qui regarde la partie sans y
+  // jouer : le bandeau porte le lieu du dernier item du fil, qui peut être
+  // n'importe où, tandis que lui se tient à un poste fixe. Un joueur ordinaire
+  // n'y touche pas : son en-tête gagne toujours, il est plus frais.
+  let salleDite = null;
+
   function deviner() {
     const bandeau = document.getElementById("lieu");
     if (!plan || !bandeau) return null;
+    const connue = (id) => (id && plan.salles.some((s) => s.id === id)) ? id : null;
     const dit = bandeau.dataset.salle;
-    if (dit && plan.salles.some((s) => s.id === dit)) return dit;
+    if (connue(dit)) return dit;
     const t = nu(bandeau.textContent);
-    if (!t || t === "—") return null;
+    if (!t || t === "—") return connue(salleDite);
     let trouve = null, ou = Infinity, taille = 0;
     plan.salles.forEach((s) => {
       (s.motifs || []).concat([s.nom]).forEach((m) => {
@@ -49,7 +58,7 @@ window.Plan = (() => {
         if (i < ou || (i === ou && n.length > taille)) { ou = i; taille = n.length; trouve = s.id; }
       });
     });
-    return trouve;
+    return trouve || connue(salleDite);
   }
 
   // ---- les ornements -------------------------------------------------------
@@ -358,14 +367,29 @@ window.Plan = (() => {
     return Math.max(4, Math.min(6.6, large / Math.max(1.5, Math.sqrt(n) * 1.35)));
   }
 
+  // Les demi-axes de la pièce, pour que la foule reste dedans. On rentre un peu
+  // (0.86) : une tache posée pile sur le mur se lit comme appartenant au
+  // couloir d'à côté. Une forme libre n'en donne pas — on ne devine pas les
+  // murs d'un tracé quelconque, et `ranger` s'en passe très bien.
+  function borneSalle(s) {
+    const f = s.forme || {};
+    if (f.c) return [f.c[2] * .86, f.c[2] * .86];
+    if (f.r) return [f.r[2] * .43, f.r[3] * .43];
+    return null;
+  }
+
   function gensDuPlan() {
     if (!plan || !window.Taches) return "";
     const parSalle = new Map();
+    const enMarche = [];
     const vus = new Set();
     const poser = (id, p) => {
       if (vus.has(id) || !p.salle) return;
       if (!plan.salles.some((s) => s.id === p.salle)) return;   // un autre château
       vus.add(id);
+      // Celui qui marche n'est dans aucune pièce : il ne rejoint pas la
+      // couronne, il prend son tracé. Le serveur ne l'envoie qu'à la régie.
+      if (p.marche) { enMarche.push(Object.assign({ id }, p)); return; }
       if (!parSalle.has(p.salle)) parSalle.set(p.salle, []);
       parSalle.get(p.salle).push(Object.assign({ id }, p));
     };
@@ -396,7 +420,9 @@ window.Plan = (() => {
       Taches.distinguer(gens);      // deux Targaryen ne font pas deux fois RT
       const [cx, cy] = centreSalle(salle);
       const r = rayonSalle(salle, gens.length);
-      const c = Taches.couronne(gens.length, r, sid);
+      // on passe les GENS et non leur nombre : depuis que la criticité fait
+      // varier les rayons, un placement qui ne connaît que `n` empile les gros
+      const c = Taches.ranger(gens, r, sid, { borne: borneSalle(salle) });
       s += '<g class="plan-gens" data-salle="' + esc(sid) + '">' + gens.map((g, i) =>
         '<g transform="translate(' + (cx + c[i][0]).toFixed(1) + "," +
         (cy + c[i][1]).toFixed(1) + ')">' +
@@ -405,7 +431,61 @@ window.Plan = (() => {
                         ou_dit: salle.nom, joueur: g.joueur },
           r, .9, g.ici ? "ici" : "") + "</g>").join("") + "</g>";
     });
-    return s;
+    return marcheDuPlan(enMarche) + s;
+  }
+
+  // ---- ceux qui traversent -------------------------------------------------
+  // Un plan qui ne montre que les pièces montre un château vide de sa moitié :
+  // à toute heure, des gens sont dans l'escalier. `/presence` rend leur route
+  // entière — la suite des salles franchies —, le rang de celle qu'ils viennent
+  // de passer et la fraction du pas en cours. On les pose ENTRE deux portes.
+  //
+  // Le trait est un raccourci et s'assume comme tel : `chemins.json` dit un
+  // coût en minutes, pas une géométrie. Deux salles voisines dans le graphe
+  // peuvent être loin l'une de l'autre sur le dessin, et la corde traverse ce
+  // qu'elle traverse. C'est un croquis de trajet, pas un relevé de couloirs.
+  function traceMarche(m) {
+    const ou = (id) => {
+      const s = id && plan.salles.find((x) => x.id === id);
+      return s ? centreSalle(s) : null;
+    };
+    const route = (m.route || []).map(ou);
+    const i = Math.max(0, Math.min(route.length - 2, m.franchi || 0));
+    const a = route[i], b = route[i + 1];
+    // Un pas dont on ne sait pas dessiner les deux bouts : on ne devine pas où
+    // est l'homme, on ne le montre pas. Une salle du graphe peut n'avoir jamais
+    // été dessinée dans plans.js — c'est permis, et ça ne se comble pas.
+    if (!a || !b) return null;
+    const f = Math.max(0, Math.min(1, m.pas || 0));
+    const ici = [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f];
+    const d = (pts) => pts.length < 2 ? "" :
+      "M" + pts.map((p) => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" L");
+    const net = (pts) => pts.filter(Boolean);
+    return { ici,
+      fait: d(net(route.slice(0, i + 1)).concat([ici])),
+      reste: d([ici].concat(net(route.slice(i + 1)))) };
+  }
+
+  function marcheDuPlan(gens) {
+    if (!gens.length) return "";
+    Taches.distinguer(gens);          // les mêmes initiales que dans les pièces
+    let traits = "", marques = "";
+    gens.forEach((g) => {
+      const t = traceMarche(g.marche || {});
+      if (!t) return;
+      const vers = plan.salles.find((x) => x.id === g.marche.vers);
+      const dit = g.nom + " — vers " + ((vers && vers.nom) || g.marche.vers || "?") +
+        (g.marche.arrive_dans ? ", dans " + Math.round(g.marche.arrive_dans) + " min" : "");
+      traits += '<g class="plan-marche" data-qui="' + esc(g.id) + '"><title>' + esc(dit) +
+        "</title>" + (t.fait ? '<path class="marche-fait" d="' + t.fait + '"/>' : "") +
+        (t.reste ? '<path class="marche-reste" d="' + t.reste + '"/>' : "") + "</g>";
+      marques += '<g transform="translate(' + t.ici[0].toFixed(1) + "," +
+        t.ici[1].toFixed(1) + ')">' +
+        Taches.marque({ id: g.id, nom: g.nom, initiales: g.initiales,
+                        titre: g.titre || "", ou_dit: dit, joueur: !!g.joueur },
+          4.6, .9, "en-marche") + "</g>";
+    });
+    return traits + '<g class="plan-gens plan-gens-marche">' + marques + "</g>";
   }
 
   function chargerPlaces() {
@@ -414,6 +494,10 @@ window.Plan = (() => {
       const moi = (window.Moi && window.Moi.personnage_id) || null;
       places = d.places;
       if (moi && places[moi]) places[moi].joueur = true;
+      salleDite = d.salle || null;
+      const avant = salleId;
+      salleId = deviner();
+      if (salleId !== avant) bascule();
       dessiner();
       const ov = document.getElementById("plan-large");
       if (ov && !ov.hidden) ouvrir();
@@ -434,7 +518,7 @@ window.Plan = (() => {
   }
 
   function svgPlan(grand, v) {
-    let s = '<svg viewBox="' + plan.viewBox + '" xmlns="http://www.w3.org/2000/svg"' +
+    let s = '<svg viewBox="' + (v.vb || plan.viewBox) + '" xmlns="http://www.w3.org/2000/svg"' +
       ' class="plan ' + (grand ? "plan-grand" : "plan-petit") + '"' +
       ' style="font-size:' + v.police.toFixed(2) + 'px">';
 
@@ -472,22 +556,82 @@ window.Plan = (() => {
     return s + "</svg>";
   }
 
+  // ---- se pencher sur le plan ---------------------------------------------
+  // Le château se prend à la molette et se pousse du doigt, comme la table
+  // peinte : même module (loupe.js), même geste, même double-clic pour reposer.
+  // Ce qui bouge est le CADRAGE, pas une image grossie — les noms et les signes
+  // gardent leur taille apparente (voir CIBLE) et ceux que la vignette n'avait
+  // pas la place de porter reviennent d'eux-mêmes dès qu'on approche.
+  //
+  // Le cadrage est tenu par surface : la vignette et le plan déplié ne
+  // s'approchent pas ensemble, et chacun garde le sien tant que la scène ne
+  // change pas de château.
+  const vbDe = (s) => String(s).trim().split(/[\s,]+/).map(Number);
+  const cadres = { petit: null, grand: null };   // null = au repos
+  const boites = { petit: null, grand: null };   // [largeur, hauteur] px, mesurées
+
+  function bornes() {
+    const [x, y, l, h] = vbDe(plan.viewBox);
+    const m = Math.max(l, h) * .05;              // un doigt de marge autour des murs
+    return [x - m, y - m, l + m * 2, h + m * 2];
+  }
+
   // Deux passes : on trace d'après la place offerte, on mesure ce qui a été
   // rendu (la carte peut être bornée par la hauteur, pas par la largeur), et
   // on retrace si l'échelle devinée était fausse. Jamais de troisième passe.
-  function poser(hote, grand, apres) {
-    const vbL = parseFloat(plan.viewBox.split(/\s+/)[2]) || 420;
+  // `leger` — un redessin de loupe : la place offerte n'a pas bougé d'un pixel,
+  // on réutilise la mesure au lieu de forcer deux calculs de page par frame.
+  function poser(hote, grand, apres, leger) {
+    const cle = grand ? "grand" : "petit";
+    const total = vbDe(plan.viewBox);
+    const vbL = total[2] || 420;
     const cible = grand ? CIBLE.grand : CIBLE.petit;
-    const tracer = (large) => {
-      const ech = Math.max(large, 40) / vbL;
-      hote.innerHTML = svgPlan(grand, { police: cible / ech, tous: grand || large >= SEUIL_TOUS }) +
+    // Le dessin remplit sa boîte et s'y ajuste (xMidYMid meet) : l'échelle
+    // réelle est celle du côté le plus serré, jamais la largeur seule. Un
+    // cadrage étroit et haut — ce que donne la loupe dès qu'on approche — serait
+    // sinon tracé avec des noms deux fois trop petits.
+    const tracer = (boite) => {
+      const vb = cadres[cle] || total;
+      const b = [Math.max(boite[0], 40), Math.max(boite[1], 40)];
+      const ech = Math.min(b[0] / vb[2], b[1] / vb[3]);
+      // La densité des noms se mesure sur la taille APPARENTE du plan entier :
+      // approcher de moitié vaut une carte deux fois plus large.
+      const apparente = ech * vbL;
+      hote.innerHTML = svgPlan(grand, { vb: vb.join(" "), police: cible / ech,
+                                        tous: grand || apparente >= SEUIL_TOUS }) +
         (grand ? "" : '<button id="plan-deplier">Déplier le plan…</button>');
-      return hote.querySelector("svg").getBoundingClientRect().width;
+      const r = hote.querySelector("svg").getBoundingClientRect();
+      return [r.width, r.height];
     };
-    const devine = hote.clientWidth || vbL;
-    const vrai = tracer(devine);
-    if (vrai && Math.abs(vrai - devine) > 3) tracer(vrai);
+    const loin = (a, b) => Math.abs(a[0] - b[0]) > 3 || Math.abs(a[1] - b[1]) > 3;
+    if (leger && boites[cle]) tracer(boites[cle]);
+    else {
+      const devine = boites[cle] ||
+        [hote.clientWidth || vbL, hote.clientHeight || total[3]];
+      const vrai = tracer(devine);
+      if (vrai[0] && loin(vrai, devine)) tracer(vrai);
+      if (vrai[0]) boites[cle] = vrai;
+    }
     brancher(hote, apres);
+    pencher(hote, grand, apres);
+  }
+
+  // La loupe s'accroche à l'HÔTE une seule fois : le dessin, lui, est remplacé
+  // soixante fois par seconde pendant un glissé.
+  function pencher(hote, grand, apres) {
+    if (!window.Loupe || hote.dataset.loupe) return;
+    hote.dataset.loupe = "1";
+    const cle = grand ? "grand" : "petit";
+    const refaire = () => {
+      if (grand) poser(hote, true, apres, true);
+      else dessiner(true);
+    };
+    Loupe.brancher(hote, {
+      vue: () => (cadres[cle] || vbDe(plan.viewBox)).slice(),
+      bornes, min: 46,
+      poser: (vb) => { cadres[cle] = vb; refaire(); },
+      reposer: () => { cadres[cle] = null; refaire(); },
+    });
   }
 
   // Se rendre quelque part : la même ligne que si le joueur l'avait tapée dans
@@ -502,9 +646,14 @@ window.Plan = (() => {
   // la carte au lieu de mettre le personnage en marche : le geste est trop petit
   // et trop serré pour engager une traversée du château.
   function brancher(racine, apres) {
+    // Un glissé finit toujours sur quelque chose : sans ce garde-fou, pousser
+    // le plan du doigt enverrait le personnage traverser le château. Le second
+    // clic d'un double (celui qui repose le cadrage) ne compte pas non plus.
+    const geste = (e) => (window.Loupe && Loupe.aGlisse(racine)) || e.detail > 1;
     racine.querySelectorAll(".tache-gens").forEach((g) => {
       g.addEventListener("click", (e) => {
         e.stopPropagation();
+        if (geste(e)) return;
         if (window.Entites) Entites.penser(g.dataset.id, "personnage", g.dataset.nom);
         if (apres) apres();
       });
@@ -512,6 +661,7 @@ window.Plan = (() => {
     racine.querySelectorAll(".plan-salle").forEach((g) => {
       g.addEventListener("click", (e) => {
         e.stopPropagation();
+        if (geste(e)) return;
         const id = g.dataset.id, nom = g.dataset.nom;
         if (!apres) { ouvrir(); return; }
         // là où l'on est déjà, il n'y a rien à traverser : on y songe.
@@ -540,8 +690,11 @@ window.Plan = (() => {
       '<div id="plan-legende"><span class="leg leg-ici">Vous êtes ici</span>' +
       '<span class="leg-etage">Un autre étage : au sommet, ou sous la roche</span>' +
       '<span class="leg-orne">Le signe dit ce qu\'on y fait</span>' +
-      '<span class="leg-gens">Une tache, deux lettres : qui s\'y tient</span>' +
-      '<span class="leg-note">Toucher une salle du doigt, c\'est s\'y rendre</span></div></div>';
+      '<span class="leg-gens">Une tache, deux lettres : qui s\'y tient — ' +
+      'la couleur dit l\'office</span>' +
+      '<span class="leg-note">Toucher une salle du doigt, c\'est s\'y rendre</span>' +
+      '<span class="leg-manuel">Molette pour approcher, glissé pour déplacer, ' +
+      'double-clic pour reposer</span></div></div>';
     document.body.appendChild(ov);
     ov.addEventListener("click", (e) => { if (e.target === ov) fermer(); });
     ov.querySelector("#plan-fermer").addEventListener("click", fermer);
@@ -568,22 +721,29 @@ window.Plan = (() => {
   }
 
   // ---- la vignette et la bascule des deux échelles -------------------------
-  let largeurRendue = 0, essais = 0;
+  let boiteRendue = [0, 0], essais = 0;
 
-  function dessiner() {
+  function dessiner(leger) {
     const hote = document.getElementById("plan");
     if (!hote) return;
-    if (!plan) { hote.innerHTML = ""; largeurRendue = 0; return; }
-    poser(hote, false, null);
+    if (!plan) { hote.innerHTML = ""; boiteRendue = [0, 0]; return; }
+    poser(hote, false, null, leger);
     const svg = hote.querySelector("svg");
-    largeurRendue = svg.getBoundingClientRect().width;
-    // tracé pendant que le décor n'a pas encore de largeur (chargement) : on ne
-    // garde pas une échelle fausse, on repasse. Trois essais et l'on renonce —
-    // si le plan reste sans largeur, c'est qu'il est masqué, et l'observateur
-    // de taille rappellera dès qu'il reparaîtra.
-    if (!largeurRendue && essais < 3) { essais++; setTimeout(dessiner, 60); }
-    else if (largeurRendue) essais = 0;
-    svg.addEventListener("click", ouvrir);
+    if (!leger) {
+      const r = svg.getBoundingClientRect();
+      boiteRendue = [r.width, r.height];
+      // tracé pendant que le décor n'a pas encore de place (chargement) : on ne
+      // garde pas une échelle fausse, on repasse. Trois essais et l'on renonce —
+      // si le plan reste sans largeur, c'est qu'il est masqué, et l'observateur
+      // de taille rappellera dès qu'il reparaîtra.
+      if (!boiteRendue[0] && essais < 3) { essais++; setTimeout(dessiner, 60); }
+      else if (boiteRendue[0]) essais = 0;
+    }
+    svg.addEventListener("click", (e) => {
+      if (window.Loupe && Loupe.aGlisse(hote)) return;
+      if (e.detail > 1) return;      // le double-clic repose le cadrage
+      ouvrir();
+    });
     hote.querySelector("#plan-deplier").addEventListener("click", (e) => {
       e.stopPropagation();
       ouvrir();
@@ -594,13 +754,18 @@ window.Plan = (() => {
   // c'est ce qui garde le corps du texte à la même taille apparente et lui fait
   // rendre les noms qu'elle a désormais la place de porter. Retracer change la
   // hauteur du décor, donc l'appel peut revenir en écho : on ne repart que si la
-  // largeur a vraiment bougé.
+  // place a vraiment bougé. La HAUTEUR compte autant que la largeur depuis que
+  // le dessin remplit sa boîte : c'est elle qui borne l'échelle dès qu'on a
+  // approché à la loupe.
   function verifier() {
     const hote = document.getElementById("plan");
     if (!plan || !hote || hote.classList.contains("vue-off")) return;
     const svg = hote.querySelector("svg");
-    const l = svg ? svg.getBoundingClientRect().width : 0;
-    if (l && Math.abs(l - largeurRendue) > 3) dessiner();
+    if (!svg) return;
+    const r = svg.getBoundingClientRect();
+    if (!r.width) return;
+    if (Math.abs(r.width - boiteRendue[0]) > 3 ||
+        Math.abs(r.height - boiteRendue[1]) > 3) dessiner();
   }
 
   function surveiller() {
@@ -654,6 +819,12 @@ window.Plan = (() => {
     const dispo = offertes();
     let choisie = dispo.find((e) => e.id === vue) || dispo.find((e) => e.id === "royaume") || dispo[0];
     if (!choisie) return;
+    // L'échelle DEMANDÉE et l'échelle MONTRÉE sont deux choses : on peut avoir
+    // demandé les livres avant que l'étagère ne soit rentrée, et voir le royaume
+    // en attendant. La nav lit celle qu'on a sous les yeux — c'est elle qui est
+    // un endroit —, et l'échelle demandée reste en attente d'être offerte.
+    const change = vueActive !== choisie.id;
+    vueActive = choisie.id;
     // Deux échelles peuvent PARTAGER un hôte — la ville et le château en volume
     // sont le même monde vu de deux hauteurs, et le bâtir deux fois coûterait
     // deux fois un demi-million de volumes. On masque donc par hôte et non par
@@ -668,7 +839,16 @@ window.Plan = (() => {
     document.querySelectorAll("#vue-bascule button").forEach((b) => {
       b.classList.toggle("actif", b.dataset.vue === choisie.id);
     });
+    // le « … » porte la braise de ce qu'il cache : sinon, une vue repliée
+    // active ne s'affiche nulle part dans la rangée et l'on se croit ailleurs.
+    const pli = document.getElementById("vue-repli");
+    if (pli) {
+      pli.querySelector("button[data-repli]")
+         .classList.toggle("actif", !!choisie.repli);
+    }
     if (choisie.reparu) choisie.reparu();
+    if (change) document.dispatchEvent(
+      new CustomEvent("vue-changee", { detail: choisie.id }));
   }
 
   // Quand un conseiller montre quelque chose sur la table peinte, il ne sert à
@@ -697,16 +877,28 @@ window.Plan = (() => {
       barre.addEventListener("click", (e) => {
         const b = e.target.closest("button");
         if (!b) return;
+        const pli = document.getElementById("vue-repli");
+        if (b.dataset.repli) { if (pli) pli.classList.toggle("ouvert"); return; }
+        if (pli) pli.classList.remove("ouvert");
         vue = b.dataset.vue;
         try { localStorage.setItem("conseil-vue", vue); } catch (err) {}
         appliquerVue();
       });
+      // un tiroir ouvert se referme dès qu'on regarde ailleurs.
+      document.addEventListener("click", (e) => {
+        const pli = document.getElementById("vue-repli");
+        if (pli && !pli.contains(e.target)) pli.classList.remove("ouvert");
+      });
     }
-    const veut = dispo.map((e) => e.id).join("|");
+    const veut = dispo.map((e) => e.id + (e.repli ? "~" : "")).join("|");
     if (barre.dataset.echelles === veut) return;
     barre.dataset.echelles = veut;
-    barre.innerHTML = dispo.map((e) =>
-      '<button data-vue="' + e.id + '">' + e.nom + "</button>").join("");
+    const bouton = (e) => '<button data-vue="' + e.id + '">' + e.nom + "</button>";
+    const rang = dispo.filter((e) => !e.repli), caches = dispo.filter((e) => e.repli);
+    barre.innerHTML = rang.map(bouton).join("") + (caches.length
+      ? '<span id="vue-repli"><button data-repli="1" title="Autres hauteurs">…</button>' +
+        '<span class="vue-tiroir">' + caches.map(bouton).join("") + "</span></span>"
+      : "");
     appliquerVue();
   }
 
@@ -792,6 +984,9 @@ window.Plan = (() => {
       lieuId = d.joueur_lieu_id || null;
       if (p === plan) return;
       plan = p || null;
+      // un autre château : le cadrage d'un plan ne veut rien dire sur un autre
+      cadres.petit = cadres.grand = null;
+      larges.petit = larges.grand = 0;
       salleId = deviner();
       bascule();
       offrirEntites();
@@ -828,6 +1023,14 @@ window.Plan = (() => {
       ["salle", "effacer", "replique", "geste", "table", "recit"]
         .forEach((t) => Bus.enregistrer(t, bientot));
     }
+    // La criticité rentre après le premier dessin — une seconde et demie de
+    // python la première fois. Sans ce redessin, les ronds gardent leur taille
+    // égale jusqu'au prochain `/presence`, quinze secondes plus tard.
+    document.addEventListener("taches-charges", () => {
+      dessiner();
+      const ov = document.getElementById("plan-large");
+      if (ov && !ov.hidden) ouvrir();
+    });
     surveiller();
     setInterval(charger, 60000);
     // la maisonnée bouge plus vite que la carte : on la relit souvent
@@ -843,5 +1046,8 @@ window.Plan = (() => {
   // où l'on est, pour qui a besoin de le savoir sans redeviner l'en-tête de
   // lieu : la salle courante, et le château qui la contient.
   return { ouvrir, fermer, relire, montrer, echelle, rebattre, viser,
-           salle: () => salleId, chateau: () => lieuId };
+           salle: () => salleId, chateau: () => lieuId,
+           // pour la nav : l'échelle sous les yeux, et le mot qui la nomme
+           vue: () => vueActive || vue,
+           nomVue: (id) => { const e = ECHELLES.find((x) => x.id === id); return e ? e.nom : null; } };
 })();

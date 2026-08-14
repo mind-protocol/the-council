@@ -8,13 +8,13 @@ Usage :
     python scripts/tick.py --jours 3
     python scripts/tick.py --jusqu-a 129.3.20
         Calcule la fenetre depuis monde.date jusqu'a la cible, ecrit une
-        PROPOSITION dans etat/staging/tick-<AAAAMMJJ-HHMMSS>.json, et imprime
+        PROPOSITION dans etat/tick-<AAAAMMJJ-HHMMSS>.json, et imprime
         un resume lisible.
 
     python scripts/tick.py --jours 3 --acteur daemon --acteur corlys
         Restreint le calcul a ces acteurs (repetable).
 
-Le script ne decide RIEN. Il lit etat/ et n'ecrit que sous etat/staging/ :
+Le script ne decide RIEN. Il lit etat/ et n'ecrit que sous etat/ :
 le MJ seul relit, arbitre et applique dans etat/*.json. Un seul ecrivain.
 
 Reference normative du format : docs/schema.md. Calendrier : 12 lunes de
@@ -40,6 +40,7 @@ Reference normative du format : docs/schema.md. Calendrier : 12 lunes de
   en place a cote : c'est une coexistence, pas un remplacement.
 """
 import argparse
+import collections
 import hashlib
 import io
 import json
@@ -50,36 +51,47 @@ from datetime import datetime
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-# Les pensees (docs/travaux.md). Module a part parce que c'est une arithmetique
-# a soi, avec ses propres chiffres a regler ; branche ici parce que c'est le
-# tick qui la fait tourner, en meme temps que les mains et les absents.
-import travaux as mod_travaux
+# LES PENSEES NE SE CALCULENT PLUS ICI, et `travaux.py` a disparu avec son
+# excitation. Un compteur ne pouvait pas dire ce qu'un homme a appris : ce qui
+# le dit, c'est sa JOURNEE — le quartier ou il se tient, les creux qu'elle lui
+# laisse, les sources a portee de ces creux. C'est `presence.py` qui le mesure
+# et `evaluer.py` qui en tire la feuille de route.
+import occupation  # qui est ASSIS — mesure, pas drapeau
+# La regence (docs/regence.md) : ce qu'un siege vacant peut faire et ce qu'il
+# doit rendre. Branche ici pour la seule garde — clause posee, passation due.
+import regence
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ETAT = os.path.join(RACINE, "etat")
-STAGING = os.path.join(ETAT, "staging")
+STAGING = ETAT
 
 JOURS_PAR_LUNE = 30
 LUNES_PAR_AN = 12
 
-ECHELLES = ("scene", "orbite", "royaume")
+# L'ECHELLE A DISPARU, et le QUARTIER la remplace (docs/boucle-acteurs.md).
+#
+# Trois systemes reglaient l'importance d'un acteur et se marchaient dessus :
+# l'echelle posee a la main, l'excitation comptee, la force narrative calculee
+# sur le graphe. En retirant l'echelle des poids, le classement des dix
+# premiers ne bougeait quasiment pas — elle recopiait a la main ce que le tissu
+# calculait deja, et se contredisait avec lui six fois sur quinze.
+#
+# Ce qui la remplace ne se declare pas : il se MESURE, a chaque tick, sur la
+# topologie. Un acteur est dans le QUARTIER d'un siege occupe (meme composante
+# connexe, moins de vingt minutes de marche) ou il est AU LOIN. Aucun plafond
+# d'acteurs : ce qui coute, c'est la tete, et une tete au loin coute peu.
+ECHELLES = ("quartier", "au loin")
 
-# Table des budgets de docs/schema.md : maxima par echelle.
-# EXCEPTION : le plafond d'acteurs en 'orbite' est monte de 12 a 20 le 23e jour
-# de la 3e lune, a l'ouverture du siege de Port-Real. Une seconde base a jouer,
-# c'est une seconde poignee de gens qui pesent sans etre en scene ; les tenir en
-# 'royaume' les rendrait sourds au joueur, ce qui est precisement le contraire
-# de ce qu'on veut d'un reseau. docs/schema.md porte desormais le meme chiffre,
-# et dit lui-meme que cette table fait foi en cas d'ecart.
 BUDGETS = {
-    "scene":   {"acteurs": 5,  "croyances": 6, "etapes": 5, "declencheurs": 3},
-    "orbite":  {"acteurs": 20, "croyances": 5, "etapes": 4, "declencheurs": 2},
+    "quartier": {"acteurs": None, "croyances": 6, "etapes": 5,
+                 "declencheurs": 3},
     # un declencheur reste permis : sans lui, un lointain serait sourd au joueur
-    "royaume": {"acteurs": None, "croyances": 3, "etapes": 2, "declencheurs": 1},
+    "au loin":  {"acteurs": None, "croyances": 3, "etapes": 2,
+                 "declencheurs": 1},
 }
 
 # Retard tolere de date_maj, en jours, avant qu'une tete soit dite en retard.
-TOLERANCE_MAJ = {"scene": 1, "orbite": 3, "royaume": 15}
+TOLERANCE_MAJ = {"quartier": 1, "au loin": 15}
 
 # Les acteurs lointains ne valent pas le calcul sur une fenetre courte.
 FENETRE_ROYAUME = 5
@@ -215,11 +227,11 @@ class Etat(object):
         # boites, et les livres gardent chacun la leur.
         brut = charger("boites", [])
         self.boites = brut.get("boites", []) if isinstance(brut, dict) else brut
-        # Les pensees. Le milieu de la chaine entre les mains et la tete :
-        # ce qu'un homme a touche, et ce que ca lui a appris (docs/travaux.md).
-        # Fichier absent = personne ne travaille, et rien ne casse.
-        brut = charger("travaux", {})
-        self.travaux = brut.get("travaux", []) if isinstance(brut, dict) else brut
+        # Les pensees : ce qu'un homme a touche et ce que ca lui a appris.
+        # A plat depuis que `travaux.json` a disparu — plus d'affaire a
+        # raccrocher, une pensee porte son auteur, son jour et sa source.
+        brut = charger("pensees", {})
+        self.pensees = brut.get("pensees", []) if isinstance(brut, dict) else brut
         # Le grand livre et la memoire verbale : sources possibles d'un savoir.
         self.actes = charger("actes", [])
         self.paroles = charger("paroles", [])
@@ -248,14 +260,40 @@ class Etat(object):
         self.sieges = charger("joueurs", [])
         if not isinstance(self.sieges, list):
             self.sieges = []
+        # ETRE ASSIS SE MESURE (voir scripts/occupation.py) : la veille de sa
+        # session date de moins de deux heures reelles, ou son inbox porte une
+        # action non traitee. Le champ `occupe` du fichier n'est qu'un cache,
+        # et il a menti — quatre sieges a `true` alors que deux dormaient. On
+        # garde le drapeau brut a cote, pour pouvoir dire qu'il a derive.
+        self.mesures_sieges = {}
+        try:
+            self.mesures_sieges = {m["personnage_id"]: m
+                                   for m in occupation.mesures()}
+        except Exception:
+            self.mesures_sieges = {}
         self.sieges_occupes = set()
         self.sieges_vacants = set()
+        self.sieges_drapeau = {}
         for siege in self.sieges:
             pid = siege.get("personnage_id")
             if not pid:
                 continue
-            (self.sieges_occupes if siege.get("occupe", True)
-             else self.sieges_vacants).add(pid)
+            # Un siege de REGIE (Corneille) n'incarne personne : pas de fiche,
+            # pas de tete, pas d'horloge. Il ne se verifie pas comme un siege,
+            # il n'en est pas un — voir l'entete de roster() dans
+            # scripts/occupation.py, qui l'ecarte de la mesure pour la meme
+            # raison. Le laisser entrer ici le ferait crier a chaque passage.
+            # Meme sort pour un siege d'une AUTRE PARTIE (`partie`) : les Sept
+            # Chandelles partagent ce roster pour apparaitre au selecteur du
+            # serveur, et rien d'autre. Sans fiche, sans tete et sans horloge
+            # ICI, c'est voulu — le seul predicat fait foi (occupation.py).
+            if occupation.hors_monde(siege):
+                continue
+            self.sieges_drapeau[pid] = bool(siege.get("occupe", True))
+            mesure = self.mesures_sieges.get(pid)
+            assis = (mesure["occupe"] if mesure is not None
+                     else self.sieges_drapeau[pid])
+            (self.sieges_occupes if assis else self.sieges_vacants).add(pid)
         # Partie seule sans roster : le journal fait foi.
         if not self.sieges and self.joueur:
             self.sieges_occupes.add(self.joueur)
@@ -393,10 +431,35 @@ def croyances_de(tete):
     return [c for c in (tete.get("croyances") or []) if isinstance(c, str)]
 
 
+_QUARTIER = {"gens": None}
+
+
+def _dans_le_quartier():
+    """Les ids que le joueur peut atteindre a pied, calcules une fois par run.
+
+    Faute de topologie lisible (fichier absent, aucun siege occupe resolu), on
+    rend None et `echelle_de` retombe sur « quartier » pour tout le monde : mieux
+    vaut simuler trop que geler le monde entier sur une erreur de lecture.
+    """
+    if _QUARTIER["gens"] is None:
+        try:
+            import presence
+            _QUARTIER["gens"] = set(presence.quartier().get("dedans") or {})
+        except Exception:
+            _QUARTIER["gens"] = set()
+    return _QUARTIER["gens"] or None
+
+
 def echelle_de(tete):
-    """Echelle declaree d'une tete ; 'orbite' par defaut faute de mieux."""
-    ech = tete.get("echelle")
-    return ech if ech in ECHELLES else "orbite"
+    """Ou se tient cette tete par rapport au joueur — mesure, jamais declaree.
+
+    Remplace le champ `echelle` de `intentions.json`, qu'on posait a la main et
+    qu'on oubliait de rabaisser quand quelqu'un s'eloignait.
+    """
+    dedans = _dans_le_quartier()
+    if dedans is None:
+        return "quartier"
+    return "quartier" if tete.get("personnage_id") in dedans else "au loin"
 
 
 def etapes_de(tete):
@@ -533,13 +596,13 @@ def empreintes_etat(joueur=None):
     return empreintes
 
 
-def ecrire_staging(nom_fichier, donnees):
-    """SEULE ecriture du script. Refuse tout chemin hors etat/staging/."""
+def ecrire_proposition(nom_fichier, donnees):
+    """SEULE ecriture du script. Refuse tout chemin hors etat/."""
     cible = os.path.abspath(os.path.join(STAGING, nom_fichier))
     permis = os.path.abspath(STAGING) + os.sep
     if not cible.startswith(permis):
         raise RuntimeError(
-            "ecriture refusee hors etat/staging/ : {}".format(cible))
+            "ecriture refusee hors etat/ : {}".format(cible))
     if not os.path.isdir(STAGING):
         os.makedirs(STAGING)
     with io.open(cible, "w", encoding="utf-8") as fh:
@@ -555,8 +618,28 @@ class Rapport(object):
         self.anomalies = []
 
     def dire(self, gravite, sujet, texte):
+        # `imprimer` ne parcourt que GRAVITES : une gravite mal orthographiee
+        # disparaissait sans un mot, et l'audit se croyait propre. On refuse
+        # bruyamment plutot que de perdre l'anomalie.
+        if gravite not in GRAVITES:
+            raise ValueError(
+                "gravite inconnue {!r} pour [{}] — attendu {}".format(
+                    gravite, sujet, ", ".join(GRAVITES)))
         self.anomalies.append({"gravite": gravite, "sujet": sujet,
                                "texte": texte})
+
+    def imprimer_json(self):
+        # Meme audit, servi a l'ecran au lieu du terminal : `--verifier --json`
+        # alimente /admin/sante. Le texte reste la source, on ne le reformate
+        # pas — un panneau qui dit autre chose que le terminal ne vaut rien.
+        durs = [a for a in self.anomalies if a["gravite"] != "note"]
+        print(json.dumps({
+            "anomalies": self.anomalies,
+            "durs": len(durs),
+            "notes": len(self.anomalies) - len(durs),
+            "par_gravite": {g: len([a for a in self.anomalies
+                                    if a["gravite"] == g]) for g in GRAVITES},
+        }, ensure_ascii=False))
 
     def imprimer(self):
         durs = [a for a in self.anomalies if a["gravite"] != "note"]
@@ -609,12 +692,13 @@ def verifier_intentions(e, r):
                    "tete pour un personnage {} — actif ou rien".format(
                        perso.get("etat")))
 
-        ech = tete.get("echelle")
-        if ech is None:
-            r.dire("avertissement", pid, "echelle absente")
-        elif ech not in ECHELLES:
+        # L'ECHELLE NE SE DECLARE PLUS : elle se mesure sur la topologie. Un
+        # champ `echelle` qui traine est un reste de l'ancien systeme, et il
+        # ment des que l'homme a bouge — on le signale pour qu'on le retire.
+        if tete.get("echelle") is not None:
             r.dire("avertissement", pid,
-                   "echelle hors {{scene, orbite, royaume}} : {!r}".format(ech))
+                   "champ `echelle` perime — l'echelle se mesure desormais sur "
+                   "le quartier (docs/boucle-acteurs.md), retire-le")
         budget = BUDGETS[echelle_de(tete)]
         ech_dite = echelle_de(tete)
 
@@ -724,15 +808,15 @@ def verifier_intentions(e, r):
         r.dire("grave", "intentions",
                "cycle de dependances : {}".format(" -> ".join(cycle)))
 
-    # budget d'acteurs par echelle
-    for ech in ECHELLES:
-        maxi = BUDGETS[ech]["acteurs"]
-        lot = [t.get("personnage_id") for t in e.intentions
-               if echelle_de(t) == ech and t.get("echelle") in ECHELLES]
-        if maxi is not None and len(lot) > maxi:
-            r.dire("avertissement", "intentions",
-                   "{} acteurs en '{}' pour un budget de {} : {}".format(
-                       len(lot), ech, maxi, ", ".join(sorted(lot))))
+    # PLUS DE PLAFOND D'ACTEURS, et c'est le point : ce n'est pas le NOMBRE de
+    # tetes qui coute, c'est ou elles sont. Vingt tetes au loin pesent moins que
+    # huit dans la salle. Ce qui borne le jeu n'est plus un quota pose a la
+    # main, c'est le quartier — il se resserre tout seul sur ce que le joueur
+    # peut atteindre. On rend donc le compte pour qu'on le voie, sans le juger.
+    par_ech = collections.Counter(echelle_de(t) for t in e.intentions)
+    r.dire("note", "intentions",
+           "{} tete(s) dans le quartier, {} au loin".format(
+               par_ech.get("quartier", 0), par_ech.get("au loin", 0)))
 
 
 # ------------------------------------------------------------- LA RUMEUR
@@ -1096,9 +1180,20 @@ def verifier_personnages(e, r):
                    "lieu_id inconnu : {!r}".format(lid))
 
 
+# `tenu_par` n'est PAS une place : c'est la main qui repond du volume. Un
+# `acteur_id` deplace le livre avec son porteur ; `tenu_par` le laisse ou il
+# est — sur la Table Peinte — et dit seulement sur quelle epaule il tombe.
+# C'est ce qui permet de ranger un coffret de trente-sept affaires par homme
+# au lieu d'une liste ou personne ne retrouve les siennes.
+#
+# `office` va avec, et ne fait pas double emploi : `tenu_par` dit QUI, `office`
+# dit SOUS QUELLE CHARGE. Ser Robert en tient trois, Aldon Hask trois aussi —
+# savoir qu'un cahier tombe sur lui ne dit pas encore de quel chapeau il le
+# porte, ni quel sceau on regarde si l'affaire tourne mal.
 CLES_BOOK = {"id", "lieu_id", "salle_id", "acteur_id", "boite", "prive",
              "lecteurs", "titre", "sous_titre", "type", "couleur", "embleme",
-             "date_maj", "colonnes", "lignes", "pages", "tables"}
+             "date_maj", "colonnes", "lignes", "pages", "tables", "tenu_par",
+             "office"}
 
 # Un coffret : etat/boites.json. Ni genre, ni colonnes, ni pages — une boite
 # ne se lit pas, elle se pose et elle s'ouvre.
@@ -1110,6 +1205,117 @@ CLES_BOITE = {"id", "lieu_id", "salle_id", "acteur_id", "prive", "lecteurs",
 # qu'on croyait avoir demandée.
 TYPES_BOOK = {"registre", "carnet", "plan", "memento", "dossier", "regle",
               "oeuvre"}
+
+
+def verifier_pensees(e, r):
+    """PAS DE SOURCE, PAS DE PENSEE — la seule regle de l'ancien systeme qui
+    meritait de survivre, et la seule qu'on verifie encore.
+
+    Ce qu'on ne verifie plus, et pourquoi : l'excitation (un compteur qui
+    montait sans sources et retombait d'un point par jour), le seuil de parole
+    a 3, l'etat `mur` d'une conclusion, le marquage `servie` (11 pensees
+    marquees sur 613 — il n'etait pas tenu et faisait croire a 98 % de perte).
+    """
+    connus = {p.get("id") for p in e.personnages if isinstance(p, dict)}
+    sans_source = sans_date = inconnus = 0
+    for p in getattr(e, "pensees", []) or []:
+        if not isinstance(p, dict):
+            continue
+        if not (p.get("source") or "").strip():
+            sans_source += 1
+        if not p.get("date"):
+            sans_date += 1
+        if p.get("qui") and p.get("qui") not in connus:
+            inconnus += 1
+    if sans_source:
+        r.dire("avertissement", "pensees",
+               "{} pensee(s) sans source — une pensee qui ne vient de rien "
+               "a ete inventee au moment de l'ecrire".format(sans_source))
+    if sans_date:
+        r.dire("avertissement", "pensees",
+               "{} pensee(s) sans date".format(sans_date))
+    if inconnus:
+        r.dire("avertissement", "pensees",
+               "{} pensee(s) attribuees a un inconnu de personnages.json"
+               .format(inconnus))
+
+    # UNE JOURNEE ENTIEREMENT FERMEE CHEZ UN HOMME FORT : il ne pensera jamais.
+    # C'est peut-etre voulu — c'est le cout d'un mandat — mais il faut le voir.
+    try:
+        import presence
+        q = presence.quartier()
+        if q.get("vide"):
+            r.dire("grave", "quartier",
+                   "QUARTIER VIDE ({}) : personne ne pense et personne ne "
+                   "bouge. Verifie horloges.json et presence.json."
+                   .format(q["vide"]))
+            return
+        routines, chemins, _ = presence.charger()
+        chateau = presence.Chateau(chemins)
+        fiches, pj = (routines.get("gens") or {}), presence.joueurs()
+        # Une ancre hors topologie n'ancre rien et se tait : le siege est
+        # occupe, sa salle existe dans la fiction, et son quartier est vide.
+        for a in q.get("ancres") or []:
+            if a.get("hors_plan"):
+                r.dire("grave", "quartier",
+                       "{} est en '{}', salle absente de chemins.json : ce "
+                       "siege n'atteint PERSONNE et son quartier est vide"
+                       .format(a["qui"], a["salle"]))
+        sans_routine, fermes = [], []
+        for pid in q.get("dedans") or {}:
+            if pid in pj:
+                continue
+            if pid not in fiches:
+                sans_routine.append(pid)
+            elif not presence.creux(pid, routines, chateau):
+                fermes.append(pid)
+        if sans_routine:
+            r.dire("avertissement", "routines",
+                   "{} tete(s) dans le quartier sans fiche de routine — leur "
+                   "position retombera sur `perime`, c'est-a-dire inventee : {}"
+                   .format(len(sans_routine), ", ".join(sorted(sans_routine))))
+        if fermes:
+            r.dire("note", "routines",
+                   "{} journee(s) entierement fermees — ces hommes ne penseront "
+                   "pas aujourd'hui : {}".format(len(fermes),
+                                                 ", ".join(sorted(fermes))))
+        # Une salle de routine absente de chemins.json rend des sauts nus a
+        # cout zero, et c'est la faute qui mettait la cour verte dans la salle
+        # de la reine.
+        muettes = set()
+        for pid, f in fiches.items():
+            modele = (routines.get("modeles") or {}).get(f.get("modele")) or {}
+            for b in modele.get("bandes") or []:
+                s = presence.piece_de_bande(b, f, modele).get("salle")
+                if s and not chateau.connait(s):
+                    muettes.add(s)
+        if muettes:
+            r.dire("avertissement", "chemins",
+                   "salle(s) de routine absentes de chemins.json (sauts nus a "
+                   "cout 0) : {}".format(", ".join(sorted(muettes))))
+    except Exception as exc:
+        r.dire("avertissement", "quartier",
+               "quartier incalculable : {}".format(str(exc)[:120]))
+
+
+def qui_a_du_temps(e):
+    """QUI DOIT UNE JOURNEE — ce que `convoquer.py` disait, mesure autrement.
+
+    L'ancien le tirait d'un compteur d'excitation ; le neuf le tire de la
+    journee elle-meme. Rendu dans la proposition du tick pour que le MJ sache
+    qui depecher, apres les mains et avant la salle.
+    """
+    try:
+        import presence
+        import evaluer
+        A, N = evaluer.lire_tissu()
+        feuille = evaluer.force_narrative(A, N, lambda t="": None)
+    except Exception as exc:
+        return [{"erreur": str(exc)[:160]}]
+    return [{"qui": l["qui"], "force": l["force"], "questions": l["questions"],
+             "creux_total": l["creux_total"],
+             "questions_posees": l["questions_posees"]}
+            for l in feuille if l.get("questions")]
 
 
 def verifier_books(e, r):
@@ -1166,6 +1372,14 @@ def verifier_books(e, r):
                                   "ou porte, jamais les deux")
         if porte and not e.perso_par_id.get(porte):
             r.dire("grave", etiq, "acteur_id inconnu : {!r}".format(porte))
+
+        # La main qui repond du volume. Elle ne le deplace pas — un cahier
+        # d'affaire reste sur la table —, elle le RANGE : le coffret groupe ses
+        # volumes par tenu_par. Un id faux ne casse rien a l'ecran, il fabrique
+        # un homme de plus dans la liste, et c'est pire.
+        tenu = livre.get("tenu_par")
+        if tenu and not e.perso_par_id.get(tenu):
+            r.dire("grave", etiq, "tenu_par inconnu : {!r}".format(tenu))
         if pose and livre.get("lieu_id") and not e.lieu(livre["lieu_id"]):
             r.dire("grave", etiq, "lieu_id inconnu : {!r}".format(livre["lieu_id"]))
         if pose and not livre.get("lieu_id"):
@@ -1766,6 +1980,117 @@ def verifier_couts_chiffres(e, r):
                             c["mesure"]))
 
 
+def verifier_occupation(e, r):
+    """L'IMPOSSIBLE QUE PERSONNE NE VOYAIT : un drapeau qui ne ment pas tout seul.
+
+    L'invariant historique — occupe -> pas de tete, vacant -> une tete — est
+    tenu par la coherence interne du fichier. Il ne dit RIEN quand le fichier
+    entier est perime : quatre sieges a `occupe: true`, deux joueurs partis
+    depuis la veille, et l'etat reste parfaitement coherent avec lui-meme
+    pendant que deux personnages cessent d'exister — ni joues par un humain,
+    ni actives par la machine, qui les exclut justement parce qu'ils sont
+    marques occupes.
+
+    On confronte donc le fichier au DEHORS : l'age de la veille de sa session
+    et le contenu de son inbox (voir `scripts/occupation.py`). Quatre fautes.
+    """
+    if not e.mesures_sieges:
+        return
+    for pid in sorted(e.mesures_sieges):
+        m = e.mesures_sieges[pid]
+        drapeau = e.sieges_drapeau.get(pid, True)
+
+        # 1. Le cache a derive. Grave dans le sens « marque occupe, plus
+        #    personne » : c'est le siege qui dort. Simple avertissement dans
+        #    l'autre sens — un siege marque vacant que quelqu'un vient de
+        #    reveiller sera correctement joue, il est juste mal etiquete.
+        if drapeau and not m["occupe"]:
+            r.dire("grave", pid,
+                   "siege marque `occupe` dans joueurs.json alors que plus "
+                   "rien n'y respire ({}) — il n'est ni joue par un humain ni "
+                   "active par la boucle, donc il DORT. "
+                   "python scripts/sieges.py --rafraichir --vraiment"
+                   .format(m["raison"]))
+        elif not drapeau and m["occupe"]:
+            r.dire("avertissement", pid,
+                   "siege marque vacant alors qu'il respire ({}) — cache "
+                   "perime (python scripts/sieges.py --rafraichir --vraiment)"
+                   .format(m["raison"]))
+
+        # 2. Ce que la fiche RACONTE contre ce qu'on mesure. La note de
+        #    nicolas-reynolds disait « VACANT pour l'instant » sous un
+        #    `occupe: true` : deux verites dans la meme entree, et c'est la
+        #    prose qu'on croit en relisant.
+        #    On ne lit que les DECLARATIONS, c'est-a-dire les majuscules : ces
+        #    notes crient ce qu'elles affirment (« VACANT pour l'instant »,
+        #    « siege ALTERNE ») et parlent en minuscules du reste (« quand ce
+        #    siege est occupe, Rhaenyra doit avoir une tete »). Chercher le
+        #    mot sans egard a la casse rendrait toute prose coupable.
+        note = str(siege_par_id(e, pid).get("note") or "")
+        if "VACANT" in note and m["occupe"]:
+            r.dire("avertissement", pid,
+                   "la note de sa fiche dit VACANT mais le siege est mesure "
+                   "assis ({}) — reecrivez la note ou levez-vous".format(
+                       m["raison"]))
+        if ("OCCUPE" in note or "OCCUPÉ" in note) and not m["occupe"]:
+            r.dire("avertissement", pid,
+                   "la note de sa fiche dit OCCUPE mais plus rien n'y respire "
+                   "({})".format(m["raison"]))
+
+        # 3. Un siege tenu occupe par un inbox qui ne bouge plus. La
+        #    definition dit « au moins un fichier » et on ne la change pas —
+        #    mais un inbox jamais vide est un `occupe: true` qui ne
+        #    redescendra jamais, c'est-a-dire le meme defaut par une autre
+        #    porte.
+        if m["inbox_dormant"]:
+            r.dire("avertissement", pid,
+                   "siege tenu occupe par {} action(s) d'inbox dont la plus "
+                   "recente date de {} — soit le joueur est parti sans qu'on "
+                   "les traite, soit le guetteur est eteint".format(
+                       m["inbox"], occupation.dire_age(m["inbox_age_s"])))
+
+    # 4. Deux sieges d'une meme paire ALTERNEE assis en meme temps. Alterne
+    #    veut dire : le meme humain, jamais les deux a la fois. C'est declare
+    #    par `alterne_avec` dans l'entree du siege — et une note qui parle
+    #    d'alternance sans ce champ n'est pas une declaration, c'est un
+    #    souvenir.
+    for siege in e.sieges:
+        pid = siege.get("personnage_id")
+        if not pid:
+            continue
+        pairs = siege.get("alterne_avec")
+        if isinstance(pairs, str):
+            pairs = [pairs]
+        note = str(siege.get("note") or "")
+        if not pairs:
+            if "ALTERNE" in note.upper():
+                r.dire("avertissement", pid,
+                       "sa note dit que ce siege est ALTERNE mais son entree "
+                       "ne porte pas `alterne_avec` — rien ne peut le "
+                       "verifier")
+            continue
+        for autre in pairs:
+            if pid in e.sieges_occupes and autre in e.sieges_occupes:
+                r.dire("grave", pid,
+                       "siege ALTERNE avec '{}' et tous deux mesures assis en "
+                       "meme temps — c'est le meme joueur : l'un des deux est "
+                       "un fantome ({} / {})".format(
+                           autre,
+                           (e.mesures_sieges.get(pid) or {}).get("raison"),
+                           (e.mesures_sieges.get(autre) or {}).get("raison")))
+            if autre not in e.sieges_drapeau:
+                r.dire("avertissement", pid,
+                       "`alterne_avec` designe '{}', qui n'est pas un siege"
+                       .format(autre))
+
+
+def siege_par_id(e, pid):
+    for siege in e.sieges:
+        if siege.get("personnage_id") == pid:
+            return siege
+    return {}
+
+
 def verifier_sieges(e, r):
     """Le siege vacant doit avoir une tete ; l'occupe ne doit pas en avoir.
 
@@ -1782,6 +2107,19 @@ def verifier_sieges(e, r):
                    "siege VACANT sans tete dans intentions.json — ce "
                    "personnage n'agira pas hors ecran tant qu'on ne lui en "
                    "ecrit pas une")
+        else:
+            # LA CLAUSE DE REGENCE. Le garde mecanique de
+            # `boucle_activation.py` refuse deja les rapports qui franchissent
+            # la ligne, mais un homme qui l'ignore y va, se fait refuser et
+            # perd un passage de correction a chaque fois. La clause dans sa
+            # tete est ce qui evite le mur ; le garde est ce qui le rattrape
+            # quand il l'oublie. On veut les deux.
+            if not regence.clause_posee(e.intention_par_id.get(pid)):
+                r.dire("avertissement", pid,
+                       "siege vacant dont la tete ne porte pas la clause de "
+                       "regence — il ignore ce qu'il ne doit pas conclure "
+                       "(python scripts/regence.py --poser {} --vraiment)"
+                       .format(pid))
         perso = e.perso_par_id.get(pid)
         if perso is not None and perso.get("etat") != "actif":
             r.dire("avertissement", pid,
@@ -1791,10 +2129,31 @@ def verifier_sieges(e, r):
         if pid not in e.perso_par_id:
             r.dire("grave", pid,
                    "siege pour un personnage absent de personnages.json")
+    verifier_occupation(e, r)
     if e.sieges and e.joueur and e.joueur in e.sieges_vacants:
         r.dire("avertissement", "journal",
                "journal.personnage_joueur_id vaut '{}' alors que son siege "
                "est marque vacant".format(e.joueur))
+    # Ce qu'un siege a decide seul et qu'on n'a pas encore rendu a celui qui
+    # s'y rassoit. Ce n'est une faute pour personne tant qu'il est vacant ; ca
+    # en devient une des qu'il est occupe, parce qu'alors le joueur joue sans
+    # savoir ce qu'on a engage en son nom.
+    for pid in sorted(e.sieges_occupes | e.sieges_vacants):
+        _, en_attente = regence.compte_rendu(pid)
+        if not en_attente:
+            continue
+        if pid in e.sieges_occupes:
+            r.dire("avertissement", pid,
+                   "{} decision(s) prises en regence jamais rendues a celui "
+                   "qui s'y est rassis (python scripts/regence.py "
+                   "--compte-rendu {})".format(len(en_attente), pid))
+        franchies = sum(len(x.get("lignes_franchies") or [])
+                        for x in en_attente)
+        if franchies:
+            r.dire("grave", pid,
+                   "{} ligne(s) irreversible(s) franchies par ce siege en "
+                   "regence — le garde a ete contourne, relisez son "
+                   "registre".format(franchies))
 
 
 def verifier_audiences(e, r):
@@ -1863,7 +2222,185 @@ def verifier_affectations(e, r):
         r.dire("avertissement", "affectations", mal)
 
 
-def verifier(e):
+def verifier_registres_derives(e, r):
+    """Un index ecrit a la main est un index qui va mentir.
+
+    Les quatre registres par type — `plan-etats-cibles`, `plan-verrous`,
+    `plan-clefs`, `plan-actions` — ne sont plus une seconde verite : ils sont
+    DERIVES des cahiers d'affaire, par `python scripts/couverture.py
+    --registres`. La regle du guide (« quand l'affaire et le registre se
+    contredisent, c'est le registre qui a raison ») supposait un registre tenu ;
+    il ne l'etait plus, 108 lignes contre 1312.
+
+    Ce qu'on a paye pour l'apprendre : Le Sanglier avait renomme l'etat cible
+    23000 dans son cahier, le registre portait toujours l'ancien nom, et sa
+    propre liste de trous lui a resservi le nom perime le matin meme. Deux
+    copies d'un plan n'est pas un defaut de proprete : c'est une machine a
+    envoyer les hommes contre des fantomes.
+
+    Sans cette garde, quelqu'un y posera une ligne de bonne foi dans six
+    semaines — et la nuit du 31e sera a refaire a l'identique. `plan-moyens` et
+    `plan-offices` n'en sont pas : ce sont des SOURCES, pas des copies.
+    """
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import couverture
+    except ImportError:
+        return
+    try:
+        ecarts, divergences = couverture.ecart_registres(e.books)
+    except Exception as mal:                      # un index ne bloque pas l'audit
+        r.dire("note", "registres", "impossible de recalculer : {}".format(mal))
+        return
+    if divergences:
+        # ON LES NOMME, ON NE LES COMPTE PAS SEULEMENT. Une retouche a la main
+        # du NOM d'une piece cree une divergence que la regle de conservation
+        # reproduit fidelement : l'ecart se referme sur lui-meme et la
+        # comparaison ne voit rien. La liste, elle, s'allonge — et c'est le seul
+        # signe qu'on ait.
+        r.dire("note", "registres",
+               "{} nom(s) divergent(s) entre index et cahier, conserves tels "
+               "quels : {} — si cette liste s'allonge, quelqu'un a ecrit dans "
+               "un index (voir docs/echiquier.md)".format(
+                   len(divergences), " · ".join(n for _, n in divergences)))
+    for bid, a, n in ecarts:
+        if a < 0:
+            r.dire("avertissement", "registre {}".format(bid),
+                   "titre non marque « calcule » — relancer "
+                   "`python scripts/couverture.py --registres`")
+        else:
+            r.dire("avertissement", "registre {}".format(bid),
+                   "ECRIT A LA MAIN, ou perime : {} ligne(s) sur le disque, {} "
+                   "derivees des cahiers. Le cahier est la verite — reporter la "
+                   "modification dans le cahier d'affaire, puis relancer "
+                   "`python scripts/couverture.py --registres` (voir "
+                   "docs/echiquier.md)".format(a, n))
+
+
+def verifier_etats_du_plan(e, r):
+    """La colonne d'etat d'une action ne porte QU'UN MOT, pris dans six.
+
+    Elle a ete un champ de recit pendant une lune : deux cents signes de prose
+    datee la ou `etat_du_plan.py` attend un mot, dix-sept pieces ecrivant
+    « fait » de six facons, et la date de realisation noyee dans le texte —
+    donc rien qui se compte, donc personne capable de dire ce qui a ete fait
+    cette lune. Sans cette garde, la prose y revient en trois jours : elle
+    revient toujours, parce qu'un homme qui a quelque chose a dire l'ecrit la
+    ou il regarde. Ce qu'il a a dire va desormais en `📝 Note`, et la date en
+    `📅 Jour fait`.
+    """
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import couverture
+    except ImportError:
+        return
+    VOC = (u"\u00e0 faire", u"en cours", u"bloqu\u00e9e", u"faite", u"close",
+           u"abandonn\u00e9e")
+    for livre in e.books:
+        bid = str(livre.get("id") or "")
+        if not bid.startswith(("affaire-", "nera-")):
+            continue
+        for t in (livre.get("tables") or []):
+            g = (couverture.genre_de((t or {}).get("titre") or "")
+                 or couverture.genre_de(livre.get("titre") or ""))
+            if g != "action":
+                continue
+            cols = (t or {}).get("colonnes") or []
+            i = couverture.col(cols, u"^\u00e9tat$|^etat$|o\u00f9 \u00e7a en est|ou ca en est")
+            if i is None:
+                continue
+            for ligne in (t.get("lignes") or []):
+                c = [couverture.nu(x) for x in ((ligne if isinstance(ligne, list)
+                                                 else (ligne or {}).get("cellules")) or [])]
+                if len(c) < 2 or not c[0] or not c[1] or i >= len(c):
+                    continue
+                m = couverture.NUM.search(c[0])
+                if not m or c[i] in VOC:
+                    continue
+                r.dire("grave", "plan {}".format(m.group(1)),
+                       "etat hors vocabulaire : {!r}. Six valeurs et pas une de "
+                       "plus — a faire / en cours / bloquee / faite / close / "
+                       "abandonnee. La prose va en « Note », la date en « Jour "
+                       "fait » : `python scripts/normaliser_etats.py`"
+                       .format(c[i][:70]))
+
+
+def verifier_activations(e, r):
+    """Ce que la boucle d'activation a produit, et ce qui a ete jete.
+
+    LE SILENCE DES REJETS EST LE PIRE DEFAUT QU'ON AIT EU. Le 10 aout, 326
+    mutations sur 355 etaient refusees — 92 % — pour une seule et meme cause :
+    le narrateur citait son resultat sous la clef `cite` quand le validateur
+    lisait `resultat_id`. La boucle a tourne des nuits entieres en produisant
+    presque rien, et rien nulle part ne le disait. Un taux de perte est une
+    panne, pas une statistique : il doit crier des le premier tour.
+    """
+    depot = os.path.join(ETAT, "activations")
+    if not os.path.isdir(depot):
+        return
+
+    # LE CUMUL DE TOUJOURS EST UNE MAUVAISE MESURE, et c'est la lecon du
+    # 10 aout au soir : la panne `resultat_id` etait REPAREE, et le taux
+    # affichait encore 78 % parce que les 326 rejets d'avant la reparation
+    # dorment sur le disque et y dormiront toujours. Un taux qu'aucune
+    # correction ne peut faire baisser ne signale plus rien.
+    # On mesure donc la FENETRE RECENTE — c'est elle qui dit l'etat de la
+    # boucle maintenant — et le cumul ne sort qu'en note, pour memoire.
+    FENETRE = 25
+
+    def depouiller(noms):
+        retenues, rejetees, causes = 0, 0, {}
+        for nom in noms:
+            try:
+                with io.open(os.path.join(depot, nom), encoding="utf-8") as fh:
+                    rapport = json.load(fh)
+            except (ValueError, OSError):
+                continue
+            if not isinstance(rapport, dict):
+                continue
+            retenues += len(rapport.get("mutations_proposees") or [])
+            for jetee in rapport.get("mutations_rejetees") or []:
+                rejetees += 1
+                if isinstance(jetee, dict):
+                    cause = str(jetee.get("erreur") or "sans cause")[:80]
+                    causes[cause] = causes.get(cause, 0) + 1
+        return retenues, rejetees, causes
+
+    # Les rapports sont horodates dans leur nom : le tri alphabetique est
+    # l'ordre chronologique, et on n'a pas a interroger le disque.
+    noms = sorted(n for n in os.listdir(depot)
+                  if n.endswith(".json") and n != "boucle.json")
+    if not noms:
+        return
+    recents = noms[-FENETRE:]
+    retenues, rejetees, causes = depouiller(recents)
+    total = retenues + rejetees
+    if not total:
+        return
+    part = 100.0 * rejetees / total
+    niveau = "grave" if part >= 25 else ("avertissement" if part >= 5
+                                         else "note")
+    r.dire(niveau, "activations",
+           "{} mutations sur {} jetees ({:.0f} %) sur les {} derniers "
+           "rapports — la boucle produit {} changement(s) applicable(s)".format(
+               rejetees, total, part, len(recents), retenues))
+    for cause, combien in sorted(causes.items(), key=lambda x: -x[1])[:3]:
+        r.dire(niveau, "activations",
+               "  {} fois : {}".format(combien, cause))
+
+    if len(noms) > len(recents):
+        cum_ret, cum_rej, _ = depouiller(noms)
+        cum_total = cum_ret + cum_rej
+        if cum_total:
+            r.dire("note", "activations",
+                   "pour memoire, depuis le premier rapport : {} sur {} "
+                   "jetees ({:.0f} %) en {} rapports — ce chiffre porte les "
+                   "pannes deja reparees et ne baissera jamais".format(
+                       cum_rej, cum_total, 100.0 * cum_rej / cum_total,
+                       len(noms)))
+
+
+def verifier(e, en_json=False):
     r = Rapport()
     if not e.joueur:
         r.dire("avertissement", "journal",
@@ -1873,17 +2410,19 @@ def verifier(e):
     verifier_evenements(e, r)
     verifier_personnages(e, r)
     verifier_mains(e, r)
-    mod_travaux.verifier_travaux(e.travaux, e.personnages, e.intentions,
-                                 e.aujourdhui, r.dire)
+    verifier_pensees(e, r)
     verifier_books(e, r)
+    verifier_registres_derives(e, r)
+    verifier_etats_du_plan(e, r)
     verifier_boites(e, r)
     verifier_plis(e, r)
     verifier_couts_chiffres(e, r)
     verifier_rumeurs(e, r)
     verifier_croyances_sans_porteur(e, r)
     verifier_affectations(e, r)
+    verifier_activations(e, r)
     verifier_audiences(e, r)
-    r.imprimer()
+    r.imprimer_json() if en_json else r.imprimer()
     # Les 'note' sont informatives : elles ne font pas echouer l'audit. La
     # croyance sans porteur crie fort sur l'etat d'avant la refonte, et ce
     # n'est pas une raison de bloquer le jeu.
@@ -2302,9 +2841,7 @@ def calculer(e, cible, restriction, joueur=None):
     # Apres les mains (dont elle peut lire les mesures) et avant la salle, dont
     # elle est l'entree : un conseiller qui n'a rien touche n'a rien a dire, et
     # la boucle d'election doit le savoir avant d'elire qui que ce soit.
-    pensees, mut_pensees = mod_travaux.calculer_travaux(
-        getattr(e, "travaux", []), e.aujourdhui, jours)
-    mutations.extend(mut_pensees)
+    pensees = qui_a_du_temps(e)
 
     return {
         "genere_le": datetime.now().isoformat(timespec="seconds"),
@@ -2374,27 +2911,24 @@ def resumer(prop, chemin):
 
     # Les pensees ensuite : c'est l'entree de la salle. On lit qui a de quoi
     # parler AVANT d'elire qui parle — sinon on elit celui qui n'a rien.
+    # Ce que `travaux` porte depuis que l'excitation a disparu : la feuille de
+    # route d'evaluer.py — sa force sur le graphe, ses questions, et le temps
+    # que sa journee lui laisse. Plus de verdict, plus de conclusion mure.
     if prop.get("travaux"):
-        parlent = [t for t in prop["travaux"] if t["verdict"] == "parle"]
-        bossent = [t for t in prop["travaux"] if t["verdict"] != "parle"]
-        print("\nLes pensees — qui a quelque chose a dire ({}/{}) :".format(
-            len(parlent), len(prop["travaux"])))
-        for t in parlent:
-            quoi = ("CONCLUSION MURE — ecris-la de SA main"
-                    if t["conclusion_mure"] else
-                    "{} pensee(s) neuve(s)".format(t["pensees_neuves"]))
-            print("  [{}] {:<18} {}".format(t["excitation"], t["qui"],
-                                            t["affaire"]))
-            print("       {}{}{}".format(
-                quoi, " · DU AUJOURD'HUI" if t["due"] else "",
-                " · EN RETARD, il le dit lui-meme" if t["en_retard"] else ""))
-        if bossent:
-            print("  Les autres travaillent et se taisent : {}".format(
-                ", ".join(sorted(set(t["qui"] for t in bossent)))))
-        steriles = [t for t in prop["travaux"] if t.get("sterile")]
-        if steriles:
-            print("  SANS SOURCE, ne produiront rien : {}".format(
-                ", ".join(t["id"] for t in steriles)))
+        erreur = next((t["erreur"] for t in prop["travaux"] if t.get("erreur")),
+                      None)
+        if erreur:
+            print("\nLes pensees -- feuille de route indisponible : " + erreur)
+        else:
+            print("\nLes pensees -- qui a du temps aujourd'hui ({}) :".format(
+                len(prop["travaux"])))
+            for t in sorted(prop["travaux"],
+                            key=lambda x: -(x.get("force") or 0)):
+                print("  [{:>5}] {:<20} {} question(s), {} min de creux{}".format(
+                    t.get("force"), t.get("qui"), t.get("questions"),
+                    t.get("creux_total"),
+                    " -- {} deja posee(s)".format(t["questions_posees"])
+                    if t.get("questions_posees") else ""))
 
     if prop.get("seuils_franchis"):
         print("\nSEUILS ({}) :".format(len(prop["seuils_franchis"])))
@@ -2569,7 +3103,7 @@ def tick(e, cible, restriction, joueur=None):
     while os.path.isfile(os.path.join(STAGING, nom)):   # deux ticks a la seconde
         n += 1
         nom = "{}-{}.json".format(base, n)
-    chemin = ecrire_staging(nom, prop)
+    chemin = ecrire_proposition(nom, prop)
     resumer(prop, chemin)
     return 0
 
@@ -2579,9 +3113,11 @@ def tick(e, cible, restriction, joueur=None):
 def main():
     ap = argparse.ArgumentParser(
         description="Moteur arithmetique du hors-scene (lit etat/, "
-                    "n'ecrit que dans etat/staging/)")
+                    "n'ecrit que dans etat/)")
     ap.add_argument("--verifier", action="store_true",
                     help="audit de coherence de etat/ (code 1 si anomalie)")
+    ap.add_argument("--json", dest="en_json", action="store_true",
+                    help="avec --verifier : l'audit en JSON, pour /admin/sante")
     ap.add_argument("--jours", type=int,
                     help="taille de la fenetre depuis monde.date")
     ap.add_argument("--jusqu-a", dest="jusqu_a", metavar="129.3.20",
@@ -2599,7 +3135,7 @@ def main():
     if args.verifier:
         if args.jours is not None or args.jusqu_a:
             sys.exit("--verifier ne se combine pas avec --jours / --jusqu-a")
-        return verifier(e)
+        return verifier(e, args.en_json)
 
     if args.jours is not None and args.jusqu_a:
         sys.exit("choisir --jours OU --jusqu-a, pas les deux")

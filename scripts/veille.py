@@ -23,7 +23,7 @@ veilles = os.path.join(etat, "veille")
 
 # flux.jsonl est append-only et bouge a chaque item : il sonnerait en continu
 # sans rien apprendre a personne. L'inbox a deja son guetteur.
-IGNORE = {"flux.jsonl", "veille", "inbox", "staging", "joueurs.json"}
+IGNORE = {"flux.jsonl", "veille", "inbox", "joueurs.json"}
 
 
 def empreintes():

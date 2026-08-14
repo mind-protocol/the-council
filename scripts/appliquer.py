@@ -1,4 +1,4 @@
-"""Applique une proposition de etat/staging/ a etat/*.json.
+"""Applique une proposition de etat/ a etat/*.json.
 
 Usage :
     python scripts/appliquer.py tick-20260806-024652.json              -> blanc
@@ -95,7 +95,9 @@ import hashlib
 import io
 import json
 import os
+import re
 import sys
+import unicodedata
 from datetime import datetime
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -103,7 +105,7 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 SCRIPTS = os.path.dirname(os.path.abspath(__file__))
 RACINE = os.path.dirname(SCRIPTS)
 ETAT = os.path.join(RACINE, "etat")
-STAGING = os.path.join(ETAT, "staging")
+STAGING = ETAT
 
 if SCRIPTS not in sys.path:
     sys.path.insert(0, SCRIPTS)
@@ -156,15 +158,104 @@ CHAMPS_PROPAGE_REQUIS = ("ou", "date", "certitude", "contenu")
 OPERATIONS = {
     "intentions": ("etape", "etape_ajouter", "tete", "tete_ajouter",
                    "croyance_ajouter", "croyance_retirer", "ignore_ajouter",
-                   "ignore_retirer"),
+                   "ignore_retirer", "declencheur_ajouter",
+                   "declencheur_retirer"),
     "evenements": ("diffusion_livree", "diffusion_ajouter", "evenement"),
-    "personnages": ("personnage",),
+    "personnages": ("personnage", "personnage_ajouter"),
     "monde": ("monde",),
-    "mains": ("mesure", "seuil", "main"),
+    "mains": ("mesure", "seuil", "main", "main_ajouter"),
     "plis": ("pli", "pli_ajouter"),
     "lieux": ("roukerie",),
     "jetons": ("incident_propage", "incident"),
+    "relations": ("relation", "relation_ajouter"),
+    # LES AFFAIRES. Sans ce domaine, un acteur pouvait EXECUTER une affaire
+    # mais jamais en ouvrir une : les 33 affaires du tissu etaient toutes de
+    # la main du MJ, et un homme important sans affaire le restait a jamais.
+    # Une affaire proposee est relue avant
+    # d'etre appliquee — c'est la garde, pas l'interdiction.
+    "books": ("affaire_ajouter", "affaire_action_ajouter", "affaire_action"),
 }
+
+# La colonne d'etat d'une table d'actions, reconnue par son intitule : ces
+# cahiers n'ont pas de schema, seulement des en-tetes ecrits a la main.
+TITRE_TABLE_ACTIONS = "actions"
+COLONNES_AFFAIRE_NEUVE = {
+    "🎯 États cibles": ["🎯 N°", "🏷️ L'état", "✅ Ce qui doit être vrai",
+                         "📍 Où", "👁️ La preuve", "⬆️ Sert"],
+    "🔒 Verrous": ["🔒 N°", "🏷️ Le verrou", "⛔ Bloque",
+                   "📌 Ce qui est vrai aujourd'hui", "👁️ La preuve",
+                   "🔓 Levé quand"],
+    "🗝️ Clefs": ["🗝️ N°", "🏷️ La clef", "🔓 Ouvre", "💡 Le principe",
+                  "💰 Le prix", "🚪 Ce que cela ferme",
+                  "👁️ La preuve attendue", "⚖️ Décision"],
+    "⚔️ Actions": ["⚔️ N°", "🏷️ L'action", "🗝️ Réalise", "📝 Ce qu'on fait",
+                    "📍 Où", "🪶 Office", "🧰 Moyens", "💰 Ce qu'elle coûte",
+                    "⛓️ Dépend de", "👁️ La preuve", "⏳ État"],
+}
+
+
+def prochaine_ligne_action(actions, numero):
+    """La ligne dont la premiere cellule porte ce numero, gras compris."""
+    cible = str(numero or "").strip().strip("*")
+    if not cible:
+        return None
+    for ligne in actions.get("lignes") or []:
+        cellules = ligne.get("cellules") or []
+        if cellules and str(cellules[0]).strip().strip("*") == cible:
+            return ligne
+    return None
+
+
+def liste_books(tables):
+    brut = tables.get("books")
+    if isinstance(brut, dict):
+        return brut.get("books") or brut.get("livres") or []
+    return brut if isinstance(brut, list) else []
+
+
+def table_actions(livre):
+    """La table des actions d'une affaire, reconnue a son intitule."""
+    for t in livre.get("tables") or []:
+        if TITRE_TABLE_ACTIONS in plat_titre(t.get("titre")):
+            return t
+    return None
+
+
+def plat_titre(t):
+    return unicodedata.normalize("NFD", str(t or "")).encode(
+        "ascii", "ignore").decode("ascii").lower()
+
+# Ouvrir une maison cree des gens, leur donne des liens, leur arme des
+# reactions et leur pose des compteurs. Les quatre operations ci-dessous
+# existent pour ca : sans elles, chaque ouverture finissait par un bloc « a
+# la main » — c'est-a-dire par la perte exacte des gardes que ce script
+# existe pour donner.
+CHAMPS_PERSO_REQUIS = ("id", "nom", "etat")
+CHAMPS_MAIN_REQUIS = ("id", "quoi", "porteur", "lieu_id")
+CHAMPS_RELATION = ("opinion", "liens", "connue_du_joueur")
+TYPES_PORTEUR = ("personnage", "maison", "lieu")
+
+
+def charge_relation(m, op, champs):
+    """L'objet relation, qu'il soit range dans `valeur` ou dans `champs`.
+
+    `valeur` est la forme documentee pour un ajout et `champs` celle d'un
+    patch — mais les sessions d'activation ecrivent l'ajout dans `champs`,
+    parce que c'est le geste naturel et que rien a l'ecriture ne les reprend.
+    Mesure du 129.4.2 : sur 47 mutations rejetees en vingt-cinq rapports,
+    CINQ l'etaient pour cette seule raison, `source_id` et `cible_id` bien
+    presents dans l'autre poche. Une arete du monde perdue pour une clef.
+
+    On accepte les deux et l'on ne desserre rien d'autre : tous les controles
+    de fond (personnages connus, sens de la relation, champs autorises, borne
+    de l'opinion) restent en aval, sur l'objet qu'on vient de trouver.
+    """
+    if op == "relation_ajouter":
+        v = m.get("valeur")
+        if isinstance(v, dict):
+            return v
+        return champs
+    return champs if champs else m.get("valeur")
 
 
 def rang_certitude(valeur):
@@ -178,6 +269,13 @@ def rang_certitude(valeur):
 def liste_jetons(table):
     """jetons.json a une racine {jetons, traits, zones} ; on rend les pieces."""
     return table.get("jetons", []) if isinstance(table, dict) else table
+
+
+def liste_simple(table, clef):
+    """Une table {<clef>: [...]} ou une liste nue — on rend la liste."""
+    if table is None:
+        return []
+    return table.get(clef, []) if isinstance(table, dict) else table
 
 
 # ------------------------------------------------------------------ lecture
@@ -257,6 +355,34 @@ def date_lisible(date):
     if not isinstance(date, dict):
         return False
     return all(isinstance(date.get(c), int) for c in ("annee", "lune", "jour"))
+
+
+def normaliser_date(date):
+    """Rend un {annee, lune, jour} d'entiers, ou None si ca ne se lit pas.
+
+    Les sessions d'activation ecrivent parfois `date_maj` en chaine —
+    « 129-4-3 », « 129.4.3 » — la ou le format est un objet. Rien ne les
+    reprenait : le patch de tete controlait le NOM des champs, jamais la forme
+    de celui-la. Mesure du 129.4.3 : six tetes fraichement reecrites (gerardys,
+    otto, robert-quince, corlys, rulf-corne, le-sanglier) sont ressorties
+    « date_maj absente ou illisible » au verificateur — donc perpetuellement en
+    retard, puisqu'on ne sait plus calculer leur age.
+
+    On normalise au lieu de refuser : le sens de « 129-4-3 » n'est pas
+    ambigu, et rejeter la mutation ferait perdre TOUTE la reecriture de la
+    tete pour une histoire de separateur.
+    """
+    if date_lisible(date):
+        return date
+    if isinstance(date, str):
+        morceaux = re.split(r"[-./ ]+", date.strip())
+        if len(morceaux) == 3:
+            try:
+                a, l, j = (int(x) for x in morceaux)
+            except ValueError:
+                return None
+            return {"annee": a, "lune": l, "jour": j}
+    return None
 
 
 def valider_tete_neuve(v, cible, tetes, personnages, joueur, ids_etapes):
@@ -357,6 +483,11 @@ def valider(mutations, tables):
     for lieu in tables["lieux"]:
         for alias in lieu.get("alias") or []:
             lieux.setdefault(alias, lieu)
+    maisons = par_id(liste_simple(tables.get("maisons"), "maisons"))
+    relations = liste_simple(tables.get("relations"), "relations")
+    # une relation n'a pas d'id : elle se designe par le couple oriente
+    couples = {(r.get("source_id"), r.get("cible_id")): r for r in relations
+               if isinstance(r, dict)}
     joueur = (tables.get("journal") or {}).get("personnage_joueur_id")
     # tous les ids d'etapes du fichier — grossit au fil du lot, pour qu'une
     # etape ajoutee deux fois dans la meme proposition soit refusee aussi.
@@ -381,6 +512,68 @@ def valider(mutations, tables):
         cible = m.get("cible")
         champs = m.get("champs") or {}
         avant, apres = None, None
+
+        # --- books : les affaires
+        if table == "books":
+            livres = liste_books(tables)
+            par_livre = {x.get("id"): x for x in livres if isinstance(x, dict)}
+            if op == "affaire_ajouter":
+                v = m.get("valeur") or {}
+                if not str(cible or "").startswith("affaire-"):
+                    faute(i, "une affaire neuve a un id prefixe `affaire-`")
+                    continue
+                if cible in par_livre:
+                    faute(i, "l'affaire {!r} existe deja".format(cible))
+                    continue
+                if not str(v.get("titre") or "").strip():
+                    faute(i, "une affaire neuve doit porter un titre")
+                    continue
+                par_livre[cible] = {"id": cible}  # le lot suivant peut la viser
+                plan.append({"n": i, "mutation": m, "avant": None,
+                             "apres": {"affaire_ouverte": cible,
+                                       "titre": v["titre"]}})
+                continue
+            livre = par_livre.get(str(cible or "").split(":")[0])
+            if livre is None:
+                faute(i, "affaire inconnue : {!r}".format(cible))
+                continue
+            actions = table_actions(livre)
+            if actions is None:
+                faute(i, "l'affaire {!r} n'a pas de table d'actions"
+                      .format(livre.get("id")))
+                continue
+            colonnes = actions.get("colonnes") or []
+            if op == "affaire_action_ajouter":
+                cellules = m.get("valeur")
+                if not isinstance(cellules, list) or len(cellules) != len(colonnes):
+                    faute(i, "une action prend exactement {} cellules, {} recues"
+                          .format(len(colonnes),
+                                  len(cellules) if isinstance(cellules, list)
+                                  else "aucune"))
+                    continue
+                plan.append({"n": i, "mutation": m, "avant": None,
+                             "apres": {"action_ajoutee": livre.get("id"),
+                                       "quoi": str(cellules[1])[:60]}})
+                continue
+            if op == "affaire_action":
+                numero = str(cible or "").partition(":")[2]
+                ligne = prochaine_ligne_action(actions, numero)
+                if ligne is None:
+                    faute(i, "action {!r} introuvable dans {}"
+                          .format(numero, livre.get("id")))
+                    continue
+                inconnues = [c for c in champs if c not in colonnes]
+                if inconnues:
+                    faute(i, "colonne inconnue : {}".format(", ".join(inconnues)))
+                    continue
+                if not champs:
+                    faute(i, "aucune colonne a modifier")
+                    continue
+                plan.append({"n": i, "mutation": m,
+                             "avant": {c: ligne["cellules"][colonnes.index(c)]
+                                       for c in champs},
+                             "apres": dict(champs)})
+                continue
 
         # --- intentions
         if table == "intentions":
@@ -450,8 +643,40 @@ def valider(mutations, tables):
                     faute(i, "echelle {!r} hors {}".format(
                         champs["echelle"], ECHELLES))
                     continue
+                if "date_maj" in champs:
+                    propre = normaliser_date(champs["date_maj"])
+                    if propre is None:
+                        faute(i, "date_maj illisible : {!r} (attendu "
+                                 "{{annee, lune, jour}} d'entiers)".format(
+                                     champs["date_maj"]))
+                        continue
+                    champs["date_maj"] = propre
                 avant = {c: tete.get(c) for c in champs}
                 apres = dict(champs)
+            elif op.startswith("declencheur"):
+                v = m.get("valeur")
+                courant = tete.get("declencheurs") or []
+                if op.endswith("ajouter"):
+                    if not isinstance(v, dict) or not v.get("si") \
+                            or not v.get("alors"):
+                        faute(i, "declencheur incomplet : 'si' (la condition, "
+                                 "en clair) et 'alors' (ce qu'il fait) sont "
+                                 "requis")
+                        continue
+                    if any(d.get("si") == v["si"] for d in courant
+                           if isinstance(d, dict)):
+                        faute(i, "{} a deja un declencheur sur cette "
+                                 "condition".format(cible))
+                        continue
+                    apres = {"declencheurs": "+ si " + v["si"][:60]}
+                else:
+                    if not isinstance(v, str) or not any(
+                            d.get("si") == v for d in courant
+                            if isinstance(d, dict)):
+                        faute(i, "aucun declencheur de {} sur cette condition "
+                                 "(donne le 'si' exact)".format(cible))
+                        continue
+                    apres = {"declencheurs": "- si " + v[:60]}
             else:  # croyance_* / ignore_*
                 liste = "croyances" if op.startswith("croyance") else "ignore"
                 v = m.get("valeur")
@@ -503,6 +728,96 @@ def valider(mutations, tables):
 
         # --- mains (les mains)
         elif table == "mains":
+            if op == "main_ajouter":
+                v = m.get("valeur")
+                if not isinstance(v, dict):
+                    faute(i, "main a ajouter : 'valeur' doit etre l'objet main")
+                    continue
+                manquants = [c for c in CHAMPS_MAIN_REQUIS if not v.get(c)]
+                if manquants:
+                    faute(i, "main a ajouter incomplete, il manque : {}".format(
+                        ", ".join(manquants)))
+                    continue
+                if cible is not None and cible != v["id"]:
+                    faute(i, "'cible' {!r} ne correspond pas a l'id {!r}".format(
+                        cible, v["id"]))
+                    continue
+                if v["id"] in mains:
+                    faute(i, "une main {} existe deja — patche-la".format(v["id"]))
+                    continue
+                porteur = v["porteur"]
+                if not isinstance(porteur, dict) or \
+                        porteur.get("type") not in TYPES_PORTEUR:
+                    faute(i, "porteur.type hors {}".format(TYPES_PORTEUR))
+                    continue
+                tables_porteur = {"personnage": personnages, "maison": maisons,
+                                  "lieu": lieux}[porteur["type"]]
+                if porteur.get("id") is not None \
+                        and porteur["id"] not in tables_porteur:
+                    faute(i, "porteur {} inconnu : {!r} — une affaire sans "
+                             "porteur s'ecrit id: null, pas avec un nom "
+                             "faux".format(porteur["type"], porteur["id"]))
+                    continue
+                if v["lieu_id"] not in lieux:
+                    faute(i, "lieu_id inconnu : {!r}".format(v["lieu_id"]))
+                    continue
+                mesures = v.get("mesure")
+                if not isinstance(mesures, list) or not 1 <= len(mesures) <= 3:
+                    faute(i, "une main porte 1 a 3 mesures, jamais plus "
+                             "(docs/schema.md)")
+                    continue
+                souci = None
+                vus = set()
+                for mes in mesures:
+                    if not isinstance(mes, dict) or not mes.get("id") \
+                            or not mes.get("quoi"):
+                        souci = "mesure incomplete (id et quoi requis)"
+                    elif mes["id"] in vus:
+                        souci = "id de mesure double : {}".format(mes["id"])
+                    elif not isinstance(mes.get("valeur"), int) \
+                            or isinstance(mes.get("valeur"), bool):
+                        souci = ("mesure {} : 'valeur' doit etre un entier — "
+                                 "les mains ne connaissent pas les "
+                                 "flottants".format(mes["id"]))
+                    else:
+                        rythme = mes.get("rythme")
+                        if not isinstance(rythme, dict) or \
+                                not isinstance(rythme.get("par"), int):
+                            souci = ("mesure {} : rythme.par entier requis, "
+                                     "sinon la mesure ne bougera jamais et "
+                                     "la main est morte".format(mes["id"]))
+                        elif not isinstance(rythme.get("jours", 1), int) \
+                                or rythme.get("jours", 1) < 1:
+                            souci = ("mesure {} : rythme.jours doit etre un "
+                                     "entier > 0".format(mes["id"]))
+                    if souci:
+                        break
+                    vus.add(mes["id"])
+                if souci:
+                    faute(i, souci)
+                    continue
+                for s in (v.get("seuils") or []):
+                    if not isinstance(s, dict) or s.get("mesure_id") not in vus:
+                        souci = ("seuil {!r} : mesure_id absent de cette "
+                                 "main".format(
+                                     (s or {}).get("id") if isinstance(s, dict)
+                                     else s))
+                        break
+                    if s.get("promeut") and s["promeut"] not in ECHELLES:
+                        souci = "seuil {} : promeut {!r} hors {}".format(
+                            s.get("id"), s["promeut"], ECHELLES)
+                        break
+                if souci:
+                    faute(i, souci)
+                    continue
+                mains[v["id"]] = v
+                plan.append({"n": i, "mutation": m, "avant": None, "apres": {
+                    "main_ajoutee": v["id"],
+                    "porteur": porteur.get("id"),
+                    "mesures": [x["id"] for x in mesures],
+                    "seuils": len(v.get("seuils") or []),
+                }})
+                continue
             act = mains.get(cible)
             if act is None:
                 faute(i, "aucune main {!r}".format(cible))
@@ -555,7 +870,13 @@ def valider(mutations, tables):
         # --- plis (le courrier)
         elif table == "plis":
             if op == "pli_ajouter":
+                # Meme tolerance que pour les relations, et pour la meme
+                # raison mesuree : l'objet arrive dans `champs` aussi souvent
+                # que dans `valeur`, et le refuser perd un pli entier.
                 v = m.get("valeur")
+                if not isinstance(v, dict) and isinstance(champs, dict) and champs:
+                    v = champs
+                    m["valeur"] = champs
                 if not isinstance(v, dict):
                     faute(i, "pli a ajouter : 'valeur' doit etre l'objet pli")
                     continue
@@ -723,6 +1044,55 @@ def valider(mutations, tables):
 
         # --- personnages
         elif table == "personnages":
+            if op == "personnage_ajouter":
+                v = m.get("valeur")
+                if not isinstance(v, dict):
+                    faute(i, "personnage a ajouter : 'valeur' doit etre la fiche")
+                    continue
+                manquants = [c for c in CHAMPS_PERSO_REQUIS if not v.get(c)]
+                if manquants:
+                    faute(i, "fiche incomplete, il manque : {}".format(
+                        ", ".join(manquants)))
+                    continue
+                if cible is not None and cible != v["id"]:
+                    faute(i, "'cible' {!r} ne correspond pas a l'id {!r}".format(
+                        cible, v["id"]))
+                    continue
+                if v["id"] in personnages:
+                    faute(i, "un personnage {} existe deja — patche-le".format(
+                        v["id"]))
+                    continue
+                if v["etat"] not in ETATS_PERSO:
+                    faute(i, "etat {!r} hors {}".format(v["etat"], ETATS_PERSO))
+                    continue
+                if v.get("lieu_id") and v["lieu_id"] not in lieux:
+                    faute(i, "lieu_id inconnu : {!r}".format(v["lieu_id"]))
+                    continue
+                if v.get("maison_id") and maisons and \
+                        v["maison_id"] not in maisons:
+                    faute(i, "maison_id inconnue : {!r}".format(v["maison_id"]))
+                    continue
+                # un homme qu'on cree actif doit avoir de quoi agir : c'est la
+                # regle du casting dynamique, et tick.py --verifier la dira de
+                # toute facon. Autant la dire ici, avant l'ecriture.
+                if v["etat"] == "actif" and v["id"] not in tetes and \
+                        not any(mm.get("table") == "intentions"
+                                and mm.get("operation") == "tete_ajouter"
+                                and (mm.get("valeur") or {}).get(
+                                    "personnage_id") == v["id"]
+                                for mm in mutations):
+                    faute(i, "{} est cree 'actif' sans tete dans ce lot : "
+                             "donne-lui une entree dans intentions.json, ou "
+                             "cree-le dormant".format(v["id"]))
+                    continue
+                personnages[v["id"]] = v
+                plan.append({"n": i, "mutation": m, "avant": None, "apres": {
+                    "personnage_ajoute": v["id"],
+                    "nom": v.get("nom"),
+                    "etat": v["etat"],
+                    "lieu_id": v.get("lieu_id"),
+                }})
+                continue
             perso = personnages.get(cible)
             if perso is None:
                 faute(i, "aucun personnage {!r}".format(cible))
@@ -736,6 +1106,62 @@ def valider(mutations, tables):
                 faute(i, "etat {!r} hors {}".format(champs["etat"], ETATS_PERSO))
                 continue
             avant = {c: perso.get(c) for c in champs}
+            apres = dict(champs)
+
+        # --- relations (orientees : A->B n'est pas B->A)
+        elif table == "relations":
+            v = charge_relation(m, op, champs)
+            source = m.get("source_id") or (v or {}).get("source_id")
+            cible_r = m.get("cible_id") or (v or {}).get("cible_id")
+            if not source or not cible_r:
+                faute(i, "relation : 'source_id' et 'cible_id' requis — une "
+                         "relation n'a pas d'id, elle se designe par le couple")
+                continue
+            inconnu = [x for x in (source, cible_r) if x not in personnages]
+            if inconnu:
+                faute(i, "personnage inconnu : {}".format(", ".join(inconnu)))
+                continue
+            if source == cible_r:
+                faute(i, "une relation de {} vers lui-meme".format(source))
+                continue
+            existante = couples.get((source, cible_r))
+            if op == "relation_ajouter":
+                if existante is not None:
+                    faute(i, "une relation {} -> {} existe deja — "
+                             "patche-la".format(source, cible_r))
+                    continue
+                if not isinstance(v, dict):
+                    faute(i, "'valeur' doit etre l'objet relation")
+                    continue
+            else:
+                if existante is None:
+                    faute(i, "aucune relation {} -> {} — la direction compte, "
+                             "verifie le sens".format(source, cible_r))
+                    continue
+            mauvais = [c for c in (v or {})
+                       if c not in CHAMPS_RELATION + ("source_id", "cible_id")]
+            if mauvais:
+                faute(i, "champs de relation interdits : {}".format(
+                    ", ".join(mauvais)))
+                continue
+            if "opinion" in (v or {}):
+                o = v["opinion"]
+                if not isinstance(o, int) or isinstance(o, bool) \
+                        or not -100 <= o <= 100:
+                    faute(i, "opinion : entier de -100 a +100, {!r} recu".format(o))
+                    continue
+            if "liens" in (v or {}) and not isinstance(v["liens"], list):
+                faute(i, "liens : une liste")
+                continue
+            if op == "relation_ajouter":
+                couples[(source, cible_r)] = v
+                plan.append({"n": i, "mutation": m, "avant": None, "apres": {
+                    "relation_ajoutee": "{} -> {}".format(source, cible_r),
+                    "opinion": v.get("opinion"),
+                    "liens": v.get("liens"),
+                }})
+                continue
+            avant = {c: existante.get(c) for c in champs}
             apres = dict(champs)
 
         # --- monde
@@ -769,12 +1195,51 @@ def appliquer(plan, tables):
     for lieu in tables["lieux"]:
         for alias in lieu.get("alias") or []:
             lieux.setdefault(alias, lieu)
+    relations = liste_simple(tables.get("relations"), "relations")
+    couples = {(r.get("source_id"), r.get("cible_id")): r for r in relations
+               if isinstance(r, dict)}
 
     for ligne in plan:
         m = ligne["mutation"]
         table, op = m["table"], m["operation"]
         cible, champs = m.get("cible"), m.get("champs") or {}
         touchees.add(table)
+
+        if table == "books":
+            livres = liste_books(tables)
+            if op == "affaire_ajouter":
+                v = m["valeur"]
+                neuve = {
+                    "id": cible,
+                    "titre": v["titre"],
+                    "sous_titre": v.get("sous_titre") or "",
+                    "type": "plan",
+                    "embleme": v.get("embleme") or "🗂️",
+                    "couleur": v.get("couleur") or "#4a4a5a",
+                    "pages": list(v.get("pages") or []),
+                    "tables": [{"titre": titre, "colonnes": list(cols),
+                                "lignes": []}
+                               for titre, cols in COLONNES_AFFAIRE_NEUVE.items()],
+                }
+                if isinstance(tables.get("books"), dict):
+                    tables["books"].setdefault("books", livres).append(neuve)
+                else:
+                    livres.append(neuve)
+                continue
+            livre = next((x for x in livres
+                          if x.get("id") == str(cible or "").split(":")[0]), None)
+            actions = table_actions(livre or {})
+            if op == "affaire_action_ajouter":
+                actions.setdefault("lignes", []).append(
+                    {"cellules": list(m["valeur"])})
+                continue
+            if op == "affaire_action":
+                colonnes = actions.get("colonnes") or []
+                ligne = prochaine_ligne_action(
+                    actions, str(cible or "").partition(":")[2])
+                for colonne, valeur in champs.items():
+                    ligne["cellules"][colonnes.index(colonne)] = valeur
+                continue
 
         if table == "intentions":
             if op == "tete_ajouter":
@@ -790,6 +1255,14 @@ def appliquer(plan, tables):
                 tete.setdefault("plan", []).append(m["valeur"])
             elif op == "tete":
                 tete.update(champs)
+            elif op.startswith("declencheur"):
+                tete.setdefault("declencheurs", [])
+                if op.endswith("ajouter"):
+                    tete["declencheurs"].append(m["valeur"])
+                else:
+                    tete["declencheurs"] = [
+                        d for d in tete["declencheurs"]
+                        if not (isinstance(d, dict) and d.get("si") == m["valeur"])]
             else:
                 liste = "croyances" if op.startswith("croyance") else "ignore"
                 tete.setdefault(liste, [])
@@ -806,6 +1279,11 @@ def appliquer(plan, tables):
             else:
                 ev.update(champs)
         elif table == "mains":
+            if op == "main_ajouter":
+                neuve = m["valeur"]
+                liste_mains(tables["mains"]).append(neuve)
+                mains[neuve["id"]] = neuve
+                continue
             act = mains[cible]
             if op == "mesure":
                 mes = next(x for x in act["mesure"]
@@ -833,7 +1311,23 @@ def appliquer(plan, tables):
         elif table == "lieux":
             lieux[cible].setdefault("roukerie", {}).update(champs)
         elif table == "personnages":
-            personnages[cible].update(champs)
+            if op == "personnage_ajouter":
+                neuf = m["valeur"]
+                liste_simple(tables["personnages"], "personnages").append(neuf)
+                personnages[neuf["id"]] = neuf
+            else:
+                personnages[cible].update(champs)
+        elif table == "relations":
+            v = charge_relation(m, op, champs)
+            source = m.get("source_id") or (v or {}).get("source_id")
+            cible_r = m.get("cible_id") or (v or {}).get("cible_id")
+            if op == "relation_ajouter":
+                neuve = dict(v)
+                neuve["source_id"], neuve["cible_id"] = source, cible_r
+                liste_simple(tables["relations"], "relations").append(neuve)
+                couples[(source, cible_r)] = neuve
+            else:
+                couples[(source, cible_r)].update(champs)
         else:
             tables["monde"].update(champs)
 
@@ -870,9 +1364,9 @@ def resumer(plan):
 
 def main():
     a = argparse.ArgumentParser(
-        description="Applique une proposition de etat/staging/ a etat/*.json.")
+        description="Applique une proposition de etat/ a etat/*.json.")
     a.add_argument("proposition",
-                   help="nom du fichier dans etat/staging/ (ou chemin complet)")
+                   help="nom du fichier dans etat/ (ou chemin complet)")
     a.add_argument("--vraiment", action="store_true",
                    help="ecrire pour de bon (sans quoi : blanc)")
     a.add_argument("--forcer", action="store_true",
@@ -921,7 +1415,7 @@ def main():
     # journal n'est jamais mutable : il sert a proteger la tete du joueur.
     tables = {nom: lire(nom) for nom in
               ("intentions", "evenements", "personnages", "monde", "journal",
-               "lieux")}
+               "lieux", "relations", "maisons")}
     # plis.json est facultatif : une partie d'avant le courrier tourne encore
     if os.path.isfile(os.path.join(ETAT, "plis.json")):
         tables["plis"] = lire("plis")
@@ -946,6 +1440,14 @@ def main():
                            if os.path.isfile(
                                os.path.join(ETAT, "mains.json"))
                            else {"mains": []})
+    # books.json : les registres et les affaires. Facultatif comme les mains —
+    # mais s'il n'est pas charge ici, liste_books() le voit VIDE : la validation
+    # d'un affaire_ajouter passe alors sur une liste fantome, la mutation
+    # s'ecrit nulle part, et ecrire() casse sur une cle absente.
+    tables["books"] = (lire("books")
+                           if os.path.isfile(
+                               os.path.join(ETAT, "books.json"))
+                           else {"books": []})
 
     # garde 2 : tout valider avant de rien ecrire
     plan, erreurs = valider(mutations, tables)

@@ -1,0 +1,279 @@
+[  0.002s] boucle.demarrage         · sec=False · une_fois=False · heartbeat_s=5.0
+[  0.005s] cycle.depart            
+[  0.008s] horloge.lecture         
+[  0.010s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=85260.0
+[  0.012s] graphe.lecture          
+[  0.047s] graphe.charge            · noeuds=1778 · aretes=4650
+[  0.048s] diffusion.importance    
+[  0.181s] energie.polarites_horloge · moyenne_minute=67000314.75 · ecart_max_minutes=1048.25 · emetteurs=1 · absorbeurs=97 · neutres=0
+[  0.184s] energie.transfert_horloge · transfere=10.682 · propositions=1018 · acteurs=98
+[  0.187s] energie.graphe           · dt_s=4095.62 · integration=0.999922 · noeuds=1778 · energises=191 · total=1164.428 · pic=pers:rhaenyra · maximum=100.0
+[  0.188s] diffusion.calendrier    
+[  0.198s] energie.calculee         · acteurs=9 · maximum=21.867
+[  0.205s] selection.elue           · acteur=robert-quince · energie=21.867 · tache=11030 · energie_tache=1.922 · budget_energie=21 · budget_s=6300 · flux_horloge=absorbe · ecart_horloge_min=-372.75 · horloge_pj=rhaenyra
+[  0.206s] acteur.choisi            · acteur=robert-quince · energie=21.867 · importance=0.218263 · budget=21
+[  0.207s] tache.choisie            · id=11030 · distance=1 · creee=False · energie=1.922
+ACTIVATION  robert-quince  energie 21.87 · budget 21 (105 min)  importance 0.218
+  tache 11030 · distance 1 · 🌫️ Choisir le point de débarquement pour son INVISIBILITÉ
+  front aurore-inchauspe · +85260.0s depuis rhaenyra
+[  0.208s] energie.reservee         · acteur=robert-quince · valeur=21.867 · plafond=21
+[  0.214s] appel.dossier            · acteur=robert-quince · tache=11030
+[  0.272s] appel.systeme_narrateur  · acteur=robert-quince · caracteres=1103
+[  0.274s] appel.systeme_pnj        · acteur=robert-quince · caracteres=57684
+[  0.275s] appel.ouverture          · acteur=robert-quince · caracteres=31790 · budget_energie=21 · budget_secondes=6300
+[  0.278s] cli.depart               · acteur=narrateur-local:cour · session=b00be55f-83e0-4a05-b1f0-cf5f5e116a28 · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[  2.169s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[  3.176s] cli.rate_limit_event     · sous_type=None
+[  6.078s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.ouverture · secondes=5.0
+[  6.527s] cli.texte                · contenu={ "appel_pnj": { "qui": "robert-quince", "message": "Ser Robert, votre homme est parti vers la porte de mer il y a une heure ; la cour est encore pleine, le jeune prince Jacaerys …
+[  6.546s] cli.resultat             · erreur=False · duree_ms=4714 · cout=0.188132 · entree=2 · sortie=183 · caracteres=404
+[  8.105s] narrateur.reveille_pnj   · acteur=robert-quince · caracteres=334
+[  8.217s] cli.depart               · acteur=robert-quince · session=aa6a5c75-b215-4719-a360-59ce90cc467a · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[ 10.235s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[ 11.532s] cli.rate_limit_event     · sous_type=None
+[ 13.244s] cli.heartbeat            · acteur=robert-quince · phase=pnj.tentative · secondes=5.0
+[ 13.404s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 14.693s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 15.411s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 15.417s] cli.assistant            · bloc=thinking
+[ 18.251s] cli.heartbeat            · acteur=robert-quince · phase=pnj.tentative · secondes=10.0
+[ 23.266s] cli.heartbeat            · acteur=robert-quince · phase=pnj.tentative · secondes=15.0
+[ 27.015s] cli.texte                · contenu={ "tentative": { "verbe": "arpenter", "quoi": "Avant l'étale, faire à pied le tour des grèves accostables du rocher avec mon registre de garde sous le bras, et arrêter non pas où …
+[ 27.041s] cli.resultat             · erreur=False · duree_ms=17217 · cout=0.309222 · entree=2 · sortie=835 · caracteres=1609
+[ 28.269s] cli.heartbeat            · acteur=robert-quince · phase=pnj.tentative · secondes=20.0
+[ 28.283s] pnj.tentative_valide     · acteur=robert-quince · verbe=arpenter · caracteres=1496
+[ 28.284s] narrateur.arbitrage      · acteur=robert-quince · caracteres=5000
+[ 28.285s] cli.depart               · acteur=narrateur-local:cour · session=b00be55f-83e0-4a05-b1f0-cf5f5e116a28 · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[ 30.921s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[ 34.367s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=5.0
+[ 39.375s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=10.0
+[ 44.391s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=15.0
+[ 49.394s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=20.0
+[ 54.395s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=25.0
+[ 59.407s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=30.0
+[ 64.422s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=35.1
+[ 69.425s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=40.1
+[ 74.439s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=45.1
+[ 79.449s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=50.1
+[ 84.460s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=55.1
+[ 89.467s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=60.1
+[ 94.468s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=65.1
+[ 99.472s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=70.1
+[100.181s] cli.texte                · contenu={ "qui": "robert-quince", "activation": { "tache": {"id": "11030", "quoi": "🌫️ Choisir le point de débarquement pour son INVISIBILITÉ", "creee": false}, "issue": "avance", "activi…
+[100.203s] cli.rate_limit_event     · sous_type=None
+[100.218s] cli.resultat             · erreur=False · duree_ms=69794 · cout=0.19008950000000002 · entree=2 · sortie=6318 · caracteres=15606
+[101.597s] rapport.extraction       · acteur=robert-quince · essai=1
+[101.604s] rapport.refuse           · acteur=robert-quince · essai=1 · erreur=activite 1 : references hors dossier : kerra-des-claies
+[101.608s] narrateur.corrige        · acteur=robert-quince · essai=2 · caracteres=895
+[101.612s] cli.depart               · acteur=narrateur-local:cour · session=b00be55f-83e0-4a05-b1f0-cf5f5e116a28 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[103.760s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[106.214s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[106.678s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=5.0
+[107.611s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[109.022s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[109.068s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[109.112s] cli.assistant            · bloc=thinking
+[111.692s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=10.0
+[116.701s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=15.0
+[121.715s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=20.0
+[126.719s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=25.0
+[131.733s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=30.1
+[136.737s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=35.1
+[141.742s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=40.1
+[146.747s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=45.1
+[151.752s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=50.1
+[156.753s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=55.1
+[161.765s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=60.1
+[164.418s] cli.texte                · contenu={ "qui": "robert-quince", "activation": { "tache": {"id": "11030", "quoi": "🌫️ Choisir le point de débarquement pour son INVISIBILITÉ", "creee": false}, "issue": "avance", "activi…
+[164.426s] cli.rate_limit_event     · sous_type=None
+[164.433s] cli.resultat             · erreur=False · duree_ms=61152 · cout=0.23772100000000002 · entree=2 · sortie=6437 · caracteres=15325
+[165.768s] rapport.extraction       · acteur=robert-quince · essai=2
+[165.772s] rapport.refuse           · acteur=robert-quince · essai=2 · erreur=activite 2 : references hors dossier : greve, porte-de-mer
+[165.774s] narrateur.corrige        · acteur=robert-quince · essai=3 · caracteres=898
+[165.776s] cli.depart               · acteur=narrateur-local:cour · session=b00be55f-83e0-4a05-b1f0-cf5f5e116a28 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[168.352s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[170.798s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=5.0
+[171.133s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[172.537s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[173.961s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[175.367s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[175.808s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=10.0
+[176.780s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[178.189s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[179.603s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[180.325s] cli.assistant            · bloc=thinking
+[180.813s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=15.0
+[185.826s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=20.0
+[190.832s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=25.0
+[195.837s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=30.0
+[200.849s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=35.1
+[205.860s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=40.1
+[210.868s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=45.1
+[215.871s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=50.1
+[220.876s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=55.1
+[225.881s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=60.1
+[230.897s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=65.1
+[235.899s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=70.1
+[236.236s] cli.texte                · contenu={ "qui": "robert-quince", "activation": { "tache": {"id": "11030", "quoi": "🌫️ Choisir le point de débarquement pour son INVISIBILITÉ", "creee": false}, "issue": "avance", "activi…
+[236.240s] cli.rate_limit_event     · sous_type=None
+[236.256s] cli.resultat             · erreur=False · duree_ms=68308 · cout=0.24848150000000002 · entree=2 · sortie=6685 · caracteres=15072
+[237.617s] rapport.extraction       · acteur=robert-quince · essai=3
+[237.620s] rapport.mutations_ecartees · acteur=robert-quince · nombre=5
+[237.626s] rapport.valide           · acteur=robert-quince · depense=21.0 · activites=5 · corrections=2
+[237.632s] rapport.depose           · acteur=robert-quince · fichier=etat/staging/activations/20260809-215355-869804-robert-quince.json
+[237.632s] acteur.energie.debitee   · acteur=robert-quince · avant=21.867 · energie=21.0 · duree_monde_s=6300 · apres=0.867
+[237.633s] continuite.enregistree   · acteur=robert-quince · tache=11030 · issue=avance · suspendue=False · fin_s=91560.0 · reprendre_a=95160.0 · cibles=5
+[237.641s] cycle.termine            · acteur=robert-quince · rapport=etat/staging/activations/20260809-215355-869804-robert-quince.json
+[237.645s] cycle.depart            
+[237.646s] horloge.lecture         
+[237.647s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=85740.0
+[237.647s] graphe.lecture          
+[237.675s] graphe.charge            · noeuds=1778 · aretes=4650
+[237.676s] diffusion.importance    
+[237.865s] energie.polarites_horloge · moyenne_minute=67000316.75 · ecart_max_minutes=1054.25 · emetteurs=1 · absorbeurs=97 · neutres=0
+[237.869s] energie.transfert_horloge · transfere=10.681 · propositions=1018 · acteurs=98
+[237.872s] energie.graphe           · dt_s=480.0 · integration=0.670123 · noeuds=1778 · energises=191 · total=1157.501 · pic=pers:rhaenyra · maximum=100.0
+[237.874s] diffusion.calendrier    
+[237.891s] energie.calculee         · acteurs=9 · maximum=14.94
+[237.892s] selection.borne          · acteur=robert-quince · energie=14.94 · seuil=15.0
+[237.893s] cycle.attente            · raison=aucun couple acteur-tache energise
+[242.902s] cycle.depart            
+[242.903s] horloge.lecture         
+[242.905s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=85745.3
+[242.905s] graphe.lecture          
+[242.952s] graphe.charge            · noeuds=1778 · aretes=4650
+[242.954s] diffusion.importance    
+[243.169s] energie.polarites_horloge · moyenne_minute=67000316.75 · ecart_max_minutes=1054.25 · emetteurs=1 · absorbeurs=97 · neutres=0
+[243.175s] energie.transfert_horloge · transfere=10.681 · propositions=1018 · acteurs=98
+[243.180s] energie.graphe           · dt_s=5.258 · integration=0.012075 · noeuds=1778 · energises=191 · total=1157.584 · pic=pers:rhaenyra · maximum=100.0
+[243.182s] diffusion.calendrier    
+[243.199s] energie.calculee         · acteurs=9 · maximum=15.023
+[243.201s] selection.rejetee        · acteur=robert-quince · energie=15.023 · raison=repos_acteur · reprendre_a=92460.0
+[243.203s] selection.borne          · acteur=steffon-darklyn · energie=8.562 · seuil=15.0
+[243.205s] cycle.attente            · raison=aucun couple acteur-tache energise
+[248.223s] cycle.depart            
+[248.224s] horloge.lecture         
+[248.225s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=85750.6
+[248.226s] graphe.lecture          
+[248.264s] graphe.charge            · noeuds=1778 · aretes=4650
+[248.265s] diffusion.importance    
+[248.464s] energie.polarites_horloge · moyenne_minute=67000316.75 · ecart_max_minutes=1054.25 · emetteurs=1 · absorbeurs=97 · neutres=0
+[248.467s] energie.transfert_horloge · transfere=10.681 · propositions=1018 · acteurs=98
+[248.469s] energie.graphe           · dt_s=5.32 · integration=0.012218 · noeuds=1778 · energises=191 · total=1157.668 · pic=pers:rhaenyra · maximum=100.0
+[248.469s] diffusion.calendrier    
+[248.480s] energie.calculee         · acteurs=9 · maximum=15.107
+[248.481s] selection.rejetee        · acteur=robert-quince · energie=15.107 · raison=repos_acteur · reprendre_a=92460.0
+[248.482s] selection.borne          · acteur=steffon-darklyn · energie=8.562 · seuil=15.0
+[248.483s] cycle.attente            · raison=aucun couple acteur-tache energise
+[253.492s] cycle.depart            
+[253.493s] horloge.lecture         
+[253.495s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=85755.8
+[253.496s] graphe.lecture          
+[253.528s] graphe.charge            · noeuds=1778 · aretes=4650
+[253.529s] diffusion.importance    
+[253.800s] energie.polarites_horloge · moyenne_minute=67000316.75 · ecart_max_minutes=1054.25 · emetteurs=1 · absorbeurs=97 · neutres=0
+[253.806s] energie.transfert_horloge · transfere=10.681 · propositions=1018 · acteurs=98
+[253.809s] energie.graphe           · dt_s=5.27 · integration=0.012102 · noeuds=1778 · energises=191 · total=1157.75 · pic=pers:rhaenyra · maximum=100.0
+[253.811s] diffusion.calendrier    
+[253.833s] energie.calculee         · acteurs=9 · maximum=15.189
+[253.835s] selection.rejetee        · acteur=robert-quince · energie=15.189 · raison=repos_acteur · reprendre_a=92460.0
+[253.837s] selection.borne          · acteur=steffon-darklyn · energie=8.562 · seuil=15.0
+[253.838s] cycle.attente            · raison=aucun couple acteur-tache energise
+[258.854s] cycle.depart            
+[258.856s] horloge.lecture         
+[258.858s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=85761.2
+[258.859s] graphe.lecture          
+[258.891s] graphe.charge            · noeuds=1778 · aretes=4650
+[258.893s] diffusion.importance    
+[259.098s] energie.polarites_horloge · moyenne_minute=67000316.75 · ecart_max_minutes=1054.25 · emetteurs=1 · absorbeurs=97 · neutres=0
+[259.101s] energie.transfert_horloge · transfere=10.681 · propositions=1018 · acteurs=98
+[259.103s] energie.graphe           · dt_s=5.363 · integration=0.012314 · noeuds=1778 · energises=191 · total=1157.832 · pic=pers:rhaenyra · maximum=100.0
+[259.104s] diffusion.calendrier    
+[259.120s] energie.calculee         · acteurs=9 · maximum=15.271
+[259.121s] selection.rejetee        · acteur=robert-quince · energie=15.271 · raison=repos_acteur · reprendre_a=92460.0
+[259.123s] selection.borne          · acteur=steffon-darklyn · energie=8.562 · seuil=15.0
+[259.124s] cycle.attente            · raison=aucun couple acteur-tache energise
+[264.134s] cycle.depart            
+[264.135s] horloge.lecture         
+[264.137s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=85766.5
+[264.139s] graphe.lecture          
+[264.179s] graphe.charge            · noeuds=1778 · aretes=4650
+[264.182s] diffusion.importance    
+[264.420s] energie.polarites_horloge · moyenne_minute=67000316.75 · ecart_max_minutes=1054.25 · emetteurs=1 · absorbeurs=97 · neutres=0
+[264.423s] energie.transfert_horloge · transfere=10.681 · propositions=1018 · acteurs=98
+[264.426s] energie.graphe           · dt_s=5.279 · integration=0.012123 · noeuds=1778 · energises=191 · total=1157.912 · pic=pers:rhaenyra · maximum=100.0
+[264.426s] diffusion.calendrier    
+[264.452s] energie.calculee         · acteurs=9 · maximum=15.351
+[264.453s] selection.rejetee        · acteur=robert-quince · energie=15.351 · raison=repos_acteur · reprendre_a=92460.0
+[264.454s] selection.borne          · acteur=steffon-darklyn · energie=8.562 · seuil=15.0
+[264.455s] cycle.attente            · raison=aucun couple acteur-tache energise
+[269.470s] cycle.depart            
+[269.472s] horloge.lecture         
+[269.474s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=85771.8
+[269.475s] graphe.lecture          
+[269.512s] graphe.charge            · noeuds=1778 · aretes=4650
+[269.513s] diffusion.importance    
+[269.671s] energie.polarites_horloge · moyenne_minute=67000316.75 · ecart_max_minutes=1054.25 · emetteurs=1 · absorbeurs=97 · neutres=0
+[269.675s] energie.transfert_horloge · transfere=10.681 · propositions=1018 · acteurs=98
+[269.677s] energie.graphe           · dt_s=5.337 · integration=0.012255 · noeuds=1778 · energises=191 · total=1157.992 · pic=pers:rhaenyra · maximum=100.0
+[269.678s] diffusion.calendrier    
+[269.691s] energie.calculee         · acteurs=9 · maximum=15.431
+[269.691s] selection.rejetee        · acteur=robert-quince · energie=15.431 · raison=repos_acteur · reprendre_a=92460.0
+[269.692s] selection.borne          · acteur=steffon-darklyn · energie=8.562 · seuil=15.0
+[269.692s] cycle.attente            · raison=aucun couple acteur-tache energise
+[274.699s] cycle.depart            
+[274.713s] horloge.lecture         
+[274.729s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=85777.1
+[274.743s] graphe.lecture          
+[274.774s] graphe.charge            · noeuds=1778 · aretes=4650
+[274.775s] diffusion.importance    
+[274.945s] energie.polarites_horloge · moyenne_minute=67000316.75 · ecart_max_minutes=1054.25 · emetteurs=1 · absorbeurs=97 · neutres=0
+[274.950s] energie.transfert_horloge · transfere=10.681 · propositions=1018 · acteurs=98
+[274.952s] energie.graphe           · dt_s=5.256 · integration=0.01207 · noeuds=1778 · energises=191 · total=1158.07 · pic=pers:rhaenyra · maximum=100.0
+[274.953s] diffusion.calendrier    
+[274.968s] energie.calculee         · acteurs=9 · maximum=15.508
+[274.969s] selection.rejetee        · acteur=robert-quince · energie=15.508 · raison=repos_acteur · reprendre_a=92460.0
+[274.971s] selection.borne          · acteur=steffon-darklyn · energie=8.562 · seuil=15.0
+[274.972s] cycle.attente            · raison=aucun couple acteur-tache energise
+[279.983s] cycle.depart            
+[279.987s] horloge.lecture         
+[279.993s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=85782.3
+[279.998s] graphe.lecture          
+[280.082s] graphe.charge            · noeuds=1778 · aretes=4650
+[280.083s] diffusion.importance    
+[280.250s] energie.polarites_horloge · moyenne_minute=67000316.75 · ecart_max_minutes=1054.25 · emetteurs=1 · absorbeurs=97 · neutres=0
+[280.253s] energie.transfert_horloge · transfere=10.681 · propositions=1018 · acteurs=98
+[280.255s] energie.graphe           · dt_s=5.263 · integration=0.012086 · noeuds=1778 · energises=191 · total=1158.146 · pic=pers:rhaenyra · maximum=100.0
+[280.256s] diffusion.calendrier    
+[280.268s] energie.calculee         · acteurs=9 · maximum=15.585
+[280.270s] selection.rejetee        · acteur=robert-quince · energie=15.585 · raison=repos_acteur · reprendre_a=92460.0
+[280.271s] selection.borne          · acteur=steffon-darklyn · energie=8.562 · seuil=15.0
+[280.272s] cycle.attente            · raison=aucun couple acteur-tache energise
+[285.285s] cycle.depart            
+[285.286s] horloge.lecture         
+[285.288s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=85787.6
+[285.290s] graphe.lecture          
+[285.317s] graphe.charge            · noeuds=1778 · aretes=4650
+[285.318s] diffusion.importance    
+[285.501s] energie.polarites_horloge · moyenne_minute=67000316.75 · ecart_max_minutes=1054.25 · emetteurs=1 · absorbeurs=97 · neutres=0
+[285.506s] energie.transfert_horloge · transfere=10.681 · propositions=1018 · acteurs=98
+[285.508s] energie.graphe           · dt_s=5.296 · integration=0.012162 · noeuds=1778 · energises=191 · total=1158.223 · pic=pers:rhaenyra · maximum=100.0
+[285.509s] diffusion.calendrier    
+[285.529s] energie.calculee         · acteurs=9 · maximum=15.662
+[285.530s] selection.rejetee        · acteur=robert-quince · energie=15.662 · raison=repos_acteur · reprendre_a=92460.0
+[285.531s] selection.borne          · acteur=steffon-darklyn · energie=8.562 · seuil=15.0
+[285.532s] cycle.attente            · raison=aucun couple acteur-tache energise
+[290.540s] cycle.depart            
+[290.541s] horloge.lecture         
+[290.545s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=85792.9
+[290.547s] graphe.lecture          
+[290.587s] graphe.charge            · noeuds=1778 · aretes=4650
+[290.589s] diffusion.importance    
+[290.750s] energie.polarites_horloge · moyenne_minute=67000316.75 · ecart_max_minutes=1054.25 · emetteurs=1 · absorbeurs=97 · neutres=0
+[290.753s] energie.transfert_horloge · transfere=10.681 · propositions=1018 · acteurs=98
+[290.755s] energie.graphe           · dt_s=5.255 · integration=0.012069 · noeuds=1778 · energises=191 · total=1158.298 · pic=pers:rhaenyra · maximum=100.0
+[290.756s] diffusion.calendrier    
+[290.768s] energie.calculee         · acteurs=9 · maximum=15.736
+[290.771s] selection.rejetee        · acteur=robert-quince · energie=15.736 · raison=repos_acteur · reprendre_a=92460.0
+[290.772s] selection.borne          · acteur=steffon-darklyn · energie=8.562 · seuil=15.0
+[290.773s] cycle.attente            · raison=aucun couple acteur-tache energise

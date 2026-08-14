@@ -1,0 +1,370 @@
+{
+ "etats_cibles": [
+  {
+   "id": "72400",
+   "quoi": "La parole du roi fait piece partout ou elle arrive, et rien n'entre a Port-Real que la Main n'apprenne",
+   "vrai_quand": "Les maisons de la Couronne se sont deliees PAR ECRIT du serment du dix-huitieme jour avant le terme des quinze jours, et le livre des arrivees de la roukerie du Donjon Rouge se relit ligne pour ligne avec le brouillon du maitre de la roukerie.",
+   "echeance": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 8
+   },
+   "sert": [
+    "71300"
+   ],
+   "de_lieu": "port-real",
+   "vers_lieu": "port-real",
+   "voie": "air",
+   "route_dite": "Deux fournees depuis la proclamation du 23e. La premiere partie le 23 au matin sur un texte qu'Otto tenait ecrit avant l'aube — vingt corbeaux et deux crieurs, Repos-des-Freux, les Griffes, Rosby, Stokeworth, Sombreval le 25e, Accalmie et Harrenhal le 27e, les Eyrie le 29e, Castral-Roc le 2e de la 4e lune. La seconde partie le 30e, adressee aux seules maisons dont la chancellerie n'avait recu AUCUNE reponse, avec en bas, d'une autre encre et d'une autre main : passe le terme, le silence sera tenu pour un refus. Le terme est le quinzieme jour a compter du 23e de la 3e lune, soit le 8e de la 4e.",
+   "source": "evenements.json `decheance-de-rhaenyra`, effets et diffusion (seconde fournee du 129.3.30, texte cite mot pour mot) | intention d'otto au 129.4.3 : « il me reste a les faire sortir sous cire et sous la date du 3e jour avant qu'un pere en avertisse un autre » | plis.json : 32 plis vers port-real, 23 remis"
+  }
+ ],
+ "verrous": [
+  {
+   "id": "72401",
+   "quoi": "La chaine des mestres porte les deux camps, et le Grand Mestre est assis dessus",
+   "bloque": [
+    "72400"
+   ],
+   "vrai_aujourdhui": "Le meme homme a pris en cire le couronnement de Rhaenyra mot pour mot — y compris « citoyens », inscrit deux fois — et tient la plume de la decheance d'Aegon. Une copie de la deposition de ser Steffon lui a ete expediee NOMMEMENT par un confrere de Peyredragon dans la nuit du 17e, de mestre a mestre, hors de tout sceau royal. Les corbeaux du roi et ceux de la reine se posent sur des tours tenues par des hommes du meme ordre, qui se doivent entre eux plus qu'ils ne doivent a leur seigneur. C'est un moyen PARTAGE, et personne des deux camps ne peut le couper sans devenir aveugle en meme temps que sourd.",
+   "leve_quand": "On cesse d'ecrire par corbeau — ce que lord Ormund a fait le 29e a Villevieille en convoquant par CAVALIERS —, ou la Citadelle prend parti par ecrit, ce qu'elle n'a jamais fait.",
+   "portee_pour_nous": "on peut le savoir, et on peut agir dessus : nous avons Gerardys, qui est du meme ordre et a deja ecrit a Orwyle nommement une fois",
+   "source": "actes.json acte-028 et acte-031 | evenements.json `deposition-steffon` (« une pour Villevieille adressee au grand mestre Orwyle », « Orwyle recoit personnellement une copie de la main d'un confrere ») | plans.json 71000, source du 129.3.29 : « il convoque par CAVALIERS et non par corbeaux — la chaine des mestres porte tout, il vient de le comprendre »"
+  },
+  {
+   "id": "72402",
+   "quoi": "Orwyle donne sa main, jamais son sceau",
+   "bloque": [
+    "72400"
+   ],
+   "vrai_aujourdhui": "Il ecrit tout ce qu'on lui dicte des faits — les quarante prisonniers, les douze cents brules — mais il a demande DEUX FOIS sous quelle autorite la Citadelle souscrit un article que nul acte ne prouve, et n'a pas offert son sceau. Il a pose lui-meme la distinction entre copier un lignage et souscrire un article, puis est parti chercher ses roles sur un billet de la caisse de la Main. Sa main est acquise a Otto ; sa signature ne l'est pas, et c'est la signature qui fait la piece.",
+   "leve_quand": "Orwyle appose son sceau sur une piece du regne — ou le roi lui retire la charge, et alors la Citadelle a un grief ecrit.",
+   "portee_pour_nous": "on peut le savoir : il l'a fait devant temoins, deux fois",
+   "source": "croyances d'otto (date_maj 129.4.3), en toutes lettres : « Sa main m'est acquise ; sa signature ne l'est pas, et c'est la signature qui fait la piece » et « Ce qu'il retient n'est donc pas le fait, c'est le sceau »"
+  },
+  {
+   "id": "72403",
+   "quoi": "La roukerie du Donjon Rouge n'est pas tenue par ceux qui croient la tenir",
+   "bloque": [
+    "72400"
+   ],
+   "vrai_aujourdhui": "Sur trente-deux plis arrives a Port-Real, vingt-trois ont ete remis — et DIX-NEUF de ces vingt-trois sont passes par la main de lord Larys Strong, dont quatre adresses au Grand Mestre, cinq a la reine douairiere et six a la Main elle-meme. Le corbeau du 25e, cachet PRIVE et non sceau de la couronne, il l'a pris a la roukerie, ouvert, lu, et porte decachete a Alicent sans s'en excuser : Otto ignore a ce jour que cette lettre existe. Le livre cloute ne porte pas ce que porte le brouillon du maitre de la roukerie ; deux departs vers Rosby et Stokeworth y figurent a l'heure creuse de Larys sans que son nom soit sur les plis ; et la ligne du payeur est barree aux six livraisons de froment, du meme trait et apres sechage — un clerc a qui l'on a dit de n'ecrire aucun nom.",
+   "leve_quand": "Un homme de la Main tient la tour aux heures creuses et le livre cloute est relu chaque soir contre le brouillon — ce que personne n'a ordonne.",
+   "portee_pour_nous": "on peut le savoir : ce que la roukerie du Donjon Rouge laisse passer, un mestre achete de l'autre bord peut le dire",
+   "source": "plis.json (comptage : 32 vers port-real, 23 remis, 19 main=larys) | evenements.json `arrivee-lettre-privee-alicent`, effets | croyances d'otto au 129.4.3 (livre cloute, brouillon, ligne du payeur barree) | croyances de larys au 129.4.3 (« le registre de la roukerie porte deux departs a son heure creuse : qui saurait lire l'heure saurait lire la main »)"
+  },
+  {
+   "id": "72404",
+   "quoi": "Il existe un second feuillet, et personne ne peut le demander sans prendre le bras d'un mestre",
+   "bloque": [],
+   "vrai_aujourdhui": "Orwyle a ecrit en mer, du 19 au 21, DEUX relations datees de ce qu'il a vu a Peyredragon : une montrable — exacte, chiffree, sans un adjectif, quarante prisonniers vivants et comptes — et une seconde ou sont les choses qu'on ne met pas sous un sceau : le mot Coucou, le prince qui reclamait quatre cordes en public, le seau d'eau traverse la cour, la reine descendant les quarante pas a pied. La seconde est pliee en quatre dans la doublure de sa manche, tenue par deux maillons de sa chaine ; a distance d'une table, cela ne se voit pas. Otto lui a demande deux relations de la nef ; il n'en a produit qu'une, et a ramene sa main gauche contre lui avant de tendre la droite. La Main ne conclut pas qu'il y a un second texte : elle conclut qu'il porte sur lui une chose qu'il ne veut pas voir demandee.",
+   "leve_quand": "On lui prend le bras et on le retrousse — la fente s'ouvre d'un pouce des qu'il leve la main au-dessus de l'epaule ; ou il le donne lui-meme a qui il aura choisi.",
+   "portee_pour_nous": "on peut agir dessus, et c'est la porte ouverte de cette tranche : il ne reproche a la reine qu'une chose exacte, de ne pas avoir repondu, et ce grief a cesse d'etre le plus grand depuis qu'il a vu ce qu'on fait de sa plume a Port-Real",
+   "source": "croyances d'orwyle (montage de la manche, les deux maillons, le bras bas) et son plan `orwyle-recit-juste`, etat fait, champ accompli | croyances d'otto au 129.4.3 (le geste du bras) | son `ignore` : Otto ignore qu'il y a deux recits"
+  },
+  {
+   "id": "72405",
+   "quoi": "Le recit officiel du feu porte deux mains, et l'une des deux le sait",
+   "bloque": [
+    "72400"
+   ],
+   "vrai_aujourdhui": "Otto attendait un massacre ; Orwyle a pose sur la table un texte exact ou les quarante sont vivants. Le si_bloque d'Otto s'est applique tel qu'il etait ecrit : un scribe a recopie le texte en y ajoutant ce qui manquait, et le sceau du roi y a ete mis tel quel. La piece qui court le royaume est donc de deux mains, elle est fausse a l'endroit exact ou elle sert, et l'homme qui a ecrit la premiere version vit dans le Donjon Rouge avec l'autre pliee dans sa manche.",
+   "leve_quand": "Sans objet : rien ne le leve. Il se paie le jour ou quelqu'un met les deux textes cote a cote.",
+   "portee_pour_nous": "on peut le savoir, et on peut le provoquer — mais seulement par Orwyle, et il ne se vendra pas",
+   "source": "evenements.json `retour-orwyle`, effets | plan d'otto `otto-recit-du-feu`, champ accompli : « Le texte porte donc deux mains, et Orwyle le sait » | croyance d'orwyle : « elle fera recopier son texte par un scribe pour y mettre ce qui manque, sous le sceau du roi »"
+  },
+  {
+   "id": "72406",
+   "quoi": "Le silence des maisons de la Couronne n'a pas de sanction ecrite",
+   "bloque": [
+    "72400"
+   ],
+   "vrai_aujourdhui": "La seconde fournee dit que passe le terme le silence sera tenu pour un refus — mais rien ne dit ce qui suit un refus, et la ligne a ete ajoutee d'une autre encre et d'une autre main que le corps du texte. Ce qui doit tenir la place de la sanction, ce sont les brefs de pupille : huit maisons nommees, agees et datees sur le role de la Main, dont une seule est scellee (Duskendale) et une entamee (Hayford). Le role a nomme des NES, non des vivants ; et parce que la feuille dit « l'aine des fils de la maison » faute d'un prenom, c'est le pere qui choisit qui monte a Port-Real — et un pere qui a peur choisit toujours celui qu'il aime le moins.",
+   "leve_quand": "Les huit brefs sont sortis sous cire avant qu'un pere en avertisse un autre, et le premier enfant est en main de garde.",
+   "portee_pour_nous": "on peut le savoir : huit maisons de la Couronne recevront la meme cire dans la meme semaine, et l'une d'elles parlera",
+   "source": "evenements.json `decheance-de-rhaenyra`, diffusion vers stokeworth du 129.3.30 | intention et croyances d'otto au 129.4.3 (le role, les huit maisons, « des nes, non des vivants », « l'aine des fils de la maison »)"
+  }
+ ],
+ "clefs": [
+  {
+   "id": "72410",
+   "quoi": "Acheter le mestre, pas le seigneur",
+   "ouvre": [
+    "72401",
+    "72406"
+   ],
+   "principe": "On n'achete pas un seigneur qui a peur : on achete l'homme qui ecrit ses lettres et lit celles qu'il recoit. Une dette de Citadelle deja reglee vaut plus qu'une bourse, parce qu'elle ne se rend pas. Un mestre lit tout et ne coute presque rien.",
+   "prix": "Le jour ou la Citadelle l'apprend, toutes les tours de la baie se ferment a la fois — et c'est la meme chaine qui porte les corbeaux du roi.",
+   "porteur": "larys"
+  },
+  {
+   "id": "72411",
+   "quoi": "Le bref de pupille",
+   "ouvre": [
+    "72406",
+    "72400"
+   ],
+   "principe": "Une sommation generale ne se repond pas ; une cire qui nomme un enfant se repond dans la journee. Huit maisons, huit noms, huit dates, sorties assez vite pour qu'aucun pere n'ait le temps d'en avertir un autre.",
+   "prix": "Le prenom des enfants, que la Main n'a pas ; et le consentement de la reine douairiere, qu'elle refuse — elle a lu la feuille jusqu'au bout, n'a demande que l'age de l'enfant, et l'a reposee sans dire ni oui ni non. On ne pourra jamais ecrire que la mere du Roi l'a voulu.",
+   "porteur": "otto"
+  },
+  {
+   "id": "72412",
+   "quoi": "Deux mains sur un meme texte",
+   "ouvre": [
+    "72405"
+   ],
+   "principe": "Un recit mediocre scelle vaut mieux qu'un beau recit en retard. Ce que le temoin refuse d'ecrire, un scribe l'ajoute, et le sceau du roi ne distingue pas les mains.",
+   "prix": "La piece ne resiste pas a une confrontation, et le temoin est vivant, en charge, et loge sous le meme toit.",
+   "porteur": "otto",
+   "note": "72412 et 72402 se mordent : chaque fois qu'on fait recopier, on prouve qu'on n'a pas obtenu le sceau."
+  },
+  {
+   "id": "72413",
+   "quoi": "Sortir de la chaine — convoquer par cavaliers",
+   "ouvre": [
+    "72401"
+   ],
+   "principe": "Ce qui ne passe pas par une tour ne se lit pas dans une tour. Quatre jours perdus sur les courriers, dix jours gagnes sur la date, et pas une ligne au livre d'un mestre.",
+   "prix": "Le prix des cavaliers et de leurs relais ; et ca ne vaut que pour ce qui part de Villevieille — la chancellerie de Port-Real, elle, ne peut pas ecrire a douze maisons par cavalier sans que la ville le voie.",
+   "porteur": "ormund-hightower",
+   "note": "Clef trouvee dans l'autre plan (71000, decision du 129.3.29) et jamais portee jusqu'ici. Personne a Port-Real ne l'a encore reprise."
+  },
+  {
+   "id": "72414",
+   "quoi": "Garder le livre plutot que la lettre",
+   "ouvre": [
+    "72402",
+    "72404"
+   ],
+   "principe": "Une depeche s'ecrit une fois, on la scelle, elle part : on garde la trace de l'enveloppe, jamais de la lettre. Qui tient le livre des arrivees et le role des lignages tient ce que chacun peut PROUVER avoir recu — sans avoir jamais souscrit une ligne de ce qu'on y a mis. C'est la seule facon de rester le seul homme des deux camps a avoir vu les deux.",
+   "prix": "Rester en charge : donc ne refuser aucune copie, tenir le bras bas, et ne rien sceller. Le jour ou on lui prend le bras, tout tombe d'un coup.",
+   "porteur": "orwyle"
+  }
+ ],
+ "actions": [
+  {
+   "id": "72420",
+   "quoi": "Faire sortir les huit brefs de pupille sous cire et sous la date du troisieme jour, avant qu'un pere en avertisse un autre",
+   "realise": [
+    "72411",
+    "72406"
+   ],
+   "office": "otto",
+   "moyens": [
+    "le role des maisons de la Couronne",
+    "la cire et le sceau du roi",
+    "les corbeaux de la roukerie du Donjon Rouge"
+   ],
+   "cout": "huit corbeaux et deux jours de clerc ; et un enfant mort au role rend la piece en delai",
+   "depend_de": [
+    "72421",
+    "72427"
+   ],
+   "preuve": "Huit brefs au registre des sorties, tous dates du troisieme jour, et le premier enfant en main de garde",
+   "jour_du": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4
+   },
+   "etat": "en cours",
+   "source": "intention d'otto au 129.4.3, en toutes lettres — Duskendale scelle et a mettre en main de garde, Hayford entamee, puis Bar Emmon, Rykker, Buckwell, Massey"
+  },
+  {
+   "id": "72421",
+   "quoi": "Obtenir le prenom de l'aine de chaque maison sans que la reine douairiere y mette sa voix",
+   "realise": [
+    "72411"
+   ],
+   "office": "otto",
+   "moyens": [
+    "le role des lignages du Grand Mestre",
+    "un billet de sa caisse"
+   ],
+   "cout": "il ne pourra jamais ecrire que la mere du Roi a consenti",
+   "depend_de": [],
+   "preuve": "Un prenom par maison, ecrit sur le role, et aucune ligne portant le nom d'Alicent",
+   "jour_du": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4
+   },
+   "etat": "en cours",
+   "source": "croyances d'otto au 129.4.3 : « Ma feuille dit l'aine des fils de la maison parce que je n'ai le prenom de personne » et « elle refuse d'y mettre sa voix »"
+  },
+  {
+   "id": "72422",
+   "quoi": "Remonter le pli manquant du 25e : le livre cloute contre le brouillon du maitre de la roukerie",
+   "realise": [
+    "72403"
+   ],
+   "office": "otto",
+   "moyens": [
+    "le livre des arrivees",
+    "le brouillon de main du maitre de la roukerie",
+    "des pieces de sa caisse"
+   ],
+   "cout": "des pieces prises sans etre comptees, et un maitre de roukerie qui sait desormais qu'on l'observe",
+   "depend_de": [],
+   "preuve": "Le nom de qui a emporte l'oiseau de l'est a none le 25e",
+   "jour_du": null,
+   "etat": "en cours",
+   "source": "croyances d'otto au 129.4.3 (les quatre croyances sur le livre, le brouillon, l'absence du maitre a none, et « je la lirai en cherchant ce qu'elle couvre »)",
+   "note": "Il ne trouvera pas : c'est lord Larys qui a pris le pli, l'a lu et l'a porte a Alicent, et Otto ignore jusqu'a l'existence de cette lettre. Deux hommes lui offrent le meme brouillon le meme jour, et il l'a remarque."
+  },
+  {
+   "id": "72423",
+   "quoi": "Tenir le livre des arrivees et le role des lignages, et n'apposer son sceau sur rien",
+   "realise": [
+    "72414",
+    "72402"
+   ],
+   "office": "orwyle",
+   "moyens": [
+    "la charge de Grand Mestre du Conseil restreint",
+    "la chaine",
+    "les roles des maisons de la Couronne"
+   ],
+   "cout": "ne refuser aucune copie qu'on lui demande — donc ecrire de sa main ce qu'il ne signera pas",
+   "depend_de": [],
+   "preuve": "Aucun sceau d'Orwyle sur aucune piece du regne depuis son debarquement du 22e",
+   "jour_du": null,
+   "etat": "en cours",
+   "source": "son intention : « rester le seul homme des deux camps a avoir vu les deux, et le rester par ecrit : consigner sans se vendre » | croyances d'otto au 129.4.3 sur la distinction copier / souscrire"
+  },
+  {
+   "id": "72424",
+   "quoi": "Mettre le second feuillet hors de sa manche — et hors du Donjon Rouge",
+   "realise": [
+    "72404"
+   ],
+   "office": "orwyle",
+   "moyens": [
+    "la doublure de sa manche et deux maillons de sa chaine",
+    "de l'encre et une aiguille, qu'il n'avait pas a bord"
+   ],
+   "cout": "le montage tient tant qu'il garde le bras bas ; le deplacer, c'est le lever",
+   "depend_de": [],
+   "preuve": "Le feuillet ailleurs qu'a son bras, et personne qui sache ou",
+   "jour_du": null,
+   "etat": "a faire",
+   "source": "croyances d'orwyle (le montage, la fente d'un pouce, la manche non cousue)",
+   "note": "SOURCE FAIBLE SUR LA DATE : sa tete n'a pas ete reecrite depuis le 129.3.25, alors qu'il est a terre depuis le 22e. Les croyances sur l'encrier vide et l'impossibilite d'une troisieme copie sont des croyances DE BORD ; a Port-Real il a de l'encre. Ce qui reste ferme, c'est qu'aucune troisieme copie n'est attestee et que le feuillet est toujours a son bras au dernier etat connu."
+  },
+  {
+   "id": "72425",
+   "quoi": "Acheter les mestres de Rosby et de Stokeworth — l'offre est partie, la reponse est attendue",
+   "realise": [
+    "72410"
+   ],
+   "office": "larys",
+   "moyens": [
+    "de l'or",
+    "un service rendu a chacun",
+    "une dette de Citadelle deja reglee"
+   ],
+   "cout": "de l'or et un service ; si un chateau se ferme, il achete le mestre au lieu du seigneur",
+   "depend_de": [],
+   "preuve": "Une nouvelle de Rosby ou de Stokeworth qui arrive a lui AVANT d'arriver a la Main",
+   "jour_du": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 7
+   },
+   "etat": "en cours",
+   "source": "plan de larys `larys-oreilles-baie`, en cours, 4 jours restants au 129.4.3"
+  },
+  {
+   "id": "72426",
+   "quoi": "Faire descendre ce qui ne doit pas passer par la roukerie dans la sacoche d'une course qui descendait deja",
+   "realise": [
+    "72403"
+   ],
+   "office": "larys",
+   "moyens": [
+    "l'usage quotidien des courses des communs, laisse s'installer sans jamais le reclamer",
+    "des plis scelles sans nom"
+   ],
+   "cout": "vingt-deux minutes de la cour du Donjon Rouge au chantier de la Vase, qu'un homme a la canne ne fait pas lui-meme ; et un fil qui remonte : un serviteur se souvient d'un billet de cuisine recu a la porte de la tour de la Main",
+   "depend_de": [],
+   "preuve": "Aucun nom a aucun registre, et un porteur qui ne se rappelle qu'un homme a la canne dans les communs",
+   "jour_du": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 5
+   },
+   "etat": "en cours",
+   "source": "croyances et intention de larys au 129.4.3 (les deux plis sans nom, l'usage des courses, « huit matins identiques effacent le matin qui compte »)"
+  },
+  {
+   "id": "72427",
+   "quoi": "Recopier pour la Main les lignages des maisons de la Couronne, sans souscrire l'article",
+   "realise": [
+    "72411",
+    "72402"
+   ],
+   "office": "orwyle",
+   "moyens": [
+    "ses roles",
+    "un billet de la caisse de la Main"
+   ],
+   "cout": "sa main, qu'il donne ; jamais son sceau, qu'il retient",
+   "depend_de": [],
+   "preuve": "Le role recopie de sa main, huit maisons nommees et agees, et pas une cire de la Citadelle dessus",
+   "jour_du": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4
+   },
+   "etat": "en cours",
+   "source": "croyances d'otto au 129.4.3 : « il a pose lui-meme la distinction entre copier un lignage et souscrire un article, et est parti chercher ses roles sur un billet de ma caisse »"
+  },
+  {
+   "id": "72428",
+   "quoi": "Tenir le terme des quinze jours et dresser la liste des maisons qui n'ont pas repondu par ecrit",
+   "realise": [
+    "72406",
+    "72400"
+   ],
+   "office": "otto",
+   "moyens": [
+    "la chancellerie du roi",
+    "le registre des reponses",
+    "la seconde fournee du 30e"
+   ],
+   "cout": "il faudra faire quelque chose des noms de la liste, et rien n'est ecrit sur ce que c'est",
+   "depend_de": [
+    "72420"
+   ],
+   "preuve": "La liste des muets, arretee au soir du huitieme jour",
+   "jour_du": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 8
+   },
+   "etat": "a faire",
+   "source": "evenements.json `decheance-de-rhaenyra`, diffusion du 129.3.30 : « Quinze jours a compter du vingt-troisieme jour de la troisieme lune pour se delier par ecrit », et la ligne d'une autre main : « passe ce terme, le silence sera tenu pour un refus »"
+  },
+  {
+   "id": "72429",
+   "quoi": "Faire relire chaque soir le livre cloute de la roukerie contre le brouillon du maitre, par un homme de la Main",
+   "realise": [
+    "72403"
+   ],
+   "office": "orwyle",
+   "moyens": [
+    "la tour de la roukerie",
+    "le livre cloute",
+    "le brouillon de la semaine"
+   ],
+   "cout": "un clerc chaque soir, et le maitre de la roukerie qui saura qu'on le double",
+   "depend_de": [
+    "72422"
+   ],
+   "preuve": "Une semaine entiere ou les deux livres disent la meme chose",
+   "jour_du": null,
+   "etat": "a faire",
+   "source": "deduit des croyances d'otto au 129.4.3 (le livre cloute ne porte pas ce que porte le brouillon) — PERSONNE NE L'A ORDONNE a ce jour ; c'est le trou de cette tranche, et il tombe sur la charge d'Orwyle parce que la roukerie est de son office"
+  }
+ ]
+}

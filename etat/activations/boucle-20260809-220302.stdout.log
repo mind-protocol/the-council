@@ -1,0 +1,61 @@
+[  0.001s] boucle.demarrage         · sec=False · une_fois=False · heartbeat_s=5.0
+[  0.006s] cycle.depart            
+[  0.013s] horloge.lecture         
+[  0.016s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=87584.0
+[  0.017s] graphe.lecture          
+[  0.059s] graphe.charge            · noeuds=1778 · aretes=4650
+[  0.061s] diffusion.importance    
+[  0.314s] energie.polarites_horloge · moyenne_minute=67000322.75 · ecart_max_minutes=1072.25 · emetteurs=1 · absorbeurs=97 · neutres=0
+[  0.342s] energie.transfert_horloge · transfere=10.679 · propositions=1018 · acteurs=98
+[  0.345s] energie.graphe           · dt_s=10.235 · integration=0.02337 · noeuds=1778 · energises=191 · total=1132.023 · pic=pers:rhaenyra · maximum=100.0
+[  0.346s] diffusion.calendrier    
+[  0.364s] energie.calculee         · acteurs=16 · maximum=21.769
+[  0.365s] selection.rejetee        · acteur=robert-quince · energie=21.769 · raison=repos_acteur · reprendre_a=92460.0
+[  0.366s] selection.rejetee        · acteur=rulf-corne · energie=18.385 · raison=repos_acteur · reprendre_a=95880.0
+[  0.368s] selection.rejetee        · acteur=aldon-hask · energie=9.715 · raison=repos_acteur · reprendre_a=93698.36
+[  0.374s] selection.elue           · acteur=steffon-darklyn · energie=8.562 · tache=40029 · energie_tache=1.127 · budget_energie=8 · budget_s=2400 · flux_horloge=absorbe · ecart_horloge_min=-380.75 · horloge_pj=rhaenyra
+[  0.375s] acteur.choisi            · acteur=steffon-darklyn · energie=8.562 · importance=0.084932 · budget=8
+[  0.376s] tache.choisie            · id=40029 · distance=1 · creee=False · energie=1.127
+ACTIVATION  steffon-darklyn  energie 8.56 · budget 8 (40 min)  importance 0.085
+  tache 40029 · distance 1 · 🔗 Écrire la chaîne complète sur un seul feuillet
+  front aurore-inchauspe · +87584.0s depuis rhaenyra
+[  0.377s] energie.reservee         · acteur=steffon-darklyn · valeur=8.562 · plafond=8
+[  0.385s] appel.dossier            · acteur=steffon-darklyn · tache=40029
+[  0.462s] appel.systeme_narrateur  · acteur=steffon-darklyn · caracteres=1103
+[  0.463s] appel.systeme_pnj        · acteur=steffon-darklyn · caracteres=19396
+[  0.464s] appel.ouverture          · acteur=steffon-darklyn · caracteres=30826 · budget_energie=8 · budget_secondes=2400
+[  0.469s] cli.depart               · acteur=narrateur-local:table-peinte · session=269f0f90-3889-4b81-9dca-b869e42d95d6 · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[  3.241s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[  4.400s] cli.rate_limit_event     · sous_type=None
+[  6.599s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.ouverture · secondes=5.0
+[  8.302s] cli.texte                · contenu={ "appel_pnj": { "qui": "steffon-darklyn", "message": "Ser Steffon, le feuillet est devant vous, écrit à moitié : les quatre cas et leur règle tiennent la page haute, la suite des…
+[  8.727s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[  8.729s] cli.resultat             · erreur=False · duree_ms=5991 · cout=0.184404 · entree=2 · sortie=211 · caracteres=461
+[ 10.287s] narrateur.reveille_pnj   · acteur=steffon-darklyn · caracteres=389
+[ 10.368s] cli.depart               · acteur=steffon-darklyn · session=442f60c1-c4e9-4cb4-b0ea-dfe7383ce16f · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[ 14.352s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[ 15.416s] cli.heartbeat            · acteur=steffon-darklyn · phase=pnj.tentative · secondes=5.0
+[ 16.082s] cli.rate_limit_event     · sous_type=None
+[ 16.458s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 17.255s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 17.279s] cli.assistant            · bloc=thinking
+[ 18.597s] cli.outil                · nom=Bash · entree={"command": "cd ./livres 2>/dev/null && head -60 affaire-commandement-chaine-ordres.txt", "description": "Read chain of command dossier"}
+[ 19.015s] cli.outil                · nom=Bash · entree={"command": "cd ./livres 2>/dev/null && grep -n -i \"capitaine\\|ser \\|commande\" registre-des-offices.txt | head -40", "description": "Look up officers register"}
+[ 20.427s] cli.heartbeat            · acteur=steffon-darklyn · phase=pnj.tentative · secondes=10.0
+[ 21.080s] cli.resultat_outil       · erreur=False · contenu=9: Qui le tient, depuis quand : SER ROBERT QUINCE. Onze ans en charge ; BORNÉ le 22e jour de la 3e lune, an 129. 14: Sceau de qui décide : APPOSÉ le 22e j. — ser Robert Quince, qu…
+[ 21.084s] cli.resultat_outil       · erreur=False · contenu=══════════════════════════════════════════════════════════════════════════ Commandement et chaîne d'ordres pendant l'opération [affaire-commandement-chaine-ordres] ⚜️ Volume de GA…
+[ 23.410s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 24.823s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 25.431s] cli.heartbeat            · acteur=steffon-darklyn · phase=pnj.tentative · secondes=15.0
+[ 26.292s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 27.763s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 27.769s] cli.assistant            · bloc=thinking
+[ 30.447s] cli.heartbeat            · acteur=steffon-darklyn · phase=pnj.tentative · secondes=20.1
+[ 35.463s] cli.heartbeat            · acteur=steffon-darklyn · phase=pnj.tentative · secondes=25.1
+[ 40.471s] cli.heartbeat            · acteur=steffon-darklyn · phase=pnj.tentative · secondes=30.1
+[ 43.792s] cli.texte                · contenu=Le feuillet est bloqué par deux cases vides — mes limites (40021) et le partage mer/quai (40022, lord Corlys à Lamarck, trois jours au mieux). Je n'ai pas trois jours et je n'atte…
+[ 43.826s] cli.resultat             · erreur=False · duree_ms=30036 · cout=0.1716515 · entree=2765 · sortie=1631 · caracteres=2522
+[ 45.160s] pnj.tentative_valide     · acteur=steffon-darklyn · verbe=écrire · caracteres=1153
+[ 45.162s] narrateur.arbitrage      · acteur=steffon-darklyn · caracteres=4659 · passage=1
+[ 45.164s] cli.depart               · acteur=narrateur-local:table-peinte · session=269f0f90-3889-4b81-9dca-b869e42d95d6 · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[ 47.710s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0

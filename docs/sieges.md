@@ -53,7 +53,7 @@ Une tête d'`intentions.json` est exactement l'information dont un joueur a beso
 | Ce que j'ignore | `intentions[<id>].ignore` | recopié tel quel dans la fiche de prise en main — c'est ce qu'on donne au joueur comme tension, pas comme manque |
 | Ce que je veux | `intentions[<id>].plan[]` étapes `en-cours` | → `objectifs.json` : `quoi` → `titre`, `jours_restants` → `echeance`, `cout` → `description`, `si_bloque` → ce que je perds |
 | Ce qui me guette | `declencheurs[]` | → une ligne chacun dans la fiche : « si ceci arrive, je saute » |
-| Ce que j'ai appris ces jours-ci | `travaux.json` où `qui` = moi | → mes pensées datées deviennent mon amont : je m'assois avec du travail en cours, pas à froid |
+| Ce que j'ai appris ces jours-ci | `pensees.json` où `qui` = moi | → mes pensées datées deviennent mon amont : je m'assois avec du travail en cours, pas à froid |
 | Mes registres | `books.json` où `acteur_id` = moi | rien à faire : ils me suivent déjà, `prive: true` compris |
 | Mes mains | `mains.json` où `porteur.id` = moi | rien à faire |
 | Qui me juge | `relations.json` où `cible_id` = moi | → la fiche : les cinq opinions qui comptent |
@@ -170,3 +170,9 @@ Peu de chose, et c'est bon signe. La section « Les sièges — changer de perso
 | 6 | Un siège ouvert pour de bon, en cobaye — `gerardys` ou `robert-quince`, tous deux `scene` | la preuve par l'usage : si ça prend plus d'une demi-heure, le §5 est faux |
 
 Le pas 6 est le seul qui prouve quelque chose. Les cinq autres sont des hypothèses.
+
+---
+
+## 10. Ce qui se passe pendant qu'un siège est vacant
+
+Ce document parle d'ouvrir et de fermer un siège. Ce qu'il fait **entre les deux** vit dans [`docs/regence.md`](regence.md) : il entre dans la file d'activation comme un acteur ordinaire, il n'a pas le droit d'engager le joueur de façon irréversible (sept lignes, vérifiées à la validation du rapport), et ce qu'il décide seul est consigné puis rendu en se rasseyant.

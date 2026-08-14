@@ -49,8 +49,14 @@
         l.classList.add("ecrit-sans-lien");
       } else {
         l.title = "Ouvrir dans les livres";
+        // ON DESCEND JUSQU'À LA LIGNE. `ligne` vise dans le volume : un numéro
+        // d'adresse, ou un bout de ce qui est écrit là (« EC.4 »). Sans elle,
+        // on retombe sur le titre de l'entrée, qui est presque toujours ce
+        // qu'on vient d'écrire — sinon le joueur arrive au haut d'une grille
+        // de deux cents lignes et doit rechercher ce qu'on lui montrait.
+        const cible = e.ligne != null && e.ligne !== "" ? e.ligne : e.titre;
         l.onclick = () => {
-          if (!(window.Books && Books.ouvrir && Books.ouvrir(e.livre))) {
+          if (!(window.Books && Books.ouvrir && Books.ouvrir(e.livre, cible))) {
             l.classList.add("ecrit-introuvable");
             l.title = "Ce volume n'est pas à portée d'ici";
           }

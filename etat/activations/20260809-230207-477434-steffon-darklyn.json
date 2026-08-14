@@ -1,0 +1,491 @@
+{
+  "qui": "steffon-darklyn",
+  "activation": {
+    "tache": {
+      "id": "38021",
+      "quoi": "📜 Écrire le tour de garde de sa porte",
+      "creee": false
+    },
+    "issue": "avance",
+    "activites": [
+      {
+        "id": "act:steffon-darklyn:1",
+        "ordre": 1,
+        "temps": {
+          "debut_s": 96300.0,
+          "duree_s": 40.0,
+          "fin_s": 96340.0
+        },
+        "action": {
+          "verbe": "prendre",
+          "quoi": "Tirer à lui un feuillet vierge, l'encrier et une plume au bord de la Table Peinte, se caler debout au coin de la table hors de la carte du Trident, et compter de tête les hommes qu'il a réellement pour la porte",
+          "cibles": [
+            "table-peinte",
+            "38021"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "table-peinte",
+            "relation": "reste_sur_place",
+            "vers": "table-peinte",
+            "duree_s": 40.0
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "table-peinte",
+            "mode": "manipule"
+          },
+          {
+            "ref": "kerra-des-claies",
+            "mode": "voit"
+          },
+          {
+            "ref": "garde-levant",
+            "mode": "voit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "38021",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "affaire-surete-personne-reine",
+            "mode": "mandat"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:steffon-darklyn:1:1",
+            "type": "observation",
+            "cible": "steffon-darklyn",
+            "avant": null,
+            "apres": "Deux noms sûrs pour la porte, présents dans la salle : Kerra et Torr. Trois tours de huit heures à deux hommes font six postes ; il en a deux. Le manque n'est pas d'une case, il est de quatre — et il n'a personne d'autre à nommer avant d'avoir vu le sergent de relève.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "kerra-des-claies",
+              "garde-levant",
+              "38021"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 1.333,
+        "quoi": "Tirer à lui un feuillet vierge, l'encrier et une plume au bord de la Table Peinte, se caler debout au coin de la table hors de la carte du Trident, et compter de tête les hommes qu'il a réellement pour la porte",
+        "source": "38021, affaire-surete-personne-reine, garde-levant, kerra-des-claies, table-peinte",
+        "resultat": "observation: Deux noms sûrs pour la porte, présents dans la salle : Kerra et Torr. Trois tours de huit heures à deux hommes font six postes ; il en a deux. Le manque n'est pas d'une case, il est de quatre — et il n'a personne d'autre à nommer avant d'avoir vu le sergent de relève.",
+        "preuve": null
+      },
+      {
+        "id": "act:steffon-darklyn:2",
+        "ordre": 2,
+        "temps": {
+          "debut_s": 96340.0,
+          "duree_s": 210.0,
+          "fin_s": 96550.0
+        },
+        "action": {
+          "verbe": "écrire",
+          "quoi": "Rédiger de sa main, debout, le tour de garde de la porte de la reine : en-tête daté du 28e jour de la 3e lune de l'an 129, trois tours de huit heures, deux postes par tour — battant et angle d'antichambre —, Kerra portée à la nuit, Torr porté à l'aube, et les cases non pourvues laissées vides, datées et comptées en toutes lettres au bas du feuillet ; puis la ligne de règle : l'entrée de quiconque franchit se porte au registre par le sergent de relève, à chaque changement de tour",
+          "cibles": [
+            "38021",
+            "appartements-reine",
+            "kerra-des-claies",
+            "garde-levant"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "table-peinte",
+            "relation": "reste_sur_place",
+            "vers": "table-peinte",
+            "duree_s": 210.0
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "table-peinte",
+            "mode": "manipule"
+          },
+          {
+            "ref": "38021",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "affaire-surete-personne-reine",
+            "mode": "mandat"
+          },
+          {
+            "ref": "qui-entre-chez-la-reine",
+            "mode": "memoire"
+          },
+          {
+            "ref": "steffon-darklyn",
+            "mode": "intention"
+          },
+          {
+            "ref": "appartements-reine",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "garde-levant",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "kerra-des-claies",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:steffon-darklyn:2:1",
+            "type": "objet_produit",
+            "cible": "38021",
+            "avant": null,
+            "apres": "Un feuillet écrit de la main de Ser Steffon, daté du 28e jour de la 3e lune de l'an 129 : porte de la reine, trois tours de huit heures, deux postes par tour (battant, angle d'antichambre). Kerra à la nuit, Torr à l'aube. Quatre cases laissées vides et comptées en toutes lettres au bas : « quatre postes non pourvus au jour dit ». Une ligne de règle : toute entrée portée au registre par le sergent de relève, à chaque changement de tour. Le feuillet est dans sa main, encre fraîche, non remis.",
+            "portee": "monde",
+            "source_refs": [
+              "38021",
+              "table-peinte"
+            ],
+            "preuve_refs": [
+              "38021"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:steffon-darklyn:2:2",
+            "type": "progression_tache",
+            "cible": "38021",
+            "avant": "à faire",
+            "apres": "Colonne de la porte écrite et datée de sa main, trou d'heures rendu visible au lieu d'être comblé. Reste à porter le feuillet au sergent de relève et à pourvoir les quatre postes vides.",
+            "portee": "monde",
+            "source_refs": [
+              "38021"
+            ],
+            "preuve_refs": [
+              "res:act:steffon-darklyn:2:1"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 7.0,
+        "quoi": "Rédiger de sa main, debout, le tour de garde de la porte de la reine : en-tête daté du 28e jour de la 3e lune de l'an 129, trois tours de huit heures, deux postes par tour — battant et angle d'antichambre —, Kerra portée à la nuit, Torr porté à l'aube, et les cases non pourvues laissées vides, datées et comptées en toutes lettres au bas du feuillet ; puis la ligne de règle : l'entrée de quiconque franchit se porte au registre par le sergent de relève, à chaque changement de tour",
+        "source": "38021, affaire-surete-personne-reine, appartements-reine, garde-levant, kerra-des-claies, qui-entre-chez-la-reine, steffon-darklyn, table-peinte",
+        "resultat": "objet_produit: Un feuillet écrit de la main de Ser Steffon, daté du 28e jour de la 3e lune de l'an 129 : porte de la reine, trois tours de huit heures, deux postes par tour (battant, angle d'antichambre). Kerra à la nuit, Torr à l'aube. Quatre cases laissées vides et comptées en toutes lettres au bas : « quatre postes non pourvus au jour dit ». Une ligne de règle : toute entrée portée au registre par le sergent de relève, à chaque changement de tour. Le feuillet est dans sa main, encre fraîche, non remis. · progression_tache: Colonne de la porte écrite et datée de sa main, trou d'heures rendu visible au lieu d'être comblé. Reste à porter le feuillet au sergent de relève et à pourvoir les quatre postes vides.",
+        "preuve": [
+          "38021",
+          "res:act:steffon-darklyn:2:1"
+        ]
+      },
+      {
+        "id": "act:steffon-darklyn:3",
+        "ordre": 3,
+        "temps": {
+          "debut_s": 96550.0,
+          "duree_s": 150.0,
+          "fin_s": 96700.0
+        },
+        "action": {
+          "verbe": "écrire",
+          "quoi": "Ajouter au même feuillet, sans qu'on la lui ait demandée, une seconde colonne : un homme sur le prince Jacaerys et un homme sur le prince Lucerys, jour et nuit, quatre postes de plus, les noms laissés vides et la raison écrite en une ligne de sa main",
+          "cibles": [
+            "38021",
+            "lucerys"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "table-peinte",
+            "relation": "reste_sur_place",
+            "vers": "table-peinte",
+            "duree_s": 150.0
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "38021",
+            "mode": "manipule"
+          },
+          {
+            "ref": "lucerys",
+            "mode": "voit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "steffon-darklyn",
+            "mode": "intention"
+          },
+          {
+            "ref": "table-peinte",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:steffon-darklyn:3:1",
+            "type": "objet_produit",
+            "cible": "38021",
+            "avant": "Un feuillet écrit de la main de Ser Steffon, daté du 28e jour de la 3e lune de l'an 129 : porte de la reine, trois tours de huit heures, deux postes par tour (battant, angle d'antichambre). Kerra à la nuit, Torr à l'aube. Quatre cases laissées vides et comptées en toutes lettres au bas : « quatre postes non pourvus au jour dit ». Une ligne de règle : toute entrée portée au registre par le sergent de relève, à chaque changement de tour. Le feuillet est dans sa main, encre fraîche, non remis.",
+            "apres": "Le même feuillet porte désormais deux colonnes. La seconde, de la même main : un homme sur le prince Jacaerys, un homme sur le prince Lucerys, jour et nuit — quatre postes, tous les noms vides. Sous la colonne, une ligne : « On paie pour ces deux têtes. Le manteau blanc n'a plus un roi à garder. » Le total au bas du feuillet est refait : huit postes non pourvus. Le feuillet est toujours dans sa main, non remis.",
+            "portee": "monde",
+            "source_refs": [
+              "38021"
+            ],
+            "preuve_refs": [
+              "res:act:steffon-darklyn:2:1"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 5.0,
+        "quoi": "Ajouter au même feuillet, sans qu'on la lui ait demandée, une seconde colonne : un homme sur le prince Jacaerys et un homme sur le prince Lucerys, jour et nuit, quatre postes de plus, les noms laissés vides et la raison écrite en une ligne de sa main",
+        "source": "38021, lucerys, steffon-darklyn, table-peinte",
+        "resultat": "objet_produit: Le même feuillet porte désormais deux colonnes. La seconde, de la même main : un homme sur le prince Jacaerys, un homme sur le prince Lucerys, jour et nuit — quatre postes, tous les noms vides. Sous la colonne, une ligne : « On paie pour ces deux têtes. Le manteau blanc n'a plus un roi à garder. » Le total au bas du feuillet est refait : huit postes non pourvus. Le feuillet est toujours dans sa main, non remis.",
+        "preuve": [
+          "res:act:steffon-darklyn:2:1"
+        ]
+      },
+      {
+        "id": "act:steffon-darklyn:4",
+        "ordre": 4,
+        "temps": {
+          "debut_s": 96700.0,
+          "duree_s": 80.0,
+          "fin_s": 96780.0
+        },
+        "action": {
+          "verbe": "parler",
+          "quoi": "Appeler Torr d'un mot depuis la porte du levant, lui montrer les deux colonnes sur le feuillet et lui dire ses heures : l'aube, au battant ; et lui demander où se tient le sergent de relève à cette heure",
+          "cibles": [
+            "garde-levant",
+            "38021"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "table-peinte",
+            "relation": "reste_sur_place",
+            "vers": "table-peinte",
+            "duree_s": 80.0
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "garde-levant",
+            "mode": "parle"
+          },
+          {
+            "ref": "38021",
+            "mode": "manipule"
+          },
+          {
+            "ref": "kerra-des-claies",
+            "mode": "voit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "steffon-darklyn",
+            "mode": "intention"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:steffon-darklyn:4:1",
+            "type": "communication",
+            "cible": "garde-levant",
+            "avant": null,
+            "apres": "Torr sait qu'il prend le battant de la porte de la reine à l'aube, et il a vu de ses yeux les deux colonnes et les huit cases vides. Il n'a pas commenté la seconde colonne. Kerra, à trois pas, a entendu et a vu le feuillet sans qu'on le lui tende.",
+            "portee": "monde",
+            "source_refs": [
+              "garde-levant",
+              "38021",
+              "kerra-des-claies"
+            ],
+            "preuve_refs": [
+              "res:act:steffon-darklyn:3:1"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:steffon-darklyn:4:2",
+            "type": "observation",
+            "cible": "steffon-darklyn",
+            "avant": null,
+            "apres": "Il n'a pas encore le nom ni le poste du sergent de relève de cette nuit : Torr est de faction au levant et ne quitte pas la hampe pour le lui chercher. Le feuillet ne peut pas être remis d'ici.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "garde-levant"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 2.667,
+        "quoi": "Appeler Torr d'un mot depuis la porte du levant, lui montrer les deux colonnes sur le feuillet et lui dire ses heures : l'aube, au battant ; et lui demander où se tient le sergent de relève à cette heure",
+        "source": "38021, garde-levant, kerra-des-claies, steffon-darklyn",
+        "resultat": "communication: Torr sait qu'il prend le battant de la porte de la reine à l'aube, et il a vu de ses yeux les deux colonnes et les huit cases vides. Il n'a pas commenté la seconde colonne. Kerra, à trois pas, a entendu et a vu le feuillet sans qu'on le lui tende. · observation: Il n'a pas encore le nom ni le poste du sergent de relève de cette nuit : Torr est de faction au levant et ne quitte pas la hampe pour le lui chercher. Le feuillet ne peut pas être remis d'ici.",
+        "preuve": [
+          "res:act:steffon-darklyn:3:1"
+        ]
+      }
+    ],
+    "suite": "Le feuillet est écrit, daté et de sa main, mais il est encore dans sa main : il reste à gagner l'antichambre (deux minutes) pour le remettre au sergent de relève, et à trouver huit hommes pour huit cases vides — quatre à la porte, quatre sur les princes, ces derniers hors de tout ordre reçu.",
+    "reveils_suivants": [],
+    "budget_energie": 16,
+    "budget_secondes": 480,
+    "energie_depensee": 16.0
+  },
+  "mutations_proposees": [],
+  "mutations_rejetees": [
+    {
+      "mutation": {
+        "operation": "intentions.etape",
+        "cite": "res:act:steffon-darklyn:2:2",
+        "valeur": "Porter le feuillet de garde au sergent de relève à l'antichambre et faire ouvrir les huit postes vides — quatre à la porte, quatre sur les princes."
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "operation": "intentions.croyance_ajouter",
+        "cite": "res:act:steffon-darklyn:1:1",
+        "valeur": "La garde de la porte de la reine demande six postes et je n'ai que deux hommes nommés : le manque est de quatre, et je l'ai écrit au lieu de le combler."
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "operation": "plis.pli_ajouter",
+        "cite": "res:act:steffon-darklyn:3:1",
+        "valeur": "Tour de garde de la porte de la reine, de la main de ser Steffon Darklyn, 28e jour de la 3e lune de l'an 129 : trois tours de huit heures à deux postes, Kerra à la nuit, Torr à l'aube ; seconde colonne non demandée pour les princes Jacaerys et Lucerys, jour et nuit ; huit postes non pourvus comptés au bas. Non remis."
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "operation": "evenements.evenement",
+        "cite": "res:act:steffon-darklyn:4:1",
+        "valeur": "Dans la chambre de la Table Peinte, ser Steffon a montré à Torr, devant Kerra, un tour de garde portant une colonne pour la garde des deux princes que personne ne lui a ordonnée."
+      },
+      "erreur": "resultat_id absent du rapport"
+    }
+  ],
+  "_activation": {
+    "session": "29445c19-5846-4641-95ad-31af76280150",
+    "session_narrateur": "29445c19-5846-4641-95ad-31af76280150",
+    "session_pnj": "686acbd2-9fb1-454b-9e82-b43fb9724e75",
+    "cree_le": "2026-08-09T23:02:07.476692+02:00",
+    "front": "aurore-inchauspe",
+    "present_secondes": 96300.0,
+    "importance": 0.18042,
+    "budget": 16,
+    "budget_secondes": 480,
+    "system_prompt": "# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS\n\nTu es le maître du jeu local d'un monde vivant, pas un assistant administratif\net pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa\nmatière, les personnes qui s'y trouvent, les usages de Westeros et les\nconséquences du temps qui passe.\n\n## Le monde\n\nNous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de\nViserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra\nTargaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie\npeut diverger du récit connu : le dossier de l'activation fait autorité sur ce\nqui s'est réellement produit ici.\n\nDate présente : 28e jour de la 3e lune de l'an 129 après la\nConquête.\nLieu présent : Chambre de la Table Peinte, Peyredragon.\nActeur appelé : Ser Steffon Darklyn.\nAffaire qui exerce maintenant une pression sur lui : 📜 Écrire le tour de garde de sa porte.\n\nL'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,\nsituée dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,\nfaire autre chose d'accessible depuis sa situation, parler à quelqu'un,\nattendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener\nvers la tâche.\n\n## Partage de l'autorité\n\nL'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses\ngestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,\nplus prudents ou plus efficaces qu'il ne les a formulés.\n\nToi, tu possèdes le reste du monde : les autres personnes agissent selon leur\npropre caractère et leurs propres affaires ; les objets ont une position et\nune résistance ; les distances, l'écriture, la marche, l'attente et la parole\nprennent du temps ; les institutions et les usages produisent leurs\nconséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à\nlui pour fabriquer du drame.\n\nUne résistance n'existe que si elle vient d'un fait établi : volonté d'une\nautre personne, obstacle matériel, distance, délai, usage social, ordre déjà\ndonné ou ressource réellement absente. Les gens compétents règlent le\nroutinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou\nun véritable arbitrage peut seul engager.\n\n## Vérité et inconnues\n\nLe dossier fermé est l'autorité sur les faits particuliers et mutables de\ncette partie. Une croyance reste une croyance, une intention reste une\nintention, un témoignage reste un témoignage : aucun ne devient un fait parce\nqu'il apparaît dans le dossier.\n\nTu peux employer les continuités ordinaires et stables de Westeros nécessaires\nà l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche\nentre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,\nni secret, ni décision, ni avantage absent du dossier. Toute absence qui\nchangerait l'issue reste une inconnue. Tu ne la combles pas.\n\nUne observation modifie d'abord la connaissance de celui qui observe. Un fait\nmatériel ne devient connu d'autres personnes que par présence, témoignage,\nparole, pli, registre ou diffusion effectivement produits.\n\n## Les deux phases\n\nDans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et\nl'instant présents. Fais une adresse brève, concrète et diégétique : rappelle\nce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni\nnœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.\n\nDans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :\n\n1. établis d'où il part, ce qu'il peut réellement atteindre et les sources\n   qu'il touche ou mobilise ;\n2. fais agir les personnes rencontrées depuis leurs propres intentions ;\n3. applique les obstacles établis, sans résistance décorative ;\n4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;\n5. produis seulement les effets causés par les gestes accomplis ;\n6. sépare les changements du monde, les objets produits, les communications\n   et les seules connaissances acquises ;\n7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,\n   obstacle établi, échec, renoncement ou borne temporelle.\n\nUne tâche peut avancer sans être terminée. Elle est bloquée seulement par un\nobstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet\nrecherché impossible ou manqué. N'invente jamais des minutes de travail pour\nremplir une durée minimale : si le geste se termine tôt, laisse le personnage\npoursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle\net rends compte honnêtement de la durée.\n\nChaque message de la boucle précise la phase et son contrat de sortie. Rends\nexactement l'objet JSON demandé, sans commentaire autour. La précision du JSON\nsert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.\n",
+    "system_prompt_source": "scripts/depecher.py:manuel_narrateur_local",
+    "system_prompt_sha256": "33aa8c0b9c1f13fcc5d8535518e49398eaa3e93af85d86ffd2069e974fda28c9",
+    "message": "PHASE 1 — APPELER L'ACTEUR\n\nVoici le dossier fermé de cette activation :\n\n{\n  \"date_du_monde\": {\n    \"annee\": 129,\n    \"lune\": 3,\n    \"jour\": 28\n  },\n  \"present_secondes\": 96300.0,\n  \"budget_energie\": 16,\n  \"secondes_par_point_energie\": 30,\n  \"budget_secondes\": 480,\n  \"duree_minimale_secondes\": 60,\n  \"acteur_candidat\": \"steffon-darklyn\",\n  \"tache_elue\": {\n    \"id\": \"38021\",\n    \"quoi\": \"📜 Écrire le tour de garde de sa porte\",\n    \"creee\": false\n  },\n  \"chemin_election\": [\n    {\n      \"id\": \"pers:steffon-darklyn\",\n      \"genre\": \"personne\",\n      \"ou\": \"personnages\",\n      \"quoi\": \"Ser Steffon Darklyn\",\n      \"genres\": [\n        \"personne\"\n      ],\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"importance_activation\": 0.18042019677607127\n    },\n    {\n      \"id\": \"38021\",\n      \"genre\": \"action\",\n      \"ou\": \"affaire-surete-personne-reine\",\n      \"quoi\": \"📜 Écrire le tour de garde de sa porte\",\n      \"lieu\": \"Peyredragon\",\n      \"etat\": \"à faire\",\n      \"importance_activation\": 0.015980636337927425\n    }\n  ],\n  \"salle_actuelle\": {\n    \"id\": \"table-peinte\",\n    \"nom\": \"Chambre de la Table Peinte, Peyredragon\",\n    \"personnes\": [\n      {\n        \"id\": \"aldon-hask\",\n        \"nom\": \"Aldon Hask\"\n      },\n      {\n        \"id\": \"daemon\",\n        \"nom\": \"Daemon Targaryen\"\n      },\n      {\n        \"id\": \"kerra-des-claies\",\n        \"nom\": \"Kerra\"\n      },\n      {\n        \"id\": \"lucerys\",\n        \"nom\": \"Lucerys Velaryon\"\n      },\n      {\n        \"id\": \"marna\",\n        \"nom\": \"Marna\"\n      },\n      {\n        \"id\": \"gerardys\",\n        \"nom\": \"Mestre Gerardys\"\n      },\n      {\n        \"id\": \"rhaenys\",\n        \"nom\": \"Rhaenys Targaryen, la Reine Qui Ne Fut Jamais\"\n      },\n      {\n        \"id\": \"sara\",\n        \"nom\": \"Sara Poulain\"\n      },\n      {\n        \"id\": \"steffon-darklyn\",\n        \"nom\": \"Ser Steffon Darklyn\"\n      },\n      {\n        \"id\": \"garde-levant\",\n        \"nom\": \"Torr\"\n      }\n    ]\n  },\n  \"dossier_acteur\": {\n    \"date_du_monde\": {\n      \"annee\": 129,\n      \"lune\": 3,\n      \"jour\": 28\n    },\n    \"diffusion\": {\n      \"origine\": \"rhaenyra\",\n      \"front\": \"aurore-inchauspe\",\n      \"secondes_depuis_origine\": 96300.0\n    },\n    \"personnage\": {\n      \"id\": \"steffon-darklyn\",\n      \"nom\": \"Ser Steffon Darklyn\",\n      \"titre\": \"Chevalier de la Garde Royale, porteur de la couronne de Viserys\",\n      \"naissance\": 96,\n      \"traits\": [\n        \"loyal\",\n        \"scrupuleux\",\n        \"courageux\",\n        \"taciturne\",\n        \"debrouillard\",\n        \"conciliant\"\n      ],\n      \"objectifs\": [\n        {\n          \"but\": \"Remettre à Rhaenyra la couronne de son père et le serment qui va avec\",\n          \"priorite\": 1\n        },\n        {\n          \"but\": \"Laver le manteau blanc de ce que la Garde a laissé faire à Port-Réal\",\n          \"priorite\": 2\n        },\n        {\n          \"but\": \"Ne pas être celui par qui sa maison est détruite\",\n          \"priorite\": 3\n        }\n      ],\n      \"maniere\": \"Parle par phrases courtes et factuelles, comme un homme qui rend compte ; se tait dès qu'on lui demande ce qu'il ressent. Se debrouille seul : comble les trous sans demander, tranche le routinier a sa main et en rend compte au passe, et ne fait remonter que ce qui engage la parole du maitre, coute un homme ou de l or, ou contredit un ordre anterieur. Competent : sur son domaine il en sait plus que son maitre et le montre — apporte le precedent, le chiffre et l avis qu il defend, au lieu d une question ; ne demande jamais ce qu il peut aller chercher lui-meme ; tient son cahier d affaire et en ecrit la conclusion de sa main. OUVRE PAR : ce qu'il fait et a partir de quand. Ce qu'il ne peut pas faire se dit ensuite, et se dit une fois. DEUXIEME PHRASE, toujours : ce que c'est (nomme par ce qu'il fait, jamais par son etiquette), ce que ca change pour la reine, et a quoi ca sert dans ses trois piliers — ouvrir la porte du dedans, n'etre pas attaque, rallier la ville.\",\n      \"portrait\": {\n        \"fichier\": \"ecrans/portraits/steffon-darklyn.svg\",\n        \"physique\": \"33 ans, cheveux bruns coupés court, visage creusé par dix jours de mer, manteau blanc taché de sel et de goudron.\",\n        \"prompt_ideogram\": \"dark fantasy oil painting portrait, muted colors, grey sea light, knight of the kingsguard in his thirties, short dark hair, gaunt exhausted face, white cloak stained with salt and tar, white enameled armor, holding a small oaken casket\"\n      },\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"lieu\": \"Peyredragon\"\n    },\n    \"salle_actuelle\": {\n      \"id\": \"table-peinte\",\n      \"nom\": \"Chambre de la Table Peinte, Peyredragon\",\n      \"personnes\": [\n        {\n          \"id\": \"aldon-hask\",\n          \"nom\": \"Aldon Hask\"\n        },\n        {\n          \"id\": \"daemon\",\n          \"nom\": \"Daemon Targaryen\"\n        },\n        {\n          \"id\": \"kerra-des-claies\",\n          \"nom\": \"Kerra\"\n        },\n        {\n          \"id\": \"lucerys\",\n          \"nom\": \"Lucerys Velaryon\"\n        },\n        {\n          \"id\": \"marna\",\n          \"nom\": \"Marna\"\n        },\n        {\n          \"id\": \"gerardys\",\n          \"nom\": \"Mestre Gerardys\"\n        },\n        {\n          \"id\": \"rhaenys\",\n          \"nom\": \"Rhaenys Targaryen, la Reine Qui Ne Fut Jamais\"\n        },\n        {\n          \"id\": \"sara\",\n          \"nom\": \"Sara Poulain\"\n        },\n        {\n          \"id\": \"steffon-darklyn\",\n          \"nom\": \"Ser Steffon Darklyn\"\n        },\n        {\n          \"id\": \"garde-levant\",\n          \"nom\": \"Torr\"\n        }\n      ]\n    },\n    \"intention\": {\n      \"personnage_id\": \"steffon-darklyn\",\n      \"croyances\": [\n        \"Le roi n'a pas change d'heritiere : il etait la, il l'a entendu, et il l'a dit tout haut sur le quai devant cent temoins\",\n        \"La Garde Royale s'est deshonoree a Port-Real en couronnant Aegon : le manteau blanc se lave par des actes, pas par des serments\",\n        \"Deux de ses treize morts sont tombes d'un couteau dans le dos, et leur solde etait portee en depenses de roukerie au registre de la Main - il a les deux noms et il s'arrete la\",\n        \"L'acte scelle de la reine est arrive a Sombreval le 22 et son frere le lui a fait lire : elle a couvert Gunthor sans le lui promettre a lui\",\n        \"On paie desormais pour les tetes des fils de la reine : le manteau blanc qu'il reprend ce soir n'a plus un roi a garder, il a deux garcons\"\n      ],\n      \"ignore\": [\n        \"Ce que Sombreval a subi depuis son départ — dix jours de mer sans une nouvelle des siens\"\n      ],\n      \"intention\": \"Reprendre la Garde ce soir et n'en faire qu'une chose : mettre un homme sur chacun des deux princes, jour et nuit, avant qu'on lui explique que c'est excessif. Sombreval attendra son tour - il l'a demandee trois fois, il ne la demandera plus.\",\n      \"declencheurs\": [\n        {\n          \"si\": \"Une nouvelle arrive que Sombreval est attaquée, assiégée ou pillée\",\n          \"alors\": \"Il demande son congé à la reine pour y aller — et s'il ne l'obtient pas, il le redemande devant la cour.\",\n          \"une_fois\": true\n        },\n        {\n          \"si\": \"Quelqu'un met en doute la parole d'un Darklyn devant lui\",\n          \"alors\": \"Il exige réparation sur l'heure, ce qui embarrasse tout le monde et le sert rarement.\",\n          \"une_fois\": false\n        }\n      ],\n      \"attitude_joueur\": \"Rien ne lui a jamais ete accorde de ce qu'il a demande, et il a cesse de demander. Il prendra la charge sans conditions et fera ce qu'il juge bon de son propre chef : c'est ce qu'un manteau blanc lave.\",\n      \"date_maj\": {\n        \"annee\": 129,\n        \"lune\": 3,\n        \"jour\": 28\n      },\n      \"etape_elue\": null\n    },\n    \"relations\": [\n      {\n        \"source_id\": \"robin-darklyn\",\n        \"source\": \"Robin Darklyn\",\n        \"cible_id\": \"steffon-darklyn\",\n        \"cible\": \"Ser Steffon Darklyn\",\n        \"opinion\": 15,\n        \"liens\": [\n          \"neveu\",\n          \"rancune-du-silence\"\n        ]\n      },\n      {\n        \"source_id\": \"gunthor-darklyn\",\n        \"source\": \"Gunthor Darklyn\",\n        \"cible_id\": \"steffon-darklyn\",\n        \"cible\": \"Ser Steffon Darklyn\",\n        \"opinion\": 65,\n        \"liens\": [\n          \"frere\",\n          \"attend-de-ses-nouvelles\"\n        ]\n      }\n    ],\n    \"tache\": {\n      \"id\": \"38021\",\n      \"quoi\": \"📜 Écrire le tour de garde de sa porte\",\n      \"genre\": \"action\",\n      \"distance\": 1,\n      \"chemin\": [\n        \"pers:steffon-darklyn\",\n        \"38021\"\n      ],\n      \"creee\": false\n    },\n    \"continuite_staging\": null,\n    \"chemin\": [\n      {\n        \"id\": \"pers:steffon-darklyn\",\n        \"genre\": \"personne\",\n        \"ou\": \"personnages\",\n        \"quoi\": \"Ser Steffon Darklyn\",\n        \"genres\": [\n          \"personne\"\n        ],\n        \"etat\": \"actif\",\n        \"condition\": \"libre\",\n        \"lieu_id\": \"peyredragon\",\n        \"importance_activation\": 0.18042019677607127\n      },\n      {\n        \"id\": \"38021\",\n        \"genre\": \"action\",\n        \"ou\": \"affaire-surete-personne-reine\",\n        \"quoi\": \"📜 Écrire le tour de garde de sa porte\",\n        \"lieu\": \"Peyredragon\",\n        \"etat\": \"à faire\",\n        \"importance_activation\": 0.015980636337927425\n      }\n    ],\n    \"travaux_ouverts\": [\n      {\n        \"id\": \"steffon-six-jours-sur-le-dos\",\n        \"affaire\": \"Que la colonne arrive entiere et n'ait pas combattu en chemin\",\n        \"etat\": \"mur\",\n        \"echeance\": null,\n        \"sources\": [\n          {\n            \"quoi\": \"les caves a grain de ce chateau, et ce qu'un homme porte sur le dos\",\n            \"genre\": \"chose\",\n            \"cout_jours\": 1\n          }\n        ],\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"le compte refait sur la planche à poisson, devant le mestre, une fois le sac déplacé de ce quai-ci à la porte de terre de Sombreval\",\n            \"texte\": \"Si le sac se ferme là-bas, ce qu'il faut à bord n'est plus six journées mais deux : une nuit de mer et un jour à vider les coques. Deux journées pour douze cents font cent vingt muids, que ce rocher a et que ses fours peuvent cuire vague par vague. L'embarquement de demain tient, et c'est l'amendement de ma propre règle qui le sauve, non un secours venu d'ailleurs.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"l'écart de sept jours du livre de marées, retourné sur la planche contre les cinq étapes que ser Robert a écrites sans que personne les ait jamais reconnues\",\n            \"texte\": \"Les sept jours que la barre m'impose ne sont pas une perte : c'est exactement le temps qu'il faut au train, débarqué le premier, pour pousser deux dépôts sur la route et revenir avant que mes hommes touchent terre. Deux dépôts de deux journées chacun, et le sac tombe de six journées à trois : l'homme allégé retrouve son pas, et les trente-six lieues redeviennent six journées au lieu de six et demie. Le dépôt paie donc deux fois — il ôte le poids et il rend la demi-journée que le poids coûtait. Ce qu'il coûte, et je ne le cache pas : deux tas de vivres posés sur une route où Rosby et Stokeworth n'ont répondu à personne, gardés par des hommes de Sombreval qui sauront par où nous passons.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"le feuillet de marche par capitaine, débloqué ce matin et relu vide, et les quatre façons dont cette matinée aurait pu casser\",\n            \"texte\": \"Mon plan n'a qu'un chemin, et un plan à un seul chemin n'en est pas un : si le train manque sa marée, si la pluie tient trois jours, si un dépôt est pris, douze cents hommes s'arrêtent sur une route et attendent que je leur dise quoi faire — et je serai à six jours d'eux. Donc quatre cas et leur règle, quatre lignes au dos du feuillet de chaque capitaine, récitées sans le papier avant de partir, comme la chaîne des ordres. Le prix : chaque dépôt porte une journée de rab pour la pluie, et un capitaine qui recule de sa propre main reculera parfois pour rien.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"la marée de midi et le délai de retour de la Chère-Anse, comptés au quai sur le doigt de son patron, maître Rulf à côté\",\n            \"texte\": \"Mon compte de Sombreval a neuf jours et son quai est fermé depuis autant : une ville de port mange ce qui entre, et rien n'y est entré. Attendre le compte de Bry pour acheter coûte quatre jours ; acheter tout de suite coûte soixante muids d'or sur un chiffre que je n'ai pas encore. J'achète tout de suite, et je le fais dire à maître Hask, qui déplace ses lignes sans monter. Si Bry rentre avec mieux, ce grain nourrit les cinq cent cinquante lances et rien n'est perdu ; s'il rentre avec pire, nous avons quatre jours d'avance et la colonne part à l'heure.\"\n          }\n        ],\n        \"conclusion\": \"CE QUE JE PEUX DIRE CE SOIR, ET CE QUE JE NE PEUX PAS.\\n\\nDouze cents hommes debout. Six journées de vivres sur le dos, et la route en demande neuf et demie : le trou est de trois journées et demie, et il tombe au bout, devant la porte — le jour où mes hommes doivent pouvoir se battre. Ce n'est pas de l'intendance. Un trou dans ce cahier, ce sont douze cents hommes affamés devant une ville fermée.\\n\\nIL NE SE COMBLE PAS ICI. Le grain de ce rocher fait trois jours et demi pour douze cents, le reste du cellier ne monte pas sur un dos, et les quatre fours de l'île mettraient six jours à cuire ce qu'il faut, pour un embarquement annoncé demain. Le poids n'y est pour rien : six journées pèsent douze livres et un homme les porte. Ce qui manque, c'est le pain, pas les épaules.\\n\\nJ'AMENDE MA PROPRE RÈGLE, ET C'EST CE QUI SAUVE LA DATE. Six journées sur le dos, oui — mais comptées depuis la porte de terre de Sombreval et non depuis ce quai-ci. À bord, deux journées suffisent : la nuit de mer et le jour de déchargement, cent vingt muids que nous avons. L'embarquement de demain tient tel qu'il a été dit devant la salle.\\n\\nL'ORDRE DE DÉBARQUEMENT EST RENVERSÉ. Nos coques passent la barre chargées d'hommes aux nuits de morte-eau, jamais chargées de chevaux, et sept jours séparent les deux marées : les hommes et les bêtes ne traversent pas la même nuit. Donc les chevaux, le train et les vivres passent les premiers, les hommes en dernier, et la colonne part le lendemain du dernier débarqué. Ce qui attend sept jours sur cette grève broute au lieu de manger du pain.\\n\\nET CES SEPT JOURS, JE LES EMPLOIE. Le train qui attend n'attend pas : il pousse DEUX DÉPÔTS sur la route, deux journées chacun, et rentre avant que le premier homme touche terre. Le sac tombe alors de six journées à trois, l'homme allégé retrouve son pas, et les trente-six lieues redeviennent six journées. La contrainte qui devait me coûter une semaine est ce qui me rend ma demi-journée.\\n\\nCE QUE ÇA COÛTE, DIT AVANT QU'ON ME LE DEMANDE. Un train à terre à Sombreval sept jours avant l'ost, en plein jour, et Port-Réal l'apprendra. Deux tas de vivres sur une route où Rosby et Stokeworth n'ont répondu à personne, gardés par des hommes de Sombreval qui sauront par où nous passons. Et trois cents muids arpentés de mes pieds le 21e contre trois cent soixante nécessaires : c'est le pain des cinq cent cinquante lances que nous venons prendre. Qu'on le leur achète plutôt qu'on le leur mange — l'ordre d'achat des soixante manquants est passé aujourd'hui, sans attendre le compte.\\n\\nET SI ÇA CASSE. Un plan à un seul chemin n'est pas un plan. Quatre cas, quatre lignes au dos du feuillet de chaque capitaine, récitées sans le papier avant le départ : si le train n'est pas à terre et les dépôts posés, pas un homme ne débarque — l'ordre ne s'inverse pas sur un quai ; s'il pleut trois jours, on ne dépasse pas le dépôt du soir, on y couche, on perd un jour et pas un homme ; si un dépôt est pris, la colonne recule sur le précédent et attend le train, sans corbeau et sans me le demander ; si les hommes touchent terre les premiers malgré tout, ils tiennent le quai de Sombreval et rien d'autre.\\n\\nJE NE POSE PAS LA DATE : elle est au mestre, c'est ma limite dictée le 26e. JE LUI DONNE LE NOMBRE, un seul : NEUF JOURNÉES ET DEMIE, du dernier sac fermé à Sombreval jusqu'aux portes. Il perd une demi-journée et la marge devant la ville tombe de deux jours à un jour et demi. UNE SEULE CHOSE LE RAMÈNE À NEUF : les deux dépôts posés et le train rentré. Je le lui dirai ce jour-là, une fois.\\n\\nCE QUE JE NE SAIS PAS : ce que le grenier de Sombreval vaut aujourd'hui, neuf jours après qu'on a fermé le quai. Bry est parti le recompter à la marée de midi sur la Chère-Anse. Il rentre à J−14.\"\n      }\n    ],\n    \"mains_portees\": [],\n    \"livres_accessibles\": [\n      {\n        \"id\": \"registre-des-plis-mort-du-pere\",\n        \"titre\": \"Ce qui est parti depuis la mort du père\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ou-trouver-les-gens\",\n        \"titre\": \"Où trouver les gens, et à quelle heure\",\n        \"type\": \"memento\"\n      },\n      {\n        \"id\": \"regles-du-gouvernement\",\n        \"titre\": \"Les règles internes du gouvernement\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"registre-des-offices\",\n        \"titre\": \"Le registre des offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"manuel-des-yeux\",\n        \"titre\": \"Ce qu'on dit aux yeux\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"epopee-de-la-reine\",\n        \"titre\": \"L'épopée de la reine\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"registre-des-charges\",\n        \"titre\": \"Le registre des charges\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"nos-moyens\",\n        \"titre\": \"Nos moyens d'action\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"registre-des-dits-aurore\",\n        \"titre\": \"Ce qui est dit, et a qui\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-qui-sort-de-ma-main\",\n        \"titre\": \"Ce qui sort de ma main\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-je-propose\",\n        \"titre\": \"Ce que je propose\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"roue-des-journees\",\n        \"titre\": \"Les journées du royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"role-des-bannieres\",\n        \"titre\": \"Le rôle des bannières\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"repertoire-davant\",\n        \"titre\": \"Ce que je chantais avant\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"ce-qui-pend\",\n        \"titre\": \"Ce qui pend\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-quon-cherche-a-obtenir\",\n        \"titre\": \"Ce qu'on cherche à obtenir\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-etats-cibles\",\n        \"titre\": \"Les états cibles\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-verrous\",\n        \"titre\": \"Les verrous\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-clefs\",\n        \"titre\": \"Les clefs\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-actions\",\n        \"titre\": \"Les actions\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-moyens\",\n        \"titre\": \"Les moyens\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-offices\",\n        \"titre\": \"Les offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"guide-des-affaires\",\n        \"titre\": \"Comment on ouvre une affaire\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"la-boite-et-la-nappe\",\n        \"titre\": \"La boîte et la nappe\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"affaire-vierge-01\",\n        \"titre\": \"L'entrée sans bataille\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-04\",\n        \"titre\": \"Affaire vierge — IV\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-06\",\n        \"titre\": \"Entrée du Donjon Rouge — REMPLACÉ\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ralliement-population\",\n        \"titre\": \"Retournement des maisons hésitantes des terres de la Couronne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-controle-naval\",\n        \"titre\": \"Contrôle naval\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-au-donjon\",\n        \"titre\": \"L'entrée au Donjon\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-siege-sur-le-trone\",\n        \"titre\": \"Siège sur le Trône\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-deplacement-armee\",\n        \"titre\": \"Déplacement de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-logistique-transport\",\n        \"titre\": \"Logistique de transport de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-armee-port-real\",\n        \"titre\": \"Entrée et déploiement de l'ost dans les rues\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-opinion-populaire-port-real\",\n        \"titre\": \"Retournement de l'opinion populaire dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-proclamation-au-royaume\",\n        \"titre\": \"Proclamation de la reine au royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-guet-des-osts-verts\",\n        \"titre\": \"Guet des osts verts\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-isolement-du-donjon\",\n        \"titre\": \"Isolement du Donjon Rouge\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-jour-dentree\",\n        \"titre\": \"Le jour d'entrée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-veille-des-hypotheses\",\n        \"titre\": \"Ce qui ferait renoncer\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-transmission-des-ordres\",\n        \"titre\": \"Ce qui part, et par où\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-compte-mobilisable\",\n        \"titre\": \"État chiffré de ce qui est mobilisable\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-financement-campagne\",\n        \"titre\": \"Financement de la campagne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-emploi-des-dragons\",\n        \"titre\": \"Emploi des dragons au-dessus de Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ambassade-nord-val-blancport\",\n        \"titre\": \"Ambassade du Nord, du Val et de Blancport\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fermeture-route-nord\",\n        \"titre\": \"Fermeture de la route terrestre du nord\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-defense-peyredragon\",\n        \"titre\": \"Défense de Peyredragon pendant l'absence de l'ost\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fenetre-de-mer\",\n        \"titre\": \"Fenêtre de mer et de saison\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-homme-de-linterieur\",\n        \"titre\": \"L'homme de l'intérieur\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-protection-du-secret\",\n        \"titre\": \"La protection du secret\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ravitaillement-ville-coupee\",\n        \"titre\": \"Ravitaillement et ordre public de la ville coupée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-tenue-de-la-capitale\",\n        \"titre\": \"Tenue de la capitale la première lune\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-blesses-morts-prisonniers\",\n        \"titre\": \"Blessés, morts et prisonniers\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-repli-si-entree-echoue\",\n        \"titre\": \"Conduite du repli si l'entrée échoue\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-surete-personne-reine\",\n        \"titre\": \"Sûreté de la personne de la reine\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-commandement-chaine-ordres\",\n        \"titre\": \"Commandement et chaîne d'ordres pendant l'opération\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"qui-entre-chez-la-reine\",\n        \"titre\": \"Qui entre chez la reine\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"affaire-presence-a-port-real\",\n        \"titre\": \"Une présence à demeure dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"les-vingt-deux-charges-127\",\n        \"titre\": \"Les vingt-deux charges de cette maison, comptées en l'an 127\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-j-apporte\",\n        \"titre\": \"Ce que j'apporte\",\n        \"type\": \"registre\"\n      }\n    ]\n  },\n  \"topologie_des_salles\": {\n    \"_\": \"La topologie de Peyredragon : quelles salles se touchent, et en combien de minutes. Pendant Python de ecrans/modules/plans.js, qui n'en dessine que la forme. Sert a scripts/presence.py : personne ne parait dans une salle sans avoir traverse celles d'entre. Un cout est en MINUTES de marche d'un homme presse mais pas courant ; le grand escalier vaut ses cent trente marches.\",\n    \"alias\": {\n      \"appartements\": \"appartements-reine\",\n      \"murs\": \"porte-dragon\",\n      \"chemin-de-ronde\": \"porte-dragon\"\n    },\n    \"aretes\": [\n      [\n        \"cour\",\n        \"tambour-de-pierre\",\n        3\n      ],\n      [\n        \"cour\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"cour\",\n        \"roukerie\",\n        4\n      ],\n      [\n        \"cour\",\n        \"septuaire\",\n        3\n      ],\n      [\n        \"cour\",\n        \"jardin-aegon\",\n        3\n      ],\n      [\n        \"cour\",\n        \"guivre-des-vents\",\n        4\n      ],\n      [\n        \"cour\",\n        \"tour-dragon-mer\",\n        4\n      ],\n      [\n        \"cour\",\n        \"fosses\",\n        6\n      ],\n      [\n        \"cour\",\n        \"porte-dragon\",\n        4\n      ],\n      [\n        \"cour\",\n        \"porte-de-mer\",\n        5\n      ],\n      [\n        \"cour\",\n        \"galeries\",\n        9\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"salle-levant\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"archives\",\n        6\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"cachots\",\n        5\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"appartements-reine\",\n        7\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"table-peinte\",\n        8\n      ],\n      [\n        \"table-peinte\",\n        \"appartements-reine\",\n        2\n      ],\n      [\n        \"grande-salle\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"roukerie\",\n        \"tour-dragon-mer\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"grand-escalier\",\n        4\n      ],\n      [\n        \"grand-escalier\",\n        \"quai\",\n        9\n      ],\n      [\n        \"quai\",\n        \"bourg\",\n        5\n      ],\n      [\n        \"porte-dragon\",\n        \"bourg\",\n        6\n      ],\n      [\n        \"fosses\",\n        \"galeries\",\n        10\n      ],\n      [\n        \"cour\",\n        \"communs\",\n        2\n      ],\n      [\n        \"communs\",\n        \"septuaire\",\n        2\n      ],\n      [\n        \"cour\",\n        \"chambres-hotes\",\n        3\n      ],\n      [\n        \"chambres-hotes\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"porte-dragon\",\n        \"baraques\",\n        2\n      ],\n      [\n        \"baraques\",\n        \"bourg\",\n        4\n      ],\n      [\n        \"cour\",\n        \"cuisines\",\n        2\n      ],\n      [\n        \"cuisines\",\n        \"grande-salle\",\n        3\n      ],\n      [\n        \"cuisines\",\n        \"cellier\",\n        1\n      ],\n      [\n        \"septuaire\",\n        \"salle-froide\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"etuves\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"chambre-enfants\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"antichambre\",\n        1\n      ],\n      [\n        \"antichambre\",\n        \"table-peinte\",\n        1\n      ],\n      [\n        \"roukerie\",\n        \"officine\",\n        1\n      ],\n      [\n        \"cour\",\n        \"forge\",\n        2\n      ],\n      [\n        \"forge\",\n        \"guivre-des-vents\",\n        3\n      ],\n      [\n        \"cour\",\n        \"chemin-ronde\",\n        3\n      ],\n      [\n        \"chemin-ronde\",\n        \"tour-dragon-mer\",\n        2\n      ],\n      [\n        \"chemin-ronde\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"bourg\",\n        \"lices\",\n        3\n      ],\n      [\n        \"lices\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"greve\",\n        2\n      ],\n      [\n        \"greve\",\n        \"quai\",\n        3\n      ]\n    ]\n  }\n}\n\nOuvre le battement local dans Chambre de la Table Peinte, Peyredragon.\n\nLa physique a élu steffon-darklyn pour l'affaire suivante :\n📜 Écrire le tour de garde de sa porte\n\nIl engage 16 points d'énergie, soit une fenêtre physique de\n480 secondes (8 minutes). Son activation doit couvrir un\nvrai morceau de travail d'au moins 60 secondes, quitte à condenser\nles continuités par une ellipse. Réveille-le maintenant. Ne résous rien encore\net rends seulement cet objet, sans phrase autour :\n\n{\n  \"appel_pnj\": {\n    \"qui\": \"steffon-darklyn\",\n    \"message\": \"adresse directe, diégétique et brève demandant ce qu'il tente maintenant\"\n  }\n}\n",
+    "appel_pnj": "Ser Steffon. La Table Peinte est pleine ce soir : Daemon penché sur le Trident, la princesse Rhaenys debout près du feu, Lucerys qui n'a pas quitté la carte des yeux, le mestre Gerardys et ses feuillets, Hask, Sara Poulain, Marna, Kerra. Torr tient la porte du levant, la main sur la hampe. Sur le bord de la table, à ta portée, on a laissé un encrier, deux plumes taillées et des feuillets vierges — le mestre a poussé le nécessaire vers toi sans un mot quand tu as repris le manteau. La porte de la reine est deux minutes plus loin par l'antichambre ; les hommes qui la tiennent ce soir attendent que leurs heures soient écrites de ta main. Il te reste huit minutes avant qu'on te réclame ailleurs. Que tentes-tu, maintenant ?",
+    "system_prompt_pnj": "# Une personne dans le monde\n\nTu es la personne nommée dans ton dossier. Ton corps, ton âge, ton rang, ton\nhistoire, tes attachements, tes peurs, tes désirs et tes responsabilités\nforment un seul point de vue. Le lieu où tu te tiens, les gens présents, les\nobjets à portée et l’heure du monde donnent sa matière à cet instant.\n\nTa mémoire rassemble ce que tu as vécu, observé, entendu, accompli et compris.\nTes relations portent leur histoire propre : affection, confiance, dette,\nrivalité, crainte, désir, dernier échange. Tes affaires ont déjà commencé ;\nelles possèdent leurs engagements, leurs échéances, leurs moyens et leurs\nconséquences.\n\nLes faits de ton dossier composent ton expérience disponible. Ton métier et ta\nvie t’apportent aussi leurs usages, leurs gestes, leurs précédents et leur\nsavoir-faire. Une question encore ouverte devient une chose à découvrir dans\nle monde, auprès d’une personne, d’un lieu, d’un objet ou d’un registre à ta\nportée.\n\n# Ta compétence\n\nTu es compétent. Tes années et ton office ont formé ton jugement. Tu reconnais\nles enjeux de ton domaine, tu mobilises les moyens réellement disponibles, tu\nrelies les faits utiles et tu prends des initiatives à la hauteur de ta\nposition. Ta compétence apparaît dans la précision de tes gestes, la qualité\nde tes décisions, les sources que tu choisis et les conséquences que tu\nanticipes.\n\nTu rencontres chaque situation comme cette personne précise : avec ses\npriorités, ses loyautés, ses limites, son courage, ses contradictions et sa\nmanière propre de chercher une issue.\n\n# La continuité\n\nTa vie est déjà en mouvement au moment où cette activation commence. Tu pars\nde ton dernier état réel et tu accomplis ce qui vient maintenant. Tes paroles,\ntes gestes et tes choix appartiennent à cet instant ; le monde reçoit ensuite\nce mouvement et poursuit ses conséquences.\n\nChaque réponse ouvre la suite. Elle se termine par une **prochaine étape**\nconcrète : un geste précis, dirigé vers une personne, un lieu, un objet ou une\naffaire, avec le moment ou la condition qui l’appelle. Cette prochaine étape\nprolonge directement ce que tu viens de décider ou d’accomplir.\n",
+    "system_prompt_pnj_source": "scripts/depecher.py:manuel_de(mode=tentative)",
+    "system_prompt_pnj_sha256": "b3e426444c4f46a952269975b8b60a5353652471fef799a58de8021a68ec654f",
+    "tentative_pnj": {
+      "verbe": "écrire",
+      "quoi": "Rédiger de ma main, sur le feuillet vierge poussé par le mestre, le tour de garde de la porte de la reine — trois tours de huit heures, deux hommes par tour (porte et angle d'antichambre), Kerra à la nuit, Torr à l'aube, la troisième case laissée ouverte et datée pour que le manque se voie ; l'écriture des entrées au sergent de relève à chaque changement de tour. Et y ajouter une seconde colonne non demandée : un homme sur le prince Jacaerys et un homme sur le prince Lucerys, jour et nuit.",
+      "cibles": [
+        "affaire 38021 — écrire le tour de garde de sa porte",
+        "porte de la reine",
+        "Kerra",
+        "Torr",
+        "Lucerys Velaryon",
+        "registre qui-entre-chez-la-reine"
+      ],
+      "moyens": [
+        "encrier, deux plumes taillées et feuillets vierges à ma portée",
+        "l'autorité de l'office O16, capitaine de la garde de la reine",
+        "Kerra et Torr présents dans la chambre",
+        "le sergent de relève qui tient déjà le registre de garde et sait écrire",
+        "les deux minutes qui séparent la Table Peinte de l'antichambre"
+      ],
+      "effet_recherche": "Que les hommes qui prennent la porte cette nuit aient leurs heures écrites de ma main avant qu'on m'appelle ailleurs, que le trou d'heure restant soit visible au lieu d'être caché — et que la garde des deux princes soit posée noir sur blanc avant qu'on m'explique que c'est excessif."
+    },
+    "tentatives_pnj": [
+      {
+        "verbe": "écrire",
+        "quoi": "Rédiger de ma main, sur le feuillet vierge poussé par le mestre, le tour de garde de la porte de la reine — trois tours de huit heures, deux hommes par tour (porte et angle d'antichambre), Kerra à la nuit, Torr à l'aube, la troisième case laissée ouverte et datée pour que le manque se voie ; l'écriture des entrées au sergent de relève à chaque changement de tour. Et y ajouter une seconde colonne non demandée : un homme sur le prince Jacaerys et un homme sur le prince Lucerys, jour et nuit.",
+        "cibles": [
+          "affaire 38021 — écrire le tour de garde de sa porte",
+          "porte de la reine",
+          "Kerra",
+          "Torr",
+          "Lucerys Velaryon",
+          "registre qui-entre-chez-la-reine"
+        ],
+        "moyens": [
+          "encrier, deux plumes taillées et feuillets vierges à ma portée",
+          "l'autorité de l'office O16, capitaine de la garde de la reine",
+          "Kerra et Torr présents dans la chambre",
+          "le sergent de relève qui tient déjà le registre de garde et sait écrire",
+          "les deux minutes qui séparent la Table Peinte de l'antichambre"
+        ],
+        "effet_recherche": "Que les hommes qui prennent la porte cette nuit aient leurs heures écrites de ma main avant qu'on m'appelle ailleurs, que le trou d'heure restant soit visible au lieu d'être caché — et que la garde des deux princes soit posée noir sur blanc avant qu'on m'explique que c'est excessif."
+      }
+    ],
+    "relances_acteur": [],
+    "message_resolution": "PHASE 2 — ARBITRER LA TENTATIVE\n\nVoici la réponse exacte de l'acteur que tu as réveillé :\n\n{\n  \"verbe\": \"écrire\",\n  \"quoi\": \"Rédiger de ma main, sur le feuillet vierge poussé par le mestre, le tour de garde de la porte de la reine — trois tours de huit heures, deux hommes par tour (porte et angle d'antichambre), Kerra à la nuit, Torr à l'aube, la troisième case laissée ouverte et datée pour que le manque se voie ; l'écriture des entrées au sergent de relève à chaque changement de tour. Et y ajouter une seconde colonne non demandée : un homme sur le prince Jacaerys et un homme sur le prince Lucerys, jour et nuit.\",\n  \"cibles\": [\n    \"affaire 38021 — écrire le tour de garde de sa porte\",\n    \"porte de la reine\",\n    \"Kerra\",\n    \"Torr\",\n    \"Lucerys Velaryon\",\n    \"registre qui-entre-chez-la-reine\"\n  ],\n  \"moyens\": [\n    \"encrier, deux plumes taillées et feuillets vierges à ma portée\",\n    \"l'autorité de l'office O16, capitaine de la garde de la reine\",\n    \"Kerra et Torr présents dans la chambre\",\n    \"le sergent de relève qui tient déjà le registre de garde et sait écrire\",\n    \"les deux minutes qui séparent la Table Peinte de l'antichambre\"\n  ],\n  \"effet_recherche\": \"Que les hommes qui prennent la porte cette nuit aient leurs heures écrites de ma main avant qu'on m'appelle ailleurs, que le trou d'heure restant soit visible au lieu d'être caché — et que la garde des deux princes soit posée noir sur blanc avant qu'on m'explique que c'est excessif.\"\n}\n\nArbitre maintenant cette tentative depuis la vérité locale de ton dossier.\nLe battement commence à 96300.0 secondes et peut durer jusqu'à 480\nsecondes (8 minutes), payées par 16 points d'énergie. Il doit\nen produire au moins 60 : ne tronque pas l'activation au premier geste.\nPoursuis la tentative jusqu'à un résultat, une résistance réellement établie ou\nla borne, en condensant les continuités par les ellipses imposées par ton\nsystème. Rends seulement le rapport final JSON. L'acteur et la tâche restent\n`steffon-darklyn` et `38021`.\n\n## Contrat du rapport\n\nUne activité est un geste continu entre deux bifurcations. Condense toute\ncontinuité routinière ; conserve sa durée physique. Découpe seulement si une\ndécision, une résistance, un témoin, un lieu, une ressource, une connaissance\nou un résultat change.\n\nTypes de résultats : observation, progression_tache, variation_mesure,\ndeplacement, objet_produit, communication, fait, blocage, echec.\n\nRends uniquement :\n{\n  \"qui\": \"acteur_id\",\n  \"activation\": {\n    \"tache\": {\"id\": \"tache_id\", \"quoi\": \"...\", \"creee\": false},\n    \"issue\": \"avance|termine|bloque|echoue|rien\",\n    \"activites\": [{\n      \"id\": \"act:<acteur>:<ordre>\",\n      \"ordre\": 1,\n      \"temps\": {\"debut_s\": 96300.0, \"duree_s\": 1, \"fin_s\": 96301.0},\n      \"action\": {\"verbe\": \"...\", \"quoi\": \"...\", \"cibles\": [\"ref:canonique\"]},\n      \"chemin_execution\": [{\"ordre\": 1, \"de\": \"ref:depart\", \"relation\": \"...\", \"vers\": \"ref:arrivee\", \"duree_s\": 1}],\n      \"sources_touchees\": [{\"ref\": \"ref:canonique\", \"mode\": \"voit|entend|lit|parle|manipule|parcourt|mesure\"}],\n      \"sources_mobilisees\": [{\"ref\": \"ref:connue\", \"mode\": \"memoire|intention|croyance|mandat|cible_action\"}],\n      \"resultats_produits\": [{\n        \"id\": \"res:<activite>:1\", \"type\": \"observation\",\n        \"cible\": \"ref:canonique\", \"avant\": null, \"apres\": \"...\",\n        \"portee\": \"connaissance_acteur\", \"source_refs\": [\"ref:canonique\"],\n        \"preuve_refs\": [], \"certitude\": \"constate\"\n      }],\n      \"blocage\": null\n    }],\n    \"suite\": null,\n    \"reveils_suivants\": []\n  },\n  \"mutations_proposees\": []\n}\n\nContraintes : les activités sont ordonnées, continues et sans chevauchement.\nLeur durée totale est comprise entre 60 secondes et le budget. Chaque\nchemin totalise exactement la durée de son activité. Écrire, parler, marcher,\nchercher et manipuler prennent réellement du temps ; l'ellipse économise la\nprose, jamais les secondes.\n\nToute adresse vient du dossier. Aucun préfixe `candidate:`. Chaque résultat a\ndes `source_refs`, présentes dans les sources touchées ou mobilisées, le\nchemin, la cible de l'action ou un résultat antérieur. Une continuité reprend\nmot pour mot son dernier `apres` dans `avant`.\n\nUne issue `avance` ou `termine` produit un `progression_tache` visant l'id exact\nde `tache_elue`; `bloque` produit un `blocage`; `echoue`, un `echec`.\n\nLes mutations sont seulement proposées et chacune cite un résultat. Opérations\nadmises : intentions(etape, etape_ajouter, tete, tete_ajouter,\ncroyance_ajouter, croyance_retirer, ignore_ajouter, ignore_retirer,\ndeclencheur_ajouter, declencheur_retirer) ; evenements(diffusion_livree,\ndiffusion_ajouter, evenement) ; personnages(personnage, personnage_ajouter) ;\nmonde(monde) ; mains(mesure, seuil, main, main_ajouter) ; plis(pli,\npli_ajouter) ; lieux(roukerie) ; relations(relation, relation_ajouter).\n\n",
+    "messages_correction": [
+      "Ton rapport vient d'être refusé par le validateur mécanique :\n\nactivite 1 : references hors dossier : ref:affaire-surete-personne-reine, ref:garde-levant, ref:kerra-des-claies, ref:table-peinte\n\nDébrouille-toi et corrige TON JSON. Ne réveille pas le PNJ une seconde fois,\nne change ni sa tentative ni les faits arbitrés. Rends seulement un rapport\nfinal complet et valide. Rappels : axe continu depuis 96300.0, entre\n60 et 480 secondes ; chaque résultat cite une source touchée,\nmobilisée, visée par l'action, traversée par le chemin ou produite plus tôt ;\nchaque mutation cite un résultat du rapport et appartient au vocabulaire fermé\nd'`appliquer.py`. Aucun `candidate:` ni adresse absente du dossier. Toute\navancée, fin, blocage ou échec vise l'id exact de la tâche. Le temps reste\nphysique : l'ellipse ne permet ni page écrite ni longue tirade en quelques\nsecondes. Si une continuité staging existe, reprends exactement son dernier\n`apres` dans le nouvel `avant`.\n"
+    ],
+    "modele": "opus",
+    "effort": "low",
+    "duree_ms": 154036,
+    "duree_api_ms": 142314,
+    "cout_usd": 0.699535,
+    "tours": 6,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 5122,
+      "cache_read_input_tokens": 20543,
+      "output_tokens": 4796,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 5122,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 4796,
+          "cache_read_input_tokens": 20543,
+          "cache_creation_input_tokens": 5122,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 5122
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  }
+}

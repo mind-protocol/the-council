@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 2099, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 2085, in main
+    etat, active = cycle(args, etat)
+                   ~~~~~^^^^^^^^^^^^
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 1924, in cycle
+    cible, depense, rapport = appeler_acteur(
+                              ~~~~~~~~~~~~~~^
+        pid, tache, budget, horloge, noeuds, args.modele, args.effort,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        args.minutes_appel, False, args.heartbeat, etat=etat)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 1716, in appeler_acteur
+    rapport = normaliser_rapport_activation(
+        rapport_brut, pid, tache, dossier, budget)
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 1321, in normaliser_rapport_activation
+    raise RuntimeError("mutation sans resultat produit correspondant")
+RuntimeError: mutation sans resultat produit correspondant

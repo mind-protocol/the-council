@@ -262,24 +262,45 @@
    ],
    "resume": "DE 20h00 À 23h41, QUATRE ENDROITS. (1) LE QUAI : les dix copies vérifiées de sa main sous la bâche, en trois liasses par date de départ ; la ligne des mille onze présente sur les dix, mais à deux doigts du bord sur DEUX copies du 30e ; toile huilée collée au dos le soir même, recopie possible jusqu'à quatre heures. Rulf a prévenu Wat de son propre chef (barque à 4h20, pas 5h30) et compte VINGT-SIX hommes de l'île partis prendre passage depuis la lune dernière, dix-neuf connus de nom, écrits demain avant que la coque largue. (2) LES CAVES après la deuxième cloche : Roon remet la tête de rôle — DIX noms, tous de la deuxième file ; le onzième refusé (deux Wyl Terrenoire, père et fils, un seul manquant, il ne choisira pas). Interdiction expresse de RECOPIER la feuille : recopiée, c'est sa main à elle de nouveau. (3) LES CUISINES : Alys avoue avoir essayé deux lignes sur quatre personnes dans la journée, puis chante 'Mille deux cent quarante' basse et sans chœur ; LA FILLE AU CHAUDRON RÉPOND LE REFRAIN après une seule écoute — la chanson est sortie à l'intérieur des murs deux jours avant sa descente au bourg. (4) LA BARBACANE : échange complet avec ser Steffon — elle lui donne la lecture de la ligne de roukerie, il lui donne sa marche et ses trois portes. TROIS LETTRES À ÉCRIRE AVANT LE 30e AU SOIR : Sombreval 180 muids, Rosby 120, Stokeworth 60, avec date et prix. Elle refuse de rien promettre sur Rosby. Elle écrit les trois nombres au pied de l'escalier avant de monter, et souffle la lampe à 23h41 après dix-sept heures et demie debout.",
    "choix": "Vérifier les dix elle-même ; réparer plutôt que recopier ; faire chanter la chanson ; donner à Steffon la réponse entière et nommer l'office du Grand Mestre sans nommer l'homme ; prendre les trois lettres et refuser Rosby ; dormir plutôt que d'écrire de nuit."
+  },
+  {
+   "id": "aurore-chez-rulf-nuit-du-30e",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30,
+    "minute": 126
+   },
+   "lieu_id": "peyredragon",
+   "resume": "Nuit du 30e, 1h18-2h06. Chez le maitre de port. Rulf a montre le feu de la coque braavienne, dixieme nuit au mouillage, jamais touche son quai. Il a dit sa feuille du 23e - portee au mestre, tombee sur le nom de personne, six jours sans reponse. Aurore lui a pose trois questions (ce qu'est une arrivee sur lest ; sa chronologie des coques du 16e, 18e et 23e ; s'il faut inscrire une provenance a l'arrivee et une destination au depart) puis s'est levee avant qu'il ait fini de chercher : debout depuis avant l'aube du 29e. Remontee au chateau seule, 130 marches, vent de nord. Couchee tout habillee. LES REPONSES DE RULF SONT EN ATTENTE.",
+   "choix": "Monter dormir sans attendre la reponse."
+  },
+  {
+   "id": "aurore-la-journee-des-livres-30e",
+   "date": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30,
+    "minute": 978
+   },
+   "lieu_id": "peyredragon",
+   "resume": "30e, 7h-16h18. LA JOURNEE OU QUATRE LIVRES ONT DIT LA MEME CHOSE. Rulf au matin (les cinq coques, les Ronces qui ne sont pas un port, l homme du 23e entre par la crique) ; Torgo au mole (les mains sans corne, le cordage commis a gauche donne en paiement, le mot a l appui inverse, l homme n est pas de l ile) ; Beaupre derriere le hangar a filets (les deux paiements d avance en argent sans nom, le brai disparu, la Bonne-Salaison dehors la nuit du 13e au 14e) ; Rulf au quai (Torgo LE JEUNE nomme, deux Torgo dans la rade) ; Bral a la bascule (le carrier venu en personne pour la premiere fois en vingt ans - une absence de charretier) ; Coll au grenier (cinq parts pour quatre bouches chez Nesse la mere depuis douze jours, aucune descente donc aucun embarquement jamais rapporte pour Ronn ; Berta descendue de deux et jamais remontee) ; Roon aux caves (938 noms, cinq doubles TOUS DES HOMMES LOUES, trois sur cinq d un village du rocher, Grelle et Fourche et Crin absents, aucun tonnelier de l ile dans la colonne). CONCLUSION CONVERGENTE : RONN VAURE N EST JAMAIS MONTE SUR UN BATEAU.",
+   "choix": "Suivre les livres plutot que les hommes, toute la journee."
   }
  ],
  "scene_courante": {
-  "lieu": "Le bureau de port, sous l'auvent — Peyredragon",
-  "salle": "quai",
+  "id": "aurore-couchee-1er-4e-lune",
   "date": {
    "annee": 129,
-   "lune": 3,
-   "jour": 29,
-   "minute": 325
+   "lune": 4,
+   "jour": 1,
+   "minute": 68
   },
-  "presents": [
-   "aurore-inchauspe",
-   "rulf-corne"
+  "lieu_id": "peyredragon",
+  "salle": "chambre",
+  "participants": [
+   "aurore-inchauspe"
   ],
-  "enjeu": "Aurore tient les VINGT-SIX écrits, jour et coque pour chacun (dix-neuf nommés, sept par le nom du patron). Rulf y a trouvé DEUX Terrenoire, le père et le fils, montés le même jour sur la même coque — le père ayant répondu du garçon à sa table. Roon a donc raison de ne pas choisir : ils sont partis à deux et il en manque un.",
-  "en_attente": "La coque des quatre ports largue à cinq heures et demie. Aurore a laissé la feuille de Roon dans sa chambre : le recoupement ne peut pas se faire ici.",
-  "aujourdhui": "29e : écrire les trois lettres de la marche (Sombreval 180 / Rosby 120 / Stokeworth 60, date et prix) avant le 30e au soir. Recouper les vingt-six contre les dix. Roon en est à la quatrième file et n'a pas dormi. La chanson court déjà dans la boulange.",
-  "note_sessions": "Front d'Aurore : 29e 5h25. Les autres sièges étaient au 28e 17h28 — elle a environ douze heures d'avance. Ne pas creuser davantage sans regarder le principal."
+  "beat": "1h08 LE 1er DE LA 4e LUNE. AURORE DORT. La journee du 30e est close et sa conclusion est ECRITE en tete du volume la-colonne-du-seizieme. || CE QUI L ATTEND AU REVEIL, ET C EST UNE HEURE FIXE : LE RENDEZ-VOUS DU SEL a la bascule AVANT LE JOUR — six ou sept porteurs des cabanes, apres trois jours secs. DEUX CONDITIONS DE BRAL, acceptees en silence : PAS DE MANTEAU DE CHATEAU, et NE RIEN DEMANDER (elle s assied a sa gauche, la ou l on note les tares, et elle ecoute ce qu ils disent A LUI). Sa raison : ils me parlent parce que je pese, ils ne vous parleront jamais parce que vous comptez. || CE QUE LA JOURNEE DU 30e A DONNE : les neuf manquants de l ile TOMBES A CINQ (deux n en etaient pas, l homme de Wenda rentre le 26e, celui du carrier vivant au sel) ; LA ROCHE-NOIRE REFERMEE par son propre maitre (court de deux et non de quatre, dont UN MORT CERTAIN avec son crochet garde a la carriere) ; la lecon qui reforme toute sa methode — UN HOMME NE SE DECLARE PAS PARCE QUE SE DECLARER C EST AVOUER LA PAIE D AEGON, d ou UN NOMBRE ET NON UNE LISTE, et le mot qui couvre : PRIS POUR L OUVRAGE. || LA DATE DU 18e EST CLASSEE — reglee avant que rien ne parte, ne plus la porter comme une dette. || OUVERT, ET RIEN DE PLUS : les deux noms du carrier CONTRE UN ECRIT A OBTENIR DE LA REINE (deux clauses : les noms ne servent qu a la feuille des rapportes ; la carriere n est pas relevee une seconde fois — il ne se presentera pas deux fois) ; le crochet a aller chercher ; 19 des 26 non recoupes ; LA DETTE ENVERS RULF (sa ligne des conges refusee sec le 30e au matin, seconde fois qu un ecrit de sa main ne tombe sur personne, et quatre nefs entrees aux hangars les 24e-27e de nuit sans un seul conge) ; AUCUNE NOUVELLE DE WAT ET HOBB, sortis le 29e a 4h20 pour clouer la liste au quai de la Gadoue. || CE QUI ARRIVE DEMAIN MATIN SANS QU ELLE L AIT DEMANDE : LE MOT DE ROON, remis au garde des caves a la releve de six heures — sa nuit est deja vecue (etat/rapports/hallis-roon.json, travaux verses) et elle contient 1182 hommes distincts contre 1240 noms, 31 doubles prouves, et le fait que les 1011 n ont jamais ete comptes mais SOUSTRAITS. NE PAS LE SERVIR AVANT LE MOT. || LE JOUEUR VEUT PASSER A AUTRE CHOSE : lui ouvrir la journee sur le sel ou sur les hangars, pas sur le compte."
  }
 }

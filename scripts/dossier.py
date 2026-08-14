@@ -67,6 +67,66 @@ def charger(nom):
     return []
 
 
+# ---- Les adresses : de quoi poser un pointeur au lieu d'un numero nu -------
+# Un conseiller cite « les neufs », « la cinquieme file », « ce qu'on doit au
+# Sanglier » — et le joueur devine. Le fil sait pourtant ouvrir la ligne exacte
+# quand on l'ecrit `[les neufs](44022)` ; il n'y manquait que d'avoir la forme
+# sous les yeux au moment ou l'on compose la replique. C'est ici qu'on regarde
+# avant d'ecrire, donc c'est ici qu'on la donne, toute faite.
+#
+# On ne deballe pas les vingt lignes de chaque cahier : seulement les numeros
+# qu'il a REELLEMENT en tete — ceux qui traversent ses pensees et sa
+# conclusion. C'est exactement ce que le MJ s'apprete a distiller.
+def index_des_lignes():
+    index = {}
+    for v in charger("books.json"):
+        tables = list(v.get("tables") or [])
+        if v.get("colonnes"):
+            tables.append({"colonnes": v.get("colonnes"),
+                           "lignes": v.get("lignes") or []})
+        for t in tables:
+            cols = t.get("colonnes") or []
+            if not cols or "N°" not in str(cols[0]):
+                continue
+            for l in (t.get("lignes") or []):
+                cells = l.get("cellules") if isinstance(l, dict) else l
+                cells = cells or []
+                m = re.match(r"\s*(?:\*\*)?\s*(\d{4,6})\b",
+                             str(cells[0] if cells else ""))
+                if not m:
+                    continue
+                lib = str(cells[1] if len(cells) > 1 else "")
+                lib = re.sub(r"^\s*[^\w\s(]+\s*", "", lib).replace("**", "")
+                index[m.group(1)] = (lib.strip(), v.get("titre") or v.get("id"))
+    return index
+
+
+def dossier_adresses(elements):
+    if not elements:
+        return
+    index = index_des_lignes()
+    if not index:
+        return
+    vus, trouves = set(), []
+    for e in elements:
+        for n in re.findall(r"(?<!\d)(\d{4,6})(?!\d)", texte_de(e)):
+            if n in vus or n not in index:
+                continue
+            vus.add(n)
+            trouves.append((n, index[n]))
+    if not trouves:
+        return
+    trouves.sort()
+    print("\n== SES ADRESSES — a poser en POINTEUR, jamais en numero nu")
+    print("   Ce qu'il a en tete porte une adresse au registre. Ecrite ainsi,")
+    print("   elle ouvre la ligne et la surligne ; ecrite en chiffres, elle ne")
+    print("   dit rien a personne. Le libelle est ce que l'homme DIT — le")
+    print("   voici tout fait, a raccourcir a sa bouche. Deux par replique.")
+    for n, (lib, livre) in trouves:
+        print("     [%s](%s)" % (lib or "…", n))
+        print("        %s" % livre)
+
+
 def jour_de(x):
     d = x.get("date") or x.get("date_prevue") or x.get("date_maj") or {}
     if not isinstance(d, dict):
@@ -97,60 +157,65 @@ def corps(x, large):
 
 
 def dossier_travaux(sujets, large):
-    """Ce qu'un homme a appris et n'a pas encore servi — la matiere de sa voix.
+    """Ce qu'un homme a appris — la MATIERE de sa voix, jamais son texte.
 
-    On prend d'abord ses travaux par `qui`, ce qui est le cas courant (« que
-    sait Gerardys ce matin ? »). A defaut, on retombe sur la recherche plein
-    texte, pour qu'une AFFAIRE se retrouve aussi par son nom.
+    LE MARQUAGE `servie` A DISPARU, et c'est une mesure qui l'a tue : 11
+    pensees marquees sur 613. Il n'etait pas tenu, et son absence faisait
+    croire a 98 % de perte. Ce qui le remplace est l'ordre du jour : les plus
+    recentes d'abord, parce qu'un homme sert ce qu'il vient d'apprendre.
 
-    Les pensees deja servies ne sont pas depliees : elles ne sont la que pour
-    qu'on ne les serve pas deux fois.
+    On prend ses pensees par `qui`, ce qui est le cas courant (« que sait
+    Gerardys ce matin ? »). A defaut, on retombe sur la recherche plein texte,
+    pour qu'une AFFAIRE se retrouve aussi par son nom.
     """
-    travaux = charger("travaux.json")
-    siens = [t for t in travaux
-             if sans_accents(str(t.get("qui") or "")) in sujets]
-    if not siens:
-        siens = [t for t in travaux
-                 if all(s in sans_accents(texte_de(t)) for s in sujets)]
-    if not siens:
+    pensees = charger("pensees.json")
+    conclusions = charger("conclusions.json")
+    siennes = [p for p in pensees
+               if sans_accents(str(p.get("qui") or "")) in sujets]
+    siens_c = [c for c in conclusions
+               if sans_accents(str(c.get("qui") or "")) in sujets]
+    if not siennes:
+        siennes = [p for p in pensees
+                   if all(s in sans_accents(texte_de(p)) for s in sujets)]
+        siens_c = [c for c in conclusions
+                   if all(s in sans_accents(texte_de(c)) for s in sujets)]
+    if not (siennes or siens_c):
         return 0
 
-    print("\n== CE QU'IL A EN TETE — JAMAIS MONTRE AU JOUEUR  (%d affaire(s))"
-          % len(siens))
+    def rang(p):
+        d = p.get("date") or {}
+        return (d.get("annee", 0), d.get("lune", 0), d.get("jour", 0))
+    siennes.sort(key=rang, reverse=True)
+
+    print("\n== CE QU'IL A EN TETE — JAMAIS MONTRE AU JOUEUR  (%d pensee(s))"
+          % len(siennes))
     print("   La MATIERE de ses repliques, pas leur texte : on distille trois a")
-    print("   six phrases la-dedans, on ne devide pas la liste.")
+    print("   six phrases la-dedans, on ne devide pas la liste. Les plus")
+    print("   recentes d'abord — c'est ce qu'il a envie de dire.")
+
+    for c in siens_c:
+        print("\n  SA CONCLUSION, de sa main — %s" % (c.get("affaire") or "?"))
+        print("    son cahier : %s" % (c.get("livre") or "aucun inscrit"))
+        t = re.sub(r"\s+", " ", str(c.get("texte") or "")).strip()
+        print("      " + (t if large else t[:600] +
+                          (" […]" if len(t) > 600 else "")))
+
     n = 0
-    for t in siens:
-        pensees = t.get("pensees") or []
-        fraiches = [p for p in pensees if not p.get("servie")]
-        servies = len(pensees) - len(fraiches)
-        ech = t.get("echeance")
-        print("\n  AFFAIRE — %s" % (t.get("affaire") or t.get("id")))
-        print("    %s · %s · excitation %s · son cahier : %s" % (
-            ("echeance le %se jour" % ech.get("jour"))
-            if isinstance(ech, dict) else "travail continu",
-            t.get("etat") or "?", t.get("excitation"),
-            t.get("livre") or "aucun inscrit"))
-        if t.get("conclusion"):
-            c = re.sub(r"\s+", " ", t["conclusion"]).strip()
-            print("    SA CONCLUSION, de sa main :")
-            print("      " + (c if large else c[:600] +
-                              (" […]" if len(c) > 600 else "")))
-        if servies:
-            print("    (%d pensee(s) deja servies a la table — ne pas les "
-                  "resservir)" % servies)
-        if not fraiches:
-            print("    rien de neuf : il a tout dit. S'il parle, c'est du "
-                  "rechauffe — il ferait mieux d'aller travailler.")
-            continue
-        print("    CE QU'IL SAIT ET N'A PAS ENCORE SERVI (%d) :" % len(fraiches))
-        for p in fraiches:
+    par_affaire = {}
+    for p in siennes:
+        par_affaire.setdefault(p.get("affaire") or "(hors affaire)", []).append(p)
+    for aff, lot in sorted(par_affaire.items(), key=lambda kv: -len(kv[1])):
+        d = lot[0].get("date") or {}
+        print("\n  %s  (%d, la derniere au %se jour)" % (
+            aff, len(lot), d.get("jour", "?")))
+        for p in lot:
             n += 1
             txt = re.sub(r"\s+", " ", str(p.get("texte") or "")).strip()
             print("      · " + (txt if large else txt[:400] +
                                 (" […]" if len(txt) > 400 else "")))
             print("        source : %s" % re.sub(
                 r"\s+", " ", str(p.get("source") or "?")).strip()[:160])
+    dossier_adresses(siennes + siens_c)
     return n
 
 

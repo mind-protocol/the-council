@@ -1,137 +1,155 @@
 [
-  {
-    "id": "boite-gouvernement",
-    "lieu_id": "peyredragon",
-    "salle_id": "table-peinte",
-    "titre": "Le gouvernement",
-    "sous_titre": "Ce qui fait loi dans la maison : qui tient quoi, à quoi on le juge, de quoi on dispose.",
-    "embleme": "⚜️",
-    "couleur": "var(--book-regle)"
-  },
-  {
-    "id": "boite-grand-plan",
-    "lieu_id": "peyredragon",
-    "salle_id": "table-peinte",
-    "titre": "Le Grand Plan",
-    "sous_titre": "Le grand livre à lacets et les registres qui le tiennent : fins, verrous, clefs, actions, moyens, offices.",
-    "embleme": "🗂️",
-    "couleur": "var(--book-plan)"
-  },
-  {
-    "id": "boite-sujets",
-    "titre": "Les sujets",
-    "sous_titre": "Une affaire par volume : ce qu'on veut y rendre vrai, ce qui l'empêche, et les gestes que cela demande. Monté chez la reine la nuit du 26e, **redescendu et reposé sur la Table Peinte à sept heures**, de sa main.",
-    "embleme": "🧩",
-    "couleur": "var(--book-plan)",
-    "lieu_id": "peyredragon",
-    "salle_id": "table-peinte"
-  },
-  {
-    "id": "boite-yeux",
-    "lieu_id": "peyredragon",
-    "salle_id": "table-peinte",
-    "titre": "Les yeux",
-    "sous_titre": "Ce qu'on dit à ceux qui écoutent, et le carnet où vivent leurs noms. Ne quitte pas la chambre.",
-    "embleme": "🌒",
-    "couleur": "var(--book-carnet)"
-  },
-  {
-    "id": "boite-fil-des-jours",
-    "lieu_id": "peyredragon",
-    "salle_id": "table-peinte",
-    "titre": "Le fil des jours",
-    "sous_titre": "Ce qui est parti, ce qui pend, et le compte des journées du royaume.",
-    "embleme": "📆",
-    "couleur": "var(--book-registre)"
-  },
-  {
-    "id": "boite-main-de-la-reine",
-    "acteur_id": "rhaenyra",
-    "prive": true,
-    "titre": "De ma main",
-    "sous_titre": "Mon carnet, ce que j'ignore, ce qu'il me reste à faire, et ce que je me dois.",
-    "embleme": "✒️",
-    "couleur": "var(--book-carnet)"
-  },
-  {
-    "id": "boite-ce-que-je-crois",
-    "acteur_id": "rhaenyra",
-    "prive": true,
-    "titre": "Ce que je crois des gens",
-    "sous_titre": "Estimations de ma main : ce que chacun pèse, ce qu'il m'a offert, et par quelle bouche je le tiens.",
-    "embleme": "🪞",
-    "couleur": "var(--book-dossier)"
-  },
-  {
-    "id": "boite-feuilles-du-plan",
-    "acteur_id": "rhaenyra",
-    "prive": true,
-    "titre": "Les feuilles du Grand Plan",
-    "sous_titre": "Détachées du grand livre pour tenir dans la main : brèches, conversions, mécanismes, étapes, emploi des moyens.",
-    "embleme": "🗄️",
-    "couleur": "var(--book-plan)"
-  },
-  {
-    "id": "boite-affaire-port-real",
-    "acteur_id": "rhaenyra",
-    "prive": true,
-    "titre": "L'affaire de Port-Réal",
-    "sous_titre": "Ce qu'il faut avoir, savoir et loger avant que le premier homme parte.",
-    "embleme": "🗡️",
-    "couleur": "var(--book-dossier)"
-  },
-  {
-    "id": "boite-mes-yeux",
-    "acteur_id": "rhaenyra",
-    "prive": true,
-    "titre": "Mes yeux",
-    "sous_titre": "Ce que je demande à ma maîtresse des nouvelles, ce que je garde, et ce que j'en montre.",
-    "embleme": "🔭",
-    "couleur": "var(--book-regle)"
-  },
-  {
-    "id": "boite-paquet-de-toile",
-    "lieu_id": "port-real",
-    "salle_id": "chantier-de-la-vase",
-    "lecteurs": [
-      "marlo-vasse"
-    ],
-    "titre": "Le paquet de toile huilée",
-    "sous_titre": "Ce qui pend, roulé dans de la toile et ficelé au vieux filin, entre deux rouleaux de bordé au milieu du tas bâché. Personne n'ouvrira ce tas avant la pleine lune. **La Grange ce soir.**",
-    "embleme": "🪢",
-    "couleur": "var(--book-carnet)"
-  },
-  {
-    "id": "boite-la-maison",
-    "lieu_id": "port-real",
-    "salle_id": "chantier-de-la-vase",
-    "titre": "La maison",
-    "sous_titre": "Ce qui fait loi aux Chantiers de la Néra, et qui se montre : le plan, les rôles et les gages, et ce qu'on dit à qui entre.",
-    "embleme": "🪵",
-    "couleur": "var(--book-regle)"
-  },
-  {
-    "id": "boite-plan-nera",
-    "lieu_id": "port-real",
-    "salle_id": "chantier-de-la-vase",
-    "lecteurs": [
-      "marlo-vasse"
-    ],
-    "titre": "Le Grand Plan de la Néra",
-    "embleme": "📐",
-    "couleur": "var(--book-plan)",
-    "sous_titre": "Ce qui doit être vrai, ce qui l'empêche, l'idée qui le lève, le geste qui la fait, et ce dont on dispose. Voyage dans la toile huilée."
-  },
-  {
-    "id": "boite-les-quatre",
-    "lieu_id": "port-real",
-    "salle_id": "chantier-de-la-vase",
-    "lecteurs": [
-      "marlo-vasse"
-    ],
-    "titre": "Les quatre",
-    "embleme": "🧭",
-    "couleur": "var(--book-dossier)",
-    "sous_titre": "Inspecter, déployer, assurer, fonctionner. Quatre verbes, pas quatre affaires : une affaire se ferme, un verbe non. Voyage dans la toile huilée."
-  }
+ {
+  "id": "boite-gouvernement",
+  "lieu_id": "peyredragon",
+  "salle_id": "table-peinte",
+  "titre": "Le gouvernement",
+  "sous_titre": "Ce qui fait loi dans la maison : qui tient quoi, à quoi on le juge, de quoi on dispose.",
+  "embleme": "⚜️",
+  "couleur": "var(--book-regle)"
+ },
+ {
+  "id": "boite-grand-plan",
+  "lieu_id": "peyredragon",
+  "salle_id": "table-peinte",
+  "titre": "Le Grand Plan",
+  "sous_titre": "Le grand livre à lacets et les registres qui le tiennent : fins, verrous, clefs, actions, moyens, offices.",
+  "embleme": "🗂️",
+  "couleur": "var(--book-plan)"
+ },
+ {
+  "id": "boite-sujets",
+  "titre": "Les sujets",
+  "sous_titre": "Une affaire par volume : ce qu'on veut y rendre vrai, ce qui l'empêche, et les gestes que cela demande. Monté chez la reine la nuit du 26e, **redescendu et reposé sur la Table Peinte à sept heures**, de sa main.",
+  "embleme": "🧩",
+  "couleur": "var(--book-plan)",
+  "lieu_id": "peyredragon",
+  "salle_id": "table-peinte"
+ },
+ {
+  "id": "boite-yeux",
+  "lieu_id": "peyredragon",
+  "salle_id": "table-peinte",
+  "titre": "Les yeux",
+  "sous_titre": "Ce qu'on dit à ceux qui écoutent, et le carnet où vivent leurs noms. Ne quitte pas la chambre.",
+  "embleme": "🌒",
+  "couleur": "var(--book-carnet)"
+ },
+ {
+  "id": "boite-fil-des-jours",
+  "lieu_id": "peyredragon",
+  "salle_id": "table-peinte",
+  "titre": "Le fil des jours",
+  "sous_titre": "Ce qui est parti, ce qui pend, et le compte des journées du royaume.",
+  "embleme": "📆",
+  "couleur": "var(--book-registre)"
+ },
+ {
+  "id": "boite-ce-que-je-crois",
+  "acteur_id": "rhaenyra",
+  "prive": true,
+  "titre": "Ce que je crois des gens",
+  "sous_titre": "Estimations de ma main : ce que chacun pèse, ce qu'il m'a offert, et par quelle bouche je le tiens.",
+  "embleme": "🪞",
+  "couleur": "var(--book-dossier)"
+ },
+ {
+  "id": "boite-affaire-port-real",
+  "acteur_id": "rhaenyra",
+  "prive": true,
+  "titre": "L'affaire de Port-Réal",
+  "sous_titre": "Ce qu'il faut avoir, savoir et loger avant que le premier homme parte.",
+  "embleme": "🗡️",
+  "couleur": "var(--book-dossier)"
+ },
+ {
+  "id": "boite-mes-yeux",
+  "acteur_id": "rhaenyra",
+  "prive": true,
+  "titre": "Mes yeux",
+  "sous_titre": "Ce que je demande à ma maîtresse des nouvelles, ce que je garde, et ce que j'en montre.",
+  "embleme": "🔭",
+  "couleur": "var(--book-regle)"
+ },
+ {
+  "id": "boite-paquet-de-toile",
+  "lieu_id": "port-real",
+  "salle_id": "chantier-de-la-vase",
+  "lecteurs": [
+   "marlo-vasse"
+  ],
+  "titre": "Le paquet de toile huilée",
+  "sous_titre": "Ce qui pend, roulé dans de la toile et ficelé au vieux filin, entre deux rouleaux de bordé au milieu du tas bâché. Personne n'ouvrira ce tas avant la pleine lune. **La Grange ce soir.**",
+  "embleme": "🪢",
+  "couleur": "var(--book-carnet)"
+ },
+ {
+  "id": "boite-la-maison",
+  "lieu_id": "port-real",
+  "salle_id": "chantier-de-la-vase",
+  "titre": "La maison",
+  "sous_titre": "Ce qui fait loi aux Chantiers de la Néra, et qui se montre : le plan, les rôles et les gages, et ce qu'on dit à qui entre.",
+  "embleme": "🪵",
+  "couleur": "var(--book-regle)"
+ },
+ {
+  "id": "boite-plan-nera",
+  "lieu_id": "port-real",
+  "salle_id": "chantier-de-la-vase",
+  "lecteurs": [
+   "marlo-vasse"
+  ],
+  "titre": "Le Grand Plan de la Néra",
+  "embleme": "📐",
+  "couleur": "var(--book-plan)",
+  "sous_titre": "Ce qui doit être vrai, ce qui l'empêche, l'idée qui le lève, le geste qui la fait, et ce dont on dispose. Voyage dans la toile huilée."
+ },
+ {
+  "id": "boite-les-quatre",
+  "lieu_id": "port-real",
+  "salle_id": "chantier-de-la-vase",
+  "lecteurs": [
+   "marlo-vasse"
+  ],
+  "titre": "Les quatre",
+  "embleme": "🧭",
+  "couleur": "var(--book-dossier)",
+  "sous_titre": "Inspecter, déployer, assurer, fonctionner. Quatre verbes, pas quatre affaires : une affaire se ferme, un verbe non. Voyage dans la toile huilée."
+ },
+ {
+  "id": "boite-le-second",
+  "lieu_id": "port-real",
+  "salle_id": "chantier-de-la-vase",
+  "lecteurs": [
+   "hann-bourbe",
+   "marlo-vasse"
+  ],
+  "titre": "Le cahier du second",
+  "embleme": "🪵",
+  "couleur": "var(--book-plan)",
+  "sous_titre": "Ce dont l'aire répond quand personne ne la regarde. Une seule affaire, et elle ne bouge pas de la carcasse."
+ },
+ {
+  "id": "boite-panier-table-peinte",
+  "lieu_id": "peyredragon",
+  "salle_id": "table-peinte",
+  "titre": "Le panier",
+  "sous_titre": "Ce qui traîne sur la Table Peinte et n'appartient à aucun coffret : la façon de tenir les affaires, et ce qu'on fait de la nappe.",
+  "embleme": "🧺",
+  "couleur": "var(--book-registre)"
+ },
+ {
+  "id": "boite-les-officiers",
+  "titre": "Les cahiers des officiers",
+  "lieu_id": "port-real",
+  "salle_id": "chantier-de-la-vase",
+  "lecteurs": [
+   "marlo-vasse",
+   "sirel-quintaine",
+   "nel-bec"
+  ],
+  "embleme": "🏷️",
+  "couleur": "var(--book-plan)",
+  "sous_titre": "Un volume par office donne hors de l'aire. Chacun n'y lit que le sien ; moi, je lis les deux."
+ }
 ]

@@ -1,0 +1,27 @@
+Traceback (most recent call last):
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 2384, in <module>
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 2370, in main
+    journaliser("boucle.arretee", raison="clavier")
+                   ^^^^^^^^^^^^^^^^^
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 2199, in cycle
+            args.minutes_appel, False, args.heartbeat, etat=etat)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    except BaseException as e:
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+        jauge["activations"] = max(0, jauge["activations"] - 1)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 1978, in appeler_acteur
+        budget_energie, budget_secondes)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    activation = rapport.get("activation") or {}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    activites = activation.get("activites") or []
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 1508, in normaliser_rapport_activation
+    personnages = lire_json(os.path.join(ETAT, "personnages.json"), [])
+    if isinstance(personnages, dict):
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 1291, in valider_issue_tache
+    (resultat.get("cible"), resultat.get("avant"),
+    ...<2 lines>...
+    
+RuntimeError: continuite rompue pour 40029 : avant=None, dernier apres="en cours — la moitié haute du feuillet est écrite ; la suite des noms qui commande si le précédent tombe n'est pas posée, et la recopie au dos des feuillets de marche des capitaines n'est pas commencée"

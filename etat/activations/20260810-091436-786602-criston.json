@@ -1,0 +1,660 @@
+{
+  "qui": "criston",
+  "activation": {
+    "tache": {
+      "id": "71029",
+      "quoi": "Arracher à Otto l'or de l'ost avant de marcher sur Sombreval",
+      "creee": false
+    },
+    "issue": "avance",
+    "activites": [
+      {
+        "id": "act:criston:1",
+        "ordre": 1,
+        "temps": {
+          "debut_s": 151443.367,
+          "duree_s": 240,
+          "fin_s": 151683.367
+        },
+        "action": {
+          "verbe": "monter",
+          "quoi": "Monter à la Tour de la Main avant que le conseil ne s'assemble, le registre des levées sous le bras, la nuit encore dans les bottes",
+          "cibles": [
+            "lieu:port-real",
+            "pers:otto"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "lieu:port-real",
+            "relation": "traverse",
+            "vers": "lieu:port-real:donjon-rouge:cour",
+            "duree_s": 150
+          },
+          {
+            "ordre": 2,
+            "de": "lieu:port-real:donjon-rouge:cour",
+            "relation": "monte",
+            "vers": "lieu:port-real:tour-de-la-main",
+            "duree_s": 90
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "lieu:port-real:tour-de-la-main",
+            "mode": "parcourt"
+          },
+          {
+            "ref": "livre:roles-de-la-gadoue",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "tache:71029",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "travaux:criston-la-colonne-de-sombreval",
+            "mode": "intention"
+          },
+          {
+            "ref": "lieu:port-real",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "pers:otto",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:criston:1:1",
+            "type": "deplacement",
+            "cible": "pers:criston",
+            "avant": "port-real",
+            "apres": "port-real, antichambre de la Tour de la Main, avant l'heure du conseil",
+            "portee": "monde",
+            "source_refs": [
+              "lieu:port-real:tour-de-la-main"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:criston:1:2",
+            "type": "observation",
+            "cible": "pers:otto",
+            "avant": null,
+            "apres": "La Main est déjà à sa table, levée avant l'aube ; deux scribes écrivent debout, les chandelles sont basses et n'ont pas été remplacées de la nuit. Otto travaille depuis longtemps et il n'attendait pas de visite.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "lieu:port-real:tour-de-la-main",
+              "pers:otto"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 8.0,
+        "quoi": "Monter à la Tour de la Main avant que le conseil ne s'assemble, le registre des levées sous le bras, la nuit encore dans les bottes",
+        "source": "lieu:port-real, lieu:port-real:tour-de-la-main, livre:roles-de-la-gadoue, pers:otto, tache:71029, travaux:criston-la-colonne-de-sombreval",
+        "resultat": "deplacement: port-real, antichambre de la Tour de la Main, avant l'heure du conseil · observation: La Main est déjà à sa table, levée avant l'aube ; deux scribes écrivent debout, les chandelles sont basses et n'ont pas été remplacées de la nuit. Otto travaille depuis longtemps et il n'attendait pas de visite.",
+        "preuve": null
+      },
+      {
+        "id": "act:criston:2",
+        "ordre": 2,
+        "temps": {
+          "debut_s": 151683.367,
+          "duree_s": 180,
+          "fin_s": 151863.367
+        },
+        "action": {
+          "verbe": "vider",
+          "quoi": "Exiger que les scribes sortent, refuser de parler tant qu'une plume reste dans la pièce, attendre debout que la porte se ferme",
+          "cibles": [
+            "pers:otto",
+            "lieu:port-real:tour-de-la-main"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "lieu:port-real:tour-de-la-main",
+            "relation": "demeure",
+            "vers": "lieu:port-real:tour-de-la-main",
+            "duree_s": 180
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:otto",
+            "mode": "parle"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:criston",
+            "mode": "mandat"
+          },
+          {
+            "ref": "lieu:port-real:tour-de-la-main",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:criston:2:1",
+            "type": "fait",
+            "cible": "lieu:port-real:tour-de-la-main",
+            "avant": "Otto à sa table, deux scribes écrivant debout",
+            "apres": "Les scribes ont emporté leurs feuillets et refermé la porte ; Otto et Criston sont seuls, sans témoin, environ une heure avant que le conseil ne s'assemble.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:criston:1:2",
+              "pers:otto"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:criston:2:2",
+            "type": "observation",
+            "cible": "pers:otto",
+            "avant": null,
+            "apres": "Otto n'a pas discuté le renvoi des scribes. Il l'a accordé tout de suite, et il s'est assis au lieu de rester debout : il a compris avant la première phrase qu'il s'agissait d'argent et qu'il préférait que cela ne s'écrive pas.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "pers:otto"
+            ],
+            "preuve_refs": [],
+            "certitude": "infere"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 6.0,
+        "quoi": "Exiger que les scribes sortent, refuser de parler tant qu'une plume reste dans la pièce, attendre debout que la porte se ferme",
+        "source": "lieu:port-real:tour-de-la-main, pers:criston, pers:otto",
+        "resultat": "fait: Les scribes ont emporté leurs feuillets et refermé la porte ; Otto et Criston sont seuls, sans témoin, environ une heure avant que le conseil ne s'assemble. · observation: Otto n'a pas discuté le renvoi des scribes. Il l'a accordé tout de suite, et il s'est assis au lieu de rester debout : il a compris avant la première phrase qu'il s'agissait d'argent et qu'il préférait que cela ne s'écrive pas.",
+        "preuve": null
+      },
+      {
+        "id": "act:criston:3",
+        "ordre": 3,
+        "temps": {
+          "debut_s": 151863.367,
+          "duree_s": 660,
+          "fin_s": 152523.367
+        },
+        "action": {
+          "verbe": "acculer",
+          "quoi": "Poser les trois pièces dans l'ordre : le registre des levées ouvert sur les quatre cents lances de Strong comptées disponibles alors que Harrenhal est rendue au prince Daemon depuis le 23 par une porte ouverte ; le tarif d'une nuit à la porte de la Gadoue, trois sous pour regarder, six pour oublier, douze pour aider à porter, par où sont entrées cent vingt lances ; et la prime criée qui n'est gagée sur rien. Puis dire, sans témoin, le prix du silence : la solde de départ des trois mille, pas la prime, versée avant demain soir.",
+          "cibles": [
+            "pers:otto",
+            "tache:71029"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "lieu:port-real:tour-de-la-main",
+            "relation": "demeure",
+            "vers": "lieu:port-real:tour-de-la-main",
+            "duree_s": 660
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:otto",
+            "mode": "parle"
+          },
+          {
+            "ref": "livre:roles-de-la-gadoue",
+            "mode": "lit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "travaux:criston-affaires-ouvertes",
+            "mode": "memoire"
+          },
+          {
+            "ref": "travaux:criston-la-colonne-de-sombreval",
+            "mode": "intention"
+          },
+          {
+            "ref": "tache:71029",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:criston:3:1",
+            "type": "communication",
+            "cible": "pers:otto",
+            "avant": null,
+            "apres": "Otto Hightower sait désormais que le Lord Commandant a relu son propre registre de levées, y a trouvé quatre cents lances de Strong portées disponibles pour un château rendu sans combat le 23, tient le tarif nominatif du Guet à la porte de la Gadoue par où cent vingt lances sont entrées de nuit, et sait que la prime criée n'est gagée sur rien.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:criston:2:1",
+              "livre:roles-de-la-gadoue"
+            ],
+            "preuve_refs": [
+              "livre:roles-de-la-gadoue"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:criston:3:2",
+            "type": "communication",
+            "cible": "pers:otto",
+            "avant": null,
+            "apres": "Ultimatum posé sans témoin : solde de départ des trois mille versée avant le soir du 29, la prime abandonnée. À défaut, la levée est criée le 29 et la colonne part le 30 par la Porte de la Boue sur la seule autorité du roi, le compte des quatre cents lances mortes et le prix impayé se disent tout haut devant Aegon dans la semaine, et la liste nominative des brûlés — déposée chez les septons du Culpucier, hors d'atteinte des scribes de la Main — se lit en chaire toute la semaine avec un nom au bout : celle qui est couronnée à Peyredragon.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:criston:3:1",
+              "pers:otto"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:criston:3:3",
+            "type": "observation",
+            "cible": "pers:otto",
+            "avant": null,
+            "apres": "Otto n'a contesté aucune des trois pièces. Il a corrigé une chose et une seule : le registre est celui du Grand Mestre, pas le sien, et la colonne des Strong n'a pas été rayée parce que rien d'écrit n'est encore arrivé de Harrenhal — c'est un aveu déguisé en excuse, et Criston l'entend comme tel.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "res:act:criston:3:1",
+              "pers:otto"
+            ],
+            "preuve_refs": [],
+            "certitude": "rapporte"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 22.0,
+        "quoi": "Poser les trois pièces dans l'ordre : le registre des levées ouvert sur les quatre cents lances de Strong comptées disponibles alors que Harrenhal est rendue au prince Daemon depuis le 23 par une porte ouverte ; le tarif d'une nuit à la porte de la Gadoue, trois sous pour regarder, six pour oublier, douze pour aider à porter, par où sont entrées cent vingt lances ; et la prime criée qui n'est gagée sur rien. Puis dire, sans témoin, le prix du silence : la solde de départ des trois mille, pas la prime, versée avant demain soir.",
+        "source": "livre:roles-de-la-gadoue, pers:otto, tache:71029, travaux:criston-affaires-ouvertes, travaux:criston-la-colonne-de-sombreval",
+        "resultat": "communication: Otto Hightower sait désormais que le Lord Commandant a relu son propre registre de levées, y a trouvé quatre cents lances de Strong portées disponibles pour un château rendu sans combat le 23, tient le tarif nominatif du Guet à la porte de la Gadoue par où cent vingt lances sont entrées de nuit, et sait que la prime criée n'est gagée sur rien. · communication: Ultimatum posé sans témoin : solde de départ des trois mille versée avant le soir du 29, la prime abandonnée. À défaut, la levée est criée le 29 et la colonne part le 30 par la Porte de la Boue sur la seule autorité du roi, le compte des quatre cents lances mortes et le prix impayé se disent tout haut devant Aegon dans la semaine, et la liste nominative des brûlés — déposée chez les septons du Culpucier, hors d'atteinte des scribes de la Main — se lit en chaire toute la semaine avec un nom au bout : celle qui est couronnée à Peyredragon. · observation: Otto n'a contesté aucune des trois pièces. Il a corrigé une chose et une seule : le registre est celui du Grand Mestre, pas le sien, et la colonne des Strong n'a pas été rayée parce que rien d'écrit n'est encore arrivé de Harrenhal — c'est un aveu déguisé en excuse, et Criston l'entend comme tel.",
+        "preuve": [
+          "livre:roles-de-la-gadoue"
+        ]
+      },
+      {
+        "id": "act:criston:4",
+        "ordre": 4,
+        "temps": {
+          "debut_s": 152523.367,
+          "duree_s": 420,
+          "fin_s": 152943.367
+        },
+        "action": {
+          "verbe": "marchander",
+          "quoi": "Tenir la pièce jusqu'à une réponse chiffrée : refuser un délai jusqu'après le conseil, refuser un billet à terme, exiger du métal ou une parole datée devant Aegon",
+          "cibles": [
+            "pers:otto",
+            "tache:71029"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "lieu:port-real:tour-de-la-main",
+            "relation": "demeure",
+            "vers": "lieu:port-real:tour-de-la-main",
+            "duree_s": 420
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:otto",
+            "mode": "entend"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "res:act:criston:3:2",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "tache:71029",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:criston:4:1",
+            "type": "observation",
+            "cible": "pers:otto",
+            "avant": null,
+            "apres": "Otto ne refuse pas et ne verse pas. Il dit que ce qui est dans les caves du Donjon Rouge n'est pas à lui seul de délier, que la prime a été criée pour être crue et non pour être payée, et qu'il ne signera rien avant d'avoir fait compter ce qui reste. Il donne une heure : avant que les cloches ne sonnent le soir du 29, un homme de sa main viendra dire un chiffre à Criston — pas au conseil.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:criston:3:2",
+              "pers:otto"
+            ],
+            "preuve_refs": [],
+            "certitude": "rapporte"
+          },
+          {
+            "id": "res:act:criston:4:2",
+            "type": "fait",
+            "cible": "pers:otto",
+            "avant": "La Main refusait le train de l'ost sans discuter son propre compte",
+            "apres": "La Main a concédé un délai daté et un canal privé plutôt que d'affronter le compte des quatre cents lances devant Aegon : elle a acheté le silence de Criston pour un jour, sans rien verser encore.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:criston:4:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "infere"
+          },
+          {
+            "id": "res:act:criston:4:3",
+            "type": "progression_tache",
+            "cible": "71029",
+            "avant": "Aucune demande d'or portée à Otto ; la marche prévue sans train ni solde",
+            "apres": "Ultimatum posé sans témoin, prime abandonnée au profit de la seule solde de départ des trois mille, échéance fixée au soir du 29 avec réponse chiffrée promise en privé. L'or n'est pas obtenu ; le levier est en place et le défaut d'Otto est prêt à être dit devant le roi si le chiffre ne vient pas.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:criston:3:2",
+              "res:act:criston:4:1"
+            ],
+            "preuve_refs": [
+              "livre:roles-de-la-gadoue"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 14.0,
+        "quoi": "Tenir la pièce jusqu'à une réponse chiffrée : refuser un délai jusqu'après le conseil, refuser un billet à terme, exiger du métal ou une parole datée devant Aegon",
+        "source": "pers:otto, res:act:criston:3:2, tache:71029",
+        "resultat": "observation: Otto ne refuse pas et ne verse pas. Il dit que ce qui est dans les caves du Donjon Rouge n'est pas à lui seul de délier, que la prime a été criée pour être crue et non pour être payée, et qu'il ne signera rien avant d'avoir fait compter ce qui reste. Il donne une heure : avant que les cloches ne sonnent le soir du 29, un homme de sa main viendra dire un chiffre à Criston — pas au conseil. · fait: La Main a concédé un délai daté et un canal privé plutôt que d'affronter le compte des quatre cents lances devant Aegon : elle a acheté le silence de Criston pour un jour, sans rien verser encore. · progression_tache: Ultimatum posé sans témoin, prime abandonnée au profit de la seule solde de départ des trois mille, échéance fixée au soir du 29 avec réponse chiffrée promise en privé. L'or n'est pas obtenu ; le levier est en place et le défaut d'Otto est prêt à être dit devant le roi si le chiffre ne vient pas.",
+        "preuve": [
+          "livre:roles-de-la-gadoue"
+        ]
+      },
+      {
+        "id": "act:criston:5",
+        "ordre": 5,
+        "temps": {
+          "debut_s": 152943.367,
+          "duree_s": 300,
+          "fin_s": 153243.367
+        },
+        "action": {
+          "verbe": "redescendre",
+          "quoi": "Quitter la Tour avant que le conseil ne s'assemble, croiser ceux qui montent, et ne rien dire à personne de ce qui vient d'être dit",
+          "cibles": [
+            "lieu:port-real:donjon-rouge:cour"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "lieu:port-real:tour-de-la-main",
+            "relation": "descend",
+            "vers": "lieu:port-real:donjon-rouge:cour",
+            "duree_s": 300
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "lieu:port-real:donjon-rouge:cour",
+            "mode": "parcourt"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "res:act:criston:4:1",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:criston:5:1",
+            "type": "deplacement",
+            "cible": "pers:criston",
+            "avant": "port-real, antichambre de la Tour de la Main, avant l'heure du conseil",
+            "apres": "port-real, cour du Donjon Rouge, à l'heure où le conseil monte",
+            "portee": "monde",
+            "source_refs": [
+              "lieu:port-real:donjon-rouge:cour"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:criston:5:2",
+            "type": "observation",
+            "cible": "pers:criston",
+            "avant": null,
+            "apres": "Rien de l'entretien n'a été entendu par un tiers : les scribes étaient dehors, la porte close, et Criston n'a parlé à personne en redescendant. Le défaut d'Otto reste une arme non tirée, et elle ne vaut que tant qu'elle n'est pas tirée.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "res:act:criston:2:1",
+              "res:act:criston:5:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 10.0,
+        "quoi": "Quitter la Tour avant que le conseil ne s'assemble, croiser ceux qui montent, et ne rien dire à personne de ce qui vient d'être dit",
+        "source": "lieu:port-real:donjon-rouge:cour, res:act:criston:4:1",
+        "resultat": "deplacement: port-real, cour du Donjon Rouge, à l'heure où le conseil monte · observation: Rien de l'entretien n'a été entendu par un tiers : les scribes étaient dehors, la porte close, et Criston n'a parlé à personne en redescendant. Le défaut d'Otto reste une arme non tirée, et elle ne vaut que tant qu'elle n'est pas tirée.",
+        "preuve": null
+      }
+    ],
+    "suite": "Attendre l'homme d'Otto et le chiffre annoncé avant les cloches du soir du 29, pendant que la levée est criée ; si le chiffre ne vient pas ou ne couvre pas la solde de départ des trois mille, dire le défaut tout haut devant Aegon et faire lire la liste des brûlés en chaire au Culpucier.",
+    "reveils_suivants": [],
+    "budget_energie": 60,
+    "budget_secondes": 1800,
+    "energie_depensee": 60.0
+  },
+  "aide": [
+    {
+      "quoi": "L'adresse du registre où sont écrites les quatre cents lances de Strong",
+      "donne": "Le registre des levées de la Couronne est tenu par le Grand Mestre, pas par la Main — ce qui a permis à Otto de plaider le retard d'écriture plutôt que la fausseté du compte, et ce que Criston sait maintenant."
+    },
+    {
+      "quoi": "Le tarif du Guet, nommé de mémoire",
+      "donne": "Rétabli sous sa forme complète et son porteur réel : Waltyr Poix, sergent du Guet à la porte de la Gadoue — trois sous pour regarder, six pour oublier, douze pour aider à porter, le nom de garde se déplaçant de quartier en quartier."
+    },
+    {
+      "quoi": "Où se trouve exactement la liste des brûlés qu'il menace de faire lire",
+      "donne": "Au septuaire du Culpucier, écrite par un septon et non par un scribe de la Couronne — donc hors d'atteinte de la plume de la Main, ce qui rend la menace tenable."
+    }
+  ],
+  "mutations_proposees": [
+    {
+      "resultat_id": "res:act:criston:4:2",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "criston",
+      "valeur": "Otto n'a pas dit non : il a acheté un jour. Un homme qui achète un jour au lieu de payer sa solde n'a pas l'or, ou ne le tient pas seul — et dans les deux cas il ne commande plus vraiment cet ost."
+    },
+    {
+      "resultat_id": "res:act:criston:3:3",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "criston",
+      "valeur": "Le registre des levées est de la main du Grand Mestre : Otto s'abritera derrière l'écriture tant qu'aucun pli de Harrenhal ne sera arrivé. Il faut donc que le compte des quatre cents lances soit dit tout haut avant que ce pli n'arrive et ne lui donne son excuse."
+    },
+    {
+      "resultat_id": "res:act:criston:4:3",
+      "table": "books",
+      "operation": "affaire_action_ajouter",
+      "cible": "affaire-le-grain-paye-avant-decrit",
+      "valeur": [
+        "129-3-28, Tour de la Main, avant conseil",
+        "Criston Cole met Otto en demeure : solde de départ des trois mille avant le soir du 29, prime criée abandonnée",
+        "Otto ne refuse ni ne verse ; promet un chiffre porté en privé avant les cloches du 29",
+        "en cours",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
+    }
+  ],
+  "mutations_rejetees": [
+    {
+      "mutation": {
+        "resultat_id": "res:act:criston:4:3",
+        "table": "intentions",
+        "operation": "etape",
+        "cible": "criston",
+        "valeur": "Attendre avant les cloches du soir du 29 l'homme d'Otto et son chiffre ; crier la levée le 29 quoi qu'il advienne, et tenir prêt le défaut de la Main pour le conseil de la semaine."
+      },
+      "erreur": "mutation 3 : criston n'a pas d'etape None"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:criston:4:1",
+        "table": "intentions",
+        "operation": "declencheur_ajouter",
+        "cible": "criston",
+        "valeur": "SI aucun homme d'Otto n'apporte de chiffre avant les cloches du soir du 29e jour, ALORS Criston dit le défaut de la Main devant Aegon au premier conseil venu — quatre cents lances mortes et prime impayée — et fait porter aux septons du Culpucier l'ordre de lire la liste des brûlés en chaire toute la semaine."
+      },
+      "erreur": "mutation 4 : declencheur incomplet : 'si' (la condition, en clair) et 'alors' (ce qu'il fait) sont requis"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:criston:4:2",
+        "table": "relations",
+        "operation": "relation_ajouter",
+        "cible": "criston",
+        "champs": {
+          "source_id": "criston",
+          "cible_id": "otto",
+          "opinion": -40,
+          "liens": [
+            "debiteur-a-presser",
+            "mepris-du-compte"
+          ]
+        }
+      },
+      "erreur": "mutation 5 : relation : 'source_id' et 'cible_id' requis — une relation n'a pas d'id, elle se designe par le couple"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:criston:3:2",
+        "table": "evenements",
+        "operation": "evenement",
+        "champs": {
+          "date": "129-3-28",
+          "lieu": "port-real",
+          "quoi": "Entretien sans témoin à la Tour de la Main, avant le conseil : Criston Cole met Otto Hightower en demeure de verser la solde de départ des trois mille avant le soir du 29, sous peine de compter tout haut devant Aegon ses quatre cents lances mortes et sa prime impayée.",
+          "temoins": "aucun",
+          "portee": "prive"
+        }
+      },
+      "erreur": "mutation 6 : aucun evenement None"
+    }
+  ],
+  "_activation": {
+    "session": "4dc4bddf-9be2-4803-a3c5-43612755eff5",
+    "session_narrateur": "4dc4bddf-9be2-4803-a3c5-43612755eff5",
+    "session_pnj": "32605604-be50-43d7-b7e9-76bb398880f2",
+    "cree_le": "2026-08-10T09:14:36.784037+02:00",
+    "front": "aurore-inchauspe",
+    "present_secondes": 151443.367,
+    "importance": 0.597494,
+    "budget": 60,
+    "budget_secondes": 1800,
+    "system_prompt": "# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS\n\nTu es le maître du jeu local d'un monde vivant, pas un assistant administratif\net pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa\nmatière, les personnes qui s'y trouvent, les usages de Westeros et les\nconséquences du temps qui passe.\n\n## Le monde\n\nNous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de\nViserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra\nTargaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie\npeut diverger du récit connu : le dossier de l'activation fait autorité sur ce\nqui s'est réellement produit ici.\n\nDate présente : 28e jour de la 3e lune de l'an 129 après la\nConquête.\nLieu présent : Salle inconnue.\nActeur appelé : Criston Cole.\nAffaire qui exerce maintenant une pression sur lui : Arracher à Otto l'or de l'ost avant de marcher sur Sombreval.\n\nL'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,\nsituée dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,\nfaire autre chose d'accessible depuis sa situation, parler à quelqu'un,\nattendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener\nvers la tâche.\n\n## Partage de l'autorité\n\nL'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses\ngestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,\nplus prudents ou plus efficaces qu'il ne les a formulés.\n\nToi, tu possèdes le reste du monde : les autres personnes agissent selon leur\npropre caractère et leurs propres affaires ; les objets ont une position et\nune résistance ; les distances, l'écriture, la marche, l'attente et la parole\nprennent du temps ; les institutions et les usages produisent leurs\nconséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à\nlui pour fabriquer du drame.\n\nUne résistance n'existe que si elle vient d'un fait établi : volonté d'une\nautre personne, obstacle matériel, distance, délai, usage social, ordre déjà\ndonné ou ressource réellement absente. Les gens compétents règlent le\nroutinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou\nun véritable arbitrage peut seul engager.\n\n## Vérité et inconnues\n\nLe dossier fermé est l'autorité sur les faits particuliers et mutables de\ncette partie. Une croyance reste une croyance, une intention reste une\nintention, un témoignage reste un témoignage : aucun ne devient un fait parce\nqu'il apparaît dans le dossier.\n\nTu peux employer les continuités ordinaires et stables de Westeros nécessaires\nà l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche\nentre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,\nni secret, ni décision, ni avantage absent du dossier. Toute absence qui\nchangerait l'issue reste une inconnue. Tu ne la combles pas.\n\nUne observation modifie d'abord la connaissance de celui qui observe. Un fait\nmatériel ne devient connu d'autres personnes que par présence, témoignage,\nparole, pli, registre ou diffusion effectivement produits.\n\n## Les deux phases\n\nDans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et\nl'instant présents. Fais une adresse brève, concrète et diégétique : rappelle\nce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni\nnœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.\n\nDans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :\n\n1. établis d'où il part, ce qu'il peut réellement atteindre et les sources\n   qu'il touche ou mobilise ;\n2. fais agir les personnes rencontrées depuis leurs propres intentions ;\n3. applique les obstacles établis, sans résistance décorative ;\n4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;\n5. produis seulement les effets causés par les gestes accomplis ;\n6. sépare les changements du monde, les objets produits, les communications\n   et les seules connaissances acquises ;\n7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,\n   obstacle établi, échec, renoncement ou borne temporelle.\n\nUne tâche peut avancer sans être terminée. Elle est bloquée seulement par un\nobstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet\nrecherché impossible ou manqué. N'invente jamais des minutes de travail pour\nremplir une durée minimale : si le geste se termine tôt, laisse le personnage\npoursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle\net rends compte honnêtement de la durée.\n\nChaque message de la boucle précise la phase et son contrat de sortie. Rends\nexactement l'objet JSON demandé, sans commentaire autour. La précision du JSON\nsert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.\n",
+    "system_prompt_source": "scripts/depecher.py:manuel_narrateur_local",
+    "system_prompt_sha256": "9ff156c48ace66364cfea297a66a9dc39956d0023213545f66e74ad50d473cbd",
+    "message": "PHASE 1 — APPELER L'ACTEUR\n\nVoici le dossier fermé de cette activation :\n\n{\n  \"date_du_monde\": {\n    \"annee\": 129,\n    \"lune\": 3,\n    \"jour\": 28\n  },\n  \"present_secondes\": 151443.367,\n  \"budget_energie\": 60,\n  \"secondes_par_point_energie\": 30,\n  \"budget_secondes\": 1800,\n  \"duree_minimale_secondes\": 60,\n  \"acteur_candidat\": \"criston\",\n  \"tache_elue\": {\n    \"id\": \"71029\",\n    \"quoi\": \"Arracher à Otto l'or de l'ost avant de marcher sur Sombreval\",\n    \"creee\": false\n  },\n  \"chemin_election\": [\n    {\n      \"id\": \"pers:criston\",\n      \"genre\": \"personne\",\n      \"ou\": \"personnages\",\n      \"quoi\": \"Criston Cole\",\n      \"genres\": [\n        \"personne\"\n      ],\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"port-real\",\n      \"importance_activation\": 0.5974937501201928\n    },\n    {\n      \"id\": \"71029\",\n      \"genre\": \"action\",\n      \"ou\": \"plan:hightower\",\n      \"quoi\": \"Arracher à Otto l'or de l'ost avant de marcher sur Sombreval\",\n      \"importance_activation\": 0.11733080042403476\n    }\n  ],\n  \"salle_actuelle\": {\n    \"id\": null,\n    \"nom\": \"Salle inconnue\",\n    \"personnes\": []\n  },\n  \"dossier_acteur\": {\n    \"date_du_monde\": {\n      \"annee\": 129,\n      \"lune\": 3,\n      \"jour\": 28\n    },\n    \"diffusion\": {\n      \"origine\": \"rhaenyra\",\n      \"front\": \"aurore-inchauspe\",\n      \"secondes_depuis_origine\": 151443.367\n    },\n    \"personnage\": {\n      \"id\": \"criston\",\n      \"nom\": \"Criston Cole\",\n      \"titre\": \"Lord Commandant de la Garde Royale, le Faiseur de Rois\",\n      \"naissance\": 82,\n      \"traits\": [\n        \"vindicatif\",\n        \"brave\",\n        \"rigide\"\n      ],\n      \"objectifs\": [\n        {\n          \"but\": \"Détruire Rhaenyra et tout ce qu'elle aime — il maquille cette haine en devoir\",\n          \"priorite\": 1\n        },\n        {\n          \"but\": \"Frapper les châteaux de la Couronne acquis aux Noirs avant qu'ils ne se lient entre eux\",\n          \"priorite\": 2\n        },\n        {\n          \"but\": \"Forger Aegon en roi guerrier digne de ce nom\",\n          \"priorite\": 3\n        }\n      ],\n      \"maniere\": \"Ton de sermon militaire ; parle d'honneur et de souillure en aiguisant ses lames.\",\n      \"portrait\": {\n        \"fichier\": \"ecrans/portraits/criston.svg\",\n        \"physique\": \"47 ans, brun grisonnant aux tempes, beau visage dur, armure et manteau blancs de la Garde Royale.\",\n        \"prompt_ideogram\": \"dark fantasy oil painting portrait, muted colors, candlelight, kingsguard knight in ornate white enameled armor and white cloak, dark hair greying at the temples, handsome bitter face, cold zealous eyes, spiked morningstar resting against his shoulder\"\n      },\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"port-real\",\n      \"lieu\": \"Port-Réal\"\n    },\n    \"salle_actuelle\": {\n      \"id\": null,\n      \"nom\": \"Salle inconnue\",\n      \"personnes\": []\n    },\n    \"intention\": {\n      \"personnage_id\": \"criston\",\n      \"croyances\": [\n        \"Toute clémence envers les Noirs est une faiblesse qui se paie en sang\",\n        \"La plume d'Otto Hightower a coûté la vie à ces hommes\",\n        \"Elle s'est fait couronner le dix-huit de la couronne de Viserys, portee par un chevalier de sa propre Garde - ET c'est ELLE qui montait le dragon de la route. Le prince Daemon l'a dit devant le grand mestre du roi, et le grand mestre l'a ecrit. Il n'a plus a le faire croire : il n'a plus qu'a le faire lire.\",\n        \"La prime a ete criee et n'est gagee sur rien — la Main a fait proclamer un prix qu'elle n'a pas l'or de payer, pendant que son ost attend. Il ne le dira pas au conseil : il le dira ailleurs\",\n        \"Harrenhal a ete rendue sans combat au prince Daemon : la plus grande forteresse du royaume est passee par une porte ouverte, pas par une breche\"\n      ],\n      \"ignore\": [],\n      \"intention\": \"Se servir des brules pour arracher a Otto l'or de l'ost — et faire dire tout haut, dans la meme semaine, que la femme couronnee a Peyredragon est celle qui les a brules.\",\n      \"declencheurs\": [\n        {\n          \"si\": \"Aemond propose de répondre avec Vhagar\",\n          \"alors\": \"Il l'appuie sans réserve et cherche aussitôt à lier son ost à ce vol — un dragon devant, l'ost derrière.\",\n          \"une_fois\": false\n        },\n        {\n          \"si\": \"Otto propose des conditions ou une trêve à Peyredragon\",\n          \"alors\": \"Il s'y oppose devant Aegon en rappelant les brûlés de la route, et fait traîner les corbeaux qu'on lui confie.\",\n          \"une_fois\": false\n        }\n      ],\n      \"attitude_joueur\": \"Rien n'a change pour elle : elle reste la femme couronnee qui a brule ses hommes. Ce qui a change, c'est Otto — un homme qui crie un prix sans avoir l'or derriere est un homme dont on n'a plus besoin longtemps.\",\n      \"date_maj\": {\n        \"annee\": 129,\n        \"lune\": 3,\n        \"jour\": 27\n      },\n      \"etape_elue\": null\n    },\n    \"relations\": [\n      {\n        \"source_id\": \"criston\",\n        \"source\": \"Criston Cole\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": -100,\n        \"liens\": [\n          \"haine-intime\"\n        ]\n      },\n      {\n        \"source_id\": \"rhaenyra\",\n        \"source\": \"Rhaenyra Targaryen\",\n        \"cible_id\": \"criston\",\n        \"cible\": \"Criston Cole\",\n        \"opinion\": -90,\n        \"liens\": [\n          \"parjure\"\n        ]\n      },\n      {\n        \"source_id\": \"daemon\",\n        \"source\": \"Daemon Targaryen\",\n        \"cible_id\": \"criston\",\n        \"cible\": \"Criston Cole\",\n        \"opinion\": -70,\n        \"liens\": [\n          \"mepris\"\n        ]\n      },\n      {\n        \"source_id\": \"gunthor-darklyn\",\n        \"source\": \"Gunthor Darklyn\",\n        \"cible_id\": \"criston\",\n        \"cible\": \"Criston Cole\",\n        \"opinion\": -50,\n        \"liens\": [\n          \"menace\"\n        ]\n      },\n      {\n        \"source_id\": \"criston\",\n        \"source\": \"Criston Cole\",\n        \"cible_id\": \"gunthor-darklyn\",\n        \"cible\": \"Gunthor Darklyn\",\n        \"opinion\": -45,\n        \"liens\": [\n          \"rebelle-a-mater\"\n        ]\n      }\n    ],\n    \"tache\": {\n      \"id\": \"71029\",\n      \"quoi\": \"Arracher à Otto l'or de l'ost avant de marcher sur Sombreval\",\n      \"genre\": \"action\",\n      \"distance\": 1,\n      \"chemin\": [\n        \"pers:criston\",\n        \"71029\"\n      ],\n      \"creee\": false\n    },\n    \"continuite_reprise\": null,\n    \"chemin\": [\n      {\n        \"id\": \"pers:criston\",\n        \"genre\": \"personne\",\n        \"ou\": \"personnages\",\n        \"quoi\": \"Criston Cole\",\n        \"genres\": [\n          \"personne\"\n        ],\n        \"etat\": \"actif\",\n        \"condition\": \"libre\",\n        \"lieu_id\": \"port-real\",\n        \"importance_activation\": 0.5974937501201928\n      },\n      {\n        \"id\": \"71029\",\n        \"genre\": \"action\",\n        \"ou\": \"plan:hightower\",\n        \"quoi\": \"Arracher à Otto l'or de l'ost avant de marcher sur Sombreval\",\n        \"importance_activation\": 0.11733080042403476\n      }\n    ],\n    \"travaux_ouverts\": [\n      {\n        \"id\": \"criston-affaires-ouvertes\",\n        \"affaire\": \"Se servir des brules pour arracher a Otto l'or de l'ost — et faire dire tout haut, dans la meme semaine, que la femme couronnee a Peyredragon est celle qui les a brules.\",\n        \"etat\": \"en cours\",\n        \"echeance\": null,\n        \"sources\": [\n          {\n            \"quoi\": \"Lever l'ost de la Couronne : convocations aux maisons restées vertes, \",\n            \"genre\": \"chose\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"Faire d'Aegon l'homme qui venge des paysans brûlés — et le lui répéter\",\n            \"genre\": \"chose\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"Arracher à Otto l'or de l'ost avant de marcher sur Sombreval\",\n            \"genre\": \"chose\",\n            \"cout_jours\": 0.5\n          }\n        ],\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"Registre des levées de la Couronne, relu de ma main sur le chemin de ronde des quais\",\n            \"texte\": \"Trois mille cinq cents hommes portés disponibles — et les quatre cents lances de Strong y sont encore, alors que Harrenhal est rendue au prince Daemon depuis le 23, sans brèche et sans un mort, par une porte ouverte. Nous comptons un ost que nous n'avons pas, exactement comme nous crions une prime que nous ne pouvons payer. C'est la même faute et c'est la même plume. Une Main qui se trompe de quatre cents lances sur son propre compte n'a pas le droit de me refuser mon train.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"Waltyr Poix, sergent du Guet à la porte de la Gadoue, interrogé sous l'arche sur les horaires de porte et leurs exceptions\",\n            \"texte\": \"Je cherchais un traître et j'ai trouvé un tarif. Trois sous pour regarder, six pour oublier, douze pour aider à porter — et le nom de garde se déplace de quartier en quartier pour qu'on ne puisse pendre personne. Deux mille manteaux d'or dont la solde ne paie pas le logis : voilà par où cent vingt lances sont entrées de nuit. On n'achète pas un homme du Guet, on achète une heure de sa nuit, et l'on recommence. Pendre le sergent ne fermerait pas la porte ; payer le Guet la fermerait. C'est une seconde raison de vouloir cet or, et elle vaut mieux que la première.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"Les survivants de la route au Culpucier, noms pris un par un et liste écrite par un septon, non par un scribe de la Couronne\",\n            \"texte\": \"Aucun n'était soldat : des hommes de Rosby, de Stokeworth et des villages du roi, pris avec leurs attelages sur la route royale. Tant que c'était un tas de brûlés, c'était un spectacle, et un spectacle s'use en une semaine. Avec des noms, des métiers et des hameaux écrits, c'est une liste, et une liste se relit en chaire par n'importe qui, dix fois, sans moi. Je l'ai laissée au septuaire exprès : ce qui est chez les septons est hors de portée de la plume de la Main.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"Hobb Sole dit Trois-Doigts, chanteur, entendu à La Gaffe sous l'arche de la porte de la Gadoue\",\n            \"texte\": \"LA PLUS DURE DE LA JOURNÉE, ET ELLE NE VIENT PAS D'UN CONSEIL. Cette ville n'a jamais acclamé un roi : elle a acclamé un repas, on l'a achetée une fois avec du pain et du bœuf et cela a marché. Elle ne croira donc pas un héraut, elle croit son ventre — et son ventre a déjà compris que les coques s'arrêtent avant d'entrer, avant que le conseil ne l'ait dit. Ma phrase était coupée en deux et c'est pour cela qu'elle ne prenait pas. La bonne est d'un seul tenant : le pain manque parce que les Velaryon ont fermé la mer, et ceux qui allaient chercher le grain sur la route du roi, ELLE les a brûlés. Et le porteur ne doit pas être un crieur payé — un chanteur acheté est un chanteur devenu inutile. On ne lui donne pas d'argent, on lui donne un brûlé qui parle.\",\n            \"servie\": false\n          }\n        ],\n        \"conclusion\": null\n      },\n      {\n        \"id\": \"criston-la-colonne-de-sombreval\",\n        \"affaire\": \"Sur quelle place je marche, avec combien, et ce que j exige d Otto pour partir\",\n        \"etat\": \"ouvert\",\n        \"echeance\": {\n          \"annee\": 129,\n          \"lune\": 4,\n          \"jour\": 3\n        },\n        \"sources\": [\n          {\n            \"quoi\": \"la carte de l ost et le compte des maisons vertes\",\n            \"genre\": \"registre\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"le conseil, devant Aegon — sa propre decision dite tout haut\",\n            \"genre\": \"gens\",\n            \"cout_jours\": 0.5\n          }\n        ],\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"carte de l'ost et compte des maisons vertes\",\n            \"texte\": \"Sombreval, pas Rosby ni Peyredragon : Rosby est trop petit pour justifier de vider l'ost, Peyredragon est hors de portée sans flotte, mais Sombreval tient un manteau blanc parjure au service de la reine noire — un chateau de la Couronne passe aux Noirs, a trois jours de marche, une cible que l'honneur et la geographie dictent ensemble.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"sa propre decision, devant le conseil et Aegon\",\n            \"texte\": \"Trois mille hommes marchent, cinq cents restent garder Port-Real et le roi. Levee le 29e jour, depart le 30e par la Porte de la Boue, trois jours de route, arrivee le 3e jour de la 4e lune devant Sombreval. Ce qu'il exige d'Otto : la solde de depart des trois mille, pas la prime criee — sans elle, convocation seule sur l'autorite du roi, plus lente mais la marche part quand meme le 30e, et le defaut d'Otto se dit tout haut au conseil dans la semaine.\"\n          }\n        ],\n        \"conclusion\": null\n      }\n    ],\n    \"mains_portees\": [],\n    \"livres_accessibles\": [\n      {\n        \"id\": \"roles-de-la-gadoue\",\n        \"titre\": \"Ce qui est entre par la Nera\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"les-chantiers-de-la-nera\",\n        \"titre\": \"Les Chantiers de la Néra\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"ce-quon-dit-a-qui-entre\",\n        \"titre\": \"Ce qu'on dit à qui entre\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"equipes-projets-nera\",\n        \"titre\": \"Organisation en équipes-projets\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"devis-du-lot\",\n        \"titre\": \"Le lot, pièce par pièce\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-quon-chante-a-la-gaffe\",\n        \"titre\": \"Ce qu'on chante a La Gaffe\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"affaire-le-double-feuillet-dorwyle\",\n        \"titre\": \"Le double feuillet d'Orwyle\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ce-quon-fait-signer-au-roi\",\n        \"titre\": \"Ce qu'on fait signer au roi, et ce qu'il y a au bas de la page\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-le-grain-paye-avant-decrit\",\n        \"titre\": \"Le grain payé avant d'être écrit\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"morts-et-rapportes\",\n        \"titre\": \"Les morts et les rapportés\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"affaire-le-bois-des-tours-brulees\",\n        \"titre\": \"Le bois des tours brûlées\",\n        \"type\": \"plan\"\n      }\n    ],\n    \"contrainte_regence\": null\n  },\n  \"topologie_des_salles\": {\n    \"_\": \"La topologie de Peyredragon : quelles salles se touchent, et en combien de minutes. Pendant Python de ecrans/modules/plans.js, qui n'en dessine que la forme. Sert a scripts/presence.py : personne ne parait dans une salle sans avoir traverse celles d'entre. Un cout est en MINUTES de marche d'un homme presse mais pas courant ; le grand escalier vaut ses cent trente marches.\",\n    \"alias\": {\n      \"appartements\": \"appartements-reine\",\n      \"murs\": \"porte-dragon\",\n      \"chemin-de-ronde\": \"porte-dragon\"\n    },\n    \"aretes\": [\n      [\n        \"cour\",\n        \"tambour-de-pierre\",\n        3\n      ],\n      [\n        \"cour\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"cour\",\n        \"roukerie\",\n        4\n      ],\n      [\n        \"cour\",\n        \"septuaire\",\n        3\n      ],\n      [\n        \"cour\",\n        \"jardin-aegon\",\n        3\n      ],\n      [\n        \"cour\",\n        \"guivre-des-vents\",\n        4\n      ],\n      [\n        \"cour\",\n        \"tour-dragon-mer\",\n        4\n      ],\n      [\n        \"cour\",\n        \"fosses\",\n        6\n      ],\n      [\n        \"cour\",\n        \"porte-dragon\",\n        4\n      ],\n      [\n        \"cour\",\n        \"porte-de-mer\",\n        5\n      ],\n      [\n        \"cour\",\n        \"galeries\",\n        9\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"salle-levant\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"archives\",\n        6\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"cachots\",\n        5\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"appartements-reine\",\n        7\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"table-peinte\",\n        8\n      ],\n      [\n        \"table-peinte\",\n        \"appartements-reine\",\n        2\n      ],\n      [\n        \"grande-salle\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"roukerie\",\n        \"tour-dragon-mer\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"grand-escalier\",\n        4\n      ],\n      [\n        \"grand-escalier\",\n        \"quai\",\n        9\n      ],\n      [\n        \"quai\",\n        \"bourg\",\n        5\n      ],\n      [\n        \"porte-dragon\",\n        \"bourg\",\n        6\n      ],\n      [\n        \"fosses\",\n        \"galeries\",\n        10\n      ],\n      [\n        \"cour\",\n        \"communs\",\n        2\n      ],\n      [\n        \"communs\",\n        \"septuaire\",\n        2\n      ],\n      [\n        \"cour\",\n        \"chambres-hotes\",\n        3\n      ],\n      [\n        \"chambres-hotes\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"porte-dragon\",\n        \"baraques\",\n        2\n      ],\n      [\n        \"baraques\",\n        \"bourg\",\n        4\n      ],\n      [\n        \"cour\",\n        \"cuisines\",\n        2\n      ],\n      [\n        \"cuisines\",\n        \"grande-salle\",\n        3\n      ],\n      [\n        \"cuisines\",\n        \"cellier\",\n        1\n      ],\n      [\n        \"septuaire\",\n        \"salle-froide\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"etuves\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"chambre-enfants\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"antichambre\",\n        1\n      ],\n      [\n        \"antichambre\",\n        \"table-peinte\",\n        1\n      ],\n      [\n        \"roukerie\",\n        \"officine\",\n        1\n      ],\n      [\n        \"cour\",\n        \"forge\",\n        2\n      ],\n      [\n        \"forge\",\n        \"guivre-des-vents\",\n        3\n      ],\n      [\n        \"cour\",\n        \"chemin-ronde\",\n        3\n      ],\n      [\n        \"chemin-ronde\",\n        \"tour-dragon-mer\",\n        2\n      ],\n      [\n        \"chemin-ronde\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"bourg\",\n        \"lices\",\n        3\n      ],\n      [\n        \"lices\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"greve\",\n        2\n      ],\n      [\n        \"greve\",\n        \"quai\",\n        3\n      ]\n    ]\n  }\n}\n\nOuvre le battement local dans Salle inconnue.\n\nLa physique a élu criston pour l'affaire suivante :\nArracher à Otto l'or de l'ost avant de marcher sur Sombreval\n\nTU LE SUIS PENDANT QU'IL TRAVAILLE, ET TU LE GUIDES. Un fil reste ouvert entre\nsa session et la tienne : sers-t'en dès qu'il part de travers, cherche une\nchose qui est dans ton dossier, ou s'engage vers un mur que tu vois et pas lui.\nOn ne le laisse pas se cogner pour le plaisir de l'arbitrer après.\n\n    python scripts/parloir.py --dire --de mj --a criston \"<le fait qui lui manque, en une phrase>\"\n    python scripts/parloir.py --ecouter --qui mj\n\nTU RECOMMANDES ET TU DÉPANNES — TU N'ORDONNES PAS. Il décide de sa journée ;\ntoi, tu lui évites de la perdre.\n\nRecommander, c'est lui ouvrir une porte qu'il ne voyait pas, et le laisser\nchoisir d'y entrer : « le maître de port tient un rôle des passages, tu y\ntrouverais tes dates » · « il y a deux Torgo dans cette rade, l'aîné au môle\net le jeune au banc de calfat — vérifie duquel on t'a parlé » · « ce compte\nexiste déjà quelque part, ça t'éviterait de le refaire ».\n\nDépanner, c'est le déblocage technique, et là tu es net : l'adresse exacte\nd'une chose, l'id sous lequel elle existe, le registre où elle est écrite, le\nformat qu'attend ce qu'il essaie de produire, le nom réel de ce qu'il a mal\nnommé. Ce sont des faits de mécanique, pas des choix de fiction : donne-les\nsans détour et sans énigme.\n\nCe qui reste à lui, entier : ce qu'il décide de faire, où il va, sa manière,\nses gestes et son rapport. S'il écarte ta recommandation, c'est sa journée et\nc'est bien. Parle-lui autant qu'il en a besoin.\n\nIl engage 60 points d'énergie, soit une fenêtre physique de\n1800 secondes (30 minutes). Son activation doit couvrir un\nvrai morceau de travail d'au moins 60 secondes, quitte à condenser\nles continuités par une ellipse. Réveille-le maintenant. Ne résous rien encore\net rends seulement cet objet, sans phrase autour :\n\n{\n  \"appel_pnj\": {\n    \"qui\": \"criston\",\n    \"message\": \"adresse directe, diégétique et brève demandant ce qu'il tente maintenant\"\n  }\n}\n",
+    "appel_pnj": "Ser Criston, la lumière est encore basse et vous n'avez pas quitté vos bottes de la nuit. Vingt-huit de la troisième lune : la levée est criée pour demain, la colonne part le trentième par la Porte de la Boue, et vous n'avez toujours pas un sou d'Otto Hightower pour la solde de départ des trois mille. Vous portez sur vous ce que vous avez ramassé hier : le compte des levées relu de votre main, avec ses quatre cents lances de Strong qui n'existent plus depuis que Harrenhal s'est ouverte au prince Daemon ; le tarif d'une nuit au Guet de la Gadoue, trois sous pour regarder, douze pour aider à porter ; et la liste des brûlés de la route royale, nom, métier et hameau, laissée aux septons du Culpucier hors d'atteinte de la plume de la Main. La Tour de la Main est à quelques travées ; le conseil ne siège pas encore ; le chanteur Trois-Doigts cuve à La Gaffe sous l'arche. Que tentez-vous, maintenant, et devant qui ?",
+    "system_prompt_pnj": "# Une personne dans le monde\n\nTu es la personne nommée dans ton dossier. Ton corps, ton âge, ton rang, ton\nhistoire, tes attachements, tes peurs, tes désirs et tes responsabilités\nforment un seul point de vue. Le lieu où tu te tiens, les gens présents, les\nobjets à portée et l’heure du monde donnent sa matière à cet instant.\n\nTa mémoire rassemble ce que tu as vécu, observé, entendu, accompli et compris.\nTes relations portent leur histoire propre : affection, confiance, dette,\nrivalité, crainte, désir, dernier échange. Tes affaires ont déjà commencé ;\nelles possèdent leurs engagements, leurs échéances, leurs moyens et leurs\nconséquences.\n\nLes faits de ton dossier composent ton expérience disponible. Ton métier et ta\nvie t’apportent aussi leurs usages, leurs gestes, leurs précédents et leur\nsavoir-faire. Une question encore ouverte devient une chose à découvrir dans\nle monde, auprès d’une personne, d’un lieu, d’un objet ou d’un registre à ta\nportée.\n\n# Ta compétence\n\nTu es compétent. Tes années et ton office ont formé ton jugement. Tu reconnais\nles enjeux de ton domaine, tu mobilises les moyens réellement disponibles, tu\nrelies les faits utiles et tu prends des initiatives à la hauteur de ta\nposition. Ta compétence apparaît dans la précision de tes gestes, la qualité\nde tes décisions, les sources que tu choisis et les conséquences que tu\nanticipes.\n\nTu rencontres chaque situation comme cette personne précise : avec ses\npriorités, ses loyautés, ses limites, son courage, ses contradictions et sa\nmanière propre de chercher une issue.\n\n# La continuité\n\nTa vie est déjà en mouvement au moment où cette activation commence. Tu pars\nde ton dernier état réel et tu accomplis ce qui vient maintenant. Tes paroles,\ntes gestes et tes choix appartiennent à cet instant ; le monde reçoit ensuite\nce mouvement et poursuit ses conséquences.\n\nChaque réponse ouvre la suite. Elle se termine par une **prochaine étape**\nconcrète : un geste précis, dirigé vers une personne, un lieu, un objet ou une\naffaire, avec le moment ou la condition qui l’appelle. Cette prochaine étape\nprolonge directement ce que tu viens de décider ou d’accomplir.\n",
+    "system_prompt_pnj_source": "scripts/depecher.py:manuel_de(mode=tentative)",
+    "system_prompt_pnj_sha256": "b3e426444c4f46a952269975b8b60a5353652471fef799a58de8021a68ec654f",
+    "tentative_pnj": {
+      "verbe": "acculer",
+      "quoi": "Monter à la Tour de la Main avant l'heure du conseil et poser devant Otto Hightower, dans cet ordre : le registre des levées où figurent encore les quatre cents lances de Strong pour un Harrenhal rendu par une porte ouverte le 23 ; le tarif d'une nuit à la porte de la Gadoue, trois sous pour regarder, douze pour aider à porter, par où cent vingt lances sont entrées ; et le fait que la prime criée n'est gagée sur rien. Lui dire, sans témoin, ce que je ne dirai pas au conseil si j'ai satisfaction : la solde de départ des trois mille, pas la prime, versée avant demain soir. Sinon la levée est criée quand même le 29, la colonne part le 30 par la Porte de la Boue sur la seule autorité du roi, et devant Aegon je compte tout haut ses quatre cents lances mortes et son prix impayé — et la liste des brûlés, que ses scribes ne peuvent plus atteindre, se lira en chaire au Culpucier toute la semaine, avec un nom au bout : celle qui est couronnée à Peyredragon.",
+      "cibles": [
+        "Otto Hightower",
+        "Tour de la Main",
+        "affaire 71029"
+      ],
+      "moyens": [
+        "registre des levées relu de ma main",
+        "le tarif du Guet de Waltyr Poix",
+        "la liste des brûlés déposée aux septons",
+        "la levée déjà criée pour le 29",
+        "mon manteau blanc et l'oreille d'Aegon"
+      ],
+      "effet_recherche": "obtenir l'or de la solde de départ avant demain soir, et si je ne l'obtiens pas, tenir prêt le défaut d'Otto pour le dire devant le roi dans la semaine"
+    },
+    "tentatives_pnj": [
+      {
+        "verbe": "acculer",
+        "quoi": "Monter à la Tour de la Main avant l'heure du conseil et poser devant Otto Hightower, dans cet ordre : le registre des levées où figurent encore les quatre cents lances de Strong pour un Harrenhal rendu par une porte ouverte le 23 ; le tarif d'une nuit à la porte de la Gadoue, trois sous pour regarder, douze pour aider à porter, par où cent vingt lances sont entrées ; et le fait que la prime criée n'est gagée sur rien. Lui dire, sans témoin, ce que je ne dirai pas au conseil si j'ai satisfaction : la solde de départ des trois mille, pas la prime, versée avant demain soir. Sinon la levée est criée quand même le 29, la colonne part le 30 par la Porte de la Boue sur la seule autorité du roi, et devant Aegon je compte tout haut ses quatre cents lances mortes et son prix impayé — et la liste des brûlés, que ses scribes ne peuvent plus atteindre, se lira en chaire au Culpucier toute la semaine, avec un nom au bout : celle qui est couronnée à Peyredragon.",
+        "cibles": [
+          "Otto Hightower",
+          "Tour de la Main",
+          "affaire 71029"
+        ],
+        "moyens": [
+          "registre des levées relu de ma main",
+          "le tarif du Guet de Waltyr Poix",
+          "la liste des brûlés déposée aux septons",
+          "la levée déjà criée pour le 29",
+          "mon manteau blanc et l'oreille d'Aegon"
+        ],
+        "effet_recherche": "obtenir l'or de la solde de départ avant demain soir, et si je ne l'obtiens pas, tenir prêt le défaut d'Otto pour le dire devant le roi dans la semaine"
+      }
+    ],
+    "relances_acteur": [],
+    "message_resolution": "PHASE 2 — ARBITRER LA TENTATIVE\n\nVoici la réponse exacte de l'acteur que tu as réveillé :\n\n{\n  \"verbe\": \"acculer\",\n  \"quoi\": \"Monter à la Tour de la Main avant l'heure du conseil et poser devant Otto Hightower, dans cet ordre : le registre des levées où figurent encore les quatre cents lances de Strong pour un Harrenhal rendu par une porte ouverte le 23 ; le tarif d'une nuit à la porte de la Gadoue, trois sous pour regarder, douze pour aider à porter, par où cent vingt lances sont entrées ; et le fait que la prime criée n'est gagée sur rien. Lui dire, sans témoin, ce que je ne dirai pas au conseil si j'ai satisfaction : la solde de départ des trois mille, pas la prime, versée avant demain soir. Sinon la levée est criée quand même le 29, la colonne part le 30 par la Porte de la Boue sur la seule autorité du roi, et devant Aegon je compte tout haut ses quatre cents lances mortes et son prix impayé — et la liste des brûlés, que ses scribes ne peuvent plus atteindre, se lira en chaire au Culpucier toute la semaine, avec un nom au bout : celle qui est couronnée à Peyredragon.\",\n  \"cibles\": [\n    \"Otto Hightower\",\n    \"Tour de la Main\",\n    \"affaire 71029\"\n  ],\n  \"moyens\": [\n    \"registre des levées relu de ma main\",\n    \"le tarif du Guet de Waltyr Poix\",\n    \"la liste des brûlés déposée aux septons\",\n    \"la levée déjà criée pour le 29\",\n    \"mon manteau blanc et l'oreille d'Aegon\"\n  ],\n  \"effet_recherche\": \"obtenir l'or de la solde de départ avant demain soir, et si je ne l'obtiens pas, tenir prêt le défaut d'Otto pour le dire devant le roi dans la semaine\"\n}\n\nTON PREMIER TRAVAIL EST DE LE FAIRE RÉUSSIR, PAS DE LE JUGER. Il ne voit que\nce qu'il a sous les yeux ; toi, tu as le dossier entier. S'il cherche une\nadresse, un nom, un chiffre, une porte, une personne qui est dans ton dossier\net pas dans sa tête — DONNE-LE-LUI et continue la scène. S'il s'y prend mal\nmais que son intention est claire, fais aboutir l'intention. S'il vise une\nchose qui n'existe pas sous ce nom mais qui existe sous un autre, corrige en\nsilence et poursuis.\n\nUn échec ne se prononce QUE sur un obstacle réel de la fiction — quelqu'un qui\nrefuse, une porte fermée à clef, une marée, un homme absent, le temps qui\nmanque. Jamais parce qu'il ignorait quelque chose que tu savais, jamais sur\nune maladresse de formulation, jamais parce qu'il a mal nommé une chose. Un\nhomme qu'on laisse échouer sur son ignorance a perdu sa journée, et nous avec.\n\nRends compte de l'aide que tu lui as donnée dans un champ `aide` du rapport :\n[{\"quoi\": \"ce qu'il lui manquait\", \"donne\": \"ce que tu lui as fourni\"}].\nS'il n'a eu besoin de rien, mets une liste vide.\n\nArbitre maintenant cette tentative depuis la vérité locale de ton dossier.\nLe battement commence à 151443.367 secondes et peut durer jusqu'à 1800\nsecondes (30 minutes), payées par 60 points d'énergie. Il doit\nen produire au moins 60 : ne tronque pas l'activation au premier geste.\nPoursuis la tentative jusqu'à un résultat, une résistance réellement établie ou\nla borne, en condensant les continuités par les ellipses imposées par ton\nsystème. Rends seulement le rapport final JSON. L'acteur et la tâche restent\n`criston` et `71029`.\n\n## Contrat du rapport\n\nUne activité est un geste continu entre deux bifurcations. Condense toute\ncontinuité routinière ; conserve sa durée physique. Découpe seulement si une\ndécision, une résistance, un témoin, un lieu, une ressource, une connaissance\nou un résultat change.\n\nTypes de résultats : observation, progression_tache, variation_mesure,\ndeplacement, objet_produit, communication, fait, blocage, echec.\n\nRends uniquement :\n{\n  \"qui\": \"acteur_id\",\n  \"activation\": {\n    \"tache\": {\"id\": \"tache_id\", \"quoi\": \"...\", \"creee\": false},\n    \"issue\": \"avance|termine|bloque|echoue|rien\",\n    \"activites\": [{\n      \"id\": \"act:<acteur>:<ordre>\",\n      \"ordre\": 1,\n      \"temps\": {\"debut_s\": 151443.367, \"duree_s\": 1, \"fin_s\": 151444.367},\n      \"action\": {\"verbe\": \"...\", \"quoi\": \"...\", \"cibles\": [\"ref:canonique\"]},\n      \"chemin_execution\": [{\"ordre\": 1, \"de\": \"ref:depart\", \"relation\": \"...\", \"vers\": \"ref:arrivee\", \"duree_s\": 1}],\n      \"sources_touchees\": [{\"ref\": \"ref:canonique\", \"mode\": \"voit|entend|lit|parle|manipule|parcourt|mesure\"}],\n      \"sources_mobilisees\": [{\"ref\": \"ref:connue\", \"mode\": \"memoire|intention|croyance|mandat|cible_action\"}],\n      \"resultats_produits\": [{\n        \"id\": \"res:<activite>:1\", \"type\": \"observation\",\n        \"cible\": \"ref:canonique\", \"avant\": null, \"apres\": \"...\",\n        \"portee\": \"connaissance_acteur\", \"source_refs\": [\"ref:canonique\"],\n        \"preuve_refs\": [], \"certitude\": \"constate\"\n      }],\n      \"blocage\": null\n    }],\n    \"suite\": null,\n    \"reveils_suivants\": []\n  },\n  \"mutations_proposees\": []\n}\n\nContraintes : les activités sont ordonnées, continues et sans chevauchement.\nLeur durée totale est comprise entre 60 secondes et le budget. Chaque\nchemin totalise exactement la durée de son activité. Écrire, parler, marcher,\nchercher et manipuler prennent réellement du temps ; l'ellipse économise la\nprose, jamais les secondes.\n\nToute adresse vient du dossier. Aucun préfixe `candidate:`. Chaque résultat a\ndes `source_refs`, présentes dans les sources touchées ou mobilisées, le\nchemin, la cible de l'action ou un résultat antérieur. Une continuité reprend\nmot pour mot son dernier `apres` dans `avant`.\n\nUne issue `avance` ou `termine` produit un `progression_tache` visant l'id exact\nde `tache_elue`; `bloque` produit un `blocage`; `echoue`, un `echec`.\n\nLes mutations sont seulement proposées. CHACUNE PORTE EXACTEMENT CETTE FORME,\net le nom des clés n'est pas négociable — une mutation qui cite son résultat\nsous une autre clé que `resultat_id` est jetée sans être lue :\n\n{\n  \"resultat_id\": \"res:act:<acteur>:1\",\n  \"table\": \"intentions\",\n  \"operation\": \"croyance_ajouter\",\n  \"cible\": \"<id visé dans cette table>\",\n  \"valeur\": \"<la valeur, pour les opérations qui en prennent une>\",\n  \"champs\": {\"<champ>\": \"<valeur>\"}\n}\n\n`resultat_id` reprend MOT POUR MOT l'`id` d'un `resultats_produits` du présent\nrapport : une mutation qui ne se rattache pas à un résultat déclaré n'a pas eu\nlieu. `valeur` ou `champs` selon l'opération, jamais un autre nom. Pas de clé\n`cite`, `domaine`, `op`, `personnage_id` ni `table.operation` collés en un seul\nmot : la table et l'opération sont deux clés distinctes.\n\nOpérations admises, par table :\n  intentions   etape, etape_ajouter, tete, tete_ajouter, croyance_ajouter,\n               croyance_retirer, ignore_ajouter, ignore_retirer,\n               declencheur_ajouter, declencheur_retirer\n  books        affaire_ajouter, affaire_action_ajouter, affaire_action\n  evenements   diffusion_livree, diffusion_ajouter, evenement\n  personnages  personnage, personnage_ajouter\n  monde        monde\n  mains        mesure, seuil, main, main_ajouter\n  plis         pli, pli_ajouter\n  lieux        roukerie\n  jetons       incident_propage, incident\n  relations    relation, relation_ajouter\n\nAucune autre table n'existe. Ne propose rien que ta journée n'ait réellement\nproduit.\n\nLes affaires, dont la `cible` a une forme stricte :\n  books.affaire_ajouter          cible = `affaire-<nom-en-kebab>` (neuf),\n                                 valeur = {\"titre\": \"...\"}\n  books.affaire_action_ajouter   cible = `affaire-<...>` (l'affaire entière),\n                                 valeur = la LISTE des cellules, une par\n                                 colonne de sa table d'actions, dans l'ordre\n  books.affaire_action           cible = `affaire-<...>:<n° de l'action>`,\n                                 champs = {\"<intitulé exact de colonne>\": \"...\"}\n\nLe numéro d'une action est celui de sa première cellule dans le cahier, jamais\nl'id d'un nœud du tissu. Une affaire à toi — ce que tu poursuis et qui n'est\nécrit nulle part — s'ouvre par `affaire_ajouter`.\n\n",
+    "messages_correction": [],
+    "modele": "opus",
+    "effort": "low",
+    "duree_ms": 149146,
+    "duree_api_ms": 139077,
+    "cout_usd": 0.510051,
+    "tours": 5,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 3823,
+      "cache_read_input_tokens": 14472,
+      "output_tokens": 8547,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 3823,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 8547,
+          "cache_read_input_tokens": 14472,
+          "cache_creation_input_tokens": 3823,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 3823
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  }
+}

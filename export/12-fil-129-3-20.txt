@@ -1,0 +1,790 @@
+AURORE — son écran, 129-3-20 (177 items)
+========================================
+
+--- etat/flux.jsonl, items portant pour=aurore-inchauspe ----------------
+
+[l.1480] effacer | date=129 AC, 3e lune, 20e j.
+  .{"heure": "17h02"}
+
+[l.1481] salle | date=129 AC, 3e lune, 20e j. | moment=avant le vol du soir | lieu=La roukerie, Peyredragon
+  .{"salle": "roukerie", "tension": 85, "presents": [{"id": "aurore-inchauspe", "nom": "Aurore Inchauspé", "titre": "de La Noiseraie", "portrait_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 128 128\" role=\"img\" aria-label=\"Aurore Inchauspé\">\n  <title>Aurore Inchauspé</title>\n  <defs>\n    <radialGradient id=\"bg-aurore\" cx=\"50%\" cy=\"32%\" r=\"80%\">\n      <stop offset=\"0%\" stop-color=\"#302719\"/>\n      <stop offset=\"55%\" stop-color=\"#221b12\"/>\n      <stop offset=\"100%\" stop-color=\"#130f09\"/>\n    </radialGradient>\n    <clipPath id=\"clip-aurore\"><circle cx=\"64\" cy=\"64\" r=\"52\"/></clipPath>\n  </defs>\n  <!-- anneau héraldique : or et sable, les émaux de la Noiseraie -->\n  <circle cx=\"64\" cy=\"64\" r=\"63\" fill=\"#241d18\"/>\n  <circle cx=\"64\" cy=\"64\" r=\"57.5\" fill=\"none\" stroke=\"#c9a227\" stroke-width=\"7\" stroke-dasharray=\"15.05 15.05\"/>\n  <!-- disque intérieur -->\n  <circle cx=\"64\" cy=\"64\" r=\"52\" fill=\"url(#bg-aurore)\" stroke=\"#7a6342\" stroke-width=\"1.2\"/>\n  <!-- buste : laine de voyage, pas de soie de cour — une maison de négoce -->\n  <g clip-path=\"url(#clip-aurore)\">\n    <path d=\"M44,47 C43,30 54,25 64,25 C74,25 85,30 84,47 L87,92 C88,102 81,107 75,106 L53,106 C47,107 40,102 41,92 Z\" fill=\"#6d5a44\"/>\n    <!-- le châle croisé sur la poitrine, tenu d'une agrafe -->\n    <path d=\"M22,128 C27,99 46,88 64,88 C82,88 101,99 106,128 Z\" fill=\"#4a3c2c\"/>\n    <path d=\"M50,92 L64,106 L78,92\" 
+
+[l.1482] recit | date=129 AC, 3e lune, 20e j.
+La roukerie sent la craie, la fiente et le grain chaud. Vous avez monté cent trente marches derrière un homme qui n’a pas ralenti une fois, et vos deux caisses sont montées derrière vous sur le dos d’un garçon qui ne les a pas posées avant le seuil. **Mestre Gerardys** compte les pots à voix basse, l’ongle sur chaque cachet de cire — dix-huit pots de brou, la double ration, ce que votre père appelle une commande de guerre.
+  .{"duree": 6, "heure": "17h02"}
+
+[l.1483] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Dix-huit. Bien. On m’en avait promis douze le mois dernier et j’en ai reçu neuf.
+  .{"reactions": [{"id": "r-neuf", "texte": "« Neuf. Le sixième jour de la deuxième lune, par la barque de Rulf. »"}, {"id": "r-rien", "texte": "Le laisser compter"}], "heure": "17h08"}
+
+[l.1484] geste | date=129 AC, 3e lune, 20e j. | acteur_id=gerardys
+Il repose le dernier pot sans le lâcher tout de suite, et vous regarde enfin — la mise, les bottes, les deux doigts bruns jusqu’à la deuxième phalange.
+  .{"duree": 1, "heure": "17h09"}
+
+[l.1485] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Votre père envoie son commis, d’ordinaire. Un nommé Talt, qui repart le soir même parce qu’il a peur des escaliers. Vous, vous êtes montée.
+  .{"reactions": [{"id": "r-commande", "texte": "« Une commande de guerre se porte soi-même. »"}, {"id": "r-talt", "texte": "« Talt a la goutte depuis la Saint-Jour. »"}, {"id": "r-taire", "texte": "Ne rien répondre, et regarder les corbeaux"}], "heure": "17h10"}
+
+[l.1486] recit | date=129 AC, 3e lune, 20e j.
+Derrière lui, quatorze corbeaux dans le noir, et deux perchoirs vides. Il n’a pas encore demandé ce que vous voulez. Il attend, la main à plat sur le registre ouvert — et **la reine** est trois étages plus bas, dans une salle où l’on compte des nefs depuis midi.
+  .{"duree": 2, "heure": "17h11"}
+
+[l.1493] vous
+ou suis je ? qui suis je ?
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1494] question
+ou suis je ?
+  .{"delai_s": 0}
+
+[l.1495] question
+qui suis je ?
+  .{"delai_s": 0}
+
+[l.1496] reponse | date=129 AC, 3e lune, 20e j.
+Vous êtes **Aurore Inchauspé**, vingt-neuf ans, fille aînée d’une maison anoblie il y a trois générations à peine. Votre famille ne vend pas d’épées : elle vend de l’encre. Le brou de noix de La Noiseraie écrit dans la moitié des roukeries du royaume — y compris, et c’est votre problème, dans celles de Port-Réal, que votre père continue de livrer.
+  .{"heure": "17h23"}
+
+[l.1497] reponse | date=129 AC, 3e lune, 20e j.
+Entre huit et dix-huit ans, on vous a placée successivement dans cinq maisons — Rosby, Stokeworth, Sombreval, Lamarck, l’Île-aux-Pinces. C’est ainsi qu’une petite maison achète sa sûreté. Vous avez donc une sœur de lait dans presque chaque grande salle de la baie, et vous appelez les grands par le nom que leur nourrice leur donnait.
+  .{"heure": "17h23"}
+
+[l.1498] reponse | date=129 AC, 3e lune, 20e j.
+Vous êtes à **Peyredragon**, dans la roukerie, en haut de la tour — cent trente marches. Nous sommes le 20e jour de la 3e lune de l’an 129, un peu après cinq heures du soir. Rhaenyra a été couronnée avant-hier ; quatre jours plus tôt, elle a brûlé la tête d’une colonne royale sur la route de Sombreval, et le royaume en parle sans que Peyredragon ait dit un mot. Vous êtes montée avec dix-huit pots — la double ration — que vous avez portés vous-même au lieu d’envoyer le commis. **Votre père ne sait pas que vous êtes ici.**
+  .{"heure": "17h23"}
+
+[l.1499] reponse | date=129 AC, 3e lune, 20e j.
+Ce que vous voulez, personne ne vous l’a demandé : vous voulez que cette charge existe — quelqu’un qui décide de ce que le royaume entend. Vous l’avez payée d’avance en montant : vous savez ce qu’on dit du feu sur les routes de Rosby et de Stokeworth, et la reine ne le sait pas. Écrivez ce que vous dites ou ce que vous faites dans la barre du bas.
+  .{"heure": "17h23"}
+
+[l.1500] recit | date=129 AC, 3e lune, 20e j.
+**Mestre Gerardys** n’a pas relevé votre marmonnement — un vieil homme entend ce qu’il choisit. Il a la main à plat sur le registre ouvert, quatorze corbeaux derrière lui dans le noir et deux perchoirs vides. Il attend toujours que vous disiez pourquoi vous êtes montée.
+  .{"duree": 2, "heure": "17h23"}
+
+[l.1501] vous
+Très bien, ceux qui montent seront donc *compensés*, et non payés, pour leur temps.
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "rhaenyra"}
+
+[l.1502] vous
+je soupese ma bourse
+  .{"mode": "penser", "delai_s": 0, "joueur_id": "rhaenyra"}
+
+[l.1503] vous
+je dois faire de la communication scientifique ! parce que la science ne transforme l emonde que si elle est comprise !!!
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1504] geste | date=129 AC, 3e lune, 20e j. | acteur_id=gerardys
+Il ferme le registre. Pas d’un coup sec — lentement, en gardant un doigt dedans, comme on met un signet avant une conversation qui va durer.
+  .{"duree": 1, "heure": "17h25"}
+
+[l.1505] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Vous parlez du savoir, dame Aurore. Vous parlez à un homme qui porte huit anneaux et qui vit dans une tour où l’on range ce que personne ne lit.
+  .{"duree": 1, "heure": "17h26"}
+
+[l.1506] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+La Citadelle enseigne le contraire de ce que vous venez de dire. On y apprend à savoir, et à se taire — le savoir se garde, il ne se répand pas. Un mestre qui explique trop est un mestre qu’on renvoie.
+  .{"reactions": [{"id": "r-encre", "texte": "« Et pourtant vous m’achetez dix-huit pots. »"}, {"id": "r-corbeaux", "texte": "« Vous avez quatorze corbeaux et deux perchoirs vides. »"}, {"id": "r-tenir", "texte": "Tenir son regard sans répondre"}], "heure": "17h27"}
+
+[l.1507] recit | date=129 AC, 3e lune, 20e j.
+Il vous regarde comme s’il vous voyait pour la première fois de la soirée. Dehors, la nuit tombe sur la rade ; en bas, dans la salle où l’on compte des nefs depuis midi, **la reine** n’a toujours rien fait écrire sur ce qui s’est passé sur la route de Sombreval — cinq jours.
+  .{"duree": 3, "heure": "17h28"}
+
+[l.1513] vous
+la science, ca se diffuse .....
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1517] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Se diffuse. Voyons ce que ça coûte. Trente-neuf roukeries dans le royaume, quatorze oiseaux ici dont quatre qui ne volent que vers Port-Réal. Un corbeau porte trois lignes et ne revient pas toujours. Un cavalier porte une page et cinq jours.
+  .{"duree": 1, "heure": "17h31"}
+
+[l.1518] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Une chanson, elle, porte quatre vers, ne coûte rien et va jusqu’au Mur — et au troisième relais elle dit le contraire de ce qu’on lui a appris. Voilà votre diffusion, dame Aurore. Ce qui va loin arrive faux. Ce qui arrive juste ne va pas loin.
+  .{"duree": 1, "heure": "17h32"}
+
+[l.1519] geste | date=129 AC, 3e lune, 20e j. | acteur_id=gerardys
+Il rouvre le registre à une page blanche, prend une plume, et la trempe dans un de vos pots. Puis il la tient au-dessus du feuillet sans écrire, et attend.
+  .{"duree": 2, "heure": "17h33"}
+
+[l.1520] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Alors dites-la, votre phrase. Celle qu’on ne peut pas chanter de travers. Sur la route de Sombreval, cinq jours après — qu’est-ce que j’écris ?
+  .{"reactions": [{"id": "r-dicter", "texte": "Dicter la phrase, tout de suite"}, {"id": "r-refuser", "texte": "« Ce n’est pas à moi de la signer. »"}, {"id": "r-demander", "texte": "« Qu’a-t-on écrit à Sombreval, ce soir-là ? »"}], "heure": "17h35"}
+
+[l.1521] vous
+le partage des connaissance permet d'ouvrir à des idées et des hypothesee plus grandes
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1522] vous
+seul les mestres a avec un esprit fermée ne vont pas loin
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1523] geste | date=129 AC, 3e lune, 20e j. | acteur_id=gerardys
+Il repose la plume en travers du pot. Referme le registre. Le bruit est très petit et très net.
+  .{"duree": 1, "heure": "17h36"}
+
+[l.1524] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Un esprit fermé. Oui. J’ai écrit les lettres du roi Viserys pendant onze ans, dame Aurore, et celles de sa fille depuis qu’elle est ici. Je vous ai demandé une phrase. Vous m’avez donné une opinion sur les mestres.
+  .{"duree": 1, "heure": "17h37"}
+
+[l.1525] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+C’est très exactement la différence entre nous deux. Moi, on me dit ce qu’il faut écrire. Vous, vous voulez décider ce qu’il faut dire — et vous n’avez pas encore su le faire une seule fois depuis que vous êtes montée.
+  .{"duree": 1, "heure": "17h38"}
+
+[l.1526] geste | date=129 AC, 3e lune, 20e j. | acteur_id=gerardys
+Il prend la lanterne, pas la vôtre, et se dirige vers l’escalier. On soupe en bas dans un quart d’heure ; il y sera, et vous non.
+  .{"entrent": [], "duree": 1, "heure": "17h39"}
+
+[l.1527] recit | date=129 AC, 3e lune, 20e j.
+Il s’arrête sur la première marche, sans se retourner tout à fait.
+
+« Vos pots sont comptés et payés. Le garçon vous redescendra vos caisses vides. »
+
+Quatorze corbeaux dans le noir derrière vous, deux perchoirs vides, et personne à qui parler. **La reine** est trois étages plus bas et ne sait toujours pas que vous existez.
+  .{"duree": 2, "heure": "17h40"}
+
+[l.1532] vous
+je souhaite écrire " Du chaos à la clarté "
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1533] geste | date=129 AC, 3e lune, 20e j. | acteur_id=gerardys
+Il s’immobilise. La lanterne se balance encore un peu au bout de son bras. Il remonte les deux marches qu’il avait descendues, sans hâte, et la lumière revient sur le registre.
+  .{"duree": 1, "heure": "17h42"}
+
+[l.1534] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+« Du chaos à la clarté. » Quatre pieds. C’est court. C’est la seule chose que ça a pour soi, et ce n’est pas rien — je vous l’accorde.
+  .{"duree": 1, "heure": "17h43"}
+
+[l.1535] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Mais dites-moi : dans cette phrase, qui a brûlé qui ? Combien d’hommes ? Sur quelle route, et pourquoi ils y étaient ? Perrin le charron la répétera volontiers, et à Stokeworth on entendra qu’il y avait du chaos. Ils le savaient déjà. Ce qu’ils ne savent pas, c’est que ces hommes étaient en armes.
+  .{"duree": 1, "heure": "17h44"}
+
+[l.1536] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Une phrase qu’on ne peut pas chanter de travers n’est pas une belle phrase, dame Aurore. C’est une phrase qui porte un fait. On ne déforme pas un chiffre aussi facilement qu’une promesse.
+  .{"duree": 1, "heure": "17h45"}
+
+[l.1537] geste | date=129 AC, 3e lune, 20e j. | acteur_id=gerardys
+Il repose la lanterne sur le pupitre, rouvre le registre à la page blanche, et reprend la plume. Il ne se rassoit pas.
+  .{"duree": 1, "reactions": [{"id": "r-refaire", "texte": "Refaire la phrase, avec le chiffre dedans"}, {"id": "r-marche", "texte": "« Vous marchandez comme un Lysien, mestre. »"}, {"id": "r-souper", "texte": "« Vous allez manquer le souper. »"}], "heure": "17h46"}
+
+[l.1539] vous
+je n eparle pas chiffre , je parle d'une vérité que même les archives de la Citadelle confirment : toute connaissance naît d'abord dans le désordre. Les observations s'accumulent, contradictoires, illisibles — un chaos de signes. C'est le travail de l'esprit rigoureux que d'en extraire la structure, de séparer le signal du bruit, de faire émerger le sens
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1540] vous
+Du Chaos, la Clarté » n'est pas une promesse creuse : c'est la méthode même du savoir. On ne crée pas la vérité — on la révèle, en dissipant la confusion qui la masquait. Voilà pourquoi cette maison peut la porter haut.
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1541] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Les archives de la Citadelle. Vous les avez lues ?
+  .{"duree": 1, "heure": "17h47"}
+
+[l.1542] recit | date=129 AC, 3e lune, 20e j.
+Il ne le dit pas méchamment. Il le dit comme on relève une erreur de compte — sans lever la voix, en attendant la correction. Une femme qui ne porte pas de chaîne n’est jamais entrée dans ces salles-là, et vous le savez tous les deux.
+  .{"duree": 1, "heure": "17h48"}
+
+[l.1543] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Ne faites jamais ça devant un homme dont c’est la maison. Devant lord Corlys, passe encore : il ne vérifiera pas. Moi, je vérifie. C’est tout ce que je fais de mes journées.
+  .{"duree": 1, "heure": "17h49"}
+
+[l.1544] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Cela dit — vous ne m’avez pas donné une mauvaise chose. Vous m’avez donné une DEVISE. C’est ce qu’une maison grave au-dessus d’une porte, et ce qu’un office porte quand il en a un. Je vous demandais une dépêche. Ce qui part ce soir sur un oiseau et qu’on lira tout haut dans une cour.
+  .{"duree": 1, "heure": "17h50"}
+
+[l.1545] geste | date=129 AC, 3e lune, 20e j. | acteur_id=gerardys
+Il écrit quatre mots en haut du feuillet, à l’encre de son père, et tourne la page vers vous pour que vous les voyiez à l’endroit : **Du Chaos, la Clarté**. Puis il pose la plume à côté, sur le bois.
+  .{"duree": 2, "reactions": [{"id": "r-dessous", "texte": "Dicter les quatre lignes qui vont dessous"}, {"id": "r-devise", "texte": "« Alors c’est la devise de la charge. »"}, {"id": "r-plume", "texte": "Prendre la plume vous-même"}], "heure": "17h51"}
+
+[l.1546] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Voilà votre titre. Maintenant les quatre lignes qui vont dessous, et qu’un charretier puisse répéter sans se tromper. Le vol du soir part quand la cloche sonne. Il vous reste le temps que je mette à ne pas souper.
+  .{"heure": "17h53"}
+
+[l.1551] vous
+et vous vouliez une chanson : 
+La Complainte de Dame Aurore la SciSense
+(à chanter fort, chope levée)
+
+Oh, écoutez, bonnes gens de la ville,
+L'histoire d'une dame savante et subtile,
+Qui prit le savoir emmêlé, obscur,
+Et en tira la lumière, c'est sûr !
+
+🍺 Du Chaos, la Clarté !
+🍺 Buvez à la vérité !
+Là où les fous voient du brouillard,
+Elle lit le sens dans le noir !
+
+Les mestres griffonnaient sans fin,
+Cent parchemins, mille chemins,
+Mais nul n'y comprenait un traître mot —
+Jusqu'à ce qu'elle brandisse son flambeau !
+
+🍺 Du Chaos, la Clarté !
+🍺 Buvez à la vérité !
+Elle sépare le grain de l'ivraie,
+Et fait chanter ce qui était muet !
+
+Alors trinquons, damoiseaux, donzelles,
+À la Maison qui rend le monde plus belle,
+Car tant qu'il restera de la confusion,
+Elle viendra, torche au poing, sans pardon !
+
+🍺 Du Chaos, la Clarté !
+🍺 la sciense pour l'éternité !
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1552] recit | date=129 AC, 3e lune, 20e j.
+Vous la chantez en entier. Dans la roukerie. Les corbeaux détestent — il y a un remous d’ailes noires au troisième couplet, et l’un d’eux crie quelque chose qui n’est pas un mot. **Gerardys** écoute jusqu’au bout sans bouger un cil, les deux mains sur le pupitre.
+  .{"duree": 4, "heure": "17h54"}
+
+[l.1553] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+…
+  .{"duree": 1, "heure": "17h58"}
+
+[l.1554] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Le refrain tient. Quatre temps, deux accents, on peut le brailler à la troisième chope sans se tromper. C’est le seul refrain correct que j’aie entendu depuis le sacre, et je ne plaisante pas.
+  .{"duree": 1, "heure": "17h59"}
+
+[l.1555] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Maintenant comptons. Dans cette chanson, vous apparaissez onze fois. La reine, zéro. La route de Sombreval, zéro. Les douze cents hommes, zéro. Les mestres y sont des imbéciles qui griffonnent — nous sommes deux à Peyredragon, dame Aurore, et l’autre est mon apprenti.
+  .{"duree": 1, "heure": "18h00"}
+
+[l.1556] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Vous vouliez que le royaume comprenne le feu de la route. Vous venez d’écrire une chanson qui apprend au royaume votre nom. Ce sont deux offices différents, et un seul est à prendre ce soir.
+  .{"duree": 1, "heure": "18h01"}
+
+[l.1557] recit | date=129 AC, 3e lune, 20e j.
+En bas, la cloche du souper. Deux coups. Le vol du soir part au troisième — c’est ainsi depuis toujours, on ne lâche pas les oiseaux avant que les cuisines soient vides.
+
+Il remet la plume dans le pot. Il ne la lâche pas.
+  .{"duree": 2, "reactions": [{"id": "r-quatre", "texte": "Dicter les quatre lignes, vite"}, {"id": "r-refrain", "texte": "« Gardez le refrain. Changez tout le reste. »"}, {"id": "r-rien", "texte": "« Alors n’envoyez rien ce soir. »"}], "heure": "18h02"}
+
+[l.1559] vous
+c'est pas moi que je cite c'est la sciense
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1561] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+La… ? Ce mot-là n’existe pas, dame Aurore. Ni en langue commune, ni en haut valyrien, et je les ai eus tous les deux à la Citadelle. Vous avez inventé un mot, et vous voulez qu’un charretier le répète.
+  .{"duree": 1, "heure": "18h04"}
+
+[l.1562] recit | date=129 AC, 3e lune, 20e j.
+Troisième coup de cloche, en bas. Les cuisines sont vides. Quelque part sous vos pieds, un garçon traverse la cour avec les plis du soir dans une sacoche de cuir — il monte les cent trente marches, il sera là dans le temps de compter jusqu’à deux cents.
+  .{"duree": 2, "heure": "18h05"}
+
+[l.1563] geste | date=129 AC, 3e lune, 20e j. | acteur_id=gerardys
+Il regarde la page, le titre écrit en haut, le grand blanc dessous. Puis il fait quelque chose que vous n’attendiez pas : il se rassoit.
+  .{"duree": 1, "heure": "18h07"}
+
+[l.1564] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Une dernière. Oubliez ce que vous voulez qu’on pense — je m’en moque, et le charretier aussi. Vous êtes montée par la route, aujourd’hui, avec des caisses. Vous vous êtes arrêtée quelque part pour manger.
+  .{"duree": 1, "heure": "18h08"}
+
+[l.1565] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Qu’est-ce qu’on y disait ?
+  .{"heure": "18h09"}
+
+[l.1566] pensee | date=129 AC, 3e lune, 20e j.
+Six haltes depuis La Noiseraie. Chez Hanna, au gué de Rosby : on ne dit pas qu’elle a brûlé des soldats, on dit des hommes qui rentraient chez eux. Perrin le charron, qui roule vos futailles depuis Stokeworth : il ne saurait pas dire qui a brûlé qui. Et pas un — pas un seul en deux jours — ne vous a parlé du couronnement.
+  .{"heure": "18h10"}
+
+[l.1572] vous
+j'essayais juste de vous faire decouvrir un nouvel aspect de la science : comprendre , enseigner divulguer
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1573] vous
+sinon je me suis arretée chez Hanna au gué de Rosby
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1574] recit | date=129 AC, 3e lune, 20e j.
+Le garçon arrive à bout de souffle avec la sacoche du soir. Gerardys la prend sans le regarder, en tire quatre plis, les range par destination — Lamarck, Sombreval, Rosby, Pointe-Aigue — et rend la sacoche vide.
+  .{"duree": 3, "entrent": [], "heure": "18h10"}
+
+[l.1575] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Comprendre. Enseigner. Divulguer. C’est très bien, dame Aurore — c’est même la description exacte d’une charge, et je vous accorde qu’elle manque à cette maison.
+  .{"duree": 1, "heure": "18h13"}
+
+[l.1576] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Mais je vous ai demandé trois fois ce qu’on disait dans une auberge. Trois fois vous m’avez répondu ce qu’il faudrait penser. C’est exactement le défaut que vous prétendez soigner : vous ne divulguez rien, vous prêchez.
+  .{"duree": 1, "heure": "18h14"}
+
+[l.1577] geste | date=129 AC, 3e lune, 20e j. | acteur_id=gerardys
+Il prend un feuillet neuf — pas le vôtre, un autre — et écrit trois lignes, vite, d’une écriture qui n’hésite pas. Il sable, plie, cachette. Puis il se lève et va décrocher un oiseau.
+  .{"duree": 4, "heure": "18h15"}
+
+[l.1578] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+« Douze cents hommes en armes marchaient sur Sombreval sans la bannière du roi. La reine les a arrêtés. Elle sera couronnée le dix-huitième jour. » Trois lignes. Aucune n’est belle. Aucune ne se chante de travers.
+  .{"duree": 1, "heure": "18h19"}
+
+[l.1579] recit | date=129 AC, 3e lune, 20e j.
+L’oiseau part de la fenêtre nord, vers Rosby. Il ne reste dans la tour que le bruit des ailes, et votre feuillet à vous sur le pupitre — le grand blanc, avec quatre mots en haut : **Du Chaos, la Clarté**.
+
+Il vous le tend en passant, sans méchanceté aucune.
+  .{"duree": 3, "heure": "18h20"}
+
+[l.1580] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Gardez-le. Il est bon. Revenez quand vous aurez ce qui va dessous — et si ce n’est pas à moi que vous voulez le dire, la reine soupe dans la petite salle du levant jusqu’à la deuxième veille.
+  .{"reactions": [{"id": "r-suivre", "texte": "Le suivre dans l’escalier"}, {"id": "r-levant", "texte": "Descendre seule vers la petite salle du levant"}, {"id": "r-rester", "texte": "Rester dans la roukerie"}], "heure": "18h23"}
+
+[l.1581] vous
+que dois divulguer
+  .{"mode": "penser", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1583] question
+arretons nos enfantillages, que voulez vous savoir ?
+  .{"delai_s": 0}
+
+[l.1584] meta
+Médaille d'or pour Dame Aurore qui a su imposer sa science aux hommes de science
+  .{"delai_s": 0}
+
+[l.1585] pensee | date=129 AC, 3e lune, 20e j.
+Ce que je tiens et que personne ici ne tient : six haltes en deux jours de route. Chez Hanna, au gué de Rosby, on dit qu’elle a brûlé des hommes qui rentraient chez eux. Perrin le charron ne saurait pas dire qui a brûlé qui. Et pas un ne m’a parlé du couronnement. Voilà ce que j’ai à vendre — pas une idée, six auberges.
+  .{"heure": "18h24"}
+
+[l.1586] pensee | date=129 AC, 3e lune, 20e j.
+Ce que le livre des encres dit et que personne ne sait lire : Repos-des-Freux a triplé sa ration en deux lunes. On y écrit trois fois plus qu’avant. Je ne sais pas ce qu’on y écrit. Je sais qu’on écrit.
+  .{"heure": "18h24"}
+
+[l.1587] pensee | date=129 AC, 3e lune, 20e j.
+Ce que ça coûte de le dire. À Gerardys : rien, et il en fera trois lignes de plus, signées de lui. À la reine directement : je saute par-dessus son mestre le soir même où il m’a rendu service — il ne me le pardonnera pas deux fois.
+  .{"heure": "18h24"}
+
+[l.1588] pensee | date=129 AC, 3e lune, 20e j.
+Ce que j’ignore et qui déciderait tout : ce qu’elle a vu, elle, sur cette route. Personne ne me l’a raconté. Personne ne l’a écrit. Cinq jours, et pas une ligne dictée — ce n’est pas de la négligence, à ce point-là. C’est un silence choisi, et je ne sais pas par qui.
+  .{"heure": "18h24"}
+
+[l.1589] pensee | date=129 AC, 3e lune, 20e j.
+Et mon père livre toujours Port-Réal. Chaque heure que je passe ici sans le dire à quelqu’un de cette maison est une heure où quelqu’un d’autre peut le dire à ma place.
+  .{"heure": "18h24"}
+
+[l.1590] reponse | date=129 AC, 3e lune, 20e j.
+Rien ne vous est demandé de deviner. Votre office est celui-ci : dans ce monde, une nouvelle met des jours à voyager et se déforme en route. Vous décidez CE QUI PART, PAR QUEL CANAL, et DANS QUELS MOTS. Un acte scellé porté par un cavalier arrive juste et lentement ; une chanson va jusqu’au Mur et arrive fausse ; un héraut ne couvre qu’une ville ; montrer bat toujours dire.
+  .{"heure": "18h24"}
+
+[l.1591] reponse | date=129 AC, 3e lune, 20e j.
+Ce qu’on vous demande à l’instant est plus petit que ça. Gerardys vous a posé une question simple, à laquelle vous avez une réponse et lui non : ce que vous avez ENTENDU sur la route en montant. Pas ce qu’il faut en penser — les phrases exactes, avec le nom de l’aubergiste. C’est la seule marchandise que vous ayez apportée.
+  .{"heure": "18h24"}
+
+[l.1592] reponse | date=129 AC, 3e lune, 20e j.
+Deux portes sont ouvertes ce soir, et vous pouvez prendre l’une ou l’autre : Gerardys, qui redescend souper et qui vous a dit de revenir avec ce qui va sous votre titre ; ou la reine elle-même, qui soupe dans la petite salle du levant jusqu’à la deuxième veille — il vient de vous donner l’adresse, ce qui n’est pas rien.
+  .{"heure": "18h24"}
+
+[l.1593] reponse | date=129 AC, 3e lune, 20e j.
+Écrivez simplement ce que vous dites ou ce que vous faites, à la première personne, comme dans un roman. « Je descends au levant. » « Je lui raconte l’auberge du gué. » Le monde répond, avec ses délais et ses gens. Vos six desseins sont dans la colonne de gauche si vous voulez voir ce qui vous attend.
+  .{"heure": "18h24"}
+
+[l.1597] vous
+Sur la route , j'ai fait 6 auberges, on parle d'hommes brulés mais pas du courronnement
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1598] recit | date=129 AC, 3e lune, 20e j.
+Vous le dites à son dos, dans l’escalier. Six auberges. Des hommes brûlés. Pas un mot du couronnement.
+
+Le bruit de ses pas s’arrête net, trois marches plus bas.
+  .{"duree": 2, "heure": "18h24"}
+
+[l.1599] geste | date=129 AC, 3e lune, 20e j. | acteur_id=gerardys
+Il remonte. Vite, cette fois — un vieil homme qui monte vite, ça ne se voit pas souvent, et ça s’entend.
+  .{"duree": 1, "heure": "18h26"}
+
+[l.1600] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Répétez-moi la seconde moitié.
+  .{"duree": 1, "heure": "18h27"}
+
+[l.1601] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Non — pas les hommes brûlés, ça je m’en doutais. L’autre. Personne ne parle du couronnement. Vous êtes passée par Rosby et Stokeworth AUJOURD’HUI, et à deux jours d’ici on ne sait pas qu’elle est reine.
+  .{"duree": 1, "heure": "18h28"}
+
+[l.1602] geste | date=129 AC, 3e lune, 20e j. | acteur_id=gerardys
+Il pose la main à plat sur les trois plis qui restaient à partir — Lamarck, Sombreval, Pointe-Aigue — comme on retient quelque chose qui allait tomber.
+  .{"duree": 1, "heure": "18h29"}
+
+[l.1603] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+J’ai envoyé mes trois lignes à Rosby il y a un quart d’heure. Elles disent le feu, et le couronnement en dernier, comme une date au bas d’un acte. Vous me dites que j’ai mis dans le troisième rang la seule chose que personne ne sait.
+  .{"duree": 1, "heure": "18h30"}
+
+[l.1604] recit | date=129 AC, 3e lune, 20e j.
+Il regarde la fenêtre nord, par où l’oiseau est parti, avec l’air d’un homme qui vient de comprendre qu’il ne peut pas le rappeler. Puis il se retourne vers vous, et pour la première fois de la soirée il ne vous parle pas comme à une marchande.
+  .{"duree": 2, "reactions": [{"id": "r-six", "texte": "Lui nommer les six auberges, une par une"}, {"id": "r-trois", "texte": "« Retenez les trois autres plis jusqu’à demain. »"}, {"id": "r-reine", "texte": "« Ce n’est pas à vous qu’il faut le dire. »"}], "heure": "18h31"}
+
+[l.1605] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Combien d’auberges, exactement ? Et lesquelles ? Nommez-les. Je veux savoir sur quelle largeur de route votre silence s’étend.
+  .{"heure": "18h33"}
+
+[l.1606] vous
+Chez Hanna, au gué de Rosby, Perrin le charron ,Repos-des-Freux ,À Gerardys
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1607] geste | date=129 AC, 3e lune, 20e j. | acteur_id=gerardys
+Il ne se rassoit toujours pas, mais il écrit debout, penché, la plume qui gratte vite. Hanna. Gué de Rosby. Perrin, charron, Stokeworth.
+  .{"duree": 2, "heure": "18h36"}
+
+[l.1608] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Hanna, au gué. Je connais l’endroit, on y change les chevaux du courrier. Si l’on ne sait pas au gué de Rosby, on ne sait nulle part entre ici et la Néra.
+  .{"duree": 1, "heure": "18h38"}
+
+[l.1609] recit | date=129 AC, 3e lune, 20e j.
+Puis la plume s’arrête au milieu du troisième nom. Il relève la tête.
+  .{"duree": 1, "heure": "18h39"}
+
+[l.1610] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Repos-des-Freux ? Non. Repos-des-Freux n’est pas sur votre route. On ne passe pas par lord Staunton pour aller de La Noiseraie à un embarcadère — c’est trois jours dans l’autre sens.
+  .{"duree": 1, "heure": "18h40"}
+
+[l.1611] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Vous n’y êtes pas allée aujourd’hui. Alors pourquoi ce nom-là, dans la même phrase que deux auberges où vous avez mangé ?
+  .{"duree": 1, "heure": "18h41"}
+
+[l.1612] recit | date=129 AC, 3e lune, 20e j.
+Quatorze corbeaux, deux perchoirs vides, trois plis retenus sous sa main. Il attend, et cette fois il n’a plus l’air pressé de souper du tout.
+
+Ce qu’il vous demande, personne ne vous l’a jamais demandé : **comment vous savez ce que vous savez.**
+  .{"duree": 2, "reactions": [{"id": "r-livre", "texte": "Lui montrer le livre des encres"}, {"id": "r-ration", "texte": "« Ils ont triplé leur ration en deux lunes. »"}, {"id": "r-taire", "texte": "« Ce nom-là, je le garde. »"}], "heure": "18h42"}
+
+[l.1613] vous
+non pardon c'etait juste un enote dans mon carenet *
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1614] vous
+Puis je aller voir la reine ?
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1615] recit | date=129 AC, 3e lune, 20e j.
+Il vous regarde un temps qui devient inconfortable. Pas fâché — patient, comme devant une colonne de chiffres qui ne tombe pas juste.
+  .{"duree": 1, "heure": "18h44"}
+
+[l.1616] geste | date=129 AC, 3e lune, 20e j. | acteur_id=gerardys
+Puis il écrit quand même. Dans la marge, en petit : **Repos-des-Freux ?** Et il souligne. D’un trait, à l’encre de votre père.
+  .{"duree": 2, "heure": "18h45"}
+
+[l.1617] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Une note dans votre carnet. Fort bien. Je la mets dans le mien.
+  .{"duree": 1, "heure": "18h47"}
+
+[l.1618] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Apprenez ceci de la tour, dame Aurore, et ce sera mon dernier service ce soir : dans une roukerie, tout ce qui est dit est écrit quelque part. Vous avez dit deux choses ce soir que vous auriez voulu reprendre. On ne rappelle pas un oiseau, et on ne rappelle pas une marge.
+  .{"duree": 1, "heure": "18h48"}
+
+[l.1619] geste | date=129 AC, 3e lune, 20e j. | acteur_id=gerardys
+Il glisse les trois plis retenus sous le registre, referme, et pose la clef du pupitre dessus — un geste qu’il fait tous les soirs et qui ce soir veut dire quelque chose.
+  .{"duree": 2, "heure": "18h49"}
+
+[l.1620] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Lamarck, Sombreval, Pointe-Aigue ne partiront pas ce soir. Ils partiront au premier vol, à l’aube. D’ici là, ce qu’ils portent peut changer.
+  .{"duree": 1, "heure": "18h51"}
+
+[l.1621] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Si vous avez quatre lignes avant l’aube, elles partiront dans les trois. Sinon ce seront les miennes, et vous aurez appris quelque chose ce soir sans rien avoir changé du tout.
+  .{"duree": 1, "heure": "18h52"}
+
+[l.1622] recit | date=129 AC, 3e lune, 20e j.
+Il prend sa lanterne. Cette fois il descend pour de bon, et sa voix vous parvient de l’escalier, sans qu’il se retourne.
+
+« La petite salle du levant. Elle mange lentement. Vous avez le temps si vous ne vous perdez pas — et vous allez vous perdre, tout le monde se perd. Deuxième palier, à gauche sous la tapisserie brûlée. »
+  .{"duree": 3, "reactions": [{"id": "r-levant", "texte": "Descendre à la petite salle du levant"}, {"id": "r-ecrire", "texte": "Rester, et écrire les quatre lignes"}, {"id": "r-livre", "texte": "Redescendre au quai chercher le livre des encres"}], "heure": "18h53"}
+
+[l.1623] objectif | date=129 AC, 3e lune, 20e j.
+  .{"action": "ajouter", "id": "obj-voix-quatre-lignes-aube", "titre": "Quatre lignes avant l aube", "description": "Les trois plis de Lamarck, Sombreval et Pointe-Aigue partent au premier vol. Ce qu ils portent n est pas encore décidé.", "source": "Mestre Gerardys", "heure": "18h56"}
+
+[l.1624] question
+explique sur quoi je dois ecrire
+  .{"delai_s": 0}
+
+[l.1625] reponse | date=129 AC, 3e lune, 20e j.
+Concrètement : trois plis scellés partent au premier vol vers Lamarck (lord Corlys), Sombreval (lord Darklyn) et Pointe-Aigue (lord Bar Emmon). Gerardys y mettra vos quatre lignes si vous les lui donnez avant l’aube, les siennes sinon. Ces trois maisons sont des bannerets de la baie — ce qu’elles croiront, elles le répéteront à leurs propres vassaux.
+  .{"heure": "18h56"}
+
+[l.1626] reponse | date=129 AC, 3e lune, 20e j.
+Les faits dont vous disposez, et qui sont vrais : douze cents hommes, en armes, marchant sur Sombreval sans la bannière du roi ; la reine les a arrêtés par le feu ; elle a été couronnée le dix-huitième jour. Ce que vous avez appris ce soir et que personne d’autre ne sait : à deux jours d’ici on parle du feu et pas du couronnement — donc c’est le couronnement qui doit venir en PREMIER, pas en date au bas de l’acte.
+  .{"heure": "18h56"}
+
+[l.1627] reponse | date=129 AC, 3e lune, 20e j.
+Les contraintes, apprises de Gerardys ce soir : une phrase doit porter un fait, pas une promesse — on déforme mal un chiffre. Elle doit pouvoir être répétée sans erreur par un charretier. Les mots inventés ne survivent pas au premier relais. Et la version de lord Darklyn a plusieurs jours d’avance : elle compte trois mille morts au lieu de douze cents. On ne dément pas un chiffre, on le remplace.
+  .{"heure": "18h56"}
+
+[l.1628] reponse | date=129 AC, 3e lune, 20e j.
+Écrivez-les simplement dans la barre, comme si vous les dictiez. Rien ne vous y oblige, cela dit : la reine soupe au levant jusqu’à la deuxième veille, et lui parler d’abord est une autre voie — plus risquée pour Gerardys, qui vous a rendu service ce soir.
+  .{"heure": "18h56"}
+
+[l.1635] vous
+voici : A deux jours, on ne parle que des flammes sans nul mot du couronnement. Sacrée au dix-huitième jour, sa nouvelle court moins vite que celle des
+douze cents hommes en armes qui ont marché sur Sombreval, sans la bannière du Roi et arreté par les flammes de la reine
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1636] recit | date=129 AC, 3e lune, 20e j.
+Il ne descend plus. Il repose la lanterne, reprend la plume, et vous fait répéter deux fois pendant qu’il écrit. Il ne dit rien jusqu’au bout.
+  .{"duree": 4, "heure": "18h56"}
+
+[l.1637] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Bien. Les chiffres y sont, la bannière y est, la date y est. En une heure vous avez appris ce que la Citadelle met un anneau à enseigner.
+  .{"duree": 1, "heure": "19h00"}
+
+[l.1638] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Maintenant regardez ce que vous avez écrit, vraiment. Votre première phrase parle de ce qu’on dit sur les routes. Lord Corlys se moque de ce qu’on dit sur les routes — il veut savoir ce qui est arrivé. Vous lui envoyez le constat d’un silence au lieu de la nouvelle qui manque.
+  .{"duree": 1, "heure": "19h01"}
+
+[l.1639] geste | date=129 AC, 3e lune, 20e j. | acteur_id=gerardys
+Il trace un trait au travers de votre première phrase. Puis il tire une flèche depuis le milieu de la seconde jusqu’en haut de la page.
+  .{"duree": 2, "heure": "19h02"}
+
+[l.1640] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Vos mots, dans l’autre ordre : « Rhaenyra Targaryen a été sacrée reine le dix-huitième jour. Six jours plus tôt, douze cents hommes en armes marchaient sur Sombreval sans la bannière du roi. Elle les a arrêtés. » Le fait d’abord, le feu ensuite, et le feu devient sa justification au lieu d’être sa nouvelle.
+  .{"duree": 2, "heure": "19h04"}
+
+[l.1641] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+C’est ça que vous vouliez dire ?
+  .{"reactions": [{"id": "r-oui", "texte": "« C’est ça. Envoyez-le. »"}, {"id": "r-corriger", "texte": "Corriger encore un mot"}, {"id": "r-silence", "texte": "« Et le silence, alors ? On n’en parle à personne ? »"}], "heure": "19h06"}
+
+[l.1642] recit | date=129 AC, 3e lune, 20e j.
+Il tient la page à deux mains, en attendant. Et sur le coin du pupitre, votre première phrase, barrée d’un trait — celle qui parlait du silence sur les routes — n’a plus de destinataire.
+  .{"duree": 2, "heure": "19h07"}
+
+[l.1643] vous
+exactement
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1646] vous
+je m'en vais retrouver la reine
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1650] geste | date=129 AC, 3e lune, 20e j. | acteur_id=gerardys
+Il recopie trois fois. La même main, le même ordre, les mêmes mots — c’est la règle, dit-il sans qu’on lui demande : trois copies qui diffèrent d’un mot font trois nouvelles différentes. Puis la cire, trois fois. Le sceau de la reine, trois fois.
+  .{"duree": 9, "heure": "19h09"}
+
+[l.1651] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Lamarck, Sombreval, Pointe-Aigue. Premier vol, à l’aube. Trois maisons qui le rediront chacune à ses vassaux — vous ne parlez pas à trois hommes, dame Aurore, vous parlez à trois comtés.
+  .{"duree": 1, "heure": "19h18"}
+
+[l.1652] recit | date=129 AC, 3e lune, 20e j.
+Il glisse les trois plis dans la sacoche du matin, l’accroche au clou près de la fenêtre nord, et reste un instant à regarder le mur.
+  .{"duree": 3, "heure": "19h19"}
+
+[l.1653] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Vingt-six ans que j’écris ce qu’on me dicte. C’est la première fois qu’on me dicte l’ORDRE.
+  .{"duree": 1, "heure": "19h22"}
+
+[l.1654] recit | date=129 AC, 3e lune, 20e j.
+Puis, comme s’il se reprenait, il ramasse votre feuillet — le vôtre, celui qui porte les quatre mots en haut et la phrase barrée en bas — et vous le tend.
+  .{"duree": 2, "heure": "19h23"}
+
+[l.1655] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Celle-là, la barrée. Elle ne vaut rien pour Lamarck et elle vaut cher pour une personne dans ce château. Je ne vous accompagne pas : si je descends avec vous, c’est le mestre qui apporte, et vous n’êtes plus qu’une marchande qui l’a suivi.
+  .{"duree": 1, "heure": "19h25"}
+
+[l.1656] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=gerardys
+Deuxième palier, à gauche sous la tapisserie brûlée. Elle mange lentement, et elle ne mange jamais seule.
+  .{"reactions": [{"id": "r-descendre", "texte": "Descendre au levant"}, {"id": "r-qui", "texte": "« Qui est avec elle ? »"}, {"id": "r-remercier", "texte": "Le remercier, une fois, sans en faire trop"}], "heure": "19h26"}
+
+[l.1657] objectif | date=129 AC, 3e lune, 20e j.
+  .{"action": "accomplir", "id": "obj-voix-quatre-lignes-aube", "titre": "Quatre lignes avant l aube", "note": "Scellées trois fois, dans la sacoche du matin. Le couronnement passe devant le feu.", "heure": "19h27"}
+
+[l.1664] pensee | date=129 AC, 3e lune, 20e j.
+La Table Peinte. On m’en a parlé dans les cinq maisons où l’on m’a élevée, et jamais deux fois pareil : Aegon le Conquérant l’aurait fait tailler dans la roche même de l’île avant de partir, et il y aurait passé des nuits à regarder un royaume qui ne lui appartenait pas encore. Une carte si grande qu’il faut marcher dessus pour aller du Nord au Bief.
+  .{"heure": "19h30"}
+
+[l.1665] pensee | date=129 AC, 3e lune, 20e j.
+Elle est trois étages sous mes pieds. On y a compté des nefs depuis midi — c’est le mot qui m’est revenu deux fois en montant, par la bouche d’un garçon d’écurie et par celle du mestre. Ils ont passé l’après-midi à compter des coques pendant qu’à deux jours d’ici on ne savait pas encore qu’elle était reine.
+  .{"heure": "19h30"}
+
+[l.1666] pensee | date=129 AC, 3e lune, 20e j.
+Dans chacune des cinq maisons, il y avait une pièce où l’on ne m’a jamais fait entrer. À Lamarck c’était le cabinet des cartes ; à Rosby, la salle haute. On m’aimait bien, on me donnait des figues, et la porte se fermait. J’ai vingt-neuf ans et je viens de passer ma soirée deux cents marches au-dessus de celle-là, à me disputer sur une phrase avec un vieil homme.
+  .{"heure": "19h30"}
+
+[l.1667] pensee | date=129 AC, 3e lune, 20e j.
+Être à la table, pas dans le livre. C’est ce que je me suis dit sur la barque, et c’est encore vrai à cette heure — sauf que ce soir j’ai appris quelque chose que personne dans cette pièce ne sait, et qu’aucun d’eux ne peut apprendre en comptant des nefs.
+  .{"heure": "19h30"}
+
+[l.1674] reponse | date=129 AC, 3e lune, 20e j.
+Les deux « annuler » n’ont rien déclenché — personne dans la fiction ne les a entendus. Le fil garde tout ce qui y entre, mais rien de ce qui n’a pas été joué n’a eu lieu. On reprend où l’on en était : vous êtes dans la roukerie, votre feuillet à la main.
+  .{"heure": "19h30"}
+
+[l.1675] effacer | date=129 AC, 3e lune, 20e j.
+  .{"heure": "19h30"}
+
+[l.1676] salle | date=129 AC, 3e lune, 20e j. | moment=après le souper | lieu=Deuxième palier, sous la tapisserie brûlée — Peyredragon
+  .{"salle": "grand-escalier", "tension": 85, "presents": [{"id": "aurore-inchauspe", "nom": "Aurore Inchauspé", "titre": "de La Noiseraie", "portrait_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 128 128\" role=\"img\" aria-label=\"Aurore Inchauspé\">\n  <title>Aurore Inchauspé</title>\n  <defs>\n    <radialGradient id=\"bg-aurore\" cx=\"50%\" cy=\"32%\" r=\"80%\">\n      <stop offset=\"0%\" stop-color=\"#302719\"/>\n      <stop offset=\"55%\" stop-color=\"#221b12\"/>\n      <stop offset=\"100%\" stop-color=\"#130f09\"/>\n    </radialGradient>\n    <clipPath id=\"clip-aurore\"><circle cx=\"64\" cy=\"64\" r=\"52\"/></clipPath>\n  </defs>\n  <!-- anneau héraldique : or et sable, les émaux de la Noiseraie -->\n  <circle cx=\"64\" cy=\"64\" r=\"63\" fill=\"#241d18\"/>\n  <circle cx=\"64\" cy=\"64\" r=\"57.5\" fill=\"none\" stroke=\"#c9a227\" stroke-width=\"7\" stroke-dasharray=\"15.05 15.05\"/>\n  <!-- disque intérieur -->\n  <circle cx=\"64\" cy=\"64\" r=\"52\" fill=\"url(#bg-aurore)\" stroke=\"#7a6342\" stroke-width=\"1.2\"/>\n  <!-- buste : laine de voyage, pas de soie de cour — une maison de négoce -->\n  <g clip-path=\"url(#clip-aurore)\">\n    <path d=\"M44,47 C43,30 54,25 64,25 C74,25 85,30 84,47 L87,92 C88,102 81,107 75,106 L53,106 C47,107 40,102 41,92 Z\" fill=\"#6d5a44\"/>\n    <!-- le châle croisé sur la poitrine, tenu d'une agrafe -->\n    <path d=\"M22,128 C27,99 46,88 64,88 C82,88 101,99 106,128 Z\" fill=\"#4a3c2c\"/>\n    <path d=\"M50,92 L64,106 L78
+
+[l.1677] recit | date=129 AC, 3e lune, 20e j.
+Cent trente marches, et vous vous perdez quand même une fois — un couloir qui sent le poisson et finit sur une porte de cuisine. Vous remontez. Deuxième palier. La tapisserie brûlée est là : un cerf, ou un cheval, on ne sait plus, le bas mangé par le feu il y a longtemps et jamais remplacé.
+  .{"duree": 14, "heure": "19h30"}
+
+[l.1678] recit | date=129 AC, 3e lune, 20e j.
+À gauche, une porte entrouverte. De la lumière basse, l’odeur du pain chaud et du vin coupé, et des voix — plusieurs, dont une qui parle peu et devant laquelle les autres s’arrêtent. Vous ne l’avez jamais entendue et vous savez laquelle c’est.
+  .{"duree": 2, "heure": "19h44"}
+
+[l.1679] geste | date=129 AC, 3e lune, 20e j. | acteur_id=garde-levant
+Un homme d’armes se détache du mur avant que vous ayez fait trois pas. Pas brutal — il se met simplement entre vous et la porte, comme on ferme un volet.
+  .{"duree": 1, "entrent": [{"id": "garde-levant", "nom": "Un homme d’armes", "titre": "de la garde de Peyredragon"}], "heure": "19h46"}
+
+[l.1680] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=garde-levant
+Non. La reine soupe.
+  .{"duree": 1, "heure": "19h47"}
+
+[l.1681] recit | date=129 AC, 3e lune, 20e j.
+Il ne vous demande pas qui vous êtes. C’est pire : il a décidé en vous regardant que ça n’avait pas d’importance. Derrière lui, dans la pièce, quelqu’un rit — un rire d’homme, court.
+
+Vous tenez un feuillet plié, avec quatre mots en haut et une phrase barrée en bas.
+  .{"duree": 2, "reactions": [{"id": "r-nom", "texte": "Donner votre nom et celui de votre maison"}, {"id": "r-gerardys", "texte": "« C’est le mestre Gerardys qui m’envoie. »"}, {"id": "r-feuillet", "texte": "Lui tendre le feuillet"}, {"id": "r-attendre", "texte": "Reculer et attendre sous la tapisserie"}], "heure": "19h48"}
+
+[l.1682] vous
+C'est Dame Aurore , qui communique les nouvelles de la journéee et aussi un peu de science
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1683] recit | date=129 AC, 3e lune, 20e j.
+L’homme d’armes vous écoute jusqu’au bout. Vous voyez le moment exact où il décroche — c’est au troisième mot.
+  .{"duree": 1, "heure": "19h50"}
+
+[l.1684] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=garde-levant
+Qui communique les… Dame de quoi ? De quelle maison ?
+  .{"duree": 1, "heure": "19h51"}
+
+[l.1685] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=garde-levant
+Écoutez. Je garde une porte. Ce qui passe, c’est un nom, une maison, et quelqu’un qui répond de vous. Le reste, je ne sais pas où le mettre.
+  .{"duree": 1, "heure": "19h52"}
+
+[l.1686] recit | date=129 AC, 3e lune, 20e j.
+Derrière lui, dans la pièce, les voix se sont tues. Pas brusquement — elles se sont éteintes l’une après l’autre, comme quand une table entend quelque chose dans le couloir et attend de savoir quoi.
+
+Le garde l’entend aussi. Ça change tout : il ne peut plus se contenter de vous renvoyer, parce que sa maîtresse écoute derrière la porte entrouverte.
+  .{"duree": 2, "heure": "19h53"}
+
+[l.1687] geste | date=129 AC, 3e lune, 20e j. | acteur_id=garde-levant
+Il baisse la voix d’un cran et parle plus vite, en homme qui doit régler ça avant qu’on lui demande de le régler.
+  .{"duree": 1, "heure": "19h55"}
+
+[l.1688] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=garde-levant
+Nom. Maison. Et qui vous envoie. Maintenant, dame — je vous le demande une fois.
+  .{"reactions": [{"id": "r-net", "texte": "« Aurore Inchauspé, de La Noiseraie. Le mestre Gerardys m’envoie. »"}, {"id": "r-encre", "texte": "« La maison qui fournit l’encre de cette roukerie. »"}, {"id": "r-haut", "texte": "Parler assez fort pour qu’on entende de la pièce"}], "heure": "19h56"}
+
+[l.1689] vous
+Mais elle m'attends
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1690] vous
+elle m'a convié
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1694] recit | date=129 AC, 3e lune, 20e j.
+Vous le dites deux fois, la seconde plus fort que la première. *Elle m’attend. Elle m’a conviée.*
+
+Le garde vous regarde. Il ne peut pas vérifier, et il le sait. Il sait aussi que la pièce derrière lui n’a pas repris ses conversations.
+  .{"duree": 2, "heure": "19h57"}
+
+[l.1695] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=garde-levant
+Alors ce n’est plus mon affaire.
+  .{"duree": 1, "heure": "19h59"}
+
+[l.1696] geste | date=129 AC, 3e lune, 20e j. | acteur_id=garde-levant
+Il ne s’écarte pas. Il fait pire pour vous : il se tourne vers la porte entrouverte, la pousse de deux doigts, et parle à l’intérieur — assez haut pour la table entière, en répétant vos mots exactement comme vous les avez dits.
+  .{"duree": 1, "heure": "20h00"}
+
+[l.1697] replique | date=129 AC, 3e lune, 20e j. | locuteur_id=garde-levant
+Votre Grâce. Une dame Inchauspé, de La Noiseraie. Elle dit que vous l’attendez, et que vous l’avez conviée.
+  .{"duree": 1, "heure": "20h01"}
+
+[l.1698] recit | date=129 AC, 3e lune, 20e j.
+Le battant s’ouvre d’un pied. La lumière tombe sur vous, sur vos bottes de route et sur vos deux doigts bruns.
+
+Dans la pièce, personne ne dit rien du tout.
+  .{"duree": 2, "heure": "20h02"}
+
+[l.1699] vous
+Inchauspé de la La Noiseraie,
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1707] vous
+c'est bon je peux y aller ?
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1708] vous
+on doit partrager le dessert
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1712] vous
+Votre grace c'est Dame Aurore , on devait partager notre dessert ensemble
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1714] vous
+j'ai une proposition de reforme pour la science
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1721] vous
+Ma Reine,
+
+Je suis Danyne Chospé, de la Maison de la Noisserie, fille aînée d'une lignée anoblie voici trois générations. Ma maison ne forge point d'épées et ne lève point d'armées. Elle façonne l'encre — cette encre tirée de la noix de la Noire Sorée, dont se servent aujourd'hui plus de la moitié des scribes du royaume. Là où d'autres maisons versent le sang, la mienne verse les mots.
+
+Et c'est au nom des mots que je me tiens devant vous.
+
+Je viens à votre cour non pour quémander des terres, mais pour offrir un art : celui de porter le savoir jusqu'au cœur du peuple. Car j'ai vu, ma Reine, comment la science demeure enfermée dans les tours des mestres, gardée comme un trésor que nul hors de leurs cercles ne peut toucher. On la consigne, on la scelle, on la murmure entre initiés — et le petit peuple, lui, reste dans l'ombre.
+
+Or je le crois de toute mon âme : la science ne transforme le monde que si elle est comprise.
+
+Un savoir que nul ne saisit ne vaut pas plus qu'un parchemin scellé au fond d'un coffre. Ce n'est pas l'encre qui éclaire le royaume — c'est la lecture qu'on en fait.
+
+Voici donc la réforme que je dépose à vos pieds. Que chaque nouvelle du jour, lorsqu'elle parcourt les Sept Couronnes, porte avec elle une petite note de savoir — une vérité de la science, dite simplement, à la portée du forgeron comme du seigneur. Que le paysan qui écoute la criée apprenne aussi, en ce même souffle, une chose vraie sur le monde qui l'entoure. Non point dans le langage obscur des mestres, mais dans des mots que chacun peut faire siens.
+
+Ainsi, ma Reine, le savoir cesserait d'être le privilège de quelques-uns pour devenir le bien de tous. Et un peuple qui comprend est un peuple qui grandit — et sous votre règne, il grandirait à votre gloire.
+
+Je ne vous offre ni or ni lames. Je vous offre la clarté. Car là où règne la clarté, ma Reine, règne aussi celle qui l'a répandue.
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1727] vous
+Ma Reine,
+
+Avant de poursuivre, permettez que je vous confie une chose qui m'est chère. Entre mes mains se trouvent les premiers écrits que mon père traça jadis, aux côtés de mon oncle, avec notre propre encre — celle de la Noire Sorée. Ces pages ne sont pas de simples parchemins : elles sont la mémoire de ma maison, le premier souffle de notre art. Je ne les montre pas pour m'en glorifier, mais pour que vous sachiez d'où me vient ma foi dans les mots.
+
+Car un mot couché sur le papier peut traverser les générations. Ce que mon père écrivit, je le lis encore aujourd'hui. Voilà le pouvoir de l'encre : elle garde vivant ce que la voix, seule, aurait laissé mourir.
+
+Je vous ai exposé mon premier plan de réforme : porter le savoir jusqu'au peuple, joindre à chaque nouvelle du jour une vérité de la science, dite pour être comprise de tous.
+
+Aujourd'hui, je dépose à vos pieds mon second dessein, plus ambitieux encore : le partage, et les idées de tous.
+
+Que le savoir ne descende plus seulement des tours des mestres vers le peuple — mais qu'il remonte aussi. Que le paysan qui observe ses champs, le pêcheur qui lit le ciel, l'artisan qui perce les secrets de sa matière, puissent eux aussi faire entendre ce qu'ils ont appris. Car la vérité ne loge pas que dans les cercles savants : elle se cache partout où un esprit curieux regarde le monde.
+
+Un royaume où chacun peut apprendre est fort. Mais un royaume où chacun peut aussi transmettre — voilà un royaume qui ne cesse jamais de grandir.
+
+Voilà pourquoi je vous offre non pas une seule voix, ma Reine, mais mille voix rassemblées. Car le savoir partagé par tous devient un savoir que nul ne peut éteindre.
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1728] vous
+Ma Reine, Je suis Dame Inchauspé, de la Maison de la Noisserie, fille aînée d'une lignée anoblie voici trois générations. Ma maison ne forge point d'épées et ne lève point d'armées. Elle façonne l'encre — cette encre tirée de la noix de la Noire Sorée, dont se servent aujourd'hui plus de la moitié des scribes du royaume. Là où d'autres maisons versent le sang, la mienne verse les mots. Et c'est au nom des mots que je me tiens devant vous. Je viens à votre cour non pour quémander des terres, mais pour offrir un art : celui de porter le savoir jusqu'au cœur du peuple. Car j'ai vu, ma Reine, comment la science demeure enfermée dans les tours des mestres, gardée comme un trésor que nul hors de leurs cercles ne peut toucher. On la consigne, on la scelle, on la murmure entre initiés — et le petit peuple, lui, reste dans l'ombre. Or je le crois de toute mon âme : la science ne transforme le monde que si elle est comprise. Un savoir que nul ne saisit ne vaut pas plus qu'un parchemin scellé au fond d'un coffre. Ce n'est pas l'encre qui éclaire le royaume — c'est la lecture qu'on en fait. Voici donc la réforme que je dépose à vos pieds. Que chaque nouvelle du jour, lorsqu'elle parcourt les Sept Couronnes, porte avec elle une petite note de savoir — une vérité de la science, dite simplement, à la portée du forgeron comme du seigneur. Que le paysan qui écoute la criée apprenne aussi, en ce même souffle, une chose vraie sur le monde qui l'entoure. Non point dans le langage obscur des mestres, mais dans des mots que chacun peut faire siens. Ainsi, ma Reine, le savoir cesserait d'être le privilège de quelques-uns pour devenir le bien de tous. Et un peuple qui comprend est un peuple qui grandit — et sous votre règne, il grandirait à votre gloire. Je ne vous offre ni or ni lames. Je vous offre la clarté. Car là où règne la clarté, ma Reine, règne aussi celle qui l'a répandue.
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1729] vous
+Ma Reine, Avant de poursuivre, permettez que je vous confie une chose qui m'est chère. Entre mes mains se trouvent les premiers écrits que mon père traça jadis, aux côtés de mon oncle, avec notre propre encre — celle de la Noire Sorée. Ces pages ne sont pas de simples parchemins : elles sont la mémoire de ma maison, le premier souffle de notre art. Je ne les montre pas pour m'en glorifier, mais pour que vous sachiez d'où me vient ma foi dans les mots. Car un mot couché sur le papier peut traverser les générations. Ce que mon père écrivit, je le lis encore aujourd'hui. Voilà le pouvoir de l'encre : elle garde vivant ce que la voix, seule, aurait laissé mourir. Je vous ai exposé mon premier plan de réforme : porter le savoir jusqu'au peuple, joindre à chaque nouvelle du jour une vérité de la science, dite pour être comprise de tous. Aujourd'hui, je dépose à vos pieds mon second dessein, plus ambitieux encore : le partage, et les idées de tous. Que le savoir ne descende plus seulement des tours des mestres vers le peuple — mais qu'il remonte aussi. Que le paysan qui observe ses champs, le pêcheur qui lit le ciel, l'artisan qui perce les secrets de sa matière, puissent eux aussi faire entendre ce qu'ils ont appris. Car la vérité ne loge pas que dans les cercles savants : elle se cache partout où un esprit curieux regarde le monde. Un royaume où chacun peut apprendre est fort. Mais un royaume où chacun peut aussi transmettre — voilà un royaume qui ne cesse jamais de grandir. Voilà pourquoi je vous offre non pas une seule voix, ma Reine, mais mille voix rassemblées. Car le savoir partagé par tous devient un savoir que nul ne peut éteindre.
+  .{"mode": "dire", "delai_s": 0, "joueur_id": "aurore-inchauspe"}
+
+[l.1752] question
+qu'est ec que j edois ecrire
+  .{"delai_s": 0}
+
+[l.1753] run
+ecrire correctement les deux messages pour Rosby et Stokeworth et Et la lettre a lord Borros, cinq lignes de votre main, toujours pas signee. VOUS AVEZ DIT QUE VOUS SIGNERIEZ LES SEPT D UN COUP OU AUCUNE, ET QUE VOUS REVIENDRIEZ AVANT L AUBE.
+  .{"delai_s": 0}
+
+[l.1767] run
+faire ce nouveau dessein 
+Nouveau dessein
+Les sept lettres de l aube — Trois plis ecrits par Gerardys (Lamarck, Sombreval, Pointe-Aigue), recopies sans la devise DU CHAOS LA CLARTE que vous en avez arrachee. Deux lettres a ecrire cette nuit par Aurore Inchauspe pour ROSBY et STOKEWORTH - les deux maisons muettes, absentes du sacre, dont vingt hommes ont dormi dans vos fosses. Et la lettre a lord Borros, cinq lignes de votre main, toujours pas signee. VOUS AVEZ DIT QUE VOUS SIGNERIEZ LES SEPT D UN COUP OU AUCUNE, ET QUE VOUS REVIENDRIEZ AVANT L AUBE. Si vous ne revenez pas, rien ne part - vous l avez fait porter au registre avec l heure.
+  .{"delai_s": 0}
+
+[l.1773] effacer | date=129 AC, 3e lune, 20e j.
+  .{"heure": "21h39"}
+
+[l.1774] salle | date=129 AC, 3e lune, 20e j. | moment=la nuit | lieu=Cellule des scribes, contre la roukerie — Peyredragon
+  .{"salle": "roukerie", "tension": 85, "presents": [{"id": "aurore-inchauspe", "nom": "Aurore Inchauspé", "titre": "de La Noiseraie", "portrait_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 128 128\" role=\"img\" aria-label=\"Aurore Inchauspé\">\n  <title>Aurore Inchauspé</title>\n  <defs>\n    <radialGradient id=\"bg-aurore\" cx=\"50%\" cy=\"32%\" r=\"80%\">\n      <stop offset=\"0%\" stop-color=\"#302719\"/>\n      <stop offset=\"55%\" stop-color=\"#221b12\"/>\n      <stop offset=\"100%\" stop-color=\"#130f09\"/>\n    </radialGradient>\n    <clipPath id=\"clip-aurore\"><circle cx=\"64\" cy=\"64\" r=\"52\"/></clipPath>\n  </defs>\n  <!-- anneau héraldique : or et sable, les émaux de la Noiseraie -->\n  <circle cx=\"64\" cy=\"64\" r=\"63\" fill=\"#241d18\"/>\n  <circle cx=\"64\" cy=\"64\" r=\"57.5\" fill=\"none\" stroke=\"#c9a227\" stroke-width=\"7\" stroke-dasharray=\"15.05 15.05\"/>\n  <!-- disque intérieur -->\n  <circle cx=\"64\" cy=\"64\" r=\"52\" fill=\"url(#bg-aurore)\" stroke=\"#7a6342\" stroke-width=\"1.2\"/>\n  <!-- buste : laine de voyage, pas de soie de cour — une maison de négoce -->\n  <g clip-path=\"url(#clip-aurore)\">\n    <path d=\"M44,47 C43,30 54,25 64,25 C74,25 85,30 84,47 L87,92 C88,102 81,107 75,106 L53,106 C47,107 40,102 41,92 Z\" fill=\"#6d5a44\"/>\n    <!-- le châle croisé sur la poitrine, tenu d'une agrafe -->\n    <path d=\"M22,128 C27,99 46,88 64,88 C82,88 101,99 106,128 Z\" fill=\"#4a3c2c\"/>\n    <path d=\"M50,92 L64,106 L78,92\" 
+
+[l.1775] recit | date=129 AC, 3e lune, 20e j.
+Gerardys vous a fait ouvrir la cellule des scribes, contre la roukerie : une paillasse, une table, un pot de suif, et le mur qui tremble un peu quand les oiseaux bougent de l’autre côté. Il n’a rien dit en vous donnant la clef. C’est déjà beaucoup.
+  .{"duree": 20, "heure": "21h39"}
+
+[l.1776] vous | date=129 AC, 3e lune, 20e j.
+Je ne dors pas. Je m’assois à la table, je taille une plume, et je commence à écrire les sept lettres — une par maison, la même nouvelle et pas les mêmes mots.
+  .{"mode": "agir", "duree": 40, "heure": "21h59"}
+
+[l.1777] recit | date=129 AC, 3e lune, 20e j.
+Les trois premières sont faciles : Lamarck, Sombreval, Pointe-Aigue partent déjà scellées, vous ne faites que recopier pour vous ce que vous avez dicté. Les quatre autres sont le travail — Rosby, Stokeworth, Repos-des-Freux, Accalmie. Quatre maisons, quatre raisons différentes de vous croire, et une seule nouvelle.
+  .{"duree": 60, "heure": "22h39"}
+
+[l.1778] vous | date=129 AC, 3e lune, 20e j.
+À Rosby j’écris la peur : douze cents hommes ont traversé ses terres sans sa permission. À Stokeworth j’écris le compte : ce que la reine paie, ce qu’elle ne prendra pas. À Accalmie j’écris court, parce que lord Borros ne lira pas trois pages — trois lignes et la date du sacre en premier.
+  .{"mode": "agir", "duree": 90, "heure": "23h39"}
+

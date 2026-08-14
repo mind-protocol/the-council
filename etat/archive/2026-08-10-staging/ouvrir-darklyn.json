@@ -1,0 +1,744 @@
+{
+ "genere_le": "2026-08-09T00:00:00",
+ "joueur": null,
+ "avertissement": "PROPOSITION — agent d'ouverture de maison (DARKLYN, palier A, etapes 1 a 4). N'a RIEN ecrit dans etat/. Le MJ principal relit, arbitre et applique. La section 'ecritures_a_la_main' contient ce que scripts/appliquer.py ne sait pas poser : creation de personnages, mains.json, relations.json, mutation des declencheurs d'une tete existante. DEUX DE CES BLOCS SONT UN PREALABLE : sans les fiches de marec-fosse et robin-darklyn dans personnages.json, les deux tete_ajouter du lot seront REFUSEES (personnage inconnu).",
+ "objet": "Ouverture de la maison DARKLYN (Sombreval) en palier A — etapes 1 a 4 du process (docs/ouvrir-une-maison.md). L'etape 5 (le plan) n'est PAS faite : voir 'decision_plans_json'. Plage d'ids reservee : 77000-77999.",
+ "empreintes": {
+  "intentions": "d3aaaa6360ae90d14d658c9b80797784742383ab",
+  "evenements": "e444ffbb2d9a6b9bcdc67b06fe1bfc75b625e9f5",
+  "personnages": "2164c43bdce7368f9381f41c1ac5a26c647c83ea",
+  "monde": "c4f54353d9dc7559642928425d908f3d3ba29271",
+  "plis": "6023ab67d5562168444b2dcc604686cf51d5cc09",
+  "lieux": "ada66c0b8b19f31241bcbff3ea7dadef6f0025c9",
+  "mains": "e2daadcda6c4b50534ee20aed72d3c347ef92eff"
+ },
+ "canon_recolte": {
+  "note": "Sombreval est la seule place du tableau que le canon DETRUIT a date fixe. Tout ce lot est ecrit contre cette date-la.",
+  "evenements": [
+   {
+    "id": "sac-sombreval",
+    "date_prevue": {
+     "annee": 129,
+     "lune": 6,
+     "jour": 1
+    },
+    "importance": 90,
+    "statut": "a-venir",
+    "acteurs": [
+     "criston",
+     "gunthor-darklyn"
+    ],
+    "etat_cible_date": "129.6.1 — l'ost de la Couronne pille Sombreval, brule la flotte SUR SES AMARRES, et lord Gunthor Darklyn est decapite sur son propre quai devant ses gens. Maison darklyn -> tombee ; l'ost vert continue vers Repos-des-Freux (bataille-repos-des-freux, 129.9.5, dont la premiere condition est justement 'si sac-sombreval a ete devie').",
+    "verrous": [
+     {
+      "texte": "retarde tant que Criston n'a pas arrache a Otto l'or de l'ost",
+      "etat_dans_le_jeu": "etape criston-ost, en-cours, jours_restants 20 au 27e -> l'ost est leve vers 129.4.18. Son si_bloque part quand meme avec 1500 hommes.",
+      "portee_pour_nous": "on peut le savoir"
+     },
+     {
+      "texte": "devie si Sombreval est tenue par une garnison ET un dragon poste — Criston ne donnera pas ses hommes a bruler deux fois",
+      "etat_dans_le_jeu": "C'est LE verrou actionnable. La reine debarque justement douze cents hommes a Sombreval le 30e (parole-gerardys-sombreval-28e) — mais pour les EMMENER, pas pour tenir la place. Le canon n'est pas devie par le debarquement : il le serait par ce qu'on laisse derriere.",
+      "portee_pour_nous": "seule la parole du souverain"
+     },
+     {
+      "texte": "devie si la Couronne est prise ailleurs (Conflans leve, Port-Real affamee par le Gosier)",
+      "etat_dans_le_jeu": "ralliement-trident 129.4.2 a-venir ; le Gosier a ete ORDONNE OUVERT par la reine le 28e — cette branche-la vient d'etre fermee de sa main.",
+      "portee_pour_nous": "on peut agir dessus"
+     },
+     {
+      "texte": "aggrave si la reine ne rend pas les quarante prisonniers verts des celliers de Gunthor",
+      "etat_dans_le_jeu": "DEJA PURGE : etape gunthor-prisonniers 'fait' — les quarante sont a Peyredragon. Ce verrou ne peut plus s'aggraver par ce chemin.",
+      "portee_pour_nous": "hors de portee"
+     }
+    ]
+   },
+   {
+    "id": "bataille-repos-des-freux",
+    "date_prevue": {
+     "annee": 129,
+     "lune": 9,
+     "jour": 5
+    },
+    "pourquoi_ici": "Sa premiere condition est 'si sac-sombreval a ete devie'. Sauver Sombreval ne sauve pas seulement Sombreval : ca decroche la mort de Rhaenys six lunes plus loin. A dire au MJ, jamais au joueur."
+   },
+   {
+    "id": "les-trois-depots-dans-les-granges-de-gunthor",
+    "date_prevue": {
+     "annee": 129,
+     "lune": 3,
+     "jour": 29,
+     "minute": 600
+    },
+    "type": "programme",
+    "pourquoi_ici": "Deja dans l'etat, non ecrit par moi : DEMAIN 10h, Gunthor apprend par son intendant qu'on a pose trois depots sur ses terres et que le premier charroi est parti le 28e au matin SANS l'accord de la reine. C'est la premiere fois que Sombreval apprend quelque chose de l'ost de la reine, et ca n'arrive pas par une lettre : ca arrive par un homme de metier qui n'existait pas encore dans personnages.json. Ce lot lui donne un nom."
+   }
+  ],
+  "ce_que_le_canon_ne_donne_pas": "Aucun canon ne dit COMMENT Sombreval apprend qu'un ost marche sur elle. Le lot pose cette route (diffusion sur decheance-de-rhaenyra, 129.4.2, par les charretiers de la porte des Dieux) : deux lunes d'avertissement, sans un nom et sans un chiffre. C'est assez pour agir, trop peu pour convaincre un homme fier."
+ },
+ "gens_retenus": [
+  {
+   "id": "gunthor-darklyn",
+   "role": "le chef",
+   "existe": true,
+   "cree": false,
+   "echelle_proposee": "orbite",
+   "echelle_actuelle": "royaume",
+   "pourquoi": "Lord de Sombreval. Tete deja ecrite, date_maj 129.3.25."
+  },
+  {
+   "id": "robin-darklyn",
+   "role": "celui qui conteste a l'interieur",
+   "existe": false,
+   "cree": true,
+   "echelle_proposee": "royaume",
+   "pourquoi": "Le fils aine. L'etat en avait deja besoin sans le nommer : le si_bloque de gunthor-ecrit-de-la-reine parle de 'sa femme et son fils CADET' — il y a donc un aine, et il n'a pas de fiche. Sa contestation n'est pas une humeur mais un chiffre : onze coques a leurs amarres sous la tour du levant, et le canon les brule sur place le 129.6.1."
+  },
+  {
+   "id": "marec-fosse",
+   "role": "l'homme de metier — les granges et le quai",
+   "existe": false,
+   "cree": true,
+   "echelle_proposee": "royaume",
+   "pourquoi": "L'INTENDANT DE SOMBREVAL EST DEJA CITE DANS L'ETAT, sans nom : les-trois-depots dit que Gunthor 'l'apprendra le 29e par son intendant'. C'est l'homme par qui sort le seul chiffre qui compte cette lune (les muids), et c'est lui qu'on dephechera. Sans lui, la maison ne produit que des opinions."
+  }
+ ],
+ "gens_ecartes": [
+  {
+   "qui": "steffon-darklyn",
+   "pourquoi": "IL EST JOUE, et ce lot NE LE TOUCHE PAS — pas une croyance, pas une etape, pas un declencheur, pas une ligne de fiche. Il a une charge (commandement de l'ost et de la marche, registre des offices, scellee le 26e), quatre limites dictees de sa main, trois etapes ouvertes datees du 28e, et il part le 30e a la premiere maree. Tout ce que ce lot fait, c'est poser DEVANT lui la place ou il debarque, avec des chiffres et un frere qui a ses propres raisons. Le detail figure dans 'ce_que_ce_lot_change_pour_ser_steffon'."
+  },
+  {
+   "qui": "la femme et le fils cadet de Gunthor",
+   "pourquoi": "Ils sont un COUT dans son si_bloque, pas des acteurs. Leur donner une fiche serait payer deux tetes pour un gage."
+  },
+  {
+   "qui": "grielle (auberge du haut, Sombreval)",
+   "pourquoi": "Citee dans info-reseau-meliss comme belle-soeur du defunt de Meliss la Claie. C'est une ROUTE, pas un acteur : le reseau de Meliss n'a pas de messages ('on se voit quand un bateau passe, deux ou trois fois l'an'). Elle ne peut rien apprendre au joueur cette lune ; lui ecrire une tete serait ecrire du decor."
+  }
+ ],
+ "ressources": {
+  "maisons_json": {
+   "constat": "AUCUNE MUTATION PROPOSEE, et c'est un resultat. Les chiffres de maisons.json tombent deja juste avec ce qui s'est dit dans la salle : levees_dispo 550 = 'les cinq cent cinquante lances de lord Gunthor Darklyn' (parole-gerardys-sombreval-28e). or 60000, revenus_lune 2200, levees_max 700, statut 'mobilisee', allegeance affichee et reelle 'noir'. Rien a corriger : on ne retouche pas des chiffres qui viennent d'etre dits tout haut devant la reine.",
+   "suzerain_id": "Reste null, volontairement. Une maison des terres de la Couronne n'a pas de maison suzeraine : son suzerain est le Trone, et le Trone est dispute — c'est litteralement le sujet de cette maison-ci. Y ecrire 'maison-targaryen-noir' transformerait un choix en etat de fait.",
+   "trou_signale_non_comble": "Sombreval a expedie DOUZE CORBEAUX dans la nuit du 16e (recit-darklyn-du-feu) et rien dans l'etat ne compte son stock : lieux.json/sombreval n'a pas de champ roukerie, et aucun lieu n'en a. Je n'en invente pas un pour cette seule maison — a trancher globalement, pas ici."
+  },
+  "main_proposee": {
+   "id": "granges-de-sombreval",
+   "justification_en_une_phrase": "Ser Steffon a nomme l'empechement lui-meme le 28e a 23h00 — cent quatre-vingts muids SORTIS ET EN CHARIOTS le jour ou il debarque, sinon la colonne s'arrete au troisieme jour a quelques lieues de Rosby — donc la mesure atteint le joueur par une bouche datee (le 30e au soir) et par un cout qui arrete une marche de douze cents hommes.",
+   "arithmetique": "Regle donnee par Steffon : un muid nourrit vingt hommes un jour ; douze cents bouches = soixante muids la journee ; six journees = 360 muids, coupes en trois lettres (SOMBREVAL 180 / ROSBY 120 / STOKEWORTH 60). La main dit ce que Sombreval a REELLEMENT : 232 muids au 30e au soir. Elle peut donc donner les 180 — et il lui reste 52 muids, treize journees de pain pour sa ville, deux lunes avant que l'ost de Criston n'arrive.",
+   "voir": "ecritures_a_la_main.mains_json"
+  }
+ },
+ "budget_et_echelles": {
+  "constat": "orbite est PLEIN : 20/20 (table BUDGETS de scripts/tick.py, qui fait foi).",
+  "promotion_demandee": {
+   "qui": "gunthor-darklyn",
+   "de": "royaume",
+   "vers": "orbite",
+   "ce_que_ca_coute": "une place sur vingt, et quatre lots freres en demandent aussi.",
+   "pourquoi_elle_ne_peut_pas_etre_evitee": "royaume = 3 croyances, 2 etapes, 1 declencheur, et simule seulement par fenetres de 5 jours. Or Sombreval est a DEUX JOURS : son intendant lui parle demain 10h (les-trois-depots), douze cents hommes de la reine debarquent chez lui le 30e au soir, et il faut au moins DEUX declencheurs armes sur le joueur — l'ecrit qui le nomme, et le debarquement sans ecrit — parce que ce sont deux evenements distincts qui peuvent arriver dans n'importe quel ordre. A un seul declencheur, la moitie du comportement de cette maison est perdue.",
+   "qui_redescend": {
+    "qui": "ren",
+    "de": "orbite",
+    "vers": "royaume",
+    "sur_pieces": "(1) ZERO etape vivante : ses deux etapes sont 'fait'. (2) date_maj 129.3.25 — la plus ancienne des vingt avec lucerys, alicent et orwyle. (3) Il est a Port-Real et n'agit QUE par Sabbe, qui reste en orbite : il est les mains d'une tete qu'on garde. (4) Un seul declencheur, ce que royaume autorise deja. Le rétrograder ne fait perdre aucune horloge.",
+    "elagage_requis": "royaume plafonne a 3 croyances : le lot retire les deux qui ne portent plus rien (l'identite de Marlo, deja acquise ; et 'il nous a donne du travail', un constat). Restent les trois qui le font AGIR : les douze sous, la marche d'ecoute de deux jours, et la regle de reponse."
+   },
+   "solution_de_repli_si_le_MJ_refuse": "Si le MJ preferait garder ren en orbite : le second candidat, sur pieces, est ORWYLE — zero etape vivante lui aussi, date_maj 129.3.25, a Port-Real. Mais il est le seul homme des deux camps a avoir vu les deux cours et son recit cousu est une bombe a retardement : je le laisse ou il est. Troisieme repli, moins bon : garder Gunthor en royaume et se contenter du declencheur de l'ecrit, en acceptant que le debarquement sans ecrit ne produise RIEN — c'est-a-dire en offrant gratuitement au joueur les cent quatre-vingts muids. Je le deconseille : c'est la seule friction chiffree que cette maison ait a offrir."
+  },
+  "echelles_des_deux_creations": "marec-fosse et robin-darklyn en ROYAUME, et pas plus haut : ni l'un ni l'autre n'entre dans une salle, chacun tient dans 3 croyances / 2 etapes / 1 declencheur, et royaume n'a pas de plafond d'acteurs. Ils montent d'un cran le jour ou le joueur met le pied a Sombreval — pas avant."
+ },
+ "mutations_proposees": [
+  {
+   "table": "intentions",
+   "cible": "ren",
+   "operation": "croyance_retirer",
+   "valeur": "Marlo Vasse, dit le Peigne, maitre d'un chantier de bris ; la reine le connait depuis longtemps et ne nous a pas dit d'ou",
+   "pourquoi": "Elagage d'echelle : acquis, ne produit plus d'action."
+  },
+  {
+   "table": "intentions",
+   "cible": "ren",
+   "operation": "croyance_retirer",
+   "valeur": "Il nous a donne du travail dans un chantier de bris : c est exactement ce que je devais aller demander de porte en porte. Je n ai plus a mentir sur rien",
+   "pourquoi": "Elagage d'echelle : un constat, pas un moteur."
+  },
+  {
+   "table": "intentions",
+   "cible": "ren",
+   "operation": "tete",
+   "champs": {
+    "echelle": "royaume",
+    "date_maj": {
+     "annee": 129,
+     "lune": 3,
+     "jour": 28
+    }
+   },
+   "pourquoi": "Libere la place d'orbite pour gunthor-darklyn. Voir budget_et_echelles.promotion_demandee.qui_redescend — argumente sur pieces."
+  },
+  {
+   "table": "intentions",
+   "cible": "gunthor-darklyn",
+   "operation": "tete",
+   "champs": {
+    "echelle": "orbite",
+    "intention": "Sa version ne le couvre plus et son quai est ferme depuis onze jours : il lui faut d'elle, par ecrit et vite, ce qu'elle n'a encore dit a personne — que Sombreval est a elle et qu'elle la defendra. Il ne le redemandera pas une quatrieme fois ; il le fera attendre a la chaine, jour et nuit, et si rien ne vient il donnera un gage au lieu d'une lettre.",
+    "attitude_joueur": "Devouement intact, et pour la premiere fois une exigence dedans : elle l'a couvert sans le nommer, et le roi vient de le nommer, lui. Il attend d'elle la meme encre — et desormais il a de quoi la lui faire payer, parce que tout ce qui nourrira son ost sort de ses granges a lui.",
+    "date_maj": {
+     "annee": 129,
+     "lune": 3,
+     "jour": 28
+    }
+   },
+   "pourquoi": "Promotion orbite. Croyances et etapes ajoutees ci-dessous restent sous les plafonds (5 croyances, 4 etapes)."
+  },
+  {
+   "table": "intentions",
+   "cible": "gunthor-darklyn",
+   "operation": "croyance_ajouter",
+   "valeur": "Onze jours qu'il a demande a la reine un ecrit qui NOMME Sombreval, comme le roi l'a nommee dans sa proclamation, et rien n'est venu : ni cavalier, ni corbeau, ni un mot par la bouche de son propre frere. Il ne l'a dit a personne de sa maison.",
+   "pourquoi": "Source : son etape gunthor-ecrit-de-la-reine (maj 25e) confrontee a l'etat REEL du pli — pli-protection-sombreval, etat 'retenu', main gerardys, parti_le null. C'est vrai de son point de vue et c'est vrai tout court."
+  },
+  {
+   "table": "intentions",
+   "cible": "gunthor-darklyn",
+   "operation": "croyance_ajouter",
+   "valeur": "Son quai est ferme depuis le dix-septieme jour et il ne l'a rouvert pour personne : rien de Sombreval n'a touche Peyredragon depuis lors, et il sait tres bien que cela se voit de la-bas. C'etait le but.",
+   "pourquoi": "Source : parole-wend-trois-choses-de-ser-robert-26e — 'aucune coque de Sombreval n'a touche depuis neuf jours (lord Gunthor Darklyn a ferme son quai apres la proclamation)'. Le fait etait dans la tete de la REINE et pas dans celle de l'homme qui l'a fait."
+  },
+  {
+   "table": "intentions",
+   "cible": "gunthor-darklyn",
+   "operation": "ignore_ajouter",
+   "valeur": "Que l'ecrit qu'il attend EXISTE : l'acte de protection scelle de son sceau le vingt-troisieme, 'qui frappe a Sombreval frappe a Peyredragon', dort depuis six jours dans la main du mestre Gerardys a Peyredragon sans etre parti. Il croit qu'on ne lui ecrira pas ; on lui a ecrit.",
+   "pourquoi": "L'ignore qui explique toute sa conduite de la lune. Source directe : plis.json, pli-protection-sombreval, etat 'retenu', main 'gerardys'."
+  },
+  {
+   "table": "intentions",
+   "cible": "gunthor-darklyn",
+   "operation": "ignore_ajouter",
+   "valeur": "Que douze cents hommes de la reine debarqueront a son quai ferme pour y prendre ses cinq cent cinquante lances et marcher sur Port-Real, sa banniere en tete le jour de l'entree ; que son propre frere ser Steffon arrive le trentieme au soir pour le lui dire de vive voix ; et qu'on lui demandera alors CENT QUATRE-VINGTS MUIDS sortis et en chariots le jour meme.",
+   "pourquoi": "Sources : parole-gerardys-sombreval-28e, acte-steffon-dit-sa-marche-a-aurore-28e, parole-aurore-ecrira-aux-trois-portes-28e. Il l'ignore encore au 28e au soir — c'est ce qui rend ses deux declencheurs interessants."
+  },
+  {
+   "table": "intentions",
+   "cible": "gunthor-darklyn",
+   "operation": "etape_ajouter",
+   "valeur": {
+    "id": "gunthor-la-chaine-du-quai",
+    "quoi": "Faire tenir la chaine du quai par deux hommes de guet jour et nuit, avec ordre de le reveiller pour UNE seule chose : une barque portant un ecrit de Peyredragon. Le quai reste ferme a tout le reste.",
+    "etat": "en-cours",
+    "jours_restants": 1,
+    "depend_de": [
+     "gunthor-ecrit-de-la-reine"
+    ],
+    "cout": [
+     "deux hommes du guet des murs, qu'il n'a pas en trop depuis le seizieme jour",
+     "avouer a son capitaine qu'il attend quelque chose, ce qu'il n'a dit a personne"
+    ],
+    "si_bloque": "Si rien n'est venu au bout de quatre nuits, il ne referme pas et il n'ecrit pas une quatrieme fois : il fait passer sa femme et son fils cadet a Peyredragon par la premiere quille, pas en otages mais en gage de ce qu'il attend, et il donne au patron de la quille une phrase pour son frere et pour personne d'autre : « dis-lui que j'ai compte les jours ».",
+    "accompli": null
+   },
+   "pourquoi": "Orbite : il passe de 3 a 4 etapes, plafond atteint. C'est aussi le pivot physique de la maison — le quai ferme est la chose que le debarquement du 30e va forcer."
+  },
+  {
+   "table": "intentions",
+   "operation": "tete_ajouter",
+   "PREALABLE": "personnages.json doit d'abord porter la fiche marec-fosse (voir ecritures_a_la_main.personnages_json).",
+   "valeur": {
+    "personnage_id": "marec-fosse",
+    "echelle": "royaume",
+    "croyances": [
+     "DEUX CENT TRENTE-DEUX MUIDS en granges et greniers au soir du 28e, et pas un de plus : il a refait le compte lui-meme apres avoir vu, de ses yeux, un charroi etranger charger dans la grange du hameau de la cote le 28e au matin, sur les terres de son maitre et sans un mot de son maitre.",
+     "SOIXANTE JOURNEES DE PAIN pour la ville en comptant les bouches montees des hameaux depuis le feu de la route — son propre role des bouches, arrete le 27e au soir. Le chiffre baisse de quatre muids par jour et il ne remonte qu'a la moisson.",
+     "Un muid nourrit vingt hommes un jour. Il tient ce chiffre du meme endroit que tout le monde et il ne le discutera avec personne."
+    ],
+    "ignore": [
+     "Que les trois depots poses sur les terres de son maitre ne sont pas un vol mais le train de vivres de la reine, et qu'on viendra lui en demander CENT QUATRE-VINGTS DE PLUS le trentieme au soir. Il a fait fermer les deux granges du haut par precaution — ce qui coutera une demi-journee de serrures et de charroi le jour ou l'ordre viendra."
+    ],
+    "intention": "Tenir le role juste, fermer ce qui n'est pas garde, et ne rien laisser sortir d'une grange sans un ordre de lord Gunthor ecrit, ou dit devant temoin. Il ne monte pas au chateau : on descend le voir.",
+    "plan": [
+     {
+      "id": "marec-refait-le-role",
+      "quoi": "Arreter le compte des muids grange par grange, y compris les deux du haut qu'on n'a pas ouvertes depuis la moisson, et le porter a son maitre avec le role des bouches a cote — parce qu'un chiffre de grain sans le chiffre des bouches n'a jamais rien voulu dire.",
+      "etat": "en-cours",
+      "jours_restants": 1,
+      "depend_de": [],
+      "cout": [
+       "une nuit de chandelle",
+       "deux hommes pour rouvrir les greniers du haut"
+      ],
+      "si_bloque": "S'il n'obtient pas les deux hommes, il compte seul et rend le chiffre avec un jour de retard — c'est-a-dire APRES le debarquement, et son maitre devra repondre a la reine sans savoir ce qu'il a.",
+      "accompli": null
+     },
+     {
+      "id": "marec-vide-les-granges-du-haut",
+      "quoi": "Faire descendre le grain des deux granges du haut dans les caves de la citadelle, derriere les murs, au lieu de le laisser sous des serrures neuves dans des batiments de bois.",
+      "etat": "en-cours",
+      "jours_restants": 4,
+      "depend_de": [
+       "marec-refait-le-role"
+      ],
+      "cout": [
+       "trois jours de charroi et six betes de trait pendant la fenaison",
+       "l'accord de lord Gunthor, qui trouvera que ca a l'air de la peur"
+      ],
+      "si_bloque": "S'il n'a ni betes ni accord, il pose un homme de garde par grange, pris sur le guet du quai, et il n'en reparle pas. Les granges de bois brulent en une heure.",
+      "accompli": null
+     }
+    ],
+    "declencheurs": [
+     {
+      "si": "Un homme de la reine lui demande son chiffre par ecrit, ou devant lord Gunthor",
+      "alors": "Il donne le vrai, arrondi a la baisse de dix muids comme il le fait depuis vingt ans, et il donne AUSSI le role des bouches de la ville sans qu'on le lui demande — ce qui montre d'un coup ce que cent quatre-vingts muids retirent a Sombreval, au lieu d'un chiffre isole qui n'engage personne.",
+      "une_fois": false
+     }
+    ],
+    "attitude_joueur": "Il ne la connait pas et ne lui doit rien. Il ne lui refusera rien non plus : ce qui sort des granges sort sur l'ordre de lord Gunthor et sur celui de personne d'autre, et il le dira aussi platement a une reine qu'a un charretier.",
+    "date_maj": {
+     "annee": 129,
+     "lune": 3,
+     "jour": 28
+    }
+   },
+   "pourquoi": "L'homme de metier. Royaume respecte au chiffre pres : 3 croyances, 2 etapes, 1 declencheur."
+  },
+  {
+   "table": "intentions",
+   "operation": "tete_ajouter",
+   "PREALABLE": "personnages.json doit d'abord porter la fiche robin-darklyn (voir ecritures_a_la_main.personnages_json).",
+   "valeur": {
+    "personnage_id": "robin-darklyn",
+    "echelle": "royaume",
+    "croyances": [
+     "Le papier ne tient pas une muraille. Son pere a lache douze corbeaux dans la nuit du seizieme et le roi a repondu en faisant ecrire le nom de Sombreval, seul, dans une proclamation de decheance : voila tout ce que les mots ont rapporte a cette maison en douze jours.",
+     "ONZE COQUES de Sombreval dorment a leurs amarres sous la tour du levant, quai ferme depuis le dix-septieme. C'est le seul bien de la maison qui puisse etre ailleurs dans trois jours, et le seul que personne ne songe a bouger.",
+     "Son oncle ser Steffon sert la reine a Peyredragon et n'a pas ecrit une ligne a la maison depuis qu'il y est monte. La reine a deja un Darklyn ; elle n'a pas besoin de Sombreval."
+    ],
+    "ignore": [
+     "Que son oncle debarquera le trentieme au soir avec deux sceaux, douze hommes et un scribe, et qu'a partir de ce soir-la Sombreval sera le quai d'un ost qui n'est pas le sien — et que ses onze coques ne seront plus tout a fait a personne."
+    ],
+    "intention": "Obtenir de son pere que les onze coques quittent le mole avant qu'un ost quelconque n'arrive — Lamarck, les Griffes, n'importe quel mouillage qui ne soit pas ce port. Et le lui demander une derniere fois seul a seul : s'il refuse encore, ne plus jamais le demander devant les gens de la maison.",
+    "plan": [
+     {
+      "id": "robin-les-onze-coques",
+      "quoi": "Faire chiffrer par le maitre de port ce qu'il en coute de mouiller onze coques ailleurs qu'a Sombreval — equipages, vivres, jours — et poser le compte devant son pere avec le role des equipages a cote.",
+      "etat": "en-cours",
+      "jours_restants": 3,
+      "depend_de": [],
+      "cout": [
+       "quarante hommes d'equipage qui ne seront plus sur les murs",
+       "contredire son pere devant son intendant, ce qu'il n'a jamais fait"
+      ],
+      "si_bloque": "Si son pere refuse, il ne redemande pas et ne boude pas : il fait armer DEUX coques a ses frais et les envoie a Lamarck sous couleur de commerce, sans le dire a personne. Les neuf autres resteront ou elles sont.",
+      "accompli": null
+     },
+     {
+      "id": "robin-ecrit-a-son-oncle",
+      "quoi": "Ecrire a ser Steffon, hors du registre du mestre, une lettre qui ne demande rien et dit seulement l'etat de la place : morts, blesses, hommes debout, journees de pain, coques a l'amarre.",
+      "etat": "en-cours",
+      "jours_restants": 2,
+      "depend_de": [],
+      "cout": [
+       "une barque de peche et un homme qui sait se taire, le quai etant ferme",
+       "passer par-dessus son pere, qui a ferme ce quai lui-meme"
+      ],
+      "si_bloque": "S'il ne trouve pas de barque, il donne la lettre au premier charretier qui monte vers Rosby : elle sera lue par trois personnes avant d'atteindre Peyredragon, si elle l'atteint.",
+      "accompli": null
+     }
+    ],
+    "declencheurs": [
+     {
+      "si": "La reine, ou un homme portant son sceau, met le pied a Sombreval",
+      "alors": "Il demande des voiles et un mouillage pour ses onze coques AVANT que son pere ait fini de saluer, et il le fait devant tout le monde. Ce qui humilie son pere, et fait de lui le premier Darklyn a demander quelque chose a cette reine.",
+      "une_fois": true
+     }
+    ],
+    "attitude_joueur": "Il n'a pas jure en 105 : il etait au berceau. Il ne la hait pas — il la trouve chere. Un mot d'elle sur ses coques l'achete entierement ; un mot de trop sur son pere le ferme pour de bon.",
+    "date_maj": {
+     "annee": 129,
+     "lune": 3,
+     "jour": 28
+    }
+   },
+   "pourquoi": "Celui qui conteste a l'interieur, et sa contestation est chiffree : onze coques que le canon brule sur leurs amarres le 129.6.1."
+  },
+  {
+   "table": "evenements",
+   "cible": "decheance-de-rhaenyra",
+   "operation": "diffusion_ajouter",
+   "valeur": {
+    "ou": "sombreval",
+    "qui": [
+     "gunthor-darklyn",
+     "robin-darklyn"
+    ],
+    "date": {
+     "annee": 129,
+     "lune": 4,
+     "jour": 2
+    },
+    "canal": "rumeur",
+    "fiabilite": 55,
+    "version": "Les charretiers qui montent de la porte des Dieux disent qu'on rassemble sous les murs de Port-Real, qu'on compte des chariots et qu'on paie les hommes d'avance. Un sergent recruteur a lu tout haut, sur le marche aux chevaux, la ligne de la proclamation ou Sombreval est nommee seule. On ne dit ni combien d'hommes, ni quand, ni sous quelle banniere.",
+    "livree": false
+   },
+   "pourquoi": "REPONSE A 'quand Sombreval apprendra-t-elle que l'ost marche sur elle, et par qui'. Accrochee a decheance-de-rhaenyra parce que c'est cette proclamation-la qui a nomme Sombreval et qui autorise Criston a la traiter en rebelle : la levee en est la consequence directe. Trois jours de route (lieux.json : sombreval jours_de_pr 3), plus deux parce que Gunthor a ferme son quai et que tout passe desormais par la route. CE QUE CA LAISSE INTACT : son ignore actuel dit deux choses — qu'une expedition se prepare, ET que Criston Cole en a la charge. A la livraison, ne retirer que la premiere. Il saura qu'on leve ; il ne saura pas pour qui ni contre qui, et un homme fier n'evacue pas sa ville sur une rumeur de charretier."
+  },
+  {
+   "table": "evenements",
+   "cible": "les-trois-depots-dans-les-granges-de-gunthor",
+   "operation": "diffusion_ajouter",
+   "valeur": {
+    "ou": "peyredragon",
+    "qui": [
+     "rulf-corne"
+    ],
+    "date": {
+     "annee": 129,
+     "lune": 4,
+     "jour": 1
+    },
+    "canal": "barque",
+    "fiabilite": 65,
+    "version": "Le patron de la Chere-Anse, qui n'a rien pu decharger a Sombreval depuis le dix-septieme, rapporte au bureau de port qu'on a ferme les deux granges du haut avec des serrures neuves et qu'on y compte le grain deux fois par jour. Il ne sait pas pourquoi. Il dit seulement qu'on ne fait pas ca quand on en a.",
+    "livree": false
+   },
+   "pourquoi": "REPONSE A LA QUATRIEME QUESTION DU TEST D'ARRET — par quelle bouche le joueur apprendra-t-il que Sombreval a bouge. Par Rulf Corne, au bureau de port, sans un chiffre : la mesure de la main atteint le joueur DEFORMEE, comme il se doit. Accrochee aux trois depots parce que c'en est la consequence directe : on ferme ses granges parce qu'on lui en a pris. Route deja existante dans l'etat (Rulf tient le port et monte au chateau), non inventee pour l'occasion."
+  }
+ ],
+ "ecritures_a_la_main": {
+  "note": "scripts/appliquer.py a un vocabulaire FERME : il ne sait ni creer un personnage, ni ecrire relations.json, ni CREER une main (les operations mains sont mesure/seuil/main, aucune n'ajoute), ni muter le champ 'declencheurs' d'une tete existante. Les quatre blocs ci-dessous se recopient a la main.",
+  "personnages_json": {
+   "PREALABLE": "OUI — A FAIRE AVANT D'APPLIQUER LE LOT. Sans ces deux fiches, les deux tete_ajouter sont refusees ('personnage inconnu de personnages.json') et, une seule mutation invalide annulant tout le lot, RIEN ne sera ecrit.",
+   "fiches": [
+    {
+     "id": "robin-darklyn",
+     "nom": "Robin Darklyn",
+     "maison_id": "maison-darklyn",
+     "titre": "Heritier de Sombreval",
+     "naissance": 105,
+     "traits": [
+      "pratique",
+      "impatient",
+      "loyal",
+      "orgueilleux"
+     ],
+     "objectifs": [
+      {
+       "but": "Faire sortir les onze coques de la maison de ce port avant qu'un ost quelconque n'y entre",
+       "priorite": 1
+      },
+      {
+       "but": "Ne pas devenir, a vingt-quatre ans, le seigneur d'une ville brulee",
+       "priorite": 2
+      },
+      {
+       "but": "Obtenir de son pere qu'il le traite en heritier et non en fils",
+       "priorite": 3
+      }
+     ],
+     "maniere": "Parle en jours et en coques ; commence toujours par le cout et finit par ce qu'il propose, jamais l'inverse. Ne hausse pas la voix devant les gens de la maison, et se tait net des que son pere prend la parole — puis recommence en prive, mot pour mot. N'invoque jamais les anciens rois de Sombreval : c'est la chose de son pere.",
+     "portrait": {
+      "fichier": "ecrans/portraits/robin-darklyn.svg",
+      "physique": "Vingt-quatre ans, large d'epaules, mains de port ; surcot fusele de sable et d'or porte sans plaisir.",
+      "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, grey harbour light, young lord in his mid twenties, broad shouldered, weathered practical hands, black and gold lozenge surcoat worn carelessly, moored ships and a shut harbour chain behind him"
+     },
+     "etat": "actif",
+     "lieu_id": "sombreval",
+     "condition": "libre"
+    },
+    {
+     "id": "marec-fosse",
+     "nom": "Marec Fosse",
+     "maison_id": "maison-darklyn",
+     "titre": "Intendant de Sombreval",
+     "naissance": 78,
+     "traits": [
+      "meticuleux",
+      "taciturne",
+      "prudent",
+      "honnete"
+     ],
+     "objectifs": [
+      {
+       "but": "Que le role dise la verite, y compris quand elle est mauvaise",
+       "priorite": 1
+      },
+      {
+       "but": "Que rien ne sorte d'une grange sans un ordre de son maitre",
+       "priorite": 2
+      },
+      {
+       "but": "Voir la ville passer l'hiver, ce qui n'est pas le souci de son maitre",
+       "priorite": 3
+      }
+     ],
+     "maniere": "Donne le chiffre d'abord, arrondi a la baisse, et la date a laquelle il l'a arrete ; ce qu'il n'a pas verifie, il dit qu'il ne l'a pas verifie. Ne repond jamais a une question qu'on ne lui a pas posee, mais pose sur la table, sans commentaire, le second role qui rend le premier lisible. Ne monte pas au chateau : on descend le voir aux granges.",
+     "portrait": {
+      "fichier": "ecrans/portraits/marec-fosse.svg",
+      "physique": "Cinquante et un ans, sec, tablier de cuir, doigts noirs d'encre et blancs de farine, un trousseau de clefs a la ceinture.",
+      "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, granary dust in a shaft of light, lean steward in his fifties, leather apron, ink-stained fingers dusted with flour, heavy ring of keys at his belt, tally roll under one arm"
+     },
+     "etat": "actif",
+     "lieu_id": "sombreval",
+     "condition": "libre"
+    }
+   ]
+  },
+  "declencheurs_gunthor": {
+   "PREALABLE": "NON — mais a poser DANS LE MEME GESTE. Sans eux, la promotion en orbite ne sert a rien : c'est tout ce que ce lot ajoute de reactif au joueur.",
+   "cible": "intentions.json / gunthor-darklyn / declencheurs (actuellement [])",
+   "valeur": [
+    {
+     "si": "Un ecrit scelle de la reine NOMMANT Sombreval lui est remis en main propre",
+     "alors": "Il rouvre son quai dans l'heure, fait sortir de ses granges tout ce qu'on lui demande sans marchander le compte, et fait crier le nom de la reine sur ses remparts. Le soir meme, il ecrit de sa propre main a Rosby et a Stokeworth pour leur dire ce qu'il a donne — ce qui les met en demeure sans le dire, et sans qu'on le lui ait demande.",
+     "une_fois": true
+    },
+    {
+     "si": "Des hommes de la reine debarquent a Sombreval, ou l'on vient lui demander du grain, sans qu'aucun ecrit ne l'ait nomme",
+     "alors": "Il les recoit, il les loge, et il donne LA MOITIE de ce qu'on demande — quatre-vingt-dix muids sur cent quatre-vingts. Il fait porter le compte au role devant deux temoins, et charge son frere d'une phrase qu'il n'ecrira jamais : « qu'elle me nomme, et elle aura le reste. » Il ne refuse pas ; il decoupe.",
+     "une_fois": true
+    }
+   ],
+   "ce_que_ca_produit": "Le second declencheur est le VERROU CHIFFRE de la maison, et il tombe exactement sur le cout que ser Steffon a ecrit lui-meme : 90 muids au lieu de 180 = une journee et demie de pain en moins pour douze cents bouches, donc la colonne s'arrete AU TROISIEME JOUR, dans le plat, a quelques lieues de Rosby — a l'endroit meme que Steffon a nomme le 28e a 23h00. Le joueur peut l'empecher pour zero dragon : il suffit que le pli de protection parte."
+  },
+  "mains_json": {
+   "PREALABLE": "NON. La main peut etre posee apres, mais avant le debarquement du 30e — sinon le chiffre n'existe pas quand on le demandera.",
+   "main": {
+    "id": "granges-de-sombreval",
+    "quoi": "Ce que Sombreval a en granges, et le nombre de journees de pain que ca laisse a la ville",
+    "porteur": {
+     "type": "personnage",
+     "id": "marec-fosse"
+    },
+    "lieu_id": "sombreval",
+    "mandat": null,
+    "mesure": [
+     {
+      "id": "muids-en-granges",
+      "quoi": "muids de grain en granges et greniers de Sombreval, les trois depots de la reine deja preleves",
+      "valeur": 240,
+      "unite": "muids",
+      "rythme": {
+       "par": -4,
+       "jours": 1
+      },
+      "reliquat": 0,
+      "plancher": 0,
+      "plafond": 900,
+      "depend_de": []
+     },
+     {
+      "id": "journees-de-pain-de-la-ville",
+      "quoi": "journees de pain pour les bouches de Sombreval, hameaux montes depuis le feu de la route compris",
+      "valeur": 60,
+      "unite": "jours",
+      "rythme": {
+       "par": -1,
+       "jours": 1
+      },
+      "reliquat": 0,
+      "plancher": 0,
+      "plafond": 240,
+      "depend_de": []
+     }
+    ],
+    "seuils": [
+     {
+      "id": "granges-a-vide",
+      "mesure_id": "muids-en-granges",
+      "quand": "sous",
+      "valeur": 60,
+      "promeut": "orbite",
+      "affaire": "Sombreval a donne son pain a l'ost de la reine et ne passe plus la lune. Trois voies, et aucune n'est bonne : acheter a Rosby au prix de la guerre, rationner une ville qui vient d'enterrer ses morts, ou reprendre sur la route ce qu'on a charge.",
+      "franchi_le": null
+     }
+    ],
+    "dernier_rapport": null,
+    "date_maj": "129.3.28"
+   },
+   "pourquoi_cette_main_et_pas_une_autre": "Test des mains applique : par quelle bouche, ou par quel empechement, ce chiffre atteindra-t-il le joueur ? Reponse en une phrase, et elle est deja ecrite dans l'etat : par ser Steffon le 30e au soir, et par une colonne de douze cents hommes qui s'arrete au troisieme jour. Aucune autre mesure de Sombreval n'a de reponse aussi courte — c'est pourquoi il n'y a qu'UNE main pour cette maison, et pas trois."
+  },
+  "relations_json": {
+   "PREALABLE": "NON.",
+   "ajouts": [
+    {
+     "source_id": "robin-darklyn",
+     "cible_id": "gunthor-darklyn",
+     "opinion": 35,
+     "liens": [
+      "fils",
+      "heritier",
+      "contredit-en-prive"
+     ],
+     "connue_du_joueur": false
+    },
+    {
+     "source_id": "robin-darklyn",
+     "cible_id": "steffon-darklyn",
+     "opinion": 15,
+     "liens": [
+      "neveu",
+      "rancune-du-silence"
+     ],
+     "connue_du_joueur": false
+    },
+    {
+     "source_id": "robin-darklyn",
+     "cible_id": "rhaenyra",
+     "opinion": 0,
+     "liens": [
+      "n-a-pas-jure-en-105"
+     ],
+     "connue_du_joueur": false
+    },
+    {
+     "source_id": "marec-fosse",
+     "cible_id": "gunthor-darklyn",
+     "opinion": 70,
+     "liens": [
+      "homme-de-la-maison",
+      "vingt-ans-de-service"
+     ],
+     "connue_du_joueur": false
+    },
+    {
+     "source_id": "gunthor-darklyn",
+     "cible_id": "steffon-darklyn",
+     "opinion": 65,
+     "liens": [
+      "frere",
+      "attend-de-ses-nouvelles"
+     ],
+     "connue_du_joueur": true
+    }
+   ],
+   "note": "Le dernier est le seul que le joueur puisse connaitre : ser Steffon est a sa table et la fraternite est publique. Les quatre autres sont du dedans de la maison."
+  }
+ },
+ "verrous_de_fait": [
+  {
+   "n": 1,
+   "titre": "L'ACTE DE PROTECTION DE SOMBREVAL EST ENCORE DANS LA MAIN DU MESTRE",
+   "les_pieces": [
+    "plis.json / pli-protection-sombreval : etat 'retenu', main 'gerardys', parti_le NULL, attendu_le le 27e.",
+    "evenements.json / remise-actes-protection : statut 'programme', date_prevue le 27e, description 'les deux cavaliers partis de Peyredragon a la premiere lumiere du 24 remettent EN MAIN PROPRE les actes... et ATTENDENT SUR PLACE la copie signee', effets 'Staunton et Sombreval obtiennent le papier qu'ils reclamaient depuis le 18'.",
+    "intentions.json / steffon-porte-de-terre (maj 28e) : il prevoit de faire passer l'acte scelle sous un pli ouvert A LA PORTE DE TERRE de Sombreval — donc l'acte part avec LUI, le 30e."
+   ],
+   "la_contradiction": "Trois versions de la meme feuille : partie le 24e et remise le 27e ; retenue a Peyredragon dans la main de Gerardys ; ou portee par ser Steffon le 30e. Ce n'est pas un detail : c'est la SEULE chose que lord Gunthor attende depuis onze jours, et toute sa tete est ecrite dessus.",
+   "ce_que_je_n_ai_pas_tranche": "Je n'ai propose AUCUNE mutation la-dessus : arbitrer un evenement canon-adjacent appartient au MJ principal, et remise-actes-protection couvre AUSSI lord Staunton, qu'aucun de mes lots ne regarde. Ce lot est ecrit pour tenir dans les deux cas — la croyance de Gunthor dit ce qu'il constate (rien n'est venu), son ignore dit ce qu'il ne sait pas (que ca existe), et son premier declencheur s'arme le jour ou le papier arrive, par quelque main que ce soit.",
+   "les_deux_mutations_pretes_si_le_MJ_tranche": [
+    {
+     "si": "le pli fait foi (recommande : table plus fine, et l'etape de Steffon du 28e le presuppose)",
+     "mutation": {
+      "table": "evenements",
+      "cible": "remise-actes-protection",
+      "operation": "evenement",
+      "champs": {
+       "statut": "devie"
+      },
+      "pourquoi": "A REDIGER PAR LE MJ : le cavalier de Sombreval n'est jamais parti ; celui de Repos-des-Freux, si. La description doit etre reecrite a la main, ce que appliquer.py ne sait pas faire."
+     }
+    },
+    {
+     "si": "l'evenement fait foi",
+     "mutation": {
+      "table": "plis",
+      "cible": "pli-protection-sombreval",
+      "operation": "pli",
+      "champs": {
+       "etat": "remis",
+       "main": "gunthor-darklyn"
+      },
+      "pourquoi": "Et alors il faut RETIRER la croyance 'onze jours et rien n'est venu' et l'ignore correspondant de ce lot, et faire tomber le premier declencheur de Gunthor immediatement."
+     }
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "titre": "FRERE OU COUSIN — LE LIEN DE SER STEFFON A LORD GUNTHOR EST ECRIT DES DEUX FACONS",
+   "les_pieces": [
+    "intentions / steffon-darklyn, croyance 4 : « l'acte scelle est arrive a Sombreval le 22 et SON FRERE le lui a fait lire ».",
+    "intentions / steffon-trois-meneurs, cout : « l'accord de SON FRERE Gunthor, qui n'a pas ete consulte ».",
+    "intentions / gunthor-sacre, accompli : « a envoye SON FRERE avec la banniere ».",
+    "paroles / parole-aurore-ecrira-aux-trois-portes-28e : « la seule des trois qu'il ira chercher lui-meme, c'est chez SON COUSIN »."
+   ],
+   "tranche": "FRERES — trois pieces contre une, et les trois sont dans les tetes, qui sont la source de conduite. Le 'cousin' de la parole du 28e est traite comme un mot d'homme fatigue a vingt-trois heures, non comme un fait. TOUT CE LOT EST ECRIT SUR 'FRERES'. Si le MJ tranche l'inverse, trois phrases sont a reprendre : la relation ajoutee, l'ignore de Gunthor sur le silence de son frere, et le si_bloque de gunthor-la-chaine-du-quai.",
+   "relations_json": "Aucune ligne ne relie steffon-darklyn a gunthor-darklyn dans relations.json. Le lot en ajoute une (a la main) — c'est le seul lien Darklyn que le joueur puisse connaitre."
+  },
+  {
+   "n": 3,
+   "titre": "SOMBREVAL EST LA DESTINATION DE TOUT LE PLAN, ET SON SEIGNEUR NE LE SAIT PAS",
+   "les_pieces": [
+    "parole-gerardys-sombreval-28e : douze cents hommes debarquent a Sombreval pour y prendre les 550 lances de Gunthor.",
+    "acte-rhaenyra-deux-rangs-deux-salles-27e : la reine a tranche SEULE, la nuit du 27e, que lord Gunthor marche EN TETE le jour de l'entree, sa banniere avec.",
+    "acte-steffon-dit-sa-marche-a-aurore-28e : depart le 30e, une journee de mer, a Sombreval le soir meme.",
+    "intentions / gunthor-darklyn : rien de tout cela n'est dans sa tete."
+   ],
+   "consequence": "L'honneur qu'on lui fait — la premiere place et sa banniere en tete — a ete decide sans lui et ne lui a pas ete ecrit, exactement comme la protection. Le lot le pose en ignore, pas en croyance : ainsi le joueur peut encore acheter cet homme pour le prix d'un pli, et le perdra s'il ne l'envoie pas. C'est le seul verrou de cette maison sur lequel le joueur agit sans depenser un homme ni un dragon."
+  }
+ ],
+ "decision_plans_json": {
+  "plage_reservee": "77000-77999",
+  "decision": "NON — on n'ouvre pas la plage 77000 pour Darklyn.",
+  "argument": "plans.json est POUR CE QUI N'EST PAS A NOUS (docs/ouvrir-une-maison.md, ligne de partage). Darklyn n'est pas d'en face : elle s'est declaree avant le sacre, elle est 'noir' en affichee comme en reelle, un Darklyn commande l'ost de la reine, et ses cinq cent cinquante lances sont deja portees dans le plan de la maison sous le volume 'Deplacement de l'armee'. Lui ecrire un plan tenu secret au joueur reviendrait a cacher a la reine ce que son propre banneret compte faire de la ville ou elle debarque dans deux jours. Le miroir de plan est vide : les etats cibles de Darklyn NE SONT PAS nos verrous — c'est le contraire, ses verrous sont les notres (le grain, le quai ferme, les onze coques). Ce qu'il faudrait a cette maison, ce n'est pas un plan adverse : ce sont deux ou trois lignes de plus dans les volumes existants de books.json, ou le joueur peut les lire.",
+  "condition_de_bascule_datee": "On ouvre 77000 le jour ou l'un de ces deux faits est acquis, et pas avant : (1) le second declencheur de Gunthor tombe — on lui demande du grain sans qu'un ecrit l'ait nomme, il en donne la moitie et fait porter le compte au role : a partir de ce moment-la il POURSUIT quelque chose contre nous (se faire payer sa fidelite) et il faut une table pour le calculer ; ou (2) la diffusion du 129.4.2 lui apprend qu'on leve un ost sous les murs de Port-Real et il ne recoit toujours rien de la reine — auquel cas il negociera ailleurs, et ce qu'il negociera devra etre lisible. ECHEANCE DE RELECTURE : le 129.4.5, jour ou ser Steffon rentre du sixieme soir. Si a cette date il rapporte un frere satisfait et un ecrit remis, la plage 77000 reste fermee jusqu'a la lune suivante."
+ },
+ "tranches_faute_d_information": [
+  {
+   "quoi": "Le nom, l'age et l'existence de l'heritier",
+   "tranche": "Robin Darklyn, ne en 105, vingt-quatre ans.",
+   "sur_quoi": "L'etat impose un fils CADET (si_bloque de gunthor-ecrit-de-la-reine) donc un aine ; il n'est nomme nulle part. Ne en 105 pour qu'il n'ait PAS jure le serment de 105 — ce qui le rend libre, et c'est tout l'interet du personnage."
+  },
+  {
+   "quoi": "Le nom de l'intendant",
+   "tranche": "Marec Fosse, cinquante et un ans.",
+   "sur_quoi": "L'etat le cite sans le nommer (les-trois-depots : « il l'apprendra le 29e par son intendant »). Le nom est libre ; la fonction ne l'est pas."
+  },
+  {
+   "quoi": "Le stock de grain de Sombreval",
+   "tranche": "240 muids au 28e au soir, 60 journees de pain pour la ville, -4 muids par jour.",
+   "sur_quoi": "Aucun chiffre n'existait. Cale pour que la ville puisse donner les 180 muids demandes SANS que ce soit indolore : il lui resterait 52 muids, treize journees. Un chiffre plus haut rendrait la demande gratuite ; un chiffre plus bas la rendrait impossible et supprimerait la scene. A remonter si le MJ veut la maison plus riche — mais alors la main ne sert plus a rien."
+  },
+  {
+   "quoi": "Onze coques a Sombreval",
+   "tranche": "Onze, a leurs amarres sous la tour du levant, quai ferme depuis le 17e.",
+   "sur_quoi": "Le canon dit 'la flotte brulee sur ses amarres' sans nombre. Onze est le meme ordre de grandeur que les onze coques de Peyredragon citees par ser Steffon le 28e ; c'est assez pour compter, trop peu pour changer une guerre."
+  },
+  {
+   "quoi": "Combien de temps la nouvelle de la levee met a atteindre Sombreval",
+   "tranche": "Cinq jours (129.4.2), par la route et non par la mer.",
+   "sur_quoi": "lieux.json donne sombreval jours_de_pr 3. J'ajoute deux jours parce que Gunthor a ferme son propre quai le 17e : il s'est coupe de la mer lui-meme, et il paie sa fermeture en retard de nouvelles. C'est une deduction, pas une regle du jeu."
+  },
+  {
+   "quoi": "La devise de la maison Darklyn",
+   "tranche": "Laissee VIDE, comme dans maisons.json.",
+   "sur_quoi": "Aucune source. Inventer une devise a une maison canon qu'on va detruire dans deux lunes ne sert rien et se paierait plus tard."
+  }
+ ],
+ "test_d_arret": {
+  "1_qui_parle_pour_elle_et_de_quoi_vit_il": "Lord Gunthor Darklyn (orbite) : de son port, de ses 550 lances et de l'anciennete de sa maison. Marec Fosse, intendant (royaume) : des granges et du role des bouches. Robin Darklyn, heritier (royaume) : de onze coques que personne d'autre ne regarde. Et ser Steffon a la table de la reine, qu'on ne touche pas.",
+  "2_que_veut_elle_cette_lune_et_qui_l_en_empeche": "Un ecrit scelle qui NOMME Sombreval. Ce qui l'en empeche est chez nous et non chez elle : le pli existe, il est ecrit, il est scelle depuis le 23e, et il dort dans la main du mestre.",
+  "3_par_quelle_nouvelle_apprendra_t_elle_ce_que_le_joueur_vient_de_faire": "Trois routes, toutes datees. DEMAIN 29e a 10h : son intendant lui dit qu'on a pris ses granges (evenement deja dans l'etat, pas de moi). LE 30e AU SOIR : son frere debarque et lui dit tout, de vive voix — la route la plus sure et la moins controlable. LE 129.4.2 : les charretiers lui disent qu'on leve un ost et qu'on a lu son nom.",
+  "4_par_quelle_bouche_le_joueur_apprendra_t_il_qu_elle_a_bouge": "Par Rulf Corne au bureau de port, le 129.4.1, sans un chiffre (« on ne ferme pas ses granges quand on en a »). Et par ser Steffon lui-meme au sixieme soir, le 129.4.5, avec les chiffres. La quatrieme question a une reponse : le palier A est justifie."
+ },
+ "ce_que_ce_lot_change_pour_ser_steffon": {
+  "ce_qui_ne_bouge_pas": "RIEN de lui. Zero mutation sur steffon-darklyn : ni fiche, ni echelle, ni croyance, ni ignore, ni etape, ni declencheur, ni date_maj. Sa charge au registre des offices, ses quatre limites, sa lettre de grain du 28e et ses trois etapes ouvertes (steffon-trois-jours, steffon-trois-meneurs, steffon-porte-de-terre) sont intactes. Il est joue ; on ne le rejoue pas.",
+  "ce_qui_change_sous_ses_pieds": [
+   "Il debarquera le 30e chez un frere qui, depuis onze jours, a compte les jours sans rien recevoir — et qui l'ignore encore, parce que son ignore dit que personne ne lui a rien ecrit, pas meme son frere.",
+   "Ses CENT QUATRE-VINGTS MUIDS ne sont plus une demande abstraite : ils sont 232 muids reels dans les mains d'un intendant nomme, et 60 journees de pain pour une ville. Son etape steffon-trois-jours peut desormais BUTER sur un chiffre au lieu d'une humeur.",
+   "Son etape steffon-trois-meneurs (« l'accord de son frere Gunthor, qui n'a pas ete consulte ») trouve enfin en face d'elle un homme qui a des raisons ecrites de refuser — et son propre si_bloque, ecrit a froid le 28e, dit deja quoi faire dans ce cas : n'en prendre que les volontaires et rapporter le refus TEL QUEL, sans l'adoucir. Rien a modifier.",
+   "Son neveu Robin lui ecrit une lettre hors registre (etape robin-ecrit-a-son-oncle, 2 jours) qui risque d'arriver APRES son depart du 30e — auquel cas elle se lira a Peyredragon en son absence, ce qui est une scene, pas un bug."
+  ],
+  "ce_que_le_MJ_doit_surveiller": "Le seul risque de collision est le declencheur 1 de ser Steffon (« une nouvelle arrive que Sombreval est attaquee, assiegee ou pillee », une_fois true). Il n'est PAS arme par ce lot : ni la levee de l'ost vert au 129.4.2, ni les granges fermees ne sont une attaque. Il reste en reserve pour le 129.6.1, ou il vaudra son poids."
+ },
+ "validation_en_blanc": {
+  "commande": "python scripts/appliquer.py ouvrir-darklyn.json",
+  "resultat_tel_quel": "13 mutations, 2 ERREURS : 'personnage inconnu' pour marec-fosse et robin-darklyn. Rien n'est ecrit — une seule mutation invalide annule le lot entier.",
+  "resultat_avec_le_prealable": "Rejoue en bac a sable, les deux fiches posees dans personnages.json : 13 mutations, ZERO erreur. Budgets acceptes par le script — ren descend a royaume avec 3 croyances, gunthor monte a orbite avec 5 croyances / 4 etapes, marec et robin passent en royaume 3/2/1.",
+  "ordre_d_application": "1) poser les deux fiches (ecritures_a_la_main.personnages_json) ; 2) python scripts/appliquer.py ouvrir-darklyn.json --vraiment ; 3) poser a la main les declencheurs de Gunthor, la main granges-de-sombreval et les cinq relations ; 4) python scripts/tick.py --verifier."
+ }
+}

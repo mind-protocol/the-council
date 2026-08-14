@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 1439, in <module>
+    return 0
+         ^^^
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 1425, in main
+    return 0
+    
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 1280, in cycle
+    
+    
+    journaliser("energie.conservee", acteur=pid, valeur=round(energie, 3),
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                budget=budget)
+                ^^^^^^^^^^^^^^~~~~
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 1108, in appeler_acteur
+    
+    
+    journaliser("rapport.extraction", acteur=pid)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^~~~~
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 777, in normaliser_rapport_activation
+    raise RuntimeError("activite %d non continue : debut %s, attendu %s"
+                       % (ordre, debut, prochain_debut))
+RuntimeError: activite 1 non continue : debut 0, attendu 70045.633

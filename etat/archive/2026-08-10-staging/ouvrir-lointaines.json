@@ -1,0 +1,429 @@
+{
+  "genere_le": "2026-08-09T00:00:00",
+  "joueur": null,
+  "avertissement": "PROPOSITION — agent d'ouverture de maisons. N'a RIEN ecrit dans etat/. Le MJ principal relit, arbitre et applique. Validee en blanc.",
+  "objet": "Ouverture en PALIER B de STARK (Winterfell), ARRYN (les Eyrie) et LANNISTER (Castral Roc) — docs/ouvrir-une-maison.md, section Paliers B et C. Etapes 1, 2 reduite au chef seul, 3, puis une tete royaume. AUCUN plan, AUCUNE main, AUCUN personnage cree, AUCUNE promotion d'echelle.",
+  "empreintes": {
+    "intentions": "bf52d3dc9a8ea17fc75908e9c33fc4c8a3e27ccd",
+    "evenements": "9193790f868bf982ee5cd1838fcb729f6fe8dfff",
+    "personnages": "57f5258bc893f49a602a27773fc31fa0416615a4",
+    "monde": "c4f54353d9dc7559642928425d908f3d3ba29271",
+    "lieux": "ada66c0b8b19f31241bcbff3ea7dadef6f0025c9"
+  },
+  "canon_recolte": {
+    "stark": [
+      {
+        "id": "emissaire-jacaerys",
+        "statut": "devie",
+        "date_prevue": "129.4.4",
+        "ce_qui_reste_vrai": "Jeyne Arryn et Cregan Stark attendent qu'on vienne leur redemander le serment de 105 dans les formes, et ne bougeront pas avant. Le porteur a abandonne la mission le 20e. Le declencheur deja arme dans la tete de Cregan est exactement la porte que ce canon devie a laissee ouverte : on n'y touche pas.",
+        "canon_hors_etat": "Le Pacte de Glace et de Feu et la marche des Loups sont tres en aval (130-131) et n'ont aucune entree dans evenements.json. Les deux etapes de Cregan (le grain d'abord, aucun homme utile au printemps) les preparent sans les nommer."
+      }
+    ],
+    "arryn": [
+      {
+        "id": "arrivee-lettre-privee-jeyne",
+        "statut": "a-venir",
+        "date_prevue": "129.3.30",
+        "porte": "Pli prive de la main de la reine, qui ne demande RIEN. Deja dans l'etat, non touche ici — l'ignore ajoute a Jeyne s'y accroche.",
+        "conditions": [
+          "annule si le corbeau est perdu au-dessus des montagnes"
+        ]
+      },
+      {
+        "id": "emissaire-jacaerys",
+        "statut": "devie",
+        "note": "meme verrou que pour le Nord : elle attend une demande dans les formes."
+      }
+    ],
+    "lannister": [
+      {
+        "constat": "AUCUN evenement de evenements.json ne nomme Lannister, l'Ouest, Castral Roc ni Jason. Zero canon ecrit. Ses deux etapes sont ecrites POUR ne pas contredire le canon connu hors etat (lever l'Ouest, franchir la Dent d'Or, mourir au Moulin Brulant devant les Tully) : elles s'arretent avant la bataille et n'en presument pas l'issue."
+      }
+    ]
+  },
+  "gens_retenus": [
+    {
+      "id": "cregan-stark",
+      "maison": "maison-stark",
+      "role": "le chef",
+      "echelle": "royaume",
+      "existe": true,
+      "cree": false,
+      "tete_existante": true,
+      "geste": "approfondissement"
+    },
+    {
+      "id": "jeyne-arryn",
+      "maison": "maison-arryn",
+      "role": "le chef",
+      "echelle": "royaume",
+      "existe": true,
+      "cree": false,
+      "tete_existante": true,
+      "geste": "approfondissement"
+    },
+    {
+      "id": "jason-lannister",
+      "maison": "maison-lannister",
+      "role": "le chef",
+      "echelle": "royaume",
+      "existe": true,
+      "cree": false,
+      "tete_existante": false,
+      "geste": "reveil d'un dormant en fiche — aucune creation de personnage"
+    }
+  ],
+  "gens_ecartes": [
+    {
+      "qui": "un castellan, un mestre, un homme de metier pour chacune des trois",
+      "pourquoi": "Palier B : le chef SEUL. Un homme de metier ne se justifie que si son chiffre doit atteindre le joueur cette lune — a dix, sept et dix jours de corbeau, aucun ne le peut."
+    },
+    {
+      "qui": "tyland-lannister",
+      "pourquoi": "Il n'est pas de l'Ouest en ce moment : il siege au conseil vert a Port-Real, et c'est le lot des Verts qui le tient. Il vit ici comme croyance de son jumeau, pas comme tete."
+    }
+  ],
+  "ressources": {
+    "note": "Etape 3 — les chiffres sont deja dans etat/maisons.json et coherents avec les etapes ecrites. AUCUNE MUTATION DE maisons.json N'EST PROPOSEE : rien de ce qui est ecrit ici ne depasse ce que ces maisons ont les moyens de tenir.",
+    "maison-stark": {
+      "or": 40000,
+      "revenus_lune": 3000,
+      "levees_dispo": 2000,
+      "levees_max": 20000,
+      "siege": "winterfell",
+      "jours_de_pr": 40,
+      "ce_que_ca_impose": "20 000 de plafond pour 2 000 mobilisables : le Nord est un reservoir immense et vide. C'est la justification chiffree de cregan-hiver-dabord."
+    },
+    "maison-arryn": {
+      "or": 150000,
+      "revenus_lune": 6000,
+      "levees_dispo": 3000,
+      "levees_max": 6000,
+      "siege": "les-eyrie",
+      "jours_de_pr": 20,
+      "ce_que_ca_impose": "3 000 sur 6 000 : exactement le chiffre deja ecrit dans sa croyance (six mille si elle vide les vallees, trois mille si elle garde les quatre passes). Chiffres et tete concordent."
+    },
+    "maison-lannister": {
+      "or": 900000,
+      "revenus_lune": 25000,
+      "levees_dispo": 4000,
+      "levees_max": 9000,
+      "siege": "castral-roc",
+      "jours_de_pr": 30,
+      "ce_que_ca_impose": "4 000 sur 9 000, et 900 000 dragons — la maison la plus riche du tableau. Ses croyances chiffrees reprennent ces nombres tels quels ; jason-lever-louest coute exactement les 4 000 disponibles et pas un de plus."
+    }
+  },
+  "mutations_proposees": [
+    {
+      "table": "intentions",
+      "cible": "cregan-stark",
+      "operation": "croyance_retirer",
+      "valeur": "Rien du Sud ne lui est parvenu depuis vingt jours : le dernier corbeau de Port-Réal parlait du roi comme d'un homme malade, et du royaume comme d'un royaume tranquille",
+      "pourquoi": "Perimee : le corbeau du couronnement a ete LIVRE a Winterfell le 28e (couronnement-rhaenyra, diffusion 3, livree). Le Sud lui est parvenu."
+    },
+    {
+      "table": "intentions",
+      "cible": "cregan-stark",
+      "operation": "croyance_ajouter",
+      "valeur": "Corbeau de la baie pose au vingt-huitieme jour, dix jours de vol : la fille de Viserys a ete couronnee sur son rocher avec la couronne du roi mort, et un autre l'a ete a Port-Real. Deux couronnes, et personne n'est encore venu lui redemander la parole de son pere.",
+      "pourquoi": "Source exacte : couronnement-rhaenyra, diffusion vers winterfell, corbeau, fiabilite 65, livree le 129.3.28. Une croyance qui porte sa source et sa date, comme le veut l'etape 4 du process."
+    },
+    {
+      "table": "intentions",
+      "cible": "cregan-stark",
+      "operation": "ignore_retirer",
+      "valeur": "Que Viserys est mort et qu'Aegon II est couronné : le corbeau vole encore et ne touchera Winterfell que dans cinq jours",
+      "pourquoi": "Il ne l'ignore plus : la diffusion est livree."
+    },
+    {
+      "table": "intentions",
+      "cible": "cregan-stark",
+      "operation": "ignore_ajouter",
+      "valeur": "Que l'ambassade qui devait venir a Winterfell lui redemander le serment de 105 a ete abandonnee par son porteur le vingtieme jour, a Peyredragon, pour une autre charge. Il attend, honorablement et sans impatience, un homme qui n'est jamais parti — et c'est cela, et rien d'autre, qui tient le Nord immobile.",
+      "pourquoi": "C'est l'ignore qui EXPLIQUE la lenteur du Nord, exigee par le brief. Tire de evenements.json/emissaire-jacaerys (statut devie : Jacaerys a abandonne cette mission de sa propre main le 20). Rien d'invente."
+    },
+    {
+      "table": "intentions",
+      "cible": "cregan-stark",
+      "operation": "etape",
+      "etape": "cregan-greniers",
+      "champs": {
+        "jours_restants": 15
+      },
+      "pourquoi": "25 jours poses le 129.3.18, dix jours de monde ecoules et jamais decomptes (date_maj est restee au 18). Echeance longue conservee : le grain du Nord tombe le 129.4.13."
+    },
+    {
+      "table": "intentions",
+      "cible": "cregan-stark",
+      "operation": "tete",
+      "champs": {
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 28
+        }
+      },
+      "pourquoi": "Une tete non touchee derive (CLAUDE.md, boucle hors scene, etape 5)."
+    },
+    {
+      "table": "evenements",
+      "cible": "vol-rhaenyra-sombreval",
+      "operation": "diffusion_ajouter",
+      "valeur": {
+        "ou": "winterfell",
+        "qui": [
+          "cregan-stark"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 2
+        },
+        "canal": "corbeau",
+        "fiabilite": 45,
+        "version": "Relaye par Blancport, ou l'on tient les nouvelles du Sud de seconde main : la reine du rocher aurait brule une armee du roi sur une route, quelque part au sud de la baie, pour un vassal qu'on ne sait pas nommer ici. On y ajoute que la guerre a commence sans declaration. Personne au Nord ne sait combien d'hommes, ni si le roi a repondu.",
+        "livree": false
+      },
+      "pourquoi": "ROUTE PAR LAQUELLE LE NORD APPREND QUE LE JOUEUR A BOUGE. Acte scelle parti de Peyredragon le 22e ; ancrage de route mesure dans l'etat : le couronnement du 18e a mis DIX jours pour Winterfell (diffusion livree le 28e). 22 + 10 = 129.4.2. Fiabilite 45 : il ne recoit pas l'acte, il recoit ce qu'en dit Blancport."
+    },
+    {
+      "table": "intentions",
+      "cible": "jeyne-arryn",
+      "operation": "croyance_retirer",
+      "valeur": "Un corbeau de Port-Réal, sept jours de vol, dit Viserys mort et Aegon couronné et oint — et ne dit rien de Rhaenyra : ce silence est la nouvelle",
+      "pourquoi": "Perimee : le silence sur Rhaenyra a ete rompu le 24e par la deposition de ser Steffon (deposition-steffon, diffusion vers les-eyrie, livree)."
+    },
+    {
+      "table": "intentions",
+      "cible": "jeyne-arryn",
+      "operation": "croyance_ajouter",
+      "valeur": "Corbeau du vingt-quatrieme jour : une deposition signee d'un manteau blanc et contresignee par deux capitaines braaviens jure que Viserys n'a pas deshonore sa fille. Peyredragon n'envoie pas des menaces, elle envoie une piece d'archive — et au Val une piece d'archive pese plus lourd qu'un dragon.",
+      "pourquoi": "Source exacte : deposition-steffon, diffusion 2, corbeau, fiabilite 70, livree le 129.3.24. La croyance reprend les mots de la version arrivee, pas le fait vrai."
+    },
+    {
+      "table": "intentions",
+      "cible": "jeyne-arryn",
+      "operation": "ignore_retirer",
+      "valeur": "Que Rhaenyra a été couronnée hier, et qu'une déposition signée d'un manteau blanc est déjà en route pour les Eyrié",
+      "pourquoi": "La deposition est arrivee et le couronnement est vieux de dix jours : cet ignore n'explique plus rien."
+    },
+    {
+      "table": "intentions",
+      "cible": "jeyne-arryn",
+      "operation": "ignore_ajouter",
+      "valeur": "Qu'un pli de la main de la reine, sous cachet prive, se pose aux Eyrie au trentieme jour et ne lui demande RIEN : ni hommes, ni bannieres, ni le serment. Elle s'est juree de ne pas etre la premiere a ecrire ; on va lui offrir la seule lettre a laquelle ce serment ne l'oblige pas a repondre.",
+      "pourquoi": "L'ignore qui explique la lenteur apparente du Val. Tire de evenements.json/arrivee-lettre-privee-jeyne (a-venir le 129.3.30) : le pli existe deja dans l'etat, je ne l'invente pas."
+    },
+    {
+      "table": "intentions",
+      "cible": "jeyne-arryn",
+      "operation": "etape",
+      "etape": "jeyne-cousins",
+      "champs": {
+        "jours_restants": 2
+      },
+      "pourquoi": "12 jours poses le 129.3.18, dix ecoules. La liste des cousins tombe le 129.3.30 — le meme jour que le pli prive de la reine : elle lira l'un en tenant l'autre."
+    },
+    {
+      "table": "intentions",
+      "cible": "jeyne-arryn",
+      "operation": "tete",
+      "champs": {
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 28
+        }
+      },
+      "pourquoi": "idem Cregan."
+    },
+    {
+      "table": "evenements",
+      "cible": "decheance-de-rhaenyra",
+      "operation": "diffusion_ajouter",
+      "valeur": {
+        "ou": "les-eyrie",
+        "qui": [
+          "jeyne-arryn"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 29
+        },
+        "canal": "corbeau",
+        "fiabilite": 85,
+        "version": "Copie de la proclamation d'Aegon II : Rhaenyra et sa lignee sont dechues, un prix est mis sur les tetes de Peyredragon, et le pardon est retire a ceux de sa maison qui viendraient sans elle. Rien n'y nomme le Val — ce qui, aux Eyrie, se lit comme une invitation a ne pas se faire remarquer.",
+        "livree": false
+      },
+      "pourquoi": "ROUTE PAR LAQUELLE LE VAL APPREND OU EN EST L'AFFAIRE. Partie de Port-Real le 22e ; ancrage : la deposition partie de Peyredragon dans la nuit du 17 a touche les Eyrie le 24e, soit SEPT jours. 22 + 7 = 129.3.29. Elle arrive UN JOUR AVANT le pli prive de la reine — c'est la que se joue le Val."
+    },
+    {
+      "table": "personnages",
+      "cible": "jason-lannister",
+      "operation": "personnage",
+      "champs": {
+        "etat": "actif"
+      },
+      "pourquoi": "Actif = a une entree dans intentions.json (CLAUDE.md, casting dynamique). Sa fiche existe deja (lieu_id castral-roc) : RIEN N'EST CREE."
+    },
+    {
+      "table": "intentions",
+      "operation": "tete_ajouter",
+      "valeur": {
+        "personnage_id": "jason-lannister",
+        "echelle": "royaume",
+        "croyances": [
+          "Son frere jumeau Tyland siege deja au conseil du roi Aegon comme maitre des deniers : ce que l'Ouest donnera, il le donnera a un roi couronne et oint, et par un Lannister deja place. Corbeau de Port-Real pose au vingt-quatrieme jour.",
+          "Quatre mille lances en selle sans toucher aux mines ni aux moissons ; neuf mille s'il vide l'Ouest, et il ne le videra pas. Neuf cent mille dragons au Roc, plus que la Couronne n'en a — c'est l'or, et non les hommes, qui fait de lui quelqu'un a qui l'on parle.",
+          "Entre le Roc et le Conflans il y a la Dent d'Or et quarante jours de marche : aucune armee ne sort de l'Ouest sans que le Conflans le sache trois semaines a l'avance, et il n'y a rien a y faire."
+        ],
+        "ignore": [
+          "Qu'un dragon a brule une colonne du roi sur la route de Sombreval le seizieme jour et qu'une seconde reine a ete couronnee le dix-huitieme. Ce qu'il recevra de Port-Real, c'est la proclamation de decheance — du parchemin. Il croit encore que cette affaire se reglera entre seigneurs, par des lettres et une demonstration.",
+          "Que l'ost de ser Criston n'est pas parti faute d'or, et que son frere Tyland promet a Port-Real un tresor qu'il n'a pas encore reuni : l'Ouest sera peut-etre le premier a marcher, et donc le premier a payer."
+        ],
+        "intention": "Lever l'Ouest a son rythme et le mener a l'est par la Dent d'Or, pour que la victoire du roi porte le lion et non le griffon — et arriver au Conflans avec assez d'hommes pour qu'on ne puisse plus lui donner d'ordres.",
+        "plan": [
+          {
+            "id": "jason-lever-louest",
+            "quoi": "Convoquer au Roc les bannerets de l'Ouest — Marpheux, Payne, Brax, Lydden, Prestre — et rassembler quatre mille lances sous sa propre banniere, sans attendre que Port-Real le lui demande",
+            "etat": "en-cours",
+            "jours_restants": 40,
+            "depend_de": [],
+            "cout": [
+              "quarante jours de corbeaux et de routes de montagne : l'Ouest est large et ses seigneurs sont loin",
+              "quatre mille hommes retires aux mines et aux moissons de fin d'ete",
+              "l'or du Roc pour les nourrir, la Couronne ne payant rien d'avance"
+            ],
+            "si_bloque": "Si les bannerets tardent au-dela des quarante jours, il part avec ce qu'il a et fait ecrire a Port-Real que les autres ont manque a l'appel. Il prefere une petite armee qui est la sienne a une grande qu'il faudrait partager.",
+            "accompli": null
+          },
+          {
+            "id": "jason-passer-la-dent-dor",
+            "quoi": "Passer la Dent d'Or et entrer dans le Conflans en armes, pour que l'Ouest soit sur le terrain avant que les Verts n'aient a le lui demander",
+            "etat": "en-cours",
+            "jours_restants": 90,
+            "depend_de": [
+              "jason-lever-louest"
+            ],
+            "cout": [
+              "quarante jours de marche pour quatre mille hommes, et le grain a lever sur les terres qu'on traverse",
+              "l'accord tacite des seigneurs des marches, qui n'aiment pas voir passer une armee",
+              "que les Tully ne ferment pas les gues avant lui"
+            ],
+            "si_bloque": "S'il ne peut pas passer avant l'automne, il campe sous la Dent d'Or et fait dire a Port-Real que l'Ouest tient la porte du Conflans. Cela ne lui coute pas un homme et se lit comme un service rendu.",
+            "accompli": null
+          }
+        ],
+        "declencheurs": [],
+        "attitude_joueur": "Il ne l'a jamais vue et ne la craint pas. Une femme dechue par proclamation, dont la tete se paie : s'il la croise un jour, ce sera au bout d'une lance et pour la gloire — et c'est exactement ainsi qu'on meurt.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 28
+        }
+      },
+      "pourquoi": "Le chef de l'Ouest, seul acteur retenu (palier B). Budget royaume respecte : 3 croyances, 2 etapes, AUCUN declencheur. Echeances longues : 40 et 90 jours."
+    },
+    {
+      "table": "evenements",
+      "cible": "decheance-de-rhaenyra",
+      "operation": "diffusion_ajouter",
+      "valeur": {
+        "ou": "castral-roc",
+        "qui": [
+          "jason-lannister"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 2
+        },
+        "canal": "corbeau",
+        "fiabilite": 90,
+        "version": "Copie de la proclamation, et sous le meme sceau une ligne de la main de son frere Tyland : le roi tiendra compte de qui aura leve le premier, et l'Ouest a plus d'or que d'excuses.",
+        "livree": false
+      },
+      "pourquoi": "C'est par PORT-REAL que l'Ouest apprend les choses, jamais par le joueur : c'est ce que veut dire allegeance_reelle vert. Route tranchee a DIX jours (castral-roc jours_de_pr 30, interpole entre les Eyrie a 20 pour 7 jours et Winterfell a 40 pour 13). 22 + 10 = 129.4.2. C'est cette lettre qui arme jason-lever-louest."
+    },
+    {
+      "table": "evenements",
+      "cible": "vol-rhaenyra-sombreval",
+      "operation": "diffusion_ajouter",
+      "valeur": {
+        "ou": "castral-roc",
+        "qui": [
+          "jason-lannister"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 6
+        },
+        "canal": "rumeur",
+        "fiabilite": 30,
+        "version": "Ce qui remonte par les marchands de la route de la Dent d'Or, avec quinze jours de retard et trois bouches de trop : la fille de Viserys aurait brule trois mille hommes du roi sur une route de la baie, avec deux betes ou peut-etre trois, et personne n'aurait survecu pour dire lesquelles. On dit aussi qu'elle est morte en couches, et on le dit dans la meme phrase.",
+        "livree": false
+      },
+      "pourquoi": "LA ROUTE PAR LAQUELLE LE JOUEUR ATTEINT L'OUEST — quinze jours, par la rumeur, et fausse sur presque tout. Jason agira sur ce recit-la, pas sur le fait."
+    }
+  ],
+  "a_la_main": {
+    "note": "RIEN. Aucune ecriture hors du vocabulaire d'appliquer.py n'est necessaire pour ce lot : les trois chefs ont une fiche dans personnages.json, les trois maisons ont leurs chiffres dans maisons.json, aucune main n'est justifiee au palier B, aucune relation nouvelle ne compte au joueur cette lune, et le champ declencheurs n'est mute nulle part (Cregan et Jeyne gardent le leur intact, Jason n'en a aucun).",
+    "prealable_lannister": "AUCUN. jason-lannister EXISTE dans personnages.json (etat dormant, lieu_id castral-roc). Il est reveille par une mutation personnages/etat, ce qu'appliquer.py sait faire."
+  },
+  "routes_de_nouvelles": {
+    "methode": "Deux ancrages MESURES dans l'etat, jamais une regle de pouce : le couronnement parti de Peyredragon le 18e est livre a Winterfell le 28e (DIX jours) ; la deposition partie de Peyredragon dans la nuit du 17 est livree aux Eyrie le 24e (SEPT jours). Castral Roc (jours_de_pr 30) est interpole entre les Eyrie (20 -> 7 j) et Winterfell (40 -> 13 j) : DIX jours. Calendrier de 12 lunes de 30 jours.",
+    "tableau": [
+      {
+        "maison": "Stark",
+        "apprend": "que la reine a brule une colonne du roi",
+        "par": "corbeau relaye par Blancport",
+        "depuis": "Peyredragon, acte scelle du 22e",
+        "arrive": "129.4.2",
+        "jours": 10,
+        "fiabilite": 45,
+        "deformation": "ni le nombre, ni le nom du vassal, ni si le roi a repondu"
+      },
+      {
+        "maison": "Arryn",
+        "apprend": "que la tete de la reine est mise a prix",
+        "par": "corbeau",
+        "depuis": "Port-Real, proclamation du 22e",
+        "arrive": "129.3.29",
+        "jours": 7,
+        "fiabilite": 85,
+        "deformation": "aucune sur le texte — la deformation est dans ce qu'elle en lit : le Val n'y est pas nomme"
+      },
+      {
+        "maison": "Lannister",
+        "apprend": "la decheance, et la ligne de son jumeau",
+        "par": "corbeau",
+        "depuis": "Port-Real, proclamation du 22e",
+        "arrive": "129.4.2",
+        "jours": 10,
+        "fiabilite": 90,
+        "deformation": "aucune : l'Ouest est du bon cote de la lettre"
+      },
+      {
+        "maison": "Lannister",
+        "apprend": "le feu de la route de Sombreval",
+        "par": "rumeur des marchands de la Dent d'Or",
+        "depuis": "la baie",
+        "arrive": "129.4.6",
+        "jours": 15,
+        "fiabilite": 30,
+        "deformation": "trois mille morts, deux ou trois betes, et la reine donnee pour morte en couches dans la meme phrase"
+      }
+    ]
+  },
+  "tranches_faute_d_information": [
+    "ROUTE VERS CASTRAL ROC : dix jours par corbeau depuis Port-Real. Aucune table ne la donne ; interpolee sur les deux ancrages mesures. Si le MJ a une autre echelle, corriger les deux diffusions Lannister ensemble.",
+    "DECOMPTE DES HORLOGES DE CREGAN ET DE JEYNE : leurs date_maj etaient restees au 129.3.18 et leurs jours_restants n'avaient jamais ete decomptes des dix jours ecoules. J'ai decompte (25 -> 15 ; 12 -> 2). Si le tick les a deja passees autrement, ces deux mutations sont a retirer — elles sont independantes du reste du lot.",
+    "CANON LANNISTER : rien dans evenements.json. Les deux etapes de Jason s'arretent AVANT toute bataille : je n'ai pas ecrit d'evenement canon, ce qui n'est pas mon office ici.",
+    "RUMEUR DE LA MORT EN COUCHES : de moi. Plausible — Rhaenyra a accouche le 13e et a saigne en vol le 16e — et elle sert la fiabilite 30. Si le MJ ne la veut pas, couper la derniere phrase de la version.",
+    "AUCUNE ETAPE NEUVE POUR CREGAN NI POUR JEYNE : le budget royaume est de deux etapes vivantes et ils en ont deja deux chacun. Leur approfondissement passe par les croyances, l'ignore et les routes — ce qui est exactement le palier B."
+  ],
+  "applique_le": "2026-08-09T19:22:44"
+}

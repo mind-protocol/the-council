@@ -1,0 +1,95 @@
+{
+  "qui": "robert-quince",
+  "activation": {
+    "tache": {
+      "id": "etape:quince-galeries",
+      "quoi": "Faire descendre des hommes dans les galeries et en dresser le plan lui-même, à la craie, faute de carte",
+      "creee": false
+    },
+    "budget_energie": 100,
+    "energie_depensee": 96,
+    "issue": "avance",
+    "activites": [
+      {
+        "ordre": 1,
+        "quoi": "S'arrête devant la bouche basse qu'il connaît, la main sur le linteau, et compte tout haut ce que la descente coûte contre ce qu'il a : douze hommes demandés, cinq de marge — et trois de ces cinq ne sont rendus que tant qu'un homme peut marcher entre la barbacane et la porte du Dragon.",
+        "cible_id": "etape:quince-galeries",
+        "source": "sa liste de postes critiques écrite avant midi le 28e — cent dix-huit sur cent vingt, marge portée à cinq ce soir",
+        "cout_energie": 22,
+        "resultat": "Douze est hors de portée sans descendre sous le plancher qu'il a juré tout haut. Il ne descendra pas douze. Il descendra ce qu'il a, et il l'écrit ainsi : trois hommes, une bouche, et le plan commencé par le bout qu'il tient.",
+        "preuve": null
+      },
+      {
+        "ordre": 2,
+        "quoi": "Fait ouvrir le coffre à torches de la porte du Dragon et compte les torches à poix de sa main, sans demander au magasinier.",
+        "cible_id": null,
+        "source": "le coffre à torches de la porte du Dragon, ouvert de ses mains",
+        "cout_energie": 18,
+        "resultat": "De quoi tenir une descente courte, pas neuf jours. Il n'en fait pas une plainte : il ramène la première descente à la longueur de ce qu'il a en main.",
+        "preuve": null
+      },
+      {
+        "ordre": 3,
+        "quoi": "Nomme trois hommes à la relève, répète l'ordre mot pour mot devant eux : entrer par la bouche basse, marquer chaque embranchement à la craie d'un chiffre et ne prendre AUCUN embranchement neuf sans lui — ressortir par où l'on est entré, l'un reste à la bouche avec une corde et ne descend pas.",
+        "cible_id": null,
+        "source": "sa règle de garnison — il décide seul de ce qui ne coûte ni un mort ni la parole de la reine",
+        "cout_energie": 24,
+        "resultat": "Les trois répètent. Le quatrième pas est refusé au plus jeune, qui voulait suivre : c'est un homme de trop retiré des murs.",
+        "preuve": null
+      },
+      {
+        "ordre": 4,
+        "quoi": "Descend le premier, souffle en descendant et s'en excuse, marque à la craie le seuil « I » et compte ses pas jusqu'au premier embranchement.",
+        "cible_id": null,
+        "source": "la bouche basse sous le rocher, et sa craie",
+        "cout_energie": 20,
+        "resultat": "Quatre-vingt-onze pas, puis la galerie se sépare en trois et non en deux. Il marque I-a, I-b, I-c au charbon et à la craie, et note l'air : deux branches tirent le feu de la torche, la troisième ne le tire pas.",
+        "preuve": "trois marques à la craie sous le rocher, comptées à quatre-vingt-onze pas de la bouche basse"
+      },
+      {
+        "ordre": 5,
+        "quoi": "Remonte, écrit de sa main au cahier d'affaire : bouche basse ouverte, une branche sur trois respire vers le dehors — donc au moins une seconde bouche que je n'ai jamais fermée. Porte au registre du soir le nombre exact d'hommes retirés des murs pour cette heure.",
+        "cible_id": "quince-galeries",
+        "source": "son cahier d'affaire, conclusion écrite de sa main",
+        "cout_energie": 12,
+        "resultat": "Le plan tient en une page et neuf marques. Ce qu'il apprend n'est pas le tracé : c'est qu'une des trois branches sort quelque part hors de sa muraille, et que quelqu'un peut entrer par là. Il ne le dira à la reine que quand il saura où elle sort — ou demain à sept heures si un homme manque.",
+        "preuve": null
+      }
+    ],
+    "suite": "Suivre I-c, celle qui ne tire pas le feu, jusqu'à son fond ou son bouchon — trois hommes, une torche par homme, avant l'étale de demain, et avant l'heure prise avec maître Rulf Corne sur son cahier des sorties."
+  },
+  "mutations_proposees": [
+    {
+      "quoi": "L'étape quince-galeries passe de « douze hommes, neuf jours » à « trois hommes, par bouches successives » — le plancher de cent vingt ne se lève pas pour un plan.",
+      "cible_id": "etape:quince-galeries",
+      "champ": "cout",
+      "valeur": [
+        "trois hommes, torches à poix, une bouche par descente"
+      ]
+    },
+    {
+      "quoi": "Fait nouveau connu de Quince : la bouche basse ouvre sur trois branches, dont deux respirent vers le dehors — il existe au moins une seconde issue sous le rocher qu'il n'a jamais fermée.",
+      "cible_id": "robert-quince",
+      "champ": "intention.croyances",
+      "valeur": "Sous le rocher, une galerie sur trois tire l'air vers le dehors : il y a une bouche que je n'ai pas fermée, et je fouille ce qui accoste pendant qu'on peut entrer par-dessous."
+    },
+    {
+      "quoi": "Retirer des ignorances : le tracé n'est plus entièrement inconnu — un seuil et trois embranchements sont levés à la craie.",
+      "cible_id": "robert-quince",
+      "champ": "intention.ignore",
+      "valeur": "Le tracé des sept galeries — hormis la bouche basse et ses trois premières branches, relevées le 28e à la craie"
+    }
+  ],
+  "_activation": {
+    "session": "cab574aa-1ed6-404c-9d6a-14644093ada5",
+    "system_prompt": "Tu es robert-quince. Tu recois une activation narrative bornee, jamais une journee entiere. Tu agis depuis les faits du dossier ferme, sans secours providentiel et sans ecrire dans le monde. Tu rends seulement le JSON demande.\n",
+    "system_prompt_source": "historique:boucle_activation.py:inline",
+    "system_prompt_sha256": "f04b510b49716c9f0099d0c70bdd3fd1835018fe059e3554d043435586c875fe",
+    "cree_le": "2026-08-09T19:36:36.848320+02:00",
+    "front": "aurore-inchauspe",
+    "present_secondes": 61380.0,
+    "importance": 0.218263,
+    "budget": 100
+  },
+  "applique_le": "verifie-en-prod:2026-08-10 (fusion staging->etat)"
+}

@@ -1,0 +1,531 @@
+{
+  "objet": "Stokeworth — lot d'ouverture MOINS la promotion d'echelle.",
+  "empreintes": {
+    "intentions": "d3aaaa6360ae90d14d658c9b80797784742383ab",
+    "evenements": "e444ffbb2d9a6b9bcdc67b06fe1bfc75b625e9f5",
+    "personnages": "2164c43bdce7368f9381f41c1ac5a26c647c83ea",
+    "lieux": "ada66c0b8b19f31241bcbff3ea7dadef6f0025c9",
+    "monde": "c4f54353d9dc7559642928425d908f3d3ba29271",
+    "relations": "79cf0281b344eaa9648c17d422edc15fb8e2892b",
+    "maisons": "70947660a4023d8cf769fb7ed8495c6cc1cb80b8"
+  },
+  "mutations_proposees": [
+    {
+      "table": "personnages",
+      "operation": "personnage_ajouter",
+      "valeur": {
+        "id": "falena-stokeworth",
+        "nom": "Falena Stokeworth",
+        "maison_id": "maison-stokeworth",
+        "titre": "Fille aînée de Stokeworth",
+        "naissance": 110,
+        "traits": [
+          "impatiente",
+          "lucide",
+          "fière",
+          "sans illusions sur son prix"
+        ],
+        "objectifs": [
+          {
+            "but": "Obtenir que sa maison écrive à quelqu'un avant que plus personne n'ait besoin de sa réponse",
+            "priorite": 1
+          },
+          {
+            "but": "Se donner une adresse hors de Stokeworth avant que son père n'en trouve une pour elle",
+            "priorite": 2
+          }
+        ],
+        "maniere": "Phrases courtes et chiffrées, apprises du castellan plutôt que de sa septa ; elle compte les jours tout haut devant les gens que ça gêne.",
+        "portrait": {
+          "fichier": null,
+          "physique": "Grande, maigre, la mâchoire de son père sans sa graisse ; les mains toujours occupées à quelque chose pendant qu'elle parle.",
+          "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, candlelight, tall gaunt young noblewoman, strong jaw, plain green gown with a small white lamb badge, impatient level stare, hands busy with a ribbon"
+        },
+        "etat": "actif",
+        "lieu_id": "stokeworth",
+        "condition": "libre"
+      },
+      "pourquoi": "Cree actif — sa tete est dans ce lot."
+    },
+    {
+      "table": "personnages",
+      "operation": "personnage_ajouter",
+      "valeur": {
+        "id": "harwyn-bourrel",
+        "nom": "Ser Harwyn Bourrel",
+        "maison_id": "maison-stokeworth",
+        "titre": "Castellan de Stokeworth",
+        "naissance": 83,
+        "traits": [
+          "méthodique",
+          "borné",
+          "honnête par comptabilité",
+          "incapable de mentir sur un chiffre"
+        ],
+        "objectifs": [
+          {
+            "but": "Tenir la porte, la grange et le compte en état de répondre à n'importe lequel des deux camps",
+            "priorite": 1
+          },
+          {
+            "but": "Obtenir par écrit un plafond de grain, pour n'avoir pas à le décider seul devant des lances",
+            "priorite": 2
+          }
+        ],
+        "maniere": "Ne répond jamais avant d'être allé chercher le registre ; donne le chiffre, la date et la page, puis se tait et attend qu'on en fasse quelque chose.",
+        "portrait": {
+          "fichier": null,
+          "physique": "Sec, quarante-six ans, une main droite raide depuis un cheval ; la chaîne de castellan portée par-dessus un manteau qui a fait deux hivers de trop.",
+          "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, candlelight, lean weathered castellan in his forties, stiff right hand, plain steward's chain over a worn green mantle, patient unimpressed expression"
+        },
+        "etat": "actif",
+        "lieu_id": "stokeworth",
+        "condition": "libre"
+      },
+      "pourquoi": "Cree actif — sa tete est dans ce lot."
+    },
+    {
+      "table": "personnages",
+      "cible": "lord-stokeworth",
+      "operation": "personnage",
+      "pourquoi": "Déjà 'actif'. Aucun changement de lieu ni de condition — présente pour mémoire, à retirer si le lot doit être minimal.",
+      "champs": {
+        "etat": "actif"
+      }
+    },
+    {
+      "table": "intentions",
+      "cible": "lord-stokeworth",
+      "operation": "tete",
+      "pourquoi": "Approfondissement SANS la promotion (orbite) : budget orbite plein, arbitrage en attente.",
+      "champs": {
+        "intention": "Ne rien envoyer avant que Rosby n'envoie. Faire rentrer les neuf sans bruit, se donner un chiffre de grain pour n'avoir jamais à répondre non de vive voix, et atteindre le huitième jour de la quatrième lune — terme de la quinzaine du roi — sans avoir écrit à personne. Il ne cherche pas à gagner : il cherche à n'être cité dans aucune des deux listes.",
+        "attitude_joueur": "Elle a renvoyé ses hommes vivants quand elle pouvait les pendre, et elle lui a écrit la première, par un cavalier payé et non par un corbeau — il a relevé les deux. Cela ne vaut pas un serment. Mais il a cessé de la traiter comme la partie qui perdra, et il a interdit chez lui qu'on l'appelle autrement que « la princesse » : ni reine, ni usurpatrice, le mot qui n'engage à rien.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 28
+        }
+      }
+    },
+    {
+      "table": "intentions",
+      "cible": "lord-stokeworth",
+      "operation": "croyance_ajouter",
+      "pourquoi": "Sa boussole, déjà écrite dans relations.json (lien 'boussole', opinion 50) et dans ses objectifs : faire exactement ce que fera Rosby, ni plus, ni avant. Source : ses charrons au gué, le 27e.",
+      "valeur": "Rosby n'a rien signé non plus — il le tient de ses charrons au gué, le vingt-septième. Tant que Rosby ne signe pas, ne rien signer n'est pas une faute : c'est une politique à deux châteaux."
+    },
+    {
+      "table": "intentions",
+      "cible": "lord-stokeworth",
+      "operation": "croyance_ajouter",
+      "pourquoi": "Sourcée et datée : info-echo-nom-de-la-chose (21e), Perrin le charron, qui roule ses futailles de Stokeworth.",
+      "valeur": "Sur la route on ne nomme pas la chose : on dit « le feu de la route », et personne n'y sait dire qui a brûlé qui. Tant que personne ne sait le dire, personne ne peut lui reprocher de n'avoir pas choisi."
+    },
+    {
+      "table": "intentions",
+      "cible": "lord-stokeworth",
+      "operation": "ignore_ajouter",
+      "pourquoi": "L'ignorance qui explique sa conduite du côté de sa maison : il croit tenir sa fille comme il tient ses hommes.",
+      "valeur": "Que sa fille aînée a déjà fait porter deux fois un mot au château de Rosby sans passer par lui, et qu'elle y a demandé ce qu'un mariage vaut à une maison qui n'a rien juré"
+    },
+    {
+      "table": "intentions",
+      "cible": "lord-stokeworth",
+      "operation": "etape",
+      "etape": "stokeworth-les-neuf",
+      "pourquoi": "Horloge décomptée du 25e (6 jours) au 28e : il en reste 3. Le coût est réécrit en jours et en cerfs, et le si_bloque est déjà armé sur ce qui va réellement arriver — la diffusion du 129.4.2 ci-dessous.",
+      "champs": {
+        "jours_restants": 3,
+        "cout": [
+          "trois jours encore, sur les six qu'il s'était donnés",
+          "la parole de neuf hommes qu'il ne tient pas, dont trois parlent déjà",
+          "vingt cerfs par tête distribués au retour, pour que le silence ait l'air d'une gratification"
+        ],
+        "si_bloque": "Si l'un d'eux parle avant d'être rentré, il le désavoue tout haut, le chasse de ses terres devant témoins, et écrit à Port-Réal le premier pour que la nouvelle vienne de lui et non d'un autre."
+      }
+    },
+    {
+      "table": "intentions",
+      "cible": "lord-stokeworth",
+      "operation": "etape_ajouter",
+      "pourquoi": "L'état cible daté du canon (quinzaine de la déchéance, terme 129.4.8) transformé en étape chiffrée : dix jours du 28e au 8e de la lune suivante.",
+      "valeur": {
+        "id": "stokeworth-les-deux-textes",
+        "quoi": "Faire écrire par son mestre DEUX textes de la même main et du même jour — l'un pour Port-Réal, l'autre pour Peyredragon —, les garder non scellés dans le même coffre, et n'en envoyer aucun tant que personne n'est venu avec des lances plutôt qu'avec un pli",
+        "etat": "en-cours",
+        "jours_restants": 10,
+        "depend_de": [],
+        "cout": [
+          "un mestre qui saura ce que contiennent les deux, et qui n'est pas à lui mais à la Citadelle",
+          "que ni Rosby ni sa fille ne parle avant lui pendant dix jours",
+          "quarante dragons de cire, de parchemin et de silence"
+        ],
+        "si_bloque": "Si la quinzaine expire le huitième sans qu'il ait rien envoyé, il envoie celui de Port-Réal — non par conviction, mais parce que Port-Réal est à un jour de cheval et Peyredragon derrière l'eau.",
+        "accompli": null
+      }
+    },
+    {
+      "table": "intentions",
+      "cible": "lord-stokeworth",
+      "operation": "etape_ajouter",
+      "pourquoi": "L'étape qui accroche la tête aux mains : son coût CITE une adresse de mesure (grenier-stokeworth.muids-en-grange), donc son si_bloque se déclenchera arithmétiquement et non au jugement.",
+      "valeur": {
+        "id": "stokeworth-le-chiffre-du-grain",
+        "quoi": "Faire compter par son castellan ce que la grange peut donner sans que la maison jeûne, pour avoir un chiffre à opposer au premier qui demandera — et ne jamais avoir à répondre non de sa propre bouche",
+        "etat": "en-cours",
+        "jours_restants": 2,
+        "depend_de": [],
+        "cout": [
+          "grenier-stokeworth.muids-en-grange",
+          "deux journées de son castellan, qui ne sera donc pas à la porte"
+        ],
+        "si_bloque": "S'il n'a pas de chiffre le jour où on lui demande, il donne le tiers de ce qu'on lui demande, sans écrit et sans reçu, et fait porter le reste sur Rosby « qui en a plus que nous ».",
+        "accompli": null
+      }
+    },
+    {
+      "table": "intentions",
+      "operation": "tete_ajouter",
+      "pourquoi": "Celle qui conteste à l'intérieur. Échelle 'royaume' et non 'orbite' : elle ne répond pas encore au joueur, elle travaille son père. Elle montera d'un cran le jour où elle écrira elle-même à quelqu'un du château. Budget royaume respecté : 3 croyances, 2 étapes, 1 déclencheur.",
+      "valeur": {
+        "personnage_id": "falena-stokeworth",
+        "echelle": "royaume",
+        "croyances": [
+          "Son père la marchande depuis deux ans et n'a conclu avec personne : elle a compris cet hiver que ce n'est pas de la prudence, c'est qu'accepter une offre serait choisir un camp.",
+          "Une maison qui n'a rien juré n'a rien à vendre. Quand les deux camps auront fini de compter, Stokeworth ne sera dans aucune des deux listes, et une fille de Stokeworth ne vaudra plus rien — c'est le vingt-troisième, en entendant lire la proclamation dans la cour, qu'elle s'est dit cela.",
+          "Neuf des hommes de son père ont ployé le genou à Peyredragon et en sont revenus vivants : quelqu'un chez la princesse a décidé de ne pas les pendre, et ce quelqu'un-là sait déjà compter."
+        ],
+        "ignore": [
+          "Que son père a écarté deux offres de mariage en deux ans sans jamais les lui nommer, et qu'une des deux venait de Rosby",
+          "Que la lettre de la princesse arrivée le vingt-troisième demandait une réponse et non un accusé de réception — son père l'a fait lire à haute voix jusqu'à l'avant-dernière ligne seulement"
+        ],
+        "intention": "Obtenir que son père ÉCRIVE à quelqu'un, n'importe lequel des deux, tant qu'une réponse existe encore — et, s'il ne le fait pas avant le terme de la quinzaine, se donner elle-même une adresse dehors.",
+        "plan": [
+          {
+            "id": "falena-faire-parler-rosby",
+            "quoi": "Faire porter un troisième mot au château de Rosby, par la femme d'un charron et non par un homme de la maison, pour savoir ce que Rosby répondra avant que son père ne le sache — puisque son père ne bougera que copié sur Rosby",
+            "etat": "en-cours",
+            "jours_restants": 4,
+            "depend_de": [],
+            "cout": [
+              "deux jours de route pour une femme qui n'est pas à elle",
+              "six cerfs pris sur ses propres bijoux",
+              "le risque qu'on le répète à son père avant qu'elle n'ait la réponse"
+            ],
+            "si_bloque": "Si Rosby ne répond rien, elle cesse de passer par Rosby et fait demander à la dame de Rosby, qui est à Peyredragon depuis le vingt-deuxième, ce qu'une femme obtient là-bas quand elle arrive sans être envoyée.",
+            "accompli": null
+          },
+          {
+            "id": "falena-le-terme",
+            "quoi": "Compter les jours de la quinzaine à voix haute à table, tous les soirs, devant son père et devant le castellan",
+            "etat": "en-cours",
+            "jours_restants": 10,
+            "depend_de": [],
+            "cout": [
+              "la moitié des soirs où son père lui coupe la parole",
+              "que le castellan finisse par la soutenir ou par la dénoncer, et elle ne sait pas lequel"
+            ],
+            "si_bloque": "Si son père lui interdit la table, elle fait compter les jours par sa septa dans la chapelle, où il ne peut pas le lui interdire sans que la maison entière sache pourquoi.",
+            "accompli": null
+          }
+        ],
+        "declencheurs": [
+          {
+            "si": "Un envoyé nommé de Peyredragon — lettre, cavalier ou officier — se présente aux portes de Stokeworth",
+            "alors": "Elle s'arrange pour être dans la cour à son arrivée et pour lui parler seule avant son père, ne serait-ce que le temps de lui faire dire d'où il vient et qui l'envoie.",
+            "une_fois": false
+          }
+        ],
+        "attitude_joueur": "Elle ne la connaît que par neuf hommes rentrés vivants et par une lettre qu'on ne lui a pas lue jusqu'au bout. Ce n'est pas de la loyauté : c'est qu'elle a deviné que la princesse est le seul des deux camps qui ait, cette lune, envoyé quelque chose à Stokeworth sans rien exiger dans la même phrase.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 28
+        }
+      }
+    },
+    {
+      "table": "intentions",
+      "operation": "tete_ajouter",
+      "pourquoi": "L'homme de métier — c'est lui qu'on dépêchera à l'étape 5, et c'est par lui qu'un chiffre sortira de cette maison. Échelle 'royaume' faute de place en orbite ; ses MAINS (grenier-stokeworth) ne sont pas budgétées et font le gros du travail, et son seuil le fera monter d'un cran le jour où son affaire mord. Budget royaume respecté : 3 croyances, 2 étapes, 1 déclencheur.",
+      "valeur": {
+        "personnage_id": "harwyn-bourrel",
+        "echelle": "royaume",
+        "croyances": [
+          "Quatre cents levées au registre veut dire soixante hommes payés et trois cent quarante paysans à qui il faudrait deux semaines et du pain : il l'a écrit au seigneur deux fois, en deux lunes, et le seigneur continue de dire quatre cents.",
+          "Un ost qui marche sur Sombreval passera sous ces murs et mangera ici : ce n'est pas une opinion, c'est la route — il n'y en a pas d'autre entre Port-Réal et la baie.",
+          "Neuf hommes rentrés à pied de Peyredragon sans une égratignure sont neuf témoins qu'on ne fera pas taire avec vingt cerfs, et il l'a dit au seigneur le vingt-cinquième."
+        ],
+        "ignore": [
+          "Que trois des neuf ont déjà raconté au village qu'ils ont juré en leur propre nom, et non au nom de leur seigneur",
+          "Que la lettre arrivée le vingt-troisième portait une dernière ligne qu'on ne lui a pas lue"
+        ],
+        "intention": "Tenir la porte, le compte et la grange en état de répondre à n'importe lequel des deux camps le jour où l'un des deux se présentera — et obtenir du seigneur, par écrit, un plafond de grain à donner, pour n'avoir pas à le décider seul devant des lances.",
+        "plan": [
+          {
+            "id": "harwyn-compter-la-grange",
+            "quoi": "Dépouiller la grange et les deux granges basses, muid par muid, et porter au seigneur UN chiffre : ce qui peut sortir sans que la maison jeûne avant la moisson",
+            "etat": "en-cours",
+            "jours_restants": 2,
+            "depend_de": [],
+            "cout": [
+              "deux journées d'homme et quatre bras de manœuvre pris à la porte",
+              "grenier-stokeworth.muids-en-grange"
+            ],
+            "si_bloque": "Si le seigneur refuse de fixer un plafond par écrit, il en fixe un lui-même au registre du castellan, le date, et le fait contresigner par le mestre — pour que ce soit la maison qui l'ait décidé et non lui.",
+            "accompli": null
+          },
+          {
+            "id": "harwyn-remettre-les-soixante-en-etat",
+            "quoi": "Remettre les soixante payés en état de tenir une porte quinze jours : solde à jour, deux tours de garde par nuit, et les deux charrettes de la basse-cour attelables en une heure",
+            "etat": "en-cours",
+            "jours_restants": 6,
+            "depend_de": [
+              "harwyn-compter-la-grange"
+            ],
+            "cout": [
+              "deux mille quatre cents cerfs de solde en retard de deux lunes, et cent vingt de plus par jour",
+              "six journées",
+              "du fer que le forgeron du bourg veut se faire payer d'avance depuis le feu de la route"
+            ],
+            "si_bloque": "S'il n'obtient pas la solde, il paie les vingt plus anciens seulement et laisse les quarante autres dormir chez eux — la porte tient le jour et ne tient plus la nuit, et il ne le dit à personne.",
+            "accompli": null
+          }
+        ],
+        "declencheurs": [
+          {
+            "si": "Un homme de la reine, ou un homme du roi, demande à Stokeworth du grain, du fourrage ou des guides",
+            "alors": "Il le fait attendre dans la cour, va chercher son chiffre au registre, et ne donne QUE ce chiffre — jamais un muid de plus, jamais de refus sec, et toujours contre un reçu écrit portant un nom et une date. Un reçu vaut mieux qu'un serment : ça prouve qu'on a donné, et ça ne dit pas à qui on est.",
+            "une_fois": false
+          }
+        ],
+        "attitude_joueur": "Il n'a d'elle que ceci, et ça lui suffit pour l'instant : les neuf sont rentrés à pied, vivants et sans fers, et le cavalier qui a porté sa lettre le vingt-troisième était payé, seul et sans escorte. On ne paie pas un homme seul pour porter une menace. Il attend de voir ce qu'elle demandera en second.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 28
+        }
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "couronnement-rhaenyra",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "LA NOUVELLE QUI CASSE SON PLAN. C'est par elle, et par aucune autre, que tombe sa croyance « le texte qu'on m'envoie ne sait pas que mes neuf ont juré ». Route : rumeur de marché depuis le rouleau lu tout haut à Peyredragon le 18e, quinze jours à remonter la route royale par les charrons et les futailles — donc 129.4.2. Fiabilité 55 : le compte est juste, les noms ne le sont pas.",
+      "valeur": {
+        "ou": "stokeworth",
+        "qui": [
+          "lord-stokeworth",
+          "harwyn-bourrel"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 2
+        },
+        "canal": "rumeur",
+        "fiabilite": 55,
+        "version": "Au marché de la route on dit qu'un rouleau de Peyredragon porte cent et douze noms d'hommes qui ont ployé le genou devant la princesse le jour de sa couronne, et que neuf en seraient d'ici. On ne sait pas les dire ; on sait les compter. Un homme de Rosby aurait dit qu'il y en a onze des siens, et que ça se lit dans un livre.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "decheance-de-rhaenyra",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "LA DATE DURE. Sa tête porte déjà « la quinzaine » de façon vague ; cette entrée lui apporte le TEXTE, avec le jour compté. Route : corbeau du roi, Port-Réal → Stokeworth (jours_de_pr 1), copie de chancellerie en seconde fournée aux maisons qui n'ont pas répondu. Fiabilité 95 : c'est le texte, il ne se déforme pas.",
+      "valeur": {
+        "ou": "stokeworth",
+        "qui": [
+          "lord-stokeworth",
+          "falena-stokeworth",
+          "harwyn-bourrel"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 30
+        },
+        "canal": "corbeau",
+        "fiabilite": 95,
+        "version": "Copie de la proclamation, seconde fournée, adressée aux maisons de la Couronne dont la chancellerie n'a reçu aucune réponse. Un prix par tête de Peyredragon. Quinze jours à compter du vingt-troisième jour de la troisième lune pour se délier par écrit de tout serment prêté là-bas. En bas, d'une autre encre et d'une autre main : passé ce terme, le silence sera tenu pour un refus.",
+        "livree": false
+      }
+    },
+    {
+      "table": "evenements",
+      "cible": "sac-sombreval",
+      "operation": "diffusion_ajouter",
+      "pourquoi": "LE VERROU DE LA ROUTE, écrit à froid et SUSPENDU : l'événement est 'a-venir', donc rien ne part tant qu'il n'est pas arbitré, et il ne partira JAMAIS s'il dévie (docs/schema.md : le statut commande la livraison). C'est le seul moyen d'écrire d'avance ce qu'un ost de passage fait à cette maison sans préjuger qu'il passera.",
+      "valeur": {
+        "ou": "stokeworth",
+        "qui": [
+          "lord-stokeworth",
+          "harwyn-bourrel",
+          "falena-stokeworth"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 6,
+          "jour": 1
+        },
+        "canal": "temoin",
+        "fiabilite": 100,
+        "version": "L'ost du roi a fait halte sous les murs. Fourrage et grain pris au prix du roi et payés en billets contresignés à Port-Réal, deux guides réquisitionnés au village, et l'ordre laissé par écrit de tenir les granges pleines pour le retour. Personne n'a demandé à lord Stokeworth de qui il était.",
+        "livree": false
+      }
+    },
+    {
+      "table": "intentions",
+      "operation": "declencheur_ajouter",
+      "cible": "lord-stokeworth",
+      "valeur": {
+        "si": "Un envoyé de la reine se présente à Stokeworth et demande du grain, des guides ou une réponse écrite",
+        "alors": "Il le reçoit bien, le fait manger, lui donne le chiffre de son castellan et pas un muid de plus, exige un reçu portant un nom et une date — et ne répond RIEN par écrit. Puis il fait partir un homme sur Rosby dans l'heure pour dire ce qui vient d'arriver chez lui, avant que Rosby ne l'apprenne d'ailleurs.",
+        "une_fois": false
+      },
+      "pourquoi": "Le seul des deux arme sur le joueur — quota royaume."
+    },
+    {
+      "table": "relations",
+      "operation": "relation_ajouter",
+      "source_id": "falena-stokeworth",
+      "cible_id": "lord-stokeworth",
+      "valeur": {
+        "opinion": -15,
+        "liens": [
+          "fille",
+          "créancière d'une réponse"
+        ],
+        "connue_du_joueur": false
+      },
+      "pourquoi": "Lien de la maison Stokeworth."
+    },
+    {
+      "table": "relations",
+      "operation": "relation_ajouter",
+      "source_id": "lord-stokeworth",
+      "cible_id": "falena-stokeworth",
+      "valeur": {
+        "opinion": 45,
+        "liens": [
+          "fille aînée",
+          "monnaie qu'il n'arrive pas à dépenser"
+        ],
+        "connue_du_joueur": false
+      },
+      "pourquoi": "Lien de la maison Stokeworth."
+    },
+    {
+      "table": "relations",
+      "operation": "relation_ajouter",
+      "source_id": "harwyn-bourrel",
+      "cible_id": "lord-stokeworth",
+      "valeur": {
+        "opinion": 25,
+        "liens": [
+          "castellan",
+          "homme qui écrit deux fois ce qu'on ne lit pas"
+        ],
+        "connue_du_joueur": false
+      },
+      "pourquoi": "Lien de la maison Stokeworth."
+    },
+    {
+      "table": "relations",
+      "operation": "relation_ajouter",
+      "source_id": "lord-stokeworth",
+      "cible_id": "harwyn-bourrel",
+      "valeur": {
+        "opinion": 60,
+        "liens": [
+          "castellan",
+          "le seul qui lui donne des chiffres"
+        ],
+        "connue_du_joueur": false
+      },
+      "pourquoi": "Lien de la maison Stokeworth."
+    },
+    {
+      "table": "relations",
+      "operation": "relation_ajouter",
+      "source_id": "falena-stokeworth",
+      "cible_id": "alarra-rosby",
+      "valeur": {
+        "opinion": 30,
+        "liens": [
+          "une adresse possible, jamais rencontrée"
+        ],
+        "connue_du_joueur": false
+      },
+      "pourquoi": "Lien de la maison Stokeworth."
+    },
+    {
+      "table": "mains",
+      "operation": "main_ajouter",
+      "valeur": {
+        "id": "grenier-stokeworth",
+        "quoi": "Ce que la grange de Stokeworth peut donner avant la moisson, et ce que la porte peut tenir avec",
+        "porteur": {
+          "type": "personnage",
+          "id": "harwyn-bourrel"
+        },
+        "lieu_id": "stokeworth",
+        "mandat": null,
+        "mesure": [
+          {
+            "id": "muids-en-grange",
+            "quoi": "Grain en grange et dans les deux granges basses",
+            "unite": "muids",
+            "valeur": 900,
+            "rythme": {
+              "par": -6,
+              "jours": 1
+            },
+            "note": "Règle établie en scène le 28e par ser Steffon Darklyn : un muid nourrit vingt hommes un jour. Cent vingt bouches au château et au bourg haut = six muids par jour. Prochaine moisson : cinquième lune."
+          },
+          {
+            "id": "solde-en-retard",
+            "quoi": "Solde due aux soixante hommes payés de la porte",
+            "unite": "cerfs",
+            "valeur": 2400,
+            "rythme": {
+              "par": 120,
+              "jours": 1
+            },
+            "note": "Deux lunes de retard. Monte de 120 par jour tant que le seigneur ne paie pas ; c'est le coût de l'étape harwyn-remettre-les-soixante-en-etat."
+          }
+        ],
+        "seuils": [
+          {
+            "id": "plus-de-quoi-nourrir-un-ost",
+            "mesure_id": "muids-en-grange",
+            "quand": "sous",
+            "valeur": 360,
+            "promeut": "orbite",
+            "affaire": "Il ne peut plus nourrir six journées d'un ost de passage sans que sa propre maison jeûne avant la moisson — Monte la tête de harwyn-bourrel de 'royaume' à 'orbite' : à partir de là, l'homme a une affaire qui mord et il ira la porter dehors.",
+            "franchi_le": null
+          },
+          {
+            "id": "la-porte-ne-tient-plus-la-nuit",
+            "mesure_id": "solde-en-retard",
+            "quand": "au-dessus",
+            "valeur": 3600,
+            "promeut": null,
+            "affaire": "Trois lunes de solde : quarante des soixante dorment chez eux et la porte n'est plus tenue la nuit — C'est le si_bloque de harwyn-remettre-les-soixante-en-etat qui s'applique, et il ne le dit à personne — donc rien ne remonte, et c'est le sujet.",
+            "franchi_le": null
+          }
+        ],
+        "dernier_rapport": null,
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 28
+        }
+      },
+      "pourquoi": "La lettre de grain de ser Steffon aux maisons de la route, engagée le 28e, attend un chiffre de Stokeworth : c'est ce compteur-là qui décidera si ce qui revient au joueur est soixante muids ou un refus poli — et c'est lui que citent les coûts de deux étapes de ce lot."
+    }
+  ],
+  "applique_le": "2026-08-09T19:29:06"
+}

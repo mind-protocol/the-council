@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Merra Sath">
+  <title>Merra Sath</title>
+  <defs>
+    <radialGradient id="bg-merra" cx="50%" cy="30%" r="82%">
+      <stop offset="0%" stop-color="#2c2620"/>
+      <stop offset="55%" stop-color="#1e1914"/>
+      <stop offset="100%" stop-color="#100c08"/>
+    </radialGradient>
+    <clipPath id="clip-merra"><circle cx="64" cy="64" r="52"/></clipPath>
+  </defs>
+  <!-- anneau : au service de Peyredragon, mais sans maison — trait continu, pas de brisures -->
+  <circle cx="64" cy="64" r="63" fill="#17161a"/>
+  <circle cx="64" cy="64" r="57.5" fill="none" stroke="#5b5f63" stroke-width="7"/>
+  <circle cx="64" cy="64" r="52" fill="url(#bg-merra)" stroke="#6b6154" stroke-width="1.2"/>
+  <g clip-path="url(#clip-merra)">
+    <!-- cou et buste : toile brune de travail, col ouvert -->
+    <rect x="58" y="63" width="12" height="26" rx="2" fill="#8a7057"/>
+    <path d="M20,128 C26,101 44,89 64,89 C84,89 102,101 108,128 Z" fill="#4a3f33"/>
+    <path d="M56,90 L64,101 L72,90 L69,88 L64,95 L59,88 Z" fill="#2a231c"/>
+    <!-- avant-bras noirs jusqu'au coude : la marque du métier, croisés sur le ventre -->
+    <path d="M34,128 C38,112 48,104 60,102 L64,109 L40,128 Z" fill="#171719"/>
+    <path d="M94,128 C90,112 80,104 68,102 L64,109 L88,128 Z" fill="#1b1b1d"/>
+    <!-- visage sec, mâchoire marquée -->
+    <ellipse cx="64" cy="55" rx="14.6" ry="17.8" fill="#8a7057"/>
+    <path d="M55,70 C58,74 61,75.5 64,75.5 C67,75.5 70,74 73,70 C71,76 68,78.5 64,78.5 C60,78.5 57,76 55,70 Z" fill="#7a6249"/>
+    <!-- cheveux tirés en arrière, noués bas : rien qui pende dans une galerie -->
+    <path d="M48.6,52 C47.6,38 53,31 64,31 C75,31 80.4,38 79.4,52 C77,42 71,38.5 64,38.5 C57,38.5 51,42 48.6,52 Z" fill="#2b211a"/>
+    <path d="M49.5,50 C46,58 45.5,66 47.5,72 C47,63 48,56 50.2,51.5 Z M78.5,50 C82,58 82.5,66 80.5,72 C81,63 80,56 77.8,51.5 Z" fill="#2b211a"/>
+    <path d="M58,30 C62,26 70,26 76,30 C82,34 84,41 82,47 C82,39 79,34 74,32 C69,30 62,30 58,30 Z" fill="#241b15"/>
+    <!-- yeux : elle regarde les objets avant les gens, donc légèrement baissés -->
+    <path d="M55,55.5 C57,53.6 60,53.6 62,55.5" fill="none" stroke="#1b1610" stroke-width="1.7" stroke-linecap="round"/>
+    <path d="M66,55.5 C68,53.6 71,53.6 73,55.5" fill="none" stroke="#1b1610" stroke-width="1.7" stroke-linecap="round"/>
+    <!-- entaille mal refermée sur une phalange, portée à la joue par la poussière -->
+    <path d="M75,62 L78.5,67" fill="none" stroke="#5e3a2c" stroke-width="1.5" stroke-linecap="round" opacity="0.85"/>
+  </g>
+  <!-- badge : un éclat d'obsidienne, taillé net -->
+  <circle cx="64" cy="113" r="11.5" fill="#141118" stroke="#6b6154" stroke-width="1.2"/>
+  <g transform="translate(64 113)">
+    <path d="M0,-7 L5.5,-1 L2.5,6.5 L-3,6 L-5.5,-1.5 Z" fill="#0c0c10" stroke="#7f8890" stroke-width="1"/>
+    <path d="M0,-7 L-5.5,-1.5 L-3,6 Z" fill="#2a2c33"/>
+    <path d="M0,-7 L5.5,-1 L1,1.5 Z" fill="#464a52" opacity="0.9"/>
+  </g>
+</svg>

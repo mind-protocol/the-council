@@ -1,0 +1,299 @@
+{
+ "etats_cibles": [
+  {
+   "id": "72000",
+   "quoi": "La colonne du roi en vue des murs de Sombreval",
+   "vrai_quand": "Les hommes comptes et payes sont sortis par la Porte de la Boue et sont en vue des murs de Sombreval, le train de siege avec eux.",
+   "echeance": {"annee": 129, "lune": 4, "jour": 8},
+   "arrive_le": {"annee": 129, "lune": 4, "jour": 8},
+   "de_lieu": "port-real",
+   "vers_lieu": "sombreval",
+   "voie": "terre",
+   "force": 2600,
+   "sert": ["72500"],
+   "route_dite": "OU EN EST REELLEMENT LA COLONNE LE 3e DE LA 4e LUNE : elle n'est pas partie et n'a jamais mis un pied hors des murs. Ser Criston avait dit devant le conseil, le 28e, qu'il marcherait le 30e par la Porte de la Boue avec trois mille hommes, cinq cents laisses a la ville, pour etre devant Sombreval le 3e. Il n'a pas marche le 30e, et il l'a ecrit lui-meme ce soir-la : la raison n'etait pas Sombreval, c'etait la caisse de solde qui n'existe pas. Il a date sa reparation au 3e jour de la 4e lune — le compte dit tout haut le 1er, le bois pris le 1er, l'ost paye sur ce qu'on ne paiera plus deux fois. Ce qui sort AUJOURD'HUI par la Porte de la Boue, c'est le TRAIN DE SIEGE seul (les trois pieces de mat prises sous le sceau du roi et charriees au depot hors les murs), pas les hommes. Trois jours de route de Port-Real a Sombreval, halte sous les murs de Stokeworth. Depart des hommes au plus tot le 5e, en vue des murs le 8e. LE CHIFFRE A BAISSE ET C'EST LE ROI QUI L'A DIT : trois mille cinq cents portes au role du Grand Mestre, dont quatre cents lances de Strong a Harrenhal, rendue au prince Daemon le 23e — le compte mobilisable de la Couronne est de trois mille cent au plus, moins cinq cents laisses a la ville et au roi : deux mille six cents, et quinze cents seulement si la solde ne vient jamais, comme son propre si_bloque le dit.",
+   "source": "pensee de ser Criston Cole du 129.3.30 (« J'AI DIT QUE JE MARCHERAIS AUJOURD'HUI PAR LA PORTE DE LA BOUE, ET JE N'AI PAS MARCHE... Repare le troisieme jour de la quatrieme lune ») | rapport de sa journee du 129.4.1, 13h03 salle du Trone : trois mille cinq cents au role, quatre cents lances de Strong perdues, trois mille cent mobilisables, dits par la bouche du roi | rapport du 129.4.1, 14h35 : « Le train de siege part le 3e jour de la 4e lune, comme ecrit » | son plan criston-ost, etat en-cours, cout « quatre mille hommes et six semaines », si_bloque « il part avec quinze cents hommes plutot que rien » | lieux.json : sombreval, jours_de_pr 3"
+  },
+  {
+   "id": "72500",
+   "quoi": "Sombreval reduite au nom du roi, et le parjure pris",
+   "vrai_quand": "La banniere du roi est sur la citadelle de Sombreval, les coques de la maison Darklyn sont hors d'usage sur leurs amarres, lord Gunthor Darklyn a repondu de la trahison ecrite dans la proclamation, et le manteau blanc parjure est en fers ou mort.",
+   "echeance": {"annee": 129, "lune": 4, "jour": 14},
+   "de_lieu": "sombreval",
+   "vers_lieu": "sombreval",
+   "voie": "terre",
+   "force": 2600,
+   "sert": ["71300"],
+   "route_dite": "Six jours devant les murs a compter de l'arrivee du 8e, et non deux : le train qui sort aujourd'hui porte la poutre maitresse, la mature et l'affut, mais NI les mantelets, NI les planchers, NI les palissades — vendus le 30e au soir a une preteuse sur gage —, NI les quarante brasses de filin neuf, refusees malgre le sceau. Ce qui manque est commande aux Chantiers de la Nera et n'est pas livre. Une ville de port avec ses murs et ses lances ne se prend pas au premier jour avec un train ampute : ou l'on attend les mantelets, ou l'on bloque et l'on affame.",
+   "source": "canon `sac-sombreval`, date_prevue 129.4.3, effets (« maison darklyn tombee ; terreur chez tous les seigneurs de la Couronne ; l'ost vert continue vers Repos-des-Freux ») et sa condition « retarde tant que Criston n'a pas arrache a Otto l'or de l'ost » | croyance de Criston du 129.3.28 : « Sombreval tient un manteau blanc parjure au service de la reine noire » | rapport de sa journee du 129.4.1, 13h31, sur ce que le train a et n'a pas | proclamation de decheance du 129.3.23, qui nomme Sombreval seule comme rebelle et son seigneur avec elle"
+  }
+ ],
+
+ "verrous": [
+  {
+   "id": "72001",
+   "quoi": "La solde de depart n'est toujours pas versee, et la Main achete des jours",
+   "bloque": ["72000"],
+   "vrai_aujourdhui": "Quatre jours de retard sur sa propre parole, et pas un cerf verse. Il exige d'Otto la solde de depart, PAS la prime criee — et Otto ne dit jamais non : le 1er, mis devant le compte du roi, il n'a conteste aucun des deux nombres et a demande que le Grand Mestre releve son role. Un jour de plus, encore. La bourse tient 600 000 dragons et 30 000 de revenu par lune ; ce qui manque n'est pas l'or, c'est la main qui le lache. Sans la solde, convocation seule sur l'autorite du roi : quinze cents hommes au lieu de deux mille six cents.",
+   "leve_quand": "La caisse de solde de depart existe, comptee et sortie du Tresor sur un nombre ecrit — ou ser Criston renonce a la solde et part sur la seule autorite du roi.",
+   "portee_pour_nous": "on peut le savoir : une caisse de solde se compte a la sortie du Tresor et se paie devant des hommes",
+   "source": "pensee de Criston du 129.3.30 (« la caisse de solde qui n'existe pas ») | sa croyance au 129.4.3 : « Otto n'a pas dit non : il a achete un jour. Un homme qui achete un jour au lieu de payer sa solde n'a pas l'or, ou ne le tient pas seul » | rapport du 129.4.1, 13h03 | maisons.json, maison-targaryen-vert : or 600000, revenus_lune 30000"
+  },
+  {
+   "id": "72002",
+   "quoi": "Le train de siege sort ampute : ni mantelets, ni planchers, ni cordage",
+   "bloque": ["72000", "72500"],
+   "vrai_aujourdhui": "La Couronne tient les trois pieces de mat — poutre maitresse, mature, affut — prises sous le sceau du roi le 1er et charriees le jour meme au depot hors les murs, sans un dragon du Tresor. Elle ne tient pas le reste : dix-huit membrures et deux rouleaux de borde etaient partis le 30e au soir, un jour AVANT l'ordre du roi, 266 cerfs comptant, chez Sirel Quintaine, preteuse sur gage au marche du Crochet, sans un nom laisse chez le changeur. Et les quarante brasses de filin neuf ont ete refusees malgre le sceau — sans cordage, pas de levage ni de halage. Ce qui manque est commande aux Chantiers de la Nera sous le sceau du roi et n'est pas livre.",
+   "leve_quand": "Les mantelets, plateformes et affuts commandes sont comptes au depot hors les murs, cordage compris.",
+   "portee_pour_nous": "on peut le savoir : un charroi de mantelets se voit sortir d'un chantier",
+   "source": "rapport de la journee de Criston du 129.4.1, 13h31 (l'interrogatoire du frere de la Garde, devis de Marlo Vasse ouvert sur le rebord du puits) et 14h35 (la commande scellee) | son cahier, `devis-du-lot`, lignes 1 et 3"
+  },
+  {
+   "id": "72003",
+   "quoi": "Cent vingt lances sans maitre dorment dans la ville qu'on va vider",
+   "bloque": ["72000"],
+   "vrai_aujourdhui": "Cent vingt lances portees comme venues de Sombreval, debarquees de nuit le 22, destination ecrite : la caserne du guet — ou elles ne sont jamais arrivees, ni paillasse, ni ration, ni solde, ni nom. Onze d'entre elles, manteaux sombres sans ecusson, gardent a un mille de la porte de Fer deux galeres de guerre refaites sur bers et une troisieme quille, quarante bras au travail. Personne sur la Nera ne sait qui paie ce chantier, pas meme le charpentier qui cherche ce nom depuis cinq jours pour lui vendre son bois. Sortir deux mille six cents hommes de Port-Real, c'est laisser cinq cents manteaux d'or devant cent vingt lances dont on ignore le maitre.",
+   "leve_quand": "On nomme le maitre des cent vingt — ou on les prend, ce qui ferme la grave pour une lune.",
+   "portee_pour_nous": "on peut agir dessus, et c'est le seul verrou d'en face qui se leve sans un homme perdu",
+   "source": "pensees de Criston des 129.3.28 (role d'entree du port, ligne du 22e ; les enfants de la greve ; la reconnaissance du chantier du bout) et 129.3.30 (role de la caserne du guet du 22e au 30e, lu tout haut devant deux freres de la Garde) | rapport du 129.4.1, 14h05 et 14h35"
+  },
+  {
+   "id": "72004",
+   "quoi": "La porte de la ville s'achete a l'heure",
+   "bloque": ["72000", "72500"],
+   "vrai_aujourdhui": "Trois sous pour regarder, six pour oublier, douze pour aider a porter, et le nom de garde se deplace de quartier en quartier pour qu'on ne puisse pendre personne. Deux mille manteaux d'or dont la solde ne paie pas le logis. Ce qui sort par la Porte de la Boue est donc su hors des murs le jour meme : le nombre des hommes, le jour du depart, et ce que portent les chariots. Sombreval l'apprend par ses propres charretiers avant qu'un corbeau vert n'ait vole.",
+   "leve_quand": "Le Guet est paye assez pour que l'heure ne se vende plus — ou la colonne sort par une autre porte que celle qui a ete annoncee.",
+   "portee_pour_nous": "on peut le savoir, et on peut l'acheter aussi : ce qui se vend a la Couronne se vend a tout le monde",
+   "source": "pensee de Criston du 129.3.28, Waltyr Poix sergent du Guet a la porte de la Gadoue, interroge sous l'arche | diffusion du 129.4.2 vers sombreval : les charretiers qui montent de la porte des Dieux disent qu'on rassemble sous les murs de Port-Real et qu'on paie les hommes d'avance"
+  },
+  {
+   "id": "72005",
+   "quoi": "L'homme qui commande la colonne passe ses journees dans la salle du Trone",
+   "bloque": ["72000"],
+   "vrai_aujourdhui": "Au 3e de la 4e lune, l'intention de ser Criston Cole n'est ni la levee, ni la solde, ni la route : c'est de faire entrer le prince Aemond dans la salle du Trone avant midi et de tenir la porte contre la plainte d'Orwyle, pour que le roi dise du haut du Trone le nom de la femme qui a brule ses paysans. Il ne tient plus la preuve — le roi a pris l'ecrit sous son pourpoint et ne le rendra pas —, il ne tient plus que l'homme, et il y depense sa journee. Trois jours de retard sur son propre depart, et pas une heure de ce jour passee hors du Donjon Rouge.",
+   "leve_quand": "Le roi a parle, ou ser Criston lache la salle et prend la route.",
+   "portee_pour_nous": "on peut le savoir : un Lord Commandant qui ne quitte pas la cour se voit de la cour",
+   "source": "intention et attitude_joueur de criston dans intentions.json, date_maj 129.4.3 | ses croyances du meme jour sur Orwyle, sur l'ecrit passe au roi, et sur Aemond a midi"
+  },
+  {
+   "id": "72006",
+   "quoi": "Le role compte quatre cents lances que la Couronne n'a plus",
+   "bloque": ["72000"],
+   "vrai_aujourdhui": "Le registre des levees est de la main du Grand Mestre et porte trois mille cinq cents disponibles, dont quatre cents lances de Strong a Harrenhal — rendue au prince Daemon le 23e, sans breche et sans un mort, par une porte ouverte. Le vrai compte est de trois mille cent au plus, et c'est desormais le chiffre du ROI, dit de sa bouche devant le conseil le 1er. Le role n'a pas ete releve pour autant : Otto a demande un jour de plus, et le jour n'est pas rendu.",
+   "leve_quand": "Le role releve est signe et le compte mobilisable arrete par ecrit, les quatre cents lances retirees.",
+   "portee_pour_nous": "on peut le savoir, et c'est deja su : Harrenhal est rendue depuis le 23e",
+   "source": "pensee de Criston du 129.3.28 (registre des levees relu de sa main sur le chemin de ronde des quais) | rapport du 129.4.1, 13h03 | maisons.json porte encore levees_dispo 3500, ce que le roi vient de contredire tout haut"
+  },
+  {
+   "id": "72007",
+   "quoi": "On marche sur une ville que personne n'est alle compter",
+   "bloque": ["72500"],
+   "vrai_aujourdhui": "Aucune source verte n'a compte depuis le feu du 16e ce que Sombreval tient : ni ses lances, ni ses murs, ni ses coques, ni ce qu'il y a dans ses granges. Ce qu'on sait tient en trois choses — la ville est nommee seule dans la proclamation du 23e, son seigneur avec elle ; elle tient un manteau blanc parjure au service de la reine noire ; et des charretiers en montent chaque jour vers la porte des Dieux. Le reste est du calcul de table. La condition ecrite du canon dit exactement ou est le danger : devie si Sombreval est tenue par une garnison et un dragon poste — Criston ne donnera pas ses hommes a bruler deux fois.",
+   "leve_quand": "Un homme est alle voir et en est revenu avec des nombres.",
+   "portee_pour_nous": "hors de portee pour eux tant que personne n'est envoye ; a notre portee, et c'est la meme ignorance qui nous protege",
+   "source": "croyance de Criston du 129.3.28 (« carte de l'ost et compte des maisons vertes ») | proclamation de decheance, ligne pour Sombreval seule | conditions du canon `sac-sombreval` | l'absence, dans ses pensees et son rapport, de toute reconnaissance envoyee vers Sombreval depuis le 16e"
+  }
+ ],
+
+ "clefs": [
+  {
+   "id": "72010",
+   "quoi": "Rendre l'or inutile au lieu de l'arracher a la Main",
+   "ouvre": ["72001", "72002"],
+   "principe": "Huit jours a reclamer le coffre a Otto, et le coffre est la seule chose qu'il puisse refuser. Un cachet sur six lignes de bois et la voix du roi pour dire un nombre : les deux accordes en un quart d'heure, et le coeur du train de siege est a la Couronne pour moins que la solde d'un crieur, sans un dragon du Tresor. Un roi signe ce qui ne lui coute rien, et cela suffit.",
+   "prix": "Ce qui est pris sous le sceau et non paye se represente un jour, et par des gens qui comptent. Et l'or de la solde reste ou il est : les hommes, eux, ne se prennent pas au sceau.",
+   "porteur": "criston"
+  },
+  {
+   "id": "72011",
+   "quoi": "Acheter le charpentier, pas le silence",
+   "ouvre": ["72002", "72003"],
+   "principe": "Un manteau blanc qui descend poser une question fait taire une greve entiere pour une lune. Une commande de la Couronne scellee fait travailler le charpentier de la vase POUR la Couronne et non contre elle — et c'est lui, non un manteau blanc, qui ira demander sur la greve. Sa propre methode, ecrite a la craie au dos de son devis : ne pas demander qui construit, demander ce qui est casse.",
+   "prix": "Le charpentier sert deux chantiers et le sait ; ce qu'il apprend pour la Couronne, il peut le vendre a l'autre. Et l'on renonce a saisir, donc a savoir vite.",
+   "porteur": "criston"
+  },
+  {
+   "id": "72012",
+   "quoi": "L'heritier avant la ville",
+   "ouvre": ["72500"],
+   "principe": "On tient une maison par ce qu'elle a laisse dehors. Les huit maisons de la Couronne sont nommees, agees et datees sur le role du Grand Mestre ; Sombreval est la premiere scellee, et un bref de pupille mis en main de garde ouvre une porte qu'un train de siege ampute n'ouvrira pas avant six jours.",
+   "prix": "Le jour ou l'on s'en sert, toutes les maisons qui hesitaient sont perdues d'un coup. Et le role nomme des NES, non des vivants : la ligne peut nommer un mort, et c'est le pere qui l'apprendra a la Main, au prix d'un delai qu'elle lui aura donne elle-meme.",
+   "porteur": "otto"
+  },
+  {
+   "id": "72013",
+   "quoi": "Prendre un homme plutot qu'une ville",
+   "ouvre": ["72500", "72007"],
+   "principe": "Sombreval, pas Rosby ni Peyredragon : Rosby est trop petit pour justifier de vider l'ost, Peyredragon hors de portee sans flotte, mais Sombreval tient un manteau blanc parjure au service de la reine noire — un chateau de la Couronne passe aux Noirs, a trois jours de marche, une cible que l'honneur et la geographie dictent ensemble. Un parjure de la Garde Royale se juge et se montre ; une ville pillee ne se montre a personne.",
+   "prix": "Si le parjure n'y est pas — et rien de vert ne l'a vu depuis le 16e —, l'expedition n'a plus d'objet que le pillage, et c'est ce que les septons repeteront.",
+   "porteur": "criston"
+  },
+  {
+   "id": "72014",
+   "quoi": "Payer le Guet plutot que pendre le sergent",
+   "ouvre": ["72004", "72003"],
+   "principe": "On n'achete pas un homme du Guet, on achete une heure de sa nuit, et l'on recommence. Pendre le sergent ne fermerait pas la porte ; payer le Guet la fermerait. C'est une seconde raison de vouloir cet or, et elle vaut mieux que la premiere.",
+   "prix": "La meme bourse que la solde de depart : ce qui va au Guet ne va pas aux hommes qui marchent. Et un Guet paye par la Couronne reste un Guet qui sait combien la Couronne paie.",
+   "porteur": "criston"
+  }
+ ],
+
+ "actions": [
+  {
+   "id": "72020",
+   "quoi": "Relever le role des levees et arreter par ecrit le compte mobilisable, les quatre cents lances de Strong retirees",
+   "realise": ["72006"],
+   "office": "orwyle",
+   "moyens": ["le registre des levees de sa main", "les roles de la Citadelle"],
+   "cout": "un jour de clerc — le jour qu'Otto a demande le 1er et qui n'est pas rendu",
+   "depend_de": [],
+   "preuve": "Le role releve et signe, trois mille cent au plus, sans Harrenhal",
+   "jour_du": {"annee": 129, "lune": 4, "jour": 4},
+   "etat": "en cours",
+   "source": "rapport de Criston du 129.4.1, 13h03 : « Otto n'a conteste aucun des deux nombres : il a demande que le Grand Mestre releve son role — un jour de plus, encore »"
+  },
+  {
+   "id": "72021",
+   "quoi": "Sortir du Tresor la caisse de solde de depart et la payer devant les hommes",
+   "realise": ["72001"],
+   "office": "otto",
+   "moyens": ["le Tresor", "un nombre ecrit devant temoins"],
+   "cout": "sur 600 000 au coffre et 30 000 par lune — la meme bourse que la prime criee sans gage et que les vivres du Bief",
+   "depend_de": ["72020"],
+   "preuve": "La caisse comptee a la sortie du Tresor, et les hommes payes d'avance",
+   "jour_du": {"annee": 129, "lune": 4, "jour": 4},
+   "etat": "bloquee",
+   "source": "pensee de Criston du 129.3.30 (« la caisse de solde qui n'existe pas ») | sa croyance au 129.4.3 (« Otto n'a pas dit non : il a achete un jour ») | maisons.json"
+  },
+  {
+   "id": "72022",
+   "quoi": "Faire sortir le train de siege par la Porte de la Boue et le mener vers Sombreval sous escorte",
+   "realise": ["72000", "72010"],
+   "office": "criston",
+   "moyens": ["les trois pieces de mat prises sous le sceau", "le depot hors les murs", "les charretiers du roi"],
+   "cout": "rien au Tresor : tout a ete pris sous le sceau du roi et charrie le jour meme",
+   "depend_de": [],
+   "preuve": "Les trois pieces de mat sur la route de Sombreval au soir du 3e",
+   "jour_du": {"annee": 129, "lune": 4, "jour": 3},
+   "etat": "en cours",
+   "source": "rapport de Criston du 129.4.1, 14h35 : « Le train de siege part le 3e jour de la 4e lune, comme ecrit »"
+  },
+  {
+   "id": "72023",
+   "quoi": "Livrer les mantelets, plateformes et affuts commandes par la Couronne aux Chantiers de la Nera",
+   "realise": ["72002", "72011"],
+   "office": "marlo-vasse",
+   "moyens": ["le chantier de la vase", "la commande scellee du roi", "ses quarante bras"],
+   "cout": "rien de verse : la commande est scellee et non payee",
+   "depend_de": ["72022"],
+   "preuve": "Les mantelets et les planchers comptes au depot hors les murs, cordage compris",
+   "jour_du": {"annee": 129, "lune": 4, "jour": 6},
+   "etat": "en cours",
+   "source": "rapport de Criston du 129.4.1, 14h35 : commande de la Couronne ecrite de sa main sous le sceau du roi, scellee et partie ; « le charpentier de la vase travaille desormais pour la Couronne et non contre elle »"
+  },
+  {
+   "id": "72024",
+   "quoi": "Compter chaque jour, a la meme heure, coques et bras au chantier du bout — et ne saisir personne",
+   "realise": ["72003"],
+   "office": "criston",
+   "moyens": ["deux hommes de sa propre maison, non du Guet", "les entrepots a sel"],
+   "cout": "deux hommes retires de sa maison, tous les jours",
+   "depend_de": [],
+   "preuve": "Un releve quotidien de nombres, sans un nom ecrit",
+   "jour_du": {"annee": 129, "lune": 4, "jour": 3},
+   "etat": "en cours",
+   "source": "rapport de Criston du 129.4.1, 14h35 : « Guet pose, releve quotidien, personne saisi »"
+  },
+  {
+   "id": "72025",
+   "quoi": "Nommer le maitre des cent vingt lances avant que la colonne ne quitte la ville",
+   "realise": ["72003"],
+   "office": "criston",
+   "moyens": ["le role d'entree du port", "le role de la caserne du guet", "le charpentier qui demande a sa place"],
+   "cout": "du temps, et le silence : le nombre a ete retire de la bouche du roi pour ne pas avertir leur maitre",
+   "depend_de": ["72023", "72024"],
+   "preuve": "Un nom, et de quelle bourse sortent les onze manteaux sombres",
+   "jour_du": {"annee": 129, "lune": 4, "jour": 7},
+   "etat": "a faire",
+   "source": "pensee de Criston du 129.4.1 (« nommer les cent vingt devant le conseil, c'etait avertir leur maitre qu'on les voit, et perdre le seul fil que j'aie ») | son cahier, `roles-de-la-gadoue`, ligne 4"
+  },
+  {
+   "id": "72026",
+   "quoi": "Payer le Guet de la porte par ou sort la colonne, pour que l'heure du depart ne se vende plus",
+   "realise": ["72014", "72004"],
+   "office": "criston",
+   "moyens": ["la caisse de solde", "le sergent de la porte de la Gadoue"],
+   "cout": "pris sur la meme bourse que la solde de depart, donc sur les hommes qui marchent",
+   "depend_de": ["72021"],
+   "preuve": "Le jour du depart n'est pas monte a Sombreval par les charretiers",
+   "jour_du": {"annee": 129, "lune": 4, "jour": 5},
+   "etat": "a faire",
+   "source": "pensee de Criston du 129.3.28 (Waltyr Poix, le tarif de la porte : trois sous, six sous, douze sous) : « Pendre le sergent ne fermerait pas la porte ; payer le Guet la fermerait »"
+  },
+  {
+   "id": "72027",
+   "quoi": "Sceller le bref de pupille de Sombreval, sous la date du 3e, et le mettre en main de garde",
+   "realise": ["72012"],
+   "office": "otto",
+   "moyens": ["les lignages dictes par le Grand Mestre", "la cire de la Main", "un billet de sa caisse"],
+   "cout": "le jour ou l'on s'en sert, les maisons qui hesitaient sont perdues ; et le role nomme des nes, non des vivants",
+   "depend_de": [],
+   "preuve": "Le bref sous cire, l'enfant nomme, et la main de garde designee",
+   "jour_du": {"annee": 129, "lune": 4, "jour": 3},
+   "etat": "en cours",
+   "source": "intention d'Otto au 129.4.3, en toutes lettres : « Duskendale scelle et a mettre en main de garde, Hayford entamee, puis Bar Emmon, Rykker, Buckwell, Massey » | son plan otto-otages, en-cours, 1 jour restant"
+  },
+  {
+   "id": "72028",
+   "quoi": "Faire entrer le prince Aemond dans la salle du Trone avant midi et tenir la porte contre la plainte d'Orwyle",
+   "realise": ["72005"],
+   "office": "criston",
+   "moyens": ["l'ordre d'entree dans la salle", "la parole donnee par le roi"],
+   "cout": "la journee du 3e entiere, et trois jours de retard sur son propre depart",
+   "depend_de": [],
+   "preuve": "Le roi dit du haut du Trone, devant Otto, le nom de celle qui a brule ses paysans",
+   "jour_du": {"annee": 129, "lune": 4, "jour": 3},
+   "etat": "en cours",
+   "source": "intention de criston dans intentions.json, date_maj 129.4.3 | si_bloque de son etape criston-forger-aegon : « il fait dire la ligne par le Grand Mestre lui-meme somme devant le roi, et lie son ost au premier vol de Vhagar »"
+  },
+  {
+   "id": "72029",
+   "quoi": "Reprendre au septuaire la liste nominative des brules de la route et la porter au roi, pour qu'il ait un nombre et un nom de village a repondre",
+   "realise": ["72005", "72013"],
+   "office": "criston",
+   "moyens": ["la liste ecrite par un septon, laissee au septuaire exprès", "les survivants du Culpucier"],
+   "cout": "reprendre une piece qu'il avait mise hors de portee de la plume de la Main",
+   "depend_de": [],
+   "preuve": "Le nombre et le nom du hameau dits par le roi, et non par lui",
+   "jour_du": {"annee": 129, "lune": 4, "jour": 4},
+   "etat": "a faire",
+   "source": "croyance de Criston au 129.4.3 : « Le roi veut un nombre et un nom de village pour les brules de la route ; je ne les ai pas » | sa pensee du 129.3.28 sur les survivants du Culpucier, noms pris un par un, liste ecrite par un septon et laissee au septuaire"
+  },
+  {
+   "id": "72030",
+   "quoi": "Faire sortir la colonne par la Porte de la Boue et la mener en trois jours devant Sombreval",
+   "realise": ["72000"],
+   "office": "criston",
+   "moyens": ["deux mille six cents hommes comptes", "cinq cents laisses a la ville et au roi", "halte sous les murs de Stokeworth"],
+   "cout": "trois jours de route ; quinze cents hommes seulement si la solde n'est pas venue",
+   "depend_de": ["72020", "72021", "72022", "72028"],
+   "preuve": "La colonne en vue des murs de Sombreval",
+   "jour_du": {"annee": 129, "lune": 4, "jour": 5},
+   "etat": "a faire",
+   "source": "sa decision arretee devant le conseil et Aegon le 129.3.29 (levee le 29e, depart le 30e, trois jours de route), non tenue le 30e faute de caisse, et datee par lui du 3e pour reparation | si_bloque de son etape criston-ost"
+  },
+  {
+   "id": "72031",
+   "quoi": "Reduire Sombreval : bruler la flotte sur ses amarres, prendre la citadelle, et faire repondre lord Gunthor Darklyn de la trahison ecrite dans la proclamation",
+   "realise": ["72500", "72013"],
+   "office": "criston",
+   "moyens": ["le train de siege complete", "les septons, pour ce qu'on fera dire ensuite"],
+   "cout": "six jours devant les murs, et ce que coute un assaut sans mantelets si les mantelets ne sont pas arrives",
+   "depend_de": ["72030", "72023"],
+   "preuve": "La banniere du roi sur la citadelle, les coques hors d'usage, le seigneur mort ou en fers",
+   "jour_du": {"annee": 129, "lune": 4, "jour": 14},
+   "etat": "a faire",
+   "source": "canon `sac-sombreval` (effets et conditions), deviee en amont par le feu royal du 16e : expedition de vengeance et non campagne d'intimidation | croyance de Criston du 129.3.28 sur le manteau blanc parjure"
+  }
+ ]
+}

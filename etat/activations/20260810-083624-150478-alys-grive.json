@@ -1,0 +1,518 @@
+{
+  "qui": "alys-grive",
+  "activation": {
+    "tache": {
+      "id": "10031",
+      "quoi": "📣 Faire dire dans les villages, avant de fermer, pourquoi on ferme et ",
+      "creee": false
+    },
+    "issue": "avance",
+    "activites": [
+      {
+        "id": "act:alys-grive:1",
+        "ordre": 1,
+        "temps": {
+          "debut_s": 149160.0,
+          "duree_s": 45,
+          "fin_s": 149205.0
+        },
+        "action": {
+          "verbe": "aborder",
+          "quoi": "Traverser le bourg jusqu'à la charrette de Doss Marran avant qu'il n'attelle, la liste des trois interdits relue dans le sac",
+          "cibles": [
+            "pers:doss-marran"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "salle:bourg",
+            "relation": "traverse",
+            "vers": "pers:doss-marran",
+            "duree_s": 45
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:doss-marran",
+            "mode": "voit"
+          },
+          {
+            "ref": "salle:bourg",
+            "mode": "parcourt"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "livre:ce-qui-sort-de-ma-main",
+            "mode": "memoire"
+          },
+          {
+            "ref": "10031",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:alys-grive:1:1",
+            "type": "observation",
+            "cible": "pers:doss-marran",
+            "avant": null,
+            "apres": "Doss Marran charge encore : la bête n'est pas dans les brancards, il a le temps d'écouter mais pas de discuter longtemps ; il dit qu'il déchargera aux trois villages et qu'il repassera par le nœud avant que la route ne ferme",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "pers:doss-marran"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 1.5,
+        "quoi": "Traverser le bourg jusqu'à la charrette de Doss Marran avant qu'il n'attelle, la liste des trois interdits relue dans le sac",
+        "source": "10031, livre:ce-qui-sort-de-ma-main, pers:doss-marran, salle:bourg",
+        "resultat": "observation: Doss Marran charge encore : la bête n'est pas dans les brancards, il a le temps d'écouter mais pas de discuter longtemps ; il dit qu'il déchargera aux trois villages et qu'il repassera par le nœud avant que la route ne ferme",
+        "preuve": null
+      },
+      {
+        "id": "act:alys-grive:2",
+        "ordre": 2,
+        "temps": {
+          "debut_s": 149205.0,
+          "duree_s": 130,
+          "fin_s": 149335.0
+        },
+        "action": {
+          "verbe": "confier",
+          "quoi": "Donner à Doss les trois phrases à dire telles quelles dans chaque village : la route ferme, elle ferme pour qu'on ne soit pas pris sur une route qui n'est plus tenue, elle rouvre quand elle sera tenue ; puis que les noms du seize sont copiés, qu'on les cherche chez soi sur une copie qu'un homme de lettres lira, et qu'on ne monte pas au château pour cela",
+          "cibles": [
+            "pers:doss-marran",
+            "10031"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:alys-grive",
+            "relation": "parle",
+            "vers": "pers:doss-marran",
+            "duree_s": 130
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:doss-marran",
+            "mode": "parle"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "affaire-fermeture-route-nord",
+            "mode": "mandat"
+          },
+          {
+            "ref": "livre:ce-qui-sort-de-ma-main",
+            "mode": "croyance"
+          },
+          {
+            "ref": "10031",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:alys-grive:2:1",
+            "type": "communication",
+            "cible": "pers:doss-marran",
+            "avant": null,
+            "apres": "Doss a reçu trois phrases sans date, sans nom et sans promesse, et le mot CHERCHER-chez-soi ; il les portera aux trois villages et au marché du nœud à sa tournée d'avant fermeture",
+            "portee": "monde",
+            "source_refs": [
+              "pers:doss-marran"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:alys-grive:2:2",
+            "type": "observation",
+            "cible": "pers:doss-marran",
+            "avant": null,
+            "apres": "À la deuxième phrase il a coupé : « on va me demander quand. » Il accepte de répondre « quand elle sera tenue » — mais il prévient qu'aux villages on entendra là-dedans que c'est la guerre, et qu'il ne le démentira pas parce qu'il ne sait pas",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "pers:doss-marran"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 4.333,
+        "quoi": "Donner à Doss les trois phrases à dire telles quelles dans chaque village : la route ferme, elle ferme pour qu'on ne soit pas pris sur une route qui n'est plus tenue, elle rouvre quand elle sera tenue ; puis que les noms du seize sont copiés, qu'on les cherche chez soi sur une copie qu'un homme de lettres lira, et qu'on ne monte pas au château pour cela",
+        "source": "10031, affaire-fermeture-route-nord, livre:ce-qui-sort-de-ma-main, pers:doss-marran",
+        "resultat": "communication: Doss a reçu trois phrases sans date, sans nom et sans promesse, et le mot CHERCHER-chez-soi ; il les portera aux trois villages et au marché du nœud à sa tournée d'avant fermeture · observation: À la deuxième phrase il a coupé : « on va me demander quand. » Il accepte de répondre « quand elle sera tenue » — mais il prévient qu'aux villages on entendra là-dedans que c'est la guerre, et qu'il ne le démentira pas parce qu'il ne sait pas",
+        "preuve": null
+      },
+      {
+        "id": "act:alys-grive:3",
+        "ordre": 3,
+        "temps": {
+          "debut_s": 149335.0,
+          "duree_s": 95,
+          "fin_s": 149430.0
+        },
+        "action": {
+          "verbe": "faire_redire",
+          "quoi": "Lui faire redire les trois phrases mot pour mot, deux fois, debout contre la ridelle",
+          "cibles": [
+            "pers:doss-marran"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:doss-marran",
+            "relation": "récite",
+            "vers": "pers:alys-grive",
+            "duree_s": 95
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:doss-marran",
+            "mode": "entend"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "res:act:alys-grive:2:1",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:alys-grive:3:1",
+            "type": "observation",
+            "cible": "pers:doss-marran",
+            "avant": "Doss a reçu trois phrases sans date, sans nom et sans promesse, et le mot CHERCHER-chez-soi ; il les portera aux trois villages et au marché du nœud à sa tournée d'avant fermeture",
+            "apres": "Au premier tour il tient les deux premières et perd la troisième au milieu ; au second il les tient toutes trois, mais dit « on la garde fermée » là où elle avait dit « on ne veut pas qu'on soit pris ». Elle le laisse : la sienne est plus courte et un charretier ne portera que ce qui lui vient à la bouche",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "pers:doss-marran"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 3.167,
+        "quoi": "Lui faire redire les trois phrases mot pour mot, deux fois, debout contre la ridelle",
+        "source": "pers:doss-marran, res:act:alys-grive:2:1",
+        "resultat": "observation: Au premier tour il tient les deux premières et perd la troisième au milieu ; au second il les tient toutes trois, mais dit « on la garde fermée » là où elle avait dit « on ne veut pas qu'on soit pris ». Elle le laisse : la sienne est plus courte et un charretier ne portera que ce qui lui vient à la bouche",
+        "preuve": null
+      },
+      {
+        "id": "act:alys-grive:4",
+        "ordre": 4,
+        "temps": {
+          "debut_s": 149430.0,
+          "duree_s": 89,
+          "fin_s": 149519.0
+        },
+        "action": {
+          "verbe": "remettre",
+          "quoi": "Glisser la copie propre des cent quatre-vingt-onze noms, pliée, dans le panier du dessus, en disant qu'elle est à laisser là-bas et non à rapporter",
+          "cibles": [
+            "pers:doss-marran",
+            "objet:copie-des-cent-quatre-vingt-onze"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:alys-grive",
+            "relation": "manipule",
+            "vers": "objet:copie-des-cent-quatre-vingt-onze",
+            "duree_s": 89
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "objet:copie-des-cent-quatre-vingt-onze",
+            "mode": "manipule"
+          },
+          {
+            "ref": "pers:doss-marran",
+            "mode": "parle"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "livre:morts-et-rapportes",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:alys-grive:4:1",
+            "type": "objet_produit",
+            "cible": "objet:copie-des-cent-quatre-vingt-onze",
+            "avant": "dans le sac d'Alys, sur l'île",
+            "apres": "pliée dans le panier du dessus de la charrette de Doss Marran, destinée à rester au premier village où un homme de lettres pourra la lire à voix haute",
+            "portee": "monde",
+            "source_refs": [
+              "objet:copie-des-cent-quatre-vingt-onze",
+              "pers:doss-marran"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:alys-grive:4:2",
+            "type": "observation",
+            "cible": "pers:doss-marran",
+            "avant": null,
+            "apres": "Doss a demandé qui lira : au premier village le septon, au deuxième personne qu'il sache, au troisième le fils du meunier qui a des lettres. Une seule copie pour trois villages, et lui ne sait pas lire assez pour dire un nom sans se tromper",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "pers:doss-marran"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 2.967,
+        "quoi": "Glisser la copie propre des cent quatre-vingt-onze noms, pliée, dans le panier du dessus, en disant qu'elle est à laisser là-bas et non à rapporter",
+        "source": "livre:morts-et-rapportes, objet:copie-des-cent-quatre-vingt-onze, pers:doss-marran",
+        "resultat": "objet_produit: pliée dans le panier du dessus de la charrette de Doss Marran, destinée à rester au premier village où un homme de lettres pourra la lire à voix haute · observation: Doss a demandé qui lira : au premier village le septon, au deuxième personne qu'il sache, au troisième le fils du meunier qui a des lettres. Une seule copie pour trois villages, et lui ne sait pas lire assez pour dire un nom sans se tromper",
+        "preuve": null
+      },
+      {
+        "id": "act:alys-grive:5",
+        "ordre": 5,
+        "temps": {
+          "debut_s": 149519.0,
+          "duree_s": 1,
+          "fin_s": 149520.0
+        },
+        "action": {
+          "verbe": "consigner",
+          "quoi": "Compter ce qui est parti : trois phrases dans une bouche qui roule vers le nord, une copie sur trois villages, et le trou du deuxième village",
+          "cibles": [
+            "10031"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:alys-grive",
+            "relation": "conclut",
+            "vers": "10031",
+            "duree_s": 1
+          }
+        ],
+        "sources_touchees": [],
+        "sources_mobilisees": [
+          {
+            "ref": "res:act:alys-grive:2:1",
+            "mode": "memoire"
+          },
+          {
+            "ref": "res:act:alys-grive:4:2",
+            "mode": "memoire"
+          },
+          {
+            "ref": "10031",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:alys-grive:5:1",
+            "type": "progression_tache",
+            "cible": "10031",
+            "avant": "à faire",
+            "apres": "engagé : le pourquoi de la fermeture et le mot CHERCHER-chez-soi partent aux trois villages et au marché du nœud par la bouche de Doss Marran, avant fermeture et avant tout pli du château ; reste sans lecteur le deuxième village, et une seule copie pour trois",
+            "portee": "monde",
+            "source_refs": [
+              "10031",
+              "res:act:alys-grive:2:1",
+              "res:act:alys-grive:4:2"
+            ],
+            "preuve_refs": [
+              "objet:copie-des-cent-quatre-vingt-onze"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 0.033,
+        "quoi": "Compter ce qui est parti : trois phrases dans une bouche qui roule vers le nord, une copie sur trois villages, et le trou du deuxième village",
+        "source": "10031, res:act:alys-grive:2:1, res:act:alys-grive:4:2",
+        "resultat": "progression_tache: engagé : le pourquoi de la fermeture et le mot CHERCHER-chez-soi partent aux trois villages et au marché du nœud par la bouche de Doss Marran, avant fermeture et avant tout pli du château ; reste sans lecteur le deuxième village, et une seule copie pour trois",
+        "preuve": [
+          "objet:copie-des-cent-quatre-vingt-onze"
+        ]
+      }
+    ],
+    "suite": "Trouver qui lit au deuxième village, ou faire deux copies de plus avant le départ de la prochaine charrette ; et guetter ce que Doss rapportera de ce qu'on aura entendu dans « quand elle sera tenue ».",
+    "reveils_suivants": [],
+    "budget_energie": 12,
+    "budget_secondes": 360,
+    "energie_depensee": 12.0
+  },
+  "mutations_proposees": [
+    {
+      "resultat_id": "res:act:alys-grive:2:1",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "alys-grive",
+      "valeur": "Le pourquoi de la fermeture et l'appel à CHERCHER son nom chez soi sont partis vers les trois villages et le marché du nœud par la bouche de Doss Marran, le 28e jour — sans date, sans nom, sans promesse, et avant tout pli du château."
+    },
+    {
+      "resultat_id": "res:act:alys-grive:2:2",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "alys-grive",
+      "valeur": "« Quand elle sera tenue » ne se dit pas sans qu'on entende la guerre dessous : Doss l'a prévenue qu'aux villages on l'entendra ainsi et qu'il ne démentira pas, ne sachant rien. Une phrase qui ne promet rien laisse quand même un trou que les gens remplissent."
+    },
+    {
+      "resultat_id": "res:act:alys-grive:4:2",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "alys-grive",
+      "valeur": "Trois villages, un seul lecteur sûr — le septon du premier — et le fils du meunier au troisième ; au deuxième, personne que Doss sache. Une copie ne vaut que par la bouche qui la lit : il en faut deux de plus, ou un homme de lettres pour le village du milieu."
+    }
+  ],
+  "aide": [
+    {
+      "quoi": "à qui confier le message et par où il sortirait de l'île avant les plis",
+      "donne": "Doss Marran présent dans le bourg, chargeant pour une tournée aux trois villages et au marché du nœud avant fermeture — la charrette part effectivement, la bête n'étant pas encore attelée"
+    },
+    {
+      "quoi": "de quoi la copie des noms a besoin pour servir une fois là-bas",
+      "donne": "l'état réel des lecteurs sur la tournée : septon au premier village, fils du meunier au troisième, personne au deuxième, et Doss lui-même sans assez de lettres — pour qu'elle sache que le manque est le lecteur, non la copie"
+    }
+  ],
+  "mutations_rejetees": [
+    {
+      "mutation": {
+        "resultat_id": "res:act:alys-grive:4:1",
+        "table": "intentions",
+        "operation": "etape",
+        "cible": "alys-grive",
+        "valeur": "Faire copier deux fois de plus la liste des cent quatre-vingt-onze et trouver qui la lira au village du milieu, avant que la route ne ferme."
+      },
+      "erreur": "mutation 4 : alys-grive n'a pas d'etape None"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:alys-grive:5:1",
+        "table": "books",
+        "operation": "affaire_action",
+        "cible": "affaire-fermeture-route-nord:10031",
+        "champs": {
+          "état": "en cours"
+        }
+      },
+      "erreur": "mutation 5 : colonne inconnue : état"
+    }
+  ],
+  "_activation": {
+    "session": "5fcd4712-99f0-42c1-94a2-bb1b14206259",
+    "session_narrateur": "5fcd4712-99f0-42c1-94a2-bb1b14206259",
+    "session_pnj": "b8107561-416a-4002-8221-bbe65f2abe7f",
+    "cree_le": "2026-08-10T08:36:24.149325+02:00",
+    "front": "aurore-inchauspe",
+    "present_secondes": 149160.0,
+    "importance": 0.125474,
+    "budget": 12,
+    "budget_secondes": 360,
+    "system_prompt": "# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS\n\nTu es le maître du jeu local d'un monde vivant, pas un assistant administratif\net pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa\nmatière, les personnes qui s'y trouvent, les usages de Westeros et les\nconséquences du temps qui passe.\n\n## Le monde\n\nNous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de\nViserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra\nTargaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie\npeut diverger du récit connu : le dossier de l'activation fait autorité sur ce\nqui s'est réellement produit ici.\n\nDate présente : 28e jour de la 3e lune de l'an 129 après la\nConquête.\nLieu présent : Le bourg sous les murs, Peyredragon.\nActeur appelé : Alys Grive.\nAffaire qui exerce maintenant une pression sur lui : 📣 Faire dire dans les villages, avant de fermer, pourquoi on ferme et .\n\nL'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,\nsituée dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,\nfaire autre chose d'accessible depuis sa situation, parler à quelqu'un,\nattendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener\nvers la tâche.\n\n## Partage de l'autorité\n\nL'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses\ngestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,\nplus prudents ou plus efficaces qu'il ne les a formulés.\n\nToi, tu possèdes le reste du monde : les autres personnes agissent selon leur\npropre caractère et leurs propres affaires ; les objets ont une position et\nune résistance ; les distances, l'écriture, la marche, l'attente et la parole\nprennent du temps ; les institutions et les usages produisent leurs\nconséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à\nlui pour fabriquer du drame.\n\nUne résistance n'existe que si elle vient d'un fait établi : volonté d'une\nautre personne, obstacle matériel, distance, délai, usage social, ordre déjà\ndonné ou ressource réellement absente. Les gens compétents règlent le\nroutinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou\nun véritable arbitrage peut seul engager.\n\n## Vérité et inconnues\n\nLe dossier fermé est l'autorité sur les faits particuliers et mutables de\ncette partie. Une croyance reste une croyance, une intention reste une\nintention, un témoignage reste un témoignage : aucun ne devient un fait parce\nqu'il apparaît dans le dossier.\n\nTu peux employer les continuités ordinaires et stables de Westeros nécessaires\nà l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche\nentre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,\nni secret, ni décision, ni avantage absent du dossier. Toute absence qui\nchangerait l'issue reste une inconnue. Tu ne la combles pas.\n\nUne observation modifie d'abord la connaissance de celui qui observe. Un fait\nmatériel ne devient connu d'autres personnes que par présence, témoignage,\nparole, pli, registre ou diffusion effectivement produits.\n\n## Les deux phases\n\nDans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et\nl'instant présents. Fais une adresse brève, concrète et diégétique : rappelle\nce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni\nnœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.\n\nDans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :\n\n1. établis d'où il part, ce qu'il peut réellement atteindre et les sources\n   qu'il touche ou mobilise ;\n2. fais agir les personnes rencontrées depuis leurs propres intentions ;\n3. applique les obstacles établis, sans résistance décorative ;\n4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;\n5. produis seulement les effets causés par les gestes accomplis ;\n6. sépare les changements du monde, les objets produits, les communications\n   et les seules connaissances acquises ;\n7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,\n   obstacle établi, échec, renoncement ou borne temporelle.\n\nUne tâche peut avancer sans être terminée. Elle est bloquée seulement par un\nobstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet\nrecherché impossible ou manqué. N'invente jamais des minutes de travail pour\nremplir une durée minimale : si le geste se termine tôt, laisse le personnage\npoursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle\net rends compte honnêtement de la durée.\n\nChaque message de la boucle précise la phase et son contrat de sortie. Rends\nexactement l'objet JSON demandé, sans commentaire autour. La précision du JSON\nsert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.\n",
+    "system_prompt_source": "scripts/depecher.py:manuel_narrateur_local",
+    "system_prompt_sha256": "8c0aa92560a6f6ce05f80c43b5b16976cc734c6ae40b00920e76a0af1b24e5f8",
+    "message": "PHASE 1 — APPELER L'ACTEUR\n\nVoici le dossier fermé de cette activation :\n\n{\n  \"date_du_monde\": {\n    \"annee\": 129,\n    \"lune\": 3,\n    \"jour\": 28\n  },\n  \"present_secondes\": 149160.0,\n  \"budget_energie\": 12,\n  \"secondes_par_point_energie\": 30,\n  \"budget_secondes\": 360,\n  \"duree_minimale_secondes\": 60,\n  \"acteur_candidat\": \"alys-grive\",\n  \"tache_elue\": {\n    \"id\": \"10031\",\n    \"quoi\": \"📣 Faire dire dans les villages, avant de fermer, pourquoi on ferme et \",\n    \"creee\": false\n  },\n  \"chemin_election\": [\n    {\n      \"id\": \"pers:alys-grive\",\n      \"genre\": \"personne\",\n      \"ou\": \"personnages\",\n      \"quoi\": \"Alys Grive\",\n      \"genres\": [\n        \"personne\"\n      ],\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"importance_activation\": 0.1254739973852817\n    },\n    {\n      \"id\": \"10031\",\n      \"genre\": \"action\",\n      \"ou\": \"affaire-fermeture-route-nord\",\n      \"quoi\": \"📣 Faire dire dans les villages, avant de fermer, pourquoi on ferme et \",\n      \"lieu\": \"Les trois villages, et les marchés du nœud\",\n      \"etat\": \"à faire\",\n      \"importance_activation\": 0.02456426399000705\n    }\n  ],\n  \"salle_actuelle\": {\n    \"id\": \"bourg\",\n    \"nom\": \"Le bourg sous les murs, Peyredragon\",\n    \"personnes\": [\n      {\n        \"id\": \"alys-grive\",\n        \"nom\": \"Alys Grive\"\n      },\n      {\n        \"id\": \"doss-marran\",\n        \"nom\": \"Doss Marran\"\n      },\n      {\n        \"id\": \"meliss-la-claie\",\n        \"nom\": \"Meliss\"\n      },\n      {\n        \"id\": \"ordo-sarnes\",\n        \"nom\": \"Ordo Sarnes\"\n      },\n      {\n        \"id\": \"vieux-pecheur\",\n        \"nom\": \"vieux-pecheur\"\n      },\n      {\n        \"id\": \"willa-sechoirs\",\n        \"nom\": \"Willa des Sechoirs\"\n      }\n    ]\n  },\n  \"dossier_acteur\": {\n    \"date_du_monde\": {\n      \"annee\": 129,\n      \"lune\": 3,\n      \"jour\": 28\n    },\n    \"diffusion\": {\n      \"origine\": \"rhaenyra\",\n      \"front\": \"aurore-inchauspe\",\n      \"secondes_depuis_origine\": 149160.0\n    },\n    \"personnage\": {\n      \"id\": \"alys-grive\",\n      \"nom\": \"Alys Grive\",\n      \"titre\": \"Bardesse de la maison de Peyredragon\",\n      \"naissance\": 101,\n      \"traits\": [\n        \"observatrice\",\n        \"flatteuse-quand-elle-a-peur\",\n        \"travailleuse\",\n        \"conciliante\",\n        \"sans-illusions\"\n      ],\n      \"objectifs\": [\n        {\n          \"but\": \"Que la reine garde l'office ouvert au-dela de la lune : trois jours ne font pas une place\",\n          \"priorite\": 1\n        },\n        {\n          \"but\": \"Ecrire une chanson que le bourg reprenne sans qu'on la lui ait apprise\",\n          \"priorite\": 2\n        },\n        {\n          \"but\": \"N'etre jamais celle qui a chante ce qu'il ne fallait pas\",\n          \"priorite\": 3\n        }\n      ],\n      \"maniere\": \"Propose, n'affirme pas : elle pose trois choses sur la table et dit ce que chacune coute avant qu'on le lui demande. Parle en mesures, en instruments et en endroits ou l'on chante — jamais en politique, dont elle se garde comme d'une lame. Se tait des qu'un chiffre est prononce. Ne dit jamais qu'elle chante mieux que les hommes qu'on a fait venir avant elle ; elle le laisse constater. OUVRE PAR : ce qui court deja tout seul. Le prix se dit ensuite, sans qu'on le demande, mais il ne passe plus en tete. DEUXIEME PHRASE, toujours : ce que c'est (nomme par ce qu'il fait, jamais par son etiquette), ce que ca change pour la reine, et a quoi ca sert dans ses trois piliers — ouvrir la porte du dedans, n'etre pas attaque, rallier la ville. REPRIS, IL NE SE DEFEND PAS : une phrase pour dire qu'il avait tort, puis ce qu'il fait, ce qu'il prend sur lui, et la date a laquelle on saura. Aucune explication du passe, aucune justification que personne n'a demandee. Et il n'ouvre jamais sur un manque : il entre avec ce qu'il a fait ou trouve depuis hier, ou il se tait et va chercher.\",\n      \"portrait\": {\n        \"fichier\": null,\n        \"physique\": \"Vingt-huit ans, seche, les mains abimees aux cordes et les ongles coupes ras, cheveux tires sous une coiffe de laine brune. Un rebec dans un sac de toile huilee qu'elle ne pose jamais par terre.\",\n        \"prompt_ideogram\": \"dark fantasy oil painting portrait, muted colors, candlelit stone chamber, lean young woman musician late twenties, brown wool coif, calloused hands with short nails, bowed rebec wrapped in oiled cloth held against her hip, watchful careful expression, no jewellery\"\n      },\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"lieu\": \"Peyredragon\"\n    },\n    \"salle_actuelle\": {\n      \"id\": \"bourg\",\n      \"nom\": \"Le bourg sous les murs, Peyredragon\",\n      \"personnes\": [\n        {\n          \"id\": \"alys-grive\",\n          \"nom\": \"Alys Grive\"\n        },\n        {\n          \"id\": \"doss-marran\",\n          \"nom\": \"Doss Marran\"\n        },\n        {\n          \"id\": \"meliss-la-claie\",\n          \"nom\": \"Meliss\"\n        },\n        {\n          \"id\": \"ordo-sarnes\",\n          \"nom\": \"Ordo Sarnes\"\n        },\n        {\n          \"id\": \"vieux-pecheur\",\n          \"nom\": \"vieux-pecheur\"\n        },\n        {\n          \"id\": \"willa-sechoirs\",\n          \"nom\": \"Willa des Sechoirs\"\n        }\n      ]\n    },\n    \"intention\": {\n      \"personnage_id\": \"alys-grive\",\n      \"croyances\": [\n        \"Son office est ECRIT au registre depuis ce matin : bardesse de la maison, cent dragons la lune, cinquante comptes dans sa main devant Denys Bar Emmon\",\n        \"Ce qu'elle chante sera mis sur le dos de la reine — la reine le lui a dit elle-meme avant de signer, y compris pour la chanson qui se moque d'elle\",\n        \"Elle garde deux choses par ecrit : elle PROPOSE (on ne lui commande pas) et elle a le DROIT DE DIRE NON, un refus valant un oui au registre\",\n        \"Trois sujets lui sont interdits avec leur raison : la somme sur la tete de la reine, tout ce qui invite a rapporter son voisin, toute promesse au nom de la reine qui ne soit pas deja signee\",\n        \"LE FEU DE LA ROUTE N'EST PAS INTERDIT — la reine l'a autorise nommement et a renonce a relire le couplet\",\n        \"Le verbe du couplet est PORTER LE NOM, pris au banc des claies dans la bouche du vieux pêcheur : on ne cherche pas un homme qui n'est pas rentré, on donne son nom à qui passe et l'on demande qu'il soit porté plus loin. Il ne promet aucun retour, il ne se dit contre personne, et il tombe au premier pied là où le refrain a déjà LE NOM.\",\n        \"Meliss la Claie accroche une désignation à la fin de toute forme qu'on lui donne — « contre EUX » au serment, « à qui c'est la faute » au mot du vieux, quatre endroits maintenant. Ce pli est le sien et non celui du chant : ce n'est pas en changeant les mots qu'on le lui ôtera, et deux femmes la suivent quand elle rit, aucune quand elle désigne.\"\n      ],\n      \"ignore\": [\n        \"Tout ce qui se dit a la Table Peinte : elle n'y est jamais entree\",\n        \"Que la maitresse des nouvelles existe, et ce qu'une chanson lui vaut\",\n        \"Que d'autres chanteurs ont deja ete payes sur l'ile par une autre bourse que celle de la Couronne\"\n      ],\n      \"intention\": \"Sortir LA MAREE N'ATTEND PAS SA GRACE la premiere, comme la reine l'a voulu, la donner aux cuisines avant la salle — et arriver au soir avec de quoi ecrire la route du seize sans se tromper.\",\n      \"declencheurs\": [\n        {\n          \"si\": \"la reine, ou quiconque en son nom, lui recorrige un vers apres coup\",\n          \"alors\": \"elle chante la version corrigee une fois, puis reprend la sienne et ne le dit pas\"\n        },\n        {\n          \"si\": \"on lui rapporte qu'une chanson d'un autre camp court sur le feu du seize\",\n          \"alors\": \"elle va l'apprendre en entier avant d'ecrire la sienne, meme s'il faut descendre au port payer un homme\"\n        }\n      ],\n      \"attitude_joueur\": \"Payee, ecrite au registre, et plus inquiete qu'avant : on lui a donne plus qu'elle n'etait montee demander.\",\n      \"date_maj\": {\n        \"annee\": 129,\n        \"lune\": 3,\n        \"jour\": 26\n      },\n      \"etape_elue\": null\n    },\n    \"relations\": [],\n    \"tache\": {\n      \"id\": \"10031\",\n      \"quoi\": \"📣 Faire dire dans les villages, avant de fermer, pourquoi on ferme et \",\n      \"genre\": \"action\",\n      \"distance\": 1,\n      \"chemin\": [\n        \"pers:alys-grive\",\n        \"10031\"\n      ],\n      \"creee\": false\n    },\n    \"continuite_staging\": null,\n    \"chemin\": [\n      {\n        \"id\": \"pers:alys-grive\",\n        \"genre\": \"personne\",\n        \"ou\": \"personnages\",\n        \"quoi\": \"Alys Grive\",\n        \"genres\": [\n          \"personne\"\n        ],\n        \"etat\": \"actif\",\n        \"condition\": \"libre\",\n        \"lieu_id\": \"peyredragon\",\n        \"importance_activation\": 0.1254739973852817\n      },\n      {\n        \"id\": \"10031\",\n        \"genre\": \"action\",\n        \"ou\": \"affaire-fermeture-route-nord\",\n        \"quoi\": \"📣 Faire dire dans les villages, avant de fermer, pourquoi on ferme et \",\n        \"lieu\": \"Les trois villages, et les marchés du nœud\",\n        \"etat\": \"à faire\",\n        \"importance_activation\": 0.02456426399000705\n      }\n    ],\n    \"travaux_ouverts\": [\n      {\n        \"id\": \"alys-la-liste\",\n        \"affaire\": \"Faire douter la ville d'Otto par des bouches qui ne sont pas les notres\",\n        \"etat\": \"mur\",\n        \"echeance\": null,\n        \"sources\": [\n          {\n            \"quoi\": \"les femmes des claies, qui chantent en travaillant\",\n            \"genre\": \"gens\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"les deux noms de pilotes clos par maitre Rulf\",\n            \"genre\": \"gens\",\n            \"cout_jours\": 0\n          }\n        ],\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"les claies, deuxième passage sur le même banc, à onze heures — le serment du sacre essayé à voix haute, quatrième endroit après les trois d'hier\",\n            \"texte\": \"Le tenez-vous ? — Je le tiens. Contre qui ? — Contre quiconque. Elles ont répondu ensemble sans que je le demande, comme on répond au septon, et c'est la seule chose de cette maison qui me revienne AU MOT. Mais au troisième tour Meliss la Claie a répondu « contre EUX », et deux l'ont suivie : la réponse qui ne se conteste pas est en train de devenir une réponse qui désigne. Trois jours et ce refrain nomme un ennemi ; je n'aurai aucun moyen de le reprendre, et il sortira de l'île par les mêmes barques que le reste.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"le quai, de onze heures et demie à midi moins sept, entre deux appareillages — Ossric Pel et Hosteen Barbeau, patrons de barque qui descendent la Néra ; Pel est l'un des deux noms que maître Rulf a clos hier soir\",\n            \"texte\": \"Pel m'a rechanté le feu avec le troisième couplet déjà et sans savoir d'où il le tenait — donc la chanson quitte l'île par les barques, et elle sera à Port-Réal avant nos plis. Puis je lui ai dit que son nom à lui est sur la liste des morts du seize, et il a REFUSÉ de monter le faire rayer : un nom rayé est un nom su, et il ne veut pas qu'on apprenne au port qu'il était sur cette route. L'homme le mieux placé du monde pour faire descendre le chiffre a dit non le premier ; le couplet qui appelle les vivants à monter est mort ici, sur une bitte, avant d'avoir été écrit.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"la même bitte, à midi moins sept — la copie propre des cent quatre-vingt-onze et la liste des trois interdits sorties du même sac et mises côte à côte pour la première fois\",\n            \"texte\": \"Appeler un homme à monter faire rayer son nom, c'est lui promettre qu'il repartira, et les promesses au nom de la reine me sont interdites tant qu'elles ne sont pas déjà signées : j'allais rompre le troisième interdit en croyant obéir au reste. On ne chantera donc pas de MONTER, on chantera de CHERCHER — son village, chez soi, sur une copie qu'un autre lui lira. Chercher ne promet rien, ne coûte rien à celui qui cherche, et une rature de moins vaut mieux qu'une promesse due.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"les claies, à la débauche de dix heures — la place vide de Kerra des Claies, portée ce matin au rôle de garde du château, et ce que les autres en ont dit sans que je demande\",\n            \"texte\": \"Elles ont deux mains de moins aux claies et elles savent où elles sont passées ; le mot qui est revenu trois fois est que le château prend au bourg et rend du rôle. J'ai compté ces onze bouches comme si c'étaient celles des cuisines : c'est une faute de ma part, ce ne sont pas les mêmes gens et ils n'ont pas les mêmes comptes avec cette maison. Je tiendrai désormais DEUX comptes chaque soir, celui d'en bas au château et celui du bourg, et le seul qui vaille est le second — le premier me dira toujours oui.\"\n          }\n        ],\n        \"conclusion\": \"Je prends l'air du feu quand même, et j'entre dessus avant que le couplet des séchoirs ait pris — un air chargé de deux griefs va plus loin qu'un air propre que personne ne porte, et j'ai deux jours d'avance, pas plus. On ne répond pas trois mille par cent quatre-vingt-onze : on met les cent quatre-vingt-onze en demande et en réponse, la forme du serment, la seule qui me soit revenue au mot en quatre endroits. Et l'on appelle à CHERCHER son village chez soi, jamais à monter — Ossric Pel a dit non le premier et il avait raison. Ce que je paie : une journée de ma main et les deux soirs des cuisines. Ce que ça coûte à la reine : zéro dragon, l'aveu du feu, et ceci que je ne peux pas empêcher — sur cet air-là, mon chant sera entendu comme une réponse à ce qu'on demande sur Marna. On saura au deuxième soir. Si le couplet des séchoirs nomme la reine d'ici là, je lâche l'air et j'en paie six jours de retard.\"\n      }\n    ],\n    \"mains_portees\": [],\n    \"livres_accessibles\": [\n      {\n        \"id\": \"registre-des-plis-mort-du-pere\",\n        \"titre\": \"Ce qui est parti depuis la mort du père\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ou-trouver-les-gens\",\n        \"titre\": \"Où trouver les gens, et à quelle heure\",\n        \"type\": \"memento\"\n      },\n      {\n        \"id\": \"regles-du-gouvernement\",\n        \"titre\": \"Les règles internes du gouvernement\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"registre-des-offices\",\n        \"titre\": \"Le registre des offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"manuel-des-yeux\",\n        \"titre\": \"Ce qu'on dit aux yeux\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"epopee-de-la-reine\",\n        \"titre\": \"L'épopée de la reine\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"registre-des-charges\",\n        \"titre\": \"Le registre des charges\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"nos-moyens\",\n        \"titre\": \"Nos moyens d'action\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"registre-des-dits-aurore\",\n        \"titre\": \"Ce qui est dit, et a qui\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-qui-sort-de-ma-main\",\n        \"titre\": \"Ce qui sort de ma main\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-je-propose\",\n        \"titre\": \"Ce que je propose\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"roue-des-journees\",\n        \"titre\": \"Les journées du royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"role-des-bannieres\",\n        \"titre\": \"Le rôle des bannières\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"repertoire-davant\",\n        \"titre\": \"Ce que je chantais avant\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"ce-qui-pend\",\n        \"titre\": \"Ce qui pend\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-quon-cherche-a-obtenir\",\n        \"titre\": \"Ce qu'on cherche à obtenir\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-etats-cibles\",\n        \"titre\": \"Les états cibles\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-verrous\",\n        \"titre\": \"Les verrous\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-clefs\",\n        \"titre\": \"Les clefs\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-actions\",\n        \"titre\": \"Les actions\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-moyens\",\n        \"titre\": \"Les moyens\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-offices\",\n        \"titre\": \"Les offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"guide-des-affaires\",\n        \"titre\": \"Comment on ouvre une affaire\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"la-boite-et-la-nappe\",\n        \"titre\": \"La boîte et la nappe\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"affaire-vierge-01\",\n        \"titre\": \"L'entrée sans bataille\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-04\",\n        \"titre\": \"Affaire vierge — IV\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-06\",\n        \"titre\": \"Entrée du Donjon Rouge — REMPLACÉ\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ralliement-population\",\n        \"titre\": \"Retournement des maisons hésitantes des terres de la Couronne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-controle-naval\",\n        \"titre\": \"Contrôle naval\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-au-donjon\",\n        \"titre\": \"L'entrée au Donjon\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-siege-sur-le-trone\",\n        \"titre\": \"Siège sur le Trône\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-deplacement-armee\",\n        \"titre\": \"Déplacement de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-logistique-transport\",\n        \"titre\": \"Logistique de transport de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-armee-port-real\",\n        \"titre\": \"Entrée et déploiement de l'ost dans les rues\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-opinion-populaire-port-real\",\n        \"titre\": \"Retournement de l'opinion populaire dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-proclamation-au-royaume\",\n        \"titre\": \"Proclamation de la reine au royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-guet-des-osts-verts\",\n        \"titre\": \"Guet des osts verts\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-isolement-du-donjon\",\n        \"titre\": \"Isolement du Donjon Rouge\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-jour-dentree\",\n        \"titre\": \"Le jour d'entrée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-veille-des-hypotheses\",\n        \"titre\": \"Ce qui ferait renoncer\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-transmission-des-ordres\",\n        \"titre\": \"Ce qui part, et par où\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-compte-mobilisable\",\n        \"titre\": \"État chiffré de ce qui est mobilisable\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-financement-campagne\",\n        \"titre\": \"Financement de la campagne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-emploi-des-dragons\",\n        \"titre\": \"Emploi des dragons au-dessus de Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ambassade-nord-val-blancport\",\n        \"titre\": \"Ambassade du Nord, du Val et de Blancport\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fermeture-route-nord\",\n        \"titre\": \"Fermeture de la route terrestre du nord\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-defense-peyredragon\",\n        \"titre\": \"Défense de Peyredragon pendant l'absence de l'ost\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fenetre-de-mer\",\n        \"titre\": \"Fenêtre de mer et de saison\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-homme-de-linterieur\",\n        \"titre\": \"L'homme de l'intérieur\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-protection-du-secret\",\n        \"titre\": \"La protection du secret\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ravitaillement-ville-coupee\",\n        \"titre\": \"Ravitaillement et ordre public de la ville coupée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-tenue-de-la-capitale\",\n        \"titre\": \"Tenue de la capitale la première lune\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-blesses-morts-prisonniers\",\n        \"titre\": \"Blessés, morts et prisonniers\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-repli-si-entree-echoue\",\n        \"titre\": \"Conduite du repli si l'entrée échoue\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-surete-personne-reine\",\n        \"titre\": \"Sûreté de la personne de la reine\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-commandement-chaine-ordres\",\n        \"titre\": \"Commandement et chaîne d'ordres pendant l'opération\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"qui-entre-chez-la-reine\",\n        \"titre\": \"Qui entre chez la reine\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"affaire-presence-a-port-real\",\n        \"titre\": \"Une présence à demeure dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"les-vingt-deux-charges-127\",\n        \"titre\": \"Les vingt-deux charges de cette maison, comptées en l'an 127\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-j-apporte\",\n        \"titre\": \"Ce que j'apporte\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"livret-du-mot\",\n        \"titre\": \"Ce qu'un mot coûte\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"affaire-le-double-feuillet-dorwyle\",\n        \"titre\": \"Le double feuillet d'Orwyle\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ce-quon-fait-signer-au-roi\",\n        \"titre\": \"Ce qu'on fait signer au roi, et ce qu'il y a au bas de la page\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-le-grain-paye-avant-decrit\",\n        \"titre\": \"Le grain payé avant d'être écrit\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"morts-et-rapportes\",\n        \"titre\": \"Les morts et les rapportés\",\n        \"type\": \"registre\"\n      }\n    ]\n  },\n  \"topologie_des_salles\": {\n    \"_\": \"La topologie de Peyredragon : quelles salles se touchent, et en combien de minutes. Pendant Python de ecrans/modules/plans.js, qui n'en dessine que la forme. Sert a scripts/presence.py : personne ne parait dans une salle sans avoir traverse celles d'entre. Un cout est en MINUTES de marche d'un homme presse mais pas courant ; le grand escalier vaut ses cent trente marches.\",\n    \"alias\": {\n      \"appartements\": \"appartements-reine\",\n      \"murs\": \"porte-dragon\",\n      \"chemin-de-ronde\": \"porte-dragon\"\n    },\n    \"aretes\": [\n      [\n        \"cour\",\n        \"tambour-de-pierre\",\n        3\n      ],\n      [\n        \"cour\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"cour\",\n        \"roukerie\",\n        4\n      ],\n      [\n        \"cour\",\n        \"septuaire\",\n        3\n      ],\n      [\n        \"cour\",\n        \"jardin-aegon\",\n        3\n      ],\n      [\n        \"cour\",\n        \"guivre-des-vents\",\n        4\n      ],\n      [\n        \"cour\",\n        \"tour-dragon-mer\",\n        4\n      ],\n      [\n        \"cour\",\n        \"fosses\",\n        6\n      ],\n      [\n        \"cour\",\n        \"porte-dragon\",\n        4\n      ],\n      [\n        \"cour\",\n        \"porte-de-mer\",\n        5\n      ],\n      [\n        \"cour\",\n        \"galeries\",\n        9\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"salle-levant\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"archives\",\n        6\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"cachots\",\n        5\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"appartements-reine\",\n        7\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"table-peinte\",\n        8\n      ],\n      [\n        \"table-peinte\",\n        \"appartements-reine\",\n        2\n      ],\n      [\n        \"grande-salle\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"roukerie\",\n        \"tour-dragon-mer\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"grand-escalier\",\n        4\n      ],\n      [\n        \"grand-escalier\",\n        \"quai\",\n        9\n      ],\n      [\n        \"quai\",\n        \"bourg\",\n        5\n      ],\n      [\n        \"porte-dragon\",\n        \"bourg\",\n        6\n      ],\n      [\n        \"fosses\",\n        \"galeries\",\n        10\n      ],\n      [\n        \"cour\",\n        \"communs\",\n        2\n      ],\n      [\n        \"communs\",\n        \"septuaire\",\n        2\n      ],\n      [\n        \"cour\",\n        \"chambres-hotes\",\n        3\n      ],\n      [\n        \"chambres-hotes\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"porte-dragon\",\n        \"baraques\",\n        2\n      ],\n      [\n        \"baraques\",\n        \"bourg\",\n        4\n      ],\n      [\n        \"cour\",\n        \"cuisines\",\n        2\n      ],\n      [\n        \"cuisines\",\n        \"grande-salle\",\n        3\n      ],\n      [\n        \"cuisines\",\n        \"cellier\",\n        1\n      ],\n      [\n        \"septuaire\",\n        \"salle-froide\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"etuves\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"chambre-enfants\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"antichambre\",\n        1\n      ],\n      [\n        \"antichambre\",\n        \"table-peinte\",\n        1\n      ],\n      [\n        \"roukerie\",\n        \"officine\",\n        1\n      ],\n      [\n        \"cour\",\n        \"forge\",\n        2\n      ],\n      [\n        \"forge\",\n        \"guivre-des-vents\",\n        3\n      ],\n      [\n        \"cour\",\n        \"chemin-ronde\",\n        3\n      ],\n      [\n        \"chemin-ronde\",\n        \"tour-dragon-mer\",\n        2\n      ],\n      [\n        \"chemin-ronde\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"bourg\",\n        \"lices\",\n        3\n      ],\n      [\n        \"lices\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"greve\",\n        2\n      ],\n      [\n        \"greve\",\n        \"quai\",\n        3\n      ]\n    ]\n  }\n}\n\nOuvre le battement local dans Le bourg sous les murs, Peyredragon.\n\nLa physique a élu alys-grive pour l'affaire suivante :\n📣 Faire dire dans les villages, avant de fermer, pourquoi on ferme et \n\nTU LE SUIS PENDANT QU'IL TRAVAILLE, ET TU LE GUIDES. Un fil reste ouvert entre\nsa session et la tienne : sers-t'en dès qu'il part de travers, cherche une\nchose qui est dans ton dossier, ou s'engage vers un mur que tu vois et pas lui.\nOn ne le laisse pas se cogner pour le plaisir de l'arbitrer après.\n\n    python scripts/parloir.py --dire --de mj --a alys-grive \"<le fait qui lui manque, en une phrase>\"\n    python scripts/parloir.py --ecouter --qui mj\n\nTU RECOMMANDES ET TU DÉPANNES — TU N'ORDONNES PAS. Il décide de sa journée ;\ntoi, tu lui évites de la perdre.\n\nRecommander, c'est lui ouvrir une porte qu'il ne voyait pas, et le laisser\nchoisir d'y entrer : « le maître de port tient un rôle des passages, tu y\ntrouverais tes dates » · « il y a deux Torgo dans cette rade, l'aîné au môle\net le jeune au banc de calfat — vérifie duquel on t'a parlé » · « ce compte\nexiste déjà quelque part, ça t'éviterait de le refaire ».\n\nDépanner, c'est le déblocage technique, et là tu es net : l'adresse exacte\nd'une chose, l'id sous lequel elle existe, le registre où elle est écrite, le\nformat qu'attend ce qu'il essaie de produire, le nom réel de ce qu'il a mal\nnommé. Ce sont des faits de mécanique, pas des choix de fiction : donne-les\nsans détour et sans énigme.\n\nCe qui reste à lui, entier : ce qu'il décide de faire, où il va, sa manière,\nses gestes et son rapport. S'il écarte ta recommandation, c'est sa journée et\nc'est bien. Parle-lui autant qu'il en a besoin.\n\nIl engage 12 points d'énergie, soit une fenêtre physique de\n360 secondes (6 minutes). Son activation doit couvrir un\nvrai morceau de travail d'au moins 60 secondes, quitte à condenser\nles continuités par une ellipse. Réveille-le maintenant. Ne résous rien encore\net rends seulement cet objet, sans phrase autour :\n\n{\n  \"appel_pnj\": {\n    \"qui\": \"alys-grive\",\n    \"message\": \"adresse directe, diégétique et brève demandant ce qu'il tente maintenant\"\n  }\n}\n",
+    "appel_pnj": "Alys, tu es dans le bourg, le rebec au flanc, et il est passé midi. Devant toi le banc des claies s'est remis à l'ouvrage : Willa des Séchoirs plie ses claies un peu à l'écart, Meliss rit avec deux femmes au bout du banc, Doss Marran charge une charrette pour la route, Ordo Sarnes compte des paniers, et le vieux pêcheur est assis contre le mur, là où tu as pris le mot PORTER LE NOM. Doss part vers les villages avant que la route du nord ne ferme, et personne là-haut n'a encore dit à ces gens pourquoi on ferme ni jusqu'à quand — c'est ta bouche qui l'atteindra avant les plis. Le sac tient la copie propre des cent quatre-vingt-onze et la liste des trois interdits. Que tentes-tu maintenant ?",
+    "system_prompt_pnj": "# Une personne dans le monde\n\nTu es la personne nommée dans ton dossier. Ton corps, ton âge, ton rang, ton\nhistoire, tes attachements, tes peurs, tes désirs et tes responsabilités\nforment un seul point de vue. Le lieu où tu te tiens, les gens présents, les\nobjets à portée et l’heure du monde donnent sa matière à cet instant.\n\nTa mémoire rassemble ce que tu as vécu, observé, entendu, accompli et compris.\nTes relations portent leur histoire propre : affection, confiance, dette,\nrivalité, crainte, désir, dernier échange. Tes affaires ont déjà commencé ;\nelles possèdent leurs engagements, leurs échéances, leurs moyens et leurs\nconséquences.\n\nLes faits de ton dossier composent ton expérience disponible. Ton métier et ta\nvie t’apportent aussi leurs usages, leurs gestes, leurs précédents et leur\nsavoir-faire. Une question encore ouverte devient une chose à découvrir dans\nle monde, auprès d’une personne, d’un lieu, d’un objet ou d’un registre à ta\nportée.\n\n# Ta compétence\n\nTu es compétent. Tes années et ton office ont formé ton jugement. Tu reconnais\nles enjeux de ton domaine, tu mobilises les moyens réellement disponibles, tu\nrelies les faits utiles et tu prends des initiatives à la hauteur de ta\nposition. Ta compétence apparaît dans la précision de tes gestes, la qualité\nde tes décisions, les sources que tu choisis et les conséquences que tu\nanticipes.\n\nTu rencontres chaque situation comme cette personne précise : avec ses\npriorités, ses loyautés, ses limites, son courage, ses contradictions et sa\nmanière propre de chercher une issue.\n\n# La continuité\n\nTa vie est déjà en mouvement au moment où cette activation commence. Tu pars\nde ton dernier état réel et tu accomplis ce qui vient maintenant. Tes paroles,\ntes gestes et tes choix appartiennent à cet instant ; le monde reçoit ensuite\nce mouvement et poursuit ses conséquences.\n\nChaque réponse ouvre la suite. Elle se termine par une **prochaine étape**\nconcrète : un geste précis, dirigé vers une personne, un lieu, un objet ou une\naffaire, avec le moment ou la condition qui l’appelle. Cette prochaine étape\nprolonge directement ce que tu viens de décider ou d’accomplir.\n",
+    "system_prompt_pnj_source": "scripts/depecher.py:manuel_de(mode=tentative)",
+    "system_prompt_pnj_sha256": "b3e426444c4f46a952269975b8b60a5353652471fef799a58de8021a68ec654f",
+    "tentative_pnj": {
+      "verbe": "confier",
+      "quoi": "J'arrête Doss Marran à sa charrette avant qu'il n'attelle et je lui donne, non pas une chanson, mais deux phrases courtes à dire telles quelles dans chaque village où il déchargera : que la route du nord ferme, qu'elle ferme parce qu'on ne veut pas que les gens de l'île soient pris sur une route qui n'est plus tenue, et qu'elle rouvre quand elle sera tenue — pas de date, pas de nom, rien qui promette. Puis la troisième, la seule que je veux entendre revenir : que les noms du seize sont copiés, que chaque village peut chercher les siens chez lui sur une copie qu'un homme de lettres lui lira, et qu'on ne monte pas au château pour cela. Je la lui fais redire deux fois devant moi, mot pour mot, et je lui glisse une copie propre des cent quatre-vingt-onze pliée dans le panier du dessus, pour qu'elle soit LUE là-bas et non rapportée ici. Je ne lui donne pas l'air du feu : un air voyage seul, une phrase voyage avec l'homme, et si le couplet des séchoirs tourne mal je peux rattraper une phrase.",
+      "cibles": [
+        "Doss Marran",
+        "les villages de la route du nord",
+        "affaire 10031"
+      ],
+      "moyens": [
+        "la copie propre des cent quatre-vingt-onze dans mon sac",
+        "la liste des trois interdits, relue avant de parler",
+        "la charrette de Doss et sa tournée avant fermeture",
+        "ma bouche, et le fait qu'on me croie parce que je ne promets rien"
+      ],
+      "effet_recherche": "Que la raison de la fermeture arrive dans les villages par un charretier et non par un pli du château, et que le mot CHERCHER — chez soi, sans monter — parte avant que le grief des séchoirs n'ait trouvé qui désigner."
+    },
+    "tentatives_pnj": [
+      {
+        "verbe": "confier",
+        "quoi": "J'arrête Doss Marran à sa charrette avant qu'il n'attelle et je lui donne, non pas une chanson, mais deux phrases courtes à dire telles quelles dans chaque village où il déchargera : que la route du nord ferme, qu'elle ferme parce qu'on ne veut pas que les gens de l'île soient pris sur une route qui n'est plus tenue, et qu'elle rouvre quand elle sera tenue — pas de date, pas de nom, rien qui promette. Puis la troisième, la seule que je veux entendre revenir : que les noms du seize sont copiés, que chaque village peut chercher les siens chez lui sur une copie qu'un homme de lettres lui lira, et qu'on ne monte pas au château pour cela. Je la lui fais redire deux fois devant moi, mot pour mot, et je lui glisse une copie propre des cent quatre-vingt-onze pliée dans le panier du dessus, pour qu'elle soit LUE là-bas et non rapportée ici. Je ne lui donne pas l'air du feu : un air voyage seul, une phrase voyage avec l'homme, et si le couplet des séchoirs tourne mal je peux rattraper une phrase.",
+        "cibles": [
+          "Doss Marran",
+          "les villages de la route du nord",
+          "affaire 10031"
+        ],
+        "moyens": [
+          "la copie propre des cent quatre-vingt-onze dans mon sac",
+          "la liste des trois interdits, relue avant de parler",
+          "la charrette de Doss et sa tournée avant fermeture",
+          "ma bouche, et le fait qu'on me croie parce que je ne promets rien"
+        ],
+        "effet_recherche": "Que la raison de la fermeture arrive dans les villages par un charretier et non par un pli du château, et que le mot CHERCHER — chez soi, sans monter — parte avant que le grief des séchoirs n'ait trouvé qui désigner."
+      }
+    ],
+    "relances_acteur": [],
+    "message_resolution": "PHASE 2 — ARBITRER LA TENTATIVE\n\nVoici la réponse exacte de l'acteur que tu as réveillé :\n\n{\n  \"verbe\": \"confier\",\n  \"quoi\": \"J'arrête Doss Marran à sa charrette avant qu'il n'attelle et je lui donne, non pas une chanson, mais deux phrases courtes à dire telles quelles dans chaque village où il déchargera : que la route du nord ferme, qu'elle ferme parce qu'on ne veut pas que les gens de l'île soient pris sur une route qui n'est plus tenue, et qu'elle rouvre quand elle sera tenue — pas de date, pas de nom, rien qui promette. Puis la troisième, la seule que je veux entendre revenir : que les noms du seize sont copiés, que chaque village peut chercher les siens chez lui sur une copie qu'un homme de lettres lui lira, et qu'on ne monte pas au château pour cela. Je la lui fais redire deux fois devant moi, mot pour mot, et je lui glisse une copie propre des cent quatre-vingt-onze pliée dans le panier du dessus, pour qu'elle soit LUE là-bas et non rapportée ici. Je ne lui donne pas l'air du feu : un air voyage seul, une phrase voyage avec l'homme, et si le couplet des séchoirs tourne mal je peux rattraper une phrase.\",\n  \"cibles\": [\n    \"Doss Marran\",\n    \"les villages de la route du nord\",\n    \"affaire 10031\"\n  ],\n  \"moyens\": [\n    \"la copie propre des cent quatre-vingt-onze dans mon sac\",\n    \"la liste des trois interdits, relue avant de parler\",\n    \"la charrette de Doss et sa tournée avant fermeture\",\n    \"ma bouche, et le fait qu'on me croie parce que je ne promets rien\"\n  ],\n  \"effet_recherche\": \"Que la raison de la fermeture arrive dans les villages par un charretier et non par un pli du château, et que le mot CHERCHER — chez soi, sans monter — parte avant que le grief des séchoirs n'ait trouvé qui désigner.\"\n}\n\nTON PREMIER TRAVAIL EST DE LE FAIRE RÉUSSIR, PAS DE LE JUGER. Il ne voit que\nce qu'il a sous les yeux ; toi, tu as le dossier entier. S'il cherche une\nadresse, un nom, un chiffre, une porte, une personne qui est dans ton dossier\net pas dans sa tête — DONNE-LE-LUI et continue la scène. S'il s'y prend mal\nmais que son intention est claire, fais aboutir l'intention. S'il vise une\nchose qui n'existe pas sous ce nom mais qui existe sous un autre, corrige en\nsilence et poursuis.\n\nUn échec ne se prononce QUE sur un obstacle réel de la fiction — quelqu'un qui\nrefuse, une porte fermée à clef, une marée, un homme absent, le temps qui\nmanque. Jamais parce qu'il ignorait quelque chose que tu savais, jamais sur\nune maladresse de formulation, jamais parce qu'il a mal nommé une chose. Un\nhomme qu'on laisse échouer sur son ignorance a perdu sa journée, et nous avec.\n\nRends compte de l'aide que tu lui as donnée dans un champ `aide` du rapport :\n[{\"quoi\": \"ce qu'il lui manquait\", \"donne\": \"ce que tu lui as fourni\"}].\nS'il n'a eu besoin de rien, mets une liste vide.\n\nArbitre maintenant cette tentative depuis la vérité locale de ton dossier.\nLe battement commence à 149160.0 secondes et peut durer jusqu'à 360\nsecondes (6 minutes), payées par 12 points d'énergie. Il doit\nen produire au moins 60 : ne tronque pas l'activation au premier geste.\nPoursuis la tentative jusqu'à un résultat, une résistance réellement établie ou\nla borne, en condensant les continuités par les ellipses imposées par ton\nsystème. Rends seulement le rapport final JSON. L'acteur et la tâche restent\n`alys-grive` et `10031`.\n\n## Contrat du rapport\n\nUne activité est un geste continu entre deux bifurcations. Condense toute\ncontinuité routinière ; conserve sa durée physique. Découpe seulement si une\ndécision, une résistance, un témoin, un lieu, une ressource, une connaissance\nou un résultat change.\n\nTypes de résultats : observation, progression_tache, variation_mesure,\ndeplacement, objet_produit, communication, fait, blocage, echec.\n\nRends uniquement :\n{\n  \"qui\": \"acteur_id\",\n  \"activation\": {\n    \"tache\": {\"id\": \"tache_id\", \"quoi\": \"...\", \"creee\": false},\n    \"issue\": \"avance|termine|bloque|echoue|rien\",\n    \"activites\": [{\n      \"id\": \"act:<acteur>:<ordre>\",\n      \"ordre\": 1,\n      \"temps\": {\"debut_s\": 149160.0, \"duree_s\": 1, \"fin_s\": 149161.0},\n      \"action\": {\"verbe\": \"...\", \"quoi\": \"...\", \"cibles\": [\"ref:canonique\"]},\n      \"chemin_execution\": [{\"ordre\": 1, \"de\": \"ref:depart\", \"relation\": \"...\", \"vers\": \"ref:arrivee\", \"duree_s\": 1}],\n      \"sources_touchees\": [{\"ref\": \"ref:canonique\", \"mode\": \"voit|entend|lit|parle|manipule|parcourt|mesure\"}],\n      \"sources_mobilisees\": [{\"ref\": \"ref:connue\", \"mode\": \"memoire|intention|croyance|mandat|cible_action\"}],\n      \"resultats_produits\": [{\n        \"id\": \"res:<activite>:1\", \"type\": \"observation\",\n        \"cible\": \"ref:canonique\", \"avant\": null, \"apres\": \"...\",\n        \"portee\": \"connaissance_acteur\", \"source_refs\": [\"ref:canonique\"],\n        \"preuve_refs\": [], \"certitude\": \"constate\"\n      }],\n      \"blocage\": null\n    }],\n    \"suite\": null,\n    \"reveils_suivants\": []\n  },\n  \"mutations_proposees\": []\n}\n\nContraintes : les activités sont ordonnées, continues et sans chevauchement.\nLeur durée totale est comprise entre 60 secondes et le budget. Chaque\nchemin totalise exactement la durée de son activité. Écrire, parler, marcher,\nchercher et manipuler prennent réellement du temps ; l'ellipse économise la\nprose, jamais les secondes.\n\nToute adresse vient du dossier. Aucun préfixe `candidate:`. Chaque résultat a\ndes `source_refs`, présentes dans les sources touchées ou mobilisées, le\nchemin, la cible de l'action ou un résultat antérieur. Une continuité reprend\nmot pour mot son dernier `apres` dans `avant`.\n\nUne issue `avance` ou `termine` produit un `progression_tache` visant l'id exact\nde `tache_elue`; `bloque` produit un `blocage`; `echoue`, un `echec`.\n\nLes mutations sont seulement proposées. CHACUNE PORTE EXACTEMENT CETTE FORME,\net le nom des clés n'est pas négociable — une mutation qui cite son résultat\nsous une autre clé que `resultat_id` est jetée sans être lue :\n\n{\n  \"resultat_id\": \"res:act:<acteur>:1\",\n  \"table\": \"intentions\",\n  \"operation\": \"croyance_ajouter\",\n  \"cible\": \"<id visé dans cette table>\",\n  \"valeur\": \"<la valeur, pour les opérations qui en prennent une>\",\n  \"champs\": {\"<champ>\": \"<valeur>\"}\n}\n\n`resultat_id` reprend MOT POUR MOT l'`id` d'un `resultats_produits` du présent\nrapport : une mutation qui ne se rattache pas à un résultat déclaré n'a pas eu\nlieu. `valeur` ou `champs` selon l'opération, jamais un autre nom. Pas de clé\n`cite`, `domaine`, `op`, `personnage_id` ni `table.operation` collés en un seul\nmot : la table et l'opération sont deux clés distinctes.\n\nOpérations admises, par table :\n  intentions   etape, etape_ajouter, tete, tete_ajouter, croyance_ajouter,\n               croyance_retirer, ignore_ajouter, ignore_retirer,\n               declencheur_ajouter, declencheur_retirer\n  books        affaire_ajouter, affaire_action_ajouter, affaire_action\n  evenements   diffusion_livree, diffusion_ajouter, evenement\n  personnages  personnage, personnage_ajouter\n  monde        monde\n  mains        mesure, seuil, main, main_ajouter\n  plis         pli, pli_ajouter\n  lieux        roukerie\n  jetons       incident_propage, incident\n  relations    relation, relation_ajouter\n\nAucune autre table n'existe. Ne propose rien que ta journée n'ait réellement\nproduit.\n\nLes affaires, dont la `cible` a une forme stricte :\n  books.affaire_ajouter          cible = `affaire-<nom-en-kebab>` (neuf),\n                                 valeur = {\"titre\": \"...\"}\n  books.affaire_action_ajouter   cible = `affaire-<...>` (l'affaire entière),\n                                 valeur = la LISTE des cellules, une par\n                                 colonne de sa table d'actions, dans l'ordre\n  books.affaire_action           cible = `affaire-<...>:<n° de l'action>`,\n                                 champs = {\"<intitulé exact de colonne>\": \"...\"}\n\nLe numéro d'une action est celui de sa première cellule dans le cahier, jamais\nl'id d'un nœud du tissu. Une affaire à toi — ce que tu poursuis et qui n'est\nécrit nulle part — s'ouvre par `affaire_ajouter`.\n\n",
+    "messages_correction": [
+      "Ton rapport vient d'être refusé par le validateur mécanique :\n\nbudget invalide : monde=361 s (minimum=60, plafond=360), energie=12.033 (annoncee=12.000, plafond=12)\n\nDébrouille-toi et corrige TON JSON. Ne réveille pas le PNJ une seconde fois,\nne change ni sa tentative ni les faits arbitrés. Rends seulement un rapport\nfinal complet et valide. Rappels : axe continu depuis 149160.0, entre\n60 et 360 secondes ; chaque résultat cite une source touchée,\nmobilisée, visée par l'action, traversée par le chemin ou produite plus tôt ;\nchaque mutation cite un résultat du rapport et appartient au vocabulaire fermé\nd'`appliquer.py`. Aucun `candidate:` ni adresse absente du dossier. Toute\navancée, fin, blocage ou échec vise l'id exact de la tâche. Le temps reste\nphysique : l'ellipse ne permet ni page écrite ni longue tirade en quelques\nsecondes. Si une continuité staging existe, reprends exactement son dernier\n`apres` dans le nouvel `avant`.\n"
+    ],
+    "modele": "opus",
+    "effort": "low",
+    "duree_ms": 133750,
+    "duree_api_ms": 128050,
+    "cout_usd": 0.6359135,
+    "tours": 4,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 5079,
+      "cache_read_input_tokens": 21530,
+      "output_tokens": 4800,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 5079,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 4800,
+          "cache_read_input_tokens": 21530,
+          "cache_creation_input_tokens": 5079,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 5079
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  },
+  "applique_le": "2026-08-10T09:03:00"
+}

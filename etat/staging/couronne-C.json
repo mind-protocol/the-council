@@ -1,0 +1,244 @@
+{
+ "_tranche": "C — L'or, la solde et la prime. Porteur : otto. Ecrit contre etat/staging/couronne-structure.json, plage 72100-72199 + verrou 72001. Ne pas fusionner sans relire : 72100 REMPLACE le 72100 annule (Vhagar), et 72101 reste au plan D (Vhagar / Aemond).",
+
+ "etats_cibles": [
+  {
+   "id": "72100",
+   "quoi": "Chaque dragon promis au nom du roi est gage sur une ligne ecrite du tresor",
+   "vrai_quand": "Le livre du tresor porte une affectation close en face des trois depenses ouvertes — la solde de depart des trois mille, la prime des tetes de Peyredragon, les billets de la Main — et plus aucun paiement au nom du roi ne sort hors de ces lignes, y compris de la main d'Aegon.",
+   "echeance": {"annee": 129, "lune": 4, "jour": 8},
+   "sert": ["72000", "71300"],
+   "source": {
+    "remplace": "72100 annule",
+    "de": "journee d'Otto Hightower du 129.3.28 — le livre du tresor, chambre des comptes, cherche ligne a ligne du 22e a ce matin : « Rien n'est affecte. Six cent mille au coffre et pas une piece ecrite en face de ce qu'on a crie » ; sa conclusion du meme jour : « Dix mille gages valent mieux que cinquante mille cries ; j'ai fait sceller le coffre et nommer le gardien » | maisons.json, maison-targaryen-vert : or 600 000, revenus_lune 30 000, levees_dispo 3 500"
+   },
+   "de_lieu": "port-real",
+   "vers_lieu": "port-real",
+   "voie": "terre",
+   "force": 600000,
+   "arrive_le": {"annee": 129, "lune": 4, "jour": 8},
+   "route_dite": "Echeance calee sur le seul terme deja ecrit de la bourse : le huitieme jour de la quatrieme lune, terme des gages des onze maisons compte par Otto le 28e. Ce qui n'est pas gage a cette date se saura non gage."
+  }
+ ],
+
+ "verrous": [
+  {
+   "id": "72001",
+   "quoi": "La solde de depart des trois mille n'est pas versee",
+   "bloque": ["72000", "72100"],
+   "vrai_aujourdhui": "NON VERSEE AU 129.4.3, et zero dragon affecte : le livre du tresor ne porte pas une piece en face de la solde des trois mille, sur 600 000 dragons au coffre et 30 000 de revenu la lune. Ce n'est plus une lenteur, c'est le motif d'un retard deja constate : la colonne n'est PAS partie le 30e par la Porte de la Boue comme Criston l'avait dit devant le conseil et devant Aegon, et il en donne lui-meme la raison le 30e au soir — « la raison n'est pas Sombreval, elle est la caisse de solde qui n'existe pas ». Otto n'a rien refuse par ecrit : il n'a rien ouvert. Le seul or reellement sorti pour cette marche n'est pas venu du Tresor — Criston a pris les trois pieces de mat du train de siege sans un dragon de la caisse, et les mantelets et palissades lui sont passes sous le nez le 30e au soir, 266 cerfs comptant, payes par une autre main que la Couronne.",
+   "leve_quand": "Une ligne d'affectation de la solde de depart des trois mille est ecrite et close au livre du tresor, et le premier versement est fait aux capitaines — ou Otto ecrit son refus a cote du compte de Criston, ce qui leve le verrou dans l'autre sens et met la marche sur l'autorite seule du roi.",
+   "portee_pour_nous": "on peut le savoir — le retard de la colonne est visible de Sombreval, et sa cause se dit au conseil vert dans la semaine",
+   "source": "journee de ser Criston Cole du 129.3.29 (exigence arretee devant le conseil et Aegon) | sa pensee du 129.3.30, role de sa propre parole du 28e relue contre le jour : la marche n'est pas partie | sa pensee du 129.4.1 : « l'or de l'ost ne s'arrache pas a la Main, il se rend inutile » | journee d'Otto du 129.3.28, livre du tresor | etape `accompli` d'otto-decheance : « l'aveu, devant Criston, qu'il n'a pas gage la prime »"
+  },
+  {
+   "id": "72102",
+   "quoi": "Rien n'est affecte : la bourse est un tas, pas un compte",
+   "bloque": ["72100"],
+   "vrai_aujourdhui": "600 000 dragons au coffre, 30 000 de revenu la lune, et pas une ligne ecrite en face de ce qui est promis : ni la prime criee le 24e, ni la solde de depart des trois mille, ni les billets de caisse que la Main paie aux roles de la Citadelle. Le livre a ete cherche ligne a ligne du 22e au 28e par Otto lui-meme : il n'a rien trouve parce qu'il n'y a rien. Consequence qu'il a ecrite le jour meme : le premier homme qui vient prendre le roi au mot se presente a un tresor qui ne l'attend pas — ou l'on paie une somme que personne n'a votee, ou l'on nous voit ne pas payer.",
+   "leve_quand": "Trois affectations ecrites et closes au livre du tresor — prime, solde, billets de la Main — avec un gardien qui repond des sorties.",
+   "portee_pour_nous": "on peut le savoir : une promesse de la Couronne restee impayee devant temoins se sait vite, et c'est exactement ce qu'Otto craint",
+   "source": "journee d'Otto du 129.3.28, livre du tresor, chambre des comptes | maisons.json, maison-targaryen-vert"
+  },
+  {
+   "id": "72103",
+   "quoi": "Quatre bouches tirent sur la meme caisse et aucune n'a ecrit son chiffre devant les trois autres",
+   "bloque": ["72100", "72000"],
+   "vrai_aujourdhui": "Criston reclame la caisse entiere pour son ost (solde de depart de 3 000 hommes) ; la prime des tetes de Peyredragon a ete criee entre 10 000 et 50 000 dragons selon la place ; la Main paie ses billets de caisse aux roles de la Citadelle pour ses huit brefs de pupille ; et les cinq cents charretees de froment que Port-Real mange la lune sortent de la meme caisse, avec la ligne du payeur BARREE sur six livraisons depuis le 24e. Aucun de ces quatre chiffres n'est ecrit en face des trois autres. C'est le meme defaut que 71004 cote Hightower, sur une bourse deux fois plus petite.",
+   "leve_quand": "Un seul homme arrete la depense pour les quatre, et les trois autres s'inclinent.",
+   "portee_pour_nous": "on peut le savoir — le prix crie s'entend sur les places, et le grain se compte au port",
+   "source": "journee d'Otto du 129.3.28 (livre du tresor ; extrait du livre du maitre du port depuis le 23e ; les deux exemplaires cries du 24e collationnes sur la minute scellee du 23e) | journee de Criston du 129.3.28 (deux hommes envoyes separement a la criee : 10 000 au Vieux Puits, 50 000 a la place aux Poissonniers, six cents pas d'ecart) | croyances d'Otto au 129.4.3 sur les billets de caisse d'Orwyle"
+  },
+  {
+   "id": "72104",
+   "quoi": "Le roi paie de sa main, hors du tresor et hors de la Main",
+   "bloque": ["72100"],
+   "vrai_aujourdhui": "Aegon a paye de sa propre main le premier homme venu reclamer la prime, et cet homme lui a dit lui-meme qu'on criait un prix Porte de la Gadoue et un autre au marche voisin. Rien n'est inscrit au tresor pour aucun des deux prix. Le roi a aussi accorde de vive voix, devant temoins, trois mille hommes et la solde pour le 30e — un ordre qui ne passe ni par Otto ni par le conseil restreint. Tant que le roi paie de sa main, aucune ligne ecrite ne tient : elle est contournee le lendemain.",
+   "leve_quand": "Aegon renvoie au tresor le prochain reclamant au lieu de le payer lui-meme — ou son propre chiffre est repris et recrie a un seul prix.",
+   "portee_pour_nous": "hors de portee : rien de ce que nous ferons ne decidera ce que le roi sort de sa poche",
+   "source": "pensees d'Aegon II du 129.3.28 (source : le premier reclamant de la prime ; source : ser Criston Cole) | etape en cours d'Aegon, action 71027 du plan hightower"
+  },
+  {
+   "id": "72105",
+   "quoi": "Le Guet n'est pas paye, et la porte se vend a l'heure",
+   "bloque": ["72100"],
+   "vrai_aujourdhui": "Deux mille manteaux d'or dont la solde ne paie pas le logis, et un tarif etabli sous l'arche de la porte de la Gadoue : trois sous pour regarder, six pour oublier, douze pour aider a porter. Le nom de garde se deplace de quartier en quartier pour qu'on ne puisse pendre personne. C'est par la que cent vingt lances sont entrees de nuit le 22e sans figurer sur aucun role. Une bourse qui ne paie pas ses propres portiers n'est pas tenue, quel que soit ce qu'elle porte au coffre.",
+   "leve_quand": "La solde du Guet paie le logis, ecrite au livre — ou la porte reste a vendre.",
+   "portee_pour_nous": "on peut agir dessus : c'est la porte la moins chere de Port-Real, et elle a deja servi a d'autres",
+   "source": "journee de Criston du 129.3.28 — Waltyr Poix, sergent du Guet a la porte de la Gadoue, interroge sous l'arche | sa pensee du 129.3.30, role de la caserne du guet du 22e au 30e lu tout haut devant deux freres de la Garde"
+  }
+ ],
+
+ "clefs": [
+  {
+   "id": "72110",
+   "quoi": "Gager dix mille plutot que crier cinquante mille",
+   "ouvre": ["72100", "72102", "72104"],
+   "principe": "Un tueur de metier achete une besogne comme une cargaison : il regarde la caution avant le prix. Un prix qui change de place en place dit a tout homme qui l'entend qu'il n'est gage sur rien — donc les gens de metier ne viennent pas, et viennent les amateurs, qui echouent, se font prendre, et parlent. Dix mille dragons ecrits et gardes achetent plus que cinquante mille cries en l'air.",
+   "prix": "10 000 dragons immobilises sur les 600 000 du coffre — et le roi doit se dedire de son propre chiffre en public, ce qu'Otto lui a laisse mettre le 23e pour lui donner une victoire de forme.",
+   "porteur": "otto",
+   "note": "C'est le gage de 71010 (payer des tetes plutot que des osts, meme porteur) : 71010 ne produit rien tant que 72110 n'est pas fait, parce qu'une tete ne s'achete pas a credit."
+  },
+  {
+   "id": "72111",
+   "quoi": "Ne rien promettre qui ne puisse porter une chose deja livree",
+   "ouvre": ["72100"],
+   "principe": "Il vit de promesses ecrites — il achete Rosby, Stokeworth et Accalmie avec du parchemin et un sceau. Le jour ou l'on aura vu une promesse de cette Couronne rester impayee devant temoins, sa signature vaudra ce que vaut le cri du 24e. Donc rien ne part tant que la lettre ne peut pas porter une chose deja faite. C'est pourquoi la lettre d'Accalmie n'est pas partie.",
+   "prix": "Le temps, et le seul temps qu'il n'a pas : Borros ne demandera pas ce qu'on lui donne, il demandera ce que ca vaut — et Aemond est la seule piece, demandee le meme mois par deux hommes. Le retard de la lettre est ce qui coute la clef 71012 (echeance 129.4.9).",
+   "porteur": "otto"
+  },
+  {
+   "id": "72112",
+   "quoi": "Payer en pieces d'archive plutot qu'en dragons : des brefs de pupille au lieu de soldes",
+   "ouvre": ["72100", "72103"],
+   "principe": "Un enfant nomme, age et date sur un role tient une maison pour le prix d'un billet de clerc. Les huit maisons de la Couronne sont nommees sur son role ; le prenom se prend sans le pere, un billet paye ouvre les roles de la Citadelle et le Grand Mestre dicte. Aucun dragon ne sort du coffre.",
+   "prix": "Deux prix, et il les connaît tous deux. UN : le role porte la naissance declaree, non l'enfant vivant — une ligne muette rend la piece en delai, et c'est le pere qui l'apprendra. DEUX : sur onze maisons deja comptees, 14 gages sur 19 sont gardes par des officiers dont le brevet vient de la main de Daemon Targaryen — 4 maisons tenues, 7 qui se croient libres, terme le 129.4.8. Un gage vaut ce que vaut le geolier.",
+   "porteur": "otto"
+  },
+  {
+   "id": "72113",
+   "quoi": "Rendre l'or de l'ost inutile au lieu de l'arracher a la Main",
+   "ouvre": ["72001", "72000"],
+   "principe": "Le coffre est la seule chose qu'Otto puisse refuser : on cesse donc de le demander. Un cachet sur six lignes de bois et la voix du roi pour dire un nombre coutent un quart d'heure et zero dragon du Tresor, la ou huit jours de reclamation n'ont rien donne. Un train de siege couche hors les murs vaut mieux que cinquante mille cries en l'air.",
+   "prix": "L'ost part paye sur ce qu'on ne paiera plus deux fois, et non sur une caisse : chaque piece manquante devra etre prise ailleurs, a l'heure, comptant — et un autre acheteur a deja paye 266 cerfs comptant sur le meme lot un jour avant lui. La Couronne finit par acheter son siege sur le marche de ceux qu'elle ne sait pas nommer.",
+   "porteur": "criston",
+   "note": "72110 et 72113 ne s'excluent pas : ils se contredisent d'intention. Otto veut ecrire ce qu'il paie ; Criston veut ne plus rien avoir a lui demander. Le second gagne d'avance tant que le premier n'a pas ouvert de ligne."
+  }
+ ],
+
+ "actions": [
+  {
+   "id": "72120",
+   "quoi": "Sceller le coffre du tresor et nommer un gardien qui repond des sorties",
+   "realise": ["72110", "72102"],
+   "office": "otto",
+   "moyens": ["la chambre des comptes", "le sceau de la Main"],
+   "cout": "zero dragon ; une journee de Main",
+   "depend_de": [],
+   "preuve": "Le coffre scelle, et un nom ecrit en regard des sorties",
+   "jour_du": {"annee": 129, "lune": 3, "jour": 28},
+   "etat": "faite",
+   "source": "journee d'Otto du 129.3.28, livre du tresor : « j'ai fait sceller le coffre et nommer le gardien »",
+   "note": "Le gardien n'est nomme nulle part dans l'etat. Tant qu'il n'a pas de nom, l'action est faite et sans office reel derriere elle — c'est le point faible de cette tranche."
+  },
+  {
+   "id": "72121",
+   "quoi": "Ecrire une affectation gagee de 10 000 dragons en face de la prime, et faire recrier UN SEUL prix sur les deux places",
+   "realise": ["72110", "72102", "72104"],
+   "office": "otto",
+   "moyens": ["le livre du tresor", "le bureau des herauts", "la minute scellee du 23e"],
+   "cout": "10 000 dragons immobilises sur 600 000 ; et le chiffre du roi repris en public",
+   "depend_de": ["72120"],
+   "preuve": "Une ligne close au livre du tresor, et deux herauts qui crient le meme nombre le meme jour",
+   "jour_du": {"annee": 129, "lune": 4, "jour": 6},
+   "etat": "a faire",
+   "source": "journee d'Otto du 129.3.28 — les deux exemplaires cries du 24e collationnes sur la minute scellee du 23e, bureau des herauts, entre huit heures et neuf heures moins dix ; sa conclusion du meme jour"
+  },
+  {
+   "id": "72122",
+   "quoi": "Ouvrir la caisse de solde de depart des trois mille, ou ecrire son refus a cote du compte de Criston",
+   "realise": ["72001"],
+   "office": "otto",
+   "moyens": ["la chambre des comptes", "les roles de solde"],
+   "cout": "a chiffrer : le montant par tete de la solde de depart n'est ecrit nulle part — seul le nombre d'hommes l'est (3 000 qui marchent, 500 qui restent garder Port-Real et le roi)",
+   "depend_de": [],
+   "preuve": "Une ligne de solde ouverte au livre, ou un refus ecrit et date",
+   "jour_du": {"annee": 129, "lune": 4, "jour": 4},
+   "etat": "bloquee",
+   "source": "exigence de ser Criston Cole arretee devant le conseil et Aegon le 129.3.29 | son constat du 129.3.30 : la marche n'est pas partie, « la caisse de solde qui n'existe pas »"
+  },
+  {
+   "id": "72123",
+   "quoi": "Dire tout haut au conseil le compte de la marche et le defaut de la Main",
+   "realise": ["72001", "72103"],
+   "office": "criston",
+   "moyens": ["le devis en quatre articles", "le role des levees de la Couronne", "les deux temoins de la criee"],
+   "cout": "zero dragon ; l'humiliation d'Otto en public, et un ennemi de plus dans la salle",
+   "depend_de": [],
+   "preuve": "Le compte dit devant le conseil, et le refus d'Otto contraint de s'ecrire a cote des chiffres",
+   "jour_du": {"annee": 129, "lune": 4, "jour": 3},
+   "etat": "en cours",
+   "source": "sa pensee du 129.3.30 : « Repare le troisieme jour de la quatrieme lune, et pas autrement : le compte dit tout haut demain matin, le bois pris demain matin, l'ost paye sur ce qu'on ne paiera plus deux fois » | sa methode arretee le 28e chez Sirel Quintaine : « je ne lui demanderai plus d'or, je lui tendrai une feuille, et son refus devra s'ecrire a cote des chiffres »"
+  },
+  {
+   "id": "72124",
+   "quoi": "Prendre le coeur du train de siege sans un dragon du Tresor",
+   "realise": ["72113"],
+   "office": "criston",
+   "moyens": ["un cachet du roi sur six lignes de bois", "le chantier de la vase", "le fait que nul ne mate cette lune"],
+   "cout": "trois pieces de mat (poutre maitresse, mature, affut) payees moins que la solde d'un crieur ; zero dragon du Tresor. Perdus : 18 membrures, 2 rouleaux de borde et 40 brasses de filin, partis le 30e au soir a 266 cerfs comptant",
+   "depend_de": [],
+   "preuve": "Les trois mats couches hors les murs, et l'echeance du lot du 31e passee",
+   "jour_du": {"annee": 129, "lune": 4, "jour": 1},
+   "etat": "faite",
+   "source": "devis en quatre articles lu chez Sirel Quintaine le 129.3.28 | sa pensee du 129.3.30 (le roi seul dans la salle du Trone, portes fermees, une heure passee) | sa pensee du 129.4.1, devis de Marlo Vasse relu article par article"
+  },
+  {
+   "id": "72125",
+   "quoi": "Faire sortir sous cire les brefs de pupille des huit maisons de la Couronne, dates du 3e jour",
+   "realise": ["72112"],
+   "office": "otto",
+   "moyens": ["les roles de la Citadelle ouverts sur billets de sa caisse", "la dictee du Grand Mestre", "le sceau de la Main"],
+   "cout": "quelques billets de caisse et zero dragon de solde ; le delai que rendra tout enfant porte ne au role et mort depuis",
+   "depend_de": [],
+   "preuve": "Duskendale scelle et mis en main de garde, Hayford entamee, puis Bar Emmon, Rykker, Buckwell, Massey — huit maisons, huit cires, une seule date",
+   "jour_du": {"annee": 129, "lune": 4, "jour": 3},
+   "etat": "en cours",
+   "source": "intention d'Otto au 129.4.3, en toutes lettres | ses croyances du meme jour : Orwyle a dicte six lignages d'affilee sans reclamer un second billet et sans sortir sa cire",
+   "note": "Le terme des gages deja comptes tombe le 129.4.8 — c'est la meme horloge que 72100."
+  },
+  {
+   "id": "72126",
+   "quoi": "Faire ecrire un nom a la ligne du payeur des livraisons de froment, ou cesser de payer le grain de la ville sur la caisse de la Main",
+   "realise": ["72103"],
+   "office": "otto",
+   "moyens": ["le livre du maitre du port", "la garde de la Couronne aux quais"],
+   "cout": "Port-Real mange 500 charretees la lune et c'est sa caisse qui les paie ; six livraisons depuis le 24e sans nom de payeur, la premiere de 38 muids de froment debarquee le 24e",
+   "depend_de": [],
+   "preuve": "Un nom ecrit et non barre a la ligne du payeur, sur une livraison datee",
+   "jour_du": null,
+   "etat": "a faire",
+   "source": "journee d'Otto du 129.3.28 — extrait du livre du maitre du port depuis le 23e, monte au cabinet a midi moins le quart | sa croyance : « la ligne du payeur est barree aux six livraisons de froment, du meme trait et apres sechage »"
+  },
+  {
+   "id": "72127",
+   "quoi": "Payer le Guet — une solde qui paie le logis pour deux mille manteaux d'or — au lieu de pendre le sergent",
+   "realise": ["72105"],
+   "office": "criston",
+   "moyens": ["le role des manteaux d'or", "les sergents de porte"],
+   "cout": "2 000 hommes a resolder ; le tarif qu'on rachete est de trois sous pour regarder, six pour oublier, douze pour aider a porter",
+   "depend_de": ["72122"],
+   "preuve": "La porte de la Gadoue fermee une nuit entiere sans qu'un sou change de main",
+   "jour_du": null,
+   "etat": "a faire",
+   "source": "journee de Criston du 129.3.28 — Waltyr Poix interroge sous l'arche : « pendre le sergent ne fermerait pas la porte ; payer le Guet la fermerait. C'est une seconde raison de vouloir cet or, et elle vaut mieux que la premiere »"
+  },
+  {
+   "id": "72128",
+   "quoi": "Refuser les trois depenses : le chiffre crie du roi, la caisse entiere reclamee par Criston, et toute promesse a Accalmie avant livraison",
+   "realise": ["72111"],
+   "office": "otto",
+   "moyens": ["le refus, et rien d'autre"],
+   "cout": "zero dragon verse — et trois hommes qui l'apprennent : Aegon paie de sa main, Criston dit son defaut au conseil, Borros ne recoit rien",
+   "depend_de": [],
+   "preuve": "Aucune ligne de solde ouverte au 129.4.3, la lettre d'Accalmie non partie, et l'aveu qu'il n'a pas gage la prime deja fait devant Criston le 23e",
+   "jour_du": {"annee": 129, "lune": 4, "jour": 3},
+   "etat": "en cours",
+   "source": "etape `accompli` d'otto-decheance : « l'aveu, devant Criston, qu'il n'a pas gage la prime » | journee d'Otto du 129.3.28, genealogies d'Accalmie, brouillon arrete a la deuxieme ligne : « La lettre ne part pas aujourd'hui. Elle partira quand elle pourra porter une chose deja livree »"
+  },
+  {
+   "id": "72129",
+   "quoi": "Payer de sa main, hors du tresor, le prochain homme qui viendra prendre la prime au mot",
+   "realise": [],
+   "office": "aegon-ii",
+   "moyens": ["sa propre bourse", "la salle du Trone, portes fermees"],
+   "cout": "l'or qu'aucun livre ne compte, et le fait qu'Otto l'apprend apres",
+   "depend_de": [],
+   "preuve": "Un second homme paye de sa main, et toujours rien d'inscrit au tresor",
+   "jour_du": {"annee": 129, "lune": 4, "jour": 3},
+   "etat": "en cours",
+   "source": "pensee d'Aegon II du 129.3.28 (source : le premier reclamant de la prime) | etape en cours d'Aegon, 5 jours restants au 129.3.28 — action 71027 du plan hightower",
+   "note": "C'est l'action qui defait 72100 sans qu'aucun Vert ne l'ait voulu ainsi. Tant qu'elle court, 72121 est de l'encre."
+  }
+ ]
+}

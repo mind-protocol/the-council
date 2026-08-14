@@ -1,0 +1,268 @@
+{
+  "objet": "Rosby — le lot d'ouverture MOINS la promotion d'echelle, creations comprises (appliquer.py elargi).",
+  "empreintes": {
+    "intentions": "7f7b17f24042d1ea5c60accc5e0fcbd2384b3b55",
+    "evenements": "5165d212b323c82229ada8620b6f180c10f4159f",
+    "personnages": "3408cd4e31a3d54757ffa1fc9de9a59ead902264",
+    "lieux": "ada66c0b8b19f31241bcbff3ea7dadef6f0025c9",
+    "monde": "c4f54353d9dc7559642928425d908f3d3ba29271",
+    "relations": "79cf0281b344eaa9648c17d422edc15fb8e2892b",
+    "maisons": "70947660a4023d8cf769fb7ed8495c6cc1cb80b8"
+  },
+  "mutations_proposees": [
+    {
+      "table": "personnages",
+      "operation": "personnage_ajouter",
+      "valeur": {
+        "id": "coryn-faille",
+        "nom": "Coryn Faille",
+        "maison_id": "maison-rosby",
+        "titre": "Intendant de Rosby",
+        "naissance": 88,
+        "lieu_id": "rosby",
+        "etat": "actif",
+        "condition": "libre",
+        "traits": [
+          "lit lentement mais lit tout",
+          "ne decide jamais devant temoin",
+          "vingt-six ans a Rosby",
+          "ne signe pas un faux"
+        ],
+        "objectifs": [
+          {
+            "but": "Que le registre de Rosby puisse etre relu dans dix ans sans faire honte a celui qui l'a tenu",
+            "priorite": 1
+          },
+          {
+            "but": "Servir le fils comme il a servi le pere, sans avoir a choisir un roi",
+            "priorite": 2
+          },
+          {
+            "but": "Savoir a un muid pres ce qui est promis et ce qui est libre, avant que quelqu'un ne vienne le prendre",
+            "priorite": 3
+          }
+        ],
+        "maniere": "Repond par un chiffre et une date, jamais par un avis. Demande qu'on repete devant lui ce qu'on veut ecrire, puis l'ecrit autrement, exactement.",
+        "portrait": {
+          "fichier": null,
+          "physique": "Quarante et un ans, mains tachees d'encre jusqu'aux poignets, tablier de bure sur bon drap, une regle de buis passee a la ceinture.",
+          "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, lamplight in a store-room, careful middle-aged steward, ink-stained hands, plain apron over good cloth, boxwood rule at his belt, guarded patient face"
+        }
+      },
+      "pourquoi": "Nomme par dame Alarra dans acte-alarra-la-date-fausse-et-rosby-29e. Cree actif : sa tete est dans le meme lot."
+    },
+    {
+      "table": "intentions",
+      "cible": "lord-rosby",
+      "operation": "tete",
+      "champs": {
+        "intention": "Vendre le passage, pas la maison. Ne signer pour personne, donner a l'hote de Port-Real un chiffre de levees assez bas pour n'etre pas leve le premier et assez haut pour n'etre pas compte parmi les traitres, et faire garnir le peage du Gue-aux-Corneilles pour que le premier ost qui passera trouve a Rosby de quoi acheter plutot que de quoi prendre.",
+        "attitude_joueur": "Elle a brule des hommes de chez lui sur une route dont il vit, puis lui a fait ecrire qu'elle ne l'avait pas encore compte parmi ceux qui n'ont pas repondu. Il tient les deux phrases ensemble et n'en croit aucune. Sa femme chez elle est un fait qu'il subit et dont il ne parle plus.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 28
+        }
+      },
+      "pourquoi": "Approfondissement de la tete SANS la promotion d'echelle (orbite) : le budget orbite est plein et l'arbitrage deborde sur le siege d'Aurore. La tete reste royaume."
+    },
+    {
+      "table": "intentions",
+      "cible": "lord-rosby",
+      "operation": "croyance_ajouter",
+      "valeur": "L'hote de Port-Real installe chez lui depuis le 19e n'a toujours pas de nom, ecrit de la main gauche, et a redemande a table combien Rosby peut lever AVANT LA FIN DE LA LUNE : il reste trois jours. Il n'a pas hausse la voix une seule fois, et c'est ce qui l'inquiete. (Sa propre table, du 19e au 28e.)",
+      "pourquoi": "source : la croyance d'alarra-rosby, qui le tient de sa maison. C'est l'horloge qui commande toute sa lune."
+    },
+    {
+      "table": "intentions",
+      "cible": "lord-rosby",
+      "operation": "croyance_ajouter",
+      "valeur": "Quarante et un noms d'hommes de la route ont ete lus a voix haute devant sa porte par son propre intendant, sans le nom de la reine dessus, devant celles des onze femmes qui etaient revenues. Onze de ces noms sont des siens, et ils sont vivants. (Sa cour, le 27e.)",
+      "pourquoi": "source : etape alarra-fait-lire-les-noms-a-rosby (jours_restants 2 au 25e) croisee avec info-017/018/023. SI LE MJ JUGE QUE L'ETAPE D'ALARRA N'A PAS ENCORE ABOUTI, retirer cette seule mutation - le reste tient sans elle."
+    },
+    {
+      "table": "intentions",
+      "cible": "lord-rosby",
+      "operation": "ignore_ajouter",
+      "valeur": "Que la prochaine demande de Peyredragon ne lui sera pas adressee : elle ira a son intendant, nomme, courte, sans un mot d'or ni de contrepartie - et qu'elle doit toucher le Gue-aux-Corneilles avant la colonne.",
+      "pourquoi": "l'ignorance qui explique toute sa conduite de la lune : il se garde d'un pli qui ne viendra pas a lui. Source de la chose vraie : acte-alarra-la-date-fausse-et-rosby-29e."
+    },
+    {
+      "table": "intentions",
+      "cible": "lord-rosby",
+      "operation": "etape",
+      "etape": "rosby-ne-rien-signer",
+      "champs": {
+        "etat": "fait",
+        "jours_restants": 0,
+        "accompli": "Le cavalier est venu, a rompu la cire dans la cour et a lu l'acte tout haut devant ses gens sans qu'on ait pu l'en empecher - donc devant l'hote. Lord Rosby a ecoute debout, n'a rien repondu par ecrit, l'a fait servir et repartir le jour meme. Il n'a rien signe, mais toute sa maison a entendu que la reine ne l'avait pas encore compte parmi ceux qui n'ont pas repondu."
+      },
+      "pourquoi": "l'horloge etait a 1 jour au 27e ; le pli est remis (plis.json, pli-vol-rhaenyra-sombreval-12-lord-rosby, cavalier, parti le 24)."
+    },
+    {
+      "table": "intentions",
+      "operation": "etape_ajouter",
+      "cible": "lord-rosby",
+      "valeur": {
+        "id": "rosby-le-chiffre-donne-a-lhote",
+        "quoi": "Donner a l'hote de Port-Real, avant la fin de la lune, un chiffre de levees : DEUX CENT VINGT lances pretes, quand il en a quatre cents.",
+        "etat": "en-cours",
+        "jours_restants": 3,
+        "depend_de": [],
+        "cout": [
+          "que son intendant Coryn Faille consente a etablir le role a ce chiffre-la",
+          "trois jours, et que l'hote ne demande pas a voir les hommes"
+        ],
+        "si_bloque": "Faille ne signera pas un faux. Alors lord Rosby donne le chiffre de vive voix, sans papier, et laisse l'hote l'ecrire lui-meme de la main gauche : Rosby est compte a Port-Real sur une piece que Rosby n'a pas ecrite - ce qui l'engage sans le proteger."
+      },
+      "pourquoi": "l'echeance de l'hote est son vrai calendrier. Le si_bloque sort du trait de Faille ('ne signe pas un faux'), pas d'une commodite de scene."
+    },
+    {
+      "table": "intentions",
+      "operation": "etape_ajouter",
+      "cible": "lord-rosby",
+      "valeur": {
+        "id": "rosby-garnir-le-peage",
+        "quoi": "Faire rentrer le grain des metairies dans les greniers du Gue-aux-Corneilles et remettre le pont en etat, pour que le premier ost qui passera trouve a Rosby de quoi manger a acheter, et non de quoi prendre.",
+        "etat": "en-cours",
+        "jours_restants": 6,
+        "depend_de": [],
+        "cout": [
+          "quarante hommes de garnison detournes de la porte pendant six jours",
+          "douze charrois, et quatre cents dragons de bras et de bois pris sur les trente mille"
+        ],
+        "si_bloque": "Si un ost - de quelque couleur - se presente avant que les greniers soient garnis, il ouvre quand meme, laisse prendre, et fait tenir le compte de ce qui est pris pour le presenter au roi qui passe. Sa forteresse est un peage sur la route royale, pas un chateau : il l'a toujours su et ne s'en cache pas."
+      },
+      "pourquoi": "l'etat cible que le canon lui impose (sac-sombreval : l'ost de Criston remonte cette route avant la 6e lune) traduit en chiffres qu'il a les moyens de tenir (or 30000, levees 400)."
+    },
+    {
+      "table": "intentions",
+      "operation": "etape_ajouter",
+      "cible": "lord-rosby",
+      "valeur": {
+        "id": "rosby-ne-rien-ecrire-tant-que-lhote-est-la",
+        "quoi": "Ne repondre par ecrit a aucun pli, d'aucun des deux camps, tant que l'hote de Port-Real dort sous son toit - et recevoir tout porteur dans la cour et non dans la salle, pour que ce qui se dit soit entendu de tous plutot que rapporte par un seul.",
+        "etat": "en-cours",
+        "jours_restants": null,
+        "depend_de": [],
+        "cout": [
+          "que personne de sa maison ne lui apporte un pli hors de la vue de l'hote",
+          "de passer pour lache aupres des siens, et il le sait"
+        ],
+        "si_bloque": "Si un pli lui est remis en prive et que l'hote l'apprend, il le fait relire tout haut le soir meme devant l'hote, pour que nul ne puisse dire qu'il l'avait cache - et il ne repond toujours pas."
+      },
+      "pourquoi": "posture permanente (jours_restants null) : la traduction en horloge de son 'ne rien signer'. Trois etapes vivantes pour un budget orbite de 4."
+    },
+    {
+      "table": "intentions",
+      "operation": "tete_ajouter",
+      "cible": "coryn-faille",
+      "valeur": {
+        "personnage_id": "coryn-faille",
+        "echelle": "royaume",
+        "croyances": [
+          "Il a lu les quarante et un noms a voix haute devant la porte, sur un ordre ecrit de dame Alarra et non de son seigneur, et onze femmes l'ont entendu. Il a porte l'ordre au registre avec la date, comme il porte tout. (Sa main, le 27e.)",
+          "L'hote sans nom lui a demande DEUX FOIS le role des levees et n'a rien obtenu par ecrit. Un homme qui redemande un role et ne le reclame jamais devant le seigneur compte pour quelqu'un d'autre. (Sa table, du 19e au 28e.)",
+          "NEUF CENTS MUIDS aux greniers du Gue-aux-Corneilles, dont SIX CENTS deja promis aux marchands de Port-Real pour la lune prochaine, et il n'a pese ni les uns ni les autres depuis la moisson. Il ne sait donc pas ce qui est libre, et c'est la seule chose de sa charge dont il ait honte. (Son propre registre, le 28e.)"
+        ],
+        "ignore": [
+          "Que dame Alarra lui a ecrit de sa main le 29e au matin - non pour lui dire d'ouvrir, mais pour qu'il ne soit pas surpris - et qu'une seconde lettre, de Peyredragon, la suit et lui sera adressee a LUI."
+        ],
+        "intention": "Tenir le registre juste et ne rien decider devant temoin. Savoir a un muid pres ce qui est promis et ce qui est libre AVANT que quiconque ne vienne le prendre - parce qu'un intendant qui sait son chiffre peut dire non sans desobeir.",
+        "plan": [
+          {
+            "id": "faille-fait-trainer-le-role",
+            "quoi": "Faire trainer le role des levees demande par l'hote : lui rendre a la place des comptes de grain exacts et inutiles, aussi longtemps qu'on ne le lui ordonne pas par ecrit ou devant temoin.",
+            "etat": "en-cours",
+            "jours_restants": 3,
+            "depend_de": [],
+            "cout": [
+              "que lord Rosby ne le lui ordonne pas devant l'hote",
+              "une nuit de copie par piece rendue"
+            ],
+            "si_bloque": "Si l'ordre lui est donne devant temoin, il l'execute a la lettre, le date, et porte au registre de sa main QUI le lui a donne et DEVANT QUI. Il n'a jamais desobei et n'a jamais couvert personne."
+          },
+          {
+            "id": "faille-pese-le-gue",
+            "quoi": "Descendre au Gue-aux-Corneilles et faire peser les neuf cents muids avant la lune neuve, pour separer au registre ce qui est promis de ce qui est libre.",
+            "etat": "en-cours",
+            "jours_restants": 5,
+            "depend_de": [],
+            "cout": [
+              "deux peseurs et cinq jours",
+              "son absence du chateau pendant que l'hote y reste"
+            ],
+            "si_bloque": "Si les marchands de Port-Real viennent charger leurs six cents avant qu'il ait pese, il les laisse charger et ecrit le compte apres : il ne retient jamais une marchandise sur sa seule autorite. Rosby ne saurait alors plus ce qui lui reste, et lui non plus."
+          }
+        ],
+        "declencheurs": [
+          {
+            "si": "Une lettre de Peyredragon lui est adressee A LUI, nomme, courte, qui ne demande rien et ne promet pas d'or - un fait, une date, une quantite",
+            "alors": "Il ne repond pas et ne la montre pas a son seigneur : il fait peser ce qu'on lui a chiffre et prepare le chargement sans ordre, pour etre en mesure de dire oui en une heure si on le lui demande. Mais si la lettre parle d'or de la reine ou d'une contrepartie, il la porte le soir meme a lord Rosby, devant l'hote, et s'en lave les mains.",
+            "une_fois": false
+          }
+        ],
+        "attitude_joueur": "Il ne la sert pas et ne la craint pas. Elle a rendu quarante et un noms sans rien demander en echange : c'est la seule piece du dossier qui ne soit pas une menace, et il l'a rangee a part.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 28
+        }
+      },
+      "pourquoi": "L'homme de metier, celui par qui un chiffre sortira et qu'on depechera (etape 2 du process). Royaume et non orbite : l'orbite est pleine, et son unique declencheur - le seul que royaume autorise - est arme exactement sur le geste du joueur (la lettre nommee, sans or), donc il n'est pas sourd. EXIGE LA FICHE PERSONNAGE D'ABORD (a_la_main)."
+    },
+    {
+      "table": "evenements",
+      "cible": "remise-actes-protection",
+      "operation": "diffusion_ajouter",
+      "valeur": {
+        "ou": "rosby",
+        "qui": [
+          "lord-rosby",
+          "coryn-faille"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 1
+        },
+        "canal": "rumeur",
+        "fiabilite": 50,
+        "version": "Par les charretiers de la route : Sombreval et le Repaire-aux-Corneilles ont recu de Peyredragon un papier scelle qui les met sous la garde de la reine, remis en main propre par un cavalier qui a attendu la copie signee. On ne dit pas ce qu'il y a dedans. On dit qui l'a eu - et Rosby n'y est pas."
+      },
+      "pourquoi": "les effets de cet evenement portent en toutes lettres 'Rosby n'a rien et l'apprendra'. Quatre jours de route et de bavardage depuis le 27e ; fiabilite 50 parce que ca vient des charretiers. C'est la nouvelle qui dit a Ambrose que la neutralite ne se paie plus."
+    },
+    {
+      "table": "evenements",
+      "cible": "ralliement-trident",
+      "operation": "diffusion_ajouter",
+      "valeur": {
+        "ou": "rosby",
+        "qui": [
+          "lord-rosby"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 12
+        },
+        "canal": "rumeur",
+        "fiabilite": 40,
+        "version": "On dit que les seigneurs du Trident se sont declares pour la reine a Harrenhal, et que c'est son epoux qui tient la place depuis deux lunes. On dit aussi que ce n'est pas vrai. Ce qui est sur, c'est que la route du nord n'est plus tenue pour sure par un homme du roi."
+      },
+      "pourquoi": "la deuxieme route, celle qui peut le faire changer d'avis dans l'autre sens. Dix jours depuis le 129.4.2, deforme et douteux (40) : un homme qui hesite n'a pas droit a une certitude."
+    },
+    {
+      "table": "intentions",
+      "operation": "declencheur_ajouter",
+      "cible": "lord-rosby",
+      "valeur": {
+        "si": "Il apprend qu'un pli de Peyredragon a ete adresse a son intendant NOMMEMENT, et non a lui",
+        "alors": "Il ne le reproche pas et ne le fait pas ouvrir : il envoie Coryn Faille peser au grenier du Gue-aux-Corneilles pour le reste de la lune et met un cousin a lui a la porte du chateau. Il s'ote son propre intendant pour n'avoir pas a savoir ce qu'on lui ecrit.",
+        "une_fois": true
+      },
+      "pourquoi": "Le second declencheur, arme sur un pli adresse a son intendant et non a lui."
+    }
+  ],
+  "applique_le": "2026-08-09T19:27:08"
+}

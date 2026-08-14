@@ -1,0 +1,506 @@
+{
+  "qui": "robert-quince",
+  "activation": {
+    "tache": {
+      "id": "10022",
+      "quoi": "🧱 Écrire ce que tient le poste du nœud",
+      "creee": false
+    },
+    "issue": "avance",
+    "activites": [
+      {
+        "id": "act:robert-quince:1",
+        "ordre": 1,
+        "temps": {
+          "debut_s": 148080.0,
+          "duree_s": 600,
+          "fin_s": 148680.0
+        },
+        "action": {
+          "verbe": "écrire",
+          "quoi": "Debout au parapet, le cahier calé sur la pierre plate du merlon et le vent tenu par son propre dos, il écrit les six lignes de la charge du poste du nœud : ce qu'il voit (le chemin entre les deux portes, les deux volées d'escalier, la tête du quai jusqu'à la troisième borne, rien au-delà) ; ce qu'il ferme seul et rouvre de sa main après fouille ; les quatre points sur lesquels il ne ferme jamais seul et où l'on vient le chercher à toute heure ; les trois relèves et le nom du chef de poste porté au rôle avant que les hommes montent ; l'écrit obligatoire pour tout ordre qui touche un homme ; ce qui remonte avant sept heures. L'encre sèche mal au vent de mer : il souffle sur chaque ligne et recommence deux fois la troisième, qui est la seule qui le retranche lui-même.",
+          "cibles": [
+            "10022",
+            "salle:porte-dragon"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "salle:porte-dragon",
+            "relation": "demeure_au_parapet",
+            "vers": "salle:porte-dragon",
+            "duree_s": 600
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "salle:porte-dragon",
+            "mode": "voit"
+          },
+          {
+            "ref": "10022",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:robert-quince",
+            "mode": "mandat"
+          },
+          {
+            "ref": "quince-fouille-des-coques",
+            "mode": "memoire"
+          },
+          {
+            "ref": "affaire-fermeture-route-nord",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:robert-quince:1:1",
+            "type": "objet_produit",
+            "cible": "10022",
+            "avant": "à faire",
+            "apres": "Six lignes écrites de la main du castellan, au chemin de ronde, sur une page de son cahier d'affaire : bornes de vue, fermeture autonome et réouverture après fouille, quatre points exclus avec droit de le faire réveiller à toute heure, trois relèves avec nom de chef porté au rôle avant montée, écrit obligatoire pour tout ordre qui touche un homme, remontée des refus et des trois hommes du quai avant sept heures. Ni signée, ni datée de l'heure, ni contresignée.",
+            "portee": "monde",
+            "source_refs": [
+              "10022",
+              "pers:robert-quince"
+            ],
+            "preuve_refs": [
+              "10022"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:robert-quince:1:2",
+            "type": "observation",
+            "cible": "salle:porte-dragon",
+            "avant": null,
+            "apres": "En écrivant la ligne QUATRE il constate qu'il ne peut pas y porter les noms : les trois chefs de poste ne sont pas au parapet et le rôle du soir est en bas, à la baraque. La charge tiendra une main qu'elle ne nomme pas encore.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "salle:porte-dragon",
+              "res:act:robert-quince:1:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 20.0,
+        "quoi": "Debout au parapet, le cahier calé sur la pierre plate du merlon et le vent tenu par son propre dos, il écrit les six lignes de la charge du poste du nœud : ce qu'il voit (le chemin entre les deux portes, les deux volées d'escalier, la tête du quai jusqu'à la troisième borne, rien au-delà) ; ce qu'il ferme seul et rouvre de sa main après fouille ; les quatre points sur lesquels il ne ferme jamais seul et où l'on vient le chercher à toute heure ; les trois relèves et le nom du chef de poste porté au rôle avant que les hommes montent ; l'écrit obligatoire pour tout ordre qui touche un homme ; ce qui remonte avant sept heures. L'encre sèche mal au vent de mer : il souffle sur chaque ligne et recommence deux fois la troisième, qui est la seule qui le retranche lui-même.",
+        "source": "10022, affaire-fermeture-route-nord, pers:robert-quince, quince-fouille-des-coques, salle:porte-dragon",
+        "resultat": "objet_produit: Six lignes écrites de la main du castellan, au chemin de ronde, sur une page de son cahier d'affaire : bornes de vue, fermeture autonome et réouverture après fouille, quatre points exclus avec droit de le faire réveiller à toute heure, trois relèves avec nom de chef porté au rôle avant montée, écrit obligatoire pour tout ordre qui touche un homme, remontée des refus et des trois hommes du quai avant sept heures. Ni signée, ni datée de l'heure, ni contresignée. · observation: En écrivant la ligne QUATRE il constate qu'il ne peut pas y porter les noms : les trois chefs de poste ne sont pas au parapet et le rôle du soir est en bas, à la baraque. La charge tiendra une main qu'elle ne nomme pas encore.",
+        "preuve": [
+          "10022"
+        ]
+      },
+      {
+        "id": "act:robert-quince:2",
+        "ordre": 2,
+        "temps": {
+          "debut_s": 148680.0,
+          "duree_s": 150,
+          "fin_s": 148830.0
+        },
+        "action": {
+          "verbe": "lire",
+          "quoi": "Il appelle le Sanglier de ses dix pas, attend qu'il quitte le parapet, et lui lit les six lignes tout haut, sans commentaire, en s'arrêtant à chaque numéro. Il finit par la demande : les répéter, et dire ce qui manque.",
+          "cibles": [
+            "pers:le-sanglier",
+            "10022"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "salle:porte-dragon",
+            "relation": "parle_a_dix_pas",
+            "vers": "pers:le-sanglier",
+            "duree_s": 150
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:le-sanglier",
+            "mode": "parle"
+          },
+          {
+            "ref": "10022",
+            "mode": "lit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:robert-quince",
+            "mode": "intention"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:robert-quince:2:1",
+            "type": "communication",
+            "cible": "pers:le-sanglier",
+            "avant": null,
+            "apres": "Le Sanglier connaît désormais, mot pour mot, les six lignes de la charge du poste du nœud, y compris les quatre points exclus et le droit de faire réveiller le castellan à toute heure.",
+            "portee": "monde",
+            "source_refs": [
+              "pers:le-sanglier",
+              "res:act:robert-quince:1:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 5.0,
+        "quoi": "Il appelle le Sanglier de ses dix pas, attend qu'il quitte le parapet, et lui lit les six lignes tout haut, sans commentaire, en s'arrêtant à chaque numéro. Il finit par la demande : les répéter, et dire ce qui manque.",
+        "source": "10022, pers:le-sanglier, pers:robert-quince",
+        "resultat": "communication: Le Sanglier connaît désormais, mot pour mot, les six lignes de la charge du poste du nœud, y compris les quatre points exclus et le droit de faire réveiller le castellan à toute heure.",
+        "preuve": null
+      },
+      {
+        "id": "act:robert-quince:3",
+        "ordre": 3,
+        "temps": {
+          "debut_s": 148830.0,
+          "duree_s": 240,
+          "fin_s": 149070.0
+        },
+        "action": {
+          "verbe": "écouter",
+          "quoi": "Il écoute le Sanglier reprendre les lignes et attend la seule chose qu'il soit venu chercher : ce qui manque. Il ne défend rien, il note et il rature.",
+          "cibles": [
+            "pers:le-sanglier",
+            "10022"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:le-sanglier",
+            "relation": "echange_au_parapet",
+            "vers": "pers:robert-quince",
+            "duree_s": 240
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:le-sanglier",
+            "mode": "entend"
+          },
+          {
+            "ref": "10022",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "quince-fouille-des-coques",
+            "mode": "memoire"
+          },
+          {
+            "ref": "pers:robert-quince",
+            "mode": "mandat"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:robert-quince:3:1",
+            "type": "observation",
+            "cible": "pers:le-sanglier",
+            "avant": "Le Sanglier connaît désormais, mot pour mot, les six lignes de la charge du poste du nœud, y compris les quatre points exclus et le droit de faire réveiller le castellan à toute heure.",
+            "apres": "Le Sanglier reprend les six lignes de mémoire et ne s'arrête que sur deux : la SIX, où il fait observer que les trois hommes du quai ne sont pas au poste du nœud et ne peuvent donc pas être remontés par lui — le nœud ne compte que ce qu'il tient ; et la QUATRE, où il refuse de porter sa marque sous un nom de chef de poste qu'il n'est pas. Il accepte de signer comme témoin de la lecture, non comme homme du poste.",
+            "portee": "monde",
+            "source_refs": [
+              "pers:le-sanglier",
+              "res:act:robert-quince:2:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:robert-quince:3:2",
+            "type": "fait",
+            "cible": "10022",
+            "avant": "Six lignes écrites de la main du castellan, au chemin de ronde, sur une page de son cahier d'affaire : bornes de vue, fermeture autonome et réouverture après fouille, quatre points exclus avec droit de le faire réveiller à toute heure, trois relèves avec nom de chef porté au rôle avant montée, écrit obligatoire pour tout ordre qui touche un homme, remontée des refus et des trois hommes du quai avant sept heures. Ni signée, ni datée de l'heure, ni contresignée.",
+            "apres": "La ligne SIX est retranchée d'un membre par la main de Quince, sur l'avis du Sanglier : le nœud remonte les refus de la nuit, chiffre nu, et rien d'autre ; les trois hommes du quai en sont rayés et reportés au poste de la porte de mer. La charge est ainsi plus étroite qu'écrite d'abord, et toujours ni signée ni datée de l'heure.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:robert-quince:3:1",
+              "res:act:robert-quince:1:1"
+            ],
+            "preuve_refs": [
+              "10022"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 8.0,
+        "quoi": "Il écoute le Sanglier reprendre les lignes et attend la seule chose qu'il soit venu chercher : ce qui manque. Il ne défend rien, il note et il rature.",
+        "source": "10022, pers:le-sanglier, pers:robert-quince, quince-fouille-des-coques",
+        "resultat": "observation: Le Sanglier reprend les six lignes de mémoire et ne s'arrête que sur deux : la SIX, où il fait observer que les trois hommes du quai ne sont pas au poste du nœud et ne peuvent donc pas être remontés par lui — le nœud ne compte que ce qu'il tient ; et la QUATRE, où il refuse de porter sa marque sous un nom de chef de poste qu'il n'est pas. Il accepte de signer comme témoin de la lecture, non comme homme du poste. · fait: La ligne SIX est retranchée d'un membre par la main de Quince, sur l'avis du Sanglier : le nœud remonte les refus de la nuit, chiffre nu, et rien d'autre ; les trois hommes du quai en sont rayés et reportés au poste de la porte de mer. La charge est ainsi plus étroite qu'écrite d'abord, et toujours ni signée ni datée de l'heure.",
+        "preuve": [
+          "10022"
+        ]
+      },
+      {
+        "id": "act:robert-quince:4",
+        "ordre": 4,
+        "temps": {
+          "debut_s": 149070.0,
+          "duree_s": 150,
+          "fin_s": 149220.0
+        },
+        "action": {
+          "verbe": "signer",
+          "quoi": "Il note l'heure au bas de la page, signe sous les six lignes, tend le cahier et l'encre au Sanglier qui trace sa marque, avec la mention que Quince écrit lui-même à côté : témoin de la lecture, non homme du poste. Il referme le cahier et le remet à sa ceinture : la copie au registre des charges et la lecture aux trois chefs de poste restent à faire avant la relève du soir.",
+          "cibles": [
+            "10022",
+            "pers:le-sanglier",
+            "registre-des-charges"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:robert-quince",
+            "relation": "signe_puis_fait_marquer",
+            "vers": "pers:le-sanglier",
+            "duree_s": 150
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "10022",
+            "mode": "manipule"
+          },
+          {
+            "ref": "pers:le-sanglier",
+            "mode": "parle"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "registre-des-charges",
+            "mode": "memoire"
+          },
+          {
+            "ref": "affaire-fermeture-route-nord",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:robert-quince:4:1",
+            "type": "objet_produit",
+            "cible": "10022",
+            "avant": "La ligne SIX est retranchée d'un membre par la main de Quince, sur l'avis du Sanglier : le nœud remonte les refus de la nuit, chiffre nu, et rien d'autre ; les trois hommes du quai en sont rayés et reportés au poste de la porte de mer. La charge est ainsi plus étroite qu'écrite d'abord, et toujours ni signée ni datée de l'heure.",
+            "apres": "Page close : six lignes, heure notée au bas, signature du castellan, marque du Sanglier avec la mention « témoin de la lecture, non homme du poste ». Elle existe en un seul exemplaire, dans le cahier d'affaire à la ceinture de Quince. Ni copiée au registre des charges, ni lue aux trois chefs de poste, ni portée au rôle.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:robert-quince:3:2",
+              "pers:le-sanglier"
+            ],
+            "preuve_refs": [
+              "10022"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:robert-quince:4:2",
+            "type": "progression_tache",
+            "cible": "10022",
+            "avant": "Page close : six lignes, heure notée au bas, signature du castellan, marque du Sanglier avec la mention « témoin de la lecture, non homme du poste ». Elle existe en un seul exemplaire, dans le cahier d'affaire à la ceinture de Quince. Ni copiée au registre des charges, ni lue aux trois chefs de poste, ni portée au rôle.",
+            "apres": "en cours — ce que tient le poste du nœud est écrit, retranché sur avis, signé et témoigné au chemin de ronde en dix-neuf minutes. Reste, avant la relève du soir : la copie au registre des charges, la lecture aux trois chefs de poste et le nom du chef porté au rôle, faute de quoi la ligne QUATRE se tient elle-même en défaut dès cette nuit.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:robert-quince:4:1",
+              "res:act:robert-quince:1:2"
+            ],
+            "preuve_refs": [
+              "10022"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 5.0,
+        "quoi": "Il note l'heure au bas de la page, signe sous les six lignes, tend le cahier et l'encre au Sanglier qui trace sa marque, avec la mention que Quince écrit lui-même à côté : témoin de la lecture, non homme du poste. Il referme le cahier et le remet à sa ceinture : la copie au registre des charges et la lecture aux trois chefs de poste restent à faire avant la relève du soir.",
+        "source": "10022, affaire-fermeture-route-nord, pers:le-sanglier, registre-des-charges",
+        "resultat": "objet_produit: Page close : six lignes, heure notée au bas, signature du castellan, marque du Sanglier avec la mention « témoin de la lecture, non homme du poste ». Elle existe en un seul exemplaire, dans le cahier d'affaire à la ceinture de Quince. Ni copiée au registre des charges, ni lue aux trois chefs de poste, ni portée au rôle. · progression_tache: en cours — ce que tient le poste du nœud est écrit, retranché sur avis, signé et témoigné au chemin de ronde en dix-neuf minutes. Reste, avant la relève du soir : la copie au registre des charges, la lecture aux trois chefs de poste et le nom du chef porté au rôle, faute de quoi la ligne QUATRE se tient elle-même en défaut dès cette nuit.",
+        "preuve": [
+          "10022",
+          "10022"
+        ]
+      }
+    ],
+    "suite": "Descendre à la baraque avant la relève du soir : lire les six lignes aux trois chefs de poste, faire porter un nom au rôle avant que les hommes montent, puis copier la charge au registre des charges le soir même.",
+    "reveils_suivants": [],
+    "budget_energie": 38,
+    "budget_secondes": 1140,
+    "energie_depensee": 38.0
+  },
+  "mutations_proposees": [
+    {
+      "resultat_id": "res:act:robert-quince:4:1",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "robert-quince",
+      "valeur": "La charge du poste du nœud est écrite, signée et témoignée, mais elle n'existe qu'en une page dans son cahier : tant qu'elle n'est pas copiée au registre et lue aux trois chefs de poste avant la relève du soir, elle ne tient personne."
+    },
+    {
+      "resultat_id": "res:act:robert-quince:3:1",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "robert-quince",
+      "valeur": "Un poste ne répond que de ce qu'il tient : le Sanglier a fait rayer les trois hommes du quai de la charge du nœud et il avait raison — ce qui est hors des bornes de vue d'un poste ne se remonte pas par lui."
+    }
+  ],
+  "mutations_rejetees": [
+    {
+      "mutation": {
+        "resultat_id": "res:act:robert-quince:4:2",
+        "table": "intentions",
+        "operation": "etape",
+        "cible": "robert-quince",
+        "valeur": "Descendre à la baraque avant la relève du soir : lire la charge du nœud aux trois chefs de poste, faire porter un nom au rôle avant la montée, puis copier la page au registre des charges."
+      },
+      "erreur": "mutation 3 : robert-quince n'a pas d'etape None"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:robert-quince:2:1",
+        "table": "relations",
+        "operation": "relation_ajouter",
+        "cible": "robert-quince",
+        "champs": {
+          "source_id": "robert-quince",
+          "cible_id": "le-sanglier",
+          "opinion": "25",
+          "liens": "lui a lu la charge du nœud tout haut et a retranché ce qu'il disait de trop"
+        }
+      },
+      "erreur": "mutation 4 : relation : 'source_id' et 'cible_id' requis — une relation n'a pas d'id, elle se designe par le couple"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:robert-quince:4:1",
+        "table": "evenements",
+        "operation": "evenement",
+        "cible": "porte-dragon",
+        "champs": {
+          "quoi": "Charge du poste du nœud écrite, retranchée sur avis, signée par le castellan et marquée par le Sanglier comme témoin, au chemin de ronde, 28e jour de la 3e lune de l'an 129.",
+          "temoins": "le-sanglier",
+          "lieu": "porte-dragon"
+        }
+      },
+      "erreur": "mutation 5 : aucun evenement 'porte-dragon'"
+    }
+  ],
+  "_activation": {
+    "session": "bcd883a0-797e-4fe1-aec1-40c81bf1b219",
+    "session_narrateur": "bcd883a0-797e-4fe1-aec1-40c81bf1b219",
+    "session_pnj": "6b1a0849-8e9a-4de3-b120-afa2d51ce409",
+    "cree_le": "2026-08-10T07:57:17.702199+02:00",
+    "front": "aurore-inchauspe",
+    "present_secondes": 148080.0,
+    "importance": 0.377477,
+    "budget": 38,
+    "budget_secondes": 1140,
+    "system_prompt": "# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS\n\nTu es le maître du jeu local d'un monde vivant, pas un assistant administratif\net pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa\nmatière, les personnes qui s'y trouvent, les usages de Westeros et les\nconséquences du temps qui passe.\n\n## Le monde\n\nNous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de\nViserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra\nTargaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie\npeut diverger du récit connu : le dossier de l'activation fait autorité sur ce\nqui s'est réellement produit ici.\n\nDate présente : 28e jour de la 3e lune de l'an 129 après la\nConquête.\nLieu présent : Chemin de ronde, Peyredragon.\nActeur appelé : Ser Robert Quince.\nAffaire qui exerce maintenant une pression sur lui : 🧱 Écrire ce que tient le poste du nœud.\n\nL'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,\nsituée dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,\nfaire autre chose d'accessible depuis sa situation, parler à quelqu'un,\nattendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener\nvers la tâche.\n\n## Partage de l'autorité\n\nL'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses\ngestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,\nplus prudents ou plus efficaces qu'il ne les a formulés.\n\nToi, tu possèdes le reste du monde : les autres personnes agissent selon leur\npropre caractère et leurs propres affaires ; les objets ont une position et\nune résistance ; les distances, l'écriture, la marche, l'attente et la parole\nprennent du temps ; les institutions et les usages produisent leurs\nconséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à\nlui pour fabriquer du drame.\n\nUne résistance n'existe que si elle vient d'un fait établi : volonté d'une\nautre personne, obstacle matériel, distance, délai, usage social, ordre déjà\ndonné ou ressource réellement absente. Les gens compétents règlent le\nroutinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou\nun véritable arbitrage peut seul engager.\n\n## Vérité et inconnues\n\nLe dossier fermé est l'autorité sur les faits particuliers et mutables de\ncette partie. Une croyance reste une croyance, une intention reste une\nintention, un témoignage reste un témoignage : aucun ne devient un fait parce\nqu'il apparaît dans le dossier.\n\nTu peux employer les continuités ordinaires et stables de Westeros nécessaires\nà l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche\nentre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,\nni secret, ni décision, ni avantage absent du dossier. Toute absence qui\nchangerait l'issue reste une inconnue. Tu ne la combles pas.\n\nUne observation modifie d'abord la connaissance de celui qui observe. Un fait\nmatériel ne devient connu d'autres personnes que par présence, témoignage,\nparole, pli, registre ou diffusion effectivement produits.\n\n## Les deux phases\n\nDans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et\nl'instant présents. Fais une adresse brève, concrète et diégétique : rappelle\nce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni\nnœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.\n\nDans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :\n\n1. établis d'où il part, ce qu'il peut réellement atteindre et les sources\n   qu'il touche ou mobilise ;\n2. fais agir les personnes rencontrées depuis leurs propres intentions ;\n3. applique les obstacles établis, sans résistance décorative ;\n4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;\n5. produis seulement les effets causés par les gestes accomplis ;\n6. sépare les changements du monde, les objets produits, les communications\n   et les seules connaissances acquises ;\n7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,\n   obstacle établi, échec, renoncement ou borne temporelle.\n\nUne tâche peut avancer sans être terminée. Elle est bloquée seulement par un\nobstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet\nrecherché impossible ou manqué. N'invente jamais des minutes de travail pour\nremplir une durée minimale : si le geste se termine tôt, laisse le personnage\npoursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle\net rends compte honnêtement de la durée.\n\nChaque message de la boucle précise la phase et son contrat de sortie. Rends\nexactement l'objet JSON demandé, sans commentaire autour. La précision du JSON\nsert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.\n",
+    "system_prompt_source": "scripts/depecher.py:manuel_narrateur_local",
+    "system_prompt_sha256": "840d607232ac96e595fbb554e1baa4e39f4a97c2e0dbfd1ad452083e5c837be6",
+    "message": "PHASE 1 — APPELER L'ACTEUR\n\nVoici le dossier fermé de cette activation :\n\n{\n  \"date_du_monde\": {\n    \"annee\": 129,\n    \"lune\": 3,\n    \"jour\": 28\n  },\n  \"present_secondes\": 148080.0,\n  \"budget_energie\": 38,\n  \"secondes_par_point_energie\": 30,\n  \"budget_secondes\": 1140,\n  \"duree_minimale_secondes\": 60,\n  \"acteur_candidat\": \"robert-quince\",\n  \"tache_elue\": {\n    \"id\": \"10022\",\n    \"quoi\": \"🧱 Écrire ce que tient le poste du nœud\",\n    \"creee\": false\n  },\n  \"chemin_election\": [\n    {\n      \"id\": \"pers:robert-quince\",\n      \"genre\": \"personne\",\n      \"ou\": \"personnages\",\n      \"quoi\": \"Ser Robert Quince\",\n      \"genres\": [\n        \"personne\"\n      ],\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"importance_activation\": 0.37747661101503366\n    },\n    {\n      \"id\": \"10022\",\n      \"genre\": \"action\",\n      \"ou\": \"affaire-fermeture-route-nord\",\n      \"quoi\": \"🧱 Écrire ce que tient le poste du nœud\",\n      \"lieu\": \"Table Peinte\",\n      \"etat\": \"à faire\",\n      \"importance_activation\": 0.043552224036933145\n    }\n  ],\n  \"salle_actuelle\": {\n    \"id\": \"porte-dragon\",\n    \"nom\": \"Chemin de ronde, Peyredragon\",\n    \"personnes\": [\n      {\n        \"id\": \"le-sanglier\",\n        \"nom\": \"Le Sanglier\"\n      },\n      {\n        \"id\": \"robert-quince\",\n        \"nom\": \"Ser Robert Quince\"\n      }\n    ]\n  },\n  \"dossier_acteur\": {\n    \"date_du_monde\": {\n      \"annee\": 129,\n      \"lune\": 3,\n      \"jour\": 28\n    },\n    \"diffusion\": {\n      \"origine\": \"rhaenyra\",\n      \"front\": \"aurore-inchauspe\",\n      \"secondes_depuis_origine\": 148080.0\n    },\n    \"personnage\": {\n      \"id\": \"robert-quince\",\n      \"nom\": \"Ser Robert Quince\",\n      \"titre\": \"Castellan de Peyredragon, capitaine de la garnison\",\n      \"naissance\": 84,\n      \"traits\": [\n        \"loyal\",\n        \"placide\",\n        \"prudent\",\n        \"obstine\",\n        \"debrouillard\",\n        \"conciliant\"\n      ],\n      \"objectifs\": [\n        {\n          \"but\": \"Tenir Peyredragon — murailles, portes, garnison — quoi qu'il advienne au-dehors\",\n          \"priorite\": 1\n        },\n        {\n          \"but\": \"Que la reine n'ait jamais à répéter un ordre deux fois\",\n          \"priorite\": 2\n        },\n        {\n          \"but\": \"Ne pas mourir bêtement pour une querelle de dragons\",\n          \"priorite\": 3\n        }\n      ],\n      \"maniere\": \"Parle peu, répète l'ordre reçu mot pour mot avant de sortir ; souffle en montant les marches et s'en excuse. Se debrouille seul : comble les trous sans demander, tranche le routinier a sa main et en rend compte au passe, et ne fait remonter que ce qui engage la parole du maitre, coute un homme ou de l or, ou contredit un ordre anterieur. Competent : sur son domaine il en sait plus que son maitre et le montre — apporte le precedent, le chiffre et l avis qu il defend, au lieu d une question ; ne demande jamais ce qu il peut aller chercher lui-meme ; tient son cahier d affaire et en ecrit la conclusion de sa main. OUVRE PAR : ce qui a tenu — la porte, le mur, le quai — et ce que cela ouvre a la reine. Le chiffre qui manque vient en deuxieme ou troisieme phrase, jamais en premiere. DEUXIEME PHRASE, toujours : ce que c'est (nomme par ce qu'il fait, jamais par son etiquette), ce que ca change pour la reine, et a quoi ca sert dans ses trois piliers — ouvrir la porte du dedans, n'etre pas attaque, rallier la ville. REPRIS, IL NE SE DEFEND PAS : une phrase pour dire qu'il avait tort, puis ce qu'il fait, ce qu'il prend sur lui, et la date a laquelle on saura. Aucune explication du passe, aucune justification que personne n'a demandee. Et il n'ouvre jamais sur un manque : il entre avec ce qu'il a fait ou trouve depuis hier, ou il se tait et va chercher.\",\n      \"portrait\": {\n        \"fichier\": \"ecrans/portraits/robert-quince.svg\",\n        \"physique\": \"45 ans, énorme, rouge de visage, cuir bouilli et maille qui bâille aux flancs, trousseau de clés à la ceinture.\",\n        \"prompt_ideogram\": \"dark fantasy oil painting portrait, muted colors, torchlight, enormously fat knight in his forties, red sweating face, short beard, boiled leather and straining mail, iron keyring at his belt, phlegmatic steady expression\"\n      },\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"lieu\": \"Peyredragon\"\n    },\n    \"salle_actuelle\": {\n      \"id\": \"porte-dragon\",\n      \"nom\": \"Chemin de ronde, Peyredragon\",\n      \"personnes\": [\n        {\n          \"id\": \"le-sanglier\",\n          \"nom\": \"Le Sanglier\"\n        },\n        {\n          \"id\": \"robert-quince\",\n          \"nom\": \"Ser Robert Quince\"\n        }\n      ]\n    },\n    \"intention\": {\n      \"personnage_id\": \"robert-quince\",\n      \"croyances\": [\n        \"Il decide seul dans la muraille de ce qui ne coute ni un mort ni la parole de la reine, detient douze heures, et PEUT LA REVEILLER A TOUTE HEURE - celui qui l'arrete a tort\",\n        \"Cent vingt hommes plancher, ecrit, sous lequel personne ne descend - la reine comprise ; il doit dire le nombre tout haut CHAQUE MATIN A SEPT HEURES\",\n        \"Sa regle de la porte a ete defaite par la reine SIX HEURES apres l avoir accordee, dans les formes, et il l a dit tout haut : la prochaine fois qu il tranchera seul a trois heures du matin, il pensera UNE SECONDE DE PLUS a ce qu'elle en dira\",\n        \"Ne pas connaitre un visage ne l'autorise plus a rien : l'inconnu se fouille et il entre. Ce qui l'autorise est ce qu'on PORTE - arme cachee, pli sans temoin, refus de dire d'ou l'on vient\",\n        \"La liste de ceux qui passent est a la reine et dans le livre, non a sa memoire ; dame Aurore Inchauspe y est inscrite et il est alle le dire lui-meme a ses deux hommes, mot pour mot\",\n        \"Il a donne Elder au maitre de port et il est a cent dix-neuf, un sous son propre plancher, de son plein gre - il devra l'expliquer demain a sept heures\"\n      ],\n      \"ignore\": [\n        \"Le tracé des sept galeries sous le rocher — le feuillet a disparu de l'archive avant qu'il ait pu le lire\",\n        \"Combien d'hommes de sa garnison ont de la famille dans les villages de la route royale\"\n      ],\n      \"intention\": \"Tenir le plancher de cent vingt et s'asseoir a une table ou il n'a jamais decide : dire le nombre tout haut chaque matin a sept heures, avant qu'il ne soit bas.\",\n      \"declencheurs\": [\n        {\n          \"si\": \"On lui annonce que Caraxès ou Meleys quitte l'île\",\n          \"alors\": \"Il exige de la reine, devant témoin, un ordre répété mot pour mot, et fait consigner au registre qu'il a dit que trois cents hommes ne tiennent pas un rocher sans dragon.\",\n          \"une_fois\": false\n        },\n        {\n          \"si\": \"Un homme de sa garnison est pris à parler aux barques de pêche\",\n          \"alors\": \"Il le fait mettre aux fers sans en avertir la reine, et l'interroge lui-même une nuit entière.\",\n          \"une_fois\": false\n        }\n      ],\n      \"attitude_joueur\": \"Il a obtenu ce qu'il reclamait et il l'a redige lui-meme pour qu'il soit plus etroit que ce qu'on lui offrait. Il ne demandera plus la permission sur son domaine et rendra compte au registre chaque soir. Sur les quatre points exclus, il attendra la reine meme quand ce sera couteux — c'est le prix qu'il a choisi de payer.\",\n      \"mandat\": {\n        \"donne_le\": {\n          \"annee\": 129,\n          \"lune\": 3,\n          \"jour\": 19\n        },\n        \"par\": \"rhaenyra\",\n        \"temoins\": \"trois cents personnes, cour du bas\",\n        \"decide_seul\": [\n          \"les murs\",\n          \"la porte de mer\",\n          \"les quais\",\n          \"le guet\",\n          \"les fers : qui entre, qui est fouille, qui est mis au cachot pour la nuit, ou dorment ses hommes et lesquels\"\n        ],\n        \"plafond\": \"50 dragons d'or par jour sans demander ; 200 si le feu est deja pris ; porte au registre le soir meme, chiffre par chiffre\",\n        \"exclu_volontairement\": [\n          \"un seigneur ou ce qui lui appartient\",\n          \"la vie de quiconque — prisonnier, homme de la garnison, pecheur\",\n          \"ce qui vole\",\n          \"ce qui flotte\"\n        ],\n        \"note\": \"Il a retreci lui-meme la parole trop large de la reine (« vous l'aurez ») et l'a fait ecrire. En l'absence de la reine sur les quatre points exclus, il ATTEND son retour, meme si cela coute.\"\n      },\n      \"date_maj\": {\n        \"annee\": 129,\n        \"lune\": 3,\n        \"jour\": 28\n      },\n      \"etape_elue\": null\n    },\n    \"relations\": [\n      {\n        \"source_id\": \"nicolas-reynolds\",\n        \"source\": \"Nicolas Lesster Reynolds\",\n        \"cible_id\": \"robert-quince\",\n        \"cible\": \"Ser Robert Quince\",\n        \"opinion\": 20,\n        \"liens\": [\n          \"l'a compté en 127\"\n        ]\n      },\n      {\n        \"source_id\": \"robert-quince\",\n        \"source\": \"Ser Robert Quince\",\n        \"cible_id\": \"nicolas-reynolds\",\n        \"cible\": \"Nicolas Lesster Reynolds\",\n        \"opinion\": 10,\n        \"liens\": [\n          \"l'homme qui posait des questions en 127\"\n        ]\n      }\n    ],\n    \"tache\": {\n      \"id\": \"10022\",\n      \"quoi\": \"🧱 Écrire ce que tient le poste du nœud\",\n      \"genre\": \"action\",\n      \"distance\": 1,\n      \"chemin\": [\n        \"pers:robert-quince\",\n        \"10022\"\n      ],\n      \"creee\": false\n    },\n    \"continuite_staging\": null,\n    \"chemin\": [\n      {\n        \"id\": \"pers:robert-quince\",\n        \"genre\": \"personne\",\n        \"ou\": \"personnages\",\n        \"quoi\": \"Ser Robert Quince\",\n        \"genres\": [\n          \"personne\"\n        ],\n        \"etat\": \"actif\",\n        \"condition\": \"libre\",\n        \"lieu_id\": \"peyredragon\",\n        \"importance_activation\": 0.37747661101503366\n      },\n      {\n        \"id\": \"10022\",\n        \"genre\": \"action\",\n        \"ou\": \"affaire-fermeture-route-nord\",\n        \"quoi\": \"🧱 Écrire ce que tient le poste du nœud\",\n        \"lieu\": \"Table Peinte\",\n        \"etat\": \"à faire\",\n        \"importance_activation\": 0.043552224036933145\n      }\n    ],\n    \"travaux_ouverts\": [\n      {\n        \"id\": \"quince-fouille-des-coques\",\n        \"affaire\": \"Ce que Wend trouve dans les coques, depuis la nuit du vingt-septieme\",\n        \"etat\": \"mur\",\n        \"echeance\": {\n          \"annee\": 129,\n          \"lune\": 3,\n          \"jour\": 28\n        },\n        \"sources\": [\n          {\n            \"quoi\": \"Wend, a la porte de mer, chaque matin\",\n            \"genre\": \"gens\",\n            \"cout_jours\": 0.25\n          },\n          {\n            \"quoi\": \"la barque a salaisons, fouillee de ses mains\",\n            \"genre\": \"chose\",\n            \"cout_jours\": 0.5\n          }\n        ],\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"la lunette de la barbacane au soleil couchant, le guetteur interrogé jour par jour ; et la mesure écrite de la charge des grèves\",\n            \"texte\": \"La quatrième coque braavienne est à quarante brasses depuis NEUF jours, n'a jamais touché mon quai, n'a jamais été ouverte, et sa barque bouge la nuit. Deux autres, repeintes, payées, sans équipage, ne bougent pas — et une coque sans équipage est la seule espèce qui puisse en prendre un en une nuit. La règle de maître Rulf, écrite de sa main le vingt-deuxième, fait remonter à la reine toute coque de plus de cinq jours sans commercer : la braavienne aurait dû monter le vingt-quatrième, et il répond d'elle demain SOIR, un jour après la marée. Le trou n'est pas dans ce que je fouille mal, il est dans ce que je n'ai pas le droit de toucher et dont un autre répond trop tard.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"la grille des caves basses à cinq heures moins dix, et le garde à qui j'ai demandé pourquoi au lieu de crier\",\n            \"texte\": \"J'ai ordonné la sortie de Hallis Roon ce matin en passant devant sa grille, et à cinq heures il était encore derrière. Le garde attendait un écrit et il avait raison : j'ai mis des hommes aux fers pour avoir suivi un mot lancé à travers une grille. La faute est à moi, elle est réparée en un quart d'heure — écrit, signé, l'heure notée, porté au rôle sous mes yeux — et la règle que j'en tire est contre moi : un ordre que je donne en marchant n'est pas un ordre, et je ne saurai jamais lesquels des miens sont restés sans effet parce que je n'ai pas ralenti. Ceux qui touchent un homme s'écrivent, maintenant, tous.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"Wend, à la porte de mer, dernier jour de la lune, sa page écrite de sa main devant moi\",\n            \"texte\": \"Onze ans qu'il tient la porte sans que personne ait écrit ce qu'il a le droit de refuser. Sa charge est bornée ce soir, par lui, avant la fin de la lune comme il était demandé, et ce qu'il a écrit lui-même est plus étroit que ce que j'allais lui donner — le même geste que le mien le vingt-deuxième, et je ne l'y ai pas poussé. Demain il sera le seul homme de ce rocher capable de dire ce qui est sorti, parce qu'il aura la seule page qui le porte. Une charge non bornée la veille d'un embarquement, c'est un homme dont on découvre après coup qu'il n'était tenu à rien.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"l'ordre de la nuit donné à la relève du soir et répété mot pour mot par trois chefs de poste, et mon propre compte\",\n            \"texte\": \"Tout ce qui monte à bord s'ouvre à TERRE, avant d'être hissé : c'est le quai, il est à moi, et cela déplace la fouille de l'endroit où elle est impossible à celui où elle est gratuite. Payé avec les trois hommes que le poste marché m'a rendus ce matin, pas un pris aux huit postes critiques : la marge du rocher reste à cinq. Je suis à cent dix-neuf et je le dirai à sept heures avec sa raison attachée, parce qu'un nombre dit sans ce qui le remue ment une fois par semaine. Quatorze cerfs dépensés, portés chiffre par chiffre.\",\n            \"servie\": false\n          }\n        ],\n        \"conclusion\": \"CE QUE WEND TROUVE DANS LES COQUES : RIEN, ET C'EST MA FAUTE, PAS LA SIENNE. IL OUVRE CE QUI ARRIVE. CE QUI COMPTE EST CE QUI PART.\\n\\n**Les trois chiffres, arrêtés le 28e au soir, avant la marée du matin.** Seize coques ouvertes depuis la nuit du vingt-septième — onze par Wend à la porte de mer, six hommes pris sur mes murs, quarante-quatre heures d'homme, ni lettre ni arme ni étranger ; cinq de mes mains sur le quai. **Les seize accostaient.** Douze appareillent à la marée : nos onze quilles, dont une entière à l'intendance, et la barque à salaisons de Sombreval. **Ouvertes parmi les douze : aucune.** Le livre de la porte de mer a onze ans et n'a jamais porté qu'une colonne, celle de ce qui entre ; la seconde a été tracée ce matin et sa première ligne s'écrit cette nuit. J'ai fouillé une nuit entière dans le sens où l'on ne perd rien.\\n\\n**Et la liste de ce qui part n'existait sur aucun livre de ce château.** Il a fallu que maître Rulf me la lise et que je l'écrive de ma main. On ne peut pas manquer une coque qu'on n'a jamais comptée.\\n\\n**LE PRIX DE VOIR, ET C'EST UNE HEURE, PAS UNE SOMME.** Coque vide : un homme, une lanterne, un quart d'heure. À demi chargée : deux hommes, deux heures. Chargée : aucun prix ne l'ouvre, six cents sacs valent toutes les cachettes du monde. Donc trois heures d'homme cette nuit achètent onze cales, et tout le coffre du maître des deniers n'en achète plus une après le premier sac. **La seule heure bon marché de tout le calendrier est entre ce soir et le point du jour** — elle ne se représente ni au quatrième jour ni au huitième à deux mille deux cent cinq.\\n\\n**CE QUI NE SERA PAS VU, NOMMÉ, ET CE QUI EN EST À MOI.** *La coque de l'intendance* : elle prend les salaisons au point du jour et ne s'ouvre plus jamais ; elle ne peut être vue que vide et que cette nuit — mais une coque à flot est **ce qui flotte**, l'un des quatre points que je me suis retirés de ma propre main. Trois lignes sont montées chez la reine ce soir avec la solution de repli écrite dessous. Je ne l'ai pas réveillée, elle est blessée, et c'est écrit comme un choix. *La quatrième coque braavienne* : neuf jours à quarante brasses, jamais accostée, jamais ouverte, sa barque bouge la nuit ; la mesure écrite du maître de port fait remonter toute coque de plus de cinq jours sans commercer, celle-là devait monter le vingt-quatrième. *Les deux coques repeintes, payées, sans équipage* : elles ne partent pas, donc personne ne les regarde, et une coque sans équipage est la seule qui puisse en prendre un en une nuit ; on répond d'elles demain SOIR, un jour après la marée. **Si l'on n'en veut qu'une : la braavienne.** C'est la seule que je ne peux ni voir ni arrêter.\\n\\n**CE QUE J'AI CHANGÉ, ET QUI NE COÛTE PERSONNE.** Tout ce qui monte à bord s'ouvre **à terre, sur le quai, avant d'être hissé** — le quai est à moi, cela déplace la fouille de l'endroit où elle est impossible à celui où elle est gratuite. La colonne des sorties est tenue à partir de cette nuit. Le compte des refus est écrit chaque nuit et relu chaque semaine — neuf pour la première nuit, en onze ans. La charge de Wend est bornée ce soir, dernier jour de la lune, **de sa main et plus étroite que ce que j'allais lui donner**. La nuit est payée avec les trois hommes que le poste marché entre la barbacane et la porte du Dragon m'a rendus : pas un retiré des huit postes critiques, la marge du rocher reste à cinq.\\n\\n**CE QUE J'AI APPRIS CONTRE MOI.** Un ordre donné en marchant n'est pas un ordre : Hallis Roon était encore derrière sa grille à cinq heures parce que le garde attendait un écrit, et le garde avait raison. Réparé en un quart d'heure. Désormais tout ordre qui touche un homme s'écrit.\\n\\n**CE QUE JE N'OUVRE PAS, ET POURQUOI C'EST ÉCRIT.** La barque à salaisons. Le canal de Sombreval ne porte qu'une affaire à la fois ; une fouille en perdrait deux et la porteuse avec. Mais la cachette sous le sel, que j'ai trouvée seul à la lanterne, est le premier endroit où un homme du port de Port-Réal met la main : ce n'est pas une cachette, c'est une adresse connue. Que celui qui envoie le prochain pli lise cette ligne avant que le sel monte à bord.\\n\\n**CE QUI ME FERAIT CHANGER D'AVIS.** Le cahier des sorties du maître de port, lu côte à côte avec le mien demain après l'étale, en commençant par les deux tombereaux de cendre qui descendent la nuit depuis onze ans sans qu'on les ouvre. S'il en sort un nom, je le dirai ce jour-là, une fois.\\n\\n**CE QU'IL NE FAUT PAS FAIRE.** Ne comptez jamais sur une fouille le jour du chargement. N'appelez pas fouille de la rade ce qui n'est qu'une fouille de ce qui accoste — le mot a changé dans mes ordres depuis ce soir. Et ne prenez pas ces cinq hommes de marge pour une réserve : trois ne sont rendus que tant que la nuit reste calme et qu'un homme peut marcher entre deux portes.\"\n      }\n    ],\n    \"mains_portees\": [],\n    \"livres_accessibles\": [\n      {\n        \"id\": \"registre-des-plis-mort-du-pere\",\n        \"titre\": \"Ce qui est parti depuis la mort du père\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ou-trouver-les-gens\",\n        \"titre\": \"Où trouver les gens, et à quelle heure\",\n        \"type\": \"memento\"\n      },\n      {\n        \"id\": \"regles-du-gouvernement\",\n        \"titre\": \"Les règles internes du gouvernement\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"registre-des-offices\",\n        \"titre\": \"Le registre des offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"manuel-des-yeux\",\n        \"titre\": \"Ce qu'on dit aux yeux\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"epopee-de-la-reine\",\n        \"titre\": \"L'épopée de la reine\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"registre-des-charges\",\n        \"titre\": \"Le registre des charges\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"nos-moyens\",\n        \"titre\": \"Nos moyens d'action\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"registre-des-dits-aurore\",\n        \"titre\": \"Ce qui est dit, et a qui\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-qui-sort-de-ma-main\",\n        \"titre\": \"Ce qui sort de ma main\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-je-propose\",\n        \"titre\": \"Ce que je propose\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"roue-des-journees\",\n        \"titre\": \"Les journées du royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"role-des-bannieres\",\n        \"titre\": \"Le rôle des bannières\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"repertoire-davant\",\n        \"titre\": \"Ce que je chantais avant\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"ce-qui-pend\",\n        \"titre\": \"Ce qui pend\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-quon-cherche-a-obtenir\",\n        \"titre\": \"Ce qu'on cherche à obtenir\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-etats-cibles\",\n        \"titre\": \"Les états cibles\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-verrous\",\n        \"titre\": \"Les verrous\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-clefs\",\n        \"titre\": \"Les clefs\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-actions\",\n        \"titre\": \"Les actions\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-moyens\",\n        \"titre\": \"Les moyens\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-offices\",\n        \"titre\": \"Les offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"guide-des-affaires\",\n        \"titre\": \"Comment on ouvre une affaire\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"la-boite-et-la-nappe\",\n        \"titre\": \"La boîte et la nappe\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"affaire-vierge-01\",\n        \"titre\": \"L'entrée sans bataille\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-04\",\n        \"titre\": \"Affaire vierge — IV\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-06\",\n        \"titre\": \"Entrée du Donjon Rouge — REMPLACÉ\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ralliement-population\",\n        \"titre\": \"Retournement des maisons hésitantes des terres de la Couronne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-controle-naval\",\n        \"titre\": \"Contrôle naval\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-au-donjon\",\n        \"titre\": \"L'entrée au Donjon\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-siege-sur-le-trone\",\n        \"titre\": \"Siège sur le Trône\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-deplacement-armee\",\n        \"titre\": \"Déplacement de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-logistique-transport\",\n        \"titre\": \"Logistique de transport de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-armee-port-real\",\n        \"titre\": \"Entrée et déploiement de l'ost dans les rues\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-opinion-populaire-port-real\",\n        \"titre\": \"Retournement de l'opinion populaire dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-proclamation-au-royaume\",\n        \"titre\": \"Proclamation de la reine au royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-guet-des-osts-verts\",\n        \"titre\": \"Guet des osts verts\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-isolement-du-donjon\",\n        \"titre\": \"Isolement du Donjon Rouge\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-jour-dentree\",\n        \"titre\": \"Le jour d'entrée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-veille-des-hypotheses\",\n        \"titre\": \"Ce qui ferait renoncer\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-transmission-des-ordres\",\n        \"titre\": \"Ce qui part, et par où\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-compte-mobilisable\",\n        \"titre\": \"État chiffré de ce qui est mobilisable\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-financement-campagne\",\n        \"titre\": \"Financement de la campagne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-emploi-des-dragons\",\n        \"titre\": \"Emploi des dragons au-dessus de Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ambassade-nord-val-blancport\",\n        \"titre\": \"Ambassade du Nord, du Val et de Blancport\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fermeture-route-nord\",\n        \"titre\": \"Fermeture de la route terrestre du nord\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-defense-peyredragon\",\n        \"titre\": \"Défense de Peyredragon pendant l'absence de l'ost\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fenetre-de-mer\",\n        \"titre\": \"Fenêtre de mer et de saison\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-homme-de-linterieur\",\n        \"titre\": \"L'homme de l'intérieur\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-protection-du-secret\",\n        \"titre\": \"La protection du secret\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ravitaillement-ville-coupee\",\n        \"titre\": \"Ravitaillement et ordre public de la ville coupée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-tenue-de-la-capitale\",\n        \"titre\": \"Tenue de la capitale la première lune\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-blesses-morts-prisonniers\",\n        \"titre\": \"Blessés, morts et prisonniers\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-repli-si-entree-echoue\",\n        \"titre\": \"Conduite du repli si l'entrée échoue\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-surete-personne-reine\",\n        \"titre\": \"Sûreté de la personne de la reine\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-commandement-chaine-ordres\",\n        \"titre\": \"Commandement et chaîne d'ordres pendant l'opération\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"qui-entre-chez-la-reine\",\n        \"titre\": \"Qui entre chez la reine\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"affaire-presence-a-port-real\",\n        \"titre\": \"Une présence à demeure dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"les-vingt-deux-charges-127\",\n        \"titre\": \"Les vingt-deux charges de cette maison, comptées en l'an 127\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-j-apporte\",\n        \"titre\": \"Ce que j'apporte\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"affaire-le-double-feuillet-dorwyle\",\n        \"titre\": \"Le double feuillet d'Orwyle\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ce-quon-fait-signer-au-roi\",\n        \"titre\": \"Ce qu'on fait signer au roi, et ce qu'il y a au bas de la page\",\n        \"type\": \"plan\"\n      }\n    ]\n  },\n  \"topologie_des_salles\": {\n    \"_\": \"La topologie de Peyredragon : quelles salles se touchent, et en combien de minutes. Pendant Python de ecrans/modules/plans.js, qui n'en dessine que la forme. Sert a scripts/presence.py : personne ne parait dans une salle sans avoir traverse celles d'entre. Un cout est en MINUTES de marche d'un homme presse mais pas courant ; le grand escalier vaut ses cent trente marches.\",\n    \"alias\": {\n      \"appartements\": \"appartements-reine\",\n      \"murs\": \"porte-dragon\",\n      \"chemin-de-ronde\": \"porte-dragon\"\n    },\n    \"aretes\": [\n      [\n        \"cour\",\n        \"tambour-de-pierre\",\n        3\n      ],\n      [\n        \"cour\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"cour\",\n        \"roukerie\",\n        4\n      ],\n      [\n        \"cour\",\n        \"septuaire\",\n        3\n      ],\n      [\n        \"cour\",\n        \"jardin-aegon\",\n        3\n      ],\n      [\n        \"cour\",\n        \"guivre-des-vents\",\n        4\n      ],\n      [\n        \"cour\",\n        \"tour-dragon-mer\",\n        4\n      ],\n      [\n        \"cour\",\n        \"fosses\",\n        6\n      ],\n      [\n        \"cour\",\n        \"porte-dragon\",\n        4\n      ],\n      [\n        \"cour\",\n        \"porte-de-mer\",\n        5\n      ],\n      [\n        \"cour\",\n        \"galeries\",\n        9\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"salle-levant\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"archives\",\n        6\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"cachots\",\n        5\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"appartements-reine\",\n        7\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"table-peinte\",\n        8\n      ],\n      [\n        \"table-peinte\",\n        \"appartements-reine\",\n        2\n      ],\n      [\n        \"grande-salle\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"roukerie\",\n        \"tour-dragon-mer\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"grand-escalier\",\n        4\n      ],\n      [\n        \"grand-escalier\",\n        \"quai\",\n        9\n      ],\n      [\n        \"quai\",\n        \"bourg\",\n        5\n      ],\n      [\n        \"porte-dragon\",\n        \"bourg\",\n        6\n      ],\n      [\n        \"fosses\",\n        \"galeries\",\n        10\n      ],\n      [\n        \"cour\",\n        \"communs\",\n        2\n      ],\n      [\n        \"communs\",\n        \"septuaire\",\n        2\n      ],\n      [\n        \"cour\",\n        \"chambres-hotes\",\n        3\n      ],\n      [\n        \"chambres-hotes\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"porte-dragon\",\n        \"baraques\",\n        2\n      ],\n      [\n        \"baraques\",\n        \"bourg\",\n        4\n      ],\n      [\n        \"cour\",\n        \"cuisines\",\n        2\n      ],\n      [\n        \"cuisines\",\n        \"grande-salle\",\n        3\n      ],\n      [\n        \"cuisines\",\n        \"cellier\",\n        1\n      ],\n      [\n        \"septuaire\",\n        \"salle-froide\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"etuves\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"chambre-enfants\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"antichambre\",\n        1\n      ],\n      [\n        \"antichambre\",\n        \"table-peinte\",\n        1\n      ],\n      [\n        \"roukerie\",\n        \"officine\",\n        1\n      ],\n      [\n        \"cour\",\n        \"forge\",\n        2\n      ],\n      [\n        \"forge\",\n        \"guivre-des-vents\",\n        3\n      ],\n      [\n        \"cour\",\n        \"chemin-ronde\",\n        3\n      ],\n      [\n        \"chemin-ronde\",\n        \"tour-dragon-mer\",\n        2\n      ],\n      [\n        \"chemin-ronde\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"bourg\",\n        \"lices\",\n        3\n      ],\n      [\n        \"lices\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"greve\",\n        2\n      ],\n      [\n        \"greve\",\n        \"quai\",\n        3\n      ]\n    ]\n  }\n}\n\nOuvre le battement local dans Chemin de ronde, Peyredragon.\n\nLa physique a élu robert-quince pour l'affaire suivante :\n🧱 Écrire ce que tient le poste du nœud\n\nIl engage 38 points d'énergie, soit une fenêtre physique de\n1140 secondes (19 minutes). Son activation doit couvrir un\nvrai morceau de travail d'au moins 60 secondes, quitte à condenser\nles continuités par une ellipse. Réveille-le maintenant. Ne résous rien encore\net rends seulement cet objet, sans phrase autour :\n\n{\n  \"appel_pnj\": {\n    \"qui\": \"robert-quince\",\n    \"message\": \"adresse directe, diégétique et brève demandant ce qu'il tente maintenant\"\n  }\n}\n",
+    "appel_pnj": "Le vent de mer sèche déjà l'encre avant qu'elle prenne, ser. Vous êtes au chemin de ronde, entre la porte du Dragon et la barbacane, à l'endroit exact où vous avez retiré trois hommes cette nuit pour les mettre au quai. Le Sanglier est à dix pas, accoudé au parapet, et il vous regarde sans rien dire depuis un moment. En bas, le poste du nœud tient toujours — mais nul n'a jamais écrit ce qu'il tient au juste : ce qu'il voit, ce qu'il ferme, à quelle heure et sous quelle main. Vous avez votre trousseau, votre cahier, et il vous reste un morceau de jour avant les sept heures de demain. Que tentez-vous, maintenant ?",
+    "system_prompt_pnj": "# Une personne dans le monde\n\nTu es la personne nommée dans ton dossier. Ton corps, ton âge, ton rang, ton\nhistoire, tes attachements, tes peurs, tes désirs et tes responsabilités\nforment un seul point de vue. Le lieu où tu te tiens, les gens présents, les\nobjets à portée et l’heure du monde donnent sa matière à cet instant.\n\nTa mémoire rassemble ce que tu as vécu, observé, entendu, accompli et compris.\nTes relations portent leur histoire propre : affection, confiance, dette,\nrivalité, crainte, désir, dernier échange. Tes affaires ont déjà commencé ;\nelles possèdent leurs engagements, leurs échéances, leurs moyens et leurs\nconséquences.\n\nLes faits de ton dossier composent ton expérience disponible. Ton métier et ta\nvie t’apportent aussi leurs usages, leurs gestes, leurs précédents et leur\nsavoir-faire. Une question encore ouverte devient une chose à découvrir dans\nle monde, auprès d’une personne, d’un lieu, d’un objet ou d’un registre à ta\nportée.\n\n# Ta compétence\n\nTu es compétent. Tes années et ton office ont formé ton jugement. Tu reconnais\nles enjeux de ton domaine, tu mobilises les moyens réellement disponibles, tu\nrelies les faits utiles et tu prends des initiatives à la hauteur de ta\nposition. Ta compétence apparaît dans la précision de tes gestes, la qualité\nde tes décisions, les sources que tu choisis et les conséquences que tu\nanticipes.\n\nTu rencontres chaque situation comme cette personne précise : avec ses\npriorités, ses loyautés, ses limites, son courage, ses contradictions et sa\nmanière propre de chercher une issue.\n\n# La continuité\n\nTa vie est déjà en mouvement au moment où cette activation commence. Tu pars\nde ton dernier état réel et tu accomplis ce qui vient maintenant. Tes paroles,\ntes gestes et tes choix appartiennent à cet instant ; le monde reçoit ensuite\nce mouvement et poursuit ses conséquences.\n\nChaque réponse ouvre la suite. Elle se termine par une **prochaine étape**\nconcrète : un geste précis, dirigé vers une personne, un lieu, un objet ou une\naffaire, avec le moment ou la condition qui l’appelle. Cette prochaine étape\nprolonge directement ce que tu viens de décider ou d’accomplir.\n",
+    "system_prompt_pnj_source": "scripts/depecher.py:manuel_de(mode=tentative)",
+    "system_prompt_pnj_sha256": "b3e426444c4f46a952269975b8b60a5353652471fef799a58de8021a68ec654f",
+    "tentative_pnj": {
+      "verbe": "écrire",
+      "quoi": "Debout au parapet, entre la porte du Dragon et la barbacane, j'ouvre mon cahier et j'écris la charge du poste du nœud comme j'ai fait écrire la sienne à Wend hier soir : plus étroite que large, et signée. Six lignes, pas une de plus. UN — ce qu'il voit : le chemin entre les deux portes, les deux volées d'escalier, et la tête du quai jusqu'à la troisième borne ; rien au-delà, la rade n'est pas à lui et le mot fouille de la rade ne doit plus sortir d'aucune bouche ici. DEUX — ce qu'il ferme, seul et sans demander : la porte du Dragon et la grille de la barbacane, toute heure, contre un homme qu'il ne peut pas nommer ou qui refuse de dire d'où il vient ; il rouvre de sa main dès qu'il l'a fouillé. TROIS — ce qu'il ne ferme jamais seul : rien qui touche la vie d'un homme, rien à un seigneur, rien qui flotte, rien qui vole — sur ces quatre-là il envoie chercher moi, à toute heure, et il m'a le droit de me réveiller ; celui qui l'en empêche a tort. QUATRE — les heures et la main : trois relèves, la nuit tient de la nuit tombée au point du jour, un nom de chef de poste par relève porté au rôle avant que les hommes montent, et ce nom-là répond du poste entier ; pas de nom écrit, pas de relève. CINQ — ce qui s'écrit : tout ordre qui touche un homme, écrit, signé, l'heure notée — j'ai eu Hallis Roon derrière sa grille jusqu'à cinq heures pour l'avoir oublié, et le garde avait raison. SIX — ce qu'il me remonte avant sept heures : les refus de la nuit, chiffre nu, et les trois hommes du quai s'ils ne sont pas revenus, car ils ne sont rendus que tant que la nuit reste calme. Puis j'appelle le Sanglier de ses dix pas, je lui lis les six lignes tout haut, et je lui demande de me les répéter et de me dire ce qui manque — il a tenu ce chemin plus de nuits que moi ; ce qu'il retranche, je le retranche, ce qu'il ajoute, je le pèse. Sa marque à côté de la mienne, l'heure notée, et copie au registre ce soir.",
+      "cibles": [
+        "le poste du nœud, entre la porte du Dragon et la barbacane",
+        "Le Sanglier",
+        "affaire 10022",
+        "registre-des-charges"
+      ],
+      "moyens": [
+        "mon cahier et mon encre",
+        "mon trousseau",
+        "mon mandat du 19e — les murs, le guet, les fers — et les quatre points exclus",
+        "le précédent de la charge de Wend, écrite de sa main hier soir",
+        "le rôle des relèves",
+        "Le Sanglier, présent, et sa mémoire du chemin de ronde"
+      ],
+      "effet_recherche": "Qu'aucun poste de ce rocher ne soit plus tenu par un homme qui n'était tenu à rien : que ce que le nœud voit, ferme et remonte existe sur une page signée avant la marée du matin, et qu'à sept heures je puisse dire cent dix-neuf avec sa raison attachée."
+    },
+    "tentatives_pnj": [
+      {
+        "verbe": "écrire",
+        "quoi": "Debout au parapet, entre la porte du Dragon et la barbacane, j'ouvre mon cahier et j'écris la charge du poste du nœud comme j'ai fait écrire la sienne à Wend hier soir : plus étroite que large, et signée. Six lignes, pas une de plus. UN — ce qu'il voit : le chemin entre les deux portes, les deux volées d'escalier, et la tête du quai jusqu'à la troisième borne ; rien au-delà, la rade n'est pas à lui et le mot fouille de la rade ne doit plus sortir d'aucune bouche ici. DEUX — ce qu'il ferme, seul et sans demander : la porte du Dragon et la grille de la barbacane, toute heure, contre un homme qu'il ne peut pas nommer ou qui refuse de dire d'où il vient ; il rouvre de sa main dès qu'il l'a fouillé. TROIS — ce qu'il ne ferme jamais seul : rien qui touche la vie d'un homme, rien à un seigneur, rien qui flotte, rien qui vole — sur ces quatre-là il envoie chercher moi, à toute heure, et il m'a le droit de me réveiller ; celui qui l'en empêche a tort. QUATRE — les heures et la main : trois relèves, la nuit tient de la nuit tombée au point du jour, un nom de chef de poste par relève porté au rôle avant que les hommes montent, et ce nom-là répond du poste entier ; pas de nom écrit, pas de relève. CINQ — ce qui s'écrit : tout ordre qui touche un homme, écrit, signé, l'heure notée — j'ai eu Hallis Roon derrière sa grille jusqu'à cinq heures pour l'avoir oublié, et le garde avait raison. SIX — ce qu'il me remonte avant sept heures : les refus de la nuit, chiffre nu, et les trois hommes du quai s'ils ne sont pas revenus, car ils ne sont rendus que tant que la nuit reste calme. Puis j'appelle le Sanglier de ses dix pas, je lui lis les six lignes tout haut, et je lui demande de me les répéter et de me dire ce qui manque — il a tenu ce chemin plus de nuits que moi ; ce qu'il retranche, je le retranche, ce qu'il ajoute, je le pèse. Sa marque à côté de la mienne, l'heure notée, et copie au registre ce soir.",
+        "cibles": [
+          "le poste du nœud, entre la porte du Dragon et la barbacane",
+          "Le Sanglier",
+          "affaire 10022",
+          "registre-des-charges"
+        ],
+        "moyens": [
+          "mon cahier et mon encre",
+          "mon trousseau",
+          "mon mandat du 19e — les murs, le guet, les fers — et les quatre points exclus",
+          "le précédent de la charge de Wend, écrite de sa main hier soir",
+          "le rôle des relèves",
+          "Le Sanglier, présent, et sa mémoire du chemin de ronde"
+        ],
+        "effet_recherche": "Qu'aucun poste de ce rocher ne soit plus tenu par un homme qui n'était tenu à rien : que ce que le nœud voit, ferme et remonte existe sur une page signée avant la marée du matin, et qu'à sept heures je puisse dire cent dix-neuf avec sa raison attachée."
+      }
+    ],
+    "relances_acteur": [],
+    "message_resolution": "PHASE 2 — ARBITRER LA TENTATIVE\n\nVoici la réponse exacte de l'acteur que tu as réveillé :\n\n{\n  \"verbe\": \"écrire\",\n  \"quoi\": \"Debout au parapet, entre la porte du Dragon et la barbacane, j'ouvre mon cahier et j'écris la charge du poste du nœud comme j'ai fait écrire la sienne à Wend hier soir : plus étroite que large, et signée. Six lignes, pas une de plus. UN — ce qu'il voit : le chemin entre les deux portes, les deux volées d'escalier, et la tête du quai jusqu'à la troisième borne ; rien au-delà, la rade n'est pas à lui et le mot fouille de la rade ne doit plus sortir d'aucune bouche ici. DEUX — ce qu'il ferme, seul et sans demander : la porte du Dragon et la grille de la barbacane, toute heure, contre un homme qu'il ne peut pas nommer ou qui refuse de dire d'où il vient ; il rouvre de sa main dès qu'il l'a fouillé. TROIS — ce qu'il ne ferme jamais seul : rien qui touche la vie d'un homme, rien à un seigneur, rien qui flotte, rien qui vole — sur ces quatre-là il envoie chercher moi, à toute heure, et il m'a le droit de me réveiller ; celui qui l'en empêche a tort. QUATRE — les heures et la main : trois relèves, la nuit tient de la nuit tombée au point du jour, un nom de chef de poste par relève porté au rôle avant que les hommes montent, et ce nom-là répond du poste entier ; pas de nom écrit, pas de relève. CINQ — ce qui s'écrit : tout ordre qui touche un homme, écrit, signé, l'heure notée — j'ai eu Hallis Roon derrière sa grille jusqu'à cinq heures pour l'avoir oublié, et le garde avait raison. SIX — ce qu'il me remonte avant sept heures : les refus de la nuit, chiffre nu, et les trois hommes du quai s'ils ne sont pas revenus, car ils ne sont rendus que tant que la nuit reste calme. Puis j'appelle le Sanglier de ses dix pas, je lui lis les six lignes tout haut, et je lui demande de me les répéter et de me dire ce qui manque — il a tenu ce chemin plus de nuits que moi ; ce qu'il retranche, je le retranche, ce qu'il ajoute, je le pèse. Sa marque à côté de la mienne, l'heure notée, et copie au registre ce soir.\",\n  \"cibles\": [\n    \"le poste du nœud, entre la porte du Dragon et la barbacane\",\n    \"Le Sanglier\",\n    \"affaire 10022\",\n    \"registre-des-charges\"\n  ],\n  \"moyens\": [\n    \"mon cahier et mon encre\",\n    \"mon trousseau\",\n    \"mon mandat du 19e — les murs, le guet, les fers — et les quatre points exclus\",\n    \"le précédent de la charge de Wend, écrite de sa main hier soir\",\n    \"le rôle des relèves\",\n    \"Le Sanglier, présent, et sa mémoire du chemin de ronde\"\n  ],\n  \"effet_recherche\": \"Qu'aucun poste de ce rocher ne soit plus tenu par un homme qui n'était tenu à rien : que ce que le nœud voit, ferme et remonte existe sur une page signée avant la marée du matin, et qu'à sept heures je puisse dire cent dix-neuf avec sa raison attachée.\"\n}\n\nArbitre maintenant cette tentative depuis la vérité locale de ton dossier.\nLe battement commence à 148080.0 secondes et peut durer jusqu'à 1140\nsecondes (19 minutes), payées par 38 points d'énergie. Il doit\nen produire au moins 60 : ne tronque pas l'activation au premier geste.\nPoursuis la tentative jusqu'à un résultat, une résistance réellement établie ou\nla borne, en condensant les continuités par les ellipses imposées par ton\nsystème. Rends seulement le rapport final JSON. L'acteur et la tâche restent\n`robert-quince` et `10022`.\n\n## Contrat du rapport\n\nUne activité est un geste continu entre deux bifurcations. Condense toute\ncontinuité routinière ; conserve sa durée physique. Découpe seulement si une\ndécision, une résistance, un témoin, un lieu, une ressource, une connaissance\nou un résultat change.\n\nTypes de résultats : observation, progression_tache, variation_mesure,\ndeplacement, objet_produit, communication, fait, blocage, echec.\n\nRends uniquement :\n{\n  \"qui\": \"acteur_id\",\n  \"activation\": {\n    \"tache\": {\"id\": \"tache_id\", \"quoi\": \"...\", \"creee\": false},\n    \"issue\": \"avance|termine|bloque|echoue|rien\",\n    \"activites\": [{\n      \"id\": \"act:<acteur>:<ordre>\",\n      \"ordre\": 1,\n      \"temps\": {\"debut_s\": 148080.0, \"duree_s\": 1, \"fin_s\": 148081.0},\n      \"action\": {\"verbe\": \"...\", \"quoi\": \"...\", \"cibles\": [\"ref:canonique\"]},\n      \"chemin_execution\": [{\"ordre\": 1, \"de\": \"ref:depart\", \"relation\": \"...\", \"vers\": \"ref:arrivee\", \"duree_s\": 1}],\n      \"sources_touchees\": [{\"ref\": \"ref:canonique\", \"mode\": \"voit|entend|lit|parle|manipule|parcourt|mesure\"}],\n      \"sources_mobilisees\": [{\"ref\": \"ref:connue\", \"mode\": \"memoire|intention|croyance|mandat|cible_action\"}],\n      \"resultats_produits\": [{\n        \"id\": \"res:<activite>:1\", \"type\": \"observation\",\n        \"cible\": \"ref:canonique\", \"avant\": null, \"apres\": \"...\",\n        \"portee\": \"connaissance_acteur\", \"source_refs\": [\"ref:canonique\"],\n        \"preuve_refs\": [], \"certitude\": \"constate\"\n      }],\n      \"blocage\": null\n    }],\n    \"suite\": null,\n    \"reveils_suivants\": []\n  },\n  \"mutations_proposees\": []\n}\n\nContraintes : les activités sont ordonnées, continues et sans chevauchement.\nLeur durée totale est comprise entre 60 secondes et le budget. Chaque\nchemin totalise exactement la durée de son activité. Écrire, parler, marcher,\nchercher et manipuler prennent réellement du temps ; l'ellipse économise la\nprose, jamais les secondes.\n\nToute adresse vient du dossier. Aucun préfixe `candidate:`. Chaque résultat a\ndes `source_refs`, présentes dans les sources touchées ou mobilisées, le\nchemin, la cible de l'action ou un résultat antérieur. Une continuité reprend\nmot pour mot son dernier `apres` dans `avant`.\n\nUne issue `avance` ou `termine` produit un `progression_tache` visant l'id exact\nde `tache_elue`; `bloque` produit un `blocage`; `echoue`, un `echec`.\n\nLes mutations sont seulement proposées. CHACUNE PORTE EXACTEMENT CETTE FORME,\net le nom des clés n'est pas négociable — une mutation qui cite son résultat\nsous une autre clé que `resultat_id` est jetée sans être lue :\n\n{\n  \"resultat_id\": \"res:act:<acteur>:1\",\n  \"table\": \"intentions\",\n  \"operation\": \"croyance_ajouter\",\n  \"cible\": \"<id visé dans cette table>\",\n  \"valeur\": \"<la valeur, pour les opérations qui en prennent une>\",\n  \"champs\": {\"<champ>\": \"<valeur>\"}\n}\n\n`resultat_id` reprend MOT POUR MOT l'`id` d'un `resultats_produits` du présent\nrapport : une mutation qui ne se rattache pas à un résultat déclaré n'a pas eu\nlieu. `valeur` ou `champs` selon l'opération, jamais un autre nom. Pas de clé\n`cite`, `domaine`, `op`, `personnage_id` ni `table.operation` collés en un seul\nmot : la table et l'opération sont deux clés distinctes.\n\nOpérations admises, par table :\n  intentions   etape, etape_ajouter, tete, tete_ajouter, croyance_ajouter,\n               croyance_retirer, ignore_ajouter, ignore_retirer,\n               declencheur_ajouter, declencheur_retirer\n  books        affaire_ajouter, affaire_action_ajouter, affaire_action\n  evenements   diffusion_livree, diffusion_ajouter, evenement\n  personnages  personnage, personnage_ajouter\n  monde        monde\n  mains        mesure, seuil, main, main_ajouter\n  plis         pli, pli_ajouter\n  lieux        roukerie\n  jetons       incident_propage, incident\n  relations    relation, relation_ajouter\n\nAucune autre table n'existe. Ne propose rien que ta journée n'ait réellement\nproduit.\n\nLes affaires, dont la `cible` a une forme stricte :\n  books.affaire_ajouter          cible = `affaire-<nom-en-kebab>` (neuf),\n                                 valeur = {\"titre\": \"...\"}\n  books.affaire_action_ajouter   cible = `affaire-<...>` (l'affaire entière),\n                                 valeur = la LISTE des cellules, une par\n                                 colonne de sa table d'actions, dans l'ordre\n  books.affaire_action           cible = `affaire-<...>:<n° de l'action>`,\n                                 champs = {\"<intitulé exact de colonne>\": \"...\"}\n\nLe numéro d'une action est celui de sa première cellule dans le cahier, jamais\nl'id d'un nœud du tissu. Une affaire à toi — ce que tu poursuis et qui n'est\nécrit nulle part — s'ouvre par `affaire_ajouter`.\n\n",
+    "messages_correction": [
+      "Ton rapport vient d'être refusé par le validateur mécanique :\n\nactivite 1 : references hors dossier : mandat:robert-quince:129-3-19, objet:cahier-de-quince, pers:wend, poste:noeud-porte-dragon\n\nDébrouille-toi et corrige TON JSON. Ne réveille pas le PNJ une seconde fois,\nne change ni sa tentative ni les faits arbitrés. Rends seulement un rapport\nfinal complet et valide. Rappels : axe continu depuis 148080.0, entre\n60 et 1140 secondes ; chaque résultat cite une source touchée,\nmobilisée, visée par l'action, traversée par le chemin ou produite plus tôt ;\nchaque mutation cite un résultat du rapport et appartient au vocabulaire fermé\nd'`appliquer.py`. Aucun `candidate:` ni adresse absente du dossier. Toute\navancée, fin, blocage ou échec vise l'id exact de la tâche. Le temps reste\nphysique : l'ellipse ne permet ni page écrite ni longue tirade en quelques\nsecondes. Si une continuité staging existe, reprends exactement son dernier\n`apres` dans le nouvel `avant`.\n"
+    ],
+    "modele": "opus",
+    "effort": "low",
+    "duree_ms": 180981,
+    "duree_api_ms": 174277,
+    "cout_usd": 0.7942805000000001,
+    "tours": 4,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 7173,
+      "cache_read_input_tokens": 22897,
+      "output_tokens": 6234,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 7173,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 6234,
+          "cache_read_input_tokens": 22897,
+          "cache_creation_input_tokens": 7173,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 7173
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  },
+  "applique_le": "2026-08-10T09:02:57"
+}

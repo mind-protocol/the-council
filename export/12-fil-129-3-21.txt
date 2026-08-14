@@ -1,0 +1,738 @@
+AURORE — son écran, 129-3-21 (123 items)
+========================================
+
+--- etat/flux.jsonl, items portant pour=aurore-inchauspe ----------------
+
+[l.1779] recit | date=129 AC, 3e lune, 21e j.
+Sur la septième vous butez une heure. Repos-des-Freux : lord Staunton, qui a triplé sa commande d’encre en deux lunes, et dont vous ne savez pas ce qu’il écrit. Vous commencez trois fois. Trois fois vous vous arrêtez, parce que toutes vos phrases lui demandent quelque chose au lieu de lui apprendre quelque chose.
+  .{"duree": 60, "heure": "1h09"}
+
+[l.1780] vous | date=129 AC, 3e lune, 21e j.
+Je finis par écrire à Repos-des-Freux la même lettre qu’aux autres, mot pour mot, sans une ligne de plus. S’il écrit tant, il répondra ; et sa réponse me dira ce que sa commande ne me dit pas.
+  .{"mode": "agir", "duree": 20, "heure": "2h09"}
+
+[l.1784] recit | date=129 AC, 3e lune, 21e j. | moment=une heure avant l’aube
+Vous dormez deux heures, la joue sur la table, et c’est le bruit des oiseaux qu’on décroche qui vous réveille — de l’autre côté du mur, la sacoche du matin part pour Lamarck, Sombreval et Pointe-Aigue. Vos mots. Trois comtés.
+  .{"duree": 130, "heure": "5h15"}
+
+[l.1785] vous | date=129 AC, 3e lune, 21e j.
+Je me passe de l’eau sur le visage, je frotte mes doigts au sable — ça ne part pas, ça ne part jamais — et je descends avec mes sept feuillets et celui de Gerardys, les quatre mots en haut.
+  .{"mode": "agir", "duree": 15, "heure": "7h25"}
+
+[l.1786] recit | date=129 AC, 3e lune, 21e j.
+Le château à cette heure-ci est un autre château. Des servantes montent du bois sans faire de bruit, quelqu’un lave le sol du grand escalier à genoux et s’écarte pour vous laisser passer sans lever la tête. Il fait froid, et par les meurtrières on ne voit pas encore la mer, on l’entend.
+  .{"duree": 12, "heure": "7h40"}
+
+[l.1787] recit | date=129 AC, 3e lune, 21e j.
+En bas, la grande porte de la chambre de la Table Peinte. Entrouverte. De la lumière dedans — quelqu’un est déjà là, quelqu’un s’est levé avant vous, et vous ne saviez pas qu’on pouvait arriver en avance à un rendez-vous fixé une heure avant l’aube.
+
+Vous vous arrêtez sur le seuil, les feuillets contre vous.
+  .{"duree": 8, "heure": "7h52"}
+
+[l.1788] reponse | date=129 AC, 3e lune, 21e j.
+Petit décalage d’horloge de ma part : la montre a filé jusqu’à 7h52 alors que la nuit devait s’arrêter une heure avant l’aube. Je la remets à l’heure — il est 5h15, le rendez-vous est maintenant, et vous êtes devant la porte à temps. Rien d’autre ne change.
+  .{"heure": "5h15"}
+
+[l.1789] recit | date=129 AC, 3e lune, 21e j. | moment=une heure avant l’aube
+Cinq heures et quart. La porte de la chambre de la Table Peinte est entrouverte et il y a de la lumière dedans : une seule lampe, posée bas, qui n’éclaire pas les murs.
+
+Quelqu’un est arrivé avant vous.
+  .{"duree": 0, "tension": 85, "heure": "5h15"}
+
+[l.1790] objectif | date=129 AC, 3e lune, 21e j.
+  .{"action": "ajouter", "id": "obj-voix-sept-lettres", "titre": "Les sept lettres de l aube", "description": "Sept maisons, une seule nouvelle, sept raisons de la croire. Repos-des-Freux reçoit la même lettre que les autres, mot pour mot — sa réponse en dira plus que son silence.", "source": "Vous-même", "duree": 0, "heure": "5h15"}
+
+[l.1800] salle | date=129 AC, 3e lune, 21e j. | moment=une heure avant l’aube | lieu=Chambre de la Table Peinte, Peyredragon
+  .{"salle": "table-peinte", "tension": 85, "duree": 0, "presents": [{"id": "rhaenyra", "nom": "Rhaenyra Targaryen", "titre": "reine des Sept Couronnes", "portrait_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 128 128\" role=\"img\" aria-label=\"Rhaenyra Targaryen\">\n  <title>Rhaenyra Targaryen</title>\n  <defs>\n    <radialGradient id=\"bg-rhaenyra\" cx=\"50%\" cy=\"32%\" r=\"80%\">\n      <stop offset=\"0%\" stop-color=\"#322a20\"/>\n      <stop offset=\"55%\" stop-color=\"#241d16\"/>\n      <stop offset=\"100%\" stop-color=\"#141009\"/>\n    </radialGradient>\n    <clipPath id=\"clip-rhaenyra\"><circle cx=\"64\" cy=\"64\" r=\"52\"/></clipPath>\n  </defs>\n  <!-- anneau héraldique -->\n  <circle cx=\"64\" cy=\"64\" r=\"63\" fill=\"#1d1a1c\"/>\n  <circle cx=\"64\" cy=\"64\" r=\"57.5\" fill=\"none\" stroke=\"#a11f1f\" stroke-width=\"7\" stroke-dasharray=\"15.05 15.05\"/>\n  <!-- disque intérieur -->\n  <circle cx=\"64\" cy=\"64\" r=\"52\" fill=\"url(#bg-rhaenyra)\" stroke=\"#7a6342\" stroke-width=\"1.2\"/>\n  <!-- buste -->\n  <g clip-path=\"url(#clip-rhaenyra)\">\n    <path d=\"M45,46 C44,29 55,24 64,24 C73,24 84,29 83,46 L86,92 C87,102 80,107 74,106 L54,106 C48,107 41,102 42,92 Z\" fill=\"#dcd6df\"/>\n    <rect x=\"57.5\" y=\"62\" width=\"13\" height=\"28\" rx=\"2\" fill=\"#7d6853\"/>\n    <path d=\"M16,128 C22,98 42,86 64,86 C86,86 106,98 112,128 Z\" fill=\"#2c2620\"/>\n    <path d=\"M30,106 C38,92 50,88 64,88 C78,88 90,92 98,106\" fill=\"none\" stroke=\"#a1
+
+[l.1801] recit | date=129 AC, 3e lune, 21e j.
+La table occupe toute la pièce — on ne la contourne pas, on marche dessus, et Westeros s’étend du Nord jusqu’au Bief sous vos bottes de route. Une seule lampe, posée bas près du Gosier, qui n’éclaire ni les murs ni le plafond.
+
+La reine est seule.
+  .{"duree": 0, "heure": "5h23"}
+
+[l.1821] pensee | date=129 AC, 3e lune, 21e j.
+Dis-le avant qu’elle ne le demande. Une faute qu’on apporte soi-même est un service ; la même, découverte, est une trahison. Gerardys aurait dit ça avec moins de mots.
+  .{"duree": 0, "heure": "5h42"}
+
+[l.1827] question
+qu'est ec que je dois faire ?
+  .{"delai_s": 0}
+
+[l.1828] reponse | date=129 AC, 3e lune, 21e j.
+Rien ne vous est demandé à l’instant : vous venez de jouer votre carte la plus forte et c’est à la reine de répondre. Elle peut brûler les quatre lettres, les laisser partir, ou vous demander de quel droit. Attendez sa réponse — c’est une scène, pas un examen.
+  .{"duree": 0, "heure": "5h42"}
+
+[l.1829] reponse | date=129 AC, 3e lune, 21e j.
+Ce que vous êtes venue chercher, en revanche, n’est toujours pas obtenu : la charge n’existe pas. C’est votre premier dessein. Pour qu’elle existe il faut trois choses dites tout haut par la reine — un nom pour l’office, de l’or, et des corbeaux à vous. Tant que personne ne l’a dit devant témoin, vous restez une marchande qu’on a laissée entrer.
+  .{"duree": 0, "heure": "5h42"}
+
+[l.1830] reponse | date=129 AC, 3e lune, 21e j.
+Ce que vous tenez et qu’elle n’a pas : ce qu’on dit sur six auberges de sa propre route, et le fait que sa couronne ne voyage pas alors que son feu voyage partout. Ce que vous tenez et que vous n’avez pas encore dit : Repos-des-Freux a triplé sa commande d’encre en deux lunes, et lord Staunton est censé être son homme.
+  .{"duree": 0, "heure": "5h42"}
+
+[l.1840] question
+est ce que tu peux me dire les probleme de communication que cela va generer
+  .{"delai_s": 0}
+
+[l.1843] run
+repond à la question de la reine Repos-des-Freux. — Vous relevez la tête. — Pourquoi lui, et pourquoi celle-là est la seule à qui vous n'avez rien ajouté ?
+  .{"delai_s": 0}
+
+[l.1844] reponse | date=129 AC, 3e lune, 21e j.
+Les deux corbeaux de Rosby. Gerardys y a envoyé hier soir sa version — le couronnement en DERNIÈRE ligne. La vôtre y arrivera après, avec le couronnement en tête. Lord Rosby recevra donc deux plis de la même roukerie qui ne disent pas la même chose dans le même ordre. En général on croit le premier arrivé, et le second passe pour un rattrapage — c’est-à-dire pour un aveu.
+  .{"duree": 0, "heure": "6h21"}
+
+[l.1845] reponse | date=129 AC, 3e lune, 21e j.
+Les sept versions qui se rencontrent. Vous avez écrit la peur à Rosby, le compte à Stokeworth, trois lignes à Accalmie. Rosby et Stokeworth sont à une journée l’un de l’autre et leurs intendants se parlent. Le jour où ils comparent, chacun voit ce qu’on a jugé bon de lui dire à lui — et le seigneur à qui l’on a écrit la peur comprend qu’on l’a jugé peureux.
+  .{"duree": 0, "heure": "6h21"}
+
+[l.1846] reponse | date=129 AC, 3e lune, 21e j.
+Le chiffre de Darklyn a de l’avance. Trois mille morts contre vos douze cents, et il est parti cinq jours avant vous. Quand deux nombres circulent, celui qui est arrivé le premier devient le vrai, et le second ressemble à un démenti. Vous n’avez pas remplacé son chiffre, vous l’avez contredit — ce n’est pas la même chose et c’est plus faible.
+  .{"duree": 0, "heure": "6h21"}
+
+[l.1847] reponse | date=129 AC, 3e lune, 21e j.
+Repos-des-Freux. Votre lettre-piège dit aussi quelque chose à lord Staunton : ce que Peyredragon sait, à quelle date, et que les oiseaux volent encore. Si l’homme tourne, vous venez de le renseigner en cherchant à le sonder. Une sonde est toujours un cadeau — la question est de savoir lequel des deux paie le plus cher.
+  .{"duree": 0, "heure": "6h21"}
+
+[l.1848] reponse | date=129 AC, 3e lune, 21e j.
+Et le retour. Sept lettres font sept réponses, qui n’arriveront pas ensemble et voudront chacune la leur. Quatre ne portent ni sceau ni charge : un banneret qui reçoit un pli sur la guerre signé d’une maison d’encre ne saura ni s’il doit y croire ni à qui répondre. C’est la meilleure raison de vouloir un nom pour votre office — un office est d’abord une adresse.
+  .{"duree": 0, "heure": "6h21"}
+
+[l.1853] question
+explique moi clairement le contenu des plis envoyé , redige et quels sont les problemes liée à la communication des infos ?
+  .{"delai_s": 0}
+
+[l.1854] reponse | date=129 AC, 3e lune, 21e j.
+LE NOYAU, identique dans les sept — c’est ce que Gerardys a écrit sous votre dictée, et il est parti scellé du sceau de la reine vers Lamarck, Sombreval et Pointe-Aigue au premier vol :
+
+« Rhaenyra Targaryen a été sacrée reine le dix-huitième jour de la troisième lune. Six jours plus tôt, douze cents hommes en armes marchaient sur Sombreval sans la bannière du roi. Elle les a arrêtés. »
+
+Trois phrases, trois faits, une date. Rien à interpréter, rien à raccourcir en chantant.
+  .{"duree": 0, "heure": "6h43"}
+
+[l.1855] reponse | date=129 AC, 3e lune, 21e j.
+LES QUATRE QUE VOUS AVEZ ÉCRITES SEULE, chacune le noyau plus une phrase pour son homme :
+
+• ROSBY — « Ces douze cents hommes ont traversé vos terres sans vous demander, messire, et sans vous avertir. La reine a fait ce que vous n’aviez pas les hommes de faire. »
+
+• STOKEWORTH — « Ils étaient nourris à vos dépens depuis Port-Réal. La reine ne vous demandera ni grain ni bêtes cette lune. »
+
+• ACCALMIE — le noyau seul, rien de plus. Lord Borros ne lit pas trois pages.
+
+• REPOS-DES-FREUX — le noyau seul, mot pour mot comme aux autres. Pas une ligne de plus, exprès.
+  .{"duree": 0, "heure": "6h43"}
+
+[l.1856] reponse | date=129 AC, 3e lune, 21e j.
+LES PROBLÈMES, en bref : Rosby recevra deux plis contradictoires de la même roukerie (celui de Gerardys met le sacre en dernier) ; Rosby et Stokeworth comparent leurs lettres un jour sur deux et verront qu’on ne leur a pas dit la même chose ; le chiffre de Darklyn — trois mille — a cinq jours d’avance sur vos douze cents, et vous le contredisez au lieu de le remplacer ; votre sonde à Repos-des-Freux renseigne aussi lord Staunton ; et les quatre non scellées n’ont ni autorité ni adresse de retour.
+  .{"duree": 0, "heure": "6h43"}
+
+[l.1872] question
+est ce qu etu peux m'ecrire preciserment le contenu de chaque lettre en mettant destinataire , date , messages mode d'envoi
+  .{"delai_s": 0}
+
+[l.1876] reponse | date=129 AC, 3e lune, 21e j.
+PARTIES — écrites par Gerardys sous votre dictée le 20e jour au soir, scellées du sceau de la reine, trois copies mot pour mot, lâchées au premier vol du 21e jour au matin.
+
+1. LAMARCK — lord Corlys Velaryon — corbeau — arrivée estimée le 22e jour.
+2. SOMBREVAL — lord Gunthor Darklyn — corbeau — arrivée estimée le 22e jour.
+3. POINTE-AIGUE — lord Bar Emmon — corbeau — arrivée estimée le 22e ou 23e jour.
+
+Texte identique aux trois : « Rhaenyra Targaryen a été sacrée reine le dix-huitième jour de la troisième lune. Six jours plus tôt, douze cents hommes en armes marchaient sur Sombreval sans la bannière du roi. Elle les a arrêtés. »
+  .{"duree": 0, "heure": "7h31"}
+
+[l.1877] reponse | date=129 AC, 3e lune, 21e j.
+NON PARTIES — écrites de votre main dans la cellule des scribes, nuit du 20 au 21, sans sceau ni ordre. Elles sont sous la main de la reine, sur la Table Peinte.
+
+4. ROSBY — lord Rosby — le noyau, plus : « Ces douze cents hommes ont traversé vos terres sans vous demander, messire, et sans vous avertir. La reine a fait ce que vous n’aviez pas les hommes de faire. »
+
+5. STOKEWORTH — lord Stokeworth — le noyau, plus : « Ils étaient nourris à vos dépens depuis Port-Réal. La reine ne vous demandera ni grain ni bêtes cette lune. »
+
+6. ACCALMIE — lord Borros Baratheon — le noyau seul. Trois lignes, rien de plus.
+
+7. REPOS-DES-FREUX — lord Staunton — le noyau seul, mot pour mot comme aux autres, délibérément.
+  .{"duree": 0, "heure": "7h31"}
+
+[l.1878] reponse | date=129 AC, 3e lune, 21e j.
+CE QUI MANQUE À CE REGISTRE, et c’est ce que la reine vient de demander tout haut : personne dans cette maison ne tient la trace de ce qui sort. Gerardys tient ce qu’il ÉCRIT, ce qui n’est pas la même chose — la dépêche qu’il a envoyée à Rosby hier soir n’est nulle part comparée à la vôtre, et c’est pour ça que les deux se contrediront sans que personne l’ait vu venir.
+
+Un registre des sorties porterait quatre colonnes : à qui, quand, par quel canal, et QUELLE VERSION. C’est la quatrième qui manque partout, et c’est la seule qui compte pour vous.
+  .{"duree": 0, "heure": "7h31"}
+
+[l.1891] pensee | date=129 AC, 3e lune, 21e j.
+Quatre portes. Il vient de me donner la liste de ce qu il faut prendre, en croyant m expliquer pourquoi c est impossible.
+  .{"duree": 0, "heure": "7h42"}
+
+[l.1913] pensee | date=129 AC, 3e lune, 21e j.
+Inscris ta faute en premier et personne ne pourra te la sortir plus tard. C est la seule chose que j aie apprise de mon père qui vaille quelque chose à cette table.
+  .{"duree": 0, "heure": "8h13"}
+
+[l.1923] reponse | date=129 AC, 3e lune, 21e j.
+REGISTRE DES SORTIES — Peyredragon, depuis la mort de Viserys I
+canal · destinataire · date · message · commentaire
+
+1. CORBEAU · Lamarck (lord Corlys) · 21e j., premier vol · le noyau · scellé du sceau de la reine, copie conforme.
+2. CORBEAU · Sombreval (lord Darklyn) · 21e j., premier vol · le noyau · scellé. Darklyn a répandu SA version cinq jours plus tôt : trois mille morts.
+3. CORBEAU · Pointe-Aigue (lord Bar Emmon) · 21e j., premier vol · le noyau · scellé.
+4. CORBEAU · Rosby · 20e j. au soir · dépêche du mestre : le feu d’abord, le sacre en dernière ligne · partie sans être comparée à la n°5.
+5. NON PARTIE · Rosby · nuit du 20 au 21 · noyau + « ces hommes ont traversé vos terres sans vous demander » · sans sceau. CONTREDIT LA N°4 DANS L’ORDRE.
+6. NON PARTIE · Stokeworth · nuit du 20 au 21 · noyau + « nourris à vos dépens ; la reine ne demandera ni grain ni bêtes » · sans sceau. Rosby et Stokeworth comparent leurs plis.
+7. NON PARTIE · Accalmie (lord Borros) · nuit du 20 au 21 · le noyau seul · sans sceau. Le dos de ce feuillet porte le présent registre.
+8. NON PARTIE · Repos-des-Freux (lord Staunton) · nuit du 20 au 21 · le noyau seul, mot pour mot · sonde délibérée ; sa commande d’encre a triplé en deux lunes.
+  .{"duree": 0, "heure": "8h32"}
+
+[l.1924] reponse | date=129 AC, 3e lune, 21e j.
+SORTIES QUI NE SONT PAS DES LETTRES
+
+9. HOMME · Port-Réal · 20e j. · le grand mestre Orwyle, témoin oculaire du sacre, reparti sur sa nef · hors de tout contrôle. Nul ne sait ce qu’il en dira ni à qui. Rien à corriger : c’est déjà sorti.
+10. PAROLE · la cour, 19 personnes présentes · 18e j., couronnement · le texte lu tout haut · lu et non envoyé, aucune copie, aucun nom relevé.
+11. PAROLE · la cour et le bourg · 18e j. · deux promesses de la reine · TEXTE EXACT INCONNU. À établir avant qu’on nous le récite.
+12. DRAGON · le Nord et le Val · en vol · les mots que porte le prince Jacaerys · non écrits, aucune copie. Sept jours de vol, aucun corbeau pour le rattraper.
+  .{"duree": 0, "heure": "8h32"}
+
+[l.1925] reponse | date=129 AC, 3e lune, 21e j.
+DEUX CORRECTIONS DE FOND, et la seconde change l’outil.
+
+La première : « dix-neuf membres de la cour ont changé de camp » n’appartient PAS à la ligne d’Orwyle. Ce n’est pas ce qu’il emporte, c’est un fait du monde — je l’ai retiré de sa ligne.
+
+La seconde : ce fait-là n’est pas une sortie, c’est une nouvelle QUE PERSONNE N’A ENCORE FAITE SORTIR. Votre registre ne doit donc pas avoir une colonne de plus, il doit avoir une SECONDE MOITIÉ — « à faire sortir » — sous celle de ce qui est parti. Dix-neuf grands d’Aegon passés à Rhaenyra, c’est la meilleure nouvelle du règne et elle dort dans cette pièce depuis trois jours.
+  .{"duree": 0, "heure": "8h32"}
+
+[l.1928] question
+liste moi les 14 corbeau x
+  .{"delai_s": 0}
+
+[l.1932] reponse | date=129 AC, 3e lune, 21e j.
+LES QUATORZE PERCHOIRS DE PEYREDRAGON (relevé de la roukerie, hier soir)
+
+• 4 vers PORT-RÉAL — le Donjon Rouge. Ils ne volent que là. Ce sont les oiseaux du règne précédent : les envoyer, c’est écrire à Aegon.
+• 2 vers LAMARCK — l’un est parti ce matin.
+• 1 vers SOMBREVAL — parti ce matin.
+• 1 vers POINTE-AIGUE — parti ce matin.
+• 1 vers ROSBY — parti hier soir avec la dépêche du mestre. Perchoir vide.
+• 1 vers HARRENHAL — parti. Perchoir vide. C’est le second.
+• 1 vers ACCALMIE.
+• 1 vers REPOS-DES-FREUX.
+• 1 vers LES GRIFFES — lord Celtigar.
+• 1 vers VILLEVIEILLE — la Citadelle. Toute roukerie en garde un ; il ne sert qu’aux mestres.
+
+Neuf oiseaux sur leurs perchoirs à cette heure. Cinq en vol.
+  .{"duree": 0, "heure": "8h44"}
+
+[l.1933] reponse | date=129 AC, 3e lune, 21e j.
+CE QUE ÇA VEUT DIRE, ET C’EST DUR. Un corbeau ne va pas où l’on veut : il rentre CHEZ LUI. On n’a donc pas quatorze messages à envoyer, on a quatorze adresses, et une seule fois chacune tant que l’oiseau n’est pas revenu.
+
+Vous n’avez AUCUN oiseau pour Stokeworth. Aucun pour Winterfell, les Eyrié, Vivesaigues, Castral Roc, Villevieille autrement que par la Citadelle. Votre lettre à Stokeworth ne peut pas partir par le ciel — il lui faut un homme et un cheval, une journée, et un homme qui parle.
+  .{"duree": 0, "heure": "8h44"}
+
+[l.1934] reponse | date=129 AC, 3e lune, 21e j.
+ET LE POINT NOIR : quatre de vos quatorze oiseaux ne savent voler que vers le Donjon Rouge. Un quart de votre roukerie est un fil tendu vers l’ennemi. On ne peut ni les reprogrammer, ni les tuer sans que la Citadelle l’apprenne — mais tant qu’ils sont là, n’importe qui dans ce château peut écrire à Port-Réal en une nuit. Personne, à ma connaissance, ne compte ces quatre-là le matin.
+  .{"duree": 0, "heure": "8h44"}
+
+[l.1954] pensee | date=129 AC, 3e lune, 21e j.
+Il vient de le dire devant elle sans qu on le lui demande. Un homme qui avoue une porte ouverte est un homme qui veut qu on la ferme — ou qui veut qu on sache que ce n est pas lui qui l a ouverte.
+  .{"duree": 0, "heure": "9h32"}
+
+[l.1955] question
+liste moi tous les fait important qui se sont derouler depuis les debut  juste action/fait et date
+  .{"delai_s": 0}
+
+[l.1956] reponse | date=129 AC, 3e lune, 21e j.
+CE QUI EST PUBLIC — ce que n’importe qui sait ou saura, et qu’Aurore peut tenir pour acquis :
+
+11e j. · La mort du roi Viserys est connue à Peyredragon.
+15e j. · Ultimatum d’Otto Hightower sous le sceau d’Aegon, adressé « à la princesse Rhaenyra ».
+15e j. · Sombreval se déclare pour Rhaenyra la première, sans attendre le couronnement.
+16e j. · Rhaenyra vole sur Syrax trois jours après ses couches, deux jours avant son sacre.
+16e j. · Elle brûle la tête de la colonne royale sur la route de Sombreval — premier feu de la guerre. Douze cents hommes.
+17e j. · La couronne de Viserys arrive par ser Steffon Darklyn.
+18e j. · Rhaenyra est couronnée sur le grand escalier, face à la mer.
+18e j. · Les quarante hommes de la route lui jurent fidélité le soir même.
+  .{"duree": 0, "heure": "9h32"}
+
+[l.1957] reponse | date=129 AC, 3e lune, 21e j.
+CE QUI EST SU DANS L’ÎLE, PAS AU-DEHORS — vous l’avez appris ici, en une nuit :
+
+16e j. · Le prince Jacaerys s’est envolé sans ordre, deux heures avant l’aube.
+19e j. · La reine institue des représentants du bourg et des gens de métier — plus de trente personnes groupées.
+20e j. · Appel aux sangs de Valyria : on cherche des cavaliers pour les dragons sans maître.
+20e j. · La charte des dragonniers, au matin.
+20e j. · La reine descend elle-même à la onzième galerie, où l’on a trouvé un nid.
+21e j. · Dix-neuf des grands d’Aegon sont passés à Rhaenyra — et personne hors de cette île ne le sait.
+  .{"duree": 0, "heure": "9h32"}
+
+[l.1958] reponse | date=129 AC, 3e lune, 21e j.
+CE QUE VOUS AVEZ VÉCU VOUS-MÊME :
+20e j., 17h · Vous montez à la roukerie avec dix-huit pots.
+20e j., 18h · Gerardys envoie sa dépêche à Rosby, le sacre en dernière ligne.
+20e j., 19h · Vous lui dictez les trois lignes ; il retient les trois plis.
+20e j., 20h · Vous forcez la porte du souper par un mensonge.
+21e j., nuit · Sept lettres écrites dans la cellule des scribes.
+21e j., 5h15 · La Table Peinte. Vous avouez les quatre lettres.
+21e j., 9h30 · Gerardys déclare que sa chronique du règne part à Villevieille.
+
+LACUNE, et elle est béante : entre le 11e et le 20e jour, vous n’étiez pas là. Tout ce qui précède, vous le tenez d’autrui — et le 21e jour, tout le royaume au-delà de deux jours de route croit encore qu’il n’y a pas de reine.
+  .{"duree": 0, "heure": "9h32"}
+
+[l.1966] question
+rajoute les actions importante même non pubic
+  .{"delai_s": 0}
+
+[l.1967] reponse | date=129 AC, 3e lune, 21e j.
+C’est la seule chose que je ne vous donnerai pas en jeu. Ce que font les autres loin de vous — les intentions de Port-Réal, ce que trame lord Staunton, ce que dira Orwyle — n’existe pour vous que le jour où quelqu’un vous l’apporte, déformé et en retard. Si je vous le sers d’un coup, votre office n’a plus d’objet : on ne devient pas la voix d’un royaume dont on sait déjà tout.
+
+Si vous voulez parler DE la partie plutôt que dedans, le bouton Coulisses est fait pour ça, et j’y répondrai franchement.
+  .{"duree": 0, "heure": "9h51"}
+
+[l.1968] reponse | date=129 AC, 3e lune, 21e j.
+EN REVANCHE, voici ce qui n’est pas public et qui vous appartient déjà — ce sont vos cartes, et vous en avez plus que vous ne croyez :
+
+· Repos-des-Freux a triplé sa ration d’encre en deux lunes. Personne d’autre ne le sait. Vous ignorez ce qu’on y écrit.
+· Quatre des quatorze corbeaux de la roukerie ne volent que vers le Donjon Rouge, et nul ne les compte le matin.
+· La chronique du règne part par serment à Villevieille, chez les Hightower. Gerardys l’a dit devant la reine.
+· Deux promesses de la reine ont été faites de vive voix, et leur texte exact n’existe nulle part.
+· Le grand mestre Orwyle est reparti pour Port-Réal avec ce qu’il a vu du sacre. Il est déjà loin.
+· Rosby recevra deux plis contradictoires de cette maison, et vous êtes la seule à le savoir.
+  .{"duree": 0, "heure": "9h51"}
+
+[l.1969] reponse | date=129 AC, 3e lune, 21e j.
+ET LA CARTE DE VOS TROUS — les questions dont vous n’avez pas la réponse, avec qui pourrait vous la donner :
+
+· Qu’écrit Repos-des-Freux, et à qui ? — sa réponse à votre lettre, dans quatre à six jours.
+· Ce que la reine a réellement vu sur la route de Sombreval — elle seule, et personne ne le lui a demandé.
+· Le texte exact des deux promesses — les dix-neuf qui étaient là, Willa pour le bourg.
+· Ce qu’Orwyle racontera à Port-Réal — trop tard pour l’empêcher, pas trop tard pour le devancer.
+· Ce qu’on dit de la reine au-delà de deux jours de route — personne ne le sait, et c’est précisément ce que votre office existerait pour savoir.
+  .{"duree": 0, "heure": "9h51"}
+
+[l.1978] pensee | date=129 AC, 3e lune, 21e j.
+Gerardys. Huit anneaux, vingt-huit ans dans cette tour, onze à écrire les lettres du vieux roi. Il a manqué son souper pour moi et il ne me l’a pas fait remarquer une seule fois — ce qui est une façon de me le faire remarquer.
+  .{"duree": 0, "heure": "9h51"}
+
+[l.1979] pensee | date=129 AC, 3e lune, 21e j.
+C’est le seul homme de ce château qui m’ait donné quelque chose : un ordre de phrases, une leçon sur les chiffres, et l’heure de ce rendez-vous. C’est aussi le seul qui garde une note sur moi, soulignée dans la marge de son registre. Les deux vont ensemble et je ferais bien de ne pas l’oublier.
+  .{"duree": 0, "heure": "9h51"}
+
+[l.1980] pensee | date=129 AC, 3e lune, 21e j.
+Il vient de dire devant sa reine que ce qu’il écrit du règne finira chez les Hightower. Un homme qui avoue ça n’est pas un traître — un traître se tait. Mais c’est un homme qui a un serment plus vieux que le sien à elle, et qui vient de le rappeler à voix haute.
+  .{"duree": 0, "heure": "9h51"}
+
+[l.1981] pensee | date=129 AC, 3e lune, 21e j.
+Ser Robert Quince. Le castellan. Je ne l’avais jamais vu avant ce matin : un gros homme qui monte trop d’escaliers et arrive essoufflé en huit minutes quand on l’appelle.
+  .{"duree": 0, "heure": "9h51"}
+
+[l.1982] pensee | date=129 AC, 3e lune, 21e j.
+Elle lui a donné cinq choses. Il les a répétées dans l’ordre, sans en manquer une. C’est la chose la plus rare que j’aie vue depuis que je suis ici — un homme par qui un message passe sans se déformer. Mon père paierait cet homme-là plus cher que ses charretiers.
+  .{"duree": 0, "heure": "9h51"}
+
+[l.1983] pensee | date=129 AC, 3e lune, 21e j.
+Et il tient les portes. La roukerie est au mestre, le quai à maître Rulf, mais les murs, le guet et qui entre sont à lui. Trois des quatre portes dont parlait Gerardys passent par ce gros homme essoufflé, et il ne m’a pas regardée une seule fois.
+  .{"duree": 0, "heure": "9h51"}
+
+[l.1984] question
+il manque les actes scellée envoyé, les propopsitions, declaration , je dois reconstitue le fils d el'histoure
+  .{"delai_s": 0}
+
+[l.1985] reponse | date=129 AC, 3e lune, 21e j.
+LES ACTES DU RÈGNE — ce qui a été DÉCLARÉ, JURÉ ou SCELLÉ depuis la mort du roi, avec l’état de l’écrit :
+
+15e j. · REÇU — l’ultimatum d’Otto Hightower, sous le sceau d’Aegon, adressé « à la princesse Rhaenyra ». Écrit. Il existe. Il nous nomme princesse, et c’est un acte de guerre en trois mots.
+15e j. · DÉCLARATION — Gunthor Darklyn déclare Sombreval pour Rhaenyra, sans qu’on le lui demande et avant le couronnement. Le premier serment du règne, et il est venu tout seul.
+18e j. · COURONNEMENT — sur le grand escalier, face à la mer, la couronne de Jaehaerys portée par ser Steffon Darklyn.
+18e j. · SERMENT — les quarante hommes pris sur la route royale jurent à Rhaenyra, le soir même, dans la cour du banquet. Des levés de village, sans un chef d’accusation au registre du castellan.
+  .{"duree": 0, "heure": "9h51"}
+
+[l.1986] reponse | date=129 AC, 3e lune, 21e j.
+19e j. · INSTITUTION — les représentants de Peyredragon : plus de trois cents petites gens groupés par village, métier et équipage ; dix groupes, chacun se donnant son porte-parole sans qu’on en désigne aucun. Elle en a entendu cinq.
+20e j. · PROCLAMATION — l’appel aux sangs de Valyria, CRIÉ sur Peyredragon : que ceux en qui coule le sang valyrien, hommes et femmes, se présentent à la barbacane.
+20e j. · ACTE SCELLÉ — la charte des dragonniers, SIGNÉE de sa main à cette table même : admission, conditions, l’ordre institué. C’est le premier acte écrit de son règne.
+21e j. · ACTE SCELLÉ — les sept premières lettres officielles, signées de sa main ce matin.
+  .{"duree": 0, "heure": "9h51"}
+
+[l.1987] reponse | date=129 AC, 3e lune, 21e j.
+ET VOICI LE FIL, PUISQUE VOUS LE CHERCHEZ. Sur huit actes fondateurs, DEUX seulement sont écrits : la charte des dragonniers et les lettres de ce matin. Le reste — la déclaration de Sombreval, le serment des quarante, l’institution des porte-parole, l’appel aux sangs — n’existe que dans la mémoire de ceux qui étaient là.
+
+Une reine dont les actes sont oraux règne aussi longtemps que les témoins vivent. Otto Hightower, lui, a écrit dès le quinzième jour. Voilà votre fil : ce règne parle beaucoup et n’écrit presque rien, et l’autre camp fait exactement l’inverse.
+  .{"duree": 0, "heure": "9h51"}
+
+[l.1989] question
+tu peux me remettre tout dans l'ordre ?
+  .{"delai_s": 0}
+
+[l.1992] reponse | date=129 AC, 3e lune, 21e j.
+LE FIL, DU PREMIER JOUR À CETTE MINUTE
+(◆ fait · ✦ acte · ✉ sortie · ○ vous)
+
+11e j. ◆ La mort du roi Viserys est connue à Peyredragon.
+15e j. ✦ Ultimatum d’Otto Hightower, sceau d’Aegon, « à la princesse Rhaenyra ». ÉCRIT.
+15e j. ✦ Sombreval se déclare pour Rhaenyra, seule et sans qu’on le demande. Oral.
+16e j. ◆ Jacaerys s’envole sans ordre, deux heures avant l’aube.
+16e j. ◆ Rhaenyra vole sur Syrax, trois jours après ses couches.
+16e j. ◆ Le feu de la route de Sombreval : douze cents hommes en armes arrêtés. Premier sang de la guerre.
+16e j. ✉ Darklyn fait écrire sa version — trois mille morts. Elle part vers le Conflans.
+17e j. ◆ La couronne de Jaehaerys débarque, portée par ser Steffon Darklyn.
+  .{"duree": 0, "heure": "10h01"}
+
+[l.1993] reponse | date=129 AC, 3e lune, 21e j.
+18e j. ✦ COURONNEMENT, sur le grand escalier face à la mer.
+18e j. ✦ Les quarante de la route jurent le soir même, dans la cour du banquet. Oral.
+18e j. ✦ Deux promesses de la reine, de vive voix. TEXTE INCONNU.
+19e j. ✦ Institution des représentants de Peyredragon : trois cents personnes, dix groupes, cinq entendus. Oral.
+20e j. ✦ L’appel aux sangs de Valyria, CRIÉ sur l’île.
+20e j. ✦ La charte des dragonniers, SIGNÉE à cette table. Premier acte écrit du règne.
+20e j. ◆ Le nid de la onzième galerie, quatre-vingts pas sous la mer.
+  .{"duree": 0, "heure": "10h01"}
+
+[l.1994] reponse | date=129 AC, 3e lune, 21e j.
+20e j. ○ 17h — vous montez à la roukerie avec dix-huit pots.
+20e j. ✉ 18h — Gerardys envoie sa dépêche à Rosby : le feu d’abord, le sacre en dernier.
+20e j. ○ 19h — vous lui dictez les trois lignes ; il retient les trois plis restants.
+20e j. ○ 20h — vous forcez la porte du souper par un mensonge.
+21e j. ○ nuit — sept lettres écrites dans la cellule des scribes.
+21e j. ✉ premier vol — Lamarck, Sombreval, Pointe-Aigue partent scellés.
+21e j. ○ 5h15 — la Table Peinte. Vous posez les sept lettres et vous avouez les quatre.
+21e j. ✦ matin — LA REINE SIGNE DE SA MAIN les sept lettres. Les quatre orphelines deviennent officielles.
+21e j. ◆ 9h12 — ser Robert reçoit cinq ordres et les répète sans en manquer un.
+21e j. ✦ 9h30 — Gerardys déclare que sa chronique du règne part à Villevieille, chez les Hightower.
+21e j. ○ 9h51 — le registre des sorties, et son trait horizontal.
+  .{"duree": 0, "heure": "10h01"}
+
+[l.1995] reponse | date=129 AC, 3e lune, 21e j.
+CE QUE LE FIL MONTRE, MIS BOUT À BOUT : dix jours, huit actes fondateurs, deux écrits. Le premier écrit du règne est une charte de dragonniers ; le second, vos sept lettres. Otto Hightower, lui, écrivait dès le quinzième jour.
+
+Et une chose a changé ce matin sans que vous l’ayez demandée : la reine a signé les quatre lettres que vous aviez écrites sans droit. Elles ne sont plus votre faute — elles sont son acte.
+  .{"duree": 0, "heure": "10h01"}
+
+[l.2026] question
+tu peux m'expliquer déposition + couronnement, contre l'ultimatum d'Otto arrivé en même temps
+  .{"delai_s": 0}
+
+[l.2031] question
+de quel mensonge parle ton : Le mensonge de Caraxès s'installe comme vérité*
+  .{"delai_s": 0}
+
+[l.2032] reponse | date=129 AC, 3e lune, 21e j.
+LE FONDEMENT DE LA REINE. Il y a vingt-quatre ans, le roi Viserys a désigné Rhaenyra héritière du Trône de Fer, et il a fait jurer les grands du royaume — pas une fois, deux. Des centaines d’hommes, à genoux, devant témoins. C’est là-dessus qu’elle règne : sur des serments prêtés de vive voix il y a une génération, par des hommes dont beaucoup sont morts.
+  .{"duree": 0, "heure": "10h34"}
+
+[l.2033] reponse | date=129 AC, 3e lune, 21e j.
+LE FONDEMENT D’AEGON. Trois choses, et elles n’ont rien de fou : l’usage veut qu’un fils passe avant une fille ; on dit que le roi aurait changé d’avis à la fin, dans une chambre où seuls les Hightower étaient présents ; et surtout Aegon a été COURONNÉ LE PREMIER. Un couronnement fait est un fait. Un serment ancien est un souvenir.
+  .{"duree": 0, "heure": "10h34"}
+
+[l.2034] reponse | date=129 AC, 3e lune, 21e j.
+L’ULTIMATUM, ET POURQUOI SES MOTS SONT L’ARME. Le quinzième jour, la lettre d’Otto arrive sous le sceau d’Aegon, adressée « à la PRINCESSE Rhaenyra ». Ce seul mot fait tout le travail : en la nommant princesse, il traite les serments de son père comme s’ils n’avaient jamais existé, et il le fait par écrit, avec un sceau, dans un document que chaque seigneur pourra montrer à ses vassaux.
+
+Le couronnement du dix-huitième jour est la réponse — un acte contre un acte. On ne réfute pas une couronne par une lettre : on se couronne.
+  .{"duree": 0, "heure": "10h34"}
+
+[l.2035] reponse | date=129 AC, 3e lune, 21e j.
+CE QUE ÇA VEUT DIRE POUR VOUS, ET C’EST TOUT VOTRE MÉTIER. Les deux camps ne se battent pas sur les mêmes armes. Le sien est fait de SERMENTS — oraux, anciens, portés par des hommes qui vieillissent, et qu’il faut sans cesse rappeler à la mémoire des vivants. Celui d’Aegon est fait d’ÉCRITS et d’un fait accompli — qui n’ont besoin de personne pour se souvenir.
+
+Un serment se rappelle, une couronne se raconte. Otto a écrit le quinzième jour. Peyredragon a écrit le vingt et unième. Six jours pendant lesquels une seule des deux versions circulait — et vous êtes arrivée le sixième.
+  .{"duree": 0, "heure": "10h34"}
+
+[l.2042] question
+mais c'est quoi la déposition ??
+  .{"delai_s": 0}
+
+[l.2045] reponse | date=129 AC, 3e lune, 21e j.
+La déposition, c’est l’acte écrit du serment. Quand le roi Viserys a fait de sa fille son héritière, il ne s’est pas contenté de le dire : on a fait venir les grands du royaume, on a lu le texte à voix haute, chacun a juré, et l’on a couché tout cela sur parchemin — le texte, la date, et la liste de ceux qui ont juré. Ce parchemin-là, on le DÉPOSE : c’est le mot. Il est le titre de propriété de la reine sur le trône.
+  .{"duree": 0, "heure": "11h09"}
+
+[l.2046] reponse | date=129 AC, 3e lune, 21e j.
+Pourquoi Gerardys y revient : Peyredragon en possède le texte. C’est la seule pièce de ce règne qui vaille un acte d’Otto Hightower — un écrit contre un écrit, et le sien est plus ancien de vingt-quatre ans.
+
+Mais un texte sans les noms ne fait que la moitié du travail. Ce qui compte n’est pas ce que le serment disait ; c’est QUI l’a prêté, et lesquels de ceux-là respirent encore.
+  .{"duree": 0, "heure": "11h09"}
+
+[l.2047] reponse | date=129 AC, 3e lune, 21e j.
+Et voilà pourquoi c’est votre affaire et pas celle du mestre. Une liste de jureurs vivants n’est pas une archive : c’est une liste d’adresses. À chacun de ces hommes on peut écrire une lettre qui ne dit qu’une chose, la sienne — « vous avez juré, ce jour-là, devant ces témoins-ci ». Ce n’est plus un argument, c’est un rappel de dette, et il est nominatif.
+
+Les dix-neuf qui viennent de passer à la reine ont peut-être fait exactement ce calcul tout seuls. Les autres attendent qu’on le leur rappelle.
+  .{"duree": 0, "heure": "11h09"}
+
+[l.2062] question
+de quel mensonge parle ton : Le mensonge de Caraxès s'installe comme vérité*
+  .{"delai_s": 0}
+
+[l.2065] reponse | date=129 AC, 3e lune, 21e j.
+Cette phrase n’est nulle part dans ce qu’Aurore a vu ni entendu — je l’ai cherchée dans tout son fil et dans l’état. Elle vient très probablement de l’autre écran, celui de la reine : c’est une chose que Rhaenyra sait et qu’Aurore ignore. Je ne vais donc pas vous la reconstituer ici, sinon je vous donne par la fenêtre ce que le jeu vous refuse par la porte.
+  .{"duree": 0, "heure": "12h19"}
+
+[l.2066] reponse | date=129 AC, 3e lune, 21e j.
+Ce qu’Aurore sait de Caraxès, et c’est tout : c’est le dragon du prince Daemon, le Ver Sanglant. Tout le monde dans la baie sait à quoi il ressemble en vol. Elle ignore où il est, où il va, et ce qu’on en raconte ailleurs.
+
+Si vous voulez en parler hors du jeu, prenez le bouton Coulisses et je répondrai franchement — c’est fait pour ça. Sinon, la manière d’Aurore reste la bonne : demandez-le à quelqu’un. Gerardys est à trois pas et il tient le journal de la roukerie.
+  .{"duree": 0, "heure": "12h19"}
+
+[l.2067] question
+tu pexu m'explqiuer Le nid de la onzième galerie, quatre-vingts pas sous la mer.
+  .{"delai_s": 0}
+
+[l.2068] reponse | date=129 AC, 3e lune, 21e j.
+Ce qu’on raconte au bourg depuis hier soir, et que vous avez entendu deux fois entre le quai et la roukerie. Les tailleurs d’obsidienne creusaient une veine sous le château. Il y a dix jours ils ont percé une poche, quatre-vingts pas SOUS le niveau de la mer, et l’ont rebouchée le jour même parce que le plafond y pleure — de l’eau salée. Le maître des fosses donne quatre jours, peut-être six, avant qu’elle ne soit noyée pour toujours.
+  .{"duree": 0, "heure": "12h19"}
+
+[l.2069] reponse | date=129 AC, 3e lune, 21e j.
+Dedans : le squelette entier d’un dragon pas plus long qu’un cheval, couché en anneau, la tête ramenée contre la queue. Morte sur ses œufs, de faim ou de vieillesse, personne n’étant jamais venu là avant la tailleuse qui l’a trouvée. Dans l’anneau de ses côtes, cinq formes rangées : deux fendues et vides depuis longtemps — et TROIS ENTIÈRES. Plus noires et plus lourdes à l’œil que celles qu’on connaît. Nul ne sait si elles sont mortes.
+
+Le prince Jacaerys a fait cesser tout travail et fait chercher la reine plutôt que d’y toucher. Elle est descendue elle-même hier après-midi.
+  .{"duree": 0, "heure": "12h19"}
+
+[l.2070] reponse | date=129 AC, 3e lune, 21e j.
+Et la phrase que le prince a dite devant témoins, qui est celle que le bourg répète : si une bête a pu se coucher ainsi sous cette île, il peut y en avoir d’autres.
+
+Ce qui vous concerne : voilà une nouvelle qui court déjà toute seule sur l’île, sans que personne l’ait décidée. Dans quatre jours la poche sera noyée et l’on ne pourra plus rien prouver — il ne restera que ce que les gens en disent. C’est exactement le genre de chose qui devient une légende ou un mensonge selon qui la raconte le premier, et personne à cette table n’y a encore pensé.
+  .{"duree": 0, "heure": "12h19"}
+
+[l.2071] question
+explique moi mieux fait et con,sequene
+  .{"delai_s": 0}
+
+[l.2072] reponse | date=129 AC, 3e lune, 21e j.
+LE FAIT, dépouillé de ce qu’on en dit. Une poche dans la roche, à quatre-vingts pas sous le niveau de la mer, ouverte il y a dix jours en suivant une veine d’obsidienne, rebouchée le jour même. Le plafond suinte, et c’est de l’eau de mer : le prince y a goûté trois fois à trois heures d’écart, et le maître des fosses après lui — pour que ce ne soit pas un seul homme qui le dise. Quatre jours, peut-être six, avant qu’elle ne soit noyée pour toujours.
+
+Dedans : une dragonne de la taille d’un cheval, morte en anneau sur sa ponte. Cinq œufs. Deux fendus et vides depuis longtemps. Trois entiers, plus noirs et plus lourds à l’œil que ceux qu’on connaît. Personne ne sait s’ils vivent.
+  .{"duree": 0, "heure": "12h19"}
+
+[l.2073] reponse | date=129 AC, 3e lune, 21e j.
+PREMIÈRE CONSÉQUENCE — matérielle, et l’horloge tourne. Il faut trancher en quatre jours : remonter les trois œufs, au risque de les briser ou de les tuer par le froid et le chaud, ou les laisser à la mer. Après, il n’y a plus d’œufs ET plus de preuve. On ne peut pas attendre de savoir s’ils sont vivants pour décider : la décision vient avant la réponse.
+  .{"duree": 0, "heure": "12h19"}
+
+[l.2074] reponse | date=129 AC, 3e lune, 21e j.
+DEUXIÈME CONSÉQUENCE — politique. Trois œufs, ce sont peut-être trois dragons, c’est-à-dire la seule chose qui décide cette guerre. Et cela tombe le jour même où la reine appelle les sangs de Valyria et institue l’ordre des dragonniers.
+
+La coïncidence est trop belle. C’est précisément ce qui la rend suspecte : le camp d’en face n’aura aucun mal à dire qu’une reine à court de dragons a trouvé des dragons le jour où elle en cherchait.
+  .{"duree": 0, "heure": "12h19"}
+
+[l.2075] reponse | date=129 AC, 3e lune, 21e j.
+TROISIÈME CONSÉQUENCE — la vôtre. Deux récits sortiront du même fait, et le délai est de quatre jours.
+
+(a) « L’île rend ses dragons à la reine légitime. » Un signe. Redoutable sur le petit peuple et sur les septons, qui n’ont pas besoin de preuve pour croire.
+(b) « La reine annonce des dragons que nul n’a vus et que la mer a engloutis. » Imparable une fois la poche noyée.
+
+Ce qui départage : des TÉMOINS NOMMÉS, et la date à laquelle on le raconte. Après la noyade, c’est une histoire ; avant, et devant des gens qu’on peut citer, c’est un fait. Il y a une troisième voie, qui est de ne rien dire du tout jusqu’à ce qu’un œuf éclose ou reste muet — mais alors le bourg le racontera à votre place, et il a déjà commencé.
+  .{"duree": 0, "heure": "12h19"}
+
+[l.2077] question
+precise moi les date
+  .{"delai_s": 0}
+
+[l.2080] reponse | date=129 AC, 3e lune, 21e j.
+LE NID — les dates exactes.
+
+10e j. · Les tailleurs percent la poche en suivant la veine d’obsidienne. Merra Sath la trouve. Rebouchée le jour même : le plafond pleure.
+20e j., après-midi · Le prince Jacaerys goûte l’eau trois fois à trois heures d’écart, le maître des fosses après lui. La reine descend en personne.
+20e j. · Sarro Vaeth donne quatre jours, peut-être six.
+
+Donc : la poche sera noyée entre le 24e ET LE 26e JOUR. Nous sommes le 21e à midi. Il reste TROIS jours au pire, cinq au mieux — et l’on ne saura lequel qu’en descendant voir.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2081] reponse | date=129 AC, 3e lune, 21e j.
+LES AUTRES HORLOGES QUI TOURNENT EN MÊME TEMPS, puisque vous devrez choisir laquelle servir en premier :
+
+22e j. · Lamarck et Sombreval reçoivent vos trois lignes.
+22e ou 23e j. · Pointe-Aigue les reçoit.
+21e j. · Les quatre lettres signées ce matin ne sont PAS encore parties. Rosby et Repos-des-Freux ont un corbeau ; Accalmie aussi. Stokeworth n’en a pas — il faut un homme, un cheval et une journée.
+25e au 27e j. · La réponse de lord Staunton, si elle vient, à compter du départ d’aujourd’hui.
+20e j. · Le chiffre de lord Darklyn — trois mille morts — est au Conflans depuis hier. Il a un jour d’avance sur tout ce que vous enverrez.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2082] reponse | date=129 AC, 3e lune, 21e j.
+CE QUE LA COMPARAISON DES DEUX MONTRE : la poche se noie AVANT que la réponse de Repos-des-Freux n’arrive, et probablement avant que le premier écho de vos lettres ne vous revienne. Vous ne saurez donc pas si votre première campagne a fonctionné quand il faudra trancher sur les œufs.
+
+C’est la contrainte de tout votre office : les décisions se prennent toujours avant que la nouvelle précédente ne soit revenue.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2109] question
+precise moi pour les lettre la date d'envoie , la date de recu estimé pour chaquz 
+de quoi parle tu  La réponse de lord Staunton, si elle vient, à compter du départ d’aujourd’hui
+  .{"delai_s": 0}
+
+[l.2110] reponse | date=129 AC, 3e lune, 21e j.
+LES SEPT LETTRES — départ et arrivée, une par une.
+
+PARTIES (21e j., premier vol, avant l’aube) :
+· Lamarck — corbeau — arrive le 22e j.
+· Sombreval — corbeau — arrive le 22e j.
+· Pointe-Aigue — corbeau — arrive le 22e ou le 23e j.
+
+PAS ENCORE PARTIES (signées ce matin, 21e j., toujours sur la table) :
+· Rosby — corbeau — si elle part aujourd’hui, arrive le 22e j.
+· Repos-des-Freux — corbeau — arrive le 22e ou le 23e j.
+· Accalmie — corbeau — arrive le 23e ou le 24e j. C’est le plus long vol de la roukerie.
+· Stokeworth — PAS DE CORBEAU. Il faut un homme et un cheval : une journée de route, donc le 22e j. au soir, et seulement si quelqu’un part aujourd’hui.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2111] reponse | date=129 AC, 3e lune, 21e j.
+CE QUE JE VOULAIS DIRE SUR STAUNTON. Votre lettre à Repos-des-Freux est une sonde : vous lui avez envoyé le texte commun, mot pour mot, sans une ligne de plus. Le renseignement n’est pas dans ce que vous écrivez — il est dans CE QU’IL RÉPONDRA, et surtout dans le fait qu’il réponde ou non.
+
+Un homme fidèle répond vite et sans y penser. Un homme qui a quelque chose à cacher répond long, ou tard, ou pas du tout. Vous ne lisez donc pas sa lettre : vous lisez son délai.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2112] reponse | date=129 AC, 3e lune, 21e j.
+LE CALCUL, si elle part aujourd’hui 21e :
+· elle arrive le 22e ou le 23e ;
+· un homme prudent lit, réfléchit, fait écrire — un à deux jours ;
+· son corbeau revient en un à deux jours.
+
+Donc une réponse normale vous parvient entre le 25e et le 27e jour. Passé le 27e sans un mot, ce n’est plus un retard, c’est une réponse — et elle vous en dira plus que n’importe quelle lettre.
+
+Rappel de ce qui rend la sonde intéressante : sa roukerie a TRIPLÉ sa commande d’encre en deux lunes. Quelqu’un écrit énormément à Repos-des-Freux, et lord Staunton est censé être l’homme de la reine.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2117] question
+Gunthor Darklyn  est dans quel camps ? ?il est ârti faire quoi ? et pourquoi il a dechiffre contrairre si meême camps
+  .{"delai_s": 0}
+
+[l.2118] reponse | date=129 AC, 3e lune, 21e j.
+Gunthor Darklyn est du camp de la reine, et il l’est plus que quiconque : le 15e jour, il a déclaré Sombreval pour Rhaenyra le PREMIER, sans qu’on le lui demande et TROIS JOURS AVANT le couronnement. Personne d’autre n’a pris ce risque-là. Sombreval est sa ville, à trois jours de Port-Réal, sur la route même où le feu a eu lieu.
+
+Ce qu’il fait à cette heure, vous ne le savez pas — vous n’avez de lui aucune nouvelle depuis sa déclaration. Vous pouvez le demander : Gerardys tient le journal de la roukerie.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2119] reponse | date=129 AC, 3e lune, 21e j.
+Pourquoi trois mille alors qu’il est des nôtres ? Vous ne pouvez pas le savoir, mais trois lectures se valent :
+
+· Il exagère POUR elle, pas contre. Trois mille soldats du roi détruits, cela fait une reine redoutable — et un banneret qui vient de miser sur elle a besoin qu’on la craigne.
+· Il se justifie. Il s’est déclaré seul, avant le sacre, contre l’usage. Un homme qui prend ce risque a besoin que la récompense paraisse énorme : trois mille, c’est la preuve qu’il a choisi le bon camp.
+· Il n’a rien compté du tout. La colonne a traversé ses terres, ses hommes ont rapporté ce qu’ils ont cru voir, et la peur multiplie. Personne n’a jamais compté des morts brûlés.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2120] reponse | date=129 AC, 3e lune, 21e j.
+ET VOILÀ CE QUI COMPTE, quel que soit le motif : une exagération amicale reste un mensonge, et l’ennemi s’en sert.
+
+Trois mille morts font de Rhaenyra une bouchère. Douze cents hommes en armes, sans la bannière du roi, marchant sur une ville qui venait de lui jurer, font d’elle une souveraine qui défend son vassal. C’est le MÊME FEU. Lord Darklyn, en voulant l’aider, a donné à Otto Hightower le meilleur argument dont il disposera cette lune.
+
+Retenez-le : dans votre métier, un allié enthousiaste est un danger que personne ne surveille.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2126] question
+parce que qu'ona ttend quoi de staunton ?
+  .{"delai_s": 0}
+
+[l.2127] reponse | date=129 AC, 3e lune, 21e j.
+Ce qu’on attend de lui. Repos-des-Freux est un château de la baie, à trois jours de Port-Réal, sur la côte. Lord Staunton est un banneret de la Couronne comme les autres : on attend de lui qu’il tienne pour la reine, qu’il ferme sa côte aux nefs du roi, et qu’il donne ses hommes quand on les demandera.
+
+Et on attend surtout de lui qu’il tienne PARCE QU’IL EST DEVANT. Après Sombreval, c’est la place noire la plus proche de l’ennemi. Si Repos-des-Freux tombe ou tourne, la baie s’ouvre du côté de Port-Réal et Peyredragon se retrouve avec une porte dans le dos.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2128] reponse | date=129 AC, 3e lune, 21e j.
+D’où le poids de votre chiffre. Une roukerie qui triple sa ration d’encre en deux lunes, c’est une maison où l’on écrit trois fois plus qu’avant. Deux lectures, et elles ne mènent pas au même endroit.
+
+(a) Il écrit à l’ennemi, ou marchande avec lui. Un homme exposé qui prend ses assurances des deux côtés — c’est la lecture qui fait peur et c’est celle qui vient en premier.
+(b) Il écrit à TOUT LE MONDE parce qu’il a peur et que personne ne lui répond. Un seigneur seul devant Port-Réal, qui demande des hommes, des nefs, une garantie, et qui n’obtient rien depuis deux lunes, écrira lui aussi trois fois plus qu’avant.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2129] reponse | date=129 AC, 3e lune, 21e j.
+Et la seconde est la plus probable, ce qui devrait inquiéter cette table davantage que la première. Si un vassal exposé supplie depuis deux lunes sans réponse, ce n’est pas lui le traître : c’est nous qui fabriquons le sien.
+
+Votre sonde répondra aux deux d’un coup. Un homme qui écrit à l’ennemi vous répondra prudemment et tard. Un homme qui appelle à l’aide depuis deux lunes vous répondra dans l’heure, longuement, et vous demandera quelque chose.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2140] question
+mais quelle probleme si la lettre arrive apres la fissure de la fosse ?
+  .{"delai_s": 0}
+
+[l.2141] reponse | date=129 AC, 3e lune, 21e j.
+Le problème est simple et il est mortel : une nouvelle qui arrive APRÈS la noyade est invérifiable au moment même où on la lit. Le seigneur qui reçoit votre pli le 25e jour n’a qu’une question — « montrez-moi » — et la seule réponse possible sera « la mer les a pris ». Une affirmation qui devient invérifiable le jour où on la lit, cela porte un nom dans toutes les langues : une rumeur.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2142] reponse | date=129 AC, 3e lune, 21e j.
+Et elle a la forme exacte d’un mensonge fabriqué. Trois œufs de dragon découverts la semaine même où la reine appelle les sangs de Valyria et institue son ordre de dragonniers — et personne ne peut aller voir. Otto Hightower n’aura pas à travailler : il lui suffira de répéter votre lettre à voix haute en souriant.
+
+Le pire n’est pas qu’on ne vous croie pas sur les œufs. Le pire est que cette nouvelle-là voyage COLLÉE aux autres. Un seigneur qui décide que vous avez inventé les œufs se met à douter du reste de la même page — et sur cette page il y a le couronnement de la reine.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2143] reponse | date=129 AC, 3e lune, 21e j.
+D’où ce que le calendrier vous offre, et qui vaut mieux qu’une lettre. Il vous reste trois jours au pire, cinq au mieux, et Lamarck est à un jour de mer.
+
+Faites DESCENDRE un témoin qui ne soit pas de cette maison. Un homme de lord Corlys, un septon, n’importe qui dont le nom ne se confonde pas avec le vôtre. Il regarde, il touche, il remonte. Après cela la mer peut prendre la poche : le fait tiendra pour toujours, parce qu’il ne reposera plus sur la parole de la reine mais sur celle d’un homme qui n’avait rien à y gagner.
+
+On ne prouve pas ce qui a disparu. On fait venir les témoins avant qu’il ne disparaisse.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2148] question
+j'ai aps cpomrpisn
+  .{"delai_s": 0}
+
+[l.2150] reponse | date=129 AC, 3e lune, 21e j.
+Plus simplement, en quatre points.
+
+1. Dans trois à cinq jours, la poche sera sous l’eau. Personne ne pourra plus jamais y descendre.
+
+2. Si vous écrivez à un seigneur « nous avons trouvé trois œufs de dragon » et que votre lettre arrive après, il ne pourra pas aller vérifier. Jamais.
+
+3. Les gens croient ce qu’ils peuvent vérifier. Quand ils ne peuvent pas, ils croient ce qui les arrange. Vos ennemis diront que vous avez tout inventé, et rien ne pourra les démentir.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2151] reponse | date=129 AC, 3e lune, 21e j.
+4. Et le danger est plus grand que les œufs. Dans la même lettre, il y a le couronnement de la reine. Si un seigneur décide que vous mentez sur les œufs, il se met à douter de tout le reste de la page. Vous perdez sa confiance sur ce qui est vrai à cause de ce qu’il croit faux.
+
+DONC : n’écrivez pas la nouvelle. Faites venir quelqu’un voir.
+
+Lamarck est à un jour de mer. Un homme de lord Corlys descend, regarde, remonte. Ensuite la mer peut tout prendre : cet homme-là aura vu, et il n’est pas de votre maison. C’est lui la preuve, pas votre lettre.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2152] reponse | date=129 AC, 3e lune, 21e j.
+En une phrase : on ne prouve pas ce qui a disparu, donc on fait venir les témoins avant que ça disparaisse. Il vous reste trois jours.
+
+Dites-moi si c’est un autre point qui coince — je reprendrai celui-là.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2157] question
+on parle pas des oeuf dans la meme lettre que le couronnement
+  .{"delai_s": 0}
+
+[l.2161] reponse | date=129 AC, 3e lune, 21e j.
+Vous avez raison, et c’est même la bonne réponse de métier : une lettre, un sujet. Je vous parlais d’une seule page parce que c’est ce que font tous les débutants ; vous venez de trouver seule la règle qui l’évite. Retenez-la, elle vaut pour tout ce que vous enverrez.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2162] reponse | date=129 AC, 3e lune, 21e j.
+Mais deux choses survivent à la séparation, et la première est plus embêtante que celle que vous venez de régler.
+
+LE CRÉDIT NE TIENT PAS À LA PAGE, IL TIENT À LA SIGNATURE. Deux lettres, deux jours d’écart, mais le même sceau, la même roukerie, la même bouche. Le seigneur qui juge la première invraisemblable ne se dit pas « cette page était fausse » — il se dit « on me raconte n’importe quoi de Peyredragon ». Vous protégez la lettre et vous exposez la source, qui est ce que vous avez de plus cher.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2163] reponse | date=129 AC, 3e lune, 21e j.
+Et LE PROBLÈME DE LA PREUVE EST INTACT. Séparée ou non, une nouvelle qui arrive après la noyade reste invérifiable. Le témoin descendu avant reste la seule chose qui la sauve.
+
+Séparer crée d’ailleurs une question neuve, qui est la vôtre : dans quel ORDRE ? Si la lettre des œufs arrive la première, elle colore celle du couronnement qui suit — et l’inverse est vrai aussi. Vous ne choisissez plus seulement les mots ; vous choisissez ce qu’on lit en premier.
+  .{"duree": 0, "heure": "12h23"}
+
+[l.2231] effacer | date=129 AC, 3e lune, 21e j.
+  .{"heure": "12h23"}
+
+[l.2232] salle | date=129 AC, 3e lune, 21e j. | moment=l’après-midi | lieu=Cellule des scribes, contre la roukerie — Peyredragon
+  .{"salle": "roukerie", "tension": 85, "presents": [{"id": "aurore-inchauspe", "nom": "Aurore Inchauspé", "titre": "de La Noiseraie", "portrait_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 128 128\" role=\"img\" aria-label=\"Aurore Inchauspé\">\n  <title>Aurore Inchauspé</title>\n  <defs>\n    <radialGradient id=\"bg-aurore\" cx=\"50%\" cy=\"32%\" r=\"80%\">\n      <stop offset=\"0%\" stop-color=\"#302719\"/>\n      <stop offset=\"55%\" stop-color=\"#221b12\"/>\n      <stop offset=\"100%\" stop-color=\"#130f09\"/>\n    </radialGradient>\n    <clipPath id=\"clip-aurore\"><circle cx=\"64\" cy=\"64\" r=\"52\"/></clipPath>\n  </defs>\n  <!-- anneau héraldique : or et sable, les émaux de la Noiseraie -->\n  <circle cx=\"64\" cy=\"64\" r=\"63\" fill=\"#241d18\"/>\n  <circle cx=\"64\" cy=\"64\" r=\"57.5\" fill=\"none\" stroke=\"#c9a227\" stroke-width=\"7\" stroke-dasharray=\"15.05 15.05\"/>\n  <!-- disque intérieur -->\n  <circle cx=\"64\" cy=\"64\" r=\"52\" fill=\"url(#bg-aurore)\" stroke=\"#7a6342\" stroke-width=\"1.2\"/>\n  <!-- buste : laine de voyage, pas de soie de cour — une maison de négoce -->\n  <g clip-path=\"url(#clip-aurore)\">\n    <path d=\"M44,47 C43,30 54,25 64,25 C74,25 85,30 84,47 L87,92 C88,102 81,107 75,106 L53,106 C47,107 40,102 41,92 Z\" fill=\"#6d5a44\"/>\n    <!-- le châle croisé sur la poitrine, tenu d'une agrafe -->\n    <path d=\"M22,128 C27,99 46,88 64,88 C82,88 101,99 106,128 Z\" fill=\"#4a3c2c\"/>\n    <path d=\"M50,92 L64,106 L78,92\" 
+
+[l.2233] recit | date=129 AC, 3e lune, 21e j.
+Vous quittez la Table Peinte vers midi, les jambes raides d’être restée debout sur un royaume pendant sept heures. On ne vous a ni congédiée ni retenue.
+  .{"duree": 25, "heure": "12h23"}
+
+[l.2234] vous | date=129 AC, 3e lune, 21e j.
+Je fais partir les trois lettres qui ont un oiseau : Rosby, Repos-des-Freux, Accalmie. Je les porte moi-même à la roukerie et je regarde les corbeaux jusqu’à ce qu’on ne les voie plus.
+  .{"mode": "agir", "duree": 70, "heure": "12h48"}
+
+[l.2235] recit | date=129 AC, 3e lune, 21e j.
+Reste Stokeworth, qui n’a pas d’oiseau. Vous descendez à l’écurie demander un cavalier. On vous répond qu’on ne selle pas un cheval de la reine sur la parole d’une dame qu’on ne connaît pas, et qu’il faut un mot de ser Robert. Ser Robert est sur les murs. Vous remontez sans cavalier.
+  .{"duree": 75, "heure": "13h58"}
+
+[l.2236] recit | date=129 AC, 3e lune, 21e j.
+L’après-midi passe à ça : trouver qui peut autoriser quoi. Vous apprenez plus sur ce château en quatre heures d’attente dans des couloirs qu’en une nuit de discussion avec un mestre.
+  .{"duree": 180, "heure": "15h13"}
+
+[l.2237] vous | date=129 AC, 3e lune, 21e j.
+Je note tout. Qui décide de quoi, et qui dit non en premier. Ça finit par faire une liste, et la liste ressemble beaucoup à celle des quatre portes.
+  .{"mode": "agir", "duree": 40, "heure": "18h13"}
+
+[l.2238] recit | date=129 AC, 3e lune, 21e j. | moment=la nuit
+Au crépuscule, deux choses ne sont pas faites, et vous vous couchez avec les deux.
+
+La lettre de Stokeworth est toujours sur votre table — un jour de retard, donc le 23e au lieu du 22e. Et personne n’est descendu voir le nid : il reste trois jours au pire, et vous n’avez ni témoin, ni barque, ni le droit d’en demander une.
+  .{"duree": 210, "heure": "18h53"}
+
+[l.2239] recit | date=129 AC, 3e lune, 21e j.
+Vous dormez d’un coup, tout habillée, sur la paillasse de la cellule des scribes. De l’autre côté du mur, les quatorze — non : les onze — respirent dans le noir.
+  .{"duree": 480, "heure": "22h23"}
+

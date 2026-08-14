@@ -1,0 +1,18 @@
+{
+  "titre": "Chantier B — chaîne mécanique du grand plan : les corrections CERTAINES",
+  "calcule_le": "2026-08-13",
+  "par": "chantier-B (lecture seule ; rien n'a été appliqué)",
+  "note": "Ce lot ne contient QUE ce qui est démontré. Les 182 numéros d'office à écrire (point 2) ne sont PAS ici : ils passent par scripts/reparer_renvois.py, qui préserve le retrait d'un espace de books.json — appliquer.py réécrit à indent=2 et rendrait 2,4 Mo de bruit au diff. Aucune empreinte n'est posée volontairement : un autre chantier écrit dans books.json en parallèle, et une empreinte ferait refuser le lot pour une raison qui n'est pas la bonne. Relire avant d'appliquer.",
+  "mutations_proposees": [
+    {
+      "table": "books",
+      "cible": "affaire-deplacement-armee:20075",
+      "operation": "affaire_action",
+      "champs": {
+        "⛓️ Dépend de": "—"
+      },
+      "pourquoi": "RENVOI DANS LE VIDE, retiré. 20075 « Compter les chevaux qu'on emmène et ceux qu'on laisse » dépend de 20030, qui n'existe nulle part : aucune pièce ne porte ce numéro, aucune affaire n'est intitulée « (20030) », et la chaîne 20030 n'apparaît qu'UNE seule fois dans tout etat/books.json — dans cette cellule même. Le bloc 200 numérote état 20000, verrous 20010/20020, clefs 20040/20050, actions 20070+ : 20030 ne tombe dans aucun logis, et toutes les autres dépendances de ce cahier visent des ACTIONS. Faute de preuve d'un numéro de remplacement, on retire plutôt que de deviner : une fausse raison est pire que pas de raison. Le tiret est l'idiome du cahier pour « aucune dépendance » (20070, 20074, 20122, 20123, 20220...). L'action reste rattachée par « 🗝️ Réalise = 20040 » et ne perd donc pas sa remontée."
+    }
+  ],
+  "applique_le": "2026-08-13T02:26:52"
+}

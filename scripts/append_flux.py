@@ -10,6 +10,16 @@
 # 1440 minutes, le jour s'incremente. Voir docs/schema.md.
 import json, io, os, re, sys, hashlib, tempfile, unicodedata
 
+# CE FICHIER EST UN SCRIPT, PAS UN MODULE. Tout son corps s'execute au chargement
+# — il ecrit le flux, avance monde.json et les horloges des sieges. Un `import
+# append_flux` fait donc tourner le monde par accident, en affichant son mode
+# d'emploi comme si l'on s'etait trompe d'argument. On le refuse tout haut
+# plutot que de laisser une horloge bouger sans que personne l'ait voulu.
+if __name__ != "__main__":
+    raise ImportError(
+        "append_flux.py s'execute, il ne s'importe pas : l'importer pousserait "
+        "le flux et avancerait l'horloge. Lancez-le en sous-processus.")
+
 racine = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 chemin = os.path.join(racine, "etat", "flux.jsonl")
 monde_p = os.path.join(racine, "etat", "monde.json")
@@ -255,10 +265,18 @@ def dit_ecart(minutes):
 
 
 def roster():
-    """Les sieges de la partie. Absent ou vide = partie seule, rien ne change."""
+    """Les sieges de la partie. Absent ou vide = partie seule, rien ne change.
+
+    Un siege de REGIE (Corneille) n'en est pas un : il ne tient aucun front, il
+    n'est nomme dans aucune audience, et rien ne s'ecrit pour lui. Il lit le
+    flux entier depuis le serveur, `pour` ou pas — l'y nommer lui ouvrirait un
+    horloge et le ferait compter comme une oreille de plus dans la salle.
+    """
     try:
         l = json.load(io.open(joueurs_p, encoding="utf-8"))
-        return l if isinstance(l, list) and l else []
+        if not (isinstance(l, list) and l):
+            return []
+        return [j for j in l if isinstance(j, dict) and not j.get("regie")]
     except Exception:
         return []
 
@@ -410,6 +428,13 @@ if "--messe-basse" in args:
         sys.stderr.write("REFUS : --messe-basse sans personne pour l'entendre.\n")
         raise SystemExit(2)
 
+# LE MUR VOULU. `--tunnel` desarme le garde-fou du meme nom (voir tunnel.py) ;
+# il ne dit rien de l'audience ni du contenu, donc il sort des arguments ici,
+# avant qu'on ne cherche a lire du JSON dedans. Sans ce retrait, le seul moyen
+# documente de pousser une longue piece — un registre relu tout haut, une lettre
+# lue en entier — plantait sur `json.loads("--tunnel")`.
+args = [a for a in args if a != "--tunnel"]
+
 items = []
 if args and args[0] == "--fichier":
     items = json.load(io.open(args[1], encoding="utf-8"))
@@ -443,6 +468,29 @@ monde["date"].setdefault("minute", 0)
 # est au roster ; celle du monde sinon (partie seule, ou scene commune : ce que
 # tout le monde voit avance tout le monde).
 sieges = [j["personnage_id"] for j in roster()]
+
+
+def sieges_de_regie():
+    """Les sieges qui REGARDENT — Corneille. `roster()` les a deja ecartes.
+
+    Pousser vers un siege de regie ne doit RIEN couter au monde : la regie est
+    hors fiction de bout en bout, personne dans aucune salle ne l'entend, et
+    une seule minute prise sur l'horloge parce qu'un recit lui a ete adresse
+    serait du temps vole aux joueurs. On force donc les durees a zero et l'on
+    n'ecrit ni `monde.json` ni `horloges.json` pour ces poussees-la.
+    """
+    try:
+        l = json.load(io.open(joueurs_p, encoding="utf-8"))
+        if not isinstance(l, list):
+            return set()
+        return {j.get("personnage_id") for j in l
+                if isinstance(j, dict) and j.get("regie") and j.get("personnage_id")}
+    except Exception:
+        return set()
+
+
+REGIES = sieges_de_regie()
+en_regie = isinstance(pour, str) and pour in REGIES
 
 # --- l'audience se DECLARE, jamais ne se devine ----------------------------
 # On a essaye de la DEDUIRE de `presence.json` : deux sieges situes dans la meme
@@ -488,7 +536,7 @@ def simuler(depart_date):
             for k in ("annee", "lune", "jour", "minute"):
                 if k in it["date"]:
                     d[k] = it["date"][k]
-        avancer(d, it.get("duree", DUREES.get(it.get("type"), 0)))
+        avancer(d, 0 if en_regie else it.get("duree", DUREES.get(it.get("type"), 0)))
     return d
 
 
@@ -553,7 +601,11 @@ if mien and len(sieges) > 1:
 # explicite fait sauter le front du retardataire jusque-la, et les minutes qu'il
 # n'a pas vecues disparaissent sans une ligne. Rien ne le disait, parce que la
 # barriere ne se jugeait que sur une poussee privee.
-if not mien and sieges:
+# `en_regie` en est exclu : une poussee vers la regie n'est pas une scene
+# commune, c'est une lecture hors fiction. Elle ne tire aucun front — les
+# durees y valent zero et rien n'est reecrit — et l'avertir de son ecart au
+# front des joueurs n'aurait aucun sens.
+if not mien and not en_regie and sieges:
     fin = minute_absolue(simuler(date))
     for s in sieges:
         saut = fin - minute_absolue(horloges[s])
@@ -597,6 +649,49 @@ if calcul_presence:
         _chateau = calcul_presence.Chateau(calcul_presence._lire("chemins.json", {}))
     except Exception:
         _chateau = None
+
+
+# UN HOMME, UNE FICHE DE PRESENCE. `avis_acteurs_inconnus()` disait deja sur la
+# sortie d'erreur qu'un id neuf ressemblait a quelqu'un du registre — mais un
+# avis n'arrete rien, et la presence, elle, s'ecrivait quand meme. Resultat :
+# « jacaerys-velaryon » a vecu six jours a cote de « jacaerys », chacun avec sa
+# salle, et le plan du chateau montrait le prince a DEUX endroits a la fois.
+#
+# On replie donc l'id sur celui du registre, et a une seule condition : que l'id
+# pousse n'ait PAS de fiche a lui. Deux ids qui existent tous les deux sont deux
+# hommes — « nesse » et « nesse-la-mere » sont bien deux personnes, et les
+# marier serait une faute pire que le doublon. Le repli suit le prefixe et
+# jamais le milieu d'un mot, comme `rapprocher()` dans criticite.py.
+_registre_ids = None
+
+
+def _ids_connus():
+    global _registre_ids
+    if _registre_ids is None:
+        try:
+            with io.open(os.path.join(racine, "etat", "personnages.json"),
+                         encoding="utf-8") as f:
+                g = json.load(f)
+            g = g if isinstance(g, list) else g.get("personnages", [])
+            _registre_ids = {p.get("id") for p in g if p.get("id")}
+        except Exception:
+            _registre_ids = set()
+    return _registre_ids
+
+
+def canonique(pid):
+    connus = _ids_connus()
+    if not pid or pid in connus:
+        return pid
+    for c in connus:
+        if pid.startswith(c + "-") or c.startswith(pid + "-"):
+            sys.stderr.write(
+                "PRESENCE : « %s » n'a pas de fiche ; sa presence est ecrite "
+                "sous « %s », qui en a une.\n"
+                "  Si ce sont deux hommes differents, donnez une fiche au second.\n"
+                % (pid, c))
+            return c
+    return pid
 
 
 def avertir_saut(pid, piece, quand):
@@ -755,6 +850,7 @@ def suivre_presence(it, quand):
         pid = x.get("id") if isinstance(x, dict) else x
         if not pid:
             return
+        pid = canonique(pid)
         avertir_saut(pid, piece, quand)
         presence[pid] = {"salle": piece.get("salle"), "lieu": piece.get("lieu"),
                          "date": dict(quand)}
@@ -763,12 +859,14 @@ def suivre_presence(it, quand):
     def retirer(pid):
         # On ne chasse quelqu'un que de la piece ou l'on est : un `sortent` en
         # retard ne doit pas l'arracher a la salle ou il vient d'entrer.
+        pid = canonique(pid)
         if pid in presence and meme_piece(presence[pid], piece):
             del presence[pid]
             suivi["touchee"] = True
 
     if it.get("type") == "salle" and it.get("presents"):
-        nommes = [(p.get("id") if isinstance(p, dict) else p) for p in it["presents"]]
+        nommes = [canonique(p.get("id") if isinstance(p, dict) else p)
+                  for p in it["presents"]]
         # Une salle DECLAREE fait autorite sur ses occupants : qui y etait sans
         # y etre nomme n'y est plus. C'est le `vider()` du navigateur, cote etat.
         for pid in list(presence):
@@ -876,15 +974,354 @@ def avis_acteurs_inconnus(items):
                 % re.split(r"[^a-zA-Z0-9]+", pid)[0])
 
 
+# ---- Les renvois poses dans la phrase -------------------------------------
+# `[les neufs](44022)` ouvre l'affaire a la ligne ; `[le Sanglier](hallis-roon)`
+# pose la question au narrateur. Une cible que l'etat ne connait pas ne
+# s'allume pas a l'ecran : elle reste du texte nu, sans que personne le sache.
+# Le script ne refuse rien — il DIT ce qui ne menera nulle part, au moment ou
+# l'on pousse, pendant qu'il est encore temps de corriger le numero.
+RENVOI = re.compile(r"\[([^\]\[<>\n]{1,80})\]\(([A-Za-z0-9][A-Za-z0-9_-]{0,60})\)")
+
+
+def _adresses_connues():
+    numeros, ids = {}, set()
+    try:
+        with io.open(os.path.join(racine, "etat", "books.json"),
+                     encoding="utf-8") as f:
+            livres = json.load(f)
+        for v in livres:
+            tables = v.get("tables") or []
+            if v.get("colonnes"):
+                tables = tables + [{"colonnes": v.get("colonnes"),
+                                    "lignes": v.get("lignes") or []}]
+            for t in tables:
+                cols = t.get("colonnes") or []
+                if not cols or "N°" not in str(cols[0]):
+                    continue
+                for l in (t.get("lignes") or []):
+                    cells = l.get("cellules") or []
+                    c = cells[0] if cells else None
+                    m = re.match(r"\s*(?:\*\*)?\s*(\d{4,6})\b", str(c or ""))
+                    if not m:
+                        continue
+                    # l'intitule de la ligne, pour proposer la forme toute faite
+                    lib = str(cells[1] if len(cells) > 1 else "")
+                    lib = re.sub(r"^\s*[^\w\s(]+\s*", "", lib).replace("**", "")
+                    numeros[m.group(1)] = lib.strip()
+    except Exception:
+        pass
+    for f_ in ("personnages.json", "lieux.json", "maisons.json"):
+        try:
+            with io.open(os.path.join(racine, "etat", f_), encoding="utf-8") as f:
+                for e in json.load(f):
+                    if e.get("id"):
+                        ids.add(e["id"])
+        except Exception:
+            pass
+    ids.update(["caraxes", "vhagar", "meleys", "syrax", "vermax", "arrax",
+                "revefeu", "sunfyre", "gosier"])
+    return numeros, ids
+
+
+# Ce qui se DIT dans la salle, et rien d'autre : un numero cite dans une
+# replique doit mener quelque part ; le meme numero dans une cle technique
+# (`demande.id`, `ref`) ne regarde pas le joueur.
+DITS = ("texte", "titre", "quoi", "detail", "sous_titre")
+
+
+def _ce_qui_se_dit(it):
+    bouts = []
+
+    def marche(x):
+        if isinstance(x, dict):
+            for k, v in x.items():
+                if isinstance(v, (dict, list)):
+                    marche(v)
+                elif k in DITS and isinstance(v, str):
+                    bouts.append(v)
+        elif isinstance(x, list):
+            for v in x:
+                marche(v)
+    marche(it)
+    return "\n".join(bouts)
+
+
+def avis_renvois(items):
+    trouves, dits = [], []
+    for it in items:
+        dit = _ce_qui_se_dit(it)
+        dits.append((it, dit))
+        poses = RENVOI.findall(json.dumps(it, ensure_ascii=False))
+        if poses:
+            trouves.append((it, poses))
+    numeros, ids = _adresses_connues()
+
+    # LE NUMERO CITE NU — le defaut qu'on veut voir disparaitre. Personne
+    # n'ecrira le lien parce que la doctrine le demande : on le rappelle a
+    # l'instant ou l'on pousse, avec la forme toute faite a recopier.
+    signales = set()
+    for it, dit in dits:
+        # ce qui est deja pose en lien ne se rappelle pas deux fois
+        nu = RENVOI.sub(" ", dit)
+        for n in re.findall(r"(?<!\d)(\d{4,6})(?!\d)", nu):
+            if n in signales or n not in numeros:
+                continue
+            signales.add(n)
+            lib = numeros[n] or "…"
+            sys.stderr.write(
+                "AVIS : le n° %s est cite NU dans « %s ».\n"
+                "  Le joueur ne peut ni savoir de quoi il s'agit, ni aller le"
+                " lire.\n"
+                "  Ecrivez plutot : [%s](%s)\n"
+                "  — le libelle est ce que la personne DIT, pas le numero.\n"
+                % (n, it.get("type", "?"), lib, n))
+
+    for it, poses in trouves:
+        for label, cible in poses:
+            if re.match(r"^\d{4,6}$", cible):
+                if cible not in numeros:   # numeros : n° → intitule de la ligne
+                    sys.stderr.write(
+                        "AVIS : le renvoi « %s » pointe le n° %s, qui n'existe"
+                        " dans aucune affaire.\n"
+                        "  Il restera du TEXTE NU a l'ecran. Verifiez le"
+                        " numero dans etat/books.json.\n" % (label, cible))
+            elif cible not in ids:
+                sys.stderr.write(
+                    "AVIS : le renvoi « %s » pointe « %s », qui n'a de fiche"
+                    " ni dans personnages, ni dans lieux, ni dans maisons.\n"
+                    "  Il restera du TEXTE NU a l'ecran.\n" % (label, cible))
+        # Deux renvois par piece, pas davantage : une replique dont chaque
+        # groupe nominal est cliquable redevient un menu — exactement ce que
+        # le champ libre permanent existe pour eviter.
+        if len(poses) > 2:
+            sys.stderr.write(
+                "AVIS : %d renvois dans une seule piece (%s).\n"
+                "  Deux au plus, comme les appuis en gras : au-dela, la phrase"
+                " se lit comme un menu.\n"
+                % (len(poses), it.get("type", "?")))
+
+
 def sans_accents_simple(t):
     t = unicodedata.normalize("NFD", t)
     return "".join(c for c in t if unicodedata.category(c) != "Mn").lower()
+
+
+# ---- L'item `ecrit` : ce qu'on ANNONCE doit etre ECRIT ---------------------
+# `ecrit` dit au joueur « voila ce qui vient d'etre porte au registre », et
+# chaque entree s'ouvre d'un clic sur le volume. CLAUDE.md pose la regle dure :
+# on l'ecrit APRES avoir ecrit pour de bon dans books.json, jamais avant — une
+# entree qui ne s'ouvre pas est pire que pas d'entree.
+#
+# LE 1er DE LA 4e LUNE, la regle a saute, et par un homme qui travaillait bien.
+# Le Sanglier a pousse un `ecrit` annoncant qu'il venait de requalifier la piece
+# 23002 — alors que son changement dormait encore, NON VERSE, dans
+# etat/rapports/le-sanglier.json (clef `cahier2`). Le lien n'etait pas mort : le
+# volume s'ouvrait, et la ligne montrait l'ANCIENNE valeur. Le joueur cliquait,
+# lisait le passe, et croyait lire le present. Ce n'est pas une faute d'homme,
+# c'est un defaut d'outil : rien ne l'en empechait, rien ne l'a averti.
+#
+# Trois verifications, de la plus benigne a la seule qui compte :
+#   1. le livre nomme existe (meme garde que `montre`, voir extrait_du_livre) ;
+#   2. une ADRESSE citee dans la famille de numeros du volume existe bien chez
+#      lui — 23999 annonce dans un volume qui va de 23000 a 23300 ne s'ouvrira
+#      sur rien. On ne verifie que ca, parce que le reste d'une entree (`titre`,
+#      `quoi`) est du texte libre : un chiffre y est aussi souvent un compte
+#      d'hommes qu'une adresse, et l'eprouver produirait du bruit, pas un garde ;
+#   3. AUCUN changement ne dort, non verse, pour ce volume — le cas du Sanglier,
+#      et le seul que rien ne signalait.
+#
+# ON AVERTIT, ON NE REFUSE PAS. Le tunnel refuse deja au double de ses seuils, et
+# empiler les refus rendrait l'outil impraticable pour des acteurs qui viennent
+# d'apprendre a s'en servir ; surtout, un refus ici bloquerait aussi l'entree
+# honnete qui parle d'une AUTRE ligne du meme volume, et le remede
+# (`verser_cahier.py --vraiment`) verse TOUS les rapports d'un coup — ce n'est
+# pas un geste qu'on arrache a quelqu'un au milieu d'une scene. Mais un avis
+# qu'on ne lit pas n'est pas un avis : celui-la est encadre et se voit.
+def _volumes():
+    try:
+        with io.open(os.path.join(racine, "etat", "books.json"),
+                     encoding="utf-8") as f:
+            return {v.get("id"): v for v in json.load(f)
+                    if isinstance(v, dict) and v.get("id")}
+    except Exception:
+        return {}
+
+
+def _tables_du_volume(v):
+    """Les tableaux du volume — `tables[]`, ou la table unique de la racine."""
+    ts = [t for t in (v.get("tables") or []) if isinstance(t, dict)]
+    if v.get("colonnes"):
+        ts.append({"titre": v.get("titre"), "colonnes": v.get("colonnes"),
+                   "lignes": v.get("lignes") or []})
+    return ts
+
+
+def _numeros_du_volume(v):
+    """Les numeros de piece que CE volume porte, en premiere cellule.
+
+    Meme lecture que `_adresses_connues`, restreinte a un volume : ce sont les
+    adresses vers lesquelles une entree d'`ecrit` peut legitimement pointer.
+    """
+    n = set()
+    for t in _tables_du_volume(v):
+        cols = t.get("colonnes") or []
+        if not cols or "N°" not in str(cols[0]):
+            continue
+        for l in (t.get("lignes") or []):
+            cel = l.get("cellules") or []
+            m = re.match(r"\s*(?:\*\*)?\s*(\d{3,6})\b", str(cel[0] if cel else ""))
+            if m:
+                n.add(m.group(1))
+    return n
+
+
+def _cahiers_en_attente():
+    """Ce qu'un homme a CHANGE aux registres et qui n'est pas encore verse.
+
+    Un rapport porte `_cahier_verse` une fois passe par verser_cahier.py (qui
+    l'ecrit lui-meme, pour qu'un cahier ne se verse pas deux fois). Sans cette
+    marque, ce que contient `cahier2` n'est qu'une PROPOSITION : books.json
+    porte toujours l'ancienne valeur.
+
+    Rend {livre_id: [(qui, entree), ...]}.
+    """
+    attente = {}
+    dossier = os.path.join(racine, "etat", "rapports")
+    try:
+        noms = sorted(os.listdir(dossier))
+    except OSError:
+        return attente
+    for nom in noms:
+        if not nom.endswith(".json"):
+            continue
+        try:
+            with io.open(os.path.join(dossier, nom), encoding="utf-8") as f:
+                rap = json.load(f)
+        except Exception:
+            continue
+        if not isinstance(rap, dict) or rap.get("_cahier_verse"):
+            continue
+        qui = rap.get("qui") or nom[:-5]
+        for e in (rap.get("cahier2") or []):
+            if isinstance(e, dict) and e.get("livre"):
+                attente.setdefault(e["livre"], []).append((qui, e))
+    return attente
+
+
+def avis_ecrits(items):
+    ecrits = [it for it in items if it.get("type") == "ecrit"]
+    if not ecrits:
+        return
+    V = _volumes()
+    attente = _cahiers_en_attente()
+    dejaDit = set()
+    for it in ecrits:
+        for e in (it.get("entrees") or []):
+            if not isinstance(e, dict):
+                continue
+            lid = e.get("livre")
+            titre = str(e.get("titre") or "")
+            quoi = str(e.get("quoi") or "")
+            if not lid:
+                sys.stderr.write(
+                    "AVIS : entree d'`ecrit` sans `livre` (« %s ») — elle se lira,\n"
+                    "  mais elle n'ouvrira rien. On ne feint pas un lien mort.\n"
+                    % titre[:60])
+                continue
+            v = V.get(lid)
+            if v is None:
+                sys.stderr.write(
+                    "AVIS : aucun livre « %s » — cette entree d'`ecrit` ne menera\n"
+                    "  nulle part a l'ecran. Le volume s'ecrit dans etat/books.json\n"
+                    "  AVANT qu'on l'annonce au joueur.\n" % lid)
+                continue
+
+            # 2. l'adresse citee, quand elle est de la famille du volume
+            nums = _numeros_du_volume(v)
+            familles = set((len(n), n[:2]) for n in nums)
+            for n in re.findall(r"(?<!\d)(\d{3,6})(?!\d)", titre + " " + quoi):
+                if (len(n), n[:2]) in familles and n not in nums:
+                    soeurs = sorted(x for x in nums
+                                    if (len(x), x[:2]) == (len(n), n[:2]))
+                    sys.stderr.write(
+                        "AVIS : l'entree annonce la piece %s de « %s », qui n'y existe\n"
+                        "  pas (le volume porte %s…%s). Le joueur ouvrira le volume\n"
+                        "  et ne trouvera pas la ligne annoncee.\n"
+                        % (n, lid, soeurs[0], soeurs[-1]))
+
+            # 3. le changement qui dort — la faute du Sanglier
+            if lid in attente and lid not in dejaDit:
+                dejaDit.add(lid)
+                pend = attente[lid]
+                # La meme ligne, ou une autre du meme volume ? On le dit, parce
+                # que ce n'est pas la meme faute : l'une est un mensonge a
+                # l'ecran, l'autre un simple voisinage.
+                dit = titre + " " + quoi
+                precises = [(q, x) for (q, x) in pend
+                            if str(x.get("ligne") or "") and
+                            str(x.get("ligne")) in dit]
+                barre = "!" * 72
+                sys.stderr.write(
+                    "\n%s\nATTENTION — VOUS ANNONCEZ UNE ECRITURE QUI N'EST PAS FAITE.\n"
+                    "  « %s » porte %d changement(s) proposes et NON VERSES :\n"
+                    % (barre, lid, len(pend)))
+                for (q, x) in pend[:4]:
+                    sys.stderr.write(
+                        "    · %s — %s / %s / %s\n"
+                        % (q, x.get("table") or "?", x.get("ligne") or "?",
+                           x.get("colonne") or "?"))
+                if len(pend) > 4:
+                    sys.stderr.write("    · … et %d autre(s)\n" % (len(pend) - 4))
+                if precises:
+                    sys.stderr.write(
+                        "  ET C'EST LA LIGNE QUE VOUS ANNONCEZ (%s). books.json porte\n"
+                        "  encore l'ANCIENNE valeur : le joueur cliquera votre entree\n"
+                        "  et lira le passe en croyant lire le present.\n"
+                        % ", ".join(sorted(set(str(x.get("ligne"))
+                                               for (_q, x) in precises))))
+                else:
+                    sys.stderr.write(
+                        "  Ce n'est peut-etre pas la ligne que vous annoncez — mais le\n"
+                        "  volume que le joueur va ouvrir n'est pas a jour pour autant.\n")
+                sys.stderr.write(
+                    "  A FAIRE, avant de pousser :\n"
+                    "    python scripts/verser_cahier.py --qui %s          (a sec)\n"
+                    "    python scripts/verser_cahier.py --qui %s --vraiment\n"
+                    "  L'item est ecrit quand meme (le flux est append-only) : versez,\n"
+                    "  verifiez le volume, et rectifiez d'une ligne s'il le faut.\n"
+                    "%s\n" % (pend[0][0], pend[0][0], barre))
 
 
 try:
     avis_acteurs_inconnus(items)
 except Exception:
     pass  # un avis ne doit jamais empecher une poussee
+
+try:
+    avis_renvois(items)
+except Exception:
+    pass  # idem : on nomme ce qui cloche, on ne bloque rien
+
+try:
+    avis_ecrits(items)
+except Exception:
+    pass  # idem : ce qui est annonce se verifie, mais rien ne bloque la poussee
+
+try:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import tunnel
+    tunnel.avis(items)
+except Exception:
+    pass  # un avis ne doit jamais empecher une poussee
+
+try:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import carte_muette
+    carte_muette.avis(items)
+except SystemExit:
+    raise          # le refus, quand il sera pose, doit passer
+except Exception:
+    pass  # idem : un avis ne bloque pas
 
 
 with io.open(chemin, "a", encoding="utf-8") as f:
@@ -958,14 +1395,18 @@ with io.open(chemin, "a", encoding="utf-8") as f:
                       "jour": date["jour"], "minute": date["minute"]}
         f.write(json.dumps(it, ensure_ascii=False) + "\n")
         suivre_presence(it, date)
-        avancer(date, it.get("duree", DUREES.get(it.get("type"), 0)))
+        # La regie ne coute pas une minute : voir sieges_de_regie().
+        avancer(date, 0 if en_regie else it.get("duree", DUREES.get(it.get("type"), 0)))
 
 # On ecrit les exceptions ET l'instantane resolu qui en decoule. `resolu` est un
 # CACHE, pas une source : il vaut pour la date qu'il porte, et il est refait a
 # chaque poussee. Le serveur le lit sans avoir a refaire le calcul en JS ; s'il
 # manque, ou si sa date n'est pas la bonne, on retombe sur `presence` comme
 # avant — le jeu ne s'arrete pas parce qu'un cache est absent.
-if suivi["touchee"] or calcul_presence:
+# La regie ne deplace personne : ce qu'on lui montre n'a pas lieu dans le
+# chateau, et une `salle` poussee vers elle ne doit pas faire entrer un homme
+# quelque part.
+if not en_regie and (suivi["touchee"] or calcul_presence):
     paquet = {"presence": presence}
     if calcul_presence:
         try:
@@ -979,7 +1420,11 @@ if suivi["touchee"] or calcul_presence:
 # Ce que le joueur vient de traverser paraît désormais sur sa ville.
 reveler(vus, mien)
 
-if mien:
+if en_regie:
+    # Rien. Ni `monde.json`, ni `horloges.json` : une poussee vers la regie
+    # n'a pas eu lieu dans le monde, et le monde ne doit pas s'en apercevoir.
+    pass
+elif mien:
     horloges[mien] = date
     io.open(horloges_p, "w", encoding="utf-8").write(
         json.dumps(horloges, ensure_ascii=False, indent=2) + "\n")
@@ -1002,7 +1447,9 @@ else:
         if change or os.path.exists(horloges_p):
             io.open(horloges_p, "w", encoding="utf-8").write(
                 json.dumps(horloges, ensure_ascii=False, indent=2) + "\n")
-io.open(monde_p, "w", encoding="utf-8").write(json.dumps(monde, ensure_ascii=False, indent=2) + "\n")
+if not en_regie:
+    io.open(monde_p, "w", encoding="utf-8").write(
+        json.dumps(monde, ensure_ascii=False, indent=2) + "\n")
 
 # Sans encodage force, la console Windows (cp1252) etouffe sur une fleche et
 # le script sort en erreur APRES avoir tout ecrit — de quoi croire a un echec.

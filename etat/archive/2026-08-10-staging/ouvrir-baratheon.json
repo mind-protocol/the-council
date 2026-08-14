@@ -1,0 +1,726 @@
+{
+  "genere_le": "129.3.28 — ouverture de la maison BARATHEON (Accalmie), palier A, etapes 1 a 4",
+  "joueur": null,
+  "avertissement": "PROPOSITION — agent d'ouverture de maison. N'a RIEN ecrit dans etat/. Le MJ principal relit, arbitre et applique. L'etape 5 (le plan) n'est PAS faite ici : voir 'decision_plans_json' — le verdict est OUI, plage 76000-76999, et le plan se DEPECHE (scripts/depecher.py --qui borros-baratheon), il ne se redige pas de ma main.",
+  "bonne_nouvelle_sur_l_outillage": "La consigne recue disait que scripts/appliquer.py ne sait ni creer un personnage, ni ecrire relations.json, ni muter les declencheurs. CE N'EST PLUS VRAI : le script porte desormais personnage_ajouter, relation_ajouter, main_ajouter, declencheur_ajouter et declencheur_retirer (OPERATIONS, l. 156-169, avec le commentaire « Ouvrir une maison cree des gens... »). La troisieme dette de docs/ouvrir-une-maison.md est soldee. CONSEQUENCE : ce lot n'a AUCUN bloc 'a la main' obligatoire — tout passe par le script, gardes comprises. La section 'a_la_main' ci-dessous ne contient que de l'OPTIONNEL, clairement etiquete.",
+  "empreintes": {
+    "intentions": "42d9dc448622d6a2fbe20f3cd0274c3df49d9c87",
+    "evenements": "9b61835438b38dcbb6d74e6678604d4b19a3a3e4",
+    "personnages": "32a67b49e04750da7dd5efb3c4cd77eb17acd099",
+    "monde": "c4f54353d9dc7559642928425d908f3d3ba29271",
+    "lieux": "ada66c0b8b19f31241bcbff3ea7dadef6f0025c9",
+    "maisons": "70947660a4023d8cf769fb7ed8495c6cc1cb80b8",
+    "plis": "6023ab67d5562168444b2dcc604686cf51d5cc09",
+    "relations": "cde2e78c5ac0adb5703762d0b2729693922a2ad8"
+  },
+  "avertissement_empreintes": "L'etat a bouge DEUX FOIS pendant l'ecriture de ce lot (des lots freres s'appliquent en parallele : royaume est passe de 24 a 29 tetes). Ces empreintes sont celles du moment ou j'ai valide en blanc. Si appliquer.py refuse pour empreinte derivee, RELIRE d'abord la tete de borros-baratheon — les trois chaines exactes de croyance_retirer et ignore_retirer doivent encore correspondre au caractere pres — puis reseller. Ne pas passer --forcer sans cette relecture.",
+  "etape_1_le_canon_recolte": {
+    "note": "Releve de etat/evenements.json. Un seul canon a-venir nomme borros-baratheon — mais c'est le plus cher du jeu, et il se joue CHEZ LUI.",
+    "cibles": [
+      {
+        "evenement": "mort-lucerys",
+        "date": "129.4.9",
+        "lieu": "accalmie",
+        "importance": 95,
+        "acteurs": [
+          "aemond",
+          "lucerys",
+          "borros-baratheon"
+        ],
+        "conditions": [
+          "annule si Lucerys n'est pas envoye a Accalmie",
+          "annule si l'emissaire est escorte par un dragon adulte ou par un autre dragon monte",
+          "annule si Aemond n'est pas a Accalmie au meme moment",
+          "devie si Borros a deja donne sa reponse par ecrit avant l'arrivee de l'emissaire"
+        ],
+        "ce_que_ca_impose_a_accalmie": "TROIS des quatre conditions se decident dans la grande salle de Borros, et la quatrieme est la seule que ce lot ait le droit d'armer : « devie si Borros a deja donne sa reponse PAR ECRIT ». Or Borros est illettre (personnages.json, traits) : sa reponse ecrite n'existe que si un homme l'ecrit. Cet homme n'existait pas dans l'etat. Il est cree ici — c'est tout l'objet de l'etape 2.",
+        "coincidence_datee_a_ne_pas_manquer": "L'etape borros-rassembler-lances porte 12 jours restants au 129.3.27, soit un compte arrete le 129.4.9. La clef 71012 du plan hightower (le mariage d'Accalmie) porte echeance 129.4.9. Le canon mort-lucerys est date 129.4.9. TROIS HORLOGES ECRITES SEPAREMENT TOMBENT LE MEME JOUR, dans la meme salle. Ce n'est pas moi qui les ai posees : c'est ce que l'etat portait deja. Le 129.4.9 est la date-charniere de la partie et Accalmie en est le lieu."
+      }
+    ],
+    "canon_deja_devie_et_qui_libere_la_place": {
+      "evenement": "emissaire-lucerys",
+      "statut": "devie",
+      "ce_qui_reste_vrai": "« Borros Baratheon ne repondra a personne tant qu'on ne posera pas deux noms sur sa table — une de ses quatre filles, et le prince qu'on lui donne — et Otto Hightower est deja chez lui a negocier. » C'est l'etat cible de la maison, ecrit par l'Histoire, et il ne depend pas de la reine."
+    },
+    "canon_amont_deja_livre_a_accalmie": [
+      "couronnement-rhaenyra -> accalmie/borros, 129.3.21, corbeau, fiab 70 — livre",
+      "deposition-steffon -> accalmie/borros, 129.3.21, corbeau, fiab 70 — livre",
+      "vol-rhaenyra-sombreval -> accalmie/borros, 129.3.20, rumeur, fiab 30 — livre (LE DRAGON : voir verrou de fait n.1)",
+      "vol-rhaenyra-sombreval -> accalmie/borros, 129.3.24, corbeau, fiab 85 — livre (l'acte scelle)",
+      "decheance-de-rhaenyra -> accalmie/borros, 129.3.27, corbeau, fiab 85 — livre",
+      "vol-rhaenyra-sombreval -> accalmie/[borros, otto], 129.3.30, temoin, fiab 95 — NON LIVRE : c'est la scene ou il fait relire l'acte tout haut devant Otto. Elle tombe dans deux jours et personne ne l'a preparee."
+    ]
+  },
+  "etape_2_les_gens": {
+    "note": "Quatre retenus, un existant et trois crees. TOUS EN ROYAUME — aucune promotion demandee, voir 'budget_d_echelle'.",
+    "chef": {
+      "id": "borros-baratheon",
+      "existe": true,
+      "echelle": "royaume (inchangee)",
+      "de_quoi_il_vit": "8 000 levees au maximum, 3 000 sous ses murs en douze jours, 90 000 dragons au coffre, 4 000 de revenu la lune. Une place : Accalmie. Aucun suzerain — il ne doit rien a personne, et c'est exactement ce qui le rend chere."
+    },
+    "celui_qui_conteste_a_l_interieur": {
+      "id": "cassandra-baratheon",
+      "cree": true,
+      "pourquoi": "La consigne dit que « ses quatre filles sont l'affaire meme ». Le contestataire d'Accalmie n'est donc pas un cadet ambitieux : c'est LA MARCHANDISE, et elle a une tete. Cassandra est l'ainee — c'est elle qu'on mariera, elle le sait, et elle ne conteste pas QUE son pere vende : elle conteste qu'il vende sans elle. Aucune fille de Borros n'existait dans personnages.json alors que l'etat entier les nomme (info-037 : « QUATRE FILLES A MARIER ET PAS DE FILS » ; le declencheur de Borros les fait tenir debout derriere lui). C'etait un trou beant : la piece que les deux camps veulent acheter n'avait pas de fiche."
+    },
+    "la_bouche": {
+      "id": "maris-baratheon",
+      "cree": true,
+      "pourquoi": "La seconde soeur, et le detonateur reel du 129.4.9. Le canon dit qu'Aemond « n'a peut-etre pas voulu » : il faut donc quelque chose qui ait lieu DANS la salle et qui le fasse vouloir. Une question posee tout haut devant trente personnes coute moins cher qu'une lettre — et son 'ignore' fait qu'elle la posera innocemment. Elle est armee A FROID : son declencheur ne connait ni Aemond, ni Lucerys, ni le canon.",
+      "cessible": "C'est la seule des quatre pieces que le MJ peut couper sans casser le lot. Si elle est coupee, le 129.4.9 redevient un rail au lieu d'un accident produit par quelqu'un."
+    },
+    "l_homme_de_metier": {
+      "id": "mestre-hallis",
+      "cree": true,
+      "tient": "CE QUI S'ECRIT ET CE QUI SE LIT, et par surcroit le compte des lances.",
+      "pourquoi": "Borros est illettre — personnages.json le dit dans ses traits, et sa maniere dit « fait lire ses lettres par son mestre et deteste qu'on le sache ». Le cahier de la reine le dit aussi, en toutes lettres : « il ne lit pas, donc il ECOUTE — et ce qu'on lui lit... ». TOUT ce que Peyredragon envoie a Accalmie passe donc par la bouche d'un homme qui n'existait pas dans l'etat. C'est lui l'homme de metier au sens du process : c'est par lui qu'un chiffre sort (les trois mille lances, c'est SON compte sur les roles), c'est lui qu'on depechera, et c'est lui qui peut ecrire la reponse qui devie le canon.",
+      "note_sur_le_nom": "Aucun mestre d'Accalmie n'est nomme dans le canon connu ni dans l'etat. Nom neuf, donc, et volontairement sans echo : Hallis."
+    },
+    "non_crees_et_pourquoi": {
+      "floris_et_ellyn_baratheon": "Les deux cadettes. Elles existent dans la fiction (quatre filles) mais elles n'ont rien a poursuivre cette lune : elles seraient du decor avec une tete. Le declencheur de Borros les met debout dans la salle sans qu'elles aient besoin d'une fiche.",
+      "un_castellan_ou_un_capitaine": "Le compte des lances sort deja par le mestre, qui tient les roles. Un cinquieme homme n'aurait produit que des opinions — c'est exactement ce que le process interdit."
+    },
+    "budget_d_echelle": {
+      "constat": "intentions.json porte 20 orbite pour un plafond de 20 (scripts/tick.py BUDGETS). Trois lots freres reclament deja des promotions : les Verts en veulent deux (aegon-ii, aemond), Velaryon a renonce a la sienne pour cette raison.",
+      "ma_position": "AUCUNE PROMOTION DEMANDEE, ET AUCUNE RETROGRADATION PROPOSEE. Ce n'est pas de la politesse budgetaire, c'est le bon reglage :",
+      "arguments": [
+        "Accalmie est a neuf jours de cavalier de Port-Real et trois de corbeau — et Peyredragon N'A PLUS DE CORBEAU POUR ACCALMIE (verrou de fait n.2). Rien de ce que le joueur fait aujourd'hui n'atteint cette maison avant plusieurs jours : elle ne peut pas reagir a un battement, et la simuler a chaque battement serait mentir sur la distance.",
+        "Le grain de 'royaume' est la fenetre de cinq jours — et docs/ouvrir-une-maison.md comme CLAUDE.md garantissent qu'UNE ECHEANCE NE SE PERD JAMAIS : l'etape d'un lointain qui tombe aujourd'hui se produit aujourd'hui (tick.py la marque malgre_saut). Le 129.4.9 tombera donc juste, meme si aucune de ces quatre tetes n'est relue entre-temps.",
+        "Les quatre tetes tiennent DANS le budget royaume au chiffre pres : 3 croyances, 2 etapes, 1 declencheur chacune. Rien n'est ampute pour entrer.",
+        "LA CONDITION DE PROMOTION, ecrite d'avance pour qu'on n'ait pas a en juger : le jour ou un emissaire du joueur franchit les portes d'Accalmie — ou le jour ou le joueur decide de lui ecrire par cavalier —, borros-baratheon, cassandra-baratheon et mestre-hallis montent en 'scene' pour la duree de l'audience, et redescendent apres. C'est la meme bascule qu'un PNJ qui entre dans la salle, et elle ne coute rien au budget orbite."
+      ]
+    }
+  },
+  "etape_3_les_ressources": {
+    "maisons_json": {
+      "id": "maison-baratheon",
+      "or": 90000,
+      "revenus_lune": 4000,
+      "levees_dispo": 3000,
+      "levees_max": 8000,
+      "siege_id": "accalmie",
+      "suzerain_id": null,
+      "allegeance_affichee": "neutre",
+      "allegeance_reelle": "neutre",
+      "statut": "intacte"
+    },
+    "verdict": "RIEN A CHANGER, et c'est un resultat, pas une paresse. Les chiffres de maisons.json et ceux de la tete de Borros s'accordent DEJA au chiffre pres : sa croyance dit « trois mille lances tiennent sous ses murs en douze jours, huit mille s'il vide les Terres de l'Orage », maisons.json dit levees_dispo 3000 et levees_max 8000. C'est la seule maison de la serie ou les deux tables disaient la meme chose sans qu'on ait a les recoller.",
+    "ce_que_ces_chiffres_decident": [
+      "8 000 levees : plus que Hightower (6 000 dispo) et plus du double de Velaryon (3 000). C'est la premiere force terrestre non engagee du tableau, et elle est neutre.",
+      "90 000 dragons contre 700 000 a Hightower et 800 000 a Velaryon : il est PAUVRE. Un homme qui a huit mille lances et quatre-vingt-dix mille dragons ne se paie pas en or — il se paie en mariage. Sa venalite (traits) et son unique monnaie sont le meme fait, et c'est ce qui rend son etat cible etroit : DEUX NOMS.",
+      "allegeance_reelle 'neutre' : la seule du tableau. Ce n'est pas un faux neutre comme Rosby et Stokeworth. Il n'y a rien a demasquer chez lui — il y a a acheter."
+    ],
+    "mains_json": {
+      "verdict": "AUCUNE MAIN. Justification en une phrase, comme demande : le seul compteur d'Accalmie qui puisse atteindre le joueur est le decompte des jours avant que les lances soient arretees, et ce decompte est DEJA tenu par l'horloge de l'etape borros-rassembler-lances — ecrire une main par-dessus n'ajouterait pas une bouche, elle ajouterait un deuxieme exemplaire de la meme horloge, avec le risque qu'ils divergent.",
+      "les_deux_mesures_ecartees_et_pourquoi": [
+        "LE COMPTE DES LANCES (3 000 -> 8 000) : le joueur ne l'obtiendra jamais comme un nombre juste. Il l'obtient par une rumeur de quai a 50 de fiabilite (diffusion ajoutee ci-dessous). Une main calculerait un chiffre exact que rien ne rapporterait — c'est la pente du tableur, pas une bouche.",
+        "LE GRAIN PRIS AUX VILLAGES AVANT LA MOISSON (cout ecrit de son etape) : vrai, il pourrit tout seul, et il n'atteindra le joueur ni par un chiffre dit en scene ni par un empechement de son plan a lui. Test de docs/mains.md non passe : on ne l'ecrit pas."
+      ],
+      "quand_en_ouvrir_une": "Le jour ou le joueur obtient une place, un homme ou un office a Accalmie — c'est-a-dire jamais avant un mariage."
+    }
+  },
+  "etape_4_les_tetes": {
+    "note": "Une tete existante enrichie (borros), trois creees (cassandra, maris, hallis). Toutes en royaume, toutes au budget exact : 3 croyances / 2 etapes / 1 declencheur. Les mutations sont dans 'mutations_proposees'.",
+    "ce_qui_change_chez_borros": "Sa tete etait juste sur le fond et FAUSSE sur deux points de fait — un ignore dementi par une diffusion deja livree, et un attitude_joueur qui affirme qu'elle ne lui a jamais ecrit alors qu'un pli signe de sa main lui a ete REMIS le 24e. Voir 'verrous_de_fait'. Son declencheur est laisse INTACT : il est deja arme exactement sur le joueur, et le plafond royaume (1) interdit d'en ajouter un second.",
+    "ce_que_les_trois_nouvelles_tetes_produisent": [
+      "cassandra : la question qui rend PUBLIQUE la faiblesse reelle de Peyredragon — la reine n'a pas de prince libre a offrir. Armee sur l'arrivee d'un emissaire.",
+      "maris : l'accident du 129.4.9, produit par quelqu'un au lieu d'etre pose par le rail. Armee a froid, sans connaitre Aemond.",
+      "hallis : la seule main capable d'ecrire la reponse d'Accalmie — c'est-a-dire la seule piece qui puisse faire jouer la quatrieme condition de deviation du canon."
+    ]
+  },
+  "mutations_proposees": [
+    {
+      "table": "personnages",
+      "operation": "personnage_ajouter",
+      "valeur": {
+        "id": "cassandra-baratheon",
+        "nom": "Cassandra Baratheon",
+        "maison_id": "maison-baratheon",
+        "titre": "Dame, fille ainee d'Accalmie",
+        "naissance": 111,
+        "traits": [
+          "fiere",
+          "calculatrice",
+          "impatiente",
+          "rancuniere"
+        ],
+        "objectifs": [
+          {
+            "but": "Etre nommee dans la salle plutot que dans un contrat qu'on lui lira apres",
+            "priorite": 1
+          },
+          {
+            "but": "Savoir, avant son pere, ce que chaque camp peut reellement donner",
+            "priorite": 2
+          }
+        ],
+        "maniere": "Parle apres son pere, jamais contre lui, et corrige son chiffre d'un seul mot. Ne hausse pas la voix ; se place.",
+        "portrait": {
+          "physique": "Grande, noire de cheveux comme son pere, machoire lourde des Baratheon ; robe d'or sombre, mains jointes devant elle et jamais derriere.",
+          "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, candlelight, tall young noblewoman, heavy black hair, strong Baratheon jaw, dark gold gown, crowned stag brooch, proud watchful stare, standing behind an empty lord's chair"
+        },
+        "etat": "actif",
+        "lieu_id": "accalmie",
+        "condition": "libre"
+      },
+      "pourquoi": "L'ainee des quatre filles. C'est la piece que les deux camps veulent acheter, et elle n'avait pas de fiche."
+    },
+    {
+      "table": "personnages",
+      "operation": "personnage_ajouter",
+      "valeur": {
+        "id": "maris-baratheon",
+        "nom": "Maris Baratheon",
+        "maison_id": "maison-baratheon",
+        "titre": "Dame, seconde fille d'Accalmie",
+        "naissance": 113,
+        "traits": [
+          "moqueuse",
+          "intrepide",
+          "cruelle-en-paroles",
+          "fine"
+        ],
+        "objectifs": [
+          {
+            "but": "Ne rien laisser passer de ce qui se marchande dans la salle de son pere",
+            "priorite": 1
+          }
+        ],
+        "maniere": "Pose tout haut la question que personne n'ose, et sourit avant qu'on ait repondu. Rit une demi-seconde trop tot.",
+        "portrait": {
+          "physique": "Plus mince et plus vive que son ainee, cheveux noirs mal tenus, robe simple ; toujours a la limite du cercle des hommes.",
+          "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, candlelight, sharp-featured young noblewoman, loose black hair, plain dark dress, half-smile of someone about to say something unforgivable, great hall in background"
+        },
+        "etat": "actif",
+        "lieu_id": "accalmie",
+        "condition": "libre"
+      },
+      "pourquoi": "La bouche de la maison. Cessible : voir etape_2.la_bouche."
+    },
+    {
+      "table": "personnages",
+      "operation": "personnage_ajouter",
+      "valeur": {
+        "id": "mestre-hallis",
+        "nom": "Mestre Hallis",
+        "maison_id": "maison-baratheon",
+        "titre": "Mestre d'Accalmie",
+        "naissance": 88,
+        "traits": [
+          "meticuleux",
+          "prudent",
+          "serviable",
+          "discret"
+        ],
+        "objectifs": [
+          {
+            "but": "Que rien n'entre ni ne sorte d'Accalmie sans une ligne au registre",
+            "priorite": 1
+          },
+          {
+            "but": "Empecher son seigneur de repondre de vive voix ce qu'il devra tenir par ecrit",
+            "priorite": 2
+          }
+        ],
+        "maniere": "Lit a voix haute, lentement, et s'arrete une seconde de trop sur la ligne qu'il veut qu'on entende. Ne conseille jamais : il relit.",
+        "portrait": {
+          "physique": "Sec, la cinquantaine, chaine de mestre aux maillons depareilles ; toujours une feuille a la main et l'autre main sur le dos d'un fauteuil.",
+          "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, candlelight, lean middle-aged maester, mismatched metal chain of links, grey robes, holding an unrolled letter, reading aloud, cautious downcast eyes"
+        },
+        "etat": "actif",
+        "lieu_id": "accalmie",
+        "condition": "libre"
+      },
+      "pourquoi": "L'homme de metier. Borros est illettre : ce mestre EST le canal de tout ce que Peyredragon adresse a Accalmie, et la seule main qui puisse ecrire la reponse qui devie le canon."
+    },
+    {
+      "table": "intentions",
+      "cible": "borros-baratheon",
+      "operation": "ignore_retirer",
+      "valeur": "Qu'un dragon a brûlé la tête d'une colonne du roi sur la route de Sombreval le seizième jour — la rumeur remonte les Terres de l'Orage et l'atteindra vers le vingtième",
+      "pourquoi": "VERROU DE FAIT n.1. Cet ignore est PERIME : la diffusion de vol-rhaenyra-sombreval vers accalmie/borros, datee du 129.3.20 (rumeur, fiab 30), porte livree: true — et l'acte scelle du 24e (fiab 85) le lui a confirme chiffres en main. Il SAIT depuis huit jours. Un ignore dementi qui reste en place est pire qu'un ignore absent : il fait jouer un homme comme s'il ne savait pas ce qu'il sait, et c'est precisement l'inverse de sa conduite reelle (il fait relire l'acte tout haut dans sa salle le 30e)."
+    },
+    {
+      "table": "intentions",
+      "cible": "borros-baratheon",
+      "operation": "ignore_ajouter",
+      "valeur": "Que Peyredragon n'a plus un seul corbeau pour Accalmie — l'oiseau qui en venait a servi le vingt-et-unieme et ne reviendra pas : toute parole de la reine exige desormais un cavalier de neuf jours, une coque, ou un dragon. Il attend donc une reponse par une voie qui n'existe plus, et prendra chaque jour de silence pour du mepris.",
+      "pourquoi": "Remplace l'ignore perime par celui qui EXPLIQUE sa conduite au lieu de la contredire. Source : info-021 (les 14 oiseaux, dont un pour Accalmie) + le cahier de la reine dans books.json — « Quatorze adresses. Sept depensees en une matinee. Aucune vers le Val, le Nord, ni Accalmie une seconde fois » — et acte-aurore-trois-lettres-parties (129.3.21) qui depense l'oiseau d'Accalmie. C'est la piece qui durcit un neutre sans que personne l'ait voulu."
+    },
+    {
+      "table": "intentions",
+      "cible": "borros-baratheon",
+      "operation": "croyance_retirer",
+      "valeur": "Deux corbeaux lui sont arrives le vingt-et-unieme jour : Peyredragon a couronne Rhaenyra de la couronne de son pere, et une deposition signee d'un manteau blanc et de deux capitaines braaviens jure que Viserys n'a jamais deshirite sa fille. Les deux camps lui ecriront desormais comme on ecrit a un homme dont on a besoin.",
+      "pourquoi": "Echange a somme nulle (plafond royaume : 3 croyances, il en a 3). Cette croyance s'arrete au 21e alors que trois plis de plus lui sont parvenus depuis, et elle ne porte pas le fait le plus lourd de sa salle : Otto Hightower loge sous son toit depuis onze jours."
+    },
+    {
+      "table": "intentions",
+      "cible": "borros-baratheon",
+      "operation": "croyance_ajouter",
+      "valeur": "Ce qui lui est entre en sept jours, dans l'ordre : la couronne de Rhaenyra et la deposition d'un manteau blanc le vingt-et-unieme, l'acte scelle de la reine le vingt-quatrieme, la decheance a prix d'enfants le vingt-septieme. Et lord Otto Hightower loge sous son toit depuis le DIX-SEPTIEME jour sans avoir encore ecrit un seul nom : celui qui est la depuis onze jours n'a rien de plus a offrir qu'il n'ait deja offert.",
+      "pourquoi": "Meme matiere, datee et a jour, plus le fait qui commande sa patience. Sources : les trois plis remis a borros-baratheon dans plis.json ; le texte du pli du 22e (« alors qu'un Hightower est chez lui depuis le dix-septieme jour ») ; info-037 (« la sommation d'Otto y est arrivee le 17 sous le sceau d'Aegon »)."
+    },
+    {
+      "table": "intentions",
+      "cible": "borros-baratheon",
+      "operation": "tete",
+      "champs": {
+        "intention": "Ne rien repondre a personne tant qu'on ne pose pas deux noms sur sa table : une de ses quatre filles, et le prince qu'on lui donne. Faire arreter le compte de ses lances pour le douzieme jour — un homme qu'on marchande vaut ce qu'il a sous ses murs le jour ou l'on marchande, et pas un cheval de plus.",
+        "attitude_joueur": "Elle lui a ecrit UNE fois, le vingt-et-unieme, sous son sceau et signee de sa main — et sa lettre parlait d'une ville brulee sur la route, pas de lui. Il ne le prend pas pour une insulte : il le prend pour la preuve qu'elle ne sait pas ce qu'il vaut. Ce qu'elle obtiendra d'Accalmie se mesurera au contrat et jamais au serment, et le contrat n'a qu'une ligne : laquelle de mes filles, et pour qui.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 28
+        }
+      },
+      "pourquoi": "VERROU DE FAIT n.3. L'ancien attitude_joueur disait « elle ne lui a jamais ecrit », ce qui est FAUX depuis le 24e : le pli pli-vol-rhaenyra-sombreval-14-borros-baratheon porte de: rhaenyra, etat: remis, main: borros-baratheon. La correction ne l'adoucit pas — elle le durcit pour une meilleure raison, et cette raison est actionnable par le joueur."
+    },
+    {
+      "table": "intentions",
+      "cible": "borros-baratheon",
+      "operation": "etape",
+      "etape": "borros-rassembler-lances",
+      "champs": {
+        "quoi": "Faire rappeler ses bannerets et faire arreter par son mestre, sur les roles, le compte de ce qu'Accalmie peut mettre en selle — trois mille lances sous les murs en douze jours, huit mille s'il vide les Terres de l'Orage — sans dire pour qui."
+      },
+      "pourquoi": "La decision atterrit desormais sur quelqu'un de NOMME, comme l'exige le manuel : le compte est celui du mestre, sur les roles, et pas une opinion du seigneur. C'est ce qui rend l'etape depechable et le chiffre contestable. Les chiffres sont ceux de maisons.json (3000/8000), inchanges. JOURS_RESTANTS VOLONTAIREMENT NON TOUCHE : la tete est a jour au 27e avec 12 jours, le tick decrementera lui-meme ; y toucher a la main risquerait un double decompte."
+    },
+    {
+      "table": "intentions",
+      "operation": "tete_ajouter",
+      "valeur": {
+        "personnage_id": "cassandra-baratheon",
+        "echelle": "royaume",
+        "croyances": [
+          "C'est elle qu'on mariera et personne d'autre : elle est l'ainee et son pere n'a pas de fils. Elle l'entend a table depuis ses douze ans, et depuis onze jours des gens de lord Otto Hightower boivent le vin d'Accalmie sans dire pourquoi ils sont venus — ce qu'elle voit de ses yeux, au vingt-huitieme jour",
+          "Quatre plis sont entres du nord en sept jours et le mestre les a tous lus tout haut dans la salle ; elle y etait aux quatre. Aucun ne dit un mot d'elle ni d'aucune de ses soeurs, et pourtant tout ce qui se joue ici se jouera sur l'une d'elles",
+          "Son pere ne lit pas : ce qu'il croit d'une lettre, c'est ce que le mestre en a lu tout haut, avec les silences qu'il y met. Elle le sait depuis l'enfance, et c'est la seule chose qu'elle puisse deplacer dans cette maison"
+        ],
+        "ignore": [
+          "Que le nom qu'on veut lui donner est celui d'Aemond Targaryen, et que lord Otto le tient dans sa manche depuis onze jours en laissant monter le prix — personne a Accalmie n'a encore entendu ce nom prononce"
+        ],
+        "intention": "Etre dans la salle le jour ou l'on nommera la fille, et faire que ce nom soit le sien a ses conditions plutot qu'au prix de son pere. A defaut de choisir l'homme, choisir l'heure et le temoin.",
+        "plan": [
+          {
+            "id": "cassandra-tenir-la-salle",
+            "quoi": "Obtenir qu'aucune lettre ne soit lue et aucune reponse donnee hors de sa presence, en se rendant necessaire a la lecture : se tenir debout derriere l'epaule droite de son pere chaque fois que le mestre deplie quelque chose",
+            "etat": "en-cours",
+            "jours_restants": 4,
+            "depend_de": [],
+            "cout": [
+              "passer, devant les gens de lord Otto, pour une fille qui se mele des affaires des hommes",
+              "que ses trois soeurs voient qu'elle se place, et le lui fassent payer"
+            ],
+            "si_bloque": "Si on la renvoie de la salle, elle va trouver le mestre seul le soir et lui fait relire ce qu'il a lu. Elle saura donc ce qui est ecrit avant son pere — et elle ne le dira pas.",
+            "accompli": null
+          },
+          {
+            "id": "cassandra-ce-que-chaque-camp-peut-donner",
+            "quoi": "Etablir ce que chacun des deux camps peut REELLEMENT donner — un prince a marier, et lequel — en faisant poser la question par une autre bouche que la sienne",
+            "etat": "en-cours",
+            "jours_restants": 9,
+            "depend_de": [
+              "cassandra-tenir-la-salle"
+            ],
+            "cout": [
+              "que le mestre accepte d'ecrire une question que son seigneur ne lui a pas dictee",
+              "neuf jours au moins pour toute reponse qui viendrait du nord — il n'y a pas d'oiseau"
+            ],
+            "si_bloque": "Si le mestre refuse d'ecrire, elle pose la question de vive voix au premier envoye qui franchit la porte, devant temoins, et met son pere devant le fait qu'elle a parle la premiere.",
+            "accompli": null
+          }
+        ],
+        "declencheurs": [
+          {
+            "si": "Un emissaire de Peyredragon — un homme, un pli porte, ou un dragon — se presente aux portes d'Accalmie",
+            "alors": "Elle se place debout derriere l'epaule droite de son pere avant qu'on ne fasse entrer, et pose elle-meme la premiere question, tout haut : lequel de vos princes, et a laquelle de nous quatre. Si la reponse est qu'il n'y a pas de prince a donner, elle le fait repeter — devant les gens de lord Otto.",
+            "une_fois": false
+          }
+        ],
+        "attitude_joueur": "Une femme qui regne, et qui a quatre fils. Cassandra ne lui doit rien et n'attend d'elle qu'une chose : un nom. Ce qu'elle pensera d'elle se decidera a la reponse, pas au serment — et elle est la seule d'Accalmie a savoir que la reponse peut etre qu'il n'y en a pas.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 28
+        }
+      },
+      "pourquoi": "La contestation interne. Son declencheur est LA piece la plus dangereuse du lot pour le joueur : il rend publique, chez un neutre a huit mille lances et devant Otto Hightower, la seule faiblesse que Peyredragon ne peut pas corriger — Jacaerys et Lucerys sont promis, Joffrey a six ans. Rien de tout cela n'est invente : c'est arithmetique sur personnages.json."
+    },
+    {
+      "table": "intentions",
+      "operation": "tete_ajouter",
+      "valeur": {
+        "personnage_id": "maris-baratheon",
+        "echelle": "royaume",
+        "croyances": [
+          "Il n'y a rien a faire a Accalmie que regarder les hommes se vendre entre eux, et son ainee sera vendue la premiere — ce qu'elle voit a table chaque soir depuis l'arrivee des gens de lord Otto, le dix-septieme jour",
+          "Ces gens-la boivent le vin de son pere depuis onze jours sans dire pour qui ils sont venus : ce qui se marchande sans se nommer se paie toujours plus cher, et son pere ne s'en apercevra pas",
+          "Une question posee tout haut devant trente personnes coute moins cher qu'une lettre et personne n'a jamais su quoi lui repondre — verifie quatre fois cette lune dans la grande salle"
+        ],
+        "ignore": [
+          "Que l'homme qu'on destine a sa soeur est un prince borgne dont l'oeil a ete creve par un fils de Rhaenyra, et que la question qui lui viendrait naturellement a la bouche est exactement celle qui peut faire tuer quelqu'un"
+        ],
+        "intention": "S'amuser de ce qui se joue dans la salle de son pere et n'en laisser passer aucune occasion — surtout devant ceux qui se croient importants.",
+        "plan": [
+          {
+            "id": "maris-etre-la-quand-on-recoit",
+            "quoi": "Etre presente chaque fois qu'Accalmie recoit quelqu'un, en se faisant porter par la curiosite de ses soeurs plutot qu'en le demandant",
+            "etat": "en-cours",
+            "jours_restants": null,
+            "depend_de": [],
+            "cout": [
+              "l'agacement de son pere, qui ne l'a jamais chassee pour cela"
+            ],
+            "si_bloque": "Si on la met dehors, elle ecoute derriere la tenture de la galerie et raconte le soir meme a ses trois soeurs, avec les mots qu'elle aurait dits a leur place.",
+            "accompli": null
+          },
+          {
+            "id": "maris-pour-qui-sont-ils-venus",
+            "quoi": "Faire dire aux ecuyers de lord Otto, en riant, pour qui ils sont venus et depuis combien de jours ils attendent",
+            "etat": "en-cours",
+            "jours_restants": 3,
+            "depend_de": [],
+            "cout": [
+              "rien, et c'est exactement pour cela qu'elle le fera"
+            ],
+            "si_bloque": "S'ils se taisent, elle le demande a lord Otto Hightower lui-meme, a table, devant son pere — et elle attend la reponse sans baisser les yeux.",
+            "accompli": null
+          }
+        ],
+        "declencheurs": [
+          {
+            "si": "Un prince, un envoye ou un dragon se presente a Accalmie et l'on parle mariage devant elle",
+            "alors": "Elle pose tout haut, devant la salle, la question que l'orgueil de l'homme ne peut pas laisser passer — ce qu'il a perdu, ce qu'il vaut, ou ce qu'il vient chercher qu'il n'a pas gagne — et elle rit avant qu'on ait repondu.",
+            "une_fois": false
+          }
+        ],
+        "attitude_joueur": "Elle ne l'a jamais vue et s'en moque. Ce que la reine represente pour elle est un nom de plus dans une salle ou l'on marchande ses soeurs — et donc une cible de plus.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 28
+        }
+      },
+      "pourquoi": "L'accident du 129.4.9, arme A FROID. Son declencheur ne connait ni Aemond, ni Lucerys, ni le canon : il se declenche sur « on parle mariage devant elle », ce qui est la definition meme de la scene d'Accalmie. Le canon dit qu'Aemond « n'a peut-etre pas voulu » ; ceci est ce qui le fera vouloir, et c'est un geste de quelqu'un, pas un rail."
+    },
+    {
+      "table": "intentions",
+      "operation": "tete_ajouter",
+      "valeur": {
+        "personnage_id": "mestre-hallis",
+        "echelle": "royaume",
+        "croyances": [
+          "Quatre plis du nord sont entres a Accalmie en sept jours — la couronne, la deposition d'un manteau blanc, l'acte scelle de la reine, la decheance de Port-Real — et il les a tous lus tout haut : il est le seul homme du chateau a savoir ce qu'ils disent MOT POUR MOT. Son propre registre, arrete au vingt-septieme jour",
+          "Trois mille lances tiennent sous les murs en douze jours et huit mille s'il vide les Terres de l'Orage : c'est SON compte, fait sur les roles des bannerets, et lord Borros le repete partout sans l'avoir verifie une seule fois",
+          "Accalmie n'a pas d'oiseau pour la baie de la Nera : celui qui en est venu le vingt-et-unieme y est reste. Toute reponse au nord exige un cavalier — neuf jours — ou une coque, et personne dans cette maison ne l'a encore compris sauf lui"
+        ],
+        "ignore": [
+          "Que la lettre du vingt-et-unieme etait signee de la main de la reine elle-meme et non d'un scribe : il l'a lue pour le fond, tout haut, et n'a pas regarde le bas de la page. Lord Borros croit donc n'avoir jamais recu un mot d'elle, et c'est le mestre qui le lui a fait croire sans le savoir"
+        ],
+        "intention": "Tenir le registre de ce qui entre et de ce qui sort, lire fidelement, et empecher son seigneur de repondre de vive voix ce qu'il devra tenir par ecrit — parce que c'est lui qui aura a l'ecrire.",
+        "plan": [
+          {
+            "id": "hallis-arreter-le-compte-des-lances",
+            "quoi": "Arreter par ecrit le compte des bannerets rappeles, banneret par banneret, pour que le chiffre de trois mille ne soit dit a un envoye qu'apres avoir ete vrai",
+            "etat": "en-cours",
+            "jours_restants": 11,
+            "depend_de": [],
+            "cout": [
+              "deux clercs et l'acces aux roles, que le castellan garde",
+              "du grain compte sur les villages avant la moisson, qu'il faudra bien inscrire quelque part"
+            ],
+            "si_bloque": "Si les bannerets ne repondent pas dans le delai, il ecrit sur DEUX COLONNES SEPAREES le chiffre qu'il a et le chiffre qu'on lui a promis, et il ne les additionne pas. Puis il lit les deux tout haut si on le lui demande, dans cet ordre.",
+            "accompli": null
+          },
+          {
+            "id": "hallis-la-reponse-par-ecrit",
+            "quoi": "Preparer d'avance la reponse ecrite d'Accalmie — une page sans nom de camp, ou il ne resterait qu'a porter deux noms — pour que le jour ou son seigneur tranchera, l'acte ne depende pas de sa memoire",
+            "etat": "en-cours",
+            "jours_restants": 6,
+            "depend_de": [],
+            "cout": [
+              "que lord Borros souffre qu'on ecrive avant qu'il ait decide, ce qu'il prend pour une insolence"
+            ],
+            "si_bloque": "S'il le lui refuse, il l'ecrit quand meme et la garde dans son coffre sans le dire. Et si l'on exige une reponse le jour meme, il rappellera tout haut qu'Accalmie n'a pas d'oiseau pour la baie et qu'il faut un cavalier de neuf jours — ce qui est vrai, et ce qui donne a son seigneur neuf jours qu'il n'avait pas demandes.",
+            "accompli": null
+          }
+        ],
+        "declencheurs": [
+          {
+            "si": "Un envoye de Peyredragon, ou une lettre de la reine, arrive a Accalmie",
+            "alors": "Il la lit tout haut integralement — signature comprise, cette fois — et porte au registre l'heure, le porteur et le premier mot de la reponse de son seigneur. Puis il fait remarquer, avant qu'on l'ait interroge, qu'il n'y a pas d'oiseau pour repondre.",
+            "une_fois": false
+          }
+        ],
+        "attitude_joueur": "Il n'a pas d'opinion sur elle et se garde d'en avoir : ce n'est pas sa place. Mais c'est par sa bouche qu'elle existe a Accalmie, et il lit ce qui est ecrit — ce qui fait de lui le seul homme du chateau qu'on gagne en ecrivant bien plutot qu'en offrant beaucoup.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 28
+        }
+      },
+      "pourquoi": "L'homme de metier. Son etape hallis-la-reponse-par-ecrit est la seule piece de tout l'etat qui puisse faire jouer la quatrieme condition de deviation de mort-lucerys (« devie si Borros a deja donne sa reponse PAR ECRIT »). Elle n'est pas ecrite pour cela : elle est ecrite parce qu'un mestre prepare l'acte de son seigneur. C'est la coincidence, pas l'intention, et c'est ainsi qu'il faut la lire."
+    },
+    {
+      "table": "relations",
+      "operation": "relation_ajouter",
+      "valeur": {
+        "source_id": "cassandra-baratheon",
+        "cible_id": "borros-baratheon",
+        "opinion": 20,
+        "liens": [
+          "fille-ainee",
+          "la-marchandise-qui-compte"
+        ],
+        "connue_du_joueur": false
+      },
+      "pourquoi": "Elle l'aime assez pour ne jamais le contredire de front, et pas assez pour le laisser vendre seul."
+    },
+    {
+      "table": "relations",
+      "operation": "relation_ajouter",
+      "valeur": {
+        "source_id": "cassandra-baratheon",
+        "cible_id": "rhaenyra",
+        "opinion": 0,
+        "liens": [
+          "attend-un-nom"
+        ],
+        "connue_du_joueur": false
+      },
+      "pourquoi": "Zero et non negatif : c'est la seule tete d'Accalmie qui n'ait encore rien decide sur la reine. Tout depend d'une reponse que la reine n'a pas donnee."
+    },
+    {
+      "table": "relations",
+      "operation": "relation_ajouter",
+      "valeur": {
+        "source_id": "maris-baratheon",
+        "cible_id": "cassandra-baratheon",
+        "opinion": 45,
+        "liens": [
+          "soeur",
+          "complice",
+          "rivale-de-salle"
+        ],
+        "connue_du_joueur": false
+      },
+      "pourquoi": "Elle la defendra en la ridiculisant, ce qui est sa seule facon de defendre quelqu'un."
+    },
+    {
+      "table": "relations",
+      "operation": "relation_ajouter",
+      "valeur": {
+        "source_id": "mestre-hallis",
+        "cible_id": "borros-baratheon",
+        "opinion": 45,
+        "liens": [
+          "serviteur",
+          "les-yeux-de-son-seigneur"
+        ],
+        "connue_du_joueur": false
+      },
+      "pourquoi": "Loyal, et conscient d'etre indispensable — deux choses qui ne se disent pas a voix haute a Accalmie."
+    },
+    {
+      "table": "relations",
+      "operation": "relation_ajouter",
+      "valeur": {
+        "source_id": "borros-baratheon",
+        "cible_id": "mestre-hallis",
+        "opinion": 30,
+        "liens": [
+          "depend-de-lui-et-deteste-qu-on-le-sache"
+        ],
+        "connue_du_joueur": false
+      },
+      "pourquoi": "Repris mot pour mot de sa maniere dans personnages.json : « fait lire ses lettres par son mestre et deteste qu'on le sache ». La relation ne fait qu'inscrire ce que la fiche disait deja."
+    },
+    {
+      "table": "relations",
+      "source_id": "borros-baratheon",
+      "cible_id": "rhaenyra",
+      "operation": "relation",
+      "champs": {
+        "liens": [
+          "dedain-pour-les-serments-anciens",
+          "a-recu-une-lettre-signee-de-sa-main"
+        ]
+      },
+      "pourquoi": "La moitie visible du verrou de fait n.3. L'opinion (-15) est laissee telle quelle : la lettre du 21e ne parlait pas de lui, elle ne l'a donc ni rapproche ni eloigne. Ce qui change, c'est qu'il ne peut plus etre joue comme un homme a qui l'on n'a jamais ecrit."
+    },
+    {
+      "table": "evenements",
+      "cible": "vol-rhaenyra-sombreval",
+      "operation": "diffusion_ajouter",
+      "valeur": {
+        "ou": "accalmie",
+        "qui": [
+          "borros-baratheon",
+          "mestre-hallis",
+          "cassandra-baratheon"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 4
+        },
+        "canal": "rumeur",
+        "fiabilite": 35,
+        "version": "Par des marchands remontes de Pointe-Aigue : la reine de Peyredragon aurait fait crier dans ses septs que marcher en armes sans declaration appelle le feu, et un septon y aurait repondu en chaire que ce qui a brule une armee brulera un jour un champ de ble. On ne s'accorde pas sur qui a parle le dernier. Rien, dans ce qu'on rapporte, ne concerne les Terres de l'Orage.",
+        "livree": false
+      },
+      "pourquoi": "LA SEULE ROUTE ENTRANTE QUI RESTE, et elle est mauvaise — c'est le point. Peyredragon n'a plus de corbeau pour Accalmie ; ce que la reine fait n'y parvient donc plus que par la mer et par des marchands, en sept jours, a 35 de fiabilite. La derniere phrase est la piece maitresse : chaque nouvelle qui l'atteint sans le nommer confirme a Borros qu'on ne le compte pas. Sa patience n'est pas de la ruse, c'est un homme qu'on n'appelle pas."
+    },
+    {
+      "table": "evenements",
+      "cible": "vol-rhaenyra-sombreval",
+      "operation": "diffusion_ajouter",
+      "valeur": {
+        "ou": "peyredragon",
+        "qui": [
+          "mysaria"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 5
+        },
+        "canal": "barque",
+        "fiabilite": 80,
+        "version": "De la Ver Blanc, contre paiement, trois lignes : lord Otto Hightower est a Accalmie depuis le dix-septieme jour et n'a toujours pas de reponse. On y attend un nom, et ce n'est pas un nom de bataille. En marge, d'une autre main : la maison Baratheon a quatre filles et pas un fils, et l'ainee s'appelle Cassandra.",
+        "livree": false
+      },
+      "pourquoi": "ROUTE SORTANTE n.1 — la bouche par laquelle le joueur apprend qu'Accalmie a bouge, et la SEULE qui arrive assez tot pour qu'il puisse agir avant le 129.4.9. Fiabilite 80 : c'est un renseignement achete, pas une rumeur de quai. Elle donne au joueur exactement les deux choses que le declencheur de Borros exige — qu'il faut un nom, et lequel est disponible. Canal deja etabli : mysaria recoit deja de la Ver Blanc par barque contre paiement (diffusions du 129.3.24 et du 129.3.26)."
+    },
+    {
+      "table": "evenements",
+      "cible": "vol-rhaenyra-sombreval",
+      "operation": "diffusion_ajouter",
+      "valeur": {
+        "ou": "peyredragon",
+        "qui": [
+          "rulf-corne",
+          "aldon-hask"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 7
+        },
+        "canal": "barque",
+        "fiabilite": 50,
+        "version": "Deux patrons de coque venus de la cote de l'orage disent qu'on rassemble sous les murs d'Accalmie : des feux de camp par centaines dans la lande et les chemins pleins de cavaliers depuis une semaine. Aucun des deux ne sait pour qui l'on rassemble, et l'un jure n'avoir vu planter la-bas d'autre banniere que le cerf.",
+        "livree": false
+      },
+      "pourquoi": "ROUTE SORTANTE n.2 — le compte des lances, par la seule voie qui existe : la mer et le port. Elle arrive le 4.7, deux jours avant que le compte soit arrete : le joueur voit l'ost se former sans savoir pour qui, ce qui est exactement l'etat de la question. Elle atterrit sur rulf-corne et aldon-hask, qui tiennent le bureau de port et remontent deja ce genre de chose au chateau — route existante, non inventee."
+    }
+  ],
+  "a_la_main": {
+    "note": "RIEN DANS CETTE SECTION N'EST UN PREALABLE. Le lot ci-dessus s'applique entier par scripts/appliquer.py — personnage_ajouter, relation_ajouter et tete_ajouter existent tous. Ce qui suit est OPTIONNEL et laisse au MJ.",
+    "optionnel_1_un_evenement_propre": "Les trois diffusions ci-dessus sont accrochees a vol-rhaenyra-sombreval, qui porte deja le fil d'Accalmie (c'est lui qui contient la scene du 30e ou Borros fait relire l'acte devant Otto). Si le MJ prefere un domicile propre, ouvrir dans evenements.json un `programme` id 'borros-compte-ses-lances', date_prevue 129.4.9, lieu_id accalmie, acteurs [borros-baratheon, mestre-hallis], et y deplacer les deux diffusions sortantes. appliquer.py ne cree pas d'evenement.",
+    "optionnel_2_les_deux_cadettes": "Floris et Ellyn Baratheon n'ont pas de fiche. Elles n'en ont pas besoin pour cette lune. Si une audience se joue a Accalmie, elles se tiennent debout derriere leur pere sans fiche, comme le declencheur de Borros le dit deja.",
+    "optionnel_3_le_portrait": "Les trois fiches creees portent un `portrait` sans `fichier` : aucun SVG n'existe dans ecrans/portraits/. A engendrer le jour ou l'un d'eux entre dans une salle jouee."
+  },
+  "verrous_de_fait": [
+    {
+      "n": 1,
+      "quoi": "L'`ignore` de Borros dit qu'il ignore le feu de la route de Sombreval et que « la rumeur l'atteindra vers le vingtieme ». Or la diffusion correspondante (accalmie / borros, 129.3.20, rumeur, fiab 30) porte livree: true, et l'acte scelle du 24e (fiab 85) le lui a confirme avec les chiffres. Il SAIT depuis huit jours — et le 30e il fait relire cet acte tout haut devant Otto Hightower. Un ignore dementi par sa propre conduite fait jouer un homme a l'envers de ce qu'il est.",
+      "repare_par": "ignore_retirer + ignore_ajouter"
+    },
+    {
+      "n": 2,
+      "quoi": "PEYREDRAGON N'A PLUS DE CORBEAU POUR ACCALMIE, et rien dans aucune tete ne le sait. L'oiseau a servi le 129.3.21 (acte-aurore-trois-lettres-parties) ; le cahier de la reine dans books.json l'ecrit noir sur blanc — « Quatorze adresses. Sept depensees en une matinee. Aucune vers le Val, le Nord, ni Accalmie une seconde fois. » Consequence non ecrite jusqu'ici : toute parole de la reine vers Accalmie exige desormais un cavalier de neuf jours, une coque, ou un dragon. Un depart le 129.3.29 arrive le 129.4.7 — DEUX JOURS avant le 129.4.9. C'est la marge reelle de la partie, et personne ne l'avait comptee.",
+      "repare_par": "l'ignore neuf de Borros, la croyance n.3 de mestre-hallis, et son si_bloque"
+    },
+    {
+      "n": 3,
+      "quoi": "L'`attitude_joueur` de Borros affirme « elle ne lui a jamais ecrit ». C'est faux depuis le 129.3.24 : le pli pli-vol-rhaenyra-sombreval-14-borros-baratheon porte de: rhaenyra, etat: remis, main: borros-baratheon — une lettre signee de sa main et scellee de son sceau, partie le 21e (acte-rhaenyra-signe-les-sept, « PREMIERE PAROLE OFFICIELLE DU REGNE »). Le joueur croit legitimement avoir ecrit a Accalmie ; la tete d'en face joue comme s'il ne l'avait pas fait. C'est la contradiction la plus couteuse du dossier, parce qu'elle porte sur la seule chose qui compte chez cet homme : a-t-on daigne s'adresser a lui.",
+      "repare_par": "la mutation tete/borros (attitude_joueur), l'ignore de mestre-hallis, et le lien ajoute a la relation borros -> rhaenyra"
+    }
+  ],
+  "accord_avec_le_lot_des_verts": {
+    "verdict": "ACCORD COMPLET. Aucune de mes pieces ne contredit ouvrir-verts.json, et deux d'entre elles s'y emboitent.",
+    "verifications": [
+      "L'etape 'aemond-porter-loffre-a-accalmie' (verts, 5 jours restants au 28e, depend de aemond-accalmie) pose Aemond a Accalmie autour du 129.4.2-4.9, et son si_bloque l'y pose MEME s'il perd l'ambassade. Mon lot ne touche ni cette etape ni Aemond : je n'ecris que ce qui l'attend sur place.",
+      "Le declencheur vert d'Aemond — « Un emissaire de Peyredragon part vers Accalmie, ou Borros Baratheon est sollicite par les Noirs » — et le declencheur existant de Borros — « Un emissaire de Peyredragon se presente a Accalmie » — sont armes sur le MEME geste du joueur, des deux cotes de la meme porte. J'y ajoute les deux declencheurs de Cassandra et de Hallis, armes sur ce meme geste. Un seul acte du joueur reveille donc quatre tetes independantes dans la meme salle : c'est la definition d'une scene, et aucune n'a besoin des autres pour se produire.",
+      "Le lot vert note qu'a Accalmie personne n'a encore entendu le nom d'Aemond (l'`ignore` de Borros : « on prepare a Port-Real un mariage au nom d'Aemond »). J'ai TENU cette ignorance : l'`ignore` de Cassandra la reprend explicitement, et aucune de mes onze croyances ne prononce le nom d'Aemond. C'etait le piege du lot — il aurait ete facile de faire savoir a la fille ce qu'on lui destine.",
+      "Le lot vert ecrit qu'Aemond ignore que Vhagar est le seul dragon que la cour puisse mettre en l'air. Rien chez moi ne l'en informe : Accalmie n'a pas de nouvelle de Villevieille.",
+      "Plages d'ids : 71000 Hightower (existant), 74000 Verts (reserve), 75000 Velaryon (reserve, non ouverte). Je prends 76000-76999. Aucun chevauchement."
+    ],
+    "un_desaccord_de_lecture_qui_n_est_pas_un_conflit": "Le lot vert lit la clef 71012 (echeance 129.4.9) comme la piece qui porte Aemond a Accalmie, et conclut que « la cour n'a pas a pousser Aemond : le plan de son grand-pere l'y porte ». Vu d'Accalmie, cette clef ne peut PAS aboutir a cette date par elle-meme : Otto est chez Borros depuis le 17e et n'a toujours pas ecrit de nom, parce que Borros a decide de ne repondre a rien tant que les deux noms ne sont pas poses. Le 129.4.9 n'est donc pas la date ou le mariage se conclut : c'est la date ou le compte des lances est arrete, c'est-a-dire la date ou Borros a enfin de quoi fixer son prix. Les deux lots restent compatibles — mais la charniere n'est pas ou le lot vert la place. Elle est chez Borros, pas chez Otto."
+  },
+  "decision_plans_json": {
+    "verdict": "OUI — la plage 76000-76999 merite d'etre ouverte pour la maison BARATHEON. Je ne l'ouvre pas ici : l'etape 5 se DEPECHE (python scripts/depecher.py --qui borros-baratheon), elle ne se redige pas de ma main.",
+    "je_reponds_l_inverse_de_l_agent_velaryon_et_voici_pourquoi": "Velaryon a repondu NON sur un argument juste : ses six verrous tombaient tous dans la meme case — « seule la parole du souverain » —, un plan dont tous les verrous ont la meme portee ne trie plus rien, et sa resonance manquait (ce que Corlys poursuit est notre moyen, mal adresse). Les trois tests se retournent ici, un par un.",
+    "test_1_les_quatre_portees_trient_ils": {
+      "resultat": "OUI — les verrous d'Accalmie se repartissent sur les quatre cases, ce qui est le contraire exact du dossier Velaryon.",
+      "detail": [
+        "ON PEUT LE SAVOIR : le compte des lances et la presence d'Otto sous son toit depuis le 17e. Deux routes reelles et deja ecrites — info-borros-cite-l-acte (129.4.3, capitaine de Sweetport Sound, fiab 55) et les deux diffusions sortantes de ce lot (129.4.5 et 129.4.7). -> une activite d'observation.",
+        "ON PEUT AGIR DESSUS : Peyredragon n'a plus d'oiseau pour Accalmie, donc tout depart doit partir MAINTENANT pour arriver avant le 129.4.9 — neuf jours de cavalier, deux jours de marge. -> une action avec sa clef et son prix, et elle a une date limite.",
+        "SEULE LA PAROLE DU SOUVERAIN : nommer laquelle des quatre filles et lequel des princes. Le cahier de la reine dans books.json le dit deja mot pour mot — « Accalmie. Borros Baratheon se paie d'un nom — il a quatre filles — et un mariage ne m'appartient pas. A la reine. » -> une decision qui monte a la table.",
+        "HORS DE PORTEE : qu'il lise lui-meme. Borros est illettre ; rien de ce que le joueur ecrit ne l'atteint autrement que par la bouche d'un mestre qui n'est pas a lui. C'est un verrou reel, et l'ecrire evite d'y revenir tous les trois jours."
+      ]
+    },
+    "test_2_la_resonance_existe_t_elle": {
+      "resultat": "OUI, et elle est deja ECRITE DANS NOS PROPRES LIVRES avant que j'y touche.",
+      "pieces": [
+        "books.json, les affaires en attente : « Accalmie : neuf jours de silence, Otto y est depuis le 17e — La reine — SANS DATE ». Une affaire ouverte, portee par la reine elle-meme, et qui n'a pas de date. Un plan d'en face date qui existe la ou nous n'avons pas de date : c'est la definition d'un empechement.",
+        "books.json, les trois montures : « le Nord, Accalmie et le Conflans se disputent la meme course. Ne pas choisir revient a les abandonner toutes les trois sans l'avoir ecrit. » Accalmie est un tiers d'une capacite que nous n'avons pas.",
+        "books.json, la colonne des muets : « La troisieme colonne — ceux qui n'ont rien dit. Le Nord. Le Val. Le Conflans. TROIS MILLE LANCES A ACCALMIE... Cette colonne pese plus que les deux autres ensemble, et de tres loin. »",
+        "L'action 34000 de nos cahiers — « dans chaque grande maison, la version qui arrive la premiere porte notre sceau », avec Accalmie nommement dans sa portee — est DEJA perdue a Accalmie : Otto y est en personne depuis le 17e. Notre propre etat cible y est en echec, et rien ne le disait."
+      ]
+    },
+    "test_3_un_etat_cible_que_la_parole_du_souverain_n_atteint_pas": {
+      "resultat": "OUI, et c'est l'argument decisif — celui que Velaryon n'avait pas.",
+      "l_argument": "Borros veut deux noms sur sa table : une de ses filles, et LE PRINCE QU'ON LUI DONNE. Il ne s'agit pas d'un homme qu'on peut convaincre en lui parlant mieux : la reine n'a pas de prince a donner. Jacaerys est promis a Baela (personnages.json le porte : Baela se bat pour « sa reine et future belle-mere »), Lucerys a Rhaena, Joffrey a six ans. L'etat cible de Borros est donc hors d'atteinte de la parole de la reine, non parce qu'elle refuserait de parler, mais PARCE QU'ELLE N'A RIEN A DIRE. C'est exactement le test que l'agent Velaryon avait pose pour distinguer un allie contrarie d'un plan d'en face — et Accalmie le passe, aujourd'hui, sans condition de bascule a attendre.",
+      "consequence": "Le tri est immediat et il est douloureux : ou bien la reine invente une monnaie qui n'est pas un prince (une place au conseil, une charge, de l'or qu'elle n'a pas, un dragon montre), ou bien elle rompt une fiancaille et le paie chez Velaryon, ou bien Accalmie est vendue aux Verts le 129.4.9. Un plan qui pose cette alternative-la merite son fichier."
+    },
+    "ce_que_le_plan_76000_devrait_porter_quand_on_le_depechera": [
+      "ETATS CIBLES : trois mille lances arretees par ecrit sous les murs le 129.4.9 (source : etape borros-rassembler-lances, 12 jours au 27e) ; deux noms poses sur la table ; une reponse ECRITE d'Accalmie (source : hallis-la-reponse-par-ecrit, et c'est la quatrieme condition de deviation de mort-lucerys) ; une place au conseil du roi si les deux camps se taisent une lune (source : si_bloque de borros-attendre-offres).",
+      "VERROUS : les quatre ci-dessus, chacun avec sa route de fuite — c'est la premiere dette du process, et elle doit etre soldee dans ce plan-la puisqu'il s'ecrit apres.",
+      "TENSION centrale : une seule fille se vend une seule fois (clef 71012 : « l'exclusivite — Borros ne se donne qu'une fois »), pour deux acheteurs qui arrivent le meme jour dans la meme salle.",
+      "RESONANCE : nos 34000 (la version qui arrive la premiere), les trois montures du cahier, et la ligne SANS DATE d'Accalmie — qui devrait en sortir datee."
+    ]
+  },
+  "tranches_faute_d_information": [
+    {
+      "quoi": "LA LETTRE PERSONNELLE DE LA REINE DU 129.3.20 — CINQ LIGNES, « JE SOUHAITE VOUS VOIR, ET JE NE VOUS DEMANDE RIEN DANS CETTE LETTRE » (acte-087), avec le jour et le lieu laisses a la main de Borros.",
+      "le_probleme": "Cet acte se termine sur « LA SIGNATURE N'EST PAS ENCORE POSEE : la plume est en l'air ». Le lendemain, la reine signe SEPT lettres dont une pour Accalmie (acte-rhaenyra-signe-les-sept) — mais ces sept sont celles qu'Aurore a ecrites dans la nuit (acte-aurore-sept-lettres), et le pli qui est parti porte la nouvelle de Sombreval, pas l'invitation. Aucun acte, aucun pli, aucune entree d'info ne dit ce qu'est devenue la page de cinq lignes.",
+      "ce_que_j_ai_tranche": "Que la lettre personnelle N'EST PAS PARTIE et n'est jamais arrivee : la version d'Aurore l'a remplacee. Ce que Borros a recu est la lettre commune, signee de la main de la reine — et c'est ce que porte le lot (attitude_joueur : « sa lettre parlait d'une ville brulee sur la route, pas de lui »).",
+      "l_autre_branche_et_son_prix": "Si le MJ tranche l'inverse — la page de cinq lignes est partie —, alors Borros detient depuis le 24e une invitation ou LE JOUR ET LE LIEU sont laisses a sa main, son silence de sept jours devient une reponse et non une attente, et le declencheur arme sur un emissaire perd son objet : on ne lui demande plus de recevoir, il a deja ete invite. TOUT LE LOT BASCULE. Les deux versions sont defendables ; il faut en choisir une et la faire gagner partout."
+    },
+    {
+      "quoi": "ACCALMIE A-T-ELLE UN OISEAU POUR PEYREDRAGON ?",
+      "ce_que_l_etat_dit": "books.json et info-021 etablissent que PEYREDRAGON n'a plus d'oiseau pour Accalmie. La reciproque n'est ecrite nulle part, et lieux.json ne porte pas de champ roukerie sur ces deux places.",
+      "ce_que_j_ai_tranche": "Qu'Accalmie n'en a pas non plus (croyance n.3 et si_bloque de mestre-hallis). Motif : la regle du jeu est qu'un oiseau ne vole que vers la roukerie qui l'a fourni, et le seul oiseau de Peyredragon connu a Accalmie est celui qui y est arrive le 21e — il y EST, il n'y retournera pas. Consequence lourde et assumee : la reponse ecrite de Borros exige un cavalier de neuf jours, ce qui donne au joueur une marge de deux jours avant le 129.4.9 et fait de la date de depart la vraie decision. Si le MJ decide qu'Accalmie a des oiseaux de la baie, retirer la croyance n.3 de Hallis, son si_bloque, et l'ignore neuf de Borros — le reste du lot tient."
+    },
+    {
+      "quoi": "LES DATES DE ROUTE DES TROIS DIFFUSIONS AJOUTEES (129.4.4, 4.5, 4.7).",
+      "ancrage": "Aucune table ne donne un delai Accalmie -> Peyredragon par la mer. Ancrages retenus : info-borros-cite-l-acte fait remonter la scene du 30e par un capitaine de Sweetport Sound et arrive le 4.3, soit QUATRE jours pour un fait de salle passe par un valet et un quai. J'ai reutilise cette echelle : la Ver Blanc paie et va plus vite (4.5 pour un fait du 4.1-4.2), les patrons de coque vont plus lentement (4.7). Si le MJ a une autre echelle, les trois dates se corrigent ensemble.",
+      "ce_que_je_n_ai_pas_tranche": "L'age exact du rassemblement au moment ou les patrons de coque le voient. J'ai ecrit « depuis une semaine » sans date, parce qu'un patron de coque ne date pas ce qu'il n'a pas compte."
+    },
+    {
+      "quoi": "LE NOM DU MESTRE D'ACCALMIE.",
+      "ce_que_j_ai_tranche": "Aucun mestre d'Accalmie n'est nomme ni dans le canon connu ni dans l'etat. J'ai cree 'Hallis' — nom neuf, volontairement sans echo avec un nom canon, pour qu'un rapprochement ulterieur ne coute rien. Si le MJ connait le nom canon, la substitution est un simple renommage d'id : la tete, les etapes et le declencheur ne bougent pas."
+    },
+    {
+      "quoi": "L'AGE DES QUATRE FILLES.",
+      "ce_que_j_ai_tranche": "Cassandra nee en 111 (18 ans), Maris en 113 (16 ans). Rien dans l'etat ne les date. Le seul contrainte reelle est qu'elles soient a marier en 129, ce que info-037 affirme des quatre. Les deux cadettes ne sont pas datees parce qu'elles ne sont pas creees."
+    }
+  ],
+  "test_d_arret": {
+    "1_qui_parle_pour_elle_et_de_quoi_vit_il": "Lord Borros Baratheon, et il vit de huit mille lances et de quatre filles — 90 000 dragons au coffre, 4 000 la lune, une place, aucun suzerain. C'est le seul homme du tableau qui soit riche en hommes et pauvre en or : il ne peut donc etre paye qu'en mariage, et c'est ce qui rend son prix impossible a marchander.",
+    "2_que_veut_elle_cette_lune_et_qu_est_ce_qui_l_en_empeche": "Que deux noms soient poses sur sa table avant que le compte de ses lances soit arrete, le 129.4.9 — parce qu'apres, il devra choisir devant des hommes rassembles (le cout est ecrit dans sa propre etape). L'en empeche : Otto Hightower loge chez lui depuis onze jours sans avoir ecrit un nom, et Peyredragon n'a rien envoye depuis le 21e — ni ne peut plus, faute d'oiseau.",
+    "3_par_quelle_nouvelle_apprendra_t_elle_ce_que_le_joueur_vient_de_faire": "Par la mer et par des marchands, en sept jours et a 35 de fiabilite (diffusion du 129.4.4) — et par rien d'autre, puisque le corbeau d'Accalmie est depense. Tout le reste exige que le joueur envoie un homme, neuf jours, avec une marge de deux jours sur le 129.4.9. C'est la reponse la plus dure des quatre maisons de la serie, et c'est ce qui fait l'interet de celle-ci.",
+    "4_par_quelle_bouche_le_joueur_apprendra_t_il_qu_elle_a_bouge": "Trois, dans cet ordre, et la premiere existe deja sans que je l'aie ecrite : le capitaine de Sweetport Sound tenant d'un valet d'Accalmie (info-borros-cite-l-acte, 129.4.3, fiab 55) ; la Ver Blanc contre paiement, par Mysaria (129.4.5, fiab 80) — qui donne les deux noms manquants et arrive a temps ; les deux patrons de coque au bureau de port, par Rulf Corne et Aldon Hask (129.4.7, fiab 50), qui montrent l'ost se former sans dire pour qui. PALIER A CONFIRME."
+  },
+  "gardes_a_passer_apres_application": [
+    "python scripts/appliquer.py ouvrir-baratheon.json           (blanc — deja passe par l'agent, sans erreur)",
+    "python scripts/appliquer.py ouvrir-baratheon.json --vraiment",
+    "python scripts/tick.py --verifier                            (aucun depassement attendu : quatre tetes royaume, budget illimite en acteurs, 3/2/1 respecte partout)",
+    "python scripts/evaluer.py --murs --portees --sourds          (ne vaudra vraiment que quand le plan 76000 existera)"
+  ],
+  "applique_le": "2026-08-09T19:31:03"
+}

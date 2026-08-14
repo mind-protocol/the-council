@@ -185,9 +185,15 @@ window.Carte = (() => {
       ") scale(" + t.toFixed(4) + ')">' + armes + "</g>";
   }
 
+  let nCarte = 0;                   // pour numéroter les <defs> d'une page
   function svgCarte(c, opts) {
     const o = opts || {};
     const m = o.marques || marques();
+    // Ce qu'on est en train de DIRE. Le temps d'une démonstration, ce que la
+    // main pose parle et le reste de la table se tait — c'est la seule façon
+    // qu'une carte a de distinguer le propos du thème. Passé la braise des
+    // neuves, tout revient au même poids : plus personne ne parle.
+    const dit = o.dit || (neuves.size ? neuves : null);
     // Une seule échelle pilote épaisseurs et corps de texte, pour que la
     // vignette serrée et la grande table se ressemblent.
     let s = '<svg viewBox="' + c.vb + '" xmlns="http://www.w3.org/2000/svg"' +
@@ -198,17 +204,33 @@ window.Carte = (() => {
     // La mer d'abord : sans elle, la côte ne sépare rien de rien. Puis le
     // haut-fond — un large trait pâle collé au rivage, comme sur les cartes
     // gravées : c'est lui qui fait « lire » le trait de côte avant la couleur.
+    // La côte de Westeros est le plus gros tracé de tous (~147 Ko) et on la
+    // dessine TROIS fois : en haut-fond, en terre, en côte. Trois copies du
+    // même `d`, c'est trois analyses de chemin par carte — on la déclare une
+    // fois et on la référence. L'identifiant est numéroté par carte : plusieurs
+    // vignettes cohabitent dans la page, et deux `id` égaux feraient pointer
+    // les deux sur la première.
+    const idt = "terre-" + (++nCarte);
+    s += '<defs><path id="' + idt + '" d="' + G.terre + '"/></defs>';
+    const cote = (cl, extra) => '<use href="#' + idt + '" class="' + cl + '"' +
+      (extra || "") + "/>";
     s += '<rect class="mer" x="' + c.x + '" y="' + c.y + '" width="' + c.l +
       '" height="' + c.h + '"/>' +
-      '<path class="hautfond" d="' + G.terre + '" stroke-width="' + (5 * c.ech).toFixed(2) + '"/>';
+      cote("hautfond", ' stroke-width="' + (5 * c.ech).toFixed(2) + '"');
     Object.keys(G.fonds).forEach((nom) => {
       if (G.fonds[nom]) s += '<path class="lointain" d="' + G.fonds[nom] + '"/>';
     });
-    s += '<path class="terre" d="' + G.terre + '"/>';
+    s += cote("terre");
     // Le relief passe SOUS les teintes de région : c'est une ombre du sol, pas
     // une couche d'information. Deux bandes seulement — là où le pays se
     // soulève, là où il devient infranchissable.
-    if (G.relief) {
+    // Le relief et les rivières sont les deux plus gros tracés de `geo.js`
+    // (~150 Ko chacun) et ne se VOIENT pas au timbre-poste : au grain de la
+    // vignette, une rivière fait un demi-pixel de bavure sous les pièces. Une
+    // chronique qui en porte dix rendait 6 Mo de géométrie à chaque repaint —
+    // c'est ce qui faisait ramer le défilement. On les saute donc au léger, et
+    // la vignette y gagne aussi en lisibilité.
+    if (G.relief && !o.leger) {
       if (G.relief.collines) s += '<path class="relief-collines" d="' + G.relief.collines + '"/>';
       if (G.relief.montagnes) s += '<path class="relief-montagnes" d="' + G.relief.montagnes + '"/>';
     }
@@ -220,12 +242,12 @@ window.Carte = (() => {
     // Le réseau entier, navigable ou non : c'est lui qui donne son grain au
     // pays entre deux places. Les provinces d'eau (`eaux`) se peignent
     // par-dessus, elles sont plus larges et plus franches.
-    if (G.rivieres) {
+    if (G.rivieres && !o.leger) {
       s += '<path class="rivieres" d="' + G.rivieres +
         '" stroke-width="' + (0.5 * c.ech).toFixed(3) + '"/>';
     }
     if (G.eaux) s += '<path class="eaux" d="' + G.eaux + '"/>';
-    s += '<path class="cote" d="' + G.terre + '"/>';
+    s += cote("cote");
     // Les grandes routes, par-dessus la côte : une chaussée longe le rivage,
     // elle ne passe pas dessous. Le réseau du mod en compte mille ; on n'a
     // gardé que celles qui portent un nom, et elles suivent le tracé réel.
@@ -251,7 +273,7 @@ window.Carte = (() => {
 
     // Les fils passent SOUS les places et les pièces : une marche doit filer
     // derrière les murs qu'elle contourne, pas par-dessus.
-    if (window.Jetons) s += Jetons.traits(m.traits, c.ech, neuves);
+    if (window.Jetons) s += Jetons.traits(m.traits, c.ech, neuves, { dit, seulement: o.seulement });
 
     // Les places de la baie se tiennent à cinq lieues les unes des autres : au
     // cadrage du royaume, leurs bannières feraient une bouillie d'étoffe. Une
@@ -325,7 +347,7 @@ window.Carte = (() => {
     });
 
     if (window.Jetons) {
-      s += Jetons.pieces(m.jetons, c.ech, { neuves, cadre: c });
+      s += Jetons.pieces(m.jetons, c.ech, { neuves, cadre: c, dit, seulement: o.seulement });
     }
     return s + "</svg>";
   }
@@ -758,7 +780,17 @@ window.Carte = (() => {
     const seul = { jetons: montre.jetons || [], traits: montre.traits || [],
                    zones: montre.zones || [] };
     const c = cadre(montre.cadre && montre.cadre !== "garder" ? montre.cadre : "auto", seul);
-    return svgCarte(c, { marques: m, classe: "carte-mini", grand: !!o.noms });
+    // La vignette est la CITATION du geste : ce qu'il pose y parle toujours,
+    // même relue trois jours plus tard, quand la braise des neuves est éteinte
+    // depuis longtemps. C'est pourquoi elle porte son `dit` en propre.
+    const dit = new Set();
+    ["jetons", "traits", "zones"].forEach((k) =>
+      (montre[k] || []).forEach((x) => { if (x.id) dit.add(x.id); }));
+    // `seulement` : la vignette ne porte QUE le geste. Le sol d'une carte, ce
+    // sont la côte, les places et leurs bannières — pas quatre-vingt-dix pièces
+    // pâles empruntées à ce que la table portait par ailleurs.
+    return svgCarte(c, { marques: m, classe: "carte-mini", grand: !!o.noms, dit,
+      leger: true, seulement: true });
   }
 
   // Changement de scène : la table se nettoie de ce qui n'était qu'un geste.
@@ -783,6 +815,11 @@ window.Carte = (() => {
           traits: d.traits || [],
           zones: d.zones || [],
         };
+        // Les ids de l'état ne sont pas tous ceux de la carte : on donne à
+        // Jetons de quoi retrouver une place par son alias, sans quoi une pièce
+        // posée sur `repos-des-freux` n'a pas de coordonnée et disparaît en
+        // silence.
+        if (window.Jetons && Jetons.aliaser) Jetons.aliaser(etat.lieux);
         redessiner();
       })
       .catch(() => {});
@@ -796,6 +833,22 @@ window.Carte = (() => {
     if (!G) return;                       // geo.js absent : pas de carte
     rafraichir();
     setInterval(rafraichir, 60000);
+    // L'endroit, sur la table peinte, c'est l'affaire qu'on tient seule : la
+    // table cadrée sur un incident n'est pas la table du royaume.
+    if (window.Nav) {
+      Nav.enregistrer("royaume", {
+        clefs: ["tenu"],
+        etat: () => ({ tenu: seul }),
+        poser: (p) => {
+          const t = p.tenu || null;
+          if (t === seul) return true;
+          if (!etat.lieux.length) return false;   // la table n'est pas encore servie
+          if (seul) tenir(seul);          // relâcher ce qu'on tenait
+          if (t) tenir(t);
+          return true;
+        },
+      });
+    }
   });
 
   return { illustrer, miniature, effacer, ouvrir: ouvrirTable, fermer: fermerTable,

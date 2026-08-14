@@ -1,0 +1,65 @@
+[  0.001s] boucle.demarrage         · sec=False · une_fois=False · heartbeat_s=5.0
+[  0.004s] cycle.depart            
+[  0.008s] horloge.lecture         
+[  0.010s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=77460.0
+[  0.012s] graphe.lecture          
+[  0.080s] graphe.charge            · noeuds=1778 · aretes=4650
+[  0.082s] diffusion.importance    
+[  0.294s] energie.polarites_horloge · moyenne_minute=67000281.75 · ecart_max_minutes=950.25 · emetteurs=1 · absorbeurs=97 · neutres=0
+[  0.317s] energie.transfert_horloge · transfere=10.699 · propositions=1018 · acteurs=98
+[  0.320s] energie.graphe           · dt_s=1440.0 · integration=0.964103 · noeuds=1778 · energises=191 · total=1164.428 · pic=pers:rhaenyra · maximum=100.0
+[  0.322s] diffusion.calendrier    
+[  0.344s] energie.calculee         · acteurs=9 · maximum=21.867
+[  0.352s] selection.elue           · acteur=robert-quince · energie=21.867 · tache=11030 · energie_tache=1.922 · budget_s=21 · flux_horloge=absorbe · ecart_horloge_min=-340.75 · horloge_pj=rhaenyra
+[  0.355s] acteur.choisi            · acteur=robert-quince · energie=21.867 · importance=0.218263 · budget=21
+[  0.356s] tache.choisie            · id=11030 · distance=1 · creee=False · energie=1.922
+ACTIVATION  robert-quince  energie 21.87 · budget 21  importance 0.218
+  tache 11030 · distance 1 · 🌫️ Choisir le point de débarquement pour son INVISIBILITÉ
+  front aurore-inchauspe · +77460.0s depuis rhaenyra
+[  0.357s] energie.reservee         · acteur=robert-quince · valeur=21.867 · plafond=21
+[  0.368s] appel.dossier            · acteur=robert-quince · tache=11030
+[  0.421s] appel.systeme_narrateur  · acteur=robert-quince · caracteres=130537
+[  0.423s] appel.systeme_pnj        · acteur=robert-quince · caracteres=55509
+[  0.424s] appel.ouverture          · acteur=robert-quince · caracteres=422 · budget=21
+[  0.431s] cli.depart               · acteur=narrateur-local:cour · session=2f84171c-4485-4f60-95ff-58ff1a793945 · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[  5.140s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[  5.460s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.ouverture · secondes=5.0
+[  6.619s] cli.rate_limit_event     · sous_type=None
+[ 10.464s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.ouverture · secondes=10.0
+[ 11.485s] cli.texte                · contenu=```json { "appel_pnj": { "qui": "robert-quince", "message": "Ser Robert — vous êtes dans la cour, le jeune Jacaerys à quelques pas, et l'on attend de vous le point de débarquement…
+[ 11.519s] cli.resultat             · erreur=False · duree_ms=6753 · cout=0.6030719999999999 · entree=2 · sortie=228 · caracteres=507
+[ 13.083s] narrateur.reveille_pnj   · acteur=robert-quince · caracteres=425
+[ 13.179s] cli.depart               · acteur=robert-quince · session=ec72293a-7523-4ff1-83d7-142ddbde3457 · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[ 15.505s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=3
+[ 16.151s] cli.rate_limit_event     · sous_type=None
+[ 18.233s] cli.heartbeat            · acteur=robert-quince · phase=pnj.tentative · secondes=5.0
+[ 23.242s] cli.heartbeat            · acteur=robert-quince · phase=pnj.tentative · secondes=10.1
+[ 27.320s] cli.texte                · contenu={ "tentative": { "verbe": "mener", "quoi": "Je mène Jacaerys du haut de la cour jusqu'au parapet qui domine la pointe, et là, le doigt sur l'eau, je lui montre les coques étrangèr…
+[ 28.246s] cli.heartbeat            · acteur=robert-quince · phase=pnj.tentative · secondes=15.1
+[ 28.384s] cli.resultat             · erreur=False · duree_ms=13213 · cout=0.290443 · entree=2 · sortie=645 · caracteres=1476
+[ 29.976s] pnj.tentative_valide     · acteur=robert-quince · verbe=mener · caracteres=1429
+[ 29.978s] narrateur.arbitrage      · acteur=robert-quince · caracteres=2044
+[ 29.979s] cli.depart               · acteur=narrateur-local:cour · session=2f84171c-4485-4f60-95ff-58ff1a793945 · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[ 32.502s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[ 35.020s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=5.0
+[ 35.263s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 36.697s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 38.123s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 39.524s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 40.048s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=10.1
+[ 40.940s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 42.350s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 43.778s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 43.894s] cli.assistant            · bloc=thinking
+[ 45.087s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=15.1
+[ 50.134s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=20.1
+[ 55.160s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=25.2
+[ 60.170s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=30.2
+[ 65.204s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=35.2
+[ 70.216s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=40.2
+[ 75.219s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=45.2
+[ 76.905s] cli.texte                · contenu=```json { "qui": "robert-quince", "activation": { "tache": {"id": "11030", "quoi": "🌫️ Choisir le point de débarquement pour son INVISIBILITÉ", "creee": false}, "issue": "avance",…
+[ 76.929s] cli.rate_limit_event     · sous_type=None
+[ 76.997s] cli.resultat             · erreur=False · duree_ms=45051 · cout=0.1386245 · entree=2 · sortie=3907 · caracteres=8010
+[ 78.653s] rapport.extraction       · acteur=robert-quince
+[ 78.767s] activation.annulee       · acteur=robert-quince · raison=RuntimeError · erreur=activite 1 : source de resultat non touchee

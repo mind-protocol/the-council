@@ -29,7 +29,8 @@
       "sarro-vaeth",
       "merra-sath"
     ],
-    "occupe": true
+    "occupe": true,
+    "alterne_avec": "marlo-vasse"
   },
   {
     "jeton": "varech-ancre-5278",
@@ -54,7 +55,9 @@
       "waltyr-poix",
       "ollo-marran"
     ],
-    "occupe": true
+    "occupe": true,
+    "alterne_avec": "rhaenyra",
+    "assis_a": 1786649574.843
   },
   {
     "jeton": "equerre-plomb-2718",
@@ -64,7 +67,19 @@
     "pnj": [
       "yohanna-reynolds"
     ],
-    "occupe": true,
+    "occupe": false,
     "note": "Siege cree le 28e j., 3e lune, an 129. VACANT pour l'instant : il a donc une tete dans intentions.json et le monde le joue comme n'importe quel absent. Pour s'y asseoir : python scripts/sieges.py --asseoir nicolas-reynolds --vraiment (la tete part alors dans etat/archive/tetes/)."
+  },
+  {
+    "jeton": "corneille-guet-9042",
+    "personnage_id": "corneille",
+    "nom": "Corneille",
+    "role": "regie",
+    "regie": true,
+    "pnj": [],
+    "occupe": true,
+    "note": "Siege de REGIE, pas un personnage du monde : Corneille n'a ni fiche, ni tete, ni horloge, et n'entre dans aucune boucle (scripts/occupation.py l'ecarte du roster mesure). Elle se tient au chemin de ronde de Peyredragon — `salle` et `lieu` ci-dessus sont son poste d'observation, declare ici et nulle part ailleurs : rien ne la met dans presence.json, rien ne l'en sort. Elle voit le flux entier, sans le tri par `pour`, et ouvre le fil refait d'un homme en touchant son visage sur le plan du chateau.",
+    "salle": "chemin-ronde",
+    "lieu": "Le chemin de ronde, Peyredragon"
   }
 ]

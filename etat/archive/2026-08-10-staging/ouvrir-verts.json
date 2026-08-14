@@ -1,0 +1,362 @@
+{
+  "genere_le": "129.3.28 — ouverture de la maison TARGARYEN (BRANCHE VERTE), palier A, etapes 1 a 4",
+  "joueur": null,
+  "avertissement": "Proposition d'un agent. Ne touche PAS etat/. Le MJ relit, arbitre, applique. L'etape 5 (le plan dans plans.json) n'est PAS ici : elle se derive par scripts/depecher.py une fois les tetes appliquees. Plage d'ids reservee pour les Verts : 74000-74999.",
+  "empreintes": {
+    "intentions": "4f00e355144fa6597b96342471a55ac12755e752",
+    "evenements": "29a5c52a45ae09a2829f527e9787108544a72664",
+    "personnages": "a2e7534bb91169a8f44019aa544f95167a0ee085",
+    "monde": "c4f54353d9dc7559642928425d908f3d3ba29271",
+    "lieux": "ada66c0b8b19f31241bcbff3ea7dadef6f0025c9"
+  },
+
+  "etape_1_le_canon_recolte": {
+    "note": "Les etats cibles dates de la cour verte et leurs verrous, deja rediges par l'Histoire. Releve de etat/evenements.json, type canon, statut a-venir.",
+    "cibles": [
+      {
+        "evenement": "mort-lucerys",
+        "date": "129.4.9",
+        "importance": 95,
+        "acteurs_verts": ["aemond"],
+        "conditions": [
+          "annule si Lucerys n'est pas envoye a Accalmie",
+          "annule si l'emissaire est escorte par un dragon adulte ou par un autre dragon monte",
+          "annule si Aemond n'est pas a Accalmie au meme moment",
+          "devie si Borros a deja donne sa reponse par ecrit avant l'arrivee de l'emissaire"
+        ],
+        "ce_que_ca_impose_a_la_cour": "La troisieme condition est un ORDRE DE PLACEMENT : pour que le canon tienne, Aemond doit etre a Accalmie le 129.4.9. Or la seule piece qui l'y met est l'etape otto-accalmie (5 jours restants au 27e) et la clef 71012 du plan hightower, dont l'echeance est ecrite au 129.4.9 EXACTEMENT. La cour n'a donc pas a pousser Aemond : le plan de son grand-pere l'y porte. C'est la charniere du camp vert, et elle est deja armee."
+      },
+      {
+        "evenement": "chute-otto",
+        "date": "129.7.5",
+        "importance": 70,
+        "acteurs_verts": ["aegon-ii", "otto", "criston"],
+        "conditions": ["si les serments et achats d'Otto ont produit des succes visibles avant cette date"],
+        "ce_que_ca_impose_a_la_cour": "La Main est REVOCABLE, et le revocateur est le chef. C'est la seule raison pour laquelle la cour verte est un objet distinct du pilier Hightower : Otto porte le plan, Aegon porte le pouvoir de le defaire. Verrou de fait n.2 ci-dessous."
+      },
+      {
+        "evenement": "sac-sombreval",
+        "date": "129.6.1",
+        "importance": 90,
+        "acteurs_verts": ["criston"],
+        "conditions": [
+          "retarde tant que Criston n'a pas arrache a Otto l'or de l'ost",
+          "devie si Sombreval est tenue par une garnison et un dragon poste",
+          "devie si la Couronne est prise ailleurs (Conflans leve, Port-Real affamee par le Gosier)",
+          "aggrave si la reine ne rend pas les quarante prisonniers verts des celliers de Gunthor"
+        ],
+        "ce_que_ca_impose_a_la_cour": "La premiere condition est un verrou d'ARGENT, pas de volonte : c'est la meme bourse que 71004. La troisieme nomme le Gosier — et le Gosier est ferme depuis le 24e. La cour ne le sait pas encore comme une cause."
+      },
+      {
+        "evenement": "bataille-repos-des-freux",
+        "date": "129.9.5",
+        "importance": 90,
+        "acteurs_verts": ["criston", "aegon-ii", "aemond"],
+        "conditions": ["si sac-sombreval a ete devie", "si Rhaenys n'est pas envoyee seule"],
+        "ce_que_ca_impose_a_la_cour": "Etat cible lointain. Ses effets ecartent Aegon et font d'Aemond Protecteur du Royaume — ce qui confirme Aemond comme LE contestataire interieur, et non Alicent."
+      },
+      {
+        "evenement": "sang-et-fromage",
+        "date": "129.5.12",
+        "importance": 90,
+        "acteurs_verts": ["helaena"],
+        "conditions": ["ne part que si un fils de Rhaenyra est tue ou blesse"],
+        "ce_que_ca_impose_a_la_cour": "La cour est CIBLE, pas actrice. C'est ce qui justifie l'etape permanente d'Helaena et le doublement de garde d'Alicent, deja ecrits. Rien a ajouter : la cour n'a aucune source pour l'anticiper."
+      },
+      {
+        "evenement": "chute-port-real",
+        "date": "130.5.1",
+        "importance": 95,
+        "conditions": ["si l'equilibre militaire a ete bouleverse avant"],
+        "ce_que_ca_impose_a_la_cour": "L'etat cible final, negatif : la cour perd sa ville sans siege. Hors portee du palier A, note pour memoire."
+      }
+    ]
+  },
+
+  "etape_2_les_gens": {
+    "note": "Trois retenus, aucun cree. Justifications tranchees sur pieces.",
+    "chef": {
+      "id": "aegon-ii",
+      "tranche": "AEGON, et non Otto — malgre les apparences.",
+      "pourquoi": "Otto GOUVERNE, mais sa tete est deja l'echine du plan hightower : il est porteur de 71010, 71012, 71013, et office de 71022, 71023, 71024, 71028. Si le chef des Verts est Otto, le plan des Verts est une copie de celui de Hightower et la table n'y gagne rien. La cour existe comme objet distinct exactement la ou le roi peut defaire la Main : canon chute-otto (129.7.5) et action 71027 du plan hightower, ou Aegon paie de sa propre bourse SANS passer par Otto. Le chef est donc celui qui tient la parole et la bourse criee.",
+      "echelle_proposee": "orbite (etait royaume)"
+    },
+    "contestataire_interieur": {
+      "id": "aemond",
+      "tranche": "AEMOND, et non Alicent.",
+      "pourquoi": "Alicent conteste la METHODE (elle ecrit a Rhaenyra derriere son pere, etape alicent-de-femme-a-femme) mais ne conteste pas qui porte la couronne : elle veut que ses enfants vivent. Aemond conteste la PERSONNE ('il aurait fait un meilleur roi et chacun le sait tout bas'), et le canon bataille-repos-des-freux le fait Protecteur du Royaume. Surtout : sa tete date du 129.3.17, onze jours de retard — et comme la tolerance de 'royaume' est de quinze jours, RIEN NE LE SIGNALE. La tete qui porte le canon du 129.4.9 est celle que personne ne relit. C'est la faute la plus chere du camp vert aujourd'hui.",
+      "echelle_proposee": "orbite (etait royaume)"
+    },
+    "homme_de_metier": {
+      "id": "criston",
+      "tient": "les hommes et la porte",
+      "pourquoi": "C'est par lui qu'un chiffre sort : l'ost de la Couronne, ce qu'il coute par jour, ce qu'il peut lever sans un dragon d'or (son si_bloque dit deja 'quinze cents plutot que rien'). Il est deja en orbite avec une tete pleine ; on ne la refait pas, on lui ajoute l'etape qui PRODUIT le chiffre.",
+      "echelle_proposee": "orbite (inchange)"
+    },
+    "le_trou_assume": {
+      "quoi": "PERSONNE NE TIENT L'ARGENT dans l'etat.",
+      "detail": "Il n'existe aucun maitre des deniers a la cour verte dans personnages.json (Tyland Lannister, le nom canon, n'y est pas). Otto tient le tresor par defaut, au titre de la Main. Ce n'est pas un oubli de ma part : c'est exactement pourquoi l'action 71026 du plan hightower ('arreter la depense pour les trois') est sortie SANS TITULAIRE. Je n'ai pas cree Tyland — l'instruction etait de ne pas inventer de gens, et Criston suffit a faire sortir des chiffres. Si le MJ veut que la bourse ait une bouche, c'est une fiche a creer et cela se decide en amont, pas dans une proposition d'agent.",
+      "consequence_ecrite": "L'etape neuve 'aegon-le-compte-du-tresor' (ci-dessous) fait sortir le chiffre par le ROI et non par un maitre des deniers : il envoie chercher le registre. C'est plus laid, plus lent, et plus vrai."
+    },
+    "laisses_en_l_etat": {
+      "alicent": "orbite, deux declencheurs (plafond atteint), cinq croyances (plafond atteint). Rien a ajouter sans retirer. Sa date_maj (129.3.25) est a trois jours : a la limite de la tolerance d'orbite, a rafraichir au prochain tick.",
+      "larys": "royaume : il ne pese pas sur le cours de la guerre, il pese sur les gens. Un declencheur a armer (il en a zero) et un ignore a poser — voir notes_pour_le_mj.",
+      "helaena": "royaume, INTOUCHEE. Elle n'est pas actrice de la guerre, elle en est la cible (canon sang-et-fromage). Lui ecrire un plan de cour serait la faire mentir.",
+      "orwyle": "orbite. Cinq croyances (plafond). Une etape permanente a lui ajouter : la manche cousue est la seule porte que le joueur puisse ouvrir dans cette cour."
+    }
+  },
+
+  "etape_3_les_ressources": {
+    "note": "maisons.json et mains.json ne font PAS partie du vocabulaire de scripts/appliquer.py — aucune mutation ne peut les porter. Tout ce bloc est donc a la main, par le MJ. Chiffres releves tels quels, pas inventes.",
+    "etat_actuel_maison_targaryen_vert": {
+      "or": 600000,
+      "revenus_lune": 30000,
+      "levees_dispo": 3500,
+      "levees_max": 4500,
+      "statut": "intacte",
+      "siege_id": "port-real",
+      "places_tenues": "port-real (lieux.controle_id = maison-targaryen-vert). Une seule. C'est un chiffre qui devrait faire peur a la cour et ne lui fait rien.",
+      "guet_de_port_real": "AUCUNE entree d'etat ne le porte : ni effectif, ni commandant. Les seuls hommes du Guet ecrits sont waltyr-poix, sergent a la porte de la Gadoue (tete royaume), et l'on ne sait rien au-dessus de lui. A ne pas combler par invention : c'est un trou reel, et il est du cote du joueur, dont les deux yeux sont entres au Culpucier le 27e."
+    },
+    "modifications_proposees_a_la_main": [
+      {
+        "fichier": "etat/maisons.json",
+        "cible": "maison-targaryen-vert",
+        "champ": "statut",
+        "de": "intacte",
+        "vers": "mobilisee",
+        "pourquoi": "criston-ost est en-cours avec 20 jours restants et le canon 6.1 n'attend que l'or. Une maison qui leve un ost n'est pas 'intacte' au sens ou l'est Lannister. Facultatif, mais c'est la seule ligne de maisons.json qui ment aujourd'hui."
+      },
+      {
+        "fichier": "etat/maisons.json",
+        "cible": "maison-targaryen-vert",
+        "champ": "revenus_lune",
+        "de": 30000,
+        "vers": "a decider par le MJ — je NE tranche PAS",
+        "pourquoi": "Le Gosier est ferme aux marchands depuis le 24e (acte corlys-la-police-des-mers-sans-nom-28e : 'rien n'est monte a Port-Real par l'eau depuis le 24'). Les revenus d'une ville portuaire dont le port est mort ne sont plus ceux d'avant. Mais le chiffre de la coupe est un arbitrage de conception, pas une deduction : je le signale, je ne l'ecris pas. C'est aussi ce qui rend le verrou de fait n.1 mordant."
+      }
+    ],
+    "mains_json": {
+      "verdict": "UNE SEULE main merite d'exister, et je la propose sans l'ecrire.",
+      "id_propose": "bourse-de-la-couronne",
+      "justification_en_une_phrase": "Sa mesure atteint le joueur par deux bouches deja en place — ses deux yeux au Culpucier entendront si un homme est venu reclamer la prime et s'il a ete paye — et par un empechement dur : le 'cout' de criston-ost ('l'or du tresor qu'Otto ne veut pas lacher') et la condition du canon 6.1 se verifient arithmetiquement sur elle au lieu d'etre juges au doigt mouille.",
+      "forme_proposee": {
+        "id": "bourse-de-la-couronne",
+        "quoi": "Ce qui reste au coffre du Donjon Rouge, et ce que le roi a promis sans le gager",
+        "porteur": {"type": "personnage", "id": "otto"},
+        "lieu_id": "port-real",
+        "mandat": null,
+        "mesure": [
+          {"id": "dragons-au-coffre", "quoi": "dragons d'or au coffre de la Couronne", "unite": "dragons", "valeur": 600000},
+          {"id": "promis-non-gage", "quoi": "ce que la prime criee par le roi le 23e engage et que rien ne garantit", "unite": "dragons", "valeur": "a chiffrer par le MJ — le montant crie n'est ecrit nulle part dans l'etat, seulement le fait qu'il n'est pas gage (parole reine-tranche-la-prime-nest-pas-gagee, 129.3.25)"}
+        ],
+        "seuils": [
+          {"id": "le-premier-reclamant-paye", "quoi": "un homme est paye sur la prime devant temoins", "sens": "franchi quand aegon-le-premier-reclamant aboutit", "ce_que_ca_monte": "le porteur de la bourse cesse d'etre Otto dans les faits"},
+          {"id": "l-or-de-l-ost-verse", "quoi": "Criston obtient l'or de l'ost", "sens": "leve la premiere condition du canon 6.1"}
+        ]
+      },
+      "avertissement": "Format a verifier contre docs/schema.md avant ecriture (les cles de 'seuils' ci-dessus sont indicatives). Et une main sans porteur present ne remonte rien : si Otto tombe le 129.7.5, cette main devient muette, ce qui est exactement le comportement voulu."
+    }
+  },
+
+  "etape_4_les_tetes": {
+    "note": "Ce que les mutations ci-dessous font, en clair. Les declencheurs ne sont PAS mutables par appliquer.py (le vocabulaire ne les porte pas) : ils sont dans notes_pour_le_mj et se posent a la main.",
+    "promotions": [
+      "aegon-ii : royaume -> orbite. Il est le chef, il est a quatre jours de mer du joueur, et il decide seul (son 'accompli' dit qu'il a confondu n'etre pas contredit avec etre obei). Un chef adverse en royaume n'est relu qu'une fois par quinzaine.",
+      "aemond : royaume -> orbite. Tete perimee de onze jours, et c'est elle qui porte le canon du 129.4.9. En royaume il n'a droit qu'a un declencheur : il en faut deux, le vol et l'ambassade."
+    ],
+    "cout_a_payer": "orbite est a 20/20 (plafond de scripts/tick.py). Ces deux promotions la portent a 22 et tick.py --verifier le dira. Ce n'est pas a un agent de choisir qui redescend : voir le rapport."
+  },
+
+  "mutations_proposees": [
+
+    {"table": "intentions", "cible": "aegon-ii", "operation": "tete",
+     "champs": {"echelle": "orbite", "date_maj": {"annee": 129, "lune": 3, "jour": 28}},
+     "pourquoi": "Le chef du camp adverse. Voir etape_2."},
+
+    {"table": "intentions", "cible": "aegon-ii", "operation": "croyance_ajouter",
+     "valeur": "Rien ne remonte plus la riviere depuis le vingt-quatrieme jour et les marchands crient a la porte de la Nera : sa soeur affame sa ville, et c'est la premiere chose qu'elle lui fait qu'il comprenne tout seul",
+     "pourquoi": "FAUSSE DANS SA CAUSE, et c'est le point : le Gosier est ferme par lord Corlys, de sa propre autorite, a demi et sans nom (acte corlys-la-police-des-mers-sans-nom-28e). La cour observe un fait vrai — le port est mort — et l'attribue a la reine. Source de la croyance : ce que le roi voit de sa fenetre et ce qu'on crie a la porte de la Nera, depuis le 129.3.24."},
+
+    {"table": "intentions", "cible": "aegon-ii", "operation": "croyance_ajouter",
+     "valeur": "Personne ne l'a repris quand il a crie la prime devant toute la salle : donc il peut decider seul, et il n'a pas besoin de sa Main pour le faire",
+     "pourquoi": "Tiree mot pour mot de l'accompli de son etape aegon-exiger-vengeance (129.3.23). C'est la croyance qui arme le canon chute-otto."},
+
+    {"table": "intentions", "cible": "aegon-ii", "operation": "ignore_ajouter",
+     "valeur": "Ce qu'il reste vraiment au coffre, et que la fermeture de l'eau a deja coupe les douanes de sa ville — personne ne lui a jamais dit un chiffre, et il n'a jamais demande",
+     "pourquoi": "L'ignore qui explique sa conduite : il paie de sa main parce qu'il croit la bourse sans fond. Verrou de fait n.1."},
+
+    {"table": "intentions", "cible": "aegon-ii", "operation": "etape_ajouter",
+     "valeur": {
+       "id": "aegon-le-compte-du-tresor",
+       "quoi": "Exiger d'Otto le chiffre exact du coffre, dit tout haut devant le conseil — puisqu'il paie de sa main et qu'on ne lui a jamais rien dit",
+       "etat": "en-cours",
+       "jours_restants": 4,
+       "depend_de": [],
+       "cout": ["qu'Otto vienne avec le registre du tresor et non avec une phrase", "de se lever avant le vin, ce qu'il ne fait qu'un matin sur trois"],
+       "si_bloque": "Si Otto lui repond par une phrase, il envoie deux hommes de la Garde chercher le registre et le fait lire tout haut par Orwyle, devant la salle — et il apprend le chiffre en meme temps que tout le monde."
+     },
+     "pourquoi": "L'etape qui FAIT SORTIR UN CHIFFRE, exigee par le palier A. Elle passe par le roi faute de maitre des deniers (voir le trou assume). Elle mord sur le verrou 71004 du plan hightower sans le resoudre : connaitre le chiffre n'arrete pas la depense pour les trois — 71026 reste sans titulaire."},
+
+    {"table": "intentions", "cible": "aemond", "operation": "tete",
+     "champs": {"echelle": "orbite",
+                "intention": "Obtenir de voler — sur Sombreval, sur Peyredragon, sur n'importe quoi — avant que la honte ne s'installe ; et se faire donner l'ambassade d'Accalmie plutot que la voir confiee a un mestre, parce qu'une ambassade est un pretexte a sortir Vhagar que personne ne peut lui refuser.",
+                "date_maj": {"annee": 129, "lune": 3, "jour": 28}},
+     "pourquoi": "Tete perimee de onze jours, et c'est celle qui porte le canon 129.4.9. L'intention est resserree sur la seule piece qui l'y mene : l'ambassade."},
+
+    {"table": "intentions", "cible": "aemond", "operation": "croyance_ajouter",
+     "valeur": "Un dragon a longe la cote de la baie deux jours de suite, de Sombreval a Repos-des-Freux, et on dit dans la ville que c'etait ELLE qui montait",
+     "pourquoi": "FAUSSE : c'etait Rhaenys sur Meleys, partie de sa propre autorite le 24e (evenement rhaenys-patrouille-de-sa-propre-autorite). La deformation arrive par la diffusion ajoutee plus bas, canal rumeur, le 129.3.30. Elle a une consequence : Aemond cherchera la reine la ou elle n'est pas."},
+
+    {"table": "intentions", "cible": "aemond", "operation": "croyance_ajouter",
+     "valeur": "Aucun dragon vert n'a vole depuis le sacre : ce n'est pas la prudence, c'est que la cour se cache — et chaque jour de ciel vide se compte contre lui personnellement",
+     "pourquoi": "Deduite de sa croyance existante ('chaque heure de silence est une humiliation'), datee au 129.3.28. Source : ce qu'il voit lui-meme depuis la Fosse."},
+
+    {"table": "intentions", "cible": "aemond", "operation": "ignore_ajouter",
+     "valeur": "Que Vhagar est le SEUL dragon que la cour puisse mettre en l'air : Tessarion est retenue a Villevieille par lord Ormund tant que rien d'autre ne repond a un dragon la-bas, et personne ne le lui a ecrit",
+     "pourquoi": "Repris tel quel du verrou 71003 et de la clef 71014 du plan hightower — les deux plans se tiennent ici, ils ne se contredisent pas. Explique sa conduite : il se croit un parmi plusieurs, il est seul, et il agira comme un homme qui a des reserves derriere lui."},
+
+    {"table": "intentions", "cible": "aemond", "operation": "etape_ajouter",
+     "valeur": {
+       "id": "aemond-porter-loffre-a-accalmie",
+       "quoi": "Porter lui-meme a Accalmie l'offre de mariage que son grand-pere y envoie, plutot que de la laisser a un mestre — neuf jours de route pour un homme, moins d'un pour Vhagar",
+       "etat": "en-cours",
+       "jours_restants": 5,
+       "depend_de": ["aemond-accalmie"],
+       "cout": ["qu'Otto lui donne l'ambassade, et accepte le marche qu'il y attache", "que sa mere ne l'apprenne pas avant que ce soit fait"],
+       "si_bloque": "Si l'ambassade est donnee a un autre, il propose d'escorter l'emissaire sur Vhagar — et se pose a Accalmie de toute facon, en avance, pour y etre quand la reponse se donne."
+     },
+     "pourquoi": "L'etape qui met Aemond a Accalmie. Elle N'ANTICIPE PAS le joueur : elle sert le mariage d'Otto (clef 71012, echeance 129.4.9) et rien d'autre. Que le canon mort-lucerys ait besoin d'Aemond a Accalmie ce jour-la est une coincidence de dates ECRITE PAR AILLEURS, pas une intention de sa part — et son si_bloque le pose la meme s'il perd l'ambassade, ce qui est la seule chose que je me sois autorisee a fixer a froid."},
+
+    {"table": "intentions", "cible": "otto", "operation": "croyance_retirer",
+     "valeur": "On rapporte de la baie qu'elle a refuse tout haut de fermer le Gosier, et pour plaire a des pecheurs : le motif est faux, mais quelqu'un avait interet a faire courir le refus",
+     "pourquoi": "Perimee par les faits : le Gosier EST ferme depuis le 24e. Otto est a cinq croyances, plafond d'orbite — on remplace, on n'empile pas."},
+
+    {"table": "intentions", "cible": "otto", "operation": "croyance_ajouter",
+     "valeur": "Rien n'est monte a Port-Real par l'eau depuis le vingt-quatrieme jour : le refus qu'on faisait courir dans la baie etait une couverture, elle a ferme le Gosier, et elle l'a fait dire autrement pour garder les pecheurs de son cote",
+     "pourquoi": "FAUSSE, et remarquablement bien raisonnee — c'est ce qui la rend dangereuse pour lui. Le Gosier est ferme par lord Corlys, de sa propre autorite, faute du blocus que la reine avait REFUSE en public le 19 (acte corlys-la-police-des-mers-sans-nom-28e : 'la chose a demi et sans le demander'). Otto prend un fait vrai, l'attribue a la reine, et en conclut qu'elle ment mieux qu'avant. Source : le compte des quais de Port-Real, du 24e au 28e. Consequence : il negociera et frappera la ou la decision n'a pas ete prise."},
+
+    {"table": "intentions", "cible": "otto", "operation": "etape_ajouter",
+     "valeur": {
+       "id": "otto-gager-la-prime",
+       "quoi": "Trouver sur quoi gager la prime que le roi a criee sans rien derriere, avant qu'un homme ne vienne la reclamer au Donjon Rouge",
+       "etat": "en-cours",
+       "jours_restants": 3,
+       "depend_de": [],
+       "cout": ["de l'or du coffre qu'il gardait pour les tetes, ou un gage sur des douanes qui ne rapportent plus rien depuis le 24e", "avouer devant Criston, une seconde fois, que le prix n'etait pas gage"],
+       "si_bloque": "Si rien ne peut gager la prime, il fait ajouter au bas du texte, en plus petit, que le prix se paie a la remise du corps et sur preuve devant le conseil — et il gagne trois semaines sur le premier reclamant."
+     },
+     "pourquoi": "Verrou de fait n.1, porte par la seule tete qui puisse le porter. NE resout PAS 71026 ('arreter la depense pour les trois') : gager une prime n'est pas arbitrer entre trois reclamants, et le trou central du plan hightower reste ouvert. Le si_bloque est une porte de sortie ECRITE A FROID qui dessert le joueur : elle retarde de trois semaines l'affaire que ses deux yeux au Culpucier viennent guetter."},
+
+    {"table": "intentions", "cible": "otto", "operation": "tete",
+     "champs": {"date_maj": {"annee": 129, "lune": 3, "jour": 28}},
+     "pourquoi": "Rafraichissement apres les deux croyances et l'etape."},
+
+    {"table": "intentions", "cible": "criston", "operation": "ignore_ajouter",
+     "valeur": "Que Peyredragon n'a marque a son role qu'une vingtaine d'hommes en sus de sa garnison — il compte une ile armee parce qu'elle a des dragons, et il ne s'est jamais demande combien elle avait de piques",
+     "pourquoi": "L'ignore qui explique pourquoi il reclame quatre mille hommes pour une ile qui n'en a pas cinquante. Il n'a aucune source : rien de ce que rapportent les oreilles de Larys ne compte des hommes."},
+
+    {"table": "intentions", "cible": "criston", "operation": "etape_ajouter",
+     "valeur": {
+       "id": "criston-chiffrer-lost-sans-or",
+       "quoi": "Arreter par ecrit ce que l'ost coute par jour et ce qu'il peut lever SANS un dragon d'or d'Otto, et poser le papier devant le roi avant que la Main ne parle",
+       "etat": "en-cours",
+       "jours_restants": 3,
+       "depend_de": [],
+       "cout": ["deux jours de clercs et le registre des roles, qu'il faut demander a la Main", "que le chiffre soit vrai, y compris s'il est humiliant"],
+       "si_bloque": "Si on lui ferme les roles, il compte sur la seule Garde et les maisons du roi, annonce quinze cents hommes au lieu de quatre mille, et laisse le conseil faire la soustraction tout seul."
+     },
+     "pourquoi": "L'etape qui fait sortir le chiffre — c'est ce que le palier A demande de l'homme de metier. Elle sert directement la premiere condition du canon 6.1 et l'action 71029 du plan hightower, sans la contredire : arracher l'or et chiffrer ce qu'on ferait sans l'or sont deux gestes du meme homme, et le second est ce qui rend le premier credible."},
+
+    {"table": "intentions", "cible": "criston", "operation": "tete",
+     "champs": {"date_maj": {"annee": 129, "lune": 3, "jour": 28}},
+     "pourquoi": "Rafraichissement."},
+
+    {"table": "intentions", "cible": "larys", "operation": "ignore_ajouter",
+     "valeur": "Que deux hommes de Peyredragon sont entres dans sa ville le vingt-septieme au matin et se sont poses au Culpucier — il tisse ses oreilles vers la baie pendant que celles de la reine s'installent sous sa fenetre",
+     "pourquoi": "Fonde sur l'evenement arrivee-des-yeux-au-culpucier (129.3.27, 7h). C'est l'ignore le plus utile de la cour : il donne au joueur une avance reelle et datee, et il s'eteindra tout seul le jour ou l'un des deux parlera."},
+
+    {"table": "intentions", "cible": "larys", "operation": "tete",
+     "champs": {"date_maj": {"annee": 129, "lune": 3, "jour": 28}},
+     "pourquoi": "Rafraichissement."},
+
+    {"table": "intentions", "cible": "orwyle", "operation": "etape_ajouter",
+     "valeur": {
+       "id": "orwyle-garder-la-manche",
+       "quoi": "Garder cousue la seconde version — le mot Coucou, les quatre cordes reclamees en public, le seau d'eau, les quarante pas descendus a pied — et ne la sortir que devant quelqu'un capable de le proteger de la Citadelle ET de la Main",
+       "etat": "en-cours",
+       "jours_restants": null,
+       "depend_de": [],
+       "cout": ["ne rien devoir a personne, ce qui devient plus cher chaque jour ou l'on se sert de sa plume"],
+       "si_bloque": "Si on le fouille ou qu'on trouve le second texte, il dit que c'est le brouillon du premier, laisse partir le texte scelle sans un mot, et n'ecrit plus jamais rien de sa main qu'il ne puisse montrer."
+     },
+     "pourquoi": "Posture permanente (jours_restants null), donc jamais decomptee et jamais 'faite'. C'est la seule porte ouverte de cette cour vers le joueur : un homme des deux camps, qui a compte les quarante prisonniers vivants de ses yeux, et dont le temoignage ecrit contredit le recit scelle sous le sceau du roi."},
+
+    {"table": "intentions", "cible": "orwyle", "operation": "tete",
+     "champs": {"date_maj": {"annee": 129, "lune": 3, "jour": 28}},
+     "pourquoi": "Rafraichissement."},
+
+    {"table": "evenements", "cible": "rhaenys-patrouille-de-sa-propre-autorite", "operation": "diffusion_ajouter",
+     "valeur": {
+       "ou": "port-real",
+       "qui": ["larys", "criston", "aemond"],
+       "date": {"annee": 129, "lune": 3, "jour": 30},
+       "canal": "rumeur",
+       "fiabilite": 40,
+       "version": "Un dragon rouge a longe la cote deux jours de suite, de Sombreval a Repos-des-Freux, en descendant assez bas pour qu'on compte les toits. Les bateliers de Rosby disent que c'etait la reine qui montait, et qu'elle regardait ou frapper ensuite.",
+       "livree": false
+     },
+     "pourquoi": "Route : la patrouille est du 24e-25e ; elle remonte par les oreilles que Larys installe a Rosby et Stokeworth (etape larys-oreilles-baie) et par les bateliers — cinq a six jours pour une rumeur sur un jour de route, la voie de l'eau etant fermee depuis le 24e. DEFORMATION : c'etait Rhaenys sur Meleys, partie de sa propre autorite, pour porter deux plis de protection — pas la reine, et pas un reperage. Fiabilite 40 : le fait du vol est vrai, le cavalier et le motif sont faux."},
+
+    {"table": "evenements", "cible": "paie-et-epreuve-au-tambour-24", "operation": "diffusion_ajouter",
+     "valeur": {
+       "ou": "port-real",
+       "qui": ["otto", "criston"],
+       "date": {"annee": 129, "lune": 4, "jour": 1},
+       "canal": "rumeur",
+       "fiabilite": 25,
+       "version": "Elle a fait battre le tambour au bourg de Peyredragon avant le jour et paye les hommes comptant devant tout le monde, main dans la bourse. On parle de plusieurs centaines marques au role en une matinee, et d'une seconde criee a suivre.",
+       "livree": false
+     },
+     "pourquoi": "Route : huit jours pour une rumeur d'ile a capitale, le port ferme, par les coques qui font encore la Nera. DEFORMATION EN DEGRE, la plus utile des trois : le role reel est d'une vingtaine d'hommes (main recrutement-peyredragon), et la solde due tient en douze cerfs. Consequence ecrite : Criston, qui ignore deja le compte des piques de l'ile, se confirmera dans son chiffre de quatre mille — c'est la nouvelle qui l'empeche de faire la seule chose bon marche qu'il pourrait faire."},
+
+    {"table": "evenements", "cible": "retour-de-la-merette", "operation": "diffusion_ajouter",
+     "valeur": {
+       "ou": "port-real",
+       "qui": ["larys"],
+       "date": {"annee": 129, "lune": 3, "jour": 31},
+       "canal": "temoin",
+       "fiabilite": 75,
+       "version": "La coque de Port-Real qui monte a Peyredragon est redescendue : chaux prise, barriques vides rendues, sorties notees nom par nom sous la voute par un maitre de port qui tient un cahier cousu. On ne meurt pas de faim la-bas et le quai travaille. Le patron declare s'appelle Ollo Marran et il est commis au bureau des roles, ici.",
+       "livree": false
+     },
+     "pourquoi": "Route : la Merette remonte le 27e ; son patron est commis du bureau des roles de Port-Real (personnages.json) et Larys achete les commis avant les seigneurs. Quatre jours. C'est la SEULE piece juste que la cour obtiendra ce mois-ci, et elle arrive au seul homme qui ne la partagera pas : il en fera un moyen de pression, pas un avis au conseil. Fiabilite 75 — il n'a rien vu du chateau."}
+
+  ],
+
+  "notes_pour_le_mj": {
+    "a_ecrire_a_la_main_car_hors_vocabulaire_dappliquer": {
+      "declencheurs": [
+        {"tete": "aegon-ii", "si": "Un homme se presente au Donjon Rouge en reclamant la prime criee le vingt-troisieme, avec quelque chose qui ressemble a une preuve venue de Peyredragon", "alors": "Il le recoit lui-meme, sans Otto dans la salle, et le paie devant temoins sur ce qu'il a — mal, trop peu, mais de sa main.", "une_fois": false,
+         "pourquoi": "Arme sur le joueur, pose d'avance : c'est la porte par laquelle un homme de la reine peut se faire payer par le roi. Miroir de l'action 71027."},
+        {"tete": "aegon-ii", "si": "Rhaenyra ecrit au roi nommement, sous son propre sceau", "alors": "Il fait lire la lettre tout haut devant la salle avant que la Main n'ait pu la voir, et repond sur-le-champ, seul.", "une_fois": false,
+         "pourquoi": "Deuxieme declencheur, plafond d'orbite atteint. Le pendant du 71006 de Hightower : ces gens-la se prennent tous par une lettre adressee a leur nom."},
+        {"tete": "aemond", "si": "Un dragon noir est vu au-dessus de la baie, de la Nera, ou au sud de Sombreval", "alors": "Il sort Vhagar sans autorisation, 'pour voir', et va chaque fois un peu plus loin.", "une_fois": false,
+         "pourquoi": "Reprend son si_bloque existant et en fait une reponse au joueur. Deja arme par la diffusion du 129.3.30."},
+        {"tete": "aemond", "si": "Un emissaire de Peyredragon part vers Accalmie, ou Borros Baratheon est sollicite par les Noirs", "alors": "Il exige l'ambassade sur-le-champ, et s'il ne l'obtient pas il se pose a Accalmie en avance et attend.", "une_fois": false,
+         "pourquoi": "La charniere du 129.4.9, armee A FROID et par le mariage d'Otto, pas par la connaissance du canon."},
+        {"tete": "otto", "si": "L'acte scelle de la reine et sa question ecrite sont lus en chaire dans les septs de la baie, ou portes par des crieurs hors de Peyredragon", "alors": "Il fait recopier le recit du roi sous le sceau et l'expedie aux MEMES septs, avec un homme pour le lire, et fait retenir les septons qui ont lu l'autre.", "une_fois": false,
+         "pourquoi": "Second declencheur d'otto (plafond orbite atteint). Arme exactement sur ce que la septa Marlow vient de reussir : cinq septs sur neuf liront la phrase de l'acte."},
+        {"tete": "larys", "si": "Un homme de Peyredragon est pris dans Port-Real", "alors": "Il ne le livre pas au roi : il le garde chez lui, le fait parler, et ne dit au conseil que ce qui le sert.", "une_fois": false,
+         "pourquoi": "Son unique declencheur permis en royaume — sans lui il serait sourd, et c'est justement lui que les deux yeux du Culpucier vont rencontrer."}
+      ],
+      "maisons_json": "Voir etape_3.modifications_proposees_a_la_main. Rien n'est fait : appliquer.py ne connait pas la table maisons.",
+      "mains_json": "Voir etape_3.mains_json. Une seule main proposee, non ecrite.",
+      "plans_json": "RIEN N'EST ECRIT — c'est l'etape 5 et elle se depeche. Plage reservee pour les Verts : 74000-74999. (71000 Hightower, 72000/73000 laissees a Rosby et Stokeworth selon l'ordre de la serie.)"
+    },
+    "gardes_a_passer_apres_application": [
+      "python scripts/tick.py --verifier — attendre un avertissement de budget : orbite passe a 22 acteurs pour un plafond de 20.",
+      "python scripts/evaluer.py --murs --portees --sourds — ne vaudra vraiment que quand le plan 74000 existera."
+    ]
+  }
+}

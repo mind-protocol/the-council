@@ -32,6 +32,11 @@ TABLES = {
     "annales": None,
     "objectifs": None,
     "vues": "vues",
+    # On empile aussi les pensees et les conclusions : deux hommes depeches
+    # en meme temps rentrent en meme temps, et chacun pose les siennes sans
+    # reecrire le tableau de l'autre.
+    "pensees": "pensees",
+    "conclusions": "conclusions",
 }
 
 

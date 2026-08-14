@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 2078, in __enter__
+    fd = os.open(VERROU, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+FileExistsError: [Errno 17] File exists: 'C:\\Users\\reyno\\le-conseil2\\etat\\staging\\activations\\.boucle.lock'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 2447, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 2425, in main
+    with VerrouBoucle():
+         ~~~~~~~~~~~~^^
+  File "C:\Users\reyno\le-conseil2\scripts\boucle_activation.py", line 2082, in __enter__
+    raise RuntimeError("une boucle tient deja %s" % VERROU)
+RuntimeError: une boucle tient deja C:\Users\reyno\le-conseil2\etat\staging\activations\.boucle.lock

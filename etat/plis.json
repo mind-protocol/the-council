@@ -1164,8 +1164,8 @@
     "lune": 3,
     "jour": 30
    },
-   "etat": "en-route",
-   "main": null
+   "etat": "remis",
+   "main": "jeyne-arryn"
   },
   {
    "id": "pli-prive-alicent",
@@ -1199,14 +1199,19 @@
    "pour": "lord-staunton",
    "vers": "repos-des-freux",
    "depuis": "peyredragon",
-   "parti_le": null,
-   "attendu_le": {
+   "parti_le": {
     "annee": 129,
     "lune": 3,
-    "jour": 27
+    "jour": 30,
+    "minute": 623
    },
-   "etat": "retenu",
-   "main": "gerardys"
+   "attendu_le": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "etat": "parti",
+   "main": "cavalier"
   },
   {
    "id": "pli-protection-sombreval",
@@ -1217,14 +1222,19 @@
    "pour": "gunthor-darklyn",
    "vers": "sombreval",
    "depuis": "peyredragon",
-   "parti_le": null,
-   "attendu_le": {
+   "parti_le": {
     "annee": 129,
     "lune": 3,
-    "jour": 27
+    "jour": 30,
+    "minute": 623
    },
-   "etat": "retenu",
-   "main": "gerardys"
+   "attendu_le": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 1
+   },
+   "etat": "parti",
+   "main": "cavalier"
   },
   {
    "id": "pli-daemon-trois-lignes-harrenhal",
@@ -1247,6 +1257,75 @@
     "jour": 1
    },
    "etat": "en-route",
+   "main": null
+  },
+  {
+   "id": "pli-o13-commandement-de-la-mer",
+   "canal": "corbeau",
+   "scelle": true,
+   "porte": "COMMANDEMENT DE LA MER, O13 au registre des offices.\n\nA lord Corlys Velaryon, sire des Marees.\n\nCe dont vous repondez : les coques QUI PORTENT DES HOMMES — dix affretees au banc de l'Est, plus les onze de la maison si on les y emploie. Ce que vous decidez seul : la composition des vagues, la route de mer, l'heure d'appareillage, le mouillage d'attente. Ce que vous ne decidez pas : l'ordre d'embarquement, qui est au quai ; et le detroit, qui n'est pas dans cette charge.\n\nVotre mesure : le nombre de quilles tenues a la mer, dit chaque semaine.\n\nS'y ajoute la regle du pied : sur l'eau, depuis qu'on retire la planche jusqu'a ce qu'on la repose, c'est la mer qui commande, y compris les hommes de l'ost qui sont dessus, et cela vaut contre un prince.\n\nElle attend votre sceau. Tant qu'il n'y est pas, vos navires comptent pour zero dans tous nos volumes.\n\nEcrit de la main du maitre des roles, sous le sceau de la reine, le vingt-septieme jour de la troisieme lune, an 129, a neuf heures.",
+   "de": "le-sanglier",
+   "pour": "corlys",
+   "vers": "lamarck",
+   "depuis": "peyredragon",
+   "parti_le": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 27,
+    "minute": 540
+   },
+   "attendu_le": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 29
+   },
+   "etat": "remis",
+   "main": "corlys"
+  },
+  {
+   "id": "pli-le-gosier-reste-ouvert",
+   "canal": "barque",
+   "scelle": true,
+   "porte": "Le Gosier reste ouvert.\n\nLe motif change, la decision non. Ce n'est plus qu'on affame le petit peuple : c'est qu'on n'affame pas une ville qu'on veut prendre en trois semaines.\n\nTenez la baie. Ne fermez rien.\n\nEt qu'il soit ecrit que cette decision est de moi et de personne d'autre, afin que vous sachiez a qui la reprocher.\n\nRhaenyra",
+   "de": "rhaenyra",
+   "pour": "corlys",
+   "vers": "lamarck",
+   "depuis": "peyredragon",
+   "parti_le": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 28,
+    "minute": 645
+   },
+   "attendu_le": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30
+   },
+   "etat": "remis",
+   "main": "corlys"
+  },
+  {
+   "id": "pli-les-quatre-cases-a-steffon",
+   "canal": "barque",
+   "scelle": true,
+   "porte": "LE JOUR DU DEPART.\n\nA TANT DE JOURNEES DE : NOUS. ROSBY. STOKEWORTH. PORT-REAL.\n\nCE QUE CA FERME.\n\nRemplissez les quatre cases. Rien d autre ne vous est demande, et rien d autre ne vous est dit — vous etes le seul de nous qui voie cette colonne de ses yeux.\n\nEt au bas, de ma main : depuis quel jour est-elle assise, et son camp a-t-il bouge ?\n\nRhaenyra",
+   "de": "rhaenyra",
+   "pour": "steffon-darklyn",
+   "vers": "sombreval",
+   "depuis": "peyredragon",
+   "parti_le": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30,
+    "minute": 480
+   },
+   "attendu_le": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 31
+   },
+   "etat": "parti",
    "main": null
   }
  ]

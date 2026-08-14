@@ -5,6 +5,7 @@
 "use strict";
 window.Entites = (() => {
   let parNom = new Map();
+  let parId = new Map();
   let regex = null;
   let prets = false;
 
@@ -34,12 +35,18 @@ window.Entites = (() => {
   // lieux et les maisons ; plan.js ajoute les salles du château où l'on est.
   function ajouter(entites) {
     (entites || []).forEach((e) => {
+      // Par ID aussi : un lien écrit à la main — `[le Sanglier](hallis-roon)` —
+      // ne passe pas par les noms, et c'est tout son intérêt (un sobriquet, un
+      // « votre frère » : ce que la reconnaissance automatique ne saura jamais).
+      if (e.id && !parId.has(e.id)) parId.set(e.id, e);
       e.noms.forEach((n) => {
         const c = (n || "").toLowerCase();
         // premier arrivé, premier servi : un nom déjà pris ne change pas d'entité
         if (c.length > 2 && !parNom.has(c)) parNom.set(c, e);
       });
     });
+    // Les renvois écrits à la main attendaient de savoir à qui ils mènent.
+    if (window.Renvois && Renvois.raviver) Renvois.raviver();
     const noms = Array.from(parNom.keys());
     if (!noms.length) return;
     noms.sort((a, b) => b.length - a.length);
@@ -166,5 +173,8 @@ window.Entites = (() => {
 
   // `penser` reste le nom d'appel des autres modules (desseins, gens…) : ils
   // pointent tous sur la même demande, pour qu'un clic ait partout le même sens.
-  return { traiter, demander, penser: demander, ajouter };
+  // De quelle nature est cet id — ou rien, si l'état ne le connaît pas.
+  const nature = (id) => (parId.get(id) || {}).type || null;
+
+  return { traiter, demander, penser: demander, ajouter, nature };
 })();

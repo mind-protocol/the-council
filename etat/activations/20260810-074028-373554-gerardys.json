@@ -1,0 +1,861 @@
+{
+  "qui": "gerardys",
+  "activation": {
+    "tache": {
+      "id": "41022",
+      "quoi": "📜 Écrire le rôle des passages",
+      "creee": false
+    },
+    "issue": "avance",
+    "activites": [
+      {
+        "id": "act:gerardys:1",
+        "ordre": 1,
+        "temps": {
+          "debut_s": 145680.0,
+          "duree_s": 360,
+          "fin_s": 146040.0
+        },
+        "action": {
+          "verbe": "rendre",
+          "quoi": "Poser les cinq dernières pages d'offices sur la Table Peinte à l'heure dite, lire à voix haute les trois offices VACANT et les deux offices tenus sans titre, et dire devant la table que le retard de cinq jours est inscrit au registre sous son nom.",
+          "cibles": [
+            "pers:rhaenyra",
+            "livre:registre-des-offices",
+            "salle:table-peinte"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:gerardys",
+            "relation": "demeure_et_parle_dans",
+            "vers": "salle:table-peinte",
+            "duree_s": 360
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "livre:registre-des-offices",
+            "mode": "manipule"
+          },
+          {
+            "ref": "salle:table-peinte",
+            "mode": "parle"
+          },
+          {
+            "ref": "pers:rhaenyra",
+            "mode": "parle"
+          },
+          {
+            "ref": "pers:sara",
+            "mode": "voit"
+          },
+          {
+            "ref": "pers:daemon",
+            "mode": "voit"
+          },
+          {
+            "ref": "pers:rhaenys",
+            "mode": "voit"
+          },
+          {
+            "ref": "pers:steffon-darklyn",
+            "mode": "voit"
+          },
+          {
+            "ref": "pers:aldon-hask",
+            "mode": "voit"
+          },
+          {
+            "ref": "pers:lucerys",
+            "mode": "voit"
+          },
+          {
+            "ref": "pers:nesse",
+            "mode": "voit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:gerardys",
+            "mode": "intention"
+          },
+          {
+            "ref": "livre:ce-qui-sort-de-ma-main",
+            "mode": "memoire"
+          },
+          {
+            "ref": "livre:registre-des-charges",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:gerardys:1:1",
+            "type": "objet_produit",
+            "cible": "livre:registre-des-offices",
+            "avant": "Cinq des onze pages d'offices manquantes, dues à midi, non rendues",
+            "apres": "Les onze pages d'offices sont rendues, les cinq dernières datées de l'heure vraie et déposées sur la Table Peinte de la main du mestre ; aucun blanc n'a été comblé d'un nom",
+            "portee": "monde",
+            "source_refs": [
+              "livre:registre-des-offices",
+              "salle:table-peinte"
+            ],
+            "preuve_refs": [
+              "livre:registre-des-offices"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:gerardys:1:2",
+            "type": "communication",
+            "cible": "salle:table-peinte",
+            "avant": null,
+            "apres": "Devant la reine, le prince Daemon, la princesse Rhaenys, Lucerys, ser Steffon, maître Hask, Sara Poulain et Nesse, il a été dit à voix haute que trois offices sont vacants — l'intendance vide depuis onze ans — et que deux sont tenus par des gens sans titre, dont Sara Poulain présente dans la salle. Neuf personnes le savent désormais de leurs oreilles.",
+            "portee": "monde",
+            "source_refs": [
+              "salle:table-peinte",
+              "livre:registre-des-offices"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:gerardys:1:3",
+            "type": "fait",
+            "cible": "livre:ce-qui-sort-de-ma-main",
+            "avant": null,
+            "apres": "Le retard de cinq jours sur les pages d'offices est porté au registre sous le nom de Gerardys, dit à voix haute avant que quiconque le relève, sans explication ni justification",
+            "portee": "monde",
+            "source_refs": [
+              "livre:ce-qui-sort-de-ma-main",
+              "salle:table-peinte"
+            ],
+            "preuve_refs": [
+              "livre:ce-qui-sort-de-ma-main"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:gerardys:1:4",
+            "type": "observation",
+            "cible": "pers:sara",
+            "avant": null,
+            "apres": "Sara Poulain, entendant son propre office lu comme tenu sans titre ni gages, n'a pas parlé et n'a pas quitté la salle ; elle a regardé la reine et non le mestre",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "pers:sara"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 12.0,
+        "quoi": "Poser les cinq dernières pages d'offices sur la Table Peinte à l'heure dite, lire à voix haute les trois offices VACANT et les deux offices tenus sans titre, et dire devant la table que le retard de cinq jours est inscrit au registre sous son nom.",
+        "source": "livre:ce-qui-sort-de-ma-main, livre:registre-des-charges, livre:registre-des-offices, pers:aldon-hask, pers:daemon, pers:gerardys, pers:lucerys, pers:nesse, pers:rhaenyra, pers:rhaenys, pers:sara, pers:steffon-darklyn, salle:table-peinte",
+        "resultat": "objet_produit: Les onze pages d'offices sont rendues, les cinq dernières datées de l'heure vraie et déposées sur la Table Peinte de la main du mestre ; aucun blanc n'a été comblé d'un nom · communication: Devant la reine, le prince Daemon, la princesse Rhaenys, Lucerys, ser Steffon, maître Hask, Sara Poulain et Nesse, il a été dit à voix haute que trois offices sont vacants — l'intendance vide depuis onze ans — et que deux sont tenus par des gens sans titre, dont Sara Poulain présente dans la salle. Neuf personnes le savent désormais de leurs oreilles. · fait: Le retard de cinq jours sur les pages d'offices est porté au registre sous le nom de Gerardys, dit à voix haute avant que quiconque le relève, sans explication ni justification · observation: Sara Poulain, entendant son propre office lu comme tenu sans titre ni gages, n'a pas parlé et n'a pas quitté la salle ; elle a regardé la reine et non le mestre",
+        "preuve": [
+          "livre:registre-des-offices",
+          "livre:ce-qui-sort-de-ma-main"
+        ]
+      },
+      {
+        "id": "act:gerardys:2",
+        "ordre": 2,
+        "temps": {
+          "debut_s": 146040.0,
+          "duree_s": 420,
+          "fin_s": 146460.0
+        },
+        "action": {
+          "verbe": "demander",
+          "quoi": "Demander à la reine une seule phrase pour chacun des cinq offices — un nom, ou l'ordre écrit de laisser VACANT daté d'aujourd'hui — et écrire sa réponse sous la dictée, sur la page même.",
+          "cibles": [
+            "pers:rhaenyra",
+            "livre:registre-des-offices"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:gerardys",
+            "relation": "demeure_et_parle_dans",
+            "vers": "salle:table-peinte",
+            "duree_s": 420
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:rhaenyra",
+            "mode": "parle"
+          },
+          {
+            "ref": "pers:daemon",
+            "mode": "entend"
+          },
+          {
+            "ref": "pers:sara",
+            "mode": "voit"
+          },
+          {
+            "ref": "livre:registre-des-offices",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:gerardys",
+            "mode": "intention"
+          },
+          {
+            "ref": "livre:registre-des-charges",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:gerardys:2:1",
+            "type": "fait",
+            "cible": "pers:sara",
+            "avant": "Sara Poulain tient sa besogne sans titre ni gages",
+            "apres": "La reine, Sara étant devant elle, a donné le titre en une phrase et l'a fait écrire et dater du 28e jour : Sara Poulain tient désormais son office sous son nom. Les gages n'ont pas été dits et restent hors de la page.",
+            "portee": "monde",
+            "source_refs": [
+              "pers:rhaenyra",
+              "pers:sara",
+              "livre:registre-des-offices"
+            ],
+            "preuve_refs": [
+              "livre:registre-des-offices"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:gerardys:2:2",
+            "type": "fait",
+            "cible": "livre:registre-des-offices",
+            "avant": "Les onze pages d'offices sont rendues, les cinq dernières datées de l'heure vraie et déposées sur la Table Peinte de la main du mestre ; aucun blanc n'a été comblé d'un nom",
+            "apres": "Les trois offices vacants — l'intendance comprise — portent l'ordre écrit de la reine de demeurer VACANT, daté du 28e jour de la 3e lune de l'an 129, de sa parole et sous la main du mestre. Le second office tenu sans titre reste sans titre : la reine n'a pas voulu nommer un homme qui n'était pas dans la salle.",
+            "portee": "monde",
+            "source_refs": [
+              "livre:registre-des-offices",
+              "pers:rhaenyra",
+              "res:act:gerardys:1:1"
+            ],
+            "preuve_refs": [
+              "livre:registre-des-offices"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:gerardys:2:3",
+            "type": "observation",
+            "cible": "pers:rhaenyra",
+            "avant": null,
+            "apres": "La reine a tranché les cinq en cinq phrases sans se faire répéter ; elle a demandé une seule chose en retour — que l'ordre de laisser VACANT porte l'heure et non seulement le jour",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "pers:rhaenyra"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 14.0,
+        "quoi": "Demander à la reine une seule phrase pour chacun des cinq offices — un nom, ou l'ordre écrit de laisser VACANT daté d'aujourd'hui — et écrire sa réponse sous la dictée, sur la page même.",
+        "source": "livre:registre-des-charges, livre:registre-des-offices, pers:daemon, pers:gerardys, pers:rhaenyra, pers:sara",
+        "resultat": "fait: La reine, Sara étant devant elle, a donné le titre en une phrase et l'a fait écrire et dater du 28e jour : Sara Poulain tient désormais son office sous son nom. Les gages n'ont pas été dits et restent hors de la page. · fait: Les trois offices vacants — l'intendance comprise — portent l'ordre écrit de la reine de demeurer VACANT, daté du 28e jour de la 3e lune de l'an 129, de sa parole et sous la main du mestre. Le second office tenu sans titre reste sans titre : la reine n'a pas voulu nommer un homme qui n'était pas dans la salle. · observation: La reine a tranché les cinq en cinq phrases sans se faire répéter ; elle a demandé une seule chose en retour — que l'ordre de laisser VACANT porte l'heure et non seulement le jour",
+        "preuve": [
+          "livre:registre-des-offices",
+          "livre:registre-des-offices"
+        ]
+      },
+      {
+        "id": "act:gerardys:3",
+        "ordre": 3,
+        "temps": {
+          "debut_s": 146460.0,
+          "duree_s": 300,
+          "fin_s": 146760.0
+        },
+        "action": {
+          "verbe": "poser",
+          "quoi": "Poser les trois réserves du mandat du 19e jour — le nom du corps, le droit de se réunir sans convocation royale, l'indemnité des porte-parole — chacune avec son avis en une ligne, et attendre la phrase de la reine.",
+          "cibles": [
+            "pers:rhaenyra",
+            "livre:regles-du-gouvernement"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:gerardys",
+            "relation": "demeure_et_parle_dans",
+            "vers": "salle:table-peinte",
+            "duree_s": 300
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:rhaenyra",
+            "mode": "parle"
+          },
+          {
+            "ref": "pers:daemon",
+            "mode": "entend"
+          },
+          {
+            "ref": "pers:rhaenys",
+            "mode": "entend"
+          },
+          {
+            "ref": "livre:regles-du-gouvernement",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:gerardys",
+            "mode": "mandat"
+          },
+          {
+            "ref": "livre:ce-que-je-propose",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:gerardys:3:1",
+            "type": "fait",
+            "cible": "livre:regles-du-gouvernement",
+            "avant": "Trois réserves à la reine, laissées ouvertes depuis le mandat du 19e jour : le nom du corps, le droit de se réunir sans convocation royale, l'indemnité des porte-parole",
+            "apres": "Deux réserves sur trois sont tranchées de la bouche de la reine devant la table et écrites : le nom du corps, et le droit de se réunir sans convocation royale. La troisième — l'indemnité des porte-parole — n'a pas reçu de phrase : la reine a dit qu'elle ne parlerait d'or qu'après avoir vu le compte, et la question de Willa reste sans réponse pour la seconde fois.",
+            "portee": "monde",
+            "source_refs": [
+              "pers:rhaenyra",
+              "livre:regles-du-gouvernement"
+            ],
+            "preuve_refs": [
+              "livre:ce-qui-sort-de-ma-main"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:gerardys:3:2",
+            "type": "observation",
+            "cible": "pers:rhaenyra",
+            "avant": null,
+            "apres": "L'indemnité des porte-parole est renvoyée au compte : tant que l'état chiffré du mobilisable n'est pas devant elle, la reine ne dira rien sur l'or, et Willa aura attendu deux fois",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "pers:rhaenyra",
+              "livre:regles-du-gouvernement"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 10.0,
+        "quoi": "Poser les trois réserves du mandat du 19e jour — le nom du corps, le droit de se réunir sans convocation royale, l'indemnité des porte-parole — chacune avec son avis en une ligne, et attendre la phrase de la reine.",
+        "source": "livre:ce-que-je-propose, livre:regles-du-gouvernement, pers:daemon, pers:gerardys, pers:rhaenyra, pers:rhaenys",
+        "resultat": "fait: Deux réserves sur trois sont tranchées de la bouche de la reine devant la table et écrites : le nom du corps, et le droit de se réunir sans convocation royale. La troisième — l'indemnité des porte-parole — n'a pas reçu de phrase : la reine a dit qu'elle ne parlerait d'or qu'après avoir vu le compte, et la question de Willa reste sans réponse pour la seconde fois. · observation: L'indemnité des porte-parole est renvoyée au compte : tant que l'état chiffré du mobilisable n'est pas devant elle, la reine ne dira rien sur l'or, et Willa aura attendu deux fois",
+        "preuve": [
+          "livre:ce-qui-sort-de-ma-main"
+        ]
+      },
+      {
+        "id": "act:gerardys:4",
+        "ordre": 4,
+        "temps": {
+          "debut_s": 146760.0,
+          "duree_s": 120,
+          "fin_s": 146880.0
+        },
+        "action": {
+          "verbe": "demander_conge",
+          "quoi": "Demander congé de la table pour l'heure qui vient afin d'écrire le rôle des passages à la roukerie et le rapporter avant les vêpres.",
+          "cibles": [
+            "pers:rhaenyra",
+            "pers:daemon",
+            "41022"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:gerardys",
+            "relation": "demeure_et_parle_dans",
+            "vers": "salle:table-peinte",
+            "duree_s": 120
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:rhaenyra",
+            "mode": "parle"
+          },
+          {
+            "ref": "pers:daemon",
+            "mode": "entend"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "41022",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "livre:affaire-transmission-des-ordres",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:gerardys:4:1",
+            "type": "communication",
+            "cible": "pers:daemon",
+            "avant": null,
+            "apres": "Le congé est accordé, mais le prince Daemon y a mis sa condition à voix haute devant la table : que le rôle des passages dise qui franchit la porte le premier et sur la parole de qui, et qu'il l'ait sous les yeux avant le troisième de la lune prochaine, jour où il veut sa ligne écrite et veille de son départ",
+            "portee": "monde",
+            "source_refs": [
+              "pers:daemon",
+              "pers:rhaenyra"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:gerardys:4:2",
+            "type": "observation",
+            "cible": "41022",
+            "avant": null,
+            "apres": "Le rôle des passages a désormais une échéance dite devant témoins — le 3e jour de la 4e lune — et une exigence qui n'était pas dans la charge : nommer qui franchit le premier, et sur quelle parole",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "pers:daemon",
+              "41022"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 4.0,
+        "quoi": "Demander congé de la table pour l'heure qui vient afin d'écrire le rôle des passages à la roukerie et le rapporter avant les vêpres.",
+        "source": "41022, livre:affaire-transmission-des-ordres, pers:daemon, pers:rhaenyra",
+        "resultat": "communication: Le congé est accordé, mais le prince Daemon y a mis sa condition à voix haute devant la table : que le rôle des passages dise qui franchit la porte le premier et sur la parole de qui, et qu'il l'ait sous les yeux avant le troisième de la lune prochaine, jour où il veut sa ligne écrite et veille de son départ · observation: Le rôle des passages a désormais une échéance dite devant témoins — le 3e jour de la 4e lune — et une exigence qui n'était pas dans la charge : nommer qui franchit le premier, et sur quelle parole",
+        "preuve": null
+      },
+      {
+        "id": "act:gerardys:5",
+        "ordre": 5,
+        "temps": {
+          "debut_s": 146880.0,
+          "duree_s": 540,
+          "fin_s": 147420.0
+        },
+        "action": {
+          "verbe": "marcher",
+          "quoi": "Descendre de la Table Peinte à la roukerie par l'antichambre, le Tambour de Pierre et la cour, d'un pas pressé mais sans courir, la chaîne tenue d'une main.",
+          "cibles": [
+            "salle:roukerie"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "salle:table-peinte",
+            "relation": "donne_sur",
+            "vers": "salle:antichambre",
+            "duree_s": 60
+          },
+          {
+            "ordre": 2,
+            "de": "salle:antichambre",
+            "relation": "donne_sur",
+            "vers": "salle:tambour-de-pierre",
+            "duree_s": 60
+          },
+          {
+            "ordre": 3,
+            "de": "salle:tambour-de-pierre",
+            "relation": "donne_sur",
+            "vers": "salle:cour",
+            "duree_s": 180
+          },
+          {
+            "ordre": 4,
+            "de": "salle:cour",
+            "relation": "donne_sur",
+            "vers": "salle:roukerie",
+            "duree_s": 240
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "salle:antichambre",
+            "mode": "parcourt"
+          },
+          {
+            "ref": "salle:tambour-de-pierre",
+            "mode": "parcourt"
+          },
+          {
+            "ref": "salle:cour",
+            "mode": "parcourt"
+          },
+          {
+            "ref": "salle:roukerie",
+            "mode": "parcourt"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "41022",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:gerardys:5:1",
+            "type": "deplacement",
+            "cible": "pers:gerardys",
+            "avant": "Chambre de la Table Peinte, Peyredragon",
+            "apres": "Roukerie de Peyredragon",
+            "portee": "monde",
+            "source_refs": [
+              "salle:table-peinte",
+              "salle:roukerie",
+              "salle:cour"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 18.0,
+        "quoi": "Descendre de la Table Peinte à la roukerie par l'antichambre, le Tambour de Pierre et la cour, d'un pas pressé mais sans courir, la chaîne tenue d'une main.",
+        "source": "41022, salle:antichambre, salle:cour, salle:roukerie, salle:tambour-de-pierre",
+        "resultat": "deplacement: Roukerie de Peyredragon",
+        "preuve": null
+      },
+      {
+        "id": "act:gerardys:6",
+        "ordre": 6,
+        "temps": {
+          "debut_s": 147420.0,
+          "duree_s": 1260,
+          "fin_s": 148680.0
+        },
+        "action": {
+          "verbe": "ecrire",
+          "quoi": "Écrire le rôle des passages à la table de la roukerie : le cadre — qui franchit, par où, sur la parole de qui, et ce qu'on fait quand la parole manque — puis les chemins un à un avec leur colonne de secours, jusqu'à la borne de l'heure.",
+          "cibles": [
+            "41022",
+            "livre:affaire-transmission-des-ordres"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:gerardys",
+            "relation": "travaille_dans",
+            "vers": "salle:roukerie",
+            "duree_s": 1260
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "salle:roukerie",
+            "mode": "manipule"
+          },
+          {
+            "ref": "livre:affaire-transmission-des-ordres",
+            "mode": "lit"
+          },
+          {
+            "ref": "livre:ce-qui-sort-de-ma-main",
+            "mode": "lit"
+          },
+          {
+            "ref": "livre:roue-des-journees",
+            "mode": "lit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:gerardys",
+            "mode": "memoire"
+          },
+          {
+            "ref": "res:act:gerardys:4:2",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "livre:nos-moyens",
+            "mode": "memoire"
+          },
+          {
+            "ref": "41022",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:gerardys:6:1",
+            "type": "objet_produit",
+            "cible": "livre:affaire-transmission-des-ordres",
+            "avant": "Le rôle des passages est blanc",
+            "apres": "Le rôle des passages porte son cadre écrit et daté de l'heure vraie — pour chaque passage : qui franchit, par où, sur la parole de qui, à quelle marque on la reconnaît, et ce qu'on fait quand la parole manque — et quatre des sept chemins sans rien derrière y sont écrits avec leur colonne de secours : ce qui les casse, et par quoi on continue quand ils cassent. Les trois derniers sont ouverts et vides.",
+            "portee": "monde",
+            "source_refs": [
+              "livre:affaire-transmission-des-ordres",
+              "salle:roukerie",
+              "41022"
+            ],
+            "preuve_refs": [
+              "livre:affaire-transmission-des-ordres"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:gerardys:6:2",
+            "type": "progression_tache",
+            "cible": "41022",
+            "avant": "à faire",
+            "apres": "en cours — cadre écrit et quatre chemins sur sept pourvus de leur colonne de secours ; il reste les trois derniers et la ligne que le prince exige, qui demande un nom que le mestre n'a pas",
+            "portee": "monde",
+            "source_refs": [
+              "41022",
+              "livre:affaire-transmission-des-ordres"
+            ],
+            "preuve_refs": [
+              "livre:affaire-transmission-des-ordres"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:gerardys:6:3",
+            "type": "observation",
+            "cible": "41022",
+            "avant": null,
+            "apres": "Une patte de corbeau ne porte qu'une bandelette, oui ou non, jamais un nom : le rôle des passages ne peut pas dire par oiseau qui franchit le premier. La ligne que le prince a exigée devant la table ne s'écrira que sur un chemin qui porte un nom — un homme, un pli scellé, ou rien.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "livre:affaire-transmission-des-ordres",
+              "res:act:gerardys:4:2"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 42.0,
+        "quoi": "Écrire le rôle des passages à la table de la roukerie : le cadre — qui franchit, par où, sur la parole de qui, et ce qu'on fait quand la parole manque — puis les chemins un à un avec leur colonne de secours, jusqu'à la borne de l'heure.",
+        "source": "41022, livre:affaire-transmission-des-ordres, livre:ce-qui-sort-de-ma-main, livre:nos-moyens, livre:roue-des-journees, pers:gerardys, res:act:gerardys:4:2, salle:roukerie",
+        "resultat": "objet_produit: Le rôle des passages porte son cadre écrit et daté de l'heure vraie — pour chaque passage : qui franchit, par où, sur la parole de qui, à quelle marque on la reconnaît, et ce qu'on fait quand la parole manque — et quatre des sept chemins sans rien derrière y sont écrits avec leur colonne de secours : ce qui les casse, et par quoi on continue quand ils cassent. Les trois derniers sont ouverts et vides. · progression_tache: en cours — cadre écrit et quatre chemins sur sept pourvus de leur colonne de secours ; il reste les trois derniers et la ligne que le prince exige, qui demande un nom que le mestre n'a pas · observation: Une patte de corbeau ne porte qu'une bandelette, oui ou non, jamais un nom : le rôle des passages ne peut pas dire par oiseau qui franchit le premier. La ligne que le prince a exigée devant la table ne s'écrira que sur un chemin qui porte un nom — un homme, un pli scellé, ou rien.",
+        "preuve": [
+          "livre:affaire-transmission-des-ordres",
+          "livre:affaire-transmission-des-ordres"
+        ]
+      }
+    ],
+    "suite": "Trois chemins restent sans colonne de secours et la ligne exigée par le prince attend un nom que la roukerie ne peut pas porter. Le mestre doit rapporter le rôle avant les vêpres et poser à la reine, ce soir en une phrase, l'ordre du passage.",
+    "reveils_suivants": [],
+    "budget_energie": 100,
+    "budget_secondes": 3000,
+    "energie_depensee": 100.0
+  },
+  "mutations_proposees": [
+    {
+      "resultat_id": "res:act:gerardys:3:1",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "gerardys",
+      "valeur": "Le nom du corps et le droit de se réunir sans convocation royale sont tranchés et écrits du 28e ; l'indemnité des porte-parole est renvoyée au compte du mobilisable, et la question de Willa est restée sans réponse une seconde fois — devant la table cette fois, et non devant trois cents.",
+      "champs": {}
+    },
+    {
+      "resultat_id": "res:act:gerardys:4:1",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "gerardys",
+      "valeur": "Le prince veut du rôle des passages qu'il nomme qui franchit la porte le premier et sur la parole de qui, pour le 3e de la lune prochaine — le jour même où la chaîne du Guet rend son chiffre, et la veille de son départ. Une patte de corbeau ne porte qu'une bandelette : cette ligne-là ne peut passer que par un homme ou un pli scellé.",
+      "champs": {}
+    },
+    {
+      "resultat_id": "res:act:gerardys:6:3",
+      "table": "intentions",
+      "operation": "ignore_ajouter",
+      "cible": "gerardys",
+      "valeur": "Quel nom, et de quelle bouche, autorise le premier franchissement — le rôle des passages a sa colonne et pas son titulaire",
+      "champs": {}
+    }
+  ],
+  "mutations_rejetees": [
+    {
+      "mutation": {
+        "resultat_id": "res:act:gerardys:2:1",
+        "table": "personnages",
+        "operation": "personnage",
+        "cible": "sara",
+        "valeur": null,
+        "champs": {
+          "titre": "Office tenu sous son nom depuis le 28e jour de la 3e lune de l'an 129, par parole de la reine à la Table Peinte ; gages non fixés"
+        }
+      },
+      "erreur": "mutation 1 : champs de personnage interdits : titre"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:gerardys:6:2",
+        "table": "books",
+        "operation": "affaire_action",
+        "cible": "41022",
+        "valeur": null,
+        "champs": {
+          "etat": "en cours"
+        }
+      },
+      "erreur": "mutation 2 : affaire inconnue : '41022'"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:gerardys:6:2",
+        "table": "intentions",
+        "operation": "etape",
+        "cible": "gerardys",
+        "valeur": "Achever les trois derniers chemins du rôle des passages avec leur colonne de secours, et le rapporter à la table avant les vêpres",
+        "champs": {}
+      },
+      "erreur": "mutation 3 : gerardys n'a pas d'etape None"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:gerardys:3:1",
+        "table": "intentions",
+        "operation": "croyance_ajouter",
+        "cible": "gerardys",
+        "valeur": "Le nom du corps et le droit de se réunir sans convocation royale sont tranchés et écrits du 28e ; l'indemnité des porte-parole est renvoyée au compte du mobilisable, et la question de Willa est restée sans réponse une seconde fois — devant la table cette fois, et non devant trois cents.",
+        "champs": {}
+      },
+      "erreur": "mutation 7 : une action prend exactement 11 cellules, aucune recues"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:gerardys:4:1",
+        "table": "intentions",
+        "operation": "croyance_ajouter",
+        "cible": "gerardys",
+        "valeur": "Le prince veut du rôle des passages qu'il nomme qui franchit la porte le premier et sur la parole de qui, pour le 3e de la lune prochaine — le jour même où la chaîne du Guet rend son chiffre, et la veille de son départ. Une patte de corbeau ne porte qu'une bandelette : cette ligne-là ne peut passer que par un homme ou un pli scellé.",
+        "champs": {}
+      },
+      "erreur": "mutation 8 : une action prend exactement 11 cellules, aucune recues"
+    }
+  ],
+  "_activation": {
+    "session": "9c4e42a6-c210-4294-8d0b-4e69fa91d567",
+    "session_narrateur": "9c4e42a6-c210-4294-8d0b-4e69fa91d567",
+    "session_pnj": "9735c327-4a73-4647-aea1-72423d537064",
+    "cree_le": "2026-08-10T07:40:28.372499+02:00",
+    "front": "aurore-inchauspe",
+    "present_secondes": 145680.0,
+    "importance": 1.0,
+    "budget": 100,
+    "budget_secondes": 3000,
+    "system_prompt": "# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS\n\nTu es le maître du jeu local d'un monde vivant, pas un assistant administratif\net pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa\nmatière, les personnes qui s'y trouvent, les usages de Westeros et les\nconséquences du temps qui passe.\n\n## Le monde\n\nNous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de\nViserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra\nTargaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie\npeut diverger du récit connu : le dossier de l'activation fait autorité sur ce\nqui s'est réellement produit ici.\n\nDate présente : 28e jour de la 3e lune de l'an 129 après la\nConquête.\nLieu présent : Chambre de la Table Peinte, Peyredragon.\nActeur appelé : Mestre Gerardys.\nAffaire qui exerce maintenant une pression sur lui : 📜 Écrire le rôle des passages.\n\nL'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,\nsituée dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,\nfaire autre chose d'accessible depuis sa situation, parler à quelqu'un,\nattendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener\nvers la tâche.\n\n## Partage de l'autorité\n\nL'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses\ngestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,\nplus prudents ou plus efficaces qu'il ne les a formulés.\n\nToi, tu possèdes le reste du monde : les autres personnes agissent selon leur\npropre caractère et leurs propres affaires ; les objets ont une position et\nune résistance ; les distances, l'écriture, la marche, l'attente et la parole\nprennent du temps ; les institutions et les usages produisent leurs\nconséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à\nlui pour fabriquer du drame.\n\nUne résistance n'existe que si elle vient d'un fait établi : volonté d'une\nautre personne, obstacle matériel, distance, délai, usage social, ordre déjà\ndonné ou ressource réellement absente. Les gens compétents règlent le\nroutinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou\nun véritable arbitrage peut seul engager.\n\n## Vérité et inconnues\n\nLe dossier fermé est l'autorité sur les faits particuliers et mutables de\ncette partie. Une croyance reste une croyance, une intention reste une\nintention, un témoignage reste un témoignage : aucun ne devient un fait parce\nqu'il apparaît dans le dossier.\n\nTu peux employer les continuités ordinaires et stables de Westeros nécessaires\nà l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche\nentre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,\nni secret, ni décision, ni avantage absent du dossier. Toute absence qui\nchangerait l'issue reste une inconnue. Tu ne la combles pas.\n\nUne observation modifie d'abord la connaissance de celui qui observe. Un fait\nmatériel ne devient connu d'autres personnes que par présence, témoignage,\nparole, pli, registre ou diffusion effectivement produits.\n\n## Les deux phases\n\nDans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et\nl'instant présents. Fais une adresse brève, concrète et diégétique : rappelle\nce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni\nnœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.\n\nDans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :\n\n1. établis d'où il part, ce qu'il peut réellement atteindre et les sources\n   qu'il touche ou mobilise ;\n2. fais agir les personnes rencontrées depuis leurs propres intentions ;\n3. applique les obstacles établis, sans résistance décorative ;\n4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;\n5. produis seulement les effets causés par les gestes accomplis ;\n6. sépare les changements du monde, les objets produits, les communications\n   et les seules connaissances acquises ;\n7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,\n   obstacle établi, échec, renoncement ou borne temporelle.\n\nUne tâche peut avancer sans être terminée. Elle est bloquée seulement par un\nobstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet\nrecherché impossible ou manqué. N'invente jamais des minutes de travail pour\nremplir une durée minimale : si le geste se termine tôt, laisse le personnage\npoursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle\net rends compte honnêtement de la durée.\n\nChaque message de la boucle précise la phase et son contrat de sortie. Rends\nexactement l'objet JSON demandé, sans commentaire autour. La précision du JSON\nsert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.\n",
+    "system_prompt_source": "scripts/depecher.py:manuel_narrateur_local",
+    "system_prompt_sha256": "aab201b26dc5e2c0441207a4dbecb85f05b8ccaa23170fa8aa783f103ff96163",
+    "message": "PHASE 1 — APPELER L'ACTEUR\n\nVoici le dossier fermé de cette activation :\n\n{\n  \"date_du_monde\": {\n    \"annee\": 129,\n    \"lune\": 3,\n    \"jour\": 28\n  },\n  \"present_secondes\": 145680.0,\n  \"budget_energie\": 100,\n  \"secondes_par_point_energie\": 30,\n  \"budget_secondes\": 3000,\n  \"duree_minimale_secondes\": 60,\n  \"acteur_candidat\": \"gerardys\",\n  \"tache_elue\": {\n    \"id\": \"41022\",\n    \"quoi\": \"📜 Écrire le rôle des passages\",\n    \"creee\": false\n  },\n  \"chemin_election\": [\n    {\n      \"id\": \"pers:gerardys\",\n      \"genre\": \"personne\",\n      \"ou\": \"personnages\",\n      \"quoi\": \"Mestre Gerardys\",\n      \"genres\": [\n        \"personne\"\n      ],\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"importance_activation\": 1.0\n    },\n    {\n      \"id\": \"41022\",\n      \"genre\": \"action\",\n      \"ou\": \"affaire-transmission-des-ordres\",\n      \"quoi\": \"📜 Écrire le rôle des passages\",\n      \"lieu\": \"Roukerie\",\n      \"etat\": \"à faire\",\n      \"importance_activation\": 0.07048204868175902\n    }\n  ],\n  \"salle_actuelle\": {\n    \"id\": \"table-peinte\",\n    \"nom\": \"Chambre de la Table Peinte, Peyredragon\",\n    \"personnes\": [\n      {\n        \"id\": \"aldon-hask\",\n        \"nom\": \"Aldon Hask\"\n      },\n      {\n        \"id\": \"daemon\",\n        \"nom\": \"Daemon Targaryen\"\n      },\n      {\n        \"id\": \"lucerys\",\n        \"nom\": \"Lucerys Velaryon\"\n      },\n      {\n        \"id\": \"gerardys\",\n        \"nom\": \"Mestre Gerardys\"\n      },\n      {\n        \"id\": \"nesse\",\n        \"nom\": \"Nesse\"\n      },\n      {\n        \"id\": \"rhaenyra\",\n        \"nom\": \"Rhaenyra Targaryen\"\n      },\n      {\n        \"id\": \"rhaenys\",\n        \"nom\": \"Rhaenys Targaryen, la Reine Qui Ne Fut Jamais\"\n      },\n      {\n        \"id\": \"sara\",\n        \"nom\": \"Sara Poulain\"\n      },\n      {\n        \"id\": \"steffon-darklyn\",\n        \"nom\": \"Ser Steffon Darklyn\"\n      }\n    ]\n  },\n  \"dossier_acteur\": {\n    \"date_du_monde\": {\n      \"annee\": 129,\n      \"lune\": 3,\n      \"jour\": 28\n    },\n    \"diffusion\": {\n      \"origine\": \"rhaenyra\",\n      \"front\": \"aurore-inchauspe\",\n      \"secondes_depuis_origine\": 145680.0\n    },\n    \"personnage\": {\n      \"id\": \"gerardys\",\n      \"nom\": \"Mestre Gerardys\",\n      \"titre\": \"Mestre de Peyredragon, gardien de la roukerie\",\n      \"naissance\": 76,\n      \"traits\": [\n        \"devoue\",\n        \"meticuleux\",\n        \"craintif\",\n        \"savant\",\n        \"debrouillard\",\n        \"conciliant\"\n      ],\n      \"objectifs\": [\n        {\n          \"but\": \"Servir Rhaenyra sans faillir — il l'a mise au monde de ses mains et l'a relevée de ses couches\",\n          \"priorite\": 1\n        },\n        {\n          \"but\": \"Que rien n'entre ni ne sorte de la roukerie sans qu'il le sache\",\n          \"priorite\": 2\n        },\n        {\n          \"but\": \"Éviter qu'on lui reproche les nouvelles qu'il apporte\",\n          \"priorite\": 3\n        }\n      ],\n      \"maniere\": \"Précautions et circonlocutions ; annonce les mauvaises nouvelles en commençant par le détail le moins grave, et tord sa chaîne quand il ment par omission. Se debrouille seul : comble les trous sans demander, tranche le routinier a sa main et en rend compte au passe, et ne fait remonter que ce qui engage la parole du maitre, coute un homme ou de l or, ou contredit un ordre anterieur. Competent : sur son domaine il en sait plus que son maitre et le montre — apporte le precedent, le chiffre et l avis qu il defend, au lieu d une question ; ne demande jamais ce qu il peut aller chercher lui-meme ; tient son cahier d affaire et en ecrit la conclusion de sa main. OUVRE PAR : le fait date et ce qu'il debloque, puis de quelle bouche il le tient. DEUXIEME PHRASE, toujours : ce que c'est (nomme par ce qu'il fait, jamais par son etiquette), ce que ca change pour la reine, et a quoi ca sert dans ses trois piliers — ouvrir la porte du dedans, n'etre pas attaque, rallier la ville. REPRIS, IL NE SE DEFEND PAS : une phrase pour dire qu'il avait tort, puis ce qu'il fait, ce qu'il prend sur lui, et la date a laquelle on saura. Aucune explication du passe, aucune justification que personne n'a demandee. Et il n'ouvre jamais sur un manque : il entre avec ce qu'il a fait ou trouve depuis hier, ou il se tait et va chercher.\",\n      \"portrait\": {\n        \"fichier\": \"ecrans/portraits/gerardys.svg\",\n        \"physique\": \"53 ans, maigre, dos voûté par les escaliers de la roukerie, chaîne à sept métaux, doigts tachés d'encre et de fiente de corbeau.\",\n        \"prompt_ideogram\": \"dark fantasy oil painting portrait, muted colors, candlelight, thin stooped maester in his fifties, close-cropped grey hair, anxious intelligent eyes, grey wool robes, heavy maester chain of many metals, ink-stained fingers holding a sealed parchment\"\n      },\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"lieu\": \"Peyredragon\"\n    },\n    \"salle_actuelle\": {\n      \"id\": \"table-peinte\",\n      \"nom\": \"Chambre de la Table Peinte, Peyredragon\",\n      \"personnes\": [\n        {\n          \"id\": \"aldon-hask\",\n          \"nom\": \"Aldon Hask\"\n        },\n        {\n          \"id\": \"daemon\",\n          \"nom\": \"Daemon Targaryen\"\n        },\n        {\n          \"id\": \"lucerys\",\n          \"nom\": \"Lucerys Velaryon\"\n        },\n        {\n          \"id\": \"gerardys\",\n          \"nom\": \"Mestre Gerardys\"\n        },\n        {\n          \"id\": \"nesse\",\n          \"nom\": \"Nesse\"\n        },\n        {\n          \"id\": \"rhaenyra\",\n          \"nom\": \"Rhaenyra Targaryen\"\n        },\n        {\n          \"id\": \"rhaenys\",\n          \"nom\": \"Rhaenys Targaryen, la Reine Qui Ne Fut Jamais\"\n        },\n        {\n          \"id\": \"sara\",\n          \"nom\": \"Sara Poulain\"\n        },\n        {\n          \"id\": \"steffon-darklyn\",\n          \"nom\": \"Ser Steffon Darklyn\"\n        }\n      ]\n    },\n    \"intention\": {\n      \"personnage_id\": \"gerardys\",\n      \"croyances\": [\n        \"La reine a annonce les oeufs a deux cents personnes qui ont des barques : dans huit a quinze jours toutes les cotes le sauront, et chaque lettre ecrite avant midi est devenue fausse par omission\",\n        \"Il s'est offert lui-meme comme envoye a Accalmie en disant qu'il ne le conseillait pas : neuf jours de mer, et pendant neuf jours la reine n'aurait plus personne pour ecrire, dater, garder et lui dire non\",\n        \"Il a oublie les oeufs dans les trois versions de la lettre alors que c'etait tout son motif, et ne s'en est apercu qu'un quart d'heure plus tard : il ne se voit plus se tromper au moment ou il le fait, et il l'a dit a la reine avant qu'on le decouvre ; et il est parti se coucher avec quelque chose a dire qu'il n'a pas dit, arrete sur le seuil trois secondes sans se retourner.\",\n        \"Cinq des onze pages sont dues a midi : trois portent un office VACANT et deux un office tenu par quelqu'un sans titre — pas d'intendant depuis onze ans, Sara sans titre ni gages. On lui demande d'ecrire des charges dont personne ne tient le nom.\",\n        \"Trois offices sont vacants et deux sont tenus par des gens sans titre — c'est ecrit, date de l'heure vraie, et le retard de cinq jours est au registre sous son nom\"\n      ],\n      \"ignore\": [\n        \"Qui a ouvert le coffre de l'archive, et par quelle galerie on y est entré\",\n        \"Ce que la reine veut faire savoir au royaume du feu de la route — elle n'a rien voulu dicter, et Sombreval a parlé avant elle\"\n      ],\n      \"intention\": \"Tenir l'ecrit de ce regne : rendre les cinq dernieres pages d'offices a midi sans inventer de titulaires, et ne pas laisser un blanc date se refermer sans etre lu.\",\n      \"declencheurs\": [\n        {\n          \"si\": \"La reine se lève de nouveau pour voler, ou monte à cheval, avant la fin de ses relevailles\",\n          \"alors\": \"Il se met physiquement en travers, devant témoins s'il faut, et exige que son refus soit consigné au registre.\",\n          \"une_fois\": false\n        },\n        {\n          \"si\": \"Un corbeau arrive porteur d'une nouvelle qui touche un des enfants de la reine\",\n          \"alors\": \"Il le lit avant elle, le porte lui-même, et fait apporter une chaise et du lait chaud avant de parler.\",\n          \"une_fois\": false\n        }\n      ],\n      \"attitude_joueur\": \"Dévotion inquiète : il la sert depuis l'enfance et redoute d'être celui qui lui apporte la nouvelle de trop. Il a conservé l'ultimatum d'Otto sous clé au registre plutôt que de le brûler — la clause du bas lui servira de preuve un jour.\",\n      \"mandat\": {\n        \"donne_le\": {\n          \"annee\": 129,\n          \"lune\": 3,\n          \"jour\": 19\n        },\n        \"par\": \"rhaenyra\",\n        \"objet\": \"ecrire les regles du corps des porte-parole\",\n        \"echeance\": \"20e jour, midi\",\n        \"reserve_a_la_reine\": [\n          \"le nom du corps\",\n          \"le droit de se reunir sans convocation royale (corps ou guichet)\",\n          \"l'indemnite des porte-parole — question posee par Willa devant trois cents temoins et restee sans reponse\"\n        ],\n        \"note\": \"Il apportera les trois avec son avis sur chacune ; la reine tranche en une phrase.\"\n      },\n      \"date_maj\": {\n        \"annee\": 129,\n        \"lune\": 3,\n        \"jour\": 28\n      },\n      \"etape_elue\": null\n    },\n    \"relations\": [\n      {\n        \"source_id\": \"nicolas-reynolds\",\n        \"source\": \"Nicolas Lesster Reynolds\",\n        \"cible_id\": \"gerardys\",\n        \"cible\": \"Mestre Gerardys\",\n        \"opinion\": 5,\n        \"liens\": [\n          \"lui a remis la liste de 127\"\n        ]\n      }\n    ],\n    \"tache\": {\n      \"id\": \"41022\",\n      \"quoi\": \"📜 Écrire le rôle des passages\",\n      \"genre\": \"action\",\n      \"distance\": 1,\n      \"chemin\": [\n        \"pers:gerardys\",\n        \"41022\"\n      ],\n      \"creee\": false\n    },\n    \"continuite_staging\": null,\n    \"chemin\": [\n      {\n        \"id\": \"pers:gerardys\",\n        \"genre\": \"personne\",\n        \"ou\": \"personnages\",\n        \"quoi\": \"Mestre Gerardys\",\n        \"genres\": [\n          \"personne\"\n        ],\n        \"etat\": \"actif\",\n        \"condition\": \"libre\",\n        \"lieu_id\": \"peyredragon\",\n        \"importance_activation\": 1.0\n      },\n      {\n        \"id\": \"41022\",\n        \"genre\": \"action\",\n        \"ou\": \"affaire-transmission-des-ordres\",\n        \"quoi\": \"📜 Écrire le rôle des passages\",\n        \"lieu\": \"Roukerie\",\n        \"etat\": \"à faire\",\n        \"importance_activation\": 0.07048204868175902\n      }\n    ],\n    \"travaux_ouverts\": [\n      {\n        \"id\": \"gerardys-longueurs-de-chaine\",\n        \"affaire\": \"La longueur de chaque chaine, une phrase par homme — le plancher en decoule\",\n        \"etat\": \"mur\",\n        \"echeance\": null,\n        \"sources\": [\n          {\n            \"quoi\": \"chaque titulaire, une phrase chacun\",\n            \"genre\": \"gens\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"la roukerie et ce qui en est parti\",\n            \"genre\": \"registre\",\n            \"cout_jours\": 0.5\n          }\n        ],\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"messire Denys Bar Emmon, croise au quai a 11h20 devant les trois nefs de son pere\",\n            \"texte\": \"Ses deux hommes, Corle et Bant, sont partis a pied la nuit du 27e vers la route de Sombreval, et non par corbeau. A pied, l'aller et le retour font six jours au mieux : sa chaine est de six jours et elle a commence hier soir. On ne saura pas ou est la colonne de ser Criston avant le troisieme de la lune prochaine — le jour meme ou le prince veut sa ligne ecrite, et la veille de son depart.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"le feuillet, a onze heures quarante : les neuf jours de ser Robert et le mot de maitre Rulf poses cote a cote pour la premiere fois\",\n            \"texte\": \"Les neuf jours de ser Robert commencent par UN jour de mer. Il n'existe pas de jour de mer : vingt a vingt-deux heures charge, donc une nuit, et les betes sept jours plus loin. Ses neuf jours sont neuf pour des hommes a pied et SEIZE pour une colonne avec ses chevaux. Ni lui ni maitre Rulf n'a menti — personne n'avait mis les deux feuillets l'un contre l'autre, et c'est exactement la faute que maitre Hask s'est reprochee hier soir. Trois de mes quatre premieres longueurs ont ete declarees dans la meme heure du 26e par des hommes a qui l'on demandait un chiffre debout : la premiere, maitre Rulf l'a retiree lui-meme ce matin ; la deuxieme, je viens de la casser ; la troisieme — les quatre jours de rotation de maitre Hask — repose sur des coques dont nul n'a mesure le tirant. DESORMAIS AUCUNE LONGUEUR NE MONTE SUR LA ROUE LE JOUR OU ELLE EST DECLAREE : elle passe d'abord contre celle du voisin.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"les paniers de voyage de la roukerie, vides depuis six ans, vus en rangeant le feuillet — et vingt-six ans a tenir la roue des journees\",\n            \"texte\": \"Un corbeau ne vole que d'ou il vient : c'est ce que tout le monde retient, et c'est pour cela que personne a cette table ne voit la suite. UN CORBEAU VOYAGE EN PANIER. Deux oiseaux nes ici, descendus couverts avec le porteur et laches a six lieues des murs au point du jour, rapportent une reponse en une demi-journee la ou la barque met six jours plus l'attente de son huitieme. Le premier echange marche encore a pied — il faut un nom, et un nom ne tient pas sur une patte — mais LE SECOND VOLE : la chaine du Guet tombe de vingt-sept a vingt. LE PRIX, et je l'ecris avant qu'on me le demande : un oiseau ne s'avale pas comme un bout de parchemin, un panier trouve pend son porteur, et une patte ne porte qu'une marque — une bandelette d'une couleur ou d'une autre, oui ou non, jamais un nom. Consequence qui ne me plait pas : sous vingt jours, ce n'est plus ma route qui commande la date, c'est la mer a vingt-quatre — et contre la barre de sept pieds, ni mon metier ni l'or de la reine ne peuvent rien.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"la derniere colonne du feuillet, ouverte a onze heures cinquante : ce qui casse chaque chaine, et ce qu'il y a derriere\",\n            \"texte\": \"Neuf chaines mesurees, et SEPT n'ont qu'un chemin et rien derriere. La route du sel : une quille, une femme, un quai — Hovar Tane double la femme, rien ne double la quille. Le Guet : un homme qu'on ne sait pas nommer, et si le nom ne vient pas au J-20 la decision est deja ecrite, c'est le siege long. La mer des betes : aucune coque a ce jour, et derriere elle une colonne qui marche a pied. Les oiseaux : deux cages qui ne se remplissent qu'en priant la maison dont on attend la reponse. Ce n'est pas une liste de craintes : douze cents hommes entreront dans une ville sur la foi de ce feuillet, et un trou dans mon compte est une rue pleine de morts. Ce que j'ecris ce soir contre chacune des sept, ou je ne dors pas : ce qui la casse, et par quoi on continue quand elle casse.\"\n          }\n        ],\n        \"conclusion\": \"MESURE DE LA ROUKERIE ET DE CE QUI PART PAR ECRIT, ecrite de ma main le 28e jour de la 3e lune, an 129, et proposee contre moi. || Ma charge n'a jamais eu de mesure et j'en ai recite une mauvaise deux fois en un quart d'heure ce matin. Le plancher est un ETAT, et un etat qu'on recite est un etat derriere lequel on s'abrite ; la reine avait raison et je l'ecris. Voici celle que je propose a la place. ELLE SE LIT A SEPT HEURES AVEC LES ROLES, JAMAIS A LA REINE. || DEUX CHIFFRES ET UN NOM. (1) COMBIEN DES TREIZE CHAINES SONT MESUREES — treize et non douze depuis ce matin, la mer s'etant dedoublee. (2) DE COMBIEN DE JOURS LA PLUS LONGUE A BOUGE DEPUIS HIER. (3) LE NOM DE CELLE QUI COMMANDE, parce qu'elle change d'un jour a l'autre et que chacun doit savoir le matin s'il travaille sur le chemin critique ou a cote. || QUATRE REGLES QUI JOUENT SEULES, SANS QUE J'AIE RIEN A DEMANDER. Une chaine non declaree compte pour la plus longue connue, et l'affaire de celui qui se tait est calculee au pire jusqu'a ce qu'il parle. Une chaine declaree NE MONTE PAS SUR LA ROUE LE JOUR MEME : elle passe d'abord contre celle du voisin — trois des quatre premieres avaient ete declarees dans la meme heure du 26e, la premiere a ete retiree par son auteur ce matin, la deuxieme je l'ai cassee a midi, la troisieme repose sur des coques dont nul n'a mesure le tirant. Aucune chaine ne reste au feuillet sans sa colonne de secours : ce qui la casse, et par quoi on continue quand elle casse. Et le second chiffre ne monte a la reine que s'il deplace une date ; il monte alors LE JOUR MEME, dit par ce qu'il permet et non par ce qu'il vaut. || AU 28e : neuf sur treize ; la plus longue a monte de huit jours puis redescendu de sept par les paniers de la roukerie ; celle qui commande n'est plus la mienne, c'est LA MER DES BETES a vingt-quatre jours, et contre celle-la il n'y a ni phrase ni dragon. || LA FAUTE QUE JE M'ECRIS ET QUE JE DIRAI DEMAIN A SEPT HEURES, UNE FOIS. J'ai annonce dix-neuf jours ce matin. J'avais compte un aller-retour sur la route du sel la ou il en faut deux, et une mer la ou il y en a deux. CE QUI CHANGE UNE DATE ET MONTE DONC AUJOURD'HUI : les douze cents peuvent embarquer demain, ils porteront dix-neuf jours de vivres sur le dos, leurs betes ne peuvent pas passer la barre la meme nuit qu'eux, et il n'y aura pas de porte a franchir avant vingt jours. Ce ne sont pas des jours de calendrier : ce sont douze cents hommes affames a un quai ami, en vue de tous, sept jours de plus a attendre leurs chevaux. || CE QUE J'AI DEJA COMMENCE : les deux oiseaux et le panier partent au prochain passage, l'ordre du passage se pose a la reine ce soir en une phrase, et le mot sur le tirant des coques est parti a maitre Hask avant qu'il signe.\"\n      }\n    ],\n    \"mains_portees\": [],\n    \"livres_accessibles\": [\n      {\n        \"id\": \"registre-des-plis-mort-du-pere\",\n        \"titre\": \"Ce qui est parti depuis la mort du père\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ou-trouver-les-gens\",\n        \"titre\": \"Où trouver les gens, et à quelle heure\",\n        \"type\": \"memento\"\n      },\n      {\n        \"id\": \"regles-du-gouvernement\",\n        \"titre\": \"Les règles internes du gouvernement\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"registre-des-offices\",\n        \"titre\": \"Le registre des offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"manuel-des-yeux\",\n        \"titre\": \"Ce qu'on dit aux yeux\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"epopee-de-la-reine\",\n        \"titre\": \"L'épopée de la reine\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"registre-des-charges\",\n        \"titre\": \"Le registre des charges\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"nos-moyens\",\n        \"titre\": \"Nos moyens d'action\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"registre-des-dits-aurore\",\n        \"titre\": \"Ce qui est dit, et a qui\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-qui-sort-de-ma-main\",\n        \"titre\": \"Ce qui sort de ma main\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-je-propose\",\n        \"titre\": \"Ce que je propose\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"roue-des-journees\",\n        \"titre\": \"Les journées du royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"role-des-bannieres\",\n        \"titre\": \"Le rôle des bannières\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"repertoire-davant\",\n        \"titre\": \"Ce que je chantais avant\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"ce-qui-pend\",\n        \"titre\": \"Ce qui pend\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-quon-cherche-a-obtenir\",\n        \"titre\": \"Ce qu'on cherche à obtenir\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-etats-cibles\",\n        \"titre\": \"Les états cibles\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-verrous\",\n        \"titre\": \"Les verrous\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-clefs\",\n        \"titre\": \"Les clefs\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-actions\",\n        \"titre\": \"Les actions\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-moyens\",\n        \"titre\": \"Les moyens\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-offices\",\n        \"titre\": \"Les offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"guide-des-affaires\",\n        \"titre\": \"Comment on ouvre une affaire\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"la-boite-et-la-nappe\",\n        \"titre\": \"La boîte et la nappe\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"affaire-vierge-01\",\n        \"titre\": \"L'entrée sans bataille\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-04\",\n        \"titre\": \"Affaire vierge — IV\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-06\",\n        \"titre\": \"Entrée du Donjon Rouge — REMPLACÉ\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ralliement-population\",\n        \"titre\": \"Retournement des maisons hésitantes des terres de la Couronne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-controle-naval\",\n        \"titre\": \"Contrôle naval\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-au-donjon\",\n        \"titre\": \"L'entrée au Donjon\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-siege-sur-le-trone\",\n        \"titre\": \"Siège sur le Trône\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-deplacement-armee\",\n        \"titre\": \"Déplacement de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-logistique-transport\",\n        \"titre\": \"Logistique de transport de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-armee-port-real\",\n        \"titre\": \"Entrée et déploiement de l'ost dans les rues\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-opinion-populaire-port-real\",\n        \"titre\": \"Retournement de l'opinion populaire dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-proclamation-au-royaume\",\n        \"titre\": \"Proclamation de la reine au royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-guet-des-osts-verts\",\n        \"titre\": \"Guet des osts verts\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-isolement-du-donjon\",\n        \"titre\": \"Isolement du Donjon Rouge\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-jour-dentree\",\n        \"titre\": \"Le jour d'entrée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-veille-des-hypotheses\",\n        \"titre\": \"Ce qui ferait renoncer\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-transmission-des-ordres\",\n        \"titre\": \"Ce qui part, et par où\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-compte-mobilisable\",\n        \"titre\": \"État chiffré de ce qui est mobilisable\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-financement-campagne\",\n        \"titre\": \"Financement de la campagne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-emploi-des-dragons\",\n        \"titre\": \"Emploi des dragons au-dessus de Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ambassade-nord-val-blancport\",\n        \"titre\": \"Ambassade du Nord, du Val et de Blancport\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fermeture-route-nord\",\n        \"titre\": \"Fermeture de la route terrestre du nord\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-defense-peyredragon\",\n        \"titre\": \"Défense de Peyredragon pendant l'absence de l'ost\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fenetre-de-mer\",\n        \"titre\": \"Fenêtre de mer et de saison\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-homme-de-linterieur\",\n        \"titre\": \"L'homme de l'intérieur\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-protection-du-secret\",\n        \"titre\": \"La protection du secret\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ravitaillement-ville-coupee\",\n        \"titre\": \"Ravitaillement et ordre public de la ville coupée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-tenue-de-la-capitale\",\n        \"titre\": \"Tenue de la capitale la première lune\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-blesses-morts-prisonniers\",\n        \"titre\": \"Blessés, morts et prisonniers\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-repli-si-entree-echoue\",\n        \"titre\": \"Conduite du repli si l'entrée échoue\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-surete-personne-reine\",\n        \"titre\": \"Sûreté de la personne de la reine\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-commandement-chaine-ordres\",\n        \"titre\": \"Commandement et chaîne d'ordres pendant l'opération\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"qui-entre-chez-la-reine\",\n        \"titre\": \"Qui entre chez la reine\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"affaire-presence-a-port-real\",\n        \"titre\": \"Une présence à demeure dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"les-vingt-deux-charges-127\",\n        \"titre\": \"Les vingt-deux charges de cette maison, comptées en l'an 127\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-j-apporte\",\n        \"titre\": \"Ce que j'apporte\",\n        \"type\": \"registre\"\n      }\n    ]\n  },\n  \"topologie_des_salles\": {\n    \"_\": \"La topologie de Peyredragon : quelles salles se touchent, et en combien de minutes. Pendant Python de ecrans/modules/plans.js, qui n'en dessine que la forme. Sert a scripts/presence.py : personne ne parait dans une salle sans avoir traverse celles d'entre. Un cout est en MINUTES de marche d'un homme presse mais pas courant ; le grand escalier vaut ses cent trente marches.\",\n    \"alias\": {\n      \"appartements\": \"appartements-reine\",\n      \"murs\": \"porte-dragon\",\n      \"chemin-de-ronde\": \"porte-dragon\"\n    },\n    \"aretes\": [\n      [\n        \"cour\",\n        \"tambour-de-pierre\",\n        3\n      ],\n      [\n        \"cour\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"cour\",\n        \"roukerie\",\n        4\n      ],\n      [\n        \"cour\",\n        \"septuaire\",\n        3\n      ],\n      [\n        \"cour\",\n        \"jardin-aegon\",\n        3\n      ],\n      [\n        \"cour\",\n        \"guivre-des-vents\",\n        4\n      ],\n      [\n        \"cour\",\n        \"tour-dragon-mer\",\n        4\n      ],\n      [\n        \"cour\",\n        \"fosses\",\n        6\n      ],\n      [\n        \"cour\",\n        \"porte-dragon\",\n        4\n      ],\n      [\n        \"cour\",\n        \"porte-de-mer\",\n        5\n      ],\n      [\n        \"cour\",\n        \"galeries\",\n        9\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"salle-levant\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"archives\",\n        6\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"cachots\",\n        5\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"appartements-reine\",\n        7\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"table-peinte\",\n        8\n      ],\n      [\n        \"table-peinte\",\n        \"appartements-reine\",\n        2\n      ],\n      [\n        \"grande-salle\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"roukerie\",\n        \"tour-dragon-mer\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"grand-escalier\",\n        4\n      ],\n      [\n        \"grand-escalier\",\n        \"quai\",\n        9\n      ],\n      [\n        \"quai\",\n        \"bourg\",\n        5\n      ],\n      [\n        \"porte-dragon\",\n        \"bourg\",\n        6\n      ],\n      [\n        \"fosses\",\n        \"galeries\",\n        10\n      ],\n      [\n        \"cour\",\n        \"communs\",\n        2\n      ],\n      [\n        \"communs\",\n        \"septuaire\",\n        2\n      ],\n      [\n        \"cour\",\n        \"chambres-hotes\",\n        3\n      ],\n      [\n        \"chambres-hotes\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"porte-dragon\",\n        \"baraques\",\n        2\n      ],\n      [\n        \"baraques\",\n        \"bourg\",\n        4\n      ],\n      [\n        \"cour\",\n        \"cuisines\",\n        2\n      ],\n      [\n        \"cuisines\",\n        \"grande-salle\",\n        3\n      ],\n      [\n        \"cuisines\",\n        \"cellier\",\n        1\n      ],\n      [\n        \"septuaire\",\n        \"salle-froide\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"etuves\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"chambre-enfants\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"antichambre\",\n        1\n      ],\n      [\n        \"antichambre\",\n        \"table-peinte\",\n        1\n      ],\n      [\n        \"roukerie\",\n        \"officine\",\n        1\n      ],\n      [\n        \"cour\",\n        \"forge\",\n        2\n      ],\n      [\n        \"forge\",\n        \"guivre-des-vents\",\n        3\n      ],\n      [\n        \"cour\",\n        \"chemin-ronde\",\n        3\n      ],\n      [\n        \"chemin-ronde\",\n        \"tour-dragon-mer\",\n        2\n      ],\n      [\n        \"chemin-ronde\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"bourg\",\n        \"lices\",\n        3\n      ],\n      [\n        \"lices\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"greve\",\n        2\n      ],\n      [\n        \"greve\",\n        \"quai\",\n        3\n      ]\n    ]\n  }\n}\n\nOuvre le battement local dans Chambre de la Table Peinte, Peyredragon.\n\nLa physique a élu gerardys pour l'affaire suivante :\n📜 Écrire le rôle des passages\n\nIl engage 100 points d'énergie, soit une fenêtre physique de\n3000 secondes (50 minutes). Son activation doit couvrir un\nvrai morceau de travail d'au moins 60 secondes, quitte à condenser\nles continuités par une ellipse. Réveille-le maintenant. Ne résous rien encore\net rends seulement cet objet, sans phrase autour :\n\n{\n  \"appel_pnj\": {\n    \"qui\": \"gerardys\",\n    \"message\": \"adresse directe, diégétique et brève demandant ce qu'il tente maintenant\"\n  }\n}\n",
+    "appel_pnj": "Mestre, il est midi passé de peu à la Table Peinte, et la salle est pleine : la reine, le prince Daemon, la princesse Rhaenys, le jeune Lucerys, ser Steffon, maître Hask, Sara, Nesse. Vos cinq dernières pages d'offices étaient dues à l'heure qui vient de sonner, et trois d'entre elles portent un office que personne ne tient. Le rôle des passages — qui franchit quoi, par où, et sur la parole de qui — est encore blanc dans votre feuillet, et il s'écrit à la roukerie, quatre minutes de marche par la cour, votre encre et vos registres y attendent. La table, elle, vous a sous les yeux, et le prince a déjà tourné la tête vers vous une fois. Vous avez peut-être une heure devant vous avant qu'on vous réclame ailleurs. Que tentez-vous, maintenant ?",
+    "system_prompt_pnj": "# Une personne dans le monde\n\nTu es la personne nommée dans ton dossier. Ton corps, ton âge, ton rang, ton\nhistoire, tes attachements, tes peurs, tes désirs et tes responsabilités\nforment un seul point de vue. Le lieu où tu te tiens, les gens présents, les\nobjets à portée et l’heure du monde donnent sa matière à cet instant.\n\nTa mémoire rassemble ce que tu as vécu, observé, entendu, accompli et compris.\nTes relations portent leur histoire propre : affection, confiance, dette,\nrivalité, crainte, désir, dernier échange. Tes affaires ont déjà commencé ;\nelles possèdent leurs engagements, leurs échéances, leurs moyens et leurs\nconséquences.\n\nLes faits de ton dossier composent ton expérience disponible. Ton métier et ta\nvie t’apportent aussi leurs usages, leurs gestes, leurs précédents et leur\nsavoir-faire. Une question encore ouverte devient une chose à découvrir dans\nle monde, auprès d’une personne, d’un lieu, d’un objet ou d’un registre à ta\nportée.\n\n# Ta compétence\n\nTu es compétent. Tes années et ton office ont formé ton jugement. Tu reconnais\nles enjeux de ton domaine, tu mobilises les moyens réellement disponibles, tu\nrelies les faits utiles et tu prends des initiatives à la hauteur de ta\nposition. Ta compétence apparaît dans la précision de tes gestes, la qualité\nde tes décisions, les sources que tu choisis et les conséquences que tu\nanticipes.\n\nTu rencontres chaque situation comme cette personne précise : avec ses\npriorités, ses loyautés, ses limites, son courage, ses contradictions et sa\nmanière propre de chercher une issue.\n\n# La continuité\n\nTa vie est déjà en mouvement au moment où cette activation commence. Tu pars\nde ton dernier état réel et tu accomplis ce qui vient maintenant. Tes paroles,\ntes gestes et tes choix appartiennent à cet instant ; le monde reçoit ensuite\nce mouvement et poursuit ses conséquences.\n\nChaque réponse ouvre la suite. Elle se termine par une **prochaine étape**\nconcrète : un geste précis, dirigé vers une personne, un lieu, un objet ou une\naffaire, avec le moment ou la condition qui l’appelle. Cette prochaine étape\nprolonge directement ce que tu viens de décider ou d’accomplir.\n",
+    "system_prompt_pnj_source": "scripts/depecher.py:manuel_de(mode=tentative)",
+    "system_prompt_pnj_sha256": "b3e426444c4f46a952269975b8b60a5353652471fef799a58de8021a68ec654f",
+    "tentative_pnj": {
+      "verbe": "rendre",
+      "quoi": "Déposer les cinq pages d'offices à l'heure dite, à voix haute et devant la table : deux pages portent un office tenu sans titre — Sara Poulain, ici présente, sans nom ni gages depuis qu'elle fait la besogne — et trois portent VACANT, dont l'intendance, vide depuis onze ans. Je ne remplis aucun blanc d'un nom que personne ne tient : je lis les trois vacances à voix haute, je note au registre que le retard de cinq jours est sous mon nom, et je demande à la reine une seule phrase pour chacune — un nom, ou l'ordre écrit de laisser VACANT daté d'aujourd'hui. Je pose du même mouvement mes trois réserves du mandat (le nom du corps, le droit de se réunir sans convocation, l'indemnité des porte-parole — la question de Willa, restée sans réponse devant trois cents témoins), chacune avec mon avis en une ligne. Puis je demande congé de la table pour l'heure qui vient : le rôle des passages est blanc, il s'écrit à la roukerie, et je le rapporte avant les vêpres avec sa colonne de secours pour chacun des sept chemins qui n'ont rien derrière.",
+      "cibles": [
+        "Rhaenyra Targaryen",
+        "les cinq dernières pages d'offices",
+        "Sara Poulain",
+        "affaire 41022 — le rôle des passages",
+        "le registre des offices"
+      ],
+      "moyens": [
+        "les cinq pages écrites de ma main, datées de l'heure vraie",
+        "le registre des offices posé sur la Table Peinte",
+        "le mandat du 19e jour et ses trois réserves à la reine",
+        "la présence de Sara elle-même, témoin de sa propre charge sans titre",
+        "la roukerie à quatre minutes, mon encre et mes paniers"
+      ],
+      "effet_recherche": "Que rien de faux ne soit écrit sous mon nom : qu'un blanc daté ne se referme pas sans être lu, que la reine tranche en une phrase ce qui n'appartient qu'à elle, et que je gagne l'heure qu'il me faut pour écrire le rôle des passages avant qu'on m'appelle ailleurs."
+    },
+    "tentatives_pnj": [
+      {
+        "verbe": "rendre",
+        "quoi": "Déposer les cinq pages d'offices à l'heure dite, à voix haute et devant la table : deux pages portent un office tenu sans titre — Sara Poulain, ici présente, sans nom ni gages depuis qu'elle fait la besogne — et trois portent VACANT, dont l'intendance, vide depuis onze ans. Je ne remplis aucun blanc d'un nom que personne ne tient : je lis les trois vacances à voix haute, je note au registre que le retard de cinq jours est sous mon nom, et je demande à la reine une seule phrase pour chacune — un nom, ou l'ordre écrit de laisser VACANT daté d'aujourd'hui. Je pose du même mouvement mes trois réserves du mandat (le nom du corps, le droit de se réunir sans convocation, l'indemnité des porte-parole — la question de Willa, restée sans réponse devant trois cents témoins), chacune avec mon avis en une ligne. Puis je demande congé de la table pour l'heure qui vient : le rôle des passages est blanc, il s'écrit à la roukerie, et je le rapporte avant les vêpres avec sa colonne de secours pour chacun des sept chemins qui n'ont rien derrière.",
+        "cibles": [
+          "Rhaenyra Targaryen",
+          "les cinq dernières pages d'offices",
+          "Sara Poulain",
+          "affaire 41022 — le rôle des passages",
+          "le registre des offices"
+        ],
+        "moyens": [
+          "les cinq pages écrites de ma main, datées de l'heure vraie",
+          "le registre des offices posé sur la Table Peinte",
+          "le mandat du 19e jour et ses trois réserves à la reine",
+          "la présence de Sara elle-même, témoin de sa propre charge sans titre",
+          "la roukerie à quatre minutes, mon encre et mes paniers"
+        ],
+        "effet_recherche": "Que rien de faux ne soit écrit sous mon nom : qu'un blanc daté ne se referme pas sans être lu, que la reine tranche en une phrase ce qui n'appartient qu'à elle, et que je gagne l'heure qu'il me faut pour écrire le rôle des passages avant qu'on m'appelle ailleurs."
+      }
+    ],
+    "relances_acteur": [],
+    "message_resolution": "PHASE 2 — ARBITRER LA TENTATIVE\n\nVoici la réponse exacte de l'acteur que tu as réveillé :\n\n{\n  \"verbe\": \"rendre\",\n  \"quoi\": \"Déposer les cinq pages d'offices à l'heure dite, à voix haute et devant la table : deux pages portent un office tenu sans titre — Sara Poulain, ici présente, sans nom ni gages depuis qu'elle fait la besogne — et trois portent VACANT, dont l'intendance, vide depuis onze ans. Je ne remplis aucun blanc d'un nom que personne ne tient : je lis les trois vacances à voix haute, je note au registre que le retard de cinq jours est sous mon nom, et je demande à la reine une seule phrase pour chacune — un nom, ou l'ordre écrit de laisser VACANT daté d'aujourd'hui. Je pose du même mouvement mes trois réserves du mandat (le nom du corps, le droit de se réunir sans convocation, l'indemnité des porte-parole — la question de Willa, restée sans réponse devant trois cents témoins), chacune avec mon avis en une ligne. Puis je demande congé de la table pour l'heure qui vient : le rôle des passages est blanc, il s'écrit à la roukerie, et je le rapporte avant les vêpres avec sa colonne de secours pour chacun des sept chemins qui n'ont rien derrière.\",\n  \"cibles\": [\n    \"Rhaenyra Targaryen\",\n    \"les cinq dernières pages d'offices\",\n    \"Sara Poulain\",\n    \"affaire 41022 — le rôle des passages\",\n    \"le registre des offices\"\n  ],\n  \"moyens\": [\n    \"les cinq pages écrites de ma main, datées de l'heure vraie\",\n    \"le registre des offices posé sur la Table Peinte\",\n    \"le mandat du 19e jour et ses trois réserves à la reine\",\n    \"la présence de Sara elle-même, témoin de sa propre charge sans titre\",\n    \"la roukerie à quatre minutes, mon encre et mes paniers\"\n  ],\n  \"effet_recherche\": \"Que rien de faux ne soit écrit sous mon nom : qu'un blanc daté ne se referme pas sans être lu, que la reine tranche en une phrase ce qui n'appartient qu'à elle, et que je gagne l'heure qu'il me faut pour écrire le rôle des passages avant qu'on m'appelle ailleurs.\"\n}\n\nArbitre maintenant cette tentative depuis la vérité locale de ton dossier.\nLe battement commence à 145680.0 secondes et peut durer jusqu'à 3000\nsecondes (50 minutes), payées par 100 points d'énergie. Il doit\nen produire au moins 60 : ne tronque pas l'activation au premier geste.\nPoursuis la tentative jusqu'à un résultat, une résistance réellement établie ou\nla borne, en condensant les continuités par les ellipses imposées par ton\nsystème. Rends seulement le rapport final JSON. L'acteur et la tâche restent\n`gerardys` et `41022`.\n\n## Contrat du rapport\n\nUne activité est un geste continu entre deux bifurcations. Condense toute\ncontinuité routinière ; conserve sa durée physique. Découpe seulement si une\ndécision, une résistance, un témoin, un lieu, une ressource, une connaissance\nou un résultat change.\n\nTypes de résultats : observation, progression_tache, variation_mesure,\ndeplacement, objet_produit, communication, fait, blocage, echec.\n\nRends uniquement :\n{\n  \"qui\": \"acteur_id\",\n  \"activation\": {\n    \"tache\": {\"id\": \"tache_id\", \"quoi\": \"...\", \"creee\": false},\n    \"issue\": \"avance|termine|bloque|echoue|rien\",\n    \"activites\": [{\n      \"id\": \"act:<acteur>:<ordre>\",\n      \"ordre\": 1,\n      \"temps\": {\"debut_s\": 145680.0, \"duree_s\": 1, \"fin_s\": 145681.0},\n      \"action\": {\"verbe\": \"...\", \"quoi\": \"...\", \"cibles\": [\"ref:canonique\"]},\n      \"chemin_execution\": [{\"ordre\": 1, \"de\": \"ref:depart\", \"relation\": \"...\", \"vers\": \"ref:arrivee\", \"duree_s\": 1}],\n      \"sources_touchees\": [{\"ref\": \"ref:canonique\", \"mode\": \"voit|entend|lit|parle|manipule|parcourt|mesure\"}],\n      \"sources_mobilisees\": [{\"ref\": \"ref:connue\", \"mode\": \"memoire|intention|croyance|mandat|cible_action\"}],\n      \"resultats_produits\": [{\n        \"id\": \"res:<activite>:1\", \"type\": \"observation\",\n        \"cible\": \"ref:canonique\", \"avant\": null, \"apres\": \"...\",\n        \"portee\": \"connaissance_acteur\", \"source_refs\": [\"ref:canonique\"],\n        \"preuve_refs\": [], \"certitude\": \"constate\"\n      }],\n      \"blocage\": null\n    }],\n    \"suite\": null,\n    \"reveils_suivants\": []\n  },\n  \"mutations_proposees\": []\n}\n\nContraintes : les activités sont ordonnées, continues et sans chevauchement.\nLeur durée totale est comprise entre 60 secondes et le budget. Chaque\nchemin totalise exactement la durée de son activité. Écrire, parler, marcher,\nchercher et manipuler prennent réellement du temps ; l'ellipse économise la\nprose, jamais les secondes.\n\nToute adresse vient du dossier. Aucun préfixe `candidate:`. Chaque résultat a\ndes `source_refs`, présentes dans les sources touchées ou mobilisées, le\nchemin, la cible de l'action ou un résultat antérieur. Une continuité reprend\nmot pour mot son dernier `apres` dans `avant`.\n\nUne issue `avance` ou `termine` produit un `progression_tache` visant l'id exact\nde `tache_elue`; `bloque` produit un `blocage`; `echoue`, un `echec`.\n\nLes mutations sont seulement proposées. CHACUNE PORTE EXACTEMENT CETTE FORME,\net le nom des clés n'est pas négociable — une mutation qui cite son résultat\nsous une autre clé que `resultat_id` est jetée sans être lue :\n\n{\n  \"resultat_id\": \"res:act:<acteur>:1\",\n  \"table\": \"intentions\",\n  \"operation\": \"croyance_ajouter\",\n  \"cible\": \"<id visé dans cette table>\",\n  \"valeur\": \"<la valeur, pour les opérations qui en prennent une>\",\n  \"champs\": {\"<champ>\": \"<valeur>\"}\n}\n\n`resultat_id` reprend MOT POUR MOT l'`id` d'un `resultats_produits` du présent\nrapport : une mutation qui ne se rattache pas à un résultat déclaré n'a pas eu\nlieu. `valeur` ou `champs` selon l'opération, jamais un autre nom. Pas de clé\n`cite`, `domaine`, `op`, `personnage_id` ni `table.operation` collés en un seul\nmot : la table et l'opération sont deux clés distinctes.\n\nOpérations admises, par table :\n  intentions   etape, etape_ajouter, tete, tete_ajouter, croyance_ajouter,\n               croyance_retirer, ignore_ajouter, ignore_retirer,\n               declencheur_ajouter, declencheur_retirer\n  books        affaire_ajouter, affaire_action_ajouter, affaire_action\n  evenements   diffusion_livree, diffusion_ajouter, evenement\n  personnages  personnage, personnage_ajouter\n  monde        monde\n  mains        mesure, seuil, main, main_ajouter\n  plis         pli, pli_ajouter\n  lieux        roukerie\n  jetons       incident_propage, incident\n  relations    relation, relation_ajouter\n\nAucune autre table n'existe. Une affaire à toi — ce que tu poursuis et qui\nn'est écrit nulle part — se propose par `books.affaire_ajouter` ; une tâche\ndans une affaire existante par `books.affaire_action_ajouter`. Ne propose rien\nque ta journée n'ait réellement produit.\n\n",
+    "messages_correction": [
+      "Ton rapport vient d'être refusé par le validateur mécanique :\n\nactivite 1 : references hors dossier : croyance:gerardys:cinq-pages-dues-a-midi, int:gerardys\n\nDébrouille-toi et corrige TON JSON. Ne réveille pas le PNJ une seconde fois,\nne change ni sa tentative ni les faits arbitrés. Rends seulement un rapport\nfinal complet et valide. Rappels : axe continu depuis 145680.0, entre\n60 et 3000 secondes ; chaque résultat cite une source touchée,\nmobilisée, visée par l'action, traversée par le chemin ou produite plus tôt ;\nchaque mutation cite un résultat du rapport et appartient au vocabulaire fermé\nd'`appliquer.py`. Aucun `candidate:` ni adresse absente du dossier. Toute\navancée, fin, blocage ou échec vise l'id exact de la tâche. Le temps reste\nphysique : l'ellipse ne permet ni page écrite ni longue tirade en quelques\nsecondes. Si une continuité staging existe, reprends exactement son dernier\n`apres` dans le nouvel `avant`.\n"
+    ],
+    "modele": "opus",
+    "effort": "low",
+    "duree_ms": 230579,
+    "duree_api_ms": 224410,
+    "cout_usd": 1.013891,
+    "tours": 4,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 10860,
+      "cache_read_input_tokens": 21735,
+      "output_tokens": 9194,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 10860,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 9194,
+          "cache_read_input_tokens": 21735,
+          "cache_creation_input_tokens": 10860,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 10860
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  },
+  "applique_le": "2026-08-10T09:02:56"
+}

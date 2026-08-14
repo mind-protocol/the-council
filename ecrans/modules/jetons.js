@@ -349,9 +349,31 @@ window.Jetons = (() => {
   // ---- géométrie -----------------------------------------------------------
   // Une marque se pose sur un lieu (par son id) ou sur un point nu de la carte,
   // pour ce qui n'a pas d'adresse : un ost en rase campagne, une voile au large.
+  // La couche carte a ses propres ids là où l'état a les siens :
+  // `repos-des-freux` dans `lieux.json` est `repaire-aux-corneilles` dans
+  // `geo.js`. Le pont existait pour les NOMS du registre et pas pour les
+  // positions — donc une pièce posée sur l'id canonique de l'état n'avait
+  // aucune coordonnée, et disparaissait SANS QUE RIEN N'ÉCHOUE. C'est le pire
+  // des défauts : on croit avoir posé ce qui n'a jamais été là. `aliaser` est
+  // appelé par carte.js dès que `lieux.json` est chargé.
+  const ALIAS = {};
+  const slug = (t) => (t || "").normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+  function aliaser(lieux) {
+    (lieux || []).forEach((l) => {
+      if (!l.id || (G.lieux || {})[l.id]) return;      // il a déjà sa place
+      (l.alias || []).forEach((a) => {
+        const k = slug(a);
+        if ((G.lieux || {})[k]) ALIAS[l.id] = k;
+      });
+    });
+  }
+
   function position(ou, point) {
     if (Array.isArray(point) && point.length === 2) return point;
-    const p = (G.lieux || {})[ou];
+    const lieux = G.lieux || {};
+    const p = lieux[ou] || lieux[ALIAS[ou]];
     return p ? [p[0], p[1]] : null;
   }
   const posJeton = (j) => position(j.ou, j.point);
@@ -436,7 +458,24 @@ window.Jetons = (() => {
   }
 
   // ---- les traits ----------------------------------------------------------
-  function unTrait(t, ech, neuves) {
+  // ---- ce qui est DIT, et ce qui n'est que le sol -------------------------
+  // Une carte qui pose tout du même poids n'articule rien : le geste qui parle
+  // de deux coques se noie dans les six plis que la table portait déjà. Quand
+  // un ensemble `dit` est fourni, ce qui en est parle (plein, nommé) et tout le
+  // reste devient sol (mince, pâle, MUET). Sans `dit`, rien ne change — c'est
+  // la grande table, où tout se vaut parce que personne n'est en train de
+  // parler.
+  function ton(m, opts) {
+    const d = opts && opts.dit;
+    if (!d || !d.size) return "";
+    return (m.id && d.has(m.id)) ? " dit" : " fond";
+  }
+  const estDit = (m, opts) => {
+    const d = opts && opts.dit;
+    return !!(d && d.size && m.id && d.has(m.id));
+  };
+
+  function unTrait(t, ech, neuves, opts) {
     let a = posDe(t), b = posVers(t);
     if (!a || !b) return "";
     const g = TRAITS[t.genre] || TRAITS.marche;
@@ -457,7 +496,7 @@ window.Jetons = (() => {
     }
 
     const cl = "trait trait-" + esc(t.genre || "marche") + " " + camp(t) + " " + sur(t) +
-      eta(t) + (neuves && neuves.has(t.id) ? " neuve" : "");
+      eta(t) + (neuves && neuves.has(t.id) ? " neuve" : "") + ton(t, opts);
     const ep = (t.epais || g.epais || 1.4) * ech;
     const tir = g.tirets ? ' stroke-dasharray="' +
       g.tirets.split(" ").map((v) => (parseFloat(v) * ech).toFixed(2)).join(" ") + '"' : "";
@@ -495,8 +534,11 @@ window.Jetons = (() => {
     return s + "</g>";
   }
 
-  function traits(liste, ech, neuves) {
-    return (liste || []).map((t) => unTrait(t, ech, neuves)).join("");
+  function traits(liste, ech, neuves, opts) {
+    const o = opts || {};
+    return (liste || []).filter((t) => !(o.seulement && o.dit && o.dit.size
+      && !(t.id && o.dit.has(t.id))))
+      .map((t) => unTrait(t, ech, neuves, opts)).join("");
   }
 
   // ---- les jetons ----------------------------------------------------------
@@ -504,7 +546,7 @@ window.Jetons = (() => {
 
   const DEC = [0, -10];              // au-dessus du point, pour ne pas le manger
   const DEC_BAS = [0, 11];           // dessous, pour ce qui n'est pas une force
-  const TAILLE = 1.15;               // la pièce pèse un peu plus qu'un point de lieu
+  const TAILLE = 1.28;               // la pièce pèse plus qu'un point de lieu, et doit se voir
   const ETAGE = 19;                  // de quoi empiler deux pièces sans manger leurs chiffres
   // Une tête n'est pas une force : elle pèse moins, elle se range SOUS la place
   // (les osts montent, les gens descendent) et elle porte son nom en clair —
@@ -537,7 +579,7 @@ window.Jetons = (() => {
     const pli = j.genre === "pli";
     const et = ETATS[j.etat];
     const cl = "jeton jeton-" + esc(j.genre || DEFAUT) + " " + camp(j) + " " + sur(j) +
-      eta(j) + (opts.neuves && opts.neuves.has(j.id) ? " neuve" : "");
+      eta(j) + (opts.neuves && opts.neuves.has(j.id) ? " neuve" : "") + ton(j, opts);
 
     const detail = [j.nom,
       dessein ? (NOM_GESTE[j.quoi] || NOM_GENRE.dessein)
@@ -613,7 +655,12 @@ window.Jetons = (() => {
     // l'autre. Mais seul son foyer l'écrit en clair — quinze relais qui
     // répètent le même nom feraient une bouillie le long de la propagation.
     // Un dessein s'écrit en clair : on ne devine pas ce qu'on a décidé de faire.
-    const clair = tete || pli || j.foyer || dessein;
+    // MAIS quand quelqu'un parle, ces règles-là sautent : seul ce qui est DIT
+    // porte son nom. Six plis nommés par-dessus une phrase qui parle de deux
+    // coques, c'est ce qui rendait la vignette illisible — la règle du pli en
+    // clair est juste sur la grande table et fausse dans une démonstration.
+    const parle = opts.dit && opts.dit.size;
+    const clair = parle ? estDit(j, opts) : (tete || pli || j.foyer || dessein);
     if (j.nom) s += '<text class="jeton-nom' + (clair ? " toujours" : "") +
       '" y="' + (clair ? "10.6" : "9.8") + '">' + esc(j.nom) + "</text>";
     return s + "</g>";
@@ -623,11 +670,26 @@ window.Jetons = (() => {
   // d'oignon autour du point d'ancrage. Et une pièce qui tomberait hors du
   // cadrage est simplement absente — comme les noms de lieux : mieux vaut le
   // manque qu'un jeton tranché par le bord. Elle reste sur la grande table.
+  // Combien de pièces de front dans un groupe. Trois : au-delà, le groupe est
+  // plus large que la place qu'il désigne et l'on ne sait plus à qui il est.
+  const DE_FRONT = 3;
+  // Le pas horizontal se prend sur la pièce la plus encombrante du rang, et ce
+  // n'est pas son glyphe qui décide — c'est son CHIFFRE. « 1 200 » posé au-dessus
+  // d'un ost est deux fois plus large que l'ost lui-même, et c'est pour ça qu'on
+  // empilait jadis au lieu de ranger de front.
+  const pasX = (j) => (j.force != null || j.ames != null || j.total != null) ? 19.5
+    : j.genre === "pli" ? 17
+    : DESSOUS[j.genre] ? 11 : 14;
+
   function pieces(liste, ech, opts) {
     const o = opts || {};
     const c = o.cadre;
     const tas = {};
     (liste || []).forEach((j) => {
+      // `seulement` : dans une vignette, la table ne montre QUE ce qui est dit.
+      // Quatre-vingt-dix pièces pâles ne font pas un sol, elles font une
+      // bouillie — et le sol, c'est la côte, les places et leurs bannières.
+      if (o.seulement && o.dit && o.dit.size && !(j.id && o.dit.has(j.id))) return;
       const p = posJeton(j);
       if (!p) return;
       // Ce qui n'est pas une force se range SOUS la place : les têtes et les
@@ -641,22 +703,29 @@ window.Jetons = (() => {
       (tas[k] = tas[k] || []).push([j, d]);
     });
     let s = "";
-    // On empile vers le haut, jamais de côté : deux pièces côte à côte, ce sont
-    // leurs chiffres qui se chevauchent, et un compte illisible ne vaut rien.
+    // EN GROUPES, PAS EN PILE. Six plis sur la même place faisaient jadis une
+    // colonne de six étages : elle montait sur les places voisines, et six
+    // choses les unes au-dessus des autres se lisent comme six affaires sans
+    // rapport. Rangées de front, elles se lisent comme ce qu'elles sont — ce
+    // que CETTE place porte. On garde le sens du décalage (les forces au-dessus
+    // du point, les têtes et les plis dessous) et l'on cumule la hauteur rang
+    // par rang, parce qu'un pli est trois fois plus haut qu'une tête.
     Object.keys(tas).forEach((k) => {
-      // Les osts s'empilent vers le haut (leurs chiffres se chevaucheraient
-      // côte à côte) ; les têtes et les plis descendent sous la place. On
-      // CUMULE la hauteur de chacun au lieu de multiplier un pas unique : un
-      // pli est trois fois plus haut qu'une tête, et deux rangs à pas fixe se
-      // recouvriraient dès qu'ils se mêlent sur la même place.
+      const groupe = tas[k];
       let bas = 0, haut = 0;
-      tas[k].forEach(([j, d]) => {
-        const pli = j.genre === "pli";
-        const dessous = DESSOUS[j.genre];
-        const pas = pli ? ETAGE_PLI : dessous ? ETAGE_TETE : ETAGE;
-        s += unJeton(j, ech, o, d, dessous ? -bas : haut);
-        if (dessous) bas += pas; else haut += pas;
-      });
+      for (let i = 0; i < groupe.length; i += DE_FRONT) {
+        const rang = groupe.slice(i, i + DE_FRONT);
+        const pitch = Math.max.apply(null, rang.map(([j]) => pasX(j)));
+        const dessous = DESSOUS[rang[0][0].genre];
+        const hauteur = Math.max.apply(null, rang.map(([j]) =>
+          j.genre === "pli" ? ETAGE_PLI : DESSOUS[j.genre] ? ETAGE_TETE : ETAGE));
+        rang.forEach(([j, d], n) => {
+          const dx = (n - (rang.length - 1) / 2) * pitch;
+          const sous = DESSOUS[j.genre];
+          s += unJeton(j, ech, o, [d[0] + dx, d[1]], sous ? -bas : haut);
+        });
+        if (dessous) bas += hauteur; else haut += hauteur;
+      }
     });
     return s;
   }
@@ -709,7 +778,7 @@ window.Jetons = (() => {
     });
   }
 
-  return { position, boite, traits, pieces, zones, legende, brancher, filtrer,
+  return { position, aliaser, boite, traits, pieces, zones, legende, brancher, filtrer,
            deplier, isoler, eveiller,
            GLYPHES, GESTES, NOM_GENRE, NOM_TRAIT, NOM_GESTE,
            ETATS, FEUX, CANAUX, FILTRES };

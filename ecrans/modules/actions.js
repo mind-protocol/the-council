@@ -38,17 +38,30 @@
       '<button id="pause" class="pulse"><i class="emb">⏸️</i>Couper</button></div>' +
       '<div class="libre">' +
       '<textarea id="champ-libre" class="mode-dire" placeholder="Vos prochaines paroles…"></textarea>' +
-      // L'heure de la fiction se tient contre le bouton d'envoi : au moment
-      // d'agir, on doit savoir quand on agit sans lever les yeux au bandeau.
+      // Plus d'heure contre le bouton d'envoi : le bandeau est descendu JUSTE
+      // SOUS cette barre, et il porte déjà la date, l'heure, l'écart de front
+      // et le lieu. Deux montres à trente pixels l'une de l'autre.
       // Améliorer : le joueur écrit vite et mal, le MJ rend la phrase telle
       // qu'elle aurait dû sortir de sa bouche. Ce n'est pas un mode — c'est un
       // filtre sur ce qu'on vient d'écrire, et il ne change ni le sens ni le
       // temps qui passe.
-      '<div class="envoi"><span id="heure-barre" hidden></span><span id="ecart-barre" class="ecart" hidden></span>' +
-      '<button id="ameliorer" title="Le MJ reformule vos mots dans la langue du récit — ' +
-      'sans fautes, sans changer ce que vous voulez dire"><i class="emb">✒️</i>' +
-      'Améliorer</button>' +
+      '<div class="envoi">' +
+      // Une pastille, pas un bouton : la plume seule, allumée ou éteinte. Le mot
+      // « Améliorer » mangeait la largeur du bandeau, et c'est le NOM DE LA SALLE
+      // qu'on veut lire au moment d'envoyer.
+      '<button id="ameliorer" aria-pressed="false" title="Améliorer : le MJ reformule vos mots ' +
+      'dans la langue du récit — sans fautes, sans changer ce que vous voulez dire">' +
+      '<i class="emb">✒️</i></button>' +
       '<button id="btn-libre"><i class="emb">💬</i>Parler</button></div></div>';
+
+    // Le bandeau — date, heure, écart de front, lieu, les deux flèches de nav —
+    // prend la GAUCHE de la rangée d'envoi, sur la même ligne que Améliorer et
+    // Parler. Une ligne à lui seul sous la barre poussait le composeur d'un
+    // cran vers le haut pour trois mots ; ici il ne coûte pas un pixel de
+    // hauteur, et l'on a le lieu et l'heure sous les yeux au moment d'envoyer.
+    const rangee = zone.querySelector(".envoi");
+    const bandeau = document.getElementById("bandeau");
+    if (rangee && bandeau) rangee.prepend(bandeau);
 
     const champ = document.getElementById("champ-libre");
     const btn = document.getElementById("btn-libre");
@@ -89,6 +102,7 @@
     let ameliorer = localStorage.getItem("ameliorer") === "1";
     function marquerAm() {
       btnAm.classList.toggle("actif", ameliorer);
+      btnAm.setAttribute("aria-pressed", ameliorer ? "true" : "false");
       // Seul ce qui est DIT ou FAIT se reformule : une question, une remarque
       // de coulisses ou une consigne de « laisser faire » n'a pas de style à
       // tenir — personne dans la fiction ne les entend.
@@ -166,8 +180,18 @@
     if (it.joueur_id && window.Moi && it.joueur_id !== window.Moi.personnage_id) {
       if (window.activerLocuteur) window.activerLocuteur(it.joueur_id);
     }
+    // ET SON VISAGE AVEC SON NOM. Le fil lui posait un blason — 🗣️ quand il
+    // parlait, ✋ quand il agissait —, c'est-à-dire un pictogramme de mode là où
+    // tout le monde a une figure. Dans une salle où huit médaillons se
+    // ressemblent, le seul homme sans visage était celui qu'on joue. Le
+    // portrait vient d'où viennent les autres : la salle d'abord, le registre
+    // ensuite (`Gens.qui`), et l'anneau d'office avec.
+    const id = it.joueur_id || (window.Moi && window.Moi.personnage_id) || null;
+    const p = (window.Gens && id) ? Gens.qui(id) : {};
     const entree = Bus.chronique(
-      it.mode === "agir" ? "chr-vous chr-acte" : "chr-vous", qui, it.texte);
+      it.mode === "agir" ? "chr-vous chr-acte" : "chr-vous", qui, it.texte,
+      { avatar: p.portrait_svg || "", role: p.titre || "" });
+    if (window.Gens && id) Gens.marquer(entree, id);
     // La ligne à reformuler garde son adresse : le MJ renverra la phrase
     // améliorée, et c'est CETTE entrée-là qu'on remplacera — pas une seconde
     // ligne en dessous, qui donnerait à voir le brouillon et sa correction.
@@ -175,6 +199,12 @@
       ATTENDUES[it.ref] = entree;
       if (it.ameliorer) entree.classList.add("chr-brouillon");
     }
+    // Le joueur a une main comme les autres. `montre` marchait sur une réplique
+    // et sur un geste de PNJ, jamais sur les siens : le personnage pouvait
+    // parler de la carte, pas y poser une pièce. Or c'est LUI qui tient le
+    // conseil — c'est même le seul dont la main sur la table décide de quelque
+    // chose.
+    if (entree && window.Illustration) Illustration.poser(entree, it);
   });
 
   // Les lignes du joueur qui attendent peut-être une réécriture, par référence.

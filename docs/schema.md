@@ -87,6 +87,19 @@ Rien n'atteint personne sans porteur. Champs : `id`, `canal` ("corbeau" | "caval
 - `statut` — "en-cours" | "accompli" | "echoue" | "abandonne"
 Donné par le MJ via le flux (item `objectif`, action ajouter/accomplir/echouer/retirer) ET écrit ici. Un objectif naît toujours diégétiquement (une demande de Corlys, un serment fait, une menace reçue) — jamais d'un menu.
 
+### etat/joueurs/&lt;siège&gt;/fils.json (ce qui court — et qui tient la plume dessus)
+Par siège, comme la table de guerre : les fils de la reine ne sont pas ceux d'Aurore. Objet `{_lisez_moi, fils:[…]}`.
+- `id` — `fil-<slug>`
+- `titre` — **ce qui se passe ET ce qu'on essaie d'obtenir**, séparés par un tiret ("Quatre charges tiennent sans sceau — les sceller avant midi"). Un titre qui ne nomme pas la difficulté et la sortie est à rouvrir pour être compris, et le rail existe pour l'éviter.
+- `detail` — le chiffre, la borne écrite, qui l'a dit. Deux lignes au plus.
+- `sur` — personnage_id sur qui l'affaire est tombée, ou `null`. **Un fil sans `sur` ne se délègue pas** : il s'affiche « sans nom » et revient à la main du joueur (le serveur le refuse aussi).
+- `echeance` (nullable), `depuis` — dates
+- `mode` — `"joue"` (ça se joue en scène) | `"delegue"` (ça tourne hors champ et revient en UNE ligne au passé). Défaut `joue`. **Le mode ne change jamais le calcul, seulement par où ça passe.**
+- `statut` — `"en-cours"` | `"clos"` | `"perdu"`
+- `remonte_si` — les SEULES conditions qui autorisent un fil délégué à frapper : `"parole"` (engage la parole du joueur) · `"cout"` (coûte un homme ou de l'or qu'on n'a pas) · `"froisse"` (froisse quelqu'un de nommé) · `"contredit"` (contredit un ordre antérieur). Hors de ces quatre, c'est déjà fait quand le joueur l'apprend.
+- `dernier` — la dernière ligne rendue au passé, telle que le joueur l'a apprise
+Un fil délégué ne remonte JAMAIS dans le rail : il remonte dans la scène, en `demande`, dans la bouche de l'homme. Écrit par `scripts/fils.py` et par `POST /fils` (qui dépose aussi l'intention dans l'inbox du siège). Doctrine complète : `docs/fils.md`.
+
 ### annales.json (les événements marquants — la mémoire longue de la partie)
 - `id, date`
 - `titre` — une ligne, ce que l'Histoire retiendra ("Sombreval se déclare la première")
@@ -116,7 +129,7 @@ Différent de la file evenements : ici c'est le grand livre de ce qui s'est rée
 ### intentions.json (les têtes des PNJ — JAMAIS montré au joueur)
 Une entrée par personnage `actif`, et une seule source pour toute action hors écran : un PNJ ne fait JAMAIS rien qui ne sorte de là. Le personnage joueur n'a jamais d'entrée (sa tête appartient au joueur).
 - `personnage_id`
-- `echelle` — coût de simulation : "scene" | "orbite" | "royaume" (voir budgets)
+- ~~`echelle`~~ — **supprimé.** Le coût de simulation ne se déclare plus, il se **mesure** : un acteur est dans le **quartier** d'un siège occupé (même composante connexe de `chemins.json`, ≤ 20 minutes de marche) ou **au loin**. Le champ recopiait à la main ce que la topologie calcule, et mentait dès que l'homme avait bougé. Voir `docs/boucle-acteurs.md` ; `scripts/presence.py --quartier` le rend, `tick.py --verifier` signale un `echelle` résiduel.
 - `croyances` — [] ce qu'il tient pour vrai (peut être FAUX : les PNJ subissent aussi le brouillard)
 - `ignore` — [] 1-3 choses qu'il ne sait PAS et dont l'absence explique sa conduite. Sert à tenir le brouillard côté PNJ : ce qui est ici ne doit pas fuiter dans ses actes.
 - `intention` — ce qu'il compte faire à court terme (1-2 lignes)
@@ -136,21 +149,24 @@ Une entrée par personnage `actif`, et une seule source pour toute action hors �
 
 Une étape dont l'horloge tombe à 0 SE PRODUIT : elle donne une entrée `actes.json`, souvent un `programme` dans `evenements.json`, et une `info.json` si le joueur peut le percevoir. Le tick est alors de l'arithmétique, pas de l'invention.
 
-Budgets par échelle — tenus à la main, vérifiés par `scripts/tick.py --verifier` :
+Budgets par **quartier** — mesurés, jamais déclarés ; vérifiés par `scripts/tick.py --verifier` :
 
-| échelle | qui | croyances | étapes | déclencheurs | simulé |
+| où | qui | croyances | étapes | déclencheurs | simulé |
 |---|---|---|---|---|---|
-| `scene` | dans la salle ou sur le point d'y entrer (~5 max) | 4-6 | 3-5 | 1-3 | à chaque battement |
-| `orbite` | pèse sur la partie sans être en scène (~20 max) | 3-5 | 2-4 | 1-2 | à chaque tick |
-| `royaume` | moteur lointain de la Danse | 1-3 | 1-2 | 0-1 | rafraîchi sur les fenêtres ≥ 5 jours |
+| `quartier` | même composante connexe qu'un siège occupé, ≤ 20 min de marche | 4-6 | 3-5 | 1-3 | à chaque battement |
+| `au loin` | tout le reste — le moteur lointain de la Danse | 1-3 | 1-2 | 0-1 | rafraîchi sur les fenêtres ≥ 5 jours |
 
-Ces plafonds mesurent l'ATTENTION du MJ par tick, pas la taille du fichier : une tête coûte de relire des croyances, peser des déclencheurs et réécrire une intention. Les monter ne donne pas de la capacité, ça donne la même simulation en moins bien faite — au-delà, la boucle hors scène se joue en apparence. Un acteur qui n'a rien à décider n'a pas besoin d'une tête : donne-lui des mains (`mains.json`), qui ne sont jamais budgétées, et un seuil la lui rendra le jour où son affaire mord.
+**Aucun plafond d'acteurs, et c'est le changement.** Ce n'est pas le NOMBRE de têtes qui coûte, c'est où elles sont : vingt têtes au loin pèsent moins que huit dans la salle. Ce qui borne le jeu n'est plus un quota tenu à la main mais la topologie — le quartier se resserre tout seul sur ce que le joueur peut atteindre. `scripts/presence.py --quartier` le rend ; **la table exécutable est celle de `scripts/tick.py`**, et quand les deux divergent c'est elle qui fait foi.
 
-Le plafond d'`orbite` est passé de 12 à 20 le 23e jour de la 3e lune, à l'ouverture du siège de Port-Réal : une seconde base à jouer, c'est une seconde poignée de gens qui pèsent sans être en scène, et les tenir en `royaume` les rendrait sourds au joueur. **La table exécutable est celle de `scripts/tick.py`** — quand les deux divergent, c'est elle qui fait foi et ce tableau-ci qui est en retard.
+**Deux conditions, jamais une : la composante connexe D'ABORD, la durée ensuite.** `Chateau.chemin()` rend honnêtement un saut nu à coût **0** entre deux salles qu'aucune arête ne relie — sans le test de composante, cela mettait trente-cinq personnes « à 0 minute » de la Table Peinte, dont Aegon II dans ses appartements à Port-Réal. Une salle absente de `chemins.json` est **hors quartier**, et on le dit.
 
-Un acteur `royaume` garde droit à UN déclencheur : sans lui il serait sourd au joueur, ce qui contredit la boucle hors scène. C'est même le seul endroit où l'on peut encore l'atteindre entre deux rafraîchissements.
+**Un second siège occupé définit son propre quartier**, et le quartier est leur union : Marlo à Port-Réal fait vivre la porte de la Gadoue, la reine ne le fait pas. Chaque siège l'ancre à SON heure (`horloges.json`) et non à `monde.date`, qui porte l'horloge la moins avancée — l'y ancrer rendrait `None` pour tous les sièges dont la position est datée du futur, et le quartier serait vide.
 
-Une échelle règle le RAFRAÎCHISSEMENT (croyances relues, horloges décomptées, déclencheurs pesés), jamais les échéances : une étape d'acteur `royaume` dont l'horloge tombe dans la fenêtre se produit quand même, et `tick.py` la rend marquée `malgre_saut`. Un coffre d'or promis pour demain arrive demain, même si la tête de celui qui l'apporte n'a pas été repassée en revue.
+Un acteur `au loin` garde droit à UN déclencheur : sans lui il serait sourd au joueur, ce qui contredit la boucle hors scène. C'est même le seul endroit où l'on peut encore l'atteindre entre deux rafraîchissements.
+
+Le quartier règle le RAFRAÎCHISSEMENT (croyances relues, horloges décomptées, déclencheurs pesés) et la POSITION, jamais les échéances : une étape d'un lointain dont l'horloge tombe dans la fenêtre se produit quand même, et `tick.py` la rend marquée `malgre_saut`. Un coffre d'or promis pour demain arrive demain, même si la tête de celui qui l'apporte n'a pas été repassée en revue.
+
+**Les creux.** La seconde sortie de `presence.py`, calculée et jamais stockée — comme la position, et pour la même raison. `creux(qui)` rend les intervalles libres de sa journée : 1440 minutes moins les bandes `ferme`, moins le sommeil, moins les minutes de marche. Un creux porte `{de, a, salle, minutes}`, et **le `salle` compte autant que la durée** : une question posée à la roukerie n'a pas les mêmes sources qu'une posée au bourg. Un homme sans creux ne pense pas ce jour-là, quelle que soit sa force — c'est le coût d'un mandat : on l'occupe. Les creux sont la seule ressource que les questions consomment ; il n'y a plus de « deux travaux par journée » posé à la main.
 
 La provenance d'une croyance ne vit PAS ici : elle vit dans `evenements.diffusion`. Ici, seulement la tête.
 
@@ -182,7 +198,7 @@ Décompte, pour `n` jours écoulés : `total = par * n + reliquat` ; `valeur += 
 Seuil de `seuils` :
 - `id` ; `mesure_id` — la mesure surveillée
 - `quand` — "sous" | "sur" ; `valeur` — le point de bascule
-- `promeut` — "orbite" | "scene" : l'échelle du porteur au franchissement. S'il a déjà une tête à cette échelle ou au-dessus, rien ne bouge — l'affaire entre dans ses croyances.
+- `promeut` — donne une tête au porteur s'il n'en a pas. Valeur libre et désormais indicative : l'échelle ne se déclare plus, elle se mesure sur le quartier. S'il a déjà une tête, rien ne bouge — l'affaire entre dans ses croyances.
 - `affaire` — 1 ligne : la bifurcation qui monte au joueur, écrite À FROID comme un `si_bloque`. Seul texte du fichier que le joueur entendra un jour.
 - `franchi_le` — date, ou `null`. Repasse à `null` quand la mesure revient du bon côté : un seuil retombe, et le porteur redescend.
 
@@ -192,30 +208,26 @@ Un franchissement ne produit JAMAIS un menu : il donne (ou étoffe) la tête du 
 
 **Aucun rendu** : le joueur ne voit jamais un compteur, seulement quelqu'un qui lui dit un chiffre. Un compte ne s'écrit que si son résultat doit atteindre le joueur — par un chiffre dit en scène, un `cout` qui rend un plan impossible, une ligne du matin, ou une crise. Note de conception : `docs/mains.md`.
 
-### travaux.json (les pensées — ce qu'un homme a appris aujourd'hui)
-Le milieu de la chaîne. Les mains (`mains.json`) comptent sans avoir d'opinion ; la tête (`intentions.json`) veut et décide ; **ceci dit ce qu'un homme a TOUCHÉ et ce que ça lui a appris**. Sans ce milieu, une réplique de conseiller n'a pas d'amont : elle se fabrique au moment de l'écrire, à partir de ce qui vient d'être dit dans la salle. **Jamais montré au joueur**, comme `intentions.json`. Tourne au tick, après les mains et avant la salle — sa sortie est l'entrée de la boucle d'élection.
+### pensees.json (ce qu'un homme a appris aujourd'hui)
+Le milieu de la chaîne. Les mains (`mains.json`) comptent sans avoir d'opinion ; la tête (`intentions.json`) veut et décide ; **ceci dit ce qu'un homme a TOUCHÉ et ce que ça lui a appris**. Sans ce milieu, une réplique de conseiller n'a pas d'amont : elle se fabrique au moment de l'écrire, à partir de ce qui vient d'être dit dans la salle. **Jamais montré au joueur**, comme `intentions.json`.
 
-Chaîne : **une source touchée → du travail → des pensées datées → une conclusion mûre → un message.**
+Chaîne : **une source touchée → du travail → des pensées datées → une conclusion écrite → un message.**
 
-- `id` — kebab-case, unique (`sanglier-six-noms`)
 - `qui` — un `personnages.id`
-- `affaire` — ce qu'il cherche, dans ses mots
-- `echeance` — {annee, lune, jour}, ou `null` pour un travail continu
-- `etat` — "en cours" | "mur" | "rendu" | "abandonne"
-- `excitation` — entier 0..6, recalculé par le tick, jamais à la main
-- `dernier_travail` — le dernier jour où il a touché une source
-- `livre` — l'`id` du cahier de `books.json` où sa conclusion ira
-- `sources` — [] ce qu'il PEUT aller toucher : {`quoi` en clair, `genre`: "gens" | "registre" | "chose" | "pli", `cout_jours`}
-- `pensees` — [] {`date`, **`source` obligatoire**, `texte`, `servie`}
-- `conclusion` — `null` tant qu'elle n'est pas écrite
+- `date` — {annee, lune, jour}
+- `source` — **obligatoire**, en clair : le registre dépouillé, l'homme écouté, la mesure qui a bougé, le pli arrivé
+- `texte` — ce qu'il en a tiré
+- `salle` — où il se tenait quand il l'a appris (la salle de son creux)
+- `affaire` — ce qu'elle sert, pour la mémoire ; libre, jamais un id à raccrocher
 
-**PAS DE SOURCE, PAS DE PENSÉE.** Une pensée naît de quelque chose que l'homme a réellement touché ce jour-là — même règle que les croyances des absents, qui ne changent que par une `diffusion` arrivée. Une pensée sans `source` est refusée par `tick.py --verifier`.
+**PAS DE SOURCE, PAS DE PENSÉE.** Une pensée naît de quelque chose que l'homme a réellement touché ce jour-là — même règle que les croyances des absents, qui ne changent que par une `diffusion` arrivée. Une pensée sans `source` est **refusée à l'entrée** par `depecher.py`, pas signalée plus tard.
 
-`servie: true` se pose sur une pensée portée à la table : sans elle, un homme se ré-excite chaque matin sur ce qu'il a déjà raconté hier.
+**Ce qui a disparu, et pourquoi** — `travaux.json` en entier. L'**excitation** était un compteur qui montait sans sources et retombait d'un point par jour : il disait qui avait *envie* de parler, jamais qui avait de *quoi*. L'état **`mur`** d'une conclusion se calculait au lieu de se constater. Le marquage **`servie`** était tenu 11 fois sur 613, et son absence faisait conclure à 98 % de travail perdu. Ce qui les remplace n'est pas un autre compteur : c'est la **journée** — le quartier où l'homme se tient, les **creux** qu'elle lui laisse, les sources à portée de ces creux. `presence.py` la mesure, `evaluer.py` en tire la feuille de route (qui a du temps, combien de questions, dans quelle salle), `depecher.py` la lit. Note de conception : `docs/boucle-acteurs.md`.
 
-Excitation, chiffres à l'essai (bloc unique en tête de `scripts/travaux.py`) : **+2** par pensée neuve jamais servie, **+3** quand une conclusion mûrit, **+1** si l'échéance tombe, **−1** par jour sans source neuve ; plafond **6**. **Sous 3, il ne parle pas : il travaille** — et travailler est une action visible, souvent un départ. Il reste éligible au geste. Deux travaux par journée d'homme, pas plus.
+### conclusions.json (ce qu'un homme a conclu, de sa main)
+- `qui`, `date`, `affaire`, `livre` (l'`id` du cahier de `books.json`), `texte`
 
-**La machine dit qu'une conclusion est mûre, elle ne l'écrit jamais.** Le texte est de la main de celui qui tient la charge, et il part dans son cahier de `books.json`, où le joueur peut le lire — les pensées en cours, elles, restent cachées. Même garde que le `contenu: null` d'une rumeur qui saute. Note de conception : `docs/travaux.md`.
+**Une conclusion est écrite ou elle ne l'est pas** — plus d'état mûri par un compteur. Quand elle l'est, elle part dans son cahier de `books.json`, où le joueur peut aller la lire ; les pensées en cours, elles, restent cachées. Même garde que le `contenu: null` d'une rumeur qui saute. **La machine ne l'écrit jamais** : le texte est de la main de celui qui tient la charge.
 
 ### plans.json (les plans d'en face — JAMAIS montré au joueur)
 

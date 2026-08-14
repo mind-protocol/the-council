@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# TISSER — projeter les treize mecanismes de lien dans UNE SEULE table d'aretes.
+# TISSER — projeter tous les mecanismes de lien dans UNE SEULE table d'aretes.
 #
 # POURQUOI. Le narratif de cette partie n'est pas dans les objets, il est dans
 # ce qui les relie : ~2 290 aretes ecrites a la main contre ~1 000 objets. Mais
@@ -20,7 +20,7 @@
 # Usage :
 #     python scripts/tisser.py                 le rapport
 #     python scripts/tisser.py --pendantes     ce qui ne resout pas, en clair
-#     python scripts/tisser.py --ecrire        depose le tissu en staging
+#     python scripts/tisser.py --ecrire        depose le tissu dans etat/tissu
 import argparse
 import io
 import json
@@ -34,7 +34,7 @@ import chiffrer  # noqa: E402  (la grammaire des couts)
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ETAT = os.path.join(RACINE, "etat")
-SORTIE = os.path.join(ETAT, "staging", "tissu")
+SORTIE = os.path.join(ETAT, "tissu")
 
 # LE VOCABULAIRE DES LIENS — seize natures, six familles. Il vit ICI parce que
 # c'est le projecteur qui le pose : un script d'assessment qui lirait le tissu
@@ -57,6 +57,8 @@ CANON = {
     "repond": "repond", "devie": "devie",
     "contredit": "contredit", "resonance": "resonance",
     "poursuit": "poursuit", "acteur_de": "acteur_de",
+    "equilibre": "equilibre", "équilibre": "equilibre",
+    "achemine": "achemine",
 }
 
 # `X$` : la meme arete, ecrite a l'envers. On la retourne — un graphe oriente
@@ -170,18 +172,33 @@ def nu(t):
 
 # ------------------------------------------------------------ les noeuds
 
-def indexer(books, intentions, mains, plans, evenements, personnages):
+def indexer(books, intentions, mains, plans, evenements, personnages, plis=None):
     """Ce qui EXISTE, et sous quelle adresse. Une arete pointe ici ou pend."""
     noeuds = {}          # id -> {genre, ou, quoi}
     doubles = collections.Counter()
 
-    def pose(ident, genre, ou, quoi):
+    def pose(ident, genre, ou, quoi, **proprietes):
         if not ident:
             return
-        if ident in noeuds and noeuds[ident]["genre"] != genre:
-            doubles[ident] += 1
-        noeuds.setdefault(ident, {"genre": genre, "ou": ou,
-                                  "quoi": nu(quoi)[:70]})
+        if ident in noeuds:
+            n = noeuds[ident]
+            genres = n.setdefault("genres", [n["genre"]])
+            if genre not in genres:
+                genres.append(genre)
+                doubles[ident] += 1
+            # Plusieurs sources peuvent décrire le même nœud (une personne
+            # paraît dans intentions puis personnages). On enrichit la
+            # projection sans écraser une valeur déjà connue par du vide.
+            n.update({k: v for k, v in proprietes.items() if v is not None})
+            if genre == "personne" and ou == "personnages":
+                # L'intention a créé l'adresse la première, mais l'étiquette
+                # d'une personne reste son nom ; son intention vit sur les
+                # étapes reliées, pas à la place de son identité.
+                n["ou"], n["quoi"] = ou, nu(quoi)[:70]
+            return
+        noeuds[ident] = {"genre": genre, "ou": ou, "quoi": nu(quoi)[:70]}
+        noeuds[ident].update({k: v for k, v in proprietes.items()
+                             if v is not None})
 
     for l in books:
         lid = l.get("id")
@@ -197,7 +214,10 @@ def indexer(books, intentions, mains, plans, evenements, personnages):
                              "clef" if "Clef" in titre else
                              "verrou" if "Verrou" in titre else
                              "etat_cible" if "cible" in titre else "piece")
-                    pose(tete, genre, lid, col(d, "🏷️") or col(d, "L'action"))
+                    pose(tete, genre, lid, col(d, "🏷️") or col(d, "L'action"),
+                         lieu=col(d, "📍 Où") or col(d, "Où"),
+                         etat=(col(d, "⏳ État") or col(d, "🔎 État")
+                               or col(d, "⏳ Où ça en est")))
                 elif MOYEN.fullmatch(tete):
                     # Les moyens sont un espace de noms PAR LIVRE : M01 vaut
                     # les voiles du Gosier chez la reine et la porte de la
@@ -212,7 +232,9 @@ def indexer(books, intentions, mains, plans, evenements, personnages):
         pose("pers:" + str(pid), "personne", "intentions", t.get("intention"))
         for e in t.get("plan") or []:
             if e.get("id"):
-                pose("etape:" + e["id"], "etape", pid, e.get("quoi"))
+                pose("etape:" + e["id"], "etape", pid, e.get("quoi"),
+                     etat=e.get("etat"), jours_restants=e.get("jours_restants"),
+                     cout=e.get("cout"), depend_de=e.get("depend_de"))
 
     for a in mains:
         aid = a.get("id")
@@ -225,13 +247,21 @@ def indexer(books, intentions, mains, plans, evenements, personnages):
         pose("ev:" + str(e.get("id")), "evenement", "evenements",
              e.get("description"))
 
+    for p in plis or []:
+        pose("pli:" + str(p.get("id")), "transmission", "plis",
+             p.get("porte"))
+
     for p in personnages:
         if p.get("id"):
-            pose("pers:" + p["id"], "personne", "personnages", p.get("nom"))
+            pose("pers:" + p["id"], "personne", "personnages", p.get("nom"),
+                 etat=p.get("etat"), condition=p.get("condition"),
+                 lieu_id=p.get("lieu_id"))
 
     for lx in charger("lieux", []):
         if isinstance(lx, dict) and lx.get("id"):
-            pose("lieu:" + lx["id"], "lieu", "lieux", lx.get("nom"))
+            pose("lieu:" + lx["id"], "lieu", "lieux", lx.get("nom"),
+                 jours_de_pr=lx.get("jours_de_pr"), region=lx.get("region"),
+                 type_lieu=lx.get("type"))
 
     for e in ("scene", "orbite", "royaume"):
         pose("echelle:" + e, "echelle", "schema", e)
@@ -252,13 +282,13 @@ def indexer(books, intentions, mains, plans, evenements, personnages):
 # ------------------------------------------------------------- les aretes
 
 def tisser(books, intentions, mains, plans, evenements, personnages=None,
-           joueur=None, lieux_connus=()):
+           joueur=None, lieux_connus=(), plis=None, liens=None):
     registres = registres_de(books)
     noms = nommer(personnages or [])
     """Une arete par lien reellement ecrit. `flou` = presente, non suivable."""
     A = []
 
-    def arc(de, vers, nature, source, flou=False, texte=""):
+    def arc(de, vers, nature, source, flou=False, texte="", **proprietes):
         # LE REPLI, A LA POSE. Canoniser apres coup obligerait chaque script
         # d'assessment a le refaire, et le premier qui l'oublierait mesurerait
         # un goulot faux.
@@ -285,6 +315,7 @@ def tisser(books, intentions, mains, plans, evenements, personnages=None,
              "flou": flou, "texte": nu(texte)[:110]}
         if lu:
             a["lu"] = lu
+        a.update({k: v for k, v in proprietes.items() if v is not None})
         A.append(a)
 
     # --- les cinq mecanismes des cahiers
@@ -392,12 +423,21 @@ def tisser(books, intentions, mains, plans, evenements, personnages=None,
     for e in evenements:
         eid = "ev:" + str(e.get("id"))
         for dif in e.get("diffusion") or []:
+            route = {
+                "canal": dif.get("canal"),
+                "date": dif.get("date"),
+                "fiabilite": dif.get("fiabilite"),
+                "deformation": dif.get("version"),
+                "etat": "arrive" if dif.get("livree") else "attendu",
+            }
             for q in (dif.get("qui") or []):
                 arc(eid, "pers:" + str(q), "revele", "evenements/diffusion",
-                    texte=dif.get("version"))
+                    texte=dif.get("version"), route=route,
+                    visible_par=[q], connaissance=True)
             if not (dif.get("qui") or []):
                 arc(eid, "lieu:" + str(dif.get("ou")), "revele",
-                    "evenements/diffusion", texte=dif.get("version"))
+                    "evenements/diffusion", texte=dif.get("version"),
+                    route=route, connaissance=True)
         for c in e.get("conditions") or []:
             arc("?", eid, "devie", "evenements/conditions", flou=True, texte=c)
         for a in (e.get("acteurs") or []):
@@ -440,6 +480,53 @@ def tisser(books, intentions, mains, plans, evenements, personnages=None,
             arc(x.get("leur_piece", "?"), x.get("notre_affaire", "?"),
                 "resonance", "plans/resonance", flou=True,
                 texte=x.get("pourquoi"))
+
+    # --- le miroir de connaissance : un pli est une chose qui voyage.
+    # Les deux arcs gardent le depart et l'arrivee visibles dans le meme graphe,
+    # sans confondre le texte transporte avec la personne qui le porte.
+    def jour(d):
+        if not isinstance(d, dict) or d.get("annee") is None:
+            return None
+        return ((d["annee"] * 12 + d.get("lune", 1) - 1) * 30
+                + d.get("jour", 1) - 1)
+
+    for p in plis or []:
+        pid = "pli:" + str(p.get("id"))
+        depart, arrivee = jour(p.get("parti_le")), jour(p.get("attendu_le"))
+        route = {
+            "canal": p.get("canal"),
+            "depart": p.get("parti_le"),
+            "arrivee": p.get("attendu_le"),
+            "delai_jours": (arrivee - depart
+                            if depart is not None and arrivee is not None else None),
+            "fiabilite": None,
+            "deformation": p.get("porte"),
+            "etat": p.get("etat"),
+            "scelle": p.get("scelle"),
+        }
+        arc("pers:" + str(p.get("de")), pid, "achemine", "plis/depart",
+            texte=p.get("porte"), route=route, connaissance=True,
+            visible_par=[p.get("de")])
+        # Le temps de voyage est payé sur `achemine`. `revele` est la remise
+        # au destinataire, instantanée une fois le pli arrivé ; recopier le
+        # même délai sur les deux arcs le ferait payer deux fois au graphe.
+        route_remise = dict(route)
+        route_remise["delai_jours"] = 0
+        arc(pid, "pers:" + str(p.get("pour")), "revele", "plis/arrivee",
+            texte=p.get("porte"), route=route_remise, connaissance=True,
+            visible_par=[p.get("pour")])
+
+    # --- les liens natifs, tisses a la main. Ils ont exactement le meme poids
+    # que les arcs extraits des cahiers ; `natif` ne sert qu'a montrer leur
+    # provenance dans la regie.
+    for l in liens or []:
+        if not isinstance(l, dict):
+            continue
+        arc(l.get("de", "?"), l.get("vers", "?"), l.get("nature", "lie"),
+            "liens", flou=not l.get("de") or not l.get("vers"),
+            texte=l.get("pourquoi"), natif=True, auteur=l.get("qui"),
+            date=l.get("quand"), justification=l.get("pourquoi"),
+            visible_par=l.get("visible_par"), route=l.get("route"))
     return A
 
 
@@ -458,17 +545,19 @@ def main():
     mains = charger("mains", [])
     evenements = charger("evenements", [])
     personnages = charger("personnages", [])
+    plis = charger("plis", [])
+    liens = charger("liens", [])
     plans_brut = charger("plans", {})
     plans = plans_brut.get("plans", []) if isinstance(plans_brut, dict) else plans_brut
 
     noeuds, doubles = indexer(books, intentions, mains, plans, evenements,
-                              personnages)
+                              personnages, plis)
     jr = charger("journal", {})
     joueur = (jr or {}).get("personnage_joueur_id") if isinstance(jr, dict) else None
     lieux_connus = {l.get("id") for l in charger("lieux", [])
                     if isinstance(l, dict) and l.get("id")}
     aretes = tisser(books, intentions, mains, plans, evenements,
-                    personnages, joueur, lieux_connus)
+                    personnages, joueur, lieux_connus, plis, liens)
 
     genres = collections.Counter(n["genre"] for n in noeuds.values())
     print("LE TISSU")

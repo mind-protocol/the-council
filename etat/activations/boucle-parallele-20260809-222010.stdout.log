@@ -1,0 +1,339 @@
+[  0.001s] boucle.demarrage         · sec=False · une_fois=False · heartbeat_s=20.0 · parallele=3
+[  0.002s] cycle.depart            
+[  0.006s] horloge.lecture         
+[  0.009s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=91680.0
+[  0.011s] graphe.lecture          
+[  0.046s] graphe.charge            · noeuds=1778 · aretes=4650
+[  0.048s] diffusion.importance    
+[  0.233s] energie.polarites_horloge · moyenne_minute=67000341.5 · ecart_max_minutes=1128.5 · emetteurs=1 · absorbeurs=97 · neutres=0
+[  0.236s] energie.transfert_horloge · transfere=10.672 · propositions=1018 · acteurs=98
+[  0.239s] energie.graphe           · dt_s=1140.0 · integration=0.928206 · noeuds=1778 · energises=191 · total=1164.426 · pic=pers:rhaenyra · maximum=100.0
+[  0.240s] diffusion.calendrier    
+[  0.259s] energie.calculee         · acteurs=16 · maximum=28.607
+[  0.261s] selection.rejetee        · acteur=rulf-corne · energie=28.607 · raison=repos_acteur · reprendre_a=95880.0
+[  0.262s] selection.rejetee        · acteur=robert-quince · energie=21.867 · raison=repos_acteur · reprendre_a=92460.0
+[  0.262s] selection.rejetee        · acteur=aldon-hask · energie=20.031 · raison=repos_acteur · reprendre_a=93698.36
+[  0.264s] selection.rejetee        · acteur=le-sanglier · energie=17.216 · raison=repos_acteur · reprendre_a=93369.921
+[  0.290s] selection.elue           · acteur=steffon-darklyn · energie=8.562 · tache=40029 · energie_tache=1.127 · budget_energie=8 · budget_s=240 · flux_horloge=absorbe · ecart_horloge_min=-399.5 · horloge_pj=rhaenyra
+[  0.291s] acteur.choisi            · acteur=steffon-darklyn · energie=8.562 · importance=0.084932 · budget=8
+[  0.292s] tache.choisie            · id=40029 · distance=1 · creee=False · energie=1.127
+ACTIVATION  steffon-darklyn  energie 8.56 · budget 8 (4 min)  importance 0.085
+  tache 40029 · distance 1 · 🔗 Écrire la chaîne complète sur un seul feuillet
+  front aurore-inchauspe · +91680.0s depuis rhaenyra
+[  0.293s] selection.elue           · acteur=alys-grive · energie=7.211 · tache=13025 · energie_tache=6.096 · budget_energie=7 · budget_s=210 · flux_horloge=absorbe · ecart_horloge_min=-399.5 · horloge_pj=rhaenyra
+[  0.294s] acteur.choisi            · acteur=alys-grive · energie=7.211 · importance=0.071873 · budget=7
+[  0.294s] tache.choisie            · id=13025 · distance=3 · creee=False · energie=6.096
+ACTIVATION  alys-grive  energie 7.21 · budget 7 (4 min)  importance 0.072
+  tache 13025 · distance 3 · 🌾 Acheter soixante muids de froment
+  front aurore-inchauspe · +91680.0s depuis rhaenyra
+[  0.296s] selection.elue           · acteur=prisonnier-wat · energie=3.32 · tache=13027 · energie_tache=1.988 · budget_energie=3 · budget_s=90 · flux_horloge=absorbe · ecart_horloge_min=-399.5 · horloge_pj=rhaenyra
+[  0.297s] acteur.choisi            · acteur=prisonnier-wat · energie=3.32 · importance=0.033093 · budget=3
+[  0.298s] tache.choisie            · id=13027 · distance=3 · creee=False · energie=1.988
+ACTIVATION  prisonnier-wat  energie 3.32 · budget 3 (2 min)  importance 0.033
+  tache 13027 · distance 3 · 🐎 Nommer les trois marchés et les douze charrettes
+  front aurore-inchauspe · +91680.0s depuis rhaenyra
+[  0.299s] selection.lot            · nombre=3 · parallele=3
+[  0.299s] energie.reservee         · acteur=steffon-darklyn · valeur=8.562 · plafond=8
+[  0.300s] energie.reservee         · acteur=alys-grive · valeur=7.211 · plafond=7
+[  0.301s] energie.reservee         · acteur=prisonnier-wat · valeur=3.32 · plafond=3
+[  0.313s] appel.dossier            · acteur=steffon-darklyn · tache=40029
+[  0.313s] appel.dossier            · acteur=alys-grive · tache=13025
+[  0.313s] appel.dossier            · acteur=prisonnier-wat · tache=13027
+[  0.459s] appel.systeme_narrateur  · acteur=alys-grive · caracteres=4751
+[  0.461s] appel.systeme_narrateur  · acteur=steffon-darklyn · caracteres=4790
+[  0.462s] appel.systeme_narrateur  · acteur=prisonnier-wat · caracteres=4803
+[  0.462s] appel.systeme_pnj        · acteur=alys-grive · caracteres=2146
+[  0.463s] appel.systeme_pnj        · acteur=steffon-darklyn · caracteres=2146
+[  0.464s] appel.systeme_pnj        · acteur=prisonnier-wat · caracteres=2146
+[  0.465s] appel.ouverture          · acteur=alys-grive · caracteres=26031 · budget_energie=7 · budget_secondes=210
+[  0.466s] appel.ouverture          · acteur=steffon-darklyn · caracteres=31312 · budget_energie=8 · budget_secondes=240
+[  0.468s] appel.ouverture          · acteur=prisonnier-wat · caracteres=23274 · budget_energie=3 · budget_secondes=90
+[  0.477s] cli.depart               · acteur=narrateur-local:grande-salle · session=07f17c75-aceb-4e5f-9ef4-d97e7abf0a45 · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[  0.478s] cli.depart               · acteur=narrateur-local:salle-levant · session=4b3e04c8-ea4b-46eb-aeee-1b6ccf4a6c70 · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[  0.478s] cli.depart               · acteur=narrateur-local:cuisines · session=b1d1233c-bb87-45f8-9343-4b1b1176c034 · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[  2.859s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[  2.977s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[  3.140s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[  4.341s] cli.rate_limit_event     · sous_type=None
+[  4.713s] cli.rate_limit_event     · sous_type=None
+[  5.144s] cli.rate_limit_event     · sous_type=None
+[  9.525s] cli.texte                · contenu={ "appel_pnj": { "qui": "steffon-darklyn", "message": "Ser Steffon, la grande salle bruit encore : le Serpent de Mer parle bas à la princesse Rhaenys près de l'âtre, Daemon va et …
+[  9.789s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[  9.794s] cli.resultat             · erreur=False · duree_ms=7258 · cout=0.203918 · entree=2 · sortie=285 · caracteres=680
+[ 10.213s] cli.texte                · contenu={ "appel_pnj": { "qui": "prisonnier-wat", "message": "La feuille est là, à trois pas, la plume en travers de l'encrier, et la reine attend encore. Elle vient de parler de Port-Réa…
+[ 10.397s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[ 10.401s] cli.resultat             · erreur=False · duree_ms=7967 · cout=0.166057 · entree=2 · sortie=235 · caracteres=497
+[ 11.428s] narrateur.reveille_pnj   · acteur=steffon-darklyn · caracteres=608
+[ 11.726s] cli.texte                · contenu={ "appel_pnj": { "qui": "alys-grive", "message": "Alys, les cuisines sentent le poisson bouilli et la fumée mouillée ; on a poussé les tréteaux contre le mur pour le repas du soir…
+[ 11.932s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[ 11.950s] cli.resultat             · erreur=False · duree_ms=9206 · cout=0.17782299999999998 · entree=2 · sortie=278 · caracteres=631
+[ 12.064s] narrateur.reveille_pnj   · acteur=prisonnier-wat · caracteres=426
+[ 12.525s] cli.depart               · acteur=steffon-darklyn · session=afab13fc-c49a-488e-9db6-1e89c8ffeadb · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[ 12.817s] cli.depart               · acteur=prisonnier-wat · session=cee6edf9-d28e-4155-a866-bb1dca0f5811 · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[ 13.618s] narrateur.reveille_pnj   · acteur=alys-grive · caracteres=564
+[ 13.746s] cli.depart               · acteur=alys-grive · session=16579ff8-d418-4699-a233-b06eafed01dd · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[ 14.889s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[ 15.389s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[ 16.077s] cli.rate_limit_event     · sous_type=None
+[ 16.113s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[ 17.148s] cli.rate_limit_event     · sous_type=None
+[ 17.459s] cli.rate_limit_event     · sous_type=None
+[ 27.394s] cli.texte                · contenu={ "tentative": { "verbe": "écrire", "quoi": "Poser au bas du feuillet, d'un seul jet, la suite des noms qui commande la colonne si le précédent tombe — moi, puis ser Robert, puis …
+[ 27.437s] cli.resultat             · erreur=False · duree_ms=12945 · cout=0.102714 · entree=2 · sortie=635 · caracteres=1518
+[ 28.210s] cli.texte                · contenu={ "tentative": { "verbe": "demander", "quoi": "Je coupe sur les marchés et les charrettes. Trois pas jusqu'à la table, je ne touche pas la feuille, je pose la main à plat sur le b…
+[ 28.281s] cli.resultat             · erreur=False · duree_ms=13213 · cout=0.07256 · entree=2 · sortie=653 · caracteres=1478
+[ 29.479s] pnj.tentative_valide     · acteur=steffon-darklyn · verbe=écrire · caracteres=1202
+[ 29.506s] narrateur.arbitrage      · acteur=steffon-darklyn · caracteres=4688 · passage=1
+[ 29.510s] cli.depart               · acteur=narrateur-local:grande-salle · session=07f17c75-aceb-4e5f-9ef4-d97e7abf0a45 · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[ 30.178s] pnj.tentative_valide     · acteur=prisonnier-wat · verbe=demander · caracteres=1197
+[ 30.179s] narrateur.arbitrage      · acteur=prisonnier-wat · caracteres=4685 · passage=1
+[ 30.180s] cli.depart               · acteur=narrateur-local:salle-levant · session=4b3e04c8-ea4b-46eb-aeee-1b6ccf4a6c70 · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[ 31.566s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[ 32.394s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[ 34.038s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 34.143s] cli.texte                · contenu={ "tentative": { "verbe": "écouter-et-noter", "quoi": "Je ne me mêle pas du compte du froment — je n'ai rien à signer et je me tais dès qu'un chiffre est prononcé. Je pose mon sac…
+[ 34.168s] cli.resultat             · erreur=False · duree_ms=18325 · cout=0.089802 · entree=2 · sortie=888 · caracteres=2098
+[ 35.125s] cli.heartbeat            · acteur=alys-grive · phase=pnj.tentative · secondes=20.0
+[ 35.127s] pnj.tentative_valide     · acteur=alys-grive · verbe=écouter-et-noter · caracteres=1645
+[ 35.129s] narrateur.arbitrage      · acteur=alys-grive · caracteres=5138 · passage=1
+[ 35.135s] cli.depart               · acteur=narrateur-local:cuisines · session=b1d1233c-bb87-45f8-9343-4b1b1176c034 · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[ 35.456s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 36.037s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 36.890s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 37.449s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[ 37.465s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 38.293s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 38.899s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 40.385s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 40.978s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 41.027s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 41.801s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 42.442s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 42.447s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 43.228s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 43.851s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 43.860s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 44.635s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 45.273s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 45.322s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 46.036s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 46.690s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 46.731s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 47.447s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 48.141s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 48.158s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 48.858s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 48.863s] cli.assistant            · bloc=thinking
+[ 49.570s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 50.574s] cli.heartbeat            · acteur=narrateur-local:grande-salle · phase=narrateur.resolution · secondes=20.0
+[ 50.980s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 50.987s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 50.998s] cli.assistant            · bloc=thinking
+[ 51.294s] cli.heartbeat            · acteur=narrateur-local:salle-levant · phase=narrateur.resolution · secondes=20.0
+[ 52.394s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 52.414s] cli.assistant            · bloc=thinking
+[ 56.341s] cli.heartbeat            · acteur=narrateur-local:cuisines · phase=narrateur.resolution · secondes=20.0
+[ 70.587s] cli.heartbeat            · acteur=narrateur-local:grande-salle · phase=narrateur.resolution · secondes=40.0
+[ 71.295s] cli.heartbeat            · acteur=narrateur-local:salle-levant · phase=narrateur.resolution · secondes=40.0
+[ 76.344s] cli.heartbeat            · acteur=narrateur-local:cuisines · phase=narrateur.resolution · secondes=40.0
+[ 83.462s] cli.texte                · contenu={ "qui": "steffon-darklyn", "activation": { "tache": {"id": "40029", "quoi": "🔗 Écrire la chaîne complète sur un seul feuillet", "creee": false}, "issue": "termine", "activites": …
+[ 83.465s] cli.rate_limit_event     · sous_type=None
+[ 83.726s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[ 83.729s] cli.resultat             · erreur=False · duree_ms=52454 · cout=0.1418185 · entree=2 · sortie=4371 · caracteres=7715
+[ 85.033s] rapport.extraction       · acteur=steffon-darklyn · essai=1
+[ 85.035s] rapport.refuse           · acteur=steffon-darklyn · essai=1 · erreur=activite 1 : references hors dossier : lieu:grande-salle, main:steffon-six-jours-sur-le-dos
+[ 85.035s] narrateur.corrige        · acteur=steffon-darklyn · essai=2 · caracteres=929
+[ 85.036s] cli.depart               · acteur=narrateur-local:grande-salle · session=07f17c75-aceb-4e5f-9ef4-d97e7abf0a45 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[ 87.021s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[ 87.566s] cli.texte                · contenu={ "qui": "alys-grive", "activation": { "tache": {"id": "13025", "quoi": "🌾 Acheter soixante muids de froment", "creee": false}, "issue": "rien", "activites": [ { "id": "act:alys-g…
+[ 87.577s] cli.rate_limit_event     · sous_type=None
+[ 87.675s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[ 87.677s] cli.resultat             · erreur=False · duree_ms=50514 · cout=0.1413285 · entree=2 · sortie=4317 · caracteres=8894
+[ 88.962s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 88.971s] rapport.extraction       · acteur=alys-grive · essai=1
+[ 88.973s] rapport.refuse           · acteur=alys-grive · essai=1 · erreur=activite 1 : references hors dossier : ref:intention:alys-grive:interdits, ref:objet:rebec-toile-huilee
+[ 88.975s] narrateur.corrige        · acteur=alys-grive · essai=2 · caracteres=941
+[ 88.976s] cli.depart               · acteur=narrateur-local:cuisines · session=b1d1233c-bb87-45f8-9343-4b1b1176c034 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[ 90.378s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 90.385s] cli.assistant            · bloc=thinking
+[ 91.320s] cli.heartbeat            · acteur=narrateur-local:salle-levant · phase=narrateur.resolution · secondes=60.0
+[ 91.512s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[ 95.548s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 97.004s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 98.436s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 99.170s] cli.assistant            · bloc=thinking
+[102.470s] cli.texte                · contenu={ "qui": "prisonnier-wat", "activation": { "tache": {"id": "13027", "quoi": "🐎 Nommer les trois marchés et les douze charrettes", "creee": false}, "issue": "bloque", "activites": …
+[102.482s] cli.rate_limit_event     · sous_type=None
+[102.578s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[102.581s] cli.resultat             · erreur=False · duree_ms=70521 · cout=0.1832 · entree=2 · sortie=6102 · caracteres=11958
+[103.898s] rapport.extraction       · acteur=prisonnier-wat · essai=1
+[103.900s] rapport.refuse           · acteur=prisonnier-wat · essai=1 · erreur=activite 1 : references hors dossier : croyance:c-est-moi-qui-clouerai, croyance:promesse-cour-aux-barques, obj:feuille-des-189, obj:plume-et-encrier, salle-levant:seuil-est, salle-levant:table-a-ecrire
+[103.901s] narrateur.corrige        · acteur=prisonnier-wat · essai=2 · caracteres=1039
+[103.903s] cli.depart               · acteur=narrateur-local:salle-levant · session=4b3e04c8-ea4b-46eb-aeee-1b6ccf4a6c70 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[105.056s] cli.heartbeat            · acteur=narrateur-local:grande-salle · phase=narrateur.correction · secondes=20.0
+[105.968s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[108.668s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[108.998s] cli.heartbeat            · acteur=narrateur-local:cuisines · phase=narrateur.correction · secondes=20.0
+[110.106s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[111.512s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[112.908s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[112.913s] cli.assistant            · bloc=thinking
+[118.226s] cli.texte                · contenu={ "qui": "steffon-darklyn", "activation": { "tache": {"id": "40029", "quoi": "🔗 Écrire la chaîne complète sur un seul feuillet", "creee": false}, "issue": "termine", "activites": …
+[118.328s] cli.rate_limit_event     · sous_type=None
+[118.450s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[118.451s] cli.resultat             · erreur=False · duree_ms=31728 · cout=0.140542 · entree=2 · sortie=3295 · caracteres=7660
+[119.754s] rapport.extraction       · acteur=steffon-darklyn · essai=2
+[119.756s] rapport.mutations_ecartees · acteur=steffon-darklyn · nombre=2
+[119.757s] rapport.refuse           · acteur=steffon-darklyn · essai=2 · erreur=continuite rompue pour 40029 : avant=None, dernier apres="en cours — la moitié haute du feuillet est écrite ; la suite des noms qui commande si le précédent tombe n'est pas posée, et la recopie au dos des feuillets de marche des capitaines n'est pas commencée"
+[119.757s] narrateur.corrige        · acteur=steffon-darklyn · essai=3 · caracteres=1098
+[119.758s] cli.depart               · acteur=narrateur-local:grande-salle · session=07f17c75-aceb-4e5f-9ef4-d97e7abf0a45 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[121.585s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[123.922s] cli.heartbeat            · acteur=narrateur-local:salle-levant · phase=narrateur.correction · secondes=20.0
+[124.168s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[125.564s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[126.679s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[126.694s] cli.assistant            · bloc=thinking
+[128.999s] cli.heartbeat            · acteur=narrateur-local:cuisines · phase=narrateur.correction · secondes=40.0
+[130.828s] cli.texte                · contenu={ "qui": "alys-grive", "activation": { "tache": {"id": "13025", "quoi": "🌾 Acheter soixante muids de froment", "creee": false}, "issue": "rien", "activites": [ { "id": "act:alys-g…
+[130.888s] cli.rate_limit_event     · sous_type=None
+[131.003s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[131.006s] cli.resultat             · erreur=False · duree_ms=40127 · cout=0.153395 · entree=2 · sortie=3873 · caracteres=8563
+[132.313s] rapport.extraction       · acteur=alys-grive · essai=2
+[132.317s] rapport.refuse           · acteur=alys-grive · essai=2 · erreur=activite 1 : references hors dossier : ref:intention:alys-grive
+[132.319s] narrateur.corrige        · acteur=alys-grive · essai=3 · caracteres=901
+[132.320s] cli.depart               · acteur=narrateur-local:cuisines · session=b1d1233c-bb87-45f8-9343-4b1b1176c034 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[134.634s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[138.397s] cli.assistant            · bloc=thinking
+[139.779s] cli.heartbeat            · acteur=narrateur-local:grande-salle · phase=narrateur.correction · secondes=20.0
+[143.926s] cli.heartbeat            · acteur=narrateur-local:salle-levant · phase=narrateur.correction · secondes=40.0
+[152.349s] cli.heartbeat            · acteur=narrateur-local:cuisines · phase=narrateur.correction · secondes=20.0
+[156.112s] cli.texte                · contenu={ "qui": "prisonnier-wat", "activation": { "tache": {"id": "13027", "quoi": "🐎 Nommer les trois marchés et les douze charrettes", "creee": false}, "issue": "bloque", "activites": …
+[156.143s] cli.rate_limit_event     · sous_type=None
+[156.310s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[156.315s] cli.resultat             · erreur=False · duree_ms=50710 · cout=0.2080935 · entree=2 · sortie=5350 · caracteres=11719
+[157.013s] cli.texte                · contenu={ "qui": "steffon-darklyn", "activation": { "tache": {"id": "40029", "quoi": "🔗 Écrire la chaîne complète sur un seul feuillet", "creee": false}, "issue": "termine", "activites": …
+[157.032s] cli.rate_limit_event     · sous_type=None
+[157.150s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[157.153s] cli.resultat             · erreur=False · duree_ms=35849 · cout=0.1443685 · entree=2 · sortie=3759 · caracteres=8642
+[157.632s] rapport.extraction       · acteur=prisonnier-wat · essai=2
+[157.634s] rapport.mutations_ecartees · acteur=prisonnier-wat · nombre=5
+[157.651s] rapport.valide           · acteur=prisonnier-wat · depense=3.0 · activites=4 · corrections=1
+[157.656s] rapport.depose           · acteur=prisonnier-wat · fichier=etat/staging/activations/20260809-222248-342194-prisonnier-wat.json
+[158.459s] rapport.extraction       · acteur=steffon-darklyn · essai=3
+[158.462s] rapport.mutations_ecartees · acteur=steffon-darklyn · nombre=2
+[158.464s] rapport.refuse           · acteur=steffon-darklyn · essai=3 · erreur=continuite rompue pour 40029 : avant="faite quant au feuillet — la chaîne complète tient sur un seul feuillet, les quatre cas et leur règle en haut, les cinq degrés de commandement bornés en bas ; la recopie au dos des feuillets de marche des capitaines n'est pas commencée", dernier apres="en cours — la moitié haute du feuillet est écrite ; la suite des noms qui commande si le précédent tombe n'e…
+[158.479s] activation.annulee       · acteur=steffon-darklyn · raison=RuntimeError · erreur=continuite rompue pour 40029 : avant="faite quant au feuillet — la chaîne complète tient sur un seul feuillet, les quatre cas et leur règle en haut, les cinq degrés de commandement bornés en bas ; la recopie au dos des feuillets de marche des capitaines n'est pas commencée", dernier apres="en cours — la moitié haute du feuillet est écrite ; la suite des noms qui commande si le précédent tombe n'e…
+[170.276s] cli.texte                · contenu={ "qui": "alys-grive", "activation": { "tache": {"id": "13025", "quoi": "🌾 Acheter soixante muids de froment", "creee": false}, "issue": "rien", "activites": [ { "id": "act:alys-g…
+[170.287s] cli.rate_limit_event     · sous_type=None
+[170.470s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[170.474s] cli.resultat             · erreur=False · duree_ms=36188 · cout=0.1447315 · entree=2 · sortie=3618 · caracteres=8548
+[171.810s] rapport.extraction       · acteur=alys-grive · essai=3
+[171.812s] rapport.refuse           · acteur=alys-grive · essai=3 · erreur=activite 2 : references hors dossier : ref:main:alys-la-liste
+[171.837s] activation.annulee       · acteur=alys-grive · raison=RuntimeError · erreur=activite 2 : references hors dossier : ref:main:alys-la-liste
+[171.839s] acteur.energie.debitee   · acteur=prisonnier-wat · avant=3.32 · energie=3.0 · duree_monde_s=90 · apres=0.32
+[171.840s] continuite.enregistree   · acteur=prisonnier-wat · tache=13027 · issue=bloque · suspendue=True · fin_s=91770.0 · reprendre_a=95370.0 · cibles=4
+[171.841s] cycle.termine            · acteur=prisonnier-wat · rapport=etat/staging/activations/20260809-222248-342194-prisonnier-wat.json
+[171.846s] cycle.lot.termine        · reussies=1 · annulees=2
+[171.847s] cycle.depart            
+[171.848s] horloge.lecture         
+[171.872s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=92400.0
+[171.873s] graphe.lecture          
+[171.897s] graphe.charge            · noeuds=1778 · aretes=4650
+[171.898s] diffusion.importance    
+[172.074s] energie.polarites_horloge · moyenne_minute=67000344.5 · ecart_max_minutes=1137.5 · emetteurs=1 · absorbeurs=97 · neutres=0
+[172.077s] energie.transfert_horloge · transfere=10.671 · propositions=1018 · acteurs=98
+[172.079s] energie.graphe           · dt_s=720.0 · integration=0.810535 · noeuds=1778 · energises=191 · total=1163.859 · pic=pers:rhaenyra · maximum=100.0
+[172.080s] diffusion.calendrier    
+[172.091s] energie.calculee         · acteurs=16 · maximum=28.607
+[172.092s] selection.rejetee        · acteur=rulf-corne · energie=28.607 · raison=repos_acteur · reprendre_a=95880.0
+[172.093s] selection.rejetee        · acteur=robert-quince · energie=21.867 · raison=repos_acteur · reprendre_a=92460.0
+[172.094s] selection.rejetee        · acteur=aldon-hask · energie=20.032 · raison=repos_acteur · reprendre_a=93698.36
+[172.095s] selection.rejetee        · acteur=le-sanglier · energie=17.217 · raison=repos_acteur · reprendre_a=93369.921
+[172.111s] selection.elue           · acteur=steffon-darklyn · energie=8.562 · tache=40029 · energie_tache=1.127 · budget_energie=8 · budget_s=240 · flux_horloge=absorbe · ecart_horloge_min=-402.5 · horloge_pj=rhaenyra
+[172.112s] acteur.choisi            · acteur=steffon-darklyn · energie=8.562 · importance=0.084932 · budget=8
+[172.113s] tache.choisie            · id=40029 · distance=1 · creee=False · energie=1.127
+ACTIVATION  steffon-darklyn  energie 8.56 · budget 8 (4 min)  importance 0.085
+  tache 40029 · distance 1 · 🔗 Écrire la chaîne complète sur un seul feuillet
+  front aurore-inchauspe · +92400.0s depuis rhaenyra
+[172.113s] selection.elue           · acteur=alys-grive · energie=7.211 · tache=13025 · energie_tache=6.096 · budget_energie=7 · budget_s=210 · flux_horloge=absorbe · ecart_horloge_min=-402.5 · horloge_pj=rhaenyra
+[172.114s] acteur.choisi            · acteur=alys-grive · energie=7.211 · importance=0.071873 · budget=7
+[172.116s] tache.choisie            · id=13025 · distance=3 · creee=False · energie=6.096
+ACTIVATION  alys-grive  energie 7.21 · budget 7 (4 min)  importance 0.072
+  tache 13025 · distance 3 · 🌾 Acheter soixante muids de froment
+  front aurore-inchauspe · +92400.0s depuis rhaenyra
+[172.117s] selection.elue           · acteur=sara · energie=2.875 · tache=37023 · energie_tache=4.292 · budget_energie=2 · budget_s=60 · flux_horloge=absorbe · ecart_horloge_min=-402.5 · horloge_pj=rhaenyra
+[172.118s] acteur.choisi            · acteur=sara · energie=2.875 · importance=0.027404 · budget=2
+[172.119s] tache.choisie            · id=37023 · distance=1 · creee=False · energie=4.292
+ACTIVATION  sara  energie 2.87 · budget 2 (1 min)  importance 0.027
+  tache 37023 · distance 1 · 👐 Désigner et payer douze femmes du bourg
+  front aurore-inchauspe · +92400.0s depuis rhaenyra
+[172.119s] selection.lot            · nombre=3 · parallele=3
+[172.120s] energie.reservee         · acteur=steffon-darklyn · valeur=8.562 · plafond=8
+[172.121s] energie.reservee         · acteur=alys-grive · valeur=7.211 · plafond=7
+[172.122s] energie.reservee         · acteur=sara · valeur=2.875 · plafond=2
+[172.130s] appel.dossier            · acteur=steffon-darklyn · tache=40029
+[172.130s] appel.dossier            · acteur=alys-grive · tache=13025
+[172.131s] appel.dossier            · acteur=sara · tache=37023
+[172.240s] appel.systeme_narrateur  · acteur=alys-grive · caracteres=4751
+[172.241s] appel.systeme_narrateur  · acteur=steffon-darklyn · caracteres=4790
+[172.242s] appel.systeme_narrateur  · acteur=sara · caracteres=4776
+[172.243s] appel.systeme_pnj        · acteur=alys-grive · caracteres=2146
+[172.243s] appel.systeme_pnj        · acteur=steffon-darklyn · caracteres=2146
+[172.244s] appel.systeme_pnj        · acteur=sara · caracteres=2146
+[172.245s] appel.ouverture          · acteur=alys-grive · caracteres=26031 · budget_energie=7 · budget_secondes=210
+[172.245s] appel.ouverture          · acteur=steffon-darklyn · caracteres=31312 · budget_energie=8 · budget_secondes=240
+[172.246s] appel.ouverture          · acteur=sara · caracteres=27463 · budget_energie=2 · budget_secondes=60
+[172.251s] cli.depart               · acteur=narrateur-local:cuisines · session=94cd7f70-79e7-47bd-b37a-ae660c663e2c · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[172.252s] cli.depart               · acteur=narrateur-local:grande-salle · session=a03623d8-76e8-4b5c-b621-5db318e17d9f · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[172.253s] cli.depart               · acteur=narrateur-local:grande-salle · session=f9072512-9728-42b6-951c-73af9037f06f · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[174.881s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[175.161s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[175.171s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[176.275s] cli.rate_limit_event     · sous_type=None
+[176.797s] cli.rate_limit_event     · sous_type=None
+[177.417s] cli.rate_limit_event     · sous_type=None
+[182.376s] cli.texte                · contenu={ "appel_pnj": { "qui": "sara", "message": "Sara, la grande salle est pleine et bruyante : le Serpent de Mer parle à dame Rhaenys près de l'âtre, Daemon marche, les deux garçons V…
+[182.484s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[182.492s] cli.resultat             · erreur=False · duree_ms=7935 · cout=0.18589099999999997 · entree=2 · sortie=285 · caracteres=613
+[182.530s] cli.texte                · contenu={ "appel_pnj": { "qui": "alys-grive", "message": "Alys, les cuisines sont à l'heure creuse : le grand feu tiré sur les braises, deux marmitons qui récurent, et sur la table de dre…
+[182.732s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[182.736s] cli.resultat             · erreur=False · duree_ms=8411 · cout=0.17771299999999998 · entree=2 · sortie=270 · caracteres=612
+[184.068s] narrateur.reveille_pnj   · acteur=sara · caracteres=552
+[184.162s] cli.texte                · contenu={ "appel_pnj": { "qui": "steffon-darklyn", "message": "Ser Steffon. La grande salle est pleine et bruyante : le Serpent de Mer parle bas à sa femme près de l'âtre, Daemon tient le…
+[184.305s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[184.344s] narrateur.reveille_pnj   · acteur=alys-grive · caracteres=545
+[184.344s] cli.resultat             · erreur=False · duree_ms=9545 · cout=0.205918 · entree=2 · sortie=361 · caracteres=843
+[184.795s] cli.depart               · acteur=sara · session=22dd451b-8e3c-4170-8f15-7d1497e0b0f5 · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[184.879s] cli.depart               · acteur=alys-grive · session=d04da4e6-e086-4df4-a34c-d25c42431d35 · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[185.893s] narrateur.reveille_pnj   · acteur=steffon-darklyn · caracteres=771
+[186.924s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[186.964s] cli.depart               · acteur=steffon-darklyn · session=e7495c6d-dbd7-468e-883f-c3689b955057 · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[187.488s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[187.923s] cli.rate_limit_event     · sous_type=None
+[188.703s] cli.rate_limit_event     · sous_type=None
+[189.313s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[191.763s] cli.rate_limit_event     · sous_type=None
+[200.898s] cli.texte                · contenu={ "tentative": { "verbe": "chanter", "quoi": "Je sors le rebec du sac sans le poser à terre, je m'assieds sur le coin de la table de dressage — pas sur l'ardoise du cuisinier — et…
+[200.911s] cli.resultat             · erreur=False · duree_ms=14181 · cout=0.08582 · entree=2 · sortie=734 · caracteres=1683
+[200.975s] cli.texte                · contenu={ "tentative": { "verbe": "sortir", "quoi": "Je ne me laisse pas prendre par la salle. Je fais trois pas jusqu'à Ser Steffon à la porte, je lui dis en une phrase que je descends a…
+[200.995s] cli.resultat             · erreur=False · duree_ms=13843 · cout=0.08787 · entree=2 · sortie=553 · caracteres=1290
+[201.364s] cli.texte                · contenu={ "tentative": { "verbe": "écrire", "quoi": "Sous la dernière règle, d'un seul jet, poser la suite des noms qui commande si le précédent tombe : moi d'abord, puis ser Robert, puis…
+[201.391s] cli.resultat             · erreur=False · duree_ms=12320 · cout=0.103503 · entree=2 · sortie=634 · caracteres=1494
+[202.389s] pnj.tentative_valide     · acteur=alys-grive · verbe=chanter · caracteres=1313
+[202.393s] narrateur.arbitrage      · acteur=alys-grive · caracteres=4798 · passage=1
+[202.394s] cli.depart               · acteur=narrateur-local:cuisines · session=94cd7f70-79e7-47bd-b37a-ae660c663e2c · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[202.565s] pnj.tentative_valide     · acteur=sara · verbe=sortir · caracteres=1051
+[202.566s] narrateur.arbitrage      · acteur=sara · caracteres=4541 · passage=1
+[202.567s] cli.depart               · acteur=narrateur-local:grande-salle · session=f9072512-9728-42b6-951c-73af9037f06f · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[202.930s] pnj.tentative_valide     · acteur=steffon-darklyn · verbe=écrire · caracteres=1180
+[202.932s] narrateur.arbitrage      · acteur=steffon-darklyn · caracteres=4674 · passage=1
+[202.933s] cli.depart               · acteur=narrateur-local:grande-salle · session=a03623d8-76e8-4b5c-b621-5db318e17d9f · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[204.536s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[205.297s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[206.335s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[208.280s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[209.668s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[210.442s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[210.886s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[211.814s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[213.027s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0

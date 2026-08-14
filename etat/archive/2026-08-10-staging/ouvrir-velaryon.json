@@ -1,0 +1,481 @@
+{
+  "genere_le": "2026-08-09T00:00:00",
+  "joueur": null,
+  "avertissement": "PROPOSITION — agent d'ouverture de maison. N'a RIEN ecrit dans etat/. Le MJ principal relit, arbitre et applique. Contient en outre une section 'ecritures_a_la_main' que scripts/appliquer.py ne sait pas poser (mains.json n'a aucune operation d'ajout) : a recopier a la main dans etat/mains.json.",
+  "objet": "Ouverture de la maison VELARYON en palier A — etapes 1 a 4 du process (docs/ouvrir-une-maison.md). L'etape 5 (le plan) n'est PAS faite : voir 'decision_plans_json'.",
+  "empreintes": {
+    "intentions": "4f00e355144fa6597b96342471a55ac12755e752",
+    "evenements": "29a5c52a45ae09a2829f527e9787108544a72664",
+    "personnages": "a2e7534bb91169a8f44019aa544f95167a0ee085",
+    "monde": "c4f54353d9dc7559642928425d908f3d3ba29271",
+    "plis": "63e01aa195b3a3e8fff9d3d67741d645ce3b087f",
+    "lieux": "ada66c0b8b19f31241bcbff3ea7dadef6f0025c9"
+  },
+  "canon_recolte": {
+    "note": "Seul canon a-venir dont Velaryon est acteur. Aucun autre canon de etat/evenements.json ne la nomme.",
+    "evenements": [
+      {
+        "id": "bataille-du-gosier",
+        "date_prevue": {
+          "annee": 130,
+          "lune": 1,
+          "jour": 10
+        },
+        "importance": 90,
+        "acteurs": [
+          "jacaerys",
+          "corlys"
+        ],
+        "etat_cible_date": "La flotte des Trois Filles force le Gosier ; Jacaerys tombe, perce de carreaux ; Lamarck est ravagee dans la foulee.",
+        "verrous": [
+          "si le blocus du Gosier a ete leve ou renforce autrement",
+          "si Jacaerys ne combat pas en premiere ligne"
+        ],
+        "ce_que_ca_impose": "Le canon PRESUPPOSE un blocus noir du Gosier en place au 130.1.10. Or la reine vient d'ordonner le 28e (parole-rhaenyra-le-gosier-reste-ouvert-28e) que le Gosier RESTE OUVERT, et l'etape ajoutee ci-dessous dit que Corlys obeira a la lettre. La premiere condition de deviation est donc armee neuf lunes a l'avance. A NE PAS RESOUDRE ICI : c'est au MJ principal de le porter, le cas echeant, dans monde.deviations. Rien dans cette proposition ne contredit le canon — elle en arme la condition, ce qui est son role."
+      }
+    ]
+  },
+  "gens_retenus": [
+    {
+      "id": "corlys",
+      "role": "le chef",
+      "echelle": "orbite",
+      "existe": true,
+      "cree": false
+    },
+    {
+      "id": "rhaenys",
+      "role": "celle qui conteste a l'interieur",
+      "echelle": "orbite",
+      "existe": true,
+      "cree": false,
+      "pourquoi": "Deja ecrit dans l'etat : elle a ramene Baela et Rhaena a Peyredragon CONTRE l'avis de Corlys qui les voulait a Lamarck (cout de son etape rhaenys-baela-rhaena), et elle patrouille de sa propre autorite sans passer par personne. Aucun besoin d'inventer une contestation."
+    },
+    {
+      "id": "bryn-cale",
+      "role": "l'homme de metier — les quilles",
+      "echelle": "royaume",
+      "existe": true,
+      "cree": false,
+      "pourquoi": "Deja en fiche, dormant, a Lamarck : « Maitre de la cale du levant, chantiers de Lamarck », maniere « donne un nombre de jours avant un nombre d'hommes, et ne le revise jamais qu'a la baisse ». C'est exactement l'homme dont O13 reclame la mesure. On le reveille au lieu d'en inventer un.",
+      "echelle_pourquoi": "royaume et non orbite : orbite est PLEIN (20/20 dans intentions.json, plafond de scripts/tick.py). Un maitre de cale a cinq jours de route se tient tres bien en royaume — il garde son unique declencheur, arme sur le joueur."
+    }
+  ],
+  "gens_ecartes": [
+    {
+      "qui": "lucerys",
+      "pourquoi": "Il est de maison-targaryen-noir, a Peyredragon, deja tete orbite, et il est l'ENJEU de la maison Velaryon (la succession de Lamarck), pas un de ses acteurs."
+    },
+    {
+      "qui": "un capitaine du croissant, invente",
+      "pourquoi": "bryn-cale fait deja sortir le chiffre. Un quatrieme nom n'aurait produit que des opinions."
+    }
+  ],
+  "ressources": {
+    "maisons_json": {
+      "id": "maison-velaryon",
+      "or": 800000,
+      "revenus_lune": 18000,
+      "levees_dispo": 3000,
+      "levees_max": 4000,
+      "siege_id": "lamarck",
+      "statut": "intacte",
+      "allegeance_reelle": "noir"
+    },
+    "constat": "maisons.json N'A PAS DE CHAMP POUR LES NEFS (docs/schema.md : or, revenus_lune, levees_dispo, levees_max — rien d'autre). Le chiffre qui decide de tout chez Velaryon n'a donc aucun domicile dans l'etat. On n'invente pas un champ hors schema : on lui donne pour domicile une main, ci-dessous.",
+    "chiffres_sources": [
+      {
+        "quoi": "quatre-vingt-dix nefs, onze jours, et le grain de Lamarck pour tenir la mer",
+        "source": "cout de l'etape corlys-gosier, intentions.json, maj 129.3.28"
+      },
+      {
+        "quoi": "dix coques affretees au banc de l'Est, plus les onze de la maison si on les y emploie",
+        "source": "books.json, registre des offices, O13, colonne « ce dont il repond »"
+      },
+      {
+        "quoi": "quatre galeres en arc a cent toises devant Peyredragon le 17e",
+        "source": "accompli de corlys-compter-bannerets"
+      },
+      {
+        "quoi": "deux nefs de Lamarck en escorte le 26e",
+        "source": "rhaenys-ramene-baela-et-rhaena-par-la-mer-26e, actes.json"
+      }
+    ]
+  },
+  "mutations_proposees": [
+    {
+      "table": "personnages",
+      "cible": "corlys",
+      "operation": "personnage",
+      "champs": {
+        "lieu_id": "lamarck"
+      },
+      "pourquoi": "VERROU DE FAIT n.2. personnages.json le donne a peyredragon, alors que son propre acte du 28e (corlys-la-police-des-mers-sans-nom-28e) porte lieu_id lamarck, que sa tete le donne en mer sur le croissant depuis le 19e, et que books.json/O13 dit « il est a Lamarck et n'a pas repondu ». Tant que la fiche dit peyredragon, la boucle hors scene lui livre les diffusions adressees a Peyredragon (qu'il ne devrait pas avoir) et lui refuse celles adressees a Lamarck (qu'il devrait avoir). C'est la panne qui explique tout le reste."
+    },
+    {
+      "table": "intentions",
+      "cible": "corlys",
+      "operation": "etape_ajouter",
+      "valeur": {
+        "id": "corlys-ordre-du-gosier",
+        "quoi": "Recevoir l'ordre de la reine du 28e — LE GOSIER RESTE OUVERT, motif change (« on n'affame pas une ville qu'on veut prendre en trois semaines »), decision d'elle seule — et decider quoi faire des six jours de police des mers deja faits, qu'elle ignore.",
+        "etat": "en-cours",
+        "jours_restants": 2,
+        "depend_de": [
+          "corlys-gosier"
+        ],
+        "cout": [
+          "rouvrir, c'est six jours de croissant tenus pour rien, quatre-vingt-dix quilles rappelees, et l'aveu qu'il a ferme sans le dire"
+        ],
+        "si_bloque": "Il obeit a la lettre et pas d'un pouce de plus : le croissant s'ecarte, les marchands repassent des le lendemain. Et il ne corrige pas la reine sur ce qui s'est passe du 19e au 30e — ce qu'elle ne lui a pas demande, il ne le raconte pas. Le mot blocus ne sera employe dans aucun de ses ordres, et le mot police non plus.",
+        "accompli": null
+      },
+      "pourquoi": "C'est la seule chose que Velaryon ait a faire cette lune qui depende du joueur. Budget orbite : quatre etapes au plafond, il en aura quatre."
+    },
+    {
+      "table": "intentions",
+      "cible": "corlys",
+      "operation": "ignore_ajouter",
+      "valeur": "Que la reine lui a donne LA MER : le 27e a neuf heures un office ecrit (O13, commandement de la mer, mesure — le nombre de quilles tenues a la mer, dit chaque semaine), le 28e sa part du Grand Plan a la craie sur la Table Peinte. Le corbeau est parti, il n'a rien lu : il continue de tenir la mer SANS NOM parce qu'il croit toujours qu'on ne lui a rien confie.",
+      "pourquoi": "Explique pourquoi un homme a qui l'on vient de tout donner se conduit exactement comme un homme a qui l'on n'a rien donne. Sans cet ignore, sa conduite se lit comme de la bouderie ; avec, c'est du courrier."
+    },
+    {
+      "table": "intentions",
+      "cible": "rhaenys",
+      "operation": "ignore_ajouter",
+      "valeur": "Que le vide sur l'eau qu'elle constate de ses yeux depuis quatre jours n'est pas la prudence des marchands : c'est son epoux qui ferme le Gosier en son propre nom depuis le 19e, contre un refus public de la reine. Elle a le fait de premiere main et pas la cause.",
+      "pourquoi": "Sa croyance n.5 dit deja « quatre jours de vol au-dessus de la baie : rien n'est monte de Port-Real par l'eau, et c'est la seule chose qu'elle sache de premiere main ». Le fait est deja dans sa tete ; il lui manquait l'ignorance de la cause. C'est la contestation interne de la maison, entierement derivee."
+    },
+    {
+      "table": "intentions",
+      "cible": "rhaenys",
+      "operation": "etape_ajouter",
+      "valeur": {
+        "id": "rhaenys-le-vide-sur-leau",
+        "quoi": "Etablir POURQUOI la baie est vide : compter elle-meme, d'en haut, les coques marchandes detournees au nord du Gosier, et porter la reponse a Corlys AVANT la reine.",
+        "etat": "en-cours",
+        "jours_restants": 2,
+        "depend_de": [
+          "rhaenys-patrouille"
+        ],
+        "cout": [
+          "deux jours de vol de plus sur Meleys, qui n'est plus jeune",
+          "passer bas au-dessus du Gosier, la ou l'on traine des scorpions sur les routes"
+        ],
+        "si_bloque": "Si Meleys ne peut pas voler deux jours de suite, elle envoie un de ses capitaines longer la ligne et rapporter le compte — plus lent, plus sur, moins vu. Et si la reponse est bien son epoux : elle le dira a la reine EN PRESENCE de Corlys, jamais dans son dos, et une seule fois.",
+        "accompli": null
+      },
+      "pourquoi": "Budget orbite : elle passe de trois a quatre etapes, plafond atteint. C'est la route n.1 par laquelle le joueur peut apprendre que Velaryon a bouge — et elle passe par une bouche, pas par une table."
+    },
+    {
+      "table": "personnages",
+      "cible": "bryn-cale",
+      "operation": "personnage",
+      "champs": {
+        "etat": "actif"
+      },
+      "pourquoi": "Actif = a une entree dans intentions.json (CLAUDE.md, casting dynamique). Il en recoit une ci-dessous. lieu_id est deja lamarck."
+    },
+    {
+      "table": "intentions",
+      "operation": "tete_ajouter",
+      "valeur": {
+        "personnage_id": "bryn-cale",
+        "echelle": "royaume",
+        "croyances": [
+          "QUATRE-VINGT-DIX QUILLES tenues a la mer depuis le 19e sans un jour de radoub. A ce train il en perd une tous les trois jours — son propre compte de la cale du levant, arrete le 28e au soir",
+          "Le grain de Lamarck nourrit le croissant et non les chantiers : ce qu'on met a la mer, on ne le repare plus (ordre de lord Corlys porte par la galere du 24e)",
+          "Personne ne lui a demande son chiffre depuis le 19e — ni le chateau, ni son maitre. Quatre comptes se sont empiles sur l'ardoise du hangar"
+        ],
+        "ignore": [
+          "Que la reine a fait ecrire le 27e une charge de la mer dont LA MESURE EST SON CHIFFRE, et que tant que lord Corlys n'y a pas appose son sceau, ses quatre-vingt-dix quilles comptent pour ZERO dans tous les volumes de Peyredragon"
+        ],
+        "intention": "Tenir le compte juste et l'ecrire chaque semaine sur son ardoise, en attendant que quelqu'un le demande. Il ne montera pas le porter : ce n'est pas sa place, et on ne lui a rien demande.",
+        "plan": [
+          {
+            "id": "bryn-compte-de-la-semaine",
+            "quoi": "Arreter le compte des quilles tenues a la mer et le confier a la premiere galere qui part pour la rade",
+            "etat": "en-cours",
+            "jours_restants": 3,
+            "depend_de": [],
+            "cout": [
+              "une journee de cale a ne pas surveiller",
+              "un homme pour ramer jusqu'a la rade"
+            ],
+            "si_bloque": "Si aucune galere ne part, il grave le chiffre sur l'ardoise du hangar et l'y laisse. Quatre s'y sont deja empiles sans que personne les lise ; le cinquieme ne le derangera pas davantage.",
+            "accompli": null
+          },
+          {
+            "id": "bryn-radoub-des-dix",
+            "quoi": "Haler dix coques du croissant par roulement, quatre jours de radoub chacune, avant que le compte ne descende tout seul",
+            "etat": "en-cours",
+            "jours_restants": 6,
+            "depend_de": [
+              "bryn-compte-de-la-semaine"
+            ],
+            "cout": [
+              "que lord Corlys accepte dix quilles de moins a la mer pendant quarante jours",
+              "le bois du chantier du levant, qui n'a plus de quoi tenir deux hivers"
+            ],
+            "si_bloque": "S'il n'obtient pas les dix, il ne demande pas une deuxieme fois : il continue a mettre a la mer ce qui flotte, et il ecrit le mot « radoub » a cote de chaque compte, pour qu'on sache un jour a quelle date on aurait pu.",
+            "accompli": null
+          }
+        ],
+        "declencheurs": [
+          {
+            "si": "Quelqu'un de Peyredragon lui demande son chiffre par ecrit, au nom de la reine",
+            "alors": "Il donne le vrai, arrondi a la baisse comme toujours — et il donne AUSSI les quatre comptes de l'ardoise, ce qui montre d'un coup la pente des trois dernieres semaines au lieu d'un chiffre isole.",
+            "une_fois": false
+          }
+        ],
+        "attitude_joueur": "Il ne connait pas la reine et n'a rien contre elle. Il donnera tout ce qu'on lui demande, exactement, et rien de ce qu'on ne lui demande pas. Le seul homme de cette proposition qu'un mot ecrit suffit a ouvrir.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 28
+        }
+      },
+      "pourquoi": "L'homme de metier. Budget royaume respecte au chiffre pres : trois croyances, deux etapes, un declencheur."
+    },
+    {
+      "table": "plis",
+      "operation": "pli_ajouter",
+      "valeur": {
+        "id": "pli-o13-commandement-de-la-mer",
+        "canal": "corbeau",
+        "scelle": true,
+        "porte": "COMMANDEMENT DE LA MER, O13 au registre des offices.\n\nA lord Corlys Velaryon, sire des Marees.\n\nCe dont vous repondez : les coques QUI PORTENT DES HOMMES — dix affretees au banc de l'Est, plus les onze de la maison si on les y emploie. Ce que vous decidez seul : la composition des vagues, la route de mer, l'heure d'appareillage, le mouillage d'attente. Ce que vous ne decidez pas : l'ordre d'embarquement, qui est au quai ; et le detroit, qui n'est pas dans cette charge.\n\nVotre mesure : le nombre de quilles tenues a la mer, dit chaque semaine.\n\nS'y ajoute la regle du pied : sur l'eau, depuis qu'on retire la planche jusqu'a ce qu'on la repose, c'est la mer qui commande, y compris les hommes de l'ost qui sont dessus, et cela vaut contre un prince.\n\nElle attend votre sceau. Tant qu'il n'y est pas, vos navires comptent pour zero dans tous nos volumes.\n\nEcrit de la main du maitre des roles, sous le sceau de la reine, le vingt-septieme jour de la troisieme lune, an 129, a neuf heures.",
+        "de": "le-sanglier",
+        "pour": "corlys",
+        "vers": "lamarck",
+        "depuis": "peyredragon",
+        "parti_le": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 27,
+          "minute": 540
+        },
+        "attendu_le": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 29
+        },
+        "etat": "en-route",
+        "main": null
+      },
+      "pourquoi": "VERROU DE FAIT n.1. Cet envoi existe dans books.json (O13 : « PROPOSE le 27e a neuf heures, corbeau parti le jour meme ») et dans paroles.json (le Sanglier, 27e) — et dans AUCUNE horloge. Rien ne le fait arriver, rien ne fait revenir la reponse : c'est pourquoi O13 est vide depuis deux jours sans que quoi que ce soit ne le compte. DIVERGENCE A ARBITRER : books.json dit corbeau, la parole du Sanglier dit « la prochaine barque avec le sceau de la reine ». J'ai suivi le registre. ET LA VRAIE PANNE EST AILLEURS : le pli est adresse a Lamarck parce que le registre croit Corlys a Lamarck ; il est en mer sur le croissant. Le pli arrivera dans un chateau ou il n'est pas."
+    },
+    {
+      "table": "plis",
+      "operation": "pli_ajouter",
+      "valeur": {
+        "id": "pli-le-gosier-reste-ouvert",
+        "canal": "barque",
+        "scelle": true,
+        "porte": "Le Gosier reste ouvert.\n\nLe motif change, la decision non. Ce n'est plus qu'on affame le petit peuple : c'est qu'on n'affame pas une ville qu'on veut prendre en trois semaines.\n\nTenez la baie. Ne fermez rien.\n\nEt qu'il soit ecrit que cette decision est de moi et de personne d'autre, afin que vous sachiez a qui la reprocher.\n\nRhaenyra",
+        "de": "rhaenyra",
+        "pour": "corlys",
+        "vers": "lamarck",
+        "depuis": "peyredragon",
+        "parti_le": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 28,
+          "minute": 645
+        },
+        "attendu_le": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 30
+        },
+        "etat": "en-route",
+        "main": null
+      },
+      "pourquoi": "VERROU DE FAIT n.1 (suite). L'ordre est dicte au palier a 10h45 le 28e (parole-rhaenyra-le-gosier-reste-ouvert-28e, « porte par cavalier au quai puis par mer le soir meme ») et n'a ni pli, ni evenement, ni horloge. Il alimente l'etape corlys-ordre-du-gosier : deux jours de mer, arrivee le 30e. TRANCHE FAUTE D'INFORMATION — voir 'tranches_faute_d_information'."
+    },
+    {
+      "table": "evenements",
+      "cible": "blocus-refuse-en-public",
+      "operation": "diffusion_ajouter",
+      "valeur": {
+        "ou": "peyredragon",
+        "qui": [
+          "rulf-corne",
+          "aldon-hask"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 31
+        },
+        "canal": "barque",
+        "fiabilite": 60,
+        "version": "Trois patrons de coque se plaignent au bureau de port d'avoir ete detournes au nord du Gosier par des galeres a hippocampe qui ne montraient aucun ordre ecrit et ne disaient au nom de qui. Ils ont perdu six jours et ils veulent qu'on les paie.",
+        "livree": false
+      },
+      "pourquoi": "ROUTE n.2 vers le joueur : par le port. Accrochee a blocus-refuse-en-public parce que ses effets portent deja, mot pour mot, la police des mers de Corlys — c'est l'evenement dont ceci est la consequence. Fiabilite basse : les patrons savent qu'on les a detournes, pas par qui."
+    },
+    {
+      "table": "evenements",
+      "cible": "blocus-refuse-en-public",
+      "operation": "diffusion_ajouter",
+      "valeur": {
+        "ou": "peyredragon",
+        "qui": [
+          "aurore-inchauspe"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 2
+        },
+        "canal": "rumeur",
+        "fiabilite": 50,
+        "version": "Cloue au pieu aux avis de l'appontement de Sombreval, d'une main qui ne signe pas : « Le Gosier est ferme aux marchands depuis la troisieme semaine et personne ne dit par qui. Les nefs de guerre passent. »",
+        "livree": false
+      },
+      "pourquoi": "ROUTE n.3 : par le pieu aux avis que Rulf Corne vient d'ouvrir a Aurore le 28e (acte-aurore-le-pieu-aux-avis-28e). Route deja existante dans l'etat, non inventee pour l'occasion."
+    },
+    {
+      "table": "evenements",
+      "cible": "blocus-refuse-en-public",
+      "operation": "diffusion_ajouter",
+      "valeur": {
+        "ou": "port-real",
+        "qui": [
+          "otto",
+          "larys"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 4
+        },
+        "canal": "rumeur",
+        "fiabilite": 55,
+        "version": "Rien ne monte plus par l'eau depuis douze jours et la ville le sent au prix du poisson. On dit que c'est le Serpent de Mer. On dit aussi que la reine a jure tout haut, devant trois cents personnes, qu'elle ne le ferait jamais.",
+        "livree": false
+      },
+      "pourquoi": "LE MIROIR, et c'est ce qui rend l'affaire couteuse au joueur : le refus public du 19e, qui etait de la clemence, devient un mensonge de reine aux yeux de Port-Real — parce que son allie fait la chose qu'elle a jure de ne pas faire. Otto n'a rien a faire pour l'exploiter : il n'a qu'a repeter les deux phrases."
+    }
+  ],
+  "ecritures_a_la_main": {
+    "note": "scripts/appliquer.py ne sait ni CREER une main (operations mains : mesure, seuil, main — aucune n'ajoute), ni creer un evenement. A recopier a la main.",
+    "mains_json": [
+      {
+        "id": "quilles-velaryon",
+        "quoi": "Ce que Velaryon tient reellement a la mer : les quilles de guerre du croissant du Gosier, et le nombre de jours que le grain de Lamarck leur permet encore d'y rester",
+        "porteur": {
+          "type": "personnage",
+          "id": "bryn-cale"
+        },
+        "lieu_id": "lamarck",
+        "mandat": null,
+        "mesure": [
+          {
+            "id": "quilles-tenues",
+            "quoi": "quilles de guerre tenues a la mer sur le croissant, sans radoub depuis le 19e",
+            "valeur": 90,
+            "unite": "nefs",
+            "rythme": {
+              "par": -1,
+              "jours": 3
+            },
+            "reliquat": 0,
+            "plancher": 0,
+            "plafond": 90,
+            "depend_de": []
+          },
+          {
+            "id": "jours-de-mer-tenables",
+            "quoi": "jours que le croissant peut encore tenir a la mer sur le grain de Lamarck",
+            "valeur": 7,
+            "unite": "jours",
+            "rythme": {
+              "par": -1,
+              "jours": 1
+            },
+            "reliquat": 0,
+            "plancher": 0,
+            "plafond": 11,
+            "depend_de": []
+          }
+        ],
+        "seuils": [
+          {
+            "id": "le-croissant-se-defait",
+            "mesure_id": "jours-de-mer-tenables",
+            "quand": "sous",
+            "valeur": 3,
+            "promeut": "orbite",
+            "affaire": "Trois jours de grain : la police des mers se levera d'elle-meme, sans que personne l'ait decide, et le Gosier rouvrira parce qu'on n'a pas su nourrir quatre-vingt-dix coques. Corlys ne le dira pas — il en fera un choix.",
+            "franchi_le": null
+          },
+          {
+            "id": "la-mer-ne-porte-plus-l-ost",
+            "mesure_id": "quilles-tenues",
+            "quand": "sous",
+            "valeur": 60,
+            "promeut": "orbite",
+            "affaire": "Sous soixante quilles, les dix coques affretees et les onze de la maison ne suffisent plus a passer l'ost en trois vagues : la part LA MER du Grand Plan devient impossible, et Peyredragon l'apprendra le jour ou elle voudra embarquer.",
+            "franchi_le": null
+          }
+        ],
+        "dernier_rapport": null,
+        "date_maj": "129.3.28",
+        "_justification_de_la_main": "TEST DE LA MAIN — par quelle bouche ou par quel empechement ce chiffre atteindra le joueur. (a) PAR LA BOUCHE : la mesure de l'office O13, telle qu'elle est deja ecrite au registre, EST ce chiffre — « le nombre de quilles tenues a la mer, dit chaque semaine ». Rien a inventer : la bouche existe et attend un sceau. (b) PAR L'EMPECHEMENT : tant que Corlys n'a pas scelle O13, ses navires comptent pour zero dans tous les volumes (regle posee par le Sanglier le 27e) — la reine a nomme LA MER a la craie du Grand Plan et planifie une traversee sur des coques qu'aucun volume ne compte. Le cout de l'etape de traversee doit citer `quilles-velaryon.quilles-tenues`. (c) PAR LA CRISE : le seuil des trois jours de grain rouvre le Gosier tout seul, sans decision de personne — le cas d'ecole d'une main mal tenue qui pourrit. Et le porteur est absent au sens de docs/mains.md : le chiffre est juste, il ne remonte pas, et le joueur le decouvrira trop tard."
+      }
+    ],
+    "evenements_json": [
+      {
+        "_optionnel": true,
+        "note": "Facultatif. Les trois routes ci-dessus sont accrochees a blocus-refuse-en-public, ce qui suffit. Si le MJ prefere un evenement propre, ouvrir un `programme` id 'police-des-mers-sans-nom' au 129.3.28, lieu_id lamarck, acteurs [corlys], et y deplacer les trois diffusions."
+      }
+    ]
+  },
+  "decision_plans_json": {
+    "verdict": "NON — pas de plage dans etat/plans.json pour Velaryon a cette date. Plage 75000-75999 RESERVEE et non ouverte.",
+    "pourquoi_non": [
+      "La ligne de partage du process est explicite : plans.json est pour ce qui n'est PAS a nous. Velaryon siege au conseil noir, ses deux tetes sont en orbite et repassees a chaque tick, ses actes sont dans actes.json et sa charge dans books.json. Ce n'est pas une brume : c'est un homme a qui l'on peut parler.",
+      "Le tri par les quatre portees ne trie rien ici. Tout ce que Corlys nous cache tombe dans la meme case, la 3 — « seule la parole du souverain » : la confirmation de Lucerys, le nom a donner a la police des mers, le sceau sur O13. Aucune activite d'observation a ouvrir, aucune action a financer. Un plan dont les six verrous tombent tous dans la meme case ne trie plus rien et ne produit rien.",
+      "La resonance manque, et sans resonance un plan n'a rien a faire dans le fichier. Ce que Velaryon poursuit — tenir la mer, faire ecrire une succession — n'est notre empechement dans aucune ligne : c'est notre moyen, mal adresse."
+    ],
+    "la_vraie_divergence_et_elle_est_reelle": "Il y en a UNE, et elle merite d'etre nommee au lieu d'etre transformee en plan : au troisieme silence sur la succession de Lamarck, le si_bloque de corlys-lucerys-lamarck dit qu'il FAIT ECRIRE L'ACTE PAR UN MESTRE ET LE GARDE SIGNE DANS SON COFFRE, SANS PLUS RIEN DEMANDER A LA REINE. Ce jour-la, la maison la plus riche du camp detient un titre de succession qu'aucun souverain n'a sanctionne — un acte que la reine ne peut plus ni accorder ni refuser, seulement decouvrir. C'est un interet propre, pas une opinion.",
+    "condition_de_bascule": "Ouvrir la plage 75000-75999 le jour ou ce si_bloque s'execute, et pas avant. A ce moment Velaryon aura un etat cible que la parole de la reine n'atteint plus — le seul test qui distingue un allie contrarie d'un plan d'en face. Jusque-la, l'affaire vit ou elle doit vivre.",
+    "ou_ca_vit_en_attendant": [
+      "intentions.json : corlys (l'etape corlys-lucerys-lamarck est deja ecrite, plus les deux mutations ci-dessus), rhaenys, bryn-cale.",
+      "books.json : O13 au registre des offices, qui attend un sceau ; et le volume de la part LA MER du Grand Plan, sans titulaire effectif tant que le sceau manque. Le joueur peut les OUVRIR et LIRE — c'est ce qu'un allie merite, et c'est le contraire d'un plan tenu secret."
+    ]
+  },
+  "verrous_de_fait": [
+    {
+      "n": 1,
+      "quoi": "Deux ordres majeurs vers Corlys n'existent dans aucune horloge : le corbeau O13 du 27e a neuf heures et l'ordre « le Gosier reste ouvert » du 28e a 10h45. Ils sont ecrits dans books.json et paroles.json, et rien dans la machine ne les fait arriver ni ne fait revenir de reponse. C'est pourquoi O13 est vide depuis deux jours sans que rien ne le compte.",
+      "repare_par": "les deux pli_ajouter"
+    },
+    {
+      "n": 2,
+      "quoi": "personnages.corlys.lieu_id = peyredragon, alors que son acte du 28e, sa tete et le registre le donnent a Lamarck ou en mer. La boucle hors scene lui livre donc les nouvelles de Peyredragon et lui refuse celles de Lamarck. Toute la maison est mal adressee.",
+      "repare_par": "la mutation personnages/corlys"
+    },
+    {
+      "n": 3,
+      "quoi": "Le chiffre qui decide de tout chez Velaryon — les nefs — n'a de domicile dans aucune table : maisons.json n'a pas le champ, et aucune main ne le tient. La reine a nomme LA MER a la craie et planifie une traversee sur des coques que personne ne compte.",
+      "repare_par": "la main quilles-velaryon"
+    }
+  ],
+  "tranches_faute_d_information": [
+    "DELAI PEYREDRAGON -> LAMARCK PAR MER : deux jours. Aucune table ne le donne (lieux.jours_de_pr se compte depuis Port-Real : Lamarck 5). Ancrage retenu : le refus public du 19e a mis cinq jours a l'atteindre, par une galere qui n'etait pas depechee pour cela ; une barque envoyee expres le soir meme doit faire mieux. Si le MJ a une autre echelle, corriger ensemble attendu_le des deux plis ET jours_restants de corlys-ordre-du-gosier.",
+    "CANAL DU PLI O13 : books.json dit « corbeau parti le jour meme », la parole du Sanglier du 27e dit « la prochaine barque avec le sceau de la reine ». J'ai suivi le registre. Les deux sont dans l'etat : c'est une contradiction a arbitrer, pas une lacune.",
+    "USURE DU CROISSANT : -1 quille tous les trois jours, et 11 jours de grain a compter du 19e (donc 7 au 28e). Le 11 et le 90 sont sources (cout de corlys-gosier) ; le RYTHME d'usure est de moi. Il est volontairement lent : il laisse environ trois lunes avant le seuil des soixante quilles, ce qui garde la bataille du Gosier (130.1.10) hors de sa portee.",
+    "BRYN-CALE EN ROYAUME ET NON ORBITE : contrainte de budget, pas de jugement. intentions.json porte exactement 20 orbite pour un plafond de 20 (scripts/tick.py). Pour le monter en orbite, il faut d'abord en redescendre un.",
+    "CE QUE JE N'AI PAS TRANCHE : la position exacte du croissant (au Gosier ou en rade de Lamarck) n'est ecrite nulle part. Les deux plis sont adresses a Lamarck parce que c'est la seule adresse que les autres lui connaissent — et c'est precisement pour cela qu'ils risquent de ne pas l'atteindre. Le MJ peut vouloir en decider autrement."
+  ],
+  "test_d_arret": {
+    "1_qui_parle_pour_elle_et_de_quoi_vit_il": "Corlys, et il vit de la mer : quatre-vingt-dix quilles, 800 000 dragons, 18 000 la lune, 3 000 levees.",
+    "2_que_veut_elle_cette_lune_et_qu_est_ce_qui_l_en_empeche": "Que Lucerys soit confirme heritier de Lamarck PAR ECRIT avant qu'un homme ne touche la prime posee sur sa tete. L'en empeche : trois demandes de vive voix restees sans reponse, et le fait qu'il ne demandera pas une quatrieme fois.",
+    "3_par_quelle_nouvelle_apprendra_t_elle_ce_que_le_joueur_vient_de_faire": "Par le pli du 28e, deux jours de mer, arrivee le 30e — et c'est la premiere fois que la reine le previent avant qu'il l'apprenne. Et par le corbeau O13 du 27e, adresse a un chateau ou il n'est pas.",
+    "4_par_quelle_bouche_le_joueur_apprendra_t_il_qu_elle_a_bouge": "Trois, dans cet ordre : Rhaenys, qui compte d'en haut les coques detournees et le portera a Corlys avant la reine (le 30e) ; Rulf Corne et Aldon Hask, par les trois patrons furieux au bureau de port (le 31e) ; le pieu aux avis d'Aurore (le 2e de la 4e lune). Palier A confirme."
+  },
+  "applique_le": "2026-08-09T19:15:57"
+}

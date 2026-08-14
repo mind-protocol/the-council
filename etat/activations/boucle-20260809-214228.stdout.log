@@ -1,0 +1,58 @@
+[  0.001s] boucle.demarrage         · sec=False · une_fois=False · heartbeat_s=5.0
+[  0.003s] cycle.depart            
+[  0.012s] horloge.lecture         
+[  0.017s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=81164.4
+[  0.020s] graphe.lecture          
+[  0.069s] graphe.charge            · noeuds=1778 · aretes=4650
+[  0.071s] diffusion.importance    
+[  0.277s] energie.polarites_horloge · moyenne_minute=67000297.0 · ecart_max_minutes=995.0 · emetteurs=1 · absorbeurs=97 · neutres=0
+[  0.280s] energie.transfert_horloge · transfere=10.689 · propositions=1018 · acteurs=98
+[  0.282s] energie.graphe           · dt_s=164.38 · integration=0.316001 · noeuds=1778 · energises=191 · total=1163.052 · pic=pers:rhaenyra · maximum=100.0
+[  0.283s] diffusion.calendrier    
+[  0.293s] energie.calculee         · acteurs=9 · maximum=20.505
+[  0.299s] selection.elue           · acteur=robert-quince · energie=20.505 · tache=29224 · energie_tache=1.734 · budget_s=20 · flux_horloge=absorbe · ecart_horloge_min=-355.0 · horloge_pj=rhaenyra
+[  0.300s] acteur.choisi            · acteur=robert-quince · energie=20.505 · importance=0.218263 · budget=20
+[  0.301s] tache.choisie            · id=29224 · distance=2 · creee=False · energie=1.734
+ACTIVATION  robert-quince  energie 20.51 · budget 20  importance 0.218
+  tache 29224 · distance 2 · 🚫 Faire signer avant le départ la règle de la dernière vague
+  front aurore-inchauspe · +81164.4s depuis rhaenyra
+[  0.302s] energie.reservee         · acteur=robert-quince · valeur=20.505 · plafond=20
+[  0.307s] appel.dossier            · acteur=robert-quince · tache=29224
+[  0.361s] appel.systeme_narrateur  · acteur=robert-quince · caracteres=36746
+[  0.362s] appel.systeme_pnj        · acteur=robert-quince · caracteres=56345
+[  0.363s] appel.ouverture          · acteur=robert-quince · caracteres=426 · budget=20
+[  0.371s] cli.depart               · acteur=narrateur-local:cour · session=735fd902-d1a1-432f-9a5b-f135ece320d6 · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[  2.843s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[  3.609s] cli.rate_limit_event     · sous_type=None
+[  5.384s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.ouverture · secondes=5.0
+[  6.720s] cli.texte                · contenu={ "appel_pnj": { "qui": "robert-quince", "message": "Ser Robert, la cour est pleine et le départ approche : Jacaerys Velaryon, dame Aurore Inchauspé, Aldon Hask, Tobb et le petit …
+[  6.798s] cli.resultat             · erreur=False · duree_ms=4137 · cout=0.19530600000000004 · entree=2 · sortie=175 · caracteres=367
+[  8.528s] narrateur.reveille_pnj   · acteur=robert-quince · caracteres=297
+[  8.623s] cli.depart               · acteur=robert-quince · session=4131884a-197d-4ba8-a1d9-2e9e3a448652 · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[ 10.781s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[ 11.654s] cli.rate_limit_event     · sous_type=None
+[ 13.637s] cli.heartbeat            · acteur=robert-quince · phase=pnj.tentative · secondes=5.0
+[ 18.646s] cli.heartbeat            · acteur=robert-quince · phase=pnj.tentative · secondes=10.0
+[ 23.647s] cli.heartbeat            · acteur=robert-quince · phase=pnj.tentative · secondes=15.0
+[ 26.465s] cli.texte                · contenu={ "tentative": { "verbe": "dire", "quoi": "Devant Jacaerys Velaryon, Aldon Hask, dame Aurore et Tobb pris à témoin ensemble, je nomme tout haut les deux qui commandent ce rocher q…
+[ 26.517s] cli.resultat             · erreur=False · duree_ms=16081 · cout=0.332717 · entree=2 · sortie=660 · caracteres=1490
+[ 27.919s] pnj.tentative_valide     · acteur=robert-quince · verbe=dire · caracteres=1377
+[ 27.919s] narrateur.arbitrage      · acteur=robert-quince · caracteres=1998
+[ 27.920s] cli.depart               · acteur=narrateur-local:cour · session=735fd902-d1a1-432f-9a5b-f135ece320d6 · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[ 30.022s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[ 32.710s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 32.946s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=5.0
+[ 34.236s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 35.640s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 37.615s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 37.953s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=10.0
+[ 39.028s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 40.558s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 42.050s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 42.954s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=15.0
+[ 43.380s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 44.742s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 44.758s] cli.assistant            · bloc=thinking
+[ 47.959s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=20.0
+[ 52.967s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=25.0
+[ 57.971s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=30.0

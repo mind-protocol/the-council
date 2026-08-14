@@ -7,6 +7,7 @@
   :root {
     --fond: #14110e; --fond2: #1c1815; --bord: #3a3128; --texte: #e6ddd0;
     --pale: #9a8f80; --or: #c8a44a; --rouge: #c05a44; --vert: #6f8f5e;
+    --bleu: #5c8fb5; --violet: #9b72b0; --orange: #c78345;
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--fond); color: var(--texte);
@@ -18,7 +19,8 @@
   header .date { color: var(--pale); }
   header .avert { margin-left: auto; color: var(--rouge); font-size: .8rem;
     letter-spacing: .05em; text-transform: uppercase; }
-  nav { display: flex; gap: .3rem; padding: .5rem 1.2rem 0; border-bottom: 1px solid var(--bord); }
+  nav { display: flex; gap: .3rem; padding: .5rem 1.2rem 0; border-bottom: 1px solid var(--bord);
+    overflow-x: auto; }
   nav button { background: none; border: 1px solid transparent; border-bottom: none;
     color: var(--pale); padding: .4rem .9rem; font: inherit; cursor: pointer; }
   nav button.actif { color: var(--or); border-color: var(--bord); background: var(--fond2); }
@@ -36,6 +38,21 @@
   td { padding: .35rem .6rem; border-bottom: 1px solid #241f1a; vertical-align: top; }
   tr:hover td { background: #1a1613; }
   .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  /* La charge : le nuage importance × activations. */
+  .nuage { width: 100%; height: auto; max-height: 46vh; display: block;
+    margin: .4rem 0 1rem; background: var(--fond2); border: 1px solid var(--bord); }
+  .nuage .pt circle { cursor: default; }
+  .nuage .pt:hover circle { fill-opacity: .95; }
+  .nuage .etiq { fill: var(--pale); font-size: 11px; font-family: inherit; }
+  .nuage .axe { fill: var(--pale); font-size: 10px; letter-spacing: .08em;
+    text-transform: uppercase; font-family: inherit; }
+  /* La santé : le bandeau d'audit. */
+  .bandeau-sante { margin: .2rem 0 1rem; }
+  .bandeau-sante .grave { color: var(--rouge); }
+  .bandeau-sante button { background: none; border: 1px solid var(--bord);
+    color: var(--pale); font: inherit; padding: .1rem .6rem; cursor: pointer; }
+  .bandeau-sante button:hover { color: var(--or); border-color: var(--or); }
+  #sante td div + div { margin-top: .35rem; }
   .chaud { color: var(--rouge); }
   .froid { color: var(--pale); }
   .quoi { color: var(--pale); font-size: .88rem; }
@@ -54,6 +71,282 @@
   footer { padding: 1rem 1.2rem; color: var(--pale); font-size: .8rem; }
   button.recharger { background: none; border: 1px solid var(--bord); color: var(--pale);
     padding: .25rem .7rem; font: inherit; cursor: pointer; }
+  #graphe { margin: -1.2rem; height: calc(100vh - 112px); min-height: 650px; overflow: hidden; }
+  .graph-shell { height: 100%; display: grid; grid-template-rows: auto auto 1fr;
+    background: radial-gradient(circle at 45% 45%, #1c1916 0, #12100e 72%); }
+  .graph-head { display: flex; align-items: center; gap: .75rem; padding: .75rem 1rem .55rem;
+    border-bottom: 1px solid var(--bord); background: rgba(20,17,14,.94); }
+  .graph-head h2 { margin: 0; color: var(--or); white-space: nowrap; }
+  .graph-head .graph-sous { color: var(--pale); font-size: .82rem; }
+  .graph-lenses { display: flex; align-items: center; gap: .35rem; margin-left: auto; }
+  .graph-lenses button, .graph-outils button, .graph-outils select, .graph-outils input {
+    border: 1px solid var(--bord); background: #171411; color: var(--pale);
+    padding: .34rem .62rem; font: inherit; font-size: .82rem; }
+  .graph-lenses button { cursor: pointer; }
+  .graph-lenses button.actif { color: #15110d; background: var(--or); border-color: var(--or); }
+  .graph-outils { display: flex; align-items: center; gap: .5rem; min-height: 43px;
+    padding: .4rem 1rem; border-bottom: 1px solid #2a241e; background: rgba(20,17,14,.9); }
+  .graph-outils input { width: min(260px, 24vw); }
+  .graph-outils select { max-width: 220px; }
+  .graph-stats { display: flex; gap: .35rem; overflow-x: auto; scrollbar-width: thin; }
+  .graph-stat { border: 1px solid #342d26; background: #1b1714; padding: .22rem .5rem;
+    white-space: nowrap; font-size: .76rem; color: var(--pale); }
+  .graph-stat b { color: var(--texte); font-weight: normal; font-variant-numeric: tabular-nums; }
+  .graph-stat.alerte b { color: var(--rouge); }
+  .graph-stage { position: relative; min-height: 0; overflow: hidden; }
+  .imp-bandeau { position: absolute; left: 50%; top: 12px; transform: translateX(-50%);
+    z-index: 6; width: 540px; max-width: 42vw;
+    background: rgba(20,17,14,.9); border: 1px solid #3a332b; border-radius: 5px; padding: 9px 11px;
+    font: .74rem ui-monospace, monospace; color: #cdc3b6; pointer-events: auto; }
+  .imp-tete { color: #e8dfd3; line-height: 1.5; margin-bottom: 6px; }
+  .imp-tete strong { color: var(--or); font-size: .82rem; }
+  .imp-chiffre { color: var(--or); }
+  .imp-liste { margin: 0; padding-left: 20px; }
+  .imp-liste li { margin: 1px 0; display: flex; justify-content: space-between; gap: 10px; }
+  .imp-liste li b { font-weight: 500; color: #ded4c6; }
+  .imp-liste li span { color: var(--or); }
+  .imp-boutons { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .imp-direct { color: #8fcf83; letter-spacing: .08em; font: .68rem ui-monospace, monospace;
+    text-shadow: 0 0 8px #79a86a88; }
+  .imp-boutons button { background: #2a241d; color: #e8dfd3; border: 1px solid #4a4136;
+    border-radius: 4px; padding: 3px 9px; font: inherit; cursor: pointer; }
+  .imp-boutons button:hover { border-color: var(--or); }
+  .imp-boutons input[type=range] { flex: 1; accent-color: #c78345; }
+  #graph-canvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: grab; }
+  #graph-canvas:active { cursor: grabbing; }
+  .graph-patterns { position: absolute; z-index: 4; top: .8rem; left: .8rem;
+    width: min(350px, 31vw); max-height: calc(100% - 1.6rem); display: flex;
+    flex-direction: column; border: 1px solid var(--bord); background: rgba(20,17,14,.96);
+    box-shadow: 0 8px 30px #0009; transition: transform .18s ease, opacity .18s ease; }
+  .graph-patterns.ferme { transform: translateX(calc(-100% - 1rem)); opacity: 0; pointer-events: none; }
+  .motifs-tete { display: flex; align-items: center; gap: .45rem; padding: .62rem .7rem;
+    border-bottom: 1px solid var(--bord); }
+  .motifs-tete strong { color: var(--or); font-size: .78rem; letter-spacing: .08em;
+    text-transform: uppercase; font-weight: normal; }
+  .motifs-tete span { color: var(--pale); font-size: .72rem; }
+  .motifs-tete button { margin-left: auto; border: 1px solid var(--bord); background: none;
+    color: var(--pale); padding: .18rem .42rem; font: inherit; font-size: .72rem; cursor: pointer; }
+  .motifs-tabs { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--bord); }
+  .motifs-tabs button { border: 0; border-right: 1px solid #2b251f; background: #171411;
+    color: var(--pale); padding: .42rem .15rem; font: inherit; font-size: .72rem; cursor: pointer; }
+  .motifs-tabs button:last-child { border-right: 0; }
+  .motifs-tabs button.actif { color: #15110d; background: var(--or); }
+  .motifs-filtres { display: flex; gap: .4rem; padding: .45rem .55rem; border-bottom: 1px solid #29231e; }
+  .motifs-filtres input { min-width: 0; flex: 1; border: 1px solid var(--bord); background: #171411;
+    color: var(--texte); padding: .28rem .42rem; font: inherit; font-size: .76rem; }
+  .motifs-filtres button { border: 1px solid var(--bord); background: none; color: var(--pale);
+    padding: .25rem .42rem; font: inherit; font-size: .72rem; cursor: pointer; white-space: nowrap; }
+  .motifs-filtres button.allume { color: var(--rouge); border-color: #71483f; }
+  .motif-lecture { display: none; padding: .55rem .65rem .6rem; border-bottom: 1px solid #342c25;
+    background: #1c1713; color: #cfc4b6; font-size: .73rem; line-height: 1.4; }
+  .motif-lecture.actif { display: block; }
+  .motif-lecture strong { display: block; color: var(--or); font-weight: normal; margin-bottom: .18rem; }
+  .motif-lecture .motif-chiffres { display: block; margin-top: .3rem; color: #998b7d;
+    font: .68rem ui-monospace, monospace; }
+  .motifs-liste { overflow: auto; scrollbar-width: thin; padding-bottom: .35rem; }
+  .motifs-liste details { border-bottom: 1px solid #27211c; }
+  .motifs-liste summary { cursor: pointer; padding: .43rem .58rem; color: #c2b6a7;
+    font-size: .76rem; letter-spacing: .035em; list-style-position: inside; }
+  .motifs-liste summary b { float: right; color: var(--or); font-weight: normal;
+    font-variant-numeric: tabular-nums; }
+  .motif-definition { padding: 0 .62rem .5rem 1.05rem; color: #8f8377;
+    font-size: .68rem; line-height: 1.35; background: #151210; }
+  .motif-ligne { display: grid; grid-template-columns: 1fr auto; width: 100%; gap: .18rem .4rem;
+    text-align: left; border: 0; border-top: 1px solid #211c18; background: #151210;
+    color: var(--texte); padding: .43rem .62rem .45rem 1.05rem; font: inherit; cursor: pointer; }
+  .motif-ligne:hover { background: #211b17; }
+  .motif-ligne.actif { background: #2a2118; box-shadow: inset 3px 0 var(--or); }
+  .motif-ligne .motif-nom { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .8rem; }
+  .motif-ligne .motif-score { color: var(--or); font: .7rem ui-monospace, monospace; }
+  .motif-ligne .motif-meta { grid-column: 1 / -1; color: var(--pale); font-size: .69rem;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .motifs-vide { padding: 1rem; color: var(--pale); font-size: .8rem; }
+  .motifs-note { padding: .36rem .58rem; color: #766c62; font-size: .67rem;
+    border-top: 1px solid #29231e; }
+  .graph-inspecteur { position: absolute; top: .8rem; right: .8rem; width: min(330px, 34vw);
+    max-height: calc(100% - 1.6rem); overflow: auto; padding: .8rem .9rem;
+    z-index: 3; border: 1px solid var(--bord); background: rgba(20,17,14,.94); box-shadow: 0 8px 30px #0008; }
+  .graph-inspecteur.vide { color: var(--pale); font-style: normal; }
+  .graph-inspecteur h3 { margin: 0 0 .25rem; color: var(--texte); font-size: 1rem; }
+  .graph-inspecteur .gid { color: var(--or); font: .72rem/1.4 ui-monospace, monospace;
+    overflow-wrap: anywhere; }
+  .graph-inspecteur dl { display: grid; grid-template-columns: 88px 1fr; gap: .22rem .55rem;
+    margin: .65rem 0 0; font-size: .82rem; }
+  .graph-inspecteur dt { color: var(--pale); }
+  .graph-inspecteur dd { margin: 0; overflow-wrap: anywhere; }
+  .graph-inspecteur .raison { margin-top: .65rem; padding-top: .55rem;
+    border-top: 1px solid var(--bord); color: #cfc4b6; font-size: .84rem; }
+  .graph-legende { position: absolute; left: .8rem; bottom: .7rem; display: flex; flex-wrap: wrap;
+    gap: .25rem .65rem; max-width: calc(100% - 380px); color: var(--pale); font-size: .72rem;
+    pointer-events: none; text-shadow: 0 1px 2px #000; }
+  .graph-legende i { display: inline-block; width: 15px; height: 2px; margin-right: .3rem;
+    vertical-align: middle; background: currentColor; }
+  .graph-legende .structure { color: #7d746b; } .graph-legende .ressource { color: var(--orange); }
+  .graph-legende .savoir { color: var(--bleu); } .graph-legende .reaction { color: var(--rouge); }
+  .graph-legende .coherence { color: var(--violet); } .graph-legende .equilibre { color: #79a86a; }
+  .graph-aide { margin-left: auto; color: #746a60; font-size: .75rem; white-space: nowrap; }
+  .graph-actions-activation { position: absolute; z-index: 4; right: .8rem; bottom: 2.35rem;
+    width: min(390px, 38vw); max-height: min(46vh, 430px); overflow: auto;
+    border: 1px solid var(--bord); background: rgba(20,17,14,.95); box-shadow: 0 8px 30px #0008; }
+  .graph-actions-activation.ferme { display: none; }
+  .graph-actions-tete { position: sticky; top: 0; z-index: 1; display: flex;
+    align-items: baseline; gap: .45rem; padding: .58rem .68rem; border-bottom: 1px solid var(--bord);
+    background: #191511; }
+  .graph-actions-tete strong { color: var(--or); font-size: .78rem; letter-spacing: .07em;
+    text-transform: uppercase; }
+  .graph-actions-tete span { margin-left: auto; color: var(--pale); font-size: .67rem; }
+  .graph-actions-fermer { border: 0; background: none; color: var(--pale); padding: 0 .12rem;
+    font: 1.1rem/1 ui-monospace, monospace; cursor: pointer; }
+  .graph-actions-fermer:hover { color: var(--texte); }
+  .graph-actions-groupe h4 { margin: 0; padding: .42rem .62rem; color: #8f8377;
+    border-bottom: 1px solid #29231e; font-size: .68rem; font-weight: normal;
+    letter-spacing: .08em; text-transform: uppercase; }
+  .graph-action-activation { width: 100%; display: grid; grid-template-columns: 1fr auto;
+    gap: .18rem .5rem; padding: .48rem .62rem; text-align: left; color: var(--texte);
+    border: 0; border-bottom: 1px solid #29231e; background: transparent; font: inherit; cursor: pointer; }
+  .graph-action-activation:hover { background: #241d17; }
+  .graph-action-activation:disabled { cursor: default; opacity: .72; }
+  /* Vert = prêt à partir. Le reste est cliquable aussi, en plus sourd. */
+  .graph-action-activation.pret { border-color: var(--vert); }
+  .graph-action-activation.pret .action-qui { color: var(--vert); font-weight: 600; }
+  .graph-action-activation:not(.pret) { opacity: .78; }
+  .graph-action-activation .action-quoi { grid-column: 1 / -1; color: #d8cfc3;
+    font-size: .77rem; line-height: 1.3; }
+  .graph-action-activation .action-qui { color: var(--or); font-size: .69rem; }
+  .graph-action-activation .action-quand { color: var(--pale); font: .65rem ui-monospace, monospace; }
+  .graph-actions-vide { padding: .65rem; color: var(--pale); font-size: .73rem; }
+  #activations { margin: -1.2rem; height: calc(100vh - 112px); min-height: 620px; }
+  .act-shell { height: 100%; display: grid; grid-template-rows: auto 1fr; background: #12100e; }
+  .act-head { display: flex; align-items: center; gap: .9rem; padding: .8rem 1rem;
+    border-bottom: 1px solid var(--bord); background: var(--fond2); }
+  .act-head h2 { margin: 0; color: var(--or); }
+  .act-head p { margin: 0; color: var(--pale); font-size: .8rem; }
+  .act-head .act-actions { margin-left: auto; display: flex; gap: .4rem; }
+  .act-head button { border: 1px solid var(--bord); background: #171411;
+    color: var(--pale); padding: .35rem .7rem; font: inherit; cursor: pointer; }
+  .act-head button:disabled { cursor: not-allowed; opacity: .45; }
+  .act-head button.copie { color: var(--vert); border-color: var(--vert); }
+  .act-head button.erreur { color: var(--rouge); border-color: var(--rouge); }
+  .act-corps { min-height: 0; display: grid;
+    grid-template-columns: minmax(300px, 360px) minmax(320px, 390px) minmax(0, 1fr); }
+  .act-mj { min-width: 0; min-height: 0; display: grid; grid-template-rows: auto 1fr;
+    border-right: 1px solid var(--bord); background: #11100f; }
+  .act-mj-tete { padding: .68rem .75rem .62rem; border-bottom: 1px solid var(--bord);
+    background: #181511; }
+  .act-mj-tete h3 { margin: 0 0 .24rem; color: var(--or); font-size: .76rem;
+    font-weight: normal; letter-spacing: .09em; text-transform: uppercase; }
+  .act-mj-tete strong { display: block; color: #e8ded0; font-size: .82rem;
+    font-weight: normal; line-height: 1.3; }
+  .act-mj-meta { display: flex; justify-content: space-between; gap: .5rem; margin-top: .24rem;
+    color: #776d63; font: .64rem ui-monospace, Consolas, monospace; }
+  .act-mj-meta .direct { color: #86aa77; }
+  .act-mj-fil { min-height: 0; overflow: auto; padding: .5rem .55rem 1rem;
+    scrollbar-width: thin; }
+  .act-mj-item { margin: .42rem 0; padding: .48rem .55rem; border: 1px solid #2d2721;
+    background: #171411; font-size: .75rem; line-height: 1.42; overflow-wrap: anywhere; }
+  .act-mj-item.joueur { margin-left: 1.1rem; border-color: #40382f; background: #1d1915; }
+  .act-mj-item.mj { margin-right: .45rem; border-left: 2px solid var(--or); }
+  .act-mj-item.outil { padding: .3rem .45rem; color: #887d72; background: #13110f;
+    font: .65rem/1.35 ui-monospace, Consolas, monospace; }
+  .act-mj-item header { display: flex; justify-content: space-between; gap: .4rem; padding: 0;
+    margin-bottom: .28rem; border: 0; background: none; color: #877b6f;
+    font: .62rem ui-monospace, Consolas, monospace; text-transform: uppercase; }
+  .act-mj-item.joueur header span:first-child { color: #b9a991; }
+  .act-mj-item.mj header span:first-child { color: var(--or); }
+  .act-mj-item p { margin: .18rem 0; white-space: normal; }
+  .act-mj-item code { color: #a8c9d8; font-size: .7rem; }
+  .act-mj-item details summary { cursor: pointer; color: #9d9185; }
+  .act-mj-item details pre { max-height: 14rem; margin: .3rem 0 0; overflow: auto;
+    white-space: pre-wrap; color: #8e8378; font: inherit; }
+  .act-liste { min-height: 0; overflow: auto; border-right: 1px solid var(--bord); background: #171411; }
+  .act-previsions { padding: .65rem .7rem .75rem; border-bottom: 1px solid var(--bord);
+    background: #15120f; }
+  .act-previsions h3 { margin: 0 0 .15rem; color: var(--or); font-size: .75rem;
+    font-weight: normal; letter-spacing: .09em; text-transform: uppercase; }
+  .act-previsions > p { margin: 0 0 .55rem; color: #786d62; font-size: .67rem; }
+  .act-previsions > p time { color: #a18d75; white-space: nowrap; }
+  .act-prevue { display: grid; grid-template-columns: 24px 1fr auto; gap: .18rem .45rem;
+    padding: .38rem .45rem; border-top: 1px dashed #342c25; }
+  .act-prevue .rang { grid-row: 1 / 3; align-self: center; color: var(--or);
+    font: .72rem ui-monospace, monospace; }
+  .act-prevue strong { font-size: .77rem; font-weight: normal; }
+  .act-prevue .act-tache { grid-column: 2 / 4; font-size: .7rem; }
+  .act-prevue .act-energie { font-size: .68rem; }
+  .act-ligne { width: 100%; display: grid; grid-template-columns: 1fr auto; gap: .2rem .65rem;
+    text-align: left; border: 0; border-bottom: 1px solid #2a241e; background: transparent;
+    color: var(--texte); padding: .75rem .85rem; font: inherit; cursor: pointer; }
+  .act-ligne:hover { background: #211b17; }
+  .act-ligne.actif { background: #2a2118; box-shadow: inset 3px 0 var(--or); }
+  .act-ligne strong { font-weight: normal; color: #efe4d5; }
+  .act-ligne time { color: var(--pale); font: .69rem ui-monospace, monospace; }
+  .act-tache { grid-column: 1 / -1; color: #b9ad9e; font-size: .78rem; line-height: 1.35; }
+  .act-meta { color: var(--pale); font: .68rem ui-monospace, monospace; }
+  .act-energie { text-align: right; color: var(--or); font: .7rem ui-monospace, monospace; }
+  .act-detail { min-width: 0; overflow: auto; padding: 1rem 1.15rem 3rem; }
+  .act-vide { display: grid; place-items: center; height: 100%; color: var(--pale); text-align: center; }
+  .act-titre { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
+    padding-bottom: .75rem; border-bottom: 1px solid var(--bord); }
+  .act-titre h3 { margin: 0; font-size: 1.18rem; font-weight: normal; }
+  .act-titre .act-id { color: var(--or); font: .7rem ui-monospace, monospace; overflow-wrap: anywhere; }
+  .act-badges { display: flex; flex-wrap: wrap; gap: .35rem; margin: .75rem 0 1rem; }
+  .act-badge { border: 1px solid #3b332b; background: #1b1714; padding: .28rem .5rem;
+    color: var(--pale); font: .7rem ui-monospace, monospace; }
+  .act-badge b { color: var(--texte); font-weight: normal; }
+  .act-badge.energie b { color: var(--or); }
+  .act-bloc { margin: .8rem 0; border: 1px solid var(--bord); background: #171411; }
+  .act-pipeline-titre { margin: 1.15rem 0 .35rem; padding: .35rem .55rem;
+    border-left: 3px solid var(--or); color: #cfc3b3; background: #191511;
+    font-size: .72rem; letter-spacing: .09em; text-transform: uppercase; }
+  .act-pipeline-titre.acteur { border-left-color: var(--bleu); }
+  .act-bloc > summary { cursor: pointer; padding: .62rem .75rem; color: var(--or);
+    list-style-position: inside; background: #1b1714; }
+  .act-bloc pre { margin: 0; padding: .8rem; max-height: 46vh; overflow: auto;
+    white-space: pre-wrap; overflow-wrap: anywhere; color: #d8cfc3; background: #12100e;
+    font: .72rem/1.5 ui-monospace, Consolas, monospace; tab-size: 2; }
+  .act-json-md { padding: .72rem .8rem .9rem; max-height: 62vh; overflow: auto;
+    color: #d8cfc3; background: #12100e; font-size: .8rem; line-height: 1.45; }
+  .act-json-md .md-objet { display: grid; gap: .48rem; }
+  .act-json-md .md-champ { min-width: 0; padding: .48rem .56rem;
+    border-left: 2px solid #3b332b; background: #171411; }
+  .act-json-md .md-champ > h4 { margin: 0 0 .28rem; color: var(--or);
+    font: .7rem ui-monospace, Consolas, monospace; letter-spacing: .045em;
+    text-transform: lowercase; }
+  .act-json-md .md-objet .md-objet { margin-top: .3rem; }
+  .act-json-md ol { margin: .25rem 0 0; padding-left: 1.65rem; }
+  .act-json-md li { margin: .4rem 0; padding-left: .12rem; }
+  .act-json-md p { margin: .16rem 0; white-space: pre-wrap; }
+  .act-json-md code { color: #a8c9d8; font: .74rem ui-monospace, Consolas, monospace; }
+  .act-json-md .md-null { color: #776d63; font-style: italic; }
+  .act-activite { padding: .65rem .75rem; border-top: 1px solid #2a241e; }
+  .act-activite:first-child { border-top: 0; }
+  .act-activite header { padding: 0; border: 0; background: none; display: flex;
+    justify-content: space-between; color: var(--texte); }
+  .act-activite header b { color: var(--or); font-weight: normal; }
+  .act-activite p { margin: .35rem 0 0; color: #b9ad9e; font-size: .82rem; }
+  .act-event { border-top: 1px solid #29231e; }
+  .act-event:first-child { border-top: 0; }
+  .act-event summary { cursor: pointer; display: grid; grid-template-columns: 150px 120px 1fr;
+    gap: .5rem; padding: .42rem .65rem; color: #bfb4a6; font: .69rem ui-monospace, monospace; }
+  .act-event summary:hover { background: #201a16; }
+  .act-event .genre { color: var(--or); }
+  .act-event .moment { color: #817568; }
+  .act-event .apercu { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .act-erreur { margin: 1rem; color: var(--rouge); }
+  @media (max-width: 900px) {
+    #graphe { height: calc(100vh - 150px); }
+    .graph-head { align-items: flex-start; flex-wrap: wrap; }
+    .graph-lenses { order: 3; width: 100%; margin-left: 0; overflow-x: auto; }
+    .graph-outils { flex-wrap: wrap; }
+    .graph-inspecteur { width: min(300px, 45vw); }
+    .graph-patterns { width: min(330px, 78vw); }
+    .graph-actions-activation { width: min(360px, 82vw); max-height: 38vh; }
+    #activations { height: auto; min-height: calc(100vh - 150px); }
+    .act-corps { grid-template-columns: 1fr;
+      grid-template-rows: minmax(260px, 42vh) minmax(220px, 38vh) minmax(420px, auto); }
+    .act-mj, .act-liste { border-right: 0; border-bottom: 1px solid var(--bord); }
+    .act-event summary { grid-template-columns: 115px 1fr; }
+    .act-event .apercu { grid-column: 1 / -1; }
+  }
 </style>
 </head>
 <body>
@@ -61,6 +354,11 @@
   <h1>Régie</h1>
   <span class="date" id="date"></span>
   <button class="recharger" onclick="charger()">Relire l'état</button>
+  <!-- UNE PAGE QU'AUCUN LIEN NE MONTRE N'EXISTE PAS. « Les pas » vivait à son
+       adresse depuis une heure et il a fallu demander où elle était : les deux
+       écrans hors fiction doivent se tenir par la main, sinon le second se
+       retrouve par la mémoire de son URL, c'est-à-dire jamais. -->
+  <a class="vers-pas" href="/pas">Les pas ↗</a>
   <span class="avert">Envers du décor — jamais sous les yeux du joueur</span>
 </header>
 <nav>
@@ -68,6 +366,10 @@
   <button data-onglet="calendrier">Le calendrier</button>
   <button data-onglet="mains">Les mains</button>
   <button data-onglet="tissu">Le tissu</button>
+  <button data-onglet="graphe">Le graphe</button>
+  <button data-onglet="activations">Activations</button>
+  <button data-onglet="charge">La charge</button>
+  <button data-onglet="sante">La santé</button>
   <button data-onglet="maison">La maison</button>
   <button data-onglet="travail">Le travail</button>
   <button data-onglet="enface">En face</button>
@@ -77,6 +379,10 @@
   <section id="calendrier"></section>
   <section id="mains"></section>
   <section id="tissu"></section>
+  <section id="graphe"></section>
+  <section id="activations"></section>
+  <section id="charge"></section>
+  <section id="sante"></section>
   <section id="maison"></section>
   <section id="travail"></section>
   <section id="enface"></section>
@@ -87,12 +393,227 @@ const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s == null ? "" : s)
   .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
+async function ecrirePressePapiers(texte) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    try {
+      await navigator.clipboard.writeText(texte);
+      return;
+    } catch (_erreur) {
+      // Les contextes sans permission passent par la voie de compatibilité.
+    }
+  }
+  const zone = document.createElement("textarea");
+  zone.value = texte;
+  zone.setAttribute("readonly", "");
+  zone.style.position = "fixed";
+  zone.style.opacity = "0";
+  document.body.appendChild(zone);
+  zone.select();
+  const copie = document.execCommand("copy");
+  zone.remove();
+  if (!copie) throw new Error("Le presse-papiers a refusé la copie.");
+}
+
+function texteCopiable(element) {
+  const copie = element.cloneNode(true);
+  copie.querySelectorAll("canvas, script, style").forEach((x) => x.remove());
+  copie.querySelectorAll("details").forEach((x) => x.open = true);
+  copie.style.cssText = "display:block;position:fixed;left:-100000px;top:0;" +
+    "width:1200px;height:auto;overflow:visible;";
+  document.body.appendChild(copie);
+  const texte = copie.innerText.trim();
+  copie.remove();
+  return texte;
+}
+
 document.querySelectorAll("nav button").forEach((b) => b.onclick = () => {
   document.querySelectorAll("nav button").forEach((x) => x.classList.remove("actif"));
   document.querySelectorAll("main section").forEach((x) => x.classList.remove("actif"));
   b.classList.add("actif");
   $("#" + b.dataset.onglet).classList.add("actif");
+  if (b.dataset.onglet === "graphe") requestAnimationFrame(() => {
+    choisirLentille("importance");
+    chargerActionsActivationGraphe();
+    ajusterGraphe(); reveillerGraphe(.25);
+    if (!G.cadreValide) {
+      cadrerGraphe(G.principal);
+      setTimeout(() => { if (cadrerGraphe(G.principal)) G.cadreValide = true; }, 850);
+    }
+  });
+  if (b.dataset.onglet === "activations") {
+    chargerActivations().then(() => {
+      actualiserPrevisionsActivations();
+      actualiserFilMjActif();
+    });
+  }
+  if (b.dataset.onglet === "charge") chargerCharge();
+  if (b.dataset.onglet === "sante") chargerSante();
 });
+
+// ---------------------------------------------------------------- LA CHARGE
+// Importance contre activations. Le quadrant qui compte est en bas a droite :
+// importance haute, zero activation — ce qui pese sur la partie et que la
+// boucle n'a jamais fait bouger.
+
+const CHARGE = { d: null, tri: "importance" };
+
+async function chargerCharge() {
+  $("#charge").innerHTML = '<h2>La charge</h2><p class="pale">lecture…</p>';
+  try {
+    const r = await fetch("/admin/charge", { cache: "no-store" });
+    CHARGE.d = await r.json();
+  } catch (e) {
+    $("#charge").innerHTML = '<h2>La charge</h2><div class="alertes">'
+      + '<div class="grave">' + esc(String(e.message || e)) + "</div></div>";
+    return;
+  }
+  rendreCharge();
+}
+
+function rendreCharge() {
+  const d = CHARGE.d || {};
+  const acteurs = (d.acteurs || []).filter((a) => a.importance > 0 || a.activations > 0);
+  if (!acteurs.length) {
+    $("#charge").innerHTML = '<h2>La charge</h2><p class="pale">aucun acteur suivi.</p>';
+    return;
+  }
+  const seuil = d.seuil || 0;
+  const maxAct = Math.max(1, ...acteurs.map((a) => a.activations));
+  const maxImp = Math.max(0.001, ...acteurs.map((a) => a.importance));
+
+  // Le nuage. Un SVG, pas un canvas : on veut pouvoir survoler chaque point
+  // et lire le nom sans code de rendu.
+  const L = 900, H = 420, mg = { g: 54, d: 18, h: 16, b: 34 };
+  const px = (v) => mg.g + (v / maxImp) * (L - mg.g - mg.d);
+  const py = (v) => H - mg.b - (v / maxAct) * (H - mg.h - mg.b);
+  const xSeuil = px(seuil);
+
+  let pts = "";
+  acteurs.forEach((a) => {
+    const x = px(a.importance), y = py(a.activations);
+    const r = 3 + Math.min(9, Math.sqrt(Math.max(0, a.energie)) * 1.1);
+    const muet = a.importance > seuil && a.activations === 0;
+    const couleur = a.assis ? "var(--violet)"
+      : muet ? "var(--rouge)"
+      : a.repos_restant_s > 0 ? "var(--pale)" : "var(--or)";
+    pts += '<g class="pt"><circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1)
+      + '" r="' + r.toFixed(1) + '" fill="' + couleur + '" fill-opacity="'
+      + (muet ? ".85" : ".45") + '" stroke="' + couleur + '"></circle>'
+      + "<title>" + esc(a.nom) + " — importance " + a.importance.toFixed(2)
+      + ", " + a.activations + " activation(s), énergie " + a.energie.toFixed(1)
+      + (a.repos_restant_s > 0
+        ? ", repos " + (a.repos_restant_s / 86400).toFixed(1) + " j" : "")
+      + (a.echelle ? ", " + esc(a.echelle) : "") + "</title></g>";
+    if (muet || a.activations > maxAct * .45 || a.importance > maxImp * .55) {
+      pts += '<text class="etiq" x="' + (x + r + 4).toFixed(1) + '" y="'
+        + (y + 3.5).toFixed(1) + '">' + esc(a.nom) + "</text>";
+    }
+  });
+
+  const muets = acteurs.filter((a) => a.importance > seuil && a.activations === 0)
+    .sort((x, y) => y.importance - x.importance);
+  const moteurs = acteurs.filter((a) => a.importance > seuil && a.activations > 0)
+    .sort((x, y) => y.activations - x.activations);
+  const gourmands = acteurs.filter((a) => a.importance <= seuil && a.activations > 2)
+    .sort((x, y) => y.activations - x.activations);
+
+  const ligne = (a) => "<tr><td>" + esc(a.nom) + '</td><td class="pale">'
+    + esc(a.echelle || "—") + '</td><td class="num">' + a.importance.toFixed(2)
+    + '</td><td class="num">' + a.activations + '</td><td class="num">'
+    + a.energie.toFixed(1) + '</td><td class="num">'
+    + (a.repos_restant_s > 0 ? (a.repos_restant_s / 86400).toFixed(1) + " j" : "—")
+    + "</td></tr>";
+  const tableau = (titre, lot, note) => !lot.length ? "" :
+    "<h2>" + titre + ' <span class="compte">' + lot.length + "</span></h2>"
+    + (note ? '<p class="pale">' + note + "</p>" : "")
+    + "<table><thead><tr><th>Acteur</th><th>Échelle</th><th>Importance</th>"
+    + "<th>Activations</th><th>Énergie</th><th>Repos</th></tr></thead><tbody>"
+    + lot.map(ligne).join("") + "</tbody></table>";
+
+  $("#charge").innerHTML =
+    "<h2>Le nuage — importance contre activations</h2>"
+    + '<p class="pale">Taille du point : énergie disponible. '
+    + '<span style="color:var(--rouge)">Rouge</span> : important et jamais activé. '
+    + '<span style="color:var(--violet)">Violet</span> : siège occupé. '
+    + '<span style="color:var(--pale)">Gris</span> : en repos. '
+    + "Seuil (médiane des importances vives) : " + seuil.toFixed(3) + ".</p>"
+    + '<svg class="nuage" viewBox="0 0 ' + L + " " + H + '" preserveAspectRatio="xMidYMid meet">'
+    + '<line x1="' + mg.g + '" y1="' + (H - mg.b) + '" x2="' + (L - mg.d)
+    + '" y2="' + (H - mg.b) + '" stroke="var(--bord)"></line>'
+    + '<line x1="' + mg.g + '" y1="' + mg.h + '" x2="' + mg.g + '" y2="'
+    + (H - mg.b) + '" stroke="var(--bord)"></line>'
+    + '<line x1="' + xSeuil.toFixed(1) + '" y1="' + mg.h + '" x2="' + xSeuil.toFixed(1)
+    + '" y2="' + (H - mg.b) + '" stroke="var(--bord)" stroke-dasharray="3 4"></line>'
+    + '<text class="axe" x="' + (L - mg.d) + '" y="' + (H - 12) + '" text-anchor="end">importance →</text>'
+    + '<text class="axe" x="6" y="' + (mg.h + 10) + '">activations ↑</text>'
+    + pts + "</svg>"
+    + tableau("Le quadrant qui compte — important, jamais activé", muets,
+        "Ce qui pèse sur la partie et que la boucle n'a pas fait bouger. "
+        + "Un acteur en repos long y est normal ; un acteur disponible n'y est pas.")
+    + tableau("Les moteurs", moteurs)
+    + tableau("Beaucoup d'activations pour peu de poids", gourmands,
+        "Candidats à la rétrogradation d'échelle.")
+    + '<p class="pale">' + (d.total_activations || 0) + " activation(s) au total, tour "
+    + esc(d.tour == null ? "?" : d.tour) + ".</p>";
+}
+
+// ---------------------------------------------------------------- LA SANTÉ
+// `tick.py --verifier` produisait deja tout ceci ; il sortait dans un
+// terminal et personne ne le lisait. Meme texte, meme gravites — on ne
+// reformule pas, un panneau qui dit autre chose que le terminal ne vaut rien.
+
+const GRAVITES = ["grave", "avertissement", "note"];
+
+async function chargerSante() {
+  $("#sante").innerHTML = '<h2>La santé de l\'état</h2>'
+    + '<p class="pale">audit en cours (quelques secondes)…</p>';
+  let d;
+  try {
+    const r = await fetch("/admin/sante", { cache: "no-store" });
+    d = await r.json();
+  } catch (e) {
+    $("#sante").innerHTML = '<h2>La santé de l\'état</h2><div class="alertes">'
+      + '<div class="grave">' + esc(String(e.message || e)) + "</div></div>";
+    return;
+  }
+  const anomalies = d.anomalies || [];
+  let h = '<h2>La santé de l\'état</h2>';
+  if (d.erreur) {
+    h += '<div class="alertes"><div class="grave">' + esc(d.erreur) + "</div></div>";
+  }
+  h += '<p class="bandeau-sante">'
+    + '<span class="grave">' + (d.durs || 0) + " anomalie(s)</span>"
+    + ' · <span class="pale">' + (d.notes || 0) + " note(s) informative(s)</span>"
+    + ' · <button id="sante-relire">relire</button></p>';
+  if (!anomalies.length) {
+    h += '<p class="pale">Rien à signaler.</p>';
+  }
+  GRAVITES.forEach((g) => {
+    const lot = anomalies.filter((a) => a.gravite === g);
+    if (!lot.length) return;
+    // Grouper par sujet : dix lignes sur le meme personnage sont un probleme,
+    // pas dix.
+    const parSujet = new Map();
+    lot.forEach((a) => {
+      if (!parSujet.has(a.sujet)) parSujet.set(a.sujet, []);
+      parSujet.get(a.sujet).push(a.texte);
+    });
+    h += "<h2>" + g.toUpperCase() + ' <span class="'
+      + (g === "note" ? "compte" : "deborde") + '">' + lot.length + "</span></h2>"
+      + "<table><thead><tr><th>Sujet</th><th>Ce qui cloche</th></tr></thead><tbody>"
+      + [...parSujet.entries()].map(([sujet, textes]) =>
+          "<tr><td>" + esc(sujet) + "</td><td>"
+          + textes.map((t) => "<div>" + esc(t) + "</div>").join("")
+          + "</td></tr>").join("")
+      + "</tbody></table>";
+  });
+  h += '<p class="pale">Audit relu à ' + new Date(d.lu_a || Date.now())
+    .toLocaleTimeString("fr-FR") + " — <code>python scripts/tick.py --verifier</code>"
+    + " donne exactement la même chose au terminal.</p>";
+  $("#sante").innerHTML = h;
+  const b = $("#sante-relire");
+  if (b) b.onclick = chargerSante;
+}
 
 function rendreTetes(d) {
   let h = "";
@@ -249,10 +770,15 @@ function rendreTissu(d) {
          F.reduce(function (a, x) { return a + x.questions; }, 0) +
          ' questions sur ' + F.length + ' têtes</span></h2>' +
          '<table><tr><th>force</th><th>questions</th><th>qui</th>' +
-         '<th>échelle</th><th>actions</th><th>critiques</th><th>goulot</th></tr>';
+         '<th>creux</th><th>actions</th><th>critiques</th><th>goulot</th></tr>';
     F.forEach(function (x) {
+      // La force ne crée pas de creux : un homme fort et occupé ne pense pas.
+      // On montre donc les deux côte à côte — sans le temps, la force ne dit
+      // que ce qu'il PÈSE, jamais ce qu'il va pouvoir en faire aujourd'hui.
       h += '<tr><td>' + x.force + '</td><td>' + x.questions + '</td><td>' +
-           esc(x.qui) + '</td><td>' + esc(x.echelle || '') + '</td><td>' +
+           esc(x.qui) + '</td><td>' +
+           (x.creux_total ? x.creux_total + ' min'
+                          : '— ' + esc(x.hors_quartier || '')) + '</td><td>' +
            x.actions + '</td><td>' + (x.critiques || '') + '</td><td>' +
            (x.goulots || []).map(function (g) {
              return esc(g.split(':').pop()); }).join(' ') + '</td></tr>';
@@ -268,6 +794,1636 @@ function rendreTissu(d) {
     h += '</table>';
   });
   e.innerHTML = h;
+}
+
+// ---------------------------------------------------------------- graphe
+// Un seul graphe, quatre lentilles. Le canvas porte toujours tous les noeuds ;
+// une lentille change les forces, la lumière et le vocabulaire visuel.
+const G = {
+  data: null, noeuds: [], aretes: [], parId: new Map(), parArete: new Map(), lentille: "projection",
+  observateur: "mj", selection: null, survol: null, glisse: null, panoramique: null,
+  tx: 0, ty: 0, zoom: 1, alpha: 0, raf: 0, largeur: 0, hauteur: 0,
+  focus: new Set(), visibles: new Set(), natives: new Map(), rangPression: new Map(), d: null,
+  redimensionneur: null, cadreValide: false, principal: [],
+  motifs: [], motifsParId: new Map(), motifsActifs: [], motifNoeuds: new Set(),
+  motifAretes: new Set(), motifAncres: new Set(), motifEtiquettes: new Set(), ciblesMotif: new Map(), positionsAvantMotif: null, categorieMotifs: "decider",
+  filtreMotifs: "", panneauMotifs: true,
+  vagues: [], toursDiffusion: 0, tempsDiffusion: 0, dureeDiffusionJours: 0,
+  inconnusDiffusion: 0, animeImportance: false, emetteurs: new Set(),
+  suivreTempsReel: true, tempsBaseJours: 0, tempsBaseMur: null,
+  horlogeCle: null, horlogeSource: null, horlogeActive: null,
+  maintenant: 0, dernierRendu: 0, acteursActives: new Set(),
+  actionsActivation: { passees: [], futures: [], hypothese: "", erreur: "" },
+  actionsActivationEnCours: false, actionsFerme: false,
+};
+window.__grapheAdmin = G;
+
+function hachage(s) {
+  let h = 2166136261;
+  for (const c of String(s || "")) { h ^= c.codePointAt(0); h = Math.imul(h, 16777619); }
+  return h >>> 0;
+}
+function couleurGenre(g) {
+  return ({ action: "#c9a75c", clef: "#82a873", verrou: "#b45e55",
+    etat_cible: "#d8c787", personne: "#d7d0c7", moyen: "#c78345",
+    office: "#a98c62", evenement: "#668fac", transmission: "#5c8fb5",
+    mesure: "#8c806f", compte: "#98795e", etape: "#bc9b60",
+    lieu: "#718a78", unite: "#9a8067", pendant: "#c05a44",
+    vacant: "#c05a44" })[g] || "#81786e";
+}
+const SEGMENTEUR_EMOJI = typeof Intl.Segmenter==="function" ? new Intl.Segmenter("fr",{granularity:"grapheme"}) : null;
+const SPRITES_EMOJI = new Map();
+function emojiNoeud(n) {
+  if (Object.prototype.hasOwnProperty.call(n,"emoji_graphe")) return n.emoji_graphe;
+  const texte=String(n.quoi||"");let emoji="";
+  try { const segments=SEGMENTEUR_EMOJI?Array.from(SEGMENTEUR_EMOJI.segment(texte),x=>x.segment):Array.from(texte);
+    emoji=segments.find(x=>/\p{Extended_Pictographic}/u.test(x))||"";
+  } catch (_) { emoji=Array.from(texte).find(x=>/\p{Extended_Pictographic}/u.test(x))||""; }
+  n.emoji_graphe=emoji;return emoji;
+}
+function spriteEmoji(emoji,taillePx,badge) {
+  const px=Math.max(6,Math.round(taillePx)),dpr=Math.min(2,window.devicePixelRatio||1),cle=emoji+"|"+px+"|"+(badge?1:0)+"|"+dpr;
+  if(SPRITES_EMOJI.has(cle))return SPRITES_EMOJI.get(cle);
+  const cote=Math.ceil(px*1.65+6),canvas=document.createElement("canvas");canvas.width=Math.ceil(cote*dpr);canvas.height=Math.ceil(cote*dpr);
+  const c=canvas.getContext("2d");c.scale(dpr,dpr);c.textAlign="center";c.textBaseline="middle";
+  if(badge){c.fillStyle="rgba(13,11,9,.9)";c.beginPath();c.arc(cote/2,cote/2,px*.63+1.5,0,Math.PI*2);c.fill();}
+  c.font=px+"px 'Segoe UI Emoji','Apple Color Emoji',sans-serif";c.fillText(emoji,cote/2,cote/2+.4);
+  const sprite={canvas,cote};SPRITES_EMOJI.set(cle,sprite);return sprite;
+}
+function familleArete(n) {
+  if (["coute", "coute_chiffre", "sert", "tient", "equilibre", "candidat_equilibre"].includes(n)) return "ressource";
+  if (["revele", "achemine"].includes(n)) return "savoir";
+  if (["repond", "devie", "bloque"].includes(n)) return "reaction";
+  if (["contredit", "resonance"].includes(n)) return "coherence";
+  return "structure";
+}
+function couleurArete(a) {
+  if (a.nature === "equilibre") return "#79a86a";
+  if (a.nature === "candidat_equilibre") return "#7c9c70";
+  return ({ structure: "#756e66", ressource: "#c78345", savoir: "#5c8fb5",
+    reaction: "#b85c4d", coherence: "#9b72b0" })[familleArete(a.nature)];
+}
+function routeArrivee(a) {
+  const e = a.route && a.route.etat;
+  return ["arrive", "remis", "ouvert", "confirme", "retenu", "intercepte"].includes(e);
+}
+
+const CATEGORIES_MOTIFS = [
+  {id:"decider",nom:"Décider"},{id:"tenir",nom:"Tenir"},
+  {id:"savoir",nom:"Savoir"},{id:"reparer",nom:"Réparer"},
+];
+const TYPES_MOTIFS = {
+  goulot:"Goulots", desequilibre:"Sans contre-arête", critique:"Chaînes critiques",
+  tension:"Concurrences", vacant:"Actions à désigner", titulaire_inconnu:"Titulaires non résolus",
+  sans_office:"Actions sans office", bifurcation:"Bifurcations",
+  surcharge:"Titulaires surchargés", articulation:"Points de rupture", cycle:"Boucles",
+  equilibre:"Équilibres", communaute:"Communautés",
+  route:"Routes de connaissance", divergence:"Divergences", deformation:"Déformations",
+  mur:"Murs invisibles", interrompue:"Routes interrompues",
+  pendante:"Arêtes pendantes", floue:"Arêtes floues", double:"Doubles genres",
+  isole:"Nœuds isolés", doublon:"Relations dupliquées",
+};
+const ORDRE_TYPES_MOTIFS=["goulot","desequilibre","critique","tension","vacant","titulaire_inconnu","sans_office","bifurcation",
+  "surcharge","articulation","cycle","equilibre","communaute","route","divergence","deformation","mur","interrompue",
+  "pendante","floue","double","doublon","isole"];
+const EXPLICATIONS_MOTIFS = {
+  goulot:"Toutes les demandes convergent ici. Le focus remonte désormais chaque chaîne complète de dépendances jusqu’à ses extrémités.",
+  desequilibre:"Une pression entre sans qu’aucune réponse ne la compense. Le prolongement rouge pointillé montre exactement où la contre-arête manque.",
+  critique:"La suite qui contraint le plus le plan. Ses maillons sont nommés ; les voisins utiles montrent titulaires, ressources, verrous et débouchés proches.",
+  tension:"Plusieurs contradictions se rencontrent sur le même objet : c’est l’endroit où un arbitrage change plusieurs branches.",
+  vacant:"L’action existe, mais son titulaire est encore le nœud vacant : elle ne peut pas réellement partir.",
+  titulaire_inconnu:"Un titulaire est écrit en prose, sans adresse résolue dans le tissu.",
+  sans_office:"Aucune relation tient ne rattache cette action à un office ou une personne.",
+  bifurcation:"Un même nœud ouvre ou réalise plusieurs suites possibles.",
+  surcharge:"Ce titulaire concentre assez de charges pour devenir un risque de continuité.",
+  articulation:"Retirer ce point coupe une partie importante du tissu.",
+  cycle:"Ces dépendances se referment les unes sur les autres : aucune ne peut finir la première.",
+  equilibre:"Une réponse explicite compense déjà une pression du graphe.",
+  communaute:"Sous-graphe dense réuni par un même registre.",
+  route:"Trajet concret par lequel un fait devient connaissable : canal, délai, arrivée et destinataire.",
+  divergence:"Un même événement circule sous plusieurs formulations.",
+  deformation:"La route existe, mais sa fiabilité dégrade ce qui arrive.",
+  mur:"Un fait adverse agit sans route effective permettant de le connaître.",
+  interrompue:"La transmission existe mais son trajet est perdu, retenu ou intercepté.",
+  pendante:"Une extrémité d’arête ne correspond à aucun nœud résolu.",
+  floue:"La relation est présente en prose mais pas encore adressable aux deux extrémités.",
+  double:"La même adresse est utilisée sous plusieurs genres.",
+  doublon:"La même relation source–nature–cible est projetée plusieurs fois.",
+  isole:"Ces nœuds existent mais ne participent encore à aucune relation.",
+};
+
+function detecterMotifs() {
+  const motifs=[], entrants=new Map(G.noeuds.map(n=>[n.id,[]])), sortants=new Map(G.noeuds.map(n=>[n.id,[]]));
+  G.aretes.forEach(a=>{entrants.get(a.vers.id).push(a);sortants.get(a.de.id).push(a);});
+  const nom=(id)=>{const n=G.parId.get(id);return n?(n.quoi||n.id):id;};
+  const unique=(xs)=>Array.from(new Set(xs));
+  const ajouter=(categorie,type,titre,meta,score,noeuds,aretes,ancres,lentille,options)=>{
+    const ns=unique((noeuds||[]).map(x=>typeof x==="string"?x:x.id).filter(x=>G.parId.has(x)));
+    const es=unique((aretes||[]).map(x=>typeof x==="string"?x:x.id).filter(Boolean));
+    const cle=(ancres&&ancres[0])||ns[0]||String(motifs.length);
+    motifs.push(Object.assign({id:categorie+":"+type+":"+cle+":"+motifs.length,categorie,type,titre,meta,score:score||0,
+      noeuds:ns,aretes:es,ancres:unique(ancres||[cle]),lentille:lentille||"projection"},options||{}));
+  };
+  const contexte=(nid,natures)=>{const es=(entrants.get(nid)||[]).concat(sortants.get(nid)||[])
+    .filter(a=>!natures||natures.includes(a.nature));return {es,nodes:unique([nid].concat(es.flatMap(a=>[a.de.id,a.vers.id])))};};
+  const chaineGoulot=(nid)=>{
+    const demandes=(entrants.get(nid)||[]).filter(a=>["coute","coute_chiffre"].includes(a.nature));
+    const noeuds=new Set([nid]),aretes=new Map(),file=[];
+    demandes.forEach(a=>{aretes.set(a.id,a);noeuds.add(a.de.id);file.push(a.de.id);});
+    for(let i=0;i<file.length;i++){
+      const id=file[i],deps=(entrants.get(id)||[]).concat(sortants.get(id)||[]).filter(a=>a.nature==="depend_de"&&!a.flou);
+      deps.forEach(a=>{aretes.set(a.id,a);const autre=a.de.id===id?a.vers.id:a.de.id;if(!noeuds.has(autre)){noeuds.add(autre);file.push(autre);}});
+    }
+    const equilibrages=(entrants.get(nid)||[]).concat(sortants.get(nid)||[]).filter(a=>["equilibre","candidat_equilibre"].includes(a.nature));
+    equilibrages.forEach(a=>{aretes.set(a.id,a);noeuds.add(a.de.id);noeuds.add(a.vers.id);});
+    return {nodes:Array.from(noeuds),es:Array.from(aretes.values()),demandes:demandes.length,
+      dependances:Array.from(aretes.values()).filter(a=>a.nature==="depend_de").length,equilibrages:equilibrages.filter(a=>a.nature==="equilibre").length};
+  };
+
+  // DECIDER — ce qui change une décision ou laisse un trou dedans.
+  G.noeuds.filter(n=>n.goulot).sort((a,b)=>b.goulot.demandes-a.goulot.demandes).forEach(n=>{
+    const c=chaineGoulot(n.id),eq=c.equilibrages;
+    ajouter("decider","goulot",n.quoi||n.id,c.demandes+" demandes · "+c.dependances+" dépendances · "+eq+" équilibre"+(eq>1?"s":""),c.demandes,c.nodes,c.es,[n.id],"pression",{etiquettes:[n.id]});
+  });
+  G.noeuds.filter(n=>n.desequilibre).forEach(n=>{
+    const c=contexte(n.id,["coute","coute_chiffre","candidat_equilibre"]);
+    ajouter("decider","desequilibre",n.quoi||n.id,n.desequilibre.consommateurs+" consommateurs · contre-arête absente",n.desequilibre.consommateurs,c.nodes,c.es,[n.id],"pression",{etiquettes:[n.id],manque:true});
+  });
+  const arcsCrit=G.aretes.filter(a=>a.critique),nodesCrit=unique(arcsCrit.flatMap(a=>[a.de.id,a.vers.id]));
+  if(arcsCrit.length){const setCrit=new Set(nodesCrit),voisins=[];
+    nodesCrit.forEach(id=>{const candidats=(entrants.get(id)||[]).concat(sortants.get(id)||[]).filter(a=>!a.flou&&!a.critique&&["tient","coute","coute_chiffre","equilibre","bloque","ouvre","realise","sert","attend"].includes(a.nature));
+      candidats.sort((a,b)=>{const na=a.de.id===id?a.vers:a.de,nb=b.de.id===id?b.vers:b.de;return Number(!!(nb.goulot||nb.desequilibre||["personne","office","moyen","unite","verrou","clef"].includes(nb.genre)))-Number(!!(na.goulot||na.desequilibre||["personne","office","moyen","unite","verrou","clef"].includes(na.genre)));});
+      voisins.push(...candidats.slice(0,3));});
+    const arcsVoisins=unique(voisins.map(a=>a.id)).map(id=>G.parArete.get(id)).filter(Boolean),nodesVoisins=unique(arcsVoisins.flatMap(a=>[a.de.id,a.vers.id])).filter(id=>!setCrit.has(id));
+    ajouter("decider","critique","Chemin critique principal",nodesCrit.length+" maillons · "+nodesVoisins.length+" voisins utiles",nodesCrit.length,nodesCrit.concat(nodesVoisins),arcsCrit.concat(arcsVoisins),[nodesCrit[0]],"pression",{etiquettes:nodesCrit.concat(nodesVoisins),chemin:nodesCrit,voisins:nodesVoisins});
+  }
+  G.noeuds.forEach(n=>{const es=(entrants.get(n.id)||[]).concat(sortants.get(n.id)||[]).filter(a=>a.nature==="contredit");
+    if(es.length<2)return;const ns=unique([n.id].concat(es.flatMap(a=>[a.de.id,a.vers.id])));
+    ajouter("decider","tension",n.quoi||n.id,es.length+" contradictions convergentes",es.length,ns,es,[n.id],"liens");});
+  G.noeuds.filter(n=>n.genre==="action").forEach(n=>{const tient=(sortants.get(n.id)||[]).filter(a=>a.nature==="tient");
+    const type=!tient.length?"sans_office":tient.every(a=>a.vers.genre==="vacant")?"vacant":tient.every(a=>a.flou||a.vers.pendant)?"titulaire_inconnu":null;if(!type)return;
+    const raison=type==="sans_office"?"aucun office":type==="vacant"?"à désigner":"nom écrit mais non résolu";
+    const es=(sortants.get(n.id)||[]).filter(a=>["tient","depend_de","realise"].includes(a.nature));
+    ajouter("decider",type,n.quoi||n.id,raison,1,[n.id].concat(es.map(a=>a.vers.id)),es,[n.id],"pression");});
+  G.noeuds.forEach(n=>{const es=(sortants.get(n.id)||[]).filter(a=>["ouvre","realise"].includes(a.nature));if(es.length<3)return;
+    ajouter("decider","bifurcation",n.quoi||n.id,es.length+" sorties possibles",es.length,[n.id].concat(es.map(a=>a.vers.id)),es,[n.id],"projection");});
+
+  // TENIR — les personnes et structures dont dépend la continuité.
+  G.noeuds.filter(n=>["personne","office"].includes(n.genre)).forEach(n=>{const es=(entrants.get(n.id)||[]).filter(a=>a.nature==="tient");if(es.length<5)return;
+    ajouter("tenir","surcharge",n.quoi||n.id,es.length+" charges tenues",es.length,[n.id].concat(es.map(a=>a.de.id)),es,[n.id],"pression");});
+
+  // Articulations du grand composant, calculées sur le graphe résolu non flou.
+  const principal=new Set(G.principal.map(n=>n.id)), adj=new Map(Array.from(principal,x=>[x,[]]));
+  G.aretes.filter(a=>!a.flou&&!a.virtuel&&principal.has(a.de.id)&&principal.has(a.vers.id)).forEach(a=>{adj.get(a.de.id).push([a.vers.id,a]);adj.get(a.vers.id).push([a.de.id,a]);});
+  const disc=new Map(),low=new Map(),tailles=new Map(),impacts=new Map();let temps=0;
+  function dfsArt(u,parent){disc.set(u,++temps);low.set(u,disc.get(u));tailles.set(u,1);let enfants=0;
+    for(const [v] of adj.get(u)||[]){if(v===parent)continue;if(!disc.has(v)){enfants++;dfsArt(v,u);tailles.set(u,tailles.get(u)+tailles.get(v));low.set(u,Math.min(low.get(u),low.get(v)));
+      if((parent!==null&&low.get(v)>=disc.get(u))||(parent===null&&enfants>1))impacts.set(u,Math.max(impacts.get(u)||0,tailles.get(v)));
+    }else low.set(u,Math.min(low.get(u),disc.get(v)));}}
+  G.principal.forEach(n=>{if(!disc.has(n.id))dfsArt(n.id,null);});
+  Array.from(impacts.entries()).sort((a,b)=>b[1]-a[1]).slice(0,24).forEach(([id,impact])=>{const es=(entrants.get(id)||[]).concat(sortants.get(id)||[]).filter(a=>!a.flou);
+    ajouter("tenir","articulation",nom(id),"coupe jusqu’à "+impact+" nœuds",impact,[id].concat(es.flatMap(a=>[a.de.id,a.vers.id])),es,[id],"projection");});
+
+  // Composantes fortement connexes de depend_de : les vraies boucles.
+  const deps=new Map(G.noeuds.map(n=>[n.id,[]]));G.aretes.filter(a=>a.nature==="depend_de"&&!a.flou).forEach(a=>deps.get(a.de.id).push(a));
+  const idx=new Map(),bas=new Map(),pile=[],dansPile=new Set();let rang=0;
+  function dfsCycle(id){idx.set(id,rang);bas.set(id,rang++);pile.push(id);dansPile.add(id);
+    for(const a of deps.get(id)||[]){const v=a.vers.id;if(!idx.has(v)){dfsCycle(v);bas.set(id,Math.min(bas.get(id),bas.get(v)));}else if(dansPile.has(v))bas.set(id,Math.min(bas.get(id),idx.get(v)));}
+    if(bas.get(id)===idx.get(id)){const comp=[];let x;do{x=pile.pop();dansPile.delete(x);comp.push(x);}while(x!==id);if(comp.length>1){const s=new Set(comp),es=G.aretes.filter(a=>a.nature==="depend_de"&&s.has(a.de.id)&&s.has(a.vers.id));
+      ajouter("tenir","cycle","Boucle autour de "+nom(comp[0]),comp.length+" nœuds interdépendants",comp.length,comp,es,[comp[0]],"projection");}}}
+  G.noeuds.forEach(n=>{if(!idx.has(n.id))dfsCycle(n.id);});
+  G.aretes.filter(a=>a.nature==="equilibre").forEach(a=>{const c=contexte(a.vers.id,["coute","coute_chiffre","equilibre","tient"]);
+    ajouter("tenir","equilibre",nom(a.de.id)+" → "+nom(a.vers.id),c.es.filter(x=>x.nature.startsWith("coute")).length+" demandes autour",c.es.length,c.nodes,c.es,[a.vers.id,a.de.id],"liens");});
+  const parRegistre=new Map();G.noeuds.forEach(n=>{const k=n.ou||"sans registre";if(!parRegistre.has(k))parRegistre.set(k,[]);parRegistre.get(k).push(n);});
+  Array.from(parRegistre.entries()).forEach(([registre,ns])=>{if(ns.length<5)return;const s=new Set(ns.map(n=>n.id)),es=G.aretes.filter(a=>s.has(a.de.id)&&s.has(a.vers.id));if(es.length<8)return;
+    ajouter("tenir","communaute",String(registre),ns.length+" nœuds · "+es.length+" liens",es.length,ns,es,[ns[0].id],"projection");});
+
+  // SAVOIR — routes, versions et murs entre vérité et croyance.
+  G.noeuds.filter(n=>n.genre==="transmission").forEach(n=>{const es=(entrants.get(n.id)||[]).concat(sortants.get(n.id)||[]).filter(a=>a.connaissance);
+    const etat=(es[0]&&es[0].route&&es[0].route.etat)||"?";ajouter("savoir","route",n.quoi||n.id,etat+" · "+((es[0]&&es[0].route&&es[0].route.canal)||"canal inconnu"),routeArrivee(es[0]||{})?2:1,[n.id].concat(es.flatMap(a=>[a.de.id,a.vers.id])),es,[n.id],"connaissance");});
+  G.noeuds.filter(n=>n.genre==="evenement").forEach(n=>{const es=(sortants.get(n.id)||[]).filter(a=>a.nature==="revele"),versions=new Set(es.map(a=>a.texte).filter(Boolean));if(versions.size<2)return;
+    ajouter("savoir","divergence",n.quoi||n.id,versions.size+" versions · "+es.length+" destinataires",versions.size,[n.id].concat(es.map(a=>a.vers.id)),es,[n.id],"connaissance");});
+  const defParSource=new Map();G.aretes.filter(a=>a.connaissance&&a.route&&typeof a.route==="object"&&a.route.fiabilite!=null&&a.route.fiabilite<100).forEach(a=>{const k=a.de.id;if(!defParSource.has(k))defParSource.set(k,[]);defParSource.get(k).push(a);});
+  defParSource.forEach((es,id)=>ajouter("savoir","deformation",nom(id),Math.min(...es.map(a=>a.route.fiabilite))+" % au plus bas",100-Math.min(...es.map(a=>a.route.fiabilite)),[id].concat(es.map(a=>a.vers.id)),es,[id],"connaissance"));
+  G.noeuds.filter(n=>n.mur).forEach(n=>{const c=contexte(n.id);ajouter("savoir","mur",n.quoi||n.id,"aucune route effective · "+(n.mur.portee||"portée inconnue"),10,c.nodes,c.es,[n.id],"connaissance");});
+  const etatsCasses=new Set(["perdu","perdue","intercepte","intercepté","retenu"]);G.noeuds.filter(n=>n.genre==="transmission").forEach(n=>{const es=(entrants.get(n.id)||[]).concat(sortants.get(n.id)||[]).filter(a=>a.connaissance),etat=es[0]&&es[0].route&&es[0].route.etat;if(!etatsCasses.has(etat))return;
+    ajouter("savoir","interrompue",n.quoi||n.id,String(etat),5,[n.id].concat(es.flatMap(a=>[a.de.id,a.vers.id])),es,[n.id],"connaissance");});
+
+  // REPARER — défauts explicites du tissu, sans mélanger les familles.
+  G.aretes.filter(a=>!a.flou&&!a.virtuel&&(a.de.pendant||a.vers.pendant)).forEach(a=>{
+    const p=a.de.pendant?a.de:a.vers;ajouter("reparer","pendante",p.quoi||p.id,a.nature+" · extrémité absente",3,[a.de.id,a.vers.id],[a],[p.id],"projection");});
+  const floues=new Map();G.aretes.filter(a=>a.flou&&!a.virtuel).forEach(a=>{if(!floues.has(a.nature))floues.set(a.nature,[]);floues.get(a.nature).push(a);});
+  floues.forEach((es,nature)=>ajouter("reparer","floue",nature,es.length+" arêtes en prose",es.length,es.flatMap(a=>[a.de.id,a.vers.id]),es,[es[0].de.id],"projection"));
+  G.noeuds.filter(n=>n.double_genre).forEach(n=>{const c=contexte(n.id);ajouter("reparer","double",n.quoi||n.id,(n.genres||[]).join(" · "),2,c.nodes,c.es,[n.id],"projection");});
+  const isoles=G.noeuds.filter(n=>n.degre===0),isolesParReg=new Map();isoles.forEach(n=>{const k=n.ou||"sans registre";if(!isolesParReg.has(k))isolesParReg.set(k,[]);isolesParReg.get(k).push(n);});
+  isolesParReg.forEach((ns,k)=>ajouter("reparer","isole",String(k),ns.length+" nœuds isolés",ns.length,ns,[],[ns[0].id],"projection"));
+  const triples=new Map();G.aretes.filter(a=>!a.virtuel).forEach(a=>{const k=a.de.id+"\u0000"+a.nature+"\u0000"+a.vers.id;if(!triples.has(k))triples.set(k,[]);triples.get(k).push(a);});
+  triples.forEach(es=>{if(es.length<2)return;const a=es[0];ajouter("reparer","doublon",nom(a.de.id)+" → "+nom(a.vers.id),es.length+" × "+a.nature,es.length,[a.de.id,a.vers.id],es,[a.de.id],"projection");});
+
+  // Un motif garde les personnes et les lieux qui le touchent directement.
+  motifs.forEach(m=>{const base=new Set(m.noeuds),contexte=m.noeuds.filter(id=>["personne","lieu"].includes(G.parId.get(id)?.genre)),liens=[];
+    G.aretes.forEach(a=>{if(a.flou||a.virtuel)return;let voisin=null;
+      if(base.has(a.de.id)&&["personne","lieu"].includes(a.vers.genre))voisin=a.vers;
+      else if(base.has(a.vers.id)&&["personne","lieu"].includes(a.de.genre))voisin=a.de;
+      if(voisin){contexte.push(voisin.id);liens.push(a.id);}});
+    m.acteursLieux=unique(contexte);m.noeuds=unique(m.noeuds.concat(m.acteursLieux));m.aretes=unique(m.aretes.concat(liens));
+    m.etiquettes=unique((m.etiquettes||m.ancres||[]).concat(m.acteursLieux));});
+
+  diffuserImportance(motifs);
+  motifs.sort((a,b)=>a.categorie.localeCompare(b.categorie)
+    ||(a.categorie==="decider"?b.score-a.score
+       :(ORDRE_TYPES_MOTIFS.indexOf(a.type)-ORDRE_TYPES_MOTIFS.indexOf(b.type))||b.score-a.score)
+    ||a.titre.localeCompare(b.titre,"fr"));
+  G.motifs=motifs;G.motifsParId=new Map(motifs.map(m=>[m.id,m]));
+}
+
+// ---------------------------------------------------------------------------
+// L'IMPORTANCE NARRATIVE — deux champs qui se rencontrent
+//
+// Un tissu n'a pas de centre en lui-même : il en a un parce qu'un joueur est
+// assis quelque part. On diffuse donc DEUX fois sur le même graphe, et c'est
+// leur produit qui classe :
+//
+//   atteinte — part émise par le seul siège principal, celui du PJ.
+//              « à quelle distance du joueur ? »
+//   charge   — part des nœuds qui ancrent l'un des SEPT motifs de Décider,
+//              chacun pesant sa propre masse. « quel poids de problème ? »
+//
+// Un problème loin du joueur ne remonte pas ; un nœud près du joueur sans
+// problème ne remonte pas. Ce qui remonte, c'est un problème QUI LE TOUCHE —
+// et c'est la seule importance que ce graphe sache porter sans qu'on lui
+// ajoute un jugement du dehors. Rien d'autre n'entre dans le calcul : ni le
+// degré, ni l'ordre des familles, ni une pondération écrite à la main.
+//
+// Les relations ne donnent aucun poids : une adjacency existe ou non. Les
+// types de nœuds règlent le transit ; les personnes absorbent l'énergie afin
+// qu'elle ne traverse pas l'une d'elles pour en rendre une autre importante.
+// ---------------------------------------------------------------------------
+const TYPES_IMPORTANCE = ["goulot","desequilibre","critique","tension",
+  "vacant","titulaire_inconnu","bifurcation"];
+// Les types ne donnent aucun bonus numerique. Ils disent seulement si l'energie
+// peut continuer. Une personne la recoit et l'arrete ; le PJ fait exception
+// parce qu'il est la source. Les impasses explicites ne propagent rien non plus.
+const GENRES_RELAIS = new Set(["action","clef","transmission","verrou","moyen",
+  "mesure","compte","evenement","etape","office","lieu","echelle",
+  "etat_cible","piece"]);
+const AMORTISSEMENT = .85, TOURS_DIFFUSION = 40;
+// Le direct n'est pas une coloration de composante connexe. Une impulsion du
+// PJ perd 15 % a chaque relais et partage le reste entre ses voisins. Sous
+// 0,3 % de l'impulsion initiale elle n'est plus un front discernable.
+const SEUIL_FLUX_DIRECT = .003;
+// Calibration du direct de test. `jours_de_pr` reste la seule distance
+// geographique disponible : on le convertit en 40 km par jour de route, puis
+// on fait voler le corbeau a 40 km/h. Aucun champ d'etat n'est ajoute.
+const COOLDOWN_TEST_JOURS = 5/1440;
+const KM_PAR_JOUR_DE_ROUTE = 40;
+const VITESSE_CORBEAU_KMH = 40;
+
+function diffuser(sources, adj, journal) {
+  let total = 0; sources.forEach((v) => { total += v; });
+  if (!total) return new Map();
+  const s = new Map(); sources.forEach((v, k) => s.set(k, v / total));
+  let x = new Map(s);
+  if (journal) journal.push(new Map(x));
+  for (let t = 0; t < TOURS_DIFFUSION; t++) {
+    const y = new Map();
+    let retenue = 0;
+    x.forEach((v, id) => {
+      const l = adj.get(id), n = G.parId.get(id);
+      // Une source emet meme si son type est normalement terminal. Ailleurs,
+      // personnes, vacants, pendants, unites et rien absorbent sans relayer.
+      if (!l || !l.liens.length || (!s.has(id) && !GENRES_RELAIS.has(n && n.genre))) {
+        retenue += v; return;
+      }
+      const part = AMORTISSEMENT * v / l.liens.length;
+      l.liens.forEach((autre) => y.set(autre, (y.get(autre) || 0) + part));
+    });
+    // La masse absorbee retourne aux sources : total conserve, aucune fuite
+    // artificielle aux extremites du graphe.
+    s.forEach((v, k) => y.set(k, (y.get(k) || 0)
+      + ((1 - AMORTISSEMENT) + AMORTISSEMENT * retenue) * v));
+    x = y;
+    if (journal) journal.push(new Map(x));
+  }
+  return x;
+}
+
+// Le classement reste purement topologique. Ce second calcul ne change aucun
+// poids : il date seulement l'arrivée de l'énergie chez les acteurs.
+// Priorités de temps :
+//   1. délai explicite de la route (un pli sait combien de jours il voyage) ;
+//   2. chemin de salles calculé par presence.py, en minutes ;
+//   3. route connue via Port-Réal, à partir de `lieux.jours_de_pr` ;
+//   4. inconnu — jamais remplacé par un zéro mensonger.
+function calendrierImportance(emission) {
+  const presence = ((((G.d||{}).tissu||{}).presence||{}).acteurs||[]);
+  const parPresence = new Map(presence.map((p)=>["pers:"+p.id,p]));
+  const lieux = new Map(G.noeuds.filter((n)=>n.genre==="lieu")
+    .map((n)=>[n.id.replace(/^lieu:/,""),n]));
+  const sourceId = emission.keys().next().value, source = G.parId.get(sourceId);
+  const adjTemps = new Map(G.noeuds.map((n)=>[n.id,[]]));
+  const ajouterArc=(de,vers,a)=>{const lot=adjTemps.get(de);if(lot)lot.push({id:vers,a});};
+  G.aretes.forEach((a)=>{
+    if(a.flou||a.virtuel||a.de===a.vers)return;
+    const de=a.de,vers=a.vers;
+    // Aucune orientation semantique n'est deduite de la nature du lien : le
+    // type du noeud decide seulement s'il relaie ou absorbe. Le graphe reste
+    // parcouru dans les deux sens ; c'est le decay, pas une liste de relations,
+    // qui finit le front.
+    ajouterArc(de.id,vers.id,a);
+    ajouterArc(vers.id,de.id,a);
+  });
+
+  function distanceActeur(n) {
+    const p=parPresence.get(n.id);
+    if(p&&Number.isFinite(p.distance_joueur_minutes))
+      return {jours:p.distance_joueur_minutes/1440,source:"chemin de salles"};
+    if(!source||!source.lieu_id||!n.lieu_id)return null;
+    if(source.lieu_id===n.lieu_id)
+      return {jours:0,source:"même lieu · chemin interne inconnu"};
+    const a=lieux.get(source.lieu_id),b=lieux.get(n.lieu_id);
+    if(!a||!b||!Number.isFinite(a.jours_de_pr)||!Number.isFinite(b.jours_de_pr))return null;
+    // `jours_de_pr` est radial, pas une matrice de distances. La seule route
+    // démontrable entre deux rayons non nuls est celle qui repasse par PR.
+    const joursRoute=a.jours_de_pr===0||b.jours_de_pr===0
+      ? Math.abs(a.jours_de_pr-b.jours_de_pr)
+      : a.jours_de_pr+b.jours_de_pr;
+    return {jours:(joursRoute*KM_PAR_JOUR_DE_ROUTE/VITESSE_CORBEAU_KMH)/24,
+      source:"corbeau 40 km/h · distance via Port-Réal"};
+  }
+  function cooldown(n) {
+    const actives=G.aretes.filter((a)=>a.nature==="poursuit"&&a.de===n
+      &&a.vers.genre==="etape"&&a.vers.etat==="en-cours").map((a)=>a.vers);
+    if(!actives.length)return {jours:0,inconnu:false,etapes:0};
+    const valeurs=actives.map((e)=>e.jours_restants).filter(Number.isFinite);
+    // Le premier travail qui se termine libère le premier créneau. On prend
+    // donc le minimum, jamais la somme (les étapes peuvent être parallèles).
+    const reel=valeurs.length?Math.max(0,Math.min(...valeurs)):null;
+    // En test, on conserve l'ordre des disponibilites mais on ne bloque pas
+    // l'observation pendant une journee entiere : cinq minutes au maximum.
+    return {jours:reel==null?null:Math.min(reel,COOLDOWN_TEST_JOURS),
+      inconnu:valeurs.length!==actives.length,etapes:actives.length};
+  }
+
+  // Dijkstra sur (jours, sauts). Les sauts ne deviennent jamais des jours :
+  // ils ne servent qu'à départager deux arrivées physiques simultanées.
+  const meilleur=new Map(), file=[];
+  emission.forEach((_v,id)=>{meilleur.set(id,{jours:0,sauts:0,energie:1});
+    file.push({id,jours:0,sauts:0,energie:1});});
+  while(file.length){
+    file.sort((a,b)=>b.jours-a.jours||b.sauts-a.sauts);const ici=file.pop();
+    const connu=meilleur.get(ici.id);if(!connu||connu.jours!==ici.jours||connu.sauts!==ici.sauts)continue;
+    const n=G.parId.get(ici.id);
+    if(!n||(!emission.has(ici.id)&&!GENRES_RELAIS.has(n.genre)))continue;
+    const sorties=adjTemps.get(ici.id)||[];
+    // Conservation locale : 15 % sont absorbes a chaque relais et le reste
+    // se partage egalement entre les sorties causales effectivement ouvertes.
+    const energieSortie=(ici.energie||0)*AMORTISSEMENT/Math.max(1,sorties.length);
+    if(energieSortie<SEUIL_FLUX_DIRECT)continue;
+    for(const pas of sorties){
+      const cible=G.parId.get(pas.id);if(!cible)continue;
+      let ajout=0,sourceTemps="structure instantanée";
+      const route=pas.a.route&&typeof pas.a.route==="object"?pas.a.route:null;
+      if(route&&String(route.canal||"").toLowerCase()==="corbeau"
+          && cible.genre==="personne"&&!emission.has(cible.id)){
+        const physique=distanceActeur(cible);if(!physique){cible.diffusion_inconnue=true;continue;}
+        ajout=physique.jours;sourceTemps=physique.source;
+      } else if(route&&String(route.canal||"").toLowerCase()==="corbeau"){
+        // Le delai historique etait chiffre en jours de route. La distance du
+        // destinataire sera appliquee une seule fois, a l'arrivee sur l'acteur.
+        ajout=0;sourceTemps="corbeau · distance au destinataire";
+      } else if(route&&Number.isFinite(route.delai_jours)&&route.delai_jours>0){
+        ajout=route.delai_jours;sourceTemps="route datée";
+      } else if(cible.genre==="personne"&&!emission.has(cible.id)) {
+        const physique=distanceActeur(cible);if(!physique){cible.diffusion_inconnue=true;continue;}
+        ajout=physique.jours;sourceTemps=physique.source;
+      }
+      const cand={jours:ici.jours+ajout,sauts:ici.sauts+1,energie:energieSortie,source:sourceTemps,
+        precedent:ici.id,arete:pas.a.id};
+      const avant=meilleur.get(cible.id);
+      if(!avant||cand.jours<avant.jours||(cand.jours===avant.jours&&
+          (cand.sauts<avant.sauts||(cand.sauts===avant.sauts&&cand.energie>avant.energie)))){
+        meilleur.set(cible.id,cand);file.push({id:cible.id,jours:cand.jours,
+          sauts:cand.sauts,energie:cand.energie});
+      }
+    }
+  }
+  let horizon=0,inconnus=0;
+  G.aretes.forEach((a)=>{a.diffusion_active=false;a.diffusion_de=null;a.diffusion_vers=null;});
+  G.noeuds.forEach((n)=>{
+    const m=meilleur.get(n.id);n.reception_jours=m?m.jours:null;n.source_delai=m&&m.source;
+    n.diffusion_sauts=m?m.sauts:null;
+    n.diffusion_energie=m?m.energie:0;
+    n.diffusion_inconnue=!m;n.cooldown_jours=0;n.cooldown_inconnu=false;n.consomme_jours=m?m.jours:null;
+    if(n.genre==="personne"&&!emission.has(n.id)){
+      const c=cooldown(n);n.cooldown_jours=c.jours;n.cooldown_inconnu=c.inconnu;n.etapes_actives=c.etapes;
+      n.peut_consommer=n.etat==="actif"&&!['prisonnier','otage'].includes(n.condition);
+      // Une étape active sans horloge interdit de prétendre connaître la
+      // disponibilité. L'énergie peut être reçue, mais sa consommation reste
+      // non datable jusqu'à correction de cette étape.
+      n.consomme_jours=m&&n.peut_consommer&&!c.inconnu&&c.jours!=null?m.jours+c.jours:null;
+    }
+    if(n.consomme_jours!=null)horizon=Math.max(horizon,n.consomme_jours);
+    else if(n.genre==="personne"&&!emission.has(n.id))inconnus++;
+    if(m&&m.arete){const a=G.parArete.get(m.arete);if(a){a.diffusion_active=true;
+      a.diffusion_de=m.precedent;a.diffusion_vers=n.id;}}
+  });
+  G.dureeDiffusionJours=Math.max(horizon,1/1440);G.inconnusDiffusion=inconnus;
+}
+
+function minuteAbsolueHorloge(d) {
+  if(!d||d.annee==null||d.lune==null||d.jour==null)return null;
+  return (((d.annee*12+(d.lune-1))*30+(d.jour-1))*1440)+(Number(d.minute)||0);
+}
+function horlogeLisible(id,d) {
+  if(!d)return id||"horloge absente";
+  const h=Math.floor((d.minute||0)/60),m=(d.minute||0)%60;
+  const siege=((G.data||{}).sieges||[]).find((s)=>s.id===id);
+  return ((siege&&siege.nom)||id)+" · "+d.jour+"e "+String(h).padStart(2,"0")+":"+String(m).padStart(2,"0");
+}
+// L'origine est l'horloge du PJ émetteur. Le présent est le front occupé le
+// plus avancé. Tant que ce front n'est pas réécrit, le temps continue à la
+// vitesse murale : une seconde réelle = une seconde dans le monde.
+function synchroniserHorloges(horloges) {
+  const sieges=((G.data||{}).sieges||[]), principal=sieges.find((s)=>s.role==="principal");
+  const sourceId=principal&&principal.id, source=sourceId&&horloges&&horloges[sourceId];
+  const candidats=(sieges.length?sieges.map((s)=>s.id):Object.keys(horloges||{}))
+    .map((id)=>({id,date:horloges&&horloges[id],minute:minuteAbsolueHorloge(horloges&&horloges[id])}))
+    .filter((x)=>x.minute!=null).sort((a,b)=>b.minute-a.minute);
+  const active=candidats[0], sm=minuteAbsolueHorloge(source);
+  if(sm==null||!active){
+    if(G.tempsBaseMur==null){G.tempsBaseJours=G.tempsDiffusion||0;G.tempsBaseMur=performance.now();}
+    G.horlogeSource=sourceId?{id:sourceId,date:source}:null;G.horlogeActive=null;return;
+  }
+  const cle=sm+"|"+active.minute;
+  if(cle!==G.horlogeCle){
+    G.horlogeCle=cle;G.tempsBaseJours=Math.max(0,(active.minute-sm)/1440);
+    G.tempsBaseMur=performance.now();
+  }
+  G.horlogeSource={id:sourceId,date:source};G.horlogeActive={id:active.id,date:active.date};
+}
+function tempsImportanceDirect() {
+  if(G.tempsBaseMur==null)return G.tempsBaseJours||0;
+  return (G.tempsBaseJours||0)+(performance.now()-G.tempsBaseMur)/86400000;
+}
+function dureePrecise(jours) {
+  if(jours==null||!Number.isFinite(jours))return "?";
+  let s=Math.max(0,Math.floor(jours*86400)),j=Math.floor(s/86400);s-=j*86400;
+  const h=Math.floor(s/3600);s-=h*3600;const m=Math.floor(s/60),sec=s-m*60;
+  return (j?j+" j ":"")+String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0");
+}
+
+function diffuserImportance(motifs) {
+  // Le graphe est parcouru dans les deux sens, mais seules les aretes resolues
+  // conduisent. Deux noeuds voisins comptent une fois, quels que soient le nom
+  // et le nombre de liens projetes entre eux : aucune semantique d'arete cachee.
+  const adj = new Map(G.noeuds.map((n) => [n.id, { liens: [] }]));
+  const paires = new Set();
+  G.aretes.forEach((a) => {
+    if (a.flou || a.virtuel || a.de.id === a.vers.id) return;
+    const A = adj.get(a.de.id), B = adj.get(a.vers.id);
+    if (!A || !B) return;
+    const cle = a.de.id < a.vers.id
+      ? a.de.id + "\u0000" + a.vers.id : a.vers.id + "\u0000" + a.de.id;
+    if (paires.has(cle)) return;
+    paires.add(cle); A.liens.push(a.vers.id); B.liens.push(a.de.id);
+  });
+
+  const emission = new Map();
+  ((G.data || {}).sieges || []).forEach((s) => {
+    const id = "pers:" + s.id;
+    if (s.role === "principal" && adj.has(id)) emission.set(id, 1);
+  });
+  G.emetteurs = new Set(emission.keys());
+
+  const charge = new Map();
+  motifs.forEach((m) => {
+    if (!TYPES_IMPORTANCE.includes(m.type)) return;
+    const ancres = (m.ancres && m.ancres.length ? m.ancres : m.noeuds).filter((id) => adj.has(id));
+    if (!ancres.length) return;
+    // Masse comprimée. Un goulot compte 143 demandes, une action à désigner
+    // en compte 1 : à masse brute, les douze goulots écrasent les cinquante
+    // et une vacantes et l'atteinte ne tranche plus rien. Le log garde
+    // l'ordre des masses et ramène l'écart à ce que la distance au joueur
+    // peut encore renverser — ce qui est tout l'objet du calcul.
+    const masse = (1 + Math.log1p(Math.max(1, m.score || 1))) / ancres.length;
+    ancres.forEach((id) => charge.set(id, (charge.get(id) || 0) + masse));
+  });
+
+  // Le journal garde chaque tour de la diffusion depuis les sièges : c'est
+  // lui que la lentille Importance rejoue, tour par tour, avec les valeurs
+  // réellement calculées — jamais une animation décorative par-dessus.
+  const journal = [];
+  const atteinte = diffuser(emission, adj, journal), pression = diffuser(charge, adj);
+  G.vagues = journal; G.toursDiffusion = journal.length;
+  const pic = (m) => Math.max(1e-12, ...m.values());
+  const mA = pic(atteinte), mP = pic(pression);
+  let mI = 1e-12;
+  G.noeuds.forEach((n) => {
+    n.atteinte = (atteinte.get(n.id) || 0) / mA;
+    n.charge = (pression.get(n.id) || 0) / mP;
+    // Moyenne geometrique : etre proche du PJ sans porter de motif, ou porter
+    // un motif sans etre atteignable depuis lui, ne suffit jamais a remonter.
+    // Les deux champs sont symetriques et aucun type ne recoit de prime.
+    n.importance = emission.size ? Math.sqrt(n.atteinte * n.charge) : n.charge;
+    if (n.importance > mI) mI = n.importance;
+  });
+  G.noeuds.forEach((n) => { n.importance /= mI; });
+
+  calendrierImportance(emission);
+  G.noeuds.forEach((n) => {
+    n.arrivee = n.reception_jours == null ? -1 : n.reception_jours;
+    n.vpic = 1;
+  });
+
+  // Le compte local devient la MASSE (il a servi à charger la diffusion) et
+  // reste lisible ; le score affiché, lui, est l'importance.
+  motifs.forEach((m) => {
+    if (!TYPES_IMPORTANCE.includes(m.type)) return;
+    const ancres = m.ancres && m.ancres.length ? m.ancres : m.noeuds;
+    let v = 0;
+    ancres.forEach((id) => { const n = G.parId.get(id); if (n && n.importance > v) v = n.importance; });
+    m.masse = m.score;
+    m.score = Math.round(v * 1000);
+  });
+}
+
+function rendreListeMotifs() {
+  const e=document.getElementById("motifs-liste");if(!e)return;
+  document.querySelectorAll(".motifs-tabs button").forEach(b=>b.classList.toggle("actif",b.dataset.categorie===G.categorieMotifs));
+  const q=G.filtreMotifs.toLowerCase();const ms=G.motifs.filter(m=>m.categorie===G.categorieMotifs
+    &&(G.lentille!=="importance"||TYPES_IMPORTANCE.includes(m.type))
+    &&(!q||(m.titre+" "+m.meta+" "+TYPES_MOTIFS[m.type]).toLowerCase().includes(q)));
+  const groupes=new Map();ms.forEach(m=>{if(!groupes.has(m.type))groupes.set(m.type,[]);groupes.get(m.type).push(m);});
+  if(!ms.length){e.innerHTML='<div class="motifs-vide">Aucun motif dans cette liste.</div>';return;}
+  let h="",premier=true;groupes.forEach((lot,type)=>{h+='<details '+(premier?'open':'')+'><summary>'+esc(TYPES_MOTIFS[type]||type)+' <b>'+lot.length+'</b></summary><div class="motif-definition">'+esc(EXPLICATIONS_MOTIFS[type]||"")+'</div>';premier=false;
+    lot.slice(0,40).forEach(m=>{h+='<button class="motif-ligne '+(G.motifsActifs.includes(m.id)?'actif':'')+'" data-motif="'+esc(m.id)+'"><span class="motif-nom">'+esc(m.titre)+'</span><span class="motif-score">'+esc(m.score)+'</span><span class="motif-meta">'+esc(m.meta)+'</span></button>';});
+    if(lot.length>40)h+='<div class="motifs-note">'+(lot.length-40)+' autres — filtrez pour les atteindre</div>';h+='</details>';});e.innerHTML=h;
+  e.querySelectorAll(".motif-ligne").forEach(b=>b.onclick=(ev)=>activerMotif(b.dataset.motif,ev.shiftKey||ev.ctrlKey||ev.metaKey));
+  const total=document.getElementById("motifs-total");if(total)total.textContent=G.motifsActifs.length?G.motifsActifs.length+" focus actif"+(G.motifsActifs.length>1?"s":""):G.motifs.length+" motifs";
+  const eff=document.getElementById("motifs-effacer");if(eff)eff.classList.toggle("allume",!!G.motifsActifs.length);
+  const lecture=document.getElementById("motif-lecture");if(lecture){const actifs=G.motifsActifs.map(id=>G.motifsParId.get(id)).filter(Boolean),m=actifs[actifs.length-1];
+    if(m){const acteurs=(m.acteursLieux||[]).filter(id=>G.parId.get(id)?.genre==="personne").length,lieux=(m.acteursLieux||[]).filter(id=>G.parId.get(id)?.genre==="lieu").length;
+      lecture.className="motif-lecture actif";lecture.innerHTML="<strong>"+esc(TYPES_MOTIFS[m.type]||m.type)+" — "+esc(m.titre)+"</strong>"+esc(EXPLICATIONS_MOTIFS[m.type]||"")+"<span class=\"motif-chiffres\">"+esc(m.meta)+" · "+m.noeuds.length+" nœuds · "+m.aretes.length+" arêtes · "+acteurs+" acteurs · "+lieux+" lieux</span>";}
+    else{lecture.className="motif-lecture";lecture.innerHTML="";}}
+}
+
+function activerMotif(id,additionner) {
+  const m=G.motifsParId.get(id);if(!m)return;
+  if(!G.positionsAvantMotif)G.positionsAvantMotif=new Map(G.noeuds.map(n=>[n.id,{x:n.x,y:n.y}]));
+  if(additionner){G.motifsActifs=G.motifsActifs.includes(id)?G.motifsActifs.filter(x=>x!==id):G.motifsActifs.concat(id);}
+  else G.motifsActifs=[id];
+  restaurerPositionsMotif(false);
+  if(!G.motifsActifs.length){effacerMotifs();return;}
+  G.lentille=m.lentille;document.querySelectorAll(".graph-lenses button").forEach(b=>b.classList.toggle("actif",b.dataset.lentille===G.lentille));
+  const obs=document.getElementById("graph-observateur");if(obs)obs.style.display=G.lentille==="connaissance"?"":"none";
+  refaireVisibilite();compacterMotifs();statistiquesGraphe();rendreListeMotifs();
+  const ancre=G.parId.get(m.ancres[0]);inspecterGraphe(ancre||null);reveillerGraphe(.45);
+  setTimeout(()=>cadrerGraphe(Array.from(G.motifNoeuds,x=>G.parId.get(x)).filter(Boolean)),80);
+}
+
+function restaurerPositionsMotif(oublier=true) {
+  if(!G.positionsAvantMotif)return;
+  G.positionsAvantMotif.forEach((p,id)=>{const n=G.parId.get(id);if(n){n.x=p.x;n.y=p.y;n.vx=0;n.vy=0;}});
+  if(oublier)G.positionsAvantMotif=null;
+  G.ciblesMotif=new Map();
+}
+function compacterMotifs() {
+  G.ciblesMotif=new Map();
+  const actifs=G.motifsActifs.map(id=>G.motifsParId.get(id)).filter(Boolean),cols=Math.ceil(Math.sqrt(actifs.length));
+  const poser=(id,x,y)=>{if(!G.parId.has(id))return;const p=G.ciblesMotif.get(id);G.ciblesMotif.set(id,p?{x:(p.x+x)/2,y:(p.y+y)/2}:{x,y});};
+  actifs.forEach((m,mi)=>{
+    const lignes=Math.ceil(actifs.length/cols),cx=G.largeur*(cols===1?.5:.34+(mi%cols)*.32/(cols-1)),cy=G.hauteur*(lignes===1?.5:.3+Math.floor(mi/cols)*.4/(lignes-1));
+    if(m.type==="critique"&&m.chemin&&m.chemin.length){
+      const chemin=m.chemin.slice(),rang=new Map(chemin.map((id,i)=>[id,i])),pas=Math.min(125,Math.max(72,G.largeur*.48/Math.max(1,chemin.length-1))),debut=cx-pas*(chemin.length-1)/2;
+      chemin.forEach((id,i)=>poser(id,debut+i*pas,cy));
+      const annexes=Array.from(new Set([...(m.voisins||[]),...(m.acteursLieux||[])])).filter(id=>!rang.has(id));
+      annexes.forEach((id,i)=>{const a=m.aretes.map(x=>G.parArete.get(x)).find(e=>e&&(rang.has(e.de.id)&&e.vers.id===id||rang.has(e.vers.id)&&e.de.id===id)),parent=a?(rang.has(a.de.id)?a.de.id:a.vers.id):chemin[i%chemin.length],pi=rang.get(parent)||0;
+        poser(id,debut+pi*pas+((i%3)-1)*18,cy+(i%2?1:-1)*(58+Math.floor(i/6)*24));});
+    }else if(m.type==="goulot"&&(m.ancres||[]).length){
+      const ancre=m.ancres[0],adj=new Map(m.noeuds.map(id=>[id,[]]));m.aretes.map(x=>G.parArete.get(x)).filter(Boolean).forEach(a=>{adj.get(a.de.id)?.push(a.vers.id);adj.get(a.vers.id)?.push(a.de.id);});
+      const distance=new Map([[ancre,0]]),file=[ancre];for(let i=0;i<file.length;i++)for(const v of adj.get(file[i])||[])if(!distance.has(v)){distance.set(v,distance.get(file[i])+1);file.push(v);}
+      poser(ancre,cx,cy);const couches=new Map();m.noeuds.filter(id=>id!==ancre).forEach(id=>{const d=distance.get(id)||1;if(!couches.has(d))couches.set(d,[]);couches.get(d).push(id);});
+      couches.forEach((ids,d)=>ids.forEach((id,i)=>{const a=i*2.3999632297,r=48+d*72+9*Math.sqrt(i);poser(id,cx+Math.cos(a)*r,cy+Math.sin(a)*r);}));
+    }else{
+      const ids=Array.from(new Set([...(m.ancres||[]),...(m.noeuds||[])]));ids.forEach((id,i)=>{let x=cx,y=cy;if(i){const a=i*2.3999632297,r=40+12*Math.sqrt(i);x+=Math.cos(a)*r;y+=Math.sin(a)*r;}poser(id,x,y);});
+    }
+  });
+  G.ciblesMotif.forEach((p,id)=>{const n=G.parId.get(id);if(n){n.x=p.x;n.y=p.y;n.vx=0;n.vy=0;}});
+}
+function effacerMotifs(recadrer) {
+  restaurerPositionsMotif();
+  G.motifsActifs=[];refaireVisibilite();rendreListeMotifs();inspecterGraphe(null);reveillerGraphe(.3);
+  if(recadrer!==false)setTimeout(()=>cadrerGraphe(G.principal),250);
+}
+
+function refaireVisibilite() {
+  G.visibles = new Set(); G.focus = new Set();
+  G.natives = new Map();
+  G.aretes.forEach((a) => {
+    if (a.natif) { G.natives.set(a.de.id, "de"); G.natives.set(a.vers.id, "vers"); }
+    let visible = true;
+    if (G.lentille === "connaissance" && G.observateur !== "mj") {
+      const vus = a.visible_par || [];
+      visible = !!a.connaissance && vus.includes(G.observateur)
+        && (routeArrivee(a) || a.de.id === "pers:" + G.observateur);
+    }
+    if (visible) { G.visibles.add(a.id); G.focus.add(a.de.id); G.focus.add(a.vers.id); }
+  });
+  if (G.lentille === "pression") {
+    G.focus.clear();
+    G.noeuds.forEach((n) => { if (n.goulot || n.desequilibre || n.force || n.critique || n.genre === "vacant") G.focus.add(n.id); });
+    G.aretes.forEach((a) => { if (["coute", "coute_chiffre", "equilibre", "candidat_equilibre"].includes(a.nature) || a.critique) {
+      G.focus.add(a.de.id); G.focus.add(a.vers.id); }
+    });
+  } else if (G.lentille === "liens") {
+    G.focus = new Set(G.natives.keys());
+  } else if (G.lentille === "connaissance" && G.observateur === "mj") {
+    G.focus.clear();
+    G.aretes.forEach((a) => { if (a.connaissance) { G.focus.add(a.de.id); G.focus.add(a.vers.id); } });
+    G.noeuds.forEach((n) => { if (n.mur) G.focus.add(n.id); });
+  }
+  if (G.motifsActifs.length) {
+    G.motifNoeuds = new Set(); G.motifAretes = new Set(); G.motifAncres = new Set(); G.motifEtiquettes = new Set();
+    G.motifsActifs.forEach((id) => {
+      const m=G.motifsParId.get(id); if(!m)return;
+      m.noeuds.forEach(x=>G.motifNoeuds.add(x));m.aretes.forEach(x=>G.motifAretes.add(x));
+      (m.ancres||[]).forEach(x=>G.motifAncres.add(x));
+      (m.etiquettes||m.ancres||[]).forEach(x=>G.motifEtiquettes.add(x));
+    });
+    G.focus = new Set(G.motifNoeuds);
+  } else {
+    G.motifNoeuds = new Set(); G.motifAretes = new Set(); G.motifAncres = new Set(); G.motifEtiquettes = new Set();
+  }
+}
+function cibleNoeud(n) {
+  const w = G.largeur || 1000, h = G.hauteur || 700;
+  if (G.lentille === "pression") {
+    const rg = G.rangPression.get(n.id);
+    if (rg != null) {
+      const cols = Math.max(3, Math.ceil(Math.sqrt(G.rangPression.size)));
+      return { x: w * (.25 + .5 * ((rg % cols) / Math.max(1, cols - 1))),
+        y: h * (.2 + .55 * (Math.floor(rg / cols) / Math.max(1, Math.ceil(G.rangPression.size / cols) - 1))) };
+    }
+    return { x: (hachage(n.ou) % 2 ? .08 : .92) * w, y: (.15 + (hachage(n.id) % 700) / 1000) * h };
+  }
+  if (G.lentille === "liens") {
+    const cote = G.natives.get(n.id);
+    if (cote) return { x: w * (cote === "de" ? .35 : .65), y: h * (.25 + (hachage(n.id) % 500) / 1000) };
+    return { x: w * (.08 + (hachage(n.ou) % 840) / 1000), y: h * (.1 + (hachage(n.id) % 800) / 1000) };
+  }
+  if (G.lentille === "connaissance") {
+    if (n.genre === "transmission") return { x: w * .5, y: h * (.08 + (hachage(n.id) % 840) / 1000) };
+    if (n.genre === "evenement" || String(n.ou).startsWith("plan:") || n.mur)
+      return { x: w * .18, y: h * (.08 + (hachage(n.id) % 840) / 1000) };
+    if (n.genre === "personne" || n.genre === "lieu")
+      return { x: w * .82, y: h * (.08 + (hachage(n.id) % 840) / 1000) };
+    return { x: w * .5, y: h * .93 };
+  }
+  const k = hachage(n.ou || n.genre), angle = (k % 6283) / 1000;
+  const rayon = .14 + ((k >>> 8) % 290) / 1000;
+  return { x: w * (.5 + Math.cos(angle) * rayon), y: h * (.5 + Math.sin(angle) * rayon * .72) };
+}
+function initialiserPositions() {
+  G.noeuds.forEach((n) => {
+    const c = cibleNoeud(n), h = hachage(n.id);
+    if (!Number.isFinite(n.x)) n.x = c.x + ((h & 255) - 128) * .32;
+    if (!Number.isFinite(n.y)) n.y = c.y + (((h >>> 8) & 255) - 128) * .32;
+    n.vx = n.vx || 0; n.vy = n.vy || 0;
+  });
+}
+function areteActive(a) {
+  if (!G.visibles.has(a.id)) return false;
+  if (G.motifsActifs.length) return G.motifAretes.has(a.id);
+  if (G.lentille === "pression") return a.critique || ["coute", "coute_chiffre", "equilibre", "candidat_equilibre"].includes(a.nature);
+  if (G.lentille === "liens") return !!a.natif;
+  if (G.lentille === "connaissance") return !!a.connaissance;
+  return !a.virtuel;
+}
+function simuler() {
+  if (G.alpha < .004) return;
+  const alpha = G.alpha;
+  G.noeuds.forEach((n) => {
+    const c = G.motifsActifs.length&&G.ciblesMotif.has(n.id)?G.ciblesMotif.get(n.id):cibleNoeud(n), force = G.motifsActifs.length?(G.motifNoeuds.has(n.id)?.035:.001):G.focus.has(n.id) ? .006 : .0025;
+    n.vx += (c.x - n.x) * force * alpha;
+    n.vy += (c.y - n.y) * force * alpha;
+  });
+  G.aretes.forEach((a) => {
+    if (!areteActive(a)) return;
+    const dx = a.vers.x - a.de.x, dy = a.vers.y - a.de.y;
+    const d = Math.max(1, Math.hypot(dx, dy));
+    const voulu = a.nature === "achemine" || a.nature === "revele" ? 78 : a.natif ? 115 : 42;
+    const f = (d - voulu) / d * .0012 * alpha * (a.virtuel ? .35 : 1);
+    const fx = dx * f, fy = dy * f;
+    const fd = Math.max(1, Math.sqrt(a.de.degre || 1));
+    const fv = Math.max(1, Math.sqrt(a.vers.degre || 1));
+    a.de.vx += fx / fd; a.de.vy += fy / fd;
+    a.vers.vx -= fx / fv; a.vers.vy -= fy / fv;
+  });
+  const cellules = new Map(), pas = 26;
+  G.noeuds.forEach((n) => {
+    const cle = Math.floor(n.x / pas) + ":" + Math.floor(n.y / pas);
+    if (!cellules.has(cle)) cellules.set(cle, []);
+    cellules.get(cle).push(n);
+  });
+  G.noeuds.forEach((n) => {
+    const cx = Math.floor(n.x / pas), cy = Math.floor(n.y / pas);
+    let vus = 0;
+    for (let ix = -1; ix <= 1 && vus < 22; ix++) for (let iy = -1; iy <= 1 && vus < 22; iy++) {
+      const lot = cellules.get((cx + ix) + ":" + (cy + iy)) || [];
+      for (const o of lot) {
+        if (o === n || vus++ > 22) continue;
+        let dx = n.x - o.x, dy = n.y - o.y, d2 = dx * dx + dy * dy;
+        if (d2 < .01) { dx = .1; dy = .1; d2 = .02; }
+        if (d2 < 280) { const f = .13 * alpha / d2; n.vx += dx * f; n.vy += dy * f; }
+      }
+    }
+  });
+  G.noeuds.forEach((n) => {
+    if (G.glisse === n) { n.vx = 0; n.vy = 0; return; }
+    n.vx *= .82; n.vy *= .82; n.x += n.vx; n.y += n.vy;
+  });
+  G.alpha *= .975;
+}
+function etatDiffusionArete(a) {
+  if(!a.diffusion_active)return {commencee:false,passee:false,enTransit:false,progression:0};
+  const de=G.parId.get(a.diffusion_de),vers=G.parId.get(a.diffusion_vers);
+  if(!de||!vers||de.arrivee<0||G.tempsDiffusion<de.arrivee)
+    return {commencee:false,passee:false,enTransit:false,progression:0};
+  const debut=de.arrivee,fin=vers.arrivee;
+  if(fin>debut&&G.tempsDiffusion<fin)return {commencee:true,passee:false,enTransit:true,
+    progression:Math.max(0,Math.min(1,(G.tempsDiffusion-debut)/(fin-debut)))};
+  return {commencee:true,passee:true,enTransit:false,progression:1};
+}
+function alphaArete(a) {
+  if (!G.visibles.has(a.id)) return 0;
+  if (G.motifsActifs.length && !G.motifAretes.has(a.id)) return .006;
+  let x = a.flou ? .07 : .15;
+  if (G.lentille === "pression") x = areteActive(a) ? (a.virtuel ? .48 : .58) : .012;
+  if (G.lentille === "importance") {
+    // Une arête ne s'allume qu'une fois ses DEUX bouts atteints : c'est par
+    // elle que l'importance vient de passer. Toutes les aretes resolues ont
+    // exactement le meme eclat : seul le passage effectif de l'onde compte.
+    const d = a.de, v = a.vers, flux=etatDiffusionArete(a);
+    const passee = flux.passee && !a.flou && !a.virtuel;
+    const pulse = (vagueNoeud(d)/(d.vpic||1) + vagueNoeud(v)/(v.vpic||1)) / 2;
+    x = flux.enTransit ? .95 : passee ? Math.min(.9, .17 + pulse * .65) : .008;
+  }
+  if (G.lentille === "liens") x = a.natif ? .9 : .012;
+  if (G.lentille === "connaissance") x = a.connaissance ? .62 : .009;
+  if (G.selection === a || (G.selection && (a.de === G.selection || a.vers === G.selection))) x = 1;
+  return x;
+}
+// Où en est la vague sur ce nœud, à l'instant animé. Interpolation entre
+// deux tours réels : on lisse le TRAJET entre deux valeurs calculées, on
+// n'invente aucune valeur intermédiaire.
+function vagueNoeud(n) {
+  if (n.arrivee < 0 || G.tempsDiffusion < n.arrivee) return 0;
+  const base=Math.max(.03,n.atteinte||0);
+  const moment=n.genre==="personne"&&n.consomme_jours!=null?n.consomme_jours:n.arrivee;
+  if(G.tempsDiffusion<moment)return base*.18; // reçue, en attente du cooldown
+  const largeur=Math.max(1/1440,G.dureeDiffusionJours*.06);
+  return base*Math.exp(-(G.tempsDiffusion-moment)/largeur);
+}
+function alphaNoeud(n) {
+  if (G.lentille === "connaissance" && G.observateur !== "mj" && !G.focus.has(n.id)
+      && n.id !== "pers:" + G.observateur) return 0;
+  let x = 1;
+  if (G.motifsActifs.length && !G.motifNoeuds.has(n.id)) x = .025;
+  if (["pression", "liens", "connaissance"].includes(G.lentille) && !G.focus.has(n.id)) x = Math.min(x,.09);
+  if (G.lentille === "importance") {
+    // Pas encore atteint : presque noir. Au passage du front : éclat. Après :
+    // le nœud reste lisible à hauteur de son importance finale.
+    const atteint = n.arrivee >= 0 && G.tempsDiffusion >= n.arrivee;
+    const pulse = vagueNoeud(n) / (n.vpic || 1);
+    x = atteint ? Math.min(1, .2 + pulse * .45 + Math.pow(n.importance || 0, .4) * .55) : .03;
+  }
+  if (G.selection === n || G.survol === n) x = 1;
+  return x;
+}
+function tailleNoeud(n) {
+  let r = n.pendant ? 4 : 2.5;
+  if (n.goulot) r = Math.min(13, 4 + Math.sqrt(n.goulot.demandes) * .62);
+  if (n.force) r = Math.max(r, 3 + Math.sqrt(n.force.force || 0) * .45);
+  if (n.genre === "transmission") r = 3.2;
+  if (G.lentille === "importance") {
+    const atteint = n.arrivee >= 0 && G.tempsDiffusion >= n.arrivee;
+    const pulse = vagueNoeud(n) / (n.vpic || 1);
+    r = 2 + (atteint ? Math.pow(n.importance || 0, .42) * 13 : 0) + pulse * 3.5;
+    if (G.emetteurs && G.emetteurs.has(n.id)) r = Math.max(r, 9);
+  }
+  if (G.motifsActifs.length&&G.motifNoeuds.has(n.id)&&n.genre==="personne") r=Math.max(r,11/G.zoom);
+  if (G.motifsActifs.length&&G.motifNoeuds.has(n.id)&&n.genre==="lieu") r=Math.max(r,9/G.zoom);
+  if (G.selection === n || G.survol === n) r += 2.5 / Math.sqrt(G.zoom);
+  return r;
+}
+function polygone(ctx, x, y, r, cotes, rotation) {
+  ctx.beginPath();
+  for (let i = 0; i < cotes; i++) {
+    const a = (rotation || 0) + Math.PI * 2 * i / cotes;
+    const px = x + Math.cos(a) * r, py = y + Math.sin(a) * r;
+    i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+  }
+  ctx.closePath();
+}
+function cheminNoeud(ctx, n, r) {
+  const x = n.x, y = n.y;
+  if (n.genre === "action") return polygone(ctx, x, y, r * 1.15, 3, -Math.PI / 2);
+  if (n.genre === "clef" || n.genre === "transmission") return polygone(ctx, x, y, r * 1.15, 4, Math.PI / 4);
+  if (n.genre === "verrou") { ctx.beginPath(); ctx.rect(x-r, y-r, r*2, r*2); return; }
+  if (n.genre === "moyen" || n.genre === "unite") return polygone(ctx, x, y, r, 6, Math.PI / 6);
+  if (n.genre === "mesure" || n.genre === "compte") { ctx.beginPath(); ctx.rect(x-r*1.35, y-r*.75, r*2.7, r*1.5); return; }
+  if (n.genre === "evenement") {
+    ctx.beginPath(); for (let i=0;i<10;i++) { const a=-Math.PI/2+i*Math.PI/5, rr=i%2?r*.48:r*1.2;
+      const px=x+Math.cos(a)*rr, py=y+Math.sin(a)*rr; i?ctx.lineTo(px,py):ctx.moveTo(px,py); } ctx.closePath(); return;
+  }
+  ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
+}
+function dessinerArete(ctx, a) {
+  const etatFlux=G.lentille==="importance"?etatDiffusionArete(a):null;
+  const alpha = alphaArete(a); if (alpha <= 0) return;
+  const inverse=G.lentille==="importance"&&a.diffusion_active&&a.diffusion_de===a.vers.id;
+  const debut=inverse?a.vers:a.de,fin=inverse?a.de:a.vers;
+  const x1=debut.x, y1=debut.y, x2=fin.x, y2=fin.y;
+  if (![x1,y1,x2,y2].every(Number.isFinite)) return;
+  ctx.save(); ctx.globalAlpha = alpha; ctx.strokeStyle = couleurArete(a);
+  const motif=G.motifsActifs.map(id=>G.motifsParId.get(id)).find(Boolean);
+  ctx.fillStyle = ctx.strokeStyle; ctx.lineWidth = (a.critique ? 2.8 : motif&&motif.type==="goulot"&&["coute","coute_chiffre"].includes(a.nature)?1.45:a.natif ? 1.8 : .75) / G.zoom;
+  const flux=!!(etatFlux&&etatFlux.commencee);
+  if(flux){
+    const niveau=Math.max(debut.importance||0,fin.importance||0);
+    // Une onde d'opacité se décale avec la profondeur : un seul trait plein,
+    // mais sa poussée se lit de proche en proche depuis le PJ.
+    const phase=(G.maintenant||performance.now())/1500-(debut.diffusion_sauts||0)*.55;
+    const poussee=.72+.28*(.5+.5*Math.sin(phase));
+    ctx.globalAlpha=Math.min(1,alpha*poussee+.08);
+    ctx.strokeStyle=etatFlux.enTransit?"#ffe09a":"#d4aa5f";ctx.fillStyle=ctx.strokeStyle;
+    ctx.lineWidth=Math.max(ctx.lineWidth,(1.05+Math.sqrt(niveau)*2.3)/G.zoom);
+  }
+  // Aucun pointillé dans la lentille live. Les pointillés de provenance ne
+  // subsistent que dans les autres lentilles où ils ont un sens documentaire.
+  ctx.setLineDash(G.lentille==="importance"?[]:(a.flou||a.virtuel)?[5/G.zoom,4/G.zoom]:[]);
+  const courbe = a.natif || ["contredit", "resonance", "revele", "achemine"].includes(a.nature);
+  let cx=(x1+x2)/2, cy=(y1+y2)/2;
+  if (courbe) { const dx=x2-x1, dy=y2-y1, d=Math.max(1,Math.hypot(dx,dy)); cx += -dy/d*12; cy += dx/d*12; }
+  ctx.beginPath();ctx.moveTo(x1,y1);
+  if(flux&&etatFlux.enTransit){
+    const p=etatFlux.progression,q=1-p;
+    if(courbe){const q1x=x1+(cx-x1)*p,q1y=y1+(cy-y1)*p;
+      ctx.quadraticCurveTo(q1x,q1y,q*q*x1+2*q*p*cx+p*p*x2,q*q*y1+2*q*p*cy+p*p*y2);
+    }else ctx.lineTo(x1+(x2-x1)*p,y1+(y2-y1)*p);
+  }else courbe?ctx.quadraticCurveTo(cx,cy,x2,y2):ctx.lineTo(x2,y2);
+  ctx.stroke();
+  if (alpha > .12 && (!flux || etatFlux.passee)) {
+    const tx=courbe ? .2*cx+.8*x2 : x1+(x2-x1)*.82, ty=courbe ? .2*cy+.8*y2 : y1+(y2-y1)*.82;
+    const ang=Math.atan2(y2-ty,x2-tx), rr=3.2/G.zoom;
+    ctx.beginPath(); ctx.moveTo(tx,ty); ctx.lineTo(tx-Math.cos(ang-.55)*rr,ty-Math.sin(ang-.55)*rr);
+    ctx.lineTo(tx-Math.cos(ang+.55)*rr,ty-Math.sin(ang+.55)*rr); ctx.closePath(); ctx.fill();
+  }
+  if (a.natif&&G.lentille!=="importance") { const mx=.25*x1+.5*cx+.25*x2, my=.25*y1+.5*cy+.25*y2;
+    ctx.beginPath(); ctx.arc(mx,my,2.4/G.zoom,0,Math.PI*2); ctx.fill(); }
+  ctx.restore();
+}
+function dessinerNoeud(ctx, n) {
+  const alpha = alphaNoeud(n); if (!alpha) return;
+  const r = tailleNoeud(n); ctx.save(); ctx.globalAlpha = alpha;
+  if(G.lentille==="importance"&&G.acteursActives&&G.acteursActives.has(n.id)){
+    ctx.save();ctx.globalAlpha=.95;ctx.strokeStyle="#f0cf78";ctx.lineWidth=2/G.zoom;
+    polygone(ctx,n.x,n.y,r+6/G.zoom,4,Math.PI/4);ctx.stroke();ctx.restore();
+  }
+  if (n.force) { ctx.strokeStyle="#d5bd73"; ctx.globalAlpha=alpha*.22; ctx.lineWidth=2/G.zoom;
+    ctx.beginPath(); ctx.arc(n.x,n.y,r+3+Math.sqrt(n.force.force||0)*.18,0,Math.PI*2); ctx.stroke(); ctx.globalAlpha=alpha; }
+  if (n.goulot) { ctx.strokeStyle="#c78345"; ctx.lineWidth=1.5/G.zoom;
+    ctx.beginPath(); ctx.arc(n.x,n.y,r+3/G.zoom,0,Math.PI*2); ctx.stroke(); }
+  if(G.motifsActifs.length&&G.motifNoeuds.has(n.id)&&["personne","lieu"].includes(n.genre)){
+    ctx.strokeStyle=n.genre==="personne"?"#efe5d8":"#7fb18c";ctx.lineWidth=2.2/G.zoom;ctx.globalAlpha=1;
+    ctx.beginPath();ctx.arc(n.x,n.y,r+4/G.zoom,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=alpha;}
+  if (n.desequilibre || n.mur) { ctx.strokeStyle="#d05b4b"; ctx.lineWidth=2/G.zoom;
+    ctx.beginPath(); ctx.arc(n.x,n.y,r+5/G.zoom,.35,Math.PI*2-.35); ctx.stroke(); }
+  cheminNoeud(ctx,n,r); ctx.fillStyle=couleurGenre(n.genre); ctx.strokeStyle=n.pendant?"#d05b4b":"#17130f";
+  ctx.lineWidth=(n.pendant?1.7:.8)/G.zoom;
+  if (n.double_genre && !n.pendant) { ctx.save(); ctx.clip(); ctx.fill(); ctx.fillStyle="#9b72b0";
+    ctx.fillRect(n.x,n.y-r*2,r*2,r*4); ctx.restore(); ctx.stroke(); }
+  else if (n.pendant) ctx.stroke(); else { ctx.fill(); ctx.stroke(); }
+  const emoji=emojiNoeud(n);if(emoji){const dansFocus=G.motifsActifs.length&&G.motifNoeuds.has(n.id),horsFocus=G.motifsActifs.length&&!dansFocus;
+    const choisi=G.selection===n||G.survol===n,acteurLieu=["personne","lieu"].includes(n.genre),important=n.goulot||n.critique||n.mur||n.desequilibre||acteurLieu;
+    const poids=Math.max(0,Math.min(1,n.importance||0)),onde=G.lentille==="importance"?vagueNoeud(n):0;
+    let taillePx=7.2+Math.min(1.8,G.zoom*1.8)+Math.pow(poids,.4)*1.8;
+    if(G.lentille==="importance")taillePx+=Math.pow(Math.max(poids,onde),.4)*3;
+    if(dansFocus)taillePx=acteurLieu?15:12;if(choisi)taillePx=17;
+    let opacite=horsFocus?.16:choisi?1:dansFocus?.96:important?.78:.42;
+    if(G.lentille==="importance")opacite=Math.max(.24,Math.min(1,.3+Math.max(poids,onde)*.8));
+    const sprite=spriteEmoji(emoji,taillePx,dansFocus||important||choisi),cote=sprite.cote/G.zoom;
+    ctx.save();ctx.globalAlpha=opacite;ctx.drawImage(sprite.canvas,n.x-cote/2,n.y-cote/2,cote,cote);ctx.restore();}
+  if (n.genre === "etat_cible") { ctx.strokeStyle="#d8c787"; ctx.lineWidth=.8/G.zoom;
+    ctx.beginPath(); ctx.arc(n.x,n.y,r+2/G.zoom,0,Math.PI*2); ctx.stroke(); }
+  if (n.mur) { ctx.strokeStyle="#d05b4b"; ctx.lineWidth=2.2/G.zoom; ctx.beginPath();
+    ctx.moveTo(n.x+r+4/G.zoom,n.y-r); ctx.lineTo(n.x+r+4/G.zoom,n.y+r); ctx.stroke(); }
+  if (n.critique) { ctx.strokeStyle="#e0bd58"; ctx.lineWidth=1.4/G.zoom; ctx.beginPath();
+    ctx.arc(n.x,n.y,r+6/G.zoom,0,Math.PI*2); ctx.stroke(); }
+  const manque=G.motifsActifs.map(id=>G.motifsParId.get(id)).find(m=>m&&m.type==="desequilibre"&&(m.ancres||[]).includes(n.id));
+  if(manque){const angle=((hachage(n.id)%240)-120)/180*Math.PI,len=74/G.zoom,ex=n.x+Math.cos(angle)*len,ey=n.y+Math.sin(angle)*len;
+    ctx.save();ctx.globalAlpha=1;ctx.strokeStyle="#e66b59";ctx.fillStyle="#e66b59";ctx.lineWidth=2/G.zoom;ctx.setLineDash([6/G.zoom,5/G.zoom]);
+    ctx.beginPath();ctx.moveTo(n.x,n.y);ctx.lineTo(ex,ey);ctx.stroke();ctx.setLineDash([]);ctx.beginPath();ctx.arc(ex,ey,7/G.zoom,0,Math.PI*2);ctx.stroke();
+    ctx.font=(10/G.zoom)+"px ui-monospace, monospace";ctx.fillText("ÉQUILIBRE ?",ex+10/G.zoom,ey+3/G.zoom);ctx.restore();}
+  const etiquette = G.selection===n || G.survol===n || G.motifEtiquettes.has(n.id) || G.motifAncres.has(n.id)
+    || (G.lentille==="importance"&&G.emetteurs&&G.emetteurs.has(n.id))
+    || (G.lentille==="importance"&&G.acteursActives&&G.acteursActives.has(n.id))
+    || (n.goulot&&G.lentille==="pression"&&!G.motifsActifs.length) || (G.lentille==="liens"&&G.natives.has(n.id));
+  if (etiquette && G.zoom > .34) { ctx.globalAlpha=1; ctx.font=(11/G.zoom)+"px Georgia";
+    const txt=(n.quoi||n.id).slice(0,58), tw=ctx.measureText(txt).width;
+    ctx.fillStyle="rgba(20,17,14,.88)"; ctx.fillRect(n.x+r+3/G.zoom,n.y-8/G.zoom,tw+6/G.zoom,15/G.zoom);
+    ctx.fillStyle="#e8dfd3"; ctx.fillText(txt,n.x+r+6/G.zoom,n.y+3/G.zoom); }
+  ctx.restore();
+}
+function dessinerGraphe() {
+  const canvas=document.getElementById("graph-canvas"); if (!canvas || !G.data) return;
+  const ctx=canvas.getContext("2d"), dpr=window.devicePixelRatio||1;
+  ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.setTransform(dpr*G.zoom,0,0,dpr*G.zoom,dpr*G.tx,dpr*G.ty);
+  G.aretes.forEach((a)=>dessinerArete(ctx,a));
+  G.noeuds.forEach((n)=>dessinerNoeud(ctx,n));
+}
+function boucleGraphe(maintenant) {
+  G.raf=0;maintenant=maintenant||performance.now();
+  const live=G.lentille==="importance"&&G.animeImportance;
+  if(live&&maintenant-G.dernierRendu<33){G.raf=requestAnimationFrame(boucleGraphe);return;}
+  G.dernierRendu=maintenant;G.maintenant=maintenant;
+  // Une fois le placement stabilisé, le direct ne recalcule plus les forces
+  // des 1 778 nœuds : il ne repeint que les flux à 30 images par seconde.
+  if(G.alpha>=.004)simuler();
+  if (G.lentille==="importance" && G.animeImportance) {
+    if(G.suivreTempsReel)G.tempsDiffusion=Math.min(G.dureeDiffusionJours,tempsImportanceDirect());
+    majOverlayImportance();
+  }
+  dessinerGraphe();
+  if (G.alpha>=.004 || G.animeImportance) G.raf=requestAnimationFrame(boucleGraphe);
+}
+function dureeLisible(jours) {
+  if(jours==null||!Number.isFinite(jours))return "délai inconnu";
+  if(jours<1/24)return Math.round(jours*1440)+" min";
+  if(jours<1)return (jours*24).toFixed(jours<.1?1:0)+" h";
+  return jours.toFixed(jours<10?1:0)+" j";
+}
+// Le bandeau distingue réception et consommation. Un acteur peut avoir reçu
+// l'énergie et rester indisponible jusqu'à la fin de son étape en cours.
+function majOverlayImportance() {
+  const e = document.getElementById("importance-etat"); if (!e) return;
+  const t = G.tempsDiffusion;
+  const touches = G.noeuds.filter((n) => n.arrivee >= 0 && t >= n.arrivee);
+  const energie = (n) => n.importance||0;
+  const actives = touches.filter((n) => n.genre === "personne"
+    && !(G.emetteurs || new Set()).has(n.id)
+    && n.consomme_jours!=null && t>=n.consomme_jours)
+    .sort((a,b) => energie(b)-energie(a));
+  G.acteursActives=new Set(actives.slice(0,12).map((n)=>n.id));
+  const tete=actives.slice(0,5);
+  const attente=touches.filter((n)=>n.genre==="personne"&&n.consomme_jours!=null&&t<n.consomme_jours).length;
+  const direct=G.suivreTempsReel?'<b class="imp-direct">DIRECT</b> ':'';
+  const front=G.horlogeActive?horlogeLisible(G.horlogeActive.id,G.horlogeActive.date):'temps mural';
+  e.innerHTML = '<div class="imp-tete">'+direct+'<strong>+' + dureePrecise(t) + '</strong> depuis le PJ'
+    + ' · front '+esc(front)+' · horizon ' + dureeLisible(G.dureeDiffusionJours)
+    + ' · <span class="imp-chiffre">' + touches.length + '</span> nœuds atteints'
+    + ' · <span class="imp-chiffre">'+actives.length+'</span> acteurs activés'
+    + ' · '+attente+' en cooldown'
+    + ' · émis par ' + Array.from(G.emetteurs || []).map((id) => (G.parId.get(id)||{}).quoi || id).join(", ")
+    + '</div><ol class="imp-liste">' + tete.map((n) =>
+      '<li><b>' + esc((n.quoi||n.id).slice(0,44)) + '</b><span>' + energie(n).toFixed(3)
+      +' · reçu '+dureeLisible(n.reception_jours)+' · libre '+dureeLisible(n.consomme_jours)+'</span></li>').join("") + '</ol>';
+  const c = document.getElementById("importance-curseur");
+  if (c && G.animeImportance) c.value = Math.round(t / Math.max(1/1440, G.dureeDiffusionJours) * 1000);
+}
+function activerImportanceDirect() {
+  G.suivreTempsReel=true;G.animeImportance=true;
+  G.tempsDiffusion=Math.min(G.dureeDiffusionJours,tempsImportanceDirect());
+  majOverlayImportance();reveillerGraphe(.5);
+}
+function reveillerGraphe(alpha) {
+  G.alpha=Math.max(G.alpha,alpha||.35); if (!G.raf) G.raf=requestAnimationFrame(boucleGraphe);
+}
+function ajusterGraphe() {
+  const canvas=document.getElementById("graph-canvas"); if (!canvas) return;
+  const r=canvas.getBoundingClientRect(), dpr=window.devicePixelRatio||1;
+  G.largeur=Math.max(1,r.width); G.hauteur=Math.max(1,r.height);
+  canvas.width=Math.round(r.width*dpr); canvas.height=Math.round(r.height*dpr);
+  initialiserPositions(); dessinerGraphe();
+}
+function cadrerGraphe(noeuds) {
+  if (G.largeur < 120 || G.hauteur < 120) return false;
+  const ns=(noeuds&&noeuds.length?noeuds:G.noeuds).filter((n)=>alphaNoeud(n)>.15);
+  if (!ns.length) return false;
+  const xs=ns.map(n=>n.x), ys=ns.map(n=>n.y), minx=Math.min(...xs), maxx=Math.max(...xs), miny=Math.min(...ys), maxy=Math.max(...ys);
+  const marge=55, reserve=G.largeur>900?Math.min(355,G.largeur*.34):0;
+  const panneau=document.getElementById("graph-patterns"), reserveGauche=G.largeur>900&&panneau&&!panneau.classList.contains("ferme")?Math.min(370,G.largeur*.32):0;
+  const largeurUtile=G.largeur-reserve-reserveGauche;
+  const k=Math.min(2.5,Math.max(.08,Math.min((largeurUtile-marge*2)/Math.max(1,maxx-minx),(G.hauteur-marge*2)/Math.max(1,maxy-miny))));
+  G.zoom=k; G.tx=reserveGauche+largeurUtile/2-(minx+maxx)/2*k; G.ty=G.hauteur/2-(miny+maxy)/2*k; dessinerGraphe();
+  return true;
+}
+function mondeDepuisEvenement(ev) {
+  const r=ev.currentTarget.getBoundingClientRect();
+  return { x:(ev.clientX-r.left-G.tx)/G.zoom, y:(ev.clientY-r.top-G.ty)/G.zoom,
+    sx:ev.clientX-r.left, sy:ev.clientY-r.top };
+}
+function noeudPres(p) {
+  let meilleur=null, d=Infinity;
+  G.noeuds.forEach((n)=>{ if(alphaNoeud(n)<=0)return; const dd=Math.hypot(n.x-p.x,n.y-p.y);
+    if(dd<d&&dd<Math.max(8/G.zoom,tailleNoeud(n)+4/G.zoom)){d=dd;meilleur=n;} }); return meilleur;
+}
+function distanceSegment(p,a,b){const dx=b.x-a.x,dy=b.y-a.y,l=dx*dx+dy*dy;if(!l)return Math.hypot(p.x-a.x,p.y-a.y);
+  const t=Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/l));return Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy);}
+function aretePres(p) { let m=null,d=7/G.zoom; G.aretes.forEach((a)=>{if(alphaArete(a)<.15)return;
+  const dd=distanceSegment(p,a.de,a.vers);if(dd<d){d=dd;m=a;}});return m; }
+function dateGraphe(d){return d&&d.annee!=null?d.annee+"."+d.lune+"."+d.jour:String(d||"");}
+function inspecterGraphe(x) {
+  G.selection=x; const e=document.getElementById("graph-inspecteur"); if(!e)return;
+  if(!x){e.className="graph-inspecteur vide";e.innerHTML="Cliquez un nœud ou une arête.<br><br>Molette : zoom · glisser le fond : déplacer · glisser un nœud : le fixer.";dessinerGraphe();return;}
+  e.className="graph-inspecteur";
+  if(x.id&&x.id.startsWith("a:")||x.virtuel||x.natif||x.de){
+    const route=x.route&&typeof x.route==="object"?x.route:null;
+    e.innerHTML="<h3>"+esc(x.nature)+"</h3><div class=\"gid\">"+esc(x.de.id)+" → "+esc(x.vers.id)+"</div><dl>"+
+      "<dt>famille</dt><dd>"+esc(familleArete(x.nature))+"</dd><dt>source</dt><dd>"+esc(x.source)+"</dd>"+
+      "<dt>statut</dt><dd>"+(x.natif?"native · projetée":x.virtuel?"candidate · non tissée":x.flou?"floue · prose":"suivable")+"</dd>"+
+      (x.auteur?"<dt>auteur</dt><dd>"+esc(x.auteur)+"</dd>":"")+(x.date?"<dt>date</dt><dd>"+esc(dateGraphe(x.date))+"</dd>":"")+
+      (route?"<dt>canal</dt><dd>"+esc(route.canal||"—")+"</dd><dt>délai</dt><dd>"+esc(route.delai_jours==null?"—":route.delai_jours+" jours")+"</dd><dt>état</dt><dd>"+esc(route.etat||"—")+"</dd><dt>fiabilité</dt><dd>"+esc(route.fiabilite==null?"—":route.fiabilite+" %")+"</dd>":"")+"</dl>"+
+      ((x.justification||x.texte)?"<div class=\"raison\">"+esc(x.justification||x.texte)+"</div>":"");
+  } else {
+    const inc=G.aretes.filter((a)=>a.de===x||a.vers===x), nat=inc.filter(a=>a.natif).length;
+    e.innerHTML="<h3>"+esc(x.quoi||x.id)+"</h3><div class=\"gid\">"+esc(x.id)+"</div><dl>"+
+      "<dt>nature</dt><dd>"+esc((x.genres||[x.genre]).join(" · "))+"</dd><dt>registre</dt><dd>"+esc(x.ou||"—")+"</dd>"+
+      "<dt>arêtes</dt><dd>"+inc.length+(nat?" · "+nat+" native(s)":"")+"</dd>"+
+      (x.genre==="personne"?"<dt>statut</dt><dd>"+esc((x.etat||"?")+" · "+(x.condition||"?"))+"</dd>"+
+       "<dt>réception</dt><dd>"+esc(dureeLisible(x.reception_jours))+" · "+esc(x.source_delai||"route inconnue")+"</dd>"+
+       "<dt>cooldown</dt><dd>"+esc(x.cooldown_inconnu?"inconnu · étape sans horloge":dureeLisible(x.cooldown_jours))+"</dd>"+
+       "<dt>consommation</dt><dd>"+esc(dureeLisible(x.consomme_jours))+"</dd>":"")+
+      (x.goulot?"<dt>pression</dt><dd>"+x.goulot.demandes+" demandes"+(x.goulot.sature?" · SATURÉ":"")+"</dd>":"")+
+      (x.force?"<dt>force</dt><dd>"+x.force.force+" · "+x.force.questions+" questions</dd>":"")+
+      (x.desequilibre?"<dt>contre-arête</dt><dd>absente · "+x.desequilibre.consommateurs+" consommateurs</dd>":"")+
+      (x.mur?"<dt>route</dt><dd class=\"chaud\">aucune route effective</dd><dt>portée</dt><dd>"+esc(x.mur.portee||"—")+"</dd>":"")+"</dl>";
+  }
+  dessinerGraphe();
+}
+function statistiquesGraphe() {
+  const r=G.data.resume||{}, t=G.d.tissu||{}; let s=[];
+  if(G.lentille==="projection") s=[[r.noeuds,"nœuds"],[r.aretes,"arêtes"],[r.suivables,"suivables"],[r.resolues,"résolues"],[r.pendantes,"pendantes","alerte"],[r.floues,"floues"],[r.doubles,"double genre","alerte"]];
+  if(G.lentille==="pression") s=[[(t.goulots||[]).length,"goulots"],[(t.desequilibres||[]).length,"sans contre-arête","alerte"],[t.vacantes||0,"actions à désigner","alerte"],[(t.sourds||[]).length,"têtes sans déclencheur"],[r.candidats||0,"candidats textuels"]];
+  if(G.lentille==="importance") {
+    const d=G.motifs.filter(m=>m.categorie==="decider"&&TYPES_IMPORTANCE.includes(m.type)), pic=d[0];
+    s=[[(G.emetteurs||new Set()).size,"PJ émetteur"],[dureeLisible(G.dureeDiffusionJours),"horizon physique"],
+       [d.length,"motifs classés"],[pic?pic.score:0,"tête du classement"],
+       [G.inconnusDiffusion,"acteurs non datables","alerte"]];
+  }
+  if(G.lentille==="liens") s=[[r.natifs||0,"liens natifs projetés"],[G.aretes.filter(a=>a.natif&&a.nature==="equilibre").length,"EQUILIBRE"],[G.aretes.filter(a=>a.natif&&a.nature==="contredit").length,"CONTREDIT"],[G.aretes.filter(a=>a.nature==="contredit").length,"contradictions totales"]];
+  if(G.lentille==="connaissance") {
+    const routes=G.aretes.filter(a=>a.connaissance&&G.visibles.has(a.id));
+    s=[[routes.length,G.observateur==="mj"?"segments de route":"segments visibles"],
+      [routes.filter(a=>a.nature==="revele").length,G.observateur==="mj"?"révèle":"faits arrivés"],
+      [G.observateur==="mj"?(r.murs_sans_route||0):"—",G.observateur==="mj"?"verrous sans route":"vérité adverse masquée",G.observateur==="mj"?"alerte":""],
+      [new Set(routes.filter(a=>a.de.genre==="transmission"||a.vers.genre==="transmission").map(a=>a.de.genre==="transmission"?a.de.id:a.vers.id)).size,"plis visibles"]];
+  }
+  document.getElementById("graph-stats").innerHTML=s.map(x=>"<span class=\"graph-stat "+(x[2]||"")+"\"><b>"+x[0]+"</b> "+x[1]+"</span>").join("");
+}
+function choisirLentille(nom,garderMotifs) {
+  if(!garderMotifs){restaurerPositionsMotif();G.motifsActifs=[];}
+  G.lentille=nom; document.querySelectorAll(".graph-lenses button").forEach(b=>b.classList.toggle("actif",b.dataset.lentille===nom));
+  document.getElementById("graph-observateur").style.display=nom==="connaissance"?"":"none";
+  const imp=document.getElementById("importance-bandeau");
+  if(imp) imp.style.display = nom==="importance" ? "" : "none";
+  if(nom==="importance") activerImportanceDirect(); else G.animeImportance=false;
+  refaireVisibilite(); statistiquesGraphe(); rendreListeMotifs(); inspecterGraphe(null); reveillerGraphe(.9); setTimeout(()=>cadrerGraphe(),700);
+}
+function brancherCanvas() {
+  const c=document.getElementById("graph-canvas");
+  c.onpointerdown=(ev)=>{const p=mondeDepuisEvenement(ev),n=noeudPres(p);c.setPointerCapture(ev.pointerId);
+    if(n){G.glisse=n;inspecterGraphe(n);}else{G.panoramique={x:ev.clientX,y:ev.clientY,tx:G.tx,ty:G.ty};const a=aretePres(p);if(a)inspecterGraphe(a);} };
+  c.onpointermove=(ev)=>{const p=mondeDepuisEvenement(ev);if(G.glisse){G.glisse.x=p.x;G.glisse.y=p.y;G.glisse.vx=0;G.glisse.vy=0;reveillerGraphe(.12);return;}
+    if(G.panoramique){G.tx=G.panoramique.tx+ev.clientX-G.panoramique.x;G.ty=G.panoramique.ty+ev.clientY-G.panoramique.y;dessinerGraphe();return;}
+    const n=noeudPres(p);if(n!==G.survol){G.survol=n;dessinerGraphe();}};
+  c.onpointerup=()=>{G.glisse=null;G.panoramique=null;}; c.onpointercancel=c.onpointerup;
+  c.onwheel=(ev)=>{ev.preventDefault();const r=c.getBoundingClientRect(),sx=ev.clientX-r.left,sy=ev.clientY-r.top;
+    const wx=(sx-G.tx)/G.zoom,wy=(sy-G.ty)/G.zoom,k=Math.max(.08,Math.min(6,G.zoom*Math.exp(-ev.deltaY*.001)));
+    G.zoom=k;G.tx=sx-wx*k;G.ty=sy-wy*k;dessinerGraphe();};
+  c.ondblclick=()=>cadrerGraphe();
+}
+function ouvrirActionActivationGraphe(id) {
+  const n=G.parId.get(id);if(!n)return;
+  G.selection=n;G.tx=G.largeur/2-n.x*G.zoom;G.ty=G.hauteur/2-n.y*G.zoom;
+  inspecterGraphe(n);reveillerGraphe(.2);dessinerGraphe();
+}
+function rendreActionsActivationGraphe() {
+  const e=document.getElementById("graph-actions-activation");if(!e)return;
+  const a=G.actionsActivation,passees=a.passees||[],futures=a.futures||[];
+  const ligne=(x,futur)=>{
+    const id=x.tache_id||"",existe=G.parId.has(id);
+    const flux=x.flux_horloge?(" · "+x.flux_horloge+" "+
+      (Number(x.ecart_horloge_minutes)>=0?"+":"")+
+      Math.round(Number(x.ecart_horloge_minutes)||0)+" min"):"";
+    const quand=futur?("#"+(x.rang||"?")+" · ⚡ "+(x.energie==null?"?":x.energie)+flux):
+      heureActivation(x.termine_le);
+    // TOUT ACTEUR ACTIF EST CLIQUABLE. On grisait le bouton des qu'une tache
+    // n'etait pas un noeud du graphe — une tache creee depuis l'intention d'un
+    // homme, par exemple —, et l'acteur devenait injoignable depuis l'admin.
+    const pret=x.pret!==false;
+    const attente=x.attente?(" · "+x.attente):"";
+    return '<button class="graph-action-activation'+(pret?' pret':'')+'" '+
+      'data-action-node="'+esc(id)+'" data-qui="'+esc(x.qui||"")+'"'+
+      (x.attente?' title="'+esc(x.attente)+'"':'')+
+      '><span class="action-qui">'+esc(x.nom||x.qui||"acteur")+
+      '</span><span class="action-quand">'+esc(quand+attente)+'</span><span class="action-quoi">'+
+      esc(x.tache||id||"action inconnue")+'</span></button>';
+  };
+  let h='<div class="graph-actions-tete"><strong>Actions choisies</strong><span>'+passees.length+
+    ' passées · '+futures.length+' futures</span><button class="graph-actions-fermer" '+
+    'title="Fermer" aria-label="Fermer la vue énergie">×</button></div>';
+  h+='<div class="graph-actions-groupe"><h4>Futures · ordre actuel</h4>'+
+    (futures.length?futures.map(x=>ligne(x,true)).join(''):
+      '<div class="graph-actions-vide">Aucune tâche future assez énergisée.</div>')+'</div>';
+  h+='<div class="graph-actions-groupe"><h4>Passées · réellement activées</h4>'+
+    (passees.length?passees.map(x=>ligne(x,false)).join(''):
+      '<div class="graph-actions-vide">Aucune activation passée.</div>')+'</div>';
+  if(a.erreur)h+='<div class="graph-actions-vide">'+esc(a.erreur)+'</div>';
+  e.innerHTML=h;
+  e.classList.toggle("ferme",G.actionsFerme);
+  e.querySelector(".graph-actions-fermer").onclick=()=>{
+    G.actionsFerme=true;e.classList.add("ferme");
+  };
+  e.querySelectorAll('[data-action-node]:not([disabled])').forEach(b=>
+    b.onclick=()=>ouvrirActionActivationGraphe(b.dataset.actionNode));
+}
+async function chargerActionsActivationGraphe() {
+  if(G.actionsActivationEnCours)return;G.actionsActivationEnCours=true;
+  try {
+    const r=await fetch("/admin/activations",{cache:"no-store"}),d=await r.json();
+    if(!r.ok||d.erreur)throw new Error(d.erreur||("HTTP "+r.status));
+    G.actionsActivation={passees:d.activations||[],futures:((d.previsions||{}).previsions)||[],
+      hypothese:((d.previsions||{}).hypothese)||"",erreur:((d.previsions||{}).erreur)||""};
+  } catch(erreur) {
+    G.actionsActivation={passees:[],futures:[],hypothese:"",erreur:String(erreur.message||erreur)};
+  } finally {G.actionsActivationEnCours=false;rendreActionsActivationGraphe();}
+}
+function rendreGraphe(d) {
+  const e=document.getElementById("graphe"), data=d.graphe;
+  if(!data||data.erreur){e.innerHTML="<h2>Le graphe</h2><div class=\"alertes\"><div class=\"grave\">"+esc(data&&data.erreur||"Aucun tissu projeté")+"</div></div>";return;}
+  if(G.raf){cancelAnimationFrame(G.raf);G.raf=0;} if(G.redimensionneur)G.redimensionneur.disconnect();
+  G.lentille="projection";G.observateur="mj";G.selection=null;G.survol=null;G.tx=0;G.ty=0;G.zoom=1;G.alpha=0;G.cadreValide=false;
+  G.motifsActifs=[];G.motifNoeuds=new Set();G.motifAretes=new Set();G.motifAncres=new Set();G.motifEtiquettes=new Set();G.ciblesMotif=new Map();G.positionsAvantMotif=null;G.categorieMotifs="decider";G.filtreMotifs="";G.panneauMotifs=true;
+  G.d=d; G.data=data; G.noeuds=data.noeuds; G.parId=new Map(G.noeuds.map(n=>[n.id,n]));
+  G.aretes=data.aretes.map((a)=>Object.assign(a,{de:G.parId.get(a.de),vers:G.parId.get(a.vers)})).filter(a=>a.de&&a.vers);
+  G.parArete=new Map(G.aretes.map(a=>[a.id,a]));
+  G.noeuds.forEach((n)=>{n.degre=0;});
+  G.aretes.forEach((a)=>{a.de.degre++;a.vers.degre++;});
+  const voisins=new Map(G.noeuds.map(n=>[n.id,[]]));
+  G.aretes.forEach(a=>{if(a.virtuel)return;voisins.get(a.de.id).push(a.vers);voisins.get(a.vers.id).push(a.de);});
+  const parcourus=new Set();G.principal=[];
+  G.noeuds.forEach(n=>{if(parcourus.has(n.id))return;const pile=[n],composante=[];parcourus.add(n.id);
+    while(pile.length){const x=pile.pop();composante.push(x);(voisins.get(x.id)||[]).forEach(y=>{if(!parcourus.has(y.id)){parcourus.add(y.id);pile.push(y);}});}
+    if(composante.length>G.principal.length)G.principal=composante;});
+  detecterMotifs();
+  synchroniserHorloges(d.horloges||{});
+  G.rangPression=new Map(((d.tissu||{}).goulots||[]).map((g,i)=>[g.noeud,i]));
+  ((d.tissu||{}).desequilibres||[]).forEach((g)=>{if(!G.rangPression.has(g.noeud))G.rangPression.set(g.noeud,G.rangPression.size);});
+  e.innerHTML='<div class="graph-shell"><div class="graph-head"><h2>Le graphe miroir</h2><span class="graph-sous">un tissu · quatre lectures</span><div class="graph-lenses">'+
+    '<button data-lentille="projection" class="actif">2 · Projection</button><button data-lentille="pression">3 · Pressions</button><button data-lentille="liens">4 · Liens natifs</button><button data-lentille="connaissance">5 · Connaissance</button><button data-lentille="importance">6 · Diffusion live</button></div></div>'+
+    '<div class="graph-outils"><input id="graph-recherche" placeholder="chercher une adresse ou un intitulé"><select id="graph-observateur" style="display:none">'+
+    (data.observateurs||[]).map(o=>'<option value="'+esc(o.id)+'">vu par · '+esc(o.nom)+'</option>').join('')+'</select><button id="graph-pattern-toggle">Motifs</button><button id="graph-cadrer">Tout cadrer</button><div class="graph-stats" id="graph-stats"></div><span class="graph-aide">molette · glisser · cliquer</span></div>'+
+    '<div class="graph-stage"><canvas id="graph-canvas"></canvas>'+
+    '<div id="importance-bandeau" class="imp-bandeau" style="display:none"><div id="importance-etat"></div>'+
+    '<div class="imp-boutons"><button id="importance-rejouer">Revenir au direct</button>'+
+    '<input id="importance-curseur" type="range" min="0" max="1000" value="0" title="parcourir le temps de diffusion"></div></div>'+
+    '<aside id="graph-patterns" class="graph-patterns"><div class="motifs-tete"><strong>Motifs</strong><span id="motifs-total">'+G.motifs.length+' motifs</span><button id="motifs-fermer">fermer</button></div><div class="motifs-tabs">'+
+    CATEGORIES_MOTIFS.map(c=>'<button data-categorie="'+c.id+'" class="'+(c.id===G.categorieMotifs?'actif':'')+'">'+c.nom+'</button>').join('')+'</div><div class="motifs-filtres"><input id="motifs-recherche" placeholder="filtrer les motifs"><button id="motifs-effacer">Effacer focus</button></div><div id="motif-lecture" class="motif-lecture"></div><div id="motifs-liste" class="motifs-liste"></div><div class="motifs-note">clic : isoler · ⇧ clic : additionner</div></aside><aside id="graph-actions-activation" class="graph-actions-activation"><div class="graph-actions-vide">Lecture des actions choisies…</div></aside><aside id="graph-inspecteur" class="graph-inspecteur vide"></aside><div class="graph-legende">'+
+    '<span class="structure"><i></i>structure</span><span class="ressource"><i></i>ressource</span><span class="savoir"><i></i>connaissance</span><span class="reaction"><i></i>réaction</span><span class="coherence"><i></i>cohérence</span><span class="equilibre"><i></i>équilibre</span></div></div></div>';
+  document.querySelectorAll(".graph-lenses button").forEach(b=>b.onclick=()=>choisirLentille(b.dataset.lentille));
+  document.querySelectorAll(".motifs-tabs button").forEach(b=>b.onclick=()=>{G.categorieMotifs=b.dataset.categorie;rendreListeMotifs();});
+  document.getElementById("motifs-recherche").oninput=(ev)=>{G.filtreMotifs=ev.target.value;rendreListeMotifs();};
+  document.getElementById("motifs-effacer").onclick=()=>effacerMotifs(true);
+  const basculerMotifs=()=>{G.panneauMotifs=!G.panneauMotifs;document.getElementById("graph-patterns").classList.toggle("ferme",!G.panneauMotifs);
+    setTimeout(()=>cadrerGraphe(G.motifsActifs.length?Array.from(G.motifNoeuds,x=>G.parId.get(x)).filter(Boolean):G.principal),220);};
+  document.getElementById("motifs-fermer").onclick=basculerMotifs;document.getElementById("graph-pattern-toggle").onclick=basculerMotifs;
+  document.getElementById("graph-observateur").onchange=(ev)=>{G.observateur=ev.target.value;refaireVisibilite();statistiquesGraphe();inspecterGraphe(null);reveillerGraphe(.7);setTimeout(()=>cadrerGraphe(),650);};
+  document.getElementById("graph-cadrer").onclick=()=>cadrerGraphe();
+  document.getElementById("importance-rejouer").onclick=()=>{
+    activerImportanceDirect(); };
+  document.getElementById("importance-curseur").oninput=(ev)=>{
+    // Le curseur arrête l'onde et se cale sur un temps du monde.
+    G.suivreTempsReel=false;G.animeImportance=false;
+    G.tempsDiffusion=(ev.target.value/1000)*G.dureeDiffusionJours;
+    majOverlayImportance(); dessinerGraphe(); };
+  document.getElementById("graph-recherche").onkeydown=(ev)=>{if(ev.key!=="Enter")return;const q=ev.target.value.trim().toLowerCase();if(!q)return;
+    const n=G.noeuds.find(n=>n.id.toLowerCase()===q)||G.noeuds.find(n=>(n.id+" "+(n.quoi||"")).toLowerCase().includes(q));
+    if(n){G.tx=G.largeur/2-n.x*G.zoom;G.ty=G.hauteur/2-n.y*G.zoom;inspecterGraphe(n);} };
+  brancherCanvas(); refaireVisibilite(); initialiserPositions(); statistiquesGraphe(); rendreListeMotifs(); inspecterGraphe(null);
+  chargerActionsActivationGraphe();
+  G.redimensionneur=new ResizeObserver(ajusterGraphe);G.redimensionneur.observe(document.querySelector(".graph-stage"));
+  requestAnimationFrame(()=>{ajusterGraphe();reveillerGraphe(1);
+    setTimeout(()=>{if(document.getElementById("graphe").classList.contains("actif")&&cadrerGraphe(G.principal))G.cadreValide=true;},750);});
+}
+
+const A = { chargee: false, activations: [], previsions: [], hypothese: "", attente: {}, actualiseLe: null,
+  selection: null, details: new Map(), filMjCle: null };
+
+function heureActivation(x) {
+  if (!x) return "heure inconnue";
+  const d = new Date(x);
+  if (Number.isNaN(d.getTime())) return String(x);
+  return d.toLocaleString("fr-FR", { day: "2-digit", month: "2-digit",
+    hour: "2-digit", minute: "2-digit", second: "2-digit" });
+}
+function dureeActivation(ms) {
+  if (ms == null || !Number.isFinite(Number(ms))) return "durée inconnue";
+  const s = Number(ms) / 1000;
+  return (s < 60 ? s.toFixed(1) + " s" : Math.floor(s / 60) + " min " +
+    Math.round(s % 60) + " s");
+}
+function dureeMonde(secondes) {
+  if (secondes == null || !Number.isFinite(Number(secondes))) return "durée monde inconnue";
+  const total = Math.max(0, Math.round(Number(secondes)));
+  const h = Math.floor(total / 3600), m = Math.floor((total % 3600) / 60), s = total % 60;
+  return (h ? h + " h " : "") + (m ? m + " min " : "") +
+    ((!h && !m) || s ? s + " s" : "");
+}
+function energieActivation(x) {
+  const reserve = x.budget == null ? "?" : x.budget;
+  const depense = x.depense == null ? "?" : x.depense;
+  const rendue = x.restitue == null ? "?" : x.restitue;
+  return "⚡ " + reserve + " réservée · −" + depense + " · +" + rendue;
+}
+function apercuEvenement(ev) {
+  if (!ev || typeof ev !== "object") return String(ev || "");
+  if (ev.contenu) return String(ev.contenu);
+  if (typeof ev.content === "string") return ev.content;
+  const m = ev.message || {};
+  if (typeof m.content === "string") return m.content;
+  if (Array.isArray(m.content)) {
+    return m.content.map((b) => b && (b.text || b.type || b.name)).filter(Boolean).join(" · ");
+  }
+  if (ev.evenement === "cli.resultat") return ev.erreur ? "erreur" : "appel terminé";
+  return "";
+}
+function rendreEvenements(liste, journal) {
+  if (!(liste || []).length) return '<div class="act-erreur">Aucun événement conservé.</div>';
+  return liste.map((ev, i) => {
+    const genre = journal ? (ev.evenement || "événement") :
+      ((ev.type || "événement") + (ev.operation ? " / " + ev.operation : ""));
+    const moment = ev.timestamp || ev.a || "";
+    const apercu = apercuEvenement(ev).replace(/\s+/g, " ").trim().slice(0, 180);
+    return '<details class="act-event"><summary><span class="genre">' +
+      esc(String(i + 1).padStart(3, "0") + " · " + genre) + '</span><span class="moment">' +
+      esc(moment ? heureActivation(moment) : (ev.t_s == null ? "" : "+" + ev.t_s + " s")) +
+      '</span><span class="apercu">' + esc(apercu) + '</span></summary><pre>' +
+      esc(JSON.stringify(ev, null, 2)) + '</pre></details>';
+  }).join("");
+}
+
+function extraireJsonMarkdown(texte) {
+  let s=String(texte||'').trim();
+  const bloc=s.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/i);
+  if(bloc)s=bloc[1].trim();
+  try{return JSON.parse(s);}catch(_e){return null;}
+}
+function texteMarkdown(texte) {
+  return esc(String(texte)).replace(/`([^`]+)`/g,'<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
+    .replace(/\n{2,}/g,'</p><p>').replace(/\n/g,'<br>');
+}
+function rendreJsonMarkdown(valeur, profondeur=0) {
+  if(valeur===null)return '<span class="md-null">nul</span>';
+  if(Array.isArray(valeur))return valeur.length
+    ?'<ol>'+valeur.map(x=>'<li>'+rendreJsonMarkdown(x,profondeur+1)+'</li>').join('')+'</ol>'
+    :'<span class="md-null">liste vide</span>';
+  if(typeof valeur==='object'){
+    const entrees=Object.entries(valeur);
+    if(!entrees.length)return '<span class="md-null">objet vide</span>';
+    return '<div class="md-objet">'+entrees.map(([cle,v])=>
+      '<section class="md-champ"><h4>'+esc(cle.replaceAll('_',' '))+'</h4>'+
+      rendreJsonMarkdown(v,profondeur+1)+'</section>').join('')+'</div>';
+  }
+  if(typeof valeur==='string')return '<p>'+texteMarkdown(valeur)+'</p>';
+  return '<code>'+esc(String(valeur))+'</code>';
+}
+function reponseEnMarkdown(texte) {
+  const json=extraireJsonMarkdown(texte);
+  if(json!==null)return '<div class="act-json-md">'+rendreJsonMarkdown(json)+'</div>';
+  return '<pre>'+esc(String(texte||'Non conservée.'))+'</pre>';
+}
+
+function heureFilMj(x) {
+  if (!x) return '';
+  const d=new Date(x);
+  return Number.isNaN(d.getTime())?'':d.toLocaleTimeString('fr-FR',
+    {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+function rendreFilMjActif(d) {
+  const colonne=document.getElementById('act-mj');
+  if(!colonne)return;
+  const ancien=document.getElementById('act-mj-fil');
+  const suivre=!ancien||ancien.scrollHeight-ancien.scrollTop-ancien.clientHeight<90;
+  const items=(d.items||[]).map((x)=>{
+    const role=x.role||'outil';
+    const etiquette=role==='mj'?'MJ':role==='joueur'?'Joueur':(x.nom||'Outil');
+    const corps=role==='outil'
+      ?'<details><summary>'+esc(x.nom||'outil')+'</summary><pre>'+esc(x.texte||'')+'</pre></details>'
+      :'<p>'+texteMarkdown(x.texte||'')+'</p>';
+    return '<article class="act-mj-item '+esc(role)+'"><header><span>'+esc(etiquette)+
+      '</span><time>'+esc(heureFilMj(x.moment))+'</time></header>'+corps+'</article>';
+  }).join('');
+  colonne.innerHTML='<div class="act-mj-tete"><h3>Fil du MJ actif</h3><strong>'+esc(d.titre||'Aucun MJ ouvert')+
+    '</strong><div class="act-mj-meta"><span class="'+(d.actif?'direct':'')+'">'+
+    (d.actif?'● en direct':'dernier fil actif')+'</span><span>'+esc(d.session?d.session.slice(0,8):'—')+
+    '</span></div></div><div class="act-mj-fil" id="act-mj-fil">'+
+    (items||'<div class="act-vide">Le fil du MJ est vide.</div>')+'</div>';
+  if(suivre)requestAnimationFrame(()=>{const fil=document.getElementById('act-mj-fil');if(fil)fil.scrollTop=fil.scrollHeight;});
+}
+
+let actualisationFilMjEnCours=false;
+async function actualiserFilMjActif(forcer=false) {
+  const panneau=document.getElementById('activations');
+  if(actualisationFilMjEnCours||document.hidden||!A.chargee||!panneau.classList.contains('actif'))return;
+  actualisationFilMjEnCours=true;
+  try {
+    const r=await fetch('/admin/activations/mj-actif',{cache:'no-store'}),d=await r.json();
+    if(!r.ok||d.erreur)throw new Error(d.erreur||('HTTP '+r.status));
+    const cle=(d.session||'')+'|'+(d.modifie_le||'')+'|'+(d.items||[]).length;
+    if(forcer||cle!==A.filMjCle){A.filMjCle=cle;rendreFilMjActif(d);}
+  } catch(erreur) {
+    const colonne=document.getElementById('act-mj');
+    if(colonne&&!A.filMjCle)colonne.innerHTML='<div class="act-erreur">Fil du MJ illisible : '+esc(erreur.message)+'</div>';
+  } finally { actualisationFilMjEnCours=false; }
+}
+
+function htmlPrevisionsActivations() {
+  const actualise = A.actualiseLe ? ' · <time>actualisé à ' +
+    esc(new Date(A.actualiseLe).toLocaleTimeString("fr-FR")) + '</time>' : '';
+  const attente = A.attente || {};
+  let vide = 'Aucun acteur n’a actuellement assez d’énergie.';
+  if (attente.repos_acteur) vide = attente.repos_acteur +
+    ' acteur(s) chargé(s), mais encore en repos causal.';
+  else if (attente.aucune_tache_disponible) vide = attente.aucune_tache_disponible +
+    ' acteur(s) chargé(s), sans tâche disponible (bloquée, terminée ou en refroidissement).';
+  else if (attente.tache_sous_seuil) vide = attente.tache_sous_seuil +
+    ' tâche(s) encore sous le seuil d’activation.';
+  return A.previsions.length ? '<div class="act-previsions" id="act-previsions"><h3>À venir selon la physique</h3><p>' +
+    esc(A.hypothese || 'ordre instantané, conditionnel aux résultats futurs') + actualise + '</p>' +
+    A.previsions.map((x) => '<div class="act-prevue"><span class="rang">' + esc(x.rang) +
+      '</span><strong>' + esc(x.nom) + '</strong><span class="act-energie">⚡ ' +
+      esc(x.energie) + ' · ' + esc(Math.round(x.importance * 1000) / 10) +
+      '% · fenêtre ' + esc(dureeMonde(x.duree_monde_secondes)) +
+      '</span><span class="act-tache">' + esc(x.tache) + '</span></div>').join('') +
+    '</div>' : '<div class="act-previsions" id="act-previsions"><h3>À venir selon la physique</h3>' +
+    '<p>' + esc(vide) + actualise + '</p></div>';
+}
+
+function rendreListeActivations() {
+  const e = document.getElementById("activations");
+  const previsions = htmlPrevisionsActivations();
+  let liste = "";
+  if (!A.activations.length) {
+    liste = '<div class="act-vide">Aucune activation déposée.</div>';
+  } else {
+    liste = A.activations.map((x, i) => '<button class="act-ligne' +
+      (A.selection === x.id ? ' actif' : '') + '" data-activation-index="' + i + '">' +
+      '<strong>' + esc(x.nom) + '</strong><time>' + esc(heureActivation(x.termine_le)) + '</time>' +
+      '<span class="act-tache">' + esc(x.tache || x.tache_id) + '</span>' +
+      '<span class="act-meta">' + esc(x.issue + ' · ' +
+        dureeMonde(x.duree_monde_secondes) +
+        ' · calcul ' + dureeActivation(x.duree_ms) + ' · ' + x.modele +
+        (x.effort && x.effort !== "inconnu" ? ' / ' + x.effort : '') +
+        (x.architecture === 'legacy_direct' ? ' · LEGACY DIRECT' : ' · NARRATEUR LOCAL')) + '</span>' +
+      '<span class="act-energie">' + esc(energieActivation(x)) + '</span></button>').join("");
+  }
+  e.innerHTML = '<div class="act-shell"><div class="act-head"><h2>Activations</h2>' +
+    '<p>Une exécution réelle par ligne · les gros journaux ne sont lus qu’au clic.</p>' +
+    '<div class="act-actions"><button id="act-copier" type="button" disabled ' +
+    'title="Sélectionnez une activation" aria-label="Copier le contenu de l’activation sélectionnée">CC</button>' +
+    '<button id="act-relire">Relire</button></div></div><div class="act-corps"><aside class="act-mj" id="act-mj">' +
+    '<div class="act-vide">Lecture du fil du MJ actif…</div></aside><div class="act-liste">' +
+    previsions + liste + '</div><div class="act-detail" id="act-detail"><div class="act-vide">' +
+    (A.activations.length ? 'Cliquez une activation pour lire l’appel entier.' : 'La boucle n’a encore rien activé.') +
+    '</div></div></div></div>';
+  document.getElementById("act-relire").onclick = () => chargerActivations(true);
+  document.getElementById("act-copier").onclick = copierActivationSelectionnee;
+  e.querySelectorAll("[data-activation-index]").forEach((b) => {
+    b.onclick = () => ouvrirActivation(A.activations[Number(b.dataset.activationIndex)]);
+  });
+}
+
+function actualiserBoutonCopieActivation() {
+  const bouton = document.getElementById("act-copier");
+  const detail = document.getElementById("act-detail");
+  if (!bouton) return;
+  const pret = Boolean(A.selection && detail && detail.dataset.activationId === A.selection);
+  bouton.disabled = !pret;
+  bouton.title = pret ? "Copier le contenu de l’activation sélectionnée" :
+    "Sélectionnez une activation";
+}
+
+async function copierActivationSelectionnee() {
+  const bouton = document.getElementById("act-copier");
+  const detail = document.getElementById("act-detail");
+  const activation = A.activations.find((x) => x.id === A.selection);
+  if (!bouton || !detail || !activation || detail.dataset.activationId !== activation.id) return;
+  const libelle = bouton.textContent;
+  bouton.classList.remove("copie", "erreur");
+  try {
+    const texte = texteCopiable(detail);
+    if (!texte) throw new Error("Le détail de l’activation est vide.");
+    await ecrirePressePapiers(texte);
+    bouton.textContent = "Copié ✓";
+    bouton.classList.add("copie");
+  } catch (erreur) {
+    console.error("Copie de l’activation impossible", erreur);
+    bouton.textContent = "Erreur";
+    bouton.classList.add("erreur");
+  } finally {
+    setTimeout(() => {
+      bouton.textContent = libelle;
+      bouton.classList.remove("copie", "erreur");
+    }, 1800);
+  }
+}
+
+async function chargerActivations(forcer) {
+  if (A.chargee && !forcer) return;
+  const e = document.getElementById("activations");
+  e.innerHTML = '<div class="act-vide">Lecture du journal d’activation…</div>';
+  try {
+    const r = await fetch("/admin/activations", { cache: "no-store" });
+    const d = await r.json();
+    if (!r.ok || d.erreur) throw new Error(d.erreur || ("HTTP " + r.status));
+    A.activations = d.activations || [];
+    A.previsions = ((d.previsions || {}).previsions) || [];
+    A.hypothese = ((d.previsions || {}).hypothese) || "";
+    A.attente = ((d.previsions || {}).attente) || {};
+    A.actualiseLe = Date.now();
+    A.chargee = true;
+    const selection = A.selection && A.activations.find((x) => x.id === A.selection);
+    rendreListeActivations();
+    actualiserFilMjActif(true);
+    if (selection) ouvrirActivation(selection);
+  } catch (erreur) {
+    e.innerHTML = '<div class="act-erreur">Activations illisibles : ' + esc(erreur.message) + '</div>';
+  }
+}
+
+let actualisationPrevisionsEnCours = false;
+async function actualiserPrevisionsActivations() {
+  const panneau = document.getElementById("activations");
+  if (actualisationPrevisionsEnCours || document.hidden || !A.chargee ||
+      !panneau.classList.contains("actif")) return;
+  actualisationPrevisionsEnCours = true;
+  try {
+    const r = await fetch("/admin/activations/previsions", { cache: "no-store" });
+    const d = await r.json();
+    if (!r.ok || d.erreur || (d.previsions || {}).erreur) {
+      throw new Error(d.erreur || (d.previsions || {}).erreur || ("HTTP " + r.status));
+    }
+    A.previsions = ((d.previsions || {}).previsions) || [];
+    A.hypothese = ((d.previsions || {}).hypothese) || "";
+    A.attente = ((d.previsions || {}).attente) || {};
+    A.actualiseLe = Date.now();
+    const bloc = document.getElementById("act-previsions");
+    if (bloc) bloc.outerHTML = htmlPrevisionsActivations();
+  } catch (_erreur) {
+    // La dernière prévision valide reste visible si un calcul ponctuel échoue.
+  } finally {
+    actualisationPrevisionsEnCours = false;
+  }
+}
+
+async function ouvrirActivation(x) {
+  if (!x) return;
+  A.selection = x.id;
+  document.querySelectorAll(".act-ligne").forEach((b) => b.classList.toggle("actif",
+    A.activations[Number(b.dataset.activationIndex)].id === x.id));
+  const e = document.getElementById("act-detail");
+  delete e.dataset.activationId;
+  e.innerHTML = '<div class="act-vide">Ouverture du prompt et du thread…</div>';
+  actualiserBoutonCopieActivation();
+  try {
+    let d = A.details.get(x.id);
+    if (!d) {
+      const r = await fetch("/admin/activations/" + encodeURIComponent(x.session), { cache: "no-store" });
+      d = await r.json();
+      if (!r.ok || d.erreur) throw new Error(d.erreur || ("HTTP " + r.status));
+      A.details.set(x.id, d);
+    }
+    if (A.selection !== x.id) return;
+    rendreDetailActivation(x, d);
+  } catch (erreur) {
+    e.innerHTML = '<div class="act-erreur">Détail illisible : ' + esc(erreur.message) + '</div>';
+    actualiserBoutonCopieActivation();
+  }
+}
+
+function rendreDetailActivation(x, d) {
+  const e = document.getElementById("act-detail");
+  const activation = (d.rapport || {}).activation || {};
+  const activites = activation.activites || [];
+  const meta = (d.rapport || {})._activation || {};
+  const usage = ((d.execution || {}).usage) || meta.usage || {};
+  const energie = x.energie_avant == null || x.energie_apres == null
+    ? energieActivation(x)
+    : "⚡ " + x.energie_avant + " → " + x.energie_apres +
+      " (−" + x.depense + ", +" + x.restitue + ")";
+  const cout = x.cout_usd == null ? "coût inconnu" : "$" + Number(x.cout_usd).toFixed(4);
+  let actes = activites.map((a, i) => {
+    const temps = a.temps || {};
+    const touchees = (a.sources_touchees || []).map((s) =>
+      typeof s === 'string' ? s : (s.ref || '?') + (s.mode ? ' [' + s.mode + ']' : '')
+    );
+    const mobilisees = (a.sources_mobilisees || []).map((s) =>
+      typeof s === 'string' ? s : (s.ref || '?') + (s.mode ? ' [' + s.mode + ']' : '')
+    );
+    const chemin = (a.chemin_execution || []).map((s) =>
+      esc((s.de || '?') + ' —' + (s.relation || '?') + ' / ' +
+        (s.duree_s == null ? '?' : s.duree_s) + ' s→ ' + (s.vers || '?'))
+    ).join('<br>');
+    const resultats = (a.resultats_produits || []).map((r) =>
+      '<p><span class="froid">' + esc((r.type || 'résultat') + ' · ' + (r.id || '?')) +
+      '</span><br>' + esc(typeof r.apres === 'string' ? r.apres :
+        JSON.stringify(r.apres == null ? null : r.apres)) +
+      ((r.source_refs || []).length ? '<br><span class="froid">depuis · ' +
+        esc(r.source_refs.join(', ')) + '</span>' : '') + '</p>'
+    ).join('');
+    return '<div class="act-activite"><header><span>' +
+      esc((a.ordre || i + 1) + '. ' + (a.quoi || 'activité')) + '</span><b>⚡ ' +
+      esc(a.cout_energie == null ? '?' : a.cout_energie) + '</b></header>' +
+      (temps.debut_s == null ? '' : '<p><span class="froid">temps · </span>+' +
+        esc(temps.debut_s) + ' → +' + esc(temps.fin_s) + ' · ' +
+        esc(temps.duree_s) + ' s</p>') +
+      (chemin ? '<p><span class="froid">chemin · </span><br>' + chemin + '</p>' : '') +
+      (touchees.length ? '<p><span class="froid">sources touchées · </span>' +
+        esc(touchees.join(', ')) + '</p>' :
+        (a.source && !mobilisees.length ? '<p><span class="froid">sources · </span>' +
+          esc(a.source) + '</p>' : '')) +
+      (mobilisees.length ? '<p><span class="froid">sources mobilisées · </span>' +
+        esc(mobilisees.join(', ')) + '</p>' : '') +
+      (resultats || '<p>' + esc(a.resultat || '') + '</p>') +
+      (a.blocage ? '<p><span class="grave">blocage · </span>' +
+        esc(typeof a.blocage === 'string' ? a.blocage : JSON.stringify(a.blocage)) + '</p>' : '') +
+      '</div>';
+  }).join("");
+  if (!actes) actes = '<div class="act-erreur">Aucune activité produite.</div>';
+  const pnj = d.pnj || null;
+  const legacy = d.architecture === 'legacy_direct' || !pnj;
+  const blocPnj = pnj ?
+    '<div class="act-pipeline-titre acteur">Acteur · ' + esc(x.nom) +
+      ' — ce fil ne reçoit pas le système du narrateur</div>' +
+    '<details class="act-bloc"><summary>4 · System acteur · ' +
+      esc(meta.system_prompt_pnj_source || 'source non conservée') + '</summary><pre>' +
+      esc(pnj.system_prompt || 'Non conservé.') + '</pre></details>' +
+    '<details class="act-bloc"><summary>5 · Appel adressé à l’acteur</summary><pre>' +
+      esc(pnj.message || 'Non conservé.') + '</pre></details>' +
+    '<details class="act-bloc" open><summary>6 · Fil propre de l’acteur · ' +
+      (pnj.thread || []).length + ' entrées</summary>' +
+      rendreEvenements(pnj.thread || [], false) + '</details>' +
+    '<details class="act-bloc" open><summary>7 · Tentative rendue par l’acteur</summary>' +
+      reponseEnMarkdown(JSON.stringify(pnj.tentative || {}, null, 2)) + '</details>' : '';
+  const blocReprise = pnj ?
+    '<div class="act-pipeline-titre">Narrateur local · reprise après la tentative</div>' +
+    '<details class="act-bloc"><summary>8 · Contrat d’arbitrage transmis au narrateur</summary><pre>' +
+      esc(meta.message_resolution || 'Non conservé.') + '</pre></details>' : '';
+  const numeroReponse = pnj ? 9 : 4;
+  const avertissementLegacy = legacy ? '<div class="act-erreur">Historique legacy : cet appel direct au PNJ précède le narrateur local. Il est conservé pour audit, pas présenté comme le pipeline actuel.</div>' : '';
+  const etiquetteSysteme = legacy ? '1 · System PNJ legacy' : '1 · System narrateur local';
+  const etiquettePrompt = legacy ? '2 · Prompt direct legacy' : '2 · Prompt narrateur · réveil local';
+  const etiquetteThread = legacy ? '3 · Thread PNJ legacy complet' : '3 · Thread narrateur complet';
+  const etiquetteReponse = legacy ? '4 · Réponse PNJ legacy' : numeroReponse + ' · Réponse finale du narrateur';
+  e.innerHTML = '<div class="act-titre"><div><h3>' + esc(x.nom) + '</h3><div>' +
+    esc(x.tache || x.tache_id) + '</div></div><div class="act-id">' + esc(x.session) +
+    '</div></div><div class="act-badges"><span class="act-badge"><b>' +
+    esc(heureActivation(x.termine_le)) + '</b></span><span class="act-badge"><b>' +
+    esc(dureeMonde(x.duree_monde_secondes)) + '</b></span>' +
+    '<span class="act-badge"><b>calcul ' + esc(dureeActivation(x.duree_ms)) +
+    '</b></span><span class="act-badge energie"><b>' +
+    esc(energie) + '</b></span><span class="act-badge">issue · <b>' + esc(x.issue) +
+    '</b></span><span class="act-badge">modèle · <b>' + esc(x.modele) + '</b></span>' +
+    '<span class="act-badge">effort · <b>' + esc(x.effort) + '</b></span>' +
+    '<span class="act-badge">' + esc(cout) + '</span><span class="act-badge">tokens · <b>' +
+    esc((usage.input_tokens == null ? '?' : usage.input_tokens) + ' → ' +
+      (usage.output_tokens == null ? '?' : usage.output_tokens)) + '</b></span></div>' +
+    avertissementLegacy +
+    (legacy ? '' : '<div class="act-pipeline-titre">Narrateur local · fil d’arbitrage</div>') +
+    '<details class="act-bloc"><summary>' + etiquetteSysteme + ' · ' +
+    esc(meta.system_prompt_source || 'source non conservée') + '</summary><pre>' +
+    esc(d.system_prompt || 'Non conservée.') + '</pre></details>' +
+    '<details class="act-bloc"><summary>' + etiquettePrompt + '</summary><pre>' +
+    esc(d.message || 'Non conservé pour cette activation.') + '</pre></details>' +
+    '<details class="act-bloc" open><summary>' + etiquetteThread + ' · ' + (d.thread || []).length +
+    ' entrées</summary>' + rendreEvenements(d.thread || [], false) + '</details>' +
+    blocPnj +
+    blocReprise +
+    '<details class="act-bloc" open><summary>' + etiquetteReponse + '</summary>' +
+    reponseEnMarkdown(d.reponse || 'Non conservée pour cette activation.') + '</details>' +
+    '<details class="act-bloc"><summary>Journal temps réel · ' + (d.journal || []).length +
+    ' événements</summary>' + rendreEvenements(d.journal || [], true) + '</details>' +
+    '<details class="act-bloc"><summary>Rapport JSON déposé</summary><pre>' +
+    esc(JSON.stringify(d.rapport || {}, null, 2)) + '</pre></details>' +
+    '<details class="act-bloc" open><summary>Activités produites · ' + activites.length +
+    '</summary>' + actes + (activation.suite ? '<div class="act-activite"><header><span>Suite</span></header><p>' +
+    esc(activation.suite) + '</p></div>' : '') + '</details>';
+  e.dataset.activationId = x.id;
+  actualiserBoutonCopieActivation();
 }
 
 function rendreMaison(d) {
@@ -292,24 +2448,57 @@ function rendreMaison(d) {
   e.innerHTML = h;
 }
 
+// LE QUARTIER ET LES CREUX, à la place des convocations et de l'excitation.
+// On n'affiche plus un compteur qui disait qui a ENVIE de parler, mais la
+// journée elle-même : jusqu'où le joueur peut atteindre quelqu'un, et combien
+// de temps la routine laisse à chacun. Un homme sans creux ne pensera pas
+// aujourd'hui, si fort soit-il — c'est le coût d'un mandat, et il se voit ici.
 function rendreTravail(d) {
   const t = d.tissu || {}, e = document.getElementById('travail');
-  let h = '<h2>Qui doit une journée <span class="compte">' +
-          (t.convocations || []).length + '</span></h2>';
-  (t.convocations || []).forEach(function (c) {
-    h += '<div class="alertes"><div><b>' + esc(c.qui) + '</b></div>';
-    (c.motifs || []).forEach(function (m) { h += '<div class="tiede">' + esc(m) + '</div>'; });
-    h += '</div>';
+  const q = t.quartier || {}, creux = t.creux || [];
+  let h = '';
+
+  if (q.erreur) {
+    h += '<h2>Quartier</h2><div class="alertes"><div><b>Incalculable</b> — ' +
+         esc(q.erreur) + '</div></div>';
+    e.innerHTML = h; return;
+  }
+
+  h += '<h2>Le quartier <span class="compte">' + (q.dedans || 0) +
+       ' à portée</span></h2>';
+  h += '<div class="alertes"><div class="tiede">Même composante connexe, ' +
+       (q.rayon_minutes || '?') + ' minutes de marche au plus. ' +
+       'Hors quartier : on ne bouge pas, on ne pense pas — mais les échéances ' +
+       'tombent quand même.</div>';
+  (q.ancres || []).forEach(function (a) {
+    h += '<div><b>' + esc(a.qui) + '</b> — ' + esc(a.salle || '?') +
+         (a.minute != null ? ', ' + Math.floor(a.minute / 60) + 'h' +
+          String(a.minute % 60).padStart(2, '0') : '') + '</div>';
   });
-  h += '<h2>Qui a quelque chose à dire <span class="compte">' +
-       (t.travaux || []).filter(function (x) { return x.verdict === 'parle'; }).length +
-       ' / ' + (t.travaux || []).length + '</span></h2>' +
-       '<table><tr><th>exc.</th><th>verdict</th><th>qui</th><th>affaire</th><th>pensées</th></tr>';
-  (t.travaux || []).forEach(function (x) {
-    h += '<tr><td>' + x.excitation + '</td><td>' + esc(x.verdict) + '</td><td>' +
-         esc(x.qui) + '</td><td>' + esc(x.affaire || '') +
-         (x.en_retard ? ' <b>EN RETARD</b>' : (x.due ? ' <b>DÛ</b>' : '')) +
-         '</td><td>' + x.pensees + '</td></tr>';
+  h += '</div>';
+
+  if ((q.dehors || []).length) {
+    h += '<h2>Dehors <span class="compte">' + q.dehors.length + '</span></h2>' +
+         '<table><tr><th>motif</th><th>qui</th></tr>';
+    q.dehors.forEach(function (x) {
+      h += '<tr><td>' + esc(x.motif) + '</td><td>' + esc(x.nom || x.qui) +
+           '</td></tr>';
+    });
+    h += '</table>';
+  }
+
+  h += '<h2>Qui a du temps aujourd\'hui <span class="compte">' + creux.length +
+       '</span></h2>' +
+       '<table><tr><th>minutes</th><th>qui</th><th>à</th><th>ses creux</th></tr>';
+  creux.forEach(function (x) {
+    const plages = (x.creux || []).map(function (c) {
+      return Math.floor(c.de / 60) + 'h' + String(c.de % 60).padStart(2, '0') +
+             '–' + Math.floor(c.a / 60) + 'h' + String(c.a % 60).padStart(2, '0') +
+             ' ' + c.salle;
+    }).join(' · ');
+    h += '<tr><td class="num">' + x.creux_total + '</td><td>' +
+         esc(x.nom || x.qui) + '</td><td>' + esc(x.salle || '') +
+         '</td><td class="tiede">' + esc(plages) + '</td></tr>';
   });
   h += '</table>';
   e.innerHTML = h;
@@ -350,15 +2539,39 @@ async function charger() {
     + (d.tension === null ? "" : " · tension " + d.tension)
     + (d.phase ? " · " + d.phase : "");
   rendreTetes(d); rendreCalendrier(d); rendreActivites(d);
-  rendreTissu(d);
+  rendreTissu(d); rendreGraphe(d);
   rendreMaison(d); rendreTravail(d); rendreEnFace(d);
+  if (A.chargee) chargerActivations(true);
   const hs = Object.keys(d.horloges || {})
     .map((k) => k + " " + d.horloges[k].jour + "." + String(Math.floor(d.horloges[k].minute / 60)).padStart(2, "0")
       + "h" + String(d.horloges[k].minute % 60).padStart(2, "0")).join("  ·  ");
   $("#pied").textContent = "Horloges des sièges : " + hs + "   —   relu à "
     + new Date().toLocaleTimeString("fr-FR");
 }
-charger();
+let lectureHorlogesEnCours=false;
+async function relireHorloges() {
+  if(lectureHorlogesEnCours||!G.data)return;
+  lectureHorlogesEnCours=true;
+  try {
+    const r=await fetch("/admin/horloges",{cache:"no-store"});
+    const d=await r.json();synchroniserHorloges(d.horloges||{});
+    if(G.lentille==="importance"&&G.suivreTempsReel){G.animeImportance=true;reveillerGraphe(.08);}
+  } catch(_e) {} finally {lectureHorlogesEnCours=false;}
+}
+charger().then(()=>{
+  const test=new URLSearchParams(location.search).get("test")||"";
+  if(test.startsWith("flux-causal"))document.querySelector('nav button[data-onglet="graphe"]').click();
+});
+setInterval(relireHorloges,1000);
+setInterval(actualiserPrevisionsActivations,5000);
+setInterval(actualiserFilMjActif,2000);
+document.addEventListener("visibilitychange",()=>{
+  if(!document.hidden){actualiserPrevisionsActivations();actualiserFilMjActif();}
+});
+setInterval(()=>{
+  if(document.getElementById("graphe").classList.contains("actif"))
+    chargerActionsActivationGraphe();
+},10000);
 </script>
 </body>
 </html>

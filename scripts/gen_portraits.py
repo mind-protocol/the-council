@@ -10,8 +10,24 @@ import requests
 
 RACINE = Path(__file__).resolve().parent.parent
 SORTIE = RACINE / "portraits"
-SUFFIXE = ", head and shoulders medallion portrait, centered composition, plain dark background, square format"
 ENDPOINT = "https://api.ideogram.ai/v1/ideogram-v3/generate"
+STYLE = "GENERAL"
+
+# Le bloc de style : chaud, clair-obscur, plein cadre. Ne PAS y remettre « on aged
+# canvas » — avec, le modele peint une toile encadree posee sur un mur, marge grise
+# comprise, et le medaillon se retrouve borde de noir.
+STYLE_BLOCK = (
+    "Painted character portrait in oils, dark fantasy medieval court, bust framing "
+    "showing head and shoulders, three-quarter view, lit by warm candlelight from one "
+    "side, dramatic chiaroscuro, muted regal color palette, visible fine brushwork, "
+    "dignified and somber mood. "
+)
+SUFFIXE = (
+    ", head and shoulders medallion portrait, centered composition, dark background,"
+    " face weathered and true to the stated age, full bleed, subject fills the frame"
+    " edge to edge, no canvas border, no picture frame, no text, no watermark,"
+    " square format"
+)
 
 
 def cle_api():
@@ -22,7 +38,7 @@ def cle_api():
 
 
 def generer(cle, perso):
-    prompt = perso["portrait"]["prompt_ideogram"] + SUFFIXE
+    prompt = STYLE_BLOCK + perso["portrait"]["prompt_ideogram"] + SUFFIXE
     reponse = requests.post(
         ENDPOINT,
         headers={"Api-Key": cle},
@@ -30,6 +46,7 @@ def generer(cle, perso):
             "prompt": (None, prompt),
             "aspect_ratio": (None, "1x1"),
             "rendering_speed": (None, "TURBO"),
+            "style_type": (None, STYLE),
             "num_images": (None, "1"),
         },
         timeout=120,

@@ -7,6 +7,8 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
+const os = require("os");
+const childProcess = require("child_process");
 const voix = require("./voix");
 
 const RACINE = path.join(__dirname, "..");
@@ -14,10 +16,20 @@ const RACINE = path.join(__dirname, "..");
 // partie tourne) passe un port en argument ou par PORT, pour ne pas se
 // disputer le port de la partie en cours.
 const PORT = Number(process.argv[2]) || Number(process.env.PORT) || 3129;
-// Longueur d'une fenêtre de fil servie au navigateur : 500 items. Le reste du
-// passé se réclame page par page (`/scene?avant=N`) quand le joueur remonte la
+// Longueur d'une fenêtre de fil servie au navigateur. Le reste du passé se
+// réclame page par page (`/scene?avant=N`) quand le joueur remonte la
 // chronique. Le fichier, lui, garde tout — c'est la mémoire de la partie.
-const MAX_FIL = 500;
+//
+// 500 était trop : rien n'est perdu, mais tout est MONTÉ. Cinq cents entrées
+// font autant de nœuds vivants dans la chronique, avec leurs vieillissements
+// et leurs survols, et le défilement se paie à chaque image.
+//
+// 80 est calé sur la SCÈNE et non sur la session : un conseil fait une
+// quarantaine de répliques, donc la fenêtre porte celle qu'on joue et celle
+// d'avant. Ce qui précède est du passé qu'on relit, et il redescend tout seul
+// quand on remonte (`/scene?avant=N`). Descendre plus bas ferait paginer à
+// l'intérieur d'une même scène — c'est là qu'est la limite, pas dans le coût.
+const MAX_FIL = 80;
 
 // La silhouette anonyme, servie à qui n'a pas encore de portrait dessiné :
 // personne n'apparaît sans son rond. Le gabarit est lu une fois ; sa teinte
@@ -29,6 +41,42 @@ function teinteDuNom(nom) {
   let h = 0;
   for (const c of String(nom || "")) h = (h * 31 + c.codePointAt(0)) % 360;
   return h;
+}
+// LE PORTRAIT INLINÉ DANS LE FLUX EST DATÉ DU JOUR DE LA POUSSÉE, et il ne
+// vieillit pas bien : `append_flux.py` recopie le SVG dans l'item au moment où
+// on l'écrit, si bien qu'un homme poussé avant qu'on lui peigne un visage garde
+// sa silhouette « Portrait inconnu » pour toujours — dans tout l'historique, et
+// jusque dans la galerie des présents de la scène en cours.
+//
+// On ne réécrit pas `flux.jsonl` pour autant : il est append-only, et une
+// réécriture casserait les curseurs des navigateurs ouverts. On rafraîchit à la
+// SERVITURE — le fichier sur disque fait foi au moment où l'on sert. Peindre un
+// portrait suffit donc à le faire apparaître partout, y compris dans le passé.
+//
+// Le cache se contrôle sur la date du fichier : `medaillons.py` peut refaire un
+// visage pendant que le serveur tourne, il part au premier `/scene` suivant.
+const _portraitsFrais = new Map();
+function portraitFrais(id) {
+  if (!id || /[^a-zA-Z0-9_-]/.test(id)) return null;
+  const p = path.join(RACINE, "ecrans", "portraits", id + ".svg");
+  let m;
+  try { m = fs.statSync(p).mtimeMs; } catch (e) { return null; }
+  const tenu = _portraitsFrais.get(id);
+  if (tenu && tenu.m === m) return tenu.svg;
+  try {
+    const svg = fs.readFileSync(p, "utf-8");
+    _portraitsFrais.set(id, { m, svg });
+    return svg;
+  } catch (e) { return null; }
+}
+function rafraichirPortraits(it) {
+  ["presents", "entrent"].forEach((k) => {
+    (it[k] || []).forEach((p) => {
+      if (!p || typeof p !== "object") return;
+      const svg = portraitFrais(p.id);
+      if (svg) p.portrait_svg = svg;
+    });
+  });
 }
 function portraitDefaut(nom) {
   if (_defautSvg === null) {
@@ -174,6 +222,33 @@ function dateDe(siege) {
   return monde;
 }
 
+// OÙ EST TOUT LE MONDE, à cette minute-là — le calcul, pas le cache.
+// `scripts/presence.py --json` fait le travail : routines, topologie, marche en
+// cours. On ne le refait pas à chaque sonde (le navigateur en tire une toutes
+// les quinze secondes, et par siège) : la réponse vaut tant que ni l'heure
+// demandée ni les trois fichiers d'entrée n'ont bougé. Un échec rend null, et
+// l'appelant retombe sur l'instantané figé — le jeu ne s'arrête pas pour ça.
+let cachePresence = null;
+function resoudrePresence(date) {
+  if (!date) return null;
+  let cle = [date.annee, date.lune, date.jour, date.minute].join(".");
+  for (const f of ["presence.json", "routines.json", "chemins.json"]) {
+    try { const s = fs.statSync(path.join(RACINE, "etat", f)); cle += "|" + s.mtimeMs; }
+    catch (e) { cle += "|?"; }
+  }
+  if (cachePresence && cachePresence.cle === cle) return cachePresence.gens;
+  let gens = null;
+  try {
+    gens = JSON.parse(childProcess.execFileSync("python",
+      [path.join(RACINE, "scripts", "presence.py"), "--json", "--quand", cle.split("|")[0]],
+      { cwd: RACINE, encoding: "utf-8", timeout: 20000,
+        windowsHide: true, maxBuffer: 8 * 1024 * 1024,
+        env: Object.assign({}, process.env, { PYTHONIOENCODING: "utf-8" }) })).gens || null;
+  } catch (e) { gens = null; }
+  cachePresence = { cle, gens };
+  return gens;
+}
+
 // L'ÉCART DE FRONT — de combien ce joueur devance ou traîne sur l'autre.
 // À deux, les horloges divergent : l'un tient un conseil de trois heures
 // pendant que l'autre traverse la cour. Tant que l'écart reste petit, personne
@@ -267,6 +342,24 @@ function audienceCourante(siegeId, depuis) {
 
 // Qui frappe à la porte ? Le jeton d'abord (une URL qu'on partage), le cookie
 // ensuite (les visites suivantes). Un jeton inconnu n'est personne.
+// Sur QUI se centre ce qu'on rend — la carte, la ville, le terrain. C'est celui
+// qui regarde, et non le personnage-joueur du journal : une carte centrée sur
+// Peyredragon quand on est ailleurs ment sur l'endroit d'où l'on parle.
+//
+// Sauf pour un siège de RÉGIE, qui n'a pas de fiche et n'est donc nulle part :
+// il regarde par-dessus l'épaule du siège principal. Sans cela sa carte n'a ni
+// centre ni plan de château — et c'est le plan qu'il vient chercher, puisque
+// c'est là qu'il touche un visage pour en ouvrir le fil.
+function regardeur(siege, journal) {
+  if (siege && siege.regie) {
+    const principal = (roster() || []).find((s) => s.role === "principal");
+    return (principal && principal.personnage_id) ||
+      (journal && journal.personnage_joueur_id) || null;
+  }
+  return (siege && siege.personnage_id) ||
+    (journal && journal.personnage_joueur_id) || null;
+}
+
 function qui(req, url) {
   const l = roster();
   if (!l) return null;
@@ -274,6 +367,88 @@ function qui(req, url) {
   const c = (req.headers.cookie || "").match(/(?:^|;\s*)jeton=([^;]*)/);
   const jeton = decodeURIComponent((q && q[1]) || (c && c[1]) || "");
   return l.find((j) => j.jeton === jeton) || null;
+}
+
+// QUI VOIT QUEL VOLUME — le tri de l'étagère, en un seul endroit.
+// Les boîtes d'abord (un volume rangé prend la place de son coffret), puis les
+// trois règles : les `lecteurs` nommés retirent, un porteur garde son privé,
+// et le reste se lit dans le château où l'on est.
+//
+// PARTAGÉ AVEC L'ÉCHIQUIER, et c'est la raison d'être de cette fonction : le
+// damier lisait `books.json` en entier, sans tri. Un homme de Port-Réal qui
+// tient ses propres affaires y voyait donc les quarante-deux plateaux du
+// conseil de Peyredragon, et pas un des siens. Un plan qu'on ne peut pas
+// ouvrir dans les livres n'a rien à faire sur le damier ; deux tris qui
+// divergent finissent par montrer à l'un le plan de l'autre.
+function volumesVisibles(tous, moi) {
+  // Où est chacun : c'est la fiche qui le dit, jamais le livre.
+  const ou = {};
+  try {
+    JSON.parse(fs.readFileSync(path.join(RACINE, "etat", "personnages.json"), "utf-8"))
+      .forEach((p) => { ou[p.id] = p.lieu_id || null; });
+  } catch (e) {}
+  const ici = moi ? (ou[moi] || null) : null;
+  // Les BOÎTES (etat/boites.json) : un coffret posé sur une table ou porté
+  // sous le bras, où l'on range des volumes. Une boîte donne sa PLACE à ce
+  // qu'elle contient — un volume rangé n'a plus de salle, plus de porteur,
+  // plus de `prive` à lui : il prend ceux du coffret, et l'on déplace vingt
+  // registres en déplaçant une boîte. On résout ici, AVANT le tri : sans quoi
+  // un volume rangé n'aurait plus de place du tout, et le brouillard le
+  // laisserait passer partout.
+  let boites = [];
+  try {
+    const bb = JSON.parse(fs.readFileSync(
+      path.join(RACINE, "etat", "boites.json"), "utf-8"));
+    if (Array.isArray(bb)) boites = bb;
+  } catch (e) {}
+  const coffret = new Map(boites.map((c) => [c.id, c]));
+  tous.forEach((b) => {
+    const c = b.boite && coffret.get(b.boite);
+    if (!c) return;
+    b.lieu_id = c.lieu_id || null;
+    b.salle_id = c.salle_id || null;
+    b.acteur_id = c.acteur_id || null;
+    b.prive = !!c.prive;
+    // `lecteurs` ne se remplace pas, il s'ajoute : un coffret peut fermer plus
+    // que le volume, jamais moins.
+    if (Array.isArray(c.lecteurs) && c.lecteurs.length) {
+      b.lecteurs = (Array.isArray(b.lecteurs) && b.lecteurs.length)
+        ? b.lecteurs.filter((q) => c.lecteurs.indexOf(q) !== -1)
+        : c.lecteurs.slice();
+    }
+  });
+  // Le château d'un volume : celui où il est posé, ou celui où se trouve
+  // l'homme qui le porte — sa fiche d'abord, le `lieu_id` du livre à défaut
+  // (un porteur sans fiche reste où on l'a écrit).
+  const chateau = (b) => (b.acteur_id && ou[b.acteur_id] !== undefined)
+    ? ou[b.acteur_id] : (b.lieu_id || null);
+  const liste = tous.filter((b) => {
+    // `lecteurs` ne donne rien, il retire : le volume garde ses règles de
+    // lieu, mais qui n'y est pas nommé ne l'ouvre pas.
+    if (Array.isArray(b.lecteurs) && b.lecteurs.length
+        && b.lecteurs.indexOf(moi) === -1) return false;
+    if (b.acteur_id && b.acteur_id === moi) return true;
+    if (b.prive && b.acteur_id) return false;
+    const ch = chateau(b);
+    return !ch || !ici || ch === ici;
+  });
+  return { liste, boites };
+}
+
+// Le personnage derrière une requête : le siège si l'on en tient un, le
+// personnage joueur du journal à défaut. Rendu `null` quand un roster existe
+// et qu'aucun jeton ne va avec — on ne sert alors rien plutôt que tout.
+function monPersonnage(req, url) {
+  const siege = qui(req, url);
+  let moi = (siege && siege.personnage_id) || null;
+  if (!moi && roster()) return null;
+  if (!moi) {
+    try {
+      moi = JSON.parse(fs.readFileSync(path.join(RACINE, "etat", "journal.json"), "utf-8"))
+        .personnage_joueur_id || null;
+    } catch (e) {}
+  }
+  return moi;
 }
 
 function fichierStatique(res, relatif, type) {
@@ -687,6 +862,720 @@ function dateCourte(d) {
   if (d.annee == null) return "";
   return d.annee + "." + d.lune + "." + d.jour;
 }
+
+// ---- journal des activations --------------------------------------------
+// La liste reste legere. Prompt, message, rapport et thread complet ne sont
+// lus que lorsqu'un MJ ouvre une activation : le graphe n'en paie jamais le
+// poids au chargement ni pendant son animation.
+const DEPOT_ACTIVATIONS = path.join(RACINE, "etat", "activations");
+
+// ---- LE PLAN ET LES TÊTES : est-ce que l'homme le porte VRAIMENT ? ----------
+//
+// Une action déclarée « en cours » dans un cahier est la PAROLE de l'homme :
+// écrite de sa main, dans un registre que le joueur peut ouvrir, et c'est
+// exactement ce qu'il dirait au conseil. C'est le vert déclaratif du plateau.
+// Le vert VRAI serait autre chose : que l'action figure dans les ÉTAPES de sa
+// tête (`etat/intentions.json`), avec une horloge — c'est-à-dire qu'elle est
+// dans la boucle des acteurs et qu'elle avancera toute seule.
+//
+// AUJOURD'HUI, LA RÉPONSE EST ZÉRO PARTOUT. 584 actions au plan, 200 étapes
+// dans les têtes, et pas une seule étape ne cite un numéro d'action : le plan
+// du conseil et la boucle des acteurs sont deux mondes qui s'ignorent. Ce n'est
+// pas une panne du détecteur, c'est le fait — et c'est pour le VOIR qu'on
+// l'expose.
+//
+// UNE RÉSERVE DE DOCTRINE, ET LE DRAPEAU QUI LA LÈVE. `intentions.json` est la
+// tête des PNJ : elle n'est JAMAIS montrée au joueur, c'est la règle cardinale
+// du manuel. Ce que la route en tire ici — un booléen « ce numéro est-il cité
+// dans ses étapes » — ne dit rien de ce qu'il pense ni de ce qu'il ignore, mais
+// c'en est tout de même une lecture. Le joueur a tranché qu'on le fasse ;
+// METTRE CETTE CONSTANTE À `false` l'éteint entièrement, sans autre chirurgie :
+// la route cesse d'ouvrir le fichier et le champ `dans_la_tete` disparaît.
+const LIRE_LES_TETES = true;
+
+const _tetes = { cle: null, par: null, etapes: 0 };
+// Les numéros cités dans les étapes de chaque tête, par personnage. On relit au
+// changement de mtime seulement : le fichier fait 300 Ko et la route est
+// appelée à chaque bascule de plateau.
+function numerosDesTetes() {
+  if (!LIRE_LES_TETES) return { par: {}, etapes: 0 };
+  const f = path.join(RACINE, "etat", "intentions.json");
+  let cle;
+  try { cle = String(fs.statSync(f).mtimeMs); } catch (e) { return { par: {}, etapes: 0 }; }
+  if (_tetes.cle === cle) return { par: _tetes.par, etapes: _tetes.etapes };
+  const par = {};
+  let etapes = 0;
+  try {
+    const brut = JSON.parse(fs.readFileSync(f, "utf-8"));
+    (Array.isArray(brut) ? brut : []).forEach((a) => {
+      if (!a || !a.personnage_id) return;
+      const vus = par[a.personnage_id] || (par[a.personnage_id] = {});
+      // Une étape vit dans `plan` (une liste) ou dans `etapes` selon les fiches.
+      // On ne suppose aucun champ : on cherche le numéro N'IMPORTE OÙ dans
+      // l'étape — `quoi`, `id`, un coût, un `si_bloque`. Un homme qui écrit
+      // « 21030 » quelque part dans son étape la relie à l'action, et c'est le
+      // seul geste qu'on lui demande.
+      ["plan", "etapes"].forEach((k) => {
+        if (!Array.isArray(a[k])) return;
+        a[k].forEach((e) => {
+          etapes++;
+          (JSON.stringify(e).match(/(?:^|[^\d])(\d{4,6})(?![\d])/g) || [])
+            .forEach((m) => { vus[m.replace(/\D/g, "")] = 1; });
+        });
+      });
+    });
+  } catch (e) { return { par: {}, etapes: 0 }; }
+  _tetes.cle = cle; _tetes.par = par; _tetes.etapes = etapes;
+  return { par: par, etapes: etapes };
+}
+
+// OÙ SE TIENT QUELQU'UN PAR RAPPORT AU JOUEUR — « quartier » ou « au loin ».
+//
+// Remplace le champ `echelle` d'intentions.json, supprimé. Le serveur NE
+// CALCULE RIEN : il relit ce que `evaluer.py --json` a déposé, comme pour le
+// reste du tissu. Dépôt absent ou périmé : on rend « quartier » pour tout le
+// monde plutôt que de déclarer le château désert — mieux vaut afficher trop
+// que faire croire que personne n'est là.
+function ouQuartier(id) {
+  try {
+    const pt = path.join(RACINE, "etat", "tissu", "evaluation.json");
+    const ev = JSON.parse(fs.readFileSync(pt, "utf-8"));
+    const gens = ((ev || {}).quartier || {}).gens;
+    if (!Array.isArray(gens) || !gens.length) return "quartier";
+    return gens.includes(id) ? "quartier" : "au loin";
+  } catch (e) { return "quartier"; }
+}
+
+function lireJsonSansFaillir(fichier, defaut) {
+  try { return JSON.parse(fs.readFileSync(fichier, "utf-8")); }
+  catch (_e) { return defaut; }
+}
+
+function rapportsEtJournalActivations() {
+  const etat = lireJsonSansFaillir(path.join(DEPOT_ACTIVATIONS, "boucle.json"),
+    { historique: [], acteurs: {} });
+  const parSession = new Map();
+  let courant = null, attente = [];
+  try {
+    const lignes = fs.readFileSync(path.join(DEPOT_ACTIVATIONS, "boucle.log.jsonl"), "utf-8")
+      .split(/\r?\n/).filter(Boolean);
+    lignes.forEach((ligne) => {
+      let ev;
+      try { ev = JSON.parse(ligne); } catch (_e) { return; }
+      if (ev.evenement === "cycle.depart") {
+        courant = null; attente = [ev]; return;
+      }
+      if (ev.evenement === "cli.depart" && ev.session) {
+        courant = ev.session;
+        parSession.set(courant, (parSession.get(courant) || []).concat(attente, [ev]));
+        attente = [];
+        return;
+      }
+      if (courant) {
+        parSession.get(courant).push(ev);
+        if (ev.evenement === "cycle.termine") courant = null;
+      } else {
+        attente.push(ev);
+      }
+    });
+  } catch (_e) { /* aucun run journalise */ }
+  return { etat, parSession };
+}
+
+function rapportDepuisEntree(entree) {
+  const relatif = String((entree && entree.rapport) || "").replace(/\//g, path.sep);
+  const fichier = path.resolve(RACINE, relatif);
+  if (!fichier.startsWith(path.resolve(DEPOT_ACTIVATIONS) + path.sep)) return null;
+  return lireJsonSansFaillir(fichier, null);
+}
+
+function transcriptClaude(session) {
+  if (!/^[a-zA-Z0-9-]+$/.test(String(session || ""))) return [];
+  const projets = path.join(os.homedir(), ".claude", "projects");
+  try {
+    for (const dossier of fs.readdirSync(projets, { withFileTypes: true })) {
+      if (!dossier.isDirectory()) continue;
+      const fichier = path.join(projets, dossier.name, session + ".jsonl");
+      if (!fs.existsSync(fichier)) continue;
+      return fs.readFileSync(fichier, "utf-8").split(/\r?\n/).filter(Boolean)
+        .map((ligne) => { try { return JSON.parse(ligne); } catch (_e) { return null; } })
+        .filter(Boolean);
+    }
+  } catch (_e) { /* le journal local Claude peut ne pas exister */ }
+  return [];
+}
+
+// Le MJ actif n'est pas une nouvelle piece d'etat : Claude ecrit deja son fil
+// append-only sous `.claude/projects/<ce projet>/<session>.jsonl`. Plusieurs MJ
+// peuvent etre ouverts (un par siege) ; celui qui a parle ou travaille le plus
+// recemment est celui que la regie montre. Les narrateurs temporaires des
+// activations ont un autre cwd et ne peuvent donc pas gagner cette election.
+let cacheFilMjActif = { cle: null, valeur: null };
+
+function texteBlocClaude(bloc) {
+  if (typeof bloc === "string") return bloc;
+  if (!bloc || typeof bloc !== "object") return "";
+  if (typeof bloc.text === "string") return bloc.text;
+  if (typeof bloc.content === "string") return bloc.content;
+  if (Array.isArray(bloc.content)) return bloc.content.map(texteBlocClaude).filter(Boolean).join("\n");
+  return "";
+}
+
+function bornerTexteClaude(texte, maximum) {
+  texte = String(texte || "");
+  return texte.length <= maximum ? texte : texte.slice(0, maximum) + "\n… [suite masquee]";
+}
+
+function apercuOutilClaude(bloc) {
+  const entree = (bloc && bloc.input) || {};
+  return entree.description || entree.command || entree.query || entree.path ||
+    (Object.keys(entree).length ? JSON.stringify(entree) : "");
+}
+
+function lignesFinFichier(fichier, maximumOctets) {
+  const taille = fs.statSync(fichier).size;
+  const debut = Math.max(0, taille - maximumOctets);
+  const longueur = taille - debut;
+  const tampon = Buffer.alloc(longueur);
+  const fd = fs.openSync(fichier, "r");
+  try { fs.readSync(fd, tampon, 0, longueur, debut); }
+  finally { fs.closeSync(fd); }
+  let texte = tampon.toString("utf-8");
+  if (debut > 0) texte = texte.slice(Math.max(0, texte.indexOf("\n") + 1));
+  return texte.split(/\r?\n/).filter(Boolean);
+}
+
+function filMjActif() {
+  const codeProjet = path.resolve(RACINE).replace(/[:\\/]/g, "-");
+  const dossier = path.join(os.homedir(), ".claude", "projects", codeProjet);
+  if (!fs.existsSync(dossier)) return { session: null, titre: null, items: [] };
+  const candidats = fs.readdirSync(dossier, { withFileTypes: true })
+    .filter((e) => e.isFile() && /^[a-zA-Z0-9-]+\.jsonl$/.test(e.name))
+    .map((e) => {
+      const fichier = path.join(dossier, e.name);
+      return { fichier, nom: e.name, stat: fs.statSync(fichier) };
+    }).sort((a, b) => b.stat.mtimeMs - a.stat.mtimeMs);
+  if (!candidats.length) return { session: null, titre: null, items: [] };
+  const choisi = candidats[0];
+  const cle = choisi.fichier + ":" + choisi.stat.size + ":" + choisi.stat.mtimeMs;
+  if (cacheFilMjActif.cle === cle) return cacheFilMjActif.valeur;
+
+  const session = path.basename(choisi.nom, ".jsonl");
+  let titre = null;
+  try {
+    const fd = fs.openSync(choisi.fichier, "r");
+    const tampon = Buffer.alloc(Math.min(65536, choisi.stat.size));
+    try { fs.readSync(fd, tampon, 0, tampon.length, 0); }
+    finally { fs.closeSync(fd); }
+    for (const ligne of tampon.toString("utf-8").split(/\r?\n/)) {
+      try {
+        const ev = JSON.parse(ligne);
+        if (ev.type === "ai-title" && ev.aiTitle) { titre = ev.aiTitle; break; }
+      } catch (_e) { /* premiere ligne partielle ou absente */ }
+    }
+  } catch (_e) { /* le fil reste lisible sans titre */ }
+
+  const items = [];
+  lignesFinFichier(choisi.fichier, 2 * 1024 * 1024).forEach((ligne) => {
+    let ev;
+    try { ev = JSON.parse(ligne); } catch (_e) { return; }
+    const moment = ev.timestamp || null;
+    if (ev.type === "user" && ev.message) {
+      const contenu = ev.message.content;
+      if (typeof contenu === "string") {
+        const automatique = contenu.match(/^<(task-notification|system-reminder|local-command-[^>]+)>/);
+        items.push(automatique
+          ? { role: "outil", nom: automatique[1],
+              texte: bornerTexteClaude(contenu, 2500), moment }
+          : { role: "joueur", texte: bornerTexteClaude(contenu, 6000), moment });
+      } else if (Array.isArray(contenu)) {
+        contenu.filter((b) => b && b.type === "tool_result").forEach((b) => {
+          const texte = texteBlocClaude(b).trim();
+          if (texte) items.push({ role: "outil", nom: "resultat",
+            texte: bornerTexteClaude(texte, 2500), moment });
+        });
+      }
+      return;
+    }
+    if (ev.type !== "assistant" || !ev.message || !Array.isArray(ev.message.content)) return;
+    ev.message.content.forEach((bloc) => {
+      if (!bloc) return;
+      if (bloc.type === "text" && bloc.text) {
+        items.push({ role: "mj", texte: bornerTexteClaude(bloc.text, 6000), moment });
+      } else if (bloc.type === "tool_use") {
+        items.push({ role: "outil", nom: bloc.name || "outil",
+          texte: bornerTexteClaude(apercuOutilClaude(bloc), 1500), moment });
+      }
+    });
+  });
+  const valeur = {
+    session, titre: titre || ("MJ " + session.slice(0, 8)),
+    modifie_le: choisi.stat.mtime.toISOString(),
+    actif: Date.now() - choisi.stat.mtimeMs < 5 * 60 * 1000,
+    tronque: choisi.stat.size > 2 * 1024 * 1024,
+    items: items.slice(-60),
+  };
+  cacheFilMjActif = { cle, valeur };
+  return valeur;
+}
+
+function prevoirActivations() {
+  let previsions = { previsions: [], erreur: null };
+  try {
+    previsions = JSON.parse(childProcess.execFileSync("python",
+      [path.join(RACINE, "scripts", "boucle_activation.py"), "--prevoir", "8"],
+      { cwd: RACINE, encoding: "utf-8", timeout: 5000,
+        windowsHide: true, maxBuffer: 2 * 1024 * 1024 }));
+  } catch (e) {
+    previsions = { previsions: [], erreur: String(e.message || e) };
+  }
+  return { previsions,
+    en_cours: fs.existsSync(path.join(DEPOT_ACTIVATIONS, ".boucle.lock")) };
+}
+
+// LA CRITICITE DU PLAN, servie a cote des registres — jamais dedans.
+//
+// Une colonne « perte » posee dans `books.json` serait effacee au prochain
+// `couverture.py`, qui regenere les registres a quatre colonnes exprement pour
+// qu'ils ne portent rien de volatil. Or il n'y a pas plus volatil qu'un score :
+// il bouge a chaque action cochee. On le CALCULE donc a la demande et l'ecran
+// l'ajoute par-dessus le volume, par numero. Les livres restent ce qu'ils sont.
+//
+// LE CACHE SE CLE SUR LA TAILLE ET LA DATE DE `books.json`, parce que le calcul
+// coute une seconde et demie et que la page le redemande a chaque ouverture de
+// volume. Une seconde et demie une fois par ecriture du plan, c'est gratuit ;
+// une fois par clic, c'est une page qui rame.
+let cacheCriticite = null;
+function criticite() {
+  // LA CLE PORTE AUSSI LE SCRIPT, et l'oublier a coute une demi-heure : on
+  // ajoute une sortie au calcul, on recharge la page, et l'on relit le cache
+  // d'avant sans qu'aucune erreur ne le dise. Un cache dont la clef ne couvre
+  // pas le code qui produit la valeur ne se trompe pas de temps en temps : il
+  // se trompe exactement quand on travaille dessus.
+  // `poids-etats.json` EST une entree du calcul au meme titre que le plan : une
+  // note portee de 5 a 8 change tous les scores en aval. L'oublier de la clef
+  // donnait un ecran qui ne bougeait pas d'un dixieme apres une renotation, et
+  // rien pour le dire — le meme piege que le script oublie, une porte plus loin.
+  const cles = [path.join(RACINE, "etat", "books.json"),
+                path.join(RACINE, "etat", "poids-etats.json"),
+                path.join(RACINE, "scripts", "criticite.py"),
+                path.join(RACINE, "scripts", "couverture.py"),
+                path.join(RACINE, "scripts", "etat_du_plan.py")];
+  let cle = "";
+  for (const f of cles) {
+    try { const s = fs.statSync(f); cle += s.size + ":" + s.mtimeMs + "|"; }
+    catch (e) { cle += "?|"; }
+  }
+  if (cacheCriticite && cacheCriticite.cle === cle) return cacheCriticite.valeur;
+  let valeur;
+  try {
+    valeur = JSON.parse(childProcess.execFileSync("python",
+      [path.join(RACINE, "scripts", "criticite.py"), "--json"],
+      { cwd: RACINE, encoding: "utf-8", timeout: 30000,
+        windowsHide: true, maxBuffer: 8 * 1024 * 1024,
+        env: Object.assign({}, process.env, { PYTHONIOENCODING: "utf-8" }) }));
+  } catch (e) {
+    valeur = { pas: {}, etats: {}, cercles: [], erreur: String((e && e.message) || e) };
+  }
+  cacheCriticite = { cle, valeur };
+  return valeur;
+}
+
+// L'audit de coherence, servi a l'ecran au lieu du terminal. `tick.py
+// --verifier` produisait deja tout ceci ; personne ne le lisait.
+function sante() {
+  try {
+    const brut = childProcess.execFileSync("python",
+      [path.join(RACINE, "scripts", "tick.py"), "--verifier", "--json"],
+      { cwd: RACINE, encoding: "utf-8", timeout: 30000,
+        windowsHide: true, maxBuffer: 8 * 1024 * 1024,
+        env: Object.assign({}, process.env, { PYTHONIOENCODING: "utf-8" }) });
+    return Object.assign(JSON.parse(brut), { lu_a: Date.now() });
+  } catch (e) {
+    // Code de sortie 1 = il Y A des anomalies : c'est le cas nominal, et
+    // execFileSync leve quand meme. La sortie est sur stdout, on la lit.
+    const sortie = (e && e.stdout) ? String(e.stdout).trim() : "";
+    if (sortie.startsWith("{")) {
+      try { return Object.assign(JSON.parse(sortie), { lu_a: Date.now() }); }
+      catch (_e) { /* tombe dans l'erreur ci-dessous */ }
+    }
+    return { anomalies: [], durs: 0, notes: 0, par_gravite: {},
+             erreur: String((e && e.message) || e), lu_a: Date.now() };
+  }
+}
+
+// La charge des acteurs : importance contre activations. Le quadrant qui
+// compte est « importance haute, zero activation » — les menaces qui
+// chargent en silence pendant qu'on regarde ailleurs.
+function chargeActeurs() {
+  const { etat } = rapportsEtJournalActivations();
+  const personnages = lireJsonSansFaillir(path.join(RACINE, "etat", "personnages.json"), []);
+  const listeP = Array.isArray(personnages) ? personnages : (personnages.personnages || []);
+  const fiches = new Map(listeP.map((p) => [p.id, p]));
+  const intentions = lireJsonSansFaillir(path.join(RACINE, "etat", "intentions.json"), []) || [];
+  // L'ÉCHELLE NE SE DÉCLARE PLUS, elle se mesure : `evaluer.py --json` dépose
+  // la liste des gens du quartier (même composante connexe qu'un siège occupé,
+  // vingt minutes de marche au plus). Le champ `echelle` d'intentions.json a
+  // disparu — il recopiait à la main ce que la topologie calcule, et mentait
+  // dès que l'homme avait bougé.
+  const echelles = new Map((Array.isArray(intentions) ? intentions : [])
+    .map((t) => [t.personnage_id || t.id, ouQuartier(t.personnage_id || t.id)]));
+  const sieges = lireJsonSansFaillir(path.join(RACINE, "etat", "joueurs.json"), []);
+  const listeS = (sieges && (sieges.sieges || sieges)) || [];
+  const assis = new Set((Array.isArray(listeS) ? listeS : [])
+    .filter((s) => s && s.occupe).map((s) => s.personnage_id));
+
+  const base = Number((etat.horloge || {}).base_secondes) || 0;
+  const acteurs = Object.entries(etat.acteurs || {}).map(([id, a]) => {
+    const fiche = fiches.get(id) || {};
+    const repos = Number(a.disponible_a) || 0;
+    return {
+      id, nom: fiche.nom || id, titre: fiche.titre || "",
+      lieu_id: fiche.lieu_id || "",
+      importance: Number(a.importance) || 0,
+      energie: Number(a.energie) || 0,
+      activations: Number(a.activations) || 0,
+      echelle: echelles.get(id) || "",
+      assis: assis.has(id),
+      // Le repos est une date en secondes de monde : ce qui compte a l'ecran,
+      // c'est ce qu'il en RESTE a partir de maintenant.
+      repos_restant_s: Math.max(0, repos - base),
+    };
+  });
+  acteurs.sort((x, y) => y.importance - x.importance);
+
+  // Le seuil de « ca compte » n'a pas de verite : la mediane des importances
+  // non nulles separe mieux que n'importe quelle constante ecrite en dur.
+  const vives = acteurs.map((a) => a.importance).filter((v) => v > 0).sort((x, y) => x - y);
+  const seuil = vives.length ? vives[Math.floor(vives.length / 2)] : 0;
+  return {
+    acteurs, seuil,
+    total_activations: (etat.historique || []).length,
+    tour: (etat.rotation_activation || {}).tour || null,
+    lu_a: Date.now(),
+  };
+}
+
+function resumeActivations() {
+  const { etat, parSession } = rapportsEtJournalActivations();
+  const personnages = lireJsonSansFaillir(path.join(RACINE, "etat", "personnages.json"), []);
+  const liste = Array.isArray(personnages) ? personnages : (personnages.personnages || []);
+  const noms = new Map(liste.map((p) => [p.id, p.nom || p.id]));
+  const activations = (etat.historique || []).slice().reverse().map((entree) => {
+    const rapport = rapportDepuisEntree(entree) || {};
+    const activation = rapport.activation || {};
+    const meta = rapport._activation || {};
+    const session = meta.session || "";
+    const journal = parSession.get(session) || [];
+    const resultat = journal.slice().reverse().find((x) => x.evenement === "cli.resultat") || {};
+    const systeme = journal.find((x) => x.evenement === "cli.systeme") || {};
+    const depart = journal.find((x) => x.evenement === "cli.depart") || {};
+    const brutResultat = resultat.brut || {};
+    const brutSysteme = systeme.brut || {};
+    const architecture = meta.session_narrateur ? "narrateur_local" : "legacy_direct";
+    return {
+      id: session || path.basename(String(entree.rapport || "activation"), ".json"),
+      session, qui: entree.qui, nom: noms.get(entree.qui) || entree.qui,
+      termine_le: entree.termine_le || meta.cree_le || null,
+      tache_id: entree.tache || ((activation.tache || {}).id) || "",
+      tache: ((activation.tache || {}).quoi) || entree.tache || "",
+      issue: activation.issue || "inconnue",
+      activites: (activation.activites || []).length,
+      budget: entree.budget == null ? meta.budget : entree.budget,
+      depense: entree.depense == null ? activation.energie_depensee : entree.depense,
+      duree_monde_secondes: entree.duree_monde_secondes == null
+        ? (activation.activites || []).reduce((s, a) =>
+            s + Number(((a.temps || {}).duree_s) || 0), 0)
+        : entree.duree_monde_secondes,
+      restitue: entree.restitue == null ? null : entree.restitue,
+      energie_avant: entree.energie_avant == null ? null : entree.energie_avant,
+      energie_apres: entree.energie_apres == null ? null : entree.energie_apres,
+      importance: entree.importance == null ? meta.importance : entree.importance,
+      front: entree.front || meta.front || "",
+      duree_ms: meta.duree_ms == null ? brutResultat.duration_ms : meta.duree_ms,
+      cout_usd: meta.cout_usd == null ? brutResultat.total_cost_usd : meta.cout_usd,
+      modele: meta.modele || brutSysteme.model || "inconnu",
+      effort: meta.effort || depart.effort || "inconnu",
+      evenements: journal.length,
+      architecture,
+    };
+  });
+  return { activations, ...prevoirActivations() };
+}
+
+function detailActivation(session) {
+  const { etat, parSession } = rapportsEtJournalActivations();
+  let entree = null, rapport = null;
+  for (const candidate of (etat.historique || [])) {
+    const r = rapportDepuisEntree(candidate);
+    if (r && r._activation && r._activation.session === session) {
+      entree = candidate; rapport = r; break;
+    }
+  }
+  if (!entree || !rapport) return null;
+  const meta = rapport._activation || {};
+  const architecture = meta.session_narrateur ? "narrateur_local" : "legacy_direct";
+  const transcript = transcriptClaude(session);
+  const sessionPnj = meta.session_pnj || null;
+  const transcriptPnj = sessionPnj ? transcriptClaude(sessionPnj) : [];
+  const journal = parSession.get(session) || [];
+  const resultat = journal.slice().reverse().find((x) => x.evenement === "cli.resultat") || {};
+  const brutResultat = resultat.brut || {};
+  let message = meta.message || null;
+  if (!message) {
+    const envoi = transcript.find((x) => x.type === "queue-operation"
+      && x.operation === "enqueue" && typeof x.content === "string");
+    const usager = transcript.find((x) => x.type === "user"
+      && x.message && typeof x.message.content === "string");
+    message = (envoi && envoi.content) || (usager && usager.message.content) || null;
+  }
+  let reponse = brutResultat.result || null;
+  if (!reponse) {
+    for (let i = transcript.length - 1; i >= 0 && !reponse; i--) {
+      const ev = transcript[i];
+      if (ev.type !== "assistant" || !ev.message) continue;
+      const contenu = ev.message.content;
+      if (typeof contenu === "string") reponse = contenu;
+      else if (Array.isArray(contenu)) reponse = contenu
+        .filter((b) => b && b.type === "text" && typeof b.text === "string")
+        .map((b) => b.text).join("\n");
+    }
+  }
+  return {
+    entree, rapport, architecture,
+    // La regie ne reconstruit jamais un prompt systeme : il est construit par
+    // les constructeurs de depecher.py, puis depose tel quel dans le rapport.
+    system_prompt: meta.system_prompt || null,
+    message,
+    reponse,
+    thread: transcript,
+    journal,
+    pnj: sessionPnj ? {
+      session: sessionPnj,
+      system_prompt: meta.system_prompt_pnj || null,
+      message: meta.appel_pnj || null,
+      tentative: meta.tentative_pnj || null,
+      thread: transcriptPnj,
+    } : null,
+    execution: {
+      duree_ms: meta.duree_ms == null ? brutResultat.duration_ms : meta.duree_ms,
+      cout_usd: meta.cout_usd == null ? brutResultat.total_cost_usd : meta.cout_usd,
+      usage: Object.keys(meta.usage || {}).length ? meta.usage : (brutResultat.usage || {}),
+      tours: meta.tours == null ? brutResultat.num_turns : meta.tours,
+    },
+  };
+}
+
+// ---- le fil d'un homme, refait de bout en bout ---------------------------
+// Ce que Corneille ouvre en touchant un visage sur le plan du château. Deux
+// moitiés d'une même vie, que rien ne montrait ensemble jusqu'ici :
+//
+//   — CE QU'IL A DIT ET FAIT EN SCÈNE. Ses répliques et ses gestes dans
+//     `etat/flux.jsonl`, plus les récits du narrateur qui le nomment : sans
+//     eux, une réplique tombe sans la salle qui la porte.
+//   — CE QU'IL A VÉCU HORS SCÈNE. Chacune de ses activations
+//     (`etat/activations/*.json`) : l'appel du narrateur, sa tentative telle
+//     qu'il l'a écrite, ce que le monde en a fait, et ce qu'il en a appris.
+//
+// L'ordre est celui du MONDE, pas celui des fichiers : les items du flux
+// portent leur date au complet, les activations la journée du dossier qui les
+// a ouvertes. Une activation dont la journée est illisible se pose à la fin,
+// dans l'ordre où elle s'est terminée — jamais silencieusement au milieu.
+//
+// Lecture seule de bout en bout : rien n'entre dans `etat/`, rien n'entre dans
+// le flux. Ce fil vit dans le navigateur de la régie et meurt avec sa page.
+const JOUR_MINUTES = 1440;
+
+function nomsDesPersonnages() {
+  const brut = lireJsonSansFaillir(path.join(RACINE, "etat", "personnages.json"), []);
+  const liste = Array.isArray(brut) ? brut : (brut.personnages || []);
+  return new Map(liste.map((p) => [p.id, p.nom || p.id]));
+}
+
+function journeeDuDossier(message) {
+  const m = String(message || "").match(/"date_du_monde"\s*:\s*\{[^}]*\}/);
+  if (!m) return null;
+  try { return JSON.parse("{" + m[0] + "}").date_du_monde || null; }
+  catch (_e) { return null; }
+}
+
+function filPersonnage(id) {
+  const noms = nomsDesPersonnages();
+  const nom = noms.get(id) || id;
+  const entrees = [];
+  // rang : [minute absolue du monde, désambiguïsateur]. Les activations d'une
+  // journée se posent après ce qui s'y est dit — le dossier ne donne que le
+  // jour, et prétendre à la minute serait inventer une heure.
+  const poser = (rang, second, e) => entrees.push(Object.assign({ _r: rang, _s: second }, e));
+
+  let flux = [];
+  try {
+    flux = fs.readFileSync(path.join(RACINE, "etat", "flux.jsonl"), "utf-8")
+      .split("\n").filter((l) => l.trim())
+      .map((l) => { try { return JSON.parse(l); } catch (_e) { return null; } })
+      .filter(Boolean);
+  } catch (_e) { /* pas de flux : il reste ses activations */ }
+
+  // Le narrateur ne nomme pas les gens par leur id : on le cherche par son nom,
+  // et par son prénom seul quand il en a un — c'est ainsi qu'une salle parle.
+  // On cherche le nom entier, et chaque morceau assez long pour ne désigner que
+  // lui — mais aux BORNES du mot : sans elles, « Sara » attrape Sarnes, et le
+  // fil d'une femme se remplit des récits d'une autre maison.
+  const appellations = [nom].concat(nom.split(/\s+/).filter((x) => x.length > 3));
+  const bornes = appellations.map((a) =>
+    new RegExp("(^|[^\\p{L}])" + a.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") +
+      "($|[^\\p{L}])", "u"));
+  const nomme = (t) => bornes.some((re) => re.test(String(t || "")));
+  let date = null;
+  flux.forEach((it, i) => {
+    if (it.date) date = it.date;
+    const rang = absolues(date);
+    if (rang === null) return;
+    const sien = it.locuteur_id === id || it.acteur_id === id;
+    if (sien && (it.type === "replique" || it.type === "geste" || it.type === "table")) {
+      poser(rang, i, { source: "scene", genre: it.type === "replique" ? "replique" : "geste",
+        qui: nom, texte: it.texte || "", date, lieu: it.lieu || "" });
+    } else if ((it.type === "recit" || it.type === "breve" || it.type === "marque")
+               && nomme(it.texte)) {
+      poser(rang, i, { source: "scene", genre: "narrateur", qui: "Le narrateur",
+        texte: (it.titre ? it.titre + " — " : "") + (it.texte || ""), date, lieu: it.lieu || "" });
+    }
+  });
+
+  // Les activations. On les lit toutes : le nom du fichier porte l'acteur, mais
+  // c'est le champ `qui` du rapport qui fait foi.
+  let fichiers = [];
+  try {
+    fichiers = fs.readdirSync(DEPOT_ACTIVATIONS)
+      .filter((f) => /^\d{8}-.*\.json$/.test(f)).sort();
+  } catch (_e) { /* aucune activation journalisée */ }
+  let horsRang = 0;
+  fichiers.forEach((f) => {
+    const rapport = lireJsonSansFaillir(path.join(DEPOT_ACTIVATIONS, f), null);
+    if (!rapport || rapport.qui !== id) return;
+    const meta = rapport._activation || {};
+    const act = rapport.activation || {};
+    const jour = journeeDuDossier(meta.message);
+    // Le jour du dossier, à sa toute fin : ce qui s'est dit ce jour-là dans la
+    // salle vient d'abord, ce qu'il est allé faire ensuite.
+    const rang = jour ? absolues(jour) + JOUR_MINUTES - 1 : Infinity;
+    const second = jour ? f : (++horsRang);
+    const tete = { source: "activation", date: jour || null,
+      tache: (act.tache || {}).quoi || "", session: meta.session || "",
+      termine_le: meta.cree_le || null, date_incertaine: !jour };
+    if (meta.appel_pnj) {
+      poser(rang, second, Object.assign({ genre: "appel", qui: "Le narrateur",
+        texte: meta.appel_pnj }, tete));
+    }
+    const t = meta.tentative_pnj;
+    if (t && t.quoi) {
+      const bas = [];
+      if (t.moyens && t.moyens.length) bas.push("Avec : " + t.moyens.join(" ; ") + ".");
+      if (t.effet_recherche) bas.push("Pour : " + t.effet_recherche);
+      if (t.renonce_si) bas.push("Renonce si : " + t.renonce_si);
+      poser(rang, second, Object.assign({ genre: "tentative", qui: nom,
+        texte: (t.verbe ? t.verbe.toUpperCase() + " — " : "") + t.quoi,
+        detail: bas.join("\n") }, tete));
+    }
+    (act.activites || []).forEach((a) => {
+      const quoi = (a.action || {}).quoi || a.quoi || "";
+      if (quoi) {
+        poser(rang, second, Object.assign({ genre: "activite", qui: nom,
+          texte: ((a.action || {}).verbe ? (a.action.verbe + " — ") : "") + quoi,
+          minutes: Math.round(Number((a.temps || {}).duree_s || 0) / 60) }, tete));
+      }
+      (a.resultats_produits || []).forEach((r) => {
+        if (!r.apres) return;
+        poser(rang, second, Object.assign({ genre: "resultat", qui: "Ce qu'il en retient",
+          texte: String(r.apres), certitude: r.certitude || "" }, tete));
+      });
+      if (a.blocage) {
+        poser(rang, second, Object.assign({ genre: "blocage", qui: "Ce qui l'arrête",
+          texte: typeof a.blocage === "string" ? a.blocage : JSON.stringify(a.blocage) }, tete));
+      }
+    });
+    if (act.issue && act.issue !== "avance") {
+      poser(rang, second, Object.assign({ genre: "issue", qui: "L'issue",
+        texte: String(act.issue) }, tete));
+    }
+  });
+
+  entrees.sort((a, b) => (a._r - b._r) ||
+    (typeof a._s === typeof b._s ? (a._s < b._s ? -1 : a._s > b._s ? 1 : 0) : 0));
+  entrees.forEach((e) => { delete e._r; delete e._s; });
+  return {
+    id, nom, entrees,
+    scenes: entrees.filter((e) => e.source === "scene").length,
+    activations: new Set(entrees.filter((e) => e.source === "activation")
+      .map((e) => e.session)).size,
+  };
+}
+
+// « Emmène-moi au moment où X est arrivé. » Corneille ne remonte pas dix mille
+// lignes à la molette : elle demande, son MJ cherche, et le fil s'ouvre à
+// l'endroit dit. Deux gestes distincts, et ils ne se confondent pas :
+//
+//   — CHERCHER (`/regie/chercher?q=`) rend les endroits du flux où la chose
+//     est dite, avec leur date et trois lignes autour. C'est l'outil du MJ :
+//     il lit, il tranche lequel des dix-sept est le bon moment, il répond.
+//   — EXTRAIRE (`/regie/extrait?de=&a=`) rend la tranche elle-même, telle
+//     qu'elle a été jouée. C'est ce que la page repose dans le fil quand le MJ
+//     a dit où.
+//
+// On ne cherche PAS à la place du MJ. « Le moment où Steffon est arrivé » n'est
+// pas une chaîne de caractères : c'est un jugement sur ce qui compte, et une
+// recherche plein texte rendrait la première occurrence du mot, presque jamais
+// la bonne. Le serveur donne les candidats, l'homme choisit.
+function chercherDansFlux(q, max) {
+  const besoin = String(q || "").trim().toLowerCase();
+  if (!besoin) return { q, trouves: [] };
+  const mots = besoin.split(/\s+/).filter((m) => m.length > 2);
+  let flux = [];
+  try {
+    flux = fs.readFileSync(path.join(RACINE, "etat", "flux.jsonl"), "utf-8")
+      .split("\n").filter((l) => l.trim())
+      .map((l) => { try { return JSON.parse(l); } catch (_e) { return null; } });
+  } catch (_e) { return { q, trouves: [] }; }
+  const trouves = [];
+  let date = null, lieu = "";
+  flux.forEach((it, i) => {
+    if (!it) return;
+    if (it.date) date = it.date;
+    if (it.lieu) lieu = it.lieu;
+    const t = String(it.texte || "").toLowerCase();
+    if (!t) return;
+    // Tous les mots utiles, dans le même item : un « et » de plus ne doit pas
+    // rendre la moitié du fil.
+    const score = mots.length ? (mots.every((m) => t.indexOf(m) !== -1) ? mots.length : 0)
+                              : (t.indexOf(besoin) !== -1 ? 1 : 0);
+    if (!score) return;
+    trouves.push({ i, type: it.type, date, lieu,
+      qui: it.locuteur_id || it.acteur_id || null,
+      extrait: String(it.texte).slice(0, 220) });
+  });
+  // Les derniers d'abord : on cherche presque toujours quelque chose de récent.
+  return { q, total: trouves.length, trouves: trouves.slice(-(max || 12)).reverse() };
+}
+
+function extraitDuFlux(de, a) {
+  let flux = [];
+  try {
+    flux = fs.readFileSync(path.join(RACINE, "etat", "flux.jsonl"), "utf-8")
+      .split("\n").filter((l) => l.trim())
+      .map((l) => { try { return JSON.parse(l); } catch (_e) { return null; } })
+      .filter(Boolean);
+  } catch (_e) { return { de: 0, a: 0, items: [] }; }
+  const debut = Math.max(0, Math.min(de | 0, flux.length));
+  const fin = Math.max(debut, Math.min(a | 0, flux.length, debut + 200));
+  // Le nom vient avec : la page qui repose une vieille tranche dans le fil n'a
+  // pas la galerie de cette scène-là sous la main, et « robert-quince » n'est
+  // pas une façon de nommer un homme.
+  const noms = nomsDesPersonnages();
+  return { de: debut, a: fin, total: flux.length,
+    items: flux.slice(debut, fin).map((it, k) => Object.assign({ _i: debut + k,
+      _nom: noms.get(it.locuteur_id || it.acteur_id) || null }, it)) };
+}
+
 function regie() {
   const lire = (f, defaut) => {
     try { return JSON.parse(fs.readFileSync(path.join(RACINE, "etat", f), "utf-8")); }
@@ -732,14 +1621,26 @@ function regie() {
   return {
       id: t.personnage_id,
       nom: nom(t.personnage_id),
-      echelle: t.echelle || "?",
+      echelle: ouQuartier(t.personnage_id),
       lieu: ouEst(t.personnage_id) || t.lieu_note || "",
       intention: t.intention || "",
       date_maj: dateCourte(t.date_maj),
       age_maj: age === null ? null : -age,
       etapes: encours.length,
       etapes_total: plan.length,
-      sans_horloge: encours.filter((e) => typeof e.jours_restants !== "number").length,
+      // `jours_restants: null` n'est PAS une horloge oubliée : le schéma en
+      // fait une posture permanente — tenir la porte de mer, peigner la grève
+      // à chaque basse mer, ne pas voir ce qu'on l'a payé pour ne pas voir.
+      // Elle n'est jamais « faite » et jamais décomptée, par construction.
+      // Ne compter comme sans horloge que l'étape où le champ MANQUE, seul cas
+      // où quelqu'un a réellement oublié de la poser. Mesure du 129.4.3 : sur
+      // six acteurs signalés « rien ne tombera jamais », cinq étaient des
+      // postures correctes et un seul, Maron Sec et son cycle de six jours,
+      // était une vraie horloge manquante — l'alerte cachait le seul vrai cas.
+      sans_horloge: encours.filter(
+        (e) => !("jours_restants" in e) ||
+               (e.jours_restants !== null && typeof e.jours_restants !== "number")
+      ).length,
       prochaine, prochaine_quoi: prochaineQuoi,
       declencheurs: (t.declencheurs || []).length,
       attitude: t.attitude_joueur || "",
@@ -747,8 +1648,11 @@ function regie() {
       siege: occupes.has(t.personnage_id),
     };
   });
-  const BUDGETS = { scene: 5, orbite: 20, royaume: null };
-  const groupes = ["scene", "orbite", "royaume"].map((e) => ({
+  // PLUS DE PLAFOND D'ACTEURS : ce n'est pas le nombre de têtes qui coûte,
+  // c'est où elles sont. Vingt têtes au loin pèsent moins que huit dans la
+  // salle, et le quartier se resserre tout seul sur ce que le joueur atteint.
+  const BUDGETS = { "quartier": null, "au loin": null };
+  const groupes = ["quartier", "au loin"].map((e) => ({
     echelle: e, budget: BUDGETS[e],
     tetes: tetes.filter((t) => t.echelle === e)
       .sort((a, b) => (a.prochaine === null) - (b.prochaine === null)
@@ -771,7 +1675,7 @@ function regie() {
       alertes.push({ gravite: "tiede", texte: "échelle « " + g.echelle + " » : " + g.tetes.length + " têtes pour ~" + g.budget });
   });
   tetes.forEach((t) => {
-    if (t.age_maj !== null && t.age_maj >= 3 && t.echelle !== "royaume")
+    if (t.age_maj !== null && t.age_maj >= 3 && t.echelle === "quartier")
       alertes.push({ gravite: "tiede", texte: t.nom + " : tête non relue depuis " + t.age_maj + " jours" });
     if (t.etapes && t.sans_horloge === t.etapes)
       alertes.push({ gravite: "tiede", texte: t.nom + " : aucune étape n'a d'horloge — rien ne tombera jamais" });
@@ -795,7 +1699,7 @@ function regie() {
       if (typeof e.jours_restants !== "number") return;
       echeances.push({
         jours: e.jours_restants, quoi: e.quoi || e.id, famille: "étape",
-        qui: nom(t.personnage_id), echelle: t.echelle,
+        qui: nom(t.personnage_id), echelle: ouQuartier(t.personnage_id),
         bloque: (e.depend_de || []).length ? "dépend de " + (e.depend_de || []).join(", ") : "",
       });
     });
@@ -864,12 +1768,107 @@ function regie() {
   // cache d'une minute que cette page refuse deja.
   let tissu = null;
   try {
-    const pt = path.join(RACINE, "etat", "staging", "tissu", "evaluation.json");
+    const pt = path.join(RACINE, "etat", "tissu", "evaluation.json");
     tissu = JSON.parse(fs.readFileSync(pt, "utf-8"));
     tissu.calcule_il_y_a_s = Math.round((Date.now() - fs.statSync(pt).mtimeMs) / 1000);
   } catch (e) { tissu = null; }
+
+  // Le graphe complet servi a la regie. Le projecteur Python reste l'unique
+  // definition des liens ; le serveur ne fait qu'ajouter les mesures de
+  // l'evaluation sur les noeuds et des aretes fantomes pour les candidats.
+  let graphe = null;
+  try {
+    const base = path.join(RACINE, "etat", "tissu");
+    const brutNoeuds = JSON.parse(fs.readFileSync(path.join(base, "noeuds.json"), "utf-8"));
+    const aretes = fs.readFileSync(path.join(base, "aretes.jsonl"), "utf-8")
+      .split(/\r?\n/).filter(Boolean).map((ligne, i) => Object.assign({ id: "a:" + i }, JSON.parse(ligne)));
+    const noeuds = Object.keys(brutNoeuds).map((id) => Object.assign({ id }, brutNoeuds[id]));
+    const parId = new Map(noeuds.map((n) => [n.id, n]));
+    const goulots = new Map(((tissu && tissu.goulots) || []).map((g) => [g.noeud, g]));
+    const desequilibres = new Map(((tissu && tissu.desequilibres) || []).map((g) => [g.noeud, g]));
+    const forces = new Map(((tissu && tissu.force) || []).map((f) => ["pers:" + f.qui, f]));
+    const murs = new Map(((tissu && tissu.murs) || []).map((m) => [m.id, m]));
+    const critique = ((tissu && tissu.critique && tissu.critique[0]) || {}).chaine || [];
+    const critiques = new Set(critique.map((n) => n.id));
+    const couplesCritiques = new Set();
+    for (let i = 0; i + 1 < critique.length; i++)
+      couplesCritiques.add(critique[i].id + "\u0000" + critique[i + 1].id);
+
+    noeuds.forEach((n) => {
+      n.goulot = goulots.get(n.id) || null;
+      n.desequilibre = desequilibres.get(n.id) || null;
+      n.force = forces.get(n.id) || null;
+      n.mur = murs.get(n.id) || null;
+      n.critique = critiques.has(n.id);
+      n.double_genre = (n.genres || []).length > 1;
+    });
+    aretes.forEach((a, i) => {
+      a.critique = couplesCritiques.has(a.de + "\u0000" + a.vers);
+      for (const bout of ["de", "vers"]) {
+        if (parId.has(a[bout])) continue;
+        const original = a[bout];
+        const id = "pendant:" + i + ":" + bout;
+        const n = { id, genre: "pendant", genres: ["pendant"], ou: "adressage",
+          quoi: original === "?" ? "extrémité non adressée" : String(original),
+          pendant: true, bout_original: original };
+        noeuds.push(n); parId.set(id, n); a[bout] = id; a.bout_original = original;
+      }
+    });
+
+    // Les candidats restent des hypotheses : pointilles et transparents. Une
+    // vraie arete `equilibre` les remplace automatiquement au prochain tissage.
+    ((tissu && tissu.desequilibres) || []).forEach((d) => {
+      (d.candidats || []).forEach((c, i) => {
+        if (!parId.has(c.id) || !parId.has(d.noeud)) return;
+        aretes.push({ id: "candidat:" + d.noeud + ":" + i, de: c.id,
+          vers: d.noeud, nature: "candidat_equilibre", source: "evaluation/texte",
+          flou: true, virtuel: true, texte: "candidat textuel non tissé" });
+      });
+    });
+
+    const journal = lire("journal.json", {}) || {};
+    const observateurs = [{ id: "mj", nom: "MJ — vérité complète" }];
+    const joueur = journal.personnage_joueur_id;
+    if (joueur) observateurs.push({ id: joueur, nom: nom(joueur) });
+    if (gens["aurore-inchauspe"] && joueur !== "aurore-inchauspe")
+      observateurs.push({ id: "aurore-inchauspe", nom: nom("aurore-inchauspe") });
+    Object.values(gens).sort((a, b) => String(a.nom).localeCompare(String(b.nom), "fr"))
+      .forEach((p) => {
+        if (!p.id || observateurs.some((o) => o.id === p.id)) return;
+        observateurs.push({ id: p.id, nom: p.nom || p.id });
+      });
+
+    // Qui émet l'importance narrative : les sièges occupés, et le principal
+    // en tête. La régie diffuse depuis eux — un tissu n'a pas de centre en
+    // soi, il en a un parce qu'un joueur est assis quelque part.
+    const emetteurs = (Array.isArray(listeSieges) ? listeSieges : [])
+      .filter((s) => s && s.occupe && s.personnage_id)
+      .map((s) => ({ id: s.personnage_id, nom: s.nom || nom(s.personnage_id),
+        role: s.role || "second" }));
+
+    const suivables = aretes.filter((a) => !a.flou && !a.virtuel);
+    const pendantes = suivables.filter((a) => parId.get(a.de).pendant || parId.get(a.vers).pendant);
+    graphe = {
+      noeuds, aretes, observateurs, sieges: emetteurs,
+      resume: {
+        noeuds: Object.keys(brutNoeuds).length,
+        aretes: aretes.filter((a) => !a.virtuel).length,
+        suivables: suivables.length,
+        resolues: suivables.length - pendantes.length,
+        pendantes: pendantes.length,
+        floues: aretes.filter((a) => a.flou && !a.virtuel).length,
+        doubles: noeuds.filter((n) => n.double_genre).length,
+        natifs: aretes.filter((a) => a.natif).length,
+        candidats: aretes.filter((a) => a.virtuel).length,
+        routes: aretes.filter((a) => a.connaissance).length,
+        murs_sans_route: murs.size,
+      },
+    };
+  } catch (e) {
+    graphe = { erreur: String(e.message || e), noeuds: [], aretes: [], observateurs: [] };
+  }
   return {
-    tissu,
+    tissu, graphe,
     date: monde.date || null, date_texte: dateCourte(monde.date),
     tension: monde.tension == null ? null : monde.tension, phase: monde.phase || "",
     horloges: lire("horloges.json", {}),
@@ -899,7 +1898,10 @@ http
       if (url === "/moi") {
         const l = roster(), j = qui(req, url);
         return envoyer(res, 200, JSON.stringify({
-          multi: !!l, moi: j ? { personnage_id: j.personnage_id, nom: j.nom || "" } : null,
+          multi: !!l,
+          // `regie` : ce siège ne joue personne, il regarde. C'est lui qui
+          // ouvre le fil d'un homme depuis le plan du château (modules/regie.js).
+          moi: j ? { personnage_id: j.personnage_id, nom: j.nom || "", regie: !!j.regie } : null,
           sieges: (l || []).map((x) => ({ personnage_id: x.personnage_id, nom: x.nom || "" })),
         }));
       }
@@ -937,6 +1939,17 @@ http
           const siege = qui(req, url);
           const lire = (f) => JSON.parse(fs.readFileSync(path.join(RACINE, "etat", f), "utf-8"));
           let moi = siege && siege.personnage_id;
+          // LA RÉGIE N'EST NULLE PART, donc elle se tient où se tient le siège
+          // principal — sinon son plan resterait vide et il n'y aurait aucun
+          // visage à toucher, ce qui est tout ce qu'elle vient faire ici. Elle
+          // ne perd rien au passage : le brouillard ne s'applique pas à un
+          // siège qui n'incarne personne (voir `regie` dans etat/joueurs.json).
+          const enRegie = !!(siege && siege.regie);
+          if (enRegie) {
+            const principal = (roster() || []).find((s) => s.role === "principal")
+              || (roster() || [])[0];
+            moi = (principal && principal.personnage_id) || null;
+          }
           // Le repli sur le journal n'est bon qu'en partie SEULE. À deux, un
           // visiteur sans jeton hériterait de la pièce de la reine — et donc de
           // qui s'y trouve. Sans siège, on ne sait pas qui regarde : on ne dit rien.
@@ -948,16 +1961,24 @@ http
           }
           // La position ne se stocke pas, elle se calcule — scripts/presence.py.
           // `presence` ne tient que les EXCEPTIONS (ce qu'une scène a constaté) ;
-          // `resolu` est l'instantané qui en découle, routines et chemins compris,
-          // refait à chaque poussée d'`append_flux.py`. On le préfère quand il est
-          // là : sans lui, un homme laissé dans la grande salle avant-hier y serait
-          // encore. Son absence n'arrête rien — on retombe sur les exceptions nues.
+          // le reste se résout à L'HEURE DE CELUI QUI REGARDE.
+          //
+          // On lisait ici l'instantané `resolu` que `append_flux.py` fige à
+          // chaque poussée. C'était faux d'une façon qu'on ne voyait pas : entre
+          // deux items — c'est-à-dire presque toujours — le château restait
+          // arrêté à la minute du dernier push, et PERSONNE N'ÉTAIT JAMAIS EN
+          // MARCHE. Mesuré sur une journée de Peyredragon, quelqu'un traverse
+          // 38 % des minutes ; le cache n'en montrait aucune. On recalcule donc
+          // pour de bon, avec un cache court pour ne pas relancer Python à
+          // chaque battement de sonde. Si le calcul échoue, on retombe sur
+          // `resolu`, puis sur les exceptions nues : le jeu ne s'arrête pas.
           let presence = {};
           let connus = [];
           try {
             const f = lire("presence.json");
             presence = f.presence || {};
-            const r = f.resolu && f.resolu.gens;
+            const r = resoudrePresence(dateDe({ personnage_id: moi }))
+              || (f.resolu && f.resolu.gens);
             if (r) {
               presence = {};
               // Qui est SUIVI, transit compris : un homme dans l'escalier n'est
@@ -966,8 +1987,29 @@ http
               connus = Object.keys(r);
               for (const id of Object.keys(r)) {
                 // En chemin, on n'est dans la pièce de personne : on est dans
-                // l'escalier, et l'on n'y partage rien.
-                if (r[id].etat === "en-chemin") continue;
+                // l'escalier, et l'on n'y partage rien. Un joueur ne le voit
+                // donc pas — il ne le croise pas.
+                //
+                // LA RÉGIE, SI. Elle ne partage aucune pièce avec personne :
+                // elle regarde le château, et un homme qui traverse est
+                // justement ce qu'elle vient voir. On lui rend le tracé entier
+                // (`route`), le rang de la salle franchie et la fraction du pas
+                // en cours — de quoi le poser entre deux portes. Il reste hors
+                // de `avec` et son `ici` reste faux : il n'est chez personne.
+                if (r[id].etat === "en-chemin") {
+                  if (!enRegie) continue;
+                  presence[id] = {
+                    salle: r[id].salle, lieu: null,
+                    marche: {
+                      de: r[id].de || null, vers: r[id].vers || null,
+                      vers_lieu: r[id].vers_lieu || null,
+                      prochaine: r[id].prochaine || null,
+                      route: r[id].route || [], franchi: r[id].franchi || 0,
+                      pas: r[id].pas || 0, arrive_dans: r[id].arrive_dans || 0,
+                    },
+                  };
+                  continue;
+                }
                 presence[id] = { salle: r[id].salle, lieu: r[id].lieu };
               }
             }
@@ -988,7 +2030,13 @@ http
               }
             }
           } catch (e) {}
-          const mien = moi && presence[moi];
+          // LA RÉGIE SE TIENT QUELQUE PART, et c'est elle qui le dit. Son
+          // entrée de `etat/joueurs.json` porte `salle` et `lieu` : elle n'a
+          // pas de corps dans `presence.json` — rien ne l'y met, rien ne l'en
+          // sort —, mais elle a un poste d'observation, et le plan s'ouvre là.
+          // Sans cette déclaration, elle retombe sur l'épaule du principal.
+          let mien = moi && presence[moi];
+          if (enRegie && siege.salle) mien = { salle: siege.salle, lieu: siege.lieu || "" };
           // Sans entrée pour le regardeur, on ne sait pas où il est : on ne dit
           // rien plutôt que de nommer une pièce au hasard. `connue: false` dit au
           // navigateur de s'en tenir à ce que le flux lui montre, comme avant.
@@ -1006,7 +2054,8 @@ http
             });
           } catch (e) {}
           const avec = Object.keys(presence)
-            .filter((id) => id !== moi && meme(presence[id], mien))
+            .filter((id) => id !== moi && !presence[id].marche
+              && meme(presence[id], mien))
             .map((id) => ({ id, nom: noms[id] || id }));
           // `connus` : les gens dont la présence est tenue. Le navigateur en a
           // besoin pour distinguer « ailleurs » de « pas suivi » — un pêcheur de
@@ -1023,13 +2072,18 @@ http
             .map((s) => s.personnage_id).filter((id) => id && id !== moi));
           const places = {};
           Object.keys(presence).forEach((id) => {
-            if (autresJoueurs.has(id) && !meme(presence[id], mien)) return;
+            // La régie voit aussi les autres joueurs, où qu'ils soient : c'est
+            // le seul siège à qui l'on ne cache rien, et c'est sa définition.
+            if (!enRegie && autresJoueurs.has(id) && !meme(presence[id], mien)) return;
             places[id] = {
               nom: noms[id] || id,
               titre: titres[id] || "",
               salle: presence[id].salle || null,
               lieu: presence[id].lieu || null,
-              ici: meme(presence[id], mien),
+              // un homme en marche n'est chez personne, pas même chez celui
+              // dont il vient de franchir la porte
+              ici: !presence[id].marche && meme(presence[id], mien),
+              marche: presence[id].marche || null,
             };
           });
           return envoyer(res, 200, JSON.stringify({
@@ -1060,6 +2114,82 @@ http
       if (url === "/admin/donnees") {
         try { return envoyer(res, 200, JSON.stringify(regie())); }
         catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
+      }
+      if (url === "/admin/activations") {
+        try { return envoyer(res, 200, JSON.stringify(resumeActivations())); }
+        catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
+      }
+      if (url === "/admin/activations/previsions") {
+        try { return envoyer(res, 200, JSON.stringify(prevoirActivations())); }
+        catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
+      }
+      if (url === "/admin/sante") {
+        try { return envoyer(res, 200, JSON.stringify(sante())); }
+        catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
+      }
+      // Les pas — la lecture à plat du plan, rangée par ce qu'un pas coûte s'il
+      // rate. Hors du jeu et hors de la régie : elle ne montre rien que les
+      // livres ne montrent déjà, elle répond seulement à l'autre question,
+      // celle qu'aucun registre ne pose — « par quoi commencer ce matin ».
+      if (url === "/pas") return fichierStatique(res, "pas.html", "text/html; charset=utf-8");
+      // Pas sous `/admin` : ce n'est pas l'envers du decor, c'est une lecture du
+      // plan que les livres eux-memes affichent.
+      if (url === "/criticite") {
+        try { return envoyer(res, 200, JSON.stringify(criticite())); }
+        catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
+      }
+      if (url === "/admin/charge") {
+        try { return envoyer(res, 200, JSON.stringify(chargeActeurs())); }
+        catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
+      }
+      if (url === "/admin/activations/mj-actif") {
+        try { return envoyer(res, 200, JSON.stringify(filMjActif())); }
+        catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
+      }
+      const ma = url.match(/^\/admin\/activations\/([a-zA-Z0-9-]+)$/);
+      if (ma) {
+        try {
+          const detail = detailActivation(ma[1]);
+          return detail
+            ? envoyer(res, 200, JSON.stringify(detail))
+            : envoyer(res, 404, JSON.stringify({ erreur: "activation absente" }));
+        } catch (e) {
+          return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) }));
+        }
+      }
+      // Le fil d'un homme, refait de bout en bout — ce que Corneille ouvre en
+      // touchant un visage sur le plan du château. Réservé aux sièges de régie :
+      // ce fil ignore le brouillard, et il n'a rien à faire chez un joueur.
+      const mp = url.match(/^\/regie\/personnage\/([a-zA-Z0-9_-]+)$/);
+      if (mp) {
+        const j = qui(req, url);
+        if (!j || !j.regie) return envoyer(res, 403, JSON.stringify({ erreur: "hors régie" }));
+        try { return envoyer(res, 200, JSON.stringify(filPersonnage(mp[1]))); }
+        catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
+      }
+      if (url === "/regie/chercher" || url === "/regie/extrait") {
+        const j = qui(req, url);
+        if (!j || !j.regie) return envoyer(res, 403, JSON.stringify({ erreur: "hors régie" }));
+        const p = new URLSearchParams(req.url.split("?")[1] || "");
+        try {
+          return envoyer(res, 200, JSON.stringify(url === "/regie/chercher"
+            ? chercherDansFlux(p.get("q"), Number(p.get("max")) || 12)
+            : extraitDuFlux(Number(p.get("de")) || 0, Number(p.get("a")) || 0)));
+        } catch (e) {
+          return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) }));
+        }
+      }
+      // Le graphe animé ne recharge pas ses milliers de nœuds chaque seconde.
+      // Il ne relit que les fronts des sièges, puis extrapole en temps réel
+      // jusqu'au prochain changement écrit par append_flux.py.
+      if (url === "/admin/horloges") {
+        try {
+          const horloges = JSON.parse(fs.readFileSync(
+            path.join(RACINE, "etat", "horloges.json"), "utf-8"));
+          return envoyer(res, 200, JSON.stringify({ horloges, lu_a: Date.now() }));
+        } catch (e) {
+          return envoyer(res, 200, JSON.stringify({ horloges: {}, lu_a: Date.now() }));
+        }
       }
       // La foule : une page d'essai, un point par habitant, la journée en
       // accéléré. Hors du jeu — elle ne lit ni le flux ni l'inbox.
@@ -1112,6 +2242,33 @@ http
         if (!types[ext]) return envoyer(res, 404, JSON.stringify({ erreur: nom }));
         try {
           const corps = fs.readFileSync(path.join(RACINE, "ecrans", "textures", nom));
+          res.writeHead(200, { "Content-Type": types[ext], "Cache-Control": "public, max-age=86400" });
+          return res.end(corps);
+        } catch (e) { return envoyer(res, 404, JSON.stringify({ erreur: nom })); }
+      }
+      // Les vues de salle. Une salle du plan peut avoir sa toile dans
+      // `ecrans/salles/<id de la salle>.jpg` — l'id est celui de `plans.js`.
+      // Le fil la pose au changement de salle, et SEULEMENT si elle existe :
+      // d'où le manifeste ci-dessous, servi une fois au chargement. Sans lui,
+      // la page devrait tenter l'image et la retirer sur erreur, ce qui la
+      // ferait clignoter à chaque salle qui n'en a pas — c'est-à-dire presque
+      // toutes. Rien à declarer nulle part : deposer le fichier suffit.
+      if (url === "/salles") {
+        try {
+          const dossier = path.join(RACINE, "ecrans", "salles");
+          const ids = fs.readdirSync(dossier)
+            .filter((n) => /\.(jpg|jpeg|png|webp)$/i.test(n))
+            .map((n) => n.replace(/\.[^.]+$/, ""));
+          return envoyer(res, 200, JSON.stringify({ salles: ids }));
+        } catch (e) { return envoyer(res, 200, JSON.stringify({ salles: [] })); }
+      }
+      if (url.startsWith("/salles/")) {
+        const nom = path.basename(decodeURIComponent(url.slice("/salles/".length)));
+        const ext = path.extname(nom).toLowerCase();
+        const types = { ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp" };
+        if (!types[ext]) return envoyer(res, 404, JSON.stringify({ erreur: nom }));
+        try {
+          const corps = fs.readFileSync(path.join(RACINE, "ecrans", "salles", nom));
           res.writeHead(200, { "Content-Type": types[ext], "Cache-Control": "public, max-age=86400" });
           return res.end(corps);
         } catch (e) { return envoyer(res, 404, JSON.stringify({ erreur: nom })); }
@@ -1179,6 +2336,14 @@ http
               if (f) {
                 try { portrait_svg = fs.readFileSync(path.join(RACINE, f), "utf-8"); } catch (e) {}
               }
+              // LE CHAMP `portrait.fichier` N'EST PAS UNE CONDITION D'EXISTENCE.
+              // Il manquait à une bonne part des fiches, et ces gens-là gardaient
+              // la silhouette anonyme alors que leur médaillon était peint et
+              // posé sur le disque — un manque invisible, puisque rien n'échoue.
+              // `medaillons.py` écrit toujours `ecrans/portraits/<id>.svg` : cet
+              // id EST l'adresse. On la tente donc quand le champ ne dit rien,
+              // et peindre un visage suffit désormais à le faire paraître.
+              if (!portrait_svg) portrait_svg = portraitFrais(p.id) || "";
               if (!portrait_svg) portrait_svg = portraitDefaut(p.nom || p.id);
               return {
                 id: p.id, nom: p.nom, titre: p.titre || "",
@@ -1223,7 +2388,7 @@ http
             // regarde. Une carte centrée sur Peyredragon quand on est ailleurs
             // est une carte qui ment sur l'endroit d'où l'on parle.
             const journal = lire("journal.json");
-            const moi = (siege && siege.personnage_id) || journal.personnage_joueur_id;
+            const moi = regardeur(siege, journal);
             const pj = lire("personnages.json").find((p) => p.id === moi);
             if (pj) { joueur_lieu_id = pj.lieu_id || null; joueur_id_carte = pj.id; }
           } catch (e) {}
@@ -1374,7 +2539,7 @@ http
             const siege = qui(req, url);
             const lire = (f) => JSON.parse(fs.readFileSync(path.join(RACINE, "etat", f), "utf-8"));
             const journal = lire("journal.json");
-            const moi = (siege && siege.personnage_id) || journal.personnage_joueur_id;
+            const moi = regardeur(siege, journal);
             const pj = lire("personnages.json").find((p) => p.id === moi);
             if (pj) ou = pj.lieu_id || null;
           } catch (e) {}
@@ -1434,68 +2599,11 @@ http
         try {
           const brut = JSON.parse(fs.readFileSync(path.join(RACINE, "etat", "books.json"), "utf-8"));
           const tous = Array.isArray(brut) ? brut : [];
-          const siege = qui(req, url);
-          let moi = (siege && siege.personnage_id) || null;
+          const moi = monPersonnage(req, url);
           if (!moi && roster()) {
             return envoyer(res, 200, JSON.stringify({ books: [], boites: [], siege: false }));
           }
-          if (!moi) {
-            try {
-              moi = JSON.parse(fs.readFileSync(path.join(RACINE, "etat", "journal.json"), "utf-8"))
-                .personnage_joueur_id || null;
-            } catch (e) {}
-          }
-          // Où est chacun : c'est la fiche qui le dit, jamais le livre.
-          const ou = {};
-          try {
-            JSON.parse(fs.readFileSync(path.join(RACINE, "etat", "personnages.json"), "utf-8"))
-              .forEach((p) => { ou[p.id] = p.lieu_id || null; });
-          } catch (e) {}
-          const ici = moi ? (ou[moi] || null) : null;
-          // Les BOÎTES (etat/boites.json) : un coffret posé sur une table ou
-          // porté sous le bras, où l'on range des volumes. Une boîte donne sa
-          // PLACE à ce qu'elle contient — un volume rangé n'a plus de salle,
-          // plus de porteur, plus de `prive` à lui : il prend ceux du coffret,
-          // et l'on déplace vingt registres en déplaçant une boîte. On résout
-          // ici, AVANT le tri : sans quoi un volume rangé n'aurait plus de
-          // place du tout, et le brouillard le laisserait passer partout.
-          let boites = [];
-          try {
-            const bb = JSON.parse(fs.readFileSync(
-              path.join(RACINE, "etat", "boites.json"), "utf-8"));
-            if (Array.isArray(bb)) boites = bb;
-          } catch (e) {}
-          const coffret = new Map(boites.map((c) => [c.id, c]));
-          tous.forEach((b) => {
-            const c = b.boite && coffret.get(b.boite);
-            if (!c) return;
-            b.lieu_id = c.lieu_id || null;
-            b.salle_id = c.salle_id || null;
-            b.acteur_id = c.acteur_id || null;
-            b.prive = !!c.prive;
-            // `lecteurs` ne se remplace pas, il s'ajoute : un coffret peut
-            // fermer plus que le volume, jamais moins.
-            if (Array.isArray(c.lecteurs) && c.lecteurs.length) {
-              b.lecteurs = (Array.isArray(b.lecteurs) && b.lecteurs.length)
-                ? b.lecteurs.filter((q) => c.lecteurs.indexOf(q) !== -1)
-                : c.lecteurs.slice();
-            }
-          });
-          // Le château d'un volume : celui où il est posé, ou celui où se
-          // trouve l'homme qui le porte — sa fiche d'abord, le `lieu_id` du
-          // livre à défaut (un porteur sans fiche reste où on l'a écrit).
-          const chateau = (b) => (b.acteur_id && ou[b.acteur_id] !== undefined)
-            ? ou[b.acteur_id] : (b.lieu_id || null);
-          const liste = tous.filter((b) => {
-            // `lecteurs` ne donne rien, il retire : le volume garde ses règles
-            // de lieu, mais qui n'y est pas nommé ne l'ouvre pas.
-            if (Array.isArray(b.lecteurs) && b.lecteurs.length
-                && b.lecteurs.indexOf(moi) === -1) return false;
-            if (b.acteur_id && b.acteur_id === moi) return true;
-            if (b.prive && b.acteur_id) return false;
-            const ch = chateau(b);
-            return !ch || !ici || ch === ici;
-          });
+          const { liste, boites } = volumesVisibles(tous, moi);
           liste.forEach((b) => (b.pages || []).forEach(inlinerFigure));
           // On ne descend que les coffrets dont il reste quelque chose à
           // ouvrir : une boîte vide sur l'étagère est un onglet qui ment.
@@ -1574,7 +2682,7 @@ http
             const siege = qui(req, url);
             const lire = (f) => JSON.parse(fs.readFileSync(path.join(RACINE, "etat", f), "utf-8"));
             const journal = lire("journal.json");
-            const moi = (siege && siege.personnage_id) || journal.personnage_joueur_id;
+            const moi = regardeur(siege, journal);
             const pj = lire("personnages.json").find((p) => p.id === moi);
             if (pj) ou = pj.lieu_id || null;
           } catch (e) {}
@@ -1599,10 +2707,1377 @@ http
           return envoyer(res, 200, JSON.stringify({ champ: null }));
         }
       }
+      // L'échiquier : les affaires du conseil, de ce qu'on a jusqu'à ce qu'on
+      // veut. RIEN N'EST ÉCRIT À LA MAIN ICI — tout est DÉRIVÉ des six registres
+      // par type de `etat/books.json` (`plan-etats-cibles`, `plan-verrous`,
+      // `plan-clefs`, `plan-actions`, `plan-moyens`, `plan-offices`), qui sont
+      // l'unité de rangement de la maison. Le guide des affaires tranche le cas
+      // où les deux divergeraient : « quand les deux se contredisent, c'est le
+      // registre qui a raison ». Une vue qui recopierait le plan dans un fichier
+      // à part serait un mensonge en attente — il n'y a donc plus de fichier.
+      //
+      // La chaîne est celle du livre, et l'échiquier l'épouse de bas en haut :
+      // moyens et offices, actions, clefs, verrous, états cibles. Un PLATEAU est
+      // une affaire.
+      //
+      // LES ÉTATS CIBLES NE SONT PAS UNE RANGÉE, C'EST UN ARBRE. La colonne
+      // `⬆️ Sert` du registre pointe vers l'état AMONT — « 200 sert 100 » —, et
+      // les douze états de la Prise de Port-Réal sont en réalité un arbre de
+      // quatre niveaux sous une seule racine. Les étaler à plat était un
+      // contresens autant qu'un problème de place.
+      //
+      // Une COLONNE s'ouvre donc sous un état qui porte des verrous, et sous une
+      // feuille qui n'en porte aucun — pour qu'une feuille rompue reste comptée.
+      // Un état intermédiaire sans verrou ne prend pas de colonne : il COIFFE
+      // celles de ses enfants, et sa portée est l'étendue de son sous-arbre.
+      //
+      // Ce que le serveur dérive et que personne n'écrit : l'arbre, la descente
+      // (ce qui pend sous chaque état), la remontée — l'épreuve du guide, « une
+      // action qui ne remonte à aucun état cible est une occupation » —, les
+      // brèches d'un état (un verrou pour lequel une clef est RETENUE), et les
+      // fautes : une pièce sans preuve, une action sans office, un moyen cité
+      // qui n'est à aucun registre, une référence qui ne résout pas.
+      if (url === "/echiquier") {
+        try {
+          // ON NE LIT QUE CE QUE CE SIÈGE PEUT OUVRIR. Le damier servait
+          // `books.json` en entier : Marlo, à Port-Réal, y trouvait les
+          // quarante-deux plateaux du conseil de Peyredragon et pas un des
+          // siens. Même tri que l'étagère, et pour la même raison — un plateau
+          // qu'on ne peut pas ouvrir dans les livres est un plan qui n'est pas
+          // le sien.
+          const brut = JSON.parse(
+            fs.readFileSync(path.join(RACINE, "etat", "books.json"), "utf-8"));
+          const moi = monPersonnage(req, url);
+          if (!moi && roster()) {
+            return envoyer(res, 200, JSON.stringify({ affaires: [] }));
+          }
+          const livres = volumesVisibles(Array.isArray(brut) ? brut : [], moi).liste;
+          const parId = {};
+          livres.forEach((l) => { if (l && l.id) parId[l.id] = l; });
+          // Une cellule de numéro porte son gras de registre : on ne garde que
+          // l'adresse. « **M01** » vaut M01, et une adresse ne se renumérote
+          // jamais — c'est une adresse, pas un rang.
+          const adresse = (c) => String(c == null ? "" : c).replace(/[*\s]/g, "");
+          const adresses = (c) => (String(c == null ? "" : c).match(/[MO]?\d+/g) || []);
+          const propre = (c) => String(c == null ? "" : c).replace(/\*\*/g, "").trim();
+          // Le libellé d'une pièce commence par le signe que le registre lui a
+          // donné : on l'ôte du nom, parce que le plateau montre le signe du
+          // RANG et l'encart le nom en clair.
+          const sansSigne = (c) => propre(c).replace(
+            /^(?:[←-⯿☀-➿️‍⃣]|[\uD83C-\uD83E][\uDC00-\uDFFF])+\s*/, "");
+          const rien = (c) => { const t = sansSigne(c); return !t || t === "—" || t === "-"; };
+          const sansAccent = (s) => String(s == null ? "" : s)
+            .normalize("NFD").replace(/[̀-ͯ]/g, "")
+            .toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+          const chiffre = (n) => parseInt(String(n).replace(/\D/g, ""), 10) || 0;
+
+
+          // ---- LA SOURCE, ET ELLE A CHANGÉ : LES CAHIERS ----------------------
+          // Il y avait deux plans dans `books.json`, et cette vue lisait le petit.
+          // Les six registres par type comptent 156 lignes ; les cahiers
+          // d'affaire, qui portent chacun leurs propres tables 🎯 🔒 🗝️ ⚔️, en
+          // comptent 1164 — dont 580 actions contre 60. La plupart des affaires
+          // les plus travaillées n'avaient pas une ligne au registre, et le
+          // plateau montrait donc un plan qui n'était plus celui du conseil.
+          //
+          // Le guide le disait déjà : « l'affaire est l'unité de TRAVAIL, les six
+          // registres par type sont l'unité de RANGEMENT ». Le travail est dans
+          // les cahiers ; l'index a décroché. On lit donc les cahiers.
+          //
+          // UN CAHIER = UNE AFFAIRE = UN PLATEAU, et le gain est plus grand que
+          // le compte : l'appariement par NOM disparaît. Le volume EST l'affaire
+          // — son titre, son emblème, son lien, sa main —, là où l'on rapprochait
+          // deux chaînes de caractères et où l'on perdait « L'entrée sans
+          // bataille » en chemin.
+          //
+          // LES COLONNES SE TROUVENT PAR LEUR EN-TÊTE, jamais par leur rang : un
+          // cahier écrit « Le prix » et « Ce que cela ferme » là où le registre a
+          // une seule colonne de coût, et l'un d'eux n'a pas de colonne « Où ».
+          // Ce qu'un cahier n'écrit pas, on ne l'invente pas : la case reste vide
+          // et la conclusion en tient compte.
+          const CANON = {
+            etat: [["l etat"], ["ce qui doit etre vrai"], ["ou"], ["la preuve"],
+                   ["sert"], ["affaire"]],
+            verrou: [["le verrou"], ["bloque"], ["ce qui est vrai"], ["la preuve"],
+                     ["leve quand"]],
+            clef: [["la clef"], ["ouvre"], ["le principe"],
+                   ["le prix", "ce qu elle coute"], ["la preuve"],
+                   ["decision", "retenue"]],
+            // `depend de` est la HUITIÈME, et elle n'était lue par personne.
+            // C'est pourtant la seule colonne du plan qui porte le lien
+            // `attend` — 397 actions sur 611 y écrivent un numéro, dont 71
+            // pointent hors du cahier. Sans elle, la moitié des arêtes qui
+            // sortent d'une affaire n'existe pas pour l'écran.
+            action: [["l action"], ["realise"], ["ce qu on fait"], ["office"],
+                     ["moyens"], ["la preuve"], ["ou ca en est", "etat"],
+                     ["depend de"]],
+          };
+          const TITRE = { etat: "etats cibles", verrou: "verrous",
+                          clef: "clefs", action: "actions" };
+          const quelleColonne = (cols, choix) => {
+            let i = -1;
+            choix.some((m) => { i = cols.indexOf(m); return i >= 0; });
+            if (i >= 0) return i;
+            choix.some((m) => { i = cols.findIndex((c) => c.indexOf(m) === 0); return i >= 0; });
+            return i;
+          };
+          // Une ligne de cahier ou de registre, rendue à la forme que tout le
+          // reste de cette route attend. Une colonne absente donne une case vide.
+          const normaliser = (t, genre) => {
+            const cols = ((t && t.colonnes) || []).map(sansAccent);
+            const rangs = CANON[genre].map((choix) => quelleColonne(cols, choix));
+            return ((t && t.lignes) || []).map((l) => {
+              const c = Array.isArray(l) ? l : (l && l.cellules);
+              if (!Array.isArray(c) || !c.length) return null;
+              return { c: [adresse(c[0])].concat(rangs.map((i) => (i >= 0 ? c[i] : ""))),
+                       num: adresse(c[0]) };
+            }).filter((x) => x && x.num);
+          };
+          // Le titre d'une table porte parfois une suite après un tiret cadratin
+          // (« Ouverture de l'Affaire — forme neuve du 26e au soir ») : on
+          // apparie sur son début, jamais sur l'égalité.
+          const tablesDe = (v, genre) => (v.tables || []).filter((t) =>
+            sansAccent(String((t && t.titre) || "").split("\u2014")[0]).indexOf(TITRE[genre]) === 0);
+
+          const etats = [], verrous = [], clefs = [], actions = [];
+          const bacs = { etat: etats, verrou: verrous, clef: clefs, action: actions };
+          const groupes = [];
+          // UN CAHIER D'AFFAIRE SE RECONNAÎT À SA FORME, PAS À SON NOM. La
+          // règle était « un id qui commence par `affaire-` », et elle tenait
+          // tant qu'une seule maison écrivait des affaires. La Néra tient les
+          // siennes sous `nera-*`, au même gabarit, ouverture comprise : le
+          // damier les ignorait toutes les sept. Un volume qui porte
+          // l'ouverture de l'affaire EST une affaire, où qu'il soit rangé et
+          // quel que soit son id — et la table des états cibles reste exigée,
+          // sans quoi il n'y a pas de plateau à dessiner.
+          const ouverture = (l) => (l.tables || []).some((t) =>
+            sansAccent(String((t && t.titre) || "").split("—")[0])
+              .indexOf("ouverture de l affaire") === 0);
+          livres.filter((l) => l && (String(l.id).indexOf("affaire-") === 0 || ouverture(l))
+            && tablesDe(l, "etat").length).forEach((v) => {
+            // `ecrites` : TOUTES les adresses que le cahier porte à ses quatre
+            // tables, qu'elles atteignent le damier ou non. Ce n'est pas la
+            // même chose que les pièces tracées, et l'écart est le sujet —
+            // 130 lignes sur 1182 réalisent une clef qui n'existe pas, ou
+            // pendent sous un état sans colonne. Le plateau a raison de ne pas
+            // les dessiner ; un conseiller a le droit de les citer quand même,
+            // et un renvoi vers l'une d'elles ne doit pas devenir du texte nu.
+            const g = { titre: sansSigne(v.titre || v.id), volume: v, etats: [],
+                        ecrites: [] };
+            Object.keys(bacs).forEach((genre) => {
+              tablesDe(v, genre).forEach((t) => normaliser(t, genre).forEach((r) => {
+                // DE QUEL CAHIER SORT CETTE LIGNE. Les quatre bacs sont
+                // GLOBAUX — un verrou d'un autre cahier tombe déjà dans notre
+                // colonne s'il bloque notre état —, et rien ne disait d'où
+                // venait une ligne. Sans cette marque, on ne peut pas
+                // distinguer une arête qui reste chez nous d'une arête qui sort.
+                r.aff = g.titre;
+                if (genre === "etat") { r.c[6] = g.titre; g.etats.push(r); }
+                if (/^\d{4,6}$/.test(String(r.num)) && g.ecrites.indexOf(r.num) < 0) {
+                  g.ecrites.push(r.num);
+                }
+                bacs[genre].push(r);
+              }));
+            });
+            if (g.etats.length) groupes.push(g);
+          });
+
+          // ---- LES MOYENS ET LES OFFICES, D'OÙ QU'ILS VIENNENT ---------------
+          // Ils étaient lus à deux ids fixes — `plan-moyens` et `plan-offices`,
+          // les registres du Grand Plan de la reine. Une maison qui tient son
+          // propre plan écrit les siens dans les TABLES d'un cahier
+          // (`nera-moyens` porte les deux), et le damier lui rendait alors
+          // toutes ses actions sans office et tous ses moyens inconnus. On
+          // récolte donc par la FORME, dans tout ce que ce siège peut ouvrir :
+          // une table qui porte une colonne « Le moyen » est un registre de
+          // moyens, où qu'elle soit posée.
+          //
+          // LES COLONNES SE TROUVENT PAR LEUR NOM, JAMAIS PAR LEUR RANG. Le
+          // registre des moyens a reçu deux colonnes de plus le jour où
+          // `nos-moyens` y a été fusionné (« Ce qu'il vaut », « Ce qu'il peut
+          // produire ») : lues au rang, la bulle disait « tenu par Tout ce qui
+          // flotte dans la baie » et « à Corlys Velaryon ». Un registre qu'on
+          // tient à la main gagne des colonnes, c'est sa vie ; une vue qui les
+          // compte est une vue qui mentira un jour sans prévenir. Chaque ligne
+          // emporte donc ses cases déjà résolues, et non le rang où les lire.
+          const recolter = (genre) => {
+            const tete = genre === "moyen" ? "le moyen" : "l office";
+            const out = [];
+            const prendre = (colonnes, lignes) => {
+              const e = (colonnes || []).map(sansAccent);
+              if (!e.some((c) => c.indexOf(tete) === 0)) return;
+              const r = (mot, defaut) => {
+                let i = e.indexOf(mot);
+                if (i < 0) i = e.findIndex((x) => x.indexOf(mot) >= 0);
+                return i >= 0 ? i : defaut;
+              };
+              const cases = genre === "moyen"
+                ? { nom: r(tete, 1), dit: r("sait faire", 2), tient: r("qui le tient", 3),
+                    ou: r("ou", 4), etat: r("etat", 5) }
+                : { nom: r(tete, 1), dit: r("repond", 3), tient: r("titulaire", 2),
+                    ou: -1, etat: r("decide seul", 4) };
+              (lignes || []).forEach((l) => {
+                const c = Array.isArray(l) ? l : (l && l.cellules);
+                if (!Array.isArray(c) || !c.length) return;
+                const x = { c: c, num: adresse(c[0]) };
+                if (!x.num) return;
+                Object.keys(cases).forEach((k) => {
+                  x[k] = cases[k] >= 0 ? propre(c[cases[k]]) : "";
+                });
+                out.push(x);
+              });
+            };
+            livres.forEach((v) => {
+              prendre(v.colonnes, v.lignes);
+              (v.tables || []).forEach((t) => prendre(t.colonnes, t.lignes));
+            });
+            return out;
+          };
+          const moyens = recolter("moyen"), offices = recolter("office");
+          if (!groupes.length) return envoyer(res, 200, JSON.stringify({ affaires: [] }));
+
+          const indexe = (t) => { const o = {}; t.forEach((x) => { o[x.num] = x; }); return o; };
+          const iV = indexe(verrous), iM = indexe(moyens), iO = indexe(offices);
+          // Un moyen et un office se citent par leur numéro — mais une action
+          // écrite vite les nomme en toutes lettres. On rattrape le nom, et ce
+          // qu'on ne rattrape pas devient une faute au lieu de disparaître.
+          const parNom = (t) => {
+            const o = {};
+            t.forEach((x) => { o[sansAccent(sansSigne(x.nom))] = x; });
+            return o;
+          };
+          const nM = parNom(moyens), nO = parNom(offices);
+          // Les cases sont résolues à la récolte : il ne reste qu'à les lire.
+          const cel = (t, genre, quoi) => (t && t[quoi]) || "";
+          // Un article de tête n'est pas une différence : le registre écrit
+          // « Maîtresse des nouvelles de la reine », l'action cite « la
+          // maîtresse des nouvelles », et c'est le même office. Ce qui ne se
+          // rattrape pas ainsi reste une faute et le montre — « à désigner »
+          // n'est pas un office, et ne le deviendra pas par indulgence.
+          const nu = (s) => sansAccent(s).replace(/^(?:l|le|la|les|du|de|des|d) /, "");
+          const retrouver = (texte, index, noms) => {
+            const code = adresses(texte).find((a) => index[a]);
+            if (code) return index[code];
+            const n = nu(sansSigne(texte));
+            if (!n) return null;
+            if (noms[n]) return noms[n];
+            const cle = Object.keys(noms).find((k) => {
+              const q = nu(k);
+              return q && (n.indexOf(q) >= 0 || q.indexOf(n) >= 0);
+            });
+            return cle ? noms[cle] : null;
+          };
+
+          // Le volume de l'affaire — UN SEUL APPARIEMENT, et tout en sort : le
+          // lien du clic, l'emblème que la maison lui a choisi, et la phrase qui
+          // dit pourquoi l'affaire occupe le conseil. Le registre nomme
+          // l'affaire en clair ; on la retrouve par son titre, et faute de titre
+          // on n'invente ni lien mort ni emblème.
+          const volumes = livres.filter((l) => l && String(l.id).indexOf("affaire-") === 0);
+          const volumeDe = (nom) => {
+            const n = sansAccent(nom);
+            if (!n) return null;
+            let v = volumes.find((l) => sansAccent(l.titre) === n);
+            if (!v) v = volumes.find((l) => sansAccent(l.titre).indexOf(n) >= 0);
+            return v || null;
+          };
+          // L'OBJET, au sens du guide : « une phrase, pourquoi cette affaire
+          // mérite l'attention du conseil ». Les volumes l'écrivent dans leur
+          // table d'ouverture, sous des intitulés voisins — on prend la ligne,
+          // jamais on ne la compose. Faute d'ouverture écrite, le sous-titre du
+          // volume dit déjà de quoi il traite.
+          const objetDe = (v) => {
+            if (!v) return null;
+            const t = v.tables || [];
+            for (const tb of t) {
+              for (const l of (tb.lignes || [])) {
+                const c = l && l.cellules;
+                if (!c || !c[0]) continue;
+                const tete = sansAccent(c[0]);
+                if (tete.indexOf("objet") >= 0 || tete.indexOf("rend vrai") >= 0) {
+                  return propre(c[1]);
+                }
+              }
+            }
+            return v.sous_titre ? propre(v.sous_titre) : null;
+          };
+
+          // ---- LE TENEUR D'UNE ACTION, ET SON VISAGE ----
+          // Une action cite son office ; l'office nomme son titulaire ; le
+          // titulaire est quelqu'un de `personnages.json`. La dernière jointure
+          // se fait sur un nom écrit en toutes lettres — « Ser Robert Quince,
+          // onze ans en charge » — donc on la fait SOBREMENT : on ne lit que la
+          // tête de la cellule (avant la première virgule, le point ou le
+          // tiret), on ôte les titres, et l'on n'accepte qu'une suite de mots
+          // ENTIERS commune aux deux côtés. « Wend » ne devient pas « Wenda »,
+          // et un office VIDE ne prend pas le visage de qui se trouve nommé
+          // dans sa ligne. Mieux vaut pas de visage qu'un mauvais visage.
+          let gens = [];
+          try { gens = JSON.parse(fs.readFileSync(
+            path.join(RACINE, "etat", "personnages.json"), "utf-8")); } catch (e) {}
+          const sansTitre = (t) => {
+            let x = t;
+            for (let i = 0; i < 3; i++) {
+              const y = x.replace(
+                /^(ser|dame|messire|mestre|maitre|maitresse|lord|lady|prince|princesse|le|la|les|l) /, "");
+              if (y === x) break;
+              x = y;
+            }
+            return x;
+          };
+          const tete = (c) => sansTitre(sansAccent(
+            String(c == null ? "" : c).replace(/\*\*/g, "").split(/[,;.(—]/)[0]));
+          const VACANT = ["vide", "vacant", "a designer", "designer", "neant"];
+          const suite = (a, b) => {
+            if (!a.length || a.length > b.length) return false;
+            for (let i = 0; i <= b.length - a.length; i++) {
+              if (a.every((m, j) => m === b[i + j])) return true;
+            }
+            return false;
+          };
+          const personneDe = (texte) => {
+            const t = tete(texte);
+            if (!t || VACANT.some((v) => t.indexOf(v) >= 0)) return null;
+            const mots = t.split(" ");
+            let pris = null, long = 0;
+            gens.forEach((g) => {
+              if (!g || !g.nom) return;
+              const n = sansAccent(g.nom);
+              [n, sansTitre(n)].forEach((cle) => {
+                const m = cle.split(" ");
+                if ((suite(mots, m) || suite(m, mots)) && cle.length > long) {
+                  pris = g; long = cle.length;
+                }
+              });
+            });
+            return pris;
+          };
+          // Le titulaire de l'office d'abord — c'est la chaîne du guide. À
+          // défaut d'office numéroté, l'action nomme souvent la personne
+          // elle-même (« Dame Aurore Inchauspé, maîtresse des nouvelles ») : on
+          // la prend aussi. Ça ne lave pas la faute — aucun office ne porte
+          // l'action, le fanion reste —, mais le plateau dit alors la vérité
+          // entière : quelqu'un le fait, et personne n'en répond.
+          const teneurDe = (o, cite) => (o ? personneDe(o.tient) : null) || personneDe(cite);
+          // UN PORTRAIT NE SE SERT QU'UNE FOIS. Soixante actions, ce serait
+          // soixante SVG dans la même réponse : on les range dans un
+          // dictionnaire à part et l'action ne porte que l'identifiant de son
+          // teneur. Le SVG est INLINÉ, jamais une URL — la page du jeu ne charge
+          // aucune ressource externe.
+          const portraits = {};
+          const visage = (g) => {
+            if (!g || !g.id) return null;
+            if (portraits[g.id] === undefined) {
+              let svg = "";
+              const f = g.portrait && g.portrait.fichier;
+              if (f) {
+                try { svg = fs.readFileSync(path.join(RACINE, f), "utf-8"); } catch (e) {}
+              }
+              portraits[g.id] = svg || portraitDefaut(g.nom || g.id);
+            }
+            return g.id;
+          };
+
+          // Une clef est RETENUE, à étudier, ou écartée : c'est un état de la
+          // clef, non un avancement. Une brèche dans un verrou, c'est une clef
+          // retenue contre lui — rien d'autre ne perce la pierre.
+          const tenueDe = (k) => {
+            const e = sansAccent(k.c[6]);
+            return e.indexOf("retenue") >= 0 ? "retenue"
+              : e.indexOf("ecartee") >= 0 ? "ecartee" : "etudier";
+          };
+          const perce = (v) => clefs.some((k) =>
+            adresses(k.c[2]).indexOf(v.num) >= 0 && tenueDe(k) === "retenue");
+
+          // ---- LES MISSIONS : ce qu'il y aurait à faire ----------------------
+          // La conclusion dit OÙ ça casse. Elle ne dit pas ce qu'on y ferait, et
+          // c'était la moitié manquante : un plateau qui diagnostique et se tait.
+          //
+          // UN GABARIT, ET IL EST LUI-MÊME LE FILTRE :
+          //
+          //     Afin d'atteindre {X}, faire {Y} aurait effet {Z}.
+          //
+          // X se calcule EN REMONTANT — l'état cible que l'acte sert, et combien
+          // d'autres il touche. Y est la seule part écrite en dur, par un verbe :
+          // retenir, écarter, désigner, écrire, trouver. Z se calcule EN
+          // REGARDANT L'AMONT IMMÉDIAT, et il doit être HONNÊTE : « le seul
+          // verrou qui l'en sépare » quand c'est vrai, « un verrou sur deux »
+          // quand ça ne suffit pas. Un détecteur dont on ne sait pas calculer le
+          // X ou le Z n'est pas un détecteur : il se jette, il ne s'écrit pas
+          // avec un Z vague.
+          //
+          // NI DATE NI PROSE : rien que la topologie et l'état des nœuds. Et
+          // RIEN NE S'ÉCRIT — une mission s'affiche, elle ne touche aucun
+          // registre. C'est du diagnostic rendu lisible, jamais une commande.
+          //
+          // LA DÉDUPLICATION SE FAIT PAR L'ACTE, PAS PAR LE DÉTECTEUR. « Toutes
+          // les clefs de ce verrou sont à l'étude » et « cette action pend sous
+          // une clef qui n'est pas retenue » désignent très souvent LE MÊME
+          // ACTE : retenir cette clef-là. Un acte est donc identifié par le
+          // couple (verbe, pièce) et posé UNE FOIS ; le premier détecteur qui le
+          // trouve écrit sa phrase, les suivants s'y rangent. Sans cela le
+          // plateau réclamerait trois fois la même décision sous trois libellés,
+          // et c'est le tunnel — la faute que cette maison proscrit le plus dur.
+          //
+          // DEUX FAMILLES DE PORTEURS, et elles ne se confondent pas. À LA REINE
+          // : retenir, écarter, désigner — c'est sa parole, personne d'autre ne
+          // peut, et ça ne coûte rien à exécuter puisque le texte est déjà au
+          // registre. AU CONSEIL : écrire, trouver — c'est du travail, et ça se
+          // dépêche.
+          const clefsDuVerrou = (v) => clefs.filter(
+            (k) => adresses(k.c[2]).indexOf(v.num) >= 0);
+          const actionsDeLaClef = (k) => actions.filter(
+            (a) => adresses(a.c[2]).indexOf(k.num) >= 0);
+          const verrousDeLetat = (n) => verrous.filter(
+            (v) => adresses(v.c[2]).indexOf(n) >= 0);
+          const verrousDeLaClef = (k) => verrous.filter(
+            (v) => adresses(k.c[2]).indexOf(v.num) >= 0);
+          const clefsDeLaction = (a) => clefs.filter(
+            (k) => adresses(a.c[2]).indexOf(k.num) >= 0);
+          const etatsDuVerrou = (v) => etats.filter(
+            (e) => adresses(v.c[2]).indexOf(e.num) >= 0);
+          const nomme = (q, genre) => ({
+            genre: genre, numero: q.num, nom: sansSigne(q.c[1]) });
+
+          // X — l'état cible qu'un verrou sert, et combien d'autres il touche.
+          // On remonte, on ne devine pas : un verrou qui bloque trois états les
+          // sert tous les trois, et le taire ferait mentir la mission sur sa
+          // portée.
+          const butDuVerrou = (v) => {
+            const es = etatsDuVerrou(v);
+            return { but: es.length ? nomme(es[0], "etat") : null,
+                     buts_autres: Math.max(0, es.length - 1) };
+          };
+          // Z — la clause de suffisance, mesurée sur le seul graphe : combien de
+          // verrous se dressent encore devant l'état qu'on vise.
+          const suffisance = (v) => {
+            const es = etatsDuVerrou(v);
+            const n = es.length ? verrousDeLetat(es[0].num).length : 0;
+            return n <= 1 ? "le seul verrou qui l'en sépare"
+              : "un verrou sur " + n;
+          };
+
+          // LA FORCE D'UN ACTE — ce qu'il débloque, mesuré sur le seul graphe et
+          // non jugé. Lever le dernier verrou d'un état cible bat lever un verrou
+          // sur deux, qui bat porter une action sous une clef, qui bat ce qui ne
+          // lève rien. Elle classe l'idée d'une affaire ET la réserve d'un homme :
+          // une seule règle, pour que les deux listes se lisent pareil.
+          const forceActe = (m) => {
+            const t = String((m && m.precision) || "");
+            if (t.indexOf("le seul verrou") === 0) return 1;
+            let x = t.match(/^un verrou sur (\d+)/);
+            if (x) return 1 + parseInt(x[1], 10);
+            if (t.indexOf("la seule action") === 0) return 20;
+            x = t.match(/^une action sur (\d+)/);
+            if (x) return 20 + parseInt(x[1], 10);
+            return 60;
+          };
+          const catalogue = {};
+          const attaches = {};
+          // Le classement d'une liste d'actes : la force d'abord, puis la portée
+          // (celle qui remonte au plus d'états), puis le coût — la parole de la
+          // reine avant le travail du conseil.
+          const classerActes = (a, b) => {
+            const ma = catalogue[a], mb = catalogue[b];
+            if (!ma || !mb) return 0;
+            return forceActe(ma) - forceActe(mb)
+              || (mb.buts_autres || 0) - (ma.buts_autres || 0)
+              || (ma.sur === "reine" ? 0 : 1) - (mb.sur === "reine" ? 0 : 1);
+          };
+          // DEUX ESPÈCES DE TROUS, et elles ne valent pas la même chose.
+          //
+          // Le trou MÉCANIQUE est celui que ces six détecteurs trouvent tout
+          // seuls : un verrou sans clef, une clef qu'on n'a pas tranchée, une
+          // action dont l'office n'a pas de numéro. Il est exhaustif, gratuit à
+          // trouver, et de faible valeur — c'est de la tenue de registre, ça
+          // s'écrit à la plume et ça se coche.
+          //
+          // Le trou NARRATIF, lui, est introuvable par calcul : « ce plan
+          // suppose que Bar Emmon dira oui ». Il se trouve en TRAVAILLANT, par
+          // un homme qu'on dépêche, et c'est le seul qui déplace quelque chose.
+          // Quand il le rapporte, il l'écrit comme un VERROU au cahier de son
+          // affaire — c'est la définition du guide — et le mécanique reprend la
+          // main aussitôt pour dire ce qui manque autour. Le mécanique est
+          // l'AVAL du narratif, jamais son concurrent.
+          //
+          // Un seul de nos six détecteurs commande un travail narratif : « un
+          // état cible sans aucun verrou » — on veut quelque chose et personne
+          // n'a encore dit ce qui empêche. Il ne se coche pas : il se dépêche.
+          // Il porte donc son espèce, et le plateau le marque autrement.
+          const poserM = (m) => {
+            m.espece = m.detecteur === "sans-verrou" ? "narratif" : "mecanique";
+            if (!catalogue[m.acte]) catalogue[m.acte] = m;
+            return m.acte;
+          };
+          const attacher = (genre, num, acte) => {
+            const c = genre + "/" + num;
+            if (!attaches[c]) attaches[c] = [];
+            if (attaches[c].indexOf(acte) < 0) attaches[c].push(acte);
+          };
+
+          // 1. TOUTES LES CLEFS D'UN VERROU SONT À L'ÉTUDE — personne n'a
+          //    tranché, et rien ne bouge tant que personne ne tranche.
+          verrous.forEach((v) => {
+            const ks = clefsDuVerrou(v);
+            if (!ks.length || !ks.every((k) => tenueDe(k) === "etudier")) return;
+            ks.forEach((k) => attacher("verrou", v.num, poserM(Object.assign(
+              butDuVerrou(v), {
+                acte: "retenir/" + k.num, sur: "reine", detecteur: "a-l-etude",
+                verbe: "retenir ou écarter", piece: nomme(k, "clef"),
+                effet: "lèverait", vers: nomme(v, "verrou"),
+                precision: suffisance(v) }))));
+          });
+
+          // 2. UNE ACTION DONT PERSONNE NE RÉPOND. Deux manques se cachaient
+          //    sous ce détecteur, et l'on demandait à la reine de désigner un
+          //    homme DÉJÀ NOMMÉ : « aucun office du registre ne la porte » est
+          //    vrai aussi quand la cellule dit « Mestre Gerardys, la roukerie ».
+          //    Ce qui manque là n'est pas un homme, c'est un NUMÉRO — et ce fait
+          //    est vrai de presque toutes les actions du plan. Il va donc au
+          //    chapeau de l'affaire, compté une fois, jamais sur les jetons :
+          //    quatre cent cinquante lampes qui disent la même chose ne disent
+          //    plus rien. Ne reste ici que la vraie décision : personne, nulle
+          //    part, ne répond de cette action.
+          actions.forEach((a) => {
+            if (retrouver(a.c[4], iO, nO)) return;
+            if (personneDe(a.c[4])) return;   // quelqu'un la porte : c'est un numéro qui manque
+            const ks = clefsDeLaction(a);
+            const k = ks[0] || null;
+            const vs = k ? verrousDeLaClef(k) : [];
+            const v = vs[0] || null;
+            const soeurs = k ? actionsDeLaClef(k).length : 0;
+            attacher("action", a.num, poserM(Object.assign(
+              v ? butDuVerrou(v) : { but: null, buts_autres: 0 }, {
+                // AU CONSEIL, ET PLUS À LA REINE. Tant qu'on croyait demander
+                // un homme, c'était sa parole ; maintenant qu'on demande un
+                // NUMÉRO, c'est du travail de greffe — on n'appelle pas la
+                // reine pour reporter une ligne au registre des offices.
+                acte: "office/" + a.num, sur: "conseil", detecteur: "sans-office",
+                // « Désigner qui répond de » était faux dès que la cellule
+                // nomme quelqu'un en clair — « Mestre Gerardys, la roukerie » —
+                // sans que ce nom se reconnaisse dans `personnages.json` :
+                // quelqu'un la porte bel et bien, c'est le LIEN qui n'est pas
+                // écrit. On ne demande donc pas un homme, on demande un numéro.
+                verbe: "écrire le numéro de l'office de", piece: nomme(a, "action"),
+                effet: k ? "porterait" : "lui donnerait une main",
+                vers: k ? nomme(k, "clef") : null,
+                precision: !k ? "elle ne remonte à aucune clef"
+                  : soeurs <= 1 ? "la seule action écrite sous elle"
+                  : "une action sur " + soeurs + " sous elle" })));
+          });
+
+          // 3. UN ÉTAT CIBLE SANS AUCUN VERROU — on veut, et l'on n'a pas dit ce
+          //    qui empêche. X remonte alors d'un cran : l'état que celui-ci sert.
+          etats.forEach((e) => {
+            if (verrousDeLetat(e.num).length) return;
+            const p = adresse(e.c[5]);
+            const pere2 = etats.find((x) => x.num === p) || null;
+            attacher("etat", e.num, poserM({
+              acte: "empeche/" + e.num, sur: "conseil", detecteur: "sans-verrou",
+              but: nomme(pere2 || e, "etat"), buts_autres: 0,
+              verbe: "trouver ce qui empêche", piece: nomme(e, "etat"),
+              // Z ne se répète pas : l'acte vise déjà cet état-là, et
+              // « donnerait sa première prise sur lui-même » n'apprend rien.
+              effet: "ouvrirait la première prise sur lui", vers: null,
+              precision: "aucun verrou n'est écrit contre lui" }));
+          });
+
+          // 4. UN VERROU SANS AUCUNE CLEF — le fait est nommé, rien n'est
+          //    envisagé contre lui.
+          verrous.forEach((v) => {
+            if (clefsDuVerrou(v).length) return;
+            attacher("verrou", v.num, poserM(Object.assign(butDuVerrou(v), {
+              acte: "clef/" + v.num, sur: "conseil", detecteur: "sans-clef",
+              verbe: "écrire une clef contre", piece: nomme(v, "verrou"),
+              effet: "donnerait de quoi le lever", vers: null,
+              precision: suffisance(v) })));
+          });
+
+          // 5. UNE ACTION SOUS UNE CLEF NON RETENUE — elle part sans que le
+          //    mécanisme qu'elle sert ait été tranché. MÊME ACTE que le premier
+          //    détecteur quand la clef est à l'étude : la dédup s'en charge.
+          //    L'acte SE POSE SUR LE VERROU, et pas sur l'action qui l'a fait
+          //    voir : c'est là que la conclusion rend son verdict (« sa clef
+          //    n'est qu'à l'étude »), et deux calculs qui accrochent la même
+          //    chose à deux rangs différents finissent par se contredire — une
+          //    action qui « tient » sous une mission à faire.
+          actions.forEach((a) => {
+            clefsDeLaction(a).forEach((k) => {
+              if (tenueDe(k) === "retenue") return;
+              const v = verrousDeLaClef(k)[0] || null;
+              attacher(v ? "verrou" : "clef", v ? v.num : k.num, poserM(Object.assign(
+                v ? butDuVerrou(v) : { but: null, buts_autres: 0 }, {
+                  acte: "retenir/" + k.num, sur: "reine", detecteur: "non-tranchee",
+                  verbe: "trancher", piece: nomme(k, "clef"),
+                  effet: v ? "lèverait" : "en déciderait le sort",
+                  vers: v ? nomme(v, "verrou") : null,
+                  precision: v ? suffisance(v)
+                    : "elle n'ouvre aucun verrou connu" })));
+            });
+          });
+
+          // 6. UNE CLEF RETENUE SANS ACTION — décidée, et personne ne la fait.
+          //    Aucune aujourd'hui ; le cas se garde, un plan bouge.
+          clefs.forEach((k) => {
+            if (tenueDe(k) !== "retenue" || actionsDeLaClef(k).length) return;
+            const v = verrousDeLaClef(k)[0] || null;
+            attacher("clef", k.num, poserM(Object.assign(
+              v ? butDuVerrou(v) : { but: null, buts_autres: 0 }, {
+                acte: "action/" + k.num, sur: "conseil", detecteur: "sans-action",
+                verbe: "écrire l'action de", piece: nomme(k, "clef"),
+                effet: "la mettrait en marche", vers: null,
+                precision: "elle est retenue et rien ne la fait" })));
+          });
+
+          // ---- LE REPLI : ce que seuls les registres connaissent ----
+          // Les six registres cessent d'être la source ; ils ne se jettent pas
+          // pour autant. Six affaires y vivent que nul cahier ne porte (deux ont
+          // bien un volume, mais vide de tables). On ne reprend d'elles que ce
+          // qui ne collisionne avec rien et qui CHAÎNE à leurs propres états :
+          // reprendre en vrac ferait rentrer par la bande le petit plan qu'on
+          // vient d'écarter.
+          // Par GENRE, et non en vrac : les numéros se croisent d'un rang à
+          // l'autre — un verrou 100 masquait l'état 100, et le repli ne reprenait
+          // plus rien du tout.
+          const connu = { etat: {}, verrou: {}, clef: {}, action: {} };
+          Object.keys(bacs).forEach((genre) => {
+            bacs[genre].forEach((r) => { connu[genre][r.num] = 1; });
+          });
+          const REGISTRE_PLAN = { etat: "plan-etats-cibles", verrou: "plan-verrous",
+                                  clef: "plan-clefs", action: "plan-actions" };
+          const repli = {};
+          Object.keys(REGISTRE_PLAN).forEach((genre) => {
+            repli[genre] = normaliser(parId[REGISTRE_PLAN[genre]], genre);
+          });
+          const memeNom = (x, y) => {
+            const a3 = sansAccent(x), b3 = sansAccent(y);
+            return !!a3 && !!b3 && (a3 === b3 || a3.indexOf(b3) >= 0 || b3.indexOf(a3) >= 0);
+          };
+          const orphelins = {};
+          repli.etat.forEach((r) => {
+            const nom = sansSigne(r.c[6]) || "Sans affaire";
+            if (connu.etat[r.num] || groupes.some((g) => memeNom(g.titre, nom))) return;
+            let g = groupes.find((x) => x.repli && x.titre === nom);
+            if (!g) groupes.push(g = { titre: nom, volume: volumeDe(nom), etats: [], repli: true });
+            g.etats.push(r); etats.push(r); orphelins[r.num] = 1;
+          });
+          const chaine = (genre, pris, amont) => {
+            repli[genre].forEach((r) => {
+              if (connu[genre][r.num] || !adresses(r.c[2]).some((x) => amont[x])) return;
+              bacs[genre].push(r); pris[r.num] = 1;
+            });
+          };
+          const vRepli = {}, kRepli = {};
+          chaine("verrou", vRepli, orphelins);
+          chaine("clef", kRepli, vRepli);
+          chaine("action", {}, kRepli);
+
+          // ---- LA GOUTTIÈRE FRANCHISSABLE ------------------------------------
+          // Le plateau s'arrêtait NET au bord du cahier. `pere()` traite un état
+          // qui sert un état d'ailleurs comme une racine — la canopée se coupe
+          // sans rien dire —, et la colonne `⛓️ Dépend de` n'était pas même lue.
+          // Or ces arêtes-là existent, elles sont écrites, et elles sont
+          // PROPRES : mesurées au niveau des PIÈCES, elles forment un graphe
+          // acyclique de trois rangs. Ce sont les AFFAIRES qui bouclent, parce
+          // qu'écraser deux cahiers en deux jetons fabrique un cycle qui n'est
+          // nulle part dans le plan — c'est la raison pour laquelle il n'y a pas
+          // de « plateau des affaires » et pourquoi le passage se fait ici,
+          // pièce à pièce (voir docs/echiquier.md).
+          //
+          // QUATRE SENS, ET LEUR ORIENTATION EST CELLE DE LA CHAÎNE :
+          //   sert     ⬆ notre état sert un état d'ailleurs — la canopée continue
+          //   attendue ⬆ une action d'ailleurs attend cette pièce — on la nourrit
+          //   servie   ⬇ un état d'ailleurs sert le nôtre — le travail est là-bas
+          //   attend   ⬇ notre action attend une pièce d'ailleurs — le blocage y est
+          const idAffaire = (titre) => sansAccent(titre).replace(/ /g, "-");
+          // Qui porte ce numéro, et à quel rang. Les numéros se croisent d'un
+          // cahier à l'autre (c'est documenté et ce n'est pas réparable au
+          // calcul) : on garde donc TOUS les porteurs et l'on choisit celui qui
+          // n'est pas chez nous.
+          const chezQui = {};
+          [["etat", etats], ["verrou", verrous], ["clef", clefs],
+           ["action", actions]].forEach((paire) => {
+            paire[1].forEach((r) => {
+              (chezQui[r.num] = chezQui[r.num] || []).push({ genre: paire[0], r: r });
+            });
+          });
+          // Ce qu'une action attend, retourné : le numéro attendu donne les
+          // actions qui l'attendent. Une action peut dépendre de n'importe quel
+          // rang — un verrou, une clef —, donc on retourne l'index une fois pour
+          // toutes plutôt que de le chercher par genre.
+          const attendu = {};
+          actions.forEach((a) => adresses(a.c[8]).forEach((n) => {
+            (attendu[n] = attendu[n] || []).push(a);
+          }));
+          const dehorsDe = (p, moi) => {
+            const out = [], vu = {};
+            const pose = (sens, r, genre) => {
+              if (!r || !r.aff || r.aff === moi) return;
+              const k = sens + "/" + r.num;
+              if (vu[k]) return;
+              vu[k] = 1;
+              out.push({ sens: sens, numero: r.num, nom: sansSigne(r.c[1]),
+                genre: genre, affaire: idAffaire(r.aff), affaire_titre: r.aff });
+            };
+            const mien = (chezQui[p.numero] || [])
+              .find((x) => x.genre === p.genre && x.r.aff === moi);
+            if (p.genre === "etat") {
+              if (mien) adresses(mien.r.c[5]).forEach((n) => {
+                const q = (chezQui[n] || [])
+                  .find((x) => x.genre === "etat" && x.r.aff !== moi);
+                if (q) pose("sert", q.r, "etat");
+              });
+              etats.forEach((o) => {
+                if (adresses(o.c[5]).indexOf(p.numero) >= 0) pose("servie", o, "etat");
+              });
+            }
+            if (p.genre === "action" && mien) {
+              adresses(mien.r.c[8]).forEach((n) => {
+                const q = (chezQui[n] || []).find((x) => x.r.aff !== moi);
+                if (q) pose("attend", q.r, q.genre);
+              });
+            }
+            (attendu[p.numero] || []).forEach((o) => pose("attendue", o, "action"));
+            return out;
+          };
+
+          // Les têtes, une fois pour toute la requête (voir numerosDesTetes).
+          const tetes = numerosDesTetes();
+          const affaires = groupes.map((g) => {
+            const pieces = [], colonnes = [];
+            // CE QUI SE DIT EN COURS SANS ÊTRE DANS LA TÊTE : un homme qui dit
+            // travailler et dont le plan de journée n'en porte pas trace. Ça se
+            // sert au MJ, ça NE SE PEINT PAS sur le plateau — c'est un écart
+            // entre deux registres, pas une information de personnage.
+            const divergents = [];
+            const chez = {};
+            g.etats.forEach((e) => { chez[e.num] = e; });
+            // L'arbre : `Sert` pointe vers l'amont. Un état qui sert un état
+            // d'une AUTRE affaire est une racine ici — on ne dessine pas la
+            // moitié d'un arbre qui vit ailleurs.
+            const pere = (e) => { const p = adresse(e.c[5]); return chez[p] ? p : null; };
+            const enfants = {};
+            g.etats.forEach((e) => { enfants[e.num] = []; });
+            g.etats.forEach((e) => { const p = pere(e); if (p) enfants[p].push(e.num); });
+            const racines = g.etats.filter((e) => !pere(e)).map((e) => e.num)
+              .sort((a, b) => chiffre(a) - chiffre(b));
+
+            const verrousDe = (n) => verrous.filter((v) => adresses(v.c[2]).indexOf(n) >= 0);
+            // Une colonne s'ouvre sous ce qui porte quelque chose, et sous une
+            // feuille même vide — c'est elle que l'épreuve du guide doit compter.
+            const ouvre = (n) => verrousDe(n).length > 0 || !enfants[n].length;
+
+            const niveau = {}, portee = {}, sienne = {};
+            const descendre = (n, d) => {
+              niveau[n] = d;
+              const debut = colonnes.length;
+              if (ouvre(n)) {
+                sienne[n] = n;
+                colonnes.push({ id: n, numero: n, titre: sansSigne(chez[n].c[1]),
+                  dit: propre(chez[n].c[2]), etat: n });
+              }
+              enfants[n].sort((a, b) => chiffre(a) - chiffre(b))
+                .forEach((c) => descendre(c, d + 1));
+              portee[n] = colonnes.slice(debut).map((c) => c.id);
+            };
+            racines.forEach((r) => descendre(r, 0));
+
+            // ---- LA CONCLUSION : où ça casse, en descendant ----
+            // UN SEUL MÉCANISME, pas six cas particuliers : on descend la
+            // chaîne depuis la pièce et l'on s'arrête AU PREMIER TROU. Une
+            // pièce, un coupable, une phrase — jamais une liste de griefs.
+            // Tout se lit sur la topologie : ni date, ni prose, rien que ce que
+            // le graphe dit déjà.
+            //
+            // Un état descend sur ses verrous ET sur les états qui le servent :
+            // c'est ce que compte déjà l'épreuve du guide (la réglette rouge,
+            // le fanion), et les deux calculs doivent dire la même vérité.
+            const clefsDe = (v) => clefs.filter((k) => adresses(k.c[2]).indexOf(v.num) >= 0);
+            const actionsDe = (k) => actions.filter((x) => adresses(x.c[2]).indexOf(k.num) >= 0);
+            const dit = (q, genre) => ({
+              genre: genre, numero: q.num, nom: sansSigne(q.c[1]),
+            });
+            const memo = {};
+            const conclure = (q, genre) => {
+              const memoire = genre + q.num;
+              if (memo[memoire]) return memo[memoire];
+              memo[memoire] = { cas: "tient" };     // garde-fou contre un cycle
+              let r;
+              if (genre === "action") {
+                const of2 = retrouver(q.c[4], iO, nO);
+                // La chaîne descend jusqu'au sol dès que QUELQU'UN la porte.
+                // Mais si aucun office numéroté ne la porte, le jeton arbore
+                // déjà son fanion : la conclusion doit le dire dans les mêmes
+                // termes, sinon le joueur lit un drapeau rouge sous une phrase
+                // qui dit que tout va bien. Ça ne casse pas la chaîne — ça
+                // s'ajoute à elle.
+                r = teneurDe(of2, q.c[4])
+                  ? (of2 ? { cas: "tient" } : { cas: "tient", sans_office: true })
+                  : { cas: "sans-teneur", cible: dit(q, "action") };
+              } else if (genre === "clef") {
+                // L'EMPÊCHEMENT D'UNE CLEF N'EST PAS SOUS ELLE, IL EST EN ELLE.
+                // Une clef à l'étude concluait « la chaîne tient » dès qu'une
+                // action portée pendait dessous — sur la pièce même que tout le
+                // monde attend, et sur laquelle la mission se pose. Son état
+                // propre passe donc AVANT ce qu'elle porte : rien ne partira
+                // tant qu'on ne l'aura pas tranchée, et ce qui est écrit
+                // dessous ne change rien à ça. Même règle pour une clef
+                // écartée : ce qui pend sous elle ne sert plus à personne.
+                const t = tenueDe(q);
+                const sous = actionsDe(q);
+                if (t === "etudier") r = { cas: "pas-tranchee", cible: dit(q, "clef") };
+                else if (t === "ecartee") r = { cas: "ecartee", cible: dit(q, "clef") };
+                else if (!sous.length) r = { cas: "sans-action", cible: dit(q, "clef") };
+                else r = premier(sous.map((x) => [x, "action"]), dit(q, "clef"));
+              } else if (genre === "verrou") {
+                const ks = clefsDe(q);
+                if (!ks.length) r = { cas: "sans-clef", cible: dit(q, "verrou") };
+                else {
+                  const tenues = ks.filter((k) => tenueDe(k) === "retenue");
+                  if (!tenues.length) {
+                    r = { cas: "a-l-etude", cible: dit(q, "verrou"),
+                          via: dit(ks[0], "clef"), autres: ks.length - 1 };
+                  } else r = premier(tenues.map((k) => [k, "clef"]), dit(q, "verrou"));
+                }
+              } else {
+                const sous = verrousDe(q.num).map((v) => [v, "verrou"])
+                  .concat((enfants[q.num] || []).sort((a2, b2) => chiffre(a2) - chiffre(b2))
+                    .map((n) => [chez[n], "etat"]));
+                if (!sous.length) r = { cas: "sans-verrou", cible: dit(q, "etat") };
+                else r = premier(sous, dit(q, "etat"));
+              }
+              memo[memoire] = r;
+              return r;
+            };
+            // Le premier enfant qui casse l'emporte ; les autres du MÊME cas se
+            // comptent, pour qu'on puisse dire « et deux autres dans le même
+            // cas » au lieu d'aligner les griefs.
+            function premier(sous, dessus) {
+              const vus = sous.map(([q, g]) => conclure(q, g));
+              const i = vus.findIndex((v) => v.cas !== "tient");
+              // « Personne n'en répond » NE S'ARRÊTE PAS À L'ACTION. Le caveat
+              // remonte avec la chaîne, sans quoi une clef dont toutes les
+              // actions sont portées hors registre dirait « la chaîne tient »
+              // à plat — au-dessus de trois fanions et d'une mission à faire.
+              // C'est la divergence qu'a révélée le calcul des missions ; on la
+              // corrige ici, du côté qui mentait.
+              if (i < 0) {
+                const nu2 = vus.some((v) => v.sans_office);
+                return nu2 ? { cas: "tient", sans_office: true } : { cas: "tient" };
+              }
+              const meme = vus.filter((v) => v.cas === vus[i].cas).length - 1;
+              const r = Object.assign({}, vus[i]);
+              r.autres = (r.autres || 0) + meme;
+              // On garde le maillon d'où l'on est parti, pour que la phrase
+              // puisse dire « X attend Y » quand ce n'est pas la pièce elle-même.
+              if (!r.depuis) r.depuis = dessus;
+              return r;
+            }
+
+            // ---- LA LAMPE : UNE PAR ACTE, SUR LA PIÈCE QU'IL VISE ----
+            // Le champ `missions` d'une pièce est sa chaîne descendante entière
+            // — c'est ce qu'il faut pour la bulle, et c'est trop pour le
+            // plateau : un même acte y allumerait l'état cible, son verrou et
+            // l'action qui l'a fait voir, trois lampes pour une décision. La
+            // marque suit donc la même règle que les missions elles-mêmes, la
+            // déduplication par l'ACTE : une idée, un acte, UNE lampe, posée sur
+            // la pièce que l'acte vise — la clef à retenir, l'action dont il
+            // faut désigner le teneur, le verrou contre quoi écrire une clef,
+            // l'état qu'il faut mettre à l'épreuve. Les pièces d'amont
+            // continuent de la DIRE dans leur bulle, ce qui est sa place.
+            //
+            // Une pièce peut être dessinée dans deux colonnes (un verrou qui
+            // bloque deux états) : la lampe va sur la première, sans quoi on
+            // compterait deux marques pour une décision.
+            const posees = {};
+            const lampeDe = (genre, num) => {
+              const k = genre + "/" + num;
+              if (posees[k]) return null;
+              const a = Object.keys(catalogue).filter((x) => {
+                const m = catalogue[x].piece;
+                return m && m.genre === genre && m.numero === num;
+              });
+              if (!a.length) return null;
+              posees[k] = 1;
+              return a;
+            };
+
+            // ---- CE QUI PEND SOUS UNE PIÈCE, EN MISSIONS ----
+            // La MÊME descente que la conclusion, et c'est voulu : les deux
+            // calculs doivent dire la même vérité, sinon le joueur lit un
+            // « la chaîne tient » au-dessus d'une chose à faire. On remonte les
+            // actes de toute la chaîne aval, dédupliqués par l'acte, le plus
+            // proche d'abord — la pièce elle-même, puis ce qui pend dessous.
+            const memoM = {};
+            const missionsDe = (q, genre) => {
+              const memoire = genre + q.num;
+              if (memoM[memoire]) return memoM[memoire];
+              memoM[memoire] = [];              // garde-fou contre un cycle
+              const sous = genre === "etat"
+                ? verrousDe(q.num).map((v) => [v, "verrou"])
+                    .concat((enfants[q.num] || []).sort((a2, b2) => chiffre(a2) - chiffre(b2))
+                      .map((n) => [chez[n], "etat"]))
+                : genre === "verrou" ? clefsDe(q).map((k) => [k, "clef"])
+                : genre === "clef" ? actionsDe(q).map((a) => [a, "action"])
+                : [];
+              const out = [], vu = {};
+              const ajoute = (a) => { if (!vu[a]) { vu[a] = 1; out.push(a); } };
+              // D'ABORD L'ACTE QUI VISE CETTE PIÈCE — c'est celui dont elle
+              // porte la lampe sur le plateau, et il serait absurde qu'elle
+              // l'affiche au coin du sceau sans le dire dans sa bulle. Un acte
+              // se pose sur le rang où la conclusion rend son verdict, mais il
+              // se LIT aussi sur la pièce qu'il vise.
+              Object.keys(catalogue).forEach((x) => {
+                const m = catalogue[x].piece;
+                if (m && m.genre === genre && m.numero === q.num) ajoute(x);
+              });
+              (attaches[genre + "/" + q.num] || []).forEach(ajoute);
+              sous.forEach(([x, gg]) => missionsDe(x, gg).forEach(ajoute));
+              memoM[memoire] = out;
+              return out;
+            };
+
+            g.etats.forEach((e) => {
+              const col = sienne[e.num] || null;
+              const cle = (n) => (col || "arbre") + "/" + n;
+              const pousse = (p) => { pieces.push(p); return p; };
+              const sansPreuve = (c) => rien(c)
+                ? ["sans preuve — rien ne dirait que c'est vrai"] : [];
+
+              const mesVerrous = verrousDe(e.num);
+              const mesClefs = clefs.filter((k) => adresses(k.c[2])
+                .some((a) => mesVerrous.some((v) => v.num === a)));
+              const mesActions = actions.filter((a) => adresses(a.c[2])
+                .some((x) => mesClefs.some((k) => k.num === x)));
+
+              // l'état cible : ce qui doit devenir vrai dans le monde
+              const p = pere(e);
+              pousse({
+                cle: cle(e.num), genre: "etat", rang: "etat", colonne: col, numero: e.num,
+                conclusion: conclure(e, "etat"), missions: missionsDe(e, "etat"),
+                lampe: lampeDe("etat", e.num),
+                nom: sansSigne(e.c[1]), dit: propre(e.c[2]), ou: propre(e.c[3]),
+                preuve: propre(e.c[4]), sert: p, niveau: niveau[e.num] || 0,
+                portee: portee[e.num] || [],
+                part: mesVerrous.map((v) => ({
+                  numero: v.num, nom: sansSigne(v.c[1]), breche: perce(v),
+                })),
+                vers: p ? [(sienne[p] || "arbre") + "/" + p] : [],
+                paie: "cet état en sert un autre",
+                sans_preuve: rien(e.c[4]),
+              });
+
+              if (!col) return;   // un état qui coiffe n'a rien qui pende sous lui
+
+              // les verrous : le fait du monde qui empêche l'état de tenir
+              mesVerrous.forEach((v) => {
+                const f = sansPreuve(v.c[4]);
+                if (rien(v.c[5])) f.push("on ne sait pas dire à quoi il serait levé");
+                pousse({
+                  cle: cle(v.num), genre: "verrou", rang: "verrou", colonne: col, numero: v.num,
+                  conclusion: conclure(v, "verrou"), missions: missionsDe(v, "verrou"),
+                  lampe: lampeDe("verrou", v.num),
+                  nom: sansSigne(v.c[1]), dit: propre(v.c[3]), preuve: propre(v.c[4]),
+                  leve_quand: propre(v.c[5]), breche: perce(v), vers: [cle(e.num)],
+                  paie: rien(v.c[5]) ? null : "levé quand : " + sansSigne(v.c[5]),
+                  fautes: f.length ? f : null,
+                });
+              });
+
+              // les clefs : le mécanisme envisagé, et où il en est du jugement
+              mesClefs.forEach((k) => {
+                const amont = adresses(k.c[2]).filter((a) => mesVerrous.some((v) => v.num === a));
+                const tenue = tenueDe(k);
+                const f = [];
+                // UNE RUPTURE, ET NON UNE REMARQUE. La différence commande la
+                // couleur du plateau : `rupture` veut dire que la REMONTÉE est
+                // cassée — il manque une pièce, la référence ne résout pas —, et
+                // c'est la seule chose que l'écran peigne en rouge. Tout ce qui
+                // manque et qui s'écrit à la plume (une preuve, un « levé
+                // quand », un numéro d'office) est une LAMPE, pas une faute :
+                // le plateau a déjà le dispositif qu'il faut pour le dire.
+                let rupture = false;
+                if (!adresses(k.c[2]).some((a) => iV[a])) {
+                  f.push("n'ouvre aucun verrou connu — la clef n'est pas reliée au plan");
+                  rupture = true;
+                }
+                pousse({
+                  cle: cle(k.num), genre: "clef", rang: "clef", colonne: col, numero: k.num,
+                  conclusion: conclure(k, "clef"), missions: missionsDe(k, "clef"),
+                  lampe: lampeDe("clef", k.num),
+                  nom: sansSigne(k.c[1]), dit: propre(k.c[3]), cout: propre(k.c[4]),
+                  preuve: propre(k.c[5]), tenue: tenue, vers: amont.map(cle),
+                  paie: tenue === "retenue" ? "clef retenue — " + sansSigne(k.c[5]) : null,
+                  fautes: f.length ? f : null, rupture: rupture,
+                });
+              });
+
+              // les actions : ce qu'on décide effectivement de faire
+              mesActions.forEach((a) => {
+                const amont = adresses(a.c[2]).filter((x) => mesClefs.some((k) => k.num === x));
+                const ou = sansAccent(a.c[7]);
+                const marche = ou.indexOf("fait") >= 0 || ou.indexOf("en cours") >= 0;
+                const of = retrouver(a.c[4], iO, nO);
+                const f = sansPreuve(a.c[6]);
+                let rupture = false;
+                if (!amont.length) {
+                  f.push("ne remonte à aucune clef — l'action n'a pas de raison démontrée");
+                  rupture = true;
+                }
+                const qui_tient = teneurDe(of, a.c[4]);
+                const quiId = visage(qui_tient);
+                // DANS SA TÊTE, OU SEULEMENT SUR LE PAPIER. Voir numerosDesTetes
+                // et la constante LIRE_LES_TETES.
+                const dansLaTete = !!(quiId && tetes.par[quiId]
+                  && tetes.par[quiId][String(a.num)]);
+                if (marche && !dansLaTete) divergents.push(a.num);
+                if (!of) f.push("aucun office ne la porte : " + (propre(a.c[4]) || "à désigner"));
+                // PERSONNE POUR LA PORTER : là, oui, il manque une pièce, et la
+                // remontée s'arrête. Un office nommé EN CLAIR ne casse rien —
+                // quelqu'un la porte très bien, ce qui lui manque est un NUMÉRO
+                // et non un homme, et ce fait-là se dit une fois au chapeau.
+                if (!of && !qui_tient) rupture = true;
+                pousse({
+                  cle: cle(a.num), genre: "action", rang: "action", colonne: col, numero: a.num,
+                  conclusion: conclure(a, "action"), missions: missionsDe(a, "action"),
+                  lampe: lampeDe("action", a.num),
+                  nom: sansSigne(a.c[1]), dit: propre(a.c[3]), preuve: propre(a.c[6]),
+                  ou_ca_en_est: propre(a.c[7]), office: propre(a.c[4]), moyens: propre(a.c[5]),
+                  // Le visage de qui la porte : on ne sert que son identifiant,
+                  // le dessin est au dictionnaire commun.
+                  teneur_id: quiId, teneur: qui_tient ? qui_tient.nom : null,
+                  vers: amont.map(cle), paie: marche ? propre(a.c[7]) : null,
+                  fautes: f.length ? f : null, rupture: rupture,
+                  dans_la_tete: dansLaTete,
+                });
+
+                // les moyens et les offices : cités par leur numéro, jamais créés
+                const cite = (texte, genre, index, noms) => {
+                  const t = retrouver(texte, index, noms);
+                  const k = cle(genre + "-" + (t ? t.num : sansAccent(texte).slice(0, 14)));
+                  let q = pieces.find((x) => x.cle === k);
+                  if (!q) {
+                    q = pousse({
+                      cle: k, genre: genre, rang: "moyen", colonne: col,
+                      numero: t ? t.num : null,
+                      nom: t ? sansSigne(t.nom) : sansSigne(texte),
+                      // La description d'une pièce est la colonne qui DIT la
+                      // chose, et elle n'est pas au même rang dans les deux
+                      // registres : « ce qu'il sait faire » pour un moyen, « ce
+                      // dont il répond » pour un office — jamais le titulaire.
+                      dit: t ? cel(t, genre, "dit") : "",
+                      tient: t ? cel(t, genre, "tient") : "",
+                      ou: t ? cel(t, genre, "ou") : "",
+                      tenue_du_moyen: t ? cel(t, genre, "etat") : "",
+                      vers: [], paie: t ? "au registre, " + t.num : null,
+                      fautes: t ? null : ["cité ici et absent de son registre — un moyen "
+                        + "et un office ne se créent jamais dans une affaire"],
+                      // ET CE N'EST PAS UNE RUPTURE. « Le crédit de l'époux de
+                      // la reine », « ce que la reine sait du Donjon » : la
+                      // chose existe, elle est employée, elle est simplement
+                      // citée par son nom au lieu de son numéro. C'est vrai de
+                      // 477 pièces du plan — un fait vrai de presque tout le
+                      // monde va au chapeau et se dit une fois, jamais sur un
+                      // jeton (voir docs/echiquier.md).
+                      rupture: false,
+                    });
+                  }
+                  if (q.vers.indexOf(cle(a.num)) < 0) q.vers.push(cle(a.num));
+                };
+                if (!rien(a.c[4])) cite(a.c[4], "office", iO, nO);
+                String(a.c[5] == null ? "" : a.c[5]).split(/·|;/).forEach((m) => {
+                  if (!rien(m)) cite(m, "moyen", iM, nM);
+                });
+              });
+
+              // L'ÉPREUVE DU GUIDE, colonne par colonne : un état cible sous
+              // lequel aucune action ne descend est une intention sans plan.
+              const c = colonnes.find((x) => x.id === col);
+              c.rompue = !mesActions.length;
+              c.sans_verrou = !mesVerrous.length;
+              // ET LE VERDICT INVERSE, qui manquait : la colonne est-elle
+              // PORTÉE ? Une colonne dont la chaîne descend jusqu'à une action
+              // n'est qu'un plan bien écrit ; elle n'est du travail que si l'un
+              // des hommes qui la tiennent a écrit « en cours » ou « fait »
+              // dans son cahier. C'est cela que le vert dit, et rien d'autre.
+              c.porte = pieces.some((q) => q.genre === "action"
+                && q.colonne === col && q.paie);
+            });
+
+            // ---- LES VOISINES : à quelles autres affaires celle-ci tient -----
+            // PREMIÈRE VERSION ÉCARTÉE, et le joueur a tranché en la voyant : on
+            // posait la sortie SUR LE JETON, un chevron par pièce et par sens.
+            // Sur un damier qui porte déjà six teintes de rang, des dalles
+            // d'occlusion, des lampes, des fanions, des visages et cent traits
+            // de chaîne, cela faisait UN SIGNE DE PLUS et rien de lisible — et
+            // ça poussait à remonter la chaîne causale pièce à pièce, ce que
+            // personne ne veut faire à cette échelle.
+            //
+            // Ce qu'il fallait est plus petit : SAVOIR À QUI CETTE AFFAIRE
+            // TIENT, et pouvoir y aller. Donc on agrège — le calcul par pièce
+            // reste la source, mais rien n'en sort au niveau de la pièce. Une
+            // ligne par affaire voisine, avec son emblème, servie au bandeau et
+            // jamais au damier.
+            const voisinage = {};
+            pieces.forEach((p) => {
+              if (!p.numero) return;
+              dehorsDe(p, g.titre).forEach((x) => {
+                const v = voisinage[x.affaire] || (voisinage[x.affaire] = {
+                  id: x.affaire, titre: x.affaire_titre, n: 0, sens: {} });
+                v.n += 1;
+                v.sens[x.sens] = (v.sens[x.sens] || 0) + 1;
+              });
+            });
+            const voisines = Object.keys(voisinage).map((k) => {
+              const v = voisinage[k];
+              const vol = volumeDe(v.titre);
+              return { id: v.id, titre: v.titre, n: v.n, sens: v.sens,
+                embleme: (vol && vol.embleme) || null };
+              // L'ORDRE EST CELUI DU POIDS, pas de l'alphabet : l'affaire à qui
+              // l'on tient par onze arêtes passe avant celle qui n'en a qu'une.
+            }).sort((a, b) => b.n - a.n || a.titre.localeCompare(b.titre));
+
+            // ... et elle REMONTE dans l'arbre : un état qui coiffe des colonnes
+            // toutes rompues est rompu lui-même, et le fanion se voit sur lui.
+            pieces.filter((p) => p.genre === "etat").forEach((p) => {
+              const sous = (p.portee || []).map((id) => colonnes.find((c) => c.id === id));
+              const rompu = !sous.length || sous.every((c) => c && c.rompue);
+              const f = p.sans_preuve ? ["sans preuve — rien ne dirait que c'est vrai"] : [];
+              if (rompu) {
+                f.push(p.portee && p.portee.length > 1
+                  ? "aucune action ne descend d'aucun état qu'il coiffe"
+                  : "aucune action ne descend jusqu'ici — une intention sans plan");
+              }
+              p.rompu = rompu;
+              if (f.length) p.fautes = f;
+              // Le SEUL défaut d'un état cible qui casse la remontée : rien ne
+              // descend jusqu'à une action. Un état sans preuve écrite est mal
+              // tenu, pas rompu.
+              p.rupture = rompu;
+              delete p.sans_preuve;
+            });
+
+            // Ce que l'affaire ENTIÈRE réclame — les actes de toutes ses pièces,
+            // dédupliqués une dernière fois : deux colonnes qui pendent sous le
+            // même verrou ne le réclament pas deux fois.
+            const toutes = [], vuA = {};
+            pieces.forEach((p) => (p.missions || []).forEach((a) => {
+              if (!vuA[a]) { vuA[a] = 1; toutes.push(a); }
+            }));
+            // LE FAIT RETOURNÉ. « Ce verrou n'a pas de rechange » est vrai de
+            // trente-deux verrous sur trente-trois : posé sur les jetons il ne
+            // dirait rien et noierait le reste. Il ne se jette pas pour autant —
+            // il se retourne et se dit UNE FOIS, au chapeau : aucun verrou du
+            // plan n'a jamais eu deux clefs, quand le guide prévoit qu'elles
+            // « se disputent la place ». Un fait vrai de presque tout le monde
+            // va sur le blason, jamais sur une pièce.
+            // CE QUI EST VRAI DE PRESQUE TOUTE L'AFFAIRE se dit au chapeau. Une
+            // action dont l'office est nommé en clair a bien quelqu'un pour la
+            // porter ; ce qui lui manque est une ligne au registre des offices,
+            // et c'est une discipline à reprendre d'un coup, pas une décision
+            // par action.
+            const enClair = pieces.filter((q) => q.genre === "action"
+              && (q.fautes || []).some((f) => f.indexOf("aucun office") === 0)
+              && q.teneur).length;
+            // Et le même fait, du côté des MOYENS : un galet ou une plume cités
+            // par leur nom au lieu de leur numéro. Ce n'était compté nulle part,
+            // donc c'était peint en rouge sur chaque jeton faute de mieux.
+            const citesEnClair = pieces.filter(
+              (q) => (q.genre === "moyen" || q.genre === "office") && !q.numero).length;
+
+            const numsV = {}, mesV = [];
+            pieces.filter((p) => p.genre === "verrou").forEach((p) => {
+              if (!numsV[p.numero]) { numsV[p.numero] = 1; mesV.push(p.numero); }
+            });
+            const combienDeClefs = (n) => clefs.filter(
+              (k) => adresses(k.c[2]).indexOf(n) >= 0).length;
+            const rechange = {
+              verrous: mesV.length,
+              aucune: mesV.filter((n) => combienDeClefs(n) === 0).length,
+              plusieurs: mesV.filter((n) => combienDeClefs(n) > 1).length,
+            };
+
+            // L'IDÉE PRINCIPALE — une affaire en réclame jusqu'à onze, et l'on
+            // n'en montre qu'UNE là où l'on n'a la place que d'une ligne (le
+            // coffret « Les sujets » en aligne trente-huit : trois idées chacune
+            // seraient un mur). Le classement ne juge pas, il mesure, dans cet
+            // ordre :
+            //   1. LA FORCE DU Z — lever le dernier verrou d'un état cible bat
+            //      lever un verrou sur deux, qui bat porter une action sous une
+            //      clef, qui bat ce qui ne lève rien du tout.
+            //   2. LA PORTÉE — à force égale, celle qui remonte au plus d'états.
+            //   3. LE COÛT — à égalité encore, celle qui ne coûte qu'un mot au
+            //      registre : la parole de la reine avant le travail du conseil.
+            const idee = toutes.slice().sort((a, b) => classerActes(a, b))[0] || null;
+
+            const v = g.volume || volumeDe(g.titre);
+            return {
+              // La clef de routage, telle que le cahier l'écrit — c'est elle qui
+              // porte la réserve par homme, et rien d'autre.
+              tenu_par: (v && v.tenu_par) || null, office: (v && v.office) || null,
+              missions: toutes, rechange: rechange, idee: idee, en_clair: enClair,
+              cites_en_clair: citesEnClair,
+              // Ce que l'affaire porte VRAIMENT, et l'écart entre la parole et
+              // la tête. Les deux vont au MJ ; seul `portees` se peint.
+              portees: colonnes.filter((c) => c.porte).length,
+              divergents: divergents,
+              id: sansAccent(g.titre).replace(/ /g, "-"), titre: g.titre,
+              livre_id: v ? v.id : null,
+              // L'emblème est CELUI DU VOLUME, jamais un choix d'ici. Une
+              // affaire dont aucun volume ne porte le nom garde le signe
+              // générique de l'affaire, et c'est en soi une information.
+              embleme: (v && v.embleme) || null, objet: objetDe(v),
+              // L'INDEX DES ADRESSES, servi pour TOUTES les affaires et pas
+              // seulement pour celle qu'on a ouverte. C'est ce qui permet à un
+              // renvoi de scène — `[les neufs](44022)` — de savoir sur-le-champ
+              // si le numéro qu'un conseiller vient de citer est une pièce du
+              // plan, et laquelle. Sans lui, la page devrait interroger la route
+              // pour chaque renvoi, ou pire : s'allumer à l'aveugle et parfois
+              // mentir. On ne garde que les adresses qu'un renvoi peut porter —
+              // quatre à six chiffres, la forme de `renvois.js` —, ce qui laisse
+              // dehors les M01 et O17 des moyens et des offices.
+              nums: (function () {
+                const n = pieces.map((q) => q.numero)
+                  .filter((x) => /^\d{4,6}$/.test(String(x || "")))
+                  .filter((x, i, t) => t.indexOf(x) === i);
+                return n;
+              })(),
+              // ET CE QUE LE CAHIER ÉCRIT SANS L'ATTEINDRE. Une ligne dont la
+              // référence ne résout pas — l'action 21030 « réalise 21020 »
+              // quand aucune clef 21020 n'existe — est écrite, numérotée,
+              // citable en conseil, et n'a AUCUN jeton sur le damier. Le
+              // plateau a raison de ne pas la dessiner : c'est la faute que le
+              // guide veut voir. Mais la citer en scène est légitime, et un
+              // renvoi vers elle doit mener à son cahier au lieu de retomber
+              // en texte nu. On sert donc les deux listes, et l'écran fait la
+              // différence : `nums` s'allume, `cites` ouvre le bon plateau et
+              // dit pourquoi il n'y a rien à allumer.
+              cites: (function () {
+                const t = pieces.map((q) => String(q.numero || ""));
+                return (g.ecrites || []).filter((n) => t.indexOf(n) < 0);
+              })(),
+              voisines: voisines,
+              colonnes: colonnes, pieces: pieces,
+              niveaux: Math.max(1, 1 + Math.max.apply(null,
+                g.etats.map((e) => niveau[e.num] || 0))),
+              rompues: colonnes.filter((c) => c.rompue).length,
+            };
+          });
+
+          affaires.sort((a, b) => b.colonnes.length - a.colonnes.length);
+          // ---- UN SEUL PLATEAU EN DÉTAIL ----
+          // Trente-six cahiers font 2275 pièces et 1,8 Mo, quand le joueur n'en
+          // regarde qu'un. Le détail ne part donc que pour l'affaire demandée ;
+          // les autres n'envoient que leur chapeau — de quoi peupler la bascule,
+          // les comptes et la bulle du blason. La page redemande la route quand
+          // on change de plateau, et le catalogue des missions, lui, reste
+          // entier : il sert aux comptes et aux livres.
+          const demandee = ((req.url.split("?")[1]) || "").split("&")
+            .map((x) => x.split("="))
+            .filter((x) => x[0] === "affaire")
+            .map((x) => decodeURIComponent(x[1] || ""))[0] || null;
+          const ouverte = affaires.find((a) => a.id === demandee) || affaires[0] || null;
+          const servies = affaires.map((a) => {
+            if (a === ouverte) return a;
+            return {
+              id: a.id, titre: a.titre, livre_id: a.livre_id, embleme: a.embleme,
+              objet: a.objet, missions: a.missions, rechange: a.rechange,
+              en_clair: a.en_clair, cites_en_clair: a.cites_en_clair,
+              portees: a.portees, divergents: a.divergents,
+              nums: a.nums, cites: a.cites,
+              idee: a.idee, rompues: a.rompues, colonnes: a.colonnes.length,
+              // les pieds d'arbre, pour la bulle du blason : on les calcule ici
+              // plutôt que d'envoyer les pièces entières.
+              pieds: a.pieces.filter((q) => q.genre === "etat" && !(q.vers || []).length)
+                .map((q) => ({ genre: "etat", numero: q.numero, nom: q.nom, cle: q.cle })),
+            };
+          });
+          let aujourdhui = null;
+          try {
+            aujourdhui = JSON.parse(fs.readFileSync(
+              path.join(RACINE, "etat", "monde.json"), "utf-8")).date || null;
+          } catch (e) {}
+          // LE CATALOGUE EST SERVI À PART, et les pièces ne portent que des
+          // adresses d'actes. Un acte réclamé par une action, par sa clef, par
+          // son verrou et par trois états ne se sérialise ainsi qu'UNE fois —
+          // c'est la même économie que les portraits.
+          return envoyer(res, 200, JSON.stringify({
+            affaires: servies, ouverte: ouverte ? ouverte.id : null,
+            portraits: portraits, aujourdhui: aujourdhui,
+            missions: catalogue }));
+        } catch (e) {
+          return envoyer(res, 200, JSON.stringify({ affaires: [] }));
+        }
+      }
       // Vos desseins : la page complète des objectifs, avec ce que la liste du
       // rail ne peut pas porter — l'échéance, le nombre de jours qui reste, et
       // de quelle bouche la chose est venue. Rien d'occulte : ce sont les
       // objectifs du joueur, pas ceux des autres.
+      // LES FILS — ce qui court, et qui tient la plume dessus. Par siège, comme
+      // la table de guerre : les fils de la reine ne sont pas ceux d'Aurore.
+      // Le mode ne change jamais le calcul, seulement par où ça passe (voir
+      // docs/fils.md) — donc rien d'occulte ici, ce sont les affaires que le
+      // joueur a lui-même sur les bras.
+      if (url === "/fils") {
+        try {
+          const siege = qui(req, url);
+          const aujourdhui = dateDe(siege);
+          const noms = {};
+          try {
+            JSON.parse(fs.readFileSync(path.join(RACINE, "etat", "personnages.json"), "utf-8"))
+              .forEach((p) => { noms[p.id] = p.nom.split(",")[0].trim(); });
+          } catch (e) {}
+          const brut = lireCroyance("fils.json", siege, null);
+          const liste = (brut && Array.isArray(brut.fils)) ? brut.fils : [];
+          const fils = liste
+            .filter((f) => (f.statut || "en-cours") === "en-cours")
+            .map((f) => Object.assign({}, f, {
+              // « sans nom » n'est pas un trou d'affichage : c'est l'information.
+              // Un fil sur personne revient à la main du joueur, et il doit le voir.
+              sur_nom: f.sur ? (noms[f.sur] || String(f.sur).replace(/-/g, " ")) : null,
+              mode: f.mode === "delegue" ? "delegue" : "joue",
+            }));
+          return envoyer(res, 200, JSON.stringify({ fils, aujourdhui }));
+        } catch (e) {
+          return envoyer(res, 200, JSON.stringify({ fils: [], aujourdhui: null }));
+        }
+      }
+      // ---- qui est DEHORS, à la minute -------------------------------------
+      // Un homme dépêché (`scripts/depecher.py`) vit sa journée dans sa propre
+      // session, avec un budget de minutes. `parloir.ouvrir_instance` pose un
+      // fichier dans `etat/parloir/.instances` au départ et le `finally` de la
+      // dépêche l'ôte au retour : c'est le seul endroit du jeu qui sache, en
+      // temps réel, que cet homme-là est en train de travailler pour de bon.
+      //
+      // Ce n'est PAS une information de fiction — le personnage ne sait rien du
+      // fait qu'on le simule — mais ce n'en est pas une du monde non plus : la
+      // pastille dit au joueur « on attend quelqu'un », ce qui est vrai à
+      // l'écran et explique pourquoi la salle traîne. Aucune donnée du
+      // dossier de l'homme ne descend ici : un id, et le temps qui reste.
+      if (url === "/depeches") {
+        const dos = path.join(RACINE, "etat", "parloir", ".instances");
+        const MINUTES_DEFAUT = 15, MARGE = 90;   // cf. scripts/parloir.py
+        const dehors = [];
+        try {
+          for (const f of fs.readdirSync(dos)) {
+            const p = path.join(dos, f);
+            let d = {};
+            try { d = JSON.parse(fs.readFileSync(p, "utf-8") || "{}"); } catch (e) {}
+            const t = (d.t ? d.t * 1000 : fs.statSync(p).mtimeMs);
+            const depuis = Math.round((Date.now() - t) / 1000);
+            const budget = (d.minutes || MINUTES_DEFAUT) * 60 + MARGE;
+            // Périmée : sa session est morte sans que le `finally` passe. On ne
+            // purge pas ici — c'est le travail de `parloir.vivants()`, qui écrit
+            // et n'est pas une lecture d'affichage — on l'ignore, simplement.
+            if (depuis > budget) continue;
+            dehors.push({
+              id: d.homme || f.split(".")[0],
+              depuis, reste: budget - depuis,
+            });
+          }
+        } catch (e) {}
+        return envoyer(res, 200, JSON.stringify({ dehors }));
+      }
       if (url === "/objectifs") {
         try {
           const siege = qui(req, url);
@@ -1626,6 +4101,188 @@ http
           return envoyer(res, 200, JSON.stringify({ objectifs: [], aujourdhui: null }));
         }
       }
+      // LE CALENDRIER — les jours de CE siège, et rien des jours d'un autre.
+      //
+      // Pourquoi une route et pas une lecture de plus dans le navigateur : un
+      // rendez-vous n'est pas un objet du jeu. C'est un `programme` daté à la
+      // minute dans evenements.json, un pli qu'on attend, un fil qui tombe, un
+      // dessein qui a un terme — quatre tables qui ne se ressemblent pas et
+      // qu'il faut coudre sur une même règle horaire. On les coud ici.
+      //
+      // LE BROUILLARD, ET C'EST LA SEULE RÈGLE DURE : on ne montre un
+      // événement que si le siège Y FIGURE (`acteurs` ou `porteur`). Un
+      // programme où il n'est pas est le plan d'un autre — le lui afficher
+      // serait ouvrir `intentions.json` par la fenêtre du calendrier. Rien
+      // n'est deviné : ce qui remonte, il l'a fixé ou on le lui a promis.
+      if (url === "/calendrier") {
+        try {
+          const siege = qui(req, url);
+          const aujourdhui = dateDe(siege);
+          const moi = (siege && siege.personnage_id) ||
+            (() => { try { return JSON.parse(fs.readFileSync(path.join(RACINE, "etat", "journal.json"), "utf-8")).personnage_joueur_id; } catch (e) { return null; } })();
+          const p = new URLSearchParams(req.url.split("?")[1] || "");
+          const devant = Math.min(30, Math.max(1, parseInt(p.get("jours"), 10) || 8));
+          const derriere = 1; // la veille : ce qu'on a manqué se voit encore
+          const lire = (f, d) => {
+            try { return JSON.parse(fs.readFileSync(path.join(RACINE, "etat", f), "utf-8")); }
+            catch (e) { return d; }
+          };
+          const jour = (d) => d ? ((d.annee || 0) * 12 + ((d.lune || 1) - 1)) * 30 + (d.jour || 0) : null;
+          const noms = {};
+          (lire("personnages.json", []) || []).forEach((x) => {
+            if (x && x.id) noms[x.id] = String(x.nom || x.id).split(",")[0].trim();
+          });
+          const nommer = (id) => noms[id] || String(id || "").replace(/-/g, " ");
+
+          const j0 = jour(aujourdhui);
+          const dedans = (d) => {
+            const n = jour(d);
+            return n !== null && j0 !== null && n >= j0 - derriere && n <= j0 + devant;
+          };
+          const entrees = [];
+          const entame = (t, n) => {
+            const s = String(t || "").replace(/\s+/g, " ").trim();
+            return s.length > n ? s.slice(0, n).replace(/\s\S*$/, "") + "…" : s;
+          };
+          // Un programme n'a pas toujours de `titre` : sa description en tient
+          // lieu. On la coupe alors en deux — la tête sert de titre, la suite de
+          // détail — au lieu de servir deux fois le même paragraphe.
+          const coupe = (e) => {
+            const desc = String(e.description || "").replace(/\s+/g, " ").trim();
+            if (e.titre) return { titre: e.titre, detail: entame(desc, 240) };
+            const tete = entame(desc, 88);
+            const reste = desc.slice(tete.replace(/…$/, "").length).trim();
+            return { titre: tete, detail: entame(reste, 240) };
+          };
+
+          // 1. Les événements où il figure — les rendez-vous, les remises, les
+          // rapports promis. `resolu` reste visible sur la veille : un joueur
+          // qui se rassoit doit voir ce qui vient de tomber, pas seulement ce
+          // qui vient.
+          (lire("evenements.json", []) || []).forEach((e) => {
+            if (!e || !e.date_prevue || !dedans(e.date_prevue)) return;
+            const acteurs = Array.isArray(e.acteurs) ? e.acteurs : [];
+            if (!moi || (acteurs.indexOf(moi) < 0 && e.porteur !== moi)) return;
+            const st = e.statut || "a-venir";
+            if (st === "annule" || st === "devie") return;
+            const autres = acteurs.filter((a) => a !== moi).map(nommer);
+            const c = coupe(e);
+            entrees.push({
+              genre: autres.length ? "rendez-vous" : "echeance",
+              id: e.id,
+              date: e.date_prevue,
+              minute: typeof e.date_prevue.minute === "number" ? e.date_prevue.minute : null,
+              titre: c.titre,
+              detail: c.detail,
+              lieu: e.lieu_id || null,
+              avec: autres,
+              statut: st,
+              tenu: st === "resolu",
+            });
+          });
+
+          // 2. Le courrier qu'on attend — un pli est un rendez-vous avec une
+          // date, tenu par un homme qui marche. `attendu_le` est l'heure dite.
+          const plis = lire("plis.json", { plis: [] });
+          ((plis && plis.plis) || []).forEach((x) => {
+            if (!x || !x.attendu_le || !dedans(x.attendu_le)) return;
+            const mien = x.pour === moi || x.de === moi;
+            if (!mien) return;
+            const enRoute = (x.etat || "en-route") === "en-route";
+            entrees.push({
+              genre: "pli",
+              id: x.id,
+              date: x.attendu_le,
+              minute: typeof x.attendu_le.minute === "number" ? x.attendu_le.minute : null,
+              titre: (x.pour === moi ? "Attendu de " + nommer(x.de) : "Doit atteindre " + nommer(x.pour)) +
+                (x.canal ? " (" + x.canal + ")" : ""),
+              detail: entame(x.porte, 200),
+              lieu: x.vers || null,
+              avec: [nommer(x.pour === moi ? x.de : x.pour)],
+              statut: x.etat || "en-route",
+              tenu: !enRoute,
+            });
+          });
+
+          // 3. Ce qui court et qui a un terme — ses fils, ses desseins. Ni
+          // l'un ni l'autre n'a d'heure : ils se posent en tête de journée.
+          const fils = lireCroyance("fils.json", siege, null);
+          ((fils && fils.fils) || []).forEach((f) => {
+            if (!f || !f.echeance || !dedans(f.echeance)) return;
+            if ((f.statut || "en-cours") !== "en-cours") return;
+            entrees.push({
+              genre: "fil", id: f.id, date: f.echeance, minute: null,
+              titre: f.titre, detail: entame(f.detail, 200),
+              lieu: null, avec: f.sur ? [nommer(f.sur)] : [],
+              statut: f.mode === "delegue" ? "delegue" : "joue", tenu: false,
+            });
+          });
+          const miens = lireCroyance("objectifs.json", siege, []);
+          (Array.isArray(miens) ? miens : []).forEach((o) => {
+            if (!o || !o.echeance || !dedans(o.echeance)) return;
+            if ((o.statut || "en-cours") !== "en-cours") return;
+            entrees.push({
+              genre: "dessein", id: o.id, date: o.echeance, minute: null,
+              titre: o.titre, detail: entame(o.description, 200),
+              lieu: null, avec: [], statut: "en-cours", tenu: false,
+            });
+          });
+
+          // 4. LE SQUELETTE DE LA JOURNÉE — sa routine, résolue comme le fait
+          // presence.py : les bandes du modèle, @dortoir et @poste remplacés.
+          // Ce n'est pas un rendez-vous, c'est le fond sur lequel les autres
+          // se posent : une heure déjà fermée n'est pas une heure libre.
+          let bandes = [];
+          try {
+            const r = lire("routines.json", {});
+            const fiche = (r.gens || {})[moi] || null;
+            const modele = fiche && (r.modeles || {})[fiche.modele];
+            if (modele) {
+              const dortoir = fiche.dortoir || modele.dortoir || null;
+              const poste = fiche.poste || modele.poste || null;
+              bandes = (modele.bandes || []).map((b) => {
+                const jeton = b.salle === "@dortoir" ? dortoir : b.salle === "@poste" ? poste : null;
+                return {
+                  de: b.de, a: b.a,
+                  salle: jeton ? jeton.salle : b.salle,
+                  lieu: b.lieu || (jeton ? jeton.lieu : null),
+                  ferme: b.ferme === true,
+                };
+              });
+            }
+          } catch (e) {}
+
+          entrees.sort((a, b) => (jour(a.date) - jour(b.date)) ||
+            ((a.minute === null ? -1 : a.minute) - (b.minute === null ? -1 : b.minute)));
+          const jours = [];
+          for (let k = -derriere; k <= devant; k++) {
+            const n = j0 + k;
+            const d = {
+              annee: Math.floor(n / 360),
+              lune: Math.floor((n % 360) / 30) + 1,
+              jour: n % 30,
+            };
+            // le jour 0 d'une lune est le 30e de la précédente
+            if (d.jour === 0) { d.jour = 30; d.lune -= 1; if (d.lune === 0) { d.lune = 12; d.annee -= 1; } }
+            jours.push({
+              date: d, ecart: k,
+              entrees: entrees.filter((x) => jour(x.date) === n),
+            });
+          }
+          // Ses mémos — ce que le joueur a lui-même écrit dans les cases.
+          // Hors fiction : voir POST /agenda.
+          let notes = [];
+          try {
+            const a = lireCroyance("agenda.json", siege, null);
+            notes = (a && Array.isArray(a.notes) ? a.notes : []).filter((n) => n && dedans(n.date));
+          } catch (e) {}
+          return envoyer(res, 200, JSON.stringify({
+            aujourdhui, moi, nom: moi ? nommer(moi) : null, bandes, jours, notes,
+          }));
+        } catch (e) {
+          return envoyer(res, 200, JSON.stringify({ jours: [], aujourdhui: null, bandes: [] }));
+        }
+      }
       if (url === "/voix/liste") return envoyer(res, 200, JSON.stringify(voix.liste()));
       // qui a demandé quoi, et ce qu'on lui a répondu — pour diagnostiquer un doublon
       if (url === "/voix/journal") return envoyer(res, 200, JSON.stringify(voix.lireJournal()));
@@ -1640,6 +4297,14 @@ http
           if (roster()) {
             const j = qui(req, url);
             const moi = j && j.personnage_id;
+            // LA RÉGIE VOIT TOUT, et c'est sa seule raison d'être. Le tri par
+            // `pour` protège un joueur de ce que l'autre entend ; Corneille
+            // n'est pas un joueur — il n'a ni tête, ni horloge, ni siège dans
+            // la fiction, et un fil amputé ne lui servirait à rien. Le jeton
+            // reste la serrure : sans lui, on n'est toujours personne. La
+            // fenêtre et le `?avant=` ci-dessous s'appliquent comme pour tous.
+            if (j && j.regie) items = items.slice();
+            else {
             // Sans jeton, on n'est personne — et personne ne lit la partie.
             // Le filtre par `pour` ne suffit pas : l'immense majorite du flux
             // n'en porte aucun, donc un inconnu recevait l'histoire entiere.
@@ -1674,6 +4339,7 @@ http
             items = items.filter((it, k) => it.pour
               ? (Array.isArray(it.pour) ? it.pour.indexOf(moi) !== -1 : it.pour === moi)
               : depuis + k < seuil);
+            }
           }
           // Le flux est append-only et ne cesse de grossir : au bout de
           // quelques heures de partie, chaque sondage retransmet des milliers
@@ -1699,6 +4365,7 @@ http
           // jour-là ne bouge plus, même si le dessin est refait demain.
           items.forEach((it) => {
             if (it.montre && it.montre.extrait) inlinerFigure(it.montre.extrait);
+            rafraichirPortraits(it);
           });
           return envoyer(res, 200, JSON.stringify({ items, debut, total, ecart: ecartDe(qui(req, url)) }));
         } catch (e) {
@@ -1756,6 +4423,78 @@ http
     // la lire, sans la relire au MJ, sans la faire entrer dans la partie. Une
     // écriture complète à chaque fois — c'est un carnet, pas un journal
     // d'événements, et le navigateur en est seul propriétaire.
+    // ÉCRIRE DANS UNE CASE DU CALENDRIER — c'est LE JOUEUR qui tient la plume,
+    // et ce qu'il écrit compte.
+    //
+    // Ce que ça n'est pas : une parole, un acte, une minute dépensée. Écrire
+    // dans son propre calendrier ne se fait devant personne — aucun PNJ ne
+    // l'entend, l'horloge ne bouge pas, rien n'entre dans `paroles.json` ni
+    // dans `actes.json`. Le texte vit dans `etat/joueurs/<siège>/agenda.json`
+    // (technique, hors docs/schema.md).
+    //
+    // Ce que ça EST, et c'est le point : une case écrite TOMBE DANS L'INBOX du
+    // siège, comme n'importe quelle action. Le guetteur du MJ sonne, il la lit,
+    // et c'est à lui de la porter dans le monde — l'homme qu'on fait chercher,
+    // le `programme` daté, le pli qui part. Un calendrier que le MJ ne voit pas
+    // n'est pas un calendrier, c'est un pense-bête ; et le joueur qui inscrit
+    // « voir Rulf à sept heures » a le droit qu'on le lui tienne.
+    if (req.method === "POST" && url === "/agenda") {
+      let corps = "";
+      req.on("data", (c) => (corps += c));
+      req.on("end", () => {
+        try {
+          const { date, heure, texte } = JSON.parse(corps);
+          if (!date || typeof heure !== "number") throw new Error("case manquante");
+          const siege = qui(req, url);
+          const dossier = siege
+            ? path.join(RACINE, "etat", "joueurs", siege.personnage_id)
+            : path.join(RACINE, "etat");
+          const p = path.join(dossier, "agenda.json");
+          let liste = [];
+          try { liste = JSON.parse(fs.readFileSync(p, "utf-8")).notes || []; } catch (e) {}
+          const clef = (d, h) => [d.annee, d.lune, d.jour, h].join("-");
+          const k = clef(date, heure);
+          liste = liste.filter((n) => clef(n.date, n.heure) !== k);
+          const t = String(texte || "").trim();
+          if (t) liste.push({ date, heure, texte: t.slice(0, 400) });
+          fs.mkdirSync(dossier, { recursive: true });
+          fs.writeFileSync(p, JSON.stringify({
+            _: "Le calendrier du joueur — ce qu'il a inscrit lui-même dans les " +
+               "cases de l'échelle « Les jours ». Ce n'est ni une parole ni un " +
+               "acte (personne ne l'a entendu, le temps n'a pas bougé), mais " +
+               "c'est SA main : le MJ en est prévenu par l'inbox et c'est à lui " +
+               "de le porter dans le monde.",
+            notes: liste,
+          }, null, 2), "utf-8");
+          // Le MJ est prévenu, comme pour toute action du joueur : son guetteur
+          // sonne sur l'inbox du siège. Une case effacée se signale aussi — un
+          // rendez-vous décommandé est une nouvelle, pas un silence.
+          try {
+            const boite = siege
+              ? path.join(RACINE, "etat", "inbox", siege.personnage_id)
+              : path.join(RACINE, "etat", "inbox");
+            fs.mkdirSync(boite, { recursive: true });
+            fs.writeFileSync(path.join(boite, "action-" + Date.now() + ".json"),
+              JSON.stringify({
+                type: "agenda",
+                action: t ? "inscrit" : "efface",
+                date, heure: heure, texte: t,
+                joueur_id: siege ? siege.personnage_id : null,
+                recu_a: new Date().toISOString(),
+                _: "Le joueur a écrit de sa main dans son calendrier (échelle " +
+                   "« Les jours »). Hors fiction : ni parole, ni acte, ni minute. " +
+                   "À vous de le porter dans le monde s'il y a lieu — l'homme " +
+                   "qu'on fait chercher, le `programme` daté, le pli qui part.",
+              }, null, 2), "utf-8");
+          } catch (e) {}
+          return envoyer(res, 200, JSON.stringify({ ok: true, notes: liste }));
+        } catch (e) {
+          return envoyer(res, 400, JSON.stringify({ erreur: String(e.message || e) }));
+        }
+      });
+      return;
+    }
+
     if (req.method === "POST" && url === "/notes") {
       let corps = "";
       req.on("data", (c) => (corps += c));
@@ -1910,6 +4649,48 @@ http
       return;
     }
 
+    // Basculer un fil : le mode s'écrit tout de suite dans `fils.json` (sinon le
+    // rail mentirait au rechargement), ET l'intention tombe dans l'inbox du
+    // siège. Le clic ne JOUE rien — il dit ce que le joueur veut ; c'est au MJ
+    // d'en tirer le mandat écrit et la scène qui va avec.
+    if (req.method === "POST" && url === "/fils") {
+      let corps = "";
+      req.on("data", (c) => (corps += c));
+      req.on("end", () => {
+        try {
+          const d = JSON.parse(corps);
+          const siege = qui(req, url);
+          const mode = d.mode === "delegue" ? "delegue" : "joue";
+          const p = cheminEtat("fils.json", siege);
+          if (!p) return envoyer(res, 200, JSON.stringify({ ok: false }));
+          const doc = JSON.parse(fs.readFileSync(p, "utf-8"));
+          const f = (doc.fils || []).find((x) => x.id === d.fil_id);
+          if (!f) return envoyer(res, 200, JSON.stringify({ ok: false }));
+          // Un fil sur personne ne se délègue pas : il n'y a personne pour le
+          // tenir. Le rail le sait déjà et n'offre pas l'interrupteur, mais on
+          // ne se fie pas au navigateur pour une règle du jeu.
+          if (mode === "delegue" && !f.sur) {
+            return envoyer(res, 200, JSON.stringify({ ok: false, motif: "sans-nom" }));
+          }
+          f.mode = mode;
+          fs.writeFileSync(p, JSON.stringify(doc, null, 1), "utf-8");
+          const dossier = siege
+            ? path.join(RACINE, "etat", "inbox", siege.personnage_id)
+            : path.join(RACINE, "etat", "inbox");
+          fs.mkdirSync(dossier, { recursive: true });
+          fs.writeFileSync(path.join(dossier, "action-" + Date.now() + ".json"),
+            JSON.stringify({
+              type: "fil", fil_id: f.id, titre: f.titre, sur: f.sur || null, mode,
+              recu_a: new Date().toISOString(),
+              joueur_id: siege ? siege.personnage_id : null,
+            }, null, 2), "utf-8");
+          return envoyer(res, 200, JSON.stringify({ ok: true, mode }));
+        } catch (e) {
+          return envoyer(res, 200, JSON.stringify({ ok: false }));
+        }
+      });
+      return;
+    }
     if (req.method === "POST" && url === "/action") {
       let corps = "";
       req.on("data", (c) => (corps += c));

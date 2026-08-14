@@ -1,0 +1,119 @@
+[  0.002s] boucle.demarrage         · sec=False · une_fois=False · heartbeat_s=5.0
+[  0.005s] cycle.depart            
+[  0.012s] horloge.lecture         
+[  0.015s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=87658.4
+[  0.016s] graphe.lecture          
+[  0.058s] graphe.charge            · noeuds=1778 · aretes=4650
+[  0.059s] diffusion.importance    
+[  0.308s] energie.polarites_horloge · moyenne_minute=67000322.75 · ecart_max_minutes=1072.25 · emetteurs=1 · absorbeurs=97 · neutres=0
+[  0.316s] energie.transfert_horloge · transfere=10.679 · propositions=1018 · acteurs=98
+[  0.321s] energie.graphe           · dt_s=74.372 · integration=0.157883 · noeuds=1778 · energises=191 · total=1137.14 · pic=pers:rhaenyra · maximum=100.0
+[  0.322s] diffusion.calendrier    
+[  0.344s] energie.calculee         · acteurs=16 · maximum=21.785
+[  0.345s] selection.rejetee        · acteur=robert-quince · energie=21.785 · raison=repos_acteur · reprendre_a=92460.0
+[  0.346s] selection.rejetee        · acteur=rulf-corne · energie=19.999 · raison=repos_acteur · reprendre_a=95880.0
+[  0.347s] selection.rejetee        · acteur=aldon-hask · energie=11.344 · raison=repos_acteur · reprendre_a=93698.36
+[  0.351s] selection.elue           · acteur=steffon-darklyn · energie=8.562 · tache=40029 · energie_tache=1.127 · budget_energie=8 · budget_s=240 · flux_horloge=absorbe · ecart_horloge_min=-380.75 · horloge_pj=rhaenyra
+[  0.352s] acteur.choisi            · acteur=steffon-darklyn · energie=8.562 · importance=0.084932 · budget=8
+[  0.353s] tache.choisie            · id=40029 · distance=1 · creee=False · energie=1.127
+ACTIVATION  steffon-darklyn  energie 8.56 · budget 8 (4 min)  importance 0.085
+  tache 40029 · distance 1 · 🔗 Écrire la chaîne complète sur un seul feuillet
+  front aurore-inchauspe · +87658.4s depuis rhaenyra
+[  0.354s] energie.reservee         · acteur=steffon-darklyn · valeur=8.562 · plafond=8
+[  0.361s] appel.dossier            · acteur=steffon-darklyn · tache=40029
+[  0.450s] appel.systeme_narrateur  · acteur=steffon-darklyn · caracteres=1103
+[  0.452s] appel.systeme_pnj        · acteur=steffon-darklyn · caracteres=19396
+[  0.453s] appel.ouverture          · acteur=steffon-darklyn · caracteres=30816 · budget_energie=8 · budget_secondes=240
+[  0.460s] cli.depart               · acteur=narrateur-local:table-peinte · session=b3f9616e-2ae4-4180-a7e3-9f8b14e56aa4 · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[  2.688s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[  4.180s] cli.rate_limit_event     · sous_type=None
+[  6.541s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.ouverture · secondes=5.0
+[  7.065s] cli.texte                · contenu={ "appel_pnj": { "qui": "steffon-darklyn", "message": "Ser Steffon, la moitié haute de votre feuillet est écrite et la plume est encore fraîche. Il vous reste quatre minutes avant…
+[  7.156s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[  7.158s] cli.resultat             · erreur=False · duree_ms=4714 · cout=0.18239700000000003 · entree=2 · sortie=131 · caracteres=280
+[  8.707s] narrateur.reveille_pnj   · acteur=steffon-darklyn · caracteres=208
+[  8.808s] cli.depart               · acteur=steffon-darklyn · session=9061593b-ba63-4186-a650-d6349085ebf5 · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[ 10.897s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=4
+[ 11.803s] cli.rate_limit_event     · sous_type=None
+[ 13.853s] cli.heartbeat            · acteur=steffon-darklyn · phase=pnj.tentative · secondes=5.0
+[ 15.632s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 15.634s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 15.729s] cli.assistant            · bloc=thinking
+[ 16.765s] cli.outil                · nom=Bash · entree={"command": "cd \"$(ls -d ./livres 2>/dev/null || echo .)\" && sed -n '1,80p' affaire-commandement-chaine-ordres.txt 2>/dev/null", "description": "Ouvrir l'affaire de la chaîne d'…
+[ 18.901s] cli.heartbeat            · acteur=steffon-darklyn · phase=pnj.tentative · secondes=10.1
+[ 20.598s] cli.resultat_outil       · erreur=False · contenu=══════════════════════════════════════════════════════════════════════════ Commandement et chaîne d'ordres pendant l'opération [affaire-commandement-chaine-ordres] ⚜️ Volume de GA…
+[ 23.420s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 23.915s] cli.heartbeat            · acteur=steffon-darklyn · phase=pnj.tentative · secondes=15.1
+[ 24.823s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 25.515s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 25.517s] cli.assistant            · bloc=thinking
+[ 28.916s] cli.heartbeat            · acteur=steffon-darklyn · phase=pnj.tentative · secondes=20.1
+[ 33.921s] cli.heartbeat            · acteur=steffon-darklyn · phase=pnj.tentative · secondes=25.1
+[ 38.926s] cli.heartbeat            · acteur=steffon-darklyn · phase=pnj.tentative · secondes=30.1
+[ 40.512s] cli.texte                · contenu=J'écris la moitié basse debout, sans m'asseoir. Sous les quatre cas, une seule colonne : **QUI COMMANDE SI LE PRÉCÉDENT TOMBE.** Pas de titres — des noms, dans l'ordre, chacun sac…
+[ 40.539s] cli.resultat             · erreur=False · duree_ms=29900 · cout=0.07729499999999999 · entree=4 · sortie=1446 · caracteres=2457
+[ 41.870s] pnj.tentative_valide     · acteur=steffon-darklyn · verbe=écrire et présenter · caracteres=1193
+[ 41.871s] narrateur.arbitrage      · acteur=steffon-darklyn · caracteres=4693 · passage=1
+[ 41.872s] cli.depart               · acteur=narrateur-local:table-peinte · session=b3f9616e-2ae4-4180-a7e3-9f8b14e56aa4 · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[ 44.196s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[ 47.901s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=5.0
+[ 52.906s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=10.0
+[ 57.918s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=15.0
+[ 62.930s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=20.0
+[ 67.934s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=25.0
+[ 72.947s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=30.1
+[ 77.962s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=35.1
+[ 82.970s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=40.1
+[ 87.991s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=45.1
+[ 90.332s] cli.texte                · contenu={ "qui": "steffon-darklyn", "activation": { "tache": {"id": "40029", "quoi": "🔗 Écrire la chaîne complète sur un seul feuillet", "creee": false}, "issue": "avance", "activites": […
+[ 90.382s] cli.rate_limit_event     · sous_type=None
+[ 91.706s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[ 91.733s] cli.resultat             · erreur=False · duree_ms=47802 · cout=0.1330055 · entree=2 · sortie=4111 · caracteres=9705
+[ 93.006s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.resolution · secondes=50.1
+[ 93.008s] rapport.extraction       · acteur=steffon-darklyn · essai=1
+[ 93.011s] rapport.mutations_ecartees · acteur=steffon-darklyn · nombre=3
+[ 93.012s] rapport.refuse           · acteur=steffon-darklyn · essai=1 · erreur=continuite rompue pour 40029 : avant=None, dernier apres="en cours — la moitié haute du feuillet est écrite ; la suite des noms qui commande si le précédent tombe n'est pas posée, et la recopie au dos des feuillets de marche des capitaines n'est pas commencée"
+[ 93.014s] narrateur.corrige        · acteur=steffon-darklyn · essai=2 · caracteres=1098
+[ 93.015s] cli.depart               · acteur=narrateur-local:table-peinte · session=b3f9616e-2ae4-4180-a7e3-9f8b14e56aa4 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[ 95.864s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[ 98.043s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=5.0
+[ 99.382s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 99.388s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 99.397s] cli.assistant            · bloc=thinking
+[103.044s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=10.0
+[108.058s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=15.0
+[113.073s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=20.0
+[118.075s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=25.0
+[123.078s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=30.1
+[128.088s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=35.1
+[133.092s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=40.1
+[136.894s] cli.texte                · contenu={ "qui": "steffon-darklyn", "activation": { "tache": {"id": "40029", "quoi": "🔗 Écrire la chaîne complète sur un seul feuillet", "creee": false}, "issue": "avance", "activites": […
+[136.898s] cli.rate_limit_event     · sous_type=None
+[137.066s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[137.069s] cli.resultat             · erreur=False · duree_ms=41956 · cout=0.163847 · entree=2 · sortie=4345 · caracteres=10182
+[138.104s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=45.1
+[138.105s] rapport.extraction       · acteur=steffon-darklyn · essai=2
+[138.108s] rapport.mutations_ecartees · acteur=steffon-darklyn · nombre=3
+[138.109s] rapport.refuse           · acteur=steffon-darklyn · essai=2 · erreur=continuite rompue pour 40029 : avant="en cours — le feuillet porte la chaîne entière de sa main : les quatre cas et leur règle en tête, la suite des noms qui commande si le précédent tombe poussée jusqu'au dernier capitaine de compagnie, chaque office recopié tel qu'il est écrit au registre des offices ; deux carrés restent vides, encadrés à l'encre et non rayés, LA RUE et CELUI QUI TIENT L'ARCHE…
+[138.110s] narrateur.corrige        · acteur=steffon-darklyn · essai=3 · caracteres=1536
+[138.111s] cli.depart               · acteur=narrateur-local:table-peinte · session=b3f9616e-2ae4-4180-a7e3-9f8b14e56aa4 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[140.441s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[143.136s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=5.0
+[144.418s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[144.421s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[144.427s] cli.assistant            · bloc=thinking
+[148.140s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=10.0
+[153.142s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=15.0
+[158.151s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=20.0
+[163.162s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=25.0
+[168.171s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=30.0
+[173.186s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=35.1
+[178.194s] cli.heartbeat            · acteur=narrateur-local:table-peinte · phase=narrateur.correction · secondes=40.1
+[180.136s] cli.texte                · contenu={ "qui": "steffon-darklyn", "activation": { "tache": {"id": "40029", "quoi": "🔗 Écrire la chaîne complète sur un seul feuillet", "creee": false}, "issue": "avance", "activites": […
+[180.148s] cli.rate_limit_event     · sous_type=None
+[180.302s] cli.systeme              · sous_type=notification · modele=None · outils=0
+[180.304s] cli.resultat             · erreur=False · duree_ms=40428 · cout=0.1667585 · entree=2 · sortie=4204 · caracteres=9772
+[181.597s] rapport.extraction       · acteur=steffon-darklyn · essai=3
+[181.600s] rapport.mutations_ecartees · acteur=steffon-darklyn · nombre=3
+[181.601s] rapport.refuse           · acteur=steffon-darklyn · essai=3 · erreur=continuite rompue pour 40029 : avant=None, dernier apres="en cours — la moitié haute du feuillet est écrite ; la suite des noms qui commande si le précédent tombe n'est pas posée, et la recopie au dos des feuillets de marche des capitaines n'est pas commencée"
+[181.648s] activation.annulee       · acteur=steffon-darklyn · raison=RuntimeError · erreur=continuite rompue pour 40029 : avant=None, dernier apres="en cours — la moitié haute du feuillet est écrite ; la suite des noms qui commande si le précédent tombe n'est pas posée, et la recopie au dos des feuillets de marche des capitaines n'est pas commencée"

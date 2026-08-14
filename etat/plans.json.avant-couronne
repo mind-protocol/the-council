@@ -1,0 +1,1183 @@
+{
+ "_note": "LES PLANS D'EN FACE — la vérité, jamais montrée au joueur. Même garde qu'intentions.json : ce qui est ici ne doit fuiter ni dans une réplique, ni dans une carte, ni dans une brève. Ce que le joueur CROIT de ces plans vit ailleurs et par siège — etat/joueurs/<id>/jetons.json et vues.json — avec sa certitude qui se délave. Un verrou d'ici ne devient une croyance chez nous que par une entrée de diffusion arrivée à échéance, comme tout le reste. Format objet et non tableaux de cellules : on calcule dessus, le cahier n'en est qu'une vue possible. Plages réservées : 70000-79999 pour les plans qui ne sont pas les nôtres.",
+ "plans": [
+  {
+   "id": "hightower",
+   "maison_id": "maison-hightower",
+   "camp": "vert",
+   "titre": "L'ost, l'or et la tour",
+   "plage": "71000-71999",
+   "ouverture": {
+    "ce_que_ce_plan_rend_vrai": "Aegon reste roi assez longtemps pour que le Bief arrive, et la maison Hightower paie cette guerre sans qu'on la fasse chez elle.",
+    "leurs_piliers": [
+     "que la tour ne brûle pas",
+     "que le Bief marche d'un bloc",
+     "que le roi tienne jusqu'à ce qu'on arrive"
+    ],
+    "ce_qu_ils_livrent": "Six mille hommes comptés sous les murs de Villevieille en une lune, puis vingt-cinq jours de route jusqu'à Port-Réal — nourris, pas un jour de moins.",
+    "ce_qu_ils_demandent": "L'or de la Couronne pour les vivres, et que le roi cesse de vider la bourse en primes criées.",
+    "ce_qu_ils_ne_garantissent_pas": "Le temps que mettront les seigneurs de la Mander à se décider. Et rien, absolument rien, contre un dragon posé sur Villevieille.",
+    "ferme_quand": "L'ost est devant Port-Réal — ou Villevieille est menacée, et alors il ne part plus jamais.",
+    "ce_qu_on_en_sait_de_source": "Têtes d'ormund-hightower (maj 129.3.27), otto (129.3.27), aegon-ii (129.3.27), alicent (129.3.25), aemond (129.3.17) ; maisons.json ; canons 7.5 et 6.1 et leurs conditions."
+   },
+   "etats_cibles": [
+    {
+     "id": "71000",
+     "quoi": "Six mille hommes comptés sous les murs de Villevieille",
+     "vrai_quand": "Les bannerets du Bief ont répondu et le compte est arrêté par écrit.",
+     "echeance": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 19
+     },
+     "source": "étape en cours d'ormund-hightower, 26 jours restants au 129.3.28 | AVANCE DE CINQ JOURS le 129.3.29 : il convoque par CAVALIERS et non par corbeaux (la chaine des mestres porte tout, il vient de le comprendre) — quatre jours perdus sur les courriers, dix jours avances sur la date. journee d'Ormund du 129.3.29 (travaux : ormund-par-quelle-main, 7 pensees versees) — sa decision arretee le soir du 29e",
+     "sert": [
+      "71100"
+     ],
+     "de_lieu": "villevieille",
+     "vers_lieu": "villevieille",
+     "arrive_le": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 19
+     },
+     "force": 6000,
+     "voie": "terre"
+    },
+    {
+     "id": "71100",
+     "quoi": "L'ost nourri pour vingt-cinq jours de route, sans toucher aux greniers de la ville",
+     "vrai_quand": "Vingt-cinq jours de vivres pour six mille hommes sont en magasin, et Villevieille mange comme avant. Chiffre par lui le 29e : 22 800 livres par jour, 570 000 pour vingt-cinq jours. Un convoi qui porte sa propre route se devore avant d'arriver (380 chariots et 1 520 boeufs mangeraient un tiers de plus qu'ils ne portent) — donc QUATRE RELAIS a garnir de 237 quartiers chacun, 76 chariots, 304 boeufs, etapes de cinq jours.",
+     "echeance": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 20
+     },
+     "source": "intention d'Ormund : « ne le mettre en marche que quand il sera nourri jusqu'à Port-Réal » | journee d'Ormund du 129.3.29 (travaux : ormund-par-quelle-main, 7 pensees versees) — sa decision arretee le soir du 29e | ITINERAIRE ARRETE PAR LUI le 129.3.29, conseil des capitaines et du mestre des vivres, Tour Haute.",
+     "sert": [
+      "71300"
+     ],
+     "de_lieu": "villevieille",
+     "vers_lieu": "port-real",
+     "arrive_le": {
+      "annee": 129,
+      "lune": 5,
+      "jour": 14
+     },
+     "force": 6000,
+     "voie": "terre",
+     "route_dite": "Route de la Rose — par Pont-l Amer puis la grand-route royale. JAMAIS la route cotiere de Sombreval, JAMAIS le Gosier ni le large de Peyredragon avant Port-Real meme. Depart 129.4.19, arrivee 129.5.14, vingt-cinq jours pile."
+    },
+    {
+     "id": "71200",
+     "quoi": "Villevieille capable de répondre à un dragon",
+     "vrai_quand": "Daeron et Tessarion sont encore dans la ville le jour où l'ost s'ébranle.",
+     "echeance": null,
+     "source": "étape sans horloge d'Ormund + sa croyance sur la Citadelle et le Septuaire Étoilé",
+     "sert": [
+      "71000",
+      "71100"
+     ]
+    },
+    {
+     "id": "71300",
+     "quoi": "Aegon tient jusqu'à l'arrivée du Bief",
+     "vrai_quand": "La déchéance de Rhaenyra est proclamée par le roi, et des têtes ont été payées plutôt que des batailles livrées.",
+     "echeance": {
+      "annee": 129,
+      "lune": 7,
+      "jour": 5
+     },
+     "source": "intention d'Otto + canon 7.5 (Aegon écarte son grand-père des lenteurs)",
+     "sert": []
+    }
+   ],
+   "verrous": [
+    {
+     "id": "71001",
+     "quoi": "Le Bief ne marche pas d'un bloc",
+     "bloque": [
+      "71000"
+     ],
+     "vrai_aujourdhui": "Hautjardin est aux mains d'un enfant et la moitié des seigneurs de la Mander attendront de voir qui paie. ET SA MONNAIE A CHANGE le 29e : les quatre relais tombent sur les terres de ses bannerets. Un seigneur qui ne repond pas ne lui retire pas des epees, il lui retire UNE GRANGE — cinq jours de route ou six mille hommes n'ont rien a manger.",
+     "source": "croyance d'Ormund | journee d'Ormund du 129.3.29 (travaux : ormund-par-quelle-main, 7 pensees versees) — sa decision arretee le soir du 29e",
+     "leve_quand": "Le compte est arrêté par écrit et les bannerets ont juré devant témoin.",
+     "portee_pour_nous": "on peut le savoir"
+    },
+    {
+     "id": "71002",
+     "quoi": "Ormund lève un ost sur une lettre de famille, et ignore que la guerre est ouverte",
+     "bloque": [
+      "71000",
+      "71100"
+     ],
+     "vrai_aujourdhui": "Il ignore le feu de la route royale du seizième jour, il ignore que Rhaenyra a été couronnée, et la sommation générale d'Otto ne l'a pas encore trouvé. Il lève six mille hommes sur une affaire de famille, à la vitesse d'une affaire de famille.",
+     "source": "trois entrées `ignore` de sa tête",
+     "leve_quand": "La sommation d'Otto arrive, ou n'importe quelle nouvelle du feu — et alors sa lenteur devient une faute qu'on lui reprochera.",
+     "portee_pour_nous": "on peut le savoir, et c'est le verrou le plus cher du plan : chaque jour où il l'ignore est un jour gagné"
+    },
+    {
+     "id": "71003",
+     "quoi": "Rien dans Villevieille ne répond à un dragon",
+     "bloque": [
+      "71000",
+      "71100"
+     ],
+     "vrai_aujourdhui": "La Citadelle et le Septuaire Étoilé valent plus que n'importe quel champ de bataille, et la ville n'a que Tessarion. Tant que c'est vrai, Daeron ne part pas — donc l'ost part sans dragon, ou ne part pas.",
+     "source": "croyance et étape sans horloge d'Ormund",
+     "leve_quand": "Un second dragon vert est posté à Villevieille, ou la menace de vol est écartée.",
+     "portee_pour_nous": "le joueur peut AGIR dessus — un dragon montré au sud immobilise Daeron sans un homme perdu"
+    },
+    {
+     "id": "71004",
+     "quoi": "La même bourse est réclamée trois fois",
+     "bloque": [
+      "71100",
+      "71300"
+     ],
+     "vrai_aujourdhui": "Sept cent mille dragons au coffre, vingt mille de revenu par lune. Otto veut payer des têtes plutôt que des osts ; Ormund veut vingt-cinq jours de vivres pour six mille hommes ; et Criston doit arracher à Otto l'or de l'ost avant de marcher sur Sombreval. Aucun des trois n'a écrit son chiffre devant les deux autres.",
+     "source": "maisons.json (or 700000, revenus_lune 20000, levees_dispo 6000) + intention d'Otto + condition du canon 6.1",
+     "leve_quand": "Un seul homme arrête la dépense pour les trois, et les deux autres s'inclinent.",
+     "portee_pour_nous": "on peut le savoir — et une prime criée sans gage se sait vite"
+    },
+    {
+     "id": "71005",
+     "quoi": "Aegon s'impatiente des lenteurs de son grand-père",
+     "bloque": [
+      "71300"
+     ],
+     "vrai_aujourdhui": "Il veut être vengé sans se déplacer, et payer de sa main le premier homme qui viendra prendre la prime au mot. Le cinquième jour de la septième lune, il écarte Otto si les achats n'ont rien produit de visible.",
+     "source": "tête d'aegon-ii + canon 7.5 et sa condition",
+     "leve_quand": "Les serments et achats d'Otto produisent un succès visible avant cette date.",
+     "portee_pour_nous": "on peut le savoir, et on peut l'aggraver : rien de visible n'arrive si rien ne se laisse acheter"
+    },
+    {
+     "id": "71006",
+     "quoi": "Peyredragon sait écrire à Ormund nommément",
+     "bloque": [],
+     "vrai_aujourdhui": "La déposition de ser Steffon Darklyn lui est arrivée adressée à son nom, et il l'a compris ainsi : on a voulu qu'il sache qu'on sait ce que sa maison a fait. Son déclencheur est armé sur exactement ce geste.",
+     "source": "croyance d'Ormund + son déclencheur",
+     "leve_quand": "—",
+     "portee_pour_nous": "LE JOUEUR PEUT AGIR : c'est la seule porte ouverte de ce plan, et elle est déjà entrebâillée"
+    }
+   ],
+   "clefs": [
+    {
+     "id": "71010",
+     "quoi": "Payer des têtes plutôt que des osts",
+     "ouvre": [
+      "71300"
+     ],
+     "principe": "Une tête coûte moins qu'une campagne et arrive plus vite. Otto le tient depuis le début et ne l'a jamais dit ainsi devant le roi.",
+     "prix": "L'or de la bourse, et le crédit du roi si la prime est criée sans gage.",
+     "porteur": "otto"
+    },
+    {
+     "id": "71011",
+     "quoi": "Nourrir avant de marcher",
+     "ouvre": [
+      "71100"
+     ],
+     "principe": "Vingt-cinq jours de route, pas un de moins. Un ost qui part affamé n'arrive pas — Ormund le sait et ne cédera pas dessus.",
+     "prix": "Le temps, et la même bourse que 71010.",
+     "porteur": "ormund-hightower",
+     "note": "71010 et 71011 s'excluent sur la bourse : c'est la tension G01 de ce plan."
+    },
+    {
+     "id": "71012",
+     "quoi": "Le mariage d'Accalmie",
+     "ouvre": [
+      "71300"
+     ],
+     "principe": "Une des filles de Borros Baratheon pour Aemond : des cavaliers sans avoir à les payer.",
+     "prix": "Aemond, et l'exclusivité — Borros ne se donne qu'une fois.",
+     "porteur": "otto",
+     "echeance": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 9
+     }
+    },
+    {
+     "id": "71013",
+     "quoi": "Les otages utiles des maisons de la Couronne",
+     "ouvre": [
+      "71300"
+     ],
+     "principe": "Fils cadets, pupilles, filles à marier : on tient une maison par ce qu'elle a laissé dehors.",
+     "prix": "Le jour où on s'en sert, on perd toutes les maisons qui hésitaient.",
+     "porteur": "otto"
+    },
+    {
+     "id": "71014",
+     "quoi": "Garder le dragon à la maison",
+     "ouvre": [
+      "71200"
+     ],
+     "principe": "Tessarion vaut plus posée sur Villevieille que volante ailleurs, tant que la ville n'a rien d'autre.",
+     "prix": "L'ost marche sans couverture aérienne sur vingt-cinq jours de route.",
+     "porteur": "ormund-hightower"
+    }
+   ],
+   "actions": [
+    {
+     "id": "71020",
+     "quoi": "Convoquer les bannerets du Bief à Villevieille et arrêter le compte",
+     "realise": [
+      "71001"
+     ],
+     "office": "ormund-hightower",
+     "moyens": [
+      "la parole de la tour",
+      "l'or de la maison",
+      "des cavaliers, non des corbeaux"
+     ],
+     "cout": "une lune, et ce que coûte de nourrir six mille hommes assemblés",
+     "depend_de": [],
+     "preuve": "Six mille hommes comptés sous les murs, et le compte écrit",
+     "jour_du": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 19
+     },
+     "etat": "en cours",
+     "source": "étape en cours, 26 jours restants | journee d'Ormund du 129.3.29 (travaux : ormund-par-quelle-main, 7 pensees versees) — sa decision arretee le soir du 29e"
+    },
+    {
+     "id": "71021",
+     "quoi": "Retenir le prince Daeron et Tessarion à Villevieille jusqu'au départ de l'ost",
+     "realise": [
+      "71014"
+     ],
+     "office": "ormund-hightower",
+     "moyens": [
+      "l'autorité de la tour sur la ville"
+     ],
+     "cout": "néant en or ; l'ost marchera sans dragon",
+     "depend_de": [],
+     "preuve": "Daeron est encore dans la ville le jour où l'ost s'ébranle",
+     "jour_du": null,
+     "etat": "en cours",
+     "source": "étape sans horloge — et c'est pourquoi elle ne tombera jamais toute seule"
+    },
+    {
+     "id": "71022",
+     "quoi": "Faire écrire par Orwyle le récit officiel du massacre de la route royale, et l'expédier partout",
+     "realise": [
+      "71300"
+     ],
+     "office": "otto",
+     "moyens": [
+      "le grand mestre",
+      "les corbeaux du roi"
+     ],
+     "cout": "néant, sauf le crédit d'Orwyle",
+     "depend_de": [],
+     "preuve": "Le récit lu hors de Port-Réal, et repris",
+     "jour_du": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 28
+     },
+     "etat": "bloquée",
+     "source": "étape `bloque` de la tête d'Otto"
+    },
+    {
+     "id": "71023",
+     "quoi": "Dresser la liste des otages utiles parmi les maisons de la Couronne",
+     "realise": [
+      "71013"
+     ],
+     "office": "otto",
+     "moyens": [
+      "les archives du Donjon Rouge",
+      "Larys"
+     ],
+     "cout": "une journée de clerc",
+     "depend_de": [],
+     "preuve": "La liste, nom par nom, avec ce que chaque maison a laissé dehors",
+     "jour_du": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 29
+     },
+     "etat": "en cours",
+     "source": "étape en cours, 1 jour restant"
+    },
+    {
+     "id": "71024",
+     "quoi": "Porter à Accalmie une offre de mariage : une fille de Borros pour Aemond",
+     "realise": [
+      "71012"
+     ],
+     "office": "otto",
+     "moyens": [
+      "un émissaire",
+      "la parole du roi"
+     ],
+     "cout": "l'exclusivité — Borros ne se donne qu'une fois",
+     "depend_de": [],
+     "preuve": "La réponse de Borros, par écrit",
+     "jour_du": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 2
+     },
+     "etat": "en cours",
+     "source": "étape en cours, 5 jours restants"
+    },
+    {
+     "id": "71025",
+     "quoi": "Amasser vingt-cinq jours de vivres pour six mille hommes sans toucher aux greniers de la ville",
+     "realise": [
+      "71011"
+     ],
+     "office": "ormund-hightower",
+     "moyens": [
+      "l'or de la maison",
+      "la Mander"
+     ],
+     "cout": "570 000 livres de grain et d'avoine pour vingt-cinq jours, servies par quatre relais de 237 quartiers — et non par un convoi, qui se mangerait en chemin",
+     "depend_de": [
+      "71020"
+     ],
+     "preuve": "Les magasins pleins, comptés, et le prix du grain à Villevieille inchangé",
+     "jour_du": null,
+     "etat": "en cours",
+     "source": "CHIFFREE PAR LUI. Ce n'est plus un trou de son plan. journee d'Ormund du 129.3.29 (travaux : ormund-par-quelle-main, 7 pensees versees) — sa decision arretee le soir du 29e"
+    },
+    {
+     "id": "71026",
+     "quoi": "Arrêter la dépense pour les trois — primes, vivres, or de l'ost",
+     "realise": [
+      "71004"
+     ],
+     "office": "à désigner",
+     "moyens": [
+      "la bourse de la maison"
+     ],
+     "cout": "que deux des trois s'inclinent",
+     "depend_de": [],
+     "preuve": "Un chiffre écrit devant les trois",
+     "jour_du": null,
+     "etat": "à faire",
+     "source": "personne ne le porte — c'est le trou central de ce plan"
+    },
+    {
+     "id": "71027",
+     "quoi": "Recevoir lui-même, sans Otto dans la salle, le premier homme qui viendra réclamer la prime",
+     "realise": [
+      "71010"
+     ],
+     "office": "aegon-ii",
+     "moyens": [
+      "la bourse du roi"
+     ],
+     "cout": "l'or, et le fait qu'Otto l'apprendra après",
+     "depend_de": [],
+     "preuve": "L'homme payé de sa main",
+     "jour_du": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "etat": "en cours",
+     "source": "étape en cours d'Aegon, 5 jours restants"
+    },
+    {
+     "id": "71028",
+     "quoi": "Faire proclamer la déchéance de Rhaenyra par le roi",
+     "realise": [
+      "71300"
+     ],
+     "office": "otto",
+     "moyens": [
+      "le roi",
+      "le grand mestre"
+     ],
+     "cout": "néant en or ; la question écrite de l'acte reste sans réponse",
+     "depend_de": [
+      "71022"
+     ],
+     "preuve": "La proclamation lue et expédiée",
+     "jour_du": null,
+     "etat": "à faire",
+     "source": "son intention en toutes lettres : « avant que la question écrite de l'acte ne trouve des oreilles dans la baie »"
+    },
+    {
+     "id": "71029",
+     "quoi": "Arracher à Otto l'or de l'ost avant de marcher sur Sombreval",
+     "realise": [],
+     "office": "criston",
+     "moyens": [
+      "les brûlés de la route"
+     ],
+     "cout": "une semaine, et l'humiliation d'Otto en public",
+     "depend_de": [],
+     "preuve": "L'or versé, ou l'ost qui part sans",
+     "jour_du": {
+      "annee": 129,
+      "lune": 6,
+      "jour": 1
+     },
+     "etat": "en cours",
+     "source": "condition du canon 6.1 : « retardé tant que Criston n'a pas arraché à Otto l'or de l'ost »",
+     "note": "Criston n'est pas Hightower : il est le troisième réclamant de la bourse, et c'est ce qui rend 71004 insoluble."
+    }
+   ],
+   "tensions": [
+    {
+     "id": "H01",
+     "monnaie": "l'or de la maison",
+     "demande": "Les primes d'Otto (71010) + vingt-cinq jours de vivres pour six mille hommes (71011) + l'or de l'ost que Criston veut arracher (71029).",
+     "existe": "700 000 dragons au coffre, 20 000 de revenu par lune.",
+     "ecart": "Aucun des trois n'a écrit son chiffre devant les deux autres. Le premier servi le sera parce qu'il aura crié le plus fort — et Aegon paie déjà de sa main sans passer par Otto.",
+     "quand_ca_se_voit": "Le premier jour où l'on demande les vivres et où la bourse a déjà servi.",
+     "ce_qui_tombe": "Les vivres, parce que ce sont les seuls qui se voient plus tard. Et alors l'ost part quand même, affamé — ou ne part pas."
+    },
+    {
+     "id": "H02",
+     "monnaie": "le temps",
+     "demande": "Aegon veut être vengé maintenant ; Ormund ne marche pas avant une lune plus vingt-cinq jours.",
+     "existe": "Le canon 7.5 dit qu'Aegon écarte son grand-père le cinquième jour de la septième lune.",
+     "ecart": "Trois lunes entre ce que le roi veut et ce que le Bief peut.",
+     "quand_ca_se_voit": "129.7.5",
+     "ce_qui_tombe": "Otto. Et le plan de la maison perd sa tête à Port-Réal juste avant que son ost arrive."
+    }
+   ],
+   "resonance": [
+    {
+     "lien": "servi par",
+     "notre_affaire": "Guet des osts verts (31000)",
+     "leur_piece": "71000 · 71002",
+     "pourquoi": "Notre H1 dit déjà : « si Ormund est à moins de douze jours, je cesse de plaider l'attente ». Son horloge de 26 jours et son ignorance sont exactement ce que ce guet doit mesurer."
+    },
+    {
+     "lien": "attendu par",
+     "notre_affaire": "Contrôle naval (22000)",
+     "leur_piece": "71100",
+     "pourquoi": "Un ost qui doit être nourri vingt-cinq jours dépend de ce qui remonte la Mander et la côte. Ce qu'on ferme sur l'eau se paie dans leurs magasins."
+    },
+    {
+     "lien": "sert",
+     "notre_affaire": "Fenêtre de mer (35000)",
+     "leur_piece": "71300",
+     "pourquoi": "Notre fenêtre se compte à rebours d'un jour d'entrée ; leur 71300 dit jusqu'à quand Aegon tient. Les deux horloges courent l'une contre l'autre."
+    },
+    {
+     "lien": "porte ouverte",
+     "notre_affaire": "à ouvrir",
+     "leur_piece": "71006",
+     "pourquoi": "Le déclencheur d'Ormund est armé sur une lettre adressée nommément à lui. Peyredragon l'a déjà fait une fois sans le vouloir."
+    }
+   ],
+   "ce_que_ca_engendre_chez_nous": [
+    {
+     "type": "observer",
+     "sujet": "la date où la sommation d'Otto atteint Villevieille",
+     "pourquoi": "71002 — chaque jour d'ignorance d'Ormund est un jour gagné, et on ne sait pas combien il en reste",
+     "vers": "31000"
+    },
+    {
+     "type": "interroger",
+     "sujet": "ce que la bourse d'Otto a déjà payé, et sur quel gage",
+     "pourquoi": "71004 — une prime criée sans gage se sait, et c'est ce qui départage les trois réclamants",
+     "vers": "31000"
+    },
+    {
+     "type": "eprouver",
+     "sujet": "ce qu'un dragon montré au sud fait à Daeron",
+     "pourquoi": "71003 — c'est le seul verrou d'en face sur lequel le joueur agit sans perdre un homme",
+     "vers": "à ouvrir"
+    },
+    {
+     "type": "decision",
+     "sujet": "écrire à Ormund nommément, ou s'en abstenir",
+     "pourquoi": "71006 — son déclencheur est armé exactement là-dessus ; ce n'est pas une activité, c'est une parole de la reine",
+     "vers": "la table"
+    }
+   ],
+   "a_verifier": [
+    "L'`ignore` d'Ormund dit que la sommation d'Otto « ne le trouvera que le vingt-deuxième jour », et sa tête est à jour au 129.3.27. Ou bien il s'agit du vingt-deuxième jour de la QUATRIÈME lune, ou bien cette entrée est périmée de six jours. Le plan repose sur 71002 : il faut trancher avant de calculer dessus.",
+    "Sa croyance sur le Bief est coupée en base : « Six mill… ». Le chiffre exact des hommes que la Mander donnerait manque."
+   ]
+  },
+  {
+   "id": "baratheon",
+   "maison_id": "maison-baratheon",
+   "camp": "neutre",
+   "titre": "Deux noms sur la table",
+   "plage": "76000-76999",
+   "ouverture": {
+    "ce_que_ce_plan_rend_vrai": "Accalmie se vend une seule fois, au plus offrant, et le prix n'est pas de l'or : c'est un nom de prince pour une des quatre filles. Tant que personne ne l'écrit, Borros Baratheon ne répond à rien — et il a raison de ne pas répondre.",
+    "leurs_piliers": [
+     "que le compte des lances soit vrai avant qu'on le dise",
+     "qu'on ne réponde à personne avant d'avoir été nommé",
+     "que rien ne sorte d'Accalmie qui n'ait été écrit"
+    ],
+    "ce_qu_ils_livrent": "Trois mille lances sous les murs en douze jours, huit mille s'il vide les Terres de l'Orage — et la route de l'orage, sans laquelle aucun des deux camps ne gagne.",
+    "ce_qu_ils_demandent": "Deux noms écrits : laquelle de ses quatre filles, et le prince qu'on lui donne. Rien d'autre n'a cours ici — ni or, ni serment, ni rappel de ce que son père a fait.",
+    "ce_qu_ils_ne_garantissent_pas": "Qu'il attende au-delà du jour où le compte sera arrêté. Après, il devra choisir devant des hommes rassemblés — le coût est écrit dans sa propre étape.",
+    "ferme_quand": "Le jour où deux noms sont posés et acceptés : il ne se donne qu'une fois. Ou le jour où les deux camps se sont tus une lune entière, et alors il va chercher son prix à Port-Réal lui-même.",
+    "ce_qu_on_en_sait_de_source": "Têtes de borros-baratheon, cassandra-baratheon, maris-baratheon et mestre-hallis (toutes maj 129.3.28, lot etat/staging/ouvrir-baratheon.json appliqué) ; maisons.json (maison-baratheon : or 90000, revenus_lune 4000, levees_dispo 3000, levees_max 8000, suzerain_id null) ; canons mort-lucerys (a-venir, 129.4.9, quatre conditions) et emissaire-lucerys (devie, ce qui reste vrai) ; plis.json (pli-vol-rhaenyra-sombreval-14-borros-baratheon, remis) ; plan hightower 71012 et 71024."
+   },
+   "etats_cibles": [
+    {
+     "id": "76000",
+     "quoi": "Trois mille lances arrêtées PAR ÉCRIT sous les murs d'Accalmie",
+     "vrai_quand": "Le compte est arrêté banneret par banneret sur les rôles, et le chiffre a été vrai avant d'être dit à quiconque.",
+     "echeance": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 9
+     },
+     "source": "étape borros-rassembler-lances (12 jours restants, tête maj 129.3.27) et étape hallis-arreter-le-compte-des-lances (11 jours restants, tête maj 129.3.28) — deux horloges écrites séparément qui tombent le même jour",
+     "sert": [
+      "76100",
+      "76300"
+     ]
+    },
+    {
+     "id": "76100",
+     "quoi": "Deux noms posés sur sa table — une de ses quatre filles, et le prince qu'on lui donne",
+     "vrai_quand": "Un camp a écrit les deux noms, et le mestre les a lus tout haut dans la grande salle.",
+     "echeance": null,
+     "source": "intention de borros-baratheon en toutes lettres, et emissaire-lucerys (statut devie) : « ce qui reste vrai et ne dépend pas d'elle »",
+     "sert": [
+      "76200"
+     ]
+    },
+    {
+     "id": "76200",
+     "quoi": "Une réponse ÉCRITE d'Accalmie, portée au nord par un cavalier",
+     "vrai_quand": "La page préparée sans nom de camp a reçu ses deux noms, le sceau du cerf, et un homme en selle — neuf jours de route.",
+     "echeance": null,
+     "source": "étape hallis-la-reponse-par-ecrit (6 jours restants au 129.3.28) — et c'est la quatrième condition de déviation de mort-lucerys : « dévié si Borros a déjà donné sa réponse par écrit avant l'arrivée de l'émissaire »",
+     "sert": [
+      "76300"
+     ]
+    },
+    {
+     "id": "76300",
+     "quoi": "Accalmie payée sans avoir combattu",
+     "vrai_quand": "Ou bien un mariage est conclu, ou bien — les deux camps s'étant tus une lune — le mestre est parti à Port-Réal réclamer une place au conseil du roi, et l'on dit dans la salle qu'il l'a obtenue.",
+     "echeance": null,
+     "source": "si_bloque de l'étape borros-attendre-offres, écrit à froid",
+     "sert": []
+    },
+    {
+     "id": "76400",
+     "quoi": "Un heraut d Accalmie devant la reine, sans une ligne ecrite",
+     "vrai_quand": "Le heraut a dit de bouche que Borros Baratheon a quatre filles, et qu on lui envoie un nom.",
+     "de_lieu": "accalmie",
+     "vers_lieu": "peyredragon",
+     "voie": "mer",
+     "force": 1,
+     "arrive_le": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 5
+     },
+     "echeance": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 5
+     },
+     "route_dite": "Coque mise a la mer le soir du 28e, un heraut a bord et PAS UNE LIGNE ECRITE. Motif dit par lui : le dernier oiseau de Peyredragon est parti le 21e et ne revient pas — il n a plus de route vers la reine, ni elle vers lui. Neuf jours de cavalier, ou une coque : environ sept jours de mer. CE N EST PAS UNE REPONSE — il n a rien repondu a personne et ne repondra rien.",
+     "source": "parole de lord Borros Baratheon au parloir, le 129.3.28, Accalmie — trois choses dites pour etre repetees telles quelles"
+    }
+   ],
+   "verrous": [
+    {
+     "id": "76001",
+     "quoi": "Le compte n'est pas encore vrai, et le seigneur le répète déjà partout",
+     "bloque": [
+      "76000",
+      "76100"
+     ],
+     "vrai_aujourdhui": "Trois mille est le compte du mestre, fait sur les rôles ; lord Borros le répète sans l'avoir vérifié une seule fois. Si les bannerets traînent, Hallis écrira sur DEUX COLONNES SÉPARÉES le chiffre qu'il a et le chiffre qu'on lui a promis, et il ne les additionnera pas.",
+     "source": "croyance n°2 et si_bloque de hallis-arreter-le-compte-des-lances",
+     "leve_quand": "Le compte est arrêté par écrit, banneret par banneret — le 129.4.9.",
+     "portee_pour_nous": "on peut le savoir",
+     "route_de_fuite": {
+      "canal": "barque",
+      "par": "deux patrons de coque venus de la côte de l'orage, au bureau de port, à rulf-corne et aldon-hask",
+      "arrive": {
+       "annee": 129,
+       "lune": 4,
+       "jour": 7
+      },
+      "jours": 7,
+      "fiabilite": 50,
+      "deforme_comment": "On voit des feux de camp par centaines dans la lande et les chemins pleins de cavaliers, mais personne ne sait pour qui l'on rassemble, et l'un jure n'avoir vu planter d'autre bannière que le cerf. Le joueur voit l'ost se former sans savoir à qui il ira — ce qui est exactement l'état de la question. Aucun chiffre ne remonte : jamais trois mille, jamais huit mille.",
+      "source": "diffusion ajoutée par ouvrir-baratheon.json sur vol-rhaenyra-sombreval, ou → peyredragon, 129.4.7"
+     }
+    },
+    {
+     "id": "76002",
+     "quoi": "Peyredragon n'a plus un seul corbeau pour Accalmie",
+     "bloque": [
+      "76100",
+      "76200"
+     ],
+     "vrai_aujourdhui": "L'oiseau qui en venait a servi le vingt-et-unième et ne reviendra pas. Toute parole de la reine exige désormais un cavalier de NEUF JOURS, une coque, ou un dragon. Borros attend une réponse par une voie qui n'existe plus, et prendra chaque jour de silence pour du mépris. Un départ le 129.3.29 arrive le 129.4.7 : DEUX JOURS de marge sur le 129.4.9.",
+     "source": "ignore neuf de borros-baratheon + croyance n°3 et si_bloque de mestre-hallis + info-021 (quatorze adresses) + acte-aurore-trois-lettres-parties (129.3.21) + cahier de la reine, books.json : « Sept dépensées en une matinée. Aucune vers le Val, le Nord, ni Accalmie une seconde fois »",
+     "leve_quand": "Un homme part. Il n'y a pas d'autre levée : ce verrou ne s'ouvre pas, il se traverse à cheval, et la porte se ferme le 129.3.30 au soir.",
+     "portee_pour_nous": "on peut agir dessus",
+     "route_de_fuite": {
+      "canal": "déjà su",
+      "par": "notre propre registre de roukerie — mestre Gerardys, et le cahier de la reine dans books.json qui l'écrit noir sur blanc",
+      "arrive": {
+       "annee": 129,
+       "lune": 3,
+       "jour": 28
+      },
+      "jours": 0,
+      "fiabilite": 100,
+      "deforme_comment": "Aucune déformation — c'est le seul verrou de ce plan dont le fait soit CHEZ NOUS. Il est écrit dans notre cahier et personne ne l'a encore compté en jours de route : ce n'est pas une nouvelle qui doit arriver, c'est une soustraction que personne n'a faite.",
+      "source": "books.json, la ligne LES CORBEAUX ; et la ligne des affaires en attente « Accalmie : neuf jours de silence, Otto y est depuis le 17e — La reine — SANS DATE »"
+     }
+    },
+    {
+     "id": "76003",
+     "quoi": "Otto Hightower loge sous son toit depuis le dix-septième et n'a toujours pas écrit un nom",
+     "bloque": [
+      "76100"
+     ],
+     "vrai_aujourdhui": "Onze jours de vin bu sans qu'un nom soit posé. Borros en tire une conclusion qui le durcit contre les Verts autant que contre nous : « celui qui est là depuis onze jours n'a rien de plus à offrir qu'il n'ait déjà offert ». La clef 71012 du plan hightower porte échéance 129.4.9 et son prix est écrit : « l'exclusivité — Borros ne se donne qu'une fois ».",
+     "source": "croyance n°3 de borros-baratheon (maj 129.3.28) + croyances n°1 et 2 de maris-baratheon + info-037 (« la sommation d'Otto y est arrivée le 17 sous le sceau d'Aegon ») + clef 71012 et action 71024 du plan hightower",
+     "leve_quand": "Otto écrit le nom d'Aemond en face de celui d'une des quatre filles. À Accalmie, personne n'a encore entendu ce nom prononcé.",
+     "portee_pour_nous": "on peut le savoir",
+     "route_de_fuite": {
+      "canal": "barque",
+      "par": "la Ver Blanc, contre paiement, à Mysaria",
+      "arrive": {
+       "annee": 129,
+       "lune": 4,
+       "jour": 5
+      },
+      "jours": 4,
+      "fiabilite": 80,
+      "deforme_comment": "Trois lignes achetées, sèches et justes : Otto est là depuis le dix-septième et n'a pas de réponse, on y attend un nom et ce n'est pas un nom de bataille. En marge, d'une autre main : quatre filles, pas un fils, l'aînée s'appelle Cassandra. Ce que la nouvelle NE dit pas, c'est le nom d'Aemond — la Ver Blanc ne l'a pas, parce qu'Accalmie ne l'a pas.",
+      "source": "diffusion ajoutée par ouvrir-baratheon.json sur vol-rhaenyra-sombreval, ou → peyredragon, 129.4.5 ; canal déjà établi (diffusions du 129.3.24 et du 129.3.26)"
+     }
+    },
+    {
+     "id": "76004",
+     "quoi": "La reine n'a pas de prince à donner",
+     "bloque": [
+      "76100",
+      "76200"
+     ],
+     "vrai_aujourdhui": "Jacaerys est promis à Baela, Lucerys à Rhaena, Joffrey a six ans. L'état cible de Borros est hors d'atteinte de la parole de la reine — non parce qu'elle refuserait de parler, mais parce qu'elle n'a rien à dire. Le déclencheur de Cassandra est armé exactement là-dessus : si la réponse est qu'il n'y a pas de prince à donner, elle le fait RÉPÉTER, devant les gens de lord Otto.",
+     "source": "personnages.json (les fiançailles) + déclencheur et attitude_joueur de cassandra-baratheon + intention de borros-baratheon + le cahier de la reine, books.json : « Accalmie. Borros Baratheon se paie d'un nom — il a quatre filles — et un mariage ne m'appartient pas. À la reine. »",
+     "leve_quand": "La reine rompt une fiançaille et le paie chez Velaryon, ou invente une monnaie qui n'est pas un prince — une charge, une place au conseil, une terre, un dragon montré. Rien d'autre.",
+     "portee_pour_nous": "seule la parole du souverain",
+     "route_de_fuite": {
+      "canal": "déjà su",
+      "par": "le cahier de la reine lui-même, qui l'a écrit avant que ce plan existe — et, pour ce que BORROS en exige, la note de la Ver Blanc du 129.4.5",
+      "arrive": {
+       "annee": 129,
+       "lune": 4,
+       "jour": 5
+      },
+      "jours": 4,
+      "fiabilite": 80,
+      "deforme_comment": "La moitié qui est chez nous est nue et juste. La moitié qui est chez lui arrive par la Ver Blanc : « on y attend un nom, et ce n'est pas un nom de bataille ». Ce que le joueur n'apprendra par aucune route, c'est que Cassandra le fera répéter tout haut — un déclencheur ne s'annonce pas.",
+      "source": "books.json (ce que je ne garantis pas) + diffusion 129.4.5"
+     }
+    },
+    {
+     "id": "76005",
+     "quoi": "Il ne lit pas",
+     "bloque": [
+      "76100",
+      "76200"
+     ],
+     "vrai_aujourdhui": "Borros est illettré et déteste qu'on le sache. Tout ce que Peyredragon adresse à Accalmie passe par la bouche de mestre Hallis, qui lit lentement et s'arrête une seconde de trop sur la ligne qu'il veut qu'on entende. Le mestre ignore lui-même que la lettre du vingt-et-unième était signée de la main de la reine : il l'a lue pour le fond et n'a pas regardé le bas de la page — et c'est ainsi que Borros croit n'avoir jamais reçu un mot d'elle.",
+     "source": "personnages.json (traits et maniere de borros-baratheon) + maniere et ignore de mestre-hallis + relation borros-baratheon → mestre-hallis (« depend-de-lui-et-deteste-qu-on-le-sache »)",
+     "leve_quand": "Jamais. Un homme n'apprend pas à lire en une lune, et le mestre n'est pas à nous.",
+     "portee_pour_nous": "hors de portée",
+     "route_de_fuite": {
+      "canal": "déjà su",
+      "par": "le cahier de la reine, fiche Borros Baratheon : « il ne lit pas, donc il écoute — et ce qu'on lui lit, quelqu'un l'a choisi »",
+      "arrive": {
+       "annee": 129,
+       "lune": 3,
+       "jour": 27
+      },
+      "jours": 0,
+      "fiabilite": 100,
+      "deforme_comment": "Rien. C'est le seul verrou de ce plan que le joueur savait AVANT qu'on l'écrive, et il l'a même déjà tourné en principe d'action dans son propre cahier. L'écrire ici sert à ne plus y revenir tous les trois jours : il est hors de portée, et ce qui se joue à sa place se joue sur le mestre (76012).",
+      "source": "books.json, la fiche de Borros Baratheon"
+     }
+    },
+    {
+     "id": "76401",
+     "quoi": "Otto a douze jours pour poser deux noms sur la table",
+     "bloque": [
+      "76100"
+     ],
+     "vrai_aujourdhui": "Onze jours sous son toit et pas un nom dit. Terme fixe par Borros lui-meme : LE DIXIEME JOUR DE LA QUATRIEME LUNE. Ce jour-la, ou Otto pose deux noms — laquelle des quatre filles et quel prince —, ou il reprend ses malles et sa chaine et va dire a Port-Real qu on ne l achete pas avec des offices.",
+     "leve_quand": "Deux noms poses sur la table avant le 129.4.10.",
+     "portee_pour_nous": "le joueur peut AGIR dessus : un nom envoye avant le 10e arrive avant celui d Otto, et le heraut est deja en mer pour le demander",
+     "source": "parole de lord Borros Baratheon au parloir, le 129.3.28, Accalmie — trois choses dites pour etre repetees telles quelles"
+    },
+    {
+     "id": "76402",
+     "quoi": "Le compte s arrete au douzieme jour et pas un cheval apres",
+     "bloque": [
+      "76000"
+     ],
+     "vrai_aujourdhui": "Ses bannerets sont rappeles sans qu on leur dise pour qui. TROIS MILLE LANCES EN DOUZE JOURS ; huit mille s il vide les Terres de l Orage, et personne ne prend la route de l orage sans lui. Ce qu il a sous ses murs ce jour-la est ce qu il vaut, et c est ce qu on paiera.",
+     "leve_quand": "Le 129.4.10, quand le compte s arrete.",
+     "portee_pour_nous": "on peut le savoir — le heraut le dira lui-meme",
+     "source": "parole de lord Borros Baratheon au parloir, le 129.3.28, Accalmie — trois choses dites pour etre repetees telles quelles"
+    }
+   ],
+   "clefs": [
+    {
+     "id": "76010",
+     "quoi": "Ne rien répondre tant que les deux noms ne sont pas posés",
+     "ouvre": [
+      "76100"
+     ],
+     "principe": "Un homme qu'on n'oblige pas à répondre garde son prix. Répondre, c'est se donner ; se taire, c'est laisser monter.",
+     "prix": "Passer pour lent — ce dont il ne se soucie pas — et devoir finir par choisir devant des hommes rassemblés.",
+     "porteur": "borros-baratheon",
+     "source": "étape borros-attendre-offres et son cout écrit"
+    },
+    {
+     "id": "76011",
+     "quoi": "Arrêter le compte avant de fixer le prix",
+     "ouvre": [
+      "76000"
+     ],
+     "principe": "Un homme qu'on marchande vaut ce qu'il a sous ses murs le jour où l'on marchande, et pas un cheval de plus. Le chiffre dit à un envoyé doit avoir été vrai d'abord.",
+     "prix": "Deux clercs, l'accès aux rôles que le castellan garde, et du grain pris aux villages avant la moisson qu'il faudra bien inscrire quelque part.",
+     "porteur": "mestre-hallis",
+     "source": "intention de borros-baratheon + étape hallis-arreter-le-compte-des-lances et son cout"
+    },
+    {
+     "id": "76012",
+     "quoi": "La page sans nom de camp",
+     "ouvre": [
+      "76200"
+     ],
+     "principe": "Préparer d'avance l'acte où il ne resterait qu'à porter deux noms, pour que le jour où le seigneur tranchera, l'acte ne dépende pas de sa mémoire.",
+     "prix": "Que lord Borros souffre qu'on écrive avant qu'il ait décidé, ce qu'il prend pour une insolence. S'il le refuse, le mestre l'écrit quand même et la garde dans son coffre sans le dire.",
+     "porteur": "mestre-hallis",
+     "source": "étape hallis-la-reponse-par-ecrit et son si_bloque",
+     "note": "C'EST LA SEULE PIÈCE DE TOUT L'ÉTAT qui puisse faire jouer la quatrième condition de déviation de mort-lucerys. Elle n'a pas été écrite pour cela : elle a été écrite parce qu'un mestre prépare l'acte de son seigneur. C'est une coïncidence, et il faut la lire ainsi."
+    },
+    {
+     "id": "76013",
+     "quoi": "Les neuf jours de cavalier, rappelés tout haut",
+     "ouvre": [
+      "76010",
+      "76300"
+     ],
+     "principe": "Si l'on exige une réponse le jour même, rappeler devant la salle qu'Accalmie n'a pas d'oiseau pour la baie et qu'il faut un cavalier de neuf jours — ce qui est vrai, et ce qui donne au seigneur neuf jours qu'il n'avait pas demandés.",
+     "prix": "Ces neuf jours sont pris à celui qui attend la réponse, et il ne saura jamais qu'on les lui a pris.",
+     "porteur": "mestre-hallis",
+     "source": "si_bloque de hallis-la-reponse-par-ecrit, mot pour mot"
+    },
+    {
+     "id": "76014",
+     "quoi": "Faire poser la question par une autre bouche que la sienne",
+     "ouvre": [
+      "76100"
+     ],
+     "principe": "Établir ce que chaque camp peut RÉELLEMENT donner — un prince à marier, et lequel — sans le demander soi-même, en se rendant nécessaire à la lecture des lettres.",
+     "prix": "Passer, devant les gens de lord Otto, pour une fille qui se mêle des affaires des hommes ; et que ses trois sœurs la voient se placer, et le lui fassent payer.",
+     "porteur": "cassandra-baratheon",
+     "source": "étapes cassandra-tenir-la-salle et cassandra-ce-que-chaque-camp-peut-donner, avec leurs couts",
+     "note": "76014 et 76010 se contredisent sous le même toit : le père tient à ne rien demander, la fille veut faire poser la question. C'est la tension B01."
+    }
+   ],
+   "actions": [
+    {
+     "id": "76020",
+     "quoi": "Rappeler ses bannerets sans dire pour qui",
+     "realise": [
+      "76011"
+     ],
+     "office": "borros-baratheon",
+     "moyens": [
+      "la parole du seigneur d'Accalmie",
+      "les rôles des bannerets"
+     ],
+     "cout": "du grain qu'il faudra prendre aux villages avant la moisson ; et l'obligation de finir par choisir un camp devant des hommes rassemblés",
+     "depend_de": [],
+     "preuve": "Des feux de camp dans la lande et les chemins pleins de cavaliers",
+     "jour_du": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 9
+     },
+     "etat": "en cours",
+     "source": "étape borros-rassembler-lances, 12 jours restants (tête maj 129.3.27)"
+    },
+    {
+     "id": "76021",
+     "quoi": "Arrêter par écrit le compte des bannerets rappelés, banneret par banneret",
+     "realise": [
+      "76011"
+     ],
+     "office": "mestre-hallis",
+     "moyens": [
+      "deux clercs",
+      "les rôles, que le castellan garde"
+     ],
+     "cout": "deux clercs, l'accès aux rôles, et du grain compté sur les villages avant la moisson",
+     "depend_de": [
+      "76020"
+     ],
+     "preuve": "Le compte arrêté, nom par nom — ou deux colonnes séparées qu'il refusera d'additionner",
+     "jour_du": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 9
+     },
+     "etat": "en cours",
+     "source": "étape hallis-arreter-le-compte-des-lances, 11 jours restants au 129.3.28"
+    },
+    {
+     "id": "76022",
+     "quoi": "Ne répondre à aucun pli, de Port-Réal comme de Peyredragon, avant qu'un camp n'écrive le nom d'une de ses filles",
+     "realise": [
+      "76010"
+     ],
+     "office": "borros-baratheon",
+     "moyens": [
+      "le silence",
+      "la porte d'Accalmie"
+     ],
+     "cout": "passer pour lent",
+     "depend_de": [],
+     "preuve": "Quatre plis entrés du nord en sept jours, aucun sorti",
+     "jour_du": null,
+     "etat": "en cours",
+     "source": "étape borros-attendre-offres, sans horloge — et c'est pourquoi elle ne tombera jamais toute seule"
+    },
+    {
+     "id": "76023",
+     "quoi": "Préparer la page sans nom de camp, où il ne resterait qu'à porter deux noms",
+     "realise": [
+      "76012"
+     ],
+     "office": "mestre-hallis",
+     "moyens": [
+      "le registre",
+      "son coffre"
+     ],
+     "cout": "que le seigneur souffre qu'on écrive avant qu'il ait décidé",
+     "depend_de": [],
+     "preuve": "La page existe, pliée, avec deux blancs",
+     "jour_du": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 4
+     },
+     "etat": "en cours",
+     "source": "étape hallis-la-reponse-par-ecrit, 6 jours restants au 129.3.28"
+    },
+    {
+     "id": "76024",
+     "quoi": "Se tenir debout derrière l'épaule droite de son père chaque fois que le mestre déplie quelque chose",
+     "realise": [
+      "76014"
+     ],
+     "office": "cassandra-baratheon",
+     "moyens": [
+      "sa place d'aînée",
+      "l'habitude de la salle"
+     ],
+     "cout": "passer pour une fille qui se mêle des affaires des hommes, devant les gens de lord Otto",
+     "depend_de": [],
+     "preuve": "Aucune lettre lue et aucune réponse donnée hors de sa présence",
+     "jour_du": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 2
+     },
+     "etat": "en cours",
+     "source": "étape cassandra-tenir-la-salle, 4 jours restants au 129.3.28"
+    },
+    {
+     "id": "76025",
+     "quoi": "Établir ce que chacun des deux camps peut réellement donner — un prince à marier, et lequel",
+     "realise": [
+      "76014"
+     ],
+     "office": "cassandra-baratheon",
+     "moyens": [
+      "le mestre",
+      "la première bouche qui franchira la porte"
+     ],
+     "cout": "que le mestre accepte d'écrire une question que son seigneur ne lui a pas dictée ; et neuf jours au moins pour toute réponse venue du nord, il n'y a pas d'oiseau",
+     "depend_de": [
+      "76024"
+     ],
+     "preuve": "Une réponse, ou un silence qu'elle fera répéter devant les gens de lord Otto",
+     "jour_du": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 7
+     },
+     "etat": "en cours",
+     "source": "étape cassandra-ce-que-chaque-camp-peut-donner, 9 jours restants au 129.3.28"
+    },
+    {
+     "id": "76026",
+     "quoi": "Faire dire aux écuyers de lord Otto, en riant, pour qui ils sont venus et depuis combien de jours ils attendent",
+     "realise": [
+      "76003"
+     ],
+     "office": "maris-baratheon",
+     "moyens": [
+      "une question posée tout haut",
+      "trente personnes dans la salle"
+     ],
+     "cout": "rien, et c'est exactement pour cela qu'elle le fera",
+     "depend_de": [],
+     "preuve": "Un nom, ou le fait qu'ils se taisent — auquel cas elle le demandera à lord Otto lui-même, à table, devant son père",
+     "jour_du": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 1
+     },
+     "etat": "en cours",
+     "source": "étape maris-pour-qui-sont-ils-venus, 3 jours restants au 129.3.28"
+    },
+    {
+     "id": "76027",
+     "quoi": "Envoyer le mestre à Port-Réal réclamer une place au conseil du roi, et faire dire dans la salle qu'il l'a obtenue",
+     "realise": [
+      "76300"
+     ],
+     "office": "mestre-hallis",
+     "moyens": [
+      "neuf jours de route",
+      "la parole de son seigneur"
+     ],
+     "cout": "se déclarer sans avoir été payé, et perdre l'exclusivité qu'on gardait",
+     "depend_de": [
+      "76022"
+     ],
+     "preuve": "Le mestre parti, et la chose dite dans la salle qu'il l'ait obtenue ou non",
+     "jour_du": null,
+     "etat": "à faire",
+     "source": "si_bloque de borros-attendre-offres : « si les deux camps se taisent une lune entière »",
+     "note": "Conditionnelle, et c'est la sortie par défaut si personne n'écrit. Elle ne tombe pas dans cette lune — mais elle dit vers où penche Accalmie quand on la laisse seule, et ce n'est pas vers nous."
+    },
+    {
+     "id": "76028",
+     "quoi": "Porter les deux noms sur la table — laquelle des quatre filles, et lequel des princes",
+     "realise": [
+      "76100"
+     ],
+     "office": "à désigner",
+     "moyens": [
+      "une bouche autorisée à promettre un mariage"
+     ],
+     "cout": "l'exclusivité : Borros ne se donne qu'une fois",
+     "depend_de": [],
+     "preuve": "Deux noms écrits, lus tout haut par le mestre dans la grande salle",
+     "jour_du": null,
+     "etat": "à faire",
+     "source": "personne ne le porte — c'est le trou central de ce plan, exactement comme 71026 l'est du plan hightower",
+     "note": "Ce n'est pas un oubli, c'est le résultat. Les deux acheteurs sont muets pour deux raisons différentes : Otto laisse monter le prix depuis onze jours (76003), et Peyredragon n'a rien à écrire (76004) et plus d'oiseau pour l'écrire (76002). L'office reste vide DES DEUX CÔTÉS, et il l'est aussi dans nos propres cahiers — 21033 porte « À DÉSIGNER »."
+    }
+   ],
+   "tensions": [
+    {
+     "id": "B01",
+     "monnaie": "l'aînée — Cassandra Baratheon, qui ne se vend qu'une fois",
+     "demande": "Otto la veut pour Aemond (clef 71012, échéance 129.4.9, prix écrit : « l'exclusivité — Borros ne se donne qu'une fois ») ; Peyredragon la voudra pour un prince qu'elle n'a pas (76004) ; et Cassandra elle-même la veut à ses conditions plutôt qu'au prix de son père (76014).",
+     "existe": "Quatre filles, mais une seule aînée, une seule exclusivité, et une seule salle où l'on peut poser un nom.",
+     "ecart": "Trois demandeurs pour une pièce, et le père tient précisément à ne rien demander (76010) pendant que sa fille veut faire poser la question (76014). Personne à Accalmie n'a écrit son prix devant les deux autres — mêmes mots que la tension H01 chez Hightower, autre monnaie.",
+     "quand_ca_se_voit": "129.4.9 — le jour où le compte est arrêté et où il a enfin de quoi fixer son prix, dans la salle où Otto attend depuis vingt-trois jours.",
+     "ce_qui_tombe": "Peyredragon, parce que c'est le seul des trois qui n'ait rien à poser et personne dans la salle. Et Cassandra, qui sera nommée dans un contrat qu'on lui lira après — à moins que son déclencheur ne parte le premier."
+    },
+    {
+     "id": "B02",
+     "monnaie": "les jours avant le 129.4.9",
+     "demande": "Neuf jours de cavalier depuis Peyredragon (76002) ; le compte arrêté le 129.4.9 (76000) ; Otto qui laisse monter le prix depuis le 17e (76003) ; et nos trois montures qui se disputent la même course — le Nord, Accalmie et le Conflans (books.json, ND.EA).",
+     "existe": "Le 129.3.28. Un départ le 29 arrive le 4.7 ; un départ le 30 arrive le 4.9, le jour même, trop tard pour être lu avant la salle.",
+     "ecart": "DEUX JOURS. C'est toute la marge de la partie, et personne ne l'avait comptée parce qu'on croyait avoir un oiseau.",
+     "quand_ca_se_voit": "Le premier jour où la reine décide d'écrire à Accalmie et où l'on compte les jours à rebours devant elle — c'est-à-dire dès qu'on regarde la ligne « Accalmie : SANS DATE » de son propre cahier.",
+     "ce_qui_tombe": "Accalmie. Notre affaire y est SANS DATE dans nos livres pendant qu'en face tout est daté au jour près : ne pas choisir aujourd'hui revient à l'abandonner sans l'avoir écrit, ce que notre propre cahier dit déjà des trois montures."
+    }
+   ],
+   "resonance": [
+    {
+     "lien": "porte ouverte",
+     "notre_affaire": "Ralliement de la population — 21001 · 21011 · 21021 · 21033 · 21034",
+     "leur_piece": "76100 · 76004 · 76028",
+     "pourquoi": "Notre 21011 dit « aucune maison n'a de raison de bouger la première » et notre 21021 y répond par une offre NOMINATIVE. Accalmie donne la raison, et elle est écrite : deux noms. Mais nos deux actions 21033 et 21034 portent « À DÉSIGNER » — et leur 76028 porte « à désigner ». LA MÊME CASE EST VIDE DES DEUX CÔTÉS, sur la même maison, à onze jours de l'échéance. C'est le miroir d'effort le plus net du dossier : notre offre nominative n'a pas de porteur, et leur table n'a pas de nom."
+    },
+    {
+     "lien": "contredit",
+     "notre_affaire": "Alliances du Nord — 3000 · 3001 · 3010 · 3020 · 3021",
+     "leur_piece": "76002 · B02",
+     "pourquoi": "Notre 3021 fait partir l'ambassade « le 4e de la 4e lune » avec les dragons, et notre 3020 écrit sa licence « avant le 4e de la 4e ». Or le cahier le dit déjà : « trois montures dont une qui boite : le Nord, Accalmie et le Conflans se disputent la même course ». Leur 76002 chiffre ce qu'on ignorait — Accalmie n'est plus à trois jours de corbeau mais à neuf jours de cheval. La course d'Accalmie ne coûte donc PAS une monture : elle coûte un homme et neuf jours, ce qui la rend compatible avec 3021 et la sort de l'abandon qu'on croyait forcé. Notre propre cahier a rayé Accalmie de la ligne des adresses de Gerardys ; ce plan dit que c'était trancher trop vite."
+    },
+    {
+     "lien": "attendu par",
+     "notre_affaire": "Notre version arrive la première — 34000 · 34100",
+     "leur_piece": "76003 · 76005",
+     "pourquoi": "34000 nomme Accalmie dans sa portée et exige qu'aucun seigneur ne puisse dire qu'il l'a su autrement d'abord. À Accalmie, c'est DÉJÀ PERDU : Otto y est en personne depuis le 17e, quatre plis y sont entrés et le mestre les a tous lus tout haut avec ses silences (76005). Et 34100 — « les lectures tiennent dans trois jours » — est arithmétiquement intenable pour une place à neuf jours de cheval. Notre état cible est en échec sur cette maison et rien ne le disait."
+    },
+    {
+     "lien": "sert",
+     "notre_affaire": "à ouvrir — la déviation du 129.4.9",
+     "leur_piece": "76200 · 76012",
+     "pourquoi": "La quatrième condition de mort-lucerys est « dévié si Borros a déjà donné sa réponse par écrit avant l'arrivée de l'émissaire ». Une seule pièce de tout l'état peut la remplir, et elle est chez eux : la page sans nom de camp que le mestre prépare de son propre chef, échéance 129.4.4. On ne peut pas la déclencher — mais on peut lui donner ses deux noms avant qu'un émissaire ne parte, et alors le canon le plus cher du jeu se déplace."
+    }
+   ],
+   "ce_que_ca_engendre_chez_nous": [
+    {
+     "type": "observer",
+     "sujet": "ce qui se rassemble sous les murs d'Accalmie, et sous quelle bannière",
+     "pourquoi": "76001 — le compte n'est pas encore vrai, et la seule route qui nous en parle (129.4.7, fiab 50) montre l'ost sans dire pour qui ; savoir deux jours plus tôt vaut la course",
+     "vers": "31000"
+    },
+    {
+     "type": "interroger",
+     "sujet": "ce qu'Otto a offert à Accalmie en onze jours, et pourquoi il n'a toujours pas écrit de nom",
+     "pourquoi": "76003 — c'est ce qui dit s'il laisse monter le prix ou s'il n'a rien à donner ; la Ver Blanc l'a pour de l'or, et sa note arrive le 129.4.5, à temps",
+     "vers": "31000"
+    },
+    {
+     "type": "action",
+     "sujet": "faire partir un cavalier pour Accalmie AUJOURD'HUI — neuf jours, deux jours de marge",
+     "pourquoi": "76002 — le seul verrou d'en face sur lequel le joueur agisse, et il a une date limite : après le 129.3.30 au soir, la course est perdue sans avoir été courue. C'est l'action qui manque en face de nos 21033 et 21034, tous deux « À DÉSIGNER »",
+     "vers": "21033"
+    },
+    {
+     "type": "decision",
+     "sujet": "nommer laquelle des quatre filles et lequel des princes — ou dire tout haut qu'on n'en a pas, et inventer l'autre monnaie",
+     "pourquoi": "76004 — la reine n'a pas de prince libre ; rompre une fiançaille se paie chez Velaryon, et ne rien dire se paie le 129.4.9. Son propre cahier l'a déjà renvoyé à elle : « un mariage ne m'appartient pas. À la reine »",
+     "vers": "la table"
+    }
+   ],
+   "a_verifier": [
+    "LA ROUTE DE FUITE N'EST PAS UN CHAMP DU SCHÉMA. `docs/schema.md` (l. 229) ne liste pas de route sur le verrou, et `scripts/evaluer.py --murs` ne la cherche PAS dans le verrou : il la cherche dans `etat/liens.json`, sur une arête dont `de` ou `vers` porte l'id du verrou et dont `route` est non vide. Les cinq `route_de_fuite` écrites ici sont donc invisibles à la garde tant que le MJ ne les recopie pas en cinq entrées de `liens.json`. C'est la dette n°1 de docs/ouvrir-une-maison.md, et elle n'est pas soldée : aujourd'hui les SIX verrous de hightower comptent comme des murs pour la même raison.",
+    "`camp: \"neutre\"`. `docs/schema.md` porte `camp` sans énumération de valeurs, et le seul plan existant porte `vert`. Aucune valeur n'est donc interdite, mais aucune n'est non plus attestée pour un neutre. Si le MJ veut fermer le vocabulaire, c'est ici qu'il faut trancher — et `neutre` est le mot que `maisons.json` emploie déjà pour `allegeance_affichee` et `allegeance_reelle` de maison-baratheon.",
+    "L'étape borros-rassembler-lances porte 12 jours restants pour une tête dont `date_maj` a été portée au 129.3.28 par le lot d'ouverture (les jours_restants ayant été volontairement laissés à leur valeur du 129.3.27). Lu au pied de la lettre, elle tombe le 129.4.10 et non le 129.4.9. J'ai retenu le 129.4.9 — c'est la lecture du lot, c'est la date de hallis-arreter-le-compte-des-lances (11 jours au 128.3.28) et c'est celle du canon. Un jour de dérive sur la date-charnière mérite d'être tranché à la main, dans la tête, avant le prochain tick.",
+    "LA LETTRE PERSONNELLE DE CINQ LIGNES (acte-087). Tout ce plan suppose la branche retenue par le lot d'ouverture : elle N'EST PAS PARTIE, et Borros n'a reçu que la lettre commune du 21e. Si le MJ tranche l'inverse, 76004 et B01 changent de nature — on ne lui demande plus de recevoir, il a déjà été invité, et son silence devient une réponse.",
+    "ACCALMIE A-T-ELLE UN OISEAU POUR PEYREDRAGON ? Le lot a tranché que non, et 76002, 76013 et B02 en dépendent entièrement. Si le MJ décide qu'Accalmie a des oiseaux de la baie, la marge de deux jours disparaît, 76002 cesse d'être « on peut agir dessus » et le plan perd son seul verrou actionnable."
+   ]
+  },
+  {
+   "id": "couronne",
+   "titre": "La colonne de la vengeance",
+   "maison_id": "maison-targaryen-vert",
+   "camp": "vert",
+   "plage": "72000-72999",
+   "ouverture": {
+    "ce_que_ce_plan_rend_vrai": "Un chateau de la Couronne passe aux Noirs est repris, et le roi est venge de ce qui a brule sur la route.",
+    "ce_qu_on_en_sait_de_source": "journee de ser Criston Cole du 129.3.29, decision arretee devant le conseil et Aegon"
+   },
+   "etats_cibles": [
+    {
+     "id": "72000",
+     "quoi": "Trois mille hommes devant Sombreval",
+     "vrai_quand": "La colonne est en vue des murs de Sombreval.",
+     "de_lieu": "port-real",
+     "vers_lieu": "sombreval",
+     "voie": "terre",
+     "force": 3000,
+     "arrive_le": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "echeance": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "route_dite": "Levee le 29e, depart le 30e par la Porte de la Boue, trois jours de route, arrivee le 3e de la 4e lune devant Sombreval. Cinq cents restent garder Port-Real et le roi.",
+     "source": "journee de ser Criston Cole du 129.3.29, decision arretee devant le conseil et Aegon"
+    },
+    {
+     "id": "72100",
+     "quoi": "REVOQUE — Vhagar ne va pas sur Sombreval",
+     "vrai_quand": "Sans objet : il a revoque cet ordre lui-meme, a voix haute, devant les gardiens de la Fosse, AVANT qu on le lui reproche.",
+     "echeance": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 31
+     },
+     "route_dite": "Converti en vol de dragon et non en marche d hommes : Sombreval est a QUELQUES HEURES, Lamarck un peu plus loin, Peyredragon hors de portee d un aller-retour dans le jour. L ordre des cibles s impose de lui-meme. Vhagar est saine et prete ; rien dans la bete ne retarde le vol, SEULE LA PERMISSION MANQUE.",
+     "source": "journee du prince Aemond du 129.3.29 — le conseil temporise, le silence vaut refus, il ne l attendra pas au-dela de DEUX JOURS | parloir du prince Aemond, soir du 129.3.28 — il revoque son propre ordre a voix haute devant les gardiens de la Fosse",
+     "statut": "annule"
+    },
+    {
+     "id": "72200",
+     "quoi": "Vhagar sur Accalmie, portant les mots de la Main",
+     "vrai_quand": "Le prince Aemond a pose devant lord Borros Baratheon et parle au nom de la Main.",
+     "de_lieu": "port-real",
+     "vers_lieu": "accalmie",
+     "voie": "mer",
+     "force": 1,
+     "arrive_le": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 31
+     },
+     "echeance": {
+      "annee": 129,
+      "lune": 3,
+      "jour": 31
+     },
+     "route_dite": "Vhagar sellee, HARNAIS DE LONG VOL, nourrie le soir du 28e et non au matin, prete a LA PREMIERE LUMIERE DU 29e. Deux journees de vol, une nuit posee sur la cote du Bec de Massey, rapportee avant la fin de la lune. La depense est engagee sur son nom AVANT le oui. Un cavalier mettrait neuf jours, dix-huit aller et retour, et un mestre rapporterait la reponse vers le 10e de la 4e lune : il gagne dix jours sur la Main.",
+     "source": "parloir du prince Aemond, soir du 129.3.28 — il revoque son propre ordre a voix haute devant les gardiens de la Fosse"
+    },
+    {
+     "id": "72201",
+     "quoi": "Il ne plaide pas lui-meme",
+     "vrai_quand": "Il a donne sa parole de porter les mots de la Main et non les siens, et n est pas entre chez le roi ce soir — si Aemond plaide, Aegon aura le plaisir de refuser a son frere ce qu il accorderait a la Main. Il a fait porter une ligne, et rien d autre. « Cinq jours de cour sans moi. Qu il en jouisse ; je tiens le compte. »",
+     "source": "parloir du prince Aemond, soir du 129.3.28 — il revoque son propre ordre a voix haute devant les gardiens de la Fosse"
+    }
+   ],
+   "verrous": [
+    {
+     "id": "72001",
+     "quoi": "La solde de depart des trois mille n est pas versee",
+     "bloque": [
+      "72000"
+     ],
+     "vrai_aujourdhui": "Il exige d Otto la solde de depart, PAS la prime criee. Sans elle, convocation seule sur l autorite du roi — plus lente, mais LA MARCHE PART QUAND MEME LE 30e, et le defaut d Otto se dit tout haut au conseil dans la semaine.",
+     "leve_quand": "Otto verse la solde de depart.",
+     "portee_pour_nous": "on peut le savoir",
+     "source": "journee de ser Criston Cole du 129.3.29, decision arretee devant le conseil et Aegon"
+    },
+    {
+     "id": "72101",
+     "quoi": "Le conseil ne lui a pas donne Vhagar",
+     "bloque": [],
+     "vrai_aujourdhui": "Le conseil temporise encore une fois. A ce compte le silence vaut refus, et il ne l attendra plus au-dela de deux jours — apres quoi il vole sans permission, comme son propre si_bloque le dit depuis le debut.",
+     "leve_quand": "Le conseil tranche, dans un sens ou dans l autre — ou deux jours passent.",
+     "portee_pour_nous": "hors de portee : rien de ce que nous ferons ne changera ce que ce conseil decide en deux jours",
+     "source": "journee du prince Aemond du 129.3.29 — le conseil temporise, le silence vaut refus, il ne l attendra pas au-dela de DEUX JOURS"
+    }
+   ],
+   "clefs": [],
+   "actions": [],
+   "tensions": [],
+   "resonance": [],
+   "ce_que_ca_engendre_chez_nous": [
+    {
+     "type": "decision",
+     "sujet": "ce qu on fait pour Sombreval avant le 3e de la 4e lune",
+     "pourquoi": "72000 — ser Steffon Darklyn est dans notre conseil et c est sa ville",
+     "vers": "la table"
+    }
+   ],
+   "a_verifier": []
+  }
+ ]
+}

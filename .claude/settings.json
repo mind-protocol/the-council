@@ -1,0 +1,27 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/scripts/parloir.py\" --ecouter --qui \"${LE_CONSEIL_MJ:-mj}\" --hook",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ \"${LE_CONSEIL_MJ:-mj}\" = \"mj\" ] || [ -z \"${LE_CONSEIL_MJ}\" ]; then exit 0; fi; case \"${LE_CONSEIL_MJ}\" in mj-*) exit 0 ;; esac; python \"$CLAUDE_PROJECT_DIR/scripts/juger.py\" --qui \"${LE_CONSEIL_MJ}\"",
+            "timeout": 240
+          }
+        ]
+      }
+    ]
+  }
+}

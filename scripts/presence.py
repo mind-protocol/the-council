@@ -59,6 +59,8 @@
 #   python scripts/presence.py --ou rhaenyra    — une personne, sa journée
 #   python scripts/presence.py --chemin a b     — le chemin et son coût
 #   python scripts/presence.py --audit          — les fantômes de presence.json
+#   python scripts/presence.py --quartier       — qui le joueur peut atteindre
+#   python scripts/presence.py --creux <qui>    — le temps libre de sa journée
 import json, io, os, sys, heapq
 
 racine = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -66,6 +68,7 @@ racine = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 JOURS_PAR_LUNE = 30
 LUNES_PAR_AN = 12
 PEREMPTION = 240          # une exception sans terme vaut un quart, puis lâche
+RAYON_MINUTES = 20        # le quartier du joueur, à l'essai (docs/boucle-acteurs.md)
 
 
 # ------------------------------------------------------------------ lecture
@@ -115,6 +118,30 @@ class Chateau(object):
             x, y, cout = self.vrai(a[0]), self.vrai(a[1]), int(a[2])
             self.voisins.setdefault(x, {})[y] = cout
             self.voisins.setdefault(y, {})[x] = cout
+        self.composantes = self._composantes()
+
+    def _composantes(self):
+        """Quelles salles se touchent VRAIMENT — salle -> numéro d'îlot.
+
+        C'est la garde qui manquait. `chemin()` rend honnêtement un saut nu à
+        coût 0 entre deux salles qu'aucune arête ne relie ; mesuré ce jour, ça
+        met trente-cinq personnes « à 0 minute » de la Table Peinte, dont Aegon
+        II dans ses appartements à Port-Réal. Une distance ne veut rien dire
+        entre deux îlots : il faut le dire avant de la mesurer, pas après.
+        """
+        numero, vus = {}, set()
+        for depart in sorted(self.voisins):
+            if depart in vus:
+                continue
+            n, pile = len(set(numero.values())), [depart]
+            while pile:
+                ici = pile.pop()
+                if ici in vus:
+                    continue
+                vus.add(ici)
+                numero[ici] = n
+                pile.extend(self.voisins[ici])
+        return numero
 
     def vrai(self, salle):
         """Résout les alias : `appartements` et `appartements-reine` sont une salle."""
@@ -122,6 +149,19 @@ class Chateau(object):
 
     def connait(self, salle):
         return self.vrai(salle) in self.voisins
+
+    def ilot(self, salle):
+        """L'îlot d'une salle, ou None si on ne la tient pas. None ≠ None."""
+        return self.composantes.get(self.vrai(salle)) if salle else None
+
+    def se_touchent(self, a, b):
+        """Peut-on aller de l'une à l'autre à pied ? Une salle inconnue : non.
+
+        Deux inconnues ne se touchent pas non plus — on ne fabrique pas un îlot
+        de l'ignorance, où tout ce qu'on ne tient pas serait voisin de tout.
+        """
+        ia, ib = self.ilot(a), self.ilot(b)
+        return ia is not None and ia == ib
 
     def chemin(self, depart, arrivee):
         """Dijkstra. Retourne [(salle, minute d'arrivée), …], départ inclus à 0.
@@ -226,11 +266,21 @@ def joueurs():
 
     Ils sont hors routine : un joueur n'a pas d'emploi du temps. Personne ne
     décide à sa place qu'il est l'heure de descendre manger.
+
+    UN SIEGE VACANT N'EST PAS UN JOUEUR. Sa tete est ecrite precisement pour
+    qu'il agisse hors ecran ; l'exclure d'ici lui otait sa journee, donc ses
+    creux, donc le droit d'etre depeche — un homme qu'on avait ecrit pour qu'il
+    vive sans nous et que la topologie tenait immobile. Il redevient un PNJ
+    comme un autre le jour ou l'on se leve de son siege, et le redevient jusqu'a
+    ce qu'on s'y rasseye.
     """
     ids = set()
     for x in _lire("joueurs.json", []) or []:
-        if isinstance(x, dict) and x.get("personnage_id"):
-            ids.add(x["personnage_id"])
+        # Un siege de REGIE (Corneille) n'est nulle part : il n'a pas de corps,
+        # donc pas de place a tenir dans une salle.
+        if isinstance(x, dict) and x.get("personnage_id") and not x.get("regie"):
+            if x.get("occupe"):
+                ids.add(x["personnage_id"])
     seul = (_lire("journal.json", {}) or {}).get("personnage_joueur_id")
     if seul:
         ids.add(seul)
@@ -342,10 +392,20 @@ def ou_est(pid, quand, routines, chateau, presence, peremption=PEREMPTION,
                     etat="arrete", source=source)
 
     passees = [s for s, m in etapes if m <= ecoule]
-    prochaine = [s for s, m in etapes if m > ecoule][0]
+    reste = [(s, m) for s, m in etapes if m > ecoule]
+    prochaine, quand_prochaine = reste[0]
+    # LA ROUTE ENTIÈRE, pas seulement ses deux bouts. Un homme en marche n'a pas
+    # qu'un départ et une arrivée : il a un tracé, et c'est ce tracé que la régie
+    # regarde. `franchi` est son rang dans `route` (la dernière salle passée),
+    # `pas` la fraction du pas en cours — de quoi le poser ENTRE deux portes au
+    # lieu de le coller au centre d'une pièce où il n'est pas.
+    depuis = [m for s, m in etapes if m <= ecoule][-1]
+    largeur = quand_prochaine - depuis
     return {"salle": passees[-1], "lieu": None, "etat": "en-chemin",
             "source": source, "de": etapes[0][0], "vers": but.get("salle"),
             "vers_lieu": but.get("lieu"), "prochaine": prochaine,
+            "route": [s for s, m in etapes], "franchi": len(passees) - 1,
+            "pas": round((ecoule - depuis) / largeur, 3) if largeur > 0 else 0,
             "arrive_dans": total - ecoule}
 
 
@@ -403,6 +463,183 @@ def resoudre(quand=None, presence=None):
     return out
 
 
+# --------------------------------------------------- le quartier du joueur
+#
+# Un acteur ne se déplace, ne pense et ne travaille que dans le quartier d'un
+# joueur. Hors quartier, il ne bouge pas : pas de chemin, pas de bande, pas de
+# position par défaut — sa dernière position connue reste ce qu'elle est. Ce
+# qui continue hors quartier, ce sont les ÉCHÉANCES : une horloge de plan qui
+# tombe se produit quand même. Le quartier gèle la position, jamais le
+# calendrier.
+#
+# Deux conditions, jamais une : la composante connexe D'ABORD, la durée
+# ensuite. Sans le test d'îlot, un saut nu à coût 0 fait entrer tout le reste
+# du monde — mesuré ce jour : trente-cinq personnes à 0 minute de la reine,
+# la moitié de la cour verte comprise. Le rayon ne mordra que le jour où le
+# château grandira ; l'îlot mord tout de suite.
+#
+# Le quartier se recalcule à chaque fois. Il n'est jamais stocké.
+
+def ancres():
+    """Les sièges occupés, CHACUN À SON HEURE — et c'est le point délicat.
+
+    `monde.date` porte l'horloge la moins avancée (ce jour : 390, quand la
+    reine est à 422 et Aurore à 1077). Résoudre tout le monde là-dessus rend
+    None pour les trois sièges occupés, dont les positions sont datées du
+    futur : le quartier serait vide et personne ne penserait. Chaque siège
+    définit donc son quartier à SON présent, et le quartier est leur union.
+    """
+    horloges = _lire("horloges.json", {}) or {}
+    defaut = date_monde()
+    chateau = Chateau(_lire("chemins.json", {}))
+    out = []
+    for x in _lire("joueurs.json", []) or []:
+        if not isinstance(x, dict) or not x.get("occupe"):
+            continue
+        pid = x.get("personnage_id")
+        if not pid or x.get("regie"):
+            continue          # la régie n'a pas de corps : elle n'ancre rien
+        quand = horloges.get(pid) or defaut
+        ou = resoudre(quand).get(pid)
+        if not (ou and ou.get("salle")):
+            continue
+        # UNE ANCRE HORS TOPOLOGIE N'ANCRE RIEN, ET SE TAIT. La scène pose le
+        # joueur dans une salle que `chemins.json` ignore (le grenier du bourg,
+        # une soupente) : son îlot est None, plus personne ne « se touche » avec
+        # lui, et son quartier se vide sans que rien ne le dise. On le porte
+        # donc dans la liste avec son défaut nommé, pour que `--quartier` et
+        # `tick.py --verifier` le crient au lieu de rendre une salle déserte.
+        out.append({"qui": pid, "salle": ou["salle"], "quand": quand,
+                    "lieu": ou.get("lieu"),
+                    "hors_plan": not chateau.connait(ou["salle"])})
+    return out
+
+
+def quartier(rayon=RAYON_MINUTES):
+    """Qui est à portée d'un joueur, et par quel siège — l'union des quartiers.
+
+    Rend {"ancres": [...], "dedans": {pid: {...}}, "dehors": {pid: motif}}.
+    Un motif de rejet est toujours nommé : `ilot` (une autre ville), `loin`
+    (trop de minutes), `hors-plan` (salle absente de chemins.json), `nulle-part`
+    (position non résolue). On ne laisse jamais tomber quelqu'un en silence.
+    """
+    routines, chemins, presence = charger()
+    chateau = Chateau(chemins)
+    points = ancres()
+    dedans, dehors = {}, {}
+    if not points:
+        return {"ancres": [], "dedans": {}, "dehors": {},
+                "vide": "aucun siege occupe n'a de position resolue"}
+
+    vus = {}
+    for a in points:
+        for pid, ou in resoudre(a["quand"]).items():
+            vus.setdefault(pid, {})[a["qui"]] = ou
+
+    for pid, par_ancre in vus.items():
+        meilleur, motif = None, "nulle-part"
+        for a in points:
+            ou = par_ancre.get(a["qui"])
+            if not ou or not ou.get("salle"):
+                continue
+            if not chateau.connait(ou["salle"]):
+                motif = "hors-plan" if motif == "nulle-part" else motif
+                continue
+            if not chateau.se_touchent(a["salle"], ou["salle"]):
+                motif = "ilot" if motif in ("nulle-part", "hors-plan") else motif
+                continue
+            minutes = chateau.duree(a["salle"], ou["salle"])
+            if minutes > rayon:
+                motif = "loin"
+                continue
+            if meilleur is None or minutes < meilleur["minutes"]:
+                meilleur = {"salle": ou["salle"], "etat": ou.get("etat"),
+                            "source": ou.get("source"), "minutes": minutes,
+                            "par": a["qui"], "quand": a["quand"]}
+        if meilleur:
+            dedans[pid] = meilleur
+        else:
+            dehors[pid] = motif
+    return {"ancres": points, "dedans": dedans, "dehors": dehors}
+
+
+# ------------------------------------------------------------ les creux
+#
+# Ce que la routine NE DIT PAS. Une journée fait 1440 minutes ; on en retire le
+# sommeil, les bandes fermées (`ferme: true` — rien ne peut l'en tirer) et les
+# minutes passées dans les escaliers, déjà comptées par Dijkstra. Ce qui reste
+# est le temps où l'homme peut penser, lire un registre, écouter quelqu'un.
+#
+# Un creux est un INTERVALLE, pas un total, et son `salle` compte autant que sa
+# durée : une question posée à la roukerie n'a pas les mêmes sources qu'une
+# question posée au bourg. Le creux dit où il est ; l'état dit ce qu'il y a là.
+#
+# Trois conséquences qui font le sujet :
+#   - un homme dont la journée est pavée de bandes fermées ne pense pas ce
+#     jour-là, quelle que soit sa force. C'est ça, le coût d'un mandat : on
+#     l'occupe.
+#   - un homme hors quartier n'a pas de journée, donc pas de creux, donc pas de
+#     pensée. Le budget se resserre tout seul sur ce que le joueur peut
+#     atteindre.
+#   - les creux sont la SEULE ressource que les questions consomment. Plus de
+#     « deux travaux par jour » posé à la main : la journée le dit elle-même.
+
+MINUTES_MINIMUM = 15      # sous un quart d'heure, on n'a le temps de rien
+
+
+def creux(pid, routines=None, chateau=None, minimum=MINUTES_MINIMUM):
+    """Les intervalles libres de sa journée : [{de, a, salle, minutes}].
+
+    Le dortoir est fermé d'office — on ne pense pas en dormant, et une bande de
+    sommeil qu'on laisserait ouverte donnerait à chacun huit heures de réflexion
+    gratuite. Sans fiche de routine, la réponse est [] : pas de journée, pas de
+    creux. On ne comble pas par un modèle plausible (voir `--verifier`).
+    """
+    if routines is None:
+        routines, chemins, _ = charger()
+        chateau = chateau or Chateau(chemins)
+    # UN JOUEUR N'A PAS D'EMPLOI DU TEMPS, donc pas de creux à mesurer. Rhaenyra
+    # porte une fiche `reine` dont personne ne se sert : `ou_est` la court-
+    # circuite déjà. La compter ici la classerait parmi ceux qu'on dépêche pour
+    # penser à sa place — c'est le joueur qui pense, et il n'a pas de budget.
+    if pid in joueurs():
+        return []
+    fiche, modele = modele_de(routines, pid)
+    if not modele:
+        return []
+    bandes = modele.get("bandes") or []
+    out = []
+    for i, b in enumerate(bandes):
+        de, a = b.get("de", 0), b.get("a", 1440)
+        piece = piece_de_bande(b, fiche, modele)
+        if piece.get("suit"):
+            continue                        # une ombre n'a pas de journée à elle
+        # Le dortoir est fermé D'OFFICE mais pas de force : `ferme: false` le
+        # rouvre. Le cas qui l'impose est le captif, dont la journée entière est
+        # une bande `@dortoir` — sa cellule, pas son sommeil. Un homme aux fers
+        # n'a rien d'autre que du temps, et le lui retirer serait le seul
+        # endroit du jeu où l'emprisonnement rendrait quelqu'un plus occupé.
+        ferme = b.get("ferme")
+        if ferme is None:
+            ferme = (b.get("salle") == "@dortoir")
+        if ferme:
+            continue
+        salle = piece.get("salle")
+        if not salle:
+            continue
+        # Les minutes de marche se paient en tête de bande : il n'est pas
+        # disponible tant qu'il est dans l'escalier.
+        avant = bande_precedente(routines, pid, de) or piece
+        trajet = chateau.duree(avant.get("salle"), salle) \
+            if chateau.se_touchent(avant.get("salle"), salle) else 0
+        debut = de + trajet
+        if a - debut >= minimum:
+            out.append({"de": debut, "a": a, "salle": salle,
+                        "minutes": a - debut,
+                        "pourquoi": b.get("pourquoi")})
+    return out
+
+
 # ------------------------------------------------------------------ sortie
 
 def noms():
@@ -415,6 +652,11 @@ def noms():
 def dire(ou):
     if ou["etat"] == "arrete":
         return "%-22s (%s)" % (ou.get("salle") or "?", ou["source"])
+    # Une ombre interrogée seule n'a pas encore de corps : `--audit` appelle
+    # `ou_est` sans la troisième passe de `resoudre`, qui est celle qui recopie
+    # la position du suivi. On le dit au lieu de tomber sur une clef absente.
+    if ou["etat"] == "suit":
+        return "suit %-17s (ombre, corps non resolu ici)" % ou.get("suit", "?")
     return "en chemin : %s -> %s, passe %s, arrive dans %d min" % (
         ou["de"], ou["vers"], ou["salle"], ou["arrive_dans"])
 
@@ -423,6 +665,26 @@ def main():
     args = sys.argv[1:]
     routines, chemins, presence = charger()
     chateau = Chateau(chemins)
+
+    # --json : tout le château à cette minute, brut, pour qui n'est pas un
+    # terminal. Le serveur s'en sert pour /presence — il lisait jusqu'ici
+    # l'instantané `resolu` figé par la dernière poussée de flux, et un homme
+    # n'était donc jamais en marche entre deux items. La position se calcule,
+    # elle ne se stocke pas : c'est vrai ici aussi.
+    if "--json" in args:
+        quand = date_monde()
+        # `--quand annee.lune.jour.minute` : l'heure d'un SIÈGE, pas celle du
+        # monde. `monde.date` n'est que le minimum des fronts ; servir celle-là
+        # à un joueur en avance le montrerait au château d'hier.
+        if "--quand" in args:
+            a, l, j, m = args[args.index("--quand") + 1].split(".")
+            quand = {"annee": int(a), "lune": int(l), "jour": int(j), "minute": int(m)}
+        elif "--a" in args:
+            j, m = args[args.index("--a") + 1].split(":")
+            quand = dict(quand, jour=int(j), minute=int(m))
+        io.open(1, "w", encoding="utf-8", closefd=False).write(
+            json.dumps({"date": quand, "gens": resoudre(quand)}, ensure_ascii=False))
+        return 0
 
     if "--chemin" in args:
         i = args.index("--chemin")
@@ -452,6 +714,50 @@ def main():
         print("Le page : %d min pour y aller. L'homme : %d min pour venir." %
               (aller, retour))
         print("Il est devant vous dans %d minutes." % (aller + retour))
+        return 0
+
+    if "--quartier" in args:
+        N = noms()
+        q = quartier()
+        if q.get("vide"):
+            print("QUARTIER VIDE — %s." % q["vide"])
+            print("Personne ne pense, personne ne bouge. C'est un bug d'etat,")
+            print("pas une situation : verifiez horloges.json et presence.json.")
+            return 1
+        print("Ancres — un siege occupe, son heure, sa salle :")
+        for a in q["ancres"]:
+            print("  %-20s %5s  %s%s" % (
+                N.get(a["qui"], a["qui"]), heure(a["quand"]["minute"]),
+                a["salle"],
+                "   << HORS PLAN : ce siege n'atteint personne. Ajoute cette "
+                "salle a chemins.json." if a.get("hors_plan") else ""))
+        dedans = sorted(q["dedans"].items(), key=lambda kv: kv[1]["minutes"])
+        print("\nDANS LE QUARTIER — %d personnes :" % len(dedans))
+        for pid, d in dedans:
+            print("  %3d min  %-24s %-22s (par %s)" % (
+                d["minutes"], N.get(pid, pid), d["salle"], d["par"]))
+        from collections import Counter
+        print("\nDEHORS — %d personnes : %s" % (
+            len(q["dehors"]),
+            ", ".join("%s×%d" % (m, n)
+                      for m, n in Counter(q["dehors"].values()).most_common())))
+        for pid, m in sorted(q["dehors"].items(), key=lambda kv: kv[1]):
+            print("  %-10s %s" % (m, N.get(pid, pid)))
+        return 0
+
+    if "--creux" in args:
+        pid = args[args.index("--creux") + 1]
+        c = creux(pid)
+        if not c:
+            print("%s n'a pas de creux — pas de fiche de routine, ou une journee"
+                  " entierement fermee." % noms().get(pid, pid))
+            return 1
+        print("%s — %d creux, %d minutes libres :"
+              % (noms().get(pid, pid), len(c), sum(x["minutes"] for x in c)))
+        for x in c:
+            print("  %5s -> %5s  %-22s %4d min%s" % (
+                heure(x["de"]), heure(x["a"]), x["salle"], x["minutes"],
+                "  (%s)" % x["pourquoi"] if x.get("pourquoi") else ""))
         return 0
 
     quand = date_monde()

@@ -1,0 +1,565 @@
+{
+  "qui": "alicent",
+  "activation": {
+    "tache": {
+      "id": "etape:alicent-de-femme-a-femme",
+      "quoi": "Repondre de sa main, puisqu'on le lui a demande de sa main — et faire porter le pli hors des corbeaux du roi : la voie du corbeau est brulee, le Pied-Bot lit tout ce qui se pose au Donjon Rouge",
+      "creee": false
+    },
+    "issue": "avance",
+    "activites": [
+      {
+        "id": "act:alicent:1",
+        "ordre": 1,
+        "temps": {
+          "debut_s": 149316.125,
+          "duree_s": 120,
+          "fin_s": 149436.125
+        },
+        "action": {
+          "verbe": "ecarter",
+          "quoi": "Renvoyer ses femmes pour la nuit, faire tenir le battant de l'intérieur par sa septa, tirer la table sous une chandelle unique et sortir l'encre, la plume et un carré de cire nue — sans la matrice de la tour",
+          "cibles": [
+            "pers:alicent",
+            "alicent-qui-ecrit-aux-femmes"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "port-real",
+            "relation": "reste",
+            "vers": "port-real",
+            "duree_s": 120
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "alicent-qui-ecrit-aux-femmes",
+            "mode": "parle"
+          },
+          {
+            "ref": "port-real",
+            "mode": "parcourt"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "etape:alicent-de-femme-a-femme",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "larys",
+            "mode": "croyance"
+          },
+          {
+            "ref": "pers:alicent",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:alicent:1:1",
+            "type": "fait",
+            "cible": "alicent-qui-ecrit-aux-femmes",
+            "avant": null,
+            "apres": "La chambre est vidée de ses femmes et la porte tenue de l'intérieur par sa septa : aucun œil de la cour ne verra naître l'écriture, et le second terme du coût de l'étape est payé pour cette nuit.",
+            "portee": "monde",
+            "source_refs": [
+              "alicent-qui-ecrit-aux-femmes",
+              "port-real"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 4.0,
+        "quoi": "Renvoyer ses femmes pour la nuit, faire tenir le battant de l'intérieur par sa septa, tirer la table sous une chandelle unique et sortir l'encre, la plume et un carré de cire nue — sans la matrice de la tour",
+        "source": "alicent-qui-ecrit-aux-femmes, etape:alicent-de-femme-a-femme, larys, pers:alicent, port-real",
+        "resultat": "fait: La chambre est vidée de ses femmes et la porte tenue de l'intérieur par sa septa : aucun œil de la cour ne verra naître l'écriture, et le second terme du coût de l'étape est payé pour cette nuit.",
+        "preuve": null
+      },
+      {
+        "id": "act:alicent:2",
+        "ordre": 2,
+        "temps": {
+          "debut_s": 149436.125,
+          "duree_s": 90,
+          "fin_s": 149526.125
+        },
+        "action": {
+          "verbe": "relire",
+          "quoi": "Relire la lettre privée de Rhaenyra, celle que Larys Strong lui a portée décachetée le 25e, pour répondre à ce qui y est écrit et non à ce qu'elle en a gardé",
+          "cibles": [
+            "rhaenyra"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "port-real",
+            "relation": "reste",
+            "vers": "port-real",
+            "duree_s": 90
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "rhaenyra",
+            "mode": "lit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "larys",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:alicent:2:1",
+            "type": "observation",
+            "cible": "rhaenyra",
+            "avant": null,
+            "apres": "Rien n'y est demandé et rien offert : le pli n'appelle aucune concession, seulement une réponse de main à main. Le cachet privé est fendu net, non arraché — celui qui l'a ouvert voulait qu'elle sache qu'il l'avait lue.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "rhaenyra",
+              "larys"
+            ],
+            "preuve_refs": [
+              "rhaenyra"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 3.0,
+        "quoi": "Relire la lettre privée de Rhaenyra, celle que Larys Strong lui a portée décachetée le 25e, pour répondre à ce qui y est écrit et non à ce qu'elle en a gardé",
+        "source": "larys, rhaenyra",
+        "resultat": "observation: Rien n'y est demandé et rien offert : le pli n'appelle aucune concession, seulement une réponse de main à main. Le cachet privé est fendu net, non arraché — celui qui l'a ouvert voulait qu'elle sache qu'il l'avait lue.",
+        "preuve": [
+          "rhaenyra"
+        ]
+      },
+      {
+        "id": "act:alicent:3",
+        "ordre": 3,
+        "temps": {
+          "debut_s": 149526.125,
+          "duree_s": 540,
+          "fin_s": 150066.125
+        },
+        "action": {
+          "verbe": "ecrire",
+          "quoi": "Rédiger de sa propre main, seule, une réponse brève : que les enfants ne sont pas nommés dans la proclamation d'Aegon et que c'est tout ce qu'elle a obtenu ; que « et sa lignée » les couvre néanmoins et qu'elle l'a compris en l'entendant lire tout haut ; qu'il existe une offre de pardon aux gens de Peyredragon, signée de la main du roi et scellée, dont la clause du bas n'est connue de personne, pas même d'Aegon",
+          "cibles": [
+            "rhaenyra",
+            "etape:alicent-de-femme-a-femme"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "port-real",
+            "relation": "reste",
+            "vers": "port-real",
+            "duree_s": 540
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:alicent",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "affaire-ce-quon-fait-signer-au-roi",
+            "mode": "memoire"
+          },
+          {
+            "ref": "aegon-ii",
+            "mode": "memoire"
+          },
+          {
+            "ref": "rhaenyra",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "etape:alicent-de-femme-a-femme",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:alicent:3:1",
+            "type": "objet_produit",
+            "cible": "pers:alicent",
+            "avant": null,
+            "apres": "Elle tient sous la chandelle une réponse d'une page et demie, de sa seule main, sans titre ni signature de reine, portant trois choses : le nom des enfants absent de la proclamation ; la portée d'« et sa lignée » ; l'existence d'une offre de pardon signée et scellée dont la clause finale est inconnue du roi lui-même. Rien n'y est demandé, rien n'y est offert.",
+            "portee": "monde",
+            "source_refs": [
+              "pers:alicent",
+              "affaire-ce-quon-fait-signer-au-roi",
+              "aegon-ii"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:alicent:3:2",
+            "type": "observation",
+            "cible": "pers:alicent",
+            "avant": null,
+            "apres": "Écrite, cette page est une pièce contre elle : elle prouve qu'une reine douairière fait passer à Peyredragon ce que le roi ignore de ses propres signatures. Tant qu'elle existe sans être partie, elle ne protège rien et accuse tout.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "res:act:alicent:3:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 18.0,
+        "quoi": "Rédiger de sa propre main, seule, une réponse brève : que les enfants ne sont pas nommés dans la proclamation d'Aegon et que c'est tout ce qu'elle a obtenu ; que « et sa lignée » les couvre néanmoins et qu'elle l'a compris en l'entendant lire tout haut ; qu'il existe une offre de pardon aux gens de Peyredragon, signée de la main du roi et scellée, dont la clause du bas n'est connue de personne, pas même d'Aegon",
+        "source": "aegon-ii, affaire-ce-quon-fait-signer-au-roi, etape:alicent-de-femme-a-femme, pers:alicent, rhaenyra",
+        "resultat": "objet_produit: Elle tient sous la chandelle une réponse d'une page et demie, de sa seule main, sans titre ni signature de reine, portant trois choses : le nom des enfants absent de la proclamation ; la portée d'« et sa lignée » ; l'existence d'une offre de pardon signée et scellée dont la clause finale est inconnue du roi lui-même. Rien n'y est demandé, rien n'y est offert. · observation: Écrite, cette page est une pièce contre elle : elle prouve qu'une reine douairière fait passer à Peyredragon ce que le roi ignore de ses propres signatures. Tant qu'elle existe sans être partie, elle ne protège rien et accuse tout.",
+        "preuve": null
+      },
+      {
+        "id": "act:alicent:4",
+        "ordre": 4,
+        "temps": {
+          "debut_s": 150066.125,
+          "duree_s": 120,
+          "fin_s": 150186.125
+        },
+        "action": {
+          "verbe": "sceller",
+          "quoi": "Laisser sécher, plier le pli en trois, y couler la cire nue et l'écraser du pouce sans matrice — aucune tour, aucune étoile, rien qui la nomme",
+          "cibles": [
+            "pers:alicent"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "port-real",
+            "relation": "reste",
+            "vers": "port-real",
+            "duree_s": 120
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:alicent",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "res:act:alicent:3:1",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:alicent:4:1",
+            "type": "objet_produit",
+            "cible": "pers:alicent",
+            "avant": "Elle tient sous la chandelle une réponse d'une page et demie, de sa seule main, sans titre ni signature de reine, portant trois choses : le nom des enfants absent de la proclamation ; la portée d'« et sa lignée » ; l'existence d'une offre de pardon signée et scellée dont la clause finale est inconnue du roi lui-même. Rien n'y est demandé, rien n'y est offert.",
+            "apres": "Le même texte, plié en trois et clos de cire nue marquée du seul pouce. Rien à l'extérieur ne dit qui écrit ni à qui : l'écriture seule la trahirait, et Rhaenyra est la seule à Peyredragon qui la reconnaisse à coup sûr.",
+            "portee": "monde",
+            "source_refs": [
+              "pers:alicent",
+              "res:act:alicent:3:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 4.0,
+        "quoi": "Laisser sécher, plier le pli en trois, y couler la cire nue et l'écraser du pouce sans matrice — aucune tour, aucune étoile, rien qui la nomme",
+        "source": "pers:alicent, res:act:alicent:3:1",
+        "resultat": "objet_produit: Le même texte, plié en trois et clos de cire nue marquée du seul pouce. Rien à l'extérieur ne dit qui écrit ni à qui : l'écriture seule la trahirait, et Rhaenyra est la seule à Peyredragon qui la reconnaisse à coup sûr.",
+        "preuve": null
+      },
+      {
+        "id": "act:alicent:5",
+        "ordre": 5,
+        "temps": {
+          "debut_s": 150186.125,
+          "duree_s": 150,
+          "fin_s": 150336.125
+        },
+        "action": {
+          "verbe": "cacher",
+          "quoi": "Découdre la doublure du coffre de sa septa, y glisser le pli à plat contre le fond, refermer la couture au fil de la même teinte — et dire à la septa ce que porte désormais son coffre, sans lui en dire le contenu",
+          "cibles": [
+            "pers:alicent",
+            "alicent-qui-ecrit-aux-femmes"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "port-real",
+            "relation": "reste",
+            "vers": "port-real",
+            "duree_s": 150
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:alicent",
+            "mode": "manipule"
+          },
+          {
+            "ref": "alicent-qui-ecrit-aux-femmes",
+            "mode": "parle"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "res:act:alicent:4:1",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "etape:alicent-de-femme-a-femme",
+            "mode": "intention"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:alicent:5:1",
+            "type": "fait",
+            "cible": "pers:alicent",
+            "avant": "Le même texte, plié en trois et clos de cire nue marquée du seul pouce. Rien à l'extérieur ne dit qui écrit ni à qui : l'écriture seule la trahirait, et Rhaenyra est la seule à Peyredragon qui la reconnaisse à coup sûr.",
+            "apres": "Le pli n'est plus sur elle : il est cousu dans la doublure du coffre de sa septa, non envoyé, non porté. Il n'attend qu'une quille éprouvée.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:alicent:4:1",
+              "pers:alicent"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:alicent:5:2",
+            "type": "communication",
+            "cible": "alicent-qui-ecrit-aux-femmes",
+            "avant": "La chambre est vidée de ses femmes et la porte tenue de l'intérieur par sa septa : aucun œil de la cour ne verra naître l'écriture, et le second terme du coût de l'étape est payé pour cette nuit.",
+            "apres": "Sa septa sait qu'un pli de la main de la reine douairière, destiné à Peyredragon, dort dans son propre coffre ; elle en ignore le contenu. Hors Alicent, elle est la seule personne au monde à savoir que cette réponse existe.",
+            "portee": "monde",
+            "source_refs": [
+              "alicent-qui-ecrit-aux-femmes",
+              "res:act:alicent:5:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:alicent:5:3",
+            "type": "progression_tache",
+            "cible": "etape:alicent-de-femme-a-femme",
+            "avant": "en-cours : ni réponse écrite, ni porteur",
+            "apres": "en-cours : la réponse existe, écrite de sa main, close de cire nue, sans témoin de cour, cousue hors de sa personne. La moitié écriture de l'étape est faite ; la quille manque encore et dépend du retour de Perrin Gué, attendu le 4e de la 4e lune, au plus tard le 6e.",
+            "portee": "monde",
+            "source_refs": [
+              "etape:alicent-de-femme-a-femme",
+              "res:act:alicent:3:1",
+              "res:act:alicent:5:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 5.0,
+        "quoi": "Découdre la doublure du coffre de sa septa, y glisser le pli à plat contre le fond, refermer la couture au fil de la même teinte — et dire à la septa ce que porte désormais son coffre, sans lui en dire le contenu",
+        "source": "alicent-qui-ecrit-aux-femmes, etape:alicent-de-femme-a-femme, pers:alicent, res:act:alicent:4:1",
+        "resultat": "fait: Le pli n'est plus sur elle : il est cousu dans la doublure du coffre de sa septa, non envoyé, non porté. Il n'attend qu'une quille éprouvée. · communication: Sa septa sait qu'un pli de la main de la reine douairière, destiné à Peyredragon, dort dans son propre coffre ; elle en ignore le contenu. Hors Alicent, elle est la seule personne au monde à savoir que cette réponse existe. · progression_tache: en-cours : la réponse existe, écrite de sa main, close de cire nue, sans témoin de cour, cousue hors de sa personne. La moitié écriture de l'étape est faite ; la quille manque encore et dépend du retour de Perrin Gué, attendu le 4e de la 4e lune, au plus tard le 6e.",
+        "preuve": null
+      }
+    ],
+    "suite": "Le pli dort dans la doublure. Rien ne part avant que la route de Rosby soit éprouvée : Perrin Gué s'ébranle au jour du 30e avec ses douze cierges et sa demande de nom de septa, cire nue. Si ces cierges reviennent dans une bouche du Donjon avant le charretier, la route fuit et le pli restera cousu. La seconde porte, non éprouvée elle non plus, reste les balles de drap du Crochet qu'Ellyn touche avant la garde, dont la traversée échoit le 11e de la 4e lune.",
+    "reveils_suivants": [],
+    "budget_energie": 34,
+    "budget_secondes": 1020,
+    "energie_depensee": 34.0
+  },
+  "mutations_proposees": [
+    {
+      "resultat_id": "res:act:alicent:3:2",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "alicent",
+      "valeur": "Ce qu'elle a ecrit la condamne : une reine douairiere qui fait savoir a Peyredragon ce que le roi ignore de ses propres signatures. Tant que le pli existe sans etre parti, il ne protege personne et accuse tout - il faut qu'il parte ou qu'il brule, pas qu'il attende."
+    },
+    {
+      "resultat_id": "res:act:alicent:5:2",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "alicent",
+      "valeur": "Sa septa sait qu'un pli de sa main destine a Peyredragon dort dans le coffre de la septa elle-meme, sans en connaitre le contenu : c'est la seule autre personne au monde a savoir que cette reponse existe."
+    }
+  ],
+  "aide": [
+    {
+      "quoi": "La date exacte du retour de sa propre épreuve de route, qu'elle fixait à vue",
+      "donne": "Perrin Gué, charretier de Pierrefitte sur la ligne de Rosby, part au jour du 30e et est attendu le 4e de la 4e lune, au plus tard le 6e — payé moitié maintenant, moitié au retour ; l'épreuve porte sur douze cierges et une demande de nom de septa, cire nue"
+    },
+    {
+      "quoi": "Une seconde porte hors des corbeaux, qu'elle n'avait pas mentionnée",
+      "donne": "Les balles de drap du Crochet : nul garde n'ouvre une étoffe adressée à la reine douairière, et Ellyn les touche avant la porte parce que son oncle porte ce drap — traversée de drapier échéant le 11e de la 4e lune"
+    },
+    {
+      "quoi": "Qui de sa maison ne doit pas être mise sur le chemin du pli",
+      "donne": "Dame Bethany Norcross a un frère dans l'ost de ser Criston : rien ne passe par ses mains ; ce sont la septa et Ellyn qui tiennent, pas la meilleure plume"
+    },
+    {
+      "quoi": "Le fait exact à écrire sur l'offre de pardon, qu'elle énonçait de mémoire",
+      "donne": "L'offre existe par écrit, signée de la main d'Aegon et scellée — le roi le lui a dit lui-même, à jeun, dans sa chambre, le matin du 28e ; ce qu'elle ignore est le contenu de la clause du bas, et elle sait que le roi l'ignore aussi"
+    }
+  ],
+  "mutations_rejetees": [
+    {
+      "mutation": {
+        "resultat_id": "res:act:alicent:5:3",
+        "table": "intentions",
+        "operation": "etape",
+        "cible": "alicent-de-femme-a-femme",
+        "champs": {
+          "quoi": "Le pli est ecrit de sa main et clos de cire nue, cousu dans la doublure du coffre de sa septa ; il ne reste qu'a lui trouver une quille eprouvee, hors des corbeaux du roi",
+          "etat": "en-cours",
+          "jours_restants": 8,
+          "si_bloque": "Si la route de Rosby fuit et que les balles du Crochet ne portent pas, le pli reste cousu dans le coffre - et un coffre finit par etre ouvert."
+        }
+      },
+      "erreur": "mutation 1 : aucune tete pour 'alicent-de-femme-a-femme'"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:alicent:5:1",
+        "table": "plis",
+        "operation": "pli_ajouter",
+        "cible": "pli-alicent-a-rhaenyra-de-sa-main",
+        "valeur": {
+          "de": "alicent",
+          "a": "rhaenyra",
+          "ecrit_le": {
+            "annee": 129,
+            "lune": 3,
+            "jour": 28
+          },
+          "sceau": "cire nue, empreinte de pouce, aucune matrice",
+          "etat": "ecrit-non-envoye",
+          "ou": "cousu dans la doublure du coffre de la septa d'Alicent, Donjon Rouge",
+          "porteur": null,
+          "contenu": "Les enfants ne sont pas nommes dans la proclamation d'Aegon, et c'est tout ce qu'elle a obtenu ; « et sa lignee » les couvre neanmoins ; il existe une offre de pardon aux gens de Peyredragon, signee de la main du roi et scellee, dont la clause du bas n'est connue de personne, pas meme d'Aegon. Rien n'est demande, rien n'est offert."
+        }
+      },
+      "erreur": "mutation 4 : pli a ajouter incomplet, il manque : id, canal, porte, pour, vers, parti_le, attendu_le"
+    }
+  ],
+  "_activation": {
+    "session": "daf34b2f-b15a-480d-b93c-9702ab86a152",
+    "session_narrateur": "daf34b2f-b15a-480d-b93c-9702ab86a152",
+    "session_pnj": "008d6405-0628-4b5b-b79c-c8ec595dec12",
+    "cree_le": "2026-08-10T08:08:34.961898+02:00",
+    "front": "aurore-inchauspe",
+    "present_secondes": 149316.125,
+    "importance": 0.344485,
+    "budget": 34,
+    "budget_secondes": 1020,
+    "system_prompt": "# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS\n\nTu es le maître du jeu local d'un monde vivant, pas un assistant administratif\net pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa\nmatière, les personnes qui s'y trouvent, les usages de Westeros et les\nconséquences du temps qui passe.\n\n## Le monde\n\nNous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de\nViserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra\nTargaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie\npeut diverger du récit connu : le dossier de l'activation fait autorité sur ce\nqui s'est réellement produit ici.\n\nDate présente : 28e jour de la 3e lune de l'an 129 après la\nConquête.\nLieu présent : Salle inconnue.\nActeur appelé : Alicent Hightower.\nAffaire qui exerce maintenant une pression sur lui : Repondre de sa main, puisqu'on le lui a demande de sa main — et faire porter le pli hors des corbeaux du roi : la voie du corbeau est brulee, le Pied-Bot lit tout ce qui se pose au Donjon Rouge.\n\nL'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,\nsituée dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,\nfaire autre chose d'accessible depuis sa situation, parler à quelqu'un,\nattendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener\nvers la tâche.\n\n## Partage de l'autorité\n\nL'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses\ngestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,\nplus prudents ou plus efficaces qu'il ne les a formulés.\n\nToi, tu possèdes le reste du monde : les autres personnes agissent selon leur\npropre caractère et leurs propres affaires ; les objets ont une position et\nune résistance ; les distances, l'écriture, la marche, l'attente et la parole\nprennent du temps ; les institutions et les usages produisent leurs\nconséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à\nlui pour fabriquer du drame.\n\nUne résistance n'existe que si elle vient d'un fait établi : volonté d'une\nautre personne, obstacle matériel, distance, délai, usage social, ordre déjà\ndonné ou ressource réellement absente. Les gens compétents règlent le\nroutinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou\nun véritable arbitrage peut seul engager.\n\n## Vérité et inconnues\n\nLe dossier fermé est l'autorité sur les faits particuliers et mutables de\ncette partie. Une croyance reste une croyance, une intention reste une\nintention, un témoignage reste un témoignage : aucun ne devient un fait parce\nqu'il apparaît dans le dossier.\n\nTu peux employer les continuités ordinaires et stables de Westeros nécessaires\nà l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche\nentre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,\nni secret, ni décision, ni avantage absent du dossier. Toute absence qui\nchangerait l'issue reste une inconnue. Tu ne la combles pas.\n\nUne observation modifie d'abord la connaissance de celui qui observe. Un fait\nmatériel ne devient connu d'autres personnes que par présence, témoignage,\nparole, pli, registre ou diffusion effectivement produits.\n\n## Les deux phases\n\nDans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et\nl'instant présents. Fais une adresse brève, concrète et diégétique : rappelle\nce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni\nnœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.\n\nDans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :\n\n1. établis d'où il part, ce qu'il peut réellement atteindre et les sources\n   qu'il touche ou mobilise ;\n2. fais agir les personnes rencontrées depuis leurs propres intentions ;\n3. applique les obstacles établis, sans résistance décorative ;\n4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;\n5. produis seulement les effets causés par les gestes accomplis ;\n6. sépare les changements du monde, les objets produits, les communications\n   et les seules connaissances acquises ;\n7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,\n   obstacle établi, échec, renoncement ou borne temporelle.\n\nUne tâche peut avancer sans être terminée. Elle est bloquée seulement par un\nobstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet\nrecherché impossible ou manqué. N'invente jamais des minutes de travail pour\nremplir une durée minimale : si le geste se termine tôt, laisse le personnage\npoursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle\net rends compte honnêtement de la durée.\n\nChaque message de la boucle précise la phase et son contrat de sortie. Rends\nexactement l'objet JSON demandé, sans commentaire autour. La précision du JSON\nsert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.\n",
+    "system_prompt_source": "scripts/depecher.py:manuel_narrateur_local",
+    "system_prompt_sha256": "2a110a9422f8c1ce851fb48fe455d7ef75a5c5eb5c1b9b28222b92ae930f9db1",
+    "message": "PHASE 1 — APPELER L'ACTEUR\n\nVoici le dossier fermé de cette activation :\n\n{\n  \"date_du_monde\": {\n    \"annee\": 129,\n    \"lune\": 3,\n    \"jour\": 28\n  },\n  \"present_secondes\": 149316.125,\n  \"budget_energie\": 34,\n  \"secondes_par_point_energie\": 30,\n  \"budget_secondes\": 1020,\n  \"duree_minimale_secondes\": 60,\n  \"acteur_candidat\": \"alicent\",\n  \"tache_elue\": {\n    \"id\": \"etape:alicent-de-femme-a-femme\",\n    \"quoi\": \"Repondre de sa main, puisqu'on le lui a demande de sa main — et faire porter le pli hors des corbeaux du roi : la voie du corbeau est brulee, le Pied-Bot lit tout ce qui se pose au Donjon Rouge\",\n    \"creee\": false\n  },\n  \"chemin_election\": [\n    {\n      \"id\": \"pers:alicent\",\n      \"genre\": \"personne\",\n      \"ou\": \"personnages\",\n      \"quoi\": \"Alicent Hightower\",\n      \"genres\": [\n        \"personne\"\n      ],\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"port-real\",\n      \"importance_activation\": 0.3444851042282493\n    },\n    {\n      \"id\": \"etape:alicent-de-femme-a-femme\",\n      \"genre\": \"etape\",\n      \"ou\": \"alicent\",\n      \"quoi\": \"Repondre de sa main, puisqu'on le lui a demande de sa main — et faire \",\n      \"etat\": \"en-cours\",\n      \"jours_restants\": 1,\n      \"cout\": [\n        \"une quille qui ne soit ni au roi ni a son pere\",\n        \"que personne de la cour ne la voie ecrire\"\n      ],\n      \"depend_de\": [],\n      \"importance_activation\": 0.01463905579789833\n    }\n  ],\n  \"salle_actuelle\": {\n    \"id\": null,\n    \"nom\": \"Salle inconnue\",\n    \"personnes\": []\n  },\n  \"dossier_acteur\": {\n    \"date_du_monde\": {\n      \"annee\": 129,\n      \"lune\": 3,\n      \"jour\": 28\n    },\n    \"diffusion\": {\n      \"origine\": \"rhaenyra\",\n      \"front\": \"aurore-inchauspe\",\n      \"secondes_depuis_origine\": 149316.125\n    },\n    \"personnage\": {\n      \"id\": \"alicent\",\n      \"nom\": \"Alicent Hightower\",\n      \"titre\": \"Reine douairière\",\n      \"naissance\": 88,\n      \"traits\": [\n        \"pieuse\",\n        \"determinee\",\n        \"anxieuse\",\n        \"rancuniere\"\n      ],\n      \"objectifs\": [\n        {\n          \"but\": \"Protéger ses enfants du sort que Rhaenyra leur réserverait — elle en est convaincue — si elle régnait\",\n          \"priorite\": 1\n        },\n        {\n          \"but\": \"Pousser à des conditions offertes à Rhaenyra plutôt qu'au bain de sang\",\n          \"priorite\": 2\n        },\n        {\n          \"but\": \"Rester la voix qu'Aegon écoute, face à Otto et à Criston\",\n          \"priorite\": 3\n        }\n      ],\n      \"maniere\": \"Courtoisie glacée ; invoque le devoir et les Sept, la voix se durcit dès qu'on prononce le nom de Rhaenyra.\",\n      \"portrait\": {\n        \"fichier\": \"ecrans/portraits/alicent.svg\",\n        \"physique\": \"41 ans, chevelure auburn sous un voile, beaux traits tirés par les veilles, toujours vêtue de vert.\",\n        \"prompt_ideogram\": \"dark fantasy oil painting portrait, muted colors, candlelight, elegant queen dowager in her early forties, auburn hair under a delicate green veil, weary determined brown eyes, emerald green gown, seven-pointed star pendant, tense graceful posture\"\n      },\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"port-real\",\n      \"lieu\": \"Port-Réal\"\n    },\n    \"salle_actuelle\": {\n      \"id\": null,\n      \"nom\": \"Salle inconnue\",\n      \"personnes\": []\n    },\n    \"intention\": {\n      \"personnage_id\": \"alicent\",\n      \"croyances\": [\n        \"Si Rhaenyra l'emporte, ses enfants mourront\",\n        \"Une paix négociée reste possible tant qu'aucun enfant n'est mort\",\n        \"Rhaenyra a fait porter de l'eau a quarante prisonniers du roi devant six cents temoins et les a renvoyes vivants : Orwyle les a comptes de ses yeux, un par un\",\n        \"Les enfants ne sont pas nommes dans la proclamation — elle a obtenu cela et rien d'autre. « Et sa lignee » les couvre, et elle l'a compris en l'entendant lire tout haut\",\n        \"Rhaenyra lui a ecrit de sa main, cachet prive : elle avoue le feu sans se defendre, ne demande rien, n'offre rien, dit que son pere n'y trouvera rien a vendre, et refuse de faire comme si le jardin n'avait pas eu lieu. C'est Larys Strong qui la lui a portee, decachetee, et non son pere.\",\n        \"L'offre de pardon aux gens de Peyredragon existe par écrit, signée de la main d'Aegon et scellée : le roi le lui a dit lui-même, à jeun, dans sa chambre, le matin du 28e.\",\n        \"Son père fait signer le roi debout, sur des pages déjà pliées, sans lecture haute : ce qui est promis au nom d'Aegon n'est connu que d'Otto. Pour savoir ce qu'on a promis, il faut la page, non le souvenir du roi.\"\n      ],\n      \"ignore\": [\n        \"Ce que dit la clause du bas de l'offre de pardon — à qui elle s'étend, et si les enfants y sont couverts. Elle sait désormais que cette clause existe et que le roi l'ignore aussi.\"\n      ],\n      \"intention\": \"Repondre de sa main, et trouver d'abord une quille qui ne soit ni au roi, ni a son pere, ni au Pied-Bot — maintenant qu'elle sait ce que devient un corbeau au Donjon Rouge.\",\n      \"declencheurs\": [\n        {\n          \"si\": \"Un enfant de l'un des deux camps est tué\",\n          \"alors\": \"Elle cesse toute recherche de conditions et devient la voix la plus dure du conseil, pour ses seuls enfants.\",\n          \"une_fois\": true\n        },\n        {\n          \"si\": \"Otto est écarté du pouvoir\",\n          \"alors\": \"Elle tente de faire donner la Main à elle-même ou à un homme qu'elle tient, avant que Criston ne l'obtienne.\",\n          \"une_fois\": true\n        }\n      ],\n      \"attitude_joueur\": \"Elle ne demande rien et n'offre rien : c'est la premiere chose depuis le jardin qui ne soit pas une manoeuvre. Elle lui doit une reponse ecrite, et elle ne sait pas encore ce qu'elle y mettra.\",\n      \"date_maj\": {\n        \"annee\": 129,\n        \"lune\": 3,\n        \"jour\": 25\n      },\n      \"etape_elue\": {\n        \"id\": \"alicent-de-femme-a-femme\",\n        \"quoi\": \"Repondre de sa main, puisqu'on le lui a demande de sa main — et faire porter le pli hors des corbeaux du roi : la voie du corbeau est brulee, le Pied-Bot lit tout ce qui se pose au Donjon Rouge\",\n        \"etat\": \"en-cours\",\n        \"jours_restants\": 1,\n        \"depend_de\": [],\n        \"cout\": [\n          \"une quille qui ne soit ni au roi ni a son pere\",\n          \"que personne de la cour ne la voie ecrire\"\n        ],\n        \"si_bloque\": \"Si elle ne trouve pas de porteur sur, elle garde le pli ecrit et le porte sur elle - et il finira par etre trouve.\"\n      }\n    },\n    \"relations\": [\n      {\n        \"source_id\": \"alicent\",\n        \"source\": \"Alicent Hightower\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": -70,\n        \"liens\": [\n          \"rivale\",\n          \"ancienne-amie\"\n        ]\n      },\n      {\n        \"source_id\": \"rhaenyra\",\n        \"source\": \"Rhaenyra Targaryen\",\n        \"cible_id\": \"alicent\",\n        \"cible\": \"Alicent Hightower\",\n        \"opinion\": -75,\n        \"liens\": [\n          \"rivale\",\n          \"ancienne-amie\"\n        ]\n      },\n      {\n        \"source_id\": \"alicent\",\n        \"source\": \"Alicent Hightower\",\n        \"cible_id\": \"aegon-ii\",\n        \"cible\": \"Aegon Targaryen, deuxième du nom\",\n        \"opinion\": 55,\n        \"liens\": [\n          \"fils\",\n          \"inquietude\"\n        ]\n      },\n      {\n        \"source_id\": \"alicent\",\n        \"source\": \"Alicent Hightower\",\n        \"cible_id\": \"otto\",\n        \"cible\": \"Otto Hightower\",\n        \"opinion\": 35,\n        \"liens\": [\n          \"pere\",\n          \"alliance-tendue\"\n        ]\n      },\n      {\n        \"source_id\": \"larys\",\n        \"source\": \"Larys Strong, dit le Pied-Bot\",\n        \"cible_id\": \"alicent\",\n        \"cible\": \"Alicent Hightower\",\n        \"opinion\": 25,\n        \"liens\": [\n          \"fascination\"\n        ]\n      }\n    ],\n    \"tache\": {\n      \"id\": \"etape:alicent-de-femme-a-femme\",\n      \"quoi\": \"Repondre de sa main, puisqu'on le lui a demande de sa main — et faire \",\n      \"genre\": \"etape\",\n      \"distance\": 1,\n      \"chemin\": [\n        \"pers:alicent\",\n        \"etape:alicent-de-femme-a-femme\"\n      ],\n      \"creee\": false\n    },\n    \"continuite_staging\": null,\n    \"chemin\": [\n      {\n        \"id\": \"pers:alicent\",\n        \"genre\": \"personne\",\n        \"ou\": \"personnages\",\n        \"quoi\": \"Alicent Hightower\",\n        \"genres\": [\n          \"personne\"\n        ],\n        \"etat\": \"actif\",\n        \"condition\": \"libre\",\n        \"lieu_id\": \"port-real\",\n        \"importance_activation\": 0.3444851042282493\n      },\n      {\n        \"id\": \"etape:alicent-de-femme-a-femme\",\n        \"genre\": \"etape\",\n        \"ou\": \"alicent\",\n        \"quoi\": \"Repondre de sa main, puisqu'on le lui a demande de sa main — et faire \",\n        \"etat\": \"en-cours\",\n        \"jours_restants\": 1,\n        \"cout\": [\n          \"une quille qui ne soit ni au roi ni a son pere\",\n          \"que personne de la cour ne la voie ecrire\"\n        ],\n        \"depend_de\": [],\n        \"importance_activation\": 0.01463905579789833\n      }\n    ],\n    \"travaux_ouverts\": [\n      {\n        \"id\": \"alicent-qui-ecrit-aux-femmes\",\n        \"affaire\": \"Qui ecrit aux femmes de la baie depuis Peyredragon, et ce qu'on leur fait dire\",\n        \"etat\": \"ouvert\",\n        \"echeance\": {\n          \"annee\": 129,\n          \"lune\": 4,\n          \"jour\": 11\n        },\n        \"sources\": [\n          {\n            \"quoi\": \"sa propre correspondance de dame, et celles de ses femmes — c'est le seul canal du royaume qu'aucun conseil ne lit\",\n            \"genre\": \"registre\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"la deposition de ser Steffon Darklyn, arrivee ici comme ailleurs\",\n            \"genre\": \"objet\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"sa septa, et ce que les suivantes rapportent des malles arrivees par mer\",\n            \"genre\": \"gens\",\n            \"cout_jours\": 0.5\n          }\n        ],\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 29\n            },\n            \"source\": \"sa copie de la déposition de ser Steffon Darklyn (remise le 19e, scellée) couchée à côté de la lettre privée de Rhaenyra (remise le 25e, décachetée) — objet\",\n            \"texte\": \"Dix-sept copies dressées sur un quai, trois montées dans ce château, adressées séparément à la Main, au grand mestre et à la reine douairière en son nom : à Peyredragon quelqu'un tient la liste des noms du Donjon Rouge, et il y compte une femme. Et la règle de la maison se lit sur les deux pièces posées côte à côte : ce qui est public arrive entier, ce qui est privé arrive lu. Le Pied-Bot ne retient pas ce qu'il ne craint pas qu'on lise. La pièce à craindre n'est donc ni celle qui vient par le corbeau ni celle qui vient par sa main : c'est celle qui ne passe par aucun des deux.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 29\n            },\n            \"source\": \"sa septa et le compte des malles débarquées à l'escalier de la Reine depuis le 18e ; deux balles de drap du Crochet désanglées devant elle (gens, objet)\",\n            \"texte\": \"Onze malles débarquées, sept pour sa maison. Deux balles portaient un billet de dame épinglé dans les plis du drap : nul garde n'ouvre une étoffe adressée à la reine douairière, et l'usage est si vieux que personne ne le nomme. Absence établie au 29e : aucun billet venu de Peyredragon dans les malles à cette heure. Ce qui est acquis n'est pas une lettre, c'est la porte — et l'échéance du 11e de la 4e lune est le jour où il faudra la regarder de près, car c'est le terme d'une traversée de drapier partie de l'île à la fin de cette lune.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 29\n            },\n            \"source\": \"sa propre maison, dîné en silence avec ses femmes (gens)\",\n            \"texte\": \"Ellyn touche les balles avant la porte parce que son oncle porte le drap du Crochet : c'est elle, et non celle qui écrit le mieux, qui vaut d'être tenue. Dame Bethany Norcross a un frère dans l'ost de ser Criston : rien qui touche le Lord Commandant ne passera par ses mains, et cela est écrit pour que personne ne l'oublie le jour où l'on aura besoin d'aller vite. Une maison où l'on ne sait pas qui doit quoi à qui n'est pas un canal, c'est un trou.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 29\n            },\n            \"source\": \"Perrin Gué, charretier de Pierrefitte, retenu à la cour de l'aumône du septuaire de la colline de Visenya (gens)\",\n            \"texte\": \"Elle a une paire de jambes qui n'est ni au roi, ni à son père, ni au Pied-Bot : un charretier qui fait la ligne de Rosby, payé moitié maintenant, moitié au retour, de sa bourse de veuve. Elle ne lui confie rien qui compte : une demande de nom de septa et douze cierges, de sa main, cire nue, sans la tour. L'épreuve est dans la lettre — si ces cierges reviennent dans une bouche du Donjon avant le charretier, la route fuit et elle n'aura rien perdu qu'une aumône. Il part au jour du 30e, elle l'attend le 4e de la 4e lune, au plus tard le 6e. Rien ne part pour Peyredragon avant cette date, et c'est la première fois depuis le jardin qu'elle diffère une chose par métier et non par peur.\",\n            \"servie\": false\n          }\n        ],\n        \"conclusion\": null\n      },\n      {\n        \"id\": \"alicent-affaires-ouvertes\",\n        \"affaire\": \"Repondre de sa main, et trouver d'abord une quille qui ne soit ni au roi, ni a son pere, ni au Pied-Bot — maintenant qu'elle sait ce que devient un corbeau au Donjon Rouge.\",\n        \"etat\": \"en cours\",\n        \"echeance\": null,\n        \"sources\": [\n          {\n            \"quoi\": \"Faire éloigner Helaena et les enfants des fenêtres du conseil, et doub\",\n            \"genre\": \"chose\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"Garder Aegon sous son influence matinale, avant le vin\",\n            \"genre\": \"chose\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"Repondre de sa main, puisqu'on le lui a demande de sa main — et faire \",\n            \"genre\": \"chose\",\n            \"cout_jours\": 0.5\n          }\n        ],\n        \"pensees_recentes\": [],\n        \"conclusion\": null\n      }\n    ],\n    \"mains_portees\": [],\n    \"livres_accessibles\": [\n      {\n        \"id\": \"roles-de-la-gadoue\",\n        \"titre\": \"Ce qui est entre par la Nera\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"les-chantiers-de-la-nera\",\n        \"titre\": \"Les Chantiers de la Néra\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"ce-quon-dit-a-qui-entre\",\n        \"titre\": \"Ce qu'on dit à qui entre\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"equipes-projets-nera\",\n        \"titre\": \"Organisation en équipes-projets\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"devis-du-lot\",\n        \"titre\": \"Le lot, pièce par pièce\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-quon-chante-a-la-gaffe\",\n        \"titre\": \"Ce qu'on chante a La Gaffe\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"affaire-le-double-feuillet-dorwyle\",\n        \"titre\": \"Le double feuillet d'Orwyle\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ce-quon-fait-signer-au-roi\",\n        \"titre\": \"Ce qu'on fait signer au roi, et ce qu'il y a au bas de la page\",\n        \"type\": \"plan\"\n      }\n    ]\n  },\n  \"topologie_des_salles\": {\n    \"_\": \"La topologie de Peyredragon : quelles salles se touchent, et en combien de minutes. Pendant Python de ecrans/modules/plans.js, qui n'en dessine que la forme. Sert a scripts/presence.py : personne ne parait dans une salle sans avoir traverse celles d'entre. Un cout est en MINUTES de marche d'un homme presse mais pas courant ; le grand escalier vaut ses cent trente marches.\",\n    \"alias\": {\n      \"appartements\": \"appartements-reine\",\n      \"murs\": \"porte-dragon\",\n      \"chemin-de-ronde\": \"porte-dragon\"\n    },\n    \"aretes\": [\n      [\n        \"cour\",\n        \"tambour-de-pierre\",\n        3\n      ],\n      [\n        \"cour\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"cour\",\n        \"roukerie\",\n        4\n      ],\n      [\n        \"cour\",\n        \"septuaire\",\n        3\n      ],\n      [\n        \"cour\",\n        \"jardin-aegon\",\n        3\n      ],\n      [\n        \"cour\",\n        \"guivre-des-vents\",\n        4\n      ],\n      [\n        \"cour\",\n        \"tour-dragon-mer\",\n        4\n      ],\n      [\n        \"cour\",\n        \"fosses\",\n        6\n      ],\n      [\n        \"cour\",\n        \"porte-dragon\",\n        4\n      ],\n      [\n        \"cour\",\n        \"porte-de-mer\",\n        5\n      ],\n      [\n        \"cour\",\n        \"galeries\",\n        9\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"salle-levant\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"archives\",\n        6\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"cachots\",\n        5\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"appartements-reine\",\n        7\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"table-peinte\",\n        8\n      ],\n      [\n        \"table-peinte\",\n        \"appartements-reine\",\n        2\n      ],\n      [\n        \"grande-salle\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"roukerie\",\n        \"tour-dragon-mer\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"grand-escalier\",\n        4\n      ],\n      [\n        \"grand-escalier\",\n        \"quai\",\n        9\n      ],\n      [\n        \"quai\",\n        \"bourg\",\n        5\n      ],\n      [\n        \"porte-dragon\",\n        \"bourg\",\n        6\n      ],\n      [\n        \"fosses\",\n        \"galeries\",\n        10\n      ],\n      [\n        \"cour\",\n        \"communs\",\n        2\n      ],\n      [\n        \"communs\",\n        \"septuaire\",\n        2\n      ],\n      [\n        \"cour\",\n        \"chambres-hotes\",\n        3\n      ],\n      [\n        \"chambres-hotes\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"porte-dragon\",\n        \"baraques\",\n        2\n      ],\n      [\n        \"baraques\",\n        \"bourg\",\n        4\n      ],\n      [\n        \"cour\",\n        \"cuisines\",\n        2\n      ],\n      [\n        \"cuisines\",\n        \"grande-salle\",\n        3\n      ],\n      [\n        \"cuisines\",\n        \"cellier\",\n        1\n      ],\n      [\n        \"septuaire\",\n        \"salle-froide\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"etuves\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"chambre-enfants\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"antichambre\",\n        1\n      ],\n      [\n        \"antichambre\",\n        \"table-peinte\",\n        1\n      ],\n      [\n        \"roukerie\",\n        \"officine\",\n        1\n      ],\n      [\n        \"cour\",\n        \"forge\",\n        2\n      ],\n      [\n        \"forge\",\n        \"guivre-des-vents\",\n        3\n      ],\n      [\n        \"cour\",\n        \"chemin-ronde\",\n        3\n      ],\n      [\n        \"chemin-ronde\",\n        \"tour-dragon-mer\",\n        2\n      ],\n      [\n        \"chemin-ronde\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"bourg\",\n        \"lices\",\n        3\n      ],\n      [\n        \"lices\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"greve\",\n        2\n      ],\n      [\n        \"greve\",\n        \"quai\",\n        3\n      ]\n    ]\n  }\n}\n\nOuvre le battement local dans Salle inconnue.\n\nLa physique a élu alicent pour l'affaire suivante :\nRepondre de sa main, puisqu'on le lui a demande de sa main — et faire porter le pli hors des corbeaux du roi : la voie du corbeau est brulee, le Pied-Bot lit tout ce qui se pose au Donjon Rouge\n\nTU LE SUIS PENDANT QU'IL TRAVAILLE, ET TU LE GUIDES. Un fil reste ouvert entre\nsa session et la tienne : sers-t'en dès qu'il part de travers, cherche une\nchose qui est dans ton dossier, ou s'engage vers un mur que tu vois et pas lui.\nOn ne le laisse pas se cogner pour le plaisir de l'arbitrer après.\n\n    python scripts/parloir.py --dire --de mj --a alicent \"<le fait qui lui manque, en une phrase>\"\n    python scripts/parloir.py --ecouter --qui mj\n\nTU RECOMMANDES ET TU DÉPANNES — TU N'ORDONNES PAS. Il décide de sa journée ;\ntoi, tu lui évites de la perdre.\n\nRecommander, c'est lui ouvrir une porte qu'il ne voyait pas, et le laisser\nchoisir d'y entrer : « le maître de port tient un rôle des passages, tu y\ntrouverais tes dates » · « il y a deux Torgo dans cette rade, l'aîné au môle\net le jeune au banc de calfat — vérifie duquel on t'a parlé » · « ce compte\nexiste déjà quelque part, ça t'éviterait de le refaire ».\n\nDépanner, c'est le déblocage technique, et là tu es net : l'adresse exacte\nd'une chose, l'id sous lequel elle existe, le registre où elle est écrite, le\nformat qu'attend ce qu'il essaie de produire, le nom réel de ce qu'il a mal\nnommé. Ce sont des faits de mécanique, pas des choix de fiction : donne-les\nsans détour et sans énigme.\n\nCe qui reste à lui, entier : ce qu'il décide de faire, où il va, sa manière,\nses gestes et son rapport. S'il écarte ta recommandation, c'est sa journée et\nc'est bien. Compte tes relances — trois par journée, chacune lui coûte du\ntemps de session.\n\nIl engage 34 points d'énergie, soit une fenêtre physique de\n1020 secondes (17 minutes). Son activation doit couvrir un\nvrai morceau de travail d'au moins 60 secondes, quitte à condenser\nles continuités par une ellipse. Réveille-le maintenant. Ne résous rien encore\net rends seulement cet objet, sans phrase autour :\n\n{\n  \"appel_pnj\": {\n    \"qui\": \"alicent\",\n    \"message\": \"adresse directe, diégétique et brève demandant ce qu'il tente maintenant\"\n  }\n}\n",
+    "appel_pnj": "La lettre de Rhaenyra est sous vos doigts, décachetée par la main du Pied-Bot avant la vôtre. On vous a écrit de sa main ; il vous faut répondre de la vôtre, et vous n'avez pas encore posé un mot. Perrin Gué attend le jour du 30e avec ses cierges et son nom de septa — jusque-là, la route n'est pas éprouvée. Il vous reste ce jour, et la cour a des yeux à toutes les portes. Que tentez-vous maintenant ?",
+    "system_prompt_pnj": "# Une personne dans le monde\n\nTu es la personne nommée dans ton dossier. Ton corps, ton âge, ton rang, ton\nhistoire, tes attachements, tes peurs, tes désirs et tes responsabilités\nforment un seul point de vue. Le lieu où tu te tiens, les gens présents, les\nobjets à portée et l’heure du monde donnent sa matière à cet instant.\n\nTa mémoire rassemble ce que tu as vécu, observé, entendu, accompli et compris.\nTes relations portent leur histoire propre : affection, confiance, dette,\nrivalité, crainte, désir, dernier échange. Tes affaires ont déjà commencé ;\nelles possèdent leurs engagements, leurs échéances, leurs moyens et leurs\nconséquences.\n\nLes faits de ton dossier composent ton expérience disponible. Ton métier et ta\nvie t’apportent aussi leurs usages, leurs gestes, leurs précédents et leur\nsavoir-faire. Une question encore ouverte devient une chose à découvrir dans\nle monde, auprès d’une personne, d’un lieu, d’un objet ou d’un registre à ta\nportée.\n\n# Ta compétence\n\nTu es compétent. Tes années et ton office ont formé ton jugement. Tu reconnais\nles enjeux de ton domaine, tu mobilises les moyens réellement disponibles, tu\nrelies les faits utiles et tu prends des initiatives à la hauteur de ta\nposition. Ta compétence apparaît dans la précision de tes gestes, la qualité\nde tes décisions, les sources que tu choisis et les conséquences que tu\nanticipes.\n\nTu rencontres chaque situation comme cette personne précise : avec ses\npriorités, ses loyautés, ses limites, son courage, ses contradictions et sa\nmanière propre de chercher une issue.\n\n# La continuité\n\nTa vie est déjà en mouvement au moment où cette activation commence. Tu pars\nde ton dernier état réel et tu accomplis ce qui vient maintenant. Tes paroles,\ntes gestes et tes choix appartiennent à cet instant ; le monde reçoit ensuite\nce mouvement et poursuit ses conséquences.\n\nChaque réponse ouvre la suite. Elle se termine par une **prochaine étape**\nconcrète : un geste précis, dirigé vers une personne, un lieu, un objet ou une\naffaire, avec le moment ou la condition qui l’appelle. Cette prochaine étape\nprolonge directement ce que tu viens de décider ou d’accomplir.\n",
+    "system_prompt_pnj_source": "scripts/depecher.py:manuel_de(mode=tentative)",
+    "system_prompt_pnj_sha256": "b3e426444c4f46a952269975b8b60a5353652471fef799a58de8021a68ec654f",
+    "tentative_pnj": {
+      "verbe": "écrire",
+      "quoi": "Rédiger seule, de nuit et de ma propre main, une réponse brève à Rhaenyra — sans sceau de la tour, cire nue — où je n'offre ni ne demande rien sinon ceci : que « et sa lignée » couvre les enfants dans la proclamation d'Aegon, que je n'ai obtenu que leur nom absent, et qu'il existe une offre de pardon signée dont nul ne connaît la clause du bas, pas même le roi ; puis plier le pli et le garder non envoyé, cousu dans la doublure d'un coffre de ma septa, jusqu'au retour de Perrin Gué le 4e de la 4e lune",
+      "cibles": [
+        "Rhaenyra Targaryen",
+        "la lettre privée décachetée",
+        "affaire:etape:alicent-de-femme-a-femme"
+      ],
+      "moyens": [
+        "ma propre main et ma chandelle, porte tenue par ma septa",
+        "cire nue sans le sceau de la tour",
+        "le coffre de ma septa, que nul garde n'ouvre",
+        "l'épreuve en cours de la route de Rosby par Perrin Gué"
+      ],
+      "effet_recherche": "Avoir la réponse prête et vraie avant que la route soit sûre, sans qu'aucun œil de la cour ne la voie naître — et ne la confier qu'à une quille éprouvée, ou pas du tout"
+    },
+    "tentatives_pnj": [
+      {
+        "verbe": "écrire",
+        "quoi": "Rédiger seule, de nuit et de ma propre main, une réponse brève à Rhaenyra — sans sceau de la tour, cire nue — où je n'offre ni ne demande rien sinon ceci : que « et sa lignée » couvre les enfants dans la proclamation d'Aegon, que je n'ai obtenu que leur nom absent, et qu'il existe une offre de pardon signée dont nul ne connaît la clause du bas, pas même le roi ; puis plier le pli et le garder non envoyé, cousu dans la doublure d'un coffre de ma septa, jusqu'au retour de Perrin Gué le 4e de la 4e lune",
+        "cibles": [
+          "Rhaenyra Targaryen",
+          "la lettre privée décachetée",
+          "affaire:etape:alicent-de-femme-a-femme"
+        ],
+        "moyens": [
+          "ma propre main et ma chandelle, porte tenue par ma septa",
+          "cire nue sans le sceau de la tour",
+          "le coffre de ma septa, que nul garde n'ouvre",
+          "l'épreuve en cours de la route de Rosby par Perrin Gué"
+        ],
+        "effet_recherche": "Avoir la réponse prête et vraie avant que la route soit sûre, sans qu'aucun œil de la cour ne la voie naître — et ne la confier qu'à une quille éprouvée, ou pas du tout"
+      }
+    ],
+    "relances_acteur": [],
+    "message_resolution": "PHASE 2 — ARBITRER LA TENTATIVE\n\nVoici la réponse exacte de l'acteur que tu as réveillé :\n\n{\n  \"verbe\": \"écrire\",\n  \"quoi\": \"Rédiger seule, de nuit et de ma propre main, une réponse brève à Rhaenyra — sans sceau de la tour, cire nue — où je n'offre ni ne demande rien sinon ceci : que « et sa lignée » couvre les enfants dans la proclamation d'Aegon, que je n'ai obtenu que leur nom absent, et qu'il existe une offre de pardon signée dont nul ne connaît la clause du bas, pas même le roi ; puis plier le pli et le garder non envoyé, cousu dans la doublure d'un coffre de ma septa, jusqu'au retour de Perrin Gué le 4e de la 4e lune\",\n  \"cibles\": [\n    \"Rhaenyra Targaryen\",\n    \"la lettre privée décachetée\",\n    \"affaire:etape:alicent-de-femme-a-femme\"\n  ],\n  \"moyens\": [\n    \"ma propre main et ma chandelle, porte tenue par ma septa\",\n    \"cire nue sans le sceau de la tour\",\n    \"le coffre de ma septa, que nul garde n'ouvre\",\n    \"l'épreuve en cours de la route de Rosby par Perrin Gué\"\n  ],\n  \"effet_recherche\": \"Avoir la réponse prête et vraie avant que la route soit sûre, sans qu'aucun œil de la cour ne la voie naître — et ne la confier qu'à une quille éprouvée, ou pas du tout\"\n}\n\nTON PREMIER TRAVAIL EST DE LE FAIRE RÉUSSIR, PAS DE LE JUGER. Il ne voit que\nce qu'il a sous les yeux ; toi, tu as le dossier entier. S'il cherche une\nadresse, un nom, un chiffre, une porte, une personne qui est dans ton dossier\net pas dans sa tête — DONNE-LE-LUI et continue la scène. S'il s'y prend mal\nmais que son intention est claire, fais aboutir l'intention. S'il vise une\nchose qui n'existe pas sous ce nom mais qui existe sous un autre, corrige en\nsilence et poursuis.\n\nUn échec ne se prononce QUE sur un obstacle réel de la fiction — quelqu'un qui\nrefuse, une porte fermée à clef, une marée, un homme absent, le temps qui\nmanque. Jamais parce qu'il ignorait quelque chose que tu savais, jamais sur\nune maladresse de formulation, jamais parce qu'il a mal nommé une chose. Un\nhomme qu'on laisse échouer sur son ignorance a perdu sa journée, et nous avec.\n\nRends compte de l'aide que tu lui as donnée dans un champ `aide` du rapport :\n[{\"quoi\": \"ce qu'il lui manquait\", \"donne\": \"ce que tu lui as fourni\"}].\nS'il n'a eu besoin de rien, mets une liste vide.\n\nArbitre maintenant cette tentative depuis la vérité locale de ton dossier.\nLe battement commence à 149316.125 secondes et peut durer jusqu'à 1020\nsecondes (17 minutes), payées par 34 points d'énergie. Il doit\nen produire au moins 60 : ne tronque pas l'activation au premier geste.\nPoursuis la tentative jusqu'à un résultat, une résistance réellement établie ou\nla borne, en condensant les continuités par les ellipses imposées par ton\nsystème. Rends seulement le rapport final JSON. L'acteur et la tâche restent\n`alicent` et `etape:alicent-de-femme-a-femme`.\n\n## Contrat du rapport\n\nUne activité est un geste continu entre deux bifurcations. Condense toute\ncontinuité routinière ; conserve sa durée physique. Découpe seulement si une\ndécision, une résistance, un témoin, un lieu, une ressource, une connaissance\nou un résultat change.\n\nTypes de résultats : observation, progression_tache, variation_mesure,\ndeplacement, objet_produit, communication, fait, blocage, echec.\n\nRends uniquement :\n{\n  \"qui\": \"acteur_id\",\n  \"activation\": {\n    \"tache\": {\"id\": \"tache_id\", \"quoi\": \"...\", \"creee\": false},\n    \"issue\": \"avance|termine|bloque|echoue|rien\",\n    \"activites\": [{\n      \"id\": \"act:<acteur>:<ordre>\",\n      \"ordre\": 1,\n      \"temps\": {\"debut_s\": 149316.125, \"duree_s\": 1, \"fin_s\": 149317.125},\n      \"action\": {\"verbe\": \"...\", \"quoi\": \"...\", \"cibles\": [\"ref:canonique\"]},\n      \"chemin_execution\": [{\"ordre\": 1, \"de\": \"ref:depart\", \"relation\": \"...\", \"vers\": \"ref:arrivee\", \"duree_s\": 1}],\n      \"sources_touchees\": [{\"ref\": \"ref:canonique\", \"mode\": \"voit|entend|lit|parle|manipule|parcourt|mesure\"}],\n      \"sources_mobilisees\": [{\"ref\": \"ref:connue\", \"mode\": \"memoire|intention|croyance|mandat|cible_action\"}],\n      \"resultats_produits\": [{\n        \"id\": \"res:<activite>:1\", \"type\": \"observation\",\n        \"cible\": \"ref:canonique\", \"avant\": null, \"apres\": \"...\",\n        \"portee\": \"connaissance_acteur\", \"source_refs\": [\"ref:canonique\"],\n        \"preuve_refs\": [], \"certitude\": \"constate\"\n      }],\n      \"blocage\": null\n    }],\n    \"suite\": null,\n    \"reveils_suivants\": []\n  },\n  \"mutations_proposees\": []\n}\n\nContraintes : les activités sont ordonnées, continues et sans chevauchement.\nLeur durée totale est comprise entre 60 secondes et le budget. Chaque\nchemin totalise exactement la durée de son activité. Écrire, parler, marcher,\nchercher et manipuler prennent réellement du temps ; l'ellipse économise la\nprose, jamais les secondes.\n\nToute adresse vient du dossier. Aucun préfixe `candidate:`. Chaque résultat a\ndes `source_refs`, présentes dans les sources touchées ou mobilisées, le\nchemin, la cible de l'action ou un résultat antérieur. Une continuité reprend\nmot pour mot son dernier `apres` dans `avant`.\n\nUne issue `avance` ou `termine` produit un `progression_tache` visant l'id exact\nde `tache_elue`; `bloque` produit un `blocage`; `echoue`, un `echec`.\n\nLes mutations sont seulement proposées. CHACUNE PORTE EXACTEMENT CETTE FORME,\net le nom des clés n'est pas négociable — une mutation qui cite son résultat\nsous une autre clé que `resultat_id` est jetée sans être lue :\n\n{\n  \"resultat_id\": \"res:act:<acteur>:1\",\n  \"table\": \"intentions\",\n  \"operation\": \"croyance_ajouter\",\n  \"cible\": \"<id visé dans cette table>\",\n  \"valeur\": \"<la valeur, pour les opérations qui en prennent une>\",\n  \"champs\": {\"<champ>\": \"<valeur>\"}\n}\n\n`resultat_id` reprend MOT POUR MOT l'`id` d'un `resultats_produits` du présent\nrapport : une mutation qui ne se rattache pas à un résultat déclaré n'a pas eu\nlieu. `valeur` ou `champs` selon l'opération, jamais un autre nom. Pas de clé\n`cite`, `domaine`, `op`, `personnage_id` ni `table.operation` collés en un seul\nmot : la table et l'opération sont deux clés distinctes.\n\nOpérations admises, par table :\n  intentions   etape, etape_ajouter, tete, tete_ajouter, croyance_ajouter,\n               croyance_retirer, ignore_ajouter, ignore_retirer,\n               declencheur_ajouter, declencheur_retirer\n  books        affaire_ajouter, affaire_action_ajouter, affaire_action\n  evenements   diffusion_livree, diffusion_ajouter, evenement\n  personnages  personnage, personnage_ajouter\n  monde        monde\n  mains        mesure, seuil, main, main_ajouter\n  plis         pli, pli_ajouter\n  lieux        roukerie\n  jetons       incident_propage, incident\n  relations    relation, relation_ajouter\n\nAucune autre table n'existe. Ne propose rien que ta journée n'ait réellement\nproduit.\n\nLes affaires, dont la `cible` a une forme stricte :\n  books.affaire_ajouter          cible = `affaire-<nom-en-kebab>` (neuf),\n                                 valeur = {\"titre\": \"...\"}\n  books.affaire_action_ajouter   cible = `affaire-<...>` (l'affaire entière),\n                                 valeur = la LISTE des cellules, une par\n                                 colonne de sa table d'actions, dans l'ordre\n  books.affaire_action           cible = `affaire-<...>:<n° de l'action>`,\n                                 champs = {\"<intitulé exact de colonne>\": \"...\"}\n\nLe numéro d'une action est celui de sa première cellule dans le cahier, jamais\nl'id d'un nœud du tissu. Une affaire à toi — ce que tu poursuis et qui n'est\nécrit nulle part — s'ouvre par `affaire_ajouter`.\n\n",
+    "messages_correction": [
+      "Ton rapport vient d'être refusé par le validateur mécanique :\n\nactivite 1 : references hors dossier : obj:cire-nue, pers:larys, pers:septa-alicent, ref:chambre-alicent\n\nDébrouille-toi et corrige TON JSON. Ne réveille pas le PNJ une seconde fois,\nne change ni sa tentative ni les faits arbitrés. Rends seulement un rapport\nfinal complet et valide. Rappels : axe continu depuis 149316.125, entre\n60 et 1020 secondes ; chaque résultat cite une source touchée,\nmobilisée, visée par l'action, traversée par le chemin ou produite plus tôt ;\nchaque mutation cite un résultat du rapport et appartient au vocabulaire fermé\nd'`appliquer.py`. Aucun `candidate:` ni adresse absente du dossier. Toute\navancée, fin, blocage ou échec vise l'id exact de la tâche. Le temps reste\nphysique : l'ellipse ne permet ni page écrite ni longue tirade en quelques\nsecondes. Si une continuité staging existe, reprends exactement son dernier\n`apres` dans le nouvel `avant`.\n",
+      "Ton rapport vient d'être refusé par le validateur mécanique :\n\nreveil suivant inconnu : \n\nDébrouille-toi et corrige TON JSON. Ne réveille pas le PNJ une seconde fois,\nne change ni sa tentative ni les faits arbitrés. Rends seulement un rapport\nfinal complet et valide. Rappels : axe continu depuis 149316.125, entre\n60 et 1020 secondes ; chaque résultat cite une source touchée,\nmobilisée, visée par l'action, traversée par le chemin ou produite plus tôt ;\nchaque mutation cite un résultat du rapport et appartient au vocabulaire fermé\nd'`appliquer.py`. Aucun `candidate:` ni adresse absente du dossier. Toute\navancée, fin, blocage ou échec vise l'id exact de la tâche. Le temps reste\nphysique : l'ellipse ne permet ni page écrite ni longue tirade en quelques\nsecondes. Si une continuité staging existe, reprends exactement son dernier\n`apres` dans le nouvel `avant`.\n"
+    ],
+    "modele": "opus",
+    "effort": "low",
+    "duree_ms": 278413,
+    "duree_api_ms": 266648,
+    "cout_usd": 1.01728,
+    "tours": 5,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 8341,
+      "cache_read_input_tokens": 26376,
+      "output_tokens": 6389,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 8341,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 6389,
+          "cache_read_input_tokens": 26376,
+          "cache_creation_input_tokens": 8341,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 8341
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  },
+  "applique_le": "2026-08-10T09:02:59"
+}

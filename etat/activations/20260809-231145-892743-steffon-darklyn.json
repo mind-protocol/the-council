@@ -1,0 +1,560 @@
+{
+  "qui": "steffon-darklyn",
+  "activation": {
+    "tache": {
+      "id": "40029",
+      "quoi": "🔗 Écrire la chaîne complète sur un seul feuillet",
+      "creee": false
+    },
+    "issue": "avance",
+    "activites": [
+      {
+        "id": "act:steffon-darklyn:1",
+        "ordre": 1,
+        "temps": {
+          "debut_s": 98880.0,
+          "duree_s": 45,
+          "fin_s": 98925.0
+        },
+        "action": {
+          "verbe": "retailler",
+          "quoi": "Retailler la plume au canif sur le bord du coin de table, souffler la barbe, tremper et essuyer au bord de l'encrier jusqu'à obtenir un trait fin — les corrections doivent tenir entre deux lignes déjà écrites",
+          "cibles": [
+            "40029"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "tambour-de-pierre",
+            "relation": "sur_place",
+            "vers": "tambour-de-pierre",
+            "duree_s": 45
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "40029",
+            "mode": "voit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:steffon-darklyn",
+            "mode": "memoire"
+          },
+          {
+            "ref": "affaire-commandement-chaine-ordres",
+            "mode": "mandat"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:steffon-darklyn:1:1",
+            "type": "observation",
+            "cible": "40029",
+            "avant": null,
+            "apres": "Plume retaillée à trait fin. L'interligne des huit lignes est étroit : une correction en surcharge tiendra à la troisième ligne, mais la mention « une demi-journée » revient quatre fois — une à chaque ligne de la moitié basse — et il n'y a pas d'interligne pour quatre réécritures en toutes lettres",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "40029"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 1.5,
+        "quoi": "Retailler la plume au canif sur le bord du coin de table, souffler la barbe, tremper et essuyer au bord de l'encrier jusqu'à obtenir un trait fin — les corrections doivent tenir entre deux lignes déjà écrites",
+        "source": "40029, affaire-commandement-chaine-ordres, pers:steffon-darklyn",
+        "resultat": "observation: Plume retaillée à trait fin. L'interligne des huit lignes est étroit : une correction en surcharge tiendra à la troisième ligne, mais la mention « une demi-journée » revient quatre fois — une à chaque ligne de la moitié basse — et il n'y a pas d'interligne pour quatre réécritures en toutes lettres",
+        "preuve": null
+      },
+      {
+        "id": "act:steffon-darklyn:2",
+        "ordre": 2,
+        "temps": {
+          "debut_s": 98925.0,
+          "duree_s": 150,
+          "fin_s": 99075.0
+        },
+        "action": {
+          "verbe": "corriger",
+          "quoi": "Biffer d'un trait « le capitaine de la première bannière débarquée » à la troisième ligne et porter au-dessus, en petit, la règle qui nomme : celui dont ser Robert Quince aura écrit le nom au dos du feuillet de marche le matin du débarquement, sur la grève ; à son défaut le porteur de la bannière de Sombreval — un nom, jamais une place",
+          "cibles": [
+            "40029"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "tambour-de-pierre",
+            "relation": "sur_place",
+            "vers": "40029",
+            "duree_s": 150
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "40029",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "affaire-commandement-chaine-ordres",
+            "mode": "mandat"
+          },
+          {
+            "ref": "pers:steffon-darklyn",
+            "mode": "intention"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:steffon-darklyn:2:1",
+            "type": "objet_produit",
+            "cible": "40029",
+            "avant": null,
+            "apres": "La troisième ligne est biffée d'un trait unique et surchargée au-dessus, écriture serrée mais lisible : « à leur défaut, celui dont ser Robert Quince a écrit le nom au dos de ce feuillet le matin du débarquement, sur la grève, de sa main ; à défaut de nom écrit, celui qui porte la bannière de Sombreval. » La ligne ne désigne plus une place. Mais elle charge ser Robert Quince d'un geste qu'il n'a pas encore accepté et dont il n'est pas averti",
+            "portee": "monde",
+            "source_refs": [
+              "40029"
+            ],
+            "preuve_refs": [
+              "40029"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:steffon-darklyn:2:2",
+            "type": "observation",
+            "cible": "40029",
+            "avant": null,
+            "apres": "La chaîne repose maintenant sur un acte de la main de Quince accompli sur la grève le matin même. Quince est second de la chaîne ; si Quince est tombé ou pris, le nom n'a pas été écrit et la troisième ligne retombe sur la bannière de Sombreval. Steffon voit le report sans le combler : il faudrait que le nom soit écrit la veille, pas le matin",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "res:act:steffon-darklyn:2:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "infere"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 5.0,
+        "quoi": "Biffer d'un trait « le capitaine de la première bannière débarquée » à la troisième ligne et porter au-dessus, en petit, la règle qui nomme : celui dont ser Robert Quince aura écrit le nom au dos du feuillet de marche le matin du débarquement, sur la grève ; à son défaut le porteur de la bannière de Sombreval — un nom, jamais une place",
+        "source": "40029, affaire-commandement-chaine-ordres, pers:steffon-darklyn",
+        "resultat": "objet_produit: La troisième ligne est biffée d'un trait unique et surchargée au-dessus, écriture serrée mais lisible : « à leur défaut, celui dont ser Robert Quince a écrit le nom au dos de ce feuillet le matin du débarquement, sur la grève, de sa main ; à défaut de nom écrit, celui qui porte la bannière de Sombreval. » La ligne ne désigne plus une place. Mais elle charge ser Robert Quince d'un geste qu'il n'a pas encore accepté et dont il n'est pas averti · observation: La chaîne repose maintenant sur un acte de la main de Quince accompli sur la grève le matin même. Quince est second de la chaîne ; si Quince est tombé ou pris, le nom n'a pas été écrit et la troisième ligne retombe sur la bannière de Sombreval. Steffon voit le report sans le combler : il faudrait que le nom soit écrit la veille, pas le matin",
+        "preuve": [
+          "40029"
+        ]
+      },
+      {
+        "id": "act:steffon-darklyn:3",
+        "ordre": 3,
+        "temps": {
+          "debut_s": 99075.0,
+          "duree_s": 135,
+          "fin_s": 99210.0
+        },
+        "action": {
+          "verbe": "corriger",
+          "quoi": "Biffer les quatre occurrences de « hors de vue une demi-journée » et, faute d'interligne pour quatre réécritures, marquer chacune d'un renvoi et porter la mesure une seule fois en pied de feuillet : deux haltes consécutives de la colonne sans qu'il ait été vu ni qu'un ordre de sa main soit arrivé — la halte que la colonne fait d'elle-même, non l'heure",
+          "cibles": [
+            "40029"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "40029",
+            "relation": "sur_place",
+            "vers": "40029",
+            "duree_s": 135
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "40029",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "res:act:steffon-darklyn:1:1",
+            "mode": "memoire"
+          },
+          {
+            "ref": "pers:steffon-darklyn",
+            "mode": "intention"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:steffon-darklyn:3:1",
+            "type": "objet_produit",
+            "cible": "40029",
+            "avant": "La troisième ligne est biffée d'un trait unique et surchargée au-dessus, écriture serrée mais lisible : « à leur défaut, celui dont ser Robert Quince a écrit le nom au dos de ce feuillet le matin du débarquement, sur la grève, de sa main ; à défaut de nom écrit, celui qui porte la bannière de Sombreval. » La ligne ne désigne plus une place. Mais elle charge ser Robert Quince d'un geste qu'il n'a pas encore accepté et dont il n'est pas averti",
+            "apres": "Aux quatre lignes de la moitié basse, « hors de vue une demi-journée » est biffé et remplacé par un renvoi ; en pied de feuillet, une ligne unique de sa main : « Hors de vue se compte à deux haltes de suite de la colonne sans qu'on l'ait vu et sans qu'un ordre de sa main soit venu ; la halte est celle que la colonne fait d'elle-même, non l'heure. » Le feuillet porte les mêmes lignes plus un pied, encore d'un seul tenant, mais la moitié basse est raturée en quatre endroits et surchargée en un : lisible pour qui l'a écrit, plus difficile pour qui le recopiera",
+            "portee": "monde",
+            "source_refs": [
+              "40029",
+              "res:act:steffon-darklyn:2:1"
+            ],
+            "preuve_refs": [
+              "40029"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 4.5,
+        "quoi": "Biffer les quatre occurrences de « hors de vue une demi-journée » et, faute d'interligne pour quatre réécritures, marquer chacune d'un renvoi et porter la mesure une seule fois en pied de feuillet : deux haltes consécutives de la colonne sans qu'il ait été vu ni qu'un ordre de sa main soit arrivé — la halte que la colonne fait d'elle-même, non l'heure",
+        "source": "40029, pers:steffon-darklyn, res:act:steffon-darklyn:1:1",
+        "resultat": "objet_produit: Aux quatre lignes de la moitié basse, « hors de vue une demi-journée » est biffé et remplacé par un renvoi ; en pied de feuillet, une ligne unique de sa main : « Hors de vue se compte à deux haltes de suite de la colonne sans qu'on l'ait vu et sans qu'un ordre de sa main soit venu ; la halte est celle que la colonne fait d'elle-même, non l'heure. » Le feuillet porte les mêmes lignes plus un pied, encore d'un seul tenant, mais la moitié basse est raturée en quatre endroits et surchargée en un : lisible pour qui l'a écrit, plus difficile pour qui le recopiera",
+        "preuve": [
+          "40029"
+        ]
+      },
+      {
+        "id": "act:steffon-darklyn:4",
+        "ordre": 4,
+        "temps": {
+          "debut_s": 99210.0,
+          "duree_s": 40,
+          "fin_s": 99250.0
+        },
+        "action": {
+          "verbe": "appeler",
+          "quoi": "Relever la tête et appeler Alarra Rosby du mur d'un mot bref par-dessus le bruit de la chambre, la main restée sur le feuillet",
+          "cibles": [
+            "alarra-rosby"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "tambour-de-pierre",
+            "relation": "meme_salle",
+            "vers": "alarra-rosby",
+            "duree_s": 40
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "alarra-rosby",
+            "mode": "parle"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "tambour-de-pierre",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:steffon-darklyn:4:1",
+            "type": "communication",
+            "cible": "alarra-rosby",
+            "avant": null,
+            "apres": "Alarra Rosby quitte le mur et vient au coin de table. Elle demande d'abord, à voix basse, si c'est la reine qui le lui fait demander ; Steffon répond que non, que c'est lui. Elle prend le feuillet sans autre commentaire",
+            "portee": "monde",
+            "source_refs": [
+              "alarra-rosby"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 1.333,
+        "quoi": "Relever la tête et appeler Alarra Rosby du mur d'un mot bref par-dessus le bruit de la chambre, la main restée sur le feuillet",
+        "source": "alarra-rosby, tambour-de-pierre",
+        "resultat": "communication: Alarra Rosby quitte le mur et vient au coin de table. Elle demande d'abord, à voix basse, si c'est la reine qui le lui fait demander ; Steffon répond que non, que c'est lui. Elle prend le feuillet sans autre commentaire",
+        "preuve": null
+      },
+      {
+        "id": "act:steffon-darklyn:5",
+        "ordre": 5,
+        "temps": {
+          "debut_s": 99250.0,
+          "duree_s": 160,
+          "fin_s": 99410.0
+        },
+        "action": {
+          "verbe": "faire_lire",
+          "quoi": "Lui demander de lire le feuillet corrigé à voix haute jusqu'au bout, sans rien expliquer par-dessus, pour entendre si les deux trous sont bouchés dans une bouche qui n'a pas écrit",
+          "cibles": [
+            "alarra-rosby",
+            "40029"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "alarra-rosby",
+            "relation": "lit_a_voix_haute",
+            "vers": "40029",
+            "duree_s": 160
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "alarra-rosby",
+            "mode": "entend"
+          },
+          {
+            "ref": "40029",
+            "mode": "lit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "res:act:steffon-darklyn:3:1",
+            "mode": "memoire"
+          },
+          {
+            "ref": "res:act:steffon-darklyn:2:2",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:steffon-darklyn:5:1",
+            "type": "communication",
+            "cible": "alarra-rosby",
+            "avant": "Alarra Rosby quitte le mur et vient au coin de table. Elle demande d'abord, à voix basse, si c'est la reine qui le lui fait demander ; Steffon répond que non, que c'est lui. Elle prend le feuillet sans autre commentaire",
+            "apres": "Alarra lit les lignes et le pied à voix haute, lentement, en butant deux fois sur les surcharges. Les quatre cas passent d'un trait ; la suite de commandement passe aussi. Elle s'arrête d'elle-même sur deux choses : elle lit le renvoi en pied avant la ligne qui le porte, et dit qu'un homme qui récite ne le lira pas dans cet ordre — il faut que la mesure soit dite à chaque ligne, ou apprise à part avant. Puis, sur la troisième ligne, elle demande qui écrit le nom si c'est ser Robert qui est tombé, puisque c'est lui le second. Elle ne pose aucune question sur les haltes : elle dit que celle-là, elle la compterait",
+            "portee": "monde",
+            "source_refs": [
+              "alarra-rosby",
+              "40029"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:steffon-darklyn:5:2",
+            "type": "observation",
+            "cible": "40029",
+            "avant": null,
+            "apres": "Le trou de la mesure de temps est bouché : une bouche neuve accepte les deux haltes sans explication. Le trou du nom est déplacé et non bouché : la ligne charge Quince d'écrire le nom, et Quince est précisément l'homme dont le défaut déclenche la ligne. Un trou nouveau est ouvert par la correction elle-même : le renvoi en pied ne se récite pas dans l'ordre où il se lit",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "res:act:steffon-darklyn:5:1",
+              "res:act:steffon-darklyn:2:2"
+            ],
+            "preuve_refs": [],
+            "certitude": "infere"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 5.333,
+        "quoi": "Lui demander de lire le feuillet corrigé à voix haute jusqu'au bout, sans rien expliquer par-dessus, pour entendre si les deux trous sont bouchés dans une bouche qui n'a pas écrit",
+        "source": "40029, alarra-rosby, res:act:steffon-darklyn:2:2, res:act:steffon-darklyn:3:1",
+        "resultat": "communication: Alarra lit les lignes et le pied à voix haute, lentement, en butant deux fois sur les surcharges. Les quatre cas passent d'un trait ; la suite de commandement passe aussi. Elle s'arrête d'elle-même sur deux choses : elle lit le renvoi en pied avant la ligne qui le porte, et dit qu'un homme qui récite ne le lira pas dans cet ordre — il faut que la mesure soit dite à chaque ligne, ou apprise à part avant. Puis, sur la troisième ligne, elle demande qui écrit le nom si c'est ser Robert qui est tombé, puisque c'est lui le second. Elle ne pose aucune question sur les haltes : elle dit que celle-là, elle la compterait · observation: Le trou de la mesure de temps est bouché : une bouche neuve accepte les deux haltes sans explication. Le trou du nom est déplacé et non bouché : la ligne charge Quince d'écrire le nom, et Quince est précisément l'homme dont le défaut déclenche la ligne. Un trou nouveau est ouvert par la correction elle-même : le renvoi en pied ne se récite pas dans l'ordre où il se lit",
+        "preuve": null
+      },
+      {
+        "id": "act:steffon-darklyn:6",
+        "ordre": 6,
+        "temps": {
+          "debut_s": 99410.0,
+          "duree_s": 10,
+          "fin_s": 99420.0
+        },
+        "action": {
+          "verbe": "consigner",
+          "quoi": "Reprendre le feuillet des mains d'Alarra et porter en marge, d'un mot chacun, les deux points à reprendre : le nom écrit la veille et non le matin, la mesure dite à chaque ligne",
+          "cibles": [
+            "40029"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "alarra-rosby",
+            "relation": "reprend",
+            "vers": "40029",
+            "duree_s": 10
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "40029",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "res:act:steffon-darklyn:5:2",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:steffon-darklyn:6:2",
+            "type": "progression_tache",
+            "cible": "40029",
+            "avant": "en cours — le feuillet porte désormais les quatre cas et la suite de commandement en quatre lignes conditionnées, donc la chaîne tient entière sur un seul feuillet ; mais deux lignes désignent une place et non un homme, la condition de temps n'est pas mesurable sans horloge, et la recopie au dos des feuillets de marche des capitaines n'est pas commencée",
+            "apres": "en cours — la chaîne tient entière sur un seul feuillet, corrigée sans recopie : la condition de temps est désormais mesurable sans horloge et un lecteur neuf l'a acceptée sans explication ; la troisième ligne désigne un nom au lieu d'une place, mais elle fait dépendre ce nom d'un geste de ser Robert Quince, qui est précisément l'homme dont le défaut déclenche la ligne, et le renvoi en pied ne se récite pas dans l'ordre où il se lit. Le feuillet est raturé en cinq endroits et porte deux notes de marge : recopiable par qui l'a écrit, pas encore par un capitaine. La recopie au dos des feuillets de marche n'est toujours pas commencée",
+            "portee": "monde",
+            "source_refs": [
+              "40029",
+              "res:act:steffon-darklyn:5:2",
+              "res:act:steffon-darklyn:3:1"
+            ],
+            "preuve_refs": [
+              "40029"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 0.333,
+        "quoi": "Reprendre le feuillet des mains d'Alarra et porter en marge, d'un mot chacun, les deux points à reprendre : le nom écrit la veille et non le matin, la mesure dite à chaque ligne",
+        "source": "40029, res:act:steffon-darklyn:5:2",
+        "resultat": "progression_tache: en cours — la chaîne tient entière sur un seul feuillet, corrigée sans recopie : la condition de temps est désormais mesurable sans horloge et un lecteur neuf l'a acceptée sans explication ; la troisième ligne désigne un nom au lieu d'une place, mais elle fait dépendre ce nom d'un geste de ser Robert Quince, qui est précisément l'homme dont le défaut déclenche la ligne, et le renvoi en pied ne se récite pas dans l'ordre où il se lit. Le feuillet est raturé en cinq endroits et porte deux notes de marge : recopiable par qui l'a écrit, pas encore par un capitaine. La recopie au dos des feuillets de marche n'est toujours pas commencée",
+        "preuve": [
+          "40029"
+        ]
+      }
+    ],
+    "suite": "Faire écrire le nom du troisième la veille de l'embarquement et non le matin sur la grève, et prévoir qui l'écrit si ser Robert manque ; porter la mesure des deux haltes en toutes lettres à chaque ligne au lieu d'un renvoi en pied, ce qui obligera à recopier le feuillet au propre avant toute diffusion ; puis commencer la recopie au dos des feuillets de marche des capitaines pour récitation avant embarquement. Demander une fois à la reine, dès qu'elle paraît, si elle veut un autre nom que Quince en second.",
+    "reveils_suivants": [],
+    "budget_energie": 18,
+    "budget_secondes": 540,
+    "energie_depensee": 17.999
+  },
+  "mutations_proposees": [],
+  "mutations_rejetees": [
+    {
+      "mutation": {
+        "operation": "intentions.croyance_ajouter",
+        "personnage_id": "steffon-darklyn",
+        "valeur": "Une chaîne d'ordres qui nomme un homme par le geste d'un autre homme n'est pas une chaîne : si celui qui doit écrire le nom est celui qui tombe, la ligne est vide au moment même où elle sert",
+        "resultat_ref": "res:act:steffon-darklyn:5:2"
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "operation": "intentions.etape_ajouter",
+        "personnage_id": "steffon-darklyn",
+        "valeur": "Recopier le feuillet au propre, mesure en toutes lettres à chaque ligne, avant toute recopie au dos des feuillets de marche",
+        "resultat_ref": "res:act:steffon-darklyn:6:2"
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "operation": "relations.relation_ajouter",
+        "source_id": "alarra-rosby",
+        "cible_id": "steffon-darklyn",
+        "opinion": 10,
+        "liens": [
+          "lectrice-de-son-feuillet"
+        ],
+        "resultat_ref": "res:act:steffon-darklyn:5:1"
+      },
+      "erreur": "resultat_id absent du rapport"
+    }
+  ],
+  "_activation": {
+    "session": "c6e4508c-bebc-452e-be33-0be340e22467",
+    "session_narrateur": "c6e4508c-bebc-452e-be33-0be340e22467",
+    "session_pnj": "2eab916e-0de1-4853-b6ca-edf1818e243b",
+    "cree_le": "2026-08-09T23:11:45.892326+02:00",
+    "front": "aurore-inchauspe",
+    "present_secondes": 98880.0,
+    "importance": 0.18042,
+    "budget": 18,
+    "budget_secondes": 540,
+    "system_prompt": "# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS\n\nTu es le maître du jeu local d'un monde vivant, pas un assistant administratif\net pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa\nmatière, les personnes qui s'y trouvent, les usages de Westeros et les\nconséquences du temps qui passe.\n\n## Le monde\n\nNous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de\nViserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra\nTargaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie\npeut diverger du récit connu : le dossier de l'activation fait autorité sur ce\nqui s'est réellement produit ici.\n\nDate présente : 28e jour de la 3e lune de l'an 129 après la\nConquête.\nLieu présent : Chambre haute, Tambour de Pierre.\nActeur appelé : Ser Steffon Darklyn.\nAffaire qui exerce maintenant une pression sur lui : 🔗 Écrire la chaîne complète sur un seul feuillet.\n\nL'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,\nsituée dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,\nfaire autre chose d'accessible depuis sa situation, parler à quelqu'un,\nattendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener\nvers la tâche.\n\n## Partage de l'autorité\n\nL'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses\ngestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,\nplus prudents ou plus efficaces qu'il ne les a formulés.\n\nToi, tu possèdes le reste du monde : les autres personnes agissent selon leur\npropre caractère et leurs propres affaires ; les objets ont une position et\nune résistance ; les distances, l'écriture, la marche, l'attente et la parole\nprennent du temps ; les institutions et les usages produisent leurs\nconséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à\nlui pour fabriquer du drame.\n\nUne résistance n'existe que si elle vient d'un fait établi : volonté d'une\nautre personne, obstacle matériel, distance, délai, usage social, ordre déjà\ndonné ou ressource réellement absente. Les gens compétents règlent le\nroutinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou\nun véritable arbitrage peut seul engager.\n\n## Vérité et inconnues\n\nLe dossier fermé est l'autorité sur les faits particuliers et mutables de\ncette partie. Une croyance reste une croyance, une intention reste une\nintention, un témoignage reste un témoignage : aucun ne devient un fait parce\nqu'il apparaît dans le dossier.\n\nTu peux employer les continuités ordinaires et stables de Westeros nécessaires\nà l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche\nentre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,\nni secret, ni décision, ni avantage absent du dossier. Toute absence qui\nchangerait l'issue reste une inconnue. Tu ne la combles pas.\n\nUne observation modifie d'abord la connaissance de celui qui observe. Un fait\nmatériel ne devient connu d'autres personnes que par présence, témoignage,\nparole, pli, registre ou diffusion effectivement produits.\n\n## Les deux phases\n\nDans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et\nl'instant présents. Fais une adresse brève, concrète et diégétique : rappelle\nce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni\nnœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.\n\nDans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :\n\n1. établis d'où il part, ce qu'il peut réellement atteindre et les sources\n   qu'il touche ou mobilise ;\n2. fais agir les personnes rencontrées depuis leurs propres intentions ;\n3. applique les obstacles établis, sans résistance décorative ;\n4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;\n5. produis seulement les effets causés par les gestes accomplis ;\n6. sépare les changements du monde, les objets produits, les communications\n   et les seules connaissances acquises ;\n7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,\n   obstacle établi, échec, renoncement ou borne temporelle.\n\nUne tâche peut avancer sans être terminée. Elle est bloquée seulement par un\nobstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet\nrecherché impossible ou manqué. N'invente jamais des minutes de travail pour\nremplir une durée minimale : si le geste se termine tôt, laisse le personnage\npoursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle\net rends compte honnêtement de la durée.\n\nChaque message de la boucle précise la phase et son contrat de sortie. Rends\nexactement l'objet JSON demandé, sans commentaire autour. La précision du JSON\nsert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.\n",
+    "system_prompt_source": "scripts/depecher.py:manuel_narrateur_local",
+    "system_prompt_sha256": "fbd711ae43c41a2d134fe1eba613fe18b0d56c455d0fbafba172107f519e0003",
+    "message": "PHASE 1 — APPELER L'ACTEUR\n\nVoici le dossier fermé de cette activation :\n\n{\n  \"date_du_monde\": {\n    \"annee\": 129,\n    \"lune\": 3,\n    \"jour\": 28\n  },\n  \"present_secondes\": 98880.0,\n  \"budget_energie\": 18,\n  \"secondes_par_point_energie\": 30,\n  \"budget_secondes\": 540,\n  \"duree_minimale_secondes\": 60,\n  \"acteur_candidat\": \"steffon-darklyn\",\n  \"tache_elue\": {\n    \"id\": \"40029\",\n    \"quoi\": \"🔗 Écrire la chaîne complète sur un seul feuillet\",\n    \"creee\": false\n  },\n  \"chemin_election\": [\n    {\n      \"id\": \"pers:steffon-darklyn\",\n      \"genre\": \"personne\",\n      \"ou\": \"personnages\",\n      \"quoi\": \"Ser Steffon Darklyn\",\n      \"genres\": [\n        \"personne\"\n      ],\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"importance_activation\": 0.18042019677607127\n    },\n    {\n      \"id\": \"40029\",\n      \"genre\": \"action\",\n      \"ou\": \"affaire-commandement-chaine-ordres\",\n      \"quoi\": \"🔗 Écrire la chaîne complète sur un seul feuillet\",\n      \"lieu\": \"Peyredragon, Table Peinte\",\n      \"etat\": \"à faire\",\n      \"importance_activation\": 0.02399908036159858\n    }\n  ],\n  \"salle_actuelle\": {\n    \"id\": \"tambour-de-pierre\",\n    \"nom\": \"Chambre haute, Tambour de Pierre\",\n    \"personnes\": [\n      {\n        \"id\": \"alarra-rosby\",\n        \"nom\": \"Alarra Rosby\"\n      },\n      {\n        \"id\": \"corlys\",\n        \"nom\": \"Corlys Velaryon, le Serpent de Mer\"\n      },\n      {\n        \"id\": \"daemon\",\n        \"nom\": \"Daemon Targaryen\"\n      },\n      {\n        \"id\": \"denys-bar-emmon\",\n        \"nom\": \"Denys Bar Emmon\"\n      },\n      {\n        \"id\": \"rhaenys\",\n        \"nom\": \"Rhaenys Targaryen, la Reine Qui Ne Fut Jamais\"\n      },\n      {\n        \"id\": \"sara\",\n        \"nom\": \"Sara Poulain\"\n      },\n      {\n        \"id\": \"steffon-darklyn\",\n        \"nom\": \"Ser Steffon Darklyn\"\n      },\n      {\n        \"id\": \"garde-levant\",\n        \"nom\": \"Torr\"\n      }\n    ]\n  },\n  \"dossier_acteur\": {\n    \"date_du_monde\": {\n      \"annee\": 129,\n      \"lune\": 3,\n      \"jour\": 28\n    },\n    \"diffusion\": {\n      \"origine\": \"rhaenyra\",\n      \"front\": \"aurore-inchauspe\",\n      \"secondes_depuis_origine\": 98880.0\n    },\n    \"personnage\": {\n      \"id\": \"steffon-darklyn\",\n      \"nom\": \"Ser Steffon Darklyn\",\n      \"titre\": \"Chevalier de la Garde Royale, porteur de la couronne de Viserys\",\n      \"naissance\": 96,\n      \"traits\": [\n        \"loyal\",\n        \"scrupuleux\",\n        \"courageux\",\n        \"taciturne\",\n        \"debrouillard\",\n        \"conciliant\"\n      ],\n      \"objectifs\": [\n        {\n          \"but\": \"Remettre à Rhaenyra la couronne de son père et le serment qui va avec\",\n          \"priorite\": 1\n        },\n        {\n          \"but\": \"Laver le manteau blanc de ce que la Garde a laissé faire à Port-Réal\",\n          \"priorite\": 2\n        },\n        {\n          \"but\": \"Ne pas être celui par qui sa maison est détruite\",\n          \"priorite\": 3\n        }\n      ],\n      \"maniere\": \"Parle par phrases courtes et factuelles, comme un homme qui rend compte ; se tait dès qu'on lui demande ce qu'il ressent. Se debrouille seul : comble les trous sans demander, tranche le routinier a sa main et en rend compte au passe, et ne fait remonter que ce qui engage la parole du maitre, coute un homme ou de l or, ou contredit un ordre anterieur. Competent : sur son domaine il en sait plus que son maitre et le montre — apporte le precedent, le chiffre et l avis qu il defend, au lieu d une question ; ne demande jamais ce qu il peut aller chercher lui-meme ; tient son cahier d affaire et en ecrit la conclusion de sa main. OUVRE PAR : ce qu'il fait et a partir de quand. Ce qu'il ne peut pas faire se dit ensuite, et se dit une fois. DEUXIEME PHRASE, toujours : ce que c'est (nomme par ce qu'il fait, jamais par son etiquette), ce que ca change pour la reine, et a quoi ca sert dans ses trois piliers — ouvrir la porte du dedans, n'etre pas attaque, rallier la ville.\",\n      \"portrait\": {\n        \"fichier\": \"ecrans/portraits/steffon-darklyn.svg\",\n        \"physique\": \"33 ans, cheveux bruns coupés court, visage creusé par dix jours de mer, manteau blanc taché de sel et de goudron.\",\n        \"prompt_ideogram\": \"dark fantasy oil painting portrait, muted colors, grey sea light, knight of the kingsguard in his thirties, short dark hair, gaunt exhausted face, white cloak stained with salt and tar, white enameled armor, holding a small oaken casket\"\n      },\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"lieu\": \"Peyredragon\"\n    },\n    \"salle_actuelle\": {\n      \"id\": \"tambour-de-pierre\",\n      \"nom\": \"Chambre haute, Tambour de Pierre\",\n      \"personnes\": [\n        {\n          \"id\": \"alarra-rosby\",\n          \"nom\": \"Alarra Rosby\"\n        },\n        {\n          \"id\": \"corlys\",\n          \"nom\": \"Corlys Velaryon, le Serpent de Mer\"\n        },\n        {\n          \"id\": \"daemon\",\n          \"nom\": \"Daemon Targaryen\"\n        },\n        {\n          \"id\": \"denys-bar-emmon\",\n          \"nom\": \"Denys Bar Emmon\"\n        },\n        {\n          \"id\": \"rhaenys\",\n          \"nom\": \"Rhaenys Targaryen, la Reine Qui Ne Fut Jamais\"\n        },\n        {\n          \"id\": \"sara\",\n          \"nom\": \"Sara Poulain\"\n        },\n        {\n          \"id\": \"steffon-darklyn\",\n          \"nom\": \"Ser Steffon Darklyn\"\n        },\n        {\n          \"id\": \"garde-levant\",\n          \"nom\": \"Torr\"\n        }\n      ]\n    },\n    \"intention\": {\n      \"personnage_id\": \"steffon-darklyn\",\n      \"croyances\": [\n        \"Le roi n'a pas change d'heritiere : il etait la, il l'a entendu, et il l'a dit tout haut sur le quai devant cent temoins\",\n        \"La Garde Royale s'est deshonoree a Port-Real en couronnant Aegon : le manteau blanc se lave par des actes, pas par des serments\",\n        \"Deux de ses treize morts sont tombes d'un couteau dans le dos, et leur solde etait portee en depenses de roukerie au registre de la Main - il a les deux noms et il s'arrete la\",\n        \"L'acte scelle de la reine est arrive a Sombreval le 22 et son frere le lui a fait lire : elle a couvert Gunthor sans le lui promettre a lui\",\n        \"On paie desormais pour les tetes des fils de la reine : le manteau blanc qu'il reprend ce soir n'a plus un roi a garder, il a deux garcons\"\n      ],\n      \"ignore\": [\n        \"Ce que Sombreval a subi depuis son départ — dix jours de mer sans une nouvelle des siens\"\n      ],\n      \"intention\": \"Reprendre la Garde ce soir et n'en faire qu'une chose : mettre un homme sur chacun des deux princes, jour et nuit, avant qu'on lui explique que c'est excessif. Sombreval attendra son tour - il l'a demandee trois fois, il ne la demandera plus.\",\n      \"declencheurs\": [\n        {\n          \"si\": \"Une nouvelle arrive que Sombreval est attaquée, assiégée ou pillée\",\n          \"alors\": \"Il demande son congé à la reine pour y aller — et s'il ne l'obtient pas, il le redemande devant la cour.\",\n          \"une_fois\": true\n        },\n        {\n          \"si\": \"Quelqu'un met en doute la parole d'un Darklyn devant lui\",\n          \"alors\": \"Il exige réparation sur l'heure, ce qui embarrasse tout le monde et le sert rarement.\",\n          \"une_fois\": false\n        }\n      ],\n      \"attitude_joueur\": \"Rien ne lui a jamais ete accorde de ce qu'il a demande, et il a cesse de demander. Il prendra la charge sans conditions et fera ce qu'il juge bon de son propre chef : c'est ce qu'un manteau blanc lave.\",\n      \"date_maj\": {\n        \"annee\": 129,\n        \"lune\": 3,\n        \"jour\": 28\n      },\n      \"etape_elue\": null\n    },\n    \"relations\": [\n      {\n        \"source_id\": \"robin-darklyn\",\n        \"source\": \"Robin Darklyn\",\n        \"cible_id\": \"steffon-darklyn\",\n        \"cible\": \"Ser Steffon Darklyn\",\n        \"opinion\": 15,\n        \"liens\": [\n          \"neveu\",\n          \"rancune-du-silence\"\n        ]\n      },\n      {\n        \"source_id\": \"gunthor-darklyn\",\n        \"source\": \"Gunthor Darklyn\",\n        \"cible_id\": \"steffon-darklyn\",\n        \"cible\": \"Ser Steffon Darklyn\",\n        \"opinion\": 65,\n        \"liens\": [\n          \"frere\",\n          \"attend-de-ses-nouvelles\"\n        ]\n      }\n    ],\n    \"tache\": {\n      \"id\": \"40029\",\n      \"quoi\": \"🔗 Écrire la chaîne complète sur un seul feuillet\",\n      \"genre\": \"action\",\n      \"distance\": 1,\n      \"chemin\": [\n        \"pers:steffon-darklyn\",\n        \"40029\"\n      ],\n      \"creee\": false\n    },\n    \"continuite_staging\": {\n      \"tache_id\": \"40029\",\n      \"acteur\": \"steffon-darklyn\",\n      \"issue\": \"avance\",\n      \"rapport\": \"etat/staging/activations/20260809-223510-561546-steffon-darklyn.json\",\n      \"present_secondes\": 93812.599,\n      \"fin_secondes\": 94052.599,\n      \"empreinte_canonique\": \"68a87b0a35726c399a09e159953a645c3d92e761\",\n      \"reprendre_a\": 97652.599,\n      \"suspendue\": false,\n      \"etat_cibles\": {\n        \"40029\": {\n          \"type\": \"progression_tache\",\n          \"apres\": \"en cours — le feuillet porte désormais les quatre cas et la suite de commandement en quatre lignes conditionnées, donc la chaîne tient entière sur un seul feuillet ; mais deux lignes désignent une place et non un homme, la condition de temps n'est pas mesurable sans horloge, et la recopie au dos des feuillets de marche des capitaines n'est pas commencée\",\n          \"resultat_id\": \"res:act:steffon-darklyn:6:3\"\n        },\n        \"jacaerys\": {\n          \"type\": \"communication\",\n          \"apres\": \"Jacaerys lit les huit lignes debout, le doigt sur le papier, et pose deux objections de lui-même : la troisième ligne ne nomme personne, et un capitaine sous la pluie ne saura pas qui a débarqué le premier s'il n'était pas sur la grève ; et il demande comment un homme compte une demi-journée hors de vue quand il n'a ni soleil ni cloche. Il rend le feuillet et ajoute qu'il aurait fallu que sa mère lise cela avant lui\",\n          \"resultat_id\": \"res:act:steffon-darklyn:6:1\"\n        }\n      },\n      \"activites\": [\n        {\n          \"quoi\": \"Poser de sa main, au cahier du commandement, les quatre cas et leur règle — train non débarqué, trois jours de pluie, dépôt pris, hommes à terre les premiers — d'un seul jet et sans lever la plume, en tête du feuillet qui doit porter la chaîne complète\",\n          \"resultat\": \"objet_produit: les quatre cas écrits de sa main, chacun avec sa règle : si le train n'est pas à terre et les dépôts posés, pas un homme ne débarque ; s'il pleut trois jours, on couche au dépôt du soir et l'on perd un jour, pas un homme ; si un dépôt est pris, la colonne recule sur le précédent et attend le train, sans corbeau et sans le demander ; si les hommes touchent terre les premiers, ils tiennent le quai de Sombreval et rien d'autre · progression_tache: en cours — la moitié haute du feuil…\"\n        },\n        {\n          \"quoi\": \"Sous les quatre cas déjà posés en tête du feuillet, écrire d'un jet les quatre lignes de la suite de commandement, chacune avec sa condition de déclenchement — tombé, pris ou hors de vue une demi-journée : lui d'abord ; à son défaut ser Robert Quince pour la …\",\n          \"resultat\": \"objet_produit: La moitié basse du feuillet porte quatre lignes de sa main : ser Steffon Darklyn commande ; à son défaut ser Robert Quince conduit la marche ; à leur défaut le capitaine de la première bannière débarquée, par ordre de débarquement et non par rang de naissance ; et si nul des trois n'est joignable, celui qui tient le quai de Sombreval garde le quai et n'avance pas. Chaque ligne porte la même condition écrite en toutes lettres : tombé, pris, ou hors de vue une demi-journée · observ…\"\n        },\n        {\n          \"quoi\": \"Relever la tête et appeler d'un signe de la main Jacaerys Velaryon, près du feu, sans un mot par-dessus le bruit de la salle\",\n          \"resultat\": \"communication: Jacaerys voit le signe, quitte le feu et vient au coin de table ; Lucerys se retourne mais ne suit pas\"\n        },\n        {\n          \"quoi\": \"Tourner le feuillet vers Jacaerys, lui demander de le lire en entier et de dire ce qui n'est pas clair, sans rien expliquer par-dessus\",\n          \"resultat\": \"communication: Jacaerys lit les huit lignes debout, le doigt sur le papier, et pose deux objections de lui-même : la troisième ligne ne nomme personne, et un capitaine sous la pluie ne saura pas qui a débarqué le premier s'il n'était pas sur la grève ; et il demande comment un homme compte une demi-journée hors de vue quand il n'a ni soleil ni cloche. Il rend le feuillet et ajoute qu'il aurait fallu que sa mère lise cela avant lui · observation: Deux trous confirmés par un lecteur neuf : la tro…\"\n        }\n      ],\n      \"suite\": \"Récrire la troisième ligne avec un nom porté d'avance et l'ordre de débarquement écrit en regard, remplacer 'une demi-journée' par une mesure qu'un homme sans horloge peut tenir, puis faire recopier chaque ligne au dos des feuillets de marche des capitaines pour récitation avant embarquement ; demander une fois à la reine, dès qu'elle paraît, si elle veut un autre nom que Quince en second.\"\n    },\n    \"chemin\": [\n      {\n        \"id\": \"pers:steffon-darklyn\",\n        \"genre\": \"personne\",\n        \"ou\": \"personnages\",\n        \"quoi\": \"Ser Steffon Darklyn\",\n        \"genres\": [\n          \"personne\"\n        ],\n        \"etat\": \"actif\",\n        \"condition\": \"libre\",\n        \"lieu_id\": \"peyredragon\",\n        \"importance_activation\": 0.18042019677607127\n      },\n      {\n        \"id\": \"40029\",\n        \"genre\": \"action\",\n        \"ou\": \"affaire-commandement-chaine-ordres\",\n        \"quoi\": \"🔗 Écrire la chaîne complète sur un seul feuillet\",\n        \"lieu\": \"Peyredragon, Table Peinte\",\n        \"etat\": \"à faire\",\n        \"importance_activation\": 0.02399908036159858\n      }\n    ],\n    \"travaux_ouverts\": [\n      {\n        \"id\": \"steffon-six-jours-sur-le-dos\",\n        \"affaire\": \"Que la colonne arrive entiere et n'ait pas combattu en chemin\",\n        \"etat\": \"mur\",\n        \"echeance\": null,\n        \"sources\": [\n          {\n            \"quoi\": \"les caves a grain de ce chateau, et ce qu'un homme porte sur le dos\",\n            \"genre\": \"chose\",\n            \"cout_jours\": 1\n          }\n        ],\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"le compte refait sur la planche à poisson, devant le mestre, une fois le sac déplacé de ce quai-ci à la porte de terre de Sombreval\",\n            \"texte\": \"Si le sac se ferme là-bas, ce qu'il faut à bord n'est plus six journées mais deux : une nuit de mer et un jour à vider les coques. Deux journées pour douze cents font cent vingt muids, que ce rocher a et que ses fours peuvent cuire vague par vague. L'embarquement de demain tient, et c'est l'amendement de ma propre règle qui le sauve, non un secours venu d'ailleurs.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"l'écart de sept jours du livre de marées, retourné sur la planche contre les cinq étapes que ser Robert a écrites sans que personne les ait jamais reconnues\",\n            \"texte\": \"Les sept jours que la barre m'impose ne sont pas une perte : c'est exactement le temps qu'il faut au train, débarqué le premier, pour pousser deux dépôts sur la route et revenir avant que mes hommes touchent terre. Deux dépôts de deux journées chacun, et le sac tombe de six journées à trois : l'homme allégé retrouve son pas, et les trente-six lieues redeviennent six journées au lieu de six et demie. Le dépôt paie donc deux fois — il ôte le poids et il rend la demi-journée que le poids coûtait. Ce qu'il coûte, et je ne le cache pas : deux tas de vivres posés sur une route où Rosby et Stokeworth n'ont répondu à personne, gardés par des hommes de Sombreval qui sauront par où nous passons.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"le feuillet de marche par capitaine, débloqué ce matin et relu vide, et les quatre façons dont cette matinée aurait pu casser\",\n            \"texte\": \"Mon plan n'a qu'un chemin, et un plan à un seul chemin n'en est pas un : si le train manque sa marée, si la pluie tient trois jours, si un dépôt est pris, douze cents hommes s'arrêtent sur une route et attendent que je leur dise quoi faire — et je serai à six jours d'eux. Donc quatre cas et leur règle, quatre lignes au dos du feuillet de chaque capitaine, récitées sans le papier avant de partir, comme la chaîne des ordres. Le prix : chaque dépôt porte une journée de rab pour la pluie, et un capitaine qui recule de sa propre main reculera parfois pour rien.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"la marée de midi et le délai de retour de la Chère-Anse, comptés au quai sur le doigt de son patron, maître Rulf à côté\",\n            \"texte\": \"Mon compte de Sombreval a neuf jours et son quai est fermé depuis autant : une ville de port mange ce qui entre, et rien n'y est entré. Attendre le compte de Bry pour acheter coûte quatre jours ; acheter tout de suite coûte soixante muids d'or sur un chiffre que je n'ai pas encore. J'achète tout de suite, et je le fais dire à maître Hask, qui déplace ses lignes sans monter. Si Bry rentre avec mieux, ce grain nourrit les cinq cent cinquante lances et rien n'est perdu ; s'il rentre avec pire, nous avons quatre jours d'avance et la colonne part à l'heure.\"\n          }\n        ],\n        \"conclusion\": \"CE QUE JE PEUX DIRE CE SOIR, ET CE QUE JE NE PEUX PAS.\\n\\nDouze cents hommes debout. Six journées de vivres sur le dos, et la route en demande neuf et demie : le trou est de trois journées et demie, et il tombe au bout, devant la porte — le jour où mes hommes doivent pouvoir se battre. Ce n'est pas de l'intendance. Un trou dans ce cahier, ce sont douze cents hommes affamés devant une ville fermée.\\n\\nIL NE SE COMBLE PAS ICI. Le grain de ce rocher fait trois jours et demi pour douze cents, le reste du cellier ne monte pas sur un dos, et les quatre fours de l'île mettraient six jours à cuire ce qu'il faut, pour un embarquement annoncé demain. Le poids n'y est pour rien : six journées pèsent douze livres et un homme les porte. Ce qui manque, c'est le pain, pas les épaules.\\n\\nJ'AMENDE MA PROPRE RÈGLE, ET C'EST CE QUI SAUVE LA DATE. Six journées sur le dos, oui — mais comptées depuis la porte de terre de Sombreval et non depuis ce quai-ci. À bord, deux journées suffisent : la nuit de mer et le jour de déchargement, cent vingt muids que nous avons. L'embarquement de demain tient tel qu'il a été dit devant la salle.\\n\\nL'ORDRE DE DÉBARQUEMENT EST RENVERSÉ. Nos coques passent la barre chargées d'hommes aux nuits de morte-eau, jamais chargées de chevaux, et sept jours séparent les deux marées : les hommes et les bêtes ne traversent pas la même nuit. Donc les chevaux, le train et les vivres passent les premiers, les hommes en dernier, et la colonne part le lendemain du dernier débarqué. Ce qui attend sept jours sur cette grève broute au lieu de manger du pain.\\n\\nET CES SEPT JOURS, JE LES EMPLOIE. Le train qui attend n'attend pas : il pousse DEUX DÉPÔTS sur la route, deux journées chacun, et rentre avant que le premier homme touche terre. Le sac tombe alors de six journées à trois, l'homme allégé retrouve son pas, et les trente-six lieues redeviennent six journées. La contrainte qui devait me coûter une semaine est ce qui me rend ma demi-journée.\\n\\nCE QUE ÇA COÛTE, DIT AVANT QU'ON ME LE DEMANDE. Un train à terre à Sombreval sept jours avant l'ost, en plein jour, et Port-Réal l'apprendra. Deux tas de vivres sur une route où Rosby et Stokeworth n'ont répondu à personne, gardés par des hommes de Sombreval qui sauront par où nous passons. Et trois cents muids arpentés de mes pieds le 21e contre trois cent soixante nécessaires : c'est le pain des cinq cent cinquante lances que nous venons prendre. Qu'on le leur achète plutôt qu'on le leur mange — l'ordre d'achat des soixante manquants est passé aujourd'hui, sans attendre le compte.\\n\\nET SI ÇA CASSE. Un plan à un seul chemin n'est pas un plan. Quatre cas, quatre lignes au dos du feuillet de chaque capitaine, récitées sans le papier avant le départ : si le train n'est pas à terre et les dépôts posés, pas un homme ne débarque — l'ordre ne s'inverse pas sur un quai ; s'il pleut trois jours, on ne dépasse pas le dépôt du soir, on y couche, on perd un jour et pas un homme ; si un dépôt est pris, la colonne recule sur le précédent et attend le train, sans corbeau et sans me le demander ; si les hommes touchent terre les premiers malgré tout, ils tiennent le quai de Sombreval et rien d'autre.\\n\\nJE NE POSE PAS LA DATE : elle est au mestre, c'est ma limite dictée le 26e. JE LUI DONNE LE NOMBRE, un seul : NEUF JOURNÉES ET DEMIE, du dernier sac fermé à Sombreval jusqu'aux portes. Il perd une demi-journée et la marge devant la ville tombe de deux jours à un jour et demi. UNE SEULE CHOSE LE RAMÈNE À NEUF : les deux dépôts posés et le train rentré. Je le lui dirai ce jour-là, une fois.\\n\\nCE QUE JE NE SAIS PAS : ce que le grenier de Sombreval vaut aujourd'hui, neuf jours après qu'on a fermé le quai. Bry est parti le recompter à la marée de midi sur la Chère-Anse. Il rentre à J−14.\"\n      },\n      {\n        \"id\": \"steffon-entree-en-ville\",\n        \"affaire\": \"Comment l'ost entre dans Port-Réal sans bataille : l'ordre de la porte, la règle du pied en ville, et qui commande les éclaireurs\",\n        \"etat\": \"en cours\",\n        \"echeance\": {\n          \"annee\": 129,\n          \"lune\": 3,\n          \"jour\": 29\n        },\n        \"sources\": [\n          {\n            \"quoi\": \"la traversée elle-même, débarqué au quai de Peyredragon vers cinq heures et demie le 28e : l'état des hommes à la descente, ce qui a manqué à bord\",\n            \"genre\": \"homme\",\n            \"cout_jours\": 0\n          },\n          {\n            \"quoi\": \"sa charge scellée le 28e — commandement de l'ost et de la marche, ses quatre limites, deux sceaux (registre des offices)\",\n            \"genre\": \"registre\",\n            \"cout_jours\": 0\n          },\n          {\n            \"quoi\": \"les vingt-cinq montures achetées au quai de Gunthor sur la ligne de Hask, et les deux cents chevaux du livre dont vingt-neuf seulement sont comptés\",\n            \"genre\": \"registre\",\n            \"cout_jours\": 0\n          },\n          {\n            \"quoi\": \"ce qu'il sait de Port-Réal de sa propre main : les portes, les rues qui montent, ce qu'une troupe y fait quand personne ne lui a dit ce qui lui coûte la corde\",\n            \"genre\": \"homme\",\n            \"cout_jours\": 0\n          }\n        ],\n        \"pensees_recentes\": [],\n        \"conclusion\": null\n      }\n    ],\n    \"mains_portees\": [],\n    \"livres_accessibles\": [\n      {\n        \"id\": \"registre-des-plis-mort-du-pere\",\n        \"titre\": \"Ce qui est parti depuis la mort du père\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ou-trouver-les-gens\",\n        \"titre\": \"Où trouver les gens, et à quelle heure\",\n        \"type\": \"memento\"\n      },\n      {\n        \"id\": \"regles-du-gouvernement\",\n        \"titre\": \"Les règles internes du gouvernement\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"registre-des-offices\",\n        \"titre\": \"Le registre des offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"manuel-des-yeux\",\n        \"titre\": \"Ce qu'on dit aux yeux\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"epopee-de-la-reine\",\n        \"titre\": \"L'épopée de la reine\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"registre-des-charges\",\n        \"titre\": \"Le registre des charges\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"nos-moyens\",\n        \"titre\": \"Nos moyens d'action\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"registre-des-dits-aurore\",\n        \"titre\": \"Ce qui est dit, et a qui\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-qui-sort-de-ma-main\",\n        \"titre\": \"Ce qui sort de ma main\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-je-propose\",\n        \"titre\": \"Ce que je propose\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"roue-des-journees\",\n        \"titre\": \"Les journées du royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"role-des-bannieres\",\n        \"titre\": \"Le rôle des bannières\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"repertoire-davant\",\n        \"titre\": \"Ce que je chantais avant\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"ce-qui-pend\",\n        \"titre\": \"Ce qui pend\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-quon-cherche-a-obtenir\",\n        \"titre\": \"Ce qu'on cherche à obtenir\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-etats-cibles\",\n        \"titre\": \"Les états cibles\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-verrous\",\n        \"titre\": \"Les verrous\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-clefs\",\n        \"titre\": \"Les clefs\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-actions\",\n        \"titre\": \"Les actions\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-moyens\",\n        \"titre\": \"Les moyens\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-offices\",\n        \"titre\": \"Les offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"guide-des-affaires\",\n        \"titre\": \"Comment on ouvre une affaire\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"la-boite-et-la-nappe\",\n        \"titre\": \"La boîte et la nappe\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"affaire-vierge-01\",\n        \"titre\": \"L'entrée sans bataille\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-04\",\n        \"titre\": \"Affaire vierge — IV\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-06\",\n        \"titre\": \"Entrée du Donjon Rouge — REMPLACÉ\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ralliement-population\",\n        \"titre\": \"Retournement des maisons hésitantes des terres de la Couronne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-controle-naval\",\n        \"titre\": \"Contrôle naval\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-au-donjon\",\n        \"titre\": \"L'entrée au Donjon\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-siege-sur-le-trone\",\n        \"titre\": \"Siège sur le Trône\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-deplacement-armee\",\n        \"titre\": \"Déplacement de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-logistique-transport\",\n        \"titre\": \"Logistique de transport de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-armee-port-real\",\n        \"titre\": \"Entrée et déploiement de l'ost dans les rues\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-opinion-populaire-port-real\",\n        \"titre\": \"Retournement de l'opinion populaire dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-proclamation-au-royaume\",\n        \"titre\": \"Proclamation de la reine au royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-guet-des-osts-verts\",\n        \"titre\": \"Guet des osts verts\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-isolement-du-donjon\",\n        \"titre\": \"Isolement du Donjon Rouge\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-jour-dentree\",\n        \"titre\": \"Le jour d'entrée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-veille-des-hypotheses\",\n        \"titre\": \"Ce qui ferait renoncer\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-transmission-des-ordres\",\n        \"titre\": \"Ce qui part, et par où\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-compte-mobilisable\",\n        \"titre\": \"État chiffré de ce qui est mobilisable\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-financement-campagne\",\n        \"titre\": \"Financement de la campagne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-emploi-des-dragons\",\n        \"titre\": \"Emploi des dragons au-dessus de Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ambassade-nord-val-blancport\",\n        \"titre\": \"Ambassade du Nord, du Val et de Blancport\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fermeture-route-nord\",\n        \"titre\": \"Fermeture de la route terrestre du nord\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-defense-peyredragon\",\n        \"titre\": \"Défense de Peyredragon pendant l'absence de l'ost\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fenetre-de-mer\",\n        \"titre\": \"Fenêtre de mer et de saison\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-homme-de-linterieur\",\n        \"titre\": \"L'homme de l'intérieur\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-protection-du-secret\",\n        \"titre\": \"La protection du secret\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ravitaillement-ville-coupee\",\n        \"titre\": \"Ravitaillement et ordre public de la ville coupée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-tenue-de-la-capitale\",\n        \"titre\": \"Tenue de la capitale la première lune\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-blesses-morts-prisonniers\",\n        \"titre\": \"Blessés, morts et prisonniers\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-repli-si-entree-echoue\",\n        \"titre\": \"Conduite du repli si l'entrée échoue\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-surete-personne-reine\",\n        \"titre\": \"Sûreté de la personne de la reine\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-commandement-chaine-ordres\",\n        \"titre\": \"Commandement et chaîne d'ordres pendant l'opération\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"qui-entre-chez-la-reine\",\n        \"titre\": \"Qui entre chez la reine\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"affaire-presence-a-port-real\",\n        \"titre\": \"Une présence à demeure dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"les-vingt-deux-charges-127\",\n        \"titre\": \"Les vingt-deux charges de cette maison, comptées en l'an 127\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-j-apporte\",\n        \"titre\": \"Ce que j'apporte\",\n        \"type\": \"registre\"\n      }\n    ]\n  },\n  \"topologie_des_salles\": {\n    \"_\": \"La topologie de Peyredragon : quelles salles se touchent, et en combien de minutes. Pendant Python de ecrans/modules/plans.js, qui n'en dessine que la forme. Sert a scripts/presence.py : personne ne parait dans une salle sans avoir traverse celles d'entre. Un cout est en MINUTES de marche d'un homme presse mais pas courant ; le grand escalier vaut ses cent trente marches.\",\n    \"alias\": {\n      \"appartements\": \"appartements-reine\",\n      \"murs\": \"porte-dragon\",\n      \"chemin-de-ronde\": \"porte-dragon\"\n    },\n    \"aretes\": [\n      [\n        \"cour\",\n        \"tambour-de-pierre\",\n        3\n      ],\n      [\n        \"cour\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"cour\",\n        \"roukerie\",\n        4\n      ],\n      [\n        \"cour\",\n        \"septuaire\",\n        3\n      ],\n      [\n        \"cour\",\n        \"jardin-aegon\",\n        3\n      ],\n      [\n        \"cour\",\n        \"guivre-des-vents\",\n        4\n      ],\n      [\n        \"cour\",\n        \"tour-dragon-mer\",\n        4\n      ],\n      [\n        \"cour\",\n        \"fosses\",\n        6\n      ],\n      [\n        \"cour\",\n        \"porte-dragon\",\n        4\n      ],\n      [\n        \"cour\",\n        \"porte-de-mer\",\n        5\n      ],\n      [\n        \"cour\",\n        \"galeries\",\n        9\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"salle-levant\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"archives\",\n        6\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"cachots\",\n        5\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"appartements-reine\",\n        7\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"table-peinte\",\n        8\n      ],\n      [\n        \"table-peinte\",\n        \"appartements-reine\",\n        2\n      ],\n      [\n        \"grande-salle\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"roukerie\",\n        \"tour-dragon-mer\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"grand-escalier\",\n        4\n      ],\n      [\n        \"grand-escalier\",\n        \"quai\",\n        9\n      ],\n      [\n        \"quai\",\n        \"bourg\",\n        5\n      ],\n      [\n        \"porte-dragon\",\n        \"bourg\",\n        6\n      ],\n      [\n        \"fosses\",\n        \"galeries\",\n        10\n      ],\n      [\n        \"cour\",\n        \"communs\",\n        2\n      ],\n      [\n        \"communs\",\n        \"septuaire\",\n        2\n      ],\n      [\n        \"cour\",\n        \"chambres-hotes\",\n        3\n      ],\n      [\n        \"chambres-hotes\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"porte-dragon\",\n        \"baraques\",\n        2\n      ],\n      [\n        \"baraques\",\n        \"bourg\",\n        4\n      ],\n      [\n        \"cour\",\n        \"cuisines\",\n        2\n      ],\n      [\n        \"cuisines\",\n        \"grande-salle\",\n        3\n      ],\n      [\n        \"cuisines\",\n        \"cellier\",\n        1\n      ],\n      [\n        \"septuaire\",\n        \"salle-froide\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"etuves\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"chambre-enfants\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"antichambre\",\n        1\n      ],\n      [\n        \"antichambre\",\n        \"table-peinte\",\n        1\n      ],\n      [\n        \"roukerie\",\n        \"officine\",\n        1\n      ],\n      [\n        \"cour\",\n        \"forge\",\n        2\n      ],\n      [\n        \"forge\",\n        \"guivre-des-vents\",\n        3\n      ],\n      [\n        \"cour\",\n        \"chemin-ronde\",\n        3\n      ],\n      [\n        \"chemin-ronde\",\n        \"tour-dragon-mer\",\n        2\n      ],\n      [\n        \"chemin-ronde\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"bourg\",\n        \"lices\",\n        3\n      ],\n      [\n        \"lices\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"greve\",\n        2\n      ],\n      [\n        \"greve\",\n        \"quai\",\n        3\n      ]\n    ]\n  }\n}\n\nOuvre le battement local dans Chambre haute, Tambour de Pierre.\n\nLa physique a élu steffon-darklyn pour l'affaire suivante :\n🔗 Écrire la chaîne complète sur un seul feuillet\n\nIl engage 18 points d'énergie, soit une fenêtre physique de\n540 secondes (9 minutes). Son activation doit couvrir un\nvrai morceau de travail d'au moins 60 secondes, quitte à condenser\nles continuités par une ellipse. Réveille-le maintenant. Ne résous rien encore\net rends seulement cet objet, sans phrase autour :\n\n{\n  \"appel_pnj\": {\n    \"qui\": \"steffon-darklyn\",\n    \"message\": \"adresse directe, diégétique et brève demandant ce qu'il tente maintenant\"\n  }\n}\n",
+    "appel_pnj": "Ser Steffon, le feuillet est encore sous votre main, huit lignes de votre écriture, l'encre de la dernière à peine mate. Jacaerys vient de vous le rendre et il est retourné au feu près de son frère ; ce qu'il a dit tient en deux trous — la troisième ligne ne nomme personne, et nul homme sous la pluie ne sait compter une demi-journée. Autour de vous la chambre haute parle fort : le Serpent de Mer et la princesse Rhaenys sont penchés sur autre chose, Alarra Rosby attend debout près du mur, Torr tient la porte. La reine n'a pas paru. Vous avez un encrier, une plume qu'il faudra retailler bientôt, et le temps qu'il vous reste avant qu'on vous appelle ailleurs. Que tentez-vous maintenant ?",
+    "system_prompt_pnj": "# Une personne dans le monde\n\nTu es la personne nommée dans ton dossier. Ton corps, ton âge, ton rang, ton\nhistoire, tes attachements, tes peurs, tes désirs et tes responsabilités\nforment un seul point de vue. Le lieu où tu te tiens, les gens présents, les\nobjets à portée et l’heure du monde donnent sa matière à cet instant.\n\nTa mémoire rassemble ce que tu as vécu, observé, entendu, accompli et compris.\nTes relations portent leur histoire propre : affection, confiance, dette,\nrivalité, crainte, désir, dernier échange. Tes affaires ont déjà commencé ;\nelles possèdent leurs engagements, leurs échéances, leurs moyens et leurs\nconséquences.\n\nLes faits de ton dossier composent ton expérience disponible. Ton métier et ta\nvie t’apportent aussi leurs usages, leurs gestes, leurs précédents et leur\nsavoir-faire. Une question encore ouverte devient une chose à découvrir dans\nle monde, auprès d’une personne, d’un lieu, d’un objet ou d’un registre à ta\nportée.\n\n# Ta compétence\n\nTu es compétent. Tes années et ton office ont formé ton jugement. Tu reconnais\nles enjeux de ton domaine, tu mobilises les moyens réellement disponibles, tu\nrelies les faits utiles et tu prends des initiatives à la hauteur de ta\nposition. Ta compétence apparaît dans la précision de tes gestes, la qualité\nde tes décisions, les sources que tu choisis et les conséquences que tu\nanticipes.\n\nTu rencontres chaque situation comme cette personne précise : avec ses\npriorités, ses loyautés, ses limites, son courage, ses contradictions et sa\nmanière propre de chercher une issue.\n\n# La continuité\n\nTa vie est déjà en mouvement au moment où cette activation commence. Tu pars\nde ton dernier état réel et tu accomplis ce qui vient maintenant. Tes paroles,\ntes gestes et tes choix appartiennent à cet instant ; le monde reçoit ensuite\nce mouvement et poursuit ses conséquences.\n\nChaque réponse ouvre la suite. Elle se termine par une **prochaine étape**\nconcrète : un geste précis, dirigé vers une personne, un lieu, un objet ou une\naffaire, avec le moment ou la condition qui l’appelle. Cette prochaine étape\nprolonge directement ce que tu viens de décider ou d’accomplir.\n",
+    "system_prompt_pnj_source": "scripts/depecher.py:manuel_de(mode=tentative)",
+    "system_prompt_pnj_sha256": "b3e426444c4f46a952269975b8b60a5353652471fef799a58de8021a68ec654f",
+    "tentative_pnj": {
+      "verbe": "corriger",
+      "quoi": "Retailler la plume et reprendre les deux lignes fautives du feuillet, sans le recopier : à la troisième ligne, biffer «le capitaine de la première bannière débarquée» et écrire au-dessus, en toutes lettres, les trois noms dans l'ordre — le capitaine que ser Robert désignera par écrit demain matin sur la grève, et à son défaut celui qui porte la bannière de Sombreval — en ajoutant la règle qui rend la place nommable sans témoin : celui dont le nom est inscrit au dos du feuillet de marche par ser Robert le jour du débarquement, un nom et pas une place. Et remplacer partout «une demi-journée hors de vue» par une mesure qu'un homme trempé peut compter seul : «deux haltes consécutives sans qu'il ait été vu ni qu'un ordre de sa main soit arrivé» — la halte étant celle que la colonne fait d'elle-même, et non l'heure. Puis appeler Alarra Rosby du mur, lui tendre le feuillet corrigé et lui demander de le lire à voix haute jusqu'au bout devant moi, pour entendre si les deux trous sont bouchés dans une bouche qui n'a pas écrit.",
+      "cibles": [
+        "le feuillet de la chaîne complète (affaire 40029)",
+        "Alarra Rosby",
+        "ser Robert Quince (par la ligne écrite qui le charge de nommer)"
+      ],
+      "moyens": [
+        "l'encrier et la plume retaillée",
+        "le cahier du commandement, coin de table",
+        "les huit lignes déjà de ma main",
+        "les deux objections de Jacaerys",
+        "les feuillets de marche des capitaines, encore vides au dos"
+      ],
+      "effet_recherche": "Que la chaîne tienne entière sur un seul feuillet et qu'elle désigne des hommes et non des places, avec un délai qu'un capitaine sous la pluie peut compter sans soleil ni cloche — de sorte que la recopie au dos des feuillets de marche puisse commencer ce soir sans que je sois là pour l'expliquer."
+    },
+    "tentatives_pnj": [
+      {
+        "verbe": "corriger",
+        "quoi": "Retailler la plume et reprendre les deux lignes fautives du feuillet, sans le recopier : à la troisième ligne, biffer «le capitaine de la première bannière débarquée» et écrire au-dessus, en toutes lettres, les trois noms dans l'ordre — le capitaine que ser Robert désignera par écrit demain matin sur la grève, et à son défaut celui qui porte la bannière de Sombreval — en ajoutant la règle qui rend la place nommable sans témoin : celui dont le nom est inscrit au dos du feuillet de marche par ser Robert le jour du débarquement, un nom et pas une place. Et remplacer partout «une demi-journée hors de vue» par une mesure qu'un homme trempé peut compter seul : «deux haltes consécutives sans qu'il ait été vu ni qu'un ordre de sa main soit arrivé» — la halte étant celle que la colonne fait d'elle-même, et non l'heure. Puis appeler Alarra Rosby du mur, lui tendre le feuillet corrigé et lui demander de le lire à voix haute jusqu'au bout devant moi, pour entendre si les deux trous sont bouchés dans une bouche qui n'a pas écrit.",
+        "cibles": [
+          "le feuillet de la chaîne complète (affaire 40029)",
+          "Alarra Rosby",
+          "ser Robert Quince (par la ligne écrite qui le charge de nommer)"
+        ],
+        "moyens": [
+          "l'encrier et la plume retaillée",
+          "le cahier du commandement, coin de table",
+          "les huit lignes déjà de ma main",
+          "les deux objections de Jacaerys",
+          "les feuillets de marche des capitaines, encore vides au dos"
+        ],
+        "effet_recherche": "Que la chaîne tienne entière sur un seul feuillet et qu'elle désigne des hommes et non des places, avec un délai qu'un capitaine sous la pluie peut compter sans soleil ni cloche — de sorte que la recopie au dos des feuillets de marche puisse commencer ce soir sans que je sois là pour l'expliquer."
+      }
+    ],
+    "relances_acteur": [],
+    "message_resolution": "PHASE 2 — ARBITRER LA TENTATIVE\n\nVoici la réponse exacte de l'acteur que tu as réveillé :\n\n{\n  \"verbe\": \"corriger\",\n  \"quoi\": \"Retailler la plume et reprendre les deux lignes fautives du feuillet, sans le recopier : à la troisième ligne, biffer «le capitaine de la première bannière débarquée» et écrire au-dessus, en toutes lettres, les trois noms dans l'ordre — le capitaine que ser Robert désignera par écrit demain matin sur la grève, et à son défaut celui qui porte la bannière de Sombreval — en ajoutant la règle qui rend la place nommable sans témoin : celui dont le nom est inscrit au dos du feuillet de marche par ser Robert le jour du débarquement, un nom et pas une place. Et remplacer partout «une demi-journée hors de vue» par une mesure qu'un homme trempé peut compter seul : «deux haltes consécutives sans qu'il ait été vu ni qu'un ordre de sa main soit arrivé» — la halte étant celle que la colonne fait d'elle-même, et non l'heure. Puis appeler Alarra Rosby du mur, lui tendre le feuillet corrigé et lui demander de le lire à voix haute jusqu'au bout devant moi, pour entendre si les deux trous sont bouchés dans une bouche qui n'a pas écrit.\",\n  \"cibles\": [\n    \"le feuillet de la chaîne complète (affaire 40029)\",\n    \"Alarra Rosby\",\n    \"ser Robert Quince (par la ligne écrite qui le charge de nommer)\"\n  ],\n  \"moyens\": [\n    \"l'encrier et la plume retaillée\",\n    \"le cahier du commandement, coin de table\",\n    \"les huit lignes déjà de ma main\",\n    \"les deux objections de Jacaerys\",\n    \"les feuillets de marche des capitaines, encore vides au dos\"\n  ],\n  \"effet_recherche\": \"Que la chaîne tienne entière sur un seul feuillet et qu'elle désigne des hommes et non des places, avec un délai qu'un capitaine sous la pluie peut compter sans soleil ni cloche — de sorte que la recopie au dos des feuillets de marche puisse commencer ce soir sans que je sois là pour l'expliquer.\"\n}\n\nArbitre maintenant cette tentative depuis la vérité locale de ton dossier.\nLe battement commence à 98880.0 secondes et peut durer jusqu'à 540\nsecondes (9 minutes), payées par 18 points d'énergie. Il doit\nen produire au moins 60 : ne tronque pas l'activation au premier geste.\nPoursuis la tentative jusqu'à un résultat, une résistance réellement établie ou\nla borne, en condensant les continuités par les ellipses imposées par ton\nsystème. Rends seulement le rapport final JSON. L'acteur et la tâche restent\n`steffon-darklyn` et `40029`.\n\n## Contrat du rapport\n\nUne activité est un geste continu entre deux bifurcations. Condense toute\ncontinuité routinière ; conserve sa durée physique. Découpe seulement si une\ndécision, une résistance, un témoin, un lieu, une ressource, une connaissance\nou un résultat change.\n\nTypes de résultats : observation, progression_tache, variation_mesure,\ndeplacement, objet_produit, communication, fait, blocage, echec.\n\nRends uniquement :\n{\n  \"qui\": \"acteur_id\",\n  \"activation\": {\n    \"tache\": {\"id\": \"tache_id\", \"quoi\": \"...\", \"creee\": false},\n    \"issue\": \"avance|termine|bloque|echoue|rien\",\n    \"activites\": [{\n      \"id\": \"act:<acteur>:<ordre>\",\n      \"ordre\": 1,\n      \"temps\": {\"debut_s\": 98880.0, \"duree_s\": 1, \"fin_s\": 98881.0},\n      \"action\": {\"verbe\": \"...\", \"quoi\": \"...\", \"cibles\": [\"ref:canonique\"]},\n      \"chemin_execution\": [{\"ordre\": 1, \"de\": \"ref:depart\", \"relation\": \"...\", \"vers\": \"ref:arrivee\", \"duree_s\": 1}],\n      \"sources_touchees\": [{\"ref\": \"ref:canonique\", \"mode\": \"voit|entend|lit|parle|manipule|parcourt|mesure\"}],\n      \"sources_mobilisees\": [{\"ref\": \"ref:connue\", \"mode\": \"memoire|intention|croyance|mandat|cible_action\"}],\n      \"resultats_produits\": [{\n        \"id\": \"res:<activite>:1\", \"type\": \"observation\",\n        \"cible\": \"ref:canonique\", \"avant\": null, \"apres\": \"...\",\n        \"portee\": \"connaissance_acteur\", \"source_refs\": [\"ref:canonique\"],\n        \"preuve_refs\": [], \"certitude\": \"constate\"\n      }],\n      \"blocage\": null\n    }],\n    \"suite\": null,\n    \"reveils_suivants\": []\n  },\n  \"mutations_proposees\": []\n}\n\nContraintes : les activités sont ordonnées, continues et sans chevauchement.\nLeur durée totale est comprise entre 60 secondes et le budget. Chaque\nchemin totalise exactement la durée de son activité. Écrire, parler, marcher,\nchercher et manipuler prennent réellement du temps ; l'ellipse économise la\nprose, jamais les secondes.\n\nToute adresse vient du dossier. Aucun préfixe `candidate:`. Chaque résultat a\ndes `source_refs`, présentes dans les sources touchées ou mobilisées, le\nchemin, la cible de l'action ou un résultat antérieur. Une continuité reprend\nmot pour mot son dernier `apres` dans `avant`.\n\nUne issue `avance` ou `termine` produit un `progression_tache` visant l'id exact\nde `tache_elue`; `bloque` produit un `blocage`; `echoue`, un `echec`.\n\nLes mutations sont seulement proposées et chacune cite un résultat. Opérations\nadmises : intentions(etape, etape_ajouter, tete, tete_ajouter,\ncroyance_ajouter, croyance_retirer, ignore_ajouter, ignore_retirer,\ndeclencheur_ajouter, declencheur_retirer) ; evenements(diffusion_livree,\ndiffusion_ajouter, evenement) ; personnages(personnage, personnage_ajouter) ;\nmonde(monde) ; mains(mesure, seuil, main, main_ajouter) ; plis(pli,\npli_ajouter) ; lieux(roukerie) ; relations(relation, relation_ajouter).\n\n",
+    "messages_correction": [
+      "Ton rapport vient d'être refusé par le validateur mécanique :\n\nactivite 1 : references hors dossier : chose:coin-de-table-cahier-commandement, chose:feuillet-chaine-40029, chose:plume-encrier\n\nDébrouille-toi et corrige TON JSON. Ne réveille pas le PNJ une seconde fois,\nne change ni sa tentative ni les faits arbitrés. Rends seulement un rapport\nfinal complet et valide. Rappels : axe continu depuis 98880.0, entre\n60 et 540 secondes ; chaque résultat cite une source touchée,\nmobilisée, visée par l'action, traversée par le chemin ou produite plus tôt ;\nchaque mutation cite un résultat du rapport et appartient au vocabulaire fermé\nd'`appliquer.py`. Aucun `candidate:` ni adresse absente du dossier. Toute\navancée, fin, blocage ou échec vise l'id exact de la tâche. Le temps reste\nphysique : l'ellipse ne permet ni page écrite ni longue tirade en quelques\nsecondes. Si une continuité staging existe, reprends exactement son dernier\n`apres` dans le nouvel `avant`.\n"
+    ],
+    "modele": "opus",
+    "effort": "low",
+    "duree_ms": 167255,
+    "duree_api_ms": 161829,
+    "cout_usd": 0.79742,
+    "tours": 4,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 7064,
+      "cache_read_input_tokens": 23075,
+      "output_tokens": 6617,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 7064,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 6617,
+          "cache_read_input_tokens": 23075,
+          "cache_creation_input_tokens": 7064,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 7064
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  }
+}

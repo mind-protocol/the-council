@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Les pas — Le Conseil</title>
+<!--
+  LES PAS — l'analyse des affaires, à plat.
+
+  POURQUOI UNE PAGE ET PAS UNE COLONNE DE PLUS DANS LES LIVRES. Le registre
+  répond à « où en est cette action-ci » : on y arrive par un numéro, on lit une
+  ligne. Cette page-ci répond à l'autre question, celle qu'aucun volume ne peut
+  poser — « par quoi commencer ce matin » —, et elle exige de voir les six cents
+  pas ENSEMBLE, rangés par ce qu'ils coûtent au plan s'ils ratent. Deux
+  questions, deux écrans ; les mélanger aurait fait du registre un tableau de
+  bord, et un registre qui classe n'est plus un registre.
+
+  ELLE NE SAIT RIEN QU'ELLE N'AIT DEMANDÉ. Tout vient de `/criticite`, qui
+  appelle `scripts/criticite.py --json`. Aucune règle du calcul n'est réécrite
+  ici — une seconde définition de la perte, et les deux divergeraient au premier
+  changement. La page range, filtre et teinte ; elle ne compte pas.
+-->
+<style>
+  :root {
+    --fond: #14110e; --fond2: #1c1815; --bord: #3a3128; --texte: #e6ddd0;
+    --pale: #9a8f80; --or: #c8a44a; --rouge: #c05a44; --vert: #6f8f5e;
+    --bleu: #5c8fb5; --orange: #c78345;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fond); color: var(--texte);
+    font: 14px/1.45 "Iowan Old Style", Georgia, serif; }
+  header { display: flex; align-items: baseline; gap: 1.2rem; flex-wrap: wrap;
+    padding: .8rem 1.2rem; border-bottom: 1px solid var(--bord); background: var(--fond2); }
+  header h1 { font-size: 1rem; margin: 0; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--or); font-weight: normal; }
+  header .date, header .bilan { color: var(--pale); font-size: .82rem; }
+  header .bilan b { color: var(--texte); font-weight: normal; }
+  header .lien { margin-left: auto; }
+  header a { color: var(--pale); text-decoration: none; border-bottom: 1px dotted var(--bord); }
+  header a:hover { color: var(--or); }
+  nav { display: flex; gap: .3rem; padding: .5rem 1.2rem 0;
+    border-bottom: 1px solid var(--bord); overflow-x: auto; }
+  nav button { background: none; border: 1px solid transparent; border-bottom: none;
+    color: var(--pale); padding: .4rem .9rem; font: inherit; cursor: pointer; }
+  nav button.actif { color: var(--or); border-color: var(--bord); background: var(--fond2); }
+  main { padding: 1rem 1.2rem 3rem; }
+  section { display: none; } section.actif { display: block; }
+  h2 { font-size: .85rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--pale); font-weight: normal; margin: 1.4rem 0 .5rem; }
+  h2:first-child { margin-top: 0; }
+  h2 .compte { color: var(--or); }
+  p.glose { color: var(--pale); font-size: .82rem; margin: .2rem 0 .8rem; max-width: 62rem; }
+  .barre { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center;
+    margin-bottom: .8rem; }
+  .barre input[type=search], .barre select { background: var(--fond2); color: var(--texte);
+    border: 1px solid var(--bord); font: inherit; padding: .3rem .5rem; }
+  .barre input[type=search] { min-width: 18rem; }
+  .barre label { color: var(--pale); font-size: .82rem; display: flex;
+    align-items: center; gap: .3rem; cursor: pointer; }
+  .barre .compte { color: var(--or); font-size: .82rem; margin-left: auto; }
+  table { border-collapse: collapse; width: 100%; }
+  th { text-align: left; font-weight: normal; font-size: .72rem; color: var(--pale);
+    letter-spacing: .08em; text-transform: uppercase; padding: .3rem .6rem;
+    border-bottom: 1px solid var(--bord); cursor: pointer; user-select: none;
+    position: sticky; top: 0; background: var(--fond); }
+  th:hover { color: var(--texte); }
+  th[data-tri]::after { margin-left: .35em; opacity: .8; }
+  th[data-tri="haut"]::after { content: "▲"; }
+  th[data-tri="bas"]::after { content: "▼"; }
+  td { padding: .35rem .6rem; border-bottom: 1px solid #241f1a; vertical-align: top; }
+  tr:hover td { background: #1a1613; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .no { color: var(--pale); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .aff { color: var(--pale); font-size: .86rem; }
+  .fort { color: var(--rouge); font-weight: 600; }
+  .moyen { color: var(--orange); }
+  .faible { color: var(--pale); }
+  .nul { color: #574c40; }
+  .faite { opacity: .5; }
+  .cercle { color: var(--rouge); }
+  /* Une RUPTURE n'est pas un manque au bout de la chaîne : c'est un maillon
+     faux au milieu. Elle se voit d'un filet, pas d'une couleur de texte — le
+     score reste la première chose qu'on lit. */
+  tr.rupture td:first-child { border-left: 2px solid var(--rouge); }
+  .prix { display: block; color: var(--pale); font-size: .8rem; font-style: italic;
+    margin-top: .2rem; max-width: 52rem; }
+  .vide { color: var(--pale); padding: 2rem 0; }
+  .grappe { border: 1px solid var(--bord); background: var(--fond2);
+    padding: .6rem .8rem; margin-bottom: .6rem; }
+  .grappe .chaine { color: var(--texte); }
+  .grappe .chaine span { color: var(--pale); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Les pas</h1>
+  <span class="date" id="date"></span>
+  <span class="bilan" id="bilan">on calcule…</span>
+  <span class="lien"><a href="/">le jeu</a> · <a href="/admin">la régie</a></span>
+</header>
+<nav id="nav"></nav>
+<main>
+  <section id="s-pas" class="actif">
+    <p class="glose">
+      <b>Perte</b> : ce que le plan perd si ce pas rate — on le retire, on
+      recalcule ce qui reste atteignable, on fait la différence. Zéro veut dire
+      qu'un autre chemin existe. <b>Portée</b> : la masse d'états cibles servie
+      en aval, sans tenir compte des doublures. <b>Attendu</b> : ce qui, dans un
+      AUTRE cahier, se casse la figure sans ce pas.
+    </p>
+    <div class="barre">
+      <input type="search" id="q" placeholder="chercher un pas, une affaire, un numéro…">
+      <select id="f-affaire"><option value="">toutes les affaires</option></select>
+      <select id="f-office"><option value="">tous les offices</option></select>
+      <select id="f-genre">
+        <option value="">tous les genres</option>
+        <option value="action">les actions ⚔️</option>
+        <option value="clef">les clefs 🗝️</option>
+        <option value="verrou">les verrous 🔒</option>
+      </select>
+      <label><input type="checkbox" id="f-restant"> ce qui reste à faire</label>
+      <label><input type="checkbox" id="f-goulots" checked> seulement ce qui coûte</label>
+      <span class="compte" id="compte"></span>
+    </div>
+    <table id="t-pas"><thead></thead><tbody></tbody></table>
+  </section>
+
+  <section id="s-idees">
+    <p class="glose">
+      Ce que l'algorithme propose d'écrire pour que la chaîne tienne — les mêmes
+      détecteurs que le plateau de l'échiquier, dans le même gabarit : <i>afin
+      d'atteindre X, faire Y aurait effet Z</i>. Ce qui est neuf est le
+      <b>rang</b> : chaque idée porte la criticité de la pièce qu'elle vise.
+      Une idée ne vaut pas par la gravité de son défaut, elle vaut par ce que la
+      pièce qu'elle débloque tient. Les trente-six cahiers sont mêlés à dessein —
+      c'est toute la question à laquelle une liste par affaire ne peut pas
+      répondre : <b>laquelle des trois cents ouvre le plus ?</b>
+    </p>
+    <div class="barre">
+      <input type="search" id="qi" placeholder="chercher une idée, une pièce, une affaire…">
+      <select id="fi-affaire"><option value="">toutes les affaires</option></select>
+      <select id="fi-nature">
+        <option value="">tout</option>
+        <option value="pas">les pas — ce qui manque au bout</option>
+        <option value="rupture">les ruptures — la chaîne cassée au milieu</option>
+      </select>
+      <select id="fi-acte"><option value="">tous les gestes</option></select>
+      <span class="compte" id="compte-idees"></span>
+    </div>
+    <table id="t-idees"><thead></thead><tbody></tbody></table>
+  </section>
+
+  <section id="s-cercles">
+    <p class="glose">
+      Des chaînes qui se mordent la queue : une action qui dépend du verrou
+      qu'elle est censée lever ne partira jamais. Aucun détecteur de couverture
+      ne les voit — chaque ligne, prise seule, est bien formée. Tant qu'un cercle
+      tient, tout ce qui pend derrière vaut zéro.
+    </p>
+    <div id="grappes"></div>
+  </section>
+
+  <section id="s-affaires">
+    <p class="glose">
+      La masse de criticité que porte chaque cahier. Le nombre de pas est là pour
+      qu'on voie le gonflement : un score dérivé de ce qui est ÉCRIT mesure la
+      rédaction autant que l'importance.
+    </p>
+    <table id="t-affaires"><thead></thead><tbody></tbody></table>
+  </section>
+
+  <section id="s-hommes">
+    <p class="glose">
+      Deux façons de peser. <b>Porte</b> : la criticité des pas dont son office
+      est écrit. <b>On tire</b> : celle des pas qui engagent un moyen qu'il
+      tient — invisible à tout tableau de charge, et c'est par là qu'on est
+      bloqué par quelqu'un qui ne sait pas qu'on l'attend.
+    </p>
+    <table id="t-hommes"><thead></thead><tbody></tbody></table>
+  </section>
+
+  <section id="s-etats">
+    <p class="glose">
+      Un état cible ne se rate pas : on l'atteint ou non. Ceux marqués 🚫 n'ont
+      aucune chaîne écrite qui mène jusqu'à eux.
+    </p>
+    <table id="t-etats"><thead></thead><tbody></tbody></table>
+  </section>
+</main>
+
+<script>
+"use strict";
+const SIGNE = { etat: "🎯", verrou: "🔒", clef: "🗝️", action: "⚔️" };
+let D = null;
+
+// ─── le rangement, une seule fois pour les quatre tableaux de la page.
+// Trois états, et le troisième rend l'ordre d'origine : un tri qui ne se défait
+// pas efface pour de bon l'ordre dans lequel la chose a été rangée.
+function rangeable(table, colonnes, lignes, dessine) {
+  let col = -1, sens = 0;
+  const thead = table.tHead, tbody = table.tBodies[0];
+  function refaire() {
+    const l = lignes.slice();
+    if (sens !== 0) {
+      const c = colonnes[col];
+      l.sort((a, b) => {
+        const x = c.val(a), y = c.val(b);
+        let d;
+        if (typeof x === "number" && typeof y === "number") d = x - y;
+        else d = String(x).localeCompare(String(y), "fr", { numeric: true, sensitivity: "base" });
+        return sens === 1 ? d : -d;
+      });
+    }
+    tbody.innerHTML = "";
+    l.forEach((o) => tbody.appendChild(dessine(o)));
+  }
+  thead.innerHTML = "";
+  const tr = document.createElement("tr");
+  colonnes.forEach((c, i) => {
+    const th = document.createElement("th");
+    th.textContent = c.titre;
+    // L'AIDE VIT SUR LA COLONNE, PAS DANS UN PARAGRAPHE. La glose en tête de
+    // section se lit une fois puis cesse d'être lue ; la question « c'est quoi,
+    // Attendu, déjà ? » se pose au moment où l'œil est sur le chiffre, trente
+    // lignes plus bas. Elle doit donc être là où le doigt est déjà.
+    if (c.aide) th.title = c.aide;
+    if (c.num) th.className = "num";
+    th.onclick = () => {
+      if (col === i) sens = (sens + 1) % 3; else { col = i; sens = c.num ? 2 : 1; }
+      [...tr.cells].forEach((x) => x.removeAttribute("data-tri"));
+      // LA COLONNE RESTE CELLE QU'ON A CHOISIE, MEME QUAND ON NE TRIE PLUS.
+      // L'oublier ici (col = -1) rendait le troisieme clic indiscernable du
+      // premier : on repartait a « descendant », et le sens montant d'une
+      // colonne chiffree devenait inatteignable — on ne pouvait plus voir ce
+      // qui coute le MOINS, qui est pourtant la moitie de la question.
+      if (sens !== 0) th.dataset.tri = sens === 1 ? "haut" : "bas";
+      refaire();
+    };
+    tr.appendChild(th);
+  });
+  thead.appendChild(tr);
+  refaire();
+  return refaire;
+}
+
+const teinte = (v) => v >= 10 ? "fort" : (v >= 3 ? "moyen" : (v > 0 ? "faible" : "nul"));
+const chiffre = (v, avecTeinte) => {
+  const td = document.createElement("td");
+  td.className = "num " + (avecTeinte ? teinte(v) : "");
+  td.textContent = v ? String(v) : "—";
+  return td;
+};
+const cell = (t, cl) => {
+  const td = document.createElement("td");
+  if (cl) td.className = cl;
+  td.textContent = t == null ? "" : String(t);
+  return td;
+};
+
+// ─── LES PAS
+function tablePas() {
+  const tous = Object.keys(D.pas).map((n) => Object.assign({ n }, D.pas[n]));
+  const sel = (id) => document.getElementById(id);
+  const liste = (id, vals) => {
+    const s = sel(id);
+    [...new Set(vals)].filter(Boolean).sort((a, b) => a.localeCompare(b, "fr"))
+      .forEach((v) => { const o = document.createElement("option"); o.value = v;
+        o.textContent = v; s.appendChild(o); });
+  };
+  liste("f-affaire", tous.map((p) => p.affaire));
+  liste("f-office", tous.map((p) => {
+    if (!p.office) return "";
+    const o = D.offices[p.office];
+    return o ? (p.office + " · " + (o.qui[0] || o.nom)) : p.office;
+  }));
+
+  const colonnes = [
+    { titre: "N°", val: (p) => p.n,
+      aide: "Le numéro de la pièce au plan. ⚔️ une action, 🗝️ une clef." },
+    { titre: "Le pas", val: (p) => p.nom,
+      aide: "L'intitulé, et dessous son prix quand la clef en porte un — en prose, parce qu'on ne divise pas une criticité par de la prose. C'est pourtant lui qui tranche entre deux pas de même perte." },
+    { titre: "Affaire", val: (p) => p.affaire,
+      aide: "Le cahier qui porte ce pas." },
+    { titre: "Où ça en est", val: (p) => p.etat,
+      aide: "Ce qu'en dit le cahier. Une ligne pâlie est déjà faite — elle reste au classement parce que sa criticité explique le reste de la chaîne." },
+    { titre: "Perte", val: (p) => p.perte, num: true,
+      aide: "Combien d'états cibles deviennent inatteignables sans cette pièce. On la retire, on recalcule, on fait la différence. Pour une action ou une clef : si ce pas rate. Pour un verrou 🔒 : tant qu'il tient — ce que cet empêchement coûte au plan. Zéro ne veut pas dire sans importance : il veut dire qu'un autre chemin existe. Elle ne sépare pas les pas D'UNE MÊME chaîne — ils portent tous la même valeur. 🔁 = pris dans un cercle : la valeur serait zéro et ce serait le contraire de la vérité." },
+    { titre: "Portée", val: (p) => p.portee, num: true,
+      aide: "Les états cibles atteignables servis en aval, doublures comprises. L'éCART AVEC LA PERTE EST LA REDONDANCE : portée haute et perte nulle = quelqu'un d'autre peut le faire ; portée nulle = orphelin, il ne mène nulle part." },
+    { titre: "Attendu", val: (p) => p.attendu, num: true,
+      aide: "Ce qui, dans un AUTRE cahier, se casse la figure sans ce pas — un saut, jamais une cascade. C'est un homme à prévenir, pas un travail à sécuriser. Dix-neuf pas seulement en portent un : ils sont toute la couture entre les affaires." },
+  ];
+
+  function ligne(p) {
+    const tr = document.createElement("tr");
+    if (p.faite) tr.className = "faite";
+    tr.appendChild(cell(SIGNE[p.genre] + " " + p.n, "no"));
+    const td = document.createElement("td");
+    td.textContent = p.nom;
+    // LE PRIX SOUS LE NOM, ET SEULEMENT LÀ OÙ IL EST ÉCRIT. C'est la seule
+    // colonne qu'on ne peut pas ranger — c'est de la prose, et diviser une
+    // criticité par de la prose ne se fait pas. Mais c'est elle qui tranche :
+    // un goulot à un quart d'heure ne se traite pas comme un goulot à trente
+    // jours d'homme, et le classement seul ne le dira jamais.
+    if (p.prix) {
+      const s = document.createElement("span");
+      s.className = "prix";
+      s.textContent = p.prix;
+      td.appendChild(s);
+    }
+    tr.appendChild(td);
+    tr.appendChild(cell(p.affaire, "aff"));
+    tr.appendChild(cell(p.etat, "aff"));
+    if (p.cercle != null) {
+      const c = document.createElement("td");
+      c.className = "num cercle";
+      c.textContent = "🔁";
+      c.title = "Prise dans un cercle de dépendances : rien ne part.";
+      tr.appendChild(c);
+    } else tr.appendChild(chiffre(p.perte, true));
+    tr.appendChild(chiffre(p.portee));
+    tr.appendChild(chiffre(p.attendu));
+    return tr;
+  }
+
+  function filtrer() {
+    const q = sel("q").value.trim().toLowerCase();
+    const aff = sel("f-affaire").value, off = sel("f-office").value;
+    const genre = sel("f-genre").value;
+    const restant = sel("f-restant").checked, goulots = sel("f-goulots").checked;
+    const gardees = tous.filter((p) => {
+      if (aff && p.affaire !== aff) return false;
+      if (genre && p.genre !== genre) return false;
+      if (restant && p.faite) return false;
+      if (goulots && !(p.perte > 0 || p.attendu > 0 || p.cercle != null)) return false;
+      if (off) {
+        const o = D.offices[p.office];
+        const et = p.office ? (o ? (p.office + " · " + (o.qui[0] || o.nom)) : p.office) : "";
+        if (et !== off) return false;
+      }
+      if (q && !(p.n + " " + p.nom + " " + p.affaire + " " + p.etat)
+        .toLowerCase().includes(q)) return false;
+      return true;
+    });
+    gardees.sort((a, b) => (b.perte + b.attendu) - (a.perte + a.attendu)
+      || a.n.localeCompare(b.n));
+    document.getElementById("compte").textContent =
+      gardees.length + " pas sur " + tous.length;
+    rangeable(document.getElementById("t-pas"), colonnes, gardees, ligne);
+  }
+  ["q", "f-affaire", "f-office", "f-genre", "f-restant", "f-goulots"]
+    .forEach((id) => {
+      const e = sel(id);
+      e.addEventListener(e.tagName === "INPUT" && e.type === "search" ? "input" : "change",
+        filtrer);
+    });
+  filtrer();
+}
+
+// ─── LES CERCLES
+function tableCercles() {
+  const h = document.getElementById("grappes");
+  h.innerHTML = "";
+  if (!D.cercles.length) {
+    h.innerHTML = '<p class="vide">Aucun cercle. Toutes les chaînes du plan descendent.</p>';
+    return;
+  }
+  D.cercles.forEach((g) => {
+    const d = document.createElement("div");
+    d.className = "grappe";
+    const c = document.createElement("div");
+    c.className = "chaine";
+    g.pieces.forEach((p, i) => {
+      if (i) c.appendChild(document.createTextNode(" → "));
+      const s = document.createElement("b");
+      s.textContent = SIGNE[p.genre] + " " + p.n;
+      c.appendChild(s);
+    });
+    d.appendChild(c);
+    const l = document.createElement("div");
+    l.className = "aff";
+    l.textContent = g.pieces.map((p) => p.nom).join(" · ");
+    d.appendChild(l);
+    const a = document.createElement("div");
+    a.className = "aff";
+    a.textContent = [...new Set(g.pieces.map((p) => p.affaire).filter(Boolean))].join(" · ");
+    d.appendChild(a);
+    h.appendChild(d);
+  });
+}
+
+// ─── PAR AFFAIRE
+function tableAffaires() {
+  const par = {};
+  Object.values(D.pas).forEach((p) => {
+    const k = p.affaire || "— sans affaire —";
+    const o = par[k] || (par[k] = { affaire: k, perte: 0, attendu: 0, pas: 0,
+      goulots: 0, restant: 0 });
+    o.perte += p.perte; o.attendu += p.attendu; o.pas += 1;
+    if (p.perte > 0) o.goulots += 1;
+    if (!p.faite) o.restant += 1;
+  });
+  const l = Object.values(par);
+  l.forEach((o) => { o.perte = Math.round(o.perte); o.attendu = Math.round(o.attendu); });
+  rangeable(document.getElementById("t-affaires"), [
+    { titre: "Affaire", val: (o) => o.affaire,
+      aide: "Le cahier. Une ligne par affaire ouverte." },
+    { titre: "Criticité", val: (o) => o.perte, num: true,
+      aide: "La somme des pertes de ses pas. À lire avec la colonne Pas : un score dérivé de ce qui est ÉCRIT mesure la rédaction autant que l'importance." },
+    { titre: "Attendu", val: (o) => o.attendu, num: true,
+      aide: "Ce que les autres cahiers attendent de celui-ci." },
+    { titre: "Goulots", val: (o) => o.goulots, num: true,
+      aide: "Combien de ses pas ont une perte non nulle — c'est-à-dire n'ont pas de doublure." },
+    { titre: "Pas", val: (o) => o.pas, num: true,
+      aide: "Le nombre d'actions et de clefs écrites. Il est là pour qu'on voie le gonflement." },
+    { titre: "À faire", val: (o) => o.restant, num: true,
+      aide: "Ce qui n'est pas encore marqué fait." },
+  ], l.sort((a, b) => b.perte - a.perte), (o) => {
+    const tr = document.createElement("tr");
+    tr.appendChild(cell(o.affaire));
+    tr.appendChild(chiffre(o.perte, true));
+    tr.appendChild(chiffre(o.attendu));
+    tr.appendChild(chiffre(o.goulots));
+    tr.appendChild(chiffre(o.pas));
+    tr.appendChild(chiffre(o.restant));
+    return tr;
+  });
+}
+
+// ─── PAR HOMME
+function tableHommes() {
+  const par = {};
+  const dit = (q) => par[q] || (par[q] = { qui: q, porte: 0, pas: 0, goulots: 0,
+    tire: 0, offices: new Set() });
+  Object.values(D.pas).forEach((p) => {
+    const o = D.offices[p.office];
+    if (o) (o.qui.length ? o.qui : ["— titulaire non écrit —"]).forEach((q) => {
+      const e = dit(q);
+      e.porte += p.perte; e.pas += 1;
+      if (p.perte > 0) e.goulots += 1;
+      e.offices.add(p.office);
+    });
+  });
+  // « on tire » : le moyen dit qui le tient, et ce n'est pas le même registre —
+  // d'où la jointure sur le nom, titres retirés. Elle est devinée, et dite.
+  // « Moi » est la reine : les moyens sont écrits de sa main, à la première
+  // personne. Sans cette règle-là, elle tient deux lignes de la table sous deux
+  // noms qui n'en sont pas — et aucune des deux ne dit qui c'est.
+  const nu = (s) => {
+    const t = String(s).trim();
+    if (/^(moi|moi seule|moi-même|moi meme)$/i.test(t)) return "la reine";
+    return t.replace(/^(ser|dame|lord|lady|le prince|la princesse|mestre|maître|maitre|septon|celui qu'on appelle)\s+/i, "").toLowerCase();
+  };
+  const parNu = {};
+  Object.values(par).forEach((e) => { parNu[nu(e.qui)] = e; });
+  Object.values(D.pas).forEach((p) => {
+    (p.moyens || []).forEach((m) => {
+      const t = (D.tenu || {})[m];
+      (t || []).forEach((q) => {
+        // Celui qui ne porte aucun office entre quand même dans la table — il
+        // tient un moyen, donc on lui tire dessus. Mais on l'inscrit AUSSI au
+        // nom normalisé : sans cela, « Moi » et « Moi seule » s'ouvraient deux
+        // lignes, et le second goulot de la maison se partageait en deux.
+        const k = nu(q);
+        const e = parNu[k] || (parNu[k] = dit(k === "la reine" ? "La reine" : q));
+        e.tire += p.perte;
+      });
+    });
+  });
+  const l = Object.values(par);
+  l.forEach((o) => { o.porte = Math.round(o.porte); o.tire = Math.round(o.tire); });
+  rangeable(document.getElementById("t-hommes"), [
+    { titre: "L'homme", val: (o) => o.qui,
+      aide: "Le titulaire, tel que le registre des offices le nomme." },
+    { titre: "Porte", val: (o) => o.porte, num: true,
+      aide: "La criticité des pas dont SON office est écrit. C'est sa charge nommée." },
+    { titre: "Pas", val: (o) => o.pas, num: true,
+      aide: "Le nombre d'actions et de clefs écrites. Il est là pour qu'on voie le gonflement." },
+    { titre: "Goulots", val: (o) => o.goulots, num: true,
+      aide: "Combien de ses pas ont une perte non nulle — c'est-à-dire n'ont pas de doublure." },
+    { titre: "On tire", val: (o) => o.tire, num: true,
+      aide: "La criticité des pas qui engagent un moyen qu'IL tient, sans que son office soit sur la ligne. Invisible à tout tableau de charge : c'est par là qu'on est bloqué par quelqu'un qui ne sait pas qu'on l'attend." },
+    { titre: "Offices", val: (o) => [...o.offices].join(" "),
+      aide: "Les charges qu'il tient." },
+  ], l.sort((a, b) => b.porte - a.porte), (o) => {
+    const tr = document.createElement("tr");
+    tr.appendChild(cell(o.qui));
+    tr.appendChild(chiffre(o.porte, true));
+    tr.appendChild(chiffre(o.pas));
+    tr.appendChild(chiffre(o.goulots));
+    tr.appendChild(chiffre(o.tire));
+    tr.appendChild(cell([...o.offices].sort().join(" "), "aff"));
+    return tr;
+  });
+}
+
+// ─── LES ÉTATS CIBLES
+function tableEtats() {
+  const l = Object.keys(D.etats).map((n) => Object.assign({ n }, D.etats[n]));
+  rangeable(document.getElementById("t-etats"), [
+    { titre: "N°", val: (o) => o.n,
+      aide: "Le numéro de l'état cible." },
+    { titre: "L'état", val: (o) => o.nom,
+      aide: "Ce qui doit devenir vrai pour que l'affaire soit résolue." },
+    { titre: "Affaire", val: (o) => o.affaire,
+      aide: "Le cahier qui le poursuit." },
+    { titre: "Poids", val: (o) => o.poids, num: true,
+      aide: "Le SEUL nombre saisi à la main de tout le calcul, dans etat/poids-etats.json. Tant que le fichier n'existe pas, tout vaut 1 — le classement dit donc « ça débloque beaucoup » et jamais « ça débloque ce qui compte »." },
+    { titre: "Atteint ?", val: (o) => (o.atteignable ? 1 : 0), num: true,
+      aide: "✅ une chaîne écrite mène jusqu'à lui. 🚫 aucune — le plan le poursuit sans avoir écrit par où." },
+  ], l.sort((a, b) => (a.atteignable - b.atteignable) || a.n.localeCompare(b.n)), (o) => {
+    const tr = document.createElement("tr");
+    tr.appendChild(cell("🎯 " + o.n, "no"));
+    tr.appendChild(cell(o.nom));
+    tr.appendChild(cell(o.affaire, "aff"));
+    tr.appendChild(chiffre(o.poids));
+    const t = document.createElement("td");
+    t.className = "num" + (o.atteignable ? "" : " fort");
+    t.textContent = o.atteignable ? "✅" : "🚫";
+    if (!o.atteignable) t.title = "Aucune chaîne écrite ne mène jusqu'à cet état.";
+    tr.appendChild(t);
+    return tr;
+  });
+}
+
+// ─── LES IDÉES — ce qu'il faudrait écrire, rangé par ce que ça ouvrirait
+const GESTE = {
+  clef: "écrire une clef", office: "désigner un porteur", retenir: "trancher une clef",
+  action: "écrire une action", empeche: "trouver l'empêchement",
+  orpheline: "rattacher une action", genre: "corriger un renvoi",
+  retrouver: "retrouver une pièce", registre: "deux plans, ou un seul",
+  numeros: "numéroter des offices", fait: "unifier l'écriture de « fait »",
+};
+function tableIdees() {
+  const tous = (D.idees || []).map((i) =>
+    Object.assign({ geste: String(i.acte || "").split("/")[0] }, i));
+  const sel = (id) => document.getElementById(id);
+  const liste = (id, vals, nom) => {
+    const s = sel(id);
+    [...new Set(vals)].filter(Boolean).sort((a, b) => a.localeCompare(b, "fr"))
+      .forEach((v) => { const o = document.createElement("option"); o.value = v;
+        o.textContent = nom ? (nom[v] || v) : v; s.appendChild(o); });
+  };
+  liste("fi-affaire", tous.map((i) => i.affaire));
+  liste("fi-acte", tous.map((i) => i.geste), GESTE);
+
+  const colonnes = [
+    { titre: "Ouvre", val: (i) => i.score, num: true,
+      aide: "La criticité de la pièce que cette idée vise : sa perte plus ce qu'on lui doit ailleurs. Zéro ne veut pas dire inutile — il veut dire que la pièce visée est doublée, ou qu'elle est elle-même inatteignable pour une autre raison." },
+    { titre: "Pièce", val: (i) => i.piece || "",
+      aide: "Le numéro visé, lu sur la clef de l'acte. Une idée qui n'en porte pas parle du cahier entier." },
+    { titre: "Le geste", val: (i) => GESTE[i.geste] || i.geste,
+      aide: "De quelle sorte est l'idée : écrire une clef, désigner un porteur, trancher une clef retenue…" },
+    { titre: "L'idée", val: (i) => i.texte,
+      aide: "Le gabarit de l'échiquier : afin d'atteindre X, faire Y aurait effet Z. Le texte est celui des détecteurs, mot pour mot — on ne le réécrit pas ici." },
+    { titre: "Affaire", val: (i) => i.affaire, aide: "Le cahier d'où l'idée sort." },
+  ];
+  function ligne(i) {
+    const tr = document.createElement("tr");
+    if (i.nature === "rupture") tr.className = "rupture";
+    tr.appendChild(chiffre(i.score, true));
+    tr.appendChild(cell(i.piece ? ((SIGNE[i.genre] || "") + " " + i.piece) : "—", "no"));
+    tr.appendChild(cell(GESTE[i.geste] || i.geste, "aff"));
+    tr.appendChild(cell(i.texte));
+    tr.appendChild(cell(i.affaire, "aff"));
+    return tr;
+  }
+  function filtrer() {
+    const q = sel("qi").value.trim().toLowerCase();
+    const aff = sel("fi-affaire").value, nat = sel("fi-nature").value;
+    const geste = sel("fi-acte").value;
+    const g = tous.filter((i) => {
+      if (aff && i.affaire !== aff) return false;
+      if (nat && i.nature !== nat) return false;
+      if (geste && i.geste !== geste) return false;
+      if (q && !((i.texte || "") + " " + (i.piece || "") + " " + i.affaire)
+        .toLowerCase().includes(q)) return false;
+      return true;
+    });
+    sel("compte-idees").textContent = g.length + " idées sur " + tous.length;
+    rangeable(document.getElementById("t-idees"), colonnes, g, ligne);
+  }
+  ["qi", "fi-affaire", "fi-nature", "fi-acte"].forEach((id) => {
+    const e = sel(id);
+    e.addEventListener(e.tagName === "INPUT" ? "input" : "change", filtrer);
+  });
+  filtrer();
+}
+
+const ONGLETS = [
+  ["s-pas", "Les pas"], ["s-idees", "Les idées"], ["s-cercles", "Les cercles"],
+  ["s-affaires", "Par affaire"], ["s-hommes", "Par homme"],
+  ["s-etats", "Les états cibles"],
+];
+
+function onglets() {
+  const nav = document.getElementById("nav");
+  ONGLETS.forEach(([id, nom], i) => {
+    const b = document.createElement("button");
+    b.textContent = nom;
+    if (!i) b.className = "actif";
+    b.onclick = () => {
+      [...nav.children].forEach((x) => x.classList.remove("actif"));
+      b.classList.add("actif");
+      ONGLETS.forEach(([j]) => document.getElementById(j)
+        .classList.toggle("actif", j === id));
+      location.hash = id.slice(2);
+    };
+    nav.appendChild(b);
+  });
+  const h = location.hash.slice(1);
+  const i = ONGLETS.findIndex(([id]) => id === "s-" + h);
+  if (i > 0) nav.children[i].click();
+}
+
+fetch("/criticite").then((r) => r.json()).then((d) => {
+  D = d;
+  if (d.erreur) {
+    document.getElementById("bilan").textContent = "le calcul a échoué : " + d.erreur;
+    return;
+  }
+  const dt = d.date || {};
+  document.getElementById("date").textContent = dt.jour
+    ? (dt.jour + "e jour de la " + dt.lune + "e lune, an " + dt.annee) : "";
+  const buts = Object.values(d.etats);
+  const atteints = buts.filter((e) => e.atteignable).length;
+  document.getElementById("bilan").innerHTML =
+    "<b>" + Object.keys(d.pas).length + "</b> pas · <b>" + atteints + "</b> états cibles"
+    + " atteignables sur <b>" + buts.length + "</b> · <b>" + d.cercles.length
+    + "</b> cercle" + (d.cercles.length > 1 ? "s" : "")
+    + " · poids saisis à la main : <b>" + d.saisis + "</b>";
+  onglets();
+  tablePas();
+  tableIdees();
+  tableCercles();
+  tableAffaires();
+  tableHommes();
+  tableEtats();
+}).catch((e) => {
+  document.getElementById("bilan").textContent = "on n'a pas pu lire /criticite : " + e;
+});
+</script>
+</body>
+</html>

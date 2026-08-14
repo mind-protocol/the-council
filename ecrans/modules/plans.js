@@ -402,6 +402,30 @@ window.Plans = {
         orne: ["lit", 258, 240, 5],
         alias: [], motifs: ["appartements royaux"] },
 
+      { id: "appartements-douairiere", nom: "Les appartements de la reine douairière", etage: "sommet",
+        forme: { c: [230, 202, 10] }, etiq: [230, 200], lignes: ["La mère"],
+        quoi: "Dans Maegor aussi, à deux portes de son fils. Une septa dort dans l'antichambre.",
+        orne: ["etoile", 230, 210, 4],
+        alias: [], motifs: ["appartements de la reine douairiere", "appartements de la douairiere"] },
+
+      { id: "chambre-helaena", nom: "La chambre de la reine Helaena", etage: "sommet",
+        forme: { c: [286, 202, 10] }, etiq: [286, 200], lignes: ["Helaena"],
+        quoi: "La reine et les jumeaux. La porte au fond du couloir de Maegor, la moins gardée des trois.",
+        orne: ["berceau", 286, 210, 4],
+        alias: [], motifs: ["chambre de la reine helaena", "chambre d'helaena"] },
+
+      { id: "salle-d-armes", nom: "La salle d'armes",
+        forme: { r: [286, 98, 62, 18, 4] }, etiq: [317, 111], lignes: ["La salle d'armes"],
+        quoi: "Le râtelier, le sable, les mannequins. Le Lord Commandant y fait sonner les heures des princes.",
+        orne: ["lances", 297, 107, 4.5],
+        alias: ["salle d'armes"], motifs: ["salle d'armes"] },
+
+      { id: "communs-donjon-rouge", nom: "Les communs",
+        forme: { r: [126, 158, 46, 14, 4] }, etiq: [149, 170], lignes: ["Les communs"],
+        quoi: "Les paillasses de la maisonnée, contre la courtine de l'ouest. Trois cents bouches dorment là et voient passer tout le reste.",
+        orne: ["paillasses", 138, 167, 3.6],
+        alias: [], motifs: ["communs du donjon rouge"] },
+
       { id: "tour-blanche", nom: "La Tour Blanche", cle: true,
         forme: { c: [164, 200, 24] }, etiq: [164, 194],
         lignes: ["La Tour", "Blanche"],
@@ -653,6 +677,18 @@ window.Plans = {
         quoi: "La seule porte qui compte : tout ce qui se mange dans cette ville la franchit, et tout ce qui sort du chantier aussi.",
         orne: ["herse", 248, 90, 4],
         alias: ["porte de la Gadoue", "la Gadoue"], motifs: ["porte de la gadoue", "la gadoue"] },
+
+      { id: "le-change", nom: "Le change", dehors: true,
+        forme: { r: [406, 46, 138, 22, 4] }, etiq: [475, 60], lignes: ["Le change"],
+        quoi: "Rue haute, dans les murs : on y pèse la monnaie et l'on y prête à la semaine. Ce qu'on y change se sait ailleurs le lendemain.",
+        orne: ["tonneaux", 424, 57, 4],
+        alias: ["le change"], motifs: ["le change", "rue haute"] },
+
+      { id: "la-gaffe", nom: "La Gaffe", cle: true,
+        forme: { r: [338, 136, 92, 26, 4] }, etiq: [384, 152], lignes: ["La Gaffe"],
+        quoi: "La taverne sous l'arche : soupe, bière coupée, et Mag qui entend tout ce qui monte du port avant le guet.",
+        orne: ["tonneaux", 356, 148, 4],
+        alias: ["La Gaffe"], motifs: ["la gaffe"] },
 
       { id: "arche-de-waltyr", nom: "L'ombre de l'arche",
         forme: { c: [280, 114, 17] }, etiq: [280, 112], lignes: ["L'arche"],

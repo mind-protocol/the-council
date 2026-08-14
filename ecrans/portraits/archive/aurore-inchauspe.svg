@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Aurore Inchauspé">
+  <title>Aurore Inchauspé</title>
+  <defs>
+    <radialGradient id="bg-aurore" cx="50%" cy="32%" r="80%">
+      <stop offset="0%" stop-color="#302719"/>
+      <stop offset="55%" stop-color="#221b12"/>
+      <stop offset="100%" stop-color="#130f09"/>
+    </radialGradient>
+    <clipPath id="clip-aurore"><circle cx="64" cy="64" r="52"/></clipPath>
+  </defs>
+  <!-- anneau héraldique : or et sable, les émaux de la Noiseraie -->
+  <circle cx="64" cy="64" r="63" fill="#241d18"/>
+  <circle cx="64" cy="64" r="57.5" fill="none" stroke="#c9a227" stroke-width="7" stroke-dasharray="15.05 15.05"/>
+  <!-- disque intérieur -->
+  <circle cx="64" cy="64" r="52" fill="url(#bg-aurore)" stroke="#7a6342" stroke-width="1.2"/>
+  <!-- buste : laine de voyage, pas de soie de cour — une maison de négoce -->
+  <g clip-path="url(#clip-aurore)">
+    <path d="M44,47 C43,30 54,25 64,25 C74,25 85,30 84,47 L87,92 C88,102 81,107 75,106 L53,106 C47,107 40,102 41,92 Z" fill="#6d5a44"/>
+    <!-- le châle croisé sur la poitrine, tenu d'une agrafe -->
+    <path d="M22,128 C27,99 46,88 64,88 C82,88 101,99 106,128 Z" fill="#4a3c2c"/>
+    <path d="M50,92 L64,106 L78,92" fill="none" stroke="#8a7454" stroke-width="3"/>
+    <circle cx="64" cy="105" r="2.6" fill="#c9a227"/>
+    <!-- visage -->
+    <ellipse cx="64" cy="55" rx="15.5" ry="18.5" fill="#8a6f52"/>
+    <!-- cheveux tirés en arrière, tressés : elle a voyagé, elle n'a pas paradé -->
+    <path d="M48,54 C46.5,34 54,27 64,27 C74,27 81.5,34 80,54 C78.5,45 73,41 64,41 C55,41 49.5,45 48,54 Z" fill="#3a2a20"/>
+    <path d="M49,48 C52,38 57,34 64,34 C71,34 76,38 79,48" fill="none" stroke="#4d382b" stroke-width="1.6" opacity="0.9"/>
+    <path d="M79,52 C84,60 83,72 79,80" fill="none" stroke="#3a2a20" stroke-width="4.2" stroke-linecap="round"/>
+  </g>
+  <!-- badge de maison : une noix, deux traits -->
+  <circle cx="64" cy="113" r="11.5" fill="#191510" stroke="#7a6342" stroke-width="1.2"/>
+  <g transform="translate(64 113)">
+    <path d="M0,-6.2 C4.4,-5.6 5.2,-1.8 3.8,1 C2.6,3.6 -2.6,3.6 -3.8,1 C-5.2,-1.8 -4.4,-5.6 0,-6.2 Z" fill="#c9a227"/>
+    <path d="M0,-5.4 V3.2" fill="none" stroke="#191510" stroke-width="1.1" stroke-linecap="round"/>
+  </g>
+</svg>

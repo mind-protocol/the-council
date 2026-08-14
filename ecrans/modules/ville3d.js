@@ -612,17 +612,20 @@ window.Ville3D = (function () {
   }).catch(() => { LIEUX = []; });
 
   // Les deux onglets, dans l'ordre où l'on descend : la rade, puis la place forte.
+  // `repli` : ces trois hauteurs vivent derrière le « … » de la bascule. Elles
+  // restent à un clic, mais elles cessent d'occuper la rangée — le plan et le
+  // royaume sont ce qu'on regarde vingt fois par scène, pas la rade.
   const ECHELLES = [
-    { id: "ville3d", nom: "La ville", vue: "ville", ordre: 2 },
-    { id: "chateau3d", nom: "Le quartier", vue: "chateau", ordre: 3 },
+    { id: "ville3d", nom: "La ville", vue: "ville", ordre: 2, repli: true },
+    { id: "chateau3d", nom: "Le quartier", vue: "chateau", ordre: 3, repli: true },
     // Et la troisième hauteur : une pièce dans le cadre, à hauteur d'homme.
     // C'est la seule où les gens de la salle se voient — plus haut, ils sont
     // trois points sous un toit et la foule reprend la parole.
-    { id: "salle3d", nom: "Vous", vue: "salle", ordre: 3.1 },
+    { id: "salle3d", nom: "Vous", vue: "salle", ordre: 3.1, repli: true },
   ];
   if (window.Plan && Plan.echelle) {
     ECHELLES.forEach((e) => Plan.echelle({
-      id: e.id, nom: e.nom, hote: HOTE, ordre: e.ordre,
+      id: e.id, nom: e.nom, hote: HOTE, ordre: e.ordre, repli: e.repli,
       // Le château n'a d'onglet que là où le lieu déclare cette hauteur-là :
       // sans `vues.chateau`, on ne va pas planter la caméra au hasard.
       dispo: () => offert() && !!((def().vues || {})[e.vue] || e.vue === "ville"),

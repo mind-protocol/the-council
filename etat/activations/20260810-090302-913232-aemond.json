@@ -1,0 +1,543 @@
+{
+  "qui": "aemond",
+  "activation": {
+    "tache": {
+      "id": "activation:aemond:5fba1e19ab30",
+      "quoi": "Obtenir de voler — sur Sombreval, sur Peyredragon, sur n'importe quoi — avant que la honte ne s'installe.",
+      "creee": true
+    },
+    "issue": "avance",
+    "activites": [
+      {
+        "id": "act:aemond:1",
+        "ordre": 1,
+        "temps": {
+          "debut_s": 150797.91,
+          "duree_s": 150,
+          "fin_s": 150947.91
+        },
+        "action": {
+          "verbe": "ecrire",
+          "quoi": "Tracer à la chandelle finissante l'ordre d'une seule ligne, daté du 29e : sangler Vhagar du grand harnais de long vol à la première lumière, la tenir sanglée jusqu'à midi, ne dételer que sur son mot et sur nul autre. Sécher, plier, sceller.",
+          "cibles": [
+            "pers:aemond",
+            "affaire:activation:aemond:5fba1e19ab30"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:aemond",
+            "relation": "ecrit_a_sa_table",
+            "vers": "pers:aemond",
+            "duree_s": 150
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:aemond",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "aemond-affaires-ouvertes",
+            "mode": "intention"
+          },
+          {
+            "ref": "affaire:activation:aemond:5fba1e19ab30",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:aemond:1:1",
+            "type": "objet_produit",
+            "cible": "pers:aemond",
+            "avant": null,
+            "apres": "Ordre scellé d'une ligne, de la main du prince Aemond, daté du 29e jour de la 3e lune de l'an 129 : « Vhagar sanglée du grand harnais de long vol à la première lumière, tenue sanglée jusqu'à midi ; dételer sur mon mot et sur nul autre. »",
+            "portee": "monde",
+            "source_refs": [
+              "pers:aemond"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 5.0,
+        "quoi": "Tracer à la chandelle finissante l'ordre d'une seule ligne, daté du 29e : sangler Vhagar du grand harnais de long vol à la première lumière, la tenir sanglée jusqu'à midi, ne dételer que sur son mot et sur nul autre. Sécher, plier, sceller.",
+        "source": "aemond-affaires-ouvertes, affaire:activation:aemond:5fba1e19ab30, pers:aemond",
+        "resultat": "objet_produit: Ordre scellé d'une ligne, de la main du prince Aemond, daté du 29e jour de la 3e lune de l'an 129 : « Vhagar sanglée du grand harnais de long vol à la première lumière, tenue sanglée jusqu'à midi ; dételer sur mon mot et sur nul autre. »",
+        "preuve": null
+      },
+      {
+        "id": "act:aemond:2",
+        "ordre": 2,
+        "temps": {
+          "debut_s": 150947.91,
+          "duree_s": 90,
+          "fin_s": 151037.91
+        },
+        "action": {
+          "verbe": "ordonner",
+          "quoi": "Remettre le pli scellé à son écuyer, lui répéter de vive voix à qui le porter — aux gardiens de dragons de la Fosse aux Dragons, les mêmes devant qui il a révoqué son ordre de Sombreval hier au soir — et lui interdire de passer par la porte du roi ou de porter un second mot à quiconque.",
+          "cibles": [
+            "pers:aemond"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:aemond",
+            "relation": "parle_a_son_ecuyer",
+            "vers": "pers:aemond",
+            "duree_s": 90
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:aemond",
+            "mode": "parle"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "aemond-quand-je-vole",
+            "mode": "memoire"
+          },
+          {
+            "ref": "res:act:aemond:1:1",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:aemond:2:1",
+            "type": "communication",
+            "cible": "pers:aemond",
+            "avant": null,
+            "apres": "L'écuyer part à pied pour la Colline de Rhaenys avec l'ordre scellé et sa consigne verbale ; il n'est pas revenu avant la fin du battement, et l'exécution de l'ordre à la Fosse n'est pas encore connue du prince.",
+            "portee": "monde",
+            "source_refs": [
+              "pers:aemond",
+              "res:act:aemond:1:1"
+            ],
+            "preuve_refs": [
+              "res:act:aemond:1:1"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 3.0,
+        "quoi": "Remettre le pli scellé à son écuyer, lui répéter de vive voix à qui le porter — aux gardiens de dragons de la Fosse aux Dragons, les mêmes devant qui il a révoqué son ordre de Sombreval hier au soir — et lui interdire de passer par la porte du roi ou de porter un second mot à quiconque.",
+        "source": "aemond-quand-je-vole, pers:aemond, res:act:aemond:1:1",
+        "resultat": "communication: L'écuyer part à pied pour la Colline de Rhaenys avec l'ordre scellé et sa consigne verbale ; il n'est pas revenu avant la fin du battement, et l'exécution de l'ordre à la Fosse n'est pas encore connue du prince.",
+        "preuve": [
+          "res:act:aemond:1:1"
+        ]
+      },
+      {
+        "id": "act:aemond:3",
+        "ordre": 3,
+        "temps": {
+          "debut_s": 151037.91,
+          "duree_s": 120,
+          "fin_s": 151157.91
+        },
+        "action": {
+          "verbe": "consigner",
+          "quoi": "Reprendre le feuillet des trois termes, écrit de sa main le 28e, et y porter sous la date du 29e, avant l'heure : « prêt depuis dix heures du soir du vingt-huitième ; rien reçu ; n'ai pas redemandé. »",
+          "cibles": [
+            "pers:aemond",
+            "affaire:activation:aemond:5fba1e19ab30"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:aemond",
+            "relation": "ecrit_a_sa_table",
+            "vers": "pers:aemond",
+            "duree_s": 120
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:aemond",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "aemond-affaires-ouvertes",
+            "mode": "memoire"
+          },
+          {
+            "ref": "affaire:activation:aemond:5fba1e19ab30",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:aemond:3:1",
+            "type": "objet_produit",
+            "cible": "pers:aemond",
+            "avant": "Feuillet des trois termes, écrit de sa main et daté du 28e, sur sa table.",
+            "apres": "Feuillet des trois termes portant une seconde entrée datée du 29e avant l'aube : « prêt depuis dix heures du soir du vingt-huitième ; rien reçu ; n'ai pas redemandé. » — pièce écrite de sa seule main, sans témoin ni contreseing.",
+            "portee": "monde",
+            "source_refs": [
+              "pers:aemond"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:aemond:3:2",
+            "type": "fait",
+            "cible": "pers:aemond",
+            "avant": null,
+            "apres": "Le retard cesse d'être une chose qu'il subit sans trace : il est daté deux fois — au rôle des plis de la Main le 28e, sur son feuillet le 29e — et il n'a rien redemandé.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "pers:aemond",
+              "res:act:aemond:3:1"
+            ],
+            "preuve_refs": [
+              "res:act:aemond:3:1"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 4.0,
+        "quoi": "Reprendre le feuillet des trois termes, écrit de sa main le 28e, et y porter sous la date du 29e, avant l'heure : « prêt depuis dix heures du soir du vingt-huitième ; rien reçu ; n'ai pas redemandé. »",
+        "source": "aemond-affaires-ouvertes, affaire:activation:aemond:5fba1e19ab30, pers:aemond",
+        "resultat": "objet_produit: Feuillet des trois termes portant une seconde entrée datée du 29e avant l'aube : « prêt depuis dix heures du soir du vingt-huitième ; rien reçu ; n'ai pas redemandé. » — pièce écrite de sa seule main, sans témoin ni contreseing. · fait: Le retard cesse d'être une chose qu'il subit sans trace : il est daté deux fois — au rôle des plis de la Main le 28e, sur son feuillet le 29e — et il n'a rien redemandé.",
+        "preuve": [
+          "res:act:aemond:3:1"
+        ]
+      },
+      {
+        "id": "act:aemond:4",
+        "ordre": 4,
+        "temps": {
+          "debut_s": 151157.91,
+          "duree_s": 240,
+          "fin_s": 151397.91
+        },
+        "action": {
+          "verbe": "s_equiper",
+          "quoi": "S'habiller pour voler : cuir de vol, bottes hautes lacées serré, gants, manteau doublé pour deux journées d'aile et une nuit posée sur la côte du Bec de Massey ; sangler l'épée, resserrer le cache-œil, prendre le nécessaire de route.",
+          "cibles": [
+            "pers:aemond"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:aemond",
+            "relation": "s_equipe_dans_ses_appartements",
+            "vers": "pers:aemond",
+            "duree_s": 240
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:aemond",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "aemond-affaires-ouvertes",
+            "mode": "intention"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:aemond:4:1",
+            "type": "variation_mesure",
+            "cible": "pers:aemond",
+            "avant": "Le prince en habit de veille, tel qu'il a passé la nuit debout.",
+            "apres": "Le prince botté, ganté, manteauté pour le long vol : rien de sa personne ne retarde plus un départ.",
+            "portee": "monde",
+            "source_refs": [
+              "pers:aemond"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 8.0,
+        "quoi": "S'habiller pour voler : cuir de vol, bottes hautes lacées serré, gants, manteau doublé pour deux journées d'aile et une nuit posée sur la côte du Bec de Massey ; sangler l'épée, resserrer le cache-œil, prendre le nécessaire de route.",
+        "source": "aemond-affaires-ouvertes, pers:aemond",
+        "resultat": "variation_mesure: Le prince botté, ganté, manteauté pour le long vol : rien de sa personne ne retarde plus un départ.",
+        "preuve": null
+      },
+      {
+        "id": "act:aemond:5",
+        "ordre": 5,
+        "temps": {
+          "debut_s": 151397.91,
+          "duree_s": 90,
+          "fin_s": 151487.91
+        },
+        "action": {
+          "verbe": "partir",
+          "quoi": "Sortir de ses appartements sans passer par l'antichambre ni par la porte du roi, descendre vers les cours basses du Donjon Rouge et prendre la route de la Colline de Rhaenys pour attendre à la Fosse, à côté de sa bête, jusqu'à midi.",
+          "cibles": [
+            "pers:aemond"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:aemond",
+            "relation": "descend_vers_les_cours_basses",
+            "vers": "port-real",
+            "duree_s": 90
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "port-real",
+            "mode": "parcourt"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "aemond-quand-je-vole",
+            "mode": "intention"
+          },
+          {
+            "ref": "pers:aemond",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:aemond:5:1",
+            "type": "deplacement",
+            "cible": "pers:aemond",
+            "avant": "Aemond Targaryen dans ses appartements, au Donjon Rouge.",
+            "apres": "Aemond Targaryen en chemin dans Port-Réal, hors du Donjon Rouge, cap sur la Fosse aux Dragons ; il n'a pas reparu devant la porte du roi.",
+            "portee": "monde",
+            "source_refs": [
+              "pers:aemond",
+              "port-real"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:aemond:5:2",
+            "type": "observation",
+            "cible": "port-real",
+            "avant": null,
+            "apres": "À la première lumière du 29e, aucun porteur de cire royale ne monte ni ne descend les cours : le silence d'Aegon tient encore, et il reste une demi-journée avant midi.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "port-real"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:aemond:5:3",
+            "type": "progression_tache",
+            "cible": "activation:aemond:5fba1e19ab30",
+            "avant": "Vol suspendu au seul mot du roi ; le prince attendait dans ses appartements, sans preuve datée du 29e et sans ordre porté à la Fosse.",
+            "apres": "Ordre scellé parti pour la Fosse, feuillet daté du 29e, prince équipé et en route vers sa bête : tout ce qui dépend de lui est fait, et une borne est posée à midi du 29e — après quoi le silence vaudra refus d'Aegon et la voie de la représaille sera reprise devant le conseil avec ses chiffres.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:aemond:1:1",
+              "res:act:aemond:2:1",
+              "res:act:aemond:3:1",
+              "res:act:aemond:5:1"
+            ],
+            "preuve_refs": [
+              "res:act:aemond:1:1",
+              "res:act:aemond:3:1"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 3.0,
+        "quoi": "Sortir de ses appartements sans passer par l'antichambre ni par la porte du roi, descendre vers les cours basses du Donjon Rouge et prendre la route de la Colline de Rhaenys pour attendre à la Fosse, à côté de sa bête, jusqu'à midi.",
+        "source": "aemond-quand-je-vole, pers:aemond, port-real",
+        "resultat": "deplacement: Aemond Targaryen en chemin dans Port-Réal, hors du Donjon Rouge, cap sur la Fosse aux Dragons ; il n'a pas reparu devant la porte du roi. · observation: À la première lumière du 29e, aucun porteur de cire royale ne monte ni ne descend les cours : le silence d'Aegon tient encore, et il reste une demi-journée avant midi. · progression_tache: Ordre scellé parti pour la Fosse, feuillet daté du 29e, prince équipé et en route vers sa bête : tout ce qui dépend de lui est fait, et une borne est posée à midi du 29e — après quoi le silence vaudra refus d'Aegon et la voie de la représaille sera reprise devant le conseil avec ses chiffres.",
+        "preuve": [
+          "res:act:aemond:1:1",
+          "res:act:aemond:3:1"
+        ]
+      }
+    ],
+    "suite": "Attendre à la Fosse aux Dragons, botté, jusqu'à midi du 29e : soit la cire tombe et il monte dans le quart d'heure, soit midi passe et il rentre au Donjon Rouge porter le silence devant le conseil.",
+    "reveils_suivants": [
+      {
+        "qui": "aemond",
+        "quand": "midi du 29e jour de la 3e lune de l'an 129, à la Fosse aux Dragons",
+        "pourquoi": "Borne posée par lui-même : le retour de son écuyer, l'état du harnais de Vhagar, et la présence ou l'absence du mot du roi."
+      }
+    ],
+    "budget_energie": 23,
+    "budget_secondes": 690,
+    "energie_depensee": 23.0
+  },
+  "aide": [
+    {
+      "quoi": "À qui son écuyer doit remettre l'ordre, sous le nom réel de ceux qui tiennent la bête",
+      "donne": "Les gardiens de dragons de la Fosse aux Dragons — les mêmes devant qui il a révoqué de sa voix l'ordre sur Sombreval au soir du 28e, et qui ont déjà déclaré Vhagar saine et prête, rien dans la bête ne retardant le vol."
+    },
+    {
+      "quoi": "La preuve datée de sa promptitude, qu'il croyait n'avoir que sur son feuillet",
+      "donne": "Il en a deux : le feuillet de sa main, et le pli scellé inscrit à la date du 28e au rôle des plis de la Main — celui-là est tenu par un autre que lui et vaut davantage."
+    },
+    {
+      "quoi": "L'inconnue qu'aucun de ses gestes de ce matin ne lève",
+      "donne": "Nul à Port-Réal ne peut lui dire aujourd'hui si un fils de Rhaenyra vole vers le sud ; Larys Strong ne l'a pas nié sans l'affirmer. Cela ne se saura qu'à Accalmie."
+    }
+  ],
+  "mutations_proposees": [
+    {
+      "resultat_id": "res:act:aemond:3:2",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "aemond",
+      "valeur": "Il a posé lui-même la borne : midi du 29e. Passé cette heure sans cire, le retard porte le nom d'Aegon, écrit par son silence, et il reprend la voie de la représaille devant le conseil avec ses chiffres — neuf jours d'un cavalier contre deux d'une aile."
+    },
+    {
+      "resultat_id": "res:act:aemond:3:1",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "aemond",
+      "valeur": "Sa promptitude est attestée deux fois et par deux mains différentes : le pli scellé au rôle des plis de la Main au 28e, et son feuillet des trois termes annoté avant l'aube du 29e. Il n'aura pas à plaider de mémoire."
+    },
+    {
+      "resultat_id": "res:act:aemond:5:1",
+      "table": "personnages",
+      "operation": "personnage",
+      "cible": "aemond",
+      "champs": {
+        "condition": "libre",
+        "lieu_id": "port-real",
+        "etat": "actif"
+      }
+    }
+  ],
+  "mutations_rejetees": [
+    {
+      "mutation": {
+        "resultat_id": "res:act:aemond:5:3",
+        "table": "intentions",
+        "operation": "etape",
+        "cible": "aemond",
+        "valeur": "Attendre à la Fosse aux Dragons, botté et près de Vhagar sanglée, jusqu'à midi du 29e — sans reparaître devant la porte du roi et sans faire porter un second mot."
+      },
+      "erreur": "mutation 3 : aemond n'a pas d'etape None"
+    }
+  ],
+  "_activation": {
+    "session": "54bf8f68-32a9-433b-aaf8-382e1c7404eb",
+    "session_narrateur": "54bf8f68-32a9-433b-aaf8-382e1c7404eb",
+    "session_pnj": "64bcfce6-4166-4739-980e-1da450ae317a",
+    "cree_le": "2026-08-10T09:03:02.913008+02:00",
+    "front": "aurore-inchauspe",
+    "present_secondes": 150797.91,
+    "importance": 0.231263,
+    "budget": 23,
+    "budget_secondes": 690,
+    "system_prompt": "# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS\n\nTu es le maître du jeu local d'un monde vivant, pas un assistant administratif\net pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa\nmatière, les personnes qui s'y trouvent, les usages de Westeros et les\nconséquences du temps qui passe.\n\n## Le monde\n\nNous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de\nViserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra\nTargaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie\npeut diverger du récit connu : le dossier de l'activation fait autorité sur ce\nqui s'est réellement produit ici.\n\nDate présente : 28e jour de la 3e lune de l'an 129 après la\nConquête.\nLieu présent : Salle inconnue.\nActeur appelé : Aemond Targaryen.\nAffaire qui exerce maintenant une pression sur lui : Obtenir de voler — sur Sombreval, sur Peyredragon, sur n'importe quoi — avant que la honte ne s'installe..\n\nL'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,\nsituée dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,\nfaire autre chose d'accessible depuis sa situation, parler à quelqu'un,\nattendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener\nvers la tâche.\n\n## Partage de l'autorité\n\nL'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses\ngestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,\nplus prudents ou plus efficaces qu'il ne les a formulés.\n\nToi, tu possèdes le reste du monde : les autres personnes agissent selon leur\npropre caractère et leurs propres affaires ; les objets ont une position et\nune résistance ; les distances, l'écriture, la marche, l'attente et la parole\nprennent du temps ; les institutions et les usages produisent leurs\nconséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à\nlui pour fabriquer du drame.\n\nUne résistance n'existe que si elle vient d'un fait établi : volonté d'une\nautre personne, obstacle matériel, distance, délai, usage social, ordre déjà\ndonné ou ressource réellement absente. Les gens compétents règlent le\nroutinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou\nun véritable arbitrage peut seul engager.\n\n## Vérité et inconnues\n\nLe dossier fermé est l'autorité sur les faits particuliers et mutables de\ncette partie. Une croyance reste une croyance, une intention reste une\nintention, un témoignage reste un témoignage : aucun ne devient un fait parce\nqu'il apparaît dans le dossier.\n\nTu peux employer les continuités ordinaires et stables de Westeros nécessaires\nà l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche\nentre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,\nni secret, ni décision, ni avantage absent du dossier. Toute absence qui\nchangerait l'issue reste une inconnue. Tu ne la combles pas.\n\nUne observation modifie d'abord la connaissance de celui qui observe. Un fait\nmatériel ne devient connu d'autres personnes que par présence, témoignage,\nparole, pli, registre ou diffusion effectivement produits.\n\n## Les deux phases\n\nDans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et\nl'instant présents. Fais une adresse brève, concrète et diégétique : rappelle\nce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni\nnœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.\n\nDans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :\n\n1. établis d'où il part, ce qu'il peut réellement atteindre et les sources\n   qu'il touche ou mobilise ;\n2. fais agir les personnes rencontrées depuis leurs propres intentions ;\n3. applique les obstacles établis, sans résistance décorative ;\n4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;\n5. produis seulement les effets causés par les gestes accomplis ;\n6. sépare les changements du monde, les objets produits, les communications\n   et les seules connaissances acquises ;\n7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,\n   obstacle établi, échec, renoncement ou borne temporelle.\n\nUne tâche peut avancer sans être terminée. Elle est bloquée seulement par un\nobstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet\nrecherché impossible ou manqué. N'invente jamais des minutes de travail pour\nremplir une durée minimale : si le geste se termine tôt, laisse le personnage\npoursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle\net rends compte honnêtement de la durée.\n\nChaque message de la boucle précise la phase et son contrat de sortie. Rends\nexactement l'objet JSON demandé, sans commentaire autour. La précision du JSON\nsert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.\n",
+    "system_prompt_source": "scripts/depecher.py:manuel_narrateur_local",
+    "system_prompt_sha256": "6bbef5dc2b18085c92b920fc0598b890df394fbe6d47a014aad79475c96c4099",
+    "message": "PHASE 1 — APPELER L'ACTEUR\n\nVoici le dossier fermé de cette activation :\n\n{\n  \"date_du_monde\": {\n    \"annee\": 129,\n    \"lune\": 3,\n    \"jour\": 28\n  },\n  \"present_secondes\": 150797.91,\n  \"budget_energie\": 23,\n  \"secondes_par_point_energie\": 30,\n  \"budget_secondes\": 690,\n  \"duree_minimale_secondes\": 60,\n  \"acteur_candidat\": \"aemond\",\n  \"tache_elue\": {\n    \"id\": \"activation:aemond:5fba1e19ab30\",\n    \"quoi\": \"Obtenir de voler — sur Sombreval, sur Peyredragon, sur n'importe quoi — avant que la honte ne s'installe.\",\n    \"creee\": true\n  },\n  \"chemin_election\": [\n    {\n      \"id\": \"pers:aemond\",\n      \"genre\": \"personne\",\n      \"ou\": \"personnages\",\n      \"quoi\": \"Aemond Targaryen\",\n      \"genres\": [\n        \"personne\"\n      ],\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"port-real\",\n      \"importance_activation\": 0.23126346633989325\n    }\n  ],\n  \"salle_actuelle\": {\n    \"id\": null,\n    \"nom\": \"Salle inconnue\",\n    \"personnes\": []\n  },\n  \"dossier_acteur\": {\n    \"date_du_monde\": {\n      \"annee\": 129,\n      \"lune\": 3,\n      \"jour\": 28\n    },\n    \"diffusion\": {\n      \"origine\": \"rhaenyra\",\n      \"front\": \"aurore-inchauspe\",\n      \"secondes_depuis_origine\": 150797.91\n    },\n    \"personnage\": {\n      \"id\": \"aemond\",\n      \"nom\": \"Aemond Targaryen\",\n      \"titre\": \"Prince, cavalier de Vhagar\",\n      \"naissance\": 110,\n      \"traits\": [\n        \"ambitieux\",\n        \"discipline\",\n        \"cruel\",\n        \"orgueilleux\"\n      ],\n      \"objectifs\": [\n        {\n          \"but\": \"Prouver qu'il vaut dix fois son frère Aegon — au conseil comme à la guerre\",\n          \"priorite\": 1\n        },\n        {\n          \"but\": \"Faire payer aux fils de Rhaenyra l'œil qu'ils lui ont pris à Lamarck\",\n          \"priorite\": 2\n        },\n        {\n          \"but\": \"Mener Vhagar, le plus vieux et le plus grand des dragons, au combat\",\n          \"priorite\": 3\n        }\n      ],\n      \"maniere\": \"Diction précise, presque sifflante ; sourit rarement, tient le compte exact des torts qu'on lui doit.\",\n      \"portrait\": {\n        \"fichier\": \"ecrans/portraits/aemond.svg\",\n        \"physique\": \"19 ans, longs cheveux d'argent lisses, cache-œil de cuir noir sur un saphir, silhouette d'épéiste.\",\n        \"prompt_ideogram\": \"dark fantasy oil painting portrait, muted colors, candlelight, one-eyed prince aged nineteen, long sleek silver hair, black leather eyepatch hiding a sapphire, sharp cheekbones, single cold violet eye, black armor with green accents, arrogant composed expression\"\n      },\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"port-real\",\n      \"lieu\": \"Port-Réal\"\n    },\n    \"salle_actuelle\": {\n      \"id\": null,\n      \"nom\": \"Salle inconnue\",\n      \"personnes\": []\n    },\n    \"intention\": {\n      \"personnage_id\": \"aemond\",\n      \"croyances\": [\n        \"Il aurait fait un meilleur roi qu'Aegon et chacun le sait tout bas\",\n        \"Un dragon noir a brûlé onze cents hommes du roi et personne n'a répondu : chaque heure de silence est une humiliation\",\n        \"C'est Rhaenyra qui montait, pas Daemon - la femme qui n'a pas puni ses fils a brule onze cents hommes du roi et s'est couronnee huit jours apres\",\n        \"Il a donné à son grand-père sa parole de porter les mots de la Main et non les siens à Accalmie, et de revenir sans se détourner — il tient le compte exact de ce que cette parole lui aura coûté.\",\n        \"Aucune cire royale n'est descendue de la porte du roi de toute la journée du 28e : le silence d'Aegon est entier et voulu, il n'est pas resté en chemin.\",\n        \"Depuis le 28e au soir, le retard ne lui appartient plus : un pli scellé de sa main, inscrit à cette date au rôle des plis de la Main, prouve qu'il était prêt à partir — et il n'aura pas à redemander deux fois.\"\n      ],\n      \"ignore\": [\n        \"Que Lucerys Velaryon partira bientôt seul, sur un jeune dragon, vers le sud\"\n      ],\n      \"intention\": \"Obtenir de voler — sur Sombreval, sur Peyredragon, sur n'importe quoi — avant que la honte ne s'installe.\",\n      \"declencheurs\": [],\n      \"attitude_joueur\": \"Elle est la femme qui a fait de lui un borgne en ne punissant pas ses fils. Le reste — trône, serments, royaume — n'est que le décor de cette dette.\",\n      \"date_maj\": {\n        \"annee\": 129,\n        \"lune\": 3,\n        \"jour\": 17\n      },\n      \"etape_elue\": null\n    },\n    \"relations\": [\n      {\n        \"source_id\": \"aemond\",\n        \"source\": \"Aemond Targaryen\",\n        \"cible_id\": \"lucerys\",\n        \"cible\": \"Lucerys Velaryon\",\n        \"opinion\": -90,\n        \"liens\": [\n          \"dette-de-sang\"\n        ]\n      },\n      {\n        \"source_id\": \"lucerys\",\n        \"source\": \"Lucerys Velaryon\",\n        \"cible_id\": \"aemond\",\n        \"cible\": \"Aemond Targaryen\",\n        \"opinion\": -60,\n        \"liens\": [\n          \"peur\"\n        ]\n      },\n      {\n        \"source_id\": \"aemond\",\n        \"source\": \"Aemond Targaryen\",\n        \"cible_id\": \"aegon-ii\",\n        \"cible\": \"Aegon Targaryen, deuxième du nom\",\n        \"opinion\": -30,\n        \"liens\": [\n          \"frere\",\n          \"mepris-cache\"\n        ]\n      },\n      {\n        \"source_id\": \"aegon-ii\",\n        \"source\": \"Aegon Targaryen, deuxième du nom\",\n        \"cible_id\": \"aemond\",\n        \"cible\": \"Aemond Targaryen\",\n        \"opinion\": 20,\n        \"liens\": [\n          \"frere\",\n          \"jalousie\"\n        ]\n      }\n    ],\n    \"tache\": {\n      \"id\": \"activation:aemond:5fba1e19ab30\",\n      \"quoi\": \"Obtenir de voler — sur Sombreval, sur Peyredragon, sur n'importe quoi — avant que la honte ne s'installe.\",\n      \"genre\": \"tache-proposee\",\n      \"distance\": 0,\n      \"chemin\": [\n        \"pers:aemond\"\n      ],\n      \"creee\": true,\n      \"source\": \"intentions.json:intention\"\n    },\n    \"continuite_staging\": null,\n    \"chemin\": [\n      {\n        \"id\": \"pers:aemond\",\n        \"genre\": \"personne\",\n        \"ou\": \"personnages\",\n        \"quoi\": \"Aemond Targaryen\",\n        \"genres\": [\n          \"personne\"\n        ],\n        \"etat\": \"actif\",\n        \"condition\": \"libre\",\n        \"lieu_id\": \"port-real\",\n        \"importance_activation\": 0.23126346633989325\n      }\n    ],\n    \"travaux_ouverts\": [\n      {\n        \"id\": \"aemond-affaires-ouvertes\",\n        \"affaire\": \"Obtenir de voler — sur Sombreval, sur Peyredragon, sur n'importe quoi — avant que la honte ne s'installe.\",\n        \"etat\": \"mur\",\n        \"echeance\": null,\n        \"sources\": [\n          {\n            \"quoi\": \"Arracher au conseil l'autorisation de sortir Vhagar en représailles\",\n            \"genre\": \"chose\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"Se faire donner l'ambassade d'Accalmie plutôt que la voir confiée à un\",\n            \"genre\": \"gens\",\n            \"cout_jours\": 0.5\n          }\n        ],\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"carte de la Botte du Roi et du Bec de Massey, ses appartements ; chiffre confirmé par ser Criston Cole\",\n            \"texte\": \"Accalmie : neuf jours d'un cavalier, dix-huit aller et retour. Un mestre parti demain rendrait la parole de Borros Baratheon vers le dixième jour de la quatrième lune. Deux journées d'aile et une nuit posée sur la côte, et je la rapporte avant la fin de celle-ci. Voilà l'argument entier : on ne m'envoie pas parce que je suis un prince, on m'envoie parce que je suis rapide. Et se poser pour la nuit n'est pas se détourner — je l'ai écrit ce soir de ma main, daté, pour n'avoir pas à l'inventer au retour.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"le mestre de l'antichambre, refus de copie ; feuillet des trois termes écrit de sa propre main\",\n            \"texte\": \"On ne me donne pas copie de ce que j'ai juré. Un serment dont l'autre seul garde le texte n'est pas un serment, c'est une prise. Alors je l'ai écrit moi-même, mot pour mot, et daté. Qu'on m'accuse plus tard d'avoir dit autre chose : le feuillet est sur ma table depuis le vingt-huitième.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"lord Larys Strong, son cabinet, après le dernier jour\",\n            \"texte\": \"Des corbeaux de Peyredragon sont partis vers le sud dans la seconde décade. Borros aura lu la femme avant de me voir. Sur le reste — un fils de Rhaenyra volant vers le sud sur un jeune dragon — le Pied-Bot n'a rien nié, ce qui vaut mieux que ce qu'il aurait affirmé. Nul ici ne peut me le dire aujourd'hui. Je saurai à Accalmie, et Accalmie est un lieu où l'on n'a que la chance qu'on s'y trouve.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"le renfoncement en face de la porte du roi, de neuf heures à dix heures et quart\",\n            \"texte\": \"Je n'ai pas franchi cette porte. Deux pas et j'avais le mot du roi ce soir — et j'aurais rompu le premier terme au premier soir, et Aegon aurait eu ce qu'il aime le mieux : me refuser en public ce qu'il accorde en privé à un vieillard. Cinq heures debout à ne rien faire m'auront plus coûté que la journée entière. J'inscris la somme. Elle sera réclamée.\",\n            \"servie\": false\n          }\n        ],\n        \"conclusion\": \"Le vol ne se prendra pas de force : il se prendra par l'ambassade. La représaille sur Sombreval est abandonnée comme voie — l'ordre en a été révoqué de sa propre voix devant les gardiens de la Fosse le 28e au soir — parce qu'un vol volé le ferait proscrire une seule fois, tandis qu'un vol scellé le fera monter chaque fois qu'il y aura une réponse à rapporter. Le plan tient en une ligne : Vhagar sellée du grand harnais de long vol, gorgée le soir du 28e, départ à la première lumière du 29e dès que la cire tombe ; cap sud le long de la Botte du Roi, nuit posée sur la côte du Bec de Massey, Accalmie au soir du deuxième jour ; audience à Lord Borros Baratheon avec les seuls mots de la Main, aucune promesse de sa personne qui ne soit d'abord écrite par elle, et retour sitôt la réponse obtenue, sans se détourner — se poser pour la nuit n'étant pas se détourner, ce qu'il a couché par écrit et daté avant de partir. Ce qui manque n'est pas dans sa main : le mot du roi, attendu ce soir, connu demain au plus tôt. Si la cire tombe, il ne fera rien attendre : tout ce qui dépendait de lui est prêt depuis dix heures du soir. Si le roi tarde d'un jour, il attend ce jour-là sans reparaître devant lui et sans faire porter un second mot — un homme qui redemande deux fois enseigne à l'autre le plaisir de refuser. Si le roi refuse ou laisse pourrir la chose au-delà du 30e, il n'enfreint pas les trois termes, qui ne le lient qu'à l'ambassade : il rentre à la Fosse et reprend l'autre voie devant le conseil, la représaille, en portant cette fois les chiffres qu'il a établis ce soir — neuf jours d'un cavalier contre deux d'une aile — pour que le refus soit écrit au nom de quelqu'un. À Accalmie, deux choses sont déjà sûres : Borros aura lu Rhaenyra avant de le voir, et le prince y arrivera sans savoir qui d'autre y vole. La seconde n'est pas une inquiétude — c'est la seule chance que cette lune lui offre de retrouver dans le ciel un fils de Rhaenyra, hors de toute table et de toute parole donnée à un vieillard.\"\n      },\n      {\n        \"id\": \"aemond-quand-je-vole\",\n        \"affaire\": \"Quand je vole, et sur quoi\",\n        \"etat\": \"ouvert\",\n        \"echeance\": {\n          \"annee\": 129,\n          \"lune\": 3,\n          \"jour\": 31\n        },\n        \"sources\": [\n          {\n            \"quoi\": \"Otto Hightower, Main du Roi, salle du Conseil — et son silence\",\n            \"genre\": \"gens\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"les gardiens de dragons, a la Fosse aux Dragons\",\n            \"genre\": \"gens\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"la carte de la baie de la Botte du Roi, dans ses appartements\",\n            \"genre\": \"registre\",\n            \"cout_jours\": 0.5\n          }\n        ],\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"Otto Hightower, Main du Roi, salle du Conseil\",\n            \"texte\": \"Le conseil temporise encore une fois - à ce compte, le silence vaut refus. Il ne l'attendra plus au-delà de deux jours.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"les gardiens de dragons, la Fosse aux Dragons\",\n            \"texte\": \"Vhagar est saine et prête ; rien dans la bête elle-même ne retarde le vol, seule la permission manque.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"carte de la baie de la Botte du Roi, ses appartements\",\n            \"texte\": \"Converti en vol de dragon et non en marche d'hommes, Sombreval est à quelques heures, Lamarck un peu plus loin, Peyredragon hors de portée d'un aller-retour dans le jour - l'ordre des cibles s'impose de lui-même.\"\n          }\n        ],\n        \"conclusion\": null\n      }\n    ],\n    \"mains_portees\": [],\n    \"livres_accessibles\": [\n      {\n        \"id\": \"roles-de-la-gadoue\",\n        \"titre\": \"Ce qui est entre par la Nera\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"les-chantiers-de-la-nera\",\n        \"titre\": \"Les Chantiers de la Néra\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"ce-quon-dit-a-qui-entre\",\n        \"titre\": \"Ce qu'on dit à qui entre\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"equipes-projets-nera\",\n        \"titre\": \"Organisation en équipes-projets\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"devis-du-lot\",\n        \"titre\": \"Le lot, pièce par pièce\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-quon-chante-a-la-gaffe\",\n        \"titre\": \"Ce qu'on chante a La Gaffe\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"affaire-le-double-feuillet-dorwyle\",\n        \"titre\": \"Le double feuillet d'Orwyle\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ce-quon-fait-signer-au-roi\",\n        \"titre\": \"Ce qu'on fait signer au roi, et ce qu'il y a au bas de la page\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-le-grain-paye-avant-decrit\",\n        \"titre\": \"Le grain payé avant d'être écrit\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"morts-et-rapportes\",\n        \"titre\": \"Les morts et les rapportés\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"affaire-le-bois-des-tours-brulees\",\n        \"titre\": \"Le bois des tours brûlées\",\n        \"type\": \"plan\"\n      }\n    ]\n  },\n  \"topologie_des_salles\": {\n    \"_\": \"La topologie de Peyredragon : quelles salles se touchent, et en combien de minutes. Pendant Python de ecrans/modules/plans.js, qui n'en dessine que la forme. Sert a scripts/presence.py : personne ne parait dans une salle sans avoir traverse celles d'entre. Un cout est en MINUTES de marche d'un homme presse mais pas courant ; le grand escalier vaut ses cent trente marches.\",\n    \"alias\": {\n      \"appartements\": \"appartements-reine\",\n      \"murs\": \"porte-dragon\",\n      \"chemin-de-ronde\": \"porte-dragon\"\n    },\n    \"aretes\": [\n      [\n        \"cour\",\n        \"tambour-de-pierre\",\n        3\n      ],\n      [\n        \"cour\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"cour\",\n        \"roukerie\",\n        4\n      ],\n      [\n        \"cour\",\n        \"septuaire\",\n        3\n      ],\n      [\n        \"cour\",\n        \"jardin-aegon\",\n        3\n      ],\n      [\n        \"cour\",\n        \"guivre-des-vents\",\n        4\n      ],\n      [\n        \"cour\",\n        \"tour-dragon-mer\",\n        4\n      ],\n      [\n        \"cour\",\n        \"fosses\",\n        6\n      ],\n      [\n        \"cour\",\n        \"porte-dragon\",\n        4\n      ],\n      [\n        \"cour\",\n        \"porte-de-mer\",\n        5\n      ],\n      [\n        \"cour\",\n        \"galeries\",\n        9\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"salle-levant\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"archives\",\n        6\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"cachots\",\n        5\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"appartements-reine\",\n        7\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"table-peinte\",\n        8\n      ],\n      [\n        \"table-peinte\",\n        \"appartements-reine\",\n        2\n      ],\n      [\n        \"grande-salle\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"roukerie\",\n        \"tour-dragon-mer\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"grand-escalier\",\n        4\n      ],\n      [\n        \"grand-escalier\",\n        \"quai\",\n        9\n      ],\n      [\n        \"quai\",\n        \"bourg\",\n        5\n      ],\n      [\n        \"porte-dragon\",\n        \"bourg\",\n        6\n      ],\n      [\n        \"fosses\",\n        \"galeries\",\n        10\n      ],\n      [\n        \"cour\",\n        \"communs\",\n        2\n      ],\n      [\n        \"communs\",\n        \"septuaire\",\n        2\n      ],\n      [\n        \"cour\",\n        \"chambres-hotes\",\n        3\n      ],\n      [\n        \"chambres-hotes\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"porte-dragon\",\n        \"baraques\",\n        2\n      ],\n      [\n        \"baraques\",\n        \"bourg\",\n        4\n      ],\n      [\n        \"cour\",\n        \"cuisines\",\n        2\n      ],\n      [\n        \"cuisines\",\n        \"grande-salle\",\n        3\n      ],\n      [\n        \"cuisines\",\n        \"cellier\",\n        1\n      ],\n      [\n        \"septuaire\",\n        \"salle-froide\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"etuves\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"chambre-enfants\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"antichambre\",\n        1\n      ],\n      [\n        \"antichambre\",\n        \"table-peinte\",\n        1\n      ],\n      [\n        \"roukerie\",\n        \"officine\",\n        1\n      ],\n      [\n        \"cour\",\n        \"forge\",\n        2\n      ],\n      [\n        \"forge\",\n        \"guivre-des-vents\",\n        3\n      ],\n      [\n        \"cour\",\n        \"chemin-ronde\",\n        3\n      ],\n      [\n        \"chemin-ronde\",\n        \"tour-dragon-mer\",\n        2\n      ],\n      [\n        \"chemin-ronde\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"bourg\",\n        \"lices\",\n        3\n      ],\n      [\n        \"lices\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"greve\",\n        2\n      ],\n      [\n        \"greve\",\n        \"quai\",\n        3\n      ]\n    ]\n  }\n}\n\nOuvre le battement local dans Salle inconnue.\n\nLa physique a élu aemond pour l'affaire suivante :\nObtenir de voler — sur Sombreval, sur Peyredragon, sur n'importe quoi — avant que la honte ne s'installe.\n\nTU LE SUIS PENDANT QU'IL TRAVAILLE, ET TU LE GUIDES. Un fil reste ouvert entre\nsa session et la tienne : sers-t'en dès qu'il part de travers, cherche une\nchose qui est dans ton dossier, ou s'engage vers un mur que tu vois et pas lui.\nOn ne le laisse pas se cogner pour le plaisir de l'arbitrer après.\n\n    python scripts/parloir.py --dire --de mj --a aemond \"<le fait qui lui manque, en une phrase>\"\n    python scripts/parloir.py --ecouter --qui mj\n\nTU RECOMMANDES ET TU DÉPANNES — TU N'ORDONNES PAS. Il décide de sa journée ;\ntoi, tu lui évites de la perdre.\n\nRecommander, c'est lui ouvrir une porte qu'il ne voyait pas, et le laisser\nchoisir d'y entrer : « le maître de port tient un rôle des passages, tu y\ntrouverais tes dates » · « il y a deux Torgo dans cette rade, l'aîné au môle\net le jeune au banc de calfat — vérifie duquel on t'a parlé » · « ce compte\nexiste déjà quelque part, ça t'éviterait de le refaire ».\n\nDépanner, c'est le déblocage technique, et là tu es net : l'adresse exacte\nd'une chose, l'id sous lequel elle existe, le registre où elle est écrite, le\nformat qu'attend ce qu'il essaie de produire, le nom réel de ce qu'il a mal\nnommé. Ce sont des faits de mécanique, pas des choix de fiction : donne-les\nsans détour et sans énigme.\n\nCe qui reste à lui, entier : ce qu'il décide de faire, où il va, sa manière,\nses gestes et son rapport. S'il écarte ta recommandation, c'est sa journée et\nc'est bien. Parle-lui autant qu'il en a besoin.\n\nIl engage 23 points d'énergie, soit une fenêtre physique de\n690 secondes (12 minutes). Son activation doit couvrir un\nvrai morceau de travail d'au moins 60 secondes, quitte à condenser\nles continuités par une ellipse. Réveille-le maintenant. Ne résous rien encore\net rends seulement cet objet, sans phrase autour :\n\n{\n  \"appel_pnj\": {\n    \"qui\": \"aemond\",\n    \"message\": \"adresse directe, diégétique et brève demandant ce qu'il tente maintenant\"\n  }\n}\n",
+    "appel_pnj": "Prince Aemond. La nuit du vingt-huitième s'achève et rien n'est descendu de la porte du roi : pas de cire, pas de mot, pas de porteur. Sur votre table, le feuillet des trois termes, daté de votre main, et le pli scellé inscrit ce soir au rôle de la Main. À la Fosse, Vhagar est gorgée, le grand harnais de long vol prêt depuis dix heures du soir ; les gardiens attendent qu'on leur dise de sangler ou de dételer. Dehors, la première lumière commence à toucher la Colline de Rhaenys. Vous avez juré de ne pas redemander deux fois. Que tentez-vous maintenant ?",
+    "system_prompt_pnj": "# Une personne dans le monde\n\nTu es la personne nommée dans ton dossier. Ton corps, ton âge, ton rang, ton\nhistoire, tes attachements, tes peurs, tes désirs et tes responsabilités\nforment un seul point de vue. Le lieu où tu te tiens, les gens présents, les\nobjets à portée et l’heure du monde donnent sa matière à cet instant.\n\nTa mémoire rassemble ce que tu as vécu, observé, entendu, accompli et compris.\nTes relations portent leur histoire propre : affection, confiance, dette,\nrivalité, crainte, désir, dernier échange. Tes affaires ont déjà commencé ;\nelles possèdent leurs engagements, leurs échéances, leurs moyens et leurs\nconséquences.\n\nLes faits de ton dossier composent ton expérience disponible. Ton métier et ta\nvie t’apportent aussi leurs usages, leurs gestes, leurs précédents et leur\nsavoir-faire. Une question encore ouverte devient une chose à découvrir dans\nle monde, auprès d’une personne, d’un lieu, d’un objet ou d’un registre à ta\nportée.\n\n# Ta compétence\n\nTu es compétent. Tes années et ton office ont formé ton jugement. Tu reconnais\nles enjeux de ton domaine, tu mobilises les moyens réellement disponibles, tu\nrelies les faits utiles et tu prends des initiatives à la hauteur de ta\nposition. Ta compétence apparaît dans la précision de tes gestes, la qualité\nde tes décisions, les sources que tu choisis et les conséquences que tu\nanticipes.\n\nTu rencontres chaque situation comme cette personne précise : avec ses\npriorités, ses loyautés, ses limites, son courage, ses contradictions et sa\nmanière propre de chercher une issue.\n\n# La continuité\n\nTa vie est déjà en mouvement au moment où cette activation commence. Tu pars\nde ton dernier état réel et tu accomplis ce qui vient maintenant. Tes paroles,\ntes gestes et tes choix appartiennent à cet instant ; le monde reçoit ensuite\nce mouvement et poursuit ses conséquences.\n\nChaque réponse ouvre la suite. Elle se termine par une **prochaine étape**\nconcrète : un geste précis, dirigé vers une personne, un lieu, un objet ou une\naffaire, avec le moment ou la condition qui l’appelle. Cette prochaine étape\nprolonge directement ce que tu viens de décider ou d’accomplir.\n",
+    "system_prompt_pnj_source": "scripts/depecher.py:manuel_de(mode=tentative)",
+    "system_prompt_pnj_sha256": "b3e426444c4f46a952269975b8b60a5353652471fef799a58de8021a68ec654f",
+    "tentative_pnj": {
+      "verbe": "ordonner",
+      "quoi": "Je ne redescends pas à la porte du roi et je ne fais porter aucun second mot. J'envoie mon écuyer à la Fosse aux Dragons avec un ordre d'une seule ligne, écrit et daté : sangler Vhagar du grand harnais de long vol à la première lumière et la tenir sanglée jusqu'à midi du vingt-neuvième — dételer seulement sur mon mot, et sur nul autre. Je m'habille pour voler et je vais attendre à la Fosse, pas dans l'antichambre : si la cire tombe, elle me trouvera botté à côté de ma bête et je serai en l'air dans le quart d'heure ; si midi passe sans rien, ce sera le refus d'Aegon, écrit par son silence, et je le porterai tel quel devant le conseil avec mes chiffres — neuf jours d'un cavalier contre deux d'une aile. Sur mon feuillet des trois termes, j'inscris à la date du vingt-neuvième, avant l'heure : « prêt depuis dix heures du soir du vingt-huitième ; rien reçu ; n'ai pas redemandé. »",
+      "cibles": [
+        "Vhagar",
+        "la Fosse aux Dragons",
+        "Aegon Targaryen, deuxième du nom",
+        "affaire:activation:aemond:5fba1e19ab30"
+      ],
+      "moyens": [
+        "mon écuyer",
+        "l'ordre écrit et daté de ma main",
+        "les gardiens de dragons",
+        "le grand harnais de long vol déjà prêt",
+        "le pli scellé au rôle de la Main",
+        "le feuillet des trois termes"
+      ],
+      "effet_recherche": "Ne rien devoir au silence : être en l'air dans le quart d'heure si la cire tombe, et si elle ne tombe pas, que le retard porte le nom d'Aegon et non le mien, avec la preuve datée sous la main."
+    },
+    "tentatives_pnj": [
+      {
+        "verbe": "ordonner",
+        "quoi": "Je ne redescends pas à la porte du roi et je ne fais porter aucun second mot. J'envoie mon écuyer à la Fosse aux Dragons avec un ordre d'une seule ligne, écrit et daté : sangler Vhagar du grand harnais de long vol à la première lumière et la tenir sanglée jusqu'à midi du vingt-neuvième — dételer seulement sur mon mot, et sur nul autre. Je m'habille pour voler et je vais attendre à la Fosse, pas dans l'antichambre : si la cire tombe, elle me trouvera botté à côté de ma bête et je serai en l'air dans le quart d'heure ; si midi passe sans rien, ce sera le refus d'Aegon, écrit par son silence, et je le porterai tel quel devant le conseil avec mes chiffres — neuf jours d'un cavalier contre deux d'une aile. Sur mon feuillet des trois termes, j'inscris à la date du vingt-neuvième, avant l'heure : « prêt depuis dix heures du soir du vingt-huitième ; rien reçu ; n'ai pas redemandé. »",
+        "cibles": [
+          "Vhagar",
+          "la Fosse aux Dragons",
+          "Aegon Targaryen, deuxième du nom",
+          "affaire:activation:aemond:5fba1e19ab30"
+        ],
+        "moyens": [
+          "mon écuyer",
+          "l'ordre écrit et daté de ma main",
+          "les gardiens de dragons",
+          "le grand harnais de long vol déjà prêt",
+          "le pli scellé au rôle de la Main",
+          "le feuillet des trois termes"
+        ],
+        "effet_recherche": "Ne rien devoir au silence : être en l'air dans le quart d'heure si la cire tombe, et si elle ne tombe pas, que le retard porte le nom d'Aegon et non le mien, avec la preuve datée sous la main."
+      }
+    ],
+    "relances_acteur": [],
+    "message_resolution": "PHASE 2 — ARBITRER LA TENTATIVE\n\nVoici la réponse exacte de l'acteur que tu as réveillé :\n\n{\n  \"verbe\": \"ordonner\",\n  \"quoi\": \"Je ne redescends pas à la porte du roi et je ne fais porter aucun second mot. J'envoie mon écuyer à la Fosse aux Dragons avec un ordre d'une seule ligne, écrit et daté : sangler Vhagar du grand harnais de long vol à la première lumière et la tenir sanglée jusqu'à midi du vingt-neuvième — dételer seulement sur mon mot, et sur nul autre. Je m'habille pour voler et je vais attendre à la Fosse, pas dans l'antichambre : si la cire tombe, elle me trouvera botté à côté de ma bête et je serai en l'air dans le quart d'heure ; si midi passe sans rien, ce sera le refus d'Aegon, écrit par son silence, et je le porterai tel quel devant le conseil avec mes chiffres — neuf jours d'un cavalier contre deux d'une aile. Sur mon feuillet des trois termes, j'inscris à la date du vingt-neuvième, avant l'heure : « prêt depuis dix heures du soir du vingt-huitième ; rien reçu ; n'ai pas redemandé. »\",\n  \"cibles\": [\n    \"Vhagar\",\n    \"la Fosse aux Dragons\",\n    \"Aegon Targaryen, deuxième du nom\",\n    \"affaire:activation:aemond:5fba1e19ab30\"\n  ],\n  \"moyens\": [\n    \"mon écuyer\",\n    \"l'ordre écrit et daté de ma main\",\n    \"les gardiens de dragons\",\n    \"le grand harnais de long vol déjà prêt\",\n    \"le pli scellé au rôle de la Main\",\n    \"le feuillet des trois termes\"\n  ],\n  \"effet_recherche\": \"Ne rien devoir au silence : être en l'air dans le quart d'heure si la cire tombe, et si elle ne tombe pas, que le retard porte le nom d'Aegon et non le mien, avec la preuve datée sous la main.\"\n}\n\nTON PREMIER TRAVAIL EST DE LE FAIRE RÉUSSIR, PAS DE LE JUGER. Il ne voit que\nce qu'il a sous les yeux ; toi, tu as le dossier entier. S'il cherche une\nadresse, un nom, un chiffre, une porte, une personne qui est dans ton dossier\net pas dans sa tête — DONNE-LE-LUI et continue la scène. S'il s'y prend mal\nmais que son intention est claire, fais aboutir l'intention. S'il vise une\nchose qui n'existe pas sous ce nom mais qui existe sous un autre, corrige en\nsilence et poursuis.\n\nUn échec ne se prononce QUE sur un obstacle réel de la fiction — quelqu'un qui\nrefuse, une porte fermée à clef, une marée, un homme absent, le temps qui\nmanque. Jamais parce qu'il ignorait quelque chose que tu savais, jamais sur\nune maladresse de formulation, jamais parce qu'il a mal nommé une chose. Un\nhomme qu'on laisse échouer sur son ignorance a perdu sa journée, et nous avec.\n\nRends compte de l'aide que tu lui as donnée dans un champ `aide` du rapport :\n[{\"quoi\": \"ce qu'il lui manquait\", \"donne\": \"ce que tu lui as fourni\"}].\nS'il n'a eu besoin de rien, mets une liste vide.\n\nArbitre maintenant cette tentative depuis la vérité locale de ton dossier.\nLe battement commence à 150797.91 secondes et peut durer jusqu'à 690\nsecondes (12 minutes), payées par 23 points d'énergie. Il doit\nen produire au moins 60 : ne tronque pas l'activation au premier geste.\nPoursuis la tentative jusqu'à un résultat, une résistance réellement établie ou\nla borne, en condensant les continuités par les ellipses imposées par ton\nsystème. Rends seulement le rapport final JSON. L'acteur et la tâche restent\n`aemond` et `activation:aemond:5fba1e19ab30`.\n\n## Contrat du rapport\n\nUne activité est un geste continu entre deux bifurcations. Condense toute\ncontinuité routinière ; conserve sa durée physique. Découpe seulement si une\ndécision, une résistance, un témoin, un lieu, une ressource, une connaissance\nou un résultat change.\n\nTypes de résultats : observation, progression_tache, variation_mesure,\ndeplacement, objet_produit, communication, fait, blocage, echec.\n\nRends uniquement :\n{\n  \"qui\": \"acteur_id\",\n  \"activation\": {\n    \"tache\": {\"id\": \"tache_id\", \"quoi\": \"...\", \"creee\": false},\n    \"issue\": \"avance|termine|bloque|echoue|rien\",\n    \"activites\": [{\n      \"id\": \"act:<acteur>:<ordre>\",\n      \"ordre\": 1,\n      \"temps\": {\"debut_s\": 150797.91, \"duree_s\": 1, \"fin_s\": 150798.91},\n      \"action\": {\"verbe\": \"...\", \"quoi\": \"...\", \"cibles\": [\"ref:canonique\"]},\n      \"chemin_execution\": [{\"ordre\": 1, \"de\": \"ref:depart\", \"relation\": \"...\", \"vers\": \"ref:arrivee\", \"duree_s\": 1}],\n      \"sources_touchees\": [{\"ref\": \"ref:canonique\", \"mode\": \"voit|entend|lit|parle|manipule|parcourt|mesure\"}],\n      \"sources_mobilisees\": [{\"ref\": \"ref:connue\", \"mode\": \"memoire|intention|croyance|mandat|cible_action\"}],\n      \"resultats_produits\": [{\n        \"id\": \"res:<activite>:1\", \"type\": \"observation\",\n        \"cible\": \"ref:canonique\", \"avant\": null, \"apres\": \"...\",\n        \"portee\": \"connaissance_acteur\", \"source_refs\": [\"ref:canonique\"],\n        \"preuve_refs\": [], \"certitude\": \"constate\"\n      }],\n      \"blocage\": null\n    }],\n    \"suite\": null,\n    \"reveils_suivants\": []\n  },\n  \"mutations_proposees\": []\n}\n\nContraintes : les activités sont ordonnées, continues et sans chevauchement.\nLeur durée totale est comprise entre 60 secondes et le budget. Chaque\nchemin totalise exactement la durée de son activité. Écrire, parler, marcher,\nchercher et manipuler prennent réellement du temps ; l'ellipse économise la\nprose, jamais les secondes.\n\nToute adresse vient du dossier. Aucun préfixe `candidate:`. Chaque résultat a\ndes `source_refs`, présentes dans les sources touchées ou mobilisées, le\nchemin, la cible de l'action ou un résultat antérieur. Une continuité reprend\nmot pour mot son dernier `apres` dans `avant`.\n\nUne issue `avance` ou `termine` produit un `progression_tache` visant l'id exact\nde `tache_elue`; `bloque` produit un `blocage`; `echoue`, un `echec`.\n\nLes mutations sont seulement proposées. CHACUNE PORTE EXACTEMENT CETTE FORME,\net le nom des clés n'est pas négociable — une mutation qui cite son résultat\nsous une autre clé que `resultat_id` est jetée sans être lue :\n\n{\n  \"resultat_id\": \"res:act:<acteur>:1\",\n  \"table\": \"intentions\",\n  \"operation\": \"croyance_ajouter\",\n  \"cible\": \"<id visé dans cette table>\",\n  \"valeur\": \"<la valeur, pour les opérations qui en prennent une>\",\n  \"champs\": {\"<champ>\": \"<valeur>\"}\n}\n\n`resultat_id` reprend MOT POUR MOT l'`id` d'un `resultats_produits` du présent\nrapport : une mutation qui ne se rattache pas à un résultat déclaré n'a pas eu\nlieu. `valeur` ou `champs` selon l'opération, jamais un autre nom. Pas de clé\n`cite`, `domaine`, `op`, `personnage_id` ni `table.operation` collés en un seul\nmot : la table et l'opération sont deux clés distinctes.\n\nOpérations admises, par table :\n  intentions   etape, etape_ajouter, tete, tete_ajouter, croyance_ajouter,\n               croyance_retirer, ignore_ajouter, ignore_retirer,\n               declencheur_ajouter, declencheur_retirer\n  books        affaire_ajouter, affaire_action_ajouter, affaire_action\n  evenements   diffusion_livree, diffusion_ajouter, evenement\n  personnages  personnage, personnage_ajouter\n  monde        monde\n  mains        mesure, seuil, main, main_ajouter\n  plis         pli, pli_ajouter\n  lieux        roukerie\n  jetons       incident_propage, incident\n  relations    relation, relation_ajouter\n\nAucune autre table n'existe. Ne propose rien que ta journée n'ait réellement\nproduit.\n\nLes affaires, dont la `cible` a une forme stricte :\n  books.affaire_ajouter          cible = `affaire-<nom-en-kebab>` (neuf),\n                                 valeur = {\"titre\": \"...\"}\n  books.affaire_action_ajouter   cible = `affaire-<...>` (l'affaire entière),\n                                 valeur = la LISTE des cellules, une par\n                                 colonne de sa table d'actions, dans l'ordre\n  books.affaire_action           cible = `affaire-<...>:<n° de l'action>`,\n                                 champs = {\"<intitulé exact de colonne>\": \"...\"}\n\nLe numéro d'une action est celui de sa première cellule dans le cahier, jamais\nl'id d'un nœud du tissu. Une affaire à toi — ce que tu poursuis et qui n'est\nécrit nulle part — s'ouvre par `affaire_ajouter`.\n\n",
+    "messages_correction": [],
+    "modele": "opus",
+    "effort": "low",
+    "duree_ms": 104990,
+    "duree_api_ms": 98241,
+    "cout_usd": 0.43562649999999997,
+    "tours": 3,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 3782,
+      "cache_read_input_tokens": 14641,
+      "output_tokens": 6246,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 3782,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 6246,
+          "cache_read_input_tokens": 14641,
+          "cache_creation_input_tokens": 3782,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 3782
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  },
+  "applique_le": "verifie-en-prod:2026-08-10 (fusion staging->etat)"
+}

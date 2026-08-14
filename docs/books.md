@@ -43,7 +43,9 @@ Un tableau, un objet par livre. Rien d'autre à la racine.
 | `acteur_id` | ou la personne qui le PORTE (`personnages.json`). **`salle_id` ou `acteur_id`, jamais les deux.** |
 | `boite` | ou le COFFRET où il est rangé (`etat/boites.json`). C'est alors la boîte qui donne la place : le volume n'a ni `salle_id`, ni `acteur_id`, ni `lieu_id`, ni `prive` à lui. Voir « Les boîtes » plus bas. |
 | `prive` | `true` : un carnet que son porteur ne montre à personne — seul le joueur qui le porte le voit. **Sans `acteur_id` il ne veut rien dire** : un volume posé n'a pas de porteur, donc pas de propriétaire à qui le réserver. C'est `lecteurs` qu'il lui faut. |
+| `tenu_par` | facultatif — la MAIN qui répond du volume (`personnages.json`). Ce n'est pas une place : le cahier ne bouge pas, il reste où sa boîte le pose. Ça ne ferme rien non plus — qui peut l'ouvrir reste l'affaire de `lecteurs` et du lieu. Ça RANGE : la carte du coffret groupe ses volumes par main, dans l'ordre où les mains paraissent, et ce qui n'a pas de `tenu_par` tombe sous « Sur personne » à la fin — une affaire ouverte que personne ne porte se voit alors sans qu'on la cherche. |
 | `lecteurs` | [] les seuls qui puissent l'ouvrir (`personnages.json`). Ça ne DONNE rien — le volume garde ses règles de lieu — ça retire : qui n'y est pas nommé ne le voit pas, et le serveur ne le lui envoie pas. Pour le registre où vivent les noms, posé sur une table où deux sièges entrent. |
+| `office` | facultatif — **sous quelle charge** le volume est tenu, mot pour mot comme au registre des offices. Ne fait pas double emploi avec `tenu_par`, qui dit seulement QUI : ser Robert en tient trois, Aldon Hask trois aussi, et savoir qu'un cahier tombe sur eux ne dit pas de quel chapeau ils le portent — ni quel sceau on regarderait si l'affaire tournait mal. S'affiche sous le titre dans la liste d'un coffret. Une charge réelle sans ligne au registre se note « (hors registre) » : c'est une information, pas un oubli. |
 | `titre` | ce qui s'affiche sur l'onglet. |
 | `sous_titre` | une ligne : de quelle main, ouvert quand, devant qui. |
 | `type` | facultatif — le genre du volume (voir la table ci-dessous). Il écrit son mot en petites capitales à côté du titre et **préremplit la teinte** de la tranche et de l'onglet. |
@@ -174,6 +176,72 @@ Ce que dit `tick.py --verifier` : coffret nulle part, sans titre, sans emblème,
 emblèmes doublés, `prive` sans porteur, `boite` qui ne renvoie à rien, volume
 qui garde une place à lui en plus de sa boîte, coffret vide ou d'un seul volume
 (un coffret d'un volume est un onglet de plus, pas un rangement).
+
+## Les marques — ce qu'on lit d'une ligne sans ouvrir le volume
+
+**Il n'y a rien à écrire pour les obtenir, et c'est le point.** La carte d'un
+coffret portait, sur chacune de ses trente-huit lignes, le même mot de genre
+(« Plan ») et le même début de sous-titre (« Affaire ouverte à la Table Peinte
+le 26e jour de la 3e lune… »). Une colonne qui dit la même chose sur toutes les
+lignes n'aide personne à choisir : elle occupe la place où devrait se lire ce
+qui les distingue. Ce qui les distingue est DÉJÀ dans les volumes — on le
+remonte, on ne le recopie pas. Une marque écrite à la main serait une seconde
+vérité à tenir, et elle mentirait au premier changement.
+
+Trois marques, dans cet ordre, et pas une de plus :
+
+| marque | d'où elle vient | ce qu'elle dit |
+| --- | --- | --- |
+| **le pilier** | la ligne `PILIER` de l'ouverture du volume | à quoi l'affaire sert — c'est elle qui porte la couleur |
+| **l'avancement** | la colonne `⏳ État` de la table `⚔️` du volume | `3 / 19` — ce qui est fait sur ce qui est écrit |
+| **l'alarme** | la même colonne | `n bloquées`, ou `rien d'écrit` quand le volume est ouvert et vide |
+
+**Le pilier est le PREMIER nommé dans la phrase**, pas le premier d'une liste :
+un volume nomme volontiers les autres piliers pour dire ce qu'il n'est pas. Cinq
+valeurs — les quatre piliers de la maison, plus « les trois piliers » pour les
+garants —, et un volume qui ne sait pas dire le sien n'en reçoit pas : l'absence
+est alors l'information, comme « sur personne » l'est pour la main.
+
+**Le rouge appartient à la faute.** Les quatre teintes de pilier l'évitent, et
+seule `bloquée` le prend. Une palette où la couleur d'alarme sert aussi de
+couleur de rangement n'alarme plus.
+
+**Un pilier s'empoigne** : le cliquer ne fait qu'une chose — ne garder que lui,
+les mains conservées, avec « Tout revoir » pour rendre le coffret. C'est ce qui
+sépare une marque d'une étiquette ; une couleur qu'on ne peut pas saisir ne sert
+qu'à décorer. Un pilier qui ne garderait rien se relâche de lui-même plutôt que
+de laisser une carte vide.
+
+Conséquence pour le MJ : **on ne tient pas les marques, on tient les volumes.**
+Une action qui passe à `faite` dans la table `⚔️` d'un cahier change son compte
+dans la liste à la lecture suivante, sans qu'on touche à rien d'autre. Et un
+volume dont l'ouverture ne sait pas dire son pilier se voit dans la liste, ce
+qui est exactement l'épreuve que le guide des affaires demande.
+
+## L'idée — ce qu'il y aurait à faire, sous chaque affaire
+
+La vue « Les sujets » (le coffret `boite-sujets`, 38 volumes `affaire-*`) porte
+un interrupteur **💡 idée**. Éteint par défaut, son état retenu en
+`localStorage` : allumé, il pose **sous chaque affaire, en retrait, une ligne** —
+son idée principale, dans le gabarit de l'échiquier (*afin d'atteindre X, faire Y
+aurait effet Z*), avec la lampe et le filet de sa famille, braise pour ce qui
+tient à la parole de la reine, vert pour ce qui est du travail de conseil.
+
+**Rien n'est recalculé ici.** La route `/echiquier` dérive déjà les missions des
+six registres du plan et range dans chaque affaire son `idee` ; les livres
+rapprochent par `livre_id`, l'appariement affaire↔volume que le serveur a déjà
+fait, et par rien d'autre. Une affaire sans mission n'affiche rien ; un volume
+qu'aucune affaire dérivée ne rejoint non plus — et c'est une information : sur
+les 38 cahiers du coffret, **32 portent une idée** — les six autres sont des
+affaires dont la chaîne ne réclame rien ou dont le cahier n'a pas de tables.
+
+**L'idée principale se choisit par mesure, jamais par jugement**, dans cet
+ordre : la force de l'effet d'abord — lever le dernier verrou d'un état cible bat
+lever un verrou sur deux, qui bat porter une action sous une clef ; puis la
+portée, à force égale, celle qui remonte au plus d'états cibles ; puis le coût,
+à égalité encore, celle qui ne coûte qu'un mot au registre. **Une seule ligne par
+affaire** : trente-huit fois trois idées seraient exactement le mur que cette
+maison appelle le tunnel.
 
 ## Les notes du joueur — le volume qui n'est pas du monde
 

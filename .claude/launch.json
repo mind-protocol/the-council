@@ -22,9 +22,30 @@
       "name": "jeu-verif",
       "runtimeExecutable": "node",
       "runtimeArgs": [
-        "serveur/serveur.js"
+        "serveur/serveur.js",
+        "3132"
       ],
       "port": 3132,
+      "autoPort": false
+    },
+    {
+      "name": "jeu-heure",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "serveur/serveur.js",
+        "3143"
+      ],
+      "port": 3143,
+      "autoPort": false
+    },
+    {
+      "name": "jeu-echiquier",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "serveur/serveur.js",
+        "3142"
+      ],
+      "port": 3142,
       "autoPort": false
     },
     {

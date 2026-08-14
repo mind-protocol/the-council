@@ -1,0 +1,65 @@
+{
+ "_lisez_moi": "Les fils : ce qui court, avec le nom de l homme dessus et QUI TIENT LA PLUME. mode=joue -> ca se joue en scene ; mode=delegue -> ca tourne hors champ et revient en UNE LIGNE au passe. Un fil sans `sur` ne se delegue pas : il revient a la main du joueur. Un fil delegue ne remonte QUE si remonte_si s arme (parole, cout, froisse, contredit) — et alors il remonte dans la SCENE, en `demande`, jamais dans le rail. Format : docs/fils.md.",
+ "fils": [
+  {
+   "id": "fil-ce-qui-part-et-par-ou",
+   "titre": "Ce qui part de l ile sort sans qu on sache par ou — etablir la route de chaque pli",
+   "detail": "affaire du plan, reattribuee a la voix",
+   "sur": "aurore-inchauspe",
+   "echeance": null,
+   "mode": "joue",
+   "statut": "en-cours",
+   "remonte_si": [
+    "parole",
+    "cout"
+   ],
+   "depuis": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 1,
+    "minute": 395
+   },
+   "dernier": "Une ligne QUI LA TIENT posee en tete du volume, visible des l ouverture."
+  },
+  {
+   "id": "fil-opinion-port-real",
+   "titre": "Port-Real crie qu on paie pour la chute de la reine — retourner ce qu on y dit",
+   "detail": "affaire du plan, reattribuee a la voix",
+   "sur": "aurore-inchauspe",
+   "echeance": null,
+   "mode": "joue",
+   "statut": "en-cours",
+   "remonte_si": [
+    "parole",
+    "froisse"
+   ],
+   "depuis": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 1,
+    "minute": 395
+   },
+   "dernier": "Une ligne QUI LA TIENT posee en tete du volume."
+  },
+  {
+   "id": "fil-galeries-sept-bouches",
+   "titre": "Le trace des sept galeries a disparu de l archive — retrouver le feuillet, ou murer les cinq bouches",
+   "detail": "deux bouches connues sur sept ; il manque un macon sur cette ile",
+   "sur": "gerardys",
+   "echeance": null,
+   "mode": "delegue",
+   "statut": "en-cours",
+   "remonte_si": [
+    "froisse",
+    "contredit"
+   ],
+   "depuis": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30,
+    "minute": 508
+   },
+   "dernier": "Le mestre le tient desormais : ce n est pas un vol mais un manque, et il l a dit."
+  }
+ ]
+}

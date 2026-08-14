@@ -2,11 +2,11 @@
 
 Usage :
     python scripts/migrer_plis.py
-        Ecrit une PROPOSITION dans etat/staging/plis-<AAAAMMJJ-HHMMSS>.json
+        Ecrit une PROPOSITION dans etat/plis-<AAAAMMJJ-HHMMSS>.json
         et imprime un resume. N'ecrit JAMAIS dans etat/.
 
     python scripts/migrer_plis.py --sortie plis-essai.json
-        Meme chose sous un autre nom (toujours dans etat/staging/).
+        Meme chose sous un autre nom (toujours dans etat/).
 
 Ce que fait la conversion, entree de diffusion par entree de diffusion :
 
@@ -45,7 +45,7 @@ RACINE = os.path.dirname(SCRIPTS)
 if SCRIPTS not in sys.path:
     sys.path.insert(0, SCRIPTS)
 
-from tick import (CANAUX_PLI, Etat, date_de, ecrire_staging, empreintes_etat,
+from tick import (CANAUX_PLI, Etat, date_de, ecrire_proposition, empreintes_etat,
                   fmt, jour_absolu, jours_de_route)
 
 
@@ -145,9 +145,9 @@ def convertir(e):
 def main():
     a = argparse.ArgumentParser(
         description="Convertit evenements.diffusion en plis (sortie dans "
-                    "etat/staging/ uniquement).")
+                    "etat/ uniquement).")
     a.add_argument("--sortie", metavar="FICHIER",
-                   help="nom du fichier dans etat/staging/")
+                   help="nom du fichier dans etat/")
     args = a.parse_args()
 
     e = Etat()
@@ -179,7 +179,7 @@ def main():
     }
     nom = args.sortie or "plis-{}.json".format(
         datetime.now().strftime("%Y%m%d-%H%M%S"))
-    chemin = ecrire_staging(nom, prop)
+    chemin = ecrire_proposition(nom, prop)
 
     print("Diffusions converties en plis : {}".format(len(plis)))
     for pli in plis:

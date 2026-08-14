@@ -1,3 +1,12 @@
+/* LA LUMIÈRE DU JOUR — voir modules/lumiere.js. Le fond et le voile sont les
+   deux seules couleurs que l'heure de la fiction déplace ; elles sont déclarées
+   ici pour que le navigateur sache les INTERPOLER (une variable non déclarée
+   saute d'une valeur à l'autre, et un saut de six heures se verrait comme une
+   panne d'électricité). Le texte, lui, ne bouge jamais : voir la règle 1 du
+   module. */
+@property --fond{ syntax:"<color>"; inherits:true; initial-value:#f4eee2; }
+@property --jour-lueur{ syntax:"<color>"; inherits:true; initial-value:transparent; }
+
 :root{
   --ink:#2b2119; --muted:#7a6a55; --paper:rgba(120,90,50,.07);
   --bord:rgba(110,85,50,.35); --accent:#a34a22; --braise:#c9683a;
@@ -5,6 +14,10 @@
   --fond-lateral:rgba(120,90,50,.05);
   --pensee:#6d5590; --monde:#5d6b58; --sang:#8f1f1f; --vert:#3f7040;
   --loge:#3d7b86;
+  /* l'or du joueur : le halo de SA tache sur toutes les cartes. Une couleur à
+     lui seul, qui n'est celle d'aucun office — on doit se retrouver d'un coup
+     d'œil sur un plan de quarante visages. */
+  --or-joueur:#c8a020;
   /* les tranches des livres, une par genre (voir docs/books.md) */
   --book-registre:#6a4a22; --book-carnet:#6d5590; --book-plan:#a34a22;
   --book-memento:#5d6b58; --book-dossier:#3d7b86; --book-regle:#8f1f1f;
@@ -22,6 +35,7 @@
     --fond-lateral:rgba(255,225,170,.03);
     --pensee:#a68cc9; --monde:#8fa387; --sang:#d95050; --vert:#5d8f5d;
     --loge:#63b3c1;
+    --or-joueur:#f0cc55;
     --book-registre:#c9a15e; --book-carnet:#a68cc9; --book-plan:#e0824a;
     --book-memento:#8fa387; --book-dossier:#63b3c1; --book-regle:#d95050;
     --book-oeuvre:#d4b25a;
@@ -29,6 +43,16 @@
 }
 html,body{margin:0;height:100%;background:var(--fond);color:var(--ink);
   font-family:Georgia,'Times New Roman',serif;line-height:1.6;font-size:19px;}
+/* 1,8 s : le temps du jeu avance par sauts (un `recit` de 420 minutes fait
+   passer la nuit d'un coup), et c'est la transition qui transforme le saut en
+   glissement. Sans elle, on ne SENT rien — on constate. */
+html{transition:--fond 1.8s ease,--jour-lueur 1.8s ease;}
+/* le jour qui tombe par le haut. C'est un fond de page, pas un calque posé
+   par-dessus : rien ne passe devant le texte, donc rien n'en abîme le
+   contraste. */
+body{background-image:linear-gradient(180deg,var(--jour-lueur),transparent 42vh);
+  background-repeat:no-repeat;background-attachment:fixed;}
+@media (prefers-reduced-motion:reduce){ html{transition:none;} }
 /* la chronique d'abord et deux tiers, la scène ensuite sur le tiers restant */
 body{display:grid;grid-template-columns:auto minmax(0,2fr) minmax(340px,1fr);
   overflow:hidden;}
@@ -57,6 +81,33 @@ button:hover{background:var(--btn-hover);border-color:var(--accent);}
 .objectif.statut-accompli{border-left-color:var(--monde);color:var(--muted);text-decoration:line-through;}
 .objectif.statut-echoue{border-left-color:var(--sang);color:var(--muted);text-decoration:line-through;}
 .objectif-vide{font-size:.8em;font-style:italic;color:var(--muted);}
+
+/* ------- « Ce qui court » : les fils, et qui tient la plume dessus -------
+   Le bord gauche dit le mode d'un coup d'œil : plein = on le joue, pointillé
+   = il tourne sans nous. Voir docs/fils.md. */
+#fils-compte{font-variant:normal;letter-spacing:0;text-transform:none;
+  float:right;opacity:.75;}
+.fil{display:flex;align-items:flex-start;gap:8px;font-size:.86em;
+  border-left:3px solid var(--braise);padding:4px 0 4px 10px;margin-bottom:11px;}
+.fil-corps{flex:1;min-width:0;cursor:pointer;transition:color .2s;}
+.fil-corps:hover{color:var(--accent);}
+.fil-titre{line-height:1.35;}
+.fil-marge{font-size:.85em;color:var(--muted);margin-top:2px;line-height:1.4;}
+.fil-echeance{white-space:nowrap;}
+.fil-echeance.echeance-retard{color:var(--sang);}
+.fil-echeance.echeance-urgent{color:var(--accent);}
+.fil-mode{display:flex;flex:none;border:1px solid var(--bord);border-radius:5px;
+  overflow:hidden;}
+.fil-bouton{font-size:.78em;padding:2px 7px;border:0;border-radius:0;
+  background:transparent;color:var(--muted);}
+.fil-bouton:hover{background:var(--btn-hover);border-color:transparent;}
+.fil-bouton.actif{background:var(--btn-hover);color:var(--accent);}
+/* Un fil délégué s'efface un peu : il tourne sans nous, et c'est le but. */
+.fil:has(.fil-bouton.actif:last-child){border-left-style:dotted;}
+.fil:has(.fil-bouton.actif:last-child) .fil-titre{color:var(--muted);}
+/* Sans nom : personne ne le tient, il revient à la main du joueur. */
+.fil:has(.fil-sans-nom){border-left-color:var(--sang);}
+.fil-sans-nom{font-size:.78em;padding:2px 7px;color:var(--sang);white-space:nowrap;}
 .reglage{margin-bottom:14px;}
 .reglage-nom{font-size:.8em;color:var(--muted);margin-bottom:2px;}
 .reglage input[type=range]{width:100%;accent-color:var(--accent);height:20px;}
@@ -67,15 +118,18 @@ body.sans-gestes .gestes{display:none;}
    sobre, discret, et absent tant qu'il n'y a qu'un joueur. */
 /* le siège dans le bandeau : qui l'on incarne, et la liste pour en changer.
    Discret par défaut — c'est un repère, pas une commande qu'on cherche. */
+/* Dans le rail, la liste ne FLOTTE pas : le panneau défile et rogne ce qui
+   déborde, un menu en absolu s'y ferait couper. Elle se déplie en place, sous
+   le bouton, et pousse le reste du rail vers le bas. */
 #siege{flex:none;position:relative;}
-#siege-bouton{padding:3px 9px;font:inherit;font-size:.94em;letter-spacing:.04em;
+#siege-bouton{display:block;width:100%;box-sizing:border-box;text-align:left;
+  padding:5px 10px;font:inherit;font-size:.94em;letter-spacing:.04em;
   color:var(--muted);background:none;border:1px solid var(--bord);
   border-radius:11px;cursor:pointer;}
 #siege-bouton:hover{color:var(--accent);border-color:var(--accent);}
-#siege-liste{position:absolute;right:0;top:calc(100% + 6px);z-index:40;
-  display:flex;flex-direction:column;min-width:130px;padding:4px;
-  background:var(--fond);border:1px solid var(--bord);border-radius:6px;
-  box-shadow:0 6px 18px rgba(0,0,0,.45);}
+#siege-liste{position:static;z-index:40;margin-top:6px;
+  display:flex;flex-direction:column;min-width:0;padding:4px;
+  background:var(--fond);border:1px solid var(--bord);border-radius:6px;}
 /* sans ceci, le display:flex ci-dessus (spécificité d'ID) bat le
    display:none de [hidden] : le menu ne se refermait jamais. */
 #siege-liste[hidden]{display:none;}
@@ -93,15 +147,38 @@ body.sans-gestes .gestes{display:none;}
 .bouton-voix:disabled{opacity:.5;cursor:default;font-style:italic;}
 
 /* ------- la scène : bandeau, décor, narrateur, input ------- */
-#scene{height:100vh;box-sizing:border-box;display:flex;flex-direction:column;
+/* `position:relative` pour les deux flèches de nav, qui se posent dans son coin
+   haut : #decor repasse en `static` plus bas dans cette feuille, il ne peut pas
+   servir d'ancre. */
+#scene{position:relative;height:100vh;box-sizing:border-box;
+  display:flex;flex-direction:column;
   overflow:hidden;padding:12px 26px 14px;gap:8px;}
-#bandeau{flex:none;display:flex;align-items:center;gap:14px;font-size:.8em;
-  color:var(--muted);letter-spacing:.04em;border-bottom:1px solid var(--bord);
-  padding-bottom:6px;}
-#lieu{font-style:italic;flex:1;}
-#jauge{width:80px;height:5px;border:1px solid var(--bord);border-radius:3px;overflow:hidden;flex:none;}
-#jauge i{display:block;height:100%;width:0;
-  background:linear-gradient(90deg,var(--accent),var(--braise));transition:width 1s;}
+/* Le bandeau a quitté la tête du décor pour la rangée d'envoi, à gauche des
+   boutons : plus de trait à lui, plus de hauteur à lui. Il prend la place que
+   les boutons laissent, et le lieu se coupe avant de les pousser. */
+#bandeau{flex:1 1 auto;min-width:0;display:flex;align-items:center;gap:9px;
+  font-size:.8em;color:var(--muted);letter-spacing:.04em;}
+/* Le nom de la salle passe AVANT la date : c'est « où suis-je » et il ne doit
+   jamais tomber à deux pixels comme il le faisait quand la date, l'heure et
+   l'écart se servaient les premiers. Il garde une base à lui ; la date cède la
+   première et se tronque si la rangée se resserre. */
+#date{flex:0 1 auto;min-width:0;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;}
+#lieu{font-style:italic;flex:1 .25 160px;min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+/* L'arc de la journée a été retiré du bandeau : la rangée d'envoi est étroite,
+   et la place va au lieu — le nom de la salle. L'heure reste dans la montre. */
+/* les deux flèches de la nav du décor : dans le coin haut du décor, hors du
+   flux — elles ne prennent aucune place et ne poussent rien. Discrètes, et
+   muettes quand il n'y a rien derrière ; elles ne s'allument qu'au survol. */
+#nav-hist{position:absolute;top:8px;right:20px;z-index:6;
+  display:flex;gap:2px;pointer-events:auto;}
+#nav-hist button{background:none;border:none;color:var(--muted);cursor:pointer;
+  font-size:1.15em;line-height:1;padding:2px 5px;opacity:.28;
+  transition:opacity .2s,color .2s;}
+#decor:hover #nav-hist button:not(:disabled){opacity:.6;}
+#nav-hist button:not(:disabled):hover{opacity:1;color:var(--accent);}
+#nav-hist button:disabled{opacity:.1;cursor:default;}
 
 #bulle-monde{flex:none;max-height:11vh;overflow-y:auto;}
 #bulle-monde:empty{display:none;}
@@ -143,9 +220,20 @@ body.sans-gestes .gestes{display:none;}
 .pensee{font-style:italic;font-size:.86em;color:var(--pensee);
   border-left:3px dotted var(--pensee);padding:2px 0 2px 12px;margin:0;}
 .pensee::before{content:'⟡ ';}
-#attente{display:none;flex:none;text-align:center;color:var(--muted);
-  font-style:italic;font-size:.82em;padding:2px 0;}
-#attente.actif{display:block;}
+/* L'attente du monde : trois points qui respirent, jamais une phrase. Une
+   phrase se lit et s'use ; un battement se sent du coin de l'œil et disparaît
+   sans qu'on l'ait relu. */
+#attente{display:none;flex:none;padding:6px 0 4px;}
+#attente.actif{display:flex;gap:5px;align-items:center;justify-content:center;}
+#attente i{width:4px;height:4px;border-radius:50%;background:var(--muted);
+  animation:attente-point 1.3s infinite ease-in-out;}
+#attente i:nth-child(2){animation-delay:.16s;}
+#attente i:nth-child(3){animation-delay:.32s;}
+@keyframes attente-point{
+  0%,70%,100%{opacity:.28;transform:translateY(0);}
+  35%{opacity:1;transform:translateY(-3px);}}
+@media (prefers-reduced-motion:reduce){
+  #attente i{animation:pulse 2.2s infinite;}}
 
 /* ------- la barre : Parler / Agir / Penser / … ------- */
 #fil-actions{flex:none;border-top:1px solid var(--bord);padding-top:8px;}
@@ -166,20 +254,24 @@ body.sans-gestes .gestes{display:none;}
 .libre textarea.mode-agir{border-left:3px solid var(--monde);font-style:italic;}
 .libre textarea.mode-agir:focus{border-color:var(--monde);}
 .libre button{padding:10px 20px;font-size:.95em;}
-/* l'heure de la fiction, contre le bouton d'envoi : quand on parle, on sait quand */
-.libre .envoi{display:flex;flex-direction:row;align-items:center;justify-content:flex-end;
-  gap:8px;flex:none;}
-#heure-barre{font-size:.72em;color:var(--muted);letter-spacing:.04em;
-  text-align:center;white-space:nowrap;font-style:italic;}
-/* Améliorer : un fanion sous le bouton d'envoi, pas un mode. Éteint, il ne
+/* La rangée d'envoi porte le bandeau à gauche (date, heure, lieu, nav) et les
+   boutons à droite : quand on parle, on sait où et quand. */
+.libre .envoi{display:flex;flex-direction:row;align-items:center;
+  justify-content:flex-end;gap:8px;flex:none;}
+.libre .envoi > button{flex:none;}
+/* Améliorer : une pastille à bascule, pas un mode et pas un mot. Éteint, il ne
    doit pas tirer l'œil ; allumé, on doit savoir que ce qu'on écrit passera
-   par la plume du MJ avant d'être entendu. */
-#ameliorer{font-size:.72em;padding:3px 10px;border-radius:12px;color:var(--muted);
-  opacity:.7;}
+   par la plume du MJ avant d'être entendu. La place gagnée va au bandeau —
+   c'est le nom de la salle qu'on veut lire au moment d'envoyer. */
+/* le sélecteur double passe devant `#fil .libre button` (ligne ~1612), qui
+   sinon lui rend ses 9px de rembourrage et ses 30 pixels de large. */
+#ameliorer,#fil .libre #ameliorer{width:26px;height:26px;padding:0;flex:none;font-size:.72em;
+  display:inline-flex;align-items:center;justify-content:center;
+  border-radius:50%;color:var(--muted);opacity:.55;}
 #ameliorer:hover{opacity:1;}
 #ameliorer.actif{color:var(--accent);border-color:var(--accent);
   background:var(--btn-hover);opacity:1;}
-#ameliorer .emb{margin-right:4px;}
+#ameliorer .emb{margin:0;font-size:1.05em;line-height:1;}
 /* le brouillon, le temps que la plume passe : la ligne pâlit sans disparaître */
 .chr-brouillon .chr-texte{opacity:.55;font-style:italic;}
 .chr-ameliore .chr-texte{transition:opacity .4s;}
@@ -240,6 +332,135 @@ body.sans-gestes .gestes{display:none;}
   text-decoration:line-through;font-weight:400;}
 /* comme « Les gens » : quand cette échelle est à l'écran, elle prend la place */
 #cartes:has(#desseins:not(.vue-off)){flex:1 1 auto;}
+
+/* ------- « Les jours » : le calendrier du siège ------- */
+#calendrier{position:static;flex:1 1 auto;min-height:200px;display:flex;
+  flex-direction:column;}
+#cartes:has(#calendrier:not(.vue-off)){flex:1 1 auto;}
+.cal-corps{flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:4px;}
+.cal-vide{font-size:.62em;color:var(--muted);}
+.cal-tete{font-size:.62em;font-style:italic;color:var(--muted);margin:0 0 10px;
+  display:flex;align-items:baseline;gap:8px;}
+.cal-mode{font-size:.85em;font-style:normal;font-variant:small-caps;
+  letter-spacing:.08em;padding:0 7px;color:var(--muted);}
+.cal-mode:first-of-type{margin-left:auto;}
+.cal-mode.actif{color:var(--braise);border-color:var(--braise);}
+
+/* ------- les carreaux : une colonne par jour, une ligne par heure ------- */
+/* Le panneau fait ~520 px : à dix jours, une colonne tombe à 56 px et un
+   carreau ne montre plus que « 7h Don… ». On donne donc une largeur PLANCHER
+   à la colonne et l'on fait défiler les jours — mieux vaut six jours lisibles
+   qu'une lune illisible. */
+.cal-grille-boite{font-size:1em;overflow-x:auto;}
+.cal-grille{display:grid;grid-template-columns:2.6em repeat(var(--cols),minmax(84px,1fr));
+  gap:1px;background:var(--bord);border:1px solid var(--bord);min-width:min-content;}
+.cal-g-coin,.cal-g-jour,.cal-g-heure,.cal-case{background:var(--fond,#00000000);
+  background-color:var(--paper);}
+.cal-g-jour{padding:3px 4px;text-align:center;font-size:.55em;line-height:1.25;}
+.cal-g-jour b{display:block;color:var(--ink);font-weight:600;}
+.cal-g-jour span{color:var(--muted);}
+.cal-g-jour.courant b{color:var(--braise);}
+.cal-g-jour.passe{opacity:.5;}
+.cal-g-heure{padding:2px 4px;text-align:right;font-size:.52em;color:var(--muted);}
+.cal-g-heure.sans{font-style:italic;}
+.cal-case{min-height:22px;padding:2px;cursor:text;display:flex;flex-direction:column;
+  gap:2px;transition:background-color .12s;}
+.cal-case:hover{background-color:color-mix(in srgb,var(--accent) 8%,var(--paper));}
+.cal-case.passe{opacity:.42;}
+.cal-case.courante{outline:1px solid var(--braise);outline-offset:-1px;
+  background-color:color-mix(in srgb,var(--braise) 10%,var(--paper));}
+/* la teinte de la salle où elle est à cette heure-là — six suffisent */
+.cal-case[data-salle="0"]{background-color:color-mix(in srgb,var(--monde) 9%,var(--paper));}
+.cal-case[data-salle="1"]{background-color:color-mix(in srgb,var(--pensee) 9%,var(--paper));}
+.cal-case[data-salle="2"]{background-color:color-mix(in srgb,var(--braise) 8%,var(--paper));}
+.cal-case[data-salle="3"]{background-color:color-mix(in srgb,var(--vert) 9%,var(--paper));}
+.cal-case[data-salle="4"]{background-color:color-mix(in srgb,var(--accent) 7%,var(--paper));}
+.cal-case[data-salle="5"]{background-color:color-mix(in srgb,var(--muted) 12%,var(--paper));}
+.cal-chip{display:block;width:100%;text-align:left;font-size:.5em;line-height:1.3;
+  padding:1px 3px;border-left:2px solid var(--braise);background:var(--fond,transparent);
+  background-color:rgba(128,128,128,.10);overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;cursor:pointer;}
+.cal-chip:hover{background-color:rgba(128,128,128,.22);}
+.cal-chip.g-rdv{border-left-color:var(--accent);}
+.cal-chip.g-pli{border-left-color:var(--pensee);}
+.cal-chip.g-fil{border-left-color:var(--monde);}
+.cal-chip.tenu{opacity:.5;text-decoration:line-through;}
+/* de sa main : trait plein, encre normale — ce n'est pas une note de marge */
+.cal-memo{font-size:.5em;line-height:1.3;color:var(--ink);
+  border-left:2px solid var(--ink);padding-left:3px;}
+.cal-case:empty::after,.cal-case:not(:has(*))::after{content:"+";font-size:.5em;
+  color:var(--muted);opacity:0;align-self:flex-start;}
+.cal-case:hover::after{opacity:.5;}
+.cal-dit{margin:6px 0 0;font-size:.52em;color:var(--muted);font-style:italic;}
+.cal-memo-champ{width:100%;font-size:.5em;line-height:1.3;font-family:inherit;
+  background:var(--paper);color:var(--ink);border:1px solid var(--braise);
+  border-radius:2px;padding:2px;resize:none;}
+.cal-legende{display:flex;flex-wrap:wrap;gap:3px 10px;margin-top:6px;font-size:.52em;
+  color:var(--muted);}
+.cal-legende span{padding-left:12px;position:relative;}
+.cal-legende span::before{content:"";position:absolute;left:0;top:.25em;width:8px;
+  height:8px;border:1px solid var(--bord);}
+.cal-legende span[data-salle="0"]::before{background:color-mix(in srgb,var(--monde) 40%,transparent);}
+.cal-legende span[data-salle="1"]::before{background:color-mix(in srgb,var(--pensee) 40%,transparent);}
+.cal-legende span[data-salle="2"]::before{background:color-mix(in srgb,var(--braise) 40%,transparent);}
+.cal-legende span[data-salle="3"]::before{background:color-mix(in srgb,var(--vert) 40%,transparent);}
+.cal-legende span[data-salle="4"]::before{background:color-mix(in srgb,var(--accent) 40%,transparent);}
+.cal-legende span[data-salle="5"]::before{background:color-mix(in srgb,var(--muted) 50%,transparent);}
+.cal-detail-boite{margin-top:10px;border-top:1px dotted var(--bord);padding-top:8px;}
+.cal-jour{margin-bottom:18px;}
+.cal-jour-titre{font-size:.6em;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);border-bottom:1px dotted var(--bord);padding-bottom:3px;
+  margin-bottom:9px;display:flex;gap:8px;align-items:baseline;}
+.cal-jour-titre b{color:var(--ink);font-weight:600;}
+.cal-jour-titre i{margin-left:auto;font-style:italic;text-transform:none;
+  letter-spacing:0;opacity:.65;}
+.cal-jour.courant .cal-jour-titre b{color:var(--braise);}
+.cal-jour.passe{opacity:.55;}
+
+/* la règle horaire du jour courant : le fond, c'est sa routine */
+.cal-journee{position:relative;}
+.cal-rule{position:relative;margin-left:34px;border-left:1px solid var(--bord);}
+.cal-graduation{position:absolute;left:0;right:0;border-top:1px dotted var(--bord);
+  opacity:.5;}
+.cal-graduation::before{content:attr(data-h);position:absolute;left:-34px;top:-.55em;
+  font-size:.52em;color:var(--muted);}
+.cal-bande{position:absolute;left:0;right:0;background:var(--paper);
+  border-top:1px solid transparent;}
+.cal-bande.fermee{background:color-mix(in srgb,var(--braise) 12%,transparent);}
+.cal-bande span{position:absolute;right:4px;top:2px;font-size:.5em;color:var(--muted);
+  opacity:.6;max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cal-maintenant{position:absolute;left:-34px;right:0;border-top:1px solid var(--braise);}
+.cal-maintenant::before{content:attr(data-h);position:absolute;left:0;top:-.6em;
+  font-size:.52em;color:var(--braise);background:var(--fond,transparent);}
+.cal-pose{position:absolute;left:10px;right:0;}
+/* poussée plus bas que son heure faute de place : le filet le dit */
+.cal-pose.repousse .cal-entree{border-left-style:dashed;}
+.cal-flottantes{margin:0 0 10px 34px;}
+.cal-flottantes-titre{font-size:.55em;color:var(--muted);font-variant:small-caps;
+  letter-spacing:.1em;margin-bottom:5px;}
+
+/* une entrée — même grammaire qu'un dessein : filet à gauche, marge, détail */
+.cal-entree{border-left:2px solid var(--braise);padding:1px 0 4px 9px;
+  margin-bottom:10px;background:var(--fond,transparent);}
+.cal-entree.g-rdv{border-left-color:var(--accent);}
+.cal-entree.g-pli{border-left-color:var(--pensee);}
+.cal-entree.g-fil{border-left-color:var(--monde);}
+.cal-entree.g-dessein{border-left-color:var(--braise);}
+.cal-entree.g-echeance{border-left-color:var(--bord);}
+.cal-entree.tenu{opacity:.55;}
+.cal-titre{font-size:.72em;font-weight:600;line-height:1.35;}
+.cal-heure{display:inline-block;min-width:3.4em;color:var(--braise);font-weight:600;}
+.cal-marge{display:flex;flex-wrap:wrap;gap:2px 10px;margin-top:2px;
+  font-size:.56em;color:var(--muted);}
+.cal-genre{font-variant:small-caps;letter-spacing:.08em;}
+.cal-tenu{color:var(--monde);}
+.cal-detail{margin:4px 0 0;font-size:.6em;color:var(--muted);line-height:1.45;}
+.cal-point{display:inline-block;margin-top:4px;padding:1px 8px;font-size:.55em;
+  font-variant:small-caps;letter-spacing:.08em;color:var(--muted);opacity:0;
+  transition:opacity .15s,color .15s;}
+.cal-entree:hover .cal-point,.cal-point:focus,.cal-point:disabled{opacity:1;}
+.cal-point:hover{color:var(--accent);}
+.cal-point:disabled{cursor:default;opacity:.55;}
 
 /* ------- « Les livres » : ce qui est posé dans la salle ------- */
 #books{position:static;flex:1 1 auto;min-height:180px;display:flex;
@@ -302,7 +523,79 @@ body.sans-gestes .gestes{display:none;}
 .book-coffret-signe{width:1.6em;font-size:1.25em;line-height:1;
   padding-right:6px !important;}
 .book-coffret-nom{white-space:nowrap;color:var(--ink) !important;}
+/* L'office sous lequel le volume est tenu : une seconde ligne, sous le titre.
+   En petit et en pâle — c'est une mention de sceau, pas un second titre. */
+.book-coffret-office{display:block;font-size:.76em;font-weight:400;
+  font-style:normal;color:var(--muted);letter-spacing:.02em;margin-top:1px;}
+.book-coffret-office::before{content:'⚜ ';opacity:.55;}
 .book-coffret-mot{font-style:italic;}
+/* Les marques d'une ligne de coffret. Une colonne qui répétait le même
+   sous-titre sur trente-sept lignes ne choisissait rien ; ce qui distingue une
+   affaire d'une autre — le pilier qu'elle sert, l'état de ses actions — est
+   déjà écrit dans le volume, et se remonte ici. Le ROUGE reste à la faute :
+   les quatre piliers l'évitent, et rien d'autre que « bloquée » ne le prend. */
+.book-marques{font-style:normal;white-space:nowrap;text-align:right;
+  display:flex;gap:5px;justify-content:flex-end;align-items:center;}
+.book-marque{font-size:.76em;letter-spacing:.02em;padding:1px 6px;
+  border-radius:2px;line-height:1.5;border:1px solid transparent;}
+/* Le pilier s'empoigne : un clic ne garde que lui, un second rend le coffret.
+   Une couleur qu'on ne peut pas saisir ne sert qu'à décorer. */
+.book-pilier{font:inherit;font-size:.76em;cursor:pointer;
+  background:color-mix(in srgb,var(--pilier) 14%,transparent);
+  border-color:color-mix(in srgb,var(--pilier) 34%,transparent);
+  color:var(--pilier);}
+.book-pilier:hover{background:color-mix(in srgb,var(--pilier) 26%,transparent);}
+.book-pilier.tenu{background:var(--pilier);border-color:var(--pilier);
+  color:var(--fond);font-weight:600;}
+.pilier-attaque{--pilier:var(--book-dossier);}
+.pilier-ville{--pilier:var(--braise);}
+.pilier-rallier{--pilier:var(--vert);}
+.pilier-portes{--pilier:var(--pensee);}
+.pilier-garant{--pilier:var(--muted);}
+/* Ce qui est fait sur ce qui est écrit. Le dénominateur compte autant que le
+   numérateur : trois sur cinq n'est pas trois sur vingt-quatre. */
+.book-avance{font-variant-numeric:tabular-nums;color:var(--ink);
+  border-color:var(--bord);}
+.book-avance.nulle{color:var(--muted);}
+.book-avance.pleine{color:var(--vert);border-color:var(--vert);}
+.book-encours{color:var(--braise);font-style:italic;}
+.book-bloque{color:var(--sang);border-color:color-mix(in srgb,var(--sang) 40%,transparent);
+  background:color-mix(in srgb,var(--sang) 10%,transparent);}
+.book-vide{color:var(--muted);font-style:italic;}
+.book-revoir{font:inherit;font-size:.9em;font-style:normal;margin-left:.6em;
+  padding:0 6px;color:var(--muted);background:none;cursor:pointer;
+  border:1px solid var(--bord);border-radius:2px;}
+.book-revoir:hover{color:var(--ink);background:var(--btn-hover);}
+/* Trente-sept affaires en file ne se lisent pas : on cherche les siennes et on
+   les rate. Un coffret dont les volumes disent de quelle main ils sont se range
+   donc PAR MAIN — une barre par homme, ses volumes dessous, et « sur personne »
+   à la fin, qui est une information et pas un reste. La barre ne s'ouvre pas :
+   c'est une étiquette, pas une ligne. */
+.book-coffret-main td{cursor:default;padding-top:10px !important;
+  padding-bottom:2px !important;border-bottom:1px solid var(--bord);
+  font-size:.94em;letter-spacing:.04em;color:var(--book-teinte,var(--accent));}
+/* le rang vit dans un bloc À L'INTÉRIEUR de la cellule : une cellule passée en
+   `flex` sort du calcul des colonnes et la barre dicte alors la largeur de
+   toute la liste qu'elle ne fait que coiffer. */
+.book-coffret-main-bloc{display:flex;align-items:center;gap:7px;}
+.book-coffret-table tr:first-child .book-coffret-main-nom{padding-top:2px !important;}
+.book-coffret-main-compte{letter-spacing:0;font-style:italic;opacity:.62;}
+.book-coffret-main-vide td{text-transform:uppercase;color:var(--muted);}
+/* Le médaillon de « Les gens », couché : la face petite, le nom et le rôle à
+   sa droite. C'est le MÊME dessin qu'à la galerie — on ne redessine pas un
+   homme par endroit du décor —, on ne change que sa mesure. */
+.book-coffret-main-gars.gens-gars{flex:0 0 auto;min-width:0;
+  flex-direction:row;align-items:center;gap:6px;text-align:left;opacity:1;
+  padding:0;}
+.book-coffret-main-gars.gens-gars:hover{transform:none;}
+.book-coffret-main-gars.gens-gars svg{width:30px;height:30px;}
+.book-coffret-main-gars .gens-dit{margin-top:0;}
+.book-coffret-main-gars .gens-dit b{font-size:.98em;color:inherit;}
+/* Le rôle est une légende, pas une notice : celui de l'intendante fait deux
+   lignes de registre et pousserait la barre plus large que la liste qu'elle
+   coiffe. Une seule ligne, et l'on va lire le reste chez « Les gens ». */
+.book-coffret-main-gars .gens-dit small{font-size:.82em;max-width:20em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .book{margin-bottom:20px;border-left:2px solid var(--book-teinte,var(--braise));
   padding:1px 0 4px 10px;}
 .book h3{margin:0;font-size:.74em;font-weight:600;line-height:1.35;}
@@ -317,6 +610,16 @@ body.sans-gestes .gestes{display:none;}
 .book-copier:hover{opacity:1;color:var(--book-teinte,var(--accent));
   border-color:var(--book-teinte,var(--accent));}
 .book-copier.fait{opacity:1;color:var(--book-teinte,var(--accent));
+  border-color:var(--book-teinte,var(--accent));}
+/* Le chemin vers le plateau de cette affaire — le pendant du « Le volume » de
+   l'échiquier. Même gabarit que « Copier », avec son signe. */
+.book-plateau{flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;
+  font:inherit;font-size:.54em;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);background:none;cursor:pointer;
+  border:1px solid var(--bord);border-radius:3px;padding:3px 8px;opacity:.55;
+  transition:opacity .15s,color .15s,border-color .15s;}
+.book-plateau i{font-style:normal;font-size:1.15em;letter-spacing:0;}
+.book-plateau:hover{opacity:1;color:var(--book-teinte,var(--accent));
   border-color:var(--book-teinte,var(--accent));}
 .book-genre{margin-left:8px;font-size:.62em;font-weight:400;font-variant:small-caps;
   letter-spacing:.12em;color:var(--book-teinte,var(--muted));white-space:nowrap;}
@@ -338,6 +641,51 @@ body.sans-gestes .gestes{display:none;}
    tenir sur deux lignes (le nom, puis la qualité) sans qu'on la coupe */
 .book-table tr td:first-child{color:var(--ink);white-space:pre-line;
   min-width:8em;}
+/* UN EN-TÊTE SE RANGE. Trois états — l'ordre du registre, croissant,
+   décroissant — et le signe ne s'affiche que lorsqu'on a rangé : une grille
+   couverte de chevrons gris annonce une fonction là où il n'y a qu'un tableau. */
+.book-table th[data-triable]{cursor:pointer;user-select:none;
+  transition:color .12s ease;}
+.book-table th[data-triable]:hover{color:var(--ink);}
+.book-table th[data-tri]::after{margin-left:.4em;font-size:.9em;opacity:.85;}
+.book-table th[data-tri="haut"]::after{content:"▲";}
+.book-table th[data-tri="bas"]::after{content:"▼";}
+/* LE CHIFFRE. Dans une grille, c'est ce que l'œil cherche : un compte, un jour,
+   une somme. Chasse fixe pour que les colonnes s'alignent sans qu'on ait eu à
+   déclarer laquelle est numérique, et la teinte de braise, un ton en dessous
+   des renvois — qui sont des numéros eux aussi, mais qui mènent quelque part. */
+.book-chiffre{font-variant-numeric:tabular-nums;
+  color:var(--braise,#b4763a);opacity:.92;}
+.book-table tr td:first-child .book-chiffre{opacity:1;font-weight:600;}
+/* LES COLONNES CALCULÉES. Elles ne sont pas dans le volume : le serveur les
+   ajoute par-dessus, et l'œil doit le savoir — sinon on cherchera « Perte »
+   dans le registre et on ne l'y trouvera pas. D'où l'en-tête en italique et le
+   filet qui les détache du tableau écrit. */
+.book-table th[data-calcule]{font-style:italic;opacity:.72;text-align:right;}
+.book-table th[data-calcule]:first-of-type{border-left:1px solid var(--bord);
+  padding-left:10px;}
+.book-table td.book-calcule{text-align:right;white-space:nowrap;
+  font-variant-numeric:tabular-nums;color:var(--muted);opacity:.65;}
+.book-table td.book-calcule:nth-last-child(3),
+.book-table tr:not(:has(td.book-calcule:nth-last-child(3))) td.book-calcule:nth-last-child(2){
+  border-left:1px solid var(--bord);padding-left:10px;}
+/* La perte se lit en un coup d'œil ou elle ne sert à rien : trois paliers, et
+   le zéro reste un tiret pâle — « quelqu'un d'autre peut le faire ». */
+.book-table td.book-calcule[data-poids]{opacity:1;font-weight:600;}
+.book-table td.book-calcule[data-poids="faible"]{color:var(--muted);}
+.book-table td.book-calcule[data-poids="moyen"]{color:var(--braise,#b4763a);}
+.book-table td.book-calcule[data-poids="fort"]{color:#c0392b;}
+/* CE QUE PÈSE UN CAHIER, dans la liste d'affaires. Le nombre est une taille,
+   l'écart est un MOUVEMENT — et c'est le seul des deux qu'on ne puisse pas
+   retrouver en ouvrant le volume, puisque le plan d'hier n'existe plus. */
+.book-coffret-poids{text-align:right;white-space:nowrap;padding-right:10px;
+  font-variant-numeric:tabular-nums;}
+.book-ecart{margin-left:.35em;font-size:.86em;font-variant-numeric:tabular-nums;}
+/* Monter n'est PAS une bonne nouvelle : la criticité croît quand on écrit du
+   plan. D'où deux teintes sobres et non un vert contre un rouge, qui
+   raconteraient un progrès là où il n'y a qu'un mouvement. */
+.book-ecart-haut{color:#c0392b;}
+.book-ecart-bas{color:var(--braise,#b4763a);}
 .book-note{margin-top:4px;font-style:italic;opacity:.75;}
 /* Un RENVOI : un numéro cité dans une cellule, qui mène à la ligne qui le
    définit — souvent dans un autre volume. On ne l'accroche que s'il mène
@@ -355,6 +703,12 @@ body.sans-gestes .gestes{display:none;}
 /* La ligne où l'on vient d'atterrir se signale un instant : une grille de
    quarante lignes ne dit pas d'elle-même laquelle on était venu chercher. */
 .book-vise td{animation:book-vise 2.4s ease-out;}
+/* Ce qu'on vise n'est pas toujours une ligne de grille : une règle porte un
+   titre, un paragraphe n'a pas d'adresse. La marque se pose alors sur le bloc
+   lui-même, avec un peu d'air pour qu'elle ne colle pas au texte. */
+.book-table-titre.book-vise,.book-page.book-vise,figcaption.book-vise{
+  animation:book-vise 2.4s ease-out;border-radius:3px;
+  margin-left:-4px;padding-left:4px;}
 @keyframes book-vise{
   0%{background:rgba(180,118,58,.32);}
   55%{background:rgba(180,118,58,.16);}
@@ -387,6 +741,28 @@ body.sans-gestes .gestes{display:none;}
 .chr-breve{border-left-color:var(--monde);color:var(--muted);font-size:.76em;}
 .chr-pensee{border-left-style:dotted;border-left-color:var(--pensee);color:var(--pensee);
   font-style:italic;}
+/* La toile d'une salle, au changement de salle. Elle marque une ARRIVÉE : d'où
+   la pleine largeur et le bord de braise, qu'aucune autre entrée ne porte. Le
+   `quoi` du plan lui sert de légende basse — on ne l'écrit pas deux fois. */
+.chr-salle-vue{border-left-color:var(--braise);color:var(--muted);font-size:.72em;}
+.salle-vue{margin:0 0 6px;}
+.salle-vue img{display:block;width:100%;border-radius:3px;
+  filter:saturate(.85) brightness(.92);}
+.salle-vue figcaption{margin-top:3px;font-variant:small-caps;letter-spacing:.06em;
+  color:var(--braise);font-size:1.05em;}
+/* L'aperçu au survol d'une salle du plan : grand, au milieu, et TRANSPARENT AU
+   CURSEUR — s'il prenait la souris il passerait sous elle, ferait sortir du
+   survol qui l'a ouvert, et battrait sans fin. */
+#salle-apercu{position:fixed;z-index:60;left:50%;top:50%;
+  transform:translate(-50%,-50%) scale(.98);width:min(72vw,980px);max-height:82vh;
+  pointer-events:none;opacity:0;transition:opacity .18s ease,transform .18s ease;
+  padding:8px;background:var(--fond,#14110e);border:1px solid var(--braise);
+  border-radius:4px;box-shadow:0 24px 70px rgba(0,0,0,.75);}
+#salle-apercu.vu{opacity:1;transform:translate(-50%,-50%) scale(1);}
+#salle-apercu img{display:block;width:100%;max-height:calc(82vh - 40px);
+  object-fit:cover;border-radius:2px;}
+#salle-apercu span{display:block;margin-top:6px;text-align:center;
+  font-variant:small-caps;letter-spacing:.08em;color:var(--braise);font-size:.95em;}
 .chr-vous{border-left-color:var(--pensee);}
 .chr-vous .chr-qui{color:var(--pensee);}
 .chr-evenement{border-left-color:var(--sang);}
@@ -420,6 +796,46 @@ body.sans-gestes .gestes{display:none;}
 .entite:hover{color:var(--accent);border-bottom-color:var(--accent);}
 .appui{font-weight:600;color:var(--ink);letter-spacing:.01em;}
 .appui .entite{color:inherit;}
+/* Un RENVOI posé à la main dans la phrase : `[les neufs](44022)`. Tant que la
+   cible n'est pas à portée, c'est du texte comme un autre — pas de gras, pas de
+   trait, rien qui promette un lien qui n'existe pas. C'est `data-vu` qui
+   l'allume, et lui seul. */
+.renvoi{font-weight:inherit;}
+.renvoi[data-vu]{font-weight:600;cursor:pointer;color:var(--ink);
+  border-bottom:1px dotted var(--accent);transition:color .2s,border-color .2s;}
+.renvoi[data-vu]:hover,.renvoi[data-vu]:focus{color:var(--accent);
+  border-bottom-color:var(--accent);outline:none;}
+/* L'icône dit la FAMILLE de la chose (🎯 un état, 🔒 un verrou, ⚔️ une action,
+   👤 un homme) : on doit pouvoir la lire sans cliquer. Discrète — c'est une
+   marge, pas un ornement. */
+.renvoi-icone{font-weight:400;margin-right:.18em;opacity:.72;font-size:.9em;
+  border:0;}
+.renvoi-perdu{opacity:.6;border-bottom-style:dashed;}
+/* Un renvoi qui désigne une PIÈCE DU PLAN : le décor bascule sur l'échiquier
+   et la chaîne s'allume au moment où la phrase se joue. Le mot le porte d'un
+   soulignement plein — on ne va pas seulement lire une ligne, on va voir une
+   position — et d'un fil braise, la couleur du plateau. */
+.renvoi[data-plan="tracee"]{border-bottom-style:solid;
+  border-bottom-color:color-mix(in srgb,var(--braise) 70%,transparent);}
+.renvoi[data-plan="tracee"]:hover,.renvoi[data-plan="tracee"]:focus{
+  border-bottom-color:var(--braise);}
+/* Une adresse ECRITE AU CAHIER dont la chaine ne remonte a rien : elle mene au
+   bon cahier, et il n'y a aucun jeton a allumer — c'est la faute meme que le
+   plateau existe pour montrer. Le trait le dit : tirete, et non plein. */
+.renvoi[data-plan="citee"]{border-bottom-style:dashed;
+  border-bottom-color:color-mix(in srgb,var(--braise) 45%,transparent);}
+/* Une ligne écrite est une ligne lue : les retours à la ligne du MJ tiennent,
+   et une énumération se rend avec sa marque à part, texte en retrait. */
+.ligne{display:block;}
+.ligne + .ligne{margin-top:.55em;}
+.ligne-puce{display:flex;gap:.55em;align-items:baseline;}
+.puce{flex:0 0 auto;color:var(--accent);opacity:.75;font-variant-numeric:tabular-nums;
+  font-size:.9em;}
+.ligne-corps{flex:1 1 auto;min-width:0;}
+/* Les capitales d'insistance : on garde l'appui, on rend la lecture possible. */
+.capitales{font-variant:small-caps;text-transform:lowercase;letter-spacing:.045em;
+  font-weight:600;color:var(--ink);}
+.capitales .entite,.appui .capitales{color:inherit;}
 .pensee-amorce{opacity:.8;}
 .parole-vous::before{content:'Vous — ';font-style:normal;font-variant:small-caps;
   color:var(--pensee);font-size:.85em;}
@@ -601,21 +1017,43 @@ svg .zone{fill:currentColor;opacity:.09;stroke:none;pointer-events:none;}
    reste : c'est la seule pièce de la table qui décide seule d'une journée */
 .trait-vol .fil{opacity:1;}
 .jeton-dragon .jeton-glyphe{stroke-width:1.35;}
-.jeton-dragon .jeton-fond{opacity:.9;}
+.jeton-dragon .jeton-fond{opacity:1;stroke-width:.7;stroke-opacity:.9;}
 .trait-serment{color:var(--braise);}
 .trait-querelle,.trait-attaque,.trait-menace{color:var(--sang);}
 .trait-mariage{color:var(--pensee);}
 
 /* les pièces posées */
 .jeton{cursor:pointer;}
-.jeton .jeton-fond{fill:var(--fond);opacity:.82;stroke:none;}
-.jeton .jeton-glyphe{fill:none;stroke:currentColor;stroke-width:1.15;
+/* Une pièce doit se lire comme une PIÈCE — un jeton posé sur du bois peint —
+   et non comme un trait de plus dans le dessin de la côte. Le fond était
+   translucide : les rivières et le rivage passaient dessous et mangeaient le
+   glyphe, qui ne faisait lui-même qu'un trait de 1,15 sur une boîte de 10.
+   Fond opaque, cerclé de la couleur du camp, glyphe plus gras : le camp se lit
+   maintenant au cercle, avant même qu'on ait identifié la forme. */
+.jeton .jeton-fond{fill:var(--fond);opacity:1;stroke:currentColor;
+  stroke-width:.45;stroke-opacity:.55;}
+.jeton .jeton-glyphe{fill:none;stroke:currentColor;stroke-width:1.5;
   stroke-linecap:round;stroke-linejoin:round;}
+/* LES OSTS EN INVERSE — ce qui tue des gens se voit de loin.
+   Un jeton clair cerclé de rouge se lit très bien tout seul et disparaît dès
+   que la table en porte quarante : à l'échelle de la baie, l'œil trie les
+   TACHES avant les formes, et une tache claire sur du parchemin clair n'en est
+   pas une. Les osts prennent donc le plein de la couleur de leur camp, glyphe
+   évidé dans le ton du fond, avec un liseré clair qui les décolle du rivage.
+   Le chiffre, lui, reste à l'encre : il est posé au-dessus du disque (rayon
+   5,6, chiffre à -7) et ne marche donc pas dessus. */
+.jeton-armee .jeton-fond,.jeton-cavalerie .jeton-fond{fill:currentColor;opacity:1;
+  stroke:var(--fond);stroke-width:.6;stroke-opacity:.9;}
+.jeton-armee .jeton-glyphe,.jeton-cavalerie .jeton-glyphe{stroke:var(--fond);
+  stroke-width:1.7;}
+.jeton-armee:hover .jeton-glyphe,.jeton-cavalerie:hover .jeton-glyphe{stroke-width:2.1;}
 .jeton .jeton-ceinture{fill:none;stroke:currentColor;stroke-width:.7;
   stroke-dasharray:1.6 1.6;opacity:.7;}
-.jeton .jeton-force{font-family:inherit;font-size:6.2px;fill:var(--ink);
-  text-anchor:middle;paint-order:stroke;stroke:var(--fond);stroke-width:1.8;
-  stroke-linejoin:round;}
+/* Le chiffre est ce qu'on vient lire sur un ost : il passe devant tout, et son
+   halo doit être assez épais pour le décoller d'une côte ou d'une autre pièce. */
+.jeton .jeton-force{font-family:inherit;font-size:6.9px;fill:var(--ink);
+  font-weight:600;text-anchor:middle;paint-order:stroke;stroke:var(--fond);
+  stroke-width:2.6;stroke-linejoin:round;}
 /* le nom vient sous le doigt : dix pièces nommées en clair feraient une
    bouillie par-dessus les noms de places */
 .jeton .jeton-nom{font-family:inherit;font-size:6px;fill:var(--ink);
@@ -624,13 +1062,14 @@ svg .zone{fill:currentColor;opacity:.09;stroke:none;pointer-events:none;}
   opacity:0;transition:opacity .18s;pointer-events:none;}
 .jeton .jeton-doute{font-family:inherit;font-size:6px;fill:currentColor;
   opacity:.8;text-anchor:middle;}
-.jeton:hover .jeton-glyphe{stroke-width:1.5;}
+.jeton:hover .jeton-glyphe{stroke-width:1.9;}
+.jeton:hover .jeton-fond{stroke-opacity:1;}
 .jeton:hover .jeton-nom{opacity:1;}
 
 /* les têtes : où l'on CROIT que sont les gens. Une tête n'est pas une force —
    elle ne pèse pas sur la table, elle se pose dessous, en retrait, et son nom
    reste lisible parce que c'est toute l'information qu'elle porte. */
-.jeton-tete .jeton-fond{opacity:.5;}
+.jeton-tete .jeton-fond{opacity:.88;}
 .jeton-tete .jeton-glyphe{stroke-width:1.35;opacity:.9;}
 .jeton .jeton-nom.toujours{opacity:.78;font-size:5.4px;font-variant:normal;
   letter-spacing:.02em;stroke-width:2.2;}
@@ -642,7 +1081,7 @@ svg .zone{fill:currentColor;opacity:.09;stroke:none;pointer-events:none;}
    son flanc est ce qu'on vient lire, et il prend l'encre de l'état dès que le
    silence dure. Une oreille ne sort jamais de la table en vieillissant : le
    trou qu'elle laisse est précisément ce qu'il faut voir. */
-.jeton-oreille .jeton-fond{opacity:.42;}
+.jeton-oreille .jeton-fond{opacity:.85;}
 .jeton-oreille .jeton-glyphe{stroke-width:1.1;opacity:.92;}
 .jeton-oreille .jeton-nom{font-size:5px;stroke-width:2.1;}
 .jeton-oreille .jeton-jours{font-size:5px;}
@@ -774,6 +1213,31 @@ svg .zone{fill:currentColor;opacity:.09;stroke:none;pointer-events:none;}
 @keyframes trait-neuf{0%{opacity:0;stroke:var(--braise)}45%{opacity:1;stroke:var(--braise)}
   100%{opacity:.85}}
 
+/* ------- ce qui est DIT, et ce qui n'est que le sol -------
+   Le temps d'une démonstration, ce que la main pose parle et le reste de la
+   table se tait. Sans cette hiérarchie, une phrase qui parle de deux coques se
+   noie dans les six plis que la table portait déjà : tout est posé du même
+   poids, donc rien n'est dit. Le sol n'est pas effacé — on doit encore voir OÙ
+   ça se passe — mais il perd son nom et son encre. */
+.jeton.fond{opacity:.3;}
+.jeton.fond:hover{opacity:.85;}
+.jeton.fond .jeton-force,.jeton.fond .jeton-ames{opacity:.45;}
+.trait.fond{opacity:.22;}
+.trait.fond:hover{opacity:.7;}
+.jeton.dit .jeton-fond{stroke-width:.62;}
+.jeton.dit .jeton-nom.toujours{opacity:.95;}
+
+/* la co-référence : l'appui du texte et la pièce se désignent l'un l'autre.
+   Un seul geste visuel pour les deux bouts — c'est ce qui les fait lire comme
+   une même chose nommée deux fois, et non comme deux objets qui clignotent. */
+.appui-piece{cursor:default;border-bottom:1px dotted var(--accent);}
+.appui-piece.vise{color:var(--accent);}
+.carte-mini .jeton.vise{opacity:1;}
+.carte-mini .jeton.vise .jeton-fond{stroke:var(--accent);stroke-width:.9;}
+.carte-mini .jeton.vise .jeton-nom{opacity:1;}
+.carte-mini .trait.vise{opacity:1;}
+.carte-mini .trait.vise .fil{stroke:var(--accent);}
+
 /* la légende ne nomme que ce qui est effectivement posé */
 .leg-sep{width:1px;height:.9em;background:var(--bord);display:inline-block;}
 .leg-marque{font-style:italic;}
@@ -781,6 +1245,13 @@ svg .zone{fill:currentColor;opacity:.09;stroke:none;pointer-events:none;}
 
 /* ------- une démonstration dans le fil ------- */
 .chr-table{border-left-color:var(--braise);}
+/* Une vignette hors de l'écran n'existe pas : illustration.js la monte quand
+   elle approche et la démonte quand elle s'éloigne. `contain` isole ce qui
+   reste — un montage ne doit pas provoquer un relayout de toute la chronique —
+   et la hauteur minimale garde la place quand le rapport n'a pas pu être
+   calculé. Le rapport exact, lui, est posé en `aspect-ratio` à la création. */
+.chr-carte{contain:layout paint style;min-height:120px;}
+.chr-carte[data-pose="0"]{background:var(--paper);}
 .chr-carte{margin:8px 0 2px;border:1px solid var(--bord);border-radius:6px;
   background:var(--paper);padding:4px 4px 2px;cursor:pointer;position:relative;
   transition:border-color .2s;}
@@ -820,6 +1291,17 @@ svg .zone{fill:currentColor;opacity:.09;stroke:none;pointer-events:none;}
   color:var(--muted);cursor:pointer;border-bottom:1px dotted var(--bord);}
 .chr-vers-table::before{content:'✥ ';font-style:normal;color:var(--braise);}
 .chr-vers-table:hover{color:var(--accent);border-bottom-color:var(--accent);}
+/* la même mention, mais pour la main posée sur L'ÉCHIQUIER : un autre signe,
+   parce que ce n'est pas la même table qu'on est allé regarder. */
+.chr-vers-plateau::before{content:'\1F3F0  ';}
+/* Quand l'echiquier a pris le decor, l'extrait reste entier dans le fil — mais
+   son VOLUME est ailleurs, et le chemin doit se voir. Un geste, pas deux. */
+.chr-livre-vers{display:block;margin-top:8px;font-size:.62em;letter-spacing:.06em;
+  text-transform:uppercase;background:none;border:0;border-top:1px solid var(--bord);
+  padding:7px 0 0;width:100%;text-align:left;color:var(--muted);cursor:pointer;
+  font-family:inherit;transition:color .2s;}
+.chr-livre-vers:hover:not(:disabled){color:var(--accent);}
+.chr-livre-vers:disabled{opacity:.55;cursor:default;font-style:italic;}
 
 @media (max-width:1100px){
   body{grid-template-columns:auto minmax(0,1fr);}
@@ -1156,10 +1638,34 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
 
 /* le médaillon de celui qui prend la parole se réveille */
 @keyframes reveil{
-  0%{box-shadow:0 0 0 0 var(--accent);}
+  0%{box-shadow:0 0 0 0 var(--role,var(--accent));}
   100%{box-shadow:0 0 0 14px transparent;}
 }
 .acteur.parle .medaillon svg{border-radius:50%;animation:reveil .7s ease-out;}
+
+/* LA BORDURE DIT L'OFFICE — la même encre que la tache du plan (voir taches.js
+   et sa table COULEURS). `--role` est posée sur le slot par galerie.js ; sans
+   office reconnu c'est une grisaille, qui ne prétend aucun rôle. On borde en
+   `border` et non en `box-shadow` : celui-là appartient à l'animation `reveil`,
+   qui l'écraserait à chaque prise de parole.
+
+   L'anneau est ÉPAIS, et c'est ce qui le rend utile : à deux pixels sur un
+   portrait de cinquante, la couleur se devinait au lieu de se lire, et l'on
+   n'y gagnait rien sur un simple contour.
+
+   Pas de `background` ici : le portrait est recadré par visage.js pour venir
+   toucher la bordure, et un fond derrière lui ne se voyait que sous la forme
+   d'un liseré clair entre les deux. `overflow:hidden` coupe net ce qui
+   dépasse du rond.
+
+   L'anneau lui-même n'est plus défini ici : il l'est une seule fois sur
+   `.visage`, plus bas, parce que c'est le même élément dans la salle et dans
+   le fil. Il ne reste ici que ce qui appartient à la colonne des présents. */
+/* celui qui parle épaissit son anneau : c'est le même signal que l'échelle,
+   dans la couleur de son office plutôt qu'en accent générique */
+/* 4,4px et 6,6px auraient été les 10 % exacts — mais le navigateur arrondit
+   une bordure au pixel de l'écran et les rendait identiques à 4 et 6. */
+.acteur.parle .medaillon .visage svg{border-width:7px;}
 
 @media (prefers-reduced-motion: reduce){
   .chr.entre,.chr.entre .chr-icone,.acteur .bulle.pleine.eclot,
@@ -1226,14 +1732,25 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
    Les entrées qui n'ont pas de portrait (récit, brève, pensée) gardent leur
    emblème à sa taille : il se centre dans la case plus large, il ne gonfle
    pas avec elle. */
-.chr .chr-icone{border:none;background:none;width:64px;height:64px;font-size:17px;}
-.chr{grid-template-columns:64px minmax(0,1fr);gap:13px;margin:0 0 26px;}
+.chr .chr-icone{border:none;background:none;width:70px;height:70px;font-size:17px;}
+.chr{grid-template-columns:70px minmax(0,1fr);gap:13px;margin:0 0 26px;}
 .chr .chr-texte{font-size:.82em;line-height:1.6;}
 .chr .chr-qui{font-size:.68em;letter-spacing:.14em;margin:0 0 2px;}
 
 /* — la parole : un portrait, un nom, une phrase. Rien d'autre. — */
-.chr-replique .chr-icone{width:64px;height:64px;border-radius:50%;overflow:hidden;
-  box-shadow:0 0 0 1px var(--bord);}
+/* plus de cerne gris ici : l'anneau du visage dit l'office, et deux contours
+   concentriques ne disaient rien de plus que le premier */
+/* `.chr-vous` a la MÊME dette que la réplique, et elle est restée douze lignes
+   plus haut : sans `overflow:visible`, la case garde le `overflow:hidden` de
+   la petite icône d'origine et rogne l'emblème de 2px en haut et à droite —
+   le 👑 de la reine paraissait alors coupé net sur toutes ses propres lignes,
+   et sur elles seules (27 comptées à l'écran, contre 0 chez les répliques). */
+.chr-replique .chr-icone,.chr-vous .chr-icone{
+  width:70px;height:70px;border-radius:50%;overflow:visible;}
+/* le portrait est rogné par le rond, mais l'emblème de l'angle doit pouvoir en
+   déborder : c'est le SVG qu'on coupe, pas la case */
+.chr-replique .chr-icone svg,.chr-vous .chr-icone svg,.chr-acte .chr-icone svg{
+  border-radius:50%;overflow:hidden;}
 .chr-replique .chr-icone svg{width:100%;height:100%;}
 .chr-replique .chr-qui{color:var(--accent);}
 .chr-replique .chr-texte{font-size:.9em;color:var(--ink);}
@@ -1272,9 +1789,13 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
    ========================================================= */
 .chr.neuf{position:relative;}
 .chr.neuf .chr-icone{position:relative;}
-.chr.neuf .chr-icone::after{content:'';position:absolute;right:4px;top:4px;
-  width:8px;height:8px;border-radius:50%;background:var(--braise);
-  box-shadow:0 0 0 2px var(--fond);}
+/* LA PASTILLE DE NON-LU EST SUPPRIMÉE (13 août). Elle avait déjà dû descendre
+   au coin bas-droit pour laisser le haut-droit à l'emblème d'office ; le point
+   vert des dépêchés a fini de saturer l'angle. Un rond orange sur un visage ne
+   peut plus vouloir dire « pas encore lu » quand un rond vert au même endroit
+   veut dire « il travaille ». Le non-lu garde ses deux autres marques, qui ne
+   se disputent aucun coin : le calque de fond derrière le texte, et le nom en
+   braise. */
 /* les entrées qui posent déjà une surface (pensée, votre voix) gardent la
    leur : on ne les repeint pas, le point suffit à les signaler.
    Le fond est un CALQUE derrière le texte, pas un rembourrage : rembourrer la
@@ -1294,17 +1815,13 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
    ce qui dit sans un mot que le compte est reparti de zéro.
    Uniquement de la couleur et de l'opacité : rien qui touche à la mise en page. */
 @keyframes lecture-fond{ from{opacity:1;} to{opacity:0;} }
-@keyframes lecture-point{ from{opacity:1;transform:scale(1);}
-  to{opacity:0;transform:scale(.4);} }
 @keyframes lecture-nom{ from{color:var(--braise);} to{color:var(--muted);} }
 .chr.neuf.lecture:not(.chr-pensee):not(.chr-vous) .chr-corps::before{
   animation:lecture-fond 5s linear forwards;}
-.chr.neuf.lecture .chr-icone::after{animation:lecture-point 5s linear forwards;}
 .chr.neuf.lecture .chr-qui{animation:lecture-nom 5s linear forwards;}
 /* la main retirée : on se rallume franchement, sans traîner */
 .chr .chr-qui{transition:color .25s;}
 .chr .chr-corps::before{transition:opacity .25s;}
-.chr .chr-icone::after{transition:opacity .25s,transform .25s;}
 
 /* — la pensée : la note bleue, harmonisée — */
 .chr-pensee .chr-corps{background:var(--bleu-pensee);border-radius:12px;
@@ -1457,6 +1974,97 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
 .emb{font-style:normal;margin-right:5px;font-size:.95em;
   font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;}
 .chr-role .emb{margin-left:1px;}
+
+/* ══ L'OFFICE DANS L'ANGLE DU VISAGE ═══════════════════════════════════════
+   Écrit sous le nom, un titre coûtait deux lignes par tête et se lisait mal à
+   cette taille ; l'emblème seul, posé assez grand sur le bord du portrait, se
+   reconnaît sans être lu. Il est placé sur le ARC du rond, à 45° — soit, pour
+   un cercle de diamètre d, à (d/2 + 0,354·d) du bord gauche : le seul endroit
+   où il chevauche l'anneau sans mordre le visage. Un disque de fond opaque
+   l'isole du portrait ; il ne prend jamais le clic, qui appartient au
+   médaillon (parler à cet homme).
+   Même forme dans la salle et dans le fil — c'est le même homme.
+
+   LE FOND DE LA PASTILLE EST CELUI DE L'ANNEAU. Sur fond de page, elle
+   flottait à côté du portrait comme une vignette rapportée ; dans la couleur
+   de l'office, elle et l'anneau ne font plus qu'une pièce, et la couleur se
+   lit deux fois — sur le tour du visage et sous son emblème. Le liseré clair
+   la détache du portrait, qui peut être sombre au même endroit. */
+.emb-coin{position:absolute;z-index:2;pointer-events:none;
+  width:24px;height:24px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-style:normal;font-size:14px;line-height:1;
+  font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif;
+  background:var(--role,var(--fond));
+  box-shadow:0 0 0 1px var(--fond),0 1px 3px rgba(0,0,0,.35);}
+
+/* Dans la salle, la case d'un présent fait toute la largeur de la colonne et
+   le rond n'en occupe que le milieu : on ne peut pas viser l'angle en
+   pourcentage de la case. D'où `.med-rond`, une enveloppe qui épouse le
+   portrait — le pourcentage porte alors sur le rond, et la pastille suit sa
+   taille à tous les crans de densité sans qu'on y retouche.
+   Dans le fil, la case EST le rond : rien à envelopper. */
+.chr .chr-icone{position:relative;}
+/* `.visage` est l'enveloppe que `visage.js` pose autour du portrait, dans la
+   salle comme dans le fil : c'est elle qui épouse le rond, donc c'est sur elle
+   que le pourcentage de l'angle porte. Le sélecteur est unique — il n'y a plus
+   qu'un seul visage dans ce jeu. */
+.visage{position:relative;display:inline-block;line-height:0;}
+.visage .emb-coin{left:85.4%;top:14.6%;transform:translate(-50%,-50%);}
+
+/* dans la colonne des présents, tout est plus petit : la pastille suit */
+.acteur .emb-coin{width:20px;height:20px;font-size:12px;}
+
+/* ══ LE VISAGE, PARTOUT PAREIL ═════════════════════════════════════════════
+   L'anneau dit l'office (`--role`, posé par visage.js depuis la même table de
+   couleurs que les taches du plan). Il est ÉPAIS : à deux pixels sur un
+   portrait de cinquante, la couleur se devinait au lieu de se lire.
+   Pas de fond derrière le portrait — il est recadré pour venir toucher son
+   anneau, et un fond ne se verrait que comme un liseré clair entre les deux. */
+.visage svg{border-radius:50%;box-sizing:border-box;overflow:hidden;
+  border:5px solid var(--role,var(--bord));
+  transition:border-width .18s,border-color .18s;}
+/* UN BLASON DE RÉCIT N'EST PAS UN VISAGE. Pas d'office, donc pas d'anneau —
+   et surtout pas de boîte : c'est un caractère, qui se centre et s'aligne dans
+   la case comme le faisait le texte nu qu'il remplace. Enveloppé dans une
+   boîte à `line-height:0`, l'emoji était écrasé. `display:contents` fait
+   disparaître l'enveloppe et rend l'enfant au parent, exactement comme avant
+   qu'on passe par ce module. */
+.visage-nu svg{border:none;}
+/* dans le fil, la case EST le rond : le visage la remplit entièrement */
+.chr-icone .visage{display:block;width:100%;height:100%;}
+.chr-icone .visage svg{width:100%;height:100%;}
+/* … sauf le blason nu, qui n'est pas une boîte. À spécificité égale, l'ordre
+   décide : cette règle doit rester APRÈS celle du dessus. */
+.visage-nu,.chr-icone .visage-nu{display:contents;}
+
+/* ══ LA FICHE AU SURVOL ════════════════════════════════════════════════════
+   Elle est née pour agrandir un portrait trop petit ; elle sert d'abord à dire
+   QUI C'EST. Sur la carte du château, où un homme n'est qu'une tache d'encre à
+   deux lettres, il n'y a rien à agrandir — on va chercher son visage au
+   registre. Même geste, deux sources, une seule fiche.
+   Flottante et non `scale()` : le visage vit dans des conteneurs qui défilent
+   (la colonne, la chronique), et tout ce qui grandit sur place y est coupé par
+   le bord du cadre. `position:fixed` échappe seul au rognage.
+   Elle ne prend jamais le clic : c'est un renseignement, pas un bouton. */
+.visage-fiche{position:fixed;z-index:400;pointer-events:none;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  padding:12px;border-radius:14px;
+  background:var(--fond);border:1px solid var(--bord);
+  box-shadow:0 10px 40px -12px rgba(0,0,0,.55);
+  opacity:0;visibility:hidden;transition:opacity .14s;}
+.visage-fiche.ouverte{opacity:1;visibility:visible;}
+.visage-fiche .visage-grand svg{width:100%;height:100%;display:block;border-width:6px;}
+/* la pastille de l'office suit l'échelle : elle est posée en pourcentage du
+   rond, il ne reste qu'à lui donner sa taille */
+.visage-fiche .emb-coin{width:52px;height:52px;font-size:30px;}
+.visage-fiche-nom{display:block;text-align:center;font-size:.9rem;
+  color:var(--ink);line-height:1.3;max-width:280px;}
+.visage-fiche-nom small{display:block;font-size:.8em;color:var(--muted);
+  margin-top:2px;}
+@media (prefers-reduced-motion: reduce){
+  .visage-fiche{transition:none;}
+}
 
 /* la barre de défilement du fil se réduit à son seul indicateur */
 #fil-corps::-webkit-scrollbar{width:5px;}
@@ -1621,7 +2229,17 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
    ========================================================= */
 #plan{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   flex-direction:column;}
-#plan svg{max-height:100%;max-width:100%;width:auto;height:auto;display:block;cursor:pointer;}
+/* Le dessin occupe la boîte entière et s'y AJUSTE (preserveAspectRatio par
+   défaut : xMidYMid meet). C'est la différence entre une vignette posée au bas
+   du décor et une carte : au repos on voit le château en entier, et dès qu'on
+   approche à la loupe, le cadrage resserré dispose de toute la hauteur pour
+   grandir au lieu de rester bridé par la largeur de la colonne. */
+#plan svg{width:100%;height:100%;display:block;cursor:pointer;}
+/* le château se prend à la main comme la table peinte : la loupe l'emporte sur
+   le curseur de la vignette, mais une salle reste une salle (cursor:pointer). */
+#plan.loupe svg,#plan-corps.loupe svg{cursor:grab;}
+#plan.loupe.loupe-tient svg,#plan-corps.loupe.loupe-tient svg{cursor:grabbing;}
+#plan.loupe .plan-salle,#plan-corps.loupe .plan-salle{cursor:pointer;}
 .vue-off{display:none !important;}
 #vue-bascule{position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:6;
   display:flex;gap:3px;}
@@ -1629,6 +2247,15 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
   background:transparent;border-color:transparent;letter-spacing:.06em;}
 #vue-bascule button.actif{color:var(--ink);background:var(--btn);border-color:var(--bord);}
 #vue-bascule button:hover{color:var(--ink);}
+/* le tiroir : les hauteurs qu'on visite rarement (la ville, le quartier, vous)
+   tiennent derrière un « … » plutôt que d'allonger la rangée. */
+#vue-repli{position:relative;display:inline-flex;}
+#vue-repli>.vue-tiroir{display:none;position:absolute;top:100%;right:0;z-index:7;
+  flex-direction:column;gap:2px;padding:3px;margin-top:2px;
+  background:var(--fond);border:1px solid var(--bord);border-radius:4px;
+  box-shadow:0 3px 10px rgba(0,0,0,.25);}
+#vue-repli.ouvert>.vue-tiroir{display:flex;}
+#vue-repli .vue-tiroir button{white-space:nowrap;text-align:right;}
 
 .plan{font-family:Georgia,'Times New Roman',serif;font-size:10px;}
 /* le dehors : la montagne au nord, la baie au sud */
@@ -1675,6 +2302,17 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
 /* les gens sur le plan : le nom des présents ne s'écrit plus sous la salle,
    ce sont les taches qui le disent — et pour toutes les salles à la fois. */
 .tache-gens.ici .tache{stroke:var(--braise);stroke-opacity:1;}
+/* ceux qui traversent : le chemin fait en trait plein et pâle, le restant en
+   pointillé. La tache est posée entre deux portes, plus légère que celles qui
+   se tiennent quelque part — un homme dans l'escalier n'est chez personne. */
+.plan-marche path{fill:none;stroke:var(--accent);stroke-linecap:round;
+  stroke-linejoin:round;pointer-events:none;}
+.plan-marche .marche-fait{stroke-width:.7;opacity:.28;}
+.plan-marche .marche-reste{stroke-width:.7;opacity:.5;stroke-dasharray:2 2.2;}
+.plan-marche:hover .marche-fait{opacity:.5;}
+.plan-marche:hover .marche-reste{opacity:.85;}
+.tache-gens.en-marche .tache{fill-opacity:.62;stroke:var(--accent);stroke-opacity:.8;}
+.tache-gens.en-marche:hover .tache{fill-opacity:1;}
 .leg-gens::before{content:"";display:inline-block;width:.62em;height:.62em;
   margin-right:.4em;border-radius:50% 46% 52% 48%;background:var(--braise);
   vertical-align:baseline;}
@@ -1747,7 +2385,7 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
 .acteur{position:static;width:auto;height:auto;flex:0 1 94px;min-width:56px;}
 .acteur .medaillon{position:static;transform:none;width:100%;padding:0 1px;
   box-sizing:border-box;opacity:.62;}
-.acteur .medaillon svg{width:52px;height:52px;}
+.acteur .medaillon svg{width:57px;height:57px;}
 .acteur .qui{font-size:.6em;margin-top:3px;}
 .acteur .qui .role{font-size:.85em;}
 /* le locuteur s'illumine sur place : plus de recentrage à compenser */
@@ -1756,12 +2394,8 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
 /* Les présents restent pleinement visibles : le silence ne délave plus les
    visages. Seul le locuteur se distingue, par l'échelle. */
 .acteur .medaillon{transition:transform .18s;opacity:1;filter:none;}
-/* ceux qu'on ne montre plus faute de place : une pastille, les noms au survol */
-.acteur-reste{flex:0 1 62px;min-width:44px;align-self:center;cursor:default;}
-.acteur-reste .medaillon{opacity:.5;display:flex;align-items:center;
-  justify-content:center;min-height:52px;border:1px dotted var(--bord);
-  border-radius:999px;padding:6px 4px;}
-.acteur-reste .qui{margin:0;font-style:italic;}
+/* Il n'y a plus de pastille « et N autres » : la salle se montre entière, et
+   c'est la taille des visages qui cède quand elle se remplit. */
 
 /* La table ne flotte plus au milieu d'un vide : une seule échelle est visible
    à la fois, donc les deux calques peuvent reprendre le flux normal et #cartes
@@ -1769,6 +2403,14 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
    tenant, le vide restant passe au-dessus, sous le bandeau. */
 #cartes{flex:0 1 auto;min-height:0;display:flex;flex-direction:column;}
 #plan,#carte{position:static;flex:0 1 auto;min-height:0;}
+/* Le château, lui, prend TOUTE la hauteur qu'on lui laisse — comme le volume,
+   l'échiquier ou les livres. Un plan de salles se lit à la loupe : on y entre,
+   on pousse le dessin du doigt, et une carte serrée en bas du décor ne laisse
+   pas la place de le faire. Le dessin, lui, s'ouvre en entier dans cette boîte
+   (max-height/max-width, ci-dessous) : on commence par voir le château, on
+   approche ensuite. */
+#cartes:has(#plan:not(.vue-off)){flex:1 1 auto;}
+#plan:not(.vue-off){flex:1 1 auto;}
 #decor{justify-content:flex-end;}
 /* la bascule coiffe la carte : posée en colonne, remontée en tête (le module
    l'ajoute après les calques) */
@@ -1798,14 +2440,11 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
 .libre textarea.mode-agir{border-left:3px solid var(--rouge-vif);}
 .libre textarea.mode-agir:focus{border-color:var(--rouge-vif);}
 
-/* Une salle qui se remplit resserre ses visages plutôt que d'avaler la table :
-   à cinq, les médaillons rétrécissent ; à sept, le rôle s'efface et il ne reste
-   que le nom — la table doit rester la plus grande chose de la colonne. */
-#acteurs:has(.acteur:nth-child(5)) .acteur{flex-basis:78px;}
-#acteurs:has(.acteur:nth-child(5)) .medaillon svg{width:44px;height:44px;}
-#acteurs:has(.acteur:nth-child(7)) .acteur{flex-basis:64px;min-width:48px;}
-#acteurs:has(.acteur:nth-child(7)) .medaillon svg{width:37px;height:37px;}
-#acteurs:has(.acteur:nth-child(7)) .qui .role{display:none;}
+/* Une salle qui se remplit ne resserre plus rien. Les crans de densité —
+   médaillons rapetissés à cinq, rôle effacé à sept — supposaient une rangée de
+   longueur fixe ; la colonne défile, elle, et un visage de 27px sans titre ne
+   dit plus à qui l'on parle. Chacun garde sa taille et sa description ; ce qui
+   ne tient pas se rejoint en descendant. */
 
 /* La rose des vents du plan : une étoile creuse, sa branche nord pleine. */
 .plan-rose path{fill:none;stroke:var(--bord);stroke-width:1.1;stroke-linejoin:round;}
@@ -2020,13 +2659,26 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
 .tache-gens.cert-rapportee .tache{fill-opacity:.5;stroke-dasharray:2 1.6;}
 .tache-gens.cert-rumeur .tache{fill-opacity:.28;stroke-dasharray:1.4 2.4;}
 .tache-gens.cert-rapportee .initiales,.tache-gens.cert-rumeur .initiales{fill-opacity:.8;}
-/* le signe de l'office, en pastille à l'épaule droite */
-.tache-gens .office-fond{fill:var(--fond);stroke:currentColor;stroke-opacity:.75;}
+/* le signe de l'office tient le cœur de la tache : c'est lui qu'on lit de loin */
 .tache-gens .office{text-anchor:middle;stroke:none;pointer-events:none;
   font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",inherit;}
+/* les initiales passent en pastille à l'épaule droite : elles départagent deux
+   hommes du même office, et se lisent de près. Fond clair, encre de sa couleur. */
+/* la pastille se tient tranquille : elle porte le nom, pas le rôle. Un fond
+   plein blanc à côté d'un emblème en couleur gagne toujours le regard. */
+.tache-gens .office-fond{fill:var(--fond);fill-opacity:.92;stroke:currentColor;
+  stroke-opacity:.55;}
+.tache-gens .initiales-epaule{fill:currentColor;text-anchor:middle;font-family:inherit;
+  font-weight:700;letter-spacing:.01em;stroke:none;pointer-events:none;}
 .tache-gens.cert-rapportee .office-fond,.tache-gens.cert-rumeur .office-fond{opacity:.6;}
-.tache-joueur .halo{fill:none;stroke:currentColor;stroke-opacity:.5;}
-.tache-joueur .tache{stroke:var(--ink);stroke-opacity:.75;}
+.tache-gens.cert-rapportee .initiales-epaule,
+.tache-gens.cert-rumeur .initiales-epaule{fill-opacity:.8;}
+/* le joueur : un halo d'or, et lui seul. Il était de la couleur de son propre
+   office — donc invisible sur sa propre tache, exactement là où il fallait se
+   trouver du premier coup d'œil. */
+.tache-joueur .halo{fill:none;stroke:var(--or-joueur);stroke-opacity:.85;}
+.tache-joueur .halo-loin{fill:none;stroke:var(--or-joueur);stroke-opacity:.25;}
+.tache-joueur .tache{stroke:var(--or-joueur);stroke-opacity:.9;}
 
 /* ce qui est arrivé au sol */
 .brulure{fill:var(--ink);fill-opacity:.20;stroke:var(--ink);stroke-opacity:.35;
@@ -2141,6 +2793,71 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
 .gens-barre input:focus{outline:none;border-color:var(--muted);}
 .gens-corps{flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:4px;}
 .gens-vide{font-size:.72em;color:var(--muted);font-style:italic;padding:6px 2px;}
+/* « Mon gouvernement » : la même cour, pesée au lieu d'être rangée par camp.
+   C'est une VUE DE MACHINE posée en tête d'un écran qui, lui, est de la
+   fiction — d'où la grille des livres (`.book-table`) reprise telle quelle et
+   le filet qui la ferme : l'œil doit voir qu'il change de registre de lecture
+   avant de lire un chiffre. Aucune teinte de gravité sur les colonnes : trois
+   paliers de couleur rangeraient les hommes par urgence, et ce tableau ne
+   conseille pas. */
+.gens-gouv{margin:0 0 14px;padding-bottom:10px;
+  border-bottom:1px solid var(--bord);}
+.gens-gouv-titre{font-size:.6em;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--braise,#b4763a);padding-bottom:2px;}
+.gens-gouv-note{font-size:.58em;font-style:italic;color:var(--muted);
+  margin-bottom:2px;}
+.gens-gouv-table td{white-space:normal;}
+.gens-gouv-table tr td:first-child{min-width:11em;}
+.gens-gouv-qui{display:flex;align-items:center;gap:6px;}
+.gens-gouv-face{flex:0 0 auto;width:26px;height:26px;display:block;}
+.gens-gouv-face svg{width:26px;height:26px;display:block;}
+.gens-gouv-cliquable{cursor:pointer;}
+.gens-gouv-cliquable:hover{color:var(--braise,#b4763a);}
+/* les offices tombent l'un sous l'autre : un homme en tient jusqu'à six, et en
+   ligne ils poussent les colonnes chiffrées hors de la colonne */
+.gens-gouv-offices{white-space:pre-line;font-size:.94em;}
+
+/* ------- l'infobulle du tableau : ce que le chiffre compte, et d'où il sort --
+   Elle remplace les `title` natifs des en-têtes, qui mettaient une seconde à
+   sortir et ne pouvaient porter que du texte plat — donc jamais le détail par
+   cahier, qui est la seule chose qui rende un total vérifiable. Elle explique
+   et ne conseille pas : pas de teinte de gravité, pas de palier, pas de
+   flèche. Position `fixed` posée en JS, hors du tableau qui défile. */
+.gouv-glosee{cursor:help;}
+.book-table th.gouv-glosee:hover,
+.book-table td.gouv-glosee:hover{color:var(--ink);
+  text-decoration:underline dotted var(--bord) 1px;text-underline-offset:3px;}
+.gouv-bulle{position:fixed;z-index:1200;display:none;
+  max-width:34em;padding:10px 12px;box-sizing:border-box;
+  /* `--paper` est une TEINTE, pas un fond : à .07 d'alpha, le tableau se lisait
+     au travers de sa propre infobulle. On empile la teinte SUR `--fond`, qui
+     est le seul opaque — même geste que les autres panneaux flottants. */
+  background:linear-gradient(var(--paper),var(--paper)),var(--fond);
+  border:1px solid var(--bord);border-radius:3px;
+  box-shadow:0 10px 30px rgba(0,0,0,.45);
+  font-size:.72em;line-height:1.5;color:var(--muted);
+  overflow:hidden;pointer-events:none;}
+.gouv-bulle b{color:var(--ink);font-weight:600;}
+.gouv-bulle code{font-size:.95em;color:var(--ink);}
+.gouv-bulle-titre{font-size:.9em;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--braise,#b4763a);margin-bottom:5px;}
+.gouv-bulle-corps{color:var(--ink);}
+/* le total de la case, en tête de sa bulle : on le relit avant son détail */
+.gouv-bulle-chiffre{font-size:1.5em;color:var(--ink);line-height:1.2;margin-bottom:6px;}
+.gouv-bulle-chiffre small{font-size:.5em;color:var(--muted);letter-spacing:.04em;}
+.gouv-bulle-calcul{font-size:1.05em;color:var(--ink);margin-bottom:6px;
+  font-variant-numeric:tabular-nums;}
+.gouv-bulle-liste{margin:2px 0 0;}
+.gouv-bulle-part{display:flex;justify-content:space-between;gap:14px;
+  padding:1px 0;border-bottom:1px dotted var(--bord);}
+.gouv-bulle-part:last-child{border-bottom:none;}
+.gouv-bulle-part span{color:var(--ink);}
+.gouv-bulle-part b{font-variant-numeric:tabular-nums;}
+.gouv-bulle-reste{font-style:italic;padding-top:3px;}
+/* le pied porte ce qui empêche la mauvaise lecture — il est en retrait, jamais
+   en gras : c'est une garde, pas un avis */
+.gouv-bulle-pied{margin-top:7px;padding-top:6px;border-top:1px solid var(--bord);
+  font-size:.94em;font-style:italic;}
 .gens-camp{margin-bottom:12px;}
 .gens-camp-titre{font-size:.6em;letter-spacing:.18em;text-transform:uppercase;
   color:var(--muted);border-bottom:1px solid var(--bord);padding-bottom:2px;margin-bottom:6px;}
@@ -2333,18 +3050,11 @@ body{grid-template-columns:auto auto minmax(0,2fr) minmax(300px,1fr);}
    Plus de `flex-basis` — c'était la mesure d'une rangée horizontale. */
 #acteurs .acteur{flex:0 0 auto;width:auto;min-width:0;}
 #acteurs .acteur .medaillon{width:100%;padding:0;}
-#acteurs .acteur .medaillon svg{width:48px;height:48px;}
+#acteurs .acteur .medaillon svg{width:53px;height:53px;}
 #acteurs .acteur .qui{font-size:.58em;margin-top:2px;
   overflow-wrap:anywhere;}
-#acteurs .acteur-reste{flex:0 0 auto;align-self:stretch;}
-#acteurs .acteur-reste .medaillon{min-height:0;padding:5px 4px;}
 
-/* Une salle pleine se serre en hauteur, pas en largeur : la colonne a la
-   place d'un visage, jamais celle de douze en grand. */
-#acteurs:has(.acteur:nth-child(6)) .acteur .medaillon svg{width:40px;height:40px;}
-#acteurs:has(.acteur:nth-child(6)) .acteur .qui .role{display:none;}
-#acteurs:has(.acteur:nth-child(8)){gap:3px;}
-#acteurs:has(.acteur:nth-child(8)) .acteur .medaillon svg{width:34px;height:34px;}
+/* Plus de crans de densité : une salle pleine défile, elle ne rapetisse pas. */
 
 /* le décor n'a plus de bandeau à porter : la carte prend toute la hauteur */
 #decor{justify-content:stretch;}
@@ -2374,16 +3084,10 @@ body{grid-template-columns:auto minmax(0,1fr) minmax(620px,1.15fr);}
 #acteurs::-webkit-scrollbar{height:0;}
 #acteurs .acteur{flex:0 0 auto;width:auto;text-align:center;}
 #acteurs .acteur .medaillon{width:auto;}
-#acteurs .acteur .medaillon svg{width:42px;height:42px;}
+#acteurs .acteur .medaillon svg{width:46px;height:46px;}
 #acteurs .acteur .qui{font-size:.56em;margin-top:2px;max-width:76px;
   overflow-wrap:anywhere;}
-#acteurs .acteur-reste{align-self:center;}
-/* une salle pleine se serre en largeur : les visages rétrécissent, le rôle
-   s'efface, mais la rangée ne passe jamais à la ligne. */
-#acteurs:has(.acteur:nth-child(7)) .acteur .medaillon svg{width:34px;height:34px;}
-#acteurs:has(.acteur:nth-child(7)) .acteur .qui .role{display:none;}
-#acteurs:has(.acteur:nth-child(10)){gap:5px;}
-#acteurs:has(.acteur:nth-child(10)) .acteur .medaillon svg{width:28px;height:28px;}
+/* la rangée ne passe jamais à la ligne et ne rapetisse pas : elle défile. */
 @media (max-width:1100px){
   body{grid-template-columns:auto minmax(0,1fr);}
   #acteurs{display:flex;}
@@ -2405,16 +3109,35 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
   overflow-y:auto;overflow-x:hidden;}
 #acteurs .acteur{flex:0 0 auto;width:auto;text-align:center;}
 #acteurs .acteur .medaillon{width:100%;padding:0;}
-#acteurs .acteur .medaillon svg{width:46px;height:46px;}
+#acteurs .acteur .medaillon svg{width:51px;height:51px;}
 #acteurs .acteur .qui{font-size:.58em;margin-top:3px;max-width:none;
   overflow-wrap:anywhere;}
-/* le titre ne s'efface plus : une salle pleine serre les visages, pas les rôles */
+/* Le titre ne s'efface JAMAIS, quel que soit le nombre : c'est la description
+   qui dit à qui l'on parle, et un visage de plus n'est pas une raison de la
+   retirer. Les crans de densité ont été supprimés avec elle — la colonne
+   défile, elle ne rapetisse pas. */
 #acteurs .acteur .qui .role{display:block;font-size:.9em;opacity:.75;
   font-style:italic;line-height:1.25;}
-#acteurs .acteur-reste{align-self:stretch;}
-#acteurs:has(.acteur:nth-child(7)) .acteur .medaillon svg{width:38px;height:38px;}
-#acteurs:has(.acteur:nth-child(10)){gap:4px;}
-#acteurs:has(.acteur:nth-child(10)) .acteur .medaillon svg{width:32px;height:32px;}
+
+/* Défiler sans barre : ni la barre native de Firefox, ni celle de Chrome, ni
+   celle d'Edge. À la place, une flèche au bas de la colonne, qui ne paraît que
+   s'il reste des gens en dessous — et qui les fait descendre d'un clic. */
+#acteurs{scrollbar-width:none;-ms-overflow-style:none;}
+#acteurs::-webkit-scrollbar{width:0;height:0;}
+.acteurs-bas{position:sticky;bottom:0;z-index:3;flex:0 0 auto;
+  height:30px;margin-top:-30px;align-self:stretch;
+  display:flex;align-items:flex-end;justify-content:center;
+  padding-bottom:2px;line-height:1;font-size:1em;
+  color:var(--braise,var(--accent));
+  background:linear-gradient(to bottom,transparent,var(--fond) 72%);
+  opacity:0;pointer-events:none;transition:opacity .2s;}
+#acteurs.peut-descendre .acteurs-bas{opacity:1;pointer-events:auto;
+  cursor:pointer;animation:acteurs-appel 2.4s ease-in-out infinite;}
+#acteurs.peut-descendre .acteurs-bas:hover{color:var(--accent);}
+@keyframes acteurs-appel{0%,100%{transform:translateY(0);}50%{transform:translateY(2px);}}
+@media (prefers-reduced-motion:reduce){
+  #acteurs.peut-descendre .acteurs-bas{animation:none;}
+}
 @media (max-width:1100px){
   body{grid-template-columns:auto minmax(0,1fr);}
   #acteurs{display:none;}
@@ -2427,6 +3150,38 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 #acteurs .acteur.adressable:hover .medaillon{transform:translateY(-1px);
   filter:brightness(1.12);}
 #acteurs .acteur.adressable:active .medaillon{transform:none;}
+
+/* IL EST DEHORS — la seule marque de l'écran qui ne parle pas du monde mais de
+   la machine : une session tourne pour cet homme (scripts/depecher.py), il est
+   en train de vivre sa journée, et ce qu'il rapportera n'est pas encore écrit.
+   Un point, à l'angle du visage, qui bat lentement. Pas de compte à rebours :
+   la minute restante est dans l'infobulle, et une salle n'est pas un tableau
+   de bord. Posée par modules/galerie.js d'après /depeches. */
+/* ELLE S'ACCROCHE AU VISAGE, PAS AU MÉDAILLON — et pour deux raisons, toutes
+   deux payées d'un essai raté. Ancrer sur le médaillon obligeait à le passer en
+   `position:relative`, ce qui RÉARMAIT le `left:50%;top:0` de la couronne
+   d'origine (tout en haut de ce fichier, neutralisé depuis par un
+   `position:static`) : toute la colonne partait d'une demi-largeur vers la
+   droite. Et le coin haut-droit est DÉJÀ PRIS par l'emblème d'office
+   (`.visage .emb-coin`, 85.4%/14.6%) : la pastille tombait dessous, invisible
+   sur tout homme qui a une charge. Elle va donc au coin bas-droit, sur le même
+   rayon, où il n'y a jamais rien. `.visage` est déjà `position:relative` et
+   épouse le portrait au pixel : rien à repositionner.
+
+   VERT, ET RIEN D'AUTRE. L'orange de la palette a été essayé et refusé : la
+   braise est la couleur de ce qui se dit dans la fiction — un appui, une
+   échéance, le locuteur qui s'illumine. Cette pastille-là ne parle pas du
+   monde mais de la machine ; elle doit se lire comme un voyant, donc dans une
+   teinte que le jeu n'emploie nulle part ailleurs. Vert ou rien. */
+#acteurs .acteur .visage .depeche{position:absolute;left:85.4%;top:85.4%;
+  transform:translate(-50%,-50%);
+  width:9px;height:9px;border-radius:50%;background:#57c98a;
+  box-shadow:0 0 0 2px var(--fond),0 0 8px rgba(87,201,138,.75);
+  animation:depeche-bat 2.2s ease-in-out infinite;pointer-events:none;z-index:2;}
+@keyframes depeche-bat{0%,100%{opacity:1;}50%{opacity:.4;}}
+@media (prefers-reduced-motion:reduce){
+  #acteurs .acteur .depeche{animation:none;}
+}
 
 /* =========================================================
    LA LIGNE DU FIL, UNE FOIS LE PORTRAIT AGRANDI.
@@ -2443,14 +3198,14 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 /* — le visage — */
 .chr-replique .chr-icone,.chr-vous .chr-icone,.chr-acte .chr-icone{
   border:none;background:var(--fond);
-  box-shadow:0 0 0 1px var(--bord),0 0 0 4px rgba(0,0,0,.05),
+  box-shadow:0 0 0 2px var(--bord),0 0 0 5px rgba(0,0,0,.05),
              0 2px 7px rgba(0,0,0,.16);
   transition:box-shadow .25s,transform .25s;}
 .chr-replique .chr-icone svg,.chr-vous .chr-icone svg,.chr-acte .chr-icone svg{
   width:100%;height:100%;display:block;}
 /* celui qui vient de parler : le cerclage s'allume, sans bondir */
 .chr.chr-dit .chr-icone{
-  box-shadow:0 0 0 1px var(--braise),0 0 0 5px rgba(201,104,58,.14),
+  box-shadow:0 0 0 2px var(--braise),0 0 0 6px rgba(201,104,58,.14),
              0 3px 10px rgba(0,0,0,.2);}
 
 /* — la ligne s'équilibre sur le milieu du visage — */
@@ -2660,3 +3415,906 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 .chr-ecrit .chr-texte{font-style:italic;font-size:.8em;color:var(--muted);}
 .chr-ecrit .chr-texte::before,.chr-ecrit .chr-texte::after{content:none;}
 .chr-ecrit .chr-corps{background:none;border:none;padding:0;}
+
+/* ---- la régie : le siège de Corneille ------------------------------------
+   Hors fiction, et ça doit se voir : un cadre froid dans un fil qui ne l'est
+   pas. Ce bloc n'est pas un moment de la partie — c'est une lecture, posée là
+   par quelqu'un qui regarde la partie de l'extérieur. */
+.regie-menu{position:fixed;z-index:60;min-width:180px;padding:4px;
+  background:var(--fond);border:1px solid var(--loge);border-radius:6px;
+  box-shadow:0 8px 24px -12px #000;}
+.regie-menu-tete{padding:3px 8px 5px;font-size:.68em;font-variant:small-caps;
+  letter-spacing:.08em;color:var(--loge);border-bottom:1px dotted var(--bord);}
+.regie-menu-choix{display:block;width:100%;margin-top:4px;padding:6px 8px;
+  text-align:left;font-size:.78em;background:none;border:0;border-radius:4px;}
+.regie-menu-choix:hover{background:var(--btn-hover);color:var(--loge);}
+
+.regie-fil{margin:14px 0;padding:8px 10px 10px;
+  border:1px solid var(--loge);border-radius:6px;
+  background:color-mix(in srgb,var(--loge) 5%,transparent);}
+.regie-fil-tete{display:flex;align-items:baseline;gap:10px;
+  padding-bottom:6px;border-bottom:1px solid var(--bord);}
+.regie-fil-tete span{font-variant:small-caps;letter-spacing:.06em;
+  font-size:.9em;color:var(--loge);}
+.regie-fil-tete em{flex:1;font-size:.66em;color:var(--muted);}
+.regie-fil-fermer{padding:0 7px;font-size:.8em;line-height:1.4;
+  background:none;border:0;color:var(--muted);}
+.regie-fil-fermer:hover{color:var(--sang);background:none;}
+
+.regie-jour{margin:12px 0 4px;font-size:.66em;font-variant:small-caps;
+  letter-spacing:.12em;color:var(--muted);
+  border-top:1px dotted var(--bord);padding-top:6px;}
+.regie-jour i{font-size:.9em;opacity:.7;}
+.regie-activation{margin:8px 0 4px;font-size:.68em;font-style:italic;
+  color:var(--loge);}
+.regie-entree{margin:0 0 7px;padding-left:9px;
+  border-left:2px solid var(--bord);font-size:.76em;}
+.regie-genre{font-size:.72em;font-variant:small-caps;letter-spacing:.09em;
+  color:var(--muted);margin-right:7px;}
+.regie-qui{font-size:.8em;font-variant:small-caps;letter-spacing:.04em;
+  color:var(--braise);}
+.regie-texte{margin-top:1px;}
+.regie-detail{margin-top:2px;font-size:.86em;font-style:italic;color:var(--muted);}
+/* Ce qui vient de la salle garde la couleur de la salle ; ce qui vient d'une
+   activation prend celle de la loge — on doit pouvoir distinguer d'un coup
+   d'œil ce que le joueur a vu de ce qui s'est fait sans lui. */
+.regie-replique{border-left-color:var(--accent);font-style:italic;}
+.regie-geste{border-left-color:var(--accent);}
+.regie-narrateur{border-left-color:var(--monde);color:var(--muted);}
+.regie-appel{border-left-color:var(--monde);}
+.regie-tentative{border-left-color:var(--loge);}
+.regie-activite{border-left-color:var(--loge);}
+.regie-resultat{border-left-color:var(--pensee);}
+.regie-blocage,.regie-issue{border-left-color:var(--sang);}
+
+/* ================= « L'échiquier » : les affaires du conseil ===============
+   Un damier, pas une frise. Une COLONNE est un état cible, un PLATEAU est une
+   affaire, et les cinq rangs sont la chaîne du guide « Comment on ouvre une
+   affaire » : états cibles, verrous, clefs, actions, moyens et offices. On lit
+   de bas en haut, et le temps n'y est nulle part — c'est la position, pas
+   l'histoire.
+
+   AUCUN TEXTE. Des cases carrées, toutes égales, dont la taille se calcule sur
+   la place de l'hôte (echiquier.js, ajuster) ; un jeton par pièce ; des traits
+   entre les rangs. Tout ce qui s'écrit vit dans l'encart (.ech-encart), qui
+   flotte en position fixe et n'est donc jamais coupé par le panneau.
+
+   LA FORME AVANT LA COULEUR — la grammaire vient des pièces de bois de la
+   nappe : tuile à huit côtés pour une affaire, rectangle pour un état cible,
+   hexagone pour un verrou, losange pour une clef, barrette pour une action,
+   rond pour un moyen, carré épais pour un office. Le sceau porte la silhouette
+   (clip-path), l'emoji du guide porte le sens, et la teinte du rang passe
+   entièrement par le cadre — un emoji n'obéit pas à currentColor.
+
+   Une teinte par rang : ce qu'on veut est or (le seul rang qu'on ne fabrique
+   pas), ce qui bloque est PIERRE, ce qui lèverait est turquoise (c'est là qu'on
+   a le droit de se tromper), ce qu'on fait est braise, ce qu'on a est vert — et
+   l'office, qui est une autorité et non une chose, est violet.
+
+   LE VERROU N'EST PLUS ROUGE, et c'est la décision de fond du 13e. Il l'était
+   au motif que « ce qui bloque est sang » — sauf qu'un verrou n'est pas une
+   faute : c'est l'objet le plus normal du guide, celui qu'un homme rapporte
+   quand il a bien travaillé, et il y en a 237 dans le plan. Les peindre en sang
+   mettait le plateau au rouge de bout en bout et ne laissait plus aucune encre
+   pour ce qui casse vraiment. Il prend donc la PIERRE, qui est déjà son mot
+   dans la maison : on compte ses dalles, on parle de sa pierre et de sa brèche,
+   et quand une clef retenue s'écrit contre lui il passe au vert (.ech-perce).
+   Le sang, désormais, ne dit plus qu'une chose : la remontée est cassée. */
+:root{
+  --ech-etat:var(--book-oeuvre); --ech-pierre:#586070;
+  --ech-verrou:var(--ech-pierre); --ech-clef:var(--loge);
+  --ech-action:var(--braise); --ech-moyen:var(--vert); --ech-office:var(--pensee);
+  --ech-dalle:rgba(96,86,74,.94); --ech-dalle-bord:rgba(60,52,42,.55);
+  /* La case est carrée et toutes les cases sont identiques — mais sa taille se
+     CALCULE sur la place réelle de l'hôte : le plateau prend tout l'emplacement
+     du décor, sans marge morte. Ce qui est ici n'est qu'un recours, le temps de
+     la première mesure. */
+  --ech-case:104px; --ech-gout:22px;
+}
+@media (prefers-color-scheme:dark){
+  :root{--ech-dalle:rgba(38,33,28,.95); --ech-dalle-bord:rgba(0,0,0,.6);
+    --ech-pierre:#9aa4b4;}
+}
+#echiquier{position:static;flex:1 1 auto;min-height:200px;display:flex;
+  flex-direction:column;}
+#cartes:has(#echiquier:not(.vue-off)){flex:1 1 auto;}
+/* le plateau se centre sur ce qui reste : cinq rangs sur n colonnes ne tombent
+   pas juste sur toutes les tailles de panneau */
+/* La piste du corps est la LARGEUR DU PANNEAU, et non le plus large de ses
+   enfants : sans ce minmax, la bascule des quarante et une affaires imposait
+   sa propre largeur à la colonne, et le plateau se centrait sur elle — donc
+   à côté du panneau, décalé de cinquante-sept pixels sur une fenêtre étroite. */
+.ech-corps{flex:1 1 auto;min-height:0;overflow:auto;display:grid;
+  grid-template-columns:minmax(0,1fr);
+  justify-items:center;align-content:safe center;}
+.ech-rien{font-size:.62em;font-style:italic;color:var(--muted);}
+
+/* ------- le bandeau des affaires -------
+   Une tuile à huit côtés par affaire, la courante allumée. Rien d'écrit : le
+   nom se lit au survol, un clic change de plateau, un clic sur la tuile
+   courante ouvre le volume dans les livres. */
+.ech-affaires{display:flex;align-items:center;gap:9px;flex-wrap:nowrap;
+  max-width:100%;min-width:0;overflow-x:auto;overflow-y:hidden;
+  margin-bottom:7px;padding-bottom:6px;border-bottom:1px dotted var(--bord);}
+/* le nom de l'affaire ouverte : le pendant écrit de l'emblème. Hors du damier,
+   sur une seule ligne, et il cède la place plutôt que de pousser la bascule sur
+   un second rang — ce qui prendrait la hauteur du plateau. */
+.ech-titre{flex:1 1 auto;min-width:0;margin:0;cursor:pointer;
+  font-size:.72em;font-weight:600;letter-spacing:.03em;line-height:1.25;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ech-titre:hover{color:var(--accent);}
+/* LE BLASON : l'emblème de l'affaire courante, en grand. C'est la seule pièce
+   du dispositif qui ait le droit d'être grosse — elle dit de quoi ce plateau
+   parle avant qu'on ait rien lu. */
+.ech-blason{flex:0 0 auto;width:46px;height:46px;padding:0;border:none;
+  background:color-mix(in srgb,var(--accent) 10%,transparent);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  clip-path:polygon(22% 0,78% 0,100% 22%,100% 78%,78% 100%,22% 100%,0 78%,0 22%);
+  box-shadow:inset 0 0 0 2px var(--accent);transition:box-shadow .15s;}
+.ech-blason .ech-icone{font-size:31px;}
+.ech-blason:hover{box-shadow:inset 0 0 0 3px var(--accent);}
+/* l'épreuve du guide se voit sur le blason, sans rien survoler */
+.ech-blason-rompu{box-shadow:inset 0 0 0 2px var(--sang);}
+.ech-blason-rompu:hover{box-shadow:inset 0 0 0 3px var(--sang);}
+
+/* Vers le cahier de l'affaire ouverte : le clic sur le blason le faisait déjà,
+   mais rien ne l'annonçait. */
+.ech-vers-livre{flex:0 0 auto;display:flex;align-items:center;gap:5px;
+  padding:3px 7px;border:none;background:none;color:var(--muted);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--muted) 40%,transparent);
+  cursor:pointer;font:inherit;font-size:.66em;letter-spacing:.03em;
+  white-space:nowrap;transition:box-shadow .15s,color .15s;}
+.ech-vers-livre:hover{color:var(--accent);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 60%,transparent);}
+
+/* LA BASCULE : une tirette qui déroule signe + nom. Les emblèmes muets côte à
+   côte obligeaient à survoler pour savoir de quoi chacun parlait. */
+.ech-bascule{flex:0 0 auto;position:relative;}
+.ech-tirette{display:flex;align-items:center;gap:5px;padding:3px 7px;
+  border:none;background:color-mix(in srgb,var(--muted) 12%,transparent);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--muted) 40%,transparent);
+  color:var(--muted);cursor:pointer;font:inherit;font-size:.66em;
+  letter-spacing:.03em;white-space:nowrap;transition:box-shadow .15s,color .15s;}
+.ech-tirette:hover{color:var(--accent);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 60%,transparent);}
+.ech-chevron{font-style:normal;font-size:.9em;opacity:.8;}
+.ech-liste{position:absolute;top:calc(100% + 4px);right:0;z-index:40;
+  min-width:230px;max-width:340px;max-height:min(62vh,640px);overflow-y:auto;
+  display:flex;flex-direction:column;padding:3px;
+  background:var(--fond,#12100e);box-shadow:0 0 0 1px var(--bord),0 6px 18px rgba(0,0,0,.45);}
+/* `display:flex` ci-dessus l'emporte sur le `[hidden]{display:none}` du
+   navigateur — sans cette ligne, le déroulé ne se referme jamais. */
+.ech-liste[hidden]{display:none;}
+.ech-choix{display:flex;align-items:center;gap:8px;width:100%;padding:5px 7px;
+  border:none;background:none;color:inherit;font:inherit;font-size:.7em;
+  text-align:left;cursor:pointer;opacity:.72;transition:opacity .15s,background .15s;}
+.ech-choix:hover{opacity:1;background:color-mix(in srgb,var(--accent) 12%,transparent);}
+.ech-choix-signe{flex:0 0 auto;width:22px;height:22px;
+  display:flex;align-items:center;justify-content:center;
+  clip-path:polygon(22% 0,78% 0,100% 22%,100% 78%,78% 100%,22% 100%,0 78%,0 22%);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--muted) 45%,transparent);}
+.ech-choix-signe .ech-icone{font-size:15px;}
+.ech-choix-nom{flex:1 1 auto;min-width:0;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap;}
+.ech-choix-ici{opacity:1;font-weight:600;}
+.ech-choix-ici .ech-choix-signe{background:color-mix(in srgb,var(--accent) 14%,transparent);
+  box-shadow:inset 0 0 0 2px var(--accent);}
+/* une affaire dont un état ne descend jusqu'à aucune action se signale de loin */
+.ech-choix-rompu .ech-choix-signe{box-shadow:inset 0 0 0 1px var(--sang);}
+.ech-choix-rompu.ech-choix-ici .ech-choix-signe{box-shadow:inset 0 0 0 2px var(--sang);}
+
+/* ------- le plateau -------
+   Une gouttière de rangs à gauche, puis une colonne par état cible qui porte
+   quelque chose. En haut, la CANOPÉE : autant d'étages que l'arbre des états a
+   de niveaux, chacun d'une hauteur de bande — un jeton y tient au large, ce
+   n'est pas un rang de cases. En dessous, les quatre rangs du damier, dont les
+   pistes sont FIXES des deux côtés : la case y est carrée par construction. */
+/* LES PISTES, ET NON LES COLONNES. Une colonne dense en prend plusieurs — sa
+   case devient un rectangle couché au lieu d'un carré où l'on rogne. C'est
+   echiquier.js qui répartit, et seulement sur la largeur qui dormait. */
+/* LE DAMIER N'EST PLUS UNE GRILLE, C'EST UN PORTEUR DE BANDES. Au-delà de douze
+   colonnes-verrous, le plateau se plie en deux et chaque bande est un damier
+   complet — sa canopée, ses réglettes, ses quatre rangs. Elles partagent la
+   même taille de case, sinon on lirait deux plateaux au lieu d'un plié. Le nom
+   de classe ne bouge pas : tout ce qui fouille le plateau (la chaîne allumée,
+   la bulle, les renvois par numéro) continue de le trouver. */
+.ech-damier{position:relative;display:flex;flex-direction:column;
+  align-items:center;gap:18px;width:max-content;
+  --ech-etage:calc(var(--ech-case) * .46);
+  /* le sceau se taille sur la SOUS-CASE ; hors damier (la canopée), la
+     sous-case vaut la demi-case, ce qui redonne exactement l'ancien calibre */
+  --pas:calc(var(--ech-case) * .5);}
+.ech-bande{position:relative;display:grid;gap:3px;width:max-content;
+  grid-template-columns:var(--ech-gout)
+                        repeat(var(--pistes,var(--cols)),var(--ech-case));
+  grid-template-rows:repeat(var(--niv),var(--ech-etage)) 10px
+                     repeat(4,var(--ech-case));}
+/* une branche : l'état s'assied au milieu des colonnes qu'il coiffe */
+.ech-branche{display:flex;align-items:center;justify-content:center;
+  border-bottom:2px solid color-mix(in srgb,var(--ech-etat) 62%,transparent);}
+.ech-branche-rompue{border-bottom-color:color-mix(in srgb,var(--sang) 85%,transparent);}
+.ech-gouttiere-cime{align-items:flex-start;padding-top:4px;}
+.ech-reglette{align-self:end;height:6px;border-radius:3px;cursor:help;
+  background:color-mix(in srgb,var(--ech-etat) 88%,transparent);}
+.ech-reglette:hover{background:var(--ech-etat);}
+/* LE VERDICT DE LA COLONNE, à l'œil, en TROIS crans — il n'en rendait qu'un, et
+   c'était le mauvais. ROUGE : aucune action n'en descend, une intention sans
+   plan. VERTE : au moins une de ses actions est déclarée en cours ou faite,
+   quelqu'un la porte. ENTRE LES DEUX, l'or ordinaire : c'est écrit, ce n'est
+   pas porté — et c'est le cas de la plupart des colonnes du plan. */
+.ech-reglette-portee{background:color-mix(in srgb,var(--vert) 88%,transparent);}
+.ech-reglette-portee:hover{background:var(--vert);}
+.ech-reglette-rompue{background:var(--sang);height:7px;}
+.ech-gouttiere{display:flex;align-items:center;justify-content:center;
+  border-right:1px solid var(--bord);cursor:help;}
+.ech-gouttiere .ech-icone{font-size:16px;opacity:.85;filter:grayscale(.15);}
+.ech-gouttiere:hover .ech-icone{opacity:1;filter:none;}
+
+/* les cases : l'alternance du damier, assez présente pour qu'on voie le
+   plateau, jamais assez pour se lire à la place des jetons */
+/* LE SEMIS SE COMPTE. Il tenait sur un flex à deux jetons par rangée : une
+   case de vingt-et-une pièces en faisait onze rangées dans une case qui n'en
+   loge que deux, et quinze jetons étaient rognés — invisibles, pas serrés. Le
+   semis est donc une grille dont echiquier.js pose le nombre de sous-colonnes
+   (--sub) et de rangées (--lig) sur le compte réel des pièces, et --span dit
+   combien de pistes la colonne occupe. --pas est le côté de la sous-case :
+   c'est lui, désormais, qui taille le sceau. */
+.ech-case{box-sizing:border-box;padding:min(4px,3%);
+  /* Des sous-cases de taille FIXE, et le bloc se centre dans la bande : sur des
+     pistes larges, un semis en 1fr écartèlerait quatre jetons d'un bout à
+     l'autre au lieu d'en faire un carré. */
+  display:grid;grid-template-columns:repeat(var(--sub,2),var(--pas));
+  grid-auto-rows:var(--pas);align-content:center;justify-content:center;
+  justify-items:center;align-items:center;
+  /* le côté de la sous-case — et JAMAIS plus de la demi-case : c'est ce
+     plafond qui donne au sceau son calibre historique (.42 de case), qu'il
+     soit seul dans son carré ou l'un de quatre */
+  --pas:min(calc(var(--ech-case) * var(--span,1) / var(--sub,2)),
+            calc(var(--ech-case) / var(--lig,1)),
+            calc(var(--ech-case) * .5));
+  gap:0;background:transparent;
+  outline:1px solid color-mix(in srgb,var(--bord) 45%,transparent);
+  outline-offset:-1px;
+  /* Une case de grille a min-height:auto : un semis trop serré ferait GRANDIR
+     la case au-delà de sa piste, et le damier cesserait d'être un damier. La
+     case garde sa piste, quitte à rogner ce qui ne rentre plus. */
+  min-width:0;min-height:0;overflow:hidden;}
+.ech-case.c1{background:var(--paper);}
+
+/* ------- les signes -------
+   Les emoji du guide. Ils portent leurs propres couleurs et n'obéissent pas à
+   currentColor : TOUTE la teinte du rang passe donc par le cadre du sceau, son
+   fond et son liseré — et l'état d'une pièce (verrou percé, clef écartée, état
+   muré, faute) s'y joue aussi, jamais sur le glyphe. */
+.ech-icone{display:inline-block;line-height:1;font-style:normal;
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;}
+
+/* ------- un jeton -------
+   Le sceau porte la silhouette de la pièce de bois et le signe ; sous lui, la
+   seule bande de signal qui reste — les brèches d'un état cible. */
+/* LA ZONE DE FRAPPE OCCUPE SA PART DE CASE, et non un timbre au milieu. Le
+   sceau dessiné ne bouge pas — il garde ses proportions et sa place —, mais le
+   bouton qui le porte s'étend jusqu'aux bords de sa part : une case à un jeton
+   se clique tout entière, à deux chacun sa moitié, à quatre chacun son quart.
+   Mesuré avant : 25 px de large dans une case de 60, soit un sixième de la
+   surface — on visait au pixel, et au trackpad c'était perdu d'avance. Le
+   curseur en main suit la zone, puisque c'est le seul indice qu'a le joueur. */
+.ech-pion{position:relative;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;width:100%;height:100%;min-width:0;min-height:0;
+  gap:2px;padding:0;background:none;border:none;border-radius:4px;cursor:pointer;}
+/* la canopée n'est pas un damier : ses jetons gardent leur taille propre */
+.ech-branche > .ech-pion{flex:0 0 auto;width:auto;height:auto;}
+.ech-pion:hover,.ech-pion:focus-visible{outline:none;}
+/* LE CHIFFRE DE LA PIÈCE — le dernier de son numéro. Le plateau reste muet :
+   un chiffre n'est pas un mot, c'est un nom court, et c'est lui qui permet de
+   dire « le verrou 3 » au lieu de montrer du doigt. Posé sur le jeton et non
+   dans le sceau, que cinq silhouettes sur sept découpent au ciseau. */
+/* LE CHIFFRE SE TIENT EN RETRAIT. Il a fait deux fois le trajet inverse : peint
+   en `--paper` — qui n'est pas le papier mais un voile à 7 % —, il était
+   invisible ; corrigé en pastille pleine, il s'est mis à crier plus fort que le
+   sceau qu'il nomme. Or ce n'est ni un état ni une alerte : c'est un NOM, et un
+   nom se lit quand on le cherche. Donc pas de disque, pas de graisse lourde —
+   le chiffre nu, à la teinte de son rang assombrie juste ce qu'il faut, et un
+   halo de fond de page qui le détache du glyphe sans faire de tache. */
+.ech-chiffre{position:absolute;z-index:3;right:calc(50% - var(--pas) * .46);
+  bottom:calc(50% - var(--pas) * .46);
+  display:flex;align-items:center;justify-content:center;
+  font-style:normal;font-weight:600;
+  font-size:min(11px,calc(var(--pas) * .26));line-height:1;
+  color:color-mix(in srgb,var(--teinte,var(--muted)) 45%,var(--ink));
+  opacity:.74;
+  text-shadow:0 0 2px var(--fond),0 0 2px var(--fond),0 0 3px var(--fond);
+  pointer-events:none;}
+/* on le retrouve d'un coup quand on désigne la pièce, et alors seulement */
+.ech-pion:hover .ech-chiffre,.ech-pion:focus-visible .ech-chiffre,
+.ech-vise .ech-chiffre{opacity:1;}
+/* Sous une certaine taille de case le chiffre ne se lit plus : il se retire
+   plutôt que de faire une tache. C'est ajuster() qui pose la classe, puisque
+   lui seul connaît la taille de case retenue. */
+.ech-sans-chiffre .ech-chiffre{display:none;}
+/* le sceau grandit avec la SOUS-CASE : un peu moins de sa pleine largeur.
+   Sur un semis de deux (le cas d'un jeton seul ou de quatre), la sous-case vaut
+   la demi-case et l'on retrouve au pixel l'ancien .42 de case. */
+.ech-sceau{position:relative;display:flex;align-items:center;justify-content:center;
+  width:min(38px,calc(var(--pas) * .84));
+  height:min(38px,calc(var(--pas) * .84));
+  box-sizing:border-box;
+  background:color-mix(in srgb,currentColor 24%,transparent);
+  box-shadow:inset 0 0 0 2px color-mix(in srgb,currentColor 92%,transparent);
+  transition:box-shadow .15s,background .15s;}
+
+.ech-sceau .ech-icone{font-size:min(24px,calc(var(--pas) * .54));}
+/* LE VISAGE DU TENEUR, sur le jeton d'une action. Le dessin vient inliné du
+   serveur et remplit le sceau.
+
+   ET IL LUI FAUT DE LA HAUTEUR. La barrette coupe à 22 % et 78 % : sur un carré
+   de 25 px, il ne restait que 14 px de visage — 23 % de la case, pour l'objet le
+   plus vertical du plateau. Deux corrections, dans cet ordre :
+
+   1. LE CADRE MONTE ET DESCEND. Le sceau d'une action qui porte un visage
+      s'allonge en hauteur (la case, elle, ne bouge pas d'un pixel et reste
+      carrée). On ne le fait QUE si la case tient une ou deux pièces : au-delà
+      les jetons s'empilent sur deux rangées et un sceau haut déborderait. Les
+      cases denses gardent donc l'ancien carré, et c'est le bon compromis — on
+      n'y lisait de toute façon aucun visage.
+   2. LA BARRETTE S'ASSOUPLIT sur ces jetons-là : 14/86 au lieu de 22/78. La
+      silhouette reste une barrette couchée — plus large que haute, coupée net
+      en haut et en bas —, mais elle laisse passer le front et le menton. Entre
+      une barrette parfaite et un visage lisible, on prend le visage. */
+.ech-visage{position:absolute;inset:0;display:block;overflow:hidden;}
+/* le cadre s'allonge quand il porte une tête, et seulement dans une case qui a
+   la place de la loger */
+.ech-case:not(:has(.ech-pion:nth-of-type(3))) .ech-g-action:has(.ech-visage) .ech-sceau{
+  height:min(58px,calc(var(--pas) * 1.32));
+  clip-path:polygon(0 14%,100% 14%,100% 86%,0 86%);}
+/* le <title> d'un portrait ferait une infobulle du navigateur par-dessus la
+   nôtre : le dessin ne prend pas la souris */
+.ech-visage svg{width:100%;height:100%;display:block;pointer-events:none;}
+.ech-g-action .ech-sceau{background:none;}
+
+/* LES SEPT FORMES, reprises des pièces taillées dans la nuit du 25e au 26e —
+   voir nappe.js. Le clip découpe le cadre en même temps que le fond, donc la
+   silhouette se lit d'un trait, sans dessin supplémentaire. */
+.ech-g-etat .ech-sceau{border-radius:2px;}                       /* rectangle */
+.ech-g-verrou .ech-sceau{                                        /* six pans */
+  clip-path:polygon(0 50%,26% 0,74% 0,100% 50%,74% 100%,26% 100%);}
+.ech-g-clef .ech-sceau{clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);} /* losange */
+.ech-g-clef .ech-icone{font-size:min(19px,calc(var(--pas) * .44));}
+.ech-g-action .ech-sceau{clip-path:polygon(0 22%,100% 22%,100% 78%,0 78%);} /* barrette */
+.ech-g-moyen .ech-sceau{border-radius:50%;}                      /* le galet */
+.ech-g-office .ech-sceau{border-radius:1px;                      /* carré épais */
+  box-shadow:inset 0 0 0 3px color-mix(in srgb,currentColor 62%,transparent);}
+.ech-g-office:hover .ech-sceau{box-shadow:inset 0 0 0 3.5px currentColor;}
+
+/* les teintes de rang */
+/* `--teinte` double `color` : la pastille du chiffre pose SA propre couleur de
+   texte, ce qui lui ferait perdre `currentColor` au moment de peindre son
+   disque. La teinte du rang doit donc lui parvenir par une variable. */
+.ech-g-etat{color:var(--ech-etat);--teinte:var(--ech-etat);}
+.ech-g-verrou{color:var(--ech-verrou);--teinte:var(--ech-verrou);}
+.ech-g-clef{color:var(--ech-clef);--teinte:var(--ech-clef);}
+.ech-g-action{color:var(--ech-action);--teinte:var(--ech-action);}
+.ech-g-moyen{color:var(--ech-moyen);--teinte:var(--ech-moyen);}
+.ech-g-office{color:var(--ech-office);--teinte:var(--ech-office);}
+/* un verrou percé — une clef RETENUE est écrite contre lui — pèse moins : le
+   cadre s'allège et passe au vert. Il est encore là, il n'est plus entier. */
+.ech-perce{color:var(--vert);}
+.ech-perce .ech-sceau{background:none;
+  box-shadow:inset 0 0 0 1.5px color-mix(in srgb,currentColor 45%,transparent);}
+/* LE VERT, ET CE QU'IL DIT — la seule chose qu'on ait voulu qu'il dise :
+   QUELQU'UN LE PORTE. Pas « la chaîne est complète » : une chaîne complète sur
+   le papier n'est pas du travail, et peindre en vert un plan bien écrit
+   reviendrait à féliciter le registre. Une action seule peut le revendiquer, et
+   seulement parce qu'un homme a écrit « en cours » ou « fait » de sa main dans
+   la colonne ⏳ État de son cahier — 42 actions sur 584. Les 542 autres ne
+   prennent rien : elles sont ÉCRITES, PAS PORTÉES, et c'est la vérité.
+   Le cerne entoure le visage du teneur : le vert et la main qui le porte se
+   lisent d'un seul regard. */
+.ech-g-action.ech-porte .ech-sceau{
+  box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--vert) 78%,transparent);}
+
+/* ET LE VERT VRAI, qui n'est pas le même et ne doit pas se confondre avec lui :
+   l'action figure dans les ÉTAPES de la tête de son teneur, avec une horloge —
+   elle est dans la boucle des acteurs, elle avancera sans qu'on la pousse.
+   « Il dit qu'il le fait » et « c'est dans sa tête » sont deux faits distincts,
+   donc deux marques : le cerne pour la parole, ce PLOT plein au coin bas-droit
+   pour la tête. Aujourd'hui il ne se pose nulle part — aucune étape du monde ne
+   cite un numéro d'action —, et c'est précisément l'information.
+   Il s'éteint avec la constante LIRE_LES_TETES de serveur.js. */
+.ech-tete::after{content:"";position:absolute;right:-4px;bottom:-4px;
+  width:8px;height:8px;border-radius:50%;z-index:3;background:var(--vert);
+  box-shadow:0 0 0 1.5px var(--fond);}
+
+/* UNE CLEF À ÉTUDIER N'EST NI UNE FAUTE NI DU TRAVAIL : c'est une DÉCISION qui
+   attend le joueur, et la seule chose du plateau qui lui soit adressée. Elle
+   n'est donc ni rouge ni verte — elle se lit à sa MARCHE, en or et en tirets
+   longs (.ech-lien-decision), la teinte de ce qu'on veut, sur un trait qui
+   n'est pas encore tranché. Le jeton, lui, garde son creux : c'est la lampe
+   qui dit qu'il y a là quelque chose à faire, et l'on ne lui dispute pas le
+   cadre. Une clef écartée est une décision PRISE : elle s'efface, elle
+   n'alerte pas. */
+.ech-clef-etudier .ech-sceau{background:none;}
+.ech-clef-ecartee{color:var(--muted);}
+.ech-clef-ecartee .ech-sceau{background:none;opacity:.55;}
+.ech-clef-ecartee .ech-icone{filter:grayscale(1);opacity:.6;}
+
+/* la faute, repérable SANS survoler : un fanion rouge au coin du jeton. Il est
+   posé sur le JETON et non sur le sceau, pour rester visible par-dessus les
+   dalles d'un état muré. */
+.ech-fanion{position:absolute;top:-4px;right:-4px;width:9px;height:9px;
+  border-radius:50%;background:var(--sang);z-index:2;
+  box-shadow:0 0 0 1.5px var(--fond);}
+.ech-faute .ech-sceau{box-shadow:inset 0 0 0 1.5px var(--sang);
+  background:color-mix(in srgb,var(--sang) 10%,transparent);}
+/* LA LAMPE : il y a quelque chose a faire sous cette piece, et ca se voit sans
+   survoler — comme le fanion, mais au coin oppose et par-dessus les dalles
+   d'occlusion : un etat mure est celui qui en a le plus besoin. C'est une
+   MARQUE, pas un glyphe de piece : plus petite que les signes de rang, posee en
+   surimpression sur le sceau et jamais dedans. Elle ne remplace pas le fanion —
+   mesure faite, les deux ensembles ne coincident pas (voir docs/carte.md). */
+.ech-lampe,.ech-depeche{position:absolute;z-index:4;font-style:normal;
+  line-height:1;pointer-events:none;
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+  filter:drop-shadow(0 0 1.5px var(--fond)) drop-shadow(0 0 1.5px var(--fond));}
+.ech-lampe{top:-7px;left:-8px;font-size:14px;}
+/* LES DEUX ESPECES DE TROUS, et le joueur doit les separer SANS SURVOLER.
+   Six detecteurs trouvent tout seuls ce qui manque au registre : un verrou sans
+   clef, une clef qu'on n'a pas tranchee, une action sans numero d'office. C'est
+   exhaustif, gratuit a trouver, et de faible valeur — de la tenue de registre,
+   qui s'ecrit a la plume et se coche. C'est la LAMPE, et elle ne change pas.
+   Un seul de ces six commande autre chose : « trouver ce qui empeche », quand
+   un etat cible n'a pas un seul verrou ecrit contre lui. Aucun calcul ne le
+   fera jamais a notre place — c'est une DEPECHE, un homme a envoyer vivre sa
+   journee, et ce qu'il rapportera s'ecrira comme un verrou au cahier.
+   Donc : autre signe (le cor, pas l'ampoule), autre coin (en bas a gauche,
+   pour que les deux coexistent sur un meme jeton), autre halo (un anneau
+   TIRETE et froid, la ou la lampe pose un halo braise plein) — parce que ce
+   qu'il y a la, precisement, on ne le sait pas encore. */
+.ech-depeche{bottom:-8px;left:-8px;font-size:15px;}
+.ech-damier .ech-pion.ech-quete{position:relative;}
+.ech-damier .ech-pion.ech-quete::before{content:"";position:absolute;z-index:0;
+  left:50%;top:calc(50% - 2px);width:min(56px,calc(var(--pas) * 1.28));
+  height:min(56px,calc(var(--pas) * 1.28));transform:translate(-50%,-50%);
+  border-radius:50%;pointer-events:none;background:none;
+  border:2px dashed color-mix(in srgb,var(--pensee) 85%,transparent);
+  animation:ech-tour 9s linear infinite;}
+@keyframes ech-tour{to{transform:translate(-50%,-50%) rotate(360deg);}}
+@media (prefers-reduced-motion:reduce){
+  .ech-damier .ech-pion.ech-quete::before{animation:none;}}
+/* hors de la chaine allumee, la quete s'estompe comme le reste */
+.ech-damier .ech-en-chaine .ech-pion.ech-quete:not(.ech-aval):not(.ech-vise):not(.ech-amont)::before{
+  opacity:.5;}
+/* ------- l'occlusion : un état cible ne se voit que par les brèches de ses
+   verrous. Une dalle par verrou ; la brèche s'ouvre quand une clef RETENUE est
+   écrite contre ce verrou-là, et pas avant. Un état à un verrou sans clef
+   retenue est muré : le joueur ne doit pas pouvoir se raconter un plan qu'il
+   n'a pas les moyens de formuler. ------- */
+.ech-dalles{position:absolute;inset:0;display:grid;
+  grid-template-columns:repeat(var(--n),1fr);}
+.ech-dalle{background:var(--ech-dalle);border-right:1px solid var(--ech-dalle-bord);
+  background-image:repeating-linear-gradient(112deg,rgba(255,255,255,.05) 0 3px,
+    transparent 3px 7px);}
+.ech-dalle:last-child{border-right:none;}
+.ech-dalle-levee{background:none;background-image:none;border-right-color:transparent;}
+/* muré, entrouvert, ouvert : trois cadres, lisibles sans survol */
+.ech-but-mure .ech-sceau{box-shadow:inset 0 0 0 2px var(--ech-dalle-bord);}
+.ech-but-entrouvert .ech-sceau{
+  box-shadow:inset 0 0 0 2px color-mix(in srgb,currentColor 72%,transparent);}
+.ech-but-ouvert .ech-sceau{box-shadow:inset 0 0 0 3px currentColor;
+  background:color-mix(in srgb,currentColor 34%,transparent);}
+/* les brèches comptées sous l'état : plein = ouverte, creux = pierre */
+.ech-breches{display:flex;align-items:center;gap:2px;height:5px;}
+.ech-breches i{width:5px;height:5px;border-radius:50%;
+  border:1.5px solid currentColor;box-sizing:border-box;opacity:.85;}
+.ech-breches .ech-breche-ouverte{background:currentColor;opacity:1;}
+
+/* ------- les marches : la chaîne du guide, en traits -------
+   CINQ ÉTATS, ET LE ROUGE N'EN EST PLUS QU'UN. Le trait disait « payé /
+   attente / rompu », et rompu tombait sur toute pièce portant la moindre faute
+   — un office cité en clair criait aussi fort qu'une chaîne cassée. Ce qui se
+   lit désormais, et rien d'autre :
+
+     payee    plein — ce rang-là de la chaîne tient, dans la monnaie que le
+              guide lui donne. Ce n'est PAS du vert : une chaîne complète sur le
+              papier n'est pas du travail, et le vert est réservé à ce qu'un
+              homme porte vraiment (voir .ech-porte et .ech-reglette-portee).
+     attente  pointillé gris — écrit et pas porté, ou une ligne qui manque à la
+              plume (une preuve, un « levé quand »). La lampe dit déjà quoi ;
+              le trait n'a pas à s'en alarmer.
+     decision UNE CLEF À ÉTUDIER, et c'est la seule chose du plateau qui soit
+              adressée au joueur. Ni faute ni travail : un tiret long en or, la
+              teinte de ce qu'on veut, pour qu'on la repère sans la confondre.
+     ecartee  clef écartée : une décision prise, pas un trou. Le trait s'efface.
+     saut     TIRETS ROUGES — la remontée est cassée. Il manque une pièce.
+*/
+.ech-liens{position:absolute;left:0;top:0;pointer-events:none;overflow:visible;}
+/* LES MARCHES SONT LA CHARPENTE DU PLAN, et elles étaient des cheveux : 1,2 px
+   à moitié transparents. Elles montent à 2,4 px et à pleine encre, et leurs
+   états se distinguent par le TRAIT autant que par la teinte — plein, pointillé
+   fin, tirets longs — et non par une nuance d'opacité que personne ne perçoit. */
+.ech-lien{fill:none;stroke-width:2.4;opacity:.85;transition:opacity .15s;}
+.ech-lien-payee{stroke:var(--accent);}
+.ech-lien-attente{stroke:var(--muted);stroke-dasharray:2 3.5;stroke-width:2;}
+.ech-lien-decision{stroke:var(--ech-etat);stroke-dasharray:6 3;opacity:1;}
+.ech-lien-ecartee{stroke:var(--muted);stroke-dasharray:1 4;stroke-width:1.6;opacity:.5;}
+.ech-lien-saut{stroke:var(--sang);stroke-dasharray:7 4;opacity:1;stroke-width:2.8;}
+.ech-lien-vif{opacity:1;stroke-width:3.2;}
+.ech-fer-payee{fill:var(--accent);}
+.ech-fer-attente{fill:var(--muted);}
+.ech-fer-decision{fill:var(--ech-etat);}
+.ech-fer-ecartee{fill:var(--muted);opacity:.5;}
+.ech-fer-saut{fill:var(--sang);}
+
+/* ------- LA CHAÎNE CAUSALE, ALLUMÉE AU SURVOL -------
+   Survoler une pièce allume tout ce qui la construit (l'AVAL : ses verrous, les
+   clefs qui les ouvrent, les actions qui les réalisent, les moyens et offices
+   qu'elles citent, et pour un état cible tout le sous-arbre qui le sert) et
+   tout ce à quoi elle sert (l'AMONT, jusqu'à la racine) — c'est l'épreuve
+   REMONTER du guide, rendue au geste.
+
+   Le reste du plateau s'efface. ON NE TOUCHE QUE L'OPACITÉ : pas une mesure ne
+   bouge, donc pas de reflow, et l'on peut traverser le plateau sans que l'écran
+   saute. L'aval est à pleine encre — c'est ce qui porte la pièce ; l'amont est
+   à mi-voix — c'est ce qu'elle porte. */
+.ech-pion,.ech-reglette{transition:opacity .18s;}
+.ech-en-chaine .ech-pion{opacity:.10;}
+.ech-en-chaine .ech-reglette{opacity:.14;}
+.ech-en-chaine .ech-pion.ech-aval,
+.ech-en-chaine .ech-pion.ech-vise{opacity:1;}
+.ech-en-chaine .ech-pion.ech-amont{opacity:.5;}
+.ech-en-chaine .ech-reglette-dans{opacity:1;}
+/* la pièce qu'on tient sous le curseur : un halo, pour la retrouver dans sa
+   propre chaîne sans avoir à chercher le curseur */
+.ech-vise .ech-sceau{box-shadow:inset 0 0 0 2px currentColor,
+  0 0 0 3px color-mix(in srgb,var(--accent) 45%,transparent);}
+/* ce qu'on porte se lit en pointillé : la même pièce, mais de l'autre côté */
+.ech-en-chaine .ech-pion.ech-amont .ech-sceau{border-radius:inherit;
+  box-shadow:inset 0 0 0 1.5px color-mix(in srgb,currentColor 55%,transparent);}
+.ech-en-chaine .ech-lien{opacity:.06;}
+.ech-en-chaine .ech-lien-aval{opacity:1;stroke-width:3.4;}
+.ech-en-chaine .ech-lien-amont{opacity:.42;}
+.ech-en-chaine .ech-branche{border-bottom-color:transparent;}
+.ech-en-chaine .ech-branche-dans{
+  border-bottom-color:color-mix(in srgb,var(--ech-etat) 80%,transparent);}
+
+/* ------- LES TROIS SIGNAUX D'UN JETON -------
+   Ils se posent EN DERNIER et s'ancrent au damier : sans quoi le cadre d'un
+   état muré, écrit plus bas dans ce fichier, les mangeait à égalité de poids —
+   on cliquait un état muré et rien ne changeait à l'écran. */
+/* LE SURVOL : cadre intérieur à pleine encre du rang, et rien autour. Il se
+   pose ici, avec les deux autres signaux, pour gagner sur le cadre d'un état
+   muré — sinon survoler un état muré ne montrait rien du tout. */
+.ech-damier .ech-pion:hover .ech-sceau,
+.ech-damier .ech-pion:focus-visible .ech-sceau{
+  box-shadow:inset 0 0 0 2.5px currentColor;
+  background:color-mix(in srgb,currentColor 38%,transparent);}
+/* LE JETON RETENU : sa bulle est epinglee, et l'on doit voir d'ou elle vient.
+   Anneau PLEIN a l'accent, et il double le cadre du rang au lieu de le
+   remplacer — c'est le troisieme signal du jeton, il doit se distinguer des
+   deux autres. */
+.ech-damier .ech-pion.ech-retenu .ech-sceau{box-shadow:inset 0 0 0 2px currentColor,
+  0 0 0 3px var(--accent);}
+.ech-damier .ech-pion.ech-retenu{outline:none;}
+
+/* ------- LE PROCHAIN PAS -------
+   Une piece que vise un acte est la ou ca debloque. Sur cinquante-quatre
+   jetons, elle doit se trouver SANS etre cherchee : un halo braise, epais,
+   double d'un anneau clair qui le detache du damier — et une pulsation lente,
+   qui attire l'oeil de loin sans clignoter.
+   TROIS SIGNAUX COEXISTENT sur un jeton, et ils ne se confondent pas :
+     prochain pas  halo BRAISE diffus, tout autour, en pulsation
+     survol        cadre interieur a pleine encre du rang, sans halo
+     retenu        anneau ACCENT net, colle au sceau, sans flou
+   Les dalles d'occlusion ne le mangent pas : le halo est porte par le jeton,
+   pas par le sceau, et il deborde. */
+.ech-damier .ech-pion.ech-pas{position:relative;}
+.ech-damier .ech-pion.ech-pas::after{content:"";position:absolute;z-index:0;
+  left:50%;top:calc(50% - 2px);width:min(52px,calc(var(--pas) * 1.16));
+  height:min(52px,calc(var(--pas) * 1.16));transform:translate(-50%,-50%);
+  border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,
+    color-mix(in srgb,var(--braise) 46%,transparent) 0%,
+    color-mix(in srgb,var(--braise) 22%,transparent) 55%,transparent 72%);
+  animation:ech-battement 2.8s ease-in-out infinite;}
+.ech-damier .ech-pion.ech-pas .ech-sceau{position:relative;z-index:1;
+  box-shadow:inset 0 0 0 2px color-mix(in srgb,currentColor 92%,transparent),
+    0 0 0 2.5px color-mix(in srgb,var(--braise) 85%,transparent);}
+.ech-damier .ech-pion.ech-pas.ech-but-mure .ech-sceau,
+.ech-damier .ech-pion.ech-pas.ech-but-entrouvert .ech-sceau{
+  box-shadow:inset 0 0 0 2px var(--ech-dalle-bord),
+    0 0 0 2.5px color-mix(in srgb,var(--braise) 85%,transparent);}
+@keyframes ech-battement{
+  0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(.9);}
+  50%{opacity:1;transform:translate(-50%,-50%) scale(1.08);}}
+/* Un prochain pas HORS de la chaine allumee ne doit pas rester criard : il perd
+   son battement et suit l'estompage general — il reste reperable, il ne tire
+   plus l'oeil. */
+.ech-damier .ech-en-chaine .ech-pion.ech-pas:not(.ech-aval):not(.ech-vise):not(.ech-amont)::after{
+  animation:none;opacity:.6;}
+@media (prefers-reduced-motion:reduce){
+  .ech-damier .ech-pion.ech-pas::after{animation:none;opacity:.9;}}
+
+/* ------- CE DONT ON EST EN TRAIN DE PARLER -------
+   Un renvoi de scene ou un `montre:{pieces}` designe une piece du plan pendant
+   qu'un homme parle. Deux temps, et c'est tout le dispositif :
+     FRANCHEMENT — le jeton bat trois fois a l'accent, la chaine causale est
+     pleine autour de lui. Un joueur qui lit vite ne doit rien rater.
+     PUIS CA SE POSE — la chaine s'eteint, le jeton garde un liseré net. « C'est
+     de celui-la qu'on parlait », et le plateau redevient lisible.
+   Ce liseré est ACCENT et non braise : le prochain pas (braise) est un jugement
+   du plateau sur lui-meme, ceci est ce que la SALLE vient de dire. Deux sources,
+   deux couleurs — un jeton peut porter les deux, et c'est frequent. */
+.ech-damier .ech-pion.ech-designe .ech-sceau{
+  box-shadow:inset 0 0 0 2px currentColor,
+    0 0 0 2px color-mix(in srgb,var(--accent) 80%,transparent);}
+.ech-damier .ech-pion.ech-designe-vif .ech-sceau{
+  box-shadow:inset 0 0 0 2px currentColor,0 0 0 3px var(--accent);
+  animation:ech-designation 850ms ease-out 3;}
+@keyframes ech-designation{
+  0%{box-shadow:inset 0 0 0 2px currentColor,0 0 0 3px var(--accent);}
+  40%{box-shadow:inset 0 0 0 2px currentColor,
+    0 0 0 9px color-mix(in srgb,var(--accent) 8%,transparent);}
+  100%{box-shadow:inset 0 0 0 2px currentColor,0 0 0 3px var(--accent);}}
+@media (prefers-reduced-motion:reduce){
+  .ech-damier .ech-pion.ech-designe-vif .ech-sceau{animation:none;}}
+
+
+/* ------- l'encart : LE SEUL TEXTE DU DISPOSITIF -------
+   Le plateau est muet par construction : pas un mot sur les cases. Tout ce qui
+   s'écrit s'écrit ici, et cet encart mérite donc une vraie typographie — pas un
+   reste d'infobulle à 250 px avec la même graisse partout.
+
+   CINQ NIVEAUX, du plus discret au plus fort :
+     1. l'amont, en tête, à mi-voix          11 px
+     2. le nom de la pièce, un vrai titre    19 px, 600
+     3. la description, taille de lecture    14,5 px / 1,6 — ~50 signes par ligne
+     4. la conclusion et les missions        14 px, 500 — les deux phrases pour
+        lesquelles la bulle existe : elles doivent attraper l'œil avant la liste
+     5. les maillons, denses                 12 px / 1,35 — de la vérification,
+        pas de la lecture
+
+   LES SIGNES TIENNENT DEVANT LEUR NOM, sur la même ligne de base. C'est une
+   mise en page INLINE et non un flex : un conteneur flex blockifie ses enfants,
+   l'emoji tombe alors sur sa propre ligne dès qu'on relève le texte, et la
+   bulle se lit en escalier. Le seul endroit où l'on garde une largeur imposée
+   est le portrait d'un teneur, calé sur la ligne de base par vertical-align.
+
+   ON RESPIRE : des blancs entre les cinq blocs plutôt que des filets partout.
+   Un seul trait, avant les maillons, parce que là on change de nature de texte. */
+/* PLUS DE DÉFILEMENT : une bulle ne se fait pas défiler. Quand le contenu
+   excède la place, c'est le CONTENU qui rétrécit — `montrer()` fait baisser
+   cette taille de base, dont tout le reste dépend en `em`, jusqu'à ce que ça
+   tienne ; sous le plancher de lisibilité, ce sont les maillons qui cèdent, et
+   jamais la tête, la conclusion ou la mission. `overflow:hidden` n'est là que
+   comme garde-fou : si une barre devait paraître, c'est que le calcul a raté. */
+.ech-encart{position:fixed;z-index:90;width:380px;max-width:calc(100vw - 24px);
+  overflow:hidden;box-sizing:border-box;padding:15px 18px 13px;
+  background:var(--fond);border:1px solid var(--bord);
+  border-left:3px solid var(--accent);border-radius:5px;
+  box-shadow:0 10px 28px rgba(0,0,0,.35);
+  font-size:14.5px;line-height:1.6;color:var(--ink);}
+/* RETENUE, ET ÇA SE VOIT. Une bulle épinglée qui a l'air d'une bulle de survol
+   est une bulle qu'on croit cassée : filet épais, halo, et la sortie écrite. */
+.ech-encart.ech-epingle{border-left-width:7px;border-color:var(--accent);
+  box-shadow:0 0 0 1px var(--accent),0 16px 36px rgba(0,0,0,.45);}
+.ech-encart.ech-epingle::before{content:"retenu — Échap ou clic à vide pour lâcher";
+  display:block;margin:-3px 0 9px;font-size:.69em;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--accent);opacity:.85;}
+.ech-e-etat{border-left-color:var(--ech-etat);}
+.ech-e-verrou{border-left-color:var(--ech-verrou);}
+.ech-e-clef{border-left-color:var(--ech-clef);}
+.ech-e-action{border-left-color:var(--ech-action);}
+.ech-e-moyen{border-left-color:var(--ech-moyen);}
+.ech-e-office{border-left-color:var(--ech-office);}
+
+/* 1. L'AMONT — ce à quoi la pièce sert, du plus proche à la racine. Le plus
+   petit de la bulle : c'est un rappel, pas une lecture. Le sélecteur vise les
+   spans DIRECTS, sans quoi la flèche se posait aussi devant chaque emoji. */
+.ech-e-amont{font-size:.74em;line-height:1.55;
+  color:color-mix(in srgb,var(--muted) 70%,var(--ink));opacity:.9;
+  margin-bottom:9px;}
+.ech-e-amont > span{white-space:nowrap;}
+.ech-e-amont > span::before{content:"↑ ";opacity:.55;}
+.ech-e-amont .ech-icone{font-size:.76em;margin-right:3px;vertical-align:-1px;}
+.ech-e-amont i{font-style:normal;}
+
+/* 2. LE NOM — un vrai titre, son signe devant, sur la ligne de base. */
+.ech-e-tete{display:block;}
+.ech-e-tete .ech-icone{font-size:1.52em;margin-right:8px;vertical-align:-3px;}
+.ech-e-tete b{font-size:1.45em;font-weight:600;line-height:1.28;letter-spacing:-.005em;}
+.ech-e-affaire .ech-e-tete .ech-icone{font-size:1.66em;vertical-align:-4px;}
+.ech-e-affaire{border-left-color:var(--accent);}
+/* qui tient l'action : sous le titre, jamais une ligne de plus à chercher */
+.ech-e-teneur{display:block;font-style:normal;font-weight:400;font-size:.86em;
+  color:color-mix(in srgb,var(--muted) 55%,var(--ink));margin-top:2px;}
+.ech-e-teneur::before{content:"— ";}
+/* UN VISAGE DANS LA BULLE EST UNE VIGNETTE, jamais une image de fond. Le
+   portrait d'un teneur est dessiné pour le jeton — `position:absolute;inset:0`,
+   il remplit sa case. Posé dans une ligne de la bulle qui n'avait pas sa règle
+   de taille (l'amont, l'aval), il remplissait l'encart entier et recouvrait le
+   texte. Cette règle est le défaut ; les deux qui suivent l'affinent. */
+.ech-encart .ech-visage{position:static;display:inline-block;width:15px;height:15px;
+  margin-right:6px;vertical-align:-3px;border-radius:50%;overflow:hidden;
+  flex:0 0 auto;}
+.ech-e-tete .ech-visage{position:static;display:inline-block;width:24px;height:24px;
+  margin-right:8px;vertical-align:-6px;border-radius:50%;overflow:hidden;}
+.ech-e-numero{float:right;margin-left:8px;font-size:.76em;letter-spacing:.11em;
+  color:var(--muted);font-variant-numeric:tabular-nums;line-height:2.1;}
+
+/* 3. LA DESCRIPTION — le corps du texte, la taille qu'on lit sans se pencher. */
+.ech-e-dit{margin:7px 0 0;font-size:1em;line-height:1.6;color:var(--ink);}
+/* LE DERNIER RECOURS. Quand même au plancher de taille et sans un maillon la
+   bulle sortirait de l'écran — une description de dix-sept cents signes —, on
+   coupe le corps du texte aux lignes, avec ses points de suite. Le volume est à
+   un clic ; une bulle qui déborde de la fenêtre, elle, ne se lit pas du tout. */
+.ech-e-serre .ech-e-dit{display:-webkit-box;-webkit-box-orient:vertical;
+  -webkit-line-clamp:var(--ech-lignes,8);overflow:hidden;}
+
+/* 4. L'EMPHASE — la conclusion, puis les missions. Les deux phrases pour
+   lesquelles la bulle existe : elles passent AVANT la liste des maillons, et
+   elles la battent en graisse. */
+.ech-e-verdict{margin-top:12px;font-size:1.07em;line-height:1.5;font-weight:600;
+  color:var(--sang);}
+.ech-e-verdict .ech-e-cite,.ech-e-mission .ech-e-cite{white-space:nowrap;}
+/* Une pièce citée qui a son jeton sur le plateau MÈNE à lui. Le pointillé sous
+   le nom est la seule marque : on ne colore pas, sinon les quatre espèces de
+   pièces perdraient leur signe distinctif au profit d'un bleu de lien. */
+.ech-e-cite.ech-e-vers{cursor:pointer;text-decoration:underline dotted currentColor 1px;
+  text-underline-offset:3px;}
+.ech-e-cite.ech-e-vers:hover,.ech-e-cite.ech-e-vers:focus-visible{
+  text-decoration-style:solid;color:var(--ink);outline:none;}
+.ech-e-verdict .ech-icone,.ech-e-mission .ech-icone{font-size:.9em;
+  margin:0 3px 0 2px;vertical-align:-2px;}
+.ech-e-verdict i,.ech-e-mission i{font-style:italic;}
+.ech-v-tient{color:var(--vert);}
+/* elle tient, mais personne n'en répond : la phrase doit dire ce que le fanion
+   dit déjà, sans quoi le joueur lit un drapeau rouge sous un verdict serein */
+.ech-v-sans-office{color:var(--muted);}
+/* UNE CLEF QU'ON N'A PAS TRANCHÉE N'EST PAS UNE FAUTE — c'est la même règle que
+   sur le jeton et sur la marche, et le verdict de la bulle était le dernier
+   endroit à l'ignorer : sur la Prise de Port-Réal, 19 bulles sur 32 disaient en
+   ROUGE « sa clef n'est qu'à l'étude », c'est-à-dire « une décision vous
+   attend ». C'est justement ce qu'on est venu voir, pas ce qui casse. Il prend
+   donc l'OR, comme la marche à trancher (.ech-e-marche-decision) ; et une clef
+   ÉCARTÉE est une décision PRISE — elle s'efface au lieu d'alerter. */
+.ech-v-a-l-etude,.ech-v-pas-tranchee{color:color-mix(in srgb,var(--ech-etat) 70%,var(--ink));}
+.ech-v-ecartee{color:var(--muted);font-style:italic;}
+
+/* LES MISSIONS — ce qu'il y aurait à faire. Une flèche, une phrase, et la
+   famille du porteur dans le filet de gauche : À LA REINE en braise (sa parole,
+   rien à dépenser), AU CONSEIL en vert de travail (du monde à aller chercher).
+   Deux au plus, puis « et N autres » : neuf lignes seraient un mur. */
+.ech-e-missions{margin-top:9px;}
+.ech-e-mission{position:relative;font-size:1.07em;line-height:1.5;font-weight:600;
+  color:var(--ink);padding:3px 0 3px 15px;margin-bottom:3px;
+  border-left:3px solid var(--bord);}
+.ech-e-mission::before{content:"\2192";position:absolute;left:5px;top:3px;
+  font-size:.95em;opacity:.8;}
+.ech-e-mission-reine{border-left-color:var(--braise);}
+.ech-e-mission-reine::before{color:var(--braise);}
+.ech-e-mission-conseil{border-left-color:var(--vert);}
+.ech-e-mission-conseil::before{color:var(--vert);}
+/* UNE DEPECHE N'EST PAS UNE LIGNE A ECRIRE. Meme partage que sur le plateau :
+   la fleche des missions de registre cede la place au cor, le filet passe au
+   tirete — on ne sait pas encore ce qu'on va trouver —, et la ligne se detache
+   du lot. C'est la seule mission du dispositif qui reclame un HOMME. */
+.ech-e-mission.ech-e-depeche{border-left-style:dashed;
+  border-left-color:var(--pensee);}
+.ech-e-mission.ech-e-depeche::before{content:"\1F4EF";color:var(--pensee);
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+  font-size:.82em;top:4px;}
+.ech-e-missions .ech-e-reste{padding-left:15px;}
+
+/* 4bis. LES VOISINES — à qui cette affaire tient. Hors du damier, dans le
+   bandeau, à côté du titre et de la tirette : c'est une information sur
+   L'AFFAIRE, pas sur une pièce, et elle n'a rien à faire sur les cases.
+   PREMIÈRE VERSION ÉCARTÉE : un chevron par pièce et par sens, posé sur le
+   jeton. Le damier porte déjà six teintes de rang, des dalles d'occlusion, des
+   lampes, des fanions, des visages et cent traits de chaîne — un signe de plus
+   n'ajoutait pas de la lecture, il en retirait. Et il poussait à remonter la
+   chaîne causale d'affaire en affaire, ce que personne ne fait à cette échelle.
+   Ici : des emblèmes, muets, cliquables. Le nom et le compte au survol. */
+.ech-voisines{display:flex;align-items:center;gap:4px;margin-left:10px;
+  padding-left:10px;border-left:1px solid var(--bord);}
+.ech-voisine{display:grid;place-items:center;width:26px;height:26px;padding:0;
+  border:1px solid transparent;border-radius:7px;background:none;cursor:pointer;
+  opacity:.62;transition:opacity .12s,border-color .12s,background .12s;}
+.ech-voisine .ech-icone{font-size:15px;}
+.ech-voisine:hover,.ech-voisine:focus-visible{outline:none;opacity:1;
+  border-color:var(--bord);background:color-mix(in srgb,var(--ink) 6%,transparent);}
+.ech-voisines-reste{font-size:.76em;letter-spacing:.04em;opacity:.6;
+  padding-left:2px;cursor:default;}
+
+/* 5. LES MAILLONS — denses, en colonne, signes en tête. De la vérification. */
+.ech-e-chaine{margin-top:11px;padding-top:9px;border-top:1px solid var(--bord);}
+.ech-e-maillon{display:block;font-size:.8em;line-height:1.35;
+  color:color-mix(in srgb,var(--muted) 55%,var(--ink));
+  padding:2px 0 2px 7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ech-e-maillon .ech-icone{font-size:.83em;margin-right:6px;vertical-align:-1px;}
+.ech-e-maillon span{white-space:nowrap;}
+/* chaque maillon porte la teinte de son rang, comme son jeton sur le plateau */
+.ech-m-etat{border-left:3px solid var(--ech-etat);}
+.ech-m-verrou{border-left:3px solid var(--ech-verrou);}
+.ech-m-clef{border-left:3px solid var(--ech-clef);}
+.ech-m-action{border-left:3px solid var(--ech-action);}
+.ech-m-moyen{border-left:3px solid var(--ech-moyen);}
+.ech-m-office{border-left:3px solid var(--ech-office);}
+.ech-e-maillon .ech-visage{position:static;display:inline-block;width:15px;height:15px;
+  margin-right:6px;vertical-align:-3px;border-radius:50%;overflow:hidden;}
+.ech-e-reste{font-size:.79em;font-style:italic;
+  color:color-mix(in srgb,var(--muted) 70%,var(--ink));opacity:.9;
+  padding:2px 0 3px 9px;}
+
+/* le détail de la pièce retenue : une ligne par chose, même famille de gris */
+.ech-e-ligne,.ech-e-part,.ech-e-pierre,.ech-e-marche,.ech-e-mal,.ech-e-note{
+  font-size:.86em;color:color-mix(in srgb,var(--muted) 55%,var(--ink));
+  line-height:1.5;margin-top:5px;}
+.ech-e-italique,.ech-e-part{font-style:italic;}
+/* le sang pour ce qui CASSE ; une note grise pour ce qui est seulement mal
+   tenu — une preuve non écrite, un office cité par son nom. Les deux se
+   disaient de la même encre, et la seconde est vingt fois plus fréquente. */
+.ech-e-mal{color:var(--sang);}
+.ech-e-note{font-style:italic;opacity:.85;}
+.ech-e-note::before{content:"— ";}
+/* portée / écrite : la question du plateau, dite en toutes lettres */
+.ech-e-portee{color:color-mix(in srgb,var(--vert) 62%,var(--ink));}
+.ech-e-portee::before{content:"\25CF  ";color:var(--vert);}
+.ech-e-ecrite::before{content:"\25CB  ";color:var(--muted);}
+.ech-e-pierre::before{content:"";display:inline-block;width:6px;height:6px;
+  margin-right:6px;border:1px solid var(--ech-verrou);box-sizing:border-box;
+  background:var(--ech-verrou);}
+.ech-e-breche::before{background:none;border-color:var(--vert);}
+/* la marche, dans la bulle : les mêmes cinq états qu'au trait du plateau */
+.ech-e-marche::before{content:"▲ ";color:var(--accent);}
+.ech-e-marche-attente{opacity:.75;}
+.ech-e-marche-attente::before{content:"△ ";color:var(--muted);}
+.ech-e-marche-decision{color:color-mix(in srgb,var(--ech-etat) 70%,var(--ink));}
+.ech-e-marche-decision::before{content:"◇ ";color:var(--ech-etat);}
+.ech-e-marche-ecartee{opacity:.6;font-style:italic;}
+.ech-e-marche-ecartee::before{content:"× ";color:var(--muted);}
+.ech-e-marche-saut{color:var(--sang);font-style:italic;}
+.ech-e-marche-saut::before{color:var(--sang);}
+
+/* LE CHEMIN VERS LES LIVRES : un renvoi qu'on voit, sous l'emblème de
+   l'affaire. Le clic sur le jeton retient désormais la bulle ; ce bouton est ce
+   qui reste du clic muet d'avant, et il vaut mieux — on découvrait l'ancien par
+   hasard, en cliquant sur un jeton pour une tout autre raison. */
+.ech-e-pied{margin-top:12px;padding-top:10px;border-top:1px solid var(--bord);}
+.ech-e-ouvrir{display:inline-flex;align-items:center;gap:8px;max-width:100%;
+  padding:7px 12px;font:inherit;font-size:.86em;line-height:1.3;text-align:left;
+  color:var(--ink);background:var(--btn);border:1px solid var(--bord);
+  border-radius:4px;cursor:pointer;}
+.ech-e-ouvrir:hover{background:var(--btn-hover);border-color:var(--accent);}
+.ech-e-ouvrir .ech-icone{font-size:1.3em;flex:0 0 auto;}
+.ech-e-ouvrir span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+/* ------- LES IDÉES DANS « LES SUJETS » -------
+   Le coffret des affaires peut montrer, sous chaque volume et en retrait, la
+   mission de tête que l'échiquier calcule. C'est la même chose vue d'ailleurs :
+   elle doit donc se reconnaître — la lampe du plateau, et le filet de la
+   famille du porteur (braise pour la reine, vert pour le conseil). Une ligne
+   par affaire, jamais deux. */
+.book-coffret-outils{display:flex;align-items:center;gap:8px;
+  margin:0 0 6px;padding:0 2px;}
+.book-idees-bouton{display:inline-flex;align-items:center;gap:6px;
+  padding:4px 10px;font:inherit;font-size:.8em;line-height:1.2;
+  color:var(--muted);background:var(--btn);border:1px solid var(--bord);
+  border-radius:999px;cursor:pointer;}
+.book-idees-bouton:hover{background:var(--btn-hover);color:var(--ink);}
+.book-idees-bouton.allume{color:var(--ink);border-color:var(--accent);
+  background:var(--btn-hover);}
+.book-idees-lampe{font-size:12px;line-height:1;filter:grayscale(1);opacity:.55;
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;}
+.book-idees-bouton.allume .book-idees-lampe{filter:none;opacity:1;}
+
+.book-coffret-idee > td{padding:0 8px 7px 34px;border:none;}
+.book-idee{position:relative;padding:5px 10px 5px 12px;
+  font-size:.78em;line-height:1.5;color:var(--muted);
+  border-left:2px solid var(--bord);background:var(--paper);border-radius:0 3px 3px 0;}
+.book-idee-reine{border-left-color:var(--braise);}
+.book-idee-conseil{border-left-color:var(--vert);}
+.book-idee-lampe{margin-right:6px;font-size:11px;
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;}
+.book-idee-cite{white-space:nowrap;color:var(--ink);}
+.book-idee-signe{margin-right:3px;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;}
+.book-idee-cite i{font-style:italic;}

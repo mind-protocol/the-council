@@ -104,6 +104,9 @@ window.Bus = (() => {
     const trouve = m && HEURES.find(([re]) => re.test(m));
     const signe = (typeof min === "number") ? signeDeLHeure(min) : (trouve ? trouve[1] : "🕰");
     const texte = m ? signe + " " + m : "";
+    // La même minute teinte la page — voir modules/lumiere.js. Elle ne passe
+    // que par ici : une seule heure, une seule source.
+    if (window.Lumiere) Lumiere.poser(min);
     // Deux endroits pour la même heure : le bandeau de la scène, et la barre
     // du joueur — là où il écrit, il doit voir quand il parle.
     [$("heure"), $("heure-barre")].forEach((h) => {
@@ -180,9 +183,21 @@ window.Bus = (() => {
   // jouer pendant que le monde prend acte. Seul le bouton Couper arrête le flux.
   function poster(action){
     const bp3=$("pause"); if(bp3) bp3.classList.toggle("actif", file.length > 0);
-    $("attente").classList.add("actif");
+    attendre(true);
     envoyer(action);
   }
+
+  // Les trois points de l'attente. Ils ne s'éteignent PAS à l'arrivée des items
+  // dans la file — ils s'éteignent quand le monde parle à l'écran. Deux items
+  // ne comptent pas pour une réponse : l'écho de la phrase du joueur, que le
+  // serveur réinscrit au flux, et sa reformulation (`reecrit`). Les laisser
+  // compter revenait à éteindre l'attente deux secondes après l'avoir allumée,
+  // c'est-à-dire toujours avant que le MJ ait dit un mot.
+  function attendre(oui){
+    const el = $("attente");
+    if(el) el.classList.toggle("actif", !!oui);
+  }
+  const PAS_UNE_REPONSE = { vous:1, reecrit:1 };
 
   // Le bouton Couper : on jette ce qui restait et on fait taire la voix.
   function couper(){
@@ -321,6 +336,8 @@ window.Bus = (() => {
       instantCourant = false;
       return;
     }
+    // Le monde vient de parler à l'écran : l'attente n'a plus lieu d'être.
+    if(!PAS_UNE_REPONSE[it.type]) attendre(false);
     // Un changement de scène vide l'écran : le repère suivant repose le décor
     // en entier plutôt que d'annoncer un écoulement depuis un fil effacé.
     if(it.type === "effacer"){ dernierRepere = ""; derniereMinute = null; dernierLieu = ""; }
@@ -335,7 +352,10 @@ window.Bus = (() => {
     }
     // `salle` nomme la salle du plan local (plan.js) quand l'en-tête ne suffit
     // pas à la deviner ; elle vaut jusqu'au prochain changement de lieu.
-    if(it.lieu){ $("lieu").textContent = it.lieu; delete $("lieu").dataset.salle; }
+    // Le lieu se coupe désormais s'il est long : le bandeau partage sa ligne
+    // avec les boutons d'envoi. Le titre garde l'en-tête entier sous la souris.
+    if(it.lieu){ $("lieu").textContent = it.lieu; $("lieu").title = it.lieu;
+      delete $("lieu").dataset.salle; }
     if(it.salle) $("lieu").dataset.salle = it.salle;
     // L'heure exacte prime : elle vient de `date.minute`, tenue par
     // append_flux.py. `moment` reste accepté comme libellé quand on veut
@@ -344,7 +364,10 @@ window.Bus = (() => {
       poserHeure(montre(it.date.minute) + (it.moment ? " · " + it.moment : ""), it.date.minute);
     } else if(it.moment) poserHeure(it.moment);
     if(it.date || it.lieu || it.moment) reperes(it);
-    if(typeof it.tension === "number") document.querySelector("#jauge i").style.width = it.tension + "%";
+    // la jauge de tension a quitté le bandeau (deux flèches de nav à sa place) :
+    // `tension` reste porté par les items, il ne se peint simplement plus.
+    const jauge = document.querySelector("#jauge i");
+    if(jauge && typeof it.tension === "number") jauge.style.width = it.tension + "%";
     const fn = rendus[it.type];
     instantCourant = !!instant;
     if(fn) fn(it, {preparer, poster, envoyer, instant});
@@ -455,7 +478,6 @@ window.Bus = (() => {
       if(total > consommes){
         const nouveaux = items.slice(consommes - debut);
         consommes = total;
-        $("attente").classList.remove("actif");
         // Au rejeu de l'historique, l'ordre du fichier fait foi : on ne trie
         // rien, sinon toutes les paroles du joueur remonteraient en tête.
         if(chargeInitiale){ file = file.concat(nouveaux); }
@@ -517,12 +539,32 @@ window.Bus = (() => {
         d.classList.add("neuf");
       }
     }
+    // MÊME ÉLÉMENT QUE DANS LA SALLE, et non plus seulement la même idée :
+    // c'est `visage.js` qui dessine le portrait, son anneau d'office et
+    // l'emblème de l'angle, ici comme dans la colonne des présents. Tant que
+    // les deux se ressemblaient sans partager de code, le fil a gardé le fond
+    // noir et le contour gris pendant que la salle avait déjà l'anneau de
+    // couleur — le même homme, deux visages, à trente centimètres l'un de
+    // l'autre.
+    //
+    // Une entrée sans portrait (récit, brève, événement) n'a ni office ni
+    // anneau à porter : son blason passe en `corps`, et le visage se rend nu.
+    //
+    // ON N'ENVELOPPE QUE CE QUI EXISTE. Une entrée peut n'avoir ni portrait ni
+    // blason — et l'envelopper quand même donnait un rond gris vide de soixante-
+    // dix pixels en tête de ligne, avec sa teinte et tout : un homme sans
+    // visage là où il n'y avait personne.
+    const dedans = !window.Visage || !(o.avatar || blason)
+      ? (o.avatar || blason)
+      : Visage.html({ nom: qui, titre: o.role, portrait_svg: o.avatar },
+                    o.avatar ? {} : { corps: blason });
     d.innerHTML =
-      '<span class="chr-icone">' + (o.avatar || blason) + "</span>" +
+      '<span class="chr-icone"' + (o.role ? ' title="' + o.role + '"' : "") + ">" +
+      dedans + "</span>" +
       '<div class="chr-corps">' +
       (qui ? '<span class="chr-qui">' + qui +
-        (o.role ? '<span class="chr-role"><i class="emb">' + embleme(o.role) + "</i>" +
-          o.role + "</span>" : "") + "</span>" : "") +
+        (o.role && !o.avatar ? '<span class="chr-role"><i class="emb">' +
+          embleme(o.role) + "</i>" + o.role + "</span>" : "") + "</span>" : "") +
       '<span class="chr-texte">' +
       (window.Attention ? Attention.html(texte, {}) : texte) + "</span></div>";
     // au rejeu de l'historique, rien ne s'anime : tout est déjà arrivé.

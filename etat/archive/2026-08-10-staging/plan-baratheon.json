@@ -1,0 +1,245 @@
+{
+ "id": "baratheon",
+ "maison_id": "maison-baratheon",
+ "camp": "neutre",
+ "titre": "Deux noms sur la table",
+ "plage": "76000-76999",
+ "ouverture": {
+  "ce_que_ce_plan_rend_vrai": "Accalmie se vend une seule fois, au plus offrant, et le prix n'est pas de l'or : c'est un nom de prince pour une des quatre filles. Tant que personne ne l'écrit, Borros Baratheon ne répond à rien — et il a raison de ne pas répondre.",
+  "leurs_piliers": [
+   "que le compte des lances soit vrai avant qu'on le dise",
+   "qu'on ne réponde à personne avant d'avoir été nommé",
+   "que rien ne sorte d'Accalmie qui n'ait été écrit"
+  ],
+  "ce_qu_ils_livrent": "Trois mille lances sous les murs en douze jours, huit mille s'il vide les Terres de l'Orage — et la route de l'orage, sans laquelle aucun des deux camps ne gagne.",
+  "ce_qu_ils_demandent": "Deux noms écrits : laquelle de ses quatre filles, et le prince qu'on lui donne. Rien d'autre n'a cours ici — ni or, ni serment, ni rappel de ce que son père a fait.",
+  "ce_qu_ils_ne_garantissent_pas": "Qu'il attende au-delà du jour où le compte sera arrêté. Après, il devra choisir devant des hommes rassemblés — le coût est écrit dans sa propre étape.",
+  "ferme_quand": "Le jour où deux noms sont posés et acceptés : il ne se donne qu'une fois. Ou le jour où les deux camps se sont tus une lune entière, et alors il va chercher son prix à Port-Réal lui-même.",
+  "ce_qu_on_en_sait_de_source": "Têtes de borros-baratheon, cassandra-baratheon, maris-baratheon et mestre-hallis (toutes maj 129.3.28, lot etat/staging/ouvrir-baratheon.json appliqué) ; maisons.json (maison-baratheon : or 90000, revenus_lune 4000, levees_dispo 3000, levees_max 8000, suzerain_id null) ; canons mort-lucerys (a-venir, 129.4.9, quatre conditions) et emissaire-lucerys (devie, ce qui reste vrai) ; plis.json (pli-vol-rhaenyra-sombreval-14-borros-baratheon, remis) ; plan hightower 71012 et 71024."
+ },
+ "etats_cibles": [
+  {
+   "id": "76000",
+   "quoi": "Trois mille lances arrêtées PAR ÉCRIT sous les murs d'Accalmie",
+   "vrai_quand": "Le compte est arrêté banneret par banneret sur les rôles, et le chiffre a été vrai avant d'être dit à quiconque.",
+   "echeance": {"annee": 129, "lune": 4, "jour": 9},
+   "source": "étape borros-rassembler-lances (12 jours restants, tête maj 129.3.27) et étape hallis-arreter-le-compte-des-lances (11 jours restants, tête maj 129.3.28) — deux horloges écrites séparément qui tombent le même jour",
+   "sert": ["76100", "76300"]
+  },
+  {
+   "id": "76100",
+   "quoi": "Deux noms posés sur sa table — une de ses quatre filles, et le prince qu'on lui donne",
+   "vrai_quand": "Un camp a écrit les deux noms, et le mestre les a lus tout haut dans la grande salle.",
+   "echeance": null,
+   "source": "intention de borros-baratheon en toutes lettres, et emissaire-lucerys (statut devie) : « ce qui reste vrai et ne dépend pas d'elle »",
+   "sert": ["76200"]
+  },
+  {
+   "id": "76200",
+   "quoi": "Une réponse ÉCRITE d'Accalmie, portée au nord par un cavalier",
+   "vrai_quand": "La page préparée sans nom de camp a reçu ses deux noms, le sceau du cerf, et un homme en selle — neuf jours de route.",
+   "echeance": null,
+   "source": "étape hallis-la-reponse-par-ecrit (6 jours restants au 129.3.28) — et c'est la quatrième condition de déviation de mort-lucerys : « dévié si Borros a déjà donné sa réponse par écrit avant l'arrivée de l'émissaire »",
+   "sert": ["76300"]
+  },
+  {
+   "id": "76300",
+   "quoi": "Accalmie payée sans avoir combattu",
+   "vrai_quand": "Ou bien un mariage est conclu, ou bien — les deux camps s'étant tus une lune — le mestre est parti à Port-Réal réclamer une place au conseil du roi, et l'on dit dans la salle qu'il l'a obtenue.",
+   "echeance": null,
+   "source": "si_bloque de l'étape borros-attendre-offres, écrit à froid",
+   "sert": []
+  }
+ ],
+ "verrous": [
+  {
+   "id": "76001",
+   "quoi": "Le compte n'est pas encore vrai, et le seigneur le répète déjà partout",
+   "bloque": ["76000", "76100"],
+   "vrai_aujourdhui": "Trois mille est le compte du mestre, fait sur les rôles ; lord Borros le répète sans l'avoir vérifié une seule fois. Si les bannerets traînent, Hallis écrira sur DEUX COLONNES SÉPARÉES le chiffre qu'il a et le chiffre qu'on lui a promis, et il ne les additionnera pas.",
+   "source": "croyance n°2 et si_bloque de hallis-arreter-le-compte-des-lances",
+   "leve_quand": "Le compte est arrêté par écrit, banneret par banneret — le 129.4.9.",
+   "portee_pour_nous": "on peut le savoir",
+   "route_de_fuite": {
+    "canal": "barque",
+    "par": "deux patrons de coque venus de la côte de l'orage, au bureau de port, à rulf-corne et aldon-hask",
+    "arrive": {"annee": 129, "lune": 4, "jour": 7},
+    "jours": 7,
+    "fiabilite": 50,
+    "deforme_comment": "On voit des feux de camp par centaines dans la lande et les chemins pleins de cavaliers, mais personne ne sait pour qui l'on rassemble, et l'un jure n'avoir vu planter d'autre bannière que le cerf. Le joueur voit l'ost se former sans savoir à qui il ira — ce qui est exactement l'état de la question. Aucun chiffre ne remonte : jamais trois mille, jamais huit mille.",
+    "source": "diffusion ajoutée par ouvrir-baratheon.json sur vol-rhaenyra-sombreval, ou → peyredragon, 129.4.7"
+   }
+  },
+  {
+   "id": "76002",
+   "quoi": "Peyredragon n'a plus un seul corbeau pour Accalmie",
+   "bloque": ["76100", "76200"],
+   "vrai_aujourdhui": "L'oiseau qui en venait a servi le vingt-et-unième et ne reviendra pas. Toute parole de la reine exige désormais un cavalier de NEUF JOURS, une coque, ou un dragon. Borros attend une réponse par une voie qui n'existe plus, et prendra chaque jour de silence pour du mépris. Un départ le 129.3.29 arrive le 129.4.7 : DEUX JOURS de marge sur le 129.4.9.",
+   "source": "ignore neuf de borros-baratheon + croyance n°3 et si_bloque de mestre-hallis + info-021 (quatorze adresses) + acte-aurore-trois-lettres-parties (129.3.21) + cahier de la reine, books.json : « Sept dépensées en une matinée. Aucune vers le Val, le Nord, ni Accalmie une seconde fois »",
+   "leve_quand": "Un homme part. Il n'y a pas d'autre levée : ce verrou ne s'ouvre pas, il se traverse à cheval, et la porte se ferme le 129.3.30 au soir.",
+   "portee_pour_nous": "on peut agir dessus",
+   "route_de_fuite": {
+    "canal": "déjà su",
+    "par": "notre propre registre de roukerie — mestre Gerardys, et le cahier de la reine dans books.json qui l'écrit noir sur blanc",
+    "arrive": {"annee": 129, "lune": 3, "jour": 28},
+    "jours": 0,
+    "fiabilite": 100,
+    "deforme_comment": "Aucune déformation — c'est le seul verrou de ce plan dont le fait soit CHEZ NOUS. Il est écrit dans notre cahier et personne ne l'a encore compté en jours de route : ce n'est pas une nouvelle qui doit arriver, c'est une soustraction que personne n'a faite.",
+    "source": "books.json, la ligne LES CORBEAUX ; et la ligne des affaires en attente « Accalmie : neuf jours de silence, Otto y est depuis le 17e — La reine — SANS DATE »"
+   }
+  },
+  {
+   "id": "76003",
+   "quoi": "Otto Hightower loge sous son toit depuis le dix-septième et n'a toujours pas écrit un nom",
+   "bloque": ["76100"],
+   "vrai_aujourdhui": "Onze jours de vin bu sans qu'un nom soit posé. Borros en tire une conclusion qui le durcit contre les Verts autant que contre nous : « celui qui est là depuis onze jours n'a rien de plus à offrir qu'il n'ait déjà offert ». La clef 71012 du plan hightower porte échéance 129.4.9 et son prix est écrit : « l'exclusivité — Borros ne se donne qu'une fois ».",
+   "source": "croyance n°3 de borros-baratheon (maj 129.3.28) + croyances n°1 et 2 de maris-baratheon + info-037 (« la sommation d'Otto y est arrivée le 17 sous le sceau d'Aegon ») + clef 71012 et action 71024 du plan hightower",
+   "leve_quand": "Otto écrit le nom d'Aemond en face de celui d'une des quatre filles. À Accalmie, personne n'a encore entendu ce nom prononcé.",
+   "portee_pour_nous": "on peut le savoir",
+   "route_de_fuite": {
+    "canal": "barque",
+    "par": "la Ver Blanc, contre paiement, à Mysaria",
+    "arrive": {"annee": 129, "lune": 4, "jour": 5},
+    "jours": 4,
+    "fiabilite": 80,
+    "deforme_comment": "Trois lignes achetées, sèches et justes : Otto est là depuis le dix-septième et n'a pas de réponse, on y attend un nom et ce n'est pas un nom de bataille. En marge, d'une autre main : quatre filles, pas un fils, l'aînée s'appelle Cassandra. Ce que la nouvelle NE dit pas, c'est le nom d'Aemond — la Ver Blanc ne l'a pas, parce qu'Accalmie ne l'a pas.",
+    "source": "diffusion ajoutée par ouvrir-baratheon.json sur vol-rhaenyra-sombreval, ou → peyredragon, 129.4.5 ; canal déjà établi (diffusions du 129.3.24 et du 129.3.26)"
+   }
+  },
+  {
+   "id": "76004",
+   "quoi": "La reine n'a pas de prince à donner",
+   "bloque": ["76100", "76200"],
+   "vrai_aujourdhui": "Jacaerys est promis à Baela, Lucerys à Rhaena, Joffrey a six ans. L'état cible de Borros est hors d'atteinte de la parole de la reine — non parce qu'elle refuserait de parler, mais parce qu'elle n'a rien à dire. Le déclencheur de Cassandra est armé exactement là-dessus : si la réponse est qu'il n'y a pas de prince à donner, elle le fait RÉPÉTER, devant les gens de lord Otto.",
+   "source": "personnages.json (les fiançailles) + déclencheur et attitude_joueur de cassandra-baratheon + intention de borros-baratheon + le cahier de la reine, books.json : « Accalmie. Borros Baratheon se paie d'un nom — il a quatre filles — et un mariage ne m'appartient pas. À la reine. »",
+   "leve_quand": "La reine rompt une fiançaille et le paie chez Velaryon, ou invente une monnaie qui n'est pas un prince — une charge, une place au conseil, une terre, un dragon montré. Rien d'autre.",
+   "portee_pour_nous": "seule la parole du souverain",
+   "route_de_fuite": {
+    "canal": "déjà su",
+    "par": "le cahier de la reine lui-même, qui l'a écrit avant que ce plan existe — et, pour ce que BORROS en exige, la note de la Ver Blanc du 129.4.5",
+    "arrive": {"annee": 129, "lune": 4, "jour": 5},
+    "jours": 4,
+    "fiabilite": 80,
+    "deforme_comment": "La moitié qui est chez nous est nue et juste. La moitié qui est chez lui arrive par la Ver Blanc : « on y attend un nom, et ce n'est pas un nom de bataille ». Ce que le joueur n'apprendra par aucune route, c'est que Cassandra le fera répéter tout haut — un déclencheur ne s'annonce pas.",
+    "source": "books.json (ce que je ne garantis pas) + diffusion 129.4.5"
+   }
+  },
+  {
+   "id": "76005",
+   "quoi": "Il ne lit pas",
+   "bloque": ["76100", "76200"],
+   "vrai_aujourdhui": "Borros est illettré et déteste qu'on le sache. Tout ce que Peyredragon adresse à Accalmie passe par la bouche de mestre Hallis, qui lit lentement et s'arrête une seconde de trop sur la ligne qu'il veut qu'on entende. Le mestre ignore lui-même que la lettre du vingt-et-unième était signée de la main de la reine : il l'a lue pour le fond et n'a pas regardé le bas de la page — et c'est ainsi que Borros croit n'avoir jamais reçu un mot d'elle.",
+   "source": "personnages.json (traits et maniere de borros-baratheon) + maniere et ignore de mestre-hallis + relation borros-baratheon → mestre-hallis (« depend-de-lui-et-deteste-qu-on-le-sache »)",
+   "leve_quand": "Jamais. Un homme n'apprend pas à lire en une lune, et le mestre n'est pas à nous.",
+   "portee_pour_nous": "hors de portée",
+   "route_de_fuite": {
+    "canal": "déjà su",
+    "par": "le cahier de la reine, fiche Borros Baratheon : « il ne lit pas, donc il écoute — et ce qu'on lui lit, quelqu'un l'a choisi »",
+    "arrive": {"annee": 129, "lune": 3, "jour": 27},
+    "jours": 0,
+    "fiabilite": 100,
+    "deforme_comment": "Rien. C'est le seul verrou de ce plan que le joueur savait AVANT qu'on l'écrive, et il l'a même déjà tourné en principe d'action dans son propre cahier. L'écrire ici sert à ne plus y revenir tous les trois jours : il est hors de portée, et ce qui se joue à sa place se joue sur le mestre (76012).",
+    "source": "books.json, la fiche de Borros Baratheon"
+   }
+  }
+ ],
+ "clefs": [
+  {
+   "id": "76010",
+   "quoi": "Ne rien répondre tant que les deux noms ne sont pas posés",
+   "ouvre": ["76100"],
+   "principe": "Un homme qu'on n'oblige pas à répondre garde son prix. Répondre, c'est se donner ; se taire, c'est laisser monter.",
+   "prix": "Passer pour lent — ce dont il ne se soucie pas — et devoir finir par choisir devant des hommes rassemblés.",
+   "porteur": "borros-baratheon",
+   "source": "étape borros-attendre-offres et son cout écrit"
+  },
+  {
+   "id": "76011",
+   "quoi": "Arrêter le compte avant de fixer le prix",
+   "ouvre": ["76000"],
+   "principe": "Un homme qu'on marchande vaut ce qu'il a sous ses murs le jour où l'on marchande, et pas un cheval de plus. Le chiffre dit à un envoyé doit avoir été vrai d'abord.",
+   "prix": "Deux clercs, l'accès aux rôles que le castellan garde, et du grain pris aux villages avant la moisson qu'il faudra bien inscrire quelque part.",
+   "porteur": "mestre-hallis",
+   "source": "intention de borros-baratheon + étape hallis-arreter-le-compte-des-lances et son cout"
+  },
+  {
+   "id": "76012",
+   "quoi": "La page sans nom de camp",
+   "ouvre": ["76200"],
+   "principe": "Préparer d'avance l'acte où il ne resterait qu'à porter deux noms, pour que le jour où le seigneur tranchera, l'acte ne dépende pas de sa mémoire.",
+   "prix": "Que lord Borros souffre qu'on écrive avant qu'il ait décidé, ce qu'il prend pour une insolence. S'il le refuse, le mestre l'écrit quand même et la garde dans son coffre sans le dire.",
+   "porteur": "mestre-hallis",
+   "source": "étape hallis-la-reponse-par-ecrit et son si_bloque",
+   "note": "C'EST LA SEULE PIÈCE DE TOUT L'ÉTAT qui puisse faire jouer la quatrième condition de déviation de mort-lucerys. Elle n'a pas été écrite pour cela : elle a été écrite parce qu'un mestre prépare l'acte de son seigneur. C'est une coïncidence, et il faut la lire ainsi."
+  },
+  {
+   "id": "76013",
+   "quoi": "Les neuf jours de cavalier, rappelés tout haut",
+   "ouvre": ["76010", "76300"],
+   "principe": "Si l'on exige une réponse le jour même, rappeler devant la salle qu'Accalmie n'a pas d'oiseau pour la baie et qu'il faut un cavalier de neuf jours — ce qui est vrai, et ce qui donne au seigneur neuf jours qu'il n'avait pas demandés.",
+   "prix": "Ces neuf jours sont pris à celui qui attend la réponse, et il ne saura jamais qu'on les lui a pris.",
+   "porteur": "mestre-hallis",
+   "source": "si_bloque de hallis-la-reponse-par-ecrit, mot pour mot"
+  },
+  {
+   "id": "76014",
+   "quoi": "Faire poser la question par une autre bouche que la sienne",
+   "ouvre": ["76100"],
+   "principe": "Établir ce que chaque camp peut RÉELLEMENT donner — un prince à marier, et lequel — sans le demander soi-même, en se rendant nécessaire à la lecture des lettres.",
+   "prix": "Passer, devant les gens de lord Otto, pour une fille qui se mêle des affaires des hommes ; et que ses trois sœurs la voient se placer, et le lui fassent payer.",
+   "porteur": "cassandra-baratheon",
+   "source": "étapes cassandra-tenir-la-salle et cassandra-ce-que-chaque-camp-peut-donner, avec leurs couts",
+   "note": "76014 et 76010 se contredisent sous le même toit : le père tient à ne rien demander, la fille veut faire poser la question. C'est la tension B01."
+  }
+ ],
+ "actions": [
+  {"id": "76020", "quoi": "Rappeler ses bannerets sans dire pour qui", "realise": ["76011"], "office": "borros-baratheon", "moyens": ["la parole du seigneur d'Accalmie", "les rôles des bannerets"], "cout": "du grain qu'il faudra prendre aux villages avant la moisson ; et l'obligation de finir par choisir un camp devant des hommes rassemblés", "depend_de": [], "preuve": "Des feux de camp dans la lande et les chemins pleins de cavaliers", "jour_du": {"annee": 129, "lune": 4, "jour": 9}, "etat": "en cours", "source": "étape borros-rassembler-lances, 12 jours restants (tête maj 129.3.27)"},
+  {"id": "76021", "quoi": "Arrêter par écrit le compte des bannerets rappelés, banneret par banneret", "realise": ["76011"], "office": "mestre-hallis", "moyens": ["deux clercs", "les rôles, que le castellan garde"], "cout": "deux clercs, l'accès aux rôles, et du grain compté sur les villages avant la moisson", "depend_de": ["76020"], "preuve": "Le compte arrêté, nom par nom — ou deux colonnes séparées qu'il refusera d'additionner", "jour_du": {"annee": 129, "lune": 4, "jour": 9}, "etat": "en cours", "source": "étape hallis-arreter-le-compte-des-lances, 11 jours restants au 129.3.28"},
+  {"id": "76022", "quoi": "Ne répondre à aucun pli, de Port-Réal comme de Peyredragon, avant qu'un camp n'écrive le nom d'une de ses filles", "realise": ["76010"], "office": "borros-baratheon", "moyens": ["le silence", "la porte d'Accalmie"], "cout": "passer pour lent", "depend_de": [], "preuve": "Quatre plis entrés du nord en sept jours, aucun sorti", "jour_du": null, "etat": "en cours", "source": "étape borros-attendre-offres, sans horloge — et c'est pourquoi elle ne tombera jamais toute seule"},
+  {"id": "76023", "quoi": "Préparer la page sans nom de camp, où il ne resterait qu'à porter deux noms", "realise": ["76012"], "office": "mestre-hallis", "moyens": ["le registre", "son coffre"], "cout": "que le seigneur souffre qu'on écrive avant qu'il ait décidé", "depend_de": [], "preuve": "La page existe, pliée, avec deux blancs", "jour_du": {"annee": 129, "lune": 4, "jour": 4}, "etat": "en cours", "source": "étape hallis-la-reponse-par-ecrit, 6 jours restants au 129.3.28"},
+  {"id": "76024", "quoi": "Se tenir debout derrière l'épaule droite de son père chaque fois que le mestre déplie quelque chose", "realise": ["76014"], "office": "cassandra-baratheon", "moyens": ["sa place d'aînée", "l'habitude de la salle"], "cout": "passer pour une fille qui se mêle des affaires des hommes, devant les gens de lord Otto", "depend_de": [], "preuve": "Aucune lettre lue et aucune réponse donnée hors de sa présence", "jour_du": {"annee": 129, "lune": 4, "jour": 2}, "etat": "en cours", "source": "étape cassandra-tenir-la-salle, 4 jours restants au 129.3.28"},
+  {"id": "76025", "quoi": "Établir ce que chacun des deux camps peut réellement donner — un prince à marier, et lequel", "realise": ["76014"], "office": "cassandra-baratheon", "moyens": ["le mestre", "la première bouche qui franchira la porte"], "cout": "que le mestre accepte d'écrire une question que son seigneur ne lui a pas dictée ; et neuf jours au moins pour toute réponse venue du nord, il n'y a pas d'oiseau", "depend_de": ["76024"], "preuve": "Une réponse, ou un silence qu'elle fera répéter devant les gens de lord Otto", "jour_du": {"annee": 129, "lune": 4, "jour": 7}, "etat": "en cours", "source": "étape cassandra-ce-que-chaque-camp-peut-donner, 9 jours restants au 129.3.28"},
+  {"id": "76026", "quoi": "Faire dire aux écuyers de lord Otto, en riant, pour qui ils sont venus et depuis combien de jours ils attendent", "realise": ["76003"], "office": "maris-baratheon", "moyens": ["une question posée tout haut", "trente personnes dans la salle"], "cout": "rien, et c'est exactement pour cela qu'elle le fera", "depend_de": [], "preuve": "Un nom, ou le fait qu'ils se taisent — auquel cas elle le demandera à lord Otto lui-même, à table, devant son père", "jour_du": {"annee": 129, "lune": 4, "jour": 1}, "etat": "en cours", "source": "étape maris-pour-qui-sont-ils-venus, 3 jours restants au 129.3.28"},
+  {"id": "76027", "quoi": "Envoyer le mestre à Port-Réal réclamer une place au conseil du roi, et faire dire dans la salle qu'il l'a obtenue", "realise": ["76300"], "office": "mestre-hallis", "moyens": ["neuf jours de route", "la parole de son seigneur"], "cout": "se déclarer sans avoir été payé, et perdre l'exclusivité qu'on gardait", "depend_de": ["76022"], "preuve": "Le mestre parti, et la chose dite dans la salle qu'il l'ait obtenue ou non", "jour_du": null, "etat": "à faire", "source": "si_bloque de borros-attendre-offres : « si les deux camps se taisent une lune entière »", "note": "Conditionnelle, et c'est la sortie par défaut si personne n'écrit. Elle ne tombe pas dans cette lune — mais elle dit vers où penche Accalmie quand on la laisse seule, et ce n'est pas vers nous."},
+  {"id": "76028", "quoi": "Porter les deux noms sur la table — laquelle des quatre filles, et lequel des princes", "realise": ["76100"], "office": "à désigner", "moyens": ["une bouche autorisée à promettre un mariage"], "cout": "l'exclusivité : Borros ne se donne qu'une fois", "depend_de": [], "preuve": "Deux noms écrits, lus tout haut par le mestre dans la grande salle", "jour_du": null, "etat": "à faire", "source": "personne ne le porte — c'est le trou central de ce plan, exactement comme 71026 l'est du plan hightower", "note": "Ce n'est pas un oubli, c'est le résultat. Les deux acheteurs sont muets pour deux raisons différentes : Otto laisse monter le prix depuis onze jours (76003), et Peyredragon n'a rien à écrire (76004) et plus d'oiseau pour l'écrire (76002). L'office reste vide DES DEUX CÔTÉS, et il l'est aussi dans nos propres cahiers — 21033 porte « À DÉSIGNER »."}
+ ],
+ "tensions": [
+  {
+   "id": "B01",
+   "monnaie": "l'aînée — Cassandra Baratheon, qui ne se vend qu'une fois",
+   "demande": "Otto la veut pour Aemond (clef 71012, échéance 129.4.9, prix écrit : « l'exclusivité — Borros ne se donne qu'une fois ») ; Peyredragon la voudra pour un prince qu'elle n'a pas (76004) ; et Cassandra elle-même la veut à ses conditions plutôt qu'au prix de son père (76014).",
+   "existe": "Quatre filles, mais une seule aînée, une seule exclusivité, et une seule salle où l'on peut poser un nom.",
+   "ecart": "Trois demandeurs pour une pièce, et le père tient précisément à ne rien demander (76010) pendant que sa fille veut faire poser la question (76014). Personne à Accalmie n'a écrit son prix devant les deux autres — mêmes mots que la tension H01 chez Hightower, autre monnaie.",
+   "quand_ca_se_voit": "129.4.9 — le jour où le compte est arrêté et où il a enfin de quoi fixer son prix, dans la salle où Otto attend depuis vingt-trois jours.",
+   "ce_qui_tombe": "Peyredragon, parce que c'est le seul des trois qui n'ait rien à poser et personne dans la salle. Et Cassandra, qui sera nommée dans un contrat qu'on lui lira après — à moins que son déclencheur ne parte le premier."
+  },
+  {
+   "id": "B02",
+   "monnaie": "les jours avant le 129.4.9",
+   "demande": "Neuf jours de cavalier depuis Peyredragon (76002) ; le compte arrêté le 129.4.9 (76000) ; Otto qui laisse monter le prix depuis le 17e (76003) ; et nos trois montures qui se disputent la même course — le Nord, Accalmie et le Conflans (books.json, ND.EA).",
+   "existe": "Le 129.3.28. Un départ le 29 arrive le 4.7 ; un départ le 30 arrive le 4.9, le jour même, trop tard pour être lu avant la salle.",
+   "ecart": "DEUX JOURS. C'est toute la marge de la partie, et personne ne l'avait comptée parce qu'on croyait avoir un oiseau.",
+   "quand_ca_se_voit": "Le premier jour où la reine décide d'écrire à Accalmie et où l'on compte les jours à rebours devant elle — c'est-à-dire dès qu'on regarde la ligne « Accalmie : SANS DATE » de son propre cahier.",
+   "ce_qui_tombe": "Accalmie. Notre affaire y est SANS DATE dans nos livres pendant qu'en face tout est daté au jour près : ne pas choisir aujourd'hui revient à l'abandonner sans l'avoir écrit, ce que notre propre cahier dit déjà des trois montures."
+  }
+ ],
+ "resonance": [
+  {"lien": "porte ouverte", "notre_affaire": "Ralliement de la population — 21001 · 21011 · 21021 · 21033 · 21034", "leur_piece": "76100 · 76004 · 76028", "pourquoi": "Notre 21011 dit « aucune maison n'a de raison de bouger la première » et notre 21021 y répond par une offre NOMINATIVE. Accalmie donne la raison, et elle est écrite : deux noms. Mais nos deux actions 21033 et 21034 portent « À DÉSIGNER » — et leur 76028 porte « à désigner ». LA MÊME CASE EST VIDE DES DEUX CÔTÉS, sur la même maison, à onze jours de l'échéance. C'est le miroir d'effort le plus net du dossier : notre offre nominative n'a pas de porteur, et leur table n'a pas de nom."},
+  {"lien": "contredit", "notre_affaire": "Alliances du Nord — 3000 · 3001 · 3010 · 3020 · 3021", "leur_piece": "76002 · B02", "pourquoi": "Notre 3021 fait partir l'ambassade « le 4e de la 4e lune » avec les dragons, et notre 3020 écrit sa licence « avant le 4e de la 4e ». Or le cahier le dit déjà : « trois montures dont une qui boite : le Nord, Accalmie et le Conflans se disputent la même course ». Leur 76002 chiffre ce qu'on ignorait — Accalmie n'est plus à trois jours de corbeau mais à neuf jours de cheval. La course d'Accalmie ne coûte donc PAS une monture : elle coûte un homme et neuf jours, ce qui la rend compatible avec 3021 et la sort de l'abandon qu'on croyait forcé. Notre propre cahier a rayé Accalmie de la ligne des adresses de Gerardys ; ce plan dit que c'était trancher trop vite."},
+  {"lien": "attendu par", "notre_affaire": "Notre version arrive la première — 34000 · 34100", "leur_piece": "76003 · 76005", "pourquoi": "34000 nomme Accalmie dans sa portée et exige qu'aucun seigneur ne puisse dire qu'il l'a su autrement d'abord. À Accalmie, c'est DÉJÀ PERDU : Otto y est en personne depuis le 17e, quatre plis y sont entrés et le mestre les a tous lus tout haut avec ses silences (76005). Et 34100 — « les lectures tiennent dans trois jours » — est arithmétiquement intenable pour une place à neuf jours de cheval. Notre état cible est en échec sur cette maison et rien ne le disait."},
+  {"lien": "sert", "notre_affaire": "à ouvrir — la déviation du 129.4.9", "leur_piece": "76200 · 76012", "pourquoi": "La quatrième condition de mort-lucerys est « dévié si Borros a déjà donné sa réponse par écrit avant l'arrivée de l'émissaire ». Une seule pièce de tout l'état peut la remplir, et elle est chez eux : la page sans nom de camp que le mestre prépare de son propre chef, échéance 129.4.4. On ne peut pas la déclencher — mais on peut lui donner ses deux noms avant qu'un émissaire ne parte, et alors le canon le plus cher du jeu se déplace."}
+ ],
+ "ce_que_ca_engendre_chez_nous": [
+  {"type": "observer", "sujet": "ce qui se rassemble sous les murs d'Accalmie, et sous quelle bannière", "pourquoi": "76001 — le compte n'est pas encore vrai, et la seule route qui nous en parle (129.4.7, fiab 50) montre l'ost sans dire pour qui ; savoir deux jours plus tôt vaut la course", "vers": "31000"},
+  {"type": "interroger", "sujet": "ce qu'Otto a offert à Accalmie en onze jours, et pourquoi il n'a toujours pas écrit de nom", "pourquoi": "76003 — c'est ce qui dit s'il laisse monter le prix ou s'il n'a rien à donner ; la Ver Blanc l'a pour de l'or, et sa note arrive le 129.4.5, à temps", "vers": "31000"},
+  {"type": "action", "sujet": "faire partir un cavalier pour Accalmie AUJOURD'HUI — neuf jours, deux jours de marge", "pourquoi": "76002 — le seul verrou d'en face sur lequel le joueur agisse, et il a une date limite : après le 129.3.30 au soir, la course est perdue sans avoir été courue. C'est l'action qui manque en face de nos 21033 et 21034, tous deux « À DÉSIGNER »", "vers": "21033"},
+  {"type": "decision", "sujet": "nommer laquelle des quatre filles et lequel des princes — ou dire tout haut qu'on n'en a pas, et inventer l'autre monnaie", "pourquoi": "76004 — la reine n'a pas de prince libre ; rompre une fiançaille se paie chez Velaryon, et ne rien dire se paie le 129.4.9. Son propre cahier l'a déjà renvoyé à elle : « un mariage ne m'appartient pas. À la reine »", "vers": "la table"}
+ ],
+ "a_verifier": [
+  "LA ROUTE DE FUITE N'EST PAS UN CHAMP DU SCHÉMA. `docs/schema.md` (l. 229) ne liste pas de route sur le verrou, et `scripts/evaluer.py --murs` ne la cherche PAS dans le verrou : il la cherche dans `etat/liens.json`, sur une arête dont `de` ou `vers` porte l'id du verrou et dont `route` est non vide. Les cinq `route_de_fuite` écrites ici sont donc invisibles à la garde tant que le MJ ne les recopie pas en cinq entrées de `liens.json`. C'est la dette n°1 de docs/ouvrir-une-maison.md, et elle n'est pas soldée : aujourd'hui les SIX verrous de hightower comptent comme des murs pour la même raison.",
+  "`camp: \"neutre\"`. `docs/schema.md` porte `camp` sans énumération de valeurs, et le seul plan existant porte `vert`. Aucune valeur n'est donc interdite, mais aucune n'est non plus attestée pour un neutre. Si le MJ veut fermer le vocabulaire, c'est ici qu'il faut trancher — et `neutre` est le mot que `maisons.json` emploie déjà pour `allegeance_affichee` et `allegeance_reelle` de maison-baratheon.",
+  "L'étape borros-rassembler-lances porte 12 jours restants pour une tête dont `date_maj` a été portée au 129.3.28 par le lot d'ouverture (les jours_restants ayant été volontairement laissés à leur valeur du 129.3.27). Lu au pied de la lettre, elle tombe le 129.4.10 et non le 129.4.9. J'ai retenu le 129.4.9 — c'est la lecture du lot, c'est la date de hallis-arreter-le-compte-des-lances (11 jours au 128.3.28) et c'est celle du canon. Un jour de dérive sur la date-charnière mérite d'être tranché à la main, dans la tête, avant le prochain tick.",
+  "LA LETTRE PERSONNELLE DE CINQ LIGNES (acte-087). Tout ce plan suppose la branche retenue par le lot d'ouverture : elle N'EST PAS PARTIE, et Borros n'a reçu que la lettre commune du 21e. Si le MJ tranche l'inverse, 76004 et B01 changent de nature — on ne lui demande plus de recevoir, il a déjà été invité, et son silence devient une réponse.",
+  "ACCALMIE A-T-ELLE UN OISEAU POUR PEYREDRAGON ? Le lot a tranché que non, et 76002, 76013 et B02 en dépendent entièrement. Si le MJ décide qu'Accalmie a des oiseaux de la baie, la marge de deux jours disparaît, 76002 cesse d'être « on peut agir dessus » et le plan perd son seul verrou actionnable."
+ ]
+}

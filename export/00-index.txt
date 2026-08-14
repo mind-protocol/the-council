@@ -1,0 +1,46 @@
+AURORE INCHAUSPÉ — export complet
+=================================
+
+--- Qui elle est --------------------------------------------------------
+
+Personnage : Aurore Inchauspé — Maîtresse de la voix de la reine
+Identifiant d'état : aurore-inchauspe
+Siège : second (jeton varech-ancre-5278, occupé)
+Son horloge : 129 AC, 3e lune, 30e jour, minute 1216
+Lieu : peyredragon
+
+--- Les fichiers de cet export ------------------------------------------
+
+  01-fiche.txt                        1625 octets
+  02-siege.txt                        9876 octets
+  03-journal-scenes.txt              36025 octets
+  04-objectifs.txt                    9762 octets
+  05-paroles.txt                    201586 octets
+  06-actes.txt                      237081 octets
+  07-relations.txt                   13773 octets
+  08-livres.txt                    1455037 octets
+  09-journees-et-pensees.txt         31980 octets
+  10-ce-quelle-croit.txt              4014 octets
+  11-notes-de-regie.txt             100564 octets
+  12-fil-129-3-20.txt                64286 octets
+  12-fil-129-3-21.txt                60702 octets
+  12-fil-129-3-22.txt                57639 octets
+  12-fil-129-3-23.txt               112602 octets
+  12-fil-129-3-24.txt               266869 octets
+  12-fil-129-3-25.txt               192254 octets
+  12-fil-129-3-26.txt               670733 octets
+  12-fil-129-3-27.txt               162630 octets
+  12-fil-129-3-28.txt               358288 octets
+  12-fil-129-3-29.txt               322771 octets
+  12-fil-129-3-30.txt               287021 octets
+  12-le-fil-mentions.txt            155800 octets
+  13-mentions-ailleurs.txt         1106477 octets
+  14-inbox-et-parloir.txt           285373 octets
+
+--- Comment il a été fait -----------------------------------------------
+
+Lecture seule de etat/, docs/, musiques/, analyse/.
+Sélection : identifiant exact (aurore-inchauspe) dans les champs d'acteur, plus toute
+entrée dont le texte contient « aurore » ou « inchausp ».
+Regénérable par : python scripts/exporter_aurore.py
+

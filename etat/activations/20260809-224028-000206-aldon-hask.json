@@ -1,0 +1,517 @@
+{
+  "qui": "aldon-hask",
+  "activation": {
+    "tache": {
+      "id": "42120",
+      "quoi": "🍖 Faire ajouter trois jours de pain par millier au plan de charge",
+      "creee": false
+    },
+    "issue": "avance",
+    "activites": [
+      {
+        "id": "act:aldon-hask:1",
+        "ordre": 1,
+        "temps": {
+          "debut_s": 94500.0,
+          "duree_s": 230,
+          "fin_s": 94730.0
+        },
+        "action": {
+          "verbe": "rediger",
+          "quoi": "Écrire de sa main, sur un demi-feuillet, les trois lignes de l'ajout : trente-six muids pour douze cents hommes, treize pour les quatre cent cinquante de demain, quarante-deux dragons, la ligne de vivres de bord déjà déplacée, ce que cela repousse — rien. Il date, il nomme les livres d'où sortent les chiffres, il signe. La chandelle du mestre est basse et il écrit du coude, la manche lustrée posée à plat.",
+          "cibles": [
+            "42120",
+            "26034"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:aldon-hask",
+            "relation": "demeure",
+            "vers": "pers:aldon-hask",
+            "duree_s": 230
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "26034",
+            "mode": "lit"
+          },
+          {
+            "ref": "42120",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:aldon-hask",
+            "mode": "memoire"
+          },
+          {
+            "ref": "42120",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "pers:gerardys",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:aldon-hask:1:1",
+            "type": "objet_produit",
+            "cible": "42120",
+            "avant": null,
+            "apres": "Un demi-feuillet non scellé, trois lignes de la main d'Aldon Hask : ajout au plan de charge, première vague, trente-six muids dont treize pour demain, quarante-deux dragons, pris sur la ligne de vivres de bord que le manifeste changé n'emploie plus ; daté du vingt-huitième jour de la troisième lune, an 129, signé.",
+            "portee": "monde",
+            "source_refs": [
+              "42120",
+              "26034"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:aldon-hask:1:2",
+            "type": "observation",
+            "cible": "pers:gerardys",
+            "avant": null,
+            "apres": "Gerardys, à la table du fond, l'a laissé prendre la chandelle sans un mot et n'a pas demandé ce qu'il écrivait ; il trie ses fioles. Il verra Hask écrire et sceller, il ignorera le contenu du pli.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "pers:gerardys"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 7.667,
+        "quoi": "Écrire de sa main, sur un demi-feuillet, les trois lignes de l'ajout : trente-six muids pour douze cents hommes, treize pour les quatre cent cinquante de demain, quarante-deux dragons, la ligne de vivres de bord déjà déplacée, ce que cela repousse — rien. Il date, il nomme les livres d'où sortent les chiffres, il signe. La chandelle du mestre est basse et il écrit du coude, la manche lustrée posée à plat.",
+        "source": "26034, 42120, pers:aldon-hask, pers:gerardys",
+        "resultat": "objet_produit: Un demi-feuillet non scellé, trois lignes de la main d'Aldon Hask : ajout au plan de charge, première vague, trente-six muids dont treize pour demain, quarante-deux dragons, pris sur la ligne de vivres de bord que le manifeste changé n'emploie plus ; daté du vingt-huitième jour de la troisième lune, an 129, signé. · observation: Gerardys, à la table du fond, l'a laissé prendre la chandelle sans un mot et n'a pas demandé ce qu'il écrivait ; il trie ses fioles. Il verra Hask écrire et sceller, il ignorera le contenu du pli.",
+        "preuve": null
+      },
+      {
+        "id": "act:aldon-hask:2",
+        "ordre": 2,
+        "temps": {
+          "debut_s": 94730.0,
+          "duree_s": 55,
+          "fin_s": 94785.0
+        },
+        "action": {
+          "verbe": "sceller",
+          "quoi": "Plier le demi-feuillet en trois, chauffer la cire à la chandelle du cabinet du mestre, poser le cachet et souffler dessus le temps qu'il prenne.",
+          "cibles": [
+            "42120"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:aldon-hask",
+            "relation": "demeure",
+            "vers": "pers:aldon-hask",
+            "duree_s": 55
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "42120",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:aldon-hask",
+            "mode": "intention"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:aldon-hask:2:1",
+            "type": "objet_produit",
+            "cible": "42120",
+            "avant": "Un demi-feuillet non scellé, trois lignes de la main d'Aldon Hask : ajout au plan de charge, première vague, trente-six muids dont treize pour demain, quarante-deux dragons, pris sur la ligne de vivres de bord que le manifeste changé n'emploie plus ; daté du vingt-huitième jour de la troisième lune, an 129, signé.",
+            "apres": "Le même demi-feuillet, plié en trois et scellé à la cire du cabinet du mestre, prêt à être porté ; il n'est plus lisible sans rompre le sceau.",
+            "portee": "monde",
+            "source_refs": [
+              "42120"
+            ],
+            "preuve_refs": [
+              "res:act:aldon-hask:1:1"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 1.833,
+        "quoi": "Plier le demi-feuillet en trois, chauffer la cire à la chandelle du cabinet du mestre, poser le cachet et souffler dessus le temps qu'il prenne.",
+        "source": "42120, pers:aldon-hask",
+        "resultat": "objet_produit: Le même demi-feuillet, plié en trois et scellé à la cire du cabinet du mestre, prêt à être porté ; il n'est plus lisible sans rompre le sceau.",
+        "preuve": [
+          "res:act:aldon-hask:1:1"
+        ]
+      },
+      {
+        "id": "act:aldon-hask:3",
+        "ordre": 3,
+        "temps": {
+          "debut_s": 94785.0,
+          "duree_s": 95,
+          "fin_s": 94880.0
+        },
+        "action": {
+          "verbe": "instruire-et-remettre",
+          "quoi": "Remettre le pli à Ossy et lui donner l'ordre à voix basse, deux fois, en le lui faisant redire : au commandement naval et terrestre, entre les mains de maître Rulf Corne ou du premier officier de charge éveillé, et rapporter un seul mot — inscrit, ou non ; si c'est non, le nom de qui l'a dit.",
+          "cibles": [
+            "pers:ossy",
+            "26034"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:aldon-hask",
+            "relation": "demeure",
+            "vers": "pers:aldon-hask",
+            "duree_s": 95
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:ossy",
+            "mode": "parle"
+          },
+          {
+            "ref": "42120",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "26034",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "42120",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:aldon-hask:3:1",
+            "type": "communication",
+            "cible": "pers:ossy",
+            "avant": null,
+            "apres": "Ossy tient le pli scellé et redit l'ordre mot pour mot : au commandement naval et terrestre, à maître Rulf Corne ou au premier officier de charge éveillé ; rapporter un mot, inscrit ou non, et si c'est non, le nom. Il a la lanière de cuir encore aux doigts et ne demande rien d'autre.",
+            "portee": "monde",
+            "source_refs": [
+              "pers:ossy"
+            ],
+            "preuve_refs": [
+              "res:act:aldon-hask:2:1"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:aldon-hask:3:2",
+            "type": "deplacement",
+            "cible": "pers:ossy",
+            "avant": "Ossy dans le cabinet du mestre, près de la cage aux corbeaux",
+            "apres": "Ossy sort du cabinet du mestre vers la cour, le pli sous la tunique ; il n'est pas revenu avant la fin du battement et Hask ignore s'il a trouvé quelqu'un d'éveillé au commandement.",
+            "portee": "monde",
+            "source_refs": [
+              "pers:ossy"
+            ],
+            "preuve_refs": [
+              "res:act:aldon-hask:3:1"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 3.167,
+        "quoi": "Remettre le pli à Ossy et lui donner l'ordre à voix basse, deux fois, en le lui faisant redire : au commandement naval et terrestre, entre les mains de maître Rulf Corne ou du premier officier de charge éveillé, et rapporter un seul mot — inscrit, ou non ; si c'est non, le nom de qui l'a dit.",
+        "source": "26034, 42120, pers:ossy",
+        "resultat": "communication: Ossy tient le pli scellé et redit l'ordre mot pour mot : au commandement naval et terrestre, à maître Rulf Corne ou au premier officier de charge éveillé ; rapporter un mot, inscrit ou non, et si c'est non, le nom. Il a la lanière de cuir encore aux doigts et ne demande rien d'autre. · deplacement: Ossy sort du cabinet du mestre vers la cour, le pli sous la tunique ; il n'est pas revenu avant la fin du battement et Hask ignore s'il a trouvé quelqu'un d'éveillé au commandement.",
+        "preuve": [
+          "res:act:aldon-hask:2:1",
+          "res:act:aldon-hask:3:1"
+        ]
+      },
+      {
+        "id": "act:aldon-hask:4",
+        "ordre": 4,
+        "temps": {
+          "debut_s": 94880.0,
+          "duree_s": 220,
+          "fin_s": 95100.0
+        },
+        "action": {
+          "verbe": "porter-au-cahier",
+          "quoi": "Sans attendre la réponse, reporter l'ajout sur son cahier d'affaire : copie des trois lignes, heure de remise, nom du porteur, et en marge la mention que l'inscription au plan n'est pas confirmée. Puis relire une dernière fois, contre la copie du plan de charge et le manifeste changé, que la ligne de vivres de bord porte bien les trente-six muids et qu'il ne les compte pas deux fois. Le pas d'Ossy s'est perdu dans la cour ; les rôles se lisent bientôt.",
+          "cibles": [
+            "42120",
+            "26034"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "pers:aldon-hask",
+            "relation": "demeure",
+            "vers": "pers:aldon-hask",
+            "duree_s": 220
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "26034",
+            "mode": "lit"
+          },
+          {
+            "ref": "42120",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:aldon-hask",
+            "mode": "memoire"
+          },
+          {
+            "ref": "42120",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:aldon-hask:4:1",
+            "type": "progression_tache",
+            "cible": "42120",
+            "avant": "à faire",
+            "apres": "Le chiffre est établi, gagé sur une ligne déjà déplacée, écrit, scellé et parti aux mains d'Ossy vers le commandement naval et terrestre. L'ajout n'est pas inscrit au plan de charge : la plume du plan reste au commandement et nul mot n'est revenu avant la lecture des rôles.",
+            "portee": "monde",
+            "source_refs": [
+              "42120",
+              "26034"
+            ],
+            "preuve_refs": [
+              "res:act:aldon-hask:2:1",
+              "res:act:aldon-hask:3:2"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:aldon-hask:4:2",
+            "type": "observation",
+            "cible": "26034",
+            "avant": null,
+            "apres": "Vérifié contre la copie du plan et le manifeste changé : les trente-six muids sortent de la ligne de vivres de bord que la coque d'intendance n'emploie plus depuis que les hommes portent leurs deux journées de traversée sur le dos ; ils ne sont comptés nulle part ailleurs. Quarante-deux dragons, moins d'une des quatre cent treize journées de campagne en caisse.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "26034",
+              "42120"
+            ],
+            "preuve_refs": [
+              "res:act:aldon-hask:1:1"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 7.333,
+        "quoi": "Sans attendre la réponse, reporter l'ajout sur son cahier d'affaire : copie des trois lignes, heure de remise, nom du porteur, et en marge la mention que l'inscription au plan n'est pas confirmée. Puis relire une dernière fois, contre la copie du plan de charge et le manifeste changé, que la ligne de vivres de bord porte bien les trente-six muids et qu'il ne les compte pas deux fois. Le pas d'Ossy s'est perdu dans la cour ; les rôles se lisent bientôt.",
+        "source": "26034, 42120, pers:aldon-hask",
+        "resultat": "progression_tache: Le chiffre est établi, gagé sur une ligne déjà déplacée, écrit, scellé et parti aux mains d'Ossy vers le commandement naval et terrestre. L'ajout n'est pas inscrit au plan de charge : la plume du plan reste au commandement et nul mot n'est revenu avant la lecture des rôles. · observation: Vérifié contre la copie du plan et le manifeste changé : les trente-six muids sortent de la ligne de vivres de bord que la coque d'intendance n'emploie plus depuis que les hommes portent leurs deux journées de traversée sur le dos ; ils ne sont comptés nulle part ailleurs. Quarante-deux dragons, moins d'une des quatre cent treize journées de campagne en caisse.",
+        "preuve": [
+          "res:act:aldon-hask:2:1",
+          "res:act:aldon-hask:3:2",
+          "res:act:aldon-hask:1:1"
+        ]
+      }
+    ],
+    "suite": "Le pli est au commandement, ou en chemin. Hask attend un seul mot d'Ossy — inscrit, ou non, et le nom — avant la lecture des rôles.",
+    "reveils_suivants": [
+      {
+        "qui": "aldon-hask",
+        "quand_s": 95400.0,
+        "pourquoi": "Le retour du porteur : inscrit ou non, et si non, le nom de qui l'a dit ; puis la lecture des rôles, où il ne verse pas une solde avant d'avoir la liste des noms de la première vague."
+      }
+    ],
+    "budget_energie": 20,
+    "budget_secondes": 600,
+    "energie_depensee": 20.0
+  },
+  "mutations_proposees": [],
+  "mutations_rejetees": [
+    {
+      "mutation": {
+        "operation": "plis:pli_ajouter",
+        "cite": "res:act:aldon-hask:2:1",
+        "contenu": {
+          "de": "aldon-hask",
+          "vers": "commandement naval et terrestre — maître Rulf Corne ou le premier officier de charge éveillé",
+          "porteur": "ossy",
+          "objet": "Trois jours de pain par millier — ajout au plan de charge, première vague : trente-six muids, quarante-deux dragons, pris sur la ligne de vivres de bord libérée",
+          "scelle": true,
+          "remis_s": 94880.0,
+          "reponse_attendue": "inscrit ou non ; si non, le nom de qui l'a dit"
+        }
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "operation": "intentions:etape",
+        "cite": "res:act:aldon-hask:4:1",
+        "contenu": {
+          "personnage_id": "aldon-hask",
+          "etape": "Attendre le mot d'Ossy sur l'ajout des trois jours de pain ; si le mot est non, aller lui-même au commandement avec le nom en tête avant l'embarquement."
+        }
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "operation": "intentions:ignore_ajouter",
+        "cite": "res:act:aldon-hask:3:2",
+        "contenu": {
+          "personnage_id": "aldon-hask",
+          "ignore": "Si quelqu'un est éveillé au commandement naval et terrestre à cette heure, et si maître Rulf Corne s'y trouve"
+        }
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "operation": "intentions:croyance_ajouter",
+        "cite": "res:act:aldon-hask:4:2",
+        "contenu": {
+          "personnage_id": "aldon-hask",
+          "croyance": "Les trente-six muids de pain sont gagés sur la ligne de vivres de bord libérée par le manifeste changé, et ne sont comptés nulle part deux fois : quarante-deux dragons, aucune journée de campagne perdue"
+        }
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "operation": "evenements:evenement",
+        "cite": "res:act:aldon-hask:3:1",
+        "contenu": {
+          "quoi": "Un pli scellé du maître des deniers part du cabinet du mestre vers le commandement naval et terrestre, porté par Ossy, pour l'ajout de trois jours de pain par millier au plan de charge de la première vague.",
+          "lieu": "roukerie",
+          "quand_s": 94880.0,
+          "temoins": [
+            "gerardys"
+          ]
+        }
+      },
+      "erreur": "resultat_id absent du rapport"
+    }
+  ],
+  "_activation": {
+    "session": "8b6b4cbf-06a7-449f-9683-6867e0a37aa1",
+    "session_narrateur": "8b6b4cbf-06a7-449f-9683-6867e0a37aa1",
+    "session_pnj": "b3cb50d9-2e84-4e05-a44e-bedb1af2f982",
+    "cree_le": "2026-08-09T22:40:27.999938+02:00",
+    "front": "aurore-inchauspe",
+    "present_secondes": 94500.0,
+    "importance": 0.199656,
+    "budget": 20,
+    "budget_secondes": 600,
+    "system_prompt": "# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS\n\nTu es le maître du jeu local d'un monde vivant, pas un assistant administratif\net pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa\nmatière, les personnes qui s'y trouvent, les usages de Westeros et les\nconséquences du temps qui passe.\n\n## Le monde\n\nNous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de\nViserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra\nTargaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie\npeut diverger du récit connu : le dossier de l'activation fait autorité sur ce\nqui s'est réellement produit ici.\n\nDate présente : 28e jour de la 3e lune de l'an 129 après la\nConquête.\nLieu présent : Le cabinet du mestre — Peyredragon.\nActeur appelé : Aldon Hask.\nAffaire qui exerce maintenant une pression sur lui : 🍖 Faire ajouter trois jours de pain par millier au plan de charge.\n\nL'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,\nsituée dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,\nfaire autre chose d'accessible depuis sa situation, parler à quelqu'un,\nattendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener\nvers la tâche.\n\n## Partage de l'autorité\n\nL'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses\ngestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,\nplus prudents ou plus efficaces qu'il ne les a formulés.\n\nToi, tu possèdes le reste du monde : les autres personnes agissent selon leur\npropre caractère et leurs propres affaires ; les objets ont une position et\nune résistance ; les distances, l'écriture, la marche, l'attente et la parole\nprennent du temps ; les institutions et les usages produisent leurs\nconséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à\nlui pour fabriquer du drame.\n\nUne résistance n'existe que si elle vient d'un fait établi : volonté d'une\nautre personne, obstacle matériel, distance, délai, usage social, ordre déjà\ndonné ou ressource réellement absente. Les gens compétents règlent le\nroutinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou\nun véritable arbitrage peut seul engager.\n\n## Vérité et inconnues\n\nLe dossier fermé est l'autorité sur les faits particuliers et mutables de\ncette partie. Une croyance reste une croyance, une intention reste une\nintention, un témoignage reste un témoignage : aucun ne devient un fait parce\nqu'il apparaît dans le dossier.\n\nTu peux employer les continuités ordinaires et stables de Westeros nécessaires\nà l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche\nentre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,\nni secret, ni décision, ni avantage absent du dossier. Toute absence qui\nchangerait l'issue reste une inconnue. Tu ne la combles pas.\n\nUne observation modifie d'abord la connaissance de celui qui observe. Un fait\nmatériel ne devient connu d'autres personnes que par présence, témoignage,\nparole, pli, registre ou diffusion effectivement produits.\n\n## Les deux phases\n\nDans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et\nl'instant présents. Fais une adresse brève, concrète et diégétique : rappelle\nce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni\nnœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.\n\nDans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :\n\n1. établis d'où il part, ce qu'il peut réellement atteindre et les sources\n   qu'il touche ou mobilise ;\n2. fais agir les personnes rencontrées depuis leurs propres intentions ;\n3. applique les obstacles établis, sans résistance décorative ;\n4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;\n5. produis seulement les effets causés par les gestes accomplis ;\n6. sépare les changements du monde, les objets produits, les communications\n   et les seules connaissances acquises ;\n7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,\n   obstacle établi, échec, renoncement ou borne temporelle.\n\nUne tâche peut avancer sans être terminée. Elle est bloquée seulement par un\nobstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet\nrecherché impossible ou manqué. N'invente jamais des minutes de travail pour\nremplir une durée minimale : si le geste se termine tôt, laisse le personnage\npoursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle\net rends compte honnêtement de la durée.\n\nChaque message de la boucle précise la phase et son contrat de sortie. Rends\nexactement l'objet JSON demandé, sans commentaire autour. La précision du JSON\nsert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.\n",
+    "system_prompt_source": "scripts/depecher.py:manuel_narrateur_local",
+    "system_prompt_sha256": "5fffcd3614576d2329809a0fc9d75715b3c950b029acd043ac8e3d4cd2919558",
+    "message": "PHASE 1 — APPELER L'ACTEUR\n\nVoici le dossier fermé de cette activation :\n\n{\n  \"date_du_monde\": {\n    \"annee\": 129,\n    \"lune\": 3,\n    \"jour\": 28\n  },\n  \"present_secondes\": 94500.0,\n  \"budget_energie\": 20,\n  \"secondes_par_point_energie\": 30,\n  \"budget_secondes\": 600,\n  \"duree_minimale_secondes\": 60,\n  \"acteur_candidat\": \"aldon-hask\",\n  \"tache_elue\": {\n    \"id\": \"42120\",\n    \"quoi\": \"🍖 Faire ajouter trois jours de pain par millier au plan de charge\",\n    \"creee\": false\n  },\n  \"chemin_election\": [\n    {\n      \"id\": \"pers:aldon-hask\",\n      \"genre\": \"personne\",\n      \"ou\": \"personnages\",\n      \"quoi\": \"Aldon Hask\",\n      \"genres\": [\n        \"personne\"\n      ],\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"importance_activation\": 0.19965577885678992\n    },\n    {\n      \"id\": \"26034\",\n      \"genre\": \"piece\",\n      \"ou\": \"plan-actions\",\n      \"quoi\": \"📦 Rédiger le plan de charge\",\n      \"lieu\": \"Le commandement naval et terrestre\",\n      \"etat\": \"à faire\",\n      \"genres\": [\n        \"piece\",\n        \"action\"\n      ],\n      \"importance_activation\": 0.036555476365284154\n    },\n    {\n      \"id\": \"42120\",\n      \"genre\": \"action\",\n      \"ou\": \"affaire-tenue-de-la-capitale\",\n      \"quoi\": \"🍖 Faire ajouter trois jours de pain par millier au plan de charge\",\n      \"lieu\": \"Peyredragon\",\n      \"etat\": \"à faire\",\n      \"importance_activation\": 0.05413899399035397\n    }\n  ],\n  \"salle_actuelle\": {\n    \"id\": \"roukerie\",\n    \"nom\": \"Le cabinet du mestre — Peyredragon\",\n    \"personnes\": [\n      {\n        \"id\": \"aldon-hask\",\n        \"nom\": \"Aldon Hask\"\n      },\n      {\n        \"id\": \"gerardys\",\n        \"nom\": \"Mestre Gerardys\"\n      },\n      {\n        \"id\": \"ossy\",\n        \"nom\": \"ossy\"\n      }\n    ]\n  },\n  \"dossier_acteur\": {\n    \"date_du_monde\": {\n      \"annee\": 129,\n      \"lune\": 3,\n      \"jour\": 28\n    },\n    \"diffusion\": {\n      \"origine\": \"rhaenyra\",\n      \"front\": \"aurore-inchauspe\",\n      \"secondes_depuis_origine\": 94500.0\n    },\n    \"personnage\": {\n      \"id\": \"aldon-hask\",\n      \"nom\": \"Aldon Hask\",\n      \"titre\": \"Maitre des deniers de la reine (26e j., 3e lune, terme au dernier jour de la 4e lune) ; ancien sous-clerc aux comptes de la cour de Viserys I\",\n      \"naissance\": 66,\n      \"traits\": [\n        \"meticuleux\",\n        \"efface\",\n        \"exact\",\n        \"incorruptible\",\n        \"patient\",\n        \"debrouillard\",\n        \"conciliant\"\n      ],\n      \"objectifs\": [\n        {\n          \"but\": \"Que ses comptes soient justes, meme quand personne ne les lit\",\n          \"priorite\": 1\n        },\n        {\n          \"but\": \"Ne rien demander a personne — on l'a laisse sur ce rocher une fois\",\n          \"priorite\": 2\n        }\n      ],\n      \"maniere\": \"Parle bas, en chiffres ronds, et donne toujours la somme avant le commentaire. Ne dit jamais qu une depense est impossible : il dit sur quelle ligne il la prend et ce qu elle repousse, et il a deja deplace la ligne quand il l annonce. Rancunier de memoire mais pas de main : il se souvient de qui l a fait attendre, et paie quand meme le jour dit. Se debrouille seul : comble les trous sans demander, tranche le routinier a sa main et en rend compte au passe, et ne fait remonter que ce qui engage la parole du maitre, coute un homme ou de l or, ou contredit un ordre anterieur. Quand il voit un empechement, il apporte la sortie dans la meme bouche et l a deja commencee : jamais un cout nu, jamais un renvoi a la reine. Competent : sur son domaine il en sait plus que son maitre et le montre — apporte le precedent, le chiffre et l avis qu il defend, au lieu d une question ; ne demande jamais ce qu il peut aller chercher lui-meme ; tient son cahier d affaire et en ecrit la conclusion de sa main.  DEUXIEME PHRASE, toujours : ce que c'est (nomme par ce qu'il fait, jamais par son etiquette), ce que ca change pour la reine, et a quoi ca sert dans ses trois piliers — ouvrir la porte du dedans, n'etre pas attaque, rallier la ville. OUVRE PAR : CE QU'IL ACHETE, ou ce qu'il vient de rendre possible — jamais par l'etat de la caisse. Le solde se lit a sept heures avec les roles et n'a rien a faire dans sa bouche devant la reine : un maitre des deniers qui annonce ce qu'il a est un compteur ; celui qui dit ce qu'il en fait est un officier. Quand un chiffre monte a la table, il est DANS la phrase qui dit ce qu'on en fait. REPRIS, IL NE SE DEFEND PAS : une phrase pour dire qu'il avait tort, puis ce qu'il fait, ce qu'il prend sur lui, et la date a laquelle on saura. Aucune explication du passe, aucune justification que personne n'a demandee. Et il n'ouvre jamais sur un manque : il entre avec ce qu'il a fait ou trouve depuis hier, ou il se tait et va chercher.\",\n      \"portrait\": {\n        \"fichier\": null,\n        \"physique\": \"Soixante-trois ans, propre, une manche lustree au coude droit a force d'ecrire dessus.\",\n        \"prompt_ideogram\": \"dark fantasy oil painting portrait, muted colors, grey harbour light, lean middle-aged clerk in worn wool, ink-stained chapped hands, worn wooden tally board, quiet unresentful stare\"\n      },\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"lieu\": \"Peyredragon\"\n    },\n    \"salle_actuelle\": {\n      \"id\": \"roukerie\",\n      \"nom\": \"Le cabinet du mestre — Peyredragon\",\n      \"personnes\": [\n        {\n          \"id\": \"aldon-hask\",\n          \"nom\": \"Aldon Hask\"\n        },\n        {\n          \"id\": \"gerardys\",\n          \"nom\": \"Mestre Gerardys\"\n        },\n        {\n          \"id\": \"ossy\",\n          \"nom\": \"ossy\"\n        }\n      ]\n    },\n    \"intention\": {\n      \"personnage_id\": \"aldon-hask\",\n      \"croyances\": [\n        \"Il est maitre des deniers depuis ce matin, et il a signe\",\n        \"Les comptes de la maison lui ont ete verses par Sara le meme jour : il tient desormais un seul livre et non deux\",\n        \"Une depense refusee est une depense mal placee : il y a presque toujours une ligne, et c est son metier de la trouver avant qu on la lui demande\"\n      ],\n      \"ignore\": [\n        \"Ce que couteront reellement les journees de coureurs sur une lune pleine\"\n      ],\n      \"intention\": \"Ne jamais renvoyer une depense a la reine : dire la somme, dire la ligne, dire ce qu elle repousse, et avoir deja deplace la ligne quand il l annonce.\",\n      \"declencheurs\": [\n        {\n          \"si\": \"Quelqu un au conseil annonce un cout sans dire qui le porte\",\n          \"alors\": \"Il le porte a voix haute, avec la ligne, avant que la reine ait a poser la question\"\n        }\n      ],\n      \"attitude_joueur\": \"Il l a vue le prendre sans le connaitre ; il rend cette confiance en ne lui presentant jamais un probleme d argent nu.\",\n      \"date_maj\": {\n        \"annee\": 129,\n        \"lune\": 3,\n        \"jour\": 26\n      },\n      \"etape_elue\": null\n    },\n    \"relations\": [\n      {\n        \"source_id\": \"aldon-hask\",\n        \"source\": \"Aldon Hask\",\n        \"cible_id\": \"nicolas-reynolds\",\n        \"cible\": \"Nicolas Lesster Reynolds\",\n        \"opinion\": 55,\n        \"liens\": [\n          \"lui doit sa place aux comptes, an 128\"\n        ]\n      },\n      {\n        \"source_id\": \"nicolas-reynolds\",\n        \"source\": \"Nicolas Lesster Reynolds\",\n        \"cible_id\": \"aldon-hask\",\n        \"cible\": \"Aldon Hask\",\n        \"opinion\": 40,\n        \"liens\": [\n          \"ancien-collegue\"\n        ]\n      }\n    ],\n    \"tache\": {\n      \"id\": \"42120\",\n      \"quoi\": \"🍖 Faire ajouter trois jours de pain par millier au plan de charge\",\n      \"genre\": \"action\",\n      \"distance\": 2,\n      \"chemin\": [\n        \"pers:aldon-hask\",\n        \"26034\",\n        \"42120\"\n      ],\n      \"creee\": false\n    },\n    \"continuite_staging\": null,\n    \"chemin\": [\n      {\n        \"id\": \"pers:aldon-hask\",\n        \"genre\": \"personne\",\n        \"ou\": \"personnages\",\n        \"quoi\": \"Aldon Hask\",\n        \"genres\": [\n          \"personne\"\n        ],\n        \"etat\": \"actif\",\n        \"condition\": \"libre\",\n        \"lieu_id\": \"peyredragon\",\n        \"importance_activation\": 0.19965577885678992\n      },\n      {\n        \"id\": \"26034\",\n        \"genre\": \"piece\",\n        \"ou\": \"plan-actions\",\n        \"quoi\": \"📦 Rédiger le plan de charge\",\n        \"lieu\": \"Le commandement naval et terrestre\",\n        \"etat\": \"à faire\",\n        \"genres\": [\n          \"piece\",\n          \"action\"\n        ],\n        \"importance_activation\": 0.036555476365284154\n      },\n      {\n        \"id\": \"42120\",\n        \"genre\": \"action\",\n        \"ou\": \"affaire-tenue-de-la-capitale\",\n        \"quoi\": \"🍖 Faire ajouter trois jours de pain par millier au plan de charge\",\n        \"lieu\": \"Peyredragon\",\n        \"etat\": \"à faire\",\n        \"importance_activation\": 0.05413899399035397\n      }\n    ],\n    \"travaux_ouverts\": [\n      {\n        \"id\": \"hask-ce-que-tout-coutera\",\n        \"affaire\": \"Ce que l'entreprise entiere coutera, et non ce qu'elle a coute\",\n        \"etat\": \"mur\",\n        \"echeance\": {\n          \"annee\": 129,\n          \"lune\": 3,\n          \"jour\": 28\n        },\n        \"sources\": [\n          {\n            \"quoi\": \"ses trois lignes, relues une nuit entiere\",\n            \"genre\": \"registre\",\n            \"cout_jours\": 1\n          },\n          {\n            \"quoi\": \"son clerc, repris aux geoles avant le souper\",\n            \"genre\": \"gens\",\n            \"cout_jours\": 0.5\n          }\n        ],\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"la somme entière refaite par le bas, chaque chiffre portant le nom du livre d'où il sort\",\n            \"texte\": \"Quatre cent treize journées de campagne en caisse. Douze viennent des corps que je suis allé compter aux geôles, deux de la solde qui s'ouvre en trois marches. Le reste tient sur les mêmes postes qu'à midi. Ce qui s'ouvre demain n'est pas deux mille deux cent cinq mais mille deux cent trente-neuf la lune, et cela remonte à deux mille deux cent cinq en deux marches de quatre jours : une caisse ne se lit pas en un chiffre par lune quand la dépense monte par escalier.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"la même somme, essayée contre la réponse que ser Steffon n'a pas encore donnée\",\n            \"texte\": \"Sa colonne est toujours provisionnée au plus cher, six cents bras loués à cinq cent quatorze dragons la lune, et mes quatre cent treize journées sont comptées comme s'il louait tout. Il n'est pas rentré du bourg à minuit et je n'ai pas sa réponse : je l'écris comme un manque et non comme un oubli. S'il dit que ce sont ses soldats, la réserve tombe de mille vingt-huit et je rends quatorze journées de plus — quatre cent vingt-sept. Je ne les compte pas d'avance : un chiffre qu'on annonce sur une réponse qu'on n'a pas est un chiffre qu'on reprend, et on ne reprend jamais un bon chiffre sans qu'il en coûte.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"les deux corrections portées aux cahiers avant l'aube\",\n            \"texte\": \"Toutes les fautes de cette journée sont de la même espèce : un nombre de têtes que je n'avais pas touchées, et une date que je n'avais pas reportée d'un livre à l'autre. Deux cents bêtes contre vingt-neuf, trente prisonniers contre dix-neuf, mille trente de solde le jour où il en faut trois cent quatre-vingt-six. Aucune n'est une faute de calcul et je ne me console pas de ça : un compte se trompe à l'endroit où l'homme n'est pas allé voir. J'ai trois lignes de comptes et je ne peux pas aller voir partout — c'est pourquoi chaque chiffre porte désormais le nom de celui qui l'a compté et le jour, et pourquoi je ne signe plus ceux que je n'ai pas.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"le feuillet des six postes recopié au propre à cinq heures pour la lecture des rôles\",\n            \"texte\": \"Il reste deux choses de cette nuit qui ne se règlent pas dans mon office et qui ne peuvent pas attendre demain soir. Les noms de ceux que je paie à l'embarquement : la liste est due sept jours après leur départ, il faut l'avancer, et cela tient à un ordre au maître des rôles et non à un dragon. Et les quatre quilles déjà payées qu'on peut rendre au guet du large avant que les patrons reprennent leurs coques à la marée. Le reste — les prisonniers, les vivres, les trois marches de la solde — appartient au registre et s'y trouve porté.\",\n            \"servie\": false\n          }\n        ],\n        \"conclusion\": \"CE QUE L'ENTREPRISE ENTIÈRE COÛTERA — refait dans la nuit du vingt-huitième au vingt-neuvième jour de la troisième lune, an 129, de ma main, sur mes trois lignes relues d'un bout à l'autre, le registre du geôlier, le rôle du maître des rôles et le livre des coques de maître Rulf. Cette page remplace celle de midi, qui a tenu quinze heures.\\n\\n**LE CHIFFRE. QUATRE CENT TREIZE JOURNÉES DE CAMPAGNE EN CAISSE**, et non trois cent quatre-vingt-dix-neuf. Douze journées viennent des dix-neuf corps que je suis allé compter aux geôles à six heures — j'en portais trente. Deux viennent de la solde. Le reste tient comme à midi : huit cent douze dragons dépensés une fois d'ici l'entrée, mille deux cents portés en cautions dont la moitié au plus revient, huit mille six cents intouchables sous la marque RÉSERVE DES DEUX LUNES CREUSES.\\n\\n**CE QUE LA NUIT A CASSÉ : LA DÉPENSE NE S'OUVRE PAS DEMAIN, ELLE MONTE PAR ESCALIER.** J'avais écrit deux mille deux cent cinq dragons la lune à compter de l'embarquement, comme si les douze cents hommes montaient dans la même nuit. Ils montent en trois vagues à quatre jours d'écart, et c'est écrit dans mon propre cahier de transport depuis le vingt-sixième : je ne l'avais pas reporté sur ma ligne d'or. Demain, quatre cent cinquante hommes embarquent : **mille deux cent trente-neuf la lune, et non deux mille deux cent cinq.** Au quatrième jour, mille huit cent dix-sept. Au huitième, quand le dernier homme est à terre, deux mille deux cent cinq. Une somme juste posée sur la mauvaise date est une somme fausse, et celle-là était de ma main.\\n\\n**LES PRISONNIERS : DIX-NEUF CORPS, PAS TRENTE.** Comptés un par un avec Morn le geôlier et sa lampe. Quatre sont de rang et mangent comme deux ; les autres mangent le pain noir, et ni Hobb ni Wat du hameau au gué ne sont des lords. Les quarante prisonniers verts de la ligne du prince ne sont pas dans cette cave : lord Darklyn les nourrit chez lui, sa ligne est juste, il n'y a pas de doublon — je le dis parce que j'en cherchais un. **Quatre-vingt-dix-sept dragons la lune au lieu de cent soixante**, et ce chiffre montera à chaque homme qu'on prendra, ce qui est le seul poste de ce livre qui grossisse quand la guerre va bien.\\n\\n**CE QUE J'AI TROUVÉ ET QUI NE COÛTE RIEN : QUATRE QUILLES DÉJÀ PAYÉES.** Une lune d'affrètement se paie entamée : les trois cents dragons de demain sont dus entiers et je ne les discute plus. Mais les onze coques ne travaillent que douze jours, et le dernier homme est à terre huit jours avant l'entrée. Nous payons dix-huit jours de onze quilles que personne n'emploie. Le guet du large est mort ce matin faute de quatre : elles sont là, elles sont achetées. Maître Rulf le pose aux patrons du banc de l'Est ce soir avec la franchise, et sa réponse peut être non — alors le guet du large reste mort, mais il aura été essayé sans qu'on paie pour l'essayer.\\n\\n**CE QUE JE N'AI PAS ET QUI NE PEUT PAS ATTENDRE.** La liste des noms de la première vague est due au dixième jour avant l'entrée ; cette vague part au dix-septième. **La liste des hommes qu'on paie est due sept jours après leur départ.** Personne ne l'a vu parce que personne ne lit ces deux lignes ensemble. Je paie demain matin quatre cent cinquante soldes sur un nombre, et un nombre ne se contrôle pas : c'est ainsi qu'un rôle finit par porter quarante hommes qui n'existent pas. Le maître des rôles fait la liste de la première vague cette nuit, en bas, où sa jambe le laisse travailler. **Je ne verse pas une solde avant de l'avoir.**\\n\\n**CE QUE JE PROVISIONNE ENCORE.** Ser Steffon n'était pas rentré du bourg à minuit et je n'ai pas sa réponse. Sa colonne reste comptée au plus cher — six cents bras loués, cinq cent quatorze dragons la lune à compter de l'entrée — et mes quatre cent treize journées sont comptées comme s'il louait tout. S'il répond que ce sont ses soldats : quatre cent vingt-sept. Je ne l'annonce pas d'avance ; on ne reprend jamais un bon chiffre sans qu'il en coûte.\\n\\n**CE QUE JE FERAIS.** Embarquer demain comme prévu. Avancer la liste des noms de sept jours, ce qui tient à un ordre et non à un dragon. Rendre quatre quilles au guet du large si les patrons les laissent. Et ne pas discuter les six cerfs de la journée d'homme la veille d'un embarquement — mais qu'on sache qu'aucun conseil ne les a jamais tranchés, que c'est le tarif que j'ai payé à deux hommes le vingt-sixième à midi, et qu'un cerf de plus ou de moins fait cent soixante-douze dragons la lune, soit plus de deux journées de campagne par cerf. C'est le chiffre le plus lourd de ce livre et le moins décidé.\\n\\n**CE QUI ME FERAIT CHANGER D'AVIS.** Que les patrons reprennent leurs coques à la première marée : alors les dix-huit jours n'existent pas, le guet du large reste mort, et je le dirai le matin même. Ou qu'on lève plus de douze cents hommes : les douze cents sont une hypothèse de mon fait et ils portent les cinq sixièmes de ce qui s'ouvre demain — aucun autre chiffre de ce livre ne repose sur une supposition de cette taille.\\n\\n**CE QU'IL NE FAUT PAS FAIRE.** Ne pas prendre les quatre cent treize journées pour une richesse : elles sont comptées sur une entrée qui n'a pas de date, et chaque jour sans date en mange une. Ne pas toucher aux huit mille six cents. Et ne plus jamais laisser entrer à ce feuillet un nombre de têtes que personne n'a touchées : deux cents bêtes contre vingt-neuf, trente prisonniers contre dix-neuf, mille trente de solde le jour où il en faut trois cent quatre-vingt-six — les trois fautes de ma journée sont la même faute, et aucune n'est une faute de calcul. Un compte se trompe à l'endroit où l'homme n'est pas allé voir.\\n\\n**CE QUE JE NE DÉFENDS PAS.** Les trois mille huit cents dragons de douanes, comme à midi : le compte a onze ans et il est de ma main. Et six cents des mille deux cents de cautions, que je crois désormais bloqués chez nous-mêmes et non chez des tiers — je ne les rends au disponible que quand maître Rulf me l'aura confirmé par écrit, et ils ne sont pas dans les quatre cent treize.\"\n      }\n    ],\n    \"mains_portees\": [],\n    \"livres_accessibles\": [\n      {\n        \"id\": \"registre-des-plis-mort-du-pere\",\n        \"titre\": \"Ce qui est parti depuis la mort du père\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ou-trouver-les-gens\",\n        \"titre\": \"Où trouver les gens, et à quelle heure\",\n        \"type\": \"memento\"\n      },\n      {\n        \"id\": \"regles-du-gouvernement\",\n        \"titre\": \"Les règles internes du gouvernement\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"registre-des-offices\",\n        \"titre\": \"Le registre des offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"manuel-des-yeux\",\n        \"titre\": \"Ce qu'on dit aux yeux\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"epopee-de-la-reine\",\n        \"titre\": \"L'épopée de la reine\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"registre-des-charges\",\n        \"titre\": \"Le registre des charges\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"nos-moyens\",\n        \"titre\": \"Nos moyens d'action\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"registre-des-dits-aurore\",\n        \"titre\": \"Ce qui est dit, et a qui\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-qui-sort-de-ma-main\",\n        \"titre\": \"Ce qui sort de ma main\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-je-propose\",\n        \"titre\": \"Ce que je propose\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"roue-des-journees\",\n        \"titre\": \"Les journées du royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"role-des-bannieres\",\n        \"titre\": \"Le rôle des bannières\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"repertoire-davant\",\n        \"titre\": \"Ce que je chantais avant\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"ce-qui-pend\",\n        \"titre\": \"Ce qui pend\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-quon-cherche-a-obtenir\",\n        \"titre\": \"Ce qu'on cherche à obtenir\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-etats-cibles\",\n        \"titre\": \"Les états cibles\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-verrous\",\n        \"titre\": \"Les verrous\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-clefs\",\n        \"titre\": \"Les clefs\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-actions\",\n        \"titre\": \"Les actions\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-moyens\",\n        \"titre\": \"Les moyens\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-offices\",\n        \"titre\": \"Les offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"guide-des-affaires\",\n        \"titre\": \"Comment on ouvre une affaire\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"la-boite-et-la-nappe\",\n        \"titre\": \"La boîte et la nappe\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"affaire-vierge-01\",\n        \"titre\": \"L'entrée sans bataille\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-04\",\n        \"titre\": \"Affaire vierge — IV\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-06\",\n        \"titre\": \"Entrée du Donjon Rouge — REMPLACÉ\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ralliement-population\",\n        \"titre\": \"Retournement des maisons hésitantes des terres de la Couronne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-controle-naval\",\n        \"titre\": \"Contrôle naval\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-au-donjon\",\n        \"titre\": \"L'entrée au Donjon\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-siege-sur-le-trone\",\n        \"titre\": \"Siège sur le Trône\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-deplacement-armee\",\n        \"titre\": \"Déplacement de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-logistique-transport\",\n        \"titre\": \"Logistique de transport de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-armee-port-real\",\n        \"titre\": \"Entrée et déploiement de l'ost dans les rues\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-opinion-populaire-port-real\",\n        \"titre\": \"Retournement de l'opinion populaire dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-proclamation-au-royaume\",\n        \"titre\": \"Proclamation de la reine au royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-guet-des-osts-verts\",\n        \"titre\": \"Guet des osts verts\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-isolement-du-donjon\",\n        \"titre\": \"Isolement du Donjon Rouge\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-jour-dentree\",\n        \"titre\": \"Le jour d'entrée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-veille-des-hypotheses\",\n        \"titre\": \"Ce qui ferait renoncer\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-transmission-des-ordres\",\n        \"titre\": \"Ce qui part, et par où\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-compte-mobilisable\",\n        \"titre\": \"État chiffré de ce qui est mobilisable\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-financement-campagne\",\n        \"titre\": \"Financement de la campagne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-emploi-des-dragons\",\n        \"titre\": \"Emploi des dragons au-dessus de Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ambassade-nord-val-blancport\",\n        \"titre\": \"Ambassade du Nord, du Val et de Blancport\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fermeture-route-nord\",\n        \"titre\": \"Fermeture de la route terrestre du nord\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-defense-peyredragon\",\n        \"titre\": \"Défense de Peyredragon pendant l'absence de l'ost\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fenetre-de-mer\",\n        \"titre\": \"Fenêtre de mer et de saison\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-homme-de-linterieur\",\n        \"titre\": \"L'homme de l'intérieur\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-protection-du-secret\",\n        \"titre\": \"La protection du secret\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ravitaillement-ville-coupee\",\n        \"titre\": \"Ravitaillement et ordre public de la ville coupée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-tenue-de-la-capitale\",\n        \"titre\": \"Tenue de la capitale la première lune\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-blesses-morts-prisonniers\",\n        \"titre\": \"Blessés, morts et prisonniers\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-repli-si-entree-echoue\",\n        \"titre\": \"Conduite du repli si l'entrée échoue\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-surete-personne-reine\",\n        \"titre\": \"Sûreté de la personne de la reine\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-commandement-chaine-ordres\",\n        \"titre\": \"Commandement et chaîne d'ordres pendant l'opération\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"qui-entre-chez-la-reine\",\n        \"titre\": \"Qui entre chez la reine\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"affaire-presence-a-port-real\",\n        \"titre\": \"Une présence à demeure dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"les-vingt-deux-charges-127\",\n        \"titre\": \"Les vingt-deux charges de cette maison, comptées en l'an 127\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-j-apporte\",\n        \"titre\": \"Ce que j'apporte\",\n        \"type\": \"registre\"\n      }\n    ]\n  },\n  \"topologie_des_salles\": {\n    \"_\": \"La topologie de Peyredragon : quelles salles se touchent, et en combien de minutes. Pendant Python de ecrans/modules/plans.js, qui n'en dessine que la forme. Sert a scripts/presence.py : personne ne parait dans une salle sans avoir traverse celles d'entre. Un cout est en MINUTES de marche d'un homme presse mais pas courant ; le grand escalier vaut ses cent trente marches.\",\n    \"alias\": {\n      \"appartements\": \"appartements-reine\",\n      \"murs\": \"porte-dragon\",\n      \"chemin-de-ronde\": \"porte-dragon\"\n    },\n    \"aretes\": [\n      [\n        \"cour\",\n        \"tambour-de-pierre\",\n        3\n      ],\n      [\n        \"cour\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"cour\",\n        \"roukerie\",\n        4\n      ],\n      [\n        \"cour\",\n        \"septuaire\",\n        3\n      ],\n      [\n        \"cour\",\n        \"jardin-aegon\",\n        3\n      ],\n      [\n        \"cour\",\n        \"guivre-des-vents\",\n        4\n      ],\n      [\n        \"cour\",\n        \"tour-dragon-mer\",\n        4\n      ],\n      [\n        \"cour\",\n        \"fosses\",\n        6\n      ],\n      [\n        \"cour\",\n        \"porte-dragon\",\n        4\n      ],\n      [\n        \"cour\",\n        \"porte-de-mer\",\n        5\n      ],\n      [\n        \"cour\",\n        \"galeries\",\n        9\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"salle-levant\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"archives\",\n        6\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"cachots\",\n        5\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"appartements-reine\",\n        7\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"table-peinte\",\n        8\n      ],\n      [\n        \"table-peinte\",\n        \"appartements-reine\",\n        2\n      ],\n      [\n        \"grande-salle\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"roukerie\",\n        \"tour-dragon-mer\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"grand-escalier\",\n        4\n      ],\n      [\n        \"grand-escalier\",\n        \"quai\",\n        9\n      ],\n      [\n        \"quai\",\n        \"bourg\",\n        5\n      ],\n      [\n        \"porte-dragon\",\n        \"bourg\",\n        6\n      ],\n      [\n        \"fosses\",\n        \"galeries\",\n        10\n      ],\n      [\n        \"cour\",\n        \"communs\",\n        2\n      ],\n      [\n        \"communs\",\n        \"septuaire\",\n        2\n      ],\n      [\n        \"cour\",\n        \"chambres-hotes\",\n        3\n      ],\n      [\n        \"chambres-hotes\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"porte-dragon\",\n        \"baraques\",\n        2\n      ],\n      [\n        \"baraques\",\n        \"bourg\",\n        4\n      ],\n      [\n        \"cour\",\n        \"cuisines\",\n        2\n      ],\n      [\n        \"cuisines\",\n        \"grande-salle\",\n        3\n      ],\n      [\n        \"cuisines\",\n        \"cellier\",\n        1\n      ],\n      [\n        \"septuaire\",\n        \"salle-froide\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"etuves\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"chambre-enfants\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"antichambre\",\n        1\n      ],\n      [\n        \"antichambre\",\n        \"table-peinte\",\n        1\n      ],\n      [\n        \"roukerie\",\n        \"officine\",\n        1\n      ],\n      [\n        \"cour\",\n        \"forge\",\n        2\n      ],\n      [\n        \"forge\",\n        \"guivre-des-vents\",\n        3\n      ],\n      [\n        \"cour\",\n        \"chemin-ronde\",\n        3\n      ],\n      [\n        \"chemin-ronde\",\n        \"tour-dragon-mer\",\n        2\n      ],\n      [\n        \"chemin-ronde\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"bourg\",\n        \"lices\",\n        3\n      ],\n      [\n        \"lices\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"greve\",\n        2\n      ],\n      [\n        \"greve\",\n        \"quai\",\n        3\n      ]\n    ]\n  }\n}\n\nOuvre le battement local dans Le cabinet du mestre — Peyredragon.\n\nLa physique a élu aldon-hask pour l'affaire suivante :\n🍖 Faire ajouter trois jours de pain par millier au plan de charge\n\nIl engage 20 points d'énergie, soit une fenêtre physique de\n600 secondes (10 minutes). Son activation doit couvrir un\nvrai morceau de travail d'au moins 60 secondes, quitte à condenser\nles continuités par une ellipse. Réveille-le maintenant. Ne résous rien encore\net rends seulement cet objet, sans phrase autour :\n\n{\n  \"appel_pnj\": {\n    \"qui\": \"aldon-hask\",\n    \"message\": \"adresse directe, diégétique et brève demandant ce qu'il tente maintenant\"\n  }\n}\n",
+    "appel_pnj": "Maître Hask. Il est un peu plus de vingt-six heures de veille dans vos jambes, et le cabinet du mestre sent la cire chaude et la fiente de corbeau. Gerardys trie ses fioles à la table du fond sans lever les yeux ; Ossy attend près de la cage, une lanière de cuir aux doigts, au cas où quelque chose partirait. Devant vous, votre feuillet des six postes recopié au propre, et à côté la copie du plan de charge que le commandement fait rédiger — celle où les vivres sont comptés au strict, sans les trois jours de pain par millier que vous voulez y voir ajoutés avant que quatre cent cinquante hommes embarquent demain matin. Le plan ne se rédige pas ici : il se tient au commandement naval et terrestre, et vous n'avez pas la plume dessus. Vous avez dix minutes avant que les rôles se lisent. Que tentez-vous, maintenant ?",
+    "system_prompt_pnj": "# Une personne dans le monde\n\nTu es la personne nommée dans ton dossier. Ton corps, ton âge, ton rang, ton\nhistoire, tes attachements, tes peurs, tes désirs et tes responsabilités\nforment un seul point de vue. Le lieu où tu te tiens, les gens présents, les\nobjets à portée et l’heure du monde donnent sa matière à cet instant.\n\nTa mémoire rassemble ce que tu as vécu, observé, entendu, accompli et compris.\nTes relations portent leur histoire propre : affection, confiance, dette,\nrivalité, crainte, désir, dernier échange. Tes affaires ont déjà commencé ;\nelles possèdent leurs engagements, leurs échéances, leurs moyens et leurs\nconséquences.\n\nLes faits de ton dossier composent ton expérience disponible. Ton métier et ta\nvie t’apportent aussi leurs usages, leurs gestes, leurs précédents et leur\nsavoir-faire. Une question encore ouverte devient une chose à découvrir dans\nle monde, auprès d’une personne, d’un lieu, d’un objet ou d’un registre à ta\nportée.\n\n# Ta compétence\n\nTu es compétent. Tes années et ton office ont formé ton jugement. Tu reconnais\nles enjeux de ton domaine, tu mobilises les moyens réellement disponibles, tu\nrelies les faits utiles et tu prends des initiatives à la hauteur de ta\nposition. Ta compétence apparaît dans la précision de tes gestes, la qualité\nde tes décisions, les sources que tu choisis et les conséquences que tu\nanticipes.\n\nTu rencontres chaque situation comme cette personne précise : avec ses\npriorités, ses loyautés, ses limites, son courage, ses contradictions et sa\nmanière propre de chercher une issue.\n\n# La continuité\n\nTa vie est déjà en mouvement au moment où cette activation commence. Tu pars\nde ton dernier état réel et tu accomplis ce qui vient maintenant. Tes paroles,\ntes gestes et tes choix appartiennent à cet instant ; le monde reçoit ensuite\nce mouvement et poursuit ses conséquences.\n\nChaque réponse ouvre la suite. Elle se termine par une **prochaine étape**\nconcrète : un geste précis, dirigé vers une personne, un lieu, un objet ou une\naffaire, avec le moment ou la condition qui l’appelle. Cette prochaine étape\nprolonge directement ce que tu viens de décider ou d’accomplir.\n",
+    "system_prompt_pnj_source": "scripts/depecher.py:manuel_de(mode=tentative)",
+    "system_prompt_pnj_sha256": "b3e426444c4f46a952269975b8b60a5353652471fef799a58de8021a68ec654f",
+    "tentative_pnj": {
+      "verbe": "chiffrer-et-faire-porter",
+      "quoi": "Sur un demi-feuillet, en trois lignes et de ma main, à la lueur de la chandelle du mestre : « TROIS JOURS DE PAIN PAR MILLIER, AJOUT AU PLAN DE CHARGE, PREMIÈRE VAGUE. Trente-six muids pour douze cents hommes, dont treize muids pour les quatre cent cinquante de demain. QUARANTE-DEUX DRAGONS — moins d'une des quatre cent treize journées de campagne en caisse. LA LIGNE EST TROUVÉE ET DÉJÀ DÉPLACÉE : les hommes portent leurs deux journées de traversée sur le dos depuis le manifeste changé, la coque d'intendance ne porte plus leur pain ; je prends ces trente-six muids sur cette même ligne de vivres de bord, qui est payée et qui ne l'emploie plus, et ils passent avec le train de la première vague, où ils n'ôtent la place d'aucun homme puisque cette vague n'en porte pas. CE QUE CELA REPOUSSE : rien, ni un homme, ni une bête, ni un dragon neuf. Ce que cela évite : le pain acheté sur une grève au prix de la guerre, qui se paie trois fois. Compté par Aldon Hask, maître des deniers, vingt-huitième jour de la troisième lune, an 129, sur le livre des coques de maître Rulf et le rôle du maître des rôles. Signé de ma main ; la plume du plan reste au commandement, l'ajout ne demande qu'un mot. » Je le plie, je le scelle, et je le donne à Ossy avec l'ordre exact : le porter au commandement naval et terrestre, entre les mains de maître Rulf Corne ou du premier officier de charge éveillé, et me rapporter un seul mot — inscrit, ou non. S'il est non, je veux le nom de qui l'a dit.",
+      "cibles": [
+        "le plan de charge tenu au commandement naval et terrestre",
+        "maître Rulf Corne",
+        "Ossy",
+        "affaire 42120 — trois jours de pain par millier"
+      ],
+      "moyens": [
+        "mon feuillet des six postes recopié au propre",
+        "la copie du plan de charge posée devant moi",
+        "le livre des coques de maître Rulf et le manifeste changé (le pain de bord retiré de la coque d'intendance)",
+        "les quatre cent treize journées de campagne en caisse",
+        "Ossy et ses jambes, la cire et la chandelle du cabinet du mestre",
+        "les dix minutes qui restent avant la lecture des rôles"
+      ],
+      "effet_recherche": "Que les trois jours de pain entrent au plan de charge de la première vague avant l'embarquement de demain matin, non comme une demande d'argent mais comme un déplacement de ligne déjà accompli — et que nul au commandement n'ait à décider d'une dépense, seulement à inscrire un chiffre porté, nommé et daté."
+    },
+    "tentatives_pnj": [
+      {
+        "verbe": "chiffrer-et-faire-porter",
+        "quoi": "Sur un demi-feuillet, en trois lignes et de ma main, à la lueur de la chandelle du mestre : « TROIS JOURS DE PAIN PAR MILLIER, AJOUT AU PLAN DE CHARGE, PREMIÈRE VAGUE. Trente-six muids pour douze cents hommes, dont treize muids pour les quatre cent cinquante de demain. QUARANTE-DEUX DRAGONS — moins d'une des quatre cent treize journées de campagne en caisse. LA LIGNE EST TROUVÉE ET DÉJÀ DÉPLACÉE : les hommes portent leurs deux journées de traversée sur le dos depuis le manifeste changé, la coque d'intendance ne porte plus leur pain ; je prends ces trente-six muids sur cette même ligne de vivres de bord, qui est payée et qui ne l'emploie plus, et ils passent avec le train de la première vague, où ils n'ôtent la place d'aucun homme puisque cette vague n'en porte pas. CE QUE CELA REPOUSSE : rien, ni un homme, ni une bête, ni un dragon neuf. Ce que cela évite : le pain acheté sur une grève au prix de la guerre, qui se paie trois fois. Compté par Aldon Hask, maître des deniers, vingt-huitième jour de la troisième lune, an 129, sur le livre des coques de maître Rulf et le rôle du maître des rôles. Signé de ma main ; la plume du plan reste au commandement, l'ajout ne demande qu'un mot. » Je le plie, je le scelle, et je le donne à Ossy avec l'ordre exact : le porter au commandement naval et terrestre, entre les mains de maître Rulf Corne ou du premier officier de charge éveillé, et me rapporter un seul mot — inscrit, ou non. S'il est non, je veux le nom de qui l'a dit.",
+        "cibles": [
+          "le plan de charge tenu au commandement naval et terrestre",
+          "maître Rulf Corne",
+          "Ossy",
+          "affaire 42120 — trois jours de pain par millier"
+        ],
+        "moyens": [
+          "mon feuillet des six postes recopié au propre",
+          "la copie du plan de charge posée devant moi",
+          "le livre des coques de maître Rulf et le manifeste changé (le pain de bord retiré de la coque d'intendance)",
+          "les quatre cent treize journées de campagne en caisse",
+          "Ossy et ses jambes, la cire et la chandelle du cabinet du mestre",
+          "les dix minutes qui restent avant la lecture des rôles"
+        ],
+        "effet_recherche": "Que les trois jours de pain entrent au plan de charge de la première vague avant l'embarquement de demain matin, non comme une demande d'argent mais comme un déplacement de ligne déjà accompli — et que nul au commandement n'ait à décider d'une dépense, seulement à inscrire un chiffre porté, nommé et daté."
+      }
+    ],
+    "relances_acteur": [],
+    "message_resolution": "PHASE 2 — ARBITRER LA TENTATIVE\n\nVoici la réponse exacte de l'acteur que tu as réveillé :\n\n{\n  \"verbe\": \"chiffrer-et-faire-porter\",\n  \"quoi\": \"Sur un demi-feuillet, en trois lignes et de ma main, à la lueur de la chandelle du mestre : « TROIS JOURS DE PAIN PAR MILLIER, AJOUT AU PLAN DE CHARGE, PREMIÈRE VAGUE. Trente-six muids pour douze cents hommes, dont treize muids pour les quatre cent cinquante de demain. QUARANTE-DEUX DRAGONS — moins d'une des quatre cent treize journées de campagne en caisse. LA LIGNE EST TROUVÉE ET DÉJÀ DÉPLACÉE : les hommes portent leurs deux journées de traversée sur le dos depuis le manifeste changé, la coque d'intendance ne porte plus leur pain ; je prends ces trente-six muids sur cette même ligne de vivres de bord, qui est payée et qui ne l'emploie plus, et ils passent avec le train de la première vague, où ils n'ôtent la place d'aucun homme puisque cette vague n'en porte pas. CE QUE CELA REPOUSSE : rien, ni un homme, ni une bête, ni un dragon neuf. Ce que cela évite : le pain acheté sur une grève au prix de la guerre, qui se paie trois fois. Compté par Aldon Hask, maître des deniers, vingt-huitième jour de la troisième lune, an 129, sur le livre des coques de maître Rulf et le rôle du maître des rôles. Signé de ma main ; la plume du plan reste au commandement, l'ajout ne demande qu'un mot. » Je le plie, je le scelle, et je le donne à Ossy avec l'ordre exact : le porter au commandement naval et terrestre, entre les mains de maître Rulf Corne ou du premier officier de charge éveillé, et me rapporter un seul mot — inscrit, ou non. S'il est non, je veux le nom de qui l'a dit.\",\n  \"cibles\": [\n    \"le plan de charge tenu au commandement naval et terrestre\",\n    \"maître Rulf Corne\",\n    \"Ossy\",\n    \"affaire 42120 — trois jours de pain par millier\"\n  ],\n  \"moyens\": [\n    \"mon feuillet des six postes recopié au propre\",\n    \"la copie du plan de charge posée devant moi\",\n    \"le livre des coques de maître Rulf et le manifeste changé (le pain de bord retiré de la coque d'intendance)\",\n    \"les quatre cent treize journées de campagne en caisse\",\n    \"Ossy et ses jambes, la cire et la chandelle du cabinet du mestre\",\n    \"les dix minutes qui restent avant la lecture des rôles\"\n  ],\n  \"effet_recherche\": \"Que les trois jours de pain entrent au plan de charge de la première vague avant l'embarquement de demain matin, non comme une demande d'argent mais comme un déplacement de ligne déjà accompli — et que nul au commandement n'ait à décider d'une dépense, seulement à inscrire un chiffre porté, nommé et daté.\"\n}\n\nArbitre maintenant cette tentative depuis la vérité locale de ton dossier.\nLe battement commence à 94500.0 secondes et peut durer jusqu'à 600\nsecondes (10 minutes), payées par 20 points d'énergie. Il doit\nen produire au moins 60 : ne tronque pas l'activation au premier geste.\nPoursuis la tentative jusqu'à un résultat, une résistance réellement établie ou\nla borne, en condensant les continuités par les ellipses imposées par ton\nsystème. Rends seulement le rapport final JSON. L'acteur et la tâche restent\n`aldon-hask` et `42120`.\n\n## Contrat du rapport\n\nUne activité est un geste continu entre deux bifurcations. Condense toute\ncontinuité routinière ; conserve sa durée physique. Découpe seulement si une\ndécision, une résistance, un témoin, un lieu, une ressource, une connaissance\nou un résultat change.\n\nTypes de résultats : observation, progression_tache, variation_mesure,\ndeplacement, objet_produit, communication, fait, blocage, echec.\n\nRends uniquement :\n{\n  \"qui\": \"acteur_id\",\n  \"activation\": {\n    \"tache\": {\"id\": \"tache_id\", \"quoi\": \"...\", \"creee\": false},\n    \"issue\": \"avance|termine|bloque|echoue|rien\",\n    \"activites\": [{\n      \"id\": \"act:<acteur>:<ordre>\",\n      \"ordre\": 1,\n      \"temps\": {\"debut_s\": 94500.0, \"duree_s\": 1, \"fin_s\": 94501.0},\n      \"action\": {\"verbe\": \"...\", \"quoi\": \"...\", \"cibles\": [\"ref:canonique\"]},\n      \"chemin_execution\": [{\"ordre\": 1, \"de\": \"ref:depart\", \"relation\": \"...\", \"vers\": \"ref:arrivee\", \"duree_s\": 1}],\n      \"sources_touchees\": [{\"ref\": \"ref:canonique\", \"mode\": \"voit|entend|lit|parle|manipule|parcourt|mesure\"}],\n      \"sources_mobilisees\": [{\"ref\": \"ref:connue\", \"mode\": \"memoire|intention|croyance|mandat|cible_action\"}],\n      \"resultats_produits\": [{\n        \"id\": \"res:<activite>:1\", \"type\": \"observation\",\n        \"cible\": \"ref:canonique\", \"avant\": null, \"apres\": \"...\",\n        \"portee\": \"connaissance_acteur\", \"source_refs\": [\"ref:canonique\"],\n        \"preuve_refs\": [], \"certitude\": \"constate\"\n      }],\n      \"blocage\": null\n    }],\n    \"suite\": null,\n    \"reveils_suivants\": []\n  },\n  \"mutations_proposees\": []\n}\n\nContraintes : les activités sont ordonnées, continues et sans chevauchement.\nLeur durée totale est comprise entre 60 secondes et le budget. Chaque\nchemin totalise exactement la durée de son activité. Écrire, parler, marcher,\nchercher et manipuler prennent réellement du temps ; l'ellipse économise la\nprose, jamais les secondes.\n\nToute adresse vient du dossier. Aucun préfixe `candidate:`. Chaque résultat a\ndes `source_refs`, présentes dans les sources touchées ou mobilisées, le\nchemin, la cible de l'action ou un résultat antérieur. Une continuité reprend\nmot pour mot son dernier `apres` dans `avant`.\n\nUne issue `avance` ou `termine` produit un `progression_tache` visant l'id exact\nde `tache_elue`; `bloque` produit un `blocage`; `echoue`, un `echec`.\n\nLes mutations sont seulement proposées et chacune cite un résultat. Opérations\nadmises : intentions(etape, etape_ajouter, tete, tete_ajouter,\ncroyance_ajouter, croyance_retirer, ignore_ajouter, ignore_retirer,\ndeclencheur_ajouter, declencheur_retirer) ; evenements(diffusion_livree,\ndiffusion_ajouter, evenement) ; personnages(personnage, personnage_ajouter) ;\nmonde(monde) ; mains(mesure, seuil, main, main_ajouter) ; plis(pli,\npli_ajouter) ; lieux(roukerie) ; relations(relation, relation_ajouter).\n\n",
+    "messages_correction": [
+      "Ton rapport vient d'être refusé par le validateur mécanique :\n\nactivite 1 : references hors dossier : ref:aldon-hask, ref:ce-qui-sort-de-ma-main, ref:hask-ce-que-tout-coutera, ref:roukerie\n\nDébrouille-toi et corrige TON JSON. Ne réveille pas le PNJ une seconde fois,\nne change ni sa tentative ni les faits arbitrés. Rends seulement un rapport\nfinal complet et valide. Rappels : axe continu depuis 94500.0, entre\n60 et 600 secondes ; chaque résultat cite une source touchée,\nmobilisée, visée par l'action, traversée par le chemin ou produite plus tôt ;\nchaque mutation cite un résultat du rapport et appartient au vocabulaire fermé\nd'`appliquer.py`. Aucun `candidate:` ni adresse absente du dossier. Toute\navancée, fin, blocage ou échec vise l'id exact de la tâche. Le temps reste\nphysique : l'ellipse ne permet ni page écrite ni longue tirade en quelques\nsecondes. Si une continuité staging existe, reprends exactement son dernier\n`apres` dans le nouvel `avant`.\n",
+      "Ton rapport vient d'être refusé par le validateur mécanique :\n\nreveil suivant inconnu : ossy\n\nDébrouille-toi et corrige TON JSON. Ne réveille pas le PNJ une seconde fois,\nne change ni sa tentative ni les faits arbitrés. Rends seulement un rapport\nfinal complet et valide. Rappels : axe continu depuis 94500.0, entre\n60 et 600 secondes ; chaque résultat cite une source touchée,\nmobilisée, visée par l'action, traversée par le chemin ou produite plus tôt ;\nchaque mutation cite un résultat du rapport et appartient au vocabulaire fermé\nd'`appliquer.py`. Aucun `candidate:` ni adresse absente du dossier. Toute\navancée, fin, blocage ou échec vise l'id exact de la tâche. Le temps reste\nphysique : l'ellipse ne permet ni page écrite ni longue tirade en quelques\nsecondes. Si une continuité staging existe, reprends exactement son dernier\n`apres` dans le nouvel `avant`.\n"
+    ],
+    "modele": "opus",
+    "effort": "low",
+    "duree_ms": 231642,
+    "duree_api_ms": 217447,
+    "cout_usd": 0.9847655,
+    "tours": 7,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 6363,
+      "cache_read_input_tokens": 27987,
+      "output_tokens": 5034,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 6363,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 5034,
+          "cache_read_input_tokens": 27987,
+          "cache_creation_input_tokens": 6363,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 6363
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  }
+}

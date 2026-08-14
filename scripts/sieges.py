@@ -5,8 +5,15 @@
     python scripts/sieges.py --quitter rhaenyra --vraiment
     python scripts/sieges.py --asseoir marlo-vasse --vraiment
 
-Un siege est une entree de `etat/joueurs.json`. Son champ `occupe` dit si
-quelqu'un est ASSIS dedans en ce moment, et de la decoule toute la regle :
+Un siege est une entree de `etat/joueurs.json`. Etre ASSIS dedans ne se
+DECLARE plus : ça se MESURE (`scripts/occupation.py`) — la veille de sa session
+date de moins de deux heures reelles, ou son inbox porte une action non traitee.
+Le champ `occupe` du fichier n'est plus que le CACHE de ce calcul ; ce script le
+recale a chaque passage. C'est la reparation du 10 aout : les quatre sieges
+etaient restes a `true` depuis la veille, deux d'entre eux n'etaient plus joues,
+et personne ne pouvait le voir puisque l'etat restait coherent avec lui-meme.
+
+De l'etat assis ou vacant decoule toute la regle :
 
   siege OCCUPE  -> pas d'entree dans intentions.json. Sa tete appartient au
                    joueur ; si le MJ lui en ecrit une, il joue a sa place.
@@ -38,6 +45,10 @@ import sys
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ETAT = os.path.join(RACINE, "etat")
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import occupation  # QUI EST ASSIS — la mesure, pas le drapeau
+import regence  # ce que le siege a decide seul pendant l'absence
+
 
 def lire(nom, defaut):
     chemin = os.path.join(ETAT, nom + ".json")
@@ -48,10 +59,14 @@ def lire(nom, defaut):
 
 
 def ecrire(nom, donnees):
+    """Pose par os.replace : une autre session qui lit pendant ce temps voit
+    l'ancien fichier ENTIER, jamais un fichier a moitie ecrit."""
     chemin = os.path.join(ETAT, nom + ".json")
-    with io.open(chemin, "w", encoding="utf-8") as f:
+    temporaire = chemin + ".sieges.tmp"
+    with io.open(temporaire, "w", encoding="utf-8") as f:
         json.dump(donnees, f, ensure_ascii=False, indent=2)
         f.write(u"\n")
+    os.replace(temporaire, chemin)
 
 
 def tetes():
@@ -72,34 +87,23 @@ def horodatage():
 
 
 def etat_des_sieges():
+    """Le roster, l'index des tetes, et la MESURE de chaque siege.
+
+    On ne rend plus le drapeau `occupe` : c'est lui qui a menti pendant deux
+    jours. Chaque ligne porte ce qui a ete mesure et POURQUOI — l'age de la
+    veille, le compte de l'inbox —, parce qu'un verdict qu'on ne peut pas
+    verifier a l'oeil est exactement ce qui a induit en erreur.
+    """
     roster = lire("joueurs", [])
     index = tetes()
-    lignes = []
-    for siege in roster:
-        pid = siege.get("personnage_id")
-        occupe = siege.get("occupe", True)
-        a_tete = pid in index
-        if occupe and a_tete:
-            ennui = "FAUTE : occupe ET une tete — le MJ le joue a votre place"
-        elif not occupe and not a_tete:
-            ennui = "FAUTE : vacant SANS tete — il n'agira pas hors ecran"
-        else:
-            ennui = ""
-        lignes.append((pid, siege.get("nom") or pid, occupe, a_tete, ennui))
-    return roster, index, lignes
+    return roster, index, occupation.mesures()
 
 
-def imprimer(lignes):
-    if not lignes:
+def imprimer(mesures):
+    if not mesures:
         print("aucun siege dans etat/joueurs.json")
         return
-    largeur = max(len(l[0] or "") for l in lignes)
-    for pid, nom, occupe, a_tete, ennui in lignes:
-        print("  {:<{w}}  {:<8} {:<16} {}".format(
-            pid or "?",
-            "assis" if occupe else "vacant",
-            "tete ecrite" if a_tete else "sans tete",
-            ennui, w=largeur))
+    occupation.imprimer(mesures)
 
 
 def basculer(cible, vers_occupe, vraiment):
@@ -112,10 +116,22 @@ def basculer(cible, vers_occupe, vraiment):
     if siege is None:
         sys.exit("aucun siege pour '{}' dans etat/joueurs.json".format(cible))
 
-    deja = siege.get("occupe", True)
+    # LA MESURE FAIT FOI, pas le drapeau. Si le fichier dit « occupe » et que
+    # plus rien ne respire depuis dix heures, le siege est vacant, un point
+    # c'est tout — et c'est le cas qu'on repare.
+    mesure = occupation.mesurer(siege, tetes=set(index))
+    deja = mesure["occupe"]
+    if mesure["derive"]:
+        print("  (le cache disait '{}' ; mesure : {} — {})".format(
+            "occupe" if mesure["cache"] else "vacant",
+            "assis" if deja else "vacant", mesure["raison"]))
     if deja == vers_occupe:
-        print("{} est deja {}.".format(
-            cible, "occupe" if deja else "vacant"))
+        print("{} est deja {} ({}).".format(
+            cible, "assis" if deja else "vacant", mesure["raison"]))
+        if mesure["derive"]:
+            occupation.rafraichir(vraiment)
+            print("  cache recale." if vraiment
+                  else "  (cache a recaler — ajoutez --vraiment)")
         return
 
     if not vers_occupe and cible not in index:
@@ -132,6 +148,10 @@ def basculer(cible, vers_occupe, vraiment):
     actions = ["{} : {} -> {}".format(
         cible, "assis" if deja else "vacant",
         "assis" if vers_occupe else "vacant")]
+    actions.append(
+        "marquer {} dans son entree — s'asseoir et se lever sont des gestes "
+        "dates, et ils battent la mesure le temps qu'elle rattrape".format(
+            "assis_a" if vers_occupe else "quitte_a"))
 
     tete = index.get(cible)
     if vers_occupe and tete is not None:
@@ -140,6 +160,20 @@ def basculer(cible, vers_occupe, vraiment):
             "etat/archive/tetes/{}-{}.json)".format(cible, horodatage()))
     if not vers_occupe:
         actions.append("sa tete reste en place : il agit desormais seul")
+        if not regence.clause_posee(tete):
+            actions.append(
+                "AVERTISSEMENT : sa tete ne porte pas la clause de regence. "
+                "Il sera active comme n'importe quel acteur et le garde "
+                "mecanique le retiendra, mais il l'ignorera en agissant.\n"
+                "    python scripts/regence.py --poser {} --vraiment"
+                .format(cible))
+    if vers_occupe:
+        _, en_attente = regence.compte_rendu(cible)
+        if en_attente:
+            actions.append(
+                "vous rendre ce qui s'est decide sans vous : {} activation(s) "
+                "en regence, ecrites dans etat/joueurs/{}/"
+                .format(len(en_attente), cible))
 
     for a in actions:
         print("  " + a)
@@ -159,11 +193,29 @@ def basculer(cible, vers_occupe, vraiment):
         ecrire("intentions", [t for t in lire("intentions", [])
                               if t.get("personnage_id") != cible])
 
-    siege["occupe"] = vers_occupe
-    ecrire("joueurs", roster)
+    # ON NE REECRIT PLUS LE ROSTER ENTIER depuis une lecture vieille de trois
+    # etapes : une autre session peut avoir touche un `pnj` ou une `note`
+    # pendant ce temps. On pose la marque, puis on laisse le rafraichissement
+    # recaler `occupe` — les deux relisent le fichier juste avant d'ecrire et
+    # ne touchent que leurs propres clefs.
+    occupation.marquer(cible, "assis_a" if vers_occupe else "quitte_a")
+    _, refuses, _ = occupation.rafraichir(True)
     print("\necrit.")
+    for m in refuses:
+        print("  ATTENTION : {} est mesure vacant et n'a pas de tete — laisse "
+              "occupe.".format(m["personnage_id"]))
     if vers_occupe:
-        print("Pensez a relire son dossier avant de jouer : "
+        # LA PASSATION. Se rasseoir sans savoir ce qu'on herite, c'est
+        # decouvrir trois lunes plus tard qu'un pli est parti en son nom. On
+        # rend la liste, on l'ecrit sur disque, et on marque le registre :
+        # ce qui a ete rendu ne sera pas rendu deux fois.
+        texte, chemin = regence.remettre(cible)
+        print("")
+        print(texte)
+        if chemin:
+            print("\n(cette passation est ecrite dans {})".format(
+                os.path.relpath(chemin, RACINE).replace("\\", "/")))
+        print("\nPensez a relire son dossier avant de jouer : "
               "etat/joueurs/{}/".format(cible))
 
 
@@ -176,9 +228,28 @@ def main():
     ap.add_argument("--quitter", metavar="PERSONNAGE_ID",
                     help="le quitter : il redevient un PNJ et doit deja "
                          "avoir une tete dans intentions.json")
+    ap.add_argument("--rafraichir", action="store_true",
+                    help="recaler le cache `occupe` sur la mesure, sans "
+                         "changer qui joue quoi")
     ap.add_argument("--vraiment", action="store_true",
                     help="ecrire pour de bon")
     args = ap.parse_args()
+
+    if args.rafraichir and not (args.asseoir or args.quitter):
+        changements, refuses, releve = occupation.rafraichir(args.vraiment)
+        imprimer(releve)
+        print("")
+        if not changements:
+            print("  le cache est deja juste : rien a recaler.")
+        for m in changements:
+            print("  {} : {} -> {}{}".format(
+                m["personnage_id"],
+                "occupe" if m["cache"] else "vacant",
+                "occupe" if m["occupe"] else "vacant",
+                "  (REFUSE : sans tete)" if m in refuses else ""))
+        if changements and not args.vraiment:
+            print("\n  (rien n'a ete ecrit — ajoutez --vraiment)")
+        return
 
     if args.asseoir and args.quitter:
         if args.asseoir == args.quitter:

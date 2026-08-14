@@ -393,7 +393,9 @@ function ChampVu(o) {
     const places = [];
     tas.forEach((gr, cle) => {
       const p = gr[0].ou || gr[0].centre || [0, 0];
-      const c = Taches.couronne(gr.length, 3.5 * k, cle);
+      // les acteurs, pas leur nombre : `taille` et la criticité changent les
+      // rayons, et un placement aveugle à ça les fait se recouvrir
+      const c = Taches.ranger(gr, 3.5 * k, cle);
       gr.forEach((a, i) => places.push([a, [p[0] + c[i][0], p[1] + c[i][1]]]));
     });
     return places;
@@ -646,6 +648,8 @@ function ChampVu(o) {
   window.addEventListener("DOMContentLoaded", () => {
     charger();
     setInterval(charger, 30000);
+    // la criticité rentre après coup : les ronds changent de taille, on redessine
+    document.addEventListener("taches-charges", dessiner);
   });
 
   return { charger, dessiner, ouvrir, fermer, existe, champ: () => champ };

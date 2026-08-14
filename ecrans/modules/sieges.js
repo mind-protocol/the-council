@@ -6,9 +6,11 @@
 // demande un personnage à /bascule, le serveur pose le cookie et renvoie à la
 // racine. Rien de ce qui est privé à un siège ne transite par cette liste.
 //
-// Le contrôle vit dans le bandeau et non dans le panneau latéral : savoir qui
-// l'on est ne se déplie pas, ça se lit. Il reste caché en partie seule — un
-// seul siège au roster n'a rien à choisir.
+// Le contrôle vit dans le panneau latéral, sous « Le siège ». Il était au
+// bandeau du décor tant que ce bandeau existait ; celui-ci est descendu sous la
+// case d'écriture, où l'on lit le lieu et l'heure — et changer de personnage
+// n'est pas une information de scène, c'est une commande de rail. Le cadre
+// reste replié en partie seule : un seul siège au roster n'a rien à choisir.
 "use strict";
 (() => {
   window.addEventListener("DOMContentLoaded", () => {
@@ -32,6 +34,10 @@
       const mien = sieges.find((s) => s.personnage_id === moi);
 
       zone.hidden = false;
+      // Le contrôle vit dans le rail : c'est le cadre `zone-siege` qui porte le
+      // titre, et il reste replié tant qu'il n'y a rien à choisir.
+      const cadre = document.getElementById("zone-siege");
+      if (cadre) cadre.hidden = false;
       bouton.textContent = mien ? (mien.nom || mien.personnage_id) : "Choisir un siège";
       bouton.title = mien
         ? "Vous incarnez " + (mien.nom || mien.personnage_id) + " — cliquez pour changer de siège"

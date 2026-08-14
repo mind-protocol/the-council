@@ -8,7 +8,7 @@
 # renvois dans le vide se reparent a la CELLULE, une par une, et pas autrement.
 #
 # CE SCRIPT N'A AUCUN JUGEMENT. Il ne cherche pas la bonne cible, il ne devine
-# rien : il prend une proposition deja arbitree, ecrite dans etat/staging/, et
+# rien : il prend une proposition deja arbitree, ecrite dans etat/, et
 # il la pose. Toute l'intelligence est dans le fichier de proposition ; ici il
 # n'y a qu'un poseur de cellules, et trois gardes.
 #
@@ -32,7 +32,7 @@
 # par ligne, et n'ecrit qu'avec --vraiment.
 #
 # Usage :
-#     python scripts/corriger_plan.py etat/staging/correction-plan-<horodatage>.json
+#     python scripts/corriger_plan.py etat/correction-plan-<horodatage>.json
 #     python scripts/corriger_plan.py <fichier> --vraiment
 #
 # Apres application : relancer `python scripts/couverture.py`, qui refait les
@@ -46,7 +46,7 @@ import unicodedata
 
 racine = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LIVRES = os.path.join(racine, "etat", "books.json")
-STAGING = os.path.join(racine, "etat", "staging")
+STAGING = os.path.join(racine, "etat")
 
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -231,7 +231,7 @@ def ecrire_livres(livres):
 
 AIDE = u"""corriger_plan.py — pose une proposition de correction du plan.
 
-    python scripts/corriger_plan.py etat/staging/correction-plan-<horodatage>.json
+    python scripts/corriger_plan.py etat/correction-plan-<horodatage>.json
     python scripts/corriger_plan.py <fichier> --vraiment
 
 Blanc par defaut : il dit ce qu'il ferait et n'ecrit rien. Il relit

@@ -47,7 +47,7 @@ C'est la même règle que partout ailleurs : **une pièce d'en face ne devient u
 
 ## Ce qu'on n'invente pas
 
-Le même partage que `docs/travaux.md`, et pour la même raison :
+Le même partage que `docs/boucle-acteurs.md`, et pour la même raison :
 
 1. **Invente largement la matière** — les gens, les prix, les rancunes.
 2. **N'invente pas le verdict** — ce que la source pouvait rendre.

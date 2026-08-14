@@ -1,0 +1,49 @@
+{
+  "_lisez_moi": "UNE NOTE SUR DIX PAR OBJECTIF FINAL, et rien d'autre à saisir. C'est le seul jugement humain de tout le dispositif : tout le reste se dérive du graphe. 5 = neutre, ce que les choses valent aujourd'hui. 10 = ce sans quoi la guerre est perdue. 0 = on peut y renoncer sans que rien ne change. Un objectif absent d'ici est noté 5.",
+  "_echelle": "ADAPTATIVE, et c'est ce qui fait qu'une note pèse. poids = A ** ((note - 5) / 5), où A est l'amplitude que le graphe produit déjà tout seul — l'écart entre le cahier le plus lourd et le cahier médian, à notes égales. Porter un objectif de 5 à 10 lui donne donc exactement le poids que la topologie donne, à elle seule, au plus gros cahier contre un cahier moyen. Une main d'homme pèse autant qu'une position dans le graphe, ni plus ni moins ; et quand le plan change de forme, l'échelle suit.",
+  "_les_autres_valent_zero": "Un état cible intermédiaire n'a pas de valeur propre : il vaut ce qu'il sert. Lui laisser 1 revenait à payer deux fois la même chose, et c'est ce qui faisait remonter la plomberie au-dessus du but.",
+  "_a_noter": "Les quatorze ci-dessous sont les seuls états que rien ne sert : le bout des chaînes. La liste se refait avec `python scripts/criticite.py --etats`. Tant que toutes les notes valent 5, la mesure ne dit rien de plus qu'avant — c'est en les écartant qu'elle commence à parler.",
+  "notes": {
+    "100": 8,
+    "4000": 7,
+    "44000": 6,
+    "44100": 7,
+    "45000": 3,
+    "50000": 8,
+    "60001": 5,
+    "60002": 5,
+    "60003": 5,
+    "60004": 5,
+    "60005": 5,
+    "60006": 5,
+    "60007": 5,
+    "60008": 5
+  },
+  "_ce_qu_ils_sont": {
+    "100": "👑 Capitale tenue — Prise de Port-Réal. Servi par 13 autres états : c'est le sommet du plan de la reine.",
+    "4000": "📋 Le Compte — L'entrée sans bataille",
+    "44000": "🗺️ La garnison et l'ost cartographiés — Une présence à demeure dans Port-Réal",
+    "44100": "🚪 Un chemin vers le Donjon, précis — Une présence à demeure dans Port-Réal",
+    "45000": "🪵 Le lot placé au-dessus du prix des quais — Le bois des tours brûlées",
+    "50000": "📜 La clause du bas est lue sur la page — Ce qu'on fait signer au roi",
+    "60001": "🪵 Le bois se vend sans qu'on aille le proposer — Néra",
+    "60002": "🪚 On vend une pièce faite et non une pièce trouvée — Néra",
+    "60003": "🧱 On nous paie des hommes autant que du bois — Néra",
+    "60004": "⚙️ Personne d'autre sur la Néra ne peut lever ce qu'on lève — Néra",
+    "60005": "📜 Une commande arrive avec un sceau dessus — Néra",
+    "60006": "🗣️ « Faites venir les gens de la Néra » — Néra",
+    "60007": "⚖️ N'être à personne avant d'avoir choisi — Néra",
+    "60008": "🪢 Ne pas pendre, et que personne ne pende pour moi — Néra"
+  },
+  "_pourquoi_ces_notes": {
+    "100": "8 — baissée de 10 le 2e de la 4e lune. MESURÉ : la note du sommet ne change RIEN au relief. À 10, 8, 7, 6 ou 5, ce sont toujours 95 % des pas qui portent la même perte — la note règle l'échelle, pas la topologie. Tout ce qui mène à la capitale bloque la capitale, donc tout vaut ce qu'elle vaut. On l'a baissée parce qu'un sommet à 10 laisse croire qu'il écrase le reste ; il ne l'écrase pas, il le NIVELLE, et ce n'est pas la même chose.",
+    "50000": "8 — ce qu'on fait signer au roi. C'est la seule fin qui close la chose en droit et non par les armes.",
+    "4000": "7 — entrer sans bataille. Vaut presque autant que la capitale, parce que c'est la manière de l'avoir.",
+    "44100": "7 — un chemin vers le Donjon. Sans porte, l'ost est devant des murs.",
+    "44000": "6 — savoir ce qu'on a en face. Cher payé si on ne l'a pas, mais on peut entrer sans.",
+    "45000": "3 — le bois des tours brûlées. De l'argent et du bois ; on peut y renoncer sans perdre la guerre.",
+    "_nera": "60001 à 60008 restent à 5, et ce n'est pas un oubli : ce sont les fins de Marlo, pas celles de la reine. C'est à son siège de les noter — les noter d'ici serait juger la vie d'un homme depuis la Table Peinte.",
+    "_qui_a_ecrit": "Proposées par la régie le 2e jour de la 4e lune. Une note se change en un chiffre ; c'est fait pour."
+  },
+  "_le_relief_ne_se_gagne_pas_ici": "Cherché, et il n'y est pas. Basculer en OU les treize états qui servent 100 rend 54 pas critiques au lieu de 1004 : pire, et faux — « Porte acquise », « Pied dans la ville », « Autorité effective », « La ville a mangé le lendemain » sont cumulatifs, on ne tient pas une capitale avec l'un des treize. La platitude n'est donc pas un défaut de mesure : c'est la forme réelle de l'entreprise. Ce qui discrimine encore : la colonne « attendu », et le partage binaire entre les 1004 pas qui mènent à la capitale et les 234 qui n'y mènent pas."
+}

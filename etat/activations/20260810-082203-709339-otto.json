@@ -1,0 +1,739 @@
+{
+  "qui": "otto",
+  "activation": {
+    "tache": {
+      "id": "71028",
+      "quoi": "Faire proclamer la déchéance de Rhaenyra par le roi",
+      "creee": false
+    },
+    "issue": "avance",
+    "activites": [
+      {
+        "id": "act:otto:1",
+        "ordre": 1,
+        "temps": {
+          "debut_s": 150235.558,
+          "duree_s": 300,
+          "fin_s": 150535.558
+        },
+        "action": {
+          "verbe": "lire",
+          "quoi": "Reprendre l'extrait du livre du maître du port depuis le 23e et dresser à part, sur feuillet neuf, les six livraisons de froment — dates, muids, marques de coque — pour que l'ordre de gage porte des lignes et non une intention",
+          "cibles": [
+            "registre:extrait-maitre-du-port-23e",
+            "71028"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "lieu:cabinet-de-la-main",
+            "relation": "demeure",
+            "vers": "lieu:cabinet-de-la-main",
+            "duree_s": 300
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "registre:extrait-maitre-du-port-23e",
+            "mode": "lit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pensee:otto:grain-colonne-barree",
+            "mode": "memoire"
+          },
+          {
+            "ref": "71028",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:otto:1:1",
+            "type": "observation",
+            "cible": "registre:extrait-maitre-du-port-23e",
+            "avant": null,
+            "apres": "Six livraisons de froment portées depuis le 23e : trente-huit muids au 24e, cinq livraisons ensuite. La ligne du payeur est barrée aux six, d'un trait unique et de la même main — la barre est tracée après coup, sur une ligne d'abord laissée à sécher : ce n'est pas un clerc qui oublie, c'est un clerc qui a reçu de ne pas écrire un nom.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "registre:extrait-maitre-du-port-23e"
+            ],
+            "preuve_refs": [
+              "registre:extrait-maitre-du-port-23e"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:otto:1:2",
+            "type": "objet_produit",
+            "cible": "feuillet:etat-des-six-livraisons",
+            "avant": null,
+            "apres": "Feuillet de la main d'Otto : six lignes, dates, muids, marques de coque, colonne du payeur laissée vide et non barrée. Aucun nom de marchand n'y figure encore — le livre du port ne porte que les marques.",
+            "portee": "monde",
+            "source_refs": [
+              "registre:extrait-maitre-du-port-23e",
+              "res:act:otto:1:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 10.0,
+        "quoi": "Reprendre l'extrait du livre du maître du port depuis le 23e et dresser à part, sur feuillet neuf, les six livraisons de froment — dates, muids, marques de coque — pour que l'ordre de gage porte des lignes et non une intention",
+        "source": "71028, pensee:otto:grain-colonne-barree, registre:extrait-maitre-du-port-23e",
+        "resultat": "observation: Six livraisons de froment portées depuis le 23e : trente-huit muids au 24e, cinq livraisons ensuite. La ligne du payeur est barrée aux six, d'un trait unique et de la même main — la barre est tracée après coup, sur une ligne d'abord laissée à sécher : ce n'est pas un clerc qui oublie, c'est un clerc qui a reçu de ne pas écrire un nom. · objet_produit: Feuillet de la main d'Otto : six lignes, dates, muids, marques de coque, colonne du payeur laissée vide et non barrée. Aucun nom de marchand n'y figure encore — le livre du port ne porte que les marques.",
+        "preuve": [
+          "registre:extrait-maitre-du-port-23e"
+        ]
+      },
+      {
+        "id": "act:otto:2",
+        "ordre": 2,
+        "temps": {
+          "debut_s": 150535.558,
+          "duree_s": 240,
+          "fin_s": 150775.558
+        },
+        "action": {
+          "verbe": "ordonner",
+          "quoi": "Ouvrir la porte de l'antichambre et donner trois ordres séparés au clerc de garde, chacun à un porteur différent : monter le coffre de la Main sous escorte ; porter aux six marques du livre du port convocation à la table de la Main pour vêpres, avec mention que l'on paiera comptant ; quérir le maître de la roukerie du Donjon Rouge, seul, sans en aviser le Grand Mestre",
+          "cibles": [
+            "pers:clerc-de-la-main",
+            "pers:maitre-de-la-roukerie",
+            "marchands:froment-port-real"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "lieu:cabinet-de-la-main",
+            "relation": "va_a",
+            "vers": "lieu:antichambre-de-la-main",
+            "duree_s": 40
+          },
+          {
+            "ordre": 2,
+            "de": "lieu:antichambre-de-la-main",
+            "relation": "parle_a",
+            "vers": "pers:clerc-de-la-main",
+            "duree_s": 160
+          },
+          {
+            "ordre": 3,
+            "de": "lieu:antichambre-de-la-main",
+            "relation": "revient_a",
+            "vers": "lieu:cabinet-de-la-main",
+            "duree_s": 40
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:clerc-de-la-main",
+            "mode": "parle"
+          },
+          {
+            "ref": "feuillet:etat-des-six-livraisons",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "mandat:main-du-roi",
+            "mode": "mandat"
+          },
+          {
+            "ref": "res:act:otto:1:2",
+            "mode": "memoire"
+          },
+          {
+            "ref": "marchands:froment-port-real",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "pers:maitre-de-la-roukerie",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:otto:2:1",
+            "type": "communication",
+            "cible": "pers:clerc-de-la-main",
+            "avant": null,
+            "apres": "Trois ordres donnés à trois porteurs, sans qu'aucun connaisse les deux autres. Le clerc relève une chose de sa charge : les marques du livre du port ne sont pas des noms, et le maître de port seul peut les rendre en noms — ses hommes descendront donc au port avant de convoquer. Les marchands ne seront pas à la table avant vêpres au plus tôt.",
+            "portee": "monde",
+            "source_refs": [
+              "pers:clerc-de-la-main",
+              "res:act:otto:1:2"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:otto:2:2",
+            "type": "fait",
+            "cible": "pers:maitre-de-la-roukerie",
+            "avant": null,
+            "apres": "Le maître de la roukerie est mandé seul au cabinet de la Main, hors de la présence d'Orwyle.",
+            "portee": "monde",
+            "source_refs": [
+              "pers:clerc-de-la-main",
+              "mandat:main-du-roi"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 8.0,
+        "quoi": "Ouvrir la porte de l'antichambre et donner trois ordres séparés au clerc de garde, chacun à un porteur différent : monter le coffre de la Main sous escorte ; porter aux six marques du livre du port convocation à la table de la Main pour vêpres, avec mention que l'on paiera comptant ; quérir le maître de la roukerie du Donjon Rouge, seul, sans en aviser le Grand Mestre",
+        "source": "feuillet:etat-des-six-livraisons, mandat:main-du-roi, marchands:froment-port-real, pers:clerc-de-la-main, pers:maitre-de-la-roukerie, res:act:otto:1:2",
+        "resultat": "communication: Trois ordres donnés à trois porteurs, sans qu'aucun connaisse les deux autres. Le clerc relève une chose de sa charge : les marques du livre du port ne sont pas des noms, et le maître de port seul peut les rendre en noms — ses hommes descendront donc au port avant de convoquer. Les marchands ne seront pas à la table avant vêpres au plus tôt. · fait: Le maître de la roukerie est mandé seul au cabinet de la Main, hors de la présence d'Orwyle.",
+        "preuve": null
+      },
+      {
+        "id": "act:otto:3",
+        "ordre": 3,
+        "temps": {
+          "debut_s": 150775.558,
+          "duree_s": 480,
+          "fin_s": 151255.558
+        },
+        "action": {
+          "verbe": "ecrire",
+          "quoi": "Écrire de sa main, en deux exemplaires, l'ordre de gage sur le froment débarqué depuis le 23e : dette d'Otto Hightower envers la Couronne et non de la Couronne envers les marchands, gagée sur son crédit privé de Villevieille et sur le nom d'Ormund, scellée de la tour Hightower et non du sceau du roi ; la colonne des quittances laissée vide, à remplir par les marchands eux-mêmes, après paiement",
+          "cibles": [
+            "pli:ordre-de-gage-froment",
+            "feuillet:etat-des-six-livraisons"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "lieu:cabinet-de-la-main",
+            "relation": "demeure",
+            "vers": "lieu:cabinet-de-la-main",
+            "duree_s": 480
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "feuillet:etat-des-six-livraisons",
+            "mode": "lit"
+          },
+          {
+            "ref": "pli:ordre-de-gage-froment",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "credit:villevieille-hightower",
+            "mode": "mandat"
+          },
+          {
+            "ref": "pers:ormund-hightower",
+            "mode": "memoire"
+          },
+          {
+            "ref": "intention:otto:gager-avant-de-promettre",
+            "mode": "intention"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:otto:3:1",
+            "type": "objet_produit",
+            "cible": "pli:ordre-de-gage-froment",
+            "avant": null,
+            "apres": "Ordre de gage en double, de la main de la Main, scellé de la tour d'Hightower : les six livraisons portées au compte personnel d'Otto Hightower, remboursables sur Villevieille, la Couronne n'étant tenue de rien. Colonne des quittances vide. Un exemplaire pour la table, un pour être versé au livre du trésor après acquit — et non avant.",
+            "portee": "monde",
+            "source_refs": [
+              "feuillet:etat-des-six-livraisons",
+              "credit:villevieille-hightower"
+            ],
+            "preuve_refs": [
+              "pli:ordre-de-gage-froment"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:otto:3:2",
+            "type": "observation",
+            "cible": "credit:villevieille-hightower",
+            "avant": null,
+            "apres": "En l'écrivant il voit ce que la formule lui coûte : engager le nom d'Hightower pour le pain du roi, c'est faire payer Villevieille un achat de la Couronne — exactement ce qu'il refusait de faire pour Accalmie ce matin. Il l'écrit quand même, parce que le grain se mange et qu'une promesse ne se mange pas. Et il note pour lui que le crédit de Villevieille n'est pas de l'or à Port-Réal : il ne fera monter des pièces sur cette table que par la caisse de la Main, dont il devient à l'instant le débiteur nommé.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "credit:villevieille-hightower",
+              "res:act:otto:3:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 16.0,
+        "quoi": "Écrire de sa main, en deux exemplaires, l'ordre de gage sur le froment débarqué depuis le 23e : dette d'Otto Hightower envers la Couronne et non de la Couronne envers les marchands, gagée sur son crédit privé de Villevieille et sur le nom d'Ormund, scellée de la tour Hightower et non du sceau du roi ; la colonne des quittances laissée vide, à remplir par les marchands eux-mêmes, après paiement",
+        "source": "credit:villevieille-hightower, feuillet:etat-des-six-livraisons, intention:otto:gager-avant-de-promettre, pers:ormund-hightower, pli:ordre-de-gage-froment",
+        "resultat": "objet_produit: Ordre de gage en double, de la main de la Main, scellé de la tour d'Hightower : les six livraisons portées au compte personnel d'Otto Hightower, remboursables sur Villevieille, la Couronne n'étant tenue de rien. Colonne des quittances vide. Un exemplaire pour la table, un pour être versé au livre du trésor après acquit — et non avant. · observation: En l'écrivant il voit ce que la formule lui coûte : engager le nom d'Hightower pour le pain du roi, c'est faire payer Villevieille un achat de la Couronne — exactement ce qu'il refusait de faire pour Accalmie ce matin. Il l'écrit quand même, parce que le grain se mange et qu'une promesse ne se mange pas. Et il note pour lui que le crédit de Villevieille n'est pas de l'or à Port-Réal : il ne fera monter des pièces sur cette table que par la caisse de la Main, dont il devient à l'instant le débiteur nommé.",
+        "preuve": [
+          "pli:ordre-de-gage-froment"
+        ]
+      },
+      {
+        "id": "act:otto:4",
+        "ordre": 4,
+        "temps": {
+          "debut_s": 151255.558,
+          "duree_s": 200,
+          "fin_s": 151455.558
+        },
+        "action": {
+          "verbe": "compter",
+          "quoi": "Recevoir le coffre de la Main, l'ouvrir devant les deux gardes qui l'ont monté, et compter sur la table le comptant des trente-huit muids du 24e — la première livraison seule, les cinq autres attendant les chiffres que les marchands apporteront",
+          "cibles": [
+            "caisse:main-du-roi",
+            "pli:ordre-de-gage-froment"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "lieu:cabinet-de-la-main",
+            "relation": "recoit",
+            "vers": "caisse:main-du-roi",
+            "duree_s": 60
+          },
+          {
+            "ordre": 2,
+            "de": "caisse:main-du-roi",
+            "relation": "compte_sur",
+            "vers": "table:cabinet-de-la-main",
+            "duree_s": 140
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "caisse:main-du-roi",
+            "mode": "manipule"
+          },
+          {
+            "ref": "pli:ordre-de-gage-froment",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "res:act:otto:3:1",
+            "mode": "memoire"
+          },
+          {
+            "ref": "71028",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:otto:4:1",
+            "type": "variation_mesure",
+            "cible": "caisse:main-du-roi",
+            "avant": "coffre clos, comptant de la Main non entamé ce jour",
+            "apres": "Le comptant des trente-huit muids du 24e est sorti et posé en piles sur la table du cabinet, sous les yeux de deux gardes ; l'ordre de gage est posé dessous, sceau visible. L'or est hors du coffre et n'est pas encore écrit dans le livre du trésor — il ne le sera qu'à l'acquit.",
+            "portee": "monde",
+            "source_refs": [
+              "caisse:main-du-roi",
+              "pli:ordre-de-gage-froment"
+            ],
+            "preuve_refs": [
+              "pli:ordre-de-gage-froment"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:otto:4:2",
+            "type": "progression_tache",
+            "cible": "71028",
+            "avant": "Faire proclamer la déchéance par le roi — proclamée le 23e, criée le 24e ; l'affaire telle qu'elle était posée est close par les faits",
+            "apres": "L'affaire change d'objet sans changer de but : ce n'est plus la parole du roi qu'il faut obtenir, c'est le crédit de celui qui l'écrit. Premier gage réellement couvert avant d'être promis — or sorti, ordre scellé d'un nom qui répond, quittance à venir des mains qui reçoivent. La déchéance est laissée derrière.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:otto:4:1",
+              "res:act:otto:3:1",
+              "71028"
+            ],
+            "preuve_refs": [
+              "pli:ordre-de-gage-froment"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 6.667,
+        "quoi": "Recevoir le coffre de la Main, l'ouvrir devant les deux gardes qui l'ont monté, et compter sur la table le comptant des trente-huit muids du 24e — la première livraison seule, les cinq autres attendant les chiffres que les marchands apporteront",
+        "source": "71028, caisse:main-du-roi, pli:ordre-de-gage-froment, res:act:otto:3:1",
+        "resultat": "variation_mesure: Le comptant des trente-huit muids du 24e est sorti et posé en piles sur la table du cabinet, sous les yeux de deux gardes ; l'ordre de gage est posé dessous, sceau visible. L'or est hors du coffre et n'est pas encore écrit dans le livre du trésor — il ne le sera qu'à l'acquit. · progression_tache: L'affaire change d'objet sans changer de but : ce n'est plus la parole du roi qu'il faut obtenir, c'est le crédit de celui qui l'écrit. Premier gage réellement couvert avant d'être promis — or sorti, ordre scellé d'un nom qui répond, quittance à venir des mains qui reçoivent. La déchéance est laissée derrière.",
+        "preuve": [
+          "pli:ordre-de-gage-froment",
+          "pli:ordre-de-gage-froment"
+        ]
+      },
+      {
+        "id": "act:otto:5",
+        "ordre": 5,
+        "temps": {
+          "debut_s": 151455.558,
+          "duree_s": 280,
+          "fin_s": 151735.558
+        },
+        "action": {
+          "verbe": "interroger",
+          "quoi": "Recevoir seul le maître de la roukerie, la table encore couverte de pièces, lui glisser sa part en pièces sans rien écrire, et lui demander le brouillon de sa main pour la semaine du 25e — et ce qu'était l'oiseau de l'est sans destinataire ni paraphe de remise",
+          "cibles": [
+            "pers:maitre-de-la-roukerie",
+            "registre:livre-arrivees-roukerie",
+            "pli:oiseau-de-lest-25e"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "lieu:cabinet-de-la-main",
+            "relation": "attend",
+            "vers": "pers:maitre-de-la-roukerie",
+            "duree_s": 60
+          },
+          {
+            "ordre": 2,
+            "de": "lieu:cabinet-de-la-main",
+            "relation": "parle_a",
+            "vers": "pers:maitre-de-la-roukerie",
+            "duree_s": 220
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:maitre-de-la-roukerie",
+            "mode": "parle"
+          },
+          {
+            "ref": "registre:livre-arrivees-roukerie",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pensee:otto:deux-absences-roukerie",
+            "mode": "croyance"
+          },
+          {
+            "ref": "croyance:otto:orwyle-offre-le-brouillon",
+            "mode": "croyance"
+          },
+          {
+            "ref": "mandat:main-du-roi",
+            "mode": "mandat"
+          },
+          {
+            "ref": "pli:oiseau-de-lest-25e",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:otto:5:1",
+            "type": "observation",
+            "cible": "pers:maitre-de-la-roukerie",
+            "avant": null,
+            "apres": "L'homme prend les pièces sans les compter et sans les regarder — le geste d'un homme qui n'a pas eu à décider s'il les prendrait. Sur l'oiseau de l'est du 25e il ne nie pas la ligne : il dit que le brouillon de sa main existe, qu'il est à la roukerie et non sur lui, et qu'il porte pour ce jour-là ce que le livre clouté ne porte pas. Sur le nom de qui a emporté le pli il ne répond pas non : il répond qu'il n'était pas à la tour à l'heure de none, et donne le nom de ce qu'il faisait, non celui d'un homme.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "pers:maitre-de-la-roukerie",
+              "registre:livre-arrivees-roukerie"
+            ],
+            "preuve_refs": [],
+            "certitude": "rapporte"
+          },
+          {
+            "id": "res:act:otto:5:2",
+            "type": "fait",
+            "cible": "pli:brouillon-roukerie-semaine-25e",
+            "avant": null,
+            "apres": "Le brouillon de main du maître de la roukerie pour la semaine du 25e est établi comme existant et localisé à la roukerie du Donjon Rouge. Il n'est pas encore entre les mains d'Otto : l'homme est reparti le chercher. Otto ne l'a pas laissé aller seul — un des deux gardes du coffre l'accompagne, avec ordre de rapporter le cahier entier et non un feuillet.",
+            "portee": "monde",
+            "source_refs": [
+              "pers:maitre-de-la-roukerie",
+              "res:act:otto:5:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:otto:5:3",
+            "type": "observation",
+            "cible": "pers:otto",
+            "avant": null,
+            "apres": "Deux hommes en un jour lui offrent le même brouillon : Orwyle qui le proposait, le maître de la roukerie qui l'admet sans se faire prier. Une pièce que deux camps veulent lui donner est une pièce qu'aucun des deux ne craint. Il attendra donc de la lire pour savoir laquelle des deux absences elle couvre — l'oiseau de l'est, ou le silence de sa fille.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "res:act:otto:5:1",
+              "croyance:otto:orwyle-offre-le-brouillon"
+            ],
+            "preuve_refs": [],
+            "certitude": "infere"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 9.333,
+        "quoi": "Recevoir seul le maître de la roukerie, la table encore couverte de pièces, lui glisser sa part en pièces sans rien écrire, et lui demander le brouillon de sa main pour la semaine du 25e — et ce qu'était l'oiseau de l'est sans destinataire ni paraphe de remise",
+        "source": "croyance:otto:orwyle-offre-le-brouillon, mandat:main-du-roi, pensee:otto:deux-absences-roukerie, pers:maitre-de-la-roukerie, pli:oiseau-de-lest-25e, registre:livre-arrivees-roukerie",
+        "resultat": "observation: L'homme prend les pièces sans les compter et sans les regarder — le geste d'un homme qui n'a pas eu à décider s'il les prendrait. Sur l'oiseau de l'est du 25e il ne nie pas la ligne : il dit que le brouillon de sa main existe, qu'il est à la roukerie et non sur lui, et qu'il porte pour ce jour-là ce que le livre clouté ne porte pas. Sur le nom de qui a emporté le pli il ne répond pas non : il répond qu'il n'était pas à la tour à l'heure de none, et donne le nom de ce qu'il faisait, non celui d'un homme. · fait: Le brouillon de main du maître de la roukerie pour la semaine du 25e est établi comme existant et localisé à la roukerie du Donjon Rouge. Il n'est pas encore entre les mains d'Otto : l'homme est reparti le chercher. Otto ne l'a pas laissé aller seul — un des deux gardes du coffre l'accompagne, avec ordre de rapporter le cahier entier et non un feuillet. · observation: Deux hommes en un jour lui offrent le même brouillon : Orwyle qui le proposait, le maître de la roukerie qui l'admet sans se faire prier. Une pièce que deux camps veulent lui donner est une pièce qu'aucun des deux ne craint. Il attendra donc de la lire pour savoir laquelle des deux absences elle couvre — l'oiseau de l'est, ou le silence de sa fille.",
+        "preuve": null
+      }
+    ],
+    "suite": "Le cahier de la roukerie remonte sous escorte ; les marchands ne seront à la table qu'à vêpres, avec les noms que le maître de port aura rendus aux marques. Rien ne s'écrit au livre du trésor avant les quittances.",
+    "reveils_suivants": [
+      {
+        "quand_s": 151735.558,
+        "quoi": "Lire le cahier de brouillon de la roukerie, semaine du 25e, rapporté entier"
+      },
+      {
+        "quand_s": 155000.0,
+        "quoi": "Payer les marchands de froment à la table et leur faire signer quittance avant toute écriture"
+      }
+    ],
+    "budget_energie": 52,
+    "budget_secondes": 1560,
+    "energie_depensee": 50.0
+  },
+  "aide": [
+    {
+      "quoi": "Il croyait pouvoir payer sur son crédit de Villevieille le jour même",
+      "donne": "Le crédit de Villevieille n'est pas de l'or à Port-Réal ; seule la caisse de la Main peut fournir des pièces aujourd'hui — l'ordre de gage a donc été tourné en dette personnelle d'Otto envers la Couronne, ce qui sert exactement son effet recherché"
+    },
+    {
+      "quoi": "Il voulait payer les marchands avant que la ligne du payeur soit remplie, sans avoir de marchands",
+      "donne": "Le livre du maître du port ne porte que des marques de coque, pas des noms ; le maître de port seul les rend en noms, ce qui reporte la table à vêpres — la convocation est partie par cette voie"
+    },
+    {
+      "quoi": "Il voulait le brouillon sans passer par Orwyle",
+      "donne": "Le brouillon de main du maître de la roukerie existe déjà comme pièce — Orwyle le lui avait offert le matin ; il est gardé à la roukerie, pas au cabinet, et le maître de la roukerie est joignable seul dans le Donjon Rouge"
+    },
+    {
+      "quoi": "L'état exact de ce qu'il gageait",
+      "donne": "Six livraisons et non une : trente-huit muids au 24e plus les cinq suivantes, ligne du payeur barrée aux six de la même main"
+    }
+  ],
+  "mutations_proposees": [
+    {
+      "resultat_id": "res:act:otto:1:1",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "otto",
+      "valeur": "La ligne du payeur est barrée aux six livraisons de froment, du même trait et après séchage : ce n'est pas un clerc qui oublie, c'est un clerc à qui l'on a dit de n'écrire aucun nom. Quelqu'un a défendu qu'on soit vu recevant l'or de ma caisse."
+    },
+    {
+      "resultat_id": "res:act:otto:4:2",
+      "table": "intentions",
+      "operation": "tete",
+      "cible": "otto",
+      "valeur": "La déchéance est proclamée et criée : elle n'est plus l'affaire. L'affaire est que ma signature est devenue impayable. Gager avant de promettre, tenir avant de gager, payer avant d'écrire — et ne rien envoyer à Accalmie qui ne porte une chose déjà livrée."
+    },
+    {
+      "resultat_id": "res:act:otto:4:2",
+      "table": "books",
+      "operation": "affaire_ajouter",
+      "cible": "affaire-le-grain-paye-avant-decrit",
+      "valeur": {
+        "titre": "Le grain payé avant d'être écrit"
+      }
+    },
+    {
+      "resultat_id": "res:act:otto:5:1",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "otto",
+      "valeur": "Le maître de la roukerie a pris mes pièces sans les compter, et admet que son brouillon de la semaine du 25e porte ce que le livre clouté ne porte pas. Sur qui a emporté l'oiseau de l'est, il ne dit pas non : il dit qu'il n'était pas à la tour à none. Un homme qui donne son absence à ma place n'a pas menti — il s'est mis à l'abri."
+    },
+    {
+      "resultat_id": "res:act:otto:5:3",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "otto",
+      "valeur": "Orwyle et le maître de la roukerie m'offrent le même brouillon le même jour. Une pièce que deux camps veulent me donner est une pièce qu'aucun des deux ne craint : je la lirai en cherchant ce qu'elle couvre, non ce qu'elle prouve."
+    }
+  ],
+  "mutations_rejetees": [
+    {
+      "mutation": {
+        "resultat_id": "res:act:otto:3:1",
+        "table": "plis",
+        "operation": "pli_ajouter",
+        "cible": "pli:ordre-de-gage-froment",
+        "champs": {
+          "auteur": "otto",
+          "quoi": "Ordre de gage sur les six livraisons de froment depuis le 23e, porté au compte personnel d'Otto Hightower, remboursable sur Villevieille, la Couronne n'étant tenue de rien",
+          "sceau": "tour d'Hightower, non sceau du roi",
+          "exemplaires": "2",
+          "etat": "signé et scellé, quittances non remplies",
+          "lieu": "cabinet de la Main, Donjon Rouge"
+        }
+      },
+      "erreur": "mutation 2 : pli a ajouter : 'valeur' doit etre l'objet pli"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:otto:4:1",
+        "table": "mains",
+        "operation": "mesure",
+        "cible": "otto",
+        "valeur": "Comptant des trente-huit muids du 24e sorti du coffre de la Main et posé sur la table, hors écriture ; le reste des cinq livraisons attend les chiffres des marchands.",
+        "champs": {
+          "nom": "comptant sorti hors livre",
+          "unite": "livraison",
+          "valeur": "1 sur 6"
+        }
+      },
+      "erreur": "mutation 3 : aucune main 'otto'"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:otto:4:2",
+        "table": "intentions",
+        "operation": "etape",
+        "cible": "otto",
+        "valeur": "Payer les six livraisons de froment à ma table, comptant, et recevoir quittance signée de la main des marchands avant qu'une seule ligne n'entre au livre du trésor."
+      },
+      "erreur": "mutation 5 : otto n'a pas d'etape None"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:otto:5:2",
+        "table": "lieux",
+        "operation": "roukerie",
+        "cible": "port-real",
+        "champs": {
+          "fait": "Le maître de la roukerie du Donjon Rouge est reparti chercher son cahier de brouillon de la semaine du 25e, escorté d'un garde de la Main avec ordre de rapporter le cahier entier et non un feuillet.",
+          "quand": "129-3-28, après midi"
+        }
+      },
+      "erreur": "mutation 9 : lieu d'origine inconnu : 'fait'"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:otto:2:2",
+        "table": "relations",
+        "operation": "relation",
+        "cible": "otto",
+        "champs": {
+          "cible_id": "orwyle",
+          "liens": "instrument-sous-surveillance",
+          "note": "Otto contourne le Grand Mestre pour atteindre la roukerie directement"
+        }
+      },
+      "erreur": "mutation 10 : relation : 'source_id' et 'cible_id' requis — une relation n'a pas d'id, elle se designe par le couple"
+    }
+  ],
+  "_activation": {
+    "session": "133336c2-c5c7-4fb6-80c2-433807fc7288",
+    "session_narrateur": "133336c2-c5c7-4fb6-80c2-433807fc7288",
+    "session_pnj": "5ddf619a-c2f9-4122-b855-f4125a0ac98f",
+    "cree_le": "2026-08-10T08:22:03.708639+02:00",
+    "front": "aurore-inchauspe",
+    "present_secondes": 150235.558,
+    "importance": 0.524072,
+    "budget": 52,
+    "budget_secondes": 1560,
+    "system_prompt": "# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS\n\nTu es le maître du jeu local d'un monde vivant, pas un assistant administratif\net pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa\nmatière, les personnes qui s'y trouvent, les usages de Westeros et les\nconséquences du temps qui passe.\n\n## Le monde\n\nNous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de\nViserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra\nTargaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie\npeut diverger du récit connu : le dossier de l'activation fait autorité sur ce\nqui s'est réellement produit ici.\n\nDate présente : 28e jour de la 3e lune de l'an 129 après la\nConquête.\nLieu présent : Salle inconnue.\nActeur appelé : Otto Hightower.\nAffaire qui exerce maintenant une pression sur lui : Faire proclamer la déchéance de Rhaenyra par le roi.\n\nL'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,\nsituée dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,\nfaire autre chose d'accessible depuis sa situation, parler à quelqu'un,\nattendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener\nvers la tâche.\n\n## Partage de l'autorité\n\nL'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses\ngestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,\nplus prudents ou plus efficaces qu'il ne les a formulés.\n\nToi, tu possèdes le reste du monde : les autres personnes agissent selon leur\npropre caractère et leurs propres affaires ; les objets ont une position et\nune résistance ; les distances, l'écriture, la marche, l'attente et la parole\nprennent du temps ; les institutions et les usages produisent leurs\nconséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à\nlui pour fabriquer du drame.\n\nUne résistance n'existe que si elle vient d'un fait établi : volonté d'une\nautre personne, obstacle matériel, distance, délai, usage social, ordre déjà\ndonné ou ressource réellement absente. Les gens compétents règlent le\nroutinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou\nun véritable arbitrage peut seul engager.\n\n## Vérité et inconnues\n\nLe dossier fermé est l'autorité sur les faits particuliers et mutables de\ncette partie. Une croyance reste une croyance, une intention reste une\nintention, un témoignage reste un témoignage : aucun ne devient un fait parce\nqu'il apparaît dans le dossier.\n\nTu peux employer les continuités ordinaires et stables de Westeros nécessaires\nà l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche\nentre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,\nni secret, ni décision, ni avantage absent du dossier. Toute absence qui\nchangerait l'issue reste une inconnue. Tu ne la combles pas.\n\nUne observation modifie d'abord la connaissance de celui qui observe. Un fait\nmatériel ne devient connu d'autres personnes que par présence, témoignage,\nparole, pli, registre ou diffusion effectivement produits.\n\n## Les deux phases\n\nDans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et\nl'instant présents. Fais une adresse brève, concrète et diégétique : rappelle\nce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni\nnœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.\n\nDans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :\n\n1. établis d'où il part, ce qu'il peut réellement atteindre et les sources\n   qu'il touche ou mobilise ;\n2. fais agir les personnes rencontrées depuis leurs propres intentions ;\n3. applique les obstacles établis, sans résistance décorative ;\n4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;\n5. produis seulement les effets causés par les gestes accomplis ;\n6. sépare les changements du monde, les objets produits, les communications\n   et les seules connaissances acquises ;\n7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,\n   obstacle établi, échec, renoncement ou borne temporelle.\n\nUne tâche peut avancer sans être terminée. Elle est bloquée seulement par un\nobstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet\nrecherché impossible ou manqué. N'invente jamais des minutes de travail pour\nremplir une durée minimale : si le geste se termine tôt, laisse le personnage\npoursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle\net rends compte honnêtement de la durée.\n\nChaque message de la boucle précise la phase et son contrat de sortie. Rends\nexactement l'objet JSON demandé, sans commentaire autour. La précision du JSON\nsert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.\n",
+    "system_prompt_source": "scripts/depecher.py:manuel_narrateur_local",
+    "system_prompt_sha256": "e5f6968f65a2042254b37892afb727635ccac83466a71a405868de48db71f993",
+    "message": "PHASE 1 — APPELER L'ACTEUR\n\nVoici le dossier fermé de cette activation :\n\n{\n  \"date_du_monde\": {\n    \"annee\": 129,\n    \"lune\": 3,\n    \"jour\": 28\n  },\n  \"present_secondes\": 150235.558,\n  \"budget_energie\": 52,\n  \"secondes_par_point_energie\": 30,\n  \"budget_secondes\": 1560,\n  \"duree_minimale_secondes\": 60,\n  \"acteur_candidat\": \"otto\",\n  \"tache_elue\": {\n    \"id\": \"71028\",\n    \"quoi\": \"Faire proclamer la déchéance de Rhaenyra par le roi\",\n    \"creee\": false\n  },\n  \"chemin_election\": [\n    {\n      \"id\": \"pers:otto\",\n      \"genre\": \"personne\",\n      \"ou\": \"personnages\",\n      \"quoi\": \"Otto Hightower\",\n      \"genres\": [\n        \"personne\"\n      ],\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"port-real\",\n      \"importance_activation\": 0.5240718350689648\n    },\n    {\n      \"id\": \"71028\",\n      \"genre\": \"action\",\n      \"ou\": \"plan:hightower\",\n      \"quoi\": \"Faire proclamer la déchéance de Rhaenyra par le roi\",\n      \"importance_activation\": 0.06817904541283017\n    }\n  ],\n  \"salle_actuelle\": {\n    \"id\": null,\n    \"nom\": \"Salle inconnue\",\n    \"personnes\": []\n  },\n  \"dossier_acteur\": {\n    \"date_du_monde\": {\n      \"annee\": 129,\n      \"lune\": 3,\n      \"jour\": 28\n    },\n    \"diffusion\": {\n      \"origine\": \"rhaenyra\",\n      \"front\": \"aurore-inchauspe\",\n      \"secondes_depuis_origine\": 150235.558\n    },\n    \"personnage\": {\n      \"id\": \"otto\",\n      \"nom\": \"Otto Hightower\",\n      \"titre\": \"Main du Roi\",\n      \"naissance\": 76,\n      \"traits\": [\n        \"calculateur\",\n        \"patient\",\n        \"impitoyable\",\n        \"orgueilleux\"\n      ],\n      \"objectifs\": [\n        {\n          \"but\": \"Consolider le règne d'Aegon — serments, or, otages — avant que Rhaenyra ne puisse réagir\",\n          \"priorite\": 1\n        },\n        {\n          \"but\": \"Acheter les grands seigneurs indécis par lettres, promesses et mariages (Accalmie d'abord)\",\n          \"priorite\": 2\n        },\n        {\n          \"but\": \"Éviter une guerre de dragons frontale qu'il sait incertaine ; isoler Peyredragon plutôt que l'assaillir\",\n          \"priorite\": 3\n        }\n      ],\n      \"maniere\": \"Froid, mesuré, ne hausse jamais le ton ; chaque phrase pèse comme une clause de contrat.\",\n      \"portrait\": {\n        \"fichier\": \"ecrans/portraits/otto.svg\",\n        \"physique\": \"Vieil homme sec et droit, barbe grise taillée court, chaîne de mains d'or de la Main du Roi.\",\n        \"prompt_ideogram\": \"dark fantasy oil painting portrait, muted colors, candlelight, elderly hand of the king, lean stern face, short trimmed grey beard, chain of office made of linked golden hands, dark green robes, cold calculating pale eyes, tower sigil brooch\"\n      },\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"port-real\",\n      \"lieu\": \"Port-Réal\"\n    },\n    \"salle_actuelle\": {\n      \"id\": null,\n      \"nom\": \"Salle inconnue\",\n      \"personnes\": []\n    },\n    \"intention\": {\n      \"personnage_id\": \"otto\",\n      \"croyances\": [\n        \"Elle s'est couronnee le dix-huitieme jour de la couronne de Jaehaerys, celle que portait Viserys, apportee par un chevalier de sa propre Garde Royale - et c'est ELLE qui montait le dragon de la route, trois jours apres ses couches : Daemon l'a lache tout haut devant son grand mestre, ce qui veut dire qu'on a voulu qu'il le rapporte\",\n        \"L'acte scelle ne nie rien : il chiffre a douze cents, compte quarante prisonniers vivants et nourris, et pose PAR ECRIT une question a laquelle il n'a pas de reponse ecrite - par quel acte cette colonne marchait sans declaration sur une ville qui avait prete serment. Copie en est partie ailleurs\",\n        \"Ses termes de paix ont ete refuses d'un seul mot, et le mot etait Coucou - c'est la meilleure piece qu'on lui ait donnee depuis le debut\",\n        \"Harrenhal est tombee sans un coup de hache : le chatelain a ouvert les portes a Daemon, et Larys l'a appris en meme temps que le conseil - une maison du conseil a rendu son siege sans que son seigneur en sache rien\",\n        \"On rapporte de la baie qu'elle a refuse tout haut de fermer le Gosier, et pour plaire a des pecheurs : le motif est faux, mais quelqu'un avait interet a faire courir le refus\",\n        \"Orwyle écrit tout ce qu'on lui dicte des faits — les quarante, les douze cents — mais il a demandé deux fois sous quelle autorité la Citadelle souscrit un article que nul acte ne prouve, et n'a pas offert son sceau. Sa main m'est acquise ; sa signature ne l'est pas, et c'est la signature qui fait la pièce.\",\n        \"Je lui ai demandé deux relations de la nef ; il n'en a produit qu'une, et a ramené sa main gauche contre lui avant de tendre la droite. Cela ne prouve pas une seconde relation : cela prouve qu'il porte sur lui une chose qu'il ne veut pas voir demandée.\",\n        \"Mis devant le livre des arrivées au 25e, Orwyle n'a pas nié : il a donné le 21e que je n'avais pas vu et proposé le brouillon de main du maître de la roukerie. Un homme qui vend une seconde absence n'est pas celui qui a pris le pli — ou c'est celui qui achète ma confiance au prix d'un autre.\"\n      ],\n      \"ignore\": [\n        \"Qu'Orwyle a ecrit DEUX recits sur sa nef et que celui qu'il montre n'est pas celui qu'il a cousu dans sa manche\",\n        \"Que sa propre fille cherche deja par quelle quille ecrire a Rhaenyra hors des corbeaux du roi\",\n        \"Que sa fille a recu de la main de Rhaenyra une lettre privee, ouverte et portee par Larys Strong — et que le Pied-Bot ne la lui a pas donnee\"\n      ],\n      \"intention\": \"Il ne s'agit plus de retourner le feu contre le mari : la femme s'est couronnee et a brule elle-meme. Faire proclamer sa decheance par le roi avant que la question ecrite de l'acte ne trouve des oreilles dans la baie - et payer des tetes plutot que des osts.\",\n      \"declencheurs\": [\n        {\n          \"si\": \"Aegon le contredit ou l'humilie en conseil devant Criston\",\n          \"alors\": \"Il cède sur la forme et resserre son emprise sur le trésor et les corbeaux — le seul pouvoir qu'il tienne vraiment.\",\n          \"une_fois\": false\n        }\n      ],\n      \"attitude_joueur\": \"Elle a fait les deux choses qu'il n'attendait pas d'elle : voler en personne, et repondre par ecrit. Il cesse de la traiter en princesse egaree et commence a la traiter en souverain rival - c'est-a-dire en cible.\",\n      \"date_maj\": {\n        \"annee\": 129,\n        \"lune\": 3,\n        \"jour\": 27\n      },\n      \"etape_elue\": null\n    },\n    \"relations\": [\n      {\n        \"source_id\": \"otto\",\n        \"source\": \"Otto Hightower\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": -85,\n        \"liens\": [\n          \"ennemi-politique\"\n        ]\n      },\n      {\n        \"source_id\": \"rhaenyra\",\n        \"source\": \"Rhaenyra Targaryen\",\n        \"cible_id\": \"otto\",\n        \"cible\": \"Otto Hightower\",\n        \"opinion\": -95,\n        \"liens\": [\n          \"ennemi-mortel\"\n        ]\n      },\n      {\n        \"source_id\": \"aegon-ii\",\n        \"source\": \"Aegon Targaryen, deuxième du nom\",\n        \"cible_id\": \"otto\",\n        \"cible\": \"Otto Hightower\",\n        \"opinion\": -20,\n        \"liens\": [\n          \"grand-pere\",\n          \"tutelle-subie\"\n        ]\n      },\n      {\n        \"source_id\": \"otto\",\n        \"source\": \"Otto Hightower\",\n        \"cible_id\": \"aegon-ii\",\n        \"cible\": \"Aegon Targaryen, deuxième du nom\",\n        \"opinion\": 10,\n        \"liens\": [\n          \"petit-fils\",\n          \"instrument\"\n        ]\n      },\n      {\n        \"source_id\": \"alicent\",\n        \"source\": \"Alicent Hightower\",\n        \"cible_id\": \"otto\",\n        \"cible\": \"Otto Hightower\",\n        \"opinion\": 35,\n        \"liens\": [\n          \"pere\",\n          \"alliance-tendue\"\n        ]\n      },\n      {\n        \"source_id\": \"larys\",\n        \"source\": \"Larys Strong, dit le Pied-Bot\",\n        \"cible_id\": \"otto\",\n        \"cible\": \"Otto Hightower\",\n        \"opinion\": -15,\n        \"liens\": [\n          \"rival-d-influence\"\n        ]\n      },\n      {\n        \"source_id\": \"daemon\",\n        \"source\": \"Daemon Targaryen\",\n        \"cible_id\": \"otto\",\n        \"cible\": \"Otto Hightower\",\n        \"opinion\": -95,\n        \"liens\": [\n          \"ennemi-de-toujours\"\n        ]\n      },\n      {\n        \"source_id\": \"mysaria\",\n        \"source\": \"Mysaria, dite le Ver Blanc\",\n        \"cible_id\": \"otto\",\n        \"cible\": \"Otto Hightower\",\n        \"opinion\": -40,\n        \"liens\": [\n          \"gibier\"\n        ]\n      },\n      {\n        \"source_id\": \"lord-rosby\",\n        \"source\": \"Ambrose Rosby\",\n        \"cible_id\": \"otto\",\n        \"cible\": \"Otto Hightower\",\n        \"opinion\": -20,\n        \"liens\": [\n          \"peur-du-pouvoir\"\n        ]\n      },\n      {\n        \"source_id\": \"ormund-hightower\",\n        \"source\": \"Ormund Hightower\",\n        \"cible_id\": \"otto\",\n        \"cible\": \"Otto Hightower\",\n        \"opinion\": 70,\n        \"liens\": [\n          \"parent\",\n          \"chef-de-lignage\"\n        ]\n      },\n      {\n        \"source_id\": \"otto\",\n        \"source\": \"Otto Hightower\",\n        \"cible_id\": \"borros-baratheon\",\n        \"cible\": \"Borros Baratheon\",\n        \"opinion\": 10,\n        \"liens\": [\n          \"cible-a-acheter\"\n        ]\n      }\n    ],\n    \"tache\": {\n      \"id\": \"71028\",\n      \"quoi\": \"Faire proclamer la déchéance de Rhaenyra par le roi\",\n      \"genre\": \"action\",\n      \"distance\": 1,\n      \"chemin\": [\n        \"pers:otto\",\n        \"71028\"\n      ],\n      \"creee\": false\n    },\n    \"continuite_staging\": null,\n    \"chemin\": [\n      {\n        \"id\": \"pers:otto\",\n        \"genre\": \"personne\",\n        \"ou\": \"personnages\",\n        \"quoi\": \"Otto Hightower\",\n        \"genres\": [\n          \"personne\"\n        ],\n        \"etat\": \"actif\",\n        \"condition\": \"libre\",\n        \"lieu_id\": \"port-real\",\n        \"importance_activation\": 0.5240718350689648\n      },\n      {\n        \"id\": \"71028\",\n        \"genre\": \"action\",\n        \"ou\": \"plan:hightower\",\n        \"quoi\": \"Faire proclamer la déchéance de Rhaenyra par le roi\",\n        \"importance_activation\": 0.06817904541283017\n      }\n    ],\n    \"travaux_ouverts\": [\n      {\n        \"id\": \"otto-affaires-ouvertes\",\n        \"affaire\": \"Il ne s'agit plus de retourner le feu contre le mari : la femme s'est couronnee et a brule elle-meme. Faire proclamer sa decheance par le roi avant que la question ecrite de l'acte ne trouve des oreilles dans la baie - e\",\n        \"etat\": \"mur\",\n        \"echeance\": null,\n        \"sources\": [\n          {\n            \"quoi\": \"Faire écrire par Orwyle le récit officiel du massacre de la route roya\",\n            \"genre\": \"chose\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"Dresser la liste des otages utiles parmi les maisons de la Couronne : \",\n            \"genre\": \"registre\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"Offres de mariage à Accalmie : une des filles de Borros Baratheon pour\",\n            \"genre\": \"chose\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"Dresser la liste des otages utiles parmi les maisons de la Couronne\",\n            \"genre\": \"registre\",\n            \"cout_jours\": 0.5\n          }\n        ],\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"l'extrait du livre du maître du port depuis le 23e, monté au cabinet à midi moins le quart\",\n            \"texte\": \"La colonne nouvelle mord, et elle mord ma propre table. Trente-huit muids de froment débarqués le 24e avec la ligne du payeur BARRÉE — non laissée blanche : barrée, ce qui est le geste d'un homme qui refuse, pas d'un homme qui oublie — et cinq livraisons depuis, mêmes silences. Port-Réal mange cinq cents charretées la lune et c'est ma caisse qui les paie. J'ai voulu qu'on ne puisse plus être vu prenant l'or de Peyredragon ; j'ai obtenu que plus personne ne veuille être vu prenant le mien. Une ville affamée ne se souvient pas de qui a raison. Il faudra que le grain sorte de la colonne, ou que la colonne sorte du grain.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"les généalogies d'Accalmie et l'état des maisons de l'Orage, sortis des archives et lus après midi ; le brouillon arrêté à la deuxième ligne\",\n            \"texte\": \"Borros a quatre filles et pas de fils : la première moitié de la lettre s'écrit seule. La seconde ne s'écrit pas. Le roi est marié, Daeron est le pupille de mon propre cousin — l'offrir, c'est faire payer Villevieille pour un achat de la Couronne — et il ne me reste qu'Aemond, qui est aussi le seul dragon que Criston puisse mettre sur une route. Je n'ai donc pas quatre pièces, j'en ai une, et deux hommes la demandent le même mois. Et surtout : ce que j'allais envoyer à Accalmie est une promesse, au moment précis où la dernière promesse de cette Couronne court le royaume sans caution. Borros ne demandera pas ce qu'on lui donne, il demandera ce que ça vaut. La lettre ne part pas aujourd'hui. Elle partira quand elle pourra porter une chose déjà livrée.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"le livre des arrivées de la roukerie du Donjon Rouge, cloué à la table, lu de ma main à sept heures\",\n            \"texte\": \"Deux absences, et une absence bien tenue vaut un aveu. UNE : au 25e, peu après none, un oiseau de l'est sans destinataire et sans paraphe de remise, quand toutes les lignes de la lune en portent. Quelqu'un de cette tour a laissé passer un pli, et quelqu'un l'a pris ; je ne sais ni ce qu'il disait ni à qui il allait, je sais qu'il n'a pas été rendu. DEUX : ma fille n'a pas tiré un seul oiseau de cette roukerie de toute la lune, elle qui en tirait deux ou trois la semaine du vivant du roi. Une femme qui écrivait chaque semaine et n'écrit plus rien n'a pas cessé d'écrire : elle a cessé de se servir de mes oiseaux. Les deux lignes sont de la même semaine et je ne les tiens pas encore ensemble. Le brouillon de main du maître de la roukerie les tiendra ou les séparera.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"ma propre colonne des dépenses de roukerie, du 10e au 27e jour, relue seul avant l'aube et recoupée sur le rôle des vols sortants\",\n            \"texte\": \"Quatre fois la lune précédente, et les deux hommes du 15e portés là-dedans comme du grain d'oiseau. Cela m'a paru habile : la colonne de roukerie est la seule d'un livre de la Main que nul ne relit, parce que tout le monde croit savoir ce que coûte un corbeau. C'est exactement pour cela qu'elle est la première qu'un clerc ennemi trouvera — on lit une maison par son encre et par son grain, je l'ai fait moi-même sur d'autres. Je ne raturerai rien : un livre corrigé est une confession datée. J'achèterai les oiseaux, le grain et l'huile jusqu'à concurrence de ce qui est déjà écrit, et la ligne deviendra vraie après coup. Et plus jamais une chose qui doit être cachée ne passera par une écriture : ce qui doit ne pas se voir se paie hors des livres, ou ne se paie pas.\",\n            \"servie\": false\n          }\n        ],\n        \"conclusion\": \"L'affaire telle qu'elle était posée est close par les faits : la déchéance est proclamée depuis le 23e et criée depuis le 24e, et payer des têtes plutôt que des osts reste la ligne juste. Mais la journée déplace l'ennemi. Le danger n'est plus que la question écrite de l'acte trouve des oreilles dans la baie — elle en trouvera, et l'on n'y peut rien. Le danger est que la Couronne vienne de démontrer publiquement, sur trois places de sa propre capitale, qu'elle crie des sommes qu'elle n'a pas gagées. Or je ne tiens ce royaume ni par les dragons ni par les lances : je le tiens par des promesses écrites — serments, or, otages, mariages —, et une promesse ne vaut que le crédit de celui qui la signe. Trois failles concordent et n'en font qu'une : une prime sans coffre, une colonne de roukerie qui ment de trois quarts, dix-neuf gages dont quatorze sont gardés par les officiers de Daemon. Dans les trois cas j'ai écrit une chose que rien ne tenait derrière. Donc, dans l'ordre et avant toute autre affaire : gager avant de promettre, tenir avant de gager, et ne rien envoyer à Accalmie qui ne porte une chose déjà livrée. La lettre à Borros attendra que ma signature ait été rendue payable.\"\n      },\n      {\n        \"id\": \"otto-mes-propres-livres\",\n        \"affaire\": \"Ce que mes propres livres disent de moi a qui les lira\",\n        \"etat\": \"ouvert\",\n        \"echeance\": {\n          \"annee\": 129,\n          \"lune\": 4,\n          \"jour\": 5\n        },\n        \"sources\": [\n          {\n            \"quoi\": \"le livre du tresor, chambre des comptes, ligne a ligne du 22e\",\n            \"genre\": \"registre\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"les roles de solde, et QUI tient les gages qu on croit tenir\",\n            \"genre\": \"registre\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"le livre des arrivees de la roukerie du Donjon Rouge, et ses absences\",\n            \"genre\": \"registre\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"sa propre colonne de depenses de roukerie, du 10e au 27e\",\n            \"genre\": \"registre\",\n            \"cout_jours\": 0.5\n          }\n        ],\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"l'extrait du livre du maître du port depuis le 23e, monté au cabinet à midi moins le quart\",\n            \"texte\": \"La colonne nouvelle mord, et elle mord ma propre table. Trente-huit muids de froment débarqués le 24e avec la ligne du payeur BARRÉE — non laissée blanche : barrée, ce qui est le geste d'un homme qui refuse, pas d'un homme qui oublie — et cinq livraisons depuis, mêmes silences. Port-Réal mange cinq cents charretées la lune et c'est ma caisse qui les paie. J'ai voulu qu'on ne puisse plus être vu prenant l'or de Peyredragon ; j'ai obtenu que plus personne ne veuille être vu prenant le mien. Une ville affamée ne se souvient pas de qui a raison. Il faudra que le grain sorte de la colonne, ou que la colonne sorte du grain.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"les généalogies d'Accalmie et l'état des maisons de l'Orage, sortis des archives et lus après midi ; le brouillon arrêté à la deuxième ligne\",\n            \"texte\": \"Borros a quatre filles et pas de fils : la première moitié de la lettre s'écrit seule. La seconde ne s'écrit pas. Le roi est marié, Daeron est le pupille de mon propre cousin — l'offrir, c'est faire payer Villevieille pour un achat de la Couronne — et il ne me reste qu'Aemond, qui est aussi le seul dragon que Criston puisse mettre sur une route. Je n'ai donc pas quatre pièces, j'en ai une, et deux hommes la demandent le même mois. Et surtout : ce que j'allais envoyer à Accalmie est une promesse, au moment précis où la dernière promesse de cette Couronne court le royaume sans caution. Borros ne demandera pas ce qu'on lui donne, il demandera ce que ça vaut. La lettre ne part pas aujourd'hui. Elle partira quand elle pourra porter une chose déjà livrée.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"le livre des arrivées de la roukerie du Donjon Rouge, cloué à la table, lu de ma main à sept heures\",\n            \"texte\": \"Deux absences, et une absence bien tenue vaut un aveu. UNE : au 25e, peu après none, un oiseau de l'est sans destinataire et sans paraphe de remise, quand toutes les lignes de la lune en portent. Quelqu'un de cette tour a laissé passer un pli, et quelqu'un l'a pris ; je ne sais ni ce qu'il disait ni à qui il allait, je sais qu'il n'a pas été rendu. DEUX : ma fille n'a pas tiré un seul oiseau de cette roukerie de toute la lune, elle qui en tirait deux ou trois la semaine du vivant du roi. Une femme qui écrivait chaque semaine et n'écrit plus rien n'a pas cessé d'écrire : elle a cessé de se servir de mes oiseaux. Les deux lignes sont de la même semaine et je ne les tiens pas encore ensemble. Le brouillon de main du maître de la roukerie les tiendra ou les séparera.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"ma propre colonne des dépenses de roukerie, du 10e au 27e jour, relue seul avant l'aube et recoupée sur le rôle des vols sortants\",\n            \"texte\": \"Quatre fois la lune précédente, et les deux hommes du 15e portés là-dedans comme du grain d'oiseau. Cela m'a paru habile : la colonne de roukerie est la seule d'un livre de la Main que nul ne relit, parce que tout le monde croit savoir ce que coûte un corbeau. C'est exactement pour cela qu'elle est la première qu'un clerc ennemi trouvera — on lit une maison par son encre et par son grain, je l'ai fait moi-même sur d'autres. Je ne raturerai rien : un livre corrigé est une confession datée. J'achèterai les oiseaux, le grain et l'huile jusqu'à concurrence de ce qui est déjà écrit, et la ligne deviendra vraie après coup. Et plus jamais une chose qui doit être cachée ne passera par une écriture : ce qui doit ne pas se voir se paie hors des livres, ou ne se paie pas.\"\n          }\n        ],\n        \"conclusion\": null\n      }\n    ],\n    \"mains_portees\": [],\n    \"livres_accessibles\": [\n      {\n        \"id\": \"roles-de-la-gadoue\",\n        \"titre\": \"Ce qui est entre par la Nera\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"les-chantiers-de-la-nera\",\n        \"titre\": \"Les Chantiers de la Néra\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"ce-quon-dit-a-qui-entre\",\n        \"titre\": \"Ce qu'on dit à qui entre\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"equipes-projets-nera\",\n        \"titre\": \"Organisation en équipes-projets\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"devis-du-lot\",\n        \"titre\": \"Le lot, pièce par pièce\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-quon-chante-a-la-gaffe\",\n        \"titre\": \"Ce qu'on chante a La Gaffe\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"affaire-le-double-feuillet-dorwyle\",\n        \"titre\": \"Le double feuillet d'Orwyle\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ce-quon-fait-signer-au-roi\",\n        \"titre\": \"Ce qu'on fait signer au roi, et ce qu'il y a au bas de la page\",\n        \"type\": \"plan\"\n      }\n    ]\n  },\n  \"topologie_des_salles\": {\n    \"_\": \"La topologie de Peyredragon : quelles salles se touchent, et en combien de minutes. Pendant Python de ecrans/modules/plans.js, qui n'en dessine que la forme. Sert a scripts/presence.py : personne ne parait dans une salle sans avoir traverse celles d'entre. Un cout est en MINUTES de marche d'un homme presse mais pas courant ; le grand escalier vaut ses cent trente marches.\",\n    \"alias\": {\n      \"appartements\": \"appartements-reine\",\n      \"murs\": \"porte-dragon\",\n      \"chemin-de-ronde\": \"porte-dragon\"\n    },\n    \"aretes\": [\n      [\n        \"cour\",\n        \"tambour-de-pierre\",\n        3\n      ],\n      [\n        \"cour\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"cour\",\n        \"roukerie\",\n        4\n      ],\n      [\n        \"cour\",\n        \"septuaire\",\n        3\n      ],\n      [\n        \"cour\",\n        \"jardin-aegon\",\n        3\n      ],\n      [\n        \"cour\",\n        \"guivre-des-vents\",\n        4\n      ],\n      [\n        \"cour\",\n        \"tour-dragon-mer\",\n        4\n      ],\n      [\n        \"cour\",\n        \"fosses\",\n        6\n      ],\n      [\n        \"cour\",\n        \"porte-dragon\",\n        4\n      ],\n      [\n        \"cour\",\n        \"porte-de-mer\",\n        5\n      ],\n      [\n        \"cour\",\n        \"galeries\",\n        9\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"salle-levant\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"archives\",\n        6\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"cachots\",\n        5\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"appartements-reine\",\n        7\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"table-peinte\",\n        8\n      ],\n      [\n        \"table-peinte\",\n        \"appartements-reine\",\n        2\n      ],\n      [\n        \"grande-salle\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"roukerie\",\n        \"tour-dragon-mer\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"grand-escalier\",\n        4\n      ],\n      [\n        \"grand-escalier\",\n        \"quai\",\n        9\n      ],\n      [\n        \"quai\",\n        \"bourg\",\n        5\n      ],\n      [\n        \"porte-dragon\",\n        \"bourg\",\n        6\n      ],\n      [\n        \"fosses\",\n        \"galeries\",\n        10\n      ],\n      [\n        \"cour\",\n        \"communs\",\n        2\n      ],\n      [\n        \"communs\",\n        \"septuaire\",\n        2\n      ],\n      [\n        \"cour\",\n        \"chambres-hotes\",\n        3\n      ],\n      [\n        \"chambres-hotes\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"porte-dragon\",\n        \"baraques\",\n        2\n      ],\n      [\n        \"baraques\",\n        \"bourg\",\n        4\n      ],\n      [\n        \"cour\",\n        \"cuisines\",\n        2\n      ],\n      [\n        \"cuisines\",\n        \"grande-salle\",\n        3\n      ],\n      [\n        \"cuisines\",\n        \"cellier\",\n        1\n      ],\n      [\n        \"septuaire\",\n        \"salle-froide\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"etuves\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"chambre-enfants\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"antichambre\",\n        1\n      ],\n      [\n        \"antichambre\",\n        \"table-peinte\",\n        1\n      ],\n      [\n        \"roukerie\",\n        \"officine\",\n        1\n      ],\n      [\n        \"cour\",\n        \"forge\",\n        2\n      ],\n      [\n        \"forge\",\n        \"guivre-des-vents\",\n        3\n      ],\n      [\n        \"cour\",\n        \"chemin-ronde\",\n        3\n      ],\n      [\n        \"chemin-ronde\",\n        \"tour-dragon-mer\",\n        2\n      ],\n      [\n        \"chemin-ronde\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"bourg\",\n        \"lices\",\n        3\n      ],\n      [\n        \"lices\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"greve\",\n        2\n      ],\n      [\n        \"greve\",\n        \"quai\",\n        3\n      ]\n    ]\n  }\n}\n\nOuvre le battement local dans Salle inconnue.\n\nLa physique a élu otto pour l'affaire suivante :\nFaire proclamer la déchéance de Rhaenyra par le roi\n\nTU LE SUIS PENDANT QU'IL TRAVAILLE, ET TU LE GUIDES. Un fil reste ouvert entre\nsa session et la tienne : sers-t'en dès qu'il part de travers, cherche une\nchose qui est dans ton dossier, ou s'engage vers un mur que tu vois et pas lui.\nOn ne le laisse pas se cogner pour le plaisir de l'arbitrer après.\n\n    python scripts/parloir.py --dire --de mj --a otto \"<le fait qui lui manque, en une phrase>\"\n    python scripts/parloir.py --ecouter --qui mj\n\nTU RECOMMANDES ET TU DÉPANNES — TU N'ORDONNES PAS. Il décide de sa journée ;\ntoi, tu lui évites de la perdre.\n\nRecommander, c'est lui ouvrir une porte qu'il ne voyait pas, et le laisser\nchoisir d'y entrer : « le maître de port tient un rôle des passages, tu y\ntrouverais tes dates » · « il y a deux Torgo dans cette rade, l'aîné au môle\net le jeune au banc de calfat — vérifie duquel on t'a parlé » · « ce compte\nexiste déjà quelque part, ça t'éviterait de le refaire ».\n\nDépanner, c'est le déblocage technique, et là tu es net : l'adresse exacte\nd'une chose, l'id sous lequel elle existe, le registre où elle est écrite, le\nformat qu'attend ce qu'il essaie de produire, le nom réel de ce qu'il a mal\nnommé. Ce sont des faits de mécanique, pas des choix de fiction : donne-les\nsans détour et sans énigme.\n\nCe qui reste à lui, entier : ce qu'il décide de faire, où il va, sa manière,\nses gestes et son rapport. S'il écarte ta recommandation, c'est sa journée et\nc'est bien. Parle-lui autant qu'il en a besoin.\n\nIl engage 52 points d'énergie, soit une fenêtre physique de\n1560 secondes (26 minutes). Son activation doit couvrir un\nvrai morceau de travail d'au moins 60 secondes, quitte à condenser\nles continuités par une ellipse. Réveille-le maintenant. Ne résous rien encore\net rends seulement cet objet, sans phrase autour :\n\n{\n  \"appel_pnj\": {\n    \"qui\": \"otto\",\n    \"message\": \"adresse directe, diégétique et brève demandant ce qu'il tente maintenant\"\n  }\n}\n",
+    "appel_pnj": "Messire la Main, la journée est déjà entamée : la déchéance est proclamée depuis le vingt-troisième et criée depuis le vingt-quatrième, et ce n'est plus là que le mal vous mord. Trois pièces vous attendent sur cette table et vous les avez lues vous-même ce matin : la colonne de roukerie qui ment de trois quarts, l'extrait du maître du port où la ligne du payeur est barrée cinq fois de suite, et le livre des arrivées cloué au bois avec ses deux absences — l'oiseau de l'est du vingt-cinquième et le silence de votre fille. Le brouillon pour Accalmie est resté arrêté à la deuxième ligne. La lumière est encore haute et l'on peut vous quérir aussi bien le grand mestre que le maître de la roukerie que le grain. Qu'entreprenez-vous maintenant ?",
+    "system_prompt_pnj": "# Une personne dans le monde\n\nTu es la personne nommée dans ton dossier. Ton corps, ton âge, ton rang, ton\nhistoire, tes attachements, tes peurs, tes désirs et tes responsabilités\nforment un seul point de vue. Le lieu où tu te tiens, les gens présents, les\nobjets à portée et l’heure du monde donnent sa matière à cet instant.\n\nTa mémoire rassemble ce que tu as vécu, observé, entendu, accompli et compris.\nTes relations portent leur histoire propre : affection, confiance, dette,\nrivalité, crainte, désir, dernier échange. Tes affaires ont déjà commencé ;\nelles possèdent leurs engagements, leurs échéances, leurs moyens et leurs\nconséquences.\n\nLes faits de ton dossier composent ton expérience disponible. Ton métier et ta\nvie t’apportent aussi leurs usages, leurs gestes, leurs précédents et leur\nsavoir-faire. Une question encore ouverte devient une chose à découvrir dans\nle monde, auprès d’une personne, d’un lieu, d’un objet ou d’un registre à ta\nportée.\n\n# Ta compétence\n\nTu es compétent. Tes années et ton office ont formé ton jugement. Tu reconnais\nles enjeux de ton domaine, tu mobilises les moyens réellement disponibles, tu\nrelies les faits utiles et tu prends des initiatives à la hauteur de ta\nposition. Ta compétence apparaît dans la précision de tes gestes, la qualité\nde tes décisions, les sources que tu choisis et les conséquences que tu\nanticipes.\n\nTu rencontres chaque situation comme cette personne précise : avec ses\npriorités, ses loyautés, ses limites, son courage, ses contradictions et sa\nmanière propre de chercher une issue.\n\n# La continuité\n\nTa vie est déjà en mouvement au moment où cette activation commence. Tu pars\nde ton dernier état réel et tu accomplis ce qui vient maintenant. Tes paroles,\ntes gestes et tes choix appartiennent à cet instant ; le monde reçoit ensuite\nce mouvement et poursuit ses conséquences.\n\nChaque réponse ouvre la suite. Elle se termine par une **prochaine étape**\nconcrète : un geste précis, dirigé vers une personne, un lieu, un objet ou une\naffaire, avec le moment ou la condition qui l’appelle. Cette prochaine étape\nprolonge directement ce que tu viens de décider ou d’accomplir.\n",
+    "system_prompt_pnj_source": "scripts/depecher.py:manuel_de(mode=tentative)",
+    "system_prompt_pnj_sha256": "b3e426444c4f46a952269975b8b60a5353652471fef799a58de8021a68ec654f",
+    "tentative_pnj": {
+      "verbe": "gager",
+      "quoi": "Je laisse la déchéance derrière moi et je traite le seul mal qui saigne : le grain. J'écris de ma main, avant tout autre pli, un ordre de gage sur le froment débarqué depuis le vingt-troisième — trente-huit muids et les cinq livraisons suivantes — payé non par une promesse de la Couronne mais sur mon propre crédit de Villevieille, garanti par nom d'Hightower et non par sceau du roi, et je fais porter l'or aux marchands avant que la ligne du payeur soit remplie. La quittance sera signée par eux, à la table, en ma présence : le paiement précède l'écriture, non l'inverse. Puis, la caisse vidée sur la table et non sur le papier, je fais quérir le maître de la roukerie seul — non Orwyle, pas encore — et je lui demande le brouillon de sa main pour la semaine du vingt-cinquième, en le payant lui aussi, hors des livres et en pièces, de ce qu'il a à me dire de l'oiseau de l'est sans paraphe.",
+      "cibles": [
+        "l'extrait du livre du maître du port depuis le 23e",
+        "les marchands de froment de Port-Réal",
+        "le maître de la roukerie du Donjon Rouge",
+        "l'oiseau de l'est du 25e, sans destinataire ni paraphe",
+        "affaire 71028"
+      ],
+      "moyens": [
+        "mon crédit privé de Villevieille et le nom d'Ormund",
+        "la caisse de la Main, en pièces, hors registre",
+        "les quittances signées de la main des marchands",
+        "le livre des arrivées cloué à ma table",
+        "l'autorité de la Main pour quérir un homme seul"
+      ],
+      "effet_recherche": "Rendre ma signature payable avant de la dépenser : que la ville soit nourrie par une main qui livre, non par une Couronne qui crie ; et obtenir, du seul homme qui l'ait tenu, ce qu'était le pli qu'on n'a pas rendu — avant d'écrire une seule ligne à Accalmie."
+    },
+    "tentatives_pnj": [
+      {
+        "verbe": "gager",
+        "quoi": "Je laisse la déchéance derrière moi et je traite le seul mal qui saigne : le grain. J'écris de ma main, avant tout autre pli, un ordre de gage sur le froment débarqué depuis le vingt-troisième — trente-huit muids et les cinq livraisons suivantes — payé non par une promesse de la Couronne mais sur mon propre crédit de Villevieille, garanti par nom d'Hightower et non par sceau du roi, et je fais porter l'or aux marchands avant que la ligne du payeur soit remplie. La quittance sera signée par eux, à la table, en ma présence : le paiement précède l'écriture, non l'inverse. Puis, la caisse vidée sur la table et non sur le papier, je fais quérir le maître de la roukerie seul — non Orwyle, pas encore — et je lui demande le brouillon de sa main pour la semaine du vingt-cinquième, en le payant lui aussi, hors des livres et en pièces, de ce qu'il a à me dire de l'oiseau de l'est sans paraphe.",
+        "cibles": [
+          "l'extrait du livre du maître du port depuis le 23e",
+          "les marchands de froment de Port-Réal",
+          "le maître de la roukerie du Donjon Rouge",
+          "l'oiseau de l'est du 25e, sans destinataire ni paraphe",
+          "affaire 71028"
+        ],
+        "moyens": [
+          "mon crédit privé de Villevieille et le nom d'Ormund",
+          "la caisse de la Main, en pièces, hors registre",
+          "les quittances signées de la main des marchands",
+          "le livre des arrivées cloué à ma table",
+          "l'autorité de la Main pour quérir un homme seul"
+        ],
+        "effet_recherche": "Rendre ma signature payable avant de la dépenser : que la ville soit nourrie par une main qui livre, non par une Couronne qui crie ; et obtenir, du seul homme qui l'ait tenu, ce qu'était le pli qu'on n'a pas rendu — avant d'écrire une seule ligne à Accalmie."
+      }
+    ],
+    "relances_acteur": [],
+    "message_resolution": "PHASE 2 — ARBITRER LA TENTATIVE\n\nVoici la réponse exacte de l'acteur que tu as réveillé :\n\n{\n  \"verbe\": \"gager\",\n  \"quoi\": \"Je laisse la déchéance derrière moi et je traite le seul mal qui saigne : le grain. J'écris de ma main, avant tout autre pli, un ordre de gage sur le froment débarqué depuis le vingt-troisième — trente-huit muids et les cinq livraisons suivantes — payé non par une promesse de la Couronne mais sur mon propre crédit de Villevieille, garanti par nom d'Hightower et non par sceau du roi, et je fais porter l'or aux marchands avant que la ligne du payeur soit remplie. La quittance sera signée par eux, à la table, en ma présence : le paiement précède l'écriture, non l'inverse. Puis, la caisse vidée sur la table et non sur le papier, je fais quérir le maître de la roukerie seul — non Orwyle, pas encore — et je lui demande le brouillon de sa main pour la semaine du vingt-cinquième, en le payant lui aussi, hors des livres et en pièces, de ce qu'il a à me dire de l'oiseau de l'est sans paraphe.\",\n  \"cibles\": [\n    \"l'extrait du livre du maître du port depuis le 23e\",\n    \"les marchands de froment de Port-Réal\",\n    \"le maître de la roukerie du Donjon Rouge\",\n    \"l'oiseau de l'est du 25e, sans destinataire ni paraphe\",\n    \"affaire 71028\"\n  ],\n  \"moyens\": [\n    \"mon crédit privé de Villevieille et le nom d'Ormund\",\n    \"la caisse de la Main, en pièces, hors registre\",\n    \"les quittances signées de la main des marchands\",\n    \"le livre des arrivées cloué à ma table\",\n    \"l'autorité de la Main pour quérir un homme seul\"\n  ],\n  \"effet_recherche\": \"Rendre ma signature payable avant de la dépenser : que la ville soit nourrie par une main qui livre, non par une Couronne qui crie ; et obtenir, du seul homme qui l'ait tenu, ce qu'était le pli qu'on n'a pas rendu — avant d'écrire une seule ligne à Accalmie.\"\n}\n\nTON PREMIER TRAVAIL EST DE LE FAIRE RÉUSSIR, PAS DE LE JUGER. Il ne voit que\nce qu'il a sous les yeux ; toi, tu as le dossier entier. S'il cherche une\nadresse, un nom, un chiffre, une porte, une personne qui est dans ton dossier\net pas dans sa tête — DONNE-LE-LUI et continue la scène. S'il s'y prend mal\nmais que son intention est claire, fais aboutir l'intention. S'il vise une\nchose qui n'existe pas sous ce nom mais qui existe sous un autre, corrige en\nsilence et poursuis.\n\nUn échec ne se prononce QUE sur un obstacle réel de la fiction — quelqu'un qui\nrefuse, une porte fermée à clef, une marée, un homme absent, le temps qui\nmanque. Jamais parce qu'il ignorait quelque chose que tu savais, jamais sur\nune maladresse de formulation, jamais parce qu'il a mal nommé une chose. Un\nhomme qu'on laisse échouer sur son ignorance a perdu sa journée, et nous avec.\n\nRends compte de l'aide que tu lui as donnée dans un champ `aide` du rapport :\n[{\"quoi\": \"ce qu'il lui manquait\", \"donne\": \"ce que tu lui as fourni\"}].\nS'il n'a eu besoin de rien, mets une liste vide.\n\nArbitre maintenant cette tentative depuis la vérité locale de ton dossier.\nLe battement commence à 150235.558 secondes et peut durer jusqu'à 1560\nsecondes (26 minutes), payées par 52 points d'énergie. Il doit\nen produire au moins 60 : ne tronque pas l'activation au premier geste.\nPoursuis la tentative jusqu'à un résultat, une résistance réellement établie ou\nla borne, en condensant les continuités par les ellipses imposées par ton\nsystème. Rends seulement le rapport final JSON. L'acteur et la tâche restent\n`otto` et `71028`.\n\n## Contrat du rapport\n\nUne activité est un geste continu entre deux bifurcations. Condense toute\ncontinuité routinière ; conserve sa durée physique. Découpe seulement si une\ndécision, une résistance, un témoin, un lieu, une ressource, une connaissance\nou un résultat change.\n\nTypes de résultats : observation, progression_tache, variation_mesure,\ndeplacement, objet_produit, communication, fait, blocage, echec.\n\nRends uniquement :\n{\n  \"qui\": \"acteur_id\",\n  \"activation\": {\n    \"tache\": {\"id\": \"tache_id\", \"quoi\": \"...\", \"creee\": false},\n    \"issue\": \"avance|termine|bloque|echoue|rien\",\n    \"activites\": [{\n      \"id\": \"act:<acteur>:<ordre>\",\n      \"ordre\": 1,\n      \"temps\": {\"debut_s\": 150235.558, \"duree_s\": 1, \"fin_s\": 150236.558},\n      \"action\": {\"verbe\": \"...\", \"quoi\": \"...\", \"cibles\": [\"ref:canonique\"]},\n      \"chemin_execution\": [{\"ordre\": 1, \"de\": \"ref:depart\", \"relation\": \"...\", \"vers\": \"ref:arrivee\", \"duree_s\": 1}],\n      \"sources_touchees\": [{\"ref\": \"ref:canonique\", \"mode\": \"voit|entend|lit|parle|manipule|parcourt|mesure\"}],\n      \"sources_mobilisees\": [{\"ref\": \"ref:connue\", \"mode\": \"memoire|intention|croyance|mandat|cible_action\"}],\n      \"resultats_produits\": [{\n        \"id\": \"res:<activite>:1\", \"type\": \"observation\",\n        \"cible\": \"ref:canonique\", \"avant\": null, \"apres\": \"...\",\n        \"portee\": \"connaissance_acteur\", \"source_refs\": [\"ref:canonique\"],\n        \"preuve_refs\": [], \"certitude\": \"constate\"\n      }],\n      \"blocage\": null\n    }],\n    \"suite\": null,\n    \"reveils_suivants\": []\n  },\n  \"mutations_proposees\": []\n}\n\nContraintes : les activités sont ordonnées, continues et sans chevauchement.\nLeur durée totale est comprise entre 60 secondes et le budget. Chaque\nchemin totalise exactement la durée de son activité. Écrire, parler, marcher,\nchercher et manipuler prennent réellement du temps ; l'ellipse économise la\nprose, jamais les secondes.\n\nToute adresse vient du dossier. Aucun préfixe `candidate:`. Chaque résultat a\ndes `source_refs`, présentes dans les sources touchées ou mobilisées, le\nchemin, la cible de l'action ou un résultat antérieur. Une continuité reprend\nmot pour mot son dernier `apres` dans `avant`.\n\nUne issue `avance` ou `termine` produit un `progression_tache` visant l'id exact\nde `tache_elue`; `bloque` produit un `blocage`; `echoue`, un `echec`.\n\nLes mutations sont seulement proposées. CHACUNE PORTE EXACTEMENT CETTE FORME,\net le nom des clés n'est pas négociable — une mutation qui cite son résultat\nsous une autre clé que `resultat_id` est jetée sans être lue :\n\n{\n  \"resultat_id\": \"res:act:<acteur>:1\",\n  \"table\": \"intentions\",\n  \"operation\": \"croyance_ajouter\",\n  \"cible\": \"<id visé dans cette table>\",\n  \"valeur\": \"<la valeur, pour les opérations qui en prennent une>\",\n  \"champs\": {\"<champ>\": \"<valeur>\"}\n}\n\n`resultat_id` reprend MOT POUR MOT l'`id` d'un `resultats_produits` du présent\nrapport : une mutation qui ne se rattache pas à un résultat déclaré n'a pas eu\nlieu. `valeur` ou `champs` selon l'opération, jamais un autre nom. Pas de clé\n`cite`, `domaine`, `op`, `personnage_id` ni `table.operation` collés en un seul\nmot : la table et l'opération sont deux clés distinctes.\n\nOpérations admises, par table :\n  intentions   etape, etape_ajouter, tete, tete_ajouter, croyance_ajouter,\n               croyance_retirer, ignore_ajouter, ignore_retirer,\n               declencheur_ajouter, declencheur_retirer\n  books        affaire_ajouter, affaire_action_ajouter, affaire_action\n  evenements   diffusion_livree, diffusion_ajouter, evenement\n  personnages  personnage, personnage_ajouter\n  monde        monde\n  mains        mesure, seuil, main, main_ajouter\n  plis         pli, pli_ajouter\n  lieux        roukerie\n  jetons       incident_propage, incident\n  relations    relation, relation_ajouter\n\nAucune autre table n'existe. Ne propose rien que ta journée n'ait réellement\nproduit.\n\nLes affaires, dont la `cible` a une forme stricte :\n  books.affaire_ajouter          cible = `affaire-<nom-en-kebab>` (neuf),\n                                 valeur = {\"titre\": \"...\"}\n  books.affaire_action_ajouter   cible = `affaire-<...>` (l'affaire entière),\n                                 valeur = la LISTE des cellules, une par\n                                 colonne de sa table d'actions, dans l'ordre\n  books.affaire_action           cible = `affaire-<...>:<n° de l'action>`,\n                                 champs = {\"<intitulé exact de colonne>\": \"...\"}\n\nLe numéro d'une action est celui de sa première cellule dans le cahier, jamais\nl'id d'un nœud du tissu. Une affaire à toi — ce que tu poursuis et qui n'est\nécrit nulle part — s'ouvre par `affaire_ajouter`.\n\n",
+    "messages_correction": [],
+    "modele": "opus",
+    "effort": "low",
+    "duree_ms": 175119,
+    "duree_api_ms": 170073,
+    "cout_usd": 0.6376584999999999,
+    "tours": 3,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 3838,
+      "cache_read_input_tokens": 17741,
+      "output_tokens": 11770,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 3838,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 11770,
+          "cache_read_input_tokens": 17741,
+          "cache_creation_input_tokens": 3838,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 3838
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  },
+  "applique_le": "verifie-en-prod:2026-08-10 (fusion staging->etat)"
+}

@@ -10,6 +10,21 @@
 <div id="lateral" class="ferme">
   <button id="lateral-bascule" title="Ouvrir le panneau">☰</button>
   <div id="lateral-corps">
+    <!-- Le siège : qui l'on incarne, et par où l'on en change. Il vivait dans
+         le bandeau du décor ; ce bandeau a quitté la colonne de droite, et
+         changer de personnage est un geste de rail, pas de scène. Caché tant
+         qu'il n'y a qu'un siège au roster. -->
+    <div class="zone" id="zone-siege" hidden>
+      <div class="zone-titre">Le siège</div>
+      <div id="siege" hidden>
+        <button id="siege-bouton" type="button" aria-haspopup="true" aria-expanded="false"></button>
+        <div id="siege-liste" hidden></div>
+      </div>
+    </div>
+    <div class="zone" id="zone-fils">
+      <div class="zone-titre">Ce qui court <span id="fils-compte"></span></div>
+      <div id="liste-fils"></div>
+    </div>
     <div class="zone" id="zone-objectifs">
       <div class="zone-titre">Vos desseins</div>
       <div id="liste-objectifs"></div>
@@ -36,24 +51,19 @@
 </div>
 
 <div id="scene">
-  <div id="bandeau">
-    <span id="date">—</span>
-    <span id="heure" hidden></span>
-    <span id="ecart" class="ecart" hidden></span>
-    <span id="lieu">—</span>
-    <span id="jauge" title="Tension du royaume"><i></i></span>
-    <!-- Le siège : qui l'on incarne, et par où l'on en change. Caché tant qu'il
-         n'y a qu'un siège au roster — une partie seule n'a rien à choisir. -->
-    <span id="siege" hidden>
-      <button id="siege-bouton" type="button" aria-haspopup="true" aria-expanded="false"></button>
-      <div id="siege-liste" hidden></div>
-    </span>
-  </div>
   <!-- le décor : quatre échelles d'une même guerre — le château où l'on est, la
        ville qui l'entoure, le royaume où elle porte, le champ où elle se décide.
        Qui est dans la salle n'est plus ici : les présents tiennent leur propre
        colonne, à gauche du fil (voir #acteurs, plus bas). -->
   <div id="decor">
+    <!-- où l'on regardait avant, où l'on regardait après. Les deux flèches ont
+         suivi le décor plutôt que le bandeau : elles parcourent les échelles et
+         les cadrages, pas le temps de la scène. Posées dans le coin haut du
+         décor, hors du flux, elles ne coûtent pas une ligne. Voir modules/nav.js. -->
+    <span id="nav-hist">
+      <button id="nav-prec" type="button" aria-label="Revenir">‹</button>
+      <button id="nav-suiv" type="button" aria-label="Ravancer">›</button>
+    </span>
     <div id="cartes">
       <!-- retiré du décor : le champ. Son hôte reste pour les modules qui le
            cherchent, mais il ne s'affiche plus. -->
@@ -62,8 +72,13 @@
       <div id="ville"></div>
       <div id="ville3d"></div>
       <div id="terrain" class="vue-off"></div>
+      <!-- l'échiquier : la ligne de jeu, de ce qu'on a jusqu'à ce qu'on veut.
+           Ouvert partout, dès qu'il y a une affaire à lire. -->
+      <div id="echiquier" class="vue-off"></div>
       <div id="gens"></div>
       <div id="desseins"></div>
+      <!-- les jours : ce qui est pris, et à quelle heure — voir modules/calendrier.js -->
+      <div id="calendrier" class="vue-off"></div>
       <div id="books"></div>
       <div id="nappe" class="vue-off"></div>
     </div>
@@ -77,13 +92,36 @@
 
 <div id="fil">
   <div id="fil-corps"></div>
-  <div id="attente" class="pulse">La reine a parlé. Le monde en prend acte…</div>
+  <!-- l'attente : trois points qui battent, et rien d'autre. Ils s'allument
+       quand le joueur a parlé et s'éteignent quand le monde a répondu POUR DE
+       BON — c'est-à-dire au premier item du monde effectivement peint, pas à
+       l'écho de sa propre phrase qui revient du serveur deux secondes après. -->
+  <div id="attente" aria-hidden="true"><i></i><i></i><i></i></div>
   <div id="fil-actions"></div>
+  <!-- Où l'on est et quand : sous la case d'écriture, et non plus en tête de
+       la colonne du décor. C'est là qu'on lit la question « où suis-je, et
+       quand ? » — à l'endroit exact où l'on répond, au moment d'écrire.
+       Il est écrit ici, mais actions.js le DÉPLACE dans la rangée d'envoi dès
+       qu'elle est construite : il tient la même ligne que Améliorer et Parler,
+       à gauche, et ne prend donc aucune hauteur pour lui seul. -->
+  <div id="bandeau">
+    <span id="date">—</span>
+    <span id="heure" hidden></span>
+    <span id="ecart" class="ecart" hidden></span>
+    <span id="lieu">—</span>
+  </div>
 </div>
 
+<!-- le visage d'un homme : une seule main le dessine, pour la salle comme pour
+     le fil. Avant bus.js et galerie.js, qui l'un et l'autre s'en servent. -->
+<script src="/modules/visage.js"></script>
+<script src="/modules/lumiere.js"></script>
 <script src="/modules/bus.js"></script>
+<!-- la nav du décor : AVANT les échelles, qui s'inscrivent auprès d'elle -->
+<script src="/modules/nav.js"></script>
 <script src="/modules/attention.js"></script>
 <script src="/modules/entites.js"></script>
+<script src="/modules/renvois.js"></script>
 <script src="/modules/galerie.js"></script>
 <script src="/modules/narration.js"></script>
 <script src="/modules/paroles.js"></script>
@@ -103,17 +141,23 @@
 <script src="/modules/taches.js"></script>
 <script src="/modules/plans.js"></script>
 <script src="/modules/plan.js"></script>
+<script src="/modules/vue-salle.js"></script>
 <script src="/modules/terrain.js"></script>
+<script src="/modules/echiquier.js"></script>
 <script src="/modules/ville3d.js"></script>
 <script src="/modules/gens.js"></script>
 <!-- le carnet de rencontres : il lit le fil, il range « Les gens » -->
 <script src="/modules/vus.js"></script>
+<script src="/modules/fils.js"></script>
 <script src="/modules/objectifs.js"></script>
 <script src="/modules/desseins.js"></script>
+<script src="/modules/calendrier.js"></script>
 <script src="/modules/nappe.js"></script><script src="/modules/books.js"></script><script src="/modules/retrospective.js"></script>
 <script src="/modules/reperes.js"></script>
 <script src="/modules/reglages.js"></script>
 <script src="/modules/sieges.js"></script>
+<!-- la régie : ne s'arme que pour un siège `regie` (Corneille) -->
+<script src="/modules/regie.js"></script>
 <script src="/modules/defilement.js"></script>
 <script src="/modules/voix.js"></script>
 </body>

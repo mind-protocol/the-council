@@ -1,0 +1,142 @@
+AURORE — sa table de guerre et ses vues
+=======================================
+
+--- Ses jetons (etat/joueurs/aurore-inchauspe/jetons.json) --------------
+
+{
+  "_lisez_moi": "Ce que la table peinte PORTE — pas la vérité du monde, mais ce que le joueur croit tenir. Chaque marque a sa `certitude` (sure | rapportee | rumeur) et devrait pouvoir se justifier par une entrée d'info.json, une parole entendue en scène ou un ordre donné par le joueur. Format complet : docs/carte.md.",
+  "jetons": [
+    {
+      "id": "dragons-peyredragon",
+      "genre": "dragon",
+      "camp": "noir",
+      "nom": "Les dragons de Peyredragon",
+      "force": 5,
+      "unite": "dragons montés",
+      "ou": "peyredragon",
+      "detail": "ce qu'on en dit sur le quai",
+      "certitude": "rapportee",
+      "statut": "actif"
+    },
+    {
+      "id": "incident-la-liste",
+      "genre": "incident",
+      "camp": "noir",
+      "feu": "vif",
+      "nom": "La liste des manquants",
+      "ou": "peyredragon",
+      "ames": 40,
+      "date": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 28
+      },
+      "certitude": "sure",
+      "contenu": "Un compte nomme des hommes de la colonne royale : cent quarante-deux manquants certains, quarante-sept rapportes, quarante vivants et retrouves, et mille onze qui ne sont pas repasses par le rocher. Ni titre, ni sceau, ni signature.",
+      "propage": [],
+      "risque": [
+        {
+          "ou": "lamarck",
+          "ames": 300,
+          "note": "premier fret, 29e a la maree du matin"
+        },
+        {
+          "ou": "ile-aux-griffes",
+          "ames": 300,
+          "note": "premier fret, 29e"
+        },
+        {
+          "ou": "pointe-aigue",
+          "ames": 200,
+          "note": "premier fret, 29e"
+        },
+        {
+          "ou": "sombreval",
+          "ames": 900,
+          "note": "coque du 30e — la ou la lettre des trois mille a ete ecrite"
+        },
+        {
+          "ou": "port-real",
+          "ames": 3000,
+          "note": "pas par les coques : par Wat et Hobb, si la reine donne la barque"
+        }
+      ]
+    }
+  ],
+  "traits": [],
+  "zones": []
+}
+
+--- Ses vues — dernières positions connues ------------------------------
+
+{
+  "vues": [
+    {
+      "personnage_id": "gerardys",
+      "lieu_id": "peyredragon",
+      "date": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 20
+      },
+      "canal": "vu",
+      "source": "de vos yeux",
+      "certitude": "sure",
+      "note": "il compte vos pots"
+    },
+    {
+      "personnage_id": "aegon-ii",
+      "lieu_id": "port-real",
+      "date": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 19
+      },
+      "canal": "rapporte",
+      "source": "on le sait sur toutes les routes",
+      "certitude": "sure",
+      "note": "couronné à Port-Réal"
+    },
+    {
+      "personnage_id": "gunthor-darklyn",
+      "lieu_id": "sombreval",
+      "date": null,
+      "canal": "rapporte",
+      "source": "vos livraisons d'encre",
+      "certitude": "sure",
+      "note": "sa roukerie prend six pots la lune"
+    },
+    {
+      "personnage_id": "lord-staunton",
+      "lieu_id": "repos-des-freux",
+      "date": null,
+      "canal": "rapporte",
+      "source": "vos livraisons d'encre",
+      "certitude": "sure",
+      "note": "sa roukerie a triplé sa ration en deux lunes"
+    },
+    {
+      "personnage_id": "lord-bar-emmon",
+      "lieu_id": "pointe-aigue",
+      "date": null,
+      "canal": "rapporte",
+      "source": "vos livraisons d'encre",
+      "certitude": "rapportee",
+      "note": "le commis y va, pas vous"
+    },
+    {
+      "personnage_id": "aurore-inchauspe",
+      "lieu_id": "peyredragon",
+      "date": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 20
+      },
+      "canal": "vu",
+      "source": "de vos yeux",
+      "certitude": "sure",
+      "note": "vous"
+    }
+  ]
+}
+

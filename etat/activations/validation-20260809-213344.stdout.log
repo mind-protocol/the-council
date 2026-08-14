@@ -1,0 +1,75 @@
+[  0.001s] boucle.demarrage         · sec=False · une_fois=False · heartbeat_s=5.0
+[  0.003s] cycle.depart            
+[  0.007s] horloge.lecture         
+[  0.009s] horloge.direct           · origine=rhaenyra · front=aurore-inchauspe · present_s=79980.0
+[  0.010s] graphe.lecture          
+[  0.052s] graphe.charge            · noeuds=1778 · aretes=4650
+[  0.054s] diffusion.importance    
+[  0.231s] energie.polarites_horloge · moyenne_minute=67000292.75 · ecart_max_minutes=982.25 · emetteurs=1 · absorbeurs=97 · neutres=0
+[  0.235s] energie.transfert_horloge · transfere=10.691 · propositions=1018 · acteurs=98
+[  0.237s] energie.graphe           · dt_s=347.215 · integration=0.551675 · noeuds=1778 · energises=191 · total=1163.184 · pic=pers:rhaenyra · maximum=100.0
+[  0.238s] diffusion.calendrier    
+[  0.249s] energie.calculee         · acteurs=9 · maximum=20.851
+[  0.256s] selection.elue           · acteur=robert-quince · energie=20.851 · tache=10030 · energie_tache=2.046 · budget_s=20 · flux_horloge=absorbe · ecart_horloge_min=-350.75 · horloge_pj=rhaenyra
+[  0.257s] acteur.choisi            · acteur=robert-quince · energie=20.851 · importance=0.218263 · budget=20
+[  0.258s] tache.choisie            · id=10030 · distance=2 · creee=False · energie=2.046
+ACTIVATION  robert-quince  energie 20.85 · budget 20  importance 0.218
+  tache 10030 · distance 2 · 🚧 Fermer après le fleuve, et un bras après l'autre
+  front aurore-inchauspe · +79980.0s depuis rhaenyra
+[  0.259s] energie.reservee         · acteur=robert-quince · valeur=20.851 · plafond=20
+[  0.264s] appel.dossier            · acteur=robert-quince · tache=10030
+[  0.332s] appel.systeme_narrateur  · acteur=robert-quince · caracteres=36604
+[  0.334s] appel.systeme_pnj        · acteur=robert-quince · caracteres=56345
+[  0.335s] appel.ouverture          · acteur=robert-quince · caracteres=416 · budget=20
+[  0.340s] cli.depart               · acteur=narrateur-local:cour · session=8e9676a1-b34b-4dae-b601-5268d77b5d59 · phase=narrateur.ouverture · reprise=False · modele=opus · effort=low · timeout_s=900
+[  5.424s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.ouverture · secondes=5.0
+[  6.208s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[  9.192s] cli.texte                · contenu=```json { "appel_pnj": { "qui": "robert-quince", "message": "Ser Robert — vous êtes dans la cour, il est passé dix heures du soir et la fermeture après le fleuve, un bras après l'…
+[  9.197s] cli.rate_limit_event     · sous_type=None
+[  9.211s] cli.resultat             · erreur=False · duree_ms=3331 · cout=0.19442500000000001 · entree=2 · sortie=153 · caracteres=329
+[ 10.435s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.ouverture · secondes=10.0
+[ 10.437s] narrateur.reveille_pnj   · acteur=robert-quince · caracteres=247
+[ 10.536s] cli.depart               · acteur=robert-quince · session=1fb8d767-a4d7-4c23-b6e1-cca646abd652 · phase=pnj.tentative · reprise=False · modele=opus · effort=low · timeout_s=900
+[ 13.038s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=3
+[ 14.276s] cli.rate_limit_event     · sous_type=None
+[ 15.568s] cli.heartbeat            · acteur=robert-quince · phase=pnj.tentative · secondes=5.0
+[ 20.571s] cli.heartbeat            · acteur=robert-quince · phase=pnj.tentative · secondes=10.0
+[ 23.071s] cli.texte                · contenu={ "tentative": { "verbe": "dicter", "quoi": "Écrire debout dans la cour, sur un feuillet posé contre le mur, l'ordre de fermeture bras par bras : quelle porte se ferme la première…
+[ 23.104s] cli.resultat             · erreur=False · duree_ms=10306 · cout=0.28910199999999997 · entree=2 · sortie=476 · caracteres=1117
+[ 24.898s] pnj.tentative_valide     · acteur=robert-quince · verbe=dicter · caracteres=1070
+[ 24.900s] narrateur.arbitrage      · acteur=robert-quince · caracteres=1686
+[ 24.904s] cli.depart               · acteur=narrateur-local:cour · session=8e9676a1-b34b-4dae-b601-5268d77b5d59 · phase=narrateur.resolution · reprise=True · modele=opus · effort=low · timeout_s=900
+[ 27.118s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[ 29.648s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 30.012s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=5.0
+[ 31.087s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 32.493s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 32.497s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 32.633s] cli.assistant            · bloc=thinking
+[ 35.019s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=10.0
+[ 40.026s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=15.0
+[ 45.027s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.resolution · secondes=20.0
+[ 45.641s] cli.texte                · contenu=```json { "qui": "robert-quince", "activation": { "tache": {"id": "10030", "quoi": "🚧 Fermer après le fleuve, et un bras après l'autre", "creee": false}, "issue": "avance", "activ…
+[ 45.654s] cli.rate_limit_event     · sous_type=None
+[ 45.663s] cli.resultat             · erreur=False · duree_ms=18863 · cout=0.05407000000000001 · entree=2 · sortie=1436 · caracteres=3060
+[ 47.017s] rapport.extraction       · acteur=robert-quince · essai=1
+[ 47.019s] rapport.refuse           · acteur=robert-quince · essai=1 · erreur=activite 1 temporellement impossible : 59 mots ecrits/decrits en 20 s (maximum genereux 48)
+[ 47.021s] narrateur.corrige        · acteur=robert-quince · essai=2 · caracteres=928
+[ 47.023s] cli.depart               · acteur=narrateur-local:cour · session=8e9676a1-b34b-4dae-b601-5268d77b5d59 · phase=narrateur.correction · reprise=True · modele=opus · effort=low · timeout_s=900
+[ 49.312s] cli.systeme              · sous_type=init · modele=claude-opus-5 · outils=0
+[ 51.883s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 52.046s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=5.0
+[ 53.305s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 53.310s] cli.systeme              · sous_type=thinking_tokens · modele=None · outils=0
+[ 53.324s] cli.assistant            · bloc=thinking
+[ 57.060s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=10.0
+[ 61.228s] cli.texte                · contenu=```json { "qui": "robert-quince", "activation": { "tache": {"id": "10030", "quoi": "🚧 Fermer après le fleuve, et un bras après l'autre", "creee": false}, "issue": "avance", "activ…
+[ 61.246s] cli.rate_limit_event     · sous_type=None
+[ 61.254s] cli.resultat             · erreur=False · duree_ms=12300 · cout=0.0531885 · entree=2 · sortie=995 · caracteres=2081
+[ 62.068s] cli.heartbeat            · acteur=narrateur-local:cour · phase=narrateur.correction · secondes=15.0
+[ 62.070s] rapport.extraction       · acteur=robert-quince · essai=2
+[ 62.074s] rapport.valide           · acteur=robert-quince · depense=20 · activites=1 · corrections=1
+[ 62.080s] rapport.depose           · acteur=robert-quince · fichier=etat/staging/activations/20260809-213446-598733-robert-quince.json
+[ 62.081s] acteur.energie.debitee   · acteur=robert-quince · avant=20.851 · duree_s=20 · apres=0.851
+[ 62.082s] continuite.enregistree   · acteur=robert-quince · tache=10030 · issue=avance · suspendue=False · reprendre_a=83580.0 · cibles=2
+[ 62.091s] cycle.termine            · acteur=robert-quince · rapport=etat/staging/activations/20260809-213446-598733-robert-quince.json

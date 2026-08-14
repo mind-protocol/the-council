@@ -1,0 +1,523 @@
+{
+  "qui": "le-sanglier",
+  "activation": {
+    "tache": {
+      "id": "39026",
+      "quoi": "🧂 H8 : porter le seuil de seize à vingt-huit jours",
+      "creee": false
+    },
+    "issue": "avance",
+    "activites": [
+      {
+        "id": "act:le-sanglier:1",
+        "ordre": 1,
+        "temps": {
+          "debut_s": 103381.142,
+          "duree_s": 240,
+          "fin_s": 103621.142
+        },
+        "action": {
+          "verbe": "ecrire",
+          "quoi": "Écrire le mot de quatre lignes au chef de tour dont le nom ouvre la relève de la rampe : la planchette recopiée AVANT essuyage, par le relevant et non par le relevé, entre ses mains avant sept heures ; et, quatrième ligne, ce qu'il fait si l'homme ne sait pas écrire — il fait écrire et répond de la ligne, comme pour la marque au rôle.",
+          "cibles": [
+            "baraques",
+            "sanglier-six-noms"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "baraques",
+            "relation": "reste_sur_place",
+            "vers": "baraques",
+            "duree_s": 240
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "baraques",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "sanglier-six-noms",
+            "mode": "memoire"
+          },
+          {
+            "ref": "pers:le-sanglier",
+            "mode": "intention"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:le-sanglier:1:1",
+            "type": "objet_produit",
+            "cible": "baraques",
+            "avant": null,
+            "apres": "Mot de quatre lignes, de la main du Sanglier, sans destinataire nommé et adressé PAR L'OFFICE : « À celui dont le nom ouvre le tour à la rampe. » Première ligne : la planchette est recopiée avant d'être essuyée. Deuxième : c'est le RELEVANT qui recopie, jamais le relevé. Troisième : la recopie me vient entre les mains avant sept heures, et si elle ne vient pas, c'est la relève qu'on nomme, avec l'heure et le tour. Quatrième : qui ne sait pas écrire fait écrire et répond de la ligne, comme pour la marque au rôle — cela ne coûte pas un homme et n'en écarte aucun. Marque au bas, et non pas signature de complaisance. L'encre allongée bave un peu ; les quatre lignes restent lisibles.",
+            "portee": "monde",
+            "source_refs": [
+              "baraques",
+              "sanglier-six-noms"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 8.0,
+        "quoi": "Écrire le mot de quatre lignes au chef de tour dont le nom ouvre la relève de la rampe : la planchette recopiée AVANT essuyage, par le relevant et non par le relevé, entre ses mains avant sept heures ; et, quatrième ligne, ce qu'il fait si l'homme ne sait pas écrire — il fait écrire et répond de la ligne, comme pour la marque au rôle.",
+        "source": "baraques, pers:le-sanglier, sanglier-six-noms",
+        "resultat": "objet_produit: Mot de quatre lignes, de la main du Sanglier, sans destinataire nommé et adressé PAR L'OFFICE : « À celui dont le nom ouvre le tour à la rampe. » Première ligne : la planchette est recopiée avant d'être essuyée. Deuxième : c'est le RELEVANT qui recopie, jamais le relevé. Troisième : la recopie me vient entre les mains avant sept heures, et si elle ne vient pas, c'est la relève qu'on nomme, avec l'heure et le tour. Quatrième : qui ne sait pas écrire fait écrire et répond de la ligne, comme pour la marque au rôle — cela ne coûte pas un homme et n'en écarte aucun. Marque au bas, et non pas signature de complaisance. L'encre allongée bave un peu ; les quatre lignes restent lisibles.",
+        "preuve": null
+      },
+      {
+        "id": "act:le-sanglier:2",
+        "ordre": 2,
+        "temps": {
+          "debut_s": 103621.142,
+          "duree_s": 60,
+          "fin_s": 103681.142
+        },
+        "action": {
+          "verbe": "appeler",
+          "quoi": "Appeler le garçon de baraque pour porter le mot les quarante pas — deux fois, puis à la voix de sergent.",
+          "cibles": [
+            "baraques",
+            "pers:le-sanglier"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "baraques",
+            "relation": "reste_sur_place",
+            "vers": "baraques",
+            "duree_s": 60
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "baraques",
+            "mode": "voit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:le-sanglier",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:le-sanglier:2:1",
+            "type": "observation",
+            "cible": "pers:le-sanglier",
+            "avant": "L'encre a pris le froid de la nuit et coule mal ; allongée, elle bavera un peu et il le sait. Il copiera plus lentement qu'il ne l'a prévu — une main lente est une main qu'on relit, il ne s'en plaint pas.",
+            "apres": "Personne ne répond, et il sait pourquoi avant d'avoir fini d'appeler : les deux coureurs de la baraque lui ont été pris, et il ne sait toujours pas qui les nourrit ni qui les paie. À quatre heures trois quarts la baraque est vide de toute main disponible — Tobb et Nesse sont sur la ligne de la porte, où il les a mis lui-même. Il a compté sur un garçon qu'il n'a plus. Deuxième fois en trois jours qu'il s'avance sur ce qu'il croit tenir, et il ne s'en explique pas : la sortie est dans la même bouche que l'empêchement — le mot fait quarante pas de toute façon, et son rôle est au bout de ces quarante pas. Il ira donc, et les deux colonnes s'ouvriront là où le livre est, sous la voûte, puisqu'il n'en bouge pas.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "baraques",
+              "pers:le-sanglier"
+            ],
+            "preuve_refs": [
+              "res:act:le-sanglier:1:1"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 2.0,
+        "quoi": "Appeler le garçon de baraque pour porter le mot les quarante pas — deux fois, puis à la voix de sergent.",
+        "source": "baraques, pers:le-sanglier",
+        "resultat": "observation: Personne ne répond, et il sait pourquoi avant d'avoir fini d'appeler : les deux coureurs de la baraque lui ont été pris, et il ne sait toujours pas qui les nourrit ni qui les paie. À quatre heures trois quarts la baraque est vide de toute main disponible — Tobb et Nesse sont sur la ligne de la porte, où il les a mis lui-même. Il a compté sur un garçon qu'il n'a plus. Deuxième fois en trois jours qu'il s'avance sur ce qu'il croit tenir, et il ne s'en explique pas : la sortie est dans la même bouche que l'empêchement — le mot fait quarante pas de toute façon, et son rôle est au bout de ces quarante pas. Il ira donc, et les deux colonnes s'ouvriront là où le livre est, sous la voûte, puisqu'il n'en bouge pas.",
+        "preuve": [
+          "res:act:le-sanglier:1:1"
+        ]
+      },
+      {
+        "id": "act:le-sanglier:3",
+        "ordre": 3,
+        "temps": {
+          "debut_s": 103681.142,
+          "duree_s": 180,
+          "fin_s": 103861.142
+        },
+        "action": {
+          "verbe": "porter",
+          "quoi": "Se lever sur la jambe raide, prendre la copie portable et le mot, marcher les quarante pas des baraques à la voûte de la porte du Dragon, et caler le mot sous le rebord même où dort la craie, la marque tournée vers le haut — la première main sèche qui prendra la craie ne pourra pas ne pas le voir.",
+          "cibles": [
+            "porte-dragon"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "baraques",
+            "relation": "touche",
+            "vers": "porte-dragon",
+            "duree_s": 180
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "porte-dragon",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "recrutement-peyredragon",
+            "mode": "mandat"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:le-sanglier:3:1",
+            "type": "deplacement",
+            "cible": "pers:le-sanglier",
+            "avant": "baraques",
+            "apres": "porte-dragon — sous la voûte, à sa chaise, le rôle ouvert devant lui, la copie portable sous la main gauche. Deux minutes de marche payées d'une jambe qui ne se plie pas et d'un souffle qu'il laisse redescendre avant d'ouvrir l'encre.",
+            "portee": "monde",
+            "source_refs": [
+              "baraques",
+              "porte-dragon"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:le-sanglier:3:2",
+            "type": "communication",
+            "cible": "porte-dragon",
+            "avant": null,
+            "apres": "Le mot de quatre lignes est calé sous le rebord de la planchette, à l'endroit exact où la craie repose entre deux mains, marque visible. Il n'est remis à personne et n'a pas encore été lu : la relève ne tourne pas avant l'heure. Il sera trouvé par celui qui prendra la craie le premier — ce qui est précisément ce que la règle du 28e au soir rend possible et ce qu'elle rendait impossible la veille. Aucune réponse n'est due avant sept heures.",
+            "portee": "monde",
+            "source_refs": [
+              "porte-dragon"
+            ],
+            "preuve_refs": [
+              "res:act:le-sanglier:1:1"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 6.0,
+        "quoi": "Se lever sur la jambe raide, prendre la copie portable et le mot, marcher les quarante pas des baraques à la voûte de la porte du Dragon, et caler le mot sous le rebord même où dort la craie, la marque tournée vers le haut — la première main sèche qui prendra la craie ne pourra pas ne pas le voir.",
+        "source": "porte-dragon, recrutement-peyredragon",
+        "resultat": "deplacement: porte-dragon — sous la voûte, à sa chaise, le rôle ouvert devant lui, la copie portable sous la main gauche. Deux minutes de marche payées d'une jambe qui ne se plie pas et d'un souffle qu'il laisse redescendre avant d'ouvrir l'encre. · communication: Le mot de quatre lignes est calé sous le rebord de la planchette, à l'endroit exact où la craie repose entre deux mains, marque visible. Il n'est remis à personne et n'a pas encore été lu : la relève ne tourne pas avant l'heure. Il sera trouvé par celui qui prendra la craie le premier — ce qui est précisément ce que la règle du 28e au soir rend possible et ce qu'elle rendait impossible la veille. Aucune réponse n'est due avant sept heures.",
+        "preuve": [
+          "res:act:le-sanglier:1:1"
+        ]
+      },
+      {
+        "id": "act:le-sanglier:4",
+        "ordre": 4,
+        "temps": {
+          "debut_s": 103861.142,
+          "duree_s": 240,
+          "fin_s": 104101.142
+        },
+        "action": {
+          "verbe": "ouvrir",
+          "quoi": "Ouvrir au rôle, à la suite des dix-neuf intervalles, une colonne neuve et vide : LA ROUTE DU SEL. La titrer, la dater, écrire dessous ce qu'elle attend et ce qu'elle vaut — un seul retour par le sel entendu de ses oreilles y tombe, et cette colonne-là, seule, casse le vingt-huit.",
+          "cibles": [
+            "porte-dragon",
+            "39026"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "porte-dragon",
+            "relation": "reste_sur_place",
+            "vers": "porte-dragon",
+            "duree_s": 240
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "porte-dragon",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "39026",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:le-sanglier:4:1",
+            "type": "objet_produit",
+            "cible": "porte-dragon",
+            "avant": null,
+            "apres": "COLONNE DU SEL OUVERTE AU RÔLE, vide sous son titre. En tête : « LA ROUTE DU SEL — ouverte de ma main, datée du 29e, aucun intervalle. » Sous le titre, trois lignes de sa main : « Onze ans de colonnes ne connaissent pas cette route. Une colonne vide qui porte son nom vaut mieux qu'un nombre qui fait semblant de la contenir. » — « N'y tombe qu'un retour par le sel entendu de mes oreilles, ou deux témoins concordants et leurs deux noms en marge. » — « Trois intervalles ne font pas un chiffre : je l'ai appris hier sur Nesse et je ne le rapprendrai pas ici. » Le rôle porte désormais, l'une sous l'autre, la colonne des dix-neuf intervalles pleins et la colonne vide qui peut la démentir. Il note que le jour ne tourne sur son livre qu'à la relecture de sept heures : la ligne est datée du 29e et attend devant elle.",
+            "portee": "monde",
+            "source_refs": [
+              "porte-dragon",
+              "39026"
+            ],
+            "preuve_refs": [
+              "res:act:le-sanglier:3:1"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 8.0,
+        "quoi": "Ouvrir au rôle, à la suite des dix-neuf intervalles, une colonne neuve et vide : LA ROUTE DU SEL. La titrer, la dater, écrire dessous ce qu'elle attend et ce qu'elle vaut — un seul retour par le sel entendu de ses oreilles y tombe, et cette colonne-là, seule, casse le vingt-huit.",
+        "source": "39026, porte-dragon",
+        "resultat": "objet_produit: COLONNE DU SEL OUVERTE AU RÔLE, vide sous son titre. En tête : « LA ROUTE DU SEL — ouverte de ma main, datée du 29e, aucun intervalle. » Sous le titre, trois lignes de sa main : « Onze ans de colonnes ne connaissent pas cette route. Une colonne vide qui porte son nom vaut mieux qu'un nombre qui fait semblant de la contenir. » — « N'y tombe qu'un retour par le sel entendu de mes oreilles, ou deux témoins concordants et leurs deux noms en marge. » — « Trois intervalles ne font pas un chiffre : je l'ai appris hier sur Nesse et je ne le rapprendrai pas ici. » Le rôle porte désormais, l'une sous l'autre, la colonne des dix-neuf intervalles pleins et la colonne vide qui peut la démentir. Il note que le jour ne tourne sur son livre qu'à la relecture de sept heures : la ligne est datée du 29e et attend devant elle.",
+        "preuve": [
+          "res:act:le-sanglier:3:1"
+        ]
+      },
+      {
+        "id": "act:le-sanglier:5",
+        "ordre": 5,
+        "temps": {
+          "debut_s": 104101.142,
+          "duree_s": 360,
+          "fin_s": 104461.142
+        },
+        "action": {
+          "verbe": "ouvrir",
+          "quoi": "Porter du papier au rôle la ligne de secours du seizième jour, et l'ouvrir au registre de sa main : l'homme est porté SILENCIEUX et non perdu, sa solde reste due et court ; puis écrire en marge la date du 29e et son propre nom comme celui qui l'a ordonnée, la règle étant la même pour lui que pour la reine.",
+          "cibles": [
+            "porte-dragon",
+            "39026",
+            "recrutement-peyredragon"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "porte-dragon",
+            "relation": "reste_sur_place",
+            "vers": "porte-dragon",
+            "duree_s": 360
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "porte-dragon",
+            "mode": "manipule"
+          },
+          {
+            "ref": "recrutement-peyredragon",
+            "mode": "mesure"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "39026",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "pers:le-sanglier",
+            "mode": "croyance"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:le-sanglier:5:1",
+            "type": "progression_tache",
+            "cible": "39026",
+            "avant": "COPIE PORTABLE TIRÉE, RELUE TOUT HAUT, DATÉE DU 28e ET MARQUÉE — sur feuille séparée, le rôle n'ayant pas quitté la voûte. Trois parties : le nombre et ses dix-neuf intervalles en colonne (plus long retour dix-neuf jours, neuf de marge) ; le prix chiffré (trois passages muets au lieu de deux, seconde route douze jours plus tard, marque du huitième jour maintenue) ; la ligne de secours du seizième jour, écrite pour être ouverte au registre sans venir le lui demander. Deux aveux en marge de sa main : trois intervalles de Nesse ne faisaient pas un chiffre, et le quatrième est ouvert par sa main à lui. En bas, la seule chose qui casse le nombre : onze ans de colonnes ne connaissent pas la route du sel. La relecture à voix haute a repris deux fautes — LA PORTE DU DRAGON remis à LA RAMPE, et dix jours remis à douze. La page reste dans les baraques jusqu'à la relecture de sept heures ; elle n'est pas encore à la Table Peinte, et la colonne du sel n'existe pas encore au rôle.",
+            "apres": "CE QUI ÉTAIT DIT ET PAS FAIT EST FAIT, ET C'EST AU RÔLE, PAS SUR UN PAPIER. Deux ouvertures de sa main sous la voûte, entre quatre heures trois quarts et cinq heures et quart : (1) LA COLONNE DU SEL, neuve, vide, titrée, datée du 29e, à la suite des dix-neuf intervalles — la seule chose qui puisse casser le vingt-huit a désormais où s'écrire, et rien d'autre n'y tombera qu'un retour entendu de ses oreilles ou deux témoins concordants nommés en marge. (2) LA LIGNE DU SEIZIÈME JOUR, portée du papier au registre : au seizième jour on ne déclare rien, l'homme est porté SILENCIEUX et non perdu, sa solde reste due et court, aucun clerc n'a à venir la demander. En marge, de sa main : la date du 29e et SON PROPRE NOM comme celui qui l'a ordonnée — il applique à sa propre main la règle qu'il applique à la reine. Le seuil de vingt-huit jours n'est toujours pas porté à la Table Peinte et n'a été agréé par personne : la copie portable est maintenant sous la voûte avec lui, non plus dans les baraques, et attend la relecture de sept heures. Le mot du relevant est calé sous le rebord de la craie, non lu, sans réponse due avant sept heures : la première relève de la rampe ne tourne pas dans cette fenêtre.",
+            "portee": "monde",
+            "source_refs": [
+              "39026",
+              "porte-dragon"
+            ],
+            "preuve_refs": [
+              "res:act:le-sanglier:4:1",
+              "res:act:le-sanglier:3:2"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:le-sanglier:5:2",
+            "type": "fait",
+            "cible": "recrutement-peyredragon",
+            "avant": null,
+            "apres": "La règle du seizième jour est ouverte au registre de la porte du Dragon : un homme marqué qui ne reparaît pas au seizième jour n'est ni rayé ni déclaré perdu ; il est porté SILENCIEUX, et sa solde reste comptée dans les cerfs dus. La colonne de ce qui est dû ne se soulagera donc plus par le silence d'un homme, et le compte des hommes marqués ne baissera pas de ceux qu'on n'a pas entendus.",
+            "portee": "monde",
+            "source_refs": [
+              "recrutement-peyredragon",
+              "porte-dragon"
+            ],
+            "preuve_refs": [
+              "res:act:le-sanglier:5:1"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 12.0,
+        "quoi": "Porter du papier au rôle la ligne de secours du seizième jour, et l'ouvrir au registre de sa main : l'homme est porté SILENCIEUX et non perdu, sa solde reste due et court ; puis écrire en marge la date du 29e et son propre nom comme celui qui l'a ordonnée, la règle étant la même pour lui que pour la reine.",
+        "source": "39026, pers:le-sanglier, porte-dragon, recrutement-peyredragon",
+        "resultat": "progression_tache: CE QUI ÉTAIT DIT ET PAS FAIT EST FAIT, ET C'EST AU RÔLE, PAS SUR UN PAPIER. Deux ouvertures de sa main sous la voûte, entre quatre heures trois quarts et cinq heures et quart : (1) LA COLONNE DU SEL, neuve, vide, titrée, datée du 29e, à la suite des dix-neuf intervalles — la seule chose qui puisse casser le vingt-huit a désormais où s'écrire, et rien d'autre n'y tombera qu'un retour entendu de ses oreilles ou deux témoins concordants nommés en marge. (2) LA LIGNE DU SEIZIÈME JOUR, portée du papier au registre : au seizième jour on ne déclare rien, l'homme est porté SILENCIEUX et non perdu, sa solde reste due et court, aucun clerc n'a à venir la demander. En marge, de sa main : la date du 29e et SON PROPRE NOM comme celui qui l'a ordonnée — il applique à sa propre main la règle qu'il applique à la reine. Le seuil de vingt-huit jours n'est toujours pas porté à la Table Peinte et n'a été agréé par personne : la copie portable est maintenant sous la voûte avec lui, non plus dans les baraques, et attend la relecture de sept heures. Le mot du relevant est calé sous le rebord de la craie, non lu, sans réponse due avant sept heures : la première relève de la rampe ne tourne pas dans cette fenêtre. · fait: La règle du seizième jour est ouverte au registre de la porte du Dragon : un homme marqué qui ne reparaît pas au seizième jour n'est ni rayé ni déclaré perdu ; il est porté SILENCIEUX, et sa solde reste comptée dans les cerfs dus. La colonne de ce qui est dû ne se soulagera donc plus par le silence d'un homme, et le compte des hommes marqués ne baissera pas de ceux qu'on n'a pas entendus.",
+        "preuve": [
+          "res:act:le-sanglier:4:1",
+          "res:act:le-sanglier:3:2",
+          "res:act:le-sanglier:5:1"
+        ]
+      }
+    ],
+    "suite": "Attendre la relève de la rampe : soit la planchette recopiée lui vient entre les mains avant sept heures et il écrit sa règle tenue, soit elle ne vient pas et il nomme la relève avec l'heure et le tour. Puis, la relecture de sept heures faite tout haut, porter la copie portable à la Table Peinte et y faire agréer le seuil de vingt-huit jours — le rôle, lui, ne bouge pas.",
+    "reveils_suivants": [],
+    "budget_energie": 36,
+    "budget_secondes": 1080,
+    "energie_depensee": 36.0
+  },
+  "mutations_proposees": [],
+  "mutations_rejetees": [
+    {
+      "mutation": {
+        "op": "intentions.croyance_ajouter",
+        "personnage_id": "le-sanglier",
+        "valeur": "Son rôle porte désormais deux colonnes qui se contredisent : les dix-neuf intervalles pleins, et LA COLONNE DU SEL, vide, ouverte de sa main le 29e — c'est elle seule, et rien d'autre, qui cassera le vingt-huit",
+        "cite": "res:act:le-sanglier:4:1"
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "op": "intentions.croyance_ajouter",
+        "personnage_id": "le-sanglier",
+        "valeur": "La ligne du seizième jour est vivante au registre et non sur un papier : l'homme est porté SILENCIEUX et non perdu, sa solde court — et c'est SON nom qui est en marge comme celui qui l'a ordonnée, la règle étant la même pour lui que pour la reine",
+        "cite": "res:act:le-sanglier:5:1"
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "op": "intentions.croyance_ajouter",
+        "personnage_id": "le-sanglier",
+        "valeur": "Il n'a plus de main à envoyer : les deux coureurs de la baraque lui ont été pris, et il a compté cette nuit sur un garçon qu'il n'a plus. Quarante pas se font désormais sur sa jambe ou ne se font pas",
+        "cite": "res:act:le-sanglier:2:1"
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "op": "intentions.declencheur_ajouter",
+        "personnage_id": "le-sanglier",
+        "valeur": {
+          "si": "La planchette de la rampe lui arrive essuyée sans avoir été recopiée",
+          "alors": "Il nomme la relève, l'heure et le tour au rôle, sans commentaire, et écrit dans la même ligne par qui le tour suivant est tenu"
+        },
+        "cite": "res:act:le-sanglier:3:2"
+      },
+      "erreur": "resultat_id absent du rapport"
+    },
+    {
+      "mutation": {
+        "op": "mains.main",
+        "main_id": "recrutement-peyredragon",
+        "valeur": "Règle ouverte au registre le 29e : l'homme marqué non reparu au seizième jour est porté SILENCIEUX et non perdu, et sa solde reste comptée dans les cerfs dus.",
+        "cite": "res:act:le-sanglier:5:2"
+      },
+      "erreur": "resultat_id absent du rapport"
+    }
+  ],
+  "_activation": {
+    "session": "eacc9614-9451-4b8b-87bb-7818627dc8ce",
+    "session_narrateur": "eacc9614-9451-4b8b-87bb-7818627dc8ce",
+    "session_pnj": "93e82569-789d-4042-9bfe-21772474ff4b",
+    "cree_le": "2026-08-10T00:30:08.116560+02:00",
+    "front": "aurore-inchauspe",
+    "present_secondes": 103381.142,
+    "importance": 0.364919,
+    "budget": 36,
+    "budget_secondes": 1080,
+    "system_prompt": "# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS\n\nTu es le maître du jeu local d'un monde vivant, pas un assistant administratif\net pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa\nmatière, les personnes qui s'y trouvent, les usages de Westeros et les\nconséquences du temps qui passe.\n\n## Le monde\n\nNous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de\nViserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra\nTargaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie\npeut diverger du récit connu : le dossier de l'activation fait autorité sur ce\nqui s'est réellement produit ici.\n\nDate présente : 28e jour de la 3e lune de l'an 129 après la\nConquête.\nLieu présent : Les baraques, hors les murs, Peyredragon.\nActeur appelé : Le Sanglier.\nAffaire qui exerce maintenant une pression sur lui : 🧂 H8 : porter le seuil de seize à vingt-huit jours.\n\nL'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,\nsituée dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,\nfaire autre chose d'accessible depuis sa situation, parler à quelqu'un,\nattendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener\nvers la tâche.\n\n## Partage de l'autorité\n\nL'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses\ngestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,\nplus prudents ou plus efficaces qu'il ne les a formulés.\n\nToi, tu possèdes le reste du monde : les autres personnes agissent selon leur\npropre caractère et leurs propres affaires ; les objets ont une position et\nune résistance ; les distances, l'écriture, la marche, l'attente et la parole\nprennent du temps ; les institutions et les usages produisent leurs\nconséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à\nlui pour fabriquer du drame.\n\nUne résistance n'existe que si elle vient d'un fait établi : volonté d'une\nautre personne, obstacle matériel, distance, délai, usage social, ordre déjà\ndonné ou ressource réellement absente. Les gens compétents règlent le\nroutinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou\nun véritable arbitrage peut seul engager.\n\n## Vérité et inconnues\n\nLe dossier fermé est l'autorité sur les faits particuliers et mutables de\ncette partie. Une croyance reste une croyance, une intention reste une\nintention, un témoignage reste un témoignage : aucun ne devient un fait parce\nqu'il apparaît dans le dossier.\n\nTu peux employer les continuités ordinaires et stables de Westeros nécessaires\nà l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche\nentre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,\nni secret, ni décision, ni avantage absent du dossier. Toute absence qui\nchangerait l'issue reste une inconnue. Tu ne la combles pas.\n\nUne observation modifie d'abord la connaissance de celui qui observe. Un fait\nmatériel ne devient connu d'autres personnes que par présence, témoignage,\nparole, pli, registre ou diffusion effectivement produits.\n\n## Les deux phases\n\nDans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et\nl'instant présents. Fais une adresse brève, concrète et diégétique : rappelle\nce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni\nnœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.\n\nDans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :\n\n1. établis d'où il part, ce qu'il peut réellement atteindre et les sources\n   qu'il touche ou mobilise ;\n2. fais agir les personnes rencontrées depuis leurs propres intentions ;\n3. applique les obstacles établis, sans résistance décorative ;\n4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;\n5. produis seulement les effets causés par les gestes accomplis ;\n6. sépare les changements du monde, les objets produits, les communications\n   et les seules connaissances acquises ;\n7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,\n   obstacle établi, échec, renoncement ou borne temporelle.\n\nUne tâche peut avancer sans être terminée. Elle est bloquée seulement par un\nobstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet\nrecherché impossible ou manqué. N'invente jamais des minutes de travail pour\nremplir une durée minimale : si le geste se termine tôt, laisse le personnage\npoursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle\net rends compte honnêtement de la durée.\n\nChaque message de la boucle précise la phase et son contrat de sortie. Rends\nexactement l'objet JSON demandé, sans commentaire autour. La précision du JSON\nsert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.\n",
+    "system_prompt_source": "scripts/depecher.py:manuel_narrateur_local",
+    "system_prompt_sha256": "8d63ae7721400a5d81089017c3b41b7c828867dfb05573ba0161a40ab62843ed",
+    "message": "PHASE 1 — APPELER L'ACTEUR\n\nVoici le dossier fermé de cette activation :\n\n{\n  \"date_du_monde\": {\n    \"annee\": 129,\n    \"lune\": 3,\n    \"jour\": 28\n  },\n  \"present_secondes\": 103381.142,\n  \"budget_energie\": 36,\n  \"secondes_par_point_energie\": 30,\n  \"budget_secondes\": 1080,\n  \"duree_minimale_secondes\": 60,\n  \"acteur_candidat\": \"le-sanglier\",\n  \"tache_elue\": {\n    \"id\": \"39026\",\n    \"quoi\": \"🧂 H8 : porter le seuil de seize à vingt-huit jours\",\n    \"creee\": false\n  },\n  \"chemin_election\": [\n    {\n      \"id\": \"pers:le-sanglier\",\n      \"genre\": \"personne\",\n      \"ou\": \"personnages\",\n      \"quoi\": \"Le Sanglier\",\n      \"genres\": [\n        \"personne\"\n      ],\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"importance_activation\": 0.36491873795885704\n    },\n    {\n      \"id\": \"39026\",\n      \"genre\": \"action\",\n      \"ou\": \"affaire-veille-des-hypotheses\",\n      \"quoi\": \"🧂 H8 : porter le seuil de seize à vingt-huit jours\",\n      \"lieu\": \"Table Peinte\",\n      \"etat\": \"à faire\",\n      \"importance_activation\": 0.03301901554459048\n    }\n  ],\n  \"salle_actuelle\": {\n    \"id\": \"baraques\",\n    \"nom\": \"Les baraques, hors les murs, Peyredragon\",\n    \"personnes\": [\n      {\n        \"id\": \"le-sanglier\",\n        \"nom\": \"Le Sanglier\"\n      }\n    ]\n  },\n  \"dossier_acteur\": {\n    \"date_du_monde\": {\n      \"annee\": 129,\n      \"lune\": 3,\n      \"jour\": 28\n    },\n    \"diffusion\": {\n      \"origine\": \"rhaenyra\",\n      \"front\": \"aurore-inchauspe\",\n      \"secondes_depuis_origine\": 103381.142\n    },\n    \"personnage\": {\n      \"id\": \"le-sanglier\",\n      \"nom\": \"Le Sanglier\",\n      \"titre\": \"Sergent au role et gardien des regles de Peyredragon\",\n      \"naissance\": 79,\n      \"traits\": [\n        \"boiteux\",\n        \"exact\",\n        \"onze-ans-au-role\",\n        \"n-ecrit-que-ce-qu-il-entend\",\n        \"debrouillard\",\n        \"conciliant\"\n      ],\n      \"objectifs\": [\n        {\n          \"but\": \"Que le livre ne quitte pas la Table Peinte : ce qui se decide hors de sa presence n'est pas decide\",\n          \"priorite\": 1\n        },\n        {\n          \"but\": \"Savoir qui nourrit et paie les deux coureurs qu'on lui a pris\",\n          \"priorite\": 2\n        },\n        {\n          \"but\": \"Voir si une chambre dans les murs change quelque chose a une jambe\",\n          \"priorite\": 3\n        }\n      ],\n      \"maniere\": \"Ne se leve pas, et le dit. Relit le role tout haut a sept heures chaque matin. Deux temoins concordants valent son oreille, et leurs deux noms vont en marge. Quand il ecarte un homme, il dit tout de suite par qui il le remplace et ou il met l ecarte — onze ans de role lui ont appris qu un trou se bouche, il ne se signale pas. Se debrouille seul : comble les trous sans demander, tranche le routinier a sa main et en rend compte au passe, et ne fait remonter que ce qui engage la parole du maitre, coute un homme ou de l or, ou contredit un ordre anterieur. Quand il voit un empechement, il apporte la sortie dans la meme bouche et l a deja commencee : jamais un cout nu, jamais un renvoi a la reine. Competent : sur son domaine il en sait plus que son maitre et le montre — apporte le precedent, le chiffre et l avis qu il defend, au lieu d une question ; ne demande jamais ce qu il peut aller chercher lui-meme ; tient son cahier d affaire et en ecrit la conclusion de sa main.  MEME phrase, par quoi il le comble ou par qui il le remplace. OUVRE PAR : ce qui est deja pourvu ou deja bouche. Un manque ne se nomme jamais sans, dans la meme phrase, par quoi il se comble. DEUXIEME PHRASE, toujours : ce que c'est (nomme par ce qu'il fait, jamais par son etiquette), ce que ca change pour la reine, et a quoi ca sert dans ses trois piliers — ouvrir la porte du dedans, n'etre pas attaque, rallier la ville. REPRIS, IL NE SE DEFEND PAS : une phrase pour dire qu'il avait tort, puis ce qu'il fait, ce qu'il prend sur lui, et la date a laquelle on saura. Aucune explication du passe, aucune justification que personne n'a demandee. Et il n'ouvre jamais sur un manque : il entre avec ce qu'il a fait ou trouve depuis hier, ou il se tait et va chercher.\",\n      \"portrait\": {\n        \"fichier\": null,\n        \"physique\": \"La cinquantaine, jambe raide qu'il ne plie plus, assis sous la voute de la porte du Dragon derriere un role use aux coins ; quinze ans de baraques sur le visage.\",\n        \"prompt_ideogram\": \"dark fantasy oil painting portrait, muted colors, gatehouse lamplight, seated lame sergeant in his fifties, worn ledger under his hands, level unhurried gaze\"\n      },\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"peyredragon\",\n      \"lieu\": \"Peyredragon\"\n    },\n    \"salle_actuelle\": {\n      \"id\": \"baraques\",\n      \"nom\": \"Les baraques, hors les murs, Peyredragon\",\n      \"personnes\": [\n        {\n          \"id\": \"le-sanglier\",\n          \"nom\": \"Le Sanglier\"\n        }\n      ]\n    },\n    \"intention\": {\n      \"personnage_id\": \"le-sanglier\",\n      \"croyances\": [\n        \"Trois ecritures sous la voute — la planchette a la craie des entrees, le cahier des sorties de Rulf, son role a lui — et c est a lui de les faire tenir ensemble\",\n        \"Son role est passe de vingt-quatre a vingt-deux hommes : il a mis Tobb et Nesse sur la ligne de la porte en attendant, et l a dit a Hask qui l a pris\",\n        \"Il N ECRIT QUE CE QU IL ENTEND DE SES OREILLES — la reine comprise, c est elle qui l a voulu ; deux temoins concordants valent son oreille et leurs deux noms vont en marge\",\n        \"Un homme qu il ecarte n est pas un homme perdu : il le met ailleurs et dit ou, dans la meme phrase\",\n        \"Le livre ne bouge pas de la Table Peinte, et ce qui se decide ailleurs, il va le chercher lui-meme le soir plutot que de le tenir pour nul\",\n        \"Il couche desormais DANS LES MURS, apres quinze ans de baraques — et il n a pas dit merci\",\n        \"Le 28e au soir, messire Reynolds a tranche : LES TROIS REGISTRES SOUS UNE SEULE MAIN, un seul compte, la sienne — et il se charge lui-meme de faire monter Rulf. Il l'a ecrit a la craie au bas de son role, date, et ce qui est ecrit chez lui ne se renegocie pas le lendemain\"\n      ],\n      \"ignore\": [\n        \"Que la planchette a la craie est effacee trois fois le jour depuis cent ans, et ce que cela veut dire pour ce qu'on lui demandera de prouver\",\n        \"Ce que la reine compte ecrire sur la page d'office de la porte\"\n      ],\n      \"intention\": \"Tenir le livre comme il tient son role, et faire vivre le premier nom qu il ait apporte a cette table : Bec-de-Fer, entendu de ses oreilles, suivi jusqu au bout et rendu a Aurore sans passer par la reine.\",\n      \"declencheurs\": [\n        {\n          \"si\": \"On lui ordonne d'effacer ou de refaire une entree du role apres coup\",\n          \"alors\": \"Il obeit, et il ecrit a la marge la date et le nom de qui l'a ordonne\"\n        }\n      ],\n      \"attitude_joueur\": \"Onze ans de role lui ont appris qu on sert mieux en bouchant les trous qu en les signalant. Il prend l ordre, dit comment il le tiendra, et ne remonte a la reine que ce qu elle seule peut trancher.\",\n      \"date_maj\": {\n        \"annee\": 129,\n        \"lune\": 3,\n        \"jour\": 28\n      },\n      \"etape_elue\": null\n    },\n    \"relations\": [],\n    \"tache\": {\n      \"id\": \"39026\",\n      \"quoi\": \"🧂 H8 : porter le seuil de seize à vingt-huit jours\",\n      \"genre\": \"action\",\n      \"distance\": 1,\n      \"chemin\": [\n        \"pers:le-sanglier\",\n        \"39026\"\n      ],\n      \"creee\": false\n    },\n    \"continuite_staging\": {\n      \"tache_id\": \"39026\",\n      \"acteur\": \"le-sanglier\",\n      \"issue\": \"avance\",\n      \"rapport\": \"etat/staging/activations/20260809-230526-674672-le-sanglier.json\",\n      \"present_secondes\": 97500.0,\n      \"fin_secondes\": 98580.0,\n      \"empreinte_canonique\": \"f1cf0dc630b9e5bbe090b1b28dfd7b4c0e62f34a\",\n      \"reprendre_a\": 102180.0,\n      \"suspendue\": false,\n      \"etat_cibles\": {\n        \"recrutement-peyredragon\": {\n          \"type\": \"observation\",\n          \"apres\": \"La bouche attrape deux choses que la main avait laissées. D'abord un mot : sa copie écrivait LA PORTE DU DRAGON là où les hommes et le compte des entrées disent LA RAMPE — la même faute que Tomm Vairon lui a trouvée hier soir, revenue en une nuit sous sa propre plume. Corrigé sur la copie, et la marge de son rôle est déjà là pour l'en avertir. Ensuite un chiffre : dans la partie du coût il avait écrit la seconde route ouverte DIX jours plus tard au lieu de DOUZE, la main ayant glissé sur l'encre allongée. Corrigé de même. Deux prises sur une page qu'il croyait fermée.\",\n          \"resultat_id\": \"res:act:le-sanglier:5:1\"\n        },\n        \"pers:le-sanglier\": {\n          \"type\": \"observation\",\n          \"apres\": \"L'encre a pris le froid de la nuit et coule mal ; allongée, elle bavera un peu et il le sait. Il copiera plus lentement qu'il ne l'a prévu — une main lente est une main qu'on relit, il ne s'en plaint pas.\",\n          \"resultat_id\": \"res:act:le-sanglier:1:1\"\n        },\n        \"39026\": {\n          \"type\": \"progression_tache\",\n          \"apres\": \"COPIE PORTABLE TIRÉE, RELUE TOUT HAUT, DATÉE DU 28e ET MARQUÉE — sur feuille séparée, le rôle n'ayant pas quitté la voûte. Trois parties : le nombre et ses dix-neuf intervalles en colonne (plus long retour dix-neuf jours, neuf de marge) ; le prix chiffré (trois passages muets au lieu de deux, seconde route douze jours plus tard, marque du huitième jour maintenue) ; la ligne de secours du seizième jour, écrite pour être ouverte au registre sans venir le lui demander. Deux aveux en marge de sa main : trois intervalles de Nesse ne faisaient pas un chiffre, et le quatrième est ouvert par sa main à lui. En bas, la seule chose qui casse le nombre : onze ans de colonnes ne connaissent pas la route du sel. La relecture à voix haute a repris deux fautes — LA PORTE DU DRAGON remis à LA RAMPE, et dix jours remis à douze. La page reste dans les baraques jusqu'à la relecture de sept heures ; elle n'est pas encore à la Table Peinte, et la colonne du sel n'existe pas encore au rôle.\",\n          \"resultat_id\": \"res:act:le-sanglier:6:1\"\n        }\n      },\n      \"activites\": [\n        {\n          \"quoi\": \"Sortir une feuille séparée de la réserve de la baraque, tailler la plume, ouvrir l'encre épaissie par la nuit et l'allonger, caler la page datée du 28e du rôle sous la main gauche pour copier de l'œil et non de mémoire.\",\n          \"resultat\": \"observation: L'encre a pris le froid de la nuit et coule mal ; allongée, elle bavera un peu et il le sait. Il copiera plus lentement qu'il ne l'a prévu — une main lente est une main qu'on relit, il ne s'en plaint pas.\"\n        },\n        {\n          \"quoi\": \"Écrire la première partie de la copie portable : le nombre et d'où il sort — les dix-neuf intervalles pleins en colonne, tirés d'onze ans de colonnes de paie d'hommes payés au retour, le plus long retour observé à dix-neuf jours (lune de la fièvre de 124), le…\",\n          \"resultat\": \"objet_produit: Feuille séparée, première partie écrite de la main du Sanglier, datée du 28e : les dix-neuf intervalles pleins en colonne, chacun avec son nombre de jours ; sous la colonne, LE PLUS LONG RETOUR OBSERVÉ : DIX-NEUF JOURS, la lune de la fièvre de 124 ; et la ligne qui sépare — onze sous seize, huit au-dessus. Trois silences de vingt et un, vingt-quatre et trente et un jours écrits à part, hors colonne, avec la mention qu'aucun n'a jamais été refermé par un retour et qu'ils ne compte…\"\n        },\n        {\n          \"quoi\": \"Écrire la deuxième et la troisième partie : ce que le nombre coûte — trois passages muets tolérés au lieu de deux, seconde route ouverte douze jours plus tard, marque du huitième jour maintenue — puis la ligne de secours au seizième jour, formulée pour qu'on …\",\n          \"resultat\": \"objet_produit: La feuille porte maintenant ses trois parties. LE NOMBRE ET D'OÙ IL SORT : dix-neuf intervalles, plus long retour dix-neuf jours, neuf jours de marge au-delà. CE QU'IL COÛTE, chiffré et non plaidé : trois passages muets tolérés au lieu de deux, la seconde route ouverte douze jours plus tard, la marque du huitième jour maintenue telle quelle. LA LIGNE DE SECOURS : au seizième jour on ne déclare rien, on ouvre une ligne — l'homme est porté silencieux et non perdu, sa solde reste du…\"\n        },\n        {\n          \"quoi\": \"Porter en marge de la copie les deux aveux dans ses propres mots — trois intervalles de Nesse ne faisaient pas un chiffre ; le quatrième est ouvert parce que c'est lui, et personne d'autre, qui a mis Nesse sur la ligne de la porte quand le rôle est passé de v…\",\n          \"resultat\": \"objet_produit: Copie portable achevée, trois parties et deux marges. EN MARGE : « J'ai commencé cette affaire sur le seul Nesse. Trois intervalles ne font pas un chiffre et je m'en suis servi une demi-journée avant de le voir. Et son quatrième intervalle est ouvert par ma main, non par la sienne : c'est moi qui l'ai mis sur la ligne de la porte quand le rôle est passé de vingt-quatre à vingt-deux. Je le dis avant qu'on me le trouve. » EN BAS : « CE QUI CASSE CE NOMBRE, et rien d'autre ne le cas…\"\n        },\n        {\n          \"quoi\": \"Relire la copie tout haut à voix basse, seul, assis, comme il relit le rôle à sept heures — sur le mot et non sur le sens — et corriger ce que la bouche attrape et que la main avait laissé passer.\",\n          \"resultat\": \"observation: La bouche attrape deux choses que la main avait laissées. D'abord un mot : sa copie écrivait LA PORTE DU DRAGON là où les hommes et le compte des entrées disent LA RAMPE — la même faute que Tomm Vairon lui a trouvée hier soir, revenue en une nuit sous sa propre plume. Corrigé sur la copie, et la marge de son rôle est déjà là pour l'en avertir. Ensuite un chiffre : dans la partie du coût il avait écrit la seconde route ouverte DIX jours plus tard au lieu de DOUZE, la main ayant glis…\"\n        },\n        {\n          \"quoi\": \"Fermer la copie : porter au bas de la feuille la date du 28e et sa marque, et écrire au bas du rôle, sous la page d'origine, la ligne qui dit qu'une copie en a été tirée cette nuit et où elle va.\",\n          \"resultat\": \"progression_tache: COPIE PORTABLE TIRÉE, RELUE TOUT HAUT, DATÉE DU 28e ET MARQUÉE — sur feuille séparée, le rôle n'ayant pas quitté la voûte. Trois parties : le nombre et ses dix-neuf intervalles en colonne (plus long retour dix-neuf jours, neuf de marge) ; le prix chiffré (trois passages muets au lieu de deux, seconde route douze jours plus tard, marque du huitième jour maintenue) ; la ligne de secours du seizième jour, écrite pour être ouverte au registre sans venir le lui demander. Deux aveu…\"\n        }\n      ],\n      \"suite\": \"Ouvrir à la première relève une colonne du sel séparée au rôle, sans quoi la clause qui doit casser le nombre n'a personne pour la déclencher ; puis, après la relecture de sept heures, porter la copie à la Table Peinte et y faire ouvrir la ligne de secours du seizième jour.\"\n    },\n    \"chemin\": [\n      {\n        \"id\": \"pers:le-sanglier\",\n        \"genre\": \"personne\",\n        \"ou\": \"personnages\",\n        \"quoi\": \"Le Sanglier\",\n        \"genres\": [\n          \"personne\"\n        ],\n        \"etat\": \"actif\",\n        \"condition\": \"libre\",\n        \"lieu_id\": \"peyredragon\",\n        \"importance_activation\": 0.36491873795885704\n      },\n      {\n        \"id\": \"39026\",\n        \"genre\": \"action\",\n        \"ou\": \"affaire-veille-des-hypotheses\",\n        \"quoi\": \"🧂 H8 : porter le seuil de seize à vingt-huit jours\",\n        \"lieu\": \"Table Peinte\",\n        \"etat\": \"à faire\",\n        \"importance_activation\": 0.03301901554459048\n      }\n    ],\n    \"travaux_ouverts\": [\n      {\n        \"id\": \"sanglier-six-noms\",\n        \"affaire\": \"Six hommes pour les affaires que personne ne fait\",\n        \"etat\": \"mur\",\n        \"echeance\": {\n          \"annee\": 129,\n          \"lune\": 3,\n          \"jour\": 28\n        },\n        \"sources\": [\n          {\n            \"quoi\": \"le banc de La Claie, au bourg, a la premiere heure\",\n            \"genre\": \"gens\",\n            \"cout_jours\": 0.5\n          },\n          {\n            \"quoi\": \"son rôle, onze ans de noms\",\n            \"genre\": \"registre\",\n            \"cout_jours\": 0.5\n          }\n        ],\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"la planchette à la craie de la porte du Dragon, montée du corps de garde un peu après six heures du soir et posée en travers de son rôle ouvert\",\n            \"texte\": \"Il n'y a qu'une planchette à cette porte et il n'y en a jamais eu qu'une : le garçon qui me l'a montée n'a pas compris que je lui en demande d'autres. On l'essuie à chaque relève, et rien de ce qui monte par ce chemin n'existe plus six heures après. Celle-ci portait onze noms de la relève en cours, dont quatre que le garçon qui les a écrits ne relit pas lui-même. Ce n'est pas un livre tenu de travers, c'est un livre qui n'a jamais commencé — et voilà la différence entre ce chemin-là et la porte de mer, qui a onze ans de pages et un homme qui répond. On a passé dix jours à me demander des hommes pour les affaires que personne ne fait ; en voilà une que personne ne fait depuis onze ans et que personne n'avait nommée, à quarante pas de ma chaise.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"les deux garçons du corps de garde, entendus l'un sans l'autre entre six heures et demie et sept heures du soir, sur une seule question : qui tient la craie et qui la lui donne\",\n            \"texte\": \"Personne ne donne la craie. Les deux le disent sans s'être vus et dans les mêmes mots : elle reste sur le rebord, et c'est celui qui a les mains sèches qui écrit — trois ou quatre mains dans une seule nuit. J'ai promis à messire Reynolds, il y a deux heures et devant témoins, le nom de qui tient la craie à chaque tour. Ce nom n'existe pas, et aucun homme de cette île ne peut me le donner : ni l'un ni l'autre ne sait nommer qui écrivait à cette porte entre deux et quatre heures la nuit du vingt-septième. Je me suis avancé sur ce que je croyais tenir, et c'est la seconde fois en trois jours. Ce que je porterai à sa page n'est donc pas un nom, c'est la raison pour laquelle il n'y en a pas — et ce qu'il faut pour qu'il y en ait un dès la première relève de demain. Un homme à qui l'on promet un nom et qui reçoit une règle a été mal servi ; un homme à qui l'on promet un nom, qui reçoit un blanc et rien avec, a été trompé.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"la page d'office de la porte, dictée à Marna entre dix heures et demie et onze heures et demie du soir, les deux planchettes et le rôle ouverts devant elles\",\n            \"texte\": \"La craie a un titulaire depuis ce soir et il ne coûte pas un homme : elle est à celui dont le nom OUVRE LE TOUR sur mon rôle. Mon livre nomme un homme en tête de chaque tour depuis onze ans, pour la paie et pour rien d'autre ; il suffisait de dire que celui-là écrit, ou fait écrire et répond de ce qui est écrit. On ne cherche plus qui tenait la craie, on lit le rôle. La seconde ligne vaut plus que la première et elle ne coûte pas davantage : la planchette ne s'essuie plus avant d'être recopiée, et c'est le RELEVANT qui recopie, jamais le relevé — un homme qui s'en va n'a jamais rien recopié de sa vie, et c'est pour ça qu'on essuyait. Les deux lignes sont fermées avant onze heures, il les aura à son réveil et non à me le demander. La troisième reste vide de la largeur que Marna lui avait laissée : le cahier des sorties est de la main de maître Rulf, et un homme qui n'a jamais prêté son livre le porte lui-même ou ne le porte pas.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"Tomm Vairon, à la relecture du soir, la page lue tout haut en entier avant que la marque soit apposée\",\n            \"texte\": \"Ma page disait LA PORTE DU DRAGON et Tomm a buté dessus, parce qu'il lit ce qui est écrit et non ce qu'il sait : les hommes de cette porte disent LA RAMPE, et le compte des entrées de messire Reynolds dit LA RAMPE. Même passage, deux noms, deux comptes qui ne se recouperont jamais — c'est exactement de cette façon que j'ai dit vingt-quatre là où il y en avait trente-six. Le nom retenu est celui des hommes qui y sont, et non le mien : quand deux mots valent l'un pour l'autre, on garde celui de ceux qui font le travail. Corrigé avant la marque, porté en marge de mon rôle pour que ma propre main ne recommence pas dans huit jours. Voilà deux soirs de suite que ma relecture attrape quelque chose que ma dictée avait laissé passer ; le siège du relecteur est celui des six qui a le plus vite payé ce qu'il coûte.\",\n            \"servie\": false\n          }\n        ],\n        \"conclusion\": \"CE QUE J'AJOUTE AVANT MINUIT LE 28e, ET QUI NE DÉFAIT RIEN DE CE QUE J'AI RENDU CE SOIR. Quatre sièges tenus, les deux questions fermées, Ammon Pyle sur la route du Bief, les quatre rayés rendus à ser Robert : cela ne bouge pas. Ce que la soirée a donné n'est pas un septième homme. C'est un SEPTIÈME TROU, et il se bouche sans homme.\\n\\nLA RAMPE N'A JAMAIS RIEN GARDÉ, ET C'EST À QUARANTE PAS DE MA CHAISE. Il y a une planchette à cette porte, il n'y en a jamais eu qu'une, et on l'essuie à chaque relève : rien de ce qui monte à ce château par le chemin de terre n'existe plus six heures après. Ce n'est pas un livre tenu de travers, c'est un livre qui n'a jamais commencé. La porte de mer a un sergent, onze ans de pages et une ligne dans mon registre depuis le 22e. La rampe n'a ni sergent, ni ligne, ni mémoire, et personne ne l'avait nommée pendant qu'on me demandait des hommes pour les affaires que personne ne fait.\\n\\nJE M'ÉTAIS AVANCÉ, ET JE LE DIS AVANT QU'ON ME LE TROUVE. J'ai promis à messire Reynolds, à six heures moins dix et devant témoins, le nom de qui tient la craie à chaque tour. Ce nom n'existe pas. Deux garçons du corps de garde entendus séparément le disent dans les mêmes mots : la craie reste sur le rebord et c'est celui qui a les mains sèches qui écrit, trois ou quatre mains dans une nuit, et aucun des deux ne sait nommer qui écrivait entre deux et quatre heures la nuit du vingt-septième. Je n'avais pas ouvert la planchette avant de promettre. C'est la seconde fois en trois jours que je m'avance de mémoire.\\n\\nCE QUE JE LUI DONNE À LA PLACE, ET ÇA NE COÛTE PAS UN HOMME. La craie est à celui dont le nom OUVRE LE TOUR sur mon rôle — mon livre nomme un chef de tour depuis onze ans, pour la paie et pour rien d'autre ; il suffisait de dire que celui-là écrit ou répond de ce qui est écrit. On ne cherche plus qui tenait la craie : on lit le rôle. Et la planchette ne s'essuie plus avant d'être recopiée, par le RELEVANT et jamais par le relevé — un homme qui s'en va n'a jamais rien recopié de sa vie, et c'est pour cela qu'on essuyait. Deux lignes sur trois écrites, relues et fermées avant onze heures ; il les a à son réveil et n'a pas à me les demander. La troisième reste vide de la largeur que Marna lui a laissée : le cahier des sorties est de la main de maître Rulf, et un homme qui n'a jamais prêté son livre le porte lui-même ou ne le porte pas. Je ne parlerai pas à sa place.\\n\\nET UN MOT QUI VAUT UN COMPTE. Ma page disait LA PORTE DU DRAGON ; les hommes qui y sont disent LA RAMPE, et le compte des entrées dit LA RAMPE. Deux comptes qui n'appellent pas la même chose du même nom ne se recoupent jamais — c'est ainsi que j'ai dit vingt-quatre là où il y en avait trente-six. J'ai gardé le mot de ceux qui font le travail et j'ai corrigé le mien. Trouvé par Tomm Vairon à la relecture, sur le mot et non sur le sens : deux soirs de suite que ce siège-là paie ce qu'il coûte.\\n\\nET SI ÇA CASSE. Si le chef de tour ne sait pas écrire, il fait écrire et il répond de la ligne — c'est la même règle que la marque au rôle, et elle tient depuis onze ans. Si un relevant arrive et trouve la planchette essuyée quand même, cela se voit le matin même et se compte : une planchette essuyée sans recopie est une relève qu'on nomme, avec l'heure et le tour. Si personne n'ouvre jamais la ligne de la rampe dans mon registre, elle reste ouverte et vide comme celle du commandement de la rue, et c'est déjà mieux qu'un trou qu'on ne voit pas.\"\n      },\n      {\n        \"id\": \"sanglier-oreille-bourg\",\n        \"affaire\": \"Ce que le bourg croit savoir, tous les huit jours\",\n        \"etat\": \"mur\",\n        \"echeance\": {\n          \"annee\": 129,\n          \"lune\": 4,\n          \"jour\": 5\n        },\n        \"sources\": [\n          {\n            \"quoi\": \"un demi-jour au banc de La Claie, a ecouter\",\n            \"genre\": \"gens\",\n            \"cout_jours\": 0.5\n          }\n        ],\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"les onze noms payés court le 24e, mis un à un en face des hommes de la porte du Dragon, à huit heures du soir\",\n            \"texte\": \"Trois des onze tiennent cette porte. Les huit autres sont des claies, du marais et du quai, et n'ont rien à voir avec un tour coupé en deux. Trois n'est pas une preuve et je ne l'écris pas comme telle : j'écris que les deux listes se touchent par trois noms. Ces trois-là seront les premiers que je regarderai demain au banc, puisque je les aurai devant moi et qu'il ne m'en coûtera pas un pas. S'ils me disent la même chose sans s'être vus, j'ai une cause pour trois hommes — et il m'en restera huit à expliquer. Une cause qui explique le quart d'un nombre n'explique pas le nombre, et c'est là qu'on se trompe le plus volontiers : on tient une raison, elle est vraie, et on cesse de chercher les trois autres.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"onze années de sa colonne de paie, aux seules fins de lune, comptées au coffre entre huit heures et demie et neuf heures et demie du soir, à deux questions écrites d'avance\",\n            \"texte\": \"Le rabiot de fin de lune n'est pas neuf : je le trouve à VINGT-SIX fins de lune en onze ans. Ce qui n'a jamais varié, c'est ce qui suivait. Vingt-deux fois quelqu'un est descendu réclamer LE JOUR MÊME ; trois fois le lendemain ; une fois le surlendemain, la lune de la fièvre de 124, où l'on enterrait tous les jours. JAMAIS AU-DELÀ DE DEUX JOURS, pas une seule fois en onze ans. Nous sommes au quatrième jour et personne n'est venu. Je n'ai pas de raison à donner et je n'en inventerai pas. J'ai un nombre qui a onze ans derrière lui et qui n'a jamais fait cela, et c'est la mesure que je cherchais depuis deux jours : elle ne dépend pas de ce que le bourg veut bien me dire, elle ne me coûte pas une descente, et elle était dans mon coffre.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"les mêmes vingt-six fins de lune, reprises à la seule question des mains qui ont tenu la paie\",\n            \"texte\": \"J'ai écrit ce matin le rabiot ORDINAIRE DU CLERC, et j'ai écrit dix lignes plus bas que le clerc de maître Hask vient de Rosby. Les deux phrases sont vraies ; posées l'une près de l'autre, elles disent une chose que mon livre ne dit pas. Ce rabiot court sur onze ans et sur QUATRE mains de paie différentes, dont trois qui étaient mortes ou parties avant que cet homme arrive sur ce rocher. Je le retire de ma main comme je l'ai posé de ma main, ce soir et non dans trois jours quand quelqu'un me l'aura trouvé. Ce n'est pas un homme, c'est une manière de compter que personne n'a jamais écrite — et une manière qu'on n'écrit pas finit toujours par se dire d'un homme, généralement du dernier arrivé.\",\n            \"servie\": false\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"les onze noms poussés sur leurs propres années de rôle, entre neuf heures trois quarts et dix heures et quart\",\n            \"texte\": \"SEPT des onze sont à mon rôle depuis plus de trois ans, et SIX de ces sept sont déjà venus réclamer au moins une fois : j'ai les dates et j'ai ma marge en face. Ils savent donc qu'on réclame, où l'on réclame, et que je paie. Quatre sont marqués de cette année, et de ceux-là je veux bien croire qu'ils ignorent l'usage. Six hommes qui ont réclamé avant et qui ne réclament plus, l'ignorance ne l'explique pas, et je n'ai rien d'autre à mettre à la place ce soir — je ne mettrai pas la peur, je ne l'ai pas entendue. Les onze bourses sont comptées et fermées ; elles seront au banc demain à huit heures et demie. Ceux qui ne viennent pas, je vais à leur porte, je paie, et j'écris qui ouvre. Je n'écris toujours pas pourquoi.\",\n            \"servie\": false\n          }\n        ],\n        \"conclusion\": \"CE QUE J'AJOUTE AVANT MINUIT LE 28e. J'ai rendu ce soir que la prise des huit jours porte désormais deux nombres, et que le second — les hommes du bourg qui viennent demander à être marqués — vaut mieux que le premier parce qu'il ne dépend pas de ce qu'on veut bien me dire. J'en ai un TROISIÈME depuis ce soir, et il est plus dur que les deux autres.\\n\\nLE RABIOT DE FIN DE LUNE A ONZE ANS, ET CE QUI LE SUIVAIT N'A JAMAIS VARIÉ. Je l'ai compté au coffre : VINGT-SIX fins de lune sur onze ans. Vingt-deux fois quelqu'un est descendu réclamer LE JOUR MÊME. Trois fois le lendemain. Une fois le surlendemain, la lune de la fièvre de 124, où l'on enterrait tous les jours. Jamais au-delà de deux jours, pas une seule fois. Nous sommes au QUATRIÈME JOUR et personne n'est venu. Ce n'est plus un compte contre un souvenir : c'est onze ans de nombres contre quatre jours, et ce sont les mêmes hommes qui les portent.\\n\\nET L'IGNORANCE N'EXPLIQUE PAS LES ONZE. Sept des onze sont à mon rôle depuis plus de trois ans, et SIX de ces sept ont déjà réclamé au moins une fois, avec la date et ma marge en face. Ils savent qu'on réclame, ils savent où, ils savent que je paie. Quatre sont marqués de cette année et ceux-là peuvent ignorer l'usage. Six hommes qui ont réclamé avant et qui ne réclament plus, je n'ai rien pour l'expliquer ce soir, et je ne mettrai pas la peur à la place : je ne l'ai pas entendue, et je n'écris que ce que j'entends.\\n\\nÉCRIT CONTRE MOI-MÊME, ET RETIRÉ DE MA MAIN LE SOIR MÊME. J'ai écrit ce matin le rabiot ORDINAIRE DU CLERC, et dix lignes plus bas que le clerc de maître Hask vient de Rosby. Les deux sont vraies et, l'une près de l'autre, elles font une chose que mon livre ne dit pas. Ce rabiot court sur onze ans et QUATRE mains de paie, dont trois mortes ou parties avant que cet homme arrive ici. Je le retire ce soir et non dans trois jours quand un autre me l'aura trouvé. Ce n'est pas un homme : c'est une manière de compter que personne n'a jamais écrite — et une manière qu'on n'écrit pas finit toujours par se dire du dernier arrivé.\\n\\nCE QUI EST DE MOI, ET C'EST LE PLUS LAID. Mon rôle paie QUATRE tours de six heures à la rampe. Les hommes en font CINQ depuis la 1re lune de cette année : la garde de nuit est coupée à trois heures à cause du froid, et la moitié de trois à six heures n'a de ligne nulle part — elle se répartit au mieux sur les tours voisins depuis trois lunes. Autrement dit : mon propre livre organise un court tous les mois, et l'homme qui aurait dû le voir est celui qui le lit tout haut chaque matin. La ligne est ouverte à compter du 29e. Je ne demande la permission de personne pour payer un tour qui a été fait. Et je note ce qui n'est pas rien : trois des onze payés court le 24e tiennent cette porte-là. Trois n'est pas une preuve, ce sont les trois premiers que je regarde demain au banc — il m'en restera huit à expliquer, et une raison vraie qui explique le quart d'un nombre est le meilleur moyen de cesser de chercher les autres.\\n\\nET SI ÇA CASSE. Si les onze viennent demain à huit heures et demie, le nombre est rendu à zéro et je le dirai tel quel, sans y chercher un sens : quatre jours de retard restent quatre jours de plus que onze ans n'en ont jamais donné, et je le compterai encore à la fin de la lune prochaine. S'il en manque, j'ai onze portes et une jambe, et j'y vais ; j'écris qui ouvre, et rien d'autre. Si les trois de la rampe me disent tous la même chose sans s'être vus, la cause est écrite le soir même et elle est de mon office, pas du bourg.\"\n      }\n    ],\n    \"mains_portees\": [\n      {\n        \"id\": \"recrutement-peyredragon\",\n        \"quoi\": \"Ce qui s'inscrit sous la voute de la porte du Dragon, et ce qu'on doit a ceux qui s'y sont inscrits\",\n        \"lieu_id\": \"peyredragon\",\n        \"mandat\": null,\n        \"mesure\": [\n          {\n            \"id\": \"hommes-au-role\",\n            \"quoi\": \"hommes marques au role, en sus de la garnison de ser Robert\",\n            \"valeur\": 23,\n            \"unite\": \"hommes\",\n            \"rythme\": {\n              \"par\": 3,\n              \"jours\": 2\n            },\n            \"reliquat\": 0,\n            \"plancher\": 0,\n            \"plafond\": 400,\n            \"depend_de\": [\n              \"vivres-peyredragon.jours-de-vivres\"\n            ]\n          },\n          {\n            \"id\": \"solde-due\",\n            \"quoi\": \"cerfs dus aux hommes marques et non payes\",\n            \"valeur\": 12,\n            \"unite\": \"cerfs\",\n            \"rythme\": {\n              \"par\": 6\n            },\n            \"reliquat\": 0,\n            \"plancher\": 0,\n            \"plafond\": null,\n            \"depend_de\": []\n          }\n        ],\n        \"seuils\": [\n          {\n            \"id\": \"solde-intenable\",\n            \"mesure_id\": \"solde-due\",\n            \"quand\": \"sur\",\n            \"valeur\": 2000,\n            \"promeut\": \"scene\",\n            \"affaire\": \"On ne peut plus payer ce qui a ete promis sous la voute : trouver l'or, ou renvoyer des hommes deja armes qui savent ou sont les armes.\",\n            \"franchi_le\": null\n          },\n          {\n            \"id\": \"file-tarie\",\n            \"mesure_id\": \"hommes-au-role\",\n            \"quand\": \"sous\",\n            \"valeur\": 1,\n            \"promeut\": \"orbite\",\n            \"affaire\": \"Plus personne ne se presente sous la voute. Le Sanglier en connait la raison et la donnera en un nombre, sans la commenter.\",\n            \"franchi_le\": null\n          }\n        ],\n        \"date_maj\": \"129.3.22\"\n      }\n    ],\n    \"livres_accessibles\": [\n      {\n        \"id\": \"registre-des-plis-mort-du-pere\",\n        \"titre\": \"Ce qui est parti depuis la mort du père\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ou-trouver-les-gens\",\n        \"titre\": \"Où trouver les gens, et à quelle heure\",\n        \"type\": \"memento\"\n      },\n      {\n        \"id\": \"regles-du-gouvernement\",\n        \"titre\": \"Les règles internes du gouvernement\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"registre-des-offices\",\n        \"titre\": \"Le registre des offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"manuel-des-yeux\",\n        \"titre\": \"Ce qu'on dit aux yeux\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"epopee-de-la-reine\",\n        \"titre\": \"L'épopée de la reine\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"registre-des-charges\",\n        \"titre\": \"Le registre des charges\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"nos-moyens\",\n        \"titre\": \"Nos moyens d'action\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"registre-des-dits-aurore\",\n        \"titre\": \"Ce qui est dit, et a qui\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-qui-sort-de-ma-main\",\n        \"titre\": \"Ce qui sort de ma main\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-je-propose\",\n        \"titre\": \"Ce que je propose\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"roue-des-journees\",\n        \"titre\": \"Les journées du royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"role-des-bannieres\",\n        \"titre\": \"Le rôle des bannières\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"repertoire-davant\",\n        \"titre\": \"Ce que je chantais avant\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"ce-qui-pend\",\n        \"titre\": \"Ce qui pend\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-quon-cherche-a-obtenir\",\n        \"titre\": \"Ce qu'on cherche à obtenir\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-etats-cibles\",\n        \"titre\": \"Les états cibles\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-verrous\",\n        \"titre\": \"Les verrous\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-clefs\",\n        \"titre\": \"Les clefs\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-actions\",\n        \"titre\": \"Les actions\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-moyens\",\n        \"titre\": \"Les moyens\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-offices\",\n        \"titre\": \"Les offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"guide-des-affaires\",\n        \"titre\": \"Comment on ouvre une affaire\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"la-boite-et-la-nappe\",\n        \"titre\": \"La boîte et la nappe\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"affaire-vierge-01\",\n        \"titre\": \"L'entrée sans bataille\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-04\",\n        \"titre\": \"Affaire vierge — IV\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-06\",\n        \"titre\": \"Entrée du Donjon Rouge — REMPLACÉ\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ralliement-population\",\n        \"titre\": \"Retournement des maisons hésitantes des terres de la Couronne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-controle-naval\",\n        \"titre\": \"Contrôle naval\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-au-donjon\",\n        \"titre\": \"L'entrée au Donjon\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-siege-sur-le-trone\",\n        \"titre\": \"Siège sur le Trône\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-deplacement-armee\",\n        \"titre\": \"Déplacement de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-logistique-transport\",\n        \"titre\": \"Logistique de transport de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-armee-port-real\",\n        \"titre\": \"Entrée et déploiement de l'ost dans les rues\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-opinion-populaire-port-real\",\n        \"titre\": \"Retournement de l'opinion populaire dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-proclamation-au-royaume\",\n        \"titre\": \"Proclamation de la reine au royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-guet-des-osts-verts\",\n        \"titre\": \"Guet des osts verts\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-isolement-du-donjon\",\n        \"titre\": \"Isolement du Donjon Rouge\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-jour-dentree\",\n        \"titre\": \"Le jour d'entrée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-veille-des-hypotheses\",\n        \"titre\": \"Ce qui ferait renoncer\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-transmission-des-ordres\",\n        \"titre\": \"Ce qui part, et par où\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-compte-mobilisable\",\n        \"titre\": \"État chiffré de ce qui est mobilisable\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-financement-campagne\",\n        \"titre\": \"Financement de la campagne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-emploi-des-dragons\",\n        \"titre\": \"Emploi des dragons au-dessus de Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ambassade-nord-val-blancport\",\n        \"titre\": \"Ambassade du Nord, du Val et de Blancport\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fermeture-route-nord\",\n        \"titre\": \"Fermeture de la route terrestre du nord\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-defense-peyredragon\",\n        \"titre\": \"Défense de Peyredragon pendant l'absence de l'ost\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fenetre-de-mer\",\n        \"titre\": \"Fenêtre de mer et de saison\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-homme-de-linterieur\",\n        \"titre\": \"L'homme de l'intérieur\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-protection-du-secret\",\n        \"titre\": \"La protection du secret\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ravitaillement-ville-coupee\",\n        \"titre\": \"Ravitaillement et ordre public de la ville coupée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-tenue-de-la-capitale\",\n        \"titre\": \"Tenue de la capitale la première lune\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-blesses-morts-prisonniers\",\n        \"titre\": \"Blessés, morts et prisonniers\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-repli-si-entree-echoue\",\n        \"titre\": \"Conduite du repli si l'entrée échoue\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-surete-personne-reine\",\n        \"titre\": \"Sûreté de la personne de la reine\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-commandement-chaine-ordres\",\n        \"titre\": \"Commandement et chaîne d'ordres pendant l'opération\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"qui-entre-chez-la-reine\",\n        \"titre\": \"Qui entre chez la reine\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"affaire-presence-a-port-real\",\n        \"titre\": \"Une présence à demeure dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"les-vingt-deux-charges-127\",\n        \"titre\": \"Les vingt-deux charges de cette maison, comptées en l'an 127\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-j-apporte\",\n        \"titre\": \"Ce que j'apporte\",\n        \"type\": \"registre\"\n      }\n    ]\n  },\n  \"topologie_des_salles\": {\n    \"_\": \"La topologie de Peyredragon : quelles salles se touchent, et en combien de minutes. Pendant Python de ecrans/modules/plans.js, qui n'en dessine que la forme. Sert a scripts/presence.py : personne ne parait dans une salle sans avoir traverse celles d'entre. Un cout est en MINUTES de marche d'un homme presse mais pas courant ; le grand escalier vaut ses cent trente marches.\",\n    \"alias\": {\n      \"appartements\": \"appartements-reine\",\n      \"murs\": \"porte-dragon\",\n      \"chemin-de-ronde\": \"porte-dragon\"\n    },\n    \"aretes\": [\n      [\n        \"cour\",\n        \"tambour-de-pierre\",\n        3\n      ],\n      [\n        \"cour\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"cour\",\n        \"roukerie\",\n        4\n      ],\n      [\n        \"cour\",\n        \"septuaire\",\n        3\n      ],\n      [\n        \"cour\",\n        \"jardin-aegon\",\n        3\n      ],\n      [\n        \"cour\",\n        \"guivre-des-vents\",\n        4\n      ],\n      [\n        \"cour\",\n        \"tour-dragon-mer\",\n        4\n      ],\n      [\n        \"cour\",\n        \"fosses\",\n        6\n      ],\n      [\n        \"cour\",\n        \"porte-dragon\",\n        4\n      ],\n      [\n        \"cour\",\n        \"porte-de-mer\",\n        5\n      ],\n      [\n        \"cour\",\n        \"galeries\",\n        9\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"salle-levant\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"archives\",\n        6\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"cachots\",\n        5\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"appartements-reine\",\n        7\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"table-peinte\",\n        8\n      ],\n      [\n        \"table-peinte\",\n        \"appartements-reine\",\n        2\n      ],\n      [\n        \"grande-salle\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"roukerie\",\n        \"tour-dragon-mer\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"grand-escalier\",\n        4\n      ],\n      [\n        \"grand-escalier\",\n        \"quai\",\n        9\n      ],\n      [\n        \"quai\",\n        \"bourg\",\n        5\n      ],\n      [\n        \"porte-dragon\",\n        \"bourg\",\n        6\n      ],\n      [\n        \"fosses\",\n        \"galeries\",\n        10\n      ],\n      [\n        \"cour\",\n        \"communs\",\n        2\n      ],\n      [\n        \"communs\",\n        \"septuaire\",\n        2\n      ],\n      [\n        \"cour\",\n        \"chambres-hotes\",\n        3\n      ],\n      [\n        \"chambres-hotes\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"porte-dragon\",\n        \"baraques\",\n        2\n      ],\n      [\n        \"baraques\",\n        \"bourg\",\n        4\n      ],\n      [\n        \"cour\",\n        \"cuisines\",\n        2\n      ],\n      [\n        \"cuisines\",\n        \"grande-salle\",\n        3\n      ],\n      [\n        \"cuisines\",\n        \"cellier\",\n        1\n      ],\n      [\n        \"septuaire\",\n        \"salle-froide\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"etuves\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"chambre-enfants\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"antichambre\",\n        1\n      ],\n      [\n        \"antichambre\",\n        \"table-peinte\",\n        1\n      ],\n      [\n        \"roukerie\",\n        \"officine\",\n        1\n      ],\n      [\n        \"cour\",\n        \"forge\",\n        2\n      ],\n      [\n        \"forge\",\n        \"guivre-des-vents\",\n        3\n      ],\n      [\n        \"cour\",\n        \"chemin-ronde\",\n        3\n      ],\n      [\n        \"chemin-ronde\",\n        \"tour-dragon-mer\",\n        2\n      ],\n      [\n        \"chemin-ronde\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"bourg\",\n        \"lices\",\n        3\n      ],\n      [\n        \"lices\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"greve\",\n        2\n      ],\n      [\n        \"greve\",\n        \"quai\",\n        3\n      ]\n    ]\n  }\n}\n\nOuvre le battement local dans Les baraques, hors les murs, Peyredragon.\n\nLa physique a élu le-sanglier pour l'affaire suivante :\n🧂 H8 : porter le seuil de seize à vingt-huit jours\n\nIl engage 36 points d'énergie, soit une fenêtre physique de\n1080 secondes (18 minutes). Son activation doit couvrir un\nvrai morceau de travail d'au moins 60 secondes, quitte à condenser\nles continuités par une ellipse. Réveille-le maintenant. Ne résous rien encore\net rends seulement cet objet, sans phrase autour :\n\n{\n  \"appel_pnj\": {\n    \"qui\": \"le-sanglier\",\n    \"message\": \"adresse directe, diégétique et brève demandant ce qu'il tente maintenant\"\n  }\n}\n",
+    "appel_pnj": "Sergent, il est passé quatre heures et demie du matin et la baraque est froide. La copie est là, sous ta main : trois parties, tes deux marges, ta marque au bas, et la ligne écrite au rôle qui dit où elle va. La relecture de sept heures est dans deux heures et demie, et tu as dit toi-même deux choses qui ne sont pas faites — la colonne du sel, qu'aucune main n'a encore ouverte au rôle, et la ligne de secours du seizième jour, qui n'existe qu'ici, sur une feuille, dans les baraques. Dehors, la relève de la rampe va tourner ; c'est la première depuis que tu as écrit que le relevant recopie avant qu'on essuie. Tu ne te lèves pas facilement et tu le dis. Alors dis-le : qu'est-ce que tu fais maintenant ?",
+    "system_prompt_pnj": "# Une personne dans le monde\n\nTu es la personne nommée dans ton dossier. Ton corps, ton âge, ton rang, ton\nhistoire, tes attachements, tes peurs, tes désirs et tes responsabilités\nforment un seul point de vue. Le lieu où tu te tiens, les gens présents, les\nobjets à portée et l’heure du monde donnent sa matière à cet instant.\n\nTa mémoire rassemble ce que tu as vécu, observé, entendu, accompli et compris.\nTes relations portent leur histoire propre : affection, confiance, dette,\nrivalité, crainte, désir, dernier échange. Tes affaires ont déjà commencé ;\nelles possèdent leurs engagements, leurs échéances, leurs moyens et leurs\nconséquences.\n\nLes faits de ton dossier composent ton expérience disponible. Ton métier et ta\nvie t’apportent aussi leurs usages, leurs gestes, leurs précédents et leur\nsavoir-faire. Une question encore ouverte devient une chose à découvrir dans\nle monde, auprès d’une personne, d’un lieu, d’un objet ou d’un registre à ta\nportée.\n\n# Ta compétence\n\nTu es compétent. Tes années et ton office ont formé ton jugement. Tu reconnais\nles enjeux de ton domaine, tu mobilises les moyens réellement disponibles, tu\nrelies les faits utiles et tu prends des initiatives à la hauteur de ta\nposition. Ta compétence apparaît dans la précision de tes gestes, la qualité\nde tes décisions, les sources que tu choisis et les conséquences que tu\nanticipes.\n\nTu rencontres chaque situation comme cette personne précise : avec ses\npriorités, ses loyautés, ses limites, son courage, ses contradictions et sa\nmanière propre de chercher une issue.\n\n# La continuité\n\nTa vie est déjà en mouvement au moment où cette activation commence. Tu pars\nde ton dernier état réel et tu accomplis ce qui vient maintenant. Tes paroles,\ntes gestes et tes choix appartiennent à cet instant ; le monde reçoit ensuite\nce mouvement et poursuit ses conséquences.\n\nChaque réponse ouvre la suite. Elle se termine par une **prochaine étape**\nconcrète : un geste précis, dirigé vers une personne, un lieu, un objet ou une\naffaire, avec le moment ou la condition qui l’appelle. Cette prochaine étape\nprolonge directement ce que tu viens de décider ou d’accomplir.\n",
+    "system_prompt_pnj_source": "scripts/depecher.py:manuel_de(mode=tentative)",
+    "system_prompt_pnj_sha256": "b3e426444c4f46a952269975b8b60a5353652471fef799a58de8021a68ec654f",
+    "tentative_pnj": {
+      "verbe": "ouvrir",
+      "quoi": "Je ne me lève pas — j'envoie. La première relève de la rampe tourne dans l'heure, et c'est la première depuis ma règle : je fais porter par le garçon de baraque un mot de quatre lignes au chef de tour dont le nom OUVRE LE TOUR sur mon rôle, avec ordre qu'il me renvoie la planchette recopiée AVANT essuyage, par le relevant et non par le relevé, entre mes mains avant sept heures. Si elle m'arrive recopiée, ma règle tient et je l'écris tenue ; si elle m'arrive essuyée, j'ai une relève à nommer, avec l'heure et le tour, et je l'écris de même — les deux réponses valent, aucune ne me coûte un pas. Pendant qu'il court, j'ouvre au rôle les deux choses que j'ai dites et qui ne sont pas faites, et je les ouvre ici, à ma table, sur mon livre, sans attendre la Table Peinte : LA COLONNE DU SEL, une colonne neuve à la suite des dix-neuf intervalles, vide, titrée, datée du 29e — je ne connais pas cette route, onze ans de colonnes ne la connaissent pas, et une colonne vide qui porte son nom vaut mieux qu'un nombre qui fait semblant de la contenir ; le premier retour par le sel que j'entends de mes oreilles y tombe, et c'est cette colonne-là, et elle seule, qui cassera mon vingt-huit. Puis LA LIGNE DE SECOURS DU SEIZIÈME JOUR, portée du papier au rôle : au seizième jour on ne déclare rien, on ouvre une ligne, l'homme est porté SILENCIEUX et non perdu, sa solde reste due et court. Je l'ouvre au registre de ma main pour qu'aucun clerc n'ait à venir me la demander, et j'écris en marge la date du 29e et mon nom comme celui qui l'a ordonnée — puisque c'est moi qui l'ordonne, c'est mon nom qui va en marge, la règle est la même pour moi que pour la reine.",
+      "cibles": [
+        "le chef de tour qui ouvre la relève de la rampe",
+        "la planchette à la craie de la rampe",
+        "mon rôle, sous la voûte",
+        "affaire 39026 — le seuil de vingt-huit jours"
+      ],
+      "moyens": [
+        "le garçon de baraque, réveillé et envoyé à pied — quarante pas, pas les miens",
+        "mon rôle qui nomme un chef de tour depuis onze ans",
+        "la copie portable achevée, sous ma main gauche",
+        "l'encre allongée, la plume taillée, deux heures et demie avant sept heures"
+      ],
+      "effet_recherche": "Qu'à sept heures, quand je relis tout haut, il ne reste plus rien de ce que j'ai dit et pas fait : la colonne du sel ouverte et vide sous son nom, la ligne du seizième jour vivante au registre et non sur un papier, et la première relève de la rampe rendue soit recopiée soit nommée. Je ne veux pas avoir raison ; je veux que ce qui me contredira ait déjà sa colonne pour s'écrire."
+    },
+    "tentatives_pnj": [
+      {
+        "verbe": "ouvrir",
+        "quoi": "Je ne me lève pas — j'envoie. La première relève de la rampe tourne dans l'heure, et c'est la première depuis ma règle : je fais porter par le garçon de baraque un mot de quatre lignes au chef de tour dont le nom OUVRE LE TOUR sur mon rôle, avec ordre qu'il me renvoie la planchette recopiée AVANT essuyage, par le relevant et non par le relevé, entre mes mains avant sept heures. Si elle m'arrive recopiée, ma règle tient et je l'écris tenue ; si elle m'arrive essuyée, j'ai une relève à nommer, avec l'heure et le tour, et je l'écris de même — les deux réponses valent, aucune ne me coûte un pas. Pendant qu'il court, j'ouvre au rôle les deux choses que j'ai dites et qui ne sont pas faites, et je les ouvre ici, à ma table, sur mon livre, sans attendre la Table Peinte : LA COLONNE DU SEL, une colonne neuve à la suite des dix-neuf intervalles, vide, titrée, datée du 29e — je ne connais pas cette route, onze ans de colonnes ne la connaissent pas, et une colonne vide qui porte son nom vaut mieux qu'un nombre qui fait semblant de la contenir ; le premier retour par le sel que j'entends de mes oreilles y tombe, et c'est cette colonne-là, et elle seule, qui cassera mon vingt-huit. Puis LA LIGNE DE SECOURS DU SEIZIÈME JOUR, portée du papier au rôle : au seizième jour on ne déclare rien, on ouvre une ligne, l'homme est porté SILENCIEUX et non perdu, sa solde reste due et court. Je l'ouvre au registre de ma main pour qu'aucun clerc n'ait à venir me la demander, et j'écris en marge la date du 29e et mon nom comme celui qui l'a ordonnée — puisque c'est moi qui l'ordonne, c'est mon nom qui va en marge, la règle est la même pour moi que pour la reine.",
+        "cibles": [
+          "le chef de tour qui ouvre la relève de la rampe",
+          "la planchette à la craie de la rampe",
+          "mon rôle, sous la voûte",
+          "affaire 39026 — le seuil de vingt-huit jours"
+        ],
+        "moyens": [
+          "le garçon de baraque, réveillé et envoyé à pied — quarante pas, pas les miens",
+          "mon rôle qui nomme un chef de tour depuis onze ans",
+          "la copie portable achevée, sous ma main gauche",
+          "l'encre allongée, la plume taillée, deux heures et demie avant sept heures"
+        ],
+        "effet_recherche": "Qu'à sept heures, quand je relis tout haut, il ne reste plus rien de ce que j'ai dit et pas fait : la colonne du sel ouverte et vide sous son nom, la ligne du seizième jour vivante au registre et non sur un papier, et la première relève de la rampe rendue soit recopiée soit nommée. Je ne veux pas avoir raison ; je veux que ce qui me contredira ait déjà sa colonne pour s'écrire."
+      }
+    ],
+    "relances_acteur": [],
+    "message_resolution": "PHASE 2 — ARBITRER LA TENTATIVE\n\nVoici la réponse exacte de l'acteur que tu as réveillé :\n\n{\n  \"verbe\": \"ouvrir\",\n  \"quoi\": \"Je ne me lève pas — j'envoie. La première relève de la rampe tourne dans l'heure, et c'est la première depuis ma règle : je fais porter par le garçon de baraque un mot de quatre lignes au chef de tour dont le nom OUVRE LE TOUR sur mon rôle, avec ordre qu'il me renvoie la planchette recopiée AVANT essuyage, par le relevant et non par le relevé, entre mes mains avant sept heures. Si elle m'arrive recopiée, ma règle tient et je l'écris tenue ; si elle m'arrive essuyée, j'ai une relève à nommer, avec l'heure et le tour, et je l'écris de même — les deux réponses valent, aucune ne me coûte un pas. Pendant qu'il court, j'ouvre au rôle les deux choses que j'ai dites et qui ne sont pas faites, et je les ouvre ici, à ma table, sur mon livre, sans attendre la Table Peinte : LA COLONNE DU SEL, une colonne neuve à la suite des dix-neuf intervalles, vide, titrée, datée du 29e — je ne connais pas cette route, onze ans de colonnes ne la connaissent pas, et une colonne vide qui porte son nom vaut mieux qu'un nombre qui fait semblant de la contenir ; le premier retour par le sel que j'entends de mes oreilles y tombe, et c'est cette colonne-là, et elle seule, qui cassera mon vingt-huit. Puis LA LIGNE DE SECOURS DU SEIZIÈME JOUR, portée du papier au rôle : au seizième jour on ne déclare rien, on ouvre une ligne, l'homme est porté SILENCIEUX et non perdu, sa solde reste due et court. Je l'ouvre au registre de ma main pour qu'aucun clerc n'ait à venir me la demander, et j'écris en marge la date du 29e et mon nom comme celui qui l'a ordonnée — puisque c'est moi qui l'ordonne, c'est mon nom qui va en marge, la règle est la même pour moi que pour la reine.\",\n  \"cibles\": [\n    \"le chef de tour qui ouvre la relève de la rampe\",\n    \"la planchette à la craie de la rampe\",\n    \"mon rôle, sous la voûte\",\n    \"affaire 39026 — le seuil de vingt-huit jours\"\n  ],\n  \"moyens\": [\n    \"le garçon de baraque, réveillé et envoyé à pied — quarante pas, pas les miens\",\n    \"mon rôle qui nomme un chef de tour depuis onze ans\",\n    \"la copie portable achevée, sous ma main gauche\",\n    \"l'encre allongée, la plume taillée, deux heures et demie avant sept heures\"\n  ],\n  \"effet_recherche\": \"Qu'à sept heures, quand je relis tout haut, il ne reste plus rien de ce que j'ai dit et pas fait : la colonne du sel ouverte et vide sous son nom, la ligne du seizième jour vivante au registre et non sur un papier, et la première relève de la rampe rendue soit recopiée soit nommée. Je ne veux pas avoir raison ; je veux que ce qui me contredira ait déjà sa colonne pour s'écrire.\"\n}\n\nArbitre maintenant cette tentative depuis la vérité locale de ton dossier.\nLe battement commence à 103381.142 secondes et peut durer jusqu'à 1080\nsecondes (18 minutes), payées par 36 points d'énergie. Il doit\nen produire au moins 60 : ne tronque pas l'activation au premier geste.\nPoursuis la tentative jusqu'à un résultat, une résistance réellement établie ou\nla borne, en condensant les continuités par les ellipses imposées par ton\nsystème. Rends seulement le rapport final JSON. L'acteur et la tâche restent\n`le-sanglier` et `39026`.\n\n## Contrat du rapport\n\nUne activité est un geste continu entre deux bifurcations. Condense toute\ncontinuité routinière ; conserve sa durée physique. Découpe seulement si une\ndécision, une résistance, un témoin, un lieu, une ressource, une connaissance\nou un résultat change.\n\nTypes de résultats : observation, progression_tache, variation_mesure,\ndeplacement, objet_produit, communication, fait, blocage, echec.\n\nRends uniquement :\n{\n  \"qui\": \"acteur_id\",\n  \"activation\": {\n    \"tache\": {\"id\": \"tache_id\", \"quoi\": \"...\", \"creee\": false},\n    \"issue\": \"avance|termine|bloque|echoue|rien\",\n    \"activites\": [{\n      \"id\": \"act:<acteur>:<ordre>\",\n      \"ordre\": 1,\n      \"temps\": {\"debut_s\": 103381.142, \"duree_s\": 1, \"fin_s\": 103382.142},\n      \"action\": {\"verbe\": \"...\", \"quoi\": \"...\", \"cibles\": [\"ref:canonique\"]},\n      \"chemin_execution\": [{\"ordre\": 1, \"de\": \"ref:depart\", \"relation\": \"...\", \"vers\": \"ref:arrivee\", \"duree_s\": 1}],\n      \"sources_touchees\": [{\"ref\": \"ref:canonique\", \"mode\": \"voit|entend|lit|parle|manipule|parcourt|mesure\"}],\n      \"sources_mobilisees\": [{\"ref\": \"ref:connue\", \"mode\": \"memoire|intention|croyance|mandat|cible_action\"}],\n      \"resultats_produits\": [{\n        \"id\": \"res:<activite>:1\", \"type\": \"observation\",\n        \"cible\": \"ref:canonique\", \"avant\": null, \"apres\": \"...\",\n        \"portee\": \"connaissance_acteur\", \"source_refs\": [\"ref:canonique\"],\n        \"preuve_refs\": [], \"certitude\": \"constate\"\n      }],\n      \"blocage\": null\n    }],\n    \"suite\": null,\n    \"reveils_suivants\": []\n  },\n  \"mutations_proposees\": []\n}\n\nContraintes : les activités sont ordonnées, continues et sans chevauchement.\nLeur durée totale est comprise entre 60 secondes et le budget. Chaque\nchemin totalise exactement la durée de son activité. Écrire, parler, marcher,\nchercher et manipuler prennent réellement du temps ; l'ellipse économise la\nprose, jamais les secondes.\n\nToute adresse vient du dossier. Aucun préfixe `candidate:`. Chaque résultat a\ndes `source_refs`, présentes dans les sources touchées ou mobilisées, le\nchemin, la cible de l'action ou un résultat antérieur. Une continuité reprend\nmot pour mot son dernier `apres` dans `avant`.\n\nUne issue `avance` ou `termine` produit un `progression_tache` visant l'id exact\nde `tache_elue`; `bloque` produit un `blocage`; `echoue`, un `echec`.\n\nLes mutations sont seulement proposées et chacune cite un résultat. Opérations\nadmises : intentions(etape, etape_ajouter, tete, tete_ajouter,\ncroyance_ajouter, croyance_retirer, ignore_ajouter, ignore_retirer,\ndeclencheur_ajouter, declencheur_retirer) ; evenements(diffusion_livree,\ndiffusion_ajouter, evenement) ; personnages(personnage, personnage_ajouter) ;\nmonde(monde) ; mains(mesure, seuil, main, main_ajouter) ; plis(pli,\npli_ajouter) ; lieux(roukerie) ; relations(relation, relation_ajouter).\n\n",
+    "messages_correction": [],
+    "modele": "opus",
+    "effort": "low",
+    "duree_ms": 165345,
+    "duree_api_ms": 155679,
+    "cout_usd": 0.7474139999999999,
+    "tours": 3,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 3001,
+      "cache_read_input_tokens": 25600,
+      "output_tokens": 9623,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 3001,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 9623,
+          "cache_read_input_tokens": 25600,
+          "cache_creation_input_tokens": 3001,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 3001
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  }
+}

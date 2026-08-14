@@ -1,0 +1,91 @@
+{
+ "_note": "SQUELETTE DU PLAN DE LA COURONNE — la structure d'abord, le contenu ensuite. Ce fichier n'est PAS l'etat : il dit la forme que doit avoir `couronne` dans etat/plans.json, la numerotation, et qui remplit quoi. Meme garde que plans.json : rien de ce qui s'ecrira ici ne fuite dans une replique, une carte ou une breve.",
+
+ "_pourquoi": "Mesure du 129.4.3. Les Noirs tiennent 60 volumes d'affaires, chacun avec ses etats cibles, ses verrous, ses clefs et ses actions numerotees, chaque action tombant sur un office avec sa date. Le camp d'en face a trois plans de camp — hightower (10 actions), baratheon (9 actions), couronne (ZERO clef, ZERO action). Le camp qui tient le Trone de Fer n'a rien a faire demain matin. Consequence mecanique : la boucle d'activation choisit un couple ACTEUR-TACHE, les taches viennent du graphe, et un acteur sans tache ne monte pas en energie. C'est pourquoi Aemond plafonne a 23 et sa tete date du 129.3.17.",
+
+ "_expire": "TOUT ce que couronne porte aujourd'hui est echu ou revoque : 72000 avait son echeance le 129.4.3 (aujourd'hui), 72200 le 129.3.31 (il y a trois jours), 72100 est annule. Le plan ne dit pas ce que les Verts font DEMAIN.",
+
+ "numerotation": {
+  "plage": "72000-72999",
+  "regle": "Un etat cible prend une centaine : 72000, 72100, 72200, 72300. Ses verrous prennent la centaine + 1..9 : 72001, 72101. Ses clefs la centaine + 10..19 : 72010, 72110. Ses actions la centaine + 20..99 : 72020, 72021, 72120.",
+  "libre": ["72300", "72400", "72500"]
+ },
+
+ "forme": {
+  "ouverture": {
+   "ce_que_ce_plan_rend_vrai": "une phrase — l'etat du monde que ce plan produit",
+   "leurs_piliers": ["ce sur quoi ils ne cedent pas, 2 a 4"],
+   "ce_qu_ils_livrent": "chiffre, lieu, delai — ce qu'ils promettent, mesurable",
+   "ce_qu_ils_demandent": "ce qu'il faut leur donner pour que ca marche",
+   "ce_qu_ils_ne_garantissent_pas": "l'aveu — ce qui leur echappe",
+   "ferme_quand": "la condition qui clot ce plan, dans un sens ou dans l'autre",
+   "ce_qu_on_en_sait_de_source": "d'ou vient ce qu'on ecrit ici"
+  },
+  "etats_cibles": {
+   "id": "72x00", "quoi": "ce qu'on veut rendre VRAI, jamais ce qu'on veut faire",
+   "vrai_quand": "le test, verifiable", "echeance": "{annee, lune, jour}",
+   "sert": ["ids d'etats amont"], "source": "la bouche ou le registre",
+   "de_lieu": "id de lieu", "vers_lieu": "id de lieu", "voie": "terre|mer|air",
+   "force": "entier — hommes, quilles ou dragons", "arrive_le": "{annee, lune, jour}",
+   "route_dite": "le trajet en clair, avec ses dates"
+  },
+  "verrous": {
+   "id": "72x01", "quoi": "ce qui empeche l'etat de tenir",
+   "bloque": ["ids d'etats cibles"],
+   "vrai_aujourdhui": "l'etat du verrou a cette date, chiffre",
+   "leve_quand": "la condition exacte de levee",
+   "portee_pour_nous": "on peut le savoir | on peut agir dessus | hors de portee",
+   "source": "la bouche ou le registre",
+   "_test": "si tout le reste etait acquis et que ceci restait vrai, l'etat serait-il impossible ? Si non, ce n'est pas un verrou."
+  },
+  "clefs": {
+   "id": "72x10", "quoi": "l'idee de strategie — « et si l'on faisait comme ca ? »",
+   "ouvre": ["ids de verrous ou d'etats"], "principe": "pourquoi ca marche",
+   "prix": "ce que ca coute, et ce que ca ferme",
+   "porteur": "id du personnage qui la tient"
+  },
+  "actions": {
+   "id": "72x20", "quoi": "ce qu'on fait, concret",
+   "realise": ["ids de clefs ou de verrous"],
+   "office": "id du personnage sur qui ca tombe — JAMAIS vide",
+   "moyens": ["ce que ca mobilise"], "cout": "en hommes, en or, en jours",
+   "depend_de": ["ids d'actions"], "preuve": "a quoi on saura que c'est fait",
+   "jour_du": "{annee, lune, jour}", "etat": "a faire | en cours | faite | bloquee",
+   "source": "la bouche ou le registre"
+  },
+  "tensions": "ce qui ne tient pas ensemble dans ce plan, en clair",
+  "resonance": "ce que ce plan fait vibrer ailleurs",
+  "ce_que_ca_engendre_chez_nous": {
+   "type": "observer | interroger | eprouver | action | decision",
+   "sujet": "ce que ca ouvre cote joueur", "pourquoi": "l'id d'ici qui le cause",
+   "vers": "la table | le conseil | un homme"
+  },
+  "a_verifier": "ce qu'on a ecrit sans source assez ferme"
+ },
+
+ "tranches": [
+  {"id": "A", "titre": "L'ouverture et ce que le roi veut", "porteur": "aegon-ii",
+   "ecrit": ["ouverture (les 7 champs)", "etat cible 72300"],
+   "borne": "Ce que le ROI veut, pas ce que sa Main veut. Aegon paie de sa main, se venge sans se deplacer, et veut qu'on cesse de lui parler comme a un enfant."},
+  {"id": "B", "titre": "La colonne et Sombreval", "porteur": "criston",
+   "ecrit": ["etat cible 72000 remis a la date", "verrous 72001-72009", "clefs 72010+", "actions 72020+"],
+   "borne": "L'echeance du 72000 tombe AUJOURD'HUI. Dis ou en est reellement la colonne le 129.4.3, et ce qui suit — pas ce qui etait prevu le 29e."},
+  {"id": "C", "titre": "L'or, la solde et la prime", "porteur": "otto",
+   "ecrit": ["verrou 72001 (vrai_aujourdhui)", "clefs 72110+", "actions 72120+"],
+   "borne": "La solde de depart des trois mille, la prime criee sans gage, et ce que la bourse tient reellement."},
+  {"id": "D", "titre": "Vhagar apres Accalmie", "porteur": "aemond",
+   "ecrit": ["etat cible 72200 remis a la date", "verrou 72101", "clefs 72210+", "actions 72220+"],
+   "borne": "72200 etait du le 129.3.31 — trois jours passes. Ou est Vhagar le 129.4.3, et ce qu'il fait ensuite."},
+  {"id": "E", "titre": "Ce qui s'ecrit et ce qui se sait", "porteur": "orwyle",
+   "ecrit": ["etat cible 72400", "ses verrous", "ses clefs", "ses actions"],
+   "borne": "La chancellerie : ce qui part, ce qui est scelle, ce que le Grand Mestre sait des deux camps et garde."}
+ ],
+
+ "_regles_dures": [
+  "Chaque action tombe sur un OFFICE nomme. Une action sans office est une action qui n'existe pas — c'est le defaut mesure chez les Noirs (52 actions a designer) et on ne le recopie pas ici.",
+  "Chaque etat cible porte une ECHEANCE datee, posterieure au 129.4.3.",
+  "On n'ecrit que ce qui a une SOURCE : une journee d'homme, une parole, un registre, une etape en cours. Pas de source, pas de ligne.",
+  "Les Verts ignorent ce qu'ils ignorent : rien ici ne suppose qu'ils sachent ce que la reine a decide le 129.4.1, sauf si une diffusion le leur a porte.",
+  "Rien de ce fichier ne fuite au joueur : ni replique, ni carte, ni breve."
+ ]
+}

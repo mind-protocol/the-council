@@ -1,0 +1,254 @@
+{
+ "_lisez_moi": "Les fils : ce qui court, avec le nom de l homme dessus et QUI TIENT LA PLUME. mode=joue -> ca se joue en scene ; mode=delegue -> ca tourne hors champ et revient en UNE LIGNE au passe. Un fil sans `sur` ne se delegue pas : il revient a la main du joueur. Un fil delegue ne remonte QUE si remonte_si s arme (parole, cout, froisse, contredit) - et alors il remonte dans la SCENE, en `demande`, jamais dans le rail. Format : docs/fils.md.",
+ "fils": [
+  {
+   "id": "fil-quatre-sceaux",
+   "titre": "Quatre charges tiennent sans sceau — les sceller avant midi",
+   "detail": "murailles, releves, nouvelles, bardesse ; la ligne etait blanche depuis le 26e",
+   "sur": "gerardys",
+   "echeance": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30,
+    "minute": 720
+   },
+   "mode": "delegue",
+   "statut": "en-cours",
+   "remonte_si": [
+    "parole",
+    "contredit"
+   ],
+   "depuis": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30,
+    "minute": 560
+   },
+   "dernier": "Datee de sa main a 9h20, devant la table — la ligne etait blanche depuis le 26e."
+  },
+  {
+   "id": "fil-plancher-garnison",
+   "titre": "La garnison est tombee a cent dix-neuf — la remonter, ou reecrire le plancher avec sa raison",
+   "detail": "un homme sous son propre plancher, de son plein gre ; tranche a la releve du soir",
+   "sur": "robert-quince",
+   "echeance": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30,
+    "minute": 1140
+   },
+   "mode": "delegue",
+   "statut": "en-cours",
+   "remonte_si": [
+    "cout",
+    "parole"
+   ],
+   "depuis": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30,
+    "minute": 442
+   },
+   "dernier": "Accorde a 10h43 : le poste a la bouche de l archive est tenu. Cent dix-huit jusqu a la releve du soir, plancher reecrit avec sa raison au registre."
+  },
+  {
+   "id": "fil-archive-sous-le-rocher",
+   "titre": "Personne n ecrit qui entre a l archive — y tenir une page, nom par nom",
+   "detail": "le seul lieu du chateau sans releve ; premiere ligne celle du mestre",
+   "sur": "gerardys",
+   "echeance": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30,
+    "minute": 1080
+   },
+   "mode": "delegue",
+   "statut": "en-cours",
+   "remonte_si": [
+    "cout",
+    "froisse"
+   ],
+   "depuis": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30,
+    "minute": 558
+   },
+   "dernier": "Poussiere mesuree le 30e a 13h38 : une seule ouverture, celle du 28e, autorisee. Pas de seconde main. Page ouverte a la porte, la reine y a inscrit son nom."
+  },
+  {
+   "id": "fil-charge-du-27e",
+   "titre": "Lord Corlys n a pas dit oui a la charge du 27e — obtenir sa parole avant midi",
+   "detail": "vingt et une coques, et le detroit n y est pas ; le meme tas est ecrit deux fois",
+   "sur": "rhaenys",
+   "echeance": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30,
+    "minute": 720
+   },
+   "mode": "delegue",
+   "statut": "clos",
+   "remonte_si": [
+    "parole",
+    "cout"
+   ],
+   "depuis": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30,
+    "minute": 468
+   },
+   "dernier": "Mandat donne a 9h44 : elle en repond seule. Partie sur Meleys a la basse mer, retour ce soir avec la parole de Corlys."
+  },
+  {
+   "id": "fil-rosby-stokeworth",
+   "titre": "Rosby et Stokeworth n ont ni repondu ni paru — les ramener a 360 cerfs la lune",
+   "detail": "un jour de delai quand tout le reste en a quatre a six",
+   "sur": "denys-bar-emmon",
+   "echeance": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 31,
+    "minute": 420
+   },
+   "mode": "delegue",
+   "statut": "en-cours",
+   "remonte_si": [
+    "parole",
+    "cout",
+    "froisse"
+   ],
+   "depuis": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30,
+    "minute": 452
+   },
+   "dernier": "Mandat donne a 9h46 : les quatre pieces poussees de son cote. Il tranche a 360 cerfs la lune, delai d un jour accorde."
+  },
+  {
+   "id": "fil-neuf-ardoises",
+   "titre": "Neuf ardoises de la baie ne sont ni engagees ni comptees — leur donner un nom avant le 5e",
+   "detail": "faute d ordre avouee par la reine elle-meme a la table",
+   "sur": null,
+   "echeance": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 5,
+    "minute": 420
+   },
+   "mode": "joue",
+   "statut": "clos",
+   "remonte_si": [
+    "parole"
+   ],
+   "depuis": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30,
+    "minute": 460
+   },
+   "dernier": "Faute d ordre avouee par la reine elle-meme a la table."
+  },
+  {
+   "id": "fil-deux-hommes-a-pied",
+   "titre": "Deux hommes a pied dus ce jour ne sont pas rentres — savoir ou ils sont avant le 32e",
+   "detail": "alarme au 32e, pas avant : c est le sens du delai",
+   "sur": "robert-quince",
+   "echeance": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 2,
+    "minute": 420
+   },
+   "mode": "delegue",
+   "statut": "en-cours",
+   "remonte_si": [
+    "cout"
+   ],
+   "depuis": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30,
+    "minute": 455
+   },
+   "dernier": "Rien. C est le sens de l alarme au 32e : avant, on n en parle pas."
+  },
+  {
+   "id": "fil-la-garde-de-la-personne-de-la-reine-et-de-ses-fils-n-a-plus-",
+   "titre": "La garde de la personne de la reine et de ses fils n a plus de titulaire — tenir O16 pendant les vingt-huit jours de mer de ser Steffon",
+   "detail": "O16 plus la garde des deux garcons, qui n avait jamais eu de ligne ; huit bouches debout, releve de huit heures",
+   "sur": "le-sanglier",
+   "echeance": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 1,
+    "minute": 420
+   },
+   "mode": "joue",
+   "statut": "en-cours",
+   "remonte_si": [
+    "parole",
+    "froisse"
+   ],
+   "depuis": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30,
+    "minute": 661
+   },
+   "dernier": ""
+  },
+  {
+   "id": "fil-les-quatre-pieces-de-l-archive-qui-ne-se-rachetent-pas-recop",
+   "titre": "Les quatre pieces de l archive qui ne se rachetent pas — recopier les trois cette nuit, le rouleau de 105 ne pouvant pas l etre",
+   "detail": "Gerardys et Marna, deux chandelles ; le rouleau de 105 est monte chez les princes, derriere la seule porte gardee a toute heure",
+   "sur": "gerardys",
+   "echeance": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 31,
+    "minute": 420
+   },
+   "mode": "joue",
+   "statut": "en-cours",
+   "remonte_si": [
+    "cout",
+    "parole"
+   ],
+   "depuis": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30,
+    "minute": 960
+   },
+   "dernier": ""
+  },
+  {
+   "id": "fil-borros-repondra-a-une-lettre-que-plus-aucun-de-vos-fils-ne-p",
+   "titre": "Borros repondra a une lettre que plus aucun de vos fils ne peut aller chercher — trouver qui portera la reponse d Accalmie",
+   "detail": "Neuf jours de cavalier, pas de corbeau qui reponde ; la ligne ecrite cette nuit interdit tout enfant de votre sang chez un seigneur non declare",
+   "sur": "gerardys",
+   "echeance": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 9,
+    "minute": 420
+   },
+   "mode": "joue",
+   "statut": "en-cours",
+   "remonte_si": [
+    "parole",
+    "cout"
+   ],
+   "depuis": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 30,
+    "minute": 1263
+   },
+   "dernier": ""
+  }
+ ]
+}

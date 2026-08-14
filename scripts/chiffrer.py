@@ -19,7 +19,7 @@
 # est le meme que partout : ce qui est arithmetique se calcule, le reste monte.
 # Convertir sans avoir classe serait ecrire 773 chiffres au jugement.
 #
-# Ne modifie rien. Depose sa proposition dans etat/staging/tissu/.
+# Ne modifie rien. Depose sa proposition dans etat/tissu/.
 import io
 import json
 import os
@@ -29,7 +29,7 @@ import collections
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ETAT = os.path.join(RACINE, "etat")
-TISSU = os.path.join(ETAT, "staging", "tissu")
+TISSU = os.path.join(ETAT, "tissu")
 
 # --------------------------------------------------------- la grammaire
 # Tiree des couts reellement ecrits, pas inventee. Exemples du corpus :
