@@ -86262,6 +86262,14 @@
        "90100",
        "`corps-adapt.js` l.182–194 : la couche appelait `Math.random()`. Sous le seuil de 0,6 d'emprise — 3 % des hommes — la relecture du four tenait : écart pire **0,600 m**, **3** états faux sur 2,19 M. Le seuil retiré, elle conduit tout le monde : écart pire **329 m**, **931 172** états faux. Corrigé par `window.BatailleHasard`, mais rien n'oblige `2-reflexion.js` ni l'arbitre à en faire autant : le trou se rouvre à chaque couche écrite."
       ]
+     },
+     {
+      "cellules": [
+       "**90360**",
+       "**Les quatre sorties ne sont jamais fraîches au même instant** — la main qui désigne n'a aucun endroit où se tenir",
+       "90300",
+       "Trouvé en nommant le cinquième fichier, compté sur le disque le 3e. `h.l1` se rafraîchit au rythme de l'ŒIL de l'homme dans `ecrans/modules/bataille/corps-adapt.js` (l. 18) ; `h.l3` à la réception d'un ordre, `bataille2d.js` l. 3406, puis une seconde fois l. 4507 pour `deSoiMeme` ; `h.l4` l. 1431 (tempérament), l. 3576 (butin) et l. 4481 (patience). **Cinq appels, trois rythmes, aucun rendez-vous.** Une SOMME s'en serait accommodée en lisant du périmé ; une MAIN qui désigne laquelle des quatre conduit ce geste-ci ne le peut pas — elle départagerait une couche fraîche et trois souvenirs, et l'on ne saurait jamais si l'erreur vient du choix ou de l'âge des sorties. Se lèverait par un point de passe unique, un par homme et par pas, où les quatre sont appelées dans l'ordre avant que rien ne soit conduit. À créer AVANT la première ligne de `5-qui-conduit.js`."
+      ]
      }
     ]
    },
@@ -86363,7 +86371,7 @@
        "90300",
        "Wenna la Nommeuse",
        "J−0",
-       "fait"
+       "fait — README de `survival-stack` réécrit le 3e : `emprise` gardé, `SOUS_EMPRISE` gardé, « seuil d'emprise » enterré, `pilote` → **`corpsAgi`**. **Le cinquième fichier tranché le 3e : `5-qui-conduit.js`, public `window.QuiConduit`, métier de MAIN et non de SOMME.** Le disque a tranché, pas moi : deux des quatre couches rendent un MOT et non un nombre — `1-corps.jambes` ∈ {sidération, fuite, recul, serrer, ruée} (l. 1499), `3-interpretation.deSoiMeme()` ∈ {repli, tenir, avancer} (l. 182-186) — et l'on ne fait pas la moyenne de deux mots : la somme était arithmétiquement impossible, pas discutable. Le verbe retenu est celui de la maison (« conduit dans le jeu »), et le fichier reste le cinquième FICHIER et non la cinquième couche, puisqu'il ne se pose aucune question dans la bouche de l'homme. Écartés : `5-composition.js` (le métier mort ci-dessus) ; `5-arbitre.js` (un arbitre départage des prétendants, c'est-à-dire des parties qui veulent la même chose — les quatre couches ne se connaissent pas et ne se disputent rien) ; `5-la-main.js` (dit qui a gagné, pas ce qui sort, et « la main » nomme déjà un office dans ce chantier) ; `orchestrateur` (jargon qui dirige, alors qu'ici rien ne dirige). ⚠ Le renvoi « → 🔒 90330 » que portait cette ligne était FAUX et a été corrigé : 90330 porte les deux modèles de peur, 90350 porte le `degage` d'Ygga, et le verrou du cinquième fichier n'avait été gravé dans aucune table. Ce qui en reste — l'instant où les quatre sorties seraient fraîches ensemble — est porté neuf en 🔒 90360."
       ]
      }
     ]
@@ -86511,8 +86519,8 @@
      {
       "cellules": [
        "**91000**",
-       "**Le mur arrête**",
-       "Sur une cuisson entière : zéro homme relevé à l'intérieur d'un bâti plein, et zéro segment de pas qui le franchisse.",
+       "**Le bâti arrête**",
+       "Sur une cuisson entière : zéro homme relevé à l'intérieur d'un bâti, et zéro segment de pas qui le **traverse**. Le compte s'appelle les **traversées**. ⚠ Deux mots repris le 3e, avant que le fer ne grave : (1) l'état disait « Le mur arrête », or `mur` porte déjà deux choses dans `bataille2d.js` — l'enceinte (l. 3830, 3999, 4833 : « hors les murs », « à l'intérieur des murs », « une ville dont les murs arrêtent une armée mais pas ses habitants ») et la paroi d'une maison (l. 2048, 4874) —, et l'enceinte, elle, arrête déjà : ce qu'on veut opposer est le BÂTI ; (2) la preuve disait « qui le franchisse », or `franchir` est réservé dans ce moteur aux seuils de nombre (8 emplois sur 11 : « le seuil franchi », « franchir les paliers », « franchissent la barre »), et demandait donc un compte de seuils. La faute physique se dit `traverser`, comme partout ailleurs (« traverser la rue », « longer un mur et le traverser en diagonale »).",
        "J−0"
       ]
      },
@@ -86581,6 +86589,14 @@
        "La grille du bâti est rangée sur les portes : elle ne sait pas répondre « qu'y a-t-il de plein ici »",
        "91200",
        "`chargerBati` case chaque bâti dans une maille de 40 m au point de sa PORTE (l. 6416-6430 : `casier(i)` sur `x[i]/y[i]`, qui valent `porte_x/porte_y`). Une maison de 17 m de façade sur 26 m de profondeur déborde donc sur des casiers où elle n'est pas rangée, et `maisonLibre` (l. 6487) n'y cherche qu'une porte proche — jamais un recouvrement. L'index qui existe ne sert pas la question du plein ; le rebâtir au bon rayon est exactement la dépense qui menace la cadence, à vingt pas par seconde et neuf mille cinq cents hommes."
+      ]
+     },
+     {
+      "cellules": [
+       "**91020**",
+       "**Le bâti n'a pas de forme** — une maison est un point de porte, il n'y a rien à opposer à un pas",
+       "91000",
+       "Compté sur le disque et non gravé d'en haut : `bataille2d.js` l. 6393-6431, le chargement du bâti. Chaque maison tient en `x`, `y`, `val`, `etat`, `usage` — et le commentaire l. 6403 dit lui-même de quel point il s'agit : « **LA PORTE, PAS LE CENTRE.** On force un huis, on ne se matérialise pas au milieu du salon ». Ni largeur, ni contour, ni polygone : `n` points de porte rangés dans une grille plate de 40 m. L'action ⚔️ 91020 — « rendre le bâti opposable au pas » — n'a donc aujourd'hui aucun objet auquel s'opposer, et aucune nappe ne le dira à la place de qui ouvre le fichier. Se lèverait en portant l'empreinte au sol depuis la source du bâti (les `_colonnes` livrent déjà `x`, `y`, `porte_x`, `porte_y`, `usage`, `etages` — jamais une largeur), ou à défaut en donnant à chaque maison un rayon tiré de `usage` : mais ce serait un choix, et un choix se dit avant d'être écrit. ⚠ Ce verrou porte le même numéro que l'action qui le réalise, suivant l'usage de l'affaire d'à côté (90310, 90320, 90110)."
       ]
      }
     ]
@@ -86653,7 +86669,7 @@
        "91000",
        "Wenna la Nommeuse",
        "J−0",
-       "à venir"
+       "en cours — trois noms posés le 3e, avant que le fer ne grave, avec les mots écartés. (1) **`mur` refusé** : il porte déjà l'enceinte ET la paroi d'une maison dans `bataille2d.js` ; ce qu'on veut opposer est le **bâti**, et l'enceinte arrête déjà — d'où 🎯 91000 renommé « Le bâti arrête ». (2) **`emprise` refusé pour l'empreinte au sol**, bien que ce soit le mot d'architecte et précisément parce que c'en est un : `survival-stack/` le tient 39 fois pour la prise du corps sur l'homme, et c'est le piège exact où la main va tomber. Le mot libre et posé : **`empreinte`**. (3) **`franchir` réservé aux seuils de nombre** (8 emplois sur 11) ; la faute physique se dit **traverser**, et le compte de 🎯 91000 s'appelle les **traversées**. RESTE À NOMMER : le contournement. Je ne le nomme pas aujourd'hui et je dis pourquoi — le code porte `voirie` (le graphe, 24 emplois), `rue` (85), `ruelle` (11) et une grille plate de 40 m sur les portes, et le nom du contournement dépend de celui des deux sur lequel on contourne. J'attends la nappe de Bren (⚔️ 91010) : nommer avant ferait tenir la décision par le mot, et c'est la faute que je viens de payer sur le cinquième fichier."
       ]
      }
     ]

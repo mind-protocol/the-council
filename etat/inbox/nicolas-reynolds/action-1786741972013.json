@@ -1,35 +1,34 @@
 {
   "type": "vue",
-  "fichier": "etat/vues/nicolas-reynolds-1786741641588.webp",
+  "fichier": "etat/vues/nicolas-reynolds-1786741972007.webp",
   "index": "etat/vues/nicolas-reynolds.json",
   "montre": "cette vue montre : la vue du joueur — sa position n'est pas connue au mètre",
-  "heure": "12h17",
-  "large_en_metres": 84,
-  "metres_par_pixel": 0.11,
+  "heure": "12h22",
+  "large_en_metres": 3792,
+  "metres_par_pixel": 4.99,
   "couches": [
     "foule",
     "bataille"
   ],
   "bataille": {
-    "temps": 688.1,
+    "temps": 1014.2,
     "marche": true,
     "branches": {
-      "il tient": 583,
+      "il tient": 575,
       "il appuie, il y est": 271,
-      "il suit, il y est": 200,
-      "il attend sa place au seuil": 116,
-      "il reprend son souffle": 98,
-      "il tient la rue": 86,
-      "il décroche en ordre": 62,
-      "entamé, il cède le pas": 44,
-      "il appuie, il rejoint sa marge": 31,
-      "il cherche l'entrée de la rue,": 17,
-      "débordé, il cède le pas": 16,
-      "il cogne la porte": 14,
-      "il vide une maison": 8,
-      "il monte relever une hache": 3,
-      "il marche sur la porte": 2,
-      "au contact": 1
+      "il décroche en ordre": 145,
+      "il suit, il y est": 100,
+      "entamé, il cède le pas": 84,
+      "il tient la rue": 74,
+      "il reprend son souffle": 70,
+      "il cherche l'entrée de la rue,": 36,
+      "débordé, il cède le pas": 30,
+      "il vide une maison": 13,
+      "il cogne la porte": 11,
+      "il appuie, il rejoint sa marge": 9,
+      "au contact": 5,
+      "son corps est parti en avant, seul": 2,
+      "nez": 1
     },
     "porte": "La porte de la Gadoue",
     "objectif": "Le Donjon Rouge",
@@ -46,9 +45,9 @@
       },
       {
         "nom": "La porte de Fer",
-        "etat": "ferme",
-        "pv": 5176,
-        "par": null
+        "etat": "ouvert",
+        "pv": 0,
+        "par": "hache"
       },
       {
         "nom": "La porte du Roi",
@@ -58,9 +57,9 @@
       },
       {
         "nom": "La Vieille Porte",
-        "etat": "cede",
-        "pv": 2842,
-        "par": null
+        "etat": "ouvert",
+        "pv": 0,
+        "par": "hache"
       }
     ],
     "arret": null,
@@ -71,45 +70,44 @@
       "ouvrir": 522.5,
       "anneau": "tenu"
     },
-    "assaut": 1528,
-    "garde": 650,
-    "morts": 256,
-    "blesses": 117,
+    "assaut": 1355,
+    "garde": 489,
+    "morts": 504,
+    "blesses": 203,
     "fuyards": 0,
     "etats": {
-      "tient": 819,
-      "blesse": 116,
-      "forme": 1170,
-      "mort": 251,
-      "repli": 61,
-      "colonne": 118,
+      "tient": 649,
+      "blesse": 202,
+      "forme": 946,
+      "mort": 499,
+      "repli": 143,
+      "colonne": 87,
       "commande": 5,
-      "assaut": 1,
-      "pille": 7,
-      "coureur": 1,
-      "melee": 1
+      "coureur": 2,
+      "pille": 12,
+      "melee": 5
     },
-    "faits": 445,
+    "faits": 718,
     "sac": {
       "maisons": 45691,
-      "forcees": 50,
+      "forcees": 177,
       "brulees": 0,
-      "butin": 0
+      "butin": 741
     },
     "ville": {
-      "paniques": 3041,
-      "foyers": 56,
-      "fuite": 478,
-      "rentre": 2221,
-      "terre": 180,
-      "contre": 81,
-      "arme": 42,
-      "barre": 31,
-      "saisi": 8
+      "paniques": 4000,
+      "foyers": 67,
+      "rentre": 2800,
+      "fuite": 1001,
+      "contre": 104,
+      "arme": 51,
+      "barre": 39,
+      "terre": 4,
+      "saisi": 1
     },
-    "moraleMoyenne": -0.95
+    "moraleMoyenne": -0.9
   },
   "joueur_id": "nicolas-reynolds",
-  "recu_a": "2026-08-14T21:07:21.593Z",
+  "recu_a": "2026-08-14T21:12:52.013Z",
   "_": "Une vue de la carte, centrée sur le joueur, telle qu'il l'a sous les yeux. OUVREZ LE FICHIER : c'est une image, et elle dit d'un coup d'œil ce que trois cents lignes de relevé disent mal — où la ligne a cédé, de quel côté la panique court, à combien de pas de la porte il se tient. Hors fiction : ce n'est ni une parole, ni un acte, ni une minute. Rien à écrire dans l'état, rien à répondre au joueur — c'est pour VOS yeux. Les dix dernières vues sont gardées en rotation et listées dans `index`, la plus récente en tête : les précédentes disent le MOUVEMENT, c'est-à-dire de quel côté ça se déplace, ce qu'une vue seule ne peut pas dire."
 }

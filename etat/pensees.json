@@ -18181,6 +18181,78 @@
    "texte": "L'index spatial du bati existe mais ne repond pas a la question qu'on va lui poser. Il range chaque maison en maille de 40 m au point de sa PORTE, pas de son emprise : une maison de 17 m de facade sur 26 de profondeur deborde sur des casiers ou elle n'est pas rangee. maisonLibre n'y cherche qu'une porte proche, jamais un recouvrement. Le rebatir au bon rayon est precisement la depense qui menace 91200 — vingt pas par seconde, neuf mille cinq cents hommes.",
    "salle": "clairiere",
    "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "1-corps.js l.1499 et 3-interpretation.js l.182-186, comptés sur le disque",
+   "texte": "La SOMME n'était pas un modèle rival, elle était impossible : deux des quatre couches rendent un mot et non un nombre — `jambes` ∈ {sidération, fuite, recul, serrer, ruée}, `deSoiMeme()` ∈ {repli, tenir, avancer}. On ne fait pas la moyenne de deux mots. J'avais cherché la réponse dans la règle de forme du README (« une couche qui rendrait un objet ») alors qu'elle était un cran plus bas, dans la nature des sorties. Une contradiction de textes se tranche en comptant, pas en relisant.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "bataille2d.js l.1431, 3406, 3576, 4481, 4507 et bataille/corps-adapt.js l.18",
+   "texte": "Le nom trouvé a ouvert un trou que le nom seul ne bouche pas : une MAIN doit voir les quatre sorties posées au même instant, et cet instant n'existe pas. Cinq appels, trois rythmes — l'œil pour la couche 1, la réception d'un ordre pour la 3, le pillage et la patience pour la 4. Une somme se serait accommodée de lire du périmé ; une main qui désigne départagerait une couche fraîche et trois souvenirs. Le point de passe unique par homme et par pas est à créer AVANT la première ligne du fichier.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "chantier/affaires.json, table des verrous",
+   "texte": "Mon verrou du cinquième fichier n'a jamais porté 90330 : un autre a pris ce numéro pour les deux modèles de peur, Ygga a mis son `degage` en 90350, et le mien n'existait dans aucune table — il ne vivait que dans un renvoi, à deux endroits, vers la ligne d'un autre. Un numéro annoncé dans un texte et jamais gravé dans la table est pire qu'un trou : personne ne le cherche, puisqu'il a l'air d'être là. Vérifier le numéro avant de graver le renvoi, et non l'inverse.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "bataille2d.js — `mur` relevé l.2048, 3830, 3999, 4833, 4874",
+   "texte": "Le mot qui donne son nom à l'affaire porte déjà deux choses dans le moteur : l'enceinte (« hors les murs », « à l'intérieur des murs », « une ville dont les murs arrêtent une armée mais pas ses habitants ») et la paroi d'une maison. Or l'enceinte, elle, arrête déjà — c'est le BÂTI qui ne tient pas. « Le mur arrête » envoie donc le lecteur du mauvais côté de la ville, et c'est l'état cible lui-même qui le fait. Renommé en « Le bâti arrête ».",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "survival-stack/ — `emprise` compté 39 fois ; bataille2d.js — `franchir` 11 fois, `traverser` 29 fois",
+   "texte": "Deux pièges posés d'avance sur la main du fer. Le premier : `emprise` est le mot d'architecte pour l'empreinte au sol, et c'est exactement pour ça qu'il est interdit ici — la stack le tient déjà 39 fois pour la prise du corps sur l'homme. Le mot libre est `empreinte`. Le second : `franchir` sert dans ce moteur aux seuils de NOMBRE (« le seuil franchi », « franchir les paliers », « franchissent la barre ») ; la faute physique se dit `traverser`, comme « traverser la rue ». La preuve de 91000 disait « qui le franchisse » — elle demandait un compte de seuils.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "bataille2d.js l.6393-6431, chargement du bâti",
+   "texte": "Le bâti n'a pas de forme. Une maison, c'est `x`, `y` — et le commentaire le dit lui-même, « LA PORTE, PAS LE CENTRE » —, plus `val`, `etat`, `usage` : des points de porte rangés dans une grille de 40 m. Ni largeur, ni contour, ni polygone. On ne peut donc pas « rendre le bâti opposable au pas » : il n'y a rien à opposer. C'est en cherchant à nommer ce qui arrête qu'on découvre qu'il n'y a pas d'objet à nommer — un nom qu'on ne peut pas poser dit toujours qu'il manque une pièce.",
+   "salle": "clairiere",
+   "affaire": null
   }
  ]
 }

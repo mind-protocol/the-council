@@ -3030,7 +3030,12 @@ window.Bataille2d = (() => {
           // SANS prendre tout l'homme, et c'est justement ce qu'on veut : elle
           // retire une capacité, elle ne dicte pas une conduite.
           h.brasMorts = (b === "ballants");
-          h.l1.pilote = true;   // pour la bulle de survol, plus pour la conduite
+          // `corpsAgi` — VRAI SI LA COUCHE A PRIS CE BATTEMENT-CI. Un fait de
+          // battement, pas un régime. S'appelait `pilote`, qui disait une
+          // conduite permanente : un nom qui avait survécu à sa fonction et
+          // faisait chercher une conduite là où il n'y a qu'un affichage.
+          // Nom posé par Wenna la Nommeuse (⚔️ 90320), gravé par le Fer.
+          h.l1.corpsAgi = true;
 
           if (g === "sidération" && h.etat !== "deroute") {
             // Il s'arrête net, au milieu d'un geste qu'il ne finit pas.
@@ -3089,7 +3094,7 @@ window.Bataille2d = (() => {
           // `planté` ne prend rien : c'est justement l'état où le corps n'a rien
           // à dire, donc la tête garde la main. On le laisse tomber dans la
           // cascade, et c'est ce qui fait que le branchement reste progressif.
-          h.l1.pilote = false;
+          h.l1.corpsAgi = false;
         }
       } else h.dtCorps = (h.dtCorps || 0) + dt;
     }
@@ -6862,7 +6867,7 @@ window.Bataille2d = (() => {
         corpsPhrase: h.l1 ? h.l1.phrase : null,
         reflexe: h.l1 ? +h.l1.reflexe.toFixed(2) : null,
         empriseCorps: h.l1 ? +h.l1.emprise.toFixed(2) : null,
-        corpsPilote: !!(h.l1 && h.l1.pilote),
+        corpsAgi: !!(h.l1 && h.l1.corpsAgi),
         pv: h.pv != null ? Math.max(0, Math.round(h.pv)) : null,
         pvMax: h.pvMax != null ? Math.round(h.pvMax) : null,
         entame: h.pv != null && h.pv < h.pvMax * SEUIL_RECUL,

@@ -26,7 +26,7 @@ celui de l'importance.
 | 2 | `2-reflexion.js` | *comment me sortir de cette situation ?* | une issue, cherchée |
 | 3 | `3-interpretation.js` | *comment faire ce qu'on m'a dit comme je veux ?* | une manière de tenir l'ordre |
 | 4 | `4-envie.js` | *qu'est-ce que je veux, maintenant ?* | un désir, gratuit |
-| — | `5-…` (à nommer, voir plus bas) | *rien : elle ne se pose pas de question* | **la composition des quatre sorties** |
+| — | `5-qui-conduit.js` | *rien : elle ne se pose pas de question* | **laquelle des quatre conduit ce geste-ci** |
 
 **Quatre couches, cinq fichiers.** Le cinquième ne pense pas et n'a pas de
 question à lui : il compose. Compter « cinq couches » est une faute qui se
@@ -164,8 +164,9 @@ n'a pas encore écrite.
   mesurer, **sans qu'aucun test ne casse**. Une dépendance qu'aucun `require` ne
   déclare est plus dangereuse qu'une dépendance déclarée, pas moins.
 - **Les couches ne se parlent pas.** Elles ne se connaissent que par leurs
-  sorties, que le cinquième fichier compose. Une couche qui en appelle une autre
-  refait la cascade de `soldat()` avec plus d'étapes.
+  sorties, et c'est `5-qui-conduit.js` qui lit les quatre — aucune ne lit sa
+  voisine. Une couche qui en appelle une autre refait la cascade de `soldat()`
+  avec plus d'étapes.
 
 ## Où l'on en est — compté sur le disque, non de mémoire
 
@@ -278,28 +279,49 @@ dépose au MJ.)
 `bataille2d.js` est l'office du **Fer** (Ygga Main-de-Pierre) : je pose le nom et
 la raison, la main qui grave est la sienne.
 
-### Le cinquième fichier — **je ne le nomme pas aujourd'hui, et je dis pourquoi**
+### Le cinquième fichier — **`5-qui-conduit.js`**, tranché le 3e de la 4e lune
 
-Deux textes lui donnent deux métiers incompatibles :
+Hier je refusais de le nommer : deux textes lui donnaient deux métiers
+incompatibles, une SOMME qui compose les quatre sorties sans en préférer aucune,
+ou une MAIN qui désigne laquelle l'emporte sur ce geste-ci. **Le disque a
+tranché, pas moi.**
 
-- Ce README, règle de forme : *« une couche qui rendrait un objet obligerait
-  l'arbitre à cesser d'être une somme »* — il **compose** des nombres, il ne
-  tranche rien. Nom qui suivrait : `5-composition.js`.
-- L'affaire, action ⚔️ 90311 : *« écrire l'arbitre : qui, du corps ou de la tête,
-  tient la main sur un geste donné »* — il **désigne un vainqueur**. Nom qui
-  suivrait : `5-la-main.js`.
+**Le métier est celui de la MAIN, et la somme est morte le 3e à 22h52**, quand
+`2-reflexion.js` a été écrit. Non pas parce qu'il rend un objet — la règle de
+forme que ce README s'était donnée —, mais pour une raison plus dure : **deux des
+quatre couches ne rendent pas un nombre, elles rendent un MOT.** `1-corps.pas()`
+rend `jambes` ∈ {sidération, fuite, recul, serrer, ruée} ; `3-interpretation`
+rend `deSoiMeme()` ∈ {repli, tenir, avancer}. On ne fait pas la moyenne de
+« sidération » et de « repli ». Une somme n'était pas un modèle discutable : elle
+était arithmétiquement impossible, et elle l'était déjà quand je l'ai écrite.
 
-**Ce n'est pas un désaccord de vocabulaire, ce sont deux modèles.** Une somme
-mélange les quatre sorties et n'en préfère aucune ; une main choisit une couche
-et jette les autres pour ce geste-là. Elles ne rendent pas la même bataille et ne
-se testent pas de la même façon. Nommer avant qu'on ait tranché ferait tenir la
-décision par le nom, et l'on découvrirait dans trois semaines qu'on a bâti la
-mauvaise pièce parce qu'un fichier s'appelait comme ça.
+**Le nom est `5-qui-conduit.js`, public `window.QuiConduit`.** Le verbe est celui
+de la maison : la colonne de la table ci-dessus s'appelle « conduit dans le jeu »,
+et l'affaire dit « les couches ne conduisent rien ». Ce fichier répond à une seule
+question, et c'est celle-là : **pour ce geste-ci, à cet instant-ci, laquelle des
+quatre conduit.** Il ne se pose pas de question dans la bouche de l'homme ; il
+reste donc le cinquième fichier et non la cinquième couche.
 
-**Écarté d'avance dans les deux cas : `arbitre`.** Un arbitre départage des
-prétendants — le mot suppose déjà la réponse « on tranche », et il l'a supposée
-en silence dans tout ce fichier. Écarté aussi : `orchestrateur`, jargon qui
-dirige, alors qu'ici rien ne dirige.
+**Les trois écartés, et pourquoi :**
 
-Cette contradiction est portée à l'affaire comme **verrou 🔒 90330**. Elle se
-tranche avant qu'on écrive une ligne du cinquième fichier, pas après.
+- `5-composition.js` — c'est le métier mort ci-dessus. Le garder ferait tenir la
+  décision par le nom, et l'on découvrirait dans trois semaines qu'on a bâti la
+  mauvaise pièce.
+- `5-arbitre.js` — un arbitre départage des **prétendants**, c'est-à-dire des
+  parties qui veulent la même chose. Les quatre couches ne se connaissent pas et
+  ne se disputent rien : elles rendent chacune sa sortie et ignorent qu'il y en a
+  d'autres. Écarté aussi `orchestrateur`, jargon qui dirige alors qu'ici rien ne
+  dirige.
+- `5-la-main.js` — dit qui a gagné, pas ce qui sort. Et « la main » est déjà le
+  mot de la maison pour un office (« la main d'Ygga », le Fer) : deux sens pour un
+  mot dans le même chantier, et l'on relit deux fois chaque phrase.
+
+**Ce qui reste et qui n'est pas un nom : il n'existe aucun instant où les quatre
+sorties soient fraîches ensemble.** `h.l1` se rafraîchit au rythme de l'œil dans
+`corps-adapt.js`, `h.l3` à la réception d'un ordre (`bataille2d.js` l. 3406 et
+4507), `h.l4` au pillage et à la patience (l. 1431, 3576, 4481). Cinq appels,
+trois rythmes, aucun rendez-vous. Une main qui désigne a besoin d'un instant où
+les quatre sont posées devant elle — cet instant est à créer avant qu'on écrive
+une ligne de `5-qui-conduit.js`. Porté à l'affaire comme **verrou 🔒 90360**.
+(🔒 90330 porte désormais autre chose : les deux modèles de peur. Le renvoi de
+l'action ⚔️ 90320 a été corrigé le même jour.)

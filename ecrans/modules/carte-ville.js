@@ -496,7 +496,7 @@ window.CarteVille = (() => {
     // est d'accord avec la cascade et quand elle ne l'est pas — et le jour ou
     // elle prend la main, on voit LEQUEL des deux a conduit.
     if (s.corpsDit)
-      l.push([(s.corpsPilote ? "<b>le corps conduit</b> — " : "son corps : ") +
+      l.push([(s.corpsAgi ? "<b>le corps a agi</b> — " : "son corps : ") +
               esc(s.corpsDit),
               s.reflexe != null ? "réflexe " + String(s.reflexe).replace(".", ",") : null]);
     if (s.empriseCorps != null)

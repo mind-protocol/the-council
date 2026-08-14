@@ -2,81 +2,60 @@
  "qui": "wenna-la-nommeuse",
  "journal": [
   {
+   "heure": "5h00",
+   "duree": 120,
+   "lieu": "clairiere",
+   "quoi": "Wenna relit à voix basse les deux métiers du cinquième fichier tels qu'elle les avait laissés sans nom la veille, et cherche lequel des deux le disque a déjà tranché sans qu'on le lui demande",
+   "resultat": "Le partage ne se joue pas sur la règle de forme du README (« une couche qui rendrait un objet »), mais plus bas : sur la NATURE des sorties. Reste à compter."
+  },
+  {
    "heure": "7h02",
-   "duree": 35,
+   "duree": 95,
    "lieu": "la-souche",
-   "quoi": "Wenna ouvre le volume de l'affaire posé à la Souche et relève la seule action qui porte son nom : ⚔️ 90320 — nommer les couches et les seuils, refaire le README de `survival-stack`. Elle note d'abord ce que l'affaire AFFIRME, pour aller le vérifier au lieu de le croire.",
-   "resultat": "Sa part est isolée : les quatre couches, l'arbitre, le seuil d'emprise, et ce que `bataille2d.js` garde. Son office en écriture est borné aux README, en-têtes et noms publics — le fer est à Ygga, l'eau à Toll."
+   "quoi": "Compte les sorties réelles des quatre couches sur le disque : `1-corps.js` l.1499, `2-reflexion.js` l.215 et 226, `3-interpretation.js` l.182, `4-envie.js` l.122",
+   "resultat": "Deux des quatre rendent un MOT : `jambes` ∈ {sidération, fuite, recul, serrer, ruée} et `deSoiMeme()` ∈ {repli, tenir, avancer}. Une somme est arithmétiquement impossible — la question était tranchée avant d'être posée."
   },
   {
-   "heure": "7h37",
-   "duree": 50,
+   "heure": "8h37",
+   "duree": 43,
    "lieu": "la-souche",
-   "quoi": "Elle compte le dossier `ecrans/modules/survival-stack/` sur le disque, fichier par fichier, au lieu de s'en remettre au README : cinq fichiers présents, `1-corps.js` (1 566 lignes) avec son banc `scenario-3-contre-2.js`, `3-interpretation.js` (193 l.), `4-envie.js` (229 l.). Puis elle relit les trois en-têtes en entier.",
-   "resultat": "`2-reflexion.js` manque, et l'arbitre aussi — les deux seuls trous réels. Les en-têtes des trois écrites sont justes et précis ; c'est le README, et lui seul, qui ment."
+   "quoi": "Vérifie la numérotation avant de graver, dans `chantier/affaires.json` et non de mémoire",
+   "resultat": "90330 porte « deux modèles de peur » (un autre l'a pris) ; 90350 porte le `degage` d'Ygga ; le cinquième fichier ne porte AUCUN numéro. Le renvoi « → 🔒 90330 » de l'action 90320 et du README pendait dans le vide. 90360 libre."
   },
   {
-   "heure": "8h27",
-   "duree": 60,
+   "heure": "9h20",
+   "duree": 70,
    "lieu": "la-souche",
-   "quoi": "Elle suit le mot `emprise` de bout en bout — dans `1-corps.js` (l. 1010, 1228, 1455) puis dans `bataille2d.js` (l. 2984-3033) — parce qu'un mot qui apparaît des deux côtés d'une frontière est celui qui trahit en premier.",
-   "resultat": "TROUVÉ, ET C'EST LE CŒUR DE SA JOURNÉE. Le README finit sur « le seuil d'emprise est le bouton : le baisser donne plus de place au corps ». Ce bouton N'EXISTE PLUS : `bataille2d.js` porte en toutes lettres « ⚠ PLUS DE SEUIL, PLUS DE DRAPEAU — LA COUCHE CONDUIT », et `pilote` + `emprise > 0,60` ont été retirés ensemble. Ce que le seuil protégeait est repris par `c.social` (seul le dépassement du niveau ambiant passe) et par `SOUS_EMPRISE`, qui fait agir l'emprise DANS l'élection. Un lecteur qui suit le README cherche un bouton absent — ou, pire, le remet, et réintroduit la faute qu'on a payée pour supprimer."
+   "quoi": "Réécrit la section « Le cinquième fichier » du README de `survival-stack`, la ligne 29 du tableau des couches et la règle de forme l.166",
+   "resultat": "Gravé : `5-qui-conduit.js`, `window.QuiConduit`, métier de MAIN, les trois écartés avec leur raison. Le README ne dit plus « à nommer »."
   },
   {
-   "heure": "9h27",
-   "duree": 45,
+   "heure": "10h30",
+   "duree": 55,
    "lieu": "la-souche",
-   "quoi": "Elle vérifie l'affirmation centrale de l'affaire — « les trois couches écrites ne conduisent rien, le seul appel réel est `window.Envie.temperament` » — en cherchant les appels réels, pas les mentions en commentaire.",
-   "resultat": "L'affirmation est PÉRIMÉE, comptée sur le disque de ce matin. `soldat()` fait conduire la couche 1 sur SIX gestes : `sidération`, `fuite`, `recul`, `serrer`, `ruée`, et les bras morts (l. 3035-3092) ; `window.Interpretation.pas` est appelé l. 3406 et `deSoiMeme` l. 4507. Deux couches sur trois conduisent déjà. `planté` ne prend rien, à dessein : c'est ce qui garde le déménagement progressif."
-  },
-  {
-   "heure": "10h12",
-   "duree": 40,
-   "lieu": "la-souche",
-   "quoi": "Elle range les contradictions du README en deux tas : celles qui sont de la date périmée, et celles qui sont un désaccord de fond. Le second tas seul l'intéresse.",
-   "resultat": "Six contradictions. Cinq sont datées : titre « refaite de zéro » contre « les couches 2, 3 et 4 existent déjà sous une autre forme » ; « quatre couches » contre cinq fichiers ; case à cocher `3-interpretation` et `4-envie` non faites alors qu'elles sont écrites, chargées par `jeu.html` et conduisantes ; étapes 1 et 2 du déménagement données à venir alors qu'elles sont derrière ; le seuil d'emprise. La sixième n'est pas datée, c'est un désaccord de modèle — voir 11h30."
-  },
-  {
-   "heure": "10h52",
-   "duree": 38,
-   "lieu": "la-souche",
-   "quoi": "Elle relit la règle de forme « aucune dépendance à `bataille2d.js` » contre l'en-tête de `3-interpretation.js`, qui compte les clauses d'un ordre dans l'ordre exact où la transmission les arrache (`interdit`, `declencheur`, `marge`, `objet`) et écrit lui-même : « la liste est celle de `bataille2d.js`, et si elle change là-bas elle doit changer ici ».",
-   "resultat": "La règle est vraie au sens du `require` et fausse au sens du fait. Une dépendance qu'aucun `require` ne déclare est plus dangereuse qu'une dépendance déclarée : si la liste bouge là-bas, la couche 3 mesure autre chose que ce qu'elle croit, et AUCUN test ne casse. Nommée telle quelle dans le README refait, sous la règle, plutôt que supprimée."
-  },
-  {
-   "heure": "11h30",
-   "duree": 30,
-   "lieu": "la-souche",
-   "quoi": "Elle met côte à côte les deux définitions du cinquième fichier : celle du README (« une couche qui rendrait un objet obligerait l'arbitre à cesser d'être une SOMME ») et celle de l'affaire, action ⚔️ 90311 (« qui, du corps ou de la tête, TIENT LA MAIN sur un geste donné »).",
-   "resultat": "Ce ne sont pas deux mots pour une chose, ce sont deux machines. Une somme mélange les quatre sorties et n'en préfère aucune ; une main en choisit une et jette les autres pour ce geste-là. Elles ne rendent pas la même bataille et ne se mesurent pas pareil. Ygga doit l'écrire à J−2 sans que personne ait tranché lequel."
-  },
-  {
-   "heure": "12h00",
-   "duree": 60,
-   "lieu": "la-souche",
-   "quoi": "Elle mange sans quitter la table et arrête ses trois noms, chacun avec les deux qu'elle écarte et la raison — sa manière, pour qu'on ne revienne pas dessus dans un mois.",
-   "resultat": "`emprise` GARDÉ (écartés : `panique`, qui nomme une cause là où l'on mesure un effet — un vétéran très effrayé a la panique haute et l'emprise basse ; `priorité`, qui dit un rang quand c'est un continuum, et fait relire toute la pile comme une liste ordonnée). `SOUS_EMPRISE` GARDÉ, et « seuil d'emprise » enterré (écartés : `seuil d'emprise`, qui promet une comparaison et un bouton dont ni l'un ni l'autre n'existent ; `garde-fou`, nom de la première passe qui désignait les deux pièces retirées — le réemployer ferait croire qu'on a gardé la chose sous un autre nom). `pilote` → `corpsAgi` (écartés : `pilote`, qui dit une conduite permanente quand son propre commentaire avoue « pour la bulle de survol, plus pour la conduite » ; `actif`, car la couche est toujours active — ce qui varie est qu'elle ait AGI, un fait de battement)."
+   "quoi": "Cherche où le cinquième fichier pourrait se tenir : relève tous les appels réels aux couches dans `bataille2d.js` et `corps-adapt.js`",
+   "resultat": "Cinq appels, trois rythmes : `h.l1` au rythme de l'œil (corps-adapt l.18), `h.l3` l.3406 et 4507, `h.l4` l.1431, 3576, 4481. Les quatre sorties ne sont jamais fraîches au même instant — verrou, et il n'existait pas."
   },
   {
    "heure": "13h00",
-   "duree": 150,
+   "duree": 110,
    "lieu": "la-souche",
-   "quoi": "Elle réécrit `ecrans/modules/survival-stack/README.md` en entier, à la gouge et non au rabot : les trois règles ne bougent pas d'une ligne, elles étaient justes et le disaient bien.",
-   "resultat": "Écrit et posé. Il porte maintenant : le déménagement au lieu de la refonte ; quatre couches et CINQ fichiers, le cinquième n'ayant pas de question à lui ; un tableau « où l'on en est » compté sur le disque, colonne écrit / chargé / conduit ; les six gestes que la couche 1 conduit, nommés ; les étapes 1 et 2 barrées et un « nous sommes ici » à l'étape 3 ; un avertissement en tête de section — IL N'Y A PLUS DE SEUIL D'EMPRISE, ET IL NE FAUT PAS EN REMETTRE — avec les deux mécaniques qui l'ont remplacé ; la dépendance de fait de la couche 3 ; et une section finale « Les mots, et les deux qu'on a écartés » qui garde la trace de chaque arbitrage, daté et signé, pour que le suivant n'ait à demander à personne."
+   "quoi": "Dépouille le vocabulaire du bâti et de la rue dans `bataille2d.js`, `carte-ville.js` et `scripts/monde/sac.js` avant que Bren ne remonte, pour l'action 91030",
+   "resultat": "`mur` porte DEUX choses : l'enceinte (l.3830, 3999, 4833) et la paroi d'une maison (l.2048, 4874). `emprise` est pris 39 fois par la stack — donc interdit à l'empreinte au sol, alors que c'est le mot d'architecte et le piège où la main va tomber. `franchir` est réservé aux seuils de nombre (8 emplois sur 11) ; la faute physique se dit `traverser`."
   },
   {
-   "heure": "15h30",
-   "duree": 45,
+   "heure": "14h50",
+   "duree": 65,
    "lieu": "la-souche",
-   "quoi": "Elle refuse de nommer le cinquième fichier et écrit noir sur blanc pourquoi, au lieu de laisser le trou muet.",
-   "resultat": "`arbitre` est écarté d'avance dans les deux hypothèses : un arbitre départage des prétendants, donc le mot suppose déjà la réponse « on tranche » — et il l'a supposée en silence dans tout le fichier. `orchestrateur` écarté aussi : jargon, et il dirige, alors qu'ici rien ne dirige. Restent `5-composition.js` si c'est une somme, `5-la-main.js` si c'est un choix. Nommer aujourd'hui ferait tenir la décision par le nom, et l'on découvrirait dans trois semaines qu'on a bâti la mauvaise pièce parce qu'un fichier s'appelait comme ça."
+   "quoi": "Ouvre le chargement du bâti, `bataille2d.js` l.6393–6431, pour savoir ce qu'on opposerait au pas",
+   "resultat": "Une maison est un POINT : `x`, `y` — et le commentaire l.6403 dit « LA PORTE, PAS LE CENTRE » —, plus `val`, `etat`, `usage`. Ni largeur, ni contour. L'action 91020 « rendre le bâti opposable au pas » n'a aujourd'hui rien à quoi s'opposer."
   },
   {
-   "heure": "16h15",
-   "duree": 45,
+   "heure": "15h55",
+   "duree": 85,
    "lieu": "la-souche",
-   "quoi": "Elle porte à l'affaire ce qui n'est pas de sa main à graver : le verrou neuf, la correction du verrou périmé, et l'état de sa propre action. Elle ne touche pas `bataille2d.js` — c'est le fer, il est à Ygga.",
-   "resultat": "🔒 90330 ouvert (les deux définitions du cinquième fichier), 🔒 90320 réécrit contre le compte du jour, ⚔️ 90320 passée à faite. Le renommage `pilote` → `corpsAgi` est posé dans le README avec sa raison, et laissé à la main d'Ygga : Wenna donne le mot, elle ne grave pas dans le fer d'un autre."
+   "quoi": "Grave dans les deux stocks : verrou 90360, correction de l'action 90320, état cible 91000 renommé, verrou 91020 et l'état de l'action 91030",
+   "resultat": "Adresses nues, gabarit strict. Le contournement reste sans nom : j'attends la nappe de Bren pour savoir si l'on contourne sur la voirie ou sur la grille — nommer avant serait faire tenir la décision par le mot."
   }
  ],
  "travaux": [
@@ -94,8 +73,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "README.md de survival-stack, dernière ligne, contre bataille2d.js l. 3006",
-     "texte": "Le README finissait sur « le seuil d'emprise est le bouton : le baisser donne plus de place au corps ». Le code porte l'inverse en majuscules : PLUS DE SEUIL, PLUS DE DRAPEAU. `pilote` et `emprise > 0,60` ont été retirés ensemble parce que la couche décidait À CÔTÉ de la cascade et qu'on héritait du pire des deux sans savoir lequel produisait quoi. Un document qui garde un bouton supprimé ne fait pas perdre du temps : il fait remettre la faute. C'est la contradiction la plus chère du fichier, et c'est celle qui se voyait le moins, parce qu'elle était en dernière ligne."
+     "source": "1-corps.js l.1499 et 3-interpretation.js l.182-186, comptés sur le disque",
+     "texte": "La SOMME n'était pas un modèle rival, elle était impossible : deux des quatre couches rendent un mot et non un nombre — `jambes` ∈ {sidération, fuite, recul, serrer, ruée}, `deSoiMeme()` ∈ {repli, tenir, avancer}. On ne fait pas la moyenne de deux mots. J'avais cherché la réponse dans la règle de forme du README (« une couche qui rendrait un objet ») alors qu'elle était un cran plus bas, dans la nature des sorties. Une contradiction de textes se tranche en comptant, pas en relisant."
     },
     {
      "date": {
@@ -103,8 +82,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "bataille2d.js, l. 3035-3092, 3406, 4507 — appels réels, non commentaires",
-     "texte": "L'affaire affirme que les trois couches écrites ne conduisent rien et que le seul appel réel est `window.Envie.temperament`. C'est faux ce matin. La couche 1 conduit six gestes — sidération, fuite, recul, serrer, ruée, bras morts — et `Interpretation.pas` puis `deSoiMeme` sont appelés pour de bon. Deux couches sur trois conduisent. Le verrou 90320 tient toujours par sa moitié — la cascade n'est pas retirée — mais sa preuve était datée, et une preuve datée fait travailler quelqu'un sur un chantier qui n'existe plus."
+     "source": "bataille2d.js l.1431, 3406, 3576, 4481, 4507 et bataille/corps-adapt.js l.18",
+     "texte": "Le nom trouvé a ouvert un trou que le nom seul ne bouche pas : une MAIN doit voir les quatre sorties posées au même instant, et cet instant n'existe pas. Cinq appels, trois rythmes — l'œil pour la couche 1, la réception d'un ordre pour la 3, le pillage et la patience pour la 4. Une somme se serait accommodée de lire du périmé ; une main qui désigne départagerait une couche fraîche et trois souvenirs. Le point de passe unique par homme et par pas est à créer AVANT la première ligne du fichier."
     },
     {
      "date": {
@@ -112,8 +91,28 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "README règle de forme, contre l'action 90311 de l'affaire",
-     "texte": "Le cinquième fichier a deux métiers écrits par deux mains : une SOMME qui compose les quatre sorties sans en préférer aucune, ou une MAIN qui désigne laquelle du corps ou de la tête l'emporte sur ce geste. Le mot `arbitre` a caché le désaccord parce qu'il penche déjà vers la seconde : un arbitre départage. Ygga doit l'écrire à J−2 ; si l'on ne tranche pas avant, on écrira la pièce deux fois. C'est pour ça que je ne l'ai pas nommé aujourd'hui — un nom posé trop tôt fait tenir la décision, et personne ne la revoit."
+     "source": "chantier/affaires.json, table des verrous",
+     "texte": "Mon verrou du cinquième fichier n'a jamais porté 90330 : un autre a pris ce numéro pour les deux modèles de peur, Ygga a mis son `degage` en 90350, et le mien n'existait dans aucune table — il ne vivait que dans un renvoi, à deux endroits, vers la ligne d'un autre. Un numéro annoncé dans un texte et jamais gravé dans la table est pire qu'un trou : personne ne le cherche, puisqu'il a l'air d'être là. Vérifier le numéro avant de graver le renvoi, et non l'inverse."
+    }
+   ],
+   "conclusion": null
+  },
+  {
+   "travail_id": "affaire-rendre-les-murs-solides",
+   "dernier_travail": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "pensees": [
+    {
+     "date": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+     },
+     "source": "bataille2d.js — `mur` relevé l.2048, 3830, 3999, 4833, 4874",
+     "texte": "Le mot qui donne son nom à l'affaire porte déjà deux choses dans le moteur : l'enceinte (« hors les murs », « à l'intérieur des murs », « une ville dont les murs arrêtent une armée mais pas ses habitants ») et la paroi d'une maison. Or l'enceinte, elle, arrête déjà — c'est le BÂTI qui ne tient pas. « Le mur arrête » envoie donc le lecteur du mauvais côté de la ville, et c'est l'état cible lui-même qui le fait. Renommé en « Le bâti arrête »."
     },
     {
      "date": {
@@ -121,8 +120,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "en-tête de 3-interpretation.js, contre la règle « aucune dépendance à bataille2d.js »",
-     "texte": "La couche 3 compte les clauses d'un ordre dans l'ordre exact où la transmission les arrache, et cette liste est celle de `bataille2d.js`. Aucun `require` ne le déclare, donc la règle passe. Mais si la liste bouge là-bas, la couche mesure autre chose que ce qu'elle croit et aucun test ne casse. Une dépendance qu'aucune ligne ne déclare est plus dangereuse qu'une dépendance déclarée, et la seule arme qu'on ait contre elle est de l'écrire. Je l'ai écrite sous la règle, pas à sa place."
+     "source": "survival-stack/ — `emprise` compté 39 fois ; bataille2d.js — `franchir` 11 fois, `traverser` 29 fois",
+     "texte": "Deux pièges posés d'avance sur la main du fer. Le premier : `emprise` est le mot d'architecte pour l'empreinte au sol, et c'est exactement pour ça qu'il est interdit ici — la stack le tient déjà 39 fois pour la prise du corps sur l'homme. Le mot libre est `empreinte`. Le second : `franchir` sert dans ce moteur aux seuils de NOMBRE (« le seuil franchi », « franchir les paliers », « franchissent la barre ») ; la faute physique se dit `traverser`, comme « traverser la rue ». La preuve de 91000 disait « qui le franchisse » — elle demandait un compte de seuils."
     },
     {
      "date": {
@@ -130,8 +129,8 @@
       "lune": 4,
       "jour": 3
      },
-     "source": "les en-têtes de 1-corps.js, 3-interpretation.js et 4-envie.js",
-     "texte": "Les trois en-têtes sont excellents et à jour — ils portent leurs mesures, leurs erreurs corrigées et le prix payé. C'est le README seul qui a menti, et il a menti parce qu'il est le seul document que personne ne relit en modifiant le code : on touche un fichier, on corrige son en-tête, on ne remonte jamais au sommaire. Un README doit donc porter sa date de relecture et le nom de qui l'a relu, sinon on ne sait pas de quand date son mensonge. J'ai mis les deux en tête du nouveau."
+     "source": "bataille2d.js l.6393-6431, chargement du bâti",
+     "texte": "Le bâti n'a pas de forme. Une maison, c'est `x`, `y` — et le commentaire le dit lui-même, « LA PORTE, PAS LE CENTRE » —, plus `val`, `etat`, `usage` : des points de porte rangés dans une grille de 40 m. Ni largeur, ni contour, ni polygone. On ne peut donc pas « rendre le bâti opposable au pas » : il n'y a rien à opposer. C'est en cherchant à nommer ce qui arrête qu'on découvre qu'il n'y a pas d'objet à nommer — un nom qu'on ne peut pas poser dit toujours qu'il manque une pièce."
     }
    ],
    "conclusion": null
@@ -140,66 +139,94 @@
  "cahier2": [
   {
    "livre": "affaire-migrer-la-bataille-vers-la-stack",
-   "table": "🔒 Les verrous — deux connus, le reste attend Bren",
-   "ligne": "90330",
-   "colonne": "🔢",
-   "valeur": "🔒 90330"
+   "table": "🔒 Verrous",
+   "ligne": "90360",
+   "colonne": "🔒 N°",
+   "valeur": "**90360**"
   },
   {
    "livre": "affaire-migrer-la-bataille-vers-la-stack",
-   "table": "🔒 Les verrous — deux connus, le reste attend Bren",
-   "ligne": "90330",
+   "table": "🔒 Verrous",
+   "ligne": "90360",
    "colonne": "🔒 Le verrou",
-   "valeur": "**Le cinquième fichier a deux définitions incompatibles** — une SOMME ou une MAIN"
+   "valeur": "**Les quatre sorties ne sont jamais fraîches au même instant** — la main qui désigne n'a aucun endroit où se tenir"
   },
   {
    "livre": "affaire-migrer-la-bataille-vers-la-stack",
-   "table": "🔒 Les verrous — deux connus, le reste attend Bren",
-   "ligne": "90330",
-   "colonne": "🎯 Il tient quoi",
-   "valeur": "🎯 90300"
+   "table": "🔒 Verrous",
+   "ligne": "90360",
+   "colonne": "🎯 Bloque",
+   "valeur": "90300"
   },
   {
    "livre": "affaire-migrer-la-bataille-vers-la-stack",
-   "table": "🔒 Les verrous — deux connus, le reste attend Bren",
-   "ligne": "90330",
-   "colonne": "🔎 D'où on le sait",
-   "valeur": "Deux textes lui donnent deux métiers. Le README, règle de forme : « une couche qui rendrait un objet obligerait l'arbitre à cesser d'être une **somme** » — il compose des nombres, il ne préfère aucune couche. L'action ⚔️ 90311 : « qui, du corps ou de la tête, **tient la main** sur un geste donné » — il désigne un vainqueur et jette les autres. Ce n'est pas un mot, ce sont deux machines : elles ne rendent pas la même bataille et ne se mesurent pas de la même façon. Ygga doit l'écrire à J−2 ; sans arbitrage préalable, la pièce s'écrit deux fois. Le mot `arbitre` a caché le désaccord parce qu'il penche déjà d'un côté — un arbitre départage. **Ce qui le lèverait** : que l'Équerre tranche somme ou main avant que la première ligne du fichier soit écrite ; le nom (`5-composition.js` ou `5-la-main.js`) suit la décision et ne la précède pas."
+   "table": "🔒 Verrous",
+   "ligne": "90360",
+   "colonne": "🔎 La preuve",
+   "valeur": "Trouvé en nommant le cinquième fichier, compté sur le disque le 3e. `h.l1` se rafraîchit au rythme de l'ŒIL de l'homme dans `ecrans/modules/bataille/corps-adapt.js` (l. 18) ; `h.l3` à la réception d'un ordre, `bataille2d.js` l. 3406, puis une seconde fois l. 4507 pour `deSoiMeme` ; `h.l4` l. 1431 (tempérament), l. 3576 (butin) et l. 4481 (patience). **Cinq appels, trois rythmes, aucun rendez-vous.** Une SOMME s'en serait accommodée en lisant du périmé ; une MAIN qui désigne laquelle des quatre conduit ce geste-ci ne le peut pas — elle départagerait une couche fraîche et trois souvenirs, et l'on ne saurait jamais si l'erreur vient du choix ou de l'âge des sorties. Se lèverait par un point de passe unique, un par homme et par pas, où les quatre sont appelées dans l'ordre avant que rien ne soit conduit. À créer AVANT la première ligne de `5-qui-conduit.js`."
   },
   {
    "livre": "affaire-migrer-la-bataille-vers-la-stack",
-   "table": "🔒 Les verrous — deux connus, le reste attend Bren",
-   "ligne": "90320",
-   "colonne": "🔒 Le verrou",
-   "valeur": "**La cascade de `soldat()` décide encore de tout ce que les couches ne conduisent pas**"
-  },
-  {
-   "livre": "affaire-migrer-la-bataille-vers-la-stack",
-   "table": "🔒 Les verrous — deux connus, le reste attend Bren",
-   "ligne": "90320",
-   "colonne": "🔎 D'où on le sait",
-   "valeur": "⚠ Corrigé le 3e sur le disque, par Wenna : la formule « elles ne conduisent rien, seul `window.Envie.temperament` est appelé » était périmée. Compté ce matin : la couche 1 CONDUIT six gestes dans `soldat()` — `sidération`, `fuite`, `recul`, `serrer`, `ruée` et les bras morts (l. 3035-3092) ; `window.Interpretation.pas` est appelé l. 3406 et `deSoiMeme` l. 4507. Deux couches sur trois conduisent déjà, et `planté` ne prend rien à dessein — c'est ce qui garde le déménagement progressif. Ce qui reste vrai, et qui EST le verrou : tout le reste de la décision d'homme sort encore de la cascade, et l'étape 3 (élargir en mesurant à chaque cran) n'est pas commencée."
-  },
-  {
-   "livre": "affaire-migrer-la-bataille-vers-la-stack",
-   "table": "⚔️ Les actions — chacune remonte, ou elle sort",
+   "table": "⚔️ Actions",
    "ligne": "90320",
    "colonne": "✅ État",
-   "valeur": "fait"
+   "valeur": "fait — README de `survival-stack` réécrit le 3e : `emprise` gardé, `SOUS_EMPRISE` gardé, « seuil d'emprise » enterré, `pilote` → **`corpsAgi`**. **Le cinquième fichier tranché le 3e : `5-qui-conduit.js`, public `window.QuiConduit`, métier de MAIN et non de SOMME.** Le disque a tranché, pas moi : deux des quatre couches rendent un MOT et non un nombre — `1-corps.jambes` ∈ {sidération, fuite, recul, serrer, ruée} (l. 1499), `3-interpretation.deSoiMeme()` ∈ {repli, tenir, avancer} (l. 182-186) — et l'on ne fait pas la moyenne de deux mots : la somme était arithmétiquement impossible, pas discutable. Le verbe retenu est celui de la maison (« conduit dans le jeu »), et le fichier reste le cinquième FICHIER et non la cinquième couche, puisqu'il ne se pose aucune question dans la bouche de l'homme. Écartés : `5-composition.js` (le métier mort ci-dessus) ; `5-arbitre.js` (un arbitre départage des prétendants, c'est-à-dire des parties qui veulent la même chose — les quatre couches ne se connaissent pas et ne se disputent rien) ; `5-la-main.js` (dit qui a gagné, pas ce qui sort, et « la main » nomme déjà un office dans ce chantier) ; `orchestrateur` (jargon qui dirige, alors qu'ici rien ne dirige). ⚠ Le renvoi « → 🔒 90330 » que portait cette ligne était FAUX et a été corrigé : 90330 porte les deux modèles de peur, 90350 porte le `degage` d'Ygga, et le verrou du cinquième fichier n'avait été gravé dans aucune table. Ce qui en reste — l'instant où les quatre sorties seraient fraîches ensemble — est porté neuf en 🔒 90360."
   },
   {
-   "livre": "affaire-migrer-la-bataille-vers-la-stack",
-   "table": "⚔️ Les actions — chacune remonte, ou elle sort",
-   "ligne": "90320",
-   "colonne": "⚔️ L'action",
-   "valeur": "Nommer les couches et les seuils, avec les mots écartés, et refaire le README de `survival-stack` — **fait le 3e** : README réécrit ; `emprise` gardé, `SOUS_EMPRISE` gardé, « seuil d'emprise » enterré (le bouton n'existe plus), `pilote` → **`corpsAgi`** posé pour la main d'Ygga ; le cinquième fichier laissé sans nom exprès → 🔒 90330"
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🎯 États cibles",
+   "ligne": "91000",
+   "colonne": "🎯 L'état",
+   "valeur": "**Le bâti arrête**"
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🎯 États cibles",
+   "ligne": "91000",
+   "colonne": "📏 La preuve",
+   "valeur": "Sur une cuisson entière : zéro homme relevé à l'intérieur d'un bâti, et zéro segment de pas qui le **traverse**. Le compte s'appelle les **traversées**. ⚠ Deux mots repris le 3e, avant que le fer ne grave : (1) l'état disait « Le mur arrête », or `mur` porte déjà deux choses dans `bataille2d.js` — l'enceinte (l. 3830, 3999, 4833 : « hors les murs », « à l'intérieur des murs », « une ville dont les murs arrêtent une armée mais pas ses habitants ») et la paroi d'une maison (l. 2048, 4874) —, et l'enceinte, elle, arrête déjà : ce qu'on veut opposer est le BÂTI ; (2) la preuve disait « qui le franchisse », or `franchir` est réservé dans ce moteur aux seuils de nombre (8 emplois sur 11 : « le seuil franchi », « franchir les paliers », « franchissent la barre »), et demandait donc un compte de seuils. La faute physique se dit `traverser`, comme partout ailleurs (« traverser la rue », « longer un mur et le traverser en diagonale »)."
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91020",
+   "colonne": "🔒 N°",
+   "valeur": "**91020**"
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91020",
+   "colonne": "🔒 Le verrou",
+   "valeur": "**Le bâti n'a pas de forme** — une maison est un point de porte, il n'y a rien à opposer à un pas"
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91020",
+   "colonne": "🎯 Bloque",
+   "valeur": "91000"
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "🔒 Verrous",
+   "ligne": "91020",
+   "colonne": "🔎 La preuve",
+   "valeur": "Compté sur le disque et non gravé d'en haut : `bataille2d.js` l. 6393-6431, le chargement du bâti. Chaque maison tient en `x`, `y`, `val`, `etat`, `usage` — et le commentaire l. 6403 dit lui-même de quel point il s'agit : « **LA PORTE, PAS LE CENTRE.** On force un huis, on ne se matérialise pas au milieu du salon ». Ni largeur, ni contour, ni polygone : `n` points de porte rangés dans une grille plate de 40 m. L'action ⚔️ 91020 — « rendre le bâti opposable au pas » — n'a donc aujourd'hui aucun objet auquel s'opposer, et aucune nappe ne le dira à la place de qui ouvre le fichier. Se lèverait en portant l'empreinte au sol depuis la source du bâti (les `_colonnes` livrent déjà `x`, `y`, `porte_x`, `porte_y`, `usage`, `etages` — jamais une largeur), ou à défaut en donnant à chaque maison un rayon tiré de `usage` : mais ce serait un choix, et un choix se dit avant d'être écrit. ⚠ Ce verrou porte le même numéro que l'action qui le réalise, suivant l'usage de l'affaire d'à côté (90310, 90320, 90110)."
+  },
+  {
+   "livre": "affaire-rendre-les-murs-solides",
+   "table": "⚔️ Actions",
+   "ligne": "91030",
+   "colonne": "✅ État",
+   "valeur": "en cours — trois noms posés le 3e, avant que le fer ne grave, avec les mots écartés. (1) **`mur` refusé** : il porte déjà l'enceinte ET la paroi d'une maison dans `bataille2d.js` ; ce qu'on veut opposer est le **bâti**, et l'enceinte arrête déjà — d'où 🎯 91000 renommé « Le bâti arrête ». (2) **`emprise` refusé pour l'empreinte au sol**, bien que ce soit le mot d'architecte et précisément parce que c'en est un : `survival-stack/` le tient 39 fois pour la prise du corps sur l'homme, et c'est le piège exact où la main va tomber. Le mot libre et posé : **`empreinte`**. (3) **`franchir` réservé aux seuils de nombre** (8 emplois sur 11) ; la faute physique se dit **traverser**, et le compte de 🎯 91000 s'appelle les **traversées**. RESTE À NOMMER : le contournement. Je ne le nomme pas aujourd'hui et je dis pourquoi — le code porte `voirie` (le graphe, 24 emplois), `rue` (85), `ruelle` (11) et une grille plate de 40 m sur les portes, et le nom du contournement dépend de celui des deux sur lequel on contourne. J'attends la nappe de Bren (⚔️ 91010) : nommer avant ferait tenir la décision par le mot, et c'est la faute que je viens de payer sur le cinquième fichier."
   }
  ],
  "_depeche": {
   "session": "6dfc61da-2a2e-5250-a76c-5be7a28d3638",
   "date_jeu": "129.4.3",
-  "jetons": 876459,
-  "secondes": 329
+  "jetons": 2081245,
+  "secondes": 437
  },
  "_cahier_verse": true
 }
