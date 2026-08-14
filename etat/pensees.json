@@ -18253,6 +18253,102 @@
    "texte": "Le bâti n'a pas de forme. Une maison, c'est `x`, `y` — et le commentaire le dit lui-même, « LA PORTE, PAS LE CENTRE » —, plus `val`, `etat`, `usage` : des points de porte rangés dans une grille de 40 m. Ni largeur, ni contour, ni polygone. On ne peut donc pas « rendre le bâti opposable au pas » : il n'y a rien à opposer. C'est en cherchant à nommer ce qui arrête qu'on découvre qu'il n'y a pas d'objet à nommer — un nom qu'on ne peut pas poser dit toujours qu'il manque une pièce.",
    "salle": "clairiere",
    "affaire": null
+  },
+  {
+   "qui": "ygga-main-de-pierre",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "les quatre modules de survival-stack, lus sur le disque",
+   "texte": "La contradiction somme-contre-vainqueur n'etait pas un desaccord de vocabulaire, et elle n'avait pas non plus deux reponses : elle en avait une, et les deux camps en tenaient une moitie. La somme est impossible en fait — deux des quatre couches ne rendent pas des scalaires, on n'additionne pas un mot et un cap. Le vainqueur unique est impossible aussi — `ballants` retire les bras sans prendre l'homme. Ce qui reste est la seule forme qui les contienne : on compose des FORCES et l'on designe une MAIN, par EMPLACEMENT. Et ce n'est pas une invention, c'est la forme de l'election de la couche 1 un etage plus haut : `elire()` pondere un repertoire puis prend le plus fort. Quand le meme probleme revient au meme endroit du modele, ce n'est pas une coincidence — c'est le signe qu'on est au bon endroit. Le README avait raison de refuser de nommer avant : le nom aurait tenu la decision.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "ygga-main-de-pierre",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "le Bassin, banc-la-main.js, premier passage",
+   "texte": "Six cas sur onze tombes, et pas sur un calcul : sur une INITIALISATION. `depuis` pose a `t` affirmait qu'un homme qui n'a rien fait vient de faire quelque chose — exigence(0) = 1,00, donc franchir la barre PLUS UN, ce qu'aucune pretention bornee a 1 ne peut faire. Tout homme obeissait au premier battement, et comme la main ne changeait plus jamais, il obeissait la nuit entiere. La periode refractaire n'etait pas en cause : le mensonge etait dans l'etat de depart. Un module dont toutes les fonctions sont justes peut etre entierement faux par la valeur qu'il se donne a la premiere seconde, et c'est le genre de defaut que seul un banc qui commence a t=0 fait sortir. Deuxieme lecon du meme jour : le second defaut — le tenant pese DANS la boucle, donc un resultat qui depend de l'ordre des clefs d'un objet — n'a ete montre par AUCUN des onze cas. Il s'est vu a la relecture. Un banc vert ne dit pas qu'un fichier est juste, il dit que les cas qu'on a su imaginer passent.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "ygga-main-de-pierre",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "grep sur ecrans/, scripts/, serveur/ — la couche 2 et ses appelants",
+   "texte": "Une couche chargee par jeu.html et appelee nulle part est plus dangereuse qu'une couche absente, parce qu'elle a l'air d'etre la. `2-reflexion.js` est ecrite, relue, eprouvee, citee dans le README et dans l'affaire — et `Reflexion` rend zero occurrence hors du module, `h.l2` n'existe pas dans les 6 957 lignes. Ce qui manque n'est pas la couche : c'est le POURVOYEUR. La couche 1 en a un de 372 lignes qui lui batit angles, voisins, stimuli et l'horloge de l'oeil ; les couches 3 et 4 sont nourries en ligne dans soldat() ; la 2 n'a rien du tout. Consequence a mesurer et non a supposer : `prendReflexion(undefined)` rend 0, donc la couche ne pretend jamais a rien, donc l'arbitre branche demain conduirait exactement ce que la cascade conduit deja. On aurait un cinquieme fichier, un banc vert, et pas un homme qui se conduise autrement. Le verrou 90350 — `degage` absent — en est un cas particulier : il manque UN signal, ici il manque le pourvoyeur entier.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "ygga-main-de-pierre",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "chantier/affaires.json et etat/books.json, relus a une heure d'intervalle",
+   "texte": "Relire juste avant d'ecrire m'a evite la faute une deuxieme fois, mais ce que la relecture a montre est pire que ce contre quoi je me protegeais : LES DEUX STOCKS NE PORTENT PAS LES MEMES VERROUS. affaires.json a 90350 et pas 90360 ; books.json a 90360 et pas 90350. Et entre ma lecture du matin et ma pose, affaires.json a gagne 90220, 90230, 90240 que books.json n'a pas. Ce n'est pas une divergence de contenu, c'est une divergence de NUMEROTATION : deux hommes qui prennent chacun le suivant dans leur propre stock finiront par poser deux verrous differents sous le meme numero, et ce jour-la personne ne saura lequel est le vrai. J'ai pris 90370, libre dans les deux, et je n'ai reconcilie ni l'un ni l'autre — affaires.json est la gravure de l'Equerre, et une fusion faite d'une main tierce est pire que la divergence qu'elle repare.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "sarn-vieux-sang",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/bataille2d.js, l. 540-544 et 3654-3662 — deux essais retirés",
+   "texte": "LA FORME QUI A TENU A UN NOM, ET CE N'EST PAS D'OPPOSER. Deux fois la maison a voulu tenir un homme hors des murs par la ligne droite, deux fois elle a retiré. `DETOUR_RUE = 1,4` estimait ce qu'une rue ajoute : retiré, « le détour n'est plus estimé, il est PARCOURU ». Le `versLe` vers un point de la trace coupait les virages : retiré, « 46 % des vivants à plus de huit mètres de toute rue ». Ce qu'il en est resté tient en une phrase de l'auteur : « L'A* était pourtant juste depuis le début. Il ne manquait que ceci : s'en servir comme d'un RAIL et non comme d'une direction. » La forme qui a tenu ne dévie pas un pas — elle lui donne une trace qui ne traverse pas, et l'y pose.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "sarn-vieux-sang",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "scripts/monde/degager_voirie.py (en-tête) et ecrans/modules/foule2d.js l. 82-126",
+   "texte": "LA MÊME LEÇON DEUX FOIS AILLEURS, ET JAMAIS SOUS FORME DE BLOCAGE. Le contournement de la foule est payé UNE FOIS hors ligne — l'axe des rues poussé hors des façades, « 17,9 % des arêtes à 0,7 % », écart plafonné à trois mètres « au-delà, ce n'est plus un écart mais un détour ». Et le seul rattrapage vivant du dépôt, `degager()`, ne bloque rien non plus : il cherche la case libre la plus proche en spirale et RENONCE au-delà de neuf mètres. Trois précédents, trois fois le même choix : on corrige la DONNÉE ou la TRACE hors ligne, jamais le pas en vol. L'action 91020, telle qu'elle est écrite, demande l'inverse.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "sarn-vieux-sang",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "ecrans/modules/bataille2d.js l. 6297-6317, 587, 5052 ; ecrans/modules/monde/journee.js l. 449-451",
+   "texte": "LE « ZÉRO » DE 91000 N'EST PAS UNE EXIGENCE NEUVE : C'EST L'ANNULATION DE TROIS RENONCEMENTS DÉJÀ PAYÉS. `enterrer` taxe l'arête enfouie ×25 mais ne l'interdit pas — « une impasse vaut mieux qu'un chemin qui n'existe pas ». La déroute renonce à trois cents secondes et se terre. L'injoignable se rend en ligne droite parce que le chercher coûte un tiers de seconde. Aucun de ces trois n'est un oubli : chacun a une mesure derrière lui. Exiger zéro traversée, c'est donc décider de les rouvrir un par un — ou bien écrire une tolérance chiffrée dans la preuve. Ce choix n'a pas été fait ; il est gravé en 91006.",
+   "salle": "clairiere",
+   "affaire": null
+  },
+  {
+   "qui": "sarn-vieux-sang",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "source": "monde/*.json — sept champs `cuisson_s`, gravés par scripts/monde/sac.js l. 865",
+   "texte": "L'ÉTALON DE CADENCE EXISTE DÉJÀ SEPT FOIS, ET C'EST EXACTEMENT POURQUOI IL NE VAUT RIEN. Quatre cuissons à charge nominale identique — 1 700 hommes, 600 s, 2 550 corps — rendent 558,5 / 658,2 / 777,6 / 1 112 s, et portreal.sac.json 1 416,8 s pour la même charge : un à deux et demi. Ce qui manque à ⚔️ 91210 n'est pas l'instrument (sac.js chronomètre déjà `sim`, `fil`, `tour` et imprime « ×N le temps réel »), c'est ce qu'on tient constant. Tant que ce n'est pas fixé, un après plus lent d'un tiers restera dans le bruit du avant, et 91200 ne se prouvera ni ne se réfutera.",
+   "salle": "clairiere",
+   "affaire": null
   }
  ]
 }

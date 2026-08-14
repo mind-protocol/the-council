@@ -86270,6 +86270,14 @@
        "90300",
        "Trouvé en nommant le cinquième fichier, compté sur le disque le 3e. `h.l1` se rafraîchit au rythme de l'ŒIL de l'homme dans `ecrans/modules/bataille/corps-adapt.js` (l. 18) ; `h.l3` à la réception d'un ordre, `bataille2d.js` l. 3406, puis une seconde fois l. 4507 pour `deSoiMeme` ; `h.l4` l. 1431 (tempérament), l. 3576 (butin) et l. 4481 (patience). **Cinq appels, trois rythmes, aucun rendez-vous.** Une SOMME s'en serait accommodée en lisant du périmé ; une MAIN qui désigne laquelle des quatre conduit ce geste-ci ne le peut pas — elle départagerait une couche fraîche et trois souvenirs, et l'on ne saurait jamais si l'erreur vient du choix ou de l'âge des sorties. Se lèverait par un point de passe unique, un par homme et par pas, où les quatre sont appelées dans l'ordre avant que rien ne soit conduit. À créer AVANT la première ligne de `5-qui-conduit.js`."
       ]
+     },
+     {
+      "cellules": [
+       "**90370**",
+       "**Rien n'appelle `2-reflexion.js`** — la couche est chargée, l'arbitre l'attend, et personne ne la fait tourner",
+       "90300",
+       "Compté sur le disque le 3e, en branchant `5-la-main.js` : `grep -rn \"Reflexion\" ecrans/ scripts/ serveur/` hors du module lui-même rend **zéro occurrence**, et `h.l2` **n'existe nulle part** dans les 6 957 lignes de `bataille2d.js`. Les trois autres couches ont leur pourvoyeur : la 1 a `bataille/corps-adapt.js`, **372 lignes** qui lui bâtissent angles, voisins, stimuli et l'horloge de l'œil ; les 3 et 4 sont nourries en ligne dans `soldat()` (3406, 4507, 1431, 3576, 4481). **La 2 n'a rien.** Conséquence mesurable et non supposée : `prendReflexion(undefined)` rend 0, donc la couche ne prétend jamais à rien, donc l'arbitre branché demain conduirait **exactement ce que la cascade conduit déjà** — on aurait un cinquième fichier, un banc vert, et pas un homme qui se conduise autrement. Le verrou 90350 (`degage` absent) en est un cas particulier : il manque UN signal ; ici il manque le pourvoyeur entier. Se lèverait par un `bataille/reflexion-adapt.js`, jumeau de `corps-adapt.js`, qui bâtit `degage`, `versLuiX/Y`, `versEuxX/Y`, `alarme`, `trempe` et `epaule` depuis `h`, et pose `h.l2`."
+      ]
      }
     ]
    },
@@ -86351,7 +86359,7 @@
        "90310",
        "Ygga Main-de-Pierre",
        "J−2",
-       "à venir"
+       "fait — `survival-stack/5-la-main.js`, 353 lignes, chargé par `jeu.html` en observation ; banc `banc-la-main.js`, **11 cas, tous tenus**. Tranche la contradiction que le README refusait de nommer : **la somme n'est pas constructible** — la couche 1 rend un MOT, la 2 des nombres et un cap, la 3 des modulations, la 4 des durées ; on n'additionne pas « fuite » et 0,42. **Et le vainqueur unique est faux aussi** : `ballants` retire les bras sans prendre l'homme. D'où la forme — arbitrage **par emplacement** (jambes, bras), chaque couche posant une **prétention** dans [0, 1] composée de ses propres nombres, la plus forte prend. **L'ordre n'est pas un prétendant, c'est le sol** : `barre(l3)` = `lettre` relu sur [0, 1], donc 0,50 pour l'homme ordinaire, et l'appelant retombe dans la cascade quand personne ne la franchit — c'est ce qui rend 90312 progressif. **Aucun tirage** : le départage se fait par comparaison et par période réfractaire `exigence(tenu)`, dont la constante de temps est prise dans `M.SEJOUR` (0,20 s, la dérobade) et non inventée. Le Bassin a pris **6 cas sur 11** au premier passage : `depuis` initialisé à `t` faisait croire à chaque homme que son ordre venait de prendre la main, donc `exigence(0)` à 1,00, donc barre + 1 — infranchissable, tout homme obéissait la nuit entière. Corrigé en `-Infinity` : un homme qui entre en scène obéit depuis toujours, il n'a pas de geste à protéger. Second défaut trouvé à la relecture et qu'aucun de mes cas ne montrait : le tenant était pesé DANS la boucle, donc le résultat dépendait de l'ordre des clefs d'un objet. Sorti de la boucle. Gravé au passage : `h.l1.pilote` → `h.l1.corpsAgi` et `corpsPilote` → `corpsAgi` — le nom posé par Wenna (90320), la main du Fer, `bataille2d.js` et `carte-ville.js`."
       ]
      },
      {
@@ -86598,6 +86606,22 @@
        "91000",
        "Compté sur le disque et non gravé d'en haut : `bataille2d.js` l. 6393-6431, le chargement du bâti. Chaque maison tient en `x`, `y`, `val`, `etat`, `usage` — et le commentaire l. 6403 dit lui-même de quel point il s'agit : « **LA PORTE, PAS LE CENTRE.** On force un huis, on ne se matérialise pas au milieu du salon ». Ni largeur, ni contour, ni polygone : `n` points de porte rangés dans une grille plate de 40 m. L'action ⚔️ 91020 — « rendre le bâti opposable au pas » — n'a donc aujourd'hui aucun objet auquel s'opposer, et aucune nappe ne le dira à la place de qui ouvre le fichier. Se lèverait en portant l'empreinte au sol depuis la source du bâti (les `_colonnes` livrent déjà `x`, `y`, `porte_x`, `porte_y`, `usage`, `etages` — jamais une largeur), ou à défaut en donnant à chaque maison un rayon tiré de `usage` : mais ce serait un choix, et un choix se dit avant d'être écrit. ⚠ Ce verrou porte le même numéro que l'action qui le réalise, suivant l'usage de l'affaire d'à côté (90310, 90320, 90110)."
       ]
+     },
+     {
+      "cellules": [
+       "**91006**",
+       "Le « zéro traversée » de 91000 contredit TROIS renoncements déjà écrits, mesurés et assumés dans le code",
+       "91000",
+       "Trois fois la maison a écrit noir sur blanc qu'un homme passerait au travers plutôt que de ne pas arriver, et les trois tiennent encore. (1) `enterrer` (bataille2d.js l. 6297-6317) rend les arêtes sous les toits vingt-cinq fois plus chères — un COÛT, pas une interdiction : « l'A* les prendra quand même s'il n'y a rien d'autre — ce qui est le bon comportement : une impasse vaut mieux qu'un chemin qui n'existe pas ». Mesuré : 1,4 % du réseau court sous le bâti, trente-cinq arêtes enfouies aux trois quarts. (2) La déroute renonce : `RENTRE_MAX = 300` (l. 587) « au-delà, on renonce et l'on se terre où l'on est », et le dernier bout se fait droit (l. 5052) « le carrefour n'est pas la porte, et l'on finit toujours par traverser sa rue ». (3) Un point injoignable se rend en ligne droite (journee.js l. 449-451), parce que chercher coûte un tiers de seconde. La preuve de 91000 exige zéro. Ou bien elle prend une tolérance chiffrée, ou bien ces trois-là tombent — et chacun a été payé une fois."
+      ]
+     },
+     {
+      "cellules": [
+       "**91007**",
+       "L'étalon de cadence n'est pas prenable en l'état : la même charge cuit de 558 s à 1 417 s",
+       "91200",
+       "Compté sur disque, sept manifestes portent `cuisson_s` (gravé par sac.js l. 865). QUATRE cuissons ont exactement la même charge nominale — 1 700 hommes, 600 s de bataille, 2 550 corps — et rendent 558,5 s (`monde/essai.reference.json`), 658,2 s (`portreal.essai-inertie.json`), 777,6 s (`essai.reserve.json`), 1 112 s (`essai.releve.json`) ; `portreal.sac.json`, même charge encore, rend 1 416,8 s. De un à deux et demi. La preuve de 91200 dit « ne tombe pas sous celle d'aujourd'hui » : tant qu'aucun protocole n'est fixé, un après plus lent d'un tiers reste dans le bruit du avant, et la mesure ne conclura rien. Le chiffre existe déjà, c'est le PROTOCOLE qui manque. Se lèverait par ⚔️ 91210, en fixant d'abord ce qui est tenu constant, puis en cuisant trois fois la même chose."
+      ]
      }
     ]
    },
@@ -86629,7 +86653,7 @@
        "91000",
        "Sarn Vieux-Sang",
        "J−4",
-       "à venir"
+       "fait le 3e — LA FORME QUI A TENU A UN NOM, ET CE N'EST PAS D'OPPOSER. Quatre fois la maison a voulu tenir un homme hors des murs. Deux formes ont été tentées PUIS RETIRÉES, avec leur prix écrit. (1) **Le détour ESTIMÉ** : `DETOUR_RUE = 1,4` — « ce qu'on supposait qu'une rue ajoute à la ligne droite » — retiré, et la parenthèse est restée l. 540-544 : « le détour n'est plus estimé, il est PARCOURU, et la distance qu'il annonce est celle qu'il a réellement faite ». (2) **La visée d'un point sur le chemin** : c'était un `versLe` vers un point de la trace, retiré l. 3654-3662 pour deux raisons dont la seconde est la nôtre — « viser un point c'est aller EN LIGNE DROITE vers lui, donc couper tous les virages, et sur mille trois cents mètres de rues tordues, marcher à travers les maisons. **Mesuré sur une cuisson : 46 % des vivants à plus de huit mètres de toute rue.** » Et la conclusion, qui est le précédent tout entier : « **L'A* était pourtant juste depuis le début. Il ne manquait que ceci : s'en servir comme d'un RAIL et non comme d'une direction.** » CE QU'IL EN EST RESTÉ : le rail, où l'homme n'est pas dévié mais POSÉ (l. 3675) — et il n'a jamais couvert que trois branches sur vingt-deux. CE QUE ÇA DIT DE ⚔️ 91020 : « rendre le bâti opposable au pas » demande une opposition, c'est-à-dire une correction de position ; or 🔒 91003 établit qu'une correction est effacée au battement suivant sur les trois branches qui marchent déjà droit. La forme qui a tenu ne corrige pas un pas : elle lui donne une trace qui ne traverse pas, et l'y pose. AILLEURS, LA MÊME LEÇON DEUX FOIS : le contournement de la foule est payé UNE FOIS hors ligne (`scripts/monde/degager_voirie.py`, l'axe des rues poussé hors des façades — « 17,9 % des arêtes à 0,7 % », écart plafonné à 3 m) au lieu d'être refait à chaque trajet ; et le seul rattrapage vivant du dépôt, `degager()` dans `foule2d.js` l. 112-126, ne bloque rien non plus — il cherche la case libre la plus proche en spirale, et **renonce au-delà de neuf mètres** (`POUSSEE = 9`). Deux verrous remontés : 🔒 91006 et 🔒 91007."
       ]
      },
      {
