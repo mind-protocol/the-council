@@ -34,6 +34,7 @@ RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BOOKS = os.path.join(RACINE, "etat", "books.json")
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import ajouter  # noqa: E402  — on réutilise son écriture atomique et sa fenêtre étroite
+import bibliotheque  # noqa: E402
 
 
 def charger(p):
@@ -96,7 +97,7 @@ def etagere(books, filtre=None):
 
 
 def main(argv):
-    books = charger(BOOKS)
+    books = bibliotheque.charger(os.path.join(RACINE, "etat"))
     if not isinstance(books, list):
         raise SystemExit("etat/books.json ne porte pas une liste.")
 
@@ -179,7 +180,8 @@ def main(argv):
         return
 
     # --- la fenêtre étroite : relire, muter, réécrire dans la même seconde ---
-    frais = charger(BOOKS)
+    session_livres = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+    frais = session_livres.livres
     cible = next((b for b in frais if b.get("id") == livre_id), None)
     if cible is None:
         raise SystemExit("le livre a disparu de books.json entre-temps : rien écrit.")
@@ -192,7 +194,7 @@ def main(argv):
     quand_maj = horloge(donneur or vers)
     if quand_maj:
         cible["date_maj"] = dict(quand_maj)
-    ajouter.ecrire_atomique(BOOKS, frais)
+    session_livres.sauver()
     print("\nbooks.json : écrit.")
 
     # L'acte. Un volume qui change de main devant témoins est un fait, et c'est

@@ -25,6 +25,17 @@
 #     python scripts/verser_cahier.py --vraiment      # ecrit
 import argparse, glob, io, json, os, re, sys, tempfile, unicodedata
 
+import bibliotheque
+
+# La console Windows est en cp1252 : un embleme ou un tiret cadratin dans le
+# rapport tuait le script APRES le calcul, et le meme plantage attendait sur
+# --vraiment. Un rapport ne doit jamais pouvoir faire tomber le versement.
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+except Exception:
+    pass
+
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BOOKS = os.path.join(RACINE, "etat", "books.json")
 RAPPORTS = os.path.join(RACINE, "etat", "rapports")
@@ -190,7 +201,8 @@ def main():
                     help="reprendre un rapport deja verse (double les lignes neuves)")
     args = ap.parse_args()
 
-    books = lire(BOOKS)
+    session_livres = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+    books = session_livres.livres
     fichiers = sorted(glob.glob(os.path.join(RAPPORTS, "*.json")))
 
     poses, refus, differes = [], [], []
@@ -335,7 +347,10 @@ def main():
                           % court(e.get("valeur"), 90))
 
     if args.vraiment and poses:
-        ecrire(BOOKS, books)
+        try:
+            session_livres.sauver()
+        except bibliotheque.BibliothequeModifiee as exc:
+            raise SystemExit(u"REFUS : %s" % exc)
         for (chemin_rap, rap) in traites:
             rap["_cahier_verse"] = True
             ecrire(chemin_rap, rap)

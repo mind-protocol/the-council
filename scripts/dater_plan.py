@@ -31,12 +31,13 @@ DEUX PLUMES SUR CE FICHIER. `etat/books.json` est ecrit par la session de jeu
 et par les agents de couverture. Le script relit le fichier juste avant
 d'ecrire et refuse si son empreinte a bouge depuis la lecture.
 """
-import io, json, os, re, sys, shutil, datetime, hashlib
+import io, os, re, sys
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RACINE, "scripts"))
 import couverture as C                     # noqa: E402
 import jours_relatifs as JR                # noqa: E402
+import bibliotheque                        # noqa: E402
 
 BOOKS = os.path.join(RACINE, "etat", "books.json")
 COL_JOUR = u"\U0001F4C5 Jour dû"
@@ -46,10 +47,6 @@ try:
     sys.stdout.reconfigure(encoding="utf-8")
 except Exception:
     pass
-
-
-def empreinte(chemin):
-    return hashlib.sha1(io.open(chemin, "rb").read()).hexdigest()
 
 
 def entetes(cols):
@@ -63,7 +60,8 @@ def entetes(cols):
 
 
 def passer(ecrire=False, filtre=None):
-    livres = json.load(io.open(BOOKS, encoding="utf-8"))
+    session_livres = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+    livres = session_livres.livres
     portees, deja, clos, muettes, colonnes = [], 0, 0, 0, 0
     for livre in livres:
         for t in (livre.get("tables") or []):
@@ -111,17 +109,10 @@ def passer(ecrire=False, filtre=None):
                 portees.append((num, C.sans_emoji(C.nu(livre.get("titre"))),
                                 cel[i_jour], source))
     if ecrire:
-        # deux plumes : on refuse d'ecrire par-dessus ce qu'un autre a pose
-        # pendant qu'on reflechissait.
-        if empreinte(BOOKS) != EMPREINTE0:
-            raise SystemExit(u"REFUS : etat/books.json a bouge depuis la lecture. "
-                             u"Relancer a blanc, relire, recommencer.")
-        ts = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-        shutil.copy(BOOKS, BOOKS + ".avant-dater-" + ts)
-        tmp = BOOKS + ".tmp"
-        with io.open(tmp, "w", encoding="utf-8") as f:
-            f.write(json.dumps(livres, ensure_ascii=False, indent=1))
-        os.replace(tmp, BOOKS)
+        try:
+            session_livres.sauver()
+        except bibliotheque.BibliothequeModifiee as exc:
+            raise SystemExit(u"REFUS : %s" % exc)
     return portees, deja, clos, muettes, colonnes
 
 
@@ -133,8 +124,6 @@ if __name__ == "__main__":
     vraiment = "--vraiment" in args
     detail = "--detail" in args
     filtre = args[args.index("--affaire") + 1].lower() if "--affaire" in args else None
-    EMPREINTE0 = empreinte(BOOKS)
-
     portees, deja, clos, muettes, colonnes = passer(vraiment, filtre)
     sys.stdout.write(
         u"%s — %d date(s) relative(s) portée(s) · %d cellule(s) déjà "
@@ -151,5 +140,4 @@ if __name__ == "__main__":
             for n, v, s in par[aff]:
                 sys.stdout.write(u"      %-8s %-18s <- %s\n" % (n, v, s))
     if not vraiment:
-        sys.stdout.write(u"\n  → --vraiment pour écrire (sauvegarde horodatée "
-                         u"etat/books.json.avant-dater-…)\n")
+        sys.stdout.write(u"\n  → --vraiment pour écrire par la bibliothèque.\n")

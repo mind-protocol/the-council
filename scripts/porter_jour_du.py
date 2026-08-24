@@ -17,11 +17,12 @@ note, ou elles sont justes. On n'ecrase jamais un `Jour dû` deja rempli.
     python scripts/porter_jour_du.py              a blanc
     python scripts/porter_jour_du.py --vraiment   ecrit, avec sauvegarde
 """
-import io, json, os, re, sys, shutil, datetime
+import io, os, re, sys
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RACINE, "scripts"))
 import couverture as C
+import bibliotheque
 
 BOOKS = os.path.join(RACINE, "etat", "books.json")
 COL_JOUR = u"📅 Jour dû"
@@ -43,7 +44,8 @@ def trouver(note):
 
 
 def passer(ecrire=False):
-    livres = json.load(io.open(BOOKS, encoding="utf-8"))
+    session_livres = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+    livres = session_livres.livres
     portees, deja, sans, colonnes, clos = [], 0, 0, 0, 0
     for livre in livres:
         for t in (livre.get("tables") or []):
@@ -87,12 +89,7 @@ def passer(ecrire=False):
                 c[i_jour] = d
                 portees.append((num.group(1), C.nu(livre.get("titre")), d))
     if ecrire:
-        ts = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-        shutil.copy(BOOKS, BOOKS + ".avant-jourdu-" + ts)
-        tmp = BOOKS + ".tmp"
-        with io.open(tmp, "w", encoding="utf-8") as f:
-            f.write(json.dumps(livres, ensure_ascii=False, indent=1))
-        os.replace(tmp, BOOKS)
+        session_livres.sauver()
     return portees, deja, sans, colonnes, clos
 
 
