@@ -28,6 +28,8 @@ import json
 import os
 import sys
 
+import bibliotheque
+
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -35,6 +37,11 @@ ETAT = os.path.join(RACINE, "etat")
 
 
 def _charger(nom, defaut):
+    if nom == "books.json":
+        try:
+            return bibliotheque.charger(ETAT)
+        except FileNotFoundError:
+            return defaut
     p = os.path.join(ETAT, nom)
     if not os.path.exists(p):
         return defaut

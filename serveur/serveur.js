@@ -10,6 +10,7 @@ const path = require("path");
 const os = require("os");
 const childProcess = require("child_process");
 const voix = require("./voix");
+const bibliotheque = require("./bibliotheque");
 // Ce qu'un marcheur perçoit d'une bataille cuite. Muet tant qu'il n'y a pas de
 // `etat/bataille.json` — c'est-à-dire tout le temps, sauf les soirs où il y en
 // a une.
@@ -1711,15 +1712,16 @@ const cachePlanModele = new Map();
 // bilan, à la criticité et à l'écran.
 function planModele(vueDe) {
   const siege = vueDe || "__defaut__";
-  const entrees = [path.join(RACINE, "etat", "books.json"),
+  const entrees = bibliotheque.cheminsSource(RACINE).concat([
                    path.join(RACINE, "etat", "boites.json"),
                    path.join(RACINE, "etat", "personnages.json"),
                    path.join(RACINE, "etat", "journal.json"),
                    path.join(RACINE, "etat", "actes.json"),
                    path.join(RACINE, "etat", "evenements.json"),
+                   path.join(RACINE, "scripts", "bibliotheque.py"),
                    path.join(RACINE, "scripts", "plan_modele.py"),
                    path.join(RACINE, "scripts", "livre.py"),
-                   path.join(RACINE, "scripts", "couverture.py")];
+                   path.join(RACINE, "scripts", "couverture.py")]);
   let cle = "";
   entrees.forEach((f) => {
     try { const s = fs.statSync(f); cle += s.size + ":" + s.mtimeMs + "|"; }
@@ -1747,14 +1749,15 @@ function criticite(vueDe) {
   // note portee de 5 a 8 change tous les scores en aval. L'oublier de la clef
   // donnait un ecran qui ne bougeait pas d'un dixieme apres une renotation, et
   // rien pour le dire — le meme piege que le script oublie, une porte plus loin.
-  const cles = [path.join(RACINE, "etat", "books.json"),
+  const cles = bibliotheque.cheminsSource(RACINE).concat([
                 path.join(RACINE, "etat", "poids-etats.json"),
                 path.join(RACINE, "scripts", "criticite.py"),
+                path.join(RACINE, "scripts", "bibliotheque.py"),
                 path.join(RACINE, "scripts", "couverture.py"),
                 path.join(RACINE, "scripts", "etat_du_plan.py"),
                 path.join(RACINE, "scripts", "plan_modele.py"),
                 path.join(RACINE, "etat", "boites.json"),
-                path.join(RACINE, "etat", "personnages.json")];
+                path.join(RACINE, "etat", "personnages.json")]);
   let cle = "";
   for (const f of cles) {
     try { const s = fs.statSync(f); cle += s.size + ":" + s.mtimeMs + "|"; }
@@ -3276,8 +3279,7 @@ http
       // page annoncer qu'il n'y a rien à lire.
       if (url === "/books") {
         try {
-          const brut = JSON.parse(fs.readFileSync(path.join(RACINE, "etat", "books.json"), "utf-8"));
-          const tous = Array.isArray(brut) ? brut : [];
+          const tous = bibliotheque.charger(RACINE);
           const moi = monPersonnage(req, url);
           if (!moi && roster()) {
             return envoyer(res, 200, JSON.stringify({ books: [], boites: [], siege: false }));
@@ -3424,8 +3426,7 @@ http
           // siens. Même tri que l'étagère, et pour la même raison — un plateau
           // qu'on ne peut pas ouvrir dans les livres est un plan qui n'est pas
           // le sien.
-          const brut = JSON.parse(
-            fs.readFileSync(path.join(RACINE, "etat", "books.json"), "utf-8"));
+          const brut = bibliotheque.charger(RACINE);
           const moi = monPersonnage(req, url);
           if (!moi && roster()) {
             return envoyer(res, 200, JSON.stringify({ affaires: [] }));

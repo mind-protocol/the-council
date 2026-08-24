@@ -17,6 +17,8 @@
 #     python scripts/couverture.py --verifier   dit ce qui bougerait, n'ecrit rien
 import io, json, os, re, sys, unicodedata
 
+import bibliotheque
+
 # La console Windows est en cp1252 : une fleche ou un embleme dans un
 # message de progression tuait le script APRES qu'il eut ecrit une partie
 # de son travail. Le rapport ne doit jamais pouvoir faire tomber le calcul.
@@ -161,7 +163,7 @@ def charger(livres=None):
     La liste fournie n'est jamais modifiee sur le disque.
     """
     if livres is None:
-        livres = json.load(io.open(LIVRES, encoding="utf-8"))
+        livres = bibliotheque.charger(os.path.join(RACINE, "etat"))
     pieces = {}          # numero -> {genre, nom, affaire, vers[], moyens[], office, dep[], etat, ou}
     inventaire = {}      # M01 / O03 -> nom
     affaires = []        # les livres qui sont des affaires
@@ -848,7 +850,7 @@ def ecart_registres(livres=None):
     écrit dans l'index. On ne peut pas distinguer une retouche d'une divergence
     ancienne par le calcul — on peut rendre la liste visible, et c'est assez."""
     if livres is None:
-        livres = json.load(io.open(LIVRES, encoding="utf-8"))
+        livres = bibliotheque.charger(os.path.join(RACINE, "etat"))
     ecarts, divergences = [], []
     sorties = deriver(livres)
     for b in livres:
