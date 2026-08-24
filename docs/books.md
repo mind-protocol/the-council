@@ -1,4 +1,4 @@
-# Les livres — `etat/books.json`
+# Les livres — `etat/books/`
 
 Un **livre** est un OBJET du monde : un registre posé sur une table, un carnet
 qu'on porte sous le bras. Il porte du JSON, il se consulte à l'écran sous
@@ -11,13 +11,21 @@ Ce fichier est technique — comme `routines.json`, `presence.json` et
 jamais. Le format ci-dessous est celui que lit `ecrans/modules/books.js`, et
 **lui seul**. Il est vérifié par `python scripts/tick.py --verifier`.
 
-## Le fichier
+## Le stockage
 
-Un tableau, un objet par livre. Rien d'autre à la racine.
+Chaque volume vit dans `etat/books/<id>.json`. `etat/books/_ordre.json` est la
+liste ordonnée de leurs identifiants et la seule autorité sur l'ordre de
+l'étagère. Le nom du fichier et le champ `id` doivent être identiques.
+
+Le vieux tableau `etat/books.json` reste lisible uniquement tant que le
+manifeste `_ordre.json` n'existe pas. Dès que ce manifeste est présent, le
+dossier est l'unique source de vérité : une copie partielle ou un retour
+silencieux au monolithe est interdit.
+
+Un fichier de volume porte un objet, sans tableau englobant :
 
 ```json
-[
-  {
+{
     "id": "registre-des-plis",
     "lieu_id": "peyredragon",
     "salle_id": "table-peinte",
@@ -29,8 +37,7 @@ Un tableau, un objet par livre. Rien d'autre à la racine.
       { "cellules": ["Lettre", "Rosby", "…"], "note": "Deux plis envoyés." }
     ],
     "pages": ["Du texte suivi, quand le tableau ne suffit pas."]
-  }
-]
+}
 ```
 
 ## Les clés — il n'y en a pas d'autres
