@@ -34,6 +34,10 @@ try {
   quatre.livres.find((x) => x.id === "a").n = 4;
   trois.sauver();
   assert.throws(() => quatre.sauver(), /volume modifié/);
+  assert.deepStrictEqual(
+    fs.readdirSync(path.join(racine, "etat", "books"))
+      .filter((n) => n.endsWith(".tmp") || n.startsWith(".bibliotheque-")),
+    []);
 
   fs.unlinkSync(path.join(racine, "etat", "books", "b.json"));
   assert.throws(() => B.charger(racine), /volume absent/);

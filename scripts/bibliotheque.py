@@ -12,6 +12,7 @@ import copy
 import json
 import os
 import re
+import tempfile
 
 
 NOM_ID = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
@@ -105,10 +106,16 @@ def _index(livres):
 
 def _ecrire_atomique(chemin, valeur):
     os.makedirs(os.path.dirname(chemin), exist_ok=True)
-    temporaire = chemin + ".tmp"
-    with io.open(temporaire, "w", encoding="utf-8") as f:
-        json.dump(valeur, f, ensure_ascii=False, indent=1)
-    os.replace(temporaire, chemin)
+    fd, temporaire = tempfile.mkstemp(
+        dir=os.path.dirname(chemin),
+        prefix=".%s." % os.path.basename(chemin), suffix=".tmp")
+    try:
+        with io.open(fd, "w", encoding="utf-8", closefd=True) as f:
+            json.dump(valeur, f, ensure_ascii=False, indent=1)
+        os.replace(temporaire, chemin)
+    finally:
+        if os.path.exists(temporaire):
+            os.remove(temporaire)
 
 
 class Session:

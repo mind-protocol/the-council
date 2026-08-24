@@ -77,6 +77,17 @@ class BibliothequeTest(unittest.TestCase):
             with self.assertRaisesRegex(B.BibliothequeModifiee, "a changé"):
                 deux.sauver()
 
+    def test_une_ecriture_ne_laisse_pas_de_temporaire_partage(self):
+        with tempfile.TemporaryDirectory() as etat:
+            ecrire_json(os.path.join(etat, "books", "_ordre.json"), ["a"])
+            ecrire_json(os.path.join(etat, "books", "a.json"), {"id": "a", "n": 0})
+            session = B.ouvrir(etat)
+            session.livres[0]["n"] = 1
+            session.sauver()
+            restes = [n for n in os.listdir(os.path.join(etat, "books"))
+                      if n.endswith(".tmp") or n.startswith(".bibliotheque-")]
+            self.assertEqual([], restes)
+
 
 if __name__ == "__main__":
     unittest.main()

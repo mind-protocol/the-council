@@ -71,9 +71,17 @@ function egaux(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
 
 function ecrireAtomique(fichier, valeur) {
   fs.mkdirSync(path.dirname(fichier), { recursive: true });
-  const temporaire = fichier + ".tmp";
-  fs.writeFileSync(temporaire, JSON.stringify(valeur, null, 1), "utf-8");
-  fs.renameSync(temporaire, fichier);
+  // Un nom fixe (`volume.json.tmp`) permettait à deux processus de remplir le
+  // même temporaire avant que le contrôle optimiste tranche. Le répertoire
+  // unique reste sur le même disque, donc le renommage final reste atomique.
+  const chantier = fs.mkdtempSync(path.join(path.dirname(fichier), ".bibliotheque-"));
+  const temporaire = path.join(chantier, path.basename(fichier) + ".tmp");
+  try {
+    fs.writeFileSync(temporaire, JSON.stringify(valeur, null, 1), "utf-8");
+    fs.renameSync(temporaire, fichier);
+  } finally {
+    fs.rmSync(chantier, { recursive: true, force: true });
+  }
 }
 
 function ouvrir(racine) {
