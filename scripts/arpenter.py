@@ -30,6 +30,8 @@ partir d'un point où le personnage n'est pas, sauf à le lui dire (`--sans-moi`
 """
 import io, json, math, os, sys, heapq, collections
 
+import bibliotheque
+
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GRAPHE = os.path.join(RACINE, "monde", "portreal.graph.json")
 BATI = os.path.join(RACINE, "monde", "portreal.bati.json")
@@ -428,8 +430,8 @@ def main():
 
     titre = opt("--titre") or ("Le levé de %s à %s" % (d0["nom"], d1["nom"]))
     porteur = opt("--porteur", "marlo-vasse")
-    B = json.load(io.open(BOOKS, encoding="utf-8"))
-    L = B if isinstance(B, list) else B["livres"]
+    session_livres = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+    L = session_livres.livres
     neuf = {
         "id": livre, "lieu_id": "port-real", "acteur_id": porteur, "prive": True,
         "titre": titre,
@@ -443,11 +445,8 @@ def main():
                   "façades n'y est pas, et l'oublier serait la seule façon de "
                   "s'en servir de travers."],
     }
-    L = [b for b in L if b.get("id") != livre] + [neuf]
-    if isinstance(B, list): B = L
-    else: B["livres"] = L
-    io.open(BOOKS, "w", encoding="utf-8").write(
-        json.dumps(B, ensure_ascii=False, indent=2))
+    L[:] = [b for b in L if b.get("id") != livre] + [neuf]
+    session_livres.sauver()
     print("  écrit dans etat/books.json : %s" % livre)
 
 

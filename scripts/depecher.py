@@ -68,6 +68,8 @@ import tempfile
 import time
 import uuid
 
+import bibliotheque
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import livre  # le tri des volumes vit la-bas, et nulle part ailleurs
 import affecter  # LE resolveur d'adresses : on ne relit plus `xyz` a la main
@@ -239,6 +241,8 @@ def brief_de(qui):
 
 
 def _liste_etat(nom, cle):
+    if nom == "books.json":
+        return bibliotheque.charger(ETAT)
     donnees = json.loads(lire(os.path.join(ETAT, nom), "[]"))
     if isinstance(donnees, dict):
         donnees = donnees.get(cle) or []

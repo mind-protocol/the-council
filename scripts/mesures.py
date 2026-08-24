@@ -30,6 +30,8 @@ import re
 import sys
 import unicodedata
 
+import bibliotheque
+
 racine = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 livres_json = os.path.join(racine, "etat", "books.json")
 mains_json = os.path.join(racine, "etat", "mains.json")
@@ -105,11 +107,7 @@ def tables_de(livre):
 
 # ─────────────────────────────────────────────── lire l'etat
 def charger_livres():
-    with io.open(livres_json, encoding="utf-8") as f:
-        d = json.load(f)
-    if isinstance(d, dict):
-        d = d.get("books") or d.get("livres") or []
-    return d if isinstance(d, list) else []
+    return bibliotheque.charger(os.path.join(racine, "etat"))
 
 
 def charger_mains():

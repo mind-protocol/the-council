@@ -11,6 +11,8 @@ import os
 import re
 import sys
 
+import bibliotheque
+
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SORTIE = os.path.join(RACINE, "export")
 ID = "aurore-inchauspe"
@@ -172,7 +174,7 @@ ecrire("07-relations.txt", "AURORE — ses relations", [
 ])
 
 # ---------------------------------------------------------------- 08 livres
-books = lire("etat/books.json") or []
+books = bibliotheque.charger(os.path.join(RACINE, "etat"))
 siens = [b for b in books if b.get("acteur_id") == ID]
 lanomment = [b for b in books if touche(b) and b not in siens]
 

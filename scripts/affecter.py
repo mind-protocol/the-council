@@ -75,6 +75,8 @@ Peyredragon n'ont rien à voir l'un avec l'autre.
 """
 import io, json, math, os, sys, tempfile
 
+import bibliotheque
+
 # La console de Windows est en cp1252 et le script parle avec des flèches.
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
@@ -343,9 +345,8 @@ def identifiants(genre):
             return {x["id"] for x in (P if isinstance(P, list)
                                       else P.get("personnages", []))}
         if genre == "livre":
-            B = json.load(io.open(BOOKS, encoding="utf-8"))
-            return {x["id"] for x in (B if isinstance(B, list)
-                                      else B.get("livres", []))}
+            return {x["id"] for x in bibliotheque.charger(
+                os.path.join(RACINE, "etat"))}
         if genre == "acteur":
             V = json.load(io.open(VILLE, encoding="utf-8"))
             return {x["id"] for x in V.get("acteurs", []) if x.get("id")}

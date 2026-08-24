@@ -19,6 +19,8 @@
 # de faire parler quelqu'un.
 import io, json, os, re, sys, unicodedata
 
+import bibliotheque
+
 # La console Windows est en cp1252 : un seul caractere abime dans une parole
 # (un `�` herite d'une vieille ecriture) tuait le script en plein milieu,
 # et le dossier s'arretait AVANT ses dernieres sections sans rien dire. C'est
@@ -47,6 +49,8 @@ def sans_accents(t):
 
 
 def charger(nom):
+    if nom == "books.json":
+        return bibliotheque.charger(etat)
     p = os.path.join(etat, nom)
     if not os.path.exists(p):
         return []

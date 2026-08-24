@@ -10,6 +10,8 @@
 #     python scripts/exporter_plan.py --sortie <dossier>
 import io, json, os, re, sys, unicodedata
 
+import bibliotheque
+
 racine = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 BOITES_DU_PLAN = ("boite-grand-plan", "boite-sujets")
@@ -144,8 +146,7 @@ def main():
         sortie = os.path.join(racine, sortie)
     os.makedirs(sortie, exist_ok=True)
 
-    d = json.load(io.open(os.path.join(racine, "etat", "books.json"), encoding="utf-8"))
-    livres = d["books"] if isinstance(d, dict) else d
+    livres = bibliotheque.charger(os.path.join(racine, "etat"))
 
     if tout:
         choisis = [b for b in livres if b.get("type") == "plan"]

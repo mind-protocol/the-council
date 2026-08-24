@@ -19,6 +19,8 @@
 #     python scripts/nappe.py --sortie ecrans/nappes
 import io, json, os, sys, unicodedata
 
+import bibliotheque
+
 racine = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # ─────────────────────────────────────────────── lecture des registres
@@ -54,8 +56,8 @@ def col(livre, entete):
 
 
 def charger():
-    livres = {b["id"]: b for b in json.load(io.open(
-        os.path.join(racine, "etat", "books.json"), encoding="utf-8"))}
+    livres = {b["id"]: b for b in bibliotheque.charger(
+        os.path.join(racine, "etat"))}
     pieces, inventaire = {}, {}
 
     for genre, (bid, cnum, cnom, cvers) in REGISTRES.items():
