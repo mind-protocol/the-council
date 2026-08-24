@@ -1702,8 +1702,42 @@ function prevoirActivations() {
 // coute une seconde et demie et que la page le redemande a chaque ouverture de
 // volume. Une seconde et demie une fois par ecriture du plan, c'est gratuit ;
 // une fois par clic, c'est une page qui rame.
-let cacheCriticite = null;
-function criticite() {
+const cacheCriticite = new Map();
+const cachePlanModele = new Map();
+
+// LE PÉRIMÈTRE DU PLAN VIENT DE PYTHON. L'échiquier garde son rendu détaillé
+// en JavaScript, mais il ne redéfinit plus ce qu'est une affaire ni ce que ce
+// siège peut voir : `plan_modele.py` est la porte commune aux rapports, au
+// bilan, à la criticité et à l'écran.
+function planModele(vueDe) {
+  const siege = vueDe || "__defaut__";
+  const entrees = [path.join(RACINE, "etat", "books.json"),
+                   path.join(RACINE, "etat", "boites.json"),
+                   path.join(RACINE, "etat", "personnages.json"),
+                   path.join(RACINE, "etat", "journal.json"),
+                   path.join(RACINE, "etat", "actes.json"),
+                   path.join(RACINE, "etat", "evenements.json"),
+                   path.join(RACINE, "scripts", "plan_modele.py"),
+                   path.join(RACINE, "scripts", "livre.py"),
+                   path.join(RACINE, "scripts", "couverture.py")];
+  let cle = "";
+  entrees.forEach((f) => {
+    try { const s = fs.statSync(f); cle += s.size + ":" + s.mtimeMs + "|"; }
+    catch (e) { cle += "?|"; }
+  });
+  const cache = cachePlanModele.get(siege);
+  if (cache && cache.cle === cle) return cache.valeur;
+  const valeur = JSON.parse(childProcess.execFileSync("python",
+    [path.join(RACINE, "scripts", "plan_modele.py"), "--json"].concat(
+      vueDe ? ["--vue-de", vueDe] : []),
+    { cwd: RACINE, encoding: "utf-8", timeout: 30000,
+      windowsHide: true, maxBuffer: 8 * 1024 * 1024,
+      env: Object.assign({}, process.env, { PYTHONIOENCODING: "utf-8" }) }));
+  cachePlanModele.set(siege, { cle, valeur });
+  return valeur;
+}
+
+function criticite(vueDe) {
   // LA CLE PORTE AUSSI LE SCRIPT, et l'oublier a coute une demi-heure : on
   // ajoute une sortie au calcul, on recharge la page, et l'on relit le cache
   // d'avant sans qu'aucune erreur ne le dise. Un cache dont la clef ne couvre
@@ -1717,24 +1751,30 @@ function criticite() {
                 path.join(RACINE, "etat", "poids-etats.json"),
                 path.join(RACINE, "scripts", "criticite.py"),
                 path.join(RACINE, "scripts", "couverture.py"),
-                path.join(RACINE, "scripts", "etat_du_plan.py")];
+                path.join(RACINE, "scripts", "etat_du_plan.py"),
+                path.join(RACINE, "scripts", "plan_modele.py"),
+                path.join(RACINE, "etat", "boites.json"),
+                path.join(RACINE, "etat", "personnages.json")];
   let cle = "";
   for (const f of cles) {
     try { const s = fs.statSync(f); cle += s.size + ":" + s.mtimeMs + "|"; }
     catch (e) { cle += "?|"; }
   }
-  if (cacheCriticite && cacheCriticite.cle === cle) return cacheCriticite.valeur;
+  const siege = vueDe || "__defaut__";
+  const cache = cacheCriticite.get(siege);
+  if (cache && cache.cle === cle) return cache.valeur;
   let valeur;
   try {
     valeur = JSON.parse(childProcess.execFileSync("python",
-      [path.join(RACINE, "scripts", "criticite.py"), "--json"],
+      [path.join(RACINE, "scripts", "criticite.py"), "--json"].concat(
+        vueDe ? ["--vue-de", vueDe] : []),
       { cwd: RACINE, encoding: "utf-8", timeout: 30000,
         windowsHide: true, maxBuffer: 8 * 1024 * 1024,
         env: Object.assign({}, process.env, { PYTHONIOENCODING: "utf-8" }) }));
   } catch (e) {
     valeur = { pas: {}, etats: {}, cercles: [], erreur: String((e && e.message) || e) };
   }
-  cacheCriticite = { cle, valeur };
+  cacheCriticite.set(siege, { cle, valeur });
   return valeur;
 }
 
@@ -2697,7 +2737,7 @@ http
       // Pas sous `/admin` : ce n'est pas l'envers du decor, c'est une lecture du
       // plan que les livres eux-memes affichent.
       if (url === "/criticite") {
-        try { return envoyer(res, 200, JSON.stringify(criticite())); }
+        try { return envoyer(res, 200, JSON.stringify(criticite(monPersonnage(req, url)))); }
         catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
       }
       if (url === "/admin/charge") {
@@ -3390,7 +3430,11 @@ http
           if (!moi && roster()) {
             return envoyer(res, 200, JSON.stringify({ affaires: [] }));
           }
-          const livres = volumesVisibles(Array.isArray(brut) ? brut : [], moi).liste;
+          const porteePlan = planModele(moi);
+          const idsVisibles = new Set(porteePlan.volumes_ids || []);
+          const idsActifs = new Set(porteePlan.affaires_ids || []);
+          const livres = (Array.isArray(brut) ? brut : [])
+            .filter((l) => l && idsVisibles.has(l.id));
           const parId = {};
           livres.forEach((l) => { if (l && l.id) parId[l.id] = l; });
           // Une cellule de numéro porte son gras de registre : on ne garde que
@@ -3475,8 +3519,10 @@ http
           // Le titre d'une table porte parfois une suite après un tiret cadratin
           // (« Ouverture de l'Affaire — forme neuve du 26e au soir ») : on
           // apparie sur son début, jamais sur l'égalité.
-          const tablesDe = (v, genre) => (v.tables || []).filter((t) =>
-            sansAccent(String((t && t.titre) || "").split("\u2014")[0]).indexOf(TITRE[genre]) === 0);
+          const tablesDe = (v, genre) => (v.tables || []).filter((t) => {
+            const titreTable = sansAccent(String((t && t.titre) || "").split("\u2014")[0]);
+            return (" " + titreTable + " ").indexOf(" " + TITRE[genre] + " ") >= 0;
+          });
 
           const etats = [], verrous = [], clefs = [], actions = [];
           const bacs = { etat: etats, verrou: verrous, clef: clefs, action: actions };
@@ -3489,11 +3535,8 @@ http
           // l'ouverture de l'affaire EST une affaire, où qu'il soit rangé et
           // quel que soit son id — et la table des états cibles reste exigée,
           // sans quoi il n'y a pas de plateau à dessiner.
-          const ouverture = (l) => (l.tables || []).some((t) =>
-            sansAccent(String((t && t.titre) || "").split("—")[0])
-              .indexOf("ouverture de l affaire") === 0);
-          livres.filter((l) => l && (String(l.id).indexOf("affaire-") === 0 || ouverture(l))
-            && tablesDe(l, "etat").length).forEach((v) => {
+          const brouillons = porteePlan.brouillons || [];
+          livres.filter((l) => idsActifs.has(l.id)).forEach((v) => {
             // `ecrites` : TOUTES les adresses que le cahier porte à ses quatre
             // tables, qu'elles atteignent le damier ou non. Ce n'est pas la
             // même chose que les pièces tracées, et l'écart est le sujet —
@@ -3573,7 +3616,7 @@ http
             return out;
           };
           const moyens = recolter("moyen"), offices = recolter("office");
-          if (!groupes.length) return envoyer(res, 200, JSON.stringify({ affaires: [] }));
+          if (!groupes.length) return envoyer(res, 200, JSON.stringify({ affaires: [], brouillons }));
 
           const indexe = (t) => { const o = {}; t.forEach((x) => { o[x.num] = x; }); return o; };
           const iV = indexe(verrous), iM = indexe(moyens), iO = indexe(offices);
@@ -3993,12 +4036,12 @@ http
             return !!a3 && !!b3 && (a3 === b3 || a3.indexOf(b3) >= 0 || b3.indexOf(a3) >= 0);
           };
           const orphelins = {};
+          const horsAffaire = [];
           repli.etat.forEach((r) => {
             const nom = sansSigne(r.c[6]) || "Sans affaire";
             if (connu.etat[r.num] || groupes.some((g) => memeNom(g.titre, nom))) return;
-            let g = groupes.find((x) => x.repli && x.titre === nom);
-            if (!g) groupes.push(g = { titre: nom, volume: volumeDe(nom), etats: [], repli: true });
-            g.etats.push(r); etats.push(r); orphelins[r.num] = 1;
+            horsAffaire.push({ numero: r.num, titre: sansSigne(r.c[1]), affaire: nom });
+            orphelins[r.num] = 1;
           });
           const chaine = (genre, pris, amont) => {
             repli[genre].forEach((r) => {
@@ -4642,6 +4685,10 @@ http
           // c'est la même économie que les portraits.
           return envoyer(res, 200, JSON.stringify({
             affaires: servies, ouverte: ouverte ? ouverte.id : null,
+            vue_de: moi, brouillons: brouillons,
+            collisions: porteePlan.collisions || [],
+            pieces_hors_affaire: porteePlan.pieces_hors_affaire || [],
+            index_hors_affaire: horsAffaire,
             portraits: portraits, aujourdhui: aujourdhui,
             missions: catalogue }));
         } catch (e) {

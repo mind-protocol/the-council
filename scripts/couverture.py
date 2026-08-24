@@ -17,6 +17,15 @@
 #     python scripts/couverture.py --verifier   dit ce qui bougerait, n'ecrit rien
 import io, json, os, re, sys, unicodedata
 
+# La console Windows est en cp1252 : une fleche ou un embleme dans un
+# message de progression tuait le script APRES qu'il eut ecrit une partie
+# de son travail. Le rapport ne doit jamais pouvoir faire tomber le calcul.
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+except Exception:
+    pass
+
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LIVRES = os.path.join(RACINE, "etat", "books.json")
 
@@ -131,8 +140,17 @@ def col(cols, motif):
 
 
 # ─────────────────────────────────────────────── lire tout le graphe
-def charger():
-    livres = json.load(io.open(LIVRES, encoding="utf-8"))
+def charger(livres=None):
+    """Lit un ensemble de volumes et en derive le graphe.
+
+    Sans argument, conserve le comportement historique et lit tout
+    ``etat/books.json``. Un appelant qui connait deja l'etagere visible d'un
+    siege peut fournir cette liste : le parseur reste unique, mais aucun livre
+    d'une autre maison n'entre alors dans ses index ni dans ses collisions.
+    La liste fournie n'est jamais modifiee sur le disque.
+    """
+    if livres is None:
+        livres = json.load(io.open(LIVRES, encoding="utf-8"))
     pieces = {}          # numero -> {genre, nom, affaire, vers[], moyens[], office, dep[], etat, ou}
     inventaire = {}      # M01 / O03 -> nom
     affaires = []        # les livres qui sont des affaires
@@ -152,7 +170,12 @@ def charger():
         # La position d'une table est une commodité de lecture, jamais une
         # déclaration : mettre l'état d'avancement en tête est même la bonne
         # idée. Le détecteur, lui, cherche l'ouverture où elle est.
-        est_affaire = any(re.search(u"ouverture", sans_emoji(t.get("titre") or u""), re.I)
+        # LES BORNES DE MOT SONT OBLIGATOIRES. Sans elles, « ouverture » se
+        # trouve A L'INTERIEUR de « La c-ouverture de bois » — un memento de
+        # Marlo, depourvu de clef `tables`, promu affaire, et `refaire()`
+        # mourait dessus sur un KeyError. Les quatre registres derives du plan
+        # ont cesse d'etre regeneres ce jour-la, sans que rien ne le dise.
+        est_affaire = any(re.search(r"\bouverture\b", sans_emoji(t.get("titre") or u""), re.I)
                           for t in tables)
         if est_affaire:
             affaires.append(b)
@@ -213,6 +236,8 @@ def charger():
             # libre. Absente, rien ne change — les cahiers sans colonne
             # continuent d'etre lus au motif, comme avant.
             i_jour = col(cols, u"jour dû|jour du")
+            i_preuve = col(cols, u"^(?:la )?preuve(?: attendue)?$")
+            i_jour_fait = col(cols, u"jour fait")
             i_aff = col(cols, u"affaire")
             # Un vrai registre M/O a un numéro en première colonne. Sans ce
             # test, toute table dont le titre porte le mot « moyens » alimente
@@ -250,9 +275,16 @@ def charger():
                 # entree-echoue`, `affaire-surete-personne-reine` — passaient
                 # donc pour des pièces de registre. 84 sur 159. Les effacer au
                 # nom d'une migration aurait détruit trois affaires entières.
-                est_cahier = str(b.get("id") or u"").startswith(("affaire-", "nera-"))
+                # Le cahier se reconnait par sa forme, pas par le dialecte de
+                # son identifiant. Une autre maison peut employer les memes
+                # tables sans adopter les prefixes historiques de Peyredragon.
+                est_cahier = est_affaire
                 if est_cahier:
                     p["cahier"] = True
+                    source = {"volume_id": b.get("id"), "table": t.get("titre"),
+                              "genre": g, "nom": c[i_nom]}
+                    if source not in p.setdefault("cahier_sources", []):
+                        p["cahier_sources"].append(source)
                     # ET LE DERNIER MOT SUR SON NOM. C'est la même faute que
                     # celle du bloc suivant, une case plus loin, et elle a coûté
                     # plus cher : le nom se posait au PREMIER livre lu
@@ -328,6 +360,10 @@ def charger():
                     p["etat"] = c[i_etat]
                 if i_jour is not None and i_jour < len(c) and c[i_jour]:
                     p["jour"] = c[i_jour]
+                if i_preuve is not None and i_preuve < len(c) and c[i_preuve]:
+                    p["preuve"] = c[i_preuve]
+                if i_jour_fait is not None and i_jour_fait < len(c) and c[i_jour_fait]:
+                    p["jour_fait"] = c[i_jour_fait]
     # LA RÉCIPROQUE SE REFAIT, ELLE NE SE SAISIT PAS. Si A exclut B, B exclut A —
     # l'écrire deux fois, c'est se donner deux occasions de se contredire. Même
     # règle que `sert / servie par` : un lien dérivé ne peut pas mentir.

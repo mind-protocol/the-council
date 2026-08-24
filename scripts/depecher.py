@@ -1189,13 +1189,13 @@ LES BORNES, et elles sont dures :
 TROUS_MONTRES = 5
 
 
-def _scores():
+def _scores(vue_de=None):
     """{numero: perte + attendu}. Vide si le calcul echoue — on retombe alors
     sur `force()`, et l'homme part quand meme."""
     try:
         import criticite
-        from couverture import charger as _ch
-        _, pieces, _, _ = _ch()
+        import plan_modele as PM
+        pieces = PM.charger(vue_de)["pieces"]
         lignes, _base, _poids, _s, _m, dehors = criticite.calculer(pieces)
         crit = {n: c for c, pt, n, p in lignes}
         # `dehors` porte ce qui, dans un AUTRE cahier, attend cette piece : on
@@ -1226,8 +1226,10 @@ def ses_trous(qui, combien=TROUS_MONTRES):
     try:
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         import etat_du_plan as plan
-        from couverture import charger, nu
-        _, pieces, _, affaires = charger()
+        from couverture import nu
+        import plan_modele as PM
+        modele = PM.charger(qui)
+        pieces, affaires = modele["pieces"], modele["affaires"]
         siennes = [b for b in affaires if (b.get("tenu_par") or u"") == qui]
         tout = []
         for b in siennes:
@@ -1241,7 +1243,7 @@ def ses_trous(qui, combien=TROUS_MONTRES):
                 if m["acte"].startswith(u"registre/"):
                     continue
                 tout.append((m, nom))
-        scores = _scores()
+        scores = _scores(qui)
         tout.sort(key=lambda x: _rang(x[0], scores, plan.force))
         if not tout:
             return u""

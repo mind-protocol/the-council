@@ -66,17 +66,20 @@ def empreinte_des_pieces(pieces):
     return out
 
 
-def poser_empreintes(pieces, quand):
+def poser_empreintes(pieces, quand, vue_de=None):
     emp = empreinte_des_pieces(pieces)
     with io.open(EMPREINTES, "a", encoding="utf-8", newline="\n") as f:
-        f.write(json.dumps({"quand": quand, "pieces": emp}, ensure_ascii=False) + u"\n")
+        f.write(json.dumps({"quand": quand, "vue_de": vue_de, "pieces": emp},
+                           ensure_ascii=False) + u"\n")
     return emp
 
 
-def mesurer():
+def mesurer(vue_de=None):
     import criticite as C
-    from couverture import charger
-    livres, pieces, _inv, affaires = charger()
+    import plan_modele as PM
+    modele = PM.charger(vue_de)
+    livres, pieces, affaires = (modele["livres"], modele["pieces"],
+                                modele["affaires"])
     lignes, base, poids, saisis, m0, dehors = C.calculer(pieces)
     tous, un, _d = C.amonts(pieces)
     ok = C.atteignables(pieces, tous, un)
@@ -134,6 +137,7 @@ def mesurer():
 
     return {
         "quand": time.time(),
+        "vue_de": modele["vue_de"],
         "pieces": len(pieces),
         "etats_atteignables": sum(1 for n in poids if ok.get(n)),
         "etats": len(poids),
@@ -167,7 +171,8 @@ LIGNES = [
 
 def dire(m, avant):
     j = time.strftime(u"%d/%m à %Hh%M", time.localtime(m["quand"]))
-    sys.stdout.write(u"\n⚖️  BILAN — %s · %d pièces au plan\n%s\n" % (j, m["pieces"], u"─" * 78))
+    sys.stdout.write(u"\n⚖️  BILAN — %s · vue de %s · %d pièces au plan\n%s\n"
+                     % (j, m.get("vue_de") or u"?", m["pieces"], u"─" * 78))
     if avant:
         sys.stdout.write(u"  écart depuis le %s\n\n"
                          % time.strftime(u"%d/%m %Hh%M", time.localtime(avant["quand"])))
@@ -198,24 +203,29 @@ def dire(m, avant):
 
 
 def main():
-    m = mesurer()
+    args = sys.argv[1:]
+    vue_de = args[args.index("--vue-de") + 1] if "--vue-de" in args else None
+    m = mesurer(vue_de)
     avant = None
     if os.path.exists(TRACE):
         try:
             L = [json.loads(x) for x in io.open(TRACE, encoding="utf-8") if x.strip()]
-            avant = L[-1] if L else None
+            # Les anciennes lignes étaient globales : les comparer à une
+            # étagère bornée fabriquerait un écart spectaculaire mais faux.
+            meme_vue = [x for x in L if x.get("vue_de") == m["vue_de"]]
+            avant = meme_vue[-1] if meme_vue else None
         except Exception:
             avant = None
     dire(m, avant)
-    if "--sec" in sys.argv:
+    if "--sec" in args:
         sys.stdout.write(u"\n  (à sec : rien n'a été écrit)\n")
         return
     with io.open(TRACE, "a", encoding="utf-8", newline="\n") as f:
         f.write(json.dumps(m, ensure_ascii=False) + u"\n")
     try:
-        from couverture import charger
-        _l, pieces, _i, _a = charger()
-        poser_empreintes(pieces, m["quand"])
+        import plan_modele as PM
+        modele = PM.charger(m["vue_de"])
+        poser_empreintes(modele["pieces"], m["quand"], m["vue_de"])
     except Exception as e:
         sys.stderr.write(u"  (empreintes non posées : %s)\n" % e)
 

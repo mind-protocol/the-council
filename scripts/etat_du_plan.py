@@ -68,7 +68,7 @@ import sys
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from couverture import (charger, nu, sans_emoji, marque, blocs,  # noqa: E402
+from couverture import (nu, sans_emoji, marque, blocs,  # noqa: E402
                         NUM, MO, NOM_GENRE, EST_MO, NERA, etiquette)
 from couverture import genre_de as C_genre  # noqa: E402
 # Les tables de la descente et le motif du « fait » vivent chez le chargeur :
@@ -77,6 +77,7 @@ from couverture import ATTENDU as C_ATTENDU, RANG as C_RANG  # noqa: E402
 from couverture import FINI as C_FINI, premier_mot as C_premier_mot  # noqa: E402
 from couverture import tete_ornee as C_tete_ornee  # noqa: E402
 import jours_relatifs as JR  # noqa: E402
+import plan_modele as PM  # noqa: E402
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -201,8 +202,7 @@ def echelle(livres=None):
     global _REL
     if _REL is None:
         if livres is None:
-            from couverture import charger as _charger
-            livres = _charger()[0]
+            livres = PM.charger()["livres"]
         _REL = relatives(livres)
     return _REL
 
@@ -267,6 +267,41 @@ def section_jour(date, pieces, affaires):
         g[p["genre"]] = g.get(p["genre"], 0) + 1
     ligne(u"%d affaires · " % len(affaires),
           u" · ".join(u"%s %d" % (NOM_GENRE.get(k, k), v) for k, v in sorted(g.items())))
+
+
+def section_portee(modele):
+    """Rend visible la frontiere de lecture qui protege les autres maisons."""
+    ligne(u"Vue de %s · " % (modele.get("vue_de") or u"?"),
+          u"%d volumes visibles · %d brouillons hors calcul"
+          % (len(modele.get("livres") or []), len(modele.get("brouillons") or [])))
+
+
+def section_synthese(modele):
+    """Trois mesures qui ne doivent plus etre confondues."""
+    m = PM.mesures(modele)
+    s, d, p = m["structure"], m["declaration"], m["preuves"]
+    titre(u"🧭 SYNTHÈSE — forme, déclaration, preuve")
+    ligne(u"Structure · ", u"%d affaires actives · %d brouillons · %d collisions de numéro"
+          % (s["affaires_actives"], s["brouillons"], s["collisions"]))
+    ligne(u"Déclaré par les cahiers · ",
+          u"%d faites · %d en cours · %d bloquées · %d à faire"
+          % (d["fait"], d["en-cours"], d["bloque"], d["a-faire"]))
+    ligne(u"Preuve des %d faites · " % p["actions_declarees_faites"],
+          u"%d décrites au cahier · %d rattachées exactement à actes/événements résolus"
+          % (p["preuve_documentee_dans_le_cahier"],
+             p["preuve_rattachee_a_un_registre_canonique"]))
+    ligne(u"Règle de lecture · ",
+          u"un état 'fait' est une déclaration; un lien canonique est une preuve rattachée, pas une preuve inventée")
+
+
+def section_brouillons(modele):
+    brouillons = modele.get("brouillons") or []
+    if not brouillons:
+        return
+    titre(u"📝 BROUILLONS — visibles, mais exclus de l'avancement")
+    for b in brouillons:
+        ligne(u"· " + (b.get("titre") or b.get("id") or u"sans titre"),
+              u", ".join(b.get("raisons") or []))
 
 
 PLAFOND = 40
@@ -1036,6 +1071,8 @@ AIDE = u"""etat_du_plan.py — l'état du plan, toutes affaires confondues.
     python scripts/etat_du_plan.py --grille          une ligne par cahier
     python scripts/etat_du_plan.py --qui             les trous par homme
     python scripts/etat_du_plan.py --pour gerardys   ses affaires, à lui seul
+    python scripts/etat_du_plan.py --vue-de marlo-vasse
+                                      le plan visible depuis un autre siège
     python scripts/etat_du_plan.py --comparer        l'écart avec la route /echiquier
     python scripts/etat_du_plan.py --jour-entree "30e de la 4e lune"
                                      résout les J−N sous hypothèse, et le dit en tête
@@ -1064,7 +1101,13 @@ if __name__ == "__main__":
     plafond = int(args[args.index("--combien") + 1]) if "--combien" in args else 12
     seul_du = "--du" in args
 
-    livres, pieces, inventaire, affaires = charger()
+    vue_de = (args[args.index("--vue-de") + 1]
+              if "--vue-de" in args else PM.personnage_par_defaut())
+    modele = PM.charger(vue_de)
+    livres = modele["livres"]
+    pieces = modele["pieces"]
+    inventaire = modele["inventaire"]
+    affaires = modele["affaires"]
     date = aujourdhui()
 
     # L'ECHELLE RELATIVE, ET SON ANCRE. On cherche d'abord le jour d'entree
@@ -1092,18 +1135,23 @@ if __name__ == "__main__":
     # affaires, pas l'état du royaume. Le conseil du matin, lui, garde sa page.
     if pour:
         section_jour(date, pieces, affaires)
+        section_portee(modele)
         section_pour(pour, pieces, affaires, plafond)
         sys.stdout.write(u"\n")
         raise SystemExit(0)
     if "--grille" in args:
         section_jour(date, pieces, affaires)
+        section_portee(modele)
         section_grille(pieces, affaires, date, rel)
+        section_brouillons(modele)
         sys.stdout.write(u"\n")
         raise SystemExit(0)
     if "--qui" in args:
         section_jour(date, pieces, affaires)
+        section_portee(modele)
         section_qui(pieces, affaires)
         section_emblemes(livres)
+        section_brouillons(modele)
         if "--comparer" in args:
             section_comparer(pieces, affaires)
         sys.stdout.write(u"\n")
@@ -1114,6 +1162,8 @@ if __name__ == "__main__":
         raise SystemExit(0)
 
     section_jour(date, pieces, affaires)
+    section_portee(modele)
+    section_synthese(modele)
     section_du(pieces, date, rel, jour_j, source_j, filtre_aff, filtre_off,
                "--tout" in args)
     section_chaines(pieces, date, filtre_aff, "--tout" in args, rel)
@@ -1123,4 +1173,5 @@ if __name__ == "__main__":
         if not filtre_aff and not filtre_off:
             section_muettes(pieces, affaires)
         section_trous(pieces, inventaire, affaires, filtre_aff)
+        section_brouillons(modele)
     sys.stdout.write(u"\n")

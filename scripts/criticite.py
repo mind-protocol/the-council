@@ -57,8 +57,9 @@ import sys
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from couverture import charger, nu, sans_emoji, NOM_GENRE  # noqa: E402
+from couverture import nu, sans_emoji, NOM_GENRE  # noqa: E402
 from couverture import FINI, premier_mot  # noqa: E402
+import plan_modele as PM  # noqa: E402
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -1259,11 +1260,13 @@ def calculer(pieces, mode_dep="interne", optimiste=True, actions_ou=False):
 # « Mon gouvernement » pour une raison qui n'est pas la sienne. Le tri est au
 # demandeur, et c'est `depecher.py` qui l'applique — sa reserve, elle, ne parle
 # que de ce qui reste.
-def charge_de(qui):
+def charge_de(qui, vue_de=None):
     """(vu, sien_ailleurs, tire) pour un homme — chacun une liste (score, n°,
     pièce), le plus lourd en tête. Listes vides si le nom n'est connu d'aucun
     des trois registres."""
-    livres, pieces, _inv, affaires = charger()
+    modele = PM.charger(vue_de or qui)
+    livres, pieces, affaires = (modele["livres"], modele["pieces"],
+                                modele["affaires"])
     lignes, base, poids, saisis, m0, dehors = calculer(pieces)
     crit = {n: c for c, pt, n, p in lignes}
     attendu = {n: sum(crit.get(m, 0) for m in ms) for n, ms in dehors.items() if ms}
@@ -1299,9 +1302,13 @@ def main():
     ap.add_argument("--acteurs", action="store_true")
     ap.add_argument("--charge", nargs="?", const="", metavar=u"QUI")
     ap.add_argument("--decisions", nargs="?", const="", metavar=u"N°")
+    ap.add_argument("--vue-de", default=PM.personnage_par_defaut(),
+                    help="siège dont on mesure l'étagère visible")
     a = ap.parse_args()
 
-    livres, pieces, inventaire, affaires = charger()
+    modele = PM.charger(a.vue_de)
+    livres, pieces, inventaire, affaires = (modele["livres"], modele["pieces"],
+                                            modele["inventaire"], modele["affaires"])
     prix_de = prix(livres)
     # La date du monde, notée à côté de chaque instantané : elle ne sert pas à
     # comparer (deux mesures d'un même jour de jeu peuvent être séparées d'une
@@ -1367,6 +1374,8 @@ def main():
         acteurs, sans_office, office_en_clair = porte_des_hommes(lignes, offices,
                                                                  moyens)
         sys.stdout.write(json.dumps({
+            "vue_de": modele["vue_de"],
+            "portee": PM.mesures(modele),
             "charge": charge,
             "acteurs": acteurs,
             "hors_acteurs": {"sans_office": {"s": round(sans_office[0], 3),
@@ -1411,10 +1420,11 @@ def main():
 
     titre(u"⚖️ LA CRITICITÉ — ce que le plan perd si ce pas-là rate")
     sys.stdout.write(
-        u"  %d pièces · %d états cibles, dont %d atteignables (masse %g)\n"
+        u"  vue de %s · %d pièces · %d états cibles, dont %d atteignables (masse %g)\n"
         u"  poids saisis à la main : %d — les autres valent 1 (etat/poids-etats.json)\n"
         u"  ET/OU lu sur le genre · « dépend de » %s · verrou sans clef : %s\n"
-        % (len(pieces), len(poids), sum(1 for e in poids if base.get(e)), m0, saisis,
+        % (modele["vue_de"], len(pieces), len(poids),
+           sum(1 for e in poids if base.get(e)), m0, saisis,
            {u"interne": u"bloque dans le cahier, compté dehors",
             u"toutes": u"bloque partout", u"aucune": u"ignoré"}[mode_dep],
            u"bloque (strict)" if a.strict else u"se lève quand même"))
