@@ -47,19 +47,17 @@ Usage :
     python scripts/scinder_moyens.py --vraiment     écrit, après sauvegarde
 """
 import io
-import json
 import os
 import re
-import shutil
 import sys
-import tempfile
 import time
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RACINE, "scripts"))
 LIVRES = os.path.join(RACINE, "etat", "books.json")
 
-import couverture as C  # noqa: E402  — nu, col, MO, NUM, RIEN, retrait
+import couverture as C  # noqa: E402  — nu, col, MO, NUM, RIEN
+import bibliotheque  # noqa: E402
 
 COL_MOY = u"🧰 Moyens"
 COL_AVEC = u"🔧 Avec quoi"
@@ -372,24 +370,13 @@ def passer(livres, ecrire=False):
 
 
 # ─────────────────────────────────────────────── écrire, sous garde
-def verser(livres, avant):
-    u"""Les trois gardes de `couverture.verser`, dans le même ordre : relecture
-    (books.json est partagé avec le MJ qui joue), sauvegarde horodatée,
-    remplacement atomique. Le retrait se relit sur le fichier — il est d'UN
-    espace ici, et le regonfler rendrait 3,4 Mo de bruit au diff."""
-    if io.open(LIVRES, encoding="utf-8").read() != avant:
-        sortie(u"\n‼ etat/books.json a changé pendant le calcul — RIEN N'A ÉTÉ "
-               u"ÉCRIT.\n  Une autre session y a touché. Relancer.\n")
-        return None
-    sauve = LIVRES + u".avant-moyens-" + time.strftime("%Y%m%d-%H%M%S")
-    shutil.copy2(LIVRES, sauve)
-    n = C.retrait()
-    fd, tmp = tempfile.mkstemp(dir=os.path.dirname(LIVRES), suffix=".tmp")
-    os.close(fd)
-    with io.open(tmp, "w", encoding="utf-8") as f:
-        json.dump(livres, f, ensure_ascii=False, indent=n)
-    os.replace(tmp, LIVRES)
-    return sauve
+def verser(session):
+    try:
+        session.sauver()
+    except bibliotheque.BibliothequeModifiee as exc:
+        sortie(u"\n‼ %s\n" % exc)
+        return False
+    return True
 
 
 # ─────────────────────────────────────────────── le rapport
@@ -461,8 +448,8 @@ if __name__ == "__main__":
     vraiment = "--vraiment" in args
     dest = args[args.index("--rapport") + 1] if "--rapport" in args else None
 
-    avant = io.open(LIVRES, encoding="utf-8").read()
-    livres = json.loads(avant)
+    session = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+    livres = session.livres
     rap = passer(livres, ecrire=vraiment)
     txt = rapport(rap, vraiment)
 
@@ -470,10 +457,8 @@ if __name__ == "__main__":
            % (len(rap["A"]), len(rap["B"]), len(rap["C"]), len(rap["MIXTE"]),
               len(rap["desapparies"]), len(rap["colonnes_creees"])))
     if vraiment:
-        sauve = verser(livres, avant)
-        if sauve is None:
+        if not verser(session):
             sys.exit(1)
-        sortie(u"  sauvegarde : %s\n" % os.path.basename(sauve))
     else:
         sortie(u"--vraiment absent : rien n'a été écrit.\n")
 

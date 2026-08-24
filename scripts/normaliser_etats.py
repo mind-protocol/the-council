@@ -29,12 +29,13 @@ Usage :
     python scripts/normaliser_etats.py --vraiment --ambigus
                                                         applique aussi les recommandations
 """
-import io, json, os, re, sys, time, unicodedata, collections
+import io, os, re, sys, time, unicodedata, collections
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LIVRES = os.path.join(RACINE, "etat", "books.json")
 sys.path.insert(0, os.path.join(RACINE, "scripts"))
 import couverture as C  # noqa: E402  — genre_de, sans_emoji, nu, col
+import bibliotheque  # noqa: E402
 
 # ─────────────────────────────────────────────── le vocabulaire fermé
 # Six valeurs. Toute autre est une faute, et `tick.py --verifier` doit la dire.
@@ -419,23 +420,12 @@ def passer(livres, appliquer_ambigus=False, ecrire=False):
 
 
 # ─────────────────────────────────────────────── écrire, sous garde
-def verser(livres, avant):
-    u"""Trois gardes, dans l'ordre de `couverture.verser` : sauvegarde, relecture
-    (books.json est partagé avec le MJ qui joue), remplacement atomique."""
-    import shutil, tempfile
-    if io.open(LIVRES, encoding="utf-8").read() != avant:
-        sortie(u"\n‼ etat/books.json a changé pendant le calcul — RIEN N'A ÉTÉ "
-               u"ÉCRIT.\n  Une autre session y a touché. Relancer.\n")
+def verser(session):
+    try:
+        session.sauver()
+    except bibliotheque.BibliothequeModifiee as exc:
+        sortie(u"\n‼ %s\n" % exc)
         return False
-    sauve = LIVRES + u".avant-etats-" + time.strftime("%Y%m%d-%H%M%S")
-    shutil.copy2(LIVRES, sauve)
-    n = C.retrait()
-    fd, tmp = tempfile.mkstemp(dir=os.path.dirname(LIVRES), suffix=".tmp")
-    os.close(fd)
-    with io.open(tmp, "w", encoding="utf-8") as f:
-        json.dump(livres, f, ensure_ascii=False, indent=n)
-    os.replace(tmp, LIVRES)
-    sortie(u"  sauvegarde : %s\n" % os.path.basename(sauve))
     return True
 
 
@@ -586,13 +576,13 @@ if __name__ == "__main__":
     amb = "--ambigus" in args
     dest = args[args.index("--rapport") + 1] if "--rapport" in args else None
 
-    avant = io.open(LIVRES, encoding="utf-8").read()
-    livres = json.loads(avant)
+    session = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+    livres = session.livres
     rap = passer(livres, appliquer_ambigus=amb, ecrire=vraiment)
     txt = rapport(rap, vraiment)
 
     if vraiment:
-        if not verser(livres, avant):
+        if not verser(session):
             sys.exit(1)
     else:
         sortie(u"--vraiment absent : rien n'a été écrit.\n")

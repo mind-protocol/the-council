@@ -40,19 +40,16 @@ Le retrait du fichier est relu et reproduit (books.json est écrit à un espace)
 un passage ne doit pas rendre 2,4 Mo de bruit au diff.
 """
 import io
-import json
 import os
 import re
-import shutil
 import sys
-import tempfile
-import time
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RACINE, "scripts"))
 LIVRES = os.path.join(RACINE, "etat", "books.json")
 
-from couverture import nu, sans_emoji, genre_de, col, MO, NUM, retrait  # noqa: E402
+from couverture import nu, sans_emoji, genre_de, col, MO, NUM  # noqa: E402
+import bibliotheque  # noqa: E402
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -129,8 +126,7 @@ def numero_de(cellule):
     return num, sur, [x[1] for x in trouves]
 
 
-def passer(affaire=None):
-    livres = json.load(io.open(LIVRES, encoding="utf-8"))
+def passer(livres, affaire=None):
     faits, refus, deja, numerotees = [], [], [], []
     for b in livres:
         bid = str(b.get("id") or u"")
@@ -179,22 +175,11 @@ def passer(affaire=None):
     return livres, faits, refus, deja, numerotees
 
 
-def ecrire(livres):
-    sauve = LIVRES + u".avant-renvois-" + time.strftime("%Y%m%d-%H%M%S")
-    shutil.copy2(LIVRES, sauve)
-    n = retrait()
-    fd, tmp = tempfile.mkstemp(dir=os.path.dirname(LIVRES), suffix=".tmp")
-    os.close(fd)
-    with io.open(tmp, "w", encoding="utf-8") as f:
-        json.dump(livres, f, ensure_ascii=False, indent=n)
-    os.replace(tmp, LIVRES)
-    return sauve
-
-
 if __name__ == "__main__":
     args = sys.argv[1:]
     aff = args[args.index("--affaire") + 1] if "--affaire" in args else None
-    livres, faits, refus, deja, numerotees = passer(aff)
+    session = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+    livres, faits, refus, deja, numerotees = passer(session.livres, aff)
 
     sys.stdout.write(u"\n%d cellule(s) d'office prendraient leur numéro :\n\n"
                      % len(faits))
@@ -236,6 +221,9 @@ if __name__ == "__main__":
         sys.stdout.write(u"\nRien à écrire : les cellules reconnaissables portent "
                          u"déjà leur numéro. Le fichier n'a pas été touché.\n")
         raise SystemExit(0)
-    sauve = ecrire(livres)
-    sys.stdout.write(u"\nÉcrit. Sauvegarde : %s\n" % os.path.basename(sauve))
+    try:
+        session.sauver()
+    except bibliotheque.BibliothequeModifiee as exc:
+        raise SystemExit(u"REFUS : %s" % exc)
+    sys.stdout.write(u"\nÉcrit par volume.\n")
     sys.stdout.write(u"Vérifier ensuite : python scripts/etat_du_plan.py\n")
