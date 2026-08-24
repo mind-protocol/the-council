@@ -6,8 +6,11 @@
 import io, json, os, sys
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(RACINE, "scripts"))
+import bibliotheque
+
 AFF = os.path.join(RACINE, "chantier", "affaires.json")
-BOOKS = os.path.join(RACINE, "etat", "books.json")
+BOOKS = "bibliotheque"
 ID = "affaire-migrer-la-bataille-vers-la-stack"
 
 ETAT_90311 = (
@@ -88,6 +91,7 @@ rapport = []
 
 # --- 1. l'etat de l'action 90311, dans chantier/affaires.json --------------
 d = charge(AFF)
+session_livres = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
 a = affaire(d)
 t = table(a, u"Actions")
 assert t["colonnes"][5] == u"✅ État", t["colonnes"]
@@ -102,7 +106,7 @@ rapport.append(u"chantier/affaires.json · Actions · 90311 · ✅ État")
 
 # --- 2. le verrou 90370, dans les DEUX stocks ------------------------------
 for chemin in (AFF, BOOKS):
-    dd = d if chemin == AFF else charge(chemin)
+    dd = d if chemin == AFF else session_livres.livres
     aa = affaire(dd)
     tv = table(aa, u"Verrous")
     pris = [l["cellules"][0] for l in tv["lignes"]]
@@ -114,7 +118,7 @@ for chemin in (AFF, BOOKS):
     rapport.append(u"%s · Verrous · 90370 pose (numeros presents : %s)"
                    % (os.path.basename(chemin), u", ".join(pris)))
     if chemin != AFF:
-        sauve(chemin, dd)
+        session_livres.sauver()
 
 sauve(AFF, d)
 

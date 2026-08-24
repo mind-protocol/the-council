@@ -4,11 +4,12 @@
 # machine le lit comme le guide : UN BLOC DE CENT PAR ETAT CIBLE, verrous en 01
 # a 09, clefs en 10 a 19, actions en 20 a 99. Mon 65010 se lisait clef alors
 # qu'il est verrou. Corrige le jour meme, avant que personne l'ait ouvert.
-import io, json, os, re, tempfile, sys
+import os, re, sys
 
 sys.stdout.reconfigure(encoding='utf-8')
 R = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-BOOKS = os.path.join(R, 'etat', 'books.json')
+sys.path.insert(0, os.path.join(R, 'scripts'))
+import bibliotheque
 
 MAP = {
  "65000": "65000",   # etat  — du bois sous la hache
@@ -34,8 +35,8 @@ def remap(s):
     return RE.sub(lambda m: MAP.get(m.group(1), m.group(1)), s)
 
 
-with io.open(BOOKS, encoding='utf-8') as f:
-    books = json.load(f)
+session_livres = bibliotheque.ouvrir(os.path.join(R, 'etat'))
+books = session_livres.livres
 
 v = [b for b in books if b.get('id') == 'nera-l-aire-de-bris'][0]
 v['sous_titre'] = v['sous_titre'].replace("Plage 65000 à 65099", "Plage 65000 à 65199")
@@ -52,10 +53,5 @@ for l in v['tables'][0]['lignes']:
                             "J'avais d'abord numéroté à la mode du cahier d'à côté et la lecture "
                             "s'en trouvait fausse — corrigé le jour même, avant que le volume ait été ouvert.")
 
-fd, tmp = tempfile.mkstemp(dir=os.path.dirname(BOOKS), suffix='.tmp')
-os.close(fd)
-with io.open(tmp, 'w', encoding='utf-8') as f:
-    json.dump(books, f, ensure_ascii=False, indent=1)
-    f.write(u'\n')
-os.replace(tmp, BOOKS)
+session_livres.sauver()
 print('renumerote — plage 65000 a 65199')

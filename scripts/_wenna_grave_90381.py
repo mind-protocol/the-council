@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 """Wenna la Nommeuse — 129.4.3 au soir. Grave 90381, 90130, et corrige 90380 / 90221."""
-import json, io, shutil, os
+import os, sys
 
-os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-CH = "etat/books.json"
-shutil.copy(CH, CH + ".avant-wenna-90381")
-d = json.load(io.open(CH, encoding="utf-8"))
+RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(RACINE, "scripts"))
+import bibliotheque
+
+session_livres = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+d = session_livres.livres
 b = [x for x in d if x["id"] == "affaire-migrer-la-bataille-vers-la-stack"][0]
 VER = [t for t in b["tables"] if t["titre"].startswith(u"\U0001f512")][0]
 ACT = [t for t in b["tables"] if t["titre"].startswith(u"⚔")][0]
@@ -81,5 +83,5 @@ p221 = u"""
 l = ligne(ACT, "90221")
 l["cellules"][col(ACT, u"✅ État")] += p221
 
-io.open(CH, "w", encoding="utf-8").write(json.dumps(d, ensure_ascii=False, indent=2))
+session_livres.sauver()
 print(u"gravé : 90380 (preuve), 90381 (neuve), 90130 (neuve), 90221 (état)")

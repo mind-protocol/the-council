@@ -6,7 +6,9 @@ import io, json, os, tempfile, sys
 
 sys.stdout.reconfigure(encoding='utf-8')
 R = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-BOOKS = os.path.join(R, 'etat', 'books.json')
+sys.path.insert(0, os.path.join(R, 'scripts'))
+import bibliotheque
+
 BOITES = os.path.join(R, 'etat', 'boites.json')
 
 
@@ -194,12 +196,13 @@ volume = {
  ],
 }
 
-books = lire(BOOKS)
+session_livres = bibliotheque.ouvrir(os.path.join(R, 'etat'))
+books = session_livres.livres
 if any(b.get('id') == volume['id'] for b in books):
     print('DEJA LA — rien fait')
     raise SystemExit(1)
 books.append(volume)
-ecrire(BOOKS, books)
+session_livres.sauver()
 
 boites = lire(BOITES)
 if not any(b.get('id') == 'boite-le-second' for b in boites):

@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 """Alys Grive, O10, ouvre son cahier — 2e jour de la 4e lune, an 129. Plage 66000 a 66199."""
-import json, shutil, sys, io, os
+import sys, io, os
+
+RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(RACINE, "scripts"))
+import bibliotheque
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-P = 'etat/books.json'
-shutil.copy(P, P + '.avant-cahier-alys-grive')
-books = json.load(open(P, encoding='utf-8'))
+session_livres = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+books = session_livres.livres
 
 if any(e.get('id') == 'affaire-role-des-bouches' for e in books):
     print('deja ouvert'); sys.exit(0)
@@ -220,6 +223,6 @@ livre = {
 }
 
 books.append(livre)
-json.dump(books, open(P, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+session_livres.sauver()
 print('ouvert : affaire-role-des-bouches — plage 66000 a 66199')
 print('etats', len(etats), '| verrous', len(verrous), '| clefs', len(clefs), '| actions', len(actions))

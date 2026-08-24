@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """Ouvre le cahier de la porte de mer (Wend, office O08). Ecriture atomique."""
-import io, json, os, tempfile
+import os, sys
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BOOKS = os.path.join(RACINE, "etat", "books.json")
+sys.path.insert(0, os.path.join(RACINE, "scripts"))
+import bibliotheque
 
 O = ['\U0001f9f1 Le champ', "✍️ Ce qu'on y écrit", '\U0001f4d6 La règle du champ', '✅ Rempli ?']
 
@@ -175,16 +176,10 @@ livre = {
  ],
 }
 
-with io.open(BOOKS, encoding="utf-8") as f:
-    books = json.load(f)
+session_livres = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+books = session_livres.livres
 if any(v.get("id") == livre["id"] for v in books):
     raise SystemExit("DEJA LA - rien fait")
 books.append(livre)
-d = os.path.dirname(BOOKS)
-fd, tmp = tempfile.mkstemp(dir=d, suffix=".tmp")
-os.close(fd)
-with io.open(tmp, "w", encoding="utf-8") as f:
-    json.dump(books, f, ensure_ascii=False, indent=1)
-    f.write(u"\n")
-os.replace(tmp, BOOKS)
+session_livres.sauver()
 print("cahier ouvert :", livre["id"], "-", len(books), "volumes")

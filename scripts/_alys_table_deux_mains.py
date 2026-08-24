@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 """La feuille a deux mains — Alys Grive (gorges) et Tobb (jambes). Table ajoutee au cahier 65xxx."""
-import json, shutil, sys, io
+import os, sys, io
+
+RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(RACINE, "scripts"))
+import bibliotheque
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-P = 'etat/books.json'
-shutil.copy(P, P + '.avant-table-deux-mains')
-books = json.load(open(P, encoding='utf-8'))
+session_livres = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+books = session_livres.livres
 livre = next(e for e in books if e['id'] == 'affaire-role-des-bouches')
 TITRE = "\U0001f9fe Le compte à deux mains — une ressource, ses preneurs, leurs jours"
 livre['tables'] = [t for t in livre['tables'] if t['titre'] != TITRE]
@@ -47,5 +50,5 @@ lignes = [
 ]
 
 livre['tables'].append({'titre': TITRE, 'colonnes': COLS, 'lignes': lignes})
-json.dump(books, open(P, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+session_livres.sauver()
 print('table posee :', TITRE, '|', len(lignes), 'lignes')

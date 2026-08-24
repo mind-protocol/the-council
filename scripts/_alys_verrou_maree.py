@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 """Le conflit qui tombe AUJOURD'HUI : le vers porteur de 41223 est la chanson que je lache ce soir."""
-import json, shutil, sys, io
+import os, sys, io
+
+RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(RACINE, "scripts"))
+import bibliotheque
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-P = 'etat/books.json'
-shutil.copy(P, P + '.avant-verrou-maree')
-books = json.load(open(P, encoding='utf-8'))
+session_livres = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+books = session_livres.livres
 livre = next(e for e in books if e['id'] == 'affaire-role-des-bouches')
 
 def tab(t):
@@ -40,5 +43,5 @@ act['lignes'].insert(1, {'cellules': [
  "**ce soir, avant les cuisines** — 2e de la 4e lune",
 ]})
 
-json.dump(books, open(P, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+session_livres.sauver()
 print('pose : verrou 66003 + action 66023')
