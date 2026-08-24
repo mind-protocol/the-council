@@ -53,7 +53,7 @@ try:
 except Exception:
     pass
 
-NUM = re.compile(r"\b(\d{3,6})\b")
+ADRESSE = re.compile(r"^\s*(\d{3,6})(?:\b|\s)")
 
 
 # ─────────────────────────────────────────────── lire les cellules comme couverture.py
@@ -79,6 +79,13 @@ def cellules(ligne):
     if isinstance(ligne, list):
         return ligne
     return ligne.setdefault("cellules", [])
+
+
+def numero_de(cellule):
+    """Le numero d'adresse est le premier nombre de la cellule, jamais un
+    numero seulement cite dans une ligne morte ou une note."""
+    m = ADRESSE.match(nu(cellule))
+    return m.group(1) if m else None
 
 
 # ─────────────────────────────────────────────── trouver une adresse
@@ -125,7 +132,7 @@ def lignes_du_numero(table, numero):
     trouvees = []
     for ligne in (table.get("lignes") or []):
         c = cellules(ligne)
-        if c and numero in NUM.findall(nu(c[0])):
+        if c and numero_de(c[0]) == numero:
             trouvees.append(ligne)
     return trouvees
 
@@ -141,7 +148,7 @@ def numero_pris(livres, numero):
         for t in tables:
             for ligne in (t.get("lignes") or []):
                 c = cellules(ligne)
-                if c and numero in NUM.findall(nu(c[0])):
+                if c and numero_de(c[0]) == numero:
                     ou.append((b.get("id"), t.get("titre")))
     return ou
 
@@ -176,13 +183,33 @@ def preparer_correction(livres, c):
         return "refus", u"la ligne n'a que %d cellules, la colonne est la %de" % (
             len(cells), i + 1)
     valeur = cells[i]
-    if nu(valeur) == nu(c.get("apres")):
+    # Une cellule de plan peut porter plusieurs milliers de caractères. Pour
+    # corriger une adresse au milieu, recopier toute la cellule dans la
+    # proposition crée une seconde version de la prose et une occasion de la
+    # tronquer. Le remplacement borné garde les mêmes garanties : fragment
+    # attendu exactement une fois, état relu au dernier moment, lot atomique.
+    if "avant_dans" in c or "apres_dans" in c:
+        avant_dans, apres_dans = c.get("avant_dans"), c.get("apres_dans")
+        if not isinstance(avant_dans, str) or not avant_dans \
+                or not isinstance(apres_dans, str):
+            return "refus", u"avant_dans/apres_dans doivent être deux textes non vides"
+        compte = valeur.count(avant_dans)
+        if compte == 0 and apres_dans in valeur:
+            c["_apres_calcule"] = valeur
+            return "deja", (cells, i, valeur)
+        if compte != 1:
+            return "refus", u"le fragment attendu apparaît %d fois, il en faut exactement une" % compte
+        apres = valeur.replace(avant_dans, apres_dans, 1)
+    else:
+        apres = c.get("apres")
+        if nu(valeur) != nu(c.get("avant")):
+            return "refus", (u"la cellule ne contient pas ce qui etait attendu.\n"
+                             u"        attendu : %s\n        trouve  : %s"
+                             % (json.dumps(c.get("avant"), ensure_ascii=False),
+                                json.dumps(valeur, ensure_ascii=False)))
+    c["_apres_calcule"] = apres
+    if nu(valeur) == nu(apres):
         return "deja", (cells, i, valeur)
-    if nu(valeur) != nu(c.get("avant")):
-        return "refus", (u"la cellule ne contient pas ce qui etait attendu.\n"
-                         u"        attendu : %s\n        trouve  : %s"
-                         % (json.dumps(c.get("avant"), ensure_ascii=False),
-                            json.dumps(valeur, ensure_ascii=False)))
     return "poser", (cells, i, valeur)
 
 
@@ -199,7 +226,7 @@ def preparer_ajout(livres, a):
         return "refus", u"la ligne a %d cellules, la table en attend %d (%s)" % (
             len(ligne), len(colonnes), u" | ".join(colonnes))
     numero = a.get("numero")
-    if numero not in NUM.findall(nu(ligne[0] if ligne else u"")):
+    if numero_de(ligne[0] if ligne else u"") != numero:
         return "refus", u"la premiere cellule (%s) ne porte pas le N° %s" % (
             json.dumps(ligne[0] if ligne else u"", ensure_ascii=False), numero)
     deja = numero_pris(livres, numero)
@@ -222,10 +249,10 @@ def entete(titre):
 
 def ecrire_livres(livres):
     """Ecriture atomique, au format de couverture.py (ensure_ascii=False,
-    indent=2, fins de ligne du systeme, pas de saut final)."""
+    indent=1, fins de ligne du systeme, pas de saut final)."""
     temporaire = LIVRES + ".tmp"
     with io.open(temporaire, "w", encoding="utf-8") as f:
-        json.dump(livres, f, ensure_ascii=False, indent=2)
+        json.dump(livres, f, ensure_ascii=False, indent=1)
     os.replace(temporaire, LIVRES)
 
 
@@ -309,13 +336,13 @@ def main():
             continue
         if quoi == "deja":
             sys.stdout.write(tete + u"\n     ✓ contient deja %s — rien a faire\n"
-                             % json.dumps(c.get("apres"), ensure_ascii=False))
+                             % json.dumps(c.get("_apres_calcule"), ensure_ascii=False))
             deja.append(adresse(c))
             continue
         cells, i, valeur = detail
         sys.stdout.write(tete + u"\n     avant : %s\n     apres : %s\n"
                          % (json.dumps(valeur, ensure_ascii=False),
-                            json.dumps(c.get("apres"), ensure_ascii=False)))
+                            json.dumps(c.get("_apres_calcule"), ensure_ascii=False)))
         sys.stdout.write(u"     certitude : %s\n" % (c.get("certitude") or u"—"))
         if c.get("pourquoi"):
             sys.stdout.write(u"     motif : %s\n" % c["pourquoi"])
@@ -362,7 +389,7 @@ def main():
     for table, a in a_faire:
         table.setdefault("lignes", []).append({"cellules": list(a["ligne"])})
     for cells, i, c in a_poser:
-        cells[i] = c["apres"]
+        cells[i] = c["_apres_calcule"]
     ecrire_livres(livres)
 
     sys.stdout.write(u"\nApplique dans etat/books.json : %d cellule(s) reecrite(s), "
