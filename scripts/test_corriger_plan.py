@@ -58,6 +58,28 @@ class CorrigerPlanTest(unittest.TestCase):
 
         self.assertEqual("refus", action)
 
+    def test_un_remplacement_qui_contient_l_ancien_fragment_est_idempotent(self):
+        livres = [{
+            "id": "affaire-a",
+            "tables": [{
+                "titre": "Actions",
+                "colonnes": ["N°", "Texte"],
+                "lignes": [{"cellules": ["28023", "avant puis après"]}],
+            }],
+        }]
+        correction = {
+            "livre": "affaire-a",
+            "table": "Actions",
+            "numero": "28023",
+            "colonne": "Texte",
+            "avant_dans": "avant",
+            "apres_dans": "avant puis après",
+        }
+
+        action, _ = C.preparer_correction(livres, correction)
+
+        self.assertEqual("deja", action)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -5365,8 +5365,8 @@ http
       req.on("end", () => {
         try {
           const d = JSON.parse(corps);
-          const f = path.join(RACINE, "etat", "books.json");
-          const livres = JSON.parse(fs.readFileSync(f, "utf-8"));
+          const sessionLivres = bibliotheque.ouvrir(RACINE);
+          const livres = sessionLivres.livres;
           const nu = (t) => String(t == null ? "" : t).replace(/\*\*/g, "")
             .replace(/\s+/g, " ").trim();
           // les emblemes sortent du nom de colonne : au-dela de U+2000 il n'y a
@@ -5454,7 +5454,7 @@ http
             reg.lignes = reg.lignes || [];
             reg.lignes.push({ cellules: ligne(reg.colonnes || []) });
           }
-          fs.writeFileSync(f, JSON.stringify(livres, null, 2), "utf-8");
+          sessionLivres.sauver();
           return envoyer(res, 200, JSON.stringify({ num: String(num), affaire: nu(aff.titre) }));
         } catch (e) {
           return envoyer(res, 400, JSON.stringify({ erreur: String(e.message || e) }));

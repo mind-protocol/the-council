@@ -8,6 +8,7 @@ dupliqué ou fichier dont l'id ne correspond pas à son nom font échouer la
 lecture au lieu de retomber silencieusement sur ``books.json``.
 """
 import io
+import copy
 import json
 import os
 import re
@@ -18,6 +19,10 @@ MANIFESTE = "_ordre.json"
 
 
 class BibliothequeInvalide(ValueError):
+    pass
+
+
+class BibliothequeModifiee(RuntimeError):
     pass
 
 
@@ -80,3 +85,84 @@ def charger(etat):
                 "books/%s.json porte l'id %r" % (ident, livre.get("id")))
         livres.append(livre)
     return livres
+
+
+def _index(livres):
+    if not isinstance(livres, list):
+        raise BibliothequeInvalide("la bibliothèque doit porter une liste")
+    ids = []
+    par_id = {}
+    for livre in livres:
+        if not isinstance(livre, dict) or not NOM_ID.fullmatch(str(livre.get("id") or "")):
+            raise BibliothequeInvalide("chaque volume doit porter un id utilisable comme fichier")
+        ident = livre["id"]
+        if ident in par_id:
+            raise BibliothequeInvalide("identifiant de volume en double : %s" % ident)
+        ids.append(ident)
+        par_id[ident] = livre
+    return ids, par_id
+
+
+def _ecrire_atomique(chemin, valeur):
+    os.makedirs(os.path.dirname(chemin), exist_ok=True)
+    temporaire = chemin + ".tmp"
+    with io.open(temporaire, "w", encoding="utf-8") as f:
+        json.dump(valeur, f, ensure_ascii=False, indent=1)
+    os.replace(temporaire, chemin)
+
+
+class Session:
+    """Une lecture suivie d'une écriture optimiste.
+
+    Dans le monolithe, toute écriture concurrente fait refuser le lot. Dans le
+    dossier, seuls les volumes réellement changés par cette session sont
+    comparés : deux mains peuvent donc écrire deux cahiers différents sans se
+    recouvrir.
+    """
+
+    def __init__(self, etat):
+        self.etat = etat
+        self.livres = charger(etat)
+        self._avant = copy.deepcopy(self.livres)
+
+    def sauver(self):
+        dossier, manifeste, monolithe = _chemins(self.etat)
+        ids_avant, avant = _index(self._avant)
+        ids_voulus, voulus = _index(self.livres)
+        courants_liste = charger(self.etat)
+        ids_courants, courants = _index(courants_liste)
+
+        if not os.path.isfile(manifeste):
+            if courants_liste != self._avant:
+                raise BibliothequeModifiee(
+                    "etat/books.json a changé depuis la lecture — rien écrit")
+            _ecrire_atomique(monolithe, self.livres)
+            self._avant = copy.deepcopy(self.livres)
+            return
+
+        touches = {i for i in set(avant) | set(voulus) if avant.get(i) != voulus.get(i)}
+        ordre_touche = ids_avant != ids_voulus
+        if ordre_touche and ids_courants != ids_avant:
+            raise BibliothequeModifiee(
+                "books/_ordre.json a changé depuis la lecture — rien écrit")
+        conflits = [i for i in touches if courants.get(i) != avant.get(i)]
+        if conflits:
+            raise BibliothequeModifiee(
+                "volume modifié depuis la lecture : %s — rien écrit" % conflits[0])
+
+        # Les nouveaux fichiers existent avant d'entrer au manifeste. Les
+        # anciens en sortent avant d'être supprimés. Un lecteur ne rencontre
+        # donc jamais une adresse annoncée sans fichier derrière elle.
+        for ident in ids_voulus:
+            if ident in touches:
+                _ecrire_atomique(os.path.join(dossier, ident + ".json"), voulus[ident])
+        if ordre_touche:
+            _ecrire_atomique(manifeste, ids_voulus)
+        for ident in ids_avant:
+            if ident not in voulus:
+                os.remove(os.path.join(dossier, ident + ".json"))
+        self._avant = copy.deepcopy(self.livres)
+
+
+def ouvrir(etat):
+    return Session(etat)

@@ -976,39 +976,29 @@ def retrait(defaut=1):
     return defaut
 
 
-def verser(livres, avant):
-    """ÉCRIRE À DEUX SESSIONS. `books.json` est partagé avec le MJ qui joue, et
-    il y écrit pendant qu'on calcule. Trois gardes, dans cet ordre :
+def verser(session):
+    """Verse uniquement les volumes touchés, avec contrôle optimiste.
 
-      1. une sauvegarde horodatée, à côté du fichier ;
-      2. une RELECTURE juste avant d'écrire — si le fichier a bougé depuis notre
-         lecture, on ne verse pas. Écraser le travail d'un autre pour poser des
-         blocs calculés serait un mauvais échange : nos blocs se refont en une
-         commande, sa scène ne se refait pas ;
-      3. un fichier temporaire et `os.replace`, qui est atomique : personne ne
-         lit jamais un `books.json` à moitié écrit."""
-    import shutil, tempfile, time
-    if empreinte() != avant:
-        sys.stdout.write(u"\n‼ etat/books.json a changé pendant le calcul — "
-                         u"RIEN N'A ÉTÉ ÉCRIT.\n  Une autre session y a touché. "
-                         u"Relancer la commande.\n")
+    Tant que le monolithe est actif, on conserve sa sauvegarde historique et
+    toute écriture concurrente fait refuser le lot. Après la scission, la
+    session compare seulement les cahiers qu'elle a réellement changés : deux
+    titulaires peuvent enfin écrire deux livres distincts en parallèle.
+    """
+    import shutil, time
+    scindee = bibliotheque.est_scindee(os.path.join(RACINE, "etat"))
+    sauve = None
+    if not scindee:
+        sauve = LIVRES + u".avant-couverture-" + time.strftime("%Y%m%d-%H%M%S")
+        shutil.copy2(LIVRES, sauve)
+    try:
+        session.sauver()
+    except bibliotheque.BibliothequeModifiee as exc:
+        if sauve and os.path.exists(sauve):
+            os.remove(sauve)
+        sys.stdout.write(u"\n‼ %s\n" % exc)
         return False
-    sauve = LIVRES + u".avant-couverture-" + time.strftime("%Y%m%d-%H%M%S")
-    shutil.copy2(LIVRES, sauve)
-    n = retrait()
-    fd, tmp = tempfile.mkstemp(dir=os.path.dirname(LIVRES), suffix=".tmp")
-    os.close(fd)
-    # `newline=""` OU LE FICHIER ENTIER PASSE AU DIFF. Sans lui, l'écriture
-    # texte de Windows traduit chaque \n en \r\n : `books.json` est sur le
-    # disque en LF, un seul passage le regonfle de 68 Ko et rend ses 68 000
-    # lignes au diff pour trois blocs calculés. À deux sessions, c'est
-    # exactement le bruit sous lequel la prochaine divergence se cacherait —
-    # la même raison qui fait lire le retrait sur le fichier plutôt que de
-    # l'écrire en dur.
-    with io.open(tmp, "w", encoding="utf-8", newline="") as f:
-        json.dump(livres, f, ensure_ascii=False, indent=n)
-    os.replace(tmp, LIVRES)
-    sys.stdout.write(u"  sauvegarde : %s\n" % os.path.basename(sauve))
+    if sauve:
+        sys.stdout.write(u"  sauvegarde : %s\n" % os.path.basename(sauve))
     return True
 
 
@@ -1029,9 +1019,9 @@ if __name__ == "__main__":
     filtre = args[args.index("--affaire") + 1] if "--affaire" in args else None
 
     if "--registres" in args:
-        avant = empreinte()
-        livres = json.loads(avant)
-        pieces_avant = charger()[1]
+        session = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+        livres = session.livres
+        pieces_avant = charger(livres)[1]
         sorties = refaire_registres(livres)
         for bid, s in sorted(sorties.items()):
             sys.stdout.write(u"%-20s %4d ligne(s) → %4d · conservees %d\n"
@@ -1050,9 +1040,9 @@ if __name__ == "__main__":
         if verif:
             sys.stdout.write(u"--verifier : rien n'a ete ecrit.\n")
             sys.exit(0)
-        if not verser(livres, avant):
+        if not verser(session):
             sys.exit(1)
-        ap = charger()[1]
+        ap = charger(bibliotheque.charger(os.path.join(RACINE, "etat")))[1]
         pend_ap = sorted(v for n in ap for v in ap[n]["vers"] if v not in ap)
         sys.stdout.write(u"  pieces apres %d · pendantes apres %d %s\n"
                          % (len(ap), len(pend_ap), pend_ap))
@@ -1062,8 +1052,8 @@ if __name__ == "__main__":
         sys.stdout.write(u"4 registre(s) derive(s) dans etat/books.json\n")
         sys.exit(0)
 
-    avant = empreinte()
-    livres, pieces, inventaire, affaires = charger()
+    session = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+    livres, pieces, inventaire, affaires = charger(session.livres)
     if filtre:
         affaires = [a for a in affaires if sans_emoji(filtre).lower() in sans_emoji(a["titre"]).lower()]
 
@@ -1073,5 +1063,5 @@ if __name__ == "__main__":
                          % (nu(b["titre"])[:46], n[0], n[1], n[2], n[3]))
     if verif:
         sys.stdout.write(u"--verifier : rien n'a ete ecrit.\n")
-    elif verser(livres, avant):
+    elif verser(session):
         sys.stdout.write(u"%d couverture(s) refaite(s) dans etat/books.json\n" % len(affaires))

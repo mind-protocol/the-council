@@ -52,4 +52,64 @@ function charger(racine) {
   });
 }
 
-module.exports = { charger, cheminsSource };
+function indexer(livres) {
+  if (!Array.isArray(livres)) throw new Error("la bibliothèque doit porter une liste");
+  const ids = [];
+  const parId = new Map();
+  livres.forEach((livre) => {
+    const id = livre && livre.id;
+    if (!ID.test(String(id || "")))
+      throw new Error("chaque volume doit porter un id utilisable comme fichier");
+    if (parId.has(id)) throw new Error("identifiant de volume en double : " + id);
+    ids.push(id);
+    parId.set(id, livre);
+  });
+  return { ids, parId };
+}
+
+function egaux(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
+
+function ecrireAtomique(fichier, valeur) {
+  fs.mkdirSync(path.dirname(fichier), { recursive: true });
+  const temporaire = fichier + ".tmp";
+  fs.writeFileSync(temporaire, JSON.stringify(valeur, null, 1), "utf-8");
+  fs.renameSync(temporaire, fichier);
+}
+
+function ouvrir(racine) {
+  const livres = charger(racine);
+  let avant = JSON.parse(JSON.stringify(livres));
+  return {
+    livres,
+    sauver() {
+      const e = emplacements(racine);
+      const a = indexer(avant);
+      const v = indexer(livres);
+      const courantsListe = charger(racine);
+      const c = indexer(courantsListe);
+      if (!fs.existsSync(e.manifeste)) {
+        if (!egaux(courantsListe, avant))
+          throw new Error("etat/books.json a changé depuis la lecture — rien écrit");
+        ecrireAtomique(e.monolithe, livres);
+        avant = JSON.parse(JSON.stringify(livres));
+        return;
+      }
+      const tous = new Set([].concat(a.ids, v.ids));
+      const touches = Array.from(tous).filter((id) => !egaux(a.parId.get(id), v.parId.get(id)));
+      const ordreTouche = !egaux(a.ids, v.ids);
+      if (ordreTouche && !egaux(c.ids, a.ids))
+        throw new Error("books/_ordre.json a changé depuis la lecture — rien écrit");
+      const conflit = touches.find((id) => !egaux(c.parId.get(id), a.parId.get(id)));
+      if (conflit) throw new Error("volume modifié depuis la lecture : " + conflit + " — rien écrit");
+      v.ids.forEach((id) => {
+        if (touches.includes(id)) ecrireAtomique(path.join(e.dossier, id + ".json"), v.parId.get(id));
+      });
+      if (ordreTouche) ecrireAtomique(e.manifeste, v.ids);
+      a.ids.filter((id) => !v.parId.has(id))
+        .forEach((id) => fs.unlinkSync(path.join(e.dossier, id + ".json")));
+      avant = JSON.parse(JSON.stringify(livres));
+    },
+  };
+}
+
+module.exports = { charger, cheminsSource, ouvrir };

@@ -20,6 +20,21 @@ try {
   assert.deepStrictEqual(B.charger(racine).map((x) => x.id), ["b", "a"]);
   assert.strictEqual(B.cheminsSource(racine).length, 3);
 
+  const une = B.ouvrir(racine);
+  const deux = B.ouvrir(racine);
+  une.livres.find((x) => x.id === "a").n = 1;
+  deux.livres.find((x) => x.id === "b").n = 2;
+  une.sauver();
+  deux.sauver();
+  assert.deepStrictEqual(B.charger(racine).map((x) => x.n), [2, 1]);
+
+  const trois = B.ouvrir(racine);
+  const quatre = B.ouvrir(racine);
+  trois.livres.find((x) => x.id === "a").n = 3;
+  quatre.livres.find((x) => x.id === "a").n = 4;
+  trois.sauver();
+  assert.throws(() => quatre.sauver(), /volume modifié/);
+
   fs.unlinkSync(path.join(racine, "etat", "books", "b.json"));
   assert.throws(() => B.charger(racine), /volume absent/);
   console.log("bibliotheque.js: OK");

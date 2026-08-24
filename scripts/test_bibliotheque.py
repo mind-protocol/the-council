@@ -43,6 +43,40 @@ class BibliothequeTest(unittest.TestCase):
             with self.assertRaisesRegex(B.BibliothequeInvalide, "porte l'id"):
                 B.charger(etat)
 
+    def test_deux_sessions_peuvent_ecrire_deux_volumes_distincts(self):
+        with tempfile.TemporaryDirectory() as etat:
+            ecrire_json(os.path.join(etat, "books", "_ordre.json"), ["a", "b"])
+            ecrire_json(os.path.join(etat, "books", "a.json"), {"id": "a", "n": 0})
+            ecrire_json(os.path.join(etat, "books", "b.json"), {"id": "b", "n": 0})
+            une, deux = B.ouvrir(etat), B.ouvrir(etat)
+            une.livres[0]["n"] = 1
+            deux.livres[1]["n"] = 2
+            une.sauver()
+            deux.sauver()
+            self.assertEqual([1, 2], [x["n"] for x in B.charger(etat)])
+
+    def test_deux_sessions_ne_recouvrent_pas_le_meme_volume(self):
+        with tempfile.TemporaryDirectory() as etat:
+            ecrire_json(os.path.join(etat, "books", "_ordre.json"), ["a"])
+            ecrire_json(os.path.join(etat, "books", "a.json"), {"id": "a", "n": 0})
+            une, deux = B.ouvrir(etat), B.ouvrir(etat)
+            une.livres[0]["n"] = 1
+            deux.livres[0]["n"] = 2
+            une.sauver()
+            with self.assertRaisesRegex(B.BibliothequeModifiee, "volume modifié"):
+                deux.sauver()
+            self.assertEqual(1, B.charger(etat)[0]["n"])
+
+    def test_le_monolithe_refuse_toute_ecriture_concurrente(self):
+        with tempfile.TemporaryDirectory() as etat:
+            ecrire_json(os.path.join(etat, "books.json"), [{"id": "a", "n": 0}])
+            une, deux = B.ouvrir(etat), B.ouvrir(etat)
+            une.livres[0]["n"] = 1
+            deux.livres[0]["n"] = 2
+            une.sauver()
+            with self.assertRaisesRegex(B.BibliothequeModifiee, "a changé"):
+                deux.sauver()
+
 
 if __name__ == "__main__":
     unittest.main()

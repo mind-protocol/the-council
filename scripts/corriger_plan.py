@@ -44,6 +44,8 @@ import re
 import sys
 import unicodedata
 
+import bibliotheque
+
 racine = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LIVRES = os.path.join(racine, "etat", "books.json")
 STAGING = os.path.join(racine, "etat")
@@ -193,10 +195,10 @@ def preparer_correction(livres, c):
         if not isinstance(avant_dans, str) or not avant_dans \
                 or not isinstance(apres_dans, str):
             return "refus", u"avant_dans/apres_dans doivent être deux textes non vides"
-        compte = valeur.count(avant_dans)
-        if compte == 0 and apres_dans in valeur:
+        if apres_dans in valeur:
             c["_apres_calcule"] = valeur
             return "deja", (cells, i, valeur)
+        compte = valeur.count(avant_dans)
         if compte != 1:
             return "refus", u"le fragment attendu apparaît %d fois, il en faut exactement une" % compte
         apres = valeur.replace(avant_dans, apres_dans, 1)
@@ -247,15 +249,6 @@ def entete(titre):
     sys.stdout.write(u"\n" + titre + u"\n" + u"─" * 96 + u"\n")
 
 
-def ecrire_livres(livres):
-    """Ecriture atomique, au format de couverture.py (ensure_ascii=False,
-    indent=1, fins de ligne du systeme, pas de saut final)."""
-    temporaire = LIVRES + ".tmp"
-    with io.open(temporaire, "w", encoding="utf-8") as f:
-        json.dump(livres, f, ensure_ascii=False, indent=1)
-    os.replace(temporaire, LIVRES)
-
-
 AIDE = u"""corriger_plan.py — pose une proposition de correction du plan.
 
     python scripts/corriger_plan.py etat/correction-plan-<horodatage>.json
@@ -286,8 +279,10 @@ def main():
     with io.open(chemin, encoding="utf-8") as f:
         prop = json.load(f)
 
-    # GARDE 1 — on relit le fichier MAINTENANT, pas plus tot.
-    livres = json.load(io.open(LIVRES, encoding="utf-8"))
+    # GARDE 1 — on relit la bibliothèque MAINTENANT, pas plus tôt. La session
+    # gardera cette version pour refuser une écriture concurrente du même livre.
+    session = bibliotheque.ouvrir(STAGING)
+    livres = session.livres
 
     corrections = prop.get("corrections") or []
     ajouts = prop.get("ajouts") or []
@@ -390,7 +385,11 @@ def main():
         table.setdefault("lignes", []).append({"cellules": list(a["ligne"])})
     for cells, i, c in a_poser:
         cells[i] = c["_apres_calcule"]
-    ecrire_livres(livres)
+    try:
+        session.sauver()
+    except bibliotheque.BibliothequeModifiee as exc:
+        sys.stdout.write(u"\n⛔ %s\n" % exc)
+        return 1
 
     sys.stdout.write(u"\nApplique dans etat/books.json : %d cellule(s) reecrite(s), "
                      u"%d ligne(s) ajoutee(s).\n" % (len(a_poser), len(a_faire)))
