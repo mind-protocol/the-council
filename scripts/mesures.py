@@ -137,8 +137,15 @@ BACKTICK = re.compile(u"`([^`]{1,120})`")
 ADRESSE = re.compile(u"^(\\.?)([a-z0-9]+(?:-[a-z0-9]+)*)(?:\\.([a-z0-9]+(?:-[a-z0-9]+)*))?$")
 
 
-def adresses_dans(texte):
-    """Rend [(adresse resolue ou None, forme ecrite)] pour une cellule."""
+def adresses_dans(texte, mains_connues=None, autoriser_inconnues=True):
+    """Rend les adresses de mesure écrites dans une cellule.
+
+    Hors d'une colonne explicitement consacrée aux mesures, un identifiant
+    inconnu est bien plus souvent une référence de code (``h.l1``,
+    ``process.argv``) qu'une adresse de compte. Les mains connues restent
+    reconnues partout ; les inconnues ne sont gardées que lorsque l'appelant
+    autorise leur diagnostic.
+    """
     trouvees = []
     derniere_main = None
     for brut in BACKTICK.findall(nu(texte)):
@@ -147,13 +154,17 @@ def adresses_dans(texte):
             continue
         point, un, deux = m.group(1), m.group(2), m.group(3)
         if deux:
+            if (mains_connues is not None and un not in mains_connues
+                    and not autoriser_inconnues):
+                derniere_main = None
+                continue
             derniere_main = un
             trouvees.append((u"%s.%s" % (un, deux), brut.strip()))
         elif point:
             # forme abregee : `.solde-due`
             if derniere_main:
                 trouvees.append((u"%s.%s" % (derniere_main, un), brut.strip()))
-            else:
+            elif autoriser_inconnues:
                 trouvees.append((None, brut.strip()))
         # un mot seul sans point n'est pas une adresse : on le laisse passer
     return trouvees
@@ -189,7 +200,7 @@ def lire_offices(livres):
     return offices
 
 
-def citations_ailleurs(livres):
+def citations_ailleurs(livres, mains_connues=None):
     """Toute adresse citee dans un autre livre que le registre des offices."""
     citations = []
     for livre in livres:
@@ -200,7 +211,12 @@ def citations_ailleurs(livres):
             for n, ligne in enumerate(table.get("lignes") or [], 1):
                 c = cellules_de(ligne)
                 for i, cell in enumerate(c):
-                    for adresse, brut in adresses_dans(cell):
+                    titre_colonne = sans_accents(sans_emoji(cols[i])) \
+                        if i < len(cols) else u""
+                    colonne_mesure = bool(re.search(
+                        u"mesure|compte|adresse", titre_colonne, re.I))
+                    for adresse, brut in adresses_dans(
+                            cell, mains_connues, autoriser_inconnues=colonne_mesure):
                         citations.append({
                             "livre_id": livre.get("id") or u"?",
                             "livre": nu(livre.get("titre")),
@@ -718,7 +734,8 @@ def main(argv):
     mains = charger_mains()
     index = index_des_mesures(mains)
     offices = lire_offices(livres)
-    citations = citations_ailleurs(livres)
+    mains_connues = {a.get("id") for a in mains if a.get("id")}
+    citations = citations_ailleurs(livres, mains_connues)
 
     dire(u"LES MESURES — %d compte(s), %d mesure(s) tenue(s), %d office(s) au plan"
          % (len(mains), len(index), len(offices)))
