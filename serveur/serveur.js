@@ -16,7 +16,10 @@ const bibliotheque = require("./bibliotheque");
 // a une.
 const croiser = require("./croiser");
 
-const RACINE = path.join(__dirname, "..");
+// Les tests d'intégration servent une partie miniature dans un dossier
+// temporaire. En production, l'absence de variable garde le dépôt courant.
+const RACINE = process.env.CONSEIL_RACINE
+  ? path.resolve(process.env.CONSEIL_RACINE) : path.join(__dirname, "..");
 // 3129 est le port du jeu. Un atelier (vérification d'écran pendant qu'une
 // partie tourne) passe un port en argument ou par PORT, pour ne pas se
 // disputer le port de la partie en cours.
