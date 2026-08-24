@@ -21,6 +21,10 @@ def affaire(ident, **changements):
 
 
 class PlanModeleTest(unittest.TestCase):
+    def test_une_ligne_morte_ne_redevient_pas_une_adresse(self):
+        self.assertIsNone(M.C.numero_de("— LIGNE MORTE (doublon de 22050)"))
+        self.assertEqual("22050", M.C.numero_de("**22050** — le verrou").group(1))
+
     def test_une_affaire_complete_est_active(self):
         m = M.construire_depuis_livres([affaire("affaire-a")], "alice")
         self.assertEqual(["affaire-a"], [b["id"] for b in m["affaires"]])

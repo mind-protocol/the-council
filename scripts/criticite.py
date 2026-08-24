@@ -1169,7 +1169,7 @@ def prix(livres):
     prose ne se fait pas, et lui coller un bareme serait inventer le seul
     chiffre que personne n'a ecrit."""
     out = {}
-    from couverture import NUM as _NUM, col as _col
+    from couverture import numero_de as _numero_de, col as _col
     for b in livres:
         for t in (b.get("tables") or []):
             cols = t.get("colonnes") or []
@@ -1179,7 +1179,7 @@ def prix(livres):
             for l in (t.get("lignes") or []):
                 c = [nu(x) for x in ((l if isinstance(l, list) else l.get("cellules")) or [])]
                 if len(c) > i and c and c[i]:
-                    m = _NUM.search(c[0])
+                    m = _numero_de(c[0])
                     if m:
                         out.setdefault(m.group(1), c[i])
     return out

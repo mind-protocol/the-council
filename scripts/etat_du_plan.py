@@ -76,6 +76,7 @@ from couverture import genre_de as C_genre  # noqa: E402
 from couverture import ATTENDU as C_ATTENDU, RANG as C_RANG  # noqa: E402
 from couverture import FINI as C_FINI, premier_mot as C_premier_mot  # noqa: E402
 from couverture import tete_ornee as C_tete_ornee  # noqa: E402
+from couverture import numero_de as C_numero_de  # noqa: E402
 import jours_relatifs as JR  # noqa: E402
 import plan_modele as PM  # noqa: E402
 
@@ -180,7 +181,7 @@ def relatives(livres):
                                         else l.get("cellules")) or [])]
                 if not cel:
                     continue
-                m = NUM.search(cel[0] or u"")
+                m = C_numero_de(cel[0] or u"")
                 if not m:
                     continue
                 f, source = JR.candidat({k: cel[i] for k, i in idx.items()

@@ -78,7 +78,18 @@ def genre_de(titre):
 
 
 NUM = re.compile(r"\b(\d{3,6})\b")
+ADRESSE = re.compile(r"^(\d{3,6})\b")
 MO = re.compile(r"\b([MO]\d{2,3})\b")
+
+
+def numero_de(texte):
+    """L'adresse d'une ligne, seulement si elle commence la premiere cellule.
+
+    Les autres nombres de la cellule sont de la prose. En particulier,
+    ``— LIGNE MORTE (doublon de 22050)`` conserve son histoire sans redevenir
+    une seconde pièce 22050 pour le graphe.
+    """
+    return ADRESSE.match(nu(texte))
 
 # ── DEUX REGISTRES M/O, ET LEURS NUMÉROS SE TÉLESCOPENT ──────────────────────
 # Le grand plan et la Néra tiennent chacun le leur, et ils ne se sont pas
@@ -253,7 +264,7 @@ def charger(livres=None):
                     if m:
                         inventaire[ns + m.group(1)] = c[i_nom]
                     continue
-                m = NUM.search(c[i_num])
+                m = numero_de(c[i_num])
                 if not m:
                     continue
                 n = m.group(1)
@@ -687,7 +698,7 @@ def lire_cahiers(livres):
                 c = [nu(x) for x in ((l if isinstance(l, list) else l.get("cellules")) or [])]
                 if len(c) < 2 or not c[0] or not c[1]:
                     continue
-                m = NUM.search(c[0])
+                m = numero_de(c[0])
                 if not m:
                     continue
                 par_genre[g][m.group(1)] = {
@@ -745,7 +756,7 @@ def deriver(livres):
             c = [nu(x) for x in ((l if isinstance(l, list) else l.get("cellules")) or [])]
             if not c or not c[0]:
                 continue
-            m = NUM.search(c[0])
+            m = numero_de(c[0])
             if m:
                 anciennes[m.group(1)] = c
 
