@@ -954,28 +954,6 @@ def refaire(b, pieces, inventaire):
     return len(pend), len(eng), len(trous), len(derivees)
 
 
-def empreinte():
-    """Ce qu'il y a sur le disque, à l'octet près."""
-    return io.open(LIVRES, encoding="utf-8").read()
-
-
-def retrait(defaut=1):
-    """LE RETRAIT SE LIT SUR LE FICHIER, il ne se décide pas ici. On écrivait
-    `indent=2` en dur quand la maison écrit `books.json` à un espace : chaque
-    passage regonflait le volume de 300 Ko et rendait tout le fichier au diff,
-    2,4 Mo de bruit pour trois lignes calculées. À deux sessions, un diff
-    illisible est un diff qu'on ne relit pas. Même geste que `affecter.py`."""
-    try:
-        with io.open(LIVRES, encoding="utf-8") as f:
-            for ligne in f:
-                n = len(ligne) - len(ligne.lstrip(u" "))
-                if n:
-                    return n
-    except OSError:
-        pass
-    return defaut
-
-
 def verser(session):
     """Verse uniquement les volumes touchés, avec contrôle optimiste.
 
