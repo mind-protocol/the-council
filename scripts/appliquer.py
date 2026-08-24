@@ -100,6 +100,8 @@ import sys
 import unicodedata
 from datetime import datetime
 
+import bibliotheque
+
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 SCRIPTS = os.path.dirname(os.path.abspath(__file__))
@@ -1444,10 +1446,8 @@ def main():
     # mais s'il n'est pas charge ici, liste_books() le voit VIDE : la validation
     # d'un affaire_ajouter passe alors sur une liste fantome, la mutation
     # s'ecrit nulle part, et ecrire() casse sur une cle absente.
-    tables["books"] = (lire("books")
-                           if os.path.isfile(
-                               os.path.join(ETAT, "books.json"))
-                           else {"books": []})
+    session_livres = bibliotheque.ouvrir(ETAT)
+    tables["books"] = session_livres.livres
 
     # garde 2 : tout valider avant de rien ecrire
     plan, erreurs = valider(mutations, tables)
@@ -1468,7 +1468,14 @@ def main():
     # garde 3 : ecriture atomique, puis marquage de la proposition
     touchees = appliquer(plan, tables)
     for nom in sorted(touchees):
-        ecrire(nom, tables[nom], joueur)
+        if nom == "books":
+            try:
+                session_livres.sauver()
+            except bibliotheque.BibliothequeModifiee as exc:
+                print("\nREFUS : {}".format(exc))
+                return 1
+        else:
+            ecrire(nom, tables[nom], joueur)
     prop["applique_le"] = datetime.now().isoformat(timespec="seconds")
     with io.open(chemin, "w", encoding="utf-8", newline="\r\n") as f:
         json.dump(prop, f, ensure_ascii=False, indent=2)

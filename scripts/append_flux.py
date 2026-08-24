@@ -10,6 +10,8 @@
 # 1440 minutes, le jour s'incremente. Voir docs/schema.md.
 import json, io, os, re, sys, hashlib, tempfile, unicodedata
 
+import bibliotheque
+
 # CE FICHIER EST UN SCRIPT, PAS UN MODULE. Tout son corps s'execute au chargement
 # — il ecrit le flux, avance monde.json et les horloges des sieges. Un `import
 # append_flux` fait donc tourner le monde par accident, en affichant son mode
@@ -133,20 +135,14 @@ def toucher_le_livre(lid, quand):
     Fenetre etroite : on relit et on reecrit dans la meme milliseconde, parce
     qu'a deux MJ books.json a deux plumes.
     """
-    p = os.path.join(racine, "etat", "books.json")
     try:
-        with io.open(p, encoding="utf-8") as f:
-            books = json.load(f)
+        session_livres = bibliotheque.ouvrir(os.path.join(racine, "etat"))
+        books = session_livres.livres
         b = next((x for x in books if x.get("id") == lid), None)
         if not b:
             return
         b["date_maj"] = dict(quand)
-        d = os.path.dirname(p)
-        fd, tmp = tempfile.mkstemp(dir=d, suffix=".tmp")
-        with io.open(fd, "w", encoding="utf-8") as f:
-            json.dump(books, f, ensure_ascii=False, indent=2)
-            f.write("\n")
-        os.replace(tmp, p)
+        session_livres.sauver()
     except Exception as e:
         sys.stderr.write("append_flux : date_maj non posee sur %s (%s)\n" % (lid, e))
 
@@ -171,10 +167,8 @@ def extrait_du_livre(montre):
     lid = montre.get("livre")
     if not lid or "extrait" in montre:
         return
-    p = os.path.join(racine, "etat", "books.json")
     try:
-        with io.open(p, encoding="utf-8") as f:
-            books = json.load(f)
+        books = bibliotheque.charger(os.path.join(racine, "etat"))
     except Exception:
         return
     b = next((x for x in books if x.get("id") == lid), None)
@@ -986,9 +980,7 @@ RENVOI = re.compile(r"\[([^\]\[<>\n]{1,80})\]\(([A-Za-z0-9][A-Za-z0-9_-]{0,60})\
 def _adresses_connues():
     numeros, ids = {}, set()
     try:
-        with io.open(os.path.join(racine, "etat", "books.json"),
-                     encoding="utf-8") as f:
-            livres = json.load(f)
+        livres = bibliotheque.charger(os.path.join(racine, "etat"))
         for v in livres:
             tables = v.get("tables") or []
             if v.get("colonnes"):
@@ -1139,10 +1131,9 @@ def sans_accents_simple(t):
 # qu'on ne lit pas n'est pas un avis : celui-la est encadre et se voit.
 def _volumes():
     try:
-        with io.open(os.path.join(racine, "etat", "books.json"),
-                     encoding="utf-8") as f:
-            return {v.get("id"): v for v in json.load(f)
-                    if isinstance(v, dict) and v.get("id")}
+        return {v.get("id"): v for v in bibliotheque.charger(
+                os.path.join(racine, "etat"))
+                if isinstance(v, dict) and v.get("id")}
     except Exception:
         return {}
 
