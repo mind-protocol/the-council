@@ -39,6 +39,7 @@ import argparse
 import json
 import math
 import os
+import random
 import sys
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -1195,8 +1196,24 @@ def _annexes(f, p, ann, mur=0.):
     M = 0.4
     out = []
     if fo > 0.:
-        # la remise est plus étroite que la maison : on garde un passage de côté
-        out.append(_quad(-f*0.82, f*0.82, p - M*2.5, p + fo))
+        if fo <= 7.:
+            # Petite remise adossée : on garde un passage de côté.
+            out.append(_quad(-f*0.82, f*0.82, p - M*2.5, p + fo))
+        else:
+            # Une longue prise n'est pas un hangar plein. C'est une aile de
+            # service qui longe une arrière-cour et rejoint un fond de cour :
+            # on densifie l'îlot tout en gardant une cour commune lisible.
+            aile = max(1.6, min(3.2, f*0.42))
+            gauche = g <= d
+            if gauche:
+                out.append(_quad(-f*0.82, -f*0.82 + aile,
+                                 p - M*2.5, p + fo))
+            else:
+                out.append(_quad(f*0.82 - aile, f*0.82,
+                                 p - M*2.5, p + fo))
+            fond = min(4.8, max(2.8, fo*0.28))
+            out.append(_quad(-f*0.82, f*0.82,
+                             p + fo - fond, p + fo))
     if g > 0.:
         out.append(_quad(-f - g, -f + M*2.5, -p*0.72, p))
     if d > 0.:
@@ -1435,6 +1452,148 @@ def _du_plan(p):
     return (p[0] * CARTE_MU, (300 - p[1]) * CARTE_MU)
 
 
+def region_port_real(lieu):
+    """La couronne régionale qui relie le plan urbain au royaume.
+
+    Elle ne régénère ni le bâti ni ses adresses : elle apporte seulement les
+    invariants qui manquaient au recul — côte continue, routes d'approche,
+    campagnes, bourgs et ouvrages portuaires. La même source est consommable
+    par la carte du royaume ; le plan 2D n'en cuit ici que la projection SVG.
+    """
+    if lieu != "port-real":
+        return None
+    chem = os.path.join(RACINE, "scripts", "ville", "port-real-region.json")
+    if not os.path.exists(chem):
+        return None
+    with open(chem, encoding="utf-8") as f:
+        src = json.load(f)
+
+    def ligne(points, ferme=False):
+        return chemin([[_du_plan(p) for p in points]], dec=1, ferme=ferme)
+
+    def courbe(points, ferme=False):
+        """Catmull-Rom converti en Bézier : les chemins suivent le terrain.
+
+        Les routes régionales n'ont aucune raison d'être des cordes tendues
+        entre deux portes. Les quais restent rectilignes, mais les chemins et
+        les limites de culture passent par une interpolation douce et stable.
+        """
+        pts = [_du_plan(p) for p in points]
+        if len(pts) < 3:
+            return ligne(points, ferme)
+        n = len(pts)
+        if ferme:
+            depart, tours = pts[0], n
+        else:
+            depart, tours = pts[0], n - 1
+        d = "M%.1f %.1f" % depart
+        for i in range(tours):
+            i1 = i % n
+            i2 = (i + 1) % n
+            p0 = pts[(i - 1) % n] if ferme or i > 0 else pts[i1]
+            p1, p2 = pts[i1], pts[i2]
+            p3 = pts[(i + 2) % n] if ferme or i + 2 < n else p2
+            c1 = (p1[0] + (p2[0] - p0[0]) / 6.,
+                  p1[1] + (p2[1] - p0[1]) / 6.)
+            c2 = (p2[0] - (p3[0] - p1[0]) / 6.,
+                  p2[1] - (p3[1] - p1[1]) / 6.)
+            d += ("C%.1f %.1f %.1f %.1f %.1f %.1f" %
+                  (c1[0], c1[1], c2[0], c2[1], p2[0], p2[1]))
+        return d + ("Z" if ferme else "")
+
+    def semis_regional(lieux, routes):
+        """De vrais petits bourgs, pas seulement quatre étiquettes."""
+        toits, arbres = [], []
+        for l in lieux:
+            if l.get("genre") == "gue":
+                continue
+            graine = sum(ord(c) for c in l["id"]) + 129
+            alea = random.Random(graine)
+            nombre = {"bourg": 34, "hameau": 13, "relais": 8}.get(l.get("genre"), 8)
+            cx, cy = l["point"]
+            for i in range(nombre):
+                a = alea.random() * math.tau
+                rayon = (alea.random() ** .62) * (15 if l.get("genre") == "bourg" else 8)
+                x, y = cx + math.cos(a) * rayon, cy + math.sin(a) * rayon * .55
+                cap = a * .22 + alea.uniform(-.35, .35)
+                lo, la = alea.uniform(1.2, 2.7), alea.uniform(.7, 1.35)
+                ux, uy = math.cos(cap), math.sin(cap)
+                vx, vy = -uy, ux
+                poly = [[x + ux * lo * s + vx * la * t,
+                         y + uy * lo * s + vy * la * t]
+                        for s, t in ((-1,-1),(1,-1),(1,1),(-1,1))]
+                toits.append([_du_plan(p) for p in poly])
+        # Fermes-rues et relais secondaires : un chemin n'est crédible que
+        # s'il dessert quelque chose. On en pose peu, en retrait, jamais comme
+        # un ruban urbain continu autour de la capitale.
+        alea = random.Random(129131)
+        for route in routes:
+            points = route.get("points", [])
+            for i in range(2, len(points) - 1, 3):
+                x, y = points[i]
+                ax, ay = points[i - 1]
+                bx, by = points[i + 1]
+                dx, dy = bx - ax, by - ay
+                norme = math.hypot(dx, dy) or 1.
+                nx, ny = -dy / norme, dx / norme
+                cote = -1 if (i + len(route.get("id", ""))) % 2 else 1
+                for j in range(1 + (i % 2)):
+                    recul = cote * alea.uniform(2.1, 4.4)
+                    avance = alea.uniform(-2.2, 2.2) + j * 2.4
+                    cx = x + nx * recul + dx / norme * avance
+                    cy = y + ny * recul + dy / norme * avance
+                    cap = math.atan2(dy, dx) + alea.uniform(-.14, .14)
+                    lo, la = alea.uniform(.9, 1.8), alea.uniform(.55, 1.05)
+                    ux, uy = math.cos(cap), math.sin(cap)
+                    vx, vy = -uy, ux
+                    poly = [[cx + ux * lo * s + vx * la * t,
+                             cy + uy * lo * s + vy * la * t]
+                            for s, t in ((-1,-1),(1,-1),(1,1),(-1,1))]
+                    toits.append([_du_plan(p) for p in poly])
+        # Un semis de houppiers rend le bois lisible sans le transformer en
+        # masse grise. Ils sont volontairement schématiques à cette échelle.
+        alea = random.Random(129130)
+        for _ in range(95):
+            x, y = alea.uniform(315, 485), alea.uniform(-60, -2)
+            r = alea.uniform(.8, 1.8)
+            arbres.append([_du_plan([x + math.cos(k * math.tau / 6) * r,
+                                     y + math.sin(k * math.tau / 6) * r])
+                            for k in range(6)])
+        return chemin(toits, dec=1, ferme=True), chemin(arbres, dec=1, ferme=True)
+
+    rep = src["repere"]
+    coins = [_du_plan([rep[0], rep[1]]), _du_plan([rep[2], rep[3]])]
+    bornes = [min(p[0] for p in coins), min(p[1] for p in coins),
+              max(p[0] for p in coins), max(p[1] for p in coins)]
+    port = src.get("port") or {}
+    bourgs, arbres = semis_regional(src.get("lieux", []), src.get("routes", []))
+    return {
+        "version": src.get("version", 1),
+        "orientation": src.get("orientation"),
+        "bornes": bornes,
+        "eau": chemin([[_du_plan(p) for p in e["points"]]
+                        for e in src.get("eau", [])], dec=1, ferme=True),
+        "terrains": [{"genre": t["genre"], "nom": t.get("nom"),
+                       "d": courbe(t["points"], True)}
+                      for t in src.get("terrains", [])],
+        "routes": [{"id": r["id"], "nom": r["nom"],
+                    "destination": r.get("destination"),
+                    "d": courbe(r["points"])} for r in src.get("routes", [])],
+        "bourgs": bourgs,
+        "arbres": arbres,
+        "lieux": [dict(l, x=_du_plan(l["point"])[0],
+                       y=_du_plan(l["point"])[1]) for l in src.get("lieux", [])],
+        "port": {
+            "quais": [dict(q, d=ligne(q["points"]))
+                       for q in port.get("quais", [])],
+            "appontements": [dict(q, d=ligne(q["points"]))
+                              for q in port.get("appontements", [])],
+            "bassins": [dict(q, d=ligne(q["points"], True))
+                        for q in port.get("bassins", [])],
+        },
+    }
+
+
 def remparts(lieu):
     """La courtine en polyligne, les portes en tours. Carte absente : rien.
 
@@ -1582,7 +1741,20 @@ def bati(source, rues):
     # maisons. Un monument entier compte pour un seul propriétaire, ses
     # morceaux étant un anneau qui doit rester d'une pièce.
     par_cat, par_prop = {}, {}
+    # LE MASQUE PART DE CE MÊME DESSIN. Garder une seconde recette ici
+    # (les rectangles bruts de `bati.json`) fabriquait deux villes : le plan
+    # montrait les maisons redressées, découpées, agrandies de leurs annexes et
+    # remplacées par les monuments, tandis que les jambes heurtaient encore le
+    # semis d'origine. On garde ci-dessous les CONTOURS FINAUX, après soudure et
+    # au décimètre effectivement écrit dans le SVG : dessin et collision
+    # reçoivent donc exactement les mêmes sommets.
+    emprises = []
+
+    def au_decimetre(piece):
+        return [(float("%.1f" % x), float("%.1f" % y)) for x, y in piece]
+
     for u, pieces in mons.items():
+        pieces = [au_decimetre(piece) for piece in pieces]
         par_cat.setdefault(u, []).extend(pieces)
         par_prop.setdefault(u, []).extend([("m", u)] * len(pieces))
     for k, r in enumerate(source["bati"]):
@@ -1607,8 +1779,10 @@ def bati(source, rues):
         ann = ((r[iaf] or 0.), (r[iag] or 0.), (r[iad] or 0.)) if iaf is not None             else (0., 0., 0.)
         mur = (r[imu] or 0.) if imu is not None else 0.
         for piece in _pieces(f, p, k, nom, ann, mur, colle):
-            cat.append([(x + dx * ca - dy * sa, y + dx * sa + dy * ca)
-                        for dx, dy in piece])
+            piece = au_decimetre(
+                [(x + dx * ca - dy * sa, y + dx * sa + dy * ca)
+                 for dx, dy in piece])
+            cat.append(piece)
             prop.append(k)
 
     # On soude PAR TYPE, jamais entre types : deux couches n'ont pas la même
@@ -1677,8 +1851,10 @@ def bati(source, rues):
         # trous d'un mètre. On a mesuré la façade au centimètre pour la perdre
         # à l'impression. Le décimètre coûte quelques centaines de kilo-octets
         # et vaut un demi-pixel à l'échelle la plus serrée du client.
+        lignes = [au_decimetre(ligne) for ligne in lignes]
         out[cat] = chemin(lignes, dec=1, ferme=True)
-    return out
+        emprises.extend(lignes)
+    return out, emprises
 
 
 def types(source):
@@ -1847,6 +2023,8 @@ def reperes(rues):
         p = rues["noeuds"].get(cle)
         if not p:
             continue
+        if cle.split(":")[0].startswith("regard"):
+            continue
         out.append({"nom": nom, "x": round(p[0], 1), "y": round(p[1], 1),
                     "genre": cle.split(":")[0]})
     return out
@@ -1868,105 +2046,191 @@ def reperes(rues):
 # mètres, soit 19 millions de cases — 19 Mo en octets, 2,4 Mo en bits. C'est
 # moins que le plan lui-même, et ça se lit d'un décalage et d'un ET.
 #
-# On rasterise les RECTANGLES ORIENTÉS de `bati.json` et non les silhouettes
-# soudées : c'est la même empreinte au sol, ça évite d'analyser trente mille
-# chemins SVG, et deux produits scalaires suffisent à savoir si une case est
-# dans un rectangle tourné.
+# On rasterise les MORCEAUX qui ont effectivement produit les silhouettes du
+# plan. Ils portent déjà la pose rectifiée, la largeur comprimée des rangs, les
+# découpes, les annexes et les monuments qui ont avalé le semis sous eux. Lire à
+# nouveau les rectangles de `bati.json` n'est pas une approximation : c'est
+# revenir à la ville d'avant la cuisson, donc faire dire deux choses différentes
+# au dessin et aux jambes.
 MASQUE_PAS = 1.0                 # mètres par case
 
-def masque(source, larg_m, haut_m):
-    col = source["_colonnes"]
-    ix, iy = col.index("x"), col.index("y")
-    ifa, ipr = col.index("facade_m"), col.index("profondeur_m")
-    icap = col.index("cap")
+def masque(emprises, larg_m, haut_m):
+    """Rasterise les contours SVG dessinés, au centre des cases."""
     nx = int(larg_m / MASQUE_PAS)
     ny = int(haut_m / MASQUE_PAS)
     bits = bytearray((nx * ny + 7) // 8)
     pose = 0
-    for r in source["bati"]:
-        a = math.radians(r[icap] or 0.)
-        ca, sa = math.cos(a), math.sin(a)
-        f = (r[ifa] or 4.) / 2.
-        p = (r[ipr] or 4.) / 2.
-        x, y = r[ix], r[iy]
-        # La boîte englobante du rectangle tourné : on ne teste que dedans.
-        demi = math.hypot(f, p)
-        i0 = max(0, int((x - demi) / MASQUE_PAS))
-        i1 = min(nx - 1, int((x + demi) / MASQUE_PAS) + 1)
-        j0 = max(0, int((y - demi) / MASQUE_PAS))
-        j1 = min(ny - 1, int((y + demi) / MASQUE_PAS) + 1)
+    for poly in emprises:
+        if len(poly) < 3:
+            continue
+        ys = [p[1] for p in poly]
+        # Une case appartient au bâti si son CENTRE tombe dans le polygone.
+        j0 = max(0, int(math.ceil(min(ys) / MASQUE_PAS - .5)))
+        j1 = min(ny - 1, int(math.floor(max(ys) / MASQUE_PAS - .5)))
         for j in range(j0, j1 + 1):
-            dy = (j + .5) * MASQUE_PAS - y
-            for i in range(i0, i1 + 1):
-                dx = (i + .5) * MASQUE_PAS - x
-                # dans le repère du bâtiment : façade sur x, profondeur sur y
-                u = dx * ca + dy * sa
-                v = -dx * sa + dy * ca
-                if -f <= u <= f and -p <= v <= p:
+            cy = (j + .5) * MASQUE_PAS
+            coupes = []
+            for n, (x1, y1) in enumerate(poly):
+                x2, y2 = poly[(n + 1) % len(poly)]
+                # Règle demi-ouverte : un sommet rencontré par la ligne ne doit
+                # compter qu'une fois.
+                if (y1 <= cy < y2) or (y2 <= cy < y1):
+                    coupes.append(x1 + (cy - y1) * (x2 - x1) / (y2 - y1))
+            if len(coupes) < 2:
+                continue
+            # Un contour final peut être concave (équerre, cour). Les coupes se
+            # prennent donc deux par deux selon la règle paire/impaire du SVG,
+            # et non du bord gauche au bord droit comme pour un convexe.
+            coupes.sort()
+            for gauche, droite in zip(coupes[0::2], coupes[1::2]):
+                i0 = max(0, int(math.ceil(gauche / MASQUE_PAS - .5)))
+                i1 = min(nx - 1, int(math.floor(droite / MASQUE_PAS - .5)))
+                for i in range(i0, i1 + 1):
                     k = j * nx + i
-                    bits[k >> 3] |= 1 << (k & 7)
-                    pose += 1
+                    if not (bits[k >> 3] >> (k & 7)) & 1:
+                        bits[k >> 3] |= 1 << (k & 7)
+                        pose += 1
     return bits, nx, ny, pose
 
 
 def graver_courtine(bits, nx, ny, lieu):
-    """Le rempart dans le masque — et les portes laissées ouvertes.
+    """Les murs dans le masque — TOUS les murs, et les portes seules percées.
 
     POURQUOI ÇA MANQUAIT, ET CE QUE ÇA COÛTAIT. Le masque ne gravait que
     `bati`. La courtine était DESSINÉE (on la voit sur le plan) mais elle
     n'était inscrite nulle part : ni la foule ni la bataille ne savaient qu'elle
     est solide. Les hommes la traversaient — pas par un défaut de trajectoire,
-    mais parce que pour eux elle n'existait pas. Neuf kilomètres et demi de
-    muraille qui ne tiennent rien, dans un jeu dont c'est le sujet.
+    mais parce que pour eux elle n'existait pas.
 
-    LES SEPT PORTES RESTENT DES TROUS, et c'est le seul point délicat : dans la
-    carte d'origine, les tronçons de mur portent `largeur: null` et les portes
-    `largeur: 6`. On grave les premiers et l'on saute les secondes. Sans ça la
-    ville devient imprenable et l'assaut piétine dehors pour toujours.
+    PUIS ELLE A ÉTÉ GRAVÉE À MOITIÉ, ET C'EST PIRE, parce qu'un mur à trous ne
+    proteste pas. Le filtre était `largeur is None` : il ne gardait que les sept
+    tronçons de courtine nue et jetait tout le reste. Mesuré sur le masque cuit
+    le 14 août, mur par mur, à un demi-mètre :
+
+        les 7 tronçons de courtine        12 100 m      0 % de trou
+        les 7 tronçons dits « portes »     1 450 m     93 % de trou
+        les 9 enceintes intérieures        5 250 m     56 % de trou
+        ----------------------------------------------------------
+                                          18 815 m     36 % de trou
+
+    Les deux dernières lignes sont deux fautes différentes.
+
+    LES « PORTES » NE SONT PAS DES PORTES : ce sont des TRONÇONS DE MUR de deux
+    cents mètres qui en contiennent une. On les sautait en entier — sept brèches
+    de deux cents mètres dans une muraille qu'on croyait fermée. Et le plan les
+    dessine, lui : `remparts()` les met dans la courtine et pose le châtelet au
+    milieu. Ce qui était dessiné et ce qui était gravé n'étaient donc pas la
+    même ville. On grave le tronçon et l'on perce le passage charretier à
+    l'endroit exact où `remparts()` plante ses deux tours — même point, même
+    largeur, un seul calcul recopié.
+
+    ⚠ LES NEUF AUTRES FORMES NE SONT PAS DES MURS, ET ON A ESSAYÉ. Le Donjon
+    Rouge, la Fosse aux Dragons, la tour de la Main, le vieux septuaire, la
+    Guilde des Alchimistes, les casernes du Guet portent `genre: "mur"` avec une
+    `largeur` (2,5 à 4) : ce sont les CONTOURS des grands lieux sur la carte de
+    ville, pas des enceintes. Gravés une fois, ils ont rendu ce qu'on voyait à
+    l'œil sur le masque — de grands rectangles posés au travers du tissu urbain.
+
+    Ce qui le prouve, et c'est une mesure et non un avis : à l'intérieur de ces
+    formes la voirie court à 260-345 m par hectare quand la ville entière est à
+    129, et le bâti y couvre 38 % — la densité ordinaire. On n'enferme pas
+    vingt-cinq ruelles dans la cour d'un donjon. Le Donjon Rouge « enceint »
+    trente et un hectares traversés par quarante-sept rues.
+
+    Le critère est donc celui que `remparts()` écrivait déjà quatre cents lignes
+    plus haut — « les grands édifices, pas le mur » —, et on le lui reprend mot
+    pour mot : `largeur in (None, 6)`. Ce qui est gravé est exactement ce qui est
+    dessiné en courtine, ni plus ni moins. Le jour où le Donjon Rouge aura une
+    vraie enceinte, elle s'écrira comme telle et non comme un contour de lieu.
+
+    ON NE ROUVRE JAMAIS UNE CASE QU'ON N'A PAS POSÉE SOI-MÊME. Percer efface des
+    cases ; si une maison est adossée à la porte, elle serait effacée avec. On
+    retient donc ce que la courtine a posé, et le perçage ne mord que là-dessus.
     """
     chem = os.path.join(RACINE, "etat", "villes", lieu + ".json")
     if not os.path.exists(chem):
         return 0
     with open(chem, encoding="utf-8") as f:
         murs = [s for s in (json.load(f).get("sol") or [])
-                if s.get("genre") == "mur" and s.get("largeur") is None]
+                if s.get("genre") == "mur"
+                and s.get("largeur") in (None, 6)]
     if not murs:
         return 0
-    demi = MUR_E / 2.
+
+    def cases(cx, cy, ux, uy, demi_long, demi_large):
+        """Les cases d'une boîte : `demi_long` le long de (ux,uy), `demi_large`
+        en travers. Sert à graver un tronçon comme à percer une porte."""
+        rayon = math.hypot(demi_long, demi_large)
+        i0 = max(0, int((cx - rayon) / MASQUE_PAS))
+        i1 = min(nx - 1, int((cx + rayon) / MASQUE_PAS) + 1)
+        j0 = max(0, int((cy - rayon) / MASQUE_PAS))
+        j1 = min(ny - 1, int((cy + rayon) / MASQUE_PAS) + 1)
+        for j in range(j0, j1 + 1):
+            dy = (j + .5) * MASQUE_PAS - cy
+            for i in range(i0, i1 + 1):
+                dx = (i + .5) * MASQUE_PAS - cx
+                if abs(dx * ux + dy * uy) > demi_long:
+                    continue
+                if abs(-dx * uy + dy * ux) > demi_large:
+                    continue
+                yield j * nx + i
+
+    mien = set()          # les cases posées par la courtine, et elles seules
+    portes = []           # où percer, une fois tout gravé
     pose = 0
     for s in murs:
+        e = float(s.get("largeur") or MUR_E)
+        demi = e / 2.
         pts = [_du_plan(p) for p in s["points"]]
         for (ax, ay), (bx, by) in zip(pts, pts[1:]):
             lx, ly = bx - ax, by - ay
             lg = math.hypot(lx, ly)
             if lg < 1e-6:
                 continue
-            ux, uy = lx / lg, ly / lg          # le long du mur
-            # La boîte du segment, élargie de la demi-épaisseur.
-            i0 = max(0, int((min(ax, bx) - demi) / MASQUE_PAS))
-            i1 = min(nx - 1, int((max(ax, bx) + demi) / MASQUE_PAS) + 1)
-            j0 = max(0, int((min(ay, by) - demi) / MASQUE_PAS))
-            j1 = min(ny - 1, int((max(ay, by) + demi) / MASQUE_PAS) + 1)
-            for j in range(j0, j1 + 1):
-                cy = (j + .5) * MASQUE_PAS - ay
-                for i in range(i0, i1 + 1):
-                    cx = (i + .5) * MASQUE_PAS - ax
-                    # projection sur le segment, bornée à ses deux bouts
-                    t = cx * ux + cy * uy
-                    if t < 0. or t > lg:
-                        continue
-                    # distance perpendiculaire
-                    if abs(-cx * uy + cy * ux) > demi:
-                        continue
-                    k = j * nx + i
-                    if not (bits[k >> 3] >> (k & 7)) & 1:
-                        pose += 1
-                    bits[k >> 3] |= 1 << (k & 7)
-    return pose
+            ux, uy = lx / lg, ly / lg
+            # LE MILIEU DU SEGMENT ET NON SON DÉPART, et la demi-longueur avec :
+            # une boîte centrée se ferme sur ses deux bouts. Bornée à `[0, lg]`
+            # depuis un bout, elle laissait une encoche à chaque sommet de la
+            # polyligne — un mur en pointillé aux angles.
+            #
+            # On allonge d'une demi-épaisseur de chaque côté : c'est le joint.
+            # Deux segments qui font un coude ne se recouvrent pas sinon, et un
+            # angle de courtine est justement l'endroit où l'on passe.
+            for k in cases((ax + bx) / 2., (ay + by) / 2., ux, uy,
+                           lg / 2. + demi, demi):
+                # `mien` NE PREND QUE CE QU'ON VIENT DE POSER, et c'est ce qui
+                # protège les maisons : une case déjà noire l'était pour une
+                # autre raison — un bâtiment adossé au mur —, et le perçage
+                # n'aura pas le droit d'y toucher.
+                if not (bits[k >> 3] >> (k & 7)) & 1:
+                    pose += 1
+                    mien.add(k)
+                bits[k >> 3] |= 1 << (k & 7)
+
+        if float(s.get("largeur") or 0.) == 6.:
+            # Le passage charretier, au milieu du tronçon — LE MÊME POINT que
+            # celui où `remparts()` plante les deux tours du châtelet. Si l'un
+            # des deux calculs bouge un jour, l'autre doit bouger avec.
+            (ax, ay), (bx, by) = pts[0], pts[-1]
+            lg = math.hypot(bx - ax, by - ay) or 1.
+            portes.append(((ax + bx) / 2., (ay + by) / 2.,
+                           (bx - ax) / lg, (by - ay) / lg,
+                           e, s.get("nom") or "une porte"))
+
+    perce = 0
+    for (cx, cy, ux, uy, e, nom) in portes:
+        for k in cases(cx, cy, ux, uy, PORTE_L / 2., e / 2. + 1.):
+            if k in mien and (bits[k >> 3] >> (k & 7)) & 1:
+                bits[k >> 3] &= ~(1 << (k & 7))
+                perce += 1
+    if portes:
+        print("  masque      %d passages percés (%d m², %.0f m de large)"
+              % (len(portes), perce, PORTE_L))
+    return pose - perce
 
 
-def ecrire_masque(b, prefixe, larg, haut, lieu=None):
-    bits, nx, ny, pose = masque(b, larg, haut)
+def ecrire_masque(emprises, prefixe, larg, haut, lieu=None):
+    bits, nx, ny, pose = masque(emprises, larg, haut)
     mur = graver_courtine(bits, nx, ny, lieu) if lieu else 0
     if mur:
         print("  masque      + %d m² de courtine (les portes restent ouvertes)"
@@ -2042,25 +2306,34 @@ def cuire(lieu):
         if lignes:
             niveaux.append({"z": z, "d": chemin(lignes)})
 
-    return {
+    bati_plan, emprises = bati(b, r)
+    region = region_port_real(lieu)
+    bornes_coeur = [0, 0, round((nx - 1) * pas), round((ny - 1) * pas)]
+    plan = {
         "_lisez_moi": "Plan 2D cuit par scripts/monde/plan_ville.py — ne pas "
                       "modifier à la main : la source est monde/" + prefixe + ".*",
         "lieu": lieu,
-        "bornes": [0, 0, round((nx - 1) * pas), round((ny - 1) * pas)],
+        "bornes": region["bornes"] if region else bornes_coeur,
+        "bornes_coeur": bornes_coeur,
+        "region": region,
         "cote": chemin(eau),
         "niveaux": niveaux,
         "voies": voies(r),
         "rempart": remparts(lieu),
-        # `bati` D'ABORD : c'est lui qui redresse la ville, et `enseignes` pose
-        # ses marques sur le résultat de ce redressement (voir POSES).
-        "bati": bati(b, r),
+        # `bati` a déjà redressé la ville. Son dessin et son masque reçoivent les
+        # mêmes `emprises`; `enseignes` lit aussi cette pose (voir POSES).
+        "bati": bati_plan,
         "types": types(b),
         "enseignes": enseignes(b),
-        "masque": ecrire_masque(b, prefixe, round((nx - 1) * pas),
-                                round((ny - 1) * pas), lieu),
+        "masque": ecrire_masque(emprises, prefixe, round((nx - 1) * pas),
+                                 round((ny - 1) * pas), lieu),
         "reperes": reperes(r),
         "quartiers": quartiers(b),
     }
+    # Une toponymie cuite reste une information du monde : le navigateur la
+    # montre, mais les messagers et les ordres pourront interroger la même.
+    from toponymie import enrichir_plan
+    return enrichir_plan(plan, r, prefixe)
 
 
 def main():

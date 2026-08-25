@@ -11,6 +11,7 @@ import json, math, heapq, io, os, random
 
 R = random.Random(112900323)
 SP = os.path.dirname(os.path.abspath(__file__))
+REGION = json.load(io.open(os.path.join(SP, "port-real-region.json"), encoding="utf-8"))
 
 L, H = 440, 300          # le repère
 PAS = 2                  # la grille de calcul : 2 unités par case
@@ -23,10 +24,7 @@ MURS = [[90,132],[96,112],[118,80],[170,58],[232,48],[292,52],[336,74],[364,112]
         [374,158],[370,204],[356,236],[310,246],[246,252],[186,250],[150,244],
         [130,238],[100,206],[89,174],[88,160]]
 
-EAU = [
-    [[0,282],[70,276],[150,272],[228,274],[296,276],[348,268],[386,250],[398,300],[0,300]],
-    [[386,250],[398,300],[440,300],[440,0],[404,8],[392,74],[386,150],[380,200]],
-]
+EAU = [e["points"] for e in REGION["eau"]]
 COLLINES = [                       # centre, rayon, hauteur
     ((318,193), 46, 30),           # la colline d'Aegon
     ((276, 94), 43, 26),           # la colline de Rhaenys

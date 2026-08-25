@@ -2835,8 +2835,34 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
 .gens-gouv-cliquable{cursor:pointer;}
 .gens-gouv-cliquable:hover{color:var(--braise,#b4763a);}
 /* les offices tombent l'un sous l'autre : un homme en tient jusqu'à six, et en
-   ligne ils poussent les colonnes chiffrées hors de la colonne */
-.gens-gouv-offices{white-space:pre-line;font-size:.94em;}
+   ligne ils poussent les colonnes chiffrées hors de la colonne.
+   ILS SE QUALIFIENT PAR LA TABLE, sinon ils perdent : `.gens-gouv-table td` pèse
+   une classe ET un type, la classe seule ne pèse qu'une classe, et le
+   `white-space:normal` de la ligne au-dessus l'emportait en silence. Ça ne se
+   voyait pas tant que personne n'avait deux offices. */
+.gens-gouv-table td.gens-gouv-offices{white-space:pre-line;font-size:.94em;}
+/* ------- les deux vues du bloc : les goulots, et la cour ---------------------
+   Le titre unique « Mon gouvernement » promettait la cour et servait les
+   goulots. Les onglets disent laquelle des deux on lit ; la note sous eux porte
+   le dénominateur, sans quoi trois lignes se lisent comme trois hommes. */
+.gens-gouv-tete{display:flex;flex-direction:column;gap:3px;padding-bottom:4px;}
+.gens-gouv-onglets{display:flex;gap:14px;align-items:baseline;}
+.gens-gouv-onglet{background:none;border:0;padding:0 0 2px;cursor:pointer;
+  font:inherit;font-size:.6em;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);border-bottom:1px solid transparent;}
+.gens-gouv-onglet:hover:not(:disabled){color:var(--braise,#b4763a);}
+.gens-gouv-onglet.est-choisi{color:var(--braise,#b4763a);
+  border-bottom-color:var(--braise,#b4763a);}
+.gens-gouv-onglet:disabled{opacity:.4;cursor:default;}
+.gens-gouv-table td.gens-gouv-cahiers{white-space:pre-line;font-size:.94em;}
+/* Une case sans titulaire se lit comme telle, en creux — pas comme un homme. */
+/* Elle se qualifie jusqu'au `:first-child`, qui met la colonne des noms en
+   pleine encre : une case vacante n'est pas un nom, elle se lit en creux. */
+.gens-gouv-table tr td:first-child.gens-gouv-vacant{font-style:italic;
+  color:var(--muted);cursor:help;}
+/* Un renvoi, pas une note : il dit où aller voir, il ne classe personne. */
+.gens-gouv-marque{display:inline-block;margin-top:3px;font-size:.82em;
+  font-style:italic;color:var(--braise,#b4763a);opacity:.85;}
 
 /* ------- l'infobulle du tableau : ce que le chiffre compte, et d'où il sort --
    Elle remplace les `title` natifs des en-têtes, qui mettaient une seconde à
@@ -4348,7 +4374,7 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
    décolorer, parce qu'on joue le soir et que l'écran est sombre.
    ========================================================= */
 :root{
-  --cv-sol:#efe7d6; --cv-eau:#b9d2d9; --cv-eau-trait:#8fb0ba;
+  --cv-sol:#efe7d6; --cv-sol-intra:#e7ddca; --cv-eau:#b9d2d9; --cv-eau-trait:#8fb0ba;
   --cv-niveau:rgba(150,120,70,.30);
   --cv-bati:#d9cbb0; --cv-bati-trait:rgba(110,85,50,.45);
   /* la chaussée : de la terre battue plus sombre que le sol, jamais de l'encre */
@@ -4363,7 +4389,7 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 }
 @media (prefers-color-scheme: dark){
   :root{
-    --cv-sol:#1b1712; --cv-eau:#1d2c33; --cv-eau-trait:#33555f;
+    --cv-sol:#1b1712; --cv-sol-intra:#16120e; --cv-eau:#1d2c33; --cv-eau-trait:#33555f;
     --cv-niveau:rgba(220,190,140,.16);
     --cv-bati:#2e2820; --cv-bati-trait:rgba(220,190,140,.22);
     --cv-voie:#6d5c42;
@@ -4482,8 +4508,34 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 .cv-quartier,.cv-ici text{pointer-events:none;}
 #cv-svg.cv-tire{cursor:grabbing;}
 .cv-sol{fill:var(--cv-sol);}
+.cv-sol-intra{fill:var(--cv-sol-intra);}
 .cv-eau{fill:var(--cv-eau);stroke:var(--cv-eau-trait);
   stroke-width:calc(2px * var(--mpp,1));}
+.cv-cote-detail{fill:none;stroke:var(--cv-eau-trait);
+  stroke-width:calc(2px * var(--mpp,1));}
+.cv-region-terrain{stroke:color-mix(in srgb,var(--cv-mur) 38%,var(--cv-sol));
+  stroke-width:calc(.45px * var(--mpp,1));opacity:.52;}
+.cv-region-champ{fill:color-mix(in srgb,var(--cv-sol) 87%,var(--cv-lum));}
+.cv-region-bois{fill:color-mix(in srgb,var(--cv-sol) 70%,var(--cv-mur));}
+.cv-region-marais{fill:color-mix(in srgb,var(--cv-sol) 72%,var(--cv-eau));}
+.cv-region-arbres{fill:color-mix(in srgb,var(--cv-sol) 42%,var(--cv-mur));opacity:.48;}
+.cv-region-bourgs{fill:color-mix(in srgb,var(--cv-sol) 38%,var(--cv-mur));
+  stroke:var(--cv-bati-trait);stroke-width:calc(.35px * var(--mpp,1));opacity:.78;}
+.cv-route-region-bord,.cv-route-region{fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.cv-route-region-bord{stroke:color-mix(in srgb,var(--cv-sol) 52%,var(--cv-mur));
+  stroke-width:max(9px,calc(2px * var(--mpp,1)));opacity:.42;}
+.cv-route-region{stroke:color-mix(in srgb,var(--cv-voie) 76%,var(--cv-artere));
+  stroke-width:max(5.4px,calc(1.15px * var(--mpp,1)));opacity:.72;}
+.cv-port-bassin{fill:color-mix(in srgb,var(--cv-eau) 88%,var(--cv-nuit));
+  stroke:var(--cv-eau-trait);stroke-width:calc(1px * var(--mpp,1));}
+.cv-port-quai,.cv-port-appontement{fill:none;
+  stroke:color-mix(in srgb,var(--cv-quai) 32%,var(--cv-mur));
+  stroke-linecap:round;stroke-linejoin:round;opacity:.9;}
+.cv-port-quai{stroke-width:max(11px,calc(2.4px * var(--mpp,1)));}
+.cv-port-appontement{stroke-width:max(6px,calc(1.5px * var(--mpp,1)));}
+.cv-region-lieu{opacity:.9;}
+.cv-region .cv-axes,.cv-region .cv-reperes,.cv-region .cv-cloches,
+.cv-region .cv-quartier{display:none;}
 .cv-niveau{fill:none;stroke:var(--cv-niveau);
   stroke-width:calc(1.1px * var(--mpp,1));}
 
@@ -4619,6 +4671,15 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 .cv-quartier{fill:var(--muted);text-anchor:middle;letter-spacing:.14em;
   text-transform:uppercase;opacity:.55;pointer-events:none;
   font-family:inherit;}
+/* Les axes sont écrits SUR leur géométrie cuite. Ils gardent une taille
+   apparente constante, mais leur cap suit réellement la rue : le nom dit donc
+   aussi dans quel sens elle traverse la ville. */
+.cv-axes{pointer-events:none;}
+.cv-axe text{fill:color-mix(in srgb,var(--accent) 68%,var(--ink));
+  text-anchor:middle;font-size:calc(12px * var(--mpp,1));
+  letter-spacing:.055em;font-variant:small-caps;
+  paint-order:stroke;stroke:var(--cv-sol);stroke-width:calc(3.5px * var(--mpp,1));}
+.cv-a-i2 text{font-size:calc(10.5px * var(--mpp,1));font-style:italic;opacity:.72;}
 /* LE RAYON EN PIXELS APPARENTS, PAS EN MÈTRES. Il était écrit `r="11"` dans le
    dessin, donc onze MÈTRES : neuf pixels quand on voit la ville, soixante-dix
    quand on est dans la rue — le gros point rouge qui finissait par couvrir ce
@@ -4632,6 +4693,43 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
   transform:translate(calc(10px * var(--mpp,1)), calc(4px * var(--mpp,1)));
   cursor:pointer;}
 .cv-repere:hover circle{fill:var(--braise);}
+/* Les noms d'usage se découvrent avec l'approche. Tous sont déjà dans le plan
+   et interrogeables ; seule leur encre attend que l'échelle soit utile. */
+.cv-repere.cv-i1,.cv-repere.cv-i2{display:none;}
+.cv-toponymes-locaux .cv-repere.cv-i2{display:inline;}
+.cv-toponymes-fins .cv-repere.cv-i1{display:inline;}
+.cv-repere.cv-i1 circle{r:calc(3.5px * var(--mpp,1));}
+.cv-repere.cv-i1 text{font-size:calc(10px * var(--mpp,1));opacity:.86;}
+.cv-repere.cv-i2 circle{r:calc(4.5px * var(--mpp,1));}
+
+/* ── LES CLOCHES ───────────────────────────────────────────────────────────
+   Le réseau sonore de la ville : un beffroi par point, sa portée au survol.
+   LE BEFFROI EST EN PIXELS APPARENTS, LA PORTÉE EN MÈTRES — et l'écart entre
+   les deux est voulu. La marque doit rester lisible à toute échelle ; le
+   cercle de portée est une distance sur le terrain, et un cercle de portée
+   qui garderait sa taille à l'écran ne dirait plus rien du tout. */
+.cv-clocher .cv-beffroi{fill:#c98f3a;stroke:var(--cv-sol);
+  r:calc(4.5px * var(--mpp,1));stroke-width:calc(1.5px * var(--mpp,1));
+  cursor:pointer;}
+.cv-clocher.cv-alarme .cv-beffroi{fill:#d9642f;r:calc(5.5px * var(--mpp,1));}
+.cv-clocher text{fill:#c98f3a;font-size:calc(10.5px * var(--mpp,1));
+  paint-order:stroke;stroke:var(--cv-sol);stroke-width:calc(3px * var(--mpp,1));
+  transform:translate(calc(9px * var(--mpp,1)), calc(-6px * var(--mpp,1)));
+  cursor:pointer;letter-spacing:.02em;}
+/* Éteinte par défaut : dix cercles de deux kilomètres allumés ensemble ne sont
+   pas une carte, c'est une soupe. On la rend au survol, et une seule à la fois. */
+.cv-clocher .cv-portee{fill:none;stroke:#d9642f;stroke-width:calc(1.5px * var(--mpp,1));
+  stroke-dasharray:calc(6px * var(--mpp,1)) calc(5px * var(--mpp,1));
+  opacity:0;transition:opacity .18s;pointer-events:none;}
+.cv-clocher:hover .cv-portee{opacity:.62;}
+.cv-clocher:hover .cv-beffroi{fill:var(--braise,#e0705c);}
+/* Un clocher sans tocsin ne trace pas de portée d'alarme : sa portée est celle
+   d'une horloge, et personne ne l'a jamais attendue pour courir. */
+.cv-clocher:not(.cv-alarme) .cv-portee{stroke:#c98f3a;}
+.cv-clocher:not(.cv-alarme):hover .cv-portee{opacity:.34;}
+/* De trop loin, les noms se retirent comme ceux des repères — les marques
+   restent, parce que c'est l'implantation qu'on lit à cette échelle. */
+.cv-loin .cv-clocher text{display:none;}
 
 /* — la bulle de survol : le type du bâtiment, à sa propre couleur.
      Elle remplace le `<title>` du navigateur, qui mettait une seconde à venir
@@ -4652,6 +4750,8 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
      chef de corps ou un blessé. Elle passe donc sur l'encre du décor, et la
      seule couleur qu'elle porte est celle du chiffre. — */
 .cv-bulle-bat{padding:.34em .6em;
+  box-sizing:border-box;max-width:min(430px,calc(100vw - 24px));
+  max-height:calc(100vh - 16px);overflow-y:auto;pointer-events:auto;white-space:normal;
   background:color-mix(in srgb,var(--cv-sol) 94%,#000);
   color:var(--ink);}
 .cv-bulle-bat span{display:block;}
@@ -4664,6 +4764,34 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
   color:var(--braise);margin-left:.5em;}
 .cv-bulle-bat i{font-style:italic;opacity:.9;}
 .cv-bulle-bat sup{font-size:.72em;vertical-align:.35em;}
+.cv-mark{display:block;position:sticky;z-index:1;bottom:0;margin:.55em 0 .1em auto;
+  padding:.25em .8em;
+  border:1px solid var(--braise);border-radius:3px;
+  background:color-mix(in srgb,var(--cv-sol) 96%,#000);
+  color:var(--braise);font:inherit;font-weight:700;cursor:pointer;}
+.cv-mark:hover{background:color-mix(in srgb,var(--braise) 12%,transparent);}
+
+/* Le formulaire est séparé de la bulle : celle-ci appartient au survol et peut
+   disparaître ; une remarque commencée appartient au joueur et reste ouverte. */
+.cv-mark-dialog{position:absolute;z-index:8;left:50%;top:50%;
+  transform:translate(-50%,-50%);width:min(520px,calc(100% - 28px));
+  box-sizing:border-box;padding:1rem;border:1px solid var(--braise);border-radius:5px;
+  background:color-mix(in srgb,var(--cv-sol) 97%,#000);color:var(--ink);
+  box-shadow:0 10px 34px rgba(0,0,0,.42);font-size:.9rem;}
+.cv-mark-titre{font:700 1.15rem/1.2 ui-serif,Georgia,serif;}
+.cv-mark-instant{margin:.25rem 0 .85rem;color:var(--muted);font-size:.82rem;}
+.cv-mark-dialog label{display:block;}
+.cv-mark-dialog textarea{display:block;width:100%;box-sizing:border-box;margin:.35rem 0 .75rem;
+  resize:vertical;padding:.55rem;border:1px solid color-mix(in srgb,var(--ink) 25%,transparent);
+  border-radius:3px;background:color-mix(in srgb,var(--cv-sol) 88%,#fff);
+  color:var(--ink);font:inherit;line-height:1.35;}
+.cv-mark-actions{display:flex;justify-content:flex-end;gap:.5rem;}
+.cv-mark-actions button{padding:.35rem .7rem;border:1px solid var(--muted);border-radius:3px;
+  background:transparent;color:var(--ink);font:inherit;cursor:pointer;}
+.cv-mark-actions [data-sauver]{border-color:var(--braise);color:var(--braise);font-weight:700;}
+.cv-mark-statut{min-height:1.2em;margin-top:.65rem;color:var(--muted);font-size:.8rem;}
+.cv-mark-statut code{color:var(--braise);user-select:text;}
+.cv-mark-sauvee textarea,.cv-mark-sauvee [data-annuler]{display:none;}
 
 /* — les enseignes : une marque de métier sur la porte, aux fortes approches.
      DÉSATURÉES, ET CE N'EST PAS UN DÉTAIL. Un emoji sort en couleurs pleines
@@ -4712,6 +4840,7 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
    qui ne portait rien, et l'on garde la masse, qui porte tout. */
 .cv-loin .cv-bati path{stroke:none;}
 .cv-loin .cv-repere text{display:none;}
+.cv-loin .cv-a-i2{display:none;}
 .cv-moyen .cv-v-ruelle{opacity:.2;}
 /* UN NOM DE QUARTIER S'EFFACE À MESURE, IL NE SAUTE PAS D'UN PALIER À L'AUTRE.
    Il est écrit en MÈTRES — jusqu'à 96 de corps, pour que « La ville » pèse plus
@@ -4735,8 +4864,9 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
      où l'on traverse la ville, c'est quelle maison est la forge.
      Un fondu, pas une coupure — une couche qui disparaît net d'un cran de
      molette se remarque, et l'on ne veut pas qu'elle se remarque. — */
-.cv-quartier,.cv-reperes{transition:opacity .18s;}
-.cv-rue .cv-quartier,.cv-rue .cv-reperes{opacity:0;pointer-events:none;}
+.cv-quartier,.cv-axes,.cv-reperes{transition:opacity .18s;}
+.cv-rue .cv-quartier,.cv-rue .cv-axes,
+.cv-rue .cv-repere.cv-i3{opacity:0;pointer-events:none;}
 
 /* — LA MARCHE — l'itinéraire, et la barre qui le mène.
      Une balade se pilote à trois boutons : partir, l'allure, renoncer. Tout
@@ -4857,3 +4987,56 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 .cv-ici-pres .cv-ici-halo{animation:cv-ici-battre 2.4s ease-in-out infinite;}
 @media (prefers-reduced-motion:reduce){
   .cv-ici-pres .cv-ici-halo{animation:none;}}
+
+/* =========================================================
+   LES VISAGES DU FIL, EN GRAND — la gouttière prend toute la
+   place jusqu'au bord gauche.
+   À 70px on reconnaissait un homme qu'on connaissait déjà ;
+   en dessous de ce seuil, les portraits ne servaient qu'à
+   rythmer la colonne. On leur donne la largeur qui reste à
+   gauche du fil : le visage devient la première chose qu'on
+   voit d'une réplique, avant même le nom.
+   ========================================================= */
+/* La ligne s'élargit VERS LA GAUCHE de ce que le visage a pris : le texte
+   garde sa mesure de lecture (~600px), et c'est la marge blanche de gauche
+   qui paie l'agrandissement, pas la colonne de mots. */
+.chr{grid-template-columns:var(--gouttiere,124px) minmax(0,1fr);
+  padding-left:0;gap:16px;max-width:calc(600px + var(--gouttiere,124px));}
+.chr .chr-icone{width:var(--gouttiere,124px);height:var(--gouttiere,124px);}
+.chr-replique .chr-icone,.chr-vous .chr-icone,.chr-acte .chr-icone{
+  width:var(--gouttiere,124px);height:var(--gouttiere,124px);}
+/* l'emblème de l'angle suit le visage : sur un rond de 124px, une pastille de
+   24 se perdait dans le liseré */
+.chr-replique .emb-coin,.chr-vous .emb-coin,.chr-acte .emb-coin{
+  width:34px;height:34px;font-size:19px;}
+/* le nom et la bulle s'appuient plus bas, au premier tiers du portrait */
+.chr-replique .chr-corps,.chr-vous .chr-corps,.chr-acte .chr-corps{
+  padding-top:14px;}
+/* les entrées sans visage gardent leur petit disque, centré dans la case */
+.chr-recit .chr-icone,.chr-breve .chr-icone,.chr-pensee .chr-icone,
+.chr-evenement .chr-icone,.chr-marque .chr-icone,.chr-objectif .chr-icone,
+.chr-question .chr-icone,.chr-reponse .chr-icone,.chr-coulisses .chr-icone,
+.chr-meta .chr-icone,.chr-run .chr-icone,.chr-intervention .chr-icone,
+.chr-reparation .chr-icone{width:32px;height:32px;}
+/* fil étroit : on ne prend pas la moitié de la ligne pour une tête */
+@media (max-width:1500px){ #fil{--gouttiere:96px;} }
+@media (max-width:1200px){ #fil{--gouttiere:76px;} }
+
+/* la fiche de survol grandit d'autant : elle doit rester un agrandissement
+   franc du visage qu'on montre, pas sa copie conforme */
+.visage-fiche .emb-coin{width:64px;height:64px;font-size:38px;}
+.visage-fiche-nom{font-size:1rem;}
+
+/* =========================================================
+   « LES SUJETS » — LA BARRE D'UNE MAIN, ET SA PASTILLE.
+   Le médaillon des gens se couchait ici à 30px, l'emblème
+   d'office gardant ses 24 : une pastille aussi large que la
+   tête, posée en travers du visage et débordant de la barre.
+   L'emblème reste — c'est lui qui dit l'office d'un coup
+   d'œil —, c'est le VISAGE qui grandit pour le porter : 48px,
+   et la pastille se met à sa mesure. On borne le visage à sa
+   case pour qu'il cesse de pousser la ligne.
+   ========================================================= */
+.book-coffret-main-gars .gens-face{flex:none;width:48px;height:48px;}
+.book-coffret-main-gars.gens-gars svg{width:48px;height:48px;flex:none;}
+.book-coffret-main-gars .emb-coin{width:20px;height:20px;font-size:12px;}

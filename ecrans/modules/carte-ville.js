@@ -22,6 +22,7 @@
 "use strict";
 window.CarteVille = (() => {
   const HOTE = "ville2d";
+  const THEME = window.CarteVilleTheme;
   let plan = null;          // le fichier cuit
   let svg = null;
   let vue = null;           // [x, y, l, h] — le viewBox courant, en mètres
@@ -38,6 +39,7 @@ window.CarteVille = (() => {
   // Le glissé en cours. Il vivait dans `brancher()` ; le survol a besoin de
   // savoir qu'on tire la carte pour se taire pendant ce temps.
   let prise = null;
+  let marqueDialogue = null;
 
   const hote = () => document.getElementById(HOTE);
   const esc = (s) => String(s == null ? "" : s)
@@ -117,16 +119,40 @@ window.CarteVille = (() => {
     vue = vue || base.slice();
     const couche = (cl, d, extra) =>
       d ? '<path class="cv-' + cl + '" d="' + d + '"' + (extra || "") + "/>" : "";
+    const region = plan.region || null;
+    const terre = region && region.eau ?
+      "M" + x0 + " " + y0 + "H" + x1 + "V" + y1 + "H" + x0 + "Z" + region.eau : "";
+    const terrainsRegion = region ? (region.terrains || []).map((t) =>
+      couche("region-terrain cv-region-" + t.genre, t.d)).join("") : "";
+    const arbresRegion = region ? couche("region-arbres", region.arbres) : "";
+    const bourgsRegion = region ? couche("region-bourgs", region.bourgs) : "";
+    const routesRegion = region ? (region.routes || []).map((r) =>
+      couche("route-region-bord", r.d) + couche("route-region", r.d)).join("") : "";
+    const portRegion = region && region.port ?
+      (region.port.bassins || []).map((b) => couche("port-bassin", b.d)).join("") +
+      (region.port.quais || []).map((q) => couche("port-quai", q.d)).join("") +
+      (region.port.appontements || []).map((q) => couche("port-appontement", q.d)).join("") : "";
     h.innerHTML =
       '<svg id="cv-svg" viewBox="' + vue.join(" ") + '" ' +
       'preserveAspectRatio="xMidYMid meet">' +
+      (terre ? '<defs><clipPath id="cv-terre"><path d="' + terre +
+        '" fill-rule="evenodd" clip-rule="evenodd"/></clipPath></defs>' : "") +
       '<rect class="cv-sol" x="' + x0 + '" y="' + y0 + '" width="' + (x1 - x0) +
         '" height="' + (y1 - y0) + '"/>' +
-      couche("eau", plan.cote) +
+      '<g class="cv-region-terrains">' + terrainsRegion + arbresRegion + '</g>' +
+      (region ? couche("eau cv-eau-region", region.eau) : "") +
+      couche("sol-intra", THEME.enceinte(plan)) +
+      couche(region && region.eau ? "cote-detail" : "eau", plan.cote) +
       '<g class="cv-niveaux">' +
         (plan.niveaux || []).map((n) => couche("niveau", n.d)).join("") + "</g>" +
+      '<g class="cv-routes-region"' + (terre ? ' clip-path="url(#cv-terre)"' : '') + '>' +
+        routesRegion + '</g>' +
+      '<g class="cv-bourgs-region"' + (terre ? ' clip-path="url(#cv-terre)"' : '') + '>' +
+        bourgsRegion + '</g>' +
       '<g class="cv-voies">' +
-        VOIES.map((g) => couche("voie cv-v-" + g, (plan.voies || {})[g])).join("") + "</g>" +
+        VOIES.map((g) => couche("voie cv-v-" + g, (plan.voies || {})[g],
+          terre && g !== "quai" ? ' clip-path="url(#cv-terre)"' : '')).join("") + "</g>" +
+      '<g class="cv-port-region">' + portRegion + '</g>' +
       '<g class="cv-bati">' + bâtiCouches().map(coucheBati).join("") + "</g>" +
       // L'ENCEINTE PAR-DESSUS LE BÂTI, et c'est voulu. Le rempart est ce qui
       // fait de Port-Réal une ville plutôt qu'un tas de toits : c'est le trait
@@ -141,8 +167,10 @@ window.CarteVille = (() => {
       // marques de métier, et elles ne doivent jamais passer devant les sept
       // portes ni le nom d'un quartier, qui sont ce par quoi on se retrouve.
       '<g class="cv-enseignes"></g>' +
-      '<g class="cv-noms">' + noms() + "</g>" +
+      '<g class="cv-noms">' + nomsRegion() + noms() + "</g>" +
+      '<g class="cv-axes">' + nomsAxes() + "</g>" +
       '<g class="cv-reperes">' + marques() + "</g>" +
+      '<g class="cv-cloches">' + clochers() + "</g>" +
       '<g class="cv-route"></g>' +
       '<g class="cv-vous">' + vous() + "</g></svg>";
     svg = h.querySelector("#cv-svg");
@@ -173,6 +201,13 @@ window.CarteVille = (() => {
     if (window.Bataille2d) Bataille2d.poser(h, () => vue, { source });
   }
 
+  function nomsRegion() {
+    return (((plan || {}).region || {}).lieux || []).map((r) =>
+      '<g class="cv-repere cv-region-lieu cv-i' + Math.max(1, Math.min(3, +(r.importance || 2))) +
+      '"><circle cx="' + r.x + '" cy="' + r.y + '"/><text x="' + r.x + '" y="' + r.y +
+      '">' + esc(r.nom) + '</text></g>').join("");
+  }
+
   // Les noms de quartier : posés au milieu de leurs maisons (le script en fait
   // le barycentre), et dimensionnés par leur POIDS — « La ville » porte 36 000
   // toits, « Le bourg de la Gadoue » cinquante-neuf, et l'œil doit le savoir
@@ -182,6 +217,19 @@ window.CarteVille = (() => {
       const t = Math.max(34, Math.min(96, 26 * Math.log10(Math.max(10, q.n))));
       return '<text class="cv-quartier" x="' + q.x + '" y="' + q.y +
         '" font-size="' + t.toFixed(0) + '">' + esc(q.nom) + "</text>";
+    }).join("");
+  }
+
+  // Le nom d'un axe appartient au plan, pas à une infobulle. Sa position et
+  // son cap sont cuits avec sa géométrie ; le navigateur n'a donc ni à deviner
+  // où la rue commence, ni à recalculer son milieu à chaque zoom.
+  function nomsAxes() {
+    return (plan.axes || []).map((a) => {
+      const i = Math.max(1, Math.min(3, +(a.importance || 1)));
+      const rotation = "rotate(" + (+a.angle || 0) + " " + a.x + " " + a.y + ")";
+      return '<g class="cv-axe cv-a-i' + i + '" data-nom="' + esc(a.nom) + '">' +
+        '<text x="' + a.x + '" y="' + a.y + '" transform="' + rotation + '">' +
+        esc(a.nom) + "</text></g>";
     }).join("");
   }
 
@@ -197,12 +245,56 @@ window.CarteVille = (() => {
   // les traits de ce plan, et gardent une taille APPARENTE constante ; le
   // texte se pose sur le point, la CSS l'écarte.
   function marques() {
-    return (plan.reperes || []).map((r) =>
-      '<g class="cv-repere cv-r-' + esc(r.genre) + '" data-nom="' + esc(r.nom) + '">' +
+    return (plan.reperes || []).map((r) => {
+      const i = Math.max(1, Math.min(3, +(r.importance || 3)));
+      return '<g class="cv-repere cv-r-' + esc(r.genre) + " cv-i" + i +
+      '" data-nom="' + esc(r.nom) + '">' +
       '<title>' + esc(r.nom) + "</title>" +
       '<circle cx="' + r.x + '" cy="' + r.y + '"/>' +
-      '<text x="' + r.x + '" y="' + r.y + '">' + esc(r.nom) + "</text></g>"
-    ).join("");
+      '<text x="' + r.x + '" y="' + r.y + '">' + esc(r.nom) + "</text></g>";
+    }).join("");
+  }
+
+  // ---- les cloches ---------------------------------------------------------
+  // UN CLOCHER, PAS UNE CLOCHE. Les Sept du vieux septuaire partagent un point :
+  // les dessiner une par une empilerait sept marques au même mètre et le nom du
+  // dessus mangerait les six autres. On groupe donc par position — ce qui est
+  // aussi la vérité du monde, puisqu'un beffroi est ce qu'on voit et une cloche
+  // ce qu'on entend.
+  //
+  // LA PORTÉE EST EN MÈTRES, ET C'EST TOUT L'OBJET. Le disque du clocher garde
+  // une taille apparente constante comme le reste du plan ; le cercle de portée,
+  // lui, est une distance sur le terrain et doit grandir quand on s'éloigne —
+  // sinon il ne dit plus rien. Il reste éteint tant qu'on ne survole pas : dix
+  // cercles de deux kilomètres allumés en même temps ne sont pas une carte.
+  function clochers() {
+    const par = new Map();
+    for (const c of plan.cloches || []) {
+      const k = c.x + ":" + c.y;
+      if (!par.has(k)) par.set(k, { x: c.x, y: c.y, nom: c.ensemble, lot: [] });
+      par.get(k).lot.push(c);
+    }
+    return [...par.values()].map((b) => {
+      const alarme = b.lot.filter((c) => c.tocsin);
+      const loin = Math.max(0, ...b.lot.map((c) => c.portee));
+      // LE NOM DE LA CLOCHE QUAND IL N'Y EN A QU'UNE. Écrire l'ensemble partout
+      // posait « Les cloches des sept portes » sept fois sur la muraille, ce qui
+      // ne désigne rien : on lit une carte pour savoir LAQUELLE.
+      const nom = b.lot.length > 1 ? b.nom : b.lot[0].nom;
+      const titre = b.lot.length > 1
+        ? b.nom + " — " + b.lot.map((c) => c.nom).join(", ") +
+          (alarme.length ? " · tocsin : " + alarme.map((c) => c.nom).join(", ")
+                         : " · pas de tocsin")
+        : b.lot[0].nom + " — " + b.lot[0].portee + " m" +
+          (alarme.length ? " · sonne le tocsin" : " · pas de tocsin");
+      return '<g class="cv-clocher' + (alarme.length ? " cv-alarme" : "") +
+        '" data-nom="' + esc(nom) + '">' +
+        "<title>" + esc(titre) + "</title>" +
+        '<circle class="cv-portee" cx="' + b.x + '" cy="' + b.y +
+          '" r="' + loin + '"/>' +
+        '<circle class="cv-beffroi" cx="' + b.x + '" cy="' + b.y + '"/>' +
+        '<text x="' + b.x + '" y="' + b.y + '">' + esc(nom) + "</text></g>";
+    }).join("");
   }
 
   // ---- les enseignes -------------------------------------------------------
@@ -348,13 +440,11 @@ window.CarteVille = (() => {
   // à la retourner un peu tôt pour un nom court. Personne ne voit qu'elle se
   // retourne trente pixels trop tôt ; tout le monde voit une image sautée.
   const MARGE_BULLE = 190, HAUT_BULLE = 26;
-  // Une fiche de bataille fait de trois à six lignes. On majore : ici aussi il
-  // vaut mieux la retourner un peu tôt que la laisser sortir du volet, où elle
-  // serait rognée juste au moment où l'on veut lire l'ordre qu'un homme porte.
-  const HAUT_BULLE_BAT = 108;
-  // Et elle est plus large : « Ser Criston Cole · 1re aile   107 debout » passe
-  // les deux cents pixels là où un nom de métier en fait cent.
-  const MARGE_BULLE_BAT = 260;
+  // La fiche est désormais une vraie loupe : pensée, souvenir de la décision
+  // précédente et quatre couches. On la retourne assez tôt pour qu'elle reste
+  // dans le volet même quand toutes les couches ont quelque chose à dire.
+  const HAUT_BULLE_BAT = 560;
+  const MARGE_BULLE_BAT = 430;
   // Le cadre du volet, relu seulement quand il bouge : `getBoundingClientRect`
   // est gratuit sur une mise en page propre et cher sur une mise en page sale,
   // et l'on ne veut pas dépendre de laquelle des deux on a.
@@ -490,7 +580,25 @@ window.CarteVille = (() => {
     // mot pour un homme qui souffle, un qui cède le pas et un qui garde un
     // poste — donc elle n'apprend rien à qui regarde une ligne se défaire.
     l.push([MOTS_ETAT[s.etat] || esc(s.etat), null]);
-    if (s.branche) l.push(["<i>" + esc(s.branche) + "</i>", null]);
+    // LA PENSÉE EST LE PREMIER OUTIL DE DEBUG. Elle ne prétend pas raconter un
+    // monologue intérieur : elle nomme la règle qui tient ses jambes maintenant
+    // et la donnée qui l'a fait gagner. La branche libre ne paraît qu'en repli
+    // pour les anciennes traces, afin de ne jamais afficher deux fois la même
+    // décision.
+    if (s.pensee) {
+      const avant = s.etat === "mort" ? "dernière pensée — j'essayais de "
+                                      : "pensée — j'essaie de ";
+      l.push(["<b>" + avant + esc(s.pensee.action) + "</b>",
+              esc(s.pensee.systeme)]);
+      l.push(["parce que " + esc(s.pensee.raison),
+              s.pensee.depuis.toFixed(1).replace(".", ",") + " s"]);
+      if (s.pensees && s.pensees.length) {
+        const p = s.pensees[0];
+        l.push(["avant — j'essayais de " + esc(p.action),
+                esc(p.systeme) + " · il y a " +
+                p.ilYa.toFixed(1).replace(".", ",") + " s"]);
+      }
+    } else if (s.branche) l.push(["<i>" + esc(s.branche) + "</i>", null]);
     // CE QUE SON CORPS DIT, A COTE DE CE QUE SA TETE A DECIDE. Les deux lignes
     // ensemble sont tout l'interet : on lit d'un coup d'oeil quand la couche 1
     // est d'accord avec la cascade et quand elle ne l'est pas — et le jour ou
@@ -498,10 +606,31 @@ window.CarteVille = (() => {
     if (s.corpsDit)
       l.push([(s.corpsAgi ? "<b>le corps a agi</b> — " : "son corps : ") +
               esc(s.corpsDit),
-              s.reflexe != null ? "réflexe " + String(s.reflexe).replace(".", ",") : null]);
+              s.sangFroid != null ? "sang-froid " + String(s.sangFroid).replace(".", ",") : null]);
+    if (s.exposition != null)
+      l.push(["exposition " + String(s.exposition).replace(".", ",") +
+              " · charge " + String(s.chargeNerveuse).replace(".", ","),
+              s.exposition > 0.65 ? "dans la bouffée" : null]);
     if (s.empriseCorps != null)
       l.push(["emprise du corps " + String(s.empriseCorps).replace(".", ","),
               s.empriseCorps > 0.6 ? "il a la main" : null]);
+    if (s.reflexion) {
+      l.push(["sa réflexion : " + esc(s.reflexion.idee),
+              "tenir " + String(s.reflexion.tient).replace(".", ",")]);
+      l.push(["attendre " + String(s.reflexion.attend).replace(".", ",") +
+              " · chercher l'épaule " + String(s.reflexion.appui).replace(".", ","),
+              s.reflexion.degage == null ? null
+                : "issue " + String(s.reflexion.degage).replace(".", ",")]);
+    }
+    if (s.maniere && s.l3)
+      l.push(["son ordre : " + esc(s.maniere),
+              "lettre " + String(s.l3.lettre).replace(".", ",") +
+              " · place " + String(s.l3.place).replace(".", ",")]);
+    if (s.envie != null)
+      l.push(["sa convoitise " + String(s.envie).replace(".", ","), null]);
+    if (s.conduit)
+      l.push(["arbitre : " + esc(s.conduit) + " tient les jambes",
+              s.conduitBras ? esc(s.conduitBras) + " tient les bras" : null]);
     // Ce qu'il porte, et jusqu'où ça va. L'allonge est la moitié qui compte :
     // c'est elle qui dit qui, de lui ou de son vis-à-vis, touchera le premier.
     if (s.arme)
@@ -525,6 +654,17 @@ window.CarteVille = (() => {
     else if (s.ordre)
       l.push(["ordre : " + esc(MOTS_ORDRE[s.ordre] || s.ordre) +
               (s.sourde ? " — <i>n'entend plus rien</i>" : ""), null]);
+    if (s.unite) {
+      l.push(["unité : " + esc(s.unite),
+              s.chefFormation ? "sous " + esc(s.chefFormation) : "sans chef"]);
+      if (s.successionDans != null)
+        l.push(["chef tombé — reprise dans " + s.successionDans.toFixed(1).replace(".", ",") + " s", null]);
+      if (s.destination)
+        l.push(["marche vers " + esc(s.destination),
+                s.calculsAStar + " route" + (s.calculsAStar > 1 ? "s" : "")]);
+      if (s.distanceChef > 0)
+        l.push(["à " + s.distanceChef.toFixed(1).replace(".", ",") + " m de son chef", null]);
+    }
     if (s.banniere === false) l.push(["sa bannière est à terre", null]);
     if (s.camp) l.push([t(s.camp), null]);
 
@@ -563,6 +703,77 @@ window.CarteVille = (() => {
       l.push(["cœur " + n2(s.trempe) + " · œil " + n2(s.oeil) +
               " · fond " + n2(s.fond), null]);
     return l;
+  }
+
+  // ---- MARQUER UN HOMME ---------------------------------------------------
+  // Le clic GELE le diagnostic et lance la capture avant même que le joueur
+  // écrive : son commentaire peut prendre une minute, l'instant contesté ne
+  // doit pas avancer pendant ce temps-là.
+  function ouvrirMarque(s) {
+    if (!s || !s.debugId || !window.Bataille2d || !Bataille2d.diagnostic) return;
+    if (marqueDialogue) marqueDialogue.remove();
+    const diagnostic = Bataille2d.diagnostic(s.debugId);
+    if (!diagnostic) return;
+    const p = diagnostic.combattant.position;
+    const lieu = CarteVille.toponymie && CarteVille.toponymie.decrire
+      ? CarteVille.toponymie.decrire(p, { rayonAxe: 30, rayonRepere: 240 }) : null;
+    const priseImage = window.Capture && Capture.composer
+      ? Capture.composer({ fenetre: 140,
+          centre: { x: p.x, y: p.y, id: s.debugId,
+                    nom: diagnostic.combattant.nom || s.debugId } })
+      : Promise.reject(new Error("le module de capture n'est pas chargé"));
+
+    const d = document.createElement("div");
+    d.className = "cv-mark-dialog";
+    d.innerHTML = '<div class="cv-mark-titre"></div>' +
+      '<div class="cv-mark-instant"></div>' +
+      '<label>Qu’est-ce qui vous paraît faux ou intéressant ?' +
+        '<textarea rows="5" maxlength="8000" placeholder="Ex. Il part seul alors que son chef attend encore le reste de la vintaine."></textarea></label>' +
+      '<div class="cv-mark-actions"><button type="button" data-annuler>Annuler</button>' +
+        '<button type="button" data-sauver>Enregistrer la marque</button></div>' +
+      '<div class="cv-mark-statut" aria-live="polite">Capture de l’instant en cours…</div>';
+    d.querySelector(".cv-mark-titre").textContent = "Mark — " +
+      (diagnostic.combattant.nom || s.nom || s.debugId);
+    d.querySelector(".cv-mark-instant").textContent = [
+      diagnostic.temps_bataille_s + " s de bataille",
+      lieu && lieu.texte,
+      diagnostic.combattant.pensee &&
+        "j’essaie de " + diagnostic.combattant.pensee.action,
+    ].filter(Boolean).join(" · ");
+    const textarea = d.querySelector("textarea"), statut = d.querySelector(".cv-mark-statut");
+    const sauver = d.querySelector("[data-sauver]");
+    d.querySelector("[data-annuler]").onclick = () => { d.remove(); marqueDialogue = null; };
+    priseImage.then(() => { statut.textContent = "Capture prête — ajoutez votre commentaire."; })
+      .catch((e) => { statut.textContent = "Capture impossible : " + e.message; });
+    sauver.onclick = async () => {
+      const commentaire = textarea.value.trim();
+      if (!commentaire) { textarea.focus(); statut.textContent = "Écrivez un commentaire avant d’enregistrer."; return; }
+      sauver.disabled = true; textarea.disabled = true;
+      statut.textContent = "Enregistrement du dossier…";
+      try {
+        const capture = await priseImage;
+        const r = await fetch("/marque-bataille", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ commentaire, diagnostic, lieu,
+                                 image: capture.image, meta: capture.meta }),
+        });
+        const rep = await r.json();
+        if (!r.ok) throw new Error(rep.erreur || ("refus du serveur " + r.status));
+        d.classList.add("cv-mark-sauvee");
+        const h = rep.historique;
+        const allegee = h && h.omis ? " · " + h.conserve +
+          " perceptions récentes gardées, " + h.omis + " anciennes omises" : "";
+        statut.innerHTML = "Marque enregistrée dans <code>" + esc(rep.ecrit) +
+          "</code>" + allegee;
+        sauver.textContent = "Fermer"; sauver.disabled = false;
+        sauver.onclick = () => { d.remove(); marqueDialogue = null; };
+      } catch (e) {
+        sauver.disabled = false; textarea.disabled = false;
+        statut.textContent = "Échec : " + String(e && e.message || e);
+      }
+    };
+    hote().appendChild(d); marqueDialogue = d;
+    textarea.focus();
   }
 
   // ON PLACE AVANT D'ÉCRIRE, et l'ordre est tout : lire le cadre du volet après
@@ -610,7 +821,7 @@ window.CarteVille = (() => {
     // du même coup la hampe sous laquelle il se range, qui est la seule chose
     // du modèle qu'aucun point rouge ne pouvait laisser deviner.
     if (window.Bataille2d && Bataille2d.souligner) {
-      const sel = s && s._sel && s._sel.escouade !== null ? s._sel : null;
+      const sel = s && s._sel && s._sel.formation !== null ? s._sel : null;
       if (sel !== soulignait) { soulignait = sel; Bataille2d.souligner(sel); }
     }
     if (s) {
@@ -624,10 +835,21 @@ window.CarteVille = (() => {
       // réécrit que lorsqu'elle a bougé assez pour qu'on le voie. C'est le même
       // marché que partout ici — on ne réécrit que ce qui change.
       const cran = (v) => (v == null ? "" : Math.round(v * 20));
-      const clef = "bat:" + s.quoi + ":" + (s.nom || "") + ":" + s.etat +
+      const clef = "bat:" + (s.debugId || "") + ":" + s.quoi + ":" + (s.nom || "") + ":" + s.etat +
                    ":" + (s.branche || "") +
+                   ":" + (s.pensee ? s.pensee.action + "/" + s.pensee.raison +
+                     "/" + s.pensee.systeme + "/" + Math.floor(s.pensee.depuis) : "") +
+                   ":" + (s.pensees && s.pensees[0] ? s.pensees[0].action +
+                     "/" + s.pensees[0].systeme + "/" + Math.floor(s.pensees[0].ilYa) : "") +
                    ":" + (s.ordre || "") + ":" + (s.vivants || "") +
                    ":" + (s.corpsDit || "") + ":" + cran(s.empriseCorps) +
+                   ":" + (s.reflexion ? s.reflexion.idee + "/" +
+                     cran(s.reflexion.tient) + "/" + cran(s.reflexion.attend) +
+                     "/" + cran(s.reflexion.appui) : "") +
+                   ":" + (s.maniere || "") + ":" + cran(s.envie) +
+                   ":" + (s.conduit || "") + ":" + (s.conduitBras || "") +
+                   ":" + (s.destination || "") + ":" + cran(s.distanceChef) +
+                   ":" + cran(s.successionDans) +
                    ":" + s.pv + ":" + cran(s.morale) + ":" + cran(s.souffle) +
                    ":" + s.amis + "/" + s.ennemis;
       if (clef !== bulleType) {
@@ -637,6 +859,13 @@ window.CarteVille = (() => {
         bulle.innerHTML = ligneDeBataille(s)
           .map(([g, d]) => "<span>" + g + (d ? "<em>" + esc(d) + "</em>" : "") +
                            "</span>").join("");
+        if (s.debugId) {
+          const mark = document.createElement("button");
+          mark.type = "button"; mark.className = "cv-mark"; mark.textContent = "Mark";
+          mark.title = "Geler cet homme, sa perception et sa zone pour laisser un feedback";
+          mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); ouvrirMarque(s); };
+          bulle.appendChild(mark);
+        }
         bulle.style.display = "block";
         bulleType = clef;
       }
@@ -762,6 +991,7 @@ window.CarteVille = (() => {
     svg.classList.toggle("cv-loin", mpp > 12);
     svg.classList.toggle("cv-moyen", mpp <= 12 && mpp > 1.2);
     svg.classList.toggle("cv-pres", mpp <= 1.2);
+    svg.classList.toggle("cv-region", mpp > 7);
     // LE BÂTI ET LA TOILE DES RUELLES N'ONT PAS LE MÊME SEUIL, et les confondre
     // était la faute : en repoussant l'effacement du bâti de 4 à 12 m/px, on a
     // repoussé du même coup les quatorze mille ruelles, qui se sont mises à
@@ -792,6 +1022,11 @@ window.CarteVille = (() => {
     // rien qu'on ne voie déjà. C'est le même seuil que les enseignes, qui
     // s'allument à la seconde où ceux-là s'éteignent — l'un remplace l'autre.
     svg.classList.toggle("cv-rue", mpp <= MPP_RUE);
+    // Les cinquante noms d'usage n'arrivent pas d'un bloc. Les places qui
+    // structurent un quartier paraissent d'abord ; les petits carrefours ne
+    // deviennent lisibles qu'à l'échelle où l'on peut réellement les choisir.
+    svg.classList.toggle("cv-toponymes-locaux", mpp <= 2.2);
+    svg.classList.toggle("cv-toponymes-fins", mpp <= .85);
     // Les traits sont écrits en mètres : sans correction ils épaississent en
     // approchant, et une artère finit large comme un quartier. On les tient à
     // une épaisseur APPARENTE constante en les divisant par l'échelle.
@@ -1376,6 +1611,86 @@ window.CarteVille = (() => {
     }).catch(() => { moi = null; });
   }
 
+  // ---- interroger la ville nommée ----------------------------------------
+  // Ces fonctions ne savent rien des messagers ni du combat. Elles répondent
+  // seulement à des questions générales : quel axe passe ici, quel repère est
+  // proche, et quels toponymes correspondent à un mot. La décision d'en faire
+  // un rendez-vous, un souvenir ou un ordre appartient aux systèmes appelants.
+  function xy(position) {
+    if (Array.isArray(position)) return { x: +position[0], y: +position[1] };
+    return { x: +(position && position.x), y: +(position && position.y) };
+  }
+
+  function distanceSegment(p, a, b) {
+    const dx = b[0] - a[0], dy = b[1] - a[1];
+    const n = dx * dx + dy * dy;
+    const t = n ? Math.max(0, Math.min(1,
+      ((p.x - a[0]) * dx + (p.y - a[1]) * dy) / n)) : 0;
+    return Math.hypot(p.x - (a[0] + dx * t), p.y - (a[1] + dy * t));
+  }
+
+  function repereProche(position, rayon) {
+    if (!plan) return null;
+    const p = xy(position), limite = rayon == null ? Infinity : +rayon;
+    if (!isFinite(p.x) || !isFinite(p.y)) return null;
+    let meilleur = null;
+    (plan.reperes || []).forEach((r) => {
+      const d = Math.hypot(p.x - r.x, p.y - r.y);
+      if (d <= limite && (!meilleur || d < meilleur.distance_m))
+        meilleur = Object.assign({ distance_m: Math.round(d * 10) / 10 }, r);
+    });
+    return meilleur;
+  }
+
+  function axesProches(position, rayon) {
+    if (!plan) return [];
+    const p = xy(position), limite = rayon == null ? Infinity : +rayon;
+    if (!isFinite(p.x) || !isFinite(p.y)) return [];
+    const trouves = [];
+    (plan.axes || []).forEach((a) => {
+      let distance = Infinity;
+      (a.trace || []).forEach((ligne) => {
+        for (let i = 1; i < ligne.length; i++)
+          distance = Math.min(distance, distanceSegment(p, ligne[i - 1], ligne[i]));
+      });
+      if (distance <= limite)
+        trouves.push(Object.assign({ distance_m: Math.round(distance * 10) / 10 }, a));
+    });
+    return trouves.sort((a, b) => a.distance_m - b.distance_m ||
+      (b.importance || 0) - (a.importance || 0) || a.nom.localeCompare(b.nom, "fr"));
+  }
+
+  function axeProche(position, rayon) {
+    return axesProches(position, rayon)[0] || null;
+  }
+
+  const cleToponyme = (s) => String(s || "").normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "").replace(/[’'-]/g, " ").toLowerCase().trim();
+
+  function chercherToponyme(texte) {
+    if (!plan) return [];
+    const q = cleToponyme(texte);
+    if (!q) return [];
+    return (plan.axes || []).map((x) => Object.assign({ type: "axe" }, x))
+      .concat((plan.reperes || []).map((x) => Object.assign({ type: "repere" }, x)))
+      .filter((x) => cleToponyme(x.nom).includes(q))
+      .sort((a, b) => (cleToponyme(a.nom) === q ? -1 : 0) -
+                       (cleToponyme(b.nom) === q ? -1 : 0) ||
+                       (b.importance || 0) - (a.importance || 0) ||
+                       a.nom.localeCompare(b.nom, "fr"));
+  }
+
+  function decrirePosition(position, options) {
+    options = options || {};
+    const axes = axesProches(position, options.rayonAxe == null ? 24 : options.rayonAxe);
+    const axe = axes[0] || null;
+    const repere = repereProche(position,
+      options.rayonRepere == null ? 220 : options.rayonRepere);
+    const texte = [axe && axe.nom, repere && ("près de " + repere.nom)]
+      .filter(Boolean).join(", ");
+    return { axe, axes, repere, texte: texte || "sans repère nommé" };
+  }
+
   // ---- l'échelle du décor --------------------------------------------------
   function charger() {
     return fetch("/carte").then((r) => r.json()).then((d) => {
@@ -1443,5 +1758,12 @@ window.CarteVille = (() => {
   // la lui faire recalculer voudrait dire recopier la chaîne entière du lieu
   // au bâtiment, pour deux nombres qu'on a sous la main.
   return { charger, dessiner, plan: () => plan, ou: () => moi,
+           toponymie: {
+             chercher: chercherToponyme,
+             decrire: decrirePosition,
+             axesProches,
+             axeProche,
+             repereProche,
+           },
            viser: (v) => { vue = v; cadrer(); } };
 })();

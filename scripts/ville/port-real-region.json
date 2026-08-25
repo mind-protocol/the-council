@@ -1,0 +1,58 @@
+{
+  "_lisez_moi": "Autorite regionale commune autour de Port-Real. Les coordonnees sont celles de la carte urbaine source (1 unite = 12 m). Le plan detaille garde ses identites; cette couronne donne la cote, les routes d'approche, les villages et le systeme portuaire aux echelles superieures.",
+  "version": 2,
+  "orientation": "projection urbaine historique; nord geographique a unifier dans une migration separee",
+  "repere": [-125, -65, 535, 350],
+  "eau": [
+    {
+      "id": "nera-regionale",
+      "nom": "La Nera",
+      "points": [[-260,310],[-150,304],[-60,294],[0,282],[70,276],[150,272],[228,274],[296,276],[348,268],[386,250],[398,300],[520,350],[680,410],[680,470],[-260,470]]
+    },
+    {
+      "id": "baie-de-la-nera",
+      "nom": "La baie de la Nera",
+      "points": [[380,200],[386,150],[392,74],[404,8],[450,-12],[520,-50],[600,-86],[680,-105],[680,470],[520,350],[398,300],[386,250]]
+    }
+  ],
+  "terrains": [
+    {"genre":"marais","nom":"Les pres bas de la Nera","points":[[-124,238],[-98,232],[-66,238],[-32,246],[4,254],[42,266],[18,278],[-20,282],[-58,278],[-92,268],[-120,258]]},
+    {"genre":"champ","nom":"Les champs de la route de la Rose","points":[[-122,72],[-88,64],[-50,66],[-12,74],[24,92],[48,122],[24,148],[-12,164],[-52,158],[-92,142],[-120,112]]},
+    {"genre":"champ","nom":"Les cultures du nord","points":[[72,-58],[122,-64],[178,-60],[232,-54],[286,-40],[342,-18],[354,10],[322,30],[274,20],[222,8],[166,6],[112,-8],[78,-30]]},
+    {"genre":"bois","nom":"Le bois de la route royale","points":[[306,-62],[354,-65],[408,-60],[456,-48],[496,-28],[486,-2],[446,14],[396,10],[352,-2],[320,-24]]},
+    {"genre":"champ","nom":"Les terres de Rosby","points":[[414,-58],[456,-62],[500,-56],[532,-40],[530,-8],[508,14],[476,22],[442,8],[420,-16]]},
+    {"genre":"champ","nom":"Les vergers du Lion","points":[[-122,154],[-92,152],[-58,160],[-24,176],[8,198],[-10,222],[-44,232],[-82,220],[-112,198]]},
+    {"genre":"champ","nom":"Les clos de la porte des Dragons","points":[[246,-8],[274,-14],[306,-4],[326,18],[314,42],[282,48],[252,34],[236,14]]}
+  ],
+  "routes": [
+    {"id":"rose","nom":"La route de la Rose","destination":"Hautjardin et la route de l'ouest","points":[[89,140],[72,137],[54,132],[34,134],[14,128],[-8,130],[-30,124],[-52,126],[-76,118],[-100,116],[-124,108]]},
+    {"id":"royale","nom":"La route royale","destination":"Sombreval et le nord","points":[[262,49],[260,37],[266,25],[263,12],[268,-2],[264,-16],[269,-30],[264,-44],[268,-62]]},
+    {"id":"rosby","nom":"La route de Rosby","destination":"Rosby","points":[[370,134],[374,122],[380,111],[378,98],[384,86],[382,72],[390,58],[392,44],[402,30],[410,16],[424,4],[438,-8],[450,-22],[466,-34],[480,-54]]},
+    {"id":"gue","nom":"La route du gue","destination":"Le gue en amont de la Nera","points":[[159,245],[148,251],[136,255],[122,258],[108,257],[92,261],[74,258],[56,260],[38,255],[18,257],[-2,252],[-24,254],[-46,247],[-68,248],[-90,241],[-112,240],[-124,236]]},
+    {"id":"lion","nom":"La route du Lion","destination":"Les collines de l'ouest","points":[[90,183],[76,187],[62,194],[48,193],[32,201],[16,205],[0,210],[-18,206],[-36,211],[-54,204],[-74,202],[-94,194],[-112,190],[-124,184]]}
+  ],
+  "lieux": [
+    {"id":"rosby","nom":"Rosby","genre":"bourg","point":[480,-54],"importance":3},
+    {"id":"gue-nera","nom":"Le gue de la Nera","genre":"gue","point":[-124,236],"importance":2},
+    {"id":"relais-royal","nom":"Le relais de la route royale","genre":"relais","point":[268,-55],"importance":2},
+    {"id":"moulins-rose","nom":"Les moulins de la Rose","genre":"hameau","point":[-102,116],"importance":2}
+  ],
+  "port": {
+    "quais": [
+      {"id":"quai-grain","nom":"Le quai au grain","points":[[274,275.3],[298,275.5],[322,272]]},
+      {"id":"quai-marchands","nom":"Le quai des marchands","points":[[322,272],[346,268.3],[362,261.5]]},
+      {"id":"quai-poissons","nom":"Le quai aux poissons","points":[[362,261.5],[374,255],[386,250]]},
+      {"id":"quai-royal","nom":"Le quai royal","points":[[386,250],[383,225],[381,204]]}
+    ],
+    "appontements": [
+      {"id":"chantier","nom":"Les cales du chantier","points":[[220,274],[230,282],[244,288]]},
+      {"id":"mole-grain","nom":"Le mole au grain","points":[[298,275.5],[302,290]]},
+      {"id":"mole-marchands","nom":"Le mole des marchands","points":[[346,268.3],[354,283]]},
+      {"id":"mole-royal","nom":"Le mole royal","points":[[383,225],[394,230]]}
+    ],
+    "bassins": [
+      {"id":"bassin-marchands","nom":"Le bassin des marchands","points":[[322,272],[346,268.3],[354,283],[330,286]]},
+      {"id":"bassin-royal","nom":"Le bassin royal","points":[[374,255],[386,250],[394,230],[383,225]]}
+    ]
+  }
+}

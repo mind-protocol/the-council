@@ -6,6 +6,7 @@ SP = os.path.dirname(os.path.abspath(__file__))
 CIBLE = os.path.join(os.path.dirname(os.path.dirname(SP)), "etat", "villes", "port-real.json")
 T = json.load(io.open(os.path.join(SP, "tissu.json"), encoding="utf-8"))
 VOIES, TOITS = T["voies"], T["toits"]
+REGION = json.load(io.open(os.path.join(SP, "port-real-region.json"), encoding="utf-8"))
 
 def dedans(poly, x, y):
     r = False; j = len(poly)-1
@@ -27,10 +28,7 @@ def par_nom(n):
         if v.get("nom") == n: return v["points"]
     return None
 
-EAU = [
-    [[0,282],[70,276],[150,272],[228,274],[296,276],[348,268],[386,250],[398,300],[0,300]],
-    [[386,250],[398,300],[440,300],[440,0],[404,8],[392,74],[386,150],[380,200]],
-]
+EAU = [e["points"] for e in REGION["eau"]]
 CULPU    = [[204,196],[252,190],[276,206],[268,236],[224,242],[198,224]]
 TANNERIE = [[194,230],[228,226],[232,246],[196,248]]
 PORT_ZONE= [[266,246],[312,242],[356,232],[362,248],[352,266],[300,276],[266,270]]
@@ -46,13 +44,11 @@ PLACES = [
 ]
 ACIER   = par_nom("La rue d'Acier")
 CROCHET = par_nom("Le Crochet")
-DEHORS_NOM = [
-    ([[89,140],[46,132],[0,124]],   "Le faubourg de la Rose"),
-    ([[262,49],[266,22],[258,0]],   "Le faubourg royal"),
-    ([[370,134],[404,122],[440,108]],"Le faubourg de Rosby"),
-    ([[159,245],[136,264],[104,278]],"Les baraques du gué"),
-    ([[90,183],[54,196],[20,214]],  "Le faubourg du Lion"),
-]
+NOMS_FAUBOURG = {"rose":"Le faubourg de la Rose", "royale":"Le faubourg royal",
+                  "rosby":"Le faubourg de Rosby", "gue":"Les baraques du gué",
+                  "lion":"Le faubourg du Lion"}
+DEHORS_NOM = [(r["points"][:4], NOMS_FAUBOURG[r["id"]])
+              for r in REGION["routes"] if r["id"] in NOMS_FAUBOURG]
 
 def quartier(p, zone):
     x, y = p[0], p[1]
@@ -124,11 +120,8 @@ for v in sorted(VOIES, key=lambda w: RANG_ORDRE.get(w["rang"], 3)):
     e["detail"] = v["raison"]
     sol.append(e)
 # les routes du dehors : elles existaient avant la ville
-for pts, nom in [([[89,140],[46,132],[0,124]], "La route de la Rose"),
-                 ([[262,49],[266,22],[258,0]], "La route royale"),
-                 ([[370,134],[404,122],[440,108]], "La route de Rosby"),
-                 ([[159,245],[136,264],[104,278]], "La route du gué")]:
-    A(genre="route", largeur=6, nom=nom, points=pts,
+for r in REGION["routes"]:
+    A(genre="route", largeur=6, nom=r["nom"], points=r["points"],
       detail="Route du dehors : la ville s'est bâtie sur elle, pas l'inverse.")
 
 # ---- les toits ------------------------------------------------------------
@@ -182,10 +175,12 @@ for nom, etiq, larg, pts, det in BATI:
     if det: e["detail"] = det
     sol.append(e)
 
-A(genre="quai", nom="Les quais de la Néra", etiq=[330, 274], points=[[278,270],[314,266],[350,258]],
-  detail="Sept coques de front à basse mer. Tout ce qui y touche doit passer la Gadoue pour entrer.")
-A(genre="quai", points=[[226,270],[240,278]],
-  detail="L'appontement du chantier : on y hale ce qu'on démonte.")
+for i, q in enumerate(REGION["port"]["quais"]):
+    A(genre="quai", nom=q["nom"], etiq=([330, 274] if i == 1 else None), points=q["points"],
+      detail="Quai spécialisé : la rive garde une chaussée continue et chaque bassin son métier.")
+for q in REGION["port"]["appontements"]:
+    A(genre="quai", nom=q["nom"], points=q["points"], ouvrage="appontement",
+      detail="Ouvrage porté sur l'eau : ce n'est pas une route et personne ne le prolonge sur la vase.")
 
 # ---- on écarte les étiquettes qui se marchent dessus ----------------------
 pin = {s["nom"] for s in sol if s.get("nom") and s["genre"] not in ("village",)}
