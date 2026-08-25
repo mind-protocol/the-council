@@ -343,7 +343,10 @@
       terrain: "La rue de leur poste, sans téléportation vers un terrain abstrait.",
       passe: "Les deux chefs avancent, deux routes seulement sont payées et chaque unité " +
              "conserve au moins 70 % de cohésion.",
-      echelle: 0.25, duree: 12,
+      // Trente secondes : les groupes partent compacts mais doivent se céder
+      // physiquement une rue étroite. Douze secondes ne mesuraient que le
+      // bouchon initial, avant que le second chef ait franchi deux mètres.
+      echelle: 0.25, duree: 30,
       avant: (B) => {
         const us = B.unites();
         const parents = us.filter((u) => u.camp === "garde").reduce((m, u) =>
