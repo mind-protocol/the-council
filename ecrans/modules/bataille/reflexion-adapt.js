@@ -10,10 +10,10 @@
 // Les trois autres couches ont leur pourvoyeur : la 1 a `corps-adapt.js`, la 3
 // et la 4 sont nourries en ligne dans `soldat()`. Celui-ci est celui de la 2.
 //
-// ELLE NE CONDUIT RIEN, ET C'EST VOULU POUR CETTE PASSE. Ce fichier écrit
-// `h.l2`, et `h.conduit` — la trace, voir tout en bas. Il ne touche ni `h.etat`,
-// ni `h.cible`, ni `h.recule`, ni la boîte aux lettres `h.recu` (qui appartient
-// à `corps-adapt`, et qu'un second lecteur viderait sous son nez).
+// CE FICHIER NE DÉPLACE PERSONNE. Il écrit `h.l2`, puis demande à l'arbitre de
+// poser `h.conduit`. `soldat()` exécute ailleurs la seule main élue. Il ne touche
+// donc ni `h.etat`, ni `h.cible`, ni la boîte aux lettres `h.recu` (qui
+// appartient à `corps-adapt`, et qu'un second lecteur viderait sous son nez).
 //
 // ═════════════════════════════════════════════════════════════════════════════
 // CE QU'IL BÂTIT, ET D'OÙ ÇA SORT
@@ -183,7 +183,16 @@
 
     const pvMax = h.pvMax || 25;
     const avant = h.l2;
-    const dMen = men ? Math.hypot(men.x - h.x, men.y - h.y) : Infinity;
+    // Une menace sans combattant a la même géométrie décisionnelle : elle peut
+    // réclamer un repli et doit donc fournir son côté à `issue()`. Elle ne
+    // devient pas pour autant un ennemi dans le rapport de forces.
+    const externe = ctx.temps <= (h.menaceJus || -Infinity)
+      ? Math.max(0, Math.min(1, h.menaceExterieure || 0)) : 0;
+    const versExterne = externe
+      ? vers(h.x, h.y, h.menaceX, h.menaceY) : null;
+    if (externe > menForce) { menForce = externe; men = null; }
+    const dMen = men ? Math.hypot(men.x - h.x, men.y - h.y)
+      : versExterne ? Math.hypot(h.menaceX - h.x, h.menaceY - h.y) : Infinity;
     const nombre = bornes((amis + 1 - ennemis) / 3);
 
     // ── L'HORLOGE D'ATTENTE, ET LE BASSIN A PRIS SA PREMIÈRE ÉCRITURE ────────
@@ -207,7 +216,7 @@
     else e.attendDepuis = 0;
 
     const cap = vers(0, 0, h.fx || 0, h.fy || 0);
-    const versLui = men ? vers(h.x, h.y, men.x, men.y) : null;
+    const versLui = men ? vers(h.x, h.y, men.x, men.y) : versExterne;
     const versEux = amis ? vers(h.x, h.y, ax / amis, ay / amis) : null;
     // Le dos : l'opposé de la menace, sinon l'opposé du cap tenu, sinon rien.
     const dos = versLui ? [-versLui[0], -versLui[1]]
@@ -263,10 +272,8 @@
     // prendre le jour où l'on voudra voir la stack sur le plan. L'autre moitié
     // de 90200 est là-bas, et elle n'est pas de ce fichier.
     //
-    // ⚠ RIEN NE LE LIT AUJOURD'HUI, ET C'EST EXACTEMENT CE QUI REND CETTE PASSE
-    // SÛRE : aucune conduite ne change, l'étalon du four ne peut pas bouger. Le
-    // jour où la peinture le lira, on verra la stack sans lui avoir donné la
-    // main — ce qui est l'ordre honnête des deux gestes.
+    // `soldat()` lit aujourd'hui ce champ comme autorité unique des jambes ; la
+    // peinture peut aussi le montrer sans reconstruire l'arbitrage.
     //
     // C'EST L'INSTANT DE 🔒 90360, ET IL EST À MOITIÉ VRAI. `h.l1` vient d'être
     // posé au battement d'à côté, `h.l2` à l'instant : ces deux-là sont frais

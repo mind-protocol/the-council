@@ -168,22 +168,22 @@
 <!-- la couche de l'interprétation. En observation : elle calcule la manière
      dont chacun tiendrait son ordre, et ne conduit rien. -->
 <script src="/modules/survival-stack/3-interpretation.js"></script>
-<!-- la couche de la réflexion. En observation : elle cherche par où sortir —
-     tenir ou céder, attendre le nombre, chercher l'épaule, et de quel côté.
-     Elle ne conduit rien tant que l'arbitre (⚔️ 90311) n'est pas branché. -->
+<!-- la couche de la réflexion : elle cherche par où sortir — tenir ou céder,
+     attendre le nombre, chercher l'épaule, et de quel côté. L'arbitre décide
+     ensuite si cette issue tient réellement les jambes. -->
 <script src="/modules/survival-stack/2-reflexion.js"></script>
 <!-- son pourvoyeur, jumeau de corps-adapt.js : il bâtit les onze signaux
      de la couche 2 depuis ce que la bataille tient déjà, pose h.l2, et laisse
-     la trace `h.conduit` — laquelle des quatre tient les jambes de cet homme.
-     Il ne conduit rien (⚔️ 90312 pour la dépose). -->
-<script src="/modules/bataille/reflexion-adapt.js"></script>
+     la trace `h.conduit` — laquelle des quatre tient les jambes de cet homme. -->
+<script src="/modules/bataille/reflexion-adapt.js?v=20260825-doctrine-dragon-marques-routes-2-feux-1"></script>
 <!-- LA MAIN — le cinquième fichier. Il ne pense pas : il dit qui, du corps, de
      la réflexion, de l'envie ou de l'ordre, tient chaque emplacement à ce
-     battement-ci. En observation : `soldat()` garde sa chaîne de `if` jusqu'à
-     la dépose morceau par morceau (⚔️ 90312). -->
+     battement-ci. `soldat()` n'exécute ensuite que la main élue. -->
 <script src="/modules/survival-stack/5-qui-conduit.js"></script>
-<script src="/modules/bataille2d.js"></script>
-<script src="/modules/carte-ville.js"></script>
+<script src="/modules/bataille/commandement.js"></script>
+<script src="/modules/bataille2d.js?v=20260825-doctrine-dragon-marques-routes-2-feux-1"></script>
+<script src="/modules/carte-ville-theme.js"></script>
+<script src="/modules/carte-ville.js?v=20260825-doctrine-dragon-marques-routes-2"></script>
 <!-- tenir sa position pendant que le temps passe : la balade dont l'horloge
      est décrochée des jambes. Après carte-ville, dont il lit la position. -->
 <script src="/modules/combat.js"></script>

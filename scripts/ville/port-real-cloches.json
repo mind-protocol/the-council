@@ -1,0 +1,366 @@
+{
+  "_lisez_moi": "LES CLOCHES DE PORT-REAL. Source humaine versionnee, comme port-real-toponymie.json : ce fichier ne calcule rien et ne contient aucune coordonnee. Chaque cloche DESIGNE son ancre dans le graphe (`ancre`, un id de noeud de monde/portreal.graph.json) et scripts/monde/cloches.py resout la position au moment de projeter. Recopier des metres ici donnerait des distances coherentes et mortes des la prochaine cuisson. Le tocsin n'est PAS une cloche : c'est une MANIERE de sonner, et c'est pour cela qu'il vit dans `sonneries` et non dans `cloches`. Une ville ne se garde pas en la surveillant, elle se garde en l'entendant : voir docs/recherche/les-gardes-et-patrouilles-de-ville.md, section 7.",
+  "version": 1,
+  "lieu": "port-real",
+  "date": "129 AC",
+  "_statuts": {
+    "canon": "Atteste pour ce lieu et ce temps.",
+    "canon-reporte": "Atteste de Westeros ou du grand septuaire d'apres 161 AC, porte ici sur le septuaire qui tient sa place en 129. La forme est canonique, son application a cette date est notre fait.",
+    "pose": "Invention posee dessous, comme le reste du depot : de l'arriere-plan deja vrai."
+  },
+  "_sonneries": {
+    "_note": "CE QU'UNE CLOCHE A LE DROIT DE DIRE. Une meme cloche en dit plusieurs, et deux cloches ne disent jamais la meme chose de la meme facon : c'est la difference entre un carillon et un langage. Personne n'apprend ces codes, on grandit dedans.",
+    "ouverture": "Le point du jour. On ouvre les portes, on rend les clefs, la ville recommence.",
+    "heures": "L'heure, et le quart pour qui les sonne. La seule horloge de quatre cent mille gens.",
+    "office": "L'appel aux Sept.",
+    "retraite": "Le couvre-feu. On couvre les braises, on ferme les portes, on vide les tavernes, on rentre. Qui marche apres la retraite porte une lanterne ou repond de soi.",
+    "ban": "La proclamation et la justice du roi. Trois volees, puis on parle.",
+    "glas": "La mort. Lent, espace, compte.",
+    "liesse": "Noces, couronnement, retour d'une flotte.",
+    "tocsin": "LE FEU OU L'ASSAUT. Volee brisee, rapide, sans mesure — on ne peut pas la confondre avec autre chose, et c'est tout son objet. Elle ne dit pas quoi : elle dit sortez."
+  },
+  "_droit": "SONNER SANS DROIT EST UNE TRAHISON, et ce n'est pas une figure de style : une cloche atteint en un instant tous ceux que le Guet mettrait une nuit a joindre. Le clocher se gardait donc comme une porte. Chaque cloche porte ici `droit` — la main a qui la corde appartient — et `tocsin_par`, plus etroite encore quand la cloche sait sonner l'alarme.",
+  "cloches": [
+    {
+      "id": "septuaire-pere",
+      "nom": "Le Pere",
+      "ensemble": "Les Sept du vieux septuaire",
+      "ancre": "septuaire",
+      "beffroi": 34,
+      "voix": "bourdon",
+      "portee": 2400,
+      "sonneries": [
+        "ban",
+        "glas",
+        "office"
+      ],
+      "droit": "Le septon du vieux septuaire, et nul autre sans son ordre.",
+      "statut": "canon-reporte",
+      "description": "Le bourdon, et la plus lourde chose suspendue de Port-Real : il faut six hommes a la corde et l'on sent la note dans le plancher avant de l'entendre. C'est la cloche de la justice — on ne proclame rien dans cette ville sans que le Pere ait parle d'abord, trois volees, et puis le silence ou l'on lit. Il mene le glas royal et personne d'autre ne peut l'ouvrir."
+    },
+    {
+      "id": "septuaire-mere",
+      "nom": "La Mere",
+      "ensemble": "Les Sept du vieux septuaire",
+      "ancre": "septuaire",
+      "beffroi": 34,
+      "voix": "grosse",
+      "portee": 1400,
+      "sonneries": [
+        "glas",
+        "office"
+      ],
+      "droit": "Le septon du vieux septuaire.",
+      "statut": "canon-reporte",
+      "description": "Le glas des gens ordinaires, celui qu'on paie et qu'on ne paie pas toujours : une famille qui n'a rien l'obtient quand meme, et c'est la seule aumone que la Foi fasse a voix haute. Elle sonne aussi les naissances qui ont failli mal tourner, ce qui fait qu'on ne sait jamais, au premier coup, si l'on doit se signer ou sourire."
+    },
+    {
+      "id": "septuaire-jouvencelle",
+      "nom": "La Jouvencelle",
+      "ensemble": "Les Sept du vieux septuaire",
+      "ancre": "septuaire",
+      "beffroi": 34,
+      "voix": "claire",
+      "portee": 900,
+      "sonneries": [
+        "liesse",
+        "office"
+      ],
+      "droit": "Le septon du vieux septuaire.",
+      "statut": "canon-reporte",
+      "description": "La plus haute et la plus courte de portee : elle ne passe pas la colline de Visenya par vent contraire, et les quartiers d'aval ne l'entendent qu'aux noces des riches, ce qui leur en dit long. Claire au point d'etre gaie, et c'est le reproche qu'on lui fait quand elle sonne un mariage que le quartier desapprouve."
+    },
+    {
+      "id": "septuaire-aieule",
+      "nom": "L'Aieule",
+      "ensemble": "Les Sept du vieux septuaire",
+      "ancre": "septuaire",
+      "beffroi": 34,
+      "voix": "grosse",
+      "portee": 1900,
+      "sonneries": [
+        "retraite",
+        "heures",
+        "office"
+      ],
+      "droit": "Le septon du vieux septuaire, sur l'heure fixee par le Guet.",
+      "tocsin_par": null,
+      "statut": "canon-reporte",
+      "description": "L'AIEULE PORTE LA LANTERNE, et c'est elle qui sonne la retraite : la cloche qui dit a quatre cent mille personnes qu'il est temps de couvrir le feu et de rentrer. Toute la garde de la ville tient a ce coup-la — on ne surveille pas une ville, on la vide, et c'est l'Aieule qui la vide. L'heure n'est pas fixe : elle suit le jour, et le Guet la fait avancer d'un quart quand la ville lui deplait."
+    },
+    {
+      "id": "septuaire-guerrier",
+      "nom": "Le Guerrier",
+      "ensemble": "Les Sept du vieux septuaire",
+      "ancre": "septuaire",
+      "beffroi": 34,
+      "voix": "grosse",
+      "portee": 2000,
+      "sonneries": [
+        "tocsin",
+        "ban",
+        "office"
+      ],
+      "droit": "Le septon du vieux septuaire.",
+      "tocsin_par": "Le Commandant du Guet, ou le septon s'il voit le feu de ses yeux.",
+      "statut": "canon-reporte",
+      "description": "LE TOCSIN DE LA VILLE. Rien d'autre ne sonne comme lui parce qu'on ne le sonne pas autrement : volee brisee, sans mesure, jusqu'a ce que quelqu'un vienne dire d'arreter. Il ne dit pas ce qui arrive — le feu et l'assaut ont le meme coup, et c'est aux portes de le preciser. Les vieux du bourg pretendent le distinguer du tocsin des casernes ; ils se trompent une fois sur deux."
+    },
+    {
+      "id": "septuaire-ferrant",
+      "nom": "Le Ferrant",
+      "ensemble": "Les Sept du vieux septuaire",
+      "ancre": "septuaire",
+      "beffroi": 34,
+      "voix": "moyenne",
+      "portee": 1300,
+      "sonneries": [
+        "ouverture",
+        "heures",
+        "office"
+      ],
+      "droit": "Le septon du vieux septuaire.",
+      "statut": "canon-reporte",
+      "description": "La cloche du travail : elle ouvre le jour, et les portes de la ville s'ouvrent apres elle et pas avant. Un charretier qui attend dehors depuis la nuit attend le Ferrant, pas le soleil. Elle sonne aussi les heures ouvrables, ce qui fait que la moitie de la ville date sa journee d'une cloche qu'elle n'ecoute pas."
+    },
+    {
+      "id": "septuaire-etranger",
+      "nom": "L'Etranger",
+      "ensemble": "Les Sept du vieux septuaire",
+      "ancre": "septuaire",
+      "beffroi": 34,
+      "voix": "bourdon",
+      "portee": 2200,
+      "sonneries": [
+        "glas"
+      ],
+      "droit": "Le septon du vieux septuaire, et seulement pour une mort couronnee.",
+      "statut": "canon-reporte",
+      "description": "ELLE NE SONNE QUE POUR LA MORT D'UN ROI, jamais pour s'essayer, jamais pour s'accorder. Presque personne dans cette ville ne l'a entendue deux fois, et c'est ce qui la rend terrible : au premier coup, on sait, avant qu'aucun crieur n'ait ouvert la bouche. Quand un roi meurt, les Sept sonnent ensemble un jour et une nuit entiers, et l'on dit qu'on les entend jusqu'a Peyredragon — personne a Peyredragon ne l'a jamais confirme."
+    },
+    {
+      "id": "donjon-veille",
+      "nom": "La cloche du Donjon",
+      "ensemble": "Le Donjon Rouge",
+      "ancre": "donjon",
+      "beffroi": 22,
+      "voix": "grosse",
+      "portee": 1600,
+      "sonneries": [
+        "tocsin",
+        "ban",
+        "heures"
+      ],
+      "droit": "Le Commandant du Guet royal et le capitaine de la garde du Donjon.",
+      "tocsin_par": "La garde du Donjon, sans demander a personne.",
+      "statut": "pose",
+      "description": "Haut sur la colline d'Aegon, elle porte loin sans etre grosse — c'est la hauteur qui travaille, pas le bronze. Elle sert la maison du roi et rien d'autre : la releve, les entrees d'importance, et l'alarme des murs. Quand elle sonne le tocsin et que le vieux septuaire se tait, le danger est DANS le chateau, et la ville l'a appris a ses depens."
+    },
+    {
+      "id": "casernes-guet",
+      "nom": "La Criarde",
+      "ensemble": "Les casernes du Guet",
+      "ancre": "casernes",
+      "beffroi": 14,
+      "voix": "moyenne",
+      "portee": 1000,
+      "sonneries": [
+        "tocsin",
+        "heures"
+      ],
+      "droit": "Le sergent de quart, sans en referer.",
+      "tocsin_par": "N'importe quel sergent de quart.",
+      "statut": "pose",
+      "description": "Laide, courte, et la plus utile de la ville : c'est la seule que le Guet puisse sonner sans demander la permission a personne. Elle rappelle les quarts, elle rassemble, elle sonne le feu. Son nom ne vient pas des manteaux d'or mais des voisins, qui la detestent — elle sonne a quatre heures du matin et rien ne l'en empeche."
+    },
+    {
+      "id": "alchimistes-feu",
+      "nom": "La cloche verte",
+      "ensemble": "La Guilde des Alchimistes",
+      "ancre": "guilde",
+      "beffroi": 9,
+      "voix": "claire",
+      "portee": 700,
+      "sonneries": [
+        "tocsin"
+      ],
+      "droit": "Les sages de la Guilde, pour le feu et pour rien d'autre.",
+      "tocsin_par": "N'importe quel sage de la Guilde.",
+      "statut": "pose",
+      "description": "Petite, aigue, posee sur le toit de la Guilde, et elle ne sait dire qu'une chose : IL BRULE ICI. La Guilde garde sous ses caves de quoi effacer un quartier, et la ville a exige d'etre prevenue avant la Guilde elle-meme. Elle n'a jamais sonne. C'est le fait le plus rassurant et le plus inquietant qu'on puisse dire d'une cloche."
+    },
+    {
+      "id": "port-maree",
+      "nom": "La cloche du maitre de port",
+      "ensemble": "Le bureau du maitre de port",
+      "ancre": "bureau-port",
+      "beffroi": 8,
+      "voix": "claire",
+      "portee": 800,
+      "sonneries": [
+        "ouverture",
+        "heures"
+      ],
+      "droit": "Le maitre de port et ses commis.",
+      "statut": "pose",
+      "description": "Elle sonne la maree, pas l'heure — ce qui revient au meme pour qui vit du fleuve et n'a aucun sens pour les autres. Dans la brume elle sonne en continu, et c'est le seul son de Port-Real dont on soit reellement reconnaissant. Les quais reglent leur journee dessus et ignorent le Ferrant."
+    },
+    {
+      "id": "porte-gadoue",
+      "nom": "La cloche de la Gadoue",
+      "ensemble": "Les cloches des sept portes",
+      "ancre": "porte:La porte de la Gadoue",
+      "beffroi": 12,
+      "voix": "moyenne",
+      "portee": 750,
+      "sonneries": [
+        "ouverture",
+        "retraite",
+        "tocsin"
+      ],
+      "droit": "Le sergent de la porte.",
+      "tocsin_par": "Le sergent de la porte, ou tout homme du Guet qui voit passer ce qu'il ne faut pas.",
+      "relaie": "septuaire-guerrier",
+      "statut": "pose",
+      "description": "La plus entendue des sept, parce que c'est la porte du port et que le quartier ne dort jamais tout a fait. Elle ferme sur la retraite et rouvre au Ferrant ; entre les deux, elle ne parle que pour dire qu'on force quelque chose. La taverne sous l'arche jure qu'on ne s'y habitue pas."
+    },
+    {
+      "id": "porte-roi",
+      "nom": "La cloche de la porte du Roi",
+      "ensemble": "Les cloches des sept portes",
+      "ancre": "porte:La porte du Roi",
+      "beffroi": 12,
+      "voix": "moyenne",
+      "portee": 700,
+      "sonneries": [
+        "ouverture",
+        "retraite",
+        "tocsin",
+        "liesse"
+      ],
+      "droit": "Le sergent de la porte.",
+      "tocsin_par": "Le sergent de la porte.",
+      "relaie": "septuaire-guerrier",
+      "statut": "pose",
+      "description": "La porte par laquelle un roi entre, donc la seule des sept qui sonne autre chose que des ordres : elle salue les retours. Elle a le bronze le mieux tenu et le sergent le plus pointilleux de la muraille, ce qui n'est pas une coincidence."
+    },
+    {
+      "id": "porte-lion",
+      "nom": "La cloche du Lion",
+      "ensemble": "Les cloches des sept portes",
+      "ancre": "porte:La porte du Lion",
+      "beffroi": 12,
+      "voix": "moyenne",
+      "portee": 650,
+      "sonneries": [
+        "ouverture",
+        "retraite",
+        "tocsin"
+      ],
+      "droit": "Le sergent de la porte.",
+      "tocsin_par": "Le sergent de la porte.",
+      "relaie": "septuaire-guerrier",
+      "statut": "pose",
+      "description": "A l'ouest, sous le vent du vieux septuaire : elle entend l'Aieule avant tout le monde et repond dans le meme souffle, si bien que les quartiers de l'ouest croient que c'est elle qui sonne la retraite. On ne les detrompe pas."
+    },
+    {
+      "id": "porte-dieux",
+      "nom": "La cloche des Dieux",
+      "ensemble": "Les cloches des sept portes",
+      "ancre": "porte:La porte des Dieux",
+      "beffroi": 12,
+      "voix": "moyenne",
+      "portee": 650,
+      "sonneries": [
+        "ouverture",
+        "retraite",
+        "tocsin",
+        "office"
+      ],
+      "droit": "Le sergent de la porte.",
+      "tocsin_par": "Le sergent de la porte.",
+      "relaie": "septuaire-guerrier",
+      "statut": "pose",
+      "description": "La seule porte dont la cloche sonne l'office, par une vieille tolerance que personne n'a jamais ecrite : les pelerins qui arrivent apres la retraite campent sous la muraille, et elle leur dit l'heure des Sept a defaut de leur ouvrir."
+    },
+    {
+      "id": "porte-vieille",
+      "nom": "La cloche de la Vieille Porte",
+      "ensemble": "Les cloches des sept portes",
+      "ancre": "porte:La Vieille Porte",
+      "beffroi": 12,
+      "voix": "moyenne",
+      "portee": 550,
+      "sonneries": [
+        "ouverture",
+        "retraite",
+        "tocsin"
+      ],
+      "droit": "Le sergent de la porte.",
+      "tocsin_par": "Le sergent de la porte.",
+      "relaie": "septuaire-guerrier",
+      "statut": "pose",
+      "description": "Felee depuis un hiver que personne ne date plus, et jamais refondue : elle rend un son mat qu'on reconnait a une lieue, ce qui est devenu son utilite. Le Guet s'en sert pour savoir laquelle des sept a repondu."
+    },
+    {
+      "id": "porte-dragons",
+      "nom": "La cloche des Dragons",
+      "ensemble": "Les cloches des sept portes",
+      "ancre": "porte:La porte des Dragons",
+      "beffroi": 12,
+      "voix": "claire",
+      "portee": 500,
+      "sonneries": [
+        "ouverture",
+        "retraite"
+      ],
+      "droit": "Le sergent de la porte.",
+      "tocsin_par": null,
+      "relaie": null,
+      "statut": "pose",
+      "description": "LA PORTE SOURDE, et deux fois plutot qu'une. Elle n'a pas le droit du tocsin — on ne sonne pas l'alarme a six cents pas de ce qui dort dans la Fosse — et elle n'entend AUCUN tocsin de la ville : deux mille deux cent cinquante et un pas du vieux septuaire, mille huit cent onze du Donjon, hors de portee des deux. Elle ne sait ni crier ni ecouter. Quand quelque chose s'y passe, un homme court, et il court jusqu'a la porte de Fer."
+    },
+    {
+      "id": "porte-fer",
+      "nom": "La cloche de Fer",
+      "ensemble": "Les cloches des sept portes",
+      "ancre": "porte:La porte de Fer",
+      "beffroi": 12,
+      "voix": "moyenne",
+      "portee": 700,
+      "sonneries": [
+        "ouverture",
+        "retraite",
+        "tocsin"
+      ],
+      "droit": "Le sergent de la porte.",
+      "tocsin_par": "Le sergent de la porte.",
+      "relaie": "donjon-veille",
+      "statut": "pose",
+      "description": "La plus a l'est, et LA SEULE DES SEPT QUI N'ENTENDE PAS LE VIEUX SEPTUAIRE : deux mille sept cent soixante-douze pas, la colline de Rhaenys au travers, et le Guerrier ne porte pas si loin. Elle ne tient au reseau que par le Donjon, a douze cent soixante-sept pas. Le jour ou le Donjon se tait, la porte de Fer est une garnison sourde a l'autre bout de la ville — et c'est par la que viennent les nouvelles de la route de Rosby."
+    }
+  ],
+  "_muettes": {
+    "_note": "CE QUI NE SONNE PAS, et pourquoi. Aussi utile que le reste : un silence qui a une raison est un fait de la ville.",
+    "fosse-dragons": "La Fosse aux Dragons n'a pas de cloche, et la porte des Dragons n'a pas le droit du tocsin : on ne sonne pas l'alarme sous les dragons. CE QUE CA COUTE, mesure sur le bati cuit : 1 059 toits — toute la colline de Rhaenys et le faubourg royal, entre (2708, 2745) et (3932, 3404) — n'entendent aucun tocsin de Port-Real. C'est le seul quartier sourd de la ville, il tient 329 des 370 toits du faubourg royal, et l'alarme y arrive a pied.",
+    "septuaires-de-quartier": "Les septuaires de quartier ont chacun leur cloche — une petite, une seule, l'office et le glas. Elles ne sont pas catalogues ici parce qu'elles n'ont pas de nom : on dit la cloche du septuaire, et l'on sait lequel parce qu'on l'entend de chez soi. Elles portent 400 a 700 pas.",
+    "geoles": "Les geoles n'ont pas de cloche. Une prison qui sonnerait dirait a la ville qu'un homme s'est echappe."
+  },
+  "_portee": "PORTEE EN METRES, DE NUIT, PAR AIR CALME, ENTRE LES TOITS. Ce n'est pas la portee de rase campagne, qui est du double ou du triple et qui ne sert a rien ici : ce qu'on veut savoir est qui entend le tocsin DANS la ville, avec trois mille toits et une colline entre la cloche et lui. De jour, sous le bruit des rues, compter le tiers en moins.",
+  "_mesure": {
+    "_note": "LES CHIFFRES CITES DANS LES DESCRIPTIONS VIENNENT D'ICI, pas de la tete de qui ecrit. Refaire la mesure apres toute cuisson du monde ou tout changement de portee — une distance recopiee est vraie le jour ou on l'ecrit et morte le lendemain.",
+    "commande": "python scripts/monde/cloches.py --lieu port-real --couverture",
+    "le": "129 AC, 4e lune — mesure du 25 aout 2026",
+    "toits": 45691,
+    "entendent_un_tocsin": "97,7 %",
+    "sourds": 1059,
+    "emetteurs_de_tocsin": 10,
+    "portes_sans_tocsin_audible": [
+      "porte-dragons"
+    ],
+    "portes_hors_de_portee_du_septuaire": [
+      "porte-dragons",
+      "porte-fer"
+    ]
+  }
+}

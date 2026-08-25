@@ -85,7 +85,7 @@ window.Capture = (() => {
   // Les variables d'abord : elles portent tout le nuancier du plan et changent
   // avec le thème. On les lit RÉSOLUES sur la racine, donc telles que l'œil du
   // joueur les a en ce moment.
-  const VARIABLES = ["--cv-sol", "--cv-eau", "--cv-eau-trait", "--cv-niveau",
+  const VARIABLES = ["--cv-sol", "--cv-sol-intra", "--cv-eau", "--cv-eau-trait", "--cv-niveau",
     "--cv-bati", "--cv-bati-trait", "--cv-lum", "--cv-nuit", "--cv-mur",
     "--cv-mur-tour", "--ink", "--muted", "--accent", "--braise", "--or-joueur"];
 
@@ -168,22 +168,28 @@ window.Capture = (() => {
     // glissée au milieu, et le joueur voit la carte sauter.
     const avant = (svg.getAttribute("viewBox") || "").split(/[ ,]+/).map(Number);
     const moi = joueur(svg);
+    const demande = o.centre && isFinite(+o.centre.x) && isFinite(+o.centre.y)
+      ? { x: +o.centre.x, y: +o.centre.y, id: o.centre.id || null,
+          nom: o.centre.nom || null } : null;
+    const point = demande || moi;
     const span = o.fenetre || FENETRE;
     let vise = null, centre;
     if (!window.CarteVille || !CarteVille.viser) {
-      centre = "la vue du joueur — la carte ne sait pas se viser";
-    } else if (!moi) {
-      centre = "la vue du joueur — sa position n'est pas connue au mètre";
+      centre = "la vue courante — la carte ne sait pas se viser";
+    } else if (!point) {
+      centre = "la vue courante — aucun centre n'est connu au mètre";
     } else if (span >= avant[2] || span >= avant[3]) {
       // Plus large que ce que le joueur regarde : la foule n'a pas été calculée
       // là-bas, on ferait une couronne vide. On garde sa vue.
-      centre = "la vue du joueur — plus serrée que la fenêtre demandée";
+      centre = demande ? "le combattant marqué, dans la vue courante déjà plus serrée"
+                       : "la vue du joueur — plus serrée que la fenêtre demandée";
     } else {
       // La fenêtre prend la FORME du volet, sinon `xMidYMid meet` la recentre
       // en laissant des marges et l'on photographie du vide sur deux bords.
       const h = span * boite.height / boite.width;
-      vise = [moi.x - span / 2, moi.y - h / 2, span, h];
-      centre = "le joueur, " + Math.round(span) + " m de large";
+      vise = [point.x - span / 2, point.y - h / 2, span, h];
+      centre = demande ? "le combattant marqué, " + Math.round(span) + " m de large"
+                       : "le joueur, " + Math.round(span) + " m de large";
     }
 
     const prises = [];
@@ -243,6 +249,22 @@ window.Capture = (() => {
     // étire sur la même boîte CSS, exactement comme le navigateur le fait.
     for (const g of gelees) ctx.drawImage(g, 0, 0, toile.width, toile.height);
 
+    // LA MARQUE RESTE DANS L'IMAGE. Sans ce cercle, une capture de cent vingt
+    // mètres contenant cent points oblige à retrouver l'homme une deuxième
+    // fois. Son rayon est en pixels : constant quelle que soit l'approche.
+    if (demande) {
+      const mx = rep.ox + demande.x * rep.k, my = rep.oy + demande.y * rep.k;
+      ctx.save();
+      ctx.strokeStyle = "#ff7a3d"; ctx.fillStyle = "rgba(255,122,61,.14)";
+      ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.arc(mx, my, 15, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(mx - 22, my); ctx.lineTo(mx - 9, my);
+      ctx.moveTo(mx + 9, my); ctx.lineTo(mx + 22, my);
+      ctx.moveTo(mx, my - 22); ctx.lineTo(mx, my - 9);
+      ctx.moveTo(mx, my + 9); ctx.lineTo(mx, my + 22); ctx.stroke();
+      ctx.restore();
+    }
+
     // 3. la taille de sortie. On ne grandit jamais une image — un plan tiré à
     // six cents pixels et soufflé à mille n'apprend rien de plus et pèse trois
     // fois plus lourd. On le RÉDUIT en revanche volontiers : à 760 pixels on
@@ -267,13 +289,13 @@ window.Capture = (() => {
       image = sortie.toDataURL(type, q);
       if (image.indexOf("data:" + type) === 0) break;   // le format a bien pris
     }
-    return { image, meta: legende(rep, sortie, centre, couches, moi) };
+    return { image, meta: legende(rep, sortie, centre, couches, moi, demande) };
   }
 
   // LA LÉGENDE FAIT LA MOITIÉ DU TRAVAIL. Une image sans échelle ni heure se
   // regarde et ne se cite pas : le MJ doit pouvoir en tirer une distance et une
   // minute, sinon il devine, et deviner est exactement ce qu'on lui interdit.
-  function legende(rep, sortie, centre, couches, moi) {
+  function legende(rep, sortie, centre, couches, moi, cible) {
     const B = window.Bataille2d && Bataille2d.etat ? Bataille2d.etat() : null;
     const F = window.Foule2d && Foule2d.etat ? Foule2d.etat() : null;
     return {
@@ -285,6 +307,8 @@ window.Capture = (() => {
       large_en_metres: Math.round(rep.vb[2]),
       haut_en_metres: Math.round(rep.vb[3]),
       joueur: moi ? { x: Math.round(moi.x), y: Math.round(moi.y) } : null,
+      cible: cible ? { id: cible.id, nom: cible.nom,
+                        x: +cible.x.toFixed(1), y: +cible.y.toFixed(1) } : null,
       couches,
       heure: F && F.heure, dehors: F && F.dehors, sous_un_toit: F && F.aEcran != null
         ? F.aEcran - F.dehors : null,

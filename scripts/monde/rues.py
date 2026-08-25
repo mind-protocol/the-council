@@ -89,8 +89,13 @@ def projeter(graphe):
         m = a.get("longueur_m")
         if not m:
             m = sum(math.dist(tr[i][:2], tr[i + 1][:2]) for i in range(len(tr) - 1))
-        aretes.append({"de": de, "vers": vers,
-                       "m": round(float(m), 1), "g": a.get("genre") or "rue"})
+        ar = {"de": de, "vers": vers,
+              "m": round(float(m), 1), "g": a.get("genre") or "rue"}
+        # Le nom n'influe pas sur le chemin le plus court ; il est pourtant ce
+        # qui permet à un passant de dire par où il est passé.
+        if a.get("nom"):
+            ar["n"] = a["nom"]
+        aretes.append(ar)
 
     # Les repères : leur position entre dans `noeuds` sous leur propre id, et
     # `reperes` fait l'annuaire nom → id. Ils n'ont besoin d'AUCUNE arête —
@@ -98,7 +103,8 @@ def projeter(graphe):
     reperes = {}
     for n in graphe.get("noeuds", []):
         nom = n.get("nom")
-        if not nom or n.get("genre") in STRUCTURE:
+        genre = str(n.get("genre") or "")
+        if not nom or genre in STRUCTURE or genre.startswith("regard"):
             continue
         xyz = n.get("xyz")
         if not xyz:
@@ -153,6 +159,11 @@ def main():
     print("  lecture de %s…" % os.path.basename(src))
     g = lire(src)
     rues, sans_trace = projeter(g)
+    # La géométrie vient du graphe ; les noms d'usage viennent d'un catalogue
+    # humain séparé. Les joindre ici donne au serveur de marche le même monde
+    # nommé que celui que le plan montre.
+    from toponymie import enrichir_rues
+    rues = enrichir_rues(rues, prefixe, strict=True)
     if not rues["aretes"]:
         print("  aucune arête de surface : rien à écrire.")
         return 1

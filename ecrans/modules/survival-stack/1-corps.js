@@ -145,6 +145,8 @@
     // remplace à elle seule les marges et les délais de décision qu'on écrivait
     // à la main dans `bataille2d.js`.
     MONTEE_S: 3, DESCENTE_S: 45,
+    EXPOSITION_MONTEE_S: 0.7, EXPOSITION_DESCENTE_S: 2.5,
+    CHARGE_MONTEE_S: 18, CHARGE_DESCENTE_S: 90,
 
     // --- LE DÉCOURS — combien de temps un stimulus RÉSONNE ---------------------
     // LA SECONDE MOITIÉ DE `LATENCE`, ET ELLE MANQUAIT. La latence dit à quel
@@ -171,7 +173,8 @@
     DECOURS: {
       "coup reçu": 2.5, "coup frôlé": 1.5, "voisin à terre": 3,
       "les siens s'en vont": 2, "quelqu'un derrière": 1, "fer qui vient": 0.15,
-      "le signe tombe": 4,
+      "le signe tombe": 4, "dragon en approche": 1.2,
+      "rugissement au-dessus": 2.2, "souffle brûlant": 2.8,
     },
     DECOURS_DEFAUT: 1,
 
@@ -567,7 +570,7 @@
     // Un champ absent sur UNE branche de retour est la panne la plus chere de
     // toute la seance, et la moins visible : rien n'a jete, rien n'a prevenu.
     if (!voisins || !voisins.length)
-      return { contagion: -1, imitation, apaise: 1 };
+      return { contagion: 1, imitation, apaise: 1 };
     let somme = 0, poids = 0;
     // Ce que les signes autour de lui apaisent, de 1 (rien) à 0 (une hampe
     // debout à trois pas). Le PLUS FORT gagne : on ne cumule pas deux
@@ -590,7 +593,7 @@
       // sous réflexe s'y applique quand meme : c'est LUI, le tunnel, et il mord
       // d'abord sur ce qu'on voit du coin de l'oeil. La peur coupe un homme de
       // son rang avant de le couper de son ennemi.
-      const serre = Math.max(0, Math.min(0.85, (ctx.reflexe + 1) / 2 * 0.7));
+      const serre = Math.max(0, Math.min(0.85, (1 - ctx.sangFroid) / 2 * 0.7));
       const peri = Math.max(0, (Math.cos(v.angle) + 0.35) / 1.35) * (1 - serre);
       const vu = (ctx.nuit ? M.GAIN_NUIT : 1) * peri;
       const entendu = gain("ouie", ctx, 1);
@@ -665,7 +668,7 @@
     // corps isolé, c'est un corps que rien n'atteint.
     const sourd = Math.max(0, Math.min(1, (ctx && ctx.sourd) || 0));
     const brut = poids > 0 ? somme / poids : -1;
-    return { contagion: -1 + (1 - sourd) * (brut + 1), imitation,
+    return { contagion: 1 - (1 - sourd) * (brut + 1), imitation,
              apaise: Math.max(0, Math.min(1, apaise)) };
   };
 
@@ -719,14 +722,14 @@
   // SEUL canal qui informe sur le dos, et elle le tue exactement quand il
   // servirait : réflexe haute → on n'entend plus derrière → on est pris à
   // revers → réflexe plus haute.
-  const surdite = (reflexe) => Math.pow(Math.max(0, (reflexe + 1) / 2), 2);
+  const surdite = (sangFroid) => Math.pow(Math.max(0, (1 - sangFroid) / 2), 2);
 
   // LE TUNNEL — le champ visuel se rétrécit sous le réflexe. La boucle la plus
   // vicieuse et la plus vraie : peur → on ne voit plus partir les coups → on est
   // surpris → peur. Un homme qui commence à avoir peur devient OBJECTIVEMENT
   // plus facile à tuer, ce qui justifie sa peur.
-  const tunnel = (reflexe, deFace) => {
-    const serre = Math.max(0, Math.min(0.95, (reflexe + 1) / 2 * 0.8));
+  const tunnel = (sangFroid, deFace) => {
+    const serre = Math.max(0, Math.min(0.95, (1 - sangFroid) / 2 * 0.8));
     const f = deFace == null ? 1 : deFace;
     return Math.max(0, (f - serre) / (1 - serre));
   };
@@ -735,8 +738,8 @@
   const gain = (canal, ctx, deFace) => {
     if (canal === "tact") return 1;                    // rien ne bouche le toucher
     if (canal === "ouie")
-      return (1 - (ctx.vacarme || 0)) * (1 - surdite(ctx.reflexe));
-    return (ctx.nuit ? M.GAIN_NUIT : 1) * tunnel(ctx.reflexe, deFace);
+      return (1 - (ctx.vacarme || 0)) * (1 - surdite(ctx.sangFroid));
+    return (ctx.nuit ? M.GAIN_NUIT : 1) * tunnel(ctx.sangFroid, deFace);
   };
 
   // ===========================================================================
@@ -952,8 +955,8 @@
   //   LA CONTAGION — l'alarme que les autres MONTRENT. C'est le seul signal
   //     continu qui parle d'eveil et non de situation, et il a sa place ici :
   //     la panique se prend au niveau de l'activation, pas seulement du choix.
-  const activer = (reflexe, cible, dt, fond, apaise) => {
-    const a = reflexe == null ? -1 : reflexe;
+  const reglerSangFroid = (sangFroid, cible, dt, fond, apaise) => {
+    const a = sangFroid == null ? 1 : sangFroid;
     // ET LA DESCENTE EST PERSONNELLE. C'est ce que `humeur: "versatile"` disait
     // dans la bataille — « il rompt TÔT et se reprend VITE ; Tam reflue de
     // cinquante pas et revient, trois fois ». La reprise n'est pas du courage :
@@ -991,7 +994,7 @@
     // plus vite au maximum — quarante-cinq secondes qui deviennent sept ou
     // huit — et l'on s'en approche sans jamais y toucher.
     const ap = 1 + M.APAISE_MAX * sature((Math.max(1, apaise || 1) - 1) / M.APAISE_MAX, 1);
-    const tau = cible > a ? M.MONTEE_S : M.DESCENTE_S / (f * ap);
+    const tau = cible < a ? M.MONTEE_S : M.DESCENTE_S / (f * ap);
     return a + (cible - a) * (1 - Math.exp(-dt / tau));
   };
 
@@ -1007,10 +1010,13 @@
   // garde sa tête plus longtemps sous la même peur, non parce qu'il a moins peur
   // (il en a autant), mais parce qu'il lui en faut davantage pour que la main
   // lui échappe.
-  const emprise = (reflexe, c) => {
-    const a = reflexe == null ? -1 : reflexe;
+  const emprise = (sangFroid, c) => {
+    const a = sangFroid == null ? 1 : sangFroid;
     const d = c && c.dressage != null ? c.dressage : 0;
-    return Math.min(1, Math.max(0, sature(((a + 1) / 2) * (1 - 0.45 * d), 0.55)));
+    const exposition = c && c.exposition != null ? c.exposition : 0;
+    const charge = c && c.chargeNerveuse != null ? c.chargeNerveuse : 0;
+    const activation = Math.max((1 - a) / 2, exposition * 0.72 + charge * 0.28);
+    return Math.min(1, Math.max(0, sature(activation * (1 - 0.45 * d), 0.55)));
   };
 
   // ===========================================================================
@@ -1105,24 +1111,91 @@
     // chaque geste bref va chercher la sienne. Le `top` reste ce qu'il est —
     // ce qui tient l'homme —, mais il ne sert plus qu'à la glande.
     const de = (quoi) => (top && top.par && top.par[quoi]) || 0;
+    const dangerExterieur = s.dangerExterieur == null ? -1 : s.dangerExterieur;
+    const avecDanger = (termes, signe, poids) => dangerExterieur > 0
+      ? termes.concat([[dangerExterieur * signe, poids]]) : termes;
     return {
       // Appelé par l'ABSENCE de menace — c'est le seul geste dont l'appel soit
       // une négation, et c'est ce qui en fait le repos.
       "planté":     im("planté", -Math.max(-1, s.menace)),
-      "recul":      im("recul", melange([[s.menace, 1], [-s.appui, 0.8], [-s.integrite, 0.6]])),
+      "recul":      im("recul", melange(avecDanger(
+                                          [[s.menace, 1], [-s.appui, 0.8],
+                                           [-s.integrite, 0.6],
+                                           [2 * (s.exposition || 0) - 1, 0.9]],
+                                          1, 1.4))),
       // Appele par le TROU et non par le nombre : c'est le coude qu'on ne sent
       // plus qui declenche, et le pourtour ouvert qui l'entretient. Sans menace
       // du tout on ne se resserre pas — on se resserre CONTRE quelque chose.
-      "serrer":     im("serrer", melange([[-s.coude, 1.2], [-s.appui, 1], [s.menace, 0.8]])),
+      "serrer":     im("serrer", melange(avecDanger(
+                                           [[-s.coude, 1.2], [-s.appui, 1],
+                                            [s.menace, 0.8]], -1, 1.7))),
       // Le seul geste armé par un ÉVÉNEMENT et par lui seul : il répond à un
       // coup, pas à une situation.
-      "dérobade":   Math.max(de("coup frôlé"), de("coup reçu")) * 2 - 1,
-      // Appelée par la contagion d'abord, la menace ensuite — et IMPOSSIBLE sans
-      // issue. On multiplie au lieu de moyenner : être acculé ne rend pas la
-      // fuite moins souhaitable, il la rend irréalisable. Une moyenne aurait
-      // laissé un homme au pied d'un mur courir à moitié.
-      "fuite":      ((melange([[de("les siens s'en vont") * 2 - 1, 1.2],
-                               [s.menace, 1], [-s.appui, 0.8]]) + 1)
+      "dérobade":   Math.max(de("coup frôlé"), de("coup reçu"),
+                              de("souffle brûlant")) * 2 - 1,
+      // Appelée par la menace et par l'abandon — et IMPOSSIBLE sans issue. On
+      // multiplie au lieu de moyenner : être acculé ne rend pas la fuite moins
+      // souhaitable, il la rend irréalisable. Une moyenne aurait laissé un
+      // homme au pied d'un mur courir à moitié.
+      //
+      // ⚠ LE TROUPEAU ÉTAIT ICI UN VETO, ET IL A TUÉ LA DÉROUTE ENTIÈRE.
+      //
+      // La ligne portait `de("les siens s'en vont") * 2 - 1` AU PLUS FORT POIDS
+      // du mélange (1,2). Personne ne part → le terme vaut −1 → il écrase les
+      // deux autres. Mesuré : au PIRE cas concevable — menace maximale, aucun
+      // appui, mourant, la rue ouverte derrière lui —, l'appel de `fuite`
+      // plafonnait à **0,20** quand `recul` et `serrer` étaient à **1,00**.
+      // Vote final à emprise 1, tous profils confondus :
+      //
+      //     recrue nue   recul 0,646  ·  serrer 0,500  ·  fuite 0,414
+      //     conscrit     recul 0,692  ·  serrer 0,589  ·  fuite 0,373
+      //     soldat       recul 0,863  ·  serrer 0,859  ·  fuite 0,195
+      //
+      // Le seul terme capable de lever ce plafond exigeait qu'une déroute soit
+      // DÉJÀ commencée : une boucle qui se verrouille elle-même, où personne ne
+      // peut être le premier à rompre.
+      //
+      // ⚠ CE QUE CETTE CORRECTION NE FAIT PAS, ET IL FAUT LE LIRE AVANT DE
+      // CROIRE QU'ELLE SUFFIT. Mesuré après coup, à 600 hommes sur 600 s :
+      // **127 morts, et toujours ZÉRO fuyard**. Le veto est levé — le banc
+      // `scenario-3-contre-2` le montre, où A2 ROMPT désormais (33,3 s) au lieu
+      // de MOURIR (38,7 s) — mais un homme en formation reste sous le seuil.
+      //
+      // La cause restante est probablement `appui` : dans un rang, la
+      // couverture est maximale, donc `-s.appui` vaut −1 et tire le mélange
+      // vers le bas quoi qu'il arrive par ailleurs. Seul un homme À LA FOIS
+      // isolé et entamé passe — et ceux-là meurent avant de rompre. C'est une
+      // HYPOTHÈSE, pas une mesure : elle se tranchera en relevant `appui`,
+      // `integrite` et `emprise` par corps au moment le plus dur, et non en
+      // devinant une seconde fois.
+      //
+      // DEUX CORRECTIONS, ET AUCUNE N'EST UN RÉGLAGE :
+      //
+      // 1. LE TROUPEAU PASSE PAR `im()`, COMME POUR TOUS LES AUTRES GESTES.
+      //    `fuite` était le seul du tableau à ne pas l'utiliser. La doctrine du
+      //    fichier est écrite au-dessus de `IMITE` : l'imitation « ne remplace
+      //    aucun appel : elle les DÉPLACE, d'un tiers au plus ». Elle amplifie
+      //    donc une déroute qui commence, sans plus interdire qu'elle commence.
+      //    `im` lit `s.imitation`, c'est-à-dire ce que les voisins FONT — une
+      //    meilleure source que le stimulus, qui reste par ailleurs actif sur
+      //    la glande par sa saillance.
+      //
+      // 2. `-s.integrite` ENTRE DANS LE MÉLANGE. `recul` le portait déjà (0,6)
+      //    et `fuite` l'ignorait : un homme à quatre points de vie n'avait pas
+      //    plus de raison de courir qu'un homme intact. C'est pourtant l'entrée
+      //    qui distingue le mieux rompre de céder le pas.
+      //
+      // CE QUE ÇA NE CHANGE PAS, ET C'EST LA GARDE : le tableau des `acquis`
+      // n'est pas touché. Un soldat dressé continue de tenir (vote 0,325 contre
+      // 0,863 à `recul`), un conscrit aussi ; seuls rompent ceux que le dossier
+      // dit fragiles — les bleusailles, dont l'acquis de fuite vaut 0,82 contre
+      // −0,40 pour `recul`, et les gueux. Le dessin des cinq corps était déjà
+      // juste ; il était seulement inatteignable.
+      "fuite":      ((im("fuite", melange(avecDanger(
+                                            [[s.menace, 1], [-s.appui, 0.9],
+                                             [-s.integrite, 0.9],
+                                             [2 * (s.chargeNerveuse || 0) - 1, 0.7]],
+                                            1, 0.9))) + 1)
                      * (s.issue + 1) / 2) - 1,
       "ruée":       im("ruée", melange([[s.menace, 1], [-s.issue, 1], [s.souffle, 0.8]])),
       // SE FIGER N'EST APPELÉ PAR RIEN DE PROPRE : il n'a pas de déclencheur. Il
@@ -1150,7 +1223,8 @@
       // sort du modèle au lieu d'une branche.
       //
       // L'imitation reste : on se fige aussi parce que le rang se fige.
-      "sidération": im("sidération", 0),
+      "sidération": im("sidération",
+                         2 * (s.exposition || 0) * (1 - (s.issue + 1) / 2) - 1),
       // ⚠ LA GARDE EST LE REPOS DES BRAS, comme `planté` est celui des jambes,
       // et elle etait appelee par la seule menace — donc a −1 des qu'aucun
       // ennemi n'etait proche. Un homme EN MARCHE, loin de tout, avait donc un
@@ -1269,8 +1343,10 @@
    */
   function pas(c, p, u) {
     const dt = p.dt, s = p.signaux;
-    if (c.reflexe == null) {
-      c.reflexe = -1;
+    if (c.sangFroid == null) {
+      c.sangFroid = 1;
+      c.exposition = 0;
+      c.chargeNerveuse = 0;
       // L'expérience est une habituation pré-chargée : c'est tout ce que `vecu`
       // veut dire, et il n'a pas besoin d'un coefficient de plus. Elle passe par
       // `prehabituer` et non plus par l'identité — voir là-bas pourquoi.
@@ -1286,7 +1362,7 @@
       c.jusqua = 0; c.jusquaBras = 0; c.retour = null;
     }
     const ctx = {
-      reflexe: c.reflexe, nuit: p.nuit, presse: p.presse, bras: c.bras,
+      sangFroid: c.sangFroid, nuit: p.nuit, presse: p.presse, bras: c.bras,
       sourd: c.sourd || 0,
       vacarme: vacarme(p.presse, s.ennemisProches),
     };
@@ -1327,7 +1403,7 @@
       // bannière debout, ce qui passe des autres passe moins fort — et ce
       // n'est pas la même chose que d'avoir moins peur soi-même.
       s.contagion = Math.max(-1, Math.min(1,
-        2 * Math.max(0, (brut - c.social) / M.SURSAUT_SOCIAL) * sg.apaise - 1));
+        1 - 2 * Math.max(0, (c.social - brut) / M.SURSAUT_SOCIAL) * sg.apaise));
       s.appui = couverture(p.voisins);
       s.coude = coude(p.voisins);
       // LES DEUX SORTIES POSTURALES. Elles ne participent a AUCUNE election :
@@ -1439,9 +1515,31 @@
     // plancher retiré plus haut. Sans stimulus, l'écho est vide et la cible
     // retombe à −1. Le test A3 (« au repos, rien ne se déclenche ») est la
     // garde : s'il casse, c'est qu'un plancher est revenu par cette porte.
-    const cible = Math.max(top ? top.saillance * 2 - 1 : -1,
-                           s.contagion == null ? -1 : s.contagion);
-    c.reflexe = activer(c.reflexe, cible, dt, c.fond, p.apaise);
+    const cible = Math.min(top ? 1 - top.saillance * 2 : 1,
+                           s.contagion == null ? 1 : s.contagion);
+    c.sangFroid = reglerSangFroid(c.sangFroid, cible, dt, c.fond, p.apaise);
+
+    const approche = Math.max(0, Math.min(1, (s.menace + 1) / 2));
+    const cibleExposition = s.aPortee ? Math.max(0.55, approche) : 0;
+    const tauExposition = cibleExposition > c.exposition
+      ? M.EXPOSITION_MONTEE_S : M.EXPOSITION_DESCENTE_S;
+    c.exposition += (cibleExposition - c.exposition) *
+      (1 - Math.exp(-dt / tauExposition));
+
+    let groupe = 0, groupeN = 0;
+    for (const v of (p.voisins || [])) if (v.ami && v.memeGroupe) {
+      groupeN++;
+      if (v.bras === "frapper" || v.bras === "parer" || v.jambes === "recul" ||
+          v.jambes === "fuite" || v.jambes === "sidération") groupe++;
+    }
+    const tensionGroupe = groupeN ? groupe / groupeN : 0;
+    const cibleCharge = Math.max(c.exposition, approche * 0.55, tensionGroupe * 0.8);
+    const tauCharge = cibleCharge > c.chargeNerveuse
+      ? M.CHARGE_MONTEE_S : M.CHARGE_DESCENTE_S;
+    c.chargeNerveuse += (cibleCharge - c.chargeNerveuse) *
+      (1 - Math.exp(-dt / tauCharge));
+    s.exposition = c.exposition;
+    s.chargeNerveuse = c.chargeNerveuse;
 
     // --- 3. l'élection, piste par piste ------------------------------------
     // `frais`, PAS `top` : les gestes brefs répondent au coup de ce battement.
@@ -1452,7 +1550,7 @@
     // PROPRES gestes. C'est le même nombre qu'on rend aux couches 2, 3 et 4 ;
     // il n'y a pas deux emprises, il y en avait une qui ne s'appliquait qu'au
     // dehors. Voir `SOUS_EMPRISE`.
-    const empr = emprise(c.reflexe, c);
+    const empr = emprise(c.sangFroid, c);
     const elire = (liste, courant, interdits) => {
       // LES DEUX MOITIÉS REVIENNENT SUR [0, 1] AVANT DE SE MULTIPLIER, et ce
       // n'est pas un détail d'échelle : sur [−1, 1], deux négatifs donneraient
@@ -1497,7 +1595,8 @@
     c.bras = coupler(c.jambes, c.bras);
 
     return {
-      jambes: c.jambes, bras: c.bras, reflexe: c.reflexe,
+      jambes: c.jambes, bras: c.bras, sangFroid: c.sangFroid,
+      exposition: c.exposition, chargeNerveuse: c.chargeNerveuse,
       emprise: empr,
       // Ou le corps veut se porter, et ou il veut faire face. Le premier ne
       // sert que pendant `serrer`, le second tout le temps.
@@ -1555,7 +1654,7 @@
                 menace, issue,
                 LATENCE, vacarme, surdite, tunnel, gain,
                 coupRecu, coupFrole, ferQuiVient, voisinTombe, voisinPart, dansLeDos, signeTombe,
-                habituer, prehabituer, saillance, armement, resonne, activer, emprise,
+                habituer, prehabituer, saillance, armement, resonne, reglerSangFroid, emprise,
                 JAMBES, BRAS, acquis, appels, INTERDIT_JAMBES, INTERDIT_BRAS,
                 possible, SOUS_EMPRISE, dysregule, coupler, pas, phrase, PHRASES };
 

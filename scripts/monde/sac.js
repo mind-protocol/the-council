@@ -97,7 +97,7 @@ function planter(base) {
 // AJOUTER UN MORCEAU DÉCOUPÉ, C'EST TOUCHER LES DEUX LISTES. Il n'y a pas de
 // résolution de dépendances ici et il ne faut pas en écrire une : deux listes
 // courtes et lisibles valent mieux qu'un chargeur qui aurait l'air malin.
-const CHAINE = ["bataille/hasard.js", "bataille/mesures.js",
+const CHAINE = ["bataille/hasard.js", "bataille/mesures.js", "bataille/roster.js",
                 "survival-stack/1-corps.js", "bataille/corps-adapt.js",
                 // La couche 4 CONDUIT, elle : l'envie de butin et ce qu'un chef
                 // supporte de silence sortent d'elle et de nulle part ailleurs
@@ -116,6 +116,7 @@ const CHAINE = ["bataille/hasard.js", "bataille/mesures.js",
                 "survival-stack/2-reflexion.js",
                 "survival-stack/5-qui-conduit.js",
                 "bataille/reflexion-adapt.js",
+                "bataille/commandement.js",
                 "bataille2d.js"];
 
 /** Charger la bataille, qui n'est pas un module ES mais une suite de scripts. */

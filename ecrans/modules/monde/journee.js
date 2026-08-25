@@ -146,6 +146,61 @@ function quart(etapes, v, t, id, poste, chez, jour) {
   }
 }
 
+// --- LE COUVRE-FEU ---------------------------------------------------------
+// ON NE GARDE PAS UNE VILLE EN LA SURVEILLANT : ON LA VIDE, ET L'ON GARDE CE
+// QUI RESTE. Sans cette coupe, la ville ne dormait jamais : la taverne partait
+// à vingt heures avec une heure cinquante-cinq de battement et deux heures de
+// séance, si bien qu'on trouvait du monde au puits à une heure du matin, et
+// que les seize guettes patrouillaient une rue aussi peuplée qu'à midi.
+//
+// La règle est celle des sources, et elle tient en trois lignes :
+//   • on ne SORT PLUS après la retraite — la sortie n'a simplement pas lieu ;
+//   • qui est dehors RENTRE, avec les quelques minutes qu'il faut pour ça ;
+//   • qui a une RAISON passe — le guet à son quart, et les besoins écrits
+//     `nuit` (le pêcheur qui descend à sa barque avant le jour).
+//
+// Ce qui reste dehors sans raison après ça est un FAIT, et c'est tout l'objet :
+// le noctivague n'existe pas tant que tout le monde a le droit d'être là.
+function dansLaNuit(m, cf) {
+  const t = ((m % 1440) + 1440) % 1440;
+  return cf.retraite < cf.ouverture
+    ? (t >= cf.retraite && t < cf.ouverture)
+    : (t >= cf.retraite || t < cf.ouverture);
+}
+
+// La retraite qui suit une minute donnée, sur la même ligne de temps — les
+// étapes du quart de nuit portent des minutes négatives, et une comparaison
+// modulo les aurait renvoyées à la veille.
+function prochaineRetraite(m, cf) {
+  const jour = Math.floor(m / 1440) * 1440;
+  const t = jour + cf.retraite;
+  return t >= m ? t : t + 1440;
+}
+
+function couvrirLeFeu(etapes, cf, id) {
+  if (!cf || cf.applique === false) return etapes;
+  // PERSONNE N'A DE MONTRE, et le couvre-feu n'y change rien. Un `rentrer` plat
+  // vidait la ville à la minute près : six cents personnes dehors à vingt et une
+  // heures, zéro à vingt et une heures trente. C'est la même faute d'horlogerie
+  // que le fichier combat partout ailleurs — on tire donc le délai de chacun sur
+  // son identité, entre la moitié et une fois et demie. Les uns filent au coup
+  // de cloche, les autres finissent leur pot, et la rue se vide en pente.
+  const base = cf.rentrer === undefined ? 30 : cf.rentrer;
+  const rentrer = base * (0.5 + melange(id, 91, 0));
+  const out = [];
+  for (const e of etapes) {
+    // LE QUART PASSE, ET C'EST LE POINT. Le couvre-feu vide la rue de tout le
+    // monde SAUF de ceux qui la gardent : c'est ce qui fait qu'à trois heures
+    // du matin, les seuls hommes dehors sont des manteaux d'or.
+    if (e.service === "poste" || e.service === "ronde" || e.nuit) { out.push(e); continue; }
+    if (dansLaNuit(e.debut, cf)) continue;          // on ne sort plus
+    const butoir = prochaineRetraite(e.debut, cf) + rentrer;
+    if (e.fin > butoir) e.fin = butoir;             // on rentre
+    if (e.fin > e.debut) out.push(e);
+  }
+  return out;
+}
+
 export function journee(cel, k, jour, rangs) {
   if (cel._jour !== jour) {
     cel._jour = jour;
@@ -224,7 +279,8 @@ export function journee(cel, k, jour, rangs) {
       const v = b.duree_var === undefined ? 0.35 : b.duree_var;
       const duree = Math.max(b.duree * 0.25,
                              b.duree * (1 + (melange(id, n * 31 + s + 7, jour) * 2 - 1) * v));
-      etapes.push({ debut, fin: debut + duree, bat: ou, service: b.service });
+      etapes.push({ debut, fin: debut + duree, bat: ou, service: b.service,
+                    nuit: !!b.nuit });
     }
   }
   // --- la veille et la ronde ----------------------------------------------
@@ -249,17 +305,23 @@ export function journee(cel, k, jour, rangs) {
     }
   }
 
-  etapes.sort((a, b) => a.debut - b.debut);
+  // LA COUPE VIENT AVANT L'ENVELOPPE, et l'ordre compte : `_tot` et `_tard`
+  // disent à quelle minute ce corps quitte son seuil et y revient, et c'est sur
+  // eux que chaque image décide s'il faut le calculer. Une enveloppe prise
+  // avant la coupe aurait gardé tout le monde « dehors » jusqu'à une heure du
+  // matin — le coût sans le fait.
+  const sorties = couvrirLeFeu(etapes, t.couvre_feu, id);
+  sorties.sort((a, b) => a.debut - b.debut);
   let tot = Infinity, tard = -Infinity;
-  for (const e of etapes) {
+  for (const e of sorties) {
     const t = estime(chez, e.bat) / 78;      // l'allure moyenne suffit ici
     tot = Math.min(tot, e.debut - t);
     tard = Math.max(tard, e.fin + t);
   }
-  cel._tot[k] = etapes.length ? tot : Infinity;
-  cel._tard[k] = etapes.length ? tard : -Infinity;
-  cel._journees[k] = etapes;
-  return etapes;
+  cel._tot[k] = sorties.length ? tot : Infinity;
+  cel._tard[k] = sorties.length ? tard : -Infinity;
+  cel._journees[k] = sorties;
+  return sorties;
 }
 
 // --- le chemin : sur les rues, jamais à travers les murs -------------------

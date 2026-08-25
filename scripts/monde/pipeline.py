@@ -77,12 +77,21 @@ ETAPES = [
          pourquoi="un métier par maison, et une porte sur la rue",
          veut=["graph.json", "bati.json", "terrain.json"],
          donne=["bati.json"], minutes=3),
+    dict(id="annexes", script="annexes.py", nom="La prise de place",
+         pourquoi="remises, appentis et murs de cour dans les vides des îlots",
+         veut=["graph.json", "bati.json"], donne=["bati.json"], minutes=2),
     dict(id="portes", script="portes.py", nom="Les portes",
          pourquoi="faire entrer les portes dans le réseau",
          veut=["graph.json", "bati.json"], donne=["graph.json"], minutes=2),
     dict(id="degager", script="degager_voirie.py", nom="Le dégagement",
          pourquoi="sortir l'axe des rues des façades",
          veut=["graph.json", "bati.json"], donne=["graph.json"], minutes=2),
+    dict(id="infill", script="combler_ilots.py", nom="Le comblement des îlots",
+         pourquoi="venelles et vraies parcelles dans les fonds hors d'atteinte",
+         veut=["terrain.json", "graph.json", "bati.json"],
+         donne=["graph.json", "bati.json"], minutes=4,
+         prudence="Append-only pour les rangs existants ; les nouveaux habitants "
+                  "demandent ensuite peupler et besoins."),
     dict(id="rues", script="rues.py", nom="Les rues",
          pourquoi="la surface du graphe, seule, pour ceux qui marchent",
          veut=["graph.json"], donne=["rues.json"], minutes=1),
@@ -97,7 +106,13 @@ ETAPES = [
     dict(id="plan", script="plan_ville.py", nom="Le plan 2D",
          pourquoi="la ville dessinée, et le masque du bâti",
          veut=["terrain.json", "rues.json", "bati.json"],
-         donne=["plan2d.json", "masque.bin"], minutes=4),
+         donne=["plan2d.json", "masque.bin"], minutes=4,
+         prudence="RÉÉCRIT `plan2d.json` EN ENTIER et emporte avec lui les trois "
+                  "couches posées après coup : la toponymie, les cloches et le "
+                  "Guet. Elles disparaissent SANS UN MOT — mesuré le 25 août, on "
+                  "a cherché les cloches une demi-heure. Relancer ensuite, dans "
+                  "cet ordre : toponymie.py --appliquer, cloches.py --appliquer, "
+                  "guet.py --appliquer."),
     dict(id="planches", script="planches.py", nom="Les planches",
          pourquoi="le plan en images, pour le REGARDER (facultatif)",
          veut=["plan2d.json"], donne=[], minutes=2, facultatif=True),

@@ -468,6 +468,50 @@ function fichierStatique(res, relatif, type) {
   }
 }
 
+// ---- les dossiers de recherche, servis en lecture ------------------------
+// L'onglet « Les dossiers » de `/bataille` donne à LIRE ce sur quoi le modèle
+// est fondé — pas seulement la bibliographie : le raisonnement, les tableaux,
+// les réserves, et la section finale qui confronte le dossier au code.
+//
+// ON NE RECOPIE RIEN ET ON NE RÉÉCRIT RIEN : le markdown part tel quel, et
+// c'est la page qui le rend. Un dossier corrigé est à jour au rechargement
+// suivant, et il n'existe nulle part de seconde version à tenir — c'est
+// exactement le défaut qu'on paie ailleurs (la huitième liste de la chaîne,
+// cf. l'en-tête de `sac.js`).
+//
+// Les deux comptes du rail ne disent pas la même chose : `references` est ce
+// qui est cité, `liens` ce qu'on peut aller lire tout de suite. Un dossier de
+// livres imprimés a beaucoup des premières et peu des seconds, et l'écart est
+// une information sur sa nature.
+function dossiersRecherche() {
+  const dossier = path.join(RACINE, "docs", "recherche");
+  let noms;
+  try {
+    noms = fs.readdirSync(dossier).filter((f) => f.endsWith(".md")).sort();
+  } catch (e) { return []; }
+
+  return noms.map((nom) => {
+    const texte = fs.readFileSync(path.join(dossier, nom), "utf-8");
+    const lignes = texte.split(/\r?\n/);
+    const titre = (lignes.find((l) => l.startsWith("# ")) || "# " + nom).slice(2).trim();
+
+    let sections = 0, references = 0, liens = 0, dansSources = false;
+    for (const l of lignes) {
+      if (l.startsWith("## ")) {
+        sections++;
+        dansSources = /^##\s+Sources\b/.test(l);
+        continue;
+      }
+      if (!dansSources) continue;
+      if (l.trim().startsWith("- ")) references++;
+      liens += (l.match(/\]\(https?:\/\//g) || []).length;
+    }
+
+    return { fichier: nom, titre, texte,
+             compte: { sections, references, liens, signes: texte.length } };
+  });
+}
+
 // ---- le monde en volume ---------------------------------------------------
 // `monde/portreal.*.json` est l'atelier : le relief (grille de 10 m), le bâti
 // (48 000 volumes en colonnes) et le graphe (36 Mo, toutes couches). On ne
@@ -2705,12 +2749,24 @@ http
       // combat d'essai à gauche, le journal complet à droite. Elle ne touche à
       // RIEN — ni état, ni flux, ni horloge : c'est un banc, pas une partie.
       if (url === "/bataille") return fichierStatique(res, "bataille.html", "text/html; charset=utf-8");
+      // Ce sur quoi le banc est fondé : les dossiers de recherche entiers, lus
+      // à chaque appel dans `docs/recherche/*.md`. Lecture seule, hors partie —
+      // le banc ne touche à rien et celle-ci non plus.
+      if (url === "/recherche") {
+        try { return envoyer(res, 200, JSON.stringify({ dossiers: dossiersRecherche() })); }
+        catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
+      }
       // Un module, ou un module d'une famille : `/modules/monde/relief.js`. Un
       // seul cran de sous-dossier, et rien qui ressemble à un chemin remontant.
-      const m = url.match(/^\/modules\/(?:([a-z0-9_-]+)\/)?([a-z0-9_-]+\.js)$/);
+      //
+      // LA FEUILLE DE STYLE PASSE PAR ICI AUSSI. Une page qui sort son style en
+      // fichier — `bataille.html` l'a fait — se retrouvait servie sans style et
+      // sans que rien ne le dise ailleurs que dans la console : la page
+      // s'affichait, illisible, et l'on cherchait le défaut dans le CSS.
+      const m = url.match(/^\/modules\/(?:([a-z0-9_-]+)\/)?([a-z0-9_-]+\.(js|css))$/);
       if (m) return fichierStatique(res,
         m[1] ? path.join("modules", m[1], m[2]) : path.join("modules", m[2]),
-        "text/javascript; charset=utf-8");
+        m[3] === "css" ? "text/css; charset=utf-8" : "text/javascript; charset=utf-8");
       // ---- le monde en volume : banc d'essai --------------------------------
       // Une page à part, hors du jeu, pour juger le rendu 3D de Port-Réal avant
       // qu'il ne prenne la place de l'échelle « la ville ». Elle ne consomme ni
@@ -5248,6 +5304,134 @@ http
           return envoyer(res, 200, JSON.stringify(
             { ecrit: "etat/vues/" + fichier, octets: octets.length,
               gardees: vues.length }));
+        } catch (e) {
+          return envoyer(res, 400, JSON.stringify({ erreur: String(e.message || e) }));
+        }
+      });
+      return;
+    }
+
+    // UNE MARQUE DE DEBUG DE LA BATAILLE. Elle n'entre ni dans la fiction ni
+    // dans l'état canonique : c'est un paquet de preuve laissé par le joueur à
+    // ceux qui travaillent sur le moteur. Un dossier autonome contient la
+    // capture, le commentaire lisible et toutes les données structurées.
+    if (req.method === "POST" && url === "/marque-bataille") {
+      // Les pages récentes bornent déjà la chronologie. La marge supérieure
+      // permet toutefois de sauver une marque produite par un onglet resté
+      // ouvert avant ce correctif : le serveur la reçoit, puis garde sa FIN.
+      // Au-delà, on cesse réellement d'accumuler le corps en mémoire.
+      let corps = "", trop = false, recus = 0;
+      req.on("data", (c) => {
+        recus += c.length;
+        if (recus > 32 * 1024 * 1024) { trop = true; corps = ""; }
+        else if (!trop) corps += c;
+      });
+      req.on("end", () => {
+        try {
+          if (trop) throw new Error("marque trop lourde");
+          const doc = JSON.parse(corps);
+          const commentaire = String(doc.commentaire || "").trim();
+          if (!commentaire) throw new Error("commentaire vide");
+          if (commentaire.length > 8000) throw new Error("commentaire trop long");
+          if (!doc.diagnostic || typeof doc.diagnostic !== "object")
+            throw new Error("diagnostic manquant");
+          // Défense en profondeur pour les anciens clients et les outils qui
+          // postent directement. La chronologie est la seule partie sans
+          // borne naturelle. On la réduit en partant du dernier item et on
+          // laisse une preuve chiffrée de ce qui a été omis.
+          const historique = Array.isArray(doc.diagnostic.historique_perceptions)
+            ? doc.diagnostic.historique_perceptions : [];
+          const metaAvant = doc.diagnostic.historique_perceptions_meta || {};
+          const MAX_HISTORIQUE = 512 * 1024;
+          let debut = historique.length, octetsHistorique = 2;
+          while (debut > 0) {
+            const taille = Buffer.byteLength(JSON.stringify(historique[debut - 1]), "utf8") +
+              (debut < historique.length ? 1 : 0);
+            if (octetsHistorique + taille > MAX_HISTORIQUE &&
+                debut < historique.length) break;
+            octetsHistorique += taille; debut--;
+          }
+          const historiqueConserve = historique.slice(debut);
+          const totalHistorique = Math.max(historique.length,
+            Number(metaAvant.total) || 0,
+            historique.length + (Number(metaAvant.omis) || 0));
+          const metaHistorique = Object.assign({}, metaAvant, {
+            politique: "fin-conservee",
+            total: totalHistorique,
+            conserve: historiqueConserve.length,
+            omis: Math.max(0, totalHistorique - historiqueConserve.length),
+            octets_json: octetsHistorique,
+            debut_conserve_s: historiqueConserve.length
+              ? historiqueConserve[0].temps : null,
+            fin_conservee_s: historiqueConserve.length
+              ? historiqueConserve[historiqueConserve.length - 1].temps : null,
+          });
+          doc.diagnostic.historique_perceptions = historiqueConserve;
+          doc.diagnostic.historique_perceptions_meta = metaHistorique;
+          const m = /^data:image\/(png|jpeg|webp);base64,([A-Za-z0-9+/=]+)$/
+            .exec(doc.image || "");
+          if (!m) throw new Error("capture absente ou invalide");
+          const octets = Buffer.from(m[2], "base64");
+          if (octets.length > 2 * 1024 * 1024) throw new Error("capture trop lourde");
+          const ext = m[1] === "jpeg" ? "jpg" : m[1];
+          const brutId = doc.diagnostic.combattant && doc.diagnostic.combattant.id || "homme";
+          const id = String(brutId).replace(/[^a-zA-Z0-9_-]/g, "-").slice(0, 60) || "homme";
+          const iso = new Date().toISOString();
+          const horodatage = iso.replace(/[:.]/g, "-");
+          const racine = path.join(RACINE, "captures", "bataille-marques");
+          const nomDossier = horodatage + "-" + id;
+          const dossier = path.join(racine, nomDossier);
+          fs.mkdirSync(dossier, { recursive: true });
+          const imageNom = "zone." + ext;
+          fs.writeFileSync(path.join(dossier, imageNom), octets);
+          const rapport = {
+            format: "marque-bataille/v1", cree_a: iso,
+            commentaire, lieu: doc.lieu || null, capture: imageNom,
+            meta_capture: doc.meta || null, diagnostic: doc.diagnostic,
+          };
+          fs.writeFileSync(path.join(dossier, "rapport.json"),
+            JSON.stringify(rapport, null, 2), "utf-8");
+          const h = doc.diagnostic.combattant || {};
+          const p = h.pensee || {};
+          const md = [
+            "# Marque de bataille — " + (h.nom || h.id || "combattant"), "",
+            "## Commentaire", "", commentaire, "",
+            "## Instant", "",
+            "- Créée : " + iso,
+            "- Temps de bataille : " + (doc.diagnostic.temps_bataille_s ?? "?") + " s",
+            "- Position : " + (doc.lieu && doc.lieu.texte ||
+              (h.position ? h.position.x + ", " + h.position.y : "inconnue")),
+            "- État : " + (h.etat || "?"),
+            "- Pensée : j'essaie de " + (p.action || "?") + " parce que " + (p.raison || "?"),
+            "- Système : " + (p.systeme || "?"),
+            "- Historique : " + metaHistorique.conserve + " perceptions récentes conservées sur " +
+              metaHistorique.total + " (fin préservée" +
+              (metaHistorique.omis ? ", " + metaHistorique.omis + " anciennes omises" : "") + ")", "",
+            "## Fichiers", "",
+            "- `rapport.json` : chronologie perceptive et calculs complets",
+            "- `" + imageNom + "` : zone au moment du clic, combattant cerclé", "",
+            "![zone marquée](" + imageNom + ")", "",
+          ].join("\n");
+          fs.writeFileSync(path.join(dossier, "LISEZ-MOI.md"), md, "utf-8");
+
+          fs.mkdirSync(racine, { recursive: true });
+          const indexPath = path.join(racine, "index.json");
+          let marques = [];
+          try { marques = JSON.parse(fs.readFileSync(indexPath, "utf-8")).marques || []; }
+          catch (e) {}
+          marques.unshift({ dossier: nomDossier, cree_a: iso, combattant: h.nom || h.id,
+                            commentaire, temps_bataille_s: doc.diagnostic.temps_bataille_s });
+          fs.writeFileSync(indexPath, JSON.stringify({
+            _: "Marques de debug déposées depuis la carte, la plus récente en tête.",
+            marques,
+          }, null, 2), "utf-8");
+          return envoyer(res, 200, JSON.stringify({
+            ecrit: "captures/bataille-marques/" + nomDossier,
+            rapport: "captures/bataille-marques/" + nomDossier + "/rapport.json",
+            capture: "captures/bataille-marques/" + nomDossier + "/" + imageNom,
+            octets: octets.length,
+            historique: metaHistorique,
+          }));
         } catch (e) {
           return envoyer(res, 400, JSON.stringify({ erreur: String(e.message || e) }));
         }

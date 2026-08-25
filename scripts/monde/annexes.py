@@ -57,30 +57,30 @@ for besoin in ("usage", "cat"):
 # Un artisan encombre : il lui faut du bois, de l'eau, de la matière et un
 # endroit pour la puanteur. Un taudis n'a ni bien ni bois pour le couvrir.
 APPETIT = {
-    "forge":         (0.90, 7.0, 3.0),
-    "tannerie":      (0.95, 9.0, 3.5),
-    "teinturerie":   (0.90, 8.0, 3.0),
-    "poterie":       (0.90, 8.0, 3.0),
-    "brasserie":     (0.85, 7.0, 3.0),
-    "boulangerie":   (0.80, 5.0, 2.5),
-    "abattoir":      (0.90, 9.0, 3.5),
-    "corderie":      (0.85, 9.0, 3.0),
-    "voilerie":      (0.80, 7.0, 3.0),
-    "moulin":        (0.60, 5.0, 2.5),
-    "entrepot":      (0.85, 10.0, 4.0),
-    "chantier-bois": (0.90, 11.0, 4.0),
-    "echoppe":       (0.55, 4.0, 2.0),
-    "taverne":       (0.65, 5.0, 2.5),
-    "auberge":       (0.80, 7.0, 3.0),
-    "ecurie":        (0.85, 8.0, 3.5),
-    "etuve":         (0.70, 5.0, 2.5),
-    "manse":         (0.75, 9.0, 4.0),
-    "maison-officier": (0.70, 7.0, 3.0),
-    "maison":        (0.45, 4.5, 2.0),
-    "cabane":        (0.35, 4.0, 2.0),
-    "taudis":        (0.12, 2.5, 1.2),
+    "forge":         (0.95, 15.0, 4.0),
+    "tannerie":      (0.98, 19.0, 4.5),
+    "teinturerie":   (0.95, 17.0, 4.0),
+    "poterie":       (0.95, 16.0, 4.0),
+    "brasserie":     (0.92, 15.0, 4.0),
+    "boulangerie":   (0.88, 10.0, 3.5),
+    "abattoir":      (0.95, 19.0, 4.5),
+    "corderie":      (0.92, 18.0, 4.0),
+    "voilerie":      (0.90, 15.0, 4.0),
+    "moulin":        (0.72, 10.0, 3.5),
+    "entrepot":      (0.92, 20.0, 5.0),
+    "chantier-bois": (0.95, 22.0, 5.0),
+    "echoppe":       (0.72, 9.0, 3.0),
+    "taverne":       (0.78, 11.0, 3.5),
+    "auberge":       (0.88, 15.0, 4.0),
+    "ecurie":        (0.92, 17.0, 4.5),
+    "etuve":         (0.80, 11.0, 3.5),
+    "manse":         (0.88, 19.0, 5.0),
+    "maison-officier": (0.84, 15.0, 4.0),
+    "maison":        (0.68, 11.0, 3.0),
+    "cabane":        (0.52, 7.0, 2.5),
+    "taudis":        (0.26, 5.0, 1.8),
 }
-DEFAUT = (0.35, 4.0, 2.0)
+DEFAUT = (0.55, 8.0, 2.5)
 
 JOUR = 0.6          # le dégagement qu'on laisse toujours autour de l'annexe
 MINI = 1.4          # sous quoi ce n'est plus une remise mais une niche
@@ -116,6 +116,17 @@ def marque(x, y, buf):
     i, j = int((x - X0)/CEL), int((y - Y0)/CEL)
     if 0 <= i < NX and 0 <= j < NY:
         buf[j*NX + i] = 1
+
+
+def marque_rectangle_local(x, y, ca, sa, u0, u1, v0, v1):
+    """Réserve une annexe acceptée avant de traiter la maison suivante."""
+    nu = max(1, int((u1 - u0)/CEL) + 1)
+    nv = max(1, int((v1 - v0)/CEL) + 1)
+    for iu in range(nu + 1):
+        for iv in range(nv + 1):
+            u = u0 + (u1 - u0)*iu/nu
+            v = v0 + (v1 - v0)*iv/nv
+            marque(x + u*ca - v*sa, y + u*sa + v*ca, MURS_BAT)
 
 
 for r in B["bati"]:
@@ -245,6 +256,14 @@ for k, r in enumerate(B["bati"]):
     if fond or g or dd:
         compte["prend"] += 1
         gagne += (fond*r[C["facade_m"]]*0.8 + (g + dd)*r[C["profondeur_m"]]*0.6)
+        # Sans cette réservation, deux maisons dos à dos pouvaient chacune
+        # mesurer le même terrain comme libre et y pousser l'une dans l'autre.
+        if fond:
+            marque_rectangle_local(x, y, ca, sa, -f*.40, f*.40, p, p + fond)
+        if g:
+            marque_rectangle_local(x, y, ca, sa, -f - g, -f, -p*.30, p*.30)
+        if dd:
+            marque_rectangle_local(x, y, ca, sa, f, f + dd, -p*.30, p*.30)
     else:
         compte["pas la place"] += 1
 

@@ -325,7 +325,13 @@ def maintenant(lieu="portreal"):
             print("    aucune adresse physique : rien ne peut lui parvenir.")
             print("    → scripts/affecter.py, ou une balade qui lui en donne une.\n")
             continue
-        if monde and monde != "port-real":
+        # LES TIRETS NE COMPTENT PAS, et cette garde les comptait. `corps.json`
+        # ecrit "portreal", cette ligne comparait a "port-real" : tout siege
+        # affecte au monde de Port-Real etait declare hors de portee, y compris
+        # Marlo Vasse a douze metres de la porte qu'on enfonce. `croiser.js`
+        # normalise deja ainsi (l. 126) ; c'etait la garde du script qui mentait.
+        plat = lambda m: str(m or "").replace("-", "")
+        if monde and plat(monde) != plat(lieu):
             print("    a %s — hors de portee de cette nuit.\n" % monde)
             continue
         r = percu(xyz[0], xyz[1], d)

@@ -81,18 +81,16 @@ const ECOLES = {
 // que des stimuli naissent — un coup part, il touche ou il frôle. Le reste de
 // la mêlée (positions, déplacements) est figé, parce que ce n'est pas ce qu'on
 // mesure ici.
-function courir(ecole, { seul = false, journal = null, vie = VIE } = {}) {
+function courir(ecole, { seul = null, journal = null, vie = VIE } = {}) {
   semer();
   const A = [homme("A1", "a", ECOLES[ecole]), homme("A2", "a", ECOLES[ecole])];
   const D = [homme("D1", "d", ECOLES.soldat), homme("D2", "d", ECOLES.soldat),
              homme("D3", "d", ECOLES.soldat)];
   for (const h of A) h.vie = vie;
   // Qui est en face de qui, et à quelle distance.
-  const FACE = seul
-    ? { A1: [["D1", 1.2, 1], ["D2", 1.6, 0.4]], A2: [] }   // A2 absent : le témoin
-    : { A1: [["D1", 1.2, 1], ["D2", 1.6, 0.4]], A2: [["D3", 1.4, 1]] };
+  const FACE = { A1: [["D1", 1.2, 1], ["D2", 1.6, 0.4]], A2: [["D3", 1.4, 1]] };
 
-  const tousA = seul ? [A[0]] : A;
+  const tousA = seul ? A.filter((h) => h.nom === seul) : A;
   const parLeNom = {}; for (const h of A.concat(D)) parLeNom[h.nom] = h;
 
   const stimuli = [];       // la boîte aux lettres commune, vidée chaque battement
@@ -159,7 +157,7 @@ function courir(ecole, { seul = false, journal = null, vie = VIE } = {}) {
            ami: false, cap: null }));
       for (const a of tousA)
         if (a !== h && a.debout && !a.parti)
-          voisins.push({ angle: -Math.PI / 2, distance: 1.0, ami: true, cap: 0,
+          voisins.push({ angle: -Math.PI / 2, distance: 1.0, ami: true, memeGroupe: true, cap: 0,
                          jambes: a.jambes || "planté", bras: a.bras || "garde",
                          depuis: a.jusqua == null ? 9 : Math.max(0, t - (a.jusqua - 1)) });
       const signaux = {
@@ -201,7 +199,7 @@ console.log("═══ LE RELEVÉ NARRATIF — deux soldats contre trois, de nui
     console.log(("  " + String(l.t).padStart(4) + "s " + l.qui).padEnd(14) +
                 l.phrase);
     if (l.saillant) console.log("".padEnd(14) + "        (" + l.saillant +
-      ", saillance " + dit(l.saillance) + " · réflexe " + dit(l.reflexe) +
+      ", saillance " + dit(l.saillance) + " · sang-froid " + dit(l.sangFroid) +
       " · emprise " + dit(l.emprise) + ")");
   }
 }
@@ -228,7 +226,7 @@ for (const e of Object.keys(rompus)) {
 console.log("\n═══ C2 · LA CONTAGION — A2 lâche-t-il plus tôt qu'un homme seul ? ═══\n");
 for (const e of Object.keys(rompus)) {
   const ensemble = rompus[e].A2;
-  const t = courir(e, { seul: true }).rompu.A1;
+  const t = courir(e, { seul: "A2" }).rompu.A2;
   console.log("  " + e.padEnd(10) +
     "à deux : " + (ensemble == null ? "jamais" : ensemble.toFixed(1) + "s").padEnd(10) +
     "seul : " + (t == null ? "jamais" : t.toFixed(1) + "s"));
@@ -244,14 +242,16 @@ console.log("\n═══ B3 · L'ASYMÉTRIE DE L'ALARME ═══\n");
   const tempsPour = (depart, cible) => {
     let a = depart, t = 0;
     const but = depart + (cible - depart) * 0.632;
-    while (t < 600 && (cible > depart ? a < but : a > but)) { a = C.activer(a, cible, PAS); t += PAS; }
+    while (t < 600 && (cible > depart ? a < but : a > but)) {
+      a = C.reglerSangFroid(a, cible, PAS); t += PAS;
+    }
     return t;
   };
-  const monte = tempsPour(-1, 1), descend = tempsPour(1, -1);
-  console.log("  constante de montée   : " + monte.toFixed(1) + " s");
-  console.log("  constante de descente : " + descend.toFixed(1) + " s");
-  console.log("  rapport               : ×" + (descend / monte).toFixed(1) +
-              (descend / monte >= 10 ? "   ✓ ≥ 10" : "   ✗ attendu ≥ 10"));
+  const alarme = tempsPour(1, -1), retour = tempsPour(-1, 1);
+  console.log("  perte de sang-froid    : " + alarme.toFixed(1) + " s");
+  console.log("  retour du sang-froid   : " + retour.toFixed(1) + " s");
+  console.log("  rapport               : ×" + (retour / alarme).toFixed(1) +
+              (retour / alarme >= 10 ? "   ✓ ≥ 10" : "   ✗ attendu ≥ 10"));
 }
 
 console.log("\n═══ A4 · INVARIANCE D'ÉCHELLE — le test qui aurait sauvé SEUIL_RECUL ═══\n");
@@ -271,7 +271,7 @@ console.log("\n═══ A3 · LE ZÉRO JUSTE — au repos, rien ne se déclench
   for (let t = 0; t < 30; t += PAS)
     r = C.pas(c, { t, dt: PAS, stimuli: [], signaux: calme, nuit: true, presse: 0 }, R());
   console.log("  après 30 s sans rien : " + r.jambes + " · " + r.bras +
-              "   réflexe " + dit(r.reflexe) + " · emprise " + dit(r.emprise) +
+              "   sang-froid " + dit(r.sangFroid) + " · emprise " + dit(r.emprise) +
               (r.jambes === "planté" && r.emprise < 0.1 ? "   ✓" : "   ✗"));
 }
 
@@ -330,7 +330,7 @@ console.log("═══ AU BANC — un conscrit, en clair, pour VOIR la couche �
     dernier[l.qui] = l.phrase;
     console.log(("  " + String(l.t).padStart(5) + "s " + l.qui).padEnd(15) + l.phrase);
     if (l.saillant) console.log("".padEnd(15) + "   (" + l.saillant +
-      " · réflexe " + dit(l.reflexe) + " · emprise " + dit(l.emprise) + ")");
+      " · sang-froid " + dit(l.sangFroid) + " · emprise " + dit(l.emprise) + ")");
   }
   console.log("\n  rupture : " + JSON.stringify(r.rompu) +
               "   chute : " + JSON.stringify(r.tombe));

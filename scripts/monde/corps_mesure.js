@@ -50,6 +50,10 @@ const CHAINE = ["bataille/hasard.js", "bataille/mesures.js",
                 // La couche 3 n'est qu'en observation, mais elle est lue par
                 // `soldat()` à chaque battement : elle doit être posée avant.
                 "survival-stack/3-interpretation.js",
+                "survival-stack/2-reflexion.js",
+                "survival-stack/5-qui-conduit.js",
+                "bataille/reflexion-adapt.js",
+                "bataille/commandement.js",
                 "bataille2d.js"];
 for (const f of CHAINE) (0, eval)(fs.readFileSync(path.join(MODULES, f), "utf8"));
 const B = globalThis.window.Bataille2d;
@@ -78,25 +82,25 @@ const n2 = (x) => (x >= 0 ? "+" : "") + x.toFixed(2);
     // et l'on garde le maximum, qui est le seul chiffre qui dise si quelque
     // chose s'est passe quelque part.
     const hs = B.troupe();
-    let n = 0, somme = 0, calmes = 0, emprise = 0, hauts = 0, pire = -1;
+    let n = 0, somme = 0, calmes = 0, emprise = 0, hauts = 0, pire = 1;
     let nEngages = 0, sommeEng = 0, recus = 0;
     const gestes = {}, bras = {};
     for (const h of hs) {
       const l = h.l1; if (!l) continue;
-      n++; somme += l.reflexe; emprise += l.emprise;
-      if (l.reflexe > pire) pire = l.reflexe;
-      if (l.reflexe < -0.8) calmes++;
-      if (l.reflexe > -0.5) hauts++;
+      n++; somme += l.sangFroid; emprise += l.emprise;
+      if (l.sangFroid < pire) pire = l.sangFroid;
+      if (l.sangFroid > 0.8) calmes++;
+      if (l.sangFroid < 0.5) hauts++;
       if (h.recu) recus += h.recu.length;
       // « engage » : il a quelqu'un d'en face a portee de bras.
-      const eng = h.etat === "melee" || h.etat === "assaut" || l.reflexe > -0.9;
-      if (eng) { nEngages++; sommeEng += l.reflexe;
+      const eng = h.enMesure || l.sangFroid < 0.9;
+      if (eng) { nEngages++; sommeEng += l.sangFroid;
         gestes[l.jambes] = (gestes[l.jambes] || 0) + 1;
         bras[l.bras] = (bras[l.bras] || 0) + 1; }
     }
-    return { t, n, moy: n ? somme / n : -1, emp: n ? emprise / n : 0,
+    return { t, n, moy: n ? somme / n : 1, emp: n ? emprise / n : 0,
              calmes: n ? calmes / n : 0, hauts: n ? hauts / n : 0,
-             pire, nEng: nEngages, moyEng: nEngages ? sommeEng / nEngages : -1,
+             pire, nEng: nEngages, moyEng: nEngages ? sommeEng / nEngages : 1,
              recus, gestes, bras };
   }
 

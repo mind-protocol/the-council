@@ -67,6 +67,11 @@ const NIVEAUX = [
     dit: "les ordres, les coureurs, les bannières, la peur qui court",
     quoi: ["ordre", "coureur-part", "coureur-arrive", "coureur-tombe", "ordre-sans-personne",
            "ordre-deforme", "declencheur-tombe", "initiative",
+           // Le porteur qui n'arrive pas. Il n'était classé NULLE PART — ni
+           // niveau, ni aspect, ni portée — donc le four l'écrivait et rien ne
+           // pouvait le lire. Il est du même rang que `coureur-tombe`, dont il
+           // est le cas particulier : un homme tombé avec sa phrase.
+           "messager-tombe",
            "escouade-sourde", "escouade-reprise", "nouveau-chef",
            "banniere-tombe", "banniere-relevee", "ralliement",
            "peur-gagne", "rumeur-gagne", "prend-les-armes"] },
@@ -77,52 +82,25 @@ const NIVEAUX = [
 
 // ---------------------------------------------------------------------------
 // LES ASPECTS — en travers, et ils se recouvrent exprès.
+//
+// ILS NE SONT PLUS ÉCRITS ICI. Ce fichier tenait sa liste des types ;
+// `serveur/croiser.js` en tenait une autre, par portées, sur le MÊME
+// vocabulaire — et elles ont dérivé en silence : douze types que le four
+// émettait manquaient d'un côté, un (`messager-tombe`) manquait des deux, si
+// bien qu'il s'écrivait dans le sac sans que rien au monde puisse le lire.
+//
+// Le vocabulaire vit désormais avec le four qui le produit, dans
+// `ecrans/modules/bataille/faits.js`, et chaque type y déclare ses aspects.
+// Ce script en lit la découpe « aspects » — noms, sous-titres et listes
+// comprises — et n'en recopie pas une ligne. Un type neuf s'écrit là-bas, une
+// fois, et il apparaît ici du même coup.
+//
+// L'ORDRE DES CLEFS EST UNE DÉCISION, et il est tenu là-bas aussi : un fait
+// sert plusieurs aspects mais ne se range que sous le PREMIER qui le réclame
+// quand on groupe (`--par aspect`).
 // ---------------------------------------------------------------------------
-const ASPECTS = {
-  commandement: {
-    nom: "La chaîne de commandement",
-    dit: "qui ordonne, qui transmet, qui n'entend plus rien",
-    quoi: ["ordre", "coureur-part", "coureur-arrive", "coureur-tombe", "ordre-sans-personne",
-           // Ce que la chaîne fait quand elle ne marche pas : elle s'abîme,
-           // elle attend, ou elle se passe de tête. Les trois sont ici, avec
-           // le reste, parce que c'est le même sujet.
-           "ordre-deforme", "declencheur-tombe", "initiative",
-           "escouade-sourde", "escouade-reprise", "nouveau-chef",
-           "tete-tombe", "chef-tombe", "banniere-tombe", "banniere-relevee",
-           "corps-ferme", "corps-sourd", "corps-versatile"] },
-  ville: {
-    nom: "La ville",
-    dit: "ce que la population fait pendant qu'on se bat dessus",
-    quoi: ["habitant", "prend-les-armes", "peur-gagne", "rumeur-gagne",
-           "maison-brulee"] },
-  fer: {
-    nom: "Le fer",
-    dit: "le contact, les corps à terre, les escouades qui cessent d'en être",
-    quoi: ["contact", "premier-sang", "blesse", "blesse-succombe",
-           "blesse-tient", "escouade-rompt", "ralliement", "assaut-au-donjon"] },
-  nouvelles: {
-    nom: "Ce qui se sait",
-    dit: "l'information qui circule — ou qui tombe en chemin",
-    quoi: ["guet-a-vu", "rumeur-gagne", "peur-gagne", "roi-averti",
-           "coureur-part", "coureur-arrive", "coureur-tombe", "ordre-sans-personne", "ordre-deforme",
-           "escouade-sourde", "escouade-reprise"] },
-  ouvrages: {
-    nom: "Les ouvrages",
-    dit: "les portes, et par où l'on entre",
-    quoi: ["porte-abimee", "porte-cede", "porte-enfoncee", "porte-ouverte",
-           "donjon-ouvert"] },
-  issue: {
-    nom: "L'issue",
-    dit: "comment la nuit s'est décidée",
-    quoi: ["contact", "premier-sang", "porte-enfoncee", "porte-ouverte",
-           "donjon-ouvert", "donjon-tranche", "roi-averti", "roi-tombe",
-           "assaut-au-donjon"] },
-  // Le filet de sécurité : un `quoi` qu'aucune liste ci-dessus ne nomme tombe
-  // ici, et le script le dit sur la sortie d'erreur. Sans ça, ajouter un fait
-  // dans `bataille2d.js` le ferait disparaître en silence de toutes les vues —
-  // et l'on chercherait le défaut dans le four, qui n'y serait pour rien.
-  divers: { nom: "Divers", dit: "ce qu'aucun aspect ne réclame encore", quoi: [] },
-};
+const FAITS = require(path.join(RACINE, "ecrans", "modules", "bataille", "faits.js"));
+const ASPECTS = FAITS.ASPECTS;
 
 const CONNUS = new Set([].concat(...NIVEAUX.map((n) => n.quoi)));
 
@@ -132,11 +110,9 @@ function niveauDe(quoi) {
   return 4;
 }
 
-/** Tous les aspects d'un fait ; `divers` s'il n'en a aucun. */
-function aspectsDe(quoi) {
-  const a = Object.keys(ASPECTS).filter((k) => ASPECTS[k].quoi.includes(quoi));
-  return a.length ? a : ["divers"];
-}
+/** Tous les aspects d'un fait ; `divers` s'il n'en a aucun. La table répond,
+ *  et le groupement par aspect les remet dans l'ordre des clefs ci-dessus. */
+const aspectsDe = FAITS.aspectsDe;
 
 // ---------------------------------------------------------------------------
 // LE TEMPS — on l'écrit comme on le lit dans le document.
@@ -369,14 +345,27 @@ function main() {
   const source = path.resolve(o.fichier);
   const { entete, faits } = charger(source);
 
-  // Ce que le four sait dire et que ce fichier ne classe pas encore. On ne
-  // l'enterre pas : c'est le seul avertissement qui empêche une vue de mentir
-  // par omission après un ajout dans `bataille2d.js`.
-  const orphelins = [...new Set(faits.map((f) => f.d.quoi))].filter((q) => !CONNUS.has(q));
-  if (orphelins.length && !o.muet)
-    console.error("annales : " + orphelins.length + " type(s) hors classement, " +
-                  "tenus pour niveau 4 / aspect « divers » — " + orphelins.join(", ") +
-                  " (à ranger dans NIVEAUX et ASPECTS de ce script)");
+  // Ce que le four sait dire et que personne ne classe encore. On ne l'enterre
+  // pas : c'est le seul avertissement qui empêche une vue de mentir par
+  // omission après un ajout dans `bataille2d.js`.
+  const vus = [...new Set(faits.map((f) => f.d.quoi))];
+  // DEUX FAÇONS D'ÊTRE HORS CLASSEMENT, ET ELLES NE SE RÉPARENT PAS AU MÊME
+  // ENDROIT. Un type absent de la table des faits n'a ni aspect ni portée —
+  // c'est le four qui a pris de l'avance sur son vocabulaire. Un type absent
+  // des NIVEAUX ci-dessus tombe au 4 : c'est ce script-ci qui n'a pas tranché
+  // de sa profondeur de lecture. On les dit séparément, sans quoi l'on va
+  // corriger le mauvais fichier.
+  const inconnus = vus.filter((q) => !FAITS.connu(q));
+  const sansNiveau = vus.filter((q) => FAITS.connu(q) && !CONNUS.has(q));
+  if (inconnus.length && !o.muet)
+    console.error("annales : " + inconnus.length + " type(s) que la table des " +
+                  "faits ne connaît pas, donc sans aspect ni portée — " +
+                  inconnus.join(", ") + " (à écrire dans " +
+                  "ecrans/modules/bataille/faits.js)");
+  if (sansNiveau.length && !o.muet)
+    console.error("annales : " + sansNiveau.length + " type(s) sans niveau, " +
+                  "tenus pour le 4 — " + sansNiveau.join(", ") +
+                  " (à ranger dans NIVEAUX de ce script)");
 
   const retenus = filtrer(faits, o);
   const groupes = grouper(retenus, o);

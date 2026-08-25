@@ -335,6 +335,42 @@ VEILLES = {
 VEILLES_PEYREDRAGON = {}
 
 # ---------------------------------------------------------------------------
+# LE COUVRE-FEU — ce qui rend la garde possible
+# ---------------------------------------------------------------------------
+# ON NE GARDE PAS UNE VILLE EN LA SURVEILLANT : ON LA VIDE, ET L'ON GARDE CE QUI
+# RESTE. C'est le fait central de `docs/recherche/les-gardes-et-patrouilles-de-
+# ville.md` (§ 0), et il manquait entierement : `journee.js` envoyait les gens
+# au puits a trois heures du matin, si bien que les seize guettes patrouillaient
+# une ville qui ne dort jamais et que la retraite de l'Aieule ne fermait rien.
+#
+# La chaine va dans l'autre sens qu'on croit. Ce n'est pas le guet qui produit
+# l'ordre nocturne, c'est l'ordre nocturne qui rend le guet possible : soixante
+# hommes ne tiennent Paris que parce que la rue est legalement interdite.
+#
+# `retraite`  : la cloche du soir. On couvre les braises, on ferme les portes,
+#               on vide les tavernes, on rentre. Ici l'Aieule du vieux septuaire
+#               (voir scripts/ville/port-real-cloches.json).
+# `ouverture` : le Ferrant. Les portes de la ville s'ouvrent apres lui, jamais
+#               avant, et la journee recommence.
+# `rentrer`   : les minutes qu'on laisse a qui est dehors pour rentrer chez lui
+#               sans etre inquiete. Une taverne ne se vide pas au coup de cloche.
+#
+# ⚠ CES DEUX HEURES SONT FIXES, ET ELLES NE DEVRAIENT PAS L'ETRE. Les sources
+# donnent partout une borne ASTRONOMIQUE — « du coucher au lever du soleil » —
+# qui bouge de plusieurs heures dans l'annee. On pose des chiffres tant que le
+# monde n'a pas de saisons ; le jour ou il en aura, c'est ici qu'on branchera le
+# soleil, et nulle part ailleurs.
+COUVRE_FEU = dict(retraite=1260, ouverture=330, rentrer=30,
+                  cloche_retraite="septuaire-aieule",
+                  cloche_ouverture="septuaire-ferrant")
+
+# Le bourg de Peyredragon n'a ni muraille ni guet : la nuit y est noire, et
+# personne ne la fait respecter. On garde les heures pour que les pecheurs et
+# les cuisines du chateau se comportent pareil, sans qu'il y ait de delit.
+COUVRE_FEU_PEYREDRAGON = dict(retraite=1260, ouverture=330, rentrer=60,
+                              applique=False)
+
+# ---------------------------------------------------------------------------
 # PEYREDRAGON — un bourg de pêche, et une forteresse par-dessus
 # ---------------------------------------------------------------------------
 # Rien de la table de Port-Réal ne se recopie ici, et ce n'est pas une question
@@ -412,7 +448,11 @@ BESOINS_PEYREDRAGON = [
     # quand on veut, on part quand l'eau le permet. La fenêtre reste donc
     # serrée — mais on ne rentre pas tous ensemble, et la durée varie beaucoup :
     # c'est le poisson qui décide de l'heure du retour, pas le pêcheur.
-    dict(id="peche", service="quai", par_jour=1, heures=[330], largeur=50,
+    # LA PECHE PASSE LE COUVRE-FEU. Un homme dehors avant le jour n'est pas un
+    # noctivague s'il descend a sa barque : le couvre-feu arrete ceux qui n'ont
+    # pas de raison, jamais ceux qui en ont une. `nuit` est cette raison-la, et
+    # elle doit etre ECRITE — sinon c'est le MJ qui l'invente au cas par cas.
+    dict(id="peche", service="quai", nuit=True, par_jour=1, heures=[330], largeur=50,
          duree=400, duree_var=0.3, rangs=["maitre", "valet"], age=[12, 68],
          part=0.8),
 
@@ -488,6 +528,7 @@ if LIEU == "peyredragon":
     RONDES = RONDES_PEYREDRAGON
     VEILLES = VEILLES_PEYREDRAGON
     PLEIN_AIR = PLEIN_AIR_PEYREDRAGON
+    COUVRE_FEU = COUVRE_FEU_PEYREDRAGON
 
 # ---------------------------------------------------------------------------
 # LA RÉSOLUTION — le plus proche de chaque service, pour chaque bâtiment
@@ -635,6 +676,7 @@ SORTIE = {
     "rondes": RONDES,
     "etendues": ETENDUE,
     "veilles": VEILLES,
+    "couvre_feu": COUVRE_FEU,
     "portees": portees,
     # une ligne par bâtiment, dans l'ordre du bâti ; -1 = pas de service atteint
     "dessert": DESSERT,

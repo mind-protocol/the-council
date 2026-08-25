@@ -31,6 +31,16 @@
 // C'est le seul endroit à toucher, et c'est délibéré : un comportement neuf ne
 // doit pas demander de retoucher la balade.
 //
+// ELLE N'EST PLUS ICI, ET C'EST LE MÊME ARGUMENT POUSSÉ D'UN CRAN. La table
+// vivait dans ce fichier ; `scripts/monde/annales.js` en tenait une autre, par
+// niveaux et par aspects, sur le MÊME vocabulaire. Deux listes, deux fichiers,
+// aucun lien — elles ont dérivé : douze types que le four émettait n'étaient
+// écrits ni ici ni là, donc une porte à moitié défoncée ne s'entendait pas et
+// le roi qui verse ne portait pas plus loin qu'un homme qui s'assoit. Le
+// vocabulaire est désormais dans `ecrans/modules/bataille/faits.js`, avec le
+// four dont il sort ; ce fichier en lit la découpe « portées » et rien
+// d'autre. Un type neuf s'y écrit UNE fois.
+//
 // PAS DE FICHIER, PAS DE BATAILLE, ZÉRO COÛT. Sans `etat/bataille.json`, tout
 // ce module rend `null` au premier test et ne lit rien. C'est le cas normal.
 "use strict";
@@ -38,74 +48,27 @@
 const fs = require("fs");
 const path = require("path");
 
-// --- LA TABLE DES PORTÉES ---------------------------------------------------
-// `vu` et `entendu` sont des mètres. `trace` est la durée en SECONDES pendant
-// laquelle le fait reste lisible au sol après qu'il s'est produit — `0` pour ce
-// qui ne laisse rien, `Infinity` pour ce qu'on retrouvera au matin.
+// --- LA TABLE DES PORTÉES, LUE AILLEURS ------------------------------------
+// `PORTEES`, `PORTEE_DEFAUT` et `ARRETENT` sortent tels quels de la table
+// unique des types de faits. On ne les recopie pas : c'est exactement la
+// recopie qui a laissé douze types du four hors de toute portée pendant des
+// semaines, sans qu'aucune ligne ait l'air fausse.
 //
-// Les chiffres ne sont pas des réglages de difficulté : ce sont des mesures.
-// Une porte bardée de fer qu'on enfonce s'entend à sept cents mètres dans une
-// ville de nuit ; un homme qui tombe ne s'entend pas à quarante.
-const PORTEES = {
-  "porte-cede":       { vu: 80,  entendu: 500, trace: 0 },
-  "porte-enfoncee":   { vu: 80,  entendu: 700, trace: Infinity, trace_vu: 60 },
-  "contact":          { vu: 60,  entendu: 250, trace: 0 },
-  // Un corps qu'on relève, un pavé noirci : ça se voit du trottoir d'en face.
-  "premier-sang":     { vu: 50,  entendu: 0,   trace: 3600, trace_vu: 20 },
-  "blesse":           { vu: 40,  entendu: 35,  trace: Infinity },
-  "blesse-succombe":  { vu: 30,  entendu: 0,   trace: Infinity },
-  "blesse-tient":     { vu: 30,  entendu: 25,  trace: Infinity },
-  "chef-tombe":       { vu: 50,  entendu: 60,  trace: 1800 },
-  "tete-tombe":       { vu: 60,  entendu: 90,  trace: 3600 },
-  "escouade-rompt":   { vu: 120, entendu: 150, trace: 0 },
-  "escouade-sourde":  { vu: 0,   entendu: 0,   trace: 0 },
-  "ralliement":       { vu: 90,  entendu: 110, trace: 0 },
-  "ordre":            { vu: 40,  entendu: 60,  trace: 0 },
-  "assaut-au-donjon": { vu: 150, entendu: 400, trace: 0 },
-  "peur-gagne":       { vu: 60,  entendu: 80,  trace: 0 },
-  "rumeur-gagne":     { vu: 60,  entendu: 0,   trace: 0 },
-  "guet-a-vu":        { vu: 70,  entendu: 0,   trace: 0 },
-  // LE FEU EST LE FAIT QUI PORTE LE PLUS LOIN DE TOUS, et de très loin. Une
-  // maison qui brûle se voit d'un bout à l'autre d'un quartier, s'entend
-  // moins qu'elle ne se voit, et laisse un trou noir dans la rue pour le
-  // reste de la partie. C'est aussi le seul acte de cette nuit qui change la
-  // ville pour de bon : sa trace ne s'éteint jamais.
-  "maison-brulee":    { vu: 600, entendu: 200, trace: Infinity, trace_vu: 400 },
-  // UN VOISIN QUI SORT AVEC UNE HACHE — ou celui d'en face qui met une planche
-  // en travers de sa porte. Ça se voit dans la rue, ça ne s'entend pas, et ça
-  // reste toute la nuit : sa porte est ouverte et il n'est pas chez lui. C'est
-  // la trace la plus jouable de toutes, parce qu'elle a une ADRESSE et qu'elle
-  // attend qu'on vienne lui demander où il était.
-  "prend-les-armes":  { vu: 40,  entendu: 0,   trace: Infinity, trace_vu: 30 },
-  // La chaîne de commandement se voit de près et ne s'entend pas : un coureur
-  // qui part est un homme qui court, rien de plus, et il faut être dans la
-  // même rue pour comprendre que c'en est un.
-  "coureur-part":     { vu: 40,  entendu: 0,   trace: 0 },
-  "coureur-arrive":   { vu: 40,  entendu: 0,   trace: 0 },
-  "coureur-tombe":    { vu: 45,  entendu: 0,   trace: 900 },
-  "banniere-tombe":   { vu: 130, entendu: 0,   trace: 600 },
-  "banniere-relevee": { vu: 130, entendu: 0,   trace: 0 },
-  "nouveau-chef":     { vu: 35,  entendu: 0,   trace: 0 },
-  "escouade-reprise": { vu: 60,  entendu: 0,   trace: 0 },
-  // Ce que chaque corps EST ne se perçoit pas : c'est une note du fichier sur
-  // lui-même, pas un événement de la rue. Portée nulle, et c'est voulu.
-  "corps-ferme":      { vu: 0,   entendu: 0,   trace: 0 },
-  "corps-sourd":      { vu: 0,   entendu: 0,   trace: 0 },
-  "corps-versatile":  { vu: 0,   entendu: 0,   trace: 0 },
-};
-// Ce qu'on ne connaît pas se voit de près et ne s'entend pas. Un fait neuf
-// arrive donc timidement plutôt que de crier à travers la ville — c'est le bon
-// défaut : on l'oublie dans la table sans que la partie devienne fausse.
-const DEFAUT = { vu: 45, entendu: 0, trace: 0 };
+// Ce que la table dit, et qui n'a pas changé de sens en déménageant :
+//   `vu` et `entendu` sont des mètres. `trace` est la durée en SECONDES
+//   pendant laquelle le fait reste lisible au sol après qu'il s'est produit —
+//   `0` pour ce qui ne laisse rien, `Infinity` pour ce qu'on retrouvera au
+//   matin. `trace_vu` est la distance à laquelle on repère cette trace-là.
+const FAITS = require("../ecrans/modules/bataille/faits.js");
+const PORTEES = FAITS.PORTEES;
+const DEFAUT = FAITS.PORTEE_DEFAUT;
 
 // CE QUI ARRÊTE UNE MARCHE. Le manuel le dit déjà : « ce qui se lève en chemin
 // devient un fil, et alors on arrête de marcher. » On ne le laisse pas au
 // jugé — un joueur qui traverse un assaut sans que ses jambes s'arrêtent a
-// perdu la scène. Ces faits-là, VUS, coupent la balade.
-const ARRETENT = new Set(["porte-cede", "porte-enfoncee", "contact",
-  "escouade-rompt", "assaut-au-donjon", "tete-tombe", "blesse",
-  // Une maison qui brûle dans la rue où l'on marche arrête n'importe qui.
-  "maison-brulee"]);
+// perdu la scène. Ces faits-là, VUS, coupent la balade ; c'est le drapeau
+// `arrete` de la table qui les désigne.
+const ARRETENT = FAITS.ARRETENT;
 
 // L'instant vaut une demi-minute de part et d'autre : c'est ce qu'un pas de
 // balade couvre, et l'on ne prétend pas mieux.

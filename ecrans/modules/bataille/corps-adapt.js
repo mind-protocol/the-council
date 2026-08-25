@@ -204,6 +204,7 @@
   // entre deux coups d'œil doit quand même être vu. Ils s'accumulent donc dans
   // `h.recu`, et c'est la boîte aux lettres qui les garde jusqu'au réveil.
   const RAYON_VOISINS = 4.5;      // mètres : de quoi tenir un rang, pas une aile
+  const RAYON_MENACE = 12;        // le second rang voit le premier travailler
 
   /** L'angle de `o` vu depuis `h`, RELATIF à son cap tenu. */
   function relatif(h, o) {
@@ -222,12 +223,13 @@
    */
   function observer(h, ctx, dt) {
     const voisins = [], proches = [];
-    ctx.autour(h.x, h.y, RAYON_VOISINS, (o) => {
+    ctx.autour(h.x, h.y, RAYON_MENACE, (o) => {
       if (o === h || !ctx.pese(o)) return;
       const d = Math.hypot(o.x - h.x, o.y - h.y);
-      if (d > RAYON_VOISINS) return;
+      if (d > RAYON_MENACE) return;
       const ami = o.camp === h.camp;
       if (ami) {
+        if (d > RAYON_VOISINS) return;
         // CE QU'UNE FORME MONTRE, ET RIEN DE PLUS. Pas son camp nominal, pas son
         // rang, pas sa peur : son geste, son cap, et depuis quand il le tient.
         // `h.branche` de la bataille n'est pas un geste de la couche 1 — on ne
@@ -244,6 +246,7 @@
         voisins.push({
           porte: porte === "banniere" ? "bannière" : porte,
           angle: relatif(h, o), distance: d, ami: true,
+          memeGroupe: !!(h.corps && o.corps === h.corps && o.escouade === h.escouade),
           jambes: l ? l.jambes : null, bras: l ? l.bras : null,
           cap: (o.fx || o.fy) ? relatif(h, { x: o.x + o.fx, y: o.y + o.fy }) : null,
           depuis: l ? Math.max(0, ctx.temps - (l.depuis || 0)) : 99,
@@ -266,6 +269,33 @@
                          ? -(o.cx * Math.cos(a) + o.cy * Math.sin(a)) : 0 });
       }
     });
+
+    // LA MESURE DU FER, PAS L'ETIQUETTE D'ETAT. Un homme est au contact si un
+    // ennemi vivant est dans l'allonge de SON arme. Les bouts se ferment ici,
+    // au meme balayage qui a deja mesure les distances : aucun second parcours.
+    const allonge = ((h.arme && h.arme.allonge) || 0.9) + 0.6;
+    const enMesure = proches.some((x) => x.distance <= allonge);
+    if (enMesure && !h.enMesure) {
+      h.enMesure = true; h.mesureDepuis = ctx.temps; h.boutsMesure++;
+    } else if (!enMesure && h.enMesure) {
+      const duree = Math.max(0, ctx.temps - h.mesureDepuis);
+      h.dernierBout = duree; h.boutMax = Math.max(h.boutMax, duree);
+      h.enMesure = false;
+    }
+    if (enMesure) h.tempsEnMesure += dt;
+
+    // Le degagement est une geometrie orientee : trois pas derriere le cap,
+    // combines avec la presse humaine. Sans masque, on garde explicitement le
+    // seul terme connu au lieu de declarer la rue ouverte.
+    let sol = 1;
+    if (ctx.libre) {
+      const fx = h.fx || h.cx || 1, fy = h.fy || h.cy || 0;
+      let libres = 0;
+      for (const pas of [0.8, 1.6, 2.4])
+        if (ctx.libre(h.x - fx * pas, h.y - fy * pas)) libres++;
+      sol = libres / 3;
+    }
+    h.degagement = Math.max(0, Math.min(1, sol * (1 - Math.min(1, (h.presse || 0) / 6))));
 
     // ---- LES DEUX STIMULI QUI SE DÉRIVENT DE CE BALAYAGE ---------------------
     // La couche 1 était sourde de trois sens sur six : `frapper` lui envoyait le
@@ -299,21 +329,27 @@
     }
 
     const pvMax = h.pvMax || 25;
+    const dangerExterieur = ctx.temps <= (h.menaceJus || -Infinity)
+      ? (h.menaceExterieure || 0) : 0;
     const signaux = {
       integrite: C.integrite(Math.max(0, h.pv), ctx.degatTypique),
       souffle:   C.souffle(h.souffle == null ? 1 : h.souffle),
-      menace:    C.menace(proches),
+      menace:    Math.max(C.menace(proches), dangerExterieur),
+      // −1 est l'absence, +1 le danger qui prend tout le champ. Le garder
+      // distinct de `menace` permet aux appels de distinguer un homme armé à
+      // portée d'une masse de feu dont on doit seulement sortir.
+      dangerExterieur: 2 * dangerExterieur - 1,
       // L'ISSUE N'EST PAS MODÉLISÉE DANS LA BATAILLE, et il faut le dire plutôt
       // que d'inventer. Il n'existe nulle part de « part de mon arrière qui est
       // libre » : ni mur, ni cul-de-sac, ni presse orientée. On prend donc la
       // presse comme approximation — être serré, c'est ne pas pouvoir reculer —
       // et l'on note que c'est le signal le plus faible des cinq tant que la
       // géométrie ne le donnera pas pour de bon.
-      issue:     C.issue(Math.max(0, 1 - (h.presse || 0) / 6)),
+      issue:     C.issue(h.degagement),
       // ⚠ `proches` N'EST PAS TRIE — il sort de la grille de voisinage, dans
       // l'ordre ou elle balaie. Prendre `[0]` revenait a tester un ennemi
       // au hasard, pas le plus proche.
-      aPortee:   proches.some((x) => x.distance <= 2.2),
+      aPortee:   enMesure,
       ennemisProches: proches.length,
     };
 

@@ -1,0 +1,127 @@
+{
+ "_lisez_moi": "L'ÉTALON DU MOTEUR. Ce que rend `ecrans/modules/bataille2d.js` et sa chaîne sur une bataille courte, à graine tenue. Il ne dit pas que la bataille est bonne : il dit qu'elle est la MÊME. On le repose d'un `--poser` quand on a CHOISI de changer le modèle, et l'on écrit alors dans le commit ce qui a bougé et pourquoi. Un déplacement de blocs, lui, ne doit rien bouger du tout — c'est toute la raison de ce fichier. Engendré par ecrans/modules/bataille/banc-moteur.js, ne pas éditer à la main.",
+ "pose_le": "2026-08-24 16:04:25",
+ "condition": {
+  "hommes": 150,
+  "duree_s": 100,
+  "porte": "La porte de la Gadoue",
+  "pas_s": 0.05,
+  "graine": 20161219,
+  "porte_ouverte_essai": "false",
+  "peuple": 0,
+  "tournee": 0,
+  "planches": 0,
+  "chaine": [
+   {
+    "f": "bataille/hasard.js",
+    "sha": "23fdcd8a79ef"
+   },
+   {
+    "f": "bataille/mesures.js",
+    "sha": "276ac2005d44"
+   },
+   {
+    "f": "survival-stack/1-corps.js",
+    "sha": "6a5931973375"
+   },
+   {
+    "f": "bataille/corps-adapt.js",
+    "sha": "2986fe65a2c9"
+   },
+   {
+    "f": "survival-stack/4-envie.js",
+    "sha": "76a2c6fbc4dd"
+   },
+   {
+    "f": "survival-stack/3-interpretation.js",
+    "sha": "0f0e474a453e"
+   },
+   {
+    "f": "survival-stack/2-reflexion.js",
+    "sha": "999419d55f11"
+   },
+   {
+    "f": "survival-stack/5-qui-conduit.js",
+    "sha": "f91e12bf7cbb"
+   },
+   {
+    "f": "bataille/reflexion-adapt.js",
+    "sha": "7e684c62b334"
+   },
+   {
+    "f": "bataille2d.js",
+    "sha": "79ba46644f5c"
+   }
+  ],
+  "chaine_sha": "a44c1353d1a9"
+ },
+ "releve": {
+  "temps": 100,
+  "morts": 6,
+  "blesses": 3,
+  "fuyards": 0,
+  "assaut": 156,
+  "garde": 69,
+  "verrou": {
+   "etat": "ouvert",
+   "pv": 0
+  },
+  "portes": [
+   {
+    "nom": "La porte de la Gadoue",
+    "etat": "ouvert",
+    "pv": 0,
+    "par": "hache"
+   },
+   {
+    "nom": "La porte de Fer",
+    "etat": "ferme",
+    "pv": 9000,
+    "par": null
+   },
+   {
+    "nom": "La porte du Roi",
+    "etat": "ferme",
+    "pv": 9000,
+    "par": null
+   },
+   {
+    "nom": "La Vieille Porte",
+    "etat": "ferme",
+    "pv": 9000,
+    "par": null
+   }
+  ],
+  "etats": {
+   "tient": 77,
+   "mort": 6,
+   "coureur": 2,
+   "colonne": 123,
+   "pille": 2,
+   "blesse": 3,
+   "forme": 19,
+   "commande": 5,
+   "melee": 2
+  },
+  "faits": 43,
+  "par_quoi": {
+   "porte-abimee": 1,
+   "corps-ferme": 1,
+   "corps-sourd": 1,
+   "corps-versatile": 1,
+   "ordre": 13,
+   "coureur-part": 7,
+   "coureur-arrive": 6,
+   "escouade-sourde": 1,
+   "ordre-deforme": 1,
+   "contact": 1,
+   "premier-sang": 1,
+   "porte-cede": 1,
+   "declencheur-tombe": 1,
+   "blesse": 3,
+   "porte-enfoncee": 1,
+   "chef-tombe": 2,
+   "banniere-tombe": 1
+  }
+ }
+}

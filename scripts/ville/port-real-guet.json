@@ -1,0 +1,145 @@
+{
+  "_lisez_moi": "L'ORDRE DE BATAILLE DU GUET DE PORT-REAL. Source humaine versionnee, meme patron que port-real-cloches.json : aucune coordonnee ici, chaque guette DESIGNE son carrefour par le nom que la toponymie lui donne deja, et scripts/monde/guet.py resout la position sur le graphe. LES SITES SONT FIGES ET NOMMES, LES RONDES SONT CALCULEES : une guette est un lieu de la fiction qu'on cite en scene, un circuit est un fait de voirie qui doit suivre les rues telles qu'elles sont. Voir docs/recherche/les-gardes-et-patrouilles-de-ville.md.",
+  "version": 1,
+  "lieu": "port-real",
+  "date": "129 AC",
+  "_le_systeme": {
+    "trois_lieux": "LA CASERNE n'est pas un lieu de garde : c'est celui des roles, de la solde, de l'armurerie et de la reserve. LES CORPS DE GARDE sont aux sept portes et font un metier de douanier — le peage, la fouille, l'etranger qu'on interroge, la porte qu'on ferme. LES GUETTES sont l'excubitorium romain : une piece basse sur un carrefour, une lanterne au-dessus de la porte, un banc, une chaine, et un cachot d'une nuit.",
+    "deux_services": "Le Guet ne connait pas l'heure, il connait les cloches. LE JOUR va du Ferrant (l'ouverture) a l'Aieule (la retraite) et tient les portes ; LA NUIT va de l'Aieule au Ferrant et tient la ville. Les deux se croisent a la retraite, qui est la minute la plus chargee de la journee.",
+    "un_pour_trois": "Dans une guette, trois hommes au poste pour un en ronde. On peut toujours venir frapper — c'est ce qui fait d'un poste un poste. La ronde ne couvre pas le quartier : elle y trace un fil, et les gens du quartier savent mieux que le Guet quelles rues ne sont pas dessus.",
+    "l_information": "PLUS CA PORTE LOIN, MOINS CA DIT. La voix porte 50 m et transmet tout ; la corne porte ~350 m et ne dit qu'un point ; la cloche porte jusqu'a 2 400 m et ne dit que « sortez » ; le coureur porte la ville entiere et met dix a trente minutes. Rien ne porte tout, vite, partout — et ce trou est le systeme."
+  },
+  "_effectifs": {
+    "_note": "ON NE FIXE PAS L'EFFECTIF D'UNE GUETTE A LA MAIN : il se repartit sur les toits qu'elle sert, calcules par guet.py. Une guette qui dessert six mille toits n'a pas la meme taille qu'une qui en dessert huit cents, et ecrire les deux chiffres a la main aurait garanti qu'ils soient faux le jour ou la ville bouge.",
+    "nuit_en_ville": 900,
+    "jour_aux_portes": 600,
+    "reserve_a_la_caserne": 579,
+    "part_en_ronde": 0.25,
+    "_total": "2 079, ce que le monde cuit porte reellement (2 032 hommes, 41 sergents, 6 capitaines)."
+  },
+  "_ronde": {
+    "_note": "LE CIRCUIT EST CALCULE SUR LE GRAPHE DES RUES, jamais ecrit ici. On tire six secteurs de soixante degres autour de la guette, on prend dans chacun un point a ~330 m qui soit sur une rue portant un nom, on les relie au plus court, et l'on referme. Ca donne une BOUCLE et non une etoile — un homme qui patrouille fait le tour, il ne rentre pas au poste entre deux rues.",
+    "cible_m": 330,
+    "rayon_m": 520,
+    "secteurs": 6,
+    "allure_m_min": 78,
+    "_pourquoi_toujours_la_meme": "Deux hommes, le meme circuit, toutes les nuits. On les reconnait, et c'est le but : un guet qu'on reconnait est un guet a qui l'on parle. Le prix est qu'on sait aussi l'eviter.",
+    "part_arrets": 0.25,
+    "_arrets": "UN HOMME DU GUET S'ARRETE. Une porte qu'on pousse, un mot a quelqu'un, une lanterne qu'on rallume : le tour reel vaut la marche plus un quart. C'est lui qui decide a quelle frequence une rue revoit une patrouille, et donc lui qu'on juge — la marche pure ne se vit nulle part.",
+    "penalite_sans_nom": 1.45
+  },
+  "guettes": [
+    {
+      "id": "guette-soie-fleuve",
+      "nom": "La guette de la Soie",
+      "carrefour": "La croisée de la Soie et du Fleuve",
+      "statut": "pose",
+      "description": "La plus grosse de la ville, et celle qu'on cite quand on dit « la guette » sans preciser. Elle tient la Soie d'un bout et le fleuve de l'autre : deux mondes qui ne se parlent pas et qui passent par elle."
+    },
+    {
+      "id": "guette-marche-fer",
+      "nom": "La guette du marche de Fer",
+      "carrefour": "Le marché de Fer",
+      "statut": "pose",
+      "description": "Sous les etals, une salle basse qui sent le poisson les jours de marche et le fer le reste du temps. Le sergent y a son banc dehors, ce qui n'est pas reglementaire et que personne n'a jamais releve."
+    },
+    {
+      "id": "guette-six-fours",
+      "nom": "La guette des Six-Fours",
+      "carrefour": "Le carrefour des Six-Fours",
+      "statut": "pose",
+      "description": "Six fours autour d'un carrefour : il y fait chaud toute la nuit et l'on s'y bat pour le quart d'hiver. Le pain du matin passe devant la porte avant d'aller nulle part ailleurs."
+    },
+    {
+      "id": "guette-auberge-grise",
+      "nom": "La guette de l'Auberge-Grise",
+      "carrefour": "Le carrefour de l'Auberge-Grise",
+      "statut": "pose",
+      "description": "En face de l'auberge dont elle porte le nom, et c'est un arrangement : l'aubergiste loge deux hommes, le Guet ferme les yeux d'une heure sur la retraite. Tout le quartier le sait."
+    },
+    {
+      "id": "guette-brasseurs",
+      "nom": "La guette des Brasseurs",
+      "carrefour": "La place des Brasseurs",
+      "statut": "pose",
+      "description": "La ronde la plus courue et la moins tranquille : on n'y arrete personne avant minuit et tout le monde apres. Les brasseurs paient une part de la lanterne, ce qui leur donne des idees sur qui l'on doit reconduire chez lui."
+    },
+    {
+      "id": "guette-marechaux",
+      "nom": "La guette des Marechaux",
+      "carrefour": "Le carrefour des Maréchaux",
+      "statut": "pose",
+      "description": "Au nord, sur la route de la Rose : la derniere lanterne avant les faubourgs, et la premiere chose que voit qui entre par la porte des Dieux apres la retraite."
+    },
+    {
+      "id": "guette-entrepots",
+      "nom": "La guette des Entrepots",
+      "carrefour": "La place des Entrepôts",
+      "statut": "pose",
+      "description": "Le Guet et les marchands s'y regardent depuis toujours. On y tient le registre de ce qui sort des hangars la nuit, et ce registre a deja servi trois fois a prouver le contraire de ce qu'on voulait."
+    },
+    {
+      "id": "guette-huit-forges",
+      "nom": "La guette des Huit-Forges",
+      "carrefour": "Le carrefour des Huit-Forges",
+      "statut": "pose",
+      "description": "Rue d'Acier, au milieu du bruit. Le jour on ne s'y entend pas parler ; la nuit c'est le seul endroit de la ville ou l'on entend venir quelqu'un a cent pas."
+    },
+    {
+      "id": "guette-cuisines",
+      "nom": "La guette des Cuisines",
+      "carrefour": "Le carrefour des Cuisines",
+      "statut": "pose",
+      "description": "Au pied de la colline d'Aegon, sur le chemin par lequel monte ce que le Donjon Rouge mange. C'est la guette qu'on tient quand on veut etre vu de la maison du roi."
+    },
+    {
+      "id": "guette-enclume",
+      "nom": "La guette de l'Enclume",
+      "carrefour": "Le carrefour de l'Enclume",
+      "statut": "pose",
+      "description": "Petite, ancienne, mal placee de l'avis de tous ceux qui y ont servi — et jamais deplacee, parce qu'elle est la depuis avant qu'on compte."
+    },
+    {
+      "id": "guette-tavernes-basses",
+      "nom": "La guette des Tavernes-Basses",
+      "carrefour": "Le carrefour des Tavernes-Basses",
+      "statut": "pose",
+      "description": "Culpucier. La guette ou l'on envoie ceux qu'on punit, et celle dont les hommes connaissent le mieux leur quartier : les deux vont ensemble et personne ne l'admet."
+    },
+    {
+      "id": "guette-dragon-tombe",
+      "nom": "La guette du Dragon-Tombe",
+      "carrefour": "Le carrefour du Dragon-Tombé",
+      "statut": "pose",
+      "description": "Sous la colline de Rhaenys, dans le seul quartier de Port-Real qui n'entende aucun tocsin. Ici l'alarme arrive a pied, dans les deux sens, et les hommes de cette guette sont les seuls a le savoir dans leurs jambes."
+    },
+    {
+      "id": "guette-dix-tavernes",
+      "nom": "La guette des Dix-Tavernes",
+      "carrefour": "Le carrefour des Dix-Tavernes",
+      "statut": "pose",
+      "description": "Dix tavernes, une lanterne. Le sergent tient le compte de qui ferme en retard et le porte a la caserne une fois la lune ; il n'en est jamais rien sorti."
+    },
+    {
+      "id": "guette-puits-roi",
+      "nom": "La guette du Puits-du-Roi",
+      "carrefour": "La place du Puits-du-Roi",
+      "statut": "pose",
+      "description": "Sur la place du puits, donc sur le passage de tout le monde a l'aube. La guette la plus regardee de la ville, et celle ou l'on se tient le mieux."
+    },
+    {
+      "id": "guette-puits-dragons",
+      "nom": "La guette du Puits-des-Dragons",
+      "carrefour": "La place du Puits-des-Dragons",
+      "statut": "pose",
+      "description": "L'autre poste de la colline de Rhaenys, et l'autre sourd. Sa ronde et celle du Dragon-Tombe se croisent une fois par tour, ce qui est le seul echange d'informations dont ce quartier dispose."
+    },
+    {
+      "id": "guette-petit-septuaire",
+      "nom": "La guette du Petit-Septuaire",
+      "carrefour": "La place du Petit-Septuaire",
+      "statut": "pose",
+      "description": "Contre le mur du septuaire de quartier, et l'on s'y dispute depuis trente ans pour savoir qui de la Foi ou du Guet paie l'huile de la lanterne commune."
+    }
+  ]
+}

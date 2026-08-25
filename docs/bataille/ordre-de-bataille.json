@@ -1,0 +1,313 @@
+{
+  "_lisez_moi": [
+    "PROPOSITION DE FORMAT — rien ne lit ce fichier aujourd'hui, et c'est voulu.",
+    "Il est la forme candidate de ce qui est aujourd'hui recopié à la main dans",
+    "`ecrans/modules/bataille2d.js`. Tant qu'il n'est pas branché, il ne fait",
+    "foi sur rien : le moteur reste la seule vérité exécutée.",
+    "",
+    "LES VALEURS SONT CELLES DU CODE, PAS CELLES DU DOSSIER — pour qu'un",
+    "branchement ne change aucune cuisson. Partout où `docs/bataille/*.md`",
+    "prescrit autre chose, la clef `ecart` le dit et renvoie au rapport",
+    "`docs/bataille/ecarts-code-dossier.md`, qui les liste toutes.",
+    "",
+    "CE QUI N'EST PAS ICI EST DE LA MÉCANIQUE et doit le rester : les fonctions",
+    "de placement (`poserCorps`, `axeDe`, `dresser`), les calculs de front, les",
+    "seuils de morale, la physique du fer. Une extraction qui les emporte casse",
+    "la bataille — la frontière est décrite dans le rapport."
+  ],
+
+  "_source": "docs/bataille/README.md, rouges.md, bleus.md, autorite.md, chaines.md, narratif.md, ancrages.md",
+  "_code": "ecrans/modules/bataille2d.js, section « L'ORDRE DE BATAILLE » (l. 920-3963)",
+
+  "exercice": {
+    "quoi": "L'exercice de la porte de la Gadoue",
+    "quand": "129 AC, 4e lune",
+    "axe": "de la porte de la Gadoue vers le Donjon Rouge",
+    "longueur_m": 613,
+    "hommes_annonces": 2500,
+    "hommes_reels": {
+      "assaut": 1700,
+      "garnison": 800,
+      "escorte_du_roi": 40,
+      "note": "Les quarante de la Garde Royale ne comptent dans aucun des deux camps : personne ne leur a assigné un côté, donc aucun arbitre ne peut statuer sur eux."
+    }
+  },
+
+  "echelle": {
+    "valeur": 1,
+    "plancher_corps": 20,
+    "plancher_garnison": 3,
+    "regle": "Tout ce qui est une masse se divise, la géométrie jamais. Les reculs, les côtés, les largeurs de front et les distances ne bougent à aucune échelle.",
+    "_mecanique": "`combien()` et `garnison()` restent dans le module — ce sont deux fonctions, pas des données."
+  },
+
+  "assaut": {
+    "total": 1700,
+    "_forme": "`recul` compte en mètres vers le DEHORS de la porte, `cote` le long du rempart (positif vers le quai d'aval). Un corps sans `porte` prend celle qu'on donne au four.",
+    "corps": [
+      {
+        "id": "cole",
+        "nom": "Ser Criston Cole",
+        "hommes": 500,
+        "porte": null,
+        "humeur": null,
+        "dit": "le centre — il frappe la porte, et il est au PREMIER rang",
+        "place": { "forme": "colonne", "parRang": 8, "recul": 110, "cote": 0, "rangTete": 0 },
+        "ecole": { "dressage": 0.30, "vecu": 0.20, "sourd": 0 },
+        "brule": null,
+        "veut": "que ce soit magnifique, et que ce soit à lui",
+        "craint": "d'être trouvé ridicule par des hommes qu'il méprise"
+      },
+      {
+        "id": "vantre",
+        "nom": "Ser Loryn Vantre",
+        "hommes": 350,
+        "porte": "La porte de Fer",
+        "humeur": null,
+        "dit": "le port — il arrive en flanc, donc en retard, et il a les outils",
+        "place": { "forme": "colonne", "parRang": 6, "recul": 300, "cote": 450, "rangTete": 0 },
+        "ecole": { "dressage": 0.10, "vecu": 0.00, "sourd": 0 },
+        "brule": null,
+        "veut": "les registres de la douane de la Néra, vidée par l'exercice",
+        "craint": "Ser Criston Cole, et il a raison",
+        "ecart": "rouges.md : « son corps est le seul qui ait des outils — contre le verrou, ses hommes valent double ». Aucun bonus de hache n'existe dans le code : `HACHE = 11` est plat pour tout le monde. Les outils ne vivent que dans la phrase `dit`."
+      },
+      {
+        "id": "cranche",
+        "nom": "Ser Ormond Cranche",
+        "hommes": 250,
+        "porte": "La porte du Roi",
+        "humeur": "ferme",
+        "dit": "l'aile ferme — il ne rompt pas, et il ne retire pas ses morts",
+        "place": { "forme": "ligne", "parRang": 25, "recul": 170, "cote": -130, "rangTete": 0 },
+        "ecole": { "dressage": 0.70, "vecu": 0.60, "sourd": 0 },
+        "brule": 0,
+        "veut": "qu'on tienne — c'est la seule chose qu'il ait jamais faite",
+        "craint": "que le Guet ait cessé d'être une troupe, et il a raison depuis six ans",
+        "ecart": "rouges.md : « il refuse de retirer ses hommes déclarés morts ». Il n'y a pas d'arbitrage dans le module — donc personne n'est déclaré mort, donc ce refus n'existe pas."
+      },
+      {
+        "id": "gueux",
+        "nom": "le sergent Rous Cantel",
+        "hommes": 400,
+        "porte": "La Vieille Porte",
+        "humeur": "sourd",
+        "dit": "on leur a retiré les cors pour que ce soit réaliste — ils n'entendent rien",
+        "place": { "forme": "nuee", "largeur": 150, "fond": 120, "recul": 270, "cote": -330, "rangTete": 0 },
+        "ecole": { "dressage": -0.30, "vecu": -0.20, "sourd": 0.85 },
+        "brule": 0.75,
+        "veut": "bien faire — et bien faire consiste ici à n'obéir à personne",
+        "_nom": "Le four écrit « X mène N hommes ». Le `nom` d'un corps doit donc être une PERSONNE : « les faux gueux mène 400 hommes » ne s'accorde pas."
+      },
+      {
+        "id": "bleusailles",
+        "nom": "Petit Wend",
+        "hommes": 200,
+        "porte": null,
+        "humeur": "versatile",
+        "dit": "les levées neuves — elles refluent, et elles reviennent en riant",
+        "place": { "forme": "nuee", "largeur": 130, "fond": 100, "recul": 130, "cote": 230, "rangTete": 0 },
+        "ecole": { "dressage": -0.60, "vecu": -0.70, "sourd": 0 },
+        "brule": 0.10,
+        "veut": "qu'on le regarde — c'est tout, et c'est assez",
+        "craint": "d'avoir l'air d'avoir peur",
+        "consigne": {
+          "verbe": "suivre",
+          "objet": { "corps": "cole" },
+          "marge": 200,
+          "intention": "couvrir",
+          "_dit": "« gardez-vous à deux cents pas de Cole » — la consigne d'avant-nuit, déjà dans la tête au premier pas, et le seul ordre qui arrive toujours à destination.",
+          "ecart": "`marge` se consomme en MÈTRES (`c[0] + nx * marge`) et se dit en pas (`enPas`, 0,75 m/pas). 200 se lit donc « à 265 pas », pas « à deux cents pas ». Pour dire deux cents pas il faut écrire 150."
+        }
+      }
+    ]
+  },
+
+  "garnison": {
+    "total": 800,
+    "_regle": "La ville a une garnison, pas quatre : ce qu'on met à une porte, on ne l'a plus à l'autre. Celle qui cède la première n'est pas celle qu'on frappe le plus fort, c'est celle qu'on a le moins gardée.",
+    "_tirage": "Le tirage au sort ne se simule pas — il est déjà dans le chiffre : la moitié des hommes de la Gadoue défend une porte qu'elle n'a jamais gardée pendant que les gens du port l'attaquent en connaissant chaque ruelle.",
+    "postes": [
+      {
+        "id": "gadoue",
+        "porte": "La porte de la Gadoue",
+        "hommes": 200,
+        "chef": {
+          "nom": "le sergent Waltyr Poix",
+          "role": "sergent du poste",
+          "rang": "au milieu du premier rang (9e homme du poste)",
+          "veut": "soixante hommes de plus, demandés par écrit trois fois",
+          "craint": "d'avoir raison, et il a raison depuis trois semaines",
+          "existe_deja": "etat/personnages.json",
+          "ecart": "bleus.md : « il est déclaré mort dans les quarante premières secondes, mis de côté, vivant, et regarde prendre son poste pendant une heure ». Le code le NOMME et rien d'autre : sans arbitrage, il se bat et il meurt comme les autres. La bouche à faire parler le lendemain n'est pas produite."
+        }
+      },
+      { "id": "porte-de-fer", "porte": "La porte de Fer", "hommes": 100, "chef": null },
+      { "id": "porte-du-roi", "porte": "La porte du Roi", "hommes": 100, "chef": null },
+      { "id": "vieille-porte", "porte": "La Vieille Porte", "hommes": 100, "chef": null },
+      {
+        "id": "anneau",
+        "porte": null,
+        "lieu": "l'anneau du Donjon",
+        "hommes": 300,
+        "forme": "six rangs concentriques, rayon 26 m + 2,2 m par rang",
+        "chef": null,
+        "ecart": "bleus.md donne les trois portes à cent au sergent Gaunt le Portier et l'anneau des trois cents à Ser Merryn Coutre. Dans le code ces quatre cents hommes n'ont AUCUN chef attaché : Gaunt et Coutre sont des figures peintes au Donjon, pas des commandants."
+      }
+    ],
+    "messagers": {
+      "un_par_porte": true,
+      "poste": "douze mètres en dedans, dos à la porte",
+      "_note": "Quatre hommes de plus, hors des 800. Chaque porte qui cède envoie le sien, et aucune ne sait ce que les autres ont fait."
+    },
+    "commandant": {
+      "nom": "Ser Luthor Largent",
+      "titre": "Commandant du Guet",
+      "ecart": "ABSENT DU CODE — pas une occurrence dans `bataille2d.js`. bleus.md lui donne l'ensemble des huit cents hommes et lui fait tenir l'anneau."
+    }
+  },
+
+  "roi": {
+    "nom": "Aegon II",
+    "role": "roi — s'il tombe, tout s'arrête",
+    "recul_m": 230,
+    "cote_m": 20,
+    "_recul": "« trois cents pas en arrière du fer » — 230 m à 0,75 m/pas font 307 pas.",
+    "escorte": 40,
+    "presse_m": 7,
+    "verse": {
+      "hommes_secondes": 90,
+      "comment": "Il est écrasé par les siens, jamais par une épée. Quinze fuyards pendant six secondes versent la charrette ; trois qui passent ne la versent pas. Aucune chance tirée."
+    }
+  },
+
+  "verrous": {
+    "pv_neuf": 9000,
+    "hache_par_homme_seconde": 11,
+    "front": "sept hommes au seuil",
+    "porte_ouverte_essai": false,
+    "usure": {
+      "La porte de la Gadoue": 0.10
+    },
+    "_usure": [
+      "Ce n'est pas un réglage de difficulté : c'est l'état d'un ouvrage qu'on a",
+      "laissé vieillir. La Gadoue est la porte du port — elle travaille tous les",
+      "jours, personne ne l'a referrée depuis des années, et c'est écrit dans les",
+      "demandes de réfection que Waltyr Poix envoie au Donjon et que personne ne lit.",
+      "Neuf cents points au lieu de neuf mille : deux minutes de sept haches",
+      "deviennent douze secondes."
+    ],
+    "ecart": "Aucun fichier de `docs/bataille/` ne mentionne l'usure, ni le fait `porte-abimee` qu'elle émet. L'horloge de chaines.md (porte qui cède à 0h38) est écrite pour une porte à neuf mille points."
+  },
+
+  "donjon": {
+    "delibere_tenir_s": [70, 240],
+    "delibere_ouvrir_s": [60, 220],
+    "_deux_fins": "Le châtelain qui n'a jamais choisi, et celui qui a la clef sur lui. Les deux fourchettes se chevauchent : la nuit se joue sur laquelle tombe la première.",
+    "figures": [
+      {
+        "camp": "garde",
+        "nom": "Ser Merryn Coutre",
+        "role": "châtelain",
+        "place": { "repere": "donjon", "dx": -14, "dy": -10 },
+        "dit": "châtelain — il veut rendre le Donjon intact, et il ne décide jamais à temps",
+        "veut": "rendre le Donjon intact : les tapisseries, le puits, les livres",
+        "craint": "de choisir"
+      },
+      {
+        "camp": "garde",
+        "nom": "Dame Elyanne de Rosby",
+        "role": "la doyenne",
+        "place": { "repere": "donjon", "dx": 12, "dy": -16 },
+        "dit": "soixante et onze ans, et elle refuse de quitter ses chambres pour un jeu"
+      },
+      {
+        "camp": "garde",
+        "nom": "le sergent Gaunt le Portier",
+        "role": "il a la clef",
+        "place": { "repere": "donjon", "dx": 16, "dy": 8 },
+        "dit": "il est pour qu'on ouvre — la seule porte qui puisse s'ouvrir sans se casser",
+        "veut": "rentrer chez lui",
+        "craint": "qu'on lui reproche la clef"
+      },
+      {
+        "camp": "garde",
+        "nom": "le septon Marris",
+        "role": "la Foi",
+        "place": { "repere": "donjon", "dx": -10, "dy": 14 },
+        "dit": "il a demandé que ça ne se fasse pas la nuit, et on ne lui a pas répondu"
+      }
+    ]
+  },
+
+  "habitants": {
+    "_pourquoi": "Un fait qui tombe sur un numéro n'est pas une scène. Il en faut huit avec une adresse, pour que `peur-gagne` ait quelqu'un sur qui tomber. `place.dans` compte en mètres vers l'INTÉRIEUR des murs depuis la porte engagée.",
+    "liste": [
+      { "nom": "Rob l'écailler", "role": "écailler", "place": { "dans": 20, "cote": 12 },
+        "dit": "il sauve son étal avant sa femme, et il le sait déjà" },
+      { "nom": "les deux Nayle", "role": "quatorze et onze ans", "place": { "dans": 48, "cote": -18 },
+        "dit": "quatorze ans et onze ans — ils suivent l'armée, ils trouvent ça magnifique" },
+      { "nom": "le vieux Wex", "role": "sourd", "place": { "dans": 62, "cote": 26 },
+        "dit": "sourd, sur le pas de sa porte — il ne bougera pas" },
+      { "nom": "mestre Ottyn", "role": "apothicaire", "place": { "dans": 120, "cote": -40 },
+        "dit": "apothicaire — il ne ferme pas, il sait ce qu'il aura dans son échoppe dans une heure" },
+      { "nom": "Nonne la lavandière", "role": "lavandière",
+        "place": { "repere": "Le marché aux poissons", "dx": 18, "dy": -10, "sinon": { "dans": 290, "cote": 0 } },
+        "dit": "trois enfants, elle en compte deux, et elle REMONTE vers le bruit" },
+      { "nom": "sœur Jenn", "role": "septuaire", "place": { "dans": 150, "cote": 62 },
+        "dit": "elle ouvre le septuaire et hurle qu'on y entre — deux cents y entrent" },
+      { "nom": "Cateline la sage-femme", "role": "sage-femme", "place": { "dans": 205, "cote": -85 },
+        "dit": "elle va vers la bataille depuis le début, et elle est en train d'accoucher quelqu'un" },
+      { "nom": "la Veuve", "role": "receleuse", "place": { "dans": 265, "cote": -120 },
+        "dit": "receleuse, rue des Sœurs — elle ne sort pas, et elle achète dès ce soir",
+        "ecart": "N'existe dans AUCUN fichier du dossier. Elle occupe la place que narratif.md donne à Mag la Gaffe." }
+    ],
+    "manquant": [
+      { "nom": "Mag la Gaffe", "role": "tenancière",
+        "ou": "sous l'arche de la porte de la Gadoue — 47 m, 62 pas de la porte qu'on enfonce",
+        "dit": "elle est à l'intérieur du premier contact. Elle ne peut pas ne pas voir.",
+        "ecart": "Huitième habitante de narratif.md, et l'argument central de ancrages.md et du README. Absente de `bataille2d.js`." }
+    ]
+  },
+
+  "autorite": {
+    "_regle": "Six hommes au-dessus des deux camps. Aucun ne tient un homme, et tous les tiennent.",
+    "liste": [
+      { "nom": "Aegon II", "dans_le_sac": "un corps, sur sa charrette — voir `roi`", "present": true },
+      { "nom": "Ser Criston Cole", "dans_le_sac": "chef du corps `cole`", "present": true },
+      { "nom": "Otto Hightower", "titre": "Main du Roi", "dans_le_sac": "rien, par décision — toute lenteur du camp bleu remonte à lui", "present": false },
+      { "nom": "Aemond Targaryen", "dans_le_sac": "rien, et rien ne doit l'être", "present": false },
+      { "nom": "Larys Strong", "dans_le_sac": "rien, jamais — il produit une liste, et elle sert après", "present": false },
+      { "nom": "Grand Mestre Orwyle", "dans_le_sac": "il tient les arbitres — dix-neuf clercs pour six cents mètres", "present": false,
+        "ecart": "Le seul des six dont le dossier dit qu'il produit quelque chose dans le sac. L'arbitrage n'existe pas dans le code : ni clerc, ni tablette, ni compte." }
+    ]
+  },
+
+  "meneurs": {
+    "_regle": "Le nom est la seule unité de lisibilité du sac. `chef-tombe` ne s'écrit que sur un nommé.",
+    "_etat": "AUCUN N'EXISTE DANS LE CODE. Les capitaines d'aile sont anonymes ; les seuls nommés du sac sont les cinq chefs de corps, le roi et Waltyr Poix.",
+    "rouges": [
+      { "nom": "Bec-de-Lièvre", "dit": "tanneur enrôlé de force" },
+      { "nom": "Ser Nolle", "dit": "adoubé mardi, ne sait pas tenir une épée" },
+      { "nom": "la Ferrande", "dit": "poissonnière, blanchisseuse du corps de Cranche", "corps": "cranche" },
+      { "nom": "Hoy le Muet", "dit": null },
+      { "nom": "Ser Ambroise Dent-d'Or", "dit": "usurier, prête au Guet, marche pour surveiller son argent" },
+      { "nom": "Tam le Vieux", "dit": "le père de Petit Wend, venu le chercher", "corps": "bleusailles" }
+    ],
+    "bleus": [
+      { "nom": "sergent Vullard", "dit": "trente et un ans de guet, refuse de courir" },
+      { "nom": "sergent Cosse", "dit": null },
+      { "nom": "Hallis le Fauconnier", "dit": "tient l'anneau nord", "poste": "anneau" },
+      { "nom": "Ser Emmon Cierge", "dit": null },
+      { "nom": "la Pie", "dit": "femme d'armes, seule de l'anneau à avoir déjà vu une vraie émeute", "poste": "anneau" },
+      { "nom": "Doggett", "dit": "arbitre, et il n'a jamais tenu une épée" }
+    ],
+    "ecart": "README.md compte vingt-quatre meneurs ; rouges.md et bleus.md titrent « les douze » et en nomment six chacun. Douze noms écrits, vingt-quatre annoncés, zéro posés."
+  },
+
+  "armes": {
+    "_note": "Le sac d'armes est une donnée de camp, pas de corps. Le roi, sa garde, les têtes et tout ce qui commande portent l'épée.",
+    "garde":  { "lance": 0.30, "epee": 0.40, "hache": 0.18, "epieu": 0.12 },
+    "assaut": { "epee": 0.28, "hache": 0.24, "lance": 0.18, "epieu": 0.18, "coutelas": 0.12 }
+  }
+}
