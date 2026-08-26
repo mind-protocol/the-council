@@ -45,14 +45,18 @@
  * partie ne serait pas un étalon. Le banc monte la chaîne seule, comme
  * `analyse/etalon-90110/deux-causes.js`.
  *
- * IL EMPRUNTE SA MÉCANIQUE AU FOUR, IL NE LA RECOPIE PAS. `planter()`, la liste
- * `CHAINE` et `chargerBataille()` sont lus dans `scripts/monde/sac.js` et
- * évalués tels quels. C'est la seule façon qu'un morceau découpé demain entre
- * dans le banc le jour même où il entre dans le four — une troisième liste de
- * scripts à tenir à la main serait une troisième liste qui dérive en silence,
- * et le banc mesurerait alors une chaîne que personne ne fait tourner. Si
- * `sac.js` change de forme au point que l'emprunt ne trouve plus ses morceaux,
- * le banc s'arrête net : il refuse de deviner.
+ * IL EMPRUNTE SA MÉCANIQUE AU FOUR, IL NE LA RECOPIE PAS. `planter()` et
+ * `chargerBataille()` sont lus dans `scripts/monde/sac.js` et évalués tels
+ * quels ; si `sac.js` change de forme au point que l'emprunt ne trouve plus ses
+ * morceaux, le banc s'arrête net — il refuse de deviner.
+ *
+ * LA CHAÎNE, ELLE, NE S'EMPRUNTE PLUS : elle se lit au manifeste
+ * `bataille/moteur/chaine.js`, que le four lit aussi, et la page de scène avec
+ * lui. C'est mieux qu'un emprunt. Un emprunt recopie une décision prise
+ * ailleurs et suppose que l'ailleurs a raison ; le manifeste EST la décision,
+ * et le banc mesure alors exactement la chaîne que le navigateur monte. Un
+ * morceau découpé demain entre dans le four, dans la page et dans le banc par
+ * la même ligne.
  */
 "use strict";
 const fs = require("fs");
@@ -114,7 +118,13 @@ function morceau(quoi, re) {
 // déclaration reste dans la portée de l'eval, d'où l'expression finale qui en
 // ressort la valeur.
 /* eslint-disable no-eval */
-const CHAINE = eval(morceau("const CHAINE", /const CHAINE = \[[\s\S]*?\];/) + "\nCHAINE;");
+// LA CHAÎNE NE S'EMPRUNTE PLUS AU FOUR : elle se lit au manifeste, comme le
+// four la lit. C'est mieux qu'un emprunt — un emprunt copie une décision prise
+// ailleurs, le manifeste EST la décision, et le banc mesure alors exactement la
+// chaîne que le navigateur monte. `planter` et `chargerBataille`, eux, restent
+// empruntés : ce sont des mécaniques du four, pas des données partagées.
+const CHAINE = require(path.join(MODULES, "bataille", "moteur", "chaine.js"))
+  .fichiers("moteur");
 const planter = eval("(" + morceau("function planter",
   /function planter\(base\) \{[\s\S]*?\n\}/) + ")");
 const chargerBataille = eval("(" + morceau("function chargerBataille",
@@ -144,28 +154,33 @@ function cuire(B, o) {
   const e = B.etat();
   const par = {};
   for (const f of B.faits()) par[f.quoi] = (par[f.quoi] || 0) + 1;
-  return {
-    secondes: (Date.now() - t0) / 1000,
-    releve: {
-      temps: e.temps,
-      // L'issue, celle du manifeste du four.
-      morts: e.morts, blesses: e.blesses, fuyards: e.fuyards,
-      assaut: e.assaut, garde: e.garde,
-      // Le verrou de la porte engagée, puis les quatre — laquelle a cédé, à
-      // combien de points de bois, et PAR QUOI : une hache et une conversation
-      // ne finissent pas la même nuit.
-      verrou: e.verrou || null,
-      portes: (e.portes || []).map((p) => ({ nom: p.nom, etat: p.etat,
-                                             pv: p.pv, par: p.par })),
-      // Ce que fait la troupe au dernier instant. Agrégé, jamais nominatif.
-      etats: e.etats,
-      types: o.armes ? B.unites().filter((u) => u.typeTroupe).map((u) => ({
-        id:u.id, type:u.typeTroupe, capacites:u.capacites,
-      })) : undefined,
-      faits: e.faits,
-      par_quoi: par,
-    },
+  // UNE CLEF POSÉE À `undefined` N'EST PAS UNE CLEF ABSENTE, et c'est ce qui
+  // rendait toute comparaison sans `--armes` perdante. L'étalon s'écrit par
+  // `JSON.stringify`, qui jette les `undefined` ; le relevé du jour, lui, garde
+  // la clef en mémoire, et l'aplatissement compare alors « rien » à
+  // « undefined ». Le banc se déclarait donc en désaccord avec lui-même. On ne
+  // pose plus la clef qu'on a réellement quelque chose à y mettre.
+  const types = o.armes ? B.unites().filter((u) => u.typeTroupe).map((u) => ({
+    id: u.id, type: u.typeTroupe, capacites: u.capacites,
+  })) : null;
+  const releve = {
+    temps: e.temps,
+    // L'issue, celle du manifeste du four.
+    morts: e.morts, blesses: e.blesses, fuyards: e.fuyards,
+    assaut: e.assaut, garde: e.garde,
+    // Le verrou de la porte engagée, puis les quatre — laquelle a cédé, à
+    // combien de points de bois, et PAR QUOI : une hache et une conversation
+    // ne finissent pas la même nuit.
+    verrou: e.verrou || null,
+    portes: (e.portes || []).map((p) => ({ nom: p.nom, etat: p.etat,
+                                           pv: p.pv, par: p.par })),
+    // Ce que fait la troupe au dernier instant. Agrégé, jamais nominatif.
+    etats: e.etats,
+    faits: e.faits,
+    par_quoi: par,
   };
+  if (types) releve.types = types;
+  return { secondes: (Date.now() - t0) / 1000, releve };
 }
 
 // ---------------------------------------------------------------------------
@@ -225,7 +240,7 @@ async function main() {
   console.log("\nBANC DU MOTEUR — " + o.hommes + " hommes à « " + o.porte +
               " », " + o.duree + " s");
   console.log("  chaîne  : " + CHAINE.length + " fichiers, empreinte d'ensemble " +
-              ensemble + "   (empruntée à scripts/monde/sac.js)");
+              ensemble + "   (lue au manifeste bataille/moteur/chaine.js)");
   const graine = (globalThis.window.BatailleHasard || {}).GRAINE;
   console.log("  graine  : " + graine + " · PORTE_OUVERTE_ESSAI=" + drapeau +
               " · ni peuple ni tournée : la ville n'entre pas dans la condition\n");
@@ -237,9 +252,16 @@ async function main() {
   dit("le hasard est posé et il se ressème",
       !!(globalThis.window.BatailleHasard &&
          typeof globalThis.window.BatailleHasard.semer === "function"));
-  dit("hasard.js ouvre la chaîne", CHAINE[0] === "bataille/hasard.js",
-      CHAINE[0] === "bataille/hasard.js" ? "" :
-      "il vient après « " + CHAINE[0] + " » : tout ce qui tire avant lui tire hors graine");
+  // HASARD OUVRE LA CHAÎNE — mais « premier de la liste » n'est plus le bon
+  // test depuis que `moteur/commun/` la précède. Ces morceaux-là ne tirent rien
+  // (un journal et des validateurs n'ont pas d'urne), et l'exigence n'a jamais
+  // porté sur le rang : elle porte sur le fait que RIEN QUI TIRE ne soit posé
+  // avant l'urne. On le vérifie donc pour ce qu'il est.
+  const avantHasard = CHAINE.slice(0, Math.max(0, CHAINE.indexOf("bataille/hasard.js")))
+    .filter((f) => f.indexOf("bataille/moteur/commun/") !== 0);
+  dit("hasard.js ouvre la chaîne", avantHasard.length === 0,
+      avantHasard.length === 0 ? "" :
+      "il vient après « " + avantHasard.join(", ") + " » : tout ce qui tire avant lui tire hors graine");
 
   const t0 = Date.now();
   await B.preparer(o.source);

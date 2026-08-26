@@ -82,6 +82,10 @@
   <div id="logCorps"></div>
 </div>
 
+<!-- LE MANIFESTE, AVANT TOUT LE RESTE. Il ne charge rien : il dit quoi, dans
+     quel ordre, et pour qui. `page.js` s'en sert pour monter la chaîne de la
+     scène ; sans lui, la page refuse de deviner ce qu'elle doit charger. -->
+<script src="/modules/bataille/moteur/chaine.js"></script>
 <script src="/modules/bataille/hasard.js"></script>
 <script src="/modules/bataille/mesures.js"></script>
 <script src="/modules/survival-stack/1-corps.js"></script>
@@ -132,6 +136,7 @@
     <button id="spas10">+10 s</button>
     <button id="spas60">+60 s</button>
     <button id="sremise">Remise à zéro</button>
+    <button type="button" onclick="location.href='/architecture-bataille'">Architecture</button>
     <!-- LES DEUX RÉGLAGES NE VALENT QUE HORS ÉPREUVE, et il faut le dire à
          l'écran. Une épreuve force sa porte et son échelle (`jouer()` appelle
          `B.echelle(s.echelle)` puis `B.rejouer(s.porte)`), donc ces menus sont
@@ -189,15 +194,16 @@
   </div>
 </div>
 
+<script src="/modules/carte-projection.js"></script>
 <script src="/modules/carte-ville-theme.js"></script>
 <script src="/modules/bataille/sources-page.js"></script>
-<script src="/modules/bataille/fond-page.js"></script>
-<script src="/modules/bataille/inspection-page.js?v=20260825-doctrine-dragon-marques-routes-2"></script>
+<script src="/modules/bataille/fond-page.js?v=20260825-geographie-regionale-1"></script>
+<script src="/modules/bataille/inspection-page.js?v=20260825-nord-en-haut-1"></script>
 <script src="/modules/bataille/sondes-page.js"></script>
 <!-- Le Guet ne dépend d'aucun moteur : il se charge avec la page, pas avec la
      chaîne de la scène, et sa famille est donc lisible avant que le moteur ait
      fini de venir. -->
 <script src="/modules/bataille/guet-epreuves.js"></script>
-<script src="/modules/bataille/page.js?v=20260825-doctrine-dragon-marques-routes-2-feux-1"></script>
+<script src="/modules/bataille/page.js?v=20260825-geographie-regionale-dragon-passe-1"></script>
 </body>
 </html>

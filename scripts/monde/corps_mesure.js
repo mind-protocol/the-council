@@ -40,21 +40,11 @@ globalThis.document = { addEventListener() {} };
 const vrai = globalThis.fetch;
 globalThis.fetch = (u, o) => vrai(/^https?:/.test(u) ? u : BASE + u, o);
 
-const CHAINE = ["bataille/hasard.js", "bataille/mesures.js",
-                "survival-stack/1-corps.js", "bataille/corps-adapt.js",
-                // La couche 4 CONDUIT, elle : l'envie de butin et ce qu'un chef
-                // supporte de silence sortent d'elle et de nulle part ailleurs
-                // depuis qu'`APPETIT` et `SILENCE` sont déposés. Elle doit donc
-                // être chargée avant `bataille2d.js`, et non après.
-                "survival-stack/4-envie.js",
-                // La couche 3 n'est qu'en observation, mais elle est lue par
-                // `soldat()` à chaque battement : elle doit être posée avant.
-                "survival-stack/3-interpretation.js",
-                "survival-stack/2-reflexion.js",
-                "survival-stack/5-qui-conduit.js",
-                "bataille/reflexion-adapt.js",
-                "bataille/commandement.js",
-                "bataille2d.js"];
+// La chaîne se lit au manifeste, comme le four et le banc la lisent. Cet outil
+// mesurait jusqu'ici une chaîne à lui — sans `roster.js`, comme `jeu.html` —,
+// c'est-à-dire un moteur légèrement différent de celui qu'on fait tourner.
+const CHAINE = require(path.join(MODULES, "bataille", "moteur", "chaine.js"))
+  .fichiers("moteur");
 for (const f of CHAINE) (0, eval)(fs.readFileSync(path.join(MODULES, f), "utf8"));
 const B = globalThis.window.Bataille2d;
 

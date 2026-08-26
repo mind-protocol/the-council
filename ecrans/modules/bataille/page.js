@@ -1,31 +1,23 @@
 (() => {
 "use strict";
 
-// LA CHAÎNE, ET C'EST LA HUITIÈME LISTE DU DÉPÔT. `sac.js` en tient une,
-// `jeu.html` une autre, les scripts d'analyse trois de plus — et l'une d'elles
-// a déjà divergé en silence (la couche 2 manquait au four, cf. l'en-tête de
-// `sac.js`). On ne règle pas ça ici : on note que le manifeste partagé est
-// devenu nécessaire, et l'on garde l'ordre STRICTEMENT identique à celui du
-// four, qui est l'autorité.
+// LA CHAÎNE — ET ELLE N'EST PLUS ÉCRITE ICI.
+//
+// C'était la huitième liste du dépôt, et la note qui tenait cette place disait
+// déjà le mal : `sac.js` en tenait une, `jeu.html` une autre, les scripts
+// d'analyse trois de plus, et l'une d'elles avait divergé en silence. On ne
+// « note » plus que le manifeste partagé est devenu nécessaire : il existe, et
+// c'est `bataille/moteur/chaine.js` qui le porte, pour la page comme pour le
+// four et le banc.
 //
 // Les trois premiers (`hasard`, `mesures`, `1-corps`) sont déjà chargés en tête
-// de page par le banc du dessus : on ne les redemande pas.
-const CHAINE = ["/modules/bataille/scenarios.js",
-                "/modules/bataille/roster.js",
-                "/modules/bataille/incendie-ville.js",
-                "/modules/bataille/dragons.js",
-                "/modules/bataille/corps-adapt.js",
-                "/modules/survival-stack/4-envie.js",
-                "/modules/survival-stack/3-interpretation.js",
-                "/modules/survival-stack/2-reflexion.js",
-                "/modules/survival-stack/5-qui-conduit.js",
-                "/modules/bataille/reflexion-adapt.js",
-                "/modules/bataille/commandement.js",
-                "/modules/bataille2d.js"];
+// de page par le banc du dessus : on les déclare `deja` plutôt que de les
+// retrancher à la main d'une liste qu'on aurait recopiée.
+const DEJA = ["bataille/hasard.js", "bataille/mesures.js", "survival-stack/1-corps.js"];
 
 const $ = (id) => document.getElementById(id);
 const PARAMETRES = new URL(window.location.href).searchParams;
-const VERSION_BATAILLE = "20260825-doctrine-dragon-marques-routes-2-feux-1";
+const VERSION_BATAILLE = "20260825-geographie-regionale-dragon-passe-1";
 
 // L'URL EST UN SIGNET DE TRAVAIL. Une épreuve, un volet ou un cadrage doit
 // pouvoir être envoyé à quelqu'un sans la phrase « clique là, puis descends ».
@@ -61,7 +53,19 @@ const script = (src) => new Promise((ok, ko) => {
 });
 
 async function charger() {
+  // Le manifeste est chargé en tête de page (une balise, avant celle-ci) : s'il
+  // manque, on le dit au lieu de retomber sur une liste de secours. Une liste
+  // de secours est exactement la neuvième liste qu'on vient de supprimer.
+  if (!window.BatailleChaine)
+    throw new Error("bataille/moteur/chaine.js n'est pas posé : la page ne sait " +
+                    "plus quoi charger, et elle refuse de le deviner.");
+  const CHAINE = window.BatailleChaine.urls("scene", { deja: DEJA });
   for (const s of CHAINE) await script(s);        // en série : chacun attend le précédent
+  // CE QUI MANQUE SE NOMME. Sans ce contrôle, un morceau qui n'a pas répondu se
+  // découvre bien plus loin, sous la forme d'un `undefined` au premier appel.
+  const absents = window.BatailleChaine.manquants("scene", window);
+  if (absents.length)
+    throw new Error("la chaîne est incomplète : " + absents.join(", "));
   const planNomme = fetch("/monde/plan2d").then((r) => r.ok ? r.json() : null)
     .catch(() => null);
   await Bataille2d.preparer("/monde");
@@ -542,6 +546,7 @@ function poserEpreuve(id) {
   const S = window.BatailleScenarios, s = scenarioParId(id);
   if (!s) return;
   sceneActiveId = id;
+  $("toile").classList.toggle("champ-ouvert", !!s.champOuvert);
   modeCarteSeule(false);
   if (s.guet) {
     // POSER = MONTRER, comme partout ailleurs : on installe la ville et les
@@ -582,6 +587,7 @@ async function lancer(id) {
   const S = window.BatailleScenarios, s = scenarioParId(id);
   if (!s) return;
   sceneActiveId = id;
+  $("toile").classList.toggle("champ-ouvert", !!s.champOuvert);
   modeCarteSeule(false);
   // UNE EPREUVE DU GUET NE FAIT PAS TOURNER LE MOTEUR : elle lit le monde cuit.
   // Elle sort donc avant tout ce qui touche a l'echelle, a la marche et a la
@@ -669,11 +675,18 @@ function dresser() {
 function modeCarteSeule(oui) {
   for (const id of ["sjouer","spas1","spas10","spas60"])
     if ($(id)) $(id).disabled=oui;
-  if (oui) $("shorloge").textContent="carte seule — choisissez une épreuve";
+  if (oui) {
+    $("toile").classList.remove("champ-ouvert");
+    $("shorloge").textContent="carte seule — choisissez une épreuve";
+  }
 }
 
 function cadrerVille() {
-  const b = planVille && planVille.bornes;
+  // L'emprise régionale peut maintenant couvrir plusieurs lieues. Ouvrir le
+  // banc sur elle réduirait Port-Réal à une tache : le cadrage historique de
+  // travail reste l'ouverture, puis la molette permet de prendre du recul.
+  const b = planVille && planVille.region && planVille.region.cadrage_initial ||
+    planVille && planVille.bornes;
   if (!b || b.length < 4) return;
   cadre = [b[0], b[1], b[2] - b[0], b[3] - b[1]];
   vue = null; zoomer();
@@ -749,10 +762,12 @@ const fondScene = BatailleFond.creer({
   toponymie: () => toponymie,
   infoFeu: (e) => {
     if ((!feuActif && !dragonVilleActif) || !vue) return null;
-    const r = $("toile").getBoundingClientRect(), k = parMetre(r);
+    const r = $("toile").getBoundingClientRect();
+    const rep = CarteProjection.repere(vue, r.width, r.height);
+    const p = CarteProjection.depuisPixel(vue, rep,
+      e.clientX - r.left, e.clientY - r.top);
     return IncendieVille.inspecter(
-      vue[0] + (e.clientX - r.left - (r.width - vue[2] * k) / 2) / k,
-      vue[1] + (e.clientY - r.top - (r.height - vue[3] * k) / 2) / k);
+      p[0], p[1]);
   },
 });
 const fond = () => fondScene.dessiner();
@@ -787,7 +802,7 @@ function tirer() {
   window.addEventListener("mousemove", (e) => {
     if (!tire) return;
     const k = parMetre(h.getBoundingClientRect());
-    vue = [tire.v[0] - (e.clientX - tire.x) / k, tire.v[1] - (e.clientY - tire.y) / k,
+    vue = [tire.v[0] - (e.clientX - tire.x) / k, tire.v[1] + (e.clientY - tire.y) / k,
            tire.v[2], tire.v[3]];
     rendu();
   });
@@ -801,9 +816,10 @@ function tirer() {
   // dériveraient au premier réglage, et l'une des deux commencerait à viser le
   // centre du cadre au lieu du curseur sans que personne le remarque.
   const approcher = (clientX, clientY, f) => {
-    const r = h.getBoundingClientRect(), k = parMetre(r);
-    const mx = vue[0] + (clientX - r.left - (r.width - vue[2] * k) / 2) / k;
-    const my = vue[1] + (clientY - r.top - (r.height - vue[3] * k) / 2) / k;
+    const r = h.getBoundingClientRect();
+    const rep = CarteProjection.repere(vue, r.width, r.height);
+    const [mx, my] = CarteProjection.depuisPixel(vue, rep,
+      clientX - r.left, clientY - r.top);
     vue = [mx - (mx - vue[0]) * f, my - (my - vue[1]) * f, vue[2] * f, vue[3] * f];
     rendu();
   };

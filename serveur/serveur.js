@@ -1321,6 +1321,12 @@ function serviceMonde(req, res, chemin) {
       }));
     if (quoi === "terrain")
       return rendre(fs.readFileSync(path.join(RACINE, "monde", d.prefixe + ".terrain.json")));
+    if (quoi === "terrain-region") {
+      const f = path.join(RACINE, "monde", d.prefixe + ".region-terrain.json");
+      if (!fs.existsSync(f))
+        return envoyer(res, 404, JSON.stringify({ erreur:"lieu sans relief régional", lieu }));
+      return rendre(fs.readFileSync(f));
+    }
     // Le plan 2D, cuit par `scripts/monde/plan_ville.py` : la même ville que le
     // relief, mais dessinée. Un lieu en a un parce que le FICHIER est là —
     // même règle que les corps et les intérieurs, et rien à déclarer ici.
@@ -2749,6 +2755,20 @@ http
       // combat d'essai à gauche, le journal complet à droite. Elle ne touche à
       // RIEN — ni état, ni flux, ni horloge : c'est un banc, pas une partie.
       if (url === "/bataille") return fichierStatique(res, "bataille.html", "text/html; charset=utf-8");
+      // L'inventaire adressable du moteur de bataille. Chaque feature a une
+      // clef stable, une preuve visuelle et, lorsqu'elle est encore enfouie
+      // dans un scénario, un endroit explicite où le dire.
+      if (url === "/architecture-bataille")
+        return fichierStatique(res, "architecture-bataille.html", "text/html; charset=utf-8");
+      if (url === "/architecture-bataille/commentaires") {
+        const fichier = path.join(RACINE, "captures", "bataille-architecture", "commentaires.jsonl");
+        let commentaires = [];
+        try {
+          commentaires = fs.readFileSync(fichier, "utf-8").split(/\r?\n/)
+            .filter(Boolean).map((l) => JSON.parse(l)).reverse();
+        } catch (e) {}
+        return envoyer(res, 200, JSON.stringify({ commentaires }));
+      }
       // Ce sur quoi le banc est fondé : les dossiers de recherche entiers, lus
       // à chaque appel dans `docs/recherche/*.md`. Lecture seule, hors partie —
       // le banc ne touche à rien et celle-ci non plus.
@@ -2756,16 +2776,27 @@ http
         try { return envoyer(res, 200, JSON.stringify({ dossiers: dossiersRecherche() })); }
         catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
       }
-      // Un module, ou un module d'une famille : `/modules/monde/relief.js`. Un
-      // seul cran de sous-dossier, et rien qui ressemble à un chemin remontant.
+      // Un module, ou un module d'une famille : `/modules/monde/relief.js`,
+      // `/modules/bataille/moteur/commun/contrats.js`. Rien qui ressemble à un
+      // chemin remontant : chaque cran est du minuscule, des chiffres, un tiret
+      // ou un souligné — un point ne passe nulle part ailleurs que dans le nom
+      // du fichier, donc « .. » ne peut pas se former.
+      //
+      // TROIS CRANS, ET C'EST LE REFACTOR DU MOTEUR QUI LES A DEMANDÉS. La
+      // borne était à un seul, et l'arborescence par acteur (`moteur/commun/`,
+      // `moteur/monde/`, `moteur/unite/`…) en demande deux de plus. Un module
+      // hors borne ne rendait pas une erreur lisible : il tombait en 404 sur
+      // une page qui, elle, se chargeait — et l'on cherchait la faute dans le
+      // fichier plutôt que dans la route.
       //
       // LA FEUILLE DE STYLE PASSE PAR ICI AUSSI. Une page qui sort son style en
       // fichier — `bataille.html` l'a fait — se retrouvait servie sans style et
       // sans que rien ne le dise ailleurs que dans la console : la page
       // s'affichait, illisible, et l'on cherchait le défaut dans le CSS.
-      const m = url.match(/^\/modules\/(?:([a-z0-9_-]+)\/)?([a-z0-9_-]+\.(js|css))$/);
+      const m = url.match(
+        /^\/modules\/((?:[a-z0-9_-]+\/){0,3})([a-z0-9_-]+\.(js|css))$/);
       if (m) return fichierStatique(res,
-        m[1] ? path.join("modules", m[1], m[2]) : path.join("modules", m[2]),
+        path.join("modules", ...m[1].split("/").filter(Boolean), m[2]),
         m[3] === "css" ? "text/css; charset=utf-8" : "text/javascript; charset=utf-8");
       // ---- le monde en volume : banc d'essai --------------------------------
       // Une page à part, hors du jeu, pour juger le rendu 3D de Port-Réal avant
@@ -3815,6 +3846,12 @@ http
               if (f) {
                 try { svg = fs.readFileSync(path.join(RACINE, f), "utf-8"); } catch (e) {}
               }
+              // LE CHAMP `portrait.fichier` N'EST PAS UNE CONDITION D'EXISTENCE.
+              // Il manque à la moitié des fiches — Aldon Hask, le Sanglier —
+              // alors que leur médaillon est peint et posé sur le disque.
+              // `medaillons.py` écrit toujours `ecrans/portraits/<id>.svg` :
+              // cet id EST l'adresse, comme sur la route des gens.
+              if (!svg) svg = portraitFrais(g.id) || "";
               portraits[g.id] = svg || portraitDefaut(g.nom || g.id);
             }
             return g.id;
@@ -5434,6 +5471,50 @@ http
           }));
         } catch (e) {
           return envoyer(res, 400, JSON.stringify({ erreur: String(e.message || e) }));
+        }
+      });
+      return;
+    }
+
+    // Un commentaire sur une feature du graphe d'architecture. Comme une
+    // marque de bataille, il reste hors fiction et hors état canonique ; la
+    // clef de feature et l'URL rendent le retour précis et reproductible.
+    if (req.method === "POST" && url === "/architecture-bataille/commentaires") {
+      let corps = "", trop = false;
+      req.on("data", (c) => {
+        if (trop) return;
+        corps += c;
+        if (Buffer.byteLength(corps, "utf8") > 64 * 1024) { trop = true; corps = ""; }
+      });
+      req.on("end", () => {
+        try {
+          if (trop) throw new Error("commentaire trop lourd");
+          const doc = JSON.parse(corps);
+          const feature = String(doc.feature || "").trim();
+          const commentaire = String(doc.commentaire || "").trim();
+          if (!/^[A-Z]{3}-[A-Z0-9-]{2,48}$/.test(feature))
+            throw new Error("feature invalide");
+          if (!commentaire) throw new Error("commentaire vide");
+          if (commentaire.length > 8000) throw new Error("commentaire trop long");
+          const entree = {
+            format:"architecture-bataille/commentaire-v1",
+            cree_a:new Date().toISOString(), feature,
+            titre:String(doc.titre || "").slice(0, 180),
+            commentaire,
+            url:String(doc.url || "").slice(0, 1000),
+            classification:String(doc.classification || "").slice(0, 80),
+            visualisation:String(doc.visualisation || "").slice(0, 80),
+          };
+          const dossier = path.join(RACINE, "captures", "bataille-architecture");
+          const fichier = path.join(dossier, "commentaires.jsonl");
+          fs.mkdirSync(dossier, { recursive:true });
+          fs.appendFileSync(fichier, JSON.stringify(entree) + "\n", "utf-8");
+          return envoyer(res, 200, JSON.stringify({
+            ecrit:"captures/bataille-architecture/commentaires.jsonl",
+            commentaire:entree,
+          }));
+        } catch (e) {
+          return envoyer(res, 400, JSON.stringify({ erreur:String(e.message || e) }));
         }
       });
       return;

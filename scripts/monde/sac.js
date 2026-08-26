@@ -89,35 +89,21 @@ function planter(base) {
   globalThis.fetch = (u, o) => vrai(/^https?:/.test(u) ? u : base + u, o);
 }
 
-// LA CHAÎNE DE LA BATAILLE, DANS L'ORDRE, et c'est le même ordre que dans
-// `ecrans/jeu.html`. Ce ne sont pas des modules ES mais des scripts qui
-// s'assignent à `window.<Nom>` : chacun a donc besoin que le précédent soit
-// déjà posé, exactement comme des balises `<script>` successives.
+// LA CHAÎNE DE LA BATAILLE, DANS L'ORDRE — ET ELLE N'EST PLUS ÉCRITE ICI.
 //
-// AJOUTER UN MORCEAU DÉCOUPÉ, C'EST TOUCHER LES DEUX LISTES. Il n'y a pas de
-// résolution de dépendances ici et il ne faut pas en écrire une : deux listes
-// courtes et lisibles valent mieux qu'un chargeur qui aurait l'air malin.
-const CHAINE = ["bataille/hasard.js", "bataille/mesures.js", "bataille/roster.js",
-                "survival-stack/1-corps.js", "bataille/corps-adapt.js",
-                // La couche 4 CONDUIT, elle : l'envie de butin et ce qu'un chef
-                // supporte de silence sortent d'elle et de nulle part ailleurs
-                // depuis qu'`APPETIT` et `SILENCE` sont déposés. Elle doit donc
-                // être chargée avant `bataille2d.js`, et non après.
-                "survival-stack/4-envie.js",
-                // La couche 3 n'est qu'en observation, mais elle est lue par
-                // `soldat()` à chaque battement : elle doit être posée avant.
-                "survival-stack/3-interpretation.js",
-                // LA COUCHE 2, SON POURVOYEUR ET LA MAIN. Le four ne les
-                // chargeait pas : `jeu.html` les avait, cette liste-ci non, et
-                // deux listes qu'on ne touche pas ensemble sont deux listes qui
-                // divergent en silence. Une couche absente du four est une
-                // couche qu'aucune cuisson ne mesure — c'est-a-dire une couche
-                // dont on ne saura jamais rien.
-                "survival-stack/2-reflexion.js",
-                "survival-stack/5-qui-conduit.js",
-                "bataille/reflexion-adapt.js",
-                "bataille/commandement.js",
-                "bataille2d.js"];
+// Il y en avait huit copies dans le dépôt : celle-ci, celle de `jeu.html`,
+// celle de `bataille/page.js`, celles des scripts d'analyse. Elles avaient déjà
+// divergé — la couche 2 manquait au four, `roster.js` manque encore au jeu — et
+// une liste qui diverge ne fait pas tomber la page : elle fabrique une chaîne
+// que personne ne mesure. Deux listes courtes et lisibles ne valaient pas mieux
+// qu'un manifeste : elles valaient exactement le temps qu'il a fallu pour
+// s'apercevoir qu'elles n'étaient plus les mêmes.
+//
+// L'ordre, les raisons de cet ordre et ce que chaque morceau pose vivent
+// désormais dans `ecrans/modules/bataille/moteur/chaine.js`. Ajouter un morceau
+// découpé, c'est toucher CE fichier-là, et lui seul.
+const CHAINE = require(path.join(MODULES, "bataille", "moteur", "chaine.js"))
+  .fichiers("moteur");
 
 /** Charger la bataille, qui n'est pas un module ES mais une suite de scripts. */
 function chargerBataille() {
