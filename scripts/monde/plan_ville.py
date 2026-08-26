@@ -1468,6 +1468,54 @@ def region_port_real(lieu):
     with open(chem, encoding="utf-8") as f:
         src = json.load(f)
 
+    # La première esquisse portait douze ovales écrits à la main. Dès que le
+    # champ physique régional existe, ses isolignes les remplacent : une
+    # courbe doit désormais sortir d'une altitude mesurable, jamais suggérer
+    # vaguement une bosse que le moteur ne connaîtrait pas.
+    relief_cuit = None
+    terrain_meta = None
+    chem_relief = os.path.join(RACINE, "monde", "portreal.region-terrain.json")
+    if os.path.exists(chem_relief):
+        with open(chem_relief, encoding="utf-8") as f:
+            tr = json.load(f)
+        niveaux_region = (src.get("topographie") or {}).get("niveaux_m") or NIVEAUX
+        tx0, ty0 = float(tr.get("x0_m", 0)), float(tr.get("y0_m", 0))
+        tres = float(tr["res_m"])
+        coeur = [0., 0., 440. * CARTE_MU, 300. * CARTE_MU]
+        relief_cuit = []
+        for z in niveaux_region:
+            segs = segments(tr["z"], tr["nx"], tr["ny"], z, tres)
+            # Le cœur possède ses propres isolignes à 10 m. On coupe la couche
+            # régionale une maille avant lui pour qu'aucun double trait ne
+            # fabrique une fausse terrasse contre la muraille.
+            traduits = []
+            for a, b in segs:
+                a = (a[0] + tx0, a[1] + ty0)
+                b = (b[0] + tx0, b[1] + ty0)
+                mx, my = (a[0] + b[0]) / 2., (a[1] + b[1]) / 2.
+                if coeur[0] - tres <= mx <= coeur[2] + tres and \
+                        coeur[1] - tres <= my <= coeur[3] + tres:
+                    continue
+                traduits.append((a, b))
+            lignes = [alleger(l, 18.) for l in coudre(traduits)
+                      if len(l) > 3]
+            if lignes:
+                relief_cuit.append({"z": z, "d": chemin(lignes, dec=1)})
+        terrain_meta = {k: tr.get(k) for k in
+                        ("x0_m", "y0_m", "res_m", "nx", "ny", "bornes_m",
+                         "statistiques")}
+        terrain_meta["source"] = "/monde/terrain-region"
+
+    # L'occupation rurale est une sortie dérivée distincte : le relief peut
+    # ainsi être corrigé sans mêler à son autorité les parcelles, les fermes
+    # et les chemins que cette correction rend possibles ou impossibles.
+    occupation = None
+    chem_occupation = os.path.join(
+        RACINE, "monde", "portreal.region-occupation.json")
+    if os.path.exists(chem_occupation):
+        with open(chem_occupation, encoding="utf-8") as f:
+            occupation = json.load(f)
+
     def ligne(points, ferme=False):
         return chemin([[_du_plan(p) for p in points]], dec=1, ferme=ferme)
 
@@ -1566,21 +1614,63 @@ def region_port_real(lieu):
     bornes = [min(p[0] for p in coins), min(p[1] for p in coins),
               max(p[0] for p in coins), max(p[1] for p in coins)]
     port = src.get("port") or {}
-    bourgs, arbres = semis_regional(src.get("lieux", []), src.get("routes", []))
+    if occupation:
+        bourgs = chemin(occupation.get("batiments", []), dec=1, ferme=True)
+        arbres = chemin(occupation.get("arbres", []), dec=1, ferme=True)
+        cultures = [
+            {"genre": genre,
+             "d": chemin(polys, dec=1, ferme=True)}
+            for genre, polys in occupation.get("parcelles", {}).items()
+            if polys
+        ]
+        bois_exploites = chemin(occupation.get("bois", []), dec=1, ferme=True)
+        chemins_secondaires = [
+            {"id": c["id"], "route": c.get("route"),
+             "d": chemin([c["points"]], dec=1)}
+            for c in occupation.get("chemins", []) if len(c.get("points", [])) > 1
+        ]
+        occupation_meta = occupation.get("statistiques")
+    else:
+        # Repli compatible avec les plans cuits avant la génération rurale.
+        semis = src.get("semis_legacy") or src
+        bourgs, arbres = semis_regional(semis.get("lieux", []),
+                                         semis.get("routes", []))
+        cultures, bois_exploites, chemins_secondaires = [], "", []
+        occupation_meta = None
+    eau_polygones = [[_du_plan(p) for p in e["points"]]
+                     for e in src.get("eau", [])]
+    cadrage = src.get("cadrage_initial") or src["repere"]
+    cadrage_coins = [_du_plan([cadrage[0], cadrage[1]]),
+                     _du_plan([cadrage[2], cadrage[3]])]
     return {
         "version": src.get("version", 1),
         "orientation": src.get("orientation"),
         "bornes": bornes,
-        "eau": chemin([[_du_plan(p) for p in e["points"]]
-                        for e in src.get("eau", [])], dec=1, ferme=True),
+        "cadrage_initial": [min(p[0] for p in cadrage_coins),
+                             min(p[1] for p in cadrage_coins),
+                             max(p[0] for p in cadrage_coins),
+                             max(p[1] for p in cadrage_coins)],
+        # Ces sommets crus sont la même autorité que le chemin SVG ci-dessous.
+        # Le banc de bataille les interroge hors du raster urbain : la côte
+        # visible et la côte infranchissable ne peuvent plus diverger.
+        "eau_polygones": eau_polygones,
+        "eau": chemin(eau_polygones, dec=1, ferme=True),
         "terrains": [{"genre": t["genre"], "nom": t.get("nom"),
                        "d": courbe(t["points"], True)}
                       for t in src.get("terrains", [])],
+        "cultures": cultures,
+        "bois_exploites": bois_exploites,
+        "relief": relief_cuit if relief_cuit is not None else [
+            {"nom": n.get("nom"), "z": n.get("z"),
+             "d": courbe(n["points"], True)} for n in src.get("relief", [])],
+        "terrain": terrain_meta,
         "routes": [{"id": r["id"], "nom": r["nom"],
                     "destination": r.get("destination"),
                     "d": courbe(r["points"])} for r in src.get("routes", [])],
+        "chemins": chemins_secondaires,
         "bourgs": bourgs,
         "arbres": arbres,
+        "occupation": occupation_meta,
         "lieux": [dict(l, x=_du_plan(l["point"])[0],
                        y=_du_plan(l["point"])[1]) for l in src.get("lieux", [])],
         "port": {
@@ -1640,7 +1730,10 @@ def remparts(lieu):
           % (len(trace), sum(math.dist(a, b) for l in trace
                              for a, b in zip(l, l[1:])), len(noms)))
     return {"courtine": chemin(trace, dec=1), "epaisseur_m": MUR_E,
-            "tours": chemin(tours, dec=1, ferme=True), "portes": noms}
+            "tours": chemin(tours, dec=1, ferme=True), "portes": noms,
+            # Consommé puis retiré par `cuire` : la même boucle est la limite
+            # du bâti urbain, pas seulement un trait décoratif.
+            "_limite": [p for ligne in trace for p in ligne]}
 
 
 def _enveloppe(pts):
@@ -1715,7 +1808,7 @@ def monuments(source, poses):
     return formes, avale
 
 
-def bati(source, rues):
+def bati(source, rues, limite=None):
     col = source["_colonnes"]
     ix, iy = col.index("x"), col.index("y")
     ifa, ipr = col.index("facade_m"), col.index("profondeur_m")
@@ -1727,8 +1820,23 @@ def bati(source, rues):
     imu = col.index("mur_d") if "mur_d" in col else None
     poses = redresser(source, rues)
     COMPTE[0] = len(poses)
+    # Le semis historique contient encore des cabanes, entrepôts et tavernes
+    # posés comme des excroissances derrière les portes et sur la grève. Tant
+    # que les vrais faubourgs ne sont pas construits comme une zone autonome,
+    # ces formes ne sont ni une campagne ni la ville : on les retranche de la
+    # projection urbaine. La pose rectifiée est l'autorité, car c'est elle qui
+    # produit réellement le toit et, plus bas, son obstacle de collision.
+    hors = {k for k, p in enumerate(poses)
+            if limite and not _dedans(p[0], p[1], limite)}
     mons, avale = monuments(source, poses)
-    POSES[0], POSES[1] = poses, frozenset(avale)
+    if limite:
+        for usage, pieces in list(mons.items()):
+            mons[usage] = [piece for piece in pieces if _dedans(
+                sum(x for x, _ in piece) / len(piece),
+                sum(y for _, y in piece) / len(piece), limite)]
+    POSES[0], POSES[1] = poses, frozenset(avale | hors)
+    if hors:
+        print("  bati  %d bâtiments extramuros écartés de la ville" % len(hors))
 
     # Une maison rend un ou plusieurs morceaux convexes (`_pieces`), posés dans
     # le plan par son centre et son cap. Les morceaux d'une même maison se
@@ -1758,7 +1866,7 @@ def bati(source, rues):
         par_cat.setdefault(u, []).extend(pieces)
         par_prop.setdefault(u, []).extend([("m", u)] * len(pieces))
     for k, r in enumerate(source["bati"]):
-        if k in avale:
+        if k in avale or k in hors:
             continue
         x, y, cap = poses[k]
         a = math.radians(cap)
@@ -2290,6 +2398,13 @@ def cuire(lieu):
     if not prefixe:
         raise SystemExit("lieu inconnu : " + lieu)
     PREFIXE[0] = prefixe
+    if lieu == "port-real":
+        # Bon marché si rien n'a changé, déterministe sinon. Le plan ne peut
+        # ainsi jamais cuire des courbes plus vieilles que leur source.
+        from relief_region import assurer as assurer_relief_region
+        assurer_relief_region()
+        from occupation_region import assurer as assurer_occupation_region
+        assurer_occupation_region()
     t = lire(os.path.join("monde", prefixe + ".terrain.json"))
     r = lire(os.path.join("monde", prefixe + ".rues.json"))
     b = lire(os.path.join("monde", prefixe + ".bati.json"))
@@ -2306,7 +2421,9 @@ def cuire(lieu):
         if lignes:
             niveaux.append({"z": z, "d": chemin(lignes)})
 
-    bati_plan, emprises = bati(b, r)
+    mur = remparts(lieu)
+    limite = mur.pop("_limite", None)
+    bati_plan, emprises = bati(b, r, limite)
     region = region_port_real(lieu)
     bornes_coeur = [0, 0, round((nx - 1) * pas), round((ny - 1) * pas)]
     plan = {
@@ -2319,7 +2436,7 @@ def cuire(lieu):
         "cote": chemin(eau),
         "niveaux": niveaux,
         "voies": voies(r),
-        "rempart": remparts(lieu),
+        "rempart": mur,
         # `bati` a déjà redressé la ville. Son dessin et son masque reçoivent les
         # mêmes `emprises`; `enseignes` lit aussi cette pose (voir POSES).
         "bati": bati_plan,

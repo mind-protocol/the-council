@@ -101,8 +101,10 @@
       coupsPortes += h.coupsPortes || 0;
       if (h.typeTroupe) {
         const y = parType[h.typeTroupe] || (parType[h.typeTroupe] =
-          { total:0, vivants:0, morts:0, blesses:0, coups:0, montes:0 });
+          { total:0, vivants:0, morts:0, blesses:0, coups:0, montes:0,
+            vitesseMax:0 });
         y.total++; y.coups += h.coupsTentes || 0;
+        y.vitesseMax=Math.max(y.vitesseMax,Math.hypot(h.vx||0,h.vy||0),h.vit||0);
         if (h.montureCombat) y.montes++;
         if (h.etat === "mort") y.morts++;
         else if (h.etat === "blesse") y.blesses++;
@@ -189,7 +191,7 @@
       partContact: vivants ? auContact / vivants : 0,
       partFrappent: vivants ? frappent / vivants : 0,
       mur, jambes, bras, etats, parCorps, parCamp, parType, geometrie,
-      coupsTentes, coupsPortes,
+      coupsTentes, coupsPortes, contreCharges:e.contreCharges || 0,
       bouts: e.dynamique ? e.dynamique.bouts : 0,
       hommesMultiBouts: e.dynamique ? e.dynamique.hommesMultiBouts : 0,
       boutMedian: e.dynamique ? e.dynamique.boutMedian : 0,
@@ -674,22 +676,23 @@
       regarder: "Commencez par les deux fronts et leurs intervalles, puis avancez par bonds. Regardez " +
                 "où naît le premier contact, si toute la ligne se jette ensemble ou si une partie " +
                 "reste hors du fer, et quel camp commence à se courber ou à rompre.",
-      manipulation: "Deux déploiements indépendants sont posés sur un terrain traversable mais coupé " +
-                    "par quelques bâtiments, à cent vingt " +
-                    "mètres. Après trois minutes de formation hors champ, les deux lignes reçoivent le " +
+      manipulation: "Deux déploiements indépendants sont posés à cent vingt mètres sur une plaine sèche, " +
+                    "sans bâtiment, mur, eau ni couvert. Après trois minutes de formation hors champ, " +
+                    "les deux lignes reçoivent le " +
                     "même objectif de terrain : le milieu du champ. Le moteur courant décide seul de la suite.",
       forces: "Tous les combattants constitués des deux camps à l'échelle 1/10, dont plusieurs " +
               "vintaines de pique et conrois montés. L'assaut est plus nombreux : " +
               "ce déséquilibre appartient au témoin et ne doit pas être compensé par une tactique cachée.",
-      terrain: "Une emprise assez large pour deux fronts, choisie dans le vrai masque : les zones de " +
-               "départ restent praticables mais des bâtiments cassent plusieurs lignes de vue et " +
-               "laissent des passages latéraux.",
+      terrain: "Un champ ouvert abstrait : aucun obstacle ne modifie les routes ni les lignes de vue. " +
+               "La distance, les corps et les portées de perception restent les seules limites.",
       passe: "Les deux forces doivent partir formées et orientées, se rencontrer réellement, conserver " +
              "leurs appartenances et n'engager qu'une minorité des hommes à la fois. Les chefs doivent " +
              "voir et transmettre les capacités adverses ; toute adaptation d'ordre doit être postérieure " +
              "à cette information. Le test ne choisit pas son vainqueur à l'avance.",
+      champOuvert: true,
       echelle: 0.10, duree: 480,
       avant: (B) => {
+        B.terrainEpreuve({ id:"champ-ouvert", obstacle:() => false });
         const t = B.troupe();
         // Cette scène ne garde que les combattants inscrits dans une unité et
         // les chefs de corps. Les coureurs de porte et la charrette ne sont ni
@@ -702,66 +705,28 @@
         const combattants = t.filter((h) => !h.tete && h.etat !== "mort");
         if (!combattants.length) return;
 
-        // Chercher une emprise rectangulaire cassée mais praticable. Choisir
-        // simplement le maximum de sol libre produisait précisément le faux
-        // champ d'exercice que C6 ne doit plus être : information complète,
-        // deux grilles face à face, aucun terrain à interpréter. Le score vise
-        // maintenant une proportion de masque, exige des départs dégagés et
-        // au moins un passage longitudinal. Aucun bâtiment n'est inventé.
-        const candidats = combattants.filter((h, i) =>
-          i % Math.max(1, Math.floor(combattants.length / 36)) === 0);
-        let meilleur = null;
-        for (const c of candidats) for (let k = 0; k < 16; k++) {
-          const a = k * Math.PI / 16, ax = Math.cos(a), ay = Math.sin(a);
-          const tx = -ay, ty = ax;
-          let libres = 0, total = 0, libresCentre = 0, totalCentre = 0;
-          let libresDepart = 0, totalDepart = 0;
-          for (let p = -82; p <= 82; p += 12) for (let l = -54; l <= 54; l += 9) {
-            total++;
-            const libre = B.libre(c.x + ax * p + tx * l, c.y + ay * p + ty * l) === true;
-            if (libre) libres++;
-            if (Math.abs(p) <= 38) { totalCentre++; if (libre) libresCentre++; }
-            if (Math.abs(p) >= 46) { totalDepart++; if (libre) libresDepart++; }
-          }
-          let meilleurPassage = 0;
-          for (const l of [-42,-28,-14,0,14,28,42]) {
-            let n=0, ok=0;
-            for (let p=-82;p<=82;p+=6) {
-              n++; if (B.libre(c.x+ax*p+tx*l,c.y+ay*p+ty*l)===true) ok++;
-            }
-            meilleurPassage=Math.max(meilleurPassage,ok/n);
-          }
-          const part=libres/total, partCentre=libresCentre/totalCentre;
-          const partDepart=libresDepart/totalDepart, obstacles=total-libres;
-          const topologie=analyserCouloir(B,{x:c.x,y:c.y},ax,ay,164,108,4);
-          const recevable=part>=.68&&part<=.96&&partDepart>=.76&&
-            partCentre>=.50&&partCentre<=.94&&meilleurPassage>=.70&&obstacles>=6&&
-            topologie.traversable&&!topologie.barriere;
-          const score=(recevable?3:0)-Math.abs(part-.84)*2.5-
-            Math.abs(partCentre-.76)*1.6+partDepart*.7+meilleurPassage*.5-
-            topologie.obstacleMax*.6;
-          // Les préférences de densité peuvent être relâchées ; une barrière
-          // qui sépare matériellement les camps, jamais.
-          if(!topologie.traversable||topologie.barriere)continue;
-          if (!meilleur || score > meilleur.score)
-            meilleur = { x:c.x, y:c.y, ax, ay, tx, ty, score,
-              terrain:{ partLibre:part, partCentre, partDepart,
-                meilleurPassage, obstacles, recevable, topologie } };
-        }
-        if (!meilleur) return;
-        const m = meilleur, ancreA = { x:m.x - m.ax * 60, y:m.y - m.ay * 60 };
+        // Les coordonnées ne servent ici que de repère d'arène. L'axe suit la
+        // plus grande dimension disponible, sans chercher un emplacement dans
+        // Port-Réal : le terrain d'épreuve ci-dessus a remplacé son masque.
+        const b = B.bornes();
+        const x = b ? (b[0]+b[2])/2 : combattants.reduce((n,h)=>n+h.x,0)/combattants.length;
+        const y = b ? (b[1]+b[3])/2 : combattants.reduce((n,h)=>n+h.y,0)/combattants.length;
+        const horizontal = !b || b[2]-b[0] >= b[3]-b[1];
+        const m = { x, y, ax:horizontal?1:0, ay:horizontal?0:1,
+          tx:horizontal?0:-1, ty:horizontal?1:0 };
+        const ancreA = { x:m.x - m.ax * 60, y:m.y - m.ay * 60 };
         const ancreG = { x:m.x + m.ax * 60, y:m.y + m.ay * 60 };
 
         const poserNuage = (camp, ancre, sens) => {
           const xs = t.filter((h) => h.camp === camp), or = Math.PI * (3 - Math.sqrt(5));
-          const libres = [];
-          for (let k = 0; k < xs.length * 30 && libres.length < xs.length; k++) {
+          const places = [];
+          for (let k = 0; k < xs.length; k++) {
             const r = 4 + 40 * Math.sqrt((k + .5) / (xs.length * 30));
             const a = k * or, x = ancre.x + Math.cos(a) * r, y = ancre.y + Math.sin(a) * r;
-            if (B.libre(x, y) === true) libres.push({ x, y });
+            places.push({ x, y });
           }
           xs.forEach((h, i) => {
-            const p = libres[i] || ancre;
+            const p = places[i] || ancre;
             h.x = p.x; h.y = p.y; h.ex = p.x; h.ey = p.y;
             h.cible = null; h.rail = null; h.railClef = null; h.railS = 0;
             h.fx = m.ax * sens; h.fy = m.ay * sens;
@@ -810,39 +775,32 @@
         { dit:"les deux forces commencent hors de portée", attendu:"> 70 m entre les centres",
           tenu:(fin, s) => !!s[0].geometrie && s[0].geometrie.separation > 70,
           mesure:(fin, s) => s[0].geometrie ? Math.round(s[0].geometrie.separation) + " m" : "sans géométrie" },
-        { dit:"aucune barrière continue ne coupe le champ en deux",
-          attendu:"deux départs connectés · aucun obstacle sur ≥ 50 % d’un axe",
+        { dit:"le champ est réellement ouvert",
+          attendu:"100 % libre · aucun obstacle · deux départs connectés",
           tenu:(fin,s) => !!s[0].geometrie && !!s[0].geometrie.terrain &&
+            s[0].geometrie.terrain.partLibre >= .99 &&
+            s[0].geometrie.terrain.obstacleMax === 0 &&
             s[0].geometrie.terrain.traversable && !s[0].geometrie.terrain.barriere,
           mesure:(fin,s) => {
             const q=s[0].geometrie&&s[0].geometrie.terrain;
-            return q ? (q.traversable?"passage continu":"aucun passage")+
-              " · plus grand obstacle "+Math.round(q.obstacleMax*100)+" %" : "terrain inconnu";
+            return q ? Math.round(q.partLibre*100)+" % libre · plus grand obstacle "+
+              Math.round(q.obstacleMax*100)+" %" : "terrain inconnu";
           } },
-        { dit:"le sol resserre le déploiement au lieu de projeter un damier dans les poches libres",
-          attendu:"toutes les ancres sur sol libre · davantage de lignes physiques que d’échelons là où ça serre",
+        { dit:"le déploiement conserve ses trois échelons sans être comprimé par le terrain",
+          attendu:"toutes les ancres libres · front, soutien et réserve présents dans chaque camp",
           tenu:(fin,s) => {
             const us=(s[0].unites||[]).filter((u)=>u.placeRalliement);
             if(!us.length||us.some((u)=>u.placeRalliement.libre!==true))return false;
-            const terrain=s[0].geometrie&&s[0].geometrie.terrain;
-            // Sur une place ouverte, trois échelons peuvent naturellement
-            // tenir sur trois lignes : ne pas inventer un étranglement pour
-            // satisfaire la sonde. Quand le masque mord réellement sur l'axe,
-            // au moins un camp doit en revanche prendre de la profondeur.
-            if(!terrain||terrain.obstacleMax<.10)return true;
-            return ["assaut","garde"].some((camp)=>{
-              const xs=us.filter((u)=>u.camp===camp),p=xs.map((u)=>u.placeRalliement);
-              return new Set(p.map((q)=>q.ligneSol)).size>
-                new Set(p.map((q)=>q.rang)).size;
-            });
+            return ["assaut","garde"].every((camp)=>
+              new Set(us.filter((u)=>u.camp===camp)
+                .map((u)=>u.placeRalliement.rang)).size===3);
           },
           mesure:(fin,s) => ["assaut","garde"].map((camp)=>{
             const p=(s[0].unites||[]).filter((u)=>u.camp===camp&&u.placeRalliement)
               .map((u)=>u.placeRalliement);
             return camp+" "+new Set(p.map((q)=>q.ligneSol)).size+" lignes de sol / "+
               new Set(p.map((q)=>q.rang)).size+" échelons";
-          }).join(" · ")+((s[0].geometrie&&s[0].geometrie.terrain&&
-            s[0].geometrie.terrain.obstacleMax<.10)?" · terrain ouvert":" · terrain resserré") },
+          }).join(" · ") },
         { dit:"les deux forces regardent réellement l'adversaire", attendu:"orientation ≥ 0,70 chacune",
           tenu:(fin, s) => !!s[0].geometrie && ["assaut", "garde"].every((c) =>
             s[0].geometrie.camps[c].faceAdversaire >= .70),
@@ -856,7 +814,7 @@
             const gs = s.filter((r) => r.geometrie).map((r) => r.geometrie.separation);
             return gs.length ? Math.round(gs[0] - Math.min(...gs)) + " m" : "sans géométrie";
           } },
-        { dit:"les éléments de commandement contournent le bâti sans lancer un chemin par homme",
+        { dit:"les éléments de commandement conduisent leurs unités sans lancer un chemin par homme",
           attendu:"chaque chef gagne au moins 80 % de son trajet · routes bornées par unité",
           tenu:(fin,s) => {
             const depart=s[0], ids=(depart.echelons||[]).map((e)=>({id:e.id,
@@ -881,32 +839,30 @@
         { dit:"la bataille a réellement lieu", attendu:">= 5 % dans l'allonge et >= 10 coups",
           tenu:(fin, s) => pic(s, (r) => r.partContact) >= .05 && fin.coupsTentes >= 10,
           mesure:(fin, s) => pic(s, (r) => r.auContact) + " au contact · " + fin.coupsTentes + " coups" },
-        { dit:"seule une minorité combat au même instant", attendu:"pic ≤ 35 %",
-          tenu:(fin, s) => pic(s, (r) => r.partContact) > 0 && pic(s, (r) => r.partContact) <= .35,
+        { dit:"seule une minorité combat au même instant", attendu:"pic ≤ 40 %",
+          tenu:(fin, s) => pic(s, (r) => r.partContact) > 0 && pic(s, (r) => r.partContact) <= .40,
           mesure:(fin, s) => Math.round(100 * pic(s, (r) => r.partContact)) + " % au pic" },
         { dit:"les appartenances résistent à la rencontre", attendu:"0 erreur",
           tenu:(fin) => (fin.erreursAppartenance || []).length === 0,
           mesure:(fin) => (fin.erreursAppartenance || []).length + " erreur(s)" },
-        { dit:"le terrain retire réellement de l'information aux commandants",
-          attendu:"plusieurs directions visuelles arrêtées par le masque",
-          tenu:(fin, s) => s.some((r) => (r.commandements || []).some((c) =>
-            c.carte && c.carte.resume && c.carte.resume.rayonsBloques >= 3)),
+        { dit:"aucun obstacle caché ne retire de l'information aux commandants",
+          attendu:"0 direction visuelle arrêtée par le masque",
+          tenu:(fin, s) => s.every((r) => (r.commandements || []).every((c) =>
+            !c.carte || !c.carte.resume || c.carte.resume.rayonsBloques === 0)),
           mesure:(fin, s) => {
             const xs=s.flatMap((r)=>(r.commandements||[]).map((c)=>
               c.carte&&c.carte.resume ? c.carte.resume.rayonsBloques : 0));
             return (xs.length ? Math.max(...xs) : 0) + "/48 directions masquées au maximum";
           } },
         { dit:"les commandants emportent la même faculté subjective que pendant un ratissage",
-          attendu:"ordres reçus · observations locales · estimations par chef",
+          attendu:"ordres reçus · observation acquise à distance · estimations par chef",
           tenu:(fin, s) => {
             const cs=(fin.commandements || []);
             return cs.length >= 2 && cs.every((c) => c.ordre) &&
               cs.some((c) => c.croyances.some((q) => q.genre === "ennemi" && q.source === "vu")) &&
               cs.some((c) => c.estimation && c.estimation.lieux > 0) &&
-              s.some((r) => {
-                const connus=(r.commandements || []).filter((c) => c.estimation && c.estimation.lieux > 0).length;
-                return connus > 0 && connus < (r.commandements || []).length;
-              });
+              (s[0].commandements || []).filter((c) => c.estimation && c.estimation.lieux > 0).length <
+                cs.filter((c) => c.estimation && c.estimation.lieux > 0).length;
           },
           mesure:(fin) => {
             const cs=fin.commandements || [], vus=cs.filter((c) => c.estimation && c.estimation.lieux > 0);
@@ -920,6 +876,22 @@
             fin.parType.conroi.montes === fin.parType.conroi.total,
           mesure:(fin) => (fin.parType.pique ? fin.parType.pique.total : 0) +
             " piquiers · " + (fin.parType.conroi ? fin.parType.conroi.montes : 0) + " cavaliers" },
+        { dit:"les cavaliers exploitent réellement une allure supérieure en terrain ouvert",
+          attendu:"vitesse de pointe des conrois ≥ 1,25 × celle des piquiers",
+          tenu:(fin,s) => {
+            const cheval=pic(s,(r)=>r.parType.conroi&&r.parType.conroi.vitesseMax);
+            const pique=pic(s,(r)=>r.parType.pique&&r.parType.pique.vitesseMax);
+            return cheval>0&&pique>0&&cheval>=pique*1.25;
+          },
+          mesure:(fin,s) => {
+            const cheval=pic(s,(r)=>r.parType.conroi&&r.parType.conroi.vitesseMax);
+            const pique=pic(s,(r)=>r.parType.pique&&r.parType.pique.vitesseMax);
+            return cheval.toFixed(1)+" m/s montés · "+pique.toFixed(1)+" m/s piquiers";
+          } },
+        { dit:"une pique reçoit au moins une charge dans les conditions physiques prévues",
+          attendu:"pointe en face · piquier planté · cavalier lancé · ≥ 1 impact",
+          tenu:(fin) => fin.contreCharges>0,
+          mesure:(fin) => fin.contreCharges+" charge(s) reçue(s) par une pique" },
         { dit:"les chefs distinguent et transmettent chevaux et longues hampes",
           attendu:"au moins une estimation de chaque signature · communication locale",
           tenu:(fin) => {

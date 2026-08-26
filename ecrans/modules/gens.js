@@ -368,6 +368,24 @@ window.Gens = (() => {
       + '<div class="gouv-bulle-pied">' + L + "</div>";
   }
 
+  // DEUX QUESTIONS, DEUX TABLEAUX — et les confondre était le défaut de fond.
+  // « Mon gouvernement » promettait la liste des gens qui répondent d'un office,
+  // et servait la liste de ceux qui portent une criticité non nulle dans les
+  // cahiers ouvrables d'ici. Trois lignes sur vingt-six, et rien pour dire que
+  // les vingt-trois autres avaient été mesurés puis écartés.
+  //
+  //   Goulots du plan — le tableau d'avant, borné à `total > 0`, et qui DIT
+  //                     désormais combien d'offices il a laissés dehors.
+  //   Gouvernement    — tous les titulaires d'un office, sans chiffre. Un zéro
+  //                     de criticité ne mesure pas l'importance d'un homme : il
+  //                     dit que le plan, tel qu'il est écrit aujourd'hui, ne
+  //                     perd rien de mesurable si ce pas-là rate. Le servir en
+  //                     colonne reviendrait à ranger la cour par un chiffre qui
+  //                     ne parle pas d'elle.
+  const CLE_VUE = "conseil.gens.gouv";
+  let vueGouv = "goulots";
+  try { vueGouv = localStorage.getItem(CLE_VUE) || "goulots"; } catch (e) {}
+
   function gouvernement(q) {
     if (!crit || !crit.charge) return null;
     const vues = (window.Books && Books.affairesVues) ? Books.affairesVues() : null;
@@ -385,37 +403,86 @@ window.Gens = (() => {
                dv: detailVu(h.vu, vues), ds: detailVu(h.sien_ailleurs, vues),
                dt: detailVu(h.tire, vues),
                v: v, s: s, t: t, total: v + s + t };
-    }).filter((L) => L.offices.length && L.total > 0)
+    }).filter((L) => L.offices.length)
       .filter((L) => !q || (L.nom + " " + L.offices.map(
         (o) => o + " " + ((offices[o] && offices[o].nom) || "")).join(" ")
       ).toLowerCase().includes(q))
       .sort((a, b) => a.offices[0].localeCompare(b.offices[0]));
     if (!lignes.length) return null;
+    const goulots = lignes.filter((L) => L.total > 0);
+    // Un tableau des goulots sans goulot ne s'affiche pas ; on bascule sur la
+    // cour plutôt que de servir une grille vide sous un titre qui promet.
+    const vue = (vueGouv === "goulots" && !goulots.length) ? "cour" : vueGouv;
 
     const bloc = document.createElement("div");
     bloc.className = "gens-gouv";
-    bloc.innerHTML = '<div class="gens-gouv-titre">Mon gouvernement</div>'
-      + '<div class="gens-gouv-note">Ce que le plan attend de chacun, cahier par'
-      + " cahier — calculé à l'ouverture, écrit nulle part.</div>";
+    const tete = document.createElement("div");
+    tete.className = "gens-gouv-tete";
+    const onglets = document.createElement("div");
+    onglets.className = "gens-gouv-onglets";
+    [["goulots", "Goulots du plan"], ["cour", "Gouvernement"]].forEach(([k, nom]) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "gens-gouv-onglet" + (vue === k ? " est-choisi" : "");
+      b.textContent = nom;
+      b.disabled = (k === "goulots" && !goulots.length);
+      b.onclick = () => {
+        vueGouv = k;
+        try { localStorage.setItem(CLE_VUE, k); } catch (e) {}
+        dessiner();
+      };
+      onglets.appendChild(b);
+    });
+    tete.appendChild(onglets);
+    const note = document.createElement("div");
+    note.className = "gens-gouv-note";
+    // LE DÉNOMINATEUR SE DIT, TOUJOURS. C'est la phrase qui manquait : trois
+    // lignes sous « Mon gouvernement » laissaient croire à une cour de trois
+    // hommes, alors que vingt-trois autres avaient été mesurés et écartés.
+    note.innerHTML = vue === "goulots"
+      ? "<b>" + goulots.length + " sur " + lignes.length + "</b> offices portent "
+        + "une criticité visible depuis ce siège. Les autres ne sont pas absents "
+        + "de la cour : leur charge ne pèse rien de mesurable sur les cahiers "
+        + "ouvrables d'ici."
+      : "Tous les titulaires d'un office, à leur numéro de registre. "
+        + "<b>Sans chiffre, et c'est voulu</b> : un zéro de criticité ne mesure "
+        + "pas l'importance d'un homme.";
+    tete.appendChild(note);
+    bloc.appendChild(tete);
+
     const enveloppe = document.createElement("div");
     enveloppe.className = "book-table-enveloppe";
     const tb = document.createElement("table");
     tb.className = "book-table gens-gouv-table";
-    // Les intitulés des colonnes reprennent mot pour mot ceux du terminal :
-    // deux noms pour la même mesure, et l'on ne sait plus laquelle on lit.
-    tb.innerHTML = "<thead><tr><th>L'homme</th><th>Ses offices</th>"
-      + '<th data-calcule>Vu</th><th data-calcule>Sien ailleurs</th>'
-      + '<th data-calcule>On lui tire</th><th data-calcule>Aveugle</th>'
-      + "</tr></thead>";
-    const th = tb.querySelectorAll("thead th");
-    glose(th[1], bulleColonne("Ses offices",
-      "Les charges dont il est titulaire au registre des offices, par numéro. "
-      + "C'est par ce champ que la colonne « sien ailleurs » le retrouve sur "
-      + "des lignes qu'il ne voit pas.", ""));
-    ["vu", "sien", "tire", "aveugle"].forEach((k, i) => glose(th[i + 2], COLONNES[k]));
-    const corps = document.createElement("tbody");
-    lignes.forEach((L) => corps.appendChild(rangGouv(L, offices)));
-    tb.appendChild(corps);
+    if (vue === "goulots") {
+      // Les intitulés des colonnes reprennent mot pour mot ceux du terminal :
+      // deux noms pour la même mesure, et l'on ne sait plus laquelle on lit.
+      tb.innerHTML = "<thead><tr><th>L'homme</th><th>Ses offices</th>"
+        + '<th data-calcule>Vu</th><th data-calcule>Sien ailleurs</th>'
+        + '<th data-calcule>On lui tire</th><th data-calcule>Aveugle</th>'
+        + "</tr></thead>";
+      const th = tb.querySelectorAll("thead th");
+      glose(th[1], bulleColonne("Ses offices",
+        "Les charges dont il est titulaire au registre des offices, par numéro. "
+        + "C'est par ce champ que la colonne « sien ailleurs » le retrouve sur "
+        + "des lignes qu'il ne voit pas.", ""));
+      ["vu", "sien", "tire", "aveugle"].forEach((k, i) => glose(th[i + 2], COLONNES[k]));
+      const corps = document.createElement("tbody");
+      goulots.forEach((L) => corps.appendChild(rangGouv(L, offices)));
+      tb.appendChild(corps);
+    } else {
+      tb.innerHTML = "<thead><tr><th>L'homme</th><th>Ses offices</th>"
+        + "<th>Ses cahiers</th></tr></thead>";
+      const th = tb.querySelectorAll("thead th");
+      glose(th[2], bulleColonne("Ses cahiers",
+        "Les affaires dont il est <b>tenu_par</b>, bornées à l'étagère que ce "
+        + "siège peut ouvrir. C'est ce qu'une dépêche lui met entre les mains.",
+        "Un homme sans cahier ouvrable d'ici n'est pas un homme sans travail : "
+        + "c'est un homme dont le travail se tient ailleurs."));
+      const corps = document.createElement("tbody");
+      lignes.forEach((L) => corps.appendChild(rangCour(L, offices, L.total > 0)));
+      tb.appendChild(corps);
+    }
     enveloppe.appendChild(tb);
     bloc.appendChild(enveloppe);
     brancherGloses(bloc);
@@ -434,31 +501,81 @@ window.Gens = (() => {
     return n.length > 52 ? n.slice(0, 51) + "…" : n;
   }
 
-  function rangGouv(L, offices) {
-    const tr = document.createElement("tr");
-    const p = L.id ? parId.get(L.id) : null;
+  // Le visage et le nom, partagés par les deux tableaux. Un homme du plan que le
+  // registre des gens ne connaît pas garde son identifiant en clair, faute de
+  // visage : c'est une jointure manquante, et la cacher derrière un tiret la
+  // rendrait introuvable.
+  // UNE CASE VIDE EST UNE INFORMATION, PAS UN NOM. Le registre des offices écrit
+  // la vacance en toutes lettres dans la colonne « qui » — « VIDE. Ligne ouverte
+  // le 27e… », « CASE BLANCHE » —, et le repli des noms en fait un homme qui
+  // n'existe pas, affiché avec son identifiant en guise de nom. Dans le tableau
+  // des goulots il ne se voyait jamais (sa criticité est nulle) ; la vue de la
+  // cour l'expose, et c'est tant mieux : deux offices ouverts sans personne
+  // dessus valent d'être lus. On garde le libellé du registre en glose plutôt
+  // que de l'effacer — c'est ce qui est écrit, et on ne le cache pas.
+  const CASE_VIDE = /\b(vide|blanche|vacant|vacante|personne|sans titulaire)\b/i;
+  const estVacant = (L) => !L.id && CASE_VIDE.test(L.nom);
 
-    const tdQui = document.createElement("td");
-    tdQui.className = "gens-gouv-qui";
-    // Un homme du plan que le registre des gens ne connaît pas garde son
-    // identifiant en clair, faute de visage : c'est une jointure manquante, et
-    // la cacher derrière un tiret la rendrait introuvable.
-    tdQui.innerHTML = '<span class="gens-gouv-face">'
+  function celluleQui(L) {
+    const td = document.createElement("td");
+    const p = L.id ? parId.get(L.id) : null;
+    td.className = "gens-gouv-qui";
+    if (estVacant(L)) {
+      td.classList.add("gens-gouv-vacant");
+      td.innerHTML = '<span class="gens-gouv-face"></span><span>la case est vide</span>';
+      glose(td, bulleColonne("Office sans titulaire",
+        "Ce que le registre des offices porte à la colonne « qui » : <i>"
+        + echappe(L.nom) + "</i>.",
+        "Personne ne répond de cette charge. Le plan peut très bien n'y perdre "
+        + "rien de mesurable aujourd'hui — ce n'est pas la même chose que de "
+        + "n'attendre rien de cet office."));
+      return td;
+    }
+    td.innerHTML = '<span class="gens-gouv-face">'
       + ((L.id && qui(L.id).portrait_svg) || "") + "</span><span>"
       + L.nom + "</span>";
     if (p) {
-      tdQui.classList.add("gens-gouv-cliquable");
-      tdQui.onclick = () => Entites.penser(p.id, "personnage", p.nom);
+      td.classList.add("gens-gouv-cliquable");
+      td.onclick = () => Entites.penser(p.id, "personnage", p.nom);
     }
-    tr.appendChild(tdQui);
+    return td;
+  }
 
-    const tdOff = document.createElement("td");
-    tdOff.className = "gens-gouv-offices";
-    tdOff.textContent = L.offices.map(
+  function celluleOffices(L, offices) {
+    const td = document.createElement("td");
+    td.className = "gens-gouv-offices";
+    td.textContent = L.offices.map(
       (o) => o + ((offices[o] && offices[o].nom)
         ? " · " + intitule(offices[o].nom) : "")
     ).join("\n");
-    tr.appendChild(tdOff);
+    return td;
+  }
+
+  // LA COUR — sans un chiffre. Le seul signe porté est un renvoi vers l'autre
+  // tableau, pour ceux qui y figurent : il dit « il y a de la matière là-bas »,
+  // jamais « il compte plus que son voisin ». Personne n'est classé ici.
+  function rangCour(L, offices, porteUnGoulot) {
+    const tr = document.createElement("tr");
+    tr.appendChild(celluleQui(L));
+    tr.appendChild(celluleOffices(L, offices));
+    const td = document.createElement("td");
+    td.className = "gens-gouv-cahiers";
+    td.textContent = L.cahiers.length ? L.cahiers.join("\n") : "—";
+    if (porteUnGoulot) {
+      const m = document.createElement("span");
+      m.className = "gens-gouv-marque";
+      m.textContent = "porte un goulot";
+      td.appendChild(document.createElement("br"));
+      td.appendChild(m);
+    }
+    tr.appendChild(td);
+    return tr;
+  }
+
+  function rangGouv(L, offices) {
+    const tr = document.createElement("tr");
+    tr.appendChild(celluleQui(L));
+    tr.appendChild(celluleOffices(L, offices));
 
     // Chaque chiffre porte son détail : de quels cahiers il sort, et combien de
     // pas il pèse. Un total qu'on ne peut pas ouvrir ne se relit pas.

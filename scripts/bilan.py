@@ -19,6 +19,8 @@
 #     python scripts/bilan.py            mesure, compare, et pose la ligne
 #     python scripts/bilan.py --sec      mesure et compare, n'écrit rien
 import io
+
+import rapporteurs
 import json
 import os
 import re
@@ -232,3 +234,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+    # Le battement se pose APRES main(), donc seulement si elle est allee
+    # au bout : un plantage ne bat pas, et c est le mecanisme entier.
+    rapporteurs.battre("bilan", u"mesure d ecart posee")

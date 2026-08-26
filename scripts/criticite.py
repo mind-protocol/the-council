@@ -48,6 +48,8 @@
 #     python scripts/criticite.py --pourquoi 8201  la chaine qui empeche une piece
 import argparse
 import io
+
+import rapporteurs
 import re
 import unicodedata
 import json
@@ -1203,6 +1205,44 @@ def _pertes(pieces, tous, un, base, poids, optimiste):
 
 
 # ─────────────────────────────────────────────── le calcul
+# ────────────────────────────── pourquoi un pas vaut zéro
+#
+# UN ZERO N'EST PAS UN FAIT, C'EST QUATRE FAITS QU'ON A CONFONDUS. La colonne ne
+# disait qu'une chose — « n'ajoute aucune perte mesurable » — et l'écran la
+# lisait « ne pèse rien », ce qui n'est pas la même phrase. Sur le plan de la
+# reine au 24 août : 53 pas portés, 76 accomplis, 0 redondants, 10 sans portée
+# et 1283 à l'amont bloqué — c'est-à-dire quatre-vingt-quinze pour cent du plan
+# rangés sous le même zéro que « c'est déjà fait ».
+#
+# LES DEUX DERNIERS NE SE CONFONDENT PAS NON PLUS, et c'est pourquoi il y en a
+# deux et non un « hors-portée » :
+#   sans-portee   — le pas ne sert AUCUN état cible. Une pièce écrite qui ne
+#                   mène nulle part : un défaut de saisie du cahier.
+#   amont-bloque  — le pas sert des états, et aucun n'est atteignable. Ce n'est
+#                   pas une branche sans importance : c'est le signe qu'en amont
+#                   quelque chose ne se dérive pas — un cycle, une exigence
+#                   jamais satisfaite. Un seul arc en trop en produit un
+#                   millier, et le zéro le taisait.
+GENRES_MESURES = ("action", "clef", "verrou")
+
+
+def raison_du_zero(p, c, pt_atteignable, portee_brute, attendu=0):
+    """Pourquoi ce pas ne pèse rien — ou qu'il pèse, et alors c'est `porte`.
+
+    Une seule règle de lecture : `porte` est le seul cas où le chiffre veut
+    dire quelque chose. Les quatre autres disent pourquoi il n'en veut pas, et
+    ils ne se remplacent pas les uns les autres."""
+    if (c or 0) + (attendu or 0) > 0:
+        return u"porte"
+    if faite(p):
+        return u"accompli"
+    if not portee_brute:
+        return u"sans-portee"
+    if not pt_atteignable:
+        return u"amont-bloque"
+    return u"redondant"
+
+
 def calculer(pieces, mode_dep="interne", optimiste=True, actions_ou=False):
     tous, un, dehors = amonts(pieces, mode_dep, actions_ou)
     # L'AMPLITUDE SE MESURE AVANT DE POUVOIR S'APPLIQUER — d'où deux passes, et
@@ -1327,6 +1367,11 @@ def main():
     attendu = {n: sum(crit.get(m, 0) for m in ms) for n, ms in dehors.items()}
 
     if a.json:
+        # La portee BRUTE — les etats qu'un pas sert, atteignables ou non. Elle
+        # separe « ne sert rien » de « sert ce que le plan ne sait pas
+        # atteindre » ; `calculer` la jette apres usage, on la refait ici. Le
+        # cache est celui de `portee` : le second passage ne coute rien.
+        cache_portee = {}
         grappes = cercles(pieces, *amonts(pieces, mode_dep, a.actions_ou)[:2])
         noue = {m: i for i, g in enumerate(grappes) for m in g}
         offices, moyens = gens(livres)
@@ -1407,6 +1452,14 @@ def main():
                            poids, base),
             "pas": {n: {"perte": c, "portee": pt,
                         "attendu": attendu.get(n, 0),
+                        # POURQUOI CE CHIFFRE EST CE QU'IL EST. Sans elle, un
+                        # zéro d'amont bloqué se lit comme un zéro d'accompli,
+                        # et l'écran range sous « rien à faire » ce qui est en
+                        # réalité « le plan ne sait pas y arriver ».
+                        "raison": raison_du_zero(p, c, pt,
+                                                 portee(n, pieces, poids,
+                                                        cache_portee),
+                                                 attendu.get(n, 0)),
                         "cercle": noue.get(n),
                         "genre": p["genre"], "nom": p["nom"],
                         "affaire": p["affaire"], "etat": p["etat"],
@@ -1575,3 +1628,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+    # Le battement se pose APRES main(), donc seulement si elle est allee
+    # au bout : un plantage ne bat pas, et c est le mecanisme entier.
+    rapporteurs.battre("criticite", u"classement refait")

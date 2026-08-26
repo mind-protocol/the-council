@@ -246,6 +246,11 @@
      « La ville ». */
   #sfond-ville{position:absolute;inset:0;width:100%;height:100%;display:block;
           overflow:hidden;pointer-events:auto}
+  /* C6 emprunte les coordonnées du monde, pas son bâti. Le même état visuel
+     masque donc le SVG urbain que le moteur vient de remplacer par son terrain
+     d'épreuve ; aucune maison fantôme ne reste dessinée sous les hommes. */
+  #toile.champ-ouvert{background:#191b13}
+  #toile.champ-ouvert #sfond-ville{display:none}
   #sfond-ville [data-ville-usage]{cursor:help;transition:filter 60ms linear}
   #fond{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
   #sbulle-ville{position:absolute;z-index:6;display:none;pointer-events:none;

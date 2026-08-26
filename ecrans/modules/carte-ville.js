@@ -116,7 +116,11 @@ window.CarteVille = (() => {
     if (!h || !plan) return;
     const [x0, y0, x1, y1] = plan.bornes;
     base = [x0, y0, x1 - x0, y1 - y0];
-    vue = vue || base.slice();
+    const ouverture = plan.region && plan.region.cadrage_initial;
+    vue = vue || (ouverture && ouverture.length === 4
+      ? [ouverture[0], ouverture[1], ouverture[2] - ouverture[0],
+         ouverture[3] - ouverture[1]]
+      : base.slice());
     const couche = (cl, d, extra) =>
       d ? '<path class="cv-' + cl + '" d="' + d + '"' + (extra || "") + "/>" : "";
     const region = plan.region || null;
@@ -124,29 +128,40 @@ window.CarteVille = (() => {
       "M" + x0 + " " + y0 + "H" + x1 + "V" + y1 + "H" + x0 + "Z" + region.eau : "";
     const terrainsRegion = region ? (region.terrains || []).map((t) =>
       couche("region-terrain cv-region-" + t.genre, t.d)).join("") : "";
+    const culturesRegion = region ? (region.cultures || []).map((t) =>
+      couche("region-culture cv-culture-" + t.genre, t.d)).join("") : "";
+    const boisExploites = region ? couche("bois-exploites", region.bois_exploites) : "";
     const arbresRegion = region ? couche("region-arbres", region.arbres) : "";
     const bourgsRegion = region ? couche("region-bourgs", region.bourgs) : "";
     const routesRegion = region ? (region.routes || []).map((r) =>
       couche("route-region-bord", r.d) + couche("route-region", r.d)).join("") : "";
+    const cheminsRegion = region ? (region.chemins || []).map((c) =>
+      couche("chemin-region-bord", c.d) + couche("chemin-region", c.d)).join("") : "";
+    const reliefRegion = region ? (region.relief || []).map((n) =>
+      couche("region-relief", n.d)).join("") : "";
     const portRegion = region && region.port ?
       (region.port.bassins || []).map((b) => couche("port-bassin", b.d)).join("") +
       (region.port.quais || []).map((q) => couche("port-quai", q.d)).join("") +
       (region.port.appontements || []).map((q) => couche("port-appontement", q.d)).join("") : "";
     h.innerHTML =
-      '<svg id="cv-svg" viewBox="' + vue.join(" ") + '" ' +
+      '<svg id="cv-svg" viewBox="' + CarteProjection.vue(vue).join(" ") + '" ' +
       'preserveAspectRatio="xMidYMid meet">' +
       (terre ? '<defs><clipPath id="cv-terre"><path d="' + terre +
         '" fill-rule="evenodd" clip-rule="evenodd"/></clipPath></defs>' : "") +
+      '<g class="cv-monde" transform="' + CarteProjection.transformSvg + '">' +
       '<rect class="cv-sol" x="' + x0 + '" y="' + y0 + '" width="' + (x1 - x0) +
         '" height="' + (y1 - y0) + '"/>' +
-      '<g class="cv-region-terrains">' + terrainsRegion + arbresRegion + '</g>' +
+      '<g class="cv-region-terrains">' + terrainsRegion + culturesRegion +
+        boisExploites + arbresRegion + '</g>' +
       (region ? couche("eau cv-eau-region", region.eau) : "") +
       couche("sol-intra", THEME.enceinte(plan)) +
       couche(region && region.eau ? "cote-detail" : "eau", plan.cote) +
+      '<g class="cv-region-relief"' + (terre ? ' clip-path="url(#cv-terre)"' : '') + '>' +
+        reliefRegion + '</g>' +
       '<g class="cv-niveaux">' +
         (plan.niveaux || []).map((n) => couche("niveau", n.d)).join("") + "</g>" +
       '<g class="cv-routes-region"' + (terre ? ' clip-path="url(#cv-terre)"' : '') + '>' +
-        routesRegion + '</g>' +
+        cheminsRegion + routesRegion + '</g>' +
       '<g class="cv-bourgs-region"' + (terre ? ' clip-path="url(#cv-terre)"' : '') + '>' +
         bourgsRegion + '</g>' +
       '<g class="cv-voies">' +
@@ -172,7 +187,7 @@ window.CarteVille = (() => {
       '<g class="cv-reperes">' + marques() + "</g>" +
       '<g class="cv-cloches">' + clochers() + "</g>" +
       '<g class="cv-route"></g>' +
-      '<g class="cv-vous">' + vous() + "</g></svg>";
+      '<g class="cv-vous">' + vous() + "</g></g></svg>";
     svg = h.querySelector("#cv-svg");
     // La bulle vit HORS du SVG : c'est du texte d'interface, il se pose en
     // pixels et non en mètres, et il n'a donc rien à faire dans un dessin qui
@@ -227,8 +242,9 @@ window.CarteVille = (() => {
     return (plan.axes || []).map((a) => {
       const i = Math.max(1, Math.min(3, +(a.importance || 1)));
       const rotation = "rotate(" + (+a.angle || 0) + " " + a.x + " " + a.y + ")";
-      return '<g class="cv-axe cv-a-i' + i + '" data-nom="' + esc(a.nom) + '">' +
-        '<text x="' + a.x + '" y="' + a.y + '" transform="' + rotation + '">' +
+      return '<g class="cv-axe cv-a-i' + i + '" data-nom="' + esc(a.nom) +
+        '" transform="' + rotation + '">' +
+        '<text x="' + a.x + '" y="' + a.y + '">' +
         esc(a.nom) + "</text></g>";
     }).join("");
   }
@@ -491,8 +507,8 @@ window.CarteVille = (() => {
   /** Le point du plan, en mètres, sous un événement de souris. */
   function enMetres(ev) {
     const r = repere();
-    return r ? [vue[0] + (ev.clientX - r.gx) / r.k,
-                vue[1] + (ev.clientY - r.gy) / r.k] : null;
+    return r ? CarteProjection.depuisPixel(vue, r,
+      ev.clientX - r.b.left, ev.clientY - r.b.top) : null;
   }
 
   /** Mètres par pixel à l'écran — l'échelle vraie, celle qui s'affiche. */
@@ -1041,7 +1057,8 @@ window.CarteVille = (() => {
     // calculé — un dixième de mètre à la fois, qui se voit au millimètre près
     // quand on zoome vers le pointeur cran après cran. Au millimètre, il n'y a
     // plus rien à rattraper.
-    svg.setAttribute("viewBox", vue.map((v) => v.toFixed(3)).join(" "));
+    svg.setAttribute("viewBox", CarteProjection.vue(vue)
+      .map((v) => v.toFixed(3)).join(" "));
     grain();
     enseignes();
     rafraichirVous();
@@ -1118,7 +1135,7 @@ window.CarteVille = (() => {
       // hauteur de l'autre, le dessin glissait plus vite que la main sur un
       // axe et moins vite sur l'autre — on tirait la carte en biais.
       vue = [prise.v[0] - (ev.clientX - prise.x) / prise.k,
-             prise.v[1] - (ev.clientY - prise.y) / prise.k,
+             prise.v[1] + (ev.clientY - prise.y) / prise.k,
              prise.v[2], prise.v[3]];
       cadrer();
     });
@@ -1757,7 +1774,7 @@ window.CarteVille = (() => {
   // `combat.js` a besoin de savoir, et elle est déjà résolue ici (`situer`) —
   // la lui faire recalculer voudrait dire recopier la chaîne entière du lieu
   // au bâtiment, pour deux nombres qu'on a sous la main.
-  return { charger, dessiner, plan: () => plan, ou: () => moi,
+  return { charger, dessiner, plan: () => plan, ou: () => moi, vue: () => vue && vue.slice(),
            toponymie: {
              chercher: chercherToponyme,
              decrire: decrirePosition,

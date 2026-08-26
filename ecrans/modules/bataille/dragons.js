@@ -123,6 +123,7 @@
       passages: 0, attaqueDepuis: 0, distanceAvant: Infinity, sautMax: 0,
       basseAllure: false, basseAllureDepuis: null,
       cibleHomme: null, cibleVerrouJus: 0,
+      piqueHomme: null,
       cibleMembres: [], cibleGuidage: [], cibleEtapes: [], cibleCap: d.cap,
       capPassage: null,
       candidatsCibles: [], zonesTraitees: [], selections: [],
@@ -142,28 +143,32 @@
   }
 
   function transformerVue() {
-    const v = vueCarte && vueCarte.length === 4
-      ? { x0: vueCarte[0], y0: vueCarte[1], x1: vueCarte[0] + vueCarte[2],
-          y1: vueCarte[1] + vueCarte[3] } : BORNE;
-    echelle = Math.min(largeur / Math.max(1, v.x1 - v.x0),
-                       hauteur / Math.max(1, v.y1 - v.y0));
-    ox = (largeur - (v.x1 - v.x0) * echelle) / 2 - v.x0 * echelle;
-    oy = (hauteur - (v.y1 - v.y0) * echelle) / 2 - v.y0 * echelle;
+    const v = vueCarte && vueCarte.length === 4 ? vueCarte
+      : [BORNE.x0, BORNE.y0, BORNE.x1 - BORNE.x0, BORNE.y1 - BORNE.y0];
+    // La trajectoire, le feu, les soldats et le SVG de ville partagent un seul
+    // contrat monde→écran. Réimplémenter ici le vieux y-vers-le-bas faisait
+    // glisser le calque dragon dès que la carte nord-en-haut était déplacée.
+    const rep = window.CarteProjection && CarteProjection.repere(v, largeur, hauteur);
+    if (rep) { echelle = rep.k; ox = rep.ox; oy = rep.oy; return; }
+    echelle = Math.min(largeur / Math.max(1, v[2]),
+                       hauteur / Math.max(1, v[3]));
+    ox = (largeur - v[2] * echelle) / 2 - v[0] * echelle;
+    oy = (hauteur - v[3] * echelle) / 2 + (v[1] + v[3]) * echelle;
   }
 
   function transformerLocalDansMonde() {
     const r = etat && etat.repere;
     if (!r) {
-      ctx.setTransform(dpr * echelle, 0, 0, dpr * echelle,
+      ctx.setTransform(dpr * echelle, 0, 0, -dpr * echelle,
                        dpr * ox, dpr * oy);
       return;
     }
     const c = Math.cos(r.cap), s = Math.sin(r.cap);
     const tx = r.x - c * 135 + s * 18;
     const ty = r.y - s * 135 - c * 18;
-    ctx.setTransform(dpr * echelle * c, dpr * echelle * s,
-                     -dpr * echelle * s, dpr * echelle * c,
-                     dpr * (ox + echelle * tx), dpr * (oy + echelle * ty));
+    ctx.setTransform(dpr * echelle * c, -dpr * echelle * s,
+                     -dpr * echelle * s, -dpr * echelle * c,
+                     dpr * (ox + echelle * tx), dpr * (oy - echelle * ty));
   }
 
   function redimensionner() {
@@ -632,13 +637,26 @@
     d.pente = Math.atan2(d.vz, Math.max(1, d.v));
   }
 
-  function altitudePique(hautVoulue, dt) {
+  function altitudePique(hautVoulue, resteAuSol, dt) {
     const d = etat.dragon;
-    // Un piqué n'est pas une correction d'altitude de pilote automatique :
-    // Syrax établit une pente et la tient. Cette consigne de vitesse verticale
-    // fait arriver le point bas au premier passage sur la cible.
-    const voulue = clamp((hautVoulue - d.z) / 5.2, -18, -1.2);
-    d.vz += (voulue - d.vz) * Math.min(1, dt * 1.45);
+    // Le point bas appartient à la ligne d'attaque, pas à une consigne
+    // d'altitude asymptotique. L'ancien (haut-z)/5,2 freinait justement la
+    // descente en approchant du sol : Arrax parcourait ~670 m avant d'atteindre
+    // son plan de tir alors que sa passe n'en mesure que 275. Ici la verticale
+    // intercepte le plan bas au moment où la ligne de feu rejoint la cible.
+    // Le retrait de 1,2 s paie l'établissement progressif du piqué. La cible
+    // ne doit pas arriver sous le ventre, mais sous le point où l'axe incliné
+    // du jet rencontrera le sol : on retire donc cette avance géométrique.
+    // La verticale maximale vaut environ 35° de la vitesse de piqué ; Arrax
+    // corrige plus vivement que Vhagar sans gagner de maniabilité latérale.
+    const descenteMax = Math.min(36, modele.pique * .58);
+    const penteFeu = modele.penteFeu * Math.PI / 180;
+    const avanceFeu = Math.min(modele.flamme * .72,
+      hautVoulue / Math.max(.2, Math.tan(penteFeu)));
+    const tempsSol = clamp((resteAuSol - avanceFeu) / Math.max(1, d.v) - 1.2,
+      1.25, 14);
+    const voulue = clamp((hautVoulue - d.z) / tempsSol, -descenteMax, -2);
+    d.vz += (voulue - d.vz) * Math.min(1, dt * 1.75);
     d.z = Math.max(22, d.z + d.vz * dt);
     d.pente = Math.atan2(d.vz, Math.max(1, d.v));
   }
@@ -1007,11 +1025,15 @@
         chaleur = Math.max(chaleur,
           AMBIANTE + (tCoeur - AMBIANTE) * attenuation);
       }
-      // x≈0,42 dans la loi de dégâts : l'impulsion de 25 ms suffit déjà à
-      // retirer environ 25 PV. On attend donc une vraie cible létale, pas un
-      // homme seulement visible dans la frange tiède.
+      // On attend une vraie cible létale, pas un homme seulement visible dans
+      // la frange tiède. Mais le seuil doit suivre le flux du modèle : 0,42
+      // était hors d'atteinte au sol pour le jet court d'Arrax (maximum ≈0,32
+      // à 22 m), ce qui interdisait mathématiquement tous ses Dracarys. La loi
+      // de dégâts inverse ici la dose nécessaire pour retirer 25 PV pendant
+      // un contact conservateur de 0,1 s.
       const xThermique = clamp((chaleur - 545) / (modele.noyau - 545), 0, 1);
-      if (xThermique < .42) continue;
+      const seuilLetal = Math.pow(25 / (modele.flux * .1), 1 / 1.15);
+      if (xThermique < seuilLetal) continue;
       vus.push({ h, p, valeur }); gain += valeur;
       x += p.x * valeur; y += p.y * valeur;
     }
@@ -1043,6 +1065,19 @@
     return meilleur;
   }
 
+  function capVersHommePique(h) {
+    if (!h || valeurCible(h) <= 0) return null;
+    const d = etat.dragon, p = localDepuisMonde(h);
+    // À la fin du piqué, viser la position présente revient à viser derrière
+    // un homme qui court. On ne prédit que jusqu'à 1,4 s : assez pour ses
+    // quelques mètres de fuite, jamais assez pour inventer sa prochaine
+    // décision ou transformer le dragon en tourelle.
+    const temps = clamp(dist(d, p) / Math.max(1, d.v), 0, 1.4);
+    const futur = { x:p.x + (h.vx || 0) * temps,
+                    y:p.y + (h.vy || 0) * temps };
+    return Math.atan2(futur.y - d.y, futur.x - d.x);
+  }
+
   function dracarys(dt) {
     const d = etat.dragon, c = etat.cible;
     const etaitBasseAllure = etat.basseAllure;
@@ -1052,6 +1087,7 @@
 
     const engagerPique = (message) => {
       etat.capPassage = etat.cibleCap;
+      etat.piqueHomme = null;
       etat.attaque = "pique"; etat.attaqueDepuis = etat.t;
       etat.altitudeEntree = d.z; etat.vitesseEntree = d.v;
       const ux = Math.cos(etat.capPassage), uy = Math.sin(etat.capPassage);
@@ -1144,13 +1180,32 @@
       const guide = meilleureOccasionPique(d.z < altitudeTirEffective * 2.8
         ? modele.opportuniteLargeur
         : modele.opportuniteLargeur * 1.9);
-      conduire(guide ? guide.cap : capPassage,
+      if (etat.piqueHomme && valeurCible(etat.piqueHomme) <= 0)
+        etat.piqueHomme = null;
+      // L'occasion reste libre tant que le dragon est haut. Dans les quatre
+      // dernières hauteurs de tir, choisir encore un autre fuyard à chaque
+      // pas faisait osciller le cap entre plusieurs bonnes solutions et les
+      // manquer toutes. On verrouille alors un corps réellement contenu dans
+      // le meilleur couloir et l'on termine ce passage sur lui.
+      if (!etat.piqueHomme && guide && d.z < altitudeTirEffective * 4.2) {
+        let meilleur = null, ecart = Infinity;
+        for (const q of guide.membres) {
+          const a = Math.abs(angle(Math.atan2(q.p.y - d.y, q.p.x - d.x) - guide.cap));
+          if (a < ecart) { ecart = a; meilleur = q.h; }
+        }
+        etat.piqueHomme = meilleur;
+      }
+      const capVerrouille = capVersHommePique(etat.piqueHomme);
+      conduire(capVerrouille ?? (guide ? guide.cap : capPassage),
                (d.z < altitudeTirEffective * 2.8 ? modele.banquePiqueBas
                  : modele.banquePiqueHaut) * Math.PI / 180, dt);
       // Le point bas demandé est sous l'altitude de tir : l'inertie verticale
       // amène ainsi Syrax à 34–40 m au premier passage, au lieu de la faire
       // tourner autour de la cible en attendant la fin d'une descente trop douce.
-      altitudePique(modele.altitudePique, dt);
+      const uxPassage = Math.cos(capPassage), uyPassage = Math.sin(capPassage);
+      const restePique = (futur.x - d.x) * uxPassage +
+        (futur.y - d.y) * uyPassage;
+      altitudePique(modele.altitudePique, restePique, dt);
       const perdue = Math.max(0, etat.altitudeEntree - d.z);
       const energetique = Math.min(modele.pique,
         Math.sqrt(etat.vitesseEntree ** 2 + 2 * G * 0.45 * perdue));
@@ -1181,7 +1236,13 @@
       } else {
         const ux = Math.cos(capPassage), uy = Math.sin(capPassage);
         const reste = (futur.x - d.x) * ux + (futur.y - d.y) * uy;
-        if (etat.t - etat.attaqueDepuis > 20 || reste < -185) {
+        // Une passe se juge dans l'espace, pas au même chronomètre pour Arrax
+        // et Vhagar. Le plafond arbitraire de 20 s faisait justement renoncer
+        // Vhagar à 61 m, environ trois dixièmes de seconde avant son plan de
+        // tir à 58 m. On ressource lorsque la ligne visée est réellement
+        // passée derrière, avec une marge proportionnelle à la portée du jet.
+        const depassement = Math.max(60, modele.opportunite * .75);
+        if (reste < -depassement) {
         // Un passage manqué ne téléporte pas le dragon pour le « rejouer » :
         // il ressource et construit simplement une nouvelle courbe.
           etat.attaque = "sortie"; etat.attaqueDepuis = etat.t;

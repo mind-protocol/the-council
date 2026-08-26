@@ -2277,6 +2277,55 @@ def verifier_registres_derives(e, r):
                    "docs/echiquier.md)".format(a, n))
 
 
+
+def verifier_rapporteurs(e, r):
+    """Le seul verificateur qui ne regarde pas l'etat : il regarde LES AUTRES.
+
+    « Le derive a derive » et « le producteur est mort » sont deux faits
+    differents, et le second est le seul invisible. Le 24 aout 2026,
+    `couverture.py` etait mort depuis des jours — un `re.search` sans bornes de
+    mot, un KeyError — et les quatre registres derives du plan avaient cesse
+    d'etre regeneres. La garde `verifier_registres_derives` faisait pourtant son
+    travail : elle signalait l'ecart de lignes. Mais elle le disait en
+    AVERTISSEMENT, au milieu de quatre-vingt-dix autres, et quand elle-meme
+    n'arrivait pas a recalculer elle le disait en NOTE, la severite la plus
+    basse du rapport. Un outil qui se tait ressemble exactement a un outil qui
+    n'a rien a dire.
+
+    D'ou cette garde-ci, et sa gravite : un ecart de lignes peut etre normal —
+    on vient d'ecrire dans un cahier sans avoir relance. UN PRODUCTEUR QUI N'A
+    PAS ABOUTI DEPUIS SA CADENCE NE L'EST JAMAIS. Le battement se pose a la fin
+    du chemin de succes (voir scripts/rapporteurs.py) ; un script qui plante ne
+    bat pas, et l'absence de battement est tout le mecanisme.
+
+    Les cadences sont en JOURS REELS et non en jours de jeu : ce sont des
+    cadences d'outillage, elles se comptent en temps de developpeur.
+    """
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import rapporteurs
+    except ImportError:
+        return
+    try:
+        lignes = rapporteurs.etat()
+    except Exception as mal:
+        r.dire("grave", "rapporteurs",
+               "le registre des battements est illisible : {} — plus personne ne "
+               "surveille les producteurs derives".format(mal))
+        return
+    for x in lignes:
+        if not x["muet"]:
+            continue
+        if x["age"] is None:
+            r.dire("grave", "rapporteur {}".format(x["qui"]),
+                   "N'A JAMAIS BATTU. {} — nul ne sait s'il tourne encore. "
+                   "`{}`".format(x["quoi"], x["commande"]))
+        else:
+            r.dire("grave", "rapporteur {}".format(x["qui"]),
+                   "MUET DEPUIS {:.0f} JOUR(S), cadence {} — {} n'est donc plus "
+                   "a jour, et rien d'autre ne le dit. `{}`"
+                   .format(x["age"], x["jours"], x["quoi"], x["commande"]))
+
 def verifier_etats_du_plan(e, r):
     """La colonne d'etat d'une action ne porte QU'UN MOT, pris dans six.
 
@@ -2413,6 +2462,7 @@ def verifier(e, en_json=False):
     verifier_pensees(e, r)
     verifier_books(e, r)
     verifier_registres_derives(e, r)
+    verifier_rapporteurs(e, r)
     verifier_etats_du_plan(e, r)
     verifier_boites(e, r)
     verifier_plis(e, r)

@@ -497,9 +497,11 @@
   }
 
   function visible(b, v) { return b.x1 >= v[0] && b.y1 >= v[1] && b.x0 <= v[0] + v[2] && b.y0 <= v[1] + v[3]; }
+  const ecranY = (y, k, oy) => oy + (vue[1] + vue[3] - y) * k;
   function tracerPolygone(b, k, ox, oy) {
     ctx.beginPath();
-    b.points.forEach((p, i) => ctx[i ? "lineTo" : "moveTo"](ox + (p.x - vue[0]) * k, oy + (p.y - vue[1]) * k));
+    b.points.forEach((p, i) => ctx[i ? "lineTo" : "moveTo"](
+      ox + (p.x - vue[0]) * k, ecranY(p.y, k, oy)));
     ctx.closePath();
   }
 
@@ -511,7 +513,7 @@
     const foyers = [];
     for (const b of actifs) {
       if (b.intensite <= .04 || !visible(b, vue)) continue;
-      const x = ox + (b.x - vue[0]) * k, y = oy + (b.y - vue[1]) * k;
+      const x = ox + (b.x - vue[0]) * k, y = ecranY(b.y, k, oy);
       if (x < -35 || y < -35 || x > L + 35 || y > H + 35) continue;
       foyers.push({ b, x, y });
     }
@@ -542,7 +544,7 @@
     etat.panachesVisibles = groupes.size;
     if (!groupes.size) return;
     const a = PARAMS.ventAngleDeg * Math.PI / 180;
-    const ux = Math.cos(a), uy = Math.sin(a), vx = -uy, vy = ux;
+    const ux = Math.cos(a), uy = -Math.sin(a), vx = -uy, vy = ux;
     ctx.save();
     ctx.filter = "blur(2.4px)";
     for (const q of groupes.values()) {
@@ -603,7 +605,7 @@
       // minimal signale alors le CENTRE du volume sans agrandir son emprise de
       // propagation. En s'approchant, il disparait au profit du vrai toit.
       if ((b.etat === "prise" || b.etat === "embrase") && k > .18) {
-        const x = ox + (b.x - vue[0]) * k, y = oy + (b.y - vue[1]) * k;
+        const x = ox + (b.x - vue[0]) * k, y = ecranY(b.y, k, oy);
         const r = clamp(Math.sqrt(b.aire) * k * .32, 2, 18) * b.intensite;
         ctx.beginPath(); ctx.arc(x, y, r, 0, TAU);
         const g = ctx.createRadialGradient(x, y, 0, x, y, Math.max(1, r));
@@ -617,8 +619,8 @@
     ctx.save(); ctx.setLineDash([5, 6]); ctx.lineWidth = 1;
     for (const q of traces) {
       const age = (etat.temps - q.t) / 240;
-      const x0 = ox + (q.x0 - vue[0]) * k, y0 = oy + (q.y0 - vue[1]) * k;
-      const x1 = ox + (q.x1 - vue[0]) * k, y1 = oy + (q.y1 - vue[1]) * k;
+      const x0 = ox + (q.x0 - vue[0]) * k, y0 = ecranY(q.y0, k, oy);
+      const x1 = ox + (q.x1 - vue[0]) * k, y1 = ecranY(q.y1, k, oy);
       if (Math.max(x0, x1) < 0 || Math.min(x0, x1) > L || Math.max(y0, y1) < 0 || Math.min(y0, y1) > H) continue;
       ctx.beginPath(); ctx.moveTo(x0, y0);
       ctx.quadraticCurveTo((x0 + x1) / 2, Math.min(y0, y1) - Math.hypot(x1 - x0, y1 - y0) * .12, x1, y1);

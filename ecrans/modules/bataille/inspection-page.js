@@ -152,8 +152,8 @@ function decrireIci(p) {
 
 function capturerZone(s) {
   const h = $("toile"), r = h.getBoundingClientRect(), k = etat.parMetre(r);
-  const ox = (r.width - etat.vue()[2] * k) / 2, oy = (r.height - etat.vue()[3] * k) / 2;
-  const tx = ox + (s.x - etat.vue()[0]) * k, ty = oy + (s.y - etat.vue()[1]) * k;
+  const rep = CarteProjection.repere(etat.vue(), r.width, r.height);
+  const [tx, ty] = CarteProjection.point(rep, s.x, s.y);
   const cw = Math.min(560, r.width), ch = Math.min(400, r.height);
   const cx = Math.max(0, Math.min(r.width - cw, tx - cw / 2));
   const cy = Math.max(0, Math.min(r.height - ch, ty - ch / 2));
@@ -226,8 +226,9 @@ function survolerScene(e) {
   if (e.target.closest && e.target.closest("#sbulle,#smark")) return true;
   installerLoupe();
   const h = $("toile"), r = h.getBoundingClientRect(), k = etat.parMetre(r);
-  const x = etat.vue()[0] + (e.clientX - r.left - (r.width - etat.vue()[2] * k) / 2) / k;
-  const y = etat.vue()[1] + (e.clientY - r.top - (r.height - etat.vue()[3] * k) / 2) / k;
+  const rep = CarteProjection.repere(etat.vue(), r.width, r.height);
+  const [x, y] = CarteProjection.depuisPixel(etat.vue(), rep,
+    e.clientX - r.left, e.clientY - r.top);
   const s = Bataille2d.sous(x, y, Math.max(1.5, 7 / k)), b = $("sbulle");
   if (!s || !s.debugId) {
     // On laisse le temps de franchir les 14 px jusqu'à la fiche. Une nouvelle

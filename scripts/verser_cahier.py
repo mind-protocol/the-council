@@ -25,6 +25,8 @@
 #     python scripts/verser_cahier.py --vraiment      # ecrit
 import argparse, glob, io, json, os, re, sys, tempfile, unicodedata
 
+import rapporteurs
+
 import bibliotheque
 
 # La console Windows est en cp1252 : un embleme ou un tiret cadratin dans le
@@ -354,6 +356,7 @@ def main():
         for (chemin_rap, rap) in traites:
             rap["_cahier_verse"] = True
             ecrire(chemin_rap, rap)
+        rapporteurs.battre("verser-cahier", u"%d changements" % len(poses))
         out.write(u"\n%d changement(s) ecrits dans etat/books.json\n" % len(poses))
         out.write(u"%d rapport(s) marques verses — ils ne repasseront plus.\n"
                   % len(traites))

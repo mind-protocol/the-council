@@ -4505,6 +4505,8 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 #cv-svg{width:100%;height:100%;display:block;cursor:grab;touch-action:none;
   user-select:none;-webkit-user-select:none;}
 #cv-svg text{user-select:none;-webkit-user-select:none;}
+#cv-svg .cv-monde text{transform-box:fill-box;transform-origin:center;
+  transform:scaleY(-1);}
 .cv-quartier,.cv-ici text{pointer-events:none;}
 #cv-svg.cv-tire{cursor:grabbing;}
 .cv-sol{fill:var(--cv-sol);}
@@ -4518,6 +4520,16 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 .cv-region-champ{fill:color-mix(in srgb,var(--cv-sol) 87%,var(--cv-lum));}
 .cv-region-bois{fill:color-mix(in srgb,var(--cv-sol) 70%,var(--cv-mur));}
 .cv-region-marais{fill:color-mix(in srgb,var(--cv-sol) 72%,var(--cv-eau));}
+.cv-region-culture{stroke:color-mix(in srgb,var(--cv-sol) 64%,var(--cv-mur));
+  stroke-width:calc(.32px * var(--mpp,1));opacity:.78;}
+.cv-culture-cereale{fill:color-mix(in srgb,var(--cv-sol) 66%,var(--cv-lum));}
+.cv-culture-pature{fill:color-mix(in srgb,var(--cv-sol) 80%,var(--cv-mur));}
+.cv-culture-verger{fill:color-mix(in srgb,var(--cv-sol) 54%,var(--cv-lum));}
+.cv-bois-exploites{fill:color-mix(in srgb,var(--cv-sol) 62%,var(--cv-mur));
+  stroke:color-mix(in srgb,var(--cv-sol) 47%,var(--cv-mur));
+  stroke-width:calc(.4px * var(--mpp,1));opacity:.72;}
+.cv-region-relief{fill:none;stroke:var(--cv-niveau);opacity:.72;
+  stroke-width:calc(.8px * var(--mpp,1));}
 .cv-region-arbres{fill:color-mix(in srgb,var(--cv-sol) 42%,var(--cv-mur));opacity:.48;}
 .cv-region-bourgs{fill:color-mix(in srgb,var(--cv-sol) 38%,var(--cv-mur));
   stroke:var(--cv-bati-trait);stroke-width:calc(.35px * var(--mpp,1));opacity:.78;}
@@ -4526,6 +4538,12 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
   stroke-width:max(9px,calc(2px * var(--mpp,1)));opacity:.42;}
 .cv-route-region{stroke:color-mix(in srgb,var(--cv-voie) 76%,var(--cv-artere));
   stroke-width:max(5.4px,calc(1.15px * var(--mpp,1)));opacity:.72;}
+.cv-chemin-region-bord,.cv-chemin-region{fill:none;stroke-linecap:round;
+  stroke-linejoin:round;}
+.cv-chemin-region-bord{stroke:color-mix(in srgb,var(--cv-sol) 62%,var(--cv-mur));
+  stroke-width:max(4.2px,calc(1px * var(--mpp,1)));opacity:.36;}
+.cv-chemin-region{stroke:color-mix(in srgb,var(--cv-sol) 54%,var(--cv-voie));
+  stroke-width:max(2.2px,calc(.55px * var(--mpp,1)));opacity:.68;}
 .cv-port-bassin{fill:color-mix(in srgb,var(--cv-eau) 88%,var(--cv-nuit));
   stroke:var(--cv-eau-trait);stroke-width:calc(1px * var(--mpp,1));}
 .cv-port-quai,.cv-port-appontement{fill:none;

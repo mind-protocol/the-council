@@ -126,8 +126,20 @@ window.Visage = (() => {
   // salle). Elle porte le nom et le titre — c'est ce que l'emblème d'angle a
   // chassé de sous le visage, et ce qu'une tache ne dit pas du tout.
   const FOIS = 4;
-  const COTE_CARTE = 168;          // px : la fiche d'une tache, qui n'a pas de
+  const COTE_CARTE = 240;          // px : la fiche d'une tache, qui n'a pas de
                                    // taille propre à multiplier
+  // Deux bornes, et elles servent des cas opposés. Un PLANCHER, parce que le
+  // multiplicateur seul laissait les petits médaillons de la salle (58px) à
+  // 232px, c'est-à-dire moins que le visage du fil au repos : on ne survole
+  // pas pour obtenir plus petit. Un PLAFOND, parce que le visage du fil fait
+  // maintenant 124px et que quatre fois cela sortirait de l'écran sur un
+  // portable — la fiche est un agrandissement, pas un rideau sur la page.
+  const PLANCHER = 320;
+  function borner(cote) {
+    const plafond = Math.round(
+      Math.min(window.innerWidth, window.innerHeight) * 0.56);
+    return Math.min(Math.max(cote, Math.min(PLANCHER, plafond)), plafond);
+  }
   let boite = null, cible = null;
 
   function fermer() {
@@ -140,7 +152,7 @@ window.Visage = (() => {
   function fiche(src) {
     if (src.classList.contains("visage")) {
       const r = src.getBoundingClientRect();
-      return { cote: Math.round(Math.max(r.width, r.height) * FOIS),
+      return { cote: borner(Math.round(Math.max(r.width, r.height) * FOIS)),
                role: src.style.getPropertyValue("--role"),
                dedans: src.innerHTML,
                nom: src.dataset.nom || "", titre: src.dataset.titre || "" };
@@ -151,7 +163,7 @@ window.Visage = (() => {
     const p = { id: id, nom: f.nom || src.dataset.nom || id,
                 titre: f.titre || "", portrait_svg: f.portrait_svg || "" };
     if (!p.portrait_svg) return null;   // sans visage, la fiche n'apprend rien
-    return { cote: COTE_CARTE, role: teinte(p),
+    return { cote: borner(COTE_CARTE), role: teinte(p),
              dedans: cadrer(p.portrait_svg) +
                (p.titre ? '<i class="emb-coin" aria-hidden="true">' +
                  embleme(p.titre) + "</i>" : ""),

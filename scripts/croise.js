@@ -88,6 +88,21 @@ const VU = {
   "banniere-relevee": "une bannière se relève au-dessus de la mêlée",
   "nouveau-chef":     "un homme prend la tête d'une troupe qui n'en avait plus",
   "escouade-reprise": "une troupe qui piétinait se remet en marche",
+  // LES DOUZE QUI N'ÉTAIENT PERÇUS PAR PERSONNE. Ils étaient émis par le four
+  // et absents de la table des portées : ils tombaient sur le défaut timide et
+  // ne se disaient nulle part. Depuis qu'ils ont une portée juste
+  // (`ecrans/modules/bataille/faits.js`), il leur faut une phrase — sans quoi
+  // le MJ lit « [porte-abimee] » et se demande ce qu'il doit en faire.
+  "porte-abimee":     "la porte de la ville porte de vieilles fentes, mal rebouchées",
+  "porte-ouverte":    "la porte de la ville s'ouvre toute seule, de l'intérieur",
+  "donjon-ouvert":    "les vantaux du Donjon Rouge s'écartent, et la garde s'y engouffre",
+  "declencheur-tombe":"une troupe qui attendait s'ébranle, sans que personne soit venu la chercher",
+  "initiative":       "un chef parle à ses hommes, et sa troupe change de cap",
+  "habitant":         "quelqu'un du quartier, sur son pas de porte, qui n'a pas l'air de rentrer",
+  "ordre-sans-personne": "un coureur s'arrête au milieu de la rue, cherche, et ne trouve personne",
+  "roi-averti":       "un homme du guet franchit la porte du Donjon Rouge en courant",
+  "messager-tombe":   "un homme qui courait vers la colline tombe et ne se relève pas",
+  "roi-tombe":        "une charrette verse au milieu de la presse, et la clameur change",
 };
 
 // CE QU'ON ENTEND N'A NI NOM NI AUTEUR — c'est la moitié du brouillard, et
@@ -109,6 +124,10 @@ const ENTENDU = {
   "assaut-au-donjon": "une rumeur d'hommes en nombre, du côté de la colline",
   "peur-gagne":       "des gens qui courent, et des volets qu'on ferme",
   "maison-brulee":    "un crépitement, et l'odeur",
+  "porte-ouverte":    "un battant lourd qu'on ouvre, et des pas qui s'y engouffrent",
+  "donjon-ouvert":    "des vantaux qu'on tire, et beaucoup de fer qui rentre quelque part",
+  "initiative":       "une voix brève, tout près, et des pieds qui se remettent en marche",
+  "roi-tombe":        "une clameur d'un autre genre, qui monte et ne retombe pas",
 };
 
 // LA TRACE SE DIT AU PRÉSENT, parce qu'elle est encore là quand on passe.
@@ -130,6 +149,14 @@ const TRACE = {
   // il revient, il a vu la nuit entière.
   "prend-les-armes":  "une porte ouverte sur une maison vide, et rien de volé",
   "barre-sa-porte":   "une porte barrée de l'intérieur, et quelqu'un derrière",
+  "porte-abimee":     "une porte fendue de vieille date, mal rebouchée",
+  "porte-ouverte":    "la porte de la ville grande ouverte, intacte, les barres posées à côté",
+  "donjon-ouvert":    "les vantaux du Donjon Rouge béants, et personne pour les tenir",
+  // MÊME GISEMENT QUE `prend-les-armes`, ET C'EST LE MEILLEUR : celui-ci a un
+  // NOM dans le sac, une adresse, et il n'est pas sorti. On peut aller frapper.
+  "habitant":         "une porte entrebâillée, et quelqu'un derrière qui a tout vu",
+  "messager-tombe":   "un homme sans armes, face contre terre, tourné vers la colline",
+  "roi-tombe":        "une charrette renversée, et ce qu'on a jeté dessus en hâte",
 };
 
 const HEURE = (m) => String(Math.floor(m / 60)).padStart(2, "0") + "h" +

@@ -720,6 +720,11 @@ window.Bataille2d = (() => {
   // Troisième collision de nom dans cette IIFE de six mille lignes après `corps`
   // et `semer`, et la seule qui se soit vue avant de tourner.
   let sousToit = null, sousEau = null;
+  // Une épreuve peut remplacer le sol de Port-Réal par un terrain abstrait.
+  // Ce n'est pas un passe-droit pour un scénario : tous les lecteurs du sol
+  // (pose, mouvement, vision et commandement) interrogent alors la même
+  // fonction. `rejouer()` l'efface avant de dresser la scène suivante.
+  let terrainEpreuve = null;
   let boucle = 0, marche = false, dernier = 0, reste = 0;
   let temps = 0;              // secondes écoulées de bataille
 
@@ -761,7 +766,8 @@ window.Bataille2d = (() => {
   // Donc : un tableau creux posé sur la cellule (`cel._peur[k]`), indexé comme
   // le binaire, et une liste plate pour ce que la simulation doit parcourir.
   let paniques = [];          // les enregistrements, à plat, pour la boucle
-  let compte = { a: 0, d: 0, morts: 0, blesses: 0, fuyards: 0, rallies: 0 };
+  let compte = { a: 0, d: 0, morts: 0, blesses: 0, fuyards: 0, rallies: 0,
+                 contreCharges: 0 };
 
   // --- les annales -----------------------------------------------------------
   // Une liste plate de faits, et un jeu de verrous pour que chacun ne s'écrive
@@ -974,11 +980,21 @@ window.Bataille2d = (() => {
   // Un point n'est franchissable que s'il est à la fois hors du bâti et hors
   // de l'eau. Une réponse positive exige les DEUX autorités : sans l'une des
   // deux, « libre » reste inconnu au lieu de devenir une permission implicite.
-  const solConnu = () => !!sousToit && !!sousEau;
-  const obstacleConnu = () => !!sousToit || !!sousEau;
-  const obstacleEn = (x, y) => !!((sousToit && sousToit(x, y)) ||
-                                   (sousEau && sousEau(x, y)));
+  const solConnu = () => !!terrainEpreuve || (!!sousToit && !!sousEau);
+  const obstacleConnu = () => !!terrainEpreuve || !!sousToit || !!sousEau;
+  const obstacleEn = (x, y) => terrainEpreuve
+    ? !!terrainEpreuve.obstacle(x, y)
+    : !!((sousToit && sousToit(x, y)) || (sousEau && sousEau(x, y)));
   const libreEn = (x, y) => !obstacleEn(x, y);
+
+  function reglerTerrainEpreuve(spec) {
+    if (spec == null) { terrainEpreuve = null; routesFormation.clear(); return null; }
+    if (typeof spec.obstacle !== "function")
+      throw new TypeError("terrain d'épreuve : obstacle(x,y) requis");
+    terrainEpreuve = { id: spec.id || "terrain-epreuve", obstacle: spec.obstacle };
+    routesFormation.clear();
+    return { id: terrainEpreuve.id };
+  }
 
   // ===========================================================================
   // LES MURS, LUS PAR LES HOMMES
@@ -3271,6 +3287,11 @@ window.Bataille2d = (() => {
   // MÊME calcul du parent. Elle ne doit pas être redemandée par chaque
   // vintaine quand celle-ci atteint le dernier nœud du graphe.
   function calculerRouteFormation(guide, d, clef) {
+    // Sur un terrain d'épreuve, la fonction d'obstacle est l'autorité entière.
+    // Un segment libre ne doit surtout pas retomber sur le graphe des rues de
+    // la ville cachée sous la scène.
+    if (terrainEpreuve && !segmentMasqueBloque(guide.x,guide.y,d.x,d.y,false))
+      return traceLocale([[guide.x,guide.y],[d.x,d.y]]);
     let tr=J.chemin(voirie,[guide.x,guide.y],[d.x,d.y],clef)||null;
     const p=tr&&tr.pts&&tr.pts.length ? tr.pts[tr.pts.length-1]
       : [guide.x,guide.y];
@@ -4287,6 +4308,7 @@ window.Bataille2d = (() => {
       : 0;
     const contreCharge = arme === ARMES.pique && o.montureCombat &&
       (h.vit || 0) < .75 && (o.vit || 0) > 2.2 && versPiquier > .45;
+    if (contreCharge) compte.contreCharges++;
     o.pv -= cloche(arme.degat[0], arme.degat[1])
           * (R() < PERCE ? 1 : ARRETE)
           * (1 + PARADE * trop)
@@ -7567,9 +7589,7 @@ window.Bataille2d = (() => {
   function repere() {
     const vue = vueDe && vueDe();
     if (!vue || !toile || !toile.width) return null;
-    const k = Math.min(toile.width / vue[2], toile.height / vue[3]);
-    return { k, ox: (toile.width - vue[2] * k) / 2 - vue[0] * k,
-             oy: (toile.height - vue[3] * k) / 2 - vue[1] * k };
+    return CarteProjection.repere(vue, toile.width, toile.height);
   }
 
   function ajuster() {
@@ -7785,7 +7805,7 @@ window.Bataille2d = (() => {
     // les voir tourner à des vitesses différentes est précisément ce qu'on
     // vient regarder.
     for (const v of verrous) {
-      const x = rep.ox + v.x * rep.k, y = rep.oy + v.y * rep.k;
+      const x = rep.ox + v.x * rep.k, y = rep.oy + v.y * rep.ky;
       const part = v.pv / v.max;
       const R1 = Math.max(7, rep.k * 4);
       // ELLE BAT QUAND ON LA TRAVAILLE, et c'est tout le sujet de l'heure
@@ -7858,7 +7878,7 @@ window.Bataille2d = (() => {
       // elle qui trahit le saut le plus visiblement.
       const qx = h.ex - h.sx1, qy = h.ey - h.sy1;
       if (qx * qx + qy * qy > BOND_SILLAGE * BOND_SILLAGE) continue;
-      const x = rep.ox + h.ex * rep.k, y = rep.oy + h.ey * rep.k;
+      const x = rep.ox + h.ex * rep.k, y = rep.oy + h.ey * rep.ky;
       if (x < -20 || y < -20 || x > L + 12 || y > H + 12) continue;
       // La déroute se lit dans sa propre couleur : c'est le seul mouvement du
       // plan qu'on veut reconnaître SANS avoir à suivre le sens du trait.
@@ -7870,7 +7890,7 @@ window.Bataille2d = (() => {
       ctx.lineWidth = Math.max(1, r * .7);
       ctx.beginPath();
       ctx.moveTo(x, y);
-      ctx.lineTo(rep.ox + h.sx1 * rep.k, rep.oy + h.sy1 * rep.k);
+      ctx.lineTo(rep.ox + h.sx1 * rep.k, rep.oy + h.sy1 * rep.ky);
       ctx.stroke();
       // La seconde queue, deux fois plus pâle : elle ne se voit pas seule, elle
       // ne sert qu'à courber le trait — et une courbe dit d'où l'on vient là où
@@ -7878,8 +7898,8 @@ window.Bataille2d = (() => {
       if (h.sx2 !== undefined) {
         ctx.globalAlpha = .14;
         ctx.beginPath();
-        ctx.moveTo(rep.ox + h.sx1 * rep.k, rep.oy + h.sy1 * rep.k);
-        ctx.lineTo(rep.ox + h.sx2 * rep.k, rep.oy + h.sy2 * rep.k);
+        ctx.moveTo(rep.ox + h.sx1 * rep.k, rep.oy + h.sy1 * rep.ky);
+        ctx.lineTo(rep.ox + h.sx2 * rep.k, rep.oy + h.sy2 * rep.ky);
         ctx.stroke();
       }
     }
@@ -7894,7 +7914,7 @@ window.Bataille2d = (() => {
     for (const h of hommes) {
       if (h.corps && h.etat !== "mort" && h.etat !== "blesse")
         debout.set(h.corps, (debout.get(h.corps) || 0) + 1);
-      const x = rep.ox + h.ex * rep.k, y = rep.oy + h.ey * rep.k;
+      const x = rep.ox + h.ex * rep.k, y = rep.oy + h.ey * rep.ky;
       if (x < -8 || y < -8 || x > L || y > H) continue;
       if (h.etat === "mort") {
         // IL SE FOND DANS LE SOL, EN DEUX MINUTES. Le mort était un carré gris
@@ -7939,7 +7959,7 @@ window.Bataille2d = (() => {
       // La monture doit se lire avant même le survol. Ce n'est pas une icône :
       // l'ovale donne aussi son orientation et l'encombrement supplémentaire.
       if (h.montureCombat && r > 1.2) {
-        ctx.save(); ctx.translate(x, y); ctx.rotate(Math.atan2(h.fy || 0, h.fx || 1));
+        ctx.save(); ctx.translate(x, y); ctx.rotate(-Math.atan2(h.fy || 0, h.fx || 1));
         ctx.strokeStyle = "#d1b06b"; ctx.lineWidth = Math.max(1, dpr);
         ctx.globalAlpha *= .8;
         ctx.beginPath(); ctx.ellipse(0, 0, r * 1.75, r * 1.15, 0, 0, 6.2832); ctx.stroke();
@@ -8038,8 +8058,8 @@ window.Bataille2d = (() => {
 
   function peindreFlecheCarte(rep, dpr, a, b, style) {
     if (!a || !b || !a.position || !b.position) return;
-    const ax=rep.ox+a.position.x*rep.k, ay=rep.oy+a.position.y*rep.k;
-    const bx=rep.ox+b.position.x*rep.k, by=rep.oy+b.position.y*rep.k;
+    const ax=rep.ox+a.position.x*rep.k, ay=rep.oy+a.position.y*rep.ky;
+    const bx=rep.ox+b.position.x*rep.k, by=rep.oy+b.position.y*rep.ky;
     const dx=bx-ax, dy=by-ay, d=Math.hypot(dx,dy);
     if (d < 4) return;
     const ux=dx/d, uy=dy/d, pointe=Math.max(5*dpr, Math.min(11*dpr, d*.14));
@@ -8060,7 +8080,7 @@ window.Bataille2d = (() => {
     const carte=carteCommandant(carteCommandantId);
     if (!carte) { carteCommandantId=null; return; }
     const champ=carte.champ, noeuds=new Map(carte.noeuds.map((n)=>[n.id,n]));
-    const sx=(x)=>rep.ox+x*rep.k, sy=(y)=>rep.oy+y*rep.k;
+    const sx=(x)=>rep.ox+x*rep.k, sy=(y)=>rep.oy+y*rep.ky;
     ctx.save(); ctx.lineJoin="round"; ctx.lineCap="round";
 
     // Le polygone clair est ce que cet homme peut actuellement inspecter. Les
@@ -8186,8 +8206,8 @@ window.Bataille2d = (() => {
     ctx.lineWidth = Math.max(1, 1.2 * dpr);
     ctx.setLineDash([4 * dpr, 4 * dpr]);
     ctx.beginPath();
-    ctx.moveTo(rep.ox + ax * rep.k, rep.oy + ay * rep.k);
-    ctx.lineTo(rep.ox + bx * rep.k, rep.oy + by * rep.k);
+    ctx.moveTo(rep.ox + ax * rep.k, rep.oy + ay * rep.ky);
+    ctx.lineTo(rep.ox + bx * rep.k, rep.oy + by * rep.ky);
     ctx.stroke();
     ctx.restore();
   }
@@ -8204,7 +8224,7 @@ window.Bataille2d = (() => {
     for (const a of ailes) {
       const b = a.banniere;
       if (!b) continue;
-      const x = rep.ox + b.x * rep.k, y = rep.oy + b.y * rep.k;
+      const x = rep.ox + b.x * rep.k, y = rep.oy + b.y * rep.ky;
       if (x < -12 || y < -12 || x > L || y > H) continue;
       const debout_ = b.debout;
       ctx.globalAlpha = debout_ ? .95 : .38;
@@ -8338,7 +8358,7 @@ window.Bataille2d = (() => {
       const chef = guideDe(u);
       if (!chef || !u.ordre) continue;
       if (!ordreEnTrainDEtreDit(u)) continue;
-      const x = rep.ox + chef.ex * rep.k, y = rep.oy + chef.ey * rep.k;
+      const x = rep.ox + chef.ex * rep.k, y = rep.oy + chef.ey * rep.ky;
       if (x < -30 || y < -30 || x > L + 30 || y > H + 30) continue;
       candidats.push({ u, chef, x, y });
     }
@@ -8474,7 +8494,7 @@ window.Bataille2d = (() => {
     ctx.textBaseline = "middle";
 
     const trace = (p) => {
-      const x = rep.ox + p.x * rep.k, y = rep.oy + p.y * rep.k;
+      const x = rep.ox + p.x * rep.k, y = rep.oy + p.y * rep.ky;
       if (x < -60 || y < -30 || x > L + 60 || y > H + 30) return;
       const g = RANGS[p.rang] || RANGS.figure;
       const roi = p.rang === "roi";
@@ -8696,6 +8716,7 @@ window.Bataille2d = (() => {
     // Sans effectif, c'est l'ÉCHELLE qui commande, et non plus trois cents
     // hommes en dur : la seule question qu'on se pose désormais est « à quelle
     // fraction de l'armée regarde-t-on ? ».
+    terrainEpreuve = null;
     dresser(nomPorte || "La porte de la Gadoue", n);
     // On rend d'abord tout le monde à sa journée : les tableaux de peur vivent
     // sur les cellules, qui, elles, survivent à la bataille.
@@ -8705,6 +8726,7 @@ window.Bataille2d = (() => {
     enArmes = new Map();
     tisserReseau();
     compte.morts = 0; compte.blesses = 0; compte.fuyards = 0; compte.rallies = 0;
+    compte.contreCharges = 0;
     // (Les annales sont remises à zéro par `dresser`, AVANT qu'il ne pose les
     // corps. Elles l'étaient ici, après lui — donc tout ce que la mise en place
     // écrivait était effacé dans la foulée. C'est resté invisible tant que
@@ -8718,7 +8740,7 @@ window.Bataille2d = (() => {
   // convoquée. Cet état est volontairement plus fort que « pause » : il ne
   // garde ni hommes, ni unités, ni ordre de bataille caché sous le canvas.
   function vider() {
-    hommes=[]; prochainHommeDebug=0;
+    hommes=[]; prochainHommeDebug=0; terrainEpreuve=null;
     escouades=[]; formations=[]; routesFormation=new Map();
     deploiements=new Map(); carteCommandantId=null;
     ratissages=new Map(); prochainRatissage=0;
@@ -8731,7 +8753,7 @@ window.Bataille2d = (() => {
     incendiesSignales.clear(); prochainePerceptionIncendie=-Infinity;
     enArmes=new Map(); deboutAvant.clear(); deboutQuand.clear(); surligne=null;
     compte.a=0; compte.d=0; compte.morts=0; compte.blesses=0;
-    compte.fuyards=0; compte.rallies=0;
+    compte.fuyards=0; compte.rallies=0; compte.contreCharges=0;
     if (ctx && toile) ctx.clearRect(0,0,toile.width,toile.height);
     if (window.Foule2d) Foule2d.salir();
     montre();
@@ -8814,11 +8836,32 @@ window.Bataille2d = (() => {
       const t = await r.json();
       const eau = t.eau, nx = +t.nx, ny = +t.ny, res = +t.res_m;
       if (!Array.isArray(eau) || eau.length !== ny || nx < 2 || ny < 2 || !(res > 0)) return;
+      const region = plan && plan.region;
+      const bornes = region && region.bornes;
+      const polygones = region && Array.isArray(region.eau_polygones)
+        ? region.eau_polygones : [];
+      const dansPolygone = (x, y, poly) => {
+        let dedans = false;
+        for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+          const a = poly[i], b = poly[j];
+          if (((a[1] > y) !== (b[1] > y)) &&
+              x < (b[0] - a[0]) * (y - a[1]) / (b[1] - a[1]) + a[0])
+            dedans = !dedans;
+        }
+        return dedans;
+      };
+      const eauRegionale = (x, y) => {
+        if (!bornes || bornes.length < 4 || x < bornes[0] || y < bornes[1] ||
+            x > bornes[2] || y > bornes[3]) return true;
+        return polygones.some((p) => p.length > 2 && dansPolygone(x, y, p));
+      };
       sousEau = (x, y) => {
         const fx = x / res, fy = y / res;
-        // Le fichier est l'emprise du monde simulé. Au-delà, on ne transforme
-        // pas l'absence de relief en terrain sec.
-        if (fx < 0 || fy < 0 || fx > nx - 1 || fy > ny - 1) return true;
+        // Le raster de dix mètres garde l'autorité dans le cœur urbain. Au
+        // dehors, la couronne régionale prend le relais avec les polygones qui
+        // ont aussi produit le remplissage SVG visible.
+        if (fx < 0 || fy < 0 || fx > nx - 1 || fy > ny - 1)
+          return eauRegionale(x, y);
         const i = Math.min(nx - 2, Math.floor(fx));
         const j = Math.min(ny - 2, Math.floor(fy));
         const tx = fx - i, ty = fy - j;
@@ -10489,7 +10532,8 @@ window.Bataille2d = (() => {
                 ouvrir: +conseil.ouvrir.toFixed(1),
                 anneau: anneauOuvert ? "ouvert" : "tenu" },
       assaut: compte.a, garde: compte.d, morts: compte.morts,
-      blesses: compte.blesses, fuyards: compte.fuyards, etats: par,
+      blesses: compte.blesses, fuyards: compte.fuyards,
+      contreCharges: compte.contreCharges, etats: par,
       dynamique,
       faits: annales.length,
       // LE SAC, EN QUATRE CHIFFRES. C'est par eux qu'on le retiendra : combien
@@ -11190,7 +11234,7 @@ window.Bataille2d = (() => {
 
   return { poser, preparer, recadrer, arreter, basculer, rejouer, vider, derange,
            etat, pas, peur, troupe, chemins, unites, ordonnerFormation,
-           equiperUnite,
+           equiperUnite, terrainEpreuve: reglerTerrainEpreuve,
            ordonnerRassemblement, ordonnerDeploiement, deplacerDeploiement,
            ordonnerDoctrineDeploiement,
            ordonnerRatissage, rapportsRatissage, rapportsCommandement, batiments,

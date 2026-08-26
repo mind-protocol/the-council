@@ -168,9 +168,7 @@ window.Foule2d = (() => {
   function repere() {
     const vue = vueDe && vueDe();
     if (!vue || !toile || !toile.width) return null;
-    const k = Math.min(toile.width / vue[2], toile.height / vue[3]);
-    return { k, ox: (toile.width - vue[2] * k) / 2 - vue[0] * k,
-             oy: (toile.height - vue[3] * k) / 2 - vue[1] * k };
+    return CarteProjection.repere(vue, toile.width, toile.height);
   }
 
   // ---- ce qu'on charge -----------------------------------------------------
@@ -532,7 +530,7 @@ window.Foule2d = (() => {
         // le fait de marcher.
         const ciel = aCiel(P);
         if (ciel) degager(P);
-        const x = rep.ox + P.x * rep.k, y = rep.oy + P.y * rep.k;
+        const x = rep.ox + P.x * rep.k, y = rep.oy + P.y * rep.ky;
         if (x < -8 || y < -8 || x > L + 8 || y > H + 8) continue;
         t.n++;
         if (t.n >= MAX_ECRAN) {
@@ -640,7 +638,7 @@ window.Foule2d = (() => {
       ctx.beginPath();
       for (let i = 0; i < pts.length; i += 4) {
         const x = rep.ox + (pts[i] + pts[i + 2] * dt) * rep.k,
-              y = rep.oy + (pts[i + 1] + pts[i + 3] * dt) * rep.k;
+              y = rep.oy + (pts[i + 1] + pts[i + 3] * dt) * rep.ky;
         if (x < -8 || y < -8 || x > L || y > H) continue;
         ctx.moveTo(x + ray, y);
         ctx.arc(x, y, ray, 0, 6.2832);

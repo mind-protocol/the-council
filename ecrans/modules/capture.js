@@ -143,13 +143,9 @@ window.Capture = (() => {
 
   // Le même repère que `foule2d` : `preserveAspectRatio="xMidYMid meet"` centre
   // le cadrage et laisse des marges. Reproduit ici en pixels CSS.
-  function repere(svg, boite) {
-    const vb = (svg.getAttribute("viewBox") || "").split(/[ ,]+/).map(Number);
-    if (vb.length !== 4 || !boite.width) return null;
-    const k = Math.min(boite.width / vb[2], boite.height / vb[3]);
-    return { k, vb,
-             ox: (boite.width - vb[2] * k) / 2 - vb[0] * k,
-             oy: (boite.height - vb[3] * k) / 2 - vb[1] * k };
+  function repere(vue, boite) {
+    if (!vue || vue.length !== 4 || !boite.width) return null;
+    return CarteProjection.repere(vue, boite.width, boite.height);
   }
 
   // ---- composer ------------------------------------------------------------
@@ -166,7 +162,8 @@ window.Capture = (() => {
     // boucle : tant qu'on ne lui rend pas la main, le cadrage de photographie
     // n'existe que dans le document et jamais à l'écran. Une seule promesse
     // glissée au milieu, et le joueur voit la carte sauter.
-    const avant = (svg.getAttribute("viewBox") || "").split(/[ ,]+/).map(Number);
+    const avant = window.CarteVille && CarteVille.vue ? CarteVille.vue() : null;
+    if (!avant) throw new Error("la carte ne publie pas son cadrage");
     const moi = joueur(svg);
     const demande = o.centre && isFinite(+o.centre.x) && isFinite(+o.centre.y)
       ? { x: +o.centre.x, y: +o.centre.y, id: o.centre.id || null,
@@ -215,7 +212,7 @@ window.Capture = (() => {
     if (vise) CarteVille.viser(avant);
     // ---- fin du tour synchrone --------------------------------------------
 
-    const rep = repere(clone, boite);
+    const rep = repere(vise || avant, boite);
     if (!rep) throw new Error("le plan n'a pas de cadrage");
     clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
     clone.setAttribute("width", Math.round(boite.width));
@@ -253,7 +250,7 @@ window.Capture = (() => {
     // mètres contenant cent points oblige à retrouver l'homme une deuxième
     // fois. Son rayon est en pixels : constant quelle que soit l'approche.
     if (demande) {
-      const mx = rep.ox + demande.x * rep.k, my = rep.oy + demande.y * rep.k;
+      const [mx, my] = CarteProjection.point(rep, demande.x, demande.y);
       ctx.save();
       ctx.strokeStyle = "#ff7a3d"; ctx.fillStyle = "rgba(255,122,61,.14)";
       ctx.lineWidth = 3;

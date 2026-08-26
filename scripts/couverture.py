@@ -17,6 +17,8 @@
 #     python scripts/couverture.py --verifier   dit ce qui bougerait, n'ecrit rien
 import io, json, os, re, sys, unicodedata
 
+import rapporteurs
+
 import bibliotheque
 
 # La console Windows est en cp1252 : une fleche ou un embleme dans un
@@ -1027,6 +1029,7 @@ if __name__ == "__main__":
         if len(pend_ap) > len(pend_av):
             sys.stdout.write(u"‼ LES PENDANTES ONT MONTE — relire la sauvegarde.\n")
             sys.exit(1)
+        rapporteurs.battre("couverture-registres", u"4 registres derives")
         sys.stdout.write(u"4 registre(s) derive(s) dans etat/books.json\n")
         sys.exit(0)
 
@@ -1042,4 +1045,5 @@ if __name__ == "__main__":
     if verif:
         sys.stdout.write(u"--verifier : rien n'a ete ecrit.\n")
     elif verser(session):
+        rapporteurs.battre("couverture", u"%d couvertures" % len(affaires))
         sys.stdout.write(u"%d couverture(s) refaite(s) dans etat/books.json\n" % len(affaires))

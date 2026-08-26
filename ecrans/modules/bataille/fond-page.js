@@ -67,14 +67,16 @@ function cuireSvgVille() {
     "aria-label":"Plan de Port-Réal",
   });
   h.insertBefore(svgVille, $("fond"));
+  const monde = elementSvg("g", { transform:CarteProjection.transformSvg });
+  svgVille.appendChild(monde);
   const [x0, y0, x1, y1] = plan.bornes;
-  svgVille.appendChild(elementSvg("rect", {
+  monde.appendChild(elementSvg("rect", {
     x:x0, y:y0, width:x1 - x0, height:y1 - y0, fill:teinte.sol,
   }));
   const region = plan.region || null;
   let terreClip = null;
   if (region && region.eau) {
-    const terrains = elementSvg("g", { opacity:.54 }); svgVille.appendChild(terrains);
+    const terrains = elementSvg("g", { opacity:.54 }); monde.appendChild(terrains);
     const couleurs = {
       champ:THEME.melanger(teinte.sol, teinte.lum, 13),
       bois:THEME.melanger(teinte.sol, teinte.mur, 30),
@@ -83,20 +85,34 @@ function cuireSvgVille() {
     for (const t of region.terrains || [])
       cheminSvg(terrains, t.d, { fill:couleurs[t.genre] || teinte.solIntra,
         stroke:THEME.melanger(teinte.sol, teinte.mur, 28), "stroke-width":2 });
+    const cultures = elementSvg("g", { opacity:.79 }); monde.appendChild(cultures);
+    const couleursCulture = {
+      cereale:THEME.melanger(teinte.sol, teinte.lum, 34),
+      pature:THEME.melanger(teinte.sol, teinte.mur, 20),
+      verger:THEME.melanger(teinte.sol, teinte.lum, 46),
+    };
+    for (const p of region.cultures || [])
+      cheminSvg(cultures, p.d, { fill:couleursCulture[p.genre] || teinte.solIntra,
+        stroke:THEME.melanger(teinte.sol, teinte.mur, 36), "stroke-width":1.2 });
+    cheminSvg(cultures, region.bois_exploites, {
+      fill:THEME.melanger(teinte.sol, teinte.mur, 38),
+      stroke:THEME.melanger(teinte.sol, teinte.mur, 53), "stroke-width":1.4,
+      opacity:.72,
+    });
     cheminSvg(terrains, region.arbres, {
       fill:THEME.melanger(teinte.sol, teinte.mur, 52), stroke:"none", opacity:.66,
     });
-    cheminSvg(svgVille, region.eau, {
+    cheminSvg(monde, region.eau, {
       fill:teinte.eau, stroke:teinte.eauTrait, "stroke-linejoin":"round",
     });
     const defs = elementSvg("defs"), clip = elementSvg("clipPath", { id:"sfond-terre" });
     const d = "M" + x0 + " " + y0 + "H" + x1 + "V" + y1 + "H" + x0 +
       "Z" + region.eau;
     clip.appendChild(elementSvg("path", { d, "fill-rule":"evenodd", "clip-rule":"evenodd" }));
-    defs.appendChild(clip); svgVille.appendChild(defs); terreClip = "url(#sfond-terre)";
+    defs.appendChild(clip); monde.appendChild(defs); terreClip = "url(#sfond-terre)";
   }
-  cheminSvg(svgVille, THEME.enceinte(plan), { fill:teinte.solIntra });
-  const eau = cheminSvg(svgVille, plan.cote, {
+  cheminSvg(monde, THEME.enceinte(plan), { fill:teinte.solIntra });
+  const eau = cheminSvg(monde, plan.cote, {
     // Le contour cuit est une ISOLIGNE ouverte. Quand la région fournit déjà
     // un polygone d'eau fermé, le remplir ferait fermer cette ligne par une
     // diagonale à travers Port-Réal. Il ne reste alors que le trait détaillé.
@@ -105,14 +121,31 @@ function cuireSvgVille() {
   });
   if (eau) traitsSvg.push([eau, 0, 2]);
 
-  const niveaux = elementSvg("g"); svgVille.appendChild(niveaux);
+  const relief = elementSvg("g", terreClip ? { "clip-path":terreClip } : {});
+  monde.appendChild(relief);
+  for (const n of (region && region.relief) || []) {
+    const q = cheminSvg(relief, n.d, { fill:"none", stroke:teinte.niveau,
+      opacity:.72 });
+    if (q) traitsSvg.push([q, 0, .8]);
+  }
+  const niveaux = elementSvg("g"); monde.appendChild(niveaux);
   for (const n of plan.niveaux || []) {
     const q = cheminSvg(niveaux, n.d, { fill:"none", stroke:teinte.niveau });
     if (q) traitsSvg.push([q, 0, 1.1]);
   }
 
   const routesRegion = elementSvg("g", terreClip ? { "clip-path":terreClip } : {});
-  svgVille.appendChild(routesRegion);
+  monde.appendChild(routesRegion);
+  for (const c of (region && region.chemins) || []) {
+    const bord = cheminSvg(routesRegion, c.d, { fill:"none",
+      stroke:THEME.melanger(teinte.sol, teinte.mur, 38), opacity:.36,
+      "stroke-linecap":"round", "stroke-linejoin":"round" });
+    const q = cheminSvg(routesRegion, c.d, { fill:"none",
+      stroke:THEME.melanger(teinte.sol, teinte.voie, 46), opacity:.68,
+      "stroke-linecap":"round", "stroke-linejoin":"round" });
+    if (bord) traitsSvg.push([bord, 4.2, 1]);
+    if (q) traitsSvg.push([q, 2.2, .55]);
+  }
   for (const r of (region && region.routes) || []) {
     const bord = cheminSvg(routesRegion, r.d, { fill:"none",
       stroke:THEME.melanger(teinte.sol, teinte.mur, 48), opacity:.42,
@@ -126,14 +159,14 @@ function cuireSvgVille() {
 
   if (region && region.bourgs) {
     const bourgs = elementSvg("g", terreClip ? { "clip-path":terreClip } : {});
-    svgVille.appendChild(bourgs);
+    monde.appendChild(bourgs);
     cheminSvg(bourgs, region.bourgs, {
       fill:THEME.melanger(teinte.sol, teinte.mur, 62), stroke:teinte.batiTrait,
       "stroke-width":.7, "stroke-linejoin":"round", opacity:.78,
     });
   }
 
-  const voies = elementSvg("g"); svgVille.appendChild(voies);
+  const voies = elementSvg("g"); monde.appendChild(voies);
   for (const usage of Object.keys(VILLE_VOIES)) {
     const [largeur, minimum, alpha] = VILLE_VOIES[usage];
     const q = cheminSvg(voies, (plan.voies || {})[usage], {
@@ -148,7 +181,7 @@ function cuireSvgVille() {
   }
 
   if (region && region.port) {
-    const port = elementSvg("g"); svgVille.appendChild(port);
+    const port = elementSvg("g"); monde.appendChild(port);
     const pierreQuai = THEME.melanger(teinte.quai, teinte.mur, 68);
     for (const b of region.port.bassins || [])
       cheminSvg(port, b.d, { fill:THEME.melanger(teinte.eau, teinte.nuit, 12),
@@ -165,7 +198,7 @@ function cuireSvgVille() {
     }
   }
 
-  const bati = elementSvg("g"); svgVille.appendChild(bati);
+  const bati = elementSvg("g"); monde.appendChild(bati);
   for (const usage of Object.keys(plan.types || {})) {
     if (!(plan.bati || {})[usage]) continue;
     const type = plan.types[usage] || {}, couleur = THEME.couleurUsage(plan, usage, mode);
@@ -177,7 +210,7 @@ function cuireSvgVille() {
     batiSvg.push(q);
   }
 
-  const rempart = elementSvg("g"); svgVille.appendChild(rempart);
+  const rempart = elementSvg("g"); monde.appendChild(rempart);
   const courtine = cheminSvg(rempart, (plan.rempart || {}).courtine, {
     fill:"none", stroke:teinte.mur, "stroke-linecap":"round", "stroke-linejoin":"round",
   });
@@ -196,7 +229,7 @@ function cuireSvgVille() {
 function cadrerSvgVille(r) {
   cuireSvgVille();
   if (!svgVille) return;
-  svgVille.setAttribute("viewBox", etat.vue().join(" "));
+  svgVille.setAttribute("viewBox", CarteProjection.vue(etat.vue()).join(" "));
   const mpp = etat.vue()[2] / Math.max(1, r.width);
   for (const [q, metres, pixels] of traitsSvg) {
     const largeur = Math.max(metres, pixels * mpp);
@@ -250,6 +283,21 @@ function fond() {
   const ctx = c.getContext("2d");
   const teinte = THEME.palette();
   ctx.clearRect(0, 0, L, H);
+  if (h.classList.contains("champ-ouvert")) {
+    // Une matière très légère suffit à dire « sol » sans réintroduire des
+    // obstacles graphiques que les hommes, eux, ne rencontreraient pas.
+    ctx.fillStyle = "#191b13";
+    ctx.fillRect(0, 0, L, H);
+    ctx.save();
+    ctx.strokeStyle = "rgba(170,153,104,.055)";
+    ctx.lineWidth = Math.max(1, dpr * .65);
+    const pas = Math.max(24, Math.round(42 * dpr));
+    for (let y = pas / 2; y < H; y += pas) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(L, y + L * .018); ctx.stroke();
+    }
+    ctx.restore();
+    return;
+  }
   cadrerSvgVille(r);
 
   // Le même centrage que le moteur, sinon le bâti glisse sous les hommes.
@@ -263,7 +311,7 @@ function fond() {
     const hc = hors.getContext("2d"), img = hc.createImageData(nx, ny), d = img.data;
     const mur = THEME.rgb(teinte.repere);
     for (let j = 0; j < ny; j++) {
-      const y = etat.vue()[1] + (j + 0.5) * pas;
+      const y = etat.vue()[1] + etat.vue()[3] - (j + 0.5) * pas;
       for (let i = 0; i < nx; i++) {
         const l = Bataille2d.libre(etat.vue()[0] + (i + 0.5) * pas, y);
         if (l === null) continue;                     // masque absent : on n'invente pas
@@ -289,8 +337,8 @@ function fond() {
 function dessinerToponymie(ctx, L, H, k, dpr) {
   if (!etat.toponymie() || !$('stoponymes').checked || !etat.vue()) return;
   const teinte = THEME.palette();
-  const ox = (L - etat.vue()[2] * k) / 2, oy = (H - etat.vue()[3] * k) / 2;
-  const ecran = (x, y) => [ox + (x - etat.vue()[0]) * k, oy + (y - etat.vue()[1]) * k];
+  const rep = CarteProjection.repere(etat.vue(), L, H);
+  const ecran = (x, y) => CarteProjection.point(rep, x, y);
   const dedans = (p, marge = 80 * dpr) =>
     p[0] >= -marge && p[1] >= -marge && p[0] <= L + marge && p[1] <= H + marge;
   const mpp = dpr / k;                         // mètres par pixel CSS
@@ -304,7 +352,7 @@ function dessinerToponymie(ctx, L, H, k, dpr) {
     // routes d'approche sont déjà lisibles par leur tracé et leur destination;
     // la toponymie fine revient dès que la ville reprend la moitié du cadre.
     if (!dedans(p) || mpp > 7 || (mpp > 2.2 && (a.importance || 1) < 3)) continue;
-    ctx.save(); ctx.translate(p[0], p[1]); ctx.rotate((a.angle || 0) * Math.PI / 180);
+    ctx.save(); ctx.translate(p[0], p[1]); ctx.rotate(-(a.angle || 0) * Math.PI / 180);
     ctx.font = ((a.importance || 1) >= 3 ? 12 : 10.5) * dpr +
       "px Georgia,serif";
     ctx.globalAlpha = (a.importance || 1) >= 3 ? 1 : .72;

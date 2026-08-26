@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Architecture de la bataille</title>
+<link rel="stylesheet" href="/modules/bataille/architecture-page.css?v=20260825-7">
+</head>
+<body>
+<header id="entete">
+  <div>
+    <p class="surtitre" id="surtitrePage">Moteur actuel · inventaire adressable</p>
+    <h1>Architecture de la bataille</h1>
+    <p class="intro" id="introPage">Chaque nœud est une feature qui existe dans le code. Sa couleur dit à quel niveau elle vit ; son œil dit comment elle se vérifie aujourd’hui.</p>
+  </div>
+  <nav aria-label="Navigation bataille">
+    <a href="/bataille">← Voir la bataille</a>
+  </nav>
+</header>
+
+<div id="vues" role="group" aria-label="Vue de l’architecture">
+  <button type="button" class="actif" data-vue="existant">Features existantes</button>
+  <button type="button" data-vue="target">Target logique</button>
+</div>
+
+<section id="resume" aria-label="Résumé de l’inventaire"></section>
+
+<div id="filtres" role="group" aria-label="Filtres du graphe">
+  <button type="button" class="actif" data-filtre="tous">Tout</button>
+  <button type="button" data-filtre="physique">🔵 Physique</button>
+  <button type="button" data-filtre="individu">🟢 Individu</button>
+  <button type="button" data-filtre="collectif">🟣 Collectif</button>
+  <button type="button" data-filtre="commandement">🟠 Commandement</button>
+  <button type="button" data-filtre="mission">🔴 Mission</button>
+  <button type="button" data-filtre="observation">🟡 Observation</button>
+  <span class="separateur"></span>
+  <button type="button" data-filtre="specifique">⚠ À généraliser</button>
+  <button type="button" data-filtre="viz-insuffisante">◐ Viz insuffisante</button>
+</div>
+
+<main id="atelier">
+  <section id="graphe" aria-label="Graphe des features existantes">
+    <svg id="liens" aria-hidden="true"></svg>
+    <div id="colonnes"></div>
+  </section>
+
+  <aside id="fiche" aria-live="polite">
+    <div id="ficheVide">
+      <span class="grand">↖</span>
+      <p>Sélectionnez une feature. Son identifiant restera dans l’URL.</p>
+    </div>
+    <div id="ficheContenu" hidden>
+      <div class="ficheTitre">
+        <span id="ficheEmoji" aria-hidden="true"></span>
+        <div><code id="ficheId"></code><h2 id="ficheNom"></h2></div>
+      </div>
+      <div id="ficheEtiquettes"></div>
+
+      <section>
+        <h3 id="ficheResponsabiliteTitre">Ce qui existe</h3>
+        <p id="ficheExiste"></p>
+      </section>
+
+      <section id="blocEtatCible" hidden>
+        <h3>État dans la target</h3>
+        <p id="ficheEtatCible"></p>
+      </section>
+
+      <section id="blocContrat" hidden>
+        <h3>Contrat du module</h3>
+        <p><strong>Reçoit :</strong> <span id="ficheEntrees"></span></p>
+        <p><strong>Produit :</strong> <span id="ficheSorties"></span></p>
+      </section>
+
+      <section id="blocGeneraliser" hidden>
+        <h3>⚠ Pourquoi c’est trop spécifique</h3>
+        <p id="ficheProbleme"></p>
+        <p class="direction"><strong>Direction :</strong> <span id="ficheDirection"></span></p>
+      </section>
+
+      <section id="blocVisualisation">
+        <h3>👁 Visualisation actuelle</h3>
+        <p id="ficheViz"></p>
+        <p id="ficheObserver" class="secondaire"></p>
+        <a id="ficheOuvrir" class="action" target="_blank" rel="noopener">Ouvrir cette preuve dans /bataille ↗</a>
+      </section>
+
+      <section>
+        <h3>Code concerné</h3>
+        <ul id="ficheSources"></ul>
+      </section>
+
+      <section id="commenter">
+        <h3>💬 Commenter précisément</h3>
+        <textarea id="commentaire" rows="5" maxlength="8000" placeholder="Ex. PHY-PASSAGE : la priorité ne devrait pas dépendre du rang, mais de…"></textarea>
+        <div class="actions">
+          <button type="button" id="enregistrer">Enregistrer</button>
+          <button type="button" id="copier">Copier la référence</button>
+        </div>
+        <p id="statutCommentaire" class="secondaire" role="status"></p>
+        <div id="historiqueCommentaires"></div>
+      </section>
+    </div>
+  </aside>
+</main>
+
+<script src="/modules/bataille/architecture-page.js?v=20260825-5"></script>
+</body>
+</html>
