@@ -253,12 +253,12 @@ async function main() {
       !!(globalThis.window.BatailleHasard &&
          typeof globalThis.window.BatailleHasard.semer === "function"));
   // HASARD OUVRE LA CHAÎNE — mais « premier de la liste » n'est plus le bon
-  // test depuis que `moteur/commun/` la précède. Ces morceaux-là ne tirent rien
-  // (un journal et des validateurs n'ont pas d'urne), et l'exigence n'a jamais
-  // porté sur le rang : elle porte sur le fait que RIEN QUI TIRE ne soit posé
-  // avant l'urne. On le vérifie donc pour ce qu'il est.
+  // test depuis que `bataille/moteur/` la précède. Ces morceaux-là ne tirent
+  // rien : un journal, des validateurs et un objet d'état n'ont pas d'urne.
+  // L'exigence n'a jamais porté sur le rang, elle porte sur le fait que RIEN
+  // QUI TIRE ne soit posé avant l'urne — on le vérifie donc pour ce qu'il est.
   const avantHasard = CHAINE.slice(0, Math.max(0, CHAINE.indexOf("bataille/hasard.js")))
-    .filter((f) => f.indexOf("bataille/moteur/commun/") !== 0);
+    .filter((f) => f.indexOf("bataille/moteur/") !== 0);
   dit("hasard.js ouvre la chaîne", avantHasard.length === 0,
       avantHasard.length === 0 ? "" :
       "il vient après « " + avantHasard.join(", ") + " » : tout ce qui tire avant lui tire hors graine");

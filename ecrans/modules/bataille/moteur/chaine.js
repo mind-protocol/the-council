@@ -48,6 +48,11 @@
     { f:"bataille/moteur/commun/contrats.js", ens:["moteur"],
       pose:"BatailleContrats",
       pourquoi:"la forme des six objets échangés ; ne dépend que du journal." },
+    { f:"bataille/moteur/etat.js", ens:["moteur"],
+      pose:"BatailleEtatSim",
+      pourquoi:"l'état de la simulation. `bataille2d.js` l'appelle à sa première " +
+               "ligne exécutable : il doit être posé avant lui, et il ne dépend " +
+               "de rien — c'est un objet littéral et rien d'autre." },
 
     { f:"bataille/hasard.js", ens:["moteur"],
       pose:"BatailleHasard",

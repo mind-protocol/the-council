@@ -885,14 +885,23 @@ celle-ci et quand devait-il réexaminer ? ».
 - [x] Créer `moteur/index.js` derrière l'API actuelle de `Bataille2D`.
       *(Délégation par `Proxy`, pour ne pas tenir une liste de plus. Elle branche
       l'horloge des traces sur `etat().temps` — le seul service réel à ce stade.)*
-- [ ] Faire passer l'état global par un objet de simulation explicite au lieu
+- [x] Faire passer l'état global par un objet de simulation explicite au lieu
   de variables libres, sans changer le comportement.
-      *(Non fait, et c'est le seul point du lot 1 qui reste. Une cinquantaine de
-      variables libres mutables dans `bataille2d.js`, dont plusieurs portent un nom
-      que des portées locales reprennent : `reste` (130 usages, 4 déclarations),
-      `verrou` (68 / 6), `roi` (55 / 3), `plan` (68 / 3). Un renommage en masse
-      passerait l'étalon en cassant des chemins que le banc n'exerce pas — le
-      rendu, notamment. À faire variable par variable, dans son propre commit.)*
+      *(65 champs, 1 297 remplacements, dans `bataille/moteur/etat.js`. Fait par
+      un outil et non à la main : masque des chaînes, gabarits, commentaires et
+      littéraux d'expression régulière, puis exclusion des onze portées locales
+      qui reprennent un nom du module — `verrou`, `roi`, `plan`, `entree`,
+      `dernier`, `source`. Trois pièges relevés en chemin, chacun par une mesure
+      et non par relecture : le nom d'un PARAMÈTRE se faisait réécrire, parce
+      que la portée d'un paramètre est le corps qui suit et non le bloc qui
+      précède ; les propriétés en RACCOURCI (`{ autour, temps }`) ne se parsent
+      plus une fois préfixées, et c'est `node --check` qui les a nommées ; les
+      commentaires de fin de ligne entraient dans les noms de champs. Vérifié
+      par l'étalon (identique), par `banc-epreuve` — dix-sept sondes, ligne pour
+      ligne et chiffre pour chiffre, 745 coups, 86 au contact, 527
+      communications, les trois mêmes sondes rouges qu'avant —, et dans le
+      navigateur : trois épreuves posées, tournées et PEINTES, ce que le banc
+      n'exerce pas.)*
 
 **Validation :** étalon moteur strictement identique, chargement navigateur et
 Node identique, aucune nouvelle branche de scénario.

@@ -496,8 +496,19 @@ window.Bataille2d = (() => {
   // de ne pas le faire.
   const CLAUSES = ["interdit", "declencheur", "marge", "objet"];
 
-  let _ordreN = 0;
-  const ordreDe = (verbe, o) => Object.assign({ n: ++_ordreN, verbe }, o || {});
+  // L'ÉTAT DE LA SIMULATION — un objet nommé, et non plus soixante-cinq
+  // variables libres éparpillées sur onze mille lignes.
+  //
+  // POURQUOI. Tant que l'état vit en variables libres, RIEN NE PEUT SORTIR
+  // DE CE FICHIER : un module extrait ne peut pas recevoir ce qu'il doit
+  // lire, puisqu'il n'y a rien à lui passer. C'est le verrou du refactor,
+  // et c'est la seule raison de ce changement — il ne modifie aucun
+  // comportement, et l'étalon du moteur doit rendre la même bataille.
+  //
+  // Ce que l'objet contient, ce que chaque champ veut dire et qui a le
+  // droit de l'écrire : `bataille/moteur/etat.js`.
+  const S = window.BatailleEtatSim.creer();
+  const ordreDe = (verbe, o) => Object.assign({ n: ++S._ordreN, verbe }, o || {});
   const memeOrdre = (a, b) => !!a && !!b && a.n === b.n;
   const copie = (o) => Object.assign({}, o);
   const aClause = (o) => CLAUSES.some((c) => o[c] !== undefined && o[c] !== null);
@@ -686,12 +697,12 @@ window.Bataille2d = (() => {
   // Ce que chaque quartier a levé, des deux côtés. C'est le seul compteur de
   // cette couche, et il sert à deux choses : franchir les paliers, et dire à
   // la fin combien de gens cette nuit a mis dans la rue qui n'y étaient pas.
-  let enArmes = new Map();     // zone -> { assaut, garde }
+
 
   function armer(p) {
     const z = situer(p.x, p.y).zone;
-    let c = enArmes.get(z);
-    if (!c) enArmes.set(z, c = { assaut: 0, garde: 0 });
+    let c = S.enArmes.get(z);
+    if (!c) S.enArmes.set(z, c = { assaut: 0, garde: 0 });
     const n = ++c[p.prend];
     if (PALIERS_ARMES.indexOf(n) < 0) return;
     noter("prend-les-armes", p.x, p.y,
@@ -709,8 +720,8 @@ window.Bataille2d = (() => {
   const MAILLE = 3;
 
   // ---- l'état ---------------------------------------------------------------
-  let toile = null, ctx = null, hote = null, vueDe = null, source = "/monde";
-  let plan = null, J = null, voirie = null;
+
+
   // LES DEUX LIMITES DU SOL. `sousToit`, chargé par `enterrer()`, sait où sont
   // les murs ; `sousEau`, chargé depuis le relief qui dessine aussi la côte,
   // sait où un homme en armure ne peut pas poser le pied. Les garder séparées
@@ -719,41 +730,41 @@ window.Bataille2d = (() => {
   // four l'a dit tout de suite — « Identifier 'bati' has already been declared ».
   // Troisième collision de nom dans cette IIFE de six mille lignes après `corps`
   // et `semer`, et la seule qui se soit vue avant de tourner.
-  let sousToit = null, sousEau = null;
+
   // Une épreuve peut remplacer le sol de Port-Réal par un terrain abstrait.
   // Ce n'est pas un passe-droit pour un scénario : tous les lecteurs du sol
   // (pose, mouvement, vision et commandement) interrogent alors la même
   // fonction. `rejouer()` l'efface avant de dresser la scène suivante.
-  let terrainEpreuve = null;
-  let boucle = 0, marche = false, dernier = 0, reste = 0;
-  let temps = 0;              // secondes écoulées de bataille
 
-  let hommes = [];            // les deux camps, dans le même tableau
-  let prochainHommeDebug = 0; // identité stable pendant un rejeu, pour les marques
-  let escouades = [];
+
+
+
+
+
+
   // Toutes les unités qui ont un chef et peuvent recevoir un mouvement.
   // `escouades` reste le canal d'ordres de l'assaut ; `formations` est neutre
   // au camp et porte aussi bien une vintaine en marche qu'un poste de garde.
-  let formations = [];
-  let routesFormation = new Map();
+
+
   // Un ralliement est un repère d'armée temporaire. Il porte les places des
   // échelons ; jamais une liste de destinations identiques pour les hommes.
-  let deploiements = new Map();
+
   // Une seule carte subjective peut être ouverte à la fois. L'identifiant est
   // celui du commandant, jamais celui de son camp : changer de chef doit
   // réellement changer de monde connu, même entre deux hommes du même rang.
-  let carteCommandantId = null;
+
   // Une mission de ratissage n'est pas une connaissance partagée. Elle ne
   // contient que le terrain objectif et l'état physique des bâtiments ; les
   // faits, engagements et ordres entendus restent sur chaque formation.
-  let ratissages = new Map();
-  let prochainRatissage = 0;
-  let ailes = [];             // cinq escouades chacune — l'unité qu'on COMMANDE
-  let tetes = [];             // ceux qui décident, et qui ne se battent pas —
+
+
+
+
                               // un par corps, et ils ne se parlent pas entre eux
-  let verrou = null;
-  let objectif = null;        // le Donjon Rouge, en mètres
-  let entree = null;          // la porte visée, en mètres
+
+
+
   // (la grille de voisinage vit plus bas, avec `semer` — elle n'est plus une
   // `Map` mais deux tableaux d'entiers, pour la raison qu'on va lire ici même.)
   // LA PEUR SE RANGE DANS LA CELLULE, PAS DANS UNE MAP À CLEFS DE TEXTE.
@@ -765,7 +776,7 @@ window.Bataille2d = (() => {
   //
   // Donc : un tableau creux posé sur la cellule (`cel._peur[k]`), indexé comme
   // le binaire, et une liste plate pour ce que la simulation doit parcourir.
-  let paniques = [];          // les enregistrements, à plat, pour la boucle
+
   let compte = { a: 0, d: 0, morts: 0, blesses: 0, fuyards: 0, rallies: 0,
                  contreCharges: 0 };
 
@@ -774,12 +785,12 @@ window.Bataille2d = (() => {
   // qu'une fois. `dejaDit` est le seul mécanisme : on lui donne une clef, il
   // rend vrai la première fois et faux ensuite. Tout ce qui doit être unique —
   // le premier sang, un chef, une escouade, un quartier — passe par lui.
-  let annales = [];
-  let dits = new Set();
+
+
   // Un jugement appartient à l'unité qui l'a formé. Une WeakMap évite de lui
   // inventer un identifiant persistant et disparaît avec le tableau du rejeu.
   const jugementsRupture = new WeakMap();
-  const dejaDit = (clef) => (dits.has(clef) ? true : (dits.add(clef), false));
+  const dejaDit = (clef) => (S.dits.has(clef) ? true : (S.dits.add(clef), false));
 
   // REJOUABLE — et il a fallu le rendre vrai. La graine était posée à la
   // construction du module et n'était jamais remise : deux `rejouer()` dans la
@@ -797,12 +808,12 @@ window.Bataille2d = (() => {
   // On ne pose rien à la main : la porte et le donjon sont des repères du plan
   // cuit, avec leurs mètres. Si demain le plan bouge, la bataille bouge avec.
   function repereDuPlan(nom, genre) {
-    const l = (plan && plan.reperes) || [];
+    const l = (S.plan && S.plan.reperes) || [];
     return l.find((r) => r.nom === nom) || l.find((r) => r.genre === genre) || null;
   }
 
   function portes() {
-    return ((plan && plan.reperes) || []).filter((r) => r.genre === "porte");
+    return ((S.plan && S.plan.reperes) || []).filter((r) => r.genre === "porte");
   }
 
   // ---- SITUER UN FAIT -------------------------------------------------------
@@ -830,12 +841,12 @@ window.Bataille2d = (() => {
 
   function situer(x, y) {
     let rep = null, dr = Infinity;
-    for (const r of (plan && plan.reperes) || []) {
+    for (const r of (S.plan && S.plan.reperes) || []) {
       const d = (r.x - x) ** 2 + (r.y - y) ** 2;
       if (d < dr) { dr = d; rep = r; }
     }
     let q = null, dq = Infinity;
-    for (const c of (plan && plan.quartiers) || []) {
+    for (const c of (S.plan && S.plan.quartiers) || []) {
       const d = (c.x - x) ** 2 + (c.y - y) ** 2;
       if (d < dq) { dq = d; q = c; }
     }
@@ -890,7 +901,7 @@ window.Bataille2d = (() => {
 
   function temoinsDe(x, y) {
     const l = [];
-    for (const p of paniques) {
+    for (const p of S.paniques) {
       // Celui qui s'est terré n'a plus rien vu : il est derrière sa porte.
       if (p.etat === "terre") continue;
       const d = Math.hypot(p.x - x, p.y - y);
@@ -945,7 +956,7 @@ window.Bataille2d = (() => {
 
   function presDe(x, y) {
     let n = null, dm = PRES_FIGURE * PRES_FIGURE;
-    for (const f of figures) {
+    for (const f of S.figures) {
       const d = (f.x - x) ** 2 + (f.y - y) ** 2;
       if (d < dm) { dm = d; n = f; }
     }
@@ -956,8 +967,8 @@ window.Bataille2d = (() => {
     if (o && o.clef && dejaDit(o.clef)) return false;
     const l = situer(x, y);
     const f = presDe(x, y);
-    annales.push(Object.assign({
-      t: +temps.toFixed(2), quoi,
+    S.annales.push(Object.assign({
+      t: +S.temps.toFixed(2), quoi,
       x: +x.toFixed(1), y: +y.toFixed(1),
       quartier: l.quartier, repere: l.repere, ou: l.ou, zone: l.zone,
       pres: f ? f.nom : null,
@@ -971,7 +982,7 @@ window.Bataille2d = (() => {
   // au jugé : les bornes du plan donnent le centre, et une porte regarde
   // toujours vers l'extérieur de ce centre-là.
   function dehors(p) {
-    const [x0, y0, x1, y1] = plan.bornes;
+    const [x0, y0, x1, y1] = S.plan.bornes;
     const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
     const dx = p.x - cx, dy = p.y - cy, d = Math.hypot(dx, dy) || 1;
     return [dx / d, dy / d];
@@ -980,20 +991,20 @@ window.Bataille2d = (() => {
   // Un point n'est franchissable que s'il est à la fois hors du bâti et hors
   // de l'eau. Une réponse positive exige les DEUX autorités : sans l'une des
   // deux, « libre » reste inconnu au lieu de devenir une permission implicite.
-  const solConnu = () => !!terrainEpreuve || (!!sousToit && !!sousEau);
-  const obstacleConnu = () => !!terrainEpreuve || !!sousToit || !!sousEau;
-  const obstacleEn = (x, y) => terrainEpreuve
-    ? !!terrainEpreuve.obstacle(x, y)
-    : !!((sousToit && sousToit(x, y)) || (sousEau && sousEau(x, y)));
+  const solConnu = () => !!S.terrainEpreuve || (!!S.sousToit && !!S.sousEau);
+  const obstacleConnu = () => !!S.terrainEpreuve || !!S.sousToit || !!S.sousEau;
+  const obstacleEn = (x, y) => S.terrainEpreuve
+    ? !!S.terrainEpreuve.obstacle(x, y)
+    : !!((S.sousToit && S.sousToit(x, y)) || (S.sousEau && S.sousEau(x, y)));
   const libreEn = (x, y) => !obstacleEn(x, y);
 
   function reglerTerrainEpreuve(spec) {
-    if (spec == null) { terrainEpreuve = null; routesFormation.clear(); return null; }
+    if (spec == null) { S.terrainEpreuve = null; S.routesFormation.clear(); return null; }
     if (typeof spec.obstacle !== "function")
       throw new TypeError("terrain d'épreuve : obstacle(x,y) requis");
-    terrainEpreuve = { id: spec.id || "terrain-epreuve", obstacle: spec.obstacle };
-    routesFormation.clear();
-    return { id: terrainEpreuve.id };
+    S.terrainEpreuve = { id: spec.id || "terrain-epreuve", obstacle: spec.obstacle };
+    S.routesFormation.clear();
+    return { id: S.terrainEpreuve.id };
   }
 
   // ===========================================================================
@@ -1092,9 +1103,9 @@ window.Bataille2d = (() => {
   // exact, et il n'en faut pas un — la case du masque fait déjà un mètre.
   const RAYON = EPAULE / 2;
   function murPres(x, y) {
-    return sousToit(x, y) ||
-           sousToit(x + RAYON, y) || sousToit(x - RAYON, y) ||
-           sousToit(x, y + RAYON) || sousToit(x, y - RAYON);
+    return S.sousToit(x, y) ||
+           S.sousToit(x + RAYON, y) || S.sousToit(x - RAYON, y) ||
+           S.sousToit(x, y + RAYON) || S.sousToit(x, y - RAYON);
   }
 
   // Même largeur corporelle au bord de l'eau. Le nom distinct conserve la
@@ -1264,12 +1275,12 @@ window.Bataille2d = (() => {
   // plancher-là (`garnison`, trois hommes) : elle tombait à dix quand l'assaut
   // en gardait quarante-cinq. Le déséquilibre qu'on voyait à l'écran venait de
   // là, et de rien d'autre.
-  let ECHELLE = 1;
-  const combien = (n) => Math.max(PAR_ESC, Math.round(n * ECHELLE));
+
+  const combien = (n) => Math.max(PAR_ESC, Math.round(n * S.ECHELLE));
   // Le plancher est plus bas que celui d'un corps : un poste de garde n'a pas
   // d'escouade, et trois hommes à une poterne sont une image juste là où trois
   // hommes ne font pas un corps d'assaut.
-  const garnison = (n) => Math.max(3, Math.round(n * ECHELLE));
+  const garnison = (n) => Math.max(3, Math.round(n * S.ECHELLE));
 
   // Les six corps. `recul` compte en mètres vers le DEHORS de la porte, `cote`
   // le long du rempart (positif vers le quai d'aval). Les deux se prennent sur
@@ -1320,7 +1331,7 @@ window.Bataille2d = (() => {
   // défaut) : Cole la frappe de face, Vantre arrive par les quais, Petit Wend
   // suit. Les trois autres ont la leur. Le Donjon reste commun — c'est ce qui
   // fait converger les colonnes au lieu de les disperser.
-  let verrous = [];           // un par porte engagée
+
   const porteDuCorps = (c, defaut) => c.porte || defaut;
 
   // COMBIEN D'AILES UN CORPS A, À EFFECTIF PLEIN — et c'est ce nombre-là qui
@@ -1376,16 +1387,16 @@ window.Bataille2d = (() => {
 
   function creerFormation(id, camp, parent, forme) {
     const rangParent = parent
-      ? formations.filter((u) => u.parent === parent).length : 0;
+      ? S.formations.filter((u) => u.parent === parent).length : 0;
     const u = {
-      n: formations.length, id, camp, parent: parent || null,
+      n: S.formations.length, id, camp, parent: parent || null,
       rangParent,
       membres: [], cadre: cadreNeuf(forme),
       escouade: null,
       ordre: { mode: "tenir", destination: null, version: 0, donneA: 0,
                texte: "Tenez ce poste." },
     };
-    formations.push(u);
+    S.formations.push(u);
     return u;
   }
 
@@ -1464,14 +1475,14 @@ window.Bataille2d = (() => {
   // grille et un coût par pas, et aucun de ceux-là n'a de raison d'en avoir.
   // Ce sont des repères humains — on les voit, on les nomme, et le jour où un
   // fait tombe à côté d'eux, la relecture saura devant QUI il est tombé.
-  let figures = [];
+
 
   // Aegon, sa presse, et ce qui a arrêté la nuit s'il y a lieu. `arret` est
   // le seul état global de tout le module qui interdise quelque chose : quand
   // il est posé, plus aucun assaillant ne se reprend et plus aucune tête ne
   // délibère. C'est ce que veut dire « tout s'arrête ».
-  let roi = null;
-  let arret = null;
+
+
   // Le coureur parti de la première porte qui cède, et la salle qui l'attend
   // sans le savoir. `averti` est l'heure où le Donjon apprend ; tout ce que les
   // deux lords décident se compte à partir de là et jamais avant.
@@ -1487,13 +1498,13 @@ window.Bataille2d = (() => {
   // ont fait. Quatre postes, quatre hommes, à vingt minutes d'intervalle : le
   // premier qui arrive est celui qui compte, et si les quatre tombent, le
   // Donjon apprendra la chose en voyant la colonne monter la rue.
-  let messagers = [];
-  let conseil = { averti: 0, tenir: 0, ouvrir: 0, tranche: false };
+
+
   // L'anneau s'est retiré de lui-même : plus personne ne tient le cercle, et
   // les assaillants trouveront une cour. C'est l'autre moitié de la seconde
   // fin — celle qui ne coûte pas un point de verrou parce qu'il n'y a plus de
   // verrou à coûter.
-  let anneauOuvert = false;
+
 
   // ---- LA TREMPE — CE QUI FAIT QUE DEUX HOMMES NE SONT PAS LE MÊME HOMME ----
   // C'EST D'ICI QUE PARTENT LES MOTIFS, et c'est ce qui manquait à toutes les
@@ -1704,7 +1715,7 @@ window.Bataille2d = (() => {
     const _p = degager(x, y);
     x = _p[0]; y = _p[1];
     const h = {
-      debugId: "homme-" + (++prochainHommeDebug),
+      debugId: "homme-" + (++S.prochainHommeDebug),
       camp, x, y, vx: 0, vy: 0,
       // CE QU'IL A DANS LES MAINS, tiré une fois et pour toute la nuit. On ne
       // ramasse pas l'arme d'un mort dans ce fichier — ce serait juste, et ça
@@ -1921,34 +1932,34 @@ window.Bataille2d = (() => {
     const porte = nomPorte ? repereDuPlan(nomPorte, "porte") : portes()[3];
     const donjon = repereDuPlan("Le Donjon Rouge", "donjon");
     if (!porte || !donjon) throw new Error("ni porte ni donjon dans ce plan");
-    entree = porte; objectif = donjon;
+    S.entree = porte; S.objectif = donjon;
 
-    hommes = []; prochainHommeDebug = 0;
-    escouades = []; formations = []; routesFormation = new Map();
-    deploiements = new Map(); carteCommandantId = null;
-    ratissages = new Map(); prochainRatissage = 0;
-    ailes = []; tetes = []; figures = [];
-    temps = 0; reste = 0;
+    S.hommes = []; S.prochainHommeDebug = 0;
+    S.escouades = []; S.formations = []; S.routesFormation = new Map();
+    S.deploiements = new Map(); S.carteCommandantId = null;
+    S.ratissages = new Map(); S.prochainRatissage = 0;
+    S.ailes = []; S.tetes = []; S.figures = [];
+    S.temps = 0; S.reste = 0;
     // L'HORLOGE DU SILLAGE REPART AVEC LE RESTE. Elle se compare à `temps`, qui
     // vient d'être remis à zéro : laissée à sa valeur, elle attendrait que la
     // nouvelle bataille rattrape l'ancienne — quatre minutes sans une seule
     // trace, sans que rien ne le dise. C'est la même leçon que le roi versé et
     // que le bâti déjà pillé, apprise une troisième fois.
-    sillageDu = 0;
+    S.sillageDu = 0;
     // Les comptes de l'image précédente aussi : gardés d'une bataille à
     // l'autre, ils feraient saigner les six chiffres au premier battement de
     // la suivante — cinq cents hommes « perdus » qui sont ceux d'avant.
-    deboutAvant.clear(); deboutQuand.clear(); surligne = null;
+    deboutAvant.clear(); deboutQuand.clear(); S.surligne = null;
     // LES DEUX HORLOGES REPARTENT AVEC LE RESTE. Une nuit où le roi a versé
     // laissait `arret` posé : la cuisson suivante commençait par une armée déjà
     // rompue, sans qu'une seule ligne le dise. C'est la même leçon que le bâti
     // déjà pillé, trente lignes plus bas, et elle se paie au même prix.
-    roi = null; arret = null; messagers = []; anneauOuvert = false;
-    conseil = { averti: 0, tenir: 0, ouvrir: 0, tranche: false };
+    S.roi = null; S.arret = null; S.messagers = []; S.anneauOuvert = false;
+    S.conseil = { averti: 0, tenir: 0, ouvrir: 0, tranche: false };
     // LES ANNALES REPARTENT ICI, ET AVANT LES CORPS. Sinon une seconde cuisson
     // n'écrit plus rien — et surtout, tout ce que la mise en place a à dire
     // (l'humeur des six corps) serait effacé juste après avoir été écrit.
-    annales = []; dits.clear();
+    S.annales = []; S.dits.clear();
 
     // SIX CORPS, ET PLUS UN SEUL BLOC. C'était trois cents hommes en colonne
     // par six ; ce sont maintenant six foules qui vont dans la même direction
@@ -1965,7 +1976,7 @@ window.Bataille2d = (() => {
     // trois cents hommes continuent de marcher, et ils disent maintenant
     // quelque chose de juste — trois cents hommes, c'est un trente-deuxième
     // de cette armée-là.
-    if (n) ECHELLE = n / TOTAL;
+    if (n) S.ECHELLE = n / TOTAL;
 
     // UN VERROU PAR PORTE ENGAGÉE, ET UN SEUL. Deux corps qui entrent par la
     // même porte frappent le MÊME battant : sans cette mise en commun, chacun
@@ -1987,17 +1998,17 @@ window.Bataille2d = (() => {
     // — mille trente-huit mètres d'écart et deux millions d'états faux — et
     // c'est précisément ce qu'elle est là pour dire : un fichier cuit qui ne se
     // rejoue pas ne se vérifie pas, et ne se corrige donc jamais.
-    if (bati) {
-      bati.etat.fill(0);
-      if (bati.fouille) bati.fouille.fill(0);
-      if (bati.occupation) bati.occupation.fill(0);
-      if (bati.feux) bati.feux.clear();
-      bati.forcees = 0; bati.brulees = 0; bati.butin = 0;
+    if (S.bati) {
+      S.bati.etat.fill(0);
+      if (S.bati.fouille) S.bati.fouille.fill(0);
+      if (S.bati.occupation) S.bati.occupation.fill(0);
+      if (S.bati.feux) S.bati.feux.clear();
+      S.bati.forcees = 0; S.bati.brulees = 0; S.bati.butin = 0;
     }
 
-    verrous = [];
+    S.verrous = [];
     const verrouDe = (rep) => {
-      let v = verrous.find((w) => w.nom === rep.nom);
+      let v = S.verrous.find((w) => w.nom === rep.nom);
       if (!v) {
         // ⚠ ESSAI — LA PORTE ENGAGÉE DÉJÀ OUVERTE. Deux minutes de hache avant
         // que la mêlée commence, c'est deux minutes à ne rien pouvoir observer
@@ -2017,7 +2028,7 @@ window.Bataille2d = (() => {
         // milieu de ce qu'elle vaut, comme les autres.
         const usure = USURE[rep.nom] || 1;
         const pv = Math.round(VERROU_PV * usure);
-        verrous.push(v = { nom: rep.nom, porte: rep,
+        S.verrous.push(v = { nom: rep.nom, porte: rep,
                            pv: ouverte ? 0 : pv, max: pv, usure,
                            etat: ouverte ? "ouvert" : "ferme",
                            par: ouverte ? "essai" : null,
@@ -2042,7 +2053,7 @@ window.Bataille2d = (() => {
       const en = (recul, cote) => [c._entree.x + nx * recul + tx * cote,
                                    c._entree.y + ny * recul + ty * cote];
       const places = poserCorps(c, c._entree);
-      const e0 = escouades.length, a0 = ailes.length;
+      const e0 = S.escouades.length, a0 = S.ailes.length;
       const nEsc = Math.ceil(places.length / PAR);
       // LE NOMBRE D'AILES SE PREND SUR L'EFFECTIF PLEIN, JAMAIS SUR L'ÉCHELLE.
       // C'est le piège de la maquette, et il est silencieux : à un trente-
@@ -2068,7 +2079,7 @@ window.Bataille2d = (() => {
       // dernier : c'est ce qu'on a dit à ce corps-là avant d'entrer dans la
       // nuit, et aucune tête n'a besoin de le répéter.
       for (let a = 0; a < nAile; a++)
-        ailes.push({ id: a0 + a, corps: c.id, rang: a,
+        S.ailes.push({ id: a0 + a, corps: c.id, rang: a,
                      ordre: (a === 0 && c.consigne)
                        ? ordreDe(c.consigne.verbe, c.consigne)
                        : ordreDe(a === 0 ? "avancer" : "tenir",
@@ -2085,10 +2096,10 @@ window.Bataille2d = (() => {
                                               Math.floor(e * nAile / nEsc));
       for (let e = 0; e < nEsc; e++) {
         const aile = aileDeLEsc(e);
-        const rangAile = escouades.filter((x) => x.aile === aile).length;
+        const rangAile = S.escouades.filter((x) => x.aile === aile).length;
         const u = creerFormation("assaut:" + (e0 + e), "assaut",
                                  "aile:" + aile, c.forme);
-        escouades.push({ id: e0 + e, corps: c.id, entree: c._entree,
+        S.escouades.push({ id: e0 + e, corps: c.id, entree: c._entree,
                          aile, rangAile,
                          trace: null, phase: "porte",
                          // Le cadre est ce que conduit le vintenar. Le chemin,
@@ -2098,7 +2109,7 @@ window.Bataille2d = (() => {
                          // Elle part avec l'ordre de son aile, sinon la
                          // transmission croirait avoir un retard à rattraper
                          // avant même que la bataille ait commencé.
-                         ordre: ailes[aileDeLEsc(e)].ordre,
+                         ordre: S.ailes[aileDeLEsc(e)].ordre,
                          attend: null, coureur: null,
                          // L'ordre qu'on tient en réserve d'un déclencheur, et
                          // le silence qui monte quand plus rien n'arrive. Les
@@ -2129,7 +2140,7 @@ window.Bataille2d = (() => {
                         { escouade: e0 + e, aile: aileDeLEsc(e),
                           corps: c.id, humeur: c.humeur,
                           chef: dans === 0 });
-        affecterFormation(h, formations[escouades[e0 + e].formation],
+        affecterFormation(h, S.formations[S.escouades[e0 + e].formation],
                           dans, h.chef);
         // CHACUN PORTE SA PORTE. On pourrait la retrouver par son corps à
         // chaque pas ; on la lui accroche une fois, parce que c'est lu vingt
@@ -2140,7 +2151,7 @@ window.Bataille2d = (() => {
         // là qu'il revient quand on lui ordonne de tenir — sans ça, « tenir »
         // ne voudrait rien dire pour quelqu'un qui n'a jamais rien gardé.
         h.poste = [h.x, h.y];
-        hommes.push(h);
+        S.hommes.push(h);
       }
 
       // LA TÊTE NE SE BAT PAS, et c'est ce qui la rend intéressante : son seul
@@ -2157,8 +2168,8 @@ window.Bataille2d = (() => {
       t.etat = "commande";
       t.poste = [t.x, t.y];
       t.decide = cloche(2, 5);
-      hommes.push(t);
-      tetes.push(t);
+      S.hommes.push(t);
+      S.tetes.push(t);
 
       // UN COMPORTEMENT QUI N'ÉMET RIEN N'EXISTE PAS — c'est la règle du
       // module, et l'humeur d'un corps la casse en silence. Un corps sourd ne
@@ -2182,9 +2193,9 @@ window.Bataille2d = (() => {
     // le premier homme de l'aile qui n'est pas déjà chef d'escouade : un
     // soldat qu'on a monté en grade, pas un être à part. Il porte la bannière,
     // ce qui veut dire qu'il la fait tomber en tombant.
-    for (const h of hommes) {
+    for (const h of S.hommes) {
       if (h.camp !== "assaut" || h.tete || h.hors || h.chef) continue;
-      const a = ailes[h.aile];
+      const a = S.ailes[h.aile];
       if (!a || a.capitaine) continue;
       h.capitaine = true;
       // LE CENTENAR, ET IL EST MONTE. C'est ce qui rend l'echelon de cent
@@ -2213,7 +2224,7 @@ window.Bataille2d = (() => {
     // Gadoue défend une porte qu'elle n'a jamais gardée pendant que les gens
     // du port l'attaquent en connaissant chaque ruelle. On ne le simule pas —
     // on n'en a pas besoin, il suffit de ne pas l'oublier en le racontant.
-    for (const v of verrous) {
+    for (const v of S.verrous) {
       const premiere = v.porte.nom === porte.nom;
       const n = garnison(premiere ? 200 : 100);
       const { nx, ny, tx, ty } = axeDe(v.porte);
@@ -2244,7 +2255,7 @@ window.Bataille2d = (() => {
         const chef = (premiere && groupe === 0) ? i === 4 : dans === 0;
         affecterFormation(h, unitesPoste[groupe], dans, chef);
         h.entree = v.porte; h.verrou = v;
-        hommes.push(h);
+        S.hommes.push(h);
       }
       // ET UN HOMME QU'ON PEUT ENVOYER. Il se tient douze mètres en dedans, dos
       // à la porte : un guet ne prend pas son élan au milieu de ceux qui la
@@ -2256,7 +2267,7 @@ window.Bataille2d = (() => {
       m.entree = v.porte; m.verrou = v;
       m.messager = false; m.parti = 0;
       v.messager = m;
-      hommes.push(m);
+      S.hommes.push(m);
     }
     // L'anneau du Donjon : trois cents hommes à l'échelle 1, six rangs
     // concentriques. Il ne
@@ -2273,9 +2284,9 @@ window.Bataille2d = (() => {
       const px = donjon.x + Math.cos(a) * r, py = donjon.y + Math.sin(a) * r;
       const h = homme("garde", px, py, { poste: [px, py] });
       affecterFormation(h, unitesAnneau[groupe], dans, dans === 0);
-      hommes.push(h);
+      S.hommes.push(h);
     }
-    for (const h of hommes) if (h.camp === "garde") h.etat = "tient";
+    for (const h of S.hommes) if (h.camp === "garde") h.etat = "tient";
 
     // ---- CEUX QUI NE SE BATTENT PAS ---------------------------------------
     // Un roi porté sur une charrette, quatre personnes enfermées dans un
@@ -2288,7 +2299,7 @@ window.Bataille2d = (() => {
     // figure et un capitaine d'escouade portent exactement la même marque à
     // l'écran, et l'œil ne sait pas lequel des deux commande quelque chose.
     const fig = (camp, p, nom, role, dit) =>
-      figures.push({ camp, x: p[0], y: p[1], nom, role, dit });
+      S.figures.push({ camp, x: p[0], y: p[1], nom, role, dit });
     const dans = (r, c) => en(-r, c);          // vers l'intérieur des murs
 
     // LE ROI EST UN CORPS, ET C'EST TOUTE LA DIFFÉRENCE. Il était une figure —
@@ -2302,19 +2313,19 @@ window.Bataille2d = (() => {
     // en cercle autour d'une charrette sont une masse, et une masse se divise.
     {
       const [rx, ry] = en(ROI_RECUL, 20);
-      roi = homme("assaut", rx, ry,
+      S.roi = homme("assaut", rx, ry,
                   { nom: "Aegon II", hors: true, roi: true,
                     role: "roi — s'il tombe, tout s'arrête" });
-      roi.etat = "tient"; roi.poste = [rx, ry];
-      roi.entree = porte; roi.verrou = verrouDe(porte);
-      hommes.push(roi);
-      const nEsc = Math.max(6, Math.round(ROI_ESCORTE * ECHELLE));
+      S.roi.etat = "tient"; S.roi.poste = [rx, ry];
+      S.roi.entree = porte; S.roi.verrou = verrouDe(porte);
+      S.hommes.push(S.roi);
+      const nEsc = Math.max(6, Math.round(ROI_ESCORTE * S.ECHELLE));
       for (let i = 0; i < nEsc; i++) {
         const a = (i / nEsc) * Math.PI * 2, r = 4 + (i % 3) * 1.4;
         const px = rx + Math.cos(a) * r, py = ry + Math.sin(a) * r;
         const g = homme("assaut", px, py, { hors: true, poste: [px, py] });
         g.etat = "tient"; g.entree = porte; g.verrou = verrouDe(porte);
-        hommes.push(g);
+        S.hommes.push(g);
       }
     }
     fig("garde", [donjon.x - 14, donjon.y - 10], "Ser Merryn Coutre", "châtelain",
@@ -2348,8 +2359,8 @@ window.Bataille2d = (() => {
     // principale — celle qu'on a demandée au four. Ils ne servent qu'à ce qui
     // parle de la bataille en général : le bandeau, le relevé, le cercle du
     // plan. Tout ce qui concerne un homme passe par le sien.
-    entree = porte;
-    verrou = verrous.find((v) => v.nom === porte.nom) || verrous[0] || null;
+    S.entree = porte;
+    S.verrou = S.verrous.find((v) => v.nom === porte.nom) || S.verrous[0] || null;
 
     // ---- ET ILS REGARDENT QUELQUE PART ---------------------------------------
     // ON NE VOYAIT AUCUNE ARME AVANT QUE LA TROUPE NE BOUGE, et la cause n'est
@@ -2369,7 +2380,7 @@ window.Bataille2d = (() => {
     // On pose `cx, cy` autant que `fx, fy` : le cap VOULU et le cap TENU. Sans
     // le premier, `tourner` ferait revenir le second à zéro au battement
     // suivant, et les armes disparaîtraient une seconde fois.
-    for (const h of hommes) {
+    for (const h of S.hommes) {
       const p = h.entree || porte;
       if (!p) continue;
       const dx = p.x - h.x, dy = p.y - h.y, d = Math.hypot(dx, dy);
@@ -2411,10 +2422,10 @@ window.Bataille2d = (() => {
   // exactement là où elles le découpaient. Sans quoi le voisinage change au
   // ras des bords de case, et une optimisation qui promettait de ne rien
   // changer change la bataille.
-  let gI0 = 0, gJ0 = 0;         // le coin de la grille, en cases de la trame
-  let gCol = 0, gLig = 0;       // sa taille, en cases
-  let gDebut = new Int32Array(0);   // ncases + 1 bornes, en style CSR
-  let gCorps = new Int32Array(0);   // les indices dans `hommes`, rangés par case
+
+
+
+
   // Les hommes bougent APRÈS le semis (`soldat` puis `pousser`), donc leur
   // case peut déborder de la boîte d'un pas de marche. Huit cases de marge
   // valent vingt-quatre mètres : personne ne franchit ça en un vingtième de
@@ -2422,74 +2433,74 @@ window.Bataille2d = (() => {
   const MARGE_C = 8;
 
   function caseDe(x, y) {
-    let i = Math.floor(x / MAILLE) - gI0, j = Math.floor(y / MAILLE) - gJ0;
+    let i = Math.floor(x / MAILLE) - S.gI0, j = Math.floor(y / MAILLE) - S.gJ0;
     // Un déroutant court à quatre cents mètres hors la porte, et rien
     // n'interdit qu'un jour il aille plus loin : on borne au lieu de sortir du
     // tableau. La boîte étant taillée sur les vivants, ce garde-fou ne sert
     // qu'aux positions absurdes.
-    if (i < 0) i = 0; else if (i >= gCol) i = gCol - 1;
-    if (j < 0) j = 0; else if (j >= gLig) j = gLig - 1;
-    return j * gCol + i;
+    if (i < 0) i = 0; else if (i >= S.gCol) i = S.gCol - 1;
+    if (j < 0) j = 0; else if (j >= S.gLig) j = S.gLig - 1;
+    return j * S.gCol + i;
   }
 
   function semer() {
     let i0 = Infinity, j0 = Infinity, i1 = -Infinity, j1 = -Infinity;
-    for (const h of hommes) {
+    for (const h of S.hommes) {
       if (h.etat === "mort") continue;
       const i = Math.floor(h.x / MAILLE), j = Math.floor(h.y / MAILLE);
       if (i < i0) i0 = i; if (i > i1) i1 = i;
       if (j < j0) j0 = j; if (j > j1) j1 = j;
     }
-    if (i0 === Infinity) { gCol = gLig = 0; return; }   // plus personne debout
+    if (i0 === Infinity) { S.gCol = S.gLig = 0; return; }   // plus personne debout
 
-    gI0 = i0 - MARGE_C; gJ0 = j0 - MARGE_C;
-    gCol = (i1 - i0) + 1 + MARGE_C * 2;
-    gLig = (j1 - j0) + 1 + MARGE_C * 2;
-    const nc = gCol * gLig;
+    S.gI0 = i0 - MARGE_C; S.gJ0 = j0 - MARGE_C;
+    S.gCol = (i1 - i0) + 1 + MARGE_C * 2;
+    S.gLig = (j1 - j0) + 1 + MARGE_C * 2;
+    const nc = S.gCol * S.gLig;
 
     // On ne rend jamais les tampons : ils prennent la taille du pire pas et la
     // gardent. C'est la moitié du gain — une allocation par pas rendrait le
     // ramasse-miettes visible à l'œil nu sur une bataille de dix mille hommes.
-    if (gDebut.length < nc + 1) gDebut = new Int32Array(nc + 1);
-    if (gCorps.length < hommes.length) gCorps = new Int32Array(hommes.length);
-    gDebut.fill(0, 0, nc + 1);
+    if (S.gDebut.length < nc + 1) S.gDebut = new Int32Array(nc + 1);
+    if (S.gCorps.length < S.hommes.length) S.gCorps = new Int32Array(S.hommes.length);
+    S.gDebut.fill(0, 0, nc + 1);
 
     // Première passe : combien d'hommes par case.
-    for (let k = 0; k < hommes.length; k++) {
-      const h = hommes[k];
+    for (let k = 0; k < S.hommes.length; k++) {
+      const h = S.hommes[k];
       if (h.etat === "mort") continue;
-      gDebut[caseDe(h.x, h.y)]++;
+      S.gDebut[caseDe(h.x, h.y)]++;
     }
     // Somme courante : `debut[c]` porte pour l'instant la FIN de la case c.
     let s = 0;
-    for (let c = 0; c < nc; c++) { s += gDebut[c]; gDebut[c] = s; }
-    gDebut[nc] = s;
+    for (let c = 0; c < nc; c++) { s += S.gDebut[c]; S.gDebut[c] = s; }
+    S.gDebut[nc] = s;
     // Seconde passe, à REBOURS, en décrémentant : chaque case se remplit par la
     // fin, donc les hommes s'y retrouvent dans l'ordre du tableau `hommes` —
     // le même ordre que les listes d'avant. C'est ce qui rend la bataille
     // identique au pas près, et c'est la seule preuve qu'on n'a rien cassé.
     // Au passage, `debut[c]` redevient le DÉBUT de la case c, et `debut[c+1]`
     // en marque la fin.
-    for (let k = hommes.length - 1; k >= 0; k--) {
-      const h = hommes[k];
+    for (let k = S.hommes.length - 1; k >= 0; k--) {
+      const h = S.hommes[k];
       if (h.etat === "mort") continue;
-      gCorps[--gDebut[caseDe(h.x, h.y)]] = k;
+      S.gCorps[--S.gDebut[caseDe(h.x, h.y)]] = k;
     }
   }
 
   function autour(x, y, rayon, fn) {
-    if (!gCol) return;
+    if (!S.gCol) return;
     const r = Math.ceil(rayon / MAILLE);
-    const ci = Math.floor(x / MAILLE) - gI0, cj = Math.floor(y / MAILLE) - gJ0;
+    const ci = Math.floor(x / MAILLE) - S.gI0, cj = Math.floor(y / MAILLE) - S.gJ0;
     // On rogne la fenêtre au lieu de ramener le centre dans la grille : une
     // case hors boîte est vide par construction, donc la sauter revient
     // exactement au `grille.get` qui rendait `undefined`.
     let i0 = ci - r, i1 = ci + r, j0 = cj - r, j1 = cj + r;
-    if (i0 < 0) i0 = 0; if (i1 >= gCol) i1 = gCol - 1;
-    if (j0 < 0) j0 = 0; if (j1 >= gLig) j1 = gLig - 1;
+    if (i0 < 0) i0 = 0; if (i1 >= S.gCol) i1 = S.gCol - 1;
+    if (j0 < 0) j0 = 0; if (j1 >= S.gLig) j1 = S.gLig - 1;
     for (let i = i0; i <= i1; i++) for (let j = j0; j <= j1; j++) {
-      const c = j * gCol + i;
-      for (let k = gDebut[c], f = gDebut[c + 1]; k < f; k++) fn(hommes[gCorps[k]]);
+      const c = j * S.gCol + i;
+      for (let k = S.gDebut[c], f = S.gDebut[c + 1]; k < f; k++) fn(S.hommes[S.gCorps[k]]);
     }
   }
 
@@ -2501,7 +2512,7 @@ window.Bataille2d = (() => {
 
   function formationDe(h) {
     if (!h || h.formation == null || h.formation < 0) return null;
-    return formations[h.formation] || null;
+    return S.formations[h.formation] || null;
   }
 
   function guideDe(u) {
@@ -2522,7 +2533,7 @@ window.Bataille2d = (() => {
   // moins improbable. Aucun tirage : une succession doit être rejouable et
   // découler des hommes déjà présents, pas consommer une nouvelle urne.
   function successions() {
-    for (const u of formations) {
+    for (const u of S.formations) {
       const c = u.cadre, chef = guideDe(u);
       if (chef) { c.perduA = null; c.reprendA = null; continue; }
       const candidats = u.membres.filter((h) =>
@@ -2533,10 +2544,10 @@ window.Bataille2d = (() => {
         const vecu = candidats.reduce((n, h) => n + (h.vecu || 0), 0) /
                      candidats.length;
         const delai = 6 - Math.max(-1, Math.min(1, vecu)) * 2;
-        c.perduA = temps; c.reprendA = temps + delai;
+        c.perduA = S.temps; c.reprendA = S.temps + delai;
         continue;
       }
-      if (temps < c.reprendA) continue;
+      if (S.temps < c.reprendA) continue;
       candidats.sort((a, b) =>
         ((b.vecu || 0) * 2 + (b.dressage || 0) + (b.trempe || 0) * .5 +
          (b.capitaine ? 4 : 0)) -
@@ -2554,7 +2565,7 @@ window.Bataille2d = (() => {
       for (const h of u.membres)
         if (h !== nouveau && h.etat !== "mort" && h.etat !== "blesse")
           h.placeFormation = placeDeFormation(rang++);
-      const apres = temps - c.perduA;
+      const apres = S.temps - c.perduA;
       c.chef = nouveau; c.perduA = null; c.reprendA = null;
       noter("nouveau-chef", nouveau.x, nouveau.y,
             { dit: { unite: u.id, camp: u.camp,
@@ -2568,8 +2579,8 @@ window.Bataille2d = (() => {
   }
 
   function ordonnerFormation(id, destination, opts) {
-    const u = typeof id === "number" ? formations[id]
-      : formations.find((x) => x.id === id);
+    const u = typeof id === "number" ? S.formations[id]
+      : S.formations.find((x) => x.id === id);
     if (!u || !destination || !Number.isFinite(destination.x) ||
         !Number.isFinite(destination.y)) return false;
     const d = { id: destination.id || ("point:" + Math.round(destination.x) + ":" +
@@ -2586,15 +2597,15 @@ window.Bataille2d = (() => {
         u.ordre.mode !== mode) {
       u.ordre = { mode, destination: d,
                   source: (opts && opts.source) || "ordre-unite",
-                  version: (u.ordre.version || 0) + 1, donneA: temps,
-                  ditA: temps, texte };
+                  version: (u.ordre.version || 0) + 1, donneA: S.temps,
+                  ditA: S.temps, texte };
       u.cadre.trace = null; u.cadre.clef = null; u.cadre.s = 0;
       u.cadre.finition = null;
       u.cadre.phase = "ordre";
     } else if (u.ordre.texte !== texte && opts && opts.texte) {
       // Redire autrement le même déplacement est un nouvel ordre entendu,
       // mais pas une raison de recalculer la même route.
-      u.ordre.texte = texte; u.ordre.donneA = temps; u.ordre.ditA = temps;
+      u.ordre.texte = texte; u.ordre.donneA = S.temps; u.ordre.ditA = S.temps;
     }
     return true;
   }
@@ -2729,14 +2740,14 @@ window.Bataille2d = (() => {
   }
 
   function planifierRassemblement(camp,centre,vers){
-    const us=formations.filter((u)=>u.camp===camp&&u.membres.some((h)=>
+    const us=S.formations.filter((u)=>u.camp===camp&&u.membres.some((h)=>
       h.etat!=="mort"&&h.etat!=="blesse"));
     if(!us.length)return null;
     let fx=vers?vers.x-centre.x:1,fy=vers?vers.y-centre.y:0;
     const fd=Math.hypot(fx,fy)||1;fx/=fd;fy/=fd;
     const groupes=new Map();
     for(const u of us){
-      const e=u.escouade!=null?escouades[u.escouade]:null;
+      const e=u.escouade!=null?S.escouades[u.escouade]:null;
       const corps=e?e.corps:(u.parent||u.id),aile=e?e.aile:u.parent;
       if(!groupes.has(corps))groupes.set(corps,{corps,unites:[]});
       groupes.get(corps).unites.push({u,corps,aile});
@@ -2787,7 +2798,7 @@ window.Bataille2d = (() => {
     const occupes=places.map((p)=>({x:p.x,y:p.y}));
     const capitainesPlan=new Map();
     for(const [aile,p] of statsAiles){
-      const a=ailes[aile],capitaine=a&&a.capitaine;if(!capitaine)continue;
+      const a=S.ailes[aile],capitaine=a&&a.capitaine;if(!capitaine)continue;
       const cible=cibleCommandementSurRuban(trace,Math.max(0,p.minS-3.2),
         p.lateral/p.n,occupes,2.7);cible.aile=aile;
       capitainesPlan.set(capitaine,cible);
@@ -2811,7 +2822,7 @@ window.Bataille2d = (() => {
     const id=(opts&&opts.id)||("deploiement:"+camp);
     for(const {u,place:p} of attributions){
       const guide=guideDe(u);
-      u.cadre.ralliement={deploiementId:id,phase:"retrouver",commenceA:temps,
+      u.cadre.ralliement={deploiementId:id,phase:"retrouver",commenceA:S.temps,
         departX:guide?guide.x:p.x,departY:guide?guide.y:p.y,
         x:p.x,y:p.y,fx:p.fx,fy:p.fy,corps:p.corps,aile:p.aile,
         rang:p.rang,ligneSol:p.ligneSol,sRuban:p.sRuban,proches:0};
@@ -2825,22 +2836,22 @@ window.Bataille2d = (() => {
     const commandants = new Map();
     const ordreInitial = (opts && opts.texte) ||
       "Retrouvez les vôtres, puis prenez votre place dans la ligne.";
-    for (const h of tetes) if (h.camp === camp && tetesPlan.has(h.corps)) {
+    for (const h of S.tetes) if (h.camp === camp && tetesPlan.has(h.corps)) {
       const mem = Commandement.memoire({ proprietaire:h.debugId,
         echelon:"corps", camp });
-      Commandement.recevoirOrdre(mem, ordreInitial, temps);
+      Commandement.recevoirOrdre(mem, ordreInitial, S.temps);
       commandants.set(h, { memoire:mem, role:"chef de corps", corps:h.corps });
       h.commandement = mem;
     }
     for (const [h, p] of capitainesPlan) {
       const mem = Commandement.memoire({ proprietaire:h.debugId,
         echelon:"aile", camp });
-      Commandement.recevoirOrdre(mem, ordreInitial, temps);
+      Commandement.recevoirOrdre(mem, ordreInitial, S.temps);
       commandants.set(h, { memoire:mem, role:"centenar", corps:h.corps, aile:p.aile });
       h.commandement = mem;
     }
-    deploiements.set(id, { id, camp, centre: { x: centre.x, y: centre.y }, fx, fy,
-                           commenceA: temps, trace, places, tetes: tetesPlan,
+    S.deploiements.set(id, { id, camp, centre: { x: centre.x, y: centre.y }, fx, fy,
+                           commenceA: S.temps, trace, places, tetes: tetesPlan,
                            capitaines: capitainesPlan, commandants,
                            commandeObserveA:-Infinity });
     return true;
@@ -2869,27 +2880,27 @@ window.Bataille2d = (() => {
    * ensuite par la pile complète et peut obéir, se sidérer, dérober ou rompre.
    */
   function ordonnerDoctrineDeploiement(id, doctrineId) {
-    const dep = deploiements.get(id), doctrine = DOCTRINES[doctrineId];
+    const dep = S.deploiements.get(id), doctrine = DOCTRINES[doctrineId];
     if (!dep || !doctrine) return false;
-    dep.doctrine = { id:doctrine.id, donneA:temps };
+    dep.doctrine = { id:doctrine.id, donneA:S.temps };
     let n = 0;
-    for (const u of formations) {
+    for (const u of S.formations) {
       const r = u.cadre && u.cadre.ralliement;
       if (!r || r.deploiementId !== id) continue;
-      u.doctrine = { id:doctrine.id, donneA:temps, source:"ordre-deploiement" };
+      u.doctrine = { id:doctrine.id, donneA:S.temps, source:"ordre-deploiement" };
       // Un ordre stocké seulement sur l'unité serait connu du moteur mais pas
       // de l'homme : sa couche 3 continuerait à peser une consigne vieille de
       // trois minutes et l'arbitre conclurait justement qu'il n'obéit plus.
       // On marque donc sa réception par l'escouade et force la prochaine
       // interprétation individuelle, sans choisir son résultat.
-      const e = u.escouade != null ? escouades[u.escouade] : null;
+      const e = u.escouade != null ? S.escouades[u.escouade] : null;
       if (e) { e.depuis = 0; e.doctrine = doctrine.id; }
       for (const h of u.membres) h.revoirL3 = 0;
       n++;
     }
     for (const c of dep.commandants.values())
       Commandement.recevoirOrdre(c.memoire,
-        "Au dragon : ouvrez les rangs, gardez vos chefs en vue, ralliez au passage.", temps);
+        "Au dragon : ouvrez les rangs, gardez vos chefs en vue, ralliez au passage.", S.temps);
     noter("doctrine-donnee", dep.centre.x, dep.centre.y,
       { dit:{ deploiement:id, doctrine:doctrine.id, unites:n } });
     return n > 0;
@@ -2897,7 +2908,7 @@ window.Bataille2d = (() => {
 
   /** Déplacer le repère supérieur : les secteurs suivent, pas les hommes un à un. */
   function deplacerDeploiement(id, ancre, opts) {
-    const dep = deploiements.get(id);
+    const dep = S.deploiements.get(id);
     if (!dep || !ancre || !Number.isFinite(ancre.x) || !Number.isFinite(ancre.y))
       return false;
     const dx = ancre.x - dep.centre.x, dy = ancre.y - dep.centre.y;
@@ -2918,12 +2929,12 @@ window.Bataille2d = (() => {
     if (opts && Number.isFinite(opts.rayonEngagement))
       dep.rayonEngagement = opts.rayonEngagement;
     if (opts && opts.texte) for (const c of dep.commandants.values())
-      Commandement.recevoirOrdre(c.memoire, opts.texte, temps);
+      Commandement.recevoirOrdre(c.memoire, opts.texte, S.temps);
     // Le déplacement recalcule le RUBAN entier sur le nouveau sol. Traduire
     // puis « sauver » chaque ancien slot séparément recréait exactement le
     // pochoir dans les arrière-cours.
     const placesParUnite=new Map(dep.places.map((p)=>[p.unite,p]));
-    for (const u of formations) {
+    for (const u of S.formations) {
       const r = u.cadre.ralliement;
       if (!r || r.deploiementId !== id) continue;
       const place=placesParUnite.get(u.id);
@@ -2943,7 +2954,7 @@ window.Bataille2d = (() => {
       u.cadre.trace=null;u.cadre.clef=null;u.cadre.s=0;u.cadre.finition=null;
       if (r.phase !== "retrouver") r.phase = "prendre-place";
       if (opts && opts.texte) {
-        u.ordre.texte = opts.texte; u.ordre.donneA = temps; u.ordre.ditA = temps;
+        u.ordre.texte = opts.texte; u.ordre.donneA = S.temps; u.ordre.ditA = S.temps;
       }
       // Recevoir le déplacement du front donne aussi son ORIENTATION. Sans
       // cela, les hommes déjà rangés gardaient le dernier cap latéral de leur
@@ -2982,7 +2993,7 @@ window.Bataille2d = (() => {
     const pts=bloque?(cheminDePorte(guide.x,guide.y,r.x,r.y,true)||
       cheminDePorte(guide.x,guide.y,r.x,r.y,false)):null;
     r.routeMasque={clef:cle,direct:!bloque||!pts,trace:traceLocale(pts),s:0,
-      dernierX:guide.x,dernierY:guide.y,avanceA:temps,recalculs:0,
+      dernierX:guide.x,dernierY:guide.y,avanceA:S.temps,recalculs:0,
       meilleurReste:Math.hypot(guide.x-r.x,guide.y-r.y)};
     if(bloque)u.cadre.calculs++;
     return r.routeMasque;
@@ -3015,12 +3026,12 @@ window.Bataille2d = (() => {
       if(h!==guide)return false;
       versLe(h,r.x,r.y,v,dt);
       const reste=Math.hypot(h.x-r.x,h.y-r.y);
-      if(reste<q.meilleurReste-.7){q.meilleurReste=reste;q.avanceA=temps;}
-      else if(temps-q.avanceA>6&&q.recalculs<2){
+      if(reste<q.meilleurReste-.7){q.meilleurReste=reste;q.avanceA=S.temps;}
+      else if(S.temps-q.avanceA>6&&q.recalculs<2){
         const pts=cheminDePorte(h.x,h.y,r.x,r.y,true)||
           cheminDePorte(h.x,h.y,r.x,r.y,false);
         if(pts&&pts.length){q.direct=false;q.trace=traceLocale(pts);q.s=0;
-          q.recalculs++;q.avanceA=temps;u.cadre.calculs++;}
+          q.recalculs++;q.avanceA=S.temps;u.cadre.calculs++;}
       }
       return true;
     }
@@ -3032,8 +3043,8 @@ window.Bataille2d = (() => {
       q.tentatives=(q.tentatives||0)+1;
       q.dernierPas=gagne;q.dernierBut=[p[0],p[1]];
       if(Math.hypot(h.x-q.dernierX,h.y-q.dernierY)>.7){
-        q.dernierX=h.x;q.dernierY=h.y;q.avanceA=temps;
-      }else if(temps-q.avanceA>12&&q.recalculs<2){
+        q.dernierX=h.x;q.dernierY=h.y;q.avanceA=S.temps;
+      }else if(S.temps-q.avanceA>12&&q.recalculs<2){
         const n=q.recalculs+1;r.routeMasque=null;
         const neuve=assurerRouteRalliement(r,guide,u);neuve.recalculs=n;
       }
@@ -3052,18 +3063,18 @@ window.Bataille2d = (() => {
       const bloque=segmentMasqueBloque(h.x,h.y,p.x,p.y,true);
       const pts=bloque?cheminDePorte(h.x,h.y,p.x,p.y,false):null;
       q=h.routeCommandement={clef:routeCle,pts:pts||null,i:1,direct:!bloque||!pts,
-        dernierX:h.x,dernierY:h.y,avanceA:temps,recalculs:0,
+        dernierX:h.x,dernierY:h.y,avanceA:S.temps,recalculs:0,
         meilleurReste:Math.hypot(h.x-p.x,h.y-p.y)};
       if(bloque){if(compteur)compteur.calculs++;else h.calculsCommandement=(h.calculsCommandement||0)+1;}
     }
     if(q.direct){
       versLe(h,p.x,p.y,v,dt);
       const reste=Math.hypot(h.x-p.x,h.y-p.y);
-      if(reste<q.meilleurReste-.7){q.meilleurReste=reste;q.avanceA=temps;}
-      else if(temps-q.avanceA>6&&q.recalculs<2){
+      if(reste<q.meilleurReste-.7){q.meilleurReste=reste;q.avanceA=S.temps;}
+      else if(S.temps-q.avanceA>6&&q.recalculs<2){
         const pts=cheminDePorte(h.x,h.y,p.x,p.y,false);
         if(pts&&pts.length){q.direct=false;q.pts=pts;q.i=1;q.recalculs++;
-          q.avanceA=temps;
+          q.avanceA=S.temps;
           if(compteur)compteur.calculs++;else h.calculsCommandement=(h.calculsCommandement||0)+1;}
       }
       return true;
@@ -3073,8 +3084,8 @@ window.Bataille2d = (() => {
     const but=q.pts[Math.min(q.i,q.pts.length-1)];
     versLeSurRouteMasque(h,but[0],but[1],v,dt);
     if(Math.hypot(h.x-q.dernierX,h.y-q.dernierY)>.7){
-      q.dernierX=h.x;q.dernierY=h.y;q.avanceA=temps;
-    }else if(temps-q.avanceA>12&&q.recalculs<2){
+      q.dernierX=h.x;q.dernierY=h.y;q.avanceA=S.temps;
+    }else if(S.temps-q.avanceA>12&&q.recalculs<2){
       const n=q.recalculs+1;h.routeCommandement=null;
       menerCommandantParMasque(h,p,cle,v,dt,compteur);
       if(h.routeCommandement)h.routeCommandement.recalculs=n;
@@ -3085,7 +3096,7 @@ window.Bataille2d = (() => {
   function rassemblerFormation(h, u, v, dt) {
     const r = u && u.cadre && u.cadre.ralliement, guide = guideDe(u);
     if (!r || !guide) return false;
-    const dep = deploiements.get(r.deploiementId);
+    const dep = S.deploiements.get(r.deploiementId);
     if (h === guide) {
       // Le centenar a désormais une charge d'aile : son départ vers la place
       // de commandement ne doit pas empêcher sa vintaine d'origine de se dire
@@ -3096,7 +3107,7 @@ window.Bataille2d = (() => {
       const proches = vifs.filter((x) => x === guide ||
         Math.hypot(x.x - guide.x, x.y - guide.y) <= 8).length / (vifs.length || 1);
       r.proches = proches;
-      if (r.phase === "retrouver" && proches >= .70 && temps - r.commenceA >= 2)
+      if (r.phase === "retrouver" && proches >= .70 && S.temps - r.commenceA >= 2)
         r.phase = "prendre-place";
       if (r.phase === "retrouver")
         return versLe(h, r.departX, r.departY, v * .55, dt);
@@ -3180,8 +3191,8 @@ window.Bataille2d = (() => {
   }
 
   function menerChefsAuRassemblement(dt) {
-    for (const dep of deploiements.values()) {
-      for (const h of tetes) {
+    for (const dep of S.deploiements.values()) {
+      for (const h of S.tetes) {
         if (h.camp !== dep.camp || h.etat === "mort" || h.etat === "blesse") continue;
         const p = dep.tetes.get(h.corps);
         if (!p) continue;
@@ -3290,9 +3301,9 @@ window.Bataille2d = (() => {
     // Sur un terrain d'épreuve, la fonction d'obstacle est l'autorité entière.
     // Un segment libre ne doit surtout pas retomber sur le graphe des rues de
     // la ville cachée sous la scène.
-    if (terrainEpreuve && !segmentMasqueBloque(guide.x,guide.y,d.x,d.y,false))
+    if (S.terrainEpreuve && !segmentMasqueBloque(guide.x,guide.y,d.x,d.y,false))
       return traceLocale([[guide.x,guide.y],[d.x,d.y]]);
-    let tr=J.chemin(voirie,[guide.x,guide.y],[d.x,d.y],clef)||null;
+    let tr=S.J.chemin(S.voirie,[guide.x,guide.y],[d.x,d.y],clef)||null;
     const p=tr&&tr.pts&&tr.pts.length ? tr.pts[tr.pts.length-1]
       : [guide.x,guide.y];
     if(Math.hypot(p[0]-d.x,p[1]-d.y)<.35)return tr;
@@ -3313,7 +3324,7 @@ window.Bataille2d = (() => {
       ? { mode:u.ordre.mode || "fouiller", source:"ordre-ratissage", texte:u.ordre.texte }
       : { mode:"marcher", source:"conduite" });
     const c = u.cadre, d = u.ordre.destination;
-    if (!J || !voirie) {
+    if (!S.J || !S.voirie) {
       finirApprocheFormation(h, u, guide, d, v, dt);
       return true;
     }
@@ -3328,12 +3339,12 @@ window.Bataille2d = (() => {
       // visent le même lieu héritent donc bien du même tracé.
       const partage = (u.parent || u.id) + ":" + d.id + ":" +
         d.x.toFixed(1) + ":" + d.y.toFixed(1);
-      let route = routesFormation.get(partage);
+      let route = S.routesFormation.get(partage);
       if (!route) {
         const clef = "bataille:groupe:" + partage;
         route = { clef, trace: calculerRouteFormation(guide,d,clef),
                   par: u.id };
-        routesFormation.set(partage, route);
+        S.routesFormation.set(partage, route);
         c.calculs++;
       }
       c.clef = route.clef; c.trace = route.trace;
@@ -3409,8 +3420,8 @@ window.Bataille2d = (() => {
     let cedeX=0, cedeY=0, cedeForce=0, cedeA=null, cedeChef=false;
     let ennemiAuCoude=false;
     const pasH=Math.hypot(h.x-(h.px ?? h.x),h.y-(h.py ?? h.y));
-    if(pasH>=.015)h.immobileDepuis=temps;
-    const vraimentImmobile=temps-(h.immobileDepuis||0)>=.35;
+    if(pasH>=.015)h.immobileDepuis=S.temps;
+    const vraimentImmobile=S.temps-(h.immobileDepuis||0)>=.35;
     const hChef=!!(h.chefFormation||h.capitaine||h.tete);
     autour(h.x, h.y, EPAULE * 2.4, (o) => {
       if (o === h || !memeEspace(h, o)) return;
@@ -3479,7 +3490,7 @@ window.Bataille2d = (() => {
       deplacer(h,h.x+cedeX*cedeForce*dt,h.y+cedeY*cedeForce*dt);
       if(Math.hypot(h.x-ax,h.y-ay)>.001){
         h.cedeDistance+=Math.hypot(h.x-ax,h.y-ay);
-        h.cedePassageA=temps;h.cedePour=cedeA.debugId;h.cedePourChef=cedeChef;
+        h.cedePassageA=S.temps;h.cedePour=cedeA.debugId;h.cedePourChef=cedeChef;
       }
     }
     // SUR UNE VOIE, ON NE SE POUSSE QUE LE LONG DE LA VOIE. La séparation ne
@@ -3545,7 +3556,7 @@ window.Bataille2d = (() => {
     // Un ordre donne une destination, pas le droit de traverser un foyer. Le
     // feu persistant infléchit donc le pas local sans remplacer la conduite
     // élue : l'homme continue sa mission, mais contourne ce qui brûle.
-    if (h.menaceGenre === "incendie" && temps <= (h.menaceJus || -Infinity) &&
+    if (h.menaceGenre === "incendie" && S.temps <= (h.menaceJus || -Infinity) &&
         (h.menaceExterieure || 0) > 0) {
       let ax = h.x - h.menaceX, ay = h.y - h.menaceY;
       let an = Math.hypot(ax, ay);
@@ -4055,7 +4066,7 @@ window.Bataille2d = (() => {
     // tranche, tout de suite. Une ou deux secondes, c'est l'ordre de grandeur
     // d'un coup d'œil : on ne fabrique donc plus d'homme sourd.
     if (h.recule) {
-      if (temps < h.reculeJusqua) return true;
+      if (S.temps < h.reculeJusqua) return true;
       h.recule = false;
       h.revoir = 0;            // on ne fait pas attendre la décision d'après
     }
@@ -4086,7 +4097,7 @@ window.Bataille2d = (() => {
     // milieu.
     h.revoir = oeil(h);
     h.recule = true;
-    h.reculeJusqua = temps + RECUL_S[0] * Math.pow(RECUL_S[1] / RECUL_S[0], R())
+    h.reculeJusqua = S.temps + RECUL_S[0] * Math.pow(RECUL_S[1] / RECUL_S[0], R())
                    * (h.pv < h.pvMax * SEUIL_RECUL ? RECUL_MAL : 1);
     return true;
   }
@@ -4223,7 +4234,7 @@ window.Bataille2d = (() => {
     // est épuisé, on frappe MOINS SOUVENT.
     h.prochain += arme.cadence / vigueur(h);
     h.coupsTentes++;
-    h.dernierCoup = temps;
+    h.dernierCoup = S.temps;
     // Le cercle de la cible, tel qu'il a été compté à SON battement (voir
     // `h.cercle`). Une image en retard au pire, et gratuite — le recalculer
     // ici ferait un balayage de voisinage par coup porté.
@@ -4280,7 +4291,7 @@ window.Bataille2d = (() => {
       // metres — mais il a mieux, DE COMBIEN LE JET A MANQUE SON SEUIL.
       if (o.recu && o.recu.length < 8 && window.Corps)
         o.recu.push(Object.assign(
-          window.Corps.coupFrole(tire, seuil, enFace(o, h)), { t: temps }));
+          window.Corps.coupFrole(tire, seuil, enFace(o, h)), { t: S.temps }));
       // LE COUP QUI NE PORTE PAS S'ENTEND — c'est même le son le plus fréquent
       // d'une mêlée, et celui qui la fait exister. `metal` à 1 : du fer sur du
       // fer, brillant et long. Voir `son.js`. On ne tire RIEN au sort ici : le
@@ -4318,7 +4329,7 @@ window.Bataille2d = (() => {
       o.recu.push(Object.assign(
         window.Corps.coupRecu(avantCoup - o.pv, (DEGAT[0] + DEGAT[1]) / 2,
                               enFace(o, h), (o.arme && o.arme.garde) || 1),
-        { t: temps }));
+        { t: S.temps }));
     // LE COUP QUI PORTE EST SOURD, ET C'EST TOUTE LA DIFFÉRENCE. Le même
     // paramètre `metal` qui valait 1 sur une parade tombe ici vers 0 : pas de
     // résonance, un thud. Ce qu'il reste de métal vient de ce que l'homme
@@ -4354,7 +4365,7 @@ window.Bataille2d = (() => {
       if (d > VUE_MORT) return;
       v.recu.push(Object.assign(
         window.Corps.voisinTombe(d, Math.cos(Math.atan2(o.y - v.y, o.x - v.x)), true),
-        { t: temps }));
+        { t: S.temps }));
     });
     // UN HOMME QUI TOMBE CRIE, et c'est le seul son de la bataille qui porte à
     // trois cents mètres — d'où la criticité la plus haute après la panique :
@@ -4412,7 +4423,7 @@ window.Bataille2d = (() => {
     // se couvrait de confettis qu'on ne savait plus lire. Avec elle, le corps
     // se fond peu à peu dans le sol, et la densité des morts devient enfin ce
     // qu'elle devrait être — la carte de là où ça a cogné.
-    o.tombe = temps;
+    o.tombe = S.temps;
     compte.morts++;
   }
 
@@ -4470,7 +4481,7 @@ window.Bataille2d = (() => {
     const d = doctrineDe(h);
     if (!d || h.tete || h.roi || h.hors || h.etat === "deroute" ||
         h.etat === "mort" || h.etat === "blesse" || h.etat === "prisonnier") return false;
-    if (temps > (h.menaceJus || -Infinity) || (h.menaceExterieure || 0) < .12)
+    if (S.temps > (h.menaceJus || -Infinity) || (h.menaceExterieure || 0) < .12)
       return false;
     if (d.danger && h.menaceGenre !== d.danger) return false;
     // Au contact, l'ordre ouvert n'est plus la bonne réponse. Le fer local a
@@ -4507,8 +4518,8 @@ window.Bataille2d = (() => {
       if (!e || e.id !== d.id || e.phase === "finie") {
         const p = cibleOrdreOuvert(h, d);
         e = h.doctrineEtat = { id:d.id, phase:"ecartement", x:p.x, y:p.y,
-          commenceA:temps, derniereMenace:temps };
-      } else e.derniereMenace = temps;
+          commenceA:S.temps, derniereMenace:S.temps };
+      } else e.derniereMenace = S.temps;
       h.doctrineActive = true; h.doctrineAgi = true; h.doctrinePhase = e.phase;
       h.cible = null; h.etat = "rassemble";
       if (Math.hypot(h.x - e.x, h.y - e.y) <= 1.2) e.phase = "tenue";
@@ -4518,7 +4529,7 @@ window.Bataille2d = (() => {
       return true;
     }
     if (!e || !d || e.id !== d.id) { h.doctrineActive = false; return false; }
-    const depuis = temps - e.derniereMenace;
+    const depuis = S.temps - e.derniereMenace;
     if (depuis <= d.tenue && h.conduit === "ordre") {
       h.doctrineActive = true; h.doctrinePhase = "tenue";
       h.etat = "rassemble"; versLe(h, e.x, e.y, MARCHE * .7, dt);
@@ -4550,7 +4561,7 @@ window.Bataille2d = (() => {
       // Devant un foyer, « céder » signifie bien gagner de la distance. La
       // réflexion peut garder une composante vers les siens, mais jamais
       // choisir par mélange un cap qui la ramène vers la flamme.
-      if (h.menaceGenre === "incendie" && temps <= (h.menaceJus || -Infinity)) {
+      if (h.menaceGenre === "incendie" && S.temps <= (h.menaceJus || -Infinity)) {
         const ax = h.x - h.menaceX, ay = h.y - h.menaceY;
         const an = Math.hypot(ax, ay) || 1;
         const ux = ax / an, uy = ay / an;
@@ -4611,7 +4622,7 @@ window.Bataille2d = (() => {
     const submersion = b
       ? borner((b.ennemis - b.amis) / Math.max(1, b.ennemis + b.amis)) : 0;
     const lesion = 1 - Math.max(0, h.pv) / Math.max(1, h.pvMax);
-    const externe = temps <= (h.menaceJus || -Infinity)
+    const externe = S.temps <= (h.menaceJus || -Infinity)
       ? borner(h.menaceExterieure) : 0;
     const donnee = contexte && Number.isFinite(contexte.severite)
       ? borner(contexte.severite) : 0;
@@ -4624,7 +4635,7 @@ window.Bataille2d = (() => {
     const chanceSeul = 0.12 + 0.74 * (q * q * (3 - 2 * q));
     h.fuiteStrategie = hasardFuite(h, 0x9e3779b9) < chanceSeul
       ? "dispersion" : "regroupement";
-    h.fuiteDepuis = temps; h.fuiteSeverite = severite;
+    h.fuiteDepuis = S.temps; h.fuiteSeverite = severite;
     h.fuiteExterieure = externe > 0;
 
     let dx = -(h.fx || 1), dy = -(h.fy || 0);
@@ -4661,7 +4672,7 @@ window.Bataille2d = (() => {
     });
     for (const v of vus)
       v.recu.push(Object.assign(window.Corps.voisinPart(1, vus.length + 1),
-                                { t: temps }));
+                                { t: S.temps }));
   }
 
   /**
@@ -4768,9 +4779,9 @@ window.Bataille2d = (() => {
   function fuirVersProtection(h, dt) {
     const g = protectionVisible(h);
     if (g) {
-      h.fuiteGroupeX = g.x; h.fuiteGroupeY = g.y; h.fuiteGroupeVuA = temps;
+      h.fuiteGroupeX = g.x; h.fuiteGroupeY = g.y; h.fuiteGroupeVuA = S.temps;
     }
-    if (h.fuiteGroupeX == null || temps - h.fuiteGroupeVuA > 7) return false;
+    if (h.fuiteGroupeX == null || S.temps - h.fuiteGroupeVuA > 7) return false;
     const bx = h.fuiteGroupeX + Math.cos(h.fuiteGroupeAngle) * h.fuiteGroupeRayon;
     const by = h.fuiteGroupeY + Math.sin(h.fuiteGroupeAngle) * h.fuiteGroupeRayon;
     versLe(h, bx, by, FUITE * 0.92, dt);
@@ -4781,7 +4792,7 @@ window.Bataille2d = (() => {
     // Le danger peut bouger, mais un homme qui a choisi « chacun pour soi »
     // ne recalcule pas sa meilleure direction vingt fois par seconde. Plus la
     // raclée perçue était forte, plus le cap acquis pèse longtemps.
-    if (temps <= (h.menaceJus || -Infinity)) {
+    if (S.temps <= (h.menaceJus || -Infinity)) {
       let dx = h.x - h.menaceX, dy = h.y - h.menaceY;
       const n = Math.hypot(dx, dy) || 1; dx /= n; dy /= n;
       const c = Math.cos(h.fuiteAngle), s = Math.sin(h.fuiteAngle);
@@ -4818,11 +4829,11 @@ window.Bataille2d = (() => {
     if (!window.Corps || !h.recu || h.recu.length >= 8) return;
     h.recu.push(Object.assign(
       window.Corps.signeTombe(Math.hypot(h.x - x, h.y - y), VUE_BANNIERE),
-      { t: temps }));
+      { t: S.temps }));
   }
 
   function survie(h) {
-    if (arret && h.camp === "assaut") rompre(h);
+    if (S.arret && h.camp === "assaut") rompre(h);
   }
 
   // UNE PENSÉE EST LA TRACE D'UNE DÉCISION, PAS UNE LIGNE DE STYLE. Tous les
@@ -4833,10 +4844,10 @@ window.Bataille2d = (() => {
     if (!h) return;
     const c = h.cercle || null;
     const cible = h.cible && h.cible !== h ? h.cible : null;
-    const a = ailleDe(h), e = a ? escouades[h.escouade] : null;
+    const a = ailleDe(h), e = a ? S.escouades[h.escouade] : null;
     const distanceCible = cible ? Math.hypot(cible.x - h.x, cible.y - h.y) : null;
     const p = {
-      temps: +temps.toFixed(2),
+      temps: +S.temps.toFixed(2),
       position: { x: +h.x.toFixed(1), y: +h.y.toFixed(1) },
       etat: h.etat,
       action: h.pensee && h.pensee.action,
@@ -4901,7 +4912,7 @@ window.Bataille2d = (() => {
         h.pensees.push(avant);
         if (h.pensees.length > 4) h.pensees.shift();
       }
-      h.pensee = { action, raison, systeme, depuis: temps };
+      h.pensee = { action, raison, systeme, depuis: S.temps };
     }
     // Compatibilité avec les journaux et l'ancienne fiche. L'autorité est
     // désormais `pensee`; cette phrase n'est plus interprétée nulle part.
@@ -4950,7 +4961,7 @@ window.Bataille2d = (() => {
       if (h.revoirCorps <= 0) {
         const ecoule = Math.min(3, (h.dtCorps || 0) + dt);
         window.BatailleCorps.observer(h, {
-          autour, temps, nuit: true, degatTypique: (DEGAT[0] + DEGAT[1]) / 2,
+          autour, temps: S.temps, nuit: true, degatTypique: (DEGAT[0] + DEGAT[1]) / 2,
           // Un porte-bannière ne porte un SIGNE que si sa hampe est encore
           // debout. Couchée, il n'est plus qu'un homme — et c'est la chute
           // elle-même qui est le stimulus, pas son absence.
@@ -4977,7 +4988,7 @@ window.Bataille2d = (() => {
         // non ouverte. C'est le pourvoyeur qui porte la nuance.
         if (window.BatailleReflexion)
           window.BatailleReflexion.observer(
-            h, { autour, temps, pese, libre: solConnu() ? libreEn : null }, ecoule);
+            h, { autour, temps: S.temps, pese, libre: solConnu() ? libreEn : null }, ecoule);
         h.revoirCorps = oeil(h); h.dtCorps = 0;
         // ---- LA DIFFUSION DU CHEF ----------------------------------------
         // Un chef a portee doit faire redescendre l'alarme, et le savoir coute
@@ -4993,7 +5004,7 @@ window.Bataille2d = (() => {
           autour(h.x, h.y, RALLIE_M, (o) => {
             if (o === h || o.camp !== h.camp) return;
             if ((o.x - h.x) ** 2 + (o.y - h.y) ** 2 > RALLIE_M * RALLIE_M) return;
-            o.chefVu = temps;
+            o.chefVu = S.temps;
           });
         }
         // ---- LE BRANCHEMENT PROGRESSIF, PREMIERE TRANCHE ------------------
@@ -5064,7 +5075,7 @@ window.Bataille2d = (() => {
             noter("escouade-rompt", h.x, h.y, { clef: "corps-" + (h.escouade || 0) });
             return;
           }
-          if (g === "dérobade" && temps <= (h.menaceJus || -Infinity)) {
+          if (g === "dérobade" && S.temps <= (h.menaceJus || -Infinity)) {
             const dx = h.x - h.menaceX, dy = h.y - h.menaceY;
             const n = Math.hypot(dx, dy) || 1, cote = h.cote < 0 ? -1 : 1;
             if (h.menaceGenre === "incendie") {
@@ -5091,7 +5102,7 @@ window.Bataille2d = (() => {
             // sait déjà faire — `versLe` avec le cap posé à l'envers, donc
             // ralenti de moitié par la marche arrière. On ne réécrit rien.
             const men = ennemiProche(h, RAYON_LOCAL) || h.cible;
-            const externe = !men && temps <= (h.menaceJus || -Infinity);
+            const externe = !men && S.temps <= (h.menaceJus || -Infinity);
             if (men || externe) {
               const mx = men ? men.x : h.menaceX, my = men ? men.y : h.menaceY;
               const dx = h.x - mx, dy = h.y - my, n = Math.hypot(dx, dy) || 1;
@@ -5187,7 +5198,7 @@ window.Bataille2d = (() => {
       // encore le reprendre ensuite, mais la fenêtre est bien plus étroite.
       const verrouRalliement = seul
         ? 12 + 22 * h.fuiteSeverite + hasardFuite(h, 0x165667b1) * 8 : 0;
-      if (temps - h.fuiteDepuis >= verrouRalliement &&
+      if (S.temps - h.fuiteDepuis >= verrouRalliement &&
           rallier(h, dt) && h.etat !== "deroute") return;
 
       if (!seul) {
@@ -5200,7 +5211,7 @@ window.Bataille2d = (() => {
                "la force en face me paraît trop grande pour qu'une ligne me protège",
                "déroute · dispersion");
       }
-      if (temps <= (h.menaceJus || -Infinity)) {
+      if (S.temps <= (h.menaceJus || -Infinity)) {
         fuirSelonCap(h, dt);
         return;
       }
@@ -5214,7 +5225,7 @@ window.Bataille2d = (() => {
       // dire à la dernière demi-heure de la nuit, et `dehors(undefined)` jette
       // là où plus personne ne regarde. Ils s'en retournent par la porte
       // principale, faute d'en avoir gardé une.
-      const sienne = h.entree || entree;
+      const sienne = h.entree || S.entree;
       const [nx, ny] = dehors(sienne);
       const bx = sienne.x + nx * 400, by = sienne.y + ny * 400;
       if (h.noeud === undefined) {
@@ -5504,7 +5515,7 @@ window.Bataille2d = (() => {
     }
 
     // --- l'assaillant ---------------------------------------------------
-    const e = escouades[h.escouade];
+    const e = S.escouades[h.escouade];
     // L'ORDRE SE LIT SUR L'ESCOUADE, PAS SUR L'AILE. C'est toute la mécanique :
     // l'aile a reçu la décision de la tête, mais l'escouade n'en sait que ce
     // qui lui est PARVENU. Les deux peuvent différer pendant longtemps, et
@@ -5529,7 +5540,7 @@ window.Bataille2d = (() => {
       h.revoirL3 = (h.revoirL3 || 0) - dt;
       if (h.revoirL3 <= 0) {
         h.revoirL3 = oeil(h);
-        const c = h.cercle, a3 = ailes[e.aile];
+        const c = h.cercle, a3 = S.ailes[e.aile];
         h.l3 = window.Interpretation.pas(ordre, {
           docile: h.envie ? h.envie.docile : 0,
           alarme: c ? Math.max(-1, 1 - (c.ennemis || 0) * 0.7) : 1,
@@ -5651,7 +5662,7 @@ window.Bataille2d = (() => {
           // verrou descendait en silence : rien ne distinguait une porte que
           // sept hommes travaillent d'une porte que personne ne touche depuis
           // vingt minutes. Or c'est exactement le sujet de l'heure creuse.
-          verrou.coup = temps;
+          verrou.coup = S.temps;
         }
         else { h.etat = "colonne";
                penser(h, "relever une hache au seuil",
@@ -5668,7 +5679,7 @@ window.Bataille2d = (() => {
         h.etat = "forme";
         penser(h, "attendre une place au seuil",
                "le front est plein et je reste avec la relève", "front de porte");
-        const a = (h.escouade / Math.max(1, escouades.length)) * Math.PI - Math.PI / 2;
+        const a = (h.escouade / Math.max(1, S.escouades.length)) * Math.PI - Math.PI / 2;
         const [nx, ny] = dehors(h.entree);
         versLe(h, verrou.x + (nx * Math.cos(a) - ny * Math.sin(a)) * 9,
                   verrou.y + (ny * Math.cos(a) + nx * Math.sin(a)) * 9, MARCHE, dt);
@@ -5709,7 +5720,7 @@ window.Bataille2d = (() => {
     // n'existe pas sans objet : un homme au milieu d'un champ ne veut rien, et
     // ce n'est pas « faiblement » — c'est rien. On regarde donc ce qu'il a sous
     // la main, puis on demande à la couche ce qu'il en pense.
-    if (bati && !h.chef && !h.front) {
+    if (S.bati && !h.chef && !h.front) {
       // On ne quitte pas la colonne à chaque pas : un jet par seconde, sinon
       // tout le monde s'arrête au premier et l'armée n'avance jamais d'un mètre.
       h.tente = (h.tente || 0) - dt;
@@ -5736,7 +5747,7 @@ window.Bataille2d = (() => {
             defendu: interdit(ordre, "piller") ? 1 : -1,
           });
           if (R() < window.Envie.tauxDeButin(h.l4)) {
-            bati.etat[b] = 1; bati.forcees++;      // on la réserve en y allant
+            S.bati.etat[b] = 1; S.bati.forcees++;      // on la réserve en y allant
             h.maison = b; h.etat = "pille";
             penser(h, "quitter la colonne pour cette maison",
                    "mon envie de butin a vaincu l'ordre et le danger",
@@ -5754,11 +5765,11 @@ window.Bataille2d = (() => {
     // invalide UNE route, celle du vintenar, jamais vingt routes d'hommes.
     h.etat = "colonne";
     menerFormation(h,
-      { id: "repere:" + (objectif.nom || "objectif"), nom: objectif.nom,
-        x: objectif.x, y: objectif.y }, MARCHE, dt);
-    penser(h, "rejoindre " + (objectif.nom || "l'objectif"),
+      { id: "repere:" + (S.objectif.nom || "objectif"), nom: S.objectif.nom,
+        x: S.objectif.x, y: S.objectif.y }, MARCHE, dt);
+    penser(h, "rejoindre " + (S.objectif.nom || "l'objectif"),
            "c'est la destination commune de ma vintaine", "ordre de formation");
-    if ((objectif.x - h.x) ** 2 + (objectif.y - h.y) ** 2 < AU_DONJON ** 2) {
+    if ((S.objectif.x - h.x) ** 2 + (S.objectif.y - h.y) ** 2 < AU_DONJON ** 2) {
       h.etat = "arrive";
       penser(h, "tenir dans la cour", "ma vintaine a atteint son objectif",
              "objectif atteint");
@@ -5801,8 +5812,8 @@ window.Bataille2d = (() => {
     // de la deuxième, et il ne restait à la fin qu'un seul front pour quatre
     // battants. Symptôme : cinq cents hommes en « forme » et sept qui cognent,
     // pendant que trois portes ne recevaient pas un coup.
-    for (const h of hommes) h.front = false;
-    for (const v of verrous) frontDUnVerrou(v);
+    for (const h of S.hommes) h.front = false;
+    for (const v of S.verrous) frontDUnVerrou(v);
   }
 
   function frontDUnVerrou(verrou) {
@@ -5812,14 +5823,14 @@ window.Bataille2d = (() => {
     // qu'on a saigné cesse de tenir son seuil, et c'est ce qui donne à
     // l'assaillant une raison de faire autre chose que cogner.
     let debout = 0;
-    for (const h of hommes) {
+    for (const h of S.hommes) {
       if (h.camp !== "garde" || h.verrou !== verrou) continue;
       if (h.etat === "mort" || h.etat === "blesse" || h.etat === "deroute") continue;
       debout++;
     }
     verrou.riposte = debout;
     const cand = [];
-    for (const h of hommes) {
+    for (const h of S.hommes) {
       // Ni la tête, ni un coureur, ni une aile qu'on a fait décrocher. Sans
       // ça, un homme qui porte un ordre à travers la presse se retrouverait
       // désigné pour cogner la porte au passage — et l'ordre n'arriverait
@@ -5837,7 +5848,7 @@ window.Bataille2d = (() => {
       // par une : sans personne pour prendre leur place, une porte ne s'ouvre
       // plus jamais. « Appuyer » est le mot pour RELEVER, et il n'y en a pas
       // d'autre dans toute la nuit.
-      const eh = escouades[h.escouade];
+      const eh = S.escouades[h.escouade];
       const v = eh && eh.ordre ? eh.ordre.verbe : "avancer";
       if (v !== "avancer" && v !== "appuyer") continue;
       cand.push([(h.x - verrou.x) ** 2 + (h.y - verrou.y) ** 2, h]);
@@ -5854,7 +5865,7 @@ window.Bataille2d = (() => {
 
   // ---- la machine du verrou -------------------------------------------------
   function porteQuiCede() {
-    for (const v of verrous) verrouQuiCede(v);
+    for (const v of S.verrous) verrouQuiCede(v);
   }
 
   function verrouQuiCede(verrou) {
@@ -5874,7 +5885,7 @@ window.Bataille2d = (() => {
       // là que la vraie mêlée se donne, et sept contre sept.
       const [nx, ny] = dehors(entree);
       let i = 0;
-      for (const h of hommes) {
+      for (const h of S.hommes) {
         if (h.camp !== "garde" || !h.poste) continue;
         if (Math.hypot(h.poste[0] - entree.x, h.poste[1] - entree.y) > 60) continue;
         const c = (i % 7 - 3) * 0.9, r = Math.floor(i / 7) * 1.2;
@@ -5907,18 +5918,18 @@ window.Bataille2d = (() => {
   // coureur quand il en a besoin, il en a un sous la main depuis le début, et
   // cet homme-là peut très bien être mort avant qu'on ait songé à l'envoyer.
   function envoyerAuDonjon(verrou) {
-    if (conseil.averti || !objectif) return;
+    if (S.conseil.averti || !S.objectif) return;
     const h = verrou.messager;
     if (!h || h.messager || h.parti) return;
     if (h.etat === "mort" || h.etat === "blesse" || h.etat === "deroute") return;
     h.etat = "coureur";
     h.messager = true;
-    h.parti = temps;
+    h.parti = S.temps;
     h.trace = null; h.avance = 0;
     penser(h, "porter la nouvelle au Donjon Rouge",
            (verrou.porte && verrou.porte.nom ? verrou.porte.nom : "la porte") +
            " est en train de céder", "messager du Guet");
-    messagers.push(h);
+    S.messagers.push(h);
   }
 
   /**
@@ -5930,22 +5941,22 @@ window.Bataille2d = (() => {
     penser(h, "porter la nouvelle au Donjon Rouge",
            (h.entree && h.entree.nom ? h.entree.nom : "ma porte") +
            " est en train de céder", "messager du Guet");
-    if (!h.trace && J && voirie) {
-      const dep = h.entree || entree;
-      h.trace = J.chemin(voirie, [dep.x, dep.y], [objectif.x, objectif.y],
+    if (!h.trace && S.J && S.voirie) {
+      const dep = h.entree || S.entree;
+      h.trace = S.J.chemin(S.voirie, [dep.x, dep.y], [S.objectif.x, S.objectif.y],
                          "bataille:donjon:" + (dep.nom || "?"));
       h.avance = 0;
     }
     const tr = h.trace;
     if (!tr || !tr.long) {
-      versLe(h, objectif.x, objectif.y, COURSE, dt);
+      versLe(h, S.objectif.x, S.objectif.y, COURSE, dt);
     } else {
       h.avance = Math.min(tr.long, h.avance + COURSE * dt);
       // Sur l'axe, comme avant — mais par le même chemin que la colonne, pour
       // qu'il n'y ait qu'un seul endroit au monde qui pose un homme sur un rail.
       surLeRail(h, surTrace(tr, h.avance), 0);
     }
-    if ((objectif.x - h.x) ** 2 + (objectif.y - h.y) ** 2 > AU_DONJON ** 2) return;
+    if ((S.objectif.x - h.x) ** 2 + (S.objectif.y - h.y) ** 2 > AU_DONJON ** 2) return;
 
     // IL EST ARRIVÉ, et c'est seulement maintenant que le Donjon sait quelque
     // chose. Tout ce que les deux lords décideront se compte à partir de cette
@@ -5953,15 +5964,15 @@ window.Bataille2d = (() => {
     h.messager = false;
     h.etat = "tient";
     h.poste = [h.x, h.y];
-    if (conseil.averti) return;
-    conseil.averti = temps;
+    if (S.conseil.averti) return;
+    S.conseil.averti = S.temps;
     noter("roi-averti", h.x, h.y,
           { clef: "roi-averti",
             dit: { porte: h.entree && h.entree.nom,
-                   depuis: +(temps - h.parti).toFixed(1),
+                   depuis: +(S.temps - h.parti).toFixed(1),
                    pas: enPas(tr ? tr.long : 0) } });
-    conseil.tenir  = temps + cloche(DELIBERE_TENIR[0], DELIBERE_TENIR[1]);
-    conseil.ouvrir = temps + cloche(DELIBERE_OUVRIR[0], DELIBERE_OUVRIR[1]);
+    S.conseil.tenir  = S.temps + cloche(DELIBERE_TENIR[0], DELIBERE_TENIR[1]);
+    S.conseil.ouvrir = S.temps + cloche(DELIBERE_OUVRIR[0], DELIBERE_OUVRIR[1]);
   }
 
   /**
@@ -5970,19 +5981,19 @@ window.Bataille2d = (() => {
    * l'on ne le remplace pas : personne, à sa porte, ne sait qu'il est tombé.
    */
   function lesMessagers() {
-    for (let i = messagers.length - 1; i >= 0; i--) {
-      const h = messagers[i];
+    for (let i = S.messagers.length - 1; i >= 0; i--) {
+      const h = S.messagers[i];
       if (h.messager && h.etat === "coureur") continue;
       if (h.messager && (h.etat === "mort" || h.etat === "blesse" ||
                          h.etat === "deroute")) {
         h.messager = false;
         noter("messager-tombe", h.x, h.y,
               { dit: { porte: h.entree && h.entree.nom,
-                       depuis: +(temps - h.parti).toFixed(1),
-                       reste: enPas(Math.hypot(objectif.x - h.x,
-                                               objectif.y - h.y)) } });
+                       depuis: +(S.temps - h.parti).toFixed(1),
+                       reste: enPas(Math.hypot(S.objectif.x - h.x,
+                                               S.objectif.y - h.y)) } });
       }
-      messagers.splice(i, 1);
+      S.messagers.splice(i, 1);
     }
   }
 
@@ -6003,18 +6014,18 @@ window.Bataille2d = (() => {
   // RIEN NE SE DÉCIDE AVANT. Discuter d'ouvrir une porte avant de savoir qu'une
   // porte cède n'aurait aucun sens : on aurait fabriqué un conseil qui devine.
   function leConseil() {
-    if (!conseil.averti || conseil.tranche) return;
-    if (temps < Math.min(conseil.tenir, conseil.ouvrir)) return;
-    conseil.tranche = true;
-    if (conseil.tenir <= conseil.ouvrir) {
+    if (!S.conseil.averti || S.conseil.tranche) return;
+    if (S.temps < Math.min(S.conseil.tenir, S.conseil.ouvrir)) return;
+    S.conseil.tranche = true;
+    if (S.conseil.tenir <= S.conseil.ouvrir) {
       // IL A TRANCHÉ, ET C'EST TOUT CE QU'IL FERA DE LA NUIT. Une ligne, parce
       // qu'un lecteur doit savoir que la question a été posée et par qui elle a
       // été fermée — sinon la porte qui ne s'ouvre pas ressemble à une porte
       // dont personne n'a parlé.
-      noter("donjon-tranche", objectif.x, objectif.y,
+      noter("donjon-tranche", S.objectif.x, S.objectif.y,
             { clef: "donjon-tranche",
               dit: { par: "Ser Merryn Coutre", contre: "le sergent Gaunt le Portier",
-                     apres: +(conseil.tenir - conseil.averti).toFixed(1) } });
+                     apres: +(S.conseil.tenir - S.conseil.averti).toFixed(1) } });
       return;
     }
     ouvrirDeDedans();
@@ -6040,10 +6051,10 @@ window.Bataille2d = (() => {
     // CELLE QU'ON OUVRE EST CELLE OÙ ILS SONT. Gaunt le Portier a la clef et il
     // l'a sur lui ; il ne va pas la porter à un battant que personne ne frappe.
     let cible = null, best = -1;
-    for (const v of verrous) {
+    for (const v of S.verrous) {
       if (v.etat === "ouvert") continue;
       let n = 0;
-      for (const h of hommes)
+      for (const h of S.hommes)
         if (h.camp === "assaut" && h.verrou === v && !h.hors &&
             h.etat !== "mort" && h.etat !== "blesse" && h.etat !== "deroute") n++;
       if (n > best) { best = n; cible = v; }
@@ -6054,18 +6065,18 @@ window.Bataille2d = (() => {
             { clef: "ouverte:" + cible.nom,
               dit: { porte: cible.nom, par: "le sergent Gaunt le Portier",
                      hommes: best,
-                     apres: +(conseil.ouvrir - conseil.averti).toFixed(1) } });
+                     apres: +(S.conseil.ouvrir - S.conseil.averti).toFixed(1) } });
       // LA GARNISON DE CETTE PORTE-LÀ NE TIENT PAS LA BRÈCHE. On ne se bat pas
       // dans un seuil qu'on vient de vous ouvrir dans le dos : elle décroche
       // sur l'anneau, ce qui est la seule chose sensée qu'un homme puisse
       // faire, et qui met quinze hommes de plus autour du Donjon dans l'heure.
-      for (const h of hommes) {
+      for (const h of S.hommes) {
         if (h.camp !== "garde" || h.verrou !== cible) continue;
         if (h.etat === "mort" || h.etat === "blesse") continue;
-        const dx = h.x - objectif.x, dy = h.y - objectif.y;
+        const dx = h.x - S.objectif.x, dy = h.y - S.objectif.y;
         const d = Math.hypot(dx, dy) || 1;
-        h.poste = [objectif.x + dx / d * 30, objectif.y + dy / d * 30];
-        signeQuiTombe(h, objectif.x, objectif.y);
+        h.poste = [S.objectif.x + dx / d * 30, S.objectif.y + dy / d * 30];
+        signeQuiTombe(h, S.objectif.x, S.objectif.y);
       }
       return;
     }
@@ -6074,22 +6085,22 @@ window.Bataille2d = (() => {
     // quatre-vingts se retire à l'intérieur des murs — il ne rompt pas, il ne
     // meurt pas, il RENTRE, et les assaillants trouvent une cour au lieu d'un
     // cercle. C'est la seule fin de la nuit où personne ne meurt au donjon.
-    anneauOuvert = true;
+    S.anneauOuvert = true;
     let n = 0;
-    for (const h of hommes) {
+    for (const h of S.hommes) {
       if (h.camp !== "garde" || h.etat === "mort" || h.etat === "blesse") continue;
-      if (Math.hypot(h.x - objectif.x, h.y - objectif.y) > AU_DONJON * 2) continue;
-      const dx = h.x - objectif.x, dy = h.y - objectif.y;
+      if (Math.hypot(h.x - S.objectif.x, h.y - S.objectif.y) > AU_DONJON * 2) continue;
+      const dx = h.x - S.objectif.x, dy = h.y - S.objectif.y;
       const d = Math.hypot(dx, dy) || 1;
-      h.poste = [objectif.x + dx / d * 6, objectif.y + dy / d * 6];
+      h.poste = [S.objectif.x + dx / d * 6, S.objectif.y + dy / d * 6];
       h.etat = "rentre";
       n++;
     }
-    noter("donjon-ouvert", objectif.x, objectif.y,
+    noter("donjon-ouvert", S.objectif.x, S.objectif.y,
           { clef: "donjon-ouvert",
             dit: { par: "le sergent Gaunt le Portier", contre: "Ser Merryn Coutre",
                    hommes: n,
-                   apres: +(conseil.ouvrir - conseil.averti).toFixed(1) } });
+                   apres: +(S.conseil.ouvrir - S.conseil.averti).toFixed(1) } });
   }
 
   // ===========================================================================
@@ -6106,18 +6117,18 @@ window.Bataille2d = (() => {
   // assez, la charrette verse. Une nuit où l'assaut tient ne le tue jamais ;
   // une nuit où il s'effondre le tue toujours. C'est ce qu'on voulait dire.
   function leRoiSurSaCharrette(dt) {
-    if (arret || !roi || roi.etat === "mort" || roi.etat === "blesse") return;
+    if (S.arret || !S.roi || S.roi.etat === "mort" || S.roi.etat === "blesse") return;
     let n = 0;
-    autour(roi.x, roi.y, ROI_PRESSE, (h) => {
+    autour(S.roi.x, S.roi.y, ROI_PRESSE, (h) => {
       if (h.camp === "assaut" && h.etat === "deroute") n++;
     });
     if (!n) return;
-    roi.presse = (roi.presse || 0) + n * dt;
-    if (roi.presse < ROI_VERSE * ECHELLE) return;
-    achever(roi);
-    noter("roi-tombe", roi.x, roi.y,
-          { clef: "roi", dit: { nom: roi.nom, presse: Math.round(roi.presse) } });
-    arret = { quoi: "roi", t: +temps.toFixed(1), nom: roi.nom };
+    S.roi.presse = (S.roi.presse || 0) + n * dt;
+    if (S.roi.presse < ROI_VERSE * S.ECHELLE) return;
+    achever(S.roi);
+    noter("roi-tombe", S.roi.x, S.roi.y,
+          { clef: "roi", dit: { nom: S.roi.nom, presse: Math.round(S.roi.presse) } });
+    S.arret = { quoi: "roi", t: +S.temps.toFixed(1), nom: S.roi.nom };
   }
 
   // ===========================================================================
@@ -6145,12 +6156,12 @@ window.Bataille2d = (() => {
 
   /** L'aile d'un homme, ou null s'il n'en a pas (garde, tête). */
   const ailleDe = (h) =>
-    (h.camp === "assaut" && !h.tete && !h.hors ? ailes[h.aile] : null);
+    (h.camp === "assaut" && !h.tete && !h.hors ? S.ailes[h.aile] : null);
 
   /** Ce qu'une aile a encore debout, sur ce qu'elle avait. */
   function forceDe(a) {
     let vif = 0, tot = 0;
-    for (const h of hommes) {
+    for (const h of S.hommes) {
       if (h.camp !== "assaut" || h.tete || h.hors || h.aile !== a.id) continue;
       tot++;
       if (h.etat !== "mort" && h.etat !== "blesse" && h.etat !== "deroute") vif++;
@@ -6180,14 +6191,14 @@ window.Bataille2d = (() => {
   function deciderLesTetes(dt) {
     // Une tête ne délibère plus quand la charrette a versé : il n'y a plus
     // d'affaire à trancher, et son corps ne l'écouterait pas.
-    if (arret) return;
-    for (const tete of tetes) {
+    if (S.arret) return;
+    for (const tete of S.tetes) {
       if (tete.etat === "mort") continue;
       tete.decide -= dt;
       if (tete.decide > 0) continue;
       tete.decide = cloche(DELIBERE[0], DELIBERE[1]);
       // Les ailes de SON corps, et pas une de plus.
-      const sien = ailes.filter((a) => a.corps === tete.corps);
+      const sien = S.ailes.filter((a) => a.corps === tete.corps);
       const cons = (CORPS.find((x) => x.id === tete.corps) || {}).consigne;
       // Celles qui peuvent encore tenir un rôle. Sous quatre dixièmes, une aile
       // décroche (branche du dessus) : elle ne presse plus, elle n'appuie plus,
@@ -6288,7 +6299,7 @@ window.Bataille2d = (() => {
                        // rien — c'est « rien ne remonte ». Ce champ n'est donc
                        // pas ce qu'elle croit : c'est ce que le lecteur des
                        // annales a le droit de savoir, et lui seul.
-                       sourd: escouades.every(
+                       sourd: S.escouades.every(
                          (e) => e.aile !== a.id || e.sourd_ne) || undefined,
                        force: +forceDe(a).toFixed(2) } });
       }
@@ -6303,32 +6314,32 @@ window.Bataille2d = (() => {
   // pas par seconde, la différence entre les deux est la cuisson entière.
   const VERBE_DIT = { avancer: "marcher", tenir: "tenir", repli: "décrocher",
                       suivre: "suivre", appuyer: "appuyer" };
-  let centreAile = [];        // par id d'aile, refait à chaque pas
-  let centreCorps = {};       // l'aile de tête encore vivante de chaque corps
+
+
 
   function centres() {
-    centreAile = []; centreCorps = {};
+    S.centreAile = []; S.centreCorps = {};
     const sx = [], sy = [], n = [];
-    for (const h of hommes) {
+    for (const h of S.hommes) {
       if (h.camp !== "assaut" || h.tete || h.hors) continue;
       if (h.etat === "mort" || h.etat === "blesse" || h.etat === "deroute") continue;
       const a = h.aile;
       sx[a] = (sx[a] || 0) + h.x; sy[a] = (sy[a] || 0) + h.y; n[a] = (n[a] || 0) + 1;
     }
-    for (const a of ailes) {
+    for (const a of S.ailes) {
       // SOUS CINQ HOMMES, UNE AILE N'EST PLUS UN REPÈRE. Elle n'a pas disparu
       // du monde, mais on ne peut plus « se tenir à deux cents pas d'elle » :
       // l'ordre qui la désigne devient impossible, et c'est au chef d'en
       // trouver un autre. C'est exactement ce qu'on veut qu'il arrive.
       if (!n[a.id] || n[a.id] < 5) continue;
-      centreAile[a.id] = [sx[a.id] / n[a.id], sy[a.id] / n[a.id]];
-      if (!(a.corps in centreCorps)) centreCorps[a.corps] = centreAile[a.id];
+      S.centreAile[a.id] = [sx[a.id] / n[a.id], sy[a.id] / n[a.id]];
+      if (!(a.corps in S.centreCorps)) S.centreCorps[a.corps] = S.centreAile[a.id];
     }
   }
 
   const centreObjet = (o) => (!o ? null
-    : o.aile !== undefined ? (centreAile[o.aile] || null)
-    : o.corps !== undefined ? (centreCorps[o.corps] || null) : null);
+    : o.aile !== undefined ? (S.centreAile[o.aile] || null)
+    : o.corps !== undefined ? (S.centreCorps[o.corps] || null) : null);
 
   // « de le sergent Rous Cantel » ne se lit pas, et « la 1e aile » non plus.
   // Deux règles de français, écrites une fois : le rang s'abrège en « 1re », et
@@ -6343,7 +6354,7 @@ window.Bataille2d = (() => {
   function nomObjet(o) {
     if (!o) return "";
     if (o.corps !== undefined) return nomDuCorps(o.corps) || o.corps;
-    const a = ailes[o.aile];
+    const a = S.ailes[o.aile];
     return a ? "la " + RANG_DIT(a.rang + 1) + " aile" +
                (nomDuCorps(a.corps) ? " " + DU(nomDuCorps(a.corps)) : "") : "";
   }
@@ -6362,13 +6373,13 @@ window.Bataille2d = (() => {
 
   // --- comment il descend ----------------------------------------------------
   function transmettre(dt) {
-    for (const e of escouades) {
-      const fu = formations[e.formation];
+    for (const e of S.escouades) {
+      const fu = S.formations[e.formation];
       // Une unité détachée au ratissage a déjà reçu un ordre autonome. Les
       // signaux de l'ancienne bataille de porte ne doivent pas lui voler un
       // homme ni écraser sa mission pendant l'épreuve.
       if (fu && fu.ratissage) continue;
-      const a = ailes[e.aile];
+      const a = S.ailes[e.aile];
       if (!a) continue;
       // SOURD DE NAISSANCE. Une escouade peut devenir sourde en route — plus
       // de bannière, plus personne à envoyer — et celle-là peut réentendre le
@@ -6509,11 +6520,11 @@ window.Bataille2d = (() => {
   // l'escouade. Ce pont date l'instant où CES hommes l'ont effectivement
   // reçue — pas celui où une tête l'a prononcée cinquante mètres plus loin.
   function marquerOrdreRecu(e) {
-    const u = e && formations[e.formation];
+    const u = e && S.formations[e.formation];
     if (!u || !e.ordre) return;
     u.ordre.texte = dire(e.ordre);
-    u.ordre.donneA = temps;
-    u.ordre.ditA = temps;
+    u.ordre.donneA = S.temps;
+    u.ordre.ditA = S.temps;
   }
 
   /**
@@ -6524,7 +6535,7 @@ window.Bataille2d = (() => {
   function declencheurTombe(e, d) {
     if (!d) return false;
     if (d.porte) {
-      const v = verrous.find((w) => w.nom === d.porte);
+      const v = S.verrous.find((w) => w.nom === d.porte);
       if (!v || v.etat === "fermee" || v.etat === undefined) return false;
       if (v.etat !== "ouvert" && v.etat !== "cede") return false;
       const p = centreDe(e.id);
@@ -6553,10 +6564,10 @@ window.Bataille2d = (() => {
   // des ailes désobéissent sans qu'on sache jamais pourquoi — et c'est
   // exactement ce qu'on est venu chercher ici.
   function initiative(dt) {
-    for (const e of escouades) {
-      const fu = formations[e.formation];
+    for (const e of S.escouades) {
+      const fu = S.formations[e.formation];
       if (fu && fu.ratissage) continue;
-      const a = ailes[e.aile];
+      const a = S.ailes[e.aile];
       if (!a) continue;
       // Un ordre devient PÉRIMÉ quand son objet a disparu du monde. Ça ne
       // s'attend pas : ça se constate au pas où ça arrive.
@@ -6621,7 +6632,7 @@ window.Bataille2d = (() => {
   }
 
   function chefDe(id) {
-    for (const h of hommes)
+    for (const h of S.hommes)
       if (h.camp === "assaut" && h.escouade === id && h.chef &&
           h.etat !== "mort" && h.etat !== "blesse" && h.etat !== "deroute") return h;
     return null;
@@ -6629,7 +6640,7 @@ window.Bataille2d = (() => {
 
   function centreDe(id) {
     let x = 0, y = 0, n = 0;
-    for (const h of hommes) {
+    for (const h of S.hommes) {
       if (h.camp === "assaut" && h.escouade === id &&
           h.etat !== "mort" && h.etat !== "blesse") { x += h.x; y += h.y; n++; }
     }
@@ -6656,7 +6667,7 @@ window.Bataille2d = (() => {
     const but = centreDe(e.id);
     if (!but) return false;
     const src = chef.escouade;
-    for (const h of hommes) {
+    for (const h of S.hommes) {
       if (h.camp !== "assaut" || h.escouade !== src) continue;
       if (h.chef || h.capitaine || h.tete) continue;
       if (h.etat === "mort" || h.etat === "blesse" || h.etat === "deroute" ||
@@ -6684,7 +6695,7 @@ window.Bataille2d = (() => {
   }
 
   function courir(h, dt) {
-    const e = escouades[h.chez];
+    const e = S.escouades[h.chez];
     const but = centreDe(h.chez);
     penser(h, "remettre « " + dire(h.porte) + " » à l'escouade " + h.chez,
            "je porte l'ordre qui m'a été confié", "coureur d'ordre");
@@ -6767,15 +6778,15 @@ window.Bataille2d = (() => {
   }
 
   function rendreCoureur(h, chez) {
-    const e = escouades[h.chez];
+    const e = S.escouades[h.chez];
     if (e && e.coureur === h) e.coureur = null;
     // Il reste où il est arrivé : on ne renvoie personne en arrière dans une
     // bataille. Son escouade devient celle qu'il vient de joindre.
     if (chez !== undefined) {
       h.escouade = chez;
-      const cible = escouades[chez];
+      const cible = S.escouades[chez];
       if (cible && cible.formation != null)
-        changerDeFormation(h, formations[cible.formation], !!h.chef);
+        changerDeFormation(h, S.formations[cible.formation], !!h.chef);
     }
     h.porte = null; h.chez = null;
     h.etat = "colonne";
@@ -6787,14 +6798,14 @@ window.Bataille2d = (() => {
   // pas avec la distance — et c'est voulu : on ne voit pas tomber un homme à
   // cent mètres, on voit tomber une bannière.
   function bannieres(dt) {
-    for (const a of ailes) {
+    for (const a of S.ailes) {
       const c = a.capitaine;
       const bas = !c || c.etat === "mort" || c.etat === "blesse" ||
                   c.etat === "deroute";
       if (a.banniere.debout && bas) {
         a.banniere.debout = false;
         a.releve = RELEVE;
-        for (const h of hommes)
+        for (const h of S.hommes)
           if (h.camp === "assaut" && !h.tete && h.aile === a.id &&
               h.etat !== "mort" && h.etat !== "blesse")
             signeQuiTombe(h, a.banniere.x, a.banniere.y);
@@ -6821,7 +6832,7 @@ window.Bataille2d = (() => {
   }
 
   function premierChefDe(id) {
-    for (const h of hommes)
+    for (const h of S.hommes)
       if (h.camp === "assaut" && !h.tete && h.aile === id && h.chef &&
           h.etat !== "mort" && h.etat !== "blesse" && h.etat !== "deroute") return h;
     return null;
@@ -6847,7 +6858,7 @@ window.Bataille2d = (() => {
   function apaiseDe(h) {
     let a = 1;
     if (sousLaBanniere(h)) a *= window.Corps.M.APAISE_BANN;
-    if (h.chefVu != null && temps - h.chefVu < CHEF_FRAIS)
+    if (h.chefVu != null && S.temps - h.chefVu < CHEF_FRAIS)
       a *= window.Corps.M.APAISE_CHEF;
     return a;
   }
@@ -6944,10 +6955,10 @@ window.Bataille2d = (() => {
   // PAS UNE ARMÉE. Un fuyard qui traverse une rue ne vide plus le quartier,
   // ce qui est exactement ce qu'on observe — on s'écarte d'un soldat, on fuit
   // une troupe.
-  let foyers = [];
+
   function fondreLesFoyers() {
     const cases = new Map();
-    for (const h of hommes) {
+    for (const h of S.hommes) {
       // Un blessé n'est pas une armée : on ne fuit pas un homme à terre, on
       // s'en approche ou l'on passe au large. C'est la même règle que le
       // fuyard isolé, et pour la même raison.
@@ -6957,15 +6968,15 @@ window.Bataille2d = (() => {
       if (!f) cases.set(c, f = { x: 0, y: 0, n: 0 });
       f.x += h.x; f.y += h.y; f.n++;
     }
-    foyers = [];
+    S.foyers = [];
     for (const f of cases.values())
-      if (f.n >= FOYER_MIN) foyers.push({ x: f.x / f.n, y: f.y / f.n, n: f.n });
+      if (f.n >= FOYER_MIN) S.foyers.push({ x: f.x / f.n, y: f.y / f.n, n: f.n });
   }
 
   /** Le foyer le plus proche, et sa distance. Rend null s'il n'y a rien. */
   function foyerProche(x, y) {
     let m = null, dmin = Infinity;
-    for (const f of foyers) {
+    for (const f of S.foyers) {
       const d = (f.x - x) ** 2 + (f.y - y) ** 2;
       if (d < dmin) { dmin = d; m = f; }
     }
@@ -6985,28 +6996,28 @@ window.Bataille2d = (() => {
   // s'éloigne. C'est le bon modèle ET le modèle bon marché, ce qui n'arrive pas
   // souvent.
   const SEAU = 100;
-  let reseau = null;
+
   function tisserReseau() {
-    if (reseau || !voirie) return;
+    if (S.reseau || !S.voirie) return;
     const seau = new Map();
-    for (const [id, n] of voirie.noeuds) {
+    for (const [id, n] of S.voirie.noeuds) {
       const c = Math.floor(n.xyz[0] / SEAU) + ":" + Math.floor(n.xyz[1] / SEAU);
       let l = seau.get(c);
       if (!l) seau.set(c, l = []);
       l.push(id);
     }
-    reseau = { seau, noeuds: voirie.noeuds };
+    S.reseau = { seau, noeuds: S.voirie.noeuds };
   }
 
   function noeudProche(x, y) {
-    if (!reseau) return null;
+    if (!S.reseau) return null;
     const ci = Math.floor(x / SEAU), cj = Math.floor(y / SEAU);
     let meil = null, dmin = Infinity;
     for (let r = 1; r < 12 && meil === null; r++) {
       for (let di = -r; di <= r; di++) for (let dj = -r; dj <= r; dj++) {
         if (r > 1 && Math.abs(di) < r && Math.abs(dj) < r) continue;
-        for (const id of reseau.seau.get((ci + di) + ":" + (cj + dj)) || []) {
-          const p = reseau.noeuds.get(id).xyz;
+        for (const id of S.reseau.seau.get((ci + di) + ":" + (cj + dj)) || []) {
+          const p = S.reseau.noeuds.get(id).xyz;
           const d = (p[0] - x) ** 2 + (p[1] - y) ** 2;
           if (d < dmin) { dmin = d; meil = id; }
         }
@@ -7034,11 +7045,11 @@ window.Bataille2d = (() => {
   }
 
   function choisirLien(noeudId, bx, by, fuir, venu) {
-    const n = reseau && reseau.noeuds.get(noeudId);
+    const n = S.reseau && S.reseau.noeuds.get(noeudId);
     if (!n || !n.liens.length) return null;
     let meil = null, best = -Infinity;
     for (const l of n.liens) {
-      const p = reseau.noeuds.get(l.vers);
+      const p = S.reseau.noeuds.get(l.vers);
       if (!p) continue;
       const d = Math.hypot(p.xyz[0] - bx, p.xyz[1] - by);
       // ON NE FAIT PAS DEMI-TOUR — sauf en cul-de-sac, où la pénalité se laisse
@@ -7052,12 +7063,12 @@ window.Bataille2d = (() => {
 
   /** Un pas de marche sur le réseau. Rend faux quand la rue manque. */
   function marcher(p, dt, bx, by, fuir) {
-    if (!reseau) return false;
+    if (!S.reseau) return false;
     // D'abord GAGNER LA RUE. On panique où l'on est — sur un seuil, au milieu
     // d'une cour —, pas sur un carrefour : sans ce premier bout en ligne
     // droite, le fuyard se téléporte de trente mètres à son premier pas.
     if (!p.surRue) {
-      const n = reseau.noeuds.get(p.noeud);
+      const n = S.reseau.noeuds.get(p.noeud);
       if (!n) return false;
       const dx = n.xyz[0] - p.x, dy = n.xyz[1] - p.y, d = Math.hypot(dx, dy);
       const pas = p.v * dt;
@@ -7078,7 +7089,7 @@ window.Bataille2d = (() => {
       else { reste -= dispo; p.arc = null; }
     }
     if (p.arc) { const q = surTrace(p.arc, p.s); p.x = q[0]; p.y = q[1]; }
-    else { const n = reseau.noeuds.get(p.noeud);
+    else { const n = S.reseau.noeuds.get(p.noeud);
            if (n) { p.x = n.xyz[0]; p.y = n.xyz[1]; } }
     return true;
   }
@@ -7100,24 +7111,24 @@ window.Bataille2d = (() => {
   // habitants dehors, à chaque image. La page s'est arrêtée net, et c'était
   // mérité : une éviction doit coûter un échange, pas une recherche.
   function oublier(i) {
-    const p = paniques[i];
+    const p = S.paniques[i];
     if (!p) return;
     if (p.cel._peur) p.cel._peur[p.k] = null;
-    const dernier = paniques.pop();
-    if (i < paniques.length) { paniques[i] = dernier; dernier.i = i; }
+    const dernier = S.paniques.pop();
+    if (i < S.paniques.length) { S.paniques[i] = dernier; dernier.i = i; }
   }
 
   // Ceux qui sont déjà rentrés : leur place est la première qu'on reprend.
   // La liste se refait à chaque pas, en même temps qu'on les parcourt de toute
   // façon — elle ne coûte donc rien de plus qu'un `push`.
-  let abris = [];
+
 
   function bourgeois(dt) {
-    abris.length = 0;
+    S.abris.length = 0;
     // À l'envers, parce qu'on retire en cours de route.
-    for (let i = paniques.length - 1; i >= 0; i--) {
-      const p = paniques[i];
-      if (p.etat === "terre") abris.push(p);
+    for (let i = S.paniques.length - 1; i >= 0; i--) {
+      const p = S.paniques[i];
+      if (p.etat === "terre") S.abris.push(p);
       const m = foyerProche(p.x, p.y);
       p.age_t += dt;
 
@@ -7219,14 +7230,14 @@ window.Bataille2d = (() => {
   // avant que le premier soldat n'y soit entré, et il n'y a rien de plus vrai
   // dans tout ce module. Une grille de vingt mètres sur les seuls paniqués —
   // deux mille au plus, donc rien.
-  let semis = new Map();
+
   function semerLaRumeur() {
-    semis.clear();
-    for (const p of paniques) {
+    S.semis.clear();
+    for (const p of S.paniques) {
       if (p.etat === "terre" || p.contre) continue;   // on court après ceux qui courent
       const c = Math.floor(p.x / RUMEUR) + ":" + Math.floor(p.y / RUMEUR);
-      let l = semis.get(c);
-      if (!l) semis.set(c, l = []);
+      let l = S.semis.get(c);
+      if (!l) S.semis.set(c, l = []);
       l.push(p);
     }
   }
@@ -7235,7 +7246,7 @@ window.Bataille2d = (() => {
     let n = 0;
     const ci = Math.floor(x / RUMEUR), cj = Math.floor(y / RUMEUR);
     for (let i = -1; i <= 1; i++) for (let j = -1; j <= 1; j++) {
-      const l = semis.get((ci + i) + ":" + (cj + j));
+      const l = S.semis.get((ci + i) + ":" + (cj + j));
       if (!l) continue;
       for (const p of l)
         if ((p.x - x) ** 2 + (p.y - y) ** 2 < RUMEUR * RUMEUR && ++n >= RUMEUR_MIN)
@@ -7261,7 +7272,7 @@ window.Bataille2d = (() => {
     // Trois tests avant toute chose, dans l'ordre du moins cher : pas de
     // bataille, pas de masse à fuir, et l'on rend la main sans avoir rien
     // alloué. C'est le chemin que prennent quatre cent mille personnes.
-    if (!hommes.length || temps <= 0) return false;
+    if (!S.hommes.length || S.temps <= 0) return false;
     const p = cel._peur ? cel._peur[k] : null;
     if (p) {
       P.x = p.x; P.y = p.y;
@@ -7281,7 +7292,7 @@ window.Bataille2d = (() => {
     // On ne prend en charge que ceux qui sont DEHORS. Celui qui est chez lui y
     // reste : il a fermé sa porte, ce qui est exactement ce qu'on ferait.
     if (P.quoi === "chez") return false;
-    if (!foyers.length) return false;
+    if (!S.foyers.length) return false;
     const m = foyerProche(P.x, P.y);
     const vu = m && m.d < ALERTE;
     if (!vu && !rumeur(P.x, P.y)) return false;
@@ -7294,12 +7305,12 @@ window.Bataille2d = (() => {
     // ville. Celui qui VOIT passe donc devant, en prenant la place de quelqu'un
     // qui est déjà rentré chez lui — la lui reprendre ne coûte rien : il est
     // sous son toit, et sa journée écrite l'y met aussi.
-    if (paniques.length >= PANIQUE_MAX) {
+    if (S.paniques.length >= PANIQUE_MAX) {
       if (!vu) return false;
       let libre = false;
-      while (abris.length && !libre) {
-        const a = abris.pop();
-        if (a.etat === "terre" && paniques[a.i] === a) { oublier(a.i); libre = true; }
+      while (S.abris.length && !libre) {
+        const a = S.abris.pop();
+        if (a.etat === "terre" && S.paniques[a.i] === a) { oublier(a.i); libre = true; }
       }
       if (!libre) return false;
     }
@@ -7309,7 +7320,7 @@ window.Bataille2d = (() => {
     // pas à la même seconde et ne courent pas à la même allure, et pourtant
     // rien n'est stocké. Un enfant et un vieillard courent moins vite qu'un
     // portefaix — c'est l'âge qui est dans la cellule qui le dit, pas un dé.
-    const id = J.ident(cel, k);
+    const id = S.J.ident(cel, k);
     const h1 = ((id * 374761393) >>> 13 & 1023) / 1023;
     const h2 = ((id * 668265263) >>> 11 & 1023) / 1023;
     const an = cel.age_sexe ? (cel.age_sexe[k] & 0x7f) : 30;
@@ -7355,9 +7366,9 @@ window.Bataille2d = (() => {
       femme: !!(cel.age_sexe && (cel.age_sexe[k] & 0x80)),
       noeud: noeudProche(P.x, P.y), arc: null, venu: null, s: 0, surRue: false,
     };
-    rec.i = paniques.length;
+    rec.i = S.paniques.length;
     cel._peur[k] = rec;
-    paniques.push(rec);
+    S.paniques.push(rec);
     // LA PEUR SE NOTE PAR QUARTIER, ET UNE SEULE FOIS PAR QUARTIER. Quatre
     // mille paniqués feraient quatre mille lignes que personne ne lira ; ce
     // qu'on veut savoir est plus simple — à quelle heure tel quartier a
@@ -7415,12 +7426,12 @@ window.Bataille2d = (() => {
   // les huit dixièmes : un marcheur laisse un mètre par segment et deux mètres
   // de mémoire, un fuyard près de trois. C'est visible dès qu'on voit l'homme.
   const SILLAGE_S = 0.8;
-  let sillageDu = 0;
+
 
   function sillage() {
-    if (temps - sillageDu < SILLAGE_S) return;
-    sillageDu = temps;
-    for (const h of hommes) {
+    if (S.temps - S.sillageDu < SILLAGE_S) return;
+    S.sillageDu = S.temps;
+    for (const h of S.hommes) {
       if (h.etat === "mort" || h.etat === "blesse") continue;
       h.sx2 = h.sx1; h.sy2 = h.sy1;
       h.sx1 = h.x; h.sy1 = h.y;
@@ -7441,12 +7452,12 @@ window.Bataille2d = (() => {
   //
   // Quatre fois par seconde suffit : la nappe a huit secondes de descente.
   const MAILLE_SON = 40;
-  let rumeurDu = -1;
+
   function rumeur() {
-    if (!window.Son || temps - rumeurDu < 0.25) return;
-    rumeurDu = temps;
+    if (!window.Son || S.temps - S.rumeurDu < 0.25) return;
+    S.rumeurDu = S.temps;
     const cases = new Map();
-    for (const h of hommes) {
+    for (const h of S.hommes) {
       if (h.etat === "mort" || h.etat === "blesse" || h.etat === "tient") continue;
       const i = Math.round(h.x / MAILLE_SON), j = Math.round(h.y / MAILLE_SON);
       const c = i + "," + j;
@@ -7468,11 +7479,11 @@ window.Bataille2d = (() => {
   }
 
   function avancer(dtReel) {
-    reste += Math.min(dtReel, 0.5);
+    S.reste += Math.min(dtReel, 0.5);
     let n = 0;
-    while (reste >= PAS && n++ < 4) {
-      reste -= PAS;
-      temps += PAS;
+    while (S.reste >= PAS && n++ < 4) {
+      S.reste -= PAS;
+      S.temps += PAS;
       rumeur();
       // ---- OÙ IL ÉTAIT AU DÉBUT DU PAS ---------------------------------------
       // LA SIMULATION BAT À 20 HZ, L'ÉCRAN À 60 : sans ce relevé, une position
@@ -7488,7 +7499,7 @@ window.Bataille2d = (() => {
       // au prorata de ce qui reste dans l'accumulateur. Le modèle ne change pas
       // d'un iota — c'est le rendu qui cesse de montrer les paliers d'un calcul
       // qui n'a jamais prétendu battre à la vitesse de l'écran.
-      for (const h of hommes) { h.px = h.x; h.py = h.y; }
+      for (const h of S.hommes) { h.px = h.x; h.py = h.y; }
       semer();
       // OÙ SONT LES AILES, une fois pour toutes. Un ordre qui désigne
       // quelqu'un a besoin de son centre, et vingt-cinq cents hommes qui le
@@ -7524,12 +7535,12 @@ window.Bataille2d = (() => {
       lesMessagers();
       porteQuiCede();
       fairePercevoirIncendies();
-      for (const h of hommes) soldat(h, PAS);
-      for (const h of hommes) if (h.etat !== "mort") pousser(h, PAS);
+      for (const h of S.hommes) soldat(h, PAS);
+      for (const h of S.hommes) if (h.etat !== "mort") pousser(h, PAS);
       // LE SOUFFLE APRÈS LE MOUVEMENT, parce que c'est `h.etat` qui dit le
       // régime et qu'il vient seulement d'être arrêté par `soldat`. Le mettre
       // avant ferait payer à chacun l'effort du pas PRÉCÉDENT.
-      for (const h of hommes) if (h.etat !== "mort") souffler(h, PAS);
+      for (const h of S.hommes) if (h.etat !== "mort") souffler(h, PAS);
       // Les masses AVANT les habitants, et la rumeur après eux : ce qui court
       // à ce pas-ci est ce qui fera paniquer le voisin au pas suivant.
       escouadesQuiRompent();
@@ -7546,7 +7557,7 @@ window.Bataille2d = (() => {
 
   function majCompte() {
     let a = 0, d = 0;
-    for (const h of hommes) {
+    for (const h of S.hommes) {
       if (h.tete) continue;         // il commande, il ne fait pas nombre
       if (h.etat === "mort" || h.etat === "blesse" || h.etat === "deroute") continue;
       if (h.camp === "assaut") a++; else d++;
@@ -7560,12 +7571,12 @@ window.Bataille2d = (() => {
   // plus rien de ce qu'on leur avait dit. C'est le fait qui manque le plus au
   // récit d'une bataille, parce qu'il est le seul à parler d'un GROUPE.
   function escouadesQuiRompent() {
-    if (!escouades.length) return;
-    const vif = new Array(escouades.length).fill(0);
-    const tot = new Array(escouades.length).fill(0);
-    const cx = new Array(escouades.length).fill(0);
-    const cy = new Array(escouades.length).fill(0);
-    for (const h of hommes) {
+    if (!S.escouades.length) return;
+    const vif = new Array(S.escouades.length).fill(0);
+    const tot = new Array(S.escouades.length).fill(0);
+    const cx = new Array(S.escouades.length).fill(0);
+    const cy = new Array(S.escouades.length).fill(0);
+    for (const h of S.hommes) {
       // La tête est du camp de l'assaut et porte une escouade nulle par
       // défaut : sans ce test, elle gonflerait à jamais l'effectif de la
       // première, qui ne romprait donc plus jamais.
@@ -7575,11 +7586,11 @@ window.Bataille2d = (() => {
       if (h.etat === "mort" || h.etat === "blesse" || h.etat === "deroute") continue;
       vif[e]++; cx[e] += h.x; cy[e] += h.y;
     }
-    for (let e = 0; e < escouades.length; e++) {
+    for (let e = 0; e < S.escouades.length; e++) {
       if (!tot[e] || vif[e] > tot[e] / 2) continue;
       // Le lieu du fait est celui des SURVIVANTS, pas celui des morts : c'est
       // là qu'il y a encore quelqu'un à voir.
-      const x = vif[e] ? cx[e] / vif[e] : verrou.x, y = vif[e] ? cy[e] / vif[e] : verrou.y;
+      const x = vif[e] ? cx[e] / vif[e] : S.verrou.x, y = vif[e] ? cy[e] / vif[e] : S.verrou.y;
       noter("escouade-rompt", x, y,
             { clef: "rompt:" + e, dit: { escouade: e, restent: vif[e], sur: tot[e] } });
     }
@@ -7587,17 +7598,17 @@ window.Bataille2d = (() => {
 
   // ---- le dessin ------------------------------------------------------------
   function repere() {
-    const vue = vueDe && vueDe();
-    if (!vue || !toile || !toile.width) return null;
-    return CarteProjection.repere(vue, toile.width, toile.height);
+    const vue = S.vueDe && S.vueDe();
+    if (!vue || !S.toile || !S.toile.width) return null;
+    return CarteProjection.repere(vue, S.toile.width, S.toile.height);
   }
 
   function ajuster() {
-    if (!toile || !hote) return;
-    const r = hote.getBoundingClientRect();
+    if (!S.toile || !S.hote) return;
+    const r = S.hote.getBoundingClientRect();
     const dpr = window.devicePixelRatio || 1;
     const l = Math.round(r.width * dpr), h = Math.round(r.height * dpr);
-    if (toile.width !== l || toile.height !== h) { toile.width = l; toile.height = h; }
+    if (S.toile.width !== l || S.toile.height !== h) { S.toile.width = l; S.toile.height = h; }
   }
 
   // Éclaircir ou assombrir une teinte de la table, sans lui faire changer de
@@ -7739,8 +7750,8 @@ window.Bataille2d = (() => {
   // suit des yeux. `carte-ville` nous dit ce qu'il désigne, on allume la
   // maisonnée — et le lien vers la bannière, qui est la chose qu'on ne peut
   // pas déduire d'un point rouge.
-  let surligne = null;
-  function souligner(sel) { surligne = sel || null; }
+
+  function souligner(sel) { S.surligne = sel || null; }
 
   function peindre() {
     // `toile` ET `ctx` : le nettoyage de « pas de bataille ici » retire la
@@ -7750,10 +7761,10 @@ window.Bataille2d = (() => {
     // `carte-ville` appelle `recadrer()` à chaque `cadrer()` — jetait alors une
     // TypeError sur `toile.width`. `ajuster()`, juste au-dessus, teste bien
     // `toile` : c'est ici qu'il manquait.
-    if (!ctx || !toile || !toile.width) return;
-    ctx.clearRect(0, 0, toile.width, toile.height);
+    if (!S.ctx || !S.toile || !S.toile.width) return;
+    S.ctx.clearRect(0, 0, S.toile.width, S.toile.height);
     const rep = repere();
-    if (!rep || !hommes.length) return;
+    if (!rep || !S.hommes.length) return;
     const dpr = window.devicePixelRatio || 1;
     // ---- LA POSITION D'ÉCRAN, ENTRE DEUX PAS DE CALCUL -----------------------
     // Ce qu'on dessine n'est plus `h.x` mais un point pris entre où il était au
@@ -7768,9 +7779,9 @@ window.Bataille2d = (() => {
     // intégrée, et tendre un trait par-dessus les ferait glisser sur cent mètres
     // de toits. Au-delà de ce qu'un homme peut couvrir en un pas, on ne lisse
     // plus rien — on saute, exactement là où le modèle a sauté.
-    const a = Math.max(0, Math.min(1, reste / PAS));
+    const a = Math.max(0, Math.min(1, S.reste / PAS));
     const BOND = 4;                  // mètres : au-delà, ce n'est plus un pas
-    for (const h of hommes) {
+    for (const h of S.hommes) {
       if (h.px === undefined) { h.ex = h.x; h.ey = h.y; continue; }
       const jx = h.x - h.px, jy = h.y - h.py;
       if (jx * jx + jy * jy > BOND * BOND) { h.ex = h.x; h.ey = h.y; continue; }
@@ -7798,13 +7809,13 @@ window.Bataille2d = (() => {
     // inutile. On ne triche donc plus que là où l'on ne peut pas faire
     // autrement, et jamais dans l'autre sens.
     const r = Math.max(1.5 * dpr, rep.k * (EPAULE / 2));
-    const L = toile.width + 8, H = toile.height + 8;
+    const L = S.toile.width + 8, H = S.toile.height + 8;
 
     // Les verrous d'abord, sous les corps : ce sont les objectifs, ils doivent
     // se lire même quand sept hommes sont dessus. Il y en a un par porte, et
     // les voir tourner à des vitesses différentes est précisément ce qu'on
     // vient regarder.
-    for (const v of verrous) {
+    for (const v of S.verrous) {
       const x = rep.ox + v.x * rep.k, y = rep.oy + v.y * rep.ky;
       const part = v.pv / v.max;
       const R1 = Math.max(7, rep.k * 4);
@@ -7813,26 +7824,26 @@ window.Bataille2d = (() => {
       // touche depuis vingt minutes descendaient toutes deux en silence, du
       // même arc lisse. Le battement est la seule chose qui donne à voir que
       // le front n'est pas plein — trois coups par minute au lieu de sept.
-      const depuis = temps - (v.coup || -99);
+      const depuis = S.temps - (v.coup || -99);
       const frais = v.etat !== "ouvert" && depuis < 1.2;
       if (frais) {
         // Une onde brève, qui part du battant. Son opacité suit le nombre de
         // bras : un seul homme fait un frémissement, sept font un choc.
         const t = depuis / 1.2;
-        ctx.globalAlpha = (1 - t) * Math.min(.5, .12 + (v.frappeurs || 1) * .06);
-        ctx.strokeStyle = "#d9663f";
-        ctx.lineWidth = Math.max(1.5, 2 * dpr);
-        ctx.beginPath();
-        ctx.arc(x, y, R1 + t * R1 * .9, 0, 6.2832);
-        ctx.stroke();
-        ctx.globalAlpha = 1;
+        S.ctx.globalAlpha = (1 - t) * Math.min(.5, .12 + (v.frappeurs || 1) * .06);
+        S.ctx.strokeStyle = "#d9663f";
+        S.ctx.lineWidth = Math.max(1.5, 2 * dpr);
+        S.ctx.beginPath();
+        S.ctx.arc(x, y, R1 + t * R1 * .9, 0, 6.2832);
+        S.ctx.stroke();
+        S.ctx.globalAlpha = 1;
       }
-      ctx.strokeStyle = v.etat === "ouvert" ? "#7a8b5a" : "#b03a24";
-      ctx.lineWidth = Math.max(2, 3 * dpr) * (frais ? 1.35 : 1);
-      ctx.beginPath();
-      ctx.arc(x, y, R1, -Math.PI / 2,
+      S.ctx.strokeStyle = v.etat === "ouvert" ? "#7a8b5a" : "#b03a24";
+      S.ctx.lineWidth = Math.max(2, 3 * dpr) * (frais ? 1.35 : 1);
+      S.ctx.beginPath();
+      S.ctx.arc(x, y, R1, -Math.PI / 2,
               -Math.PI / 2 + 6.2832 * Math.max(0, part));
-      ctx.stroke();
+      S.ctx.stroke();
     }
 
     // ---- LES SILLAGES, SOUS TOUT LE MONDE ---------------------------------
@@ -7867,8 +7878,8 @@ window.Bataille2d = (() => {
     // Le plus rapide du plan fait 3,6 m/s et le relevé tombe toutes les 0,8 s :
     // au-delà de cinq mètres, aucun homme n'a marché — il a été déplacé.
     const BOND_SILLAGE = 5;
-    ctx.lineCap = "round";
-    for (const h of hommes) {
+    S.ctx.lineCap = "round";
+    for (const h of S.hommes) {
       if (h.sx2 === undefined || h.etat === "mort" || h.etat === "blesse") continue;
       const dx = h.sx1 - h.sx2, dy = h.sy1 - h.sy2;
       const d2 = dx * dx + dy * dy;
@@ -7885,25 +7896,25 @@ window.Bataille2d = (() => {
       // Le sillage suit la même règle que le corps, sinon la traînée reste
       // bleue derrière un homme redevenu rouge — et c'est le trait qu'on voit
       // en premier, puisqu'il est plus long que le point.
-      ctx.strokeStyle = couleurDe(h);
-      ctx.globalAlpha = .30;
-      ctx.lineWidth = Math.max(1, r * .7);
-      ctx.beginPath();
-      ctx.moveTo(x, y);
-      ctx.lineTo(rep.ox + h.sx1 * rep.k, rep.oy + h.sy1 * rep.ky);
-      ctx.stroke();
+      S.ctx.strokeStyle = couleurDe(h);
+      S.ctx.globalAlpha = .30;
+      S.ctx.lineWidth = Math.max(1, r * .7);
+      S.ctx.beginPath();
+      S.ctx.moveTo(x, y);
+      S.ctx.lineTo(rep.ox + h.sx1 * rep.k, rep.oy + h.sy1 * rep.ky);
+      S.ctx.stroke();
       // La seconde queue, deux fois plus pâle : elle ne se voit pas seule, elle
       // ne sert qu'à courber le trait — et une courbe dit d'où l'on vient là où
       // un segment ne dit qu'une direction.
       if (h.sx2 !== undefined) {
-        ctx.globalAlpha = .14;
-        ctx.beginPath();
-        ctx.moveTo(rep.ox + h.sx1 * rep.k, rep.oy + h.sy1 * rep.ky);
-        ctx.lineTo(rep.ox + h.sx2 * rep.k, rep.oy + h.sy2 * rep.ky);
-        ctx.stroke();
+        S.ctx.globalAlpha = .14;
+        S.ctx.beginPath();
+        S.ctx.moveTo(rep.ox + h.sx1 * rep.k, rep.oy + h.sy1 * rep.ky);
+        S.ctx.lineTo(rep.ox + h.sx2 * rep.k, rep.oy + h.sy2 * rep.ky);
+        S.ctx.stroke();
       }
     }
-    ctx.globalAlpha = 1;
+    S.ctx.globalAlpha = 1;
 
     // COMBIEN IL EN RESTE DEBOUT, PAR CORPS. Une tête sans ce chiffre n'est
     // qu'un nom posé sur le plan ; avec lui, on voit fondre les deux mille de
@@ -7911,7 +7922,7 @@ window.Bataille2d = (() => {
     // fait dans la boucle qu'on parcourt déjà, avant le rognage à l'écran —
     // sinon un corps sorti du cadre paraîtrait mort.
     debout.clear();
-    for (const h of hommes) {
+    for (const h of S.hommes) {
       if (h.corps && h.etat !== "mort" && h.etat !== "blesse")
         debout.set(h.corps, (debout.get(h.corps) || 0) + 1);
       const x = rep.ox + h.ex * rep.k, y = rep.oy + h.ey * rep.ky;
@@ -7924,30 +7935,30 @@ window.Bataille2d = (() => {
         // début. Une chute fraîche est donc sombre et nette, puis elle passe à
         // la teinte du sol sans jamais disparaître tout à fait — un mort reste
         // un corps qu'on retrouvera au matin.
-        const age = Math.min(1, (temps - (h.tombe || 0)) / SEDIMENT);
-        ctx.globalAlpha = .78 - age * .42;
-        ctx.fillStyle = age < .18 ? TEINTE.chute : TEINTE.mort;
+        const age = Math.min(1, (S.temps - (h.tombe || 0)) / SEDIMENT);
+        S.ctx.globalAlpha = .78 - age * .42;
+        S.ctx.fillStyle = age < .18 ? TEINTE.chute : TEINTE.mort;
         const c = r * (.86 - age * .18);
-        ctx.fillRect(x - c, y - c, c * 2, c * 2);
-        ctx.globalAlpha = 1;
+        S.ctx.fillRect(x - c, y - c, c * 2, c * 2);
+        S.ctx.globalAlpha = 1;
         continue;
       }
       // Le blessé se lit comme un mort — couché, à plat — mais il garde sa
       // couleur de sang : sur le plan, on doit voir d'un coup d'œil combien
       // sont par terre et combien de ceux-là respirent encore.
       if (h.etat === "blesse") {
-        ctx.globalAlpha = .8; ctx.fillStyle = TEINTE.blesse;
-        ctx.fillRect(x - r, y - r * .55, r * 2, r * 1.1);
-        ctx.globalAlpha = 1;
+        S.ctx.globalAlpha = .8; S.ctx.fillStyle = TEINTE.blesse;
+        S.ctx.fillRect(x - r, y - r * .55, r * 2, r * 1.1);
+        S.ctx.globalAlpha = 1;
         continue;
       }
       // CE QU'ON DÉSIGNE S'ALLUME, LE RESTE S'EFFACE — et l'inverse serait pire
       // que rien : entourer les vingt hommes d'une escouade au milieu de deux
       // mille points de la même couleur ne les fait pas ressortir, ça ajoute du
       // bruit. C'est la BAISSE du reste qui les fait apparaître.
-      const tenu = !surligne || (surligne.formation !== null &&
-                                 h.formation === surligne.formation);
-      ctx.globalAlpha = surligne ? (tenu ? 1 : .22) : 1;
+      const tenu = !S.surligne || (S.surligne.formation !== null &&
+                                 h.formation === S.surligne.formation);
+      S.ctx.globalAlpha = S.surligne ? (tenu ? 1 : .22) : 1;
       // À LA VILLE ENTIÈRE, LA MASSE SATURE. Sous le plancher de taille, deux
       // mille carrés de un pixel et demi à pleine encre se recouvrent et font
       // une tache uniforme : on perd le détail (c'est inévitable) ET la forme
@@ -7955,15 +7966,15 @@ window.Bataille2d = (() => {
       // se recouvre s'additionne — et la densité redevient lisible, c'est-à-dire
       // qu'on voit où sont les hommes au lieu de voir qu'il y en a.
       if (rep.k * EPAULE < 1.5 * dpr)
-        ctx.globalAlpha *= Math.max(.34, rep.k * EPAULE / (1.5 * dpr));
+        S.ctx.globalAlpha *= Math.max(.34, rep.k * EPAULE / (1.5 * dpr));
       // La monture doit se lire avant même le survol. Ce n'est pas une icône :
       // l'ovale donne aussi son orientation et l'encombrement supplémentaire.
       if (h.montureCombat && r > 1.2) {
-        ctx.save(); ctx.translate(x, y); ctx.rotate(-Math.atan2(h.fy || 0, h.fx || 1));
-        ctx.strokeStyle = "#d1b06b"; ctx.lineWidth = Math.max(1, dpr);
-        ctx.globalAlpha *= .8;
-        ctx.beginPath(); ctx.ellipse(0, 0, r * 1.75, r * 1.15, 0, 0, 6.2832); ctx.stroke();
-        ctx.restore();
+        S.ctx.save(); S.ctx.translate(x, y); S.ctx.rotate(-Math.atan2(h.fy || 0, h.fx || 1));
+        S.ctx.strokeStyle = "#d1b06b"; S.ctx.lineWidth = Math.max(1, dpr);
+        S.ctx.globalAlpha *= .8;
+        S.ctx.beginPath(); S.ctx.ellipse(0, 0, r * 1.75, r * 1.15, 0, 0, 6.2832); S.ctx.stroke();
+        S.ctx.restore();
       }
       // LA TREMPE SE VOIT, et c'est ce qui rend la variation lisible au lieu de
       // rester un chiffre dans un fichier. Une même teinte, éclaircie ou
@@ -7972,18 +7983,18 @@ window.Bataille2d = (() => {
       // clarté — mais une troupe cesse d'être une masse plate. Et à l'œil, un
       // paquet de points clairs qui tient là où le reste a lâché SE VOIT, sans
       // qu'on ait rien à mesurer.
-      ctx.fillStyle = eclaircir(couleurDe(h), h.trempe || 0);
-      if (r <= 2.4) ctx.fillRect(x - r, y - r, r * 2, r * 2);
-      else { ctx.beginPath(); ctx.arc(x, y, r, 0, 6.2832); ctx.fill(); }
-      ctx.globalAlpha = 1;
+      S.ctx.fillStyle = eclaircir(couleurDe(h), h.trempe || 0);
+      if (r <= 2.4) S.ctx.fillRect(x - r, y - r, r * 2, r * 2);
+      else { S.ctx.beginPath(); S.ctx.arc(x, y, r, 0, 6.2832); S.ctx.fill(); }
+      S.ctx.globalAlpha = 1;
       // L'ordre ouvert se lit sur les mêmes corps et dans la même vue : un
       // fin anneau bleu, seulement pendant la manœuvre. Ce n'est ni une
       // seconde visualisation ni une particule par homme qui persiste.
       if (h.doctrineActive && r > 1.1) {
-        ctx.strokeStyle = h.doctrinePhase === "ralliement" ? "#9ec8ca" : "#77b8c4";
-        ctx.globalAlpha = .72; ctx.lineWidth = Math.max(.8, dpr);
-        ctx.beginPath(); ctx.arc(x, y, r + 1.25 * dpr, 0, 6.2832); ctx.stroke();
-        ctx.globalAlpha = 1;
+        S.ctx.strokeStyle = h.doctrinePhase === "ralliement" ? "#9ec8ca" : "#77b8c4";
+        S.ctx.globalAlpha = .72; S.ctx.lineWidth = Math.max(.8, dpr);
+        S.ctx.beginPath(); S.ctx.arc(x, y, r + 1.25 * dpr, 0, 6.2832); S.ctx.stroke();
+        S.ctx.globalAlpha = 1;
       }
       // ---- LE FER, ET C'EST UNE LONGUEUR AVANT D'ÊTRE UNE COULEUR -----------
       // On dessine l'arme À SON ALLONGE VRAIE, en mètres, dans la direction où
@@ -8013,15 +8024,15 @@ window.Bataille2d = (() => {
       if (rep.k >= 3 && h.arme && (h.fx || h.fy)) {
         const cote = h.gaucher ? -POING : POING;
         const dx = -h.fy * cote * rep.k, dy = h.fx * cote * rep.k;
-        ctx.strokeStyle = h.arme.teinte;
-        ctx.globalAlpha = h.etat === "melee" || h.etat === "assaut" ? .85 : .5;
-        ctx.lineWidth = Math.max(1, (h.arme.degat[1] / 30) * dpr);
-        ctx.beginPath();
-        ctx.moveTo(x + dx, y + dy);
-        ctx.lineTo(x + dx + h.fx * h.arme.allonge * rep.k,
+        S.ctx.strokeStyle = h.arme.teinte;
+        S.ctx.globalAlpha = h.etat === "melee" || h.etat === "assaut" ? .85 : .5;
+        S.ctx.lineWidth = Math.max(1, (h.arme.degat[1] / 30) * dpr);
+        S.ctx.beginPath();
+        S.ctx.moveTo(x + dx, y + dy);
+        S.ctx.lineTo(x + dx + h.fx * h.arme.allonge * rep.k,
                    y + dy + h.fy * h.arme.allonge * rep.k);
-        ctx.stroke();
-        ctx.globalAlpha = 1;
+        S.ctx.stroke();
+        S.ctx.globalAlpha = 1;
       }
       // TROIS GRADES, TROIS MARQUES, ET ELLES SE DISTINGUENT DE LOIN. Il n'y en
       // avait qu'une — le liseré du chef d'escouade —, si bien qu'un capitaine
@@ -8030,20 +8041,20 @@ window.Bataille2d = (() => {
       // regarde tomber : perdre l'un coûte une escouade, perdre l'autre coûte
       // la morale de cinq.
       if (h.capitaine) {
-        ctx.strokeStyle = "#f0dfa8"; ctx.lineWidth = Math.max(1.4, 1.8 * dpr);
-        ctx.beginPath(); ctx.arc(x, y, r + 2.2 * dpr, 0, 6.2832); ctx.stroke();
+        S.ctx.strokeStyle = "#f0dfa8"; S.ctx.lineWidth = Math.max(1.4, 1.8 * dpr);
+        S.ctx.beginPath(); S.ctx.arc(x, y, r + 2.2 * dpr, 0, 6.2832); S.ctx.stroke();
       } else if (h.chef) {
-        ctx.strokeStyle = "#e8d9a8"; ctx.lineWidth = Math.max(1, dpr);
-        ctx.beginPath(); ctx.arc(x, y, r + 1.5 * dpr, 0, 6.2832); ctx.stroke();
+        S.ctx.strokeStyle = "#e8d9a8"; S.ctx.lineWidth = Math.max(1, dpr);
+        S.ctx.beginPath(); S.ctx.arc(x, y, r + 1.5 * dpr, 0, 6.2832); S.ctx.stroke();
       }
       // Le coureur traverse la presse avec un ordre dedans : il porte un halo,
       // parce qu'un point jaune de trois pixels dans deux mille points rouges
       // ne se suit pas des yeux, et que le suivre EST le spectacle.
       if (h.etat === "coureur") {
-        ctx.globalAlpha = .55;
-        ctx.strokeStyle = TEINTE.coureur; ctx.lineWidth = Math.max(1, dpr);
-        ctx.beginPath(); ctx.arc(x, y, r + 4 * dpr, 0, 6.2832); ctx.stroke();
-        ctx.globalAlpha = 1;
+        S.ctx.globalAlpha = .55;
+        S.ctx.strokeStyle = TEINTE.coureur; S.ctx.lineWidth = Math.max(1, dpr);
+        S.ctx.beginPath(); S.ctx.arc(x, y, r + 4 * dpr, 0, 6.2832); S.ctx.stroke();
+        S.ctx.globalAlpha = 1;
       }
     }
 
@@ -8063,46 +8074,46 @@ window.Bataille2d = (() => {
     const dx=bx-ax, dy=by-ay, d=Math.hypot(dx,dy);
     if (d < 4) return;
     const ux=dx/d, uy=dy/d, pointe=Math.max(5*dpr, Math.min(11*dpr, d*.14));
-    ctx.strokeStyle=style.couleur; ctx.fillStyle=style.couleur;
-    ctx.globalAlpha=style.alpha; ctx.lineWidth=Math.max(1, style.largeur*dpr);
-    ctx.setLineDash((style.tirets || []).map((x)=>x*dpr));
-    ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke();
+    S.ctx.strokeStyle=style.couleur; S.ctx.fillStyle=style.couleur;
+    S.ctx.globalAlpha=style.alpha; S.ctx.lineWidth=Math.max(1, style.largeur*dpr);
+    S.ctx.setLineDash((style.tirets || []).map((x)=>x*dpr));
+    S.ctx.beginPath(); S.ctx.moveTo(ax,ay); S.ctx.lineTo(bx,by); S.ctx.stroke();
     if (style.fleche) {
-      ctx.setLineDash([]); ctx.beginPath(); ctx.moveTo(bx,by);
-      ctx.lineTo(bx-ux*pointe-uy*pointe*.45, by-uy*pointe+ux*pointe*.45);
-      ctx.lineTo(bx-ux*pointe+uy*pointe*.45, by-uy*pointe-ux*pointe*.45);
-      ctx.closePath(); ctx.fill();
+      S.ctx.setLineDash([]); S.ctx.beginPath(); S.ctx.moveTo(bx,by);
+      S.ctx.lineTo(bx-ux*pointe-uy*pointe*.45, by-uy*pointe+ux*pointe*.45);
+      S.ctx.lineTo(bx-ux*pointe+uy*pointe*.45, by-uy*pointe-ux*pointe*.45);
+      S.ctx.closePath(); S.ctx.fill();
     }
   }
 
   function peindreCarteCommandant(rep, dpr) {
-    if (carteCommandantId == null) return;
-    const carte=carteCommandant(carteCommandantId);
-    if (!carte) { carteCommandantId=null; return; }
+    if (S.carteCommandantId == null) return;
+    const carte=carteCommandant(S.carteCommandantId);
+    if (!carte) { S.carteCommandantId=null; return; }
     const champ=carte.champ, noeuds=new Map(carte.noeuds.map((n)=>[n.id,n]));
     const sx=(x)=>rep.ox+x*rep.k, sy=(y)=>rep.oy+y*rep.ky;
-    ctx.save(); ctx.lineJoin="round"; ctx.lineCap="round";
+    S.ctx.save(); S.ctx.lineJoin="round"; S.ctx.lineCap="round";
 
     // Le polygone clair est ce que cet homme peut actuellement inspecter. Les
     // pointes sombres qui continuent un rayon arrêté montrent explicitement
     // qu'il existe du terrain derrière le masque, sans rien révéler de ce qui
     // s'y trouve.
     if (champ && champ.rayons.length) {
-      ctx.fillStyle="rgba(91,151,178,.075)";
-      ctx.strokeStyle="rgba(113,183,211,.30)"; ctx.lineWidth=Math.max(1,dpr);
-      ctx.beginPath();
-      champ.rayons.forEach((q,i)=>(i?ctx.lineTo(sx(q.x),sy(q.y)):ctx.moveTo(sx(q.x),sy(q.y))));
-      ctx.closePath(); ctx.fill(); ctx.stroke();
+      S.ctx.fillStyle="rgba(91,151,178,.075)";
+      S.ctx.strokeStyle="rgba(113,183,211,.30)"; S.ctx.lineWidth=Math.max(1,dpr);
+      S.ctx.beginPath();
+      champ.rayons.forEach((q,i)=>(i?S.ctx.lineTo(sx(q.x),sy(q.y)):S.ctx.moveTo(sx(q.x),sy(q.y))));
+      S.ctx.closePath(); S.ctx.fill(); S.ctx.stroke();
       const ox=sx(champ.origine.x), oy=sy(champ.origine.y);
       for (const q of champ.rayons) if (q.bloque) {
         const ux=Math.cos(q.angle), uy=Math.sin(q.angle);
-        ctx.strokeStyle="rgba(8,9,10,.38)"; ctx.lineWidth=Math.max(3,6*dpr);
-        ctx.beginPath(); ctx.moveTo(sx(q.x),sy(q.y));
-        ctx.lineTo(sx(champ.origine.x+ux*champ.rayon),
-                   sy(champ.origine.y+uy*champ.rayon)); ctx.stroke();
+        S.ctx.strokeStyle="rgba(8,9,10,.38)"; S.ctx.lineWidth=Math.max(3,6*dpr);
+        S.ctx.beginPath(); S.ctx.moveTo(sx(q.x),sy(q.y));
+        S.ctx.lineTo(sx(champ.origine.x+ux*champ.rayon),
+                   sy(champ.origine.y+uy*champ.rayon)); S.ctx.stroke();
       }
-      ctx.fillStyle="rgba(113,183,211,.85)"; ctx.beginPath();
-      ctx.arc(ox,oy,Math.max(3,3*dpr),0,6.2832); ctx.fill();
+      S.ctx.fillStyle="rgba(113,183,211,.85)"; S.ctx.beginPath();
+      S.ctx.arc(ox,oy,Math.max(3,3*dpr),0,6.2832); S.ctx.fill();
     }
 
     const styles={
@@ -8121,39 +8132,39 @@ window.Bataille2d = (() => {
       if (n.id==="soi") continue;
       const x=sx(n.position.x), y=sy(n.position.y);
       if (n.id==="objectif") {
-        const r=Math.max(5,5*dpr); ctx.fillStyle="rgba(225,183,95,.18)";
-        ctx.strokeStyle="#e1b75f"; ctx.globalAlpha=.85; ctx.lineWidth=Math.max(1,1.4*dpr);
-        ctx.beginPath(); ctx.moveTo(x,y-r); ctx.lineTo(x+r,y); ctx.lineTo(x,y+r);
-        ctx.lineTo(x-r,y); ctx.closePath(); ctx.fill(); ctx.stroke();
+        const r=Math.max(5,5*dpr); S.ctx.fillStyle="rgba(225,183,95,.18)";
+        S.ctx.strokeStyle="#e1b75f"; S.ctx.globalAlpha=.85; S.ctx.lineWidth=Math.max(1,1.4*dpr);
+        S.ctx.beginPath(); S.ctx.moveTo(x,y-r); S.ctx.lineTo(x+r,y); S.ctx.lineTo(x,y+r);
+        S.ctx.lineTo(x-r,y); S.ctx.closePath(); S.ctx.fill(); S.ctx.stroke();
         continue;
       }
       if (n.type==="commandant-allie") {
-        ctx.strokeStyle="#7bc5cf"; ctx.globalAlpha=.72; ctx.lineWidth=Math.max(1,1.4*dpr);
-        ctx.beginPath(); ctx.arc(x,y,Math.max(5,5*dpr),0,6.2832); ctx.stroke();
+        S.ctx.strokeStyle="#7bc5cf"; S.ctx.globalAlpha=.72; S.ctx.lineWidth=Math.max(1,1.4*dpr);
+        S.ctx.beginPath(); S.ctx.arc(x,y,Math.max(5,5*dpr),0,6.2832); S.ctx.stroke();
         continue;
       }
       const incertitude=Math.min(34,7+(1-(n.confiance||0))*20+(n.age||0)/45);
-      ctx.fillStyle="rgba(207,77,54,.09)"; ctx.strokeStyle="rgba(226,105,77,.55)";
-      ctx.globalAlpha=.9; ctx.lineWidth=Math.max(1,dpr); ctx.setLineDash([4*dpr,3*dpr]);
-      ctx.beginPath(); ctx.arc(x,y,Math.max(6,incertitude*rep.k),0,6.2832); ctx.fill(); ctx.stroke();
-      ctx.setLineDash([]); ctx.fillStyle="#dc664e";
-      const r=Math.max(5,5*dpr); ctx.beginPath(); ctx.moveTo(x,y-r);
-      ctx.lineTo(x+r*.9,y+r*.75); ctx.lineTo(x-r*.9,y+r*.75); ctx.closePath(); ctx.fill();
+      S.ctx.fillStyle="rgba(207,77,54,.09)"; S.ctx.strokeStyle="rgba(226,105,77,.55)";
+      S.ctx.globalAlpha=.9; S.ctx.lineWidth=Math.max(1,dpr); S.ctx.setLineDash([4*dpr,3*dpr]);
+      S.ctx.beginPath(); S.ctx.arc(x,y,Math.max(6,incertitude*rep.k),0,6.2832); S.ctx.fill(); S.ctx.stroke();
+      S.ctx.setLineDash([]); S.ctx.fillStyle="#dc664e";
+      const r=Math.max(5,5*dpr); S.ctx.beginPath(); S.ctx.moveTo(x,y-r);
+      S.ctx.lineTo(x+r*.9,y+r*.75); S.ctx.lineTo(x-r*.9,y+r*.75); S.ctx.closePath(); S.ctx.fill();
       // Deux marques purement descriptives : fer long et silhouette montée.
       // Elles ne changent aucune relation du graphe et n'impliquent donc
       // encore aucune manœuvre.
       if (n.signatures && n.signatures.longuesHampes) {
-        ctx.strokeStyle="#f1d09a"; ctx.lineWidth=Math.max(1,dpr); ctx.beginPath();
-        ctx.moveTo(x-r*1.5,y+r*1.2); ctx.lineTo(x+r*1.5,y-r*1.2); ctx.stroke();
+        S.ctx.strokeStyle="#f1d09a"; S.ctx.lineWidth=Math.max(1,dpr); S.ctx.beginPath();
+        S.ctx.moveTo(x-r*1.5,y+r*1.2); S.ctx.lineTo(x+r*1.5,y-r*1.2); S.ctx.stroke();
       }
       if (n.signatures && n.signatures.montes) {
-        ctx.strokeStyle="#e2bd6d"; ctx.beginPath();
-        ctx.arc(x,y+r*1.45,r*.75,Math.PI,0); ctx.stroke();
+        S.ctx.strokeStyle="#e2bd6d"; S.ctx.beginPath();
+        S.ctx.arc(x,y+r*1.45,r*.75,Math.PI,0); S.ctx.stroke();
       }
       if (rep.k>=1.4) {
         const force=n.force ? n.force.min+"–"+n.force.max : "?";
-        ctx.font=Math.max(10,10*dpr)+"px Georgia,serif"; ctx.fillStyle="#f0dfbd";
-        ctx.globalAlpha=.88; ctx.fillText(force+" · "+Math.round((n.confiance||0)*100)+" %",
+        S.ctx.font=Math.max(10,10*dpr)+"px Georgia,serif"; S.ctx.fillStyle="#f0dfbd";
+        S.ctx.globalAlpha=.88; S.ctx.fillText(force+" · "+Math.round((n.confiance||0)*100)+" %",
           x+r+4*dpr,y-3*dpr);
       }
     }
@@ -8161,19 +8172,19 @@ window.Bataille2d = (() => {
     // Une légende compacte rend la sélection vérifiable jusque dans une
     // capture Mark. Elle ne suit pas la carte et ne peut donc être confondue
     // avec un ordre ou une position du monde.
-    const marge=10*dpr, w=Math.min(toile.width-marge*2,360*dpr), h=58*dpr;
-    ctx.setLineDash([]); ctx.globalAlpha=.90; ctx.fillStyle="rgba(17,19,20,.82)";
-    ctx.fillRect(marge,marge,w,h); ctx.strokeStyle="rgba(113,183,211,.65)";
-    ctx.strokeRect(marge,marge,w,h);
-    ctx.fillStyle="#e9ddc4"; ctx.font="700 "+Math.max(11,12*dpr)+"px Georgia,serif";
-    ctx.fillText("Carte de "+carte.nom,marge+9*dpr,marge+18*dpr);
-    ctx.fillStyle="#bdb39e"; ctx.font=Math.max(9,10*dpr)+"px Arial,sans-serif";
+    const marge=10*dpr, w=Math.min(S.toile.width-marge*2,360*dpr), h=58*dpr;
+    S.ctx.setLineDash([]); S.ctx.globalAlpha=.90; S.ctx.fillStyle="rgba(17,19,20,.82)";
+    S.ctx.fillRect(marge,marge,w,h); S.ctx.strokeStyle="rgba(113,183,211,.65)";
+    S.ctx.strokeRect(marge,marge,w,h);
+    S.ctx.fillStyle="#e9ddc4"; S.ctx.font="700 "+Math.max(11,12*dpr)+"px Georgia,serif";
+    S.ctx.fillText("Carte de "+carte.nom,marge+9*dpr,marge+18*dpr);
+    S.ctx.fillStyle="#bdb39e"; S.ctx.font=Math.max(9,10*dpr)+"px Arial,sans-serif";
     const resume=carte.resume;
-    ctx.fillText(resume.croyances+" croyance(s) · "+resume.rayonsBloques+"/"+
+    S.ctx.fillText(resume.croyances+" croyance(s) · "+resume.rayonsBloques+"/"+
       resume.rayons+" directions masquées",marge+9*dpr,marge+35*dpr);
     const ordre=carte.ordre ? "Ordre : "+carte.ordre : "Aucun ordre reçu";
-    ctx.fillText(ordre.length>58?ordre.slice(0,57)+"…":ordre,marge+9*dpr,marge+50*dpr);
-    ctx.restore();
+    S.ctx.fillText(ordre.length>58?ordre.slice(0,57)+"…":ordre,marge+9*dpr,marge+50*dpr);
+    S.ctx.restore();
   }
 
   /** Quel corps vient de perdre quelqu'un, et à quelle heure. */
@@ -8182,7 +8193,7 @@ window.Bataille2d = (() => {
       const avant = deboutAvant.get(id);
       // On ne marque QUE la baisse. Un corps qui reprend un homme — un rallié,
       // un blessé qu'on relève — ne doit pas faire saigner son chiffre.
-      if (avant !== undefined && n < avant) deboutQuand.set(id, temps);
+      if (avant !== undefined && n < avant) deboutQuand.set(id, S.temps);
       deboutAvant.set(id, n);
     }
   }
@@ -8198,18 +8209,18 @@ window.Bataille2d = (() => {
   // un homme qui va rompre, et l'on voit la longueur du trait avant d'avoir lu
   // le moindre chiffre.
   function peindreLeLien(rep, dpr) {
-    if (!surligne || !surligne.lien) return;
-    const [ax, ay, bx, by] = surligne.lien;
-    ctx.save();
-    ctx.strokeStyle = "#f0dfa8";
-    ctx.globalAlpha = .5;
-    ctx.lineWidth = Math.max(1, 1.2 * dpr);
-    ctx.setLineDash([4 * dpr, 4 * dpr]);
-    ctx.beginPath();
-    ctx.moveTo(rep.ox + ax * rep.k, rep.oy + ay * rep.ky);
-    ctx.lineTo(rep.ox + bx * rep.k, rep.oy + by * rep.ky);
-    ctx.stroke();
-    ctx.restore();
+    if (!S.surligne || !S.surligne.lien) return;
+    const [ax, ay, bx, by] = S.surligne.lien;
+    S.ctx.save();
+    S.ctx.strokeStyle = "#f0dfa8";
+    S.ctx.globalAlpha = .5;
+    S.ctx.lineWidth = Math.max(1, 1.2 * dpr);
+    S.ctx.setLineDash([4 * dpr, 4 * dpr]);
+    S.ctx.beginPath();
+    S.ctx.moveTo(rep.ox + ax * rep.k, rep.oy + ay * rep.ky);
+    S.ctx.lineTo(rep.ox + bx * rep.k, rep.oy + by * rep.ky);
+    S.ctx.stroke();
+    S.ctx.restore();
   }
 
   // ---- LES BANNIÈRES --------------------------------------------------------
@@ -8218,32 +8229,32 @@ window.Bataille2d = (() => {
   // objet du sac qui dise d'un coup d'œil OÙ EST UNE AILE et si elle tient
   // encore : cinq escouades sont une abstraction, une hampe est un endroit.
   function peindreLesBannieres(rep, dpr) {
-    if (!ailes.length) return;
-    const L = toile.width + 12, H = toile.height + 12;
+    if (!S.ailes.length) return;
+    const L = S.toile.width + 12, H = S.toile.height + 12;
     const h0 = Math.max(9 * dpr, rep.k * 3.2);      // la hampe, en pixels
-    for (const a of ailes) {
+    for (const a of S.ailes) {
       const b = a.banniere;
       if (!b) continue;
       const x = rep.ox + b.x * rep.k, y = rep.oy + b.y * rep.ky;
       if (x < -12 || y < -12 || x > L || y > H) continue;
       const debout_ = b.debout;
-      ctx.globalAlpha = debout_ ? .95 : .38;
-      ctx.strokeStyle = debout_ ? "#f0dfa8" : TEINTE.mort;
-      ctx.lineWidth = Math.max(1.2, 1.4 * dpr);
-      ctx.beginPath();
+      S.ctx.globalAlpha = debout_ ? .95 : .38;
+      S.ctx.strokeStyle = debout_ ? "#f0dfa8" : TEINTE.mort;
+      S.ctx.lineWidth = Math.max(1.2, 1.4 * dpr);
+      S.ctx.beginPath();
       // Debout : verticale. À terre : couchée, du côté où l'homme est tombé.
-      if (debout_) { ctx.moveTo(x, y); ctx.lineTo(x, y - h0); }
-      else { ctx.moveTo(x, y); ctx.lineTo(x + h0, y + h0 * .25); }
-      ctx.stroke();
+      if (debout_) { S.ctx.moveTo(x, y); S.ctx.lineTo(x, y - h0); }
+      else { S.ctx.moveTo(x, y); S.ctx.lineTo(x + h0, y + h0 * .25); }
+      S.ctx.stroke();
       const [px, py] = debout_ ? [x, y - h0] : [x + h0, y + h0 * .25];
-      ctx.fillStyle = debout_ ? TEINTE.assaut : TEINTE.mort;
-      ctx.beginPath();
-      ctx.moveTo(px, py);
-      ctx.lineTo(px + h0 * .55, py + h0 * .18);
-      ctx.lineTo(px, py + h0 * .36);
-      ctx.closePath();
-      ctx.fill();
-      ctx.globalAlpha = 1;
+      S.ctx.fillStyle = debout_ ? TEINTE.assaut : TEINTE.mort;
+      S.ctx.beginPath();
+      S.ctx.moveTo(px, py);
+      S.ctx.lineTo(px + h0 * .55, py + h0 * .18);
+      S.ctx.lineTo(px, py + h0 * .36);
+      S.ctx.closePath();
+      S.ctx.fill();
+      S.ctx.globalAlpha = 1;
     }
   }
 
@@ -8262,7 +8273,7 @@ window.Bataille2d = (() => {
 
   function ordreEnTrainDEtreDit(u) {
     const ditA = u && u.ordre && u.ordre.ditA;
-    return Number.isFinite(ditA) && temps >= ditA && temps - ditA < ORDRE_CHANGE;
+    return Number.isFinite(ditA) && S.temps >= ditA && S.temps - ditA < ORDRE_CHANGE;
   }
 
   /** La phrase réellement détenue par cette unité, jamais son état moteur. */
@@ -8272,7 +8283,7 @@ window.Bataille2d = (() => {
     if (u && u.ordre && (u.ordre.source === "ordre-rassemblement" ||
                          u.ordre.source === "ordre-ratissage"))
       return u.ordre.texte;
-    const e = u && u.escouade != null ? escouades[u.escouade] : null;
+    const e = u && u.escouade != null ? S.escouades[u.escouade] : null;
     const o = e && e.ordre;
     // Les ordres d'assaut ont déjà leur grammaire, leurs clauses perdues et
     // leur histoire de transmission. C'est CETTE version arrivée à l'escouade
@@ -8291,28 +8302,28 @@ window.Bataille2d = (() => {
   function ordreFaitBouger(u) {
     if (u && u.ordre && u.ordre.source === "ordre-rassemblement")
       return u.cadre.ralliement && u.cadre.ralliement.phase !== "en-place";
-    const e = u && u.escouade != null ? escouades[u.escouade] : null;
+    const e = u && u.escouade != null ? S.escouades[u.escouade] : null;
     return e && e.ordre ? e.ordre.verbe !== "tenir"
       : !!(u && u.ordre && u.ordre.mode === "marcher");
   }
 
   function cheminBulle(x, y, l, h, r, pointeX, pointeY) {
     const rr = Math.min(r, l / 2, h / 2);
-    ctx.beginPath();
-    ctx.moveTo(x + rr, y);
-    ctx.lineTo(x + l - rr, y); ctx.quadraticCurveTo(x + l, y, x + l, y + rr);
-    ctx.lineTo(x + l, y + h - rr); ctx.quadraticCurveTo(x + l, y + h, x + l - rr, y + h);
-    ctx.lineTo(Math.min(x + l - rr, pointeX + 4), y + h);
-    ctx.lineTo(pointeX, pointeY);
-    ctx.lineTo(Math.max(x + rr, pointeX - 4), y + h);
-    ctx.lineTo(x + rr, y + h); ctx.quadraticCurveTo(x, y + h, x, y + h - rr);
-    ctx.lineTo(x, y + rr); ctx.quadraticCurveTo(x, y, x + rr, y);
-    ctx.closePath();
+    S.ctx.beginPath();
+    S.ctx.moveTo(x + rr, y);
+    S.ctx.lineTo(x + l - rr, y); S.ctx.quadraticCurveTo(x + l, y, x + l, y + rr);
+    S.ctx.lineTo(x + l, y + h - rr); S.ctx.quadraticCurveTo(x + l, y + h, x + l - rr, y + h);
+    S.ctx.lineTo(Math.min(x + l - rr, pointeX + 4), y + h);
+    S.ctx.lineTo(pointeX, pointeY);
+    S.ctx.lineTo(Math.max(x + rr, pointeX - 4), y + h);
+    S.ctx.lineTo(x + rr, y + h); S.ctx.quadraticCurveTo(x, y + h, x, y + h - rr);
+    S.ctx.lineTo(x, y + rr); S.ctx.quadraticCurveTo(x, y, x + rr, y);
+    S.ctx.closePath();
   }
 
   function peindreLesOrdres(rep, dpr) {
-    if (!formations.length) return;
-    const L = toile.width, H = toile.height;
+    if (!S.formations.length) return;
+    const L = S.toile.width, H = S.toile.height;
     const texteEntier = rep.k >= ORDRE_TEXTE_A * dpr;
     const font = Math.round(9.5 * dpr);
     const pris = [];
@@ -8338,23 +8349,23 @@ window.Bataille2d = (() => {
       return lignes;
     };
     const verbeCompact = (x, y, marche_, teinte) => {
-      ctx.strokeStyle = teinte;
-      ctx.fillStyle = teinte;
-      ctx.lineWidth = Math.max(1.3, 1.5 * dpr);
-      ctx.beginPath();
+      S.ctx.strokeStyle = teinte;
+      S.ctx.fillStyle = teinte;
+      S.ctx.lineWidth = Math.max(1.3, 1.5 * dpr);
+      S.ctx.beginPath();
       if (marche_) {
-        ctx.moveTo(x - 5 * dpr, y); ctx.lineTo(x + 4 * dpr, y);
-        ctx.moveTo(x + 1 * dpr, y - 3 * dpr); ctx.lineTo(x + 5 * dpr, y);
-        ctx.lineTo(x + 1 * dpr, y + 3 * dpr);
+        S.ctx.moveTo(x - 5 * dpr, y); S.ctx.lineTo(x + 4 * dpr, y);
+        S.ctx.moveTo(x + 1 * dpr, y - 3 * dpr); S.ctx.lineTo(x + 5 * dpr, y);
+        S.ctx.lineTo(x + 1 * dpr, y + 3 * dpr);
       } else {
         // Deux pieds posés : une tenue, pas seulement un tiret minuscule.
-        ctx.moveTo(x - 5 * dpr, y - 2 * dpr); ctx.lineTo(x - 5 * dpr, y + 2 * dpr);
-        ctx.lineTo(x + 5 * dpr, y + 2 * dpr); ctx.lineTo(x + 5 * dpr, y - 2 * dpr);
+        S.ctx.moveTo(x - 5 * dpr, y - 2 * dpr); S.ctx.lineTo(x - 5 * dpr, y + 2 * dpr);
+        S.ctx.lineTo(x + 5 * dpr, y + 2 * dpr); S.ctx.lineTo(x + 5 * dpr, y - 2 * dpr);
       }
-      ctx.stroke();
+      S.ctx.stroke();
     };
     const candidats = [];
-    for (const u of formations) {
+    for (const u of S.formations) {
       const chef = guideDe(u);
       if (!chef || !u.ordre) continue;
       if (!ordreEnTrainDEtreDit(u)) continue;
@@ -8366,10 +8377,10 @@ window.Bataille2d = (() => {
     // touchent : c'est précisément celui que l'œil cherche à cet instant.
     candidats.sort((a, b) => b.u.ordre.ditA - a.u.ordre.ditA);
 
-    ctx.save();
-    ctx.textBaseline = "middle";
-    ctx.textAlign = "center";
-    ctx.font = "600 " + font + "px ui-sans-serif, system-ui, sans-serif";
+    S.ctx.save();
+    S.ctx.textBaseline = "middle";
+    S.ctx.textAlign = "center";
+    S.ctx.font = "600 " + font + "px ui-sans-serif, system-ui, sans-serif";
     for (const p of candidats) {
       const o = p.u.ordre;
       const marche_ = ordreFaitBouger(p.u);
@@ -8383,20 +8394,20 @@ window.Bataille2d = (() => {
         const lw = 18 * dpr, lh = 14 * dpr;
         cheminBulle(p.x - lw / 2, p.y - 24 * dpr, lw, lh, 4 * dpr,
                     p.x, p.y - 6 * dpr);
-        ctx.globalAlpha = recent ? .96 : .84;
-        ctx.fillStyle = "rgba(18,16,13,.92)";
-        ctx.fill();
-        ctx.globalAlpha = 1;
-        ctx.strokeStyle = recent ? "#f1ca72" : teinte;
-        ctx.lineWidth = Math.max(1, (recent ? 1.7 : 1.1) * dpr);
-        ctx.stroke();
+        S.ctx.globalAlpha = recent ? .96 : .84;
+        S.ctx.fillStyle = "rgba(18,16,13,.92)";
+        S.ctx.fill();
+        S.ctx.globalAlpha = 1;
+        S.ctx.strokeStyle = recent ? "#f1ca72" : teinte;
+        S.ctx.lineWidth = Math.max(1, (recent ? 1.7 : 1.1) * dpr);
+        S.ctx.stroke();
         verbeCompact(p.x, p.y - 17.5 * dpr, marche_, recent ? "#f1ca72" : teinte);
         continue;
       }
 
       const lignes = lignesDe(phrase, 29, 3);
-      ctx.font = "600 " + font + "px ui-sans-serif, system-ui, sans-serif";
-      const largeur = Math.max(...lignes.map((x) => ctx.measureText(x).width)) + 12 * dpr;
+      S.ctx.font = "600 " + font + "px ui-sans-serif, system-ui, sans-serif";
+      const largeur = Math.max(...lignes.map((x) => S.ctx.measureText(x).width)) + 12 * dpr;
       const hauteur = (8 + lignes.length * 11) * dpr;
       const ecart = 12 * dpr;
       const essais = [0, -largeur * .55, largeur * .55, -largeur, largeur];
@@ -8414,7 +8425,7 @@ window.Bataille2d = (() => {
       // Dans une presse illisible, aucun chef ne perd complètement son ordre :
       // seule la phrase cède, et son verbe compact reste au-dessus de lui.
       if (!boite) {
-        ctx.globalAlpha = recent ? 1 : .82;
+        S.ctx.globalAlpha = recent ? 1 : .82;
         verbeCompact(p.x, p.y - 8 * dpr, marche_, recent ? "#f1ca72" : teinte);
         continue;
       }
@@ -8422,19 +8433,19 @@ window.Bataille2d = (() => {
       const bx = boite[0], by = boite[1], pointeX = Math.max(bx + 6 * dpr,
         Math.min(boite[2] - 6 * dpr, p.x));
       cheminBulle(bx, by, largeur, hauteur, 5 * dpr, pointeX, p.y - 2 * dpr);
-      ctx.globalAlpha = recent ? .96 : .86;
-      ctx.fillStyle = recent ? "rgba(73,55,24,.94)" : "rgba(18,16,13,.90)";
-      ctx.fill();
-      ctx.globalAlpha = 1;
-      ctx.strokeStyle = recent ? "#f1ca72" : teinte;
-      ctx.lineWidth = Math.max(1, (recent ? 1.7 : 1.1) * dpr);
-      ctx.stroke();
-      ctx.fillStyle = recent ? "#ffe6a0" : "#f1e5ce";
-      ctx.font = "600 " + font + "px ui-sans-serif, system-ui, sans-serif";
+      S.ctx.globalAlpha = recent ? .96 : .86;
+      S.ctx.fillStyle = recent ? "rgba(73,55,24,.94)" : "rgba(18,16,13,.90)";
+      S.ctx.fill();
+      S.ctx.globalAlpha = 1;
+      S.ctx.strokeStyle = recent ? "#f1ca72" : teinte;
+      S.ctx.lineWidth = Math.max(1, (recent ? 1.7 : 1.1) * dpr);
+      S.ctx.stroke();
+      S.ctx.fillStyle = recent ? "#ffe6a0" : "#f1e5ce";
+      S.ctx.font = "600 " + font + "px ui-sans-serif, system-ui, sans-serif";
       for (let i = 0; i < lignes.length; i++)
-        ctx.fillText(lignes[i], bx + largeur / 2, by + (8 + i * 11) * dpr);
+        S.ctx.fillText(lignes[i], bx + largeur / 2, by + (8 + i * 11) * dpr);
     }
-    ctx.restore();
+    S.ctx.restore();
   }
 
   // ---- LES NOMMÉS -----------------------------------------------------------
@@ -8470,19 +8481,19 @@ window.Bataille2d = (() => {
   };
 
   function couronne(x, y, s) {
-    ctx.beginPath();
-    ctx.moveTo(x - s, y + s * .55);
-    ctx.lineTo(x - s, y - s * .40);
-    ctx.lineTo(x - s * .5, y + s * .10);
-    ctx.lineTo(x, y - s * .65);
-    ctx.lineTo(x + s * .5, y + s * .10);
-    ctx.lineTo(x + s, y - s * .40);
-    ctx.lineTo(x + s, y + s * .55);
-    ctx.closePath();
+    S.ctx.beginPath();
+    S.ctx.moveTo(x - s, y + s * .55);
+    S.ctx.lineTo(x - s, y - s * .40);
+    S.ctx.lineTo(x - s * .5, y + s * .10);
+    S.ctx.lineTo(x, y - s * .65);
+    S.ctx.lineTo(x + s * .5, y + s * .10);
+    S.ctx.lineTo(x + s, y - s * .40);
+    S.ctx.lineTo(x + s, y + s * .55);
+    S.ctx.closePath();
   }
 
   function peindreLesNommes(rep, dpr) {
-    const L = toile.width + 8, H = toile.height + 8;
+    const L = S.toile.width + 8, H = S.toile.height + 8;
     // LES ÉTIQUETTES NE SE MARCHENT PLUS DESSUS. On garde les rectangles déjà
     // écrits et l'on saute ceux qui les croisent — le rang décidant qui passe.
     // Un nom sauté n'est pas perdu : son anneau reste, et il suffit de serrer
@@ -8491,7 +8502,7 @@ window.Bataille2d = (() => {
     const libre = (a) => !pris.some((b) => a[0] < b[2] && a[2] > b[0] &&
                                            a[1] < b[3] && a[3] > b[1]);
 
-    ctx.textBaseline = "middle";
+    S.ctx.textBaseline = "middle";
 
     const trace = (p) => {
       const x = rep.ox + p.x * rep.k, y = rep.oy + p.y * rep.ky;
@@ -8500,39 +8511,39 @@ window.Bataille2d = (() => {
       const roi = p.rang === "roi";
       const teinte = g.teinte || ANNEAU[p.camp] || ANNEAU.ville;
       const R0 = Math.max((roi ? 8.5 : 6.5) * dpr, rep.k * (roi ? 6.5 : 5));
-      ctx.globalAlpha = p.tombe ? .45 : 1;
-      ctx.strokeStyle = teinte;
-      ctx.lineWidth = Math.max(1.4, (roi ? 2.2 : 1.6) * dpr);
+      S.ctx.globalAlpha = p.tombe ? .45 : 1;
+      S.ctx.strokeStyle = teinte;
+      S.ctx.lineWidth = Math.max(1.4, (roi ? 2.2 : 1.6) * dpr);
 
       // La figure ne se bat pas : son anneau est POINTILLÉ. C'est la seule
       // distinction qui compte vraiment sur ce plan — entre ceux qui peuvent
       // mourir dans la minute et ceux qui regardent.
-      if (p.rang === "figure") ctx.setLineDash([3 * dpr, 3 * dpr]);
-      ctx.beginPath(); ctx.arc(x, y, R0, 0, 6.2832); ctx.stroke();
-      ctx.setLineDash([]);
+      if (p.rang === "figure") S.ctx.setLineDash([3 * dpr, 3 * dpr]);
+      S.ctx.beginPath(); S.ctx.arc(x, y, R0, 0, 6.2832); S.ctx.stroke();
+      S.ctx.setLineDash([]);
 
       // Un second anneau sur ceux qui décident : la tête d'un corps n'est pas
       // un habitant, et l'œil doit pouvoir trier sans lire.
       if (p.rang === "tete" || roi) {
-        ctx.lineWidth = Math.max(1, 1.2 * dpr);
-        ctx.beginPath(); ctx.arc(x, y, R0 + 3 * dpr, 0, 6.2832); ctx.stroke();
+        S.ctx.lineWidth = Math.max(1, 1.2 * dpr);
+        S.ctx.beginPath(); S.ctx.arc(x, y, R0 + 3 * dpr, 0, 6.2832); S.ctx.stroke();
       }
       if (roi) {
-        ctx.fillStyle = OR;
+        S.ctx.fillStyle = OR;
         couronne(x, y - R0 - 6 * dpr, Math.max(4 * dpr, R0 * .5));
-        ctx.fill();
+        S.ctx.fill();
       }
       // Tombé : on barre l'anneau. Un nommé à terre reste sur le plan — c'est
       // une bouche à faire parler au matin — mais il ne commande plus rien, et
       // ça doit se voir sans lire son étiquette.
       if (p.tombe) {
         const d = R0 * .72;
-        ctx.beginPath();
-        ctx.moveTo(x - d, y - d); ctx.lineTo(x + d, y + d);
-        ctx.stroke();
+        S.ctx.beginPath();
+        S.ctx.moveTo(x - d, y - d); S.ctx.lineTo(x + d, y + d);
+        S.ctx.stroke();
       }
 
-      if (rep.k <= g.seuil) { ctx.globalAlpha = 1; return; }
+      if (rep.k <= g.seuil) { S.ctx.globalAlpha = 1; return; }
 
       // Deux lignes : le nom, et ce qu'il EST. Le second mot est ce qui manquait
       // — « Ser Merryn Coutre » ne dit pas qu'il tient le Donjon, et
@@ -8543,13 +8554,13 @@ window.Bataille2d = (() => {
       // en continu, et il passait de vingt à dix-sept sans un frémissement —
       // trois morts qu'on n'a pas sentis. Il brûle une seconde, puis se range.
       const saigne = compteVif &&
-                     temps - (deboutQuand.get(p.corps) || -99) < SURSAUT;
+                     S.temps - (deboutQuand.get(p.corps) || -99) < SURSAUT;
       const F1 = Math.round((roi ? 12.5 : 11) * dpr);
       const F2 = Math.round(9 * dpr);
-      ctx.font = (roi ? "600 " : "") + F1 + "px ui-sans-serif, system-ui, sans-serif";
-      const l1 = ctx.measureText(p.nom).width;
-      ctx.font = F2 + "px ui-sans-serif, system-ui, sans-serif";
-      const l2 = sous ? ctx.measureText(sous).width : 0;
+      S.ctx.font = (roi ? "600 " : "") + F1 + "px ui-sans-serif, system-ui, sans-serif";
+      const l1 = S.ctx.measureText(p.nom).width;
+      S.ctx.font = F2 + "px ui-sans-serif, system-ui, sans-serif";
+      const l2 = sous ? S.ctx.measureText(sous).width : 0;
       const l = Math.max(l1, l2);
       const hb = sous ? 26 * dpr : 16 * dpr;
       const lb = l + 8 * dpr;
@@ -8570,7 +8581,7 @@ window.Bataille2d = (() => {
         const b = [px2, py2, px2 + lb, py2 + hb];
         if (libre(b)) { boite = b; break; }
       }
-      if (!boite) { ctx.globalAlpha = 1; return; }
+      if (!boite) { S.ctx.globalAlpha = 1; return; }
       pris.push(boite);
       const bx = boite[0], ty = boite[1] + hb / 2;
       // UN FILET DE RAPPEL DÈS QUE L'ÉTIQUETTE A DÛ SE DÉPLACER. Les quatre
@@ -8581,49 +8592,49 @@ window.Bataille2d = (() => {
       // Le filet ne se dessine QUE dans ce cas : à droite, la place par
       // défaut, il n'apprendrait rien et salirait la carte.
       if (boite !== places[0] && bx !== places[0][0]) {
-        ctx.save();
-        ctx.strokeStyle = teinte;
-        ctx.globalAlpha = (p.tombe ? .25 : .45);
-        ctx.lineWidth = Math.max(1, dpr);
-        ctx.beginPath();
-        ctx.moveTo(x, y);
+        S.ctx.save();
+        S.ctx.strokeStyle = teinte;
+        S.ctx.globalAlpha = (p.tombe ? .25 : .45);
+        S.ctx.lineWidth = Math.max(1, dpr);
+        S.ctx.beginPath();
+        S.ctx.moveTo(x, y);
         // Vers le coin de la boîte qui regarde l'homme, jamais vers son milieu :
         // un trait qui entre dans l'étiquette la barre.
-        ctx.lineTo(bx < x ? boite[2] : bx,
+        S.ctx.lineTo(bx < x ? boite[2] : bx,
                    Math.max(boite[1], Math.min(boite[3], y)));
-        ctx.stroke();
-        ctx.restore();
+        S.ctx.stroke();
+        S.ctx.restore();
       }
 
-      ctx.globalAlpha = p.tombe ? .4 : .82;
-      ctx.fillStyle = "rgba(18,16,13,.72)";
-      ctx.fillRect(boite[0], boite[1], lb, hb);
-      ctx.globalAlpha = p.tombe ? .55 : 1;
-      ctx.fillStyle = teinte;
-      ctx.font = (roi ? "600 " : "") + F1 + "px ui-sans-serif, system-ui, sans-serif";
-      ctx.fillText(p.nom, bx + 4 * dpr, sous ? ty - 5 * dpr : ty);
+      S.ctx.globalAlpha = p.tombe ? .4 : .82;
+      S.ctx.fillStyle = "rgba(18,16,13,.72)";
+      S.ctx.fillRect(boite[0], boite[1], lb, hb);
+      S.ctx.globalAlpha = p.tombe ? .55 : 1;
+      S.ctx.fillStyle = teinte;
+      S.ctx.font = (roi ? "600 " : "") + F1 + "px ui-sans-serif, system-ui, sans-serif";
+      S.ctx.fillText(p.nom, bx + 4 * dpr, sous ? ty - 5 * dpr : ty);
       if (sous) {
-        ctx.globalAlpha = saigne ? 1 : (p.tombe ? .4 : .7);
-        if (saigne) ctx.fillStyle = "#d9663f";
-        ctx.font = (saigne ? "600 " : "") + F2 +
+        S.ctx.globalAlpha = saigne ? 1 : (p.tombe ? .4 : .7);
+        if (saigne) S.ctx.fillStyle = "#d9663f";
+        S.ctx.font = (saigne ? "600 " : "") + F2 +
                    "px ui-sans-serif, system-ui, sans-serif";
-        ctx.fillText(sous, bx + 4 * dpr, ty + 7 * dpr);
+        S.ctx.fillText(sous, bx + 4 * dpr, ty + 7 * dpr);
       }
-      ctx.globalAlpha = 1;
+      S.ctx.globalAlpha = 1;
     };
 
     // On rassemble avant de peindre, et l'on trie par rang : c'est ce tri qui
     // fait que le roi écrit son nom avant une lavandière, et non l'ordre dans
     // lequel `dresser` les a poussés dans le tableau.
     const marques = [];
-    for (const h of hommes) {
+    for (const h of S.hommes) {
       if (!h.nom) continue;
       marques.push({ x: h.ex, y: h.ey, nom: h.nom, camp: h.camp, corps: h.corps,
                      role: h.role,
                      rang: h.roi ? "roi" : h.tete ? "tete" : "nomme",
                      tombe: h.etat === "mort" || h.etat === "blesse" });
     }
-    for (const f of figures)
+    for (const f of S.figures)
       marques.push({ x: f.x, y: f.y, nom: f.nom, camp: f.camp, role: f.role,
                      rang: "figure", tombe: false });
     // Un tombé passe après un debout de même rang : la place va à qui commande
@@ -8635,47 +8646,47 @@ window.Bataille2d = (() => {
 
   function image() {
     const t = performance.now();
-    const dt = dernier ? (t - dernier) / 1000 : 0;
-    dernier = t;
-    if (marche) avancer(dt);
+    const dt = S.dernier ? (t - S.dernier) / 1000 : 0;
+    S.dernier = t;
+    if (S.marche) avancer(dt);
     peindre();
     montre();
-    boucle = requestAnimationFrame(image);
+    S.boucle = requestAnimationFrame(image);
   }
 
   // ---- la barre -------------------------------------------------------------
-  let barre = null, lecture = null;
+
   function batirBarre() {
-    barre = document.createElement("div");
-    barre.className = "cv-bat-barre";
-    barre.innerHTML =
+    S.barre = document.createElement("div");
+    S.barre.className = "cv-bat-barre";
+    S.barre.innerHTML =
       '<button class="cv-b-jouer" title="Lancer ou suspendre l\'assaut">▶</button>' +
       '<span class="cv-b-etat">—</span>' +
       '<button class="cv-b-rejouer" title="Remettre l\'armée devant la porte">↺</button>';
-    lecture = barre.querySelector(".cv-b-etat");
-    barre.querySelector(".cv-b-jouer").addEventListener("click", (e) => {
+    S.lecture = S.barre.querySelector(".cv-b-etat");
+    S.barre.querySelector(".cv-b-jouer").addEventListener("click", (e) => {
       e.stopPropagation(); basculer();
     });
-    barre.querySelector(".cv-b-rejouer").addEventListener("click", (e) => {
+    S.barre.querySelector(".cv-b-rejouer").addEventListener("click", (e) => {
       e.stopPropagation(); rejouer();
     });
     ["pointerdown", "wheel", "dblclick"].forEach((t) =>
-      barre.addEventListener(t, (e) => e.stopPropagation()));
-    hote.appendChild(barre);
+      S.barre.addEventListener(t, (e) => e.stopPropagation()));
+    S.hote.appendChild(S.barre);
   }
 
   function montre() {
-    if (!lecture) return;
-    if (!hommes.length) { lecture.textContent = "—"; return; }
-    const mm = Math.floor(temps / 60), ss = Math.floor(temps % 60);
+    if (!S.lecture) return;
+    if (!S.hommes.length) { S.lecture.textContent = "—"; return; }
+    const mm = Math.floor(S.temps / 60), ss = Math.floor(S.temps % 60);
     // COMBIEN DE PORTES SONT TOMBÉES, plutôt que l'état d'une seule. C'est le
     // seul chiffre qui dise où en est un sac : une ville tient tant qu'il lui
     // reste un battant.
-    const ouvertes = verrous.filter((v) => v.etat === "ouvert").length;
-    const porte = verrous.length <= 1
-      ? (verrou && verrou.etat === "ouvert" ? "porte enfoncée"
-         : Math.round((verrou ? verrou.pv / verrou.max : 1) * 100) + " % de porte")
-      : ouvertes + "/" + verrous.length + " portes";
+    const ouvertes = S.verrous.filter((v) => v.etat === "ouvert").length;
+    const porte = S.verrous.length <= 1
+      ? (S.verrou && S.verrou.etat === "ouvert" ? "porte enfoncée"
+         : Math.round((S.verrou ? S.verrou.pv / S.verrou.max : 1) * 100) + " % de porte")
+      : ouvertes + "/" + S.verrous.length + " portes";
     // CINQ MESURES DE NATURE DIFFÉRENTE, ET ELLES NE PÈSENT PAS PAREIL. Elles
     // s'écrivaient d'affilée, au même poids, séparées par des points médians :
     // le RAPPORT DE FORCE — le seul chiffre qui décide de la nuit — se lisait
@@ -8685,7 +8696,7 @@ window.Bataille2d = (() => {
     const pertes = [compte.blesses ? compte.blesses + " à terre" : null,
                     compte.fuyards ? compte.fuyards + " en fuite" : null]
                    .filter(Boolean).join(" · ");
-    lecture.innerHTML =
+    S.lecture.innerHTML =
       '<b class="cv-b-h">' + mm + "′" + (ss < 10 ? "0" : "") + ss + "</b>" +
       '<span class="cv-b-force"><b>' + compte.a + "</b> contre <b>" +
         compte.d + "</b></span>" +
@@ -8694,7 +8705,7 @@ window.Bataille2d = (() => {
   }
 
   function basculer() {
-    if (!hommes.length) rejouer();
+    if (!S.hommes.length) rejouer();
     // OUVRIR L'OREILLE ICI, ET NULLE PART AILLEURS. Aucun navigateur ne laisse
     // une page faire du bruit sans qu'on l'ait touchée — il faut donc un geste,
     // et celui-ci est le bon : c'est le seul du jeu qui déclenche à coup sûr ce
@@ -8702,12 +8713,12 @@ window.Bataille2d = (() => {
     // plus, et un éveil au chargement de la page ne marcherait tout simplement
     // pas. On suspend en même temps qu'on suspend l'assaut : une bataille en
     // pause ne gronde pas.
-    if (window.Son) { if (marche) Son.dormir(); else Son.eveiller(); }
-    marche = !marche;
-    dernier = performance.now();
-    if (barre) {
-      barre.querySelector(".cv-b-jouer").textContent = marche ? "⏸" : "▶";
-      barre.classList.toggle("marche", marche);
+    if (window.Son) { if (S.marche) Son.dormir(); else Son.eveiller(); }
+    S.marche = !S.marche;
+    S.dernier = performance.now();
+    if (S.barre) {
+      S.barre.querySelector(".cv-b-jouer").textContent = S.marche ? "⏸" : "▶";
+      S.barre.classList.toggle("marche", S.marche);
     }
     if (window.Foule2d) Foule2d.salir();
   }
@@ -8716,14 +8727,14 @@ window.Bataille2d = (() => {
     // Sans effectif, c'est l'ÉCHELLE qui commande, et non plus trois cents
     // hommes en dur : la seule question qu'on se pose désormais est « à quelle
     // fraction de l'armée regarde-t-on ? ».
-    terrainEpreuve = null;
+    S.terrainEpreuve = null;
     dresser(nomPorte || "La porte de la Gadoue", n);
     // On rend d'abord tout le monde à sa journée : les tableaux de peur vivent
     // sur les cellules, qui, elles, survivent à la bataille.
-    for (const p of paniques) if (p.cel._peur) p.cel._peur[p.k] = null;
-    paniques.length = 0; abris.length = 0; semis.clear(); foyers = [];
-    incendiesSignales.clear(); prochainePerceptionIncendie = -Infinity;
-    enArmes = new Map();
+    for (const p of S.paniques) if (p.cel._peur) p.cel._peur[p.k] = null;
+    S.paniques.length = 0; S.abris.length = 0; S.semis.clear(); S.foyers = [];
+    S.incendiesSignales.clear(); S.prochainePerceptionIncendie = -Infinity;
+    S.enArmes = new Map();
     tisserReseau();
     compte.morts = 0; compte.blesses = 0; compte.fuyards = 0; compte.rallies = 0;
     compte.contreCharges = 0;
@@ -8732,7 +8743,7 @@ window.Bataille2d = (() => {
     // écrivait était effacé dans la foulée. C'est resté invisible tant que
     // `dresser` n'écrivait rien ; le jour où il a annoncé les humeurs des six
     // corps, ces six lignes-là ne sont jamais arrivées jusqu'au fichier.)
-    dernier = performance.now();
+    S.dernier = performance.now();
     if (window.Foule2d) Foule2d.salir();
   }
 
@@ -8740,42 +8751,42 @@ window.Bataille2d = (() => {
   // convoquée. Cet état est volontairement plus fort que « pause » : il ne
   // garde ni hommes, ni unités, ni ordre de bataille caché sous le canvas.
   function vider() {
-    hommes=[]; prochainHommeDebug=0; terrainEpreuve=null;
-    escouades=[]; formations=[]; routesFormation=new Map();
-    deploiements=new Map(); carteCommandantId=null;
-    ratissages=new Map(); prochainRatissage=0;
-    ailes=[]; tetes=[]; figures=[]; messagers=[];
-    verrous=[]; entree=null; objectif=null; verrou=null;
-    roi=null; arret=null; anneauOuvert=false;
-    conseil={ averti:0, tenir:0, ouvrir:0, tranche:false };
-    annales=[]; dits.clear(); temps=0; reste=0; marche=false;
-    paniques.length=0; abris.length=0; semis.clear(); foyers=[];
-    incendiesSignales.clear(); prochainePerceptionIncendie=-Infinity;
-    enArmes=new Map(); deboutAvant.clear(); deboutQuand.clear(); surligne=null;
+    S.hommes=[]; S.prochainHommeDebug=0; S.terrainEpreuve=null;
+    S.escouades=[]; S.formations=[]; S.routesFormation=new Map();
+    S.deploiements=new Map(); S.carteCommandantId=null;
+    S.ratissages=new Map(); S.prochainRatissage=0;
+    S.ailes=[]; S.tetes=[]; S.figures=[]; S.messagers=[];
+    S.verrous=[]; S.entree=null; S.objectif=null; S.verrou=null;
+    S.roi=null; S.arret=null; S.anneauOuvert=false;
+    S.conseil={ averti:0, tenir:0, ouvrir:0, tranche:false };
+    S.annales=[]; S.dits.clear(); S.temps=0; S.reste=0; S.marche=false;
+    S.paniques.length=0; S.abris.length=0; S.semis.clear(); S.foyers=[];
+    S.incendiesSignales.clear(); S.prochainePerceptionIncendie=-Infinity;
+    S.enArmes=new Map(); deboutAvant.clear(); deboutQuand.clear(); S.surligne=null;
     compte.a=0; compte.d=0; compte.morts=0; compte.blesses=0;
     compte.fuyards=0; compte.rallies=0; compte.contreCharges=0;
-    if (ctx && toile) ctx.clearRect(0,0,toile.width,toile.height);
+    if (S.ctx && S.toile) S.ctx.clearRect(0,0,S.toile.width,S.toile.height);
     if (window.Foule2d) Foule2d.salir();
     montre();
   }
 
   // ---- l'attelage -----------------------------------------------------------
-  let pret = null, rate = null;
+
   function poser(h, donneVue, opts) {
-    if (rate) return Promise.resolve(false);
-    hote = h; vueDe = donneVue;
-    source = (opts && opts.source) || source;
-    if (!toile) {
-      toile = document.createElement("canvas");
-      toile.className = "cv-bataille";
-      ctx = toile.getContext("2d");
+    if (S.rate) return Promise.resolve(false);
+    S.hote = h; S.vueDe = donneVue;
+    S.source = (opts && opts.source) || S.source;
+    if (!S.toile) {
+      S.toile = document.createElement("canvas");
+      S.toile.className = "cv-bataille";
+      S.ctx = S.toile.getContext("2d");
     }
-    if (toile.parentNode !== hote) hote.appendChild(toile);
-    if (!barre) batirBarre();
-    else if (barre.parentNode !== hote) hote.appendChild(barre);
+    if (S.toile.parentNode !== S.hote) S.hote.appendChild(S.toile);
+    if (!S.barre) batirBarre();
+    else if (S.barre.parentNode !== S.hote) S.hote.appendChild(S.barre);
     ajuster();
-    if (!pret) pret = amorcer();
-    return pret;
+    if (!S.pret) S.pret = amorcer();
+    return S.pret;
   }
 
   // LES DONNÉES D'ABORD, L'ÉCRAN ENSUITE — et les deux se séparent, parce que
@@ -8788,18 +8799,18 @@ window.Bataille2d = (() => {
   // absolu (`/modules/…`), sous Node c'est une URL de fichier. Une ligne, et
   // le module devient exécutable des deux côtés.
   async function preparer(ou) {
-    if (ou) source = ou;
-    J = await import(window.CHEMIN_JOURNEE || "/modules/monde/journee.js");
-    const r = await fetch(source + "/plan2d");
+    if (ou) S.source = ou;
+    S.J = await import(window.CHEMIN_JOURNEE || "/modules/monde/journee.js");
+    const r = await fetch(S.source + "/plan2d");
     if (!r.ok) throw new Error("plan2d : " + r.status);
-    plan = await r.json();
+    S.plan = await r.json();
     if (!repereDuPlan("Le Donjon Rouge", "donjon")) throw new Error("pas de donjon ici");
     // La voirie n'est demandée QUE parce qu'on en aura besoin après la porte.
     // Un demi-mégaoctet qu'on ne paie pas si l'on n'ouvre jamais l'échelle.
-    voirie = await J.voirie(source);
-    await Promise.all([enterrer(source), chargerEau(source)]);
+    S.voirie = await S.J.voirie(S.source);
+    await Promise.all([enterrer(S.source), chargerEau(S.source)]);
     tisserReseau();
-    await chargerBati(source);
+    await chargerBati(S.source);
     return true;
   }
 
@@ -8829,14 +8840,14 @@ window.Bataille2d = (() => {
   // interpole ces mêmes quatre sommets et on tranche au même seuil de 0,5.
   // Il n'y a donc pas une rive décorative et une autre rive mécanique.
   async function chargerEau(src) {
-    sousEau = null;
+    S.sousEau = null;
     try {
       const r = await fetch(src + "/terrain");
       if (!r.ok) return;
       const t = await r.json();
       const eau = t.eau, nx = +t.nx, ny = +t.ny, res = +t.res_m;
       if (!Array.isArray(eau) || eau.length !== ny || nx < 2 || ny < 2 || !(res > 0)) return;
-      const region = plan && plan.region;
+      const region = S.plan && S.plan.region;
       const bornes = region && region.bornes;
       const polygones = region && Array.isArray(region.eau_polygones)
         ? region.eau_polygones : [];
@@ -8855,7 +8866,7 @@ window.Bataille2d = (() => {
             x > bornes[2] || y > bornes[3]) return true;
         return polygones.some((p) => p.length > 2 && dansPolygone(x, y, p));
       };
-      sousEau = (x, y) => {
+      S.sousEau = (x, y) => {
         const fx = x / res, fy = y / res;
         // Le raster de dix mètres garde l'autorité dans le cœur urbain. Au
         // dehors, la couronne régionale prend le relais avec les polygones qui
@@ -8871,14 +8882,14 @@ window.Bataille2d = (() => {
         const bas = d * (1 - tx) + c * tx;
         return haut * (1 - ty) + bas * ty > .5;
       };
-    } catch (e) { sousEau = null; }
+    } catch (e) { S.sousEau = null; }
   }
 
   async function enterrer(src) {
-    if (!voirie || voirie._enterre) return;
+    if (!S.voirie || S.voirie._enterre) return;
     let masque = null;
     try {
-      const m = plan && plan.masque;
+      const m = S.plan && S.plan.masque;
       if (!m) return;
       const r = await fetch(src + "/masque");
       if (!r.ok) return;
@@ -8900,9 +8911,9 @@ window.Bataille2d = (() => {
     // maison à cette question-là. Tant qu'il n'a pas été chargé — pas de plan,
     // pas de `fetch`, four sans serveur —, `sousToit` reste nul et les appelants
     // doivent rendre « on ne sait pas », JAMAIS « c'est libre ».
-    sousToit = dedans;
+    S.sousToit = dedans;
     let n = 0;
-    for (const [, nd] of voirie.noeuds) {
+    for (const [, nd] of S.voirie.noeuds) {
       for (const l of nd.liens) {
         const a = l.arete;
         if (a._sous === undefined) {
@@ -8923,7 +8934,7 @@ window.Bataille2d = (() => {
         if (a._sous > ENTERRE) l.cout *= PENITENCE;
       }
     }
-    voirie._enterre = n;
+    S.voirie._enterre = n;
   }
 
   // ---- LE BÂTI, POUR LE PILLER ---------------------------------------------
@@ -8940,12 +8951,12 @@ window.Bataille2d = (() => {
   // porte seize colonnes ; on en retient quatre — où est la porte, ce qu'on y
   // fait, combien d'étages, et où en est le pillage. Le reste ne sert pas à
   // enfoncer un huis.
-  let bati = null;
+
   // Les feux du sac sont rares et persistants ; les incendies du moteur urbain
   // sont des agrégats rafraîchis avec un TTL court. Dans les deux cas, la
   // perception balaie les FOYERS, jamais cinquante-trois mille maisons.
-  let incendiesSignales = new Map();
-  let prochainePerceptionIncendie = -Infinity;
+
+
   const PAS_PERCEPTION_INCENDIE = .45;
   const PORTEE_PERCEPTION_INCENDIE = 55;
   const PILLE_S    = [25, 70];   // ce que coûte une maison, du seuil au butin
@@ -8965,9 +8976,9 @@ window.Bataille2d = (() => {
   };
 
   async function chargerBati(src) {
-    if (bati && bati.source === src) return;
+    if (S.bati && S.bati.source === src) return;
     const r = await fetch(src + "/bati");
-    if (!r.ok) { bati = null; return; }
+    if (!r.ok) { S.bati = null; return; }
     const d = await r.json();
     const col = {}; d._colonnes.forEach((c, i) => (col[c] = i));
     const l = d.bati, n = l.length;
@@ -9013,7 +9024,7 @@ window.Bataille2d = (() => {
     for (let k = 0; k < nx * ny; k++) cnt[k + 1] += cnt[k];
     const rang = new Int32Array(n), curseur = cnt.slice();
     for (let i = 0; i < n; i++) rang[curseur[casier(i)]++] = i;
-    bati = { source: src, n, x, y, cx, cy, val, etat, fouille, occupation, usage,
+    S.bati = { source: src, n, x, y, cx, cy, val, etat, fouille, occupation, usage,
              M, x0, y0, nx, ny, debut: cnt, ordre: rang,
              forcees: 0, brulees: 0, butin: 0, feux:new Set() };
   }
@@ -9041,21 +9052,21 @@ window.Bataille2d = (() => {
   /** Forcer une maison : y aller, y rester, en ressortir. */
   function piller(h, dt) {
     const b = h.maison;
-    if (b == null || !bati) { h.etat = "colonne"; return; }
-    const d = Math.hypot(bati.x[b] - h.x, bati.y[b] - h.y);
+    if (b == null || !S.bati) { h.etat = "colonne"; return; }
+    const d = Math.hypot(S.bati.x[b] - h.x, S.bati.y[b] - h.y);
     // On y va — en ligne droite, et c'est honnête : la porte donne sur la rue
     // où l'on marchait déjà, il y a vingt-six mètres au plus.
-    if (d > 1.5) { h.surVoie = false; versLe(h, bati.x[b], bati.y[b], MARCHE, dt); return; }
+    if (d > 1.5) { h.surVoie = false; versLe(h, S.bati.x[b], S.bati.y[b], MARCHE, dt); return; }
     h.reste_pille -= dt;
     if (h.reste_pille > 0) return;
     // ON RESSORT. Le butin est celui de la maison, pas du temps passé — un
     // taudis fouillé une minute reste un taudis.
-    bati.butin += bati.val[b];
+    S.bati.butin += S.bati.val[b];
     const brule = R() < (BRULE[h.corps] ?? FEU);
-    bati.etat[b] = brule ? 3 : 2;
+    S.bati.etat[b] = brule ? 3 : 2;
     if (brule) {
-      bati.brulees++;
-      bati.feux.add(b);
+      S.bati.brulees++;
+      S.bati.feux.add(b);
       // Le feu se voit de loin, et c'est le seul acte de cette bataille qui
       // change la ville pour de bon. On ne le note que de loin en loin, sinon
       // les annales ne parlent plus que de fumée.
@@ -9071,19 +9082,19 @@ window.Bataille2d = (() => {
 
   /** La maison intacte la plus proche, dans la portée. Rend -1 s'il n'y en a pas. */
   function maisonLibre(px, py, portee) {
-    if (!bati) return -1;
-    const M = bati.M;
-    const i0 = Math.max(0, Math.min(bati.nx - 1, ((px - bati.x0) / M) | 0));
-    const j0 = Math.max(0, Math.min(bati.ny - 1, ((py - bati.y0) / M) | 0));
+    if (!S.bati) return -1;
+    const M = S.bati.M;
+    const i0 = Math.max(0, Math.min(S.bati.nx - 1, ((px - S.bati.x0) / M) | 0));
+    const j0 = Math.max(0, Math.min(S.bati.ny - 1, ((py - S.bati.y0) / M) | 0));
     const r = Math.ceil(portee / M);
     let meil = -1, dmin = portee * portee;
-    for (let j = Math.max(0, j0 - r); j <= Math.min(bati.ny - 1, j0 + r); j++) {
-      for (let i = Math.max(0, i0 - r); i <= Math.min(bati.nx - 1, i0 + r); i++) {
-        const c = j * bati.nx + i;
-        for (let k = bati.debut[c]; k < bati.debut[c + 1]; k++) {
-          const b = bati.ordre[k];
-          if (bati.etat[b]) continue;               // déjà forcée
-          const d = (bati.x[b] - px) ** 2 + (bati.y[b] - py) ** 2;
+    for (let j = Math.max(0, j0 - r); j <= Math.min(S.bati.ny - 1, j0 + r); j++) {
+      for (let i = Math.max(0, i0 - r); i <= Math.min(S.bati.nx - 1, i0 + r); i++) {
+        const c = j * S.bati.nx + i;
+        for (let k = S.bati.debut[c]; k < S.bati.debut[c + 1]; k++) {
+          const b = S.bati.ordre[k];
+          if (S.bati.etat[b]) continue;               // déjà forcée
+          const d = (S.bati.x[b] - px) ** 2 + (S.bati.y[b] - py) ** 2;
           if (d < dmin) { dmin = d; meil = b; }
         }
       }
@@ -9111,16 +9122,16 @@ window.Bataille2d = (() => {
   }
 
   const cleSecteur = (m, b) =>
-    Math.floor((bati.x[b] - m.x0) / MAILLE_SECTEUR) + ":" +
-    Math.floor((bati.y[b] - m.y0) / MAILLE_SECTEUR);
+    Math.floor((S.bati.x[b] - m.x0) / MAILLE_SECTEUR) + ":" +
+    Math.floor((S.bati.y[b] - m.y0) / MAILLE_SECTEUR);
 
   function batiments() {
-    if (!bati) return [];
-    const l = new Array(bati.n);
-    for (let i = 0; i < bati.n; i++) l[i] = {
-      id:i, x:bati.x[i], y:bati.y[i], usage:bati.usage[i],
-      fouille:bati.fouille ? bati.fouille[i] : 0,
-      occupe:!!(bati.occupation && bati.occupation[i]),
+    if (!S.bati) return [];
+    const l = new Array(S.bati.n);
+    for (let i = 0; i < S.bati.n; i++) l[i] = {
+      id:i, x:S.bati.x[i], y:S.bati.y[i], usage:S.bati.usage[i],
+      fouille:S.bati.fouille ? S.bati.fouille[i] : 0,
+      occupe:!!(S.bati.occupation && S.bati.occupation[i]),
     };
     return l;
   }
@@ -9130,8 +9141,8 @@ window.Bataille2d = (() => {
     if (!r) return null;
     const f = Object.assign({
       id:r.missionId + ":" + type + ":" + b,
-      type, batiment:b, usage:bati.usage[b], x:bati.x[b], y:bati.y[b],
-      observeA:+temps.toFixed(1), source:"vu", auteur:u.id,
+      type, batiment:b, usage:S.bati.usage[b], x:S.bati.x[b], y:S.bati.y[b],
+      observeA:+S.temps.toFixed(1), source:"vu", auteur:u.id,
     }, plus || {});
     r.faits.set(f.id, f);
     assimilerFait(r, f);
@@ -9163,7 +9174,7 @@ window.Bataille2d = (() => {
       h.recu.push({ quoi, canal, force: borner(force),
                     soudainete: borner(soudainete == null ? force : soudainete),
                     deFace: deFace == null ? 1 : Math.max(-1, Math.min(1, deFace)),
-                    source: source || "danger extérieur", t: temps });
+                    source: source || "danger extérieur", t: S.temps });
       return true;
     };
 
@@ -9174,13 +9185,13 @@ window.Bataille2d = (() => {
       bilan.exposes++;
       const menace = borner(q.menace);
       if (menace > 0) {
-        h.menaceExterieure = temps > (h.menaceJus || -Infinity)
+        h.menaceExterieure = S.temps > (h.menaceJus || -Infinity)
           ? menace : Math.max(h.menaceExterieure || 0, menace);
         h.menaceX = Number.isFinite(q.menaceX) ? q.menaceX : h.x;
         h.menaceY = Number.isFinite(q.menaceY) ? q.menaceY : h.y;
         h.menaceGenre = q.genre || "danger-exterieur";
         h.menaceJus = Math.max(h.menaceJus || -Infinity,
-                               temps + Math.max(0.15, +q.dureeMenace || 0.9));
+                               S.temps + Math.max(0.15, +q.dureeMenace || 0.9));
       }
       const dragon = q.genre === "dragon";
       if (pousser(h, q.quoiVue || (dragon ? "dragon en approche" : "danger en approche"), "vue", q.vue,
@@ -9209,13 +9220,13 @@ window.Bataille2d = (() => {
     for (const q of Array.isArray(sources) ? sources : []) {
       if (!q || q.actif === false || !Number.isFinite(q.x) || !Number.isFinite(q.y)) continue;
       const id = q.id == null ? `${Math.round(q.x)}:${Math.round(q.y)}` : String(q.id);
-      incendiesSignales.set(id, {
+      S.incendiesSignales.set(id, {
         id, x:+q.x, y:+q.y, rayon:Math.max(0, +q.rayon || 0),
         intensite:Math.max(0, Math.min(1, +q.intensite || 0)),
-        expire:temps + vie,
+        expire:S.temps + vie,
       });
     }
-    return incendiesSignales.size;
+    return S.incendiesSignales.size;
   }
 
   /** Les foyers actifs, agrégés spatialement avant d'être montrés aux hommes. */
@@ -9231,10 +9242,10 @@ window.Bataille2d = (() => {
       q.intensite = Math.max(q.intensite, intensite);
       q.rayon = Math.max(q.rayon, rayon);
     };
-    if (bati && bati.feux) for (const b of bati.feux)
-      if (bati.etat[b] === 3) ajouter(bati.cx[b], bati.cy[b], .82, 4.5);
-    for (const [id, q] of incendiesSignales) {
-      if (q.expire < temps) { incendiesSignales.delete(id); continue; }
+    if (S.bati && S.bati.feux) for (const b of S.bati.feux)
+      if (S.bati.etat[b] === 3) ajouter(S.bati.cx[b], S.bati.cy[b], .82, 4.5);
+    for (const [id, q] of S.incendiesSignales) {
+      if (q.expire < S.temps) { S.incendiesSignales.delete(id); continue; }
       ajouter(q.x, q.y, q.intensite, q.rayon);
     }
     return [...cellules.values()].map((q) => ({
@@ -9245,8 +9256,8 @@ window.Bataille2d = (() => {
   }
 
   function fairePercevoirIncendies() {
-    if (temps < prochainePerceptionIncendie || !hommes.length) return;
-    prochainePerceptionIncendie = temps + PAS_PERCEPTION_INCENDIE;
+    if (S.temps < S.prochainePerceptionIncendie || !S.hommes.length) return;
+    S.prochainePerceptionIncendie = S.temps + PAS_PERCEPTION_INCENDIE;
     const sources = incendiesActifs();
     if (!sources.length) return;
     const maille = 64, grille = new Map();
@@ -9255,7 +9266,7 @@ window.Bataille2d = (() => {
       let xs = grille.get(cle); if (!xs) grille.set(cle, xs = []); xs.push(q);
     }
     const expositions = [];
-    for (const h of hommes) {
+    for (const h of S.hommes) {
       if (h.tete || h.hors || h.interieur != null || h.etat === "mort" ||
           h.etat === "blesse" || h.etat === "prisonnier" || h.etat === "rentre") continue;
       const ci = Math.floor(h.x / maille), cj = Math.floor(h.y / maille);
@@ -9287,7 +9298,7 @@ window.Bataille2d = (() => {
   // les centres globaux que les bancs calculent après coup : seulement les
   // hommes réellement visibles autour de lui, agrégés en une zone grossière.
   function chargeCommandant(h) {
-    for (const dep of deploiements.values()) {
+    for (const dep of S.deploiements.values()) {
       if (!dep.commandants || !dep.commandants.has(h)) continue;
       return { dep, charge:dep.commandants.get(h) };
     }
@@ -9296,8 +9307,8 @@ window.Bataille2d = (() => {
 
   function forcePropreCommandant(h, c, dep) {
     return c.role === "chef de corps"
-      ? hommes.filter((o) => o.camp === h.camp && o.corps === c.corps && pese(o)).length
-      : formations.filter((u) => u.camp === h.camp && u.cadre.ralliement &&
+      ? S.hommes.filter((o) => o.camp === h.camp && o.corps === c.corps && pese(o)).length
+      : S.formations.filter((u) => u.camp === h.camp && u.cadre.ralliement &&
           u.cadre.ralliement.deploiementId === dep.id &&
           u.cadre.ralliement.aile === c.aile)
         .reduce((n, u) => n + u.membres.filter(pese).length, 0);
@@ -9317,7 +9328,7 @@ window.Bataille2d = (() => {
   // commandants alliés avec lesquels cet homme a effectivement communiqué ;
   // le graphe filtre lui-même ceux qu'il ne connaît pas.
   function carteCommandant(debugId, champConnu) {
-    const h = hommes.find((o) => o.debugId === debugId);
+    const h = S.hommes.find((o) => o.debugId === debugId);
     const q = h && chargeCommandant(h);
     if (!h || !q || !h.commandement) return null;
     const champ = champConnu || Commandement.champVision({
@@ -9340,28 +9351,28 @@ window.Bataille2d = (() => {
     const allies = [...alliesConnus.values()];
     const forcePropre = forcePropreCommandant(h, q.charge, q.dep);
     const graphe = Commandement.grapheTactique(h.commandement, {
-      maintenant:temps, position:{ x:h.x, y:h.y }, nom:h.nom || q.charge.role,
+      maintenant:S.temps, position:{ x:h.x, y:h.y }, nom:h.nom || q.charge.role,
       objectif:objectifCommandant(h, q.dep), forcePropre, champ, allies,
     });
     return Object.assign(graphe, {
       id:h.debugId, nom:h.nom || q.charge.role, role:q.charge.role,
       deploiement:q.dep.id, forcePropre,
       estimation:q.charge.estimation || Commandement.estimation(h.commandement,
-        forcePropre, temps),
+        forcePropre, S.temps),
     });
   }
 
   function selectionnerCarteCommandant(debugId) {
-    if (debugId == null || carteCommandantId === debugId) carteCommandantId = null;
-    else if (carteCommandant(debugId)) carteCommandantId = debugId;
+    if (debugId == null || S.carteCommandantId === debugId) S.carteCommandantId = null;
+    else if (carteCommandant(debugId)) S.carteCommandantId = debugId;
     peindre();
-    return carteCommandantId == null ? null : carteCommandant(carteCommandantId);
+    return S.carteCommandantId == null ? null : carteCommandant(S.carteCommandantId);
   }
 
   function observerCommandants() {
-    for (const dep of deploiements.values()) {
-      if (!dep.commandants || temps - dep.commandeObserveA < 5) continue;
-      dep.commandeObserveA = temps;
+    for (const dep of S.deploiements.values()) {
+      if (!dep.commandants || S.temps - dep.commandeObserveA < 5) continue;
+      dep.commandeObserveA = S.temps;
       const actifs = [...dep.commandants.entries()].filter(([h]) => pese(h));
       for (const [h, c] of actifs) {
         // Quarante-huit rayons sont calculés une fois pour le chef et servent
@@ -9370,7 +9381,7 @@ window.Bataille2d = (() => {
         // pour chacun des centaines d'ennemis possibles.
         c.champ = Commandement.champVision({ position:{ x:h.x, y:h.y }, rayon:65,
           rayons:48, pas:1.5, obstacle:obstacleConnu() ? obstacleEn : null });
-        const vus = hommes.filter((o) => !o.hors && !o.tete && pese(o) &&
+        const vus = S.hommes.filter((o) => !o.hors && !o.tete && pese(o) &&
           o.camp !== h.camp && memeEspace(h, o) &&
           Commandement.visibleDansChamp(c.champ, o, 1.2));
         if (vus.length) {
@@ -9398,21 +9409,21 @@ window.Bataille2d = (() => {
             min:Math.max(1, Math.floor(longuesHampes * .7)),
             max:Math.ceil(longuesHampes * 1.3) };
           Commandement.assimiler(c.memoire, {
-            id:"vision:" + dep.id + ":" + h.debugId + ":" + zone + ":" + Math.floor(temps / 5),
+            id:"vision:" + dep.id + ":" + h.debugId + ":" + zone + ":" + Math.floor(S.temps / 5),
             genre:"ennemi", sujet:{ genre:"zone", id:zone },
             zone:{ id:zone }, position:{ x, y }, statut:"actif",
             forceMin:Math.max(1, Math.floor(groupe.length * .65)),
             forceMax:Math.max(1, Math.ceil(groupe.length * 1.35)),
             signatures,
-            source:"vu", auteur:h.debugId, observeA:+temps.toFixed(1),
+            source:"vu", auteur:h.debugId, observeA:+S.temps.toFixed(1),
             texte:"ennemis vus devant mon front" +
               (montes ? ", dont des hommes montés" : "") +
               (longuesHampes ? ", avec de longues hampes" : ""),
-          }, +temps.toFixed(1));
+          }, +S.temps.toFixed(1));
           }
         }
         const forcePropre = forcePropreCommandant(h, c, dep);
-        c.estimation = Commandement.estimation(c.memoire, forcePropre, temps);
+        c.estimation = Commandement.estimation(c.memoire, forcePropre, S.temps);
       }
       // Deux chefs du même rang ne se parlent que s'ils se rencontrent et ont
       // effectivement quelque chose de neuf. Aucune radio implicite.
@@ -9423,10 +9434,10 @@ window.Bataille2d = (() => {
         const ba = Commandement.inconnusPour(cb.memoire, ca.memoire);
         if (!ab.length && !ba.length) continue;
         const recusB = Commandement.transmettre(ca.memoire, cb.memoire,
-          { maintenant:+temps.toFixed(1), faits:ab });
+          { maintenant:+S.temps.toFixed(1), faits:ab });
         const recusA = Commandement.transmettre(cb.memoire, ca.memoire,
-          { maintenant:+temps.toFixed(1), faits:ba });
-        const parole = { a:+temps.toFixed(1), de:a.debugId, vers:b.debugId,
+          { maintenant:+S.temps.toFixed(1), faits:ba });
+        const parole = { a:+S.temps.toFixed(1), de:a.debugId, vers:b.debugId,
           positionDe:{ x:+a.x.toFixed(1), y:+a.y.toFixed(1) },
           positionVers:{ x:+b.x.toFixed(1), y:+b.y.toFixed(1) },
           faits:recusA.length + recusB.length,
@@ -9439,7 +9450,7 @@ window.Bataille2d = (() => {
   }
 
   function confianceActuelle(c) {
-    return Commandement.confiance(c, temps);
+    return Commandement.confiance(c, S.temps);
   }
 
   function assimilerFait(r, f) {
@@ -9459,13 +9470,13 @@ window.Bataille2d = (() => {
       sujet:{ genre:"lieu", id:f.batiment,
         nom:(f.usage || "bâtiment") + " n°" + f.batiment },
       position:{ x:f.x, y:f.y }, statut, forceMin, forceMax,
-    }), +temps.toFixed(1));
+    }), +S.temps.toFixed(1));
   }
 
   function estimerSituation(u) {
     const r = u && u.ratissage;
     if (!r) return null;
-    const e = Commandement.estimation(r.commandement, u.membres.filter(pese).length, temps);
+    const e = Commandement.estimation(r.commandement, u.membres.filter(pese).length, S.temps);
     let posture = "chercher";
     if (e.rapport === "inferieur") posture = "eviter-et-appeler";
     else if (e.rapport === "superieur") posture = "reduire";
@@ -9476,11 +9487,11 @@ window.Bataille2d = (() => {
   function donnerOrdreLocal(u, texte, raison) {
     const r = u && u.ratissage;
     if (!r || r.ordreLocal === texte) return;
-    r.ordreLocal = texte; r.raisonOrdre = raison; r.ordreLocalA = +temps.toFixed(1);
+    r.ordreLocal = texte; r.raisonOrdre = raison; r.ordreLocalA = +S.temps.toFixed(1);
     if (u.ordre) {
       u.ordre.version = (u.ordre.version || 0) + 1;
-      u.ordre.donneA = temps;
-      u.ordre.ditA = temps;
+      u.ordre.donneA = S.temps;
+      u.ordre.ditA = S.temps;
     }
   }
 
@@ -9511,8 +9522,8 @@ window.Bataille2d = (() => {
         f.batiment === b && (f.type === "maison_claire" || f.type === "groupe_vaincu" ||
                             f.type === "deja_fouillee")));
       if (!inconnus.length) continue;
-      const cx = inconnus.reduce((n, b) => n + bati.x[b], 0) / inconnus.length;
-      const cy = inconnus.reduce((n, b) => n + bati.y[b], 0) / inconnus.length;
+      const cx = inconnus.reduce((n, b) => n + S.bati.x[b], 0) / inconnus.length;
+      const cy = inconnus.reduce((n, b) => n + S.bati.y[b], 0) / inconnus.length;
       const d = Math.hypot(cx - chef.x, cy - chef.y);
       if (d < dmin) { dmin = d; meilleur = cle; }
     }
@@ -9524,7 +9535,7 @@ window.Bataille2d = (() => {
     r.ralliementLocal = false;
     r.retourChef = null;
     r.secteur = meilleur;
-    const e = { secteur:meilleur, par:u.id, depuis:+temps.toFixed(1), actif:true };
+    const e = { secteur:meilleur, par:u.id, depuis:+S.temps.toFixed(1), actif:true };
     r.engagements.set(meilleur + "|" + u.id, e); r.engagement = e;
     donnerOrdreLocal(u, "Prenez le secteur " + meilleur + ". Quatre hommes par maison ; les autres tiennent la rue.",
       "ce secteur est le plus proche qui ne soit ni attribué ni reconnu");
@@ -9554,7 +9565,7 @@ window.Bataille2d = (() => {
   }
 
   function echangerEntrePairs(m) {
-    const us = m.unites.map((id) => formations.find((u) => u.id === id)).filter(Boolean);
+    const us = m.unites.map((id) => S.formations.find((u) => u.id === id)).filter(Boolean);
     for (let i = 0; i < us.length; i++) for (let j = i + 1; j < us.length; j++) {
       const a = us[i], b = us[j], ca = guideDe(a), cb = guideDe(b);
       if (!ca || !cb || !memeEspace(ca, cb) ||
@@ -9574,12 +9585,12 @@ window.Bataille2d = (() => {
       let faits = 0;
       for (const [k, f] of ra.faits) if (!rb.faits.has(k)) {
         const recu = Commandement.transmettre(ra.commandement, rb.commandement,
-          { maintenant:+temps.toFixed(1), faits:[f] })[0];
+          { maintenant:+S.temps.toFixed(1), faits:[f] })[0];
         if (recu) { assimilerFait(rb, recu); nouveauxA.push(f); faits++; }
       }
       for (const [k, f] of rb.faits) if (!ra.faits.has(k)) {
         const recu = Commandement.transmettre(rb.commandement, ra.commandement,
-          { maintenant:+temps.toFixed(1), faits:[f] })[0];
+          { maintenant:+S.temps.toFixed(1), faits:[f] })[0];
         if (recu) { assimilerFait(ra, recu); nouveauxB.push(f); faits++; }
       }
       for (const [k, e] of ra.engagements) if (!rb.engagements.has(k) ||
@@ -9595,13 +9606,13 @@ window.Bataille2d = (() => {
       for (const f of nouveauxB) { const p = phraseFait(f); if (p) phrasesB.push(p); }
       phrasesA.push(phraseEstimation(estimerSituation(a)));
       phrasesB.push(phraseEstimation(estimerSituation(b)));
-      const communication = { a:+temps.toFixed(1), de:a.id, vers:b.id,
+      const communication = { a:+S.temps.toFixed(1), de:a.id, vers:b.id,
         phrasesA, phrasesB, estimationA:estimerSituation(a), estimationB:estimerSituation(b) };
       Commandement.tracerCommunication(ra.commandement, communication);
       Commandement.tracerCommunication(rb.commandement, communication);
       m.communications.push(communication);
       if (m.communications.length > 80) m.communications.shift();
-      m.rencontres.set(cle, temps); m.echanges++; m.faitsTransmis += faits;
+      m.rencontres.set(cle, S.temps); m.echanges++; m.faitsTransmis += faits;
       m.messages += phrasesA.length + phrasesB.length;
       noter("echange-pairs", (ca.x + cb.x) / 2, (ca.y + cb.y) / 2,
         { dit:{ entre:[ca.nom || a.id, cb.nom || b.id],
@@ -9624,7 +9635,7 @@ window.Bataille2d = (() => {
     let b = -1, dmin = Infinity;
     for (const q of m.secteurs.get(r.secteur) || []) {
       if (faitsBat.has(q)) continue;
-      const d = Math.hypot(bati.x[q] - chef.x, bati.y[q] - chef.y);
+      const d = Math.hypot(S.bati.x[q] - chef.x, S.bati.y[q] - chef.y);
       if (d < dmin) { dmin = d; b = q; }
     }
     if (b < 0) return null;
@@ -9632,7 +9643,7 @@ window.Bataille2d = (() => {
     r.courant = b; r.phase = "approcher"; r.progres = 0; r.approche = null;
     r.combatDepuis = null;
     r.passage = { b, prochain:0, traverses:0 };
-    r.marcheMaison = { x:chef.x, y:chef.y, avanceA:temps };
+    r.marcheMaison = { x:chef.x, y:chef.y, avanceA:S.temps };
     // Une maison reçoit une petite équipe, pas la vintaine entière. Le
     // vintenar conserve la rue et fait tourner des groupes de quatre hommes.
     const disponibles = u.membres.filter((h) => h !== chef && pese(h));
@@ -9642,12 +9653,12 @@ window.Bataille2d = (() => {
     r.prochaineEquipe = disponibles.length ? (depart + n) % disponibles.length : 0;
     r.fouilleurs = new Set(equipe.map((h) => h.debugId));
     r.chefFouille = equipe[0] ? equipe[0].debugId : chef.debugId;
-    donnerOrdreLocal(u, "Quatre hommes dans le " + (bati.usage[b] || "bâtiment") +
+    donnerOrdreLocal(u, "Quatre hommes dans le " + (S.bati.usage[b] || "bâtiment") +
       " n°" + b + ". Les autres gardent l'huis et la rue.",
       "la maison suivante de notre secteur n'a pas encore été reconnue");
     ordonnerFormation(u.id,
-      { id:"batiment:" + b, nom:"le " + (bati.usage[b] || "bâtiment") + " n°" + b,
-        x:bati.x[b], y:bati.y[b] },
+      { id:"batiment:" + b, nom:"le " + (S.bati.usage[b] || "bâtiment") + " n°" + b,
+        x:S.bati.x[b], y:S.bati.y[b] },
       { mode:"fouiller", source:"ordre-ratissage", texte:r.ordre });
     return b;
   }
@@ -9657,12 +9668,12 @@ window.Bataille2d = (() => {
   // d'être leur destination physique sans cesser d'être leur chef.
   function placeDeCommandementRdv(u, m) {
     if (!m.formationRdv) {
-      const elements=m.unites.map((id) => formations.find((q) => q.id===id))
+      const elements=m.unites.map((id) => S.formations.find((q) => q.id===id))
         .filter(Boolean).map((q) => { const h=guideDe(q); return h && { id:q.id,x:h.x,y:h.y }; })
         .filter(Boolean);
       const bs=m.batiments || [], front=bs.length ? {
-        x:bs.reduce((n,b)=>n+bati.x[b],0)/bs.length,
-        y:bs.reduce((n,b)=>n+bati.y[b],0)/bs.length,
+        x:bs.reduce((n,b)=>n+S.bati.x[b],0)/bs.length,
+        y:bs.reduce((n,b)=>n+S.bati.y[b],0)/bs.length,
       } : { x:m.rdv.x+1,y:m.rdv.y };
       // Trois mètres suffisent entre des CHEFS seuls et les gardent tous à
       // portée de parole. Leurs vintaines, elles, restent à leur dernier poste.
@@ -9678,12 +9689,12 @@ window.Bataille2d = (() => {
   // leurs relations de formation autour de leur vintenar.
   function placeDeRalliementRdv(u, m) {
     if (!m.ralliementRdv) {
-      const elements=m.unites.map((id) => formations.find((q) => q.id===id))
+      const elements=m.unites.map((id) => S.formations.find((q) => q.id===id))
         .filter(Boolean).map((q) => { const h=guideDe(q); return h && { id:q.id,x:h.x,y:h.y }; })
         .filter(Boolean);
       const bs=m.batiments || [], front=bs.length ? {
-        x:bs.reduce((n,b)=>n+bati.x[b],0)/bs.length,
-        y:bs.reduce((n,b)=>n+bati.y[b],0)/bs.length,
+        x:bs.reduce((n,b)=>n+S.bati.x[b],0)/bs.length,
+        y:bs.reduce((n,b)=>n+S.bati.y[b],0)/bs.length,
       } : { x:m.rdv.x+1,y:m.rdv.y };
       let fx=front.x-m.rdv.x, fy=front.y-m.rdv.y;
       const d=Math.hypot(fx,fy)||1; fx/=d; fy/=d;
@@ -9703,15 +9714,15 @@ window.Bataille2d = (() => {
 
   function menerVintaineAuRdv(h,u,poste,dt) {
     const r=u.ratissage, chef=guideDe(u), d=u.ordre.destination;
-    if(!r.ralliementMarche)r.ralliementMarche={x:chef.x,y:chef.y,avanceA:temps};
+    if(!r.ralliementMarche)r.ralliementMarche={x:chef.x,y:chef.y,avanceA:S.temps};
     const w=r.ralliementMarche;
     if(Math.hypot(chef.x-w.x,chef.y-w.y)>.8){
-      w.x=chef.x;w.y=chef.y;w.avanceA=temps;
+      w.x=chef.x;w.y=chef.y;w.avanceA=S.temps;
     }
     // Le graphe de rue peut couper une géométrie que le masque final refuse.
     // Après quinze secondes sans progression, l'unité ne repaie pas la même
     // route : elle termine localement, toujours derrière un seul guide.
-    if(!r.ralliementLocal&&temps-w.avanceA>15){
+    if(!r.ralliementLocal&&S.temps-w.avanceA>15){
       r.ralliementLocal=true;
       u.cadre.finition={id:d.id,
         pts:cheminDePorte(chef.x,chef.y,poste.x,poste.y,true),i:1};
@@ -9724,7 +9735,7 @@ window.Bataille2d = (() => {
   function menerChefAuRdv(h,u,m,p,dt) {
     const r=u.ratissage;
     if (!r.retourChef || r.retourChef.id!==u.id) {
-      const trace=J&&voirie ? J.chemin(voirie,[h.x,h.y],[p.x,p.y],
+      const trace=S.J&&S.voirie ? S.J.chemin(S.voirie,[h.x,h.y],[p.x,p.y],
         "ratissage:chefs:"+m.id+":"+u.id) : null;
       r.retourChef={id:u.id,trace,avance:0,finition:null};
     }
@@ -9796,21 +9807,21 @@ window.Bataille2d = (() => {
   function approcherPorte(h, u, b, dt, guideLocal) {
     const r = u.ratissage, guide = guideLocal || guideDe(u);
     if (!r.approche || r.approche.b !== b) {
-      r.approche = { b, pts:cheminDePorte(guide.x, guide.y, bati.x[b], bati.y[b]), i:1,
-        dernierX:guide.x, dernierY:guide.y, avanceA:temps, bloquee:false };
+      r.approche = { b, pts:cheminDePorte(guide.x, guide.y, S.bati.x[b], S.bati.y[b]), i:1,
+        dernierX:guide.x, dernierY:guide.y, avanceA:S.temps, bloquee:false };
       u.cadre.calculs++;
     }
     const ap = r.approche;
     if (Math.hypot(guide.x - ap.dernierX, guide.y - ap.dernierY) > .8) {
-      ap.dernierX = guide.x; ap.dernierY = guide.y; ap.avanceA = temps;
+      ap.dernierX = guide.x; ap.dernierY = guide.y; ap.avanceA = S.temps;
     }
     // Une porte erronée, une muraille prise pour un entrepôt ou un cul-de-sac
     // du masque ne retient plus toute l'unité pour l'éternité. Quinze secondes
     // sans gagner un mètre constituent une observation locale : cette maison
     // n'est pas accessible depuis ici, on la note et on en prend une autre.
-    if (temps - ap.avanceA > 15) { ap.bloquee = true; return false; }
+    if (S.temps - ap.avanceA > 15) { ap.bloquee = true; return false; }
     if (!ap.pts || !ap.pts.length) {
-      suivreGuideDirect(h, guide, bati.x[b], bati.y[b], MARCHE, dt); return true;
+      suivreGuideDirect(h, guide, S.bati.x[b], S.bati.y[b], MARCHE, dt); return true;
     }
     while (ap.i < ap.pts.length - 1 &&
            Math.hypot(guide.x - ap.pts[ap.i][0], guide.y - ap.pts[ap.i][1]) < .7) ap.i++;
@@ -9835,10 +9846,10 @@ window.Bataille2d = (() => {
     h.cible = null;
     penser(h, "ressortir par la porte",
       "la fouille de cette maison est terminée", "franchissement en file");
-    if (Math.hypot(bati.x[b] - h.x, bati.y[b] - h.y) > .55) {
-      versLe(h, bati.x[b], bati.y[b], MARCHE, dt); return true;
+    if (Math.hypot(S.bati.x[b] - h.x, S.bati.y[b] - h.y) > .55) {
+      versLe(h, S.bati.x[b], S.bati.y[b], MARCHE, dt); return true;
     }
-    h.x = bati.x[b]; h.y = bati.y[b];
+    h.x = S.bati.x[b]; h.y = S.bati.y[b];
     h.interieur = null; h.entreDepuis = null; h.sortieBatiment = null;
     h.etat = "rassemble";
     return true;
@@ -9849,13 +9860,13 @@ window.Bataille2d = (() => {
   // Le centre cuit du bâtiment est le seul point intérieur que nous connaissions
   // réellement ; chacun s'y rend depuis la porte, sans saut de coordonnées.
   function pointDerriereHuis(b, k, profondeur) {
-    const dx = bati.cx[b] - bati.x[b], dy = bati.cy[b] - bati.y[b];
+    const dx = S.bati.cx[b] - S.bati.x[b], dy = S.bati.cy[b] - S.bati.y[b];
     const d = Math.hypot(dx, dy) || 1, ux = dx / d, uy = dy / d;
     const p = Math.min(profondeur || 4, Math.max(1.4, d * .65));
     const a = k * 2.399963229728653;
     const lateral = Math.min(1.4, .3 * Math.sqrt(k)) * Math.sin(a);
-    return [bati.x[b] + ux * p - uy * lateral,
-            bati.y[b] + uy * p + ux * lateral];
+    return [S.bati.x[b] + ux * p - uy * lateral,
+            S.bati.y[b] + uy * p + ux * lateral];
   }
 
   function franchirHuis(h, u, b, m) {
@@ -9863,22 +9874,22 @@ window.Bataille2d = (() => {
     if (!r.passage || r.passage.b !== b)
       r.passage = { b, prochain:0, traverses:0 };
     const k = r.passage.traverses++;
-    h.interieur = b; h.entreDepuis = temps; h.cible = null;
+    h.interieur = b; h.entreDepuis = S.temps; h.cible = null;
     h.pointInterieur = pointDerriereHuis(b, k, 4);
     h.etat = "fouille"; m.entrees++;
     if (r.phase === "approcher") r.phase = "fouille";
-    r.passage.prochain = temps + .32;
+    r.passage.prochain = S.temps + .32;
   }
 
   function revelerRebelles(m, u, b) {
-    if (!bati.occupation[b] || m.rebelles.has(b)) return;
+    if (!S.bati.occupation[b] || m.rebelles.has(b)) return;
     // C7 conditionne une seule découverte importante : le premier groupe
     // effectivement trouvé abrite le chef recherché. Les caches restent tirées
     // par le bâti ; seule l'identité nécessaire au test dépend de l'enquête
     // réellement menée, afin qu'une porte inaccessible ne rende pas le rapport
     // impossible par construction.
     if (m.batimentChef == null) m.batimentChef = b;
-    const n = bati.occupation[b], ru = creerFormation("rebelles:" + m.id + ":" + b,
+    const n = S.bati.occupation[b], ru = creerFormation("rebelles:" + m.id + ":" + b,
       "garde", "rebelles:" + m.id, "interieur");
     const ids = [];
     for (let i = 0; i < n; i++) {
@@ -9888,9 +9899,9 @@ window.Bataille2d = (() => {
         { corps:"rebelles", chef:i === 0, poste:p,
           nom:chef ? "le chef rebelle" : null,
           role:chef ? "chef des rebelles" : "rebelle" });
-      h.interieur = b; h.entreDepuis = temps; h.rebelle = true;
+      h.interieur = b; h.entreDepuis = S.temps; h.rebelle = true;
       h.rebelleChef = chef; h.batimentRebelle = b; h.etat = "tient";
-      affecterFormation(h, ru, i, i === 0); hommes.push(h); ids.push(h.debugId);
+      affecterFormation(h, ru, i, i === 0); S.hommes.push(h); ids.push(h.debugId);
     }
     m.rebelles.set(b, ids); m.groupesReveles++;
     // L'équipe de quatre découvre ; elle n'est pas condamnée à livrer seule un
@@ -9898,7 +9909,7 @@ window.Bataille2d = (() => {
     // obtenir deux hommes d'avantage, tandis que le vintenar et le reste de la
     // vintaine continuent de tenir la rue.
     const r = u.ratissage;
-    r.combatDepuis = temps;
+    r.combatDepuis = S.temps;
     const disponibles = u.membres.filter((h) => h !== guideDe(u) && pese(h));
     const besoin = Math.min(disponibles.length, Math.max(4, n + 2));
     for (const h of disponibles) {
@@ -9906,8 +9917,8 @@ window.Bataille2d = (() => {
       r.fouilleurs.add(h.debugId);
     }
     faitRatissage(u, "ennemis_trouves", b, { nombre:n });
-    noter("rebelles-trouves", bati.x[b], bati.y[b],
-      { dit:{ batiment:b, usage:bati.usage[b], hommes:n, mission:m.id } });
+    noter("rebelles-trouves", S.bati.x[b], S.bati.y[b],
+      { dit:{ batiment:b, usage:S.bati.usage[b], hommes:n, mission:m.id } });
   }
 
   function envoyerRapport(u, m, fait) {
@@ -9915,7 +9926,7 @@ window.Bataille2d = (() => {
     const porteur = u.membres.find((h) => h !== guideDe(u) && pese(h) && !h.rapportMission);
     if (!porteur) return false;
     porteur.rapportMission = { missionId:m.id, fait:Object.assign({}, fait),
-      vers:m.commandement, unite:u.id, partiA:temps };
+      vers:m.commandement, unite:u.id, partiA:S.temps };
     porteur.cible = null;
     const b = fait.batiment;
     if (b != null && porteur.interieur === b) porteur.sortieBatiment = b;
@@ -9933,8 +9944,8 @@ window.Bataille2d = (() => {
     if (!r || !cible || cible.etat === "mort") { h.rapportMission = null; return; }
     penser(h, "porter le rapport au commandement",
       "nous avons identifié le chef rebelle", "rapport montant");
-    if (!r.trace && J && voirie && h.interieur == null) {
-      r.trace = J.chemin(voirie, [h.x, h.y], [cible.x, cible.y],
+    if (!r.trace && S.J && S.voirie && h.interieur == null) {
+      r.trace = S.J.chemin(S.voirie, [h.x, h.y], [cible.x, cible.y],
         "ratissage:rapport:" + r.missionId + ":" + r.unite);
       r.avance = 0;
     }
@@ -9945,8 +9956,8 @@ window.Bataille2d = (() => {
       } else versLe(h, cible.x, cible.y, COURSE, dt);
       return;
     }
-    cible.rapports.push(Object.assign({}, r.fait, { recuA:+temps.toFixed(1), porteur:h.debugId }));
-    const m = ratissages.get(r.missionId);
+    cible.rapports.push(Object.assign({}, r.fait, { recuA:+S.temps.toFixed(1), porteur:h.debugId }));
+    const m = S.ratissages.get(r.missionId);
     if (m) { m.rapportsArrives++; m.chefSignale = true; }
     noter("rapport-arrive", cible.x, cible.y,
       { dit:{ par:h.debugId, chef:cible.nom || cible.debugId,
@@ -9955,7 +9966,7 @@ window.Bataille2d = (() => {
   }
 
   function menerRatissage(h, u, dt) {
-    const r = u && u.ratissage, m = r && ratissages.get(r.missionId);
+    const r = u && u.ratissage, m = r && S.ratissages.get(r.missionId);
     if (!r || !m) return false;
     if (h.sortieBatiment != null) { sortirParHuis(h, dt); return true; }
     if (h.rapportMission) { courirRapport(h, dt); return true; }
@@ -9978,7 +9989,7 @@ window.Bataille2d = (() => {
           "ordre de ralliement");
         menerVintaineAuRdv(h,u,poste,dt);
         if(vintaineRalliee(u,poste)){
-          r.repos=true;r.rallieA=+temps.toFixed(1);r.posteRdv={x:poste.x,y:poste.y};
+          r.repos=true;r.rallieA=+S.temps.toFixed(1);r.posteRdv={x:poste.x,y:poste.y};
           r.retourChef=null;
           donnerOrdreLocal(u,"Vintaine, repos au poste de ralliement. Chefs au point de rencontre.",
             "la vintaine a rejoint le corps et peut tenir sans suivre chaque mouvement de son chef");
@@ -10015,10 +10026,10 @@ window.Bataille2d = (() => {
     if (h === chef && r.phase === "approcher" && r.marcheMaison) {
       const w = r.marcheMaison;
       if (Math.hypot(chef.x - w.x, chef.y - w.y) > .8) {
-        w.x = chef.x; w.y = chef.y; w.avanceA = temps;
+        w.x = chef.x; w.y = chef.y; w.avanceA = S.temps;
       }
-      if (Math.hypot(bati.x[b] - chef.x, bati.y[b] - chef.y) > 12 &&
-          temps - w.avanceA > 20) {
+      if (Math.hypot(S.bati.x[b] - chef.x, S.bati.y[b] - chef.y) > 12 &&
+          S.temps - w.avanceA > 20) {
         faitRatissage(u, "maison_inaccessible", b,
           { conclusion:"la route vers cette porte n'a produit aucune progression" });
         r.courant = null; r.phase = "choisir-maison"; r.approche = null;
@@ -10030,8 +10041,8 @@ window.Bataille2d = (() => {
         "quatre des nôtres suffisent à fouiller pendant que nous gardons la rue",
         "couverture du ratissage");
       // Le gros suit jusqu'aux abords, mais ne se tasse jamais dans l'huis.
-      const dRue = Math.hypot(bati.x[b] - h.x, bati.y[b] - h.y);
-      if (dRue > 7) suivreGuideDirect(h, chef, bati.x[b], bati.y[b], MARCHE, dt);
+      const dRue = Math.hypot(S.bati.x[b] - h.x, S.bati.y[b] - h.y);
+      if (dRue > 7) suivreGuideDirect(h, chef, S.bati.x[b], S.bati.y[b], MARCHE, dt);
       return true;
     }
     if (r.courant == null && r.quitterSecteurApres) {
@@ -10041,7 +10052,7 @@ window.Bataille2d = (() => {
       return true;
     }
     if (h.interieur !== b) {
-      const d = Math.hypot(bati.x[b] - h.x, bati.y[b] - h.y);
+      const d = Math.hypot(S.bati.x[b] - h.x, S.bati.y[b] - h.y);
       const chefDedans = chefFouille && chefFouille.interieur === b;
       // Le chef doit réellement atteindre l'huis. Une fois qu'il l'a ouvert,
       // demander à chaque homme de tenir dans le même disque de 1,35 m crée un
@@ -10057,7 +10068,7 @@ window.Bataille2d = (() => {
         // quoi ceux-ci visent le salon à travers la façade. Ils visent l'huis.
         if (h !== chefFouille && chefDedans && d <= 45) {
           h.passageEtroit = true;
-          versLe(h, bati.x[b], bati.y[b], MARCHE, dt);
+          versLe(h, S.bati.x[b], S.bati.y[b], MARCHE, dt);
           h.passageEtroit = false;
         }
         else if (d <= 45) {
@@ -10071,7 +10082,7 @@ window.Bataille2d = (() => {
         else menerFormation(h, u.ordre.destination, MARCHE, dt);
         return true;
       }
-      if (h !== chefFouille && temps < r.passage.prochain) {
+      if (h !== chefFouille && S.temps < r.passage.prochain) {
         penser(h, "attendre mon tour au seuil",
           "le chef est entré et la porte ne laisse passer qu'un homme à la fois",
           "franchissement en file");
@@ -10098,28 +10109,28 @@ window.Bataille2d = (() => {
       return true;
     }
     penser(h, "fouiller l'intérieur",
-      "nous avons franchi le seuil du " + (bati.usage[b] || "bâtiment"),
+      "nous avons franchi le seuil du " + (S.bati.usage[b] || "bâtiment"),
       "ordre de ratissage");
     if (h !== chefFouille) return true;
     const equipe = u.membres.filter((x) => r.fouilleurs && r.fouilleurs.has(x.debugId) && pese(x));
     const dedans = equipe.filter((x) => x.interieur === b).length;
     if (dedans < Math.min(3, equipe.length)) return true;
     r.progres += dt;
-    if (r.progres < 7 + Math.min(8, (bati.val[b] || 2) * .12)) return true;
-    if (bati.fouille[b] === 2) {
+    if (r.progres < 7 + Math.min(8, (S.bati.val[b] || 2) * .12)) return true;
+    if (S.bati.fouille[b] === 2) {
       m.doublons++; faitRatissage(u, "deja_fouillee", b);
       sortirDuBatiment(u, b); r.courant = null; r.phase = "choisir-maison"; return true;
     }
     // Une autre équipe a pu découvrir la résistance pendant que celle-ci
     // fouillait la même adresse. `3` signifie « combat en cours », jamais
     // « maison terminée » : la seconde équipe reste dedans et prête main-forte.
-    if (bati.fouille[b] === 3) { r.phase = "combat"; return true; }
-    if (bati.occupation[b]) {
-      bati.fouille[b] = 3; revelerRebelles(m, u, b); r.phase = "combat";
-      donnerOrdreLocal(u, "Renfort dans le " + (bati.usage[b] || "bâtiment") +
+    if (S.bati.fouille[b] === 3) { r.phase = "combat"; return true; }
+    if (S.bati.occupation[b]) {
+      S.bati.fouille[b] = 3; revelerRebelles(m, u, b); r.phase = "combat";
+      donnerOrdreLocal(u, "Renfort dans le " + (S.bati.usage[b] || "bâtiment") +
         " n°" + b + ". Le reste tient la rue.", "des hommes armés viennent d'y être découverts");
     } else {
-      bati.fouille[b] = 2; m.batimentsClairs++;
+      S.bati.fouille[b] = 2; m.batimentsClairs++;
       faitRatissage(u, "maison_claire", b, { conclusion:"aucun ennemi aperçu lors de la fouille" });
       sortirDuBatiment(u, b); r.courant = null; r.phase = "choisir-maison";
     }
@@ -10129,9 +10140,9 @@ window.Bataille2d = (() => {
   function suivreIssuesRatissage(m) {
     for (const [b, ids] of m.rebelles) {
       if (m.resolus.has(b)) continue;
-      const xs = ids.map((id) => hommes.find((h) => h.debugId === id)).filter(Boolean);
+      const xs = ids.map((id) => S.hommes.find((h) => h.debugId === id)).filter(Boolean);
       const encore = xs.filter((h) => pese(h));
-      const unitesCombat = formations.filter((q) => q.ratissage && q.ratissage.courant === b);
+      const unitesCombat = S.formations.filter((q) => q.ratissage && q.ratissage.courant === b);
       const uCombat = unitesCombat[0];
       const assaillants = unitesCombat.flatMap((q) =>
         q.membres.filter((h) => pese(h) && h.interieur === b));
@@ -10140,18 +10151,18 @@ window.Bataille2d = (() => {
       // les survivants rendent leurs armes. C'est une issue locale, pas une
       // déroute du camp entier.
       const enlise = uCombat && uCombat.ratissage.combatDepuis != null &&
-        temps - uCombat.ratissage.combatDepuis > 60 &&
+        S.temps - uCombat.ratissage.combatDepuis > 60 &&
         assaillants.length >= encore.length && assaillants.length >= 3;
       if (encore.length &&
           ((encore.length <= Math.max(2, Math.floor(xs.length * .35)) &&
             assaillants.length > encore.length) || enlise)) {
         for (const h of encore) { h.etat = "prisonnier"; h.cible = null; }
-        noter("reddition-locale", bati.x[b], bati.y[b],
+        noter("reddition-locale", S.bati.x[b], S.bati.y[b],
           { dit:{ batiment:b, prisonniers:encore.length, mission:m.id,
                   cause:enlise ? "encercles dans le bâtiment" : "groupe réduit" } });
       }
       if (xs.some((h) => pese(h))) continue;
-      m.resolus.add(b); m.groupesVaincus++; bati.fouille[b] = 2;
+      m.resolus.add(b); m.groupesVaincus++; S.bati.fouille[b] = 2;
       const u = uCombat;
       if (!u) continue;
       const f = faitRatissage(u, "groupe_vaincu", b, { nombre:xs.length });
@@ -10165,21 +10176,21 @@ window.Bataille2d = (() => {
         sortirDuBatiment(q, b); q.ratissage.courant = null;
         q.ratissage.phase = "choisir-maison";
       }
-      noter("groupe-rebelle-vaincu", bati.x[b], bati.y[b],
+      noter("groupe-rebelle-vaincu", S.bati.x[b], S.bati.y[b],
         { dit:{ batiment:b, hommes:xs.length, chef:xs.some((h) => h.rebelleChef) || undefined } });
     }
   }
 
   function coordonnerRatissages() {
-    for (const m of ratissages.values()) {
+    for (const m of S.ratissages.values()) {
       // « Un messager est parti » n'est pas équivalent à « le commandement
       // sait ». Si le porteur tombe ou perd sa mission, un chef qui possède
       // encore le fait en envoie un autre au lieu de considérer la chaîne close.
       if(m.rapportChefParti&&m.rapportsArrives===0&&m.rapportChefFait){
-        const p=hommes.find((h)=>h.debugId===m.rapportPorteur);
+        const p=S.hommes.find((h)=>h.debugId===m.rapportPorteur);
         if(!p||!p.rapportMission||!pese(p)){
           m.rapportChefParti=false;m.rapportPorteur=null;
-          const u=m.unites.map((id)=>formations.find((q)=>q.id===id)).find((q)=>
+          const u=m.unites.map((id)=>S.formations.find((q)=>q.id===id)).find((q)=>
             q&&q.ratissage&&[...q.ratissage.faits.values()].some((f)=>
               f.type==="chef_rebelle_identifie"));
           if(u)envoyerRapport(u,m,m.rapportChefFait);
@@ -10187,7 +10198,7 @@ window.Bataille2d = (() => {
       }
       echangerEntrePairs(m);
       for (const id of m.unites) {
-        const u = formations.find((q) => q.id === id);
+        const u = S.formations.find((q) => q.id === id);
         if (u && u.ratissage && !u.ratissage.secteur &&
             u.ratissage.phase !== "rendre-compte") choisirSecteur(u, m);
       }
@@ -10196,8 +10207,8 @@ window.Bataille2d = (() => {
   }
 
   function ordonnerRatissage(spec) {
-    if (!bati || !spec) return false;
-    const id = spec.id || "ratissage:" + (++prochainRatissage);
+    if (!S.bati || !spec) return false;
+    const id = spec.id || "ratissage:" + (++S.prochainRatissage);
     const zone = spec.zone || {};
     const cx = Number.isFinite(zone.x) ? zone.x : 0, cy = Number.isFinite(zone.y) ? zone.y : 0;
     const rayon = Number.isFinite(zone.rayon) ? zone.rayon : 90;
@@ -10208,7 +10219,7 @@ window.Bataille2d = (() => {
     if (spec.maxBatiments) bs = bs.slice(0, spec.maxBatiments);
     if (!bs.length) return false;
     const ids = new Set(spec.unites || []);
-    const us = formations.filter((u) => ids.has(u.id));
+    const us = S.formations.filter((u) => ids.has(u.id));
     if (!us.length) return false;
     const x0 = Math.min(...bs.map((b) => b.x)), y0 = Math.min(...bs.map((b) => b.y));
     const m = {
@@ -10225,7 +10236,7 @@ window.Bataille2d = (() => {
       chefIdentifie:false, chefSignale:false, batimentChef:null,
     };
     for (const q of bs) {
-      bati.fouille[q.id] = 0; bati.occupation[q.id] = 0;
+      S.bati.fouille[q.id] = 0; S.bati.occupation[q.id] = 0;
       const k = cleSecteur(m, q.id);
       if (!m.secteurs.has(k)) m.secteurs.set(k, []);
       m.secteurs.get(k).push(q.id);
@@ -10245,7 +10256,7 @@ window.Bataille2d = (() => {
     const selection = [], vus = new Set();
     if (min) {
       const secteurs = [...m.secteurs.entries()].map(([cle, qs]) => ({ cle, qs,
-        d:Math.min(...qs.map((b) => Math.hypot(bati.x[b] - m.rdv.x, bati.y[b] - m.rdv.y))) }))
+        d:Math.min(...qs.map((b) => Math.hypot(S.bati.x[b] - m.rdv.x, S.bati.y[b] - m.rdv.y))) }))
         .sort((a, b) => a.d - b.d);
       for (const s of secteurs.slice(0, min)) {
         const x = tirages.filter((t) => s.qs.includes(t.q.id))
@@ -10259,28 +10270,28 @@ window.Bataille2d = (() => {
     const caches = selection.slice(0, max);
     for (const x of caches) {
       const n = 3 + Math.floor(grainTexte(id + ":groupe:" + x.q.id) * 5);
-      bati.occupation[x.q.id] = n; m.groupesPrevus++;
+      S.bati.occupation[x.q.id] = n; m.groupesPrevus++;
     }
     m.batimentChef = null;
     for (const u of us) {
       const memoire = Commandement.memoire({ proprietaire:u.id, echelon:"vintaine", camp:u.camp });
       Commandement.recevoirOrdre(memoire,
         (spec.ordre && spec.ordre.texte) || "Fouillez ce quartier. Rendez compte de ce que vous trouvez.",
-        temps);
+        S.temps);
       u.ratissage = { missionId:id, secteur:null, engagement:null, courant:null,
         phase:"choisir", progres:0, commandement:memoire,
         faits:memoire.faits, croyances:memoire.croyances, engagements:new Map(),
         ordre:(spec.ordre && spec.ordre.texte) || "Fouillez ce quartier. Rendez compte de ce que vous trouvez." };
       const chef = guideDe(u); if (chef) chef.commandement = memoire;
       u.ordre = { mode:"fouiller", destination:null, version:(u.ordre.version || 0) + 1,
-        donneA:temps, ditA:temps, source:"ordre-ratissage", texte:u.ratissage.ordre };
+        donneA:S.temps, ditA:S.temps, source:"ordre-ratissage", texte:u.ratissage.ordre };
     }
-    ratissages.set(id, m);
+    S.ratissages.set(id, m);
     return true;
   }
 
   function rapportsRatissage() {
-    return [...ratissages.values()].map((m) => ({
+    return [...S.ratissages.values()].map((m) => ({
       id:m.id, batiments:m.batiments.length, secteurs:m.secteurs.size,
       entrees:m.entrees, batimentsClairs:m.batimentsClairs, doublons:m.doublons,
       engagementsPris:m.engagementsPris, conflitsResolus:m.conflitsResolus,
@@ -10291,13 +10302,13 @@ window.Bataille2d = (() => {
       chefIdentifie:m.chefIdentifie, chefSignale:m.chefSignale,
       rapportsPartis:m.rapportsPartis, rapportsArrives:m.rapportsArrives,
       congestion5:(() => {
-        const ids=new Set(m.unites), xs=formations.filter((u) => ids.has(u.id))
+        const ids=new Set(m.unites), xs=S.formations.filter((u) => ids.has(u.id))
           .flatMap((u) => u.membres).filter(pese);
         return xs.reduce((pic,h) => Math.max(pic, xs.filter((o) => o !== h &&
           Math.hypot(o.x-h.x,o.y-h.y) <= 5).length), 0);
       })(),
       congestionRdvEtrangere5:(() => {
-        const ids=new Set(m.unites), us=formations.filter((u) => ids.has(u.id));
+        const ids=new Set(m.unites), us=S.formations.filter((u) => ids.has(u.id));
         const ns=new Set(us.map((u)=>u.n));
         const xs=us.flatMap((u)=>u.membres).filter((h)=>pese(h) &&
           Math.hypot(h.x-m.rdv.x,h.y-m.rdv.y)<=40);
@@ -10306,26 +10317,26 @@ window.Bataille2d = (() => {
           Math.hypot(o.x-h.x,o.y-h.y)<=5).length),0);
       })(),
       unitesAuRepos:m.unites.reduce((n,id) => {
-        const u=formations.find((q)=>q.id===id);
+        const u=S.formations.find((q)=>q.id===id);
         return n + (u && u.ratissage && u.ratissage.repos ? 1 : 0);
       },0),
       unitesRalliees:m.unites.reduce((n,id) => {
-        const u=formations.find((q)=>q.id===id), r=u&&u.ratissage;
+        const u=S.formations.find((q)=>q.id===id), r=u&&u.ratissage;
         return n + (r&&r.rallieA!=null ? 1 : 0);
       },0),
       effectifMission:m.unites.reduce((n,id) => {
-        const u=formations.find((q)=>q.id===id), chef=guideDe(u);
+        const u=S.formations.find((q)=>q.id===id), chef=guideDe(u);
         return n+(u ? u.membres.filter((h)=>h!==chef&&pese(h)).length : 0);
       },0),
       effectifRallie:m.unites.reduce((n,id) => {
-        const u=formations.find((q)=>q.id===id), r=u&&u.ratissage, chef=guideDe(u);
+        const u=S.formations.find((q)=>q.id===id), r=u&&u.ratissage, chef=guideDe(u);
         return n+(u&&r&&r.rallieA!=null ?
           u.membres.filter((h)=>h!==chef&&pese(h)).length : 0);
       },0),
       troupesRalliees:(() => {
         let n=0;
         for(const id of m.unites){
-          const u=formations.find((q)=>q.id===id), r=u&&u.ratissage;
+          const u=S.formations.find((q)=>q.id===id), r=u&&u.ratissage;
           if(!u||!r||!r.posteRdv)continue;
           const chef=guideDe(u);
           n+=u.membres.filter((h)=>h!==chef&&pese(h)&&
@@ -10335,7 +10346,7 @@ window.Bataille2d = (() => {
       })(),
       troupesAuRdv:(() => {
         const ids=new Set(m.unites);
-        return formations.filter((u)=>ids.has(u.id)).reduce((n,u) => {
+        return S.formations.filter((u)=>ids.has(u.id)).reduce((n,u) => {
           const chef=guideDe(u);
           return n + u.membres.filter((h)=>h!==chef && pese(h) &&
             Math.hypot(h.x-m.rdv.x,h.y-m.rdv.y)<=8).length;
@@ -10345,20 +10356,20 @@ window.Bataille2d = (() => {
         if(!m.formationRdv)return 0;
         let n=0;
         for(const [id,p] of m.formationRdv){
-          const u=formations.find((q)=>q.id===id), h=guideDe(u);
+          const u=S.formations.find((q)=>q.id===id), h=guideDe(u);
           if(h&&Math.hypot(h.x-p.x,h.y-p.y)<=2)n++;
         }
         return n;
       })(),
       formationRdv:m.formationRdv ? [...m.formationRdv.entries()].map(([unite,p]) =>
-        (() => { const u=formations.find((q)=>q.id===unite), h=guideDe(u); return {
+        (() => { const u=S.formations.find((q)=>q.id===unite), h=guideDe(u); return {
           unite, x:+p.x.toFixed(1), y:+p.y.toFixed(1),
           chefX:h ? +h.x.toFixed(1) : null, chefY:h ? +h.y.toFixed(1) : null,
           reste:h ? +Math.hypot(h.x-p.x,h.y-p.y).toFixed(1) : null,
         }; })())
         : [],
       unites:m.unites.map((id) => {
-        const u = formations.find((q) => q.id === id), r = u && u.ratissage;
+        const u = S.formations.find((q) => q.id === id), r = u && u.ratissage;
         const cf = u && r && u.membres.find((h) => h.debugId === r.chefFouille);
         const chef=u&&guideDe(u), pr=m.ralliementRdv&&m.ralliementRdv.get(id);
         const vivants=u ? u.membres.filter(pese) : [];
@@ -10397,7 +10408,7 @@ window.Bataille2d = (() => {
 
   function rapportsCommandement() {
     const xs = [];
-    for (const dep of deploiements.values()) {
+    for (const dep of S.deploiements.values()) {
       if (!dep.commandants) continue;
       for (const [h, c] of dep.commandants) {
         const carte = carteCommandant(h.debugId, c.champ);
@@ -10408,9 +10419,9 @@ window.Bataille2d = (() => {
           ordre:c.memoire.ordre && c.memoire.ordre.texte,
           ordreRecuA:c.memoire.ordre && c.memoire.ordre.recuA,
           faits:c.memoire.faits.size, estimation:c.estimation ||
-            Commandement.estimation(c.memoire, 0, temps),
+            Commandement.estimation(c.memoire, 0, S.temps),
           croyances:[...c.memoire.croyances.values()].map((q) => Object.assign({}, q,
-            { confianceActuelle:+Commandement.confiance(q, temps).toFixed(2) })),
+            { confianceActuelle:+Commandement.confiance(q, S.temps).toFixed(2) })),
           communications:c.memoire.communications.length,
           carte:carte ? { resume:carte.resume, noeuds:carte.noeuds,
             liens:carte.liens } : null,
@@ -10428,14 +10439,14 @@ window.Bataille2d = (() => {
       // la porte de la Gadoue à tout moment, sur un plan qu'on avait ouvert
       // pour chercher une rue. Une bataille se convoque — c'est le bouton qui
       // la fait exister, pas le fait de regarder la ville.
-      if (!boucle) boucle = requestAnimationFrame(image);
-      if (window.ResizeObserver) new ResizeObserver(ajuster).observe(hote);
+      if (!S.boucle) S.boucle = requestAnimationFrame(image);
+      if (window.ResizeObserver) new ResizeObserver(ajuster).observe(S.hote);
       return true;
     } catch (e) {
       console.warn("bataille2d : pas de bataille ici —", e);
-      rate = e;
-      if (barre) { barre.remove(); barre = null; }
-      if (toile) { toile.remove(); toile = null; }
+      S.rate = e;
+      if (S.barre) { S.barre.remove(); S.barre = null; }
+      if (S.toile) { S.toile.remove(); S.toile = null; }
       return false;
     }
   }
@@ -10454,23 +10465,23 @@ window.Bataille2d = (() => {
   // ici que si personne d'autre ne va le faire : à l'arrêt, il n'y a pas de
   // boucle, et un recadrage qui ne repeindrait pas laisserait l'armée en place
   // pendant qu'on tire le plan sous elle.
-  function recadrer() { ajuster(); if (!boucle) peindre(); }
+  function recadrer() { ajuster(); if (!S.boucle) peindre(); }
   function arreter() {
-    if (boucle) cancelAnimationFrame(boucle);
-    boucle = 0; marche = false;
+    if (S.boucle) cancelAnimationFrame(S.boucle);
+    S.boucle = 0; S.marche = false;
   }
 
   /** De quoi lire la bataille depuis la console, sans la regarder. */
   function etat() {
-    if (!hommes.length) return { dressee: false, temps: 0, marche: false };
+    if (!S.hommes.length) return { dressee: false, temps: 0, marche: false };
     const par = {};
-    for (const h of hommes) par[h.etat] = (par[h.etat] || 0) + 1;
-    const combattants = hommes.filter((h) => !h.tete && !h.roi && !h.hors &&
+    for (const h of S.hommes) par[h.etat] = (par[h.etat] || 0) + 1;
+    const combattants = S.hommes.filter((h) => !h.tete && !h.roi && !h.hors &&
       h.etat !== "mort" && h.etat !== "blesse" && h.etat !== "rentre");
     const moyenne = (f) => combattants.length
       ? combattants.reduce((s, h) => s + f(h), 0) / combattants.length : 0;
     const durees = combattants.flatMap((h) => {
-      const d = h.enMesure ? Math.max(0, temps - h.mesureDepuis) : h.dernierBout;
+      const d = h.enMesure ? Math.max(0, S.temps - h.mesureDepuis) : h.dernierBout;
       return d > 0 ? [d] : [];
     }).sort((a, b) => a - b);
     const quantile = (q) => durees.length
@@ -10478,7 +10489,7 @@ window.Bataille2d = (() => {
     const dynamique = {
       combattants: combattants.length,
       enMesure: combattants.filter((h) => h.enMesure).length,
-      frappeursRecents: combattants.filter((h) => temps - h.dernierCoup <= 5).length,
+      frappeursRecents: combattants.filter((h) => S.temps - h.dernierCoup <= 5).length,
       coupsTentes: combattants.reduce((s, h) => s + h.coupsTentes, 0),
       coupsPortes: combattants.reduce((s, h) => s + h.coupsPortes, 0),
       bouts: combattants.reduce((s, h) => s + h.boutsMesure, 0),
@@ -10498,54 +10509,54 @@ window.Bataille2d = (() => {
     // On coupe le complément chiffré des libellés — « à 40 pas » — sinon
     // chaque homme fait sa propre ligne et l'on ne compte plus rien.
     const branches = {};
-    for (const h of hommes) {
+    for (const h of S.hommes) {
       if (h.camp !== "assaut" || h.tete || h.hors) continue;
       if (h.etat === "mort" || h.etat === "deroute") continue;
       const b = (h.branche || "sans branche").split(/ (?:à|—) /)[0];
       branches[b] = (branches[b] || 0) + 1;
     }
     return {
-      temps: +temps.toFixed(1), marche,
+      temps: +S.temps.toFixed(1), marche: S.marche,
       // Rangé du plus nombreux au moins nombreux : la première ligne est ce
       // que fait l'armée, quoi qu'on ait cru lui ordonner.
       branches: Object.fromEntries(
         Object.entries(branches).sort((a, b) => b[1] - a[1])),
-      porte: entree && entree.nom, objectif: objectif && objectif.nom,
-      verrou: verrou && { etat: verrou.etat, pv: Math.round(verrou.pv) },
+      porte: S.entree && S.entree.nom, objectif: S.objectif && S.objectif.nom,
+      verrou: S.verrou && { etat: S.verrou.etat, pv: Math.round(S.verrou.pv) },
       // Les quatre portes, chacune avec son compte : c'est le relevé qui dit
       // laquelle a cédé la première, et c'est de là que part tout le reste.
       // `par` dit COMMENT elle s'est ouverte, et c'est la seule chose qu'on
       // veuille savoir d'une porte : une qu'on enfonce a coûté trois mille
       // points et une demi-heure de morts sur un seuil, une qu'on ouvre n'a
       // rien coûté du tout.
-      portes: verrous.map((v) => ({ nom: v.nom, etat: v.etat,
+      portes: S.verrous.map((v) => ({ nom: v.nom, etat: v.etat,
                                     pv: Math.round(v.pv),
                                     par: v.par || (v.etat === "ouvert" ? "hache" : null) })),
       // CE QUI A ARRÊTÉ LA NUIT, s'il y a lieu — et c'est le seul champ du
       // relevé qui puisse dire que la bataille n'a pas eu d'issue militaire.
-      arret,
+      arret: S.arret,
       // Le Donjon : à quelle heure il a su, et lequel des deux lords a gagné.
       // L'écart entre `averti` et la porte qui cède est le fait le plus cher de
       // toute la nuit.
-      donjon: { averti: conseil.averti || null, tranche: conseil.tranche,
-                tenir: +conseil.tenir.toFixed(1),
-                ouvrir: +conseil.ouvrir.toFixed(1),
-                anneau: anneauOuvert ? "ouvert" : "tenu" },
+      donjon: { averti: S.conseil.averti || null, tranche: S.conseil.tranche,
+                tenir: +S.conseil.tenir.toFixed(1),
+                ouvrir: +S.conseil.ouvrir.toFixed(1),
+                anneau: S.anneauOuvert ? "ouvert" : "tenu" },
       assaut: compte.a, garde: compte.d, morts: compte.morts,
       blesses: compte.blesses, fuyards: compte.fuyards,
       contreCharges: compte.contreCharges, etats: par,
       dynamique,
-      faits: annales.length,
+      faits: S.annales.length,
       // LE SAC, EN QUATRE CHIFFRES. C'est par eux qu'on le retiendra : combien
       // de portes forcées, combien de toits en feu, et ce que l'armée emporte.
-      sac: bati ? { maisons: bati.n, forcees: bati.forcees,
-                    brulees: bati.brulees, butin: Math.round(bati.butin) } : null,
+      sac: S.bati ? { maisons: S.bati.n, forcees: S.bati.forcees,
+                    brulees: S.bati.brulees, butin: Math.round(S.bati.butin) } : null,
       // La ville : combien ont peur, et dans quel état. C'est le seul relevé
       // qui dise si la couche de peur fait quelque chose — on ne la voit
       // autrement qu'en regardant une rue se vider.
       ville: (() => {
-        const v = { paniques: paniques.length, foyers: foyers.length };
-        for (const p of paniques) v[p.etat] = (v[p.etat] || 0) + 1;
+        const v = { paniques: S.paniques.length, foyers: S.foyers.length };
+        for (const p of S.paniques) v[p.etat] = (v[p.etat] || 0) + 1;
         return v;
       })(),
       sangFroidMoyen: dynamique.sangFroidMoyen,
@@ -10559,7 +10570,7 @@ window.Bataille2d = (() => {
   // secondes de bataille d'un trait et rend l'état. C'est aussi ce qui permet
   // de rejouer deux fois la même et de comparer.
   function pas(secondes) {
-    if (!hommes.length) rejouer();
+    if (!S.hommes.length) rejouer();
     const n = Math.round((secondes || 1) / PAS);
     // `avancer` consomme exactement un pas quand on lui en donne un : le
     // reliquat repart à zéro à chaque tour, et l'on ne dépend pas de l'horloge
@@ -10571,14 +10582,14 @@ window.Bataille2d = (() => {
   // Les habitants qu'on a pris en charge, à plat. C'est le seul moyen de
   // VÉRIFIER que la peur passe par les rues au lieu de traverser les murs :
   // sans ce relevé, on ne peut que regarder des points et se persuader.
-  const peur = () => paniques.map((p) => ({ x: p.x, y: p.y, etat: p.etat,
+  const peur = () => S.paniques.map((p) => ({ x: p.x, y: p.y, etat: p.etat,
                                             surRue: p.surRue, contre: p.contre }));
 
   // Les corps eux-mêmes, tels quels — c'est ce que le four échantillonne à
   // chaque pas. On rend le tableau VIVANT et non une copie : le four le
   // parcourt cent mille fois, et recopier trois cents objets à chaque pas
   // coûterait plus cher que la simulation.
-  const troupe = () => hommes;
+  const troupe = () => S.hommes;
 
   // LES RAILS QUE SUIVENT LES CHEFS. Un quart du chemin passe par des
   // ruelles, que le plan n'imprime pas au-delà de deux mètres par pixel : sans
@@ -10587,7 +10598,7 @@ window.Bataille2d = (() => {
   // n'y a donc qu'une poignée de tracés distincts.
   const chemins = () => {
     const vus = new Set(), l = [];
-    for (const u of formations) {
+    for (const u of S.formations) {
       const tr = u.cadre && u.cadre.trace;
       if (!tr || vus.has(tr)) continue;
       vus.add(tr);
@@ -10605,7 +10616,7 @@ window.Bataille2d = (() => {
   function equiperUnite(id, typeId) {
     const Roster = window.BatailleRoster;
     const type = Roster && Roster.TYPES.find((x) => x.id === typeId);
-    const u = formations.find((x) => x.id === id);
+    const u = S.formations.find((x) => x.id === id);
     if (!type || !u) return null;
     const xs = u.membres.filter((h) => !h.tete && !h.hors);
     const file = [];
@@ -10639,7 +10650,7 @@ window.Bataille2d = (() => {
   // combien de routes elle a réellement demandées et combien des siens sont
   // encore à portée de leur propre chef. C'est la sonde qui empêche « pas un
   // A* par homme » de rester un commentaire invérifiable.
-  const unites = () => formations.map((u) => {
+  const unites = () => S.formations.map((u) => {
     const chef = guideDe(u);
     const vivants = u.membres.filter((h) => h.etat !== "mort" &&
       h.etat !== "blesse" && h.etat !== "deroute");
@@ -10682,9 +10693,9 @@ window.Bataille2d = (() => {
       calculsAStar: u.cadre.calculs,
       cohesion: distances.length ? proches / distances.length : (chef ? 1 : 0),
       distanceP90: distances.length ? distances[Math.floor((distances.length - 1) * .9)] : 0,
-      sansChefDepuis: u.cadre.perduA === null ? null : temps - u.cadre.perduA,
+      sansChefDepuis: u.cadre.perduA === null ? null : S.temps - u.cadre.perduA,
       successionDans: u.cadre.reprendA === null ? null
-        : Math.max(0, u.cadre.reprendA - temps),
+        : Math.max(0, u.cadre.reprendA - S.temps),
     };
   });
 
@@ -10737,12 +10748,12 @@ window.Bataille2d = (() => {
   // rayons et les plus proches coûteraient trop cher dans la boucle ; une fois
   // au clic, leur coût est négligeable et leur valeur de diagnostic immense.
   function diagnostic(debugId) {
-    const h = hommes.find((x) => x.debugId === debugId);
+    const h = S.hommes.find((x) => x.debugId === debugId);
     if (!h) return null;
     const u = formationDe(h), chef = guideDe(u);
-    const a = ailleDe(h), e = a ? escouades[h.escouade] : null;
+    const a = ailleDe(h), e = a ? S.escouades[h.escouade] : null;
     const rayons = [5, 12, 25, 50].map((rayon) => {
-      const xs = hommes.filter((o) => o !== h &&
+      const xs = S.hommes.filter((o) => o !== h &&
         Math.hypot(o.x - h.x, o.y - h.y) <= rayon);
       return {
         rayon_m: rayon, total: xs.length,
@@ -10754,7 +10765,7 @@ window.Bataille2d = (() => {
         en_repli: xs.filter((o) => o.etat === "repli" || o.etat === "deroute").length,
       };
     });
-    const proches = hommes.filter((o) => o !== h).map((o) => ({
+    const proches = S.hommes.filter((o) => o !== h).map((o) => ({
       id: o.debugId, nom: o.nom || null, camp: o.camp, etat: o.etat,
       distance_m: +Math.hypot(o.x - h.x, o.y - h.y).toFixed(1),
       action: o.pensee && o.pensee.action,
@@ -10773,7 +10784,7 @@ window.Bataille2d = (() => {
         h.pensee.systeme !== "corps · couche 1")
       alertes.push("le corps propose « " + h.l1.jambes + " », un autre système conduit");
     let chargeCommandement = null;
-    for (const dep of deploiements.values()) if (dep.commandants && dep.commandants.has(h)) {
+    for (const dep of S.deploiements.values()) if (dep.commandants && dep.commandants.has(h)) {
       chargeCommandement = dep.commandants.get(h); break;
     }
     const memoireChef = h.commandement;
@@ -10781,7 +10792,7 @@ window.Bataille2d = (() => {
     return {
       format: "marque-bataille/v1",
       calcule_a: new Date().toISOString(),
-      temps_bataille_s: +temps.toFixed(2),
+      temps_bataille_s: +S.temps.toFixed(2),
       combattant: {
         id: h.debugId, nom: h.nom || null, role: h.role || null,
         camp: h.camp, corps: h.corps || null, etat: h.etat,
@@ -10790,7 +10801,7 @@ window.Bataille2d = (() => {
         metier: h.metier || null, type_troupe: h.typeTroupe || null,
         monte_combat: !!h.montureCombat,
         pensee: h.pensee && Object.assign({}, h.pensee,
-          { duree_s: +(temps - h.pensee.depuis).toFixed(1) }),
+          { duree_s: +(S.temps - h.pensee.depuis).toFixed(1) }),
         ordre: e ? dire(e.ordre) : null,
         ordre_litteral: u ? ordreLitteral(u) : null,
         traits: { trempe: +h.trempe.toFixed(2), oeil: +(1 / h.vivacite).toFixed(2),
@@ -10843,7 +10854,7 @@ window.Bataille2d = (() => {
             dernier_pas_m: +(u.cadre.ralliement.routeMasque.dernierPas || 0).toFixed(3),
             dernier_but: u.cadre.ralliement.routeMasque.dernierBut
               ? u.cadre.ralliement.routeMasque.dernierBut.map((v)=>+v.toFixed(1)) : null,
-            sans_progres_depuis_s: +(temps-
+            sans_progres_depuis_s: +(S.temps-
               u.cadre.ralliement.routeMasque.avanceA).toFixed(1),
           } : null,
         } : null,
@@ -10854,7 +10865,7 @@ window.Bataille2d = (() => {
         estimation:chargeCommandement ? chargeCommandement.estimation
           : (u && u.ratissage ? estimerSituation(u) : null),
         croyances:[...memoireChef.croyances.values()].map((c) => Object.assign({}, c,
-          { confiance_actuelle:+Commandement.confiance(c, temps).toFixed(2) })),
+          { confiance_actuelle:+Commandement.confiance(c, S.temps).toFixed(2) })),
         communications:memoireChef.communications.slice(),
         carte:carteCommandant(h.debugId),
       } : null,
@@ -10870,7 +10881,7 @@ window.Bataille2d = (() => {
   // sont arrivés — c'est un document, pas une vue : on ne le trie pas, on ne
   // le filtre pas, et surtout on ne le résume pas ici. Résumer est le travail
   // de celui qui raconte.
-  const faits = () => annales;
+  const faits = () => S.annales;
 
   // ---- L'ALENTOUR — CE QUE LA RUE TENAIT À CETTE MINUTE-LÀ ------------------
   // À NE PAS CONFONDRE AVEC `temoins`, qui est au-dessus et qui répond à une
@@ -10904,12 +10915,12 @@ window.Bataille2d = (() => {
   function temoigner(o) {
     const opt = o || {};
     const F = window.Foule2d;
-    if (!F || !F.presents) return { faits: 0, sans: annales.length };
+    if (!F || !F.presents) return { faits: 0, sans: S.annales.length };
     const R = opt.rayon || ALENTOUR_R;
     const quoi = opt.quoi ? new Set([].concat(opt.quoi)) : null;
     const min0 = typeof opt.minute === "number" ? opt.minute : null;
     let vus = 0, sans = 0;
-    for (const f of annales) {
+    for (const f of S.annales) {
       if (f.alentour !== undefined) continue;       // déjà fait
       if (quoi && !quoi.has(f.quoi)) { sans++; continue; }
       const g = F.presents(f.x, f.y, R,
@@ -10955,7 +10966,7 @@ window.Bataille2d = (() => {
                       coureur: 2, homme: 1 };
 
   function sousLeDoigt(x, y, rayon) {
-    if (!hommes.length) return null;
+    if (!S.hommes.length) return null;
     const r = Math.max(1.5, rayon || 6);
     const r2 = r * r;
     let best = null, bestRang = 0, bestD = Infinity;
@@ -10966,7 +10977,7 @@ window.Bataille2d = (() => {
 
     // Les figures d'abord : elles ne sont pas dans `hommes`, donc pas dans la
     // grille, et il n'y en a que douze.
-    for (const f of figures) {
+    for (const f of S.figures) {
       const d = (f.x - x) * (f.x - x) + (f.y - y) * (f.y - y);
       if (d > r2) continue;
       peser({ quoi: "figure", nom: f.nom, role: f.role || null,
@@ -10988,7 +10999,7 @@ window.Bataille2d = (() => {
       // Donjon obéir à une escouade de l'assaut. Le piège que la tête avait
       // déjà tendu une fois sur l'effectif, tendu une seconde fois.
       const a = ailleDe(h);
-      const e = a ? escouades[h.escouade] : null;
+      const e = a ? S.escouades[h.escouade] : null;
       const u = formationDe(h), chefFormation = guideDe(u);
       const commandant = chargeCommandant(h);
       const o = {
@@ -10999,7 +11010,7 @@ window.Bataille2d = (() => {
         nom: h.nom || null, role: h.role || null, camp: h.camp, etat: h.etat,
         commandant:!!commandant,
         roleCommandant:commandant ? commandant.charge.role : null,
-        carteCommandantActive:carteCommandantId === h.debugId,
+        carteCommandantActive:S.carteCommandantId === h.debugId,
         croyancesCommandant:h.commandement ? h.commandement.croyances.size : 0,
         // CE QU'IL A DANS LES MAINS, en toutes lettres et avec sa portée. Le
         // trait sur le plan dit déjà la longueur ; le doigt dit le nom, parce
@@ -11025,7 +11036,7 @@ window.Bataille2d = (() => {
         destination: u && u.ordre.destination ? u.ordre.destination.nom : null,
         calculsAStar: u ? u.cadre.calculs : null,
         successionDans: u && u.cadre.reprendA !== null
-          ? Math.max(0, u.cadre.reprendA - temps) : null,
+          ? Math.max(0, u.cadre.reprendA - S.temps) : null,
         distanceChef: chefFormation && chefFormation !== h
           ? Math.hypot(h.x - chefFormation.x, h.y - chefFormation.y) : 0,
         attend: e && e.attente ? dire(e.attente) : null,
@@ -11072,12 +11083,12 @@ window.Bataille2d = (() => {
           action: h.pensee.action,
           raison: h.pensee.raison,
           systeme: h.pensee.systeme,
-          depuis: Math.max(0, +(temps - h.pensee.depuis).toFixed(1)),
+          depuis: Math.max(0, +(S.temps - h.pensee.depuis).toFixed(1)),
           phrase: "j'essaie de " + h.pensee.action + " parce que " + h.pensee.raison,
         } : null,
         pensees: (h.pensees || []).slice(-2).reverse().map((p) => ({
           action: p.action, raison: p.raison, systeme: p.systeme,
-          ilYa: Math.max(0, +(temps - p.depuis).toFixed(1)),
+          ilYa: Math.max(0, +(S.temps - p.depuis).toFixed(1)),
         })),
         // ---- CE QUE LA COUCHE 3 EN DIT, à côté de ce que la cascade a fait.
         // `branche` dit par quelle RÈGLE il en est là ; `maniere` dit comment
@@ -11126,7 +11137,7 @@ window.Bataille2d = (() => {
         souffle: h.souffle != null ? +h.souffle.toFixed(2) : null,
         soufflant: !!h.repos,
         cession: h.cedePour ? { pour:h.cedePour, chef:h.cedePourChef,
-          ilYa:Math.max(0,+(temps-h.cedePassageA).toFixed(1)),
+          ilYa:Math.max(0,+(S.temps-h.cedePassageA).toFixed(1)),
           distance:+h.cedeDistance.toFixed(2) } : null,
         // Le cercle est celui de SON dernier battement — la même mesure que
         // celle sur laquelle il vient de décider, pas un recomptage qui
@@ -11135,7 +11146,7 @@ window.Bataille2d = (() => {
         ennemis: h.cercle ? h.cercle.ennemis : null,
         avantage: h.cercle ? avantage(h.cercle, h) : null,
         // Ce qui reste de son pas en arrière, et de sa patience de nez à nez.
-        recule: h.recule ? Math.max(0, +(h.reculeJusqua - temps).toFixed(1)) : null,
+        recule: h.recule ? Math.max(0, +(h.reculeJusqua - S.temps).toFixed(1)) : null,
         patience: h.patience != null ? +h.patience.toFixed(1) : null,
         // ⚠ `vivacite` est un facteur de DÉLAI : 0,6 est le vif. On le rend
         // donc à l'endroit sous le doigt, sinon la fiche ment.
@@ -11155,14 +11166,14 @@ window.Bataille2d = (() => {
       };
       peser(o, RANG_SOUS[o.quoi] || 1, d);
     };
-    if (gCol && gLig) autour(x, y, r, regarder);
-    else for (const h of hommes) regarder(h);
+    if (S.gCol && S.gLig) autour(x, y, r, regarder);
+    else for (const h of S.hommes) regarder(h);
 
     // Le verrou ne gagne jamais contre un homme : sept hommes cognent dessus,
     // et c'est d'eux qu'on veut la fiche quand on les vise. Il ne répond que
     // lorsqu'on montre le battant lui-même, où il n'y a personne.
     if (!best) {
-      for (const v of verrous) {
+      for (const v of S.verrous) {
         const d = (v.x - x) * (v.x - x) + (v.y - y) * (v.y - y);
         if (d > (r + 4) * (r + 4)) continue;
         peser({ quoi: "porte", nom: v.nom, etat: v.etat,
@@ -11178,13 +11189,13 @@ window.Bataille2d = (() => {
   // poste, un roi et douze témoins, avec leurs mètres. Une distribution qui se
   // lit dans la console est une distribution qu'on peut corriger.
   const nommes = () => [
-    ...hommes.filter((h) => h.nom).map((h) => ({
+    ...S.hommes.filter((h) => h.nom).map((h) => ({
       nom: h.nom, camp: h.camp, corps: h.corps, role: h.role || null,
       rang: h.roi ? "roi" : h.tete ? "tete"
             : h.capitaine ? "capitaine" : h.hors ? "escorte" : "homme",
       etat: h.etat, x: +h.x.toFixed(1), y: +h.y.toFixed(1),
       ou: situer(h.x, h.y).ou })),
-    ...figures.map((f) => ({
+    ...S.figures.map((f) => ({
       nom: f.nom, camp: f.camp, rang: "figure", role: f.role || null, dit: f.dit,
       x: +f.x.toFixed(1), y: +f.y.toFixed(1), ou: situer(f.x, f.y).ou })),
   ];
@@ -11192,8 +11203,8 @@ window.Bataille2d = (() => {
   /** Les places des chefs dans le repère supérieur, pour les épreuves et marks. */
   const echelons = () => {
     const xs = [];
-    for (const dep of deploiements.values()) {
-      for (const h of tetes) {
+    for (const dep of S.deploiements.values()) {
+      for (const h of S.tetes) {
         const p = h.camp === dep.camp && dep.tetes.get(h.corps);
         if (p) xs.push({ deploiement:dep.id, role:"chef de corps", id:h.debugId,
                          nom:h.nom || null, corps:h.corps, x:h.x, y:h.y,
@@ -11210,20 +11221,20 @@ window.Bataille2d = (() => {
 
   /** L'ordre de bataille tel qu'il est posé — combien, où, sous quel nom. */
   const ordreDeBataille = () => ({
-    echelle: ECHELLE,
+    echelle: S.ECHELLE,
     assaut: CORPS.map((c) => ({
       corps: c.id, chef: c.nom, forme: c.forme, humeur: c.humeur,
-      hommes: hommes.filter((h) => h.corps === c.id && !h.tete).length,
+      hommes: S.hommes.filter((h) => h.corps === c.id && !h.tete).length,
       sur: c.hommes,
-      ailes: ailes.filter((a) => a.corps === c.id).length,
-      escouades: escouades.filter((e) => e.corps === c.id).length,
+      ailes: S.ailes.filter((a) => a.corps === c.id).length,
+      escouades: S.escouades.filter((e) => e.corps === c.id).length,
       dit: c.dit,
     })),
-    garde: hommes.filter((h) => h.camp === "garde").length,
+    garde: S.hommes.filter((h) => h.camp === "garde").length,
     // Le roi et les siens ne sont d'aucun corps, et c'est pour ça qu'ils se
     // comptent à part : ils ne prennent aucune porte et n'obéissent à personne.
-    charrette: hommes.filter((h) => h.hors).length,
-    figures: figures.length,
+    charrette: S.hommes.filter((h) => h.hors).length,
+    figures: S.figures.length,
   });
 
   const comportements = () => ({
@@ -11241,15 +11252,15 @@ window.Bataille2d = (() => {
            faits, nommes, echelons, ordreDeBataille, diagnostic, comportements,
            sous: sousLeDoigt, souligner, carteCommandant,
            selectionnerCarteCommandant,
-           carteCommandantSelectionnee: () => carteCommandantId == null
-             ? null : carteCommandant(carteCommandantId),
+           carteCommandantSelectionnee: () => S.carteCommandantId == null
+             ? null : carteCommandant(S.carteCommandantId),
            dangerExterieur, signalerIncendies, incendiesActifs, jugerRuptureUnite,
            temoigner,
            // Régler une future épreuve ne convoque plus l'armée sur une carte
            // encore vide. Si une scène existe déjà, le comportement historique
            // reste inchangé ; sinon `Scenarios.poser()` la dressera explicitement.
-           echelle: (e) => { if (e) { ECHELLE = e; if (hommes.length) rejouer(); }
-                             return ECHELLE; },
+           echelle: (e) => { if (e) { S.ECHELLE = e; if (S.hommes.length) rejouer(); }
+                             return S.ECHELLE; },
            portes: () => portes().map((p) => p.nom),
            // CE POINT EST-IL LIBRE ? Rend `null` tant que le masque n'est pas
            // chargé — « on ne sait pas » et non « c'est libre », comme
@@ -11262,7 +11273,7 @@ window.Bataille2d = (() => {
            // pas. C'est la même règle que pour `mesures.js` : une seule
            // réponse, chez celui qui la tient.
            libre: (x, y) => (solConnu() ? libreEn(x, y) : null),
-           eau: (x, y) => (sousEau ? sousEau(x, y) : null),
-           bornes: () => plan && plan.bornes ? plan.bornes.slice() : null,
+           eau: (x, y) => (S.sousEau ? S.sousEau(x, y) : null),
+           bornes: () => S.plan && S.plan.bornes ? S.plan.bornes.slice() : null,
            rafraichir: () => { peindre(); montre(); } };
 })();
