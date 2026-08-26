@@ -1,0 +1,115 @@
+{
+  "type": "vue",
+  "fichier": "etat/vues/nicolas-reynolds-1786789619896.webp",
+  "index": "etat/vues/nicolas-reynolds.json",
+  "montre": "cette vue montre : la vue du joueur — sa position n'est pas connue au mètre",
+  "heure": "13h08",
+  "large_en_metres": 57,
+  "metres_par_pixel": 0.07,
+  "couches": [
+    "foule",
+    "bataille"
+  ],
+  "bataille": {
+    "temps": 612.3,
+    "marche": true,
+    "branches": {
+      "il tient": 574,
+      "il appuie, il y est": 339,
+      "il suit, il y est": 178,
+      "il attend sa place au seuil": 93,
+      "il tient la rue": 86,
+      "il reprend son souffle": 70,
+      "il décroche en ordre": 62,
+      "entamé, il cède le pas": 42,
+      "il marche sur la porte": 40,
+      "il suit, il rejoint sa marge": 22,
+      "il appuie, il rejoint sa marge": 21,
+      "débordé, il cède le pas": 13,
+      "il cogne la porte": 7,
+      "au contact": 3,
+      "il cherche l'entrée de la rue,": 3,
+      "il vide une maison": 2,
+      "il monte relever une hache": 2,
+      "son corps cherche l'épaule": 1
+    },
+    "porte": "La porte de la Gadoue",
+    "objectif": "Le Donjon Rouge",
+    "verrou": {
+      "etat": "ouvert",
+      "pv": 0
+    },
+    "portes": [
+      {
+        "nom": "La porte de la Gadoue",
+        "etat": "ouvert",
+        "pv": 0,
+        "par": "hache"
+      },
+      {
+        "nom": "La porte de Fer",
+        "etat": "ferme",
+        "pv": 6243,
+        "par": null
+      },
+      {
+        "nom": "La porte du Roi",
+        "etat": "ouvert",
+        "pv": 0,
+        "par": "hache"
+      },
+      {
+        "nom": "La Vieille Porte",
+        "etat": "cede",
+        "pv": 3703,
+        "par": null
+      }
+    ],
+    "arret": null,
+    "donjon": {
+      "averti": 373.2000000000506,
+      "tranche": true,
+      "tenir": 512.3,
+      "ouvrir": 522.5,
+      "anneau": "tenu"
+    },
+    "assaut": 1548,
+    "garde": 674,
+    "morts": 229,
+    "blesses": 98,
+    "fuyards": 0,
+    "etats": {
+      "tient": 803,
+      "blesse": 98,
+      "forme": 1184,
+      "mort": 225,
+      "repli": 61,
+      "colonne": 155,
+      "melee": 17,
+      "commande": 5,
+      "pille": 1,
+      "coureur": 1
+    },
+    "faits": 405,
+    "sac": {
+      "maisons": 45691,
+      "forcees": 29,
+      "brulees": 0,
+      "butin": 0
+    },
+    "ville": {
+      "paniques": 188,
+      "foyers": 55,
+      "rentre": 85,
+      "fuite": 54,
+      "arme": 8,
+      "contre": 7,
+      "terre": 29,
+      "barre": 5
+    },
+    "moraleMoyenne": -0.94
+  },
+  "joueur_id": "nicolas-reynolds",
+  "recu_a": "2026-08-15T10:26:59.898Z",
+  "_": "Une vue de la carte, centrée sur le joueur, telle qu'il l'a sous les yeux. OUVREZ LE FICHIER : c'est une image, et elle dit d'un coup d'œil ce que trois cents lignes de relevé disent mal — où la ligne a cédé, de quel côté la panique court, à combien de pas de la porte il se tient. Hors fiction : ce n'est ni une parole, ni un acte, ni une minute. Rien à écrire dans l'état, rien à répondre au joueur — c'est pour VOS yeux. Les dix dernières vues sont gardées en rotation et listées dans `index`, la plus récente en tête : les précédentes disent le MOUVEMENT, c'est-à-dire de quel côté ça se déplace, ce qu'une vue seule ne peut pas dire."
+}

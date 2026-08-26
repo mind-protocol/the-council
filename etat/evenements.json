@@ -496,7 +496,7 @@
         "canal": "rumeur",
         "fiabilite": 30,
         "version": "Une complainte de neuf couplets court les auberges du Trident : on y sommait des hommes en armes qui ne repondaient pas, et le feu tombait. Le chiffre de douze cents y est chante, mais il n'est pas au refrain — c'est la fumee qui est au refrain.",
-        "livree": false
+        "livree": true
       },
       {
         "ou": "rosby",
@@ -511,7 +511,7 @@
         "canal": "rumeur",
         "fiabilite": 20,
         "version": "A l'auberge du gue, chez Hanna, on chante desormais la complainte des neuf couplets — mais pas celle qui a ete ecrite : au lieu de douze cents lances sans banniere, on chante trois mille hommes sans sepulture, et un couplet que personne n'a compose dit que la reine est restee dans la cendre a regarder. Hanna dit qu'on la lui a apprise, et qu'elle ne sait plus par qui.",
-        "livree": false
+        "livree": true
       },
       {
         "ou": "stokeworth",
@@ -572,7 +572,7 @@
         "canal": "corbeau",
         "fiabilite": 45,
         "version": "Relaye par Blancport, ou l'on tient les nouvelles du Sud de seconde main : la reine du rocher aurait brule une armee du roi sur une route, quelque part au sud de la baie, pour un vassal qu'on ne sait pas nommer ici. On y ajoute que la guerre a commence sans declaration. Personne au Nord ne sait combien d'hommes, ni si le roi a repondu.",
-        "livree": false
+        "livree": true
       },
       {
         "ou": "castral-roc",
@@ -604,7 +604,7 @@
         "canal": "rumeur",
         "fiabilite": 35,
         "version": "Par des marchands remontes de Pointe-Aigue : la reine de Peyredragon aurait fait crier dans ses septs que marcher en armes sans declaration appelle le feu, et un septon y aurait repondu en chaire que ce qui a brule une armee brulera un jour un champ de ble. On ne s'accorde pas sur qui a parle le dernier. Rien, dans ce qu'on rapporte, ne concerne les Terres de l'Orage.",
-        "livree": false
+        "livree": true
       },
       {
         "ou": "peyredragon",
@@ -932,7 +932,7 @@
         "canal": "rumeur",
         "fiabilite": 55,
         "version": "Au marché de la route on dit qu'un rouleau de Peyredragon porte cent et douze noms d'hommes qui ont ployé le genou devant la princesse le jour de sa couronne, et que neuf en seraient d'ici. On ne sait pas les dire ; on sait les compter. Un homme de Rosby aurait dit qu'il y en a onze des siens, et que ça se lit dans un livre.",
-        "livree": false
+        "livree": true
       },
       {
         "ou": "stokeworth",
@@ -948,7 +948,7 @@
         "canal": "rumeur",
         "fiabilite": 55,
         "version": "Au marché de la route on dit qu'un rouleau de Peyredragon porte cent et douze noms d'hommes qui ont ployé le genou devant la princesse le jour de sa couronne, et que neuf en seraient d'ici. On ne sait pas les dire ; on sait les compter. Un homme de Rosby aurait dit qu'il y en a onze des siens, et que ça se lit dans un livre.",
-        "livree": false
+        "livree": true
       }
     ]
   },
@@ -1184,8 +1184,8 @@
         "qui": null,
         "date": {
           "annee": 129,
-          "lune": 6,
-          "jour": 6
+          "lune": 4,
+          "jour": 9
         },
         "canal": "corbeau",
         "fiabilite": 65,
@@ -1204,21 +1204,8 @@
         },
         "canal": "rumeur",
         "fiabilite": 40,
-        "version": "On dit que les seigneurs du Trident se sont declares pour la reine a Harrenhal, et que c'est son epoux qui tient la place depuis deux lunes. On dit aussi que ce n'est pas vrai. Ce qui est sur, c'est que la route du nord n'est plus tenue pour sure par un homme du roi."
-      },
-      {
-        "ou": "rosby",
-        "qui": [
-          "lord-rosby"
-        ],
-        "date": {
-          "annee": 129,
-          "lune": 4,
-          "jour": 12
-        },
-        "canal": "rumeur",
-        "fiabilite": 40,
-        "version": "On dit que les seigneurs du Trident se sont declares pour la reine a Harrenhal, et que c'est son epoux qui tient la place depuis deux lunes. On dit aussi que ce n'est pas vrai. Ce qui est sur, c'est que la route du nord n'est plus tenue pour sure par un homme du roi."
+        "version": "On dit que les seigneurs du Trident se sont declares pour la reine a Harrenhal, et que c'est son epoux qui tient la place depuis deux lunes. On dit aussi que ce n'est pas vrai. Ce qui est sur, c'est que la route du nord n'est plus tenue pour sure par un homme du roi.",
+        "livree": false
       }
     ]
   },
@@ -1257,7 +1244,7 @@
         "canal": "corbeau",
         "fiabilite": 85,
         "version": "Une seule ligne, de la main du prince : Harrenhal est prise, sans un mort. Rien sur ce qu'elle a coute, rien sur ce qui a ete promis a ser Simon Strong, et pas un mot pour elle. C'est la premiere chose qu'il lui ecrit depuis le matin du dix-neuf.",
-        "livree": false
+        "livree": true
       },
       {
         "ou": "port-real",
@@ -1337,7 +1324,7 @@
       "dévié si la Couronne est prise ailleurs (Conflans levé, Port-Réal affamée par le Gosier)",
       "aggravé si la reine ne rend pas les quarante prisonniers verts des celliers de Gunthor"
     ],
-    "statut": "a-venir",
+    "statut": "resolu",
     "effets": "maison darklyn → tombée ; terreur chez tous les seigneurs de la Couronne ; l'ost vert continue vers Repos-des-Freux",
     "diffusion": [
       {
@@ -1345,21 +1332,21 @@
         "qui": null,
         "date": {
           "annee": 129,
-          "lune": 6,
-          "jour": 2
+          "lune": 4,
+          "jour": 4
         },
         "canal": "barque",
         "fiabilite": 45,
         "version": "Les barques de pêche rentrent avant l'heure : Sombreval brûle du côté du port et on entend les cloches depuis la mer. On ne sait pas si lord Gunthor tient encore la citadelle, ni combien sont sortis par la porte de terre.",
-        "livree": false
+        "livree": true
       },
       {
         "ou": "peyredragon",
         "qui": null,
         "date": {
           "annee": 129,
-          "lune": 6,
-          "jour": 4
+          "lune": 4,
+          "jour": 6
         },
         "canal": "temoin",
         "fiabilite": 90,
@@ -1377,13 +1364,13 @@
         ],
         "date": {
           "annee": 129,
-          "lune": 6,
-          "jour": 2
+          "lune": 4,
+          "jour": 4
         },
         "canal": "corbeau",
         "fiabilite": 75,
         "version": "Ser Criston Cole écrit que Sombreval est reprise au nom du roi, que le traître a payé, et que les brûlés de la route royale sont vengés. Il ne dit rien du nombre de maisons vidées ni de ce que ses hommes ont emporté.",
-        "livree": false
+        "livree": true
       },
       {
         "ou": "stokeworth",
@@ -1394,30 +1381,13 @@
         ],
         "date": {
           "annee": 129,
-          "lune": 6,
-          "jour": 1
+          "lune": 3,
+          "jour": 31
         },
         "canal": "temoin",
         "fiabilite": 100,
         "version": "L'ost du roi a fait halte sous les murs. Fourrage et grain pris au prix du roi et payés en billets contresignés à Port-Réal, deux guides réquisitionnés au village, et l'ordre laissé par écrit de tenir les granges pleines pour le retour. Personne n'a demandé à lord Stokeworth de qui il était.",
-        "livree": false
-      },
-      {
-        "ou": "stokeworth",
-        "qui": [
-          "lord-stokeworth",
-          "harwyn-bourrel",
-          "falena-stokeworth"
-        ],
-        "date": {
-          "annee": 129,
-          "lune": 6,
-          "jour": 1
-        },
-        "canal": "temoin",
-        "fiabilite": 100,
-        "version": "L'ost du roi a fait halte sous les murs. Fourrage et grain pris au prix du roi et payés en billets contresignés à Port-Réal, deux guides réquisitionnés au village, et l'ordre laissé par écrit de tenir les granges pleines pour le retour. Personne n'a demandé à lord Stokeworth de qui il était.",
-        "livree": false
+        "livree": true
       }
     ]
   },
@@ -2029,7 +1999,7 @@
         "canal": "corbeau",
         "fiabilite": 90,
         "version": "Copie de la proclamation, et sous le meme sceau une ligne de la main de son frere Tyland : le roi tiendra compte de qui aura leve le premier, et l'Ouest a plus d'or que d'excuses.",
-        "livree": false
+        "livree": true
       },
       {
         "ou": "stokeworth",
@@ -2062,7 +2032,7 @@
         "canal": "rumeur",
         "fiabilite": 55,
         "version": "Les charretiers qui montent de la porte des Dieux disent qu'on rassemble sous les murs de Port-Real, qu'on compte des chariots et qu'on paie les hommes d'avance. Un sergent recruteur a lu tout haut, sur le marche aux chevaux, la ligne de la proclamation ou Sombreval est nommee seule. On ne dit ni combien d'hommes, ni quand, ni sous quelle banniere.",
-        "livree": false
+        "livree": true
       },
       {
         "ou": "stokeworth",
@@ -2694,7 +2664,7 @@
         "canal": "barque",
         "fiabilite": 60,
         "version": "Trois patrons de coque se plaignent au bureau de port d'avoir ete detournes au nord du Gosier par des galeres a hippocampe qui ne montraient aucun ordre ecrit et ne disaient au nom de qui. Ils ont perdu six jours et ils veulent qu'on les paie.",
-        "livree": false
+        "livree": true
       },
       {
         "ou": "peyredragon",
@@ -2709,7 +2679,7 @@
         "canal": "rumeur",
         "fiabilite": 50,
         "version": "Cloue au pieu aux avis de l'appontement de Sombreval, d'une main qui ne signe pas : « Le Gosier est ferme aux marchands depuis la troisieme semaine et personne ne dit par qui. Les nefs de guerre passent. »",
-        "livree": false
+        "livree": true
       },
       {
         "ou": "port-real",
@@ -2725,7 +2695,7 @@
         "canal": "rumeur",
         "fiabilite": 55,
         "version": "Rien ne monte plus par l'eau depuis douze jours et la ville le sent au prix du poisson. On dit que c'est le Serpent de Mer. On dit aussi que la reine a jure tout haut, devant trois cents personnes, qu'elle ne le ferait jamais.",
-        "livree": false
+        "livree": true
       }
     ]
   },
@@ -4057,7 +4027,7 @@
       "minute": 300
     },
     "type": "programme",
-    "statut": "programme",
+    "statut": "resolu",
     "importance": 62,
     "lieu_id": "peyredragon",
     "acteurs": [
@@ -4065,12 +4035,13 @@
       "daemon",
       "rhaenyra"
     ],
-    "description": "LA PRINCESSE RHAENYS PART SUR MELEYS PORTER LA REGLE DES TROIS CERCLES A DAEMON, accord de la reine le 2e a 16h54. Elle porte AUSSI le mot de la main de la reine sur les chevaux otes. ELLE RAPPORTE SA RECITATION OU SON REFUS MOT POUR MOT. Condition reprise du prince et tenue par la reine : SON REFUS, S IL REFUSE, PART AU REGISTRE LE JOUR OU ELLE SE POSE -- non le jour ou elle rentre. Terme : l aube du 4e, apres quoi le maitre des roles ecrit NON LIE en face du nom de Daemon, a la date, sans un mot de plus.",
+    "description": "LA PRINCESSE RHAENYS PART SUR MELEYS PORTER LA REGLE DES TROIS CERCLES A DAEMON, accord de la reine le 2e a 16h54. Elle porte AUSSI le mot de la main de la reine sur les chevaux otes. ELLE RAPPORTE SA RECITATION OU SON REFUS MOT POUR MOT. Condition reprise du prince et tenue par la reine : SON REFUS, S IL REFUSE, PART AU REGISTRE LE JOUR OU ELLE SE POSE -- non le jour ou elle rentre. Terme : l aube du 4e, apres quoi le maitre des roles ecrit NON LIE en face du nom de Daemon, a la date, sans un mot de plus. || CE QUE PERSONNE N AVAIT VU EN L ECRIVANT, ET QUI FAIT FOI DESORMAIS : elle a leve A CINQ HEURES, au crepuscule du matin, et CARAXES S EST POSE AUX FOSSES EN DEBUT D APRES-MIDI. ILS SE SONT CROISES EN L AIR. Elle portera la regle a un Harrenhal dont le prince est reparti ; il est assis a la Table Peinte de sa femme pendant qu elle vole. Le terme de l aube du 4e court quand meme : le maitre des roles ecrira NON LIE en face du nom de Daemon a l heure dite, faute d une recitation ou d un refus rapportes — alors que l homme est a portee de voix de la reine depuis l apres-midi. LA REGLE NE TOMBE PAS PARCE QU IL A REFUSE : elle tombe parce que la messagere et le destinataire ont pris deux caps opposes le meme jour.",
     "conditions": [
       "la seule monture sous ordre quitte le rocher : si un feu s allume a Pointe-Aigue pendant son absence, personne ne peut faire la verification de 2h30",
-      "si elle ne trouve pas Daemon en mer, elle rentre sans reponse et le NON LIE s ecrit quand meme -- c est ecrit d avance"
+      "si elle ne trouve pas Daemon en mer, elle rentre sans reponse et le NON LIE s ecrit quand meme -- c est ecrit d avance",
+      "leve si Daemon recite ou refuse la regle EN PERSONNE a Peyredragon avant l aube du 4e — il est dans le chateau depuis le debut de l apres-midi"
     ],
-    "effets": "Daemon est lie, ou nommement NON LIE a la date. Et il apprend les chevaux otes de la main de la reine plutot que d un autre."
+    "effets": "RESOLU AUTREMENT QUE PREVU, le 3e a 19h33 : le prince a RECITE la regle a la table de sa femme, de memoire, dix heures avant le terme. Le maitre des roles ecrit LIE en face de son nom. La course de Meleys devient sans objet quant a la regle — mais la princesse Rhaenys porte AUSSI le mot de la reine sur les chevaux otes, qui reste a remettre, et elle l apprendra en se posant sur un Harrenhal vide."
   },
   {
     "id": "prog-le-prix-manquant-des-deux-serrures-de-la-reine",
@@ -4782,5 +4753,75 @@
       "La collision entre le gabarit A (declenche par un feu, de nuit) et la regle de vol scellee le 2e cesse d'etre invisible.",
       "Lucerys Velaryon n'est pas depense : son pere avait donne puis repris son accord le jour meme."
     ]
+  },
+  {
+    "id": "prog-la-roue-portee-au-registre-3e",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 3
+    },
+    "type": "programme",
+    "importance": 55,
+    "description": "CE SOIR, APRES 18h51 : le mestre Gerardys porte LA ROUE DES JOURS DUS au registre des offices COMME UNE CHARGE et non comme une habitude — ordre de la reine dans la chambre haute, sa propre regle du 2e retournee sur son mestre. LA CASE `EN SON ABSENCE` DOIT ETRE REMPLIE et non laissee en blanc date comme les trois offices vacants. || CE QUI EST DU A L AUBE DU 4e, ET QU IL N A PAS : LE NOM DU SUPPLEANT, en meme temps que la longueur de chaine de dame Sara Poulain. Aucune des vingt-deux charges de cette maison ne porte la tenue d un calendrier ; il n y a donc personne d evident a mettre dessous.",
+    "lieu_id": "peyredragon",
+    "acteurs": [
+      "gerardys",
+      "rhaenyra"
+    ],
+    "conditions": [
+      "annule si la reine revient sur l ordre avant que le mestre se couche"
+    ],
+    "statut": "a-venir",
+    "effets": "la roue cesse d etre un usage d une seule main ; le verrou 11009 se leve si la case en son absence porte un nom",
+    "diffusion": []
+  },
+  {
+    "id": "prog-les-quatre-longueurs-de-chaine",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 5
+    },
+    "type": "programme",
+    "importance": 52,
+    "description": "LES QUATRE CHAINES QUI MANQUENT AU FEUILLET DES TREIZE, chacune avec une HEURE et non une promesse, arretees par le mestre le 3e a 8h50 : (1) SER STEFFON DARKLYN, le 3e au soir, a sa porte ; (2) DAME SARA POULAIN, a l aube du 4e, ayant enfin un titre pour declarer ; (3) L HOMME DU DEDANS, le 5e, par le maitre des roles. (4) MESSIRE MARLO VASSE : ECARTE, sa chaine portee au feuillet en CALCULE a la plus longue connue, sans qu on la lui demande — l attendre par politesse coutait deux passages, soit seize jours de plancher. Il reste libre de la corriger a son retour. || CE QUI SE JOUE DESSUS : le plancher du jour d entree est au 27e, trois jours avant le terme du maitre des deniers. IL SUFFIT D UNE DE CES QUATRE AU-DESSUS DE VINGT-QUATRE JOURS pour que la solde du Guet soit signee par un homme qui ne tient plus la plume.",
+    "lieu_id": "peyredragon",
+    "acteurs": [
+      "gerardys",
+      "steffon-darklyn",
+      "sara",
+      "le-sanglier"
+    ],
+    "conditions": [
+      "retarde si ser Steffon n est pas a sa porte ce soir",
+      "retarde si dame Sara n a pas sa longueur a l aube"
+    ],
+    "statut": "a-venir",
+    "effets": "le feuillet des treize se ferme ; le plancher du 27e se confirme ou monte",
+    "diffusion": []
+  },
+  {
+    "id": "prog-la-date-de-travail-au-6e-a-midi",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 6
+    },
+    "type": "programme",
+    "importance": 78,
+    "description": "LE 6e A MIDI : le mestre Gerardys porte A LA REINE, SEULE ET SANS COPIE, LA DATE DE TRAVAIL DU JOUR D ENTREE. Promise de sa bouche dans la chambre haute le 3e a 18h39, sur DEUX NUITS PRISES DE SON PROPRE SOMMEIL — les 4e et 5e — pour dresser la roue des trente-deux lignes. C est l action 11026 puis 11027 du cahier du jour d entree, et le verrou 11001 tombe avec elles. || CE QUE CA DEBLOQUE : quatre cent trente-trois actions du plan sont datees en J moins tant et ne se synchronisent aujourd hui sur rien. || SI ELLE NE VIENT PAS : il rend le PLANCHER a la place de la date, comme le 3e au soir.",
+    "lieu_id": "peyredragon",
+    "acteurs": [
+      "gerardys",
+      "rhaenyra"
+    ],
+    "conditions": [
+      "retarde si les quatre longueurs manquantes ne sont pas rentrees le 5e au soir",
+      "annule si la reine renvoie le mestre a Accalmie avant le 6e"
+    ],
+    "statut": "a-venir",
+    "effets": "la DATE DE TRAVAIL existe ; 11026 et 11027 passent faites ; reste a la figer en DATE ARRETEE (11031) devant deux temoins",
+    "diffusion": []
   }
 ]
