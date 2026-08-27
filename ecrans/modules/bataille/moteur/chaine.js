@@ -57,6 +57,10 @@
       pose:"BatailleMondeNavigation",
       pourquoi:"les routes de groupe. Elle prend la topologie en argument, " +
                "donc apres elle ; posee avant `bataille2d.js`, qui s'y lie." },
+    { f:"bataille/moteur/unite/identite.js", ens:["moteur"],
+      pose:"BatailleUniteIdentite",
+      pourquoi:"l'appartenance, la place et la succession. Elle prend `dehors` " +
+               "de la topologie et `noter` du monolithe : apres l'une, avant l'autre." },
     { f:"bataille/moteur/etat.js", ens:["moteur"],
       pose:"BatailleEtatSim",
       pourquoi:"l'état de la simulation. `bataille2d.js` l'appelle à sa première " +
