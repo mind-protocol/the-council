@@ -17,7 +17,13 @@ const DEJA = ["bataille/hasard.js", "bataille/mesures.js", "survival-stack/1-cor
 
 const $ = (id) => document.getElementById(id);
 const PARAMETRES = new URL(window.location.href).searchParams;
-const VERSION_BATAILLE = "20260825-geographie-regionale-dragon-passe-1";
+// ⚠ CETTE ESTAMPILLE SE BOUGE À CHAQUE FOIS QU'ON TOUCHE AU MOTEUR, et l'oubli
+// ne se voit pas : la page charge, les épreuves s'affichent, la bataille tourne
+// — avec l'ANCIEN moteur sorti du cache du navigateur. Le disque et l'écran
+// racontent alors deux scènes différentes, et l'on cherche des heures pourquoi
+// un changement mesuré au banc « n'a rien changé » à l'écran. C'est arrivé le
+// 27 août avec le hoissage de la couche 3.
+const VERSION_BATAILLE = "20260827-lot3-couche3-avant-arbitre-1";
 
 // L'URL EST UN SIGNET DE TRAVAIL. Une épreuve, un volet ou un cadrage doit
 // pouvoir être envoyé à quelqu'un sans la phrase « clique là, puis descends ».

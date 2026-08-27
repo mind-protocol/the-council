@@ -204,6 +204,12 @@
      chaîne de la scène, et sa famille est donc lisible avant que le moteur ait
      fini de venir. -->
 <script src="/modules/bataille/guet-epreuves.js"></script>
-<script src="/modules/bataille/page.js?v=20260825-geographie-regionale-dragon-passe-1"></script>
+<!-- ⚠ CETTE ESTAMPILLE ET CELLE DE `VERSION_BATAILLE`, DANS page.js, SE BOUGENT
+     ENSEMBLE. Celle-ci decide si le navigateur va rechercher `page.js` ; celle
+     de page.js decide s'il va rechercher le MOTEUR. Oublier la premiere rend la
+     seconde inutile : on sert un vieux page.js qui reclame un vieux moteur, et
+     l'ecran montre une bataille d'avant-hier pendant que le banc en mesure une
+     d'aujourd'hui. -->
+<script src="/modules/bataille/page.js?v=20260827-lot3-couche3-avant-arbitre-1"></script>
 </body>
 </html>
