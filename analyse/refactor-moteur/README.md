@@ -343,3 +343,61 @@ une bataille plus vivante, et il faudra décider s'il tient encore.
 **Critère du nouvel étalon** : la couche 3 disponible pour au moins 95 % des
 hommes vivants au moment de l'élection (`banc-combattant.js`).
 
+---
+
+## Le fer ne se touche pas — la cause, et elle n'est pas au lot 6
+
+C'est pour ce défaut que le lot 6 avait été avancé dans l'ordre. **Il n'y est
+pas.** Le commandant décide correctement : son ordre est posé à t=5 s — « À La
+porte de la Gadoue. Restez avec votre vintaine. » — et **ne change plus une seule
+fois** de toute la bataille. Rien n'ordonne le repli. J'avais écrit le contraire
+(« quelque chose ordonne un rassemblement qui prime sur l'assaut ») ; c'était
+faux, et c'est la trace des ordres qui l'a dit.
+
+### La chaîne complète
+
+1. **La route est un détour de facteur deux.** 7 points, **223 m** pour 110 m à
+   vol d'oiseau, et son point le plus éloigné est à **164 m** de la porte. Elle
+   part de 110 m, s'éloigne jusqu'à 164, puis revient à 0. C'est le défaut que
+   `deplacer()` documente déjà en commentaire : « la voirie ne dessert pas le
+   dehors […] la réparation est dans la VOIRIE, qui doit sortir des murs et
+   desservir les faubourgs par où l'assaut arrive ».
+
+2. **Trente pour cent de l'unité coupe droit vers la porte** et y arrive : le
+   plus proche est à **13 m à t=40 s**. Le chef, lui, suit sa route et se trouve
+   alors à 142 m.
+
+3. **L'unité s'étire à 157 mètres, et le régulateur ne le voit pas.**
+   `allureDuGuide` mesure le **7ᵉ décile** des distances au guide ; avec 70 % des
+   hommes à 6 m et 30 % étalés sur cent cinquante, le D7 reste à 6 m. Le
+   régulateur est aveugle exactement aux hommes qui se perdent — et c'est
+   délibéré, son commentaire le dit : le D7 évite que « le dernier homme coincé à
+   un angle immobilise éternellement toute la colonne ».
+
+4. **Puis la bride tombe, et ne se relâche plus.** Quand les égarés refluent et
+   s'entassent, le D7 franchit 10 m et `allureDuGuide` rend `v * 0,15`. Mesuré :
+   le guide passe de 0,84 à **0,16 m/s** vers t=70 s et y reste jusqu'à la fin.
+   L'unité se recompacte (157 m → 55 m) sans que le D7 repasse sous 10 m.
+
+5. **Toute l'unité rentre au huitième de l'allure**, en suivant un chef qui est
+   derrière elle sur un détour. Le plus proche de la porte repasse de 13 m à
+   110 m. Le verrou n'est jamais touché : il finit à 900 pv, son maximum.
+
+**Ce n'est pas une poche de géométrie** — vérifié : à t=110 s le guide est sur du
+sol libre, les huit directions dégagées à 1, 3 et 8 mètres. Il n'est pas coincé,
+il est bridé.
+
+### Où est la réparation
+
+| pièce | lot |
+|---|---|
+| la route qui détourne | **2** — navigation ; le code le documente déjà |
+| la bride qui voit trop tard et ne lâche plus | **4** — « ajouter vitesse dynamique du guide et rattrapage des membres » |
+| la décision du commandant | **6** — et elle est correcte aujourd'hui |
+
+Le lot 6 n'aurait rien réparé de tout cela. La pièce la moins chère et la plus
+rentable est la **bride** : elle est isolée dans une fonction de quinze lignes,
+elle se mesure au dixième, et tant qu'elle tient l'étalon mesure une marche au
+lieu d'un combat — ce qui rend `prendCorps`, la létalité et la fermeture du
+contact non mesurables.
+
