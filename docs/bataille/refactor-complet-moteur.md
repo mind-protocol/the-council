@@ -951,13 +951,19 @@ ciblées sans téléport, sans traversée de mur et sans bouchon artificiel au s
       encore. Il faudra d'abord inverser l'ordre de `soldat()` : voir le point
       suivant.)*
 - [ ] Faire passer corps, réflexion, interprétation et envie par un adaptateur unique.
-      *(Relevé fait, et il est pire que « quatre adaptateurs valent mieux qu'un » :
-      `l1` et `l2` ont chacune leur adaptateur, qui tourne AVANT l'élection ; `l3`
-      et `l4` sont calculées **en ligne dans `soldat()`**, six cents lignes plus
-      bas, donc APRÈS. Mesuré : la couche 3 n'est disponible que pour **55,9 %**
-      des hommes au moment où l'arbitre la lit, et la couche 4 pour **0,0 %** —
-      `QuiConduit` élit donc entre quatre candidats dont un est toujours nul.
-      `reflexion-adapt.js` le dit déjà en commentaire ; rien ne le mesurait.)*
+      *(Relevé fait. `l1` et `l2` ont chacune leur adaptateur, qui tourne AVANT
+      l'élection ; `l3` et `l4` sont calculées **en ligne dans `soldat()`**, aux
+      680ᵉ et 870ᵉ lignes d'une cascade de 855 — donc APRÈS, et seulement pour les
+      hommes dont le battement va jusque-là. Mesuré : 239 hommes vivants, **239
+      ont une escouade** — la porte d'entrée de `l3` n'est donc jamais fermée —
+      et pourtant **135 seulement ont une `l3`**. Les 104 autres ont tout ce qu'il
+      faut : leur battement est simplement sorti de la cascade avant.
+      ⚠ CE N'EST PAS « UNE COUCHE MANQUE À L'ARBITRE ». Une envie absente est
+      notée comme une envie de zéro — aucune prétention, pas un `NaN` : vérifié
+      en faisant tourner `QuiConduit` à la main. Et c'est la sémantique voulue,
+      écrite dans le code : « la convoitise n'existe pas sans objet ». Le défaut
+      n'est pas l'absence, c'est la DÉPENDANCE AU CHEMIN — la couche d'un homme
+      dépend de la distance que son battement a parcourue.)*
 - [x] Donner à chaque homme ordre reçu, chef connu, unité et mémoire récente.
       *(`porterOrdreEtChef()`, appelée en tête de `soldat()` pour tout homme
       vivant. Mesuré avant : **0,0 %** portaient un ordre reçu, **0,0 %** un chef

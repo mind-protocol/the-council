@@ -122,12 +122,19 @@ async function main() {
   let echantillons = 0, desaccord = 0, sansPensee = 0, sansConduit = 0;
   const porte = { ordre: 0, unite: 0, chefConnu: 0, memoire: 0,
                   commandement: 0, perceptions: 0 };
-  // LES QUATRE COUCHES SONT-ELLES SEULEMENT LA QUAND L'ARBITRE LES LIT ?
-  // `l1` et `l2` ont chacune un adaptateur qui tourne AVANT l'election ; `l3`
-  // et `l4` sont calculees en ligne dans `soldat()`, six cents lignes plus bas,
-  // c'est-a-dire APRES. La main les lit donc du battement d'avant — quand elles
-  // ont ete calculees une fois. Ce compte dit combien d'hommes ont une couche
-  // que personne n'a jamais remplie.
+  // LES QUATRE COUCHES SONT-ELLES LA QUAND L'ARBITRE LES LIT ?
+  // `l1` et `l2` ont chacune un adaptateur qui tourne AVANT l'election ; `l3` et
+  // `l4` sont calculees EN LIGNE dans `soldat()`, aux 680e et 870e lignes d'une
+  // cascade de 855 — donc apres, et seulement pour les hommes dont le battement
+  // va jusque-la. Ce compte dit combien d'hommes ont une couche remplie.
+  //
+  // ⚠ UN COMPTE BAS N'EST PAS UN DEFAUT EN SOI, et il faut le lire avec ca en
+  // tete : une envie absente est notee par `QuiConduit` comme une envie de ZERO
+  // — aucune pretention, pas un `NaN` —, et c'est la semantique voulue, « la
+  // convoitise n'existe pas sans objet ». Ce qui est un defaut, c'est que la
+  // couche depende du CHEMIN : 239 hommes sur 239 ont une escouade, donc la
+  // condition d'entree de `l3` n'est jamais fermee, et pourtant 135 seulement
+  // ont une `l3`. Les 104 autres sont sortis de la cascade avant.
   const couche = { l1: 0, l2: 0, l3: 0, l4: 0 };
   let soloAttaque = 0, attaquants = 0;
 

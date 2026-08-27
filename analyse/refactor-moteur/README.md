@@ -240,8 +240,24 @@ Sur la condition de référence (150 hommes, la Gadoue, 100 s) :
 jamais.** C'est la phrase que ces chiffres portent, et c'est ce que « brancher la
 pensée sur la vraie trace d'arbitrage » veut dire concrètement.
 
-**L'arbitre élit entre quatre candidats dont un est toujours nul.** La couche 4
-n'est jamais calculée avant d'être lue ; la couche 3 l'est une fois sur deux.
+**Correction — la première lecture de ces deux lignes était fausse.** J'avais
+écrit « l'arbitre élit entre quatre candidats dont un est toujours nul », présenté
+comme un défaut. Vérifié en faisant tourner `QuiConduit` à la main : une envie
+absente est notée **exactement comme une envie de zéro** — aucune prétention, pas
+un `NaN`. Et c'est la sémantique voulue, écrite dans le code : « la convoitise
+n'existe pas sans objet : un homme au milieu d'un champ ne veut rien, et ce n'est
+pas *faiblement* — c'est rien. »
+
+Le vrai défaut est ailleurs, et il est structurel. Sur 239 hommes vivants, **239
+ont une escouade** — la condition d'entrée de `l3` n'est donc jamais fermée — et
+pourtant **135 seulement ont une `l3`**. Les 104 autres ont tout ce qu'il faut :
+leur battement est sorti de la cascade avant la 680ᵉ ligne, où le calcul se
+trouve. Celui de `l4` est à la 870ᵉ.
+
+**La couche d'un homme dépend de la distance que son battement a parcourue dans
+`soldat()`.** C'est le même défaut que « l'arbitre est consulté à la 236ᵉ ligne »,
+vu par l'autre bout : ce n'est pas une couche qui manque, c'est un chemin qui
+décide de ce qui existe.
 
 ### Ce que le premier pas a fait, et ce qu'il n'a pas fait
 
