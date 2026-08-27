@@ -21,6 +21,16 @@ chercher l'écrivain des annales sans que rien ne l'interdise.
 Ce dossier corrige ce trou-là en premier. **Les principes viennent avant les
 modules, et ils sont vérifiables.**
 
+## Par où commencer
+
+**[`ARCHITECTURE.md`](ARCHITECTURE.md)** présente la solution : le modèle retenu,
+les sept décisions qui le constituent, les options écartées et pourquoi, l'ordre
+d'un battement, et deux parcours qui montrent l'architecture à l'œuvre — un ordre
+qui descend du général jusqu'aux jambes d'un homme, une perception qui monte.
+
+C'est le document à lire en premier, et le seul à lire si l'on ne veut qu'une
+vue d'ensemble. Le reste de ce dossier en est le détail.
+
 ## Comment le lire
 
 Commencer par [`00-principes/`](00-principes/), dans l'ordre. Les huit fichiers y
