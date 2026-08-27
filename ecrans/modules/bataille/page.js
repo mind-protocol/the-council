@@ -23,7 +23,7 @@ const PARAMETRES = new URL(window.location.href).searchParams;
 // racontent alors deux scènes différentes, et l'on cherche des heures pourquoi
 // un changement mesuré au banc « n'a rien changé » à l'écran. C'est arrivé le
 // 27 août avec le hoissage de la couche 3.
-const VERSION_BATAILLE = "20260827-lot3-couche3-avant-arbitre-1";
+const VERSION_BATAILLE = "20260827-navigation-sortie-1";
 
 // L'URL EST UN SIGNET DE TRAVAIL. Une épreuve, un volet ou un cadrage doit
 // pouvoir être envoyé à quelqu'un sans la phrase « clique là, puis descends ».

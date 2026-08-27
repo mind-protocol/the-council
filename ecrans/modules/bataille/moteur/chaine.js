@@ -53,6 +53,10 @@
       pourquoi:"le sol, le bâti et l'eau. Première pièce du monde physique " +
                "sortie du monolithe ; `bataille2d.js` s'y lie au chargement, " +
                "donc avant lui, et elle ne dépend de rien." },
+    { f:"bataille/moteur/monde/navigation.js", ens:["moteur"],
+      pose:"BatailleMondeNavigation",
+      pourquoi:"les routes de groupe. Elle prend la topologie en argument, " +
+               "donc apres elle ; posee avant `bataille2d.js`, qui s'y lie." },
     { f:"bataille/moteur/etat.js", ens:["moteur"],
       pose:"BatailleEtatSim",
       pourquoi:"l'état de la simulation. `bataille2d.js` l'appelle à sa première " +
