@@ -67,10 +67,154 @@ le fer se touche, et non se contenter de l'égalité de celle-ci.
 
 ## Ce que le lot 0 n'a pas fait
 
-- Les métriques manquantes (téléports, collisions, densité, A* calculés,
-  distance P90 au chef, combattants arrêtés hors portée, décisions et
-  communications) **ne sont pas encore instrumentées**. Le journal de décision
-  existe désormais (`moteur/commun/traces.js`), mais rien ne lui écrit encore :
-  c'est le premier vrai travail des lots suivants.
+- ~~Les métriques manquantes ne sont pas encore instrumentées.~~ **Faites au
+  lot 2** : `banc-monde.js` relève téléports, hommes dans le bâti, A* calculés,
+  densité, distance P90 au chef et arrêtés hors portée — voir plus bas. Restent
+  les décisions et les communications, qui attendent que quelque chose écrive
+  dans le journal (`moteur/commun/traces.js`).
 - C5, C6, le ratissage, le messager et l'entrée de bâtiment n'ont **pas** été
   relevés séparément : seule la condition du banc l'a été.
+
+---
+
+## Lot 2 — ce que les sondes disent, et pourquoi le fer ne se touche pas
+
+`ecrans/modules/bataille/banc-monde.js` est la sonde qui manquait. Elle est
+**extérieure au moteur** : elle fait tourner la bataille et regarde la troupe
+entre deux pas, sans instrumenter une ligne — elle ne peut donc pas fausser
+l'étalon pendant une extraction.
+
+```bash
+node ecrans/modules/bataille/banc-monde.js
+```
+
+Premier relevé, sur la condition de référence (150 hommes, la Gadoue, 100 s) :
+
+| sonde | valeur | lecture |
+|---|---|---|
+| téléports | **0** | aucun pas au-dessus de 8 m/s |
+| hommes dans le bâti | **0 %** | 0 sur 23 900 relevés |
+| A* calculés | **4** pour 16 unités | 0,017 par homme — la route est bien collective |
+| densité maximale | 2,2 /m² | jamais serré ; 0 seconde au-dessus de 4 |
+| distance au chef, médiane | 7,6 m | |
+| distance au chef, **P90** | **92,5 m** | la queue traîne à quatre-vingt-douze mètres |
+| sans pair de son unité | 14,6 % | |
+| arrêtés à 5–10 m d'un ennemi | **0 %** | |
+
+**Trois des promesses du lot 2 sont déjà tenues** : pas de téléport, pas de
+traversée de mur, pas d'A* par homme. Ce n'était pas su — rien ne le mesurait.
+
+### Le fer ne se touche pas, et ce n'est pas un bouchon
+
+`arrêtés à 5–10 m d'un ennemi : 0 %` élimine l'hypothèse du contact qui ne se
+ferme pas : personne ne se fige devant l'ennemi. La distance de l'assaut à la
+porte, relevée toutes les vingt secondes, dit autre chose :
+
+| t | assaut → porte |
+|---|---|
+| 0 s | 110 m |
+| 40 s | **13 m** |
+| 60 s | 15 m |
+| 80 s | 34 m |
+| 140 s | 101 m |
+| 220 s | 110 m |
+
+**La colonne arrive à la porte à quarante secondes, ne la frappe jamais, puis
+fait demi-tour et retourne à son point de départ.** Le verrou reste à 900 points
+de bois — c'est son maximum, pas une usure : il n'a pas été touché une fois. Les
+états le confirment : `colonne` tombe de 121 à 87 pendant que `forme` monte de
+13 à 49. Ils se reforment au lieu d'assaillir.
+
+Ce n'est donc **ni un défaut de topologie, ni un défaut de collision** — le
+monde physique fait son travail. C'est une décision : quelque chose ordonne un
+rassemblement qui prime sur l'assaut, et rien ne le révise quand la porte est à
+treize mètres. Le lot 6 (« boucle après péremption », « `tenir` n'est choisi que
+si une zone ou une contrainte lui donne une utilité ») est l'endroit où ça se
+répare, pas le lot 2.
+
+**Conséquence pour l'étalon**, et elle est ferme : tant que ce défaut tient, la
+condition du banc mesure une marche, une porte jamais frappée et des ordres qui
+circulent. C'est assez pour valider une extraction — le lot 2 s'en contente — et
+ce n'est pas assez pour valider un changement de modèle du combat.
+
+### Ce que le lot 2 a extrait
+
+`moteur/monde/topologie.js` — le sol, le bâti, l'eau : `dehors`, `solConnu`,
+`obstacleConnu`, `obstacleEn`, `libreEn`, `reglerTerrainEpreuve`, `degager`,
+`murPres`, `obstaclePres`, `demiLibre`, plus `RAYON` et `DEGAGE_MAX`. Cent
+soixante lignes **déplacées telles quelles**, commentaires compris — ce sont eux
+qui portent les trois fautes qu'on a mis des semaines à trouver (un homme posé
+dans un mur, la marge qui bloque une venelle, la rue plus large que le masque).
+
+Le monolithe garde une ligne de liaison qui redonne les mêmes noms au même sens :
+aucun site d'appel ne change. C'est la forme que prendront les quatre
+extractions suivantes — navigation, mouvement, collisions, combat.
+
+---
+
+## Lot 3 — relevé avant de toucher au combattant
+
+Trois faits, établis en lisant le code et non en le devinant. Ils expliquent
+ensemble pourquoi « j'essaie de X parce que Y » ne dit pas la vérité sur un
+homme, et pourquoi il n'y a pas d'assaut solo *observable*.
+
+### 1. La pensée est une légende, pas une trace
+
+`penser()` est appelée depuis **56 endroits**, et chacun nomme son propre
+« système » :
+
+| ce que le système nomme | appels |
+|---|---|
+| une vraie couche (`corps · couche 1`, `réflexion · couche 2`, `envie · couche 4`) | **10** |
+| la branche qui a bougé l'homme (`front de porte`, `ordre de formation`, `messager du Guet`, `coureur d'ordre`, `franchissement en file`…) | **46** |
+
+Or l'arbitre existe et tourne à chaque battement : `QuiConduit` élit laquelle
+des quatre — `ordre`, `corps`, `reflexion`, `envie` — tient les jambes, et le
+résultat est posé dans `h.conduit` par `reflexion-adapt.js`. **Deux vérités sur
+le même homme au même instant, et l'écran ne lit que la mauvaise.**
+
+`diagnostic()` soupçonne déjà la divergence homme par homme (« le corps propose
+X, un autre système conduit ») — personne ne l'a jamais comptée sur l'armée.
+C'est ce que fait `banc-combattant.js`.
+
+### 2. L'arbitre est consulté au tiers d'une cascade de 855 lignes
+
+`soldat()` fait **855 lignes** et **38 sorties anticipées**. Les couches sont
+observées en tête (L4810 pour la 1, L4837 pour la 2, et c'est là que l'élection
+est posée), mais la seule ligne qui AGIT sur cette élection —
+`if (executerReflexion(h, dt)) return;` — est à la **236ᵉ ligne** de la cascade.
+
+Tout ce qui retourne avant elle — le saignement, le ratissage, le ralliement, la
+rupture — contourne l'arbitre **par construction**, pas par accident. C'est
+l'item « éliminer les branches de mouvement qui contournent `QuiConduit` », et
+il ne s'agit pas d'éliminer des exceptions : il s'agit d'inverser l'ordre.
+
+### 3. Deux couches sur quatre sont calculées trop tard
+
+| couche | où elle est calculée | quand |
+|---|---|---|
+| `l1` corps | `corps-adapt.js` | **avant** l'élection |
+| `l2` réflexion | `reflexion-adapt.js` | **avant** l'élection |
+| `l3` interprétation | en ligne dans `soldat()`, L5391 | **après** |
+| `l4` envie | en ligne dans `soldat()`, L5579 | **après** |
+
+L'élection lit donc `l3` et `l4` du battement précédent — et seulement de celui
+où la cascade était allée assez loin pour les écrire. `reflexion-adapt.js` le dit
+lui-même en commentaire : « `h.l3` date du dernier ordre reçu et `h.l4` du
+dernier pillage — ils sont ce qu'ils sont. La main les lit tels quels […] et il
+faut le savoir en lisant `h.conduit`. »
+
+C'est exactement l'item « faire passer corps, réflexion, interprétation et envie
+par un adaptateur unique » : les quatre au même endroit, **avant** l'élection.
+
+### Le banc
+
+```bash
+node ecrans/modules/bataille/banc-combattant.js
+```
+
+Extérieur au moteur, comme `banc-monde.js`. Il met côte à côte l'élection et la
+pensée affichée, compte le désaccord, dit ce que chaque homme porte réellement
+(ordre reçu, unité, chef connu, mémoire), relève la disponibilité des quatre
+couches, et compte les attaquants sans un seul pair de leur unité à douze mètres.
+

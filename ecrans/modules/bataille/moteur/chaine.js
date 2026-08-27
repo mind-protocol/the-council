@@ -48,6 +48,11 @@
     { f:"bataille/moteur/commun/contrats.js", ens:["moteur"],
       pose:"BatailleContrats",
       pourquoi:"la forme des six objets échangés ; ne dépend que du journal." },
+    { f:"bataille/moteur/monde/topologie.js", ens:["moteur"],
+      pose:"BatailleMondeTopologie",
+      pourquoi:"le sol, le bâti et l'eau. Première pièce du monde physique " +
+               "sortie du monolithe ; `bataille2d.js` s'y lie au chargement, " +
+               "donc avant lui, et elle ne dépend de rien." },
     { f:"bataille/moteur/etat.js", ens:["moteur"],
       pose:"BatailleEtatSim",
       pourquoi:"l'état de la simulation. `bataille2d.js` l'appelle à sa première " +

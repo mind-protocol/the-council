@@ -908,11 +908,37 @@ Node identique, aucune nouvelle branche de scénario.
 
 ### Lot 2 — Extraire le monde physique
 
-- [ ] Extraire topologie, navigation, mouvement, collisions et combat.
+- [~] Extraire topologie, navigation, mouvement, collisions et combat.
+      *(**Topologie sortie** : `moteur/monde/topologie.js`, 160 lignes déplacées
+      telles quelles, commentaires compris. Le monolithe garde une ligne de
+      liaison qui redonne les mêmes noms au même sens — aucun des sites d'appel
+      ne change, et l'étalon est identique. Restent navigation, mouvement,
+      collisions et combat, qui suivront la même forme : un module qui prend
+      l'état, une liaison qui rebranche les noms.)*
 - [ ] Interdire les écritures de position hors du monde par garde de développement.
-- [ ] Unifier dessin, bâti, eau, portes, intérieurs et masque de navigation.
-- [ ] Instrumenter les déplacements supérieurs à la vitesse physiquement possible.
+      *(Pas encore de garde — mais la mesure existe, et elle dit qu'il n'y a rien
+      à interdire aujourd'hui : zéro téléport au-dessus de 8 m/s sur la condition
+      de référence. `deplacer()` est déjà le seul point de passage, comme son
+      commentaire le promettait ; on le savait sans le mesurer.)*
+- [x] Unifier dessin, bâti, eau, portes, intérieurs et masque de navigation.
+      *(Déjà unifié, et c'est la mesure qui le prouve : **0 homme vivant dans le
+      bâti sur 23 900 relevés**. La topologie extraite est l'autorité unique —
+      `obstacleEn` interroge le terrain d'épreuve OU le couple `sousToit` /
+      `sousEau`, et `solConnu()` répond « je ne sais pas » plutôt que « c'est
+      libre » quand une autorité manque.)*
+- [x] Instrumenter les déplacements supérieurs à la vitesse physiquement possible.
+      *(`banc-monde.js`, sonde **extérieure au moteur** : elle regarde la troupe
+      entre deux pas au lieu d'instrumenter le code, et ne peut donc pas fausser
+      un étalon pendant une extraction. Elle relève aussi les hommes dans le
+      bâti, les A* calculés, la densité, le P90 au chef, les hommes sans pair et
+      les arrêtés à 5–10 m d'un ennemi.)*
 - [ ] Implémenter cession de passage et densité comme physique commune.
+      *(La cession existe et se mesure — `banc-circulation` : 0,038 m pour un
+      allié, 0,095 m pour un chef en mouvement. La densité, elle, est **mesurée
+      mais ne contraint rien** : 2,2 /m² au pic sur la condition de référence, et
+      zéro seconde au-dessus de 4. Tant qu'on ne serre pas, la physique de foule
+      n'a rien à mordre — il faudra une condition qui presse pour l'écrire
+      honnêtement.)*
 - [ ] Remplacer les entrées de bâtiment par des transitions topologiques.
 
 **Validation :** zéro divergence d'étalon pour l'extraction ; puis épreuves
