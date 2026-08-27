@@ -57,6 +57,9 @@
       pose:"BatailleMondeNavigation",
       pourquoi:"les routes de groupe. Elle prend la topologie en argument, " +
                "donc apres elle ; posee avant `bataille2d.js`, qui s'y lie." },
+    { f:"bataille/moteur/monde/mouvement.js", ens:["moteur"],
+      pose:"BatailleMondeMouvement",
+      pourquoi:"le seul ecrivain de position. Prend la topologie, donc apres elle." },
     { f:"bataille/moteur/unite/identite.js", ens:["moteur"],
       pose:"BatailleUniteIdentite",
       pourquoi:"l'appartenance, la place et la succession. Elle prend `dehors` " +
