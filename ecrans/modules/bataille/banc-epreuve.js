@@ -4,7 +4,12 @@
 const { planter, chargerBataille } = require("./banc-moteur.js");
 
 const argv = process.argv.slice(2);
-const id = argv.find((x) => !x.startsWith("--")) || "bataille-rangee-naive";
+// LE NOM DE L'EPREUVE EST LE SEUL ARGUMENT NU — et il faut sauter les VALEURS
+// des options, sinon `--serveur http://localhost:3132` fait prendre l'URL pour
+// un nom d'epreuve et le banc s'arrete sur « epreuve inconnue ».
+const nus = argv.filter((x, i) => !x.startsWith("--") &&
+                                  !(i > 0 && argv[i - 1].startsWith("--")));
+const id = nus[0] || "bataille-rangee-naive";
 const valeur = (nom, defaut) => {
   const i = argv.indexOf("--" + nom); return i >= 0 ? argv[i + 1] : defaut;
 };

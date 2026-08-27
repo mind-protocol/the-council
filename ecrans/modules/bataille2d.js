@@ -4825,6 +4825,56 @@ window.Bataille2d = (() => {
     }
   }
 
+  // ===========================================================================
+  // LA COUCHE 3, EN TÊTE DE BATTEMENT — le rendez-vous qui manquait
+  // ===========================================================================
+  // ELLE ÉTAIT PLUS BAS, ET C'EST TOUT LE DÉFAUT. Ce bloc vivait à la 680e ligne
+  // de la cascade de `soldat()`, si bien qu'un homme ne l'avait que si son
+  // battement descendait jusque-là. Mesuré : 239 hommes vivants, 239 avec une
+  // escouade — la condition d'entrée n'est donc JAMAIS fermée — et 135 seulement
+  // avec une `l3`.
+  //
+  // CE QUE ÇA COÛTAIT, ET C'EST LA VRAIE FAUTE. `QuiConduit.barre(l3)` rend ZÉRO
+  // quand la couche 3 est absente, et l'écrit en toutes lettres : « un homme
+  // sans ordre du tout n'a pas de barre : il est livré à ses couches, ce qui est
+  // la définition d'un homme sans nouvelles ». Avec une `l3` ordinaire, la barre
+  // vaut 0,50 — « la seule raison pour laquelle une troupe reste une troupe ».
+  //
+  // Autrement dit : QUARANTE-TROIS POUR CENT DE L'ARMÉE ÉTAIT ARBITRÉE COMME
+  // N'AYANT REÇU AUCUN ORDRE. Pas parce qu'elle n'en avait pas — tous en ont un
+  // — mais parce que le chemin de code n'était pas allé le chercher. N'importe
+  // quelle prétention du corps l'emportait alors sans rien avoir à franchir.
+  //
+  // On la calcule donc AU MÊME COUP D'ŒIL que les couches 1 et 2, ce que son
+  // propre commentaire demandait déjà (« au rythme de son œil »). Le commentaire
+  // du rendez-vous, deux lignes plus bas, disait qu'il n'existait aucun
+  // rendez-vous des quatre couches et que celui-ci en donnait deux ; il en donne
+  // trois. La 4 reste où elle est, et pour une raison : son calcul est
+  // inséparable du jet de pillage qui le suit, et les séparer déplacerait un
+  // tirage — un autre changement, qui mérite sa propre mesure.
+  function observerL3(h, dt) {
+    if (!window.Interpretation) return;
+    const e = S.escouades[h.escouade];
+    if (!e) return;
+    const ordre = e.ordre || ORDRE_NU;
+    h.revoirL3 = (h.revoirL3 || 0) - dt;
+    if (h.revoirL3 > 0) return;
+    h.revoirL3 = oeil(h);
+    const c = h.cercle, a3 = S.ailes[e.aile];
+    h.l3 = window.Interpretation.pas(ordre, {
+      docile: h.envie ? h.envie.docile : 0,
+      alarme: c ? Math.max(-1, 1 - (c.ennemis || 0) * 0.7) : 1,
+      epaule: c ? Math.min(1, (c.amis || 0) / 4 * 2 - 1) : 0,
+      frais: h.souffle != null ? h.souffle * 2 - 1 : 0,
+      vu: (a3 && a3.banniere.debout && sousLaBanniere(h)) ? 1 : -1,
+      // Depuis combien de temps il n'a rien reçu, rapporté à la minute :
+      // +1 l'ordre vient de tomber, −1 il date d'une heure. C'est le même
+      // compteur que celui de l'initiative, lu autrement — là il décide,
+      // ici il use.
+      depuis: Math.max(-1, 1 - (e.depuis || 0) / 60),
+    });
+  }
+
   function soldat(h, dt) {
     if (h.etat === "mort") return;
     porterOrdreEtChef(h);
@@ -4892,6 +4942,10 @@ window.Bataille2d = (() => {
         //
         // Sans les masques du bâti et de l'eau, la retraite est INCONNUE et
         // non ouverte. C'est le pourvoyeur qui porte la nuance.
+        // LA COUCHE 3 AVANT L'ARBITRE, et non six cents lignes après lui :
+        // c'est elle qui pose la BARRE que les trois prétendants doivent
+        // franchir. La calculer après l'élection revenait à élire sans barre.
+        observerL3(h, ecoule);
         if (window.BatailleReflexion)
           window.BatailleReflexion.observer(
             h, { autour, temps: S.temps, pese, libre: solConnu() ? libreEn : null }, ecoule);
@@ -5442,25 +5496,11 @@ window.Bataille2d = (() => {
     // Au rythme de son œil, pas à vingt fois la seconde : `oeil(h)` est déjà
     // l'horloge de la couche 1, et une manière de tenir un ordre ne se révise
     // pas plus vite qu'on ne s'aperçoit de ce qui a changé.
-    if (window.Interpretation && e) {
-      h.revoirL3 = (h.revoirL3 || 0) - dt;
-      if (h.revoirL3 <= 0) {
-        h.revoirL3 = oeil(h);
-        const c = h.cercle, a3 = S.ailes[e.aile];
-        h.l3 = window.Interpretation.pas(ordre, {
-          docile: h.envie ? h.envie.docile : 0,
-          alarme: c ? Math.max(-1, 1 - (c.ennemis || 0) * 0.7) : 1,
-          epaule: c ? Math.min(1, (c.amis || 0) / 4 * 2 - 1) : 0,
-          frais: h.souffle != null ? h.souffle * 2 - 1 : 0,
-          vu: (a3 && a3.banniere.debout && sousLaBanniere(h)) ? 1 : -1,
-          // Depuis combien de temps il n'a rien reçu, rapporté à la minute :
-          // +1 l'ordre vient de tomber, −1 il date d'une heure. C'est le même
-          // compteur que celui de l'initiative, lu autrement — là il décide,
-          // ici il use.
-          depuis: Math.max(-1, 1 - (e.depuis || 0) / 60),
-        });
-      }
-    }
+    // ---- LA COUCHE 3 A ÉTÉ HOISSÉE ----------------------------------------
+    // Elle se calcule désormais en tête de battement, dans `observerCouches()`,
+    // AVANT l'élection qui la lit. Elle était ici, à la 680e ligne d'une
+    // cascade de 855 : seuls les hommes dont le battement allait jusque-là
+    // l'avaient — quarante-trois pour cent de l'armée décidait donc sans barre.
 
     // POURQUOI IL FAIT CE QU'IL FAIT, ET NON PAS SEULEMENT CE QU'IL FAIT.
     // `branche` était renseignée pour la garde et pour elle seule ; l'assaillant

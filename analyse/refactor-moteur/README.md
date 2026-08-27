@@ -282,3 +282,55 @@ Deux pièges relevés en chemin, et aucun des deux ne se voyait à la relecture 
   des hommes portaient un ordre, et c'était toujours le même. Ça s'est vu en
   regardant une valeur réelle dans le navigateur, pas en relisant le code.
 
+### Le deuxième pas — la couche 3 remise avant l'arbitre
+
+C'est le premier **changement de modèle** du refactor : l'étalon a bougé, et il a
+été reposé.
+
+Ce qui était faux : `l3` se calculait à la 680ᵉ ligne de la cascade de 855, donc
+seulement pour les hommes dont le battement descendait jusque-là. Ce que ça
+coûtait : `QuiConduit.barre(l3)` rend **zéro** quand la couche est absente — le
+code l'écrit, « un homme sans ordre du tout n'a pas de barre : il est livré à ses
+couches » — contre **0,50** pour un ordre ordinaire, « la seule raison pour
+laquelle une troupe reste une troupe ». **43 % de l'armée était arbitrée comme
+n'ayant reçu aucun ordre**, alors que tous en avaient un.
+
+La prédiction, posée AVANT de mesurer : `corps` doit reculer, `ordre` doit monter.
+
+| mesure | avant | après |
+|---|---|---|
+| couche 3 disponible | 55,9 % | **97,9 %** |
+| élection : `ordre` | 55,6 % | **96,6 %** |
+| élection : `corps` | 28,7 % | 0,0 % |
+| distance au chef, P90 | 92,5 m | **68,8 m** |
+| hommes sans pair | 14,6 % | 12,0 % |
+| vintaines groupées | 90 % | **97 %** |
+| A* pour 24 vintaines | 36 | **30** |
+| au contact / coups | 86 / 745 | **112 / 1446** |
+| en déroute | 0 | **6** |
+| `banc-dynamiques` | 8 rouges | **8 rouges** |
+
+L'échange sur les sondes rouges : « les deux chefs ont quitté leur place » est
+**réparée** (3,2 m · 1,4 m → 2,2 m · 2,3 m) ; « seule une minorité combat au même
+instant » **apparaît** (44 % contre un critère de ≤ 40 %). Une bataille plus
+dense met plus d'hommes au contact en même temps — c'est le critère qui rencontre
+une bataille plus vivante, et il faudra décider s'il tient encore.
+
+**Deux choses à ne pas se raconter.**
+
+1. **L'écart pensée/élection tombe de 27,3 % à 0,0 %, et ce n'est pas une
+   victoire.** Les deux mesures se sont effondrées sur « ordre » : le désaccord
+   ne se voit plus faute de variété, pas faute d'exister. L'item « brancher la
+   pensée sur la trace d'arbitrage » reste entier.
+
+2. **`corps` à 0,0 % n'est pas un défaut de calibrage.** `prendCorps` rend
+   l'emprise du corps ; pour battre une barre à 0,50 il faut une emprise franche,
+   et dans une bataille où le fer ne se touche jamais, rien n'agrippe personne.
+   Le vrai test de `prendCorps` demande une condition avec contact — donc le
+   défaut du lot 6 réparé d'abord. Avant ce changement, le corps l'emportait
+   souvent : c'était une incarnation en trompe-l'œil, produite par l'absence de
+   barre et non par une emprise réelle.
+
+**Critère du nouvel étalon** : la couche 3 disponible pour au moins 95 % des
+hommes vivants au moment de l'élection (`banc-combattant.js`).
+

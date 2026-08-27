@@ -950,7 +950,7 @@ ciblées sans téléport, sans traversée de mur et sans bouchon artificiel au s
       *(Le contrat existe — `moteur/commun/contrats.js` — mais rien ne le produit
       encore. Il faudra d'abord inverser l'ordre de `soldat()` : voir le point
       suivant.)*
-- [ ] Faire passer corps, réflexion, interprétation et envie par un adaptateur unique.
+- [~] Faire passer corps, réflexion, interprétation et envie par un adaptateur unique.
       *(Relevé fait. `l1` et `l2` ont chacune leur adaptateur, qui tourne AVANT
       l'élection ; `l3` et `l4` sont calculées **en ligne dans `soldat()`**, aux
       680ᵉ et 870ᵉ lignes d'une cascade de 855 — donc APRÈS, et seulement pour les
@@ -964,6 +964,22 @@ ciblées sans téléport, sans traversée de mur et sans bouchon artificiel au s
       écrite dans le code : « la convoitise n'existe pas sans objet ». Le défaut
       n'est pas l'absence, c'est la DÉPENDANCE AU CHEMIN — la couche d'un homme
       dépend de la distance que son battement a parcourue.)*
+      **FAIT POUR LA COUCHE 3** (`observerL3()`, appelée au même coup d'œil que
+      les couches 1 et 2, avant l'élection). Ce que ça réparait, et c'est la
+      vraie faute : `QuiConduit.barre(l3)` rend **zéro** quand la couche est
+      absente — « un homme sans ordre du tout n'a pas de barre : il est livré à
+      ses couches » —, contre 0,50 pour un ordre ordinaire, « la seule raison
+      pour laquelle une troupe reste une troupe ». **43 % de l'armée était donc
+      arbitrée comme n'ayant reçu aucun ordre**, alors que tous en avaient un.
+      Mesuré : `l3` disponible 55,9 % → **97,9 %** ; P90 au chef 92,5 → **68,8 m** ;
+      vintaines groupées 90 % → **97 %** ; A* 36 → **30** ; la bataille passe de
+      86 au contact / 745 coups à **112 / 1446**, avec les premières déroutes
+      réelles (6 contre 0). `banc-dynamiques` : **8 sondes rouges avant, 8 après**
+      — « les deux chefs ont quitté leur place » réparée, « seule une minorité
+      combat » (44 % contre ≤ 40 %) apparue. Étalon reposé.
+      **La couche 4 reste en place, et c'est délibéré** : son calcul est
+      inséparable du jet de pillage qui le suit, et les séparer déplacerait un
+      tirage dans l'urne — un autre changement, qui mérite sa propre mesure.)*
 - [x] Donner à chaque homme ordre reçu, chef connu, unité et mémoire récente.
       *(`porterOrdreEtChef()`, appelée en tête de `soldat()` pour tout homme
       vivant. Mesuré avant : **0,0 %** portaient un ordre reçu, **0,0 %** un chef
@@ -999,6 +1015,13 @@ ciblées sans téléport, sans traversée de mur et sans bouchon artificiel au s
 
 **Validation :** aucun assaut solo sans cause observable ; contact réellement
 fermé jusqu'à la portée ; réaction différente selon vécu, fatigue, ordre et issue.
+
+**Critère du nouvel étalon** (reposé le 27 août, après le hoissage de la couche 3) :
+la couche 3 doit être disponible pour **au moins 95 % des hommes vivants** au
+moment de l'élection — `node ecrans/modules/bataille/banc-combattant.js`. C'est
+ce que ce changement garantit, et c'est ce qu'une régression casserait en
+premier : sous ce seuil, une part de l'armée redevient « livrée à ses couches »
+sans barre à franchir.
 
 ### Lot 4 — Extraire unité, cohésion et formation
 
