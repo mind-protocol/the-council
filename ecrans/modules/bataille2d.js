@@ -4767,8 +4767,67 @@ window.Bataille2d = (() => {
     memoriserPerception(h);
   }
 
+  // ===========================================================================
+  // CE QUE CET HOMME-CI PORTE — son ordre, son chef, et depuis quand
+  // ===========================================================================
+  // MESURÉ AVANT D'ÊTRE ÉCRIT, et c'est ce qui justifie ces vingt lignes :
+  // `banc-combattant.js` relève, sur la condition de référence, 0,0 % d'hommes
+  // portant un ordre reçu et 0,0 % portant un chef connu. L'ordre vit sur
+  // l'UNITÉ (`u.ordre`) et le chef aussi (`u.cadre.chef`) ; l'homme, lui, ne
+  // sait rien — ni ce qu'on lui a dit, ni qui le commande.
+  //
+  // CE QUE ÇA COÛTE QUAND ÇA MANQUE. Un homme sans chef connu ne peut pas
+  // « rester avec ses pairs » au sens du refactor : il n'a personne à suivre en
+  // particulier, donc il suivra n'importe qui de la bonne couleur. Et un homme
+  // sans ordre reçu ne peut pas être en RETARD sur son ordre — il lit toujours
+  // celui de son unité, c'est-à-dire le plus récent, c'est-à-dire qu'il obéit
+  // avant d'avoir entendu.
+  //
+  // ⚠ CE GESTE N'EST QU'UNE ÉCRITURE, ET RIEN NE LE LIT ENCORE. C'est
+  // délibéré : le lot 3 tient en plusieurs pas, celui-ci est additif et doit
+  // laisser l'étalon strictement identique. Le jour où la délibération lira
+  // `h.ordreRecu` au lieu de `u.ordre`, ce sera un changement de modèle, mesuré
+  // et annoncé comme tel.
+  //
+  // ⚠ ON NE PASSE PAS PAR `guideDe()`. Elle a un EFFET DE BORD — elle réaffecte
+  // `u.cadre.chef` quand le chef courant est tombé. L'appeler ici la ferait
+  // tourner plus tôt dans le battement qu'aujourd'hui, et une succession
+  // observée un cran plus tôt est un changement de comportement. On lit donc
+  // `u.cadre.chef` tel quel, sans le réparer.
+  //
+  // Le chef n'est « connu » que s'il est À PORTÉE DE VUE. Au-delà, l'homme
+  // garde ce qu'il a vu en dernier, avec sa date et son endroit : c'est de la
+  // mémoire, pas de l'omniscience, et c'est ce qui permettra plus tard à un
+  // messager ou à un isolé de chercher là où il l'a vu.
+  const VUE_CHEF = 18;              // la même portée que `VUE_MORT` : à vue d'œil
+
+  function porterOrdreEtChef(h) {
+    const u = formationDe(h);
+    if (!u) return;
+    // LA CLEF EST `version`, ET CE N'EST PAS UN DÉTAIL. Un ordre d'unité porte
+    // `mode`, `destination`, `donneA`, `texte` et `version` — pas de `n` : la
+    // première écriture de ce geste comparait `o.n`, c'est-à-dire `undefined`
+    // à `undefined`, si bien que l'homme retenait son PREMIER ordre et ne
+    // remarquait plus jamais les suivants. Quatre-vingt-treize pour cent des
+    // hommes portaient donc un ordre, et c'était toujours le même. Ça ne se
+    // voit pas en relisant : ça se voit en regardant une valeur.
+    const o = u.ordre;
+    if (o && (!h.ordreRecu || h.ordreRecu.version !== o.version)) {
+      h.ordreRecu = { version: o.version, mode: o.mode,
+                      destination: o.destination ? o.destination.nom || null : null,
+                      texte: o.texte || null, recuA: S.temps };
+    }
+    const chef = u.cadre && u.cadre.chef;
+    if (chef && chef !== h && chef.etat !== "mort" &&
+        Math.hypot(chef.x - h.x, chef.y - h.y) <= VUE_CHEF) {
+      h.chefConnuId = chef.debugId;
+      h.chefVuA = S.temps; h.chefVuX = chef.x; h.chefVuY = chef.y;
+    }
+  }
+
   function soldat(h, dt) {
     if (h.etat === "mort") return;
+    porterOrdreEtChef(h);
     // Une cible n'est pas une liaison magique. Dès qu'un des deux franchit un
     // huis, l'autre le perd ; il devra le retrouver par une perception valide
     // dans le même espace.

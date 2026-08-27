@@ -218,3 +218,51 @@ pensée affichée, compte le désaccord, dit ce que chaque homme porte réelleme
 (ordre reçu, unité, chef connu, mémoire), relève la disponibilité des quatre
 couches, et compte les attaquants sans un seul pair de leur unité à douze mètres.
 
+### Le premier relevé, et ce que le premier pas a changé
+
+Sur la condition de référence (150 hommes, la Gadoue, 100 s) :
+
+| mesure | avant | après le 1er pas |
+|---|---|---|
+| pensée ≠ élection | **27,3 %** | 27,3 % *(rien ne lit encore les nouveaux champs)* |
+| l'arbitre dit « le corps tient les jambes » | 28,7 % | — |
+| la pensée affichée dit « corps » | **1,4 %** | — |
+| couche 1 disponible | 97,9 % | — |
+| couche 2 disponible | 97,9 % | — |
+| couche 3 disponible | **55,9 %** | — |
+| couche 4 disponible | **0,0 %** | — |
+| un ordre reçu | **0,0 %** | **93,3 %** |
+| un chef connu | **0,0 %** | **62,0 %** |
+| une unité | 100 % | 100 % |
+| une mémoire récente | 100 % | 100 % |
+
+**Le corps conduit près d'un tiers de l'armée et l'écran ne le dit presque
+jamais.** C'est la phrase que ces chiffres portent, et c'est ce que « brancher la
+pensée sur la vraie trace d'arbitrage » veut dire concrètement.
+
+**L'arbitre élit entre quatre candidats dont un est toujours nul.** La couche 4
+n'est jamais calculée avant d'être lue ; la couche 3 l'est une fois sur deux.
+
+### Ce que le premier pas a fait, et ce qu'il n'a pas fait
+
+`porterOrdreEtChef()` en tête de `soldat()` : chaque homme vivant porte
+désormais l'ordre qu'il a reçu — avec sa version, son mode, sa destination et sa
+date — et l'identité de son chef, avec l'heure et l'endroit où il l'a vu pour la
+dernière fois.
+
+C'est **additif** : rien ne lit ces champs, et l'étalon est strictement
+identique. C'est délibéré — le jour où la délibération lira `h.ordreRecu` au lieu
+de `u.ordre`, ce sera un changement de modèle, à mesurer et à annoncer.
+
+Deux pièges relevés en chemin, et aucun des deux ne se voyait à la relecture :
+
+- **on ne passe pas par `guideDe()`**, qui réaffecte `u.cadre.chef` quand le chef
+  courant est tombé. L'appeler en tête de battement ferait observer une
+  succession un cran plus tôt qu'aujourd'hui — un changement de comportement
+  déguisé en lecture ;
+- **la clef de fraîcheur d'un ordre d'unité est `version`, pas `n`.** La première
+  écriture comparait `undefined` à `undefined` : l'homme retenait son PREMIER
+  ordre et ne remarquait plus jamais les suivants. Quatre-vingt-treize pour cent
+  des hommes portaient un ordre, et c'était toujours le même. Ça s'est vu en
+  regardant une valeur réelle dans le navigateur, pas en relisant le code.
+

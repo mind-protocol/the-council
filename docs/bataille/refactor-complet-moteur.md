@@ -947,10 +947,49 @@ ciblées sans téléport, sans traversée de mur et sans bouchon artificiel au s
 ### Lot 3 — Stabiliser le combattant
 
 - [ ] Introduire `IntentionGeste` comme unique sortie individuelle.
+      *(Le contrat existe — `moteur/commun/contrats.js` — mais rien ne le produit
+      encore. Il faudra d'abord inverser l'ordre de `soldat()` : voir le point
+      suivant.)*
 - [ ] Faire passer corps, réflexion, interprétation et envie par un adaptateur unique.
-- [ ] Donner à chaque homme ordre reçu, chef connu, unité et mémoire récente.
+      *(Relevé fait, et il est pire que « quatre adaptateurs valent mieux qu'un » :
+      `l1` et `l2` ont chacune leur adaptateur, qui tourne AVANT l'élection ; `l3`
+      et `l4` sont calculées **en ligne dans `soldat()`**, six cents lignes plus
+      bas, donc APRÈS. Mesuré : la couche 3 n'est disponible que pour **55,9 %**
+      des hommes au moment où l'arbitre la lit, et la couche 4 pour **0,0 %** —
+      `QuiConduit` élit donc entre quatre candidats dont un est toujours nul.
+      `reflexion-adapt.js` le dit déjà en commentaire ; rien ne le mesurait.)*
+- [x] Donner à chaque homme ordre reçu, chef connu, unité et mémoire récente.
+      *(`porterOrdreEtChef()`, appelée en tête de `soldat()` pour tout homme
+      vivant. Mesuré avant : **0,0 %** portaient un ordre reçu, **0,0 %** un chef
+      connu — l'ordre vivait sur l'unité et le chef aussi ; l'homme ne savait ni
+      ce qu'on lui avait dit, ni qui le commandait. Après : **93,3 %** et
+      **62,0 %** (les 38 % restants sont à plus de dix-huit mètres de leur chef,
+      ce qui est cohérent avec un P90 à 92 m). L'unité et la mémoire récente
+      étaient déjà à 100 %.
+      Deux pièges relevés : on ne passe PAS par `guideDe()`, qui réaffecte
+      `u.cadre.chef` — l'appeler plus tôt dans le battement ferait observer une
+      succession un cran trop tôt ; et la clef de fraîcheur d'un ordre est
+      `version`, pas `n`. La première écriture comparait `undefined` à
+      `undefined`, si bien que l'homme retenait son premier ordre pour toujours —
+      93 % portaient un ordre, et c'était le même. Ça ne se voit pas en
+      relisant : ça s'est vu en regardant une valeur dans le navigateur.
+      **Additif, et l'étalon est identique** : rien ne lit encore ces champs. Le
+      jour où la délibération lira `h.ordreRecu` au lieu de `u.ordre`, ce sera un
+      changement de modèle, mesuré et annoncé comme tel.)*
 - [ ] Éliminer les branches de mouvement qui contournent `QuiConduit`.
+      *(Relevé : `soldat()` fait **855 lignes** et **38 sorties anticipées**. La
+      seule ligne qui agit sur l'élection — `if (executerReflexion(h, dt)) return;`
+      — est à la **236ᵉ**. Tout ce qui retourne avant elle contourne l'arbitre
+      par construction. Il ne s'agit donc pas d'éliminer des exceptions : il
+      s'agit d'inverser l'ordre de la cascade.)*
 - [ ] Brancher la pensée courante sur la vraie trace d'arbitrage.
+      *(Relevé, et c'est le chiffre du lot : **27,3 % des hommes affichent une
+      pensée qui contredit ce qui les conduit**. `penser()` est appelée depuis 56
+      endroits ; 10 nomment une couche, 46 nomment la branche qui a bougé
+      l'homme. Le plus parlant : l'arbitre dit que le CORPS tient les jambes
+      **28,7 %** du temps, la pensée affichée ne le dit que **1,4 %**. Le corps
+      conduit près d'un tiers de l'armée et l'écran ne le dit presque jamais.
+      Mesure : `banc-combattant.js`.)*
 
 **Validation :** aucun assaut solo sans cause observable ; contact réellement
 fermé jusqu'à la portée ; réaction différente selon vécu, fatigue, ordre et issue.

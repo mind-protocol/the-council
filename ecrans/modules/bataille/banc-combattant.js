@@ -145,7 +145,7 @@ async function main() {
         etiquettes[h.pensee.systeme] = (etiquettes[h.pensee.systeme] || 0) + 1;
       if (c && p && c !== p) desaccord++;
 
-      if (h.ordre) porte.ordre++;
+      if (h.ordreRecu || h.ordre) porte.ordre++;
       if (h.escouade != null || h.formation != null) porte.unite++;
       if (h.chefConnuId != null || h.chefConnu != null) porte.chefConnu++;
       if (h.pensees && h.pensees.length) porte.memoire++;
