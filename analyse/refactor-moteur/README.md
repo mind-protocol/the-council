@@ -323,6 +323,15 @@ une bataille plus vivante, et il faudra décider s'il tient encore.
    ne se voit plus faute de variété, pas faute d'exister. L'item « brancher la
    pensée sur la trace d'arbitrage » reste entier.
 
+   **La mesure a donc été refaite**, parce qu'on ne poursuit pas avec un
+   instrument qui se lit comme une réussite. Ce qui discrimine sans dépendre
+   d'aucune distribution : **la part des pensées dont l'étiquette nomme une
+   COUCHE** — dix des cinquante-six appels à `penser()` le font, les quarante-six
+   autres nomment un endroit du code. Elle vaudra 100 % le jour où la pensée
+   sortira de l'arbitrage. Elle vaut aujourd'hui **1,3 %** : l'item est à 1,3 %
+   fait. L'ancienne mesure est gardée à côté — un désaccord non nul reste un vrai
+   signal —, mais elle ne se lit plus seule.
+
 2. **`corps` à 0,0 % n'est pas un défaut de calibrage.** `prendCorps` rend
    l'emprise du corps ; pour battre une barre à 0,50 il faut une emprise franche,
    et dans une bataille où le fer ne se touche jamais, rien n'agrippe personne.

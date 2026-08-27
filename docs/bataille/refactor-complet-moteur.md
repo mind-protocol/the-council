@@ -1011,7 +1011,14 @@ ciblées sans téléport, sans traversée de mur et sans bouchon artificiel au s
       l'homme. Le plus parlant : l'arbitre dit que le CORPS tient les jambes
       **28,7 %** du temps, la pensée affichée ne le dit que **1,4 %**. Le corps
       conduit près d'un tiers de l'armée et l'écran ne le dit presque jamais.
-      Mesure : `banc-combattant.js`.)*
+      Mesure : `banc-combattant.js`.
+      ⚠ APRÈS LE HOISSAGE DE LA COUCHE 3, l'écart est tombé à 0,0 % — **et ce
+      n'était pas une victoire** : les deux mesures s'étaient rangées sur
+      « ordre », donc le désaccord ne se voyait plus faute de variété. La mesure
+      a été refaite : ce qui discrimine vraiment, c'est **la part des pensées
+      dont l'étiquette nomme une COUCHE** plutôt qu'un endroit du code. Elle ne
+      dépend d'aucune distribution et vaudra 100 % le jour où l'item sera fait.
+      Elle vaut aujourd'hui **1,3 %**.)*
 
 **Validation :** aucun assaut solo sans cause observable ; contact réellement
 fermé jusqu'à la portée ; réaction différente selon vécu, fatigue, ordre et issue.

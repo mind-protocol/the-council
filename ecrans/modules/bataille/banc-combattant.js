@@ -120,6 +120,24 @@ async function main() {
   const n = Math.round(o.duree / PAS);
   const conduit = {}, pensee = {}, etiquettes = {};
   let echantillons = 0, desaccord = 0, sansPensee = 0, sansConduit = 0;
+  // LA MESURE QUI NE S'EFFONDRE PAS.
+  //
+  // « pensée ≠ élection » a cessé de discriminer le jour où les deux se sont
+  // rangées sur « ordre » : elle est tombée de 27,3 % à 0,0 % sans que l'item
+  // du lot 3 ait avancé d'un pouce. Un zéro obtenu par effondrement de la
+  // variété n'est pas un zéro obtenu par accord — et une mesure qui ne sait pas
+  // faire la différence est pire qu'absente, parce qu'elle se lit comme une
+  // réussite. On la garde, parce qu'un désaccord non nul reste un vrai signal ;
+  // on ne la lit plus seule.
+  //
+  // CE QUI DISCRIMINE VRAIMENT : l'étiquette de la pensée NOMME-T-ELLE UNE
+  // COUCHE ? `penser()` est appelée depuis 56 endroits ; dix nomment une couche
+  // de la survival stack, quarante-six nomment la branche de code qui a bougé
+  // l'homme — « front de porte », « ordre de formation », « messager du Guet ».
+  // Cette part-là ne dépend d'aucune distribution : elle dit si la pensée SORT
+  // de l'arbitrage ou si elle le double. Elle vaudra 100 % le jour où l'item
+  // sera fait, quelle que soit la main qui l'emporte.
+  let pensesParCouche = 0;
   const porte = { ordre: 0, unite: 0, chefConnu: 0, memoire: 0,
                   commandement: 0, perceptions: 0 };
   // LES QUATRE COUCHES SONT-ELLES LA QUAND L'ARBITRE LES LIT ?
@@ -151,6 +169,13 @@ async function main() {
       if (h.pensee && h.pensee.systeme)
         etiquettes[h.pensee.systeme] = (etiquettes[h.pensee.systeme] || 0) + 1;
       if (c && p && c !== p) desaccord++;
+      // Une etiquette qui nomme une couche contient le mot « couche » : c'est
+      // la convention des dix appels qui le font (« corps · couche 1 »,
+      // « réflexion · couche 2 », « envie · couche 4 »). Les quarante-six autres
+      // nomment un endroit du code.
+      if (h.pensee && h.pensee.systeme &&
+          String(h.pensee.systeme).toLowerCase().indexOf("couche") >= 0)
+        pensesParCouche++;
 
       if (h.ordreRecu || h.ordre) porte.ordre++;
       if (h.escouade != null || h.formation != null) porte.unite++;
@@ -184,8 +209,10 @@ async function main() {
   table("ce que la pensée affichée dit — replié sur les mêmes quatre", pensee);
 
   console.log("\n── l'écart ──");
+  dit("la pensée nomme une couche", pc(pensesParCouche, echantillons),
+      "100 % le jour où l'item est fait");
   dit("pensée ≠ élection", pc(desaccord, echantillons),
-      desaccord + " sur " + echantillons);
+      desaccord + " sur " + echantillons + " — ne se lit pas seul");
   dit("sans élection", pc(sansConduit, echantillons));
   dit("sans pensée", pc(sansPensee, echantillons));
 
