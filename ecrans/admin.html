@@ -361,6 +361,7 @@
   <a class="vers-pas" href="/pas">Les pas ↗</a>
   <span class="avert">Envers du décor — jamais sous les yeux du joueur</span>
 </header>
+<script src="/modules/chambres.js"></script>
 <nav>
   <button data-onglet="tetes" class="actif">Les têtes</button>
   <button data-onglet="calendrier">Le calendrier</button>
@@ -368,6 +369,7 @@
   <button data-onglet="tissu">Le tissu</button>
   <button data-onglet="graphe">Le graphe</button>
   <button data-onglet="activations">Activations</button>
+  <button data-onglet="chambres">Les chambres</button>
   <button data-onglet="charge">La charge</button>
   <button data-onglet="sante">La santé</button>
   <button data-onglet="maison">La maison</button>
@@ -381,6 +383,7 @@
   <section id="tissu"></section>
   <section id="graphe"></section>
   <section id="activations"></section>
+  <section id="chambres"></section>
   <section id="charge"></section>
   <section id="sante"></section>
   <section id="maison"></section>
@@ -426,7 +429,30 @@ function texteCopiable(element) {
   return texte;
 }
 
+// L'ONGLET COURANT VIT DANS L'URL. Sans cela, tout rechargement — et il y en a
+// un a chaque fois qu'on touche a la page — ramenait a « Les tetes », et il
+// fallait recliquer pour retrouver ce qu'on etait en train de regarder.
+// `?onglet=graphe` se partage aussi : on envoie une vue, pas un chemin a
+// refaire. `remplacerEtat` et non `pushState` : ce n'est pas une navigation,
+// c'est ou l'on en est.
+function ecrireOngletDansURL(onglet) {
+  try {
+    const u = new URL(window.location.href);
+    if (onglet && onglet !== "tetes") u.searchParams.set("onglet", onglet);
+    else u.searchParams.delete("onglet");
+    history.replaceState(null, "", u);
+  } catch (_e) { /* une URL qui ne s'ecrit pas ne doit pas casser l'onglet */ }
+}
+function ongletDeLURL() {
+  try {
+    const demande = new URL(window.location.href).searchParams.get("onglet");
+    if (!demande) return null;
+    return document.querySelector('nav button[data-onglet="' + CSS.escape(demande) + '"]')
+      ? demande : null;
+  } catch (_e) { return null; }
+}
 document.querySelectorAll("nav button").forEach((b) => b.onclick = () => {
+  ecrireOngletDansURL(b.dataset.onglet);
   document.querySelectorAll("nav button").forEach((x) => x.classList.remove("actif"));
   document.querySelectorAll("main section").forEach((x) => x.classList.remove("actif"));
   b.classList.add("actif");
@@ -446,6 +472,7 @@ document.querySelectorAll("nav button").forEach((b) => b.onclick = () => {
       actualiserFilMjActif();
     });
   }
+  if (b.dataset.onglet === "chambres") chargerChambres();
   if (b.dataset.onglet === "charge") chargerCharge();
   if (b.dataset.onglet === "sante") chargerSante();
 });
@@ -810,6 +837,7 @@ const G = {
   filtreMotifs: "", panneauMotifs: true,
   vagues: [], toursDiffusion: 0, tempsDiffusion: 0, dureeDiffusionJours: 0,
   inconnusDiffusion: 0, animeImportance: false, emetteurs: new Set(),
+  etiquettes: [], physiqueAbsente: false,
   suivreTempsReel: true, tempsBaseJours: 0, tempsBaseMur: null,
   horlogeCle: null, horlogeSource: null, horlogeActive: null,
   maintenant: 0, dernierRendu: 0, acteursActives: new Set(),
@@ -1064,10 +1092,27 @@ const TYPES_IMPORTANCE = ["goulot","desequilibre","critique","tension",
 // Les types ne donnent aucun bonus numerique. Ils disent seulement si l'energie
 // peut continuer. Une personne la recoit et l'arrete ; le PJ fait exception
 // parce qu'il est la source. Les impasses explicites ne propagent rien non plus.
-const GENRES_RELAIS = new Set(["action","clef","transmission","verrou","moyen",
-  "mesure","compte","evenement","etape","office","lieu","echelle",
-  "etat_cible","piece"]);
-const AMORTISSEMENT = .85, TOURS_DIFFUSION = 40;
+// LA PHYSIQUE NE SE REDEFINIT PLUS ICI. Cette page en tenait sa propre copie,
+// et cette copie avait derive : la meme liste que le Python, MOINS `personne`.
+// Une onde qu'un homme absorbait au lieu de la passer — alors que la doctrine
+// dit qu'une nouvelle ne voyage jamais autrement que par des gens. Mesure sur
+// le tissu du 129.4.3 depuis pers:rhaenyra : 2159 noeuds atteignables avec le
+// relais contre 1647 sans, 80 personnes sur 114 contre 67. La regie annoncait
+// donc une diffusion qui n'etait pas celle qui elit les acteurs.
+// Source unique : scripts/noyau/diffusion.json, servi sous `graphe.physique`.
+let GENRES_RELAIS = new Set(), AMORTISSEMENT = .85, TOURS_DIFFUSION = 40;
+function adopterPhysique(p) {
+  // Pas de defaut silencieux : sans le fichier, on le DIT. Un repli muet est
+  // exactement le mecanisme qu'on vient de retirer.
+  if (!p || !Array.isArray(p.genres_relais) || !p.genres_relais.length) {
+    console.error("physique de diffusion absente — scripts/noyau/diffusion.json", p);
+    G.physiqueAbsente = true; return;
+  }
+  GENRES_RELAIS = new Set(p.genres_relais);
+  AMORTISSEMENT = Number(p.amortissement);
+  TOURS_DIFFUSION = Number(p.tours);
+  G.physiqueAbsente = false;
+}
 // Le direct n'est pas une coloration de composante connexe. Une impulsion du
 // PJ perd 15 % a chaque relais et partage le reste entre ses voisins. Sous
 // 0,3 % de l'impulsion initiale elle n'est plus un front discernable.
@@ -1601,6 +1646,7 @@ function alphaNoeud(n) {
   if (G.selection === n || G.survol === n) x = 1;
   return x;
 }
+const RAYON_MAX_PX = 22;
 function tailleNoeud(n) {
   let r = n.pendant ? 4 : 2.5;
   if (n.goulot) r = Math.min(13, 4 + Math.sqrt(n.goulot.demandes) * .62);
@@ -1615,7 +1661,12 @@ function tailleNoeud(n) {
   if (G.motifsActifs.length&&G.motifNoeuds.has(n.id)&&n.genre==="personne") r=Math.max(r,11/G.zoom);
   if (G.motifsActifs.length&&G.motifNoeuds.has(n.id)&&n.genre==="lieu") r=Math.max(r,9/G.zoom);
   if (G.selection === n || G.survol === n) r += 2.5 / Math.sqrt(G.zoom);
-  return r;
+  // UN NOEUD NE MASQUE PAS SES VOISINS. Le rayon est en unites monde, donc
+  // multiplie par le zoom : `etape:steffon-serment-garde`, seul en tete du
+  // classement, se peignait en disque opaque de 90 px et recouvrait ses
+  // voisins immediats — c'est-a-dire exactement les mieux classes, ceux que la
+  // lentille existe pour montrer. On borne a l'ecran, jamais dans le monde.
+  return Math.min(r, RAYON_MAX_PX / G.zoom);
 }
 function polygone(ctx, x, y, r, cotes, rotation) {
   ctx.beginPath();
@@ -1730,10 +1781,47 @@ function dessinerNoeud(ctx, n) {
     || (G.lentille==="importance"&&G.emetteurs&&G.emetteurs.has(n.id))
     || (G.lentille==="importance"&&G.acteursActives&&G.acteursActives.has(n.id))
     || (n.goulot&&G.lentille==="pression"&&!G.motifsActifs.length) || (G.lentille==="liens"&&G.natives.has(n.id));
-  if (etiquette && G.zoom > .34) { ctx.globalAlpha=1; ctx.font=(11/G.zoom)+"px Georgia";
-    const txt=(n.quoi||n.id).slice(0,58), tw=ctx.measureText(txt).width;
-    ctx.fillStyle="rgba(20,17,14,.88)"; ctx.fillRect(n.x+r+3/G.zoom,n.y-8/G.zoom,tw+6/G.zoom,15/G.zoom);
-    ctx.fillStyle="#e8dfd3"; ctx.fillText(txt,n.x+r+6/G.zoom,n.y+3/G.zoom); }
+  // Les etiquettes ne se peignent PAS ici : elles sont mises de cote et posees
+  // apres tous les noeuds, une fois qu'on peut savoir laquelle en recouvre une
+  // autre. Peintes au fil des noeuds, cinq noms tombaient au meme endroit et
+  // aucun n'etait lisible — c'etait le cas des cinq acteurs les plus energises.
+  if (etiquette && G.zoom > .34) G.etiquettes.push({ n, r });
+  ctx.restore();
+}
+// Pose les etiquettes en dernier, en espace ECRAN, et refuse celles qui
+// recouvrent une deja posee. L'ordre decide qui gagne : selection et survol
+// d'abord, puis le plus energise — un nom perdu vaut mieux qu'un tas illisible.
+function poserEtiquettes(ctx) {
+  const prises = [];
+  const chevauche = (b) => prises.some((a) =>
+    b.x < a.x + a.w && b.x + b.w > a.x && b.y < a.y + a.h && b.y + b.h > a.y);
+  const rang = (e) => (G.selection === e.n || G.survol === e.n) ? 2
+    : (G.emetteurs && G.emetteurs.has(e.n.id)) ? 1 : 0;
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  const dpr = window.devicePixelRatio || 1;
+  ctx.scale(dpr, dpr);
+  ctx.font = "11px Georgia"; ctx.globalAlpha = 1;
+  G.etiquettes
+    .sort((a, b) => rang(b) - rang(a)
+      || (b.n.importance || 0) - (a.n.importance || 0))
+    .forEach((e) => {
+      const txt = (e.n.quoi || e.n.id).slice(0, 58);
+      const w = ctx.measureText(txt).width + 6;
+      const x0 = e.n.x * G.zoom + G.tx + e.r * G.zoom + 3;
+      const y0 = e.n.y * G.zoom + G.ty - 8;
+      // Quatre places autour du noeud : a droite, a gauche, dessous, dessus.
+      const places = [[x0, y0], [x0 - w - (e.r * G.zoom + 6) * 2, y0],
+                      [x0 - w / 2, y0 + 16], [x0 - w / 2, y0 - 16]];
+      for (const [x, y] of places) {
+        const boite = { x, y, w, h: 15 };
+        if (chevauche(boite)) continue;
+        if (x < 0 || y < 0 || x + w > G.largeur || y + 15 > G.hauteur) continue;
+        prises.push(boite);
+        ctx.fillStyle = "rgba(20,17,14,.88)"; ctx.fillRect(x, y, w, 15);
+        ctx.fillStyle = "#e8dfd3"; ctx.fillText(txt, x + 3, y + 11);
+        return;
+      }
+    });
   ctx.restore();
 }
 function dessinerGraphe() {
@@ -1742,7 +1830,9 @@ function dessinerGraphe() {
   ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,canvas.width,canvas.height);
   ctx.setTransform(dpr*G.zoom,0,0,dpr*G.zoom,dpr*G.tx,dpr*G.ty);
   G.aretes.forEach((a)=>dessinerArete(ctx,a));
+  G.etiquettes=[];
   G.noeuds.forEach((n)=>dessinerNoeud(ctx,n));
+  poserEtiquettes(ctx);
 }
 function boucleGraphe(maintenant) {
   G.raf=0;maintenant=maintenant||performance.now();
@@ -1816,8 +1906,16 @@ function cadrerGraphe(noeuds) {
   const marge=55, reserve=G.largeur>900?Math.min(355,G.largeur*.34):0;
   const panneau=document.getElementById("graph-patterns"), reserveGauche=G.largeur>900&&panneau&&!panneau.classList.contains("ferme")?Math.min(370,G.largeur*.32):0;
   const largeurUtile=G.largeur-reserve-reserveGauche;
-  const k=Math.min(2.5,Math.max(.08,Math.min((largeurUtile-marge*2)/Math.max(1,maxx-minx),(G.hauteur-marge*2)/Math.max(1,maxy-miny))));
-  G.zoom=k; G.tx=reserveGauche+largeurUtile/2-(minx+maxx)/2*k; G.ty=G.hauteur/2-(miny+maxy)/2*k; dessinerGraphe();
+  // Le bandeau du direct mange le haut de la scene. Il n'etait reserve nulle
+  // part : en lentille Diffusion, le cadrage posait le foyer de l'onde — les
+  // acteurs les mieux classes — exactement dessous, avec leurs etiquettes.
+  const bandeau=document.getElementById("importance-bandeau");
+  const reserveHaut=bandeau&&bandeau.style.display!=="none"
+    ? Math.min(200,bandeau.getBoundingClientRect().height+18) : 0;
+  const hauteurUtile=G.hauteur-reserveHaut;
+  const k=Math.min(2.5,Math.max(.08,Math.min((largeurUtile-marge*2)/Math.max(1,maxx-minx),(hauteurUtile-marge*2)/Math.max(1,maxy-miny))));
+  G.zoom=k; G.tx=reserveGauche+largeurUtile/2-(minx+maxx)/2*k;
+  G.ty=reserveHaut+hauteurUtile/2-(miny+maxy)/2*k; dessinerGraphe();
   return true;
 }
 function mondeDepuisEvenement(ev) {
@@ -1865,13 +1963,22 @@ function inspecterGraphe(x) {
 }
 function statistiquesGraphe() {
   const r=G.data.resume||{}, t=G.d.tissu||{}; let s=[];
-  if(G.lentille==="projection") s=[[r.noeuds,"nœuds"],[r.aretes,"arêtes"],[r.suivables,"suivables"],[r.resolues,"résolues"],[r.pendantes,"pendantes","alerte"],[r.floues,"floues"],[r.doubles,"double genre","alerte"]];
+  // ON ANNONCE CE QU'ON PEINT. La page dessinait 8077 noeuds en affichant
+  // « 2341 noeuds » : l'ecart etait les extremites d'arete non adressees, une
+  // par bout manquant, nees pour l'essentiel des 3300 aretes floues. 71 % de
+  // ce qu'on voyait n'etait pas une affaire, et « 5 pendantes » comptait les
+  // ARETES suivables, ce qui laissait croire le contraire.
+  if(G.lentille==="projection") s=[[r.noeuds_dessines!=null?r.noeuds_dessines:r.noeuds,"nœuds peints"],[r.noeuds,"affaires"],[r.pendants||0,"bouts non adressés","alerte"],[r.aretes,"arêtes"],[r.suivables,"suivables"],[r.pendantes,"arêtes pendantes","alerte"],[r.floues,"floues"],[r.doubles,"double genre","alerte"]];
   if(G.lentille==="pression") s=[[(t.goulots||[]).length,"goulots"],[(t.desequilibres||[]).length,"sans contre-arête","alerte"],[t.vacantes||0,"actions à désigner","alerte"],[(t.sourds||[]).length,"têtes sans déclencheur"],[r.candidats||0,"candidats textuels"]];
   if(G.lentille==="importance") {
     const d=G.motifs.filter(m=>m.categorie==="decider"&&TYPES_IMPORTANCE.includes(m.type)), pic=d[0];
+    // Un score interne brut ne se lit pas : « 340 tête du classement » ne dit
+    // ni son unite ni son echelle. On nomme la tete, le score suit.
     s=[[(G.emetteurs||new Set()).size,"PJ émetteur"],[dureeLisible(G.dureeDiffusionJours),"horizon physique"],
-       [d.length,"motifs classés"],[pic?pic.score:0,"tête du classement"],
+       [d.length,"motifs classés"],
+       [pic?(String(pic.titre||"—").slice(0,32)+" · "+Math.round(pic.score)):"—","motif de tête"],
        [G.inconnusDiffusion,"acteurs non datables","alerte"]];
+    if (G.physiqueAbsente) s.push(["!","physique de diffusion absente","alerte"]);
   }
   if(G.lentille==="liens") s=[[r.natifs||0,"liens natifs projetés"],[G.aretes.filter(a=>a.natif&&a.nature==="equilibre").length,"EQUILIBRE"],[G.aretes.filter(a=>a.natif&&a.nature==="contredit").length,"CONTREDIT"],[G.aretes.filter(a=>a.nature==="contredit").length,"contradictions totales"]];
   if(G.lentille==="connaissance") {
@@ -1881,7 +1988,9 @@ function statistiquesGraphe() {
       [G.observateur==="mj"?(r.murs_sans_route||0):"—",G.observateur==="mj"?"verrous sans route":"vérité adverse masquée",G.observateur==="mj"?"alerte":""],
       [new Set(routes.filter(a=>a.de.genre==="transmission"||a.vers.genre==="transmission").map(a=>a.de.genre==="transmission"?a.de.id:a.vers.id)).size,"plis visibles"]];
   }
-  document.getElementById("graph-stats").innerHTML=s.map(x=>"<span class=\"graph-stat "+(x[2]||"")+"\"><b>"+x[0]+"</b> "+x[1]+"</span>").join("");
+  // Le bandeau porte desormais du texte d'etat (le titre du motif de tete) :
+  // il s'echappe, comme partout ailleurs dans cette page.
+  document.getElementById("graph-stats").innerHTML=s.map(x=>"<span class=\"graph-stat "+(x[2]||"")+"\"><b>"+esc(String(x[0]))+"</b> "+esc(String(x[1]))+"</span>").join("");
 }
 function choisirLentille(nom,garderMotifs) {
   if(!garderMotifs){restaurerPositionsMotif();G.motifsActifs=[];}
@@ -1967,7 +2076,8 @@ function rendreGraphe(d) {
   if(G.raf){cancelAnimationFrame(G.raf);G.raf=0;} if(G.redimensionneur)G.redimensionneur.disconnect();
   G.lentille="projection";G.observateur="mj";G.selection=null;G.survol=null;G.tx=0;G.ty=0;G.zoom=1;G.alpha=0;G.cadreValide=false;
   G.motifsActifs=[];G.motifNoeuds=new Set();G.motifAretes=new Set();G.motifAncres=new Set();G.motifEtiquettes=new Set();G.ciblesMotif=new Map();G.positionsAvantMotif=null;G.categorieMotifs="decider";G.filtreMotifs="";G.panneauMotifs=true;
-  G.d=d; G.data=data; G.noeuds=data.noeuds; G.parId=new Map(G.noeuds.map(n=>[n.id,n]));
+  G.d=d; G.data=data; adopterPhysique(data.physique);
+  G.noeuds=data.noeuds; G.parId=new Map(G.noeuds.map(n=>[n.id,n]));
   G.aretes=data.aretes.map((a)=>Object.assign(a,{de:G.parId.get(a.de),vers:G.parId.get(a.vers)})).filter(a=>a.de&&a.vers);
   G.parArete=new Map(G.aretes.map(a=>[a.id,a]));
   G.noeuds.forEach((n)=>{n.degre=0;});
@@ -1982,8 +2092,8 @@ function rendreGraphe(d) {
   synchroniserHorloges(d.horloges||{});
   G.rangPression=new Map(((d.tissu||{}).goulots||[]).map((g,i)=>[g.noeud,i]));
   ((d.tissu||{}).desequilibres||[]).forEach((g)=>{if(!G.rangPression.has(g.noeud))G.rangPression.set(g.noeud,G.rangPression.size);});
-  e.innerHTML='<div class="graph-shell"><div class="graph-head"><h2>Le graphe miroir</h2><span class="graph-sous">un tissu · quatre lectures</span><div class="graph-lenses">'+
-    '<button data-lentille="projection" class="actif">2 · Projection</button><button data-lentille="pression">3 · Pressions</button><button data-lentille="liens">4 · Liens natifs</button><button data-lentille="connaissance">5 · Connaissance</button><button data-lentille="importance">6 · Diffusion live</button></div></div>'+
+  e.innerHTML='<div class="graph-shell"><div class="graph-head"><h2>Le graphe miroir</h2><span class="graph-sous">un tissu · cinq lectures</span><div class="graph-lenses">'+
+    '<button data-lentille="projection" class="actif">1 · Projection</button><button data-lentille="pression">2 · Pressions</button><button data-lentille="liens">3 · Liens natifs</button><button data-lentille="connaissance">4 · Connaissance</button><button data-lentille="importance">5 · Diffusion live</button></div></div>'+
     '<div class="graph-outils"><input id="graph-recherche" placeholder="chercher une adresse ou un intitulé"><select id="graph-observateur" style="display:none">'+
     (data.observateurs||[]).map(o=>'<option value="'+esc(o.id)+'">vu par · '+esc(o.nom)+'</option>').join('')+'</select><button id="graph-pattern-toggle">Motifs</button><button id="graph-cadrer">Tout cadrer</button><div class="graph-stats" id="graph-stats"></div><span class="graph-aide">molette · glisser · cliquer</span></div>'+
     '<div class="graph-stage"><canvas id="graph-canvas"></canvas>'+
@@ -2560,7 +2670,14 @@ async function relireHorloges() {
 }
 charger().then(()=>{
   const test=new URLSearchParams(location.search).get("test")||"";
-  if(test.startsWith("flux-causal"))document.querySelector('nav button[data-onglet="graphe"]').click();
+  if(test.startsWith("flux-causal")){
+    document.querySelector('nav button[data-onglet="graphe"]').click();
+    return;
+  }
+  // On rouvre l'onglet que l'URL demande, une fois les donnees la : le clic
+  // passe par le meme chemin que la main du regisseur, donc rien a dupliquer.
+  const onglet=ongletDeLURL();
+  if(onglet)document.querySelector('nav button[data-onglet="'+CSS.escape(onglet)+'"]').click();
 });
 setInterval(relireHorloges,1000);
 setInterval(actualiserPrevisionsActivations,5000);

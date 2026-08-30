@@ -5,6 +5,7 @@ const path = require("path");
 const { RACINE } = require("../http");
 const { chargeActeurs, criticite, detailActivation, filMjActif, prevoirActivations, resumeActivations, sante } = require("../agents").activations; // LA PORTE serveur des agents
 const { chercherDansFlux, extraitDuFlux, filPersonnage, regie } = require("../agents").regie; // LA PORTE serveur des agents
+const { vueChambres, chambre } = require("../agents").chambres; // LA PORTE serveur des agents
 const { envoyer, fichierStatique } = require("../http");
 const { monPersonnage, qui } = require("../http");
 
@@ -47,6 +48,21 @@ function traiter(req, res, url) {
     if (url === "/admin/donnees") {
       try { return envoyer(res, 200, JSON.stringify(regie())); }
       catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
+    }
+    // L'ENVERS DU MODELE HABITANT. Lecture seule de `chambres/` et des
+    // traces d'activite : la frise (qui s'est reveille, qui a parle a qui,
+    // quand), la bande des salles, le detail d'une chambre au clic.
+    if (url === "/admin/chambres") {
+      try { return envoyer(res, 200, JSON.stringify(vueChambres())); }
+      catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
+    }
+    const mc = url.match(/^\/admin\/chambres\/([a-z0-9-]+)$/);
+    if (mc) {
+      try {
+        const d = chambre(mc[1]);
+        if (!d) return envoyer(res, 404, JSON.stringify({ erreur: "pas de chambre" }));
+        return envoyer(res, 200, JSON.stringify(d));
+      } catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
     }
     if (url === "/admin/activations") {
       try { return envoyer(res, 200, JSON.stringify(resumeActivations())); }
