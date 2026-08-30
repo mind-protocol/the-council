@@ -58,6 +58,30 @@ def mission(qui, brief, consigne, contexte=None):
     # Ses cahiers d'abord — c'est ce dont il répond. Puis ce qui tombe sur lui
     # de dehors, et qu'aucun chemin ne lui portait.
     ajout = ses_trous(qui) + sa_charge_ailleurs(qui) + on_lattend(qui) + ajout
+    from agents.expose import chambre as _ch
+    sa_chambre = _ch.chemin(qui).replace("\\", "/")
+    # LES BILLETS ENTRENT EN PERCEPT (habitant.md §3) : « Untel t'a écrit :
+    # "…" » — jamais une invitation à ouvrir un fichier (2/2 ignorée aux
+    # essais). Le curseur n'avance qu'au lancement réussi (marquer_lus, dans
+    # depecher) : un départ raté ne mange pas les billets.
+    billets = u""
+    for b in _ch.non_lus(qui):
+        d = b.get("date")
+        if isinstance(d, dict):
+            d = u"%s.%s.%s" % (d.get("annee", u"?"), d.get("lune", u"?"),
+                               d.get("jour", u"?"))
+        quand = u" (%s%s)" % (d or u"", u", %s" % b["heure"]
+                              if b.get("heure") else u"")
+        billets += (u"\n%s t'a écrit%s : « %s »\n"
+                    % (b.get("de") or b.get("avec"),
+                       quand if quand != u" ()" else u"",
+                       (b.get("texte") or u"").strip()))
+    if billets:
+        billets = (u"\n## On t'a écrit\n" + billets +
+                   u"\nCes mots te sont arrivés : ils font partie de ta journée."
+                   u" Réponds-y à ta façon — dans tes gestes, tes cahiers, ou en"
+                   u" notant ta réponse dans ta chambre pour la lui porter.\n")
+    ajout = billets + ajout
     return u"""%(contexte)s
 
 ---
@@ -77,55 +101,30 @@ arrive, cette commande porte ta réponse dans la pièce :
 
 Puis ta journée continue depuis ce nouvel échange.
 
-## Ton rapport
+## Ta chambre
 
-Ta dernière réponse prend exactement la forme de cet objet JSON :
+Ta chambre est le dossier `%(chambre)s` — elle est à toi, et à toi seul.
 
-{
-  "qui": "%(qui)s",
-  "journal": [
-    {
-      "heure": "7h00",
-      "duree": 20,
-      "lieu": "lieu du geste",
-      "quoi": "geste accompli, à la troisième personne",
-      "resultat": "fait obtenu ou absence précisément établie"
-    }
-  ],
-  "travaux": [
-    {
-      "travail_id": "identifiant exact donné plus bas",
-      "dernier_travail": %(aujourdhui)s,
-      "pensees": [
-        {
-          "date": %(aujourdhui)s,
-          "source": "personne, lieu, objet ou registre touché",
-          "texte": "ce que cette rencontre a appris"
-        }
-      ],
-      "conclusion": null
-    }
-  ],
-  "cahier2": [
-    {
-      "livre": "...",
-      "table": "...",
-      "ligne": "...",
-      "colonne": "...",
-      "valeur": "..."
-    }
-  ]
-}
+- `claude.md` : ta manière, de ta main. Amende-le quand ta journée te contredit.
+- `brouillons/` : ce qui mûrit. Rature, reprends, ne rends que le propre.
+- `fil/` : les traces de tes journées passées — relis-les si un souvenir te manque.
+- `relations/<untel>/claude.md` : ce que TU retiens de chacun.
 
-Une marche porte `de` et `a` à la place de `lieu`. Une découverte porte sa
-source et sa date. Une conclusion mûre prend place dans l'affaire qu'elle
-conclut. Les changements de registre prennent leurs coordonnées dans
-`cahier2`.
+Rien dans ta chambre ne fait foi sur le monde : elle est ta mémoire et ton
+caractère. Ce qui doit devenir vrai passe par tes gestes dans la journée.
 
-Tes identifiants de travail :
+## Ton retour
+
+Plus de formulaire : ta journée EST ton retour. Ce que tu apprends, écris-le
+dans tes cahiers et ta chambre à mesure ; ce que tu conclus, note-le où tu
+sauras le retrouver. Ta dernière réponse est une phrase d'homme — ce que ta
+journée a changé, dit à ta façon, en quelques lignes au plus.
+
+Tes affaires ouvertes, pour mémoire :
 
 %(travaux_ids)s
 %(ajout)s""" % {
+        "chambre": sa_chambre,
         "depot": depot,
         "parloir": PARLOIR_PY,
         "qui": qui,
@@ -394,6 +393,11 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True):
         print(u"  %-18s ECHEC — %s" % (qui, e))
         return False
 
+    # LE LANCEMENT A PRIS : son reveil a tout vu — les billets sont lus.
+    # Avant ce point (echec du depart), les curseurs n'ont pas bouge.
+    from agents.expose import chambre as _ch
+    _ch.marquer_lus(qui)
+
     if not attendre:
         # Parti en cast : sa journee vit sans nous. Pas de rapport a parser —
         # le retour d'une journee, c'est l'etat de sa chambre plus ses
@@ -402,17 +406,30 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True):
               % (qui, os.path.relpath(rep["log"], RACINE)))
         return True
 
+    # LE VECU AU FIL, TOUJOURS — pas de hook possible sous --restricted :
+    # c'est le lanceur qui depose (habitant.md pas 6).
+    from agents.expose import trace as _tr
+    try:
+        _tr.deposer(qui, sid, etiquette=u"%d.%d.%d" % date)
+    except Exception:
+        pass  # un fil qui manque ne vaut pas une journee perdue
+
     rapport, note = extraire_json(rep.get("result", ""))
     u_ = rep.get("usage", {}) or {}
     jetons = (u_.get("input_tokens", 0) + u_.get("cache_read_input_tokens", 0)
               + u_.get("cache_creation_input_tokens", 0))
 
     if rapport is None:
+        # PLUS UN ECHEC : le gabarit JSON est retire (habitant.md pas 3).
+        # Sa derniere reponse est une phrase d'homme ; sa journee vit dans
+        # sa chambre (fil/, brouillons/, cahiers) et ses versements.
+        phrase = (rep.get("result") or u"").strip()
         brut = os.path.join(DEPOT_RAPPORTS, "%s.brut.txt" % qui)
-        _poser(brut, rep.get("result", ""))
-        print(u"  %-18s RAPPORT ILLISIBLE (%s) — brut dans %s"
-              % (qui, note, os.path.relpath(brut, RACINE)))
-        return False
+        _poser(brut, phrase)
+        print(u"  %-18s %5d j. · %3ds — sa phrase : %s"
+              % (qui, jetons, round(time.time() - debut),
+                 re.sub(r"\s+", u" ", phrase)[:160] or u"(muette)"))
+        return True
 
     rapport.setdefault("qui", qui)
     rapport["_depeche"] = {

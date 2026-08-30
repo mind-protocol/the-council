@@ -217,10 +217,26 @@ def etagere_systeme(qui):
 
 
 def manuel_de(qui, mode="journee", contexte=None):
-    """Rend exactement le nouveau prompt système commun à chaque personne."""
+    """Le prompt système : le métier commun, puis SA manière — le claude.md
+    de sa chambre, écrit de sa main (habitant.md pas 3). Le métier dit comment
+    on vit ; le cahier dit qui il est devenu. Le cahier vient en dernier :
+    c'est la voix la plus proche de lui, elle doit avoir le dernier mot."""
     metier = lire(METIER)
     if metier is None:
         raise SystemExit("scripts/agents/prompts/metier.md manque au constructeur d'incarnation.")
+    from agents.expose import chambre as _ch
+    cahier = lire(os.path.join(_ch.chemin(qui), "claude.md"))
+    if cahier and cahier.strip():
+        metier += (u"""
+
+---
+
+# Ta manière, de ta main
+
+Ce qui suit est ton propre cahier — tu l'as écrit, tu peux l'amender dans ta
+chambre quand ta journée te contredit.
+
+""" + cahier.strip() + u"\n")
     return metier
 
 
