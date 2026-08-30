@@ -83,7 +83,7 @@ Six containers de **sujet**, deux transverses. Chacun possède son sujet **de bo
 | 🧠 **agents** | briefs, dépêche, activation, parloir, jugement, greffe documentaire | `depecher.py`, `boucle_activation.py`, `parloir.py`, `juger.py`, `veille.py`, `affecter.py` |
 | 📋 **plan** | cahiers, couverture, criticité, levées, renvois, exports | `criticite.py`, `couverture.py`, `etat_du_plan.py`, `plan/`, `tisser.py`, `mesures.py` |
 | 🌍 **monde** | la ville : masque, plan, bâti, gens, journées, relief, sa carte et son 3D | `monde/`, `materialisation/`, `ville/`, `ecrans/modules/monde/`, `carte-ville.js`, `serveur/monde3d.js` |
-| 📜 **scène** | le flux, l'inbox, la montre, les items et leur rendu | `append_flux.py`, `tunnel.py`, `fils.py`, `guetteur.sh`, `serveur/routes/`, `ecrans/modules/*.js` |
+| 📜 **scène** | le flux, l'inbox, la montre, les items et leur rendu | `append_flux.py`, `tunnel.py`, `fils.py`, `serveur/routes/`, `ecrans/modules/*.js` (le guetteur est mort — habitant.md pas 5) |
 | 📐 **doctrine** | les contrats : `schema.md` (intouchable), `agents/prompts/metier.md`, les fiches | `docs/` |
 | 🔬 **bancs** | gardes, mesures, étalons, l'audit | `verifier.mjs`, `scripts/tests/`, `banc-*.js`, `analyse/` |
 
@@ -296,7 +296,7 @@ scripts/scene/           📜  le flux, l'inbox, la montre, les sièges
   expose.py
   flux.py                  ← append_flux.py
   tunnel.py  regie.py  sieges.py  seed_flux.py
-  guetteur.sh              ← guetteur.sh
+  (guetteur.sh : mort le 30.8 — remplace par le reveil habitant du serveur, habitant.md pas 5)
 
 (bataille)               ⚔️  = des appels au dépôt voisin `batailles` — la porte viendra avec ses peaux (voir sa proposition `coding/PROPOSITION-moteur-appele.md`)
 

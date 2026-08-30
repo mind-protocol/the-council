@@ -173,3 +173,27 @@ def appeler_zone(ville, de, mot, verbe, modele=None, minutes=MINUTES):
                             else u"reprise"))
         return (json.loads(out).get("result") or u"").strip()
     raise RuntimeError("ni --session-id ni --resume n'ont abouti pour %s" % mj)
+
+
+MOT_DU_POST = (u"je viens d'agir — mon action t'attend dans l'inbox, "
+               u"et ma parole au flux.")
+
+
+def main():
+    """L'entree de scripts/reveiller.py, la facade (habitant.md pas 5 : le
+    guetteur meurt). Le serveur la spawn DETACHEE sur le POST du joueur — le
+    MJ du joueur est un habitant comme les autres, son reveil est un appel.
+    La supervision est un siege : `claude --resume <session mj>` quand le
+    dev veut piloter, rendu en sortant."""
+    import argparse
+    ap = argparse.ArgumentParser(description=main.__doc__)
+    ap.add_argument("--qui", default="mj",
+                    help="la zone a reveiller (defaut : le MJ du joueur)")
+    ap.add_argument("--de", required=True,
+                    help="qui reveille — le personnage du siege qui a poste")
+    ap.add_argument("--modele", default=None)
+    ap.add_argument("texte", nargs="*",
+                    help="son mot (defaut : va lire l'inbox et le flux)")
+    a = ap.parse_args()
+    mot = u" ".join(a.texte) or MOT_DU_POST
+    print(appeler_zone(a.qui, a.de, mot, u"POST", modele=a.modele))

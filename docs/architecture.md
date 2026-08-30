@@ -17,7 +17,7 @@ monde est **le disque** — jamais la conversation.
 | 🗣️ **Parloir** | `parloir.py`, `etat/parloir/`, hooks `PostToolUse` | Le fil régie↔agent pendant qu'une session vit — hors fiction |
 | 🎭 **MJ** | session Claude + `CLAUDE.md`, demain `claude -p` + manuel par rôle | Une FAMILLE d'arbitres devant des sièges : principal ou de zone, interactif ou dépêché — élit, met en scène, arbitre ; n'invente jamais une parole |
 | 📜 **Flux & Rendu** | `append_flux.py`, `etat/flux.jsonl`, `serveur/`, `ecrans/modules/` | Ce que le joueur voit : append-only, curseur client, une page persistante |
-| 📥 **Inbox** | `etat/inbox/`, `guetteur.sh` | Les actes du joueur qui réveillent le MJ ; rien d'autre ne le réveille |
+| 📥 **Inbox** | `etat/inbox/`, `reveiller.py` (spawné par le serveur — le guetteur est mort, habitant.md pas 5) | Les actes du joueur qui réveillent le MJ ; rien d'autre ne le réveille |
 | 📐 **Doctrine** | `docs/` | Les contrats : `schema.md` (format, intouchable), `agents/prompts/metier.md`, `carte.md`, les fiches de conception |
 
 ## Les modules par container
@@ -57,7 +57,7 @@ monde est **le disque** — jamais la conversation.
 - `ecrans/modules/` — un type d'item = un module (galerie, paroles, gestes, carte, jetons, books, echiquier, terrain, ville…).
 
 ### 📥 Inbox
-- La page POSTe → `etat/inbox/<siège>/action-*.json` ; `guetteur.sh` (réarmé en premier geste du tour) réveille le MJ ; lecture de TOUT, traitement, suppression.
+- La page POSTe → `etat/inbox/<siège>/action-*.json` ; le serveur spawn `scripts/reveiller.py` (détaché) qui réveille le MJ du joueur en session continue — le guetteur est mort (habitant.md pas 5) ; lecture de TOUT, traitement, suppression.
 
 ### 📐 Doctrine
 - `schema.md` — le format, jamais modifié par personne.

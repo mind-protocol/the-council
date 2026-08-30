@@ -1,4 +1,9 @@
 #!/bin/sh
+# MORT le 30.8.2026 (docs/habitant.md pas 5, confirme par le dev) : remplace
+# par le reveil habitant du serveur — POST /action spawn scripts/reveiller.py,
+# le MJ du joueur est un habitant en session continue. Plus rien ne doit
+# l'armer ; la suppression physique est laissee au dev.
+#
 # Guetteur d'inbox : attend qu'un fichier NOUVEAU apparaisse dans etat/inbox/,
 # puis sort en listant tout ce qui s'y trouve. Ignore les fichiers deja presents
 # au moment de l'armement (passes en arguments).

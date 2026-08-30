@@ -422,7 +422,23 @@ def main():
     if a.dire:
         if not (a.de and a.a and a.texte):
             raise SystemExit(u"--dire veut --de, --a et un texte")
-        fil = dire(a.de, a.a, u" ".join(a.texte))
+        texte = u" ".join(a.texte)
+        cible = resoudre(a.a)
+        # ECRIRE = REVEILLER (habitant.md §4 et pas 5). Un billet a un homme
+        # ABSENT part au canal de sa chambre et le reveille en cast — le
+        # geste d'ecrire est le reveilleur, aucun demon. Un homme DEHORS
+        # (instance vivante) garde le fil du parloir : il ecoute deja, par
+        # son hook — c'est le comportement historique, intact. Les zones
+        # (mj, mj-*) et la salle commune gardent aussi le fil.
+        if (not est_un_mj(cible) and cible != TOUS and u"." not in cible
+                and not any(v["homme"] == cible for v in vivants(purger=False))):
+            from agents.expose import billet as _b
+            canal, rep = _b.ecrire(a.de, cible, texte, modele=a.modele)
+            print(u"billet a %s (canal %s) — reveille en cast, log %s"
+                  % (cible, os.path.relpath(canal, RACINE),
+                     os.path.relpath(rep["log"], RACINE)))
+            return
+        fil = dire(a.de, a.a, texte)
         print(u"dit a %s (fil %s)" % (a.a, fil))
         return
 

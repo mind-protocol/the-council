@@ -27,6 +27,7 @@ tels quels — et elles passent elles aussi par la porte.
 | `affectation/` | `affecter.py` | une adresse physique pour une chose de la fiction — lecture, controle, cli |
 | `sieges.py` | `scene/sieges.py` (décision du 30 : les sièges sont la machinerie des acteurs, pas la peau) | s'asseoir, quitter : occupé → pas de tête ; vacant → une tête obligatoirement ; l'archive des têtes — façade `scripts/sieges.py` (chemin ULTRA-GELÉ) |
 | `zone.py` | le modèle habitant (docs/habitant.md §3-§4, pas 4) | le réveil en CALL du MJ de zone — `appeler_zone(ville, de, mot, verbe)` (session continue, id uuid5 SANS date, `--session-id` puis `--resume`, verdict sur stdout), `arbitre_de` (l'arbitre d'un homme d'après sa ville ; la zone du joueur = `mj`), `est_une_zone`. Lié APRÈS `depeche` dans la porte (il relit `brief`) |
+| `billet.py` | le modèle habitant (docs/habitant.md §4, pas 5) | écrire = réveiller — `deposer` (l'entrée au canal canonique de la paire), `ecrire` (dépôt puis réveil du destinataire en CAST via `mission.appeler(attendre=False)`, SANS garde de creux : un billet ne propose pas, il réveille). Lié après `depeche` dans la porte |
 | `chambre.py` | le modèle habitant (docs/habitant.md §2, pas 1) | le domicile d'un habitant — `chemin`, `ouvrir` (arborescence + claude.md seedé UNE fois, jamais retouché), `canal` (le discussion.json canonique d'une paire, ordre lexical), `non_lus`/`marquer_lus` (le curseur `.lu` par canal). Hommes et MJ : mêmes fonctions. RIEN dans `chambres/` ne fait foi — la vérité vit dans `etat/` |
 
 ## Les prompts (`prompts/`)
