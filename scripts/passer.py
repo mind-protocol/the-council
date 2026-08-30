@@ -41,7 +41,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-import ajouter  # noqa: E402  — on réutilise son écriture atomique et sa fenêtre étroite
+from etat.expose import ajouter  # noqa: E402  — on réutilise son écriture atomique et sa fenêtre étroite
 import bibliotheque  # noqa: E402
 
 

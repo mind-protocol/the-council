@@ -365,7 +365,7 @@ def lire_presence():
 # ecrit reste vrai — le serveur peut le lire tel quel sans refaire le calcul en
 # JS. Un seul moteur de position, en Python.
 try:
-    import presence as calcul_presence
+    from temps.expose import presence as calcul_presence
 except Exception:
     calcul_presence = None
 
@@ -1308,7 +1308,7 @@ except Exception:
 
 try:
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    import tunnel
+    from scene.expose import tunnel
     tunnel.avis(items)
 except Exception:
     pass  # un avis ne doit jamais empecher une poussee
