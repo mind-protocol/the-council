@@ -44,3 +44,7 @@ from plan.mesures import main as mesures_main  # noqa: E402,F401 — l'entree CL
 # Descendue au lot 2 : le paquet plan/tisser/, plus la commande racine.
 from plan import tisser  # noqa: E402,F401
 from plan.tisser import main as tisser_main  # noqa: E402,F401 — l'entree CLI de la facade
+# Descendue au lot 2 : scripts/fils.py -> plan/affaires.py (l'homonymie
+# fils.py / ecrans/modules/fils.js est levee, la facade fils.py reste).
+from plan import affaires  # noqa: E402,F401
+from plan.affaires import main as fils_main  # noqa: E402,F401 — l'entree CLI de la facade
