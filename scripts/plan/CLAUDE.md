@@ -1,13 +1,47 @@
-# `plan/` — le Grand Plan, ses colonnes et ses réparations
+# 📋 `plan/` — le container du Grand Plan : cahiers, couverture, criticité, levées
 
-Le plan de la Prise de Port-Réal vit dans les cahiers de `etat/books.json`. Ces
-scripts-là le lisent, le corrigent, et normalisent ses colonnes. **Aucun ne tourne
-au tour de jeu** : on les sort quand une colonne est partie de travers, jamais dans
-la boucle.
+Le plan de la Prise de Port-Réal vit dans les cahiers de `etat/books.json`. Ce
+container possède tout ce qui le lit, le mesure et le répare — la matière des
+neuf commandes racine (descendues au lot 2, `docs/organisation.md` §7) et les
+scripts de réparation historiques.
 
-**Tous écrivent dans les cahiers, et tous ont un mode à blanc.** La règle sans
-exception : on lance sans `--vraiment`, **on LIT le rapport**, et on relance avec.
-Un cahier réécrit de travers ne se voit qu'à la lecture suivante, des jours après.
+**LA PORTE est `expose.py`** (`docs/organisation.md` §2) : on n'entre ici que
+par `from plan.expose import ...` — jamais par un module direct. Les commandes
+racine (`couverture.py`, `criticite.py`, `etat_du_plan.py`, `mesures.py`,
+`tisser.py`, `fils.py`, `verser_cahier.py`, `exporter_plan.py`, `passer.py`)
+sont des FAÇADES aux chemins gelés : elles passent elles aussi par la porte.
+
+## Les modules du lot 2 — la matière des commandes
+
+| Module | Descendu de | Ce qu'il sait |
+|---|---|---|
+| `couverture/` | `couverture.py` | la couverture d'une affaire, calculée jamais saisie — lecture, blocs, registres dérivés, écriture |
+| `criticite/` | `criticite.py` | ce qu'on perd si ce pas-là rate — page, graphe, hommes, affaires, décisions, note, calcul, cli |
+| `etat_du_plan/` | `etat_du_plan.py` | l'état du plan, toutes affaires confondues (lecture seule) — page, échéances, missions, sections, cli |
+| `mesures/` | `mesures.py` | les adresses de mesure résolues contre `mains.json` — adresses, rapport, seuils |
+| `tisser/` | `tisser.py` | tous les liens projetés dans UNE table d'arêtes — lecture, tissage |
+| `affaires.py` | `fils.py` | ce qui court, et qui tient la plume dessus (le nom lève l'homonymie `fils.py`/`fils.js`) |
+| `verser_cahier.py` | `verser_cahier.py` | verser les `cahier2` des rapports dans les registres — refuse, ne devine jamais |
+| `exporter_plan.py` | `exporter_plan.py` | l'export texte brut des cahiers (n'exporte plus à l'import) |
+| `passer.py` | `passer.py` | un livre change de main, ou se pose sur une table |
+
+Les paquets (`couverture/`, `criticite/`, `etat_du_plan/`, `mesures/`,
+`tisser/`) existent parce qu'un module naît sous 500 lignes (le cliquet de
+`.claude/hooks/taille.js`) : la matière y est découpée par sections, les
+commentaires ont voyagé avec leur code. Le découpage FIN (par consommateur
+réel) reste au lot 2 tiré par les features (`docs/organisation.md` §5).
+
+Entre modules du MÊME container, l'import est direct
+(`from plan.couverture.lecture import nu`) ; seuls les façades et les autres
+containers passent par la porte. `jours_relatifs` (container temps) n'a qu'un
+point de contact : `etat_du_plan/echeances.py`.
+
+## Les réparations — les scripts historiques du dossier
+
+**Aucun ne tourne au tour de jeu** : on les sort quand une colonne est partie
+de travers, jamais dans la boucle. **Tous écrivent dans les cahiers, et tous
+ont un mode à blanc.** La règle sans exception : on lance sans `--vraiment`,
+**on LIT le rapport**, et on relance avec.
 
 | Script | Ce qu'il fait |
 |---|---|
