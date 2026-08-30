@@ -36,6 +36,8 @@ from agents import chambre  # noqa: E402,F401 — lu par depeche/mission (le mon
 from agents import trace  # noqa: E402,F401 — lu par la facade scripts/vecu.py
 # Pas 7 : les fils etat/parloir/ vers les canaux des chambres (une seule fois).
 from agents import parloir_migration  # noqa: E402,F401 — lu par scripts/migrer_parloir.py
+# L'amorce des zones : un mj-<ville> par ville habitee, chambres ouvertes d'avance.
+from agents import amorce  # noqa: E402,F401 — ouvrir_les_zones
 # La salle : ce qu'un habitant entend la ou il se tient. Lu par
 # scene/flux.py au moment de la poussee — le seul endroit qui tienne a
 # la fois la piece, la presence et le texte. Depend de `chambre`, lie
