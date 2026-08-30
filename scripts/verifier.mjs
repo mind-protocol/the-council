@@ -169,6 +169,21 @@ const EPREUVES = [
       + "porteur. Il parle du contenu du jeu, jamais du code : il ne peut pas "
       + "garder une porte, et il vieillit a chaque tour joue.",
   },
+  {
+    id: "graphe-archi", rang: "mesure", secondes: 1.5,
+    commande: [PY, "scripts/analyse/graphe_archi.py", "--json"],
+    compte: null,
+    resume: (sortie) => {
+      const d = JSON.parse(sortie);
+      return d.orphelins.length + " orphelins · " + d.hors_porte.length
+        + " hors porte · " + d.remontees.length + " remontees · "
+        + d.commandes_bibliotheques.length + " commandes-bibliotheques";
+    },
+    pourquoi: "Les quatre ecarts entre la declaration (docs/containers.json) et le "
+      + "cablage reel : orphelins, liens hors porte, dependances qui remontent, "
+      + "commandes racine importees comme modules. Quatre chiffres qui ne doivent "
+      + "que DESCENDRE — c'est la distance du chantier d'organisation.",
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -238,6 +253,11 @@ const droite = (s, n) => (String(s).length >= n ? String(s)
 
 /** Ce que l'epreuve a CONCLU, en une ligne — pas sa derniere mesure imprimee. */
 function verdictCourt(r) {
+  // Une epreuve dont la sortie est faite pour une machine (du JSON) porte son
+  // propre resume ; s'il echoue, on retombe sur la lecture generique.
+  if (r.epreuve.resume) {
+    try { return r.epreuve.resume(r.sortie).slice(0, 74); } catch { /* generique */ }
+  }
   const lignes = r.sortie.split("\n").map((l) => l.trimEnd()).filter((l) => l.trim());
   // QUAND C'EST ROUGE, ON MONTRE L'ECART, PAS L'EXPLICATION. Les bancs de cette
   // maison finissent par un paragraphe qui dit quoi faire ; c'est utile a lire,

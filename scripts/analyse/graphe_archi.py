@@ -309,12 +309,21 @@ if __name__ == "__main__":
         print("ecrit : docs/graphe-archi.md")
     elif "--mermaid" in sys.argv:
         print(mermaid(resultat))
-    elif "--json" in sys.argv:
-        sortie = dict(resultat)
-        sortie["arcs"] = [{"de": a, "vers": b, "n": n} for (a, b), n in resultat["arcs"].items()]
-        sortie["hors_porte"] = [list(x) for x in resultat["hors_porte"]]
-        sortie["remontees"] = [list(x) for x in resultat["remontees"]]
-        del sortie["ou"]
-        print(json.dumps(sortie, ensure_ascii=False, indent=2))
     else:
-        imprimer(resultat)
+        if "--json" in sys.argv:
+            sortie = dict(resultat)
+            sortie["arcs"] = [{"de": a, "vers": b, "n": n} for (a, b), n in resultat["arcs"].items()]
+            sortie["hors_porte"] = [list(x) for x in resultat["hors_porte"]]
+            sortie["remontees"] = [list(x) for x in resultat["remontees"]]
+            del sortie["ou"]
+            print(json.dumps(sortie, ensure_ascii=False, indent=2))
+        else:
+            imprimer(resultat)
+        # Le code de sortie dit si la distance a la cible est nulle. C'est la
+        # convention des MESURES de verifier.mjs : non-zero tant que l'ecart de
+        # fond persiste, zero le jour ou la mesure peut monter en garde. Les
+        # modes generateurs (--doc, --mermaid) ne sont pas des sondes et
+        # sortent toujours en 0.
+        ecarts = (len(resultat["orphelins"]) + len(resultat["hors_porte"])
+                  + len(resultat["remontees"]) + len(resultat["commandes_bibliotheques"]))
+        sys.exit(1 if ecarts else 0)
