@@ -84,7 +84,7 @@ def poser_empreintes(pieces, quand, vue_de=None):
 
 
 def mesurer(vue_de=None):
-    import criticite as C
+    from plan.expose import criticite as C
     import plan_modele as PM
     modele = PM.charger(vue_de)
     livres, pieces, affaires = (modele["livres"], modele["pieces"],

@@ -36,7 +36,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-import affecter  # LE resolveur d'adresses : on ne relit plus `xyz` a la main
+from agents.expose import affecter  # LE resolveur d'adresses : on ne relit plus `xyz` a la main
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GRAPHE = os.path.join(RACINE, "monde", "portreal.graph.json")

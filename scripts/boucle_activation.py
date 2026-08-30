@@ -48,11 +48,11 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-import depecher  # le script d'appel canonique
+from agents.expose import depecher  # le script d'appel canonique
 import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
-import appliquer  # vocabulaire ferme des mutations
-import occupation  # qui est ASSIS — mesure, pas drapeau
-import regence  # la ligne qu'un siege vacant ne franchit pas
+from etat.expose import appliquer  # vocabulaire ferme des mutations
+from temps.expose import occupation  # qui est ASSIS — mesure, pas drapeau
+from temps.expose import regence  # la ligne qu'un siege vacant ne franchit pas
 
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

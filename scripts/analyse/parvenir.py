@@ -57,7 +57,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-import boucle_activation as activation  # noqa: E402  (tissu, genres relais)
+from agents.expose import boucle_activation as activation  # noqa: E402  (tissu, genres relais)
 import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
 
 # CE QUI PORTE UNE NOUVELLE, ET CE QUI N'EN PORTE PAS.

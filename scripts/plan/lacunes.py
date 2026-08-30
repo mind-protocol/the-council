@@ -52,7 +52,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-import boucle_activation as activation  # noqa: E402
+from agents.expose import boucle_activation as activation  # noqa: E402
 
 
 def lire(nom, defaut):

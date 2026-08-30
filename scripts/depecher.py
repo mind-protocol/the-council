@@ -80,7 +80,7 @@ import bibliotheque
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import livre  # le tri des volumes vit la-bas, et nulle part ailleurs
-import affecter  # LE resolveur d'adresses : on ne relit plus `xyz` a la main
+from agents.expose import affecter  # LE resolveur d'adresses : on ne relit plus `xyz` a la main
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
@@ -165,7 +165,7 @@ def feuille_de_route():
         return _FEUILLE
     try:
         sys.path.insert(0, os.path.join(RACINE, "scripts"))
-        import evaluer
+        from temps.expose import evaluer
         A, N = evaluer.lire_tissu()
         for l in evaluer.force_narrative(A, N, lambda t="": None):
             _FEUILLE[l["qui"]] = l
@@ -1257,7 +1257,7 @@ def _scores(vue_de=None):
     """{numero: perte + attendu}. Vide si le calcul echoue — on retombe alors
     sur `force()`, et l'homme part quand meme."""
     try:
-        import criticite
+        from plan.expose import criticite
         import plan_modele as PM
         pieces = PM.charger(vue_de)["pieces"]
         lignes, _base, _poids, _s, _m, dehors = criticite.calculer(pieces)
@@ -1289,8 +1289,8 @@ def _rang(m, scores, force):
 def ses_trous(qui, combien=TROUS_MONTRES):
     try:
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-        import etat_du_plan as plan
-        from couverture import nu
+        from plan.expose import etat_du_plan as plan
+        from plan.expose import nu
         import plan_modele as PM
         modele = PM.charger(qui)
         pieces, affaires = modele["pieces"], modele["affaires"]
@@ -1404,7 +1404,7 @@ def sa_charge_ailleurs(qui, combien=TROUS_AILLEURS):
     il va voir le tenant du volume, et le pas est à lui."""
     try:
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-        import criticite
+        from plan.expose import criticite
         _vu, sien, _tire = criticite.charge_de(qui)
         groupes = _par_cahier(_restants(sien))
         if not groupes:
@@ -1432,7 +1432,7 @@ def on_lattend(qui, combien=TROUS_AILLEURS):
     ligne. Ça se RÉPOND : ce n'est pas son travail, c'est quelqu'un qui attend."""
     try:
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-        import criticite
+        from plan.expose import criticite
         _vu, _sien, tire = criticite.charge_de(qui)
         groupes = _par_cahier(_restants(tire))
         if not groupes:
@@ -1661,7 +1661,7 @@ def appeler(qui, manuel, texte, sid, modele, minutes, parloir=True):
     identite = qui
     if parloir:
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-        import parloir as _p
+        from agents.expose import parloir as _p
         identite = _p.ouvrir_instance(qui, sid.replace("-", "")[:8],
                                       os.path.basename(neutre), minutes)
     reglages = poser_le_parloir(neutre, identite) if parloir else None
@@ -1702,7 +1702,7 @@ def appeler(qui, manuel, texte, sid, modele, minutes, parloir=True):
         # tramaient deja apres les essais du 9 aout.
         if parloir and identite != qui:
             try:
-                import parloir as _p
+                from agents.expose import parloir as _p
                 _p.fermer_instance(identite)
             except Exception:
                 pass
