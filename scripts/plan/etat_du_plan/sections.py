@@ -18,11 +18,10 @@ from plan.expose import numero_de as C_numero_de  # noqa: F401
 
 import json
 
-import jours_relatifs as JR
 import plan_modele as PM
 
 from plan.etat_du_plan.page import LARGEUR, titre, ligne, cale
-from plan.etat_du_plan.echeances import (aujourdhui, statut_de, echeance_de,
+from plan.etat_du_plan.echeances import (JR, aujourdhui, statut_de, echeance_de,
                                          echelle, amont_de, rang,
                                          DEPEND, FINI_ETAT, STATUTS)
 from plan.etat_du_plan.missions import missions_de

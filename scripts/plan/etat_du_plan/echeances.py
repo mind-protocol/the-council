@@ -17,6 +17,8 @@ from plan.expose import ATTENDU as C_ATTENDU, RANG as C_RANG  # noqa: F401
 from plan.expose import FINI as C_FINI, premier_mot as C_premier_mot  # noqa: F401
 from plan.expose import tete_ornee as C_tete_ornee  # noqa: F401
 from plan.expose import numero_de as C_numero_de  # noqa: F401
+# LE SEUL point de contact du paquet avec jours_relatifs (container temps) :
+# les autres modules reprennent JR d'ici, pour que le lien reste unique.
 import jours_relatifs as JR  # noqa: F401
 import plan_modele as PM  # noqa: F401
 

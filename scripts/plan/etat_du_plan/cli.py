@@ -5,10 +5,9 @@ par la porte plan/expose.py).
 import sys
 
 from plan.expose import sans_emoji
-import jours_relatifs as JR
 import plan_modele as PM
 
-from plan.etat_du_plan.echeances import aujourdhui, echelle, registre
+from plan.etat_du_plan.echeances import JR, aujourdhui, echelle, registre
 from plan.etat_du_plan.sections import (section_jour, section_portee,
                                         section_synthese, section_brouillons,
                                         section_du, section_chaines,

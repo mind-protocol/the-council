@@ -15,10 +15,9 @@ from plan.expose import FINI as C_FINI, premier_mot as C_premier_mot  # noqa: F4
 from plan.expose import tete_ornee as C_tete_ornee  # noqa: F401
 from plan.expose import numero_de as C_numero_de  # noqa: F401
 
-import jours_relatifs as JR
 
 from plan.etat_du_plan.page import LARGEUR, titre, ligne, cale
-from plan.etat_du_plan.echeances import (statut_de, echeance_de, echelle,
+from plan.etat_du_plan.echeances import (JR, statut_de, echeance_de, echelle,
                                          amont_de)
 
 # ─────────────────────────────────────────────── la coupe par personne
