@@ -1,6 +1,25 @@
 # -*- coding: utf-8 -*-
 """MISSION — le texte de mission servi a l'homme, l'etagere et le parloir
 poses dans sa session, l'archive du prompt, et l'appel claude -p.
+
+L'ISOLATION EST MESUREE, PAS SUPPOSEE (docs/habitant.md pas 2, reveils-jouets
+du 30.8) : `--restricted --tools <liste>` remplace `--allowedTools`.
+  - --restricted ignore les settings USER et PROJET — les hooks parasites de
+    la machine ne frappent plus (deux reveils d'essai sur trois y finissaient
+    leur vie) — et garde les outils nommes par --tools ;
+  - un fichier passe EXPLICITEMENT par --settings frappe ENCORE : le
+    parloir-hook des depeches, qui passe deja par --settings, continue donc
+    de battre en mode call. C'est un sursis, pas un avenir : le modele
+    habitant remplace ce hook par les canaux des chambres (transition
+    assumee, pas 3-5 du chantier) ;
+  - Write/Edit dans la chambre montee (--add-dir) exigent
+    --permission-mode acceptEdits, deja pose.
+
+CALL ET CAST (habitant.md §4) : on appelle quand on a besoin de la reponse
+(attendre=True — le comportement historique), on depeche quand on lance une
+vie (attendre=False — spawn detache, stdout dans fil/ de sa chambre, la
+suite arrive par les canaux). Le defaut CLI reste le call tant que les
+reveils-bancs 3-5 n'ont pas tourne.
 """
 import io
 import json
@@ -200,7 +219,8 @@ def archiver_le_prompt(qui, sid, manuel, texte):
     }, indent=1)
 
 
-def appeler(qui, manuel, texte, sid, modele, minutes, parloir=True):
+def appeler(qui, manuel, texte, sid, modele, minutes, parloir=True,
+            attendre=True):
     """Tente --session-id ; retombe sur --resume si l'id a deja servi.
 
     LE MANUEL PASSE PAR --system-prompt-file. Windows plafonne une ligne a
@@ -211,9 +231,22 @@ def appeler(qui, manuel, texte, sid, modele, minutes, parloir=True):
 
     Le repertoire est hors du depot : la decouverte remonte l'arborescence, un
     sous-dossier de le-conseil2 aurait retrouve le manuel du MJ par-dessus.
+    SA CHAMBRE est montee en plus du depot (chambre.ouvrir + --add-dir) :
+    l'habitant ecrit chez lui, et chez lui seulement — rien dans chambres/
+    ne fait foi, la porte-etat garde le reste.
+
+    attendre=False est le CAST : spawn detache (Popen sans wait), stdout vers
+    un log dans fil/ de sa chambre, retour immediat {cast, log, session}. Un
+    cast ne sait pas retomber sur --resume (personne ne lit sa sortie a
+    temps) : il part en --session-id sec, et un id deja servi se lira dans
+    son log. Pas de parloir en cast : sa fin de session n'est pas connue, on
+    ne laisse pas d'oreilles orphelines — les canaux des chambres prennent
+    la releve (habitant.md, pas 3-5).
     """
+    from agents.expose import chambre as _ch
     neutre = tempfile.mkdtemp(prefix="depeche-%s-" % qui)
     poser_letagere(neutre, qui)
+    sa_chambre = _ch.ouvrir(qui)
     prompt_systeme = os.path.join(neutre, "system-prompt.md")
     with io.open(prompt_systeme, "w",
                  encoding="utf-8", newline="\n") as f:
@@ -225,23 +258,49 @@ def appeler(qui, manuel, texte, sid, modele, minutes, parloir=True):
     # messages. Le jeton vient de l'identifiant de session : deterministe,
     # donc retrouvable, et distinct par instance.
     identite = qui
+    parloir = parloir and attendre  # jamais d'oreille orpheline sur un cast
     if parloir:
         from agents.expose import parloir as _p
         identite = _p.ouvrir_instance(qui, sid.replace("-", "")[:8],
                                       os.path.basename(neutre), minutes)
     reglages = poser_le_parloir(neutre, identite) if parloir else None
 
-    outils = list(OUTILS) + ([OUTIL_PARLOIR] if parloir else [])
-    base = ["claude", "-p", "--output-format", "json",
+    # --restricted --tools : l'isolation mesuree (voir l'en-tete). Bash est
+    # entier dans OUTILS : OUTIL_PARLOIR (un motif Bash) n'a plus a s'ajouter.
+    base = ["claude", "-p",
             "--system-prompt-file", prompt_systeme,
-            "--add-dir", RACINE, "--allowedTools"] + outils
+            "--add-dir", RACINE, "--add-dir", sa_chambre,
+            "--restricted", "--tools", ",".join(OUTILS)]
+    if attendre:
+        base += ["--output-format", "json"]
     if reglages:
-        # Le hook doit etre charge sans dependre de la reconnaissance du
+        # Un --settings explicite frappe encore sous --restricted (mesure) :
+        # le hook du parloir est charge sans dependre de la reconnaissance du
         # repertoire neutre comme projet.
         base += ["--settings", reglages]
     base += ["--permission-mode", "acceptEdits"]
     if modele:
         base += ["--model", modele]
+
+    if not attendre:
+        # LE CAST — on lance une vie, on ne la regarde pas vivre. La mission
+        # part par un fichier tenu ouvert en stdin ; le fil de sa chambre
+        # recoit la sortie, datee, relisible.
+        horo = time.strftime("%Y%m%d-%H%M%S")
+        log = os.path.join(sa_chambre, "fil", "depeche-%s.log" % horo)
+        entree = os.path.join(neutre, "mission.txt")
+        with io.open(entree, "w", encoding="utf-8", newline="\n") as f:
+            f.write(texte)
+        drapeaux = {}
+        if os.name == "nt":  # DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP
+            drapeaux["creationflags"] = 0x00000008 | 0x00000200
+        else:
+            drapeaux["start_new_session"] = True
+        with io.open(entree, "rb") as fin, io.open(log, "wb") as flog:
+            subprocess.Popen(base + ["--session-id", sid], cwd=neutre,
+                             stdin=fin, stdout=flog,
+                             stderr=subprocess.STDOUT, **drapeaux)
+        return {"cast": True, "log": log, "session": sid}
 
     dernier = u""
     try:
@@ -292,7 +351,7 @@ def extraire_json(texte):
     return None, u"aucun objet JSON dans la reponse"
 
 
-def depecher(qui, consigne, modele, minutes, sec):
+def depecher(qui, consigne, modele, minutes, sec, attendre=True):
     date = date_du_monde()
     sid = identifiant_de_session(qui, date)
     brief = brief_de(qui)
@@ -329,10 +388,19 @@ def depecher(qui, consigne, modele, minutes, sec):
 
     debut = time.time()
     try:
-        rep = appeler(qui, manuel, texte, sid, modele, minutes)
+        rep = appeler(qui, manuel, texte, sid, modele, minutes,
+                      attendre=attendre)
     except Exception as e:
         print(u"  %-18s ECHEC — %s" % (qui, e))
         return False
+
+    if not attendre:
+        # Parti en cast : sa journee vit sans nous. Pas de rapport a parser —
+        # le retour d'une journee, c'est l'etat de sa chambre plus ses
+        # versements (habitant.md §1) ; son log dit ou la regarder.
+        print(u"  %-18s parti detache → %s"
+              % (qui, os.path.relpath(rep["log"], RACINE)))
+        return True
 
     rapport, note = extraire_json(rep.get("result", ""))
     u_ = rep.get("usage", {}) or {}

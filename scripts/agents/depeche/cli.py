@@ -42,7 +42,17 @@ def main():
                     help="delai avant abandon d'un homme")
     ap.add_argument("--sec", action="store_true",
                     help="montre tout, n'appelle rien, ne coute rien")
+    # CALL ou CAST (docs/habitant.md §4). Le DEFAUT reste le call — attendre
+    # et rendre le rapport, le comportement historique — tant que les
+    # reveils-bancs 3-5 n'ont pas tourne. --cast est une OPTION nouvelle :
+    # spawn detache, stdout dans fil/ de sa chambre, la suite par les canaux.
+    ap.add_argument("--cast", action="store_true",
+                    help="lancer une vie sans l'attendre (detache, log en"
+                         " chambre) — le call reste le defaut")
+    ap.add_argument("--attendre", action="store_true",
+                    help="forcer le call (deja le defaut ; prime sur --cast)")
     a = ap.parse_args()
+    attendre = a.attendre or not a.cast
 
     if a.salles:
         pj = les_pj()
@@ -101,9 +111,11 @@ def main():
     print(u"DEPECHER — le %d.%d.%d · %d homme(s)%s"
           % (date + (len(gens), u" · A SEC" if a.sec else u"")))
     ok = 0
-    if a.sec or a.front <= 1 or len(gens) == 1:
+    if a.sec or a.front <= 1 or len(gens) == 1 or not attendre:
+        # Les casts n'ont pas besoin d'un pool : ils partent detaches.
         for qui in gens:
-            if depecher(qui, a.mission, a.modele, a.minutes, a.sec):
+            if depecher(qui, a.mission, a.modele, a.minutes, a.sec,
+                        attendre=attendre):
                 ok += 1
     else:
         # ILS PARTENT ENSEMBLE. Une journee d'homme se paie en minutes ; sept
@@ -123,6 +135,11 @@ def main():
                         ok += 1
                 except Exception as e:
                     print(u"  %-18s ECHEC — %s" % (envoyes[fini], e))
+    if not a.sec and not attendre:
+        print(u"\n%d/%d partis detaches. Leurs logs vivent dans fil/ de leur"
+              u" chambre ; leurs retours arriveront par leurs versements."
+              % (ok, len(gens)))
+        return
     if not a.sec:
         print(u"\n%d/%d rentres. Leurs pensees sont versees ; leurs changements "
               u"de registre sont des PROPOSITIONS." % (ok, len(gens)))

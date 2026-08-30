@@ -31,7 +31,9 @@ MANUEL_MJ = os.path.join(RACINE, "CLAUDE.md")
 # reprendre une session v1 conserverait précisément le contexte global pollué.
 SEL = uuid.uuid5(uuid.NAMESPACE_URL, "le-conseil/depeches/v5")
 
-OUTILS = ["Read", "Grep", "Glob", "Bash"]
+# L'habitant ecrit chez lui (docs/habitant.md pas 2) : Write et Edit entrent,
+# la chambre est montee par --add-dir dans mission.appeler.
+OUTILS = ["Read", "Grep", "Glob", "Bash", "Write", "Edit"]
 
 # LE PARLOIR — sa bouche, quand on lui parle pendant sa journee. Il l'appelle
 # par Bash, qu'il a desormais en entier (voir l'en-tete).
