@@ -124,17 +124,51 @@ def existe(nom):
     return os.path.exists(chemin(nom))
 
 
-def ecrire(nom, valeur):
-    """Ecrire une table, atomiquement. Rend le chemin ecrit."""
-    p = chemin(nom)
+def ecrire(nom, valeur, indent=2):
+    """Ecrire une table, atomiquement. Rend le chemin ecrit.
+
+    `indent` : la mise en page N'EST PAS un detail ici. Les gros registres
+    (`books`, les rapports) s'ecrivent en indent=1 — chaque espace compte sur
+    2 Mo —, les cartes de ville en compact (`indent=None` → separateurs
+    serres), le reste en 2. La porte impose la semantique d'erreur et
+    l'atomicite, pas la mise en page : forcer indent=2 partout aurait reecrit
+    des tables entieres au premier passage de chaque migrant.
+    """
+    return _poser(chemin(nom), lambda f: _dump(valeur, f, indent))
+
+
+def ecrire_lignes(nom, lignes):
+    """Ecrire un fichier JSONL ENTIER (une valeur JSON par ligne), atomiquement.
+
+    Pour les projections qui reecrivent tout leur fichier d'un bloc
+    (`tisser.py` et `noyau/chiffrer.py` deposent `etat/tissu/*.jsonl` ainsi).
+    L'APPEND au fil (`append_flux.py`) n'est PAS ce geste : il reste chez sa
+    seule plume. `nom` garde son extension telle quelle.
+    """
+    def _rendre(f):
+        for l in lignes:
+            f.write(json.dumps(l, ensure_ascii=False) + "\n")
+    p = nom if os.path.isabs(nom) else os.path.join(ETAT, *str(nom).replace("\\", "/").split("/"))
+    return _poser(p, _rendre)
+
+
+def _dump(valeur, f, indent):
+    if indent is None:
+        json.dump(valeur, f, ensure_ascii=False, separators=(",", ":"))
+    else:
+        json.dump(valeur, f, ensure_ascii=False, indent=indent)
+    f.write("\n")
+
+
+def _poser(p, rendre):
+    """L'ecriture atomique elle-meme : temporaire dans le meme dossier, replace."""
     d = os.path.dirname(p)
     if d:
         os.makedirs(d, exist_ok=True)
     fd, provisoire = tempfile.mkstemp(dir=d or None, suffix=".tmp")
     try:
         with io.open(fd, "w", encoding="utf-8", newline="\n") as f:
-            json.dump(valeur, f, ensure_ascii=False, indent=2)
-            f.write("\n")
+            rendre(f)
         os.replace(provisoire, p)
     except BaseException:
         try:
