@@ -67,8 +67,8 @@ import sys
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from couverture import nu, sans_emoji, NOM_GENRE  # noqa: E402
-from couverture import FINI, premier_mot  # noqa: E402
+from plan.expose import nu, sans_emoji, NOM_GENRE  # noqa: E402
+from plan.expose import FINI, premier_mot  # noqa: E402
 import plan_modele as PM  # noqa: E402
 
 try:
@@ -262,7 +262,7 @@ def gens(livres):
     deux hommes (« Tobb, de la Claie ; Nesse, du Marais du sud ») — les deux
     comptent, et chacun porte alors la charge entiere de l'office : on ne
     partage pas une charge en deux parce que deux hommes la tiennent."""
-    from couverture import MO as _MO, registre_de as _ns
+    from plan.expose import MO as _MO, registre_de as _ns
     offices, moyens = {}, {}
     for b in livres:
         # LE CASIER M/O, COMME DANS `charger()` — et l'oublier ici a coûté un
@@ -279,7 +279,7 @@ def gens(livres):
             cols = t.get("colonnes") or []
             if not cols:
                 continue
-            from couverture import col as _col
+            from plan.expose import col as _col
             i_t = _col(cols, u"titulaire")
             i_q = _col(cols, u"qui le tient")
             if i_t is None and i_q is None:
@@ -361,7 +361,7 @@ CHIFFRES = re.compile(r"\d{3,6}")
 
 
 def idees(pieces, crit, poids, base):
-    from etat_du_plan import missions_de, phrase   # noqa: E402
+    from plan.expose import missions_de, phrase   # noqa: E402
     out = []
     for aff in sorted({p["affaire"] for p in pieces.values() if p["affaire"]}):
         for m in missions_de(aff, pieces):
@@ -1179,7 +1179,7 @@ def prix(livres):
     prose ne se fait pas, et lui coller un bareme serait inventer le seul
     chiffre que personne n'a ecrit."""
     out = {}
-    from couverture import numero_de as _numero_de, col as _col
+    from plan.expose import numero_de as _numero_de, col as _col
     for b in livres:
         for t in (b.get("tables") or []):
             cols = t.get("colonnes") or []

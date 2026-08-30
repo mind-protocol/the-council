@@ -42,7 +42,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-import couverture as C  # noqa: E402  — genre_de, sans_emoji, nu, col
+from plan.expose import couverture as C  # noqa: E402  — genre_de, sans_emoji, nu, col
 import bibliotheque  # noqa: E402
 
 # ─────────────────────────────────────────────── le vocabulaire fermé
@@ -542,7 +542,7 @@ GARDE = u'''def verifier_etats_du_plan(e, r):
     `📅 Jour fait`.
     """
     try:
-                import couverture
+                from plan.expose import couverture
     except ImportError:
         return
     VOC = (u"\\u00e0 faire", u"en cours", u"bloqu\\u00e9e", u"faite", u"close",

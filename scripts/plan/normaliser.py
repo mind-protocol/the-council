@@ -46,7 +46,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-import tisser  # noqa: E402
+from plan.expose import tisser  # noqa: E402
 CANON, INVERSES = tisser.CANON, tisser.INVERSES
 
 

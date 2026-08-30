@@ -28,7 +28,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-import couverture as C  # noqa: E402
+from plan.expose import couverture as C  # noqa: E402
 import livre  # noqa: E402
 
 FAIT = {"fait", "faite", "faits", "faites", "clos", "close", "closes", "termine", "terminee"}

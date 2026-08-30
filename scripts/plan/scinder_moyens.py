@@ -64,7 +64,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-import couverture as C  # noqa: E402  — nu, col, MO, NUM, RIEN
+from plan.expose import couverture as C  # noqa: E402  — nu, col, MO, NUM, RIEN
 import bibliotheque  # noqa: E402
 
 COL_MOY = u"🧰 Moyens"

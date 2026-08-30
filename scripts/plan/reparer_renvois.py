@@ -56,7 +56,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-from couverture import nu, sans_emoji, genre_de, col, MO, NUM  # noqa: E402
+from plan.expose import nu, sans_emoji, genre_de, col, MO, NUM  # noqa: E402
 import bibliotheque  # noqa: E402
 
 try:

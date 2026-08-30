@@ -76,15 +76,15 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-from couverture import (nu, sans_emoji, marque, blocs,  # noqa: E402
-                        NUM, MO, NOM_GENRE, EST_MO, NERA, etiquette)
-from couverture import genre_de as C_genre  # noqa: E402
+from plan.expose import (nu, sans_emoji, marque, blocs,  # noqa: E402
+                         NUM, MO, NOM_GENRE, EST_MO, NERA, etiquette)
+from plan.expose import genre_de as C_genre  # noqa: E402
 # Les tables de la descente et le motif du « fait » vivent chez le chargeur :
 # un seul lecteur du graphe, une seule vérité — y compris pour ses constantes.
-from couverture import ATTENDU as C_ATTENDU, RANG as C_RANG  # noqa: E402
-from couverture import FINI as C_FINI, premier_mot as C_premier_mot  # noqa: E402
-from couverture import tete_ornee as C_tete_ornee  # noqa: E402
-from couverture import numero_de as C_numero_de  # noqa: E402
+from plan.expose import ATTENDU as C_ATTENDU, RANG as C_RANG  # noqa: E402
+from plan.expose import FINI as C_FINI, premier_mot as C_premier_mot  # noqa: E402
+from plan.expose import tete_ornee as C_tete_ornee  # noqa: E402
+from plan.expose import numero_de as C_numero_de  # noqa: E402
 import jours_relatifs as JR  # noqa: E402
 import plan_modele as PM  # noqa: E402
 
