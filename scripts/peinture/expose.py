@@ -4,9 +4,8 @@
 La regle (docs/organisation.md §2) : on n'entre dans un container que par sa
 porte — `from peinture.expose import ...`, jamais un module interne.
 
-Rien de consomme encore : aucun fichier Python n'importe `composer.py` ni un
-module de `peinture/` aujourd'hui. La porte est posee vide pour que le premier
-consommateur entre par elle. ATTENTION le jour ou elle se peuple : ce
+`composer` est descendu ici au lot 2 (facade scripts/composer.py) ; son
+import est inerte (des defs, pas d'appel). ATTENTION pour la suite : ce
 container appelle des API payantes — aucun reexport ne doit declencher un
 appel au chargement.
 """
@@ -18,3 +17,5 @@ while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
 for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
+
+from peinture import composer  # noqa: E402,F401 — poser une chanson en .md ; import inerte, aucun appel d'API

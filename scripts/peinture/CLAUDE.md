@@ -25,5 +25,7 @@ Trois habitudes qui en découlent :
 été peint. Ce sont les deux qu'on peut relancer sans y penser.
 
 Le MJ **compose** une chanson (concept, paroles Suno, prompt musical) et la pose
-avec `../composer.py`, qui reste à la racine parce qu'il se tape en scène.
+avec `scripts/composer.py` — depuis le lot 2, une **façade** gelée dont la
+matière vit ici, dans [`composer.py`](composer.py) (n'écrit que `musiques/*.md`,
+ne paie rien, import inerte). La porte [`expose.py`](expose.py) le réexporte ;
 `generer_chanson.py` ne vient qu'après, s'il faut l'audio.

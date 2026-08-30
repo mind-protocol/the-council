@@ -212,7 +212,7 @@ _ETAT = re.compile(r"[\x22\x27]etat[\x22\x27]|etat/|etat" + "\\\\")
 # passer outre la porte.
 _HORS = (
     "scripts/noyau/tables.py",           # la porte elle-meme
-    "scripts/composer.py",               # n'ecrit que musiques/*.md ; « etat » en commentaire
+    "scripts/peinture/composer.py",      # n'ecrit que musiques/*.md ; « etat » en commentaire (matiere descendue au lot 2)
     "scripts/carte_geo.py",              # lit les mods CK3, ecrit ecrans/modules/geo.js
     "scripts/analyse/graphe_archi.py",   # lit docs/containers.json, ecrit docs/graphe-archi.md
     "scripts/monde/peyredragon_chateau.py",  # ecrit monde/peyredragon.bati.json ; « etat » = clef de donnees
