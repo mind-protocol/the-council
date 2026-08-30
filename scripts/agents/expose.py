@@ -24,6 +24,9 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
+# Venue de scene/ (decision du 30, organisation.md §3 : les sieges sont la
+# machinerie des acteurs, pas la peau) : s'asseoir, quitter, l'archive des tetes.
+from agents import sieges  # noqa: E402,F401 — lu par la facade scripts/sieges.py
 # Descendue au lot 2 : le paquet agents/affectation/, plus la commande racine.
 # Le nom `affecter` reste servi par la porte : c'est lui que la facade et les
 # importeurs historiques demandent.

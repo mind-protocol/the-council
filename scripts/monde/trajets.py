@@ -28,7 +28,6 @@ et l'on ne touche plus au gros fichier. Le cache se refait avec `--cache`.
 import io, json, math, os, sys, heapq, collections
 
 
-from agents.expose import affecter  # LE resolveur d'adresses : on ne relit plus `xyz` a la main
 from etat.expose import tables  # LA PORTE de etat/
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -146,6 +145,10 @@ def plus_proche(C, x, y):
 def ou_est(C, clef):
     """Un repère du monde, ou une chose affectée (`lieu:`, `salle:`…)."""
     if ":" in clef:
+        # LE resolveur d'adresses, par LA PORTE des agents — paresseusement :
+        # au module, ce lien remonte (monde rang 1 -> agents rang 2) et boucle
+        # (agents.expose -> affectation -> monde.expose -> trajets).
+        from agents.expose import affecter
         xyz = affecter.adresse(clef)
         if not xyz:
             sortir("  %s n'a pas d'adresse physique (scripts/affecter.py)." % clef)

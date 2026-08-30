@@ -20,7 +20,6 @@ cette porte : la peau se regarde, elle ne se consomme pas.
 | `flux_ecrits.py` | deux avis du pousseur : les renvois `[texte](adresse)` doivent résoudre, ce qu'on ANNONCE doit être ÉCRIT | — |
 | `tunnel.py` | le compteur qui refuse le mur : seuils (ITEM, TRANCHE, SUITE, VOIX, FILS), plafond dur (MUR), `--tunnel` pour le mur voulu | `scripts/tunnel.py` (module, pas de CLI) |
 | `regie.py` | l'outil du MJ de Corneille : retrouver un moment dans le fil — les candidats, jamais le choix | `scripts/regie.py` |
-| `sieges.py` | s'asseoir, quitter : occupé → pas de tête ; vacant → une tête obligatoirement ; l'archive des têtes | `scripts/sieges.py` (chemin ULTRA-GELÉ : les books le citent) |
 | `seed_flux.py` | le beat d'ouverture (le conseil noir) — DESTRUCTIF, ne part que par `main()`, l'import est inerte | `scripts/seed_flux.py` |
 
 `guetteur.sh` reste à la racine `scripts/` tel quel (shell, cité par le manuel).
@@ -30,7 +29,8 @@ cette porte : la peau se regarde, elle ne se consomme pas.
 - **Une seule plume du flux** (`flux.py`), append-only ; le flux ne se coupe
   qu'à la main. Les avis (tunnel, acteurs inconnus, renvois, écrits) nomment
   ce qui cloche ; seul le plafond dur du tunnel refuse.
-- `sieges.py` et `flux.py` lisent l'occupation et la régence par la porte de
+- `sieges.py` vit désormais dans `agents/` (décision du 30, organisation.md §3 :
+  les sièges sont la machinerie des acteurs, pas la peau).
+- `flux.py` lit l'occupation et la régence par la porte de
   `temps/`, et les tables par la porte de `etat/`.
-- `flux_scribe.py` est le seul importeur de `bibliotheque` (noyau) du
-  container — il basculera vers la porte de `plan/` quand elle l'offrira.
+- `flux_scribe.py` lit `bibliotheque` par la porte de `plan/`.

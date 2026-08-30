@@ -25,6 +25,7 @@ tels quels — et elles passent elles aussi par la porte.
 | `jugement.py` | `juger.py` | le juge séparé (claude -p) du hook Stop — dix questions, deux relances au plus |
 | `matiere.py` | `dossier.py` | le dossier d'un sujet, rassemblé dans l'ordre d'autorité |
 | `affectation/` | `affecter.py` | une adresse physique pour une chose de la fiction — lecture, controle, cli |
+| `sieges.py` | `scene/sieges.py` (décision du 30 : les sièges sont la machinerie des acteurs, pas la peau) | s'asseoir, quitter : occupé → pas de tête ; vacant → une tête obligatoirement ; l'archive des têtes — façade `scripts/sieges.py` (chemin ULTRA-GELÉ) |
 
 Les paquets (`depeche/`, `activation/`, `affectation/`) existent parce qu'un
 module naît sous 500 lignes (le cliquet de `.claude/hooks/taille.js`) : la
