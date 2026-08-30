@@ -37,3 +37,4 @@ from temps.lecture import CANAUX_PLI, Etat, jours_de_route  # noqa: E402,F401
 from temps.bouche import BUDGETS  # noqa: E402,F401
 from temps.scelle import ecrire_proposition, empreintes_etat  # noqa: E402,F401
 import tick  # noqa: E402,F401 — la facade CLI, gardee pour les tests qui l'importent
+from temps import reprise  # noqa: E402,F401 — la feuille de reprise (lecture seule) ; hors contrainte d'ordre
