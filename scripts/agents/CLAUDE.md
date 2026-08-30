@@ -26,6 +26,14 @@ tels quels — et elles passent elles aussi par la porte.
 | `matiere.py` | `dossier.py` | le dossier d'un sujet, rassemblé dans l'ordre d'autorité |
 | `affectation/` | `affecter.py` | une adresse physique pour une chose de la fiction — lecture, controle, cli |
 | `sieges.py` | `scene/sieges.py` (décision du 30 : les sièges sont la machinerie des acteurs, pas la peau) | s'asseoir, quitter : occupé → pas de tête ; vacant → une tête obligatoirement ; l'archive des têtes — façade `scripts/sieges.py` (chemin ULTRA-GELÉ) |
+| `chambre.py` | le modèle habitant (docs/habitant.md §2, pas 1) | le domicile d'un habitant — `chemin`, `ouvrir` (arborescence + claude.md seedé UNE fois, jamais retouché), `canal` (le discussion.json canonique d'une paire, ordre lexical), `non_lus`/`marquer_lus` (le curseur `.lu` par canal). Hommes et MJ : mêmes fonctions. RIEN dans `chambres/` ne fait foi — la vérité vit dans `etat/` |
+
+## Les prompts (`prompts/`)
+
+- `metier.md` — le manuel d'une personne dans le monde (servi par `depeche/manuel.py`).
+- `mj-zone.md` — le manuel de l'arbitre d'une ville (habitant.md, pas 1) : électeur-greffier,
+  jamais auteur (Règle Zéro), les trois verbes TENTER/FAIRE/DEMANDER, session continue.
+  Branché au pas 4 du chantier (le MJ de zone en session continue).
 
 Les paquets (`depeche/`, `activation/`, `affectation/`) existent parce qu'un
 module naît sous 500 lignes (le cliquet de `.claude/hooks/taille.js`) : la
