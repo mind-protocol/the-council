@@ -48,3 +48,6 @@ from plan.tisser import main as tisser_main  # noqa: E402,F401 — l'entree CLI 
 # fils.py / ecrans/modules/fils.js est levee, la facade fils.py reste).
 from plan import affaires  # noqa: E402,F401
 from plan.affaires import main as fils_main  # noqa: E402,F401 — l'entree CLI de la facade
+# Descendue au lot 2 : scripts/verser_cahier.py -> plan/verser_cahier.py.
+from plan import verser_cahier  # noqa: E402,F401
+from plan.verser_cahier import main as verser_cahier_main  # noqa: E402,F401 — l'entree CLI de la facade
