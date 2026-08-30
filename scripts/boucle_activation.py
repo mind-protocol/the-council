@@ -49,7 +49,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 from agents.expose import depecher  # le script d'appel canonique
-import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
+from etat.expose import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
 from etat.expose import appliquer  # vocabulaire ferme des mutations
 from temps.expose import occupation  # qui est ASSIS — mesure, pas drapeau
 from temps.expose import regence  # la ligne qu'un siege vacant ne franchit pas

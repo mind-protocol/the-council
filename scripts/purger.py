@@ -16,7 +16,17 @@
 # DATE, et seulement par date — puis affiche tout, et ne supprime que si on le
 # lui ordonne. Il ne touche jamais au flux : le flux se coupe a la main, et c'est
 # tres bien ainsi.
-import io, json, os, re, sys, unicodedata
+import json, os, re, sys, unicodedata
+
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
+from etat.expose import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
 
 racine = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 etat = os.path.join(racine, "etat")
@@ -62,10 +72,9 @@ def dans(x, d0, d1, lune=None):
 
 
 def charge(p):
-    if not os.path.exists(p):
+    d = tables.lire(p, None)
+    if d is None:
         return None, None
-    with io.open(p, encoding="utf-8") as f:
-        d = json.load(f)
     if isinstance(d, list):
         return d, None
     for k, v in d.items():
@@ -81,10 +90,7 @@ def ecrire(p, liste, enveloppe):
         contenu = d
     else:
         contenu = liste
-    tmp = p + ".tmp"
-    with io.open(tmp, "w", encoding="utf-8") as f:
-        json.dump(contenu, f, ensure_ascii=False, indent=1)
-    os.replace(tmp, p)
+    tables.ecrire(p, contenu, indent=1)
 
 
 def resume(x):

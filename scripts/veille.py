@@ -15,7 +15,17 @@
 # Il dit « personnages.json et intentions.json ont bouge » ; a moi de les relire
 # avant d'ecrire quoi que ce soit. Premier geste du tour, avec le rearmement du
 # guetteur.
-import hashlib, io, json, os, sys
+import hashlib, io, os, sys
+
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
+from etat.expose import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
 
 racine = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 etat = os.path.join(racine, "etat")
@@ -62,18 +72,16 @@ def main(argv):
     p = os.path.join(veilles, session + ".json")
 
     maintenant = empreintes()
-    avant = None
-    if os.path.exists(p):
-        try:
-            with io.open(p, encoding="utf-8") as f:
-                avant = json.load(f)
-        except Exception:
-            avant = None
+    # Une veille abimee ne pilote aucune decision de jeu : elle se rearme au
+    # passage suivant. C'est le seul endroit ou l'on rattrape TableAbimee.
+    try:
+        avant = tables.lire(p, None)
+    except tables.TableAbimee:
+        avant = None
 
     if avant is None:
         if rearmer:
-            with io.open(p, "w", encoding="utf-8") as f:
-                json.dump(maintenant, f, ensure_ascii=False, indent=1)
+            tables.ecrire(p, maintenant, indent=1)
         print("veille armee pour « %s » — %d tables suivies. Rien a signaler "
               "au premier passage." % (session, len(maintenant)))
         return
@@ -81,8 +89,7 @@ def main(argv):
     changees = [n for n, h in maintenant.items() if avant.get(n) != h]
     disparues = [n for n in avant if n not in maintenant]
     if rearmer:
-        with io.open(p, "w", encoding="utf-8") as f:
-            json.dump(maintenant, f, ensure_ascii=False, indent=1)
+        tables.ecrire(p, maintenant, indent=1)
 
     if not changees and not disparues:
         print("RIEN N'A BOUGE depuis votre dernier tour. Votre memoire de l'etat "

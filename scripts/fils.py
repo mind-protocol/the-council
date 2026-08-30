@@ -17,9 +17,18 @@ Doctrine et format : docs/fils.md.
     python scripts/fils.py --qui rhaenyra --clore fil-quatre-sceaux
 """
 import argparse
-import json
 import os
 import sys
+
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
+from etat.expose import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ETAT = os.path.join(RACINE, "etat")
@@ -48,42 +57,26 @@ def sieges():
 
 
 def lire(siege):
-    p = chemin(siege)
-    if not os.path.exists(p):
-        return {"_lisez_moi": LISEZ_MOI, "fils": []}
-    with open(p, encoding="utf-8") as f:
-        doc = json.load(f)
+    doc = tables.lire(chemin(siege), {"_lisez_moi": LISEZ_MOI, "fils": []})
     doc.setdefault("fils", [])
     return doc
 
 
 def ecrire(siege, doc):
     doc["_lisez_moi"] = LISEZ_MOI
-    with open(chemin(siege), "w", encoding="utf-8") as f:
-        json.dump(doc, f, ensure_ascii=False, indent=1)
+    tables.ecrire(chemin(siege), doc, indent=1)
 
 
 def noms():
-    try:
-        with open(os.path.join(ETAT, "personnages.json"), encoding="utf-8") as f:
-            return {p["id"]: p["nom"].split(",")[0].strip() for p in json.load(f)}
-    except Exception:
-        return {}
+    return {p["id"]: p["nom"].split(",")[0].strip()
+            for p in tables.lire("personnages", []) if p.get("id") and p.get("nom")}
 
 
 def horloge(siege):
-    try:
-        with open(os.path.join(ETAT, "horloges.json"), encoding="utf-8") as f:
-            h = json.load(f)
-        if siege in h:
-            return h[siege]
-    except Exception:
-        pass
-    try:
-        with open(os.path.join(ETAT, "monde.json"), encoding="utf-8") as f:
-            return json.load(f).get("date")
-    except Exception:
-        return None
+    h = tables.lire("horloges", {})
+    if siege in h:
+        return h[siege]
+    return tables.lire("monde", {}).get("date")
 
 
 def en_jours(d):

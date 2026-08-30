@@ -63,6 +63,16 @@
 #   python scripts/presence.py --creux <qui>    — le temps libre de sa journée
 import json, io, os, sys, heapq
 
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
+from etat.expose import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
+
 racine = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 JOURS_PAR_LUNE = 30
@@ -73,12 +83,8 @@ RAYON_MINUTES = 20        # le quartier du joueur, à l'essai (docs/boucle-acteu
 
 # ------------------------------------------------------------------ lecture
 
-def _lire(nom, defaut):
-    try:
-        return json.load(io.open(os.path.join(racine, "etat", nom),
-                                 encoding="utf-8"))
-    except Exception:
-        return defaut
+# Absent -> defaut ; corrompu -> plante (l'ancienne version avalait tout).
+_lire = tables.lire
 
 
 def charger():

@@ -37,8 +37,6 @@ from __future__ import print_function
 
 import argparse
 import datetime
-import io
-import json
 import os
 import sys
 
@@ -56,25 +54,10 @@ for _p in (_d, _os.path.join(_d, "noyau")):
 
 from temps.expose import occupation  # QUI EST ASSIS — la mesure, pas le drapeau
 from temps.expose import regence  # ce que le siege a decide seul pendant l'absence
+from etat.expose import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
 
-
-def lire(nom, defaut):
-    chemin = os.path.join(ETAT, nom + ".json")
-    if not os.path.exists(chemin):
-        return defaut
-    with io.open(chemin, encoding="utf-8") as f:
-        return json.load(f)
-
-
-def ecrire(nom, donnees):
-    """Pose par os.replace : une autre session qui lit pendant ce temps voit
-    l'ancien fichier ENTIER, jamais un fichier a moitie ecrit."""
-    chemin = os.path.join(ETAT, nom + ".json")
-    temporaire = chemin + ".sieges.tmp"
-    with io.open(temporaire, "w", encoding="utf-8") as f:
-        json.dump(donnees, f, ensure_ascii=False, indent=2)
-        f.write(u"\n")
-    os.replace(temporaire, chemin)
+lire = tables.lire      # absent -> defaut ; corrompu -> plante, jamais un defaut
+ecrire = tables.ecrire  # atomique (os.replace) : jamais un fichier a moitie ecrit
 
 
 def tetes():
@@ -190,14 +173,7 @@ def basculer(cible, vers_occupe, vraiment):
         return
 
     if vers_occupe and tete is not None:
-        dossier = os.path.join(ETAT, "archive", "tetes")
-        if not os.path.isdir(dossier):
-            os.makedirs(dossier)
-        chemin = os.path.join(
-            dossier, "{}-{}.json".format(cible, horodatage()))
-        with io.open(chemin, "w", encoding="utf-8") as f:
-            json.dump(tete, f, ensure_ascii=False, indent=2)
-            f.write(u"\n")
+        ecrire("archive/tetes/{}-{}".format(cible, horodatage()), tete)
         ecrire("intentions", [t for t in lire("intentions", [])
                               if t.get("personnage_id") != cible])
 

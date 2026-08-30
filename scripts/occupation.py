@@ -73,11 +73,20 @@ le defaut qu'on repare ; on ne le remplace pas par un autre.
 from __future__ import print_function
 
 import argparse
-import io
 import json
 import os
 import sys
 import time
+
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
+from etat.expose import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ETAT = os.path.join(RACINE, "etat")
@@ -105,14 +114,9 @@ SEUIL_OCCUPATION_SECONDES = SEUIL_OCCUPATION_MINUTES * 60
 # Lecture
 # --------------------------------------------------------------------------
 
-def _lire_json(chemin, defaut):
-    if not os.path.exists(chemin):
-        return defaut
-    try:
-        with io.open(chemin, encoding="utf-8") as f:
-            return json.load(f)
-    except (ValueError, OSError, IOError):
-        return defaut
+# Absent -> defaut ; corrompu -> plante. L'ancienne version avalait le corrompu,
+# ce qui est la faute que la porte ferme (voir noyau/tables.py).
+_lire_json = tables.lire
 
 
 # --------------------------------------------------------------------------
@@ -380,9 +384,7 @@ def rafraichir(vraiment=False, maintenant=None, crier=True):
     if not vraiment or not a_ecrire:
         return changements, refuses, releve
 
-    chemin = os.path.join(ETAT, "joueurs.json")
-    with io.open(chemin, encoding="utf-8") as f:
-        frais = json.load(f)
+    frais = tables.lire("joueurs")
     entrees = frais
     if isinstance(frais, dict):
         entrees = frais.get("joueurs") or frais.get("sieges") or []
@@ -396,11 +398,7 @@ def rafraichir(vraiment=False, maintenant=None, crier=True):
             touche = True
     if not touche:
         return changements, refuses, releve
-    temporaire = chemin + ".occupation.tmp"
-    with io.open(temporaire, "w", encoding="utf-8") as f:
-        json.dump(frais, f, ensure_ascii=False, indent=2)
-        f.write(u"\n")
-    os.replace(temporaire, chemin)
+    tables.ecrire("joueurs", frais)
     return changements, refuses, releve
 
 
@@ -409,9 +407,7 @@ def marquer(pid, clef, maintenant=None):
     if clef not in ("assis_a", "quitte_a"):
         raise ValueError(clef)
     maintenant = time.time() if maintenant is None else maintenant
-    chemin = os.path.join(ETAT, "joueurs.json")
-    with io.open(chemin, encoding="utf-8") as f:
-        frais = json.load(f)
+    frais = tables.lire("joueurs")
     entrees = frais
     if isinstance(frais, dict):
         entrees = frais.get("joueurs") or frais.get("sieges") or []
@@ -423,11 +419,7 @@ def marquer(pid, clef, maintenant=None):
             touche = True
     if not touche:
         return False
-    temporaire = chemin + ".occupation.tmp"
-    with io.open(temporaire, "w", encoding="utf-8") as f:
-        json.dump(frais, f, ensure_ascii=False, indent=2)
-        f.write(u"\n")
-    os.replace(temporaire, chemin)
+    tables.ecrire("joueurs", frais)
     return True
 
 

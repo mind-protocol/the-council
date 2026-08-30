@@ -58,7 +58,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 from agents.expose import boucle_activation as activation  # noqa: E402  (tissu, genres relais)
-import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
+from etat.expose import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
 
 # CE QUI PORTE UNE NOUVELLE, ET CE QUI N'EN PORTE PAS.
 #
