@@ -2,28 +2,22 @@
 # Ouvre a la main le cahier de l'office O01 — l'aire de bris, chantier de la
 # vase. Le verseur ne cree ni livre ni table : ceci est le geste manuel, fait en
 # connaissance de cause, le 2e jour de la 4e lune de l'an 129.
-import io, json, os, tempfile, sys
+import os, sys
 
 sys.stdout.reconfigure(encoding='utf-8')
 R = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.join(R, 'scripts'))
 import bibliotheque
+from etat.expose import tables  # LA PORTE de etat/
 
 BOITES = os.path.join(R, 'etat', 'boites.json')
 
 
-def lire(p):
-    with io.open(p, encoding='utf-8') as f:
-        return json.load(f)
+lire = tables.lire
 
 
 def ecrire(p, d):
-    fd, tmp = tempfile.mkstemp(dir=os.path.dirname(p), suffix='.tmp')
-    os.close(fd)
-    with io.open(tmp, 'w', encoding='utf-8') as f:
-        json.dump(d, f, ensure_ascii=False, indent=1)
-        f.write(u'\n')
-    os.replace(tmp, p)
+    tables.ecrire(p, d, indent=1)
 
 
 def L(*c):
@@ -196,7 +190,7 @@ volume = {
  ],
 }
 
-session_livres = bibliotheque.ouvrir(os.path.join(R, 'etat'))
+session_livres = bibliotheque.ouvrir(tables.ETAT)
 books = session_livres.livres
 if any(b.get('id') == volume['id'] for b in books):
     print('DEJA LA — rien fait')

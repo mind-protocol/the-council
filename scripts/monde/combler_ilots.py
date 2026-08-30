@@ -36,6 +36,16 @@ from echelle import (ANNEAU, METRE_PAR_UNITE, gabarit, hors_anneau,
                      mx, my, ux, uy)
 from pose import Occupation
 
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
+from etat.expose import tables  # LA PORTE de etat/
+
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
@@ -47,15 +57,12 @@ MAX_POCHES = 2200
 R = random.Random(0xC0A7)
 
 
-def lire(p):
-    with io.open(p, encoding="utf-8") as f:
-        return json.load(f)
+lire = tables.lire
 
 
 def ecrire(p, v):
-    os.makedirs(os.path.dirname(p), exist_ok=True)
-    with io.open(p, "w", encoding="utf-8") as f:
-        json.dump(v, f, ensure_ascii=False, separators=(",", ":"))
+    # atomique et compact par la porte — vise monde/, pas etat/
+    tables.ecrire(p, v, indent=None)
 
 
 def dedans_poly(poly, x, y):

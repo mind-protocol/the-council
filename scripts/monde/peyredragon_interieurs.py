@@ -52,6 +52,16 @@ sys.path.insert(0, os.path.join(RACINE, "scripts", "materialisation"))
 import lieux as Li            # noqa: E402
 import peyredragon as P       # noqa: E402
 
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
+from etat.expose import tables  # LA PORTE de etat/
+
 # Le repère : la matérialisation compte depuis le milieu de l'île, le monde 3D
 # depuis le coin sud-ouest. Même décalage que `peyredragon_chateau.py`.
 DECALAGE = (3000.0, 2500.0)
@@ -1111,7 +1121,7 @@ def batir_salle(s, portes_voulues, rapport):
 # ---------------------------------------------------------------------------
 def voisins():
     """Qui touche qui, d'après etat/chemins.json."""
-    d = json.load(open(CHEMINS, encoding="utf-8"))
+    d = tables.lire(CHEMINS)
     alias = d.get("alias", {})
     v, aretes = {}, []
     for a in d["aretes"]:

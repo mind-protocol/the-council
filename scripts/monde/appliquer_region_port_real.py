@@ -6,10 +6,19 @@ côte, des routes d'approche et du port, puis corrige dans le graphe actif les
 deux seules extrémités de route qui finissaient sous l'eau. Les rangs de
 ``bati.json`` — donc les adresses de la partie — ne sont jamais ouverts.
 """
-import io
 import json
 import math
 import os
+
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
+from etat.expose import tables  # LA PORTE de etat/
 
 ICI = os.path.dirname(os.path.abspath(__file__))
 RACINE = os.path.dirname(os.path.dirname(ICI))
@@ -20,19 +29,14 @@ TERRAIN_CHEM = os.path.join(RACINE, "monde", "portreal.terrain.json")
 MU = 12.0
 
 
-def lire(p):
-    with io.open(p, encoding="utf-8") as f:
-        return json.load(f)
+lire = tables.lire
 
 
 def ecrire(p, d):
-    # Le serveur de jeu peut lire la carte au même instant. Une écriture directe
-    # sous Windows a alors parfois rendu EINVAL ; un voisin complet puis un
-    # remplacement atomique ne laisse jamais un JSON tronqué au lecteur.
-    tmp = p + ".region.tmp"
-    with io.open(tmp, "w", encoding="utf-8") as f:
-        json.dump(d, f, ensure_ascii=False, separators=(",", ":"))
-    os.replace(tmp, p)
+    # Le serveur de jeu peut lire la carte au même instant : l'écriture de la
+    # porte est atomique, jamais un JSON tronqué au lecteur. Compact (indent
+    # None) comme avant — la carte pèse.
+    tables.ecrire(p, d, indent=None)
 
 
 def monde(p):

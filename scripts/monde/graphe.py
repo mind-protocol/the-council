@@ -21,8 +21,18 @@ from echelle import (METRE_PAR_UNITE as MU, m, mx, my, ux, uy, mcap,
                      hauteur_sol, gabarit, NIVEAUX, HAUTEUR_SOUS_PLAFOND,
                      MUR_HAUTEUR, MUR_EPAISSEUR, QUAI_HAUTEUR, SOL_VILLE)
 
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
+from etat.expose import tables  # LA PORTE de etat/
+
 R = random.Random(51290323)
-CARTE = json.load(io.open(os.path.join(RACINE, "etat", "villes", "port-real.json"), encoding="utf-8"))
+CARTE = tables.lire(os.path.join(RACINE, "etat", "villes", "port-real.json"))
 
 # ---------------------------------------------------------------------------
 # le sol, repris de la carte : elle est l'autorité géographique

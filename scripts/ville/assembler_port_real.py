@@ -2,6 +2,17 @@
 """Assemble etat/villes/port-real.json depuis le tissu engendré."""
 import json, io, os, math
 
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
+from etat.expose import tables  # LA PORTE de etat/ (lecture ; l'ecriture garde
+# son rendu maison, une entite par ligne, que json.dump ne sait pas produire)
+
 SP = os.path.dirname(os.path.abspath(__file__))
 CIBLE = os.path.join(os.path.dirname(os.path.dirname(SP)), "etat", "villes", "port-real.json")
 T = json.load(io.open(os.path.join(SP, "tissu.json"), encoding="utf-8"))
@@ -202,7 +213,7 @@ for _ in range(400):
     if not bouge: break
 
 # ---- ce que le siège CROIT : corps et acteurs ------------------------------
-vieux = json.load(io.open(CIBLE, encoding="utf-8"))
+vieux = tables.lire(CIBLE)
 PLACE = {  # le bas de la ville a bougé : on replace ce qui s'y tient
     "coque-du-quinze": [238,262], "brise-coques": [222,260], "gosses-de-la-greve": [200,266],
     "guet-de-la-gadoue": [282,244], "queue-de-la-gadoue": [274,238], "manteaux-dor": [234,166],

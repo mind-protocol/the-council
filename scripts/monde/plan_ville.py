@@ -65,9 +65,19 @@ COUCHES_BATI = ["institution", "culte", "civique", "commerce", "artisanat",
                 "plaisir", "service", "nuisance", "habitat"]
 
 
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
+from etat.expose import tables  # LA PORTE de etat/
+
+
 def lire(chemin):
-    with open(os.path.join(RACINE, chemin), encoding="utf-8") as f:
-        return json.load(f)
+    return tables.lire(os.path.join(RACINE, chemin))
 
 
 # ---------------------------------------------------------------------------
@@ -1695,13 +1705,12 @@ def remparts(lieu):
     la bonne réponse : le château de Peyredragon est servi en maillage.
     """
     chem = os.path.join(RACINE, "etat", "villes", lieu + ".json")
-    if not os.path.exists(chem):
+    carte = tables.lire(chem, None)
+    if carte is None:
         print("  rempart  pas de carte de ville pour « %s » : aucune courtine"
               % lieu)
         return {}
-    with open(chem, encoding="utf-8") as f:
-        murs = [s for s in (json.load(f).get("sol") or [])
-                if s.get("genre") == "mur"]
+    murs = [s for s in (carte.get("sol") or []) if s.get("genre") == "mur"]
     trace, tours, noms = [], [], []
     for s in murs:
         large = s.get("largeur")
@@ -2256,11 +2265,11 @@ def graver_courtine(bits, nx, ny, lieu):
     retient donc ce que la courtine a posé, et le perçage ne mord que là-dessus.
     """
     chem = os.path.join(RACINE, "etat", "villes", lieu + ".json")
-    if not os.path.exists(chem):
+    carte = tables.lire(chem, None)
+    if carte is None:
         return 0
-    with open(chem, encoding="utf-8") as f:
-        murs = [s for s in (json.load(f).get("sol") or [])
-                if s.get("genre") == "mur"
+    murs = [s for s in (carte.get("sol") or [])
+            if s.get("genre") == "mur"
                 and s.get("largeur") in (None, 6)]
     if not murs:
         return 0
