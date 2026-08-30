@@ -53,7 +53,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-import occupation  # qui est ASSIS — mesure, pas drapeau
+from temps.expose import occupation  # qui est ASSIS — mesure, pas drapeau
 import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
 
 

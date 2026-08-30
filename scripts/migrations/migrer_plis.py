@@ -53,8 +53,8 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-from tick import (CANAUX_PLI, Etat, date_de, ecrire_proposition, empreintes_etat,
-                  fmt, jour_absolu, jours_de_route)
+from temps.expose import (CANAUX_PLI, Etat, date_de, ecrire_proposition,
+                          empreintes_etat, fmt, jour_absolu, jours_de_route)
 
 
 def id_de_pli(evenement_id, index, pour):

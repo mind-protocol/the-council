@@ -64,10 +64,10 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-import occupation  # qui est ASSIS — mesure, pas drapeau
+from temps.expose import occupation  # qui est ASSIS — mesure, pas drapeau
 # La regence (docs/regence.md) : ce qu'un siege vacant peut faire et ce qu'il
 # doit rendre. Branche ici pour la seule garde — clause posee, passation due.
-import regence
+from temps.expose import regence
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ETAT = os.path.join(RACINE, "etat")
@@ -451,7 +451,7 @@ def _dans_le_quartier():
     """
     if _QUARTIER["gens"] is None:
         try:
-            import presence
+            from temps.expose import presence
             _QUARTIER["gens"] = set(presence.quartier().get("dedans") or {})
         except Exception:
             _QUARTIER["gens"] = set()
@@ -1250,7 +1250,7 @@ def verifier_pensees(e, r):
     # UNE JOURNEE ENTIEREMENT FERMEE CHEZ UN HOMME FORT : il ne pensera jamais.
     # C'est peut-etre voulu — c'est le cout d'un mandat — mais il faut le voir.
     try:
-        import presence
+        from temps.expose import presence
         q = presence.quartier()
         if q.get("vide"):
             r.dire("grave", "quartier",
@@ -1314,8 +1314,8 @@ def qui_a_du_temps(e):
     qui depecher, apres les mains et avant la salle.
     """
     try:
-        import presence
-        import evaluer
+        from temps.expose import presence
+        from temps.expose import evaluer
         A, N = evaluer.lire_tissu()
         feuille = evaluer.force_narrative(A, N, lambda t="": None)
     except Exception as exc:
@@ -2213,7 +2213,7 @@ def verifier_affectations(e, r):
     """
     try:
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-        import affecter
+        from agents.expose import affecter
     except ImportError:
         return
     L = affecter.charger_liens()
@@ -2252,7 +2252,7 @@ def verifier_registres_derives(e, r):
     """
     try:
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-        import couverture
+        from plan.expose import couverture
     except ImportError:
         return
     try:
@@ -2348,7 +2348,7 @@ def verifier_etats_du_plan(e, r):
     """
     try:
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-        import couverture
+        from plan.expose import couverture
     except ImportError:
         return
     VOC = (u"\u00e0 faire", u"en cours", u"bloqu\u00e9e", u"faite", u"close",

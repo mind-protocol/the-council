@@ -320,7 +320,7 @@ def sourds(dire):
     it = charger("intentions", [])
     dedans = set()
     try:
-        import presence as mod_presence
+        from temps.expose import presence as mod_presence
         dedans = set((mod_presence.quartier().get("dedans") or {}))
     except Exception:
         pass
@@ -446,7 +446,7 @@ def force_narrative(A, N, dire, joueur=None):
     # fort soit-il — et c'est ca, le cout d'un mandat : on l'occupe.
     creux_de, motif = {}, {}
     try:
-        import presence as mod_presence
+        from temps.expose import presence as mod_presence
         q = mod_presence.quartier()
         rout, chem, _ = mod_presence.charger()
         chat = mod_presence.Chateau(chem)
@@ -545,7 +545,7 @@ def pour_la_regie(A, N, muet):
     # --- OU EST CHACUN, a la minute. La position ne se stocke pas, elle se
     # calcule : on appelle le moteur, on ne relit pas un instantane.
     try:
-        import presence as mod_presence
+        from temps.expose import presence as mod_presence
         ou = mod_presence.resoudre()
         gens = charger("personnages", [])
         noms = {g.get("id"): (g.get("nom") or g.get("id"))
@@ -592,7 +592,7 @@ def pour_la_regie(A, N, muet):
     # a quelque chose a dire, c'etait sa journee. Un homme qui a du temps dans
     # une salle ou il y a des sources pense ; les autres travaillent.
     try:
-        import presence as mod_presence
+        from temps.expose import presence as mod_presence
         q = mod_presence.quartier()
         rout, chem, _ = mod_presence.charger()
         chat = mod_presence.Chateau(chem)

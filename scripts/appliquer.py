@@ -123,7 +123,7 @@ if SCRIPTS not in sys.path:
 try:
     # Une seule table de budgets pour les deux scripts : celle de tick.py,
     # qui transcrit docs/schema.md.
-    from tick import BUDGETS
+    from temps.expose import BUDGETS
 except ImportError:     # doublon de secours, a retoucher AVEC celui de tick.py
     BUDGETS = {
         "scene":   {"acteurs": 5,  "croyances": 6, "etapes": 5,

@@ -54,8 +54,8 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-import occupation  # QUI EST ASSIS — la mesure, pas le drapeau
-import regence  # ce que le siege a decide seul pendant l'absence
+from temps.expose import occupation  # QUI EST ASSIS — la mesure, pas le drapeau
+from temps.expose import regence  # ce que le siege a decide seul pendant l'absence
 
 
 def lire(nom, defaut):

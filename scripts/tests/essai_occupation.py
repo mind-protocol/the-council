@@ -23,8 +23,8 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-import occupation  # noqa: E402
-import tick  # noqa: E402
+from temps.expose import occupation  # noqa: E402
+from temps.expose import tick  # noqa: E402
 
 RATES = []
 
