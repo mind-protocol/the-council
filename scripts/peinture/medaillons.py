@@ -27,6 +27,16 @@ import sys
 
 from PIL import Image, ImageDraw
 
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
+from etat.expose import tables  # LA PORTE de etat/
+
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SOURCE = os.path.join(RACINE, "portraits")
 CIBLE = os.path.join(RACINE, "ecrans", "portraits")
@@ -90,8 +100,7 @@ def main():
     if "--seulement" in sys.argv:
         seulement = set(sys.argv[sys.argv.index("--seulement") + 1].split(","))
 
-    gens = json.load(io.open(
-        os.path.join(RACINE, "etat", "personnages.json"), encoding="utf-8"))
+    gens = tables.lire("personnages")
     if isinstance(gens, dict):
         gens = gens["personnages"]
     noms = {p["id"]: p.get("nom", p["id"]) for p in gens}

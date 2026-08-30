@@ -206,7 +206,18 @@ def ecrire_atomique(chemin_ou_nom, valeur):
 _ECRITURE = re.compile(r"json\.dump\s*\(|open\s*\([^)]*[\x22\x27]w")
 _PORTE = re.compile(r"(from|import)\s+tables\b|\btables\.(lire|ecrire)\b")
 _ETAT = re.compile(r"[\x22\x27]etat[\x22\x27]|etat/|etat" + "\\\\")
-_HORS = ("scripts/noyau/tables.py",)
+# Les exemptes, chacun avec sa raison — un fichier n'entre ici que s'il ne
+# touche PAS a etat/ (le detecteur est verbeux : le mot « etat » dans un
+# commentaire ou une clef de donnees suffit a le faire sonner), jamais pour
+# passer outre la porte.
+_HORS = (
+    "scripts/noyau/tables.py",           # la porte elle-meme
+    "scripts/composer.py",               # n'ecrit que musiques/*.md ; « etat » en commentaire
+    "scripts/carte_geo.py",              # lit les mods CK3, ecrit ecrans/modules/geo.js
+    "scripts/analyse/graphe_archi.py",   # lit docs/containers.json, ecrit docs/graphe-archi.md
+    "scripts/monde/peyredragon_chateau.py",  # ecrit monde/peyredragon.bati.json ; « etat » = clef de donnees
+    "scripts/monde/peyredragon_voirie.py",   # ecrit monde/peyredragon.graph.json ; « etat » = clef de donnees
+)
 
 
 def _fichiers_py():

@@ -28,6 +28,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 import bibliotheque
+from etat.expose import tables  # LA PORTE de etat/
 
 racine = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -64,8 +65,7 @@ def col(livre, entete):
 
 
 def charger():
-    livres = {b["id"]: b for b in bibliotheque.charger(
-        os.path.join(racine, "etat"))}
+    livres = {b["id"]: b for b in bibliotheque.charger(tables.ETAT)}
     pieces, inventaire = {}, {}
 
     for genre, (bid, cnum, cnom, cvers) in REGISTRES.items():
@@ -103,10 +103,7 @@ def charger():
             c = l["cellules"]
             inventaire[nu(c[inum])] = {"num": nu(c[inum]), "genre": genre, "nom": nu(c[inom])}
 
-    pose = {}
-    p = os.path.join(racine, "etat", "nappe-pose.json")
-    if os.path.exists(p):
-        pose = json.load(io.open(p, encoding="utf-8"))
+    pose = tables.lire("nappe-pose", {})
     return pieces, inventaire, pose
 
 

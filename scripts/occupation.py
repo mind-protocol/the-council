@@ -384,7 +384,9 @@ def rafraichir(vraiment=False, maintenant=None, crier=True):
     if not vraiment or not a_ecrire:
         return changements, refuses, releve
 
-    frais = tables.lire("joueurs")
+    # Le chemin passe par ETAT (jamais un nom nu) : le harnais essai_occupation
+    # detourne occupation.ETAT vers un dossier jetable, et ca doit rester vrai.
+    frais = tables.lire(os.path.join(ETAT, "joueurs.json"))
     entrees = frais
     if isinstance(frais, dict):
         entrees = frais.get("joueurs") or frais.get("sieges") or []
@@ -398,7 +400,7 @@ def rafraichir(vraiment=False, maintenant=None, crier=True):
             touche = True
     if not touche:
         return changements, refuses, releve
-    tables.ecrire("joueurs", frais)
+    tables.ecrire(os.path.join(ETAT, "joueurs.json"), frais)
     return changements, refuses, releve
 
 
@@ -407,7 +409,7 @@ def marquer(pid, clef, maintenant=None):
     if clef not in ("assis_a", "quitte_a"):
         raise ValueError(clef)
     maintenant = time.time() if maintenant is None else maintenant
-    frais = tables.lire("joueurs")
+    frais = tables.lire(os.path.join(ETAT, "joueurs.json"))
     entrees = frais
     if isinstance(frais, dict):
         entrees = frais.get("joueurs") or frais.get("sieges") or []
@@ -419,7 +421,7 @@ def marquer(pid, clef, maintenant=None):
             touche = True
     if not touche:
         return False
-    tables.ecrire("joueurs", frais)
+    tables.ecrire(os.path.join(ETAT, "joueurs.json"), frais)
     return True
 
 

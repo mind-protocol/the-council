@@ -58,6 +58,16 @@ for _flux in (sys.stdout, sys.stderr):
     except (AttributeError, ValueError):
         pass
 
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
+from etat.expose import tables  # LA PORTE de etat/
+
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ETALON_DIR = os.path.join(RACINE, "scripts", "tests", "etalon-tick")
 FIXTURE = os.path.join(ETALON_DIR, "etat")
@@ -108,8 +118,7 @@ def calculer(garder=False):
             raise SystemExit(
                 "banc-tick : aucune proposition ecrite.\n"
                 + (tick.stdout or "")[-1500:] + (tick.stderr or "")[-1500:])
-        with io.open(os.path.join(etat, propositions[-1]), encoding="utf-8") as f:
-            proposition = json.load(f)
+        proposition = tables.lire(os.path.join(etat, propositions[-1]))
         for clef in VOLATILES:
             proposition.pop(clef, None)
         return proposition, (tick.stdout or "")

@@ -24,17 +24,17 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 import bibliotheque
+from etat.expose import tables  # LA PORTE de etat/
 
 
 def lire_octets(chemin):
+    # binaire a dessein : l'empreinte sha256 porte sur les octets, pas le JSON
     with open(chemin, "rb") as f:
         return f.read()
 
 
 def ecrire_json(chemin, valeur):
-    with io.open(chemin, "w", encoding="utf-8") as f:
-        json.dump(valeur, f, ensure_ascii=False, indent=1)
-        f.write("\n")
+    tables.ecrire(chemin, valeur, indent=1)
 
 
 def main():

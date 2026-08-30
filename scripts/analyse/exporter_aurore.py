@@ -20,6 +20,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 import bibliotheque
+from etat.expose import tables  # LA PORTE de etat/
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SORTIE = os.path.join(RACINE, "export")
@@ -31,15 +32,12 @@ _ecrits = []
 
 
 def lire(rel):
-    p = os.path.join(RACINE, rel)
-    if not os.path.exists(p):
-        return None
     # Un fichier vide ou tronque — l'inbox en porte trois de zero octet — ne
-    # doit pas faire tomber tout l'export. On rend ce qu'on peut lire.
+    # doit pas faire tomber tout l'export. On rend ce qu'on peut lire : c'est
+    # le seul endroit ou l'on rattrape TableAbimee, et c'est un export.
     try:
-        with open(p, encoding="utf-8") as f:
-            return json.load(f)
-    except (ValueError, OSError):
+        return tables.lire(os.path.join(RACINE, rel), None)
+    except tables.TableAbimee:
         return None
 
 
@@ -182,7 +180,7 @@ ecrire("07-relations.txt", "AURORE — ses relations", [
 ])
 
 # ---------------------------------------------------------------- 08 livres
-books = bibliotheque.charger(os.path.join(RACINE, "etat"))
+books = bibliotheque.charger(tables.ETAT)
 siens = [b for b in books if b.get("acteur_id") == ID]
 lanomment = [b for b in books if touche(b) and b not in siens]
 

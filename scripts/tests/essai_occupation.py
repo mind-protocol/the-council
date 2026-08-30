@@ -25,6 +25,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
 
 from temps.expose import occupation  # noqa: E402
 from temps.expose import tick  # noqa: E402
+from etat.expose import tables  # noqa: E402 — LA PORTE de etat/ (le harnais lit par elle)
 
 RATES = []
 
@@ -160,7 +161,7 @@ base = monter(
     tetes=["a-tete"],
 )
 chg, refuses, _ = occupation.rafraichir(True, crier=False)
-apres = json.load(io.open(os.path.join(base, "joueurs.json"), encoding="utf-8"))
+apres = tables.lire(os.path.join(base, "joueurs.json"))
 par_id = {s["personnage_id"]: s for s in apres}
 verifie("le siege avec tete bascule vacant", par_id["a-tete"]["occupe"], False)
 verifie("le siege SANS tete reste occupe", par_id["sans-tete"]["occupe"], True)
@@ -174,12 +175,12 @@ verifie("aucun .tmp ne traine",
 
 print("\n   marquer() ne touche qu'une clef")
 occupation.marquer("a-tete", "assis_a")
-apres = json.load(io.open(os.path.join(base, "joueurs.json"), encoding="utf-8"))
+apres = tables.lire(os.path.join(base, "joueurs.json"))
 par_id = {s["personnage_id"]: s for s in apres}
 verifie("assis_a pose", isinstance(par_id["a-tete"].get("assis_a"), float), True)
 verifie("les voisins sont intacts", par_id["sans-tete"]["occupe"], True)
 occupation.marquer("a-tete", "quitte_a")
-apres = json.load(io.open(os.path.join(base, "joueurs.json"), encoding="utf-8"))
+apres = tables.lire(os.path.join(base, "joueurs.json"))
 par_id = {s["personnage_id"]: s for s in apres}
 verifie("quitter efface assis_a", "assis_a" in par_id["a-tete"], False)
 
