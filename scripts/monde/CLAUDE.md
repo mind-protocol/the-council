@@ -31,6 +31,20 @@ toute relance.
 - **`combler_ilots.py` est append-only** pour les rangs existants, mais ses
   nouveaux habitants demandent ensuite `peupler` et `besoins`.
 
+## Les commandes descendues (lot 2) — le monde qu'on interroge
+
+À côté de la CUISSON (la chaîne ci-dessus), le container porte depuis le lot 2
+la matière des quatre commandes racine du monde. **La porte** : `expose.py` —
+`from monde.expose import ...`, jamais un module interne. Chaque commande
+racine est une façade gelée (chemin et CLI inchangés).
+
+| module | ce qu'il possède | commande façade |
+|---|---|---|
+| `geographie.py` + `geographie_traces.py` + `geographie_sortie.py` | la carte de Westeros depuis le mod AGOT : constantes et lecteur du mod / masques, contours, routes / assemblage et écriture de `ecrans/modules/geo.js` | `scripts/carte_geo.py` |
+| `arpentage.py` | lever une carte au pas et à l'œil — le brouillard s'applique | `scripts/arpenter.py` |
+| `corps.py` + `corps_metiers.py` | lister, lier, promouvoir les corps ; la matière sociale de l'incarnation | `scripts/corps.py` |
+| `trajets.py` | combien de temps pour aller là-bas, à pied, par les rues (mêmes règles que `journee.js`) | `scripts/marche.py` |
+
 ## Blender
 
 `batir.py` se lance PAR Blender, sans interface :
