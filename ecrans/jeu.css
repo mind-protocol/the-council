@@ -3471,6 +3471,31 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 .chr-ecrit .chr-texte::before,.chr-ecrit .chr-texte::after{content:none;}
 .chr-ecrit .chr-corps{background:none;border:none;padding:0;}
 
+/* --- le billet : un papier qui a voyagé, pas une voix ---------------------
+   Le fil d'un homme incarné (modules/fil-homme.js) : chaque entrée d'un canal
+   relations/*/discussion.json se peint en écrit remis en main — cadre de
+   papier, expéditeur et date en tête discrète. Distinct de chr-replique
+   (une voix) et de chr-ecrit (la plume qu'on repose) : ici le papier a
+   voyagé, on le tient. */
+.chr-billet{border-left-color:var(--braise);}
+.chr-billet .chr-qui::before{content:'✉️ ';font-size:.9em;}
+.chr-billet .chr-corps{background:var(--paper);border:1px solid var(--bord);
+  border-radius:2px;padding:6px 9px;box-shadow:1px 1px 0 rgba(0,0,0,.25);}
+.chr-billet .chr-texte{font-size:.76em;}
+.chr-billet-date{margin-left:8px;font-variant:normal;letter-spacing:0;
+  font-size:.85em;color:var(--muted);font-style:italic;}
+/* Le fil d'un homme garde ses retours à la ligne : c'est de la mémoire
+   écrite, pas une réplique d'une phrase. */
+.chr-fil .chr-texte{white-space:pre-wrap;}
+/* Les gestes d'une journée, repliés : le résumé en tête, le détail au clic. */
+.chr-breve summary{cursor:pointer;}
+.gestes-detail{margin:4px 0 0;padding-left:16px;color:var(--muted);
+  font-size:.95em;}
+/* Un arbitre incarné observe : la ligne discrète au-dessus de son fil. */
+.fil-observation{margin:0 0 12px;padding-left:10px;font-size:.66em;
+  color:var(--muted);font-style:italic;
+  border-left:2px solid var(--bord);}
+
 /* ---- la régie : le siège de Corneille ------------------------------------
    Hors fiction, et ça doit se voir : un cadre froid dans un fil qui ne l'est
    pas. Ce bloc n'est pas un moment de la partie — c'est une lecture, posée là

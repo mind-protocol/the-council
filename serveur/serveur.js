@@ -43,6 +43,7 @@ const ROUTES = [
   monde.marche,                    // POST /ou, /marche
   require("./routes/action"),      // POST /action — la parole du joueur
   require("./routes/verbe"),       // POST /verbe — les trois verbes de l'habitant
+  require("./routes/fil-homme"),   // GET /fil-homme — la mémoire d'un homme incarné
 ];
 
 http
