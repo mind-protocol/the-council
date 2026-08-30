@@ -30,7 +30,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
 
 from temps import occupation  # noqa: E402,F401 — qui est ASSIS ; lu par regence, sieges, lecture
 import presence  # noqa: E402,F401 — qui est a portee ; lu par bouche, evaluer, append_flux
-import regence  # noqa: E402,F401 — relit cette porte : occupation deja lie
+from temps import regence  # noqa: E402,F401 — relit cette porte : occupation deja lie
 from temps import disponibilite as evaluer  # noqa: E402,F401 — qui a du temps ; presence lu paresseusement
 disponibilite = evaluer  # le nom du lot 2 (docs/organisation.md §7), pour les nouveaux lecteurs
 from temps.calendrier import jour_absolu, date_de, fmt  # noqa: E402,F401
