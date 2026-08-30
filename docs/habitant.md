@@ -41,6 +41,8 @@ chambres/<id>/                     hommes ET mj (mj, mj-peyredragon, mj-portreal
    en-souffrance.json              ses fils ouverts : ce qu'il attend de qui, et
                                    depuis quand ; ce qu'on attend de lui — semé vide
    fil/                            les traces de ses sessions — le vécu, relisible
+                                   `<date>-salle.md` : ce qu'il a entendu là où
+                                   il se tenait, écrit à la poussée du flux
    books/                          ses volumes, toujours sous sa main
    brouillons/                     l'itératif — ce qui mûrit avant de se verser
    relations/<autre>/
@@ -71,6 +73,26 @@ entrée** : la doctrine est de nous, le contenu est de lui. Ils se lisent par
 sert va **en percept**, comme les billets — jamais en invitation à ouvrir un
 fichier.
 
+**Ce qui se dit devant lui entre chez lui, et la co-présence ouvre les relations.**
+`agents/salle.py`, appelé par `scene/flux.py` au moment de la poussée — le seul
+endroit qui tienne à la fois la pièce, la présence et le texte. Deux écritures, un
+seul calcul (qui est dans la pièce), et **le filtre est la chambre** : on ne recopie
+rien chez qui n'en a pas, et deux co-présents n'ouvrent une relation que s'ils en
+ont une tous les deux. Sans ce filtre, un conseil de treize présents écrivait treize
+copies de chaque réplique et ouvrait cent cinquante-six dossiers ; avec lui, la
+charge grandit au rythme où l'on ouvre des chambres — et en ouvrir une devient un
+geste qui a un effet. Mesuré sur un parc jouet : à 20 habitants un réveil lit ses 19
+relations en 5,8 ms, à 100 en 19 ms.
+
+Trois règles dures, tenues par `scripts/tests/test_salle.py` : **le chuchotement ne
+fuite pas** (`--messe-basse` prime sur la pièce, le tiers présent n'en a pas une
+ligne) ; **le hors-fiction n'est entendu de personne** (une `pensee` ne coûte pas
+une minute justement parce que nul ne l'entend) ; **la fiche de relation porte un
+constat daté, jamais un jugement** — elle est « ce que LUI retient de l'autre », lui
+écrire une opinion serait tenir sa main. On accumule pendant la poussée et l'on
+écrit une fois par chambre à la fin : item par item, quarante répliques dans une
+salle de vingt feraient huit cents ouvertures de fichier dans la plume de l'horloge.
+
 `chambres/` vit à la racine du dépôt, versionné comme `etat/` : la mémoire des
 habitants fait partie de la partie. Les fils `~mj` d'`etat/parloir/` migrent vers
 les `relations/` à mesure que les chambres s'ouvrent — une conversation n'est pas
@@ -82,11 +104,16 @@ Un homme en journée a trois verbes vers son arbitre, symétriques des boutons d
 joueur (prouvé nécessaire : 3/3 réveils d'essai, son premier geste de communication
 fut `parloir --dire --a mj`) :
 
-| verbe | équivalent joueur | résolution |
+**Le lexique est UNIQUE et c'est celui du joueur** (normalisé le 31.8 — un seul
+nom par geste, l'homme et le joueur font les mêmes) :
+
+| geste | ce que c'est | résolution |
 |---|---|---|
-| **TENTER** — « je pars sur mon cheval » | Agir | le MJ de zone tranche en coulisse (traits, circonstances — jamais de stats) |
-| **FAIRE** — « je déplace ce livre » | l'acte | mutation **proposée** → staging, arbitrage |
-| **DEMANDER** — « l'histoire de ceci ? » | Question | le MJ de zone répond **depuis l'état seulement** — il décrit le monde, il ne parle pour personne : Règle Zéro intacte |
+| **PARLER** — « Maître Hask, … » | une parole adressée | vers un arbitre : call ; vers un homme : billet au canal + réveil cast |
+| **AGIR** — « je pars sur mon cheval », « je déplace ce livre » | un geste qui engage le monde (absorbe l'ancien TENTER **et** FAIRE) | l'arbitre tranche en coulisse — issue incertaine : il décide ; mutation mécanique : proposition → staging |
+| **PENSER** — « et si la roue… » | **un réveil de soi-même** : la pensée est un cast à soi — sa session vit ce moment intérieur, le vécu et la conclusion se déposent chez lui | aucun arbitre : ça reste en chambre (prévoir librement) |
+| **QUESTION** — « l'histoire de ceci ? » | demander ce que le monde dit | l'arbitre répond **depuis l'état seulement** — Règle Zéro intacte |
+| **INTERVENTION** — la main par-dessus | hors fiction : on répare, on ne joue pas | réservé au siège de régie (joueur/dev), jamais un geste d'homme dépêché |
 
 Les billets entre hommes entrent dans le brief **en percept** — « Hask t'a écrit :
 "…" » — jamais comme une invitation à ouvrir un fichier (leçon des essais : 2/2
