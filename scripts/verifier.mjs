@@ -135,6 +135,15 @@ const EPREUVES = [
     pourquoi: "La route /piece de bout en bout. Ouvre un port EPHEMERE (listen 0) "
       + "et non le 3129 : lancer la verification ne derange pas une partie en cours.",
   },
+  {
+    id: "porte-etat", rang: "garde", secondes: 2.6,
+    commande: [PY, "scripts/noyau/tables.py", "--verifier"],
+    compte: /^(\d+) fichier\(s\)/m,
+    pourquoi: "Personne n'ecrit dans `etat/` sans passer par la porte unique. "
+      + "Mesure nee a 45, descendue a 0 par groupes (un commit par groupe), "
+      + "promue GARDE le jour du zero : le quarante-sixieme ecrivain sauvage "
+      + "est refuse ici, pas decouvert trois lunes plus tard.",
+  },
 
   // --- LES MESURES ----------------------------------------------------------
   {
@@ -152,14 +161,6 @@ const EPREUVES = [
     compte: /(\d+) NON/,
     pourquoi: "Les quatre sondes de `banc-epreuve` et quatre autres. Sept minutes : "
       + "hors du passage ordinaire, il ne tourne qu'avec --long.",
-  },
-  {
-    id: "porte-etat", rang: "mesure", secondes: 2.6,
-    commande: [PY, "scripts/noyau/tables.py", "--verifier"],
-    compte: /^(\d+) fichier\(s\)/m,
-    pourquoi: "Combien de fichiers ecrivent dans `etat/` sans passer par la porte "
-      + "unique. Ce chiffre ne doit que descendre — il se migre un fichier par "
-      + "commit, pas en un geste aveugle.",
   },
   {
     id: "coherence-etat", rang: "mesure", secondes: 9.4,
