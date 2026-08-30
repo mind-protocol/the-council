@@ -20,10 +20,10 @@
 
 const fs = require("fs");
 const path = require("path");
-const { RACINE } = require("../contexte");
-const { absolues, dateCourte, jourAbsolu } = require("../dates");
+const { RACINE } = require("../http");
+const { absolues, dateCourte, jourAbsolu } = require("../http");
 const { DEPOT_ACTIVATIONS, lireJsonSansFaillir, ouQuartier } = require("./activations");
-const { qui } = require("../siege");
+const { qui } = require("../http");
 
 const JOUR_MINUTES = 1440;
 
@@ -487,12 +487,33 @@ function regie() {
       .map((s) => ({ id: s.personnage_id, nom: s.nom || nom(s.personnage_id),
         role: s.role || "second" }));
 
+    // LA PHYSIQUE DE LA DIFFUSION VIENT DU PYTHON, la page ne la redefinit
+    // plus. Elle en tenait sa propre copie, derivee : la meme liste de relais
+    // MOINS `personne`, donc une onde qu'un homme absorbait au lieu de la
+    // passer. Mesure sur le tissu du 129.4.3, depuis pers:rhaenyra : 2159
+    // noeuds atteignables avec le relais contre 1647 sans, 80 personnes sur
+    // 114 contre 67. La page annoncait une diffusion qui n'etait pas celle
+    // qui elit les acteurs. Source unique : scripts/noyau/diffusion.json.
+    let physique = null;
+    try {
+      physique = JSON.parse(fs.readFileSync(
+        path.join(RACINE, "scripts", "noyau", "diffusion.json"), "utf-8"));
+    } catch (e) { physique = { erreur: String(e.message || e) }; }
+
     const suivables = aretes.filter((a) => !a.flou && !a.virtuel);
     const pendantes = suivables.filter((a) => parId.get(a.de).pendant || parId.get(a.vers).pendant);
     graphe = {
-      noeuds, aretes, observateurs, sieges: emetteurs,
+      noeuds, aretes, observateurs, sieges: emetteurs, physique,
       resume: {
         noeuds: Object.keys(brutNoeuds).length,
+        // CE QUI EST DESSINE, ET PAS SEULEMENT CE QUI EST RESOLU. La page
+        // peignait 8077 noeuds en en annoncant 2341 : l'ecart, ce sont les
+        // extremites d'arete non adressees, une par bout manquant. 71 % de ce
+        // qu'on voyait n'etait pas une affaire, et aucun compteur ne le
+        // disait — « 5 pendantes » comptait les ARETES suivables, pas les
+        // noeuds fantomes nes des 3300 aretes floues.
+        noeuds_dessines: noeuds.length,
+        pendants: noeuds.filter((n) => n.pendant).length,
         aretes: aretes.filter((a) => !a.virtuel).length,
         suivables: suivables.length,
         resolues: suivables.length - pendantes.length,

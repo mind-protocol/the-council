@@ -1,7 +1,7 @@
 // GET /chemin et /monde/* — l'itinéraire à pied et les couches du monde en volume.
 const fs = require("fs");
 const path = require("path");
-const { RACINE } = require("../contexte");
+const { RACINE } = require("../http");
 const { envoyer } = require("../http");
 const { LIEU3D_DEFAUT, butProche, cheminPieton, graphePieton, noeudProche,
         repereProche, serviceMonde } = require("../monde3d");

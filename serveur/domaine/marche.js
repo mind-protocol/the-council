@@ -13,7 +13,7 @@
 // calent dessus (voir serveur/CLAUDE.md).
 const fs = require("fs");
 const path = require("path");
-const { RACINE } = require("../contexte");
+const { RACINE } = require("../http");
 const { DEBUG_MARCHE_AU_FIL, LIEU3D_DEFAUT, LIEUX3D, PLURIELS, SESSION_SERVEUR,
         _resteMarche, batiAutour, direGens, metier, repereProche } = require("../monde3d");
 

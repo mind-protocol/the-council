@@ -1,7 +1,7 @@
 // POST /ou et /marche — le transport seul : lire le corps, appeler le moteur
 // (domaine/marche.js), rendre ce qu'il a répondu.
 const { envoyer } = require("../http");
-const { qui } = require("../siege");
+const { qui } = require("../http");
 const { marcher, poser } = require("../domaine/marche");
 
 // Les deux routes ont la même forme : on accumule le corps, on le passe au

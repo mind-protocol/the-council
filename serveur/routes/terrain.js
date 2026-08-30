@@ -1,9 +1,9 @@
 // GET /terrain — le champ, quand il y en a un.
 const fs = require("fs");
 const path = require("path");
-const { RACINE } = require("../contexte");
+const { RACINE } = require("../http");
 const { envoyer } = require("../http");
-const { qui, regardeur } = require("../siege");
+const { qui, regardeur } = require("../http");
 
 function traiter(req, res, url) {
   if (req.method === "GET") {

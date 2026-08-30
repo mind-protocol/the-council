@@ -1,7 +1,7 @@
 // GET /retrospective, /medailles, /captures/*, /textures/*, /sons/cris/*.
 const fs = require("fs");
 const path = require("path");
-const { RACINE } = require("../contexte");
+const { RACINE } = require("../http");
 const { envoyer } = require("../http");
 
 function traiter(req, res, url) {

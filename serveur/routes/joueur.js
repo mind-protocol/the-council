@@ -1,9 +1,9 @@
 // GET /, /moi, /bascule — qui frappe à la porte, et à quelle table il s'assied.
 const fs = require("fs");
 const path = require("path");
-const { RACINE } = require("../contexte");
+const { RACINE } = require("../http");
 const { envoyer } = require("../http");
-const { qui, roster } = require("../siege");
+const { qui, roster } = require("../http");
 
 function traiter(req, res, url) {
   if (req.method === "GET") {

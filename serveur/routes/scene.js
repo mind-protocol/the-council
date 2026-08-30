@@ -1,10 +1,10 @@
 // GET /scene — la fenêtre de flux servie au navigateur, triée par audience.
 const fs = require("fs");
 const path = require("path");
-const { MAX_FIL, RACINE } = require("../contexte");
+const { MAX_FIL, RACINE } = require("../http");
 const { envoyer, inlinerFigure } = require("../http");
 const { rafraichirPortraits } = require("../portraits");
-const { ecartDe, qui, roster } = require("../siege");
+const { ecartDe, qui, roster } = require("../http");
 
 function traiter(req, res, url) {
   if (req.method === "GET") {

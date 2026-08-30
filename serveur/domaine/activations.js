@@ -16,8 +16,8 @@ const path = require("path");
 const os = require("os");
 const childProcess = require("child_process");
 const bibliotheque = require("../bibliotheque");
-const { RACINE } = require("../contexte");
-const { qui } = require("../siege");
+const { RACINE } = require("../http");
+const { qui } = require("../http");
 
 const DEPOT_ACTIVATIONS = path.join(RACINE, "etat", "activations");
 

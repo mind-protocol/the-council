@@ -2,11 +2,11 @@
 // modules et le style servis au navigateur. Rien de tout cela n'est du jeu.
 const fs = require("fs");
 const path = require("path");
-const { RACINE } = require("../contexte");
+const { RACINE } = require("../http");
 const { chargeActeurs, criticite, detailActivation, filMjActif, prevoirActivations, resumeActivations, sante } = require("../domaine/activations");
 const { chercherDansFlux, extraitDuFlux, filPersonnage, regie } = require("../domaine/regie");
 const { envoyer, fichierStatique } = require("../http");
-const { monPersonnage, qui } = require("../siege");
+const { monPersonnage, qui } = require("../http");
 
 function traiter(req, res, url) {
   if (req.method === "GET") {

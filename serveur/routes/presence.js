@@ -1,9 +1,9 @@
 // GET /presence — qui est où, à cette minute, pour CE siège.
 const fs = require("fs");
 const path = require("path");
-const { RACINE, dateDe, resoudrePresence } = require("../contexte");
+const { RACINE, dateDe, resoudrePresence } = require("../http");
 const { envoyer } = require("../http");
-const { qui, roster } = require("../siege");
+const { qui, roster } = require("../http");
 
 function traiter(req, res, url) {
   if (req.method === "GET") {

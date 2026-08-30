@@ -8,7 +8,7 @@
 // Voir serveur/CLAUDE.md et docs/serveur-structuration.md.
 const http = require("http");
 const voix = require("./voix");
-const { PORT } = require("./contexte");
+const { PORT } = require("./http");
 const { envoyer } = require("./http");
 const { direLaPeremption } = require("./monde3d");
 

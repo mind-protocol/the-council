@@ -1,9 +1,9 @@
 // POST /agenda, /notes, /nappe — ce que le joueur écrit de sa main, hors fiction.
 const fs = require("fs");
 const path = require("path");
-const { RACINE, cheminNotes } = require("../contexte");
+const { RACINE, cheminNotes } = require("../http");
 const { envoyer } = require("../http");
-const { qui } = require("../siege");
+const { qui } = require("../http");
 
 function traiter(req, res, url) {
   if (req.method === "POST" && url === "/agenda") {

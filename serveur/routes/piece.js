@@ -1,6 +1,6 @@
 // POST /piece — la pièce jouée depuis le banc d'essai.
 const bibliotheque = require("../bibliotheque");
-const { RACINE } = require("../contexte");
+const { RACINE } = require("../http");
 const { envoyer } = require("../http");
 
 function traiter(req, res, url) {

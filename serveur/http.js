@@ -42,4 +42,9 @@ function inlinerFigure(page) {
   } catch (e) {}
 }
 
-module.exports = { envoyer, fichierStatique, inlinerFigure };
+// LA PORTE du socle (docs/organisation.md §2) : `contexte`, `dates` et `siege`
+// se lisent ICI — un container ne require jamais un module interne du socle.
+// Réexport à plat : aucun nom n'entre en collision entre les quatre modules.
+module.exports = Object.assign(
+  { envoyer, fichierStatique, inlinerFigure },
+  require("./contexte"), require("./dates"), require("./siege"));

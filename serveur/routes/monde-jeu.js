@@ -1,10 +1,10 @@
 // GET /salles, /entites, /gens — les gens et les lieux, servis au décor.
 const fs = require("fs");
 const path = require("path");
-const { RACINE } = require("../contexte");
+const { RACINE } = require("../http");
 const { envoyer } = require("../http");
 const { portraitDefaut, portraitFrais } = require("../portraits");
-const { qui } = require("../siege");
+const { qui } = require("../http");
 
 function traiter(req, res, url) {
   if (req.method === "GET") {

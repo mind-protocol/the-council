@@ -2,10 +2,10 @@
 // siège les croit : jetons, traits, bannières, et le vieillissement des certitudes.
 const fs = require("fs");
 const path = require("path");
-const { RACINE, dateDe, lireCroyance } = require("../contexte");
-const { AGE_DIT, jourAbsolu, vieillir } = require("../dates");
+const { RACINE, dateDe, lireCroyance } = require("../http");
+const { AGE_DIT, jourAbsolu, vieillir } = require("../http");
 const { envoyer } = require("../http");
-const { qui, regardeur } = require("../siege");
+const { qui, regardeur } = require("../http");
 
 function traiter(req, res, url) {
   if (req.method === "GET") {

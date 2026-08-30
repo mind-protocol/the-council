@@ -1,9 +1,9 @@
 // POST /action — la parole et les gestes du joueur, versés dans son inbox.
 const fs = require("fs");
 const path = require("path");
-const { RACINE } = require("../contexte");
+const { RACINE } = require("../http");
 const { envoyer } = require("../http");
-const { audienceCourante, qui, roster } = require("../siege");
+const { audienceCourante, qui, roster } = require("../http");
 
 function traiter(req, res, url) {
   if (req.method === "POST" && url === "/action") {

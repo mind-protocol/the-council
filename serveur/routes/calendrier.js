@@ -1,9 +1,9 @@
 // GET /calendrier — les bandes, les jours et les notes d'agenda d'un siège.
 const fs = require("fs");
 const path = require("path");
-const { RACINE, dateDe, lireCroyance } = require("../contexte");
+const { RACINE, dateDe, lireCroyance } = require("../http");
 const { envoyer } = require("../http");
-const { qui } = require("../siege");
+const { qui } = require("../http");
 
 function traiter(req, res, url) {
   if (req.method === "GET") {

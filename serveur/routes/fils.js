@@ -1,9 +1,9 @@
 // GET /fils, /depeches, /objectifs et POST /fils — les fils du joueur et ses desseins.
 const fs = require("fs");
 const path = require("path");
-const { RACINE, cheminEtat, dateDe, lireCroyance } = require("../contexte");
+const { RACINE, cheminEtat, dateDe, lireCroyance } = require("../http");
 const { envoyer } = require("../http");
-const { qui } = require("../siege");
+const { qui } = require("../http");
 
 function traiter(req, res, url) {
   if (req.method === "GET") {

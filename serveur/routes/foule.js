@@ -1,7 +1,7 @@
 // POST /foule/journal — la page d'essai verse ce qu'elle a vu bouger.
 const fs = require("fs");
 const path = require("path");
-const { RACINE } = require("../contexte");
+const { RACINE } = require("../http");
 const { envoyer } = require("../http");
 
 function traiter(req, res, url) {

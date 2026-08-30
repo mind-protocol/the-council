@@ -10,10 +10,10 @@
 const fs = require("fs");
 const path = require("path");
 const bibliotheque = require("../bibliotheque");
-const { RACINE } = require("../contexte");
+const { RACINE } = require("../http");
 const { numerosDesTetes, planModele } = require("./activations");
 const { portraitDefaut, portraitFrais } = require("../portraits");
-const { monPersonnage, roster } = require("../siege");
+const { monPersonnage, roster } = require("../http");
 
 function composer(req, url) {
   try {

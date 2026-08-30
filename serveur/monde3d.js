@@ -17,9 +17,9 @@
 
 const fs = require("fs");
 const path = require("path");
-const { RACINE } = require("./contexte");
+const { RACINE } = require("./http");
 const { envoyer } = require("./http");
-const { qui } = require("./siege");
+const { qui } = require("./http");
 
 const LIEUX3D = {
   "port-real": {

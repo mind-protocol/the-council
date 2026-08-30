@@ -2,9 +2,9 @@
 const fs = require("fs");
 const path = require("path");
 const bibliotheque = require("../bibliotheque");
-const { RACINE, cheminNotes } = require("../contexte");
+const { RACINE, cheminNotes } = require("../http");
 const { envoyer, inlinerFigure } = require("../http");
-const { monPersonnage, qui, roster, volumesVisibles } = require("../siege");
+const { monPersonnage, qui, roster, volumesVisibles } = require("../http");
 
 function traiter(req, res, url) {
   if (req.method === "GET") {

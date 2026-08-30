@@ -7,7 +7,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const { RACINE } = require("./contexte");
+const { RACINE } = require("./http");
 
 let _defautSvg = null;
 function teinteDuNom(nom) {
