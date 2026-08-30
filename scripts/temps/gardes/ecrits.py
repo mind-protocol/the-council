@@ -138,6 +138,12 @@ def verifier_pensees(e, r):
                "quartier incalculable : {}".format(str(exc)[:120]))
 
 
+# LES PENSEES NE SE CALCULENT PLUS DANS LE TICK, et `travaux.py` a disparu
+# avec son excitation. Un compteur ne pouvait pas dire ce qu'un homme a
+# appris : ce qui le dit, c'est sa JOURNEE — le quartier ou il se tient,
+# les creux qu'elle lui laisse, les sources a portee de ces creux. C'est
+# `presence.py` qui le mesure et `evaluer.py` qui en tire la feuille de
+# route.
 def qui_a_du_temps(e):
     """QUI DOIT UNE JOURNEE — ce que `convoquer.py` disait, mesure autrement.
 
