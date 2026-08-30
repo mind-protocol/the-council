@@ -15,6 +15,7 @@ import json
 import os
 import sys
 
+from etat.expose import tables  # LA PORTE de etat/ : poser_clause lit et ecrit par elle
 from temps.regence import (
     ETAT, RACINE, date_du_monde, dire_date, est_en_regence, franchissements, horloge_de, lire_json, lire_table, nom_de, sieges, sieges_occupes, sieges_vacants, texte_du_refus)
 # --------------------------------------------------------------------------
@@ -92,8 +93,7 @@ def poser_clause(pid, vraiment):
         print("\n(rien n'a été écrit — ajoutez --vraiment)")
         return
     chemin = os.path.join(ETAT, "intentions.json")
-    with io.open(chemin, encoding="utf-8") as f:
-        tetes = json.load(f)
+    tetes = tables.lire(chemin)  # LA PORTE de etat/ : corrompu -> plante net
     touche = False
     for entree in tetes:
         if not isinstance(entree, dict) or \
@@ -116,11 +116,7 @@ def poser_clause(pid, vraiment):
         touche = True
     if not touche:
         sys.exit("la tête de %s a disparu entre-temps : rien écrit." % pid)
-    temporaire = chemin + ".regence.tmp"
-    with io.open(temporaire, "w", encoding="utf-8") as f:
-        json.dump(tetes, f, ensure_ascii=False, indent=2)
-        f.write(u"\n")
-    os.replace(temporaire, chemin)
+    tables.ecrire(chemin, tetes)  # atomique, indent=2 — remplace l'ancien temporaire+replace
     print("\nécrit dans etat/intentions.json.")
 
 

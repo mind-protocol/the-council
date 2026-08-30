@@ -8,8 +8,9 @@
 # vivent dans presence.py, qui reexporte d'ici.
 import json, io, os, sys, heapq  # noqa: F401 — le meme socle que presence.py
 
+from etat.expose import tables  # LA PORTE de etat/ (lecture seule ici)
 from temps.presence import (
-    _lire, Chateau, PEREMPTION, RAYON_MINUTES, absolu, bande_precedente, charger, date_monde, exception_valide, heure, joueurs, modele_de, ou_est, piece_de_bande, resoudre)
+    Chateau, PEREMPTION, RAYON_MINUTES, absolu, bande_precedente, charger, date_monde, exception_valide, heure, joueurs, modele_de, ou_est, piece_de_bande, resoudre)
 # --------------------------------------------------- le quartier du joueur
 #
 # Un acteur ne se déplace, ne pense et ne travaille que dans le quartier d'un
@@ -36,11 +37,11 @@ def ancres():
     futur : le quartier serait vide et personne ne penserait. Chaque siège
     définit donc son quartier à SON présent, et le quartier est leur union.
     """
-    horloges = _lire("horloges.json", {}) or {}
+    horloges = tables.lire("horloges.json", {}) or {}
     defaut = date_monde()
-    chateau = Chateau(_lire("chemins.json", {}))
+    chateau = Chateau(tables.lire("chemins.json", {}))
     out = []
-    for x in _lire("joueurs.json", []) or []:
+    for x in tables.lire("joueurs.json", []) or []:
         if not isinstance(x, dict) or not x.get("occupe"):
             continue
         pid = x.get("personnage_id")
@@ -191,7 +192,7 @@ def creux(pid, routines=None, chateau=None, minimum=MINUTES_MINIMUM):
 
 def noms():
     d = {}
-    for p in _lire("personnages.json", []) or []:
+    for p in tables.lire("personnages.json", []) or []:
         d[p.get("id")] = p.get("nom")
     return d
 
@@ -247,7 +248,7 @@ def main():
         # laquelle un conseil attend.
         quand = date_monde()
         pid = args[args.index("--chercher") + 1]
-        ou_moi = resoudre(quand).get(_lire("journal.json", {})
+        ou_moi = resoudre(quand).get(tables.lire("journal.json", {})
                                      .get("personnage_joueur_id") or "")
         ici = args[args.index("--depuis") + 1] if "--depuis" in args else \
             (ou_moi or {}).get("salle")
