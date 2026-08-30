@@ -36,3 +36,7 @@ import boucle_activation  # noqa: E402,F401 — relit cette porte : depecher dej
 # Descendue au lot 2 : scripts/dossier.py -> agents/matiere.py (§7).
 from agents import matiere  # noqa: E402,F401 — le dossier d'un sujet, rassemble
 from agents.matiere import main as dossier_main  # noqa: E402,F401 — l'entree CLI de la facade
+# Descendue au lot 2 : scripts/juger.py -> agents/jugement.py (§7). Le hook
+# Stop tape toujours scripts/juger.py, la facade.
+from agents import jugement  # noqa: E402,F401 — le juge separe, en claude -p
+from agents.jugement import main as juger_main  # noqa: E402,F401 — l'entree CLI de la facade
