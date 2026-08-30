@@ -68,13 +68,11 @@ from temps.expose import occupation  # qui est ASSIS — mesure, pas drapeau
 # La regence (docs/regence.md) : ce qu'un siege vacant peut faire et ce qu'il
 # doit rendre. Branche ici pour la seule garde — clause posee, passation due.
 from temps.expose import regence
+from etat.expose import tables  # LA PORTE de etat/
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ETAT = os.path.join(RACINE, "etat")
 STAGING = ETAT
-
-JOURS_PAR_LUNE = 30
-LUNES_PAR_AN = 12
 
 # L'ECHELLE A DISPARU, et le QUARTIER la remplace (docs/boucle-acteurs.md).
 #
@@ -149,66 +147,20 @@ SILENCE_RUMEUR = {"vif": 5, "couve": 15}
 
 
 # ------------------------------------------------------------------- dates
+# Demenage dans temps/calendrier.py (decoupage du container temps).
 
-def jour_absolu(date):
-    """{annee, lune, jour} -> entier de jours. 12 lunes de 30 jours."""
-    if not isinstance(date, dict):
-        return None
-    try:
-        a = int(date.get("annee"))
-        l = int(date.get("lune"))
-        j = int(date.get("jour"))
-    except (TypeError, ValueError):
-        return None
-    return (a * LUNES_PAR_AN + (l - 1)) * JOURS_PAR_LUNE + (j - 1)
-
-
-def date_de(n):
-    """Entier de jours -> {annee, lune, jour}."""
-    jour = n % JOURS_PAR_LUNE
-    lunes = n // JOURS_PAR_LUNE
-    return {"annee": lunes // LUNES_PAR_AN,
-            "lune": (lunes % LUNES_PAR_AN) + 1,
-            "jour": jour + 1}
-
-
-def fmt(date):
-    """{annee, lune, jour} -> '129.3.17'."""
-    if not isinstance(date, dict):
-        return "?"
-    return "{}.{}.{}".format(date.get("annee", "?"), date.get("lune", "?"),
-                             date.get("jour", "?"))
-
-
-def lire_date(texte):
-    """'129.3.20' -> {annee, lune, jour}."""
-    morceaux = texte.replace("/", ".").replace("-", ".").split(".")
-    if len(morceaux) != 3:
-        sys.exit("date illisible : {} (attendu 129.3.20)".format(texte))
-    try:
-        a, l, j = (int(m) for m in morceaux)
-    except ValueError:
-        sys.exit("date illisible : {} (attendu 129.3.20)".format(texte))
-    if not 1 <= l <= LUNES_PAR_AN or not 1 <= j <= JOURS_PAR_LUNE:
-        sys.exit("date hors calendrier : {} (12 lunes de 30 jours)".format(texte))
-    return {"annee": a, "lune": l, "jour": j}
+from temps.calendrier import (JOURS_PAR_LUNE, LUNES_PAR_AN,  # noqa: E402,F401
+                              jour_absolu, date_de, fmt, lire_date)
 
 
 # ---------------------------------------------------------------- lecture
 
 def charger(nom, defaut):
-    """Lit etat/<nom>.json. Lecture seule, toujours."""
-    chemin = os.path.join(ETAT, nom + ".json")
-    if not os.path.isfile(chemin):
-        return defaut
-    with io.open(chemin, encoding="utf-8") as fh:
-        contenu = fh.read().strip()
-    if not contenu:
-        return defaut
+    """Lit etat/<nom>.json par la porte. Corrompu : sys.exit, avec le chemin."""
     try:
-        return json.loads(contenu)
-    except ValueError as err:
-        sys.exit("etat/{}.json illisible : {}".format(nom, err))
+        return tables.lire(nom, defaut)
+    except tables.TableAbimee as err:
+        sys.exit(str(err))
 
 
 class Etat(object):
@@ -605,18 +557,13 @@ def empreintes_etat(joueur=None):
 
 
 def ecrire_proposition(nom_fichier, donnees):
-    """SEULE ecriture du script. Refuse tout chemin hors etat/."""
+    """SEULE ecriture du script. Refuse tout chemin hors etat/, puis la porte."""
     cible = os.path.abspath(os.path.join(STAGING, nom_fichier))
     permis = os.path.abspath(STAGING) + os.sep
     if not cible.startswith(permis):
         raise RuntimeError(
             "ecriture refusee hors etat/ : {}".format(cible))
-    if not os.path.isdir(STAGING):
-        os.makedirs(STAGING)
-    with io.open(cible, "w", encoding="utf-8") as fh:
-        fh.write(json.dumps(donnees, ensure_ascii=False, indent=2))
-        fh.write("\n")
-    return cible
+    return tables.ecrire(cible, donnees)
 
 
 # ------------------------------------------------------- MODE A : verifier
