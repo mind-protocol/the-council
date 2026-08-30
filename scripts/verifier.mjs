@@ -42,6 +42,13 @@
  * UNE MESURE QUI PASSE AU VERT DOIT MONTER EN GARDE, et la commande le dit
  * quand ca arrive. Sans quoi le second rang deviendrait le cimetiere ou l'on
  * range ce qu'on ne veut plus regarder.
+ *
+ * HISTOIRE : le 30 du 8e mois 2026, douze epreuves (dix gardes — banc-moteur,
+ * banc-monde, banc-combattant, banc-commandement, banc-formation,
+ * banc-circulation, banc-pensees, banc-reflexion-adapt, banc-qui-conduit,
+ * incendie-ville — et deux mesures, banc-epreuve et banc-dynamiques) sont
+ * parties avec le moteur de bataille, supprime du depot et remplace par des
+ * appels au depot voisin `batailles` : elles n'exercaient que lui.
  */
 import { spawn } from "node:child_process";
 import path from "node:path";

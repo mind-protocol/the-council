@@ -200,7 +200,7 @@ flowchart TB
 
 *Ils lisent tout et n'ecrivent rien : gardes, mesures, etalons, audit*
 
-**24 fichiers, 5450 lignes.** Porte : `scripts/verifier.mjs`
+**24 fichiers, 5457 lignes.** Porte : `scripts/verifier.mjs`
 
 - **scripts/** (20) — `croisement.py`, `exporter_aurore.py`, `parvenir.py`, `simuler_reveil_maisons.py`, `graphe_archi.py`, `verifier.mjs`, `essai_occupation.py`, `scorer_activation_hightower.py`, `chercher_activation_hightower.py` … et 11 autres
 - **serveur/** (4) — `test_siege.js`, `test_marche.js`, `test_piece_http.js`, `test_bibliotheque.js`
