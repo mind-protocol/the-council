@@ -88,6 +88,14 @@ Sept containers de **sujet**, deux transverses. Chacun possède son sujet **de b
 | 📐 **doctrine** | les contrats : `schema.md` (intouchable), `metier.md`, les fiches | `docs/` |
 | 🔬 **bancs** | gardes, mesures, étalons, l'audit | `verifier.mjs`, `scripts/tests/`, `banc-*.js`, `analyse/` |
 
+### L'invariant du siège *(décision du 30 — la synthèse qui unifie la boucle)*
+
+> **Un acteur — humain ou PNJ — est un SIÈGE.** Quatre choses le font : un *point de vue servi* (la scène rendue / le brief), un *canal d'action* (l'inbox / les écrits + propositions), un *fil propre* (le flux par siège / le vécu), un *brouillard* (`info.json` par siège / croyances + diffusion). Le MJ — principal ou de zone, interactif ou `claude -p` — est la même machinerie d'arbitrage devant des sièges. Les deux boucles d'`architecture.md` (jeu, agents) sont **une boucle, deux profils** : temps de scène et journée.
+
+C'était déjà latent : `sieges.py` s'annonce « s'asseoir dans un personnage, en quitter un », et *Laisser faire* est la bascule de profil d'un siège. Trois asymétries restent nommées pour que l'unification ne devienne pas une bouillie : la **cadence** (minutes de scène / journées), le **rendu** (mise en scène / dossier), la **Règle Zéro** (les paroles du PNJ sont protégées par la dépêche ; le joueur écrit les siennes librement).
+
+Conséquences sur les containers : l'intention d'🧠 `agents` est réécrite (« les sièges, humains comme PNJ ») et `sieges.py` y passe (depuis `scene`) ; 📜 `scène` se resserre sur le **rendu du profil scène**. **C'est aussi le principe de découpage du lot 2 d'`agents/`** : la partie générique n'est pas « générique au rôle dépêché », elle est générique au *siège* — servir un point de vue, recevoir des actes, tenir un fil, tenir un brouillard ; le chemin joueur et le chemin PNJ deviennent deux profils de la même porte. Tension laissée ouverte : `serveur/siege.js` (le brouillard *en lecture*, 12 lecteurs) reste au `socle` — le siège-lecture n'est pas le siège-machinerie ; à réexaminer quand `agents` s'éclatera.
+
 ### La forme d'un container
 
 ```
@@ -183,6 +191,7 @@ La question a été posée : faut-il ce refactor, puis un second pour les featur
 | bruit de fond (deux co-présents se sont parlé → entrée de `diffusion` canal rumeur/témoin, zéro appel LLM) | ⏱️ `temps` (le tick pose les entrées) + 🗄️ `etat` (la table existe) | non — un module de plus |
 | le billet (un homme écrit *à* quelqu'un ; arrive au brief de sa prochaine dépêche) | 🧠 `agents` (le brief) + 🗄️ `etat` (plis) | non |
 | rencontres jouées (tours alternés sur les sessions `--resume` existantes, fil au parloir) | 🧠 `agents` (`rencontres.py`, `election.py`) + 📜 `scene` (le greffage : événement + témoins + diffusion) | non |
+| le **vécu** (un fil par homme, pour le debug : index chronologique ancré — jamais une source ; les gestes archivés depuis `depouiller()` au hook Stop, le seul morceau périssable) | 🧠 `agents` (c'est son `introspect()` — le seul container sans viz) + 🗄️ `etat` (`journaux/<homme>/`) | non — et il passe AVANT rencontres et MJs : leur debug en dépendra, et un MJ-rôle hérite d'un vécu gratuitement |
 | MJs via `claude -p`, prompt dédié (un MJ devient un **rôle** de la même machinerie que les hommes) | 🧠 `agents` (la dépêche se généralise : `depecher(rôle, manuel)`) + 📐 `doctrine` (les manuels par rôle, comme `metier.md`) | **non structurel — mais c'est LA feature qui doit informer l'éclatement d'`agents`** : séparer le générique au rôle (session, resume, brief, retour, jugement) du propre à l'homme (greffe, tête, pensées) |
 
 D'où **le refactor en deux vitesses** (et pas deux refactors) :

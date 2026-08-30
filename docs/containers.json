@@ -84,13 +84,14 @@
   },
 
   "agents": {
-    "intention": "La cognition des hommes : brief d'entree, journee vecue, ecrits rendus",
+    "intention": "LES SIEGES, humains comme PNJ : servir un point de vue, recevoir des actes, tenir un fil (le vecu), tenir un brouillard — deux profils (scene / journee), une machinerie",
     "emoji": "🧠",
     "rang": 2,
     "porte": "scripts/agents/expose.py",
     "fichiers": [
       "scripts/agents/expose.py",
       "scripts/depecher.py", "scripts/boucle_activation.py", "scripts/parloir.py",
+      "scripts/sieges.py",
       "scripts/juger.py", "scripts/dossier.py", "scripts/affecter.py",
       "serveur/domaine/activations.js", "serveur/domaine/regie.js"
     ]
@@ -147,14 +148,14 @@
   },
 
   "scene": {
-    "intention": "LA PEAU : le flux, l'inbox, la montre, les sieges — ce que le joueur voit ; personne ne la lit",
+    "intention": "LE RENDU du profil scene : le flux, l'inbox, la montre, la mise en scene — ce que le joueur voit ; personne ne la lit",
     "emoji": "📜",
     "rang": 4,
     "porte": "scripts/scene/expose.py",
     "fichiers": [
       "scripts/scene/expose.py",
       "scripts/append_flux.py", "scripts/tunnel.py", "scripts/regie.py",
-      "scripts/sieges.py", "scripts/seed_flux.py", "scripts/guetteur.sh",
+      "scripts/seed_flux.py", "scripts/guetteur.sh",
       "serveur/serveur.js", "serveur/bibliotheque.js",
       "serveur/routes/scene.js", "serveur/routes/action.js",
       "serveur/routes/piece.js", "serveur/routes/fils.js",
