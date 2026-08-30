@@ -33,3 +33,6 @@ from agents.affectation import main as affecter_main  # noqa: E402,F401 — l'en
 import parloir  # noqa: E402,F401 — parler a un homme depeche ; lu par depecher
 import depecher  # noqa: E402,F401 — relit cette porte : affecter deja lie
 import boucle_activation  # noqa: E402,F401 — relit cette porte : depecher deja lie
+# Descendue au lot 2 : scripts/dossier.py -> agents/matiere.py (§7).
+from agents import matiere  # noqa: E402,F401 — le dossier d'un sujet, rassemble
+from agents.matiere import main as dossier_main  # noqa: E402,F401 — l'entree CLI de la facade
