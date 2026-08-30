@@ -38,5 +38,7 @@ from plan.etat_du_plan import main as etat_du_plan_main  # noqa: E402,F401 — l
 # Descendue au lot 2 : le paquet plan/criticite/, plus la commande racine.
 from plan import criticite  # noqa: E402,F401 — le module entier, pour `criticite.calculer` etc.
 from plan.criticite import entree as criticite_main  # noqa: E402,F401 — l'entree CLI de la facade
-import mesures  # noqa: E402,F401
+# Descendue au lot 2 : le paquet plan/mesures/, plus la commande racine.
+from plan import mesures  # noqa: E402,F401
+from plan.mesures import main as mesures_main  # noqa: E402,F401 — l'entree CLI de la facade
 import tisser  # noqa: E402,F401
