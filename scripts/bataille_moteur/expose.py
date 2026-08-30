@@ -7,11 +7,10 @@ remplace une porte par une porte — `cuire(ordre) -> annales` vivra ici.
 
 Rien de consomme encore : personne n'importe `bataille.py` aujourd'hui.
 
-HOMONYMIE A CONNAITRE : tant que `scripts/bataille.py` existe a la racine, le
-module `bataille` masque le paquet `bataille/` — `from bataille.expose import`
-echouerait. Sans consommateur ce n'est pas un probleme aujourd'hui ; le jour
-ou la porte sert, c'est la commande qui devient facade et le conflit se regle
-au lot 2 (docs/organisation.md §8 le sait deja pour `fils`).
+HOMONYMIE LEVEE (2026-08-30) : le paquet s'appelle `bataille_moteur` parce que
+`scripts/bataille.py` (la commande, chemin GELE — cite dans les cahiers
+in-fiction de etat/books/) masquait tout paquet nomme `bataille`.
+`from bataille_moteur.expose import ...` fonctionne des aujourd'hui.
 """
 
 import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/

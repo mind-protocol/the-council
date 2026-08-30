@@ -300,7 +300,7 @@ scripts/scene/           📜  le flux, l'inbox, la montre, les sièges
   tunnel.py  regie.py  sieges.py  seed_flux.py
   guetteur.sh              ← guetteur.sh
 
-scripts/bataille/        ⚔️  D1 : la porte qui deviendra l'adaptateur
+scripts/bataille_moteur/ ⚔️  D1 : la porte qui deviendra l'adaptateur (le paquet ne peut pas s'appeler `bataille` : la commande gelee `scripts/bataille.py` le masquerait)
   expose.py                    cuire(ordre) → annales · l'unique point d'entrée
   cuisson.py               ← bataille.py
 

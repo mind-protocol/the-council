@@ -84,6 +84,10 @@ contrôler qu'un classement n'a rien cassé :
 
 **Le tour de jeu** — `reprise.py` (la feuille de reprise, premier geste),
 `dossier.py`, `fils.py`, `criticite.py`, `evaluer.py`, `veille.py`.
+⚠ Homonymie à connaître (lot 2 la lèvera) : `fils.py` = *les affaires en cours*
+(plan), tandis que `ecrans/modules/fils.js` = *le fil du récit* (scène) — deux
+containers, un seul mot ; le chemin racine `scripts/fils.py` est gelé, c'est le
+module d'écran qui devra changer de nom (docs/organisation.md §8 ⑧).
 
 **La Règle Zéro** — `depecher.py` (envoyer un homme vivre sa journée),
 `parloir.py` (lui parler pendant qu'il travaille), `presence.py` (qui est à

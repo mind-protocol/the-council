@@ -60,25 +60,21 @@ flowchart TB
   scene -->|4| peinture
   socle -->|4| scene
   agents -->|3| temps
+  plan -->|3| etat
   bataille -->|3| socle
   temps -->|3| socle
   scene -->|3| bataille
-  bancs -.->|2| etat
   scene -->|2| temps
   plan -->|2| temps
   bancs -.->|2| temps
-  temps -->|2| plan
   monde -->|2| bataille
   socle -->|2| plan
   agents -->|1| monde
   bancs -.->|1| monde
   etat -->|1| plan
   etat -->|1| temps
-  agents -->|1| etat
   peinture -->|1| plan
   monde -->|1| agents
-  temps -->|1| etat
-  temps -->|1| agents
   socle -->|1| bataille
   agents -->|1| scene
   plan -->|1| peinture
@@ -111,25 +107,21 @@ flowchart TB
 | `scene` | `peinture` | 4 |  |
 | `socle` | `scene` | 4 | ⚠️ remontée |
 | `agents` | `temps` | 3 |  |
+| `plan` | `etat` | 3 |  |
 | `bataille` | `socle` | 3 |  |
 | `temps` | `socle` | 3 |  |
 | `scene` | `bataille` | 3 |  |
-| `bancs` | `etat` | 2 |  |
 | `scene` | `temps` | 2 |  |
 | `plan` | `temps` | 2 |  |
 | `bancs` | `temps` | 2 |  |
-| `temps` | `plan` | 2 | ⚠️ remontée |
 | `monde` | `bataille` | 2 | ⚠️ remontée |
 | `socle` | `plan` | 2 | ⚠️ remontée |
 | `agents` | `monde` | 1 |  |
 | `bancs` | `monde` | 1 |  |
 | `etat` | `plan` | 1 | ⚠️ remontée |
 | `etat` | `temps` | 1 | ⚠️ remontée |
-| `agents` | `etat` | 1 |  |
 | `peinture` | `plan` | 1 |  |
 | `monde` | `agents` | 1 | ⚠️ remontée |
-| `temps` | `etat` | 1 |  |
-| `temps` | `agents` | 1 | ⚠️ remontée |
 | `socle` | `bataille` | 1 | ⚠️ remontée |
 | `agents` | `scene` | 1 | ⚠️ remontée |
 | `plan` | `peinture` | 1 | ⚠️ remontée |
@@ -143,7 +135,7 @@ flowchart TB
 
 *La seule verite : un fait qui n'y est pas ecrit n'existe pas*
 
-**5 fichiers, 2135 lignes.** Porte : `scripts/etat/expose.py`
+**5 fichiers, 2187 lignes.** Porte : `scripts/etat/expose.py`
 
 - **scripts/** (5) — `appliquer.py`, `tables.py`, `purger.py`, `ajouter.py`, `veille.py`
 
@@ -160,7 +152,7 @@ flowchart TB
 
 *La ville : masque, plan, bati, gens, relief — sa cuisson, son service et son ecran*
 
-**108 fichiers, 43184 lignes.** Porte : `scripts/monde/expose.py`
+**108 fichiers, 43222 lignes.** Porte : `scripts/monde/expose.py`
 
 - **scripts/** (63) — `plan_ville.py`, `peyredragon_interieurs.py`, `densifier.py`, `mesure_murs.js`, `sac.js`, `peupler.py`, `carte_geo.py`, `formes.py`, `coudre.py` … et 54 autres
 - **serveur/** (9) — `monde3d.js`, `marche.js`, `carte.js`, `presence.js`, `monde-jeu.js`, `terrain.js`, `foule.js`, `chemin.js`, `marche.js`
@@ -170,16 +162,16 @@ flowchart TB
 
 *Possede le temps hors-scene : horloges, echeances, diffusion — calcule et propose, ne decide jamais*
 
-**9 fichiers, 6832 lignes.** Porte : `scripts/temps/expose.py`
+**9 fichiers, 4274 lignes.** Porte : `scripts/temps/expose.py`
 
-- **scripts/** (8) — `tick.py`, `presence.py`, `regence.py`, `evaluer.py`, `occupation.py`, `reprise.py`, `jours_relatifs.py`, `expose.py`
+- **scripts/** (8) — `presence.py`, `regence.py`, `evaluer.py`, `tick.py`, `occupation.py`, `reprise.py`, `jours_relatifs.py`, `expose.py`
 - **serveur/** (1) — `calendrier.js`
 
 ### 🧠 agents — rang 2
 
 *LES SIEGES, humains comme PNJ : servir un point de vue, recevoir des actes, tenir un fil (le vecu), tenir un brouillard — deux profils (scene / journee), une machinerie*
 
-**10 fichiers, 8507 lignes.** Porte : `scripts/agents/expose.py`
+**10 fichiers, 8459 lignes.** Porte : `scripts/agents/expose.py`
 
 - **scripts/** (8) — `boucle_activation.py`, `depecher.py`, `affecter.py`, `parloir.py`, `dossier.py`, `juger.py`, `sieges.py`, `expose.py`
 - **serveur/** (2) — `activations.js`, `regie.js`
@@ -188,7 +180,7 @@ flowchart TB
 
 *Le Grand Plan : cahiers, couverture, criticite, levees — ce que les hommes ecrivent et ce qu'on en tire*
 
-**52 fichiers, 18393 lignes.** Porte : `scripts/plan/expose.py`
+**52 fichiers, 18335 lignes.** Porte : `scripts/plan/expose.py`
 
 - **scripts/** (24) — `criticite.py`, `etat_du_plan.py`, `couverture.py`, `mesures.py`, `tisser.py`, `normaliser_etats.py`, `scinder_moyens.py`, `plan_leves.py`, `corriger_plan.py` … et 15 autres
 - **serveur/** (6) — `echiquier.js`, `atelier.js`, `agenda.js`, `livres.js`, `recherche.js`, `echiquier.js`
@@ -198,7 +190,7 @@ flowchart TB
 
 *Le moteur de bataille — EN SURSIS : sa porte deviendra l'adaptateur vers le depot `batailles`*
 
-**49 fichiers, 29070 lignes.** Porte : `scripts/bataille/expose.py`
+**49 fichiers, 29075 lignes.** Porte : `scripts/bataille_moteur/expose.py`
 
 - **scripts/** (2) — `bataille.py`, `expose.py`
 - **serveur/** (1) — `bataille.js`
@@ -208,7 +200,7 @@ flowchart TB
 
 *Ce qui appelle une API payante : portraits, salles, voix, chansons*
 
-**15 fichiers, 2664 lignes.** Porte : `scripts/peinture/expose.py`
+**15 fichiers, 2670 lignes.** Porte : `scripts/peinture/expose.py`
 
 - **scripts/** (11) — `gen_voix.py`, `figures.py`, `nappe.py`, `gen_salles.py`, `generer_chanson.py`, `figure_forces.py`, `medaillons.py`, `composer.py`, `audition_voix.py` … et 2 autres
 - **serveur/** (4) — `voix.js`, `medias.js`, `portraits.js`, `voix.js`
@@ -217,7 +209,7 @@ flowchart TB
 
 *LE RENDU du profil scene : le flux, l'inbox, la montre, la mise en scene — ce que le joueur voit ; personne ne la lit*
 
-**39 fichiers, 8507 lignes.** Porte : `scripts/scene/expose.py`
+**39 fichiers, 8485 lignes.** Porte : `scripts/scene/expose.py`
 
 - **scripts/** (5) — `append_flux.py`, `tunnel.py`, `regie.py`, `seed_flux.py`, `expose.py`
 - **serveur/** (8) — `fils.js`, `action.js`, `bibliotheque.js`, `piece.js`, `vue.js`, `scene.js`, `joueur.js`, `serveur.js`
@@ -227,18 +219,18 @@ flowchart TB
 
 *Ils lisent tout et n'ecrivent rien : gardes, mesures, etalons, audit*
 
-**26 fichiers, 5923 lignes.** Porte : `scripts/verifier.mjs`
+**26 fichiers, 5922 lignes.** Porte : `scripts/verifier.mjs`
 
-- **scripts/** (22) — `croisement.py`, `exporter_aurore.py`, `parvenir.py`, `verifier.mjs`, `simuler_reveil_maisons.py`, `graphe_archi.py`, `croise.js`, `scorer_activation_hightower.py`, `essai_occupation.py` … et 13 autres
+- **scripts/** (22) — `croisement.py`, `exporter_aurore.py`, `parvenir.py`, `verifier.mjs`, `simuler_reveil_maisons.py`, `graphe_archi.py`, `croise.js`, `essai_occupation.py`, `scorer_activation_hightower.py` … et 13 autres
 - **serveur/** (4) — `test_siege.js`, `test_marche.js`, `test_piece_http.js`, `test_bibliotheque.js`
 
 ## Les écarts à la cible
 
 | écart | compte | ce que ça veut dire |
 |---|---:|---|
-| orphelins | 0 | un fichier qu'aucun container ne réclame |
-| liens hors porte | 222 | un lien qui entre ailleurs que par la porte |
-| dépendances qui remontent | 19 | violation de la loi 2 (rangs) |
+| orphelins | 14 | un fichier qu'aucun container ne réclame |
+| liens hors porte | 220 | un lien qui entre ailleurs que par la porte |
+| dépendances qui remontent | 17 | violation de la loi 2 (rangs) |
 | commandes-bibliothèques | 0 | une commande racine importée comme module |
 
 Ces quatre chiffres ne doivent que **descendre**. Ils sont la distance entre
