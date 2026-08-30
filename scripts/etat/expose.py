@@ -23,3 +23,5 @@ import tables  # noqa: E402,F401 — la porte unique des ecritures dans etat/
 import appliquer  # noqa: E402,F401 — le vocabulaire ferme des mutations ; lu par boucle_activation
 from etat import entree  # noqa: E402,F401 — une entree a la fois, ecriture atomique ; lu par passer
 ajouter = entree  # l'ancien nom reste vivant pour les importeurs historiques (passer, facade ajouter.py)
+from etat import empreintes  # noqa: E402,F401 — le detecteur de fumee (veille) ; l'occupation lit ses fichiers, pas son code
+veille = empreintes  # l'ancien nom reste vivant pour la facade veille.py
