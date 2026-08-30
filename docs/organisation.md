@@ -2,7 +2,7 @@
 
 **Proposition, rien n'est acté.** Elle se discute avant qu'un fichier bouge.
 
-Ce document ne parle pas de ce qui se passe dans le jeu — c'est le travail de [`architecture.md`](architecture.md), qui décrit les quatre boucles et leurs invariants. Celui-ci dit **où vit le code, par quelle porte on y entre, et ce qui empêche un sujet de s'éparpiller**. Les deux se lisent ensemble : l'un est la physiologie, l'autre l'anatomie.
+Ce document ne parle pas de ce qui se passe dans le jeu — c'est le travail de [`architecture.md`](architecture.md), qui décrit la boucle des sièges (deux profils), la boucle du temps et leurs invariants. Celui-ci dit **où vit le code, par quelle porte on y entre, et ce qui empêche un sujet de s'éparpiller**. Les deux se lisent ensemble : l'un est la physiologie, l'autre l'anatomie.
 
 ---
 

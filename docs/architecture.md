@@ -13,9 +13,9 @@ monde est **le disque** — jamais la conversation.
 |---|---|---|
 | 🗄️ **État** | `etat/` | La seule vérité : un fait qui n'y est pas écrit n'existe pas |
 | ⏱️ **Arithmétique** | `tick.py`, `appliquer.py`, `etat/staging/` | Possède le temps hors-scène ; calcule et propose, ne décide jamais |
-| 🧠 **Agents** | `depecher.py`, `boucle_activation.py`, sessions PNJ | La cognition des hommes : brief d'entrée, journée vécue, écrits rendus |
+| 🧠 **Agents** | `depecher.py`, `boucle_activation.py`, `sieges.py`, sessions PNJ | Les SIÈGES, humains comme PNJ : un point de vue servi, des actes reçus, un fil propre, un brouillard — deux profils (scène / journée), une machinerie |
 | 🗣️ **Parloir** | `parloir.py`, `etat/parloir/`, hooks `PostToolUse` | Le fil régie↔agent pendant qu'une session vit — hors fiction |
-| 🎭 **MJ** | session Claude + `CLAUDE.md`, `docs/metier.md` | L'orchestrateur : élit, met en scène, arbitre les propositions — n'invente jamais une parole |
+| 🎭 **MJ** | session Claude + `CLAUDE.md`, demain `claude -p` + manuel par rôle | Une FAMILLE d'arbitres devant des sièges : principal ou de zone, interactif ou dépêché — élit, met en scène, arbitre ; n'invente jamais une parole |
 | 📜 **Flux & Rendu** | `append_flux.py`, `etat/flux.jsonl`, `serveur/`, `ecrans/modules/` | Ce que le joueur voit : append-only, curseur client, une page persistante |
 | 📥 **Inbox** | `etat/inbox/`, `guetteur.sh` | Les actes du joueur qui réveillent le MJ ; rien d'autre ne le réveille |
 | 📐 **Doctrine** | `docs/` | Les contrats : `schema.md` (format, intouchable), `metier.md`, `carte.md`, les fiches de conception |
@@ -64,42 +64,41 @@ monde est **le disque** — jamais la conversation.
 - `metier.md` — le manuel qu'on met entre les mains d'un dépêché (autonome).
 - Les fiches de conception : `boucle-acteurs.md`, `mains.md`, `criticite.md`, `carte.md`, `books.md`, celle-ci.
 
-## Les liens — quatre boucles, et une seule porte d'écriture
+## Les liens — une boucle à deux profils, plus le temps
+
+**L'invariant du siège** (décision du 30, gravé aussi dans [`organisation.md`](organisation.md)) : un acteur — humain ou PNJ — est un **siège**. Quatre choses le font : un *point de vue servi* (la scène rendue / le brief), un *canal d'action* (l'inbox / les écrits + propositions), un *fil propre* (le flux par siège / le vécu), un *brouillard* (`info.json` / croyances + diffusion). Les deux anciennes boucles (« jeu » et « agents ») sont donc **la même boucle**, vue sous deux profils : le **profil scène** (cadence en minutes, rendu mis en scène) et le **profil journée** (cadence en journées, dossier). *Laisser faire* est la bascule de profil d'un siège humain.
 
 ```mermaid
 flowchart LR
-    subgraph JEU["Boucle de jeu (temps de scène)"]
-        J[Joueur] -->|POST| I[📥 Inbox]
-        I -->|guetteur| MJ[🎭 MJ]
-        MJ -->|append_flux| F[📜 Flux]
-        F -->|/scene| J
-    end
-    subgraph AGENTS["Boucle des agents (journées)"]
-        MJ -->|depecher / activation| A[🧠 Session PNJ]
-        A -->|rapport, pensées, conclusion| E[(🗄️ État)]
-        A -->|tete proposée| S[etat/staging]
-        MJ <-->|🗣️ parloir| A
+    subgraph BOUCLE["LA boucle des sièges — deux profils"]
+        SJ["💺 siège · profil SCÈNE<br/>(le joueur)"] -->|"actes : POST 📥 inbox"| MJ["🎭 MJ<br/>principal / de zone<br/>interactif / dépêché"]
+        MJ -->|"point de vue : 📜 flux (append_flux)"| SJ
+        MJ -->|"point de vue : brief (depecher / activation)"| SP["💺 siège · profil JOURNÉE<br/>(le PNJ en session)"]
+        SP -->|"actes : écrits rendus + tête proposée → staging"| MJ
+        MJ <-->|"🗣️ parloir (hors fiction)"| SP
     end
     subgraph TEMPS["Boucle du temps (hors scène)"]
-        T[⏱️ tick] -->|proposition| S
+        T[⏱️ tick] -->|proposition| S[etat/staging]
         S -->|arbitrage MJ| AP[appliquer]
-        AP -->|vocabulaire fermé + empreintes| E
+        AP -->|vocabulaire fermé + empreintes| E[(🗄️ État)]
     end
-    E -->|briefs, dossiers, feuille de route| MJ
-    E -->|briefs greffe documentaire| A
-    D[📐 Doctrine] -.contrats.-> MJ
-    D -.metier.md.-> A
+    SP -->|pensées, conclusions, cahiers| E
+    E -->|"fil propre : flux par siège / vécu"| SJ
+    E -->|"fil propre + greffe documentaire"| SP
+    D[📐 Doctrine] -.->|"un manuel par rôle (metier.md, demain mj-zone.md)"| MJ
+    D -.metier.md.-> SP
 ```
 
-- **Boucle de jeu** : Inbox → MJ → Flux → Joueur → Inbox. Le joueur ne parle jamais à l'état ; le MJ ne parle au joueur que par le flux.
-- **Boucle des agents** : brief (les écrits de l'homme + sa tête + sa salle) → session → écrits rendus (pensées versées, conclusion, cahiers) → proposition de tête en staging. Le parloir court en travers, pendant la session.
-- **Boucle du temps** : tick → staging → arbitrage → appliquer. Le tick ne décide rien ; appliquer ne juge rien ; le MJ fait les deux et n'écrit rien directement.
-- **Boucle des joueurs multiples** : parloir entre régies (`mj` ↔ `mj-<joueur>`), casting par personne, un seul possesseur du temps.
+- **La boucle des sièges** : point de vue servi → actes → arbitrage → état → point de vue. Un siège ne parle jamais à l'état ; l'arbitre ne parle à un siège que par son point de vue. Vraie pour le joueur (c'était la « boucle de jeu ») comme pour le PNJ (c'était la « boucle des agents »).
+- **Ce qui distingue les profils, et rien d'autre** : la cadence (minutes de scène / journées), le rendu (mise en scène / dossier), et la Règle Zéro (les paroles du PNJ sont protégées par la dépêche ; le joueur écrit les siennes librement).
+- **Boucle du temps** : tick → staging → arbitrage → appliquer. Le tick ne décide rien ; appliquer ne juge rien ; le MJ fait les deux et n'écrit rien directement. Inchangée : le temps n'est pas un siège.
+- **Les joueurs multiples ne sont plus une boucle à part** : *n* sièges de profil scène, un MJ par siège humain (parloir entre régies `mj` ↔ `mj-<joueur>`), un seul possesseur du temps.
+- **Le vécu** (à venir — voir `organisation.md`, table des features) : le fil propre du profil journée, symétrique du flux par siège — un index chronologique ancré, jamais une source.
 
 ## Frontières strictes (les invariants qui font tenir le tout)
 
 1. **Un fait n'existe que dans 🗄️ État.** La conversation du MJ, le parloir, le widget : tout est périssable — les fichiers ont toujours raison.
-2. **Deux frontières autour de la 🧠 cognition d'un agent** (le miroir exact de `batailles`) : il ne voit le monde qu'à travers son brief + ce que ses outils lui laissent lire ; il n'agit sur l'état que par ses écrits rendus et des propositions — jamais d'écriture directe de tête.
+2. **Deux frontières autour de la cognition de TOUT siège** (le miroir exact de `batailles`, élargi par l'invariant du siège) : un siège ne voit le monde qu'à travers son point de vue servi (le brief + ses outils pour le PNJ ; `info.json` et le flux pour le joueur — c'était déjà vrai sans être dit) ; il n'agit sur l'état que par son canal d'actes (écrits rendus + propositions / inbox) — jamais d'écriture directe.
 3. **Une seule porte d'écriture arbitrée** : tout ce qui mute des croyances ou des horloges passe par staging + `appliquer.py` (vocabulaire fermé, empreintes). `ajouter.py` pour les entrées simples. La réécriture de tableau à la main est l'exception qui perd les gardes.
 4. **Le brouillard est par siège et par tête** : `info.json` et `diffusion` sont les seuls canaux par lesquels une croyance change. *(Frontière vraie pour les personnages, poreuse pour le parloir — voir Propositions.)*
 5. **Le flux est append-only et la montre lui appartient** : `append_flux.py` est le seul à faire avancer `monde.date.minute`.
