@@ -4,7 +4,7 @@ import sys
 import unittest
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "plan"))
-import corriger_plan as C  # noqa: E402
+from plan.expose import corriger_plan as C  # noqa: E402
 
 
 class CorrigerPlanTest(unittest.TestCase):

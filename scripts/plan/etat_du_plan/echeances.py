@@ -19,7 +19,7 @@ from plan.expose import tete_ornee as C_tete_ornee  # noqa: F401
 from plan.expose import numero_de as C_numero_de  # noqa: F401
 # LE SEUL point de contact du paquet avec jours_relatifs (container temps) :
 # les autres modules reprennent JR d'ici, pour que le lien reste unique.
-import jours_relatifs as JR  # noqa: F401
+from temps.expose import jours_relatifs as JR  # noqa: F401 — LA PORTE de temps/
 import plan_modele as PM  # noqa: F401
 
 # Trois etages de plus qu'a la racine : scripts/plan/etat_du_plan/.

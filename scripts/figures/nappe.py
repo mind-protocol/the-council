@@ -27,7 +27,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-import bibliotheque
+from plan.expose import bibliotheque  # LA PORTE de plan/
 from etat.expose import tables  # LA PORTE de etat/
 
 racine = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))

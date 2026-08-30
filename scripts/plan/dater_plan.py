@@ -43,7 +43,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 from plan.expose import couverture as C    # noqa: E402
-import jours_relatifs as JR                # noqa: E402
+from temps.expose import jours_relatifs as JR  # noqa: E402 — LA PORTE de temps/
 import bibliotheque                        # noqa: E402
 
 BOOKS = os.path.join(RACINE, "etat", "books.json")

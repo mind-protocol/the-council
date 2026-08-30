@@ -27,7 +27,7 @@ import re
 import sys
 import collections
 
-import tables  # LA PORTE de etat/ : le depot atomique de la proposition
+from etat.expose import tables  # LA PORTE de etat/ : le depot atomique de la proposition
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ETAT = os.path.join(RACINE, "etat")

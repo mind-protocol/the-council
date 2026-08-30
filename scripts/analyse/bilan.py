@@ -28,7 +28,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-import rapporteurs
+from plan.expose import rapporteurs  # LA PORTE de plan/
 import json
 import os
 import re
@@ -85,7 +85,7 @@ def poser_empreintes(pieces, quand, vue_de=None):
 
 def mesurer(vue_de=None):
     from plan.expose import criticite as C
-    import plan_modele as PM
+    from plan.expose import plan_modele as PM
     modele = PM.charger(vue_de)
     livres, pieces, affaires = (modele["livres"], modele["pieces"],
                                 modele["affaires"])
@@ -117,7 +117,7 @@ def mesurer(vue_de=None):
     # La main sur la carte : le même compte que `carte_muette`, sur tout le flux.
     parlants = mains = 0
     try:
-        import carte_muette as CM
+        from monde.expose import carte_muette as CM
         lieux = CM._lieux()
         motif = re.compile(u"|".join(re.escape(x) for x in
                                      sorted(lieux, key=len, reverse=True)))
@@ -232,7 +232,7 @@ def main():
     with io.open(TRACE, "a", encoding="utf-8", newline="\n") as f:
         f.write(json.dumps(m, ensure_ascii=False) + u"\n")
     try:
-        import plan_modele as PM
+        from plan.expose import plan_modele as PM
         modele = PM.charger(m["vue_de"])
         poser_empreintes(modele["pieces"], m["quand"], m["vue_de"])
     except Exception as e:

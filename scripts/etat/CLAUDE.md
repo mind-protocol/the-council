@@ -43,5 +43,6 @@ porte, entrée CLI. Leurs chemins et leurs CLI sont gelés.
 ## Reste à faire (lot 3)
 
 - `noyau/tables.py` → `etat/tables.py` (24+ importeurs à rebasculer).
-- `bibliotheque` (les books) est encore importé nu par `mutations/cli.py` —
-  il bascule vers la porte de `plan/` quand elle l'offre.
+- `bibliotheque` (les books) est servi à `mutations/cli.py` par la porte de
+  `plan/` — paresseusement, dans `main()` : `etat` est rang 0, il ne charge le
+  container plan qu'au moment d'appliquer.

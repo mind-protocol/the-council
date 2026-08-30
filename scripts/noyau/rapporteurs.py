@@ -35,7 +35,7 @@
 import os
 import time
 
-import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
+from etat.expose import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 FICHIER = os.path.join(RACINE, "etat", "rapporteurs.json")

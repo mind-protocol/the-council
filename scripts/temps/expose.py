@@ -33,6 +33,7 @@ from temps import presence  # noqa: E402,F401 — qui est a portee ; lu par bouc
 from temps import regence  # noqa: E402,F401 — relit cette porte : occupation deja lie
 from temps import disponibilite as evaluer  # noqa: E402,F401 — qui a du temps ; presence lu paresseusement
 disponibilite = evaluer  # le nom du lot 2 (docs/organisation.md §7), pour les nouveaux lecteurs
+import jours_relatifs  # noqa: E402,F401 — le calendrier relatif (noyau, lot 3 : il demenagera ici) ; lu par dater_plan et les echeances
 from temps.calendrier import jour_absolu, date_de, fmt  # noqa: E402,F401
 from temps.lecture import CANAUX_PLI, Etat, jours_de_route  # noqa: E402,F401
 from temps.bouche import BUDGETS  # noqa: E402,F401

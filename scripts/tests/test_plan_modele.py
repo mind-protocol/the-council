@@ -11,7 +11,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-import plan_modele as M  # noqa: E402
+from plan.expose import plan_modele as M  # noqa: E402
 
 
 def table(titre, lignes=1):

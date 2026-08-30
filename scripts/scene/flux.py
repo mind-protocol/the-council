@@ -802,7 +802,7 @@ except Exception:
     pass  # un avis ne doit jamais empecher une poussee
 
 try:
-    import carte_muette
+    from monde.expose import carte_muette
     carte_muette.avis(items)
 except SystemExit:
     raise          # le refus, quand il sera pose, doit passer

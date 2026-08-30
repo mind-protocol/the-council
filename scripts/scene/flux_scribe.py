@@ -10,7 +10,7 @@ import json
 import os
 import unicodedata
 
-import bibliotheque
+from plan.expose import bibliotheque  # LA PORTE de plan/
 from etat.expose import tables  # LA PORTE de etat/
 
 racine = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))

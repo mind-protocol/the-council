@@ -7,7 +7,7 @@ import os, sys
 sys.stdout.reconfigure(encoding='utf-8')
 R = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.join(R, 'scripts'))
-import bibliotheque
+from plan.expose import bibliotheque  # LA PORTE de plan/
 from etat.expose import tables  # LA PORTE de etat/
 
 BOITES = os.path.join(R, 'etat', 'boites.json')

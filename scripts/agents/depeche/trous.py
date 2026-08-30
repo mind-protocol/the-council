@@ -61,7 +61,7 @@ def _scores(vue_de=None):
     sur `force()`, et l'homme part quand meme."""
     try:
         from plan.expose import criticite
-        import plan_modele as PM
+        from plan.expose import plan_modele as PM
         pieces = PM.charger(vue_de)["pieces"]
         lignes, _base, _poids, _s, _m, dehors = criticite.calculer(pieces)
         crit = {n: c for c, pt, n, p in lignes}
@@ -94,7 +94,7 @@ def ses_trous(qui, combien=TROUS_MONTRES):
     try:
         from plan.expose import etat_du_plan as plan
         from plan.expose import nu
-        import plan_modele as PM
+        from plan.expose import plan_modele as PM
         modele = PM.charger(qui)
         pieces, affaires = modele["pieces"], modele["affaires"]
         siennes = [b for b in affaires if (b.get("tenu_par") or u"") == qui]

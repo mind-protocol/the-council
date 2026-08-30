@@ -8,7 +8,7 @@ import math
 import os
 import sys
 
-import bibliotheque
+from plan.expose import bibliotheque  # LA PORTE de plan/
 from etat.expose import tables  # LA PORTE de etat/
 
 # La console de Windows est en cp1252 et le script parle avec des flèches.
@@ -18,7 +18,7 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__)))))
 sys.path.insert(0, os.path.join(RACINE, "scripts", "monde"))
-import bati as _bati                                # le lecteur unique du bâti
+from monde.expose import bati as _bati              # le lecteur unique du bâti
 
 DEFAUT_MONDE = _bati.DEFAUT
 GENS = os.path.join(RACINE, "monde", "portreal.gens.json")

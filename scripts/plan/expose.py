@@ -25,36 +25,43 @@ for _p in (_d, _os.path.join(_d, "noyau")):
 
 # couverture d'abord : ses noms servent aux deux suivantes pendant leur import.
 # Descendue au lot 2 : le paquet plan/couverture/, plus la commande racine.
-from plan import couverture  # noqa: E402,F401 — le module entier, pour `import couverture as C`
+import plan.couverture as couverture  # noqa: E402,F401 — le module entier, pour `import couverture as C`
 from plan.couverture import (nu, sans_emoji, marque, blocs, NUM, MO, NOM_GENRE,  # noqa: E402,F401
                              EST_MO, NERA, etiquette, genre_de, ATTENDU, RANG,
                              FINI, premier_mot, tete_ornee, numero_de,
                              registre_de, col)
 from plan.couverture import main as couverture_main  # noqa: E402,F401 — l'entree CLI de la facade
+# Les modules de plan encore ranges sous noyau/ (lot 3 : ils demenageront ici).
+# La porte les offre des maintenant : plus personne ne les importe nus.
+import bibliotheque  # noqa: E402,F401 — les cahiers (books) ; lu par agents, monde, scene, cli des mutations
+import livre  # noqa: E402,F401 — le tri des volumes ; lu par le brief des depeches
+import plan_modele  # noqa: E402,F401 — relit cette porte : couverture deja liee
+import rapporteurs  # noqa: E402,F401 — les rapporteurs du plan ; lu par les gardes du tick et bilan
+import plan.corriger_plan as corriger_plan  # noqa: E402,F401 — la correction des cahiers ; lu par son test
 # Descendue au lot 2 : le paquet plan/etat_du_plan/, plus la commande racine.
-from plan import etat_du_plan  # noqa: E402,F401
+import plan.etat_du_plan as etat_du_plan  # noqa: E402,F401
 from plan.etat_du_plan import missions_de, phrase  # noqa: E402,F401
 from plan.etat_du_plan import main as etat_du_plan_main  # noqa: E402,F401 — l'entree CLI de la facade
 # Descendue au lot 2 : le paquet plan/criticite/, plus la commande racine.
-from plan import criticite  # noqa: E402,F401 — le module entier, pour `criticite.calculer` etc.
+import plan.criticite as criticite  # noqa: E402,F401 — le module entier, pour `criticite.calculer` etc.
 from plan.criticite import entree as criticite_main  # noqa: E402,F401 — l'entree CLI de la facade
 # Descendue au lot 2 : le paquet plan/mesures/, plus la commande racine.
-from plan import mesures  # noqa: E402,F401
+import plan.mesures as mesures  # noqa: E402,F401
 from plan.mesures import main as mesures_main  # noqa: E402,F401 — l'entree CLI de la facade
 # Descendue au lot 2 : le paquet plan/tisser/, plus la commande racine.
-from plan import tisser  # noqa: E402,F401
+import plan.tisser as tisser  # noqa: E402,F401
 from plan.tisser import main as tisser_main  # noqa: E402,F401 — l'entree CLI de la facade
 # Descendue au lot 2 : scripts/fils.py -> plan/affaires.py (l'homonymie
 # fils.py / ecrans/modules/fils.js est levee, la facade fils.py reste).
-from plan import affaires  # noqa: E402,F401
+import plan.affaires as affaires  # noqa: E402,F401
 from plan.affaires import main as fils_main  # noqa: E402,F401 — l'entree CLI de la facade
 # Descendue au lot 2 : scripts/verser_cahier.py -> plan/verser_cahier.py.
-from plan import verser_cahier  # noqa: E402,F401
+import plan.verser_cahier as verser_cahier  # noqa: E402,F401
 from plan.verser_cahier import main as verser_cahier_main  # noqa: E402,F401 — l'entree CLI de la facade
 # Descendue au lot 2 : scripts/exporter_plan.py -> plan/exporter_plan.py.
 # La matiere n'exporte plus au chargement ; seule sa main() ecrit exports/.
-from plan import exporter_plan  # noqa: E402,F401
+import plan.exporter_plan as exporter_plan  # noqa: E402,F401
 from plan.exporter_plan import main as exporter_plan_main  # noqa: E402,F401 — l'entree CLI de la facade
 # Descendue au lot 2 : scripts/passer.py -> plan/passer.py.
-from plan import passer  # noqa: E402,F401
+import plan.passer as passer  # noqa: E402,F401
 from plan.passer import main as passer_main  # noqa: E402,F401 — l'entree CLI de la facade

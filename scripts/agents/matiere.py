@@ -21,7 +21,7 @@
 # dernier, marque pour ce qu'il est. A lire avant d'ouvrir une scene, et avant
 # de faire parler quelqu'un.
 import io, json, os, re, sys, unicodedata
-import bibliotheque
+from plan.expose import bibliotheque  # LA PORTE de plan/
 
 # La console Windows est en cp1252 : un seul caractere abime dans une parole
 # (un `�` herite d'une vieille ecriture) tuait le script en plein milieu,

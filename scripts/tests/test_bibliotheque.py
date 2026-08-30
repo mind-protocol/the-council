@@ -12,7 +12,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-import bibliotheque as B
+from plan.expose import bibliotheque as B
 
 
 def ecrire_json(chemin, valeur):

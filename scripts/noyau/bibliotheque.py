@@ -13,7 +13,7 @@ import json
 import os
 import re
 
-import tables  # LA PORTE de etat/ : l'ecriture atomique et sa semantique d'erreur
+from etat.expose import tables  # LA PORTE de etat/ : l'ecriture atomique et sa semantique d'erreur
 
 
 NOM_ID = re.compile(r"^[a-z0-9][a-z0-9._-]*$")

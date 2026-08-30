@@ -31,7 +31,7 @@ partir d'un point où le personnage n'est pas, sauf à le lui dire (`--sans-moi`
 import io, json, math, os, sys, heapq, collections
 
 
-import bibliotheque
+from plan.expose import bibliotheque  # LA PORTE de plan/
 from etat.expose import tables  # LA PORTE de etat/
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))

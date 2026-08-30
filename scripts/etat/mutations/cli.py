@@ -17,7 +17,6 @@ from etat.mutations.vocabulaire import (  # noqa: E501
     liste_books)
 from etat.mutations.lecture import ETAT, STAGING, chemin_table, empreinte, lire
 from etat.expose import tables as porte  # LA PORTE de etat/
-import bibliotheque  # les books, par leur bibliotheque (noyau, en attendant plan/)
 
 def resumer(plan):
     for ligne in plan:
@@ -117,6 +116,9 @@ def main():
     # mais s'il n'est pas charge ici, liste_books() le voit VIDE : la validation
     # d'un affaire_ajouter passe alors sur une liste fantome, la mutation
     # s'ecrit nulle part, et ecrire() casse sur une cle absente.
+    # Les books par LA PORTE de plan/ — paresseusement : etat est rang 0,
+    # ce module ne charge le container plan qu'au moment d'appliquer.
+    from plan.expose import bibliotheque
     session_livres = bibliotheque.ouvrir(ETAT)
     tables["books"] = session_livres.livres
 

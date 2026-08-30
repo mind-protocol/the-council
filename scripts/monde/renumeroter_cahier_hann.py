@@ -9,7 +9,7 @@ import os, re, sys
 sys.stdout.reconfigure(encoding='utf-8')
 R = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.join(R, 'scripts'))
-import bibliotheque
+from plan.expose import bibliotheque  # LA PORTE de plan/
 
 MAP = {
  "65000": "65000",   # etat  — du bois sous la hache

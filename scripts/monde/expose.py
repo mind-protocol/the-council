@@ -18,6 +18,8 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
+from monde import bati  # noqa: E402,F401 — le lecteur unique du bati (etat/monde*.json) ; lu par l'affectation
+import carte_muette  # noqa: E402,F401 — la carte muette (noyau, lot 3 : elle demenagera ici) ; lue par le flux et bilan
 from monde import arpentage  # noqa: E402,F401 — lever une carte au pas ; facade scripts/arpenter.py
 arpenter = arpentage  # l'ancien nom reste vivant pour la facade
 from monde import geographie  # noqa: E402,F401 — la carte de Westeros depuis le mod ; facade scripts/carte_geo.py

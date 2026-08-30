@@ -389,7 +389,7 @@ def verifier_rapporteurs(e, r):
     cadences d'outillage, elles se comptent en temps de developpeur.
     """
     try:
-        import rapporteurs
+        from plan.expose import rapporteurs
     except ImportError:
         return
     try:
