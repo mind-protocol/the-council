@@ -41,4 +41,6 @@ from plan.criticite import entree as criticite_main  # noqa: E402,F401 — l'ent
 # Descendue au lot 2 : le paquet plan/mesures/, plus la commande racine.
 from plan import mesures  # noqa: E402,F401
 from plan.mesures import main as mesures_main  # noqa: E402,F401 — l'entree CLI de la facade
-import tisser  # noqa: E402,F401
+# Descendue au lot 2 : le paquet plan/tisser/, plus la commande racine.
+from plan import tisser  # noqa: E402,F401
+from plan.tisser import main as tisser_main  # noqa: E402,F401 — l'entree CLI de la facade
