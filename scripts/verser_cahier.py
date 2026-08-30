@@ -23,7 +23,7 @@
 #     python scripts/verser_cahier.py                 # a sec — montre tout
 #     python scripts/verser_cahier.py --qui sara      # un homme, repetable
 #     python scripts/verser_cahier.py --vraiment      # ecrit
-import argparse, glob, io, json, os, re, sys, tempfile, unicodedata
+import argparse, glob, os, re, sys, unicodedata
 
 import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
 _d = _os.path.dirname(_os.path.abspath(__file__))
@@ -36,6 +36,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
 import rapporteurs
 
 import bibliotheque
+from etat.expose import tables  # LA PORTE de etat/
 
 # La console Windows est en cp1252 : un embleme ou un tiret cadratin dans le
 # rapport tuait le script APRES le calcul, et le meme plantage attendait sur
@@ -51,20 +52,12 @@ BOOKS = os.path.join(RACINE, "etat", "books.json")
 RAPPORTS = os.path.join(RACINE, "etat", "rapports")
 
 
-def lire(chemin):
-    with io.open(chemin, encoding="utf-8") as f:
-        return json.load(f)
+lire = tables.lire
 
 
 def ecrire(chemin, donnees):
-    """Relit, ecrit dans un temporaire, remplace. Meme geste qu'ajouter.py."""
-    d = os.path.dirname(chemin)
-    fd, tmp = tempfile.mkstemp(dir=d, suffix=".tmp")
-    os.close(fd)
-    with io.open(tmp, "w", encoding="utf-8") as f:
-        json.dump(donnees, f, ensure_ascii=False, indent=1)
-        f.write(u"\n")
-    os.replace(tmp, chemin)
+    """Ecriture atomique par la porte. indent=1 : registre volumineux."""
+    tables.ecrire(chemin, donnees, indent=1)
 
 
 # --- normalisation ---------------------------------------------------------
@@ -211,7 +204,7 @@ def main():
                     help="reprendre un rapport deja verse (double les lignes neuves)")
     args = ap.parse_args()
 
-    session_livres = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+    session_livres = bibliotheque.ouvrir(tables.ETAT)
     books = session_livres.livres
     fichiers = sorted(glob.glob(os.path.join(RAPPORTS, "*.json")))
 

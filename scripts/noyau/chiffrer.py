@@ -27,6 +27,8 @@ import re
 import sys
 import collections
 
+import tables  # LA PORTE de etat/ : le depot atomique de la proposition
+
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ETAT = os.path.join(RACINE, "etat")
 TISSU = os.path.join(ETAT, "tissu")
@@ -182,12 +184,7 @@ def main():
             break
         print("  [{}] {}".format(a["nature"][:12], (a.get("texte") or "")[:96]))
 
-    if not os.path.isdir(TISSU):
-        os.makedirs(TISSU)
-    p = os.path.join(TISSU, "couts-lus.jsonl")
-    with io.open(p, "w", encoding="utf-8") as fh:
-        for a in tires:
-            fh.write(json.dumps(a, ensure_ascii=False) + "\n")
+    p = tables.ecrire_lignes(os.path.join(TISSU, "couts-lus.jsonl"), tires)
     print()
     print("Proposition deposee : {} ({} aretes lues).".format(
         os.path.relpath(p, RACINE), len(tires)))

@@ -19,6 +19,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 import bibliotheque
+from etat.expose import tables  # LA PORTE de etat/
 
 racine = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -154,7 +155,7 @@ def main():
         sortie = os.path.join(racine, sortie)
     os.makedirs(sortie, exist_ok=True)
 
-    livres = bibliotheque.charger(os.path.join(racine, "etat"))
+    livres = bibliotheque.charger(tables.ETAT)
 
     if tout:
         choisis = [b for b in livres if b.get("type") == "plan"]

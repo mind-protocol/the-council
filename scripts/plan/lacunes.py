@@ -53,14 +53,11 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 from agents.expose import boucle_activation as activation  # noqa: E402
+from etat.expose import tables  # noqa: E402 — LA PORTE de etat/
 
 
-def lire(nom, defaut):
-    try:
-        with io.open(os.path.join(ETAT, nom + ".json"), encoding="utf-8") as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return defaut
+# Absent -> defaut ; corrompu -> plante : la semantique de la porte.
+lire = tables.lire
 
 
 def liste(valeur, *cles):

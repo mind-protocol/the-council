@@ -39,6 +39,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 import bibliotheque
+from etat.expose import tables  # LA PORTE de etat/
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GRAPHE = os.path.join(RACINE, "monde", "portreal.graph.json")
@@ -412,11 +413,7 @@ def main():
                            "genre": (fin or {}).get("genre", "")})
         bornes[-1] = {"nom": d1["nom"], "ref": "rep:" + d1["nom"],
                       "genre": d1.get("genre", "")}
-        p = os.path.join(RACINE, "etat", "leves.json")
-        try:
-            T = json.load(io.open(p, encoding="utf-8"))
-        except (OSError, ValueError):
-            T = {"leves": []}
+        T = tables.lire("leves", {"leves": []})
         T.setdefault("leves", [])
         T["leves"] = [x for x in T["leves"] if x.get("id") != leve]
         T["leves"].append({
@@ -426,8 +423,7 @@ def main():
             "minutes": max(1, round(total / 83.0)),
             "bornes": bornes, "troncons": troncons,
         })
-        io.open(p, "w", encoding="utf-8").write(
-            json.dumps(T, ensure_ascii=False, indent=2))
+        tables.ecrire("leves", T)
         print("  écrit dans etat/leves.json : %s" % leve)
 
     livre = opt("--livre")
@@ -438,7 +434,7 @@ def main():
 
     titre = opt("--titre") or ("Le levé de %s à %s" % (d0["nom"], d1["nom"]))
     porteur = opt("--porteur", "marlo-vasse")
-    session_livres = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+    session_livres = bibliotheque.ouvrir(tables.ETAT)
     L = session_livres.livres
     neuf = {
         "id": livre, "lieu_id": "port-real", "acteur_id": porteur, "prive": True,

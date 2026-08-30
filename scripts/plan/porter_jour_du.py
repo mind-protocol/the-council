@@ -31,6 +31,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
 
 from plan.expose import couverture as C
 import bibliotheque
+from etat.expose import tables  # noqa: E402 — LA PORTE de etat/
 
 BOOKS = os.path.join(RACINE, "etat", "books.json")
 COL_JOUR = u"📅 Jour dû"
@@ -52,7 +53,7 @@ def trouver(note):
 
 
 def passer(ecrire=False):
-    session_livres = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+    session_livres = bibliotheque.ouvrir(tables.ETAT)
     livres = session_livres.livres
     portees, deja, sans, colonnes, clos = [], 0, 0, 0, 0
     for livre in livres:

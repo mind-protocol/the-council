@@ -44,6 +44,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
 
 from plan.expose import couverture as C  # noqa: E402  — genre_de, sans_emoji, nu, col
 import bibliotheque  # noqa: E402
+from etat.expose import tables  # noqa: E402 — LA PORTE de etat/
 
 # ─────────────────────────────────────────────── le vocabulaire fermé
 # Six valeurs. Toute autre est une faute, et `tick.py --verifier` doit la dire.
@@ -583,7 +584,7 @@ if __name__ == "__main__":
     amb = "--ambigus" in args
     dest = args[args.index("--rapport") + 1] if "--rapport" in args else None
 
-    session = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+    session = bibliotheque.ouvrir(tables.ETAT)
     livres = session.livres
     rap = passer(livres, appliquer_ambigus=amb, ecrire=vraiment)
     txt = rapport(rap, vraiment)

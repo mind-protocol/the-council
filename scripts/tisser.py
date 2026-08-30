@@ -39,6 +39,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 import chiffrer  # noqa: E402  (la grammaire des couts)
+from etat.expose import tables  # noqa: E402 — LA PORTE de etat/
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ETAT = os.path.join(RACINE, "etat")
@@ -80,17 +81,8 @@ HYPO = re.compile(r"\bH\d{1,2}\b")
 
 
 def charger(nom, defaut):
-    p = os.path.join(ETAT, nom + ".json")
-    if not os.path.isfile(p):
-        return defaut
-    with io.open(p, encoding="utf-8") as fh:
-        t = fh.read().strip()
-    if not t:
-        return defaut
-    try:
-        d = json.loads(t)
-    except ValueError:
-        return defaut
+    # Absent -> defaut ; corrompu -> plante (l'ancienne version avalait tout).
+    d = tables.lire(nom, defaut)
     return d.get(nom, d) if isinstance(d, dict) else d
 
 
@@ -621,15 +613,8 @@ def main():
                 print("      {}".format(a["texte"]))
 
     if args.ecrire:
-        if not os.path.isdir(SORTIE):
-            os.makedirs(SORTIE)
-        p = os.path.join(SORTIE, "aretes.jsonl")
-        with io.open(p, "w", encoding="utf-8") as fh:
-            for a in aretes:
-                fh.write(json.dumps(a, ensure_ascii=False) + "\n")
-        q = os.path.join(SORTIE, "noeuds.json")
-        with io.open(q, "w", encoding="utf-8") as fh:
-            json.dump(noeuds, fh, ensure_ascii=False, indent=1)
+        p = tables.ecrire_lignes(os.path.join(SORTIE, "aretes.jsonl"), aretes)
+        q = tables.ecrire(os.path.join(SORTIE, "noeuds.json"), noeuds, indent=1)
         print()
         print("Tissu depose : {} / {}".format(
             os.path.relpath(p, RACINE), os.path.relpath(q, RACINE)))

@@ -32,11 +32,10 @@
 # Un producteur qui plante ne bat pas, et c'est tout le mécanisme : on n'a rien
 # à attraper, rien à envelopper dans un try. L'absence de battement EST le
 # signal. Ne jamais battre « au cas où » avant que le travail soit écrit.
-import io
-import json
 import os
-import tempfile
 import time
+
+import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 FICHIER = os.path.join(RACINE, "etat", "rapporteurs.json")
@@ -67,11 +66,9 @@ ATTENDUS = [
 
 
 def _lire():
-    if not os.path.exists(FICHIER):
-        return {"passages": {}}
     try:
-        return json.load(io.open(FICHIER, encoding="utf-8"))
-    except Exception:
+        return tables.lire(FICHIER, {"passages": {}})
+    except tables.TableAbimee:
         # Un registre de battements illisible ne doit jamais faire tomber le
         # producteur qui vient y battre : on repart d'une page blanche, et la
         # garde criera d'elle-même au prochain audit.
@@ -79,12 +76,7 @@ def _lire():
 
 
 def _ecrire(d):
-    dossier = os.path.dirname(FICHIER)
-    fd, tmp = tempfile.mkstemp(dir=dossier, suffix=".tmp")
-    os.close(fd)
-    with io.open(tmp, "w", encoding="utf-8", newline="") as f:
-        f.write(json.dumps(d, ensure_ascii=False, indent=1))
-    os.replace(tmp, FICHIER)
+    tables.ecrire(FICHIER, d, indent=1)
 
 
 def battre(qui, quoi=u""):

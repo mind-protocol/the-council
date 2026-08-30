@@ -66,6 +66,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
 
 from plan.expose import couverture as C  # noqa: E402  — nu, col, MO, NUM, RIEN
 import bibliotheque  # noqa: E402
+from etat.expose import tables  # noqa: E402 — LA PORTE de etat/
 
 COL_MOY = u"🧰 Moyens"
 COL_AVEC = u"🔧 Avec quoi"
@@ -456,7 +457,7 @@ if __name__ == "__main__":
     vraiment = "--vraiment" in args
     dest = args[args.index("--rapport") + 1] if "--rapport" in args else None
 
-    session = bibliotheque.ouvrir(os.path.join(RACINE, "etat"))
+    session = bibliotheque.ouvrir(tables.ETAT)
     livres = session.livres
     rap = passer(livres, ecrire=vraiment)
     txt = rapport(rap, vraiment)
