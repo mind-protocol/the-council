@@ -26,10 +26,11 @@ avant eux.
 | `mutations.py` | la rédaction des mutations arithmétiques proposées (extrait de fenetre.py, limite 500) |
 | `fenetre.py` | `calculer()` en phases nommées + `tick()` — le cœur du mode B |
 | `resume.py` | la proposition en français, pour le MJ |
-| `occupation.py`* | qui est ASSIS — mesuré, pas drapeau *(encore à la racine scripts/, lot 2)* |
-| `presence.py`* | qui est à portée — le quartier *(idem)* |
-| `regence.py`* | ce qu'un siège vacant peut faire *(idem)* |
-| `evaluer.py`* | qui a du temps — la feuille de route *(idem)* |
+| `occupation.py` | qui est ASSIS — mesuré, pas drapeau *(descendu au lot 2 ; façade `scripts/occupation.py`)* |
+| `presence.py` + `presence_quartier.py` | qui est où, à la minute — la résolution / le quartier du joueur, les creux, la CLI *(façade `scripts/presence.py`)* |
+| `regence.py` + `regence_passation.py` | les sept lignes rouges et le crible / la clause, le registre de passation, la CLI *(façade `scripts/regence.py`)* |
+| `disponibilite.py` + `disponibilite_regie.py` | qui a du temps — les questions 1-7 / la force narrative et la feuille de la régie *(la porte garde le nom historique `evaluer` ; façade `scripts/evaluer.py`)* |
+| `reprise.py` | la feuille de reprise — les cinq questions d'un joueur qui se rassoit *(façade `scripts/reprise.py`)* |
 
 La commande `scripts/tick.py` est une **façade** : argparse + appels aux
 modules. Son chemin et sa CLI (`--verifier`, `--jours`, `--jusqu-a`,
