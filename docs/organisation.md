@@ -164,13 +164,34 @@ C'est la leçon de l'audit du 30 : *le compteur qui n'existe pas est celui qui d
 
 ### Lot 2 — vider les façades *(par commande, une par commit)*
 
-Descendre la matière de chaque commande dans les modules de son container ; la commande garde son verbe et ses arguments. Ordre recommandé : par taille décroissante, parce que le hook `taille.js` est un cliquet — chaque descente abaisse définitivement un plafond. `tick.py` et `boucle_activation.py` d'abord : 6 400 lignes à eux deux.
+Descendre la matière de chaque commande dans les modules de son container ; la commande garde son verbe et ses arguments. Le hook `taille.js` est un cliquet — chaque descente abaisse définitivement un plafond.
+
+**L'ordre n'est PAS la taille — il est tiré par les features** (décision du 30, voir « Où atterrissent les features » ci-dessous) : on éclate un container *au moment où une feature le force à trouver ses bons noms de modules*, jamais avant. Un éclatement « pur », fait à froid, produit des noms qu'on renomme trois semaines plus tard — c'est le deuxième refactor qu'on veut éviter, et on l'évite en ne faisant jamais d'éclatement sans consommateur.
 
 **La garde qui rend le lot irréversible** : une façade dépasse 60 lignes → mesure.
 
 ### Lot 3 — le regroupement par sujet *(quand `chaine.js` pose les balises)*
 
 Déplacer les écrans sous leur sujet. **Ce lot dépend d'une décision de l'audit** (§2.1 : le manifeste pose les balises au lieu de coexister avec cent balises en dur) : tant que les chemins `/modules/*.js` sont écrits à la main dans les HTML, chaque déplacement est une occasion de casser une page en silence. Une fois le manifeste seul maître, un fichier peut changer d'adresse sans que personne le sache — ce qui est exactement le but.
+
+### Où atterrissent les features prévues — le test de robustesse *(décision du 30)*
+
+La question a été posée : faut-il ce refactor, puis un second pour les features en tête (les hommes qui se parlent, les MJs dépêchés par `claude -p` avec prompt dédié) ? **Réponse : un seul refactor — parce que chaque feature atterrit dans les containers déclarés sans en déplacer un.** La vérification, feature par feature :
+
+| feature en tête | où elle atterrit | change la structure ? |
+|---|---|---|
+| bruit de fond (deux co-présents se sont parlé → entrée de `diffusion` canal rumeur/témoin, zéro appel LLM) | ⏱️ `temps` (le tick pose les entrées) + 🗄️ `etat` (la table existe) | non — un module de plus |
+| le billet (un homme écrit *à* quelqu'un ; arrive au brief de sa prochaine dépêche) | 🧠 `agents` (le brief) + 🗄️ `etat` (plis) | non |
+| rencontres jouées (tours alternés sur les sessions `--resume` existantes, fil au parloir) | 🧠 `agents` (`rencontres.py`, `election.py`) + 📜 `scene` (le greffage : événement + témoins + diffusion) | non |
+| MJs via `claude -p`, prompt dédié (un MJ devient un **rôle** de la même machinerie que les hommes) | 🧠 `agents` (la dépêche se généralise : `depecher(rôle, manuel)`) + 📐 `doctrine` (les manuels par rôle, comme `metier.md`) | **non structurel — mais c'est LA feature qui doit informer l'éclatement d'`agents`** : séparer le générique au rôle (session, resume, brief, retour, jugement) du propre à l'homme (greffe, tête, pensées) |
+
+D'où **le refactor en deux vitesses** (et pas deux refactors) :
+
+1. **Lot 1 partout, tout de suite** — neutre aux features par construction (rien ne bouge, on réexporte) ;
+2. **Lot 2 par container, tiré par les features** — `agents/` s'éclate au moment des MJs dédiés et des rencontres, `temps/` au moment du bruit de fond ;
+3. le bruit de fond et le billet ne dépendent pas du lot 2 : ils suivent le lot 1 directement.
+
+Le piège symétrique est aussi écarté : attendre la fin du design des features pour refactorer bloquerait tout — poser des portes n'exige pas que la granularité des rencontres soit mûre.
 
 ---
 
