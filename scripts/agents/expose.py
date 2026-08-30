@@ -1,0 +1,30 @@
+# -*- coding: utf-8 -*-
+"""LA PORTE du container 🧠 agents — depeche, activation, parloir, affectation.
+
+La regle (docs/organisation.md §2) : on n'entre dans un container que par sa
+porte — `from agents.expose import ...`, jamais `import depecher`.
+Ce fichier REEXPORTE ce que les importeurs consomment reellement aujourd'hui,
+rien de plus.
+
+Tant que le lot 2 n'a pas vide les commandes, importer cette porte execute
+`affecter`, `parloir`, `depecher` et `boucle_activation` — et, par leurs
+propres imports, les portes `etat` et `temps`. C'est le comportement courant
+des importeurs actuels, pas un effet nouveau.
+
+L'ORDRE DES IMPORTS EST UNE CONTRAINTE : `depecher` et `boucle_activation`,
+basculees sur cette porte, relisent `agents.expose` PENDANT son chargement ;
+`affecter` (et `depecher` pour la boucle) doivent donc etre lies avant.
+"""
+
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
+import affecter  # noqa: E402,F401 — LE resolveur d'adresses ; lu par depecher, marche, tick
+import parloir  # noqa: E402,F401 — parler a un homme depeche ; lu par depecher
+import depecher  # noqa: E402,F401 — relit cette porte : affecter deja lie
+import boucle_activation  # noqa: E402,F401 — relit cette porte : depecher deja lie
