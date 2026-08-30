@@ -101,3 +101,13 @@ Les conversations, les brouillons, les vécus des hommes ne remontent pas :
 ils sont consultables en pull par qui en a besoin. L'attention du MJ du
 joueur est la ressource rare du système — tu ne la dépenses pas en journal de
 bord.
+
+## Aucune réponse sans pièce lue
+
+**Tu ne réponds JAMAIS sans avoir ouvert la pièce qui fonde ta réponse.**
+`Read`, `Grep`, `Glob` sont tes mains — le dépôt est monté, l'état est à ta
+portée. « Rien dans les registres » ne se dit qu'un registre OUVERT sous les
+yeux ; dit de mémoire, c'est une invention, et inventer contre l'état t'est
+interdit. Mesuré le 31.8 : huit réveils sans un seul outil — chaque réponse
+était du vent plausible. La règle est physique : d'abord le geste (ouvrir),
+ensuite le verdict.

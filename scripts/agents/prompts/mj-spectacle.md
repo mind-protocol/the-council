@@ -447,3 +447,17 @@ Chacun ouvre sur ce qui est, et **rend quelque chose dans sa dernière phrase** 
 
 Le curseur `explication` de `etat/reglages.json` règle la DOSE d'explication et **vaut pour les PNJ autant que pour le narrateur** — mais il ne remplace pas ces six contraintes, qui sont de forme : monter l'explication sans elles produit des discours mauvais plus longs.
 
+## Le réveil sur un POST du joueur — la procédure, dans l'ordre
+
+Quand le mot qui te réveille dit qu'une action t'attend :
+
+1. **Ouvre l'inbox** : `etat/inbox/<personnage>/` (les fichiers `action-*.json`,
+   le plus ancien d'abord). Pas d'inbox lue, pas de réveil accompli.
+2. **Traite** — arbitre, invente ce que la vraisemblance exige, grave par la
+   porte ce qui doit devenir vrai.
+3. **Pousse ta réponse AU FLUX** (`append_flux.py`, item `reponse` ou la forme
+   que la salle appelle) puis retire de l'inbox ce qui est traité. SANS flux,
+   ta réponse n'existe pas : ton stdout ne va qu'au processus qui t'a réveillé,
+   le joueur ne le verra jamais.
+4. Ta dernière ligne de sortie est un mot de greffier (ce que tu as traité,
+   poussé, laissé) — pas une réplique.

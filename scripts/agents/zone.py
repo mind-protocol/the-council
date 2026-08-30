@@ -36,7 +36,7 @@ from agents.depeche.brief import RACINE, OUTILS, lire, date_du_monde
 
 # Le sel de l'espace de noms des sessions de zone. Le changer rend tous les
 # MJ amnesiques d'un coup : c'est le seul geste qui reparte de zero.
-SEL = uuid.uuid5(uuid.NAMESPACE_URL, "le-conseil/zones/v1")
+SEL = uuid.uuid5(uuid.NAMESPACE_URL, "le-conseil/zones/v2")
 
 MJ_ZONE_MD = os.path.join(RACINE, "scripts", "agents", "prompts",
                           "mj-zone.md")
