@@ -109,20 +109,28 @@ def liens_python(fichiers):
         if not f.endswith(".py"):
             continue
         texte = lire(os.path.join(RACINE, f))
-        noms = set(re.findall(r"^\s*(?:from|import)\s+([a-zA-Z_][\w]*)", texte, re.M))
+        # (?![.\w]) : un import POINTE (`from plan.couverture import`) n'est pas
+        # un import du module nu `plan` — sans ce garde, il matchait l'homonyme
+        # `temps/gardes/plan.py` et fabriquait des liens plan→temps qui
+        # n'existent pas. Les imports pointes sont resolus juste en dessous.
+        noms = set(re.findall(r"^\s*(?:from|import)\s+([a-zA-Z_][\w]*)(?![.\w])",
+                              texte, re.M))
         for n in noms - STDLIB:
             for cible in par_module.get(n, []):
                 if cible != f:
                     liens.append((f, cible))
-        # Les portes : `from plan.expose import ...` est un import pointe que le
-        # motif au nom nu ne voit pas (il capture `plan`, qui n'est le nom d'aucun
-        # module). Sans cette resolution, un lien bascule sur une porte SORTIRAIT
-        # du graphe au lieu d'y entrer par la porte.
-        for n in set(re.findall(r"^\s*(?:from|import)\s+([a-zA-Z_]\w*)\.expose\b",
+        # Les imports pointes : `from plan.expose import ...` comme
+        # `from temps.gardes.plan import ...` se resolvent par leur CHEMIN —
+        # module, paquet (__init__.py), et donc aussi les portes. Sans cette
+        # resolution, un lien bascule sur une porte SORTIRAIT du graphe au
+        # lieu d'y entrer par la porte.
+        for n in set(re.findall(r"^\s*(?:from|import)\s+([a-zA-Z_]\w*(?:\.\w+)+)",
                                 texte, re.M)):
-            cible = "scripts/%s/expose.py" % n
-            if cible in fichiers and cible != f:
-                liens.append((f, cible))
+            base = "scripts/" + n.replace(".", "/")
+            for essai in (base + ".py", base + "/__init__.py"):
+                if essai in fichiers and essai != f:
+                    liens.append((f, essai))
+                    break
     return liens
 
 
