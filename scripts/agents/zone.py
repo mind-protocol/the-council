@@ -50,6 +50,10 @@ MJ_SPECTACLE_MD = os.path.join(RACINE, "scripts", "agents", "prompts",
 # une journee.
 MINUTES = 3
 
+# L'ETABLI, lui, EST une journee (habitant.md : le MJ est un travailleur) :
+# trancher, graver, relancer ne tient pas dans le filet d'un verdict.
+ETABLI_MINUTES = 8
+
 
 def est_une_zone(qui):
     """La convention de parloir.est_un_mj, reprise telle quelle : `mj` ou
@@ -131,6 +135,62 @@ def _manuel(mj):
         manuel += (u"\n\n---\n\n# Ta maniere, de ta main\n\n"
                    + cahier.strip() + u"\n")
     return manuel
+
+
+def _en_jours(d):
+    """Une date du monde en jours pleins — la formule de
+    agents/activation/horloges.py (12 lunes de 30 jours), reprise a
+    l'identique : une seule arithmetique de calendrier dans le depot."""
+    return ((int(d.get("annee", 0)) * 12
+             + int(d.get("lune", 0)) - 1) * 30 + int(d.get("jour", 0)))
+
+
+# La regle est celle d'en-souffrance.json, gravee dans son gabarit
+# (agents/chambre.py) : « un fil qu'on n'a pas relance depuis trois jours
+# se relance ou se ferme ».
+ECHEANCE_JOURS = 3
+
+
+def etabli_de(mj):
+    """LE MOT d'etabli du MJ — calcule ICI, par le lanceur, hors sandbox
+    (habitant.md : le MJ est un travailleur ; son brief est son etabli).
+
+    Les comptes sont REELS, jamais estimes : les fichiers du staging
+    (etat/staging/, les propositions a depouiller), les fils echus de SON
+    en-souffrance (j_attends + on_attend_de_moi dont la date — demande_le,
+    ou depuis pour ce qu'on attend de lui — a plus de ECHEANCE_JOURS jours
+    du monde), et ses billets non lus (chambre.non_lus). Le mot ne dit que
+    les nombres et l'ordre de traitement ; ses affaires, il les a deja dans
+    sa chambre (books/).
+    """
+    staging = os.path.join(RACINE, "etat", "staging")
+    try:
+        propositions = sum(1 for n in os.listdir(staging)
+                           if os.path.isfile(os.path.join(staging, n)))
+    except OSError:
+        propositions = 0
+    souffrance = chambre.en_souffrance(mj)
+    aujourd_hui = _en_jours(dict(zip(("annee", "lune", "jour"),
+                                     date_du_monde())))
+    echus = 0
+    for fil in ((souffrance.get("j_attends") or [])
+                + (souffrance.get("on_attend_de_moi") or [])):
+        if not isinstance(fil, dict):
+            continue
+        quand = fil.get("demande_le") or fil.get("depuis")
+        if not isinstance(quand, dict):
+            continue
+        if aujourd_hui - _en_jours(quand) > ECHEANCE_JOURS:
+            echus += 1
+    billets = len(chambre.non_lus(mj))
+    return (u"ÉTABLI — ta table t'attend : %d propositions au staging, "
+            u"%d fils en souffrance échus, %d billets non lus. "
+            u"Tes affaires sont dans ta chambre (books/). Traite dans "
+            u"l'ordre : mesures d'une passe ; mutations dans l'ordre de tes "
+            u"\"Réalise\" ; ce qui porte \"Qui: <autre>\" part en billet, tu "
+            u"ne l'exécutes pas ; les décisions remontent en billet à dev. "
+            u"Écris tes items de flux dans brouillons/flux-a-pousser.jsonl."
+            % (propositions, echus, billets))
 
 
 def _message(de, mot, verbe):
@@ -257,8 +317,16 @@ def main():
     ap.add_argument("--de", required=True,
                     help="qui reveille — le personnage du siege qui a poste")
     ap.add_argument("--modele", default=None)
+    ap.add_argument("--etabli", action="store_true",
+                    help="la journee-etabli : le mot est SON etabli (staging, "
+                         "fils echus, billets), calcule ici, hors sandbox")
     ap.add_argument("texte", nargs="*",
                     help="son mot (defaut : va lire l'inbox et le flux)")
     a = ap.parse_args()
-    mot = u" ".join(a.texte) or MOT_DU_POST
-    print(appeler_zone(a.qui, a.de, mot, u"POST", modele=a.modele))
+    if a.etabli:
+        print(appeler_zone(a.qui, a.de, etabli_de(_sain(zone_de(a.qui))),
+                           u"ETABLI", modele=a.modele,
+                           minutes=ETABLI_MINUTES))
+    else:
+        mot = u" ".join(a.texte) or MOT_DU_POST
+        print(appeler_zone(a.qui, a.de, mot, u"POST", modele=a.modele))

@@ -4,6 +4,11 @@ le guetteur meurt, le geste du joueur EST le reveilleur).
 
     python scripts/reveiller.py --de rhaenyra
     python scripts/reveiller.py --qui mj-portreal --de otto "on force la porte"
+    python scripts/reveiller.py --qui mj --de dev --etabli
+
+`--etabli` : la journee-etabli du MJ (habitant.md : le MJ est un travailleur)
+— le mot devient son etabli (staging, fils echus, billets non lus), calcule
+par le lanceur hors sandbox (zone.etabli_de), verbe ETABLI.
 
 Le serveur la spawn DETACHEE sur POST /action (serveur/routes/action.js) ;
 elle appelle zone.appeler_zone — session continue du MJ, verdict sur stdout
