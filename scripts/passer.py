@@ -32,7 +32,6 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BOOKS = os.path.join(RACINE, "etat", "books.json")
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
 _d = _os.path.dirname(_os.path.abspath(__file__))
 while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:

@@ -78,7 +78,6 @@ for _p in (_d, _os.path.join(_d, "noyau")):
 
 import bibliotheque
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import livre  # le tri des volumes vit la-bas, et nulle part ailleurs
 from agents.expose import affecter  # LE resolveur d'adresses : on ne relit plus `xyz` a la main
 from etat.expose import tables  # LA PORTE de etat/
@@ -165,7 +164,6 @@ def feuille_de_route():
     if _FEUILLE:
         return _FEUILLE
     try:
-        sys.path.insert(0, os.path.join(RACINE, "scripts"))
         from temps.expose import evaluer
         A, N = evaluer.lire_tissu()
         for l in evaluer.force_narrative(A, N, lambda t="": None):
@@ -1289,7 +1287,6 @@ def _rang(m, scores, force):
 
 def ses_trous(qui, combien=TROUS_MONTRES):
     try:
-        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         from plan.expose import etat_du_plan as plan
         from plan.expose import nu
         import plan_modele as PM
@@ -1404,7 +1401,6 @@ def sa_charge_ailleurs(qui, combien=TROUS_AILLEURS):
     """Les pas dont SON office répond, dans le cahier d'un autre. Ça se FAIT :
     il va voir le tenant du volume, et le pas est à lui."""
     try:
-        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         from plan.expose import criticite
         _vu, sien, _tire = criticite.charge_de(qui)
         groupes = _par_cahier(_restants(sien))
@@ -1432,7 +1428,6 @@ def on_lattend(qui, combien=TROUS_AILLEURS):
     """Les pas qui engagent un moyen qu'il tient, sans que son nom soit sur la
     ligne. Ça se RÉPOND : ce n'est pas son travail, c'est quelqu'un qui attend."""
     try:
-        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         from plan.expose import criticite
         _vu, _sien, tire = criticite.charge_de(qui)
         groupes = _par_cahier(_restants(tire))
@@ -1657,7 +1652,6 @@ def appeler(qui, manuel, texte, sid, modele, minutes, parloir=True):
     # donc retrouvable, et distinct par instance.
     identite = qui
     if parloir:
-        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         from agents.expose import parloir as _p
         identite = _p.ouvrir_instance(qui, sid.replace("-", "")[:8],
                                       os.path.basename(neutre), minutes)

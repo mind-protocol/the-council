@@ -27,7 +27,6 @@ et l'on ne touche plus au gros fichier. Le cache se refait avec `--cache`.
 """
 import io, json, math, os, sys, heapq, collections
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
 _d = _os.path.dirname(_os.path.abspath(__file__))
 while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:

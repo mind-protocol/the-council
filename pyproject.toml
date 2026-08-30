@@ -21,6 +21,20 @@ requires-python = ">=3.9"
 requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+# LA CARTE DES PAQUETS. C'est la declaration que les outils lisent (et ce que
+# `pip install -e .` installerait, dans un venv, si on le decidait un jour) :
+# les containers de scripts/ sont des paquets, importables par nom qualifie
+# (`from etat.expose import tables`) des que scripts/ est sur sys.path.
+packages = [
+    "noyau", "etat", "temps", "agents", "plan", "scene", "monde",
+    "bataille", "peinture", "analyse", "figures", "ville",
+    "materialisation", "migrations", "tests",
+]
+
+[tool.setuptools.package-dir]
+"" = "scripts"
+
 [tool.pytest.ini_options]
 # Ou sont les epreuves. `scripts/` entre dans `sys.path` pour que les tests
 # importent les modules comme le font les scripts eux-memes.
@@ -33,27 +47,30 @@ line-length = 100
 exclude = ["monde", "captures", "voix", "vendor", "__pycache__", "archive"]
 
 # ---------------------------------------------------------------------------
-# CE QUE CE FICHIER NE FAIT PAS, ET POURQUOI
+# L'ETAT DES AMORCES, ET LA DECISION DIFFEREE
 #
-# Il ne declare PAS `scripts` comme un paquet installable, et les
-# `sys.path.insert` du depot ne disparaissent donc pas tous.
+# Les paquets sont desormais DECLARES ci-dessus, et les `sys.path.insert`
+# redondants (l'insert isole qui doublait l'amorce canonique dans le meme
+# fichier, ou le sys.path[0] que Python pose deja) ont ete retires — 35 lignes.
 #
-# Ils sont de deux especes, et une seule est du bruit :
+# Ce qui RESTE est l'amorce canonique de scripts/CLAUDE.md (« le chemin des
+# freres »), et elle est portante a trois endroits :
 #
-#   - `sys.path.insert(0, dirname(__file__))` dans un script qu'on lance par
-#     `python scripts/x.py` ne sert a rien : Python met deja ce dossier en
-#     `sys.path[0]`. Ceux-la, quand le module n'est importe de nulle part
-#     ailleurs, ont ete retires.
+#   - les COMMANDES (racine et sous-dossiers) : ce sont les points d'entree,
+#     l'amorce est ce qui rend `noyau/` visible pour les imports a nom nu
+#     (`import tables`, `import bibliotheque`) ;
+#   - les PORTES (`<container>/expose.py`) : leur amorce bootstrappe le chemin
+#     pour les entrees qui n'en ont pas (evaluer.py importe temps.expose et
+#     ne porte rien d'autre) ;
+#   - les TESTS : `unittest discover -s scripts/tests` met scripts/tests en
+#     sys.path, pas scripts/.
 #
-#   - `sys.path.insert(0, RACINE/scripts)` depuis `scripts/analyse/`,
-#     `scripts/plan/`, `scripts/monde/` porte quelque chose de reel : c'est ce
-#     qui permet a un script de sous-dossier d'importer ses freres. Le supprimer
-#     exigerait soit un `pip install -e .`, soit de reecrire les cent trente
-#     imports en `from scripts import x`. Les deux sont des chantiers a part
-#     entiere, et le second casse toute invocation par `python scripts/x.py` —
-#     qui est la SEULE facon dont ce depot est reellement lance, par le manuel
-#     comme par les hooks.
-#
-# Retirer les lignes utiles au nom d'une proprete qu'aucun outil n'exige aurait
-# rendu le depot injouable jusqu'a l'installation. On a retire le bruit, on a
-# garde ce qui porte, et l'on a ecrit pourquoi.
+# Les faire disparaitre exige UNE decision, pas un nettoyage : soit
+# `pip install -e .` — mais dans le Python GLOBAL de la machine, cela pose
+# `monde`, `plan`, `analyse` en noms de premier niveau pour tous les projets,
+# et il n'y a pas de venv ici ; soit reecrire tous les imports a nom nu en
+# noms qualifies (`from noyau import tables`) — d'un bloc, car un depot moitie
+# nu moitie qualifie importe le meme module deux fois sous deux noms, chacun
+# avec son etat. Les deux se decident, elles ne se glissent pas dans un
+# commit. Deja acquis pour le jour venu : la carte des paquets ci-dessus, et
+# des amorces identiques partout (une seule forme a supprimer).

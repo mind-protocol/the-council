@@ -65,7 +65,6 @@ import os
 import sys
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from plan.expose import nu, sans_emoji, NOM_GENRE  # noqa: E402
 from plan.expose import FINI, premier_mot  # noqa: E402

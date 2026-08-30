@@ -120,8 +120,6 @@ RACINE = os.path.dirname(SCRIPTS)
 ETAT = os.path.join(RACINE, "etat")
 STAGING = ETAT
 
-if SCRIPTS not in sys.path:
-    sys.path.insert(0, SCRIPTS)
 
 try:
     # Une seule table de budgets pour les deux scripts : celle de tick.py,

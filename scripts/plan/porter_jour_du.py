@@ -20,7 +20,6 @@ note, ou elles sont justes. On n'ecrase jamais un `Jour dû` deja rempli.
 import io, os, re, sys
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.insert(0, os.path.join(RACINE, "scripts"))
 import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
 _d = _os.path.dirname(_os.path.abspath(__file__))
 while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:

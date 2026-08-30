@@ -1291,14 +1291,12 @@ except Exception:
     pass  # idem : ce qui est annonce se verifie, mais rien ne bloque la poussee
 
 try:
-    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     from scene.expose import tunnel
     tunnel.avis(items)
 except Exception:
     pass  # un avis ne doit jamais empecher une poussee
 
 try:
-    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import carte_muette
     carte_muette.avis(items)
 except SystemExit:

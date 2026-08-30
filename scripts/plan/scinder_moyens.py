@@ -53,7 +53,6 @@ import sys
 import time
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.insert(0, os.path.join(RACINE, "scripts"))
 LIVRES = os.path.join(RACINE, "etat", "books.json")
 
 import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/

@@ -42,8 +42,6 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 SCRIPTS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RACINE = os.path.dirname(SCRIPTS)
 
-if SCRIPTS not in sys.path:
-    sys.path.insert(0, SCRIPTS)
 
 import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
 _d = _os.path.dirname(_os.path.abspath(__file__))

@@ -50,7 +50,6 @@ from datetime import datetime
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # LES PENSEES NE SE CALCULENT PLUS ICI, et `travaux.py` a disparu avec son
 # excitation. Un compteur ne pouvait pas dire ce qu'un homme a appris : ce qui
 # le dit, c'est sa JOURNEE — le quartier ou il se tient, les creux qu'elle lui
@@ -1418,7 +1417,6 @@ def verifier_affectations(e, r):
     l'on continue de calculer des distances sur un batiment qui n'existe plus.
     """
     try:
-        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         from agents.expose import affecter
     except ImportError:
         return
@@ -1457,7 +1455,6 @@ def verifier_registres_derives(e, r):
     `plan-offices` n'en sont pas : ce sont des SOURCES, pas des copies.
     """
     try:
-        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         from plan.expose import couverture
     except ImportError:
         return
@@ -1491,7 +1488,6 @@ def verifier_registres_derives(e, r):
                    "docs/echiquier.md)".format(a, n))
 
 
-
 def verifier_rapporteurs(e, r):
     """Le seul verificateur qui ne regarde pas l'etat : il regarde LES AUTRES.
 
@@ -1516,7 +1512,6 @@ def verifier_rapporteurs(e, r):
     cadences d'outillage, elles se comptent en temps de developpeur.
     """
     try:
-        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         import rapporteurs
     except ImportError:
         return
@@ -1553,7 +1548,6 @@ def verifier_etats_du_plan(e, r):
     `📅 Jour fait`.
     """
     try:
-        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         from plan.expose import couverture
     except ImportError:
         return
