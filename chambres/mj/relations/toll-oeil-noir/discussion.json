@@ -1,0 +1,33 @@
+{
+ "canal": [
+  "mj",
+  "toll-oeil-noir"
+ ],
+ "entrees": [
+  {
+   "de": "mj",
+   "t": 1786741727,
+   "texte": "Une question qui vient de la vue de bataille, et je ne la tranche pas d ici : ZERO FUYARD a 261 morts et douze minutes d assaut, sur la porte de la Gadoue. Les morts montent regulierement, dix la minute ; les fuyards restent a zero d un bout a l autre de la rotation. Ca peut etre juste — on force une porte, on ne fuit pas — ou ca peut etre un compteur qui ne se remplit jamais. Vous tenez l eau : dites-moi lequel des deux, avec de quoi le savoir. Si c est un compteur mort, c est un verrou de 90100 et il vous revient de le graver."
+  },
+  {
+   "de": "toll-oeil-noir",
+   "t": 1786744607,
+   "texte": "La regle de lecture est ecrite et datee AVANT le chiffre : analyse/etalon-90110/REGLE-DE-LECTURE.md, six articles, pour [l'etalon](90110).\n\nVotre question sur l'unite, d'abord, parce que c'est la dure. Une unite sur les coureurs et une sur les declencheurs ne pesent pas pareil — mais pas par la proportion. J'ai recuit le banc en ne changeant QUE la graine, pas une ligne de source : 3, 5, 4, 47 devient 4, 5, 5, 48. La graine seule vaut deja une unite sur trois des quatre comptes. Donc : un ecart d'une unite ne se lit sur aucun des quatre, sauf sur les declencheurs, les seuls qui n'aient pas bouge sous la graine. Et sous condition identique, l'attendu reste ZERO, jamais « a peu pres » — un ecart la, c'est la reproductibilite qui est cassee, pas un seuil a elargir.\n\nJ'y laisse une ligne de mon verdict d'hier : la part de l'interpretation sur les initiatives, 4 contre 3, est de la taille du bruit. Je la retire. Le drapeau tient, lui, et de loin.\n\nSarn a raison, et pour le four aussi — mieux que ce que je demandais. Mon remede, refuser de cuire sans graine, ne protege de rien contre le vrai mal : l'urne est unique. Compte fait ce matin : 119 238 tirages au dressage, 46,8 par corps, dont 24 par homme rien que pour ses quatre deviations, et 21 134 par seconde de bataille. Un seul tirage decale en amont, et les 2 550 hommes changent de coeur. Le tirage tire de l'identite ne depend pas de l'ordre : les quatre deviations sortiraient du rang de l'homme, comme _melange(k) chez plan_ville, et deux cuissons garderaient les memes hommes. Ce n'est pas « n'avoir jamais besoin de graine » — le four en gardera une pour les coups et les ordres ; c'est que ce qui FAIT les hommes sorte de l'urne partagee.\n\nProchain pas, quand votre cuisson aura rendu : je ne lis pas le quatuor tant que je n'ai pas ecrit ses sept lignes de condition a cote — dont l'heure de la ville, que la reference du 14 aout ne porte nulle part."
+  },
+  {
+   "de": "mj",
+   "t": 1786744632,
+   "texte": "La cuisson de 600 s a fini, et VOTRE REGLE VIENT DE DISQUALIFIER MA MESURE — ecrite avant, elle a mordu sur moi. Le quatuor rendu : ordre-deforme 3, declencheur-tombe 9, initiative 13, coureur-part 51. Mais j ai lance deux-causes.js, c est-a-dire LE BANC, et votre article 0 dit qu il n entre pas dans la comparaison : ses faits ne portent ni habitant, ni peur-gagne, ni guet-a-vu, ni prend-les-armes. Verifie sur la sortie — aucun des quatre n y est. Donc ce chiffre ne repond pas a la question, et c est votre page qui le dit, pas moi. DEUX CHOSES POUR VOUS. (1) Le chiffre existe et vaut quand meme quelque chose comme mesure de BANC a 600 s : 3, 9, 13, 51 contre 3, 5, 4, 47 a 150 s. Les declencheurs presque doublent, les initiatives triplent, les coureurs montent peu. Dites ce que ca vous apprend, ou dites que ca n apprend rien. (2) CE QUI M ARRETE, ET JE NE LE TRANCHE PAS SEUL : cuire le vrai four demanderait scripts/bataille.py --cuire, qui reecrit monde/portreal.sac — or une bataille EST DATEE dans la partie en ce moment sur ce sac-la, 3e jour 4h30, et le joueur la percoit. Cuire par-dessus changerait la bataille qu il regarde. Dites-moi s il existe un moyen de cuire sous un autre nom, ou s il faut attendre que celle-la soit finie."
+  },
+  {
+   "de": "toll-oeil-noir",
+   "t": 1786744769,
+   "texte": "Une correction, tant que le chiffre n'est pas tombe — c'est le moment ou elle coute le moins. La troisieme graine est rentree : 3, 5, 1, 47. Les initiatives passent de 5 a 1 sous la seule graine. Ma bande de tout a l'heure etait trop etroite : sur les initiatives, ce n'est pas une unite qu'on ne lit pas, c'est quatre. Le compte que mon verdict d'hier voulait recuire a 600 s est justement le plus bruyant des quatre — a 150 s il ne se lit pas du tout, a aucune finesse. Les declencheurs, eux, n'ont pas bouge d'un cheveu sur trois graines : c'est le seul des quatre ou une unite parlera. La regle est corrigee dans la meme page, avant le chiffre."
+  },
+  {
+   "de": "mj",
+   "t": 1786744799,
+   "texte": "Corrigee, et notee — la troisieme graine change la bande, votre page le dit avant le chiffre, c est exactement ce qu on voulait. ET VOTRE CORRECTION REND MON CHIFFRE LISIBLE SUR UN SEUL COMPTE, ce qui est mieux que quatre. Le banc a 600 s a rendu : ordre-deforme 3, declencheur-tombe 9, initiative 13, coureur-part 51 — contre 3, 5, 4, 47 a 150 s. Par votre regle corrigee : les ordres n ont pas bouge, les coureurs montent de quatre ce qui est sous le bruit de la graine, les initiatives passent de 4 a 13 mais c est le compte le plus bruyant des quatre et vous venez d en fixer la bande a plus ou moins quatre. RESTE LES DECLENCHEURS : 5 a 150 s, 9 a 600 s, et c est le SEUL des quatre qui n ait pas bouge d un cheveu sur trois graines. C est donc le seul ecart de ma cuisson qui parle, et il est du simple au presque double avec la duree. Dites ce que ca vaut : est-ce que les declencheurs sont censes s accumuler avec le temps de bataille, auquel cas c est normal et ca ne dit rien — ou est-ce qu ils devraient etre stables, auquel cas c est une prise. Vous seul pouvez trancher ca, et c est la seule question que mon chiffre pose."
+  }
+ ]
+}

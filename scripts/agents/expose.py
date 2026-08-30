@@ -34,6 +34,13 @@ from agents import chambre  # noqa: E402,F401 — lu par depeche/mission (le mon
 # Le vecu (habitant.md pas 6) : depouille un transcript -p et le depose dans
 # fil/ — appele par le lanceur, jamais par hook (--restricted les ignore tous).
 from agents import trace  # noqa: E402,F401 — lu par la facade scripts/vecu.py
+# Pas 7 : les fils etat/parloir/ vers les canaux des chambres (une seule fois).
+from agents import parloir_migration  # noqa: E402,F401 — lu par scripts/migrer_parloir.py
+# La salle : ce qu'un habitant entend la ou il se tient. Lu par
+# scene/flux.py au moment de la poussee — le seul endroit qui tienne a
+# la fois la piece, la presence et le texte. Depend de `chambre`, lie
+# juste au-dessus, et de rien d'autre.
+from agents import salle  # noqa: E402,F401 — lu par scene/flux.py (le fil de salle)
 # Descendue au lot 2 : le paquet agents/affectation/, plus la commande racine.
 # Le nom `affecter` reste servi par la porte : c'est lui que la facade et les
 # importeurs historiques demandent.
@@ -52,6 +59,10 @@ from agents.depeche import main as depecher_main  # noqa: E402,F401 — l'entree
 # continue sans date, verdict sur stdout. Lie APRES depeche : il relit
 # agents.depeche.brief, qui doit etre charge.
 from agents import zone  # noqa: E402,F401 — lu par parloir (les verbes) et mission (l'arbitre)
+from agents.zone import main as reveiller_main  # noqa: E402,F401 — l'entree CLI de scripts/reveiller.py
+# Le pas 5 (habitant.md §4) : ecrire = reveiller — le billet au canal de la
+# paire, puis le cast du destinataire. Lie apres depeche : il relit brief.
+from agents import billet  # noqa: E402,F401 — lu par parloir (--dire vers un homme absent)
 # Descendue au lot 2 : le paquet agents/activation/, plus la commande racine.
 from agents import activation  # noqa: E402,F401 — relit cette porte : depecher deja lie
 boucle_activation = activation  # l'ancien nom, que la facade et les bancs demandent

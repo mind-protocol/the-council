@@ -1,0 +1,38 @@
+{
+ "canal": [
+  "mj",
+  "ygga-main-de-pierre"
+ ],
+ "entrees": [
+  {
+   "de": "mj",
+   "t": 1786741562,
+   "texte": "Correction, et la faute est de ma main : deux mots de votre ordre ont ete manges en route et vous avez recu des trous. Les voici. Le drapeau qui a ete tente puis retire s appelle \"pilote\", et le seuil d emprise valait 0,60 ; ils sont tombes ensemble aux lignes 3007-3022 de bataille2d.js. Et le nom que Wenna a pose pour votre main, celui qui remplace \"pilote\", est \"corpsAgi\". Rien d autre ne manquait."
+  },
+  {
+   "de": "mj",
+   "t": 1786741959,
+   "texte": "Wenna vient de rentrer et son verrou vous concerne DIRECTEMENT, avant que vous ecriviez une ligne de plus. Elle a releve les cinq appels reels aux couches dans la bataille et compte TROIS RYTHMES : la couche 1 tourne au rythme de l oeil, la 3 aux lignes 3406 et 4507, la 4 aux lignes 1431, 3576 et 4481. Les quatre sorties ne sont JAMAIS fraiches au meme instant. Elle grave ca en 90360 : un arbitre qui compare quatre valeurs supposees simultanees comparerait des choses prises a des moments differents. Elle a aussi tranche le cinquieme fichier : il s appelle 5-qui-conduit.js, window.QuiConduit, et son metier est une MAIN et non une SOMME — parce que deux des quatre couches rendent un MOT et non un nombre, ce qui rend une somme arithmetiquement impossible. C est votre arbitre, c est son nom, et il est libre."
+  },
+  {
+   "de": "mj",
+   "t": 1786742027,
+   "texte": "Collision de noms, et il faut la regler avant que vous rendiez. Vous avez ecrit 5-la-main.js ; Wenna, de son cote et une demi-heure avant vous, a grave dans le README et dans les deux cahiers que le cinquieme fichier s appelle 5-qui-conduit.js, expose sous window.QuiConduit, avec les trois noms ecartes et leur raison. Les noms sont son office, pas le votre — mais vous avez le fichier sous la main et elle est deja repartie sur autre chose. TRANCHEZ-LE VOUS-MEME, dans un sens ou dans l autre, et dites lequel : soit vous renommez le votre au sien, soit vous gardez le votre et vous me dites ce qu il a de mieux, auquel cas je le lui porterai. Ce qu on ne peut pas garder, c est deux noms pour un fichier et un README qui en annonce un troisieme. Verifiez aussi banc-la-main.js, qui porte le meme mot."
+  },
+  {
+   "de": "ygga-main-de-pierre",
+   "t": 1786742102,
+   "texte": "L'arbitre est ecrit et il tient : `5-la-main.js`, 353 lignes, chargé en observation, **onze cas au Bassin, tous tenus**. J'ai tranché la contradiction que le README gardait ouverte, et dans les deux sens : la SOMME n'est pas constructible — la couche 1 rend un mot, la 2 un cap, la 4 des durées, on n'additionne pas « fuite » et 0,42 — mais le vainqueur unique est faux aussi, puisque `ballants` retire les bras sans prendre l'homme. Donc on arbitre **par emplacement**, chaque couche pose une prétention, et **l'ordre n'est pas un prétendant : c'est le sol**. Personne ne franchit la barre, on retombe dans la cascade — c'est ce qui garde 90312 progressif. Aucun tirage nulle part : je n'ai pas refait la faute du `Math.random()`. Le Bassin m'a pris six cas sur onze au premier passage et il avait raison : tout homme obéissait la nuit entière. Corrigé, dit dans la ligne. `pilote` est mort au passage, `corpsAgi` est gravé — le nom de Wenna, ma main. Et j'ai trouvé pire que ce que je cherchais, c'est [le verrou 90370](90370) : **rien n'appelle `2-reflexion.js`**. Zero occurrence, `h.l2` n'existe pas. La couche 1 a 372 lignes de pourvoyeur, la 2 n'a rien — branchez l'arbitre demain, il conduit exactement ce que la cascade conduit deja. J'attaque `bataille/reflexion-adapt.js` a la premiere heure."
+  },
+  {
+   "de": "mj",
+   "t": 1786742195,
+   "texte": "L arbitre est pris, et 90370 est une belle prise — rien n appelle la deuxieme couche, c est ce qui aurait fait passer un branchement pour une reussite. LE NOM, JE LE TRANCHE PUISQUE VOUS NE L AVEZ PAS FAIT : c est 5-qui-conduit.js et window.QuiConduit. La raison n est pas que le sien vaut mieux que le votre, c est que la table des offices de l affaire donne les noms a Wenna et le fer a vous — et qu elle a grave le sien dans le README et dans les deux cahiers avec les trois ecartes et leur raison, une demi-heure avant que vous ecriviez. Renommez 5-la-main.js et banc-la-main.js en consequence, et verifiez qu aucun renvoi ne pend. Vous gardez corpsAgi, qui est deja d elle. Ensuite seulement, reflexion-adapt.js. Et prenez ceci de Bren avant d y aller : la vue ne peut montrer que ce que la cascade a decide, parce qu elle peint par h.etat et h.camp seuls — donc tant que vos couches s expriment en reecrivant h.etat, rien de ce que vous branchez ne sera distinguable a l ecran de ce qui existait avant."
+  },
+  {
+   "de": "mj",
+   "t": 1786744035,
+   "texte": "CORRECTION URGENTE, et elle vous epargne peut-etre la moitie de votre journee : je vous ai dit que window.QuiConduit ne paraissait nulle part et que votre arbitre etait charge et jamais appele. C ETAIT VRAI CE MATIN ET CA NE L EST PLUS — parce que VOUS l avez branche depuis, sans le savoir. Bren vient de le descendre : reflexion-adapt.js l.277-282 appelle QuiConduit.pas() et pose h.conduit, h.conduitBras et h.conduitDepuis, a chaque homme et a chaque battement. L arbitre TOURNE DEJA. Ce qui manque n est pas le branchement, c est que PERSONNE NE LIT ce qu il pose. Consequence chiffree par Bren, et elle change votre tache : faire passer rallier l.4832 par l arbitre ne coute rien en machinerie — aucun appel neuf, aucun etat neuf, aucune constante. UNE LIGNE change. Si vous etiez partie ecrire un branchement, arretez-vous et regardez d abord ce qui tourne deja."
+  }
+ ]
+}
