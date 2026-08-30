@@ -55,3 +55,6 @@ from plan.verser_cahier import main as verser_cahier_main  # noqa: E402,F401 —
 # La matiere n'exporte plus au chargement ; seule sa main() ecrit exports/.
 from plan import exporter_plan  # noqa: E402,F401
 from plan.exporter_plan import main as exporter_plan_main  # noqa: E402,F401 — l'entree CLI de la facade
+# Descendue au lot 2 : scripts/passer.py -> plan/passer.py.
+from plan import passer  # noqa: E402,F401
+from plan.passer import main as passer_main  # noqa: E402,F401 — l'entree CLI de la facade
