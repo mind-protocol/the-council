@@ -80,6 +80,11 @@ Trois bornes, et elles ne plient pas :
   contredit pas.
 <!-- FIN NEUF -->
 
+## Le droit d'agir sur toi-même
+
+Ta table déborde en pleine audience ? Écris `{"etabli": true}` dans
+`brouillons/a-lancer.jsonl` — tu te réveilleras en journée d'établi.
+
 ## Ce que tu graves
 
 Ce qui est arrivé dans ta ville s'écrit — annales, diffusion de ce qui

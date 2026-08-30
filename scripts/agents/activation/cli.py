@@ -74,6 +74,22 @@ def main():
     with VerrouBoucle():
         etat = None
         while True:
+            # LA TABLE DU MJ FAIT PARTIE DU FRONT (habitant.md : le MJ est
+            # un travailleur — la boucle l'elit comme tout le monde). A
+            # chaque battement : si sa table porte quelque chose (memes
+            # comptes que son mot d'etabli) et qu'aucun etabli n'est recent
+            # (cooldown reel, marqueur dans sa chambre), son etabli part
+            # DETACHE. Gradue, jamais bloquant : un echec de calcul se
+            # journalise et la boucle continue. Import local : la porte lie
+            # `zone` avant `activation`, mais on ne paie l'import qu'ici.
+            try:
+                from agents.expose import zone as _zone
+                comptes = _zone.veiller_etabli()
+                if comptes:
+                    journaliser("etabli.lance", **comptes)
+            except Exception as e:
+                journaliser("etabli.echoue", raison=type(e).__name__,
+                            erreur=_court(str(e), 200))
             try:
                 if args.max_activations:
                     args.capacite_cycle = min(

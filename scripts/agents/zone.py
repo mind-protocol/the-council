@@ -29,6 +29,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
 import uuid
 
 from agents import chambre
@@ -151,17 +152,18 @@ def _en_jours(d):
 ECHEANCE_JOURS = 3
 
 
-def etabli_de(mj):
-    """LE MOT d'etabli du MJ — calcule ICI, par le lanceur, hors sandbox
+def comptes_d_etabli(mj):
+    """Les trois comptes REELS de la table du MJ — (propositions, echus,
+    billets). La seule arithmetique d'etabli : le mot (etabli_de) et le
+    battement de la boucle (veiller_etabli) la partagent — jamais deux
+    calculs qui divergent. Calcule ICI, par le lanceur, hors sandbox
     (habitant.md : le MJ est un travailleur ; son brief est son etabli).
 
     Les comptes sont REELS, jamais estimes : les fichiers du staging
     (etat/staging/, les propositions a depouiller), les fils echus de SON
     en-souffrance (j_attends + on_attend_de_moi dont la date — demande_le,
     ou depuis pour ce qu'on attend de lui — a plus de ECHEANCE_JOURS jours
-    du monde), et ses billets non lus (chambre.non_lus). Le mot ne dit que
-    les nombres et l'ordre de traitement ; ses affaires, il les a deja dans
-    sa chambre (books/).
+    du monde), et ses billets non lus (chambre.non_lus).
     """
     staging = os.path.join(RACINE, "etat", "staging")
     try:
@@ -182,7 +184,13 @@ def etabli_de(mj):
             continue
         if aujourd_hui - _en_jours(quand) > ECHEANCE_JOURS:
             echus += 1
-    billets = len(chambre.non_lus(mj))
+    return propositions, echus, len(chambre.non_lus(mj))
+
+
+def etabli_de(mj):
+    """LE MOT d'etabli du MJ. Le mot ne dit que les nombres et l'ordre de
+    traitement ; ses affaires, il les a deja dans sa chambre (books/)."""
+    propositions, echus, billets = comptes_d_etabli(mj)
     return (u"ÉTABLI — ta table t'attend : %d propositions au staging, "
             u"%d fils en souffrance échus, %d billets non lus. "
             u"Tes affaires sont dans ta chambre (books/). Traite dans "
@@ -191,6 +199,108 @@ def etabli_de(mj):
             u"ne l'exécutes pas ; les décisions remontent en billet à dev. "
             u"Écris tes items de flux dans brouillons/flux-a-pousser.jsonl."
             % (propositions, echus, billets))
+
+
+# Le cooldown de l'etabli : la boucle bat toutes les quelques secondes, une
+# journee d'etabli dure des minutes — sans ce garde-fou, chaque battement
+# empilerait un MJ sur le precedent. Horodate REELLE (mtime du marqueur),
+# jamais la date du monde : c'est du spam de processus qu'on borne, pas du
+# temps de jeu.
+MARQUEUR_ETABLI = ".dernier-etabli"
+COOLDOWN_ETABLI_MINUTES = 30
+
+
+def _marqueur_etabli(mj):
+    return os.path.join(chambre.chemin(mj), "brouillons", MARQUEUR_ETABLI)
+
+
+def etabli_recent(mj, minutes=COOLDOWN_ETABLI_MINUTES):
+    """Un etabli a-t-il ete lance il y a moins de `minutes` (reelles) ?"""
+    try:
+        return (time.time() - os.path.getmtime(_marqueur_etabli(mj))
+                ) < minutes * 60
+    except OSError:
+        return False
+
+
+def marquer_etabli(mj):
+    """Pose l'horodate du lancement — TOUT chemin qui lance un etabli la
+    pose (boucle, a-lancer, commande directe) : le cooldown vaut pour tous."""
+    chambre.ouvrir(mj)
+    with io.open(_marqueur_etabli(mj), "w", encoding="utf-8",
+                 newline="\n") as f:
+        f.write(time.strftime("%Y-%m-%d %H:%M:%S") + u"\n")
+
+
+def lancer_etabli_detache(mj, de):
+    """Spawn DETACHE de `reveiller.py --qui <mj> --de <de> --etabli` — le
+    motif de serveur/routes/action.js (detached, stdio ignore, windowsHide)
+    et de mission.appeler (les drapeaux du cast). Marque le cooldown au
+    depart, pas au retour : c'est le lancement qu'on espace."""
+    marquer_etabli(mj)
+    drapeaux = {}
+    if os.name == "nt":  # DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP
+        drapeaux["creationflags"] = 0x00000008 | 0x00000200
+    else:
+        drapeaux["start_new_session"] = True
+    subprocess.Popen(
+        [sys.executable, os.path.join(RACINE, "scripts", "reveiller.py"),
+         "--qui", mj, "--de", de, "--etabli"],
+        cwd=RACINE, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL, **drapeaux)
+
+
+def veiller_etabli(mj="mj", de="boucle", minutes=COOLDOWN_ETABLI_MINUTES):
+    """LE BATTEMENT : la boucle d'activation appelle ceci a chaque passage
+    (agents/activation/cli.py). Si la table du MJ porte quelque chose —
+    memes comptes que le mot d'etabli — et qu'aucun etabli n'est recent,
+    son etabli part detache. Rend les comptes si lance, None sinon.
+    Gradue, jamais bloquant : l'appelant enveloppe dans son try/except."""
+    propositions, echus, billets = comptes_d_etabli(mj)
+    if propositions + echus + billets <= 0:
+        return None
+    if etabli_recent(mj, minutes):
+        return None
+    lancer_etabli_detache(mj, de)
+    return {"propositions": propositions, "echus": echus,
+            "billets": billets}
+
+
+def _ramasser_a_lancer(mj):
+    """LE MJ S'AUTO-LANCE PAR LE VERBE AGIR — meme motif que le spool de
+    flux : son sandbox bloque python (mesure du 31.8), donc il ECRIT son
+    geste dans SA chambre (brouillons/a-lancer.jsonl, un objet JSON par
+    ligne) et c'est ICI, hors sandbox, au retour de l'audience, que le
+    lanceur le ramasse. Une ligne = un lancement ; un etabli recent laisse
+    la ligne en place (le cooldown vaut pour tous les chemins) ; un geste
+    illisible ou inconnu reste et se dit sur stderr — rien ne se perd en
+    silence."""
+    fichier = os.path.join(chambre.chemin(mj), "brouillons",
+                           "a-lancer.jsonl")
+    if not os.path.exists(fichier):
+        return
+    restes = []
+    with io.open(fichier, encoding="utf-8", errors="replace") as f:
+        lignes = [l.strip() for l in f if l.strip()]
+    for ligne in lignes:
+        try:
+            item = json.loads(ligne)
+            if not (isinstance(item, dict) and item.get("etabli")):
+                restes.append(ligne)
+                sys.stderr.write(u"(a-lancer %s : geste inconnu — %s)\n"
+                                 % (mj, ligne[:80]))
+            elif etabli_recent(mj):
+                restes.append(ligne)
+                sys.stderr.write(u"(a-lancer %s : etabli recent, la ligne "
+                                 u"attend)\n" % mj)
+            else:
+                lancer_etabli_detache(mj, mj)
+                sys.stderr.write(u"(a-lancer %s : etabli lance)\n" % mj)
+        except Exception as e:
+            restes.append(ligne)
+            sys.stderr.write(u"(a-lancer %s : %s)\n" % (mj, str(e)[:120]))
+    with io.open(fichier, "w", encoding="utf-8", newline="\n") as f:
+        f.write(u"\n".join(restes) + (u"\n" if restes else u""))
 
 
 def _message(de, mot, verbe):
@@ -257,6 +367,7 @@ def appeler_zone(ville, de, mot, verbe, modele=None, minutes=MINUTES):
                             u"nouvelle" if tentative[0] == "--session-id"
                             else u"reprise"))
         _pousser_le_spool(mj)
+        _ramasser_a_lancer(mj)
         return (json.loads(out).get("result") or u"").strip()
     raise RuntimeError("ni --session-id ni --resume n'ont abouti pour %s" % mj)
 
@@ -324,9 +435,10 @@ def main():
                     help="son mot (defaut : va lire l'inbox et le flux)")
     a = ap.parse_args()
     if a.etabli:
-        print(appeler_zone(a.qui, a.de, etabli_de(_sain(zone_de(a.qui))),
-                           u"ETABLI", modele=a.modele,
-                           minutes=ETABLI_MINUTES))
+        mj = _sain(zone_de(a.qui))
+        marquer_etabli(mj)  # le cooldown vaut pour tous les chemins
+        print(appeler_zone(mj, a.de, etabli_de(mj), u"ETABLI",
+                           modele=a.modele, minutes=ETABLI_MINUTES))
     else:
         mot = u" ".join(a.texte) or MOT_DU_POST
         print(appeler_zone(a.qui, a.de, mot, u"POST", modele=a.modele))
