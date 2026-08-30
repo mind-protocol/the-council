@@ -91,20 +91,10 @@ def migrer(vraiment=False, dire=print):
                 "" if vraiment else "  [a sec]"))
         if not vraiment:
             continue
-        canal = chambre.canal(a, b)  # ouvre les deux chambres au passage
-        existantes = []
-        if os.path.exists(canal):
-            with io.open(canal, encoding="utf-8") as f:
-                existantes = (json.load(f).get("entrees") or [])
-        # L'histoire migree PRECEDE ce que les chambres ont deja echange.
-        with io.open(canal, "w", encoding="utf-8", newline="\n") as f:
-            json.dump({"canal": [a, b], "entrees": neuves + existantes},
-                      f, ensure_ascii=False, indent=1)
-        for qui, autre in ((a, b), (b, a)):
-            with io.open(os.path.join(chambre.chemin(qui), "relations",
-                                      autre, ".lu"), "w",
-                         encoding="utf-8", newline="\n") as f:
-                f.write("%d" % (len(neuves) + len(existantes)))
+        # TOUTES LES ECRITURES SONT CHEZ chambre : le format du canal et les
+        # curseurs lui appartiennent — ce module ne fait que lire etat/ et
+        # supprimer le legacy migre.
+        chambre.verser_histoire(a, b, neuves)
         for chemin in chemins:
             os.remove(chemin)
             nom = os.path.basename(chemin)[:-6]

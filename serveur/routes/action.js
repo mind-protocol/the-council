@@ -32,6 +32,17 @@ function traiter(req, res, url) {
         fs.mkdirSync(dossier, { recursive: true });
         fs.writeFileSync(path.join(dossier, "action-" + Date.now() + ".json"),
           JSON.stringify(action, null, 2), "utf-8");
+        // LE GUETTEUR EST MORT (habitant.md pas 5) : c'est le POST qui
+        // réveille le MJ du joueur, en habitant — spawn détaché, l'inbox
+        // garde l'acte si le réveil rate.
+        try {
+          const { spawn } = require("child_process");
+          const p = spawn(process.env.PYTHON || "python",
+            [path.join(RACINE, "scripts", "reveiller.py"),
+             "--de", (siege && siege.personnage_id) || "joueur"],
+            { cwd: RACINE, detached: true, stdio: "ignore" });
+          p.unref();
+        } catch (e) { /* un reveil rate ne perd rien : l'inbox garde l'acte */ }
         // Ce que le joueur dit ou fait entre dans le flux : sans cela, sa parole
         // n'existe que dans le navigateur et disparaît au premier rechargement.
         // « Laisser faire » se poste même vide : l'absence de consigne EST la

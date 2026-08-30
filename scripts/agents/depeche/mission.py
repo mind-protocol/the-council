@@ -187,12 +187,94 @@ def poser_letagere(neutre, qui):
     dossier = os.path.join(neutre, "livres")
     os.makedirs(dossier)
     n = 0
+    index = []
     for b in livre.etagere(qui):
         with io.open(os.path.join(dossier, "%s.txt" % b.get("id")), "w",
                      encoding="utf-8", newline="\n") as f:
             f.write(livre.rendre(b, large=True))
+        index.append("%-34s %s%s" % (
+            b.get("id"), b.get("titre") or "",
+            ("   (porte par %s)" % b["acteur_id"]) if b.get("acteur_id")
+            else ("   (pose : %s)" % b["salle_id"]) if b.get("salle_id")
+            else ""))
         n += 1
+    # L'INDEX EST UN FICHIER, PLUS UN PARAGRAPHE DU REVEIL. Il pesait 7,2 Ko
+    # dans le message pour dire des noms de fichiers ; il est ici, a cote de
+    # ce qu'il indexe, et c'est la ou un homme le cherche.
+    with io.open(os.path.join(dossier, "_index.txt"), "w", encoding="utf-8",
+                 newline="\n") as f:
+        f.write("LES VOLUMES A TA PORTEE — %d" % n + chr(10))
+        f.write("Chacun s'ouvre sous ./livres/<identifiant>.txt ;"
+                " Grep cherche dans leur texte." + chr(10) * 2)
+        f.write((chr(10)).join(sorted(index)) + chr(10))
     return n
+
+
+def poser_la_memoire(neutre, qui, contexte=None):
+    """Materialise au pas-de-tir ce que le message ne porte plus.
+
+    LE PENDANT OBLIGE DE LA COMPRESSION. Sortir les croyances et les pensees
+    du message ne vaut que si elles EXISTENT quelque part qu'il puisse ouvrir :
+    un pointeur vers rien est pire qu'un percept trop long. Deux fichiers,
+    ecrits ici parce que ce sont des lectures de `etat/` mises en forme pour
+    lui — sa chambre, elle, est a lui, et nous n'y ecrivons pas sa memoire.
+
+    Rend {croyances, pensees} : le nombre de lignes posees de chaque cote.
+    """
+    dossier = os.path.join(neutre, "ma-memoire")
+    os.makedirs(dossier, exist_ok=True)
+    # `contexte` est un confort, pas une dependance : les deux chemins d'appel
+    # (depeche et boucle d'activation) ne l'ont pas tous les deux sous la main,
+    # et un fichier qui manque parce qu'un argument manquait serait exactement
+    # le pointeur mort qu'on cherche a eviter. A defaut, on relit la tete.
+    intention = (contexte or {}).get("intention")
+    if not intention:
+        tetes = tables.lire(os.path.join(RACINE, "etat", "intentions.json"), [])
+        if isinstance(tetes, dict):
+            tetes = tetes.get("intentions") or []
+        intention = next((t for t in tetes
+                          if isinstance(t, dict)
+                          and t.get("personnage_id") == qui), {})
+
+    croyances = [str(x) for x in (intention.get("croyances") or []) if x]
+    if croyances:
+        with io.open(os.path.join(dossier, "ce-que-je-tiens-pour-vrai.txt"),
+                     "w", encoding="utf-8", newline=chr(10)) as f:
+            f.write("CE QUE JE TIENS POUR VRAI" + chr(10))
+            f.write("La derniere en tete. Rien ici n'est prouve : c'est ce que"
+                    " je crois," + chr(10) + "et j'ai le droit de me tromper."
+                    + chr(10) * 2)
+            for x in croyances:
+                f.write("- " + x + chr(10) * 2)
+
+    pensees = [p for p in _pensees_de(qui)]
+    if pensees:
+        with io.open(os.path.join(dossier, "ce-que-jai-appris.txt"), "w",
+                     encoding="utf-8", newline=chr(10)) as f:
+            f.write("CE QUE J'AI APPRIS" + chr(10))
+            f.write("Mes pensees datees, la plus recente en tete." + chr(10) * 2)
+            for x in pensees:
+                d = x.get("date") or {}
+                f.write("[%s.%s.%s] %s" % (d.get("annee"), d.get("lune"),
+                                           d.get("jour"),
+                                           str(x.get("texte") or "")))
+                if x.get("source"):
+                    f.write(chr(10) + "   (source : %s)" % x["source"])
+                f.write(chr(10) * 2)
+    return {"croyances": len(croyances), "pensees": len(pensees)}
+
+
+def _pensees_de(qui):
+    """Ses pensees, la plus recente en tete. Lecture par la porte."""
+    d = tables.lire(os.path.join(RACINE, "etat", "pensees.json"), [])
+    if isinstance(d, dict):
+        d = d.get("pensees") or []
+    siennes = [p for p in d if isinstance(p, dict) and p.get("qui") == qui]
+
+    def rang(p):
+        j = p.get("date") or {}
+        return (j.get("annee", 0), j.get("lune", 0), j.get("jour", 0))
+    return sorted(siennes, key=rang, reverse=True)
 
 
 def poser_le_parloir(neutre, qui):
@@ -280,6 +362,8 @@ def appeler(qui, manuel, texte, sid, modele, minutes, parloir=True,
     from agents.expose import chambre as _ch
     neutre = tempfile.mkdtemp(prefix="depeche-%s-" % qui)
     poser_letagere(neutre, qui)
+    # Ce que le message ne porte plus doit exister la ou il pointe.
+    poser_la_memoire(neutre, qui)
     sa_chambre = _ch.ouvrir(qui)
     prompt_systeme = os.path.join(neutre, "system-prompt.md")
     with io.open(prompt_systeme, "w",
@@ -395,6 +479,18 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True):
     # plus — la garde etait donc toujours vraie et PLUS PERSONNE NE PARTAIT.
     # Les deux vrais motifs sont les deux sorties precoces de `brief_de`.
     empeche = None
+    # UN SIEGE OCCUPE N'EST PAS DEPECHE : quand un joueur incarne cet homme,
+    # sa journee est vecue par le siege — une depeche parallele donnerait
+    # deux volontes au meme corps le meme jour. L'anachronisme tolere le
+    # desordre des dates, pas la double volonte (decision du 30.8).
+    joueurs = tables.lire(os.path.join(ETAT, "joueurs.json"), [])
+    if isinstance(joueurs, dict):
+        joueurs = joueurs.get("joueurs", [])
+    for j in joueurs or []:
+        if isinstance(j, dict) and j.get("occupe") and not j.get("regie") \
+                and (j.get("personnage_id") or j.get("id")) == qui:
+            empeche = u"son siege est occupe — un joueur l'incarne"
+            break
     if not brief:
         empeche = u"aucun dossier"
     elif u"Aucune tete dans intentions.json" in brief:
