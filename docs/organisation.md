@@ -72,7 +72,7 @@ C'est le `expose.js` de `batailles` transposé : là-bas, `main.js` est le seul 
 
 ## 3. Les containers proposés
 
-Sept containers de **sujet**, deux transverses. Chacun possède son sujet **de bout en bout** — du calcul Python à ce que la page en dessine.
+Six containers de **sujet**, deux transverses. Chacun possède son sujet **de bout en bout** — du calcul Python à ce que la page en dessine.
 
 > **Pourquoi par sujet et non par couche technique** (calcul / service / rendu) ? Parce que la douleur mesurée est la dispersion d'un sujet à six adresses (§1②), pas le mélange calcul-rendu. Le rendu est d'ailleurs déjà séparé par le protocole : le serveur sert du JSON, la page le dessine — la frontière technique existe sans qu'on ait à la faire porter par l'arborescence. C'est un écart assumé avec `batailles`, où la Présentation est un container à part : là-bas il y a un seul sujet, ici il y en a six.
 
@@ -174,9 +174,9 @@ Descendre la matière de chaque commande dans les modules de son container ; la 
 
 **La garde qui rend le lot irréversible** : une façade dépasse 60 lignes → mesure.
 
-### Lot 3 — le regroupement par sujet *(quand `chaine.js` pose les balises)*
+### Lot 3 — le regroupement par sujet *(re-scopé le 30 août 2026)*
 
-Déplacer les écrans sous leur sujet. **Ce lot dépend d'une décision de l'audit** (§2.1 : le manifeste pose les balises au lieu de coexister avec cent balises en dur) : tant que les chemins `/modules/*.js` sont écrits à la main dans les HTML, chaque déplacement est une occasion de casser une page en silence. Une fois le manifeste seul maître, un fichier peut changer d'adresse sans que personne le sache — ce qui est exactement le but.
+Ce lot était gaté sur « `chaine.js` pose les balises » (§2.1 de l'audit) — or **`chaine.js` est mort avec le moteur de bataille**, sorti du dépôt le 30 août 2026 : le gate tel qu'écrit ne peut plus advenir. Le périmètre restant : **distribuer les écrans survivants entre `monde`, `plan` et `scene`**, selon la table de §7. Le danger, lui, n'a pas bougé : tant que les chemins `/modules/*.js` sont écrits à la main dans les HTML, chaque déplacement est une occasion de casser une page en silence. Deux formes possibles du nouveau gate, à trancher : **(a)** créer un manifeste de balises pour `jeu.html` — une liste unique qui pose les `<script>`, pour qu'un fichier puisse changer d'adresse sans qu'aucune page ne le sache ; **(b)** décider explicitement de s'en passer — les déplacements se font alors à la main, HTML par HTML, en assumant le risque de casse silencieuse.
 
 ### Où atterrissent les features prévues — le test de robustesse *(décision du 30)*
 
@@ -297,6 +297,8 @@ scripts/scene/           📜  le flux, l'inbox, la montre, les sièges
   flux.py                  ← append_flux.py
   tunnel.py  regie.py  sieges.py  seed_flux.py
   guetteur.sh              ← guetteur.sh
+
+(bataille)               ⚔️  = des appels au dépôt voisin `batailles` — la porte viendra avec ses peaux (voir sa proposition `coding/PROPOSITION-moteur-appele.md`)
 
 scripts/peinture/        🎨  ce qui appelle une API payante (fiche déjà écrite)
   expose.py                    portraits · salles · voix · chansons · médaillons
