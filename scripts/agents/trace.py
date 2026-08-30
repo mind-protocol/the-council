@@ -36,11 +36,14 @@ def depouiller_fil(transcript):
     """Les evenements du vecu, dans l'ordre : (genre, texte).
 
     genre : 'reveil' (ce qu'on lui a dit — chaque tour user), 'geste'
-    (un outil, sa cible), 'parole' (un texte de lui). Plus complet que
+    (un outil, sa cible), 'parole' (un texte de lui), 'entendu' (ce que le
+    parloir lui a repondu — une voix EN SA PRESENCE fait partie du vecu,
+    un resultat d'outil ordinaire n'en fait pas partie). Plus complet que
     jugement.depouiller, qui ne garde que le dernier mot pour juger :
     ici on garde la journee entiere, c'est de la memoire.
     """
     evenements = []
+    oreilles = set()  # les tool_use dont le resultat est une voix (parloir)
     if not transcript or not os.path.exists(transcript):
         return evenements
     with io.open(transcript, encoding="utf-8", errors="replace") as f:
@@ -55,6 +58,19 @@ def depouiller_fil(transcript):
             msg = d.get("message") or {}
             role = msg.get("role") or d.get("type")
             contenu = msg.get("content")
+            if role == "user" and d.get("toolUseResult") is not None:
+                for bloc in (contenu if isinstance(contenu, list) else []):
+                    if not (isinstance(bloc, dict) and
+                            bloc.get("type") == "tool_result" and
+                            bloc.get("tool_use_id") in oreilles):
+                        continue
+                    t = bloc.get("content")
+                    if isinstance(t, list):
+                        t = u" ".join(x.get("text", "") for x in t
+                                      if isinstance(x, dict))
+                    if t and str(t).strip():
+                        evenements.append(("entendu", str(t)[:PLAFOND_TEXTE]))
+                continue
             if role == "user" and not d.get("toolUseResult"):
                 if isinstance(contenu, str) and contenu.strip():
                     evenements.append(("reveil", contenu[:PLAFOND_TEXTE]))
@@ -79,6 +95,8 @@ def depouiller_fil(transcript):
                              e.get("pattern") or e.get("command") or u"")
                     evenements.append(("geste", u"%s %s" % (
                         bloc.get("name"), str(cible)[:160])))
+                    if "parloir" in str(cible):
+                        oreilles.add(bloc.get("id"))
     return evenements
 
 
@@ -102,7 +120,11 @@ def deposer(qui, session_id, etiquette=None, transcript=None):
     lignes = [u"# Vécu de %s — %s" % (qui, etiquette or session_id[:8]),
               u"", u"session `%s`" % session_id, u""]
     for genre, texte in evenements:
-        if genre == "geste":
+        if genre == "entendu":
+            lignes.append(u"")
+            lignes.append(u"> 👂 %s" % texte.replace(u"\n", u"\n> "))
+            lignes.append(u"")
+        elif genre == "geste":
             lignes.append(u"- 🤚 `%s`" % texte)
         elif genre == "reveil":
             lignes.append(u"")
