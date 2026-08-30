@@ -181,6 +181,16 @@ try:
 except Exception:
     calcul_presence = None
 
+# LE FIL DE SALLE. Ce qui se dit devant un habitant entre dans sa chambre —
+# `chambres/` appartient au container `agents/`, donc on APPELLE, on n'ecrit
+# pas d'ici. Jamais bloquant : une chambre qui refuse ne doit pas empecher une
+# poussee, comme `regence.consigner` dans la boucle d'activation. La plume de
+# l'horloge passe avant la memoire de qui que ce soit.
+try:
+    from agents.expose import salle as salle_entendue
+except Exception:
+    salle_entendue = None
+
 
 def meme_piece(a, b):
     """Deux pieces sont la meme si leur `salle` l'est — a defaut, leur `lieu`.
@@ -627,6 +637,36 @@ def conseiller_salle(nom_lieu, depuis, inconnue=None):
         "--nom \"<nom>\" --visible-pour <siege> --vraiment\n")
 
 
+def auditeurs_de_la_piece():
+    """Qui entend ce qui se dit ici, a cet instant.
+
+    Le chuchotement PRIME : `--messe-basse a,b` veut dire que la salle en
+    compte six et que deux seulement entendent. La regle est calculee ici
+    parce qu'ici seulement on tient `presence` a jour de l'item qu'on vient
+    d'ecrire — et une regle n'a qu'une source.
+    """
+    if piece is None:
+        return []
+    if messe_basse:
+        return [canonique(x) for x in messe_basse]
+    return [pid for pid, ou in presence.items() if meme_piece(ou, piece)]
+
+
+def ecouter_la_salle(it, quand):
+    """Range l'item chez les habitants qui l'ont percu. N'ecrit rien encore.
+
+    En regie, rien n'a lieu : ce qu'on montre a Corneille ne se passe pas dans
+    le chateau, donc personne ne l'entend — la meme raison qui lui interdit de
+    deplacer quelqu'un ou de couter une minute.
+    """
+    if salle_entendue is None or en_regie or piece is None:
+        return
+    try:
+        salle_entendue.entendre(it, piece, auditeurs_de_la_piece(), quand)
+    except Exception as bruit:  # jamais bloquant : la poussee passe avant
+        sys.stderr.write(u"fil de salle ignore : %s" % bruit + chr(10))
+
+
 def suivre_presence(it, quand):
     """Derive la presence des items pousses. Rien a ecrire de plus pour le MJ."""
     global piece
@@ -881,6 +921,7 @@ with io.open(chemin, "a", encoding="utf-8") as f:
                       "jour": date["jour"], "minute": date["minute"]}
         f.write(json.dumps(it, ensure_ascii=False) + "\n")
         suivre_presence(it, date)
+        ecouter_la_salle(it, date)
         # La regie ne coute pas une minute : voir sieges_de_regie().
         avancer(date, 0 if en_regie else it.get("duree", DUREES.get(it.get("type"), 0)))
 
@@ -892,6 +933,21 @@ with io.open(chemin, "a", encoding="utf-8") as f:
 # La regie ne deplace personne : ce qu'on lui montre n'a pas lieu dans le
 # chateau, et une `salle` poussee vers elle ne doit pas faire entrer un homme
 # quelque part.
+# UNE ECRITURE PAR CHAMBRE, ET SEULEMENT MAINTENANT. Le tampon a accumule
+# pendant toute la boucle : une poussee de quarante items dans une salle de
+# vingt habitants ferait huit cents ouvertures de fichier dans la plume de
+# l'horloge si l'on ecrivait item par item.
+if salle_entendue is not None and not en_regie:
+    try:
+        _depot = salle_entendue.deposer()
+        if _depot["fils"] or _depot["relations"]:
+            sys.stderr.write(
+                u"chambres : %d fil(s) de salle, %d relation(s) ouverte(s)"
+                % (_depot["fils"], _depot["relations"]) + chr(10))
+    except Exception as bruit:
+        sys.stderr.write(u"depot des fils de salle ignore : %s" % bruit
+                         + chr(10))
+
 if not en_regie and (suivi["touchee"] or calcul_presence):
     paquet = {"presence": presence}
     if calcul_presence:

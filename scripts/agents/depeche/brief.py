@@ -169,18 +169,21 @@ def brief_de(qui):
         for c in concl:
             out.append("    %s  → %s" % (c.get("affaire"),
                                          c.get("livre") or "aucun cahier"))
+    # HUIT PENSEES DE 220 CARACTERES, C'EST 1,8 Ko A CHAQUE REVEIL — et elles
+    # sont deja ecrites. On dit ce qu'il faut pour qu'il aille les lire : leur
+    # nombre, la derniere en entier (celle qu'il vient d'avoir), l'adresse.
     if pensees:
         def rang(p):
             d = p.get("date") or {}
             return (d.get("annee", 0), d.get("lune", 0), d.get("jour", 0))
-        recentes = sorted(pensees, key=rang, reverse=True)[:8]
+        recentes = sorted(pensees, key=rang, reverse=True)
+        derniere = re.sub(r"\s+", " ", str(recentes[0].get("texte") or ""))
         out.append("")
-        out.append("  CE QU'IL SAIT DEJA (%d pensees, les %d dernieres) — pour"
-                   " qu'il ne retrouve pas ce qu'il a deja trouve :"
-                   % (len(pensees), len(recentes)))
-        for p in recentes:
-            out.append("    · %s" % re.sub(r"\s+", " ",
-                                           str(p.get("texte") or ""))[:220])
+        out.append("  CE QU'IL SAIT DEJA — %d pensees ecrites de sa main, dans"
+                   " `./ma-memoire/ce-que-jai-appris.txt`. Qu'il n'y retrouve"
+                   " pas ce qu'il a deja trouve. La derniere :"
+                   % len(pensees))
+        out.append("    · %s" % derniere[:260])
     return "\n".join(out)
 
 

@@ -9,6 +9,7 @@ import re
 import sys
 
 from etat.expose import tables
+from agents import chambre  # sa main : le cahier fait foi sur sa maniere
 
 from agents.depeche.brief import (RACINE, ETAT, METIER, lire, date_du_monde,
                                   livre,
@@ -17,6 +18,73 @@ from agents.depeche.brief import (RACINE, ETAT, METIER, lire, date_du_monde,
                                   _voix_incarnee,
                                   position_de, dans_le_rayon, dans_la_salle,
                                   salles_peuplees, les_pj)
+
+def _tete(texte, n):
+    """La premiere phrase, ou n caracteres — de quoi decider d'ouvrir."""
+    texte = re.sub(r"\s+", " ", str(texte or "")).strip()
+    return texte if len(texte) <= n else texte[:n].rsplit(" ", 1)[0] + "…"
+
+
+def _cahier_amende(qui):
+    """A-t-il ecrit dans son cahier depuis qu'on le lui a ouvert ?
+
+    Le seme porte « ## Comment j'amende ce cahier » et rien de plus ; une
+    section datee en plus veut dire qu'il a repris la plume. On ne compare pas
+    au gabarit (il changera), on cherche la marque de SA main.
+    """
+    if not qui:
+        return False
+    try:
+        with io.open(os.path.join(chambre.chemin(qui), "claude.md"),
+                     encoding="utf-8") as f:
+            return "## Amendé le" in f.read()
+    except (OSError, ValueError):
+        return False
+
+
+def _ce_qui_pend(qui):
+    """Ses fils ouverts et les pannes de la machine — en percept, jamais en
+    invitation a ouvrir un fichier. Un fil qui attend depuis deux jours doit
+    lui tomber dessus ; une panne qu'il a subie doit lui revenir avant qu'il
+    la refasse. C'est la meme lecon que les billets, appliquee a ce qu'il
+    attend des gens et a ce que l'appareil lui a coute.
+    """
+    if not qui:
+        return []
+    lignes = []
+    try:
+        pend = chambre.en_souffrance(qui)
+        pannes = chambre.problemes(qui)
+    except Exception:
+        return []
+    attend = [x for x in (pend.get("j_attends") or []) if isinstance(x, dict)]
+    doit = [x for x in (pend.get("on_attend_de_moi") or [])
+            if isinstance(x, dict) and not x.get("tenu")]
+    if attend:
+        lignes.extend(["", "## Ce que tu attends de quelqu'un", ""])
+        for x in attend:
+            lignes.append("- %s : %s%s" % (
+                x.get("de") or "?", _tete(x.get("quoi"), 200),
+                ("  [%s]" % x["etat"]) if x.get("etat") else ""))
+    if doit:
+        lignes.extend(["", "## Ce qu'on attend de toi, et qui n'est pas tenu",
+                       ""])
+        for x in doit:
+            d = x.get("du") or {}
+            quand = ("%s.%s.%s" % (d.get("annee"), d.get("lune"), d.get("jour"))
+                     if d.get("jour") else "sans jour")
+            lignes.append("- pour %s, %s : %s" % (
+                x.get("pour") or "?", quand, _tete(x.get("quoi"), 200)))
+    ouvertes = [x for x in (pannes.get("entrees") or [])
+                if isinstance(x, dict) and x.get("etat") != "close"]
+    if ouvertes:
+        lignes.extend(["", "## Ce que la machine t'a deja fait", ""])
+        for x in ouvertes:
+            lignes.append("- %s — %s  →  %s" % (
+                x.get("id") or "?", _tete(x.get("quoi"), 160),
+                _tete(x.get("ce_que_j_y_fais"), 200)))
+    return lignes
+
 
 def memoire_activation(contexte):
     """Formule l'identité, la situation, la mémoire et les affaires présentes."""
@@ -51,7 +119,17 @@ def memoire_activation(contexte):
                       (str(p.get("etat") or ""),
                        (", " + str(p.get("condition")))
                        if p.get("condition") else ""))
-    voix = _voix_incarnee(p)
+    # SA MAIN GAGNE SUR L'ETAT, ET C'ETAIT UNE FAUTE, PAS UN POIDS. `maniere`
+    # est figee au jour ou la fiche a ete ecrite ; le `claude.md` de sa chambre
+    # DERIVE. Mesure du 30.8 sur Gerardys : le message lui servait « annonce
+    # les mauvaises nouvelles en commencant par le detail le moins grave »
+    # pendant que son propre cahier, dans le meme reveil, portait « Devant la
+    # reine, je commence par ce qui NE BOUGE PAS — ma maniere d'avant ne la
+    # menage pas ». On lui reinjectait chaque matin la regle qu'il venait de
+    # revoquer : la derive de personnalite etait annulee au reveil suivant.
+    # Des qu'il a amende son cahier, l'etat se tait sur sa maniere — le cahier
+    # est deja dans le systeme, il n'a pas besoin d'etre contredit ici.
+    voix = _voix_incarnee(p) if not _cahier_amende(p.get("id")) else None
     if voix:
         lignes.extend(["", "Ta voix et tes gestes :", voix])
 
@@ -98,10 +176,16 @@ def memoire_activation(contexte):
         lignes.extend(["", "## Ta vie en cours", "",
                        "Ton intention du moment :",
                        str(intention["intention"])])
+    # LES CROYANCES SONT DE L'HISTOIRE, PAS UNE DECISION D'AUJOURD'HUI. Six
+    # paragraphes, 2,3 Ko, relus a chaque reveil. Elles vont au fichier ; ce
+    # qui reste ici est ce qui le fera l'ouvrir : combien, et la premiere.
     croyances = [str(x) for x in (intention.get("croyances") or []) if x]
     if croyances:
-        lignes.extend(["", "Ce que tu tiens pour vrai :"])
-        lignes.extend("- " + x for x in croyances)
+        lignes.extend(["", "Ce que tu tiens pour vrai — %d choses, la"
+                       " derniere en tete, le tout dans"
+                       " `./ma-memoire/ce-que-je-tiens-pour-vrai.txt` :"
+                       % len(croyances),
+                       "- " + _tete(croyances[0], 400)])
     ignores = [str(x) for x in (intention.get("ignore") or []) if x]
     if ignores:
         lignes.extend(["", "Les questions encore ouvertes pour toi :"])
@@ -168,23 +252,37 @@ def memoire_activation(contexte):
                           (cible, str(etat.get("apres"))))
         lignes.append("Ton prochain geste part exactement de cet état acquis.")
 
-    for travail in contexte.get("travaux_ouverts") or []:
+    # SA MEMOIRE LONGUE : 9,4 Ko pour deux affaires, recopies a chaque reveil.
+    # La CONCLUSION reste — c'est ce qu'il ne doit pas refaire. Les pensees
+    # qui l'ont produite partent au fichier, avec de quoi donner envie d'y
+    # aller : leur nombre, et la premiere ligne de la derniere.
+    travaux = contexte.get("travaux_ouverts") or []
+    for travail in travaux:
         lignes.extend(["", "Affaire en cours : " +
                        str(travail.get("affaire") or travail.get("id") or "")])
         if travail.get("conclusion"):
-            lignes.extend(["Ce que tu en as déjà conclu :",
-                           str(travail["conclusion"])])
+            # LA CONCLUSION EST UNE PIECE, PAS UNE PHRASE. Celle du mestre sur
+            # les longueurs de chaine fait 2,5 Ko — c'est un document qu'il a
+            # ecrit dans un volume, avec une adresse. Le reveil doit lui dire
+            # QU'IL A CONCLU et sur quoi, pour qu'il ne recommence pas ; le
+            # texte entier se relit dans son cahier, ou il est deja.
+            lignes.extend(["Ce que tu en as déjà conclu (le texte entier est"
+                           " dans ton cahier) :",
+                           _tete(travail["conclusion"], 320)])
         pensees = travail.get("pensees_recentes") or []
         if pensees:
-            lignes.append("Ce que tes derniers pas t'ont appris :")
-            for pensee in pensees:
-                if not isinstance(pensee, dict):
-                    lignes.append("- " + str(pensee))
-                    continue
-                texte = str(pensee.get("texte") or "")
-                source = pensee.get("source")
-                lignes.append("- " + texte +
-                              ((" (source : %s)" % source) if source else ""))
+            derniere = pensees[-1]
+            texte = (derniere.get("texte") if isinstance(derniere, dict)
+                     else str(derniere)) or ""
+            lignes.append("Tes %d derniers pas sur cette affaire sont écrits"
+                          " dans `./ma-memoire/ce-que-jai-appris.txt`. Le"
+                          " dernier : %s" % (len(pensees), _tete(texte, 300)))
+
+    # LES DEUX CAHIERS DE SA CHAMBRE, EN PERCEPT. Ils existaient depuis le
+    # 30.8 et RIEN ne les servait : on remplissait une memoire que personne ne
+    # relisait. Ce sont les deux seules choses du reveil qui portent des GENS
+    # et des PANNES — le plan compte des pas, pas des fils ouverts.
+    lignes.extend(_ce_qui_pend(p.get("id")))
 
     mains = contexte.get("mains_portees") or []
     if mains:
@@ -206,11 +304,20 @@ def etagere_systeme(qui):
     siens, maison = livre.index(qui, noms)
     blocs = []
     if siens:
-        blocs.extend(["Les tiens :", *siens])
+        blocs.extend(["Les tiens — sur toi, tu les ouvres sans te lever :",
+                      *siens])
+    # UN INDEX DE POINTEURS N'A RIEN A FAIRE EN PERCEPT. Les volumes de la
+    # maison faisaient 66 lignes et 7,2 Ko a chaque reveil, pour dire des
+    # noms de fichiers. Ils sont poses sur le disque par `poser_letagere`,
+    # et leur index avec : on donne leur NOMBRE, qui dit l echelle, et
+    # l adresse — le reste est un Grep de sa part.
     if maison:
         if blocs:
             blocs.append("")
-        blocs.extend(["Ceux de la maison présents là où tu es :", *maison])
+        blocs.append("Ceux de la maison présents là où tu es : %d volumes,"
+                     " listés dans `./livres/_index.txt` (titre, porteur,"
+                     " salle). Grep sur `./livres/` cherche dans leur texte."
+                     % len(maison))
     if not blocs:
         blocs.append("Ton étagère est vide à cet instant.")
     return "\n".join(blocs)

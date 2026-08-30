@@ -34,7 +34,7 @@ from agents.depeche.narrateur import (  # noqa: F401
 from agents.depeche.trous import (  # noqa: F401
     TROUS_MONTRES, TROUS_AILLEURS, ses_trous, sa_charge_ailleurs, on_lattend)
 from agents.depeche.mission import (  # noqa: F401
-    DEPECHES, mission, poser_letagere, poser_le_parloir, archiver_le_prompt,
+    DEPECHES, mission, poser_la_memoire, poser_letagere, poser_le_parloir, archiver_le_prompt,
     appeler, extraire_json, depecher)
 from agents.depeche.retour import (  # noqa: F401
     verser_sur_le_champ, proposer_la_tete)
