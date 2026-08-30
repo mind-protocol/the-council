@@ -134,6 +134,69 @@ def dossier_adresses(elements):
         print("        %s" % livre)
 
 
+# ---- Les registres : ce qui est ARRETE, avant ce qui a ete dit -------------
+# La spec est du MJ lui-meme (chambres/mj/books/affaire-retrouver-un-chiffre-
+# arrete.json, D.31) : une joueuse a decroche sur un compte dont la reponse
+# etait ecrite, datee et sourcee dans un registre que rien ne savait voir —
+# index_des_lignes() ne lit que les tables a colonne N°, jamais mot -> ligne.
+# Ici : AUCUNE condition sur l'intitule des colonnes, filtre conjonctif de
+# main(), et le PLAFOND est la moitie de la spec — un registre deballe est un
+# mur (le meme mal que le tunnel).
+PLAFOND_REGISTRES = 12
+
+
+def dossier_registres(sujets):
+    """Les lignes de etat/books/ qui portent TOUS les sujets.
+
+    Rend (lignes, restes) : au plus PLAFOND_REGISTRES tuples
+    (volume, table, cellules), volumes les plus fournis d'abord, et le
+    compte de ce qui n'est pas montre par volume — la queue du rendu."""
+    par_volume = {}
+    for v in charger("books.json"):
+        titre_v = str(v.get("titre") or v.get("id") or "?")
+        tables = list(v.get("tables") or [])
+        if v.get("colonnes"):
+            tables.append({"titre": "", "colonnes": v.get("colonnes"),
+                           "lignes": v.get("lignes") or []})
+        for t in tables:
+            titre_t = str(t.get("titre") or "")
+            for l in (t.get("lignes") or []):
+                cells = (l.get("cellules") if isinstance(l, dict) else l) or []
+                texte = sans_accents(" ".join(str(c) for c in cells)
+                                     + " " + str((l.get("note") or "")
+                                                 if isinstance(l, dict) else ""))
+                if all(s in texte for s in sujets):
+                    par_volume.setdefault(titre_v, []).append((titre_t, cells))
+    ordre = sorted(par_volume.items(), key=lambda kv: -len(kv[1]))
+    lignes, restes = [], {}
+    for volume, trouvees in ordre:
+        for titre_t, cells in trouvees:
+            if len(lignes) < PLAFOND_REGISTRES:
+                lignes.append((volume, titre_t, cells))
+            else:
+                restes[volume] = restes.get(volume, 0) + 1
+    return lignes, restes
+
+
+def imprimer_registres(sujets):
+    """La section, PREMIERE du dossier : un registre est plus haut dans
+    l'ordre d'autorite qu'un recit de scene. Rend le nombre de lignes."""
+    lignes, restes = dossier_registres(sujets)
+    if not lignes:
+        return 0
+    print("\n== CE QUI EST ARRETE AUX REGISTRES  (%d)" % len(lignes))
+    for volume, table, cells in lignes:
+        nettes = [re.sub(r"\*\*", "", str(c)).strip() for c in cells if
+                  str(c).strip()]
+        print("  [%s%s]" % (volume, (" — " + table) if table else ""))
+        print("      " + " · ".join(nettes)[:400])
+    if restes:
+        print("      + %d autres ligne(s) dans %s" % (
+            sum(restes.values()),
+            ", ".join(sorted(restes))))
+    return len(lignes)
+
+
 def jour_de(x):
     d = x.get("date") or x.get("date_prevue") or x.get("date_maj") or {}
     if not isinstance(d, dict):
@@ -250,6 +313,8 @@ def main(argv):
     print("DOSSIER : %s%s" % (" + ".join(sujets),
                               ("  (depuis le %de jour)" % depuis) if depuis else ""))
     total = 0
+    # D.32 (la spec du MJ) : ce qui est ARRETE passe avant ce qui a ete dit.
+    total += imprimer_registres(sujets)
     for fichier, titre in SOURCES:
         trouves = []
         for x in charger(fichier):
