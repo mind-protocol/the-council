@@ -196,8 +196,48 @@ def appeler_zone(ville, de, mot, verbe, modele=None, minutes=MINUTES):
                          % (mj, sid[:8],
                             u"nouvelle" if tentative[0] == "--session-id"
                             else u"reprise"))
+        _pousser_le_spool(mj)
         return (json.loads(out).get("result") or u"").strip()
     raise RuntimeError("ni --session-id ni --resume n'ont abouti pour %s" % mj)
+
+
+def _pousser_le_spool(mj):
+    """LE LANCEUR POUSSE AU FLUX — meme motif que le vecu (trace.deposer).
+
+    Mesure du 31.8 : le sandbox du reveil -p a bloque `python append_flux.py`
+    au MJ — sa reponse, ecrite et prete, est restee prisonniere d'un fichier.
+    Le MJ ecrit donc ses items dans SA chambre (brouillons/flux-a-pousser.jsonl,
+    un item JSON par ligne, l'audience en clef `pour`) et c'est ICI, hors
+    sandbox, que la porte se passe. Le spool est vide apres la poussee ; un
+    item illisible reste en place et se dit sur stderr — rien ne se perd en
+    silence."""
+    spool = os.path.join(chambre.chemin(mj), "brouillons",
+                         "flux-a-pousser.jsonl")
+    if not os.path.exists(spool):
+        return
+    restes = []
+    with io.open(spool, encoding="utf-8", errors="replace") as f:
+        lignes = [l.strip() for l in f if l.strip()]
+    for ligne in lignes:
+        try:
+            item = json.loads(ligne)
+            audience = item.get("pour") or "tous"
+            if isinstance(audience, list):
+                audience = ",".join(audience)
+            r = subprocess.run(
+                [sys.executable, os.path.join(RACINE, "scripts",
+                                              "append_flux.py"),
+                 ligne, "--pour", str(audience)],
+                cwd=RACINE, capture_output=True, timeout=60)
+            if r.returncode != 0:
+                restes.append(ligne)
+                sys.stderr.write(u"(spool %s : refus — %s)\n" % (
+                    mj, r.stdout.decode("utf-8", "replace").strip()[:160]))
+        except Exception as e:
+            restes.append(ligne)
+            sys.stderr.write(u"(spool %s : %s)\n" % (mj, str(e)[:120]))
+    with io.open(spool, "w", encoding="utf-8", newline="\n") as f:
+        f.write(u"\n".join(restes) + (u"\n" if restes else u""))
 
 
 MOT_DU_POST = (u"je viens d'agir — mon action t'attend dans l'inbox, "
