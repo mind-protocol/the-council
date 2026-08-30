@@ -10,6 +10,8 @@ python -m unittest discover -s scripts/tests -p "test_*.py"
 | `test_plan_modele.py` | le plan visible d'un siège : étagères, mesures, brouillons |
 | `test_mesures.py` | les adresses de mesure : ce qu'un cahier cite vs ce que l'état tient |
 | `test_corriger_plan.py` | la correction par fragment : unique, ambigu, idempotent |
+| `test_salle.py` | le fil de salle et les relations : ce que la pièce entend, ce que le chuchotement ne laisse pas fuiter, le filtre « chambre existante » |
+| `test_taches_orphelines.py` | l'action « à désigner » : le nœud `vacant` est une frontière, et l'orpheline retombe sur le maître de son affaire — jamais sur qui passe |
 | `essai_occupation.py` | 30 cas d'occupation et d'invariants, sur un `etat/` jetable |
 
 **Rien ne touche le vrai dépôt.** `essai_occupation.py` détourne `occupation.ETAT`

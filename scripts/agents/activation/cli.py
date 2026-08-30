@@ -8,12 +8,21 @@ import json
 import sys
 import time
 
+from agents.activation import socle  # LES DRAPEAUX SE POSENT SUR LE MODULE
 from agents.activation.socle import (ECHECS_CONSECUTIFS_MAX, journaliser,
                                      _court)
 from agents.activation.cycle import VerrouBoucle, cycle, prevoir_activations
 
 def main():
-    global PERSISTER_LOGS, AFFICHER_LOGS
+    # `global PERSISTER_LOGS` NE FAISAIT RIEN, ET C'EST LE PIEGE CLASSIQUE DU
+    # DECOUPAGE. `from socle import PERSISTER_LOGS` copie la VALEUR dans ce
+    # module-ci ; la reaffecter n'a jamais touche celle que `journaliser()`
+    # relit dans socle. Consequence mesuree le 31.8 : `--prevoir`, documente
+    # « rendre les N prochains candidats en JSON », rendait quarante lignes de
+    # log AVANT le JSON — donc une sortie que personne ne peut parser, et une
+    # commande de lecture inutilisable pour un banc ou pour la regie.
+    # On pose desormais les drapeaux SUR le module, comme la fiche du container
+    # le dit deja aux bancs (`activation.socle.AFFICHER_LOGS = False`).
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                                   errors="replace")
     ap = argparse.ArgumentParser(description=__doc__)
@@ -46,13 +55,13 @@ def main():
     if args.prevoir < 0:
         ap.error("prevoir doit etre positif")
     if args.prevoir:
-        PERSISTER_LOGS = False
-        AFFICHER_LOGS = False
+        socle.PERSISTER_LOGS = False
+        socle.AFFICHER_LOGS = False
         json.dump(prevoir_activations(args.prevoir), sys.stdout,
                   ensure_ascii=False, indent=2)
         sys.stdout.write("\n")
         return
-    PERSISTER_LOGS = not args.sec
+    socle.PERSISTER_LOGS = not args.sec
     journaliser("boucle.demarrage", sec=args.sec, une_fois=args.une_fois,
                 heartbeat_s=args.heartbeat, parallele=args.parallele)
 
@@ -61,6 +70,7 @@ def main():
         return 0
     faites = 0
     echecs_consecutifs = 0
+    annulations = 0
     with VerrouBoucle():
         etat = None
         while True:
@@ -70,7 +80,7 @@ def main():
                         args.parallele, args.max_activations - faites)
                 else:
                     args.capacite_cycle = args.parallele
-                etat, actives = cycle(args, etat)
+                etat, actives, tentees = cycle(args, etat)
             except KeyboardInterrupt:
                 journaliser("boucle.arretee", raison="clavier")
                 return 130
@@ -92,7 +102,26 @@ def main():
                 time.sleep(args.intervalle)
                 continue
             echecs_consecutifs = 0
-            faites += actives
+            # ON COMPTE LES TENTATIVES, PAS LES REUSSITES. `--max-activations`
+            # ne bornait que le succes : une panne qui annule tout laissait le
+            # compteur a zero, et la course ne pouvait plus se terminer. Onze
+            # appels et 3,91 USD le 31.8, sur le meme homme et la meme tache.
+            # Le plafond borne desormais ce qu'on DEPENSE, ce qui est le seul
+            # sens utile d'un plafond.
+            faites += tentees
+            # ET L'ON S'ARRETE SI RIEN N'ABOUTIT. Le plafond borne la depense,
+            # mais il ne dit pas qu'une panne est une panne : onze tentatives
+            # d'affilee sur le meme homme, toutes annulees, sont un systeme
+            # casse — pas une journee difficile. Trois annulations de suite
+            # sans une seule reussite arretent la course et le disent.
+            if actives:
+                annulations = 0
+            else:
+                annulations += 1
+                if annulations >= 3:
+                    journaliser("boucle.arretee", raison="rien n'aboutit",
+                                tentatives=faites, annulations=annulations)
+                    return 1
             if args.une_fois or (args.max_activations and
                                  faites >= args.max_activations):
                 return 0

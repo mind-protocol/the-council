@@ -50,6 +50,57 @@ def choisir_tache(acteur, noeuds, aretes, adj, energies, etat=None,
             elif tache_active(noeuds[vers]) and noeuds[de].get("genre") == "personne":
                 titulaires[vers].add(de)
 
+    # Celles qu'un `tient` renvoie vers un noeud `vacant` : l'ecriteau
+    # « personne ne tient ceci » est une donnee, pas un trou.
+    a_designer = set()
+    for a in aretes:
+        if a.get("flou") or a.get("nature") != "tient":
+            continue
+        de, vers = a.get("de"), a.get("vers")
+        if de in noeuds and vers in noeuds:
+            if noeuds[vers].get("genre") == "vacant":
+                a_designer.add(de)
+            elif noeuds[de].get("genre") == "vacant":
+                a_designer.add(vers)
+
+    # UNE ACTION A DESIGNER RETOMBE SUR LE PROPRIETAIRE DE SON AFFAIRE.
+    #
+    # Rendre le noeud `vacant` infranchissable (voir la frontiere du parcours
+    # plus bas) a ferme la fuite : plus personne ne ramasse la charge d'autrui
+    # en passant par l'ecriteau de sa vacance. Mais ca laissait ces actions
+    # sans personne du tout — elles n'avancaient plus jamais, et c'est troquer
+    # une injustice contre un immobilisme.
+    #
+    # Une action « a designer » n'est pourtant pas sans maitre : elle est DANS
+    # une affaire, et une affaire a quelqu'un qui la porte. On le derive du
+    # tissu au lieu de le declarer — le proprietaire est celui qui tient le
+    # plus d'actions du meme `ou`. Mesure du 31.8 : `71026` (plan:hightower)
+    # retombe sur OTTO, qui en tient quatre ; `76028` (plan:baratheon) sur
+    # MESTRE HALLIS, qui en tient trois. Les deux sont justes, et aucun des
+    # deux n'aurait pu la ramasser par distance.
+    #
+    # C'est une retombee, pas une assignation : elle ne s'ecrit nulle part, et
+    # le jour ou quelqu'un est vraiment designe, son arete `tient` la remplace.
+    proprietaires = {}
+    par_affaire = {}
+    for nid, porteurs in titulaires.items():
+        ou = (noeuds.get(nid) or {}).get("ou")
+        if not isinstance(ou, str) or ":" not in ou:
+            continue
+        compte = par_affaire.setdefault(ou, {})
+        for p in porteurs:
+            compte[p] = compte.get(p, 0) + 1
+    for ou, compte in par_affaire.items():
+        proprietaires[ou] = max(sorted(compte), key=lambda p: (compte[p], p))
+    for nid, n in noeuds.items():
+        if titulaires.get(nid) or not tache_active(n):
+            continue
+        if nid not in a_designer:
+            continue
+        maitre = proprietaires.get(n.get("ou"))
+        if maitre:
+            titulaires[nid] = {maitre}
+
     def appartient_ou_vacante(nid):
         return not titulaires.get(nid) or acteur in titulaires[nid]
 
@@ -87,9 +138,23 @@ def choisir_tache(acteur, noeuds, aretes, adj, energies, etat=None,
                 and float(energies.get(ici, 0.0)) >= ENERGIE_MIN):
             candidats.append((d, -float(energies.get(ici, 0.0)), ici, chemin))
             continue
-        # Une autre personne est une frontiere : ses propres taches ne sont
-        # pas le prolongement implicite de celles de l'acteur active.
-        if ici != acteur and noeuds[ici].get("genre") == "personne":
+        # DEUX FRONTIERES, ET LA SECONDE A COUTE UNE ELECTION.
+        #
+        # Une autre PERSONNE : ses propres taches ne sont pas le prolongement
+        # implicite de celles de l'acteur active.
+        #
+        # Un noeud VACANT : c'est l'ecriteau qui dit « personne ne tient
+        # ceci ». On n'herite pas d'une charge en passant par la marque de sa
+        # vacance. Mesure du 31.8 : le tissu n'a qu'un seul noeud de ce genre,
+        # `a_designer`, mais il porte 46 voisins et DEUX actions actives
+        # pendantes — et 54 personnes sur 114 l'atteignent. Il servait donc de
+        # moyeu a toutes les taches orphelines : au cycle a sec, Aurore
+        # Inchauspe (un siege de joueur vacant) et Aldon Hask convergeaient
+        # tous deux sur la meme action 76028, atteinte a distance 4 par ce
+        # chemin exact — pers:aurore -> moyen:M18 -> piece:10025 ->
+        # vacant:a_designer -> action:76028. Une action a designer se DESIGNE ;
+        # elle ne se ramasse pas en passant.
+        if ici != acteur and noeuds[ici].get("genre") in ("personne", "vacant"):
             continue
         for autre in adj.get(ici) or []:
             if autre not in vus:

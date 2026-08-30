@@ -80,11 +80,27 @@ def appeler_stream(pid, manuel, mission, sid, modele, effort, minutes, heartbeat
     if not reprendre:
         if autoriser_lecture:
             depecher.poser_letagere(neutre, pid)
+            # Le message ne porte plus ses croyances ni ses pensees : il y
+            # POINTE. Les poser ici aussi, sinon l'homme active suit une
+            # adresse morte — la faute exacte du billet-fichier.
+            depecher.poser_la_memoire(neutre, pid)
         with io.open(prompt_systeme, "w",
                      encoding="utf-8", newline="\n") as f:
             f.write(manuel)
+    # --restricted : L'ISOLATION DES HOOKS, ET ELLE COUTAIT 100 % DES
+    # ACTIVATIONS. Le chemin de la depeche s'isole depuis le 30.8
+    # (`mission.appeler`) ; celui-ci ne le faisait pas, et les hooks du niveau
+    # UTILISATEUR se declenchaient dans la session engendree. Mesure du 31.8,
+    # onze tentatives et 3,91 USD pour zero activation : le narrateur rendait
+    # le bon objet — verifie dans son transcript, `{"appel_pnj": {"qui":
+    # "otto", ...}}` — puis un hook Stop herite le faisait travailler encore.
+    # Comme le parseur lit le DERNIER message de la session, il tombait sur la
+    # sortie du hook : « le narrateur a reveille None au lieu de otto », sept
+    # fois, plus quatre JSON malformes. Un --settings explicite frappe encore
+    # sous --restricted (mesure de mission.py) : le hook de jugement du
+    # narrateur et le parloir de l'acteur restent donc charges, et eux seuls.
     commande = ["claude", "-p", "--output-format", "stream-json",
-                "--verbose"]
+                "--verbose", "--restricted"]
     if autoriser_lecture:
         # Le PNJ reçoit explicitement SON manuel comme prompt système. Il ne
         # dépend plus de la découverte automatique de CLAUDE.md, qui pouvait
@@ -93,8 +109,9 @@ def appeler_stream(pid, manuel, mission, sid, modele, effort, minutes, heartbeat
         commande += ["--system-prompt-file", prompt_systeme]
         # Le dossier neutre ne contient que le prompt et l'étagère fermée
         # matérialisée pour ce PNJ. Le dépôt canonique n'est pas ajouté.
-        commande += ["--tools", ",".join(depecher.OUTILS), "--allowedTools"]
-        commande += list(depecher.OUTILS)
+        # Sous --restricted, `--tools` porte seul la liste : `--allowedTools`
+        # n'a plus d'objet (meme motif que depeche/mission.appeler).
+        commande += ["--tools", ",".join(depecher.OUTILS)]
     else:
         # Le narrateur reçoit toute sa vérité dans le dossier local du prompt.
         # Il arbitre ; il ne fouille ni n'écrit le monde pendant l'appel.

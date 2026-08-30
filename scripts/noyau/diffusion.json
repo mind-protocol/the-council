@@ -1,0 +1,11 @@
+{
+  "_note": "LA PHYSIQUE DE LA DIFFUSION — UNE SEULE DEFINITION, DEUX LECTEURS. Le 30 aout, la page de regie faisait tourner la liste des relais d'il y a deux versions : la meme que boucle_activation.py, MOINS 'personne'. Mesure du jour sur le tissu courant, depuis pers:rhaenyra : 2159 noeuds atteignables avec le relais, 1647 sans ; 80 personnes sur 114 contre 67. La page annoncait donc une diffusion qui n'etait pas celle qui elit les acteurs. Ce fichier est desormais la seule definition : scripts/noyau/diffusion.py le charge pour le Python, serveur/domaine/regie.js le sert a la page sous graphe.physique. Ne recopier ces valeurs NULLE PART.",
+  "amortissement": 0.85,
+  "tours": 40,
+  "genres_relais": [
+    "action", "clef", "transmission", "verrou", "moyen", "mesure",
+    "compte", "evenement", "etape", "office", "lieu", "echelle",
+    "etat_cible", "piece", "personne"
+  ],
+  "_note_personne": "'personne' EST UN RELAIS, et c'est la doctrine qui le dit : une nouvelle ne voyage jamais autrement que par des gens — un porteur, une bouche, un pli remis en main. Sans elle, la diffusion depuis le joueur n'atteignait que 67 noeuds sur 1849 et pas un seul evenement : on pouvait ATTEINDRE un homme, on ne pouvait pas passer PAR lui, et tout lien d'homme a homme etait un cul-de-sac. Le delai reste paye sur l'arete (route.delai_jours, sinon la distance physique), donc passer par quelqu'un coute ce que coute le chemin."
+}

@@ -18,6 +18,7 @@ from temps.expose import occupation
 from agents.activation.socle import (RACINE, ETAT, DEPOT, ETAT_BOUCLE,
                                      VERROU, ENERGIE_ACTIVATION_MIN,
                                      ENERGIE_MAX, ENERGIE_MIN,
+                                     REPOS_ACTEUR_SECONDES,
                                      secondes_monde_pour_energie, _court,
                                      journaliser, lire_json,
                                      ecrire_atomique, charger_tissu)
@@ -111,8 +112,28 @@ def cycle(args, etat=None):
         journaliser("cycle.sans_acteur")
         if not args.sec:
             ecrire_atomique(ETAT_BOUCLE, etat)
-        return etat, False
+        return etat, 0, 0
     rotation = etat.setdefault("rotation_activation", {"tour": 1, "vus": []})
+    # UNE ROTATION QUI A DORMI N'EST PLUS UNE ROTATION, C'EST UNE EXCLUSION.
+    # Le tour en cours reserve ceux qui viennent de passer, pour etaler les
+    # activations : c'est juste tant que la boucle TOURNE. Arretee dix-sept
+    # jours, elle reprend avec les memes noms en reserve — et ce sont les plus
+    # energises, puisque ce sont eux qui avaient ete elus. Mesure du 31.8 :
+    # tour 33, douze reserves dont Otto (53,7), Gerardys (37,1) et Criston
+    # (33,9), tous trois sur LEUR propre tache a distance 1 ; le cycle a sec
+    # les rejetait tous les trois et elisait le quatrieme. La premiere
+    # activation apres une pause n'etait donc jamais la plus juste.
+    # On date la reserve, et une reserve plus vieille qu'une journee de monde
+    # est echue : la rotation reprend au premier tour.
+    pose_a = rotation.get("pose_a")
+    age = None if pose_a is None else (horloge["present_secondes"] - float(pose_a))
+    if rotation.get("vus") and (age is None or age < 0 or age > 86400):
+        journaliser("rotation.echue", tour=rotation.get("tour"),
+                    reserves=len(rotation.get("vus") or []),
+                    age_s=None if age is None else round(age, 1),
+                    note="reserve d'un repere anterieur : on repart au tour 1")
+        rotation["tour"] = 1
+        rotation["vus"] = []
     vus_rotation = set(rotation.get("vus") or [])
 
     def selectionner(exclus_rotation):
@@ -166,6 +187,7 @@ def cycle(args, etat=None):
     if not selections and vus_rotation:
         rotation["tour"] = int(rotation.get("tour") or 1) + 1
         rotation["vus"] = []
+        rotation.pop("pose_a", None)
         vus_rotation.clear()
         journaliser("rotation.nouveau_tour", tour=rotation["tour"])
         selections = selectionner(vus_rotation)
@@ -173,7 +195,7 @@ def cycle(args, etat=None):
         journaliser("cycle.attente", raison="aucun couple acteur-tache energise")
         if not args.sec:
             ecrire_atomique(ETAT_BOUCLE, etat)
-        return etat, 0
+        return etat, 0, 0
 
     lots = []
     for energie, score, pid, jauge, tache, energie_tache in selections:
@@ -208,6 +230,7 @@ def cycle(args, etat=None):
                horloge["source_id"]))
 
     rotation["vus"] = sorted(vus_rotation | {lot["pid"] for lot in lots})
+    rotation["pose_a"] = round(float(horloge["present_secondes"]), 3)
     journaliser("rotation.acteurs_reserves", tour=rotation.get("tour"),
                 acteurs=rotation["vus"])
 
@@ -218,7 +241,7 @@ def cycle(args, etat=None):
                 lot["pid"], lot["tache"], lot["budget"], horloge, noeuds,
                 args.modele, args.effort, args.minutes_appel, True,
                 args.heartbeat, etat=etat)
-        return etat, len(lots)
+        return etat, len(lots), len(lots)
 
     for lot in lots:
         journaliser("energie.reservee", acteur=lot["pid"],
@@ -243,12 +266,25 @@ def cycle(args, etat=None):
             try:
                 resultats[cle] = futur.result()
             except BaseException as e:
+                # UN ECHEC DOIT COUTER QUELQUE CHOSE, SINON C'EST UNE BOUCLE.
+                # On defaisait tout : le compteur d'activations, et la reserve
+                # de rotation. Le meme homme redevenait donc le premier elu, a
+                # l'identique, indefiniment — et comme `faites` ne compte que
+                # les REUSSIES, `--max-activations` n'etait jamais atteint.
+                # Mesure du 31.8 : onze tentatives sur Otto, la meme tache a
+                # chaque tour, 3,91 USD, et rien n'aurait arrete la course.
+                # On garde donc la reserve (le tour passe au suivant) et l'on
+                # met l'homme au repos, comme apres une activation reussie :
+                # ce qui a echoue une fois echouera encore dans la minute.
                 lot["jauge"]["activations"] = max(
                     0, lot["jauge"]["activations"] - 1)
-                rotation["vus"] = [x for x in rotation.get("vus") or []
-                                   if x != lot["pid"]]
+                repos = etat.setdefault("repos", {}).setdefault("acteurs", {})
+                repos[lot["pid"]] = round(
+                    float(horloge["present_secondes"])
+                    + REPOS_ACTEUR_SECONDES, 3)
                 journaliser("activation.annulee", acteur=lot["pid"],
                             raison=type(e).__name__,
+                            repos_jusqu_a=repos[lot["pid"]],
                             erreur=_court(str(e), 400))
 
     reussies = 0
@@ -304,7 +340,12 @@ def cycle(args, etat=None):
     ecrire_atomique(ETAT_BOUCLE, etat)
     journaliser("cycle.lot.termine", reussies=reussies,
                 annulees=len(lots) - reussies)
-    return etat, reussies
+    # ON REND AUSSI LES TENTATIVES. `--max-activations` ne comptait que les
+    # reussites : une panne qui annule tout ne faisait donc jamais avancer le
+    # compteur, et la course ne pouvait pas se terminer. Le troisieme membre
+    # est ce qui la borne ; les appelants qui n'en veulent pas depaquettent
+    # les deux premiers comme avant.
+    return etat, reussies, len(lots)
 
 
 def prevoir_activations(limite):

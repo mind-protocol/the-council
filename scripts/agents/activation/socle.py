@@ -28,8 +28,12 @@ PERSISTER_LOGS = False
 AFFICHER_LOGS = True
 VERROU_LOG = threading.Lock()
 
-AMORTISSEMENT = 0.85
-TOURS_DIFFUSION = 40
+# La physique de la diffusion vit dans `scripts/noyau/diffusion.json` et
+# s'importe : deux implementations de la meme formule ont derive sans que
+# personne le voie, et la page de regie a tourne des semaines sur une liste de
+# relais dont `personne` etait absent. Ne recopier ces valeurs nulle part.
+from diffusion import AMORTISSEMENT, TOURS_DIFFUSION, GENRES_RELAIS  # noqa: E402,F401
+
 ENERGIE_MAX = 100.0
 ENERGIE_MIN = 1.0
 # Plancher d'ACTIVATION : on n'elit personne a qui l'on ne donne pas de quoi
@@ -43,18 +47,6 @@ ECHECS_CONSECUTIFS_MAX = 5
 REPOS_ACTEUR_SECONDES = 15 * 60
 REPOS_PAIRE_SECONDES = 60 * 60
 TRANSFERT_HORLOGE_MAX = 0.5
-# `personne` EST UN RELAIS, et c'est la doctrine qui le dit : une nouvelle ne
-# voyage jamais autrement que par des gens — un porteur, une bouche, un pli
-# remis en main. Sans elle, la diffusion depuis le joueur n'atteignait que 67
-# noeuds sur 1849 et pas un seul evenement : on pouvait ATTEINDRE un homme, on
-# ne pouvait pas passer PAR lui, et tout lien d'homme a homme etait un
-# cul-de-sac. Le delai reste paye sur l'arete (route.delai_jours, sinon la
-# distance physique), donc passer par quelqu'un coute ce que coute le chemin.
-GENRES_RELAIS = {
-    "action", "clef", "transmission", "verrou", "moyen", "mesure",
-    "compte", "evenement", "etape", "office", "lieu", "echelle",
-    "etat_cible", "piece", "personne",
-}
 ETATS_TERMINES = (
     "fait", "faite", "fini", "termine", "abandonn", "annul", "sans objet",
 )
