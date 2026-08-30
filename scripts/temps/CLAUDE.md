@@ -22,7 +22,7 @@ avant eux.
 | `mains.py` | l'arithmétique des mesures : rythmes, bornes, décomptes exacts, seuils, coûts chiffrés |
 | `scelle.py` | empreintes des tables, chemin scellé, la SEULE écriture du tick |
 | `rumeur.py` | propagation des incidents, détection des bouches (arrivées), témoins, cycles |
-| `gardes/` | les 19 vérificateurs + `Rapport` + `verifier()` — voir `gardes/__init__.py` |
+| `gardes/` | les 19 vérificateurs + `Rapport` + `verifier()` — 5 familles, voir `gardes/__init__.py` |
 | `fenetre.py` | `calculer()` en phases nommées + `tick()` — le cœur du mode B |
 | `resume.py` | la proposition en français, pour le MJ |
 | `occupation.py`* | qui est ASSIS — mesuré, pas drapeau *(encore à la racine scripts/, lot 2)* |
