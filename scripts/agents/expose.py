@@ -30,7 +30,10 @@ for _p in (_d, _os.path.join(_d, "noyau")):
 from agents import affectation  # noqa: E402,F401 — LE resolveur d'adresses ; lu par depecher, marche, tick
 affecter = affectation
 from agents.affectation import main as affecter_main  # noqa: E402,F401 — l'entree CLI de la facade
-import parloir  # noqa: E402,F401 — parler a un homme depeche ; lu par depecher
+# Descendue au lot 2 : agents/parloir.py, plus la commande racine (les hooks
+# PostToolUse tapent toujours scripts/parloir.py, la facade).
+from agents import parloir  # noqa: E402,F401 — parler a un homme depeche ; lu par depecher
+from agents.parloir import main as parloir_main  # noqa: E402,F401 — l'entree CLI de la facade
 import depecher  # noqa: E402,F401 — relit cette porte : affecter deja lie
 import boucle_activation  # noqa: E402,F401 — relit cette porte : depecher deja lie
 # Descendue au lot 2 : scripts/dossier.py -> agents/matiere.py (§7).
