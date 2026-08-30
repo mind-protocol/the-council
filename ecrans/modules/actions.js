@@ -143,7 +143,10 @@
     // réponse, en synchrone. Le call réveille un vrai `claude -p` : une à
     // trois minutes au premier réveil d'une zone, d'où l'attente affichée.
     // Un PJ du roster ne passe JAMAIS par ici : son chemin /action est intact.
-    const VERBES_HOMME = { dire: "dire", agir: "tenter", faire: "faire", question: "demander" };
+    // penser = un reveil de soi (cast) : la reponse HTTP est un accuse,
+    // la pensee vit dans sa chambre — d'ou son retour dans la barre.
+    const VERBES_HOMME = { dire: "dire", agir: "tenter", faire: "faire",
+                           question: "demander", penser: "penser" };
     function envoyerVerbe(m, texte) {
       const moi = window.Moi;
       // Écho immédiat : /verbe n'inscrit rien au flux de la scène, le sondage
@@ -204,7 +207,9 @@
         return setTimeout(() => tailler(essais - 1), 300);
       if (!window.Moi || !window.Moi.hors_roster) return;
       boutons.faire.hidden = false;
-      ["penser", "meta", "run", "intervention"].forEach((k) => {
+      // penser revient (31.8) : c'est un verbe d'homme desormais — un reveil
+      // de soi. Seuls les modes MJ-du-joueur se rangent.
+      ["meta", "run", "intervention"].forEach((k) => {
         boutons[k].hidden = true;
       });
       if (boutons[mode] && boutons[mode].hidden) basculer("dire");

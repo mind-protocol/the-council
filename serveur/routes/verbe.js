@@ -13,7 +13,10 @@ const { RACINE } = require("../http");
 const { envoyer } = require("../http");
 
 const VERBES = { tenter: "--tenter", faire: "--faire",
-                 demander: "--demander", dire: "--dire" };
+                 demander: "--demander", dire: "--dire",
+                 // PENSER : un reveil de soi (cast) — le verdict HTTP est
+                 // juste l'accuse « il y pense », la suite vit dans sa chambre.
+                 penser: "--penser" };
 
 function traiter(req, res, url) {
   if (req.method === "POST" && url === "/verbe") {
