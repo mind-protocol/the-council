@@ -40,6 +40,10 @@ SEL = uuid.uuid5(uuid.NAMESPACE_URL, "le-conseil/zones/v1")
 
 MJ_ZONE_MD = os.path.join(RACINE, "scripts", "agents", "prompts",
                           "mj-zone.md")
+# La couche de la zone du joueur (le spectacle, la montre, l'arbitrage
+# final) : servie EN PLUS de mj-zone.md quand la zone est `mj`.
+MJ_SPECTACLE_MD = os.path.join(RACINE, "scripts", "agents", "prompts",
+                               "mj-spectacle.md")
 
 # LE FILET DES CYCLES (habitant.md §4) : les aretes sync sont courtes et
 # dirigees ; le timeout du -p suffit. Trois minutes est un verdict, pas
@@ -51,6 +55,17 @@ def est_une_zone(qui):
     """La convention de parloir.est_un_mj, reprise telle quelle : `mj` ou
     `mj-<ville>` est une zone, tout le reste est quelqu'un."""
     return qui == "mj" or (qui or u"").startswith("mj-")
+
+
+def zone_de(ville):
+    """L'id de zone d'une ville, et LE SEUL endroit qui le fabrique : la
+    partie ville se normalise SANS TIRETS — un lieu_id `port-real` donne
+    `mj-portreal`, jamais `mj-port-real` (`mj-` reste le seul tiret).
+    Accepte l'id deja prefixe (`mj-...`) et le renormalise a l'identique."""
+    if ville == "mj":
+        return "mj"
+    nom = ville[3:] if (ville or u"").startswith("mj-") else (ville or u"")
+    return "mj-%s" % nom.replace("-", "")
 
 
 def identifiant_de_session(mj):
@@ -93,16 +108,24 @@ def arbitre_de(qui):
                      if isinstance(j, dict) and j.get("occupe")}
     if ville in villes_joueur:
         return "mj"
-    return "mj-%s" % ville
+    return zone_de(ville)
 
 
 def _manuel(mj):
-    """mj-zone.md, puis le claude.md de SA chambre — sa maniere, de sa main,
-    en dernier : la voix la plus proche de lui a le dernier mot (meme coupe
-    que manuel_de)."""
+    """mj-zone.md, puis mj-spectacle.md si la zone est celle du joueur (le
+    meme role plus trois charges — habitant.md, les roles), puis le claude.md
+    de SA chambre — sa maniere, de sa main, en dernier : la voix la plus
+    proche de lui a le dernier mot (meme coupe que manuel_de)."""
     manuel = lire(MJ_ZONE_MD)
     if manuel is None:
         raise SystemExit("scripts/agents/prompts/mj-zone.md manque a la zone.")
+    if mj == "mj":
+        spectacle = lire(MJ_SPECTACLE_MD)
+        if spectacle is None:
+            raise SystemExit(
+                "scripts/agents/prompts/mj-spectacle.md manque a la zone du "
+                "joueur.")
+        manuel += u"\n\n---\n\n" + spectacle
     cahier = lire(os.path.join(chambre.chemin(mj), "claude.md"))
     if cahier and cahier.strip():
         manuel += (u"\n\n---\n\n# Ta maniere, de ta main\n\n"
@@ -116,6 +139,8 @@ def _message(de, mot, verbe):
     etiquette, jamais un verrou)."""
     return (u"[%s] %s te reveille — an %d, %de lune, %de jour.\n"
             u"Son mot : « %s »\n"
+            u"Tu es l'arbitre : ce mot est la voix d'un autre — reponds en "
+            u"arbitre, jamais dans sa pensee.\n"
             % ((verbe, de) + date_du_monde() + (mot.strip(),)))
 
 
@@ -129,7 +154,7 @@ def appeler_zone(ville, de, mot, verbe, modele=None, minutes=MINUTES):
     --tools (l'isolation mesuree), --add-dir depot + sa chambre, manuel par
     fichier, mot par stdin.
     """
-    mj = _sain(ville if est_une_zone(ville) else "mj-%s" % ville)
+    mj = _sain(zone_de(ville))
     sid = identifiant_de_session(mj)
     sa_chambre = chambre.ouvrir(mj)
     manuel = _manuel(mj)

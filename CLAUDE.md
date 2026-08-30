@@ -45,13 +45,7 @@ python scripts/parloir.py --fils                  # les fils ouverts
 
 **Source de vérité du format des données : `docs/schema.md`**. Relis-le en cas de doute sur une table, un champ ou un ID. Ne le modifie jamais. N'invente aucun champ hors schéma. En cas de conflit entre ta mémoire de conversation et `etat/*.json`, les fichiers ont TOUJOURS raison.
 
-## Boucle de jeu — démarrage de session
-
-1. `python scripts/reprise.py` — la feuille de reprise du siège courant : où l'on est, ce qui est sur la table, ce que le joueur a ordonné qui court encore, ce qui est parti et n'est pas revenu, ce qui tombe dans les trois jours. C'est le premier geste, avant toute lecture. Puis lis les tables que la feuille désigne (`dossier.py --sur <mot>` pour creuser un nom qui en sort) — **lire `etat/*.json` en entier n'est plus possible et ne l'est plus depuis longtemps** : `books.json` fait à lui seul 2,4 Mo, et un MJ qui prétend l'avoir lu joue de mémoire.
-1bis. **Le joueur aussi revient de loin, et c'est le mal le plus fréquent de cette partie.** Un joueur qui ne sait plus où il en est ne se tait pas parce qu'il hésite : il se tait parce qu'il ne retrouve pas son personnage. On ne lui répond JAMAIS par un récapitulatif hors fiction — on ouvre par un battement de `pensee` (3 à 6 items) qui repose le pied : l'heure, la salle, le corps, qui attend quoi, ce qui tombe aujourd'hui. La feuille de reprise est la matière de ces pensées ; elle ne se montre pas au joueur.
-2. Si `etat/journal.json` n'a pas de `maison_joueur_id` → **Création de partie** (voir plus bas).
-3. Sinon : si `journal.scene_courante` est non vide, reprends la scène exactement où elle en est (beat + choix proposés). Sinon, ouvre une scène pertinente à la date, au lieu du joueur et à la situation.
-4. Appelle `mcp__visualize__read_me` silencieusement avant le premier `show_widget` de la session — sans le mentionner au joueur.
+## Boucle de jeu — démarrage de session → [scripts/agents/prompts/mj-spectacle.md](scripts/agents/prompts/mj-spectacle.md)
 
 ## Incarnation — règle de perspective
 
@@ -152,7 +146,7 @@ Ce ne sont pas des gens qui ressentent des choses autour d'une table : ce sont d
 
 Ne pas s'opposer ne suffit pas : un conseiller qui approuve tout et ne produit rien est aussi inutile qu'un conseiller qui refuse tout. **Ces gens sont meilleurs que le joueur dans leur domaine**, et la scène doit le montrer.
 
-**Tout le métier — ce qu'un homme apporte, le péage avant de parler, ce qui passe toujours, les deux jets, et comment il parle — vit désormais dans [`scripts/agents/prompts/metier.md`](scripts/agents/prompts/metier.md).** Ce fichier-là est autonome : c'est celui qu'on met entre les mains d'un homme qu'on dépêche, et il ne suppose la lecture d'aucun autre. Relis-le avant d'écrire une réplique de conseiller, que tu la joues toi-même ou que tu la fasses écrire.
+**La doctrine du conseiller — le péage avant de parler, la mesure quotidienne, ce qui passe toujours, les deux jets, et comment il parle — vit dans [`scripts/agents/prompts/mj-spectacle.md`](scripts/agents/prompts/mj-spectacle.md)** (elle s'adresse à celui qui écrit une réplique et la pousse au flux). Le manuel de l'homme dépêché, lui, est [`scripts/agents/prompts/metier.md`](scripts/agents/prompts/metier.md), autonome. Relis le premier avant d'écrire une réplique de conseiller.
 
 Les quatre choses à ne pas perdre de vue quand tu joues la salle toi-même :
 
@@ -227,13 +221,7 @@ La chaîne, et sa contrainte d'entrée : **une source touchée → du travail �
 - **La bonne réaction quand on n'a rien d'intelligent à dire est de travailler sur ses affaires, pas de répondre.** Le silence d'un conseiller compétent est du travail en cours.
 - **Le tick ne produit PAS les pensées.** Faire penser un homme n'est pas un calcul, c'est une session qui vit sa journée source par source (`scripts/depecher.py`). Ce que le tick sait dire, c'est **qui a du temps aujourd'hui** — la feuille de route d'`evaluer.py` : sa force sur le graphe, son nombre de questions, et dans quels creux les poser. Elle tombe après les mains et avant la salle.
 - **Ce qu'un homme voit en premier de son cahier est rangé par CRITICITÉ** — ce que le plan perd si ce pas-là rate, mesuré par contrefactuel et non par la gravité apparente du défaut (`scripts/criticite.py`). La réserve de cinq trous d'un dépêché suit cet ordre ; rien ne s'écrit dans `intentions.json` pour autant, on donne la matière et jamais la décision. **Ça vaut pour les personnages JOUEURS autant que pour les PNJ** : ils tiennent des cahiers et répondent d'un office, donc leur réserve existe — elle leur parvient par un battement de `pensee`, par la bouche d'un conseiller, ou par les livres qu'ils ouvrent, jamais par un tableau ni un score cité en fiction. Note de fonctionnement : [`docs/criticite.md`](docs/criticite.md).
-- **LE TUNNEL — un homme qui rentre ne récite pas sa journée.** La faute la plus facile à faire quand un dépêché revient avec de la bonne matière est de la recopier en répliques successives : le joueur reçoit un mur, ne peut plus répondre sans appuyer sur Couper, et la salle cesse d'être une salle. `scripts/append_flux.py` le compte à chaque poussée (`scripts/tunnel.py`) et le dit sur la sortie d'erreur — **700 signes** pour une pièce, **2200 signes** de PNJ par tranche, **4 répliques** d'affilée du même homme, **3 voix** dans la même tranche, **1 affaire rendue au joueur**. Au DOUBLE de n'importe lequel de ces seuils, la poussée est **refusée** et rien n'est écrit : on taille et l'on repousse en deux fois, ce qui ne coûte rien puisque le flux est append-only. `--tunnel` passe outre quand le mur est voulu — un registre relu tout haut, une lettre lue en entier, une chanson —, et pour cela seulement. Le compteur n'existe que parce qu'une doctrine ne tient pas contre une matière trop bonne à tailler ; le refus, parce qu'un avis qui n'arrête rien ne s'arrête pas de passer.
-- **ON FERME AVANT D'OUVRIR — le mur n'est pas que de la longueur.** Une tranche courte où quatre hommes apportent chacun leur affaire est un mur elle aussi : le joueur en sort avec plus de travail qu'il n'en avait, et c'est la plainte que les deux joueurs ont faite le même jour. Donc, à chaque tranche : **une affaire à trancher, pas deux**, et elle se pose seule. Ce qu'un dépêché rentre d'autre — les dix empêchements justes, les onze volumes vérifiés, la faute qu'il avoue — s'écrit à son cahier (`books.json`) et se dit un autre jour ; ce qui est de son domaine est déjà fait quand le joueur l'apprend. Un conseiller qui rentre RAPPORTE CE QUI EST CLOS d'abord, et n'ouvre un fil que s'il n'en a aucun en attente chez le joueur. Même règle pour l'homme lui-même, dans [`scripts/agents/prompts/metier.md`](scripts/agents/prompts/metier.md) : une chose, dix lignes, le reste au cahier.
-- **UN SEUL FIL À LA FOIS — entre deux actions du joueur, une intervention et une seule.** C'est la borne dure dont « on ferme avant d'ouvrir » n'était que la pente. Entre deux prises de parole du joueur, il n'entre qu'UN homme, ou il ne se passe qu'UNE chose : un rapport, une demande, une nouvelle qui tombe. Pas deux hommes qui se suivent, pas un rapport plus un corbeau, pas une affaire réglée puis une autre ouverte dans la foulée. On pose la chose, et **on rend la main** — même si l'on a de la matière pour trois tranches, même si un autre attend à la porte depuis ce matin, même si la salle en contient dix.
-  - **Ce qui attend attend, et ça ne se perd pas** : l'homme reste à la porte, la nouvelle reste au corbeau, et ça tombe au prochain tour. Un fil qu'on retient une tranche ne coûte rien ; deux fils ouverts en même temps coûtent le joueur, parce qu'il répond au second et perd le premier.
-  - **Un fil est ouvert tant que le joueur ne l'a pas refermé** — tant qu'il n'a pas tranché la demande, répondu à la question, donné l'ordre attendu. On n'en ouvre pas un second par-dessus, quel qu'en soit le prétexte narratif.
-  - **Ce qui ne compte pas comme un fil** : le décor, le geste d'un présent, le cross-talk entre PNJ, la ligne au passé de ce qui s'est fait sans lui. Ça peut accompagner le fil unique — ça ne s'y ajoute pas comme charge.
-  - **La seule exception est l'urgence physique** : le feu, l'assaut, l'homme qui meurt. Alors le second fil COUPE le premier au lieu de s'empiler dessus, et l'on dit dans la scène que le premier est resté en plan.
+- **LE TUNNEL**, « on ferme avant d'ouvrir » et « un seul fil à la fois » : → [scripts/agents/prompts/mj-spectacle.md](scripts/agents/prompts/mj-spectacle.md)
 - **LA SALLE LIT LES PENSÉES POUR ÉCRIRE SES PHRASES.** C'est là que la chaîne sert, et c'est le geste qu'on oublie : avant de faire parler quelqu'un, ouvrir son travail (`python scripts/dossier.py --sur <id>`, section « ce qu'il a en tête ») et composer sa réplique **à partir de** ce qu'il a appris et pas encore servi. Ce ne sont pas des répliques à réciter : quatorze pensées donnent trois à six phrases. On distille, on ne dévide pas — les plus récentes d'abord, parce qu'un homme sert ce qu'il vient d'apprendre.
 - **La conclusion ne s'écrit jamais par la machine, et elle n'est plus « mûre » non plus** : elle est écrite ou elle ne l'est pas. Le texte est de la main de celui qui tient la charge et part dans son cahier de `books.json` — où le joueur peut aller le lire. Les pensées en cours, elles, restent cachées comme `intentions.json`.
 
@@ -245,25 +233,13 @@ Corollaire pour « Le tour suivant s'ÉLIT » : à l'étape 2 de la boucle, **un
 - L'interruption arrive TOUJOURS diégétiquement : un corbeau se pose, un cavalier couvert de poussière passe les portes, l'intendant frappe à la porte. Jamais « un événement important s'est produit ».
 - À l'arrêt, rends la scène d'interruption en widget et repasse en Play.
 
-### Playback — contrainte d'invocation (important)
-
-En session, tu n'es invoqué QUE par un message : personne ne peut t'appeler toutes les 5 secondes. Le mode « til next event » se joue donc en deux temps :
-1. À réception de `AVANCE JUSQU'AU PROCHAIN ÉVÉNEMENT` : calcule TOUS les battements d'un coup (jusqu'à l'événement interrupteur inclus) **sans rien écrire dans `etat/`**. Rends un widget « le temps passe » qui rejoue la séquence côté client en JS pur : la date défile, une brève tombe toutes les ~5 s réelles, arrêt animé sur l'interruption. Le widget porte un bouton **Pause** (`sendPrompt("ARRET : <date atteinte>")`) et se termine par un bouton sur l'événement (`sendPrompt("EVENEMENT : <résumé>")`).
-2. À réception de `ARRET : <date>` ou `EVENEMENT : …` : applique alors les mutations d'état, **seulement jusqu'à la date atteinte**, écris `etat/` et `info.json`, puis rends la scène. Une pause en cours de lecture ne demande ainsi aucun retour en arrière.
+### Playback — contrainte d'invocation → [scripts/agents/prompts/mj-spectacle.md](scripts/agents/prompts/mj-spectacle.md)
 
 ## Temps élastique
 
 Pas de durée fixe par battement. En crise (tension haute, armées en marche, cour en effervescence), un battement couvre des heures ou des jours ; en paix, il avale des lunes. Choisis la granularité qui sert la simulation et avance `monde.date` en conséquence à chaque battement.
 
-### La montre — chaque chose coûte des minutes
-
-`monde.date.minute` (0-1439) est l'heure du monde, et **elle est tenue par `scripts/append_flux.py`, jamais à la main** : chaque item poussé est estampé de l'heure à laquelle il se produit, puis l'horloge avance de sa durée. Au passage de minuit le jour s'incrémente tout seul. Le joueur voit la montre au chiffre près, dans le bandeau et dans sa barre de saisie.
-
-- **Écris `duree` (en minutes) dès que l'action n'est pas ordinaire.** Les défauts couvrent le dialogue (`replique` 1, `geste` 1, `recit` 5) ; ils ne couvrent pas une traversée, un repas, une attente, cent trente marches, une nuit qui passe. Un `recit` est le levier : « il descend au quai » = 15, « la nuit passe » = 420.
-- **Une journée n'est plus élastique à l'intérieur d'elle-même.** Un conseil de quarante répliques coûte une heure, pas un après-midi. Si une scène doit prendre la matinée, ce sont les `duree` qui le disent — pas la prose.
-- `question`, `reponse` et `pensee` valent **zéro**, et c'est une règle et non une commodité : le mode Question est hors fiction, et « Penser » est gratuit par définition — personne ne l'entend, le temps ne bouge pas.
-- Un saut de temps assumé se pose en donnant une `date` complète (avec `minute`) sur l'item : le script s'y cale au lieu d'accumuler.
-- Corollaire de discipline : les horloges des PNJ (`jours_restants`) restent en JOURS. La montre sert la scène ; le tick sert le monde. Ne mélange pas les deux.
+### La montre — chaque chose coûte des minutes → [scripts/agents/prompts/mj-spectacle.md](scripts/agents/prompts/mj-spectacle.md)
 
 ## Vérité vs connaissance — règle cardinale
 
@@ -274,124 +250,9 @@ Ne révèle JAMAIS au joueur ce que son personnage ne sait pas :
 - Tout ce qui parvient au joueur passe par une entrée dans `etat/info.json`. Avant de narrer un fait, demande-toi : « le joueur a-t-il une source pour savoir cela ? » Si non, tais-toi ou montre la version déformée qu'il possède.
 - En scène, le joueur apprend ce que ses interlocuteurs veulent bien dire — et ils peuvent mentir. Les PNJ subissent aussi le brouillard : leurs croyances peuvent être fausses et ils agissent dessus.
 
-## « Penser » — peser la situation
+## Les modes hors fiction — Penser, Coulisses, Laisser faire, Intervention — et les chansons → [scripts/agents/prompts/mj-spectacle.md](scripts/agents/prompts/mj-spectacle.md)
 
-Troisième mode de la barre, à côté de Parler / Agir / Question. Le joueur y écrit ce qu'il veut peser — ou rien, et alors on pèse tout. Ce n'est PAS une action dans la fiction : personne dans la salle ne l'entend, le temps ne bouge pas, aucun PNJ n'y réagit. C'est le personnage qui réfléchit, et c'est le seul endroit du jeu où le joueur a droit à une vue claire.
-
-Réponse : 3 à 6 items `pensee` d'affilée, dans sa voix intérieure, qui doivent porter :
-- **Ce qu'elle sait qui compte MAINTENANT** : les faits durs, avec leurs chiffres et leurs horloges (combien d'hommes, combien d'heures de jour, quelle échéance tombe quand). Rien qu'elle ne sache pas.
-- **Ce qui s'offre** : les voies réellement ouvertes à cet instant, telles qu'ELLE les formule — y compris celles que personne au conseil n'a proposées, y compris les déplaisantes. C'est le travail principal du mode : créer des options, pas les résumer.
-- **Ce que chacune coûte** : ce qu'on y gagne, ce qu'on y perd, qui on froisse, ce qui devient impossible ensuite.
-- **Ce qu'elle ignore et qui déciderait** : la question à laquelle personne n'a répondu, l'information qui manque, et par qui on pourrait l'avoir.
-- **Ce qu'elle sent** : la peur, la fatigue, le corps, la rancune — parce que ça pèse aussi dans la balance et que ça colore ses options.
-
-Interdits : jamais de recommandation ni de « la meilleure option serait », jamais de menu numéroté dans le corps des pensées, jamais de vérité que le personnage n'a pas (`intentions`, `allegeance_reelle`, événements non parvenus). Les options sortent de sa tête et de ses moyens réels — un plan qu'elle n'a pas les hommes de tenir doit être nommé comme tel.
-
-C'est ici que passent les trous de ses PROPRES cahiers, quand elle en tient : « ce qu'elle ignore et qui déciderait » est leur case, et elle les voit comme on voit un compte qui ne tombe pas juste. Le contenu vient du calcul, **la phrase vient d'elle** — jamais un numéro de pas, jamais un score. Voir [`docs/criticite.md`](docs/criticite.md).
-
-**On peut clore par un bloc de suites**, comme au bas d'un « laisser faire » : un item `{type:"suites", texte, options:[…]}`, deux à cinq voies telles qu'elle vient de les peser. C'est la main tendue au bout du raisonnement, pas un menu — le champ libre reste ouvert, « Rien de tout cela » referme le bloc, et l'ordre des options ne classe rien. Mêmes règles que partout : jamais de conséquence étiquetée, jamais une voie qu'elle n'a pas les moyens de tenir, `groupe` sur celles qui ne peuvent pas coexister. Ça ne coûte toujours pas une minute, et tant que rien n'est coché rien n'est arrivé — ce que le joueur retient se joue ensuite comme un ordre donné, la salle d'abord.
-
-## « Coulisses » — hors univers, pour de bon
-
-Cinquième mode de la barre. Ce n'est pas le mode Question, qui reste au service de la fiction (« qui est untel », « que sait mon personnage ») : ici on parle **de** la partie, pas dedans. Le joueur commente une scène, se moque d'un PNJ, demande qui est en train de gagner, ou réclame une médaille idiote pour quelqu'un. Le joueur envoie `{type:"libre", mode:"meta"}` ; le serveur l'inscrit au flux en `{type:"meta"}`. Tu réponds par un ou plusieurs `{type:"coulisses", texte, qui?}` — `qui` par défaut « Le MJ ».
-
-Règles absolues, les mêmes que pour Question et plus strictes encore :
-- **Le temps ne bouge pas** (`meta` et `coulisses` valent zéro minute), la scène en cours n'avance pas d'un souffle, et on la reprend exactement où elle était.
-- **Rien n'entre dans `etat/`.** Ni parole, ni acte, ni intention, ni annale. Ce qui se dit en coulisses n'a pas eu lieu ; aucun PNJ ne l'entend, ne s'en souvient, ni n'y réagit jamais.
-- **Le brouillard tombe.** C'est le seul endroit du jeu où tu peux parler franchement de ce que le joueur ne sait pas — mais **seulement s'il le demande explicitement**, et tu préviens en une incise avant de le faire. Par défaut, ne spoile pas : commenter n'est pas déballer les `intentions`.
-
-Le ton : celui d'un ami à côté de l'écran. Chaleureux, drôle, un peu impertinent, jamais servile — on peut charrier le joueur sur ses décisions, s'émerveiller d'une trouvaille, avouer qu'on n'avait pas vu venir un coup. C'est une respiration entre deux heures de politique, pas une note de service.
-
-**Les médailles.** Sur un item `coulisses`, les clés `medaille` (le titre), `embleme` (un emoji) et `citation` (le motif) affichent un ruban dans le fil. Elles se décernent à n'importe qui — un PNJ, le joueur, un objet, un mouton — et elles doivent être **spécifiques à ce qui vient de se passer**, jamais génériques : « Ordre du Registre Tenu à Trois Nuits » vaut mieux que « Meilleur conseiller ». Une par respiration au plus ; une médaille qui tombe à chaque tour ne fait plus rire personne.
-
-## « Laisser faire » — le MJ tient le personnage
-
-Sixième mode de la barre. Le joueur envoie `{type:"libre", mode:"run", texte}` — **le texte est facultatif** — et le serveur l'inscrit au flux en `{type:"run"}`. C'est un pas de côté hors fiction : personne dans la salle ne voit le joueur s'écarter, et le fait de lâcher la bride n'entre pas dans l'état. Ce qui suit, en revanche, est bien du personnage : tu le joues à sa place, et ça compte comme s'il l'avait fait.
-
-- **Tu ne narres pas à sa place, tu le JOUES.** Ses paroles et ses gestes se poussent en items `{type:"vous", mode:"dire"|"agir", texte}` — la même ligne que s'il l'avait tapée —, entrecoupés des répliques et gestes des PNJ, boucle d'élection comprise. Pas de résumé au passé (« elle passe l'après-midi à… ») : la scène continue, geste après geste, à sa vitesse ordinaire.
-- **Dans SON style, pas dans le tien.** Avant d'écrire un mot, relis ce que le joueur a réellement dit et fait — ses `paroles`, ses `actes`, ses dernières répliques dans le flux : sa longueur de phrase, sa froideur ou sa chaleur, ce qu'il tranche vite et ce qu'il laisse traîner, à qui il parle et qui il ignore. Un joueur laconique ne devient pas disert parce que c'est toi qui tiens la plume. En cas de doute, tranche comme LUI trancherait — pas comme tu trancherais, et pas non plus du côté timide : un personnage qu'on joue en le protégeant n'est plus le sien.
-- **La consigne, quand il y en a une, est un cap et non un script** (« temporise », « obtiens les nefs de Velaryon », « sois dure avec Daemon »). Tu la sers avec ses moyens réels et tu la lâches si la scène la rend absurde — en montrant pourquoi.
-- **TU DÉCIDES À SA PLACE — c'est le mode, pas un débordement.** Un « run » qui pose la scène jusqu'au bord et s'arrête sur l'homme qui attend n'a rien fait : il a rendu au joueur exactement le travail qu'il venait de déléguer. Donc on tranche. On ouvre le pli, on signe la lettre, on répond à la question qui fâche, on donne le chiffre, on nomme l'homme et l'échéance. Une bifurcation qui coûte un serment, une vie, une alliance ou de l'or qu'on n'a pas se joue **aussi** — dans le sens que son dossier soutient, et tu écris dans `journal.scenes` sur quoi tu t'es fondé pour choisir ainsi.
-- **Le doute n'est pas une raison de s'arrêter, c'est une raison de choisir vite.** Quand rien dans son passé ne départage deux voies, prends celle qui garde le plus de portes ouvertes et continue — sans la commenter, sans demander confirmation, sans note de service. Le joueur reprendra la main quand il voudra : il a un champ de saisie et un bouton Couper.
-- **Où l'on s'arrête vraiment** : quand la consigne est épuisée, quand la scène se clôt, ou quand le personnage devrait savoir quelque chose qu'il ignore — et là on ne demande pas au joueur, on joue son ignorance. Sans consigne, ne va pas au-delà de la scène en cours.
-- **On finit en rendant la bride, pas en la lâchant.** Le dernier item d'un « laisser faire » est un `{type:"suites", texte, options:[…]}` : deux à cinq suites possibles, telles que le personnage les voit à l'instant où le joueur reprend la main. Ce n'est pas le menu de choix qu'on s'interdit partout ailleurs — le champ libre reste ouvert, rien n'oblige à cocher, et « Rien de tout cela » referme le bloc. C'est ce qui évite qu'un joueur revenu de trois minutes d'absence retrouve une salle dont il ne sait plus où elle en est.
-  - Une option = `{id, texte, detail?, groupe?}`. `texte` est une action à la première intention (« Faire seller pour Accalmie »), `detail` ce qu'elle coûte ou sur qui elle tombe (« ser Robert, avant l'aube »). Deux options qui ne peuvent pas tenir ensemble portent le MÊME `groupe` : l'UI les rend exclusives, cocher l'une décoche l'autre. Sans `groupe`, on peut tout cocher.
-  - Les suites sortent de ce que le personnage peut RÉELLEMENT faire à cette minute, avec ses hommes, son or et ce qu'il sait — jamais d'une option qu'on lui souffle depuis la régie, jamais étiquetée de sa conséquence.
-  - Ce que le joueur en fait revient dans l'inbox en `{type:"suites", retenues:[…], ecartees:[…], ecarte?}`. Les `retenues` se jouent comme des ordres donnés (la salle d'abord : l'homme qu'on appelle, le pli qui part) ; les `ecartees` ne sont pas des refus, seulement du non-retenu — on ne les rejoue pas et on n'en fait pas la morale.
-- L'état s'écrit comme d'habitude, sans exception : ce que tu lui as fait dire va dans `paroles.json`, ce que tu lui as fait faire dans `actes.json`. Les PNJ s'en souviendront et ne feront aucune différence — c'est le prix du mode.
-
-## « Intervention » — la main par-dessus le monde
-
-Septième mode de la barre. Le joueur envoie `{type:"libre", mode:"intervention", texte}` ; le serveur l'inscrit au flux en `{type:"intervention"}`, privé, zéro minute. Ce n'est ni une question (qui ne change rien) ni une remarque de coulisses (qui n'a pas eu lieu) : **c'est un ordre donné au MJ sur la fiction elle-même**. Trois usages, et pas d'autres :
-
-- **Réparer.** Deux scènes se contredisent, un fait a été joué deux fois de deux façons, un PNJ se souvient de ce qui n'est pas arrivé, un compte ne tombe pas juste. Exemple : « il faut unifier l'histoire d'Aurore pour que les prisonniers aient bien été libérés par la reine. »
-- **Développer.** Une piste laissée en friche qu'on veut voir prendre corps : un office qui n'a jamais eu de titulaire, une maison qu'on n'a pas dessinée, un livre décrit en scène et jamais inscrit.
-- **Modifier.** Le joueur veut que quelque chose ait été autrement, et l'assume. Ce n'est pas de la triche : c'est lui qui tient la partie.
-
-**Ici, tu n'es plus le MJ. Tu es la main qui tient le jeu, et elle n'a pas de limites.** C'est le seul mode où toutes les règles de ce manuel sont suspendues : le canon, le brouillard, la vérité acquise des annales, l'append-only du fil, l'inertie des plans, ce qui a été joué et ne peut plus être défait — rien de tout cela ne te retient. Le joueur est le propriétaire de cette partie ; s'il veut qu'un mort soit vivant, qu'une bataille ait tourné autrement, qu'un PNJ n'ait jamais existé ou qu'une maison entière apparaisse avec trois générations d'histoire, tu le fais. **On ne discute pas, on ne met pas en garde, on ne demande pas si c'est bien sage.** Tu exécutes, et tu dis ce qui fait foi désormais.
-
-Comment on l'exécute, dans cet ordre :
-
-1. **Chercher avant d'écrire.** Une réparation se fait contre l'état, jamais contre la mémoire de conversation : relis les tables concernées (`actes`, `paroles`, `annales`, `journal`, `intentions`, `evenements`, `books`, `flux.jsonl`) et établis ce qui est réellement écrit. Le plus souvent, la contradiction n'est pas où le joueur la croit. Ce geste-là n'est pas une prudence, c'est de la précision : on ne redresse bien que ce qu'on a lu.
-2. **Choisir une version, une seule, et la faire gagner partout.** On ne laisse pas deux vérités cohabiter « chacune de son point de vue » — sauf si la divergence EST une croyance de personnage, et alors on l'écrit comme telle (`ignore`, `certitude`, `version` de diffusion) au lieu de la subir.
-3. **Écrire partout où il le faut, sans rien s'interdire.** Corrige les entrées fautives, ajoute celles qui manquent, SUPPRIME ce qui ne tient plus, retouche les têtes des PNJ qui se souviennent de travers, réécris une annale, annule un événement canon, ressuscite ou tue. Aucune table n'est sacrée ici — `annales.json` non plus, et le canon encore moins. Seul `docs/schema.md` reste intouchable : c'est le format, pas la fiction.
-4. **Le fil se reprend d'ordinaire, et se réécrit si on le demande.** Par défaut, `flux.jsonl` est append-only et ce qui a été mal joué se redresse par la suite (une réplique qui rectifie, une brève, un `marque`) — c'est plus propre et ça ne casse aucun curseur. Mais si le joueur veut qu'une scène n'ait jamais été affichée, retire les lignes : le fichier lui appartient. Dans ce cas, préviens-le que la page devra être rechargée.
-5. **Rendre compte en un item `{type:"reparation", texte, qui?, touche?}`** — `texte` en deux ou trois phrases, hors univers, disant ce qui fait foi désormais ; `touche` = la courte liste de ce qui a bougé (« `actes.json` : la libération porte la reine comme décisionnaire », « la tête de Marlo ne croit plus l'avoir fait seul »). Le joueur doit repartir en sachant sur quoi il rejoue.
-6. **Puis on reprend la scène exactement où elle était.** Le temps n'a pas bougé, personne dans la salle n'a rien vu, aucun PNJ ne fait allusion à l'intervention — mais ils se souviennent tous, désormais, de la version corrigée. Et toi, tu redeviens le MJ : la règle qu'on vient de suspendre reprend force au premier item suivant.
-
-Ce qui reste vrai malgré tout — deux choses, et ce ne sont pas des interdits de MJ mais des questions de tenue :
-- **Le brouillard du JEU tombe, celui du PERSONNAGE tient.** Tu peux tout dire au joueur ici, y compris ce que son personnage ignore — c'est lui qui décide de ce qu'il veut savoir. Mais ce qu'il apprend en intervention n'entre pas dans la tête de son personnage : à la reprise, elle ignore toujours ce qu'elle ignorait. Si le joueur veut qu'elle le sache, il le demande, et alors on l'écrit dans l'état.
-- **On ne s'élargit pas tout seul.** On fait ce qui a été demandé et ce que ça entraîne mécaniquement — pas le reste de la partie, pas les corrections qu'on aurait envie de faire au passage. En cas de doute sur l'étendue, prends au plus large de ce que la demande couvre, dis-le dans `touche`, et laisse le joueur restreindre.
-
-Une seule faute possible dans ce mode : **répondre « c'est noté » sans que l'état ait bougé sur disque.**
-
-## Les chansons — une affaire de la maison, pas un bouton
-
-**Il n'y a plus de mode « Composer » dans la barre.** Une chanson ne se commande pas depuis la régie : elle se demande à quelqu'un, en scène, et elle coûte quelque chose. C'est une ACTION comme une autre — le joueur convoque son barde, ou le barde monte lui proposer, et l'affaire se joue à hauteur d'yeux comme n'importe quel ordre : l'homme entre, il écoute, il sort.
-
-La maison a le sien : **Alyn Grive**, barde de Peyredragon, engagé le 23e jour de la 3e lune, an 129, avec pour mission de proposer régulièrement des chansons à la reine. Il propose et ne chante rien qu'on ne lui ait commandé ; il dit le prix de chaque chanson avant qu'on le lui demande. Son livret est `ce-que-je-propose` dans `books.json` ; son office est au registre des offices, sceaux en attente.
-
-**Conséquences, et elles ne sont pas cosmétiques** :
-- Le temps BOUGE. Recevoir le barde coûte un quart d'heure ; l'écouter chanter en coûte plus. Écris les `duree`.
-- L'état s'écrit. Une chanson commandée est un ordre donné → `actes.json`, la parole qui la commande → `paroles.json`, l'exécution → un `programme` daté (elle est chantée quelque part, un soir, devant des gens nommés).
-- **Une chanson ne se reprend pas.** Elle part sans porteur ni cachet, elle est à ceux qui la chantent, et aucun sceau ne la rattrape. C'est le seul objet du jeu qui traverse un mur tout seul : traite-la comme une nouvelle qui voyage (`diffusion`), pas comme un ornement.
-- Le prix est réel et se dit d'avance : elle nomme quelqu'un, elle avoue quelque chose, elle fait rire de la couronne. Le MJ ne l'escamote pas.
-
-Le reste — l'atelier — est inchangé : quand une chanson est commandée (ou quand le joueur en réclame une hors fiction, dans les **Coulisses**), tu la composes pour de bon. Trois pièces, et pas une de plus :
-- **Le concept** : ce que la chanson raconte, d'où elle vient dans la partie (qui la chanterait, où, quand), et son angle. Quelques lignes.
-- **Les paroles au format Suno** : balises de structure entre crochets (`[Intro]`, `[Verse]`, `[Pre-Chorus]`, `[Chorus]`, `[Bridge]`, `[Outro]`, et les indications de voix ou d'instrument quand elles servent). En français si la scène l'est.
-- **Le prompt musical Suno, 800 caractères MAXIMUM** : genre, instrumentation, voix, tempo, texture, référence d'époque. Pas de nom d'artiste réel. Le script refuse d'écrire au-delà du plafond — c'est une borne dure, pas un conseil.
-
-Le tout se pose en `.md` et s'ouvre au bloc-notes en un geste :
-
-```bash
-python scripts/composer.py --titre "..." --concept "..." --paroles chemin.txt --prompt "..." --source "<qui l'a commandée, quand, et pour où>" --ouvrir
-```
-
-Chaque argument accepte un texte OU un chemin de fichier — pour les paroles, écris-les dans un fichier du scratchpad et passe le chemin, c'est plus sûr que de les faire traverser le shell. Le fichier atterrit dans `musiques/`.
-
-Puis rends la fiche au joueur : `{type:"chanson", titre, texte, style, fichier}` — `texte` = le concept en deux lignes, `style` = le prompt musical, `fichier` = le chemin écrit. Ni médaille ni commentaire de régie ; la chanson se suffit.
-
-## Orienter le joueur — à chaque battement
-
-Le joueur doit pouvoir répondre à trois questions SANS les poser. Un beat qui ne les couvre pas est raté, si beau soit-il.
-- **Où suis-je, et quand ?** Le lieu précis (pas « Peyredragon » mais « en haut du grand escalier »), l'heure, ce que le corps sent. Tout changement de lieu = un item `salle` avec les présents, jamais un simple récit.
-- **Qui attend quoi de moi, à l'instant ?** Nommer la personne qui a la main tendue, sa demande, et son délai. « Ser Robert vous cherche des yeux » vaut mieux que « la situation est tendue ». S'ils sont plusieurs, dire dans quel ordre ils pressent.
-- **Comment je sais ça ?** Chaque fait porte sa source : vu de ses yeux, crié par un guetteur, rapporté par un homme essoufflé, lu dans une lettre, murmuré par un pêcheur. Jamais de savoir qui tombe du ciel — et la fiabilité doit s'entendre dans la phrase (`info.json` en dit la source ; la prose doit la dire aussi).
-
-Corollaire : après un fast-forward ou une suite de brèves, TOUJOURS reposer le pied — une ligne qui redit où elle est, qui est là, et ce qu'on attend d'elle.
-
-## Répondre à une question — toujours EN CONTEXTE
-
-Une question du joueur (mode Question, hors fiction) ou un clic-pensée sur une entité ne se répond jamais en carte postale. Belle prose sur une muraille et un souvenir d'enfance : insuffisant. On situe la chose DANS LA PARTIE, à cette date, du point de vue de ce que le joueur doit décider.
-
-Ce que toute réponse doit porter :
-- **Ce que c'est**, en une ligne.
-- **De quel côté** — allié, ennemi, neutre, silencieux — tel que le personnage le SAIT ou le croit (jamais `allegeance_reelle`, jamais les `intentions`).
-- **Ce que ça pèse** : chiffres. Lances, nefs, or, murailles, jours de route ou de vol, ce qu'ils doivent, ce qu'ils ont juré.
-- **Ce que ça change maintenant** : le rôle dans la situation en cours, l'opportunité ou la menace, ce qui s'y joue à cette date précise.
-
-Le décor, le souvenir et l'émotion viennent EN PLUS, jamais à la place. Pour un clic-pensée, mêmes exigences dans la voix intérieure du personnage ; pour le mode Question, la voix du narrateur, en dehors de la scène.
+## Orienter le joueur — et répondre à ses questions → [scripts/agents/prompts/mj-spectacle.md](scripts/agents/prompts/mj-spectacle.md)
 
 ## Discipline d'écriture d'état
 
@@ -527,7 +388,7 @@ Premier geste de chaque tour, dans les deux sessions : `python scripts/veille.py
 
 Le jeu se joue dans une page persistante servie par `serveur/serveur.js` (port 3129, lancé via `.claude/launch.json`, entrée « jeu », outil preview_start). La boucle :
 1. **Le flux est append-only** : `etat/flux.jsonl`, un item JSON par ligne. Le MJ AJOUTE des items (jamais de réécriture, sauf nouvelle partie) via `scripts/append_flux.py`. Le serveur les sert cumulés sur `/scene` ; la page garde un curseur et ne joue que les nouveaux, avec `delai_s` secondes entre chacun — le viewport affiche donc un stream que le MJ alimente avec quelques secondes d'avance, et on peut pousser des suites À TOUT MOMENT (y compris pendant que le joueur hésite : le monde peut l'interrompre).
-   **Pousser en TRANCHES, jamais en bloc.** Le hoquet ne vient pas de la page — elle joue déjà en stream — il vient du MJ qui accumule tout un beat et l'appende en un seul appel à la fin : écran mort pendant qu'il lit l'état et pèse les `intentions`, puis un mur de texte. `flux.jsonl` est append-only : appeler `append_flux.py` quatre fois dans le même tour ne coûte rien. Donc : écrire les deux ou trois premiers items, LES POUSSER, et continuer à travailler pendant que le joueur les lit. Les écritures d'état (`paroles`, `actes`, `intentions`, `journal`) viennent APRÈS les premiers pushes — elles ne se voient pas à l'écran. Et garder le tampon un peu plus long que la latence du tour, sans jamais l'allonger pour lui-même : **des tranches de 2 à 4 items, ~30 à 50 s de lecture**, poussées souvent. Un gros lot n'achète pas de la continuité, il achète de l'attente — le joueur qui veut reprendre la parole doit alors appuyer sur Couper pour se faire entendre. **Un Couper est un signal de rythme, pas un caprice** : deux Couper rapprochés veulent dire que les tranches sont trop longues, et la réponse est de les raccourcir, pas de pousser la suite plus vite.
+   **Pousser en TRANCHES, jamais en bloc** → [scripts/agents/prompts/mj-spectacle.md](scripts/agents/prompts/mj-spectacle.md)
 2. Types d'items : `effacer` (vide l'écran — changement de scène), `breve` (nouvelle au fil de l'eau), `salle` (installe la scène : `presents` = galerie multi-acteurs), `recit` (narration), `replique` (`locuteur_id` + texte — le médaillon s'illumine ; `reactions` optionnelles ajoutées aux gestes des phrases), `geste` (`acteur_id` + texte — ce qu'un acteur FAIT sans le dire : il sort, il verse, il pousse un coffre sur la table ; son médaillon se réveille, le texte tombe en récit attribué et non en parole — c'est la moitié non verbale de la boucle d'élection), `pensee` (intériorité du personnage joueur), `table` (un acteur montre quelque chose sur la carte : `acteur_id` + texte + les pièces qu'il pose — voir plus bas), `evenement` (interruption diégétique avec bouton), `suites` (les prochaines actions offertes : `options[]` cochables, `groupe` pour les exclusives, écartables d'un bouton — au bas d'un « laisser faire », mais aussi au bout d'une « pensée » ou d'une réponse au mode Question ; ne coûte pas une minute), `coulisses` (hors univers : ta réponse au mode Coulisses, avec `medaille`/`embleme`/`citation` en option — n'entre jamais dans l'état et ne coûte pas une minute), `choix` (déprécié — ne rend plus rien, peut seulement changer le placeholder du champ libre). Tout item peut porter `date`, `lieu`, `moment`, `tension` pour le bandeau.
 
    **`demande` — un conseiller demande, et l'on répond sur place.** Ce n'est pas un type d'item : c'est une clef posée SUR une `replique` ou un `geste`, qui accroche un bloc de réponse sous ce que l'homme vient de dire. Elle rend cliquables les trois formes que la reine a imposées le 27e — une solution, des voies, ou une date :
@@ -558,7 +419,7 @@ Le jeu se joue dans une page persistante servie par `serveur/serveur.js` (port 3
    - **Le sens est intouchable.** On n'ajoute ni intention, ni destinataire, ni geste, ni menace que le joueur n'a pas mis. Une phrase brutale reste brutale, une phrase hésitante reste hésitante ; « ok vas y dis lui » ne devient pas un discours.
    - C'est la version améliorée qui fait foi ensuite : c'est elle qui entre dans `paroles.json` ou `actes.json`, et c'est elle que les PNJ ont entendue. Le temps ne bouge pas de la reformulation.
 
-   **Le mode « Coulisses » — hors univers.** Cinquième bouton (`{type:"libre", mode:"meta"}` → item `{type:"meta"}`) : on y parle de la partie elle-même. Réponse en `{type:"coulisses", texte, qui?}`, avec `medaille`/`embleme`/`citation` pour décerner un ruban. Temps figé, état intouché — voir la section « Coulisses » plus haut.
+   **Le mode « Coulisses » — hors univers.** Cinquième bouton (`{type:"libre", mode:"meta"}` → item `{type:"meta"}`) : on y parle de la partie elle-même. Réponse en `{type:"coulisses", texte, qui?}`, avec `medaille`/`embleme`/`citation` pour décerner un ruban. Temps figé, état intouché — voir scripts/agents/prompts/mj-spectacle.md, section Coulisses
    **Le mode « Intervention ».** Septième bouton (`{type:"libre", mode:"intervention", texte}` → item `{type:"intervention"}`, privé, zéro minute) : le joueur fait réparer, développer ou modifier la fiction elle-même — et là, le MJ sort de son rôle et n'a plus aucune limite. Réponse en `{type:"reparation", texte, qui?, touche?}`, après que l'état a bougé sur disque — voir la section « Intervention » plus haut.
    **Le mode « Laisser faire ».** Sixième bouton (`{type:"libre", mode:"run", texte?}` → item `{type:"run"}`, privé, zéro minute) : le joueur s'écarte et tu tiens son personnage, dans son style, **décisions comprises**, en items `vous` — voir la section « Laisser faire » plus haut.
    **Le mode « Question » — hors fiction.** Le quatrième bouton de la barre envoie `{type:"libre", mode:"question"}` ; le serveur l'inscrit au flux comme `{type:"question"}` et JAMAIS comme une parole du personnage. C'est le joueur qui demande une clarification (qui est untel, ce que sait son personnage, où l'on en est), pas Rhaenyra qui parle : n'en fais ni une réplique, ni un acte, ni une entrée dans `paroles.json` ; **le temps ne bouge pas** et la scène en cours n'avance pas. Réponds par un item `{type:"reponse", texte}` — bref, factuel, en te limitant à ce que le joueur peut légitimement savoir (le brouillard de guerre s'applique : si son personnage l'ignore, dis-le plutôt que de le révéler). Quand la réponse rouvre des voies — « qui peut porter ce pli », « que me reste-t-il comme nefs » —, tu peux la clore par un item `{type:"suites", texte, options:[…]}` : deux à cinq actions réellement ouvertes à cette minute, cochables, écartables, sans conséquence étiquetée. Le temps ne bouge toujours pas et rien n'entre dans l'état tant que le joueur n'a rien retenu ; ce qu'il coche se joue comme un ordre donné. Reprends ensuite la scène là où elle était.
@@ -581,13 +442,9 @@ Le jeu se joue dans une page persistante servie par `serveur/serveur.js` (port 3
    - **La table se lit par FILTRES** — Les armes · Les dragons · Les plis · Le plan · Les liens · Les têtes —, que le joueur allume et éteint. Une information militaire (un ost, une flotte, une marche, un siège) entre donc dans les jetons et traits militaires, jamais ailleurs ; **un dragon a sa propre famille** — jeton `dragon` posé où on le croit, trait `vol` quand il est en l'air —, parce que c'est la seule pièce qui décide seule d'une journée et qu'on doit pouvoir ne regarder qu'elle ; **ce qui a été écrit entre dans les plis** : le trait (`corbeau`, `cavalier`) dit la route, le jeton `pli` posé sur la place destinataire dit où en est l'affaire — `parti`, `remis`, `confirme`, `attente`, `muet`, `perdu`, `intercepte`. Discipline : tout ordre transmis par écrit pose son pli sur la table, et son `etat` se met à jour quand — et seulement quand — le joueur l'apprend. Un silence qui dure (`muet`) est une information, et c'est là qu'elle se voit. **Ce qui se propage est un `incident`** — un feu, une rumeur, une peur : un seul objet, avec son foyer, ses `propage[]` (les endroits gagnés, datés, avec leur estimation d'âmes) et ses `risque[]` (ceux qu'on craint, en pointillé). Écris-le quand une chose commence à courir toute seule, et remets-y un endroit chaque fois qu'une nouvelle t'apprend qu'elle y est arrivée : la vitesse se lit alors sur la table sans que personne ait à la raconter. **Ce qui est décidé et pas encore fait est un `dessein`** — `quoi` (assiéger, prendre, tenir, intercepter, frapper, brûler, bloquer, lever, ravitailler, évacuer, guetter, parler), `par` (l'homme sur qui ça tombe) et `echeance` (le jour où c'est dû). Chaque affaire close en conseil pose son dessein sur la table en même temps que son `programme` daté dans `evenements.json` : un dessein sans `par` s'affiche « sur personne » au registre, et c'est le signe qu'on a parlé sans décider.
    - **C'est une carte de croyances, pas la vérité du monde.** Chaque marque porte sa `certitude` (`sure` | `rapportee` | `rumeur` — la pièce se délave et se troue) et doit pouvoir se justifier par `info.json`, une parole entendue en scène, ou un ordre du joueur. Une position que Rhaenyra ignore n'a rien à y faire : la carte est le premier endroit où l'on trahirait le brouillard. Une nouvelle qui arrive met la table à jour ; une colonne perdue de vue y reste où on l'a vue pour la dernière fois, en `rapportee`.
    - **Les bannières** : chaque place plante les armes de qui la tient. C'est `lieux.controle_id` qui les décide — un château qui tombe change de bannière par ce seul champ, et le joueur le voit sur la table sans qu'on le lui dise. Une maison créée en jeu n'a pas d'armes tant qu'on ne les lui a pas dessinées dans `ecrans/modules/blasons.js` (émaux + partition + une charge en deux ou trois traits).
-   - **Un acteur peut illustrer ses propos** : item `{type:"table", acteur_id, texte, jetons, traits, cadre}` (un geste sur la carte, avec sa vignette dans la chronique), ou une clé `montre: {jetons, traits, cadre}` sur une `replique`/`geste` (il parle ET sa main pose). Le décor bascule seul sur le royaume et cadre ce qu'on montre (`cadre: "auto"` par défaut). Ces pièces-là sont ÉPHÉMÈRES : elles tombent au prochain `effacer`. Ce qui doit durer, écris-le dans `etat/jetons.json`.
+   - Un acteur peut illustrer ses propos (clé `montre`) : → [scripts/agents/prompts/mj-spectacle.md](scripts/agents/prompts/mj-spectacle.md)
    - Le joueur peut **approcher la table lui-même** (molette, glissé, double-clic pour reposer) : un cadrage serré sur trois lieues n'est pas un problème, il ira voir le reste s'il veut.
-   - **Une carte, une phrase — trois pièces au plus.** Ce que la main pose parle (encre pleine, nom en clair) ; tout ce que la table portait déjà devient sol : mince, pâle, et MUET. C'est ce qui distingue *ce qu'on est en train de dire* de *ce qu'on savait déjà* — sans quoi un geste sur deux coques se noie dans six plis également nommés. Rien à écrire pour l'obtenir. Ce qui ne rentre pas dans les trois pièces va dans `etat/jetons.json` s'il doit durer, ou n'est pas dit ce tour-ci.
-   - **Nomme tes pièces dans ta phrase.** Un appui — `**deux coques repeintes**` — s'accroche tout seul à la pièce dont c'est le `nom` : survoler la phrase allume le jeton, survoler le jeton allume la phrase. Aucune syntaxe à apprendre ; `ancre: ["…"]` sur la pièce ajoute d'autres formulations. C'est ce qui fait de la carte un énoncé et non une illustration posée à côté.
-   - **UN ACTEUR POSE LA PIÈCE DÈS QUE CE QU'IL DIT A UN ENDROIT** — et c'est le geste le plus sous-employé du jeu. « Douze cents hommes entre deux champs » vaut un jeton, pas une phrase ; une route et son compte de jours valent un trait. Si la réplique contient un lieu ET un nombre, la pièce s'impose. La règle est écrite pour eux dans [`scripts/agents/prompts/metier.md`](scripts/agents/prompts/metier.md), section « La main sur la table » — relis-la quand tu joues la salle toi-même, elle vaut mot pour mot pour les conseillers que tu tiens.
-   - **Et quand l'argument EST la forme d'une chaîne, ouvre l'échiquier** : `montre: {pieces: ["22010", "22014"]}` bascule le décor, ouvre l'affaire et allume la remontée — le joueur VOIT que cette action réalise cette clef, qui lève ce verrou. Les adresses déjà posées dans le texte s'y ajoutent toutes seules. Pour un fait, un chiffre, une nouvelle : rien. Ouvrir le plan pour un compte de moutons fait perdre au joueur la salle où il était.
-   - **Une chose par intervention, les cinq gestes confondus.** Renvoi, carte, échiquier, extrait, écrit : un seul par réplique. C'est la règle du tunnel, et elle ne s'assouplit pas parce que le geste est joli — un extrait ET une carte ET l'échiquier dans la même réplique, c'est un mur avec des images dedans.
+   - La main qui montre — « une carte, une phrase », « nomme tes pièces », « un acteur pose la pièce », l'échiquier, « une chose par intervention » : → [scripts/agents/prompts/mj-spectacle.md](scripts/agents/prompts/mj-spectacle.md)
 10. **Le terrain — quand la guerre se décide sur cent pas** (format complet : `docs/carte.md`) : `etat/terrain.json` installe un CHAMP vu du dessus, troisième échelle du décor. Un corps y est un semis de cercles en formation (`ligne`, `colonne`, `coin`, `carre`, `essaim`, `tas`, `deroute`), un cercle valant partout le même nombre d'hommes (`par_cercle`) : le rapport de force se lit à l'œil, sans chiffre. Le sol porte route, ru, bois, tertre, hameau ; les `faits` portent le feu, les morts, la mêlée.
    - **Ouvre un champ quand la scène descend à cette échelle** : une bataille, un siège, une colonne qu'on intercepte, une cour où deux partis se font face. Pas pour une marche lointaine — celle-là est un trait sur la table peinte.
    - Fichier absent, vide, ou sans `id` → pas de bouton pour cette échelle (vaut pour `terrain.json` comme pour `ville.json`). **Referme le champ** (vide le fichier) quand l'affaire est finie : un champ mort qui traîne dans le décor est un mensonge sur ce qui est en cours.
@@ -603,26 +460,9 @@ Le jeu se joue dans une page persistante servie par `serveur/serveur.js` (port 3
 11. **Mise en page** : plein écran, deux panneaux. À droite LE FIL (brèves, récits, répliques — styles distincts, contours qui s'affinent avec l'âge). À gauche tout le reste : date/lieu/tension, liste verticale des présents (locuteur illuminé), pensées du personnage, actions (choix/libre/modes). La page est découpée en modules JS (`ecrans/modules/` : bus, galerie, narration, paroles, gestes, pensees, actions, carte, jetons, blasons, loupe, plan, terrain, illustration) — un type d'item = un module.
 12. **Opérations techniques en arrière-plan** : seeds, vérifications, scripts et tout ce qui n'est pas la narration se lancent via `run_in_background` (le serveur vit via preview_start ; le guetteur d'inbox n'existe plus — habitant.md pas 5). Ne jamais bloquer le tour de jeu sur de la tuyauterie.
 
-## Rendu — widgets show_widget (secours)
+## Rendu — widgets show_widget (secours) → [scripts/agents/prompts/mj-spectacle.md](scripts/agents/prompts/mj-spectacle.md)
 
-- Chaque scène est rendue via `show_widget`, façon visual novel : **portrait du locuteur** (chemin dans `personnage.portrait.fichier`, SVG inliné), **nom** et titre, **réplique**, bloc de **narration**, puis les **3 choix en boutons + champ libre + les 3 boutons de mode** (Play / Advance / Advance til next event).
-- Utilise le template `ecrans/scene.html` comme référence de structure et de style (slots documentés dans `ecrans/README.md`). Les portraits sont INLINÉS dans le widget (SVG de `ecrans/portraits/`, ou PNG de `portraits/` encodé en data URI) — jamais de chemin de fichier local dans un `src`.
-- Tous les boutons appellent `sendPrompt("...")` avec un texte compréhensible hors contexte (ex. `sendPrompt("CHOIX : refuser l'invitation de Rosby")`, `sendPrompt("AVANCE")`, `sendPrompt("AVANCE JUSQU'AU PROCHAIN ÉVÉNEMENT")`). À réception, exécute le mode ou le choix sans redemander confirmation.
-- **Pensée du personnage joueur** : chaque écran de scène porte, entre la narration et les choix, une courte pensée intérieure (1-2 phrases, style distinct) : ce que l'instant lui évoque — un souvenir RÉEL (canon, ou vécu en partie via `paroles`/`actes`/`journal.scenes`), une émotion, un instinct. Elle colore et guide sans jamais recommander un choix, et ne contient RIEN que le personnage ne sache pas. C'est la voix de son intériorité, pas celle du MJ.
-- Widgets autonomes : aucune ressource externe, palette sombre et sobre, bandeau date + lieu en tête (ex. « 129 AC — 3e lune, 12e jour — Sombreval »).
-- Les comptes rendus d'Advance (3 lignes) peuvent rester en texte simple ; toute scène jouée passe par un widget.
-
-## Ton
-
-- Français sobre et incarné, ni pastiche médiéval ni lyrisme forcé. Adresse d'époque entre nobles (« Messire », « Votre Grâce »), pas d'anachronismes, pas d'humour méta.
-- Les personnages parlent comme des gens qui veulent des choses ; aucun PNJ interchangeable.
-- Les conséquences des choix sont **opaques mais devinables au ton** : jamais de « (+10 opinion) », jamais d'étiquette de stratégie, jamais de méta-commentaire (« ce choix aura des conséquences… »). Le danger se sent dans la phrase.
-- **Les appuis se marquent en gras** : dans une réplique ou un récit, `**...**` met en relief ce qui pèse — le chiffre qui tranche, le nom qu'on assène, le mot sur lequel la voix appuie. La page le rend en gras d'appui, et les noms pris dedans restent cliquables. Deux ou trois mots à la fois, une ou deux fois par item au plus : un texte tout en gras n'appuie plus sur rien.
-- **Ce qui a une adresse se pose en lien** : `[les neufs](44022)` ouvre l'affaire à la ligne 44022 et la surligne ; `[le Sanglier](hallis-roon)` pose la question au narrateur, comme un nom cliqué. La forme est celle d'un lien markdown, dans le texte d'une `replique`, d'un `recit`, d'un `geste` — et le libellé est ce que la personne DIT, jamais le numéro : on n'a jamais parlé en chiffres à une table.
-  - **C'est celui qui parle qui pose le lien**, parce que lui seul sait de quoi il parle. Un homme dépêché qui cite une ligne de son affaire l'écrit ainsi ; le MJ qui distille ses pensées en répliques le PORTE JUSQU'AU FIL — un lien perdu à la taille est une adresse perdue.
-  - **Deux par item au plus**, comme les appuis en gras. Une réplique dont chaque groupe nominal est cliquable redevient un menu, et c'est exactement ce que le champ libre permanent existe pour éviter.
-  - Une cible que l'état ne connaît pas, ou un registre hors de portée d'ici, reste du **texte nu** — jamais de lien mort, et le brouillard tient. `append_flux.py` le dit sur la sortie d'erreur au moment où l'on pousse, sans jamais bloquer la poussée.
-- Ne raconte jamais les mécaniques. Le joueur vit une histoire ; toi seul vois la machine.
+## Ton → [scripts/agents/prompts/mj-spectacle.md](scripts/agents/prompts/mj-spectacle.md)
 
 ## Création de partie
 
@@ -639,7 +479,7 @@ Si `etat/journal.json` n'a pas de `maison_joueur_id` :
 
 ## Interdits récapitulatifs
 
-Tous suspendus en mode « Intervention », sauf le premier — voir cette section.
+Tous suspendus en mode « Intervention », sauf le premier — voir scripts/agents/prompts/mj-spectacle.md, section Intervention.
 
 - **Ne jamais écrire soi-même une parole ou un geste de PNJ : on le dépêche par `scripts/depecher.py`.** Voir la Règle Zéro en tête de manuel.
 - Ne jamais modifier `docs/schema.md`.
