@@ -23,6 +23,7 @@ avant eux.
 | `scelle.py` | empreintes des tables, chemin scellé, la SEULE écriture du tick |
 | `rumeur.py` | propagation des incidents, détection des bouches (arrivées), témoins, cycles |
 | `gardes/` | les 19 vérificateurs + `Rapport` + `verifier()` — 5 familles, voir `gardes/__init__.py` |
+| `mutations.py` | la rédaction des mutations arithmétiques proposées (extrait de fenetre.py, limite 500) |
 | `fenetre.py` | `calculer()` en phases nommées + `tick()` — le cœur du mode B |
 | `resume.py` | la proposition en français, pour le MJ |
 | `occupation.py`* | qui est ASSIS — mesuré, pas drapeau *(encore à la racine scripts/, lot 2)* |
