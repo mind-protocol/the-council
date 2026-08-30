@@ -138,48 +138,9 @@ from temps.mains import (rythme_de, borner, au_plancher,  # noqa: E402,F401
 
 # ------------------------------------------------------- garde d'ecriture
 
-TABLES_MUTABLES = ("intentions", "evenements", "personnages", "monde",
-                   "info", "actes", "paroles", "jetons", "annales",
-                   "mains", "plis", "lieux")
-
-
-# Les tables qui appartiennent a UN JOUEUR (voir scripts/appliquer.py). Le
-# sceau doit porter sur le fichier que appliquer.py ecrira reellement.
-CROYANCES = ("jetons", "vues", "objectifs")
-
-
-def chemin_scelle(nom, joueur=None):
-    if nom in CROYANCES and joueur:
-        p = os.path.join(ETAT, "joueurs", joueur, nom + ".json")
-        if os.path.isfile(p):
-            return p
-    return os.path.join(ETAT, nom + ".json")
-
-
-def empreintes_etat(joueur=None):
-    """Empreinte des tables au moment du calcul.
-
-    Sert de garde a scripts/appliquer.py : si une table a bouge depuis, c'est
-    qu'un autre ecrivain est passe et la proposition est perimee.
-    """
-    empreintes = {}
-    for nom in TABLES_MUTABLES:
-        chemin = chemin_scelle(nom, joueur)
-        if not os.path.isfile(chemin):
-            continue
-        with io.open(chemin, "rb") as f:
-            empreintes[nom] = hashlib.sha1(f.read()).hexdigest()
-    return empreintes
-
-
-def ecrire_proposition(nom_fichier, donnees):
-    """SEULE ecriture du script. Refuse tout chemin hors etat/, puis la porte."""
-    cible = os.path.abspath(os.path.join(STAGING, nom_fichier))
-    permis = os.path.abspath(STAGING) + os.sep
-    if not cible.startswith(permis):
-        raise RuntimeError(
-            "ecriture refusee hors etat/ : {}".format(cible))
-    return tables.ecrire(cible, donnees)
+# Demenage dans temps/scelle.py (decoupage du container temps).
+from temps.scelle import (TABLES_MUTABLES, CROYANCES,  # noqa: E402,F401
+                          chemin_scelle, empreintes_etat, ecrire_proposition)
 
 
 # ------------------------------------------------------- MODE A : verifier
