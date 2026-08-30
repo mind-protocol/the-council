@@ -1,0 +1,59 @@
+# Le Conseil — declaration du projet Python.
+#
+# POURQUOI CE FICHIER. Le depot n'en avait aucun : ni `pyproject.toml`, ni
+# `package.json`. Un outil Python lance ici (pytest, ruff, un formateur, un
+# editeur) n'avait aucun moyen de savoir ou commence le projet, et remontait
+# jusqu'au dossier de l'utilisateur pour trouver une configuration. Le meme
+# defaut cote Node etait pire encore et se voyait a chaque execution : le
+# `package.json` fantome de `C:\Users\reyno\` etait ce que Node lisait pour
+# decider si `journee.js` etait un module — autrement dit, le depot heritait de
+# la configuration Node du dossier utilisateur. C'est un defaut de
+# reproductibilite qu'aucun banc ne voit passer, parce qu'il ne casse rien : il
+# rend seulement deux machines differentes.
+
+[project]
+name = "le-conseil"
+version = "0.0.0"
+description = "Le Conseil — un jdr narratif solo, sa simulation d'acteurs et son moteur de bataille."
+requires-python = ">=3.9"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+# Ou sont les epreuves. `scripts/` entre dans `sys.path` pour que les tests
+# importent les modules comme le font les scripts eux-memes.
+testpaths = ["scripts/tests", "serveur"]
+pythonpath = ["scripts", "scripts/noyau"]
+python_files = ["test_*.py", "banc_*.py"]
+
+[tool.ruff]
+line-length = 100
+exclude = ["monde", "captures", "voix", "vendor", "__pycache__", "archive"]
+
+# ---------------------------------------------------------------------------
+# CE QUE CE FICHIER NE FAIT PAS, ET POURQUOI
+#
+# Il ne declare PAS `scripts` comme un paquet installable, et les
+# `sys.path.insert` du depot ne disparaissent donc pas tous.
+#
+# Ils sont de deux especes, et une seule est du bruit :
+#
+#   - `sys.path.insert(0, dirname(__file__))` dans un script qu'on lance par
+#     `python scripts/x.py` ne sert a rien : Python met deja ce dossier en
+#     `sys.path[0]`. Ceux-la, quand le module n'est importe de nulle part
+#     ailleurs, ont ete retires.
+#
+#   - `sys.path.insert(0, RACINE/scripts)` depuis `scripts/analyse/`,
+#     `scripts/plan/`, `scripts/monde/` porte quelque chose de reel : c'est ce
+#     qui permet a un script de sous-dossier d'importer ses freres. Le supprimer
+#     exigerait soit un `pip install -e .`, soit de reecrire les cent trente
+#     imports en `from scripts import x`. Les deux sont des chantiers a part
+#     entiere, et le second casse toute invocation par `python scripts/x.py` —
+#     qui est la SEULE facon dont ce depot est reellement lance, par le manuel
+#     comme par les hooks.
+#
+# Retirer les lignes utiles au nom d'une proprete qu'aucun outil n'exige aurait
+# rendu le depot injouable jusqu'a l'installation. On a retire le bruit, on a
+# garde ce qui porte, et l'on a ecrit pourquoi.

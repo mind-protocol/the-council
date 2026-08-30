@@ -80,7 +80,7 @@ const ETALON = path.join(__dirname, "etalon-moteur.json");
 // c'est la seule raison pour laquelle ces deux chiffres sont si petits.
 // ---------------------------------------------------------------------------
 const DEFAUTS = { hommes: 150, duree: 100, porte: "La porte de la Gadoue",
-                  serveur: "http://localhost:3129", source: "/monde" };
+                  serveur: "", source: "/monde" };
 const PAS = 1 / 20;               // le pas du module, et il ne se règle pas ici
 
 function args() {

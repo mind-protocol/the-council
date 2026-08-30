@@ -58,7 +58,7 @@ const MODULES = path.join(ICI, "ecrans", "modules");
 const SAC = path.join(ICI, "scripts", "monde", "sac.js");
 
 const DEFAUTS = { hommes: 150, duree: 100, porte: "La porte de la Gadoue",
-                  serveur: "http://localhost:3129", source: "/monde", epreuve: "" };
+                  serveur: "", source: "/monde", epreuve: "" };
 const PAS = 1 / 20;
 
 // LA VITESSE QU'AUCUN CORPS NE DÉPASSE. La fuite est à 3,6 m/s et un cheval au

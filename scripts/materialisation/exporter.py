@@ -16,7 +16,6 @@ import time
 
 import numpy as np
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import formes as F
 import peyredragon as P

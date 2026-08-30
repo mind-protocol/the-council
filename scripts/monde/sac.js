@@ -83,9 +83,25 @@ function planter(base) {
   globalThis.requestAnimationFrame = () => 0;
   globalThis.cancelAnimationFrame = () => {};
   globalThis.document = { addEventListener() {} };
-  // Les modules demandent « /monde/… » ; on les envoie au serveur qui sert
-  // déjà le jeu. C'est lui l'autorité sur la voirie et sur le plan.
+  // Les modules demandent « /monde/… ». Deux transports, une seule autorité.
+  //
+  // SANS BASE, ON SERT LA ROUTE EN MÉMOIRE. `serveur/noyau/monde3d.js` expose
+  // `serviceMonde` : sous Node, on l'appelle directement, avec une requête et
+  // une réponse de papier. Ce n'est pas un raccourci qui recopie les fichiers de
+  // `monde/` — la voirie reste taillée par la route, le plan reste choisi par
+  // elle. Seul le transport change. C'est ce qui rend les bancs autonomes : un
+  // étalon qui exige un serveur vivant ne peut ni tourner en CI, ni garder un
+  // commit, ni dire de quel `monde/` il parle.
+  //
+  // AVEC UNE BASE, ON PASSE PAR LE RÉSEAU, comme avant — c'est ce que fait le
+  // four, qui cuit contre le serveur du jeu et doit voir exactement ce que le
+  // navigateur voit.
   const vrai = globalThis.fetch;
+  if (!base || base === "local") {
+    const racine = path.dirname(path.dirname(MODULES));
+    require(path.join(racine, "scripts", "monde", "monde_local.js")).poserFetchLocal();
+    return;
+  }
   globalThis.fetch = (u, o) => vrai(/^https?:/.test(u) ? u : base + u, o);
 }
 

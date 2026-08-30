@@ -1,0 +1,262 @@
+{
+  "acteurs_sautes_royaume": [],
+  "acteurs_simules": [
+    "proche-etalon",
+    "lointain-etalon"
+  ],
+  "avertissement": "Proposition — le MJ arbitre et applique lui-meme dans etat/*.json. Ce fichier n'est pas de l'etat.",
+  "bouches": [],
+  "declencheurs_a_evaluer": [
+    {
+      "alors": "il fait fermer le cellier et n'en rend plus la clef",
+      "echelle": "quartier",
+      "personnage_id": "proche-etalon",
+      "si": "la reine engage la garnison hors des murs",
+      "une_fois": null
+    },
+    {
+      "alors": "il desarme et jure n'avoir rien prepare",
+      "echelle": "quartier",
+      "personnage_id": "lointain-etalon",
+      "si": "une nef de la reine parait devant la place lointaine",
+      "une_fois": null
+    }
+  ],
+  "empreintes": {
+    "evenements": "fcd23c98e10e476e83ed43251c32807e794d69f8",
+    "intentions": "b66085241b39dfb9cc5a1384337bd37b9ca5f283",
+    "lieux": "8ef2886bf25f7e577adc5da7a8a9010e78e9de2d",
+    "monde": "ac8767a40f1ba9b983a670f7d108c9fec49133ca",
+    "personnages": "0b122e4095c6fafc0eb8aafb7ee466deec54e24f"
+  },
+  "etapes_en_attente": [
+    {
+      "cout": [
+        "un quart d'heure de la reine"
+      ],
+      "depend_de_non_fait": [
+        "proche-compter-grain"
+      ],
+      "echelle": "quartier",
+      "etape": "proche-porter-compte",
+      "jours_restants": 2,
+      "personnage_id": "proche-etalon",
+      "quoi": "Porter le compte a la reine et demander la garnison",
+      "si_bloque": "Si la reine ne le recoit pas, il laisse le compte au mestre et attend."
+    },
+    {
+      "cout": [
+        "un chaudronnier"
+      ],
+      "echelle": "quartier",
+      "etape": "proche-sans-horloge",
+      "jours_restants": null,
+      "personnage_id": "proche-etalon",
+      "probleme": "horloge absente ou illisible",
+      "quoi": "Faire retamer les mesures de cuivre — sans horloge posee",
+      "si_bloque": "Il s'en passe et mesure a la corde."
+    }
+  ],
+  "etapes_qui_avancent": [
+    {
+      "cout": [
+        "rien qu'on n'ait deja"
+      ],
+      "echelle": "quartier",
+      "etape": "proche-refaire-apres-moisson",
+      "jours_restants": 40,
+      "jours_restants_apres": 35,
+      "personnage_id": "proche-etalon",
+      "quoi": "Refaire le compte apres la moisson",
+      "si_bloque": "Rien a bloquer si loin."
+    }
+  ],
+  "etapes_qui_tombent": [
+    {
+      "cout": [
+        "deux scribes une journee"
+      ],
+      "date_estimee": {
+        "annee": 129,
+        "jour": 23,
+        "lune": 3
+      },
+      "echelle": "quartier",
+      "etape": "proche-compter-grain",
+      "jours_restants": 3,
+      "personnage_id": "proche-etalon",
+      "quoi": "Depouiller le compte du grain, cellier par cellier",
+      "si_bloque": "S'il n'a pas les scribes, il compte seul et ne rend qu'un ordre de grandeur."
+    },
+    {
+      "cout": [
+        "trente hommes",
+        "de quoi les payer neuf jours"
+      ],
+      "date_estimee": {
+        "annee": 129,
+        "jour": 25,
+        "lune": 3
+      },
+      "echelle": "quartier",
+      "etape": "lointain-armer",
+      "jours_restants": 5,
+      "personnage_id": "lointain-etalon",
+      "quoi": "Armer trois barques a la place lointaine",
+      "si_bloque": "S'il manque les hommes, il n'en arme que deux et retarde de six jours."
+    }
+  ],
+  "evenements_a_resoudre": [
+    {
+      "acteurs": [
+        "proche-etalon"
+      ],
+      "conditions": [],
+      "date": {
+        "annee": 129,
+        "jour": 17,
+        "lune": 3
+      },
+      "description": "Une echeance deja passee que le moteur doit rattraper et signaler EN RETARD.",
+      "diffusion": [],
+      "en_retard": true,
+      "id": "etalon-echeance-en-retard",
+      "importance": 45,
+      "lieu_id": "siege-etalon",
+      "type": "programme"
+    },
+    {
+      "acteurs": [
+        "reine-etalon",
+        "proche-etalon"
+      ],
+      "conditions": [
+        "si la reine est partie avant le 22e"
+      ],
+      "date": {
+        "annee": 129,
+        "jour": 22,
+        "lune": 3
+      },
+      "description": "Le conseil du siege se tient et tranche l'affaire du grain.",
+      "diffusion": [
+        {
+          "canal": "rumeur",
+          "date": {
+            "annee": 129,
+            "jour": 24,
+            "lune": 3
+          },
+          "fiabilite": 30,
+          "livree": false,
+          "ou": "loin-etalon",
+          "qui": [
+            "lointain-etalon"
+          ],
+          "version": "On dit au loin que le siege manque de grain, et l'on double le chiffre."
+        },
+        {
+          "canal": "rumeur",
+          "date": {
+            "annee": 129,
+            "jour": 8,
+            "lune": 4
+          },
+          "fiabilite": 20,
+          "livree": false,
+          "ou": "loin-etalon",
+          "qui": [
+            "lointain-etalon"
+          ],
+          "version": "Ce qui n'arrive qu'apres la fenetre, et ne doit donc pas etre livre."
+        }
+      ],
+      "en_retard": false,
+      "id": "etalon-conseil-du-22",
+      "importance": 55,
+      "lieu_id": "siege-etalon",
+      "type": "programme"
+    }
+  ],
+  "fenetre": {
+    "a": {
+      "annee": 129,
+      "jour": 25,
+      "lune": 3
+    },
+    "de": {
+      "annee": 129,
+      "jour": 20,
+      "lune": 3,
+      "minute": 0
+    },
+    "jours": 5
+  },
+  "joueur": null,
+  "mains": [],
+  "mutations_proposees": [
+    {
+      "champs": {
+        "jours_restants": 35
+      },
+      "cible": "proche-etalon",
+      "etape": "proche-refaire-apres-moisson",
+      "operation": "etape",
+      "pourquoi": "5 jour(s) ecoule(s)",
+      "table": "intentions"
+    }
+  ],
+  "nouvelles_a_livrer": [],
+  "nouvelles_conditionnelles": [
+    {
+      "canal": "rumeur",
+      "date": {
+        "annee": 129,
+        "jour": 24,
+        "lune": 3
+      },
+      "depend_de_evenement": "etalon-conseil-du-22",
+      "diffusion_index": 0,
+      "en_retard": false,
+      "evenement_id": "etalon-conseil-du-22",
+      "fiabilite": 30,
+      "ou": "loin-etalon",
+      "qui": [
+        "lointain-etalon"
+      ],
+      "qui_deduit": false,
+      "statut_evenement": "a-venir",
+      "touche_joueur": false,
+      "version": "On dit au loin que le siege manque de grain, et l'on double le chiffre."
+    }
+  ],
+  "plis_encore_en_route": [],
+  "plis_remis": [],
+  "postures_permanentes": 0,
+  "rumeurs_immobiles": [],
+  "rumeurs_qui_sautent": [],
+  "seuils_franchis": [],
+  "tetes_a_rafraichir": [
+    {
+      "date_maj": {
+        "annee": 129,
+        "jour": 19,
+        "lune": 3
+      },
+      "echelle": "quartier",
+      "personnage_id": "proche-etalon",
+      "retard_apres_fenetre": 6
+    },
+    {
+      "date_maj": {
+        "annee": 129,
+        "jour": 28,
+        "lune": 2
+      },
+      "echelle": "quartier",
+      "personnage_id": "lointain-etalon",
+      "retard_apres_fenetre": 27
+    }
+  ],
+  "travaux": []
+}

@@ -13,7 +13,7 @@ const id = nus[0] || "bataille-rangee-naive";
 const valeur = (nom, defaut) => {
   const i = argv.indexOf("--" + nom); return i >= 0 ? argv[i + 1] : defaut;
 };
-const serveur = valeur("serveur", "http://localhost:3129");
+const serveur = valeur("serveur", "");
 const duree = +valeur("duree", 0);
 const echelle = +valeur("echelle", 0);
 const chefDebug = valeur("chef", "");

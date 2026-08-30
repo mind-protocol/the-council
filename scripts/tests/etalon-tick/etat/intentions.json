@@ -1,0 +1,97 @@
+[
+  {
+    "personnage_id": "proche-etalon",
+    "croyances": [
+      "La reine tiendra le siege tant qu'il reste du grain",
+      "Le lointain n'a pas encore appris ce qui s'est dit ici le 18e"
+    ],
+    "ignore": [
+      "Que le lointain a arme trois barques le 19e"
+    ],
+    "intention": "Faire porter le compte du grain a la reine avant qu'elle n'engage la garnison",
+    "plan": [
+      {
+        "id": "proche-ouvrir-cellier",
+        "quoi": "Ouvrir le cellier et en faire sortir les sacs",
+        "etat": "fait",
+        "jours_restants": 0,
+        "depend_de": [],
+        "cout": ["une clef"],
+        "si_bloque": "Sans la clef, il fait sauter la serrure et le dit apres.",
+        "accompli": "Cellier ouvert le 19e au matin."
+      },
+      {
+        "id": "proche-compter-grain",
+        "quoi": "Depouiller le compte du grain, cellier par cellier",
+        "etat": "en-cours",
+        "jours_restants": 3,
+        "depend_de": ["proche-ouvrir-cellier"],
+        "cout": ["deux scribes une journee"],
+        "si_bloque": "S'il n'a pas les scribes, il compte seul et ne rend qu'un ordre de grandeur."
+      },
+      {
+        "id": "proche-porter-compte",
+        "quoi": "Porter le compte a la reine et demander la garnison",
+        "etat": "en-cours",
+        "jours_restants": 2,
+        "depend_de": ["proche-compter-grain"],
+        "cout": ["un quart d'heure de la reine"],
+        "si_bloque": "Si la reine ne le recoit pas, il laisse le compte au mestre et attend."
+      },
+      {
+        "id": "proche-refaire-apres-moisson",
+        "quoi": "Refaire le compte apres la moisson",
+        "etat": "en-cours",
+        "jours_restants": 40,
+        "depend_de": [],
+        "cout": ["rien qu'on n'ait deja"],
+        "si_bloque": "Rien a bloquer si loin."
+      },
+      {
+        "id": "proche-sans-horloge",
+        "quoi": "Faire retamer les mesures de cuivre — sans horloge posee",
+        "etat": "en-cours",
+        "depend_de": [],
+        "cout": ["un chaudronnier"],
+        "si_bloque": "Il s'en passe et mesure a la corde."
+      }
+    ],
+    "declencheurs": [
+      {
+        "si": "la reine engage la garnison hors des murs",
+        "alors": "il fait fermer le cellier et n'en rend plus la clef"
+      }
+    ],
+    "attitude_joueur": "loyal, et il compte bien qu'on le sache",
+    "date_maj": {"annee": 129, "lune": 3, "jour": 19}
+  },
+  {
+    "personnage_id": "lointain-etalon",
+    "croyances": [
+      "Le siege de l'etalon est mal garde du cote de la greve"
+    ],
+    "ignore": [
+      "Que le proche a compte le grain"
+    ],
+    "intention": "Armer trois barques et toucher la greve avant la lune neuve",
+    "plan": [
+      {
+        "id": "lointain-armer",
+        "quoi": "Armer trois barques a la place lointaine",
+        "etat": "en-cours",
+        "jours_restants": 5,
+        "depend_de": [],
+        "cout": ["trente hommes", "de quoi les payer neuf jours"],
+        "si_bloque": "S'il manque les hommes, il n'en arme que deux et retarde de six jours."
+      }
+    ],
+    "declencheurs": [
+      {
+        "si": "une nef de la reine parait devant la place lointaine",
+        "alors": "il desarme et jure n'avoir rien prepare"
+      }
+    ],
+    "attitude_joueur": "hostile, et il ne l'a pas encore dit",
+    "date_maj": {"annee": 129, "lune": 2, "jour": 28}
+  }
+]

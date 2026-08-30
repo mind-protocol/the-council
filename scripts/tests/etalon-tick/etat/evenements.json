@@ -1,0 +1,73 @@
+[
+  {
+    "id": "etalon-conseil-du-22",
+    "date_prevue": {"annee": 129, "lune": 3, "jour": 22},
+    "type": "programme",
+    "importance": 55,
+    "description": "Le conseil du siege se tient et tranche l'affaire du grain.",
+    "lieu_id": "siege-etalon",
+    "acteurs": ["reine-etalon", "proche-etalon"],
+    "conditions": ["si la reine est partie avant le 22e"],
+    "statut": "a-venir",
+    "effets": "le compte du grain devient public dans la maison",
+    "diffusion": [
+      {
+        "ou": "loin-etalon",
+        "qui": ["lointain-etalon"],
+        "date": {"annee": 129, "lune": 3, "jour": 24},
+        "canal": "rumeur",
+        "fiabilite": 30,
+        "version": "On dit au loin que le siege manque de grain, et l'on double le chiffre.",
+        "livree": false
+      },
+      {
+        "ou": "loin-etalon",
+        "qui": ["lointain-etalon"],
+        "date": {"annee": 129, "lune": 4, "jour": 8},
+        "canal": "rumeur",
+        "fiabilite": 20,
+        "version": "Ce qui n'arrive qu'apres la fenetre, et ne doit donc pas etre livre.",
+        "livree": false
+      }
+    ]
+  },
+  {
+    "id": "etalon-barques-du-26",
+    "date_prevue": {"annee": 129, "lune": 3, "jour": 26},
+    "type": "programme",
+    "importance": 70,
+    "description": "Les trois barques du lointain touchent la greve — hors fenetre d'un jour.",
+    "lieu_id": "siege-etalon",
+    "acteurs": ["lointain-etalon"],
+    "conditions": ["si la greve est gardee"],
+    "statut": "a-venir",
+    "effets": "trente hommes a terre du cote de la greve",
+    "diffusion": []
+  },
+  {
+    "id": "etalon-canon-de-la-lune-suivante",
+    "date_prevue": {"annee": 129, "lune": 4, "jour": 12},
+    "type": "canon",
+    "importance": 80,
+    "description": "Ce qui doit arriver de toute facon, bien hors de la fenetre.",
+    "lieu_id": "loin-etalon",
+    "acteurs": ["lointain-etalon"],
+    "conditions": [],
+    "statut": "a-venir",
+    "effets": "rien dans cette fenetre",
+    "diffusion": []
+  },
+  {
+    "id": "etalon-echeance-en-retard",
+    "date_prevue": {"annee": 129, "lune": 3, "jour": 17},
+    "type": "programme",
+    "importance": 45,
+    "description": "Une echeance deja passee que le moteur doit rattraper et signaler EN RETARD.",
+    "lieu_id": "siege-etalon",
+    "acteurs": ["proche-etalon"],
+    "conditions": [],
+    "statut": "a-venir",
+    "effets": "le retard se voit",
+    "diffusion": []
+  }
+]

@@ -26,7 +26,6 @@ import math
 import os
 import sys
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import plan_ville as PV
 
 RACINE = PV.RACINE

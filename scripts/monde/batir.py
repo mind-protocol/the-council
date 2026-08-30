@@ -10,7 +10,6 @@ dans monde/rendus/.
 Rien n'est modélisé « à l'œil » : chaque volume sort d'une donnée du graphe.
 """
 import bpy, bmesh, json, math, os, sys, random
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from echelle import polygone_reel
 import textures
 

@@ -57,3 +57,25 @@ chansons/
 # (scripts/monde/planches.py et le --planches de sac.js). C'est une fenêtre sur
 # un four qui tourne dix minutes, pas un livrable — même raison que /monde/.
 /dessins/planches/
+
+# Les copies datees a la main : 99 fichiers, 261 Mo suivis — dont douze copies
+# de `books.json` faites le meme jour. Ce n'est pas de la prudence, c'est le
+# symptome d'une ecriture qu'on n'osait pas faire. La vraie reponse est la porte
+# unique et atomique de `scripts/tables.py`, plus un commit : c'est exactement a
+# cela que git sert, et ce depot en a un. L'historique garde le poids des 99
+# premieres — ce qui compte est que la 100e n'arrive pas.
+*.avant-*
+*.avant
+*.bak
+
+# Le journal de la boucle d'activation : 30 Mo de lignes ecrites en jouant, qui
+# se remplissent tout seuls et ne se relisent jamais. Meme nature que l'inbox.
+etat/activations/*.log.jsonl
+
+# Les gros medias recus : un .m4a de 42 Mo alourdissait chaque clone pour un
+# document que personne n'ouvre dans un terminal. Meme raison que docs/*.pdf
+# juste au-dessus — ce sont des sources externes, pas des livrables du depot.
+docs/*.m4a
+docs/*.mp3
+docs/*.mp4
+docs/*.wav
