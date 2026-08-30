@@ -6,6 +6,36 @@ Un module est **une responsabilité, un fichier, une fabrique**. Il déclare sa
 couche, ce qu'il reçoit, ce qu'il rend. Il ne pose aucune globale et ne connaît
 aucun appelant.
 
+## Sa nature — cinq, et pas d'autres
+
+Tous les modules n'ont pas la même forme, et confondre leurs formes est le
+premier pas vers un module qui grossit. Chaque fiche déclare la sienne en tête.
+
+| nature | possède un état ? | décide ? | forme concrète |
+|---|---|---|---|
+| **barème** | non — des constantes et des règles de lecture | non | des fonctions pures ; deux appels identiques rendent la même chose, toujours |
+| **service** | non | non | des fonctions pures aussi, mais qui *calculent* au lieu de consulter (une route, une trajectoire) |
+| **registre** | oui, et il en est l'écrivain unique | non | un état privé, des lectures, et des intentions qu'on lui remet |
+| **acteur** | oui | oui — il tranche, et sa décision est traçable | un état privé, une fonction de battement, une trace |
+| **sonde** | non | non | lit tout, n'écrit rien, ne peut être lue par personne |
+
+Les conséquences sont dures et servent tous les jours :
+
+- **Un barème et un service se testent sans monde et sans homme.** Aucun montage,
+  aucune bataille : on appelle, on compare. C'est pour ça qu'on en veut le plus
+  possible, et qu'on descend une règle d'un acteur vers un barème dès qu'elle
+  cesse d'avoir besoin de savoir *qui* pose la question.
+- **Un registre n'a pas d'avis.** S'il se met à choisir, il est devenu acteur et
+  la fiche ment.
+- **Un acteur ne se teste que par sa trace.** Il en écrit une à chaque décision,
+  sinon on ne saura pas pourquoi il a fait ce qu'il a fait — c'est la faute qui a
+  coûté le plus cher au moteur précédent.
+- **Une sonde ne remonte pas dans le moteur.** Elle observe entre deux battements
+  et ne s'y insère jamais, sinon elle mesure sa propre présence.
+
+Une nature qu'on n'arrive pas à choisir est le signe d'un module qui en contient
+deux.
+
 ## Sa taille
 
 **Un module tient dans une tête.** L'ordre de grandeur visé est deux à trois

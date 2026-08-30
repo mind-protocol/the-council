@@ -8,8 +8,9 @@ ouvert : le joueur ne pourra jamais y lire une ligne.
 
 Ce fichier est technique — comme `routines.json`, `presence.json` et
 `horloges.json` — et vit donc hors de `docs/schema.md`, qu'on ne modifie
-jamais. Le format ci-dessous est celui que lit `ecrans/modules/books.js`, et
-**lui seul**. Il est vérifié par `python scripts/tick.py --verifier`.
+jamais. Le format ci-dessous est celui que lit `ecrans/modules/books/`, et
+**lui seul** — `lecture.js` pour la forme d'un volume, `portee.js` pour où il
+est et qui l'ouvre. Il est vérifié par `python scripts/tick.py --verifier`.
 
 ## Le stockage
 
