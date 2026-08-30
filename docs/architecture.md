@@ -18,7 +18,7 @@ monde est **le disque** — jamais la conversation.
 | 🎭 **MJ** | session Claude + `CLAUDE.md`, demain `claude -p` + manuel par rôle | Une FAMILLE d'arbitres devant des sièges : principal ou de zone, interactif ou dépêché — élit, met en scène, arbitre ; n'invente jamais une parole |
 | 📜 **Flux & Rendu** | `append_flux.py`, `etat/flux.jsonl`, `serveur/`, `ecrans/modules/` | Ce que le joueur voit : append-only, curseur client, une page persistante |
 | 📥 **Inbox** | `etat/inbox/`, `guetteur.sh` | Les actes du joueur qui réveillent le MJ ; rien d'autre ne le réveille |
-| 📐 **Doctrine** | `docs/` | Les contrats : `schema.md` (format, intouchable), `metier.md`, `carte.md`, les fiches de conception |
+| 📐 **Doctrine** | `docs/` | Les contrats : `schema.md` (format, intouchable), `agents/prompts/metier.md`, `carte.md`, les fiches de conception |
 
 ## Les modules par container
 
@@ -61,7 +61,7 @@ monde est **le disque** — jamais la conversation.
 
 ### 📐 Doctrine
 - `schema.md` — le format, jamais modifié par personne.
-- `metier.md` — le manuel qu'on met entre les mains d'un dépêché (autonome).
+- `agents/prompts/metier.md` — le manuel qu'on met entre les mains d'un dépêché (autonome).
 - Les fiches de conception : `boucle-acteurs.md`, `mains.md`, `criticite.md`, `carte.md`, `books.md`, celle-ci.
 
 ## Les liens — une boucle à deux profils, plus le temps

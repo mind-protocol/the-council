@@ -220,7 +220,7 @@ def manuel_de(qui, mode="journee", contexte=None):
     """Rend exactement le nouveau prompt système commun à chaque personne."""
     metier = lire(METIER)
     if metier is None:
-        raise SystemExit("docs/metier.md manque au constructeur d'incarnation.")
+        raise SystemExit("scripts/agents/prompts/metier.md manque au constructeur d'incarnation.")
     return metier
 
 

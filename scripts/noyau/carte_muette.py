@@ -3,7 +3,7 @@
 #
 # POURQUOI CE FICHIER EXISTE, ET POURQUOI IL RESSEMBLE À `tunnel.py`. La règle
 # est écrite deux fois — dans `CLAUDE.md` (« un acteur pose la pièce dès que ce
-# qu'il dit a un endroit ») et dans `docs/metier.md` (« La main sur la table »).
+# qu'il dit a un endroit ») et dans `scripts/agents/prompts/metier.md` (« La main sur la table »).
 # Elle a été écrite le 2e jour de la 4e lune. Voici ce que le flux disait ce
 # jour-là, AVANT qu'on l'écrive, et il n'y a aucune raison de croire qu'une
 # doctrine de plus y changerait quoi que ce soit :

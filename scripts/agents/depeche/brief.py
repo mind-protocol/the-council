@@ -10,10 +10,10 @@ import re
 import sys
 import uuid
 
-import bibliotheque
+from plan.expose import bibliotheque  # LA PORTE de plan/
 # LE SEUL point de contact du paquet avec livre et bibliotheque (noyau,
 # container plan) : les autres modules reprennent `livre` d'ici.
-import livre  # le tri des volumes vit la-bas, et nulle part ailleurs
+from plan.expose import livre  # le tri des volumes vit la-bas, et nulle part ailleurs
 from agents.expose import affecter  # LE resolveur d'adresses
 from etat.expose import tables  # LA PORTE de etat/
 
@@ -22,7 +22,7 @@ RACINE = os.path.dirname(os.path.dirname(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__)))))
 ETAT = os.path.join(RACINE, "etat")
 DEPOT_RAPPORTS = os.path.join(ETAT, "rapports")
-METIER = os.path.join(RACINE, "docs", "metier.md")
+METIER = os.path.join(RACINE, "scripts", "agents", "prompts", "metier.md")
 MANUEL_MJ = os.path.join(RACINE, "CLAUDE.md")
 
 # Le sel de l'espace de noms. Le changer rend toutes les sessions orphelines

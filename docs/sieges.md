@@ -65,7 +65,7 @@ Une tête d'`intentions.json` est exactement l'information dont un joueur a beso
 
 ## 4. Ce qui ne se dérive pas : DEUX pages, et c'est tout le travail humain
 
-### `metier.md` — ce que sa vie lui a mis dans la tête
+### `agents/prompts/metier.md` — ce que sa vie lui a mis dans la tête
 
 Une demi-page, à la première personne du savoir : ce que ce personnage sait d'office et qu'on ne doit jamais lui faire découvrir. Pour Rulf Corne, vingt-deux ans de maître de port : il sait à l'œil ce qu'une coque tire chargée, il sait qu'un capitaine qui ment sur son port d'escale le fait toujours sur la même ligne du livre, il connaît le nom des onze patrons de la rade et lequel boit. Pour Gerardys : la forme d'une lettre qui engage, ce qu'un corbeau coûte, ce qu'on n'écrit jamais.
 
@@ -102,14 +102,14 @@ Ce qu'`--ouvrir` fait, dans l'ordre :
 
 1. **Refuse** si le personnage n'existe pas, est `mort`, ou a déjà un siège.
 2. Engendre un jeton dans le style existant (`noyer-brasier-4417`) et ajoute l'entrée au roster, `occupe: false`.
-3. Crée `etat/joueurs/<id>/` : `journal.json` (vide, `personnage_joueur_id` et `maison_joueur_id` renseignés), `vues.json` et `jetons.json` **dérivés des croyances**, `objectifs.json` **dérivé du plan**, `reglages.json` (défauts 50/50), et deux gabarits vides `metier.md` et `charge.md` avec leurs trois questions en commentaire.
+3. Crée `etat/joueurs/<id>/` : `journal.json` (vide, `personnage_joueur_id` et `maison_joueur_id` renseignés), `vues.json` et `jetons.json` **dérivés des croyances**, `objectifs.json` **dérivé du plan**, `reglages.json` (défauts 50/50), et deux gabarits vides `agents/prompts/metier.md` et `charge.md` avec leurs trois questions en commentaire.
 4. Crée `etat/inbox/<id>/` et arme `etat/veille/<id>.json`.
 5. Pose `etat/horloges.json[<id>]` = `monde.date`.
 6. **N'assoit personne.** Le siège est ouvert, vacant, avec sa tête intacte — donc il continue d'agir. On s'y assoit ensuite par `--asseoir`, qui archive la tête comme aujourd'hui.
 7. **Imprime les trous**, et c'est la moitié de la valeur du script :
    - pas de tête → rien à dériver, tout est à écrire
    - tête `royaume` (1-3 croyances) → « ce joueur va s'asseoir devant un monde vide, montez-le en `orbite` d'abord »
-   - `metier.md` ou `charge.md` vide → « siège mort, jouez la scène qui le charge »
+   - `agents/prompts/metier.md` ou `charge.md` vide → « siège mort, jouez la scène qui le charge »
    - pas de portrait, pas de voix, pas de corps lié, pas de routine
    - aucun nom dans `pnj[]` → personne ne lui obéit
 
@@ -165,7 +165,7 @@ Peu de chose, et c'est bon signe. La section « Les sièges — changer de perso
 | 1 | `--ouvrir` : roster, dossier, inbox, veille, horloge, gabarits, **liste des trous** | ouvrir un siège cesse d'être un rite ; on voit ce qui manque avant de s'asseoir |
 | 2 | La dérivation croyances → `vues`/`jetons` et plan → `objectifs` | le joueur s'assoit devant un monde peuplé au lieu d'une carte blanche |
 | 3 | `--fermer` : brouillon de tête en staging | quitter un siège cesse d'être le geste qui peut casser la partie |
-| 4 | Les deux gabarits `metier.md` / `charge.md` + le test du siège mort | on arrête d'ouvrir des fauteuils qui ne meuvent rien |
+| 4 | Les deux gabarits `agents/prompts/metier.md` / `charge.md` + le test du siège mort | on arrête d'ouvrir des fauteuils qui ne meuvent rien |
 | 5 | Gardes `tick.py --verifier` : PNJ à deux sièges, siège occupé sans `pnj`, dossier incomplet | la faute se voit au tick au lieu de se voir en séance |
 | 6 | Un siège ouvert pour de bon, en cobaye — `gerardys` ou `robert-quince`, tous deux `scene` | la preuve par l'usage : si ça prend plus d'une demi-heure, le §5 est faux |
 

@@ -84,7 +84,7 @@ Six containers de **sujet**, deux transverses. Chacun possède son sujet **de bo
 | 📋 **plan** | cahiers, couverture, criticité, levées, renvois, exports | `criticite.py`, `couverture.py`, `etat_du_plan.py`, `plan/`, `tisser.py`, `mesures.py` |
 | 🌍 **monde** | la ville : masque, plan, bâti, gens, journées, relief, sa carte et son 3D | `monde/`, `materialisation/`, `ville/`, `ecrans/modules/monde/`, `carte-ville.js`, `serveur/monde3d.js` |
 | 📜 **scène** | le flux, l'inbox, la montre, les items et leur rendu | `append_flux.py`, `tunnel.py`, `fils.py`, `guetteur.sh`, `serveur/routes/`, `ecrans/modules/*.js` |
-| 📐 **doctrine** | les contrats : `schema.md` (intouchable), `metier.md`, les fiches | `docs/` |
+| 📐 **doctrine** | les contrats : `schema.md` (intouchable), `agents/prompts/metier.md`, les fiches | `docs/` |
 | 🔬 **bancs** | gardes, mesures, étalons, l'audit | `verifier.mjs`, `scripts/tests/`, `banc-*.js`, `analyse/` |
 
 ### L'invariant du siège *(décision du 30 — la synthèse qui unifie la boucle)*
@@ -188,7 +188,7 @@ La question a été posée : faut-il ce refactor, puis un second pour les featur
 | le billet (un homme écrit *à* quelqu'un ; arrive au brief de sa prochaine dépêche) | 🧠 `agents` (le brief) + 🗄️ `etat` (plis) | non |
 | rencontres jouées (tours alternés sur les sessions `--resume` existantes, fil au parloir) | 🧠 `agents` (`rencontres.py`, `election.py`) + 📜 `scene` (le greffage : événement + témoins + diffusion) | non |
 | le **vécu** (un fil par homme, pour le debug : index chronologique ancré — jamais une source ; les gestes archivés depuis `depouiller()` au hook Stop, le seul morceau périssable) | 🧠 `agents` (c'est son `introspect()` — le seul container sans viz) + 🗄️ `etat` (`journaux/<homme>/`) | non — et il passe AVANT rencontres et MJs : leur debug en dépendra, et un MJ-rôle hérite d'un vécu gratuitement |
-| MJs via `claude -p`, prompt dédié (un MJ devient un **rôle** de la même machinerie que les hommes) | 🧠 `agents` (la dépêche se généralise : `depecher(rôle, manuel)`) + 📐 `doctrine` (les manuels par rôle, comme `metier.md`) | **non structurel — mais c'est LA feature qui doit informer l'éclatement d'`agents`** : séparer le générique au rôle (session, resume, brief, retour, jugement) du propre à l'homme (greffe, tête, pensées) |
+| MJs via `claude -p`, prompt dédié (un MJ devient un **rôle** de la même machinerie que les hommes) | 🧠 `agents` (la dépêche se généralise : `depecher(rôle, manuel)`) + 📐 `doctrine` (les manuels par rôle, comme `agents/prompts/metier.md`) | **non structurel — mais c'est LA feature qui doit informer l'éclatement d'`agents`** : séparer le générique au rôle (session, resume, brief, retour, jugement) du propre à l'homme (greffe, tête, pensées) |
 
 D'où **le refactor en deux vitesses** (et pas deux refactors) :
 

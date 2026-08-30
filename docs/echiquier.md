@@ -179,7 +179,7 @@ d'avancement. Les deux se croisaient sans se voir.
 La leçon n'est pas qu'il faut de nouveaux détecteurs qui liraient la prose : ce
 serait rendre au calcul ce qui appartient aux hommes. C'est que **ce qu'un homme
 trouve doit s'écrire dans la structure** — une ligne de verrou, pas une phrase
-dans une case d'état. C'est écrit en toutes lettres dans `docs/metier.md`,
+dans une case d'état. C'est écrit en toutes lettres dans `scripts/agents/prompts/metier.md`,
 section « Un empêchement trouvé s'écrit comme un VERROU », avec la coordonnée
 exacte.
 
