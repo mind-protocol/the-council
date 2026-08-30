@@ -19,3 +19,4 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 import tunnel  # noqa: E402,F401 — le compteur du flux ; lu par append_flux
+from scene import seed_flux  # noqa: E402,F401 — le beat d'ouverture ; import inerte, l'ecriture ne part que par main()
