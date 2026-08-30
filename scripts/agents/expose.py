@@ -31,6 +31,9 @@ from agents import sieges  # noqa: E402,F401 — lu par la facade scripts/sieges
 # chemin, ouvrir (claude.md seede une fois), canal canonique, non-lus.
 # Sans dependance interne : lie tot, sans contrainte d'ordre.
 from agents import chambre  # noqa: E402,F401 — lu par depeche/mission (le montage --add-dir)
+# Le vecu (habitant.md pas 6) : depouille un transcript -p et le depose dans
+# fil/ — appele par le lanceur, jamais par hook (--restricted les ignore tous).
+from agents import trace  # noqa: E402,F401 — lu par la facade scripts/vecu.py
 # Descendue au lot 2 : le paquet agents/affectation/, plus la commande racine.
 # Le nom `affecter` reste servi par la porte : c'est lui que la facade et les
 # importeurs historiques demandent.

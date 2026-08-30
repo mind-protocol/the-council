@@ -116,10 +116,6 @@ du `-p` suffit.
   comme les autres. Le battement hors-acte devient un réveil de plus (élection ou
   cron). La supervision devient un siège : `claude --resume <mj>` en interactif
   quand le dev veut piloter, rendu en sortant.
-- **Le MJ du joueur n'apprend que deux choses** de l'activité des hommes : ce qu'il
-  doit **arbitrer** (staging, conflits, canon) et ce qu'il peut **raconter** (les
-  faits devenus perceptibles). Tout le reste — conversations, brouillons, vécus —
-  est consultable en pull. Son attention est la ressource rare du système.
 - **L'élection (la boucle) reste le rattrapeur priorisé** : l'énergie du tissu élit
   qui vivre ; un message en attente pèse sur son destinataire. Le tick ne réveille
   personne : il propose.
@@ -140,7 +136,7 @@ mémoire de l'homme. Le speculatif capitalise ; seule la consolidation attend so
 | leçon | mesure |
 |---|---|
 | Le pas-de-tir neutre gagne (variante B) | naître dans le dépôt coûte ~+50 k jetons/tour (le manuel racine remonte par la découverte) ET expose aux hooks du projet |
-| **L'isolation des hooks utilisateur est un chantier ouvert** | deux réveils sur trois ont fini leur vie à écrire des prédictions pour un hook global de la machine — à neutraliser au lancement (`--setting-sources` ou équivalent, à mesurer) |
+| **L'isolation des hooks : `--restricted`** (mesuré le 30.8) | `--restricted --tools Bash,Read,Write…` ignore les settings user ET projet (zéro hook parasite au réveil-jouet, Bash vivant) — c'est le mode de lancement des habitants ; conséquence : aucun hook ne bat jamais chez un habitant, le vécu se dépose par le lanceur (`trace.deposer`), pas par hook Stop |
 | Le billet-fichier ne suffit pas | 2/2 ignoré sous la pression de l'élan → billet en percept dans le brief |
 | Le besoin homme→MJ est réel | 3/3 : premier geste = parloir vers l'arbitre |
 | Le rapport JSON est un artefact RPC | il disparaît au profit des écrits de chambre + versements + une phrase |
@@ -170,7 +166,7 @@ container `agents/` ; `chambres/` est de la donnée.
 5. **Écrire = réveiller** — `--dire` spawn le destinataire détaché ; le serveur
    lance le MJ sur POST ; le guetteur s'éteint. → **réveil-banc n°5** : un ping-pong
    homme↔homme réel.
-6. **Le vécu** (`agents/trace.py` + hook Stop) — transcript + `depouiller()` dans
+6. **Le vécu** (`agents/trace.py`, appelé par le lanceur — pas de hook : `--restricted` les ignore tous) — transcript + dépôt dans
    `fil/` ; `vecu.py --md` comme vue lisible. *(délégable)*
 7. **Les migrations douces** — les fils `~mj` du parloir vers `relations/`, la
    dépêche manuelle branchée sur `chambre.ouvrir()` au premier réveil. *(délégable)*

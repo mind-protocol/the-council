@@ -26,6 +26,8 @@ import io
 import json
 import os
 
+from etat.expose import tables  # LA PORTE de etat/ — meme pour une lecture
+
 # Deux etages au-dessus : scripts/agents/ -> la racine du depot.
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(
     os.path.abspath(__file__))))
@@ -43,11 +45,7 @@ def chemin(qui):
 
 def _fiche(qui):
     """La fiche de personnages.json, ou {} — un MJ n'en a pas, et c'est bien."""
-    f = os.path.join(RACINE, "etat", "personnages.json")
-    if not os.path.exists(f):
-        return {}
-    with io.open(f, encoding="utf-8") as h:
-        donnees = json.load(h)
+    donnees = tables.lire(os.path.join(RACINE, "etat", "personnages.json"), [])
     if isinstance(donnees, dict):
         donnees = donnees.get("personnages") or []
     return next((p for p in donnees
