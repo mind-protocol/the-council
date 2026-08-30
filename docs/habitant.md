@@ -24,7 +24,11 @@ vers ceux qu'il connaît, et une session qui est sa mémoire.**
   la sienne — dans le registre, et l'a confrontée sans drame.
 - **Le travail est itératif** : on rature dans ses brouillons, on reprend, on ne
   rend que le propre. Le rapport JSON de fin de session disparaît : le retour d'une
-  journée, c'est l'état de sa chambre plus ses versements — et une phrase d'homme.
+  journée, c'est l'état de sa chambre plus ses versements — et sa **conclusion pour
+  lui-même** : ce que la journée a changé, ce qu'il compte faire ensuite. Elle ne
+  s'adresse à personne d'autre (toute parole au monde passe par un canal réel) ;
+  elle s'écrit dans sa chambre (`demain.md`) et son prochain réveil s'ouvre dessus —
+  « là où tu t'étais laissé ». La boucle de continuité est physique, décidé le 30.8.
 
 ## 2. La chambre — le domicile
 
@@ -33,6 +37,9 @@ chambres/<id>/                     hommes ET mj (mj, mj-peyredragon, mj-portreal
    claude.md                       sa manière, DE SA MAIN — seedée une fois depuis la
                                    fiche, plus jamais touchée par nous ; sa dérive est
                                    la personnalité qui évolue (pour un MJ : son style)
+   problemes.json                  les pannes de l'APPAREIL — semé vide, règle en tête
+   en-souffrance.json              ses fils ouverts : ce qu'il attend de qui, et
+                                   depuis quand ; ce qu'on attend de lui — semé vide
    fil/                            les traces de ses sessions — le vécu, relisible
    books/                          ses volumes, toujours sous sa main
    brouillons/                     l'itératif — ce qui mûrit avant de se verser
@@ -48,6 +55,21 @@ La chambre est de la mémoire et du caractère ; la vérité vit dans `etat/`, e
 ce qui doit devenir vrai passe par la porte (`tables`, versements, staging) — la
 garde `porte-etat` le tient déjà mécaniquement. Une chambre peut se tromper sur le
 monde ; c'est même son droit.
+
+**Les deux JSON sont une invention d'habitant, promue au template.** Le mestre
+les a ouverts de sa propre main, sans que rien ne les lui demande, et ils tiennent
+tous deux ce qu'aucune autre table ne tient. `problemes.json` sépare les pannes de
+la MACHINE des empêchements du monde — ceux-là sont des verrous et vont au
+registre ; ses deux entrées sont un versement refusé en silence et sept
+coordonnées qui n'ont jamais atteint la file, et sa conclusion vaut d'être citée :
+*« un refus se voit quand on regarde, une absence ne se voit même pas quand on
+regarde »*. `en-souffrance.json` compte les GENS qui n'ont pas répondu et depuis
+quand, là où le plan ne compte que des pas — *« ce n'est pas la même chose et cela
+ne se calcule pas »*. On les sème donc **vides, avec leur règle en tête et pas une
+entrée** : la doctrine est de nous, le contenu est de lui. Ils se lisent par
+`chambre.problemes(qui)` et `chambre.en_souffrance(qui)`, et ce que le réveil en
+sert va **en percept**, comme les billets — jamais en invitation à ouvrir un
+fichier.
 
 `chambres/` vit à la racine du dépôt, versionné comme `etat/` : la mémoire des
 habitants fait partie de la partie. Les fils `~mj` d'`etat/parloir/` migrent vers
