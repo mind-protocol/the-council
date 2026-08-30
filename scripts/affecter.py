@@ -73,7 +73,7 @@ qu'un entier se compare, se trie et se vérifie. L'unicité d'un bâtiment porte
 donc sur la PAIRE (monde, bat) : le bâtiment 1554 de Port-Réal et le 1554 de
 Peyredragon n'ont rien à voir l'un avec l'autre.
 """
-import io, json, math, os, sys, tempfile
+import io, json, math, os, sys
 
 import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
 _d = _os.path.dirname(_os.path.abspath(__file__))
@@ -84,6 +84,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 import bibliotheque
+from etat.expose import tables  # LA PORTE de etat/
 
 # La console de Windows est en cp1252 et le script parle avec des flèches.
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -181,9 +182,7 @@ def monde_de(entree):
 
 
 def charger_liens():
-    if not os.path.exists(LIENS):
-        return {"liens": {}, "affectations": {}}
-    L = json.load(io.open(LIENS, encoding="utf-8"))
+    L = tables.lire(LIENS, {"liens": {}, "affectations": {}})
     L.setdefault("liens", {})
     L.setdefault("affectations", {})
     return L
@@ -202,11 +201,9 @@ def retrait(chemin, defaut=2):
 
 
 def ecrire(chemin, obj):
-    """Relire-écrire dans la même milliseconde : à deux MJ, on ne s'écrase pas."""
-    fd, tmp = tempfile.mkstemp(dir=os.path.dirname(chemin), suffix=".tmp")
-    with io.open(fd, "w", encoding="utf-8") as f:
-        f.write(json.dumps(obj, ensure_ascii=False, indent=retrait(chemin)))
-    os.replace(tmp, chemin)
+    """Relire-écrire dans la même milliseconde : à deux MJ, on ne s'écrase pas.
+    L'indentation du fichier en place est préservée (voir retrait)."""
+    tables.ecrire(chemin, obj, indent=retrait(chemin))
 
 
 def fiche_bati(bati, C, i, monde=DEFAUT_MONDE):

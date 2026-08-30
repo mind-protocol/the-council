@@ -41,20 +41,15 @@ RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ETAT = os.path.join(RACINE, "etat")
 TISSU = os.path.join(ETAT, "tissu")
 
+from etat.expose import tables  # noqa: E402 — LA PORTE de etat/
+
 # ------------------------------------------------------------- les chiffres
 SATURATION = 20      # au-dela, un noeud est dit sature
 RARE = 3             # un moyen tenu par un seul homme est un point de rupture
 
 
 def charger(nom, defaut):
-    p = os.path.join(ETAT, nom + ".json")
-    if not os.path.isfile(p):
-        return defaut
-    with io.open(p, encoding="utf-8") as fh:
-        t = fh.read().strip()
-    if not t:
-        return defaut
-    d = json.loads(t)
+    d = tables.lire(nom, defaut)
     return d.get(nom, d) if isinstance(d, dict) else d
 
 
@@ -695,9 +690,7 @@ def main():
             "force": force_narrative(A, N, muet),
         }
         out.update(pour_la_regie(A, N, muet))
-        p = os.path.join(TISSU, "evaluation.json")
-        with io.open(p, "w", encoding="utf-8") as fh:
-            json.dump(out, fh, ensure_ascii=False, indent=1)
+        p = tables.ecrire(os.path.join(TISSU, "evaluation.json"), out, indent=1)
         print("evaluation deposee : {}".format(os.path.relpath(p, RACINE)))
         return 0
 

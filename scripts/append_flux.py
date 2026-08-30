@@ -19,6 +19,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 import bibliotheque
+from etat.expose import tables  # LA PORTE de etat/
 
 # CE FICHIER EST UN SCRIPT, PAS UN MODULE. Tout son corps s'execute au chargement
 # — il ecrit le flux, avance monde.json et les horloges des sieges. Un `import
@@ -144,7 +145,7 @@ def toucher_le_livre(lid, quand):
     qu'a deux MJ books.json a deux plumes.
     """
     try:
-        session_livres = bibliotheque.ouvrir(os.path.join(racine, "etat"))
+        session_livres = bibliotheque.ouvrir(tables.ETAT)
         books = session_livres.livres
         b = next((x for x in books if x.get("id") == lid), None)
         if not b:
@@ -176,7 +177,7 @@ def extrait_du_livre(montre):
     if not lid or "extrait" in montre:
         return
     try:
-        books = bibliotheque.charger(os.path.join(racine, "etat"))
+        books = bibliotheque.charger(tables.ETAT)
     except Exception:
         return
     b = next((x for x in books if x.get("id") == lid), None)
@@ -274,13 +275,10 @@ def roster():
     flux entier depuis le serveur, `pour` ou pas — l'y nommer lui ouvrirait un
     horloge et le ferait compter comme une oreille de plus dans la salle.
     """
-    try:
-        l = json.load(io.open(joueurs_p, encoding="utf-8"))
-        if not (isinstance(l, list) and l):
-            return []
-        return [j for j in l if isinstance(j, dict) and not j.get("regie")]
-    except Exception:
+    l = tables.lire(joueurs_p, [])
+    if not (isinstance(l, list) and l):
         return []
+    return [j for j in l if isinstance(j, dict) and not j.get("regie")]
 
 
 def lire_horloges(defaut):
@@ -289,11 +287,8 @@ def lire_horloges(defaut):
     Un joueur sans entree est repute au front du monde : il n'a rien vecu de
     plus que le commun, ce qui est exactement vrai.
     """
-    try:
-        h = json.load(io.open(horloges_p, encoding="utf-8"))
-        if not isinstance(h, dict):
-            h = {}
-    except Exception:
+    h = tables.lire(horloges_p, {})
+    if not isinstance(h, dict):
         h = {}
     for j in roster():
         pid = j["personnage_id"]
@@ -347,12 +342,9 @@ presence_p = os.path.join(racine, "etat", "presence.json")
 
 
 def lire_presence():
-    try:
-        t = json.load(io.open(presence_p, encoding="utf-8"))
-        p = t.get("presence")
-        return p if isinstance(p, dict) else {}
-    except Exception:
-        return {}
+    t = tables.lire(presence_p, {})
+    p = t.get("presence") if isinstance(t, dict) else None
+    return p if isinstance(p, dict) else {}
 
 
 # La position ne se STOCKE pas, elle se CALCULE — `scripts/presence.py`. Ce
@@ -463,7 +455,7 @@ if not explicite:
             "Rien n'a ete ecrit.\n" % (pour, pour))
         raise SystemExit(2)
 
-monde = json.load(io.open(monde_p, encoding="utf-8"))
+monde = tables.lire(monde_p)
 monde["date"].setdefault("minute", 0)
 
 # Quelle horloge cette poussee fait-elle tourner ? Celle du joueur nomme s'il
@@ -481,14 +473,11 @@ def sieges_de_regie():
     serait du temps vole aux joueurs. On force donc les durees a zero et l'on
     n'ecrit ni `monde.json` ni `horloges.json` pour ces poussees-la.
     """
-    try:
-        l = json.load(io.open(joueurs_p, encoding="utf-8"))
-        if not isinstance(l, list):
-            return set()
-        return {j.get("personnage_id") for j in l
-                if isinstance(j, dict) and j.get("regie") and j.get("personnage_id")}
-    except Exception:
+    l = tables.lire(joueurs_p, [])
+    if not isinstance(l, list):
         return set()
+    return {j.get("personnage_id") for j in l
+            if isinstance(j, dict) and j.get("regie") and j.get("personnage_id")}
 
 
 REGIES = sieges_de_regie()
@@ -562,14 +551,13 @@ def reclamer_un_run(retarde, demandeur, ecart):
             if f.startswith("barriere-"):
                 return ("  Un ordre de rattrapage attend deja dans l'inbox de %s."
                         % retarde)
-        chemin_ordre = os.path.join(dossier, "barriere-%s.json" % retarde)
-        io.open(chemin_ordre, "w", encoding="utf-8").write(json.dumps({
+        tables.ecrire(os.path.join(dossier, "barriere-%s.json" % retarde), {
             "type": "libre", "mode": "run",
             "texte": ("Rattrapage : %s a %s d'avance et ne peut plus avancer. "
                       "Joue ta journee jusqu'a rejoindre le front commun."
                       % (demandeur, dit_ecart(ecart))),
             "joueur_id": retarde, "barriere": True,
-        }, ensure_ascii=False))
+        }, indent=None)
     except OSError as e:
         return "  (impossible de prevenir %s : %s)" % (retarde, e)
     return ("  Un ordre de « laisser faire » vient d'etre depose dans l'inbox de "
@@ -753,15 +741,11 @@ def reveler(salles, siege):
         e["visible"] = qui
         change = True
     if change:
-        io.open(corps_p, "w", encoding="utf-8").write(
-            json.dumps(C, ensure_ascii=False, indent=2))
+        tables.ecrire(corps_p, C)
 
 
 def _affectations():
-    try:
-        return json.load(io.open(corps_p, encoding="utf-8")).get("affectations") or {}
-    except (OSError, ValueError):
-        return {}
+    return tables.lire(corps_p, {}).get("affectations") or {}
 
 
 def connue_quelque_part(salle):
@@ -988,7 +972,7 @@ RENVOI = re.compile(r"\[([^\]\[<>\n]{1,80})\]\(([A-Za-z0-9][A-Za-z0-9_-]{0,60})\
 def _adresses_connues():
     numeros, ids = {}, set()
     try:
-        livres = bibliotheque.charger(os.path.join(racine, "etat"))
+        livres = bibliotheque.charger(tables.ETAT)
         for v in livres:
             tables = v.get("tables") or []
             if v.get("colonnes"):
@@ -1413,8 +1397,7 @@ if not en_regie and (suivi["touchee"] or calcul_presence):
                                 "gens": calcul_presence.resoudre(date, presence)}
         except Exception:
             pass
-    io.open(presence_p, "w", encoding="utf-8").write(
-        json.dumps(paquet, ensure_ascii=False, indent=2) + "\n")
+    tables.ecrire(presence_p, paquet)
 
 # Ce que le joueur vient de traverser paraît désormais sur sa ville.
 reveler(vus, mien)
@@ -1425,8 +1408,7 @@ if en_regie:
     pass
 elif mien:
     horloges[mien] = date
-    io.open(horloges_p, "w", encoding="utf-8").write(
-        json.dumps(horloges, ensure_ascii=False, indent=2) + "\n")
+    tables.ecrire(horloges_p, horloges)
     # `monde.date` recule au plus lent : c'est la date jusqu'a laquelle le monde
     # est acquis pour TOUT LE MONDE. Elle n'avance donc que quand la derniere
     # scene a rattrape — et jamais en arriere, un front partant du monde.
@@ -1444,11 +1426,9 @@ else:
                 horloges[s] = dict(date)
                 change = True
         if change or os.path.exists(horloges_p):
-            io.open(horloges_p, "w", encoding="utf-8").write(
-                json.dumps(horloges, ensure_ascii=False, indent=2) + "\n")
+            tables.ecrire(horloges_p, horloges)
 if not en_regie:
-    io.open(monde_p, "w", encoding="utf-8").write(
-        json.dumps(monde, ensure_ascii=False, indent=2) + "\n")
+    tables.ecrire(monde_p, monde)
 
 # Sans encodage force, la console Windows (cp1252) etouffe sur une fleche et
 # le script sort en erreur APRES avoir tout ecrit — de quoi croire a un echec.

@@ -37,6 +37,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 from agents.expose import affecter  # LE resolveur d'adresses : on ne relit plus `xyz` a la main
+from etat.expose import tables  # LA PORTE de etat/
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GRAPHE = os.path.join(RACINE, "monde", "portreal.graph.json")
@@ -157,7 +158,7 @@ def ou_est(C, clef):
         if not xyz:
             sortir("  %s n'a pas d'adresse physique (scripts/affecter.py)." % clef)
         try:
-            A = json.load(io.open(CORPS, encoding="utf-8")).get("affectations") or {}
+            A = tables.lire(CORPS, {}).get("affectations") or {}
         except (OSError, ValueError):
             A = {}
         return xyz[0], xyz[1], ((A.get(clef) or {}).get("nom") or clef)

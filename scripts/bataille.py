@@ -35,6 +35,16 @@ import os
 import subprocess
 import sys
 
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
+from etat.expose import tables  # LA PORTE de etat/
+
 # La console de Windows est en cp1252 et le script parle avec des fleches : sans
 # cette ligne, `--cuire` meurt sur un `→` apres avoir tout bien fait. C'est
 # la convention de la maison (voir reprise.py, bilan.py, criticite.py).
@@ -52,11 +62,8 @@ def sortir(m):
 
 
 def lire(p, defaut=None):
-    try:
-        with io.open(p, encoding="utf-8") as f:
-            return json.load(f)
-    except Exception:
-        return defaut
+    # Absent -> defaut ; corrompu -> plante (l'ancienne version avalait tout).
+    return tables.lire(p, defaut)
 
 
 def hhmm(m):
@@ -196,8 +203,7 @@ def dater(jour, minute, lieu="portreal", lune=None, annee=None, vraiment=True):
         "lune": int(lune) if lune is not None else ici.get("lune", 1),
         "jour": int(jour), "minute": int(minute)}}
     if vraiment:
-        with io.open(ETAT, "w", encoding="utf-8") as f:
-            f.write(json.dumps(d, ensure_ascii=False, indent=1))
+        tables.ecrire(ETAT, d, indent=1)
     fin = int(minute) + (man.get("duree_s") or 0) / 60
     print("  la bataille a lieu le %s." % dire_date(d["debut"]))
     print("  duree : %s s — elle se termine a %s%s."

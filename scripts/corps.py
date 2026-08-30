@@ -36,11 +36,13 @@ Deux gestes, et ils vont dans les deux sens :
 Un corps lié reste un corps : il ne pense pas plus qu'avant. Ce sont
 `intentions.json` et le MJ qui font une tête.
 """
-import io, json, os, sys, tempfile, unicodedata
+import io, json, os, sys, unicodedata
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(RACINE, "scripts", "monde"))
+sys.path.insert(0, os.path.join(RACINE, "scripts"))
 import bati as _bati                                # le lecteur unique du bâti
+from etat.expose import tables                      # LA PORTE de etat/
 
 GENS = os.path.join(RACINE, "monde", "portreal.gens.json")
 LIENS = os.path.join(RACINE, "etat", "corps.json")
@@ -85,9 +87,7 @@ def par_identifiant(G, C, aid):
 
 
 def charger_liens():
-    if not os.path.exists(LIENS):
-        return {"liens": {}, "corps": []}
-    L = json.load(io.open(LIENS, encoding="utf-8"))
+    L = tables.lire(LIENS, {"liens": {}, "corps": []})
     L.setdefault("liens", {})
     L.setdefault("corps", [])
     return L
@@ -111,12 +111,9 @@ def retrait(chemin, defaut=2):
 
 
 def ecrire(chemin, obj):
-    """Relire-écrire dans la même milliseconde : à deux MJ, on ne s'écrase pas."""
-    d = os.path.dirname(chemin)
-    fd, tmp = tempfile.mkstemp(dir=d, suffix=".tmp")
-    with io.open(fd, "w", encoding="utf-8") as f:
-        f.write(json.dumps(obj, ensure_ascii=False, indent=retrait(chemin)))
-    os.replace(tmp, chemin)
+    """Relire-écrire dans la même milliseconde : à deux MJ, on ne s'écrase pas.
+    L'indentation du fichier en place est préservée (voir retrait)."""
+    tables.ecrire(chemin, obj, indent=retrait(chemin))
 
 
 def sortir(msg):

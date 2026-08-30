@@ -81,6 +81,7 @@ import bibliotheque
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import livre  # le tri des volumes vit la-bas, et nulle part ailleurs
 from agents.expose import affecter  # LE resolveur d'adresses : on ne relit plus `xyz` a la main
+from etat.expose import tables  # LA PORTE de etat/
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
@@ -124,17 +125,17 @@ def date_du_monde():
     rejoue pas, tandis qu'un homme depeche un jour trop tot est simplement en
     avance sur le siege qui traine.
     """
-    m = json.loads(lire(os.path.join(ETAT, "monde.json"), "{}"))
+    m = tables.lire(os.path.join(ETAT, "monde.json"), {})
     d = m.get("date", {})
     jours = [(d.get("annee", 0), d.get("lune", 0), d.get("jour", 0))]
-    joueurs = json.loads(lire(os.path.join(ETAT, "joueurs.json"), "[]"))
+    joueurs = tables.lire(os.path.join(ETAT, "joueurs.json"), [])
     if isinstance(joueurs, dict):
         joueurs = joueurs.get("joueurs", [])
     occupes = set()
     for j in joueurs or []:
         if isinstance(j, dict) and j.get("occupe") and not j.get("regie"):
             occupes.add(j.get("personnage_id") or j.get("id"))
-    horloges = json.loads(lire(os.path.join(ETAT, "horloges.json"), "{}"))
+    horloges = tables.lire(os.path.join(ETAT, "horloges.json"), {})
     for qui, h in (horloges or {}).items():
         if qui in occupes and isinstance(h, dict):
             jours.append((h.get("annee", 0), h.get("lune", 0), h.get("jour", 0)))
@@ -251,7 +252,7 @@ def brief_de(qui):
 def _liste_etat(nom, cle):
     if nom == "books.json":
         return bibliotheque.charger(ETAT)
-    donnees = json.loads(lire(os.path.join(ETAT, nom), "[]"))
+    donnees = tables.lire(os.path.join(ETAT, nom), [])
     if isinstance(donnees, dict):
         donnees = donnees.get(cle) or []
     return donnees if isinstance(donnees, list) else []
@@ -336,8 +337,8 @@ def travaux_ouverts_de(qui):
             "source": source,
         })
 
-    rapport = json.loads(lire(
-        os.path.join(ETAT, "rapports", "%s.json" % qui), "{}"))
+    rapport = tables.lire(
+        os.path.join(ETAT, "rapports", "%s.json" % qui), {})
     for t in (rapport.get("travaux") or []):
         if isinstance(t, dict):
             _verser(t, "dernier rapport")
@@ -349,7 +350,7 @@ def travaux_ouverts_de(qui):
             f = os.path.join(base, jour, "%s.json" % qui)
             if not os.path.isfile(f):
                 continue
-            archive = json.loads(lire(f, "{}"))
+            archive = tables.lire(f, {})
             conclu = next((t for t in (archive.get("travaux") or [])
                            if isinstance(t, dict) and t.get("conclusion")),
                           None)
@@ -378,7 +379,7 @@ def dossier_journee(qui, brief):
                   "declencheurs", "attitude_joueur", "mandat", "date_maj")
                  if k in intention}
 
-    presence = json.loads(lire(os.path.join(ETAT, "presence.json"), "{}"))
+    presence = tables.lire(os.path.join(ETAT, "presence.json"), {})
     resolus = ((presence.get("resolu") or {}).get("gens") or {}) \
         if isinstance(presence, dict) else {}
     position = resolus.get(qui) or {}
@@ -419,7 +420,7 @@ def les_pj():
     appartient a quelqu'un, et la faire vivre par une session serait parler a
     sa place. C'est une exclusion DURE — il n'y a pas de drapeau pour la
     lever, parce qu'il n'y a pas de cas ou l'on voudrait."""
-    j = json.loads(lire(os.path.join(ETAT, "joueurs.json"), "[]"))
+    j = tables.lire(os.path.join(ETAT, "joueurs.json"), [])
     if isinstance(j, dict):
         j = j.get("joueurs") or j.get("sieges") or []
     return {s.get("personnage_id") or s.get("id")
@@ -430,7 +431,7 @@ def salles_peuplees():
     """{salle: [ids]} d'apres les positions RESOLUES par scripts/presence.py.
     On ne lit pas `presence` brut : c'est le declaratif, `resolu` est ce qui
     tient compte des deplacements."""
-    d = json.loads(lire(os.path.join(ETAT, "presence.json"), "{}"))
+    d = tables.lire(os.path.join(ETAT, "presence.json"), {})
     gens = ((d.get("resolu") or {}).get("gens") or {})
     par_salle = {}
     for qui, ou in gens.items():
@@ -458,8 +459,8 @@ def positions():
     dans `monde/gens/`, qui pese quatre cent mille ames et se regenere. Ces
     gens-la retombent sur la position de leur salle, ce qui suffit.
     """
-    C = json.loads(lire(os.path.join(ETAT, "corps.json"), "{}"))
-    P = json.loads(lire(os.path.join(ETAT, "presence.json"), "{}"))
+    C = tables.lire(os.path.join(ETAT, "corps.json"), {})
+    P = tables.lire(os.path.join(ETAT, "presence.json"), {})
     af = C.get("affectations") or {}
     gens = ((P.get("resolu") or {}).get("gens") or {})
 
@@ -502,7 +503,7 @@ def dans_le_rayon(cible, metres):
             u"« %s » n'a pas d'adresse physique — ni corps, ni salle affectee.\n"
             u"  python scripts/affecter.py    pour lui en donner une" % cible)
 
-    P = json.loads(lire(os.path.join(ETAT, "presence.json"), "{}"))
+    P = tables.lire(os.path.join(ETAT, "presence.json"), {})
     tous = ((P.get("resolu") or {}).get("gens") or {})
     pj = les_pj()
     dedans, ecartes, aveugles = [], [], []
@@ -717,7 +718,7 @@ def memoire_activation(contexte):
 
 def etagere_systeme(qui):
     """Liste fermee des livres que le verrou de ``livre`` laisse ouvrir."""
-    gens = json.loads(lire(os.path.join(ETAT, "personnages.json"), "[]"))
+    gens = tables.lire(os.path.join(ETAT, "personnages.json"), [])
     if isinstance(gens, dict):
         gens = gens.get("personnages") or []
     noms = {g.get("id"): g.get("nom") or g.get("id") for g in gens}
@@ -1058,7 +1059,7 @@ n'est pas une liste, fait jeter la mutation entière.
 
 def _mission_historique(qui, brief, consigne):
     depot = os.path.join(RACINE, "").replace("\\", "/")
-    gens = json.loads(lire(os.path.join(ETAT, 'personnages.json'), '[]'))
+    gens = tables.lire(os.path.join(ETAT, 'personnages.json'), [])
     if isinstance(gens, dict):
         gens = gens.get('personnages', [])
     noms = {g.get('id'): g.get('nom') or g.get('id') for g in gens}
@@ -1619,19 +1620,15 @@ def archiver_le_prompt(qui, sid, manuel, texte):
     On ecrit AVANT l'appel et non apres : une session qui meurt en cours doit
     laisser son prompt, sinon il manque exactement quand il sert le plus.
     """
-    os.makedirs(DEPECHES, exist_ok=True)
     horo = "%s-%06d" % (time.strftime("%Y%m%d-%H%M%S"),
                         int(time.time() * 1e6) % 1000000)
-    cible = os.path.join(DEPECHES, "%s-%s.json" % (horo, qui))
-    with io.open(cible, "w", encoding="utf-8", newline="\n") as f:
-        f.write(json.dumps({
-            "qui": qui,
-            "session": sid,
-            "date_jeu": "%s.%s.%s" % date_du_monde(),
-            "system_prompt": manuel,
-            "mission": texte,
-        }, ensure_ascii=False, indent=1))
-    return cible
+    return tables.ecrire(os.path.join(DEPECHES, "%s-%s.json" % (horo, qui)), {
+        "qui": qui,
+        "session": sid,
+        "date_jeu": "%s.%s.%s" % date_du_monde(),
+        "system_prompt": manuel,
+        "mission": texte,
+    }, indent=1)
 
 
 def appeler(qui, manuel, texte, sid, modele, minutes, parloir=True):
@@ -1787,7 +1784,7 @@ def depecher(qui, consigne, modele, minutes, sec):
         "jetons": jetons, "secondes": round(time.time() - debut),
     }
     cible = os.path.join(DEPOT_RAPPORTS, "%s.json" % qui)
-    _poser(cible, json.dumps(rapport, ensure_ascii=False, indent=2))
+    tables.ecrire(cible, rapport)
     verse = verser_sur_le_champ(rapport, qui, date)
     proposer_la_tete(rapport, qui, date, sid)
 
@@ -1826,12 +1823,7 @@ def verser_sur_le_champ(rapport, qui, date):
     signalee plus tard. C'est la seule regle de l'ancien systeme qui meritait
     de survivre, et elle ne vaut que si elle mord a l'entree.
     """
-    chemin = os.path.join(ETAT, "pensees.json")
-    try:
-        with io.open(chemin, encoding="utf-8") as fh:
-            T = json.load(fh)
-    except Exception:
-        T = {"pensees": []}
+    T = tables.lire("pensees", {"pensees": []})
     liste = T.setdefault("pensees", []) if isinstance(T, dict) else T
     quand = {"annee": date[0], "lune": date[1], "jour": date[2]}
     l = feuille_de_route().get(qui) or {}
@@ -1858,22 +1850,17 @@ def verser_sur_le_champ(rapport, qui, date):
             vus.add((texte[:60], qui))
             pose += 1
     if pose:
-        _poser(chemin, json.dumps(T, ensure_ascii=False, indent=1) + "\n")
+        tables.ecrire("pensees", T, indent=1)
 
     # Une conclusion ne se calcule pas : elle est ecrite ou elle ne l'est pas.
     if rapport.get("conclusion"):
-        pc = os.path.join(ETAT, "conclusions.json")
-        try:
-            with io.open(pc, encoding="utf-8") as fh:
-                C = json.load(fh)
-        except Exception:
-            C = {"conclusions": []}
+        C = tables.lire("conclusions", {"conclusions": []})
         C.setdefault("conclusions", []).append({
             "qui": qui, "date": dict(quand),
             "affaire": (rapport.get("travaux") or [{}])[0].get("affaire"),
             "livre": rapport.get("livre"),
             "texte": rapport["conclusion"]})
-        _poser(pc, json.dumps(C, ensure_ascii=False, indent=1) + "\n")
+        tables.ecrire("conclusions", C, indent=1)
 
     if sans_source:
         print(u"  (%d pensee(s) refusee(s) : pas de source, pas de pensee)"
@@ -1922,7 +1909,7 @@ def proposer_la_tete(rapport, qui, date, sid):
     }
     cible = os.path.join(ETAT, "staging",
                          "tete-%s-%d-%d-%d.json" % (qui, *date))
-    _poser(cible, json.dumps({
+    tables.ecrire(cible, {
         "_pourquoi": ("Tete de %s apres sa depeche du %d.%d.%d (session %s). "
                       "Le script ne propose que date_maj ; ajoute ici tes "
                       "mutations d'etapes et de croyances d'apres la matiere, "
@@ -1933,7 +1920,7 @@ def proposer_la_tete(rapport, qui, date, sid):
             "table": "intentions", "cible": qui, "operation": "tete",
             "champs": {"date_maj": quand},
         }],
-    }, ensure_ascii=False, indent=1) + "\n")
+    }, indent=1)
     print(u"  %-18s tete a tenir → %s" % (qui, os.path.relpath(cible, RACINE)))
     return cible
 

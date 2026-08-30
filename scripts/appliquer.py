@@ -109,6 +109,9 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 import bibliotheque
+# `tables` est deja le nom du dict des tables chargees dans ce script : la
+# porte entre sous le nom `porte` — c'est bien noyau/tables (import tables).
+from etat.expose import tables as porte
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
@@ -326,11 +329,10 @@ def chemin_table(nom, joueur=None):
 
 
 def lire(nom, joueur=None):
-    chemin = chemin_table(nom, joueur)
-    if not os.path.isfile(chemin):
-        sys.exit("{} absent".format(chemin))
-    with io.open(chemin, encoding="utf-8") as f:
-        return json.load(f)
+    try:
+        return porte.lire(chemin_table(nom, joueur))
+    except porte.TableAbimee as e:
+        sys.exit(str(e))
 
 
 def liste_mains(table):
@@ -1345,13 +1347,9 @@ def appliquer(plan, tables):
 
 
 def ecrire(nom, donnees, joueur=None):
-    """Ecriture atomique : fichier temporaire puis remplacement."""
-    chemin = chemin_table(nom, joueur)
-    temporaire = chemin + ".tmp"
-    with io.open(temporaire, "w", encoding="utf-8", newline="\r\n") as f:
-        json.dump(donnees, f, ensure_ascii=False, indent=2)
-        f.write("\n")
-    os.replace(temporaire, chemin)
+    """Ecriture atomique par la porte. Fins de ligne LF desormais — l'ancien
+    newline="\\r\\n" n'etait justifie nulle part et divergeait du reste."""
+    porte.ecrire(chemin_table(nom, joueur), donnees)
 
 
 # ---------------------------------------------------------------------- main
@@ -1485,9 +1483,7 @@ def main():
         else:
             ecrire(nom, tables[nom], joueur)
     prop["applique_le"] = datetime.now().isoformat(timespec="seconds")
-    with io.open(chemin, "w", encoding="utf-8", newline="\r\n") as f:
-        json.dump(prop, f, ensure_ascii=False, indent=2)
-        f.write("\n")
+    porte.ecrire(chemin, prop)
 
     print("\nApplique. Tables ecrites : {}".format(", ".join(sorted(touchees))))
     print("Verifie la coherence : python scripts/tick.py --verifier")
