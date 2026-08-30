@@ -31,8 +31,10 @@ from plan.couverture import (nu, sans_emoji, marque, blocs, NUM, MO, NOM_GENRE, 
                              FINI, premier_mot, tete_ornee, numero_de,
                              registre_de, col)
 from plan.couverture import main as couverture_main  # noqa: E402,F401 — l'entree CLI de la facade
-import etat_du_plan  # noqa: E402,F401
-from etat_du_plan import missions_de, phrase  # noqa: E402,F401
+# Descendue au lot 2 : le paquet plan/etat_du_plan/, plus la commande racine.
+from plan import etat_du_plan  # noqa: E402,F401
+from plan.etat_du_plan import missions_de, phrase  # noqa: E402,F401
+from plan.etat_du_plan import main as etat_du_plan_main  # noqa: E402,F401 — l'entree CLI de la facade
 # Descendue au lot 2 : le paquet plan/criticite/, plus la commande racine.
 from plan import criticite  # noqa: E402,F401 — le module entier, pour `criticite.calculer` etc.
 from plan.criticite import entree as criticite_main  # noqa: E402,F401 — l'entree CLI de la facade
