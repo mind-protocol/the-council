@@ -114,6 +114,15 @@ def liens_python(fichiers):
             for cible in par_module.get(n, []):
                 if cible != f:
                     liens.append((f, cible))
+        # Les portes : `from plan.expose import ...` est un import pointe que le
+        # motif au nom nu ne voit pas (il capture `plan`, qui n'est le nom d'aucun
+        # module). Sans cette resolution, un lien bascule sur une porte SORTIRAIT
+        # du graphe au lieu d'y entrer par la porte.
+        for n in set(re.findall(r"^\s*(?:from|import)\s+([a-zA-Z_]\w*)\.expose\b",
+                                texte, re.M)):
+            cible = "scripts/%s/expose.py" % n
+            if cible in fichiers and cible != f:
+                liens.append((f, cible))
     return liens
 
 
@@ -177,7 +186,14 @@ def analyser():
                  and declaration[a]["rang"] != 9]
     racine_py = {f for f in fichiers
                  if f.startswith("scripts/") and f.count("/") == 1 and f.endswith(".py")}
-    commandes_bibliotheques = sorted({cible for _, cible in tous if cible in racine_py})
+    # La porte d'un container est l'importeur LEGITIME de ses propres commandes :
+    # pendant le lot 1 (docs/organisation.md §5), c'est elle qui reexporte ce que
+    # les commandes offrent, en attendant que le lot 2 les vide. Sans cette
+    # exemption le compteur ne pourrait jamais atteindre zero avant le lot 2.
+    porte_de = {c["porte"]: nom for nom, c in declaration.items()}
+    commandes_bibliotheques = sorted(
+        {cible for source, cible in tous if cible in racine_py
+         and porte_de.get(source) != ou.get(cible)})
 
     return {
         "declaration": declaration, "ou": ou, "arcs": arcs, "globales": len(globales),
