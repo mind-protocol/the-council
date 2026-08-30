@@ -20,7 +20,8 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 import tables  # noqa: E402,F401 — la porte unique des ecritures dans etat/
-import appliquer  # noqa: E402,F401 — le vocabulaire ferme des mutations ; lu par boucle_activation
+from etat import mutations  # noqa: E402,F401 — le vocabulaire ferme des mutations ; lu par boucle_activation
+appliquer = mutations  # l'ancien nom reste vivant pour les importeurs historiques (boucle_activation, facade)
 from etat import entree  # noqa: E402,F401 — une entree a la fois, ecriture atomique ; lu par passer
 ajouter = entree  # l'ancien nom reste vivant pour les importeurs historiques (passer, facade ajouter.py)
 from etat import empreintes  # noqa: E402,F401 — le detecteur de fumee (veille) ; l'occupation lit ses fichiers, pas son code
