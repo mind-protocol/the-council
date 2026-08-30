@@ -1,26 +1,20 @@
-# Ajoute UN enregistrement a une table d'empilement, sans jamais reecrire ce
-# qu'on n'a pas lu a l'instant meme.
-#
-# Usage :
-#     python scripts/ajouter.py actes '{"id":"acte-042", ...}'
-#     python scripts/ajouter.py vues --fichier v.json
-#     python scripts/ajouter.py paroles '<json>' '<json>' ...
-#
-# POURQUOI. A deux MJ, l'ecriture du monde est optimiste : chacun edite, et l'on
-# rattrape apres coup. Ca marche pour tout, SAUF une chose — la reecriture d'un
-# tableau entier. Je lis actes.json, je reflechis deux minutes, l'autre session y
-# ajoute un acte, j'ecris ma version : son acte a disparu, et personne ne le
-# saura jamais. Ce n'est pas un conflit a arbitrer, c'est une perte silencieuse.
-#
-# Ce script ne supprime pas la course : il la reduit a rien. Il relit le fichier
-# et le reecrit dans la meme milliseconde, au lieu d'etaler l'operation sur toute
-# ma duree de reflexion. Pour les quatre tables ou l'on EMPILE, c'est le seul
-# geste d'ecriture autorise quand deux sessions jouent.
-#
-# Les autres tables (personnages, relations, maisons, monde, intentions) restent
-# editables a la main : on y modifie une fiche existante, les collisions y sont
-# rares, visibles, et reparables en une ligne.
-import io, json, os, sys, tempfile
+# -*- coding: utf-8 -*-
+"""Ajoute UN enregistrement a une table d'empilement, sans jamais reecrire
+ce qu'on n'a pas lu a l'instant meme.
+
+Usage :
+    python scripts/ajouter.py actes '{"id":"acte-042", ...}'
+    python scripts/ajouter.py vues --fichier v.json
+    python scripts/ajouter.py paroles '<json>' '<json>' ...
+
+CE FICHIER EST UNE FACADE (docs/organisation.md §2) : la matiere — le
+POURQUOI de la fenetre etroite, les tables d'empilement, l'ecriture
+atomique — vit dans etat/entree.py. Le chemin et la CLI de cette commande
+sont geles ; les reexports ci-dessous gardent les anciens noms `ajouter.*`
+vivants pour les importeurs historiques.
+"""
+import sys
+
 import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
 _d = _os.path.dirname(_os.path.abspath(__file__))
 while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
@@ -29,121 +23,13 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
+from etat.expose import entree as _entree  # noqa: E402 — LA PORTE de etat/
 
-racine = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# Table -> la clef qui porte la liste, ou None si le fichier EST la liste.
-TABLES = {
-    "actes": None,
-    "paroles": None,
-    "info": None,
-    "annales": None,
-    "objectifs": None,
-    "vues": "vues",
-    # On empile aussi les pensees et les conclusions : deux hommes depeches
-    # en meme temps rentrent en meme temps, et chacun pose les siennes sans
-    # reecrire le tableau de l'autre.
-    "pensees": "pensees",
-    "conclusions": "conclusions",
-}
-
-
-
-def chemin(table, joueur=None):
-    """Le fichier de la table — dans le dossier du joueur s'il y en a un.
-
-    Les croyances (vues, objectifs) appartiennent a un joueur : a deux, elles
-    vivent dans etat/joueurs/<id>/. Repli sur etat/ tant que ce fichier racine
-    existe, pour qu'une partie seule ne voie aucune difference.
-
-    Une fois la racine archivee, ce repli n'a plus de fichier a ouvrir : mieux
-    vaut refuser bruyamment que d'ecrire une croyance dans un fichier fantome
-    que personne ne relira jamais. Un --joueur mal orthographie tombe ici aussi,
-    et c'est tant mieux — c'est exactement le meme bug.
-    """
-    if joueur:
-        p = os.path.join(racine, "etat", "joueurs", joueur, table + ".json")
-        if os.path.exists(p):
-            return p
-    p = os.path.join(racine, "etat", table + ".json")
-    if os.path.exists(p):
-        return p
-    if joueur:
-        raise SystemExit(
-            "pas de %s.json pour le joueur '%s', et plus de repli a la racine.\n"
-            "Verifiez etat/joueurs/%s/ : le --joueur est-il le bon personnage_id ?"
-            % (table, joueur, joueur))
-    raise SystemExit(
-        "%s.json n'existe plus a la racine : cette table appartient a un joueur.\n"
-        "Precisez a qui vous ecrivez : --joueur <personnage_id>." % table)
-
-
-def ecrire_atomique(p, donnees):
-    """Une seule implementation, dans `scripts/tables.py`."""
-    return tables.ecrire(p, donnees)
-
-
-def ajouter(table, enregistrements, joueur=None):
-    if table not in TABLES:
-        raise SystemExit(
-            "Table inconnue : %s. Tables d'empilement : %s.\n"
-            "Les autres se modifient a la main (on y edite une fiche, on n'empile pas)."
-            % (table, ", ".join(sorted(TABLES))))
-    p = chemin(table, joueur)
-    # --- la fenetre etroite commence ici -----------------------------------
-    with io.open(p, encoding="utf-8") as f:
-        donnees = json.load(f)
-    clef = TABLES[table]
-    liste = donnees if clef is None else donnees.setdefault(clef, [])
-    if not isinstance(liste, list):
-        raise SystemExit("%s ne porte pas une liste : rien n'a ete ecrit." % p)
-
-    # Un id deja present veut dire que l'autre session l'a pose avant nous, ou
-    # qu'on rejoue le meme appel. Dans les deux cas on ne double pas.
-    connus = set(x.get("id") for x in liste if isinstance(x, dict))
-    poses = []
-    for e in enregistrements:
-        eid = e.get("id") if isinstance(e, dict) else None
-        if eid and eid in connus:
-            print("deja present, ignore : %s" % eid)
-            continue
-        liste.append(e)
-        connus.add(eid)
-        poses.append(eid or "(sans id)")
-    if not poses:
-        return []
-    ecrire_atomique(p, donnees)
-    # --- et elle finit la -------------------------------------------------
-    return poses
-
-
-def main(argv):
-    if not argv:
-        raise SystemExit(__doc__ or "usage : ajouter.py <table> '<json>' [...]")
-    table = argv[0]
-    reste = argv[1:]
-    joueur = None
-    if "--joueur" in reste:
-        i = reste.index("--joueur")
-        joueur = reste[i + 1]
-        reste = reste[:i] + reste[i + 2:]
-    enregistrements = []
-    if reste and reste[0] == "--fichier":
-        for p in reste[1:]:
-            with io.open(p, encoding="utf-8") as f:
-                d = json.load(f)
-            enregistrements.extend(d if isinstance(d, list) else [d])
-    else:
-        for brut in reste:
-            d = json.loads(brut)
-            enregistrements.extend(d if isinstance(d, list) else [d])
-    if not enregistrements:
-        raise SystemExit("rien a ajouter")
-    poses = ajouter(table, enregistrements, joueur)
-    print("%s : %d ajoute(s) — %s" % (table, len(poses), ", ".join(poses)) if poses
-          else "%s : rien de nouveau" % table)
-
+TABLES = _entree.TABLES
+chemin = _entree.chemin
+ecrire_atomique = _entree.ecrire_atomique
+ajouter = _entree.ajouter
+main = _entree.main
 
 if __name__ == "__main__":
     main(sys.argv[1:])

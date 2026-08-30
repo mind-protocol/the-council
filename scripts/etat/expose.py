@@ -21,4 +21,5 @@ for _p in (_d, _os.path.join(_d, "noyau")):
 
 import tables  # noqa: E402,F401 — la porte unique des ecritures dans etat/
 import appliquer  # noqa: E402,F401 — le vocabulaire ferme des mutations ; lu par boucle_activation
-import ajouter  # noqa: E402,F401 — une entree a la fois, ecriture atomique ; lu par passer
+from etat import entree  # noqa: E402,F401 — une entree a la fois, ecriture atomique ; lu par passer
+ajouter = entree  # l'ancien nom reste vivant pour les importeurs historiques (passer, facade ajouter.py)
