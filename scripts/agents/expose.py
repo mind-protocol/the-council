@@ -34,7 +34,10 @@ from agents.affectation import main as affecter_main  # noqa: E402,F401 — l'en
 # PostToolUse tapent toujours scripts/parloir.py, la facade).
 from agents import parloir  # noqa: E402,F401 — parler a un homme depeche ; lu par depecher
 from agents.parloir import main as parloir_main  # noqa: E402,F401 — l'entree CLI de la facade
-import depecher  # noqa: E402,F401 — relit cette porte : affecter deja lie
+# Descendue au lot 2 : le paquet agents/depeche/, plus la commande racine.
+from agents import depeche  # noqa: E402,F401 — relit cette porte : affecter deja lie
+depecher = depeche  # l'ancien nom, que la facade et boucle_activation demandent
+from agents.depeche import main as depecher_main  # noqa: E402,F401 — l'entree CLI de la facade
 import boucle_activation  # noqa: E402,F401 — relit cette porte : depecher deja lie
 # Descendue au lot 2 : scripts/dossier.py -> agents/matiere.py (§7).
 from agents import matiere  # noqa: E402,F401 — le dossier d'un sujet, rassemble
