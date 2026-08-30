@@ -2594,7 +2594,7 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
   display:flex;flex-direction:row;align-items:center;gap:7px;max-width:240px;
   padding:4px 8px;border:1px solid rgba(232,201,138,.22);border-radius:3px;
   background:rgba(12,14,18,.82);box-shadow:0 2px 10px rgba(0,0,0,.55);}
-\* le signe de l'espèce : une forge, une taverne, une roukerie se reconnaissent
+/* le signe de l'espèce : une forge, une taverne, une roukerie se reconnaissent
    avant d'être lues. Il ne se souligne pas — c'est un <u> parce qu'il fallait
    une balise, pas parce que c'est un lien. */
 .monde-survol u{text-decoration:none;font-size:15px;line-height:1;flex:0 0 auto;
@@ -3473,7 +3473,7 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 
 /* --- le billet : un papier qui a voyagé, pas une voix ---------------------
    Le fil d'un homme incarné (modules/fil-homme.js) : chaque entrée d'un canal
-   relations/*/discussion.json se peint en écrit remis en main — cadre de
+   relations/<autre>/discussion.json se peint en écrit remis en main — cadre de
    papier, expéditeur et date en tête discrète. Distinct de chr-replique
    (une voix) et de chr-ecrit (la plume qu'on repose) : ici le papier a
    voyagé, on le tient. */
@@ -3491,10 +3491,30 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 .chr-breve summary{cursor:pointer;}
 .gestes-detail{margin:4px 0 0;padding-left:16px;color:var(--muted);
   font-size:.95em;}
+/* Le markdown minimal des bulles de mémoire (fil-homme.js, md()) : des
+   intertitres discrets, jamais des titres de page — c'est un fil, pas un
+   document. */
+.md-titre{display:block;font-style:normal;font-variant:small-caps;
+  letter-spacing:.05em;color:var(--braise);margin:8px 0 2px;}
+.md-t1{font-size:1.02em;}
+.md-t2{font-size:.94em;}
+.md-t3,.md-t4{font-size:.88em;color:var(--muted);}
+.chr-fil .chr-texte strong{color:var(--ink);}
+.md-puce{color:var(--muted);}
 /* Un arbitre incarné observe : la ligne discrète au-dessus de son fil. */
-.fil-observation{margin:0 0 12px;padding-left:10px;font-size:.66em;
+.fil-observation{margin:0 0 4px;padding-left:10px;font-size:.66em;
   color:var(--muted);font-style:italic;
   border-left:2px solid var(--bord);}
+/* Le champ du poste d'observation : un billet du dev au MJ observé — un
+   textarea et un bouton, rien de la barre des verbes. */
+#fil-mj-envoi{display:flex;flex-direction:column;gap:4px;padding:6px 0 2px;}
+#fil-mj-envoi textarea{min-height:44px;resize:vertical;padding:6px 8px;
+  font:inherit;font-size:.78em;color:var(--ink);background:var(--paper);
+  border:1px solid var(--bord);border-radius:3px;}
+#fil-mj-envoi button{align-self:flex-end;padding:3px 12px;font:inherit;
+  font-size:.72em;cursor:pointer;color:var(--braise);
+  background:none;border:1px solid var(--braise);border-radius:2px;}
+#fil-mj-envoi button:disabled{opacity:.45;cursor:default;}
 
 /* ---- la régie : le siège de Corneille ------------------------------------
    Hors fiction, et ça doit se voir : un cadre froid dans un fil qui ne l'est
