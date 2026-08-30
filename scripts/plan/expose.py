@@ -24,11 +24,13 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 # couverture d'abord : ses noms servent aux deux suivantes pendant leur import.
-import couverture  # noqa: E402,F401 — le module entier, pour `import couverture as C`
-from couverture import (nu, sans_emoji, marque, blocs, NUM, MO, NOM_GENRE,  # noqa: E402,F401
-                        EST_MO, NERA, etiquette, genre_de, ATTENDU, RANG,
-                        FINI, premier_mot, tete_ornee, numero_de,
-                        registre_de, col)
+# Descendue au lot 2 : le paquet plan/couverture/, plus la commande racine.
+from plan import couverture  # noqa: E402,F401 — le module entier, pour `import couverture as C`
+from plan.couverture import (nu, sans_emoji, marque, blocs, NUM, MO, NOM_GENRE,  # noqa: E402,F401
+                             EST_MO, NERA, etiquette, genre_de, ATTENDU, RANG,
+                             FINI, premier_mot, tete_ornee, numero_de,
+                             registre_de, col)
+from plan.couverture import main as couverture_main  # noqa: E402,F401 — l'entree CLI de la facade
 import etat_du_plan  # noqa: E402,F401
 from etat_du_plan import missions_de, phrase  # noqa: E402,F401
 import criticite  # noqa: E402,F401
