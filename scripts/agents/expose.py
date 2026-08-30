@@ -24,7 +24,12 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-import affecter  # noqa: E402,F401 — LE resolveur d'adresses ; lu par depecher, marche, tick
+# Descendue au lot 2 : le paquet agents/affectation/, plus la commande racine.
+# Le nom `affecter` reste servi par la porte : c'est lui que la facade et les
+# importeurs historiques demandent.
+from agents import affectation  # noqa: E402,F401 — LE resolveur d'adresses ; lu par depecher, marche, tick
+affecter = affectation
+from agents.affectation import main as affecter_main  # noqa: E402,F401 — l'entree CLI de la facade
 import parloir  # noqa: E402,F401 — parler a un homme depeche ; lu par depecher
 import depecher  # noqa: E402,F401 — relit cette porte : affecter deja lie
 import boucle_activation  # noqa: E402,F401 — relit cette porte : depecher deja lie
