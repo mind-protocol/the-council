@@ -68,6 +68,14 @@ import tempfile
 import time
 import uuid
 
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
 import bibliotheque
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -300,6 +308,57 @@ def _affaires_du_brief(brief):
     return texte.strip(" =\n")
 
 
+def travaux_ouverts_de(qui):
+    """Ce que cet homme a ÉCRIT — la pièce centrale de la greffe documentaire.
+
+    La mémoire d'un dépêché n'est pas sa tête d'`intentions.json` (treize
+    têtes en retard au 30 août, dont Hask gelé huit jours de jeu pendant
+    qu'il se corrigeait neuf fois par écrit) : c'est ses pensées datées et
+    sa dernière conclusion de sa main. `memoire_activation()` savait déjà
+    les servir (`travaux_ouverts`), mais AUCUN chemin ne les peuplait —
+    ni ici, ni la boucle d'activation, dont le `travaux = []` était codé
+    en dur. L'homme reprend là où SA plume s'est arrêtée, pas là où le
+    dernier quart d'heure l'a laissé.
+
+    Lecture bornée : le dernier rapport (`etat/rapports/<qui>.json`), et si
+    aucun travail n'y porte de conclusion, la première conclusion trouvée en
+    remontant les archives (`etat/archive/travaux/<date>/<qui>.json`), une
+    seule. Quatre pensées par travail, comme la boucle d'activation.
+    """
+    ouverts = []
+
+    def _verser(travail, source):
+        ouverts.append({
+            "id": travail.get("travail_id") or travail.get("id"),
+            "affaire": travail.get("travail_id") or travail.get("id"),
+            "pensees_recentes": (travail.get("pensees") or [])[-4:],
+            "conclusion": travail.get("conclusion"),
+            "source": source,
+        })
+
+    rapport = json.loads(lire(
+        os.path.join(ETAT, "rapports", "%s.json" % qui), "{}"))
+    for t in (rapport.get("travaux") or []):
+        if isinstance(t, dict):
+            _verser(t, "dernier rapport")
+
+    if not any(o["conclusion"] for o in ouverts):
+        base = os.path.join(ETAT, "archive", "travaux")
+        for jour in sorted(os.listdir(base) if os.path.isdir(base) else [],
+                           reverse=True):
+            f = os.path.join(base, jour, "%s.json" % qui)
+            if not os.path.isfile(f):
+                continue
+            archive = json.loads(lire(f, "{}"))
+            conclu = next((t for t in (archive.get("travaux") or [])
+                           if isinstance(t, dict) and t.get("conclusion")),
+                          None)
+            if conclu:
+                _verser(conclu, "archive du %s" % jour)
+                break
+    return ouverts
+
+
 def dossier_journee(qui, brief):
     """Rassemble l'identité et la situation vivante d'une journée."""
     personnages = _liste_etat("personnages.json", "personnages")
@@ -341,6 +400,7 @@ def dossier_journee(qui, brief):
         "intention": intention,
         "relations": _relations_de(qui, noms),
         "affaires_du_jour": _affaires_du_brief(brief),
+        "travaux_ouverts": travaux_ouverts_de(qui),
     }
 
 
@@ -1541,6 +1601,39 @@ def poser_le_parloir(neutre, qui):
     return cible
 
 
+DEPECHES = os.path.join(ETAT, "depeches")
+
+
+def archiver_le_prompt(qui, sid, manuel, texte):
+    """Garde sur disque CE QUI A REELLEMENT ETE INJECTE, avant l'appel.
+
+    Le manuel partait dans un `mkdtemp` que personne ne relit et que le systeme
+    balaie : on pouvait donc lire toute la journee d'un homme sans jamais savoir
+    ce qu'il avait recu en entrant. La question « il est coherent » ou « on le
+    re-briefe a chaque reveil » n'avait pas de piece pour la trancher.
+
+    La boucle d'activation, elle, archive deja son `system_prompt` dans
+    `etat/activations/` — c'est le meme geste, porte au chemin manuel, qui
+    etait le seul des deux a n'avoir aucune trace.
+
+    On ecrit AVANT l'appel et non apres : une session qui meurt en cours doit
+    laisser son prompt, sinon il manque exactement quand il sert le plus.
+    """
+    os.makedirs(DEPECHES, exist_ok=True)
+    horo = "%s-%06d" % (time.strftime("%Y%m%d-%H%M%S"),
+                        int(time.time() * 1e6) % 1000000)
+    cible = os.path.join(DEPECHES, "%s-%s.json" % (horo, qui))
+    with io.open(cible, "w", encoding="utf-8", newline="\n") as f:
+        f.write(json.dumps({
+            "qui": qui,
+            "session": sid,
+            "date_jeu": "%s.%s.%s" % date_du_monde(),
+            "system_prompt": manuel,
+            "mission": texte,
+        }, ensure_ascii=False, indent=1))
+    return cible
+
+
 def appeler(qui, manuel, texte, sid, modele, minutes, parloir=True):
     """Tente --session-id ; retombe sur --resume si l'id a deja servi.
 
@@ -1559,6 +1652,7 @@ def appeler(qui, manuel, texte, sid, modele, minutes, parloir=True):
     with io.open(prompt_systeme, "w",
                  encoding="utf-8", newline="\n") as f:
         f.write(manuel)
+    archiver_le_prompt(qui, sid, manuel, texte)
     # LE FIL PORTE LA SESSION, PAS L'HOMME. Deux dépêches du même acteur
     # peuvent tourner en même temps — la mienne et celle de la boucle
     # d'activation, le 9 août — et sous un seul nom elles se volaient les
@@ -1695,6 +1789,7 @@ def depecher(qui, consigne, modele, minutes, sec):
     cible = os.path.join(DEPOT_RAPPORTS, "%s.json" % qui)
     _poser(cible, json.dumps(rapport, ensure_ascii=False, indent=2))
     verse = verser_sur_le_champ(rapport, qui, date)
+    proposer_la_tete(rapport, qui, date, sid)
 
     p = sum(len(t.get("pensees", []) or []) for t in rapport.get("travaux", []) or [])
     print(u"  %-18s %2d pensee(s) [%d versee(s)] · %2d etape(s) · %s · %5d j. · %3ds → %s%s"
@@ -1784,6 +1879,63 @@ def verser_sur_le_champ(rapport, qui, date):
         print(u"  (%d pensee(s) refusee(s) : pas de source, pas de pensee)"
               % sans_source)
     return pose
+
+
+def proposer_la_tete(rapport, qui, date, sid):
+    """Au retour d'une depeche, la tenue de la tete cesse d'etre un geste
+    qu'on oublie : une proposition tombe en staging, comme apres un tick.
+
+    Treize tetes en retard au 30 aout — dont Hask, gele huit jours de jeu
+    pendant que ses cahiers vivaient — et une seule cause : rien dans la
+    boucle ne reecrivait `intentions.json`, la tenue etait un geste manuel.
+
+    CE QUE LE SCRIPT PROPOSE : l'arithmetique seule — `date_maj` au jour de
+    la depeche. Il n'invente ni etape franchie ni croyance : un rapport ne
+    declare pas structurellement « etape X faite », le deduire du texte
+    serait une decision, et la machine donne la matiere, jamais la decision.
+    Le MJ ajoute ses mutations (etapes, croyances) dans la MEME proposition
+    avant `appliquer.py <fichier> --vraiment` — la `matiere` ci-dessous est
+    la pour ca.
+
+    Un fichier par homme et par jour de jeu (deterministe, re-ecrase par une
+    depeche ulterieure du meme jour) ; rien si l'homme n'a pas de tete (PJ,
+    dormant) ou si sa tete est deja au jour.
+    """
+    tetes = _liste_etat("intentions.json", "intentions")
+    tete = next((t for t in tetes if t.get("personnage_id") == qui), None)
+    if not tete:
+        return None
+    quand = {"annee": date[0], "lune": date[1], "jour": date[2]}
+    if tete.get("date_maj") == quand:
+        return None
+
+    with io.open(os.path.join(ETAT, "intentions.json"), "rb") as f:
+        sceau = __import__("hashlib").sha1(f.read()).hexdigest()
+    matiere = {
+        "journal": ["%s → %s" % (j.get("quoi", ""), j.get("resultat", "—"))
+                    for j in (rapport.get("journal") or [])
+                    if isinstance(j, dict)],
+        "conclusion": bool(rapport.get("conclusion")) or any(
+            t.get("conclusion") for t in rapport.get("travaux") or []
+            if isinstance(t, dict)),
+        "rapport": "etat/rapports/%s.json" % qui,
+    }
+    cible = os.path.join(ETAT, "staging",
+                         "tete-%s-%d-%d-%d.json" % (qui, *date))
+    _poser(cible, json.dumps({
+        "_pourquoi": ("Tete de %s apres sa depeche du %d.%d.%d (session %s). "
+                      "Le script ne propose que date_maj ; ajoute ici tes "
+                      "mutations d'etapes et de croyances d'apres la matiere, "
+                      "puis applique le tout." % ((qui,) + date + (sid,))),
+        "matiere": matiere,
+        "empreintes": {"intentions": sceau},
+        "mutations_proposees": [{
+            "table": "intentions", "cible": qui, "operation": "tete",
+            "champs": {"date_maj": quand},
+        }],
+    }, ensure_ascii=False, indent=1) + "\n")
+    print(u"  %-18s tete a tenir → %s" % (qui, os.path.relpath(cible, RACINE)))
+    return cible
 
 
 def _poser(chemin, contenu):

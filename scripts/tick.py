@@ -56,6 +56,14 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # le dit, c'est sa JOURNEE — le quartier ou il se tient, les creux qu'elle lui
 # laisse, les sources a portee de ces creux. C'est `presence.py` qui le mesure
 # et `evaluer.py` qui en tire la feuille de route.
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
 import occupation  # qui est ASSIS — mesure, pas drapeau
 # La regence (docs/regence.md) : ce qu'un siege vacant peut faire et ce qu'il
 # doit rendre. Branche ici pour la seule garde — clause posee, passation due.
@@ -2295,7 +2303,7 @@ def verifier_rapporteurs(e, r):
     D'ou cette garde-ci, et sa gravite : un ecart de lignes peut etre normal —
     on vient d'ecrire dans un cahier sans avoir relance. UN PRODUCTEUR QUI N'A
     PAS ABOUTI DEPUIS SA CADENCE NE L'EST JAMAIS. Le battement se pose a la fin
-    du chemin de succes (voir scripts/rapporteurs.py) ; un script qui plante ne
+    du chemin de succes (voir scripts/noyau/rapporteurs.py) ; un script qui plante ne
     bat pas, et l'absence de battement est tout le mecanisme.
 
     Les cadences sont en JOURS REELS et non en jours de jeu : ce sont des
@@ -2370,7 +2378,7 @@ def verifier_etats_du_plan(e, r):
                        "etat hors vocabulaire : {!r}. Six valeurs et pas une de "
                        "plus — a faire / en cours / bloquee / faite / close / "
                        "abandonnee. La prose va en « Note », la date en « Jour "
-                       "fait » : `python scripts/normaliser_etats.py`"
+                       "fait » : `python scripts/plan/normaliser_etats.py`"
                        .format(c[i][:70]))
 
 

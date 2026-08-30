@@ -120,7 +120,7 @@ python scripts/sieges.py                         # idem, plus les têtes et les 
 python scripts/sieges.py --rafraichir            # ce qui serait recalé
 python scripts/sieges.py --rafraichir --vraiment # recaler le cache
 python scripts/tick.py --verifier                # les invariants
-python scripts/essai_occupation.py               # le harnais : 30 cas sur un etat/ jetable
+python scripts/tests/essai_occupation.py               # le harnais : 30 cas sur un etat/ jetable
 ```
 
 Le harnais monte un `etat/` temporaire à chaque cas (veilles vieillies à la main par `os.utime`, inbox peuplée, marques posées) et ne touche jamais au dépôt. Il couvre la mesure, le `.gardez`, les veilles déclarées, `assis_a`/`quitte_a`, le refus d'écriture, l'atomicité de l'écriture, et les sept fautes de `verifier_occupation`. **Ajouter un cas avant de toucher au seuil ou aux règles de veille.**

@@ -40,7 +40,16 @@ import time
 import uuid
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
 import depecher  # le script d'appel canonique
+import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
 import appliquer  # vocabulaire ferme des mutations
 import occupation  # qui est ASSIS — mesure, pas drapeau
 import regence  # la ligne qu'un siege vacant ne franchit pas
@@ -143,20 +152,19 @@ def journaliser(evenement, brut=None, **champs):
 
 
 def lire_json(chemin, defaut):
-    try:
-        with io.open(chemin, encoding="utf-8") as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return defaut
+    """Une seule porte, une seule semantique — voir `scripts/tables.py`.
+
+    Il y avait quatre `lire_json` dans ce depot et quatre comportements devant
+    un fichier corrompu : deux plantaient, deux repartaient en silence sur le
+    defaut. C'est tranche une fois pour toutes — un JSON abime PLANTE, seule
+    l'absence rend le defaut.
+    """
+    return tables.lire(chemin, defaut)
 
 
 def ecrire_atomique(chemin, valeur):
-    os.makedirs(os.path.dirname(chemin), exist_ok=True)
-    provisoire = chemin + ".tmp"
-    with io.open(provisoire, "w", encoding="utf-8", newline="\n") as f:
-        json.dump(valeur, f, ensure_ascii=False, indent=2)
-        f.write("\n")
-    os.replace(provisoire, chemin)
+    """Une seule implementation, dans `scripts/tables.py`."""
+    return tables.ecrire(chemin, valeur)
 
 
 def charger_tissu():
@@ -1359,7 +1367,6 @@ def dossier_activation(pid, tache, horloge, noeuds, etat=None):
     intentions = lire_json(os.path.join(ETAT, "intentions.json"), [])
     if isinstance(intentions, dict):
         intentions = intentions.get("intentions") or []
-    travaux = []
     mains = lire_json(os.path.join(ETAT, "mains.json"), [])
     if isinstance(mains, dict):
         mains = mains.get("mains") or []
@@ -1406,17 +1413,12 @@ def dossier_activation(pid, tache, horloge, noeuds, etat=None):
                       "declencheurs", "attitude_joueur", "mandat", "date_maj")
                      if k in intention}
         intention["etape_elue"] = plan[0] if plan else None
-    travaux_ouverts = []
-    for t in travaux:
-        if t.get("qui") != pid or t.get("etat") in ("rendu", "abandonne"):
-            continue
-        travaux_ouverts.append({
-            "id": t.get("id"), "affaire": t.get("affaire"),
-            "etat": t.get("etat"), "echeance": t.get("echeance"),
-            "sources": t.get("sources") or [],
-            "pensees_recentes": (t.get("pensees") or [])[-4:],
-            "conclusion": t.get("conclusion"),
-        })
+    # La mémoire écrite de l'homme — son dernier rapport et sa dernière
+    # conclusion. L'ancien `travaux = []` était codé en dur : le bloc
+    # `travaux_ouverts` de memoire_activation() n'a jamais été servi avant
+    # le 30 août. Le lecteur canonique vit chez depecher, même dossier pour
+    # le chemin manuel et pour celui-ci.
+    travaux_ouverts = depecher.travaux_ouverts_de(pid)
     mains_portees = []
     for m in mains:
         if not isinstance(m.get("porteur"), dict) or m["porteur"].get("id") != pid:

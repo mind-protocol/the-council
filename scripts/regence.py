@@ -45,21 +45,32 @@ RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ETAT = os.path.join(RACINE, "etat")
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
 import occupation  # qui est ASSIS — mesure, pas drapeau
+import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
 
 
 # --------------------------------------------------------------------------
 # Lecture
 # --------------------------------------------------------------------------
 
+
 def lire_json(chemin, defaut):
-    if not os.path.exists(chemin):
-        return defaut
-    try:
-        with io.open(chemin, encoding="utf-8") as f:
-            return json.load(f)
-    except (ValueError, OSError):
-        return defaut
+    """Une seule porte, une seule semantique — voir `scripts/tables.py`.
+
+    Il y avait quatre `lire_json` dans ce depot et quatre comportements devant
+    un fichier corrompu : deux plantaient, deux repartaient en silence sur le
+    defaut. C'est tranche une fois pour toutes — un JSON abime PLANTE, seule
+    l'absence rend le defaut.
+    """
+    return tables.lire(chemin, defaut)
 
 
 def lire_table(nom, defaut):

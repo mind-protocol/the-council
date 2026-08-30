@@ -339,7 +339,7 @@ est tombée, il en reste trois :
    entre dans les `croyances` ; avec les trois porteurs, c'est un arbitrage du MJ
    à chaque arrivée. Tant que c'est à la main, `diffusion` reste plus commode
    pour les nouvelles de masse — et c'est la vraie raison de sa survie.
-3. **La migration du reste** : `scripts/migrer_plis.py` couvre les canaux
+3. **La migration du reste** : `scripts/migrations/migrer_plis.py` couvre les canaux
    d'objet ; il faudrait son équivalent pour convertir les entrées `rumeur` en
    incidents, et les `temoin` en relais nommés — ce dernier cas est désormais
    une conversion mécanique, puisque la cible existe.
@@ -349,7 +349,7 @@ est tombée, il en reste trois :
 
 ## Migration
 
-`scripts/migrer_plis.py` convertit les entrées `evenements.diffusion` de canal
+`scripts/migrations/migrer_plis.py` convertit les entrées `evenements.diffusion` de canal
 `corbeau`/`cavalier`/`barque` en plis, et écrit sa sortie dans `etat/staging/`.
 Il ne touche jamais `etat/`. `rumeur` et `temoin` sont laissés à `diffusion` :
 ce ne sont pas des objets.

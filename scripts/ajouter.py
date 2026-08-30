@@ -21,6 +21,15 @@
 # editables a la main : on y modifie une fiche existante, les collisions y sont
 # rares, visibles, et reparables en une ligne.
 import io, json, os, sys, tempfile
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
+import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
 
 racine = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -38,6 +47,7 @@ TABLES = {
     "pensees": "pensees",
     "conclusions": "conclusions",
 }
+
 
 
 def chemin(table, joueur=None):
@@ -70,18 +80,8 @@ def chemin(table, joueur=None):
 
 
 def ecrire_atomique(p, donnees):
-    """Fichier temporaire puis remplacement : jamais de fichier a moitie ecrit."""
-    d = os.path.dirname(p)
-    fd, tmp = tempfile.mkstemp(dir=d, suffix=".tmp")
-    try:
-        with io.open(fd, "w", encoding="utf-8") as f:
-            json.dump(donnees, f, ensure_ascii=False, indent=2)
-            f.write("\n")
-        os.replace(tmp, p)
-    except BaseException:
-        if os.path.exists(tmp):
-            os.remove(tmp)
-        raise
+    """Une seule implementation, dans `scripts/tables.py`."""
+    return tables.ecrire(p, donnees)
 
 
 def ajouter(table, enregistrements, joueur=None):

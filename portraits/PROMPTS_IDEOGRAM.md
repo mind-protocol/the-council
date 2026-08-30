@@ -5,7 +5,7 @@
 
 Générer en **1:1**, style **Realistic**. Coller le STYLE BLOCK, puis le prompt du personnage.
 Enregistrer sous `portraits/<id>.png` — **l'id exact, sans suffixe de maison**.
-Puis `python scripts/medaillons.py --vraiment` pour le brancher à l'écran.
+Puis `python scripts/peinture/medaillons.py --vraiment` pour le brancher à l'écran.
 
 ## STYLE BLOCK (à préfixer à chaque prompt)
 

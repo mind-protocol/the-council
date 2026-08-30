@@ -10,6 +10,14 @@
 # 1440 minutes, le jour s'incremente. Voir docs/schema.md.
 import json, io, os, re, sys, hashlib, tempfile, unicodedata
 
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
 import bibliotheque
 
 # CE FICHIER EST UN SCRIPT, PAS UN MODULE. Tout son corps s'execute au chargement

@@ -30,6 +30,14 @@ partir d'un point où le personnage n'est pas, sauf à le lui dire (`--sans-moi`
 """
 import io, json, math, os, sys, heapq, collections
 
+import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
+_d = _os.path.dirname(_os.path.abspath(__file__))
+while _os.path.basename(_d) != "scripts" and _os.path.dirname(_d) != _d:
+    _d = _os.path.dirname(_d)
+for _p in (_d, _os.path.join(_d, "noyau")):
+    if _p not in _sys.path:
+        _sys.path.insert(0, _p)
+
 import bibliotheque
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
