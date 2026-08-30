@@ -22,9 +22,14 @@ def ouvrir_les_zones(dire=lambda t: None):
                                        "personnages.json"), [])
     if isinstance(donnees, dict):
         donnees = donnees.get("personnages") or []
+    if any(isinstance(p, dict) and p.get("id") == "dev" for p in donnees):
+        dire("  ATTENTION : un personnage du monde s'appelle 'dev' — ce nom"
+             " est RESERVE au developpeur (docs/habitant.md).")
     villes = sorted({str(p.get("lieu_id") or "").strip()
                      for p in donnees if isinstance(p, dict)} - {""})
-    zones = ["mj"] + ["mj-" + v.replace("-", "") for v in villes]
+    # `dev` : le developpeur est un habitant adressable (nom reserve) —
+    # une chambre, des billets, des actions assignees ; jamais depeche.
+    zones = ["mj", "dev"] + ["mj-" + v.replace("-", "") for v in villes]
     for z in zones:
         neuve = not os.path.isdir(chambre.chemin(z))
         chambre.ouvrir(z)

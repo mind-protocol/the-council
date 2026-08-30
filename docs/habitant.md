@@ -177,6 +177,11 @@ du `-p` suffit.
   staging, M fils à relancer »), et sa journée consiste à trancher, graver,
   relancer. Même chambre, mêmes fils, mêmes journées de travail — la symétrie
   habitant est complète.
+- **`dev` est un nom réservé** (31.8) : le développeur est un habitant adressable
+  — sa chambre est `chambres/dev/`, on lui écrit un billet (`--a dev`), on lui
+  assigne des actions (« Qui : dev »). Il n'est jamais dépêché (pas de fiche,
+  pas de journée) : ses réveils sont ses sessions de travail réelles. Aucun
+  personnage du monde ne peut porter cet id.
 
 ### Prévoir et rattraper — par destination d'écriture
 
