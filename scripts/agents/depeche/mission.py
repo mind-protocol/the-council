@@ -86,12 +86,25 @@ def mission(qui, brief, consigne, contexte=None):
                    u" Réponds-y à ta façon — dans tes gestes, tes cahiers, ou en"
                    u" notant ta réponse dans ta chambre pour la lui porter.\n")
     ajout = billets + ajout
+    # LA OU IL S'ETAIT LAISSE : le mot qu'il s'est laisse hier (demain.md,
+    # ecrit par depecher en fin de journee) se relit en tete de la journee
+    # neuve — puis sera ecrase par la conclusion de ce soir. L'ordre :
+    # injecte au reveil N+1, ecrase en fin de N+1.
+    hier = u""
+    chemin_demain = os.path.join(_ch.chemin(qui), "demain.md")
+    if os.path.exists(chemin_demain):
+        with io.open(chemin_demain, encoding="utf-8") as f:
+            mot_dhier = f.read().strip()
+        if mot_dhier:
+            hier = (u"\n## Là où tu t'étais laissé\n\n" + mot_dhier +
+                    u"\n\nC'est le mot que tu t'es laissé hier. Reprends de"
+                    u" là, ou contredis-le — c'est le tien.\n")
     return u"""%(contexte)s
 
 ---
 
 # Cette journée
-
+%(hier)s
 Ton contexte vivant est déjà auprès de toi. Le dépôt %(depot)s matérialise le
 monde que tes yeux et tes mains peuvent consulter. Ton étagère se trouve dans
 `./livres/`, un fichier par volume. `Read`, `Grep` et `Glob` servent à toucher
@@ -135,8 +148,10 @@ caractère. Ce qui doit devenir vrai passe par tes gestes dans la journée.
 
 Plus de formulaire : ta journée EST ton retour. Ce que tu apprends, écris-le
 dans tes cahiers et ta chambre à mesure ; ce que tu conclus, note-le où tu
-sauras le retrouver. Ta dernière réponse est une phrase d'homme — ce que ta
-journée a changé, dit à ta façon, en quelques lignes au plus.
+sauras le retrouver. Ta dernière réponse est ta conclusion à toi — ce que ta
+journée a changé, et ce que tu comptes faire ensuite, dit à ta façon, en
+quelques lignes au plus. Tu te la laisses comme on se laisse un mot sur sa
+table : c'est elle que tu retrouveras à ton prochain réveil.
 
 Tes affaires ouvertes, pour mémoire :
 
@@ -144,6 +159,7 @@ Tes affaires ouvertes, pour mémoire :
 %(ajout)s""" % {
         "chambre": sa_chambre,
         "arbitre": arbitre,
+        "hier": hier,
         "depot": depot,
         "parloir": PARLOIR_PY,
         "qui": qui,
@@ -445,6 +461,14 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True):
         phrase = (rep.get("result") or u"").strip()
         brut = os.path.join(DEPOT_RAPPORTS, "%s.brut.txt" % qui)
         _poser(brut, phrase)
+        # LE MOT SUR SA TABLE : sa conclusion s'ecrit dans sa chambre,
+        # ECRASEE a chaque journee — c'est le mot le plus recent qui compte,
+        # le fil garde l'historique. Elle sera reinjectee a son prochain
+        # reveil (« La ou tu t'etais laisse », mission()).
+        if phrase:
+            with io.open(os.path.join(_ch.chemin(qui), "demain.md"), "w",
+                         encoding="utf-8", newline="\n") as f:
+                f.write(phrase + u"\n")
         print(u"  %-18s %5d j. · %3ds — sa phrase : %s"
               % (qui, jetons, round(time.time() - debut),
                  re.sub(r"\s+", u" ", phrase)[:160] or u"(muette)"))
