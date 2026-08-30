@@ -2,7 +2,7 @@ const assert = require("assert");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
-const B = require("./scene").bibliotheque; // LA PORTE serveur de scene
+const B = require("./plan").bibliotheque; // LA PORTE serveur du plan
 
 function ecrire(fichier, valeur) {
   fs.mkdirSync(path.dirname(fichier), { recursive: true });

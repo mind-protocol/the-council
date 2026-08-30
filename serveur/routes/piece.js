@@ -1,5 +1,5 @@
 // POST /piece — la pièce jouée depuis le banc d'essai.
-const bibliotheque = require("../bibliotheque");
+const { bibliotheque } = require("../plan"); // LA PORTE serveur du plan
 const { RACINE } = require("../http");
 const { envoyer } = require("../http");
 

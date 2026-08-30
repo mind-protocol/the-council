@@ -1,6 +1,5 @@
 // LA PORTE serveur du container scene (docs/organisation.md §2) : ce que les
-// autres containers ont le droit d'en lire. La scene est la peau — seul
-// `bibliotheque` (les cahiers servis) est consommé d'ailleurs aujourd'hui.
-module.exports = {
-  bibliotheque: require("../bibliotheque"), // les books côté serveur : charger, ouvrir
-};
+// autres containers ont le droit d'en lire. La scene est LA PEAU — personne ne
+// la lit, et cette porte est vide a dessein (bibliotheque est parti dans plan/,
+// ou vivent les cahiers).
+module.exports = {};
