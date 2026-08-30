@@ -9,6 +9,11 @@
       '<div id="mode-input" data-mode="dire">' +
       '<button id="mode-dire" class="actif"><i class="emb">💬</i>Parler</button>' +
       '<button id="mode-agir"><i class="emb">✋</i>Agir</button>' +
+      // Le troisième verbe de l'habitant (habitant.md §3) : FAIRE, la mutation
+      // proposée. Il n'apparaît qu'en incarnant un homme hors roster — un PJ
+      // classique agit par la scène, pas par le staging.
+      '<button id="mode-faire" hidden title="Proposer une mutation du monde : déplacer, verser, remettre — l\'arbitre tranche">' +
+      '<i class="emb">🤲</i>Faire</button>' +
       '<button id="mode-penser" title="Peser la situation : ce que vous savez, ce qui s\'offre, ce que ça coûte">' +
       '<i class="emb">💭</i>Penser</button>' +
       '<button id="mode-question" title="Hors fiction : demander une précision">' +
@@ -70,6 +75,7 @@
     const boutons = {
       dire: document.getElementById("mode-dire"),
       agir: document.getElementById("mode-agir"),
+      faire: document.getElementById("mode-faire"),
       penser: document.getElementById("mode-penser"),
       question: document.getElementById("mode-question"),
       meta: document.getElementById("mode-meta"),
@@ -79,6 +85,7 @@
     const AMORCES = {
       dire: "Vos prochaines paroles…",
       agir: "Ce que vous faites…",
+      faire: "Ce que vous changez au monde — l'arbitre tranche…",
       penser: "Ce que vous pesez — ou rien, et vous pesez tout",
       question: "Ce que vous voulez éclaircir — hors de la scène…",
       meta: "Hors univers : la partie, le casting, une médaille à décerner…",
@@ -88,6 +95,7 @@
     const ENVOIS = {
       dire: '<i class="emb">💬</i>Parler',
       agir: '<i class="emb">✋</i>Agir',
+      faire: '<i class="emb">🤲</i>Faire',
       penser: '<i class="emb">💭</i>Peser',
       question: '<i class="emb">❓</i>Demander',
       meta: '<i class="emb">🎬</i>Commenter',
@@ -128,11 +136,49 @@
     }
     Object.keys(boutons).forEach((k) => (boutons[k].onclick = () => basculer(k)));
 
+    // ---- l'homme hors roster parle à son arbitre, pas à la scène ---------
+    // Incarner un homme quelconque (siège fabriqué par /bascule) change le
+    // canal : ses gestes passent par POST /verbe (habitant.md §3) — tenter,
+    // faire, demander, dire — et le verdict de l'arbitre revient DANS la
+    // réponse, en synchrone. Le call réveille un vrai `claude -p` : une à
+    // trois minutes au premier réveil d'une zone, d'où l'attente affichée.
+    // Un PJ du roster ne passe JAMAIS par ici : son chemin /action est intact.
+    const VERBES_HOMME = { dire: "dire", agir: "tenter", faire: "faire", question: "demander" };
+    function envoyerVerbe(m, texte) {
+      const moi = window.Moi;
+      // Écho immédiat : /verbe n'inscrit rien au flux de la scène, le sondage
+      // ne rendra donc pas cette ligne — on la pose nous-mêmes.
+      Bus.chronique(m === "question" ? "chr-question"
+        : (m === "dire" ? "chr-vous" : "chr-vous chr-acte"),
+        m === "question" ? "Question" : (moi.nom || moi.personnage_id), texte);
+      const att = document.getElementById("attente");
+      if (att) att.classList.add("actif");
+      btn.disabled = true;
+      const corps = { de: moi.personnage_id, verbe: VERBES_HOMME[m], texte: texte };
+      if (moi.arbitre) corps.a = moi.arbitre;
+      fetch("/verbe", { method: "POST",
+        headers: { "Content-Type": "application/json" }, body: JSON.stringify(corps) })
+        .then((r) => r.json())
+        .then((d) => Bus.chronique("chr-reponse", "L'arbitre",
+          (d && (d.verdict || d.erreur)) || "(pas de verdict)"))
+        .catch((e) => Bus.chronique("chr-reponse", "L'arbitre",
+          "Le verdict n'est pas revenu : " + e))
+        .finally(() => {
+          if (att) att.classList.remove("actif");
+          btn.disabled = false;
+        });
+    }
+
     btn.onclick = () => {
       const v = champ.value.trim();
       // penser sans objet est permis : on pèse toute la situation. Laisser faire
       // sans consigne aussi : c'est même son usage le plus courant.
       if (!v && mode !== "penser" && mode !== "run") return;
+      if (window.Moi && window.Moi.hors_roster && VERBES_HOMME[mode]) {
+        envoyerVerbe(mode, v);
+        champ.value = "";
+        return;
+      }
       // pas d'affichage optimiste : le serveur inscrit la parole au flux, et on
       // relit aussitôt — une seule source de vérité, qui survit au rechargement.
       Bus.poster({ type: "libre", mode: mode, texte: v,
@@ -144,6 +190,22 @@
       if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); btn.click(); }
     };
     basculer("dire");
+
+    // La barre se taille au siège : bus.js remplit window.Moi depuis /moi (en
+    // parallèle de nous) — on attend cette réponse-là plutôt que d'en refaire
+    // une. Hors roster : Faire apparaît, et les modes qui parlent au MJ du
+    // JOUEUR (penser, coulisses, laisser faire, intervention) se rangent — cet
+    // homme-là n'a que ses quatre verbes vers son arbitre.
+    (function tailler(essais) {
+      if (window.Moi === null && essais > 0)
+        return setTimeout(() => tailler(essais - 1), 300);
+      if (!window.Moi || !window.Moi.hors_roster) return;
+      boutons.faire.hidden = false;
+      ["penser", "meta", "run", "intervention"].forEach((k) => {
+        boutons[k].hidden = true;
+      });
+      if (boutons[mode] && boutons[mode].hidden) basculer("dire");
+    })(40);
 
     // ---- parler à quelqu'un d'un clic ------------------------------------
     // Un visage dans la colonne des présents est une adresse : cliquer dessus

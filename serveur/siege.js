@@ -132,7 +132,26 @@ function qui(req, url) {
   const q = (req.url.split("?")[1] || "").match(/(?:^|&)jeton=([^&]*)/);
   const c = (req.headers.cookie || "").match(/(?:^|;\s*)jeton=([^;]*)/);
   const jeton = decodeURIComponent((q && q[1]) || (c && c[1]) || "");
-  return l.find((j) => j.jeton === jeton) || null;
+  const j = l.find((x) => x.jeton === jeton);
+  if (j) return j;
+  // Le siège FABRIQUÉ d'un homme hors roster : n'importe quel personnage de
+  // `etat/personnages.json` s'incarne depuis le jeu (habitant.md — tout homme
+  // est un habitant). Le cookie `homme:<id>` est posé par /bascule ; le siège
+  // n'existe que le temps de la requête, rien ne s'écrit dans joueurs.json.
+  // `hors_roster` dit au front de router ses gestes vers /verbe et non /action.
+  if (jeton.slice(0, 6) === "homme:") {
+    const id = jeton.slice(6);
+    try {
+      const p = JSON.parse(fs.readFileSync(
+        path.join(RACINE, "etat", "personnages.json"), "utf-8"))
+        .find((x) => x.id === id);
+      // Le siège porte son jeton : la route `/` re-pose le cookie depuis
+      // `j.jeton`, et sans lui elle écrirait « undefined » à la place.
+      if (p) return { jeton: jeton, personnage_id: p.id, nom: p.nom || p.id,
+                      hors_roster: true };
+    } catch (e) {}
+  }
+  return null;
 }
 
 // Le personnage derrière une requête : le siège si l'on en tient un, le

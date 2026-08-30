@@ -29,9 +29,14 @@
 
     fetch("/moi").then((r) => r.json()).then((d) => {
       const sieges = (d && d.sieges) || [];
-      if (!d || !d.multi || sieges.length < 2) return;
+      // Les hommes hors roster : tout le reste du monde, incarnable au même
+      // titre qu'un siège — le serveur les sert déjà triés par nom.
+      const hommes = (d && d.hommes) || [];
+      if (!d || !d.multi || (sieges.length < 2 && !hommes.length)) return;
       const moi = d.moi && d.moi.personnage_id;
-      const mien = sieges.find((s) => s.personnage_id === moi);
+      const mien = sieges.find((s) => s.personnage_id === moi)
+        || hommes.find((s) => s.personnage_id === moi)
+        || (d.moi ? { personnage_id: moi, nom: d.moi.nom } : null);
 
       zone.hidden = false;
       // Le contrôle vit dans le rail : c'est le cadre `zone-siege` qui porte le
@@ -43,12 +48,18 @@
         ? "Vous incarnez " + (mien.nom || mien.personnage_id) + " — cliquez pour changer de siège"
         : "Aucun siège : cliquez pour en prendre un";
 
-      liste.innerHTML = sieges.map((s) => {
+      const choix = (s) => {
         const ici = s.personnage_id === moi;
         return '<button type="button" class="siege-choix' + (ici ? " actif" : "") +
                '" data-vers="' + esc(s.personnage_id) + '">' +
                esc(s.nom || s.personnage_id) + "</button>";
-      }).join("");
+      };
+      // Deux groupes : les sièges de la partie d'abord, puis tous les autres
+      // hommes du monde. Choisir l'un ou l'autre passe par le MÊME /bascule.
+      liste.innerHTML = sieges.map(choix).join("") +
+        (hommes.length
+          ? '<div class="siege-groupe">Les hommes</div>' + hommes.map(choix).join("")
+          : "");
 
       bouton.onclick = (e) => {
         e.stopPropagation();

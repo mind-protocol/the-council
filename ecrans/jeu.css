@@ -133,6 +133,11 @@ body.sans-gestes .gestes{display:none;}
 /* sans ceci, le display:flex ci-dessus (spécificité d'ID) bat le
    display:none de [hidden] : le menu ne se refermait jamais. */
 #siege-liste[hidden]{display:none;}
+/* Cent quatorze hommes dans le menu : il défile, il ne pousse pas le rail. */
+#siege-liste{max-height:46vh;overflow-y:auto;}
+.siege-groupe{padding:8px 10px 3px;font-size:.72em;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);border-top:1px solid var(--bord);
+  margin-top:4px;}
 .siege-choix{padding:6px 10px;font:inherit;font-size:.94em;text-align:left;
   color:var(--muted);background:none;border:0;border-radius:4px;cursor:pointer;
   white-space:nowrap;}

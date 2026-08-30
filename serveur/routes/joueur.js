@@ -5,6 +5,28 @@ const { RACINE } = require("../http");
 const { envoyer } = require("../http");
 const { qui, roster } = require("../http");
 
+// Les fiches du monde — la liste dans laquelle on peut désormais s'incarner.
+function fiches() {
+  try {
+    const l = JSON.parse(fs.readFileSync(
+      path.join(RACINE, "etat", "personnages.json"), "utf-8"));
+    return Array.isArray(l) ? l : [];
+  } catch (e) { return []; }
+}
+
+// L'arbitre d'un homme hors roster : le MJ de SA zone (habitant.md §3 — le
+// front qui incarne un homme d'une autre ville passe son `mj-<ville>`). Dans
+// la zone du joueur — celle du siège principal —, on rend null : /verbe prend
+// alors son défaut, `mj`.
+function arbitreDe(id, ps, l) {
+  const p = ps.find((x) => x.id === id);
+  const principal = (l || []).find((s) => s.role === "principal");
+  const fp = principal && ps.find((x) => x.id === principal.personnage_id);
+  const zone = (fp && fp.lieu_id) || null;
+  if (!p || !p.lieu_id || !zone || p.lieu_id === zone) return null;
+  return "mj-" + p.lieu_id;
+}
+
 function traiter(req, res, url) {
   if (req.method === "GET") {
     if (url === "/") {
@@ -23,12 +45,26 @@ function traiter(req, res, url) {
     // à l'un et « Daemon » à l'autre. Roster absent = partie mono-joueur.
     if (url === "/moi") {
       const l = roster(), j = qui(req, url);
+      // `hommes` : tout le reste du monde, incarnable au même titre que les
+      // sièges (habitant.md — tout homme est un habitant). Alphabétique ; le
+      // front les groupe sous les sièges. Mono-joueur : rien, comme avant.
+      const ps = l ? fiches() : [];
+      const dedans = new Set((l || []).map((x) => x.personnage_id));
+      const moi = j ? { personnage_id: j.personnage_id, nom: j.nom || "", regie: !!j.regie } : null;
+      if (moi && j.hors_roster) {
+        moi.hors_roster = true;
+        // L'arbitre de ses verbes — le front le passera tel quel à /verbe.
+        moi.arbitre = arbitreDe(j.personnage_id, ps, l);
+      }
       return envoyer(res, 200, JSON.stringify({
         multi: !!l,
         // `regie` : ce siège ne joue personne, il regarde. C'est lui qui
         // ouvre le fil d'un homme depuis le plan du château (modules/regie.js).
-        moi: j ? { personnage_id: j.personnage_id, nom: j.nom || "", regie: !!j.regie } : null,
+        moi: moi,
         sieges: (l || []).map((x) => ({ personnage_id: x.personnage_id, nom: x.nom || "" })),
+        hommes: ps.filter((p) => !dedans.has(p.id))
+          .map((p) => ({ personnage_id: p.id, nom: p.nom || p.id }))
+          .sort((a, b) => a.nom.localeCompare(b.nom, "fr")),
       }));
     }
     // Débug — changer de siège sans rouvrir l'URL au jeton. On ne rend JAMAIS
@@ -36,16 +72,21 @@ function traiter(req, res, url) {
     // cookie correspondant et renvoie à la racine. Outil de mise au point.
     if (url === "/bascule") {
       const l = roster();
-      if (!l || l.length < 2) return envoyer(res, 404, JSON.stringify({ erreur: "roster" }));
+      if (!l) return envoyer(res, 404, JSON.stringify({ erreur: "roster" }));
       const q = (req.url.split("?")[1] || "").match(/(?:^|&)vers=([^&]*)/);
       const vers = decodeURIComponent((q && q[1]) || "");
       const j = qui(req, url);
       // Sans cible : le suivant du roster, en boucle.
       const i = j ? l.findIndex((x) => x.jeton === j.jeton) : -1;
       const cible = vers ? l.find((x) => x.personnage_id === vers) : l[(i + 1) % l.length];
-      if (!cible) return envoyer(res, 404, JSON.stringify({ erreur: vers }));
+      // Une cible hors roster mais au monde : le jeton fabriqué `homme:<id>`,
+      // que `qui()` (serveur/siege.js) résout en siège éphémère. Rien ne
+      // s'écrit dans joueurs.json — le roster reste le roster.
+      let jeton = cible && cible.jeton;
+      if (!jeton && vers && fiches().some((p) => p.id === vers)) jeton = "homme:" + vers;
+      if (!jeton) return envoyer(res, 404, JSON.stringify({ erreur: vers }));
       res.writeHead(302, {
-        "Set-Cookie": "jeton=" + encodeURIComponent(cible.jeton) + "; Path=/; Max-Age=31536000; SameSite=Lax",
+        "Set-Cookie": "jeton=" + encodeURIComponent(jeton) + "; Path=/; Max-Age=31536000; SameSite=Lax",
         Location: "/",
       });
       return res.end();
