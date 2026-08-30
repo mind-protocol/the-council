@@ -34,6 +34,7 @@ function traiter(req, res, url) {
                     String(d.texte)];
       execFile(process.env.PYTHON || "python", args,
         { cwd: RACINE, timeout: 300000, maxBuffer: 4 * 1024 * 1024,
+          windowsHide: true,
           env: Object.assign({}, process.env, { PYTHONIOENCODING: "utf-8" }) },
         (err, stdout, stderr) => {
           if (err && !(stdout || "").trim()) {

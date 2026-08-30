@@ -2394,6 +2394,9 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
 #mode-input button .emb,#btn-libre .emb{font-size:1em;margin-right:5px;
   vertical-align:-1px;}
 #mode-input button{display:inline-flex;align-items:center;}
+/* sans ceci, le inline-flex ci-dessus bat le display:none de [hidden] —
+   les modes MJ restaient VISIBLES chez un homme incarne (vu au banc du 30.8) */
+#mode-input button[hidden]{display:none;}
 
 /* =========================================================
    LES PRÉSENTS SOUS LA CARTE — plus de couronne.

@@ -40,7 +40,8 @@ function traiter(req, res, url) {
           const p = spawn(process.env.PYTHON || "python",
             [path.join(RACINE, "scripts", "reveiller.py"),
              "--de", (siege && siege.personnage_id) || "joueur"],
-            { cwd: RACINE, detached: true, stdio: "ignore" });
+            { cwd: RACINE, detached: true, stdio: "ignore",
+              windowsHide: true });  // sinon chaque action ouvre une console
           p.unref();
         } catch (e) { /* un reveil rate ne perd rien : l'inbox garde l'acte */ }
         // Ce que le joueur dit ou fait entre dans le flux : sans cela, sa parole

@@ -197,7 +197,10 @@
     // JOUEUR (penser, coulisses, laisser faire, intervention) se rangent — cet
     // homme-là n'a que ses quatre verbes vers son arbitre.
     (function tailler(essais) {
-      if (window.Moi === null && essais > 0)
+      // == et non === : avant que bus.js ait pose son null initial, Moi est
+      // UNDEFINED — le === laissait filer ce cas et la taille n'avait jamais
+      // lieu (vu au banc du 30.8 : Penser visible chez un homme incarne).
+      if (window.Moi == null && essais > 0)
         return setTimeout(() => tailler(essais - 1), 300);
       if (!window.Moi || !window.Moi.hors_roster) return;
       boutons.faire.hidden = false;
