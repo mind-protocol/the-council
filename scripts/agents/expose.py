@@ -48,6 +48,10 @@ from agents.parloir import main as parloir_main  # noqa: E402,F401 — l'entree 
 from agents import depeche  # noqa: E402,F401 — relit cette porte : affecter deja lie
 depecher = depeche  # l'ancien nom, que la facade et boucle_activation demandent
 from agents.depeche import main as depecher_main  # noqa: E402,F401 — l'entree CLI de la facade
+# Le pas 4 (habitant.md §3-§4) : le reveil en CALL du MJ de zone — session
+# continue sans date, verdict sur stdout. Lie APRES depeche : il relit
+# agents.depeche.brief, qui doit etre charge.
+from agents import zone  # noqa: E402,F401 — lu par parloir (les verbes) et mission (l'arbitre)
 # Descendue au lot 2 : le paquet agents/activation/, plus la commande racine.
 from agents import activation  # noqa: E402,F401 — relit cette porte : depecher deja lie
 boucle_activation = activation  # l'ancien nom, que la facade et les bancs demandent

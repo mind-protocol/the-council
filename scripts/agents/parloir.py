@@ -34,6 +34,8 @@
 #
 # Usage :
 #     python scripts/parloir.py --dire --de mj --a le-sanglier "Reviens au quai"
+#     python scripts/parloir.py --tenter --de gerardys --a mj "je pars sur mon cheval"
+#     python scripts/parloir.py --demander --de gerardys --a mj "que disent les registres ?"
 #     python scripts/parloir.py --dire --de mj --a mj-aurore "Gerardys est a toi"
 #     python scripts/parloir.py --dire --de mj --a tous "On ouvre la salle"
 #     python scripts/parloir.py --ecouter --qui le-sanglier
@@ -305,6 +307,19 @@ def rendre(neuf, pour):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--dire", action="store_true")
+    # LES VERBES (docs/habitant.md §3, pas 4) : l'acces de l'homme au monde,
+    # par le meme adressage que --dire. La resolution est la convention
+    # est_un_mj, et elle seule : `mj` et `mj-*` -> un MJ de zone, appele en
+    # CALL (le verdict est le retour de commande, dans le fil de sa pensee) ;
+    # le reste -> un homme, depot simple (son reveil est le pas 5).
+    ap.add_argument("--tenter", action="store_true",
+                    help="je tente — l'arbitre de zone tranche en coulisse")
+    ap.add_argument("--faire", action="store_true",
+                    help="je propose un changement au monde")
+    ap.add_argument("--demander", action="store_true",
+                    help="que dit le monde ? — reponse depuis l'etat seul")
+    ap.add_argument("--modele", default=None,
+                    help="modele du MJ de zone (verbes seulement)")
     ap.add_argument("--de", default=None)
     ap.add_argument("--a", default=None)
     ap.add_argument("texte", nargs="*")
@@ -378,6 +393,30 @@ def main():
             for c in glob.glob(os.path.join(CURSEURS, "%s.*" % fil)):
                 os.remove(c)
         print(u"fil(s) clos : %s" % (u", ".join(vises) or u"aucun"))
+        return
+
+    verbe = (u"TENTER" if a.tenter else u"FAIRE" if a.faire
+             else u"DEMANDER" if a.demander else None)
+    if verbe:
+        if not (a.de and a.a and a.texte):
+            raise SystemExit(u"--%s veut --de, --a et un texte"
+                             % verbe.lower())
+        mot = u" ".join(a.texte)
+        # LA TRACE PHYSIQUE D'ABORD : le mot entre au fil comme un --dire —
+        # ce qui s'est dit s'est dit, meme si l'appel echoue ensuite.
+        fil = dire(a.de, a.a, u"[%s] %s" % (verbe, mot))
+        if not est_un_mj(a.a):
+            # Un homme : depot simple — son reveil est le pas 5.
+            print(u"dit a %s (fil %s)" % (a.a, fil))
+            return
+        # LE CALL (habitant.md §4) : on a besoin du verdict pour continuer.
+        # Import tardif — la porte lie zone apres parloir (l'ordre des
+        # imports d'expose.py est une contrainte).
+        from agents.expose import zone as _zone
+        verdict = _zone.appeler_zone(a.a, a.de, mot, verbe, modele=a.modele)
+        # Le verdict est AUSSI une trace physique : la reponse du MJ, au fil.
+        dire(a.a, a.de, verdict)
+        print(verdict)
         return
 
     if a.dire:

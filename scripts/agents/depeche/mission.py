@@ -60,6 +60,10 @@ def mission(qui, brief, consigne, contexte=None):
     ajout = ses_trous(qui) + sa_charge_ailleurs(qui) + on_lattend(qui) + ajout
     from agents.expose import chambre as _ch
     sa_chambre = _ch.chemin(qui).replace("\\", "/")
+    # SON ARBITRE DE ZONE (habitant.md §3, pas 4) : d'apres sa ville — la
+    # zone du joueur est `mj`, les autres `mj-<ville>` ; a defaut, `mj`.
+    from agents.expose import zone as _zone
+    arbitre = _zone.arbitre_de(qui)
     # LES BILLETS ENTRENT EN PERCEPT (habitant.md §3) : « Untel t'a écrit :
     # "…" » — jamais une invitation à ouvrir un fichier (2/2 ignorée aux
     # essais). Le curseur n'avance qu'au lancement réussi (marquer_lus, dans
@@ -94,10 +98,24 @@ monde que tes yeux et tes mains peuvent consulter. Ton étagère se trouve dans
 ces sources ; `Grep` localise un passage dans les grands journaux avant sa
 lecture.
 
-Le parloir apporte une parole au milieu de ton travail. Lorsqu'une parole y
-arrive, cette commande porte ta réponse dans la pièce :
+## Ton arbitre, et tes trois verbes
 
-    python %(parloir)s --dire --de %(qui)s --a mj "..."
+Ton arbitre de zone est `%(arbitre)s`. Quand ton geste engage le monde, tu le
+lui adresses par l'un des trois verbes — le verdict revient comme retour de
+commande, dans le fil de ta pensée :
+
+    python %(parloir)s --tenter --de %(qui)s --a %(arbitre)s "je pars sur mon cheval"
+    python %(parloir)s --faire --de %(qui)s --a %(arbitre)s "je déplace ce livre"
+    python %(parloir)s --demander --de %(qui)s --a %(arbitre)s "l'histoire de cette tour ?"
+
+TENTER : tu tentes, l'arbitre tranche en coulisse. FAIRE : tu proposes un
+changement au monde. DEMANDER : tu demandes ce que le monde dit — la réponse
+vient des registres seuls.
+
+Le parloir apporte aussi une parole au milieu de ton travail. Lorsqu'une
+parole y arrive, cette commande porte ta réponse dans la pièce :
+
+    python %(parloir)s --dire --de %(qui)s --a %(arbitre)s "..."
 
 Puis ta journée continue depuis ce nouvel échange.
 
@@ -125,6 +143,7 @@ Tes affaires ouvertes, pour mémoire :
 %(travaux_ids)s
 %(ajout)s""" % {
         "chambre": sa_chambre,
+        "arbitre": arbitre,
         "depot": depot,
         "parloir": PARLOIR_PY,
         "qui": qui,
