@@ -15,8 +15,8 @@
  * et le pose comme une propriete d'architecture ; c'en est une ici aussi.
  *
  * LE MANIFESTE EST LA DECISION, PAS UNE LISTE : ce qui verifie ce depot est
- * ENONCE ici, une fois,
- * avec le rang de chaque epreuve et la raison de ce rang. Une epreuve neuve
+ * ENONCE ici, une fois, avec le rang de chaque epreuve et la raison de ce
+ * rang. Une epreuve neuve
  * entre par ce fichier, et par lui seul — sinon l'on retombe sur des listes qui
  * divergent en silence, ce que ce depot a deja paye.
  *
