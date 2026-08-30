@@ -1,0 +1,1131 @@
+====================================================================================================
+MIGRER LA BATAILLE VERS LA STACK
+====================================================================================================
+id      : affaire-migrer-la-bataille-vers-la-stack
+type    : plan
+salle_id : la-souche
+lieu_id : barralfond
+embleme : 🌳
+
+🧭 Première affaire de **BARRALFOND**, tenue par NICOLAS REYNOLDS, l'Équerre. Ouverte à la Souche le
+3e jour de la 4e lune, an 129. Plage 90000 à 90999. Porte sur le MOTEUR ; ne touche rien de `etat/`.
+
+----------------------------------------------------------------------------------------------------
+AFFAIRE OUVERTE À LA SOUCHE, LE 3e JOUR DE LA 4e LUNE, AN 129.
+
+**CE QU'ON VEUT.** Que `bataille2d.js` finisse sa migration vers le format en couches, et
+complètement : plus une seule décision d'homme qui sorte de la cascade de `soldat()`. Trois choses
+ensemble, jamais deux sur trois — **la bataille a du sens quand on la cuit**, **elle se voit sur
+l'interface**, **et rien n'y tourne hors de la stack**.
+
+**OÙ ON EN EST, COMPTÉ SUR LE DISQUE ET NON DE MÉMOIRE.** `survival-stack/` porte trois couches :
+`1-corps.js` (93 ko), `3-interpretation.js`, `4-envie.js`. Il manque `2-reflexion.js` et l'arbitre.
+`jeu.html` charge les trois écrites. Et `bataille2d.js` — **6 957 lignes** — ne les cite que dans
+ses commentaires : le seul appel réel est `window.Envie.temperament`. La stack est chargée et ne
+conduit rien.
+
+**L'ÉTALON.** Quatre comptes sur la référence, depuis qu'on a retiré `PORTE_OUVERTE_ESSAI` : **5
+ordres déformés, 5 déclencheurs tombés, 14 initiatives, 54 coureurs**. Toute la migration se juge
+contre eux. Un écart se dit et s'explique ; il ne s'arrondit pas.
+
+----------------------------------------------------------------------------------------------------
+**POURQUOI ON NE RETIRE PAS LA CASCADE EN PREMIER.**
+
+Parce qu'elle fait aujourd'hui le travail des trois couches hautes, et qu'on n'a pas de quoi la
+remplacer : il manque la deuxième et l'arbitre. Retirer d'abord, c'est se retrouver avec une
+bataille qui ne décide plus rien et un étalon qu'on ne peut plus comparer à quoi que ce soit.
+
+L'ordre est donc : **cuire pour fixer l'étalon** (90100), **voir** (90200), **puis remplacer morceau
+par morceau en cuisant à chaque cran** (90300). C'est la marche que le README de `survival-stack`
+s'est écrite à lui-même le 3e — « on ne valide pas une couche en la regardant calculer à côté » — et
+personne ne l'a suivie depuis.
+
+**LA COLONNE DES VERROUS PORTE DEUX LIGNES ET S'ARRÊTE LÀ.** Les deux sont comptées sur le disque.
+Le reste attend que Bren remonte du Lit des Racines : un verrou gravé d'en haut est un trou
+mécanique, et un trou mécanique ne vaut rien.
+
+----------------------------------------------------------------------------------------------------
+🏰 OUVERTURE DE L'AFFAIRE
+----------------------------------------------------------------------------------------------------
+
+  [1]
+    🧱 Le champ : 🏷️ **LE NOM**
+    ✍️ Ce qu'on y écrit : Migrer la bataille vers la stack
+    📖 La règle du champ : Le sujet dont on traite, **jamais la solution**.
+    ✅ Rempli ? : **oui**
+
+  [2]
+    🧱 Le champ : 🎯 **L'OBJET**
+    ✍️ Ce qu'on y écrit : Terminer la migration de `bataille2d.js` vers le
+                          format en couches, **complètement** : plus une
+                          décision d'homme qui sorte de la cascade.
+    📖 La règle du champ : Ce qu'on veut obtenir, en une phrase, mesurable.
+    ✅ Rempli ? : **oui**
+
+  [3]
+    🧱 Le champ : 🧱 **LE PÉRIMÈTRE — DANS**
+
+  [4]
+    🧱 Le champ : 🚫 **LE PÉRIMÈTRE — HORS**
+
+  [5]
+    🧱 Le champ : 📌 **L'ÉTAT ACTUEL**
+
+  [6]
+    🧱 Le champ : 🔢 **LA PLAGE**
+
+  [7]
+    🧱 Le champ : 💡 **LA CONCLUSION**
+
+  [8]
+    🧱 Le champ : 🔚 **FERMÉE QUAND**
+
+----------------------------------------------------------------------------------------------------
+🔗 AFFAIRES LIÉES — LES LIENS ÉCRITS, PUIS LES CALCULÉS
+----------------------------------------------------------------------------------------------------
+  🪢 Le lien | 🔗 L'affaire | 🔢 Notre pièce | 🔢 La leur | 📝 Pourquoi
+  ----------+-------------+---------------+-----------+-----------
+            |             |               |           |           
+
+----------------------------------------------------------------------------------------------------
+⛓️ CE QUI PEND, ET SUR QUI — CALCULÉ, NE PAS ÉCRIRE À LA MAIN
+----------------------------------------------------------------------------------------------------
+  🧭 Sens | 🔢 Notre pièce | 🔢 La leur | 🔗 L'affaire     
+  -------+---------------+-----------+-----------------
+  —      |               |           | rien ne traverse
+
+----------------------------------------------------------------------------------------------------
+🔨🪶 CE QU'ON ENGAGE, ET QUI D'AUTRE LE VEUT — CALCULÉ, NE PAS ÉCRIRE À LA MAIN
+----------------------------------------------------------------------------------------------------
+  🔢 La pièce | ⚔️ Nos actions | 🔗 Aussi engagée par      
+  -----------+----------------+--------------------------
+  —          |                | aucun moyen, aucun office
+
+----------------------------------------------------------------------------------------------------
+🕳️ LES TROUS — CALCULÉ, NE PAS ÉCRIRE À LA MAIN
+----------------------------------------------------------------------------------------------------
+
+  [1]
+    🕳️ Le défaut : 🔒 verrou qu'aucune clef n'ouvre — il est mal nommé
+    🔢 Les pièces : 🔒 90110 · 🔒 90120 · 🔒 90130 · 🔒 90140 · 🔒 90150 · 🔒 90220 · 🔒
+                   90230 · 🔒 90240 · 🔒 90250 · 🔒 90260 · 🔒 90310 · 🔒 90320 · 🔒
+                   90330 · 🔒 90340 · 🔒 90350 · 🔒 90360 · 🔒 90370 · 🔒 90380
+
+  [2]
+    🕳️ Le défaut : 🔤 office ou moyen nommé en clair — écrire son numéro, sans
+                   quoi le lien n'existe pas pour la machine
+    🔢 Les pièces : ⚔️ 90010 · ⚔️ 90011 · 🔒 90110 · ⚔️ 90210 · ⚔️ 90211 · ⚔️ 90221
+                   · ⚔️ 90231 · 🔒 90310 · ⚔️ 90311 · ⚔️ 90312 · 🔒 90320 · ⚔️
+                   90381
+
+  [3]
+    🕳️ Le défaut : 🔀 erreur de genre — la colonne attend un rang et porte l'autre
+                   : le renvoi ne remonte pas
+    🔢 Les pièces : 🔒 90310
+
+  [4]
+    🕳️ Le défaut : ↗️ raccourci — le renvoi saute un rang de la chaîne du guide
+    🔢 Les pièces : ⚔️ 90010 · ⚔️ 90011 · ⚔️ 90210 · ⚔️ 90211 · ⚔️ 90221 · ⚔️
+                   90231 · ⚔️ 90311 · ⚔️ 90312 · ⚔️ 90381
+
+----------------------------------------------------------------------------------------------------
+🎯 ÉTATS CIBLES — LES TROIS, OU RIEN
+----------------------------------------------------------------------------------------------------
+
+  [1]
+    🎯 N° : **90100**
+    🎯 L'état cible : **La bataille a du sens en cuisson**
+    📏 La preuve : `python scripts/bataille.py --cuire` rend une nuit dont les
+                  comptes tiennent debout et se reproduisent : ordres déformés,
+                  déclencheurs tombés, initiatives, coureurs. La référence du 14
+                  août est **5, 5, 14 et 54** — un écart se dit et s'explique, il
+                  ne s'arrondit pas.
+    📅 Jour dû : J−6
+
+  [2]
+    🎯 N° : **90200**
+    🎯 L'état cible : **La bataille est visible sur l'interface**
+    📏 La preuve : La nuit cuite se regarde dans le jeu, pas seulement dans un sac
+                  : on voit la ligne céder, la panique courir, la rue bouchonner.
+                  Ce que la vue de bataille dépose au MJ toutes les trente
+                  secondes doit montrer la même chose que ce que la stack a
+                  décidé.
+    📅 Jour dû : J−3
+
+  [3]
+    🎯 N° : **90300**
+    🎯 L'état cible : **Rien ne tourne hors de la stack**
+    📏 La preuve : Aucune décision d'homme ne sort plus de la cascade de
+                  `soldat()`. `bataille2d.js` ne garde que le sol, le temps et le
+                  rendu ; tout ce qui pense est dans `survival-stack/`.
+    📅 Jour dû : J−0
+
+----------------------------------------------------------------------------------------------------
+🔒 VERROUS
+----------------------------------------------------------------------------------------------------
+
+  [1]
+    🔒 N° : **90310**
+    🔒 Le verrou : **Il manque `2-reflexion.js`**, et l'arbitre avec
+    🎯 Bloque : 90300
+    🔎 La preuve : Compté sur le disque : `survival-stack/` porte `1-corps`,
+                  `3-interpretation`, `4-envie`. La deuxième couche et l'arbitre
+                  n'existent pas. La cascade ne peut pas être retirée tant que
+                  rien ne tient leur place.
+
+  [2]
+    🔒 N° : **90320**
+    🔒 Le verrou : **La cascade de `soldat()` décide encore de tout ce que les
+                  couches ne conduisent pas** — ce n'est plus « chargé n'est pas
+                  branché », c'est « branché à moitié, et hors de la stack »
+    🎯 Bloque : 90300
+    🔎 La preuve : ⚠ Corrigé le 3e sur le disque, par Bren et Wenna : la formule «
+                  elles ne conduisent rien, seul `window.Envie.temperament` est
+                  appelé » était fausse. `bataille2d.js` l. 3035–3092 :
+                  `h.l1.jambes` conduit `sidération`, `fuite`, `recul`, `serrer`,
+                  `ruée`, et `h.brasMorts` retire les bras.
+                  `window.Interpretation.pas` est appelé l. 3406, `deSoiMeme` l.
+                  4507, et la couche 4 conduit le pillage l. 3593. Le drapeau
+                  `pilote` et le seuil d'emprise 0,60 sont tombés (l. 3007–3022).
+                  Deux couches sur trois conduisent déjà ; `planté` ne prend rien
+                  à dessein. Et le branchement ne vit PAS dans `survival-stack/` :
+                  il est dans `ecrans/modules/bataille/corps-adapt.js`, 372
+                  lignes, chargé par `jeu.html` l. 164, que ce volume ne nommait
+                  nulle part. Ce qui reste vrai et qui EST le verrou : tout le
+                  reste de la décision d'homme sort encore de la cascade, et
+                  l'étape 3 — élargir en mesurant à chaque cran — n'est pas
+                  commencée.
+
+  [3]
+    🔒 N° : **90110**
+    🔒 Le verrou : **L'étalon 5, 5, 14 et 54 confond deux causes** — le drapeau
+                  retiré et les couches hautes branchées sont tombés dans le même
+                  anneau
+    🎯 Bloque : 90100
+    🔎 La preuve : **Verdict rendu le 129.4.3** —
+                  `analyse/etalon-90110/deux-causes.js`, quatre bras, 1700 hommes
+                  et 150 s, un seul changement à la fois. Tel-quel **3, 5, 4, 47**
+                  (cuit deux fois, à deux heures de machine : même quatuor, la
+                  graine tient) · `--porte-ouverte` **0, 0, 5, 27** ·
+                  `--sans-interpretation` **3, 5, 3, 48** · `--sans-couches`
+                  **impossible**, voir 🔒 90130. **Le drapeau a bougé trois comptes
+                  sur quatre, et à lui seul** : les ordres déformés et les
+                  déclencheurs tombent à 0 et 0 quand la porte se rouvre et ne
+                  bougent pas d'une unité quand on ôte l'interprétation ; les
+                  coureurs passent de 47 à 27 par le seul drapeau, et de 47 à 48
+                  sans l'interprétation, c'est-à-dire rien. La condition du
+                  chiffre, sans laquelle il ne vaut rien : graine **20161219**
+                  (`bataille/hasard.js` l.32), tenue par `H`, repli
+                  `Math.random()` non servi · ville **an 129, 4e lune, jour 3,
+                  minute 721 (12h01)**, lue en direct dans `etat/monde.json` ·
+                  **peuple 0, tournée 0, planches 0** — le banc monte la chaîne
+                  seule, il ne cuit pas par `sac.js` · empreintes sha256 : hasard
+                  `23fdcd8a79ef`, mesures `276ac2005d44`, 1-corps `6a5931973375`,
+                  corps-adapt `2986fe65a2c9`, 4-envie `76a2c6fbc4dd`,
+                  3-interpretation `0f0e474a453e`, bataille2d `594eba8429bc` ·
+                  drapeaux : `PORTE_OUVERTE_ESSAI`=`false`, 3-interpretation
+                  branchée, 4-envie branchée · **1700 hommes, 150 s — ce ne sont
+                  PAS les 600 s de la référence** : ce verdict porte sur des
+                  parts, pas sur les 5, 5, 14 et 54. Le détail est dans
+                  `analyse/etalon-90110/VERDICT-90110.md`.
+
+                  ⚠ **CORRIGÉ LE MÊME JOUR PAR CELUI QUI L'A ÉCRIT, ET UNE LIGNE
+                  EN SORT.** Le banc recuit avec la GRAINE SEULE changée — rien
+                  d'autre, pas une ligne de source — rend **4, 5, 5, 48** (graine
+                  20161220) et **3, 5, 1, 47** (graine 424242) contre 3, 5, 4, 47.
+                  **La ligne « les initiatives : l'interprétation en vaut une sur
+                  quatre, 4 contre 3 » est du bruit, et je la retire** : ce
+                  compte-là va de 1 à 5 sous la seule urne. Ce qui tient et reste
+                  hors de toute bande : le drapeau — 3 et 5 vers 0 et 0, 47 vers
+                  27. Ce qui reste vrai aussi : la part de `4-envie` n'est pas
+                  mesurable, elle ne se débranche pas. Voir 🔒 90150 (l'urne est
+                  unique) et `analyse/etalon-90110/REGLE-DE-LECTURE.md`.
+
+  [4]
+    🔒 N° : **90330**
+    🔒 Le verrou : **Deux modèles de peur décident en même temps** — la couche est
+                  branchée, l'ancien n'est pas déposé
+    🎯 Bloque : 90300
+    🔎 La preuve : Étalon posé dans `ecrans/modules/bataille/corps-adapt.js` l.150
+                  : **2801 lignes de code** hors commentaires avant le refacto.
+                  Mesuré le 3e jour de la 4e lune — `grep -vE '^\s*(//|/\*|\*)' …
+                  | wc -l` — : **2980**, soit **+179**. `morale`, `ROMPT`, `CHOC`,
+                  `SANG`, `REPRISE`, `PLANCHER_FERME`, `survie()` décident encore
+                  à côté de `h.l1`. Deux modèles qui disent la même chose avec des
+                  pièces différentes ne se départagent jamais : on hérite du pire
+                  des deux sans savoir lequel produit quoi.
+
+  [5]
+    🔒 N° : **90340**
+    🔒 Le verrou : **Onze transitions d'état d'un homme ne passent pas par
+                  `soldat()`**
+    🎯 Bloque : 90300
+    🔎 La preuve : ⚠ Descendu entierement le 3e de la 4e lune, et le compte de onze
+                  est a corriger. **Onze fonctions, QUATORZE ecritures d'etat** —
+                  lignes relevees le 129.4.3 au matin, le fichier ayant gagne
+                  quatre lignes pendant la descente meme (7 013 → 7 017) :
+                  `dresser` 1780·1810·1818, `tomber` 2832, `achever` 2872,
+                  `rompre` 2921, `envoyerAuDonjon` 3895, `courirAuDonjon` 3929,
+                  `ouvrirDeDedans` 4060, `envoyerCoureur` 4617, `rendreCoureur`
+                  4724, `rallier` 4833, `piller` 6519·6540. **(1) LAQUELLE LIT LA
+                  COUCHE : une seule.** `rallier` l.4832 — et c'est le SEUL acces
+                  a `h.l1` de tout le fichier hors `soldat()`, verifie par
+                  recherche de `h.l1|h.l2|h.l3|h.l4|BatailleCorps|QuiConduit`.
+                  `window.QuiConduit` n'y parait pas une fois : l'arbitre est
+                  charge et jamais appele. **(2) LAQUELLE ECRIT UN DRAPEAU :
+                  aucune, zero sur onze.** `corpsAgi` n'est ecrit qu'en l.3083 et
+                  l.3142, tous deux DANS le bloc de la couche de `soldat()`. **(3)
+                  CE QUE CA COUTE : huit des onze ne coutent RIEN, et c'est le
+                  fait neuf.** Le bloc de la couche (2983-3145) passe AVANT tous
+                  les aiguillages de la cascade — `deroute` l.3182, `coureur`
+                  l.3227, `rentre` l.3233, `pille` l.3603 : l'homme qu'elles
+                  deplacent est reobserve au battement suivant et son drapeau se
+                  reecrit. **Trois font exception, pour deux raisons
+                  differentes.** `dresser` (1780·1810·1818) **n'est pas une
+                  transition** : c'est la pose initiale, avant le premier
+                  battement, quand `h.l1` n'existe pas — rien a lire, rien a
+                  ecrire, rien a compter ; trois des onze tombent. Restent
+                  `tomber` l.2832 → `blesse` et `achever` l.2872 → `mort`, et **la
+                  se trouve le trou de Wenna** : `soldat()` sort l.2972 sur
+                  `blesse` et l.2971 sur `tete`, AVANT `observer()` l.2987 ; or
+                  rien n'efface `h.l1` — sa seule ecriture dans tout le depot est
+                  `bataille/corps-adapt.js` l.362, dans `observer()`. Un homme qui
+                  tombe garde jusqu'au matin la sortie de couche de son dernier
+                  coup d'oeil, `corpsAgi` compris. Porte neuf en 🔒 90260, avec sa
+                  mesure. ⚠ Renvois mis a jour : `5-qui-conduit.js`,
+                  `window.QuiConduit`, `h.l1.pilote` → `h.l1.corpsAgi`.
+
+  [6]
+    🔒 N° : **90120**
+    🔒 Le verrou : **Une couche neuve qui tire son hasard ailleurs casse la
+                  reproductibilité, et ça s'est déjà produit**
+    🎯 Bloque : 90100
+    🔎 La preuve : `corps-adapt.js` l.182–194 : la couche appelait `Math.random()`.
+                  Sous le seuil de 0,6 d'emprise — 3 % des hommes — la relecture
+                  du four tenait : écart pire **0,600 m**, **3** états faux sur
+                  2,19 M. Le seuil retiré, elle conduit tout le monde : écart pire
+                  **329 m**, **931 172** états faux. Corrigé par
+                  `window.BatailleHasard`, mais rien n'oblige `2-reflexion.js` ni
+                  l'arbitre à en faire autant : le trou se rouvre à chaque couche
+                  écrite.
+
+  [7]
+    🔒 N° : **90360**
+    🔒 Le verrou : **Les quatre sorties ne sont jamais fraîches au même instant** —
+                  la main qui désigne n'a aucun endroit où se tenir
+    🎯 Bloque : 90300
+    🔎 La preuve : Trouvé en nommant le cinquième fichier, compté sur le disque le
+                  3e. `h.l1` se rafraîchit au rythme de l'ŒIL de l'homme dans
+                  `ecrans/modules/bataille/corps-adapt.js` (l. 18) ; `h.l3` à la
+                  réception d'un ordre, `bataille2d.js` l. 3406, puis une seconde
+                  fois l. 4507 pour `deSoiMeme` ; `h.l4` l. 1431 (tempérament), l.
+                  3576 (butin) et l. 4481 (patience). **Cinq appels, trois
+                  rythmes, aucun rendez-vous.** Une SOMME s'en serait accommodée
+                  en lisant du périmé ; une MAIN qui désigne laquelle des quatre
+                  conduit ce geste-ci ne le peut pas — elle départagerait une
+                  couche fraîche et trois souvenirs, et l'on ne saurait jamais si
+                  l'erreur vient du choix ou de l'âge des sorties. Se lèverait par
+                  un point de passe unique, un par homme et par pas, où les quatre
+                  sont appelées dans l'ordre avant que rien ne soit conduit. À
+                  créer AVANT la première ligne de `5-qui-conduit.js`.
+
+  [8]
+    🔒 N° : **90370**
+    🔒 Le verrou : **Rien n'appelle `2-reflexion.js`** — la couche est chargée,
+                  l'arbitre l'attend, et personne ne la fait tourner
+    🎯 Bloque : 90300
+    🔎 La preuve : Compté sur le disque le 3e, en branchant `5-qui-conduit.js` :
+                  `grep -rn "Reflexion" ecrans/ scripts/ serveur/` hors du module
+                  lui-même rend **zéro occurrence**, et `h.l2` **n'existe nulle
+                  part** dans les 6 957 lignes de `bataille2d.js`. Les trois
+                  autres couches ont leur pourvoyeur : la 1 a
+                  `bataille/corps-adapt.js`, **372 lignes** qui lui bâtissent
+                  angles, voisins, stimuli et l'horloge de l'œil ; les 3 et 4 sont
+                  nourries en ligne dans `soldat()` (3406, 4507, 1431, 3576,
+                  4481). **La 2 n'a rien.** Conséquence mesurable et non supposée
+                  : `prendReflexion(undefined)` rend 0, donc la couche ne prétend
+                  jamais à rien, donc l'arbitre branché demain conduirait
+                  **exactement ce que la cascade conduit déjà** — on aurait un
+                  cinquième fichier, un banc vert, et pas un homme qui se conduise
+                  autrement. Le verrou 90350 (`degage` absent) en est un cas
+                  particulier : il manque UN signal ; ici il manque le pourvoyeur
+                  entier. Se lèverait par un `bataille/reflexion-adapt.js`, jumeau
+                  de `corps-adapt.js`, qui bâtit `degage`, `versLuiX/Y`,
+                  `versEuxX/Y`, `alarme`, `trempe` et `epaule` depuis `h`, et pose
+                  `h.l2`.
+
+  [9]
+    🔒 N° : **90220**
+    🔒 Le verrou : **`moraleMoyenne` porte trois quantites differentes sous un seul
+                  nom** — le seul nombre de la vue qui vienne de la stack ne se
+                  lit pas
+    🎯 Bloque : 90200
+    🔎 La preuve : `bataille2d.js` l.6617 (lignes relevees le 129.4.3 vers midi ;
+                  le fichier a deja bouge de cinq lignes ce matin) : la valeur est
+                  la moyenne de `h.l1.reflexe`, qui vit sur [-1, 1] et vaut -1 AU
+                  REPOS — `survival-stack/1-corps.js` l.92, « le zero juste tient
+                  toujours : reflexe -1,00 », et l.1272-1273, un corps sans
+                  reflexe est pose a -1. Le NOM est reste celui de la jauge
+                  deposee, qui vivait sur [0, 1] et ou 1 valait bien. Les vues
+                  DEPOSEES portent trois regimes sous ce seul nom :
+                  `etat/vues/rhaenyra.json` rend +0,97 puis +0,91 quand les morts
+                  vont de 13 a 39 ; `etat/vues/marlo-vasse.json` rend `null` sur
+                  ses dix vues, de 342 s a 572 s — un NaN serialise en silence,
+                  pendant que tous les comptes de la cascade restaient pleins et
+                  plausibles ; `etat/vues/nicolas-reynolds.json` rend -0,93 puis
+                  -0,95 quand les morts vont de 235 a 355. Rien dans la vue ne dit
+                  lequel des trois on lit. Deux defauts de plus dans le meme
+                  calcul : le repli `h.l1 ? h.l1.reflexe : -1` rend exactement -1
+                  quand AUCUN homme n'a de couche, donc une armee sans stack et
+                  une armee parfaitement calme rendent le meme chiffre ; et
+                  l'amplitude est nulle a l'usage — 277 secondes et 120 morts de
+                  plus font bouger le nombre de 0,02.
+
+  [10]
+    🔒 N° : **90230**
+    🔒 Le verrou : **Le seul canal ou la stack se nomme dans la vue, `branches`,
+                  ecarte par construction les hommes dont la stack vient de
+                  decider**
+    🎯 Bloque : 90200
+    🔎 La preuve : Cinq libelles seulement disent qu'un corps a pris la main :
+                  `bataille2d.js` l.3043, 3048, 3068, 3080, 3090 — « sidere », «
+                  son corps a rompu avant sa tete », « son corps cede le pas », «
+                  son corps cherche l'epaule », « son corps est parti en avant,
+                  seul ». Ils passent dans la vue par le releve `branches`,
+                  l.6565-6571, qui ecarte l.6567-6568 tout homme qui n'est pas de
+                  l'assaut, toute tete, tout `hors`, et tout homme `mort` ou
+                  `deroute`. Or la branche `fuite` appelle `rompre(h)` l.3047, qui
+                  pose `h.etat = "deroute"` l.2894 : la decision la plus lourde de
+                  la couche 1 — le corps rompt avant la tete — ecrit une branche
+                  qui n'est JAMAIS comptee, a la seconde ou elle est ecrite.
+                  Mesure sur les dix vues de `etat/vues/nicolas-reynolds.json`, de
+                  620 s a 897 s et 355 morts : `fuyards` 0, aucun `deroute` dans
+                  `etats`, et deux hommes sur 1460 portant un libelle « son corps
+                  », a la derniere vue seulement. La stack tient donc dans la vue
+                  par deux points sur mille cinq cents, et son geste principal par
+                  zero.
+
+  [11]
+    🔒 N° : **90240**
+    🔒 Le verrou : **L'image ne lit RIEN de la stack** : la vue ne PEUT PAS
+                  distinguer ce que la stack a decide de ce que la cascade a
+                  decide, et c'est l'image qui porte l'etat cible
+    🎯 Bloque : 90200
+    🔎 La preuve : L'etat cible demande qu'on VOIE la ligne ceder ; ce qui part au
+                  MJ est une image plus une legende — `ecrans/modules/capture.js`
+                  l.270 et l.276-293. Les deux toiles saisies sont `.cv-foule` et
+                  `.cv-bataille`, l.192. Ce qui peint un homme est `couleurDe(h)`,
+                  `bataille2d.js` l.5528-5531 : `h.etat` et `h.camp`, rien
+                  d'autre. Compte sur le fichier : `h.l1` y parait treize fois —
+                  l.3025, 3026, 3038, 3097, 4787, 6618, 6866-6875 — et pas une
+                  seule entre l.4787 et l.6618, intervalle qui contient
+                  `peindre()` (l.5599) et tous ses aides. AUCUNE trace de la
+                  couche 1 dans la peinture. Et quand la couche 1 conduit, elle
+                  s'exprime en REECRIVANT `h.etat` — l.3042 `tient`, l.3068
+                  `tient`, l.3080 `tient`, l.3090 `melee` — donc dans le meme mot
+                  que la cascade : un homme sidere par son corps est peint, compte
+                  dans `etats` et compte dans `assaut` exactement comme un homme
+                  que sa tete tient en ligne. Aucun cadrage, aucune cadence,
+                  aucune couche de plus n'y changeront rien : la separation
+                  n'existe pas dans la donnee que la vue transporte. ⚠ CE QUI LE
+                  LEVERAIT, descendu le 3e pour ⚔️ 90211 et rapporte a Toll : UNE
+                  LIGNE dans `etat()` (l.6617, a cote de `moraleMoyenne`) qui
+                  compte `h.l1.corpsAgi` SUR les hommes qui portent une `l1` —
+                  DEUX nombres et non un, sinon une armee sans stack et un corps
+                  qui ne prend rien rendent le meme zero, ce qui est la faute de
+                  90220 refaite. Rien d'autre a ouvrir : `capture.js` l.277
+                  embarque `Bataille2d.etat()` ENTIER dans la legende, donc le
+                  compte part au MJ sans toucher `peindre()`, ni la capture, ni
+                  une couche de plus. Et ce n'est PAS par les cinq libelles :
+                  `branche` est reecrit par qui decide a chaque battement (27
+                  ecritures, dont 22 de la cascade), tandis que les cinq de la
+                  couche ne s'ecrivent qu'au battement de l'OEIL — tout le bloc
+                  l.3025-3097 est dans `if (h.revoirCorps <= 0)` (l.2958, referme
+                  par le `else` l.3098), et `oeil()` l.1165 vaut environ 0,9 s
+                  contre `PAS` = 0,05 s (l.663). Un libelle de corps vit donc UN
+                  battement sur dix-huit, et une vue prise a l'instant en voit un
+                  dix-huitieme : c'est le chiffre qui manquait a 🔒 90230 — « deux
+                  hommes sur 1460 » n'est pas un defaut de filtre mais une
+                  dilution, et elargir le filtre l.6567 ne reparerait rien.
+                  `corpsAgi`, lui, n'est ecrit que DANS le bloc de l'oeil (l.3038
+                  et l.3097) : il tient toute la periode de l'oeil, et c'est le
+                  seul fait de la stack de ce fichier dont la duree de vie depasse
+                  un battement, donc le seul qu'une vue instantanee echantillonne
+                  sans biais. Ce que ce compte ne dit pas encore est porte neuf en
+                  🔒 90250.
+
+  [12]
+    🔒 N° : **90250**
+    🔒 Le verrou : **`corpsAgi` ne compte qu'un PLANCHER** — la couche 1 conduit
+                  deux fois hors du drapeau, et la vue lira « cascade » la ou la
+                  stack a conduit
+    🎯 Bloque : 90200
+    🔎 La preuve : Descendu au Lit des Racines le 3e, compte sur le disque. (1)
+                  `h.brasMorts = (b === "ballants")`, `bataille2d.js` l.3032, est
+                  pose AVANT les cinq branches et hors d'elles : un homme dont les
+                  jambes disent `planté` — qui « ne prend rien a dessein », l.3095
+                  — finit a `h.l1.corpsAgi = false` l.3097 alors que la couche
+                  vient de lui retirer les bras. `frapper()` sort des l.2647 sur
+                  `if (h.brasMorts) return`, et `survival-stack/1-corps.js` l.1528
+                  nomme le cas mot pour mot : « planté|ballants — Il est planté
+                  là, les bras tombés, et il ne se défend plus. » La stack
+                  conduit, le drapeau dit non. (2) `rallier` l.4787 lit
+                  `h.l1.jambes` hors de `soldat()` et n'ecrit aucun drapeau : le
+                  fuyard que la couche refuse de rallier est une decision de la
+                  stack qui n'apparait dans aucun compte. Tout releve fonde sur
+                  `corpsAgi` est donc un PLANCHER, et doit se dire tel au MJ au
+                  lieu de se lire comme un taux. Se leverait sans rien inventer :
+                  `survival-stack/5-qui-conduit.js` l.324 rend deja `{jambes,
+                  bras}`, chacun avec sa `main` nommee (`corps`, `ordre`, …) — le
+                  drapeau doit etre par EMPLACEMENT, de la forme de l'arbitre
+                  d'Ygga (⚔️ 90311), et non un booleen pour tout l'homme. Tant
+                  qu'il reste booleen, l'observation et l'arbitre diront deux
+                  choses differentes des le premier cran de 90312.
+
+  [13]
+    🔒 N° : **90380**
+    🔒 Le verrou : **La couche 1 est seule à l'envers de la convention de la
+                  maison** — `reflexe` est nommé du côté de la glande (−1 au
+                  repos), tous les autres signaux de la stack du côté favorable
+                  (+1)
+    🎯 Bloque : 90300 90200
+    🔎 La preuve : Constaté le 3e en nommant les trois quantités de 🔒 90220, et non
+                  supposé. `survival-stack/2-reflexion.js` l.82-84 écrit la règle
+                  de la maison et la déclare **non négociable** : « Tous dans [−1,
+                  1], tous nommés du côté favorable en +1 — la convention est
+                  celle des couches 3 et 4 […] : un signal qui s'inverse d'une
+                  couche à l'autre est une faute qu'on ne retrouve jamais. » Or
+                  `1-corps.js` pose `reflexe` à **−1 au repos** (l.92 « le zéro
+                  juste tient toujours : reflexe −1,00 » ; l.1272-1273, un corps
+                  sans réflexe est posé à −1) et +1 quand le fer est sur lui —
+                  soit **exactement le miroir de `alarme`** (`2-reflexion.js` l.87
+                  : « +1 tout est calme · −1 le fer est sur lui »), qui est la
+                  MÊME grandeur physique vue de la couche 2. Deux conséquences
+                  datées, pas craintes. ① `bataille/reflexion-adapt.js` **reste à
+                  écrire** (🔒 90370) et devra bâtir `alarme` : le geste naturel
+                  est de le nourrir depuis `h.l1.reflexe`, et **sans négation la
+                  couche 2 lira le calme comme la terreur** sur ses neuf clauses
+                  (l.126-127, 156, 178, 204-207) — une bataille entière décidée à
+                  l'envers, et rien qui jette. ② Le seul nombre de la stack qui
+                  parte au MJ le porte déjà : `etat/vues/nicolas-reynolds.json`
+                  publie **−0,94**, qui dit une armée AU REPOS et se lit
+                  spontanément comme une armée aux abois. Se lèverait **en nommant
+                  la grandeur du côté favorable dans la couche 1 aussi** — un
+                  `calme` = −`reflexe`, ou `reflexe` renommé et retourné à sa
+                  source — **et jamais en écrivant la conversion dans
+                  l'adaptateur** : une convention qu'on rattrape en route est
+                  celle qu'on oublie au troisième appelant. À trancher AVANT la
+                  première ligne de `reflexion-adapt.js`.
+
+                  ⚠ **CORRIGÉ LE 3e AU SOIR, PAR CELLE QUI L'A ÉCRIT.** Ce verrou
+                  disait que `reflexe` et `alarme` sont « la MÊME grandeur
+                  physique vue de la couche 2 ». **C'est faux**, et
+                  `bataille/reflexion-adapt.js` — écrit depuis, 294 lignes, chargé
+                  `jeu.html` l.179 — le prouve : l.156, 175 et 225, `alarme` se
+                  recalcule **entièrement à chaque battement** depuis l'ennemi le
+                  plus menaçant (`menForce`), sans une once de mémoire ; `reflexe`
+                  est une **charge** — `1-corps.js` l.996, `a + (cible − a)(1 −
+                  e^−dt/τ)`, τ montée **3 s**, τ descente **45 s** divisée par le
+                  fond et par ce qu'il a sous les yeux jusqu'à six fois (l.147,
+                  l.993). Un homme dont l'ennemi vient de tomber a `alarme` à +1
+                  au battement suivant — 0,05 s — et son réflexe encore haut
+                  quarante secondes plus tard. **Ce qu'il a DEVANT lui et ce que
+                  son corps en GARDE sont deux quantités**, et c'est pour cela que
+                  le remède ne peut pas être de nommer l'une par la négation de
+                  l'autre. **① EST DONC MORT** : Ygga n'a pas nourri `alarme`
+                  depuis `h.l1.reflexe`, aucune bataille n'est décidée à l'envers,
+                  et elle ne peut plus l'être par cette porte. **② TIENT ENTIER,
+                  et le mot a déjà commencé à couler** : `bataille2d.js` l.6669
+                  porte en commentaire « `moraleMoyenne` est devenue **l'alarme
+                  moyenne** » — le mot de la couche 2 posé sur la grandeur de la
+                  couche 1, un étage sous le champ, dans le fichier même qui
+                  publie au MJ. Tranché en ⚔ 90381.
+
+  [14]
+    🔒 N° : **90260**
+    🔒 Le verrou : **Un homme cesse d'etre observe a l'instant ou il tombe, et sa
+                  derniere sortie de couche reste comptee jusqu'au matin** — donc
+                  le compte de la stack n'est PAS un plancher : il est mine par le
+                  bas et gonfle par le haut
+    🎯 Bloque : 90200
+    🔎 La preuve : Descendu au Lit des Racines le 3e de la 4e lune, en repassant
+                  les onze transitions de 🔒 90340. **LE MECANISME, en deux lignes
+                  de code et rien de plus.** `soldat()` sort l.2972 sur `if
+                  (h.etat === "blesse")` et l.2971 sur `if (h.tete)`, c'est-a-dire
+                  AVANT l'appel a `observer()` l.2987 — c'est le trou que Wenna a
+                  montre. Et `h.l1` n'a **qu'une seule ecriture dans tout le
+                  depot** : `ecrans/modules/bataille/corps-adapt.js` l.362, a
+                  l'interieur d'`observer()`. Rien ne l'efface, rien ne le date,
+                  rien ne le perime. Un homme que `tomber` l.2832 met en `blesse`,
+                  ou qu'`achever` l.2872 met en `mort`, conserve donc jusqu'au
+                  matin la sortie de couche de son dernier coup d'oeil — `jambes`,
+                  `bras`, `reflexe`, `emprise` et `corpsAgi` — alors qu'il n'est
+                  plus regarde par personne. **COMBIEN, mesure et non suppose** :
+                  `etat/vues/nicolas-reynolds.json`, dix vues de 1 542 s a 1 812 s
+                  — **173 blesses sur 2 550 corps** a la derniere (169 a la
+                  premiere : ils s'accumulent toute la nuit). `moraleMoyenne`
+                  l.6673 n'ecarte que `mort` : les blesses de l'assaut entrent
+                  dans la moyenne avec un `reflexe` gele depuis leur chute, et un
+                  compte de `corpsAgi` bati sur le meme filtre les compterait de
+                  meme. Le releve `branches` l.6619 ecarte `mort` et `deroute`,
+                  pas `blesse` non plus. **CE QUE CA CASSE, ET C'EST LE MOT DE 🔒
+                  90250.** « Plancher » n'est honnete que si toutes les erreurs
+                  vont dans le meme sens. Or le gel se produit au corps-a-corps —
+                  c'est la qu'on tombe —, c'est-a-dire la ou l'alarme est haute et
+                  ou la couche prend le plus souvent la main : la population gelee
+                  **penche vers `corpsAgi = true`**. Le compte est donc mine par
+                  le bas (`planté|ballants` l.3073-3142, `rallier` l.4832) ET
+                  gonfle par le haut, et l'on ne peut plus le dire « au moins tant
+                  » au MJ. **CE QUI LE LEVERAIT** : deux gestes, aucun n'invente
+                  rien. Poser `h.l1 = null` dans `tomber` et dans `achever` — un
+                  homme qui ne sera plus jamais regarde n'a pas de sortie de
+                  couche, et `null` est deja la valeur que tout releve sait lire
+                  (`h.l1 ? … : null`, l.6921-6930). Et ecarter `blesse` au meme
+                  titre que `mort` dans `moraleMoyenne` l.6673. Tant que ni l'un
+                  ni l'autre n'est fait, tout nombre de la vue qui se fonde sur
+                  `h.l1` melange des decisions de l'instant et des decisions d'il
+                  y a une heure, sans que rien dans la vue ne dise lesquelles.
+
+  [15]
+    🔒 N° : **90350**
+    🔒 Le verrou : **`degage` n'existe pas** : aucun homme ne sait s'il a une
+                  retraite
+    🎯 Bloque : 90300
+    🔎 La preuve : Écrit en écrivant `2-reflexion.js`. `decider()` (2542‑2585) fait
+                  céder le pas sur le seul compte local et ne regarde JAMAIS
+                  derrière : un homme dos au mur recule dans le mur. Or un homme
+                  acculé se bat — c'est le fait le mieux établi du domaine, et la
+                  couche 2 le rend, mais seulement si on lui dit s'il est acculé.
+                  `h` ne porte rien de tel : ni sonde arrière, ni distance au
+                  bâti. Sans ce signal, `degage` vaut 0 partout et la couche 2 se
+                  comporte comme la cascade qu'elle remplace. Se lèverait par
+                  trois sondes en éventail derrière l'homme, sur le graphe de
+                  voirie, à la distance de trois secondes de marche.
+
+  [16]
+    🔒 N° : **90130**
+    🔒 Le verrou : **`compte.fuyards` n'est le compte de personne** — trois des
+                  cinq branches de `jambes` sortent un homme de `deroute` sans le
+                  décompter
+    🎯 Bloque : 90100 90200
+    🔎 La preuve : Descendu au Lit des Racines le 3e de la 4e lune, compté sur le
+                  disque et non de mémoire. **TROIS BRANCHES SUR CINQ.**
+                  `bataille2d.js` l.3085–3136 : la couche 1 ouvre cinq branches de
+                  `jambes`. Deux se gardent — `sidération` (3085) et `fuite`
+                  (3091) portent `&& h.etat !== "deroute"`. Les trois autres n'ont
+                  aucune garde et posent l'état sec avant de rendre la main :
+                  `recul` → `h.etat = "tient"` (3113), `serrer` → `"tient"`
+                  (3125), `ruée` → `"melee"` (3135), chacune suivie d'un `return`
+                  qui saute le bloc `h.etat === "deroute"` de l.3182. Or
+                  `compte.fuyards++` ne vit qu'en un seul endroit — `rompre()`
+                  l.2922 — et `compte.fuyards--` en un seul autre — `rallier()`
+                  l.4834 — qui n'est appelé QUE depuis ce bloc-là. L'entrée est
+                  comptée à tous les coups, la sortie une fois sur deux : le
+                  nombre n'est plus un compte, c'est le solde de deux registres
+                  tenus par des mains différentes, et il dérive dans les deux sens
+                  sans que rien ne le rattrape. **L'ÉCART ENTRE LES SIÈGES.** Dix
+                  vues de Nicolas Reynolds (`etat/vues/nicolas-reynolds.json`,
+                  2141,8 s → 2441,7 s) : **607 morts et 0 fuyard aux dix**. Les
+                  vues de Rhaenyra, prises avant que la couche 1 ne soit branchée
+                  (`couches: ["foule"]`), portent **13, 39 et 29**. ⚠ CE QUE JE
+                  N'AI PAS ÉTABLI, et il faut le lire avec le reste : le bloc
+                  `etats` de Reynolds ne porte même pas la clef `deroute`, donc
+                  pas un homme n'était en déroute à ces instants — le zéro est
+                  surdéterminé, et ces trois sorties muettes n'ont pas encore eu
+                  d'occasion de se taire. Le verrou tient sur le code, pas sur
+                  cette nuit-là. **POURQUOI IL BLOQUE LES DEUX.** Un compte de
+                  fuyards faux rend une nuit insensée (90100) avant de rendre une
+                  vue trompeuse (90200) : `sac.js` l.860 verse `fin.fuyards` dans
+                  l'issue, et la barre de lecture l.6253 l'affiche en clair. **CE
+                  QUI LE LÈVERAIT.** Une seule porte de sortie, comme `rompre()`
+                  est la seule porte d'entrée : que les trois branches passent par
+                  une `revenir(h)` qui décompte, ou qu'elles portent la même garde
+                  que les deux autres. Le choix n'est pas de ma main — je rapporte
+                  la nappe, le Fer taille.
+
+  [17]
+    🔒 N° : **90140**
+    🔒 Le verrou : **Le seul hasard de la bataille a un repli MUET, et il est sur
+                  sa propre ligne** — `H ? H.R() : Math.random()`
+    🎯 Bloque : 90100
+    🔎 La preuve : Trouvé par Toll Œil-Noir le 3e, vérifié et **recompté** le même
+                  jour : `ecrans/modules/bataille/corps-adapt.js` l.350 — `}, H ?
+                  H.R() : Math.random());`. **Il n'y en a qu'UN dans toute la
+                  chaîne de la bataille, pas deux** : `grep -rn "Math\.random"
+                  ecrans/modules/` rend cette ligne, puis `son.js` et `voix.js`
+                  seuls — qui ne cuisent pas. `5-qui-conduit.js` n'en porte
+                  **aucun** : ses l.71-72 sont le RÉCIT de l'incident du 3e, pas
+                  un appel.
+
+                  **CE QUI EN FAIT UN VERROU ET NON UNE CRAINTE, ET C'EST DATÉ.**
+                  Il n'y a pas de résolution de dépendances ici et le dépôt
+                  l'assume : **trois listes de chargement tenues à la main** —
+                  `jeu.html` l.159-185, `scripts/monde/sac.js` l.100,
+                  `scripts/monde/corps_mesure.js` l.43 — avec, écrit dans `sac.js`
+                  l.97-99, « ajouter un morceau découpé, c'est toucher les deux
+                  listes », et **la divergence a déjà eu lieu une fois** : le four
+                  ne chargeait pas la couche 2, `jeu.html` si (même fichier, plus
+                  bas — « deux listes qu'on ne touche pas ensemble sont deux
+                  listes qui divergent en silence »). Le jour où `hasard.js` passe
+                  après `corps-adapt.js` dans **une seule des trois**, `H` est
+                  `undefined`, la ligne tire ailleurs, **et la cuisson cesse
+                  d'être reproductible en rendant des nombres parfaitement
+                  plausibles**. C'est le retour exact de la panne de 🔒 90120 —
+                  écart pire 329 m, 931 172 états faux — mais sans le drapeau qui
+                  l'avait rendue visible. Et la première ligne de `hasard.js`, «
+                  le seul hasard de la bataille, et il est reproductible »,
+                  devient fausse à cet instant sans que rien ne le dise.
+
+                  **CE QUE LE NOM EN DIT, ET C'EST LE LEVIER : ce repli n'a pas de
+                  nom parce qu'il n'a pas de métier.** On ne peut pas l'appeler «
+                  le hasard de la bataille » — il ne l'est pas, c'est ce qui le
+                  définit ; ni « hasard de secours » — il n'y a rien à secourir,
+                  une cuisson non reproductible n'a aucune valeur de repli sur une
+                  cuisson absente. **Un repli qu'on ne sait pas nommer est un
+                  repli qui ne doit pas exister.** Se lèverait en retirant `:
+                  Math.random()` et en exigeant `H` **au chargement** : l'absence
+                  devient alors un cri à l'instant où elle est vraie, au lieu d'un
+                  mensonge à chaque battement. C'est la règle de 🔒 90220 appliquée
+                  un étage plus bas.
+
+  [18]
+    🔒 N° : **90150**
+    🔒 Le verrou : **L'urne de la bataille est UNIQUE et partagée : ce qui rend une
+                  cuisson reproductible n'est pas la graine, c'est l'ORDRE des
+                  tirages** — deux cuissons qui diffèrent d'un rien n'ont donc
+                  même pas les mêmes hommes, et aucun écart entre deux bras n'est
+                  « la part » de la cause qu'on a changée
+    🎯 Bloque : 90100
+    🔎 La preuve : Mesuré au banc le 129.4.3, pas supposé —
+                  `analyse/etalon-90110/compte-tirages.js`, le compteur posé DANS
+                  la source de `hasard.js` (une enveloppe posée après coup ne
+                  verrait rien : `bataille2d.js` l.725 destructure `R` à son
+                  chargement). **À 1700 hommes (2 550 corps) : 119 238 tirages au
+                  DRESSAGE, soit 46,8 par corps — dont 24 par homme pour ses
+                  seules déviations** (`trempe`, `vivacite`, `fond`, `souplesse`
+                  et deux `trempe` d'école, `bataille2d.js` l.1346‑1382, quatre
+                  `R()` chacune : **61 200 tirages, plus de la moitié du dressage,
+                  rien que pour fabriquer QUI sont les hommes**) — **puis 21 134
+                  tirages par seconde de bataille**, près de 13 millions sur 600
+                  s. `hasard.js` n'a qu'un seul état, `_s` (l.33), et tout le
+                  monde y puise dans l'ordre où il passe : **un seul tirage décalé
+                  en amont rebat les déviations des 2 550 hommes.** ÉPROUVÉ LE
+                  MÊME JOUR, banc tel-quel, 1700 hommes, 150 s, la GRAINE SEULE
+                  changée et pas une ligne de source : 20161219 → **3, 5, 4, 47**
+                  · 20161220 → **4, 5, 5, 48** · 424242 → **3, 5, 1, 47**. Une
+                  unité sur trois des quatre comptes, et **de 1 à 5 sur les
+                  initiatives**. Conséquences, et elles sont dures : (1) un écart
+                  d'une unité entre deux cuissons ne se lit sur aucun des quatre
+                  sauf les déclencheurs, seuls immobiles sur trois graines ; (2)
+                  un écart entre deux bras est la cause PLUS le rebattement, et
+                  une soustraction ne les sépare pas — d'où la ligne retirée en 🔒
+                  90110. **CE QUI LE LÈVERAIT, et ce n'est PAS de refuser la
+                  cuisson quand la graine manque — ça n'y protège de rien** : que
+                  ce qui FAIT un homme sorte de son identité et non de l'urne
+                  partagée, comme `_melange(k)` de `scripts/monde/plan_ville.py`
+                  l.1128 (« même rang, même maison, toujours ») et le déphasage
+                  haché de `scripts/monde/besoins.py` l.21, tous deux rapportés
+                  par Sarn. Le four gardera une graine pour les coups et les
+                  ordres ; les quatre déviations, elles, n'en ont pas besoin.
+                  Règle de lecture complète :
+                  `analyse/etalon-90110/REGLE-DE-LECTURE.md`.
+
+----------------------------------------------------------------------------------------------------
+⚔️ ACTIONS — CHACUNE REMONTE, OU ELLE SORT
+----------------------------------------------------------------------------------------------------
+
+  [1]
+    ⚔️ N° : **90010**
+    ⚔️ L'action : Descendre la nappe de `soldat()` : chaque décision qu'elle
+                  prend, ce qui l'appelle, et à quelle couche elle appartiendrait
+    ⬆️ Réalise : 90320 90300
+    🪶 L'office : Bren Racine-Grise
+    📅 Jour dû : J−7
+    ✅ État : faite
+
+  [2]
+    ⚔️ N° : **90011**
+    ⚔️ L'action : Relire les anneaux : ce qui a déjà été tenté sur cette cascade,
+                  la forme retenue, ce qu'il en est resté
+    ⬆️ Réalise : 90300
+    🪶 L'office : Sarn Vieux-Sang
+    📅 Jour dû : J−7
+    ✅ État : faite
+
+  [3]
+    ⚔️ N° : **90110**
+    ⚔️ L'action : Cuire `--cuire` sur la référence et poser les quatre comptes
+                  comme étalon, avant qu'on touche à quoi que ce soit
+    ⬆️ Réalise : 90100
+    🪶 L'office : Toll Œil-Noir
+    📅 Jour dû : J−6
+    ✅ État : en cours
+    📝 Note : la RÈGLE DE LECTURE est écrite le 3e AVANT que le chiffre ne tombe, et
+             c'est la seule raison pour laquelle elle vaut quelque chose.
+             `analyse/etalon-90110/REGLE-DE-LECTURE.md`, six articles. (1) La référence
+             du 14 août recomptée à la main dans `monde/essai.reference.annales.json` :
+             `ordre-deforme` 5, `declencheur-tombe` 5, `initiative` 14, `coureur-part`
+             54 — le quatuor retombe juste. (2) Mais son manifeste ne grave ni graine,
+             ni drapeaux, ni empreintes, ni jour, ni minute de la ville : trois des
+             sept lignes de condition sont perdues, donc la référence ne peut PAS
+             servir de contrôle d'égalité (🔒 91013 — l'heure de la ville est lue en
+             direct, et le 14 août n'est pas le 3e de la 4e lune). Elle sert d'ordre de
+             grandeur. (3) Le banc n'y sert pas non plus : il ne charge pas la ville et
+             ne porte aucun des quinze faits d'habitants de la référence. (4) LA RÈGLE
+             : attendu ZÉRO sous condition identique, et aucun seuil n'autorise un
+             écart là ; quand la condition a bougé, la bande se MESURE — trois graines
+             cuites le jour même, ±1 sur les ordres déformés et les coureurs, 0 sur les
+             déclencheurs, de 1 à 5 sur les initiatives ; les quatre se lisent
+             séparément, jamais sommés ni en pourcentage ; un compte qui tombe à zéro
+             est un mécanisme et se lit d'abord. Reste dû : le second quatuor de 600 s
+             sous condition écrite en sept lignes — c'est LUI qui sera l'étalon de
+             cette affaire, pas celui du 14 août
+
+  [4]
+    ⚔️ N° : **90210**
+    ⚔️ L'action : Faire que la nuit cuite se regarde dans le jeu, et non seulement
+                  dans le sac
+    ⬆️ Réalise : 90200
+    🪶 L'office : Ygga Main-de-Pierre
+    📅 Jour dû : J−4
+    ✅ État : à faire
+
+  [5]
+    ⚔️ N° : **90211**
+    ⚔️ L'action : Vérifier que ce que la vue dépose montre bien ce que la stack a
+                  décidé, sur une nuit entière
+    ⬆️ Réalise : 90200
+    🪶 L'office : Toll Œil-Noir
+    📅 Jour dû : J−3
+    ✅ État : à faire
+
+  [6]
+    ⚔️ N° : **90310**
+    ⚔️ L'action : Écrire `2-reflexion.js` — la couche qui manque entre le corps et
+                  l'interprétation
+    ⬆️ Réalise : 90310
+    🪶 L'office : Ygga Main-de-Pierre
+    📅 Jour dû : J−3
+    ✅ État : faite
+    📝 Note : `survival-stack/2-reflexion.js`, 236 lignes, chargé par `jeu.html` en
+             observation. Rend `tient`, `attend`, `appui` et un cap `issue`. Éprouvé au
+             Bassin sur sept cas : bornes [−1,1] tenues, cap unitaire ou nul. Les six
+             morceaux de la couche 2 éparpillés dans `soldat()` y sont ramassés, dont
+             la duplication 3053-3057 / 3222-3271 réunie en une seule fonction. Ne
+             conduit rien tant que 90311 n'est pas écrit
+
+  [7]
+    ⚔️ N° : **90311**
+    ⚔️ L'action : Écrire l'arbitre : qui, du corps ou de la tête, tient la main
+                  sur un geste donné
+    ⬆️ Réalise : 90310
+    🪶 L'office : Ygga Main-de-Pierre
+    📅 Jour dû : J−2
+    ✅ État : faite
+    📝 Note : `survival-stack/5-qui-conduit.js`, 353 lignes, chargé par `jeu.html` en
+             observation ; banc `banc-qui-conduit.js`, 11 cas, tous tenus. Tranche la
+             contradiction que le README refusait de nommer : la somme n'est pas
+             constructible — la couche 1 rend un MOT, la 2 des nombres et un cap, la 3
+             des modulations, la 4 des durées ; on n'additionne pas « fuite » et 0,42.
+             Et le vainqueur unique est faux aussi : `ballants` retire les bras sans
+             prendre l'homme. D'où la forme — arbitrage par emplacement (jambes, bras),
+             chaque couche posant une prétention dans [0, 1] composée de ses propres
+             nombres, la plus forte prend. L'ordre n'est pas un prétendant, c'est le
+             sol : `barre(l3)` = `lettre` relu sur [0, 1], donc 0,50 pour l'homme
+             ordinaire, et l'appelant retombe dans la cascade quand personne ne la
+             franchit — c'est ce qui rend 90312 progressif. Aucun tirage : le départage
+             se fait par comparaison et par période réfractaire `exigence(tenu)`, dont
+             la constante de temps est prise dans `M.SEJOUR` (0,20 s, la dérobade) et
+             non inventée. Le Bassin a pris 6 cas sur 11 au premier passage : `depuis`
+             initialisé à `t` faisait croire à chaque homme que son ordre venait de
+             prendre la main, donc `exigence(0)` à 1,00, donc barre + 1 —
+             infranchissable, tout homme obéissait la nuit entière. Corrigé en
+             `-Infinity` : un homme qui entre en scène obéit depuis toujours, il n'a
+             pas de geste à protéger. Second défaut trouvé à la relecture et qu'aucun
+             de mes cas ne montrait : le tenant était pesé DANS la boucle, donc le
+             résultat dépendait de l'ordre des clefs d'un objet. Sorti de la boucle.
+             Gravé au passage : `h.l1.pilote` → `h.l1.corpsAgi` et `corpsPilote` →
+             `corpsAgi` — le nom posé par Wenna (90320), la main du Fer,
+             `bataille2d.js` et `carte-ville.js`
+
+  [8]
+    ⚔️ N° : **90312**
+    ⚔️ L'action : Retirer la cascade de `soldat()` morceau par morceau, en cuisant
+                  à chaque cran
+    ⬆️ Réalise : 90300
+    🪶 L'office : Ygga Main-de-Pierre · Toll Œil-Noir
+    📅 Jour dû : J−1
+    ✅ État : en cours
+    📝 Note : PREMIER CRAN BRANCHÉ le 3e, non encore éprouvé. `rallier()`
+             (`bataille2d.js` l.4867) était le SEUL accès à `h.l1` de tout le fichier
+             hors de `soldat()` — quatorze appels vivants aux couches, un seul ici
+             (relevé de Bren, le 3e) : un appelant unique, déjà écrit, qui lisait déjà
+             la couche en direct. C'est l'essai le moins cher qui existe, donc c'est
+             par lui qu'on commence la dépose, et non par la nappe. CE QUI CHANGE EST
+             LA QUESTION, PAS LA RÉPONSE : on lisait le MOT de la couche 1 — « est-ce
+             qu'il dit fuite ? » ; on demande maintenant à l'arbitre QUI TIENT SES
+             JAMBES ce battement-ci. Un homme se rallie quand l'ordre les a reprises,
+             et pas autrement — c'est la définition du ralliement, et le mot que
+             `5-qui-conduit.js` rend déjà. `!== "ordre"` et non `=== "corps"`, parce
+             que deux cas que `h.l1.jambes` ne savait pas écrire s'y ajoutent : l'homme
+             que la RÉFLEXION tient se raisonne pour sortir (le rallier serait le
+             renvoyer en ligne à l'instant où il décide de n'y pas rester), et l'homme
+             que l'ENVIE tient a lâché la colonne pour une maison. Aucun des deux
+             n'obéit ; aucun des deux ne se rallie. LE GEL DE 🔒 90260 NE MORD PAS SUR
+             CETTE LIGNE — vérifié, non supposé : il mord sur les hommes qui TOMBENT,
+             `soldat()` rendant la main à `mort` (l.2968) et à `blessé` (l.2970) AVANT
+             l'observation, si bien que leur dernière sortie de couche reste au chaud
+             jusqu'au matin ; un homme `déroute`, lui, traverse l'observation à chaque
+             battement de son œil, et `h.conduit` y est aussi frais que `h.l1` l'était.
+             C'est pourquoi je branche avant de réparer le gel. LE BRAS TÉMOIN EST LE
+             MÊME FICHIER, AUCUNE LIGNE N'EST RÉÉCRITE : le branchement porte son
+             propre repli — sans `h.conduit`, la ligne retombe sur le vieux test —,
+             donc retirer `5-qui-conduit.js` de la chaîne rend exactement la conduite
+             d'hier, et non une reconstitution de la conduite d'hier. Banc :
+             `analyse/branchement-90312/rallier.js`, décor repris de
+             `analyse/etalon-90110/deux-causes.js` à la virgule près, `--sans-arbitre`
+             pour le témoin ; il refuse de tourner si l'arbitre est là quand il ne
+             devrait pas, et l'ancre du relevé lève au lieu de mentir si elle a bougé.
+             `node --check` passe sur les deux fichiers. CE QUI RESTE, ET IL EST NOMMÉ
+             : rien n'est cuit — mes deux sorties du 3e au soir ne portent que
+             l'avertissement de node, le serveur n'était pas levé. Demandé à Toll au
+             parloir le 3e : les deux bras, même graine, même durée, et le compte des
+             RALLIEMENTS ajouté à l'étalon 90110 — c'est le seul compte que ce cran est
+             censé déplacer (avec les fuyards à la fin), il n'est pas dans le quatuor,
+             et la graine seule y vaut jusqu'à quatre unités sur les initiatives. Le
+             quatuor, lui, doit rester immobile : s'il bouge, j'ai tort
+
+  [9]
+    ⚔️ N° : **90320**
+    ⚔️ L'action : Nommer les couches et les seuils, avec les mots écartés, et
+                  refaire le README de `survival-stack` — **fait le 3e** : README
+                  réécrit ; `emprise` gardé, `SOUS_EMPRISE` gardé, « seuil
+                  d'emprise » enterré (le bouton n'existe plus), `pilote` →
+                  **`corpsAgi`** posé pour la main d'Ygga ; le cinquième fichier
+                  laissé sans nom exprès → 🔒 90330
+    ⬆️ Réalise : 90300
+    🪶 L'office : Wenna la Nommeuse
+    📅 Jour dû : J−0
+    ✅ État : faite
+    📝 Note : README de `survival-stack` réécrit le 3e : `emprise` gardé, `SOUS_EMPRISE`
+             gardé, « seuil d'emprise » enterré, `pilote` → `corpsAgi`. Le cinquième
+             fichier tranché le 3e : `5-qui-conduit.js`, public `window.QuiConduit`,
+             métier de MAIN et non de SOMME. Le disque a tranché, pas moi : deux des
+             quatre couches rendent un MOT et non un nombre — `1-corps.jambes` ∈
+             {sidération, fuite, recul, serrer, ruée} (l. 1499),
+             `3-interpretation.deSoiMeme()` ∈ {repli, tenir, avancer} (l. 182-186) — et
+             l'on ne fait pas la moyenne de deux mots : la somme était arithmétiquement
+             impossible, pas discutable. Le verbe retenu est celui de la maison («
+             conduit dans le jeu »), et le fichier reste le cinquième FICHIER et non la
+             cinquième couche, puisqu'il ne se pose aucune question dans la bouche de
+             l'homme. Écartés : `5-composition.js` (le métier mort ci-dessus) ;
+             `5-arbitre.js` (un arbitre départage des prétendants, c'est-à-dire des
+             parties qui veulent la même chose — les quatre couches ne se connaissent
+             pas et ne se disputent rien) ; `5-qui-conduit.js` (dit qui a gagné, pas ce
+             qui sort, et « la main » nomme déjà un office dans ce chantier) ;
+             `orchestrateur` (jargon qui dirige, alors qu'ici rien ne dirige). ⚠ Le
+             renvoi « → 🔒 90330 » que portait cette ligne était FAUX et a été corrigé :
+             90330 porte les deux modèles de peur, 90350 porte le `degage` d'Ygga, et
+             le verrou du cinquième fichier n'avait été gravé dans aucune table. Ce qui
+             en reste — l'instant où les quatre sorties seraient fraîches ensemble —
+             est porté neuf en 🔒 90360
+
+  [10]
+    ⚔️ N° : **90221**
+    ⚔️ L'action : Nommer les trois quantités que `moraleMoyenne` porte sous un
+                  seul nom, avec les écartés et la raison, et trancher ce qu'est
+                  le `null`
+    ⬆️ Réalise : 90220 90200
+    🪶 L'office : Wenna la Nommeuse
+    📅 Jour dû : J−3
+    ✅ État : faite
+    📅 Jour fait : 3e
+    📝 Note : le 3e, constaté sur le disque et dans les anneaux, non décrété. TROIS
+             QUANTITÉS, TROIS NOMS ; UN NOM NE SE PARTAGE PAS. ① `moraleMoyenne` — la
+             jauge de rupture : moyenne de `h.morale`, née à 1 (`2d3350c:bataille2d.js`
+             l.600), bornée [0,1] (l.1176, l.1195), 1 intacte, 0 il rompt. C'est le
+             +0,97 → +0,91 de `etat/vues/rhaenyra.json` (8 vues, 11h27Z, code d'avant
+             `745c8eb` du 14 à 22h11). Ce nom reste à cette quantité et se GÈLE : huit
+             vues déposées le portent déjà, on ne renomme pas ce qui est parti — on
+             interdit de le réemployer. ② `reflexeMoyen` — moyenne de `h.l1.reflexe`,
+             [−1, 1], −1 AU REPOS (`1-corps.js` l.92, l.1272-1273). C'est le −0,94 →
+             −0,92 de `etat/vues/nicolas-reynolds.json` (10 vues, 21h14Z). Écartés :
+             `alarmeMoyenne` — que le commentaire l.6614 emploie déjà — REFUSÉ,
+             `alarme` est pris par la couche 2 (`2-reflexion.js` l.87) et porte la
+             convention INVERSE (« +1 tout est calme ») : publier −0,94 sous ce mot
+             fait lire « le fer est sur eux » d'une armée au repos → 🔒 90380 ;
+             `peurMoyenne`, `tensionMoyenne` — REFUSÉS, `peur()` (l.6641) nomme déjà
+             les habitants, et la couche 1 mesure une glande et un temps de charge, pas
+             un sentiment ; `moraleMoyenne` — REFUSÉ, voir ①, et le sens s'inverse (1 =
+             bien contre −1 = bien). ③ `sansCorps` — le compte des vivants de l'assaut
+             sans `h.l1`. Ce n'est pas une mesure, c'est une absence, et elle est
+             aujourd'hui écrite `−1` au milieu de la moyenne : `soldat()` sort avant
+             `observer()` pour `blesse` (l.2945) et pour `tete` (l.2948), tandis que le
+             filtre l.6617 n'écarte que `mort` — les 172 blessés du relevé de Nicolas
+             et toutes les têtes de l'assaut entrent donc au dénominateur au calme
+             parfait sans avoir jamais été regardés. Écartés : `sansStack` (la stack
+             est un dossier, pas un organe qu'un homme a ou n'a pas), `sansL1` (nom de
+             champ, pas nom de fait — illisible pour qui reçoit la vue),
+             `hommesMesures` (dit ce qu'on a fait, pas ce qui manque, et ne se lit pas
+             sans le total). LE `null` DE MARLO N'EST PAS UNE QUATRIÈME CHOSE : C'EST ②
+             EMPOISONNÉE. Une moyenne n'a pas d'anticorps — un `reflexe` NaN sur 1741
+             suffit. `1-corps.js` l.556-568 porte l'aveu ET la signature : `apaise`
+             absent d'une branche de retour, contagion NaN, réflexe NaN définitif, 116
+             hommes sur 604 ; « une bataille de six cents secondes rendait ZÉRO mort et
+             un verrou intact » — c'est-à-dire, mot pour mot, les dix vues de
+             `marlo-vasse.json` : 572 s, 0 mort, verrou 900 pv, `fuyards` 0. Corrigé
+             depuis (l.569), la panne ne peut plus revenir par cette branche. CE QU'IL
+             FAUT EN RETENIR, ET QUI EST LE VRAI DÉFAUT DERRIÈRE LE NOM : le dépôt
+             publie l'ABSENCE en silence (−1, un nombre plausible) et la PANNE en clair
+             (`null`). C'est l'inverse de ce qu'il faut : une absence doit se voir, une
+             panne doit se compter. ⚠ `reflexeMoyen` EST RETIRÉ, ET REMPLACÉ PAR
+             `sangFroidMoyen` — le 3e au soir, par moi ; voir ⚔ 90381. Rien n'est
+             perdu, et c'était le dernier jour où ce choix était gratuit :
+             `bataille2d.js` l.6672 porte encore `moraleMoyenne`, aucune vue n'est
+             partie sous `reflexeMoyen`, et le mot n'aura vécu qu'une journée dans ce
+             cahier. La raison est celle qui a tranché le nom du champ : `reflexe`
+             disparaît comme identifiant, donc le relevé qui en publie la moyenne ne
+             peut pas le garder — un relevé nommé d'après un champ mort est le prochain
+             « moraleMoyenne », et c'est exactement la faute que cette ligne-ci avait
+             été ouverte pour réparer. Et le chiffre se lit enfin sans notice : +0,94
+             dit une armée à froid, là où −0,94 disait une armée au repos et se lisait
+             aux abois. ② de 🔒 90380 tombe avec ce seul mot
+
+  [11]
+    ⚔️ N° : **90231**
+    ⚔️ L'action : Rendre les libellés de la couche 1 comptables dans la vue : la
+                  marque d'origine passe en tête du libellé
+    ⬆️ Réalise : 90230 90200
+    🪶 L'office : Wenna la Nommeuse · Ygga Main-de-Pierre
+    📅 Jour dû : J−3
+    ✅ État : en cours
+    📝 Note : nommé le 3e, reste à graver par le Fer — **OUI, UN NOM EST POUR QUELQUE
+             CHOSE DANS LE 🔒 90230, ET C'EST LE MIEN.** Le relevé `branches` fabrique
+             ses clefs en coupant chaque libellé **au premier « à » ou « — »**
+             (`bataille2d.js` l.6569), pour retirer les compléments chiffrés du genre «
+             à 40 pas » — sans quoi chaque homme ferait sa propre ligne. Quatre des
+             cinq libellés de la couche 1 commencent par **« son corps »** (l.3048,
+             3068, 3080, 3090) : c'est la seule marque qui les rende comptables dans la
+             vue, et personne d'autre dans le fichier ne l'emploie. Le cinquième,
+             `"sidéré — son corps ne répond plus"` (l.3043), porte sa marque **APRÈS un
+             tiret cadratin** : il entre dans la vue sous la clef **« sidéré »**,
+             décapité — et le geste le plus lisible de la couche devient incomptable,
+             sans que rien ne prévienne. **Témoin sur le disque, même mécanique, autre
+             victime** : la clef **« nez »**, présente dans six des dix vues de
+             `etat/vues/nicolas-reynolds.json`, est `"nez à nez, il attend le nombre"`
+             (l.3328) coupé au « à ». **CORRECTION DE NOM, ET ELLE NE TOUCHE PAS AU
+             RELEVÉ : la marque d'origine passe EN TÊTE** → `"son corps ne répond plus,
+             il est sidéré"`. **Règle pour les libellés à venir** : aucun libellé de
+             couche ne met sa marque d'origine après un « — » ni un « à » ; ce qui doit
+             être compté se dit avant la première ponctuation. Écarté : préfixer d'un
+             marqueur technique (`[l1] sidéré`) — REFUSÉ, un relevé qui part au MJ
+             n'est pas un journal de compilation, et « son corps » dit déjà l'origine
+             en français. Écarté aussi : changer le hachoir pour qu'il ne coupe que
+             devant un chiffre — c'est du fer, pas du nom, et cela laisserait quand
+             même le libellé mentir sur son auteur ; à faire en plus, pas à la place. ⚠
+             **ET LE COMPTE N'EST PAS DEUX HOMMES SUR 1460, C'EST UN** : `"son corps
+             est parti en avant, seul"` = 1 dans les dix vues de Nicolas, et la seconde
+             clef comptée (`nez`) appartient à la cascade, pas à la stack.
+
+  [12]
+    ⚔️ N° : **90381**
+    ⚔️ L'action : Nommer la grandeur de la couche 1 du côté favorable, et dire où
+                  vit le retournement
+    ⬆️ Réalise : 90380
+    🪶 L'office : Wenna la Nommeuse
+    📅 Jour dû : J−0
+    ✅ État : faite
+    📅 Jour fait : 3e
+    📝 Note : le 3e au soir, compté sur le disque, non décrété. LE NOM : `sangFroid`,
+             sur [−1, 1] — +1 il est à froid et sa main lui appartient · −1 la glande a
+             pris la main. Il remplace `h.l1.reflexe` (−1 au repos), et le relevé
+             `reflexeMoyen` que j'avais nommé le matin même en ⚔ 90221 devient
+             `sangFroidMoyen` — corrigé là-bas. CE QUI A TRANCHÉ, ET CE N'ÉTAIT PAS
+             DANS LE VERROU : `alarme` n'est pas la même grandeur. Preuve datée en 🔒
+             90380 — sans mémoire, contre 3 s de montée et 45 s de descente. Le nom
+             devait donc dire la charge et non la situation, sinon on aurait deux mots
+             pour ce qui n'est pas une seule chose. ÉCARTÉ — `calme`. C'est le mot de
+             la définition d'`alarme` (`2-reflexion.js` l.87 : « +1 tout est calme »).
+             Poser sur la charge le synonyme de la situation, c'est garantir qu'un
+             troisième appelant nourrira l'un depuis l'autre : la faute même que ce
+             verrou craignait, réintroduite par le nom au lieu de par le signe. Deux
+             quantités à quarante-cinq secondes l'une de l'autre ne peuvent pas porter
+             deux mots qu'on lit pareil. ÉCARTÉ — `maitrise`. C'est `dressage`.
+             `emprise()` l.1010 existe précisément pour les tenir séparés — `(1 −
+             0,45·d)` : le vétéran garde sa tête plus longtemps sous la même peur, il
+             n'en a pas moins. Un nom qui mêle l'acquis et l'instantané détruit la
+             seule distinction sur quoi la couche est bâtie. (Écarté aussi — `froid`
+             seul : `M.GAIN_NUIT` et la nuit vivent dans le même fichier, où « froid »
+             se lit en température.) OÙ VIT LE RETOURNEMENT, ET C'EST LA MOITIÉ DU
+             TRAVAIL : ON NE RETOURNE UN SIGNE QU'EN RETIRANT LE NOM. `reflexe` doit
+             disparaître comme identifiant dans le même geste, et ne jamais survivre
+             avec un signe neuf. Compté sur le disque : 25 lignes le lisent, dans 6
+             fichiers — `1-corps.js` (593, 722, 728-729, 955-956, 1010-1011, 1272-1273,
+             1289, 1444, 1455, 1500), `bataille2d.js` (6673, 6923, 6929),
+             `bataille.html` (465, 477), `carte-ville.js` (501),
+             `scenario-3-contre-2.js` (204, 274, 333), `scripts/monde/corps_mesure.js`
+             (86-93). Dix d'entre elles ont le signe cuit dans un littéral ou une
+             comparaison : `corps_mesure.js` l.88 `< −0,8` = calmes, l.89 `> −0,5` =
+             hauts, l.92 `> −0,9` = engagé, l.87 `> pire` ; les replis `−1` de
+             `bataille2d.js` l.6673, `1-corps.js` 956, 1011, 1272, `bataille.html` 465,
+             477. Un site oublié sous le même nom compile encore et publie un nombre
+             plausible retourné : l'instrument de Toll ment sans rien dire. Un site
+             oublié sous un nom retiré rend `undefined` → NaN → `null` dans la vue.
+             C'est mot pour mot la règle de ⚔ 90221 — l'absence doit se voir, la panne
+             doit se compter — et ici c'est le nom, lui seul, qui décide laquelle des
+             deux on aura. LES DEUX LIGNES QUE LE SIGNE SEUL NE RATTRAPE PAS, et qu'on
+             ne trouve pas en cherchant `reflexe` — pour la main du Fer : ①
+             `1-corps.js` l.994, `const tau = cible > a ? M.MONTEE_S : M.DESCENTE_S /
+             (f * ap)`. Le sens du test EST l'asymétrie de la glande. Retourné sans
+             devenir `cible < a`, tout homme s'alarmerait en 45 s et se calmerait en 3
+             — et rien ne casserait. ② `1-corps.js` l.1443, `const cible =
+             Math.max(saillance·2−1, contagion)`. « Le plus fort des stimuli » devient
+             `Math.min` du côté favorable. `Math.max` compile aussi bien et rend le
+             plus calme des stimuli : un homme frappé pendant qu'on lui crie que tout
+             va bien ne bougerait pas. ET IL Y A UNE TROISIÈME GRANDEUR DU MÊME CÔTÉ, à
+             l'intérieur : `contagion` — « l'alarme qu'on prend des autres »,
+             `1-corps.js` l.535, posée à −1 quand personne n'est alarmé (l.570, l.668,
+             l.1329) et lue par `cible` l.1443. Le mot reste bon et ne change pas : une
+             contagion est une contagion, elle ne sort pas de la couche, rien ne la
+             publie et aucune autre couche ne la lit. Mais son zéro doit tourner avec
+             le reste dans le même geste, ou la ligne 1443 mélange deux conventions
+             sans que rien ne jette
+
+----------------------------------------------------------------------------------------------------
+🪶 LES OFFICES — QUI ÉCRIT OÙ
+----------------------------------------------------------------------------------------------------
+
+  [1]
+    🪶 L'office : **Les anneaux**
+    👤 Qui le tient : Sarn Vieux-Sang
+    📁 Ce qu'il écrit : Il rapporte le précédent ; il ne taille pas.
+
+  [2]
+    🪶 L'office : **La nappe**
+    👤 Qui le tient : Bren Racine-Grise
+    📁 Ce qu'il écrit : Il rapporte les accroches ; ce qu'il remonte va à la
+                       colonne des verrous.
+
+  [3]
+    🪶 L'office : **Le fer**
+    👤 Qui le tient : Ygga Main-de-Pierre
+    📁 Ce qu'il écrit : `ecrans/modules/bataille2d.js`,
+                       `ecrans/modules/survival-stack/`,
+                       `ecrans/modules/bataille/`
+
+  [4]
+    🪶 L'office : **L'eau**
+    👤 Qui le tient : Toll Œil-Noir
+    📁 Ce qu'il écrit : `scripts/bataille.py`, `scripts/monde/sac.js` — ce qui
+                       cuit et ce qui mesure, jamais ce qu'il mesure
+
+  [5]
+    🪶 L'office : **Les noms**
+    👤 Qui le tient : Wenna la Nommeuse
+    📁 Ce qu'il écrit : Les README, les en-têtes de module, les noms publics
+
+  [6]
+    🪶 L'office : **L'Équerre**
+    👤 Qui le tient : Nicolas Reynolds
+    📁 Ce qu'il écrit : `chantier/affaires.json` — lui seul grave à la Souche
+

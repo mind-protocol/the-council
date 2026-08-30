@@ -68,9 +68,14 @@ Beaucoup de ces scripts agissent au chargement : `seed_flux.py` réinitialise
 bataille. Un « test d'import » qui les balaie détruit une partie en cours. Pour
 contrôler qu'un classement n'a rien cassé :
 
+- **`node scripts/verifier.mjs`** — les quatorze étalons du dépôt en 55 s, un
+  code de sortie, et rien qui touche `etat/` : chaque épreuve tourne dans son
+  propre processus, en dossier temporaire, sur un port éphémère. C'est le
+  premier geste après tout déplacement, et il remplace la liste ci-dessous ;
 - `python -m compileall -q scripts/` — la syntaxe ;
 - l'évaluation statique des expressions de racine — les chemins ;
-- `python -m unittest discover -s scripts/tests -p "test_*.py"` — le comportement ;
+- `python -m unittest discover -s scripts/tests -p "test_*.py"` — le comportement
+  (déjà compris dans `verifier.mjs`) ;
 - les commandes en lecture seule, une par une : `reprise.py`, `sieges.py`,
   `occupation.py`, `dossier.py --sur <id>`, `presence.py --quartier`,
   `tick.py --verifier`.
@@ -98,6 +103,13 @@ Stop, déclaré dans `.claude/settings.json`).
 
 **La géométrie** — `corps.py`, `affecter.py`, `marche.py`, `arpenter.py`,
 `carte_geo.py`, `passer.py`.
+
+**La vérification** — `verifier.mjs` : une commande, tous les étalons, un code de
+sortie (`node scripts/verifier.mjs`, ou `--long` pour ce qui coûte des minutes).
+Son manifeste est la seule déclaration de ce qui vérifie ce dépôt : une épreuve
+neuve entre par ce fichier, sinon les listes divergent comme elles l'ont déjà
+fait pour l'ordre de chargement. Les bancs eux-mêmes vivent dans `analyse/`,
+`tests/` et `ecrans/modules/bataille/`.
 
 **Le reste** — `bataille.py` (son chemin est cité dans les cahiers in-fiction :
 il ne bouge pas) et `composer.py`.
