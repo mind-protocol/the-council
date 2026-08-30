@@ -19,18 +19,18 @@ flowchart TB
   end
   subgraph R1["rang 1"]
     direction LR
-    temps["⏱️ temps<br/><i>8 fichiers</i>"]
-    monde["🌍 monde<br/><i>107 fichiers</i>"]
+    temps["⏱️ temps<br/><i>9 fichiers</i>"]
+    monde["🌍 monde<br/><i>108 fichiers</i>"]
   end
   subgraph R2["rang 2"]
     direction LR
-    agents["🧠 agents<br/><i>8 fichiers</i>"]
-    plan["📋 plan<br/><i>51 fichiers</i>"]
+    agents["🧠 agents<br/><i>10 fichiers</i>"]
+    plan["📋 plan<br/><i>52 fichiers</i>"]
   end
   subgraph R3["rang 3"]
     direction LR
-    bataille["⚔️ bataille<br/><i>48 fichiers</i>"]
-    peinture["🎨 peinture<br/><i>14 fichiers</i>"]
+    bataille["⚔️ bataille<br/><i>49 fichiers</i>"]
+    peinture["🎨 peinture<br/><i>15 fichiers</i>"]
   end
   subgraph R4["rang 4"]
     direction LR
@@ -45,39 +45,38 @@ flowchart TB
   plan -->|29| socle
   scene -->|25| monde
   bancs -.->|9| plan
-  agents -->|8| plan
   scene -->|8| plan
   bataille -->|8| monde
   plan -->|7| monde
+  agents -->|6| plan
   monde -->|5| plan
   agents -->|5| socle
   socle -->|5| monde
   monde -->|5| scene
   bancs -.->|4| agents
-  scene -->|4| temps
   plan -->|4| agents
   plan -->|4| scene
   peinture -->|4| socle
   scene -->|4| peinture
   socle -->|4| scene
   agents -->|3| temps
-  bancs -.->|3| temps
   bataille -->|3| socle
   temps -->|3| socle
   scene -->|3| bataille
   bancs -.->|2| etat
-  agents -->|2| etat
+  scene -->|2| temps
   plan -->|2| temps
+  bancs -.->|2| temps
   temps -->|2| plan
   monde -->|2| bataille
   socle -->|2| plan
   agents -->|1| monde
   bancs -.->|1| monde
-  etat -->|1| temps
   etat -->|1| plan
+  etat -->|1| temps
+  agents -->|1| etat
   peinture -->|1| plan
   monde -->|1| agents
-  plan -->|1| etat
   temps -->|1| etat
   temps -->|1| agents
   socle -->|1| bataille
@@ -97,39 +96,38 @@ flowchart TB
 | `plan` | `socle` | 29 |  |
 | `scene` | `monde` | 25 |  |
 | `bancs` | `plan` | 9 |  |
-| `agents` | `plan` | 8 | ⚠️ remontée |
 | `scene` | `plan` | 8 |  |
 | `bataille` | `monde` | 8 |  |
 | `plan` | `monde` | 7 |  |
+| `agents` | `plan` | 6 | ⚠️ remontée |
 | `monde` | `plan` | 5 | ⚠️ remontée |
 | `agents` | `socle` | 5 |  |
 | `socle` | `monde` | 5 | ⚠️ remontée |
 | `monde` | `scene` | 5 | ⚠️ remontée |
 | `bancs` | `agents` | 4 |  |
-| `scene` | `temps` | 4 |  |
 | `plan` | `agents` | 4 | ⚠️ remontée |
 | `plan` | `scene` | 4 | ⚠️ remontée |
 | `peinture` | `socle` | 4 |  |
 | `scene` | `peinture` | 4 |  |
 | `socle` | `scene` | 4 | ⚠️ remontée |
 | `agents` | `temps` | 3 |  |
-| `bancs` | `temps` | 3 |  |
 | `bataille` | `socle` | 3 |  |
 | `temps` | `socle` | 3 |  |
 | `scene` | `bataille` | 3 |  |
 | `bancs` | `etat` | 2 |  |
-| `agents` | `etat` | 2 |  |
+| `scene` | `temps` | 2 |  |
 | `plan` | `temps` | 2 |  |
+| `bancs` | `temps` | 2 |  |
 | `temps` | `plan` | 2 | ⚠️ remontée |
 | `monde` | `bataille` | 2 | ⚠️ remontée |
 | `socle` | `plan` | 2 | ⚠️ remontée |
 | `agents` | `monde` | 1 |  |
 | `bancs` | `monde` | 1 |  |
-| `etat` | `temps` | 1 | ⚠️ remontée |
 | `etat` | `plan` | 1 | ⚠️ remontée |
+| `etat` | `temps` | 1 | ⚠️ remontée |
+| `agents` | `etat` | 1 |  |
 | `peinture` | `plan` | 1 |  |
 | `monde` | `agents` | 1 | ⚠️ remontée |
-| `plan` | `etat` | 1 |  |
 | `temps` | `etat` | 1 |  |
 | `temps` | `agents` | 1 | ⚠️ remontée |
 | `socle` | `bataille` | 1 | ⚠️ remontée |
@@ -162,9 +160,9 @@ flowchart TB
 
 *La ville : masque, plan, bati, gens, relief — sa cuisson, son service et son ecran*
 
-**107 fichiers, 43165 lignes.** Porte : `scripts/monde/expose.py`
+**108 fichiers, 43184 lignes.** Porte : `scripts/monde/expose.py`
 
-- **scripts/** (62) — `plan_ville.py`, `peyredragon_interieurs.py`, `densifier.py`, `mesure_murs.js`, `sac.js`, `peupler.py`, `carte_geo.py`, `formes.py`, `coudre.py` … et 53 autres
+- **scripts/** (63) — `plan_ville.py`, `peyredragon_interieurs.py`, `densifier.py`, `mesure_murs.js`, `sac.js`, `peupler.py`, `carte_geo.py`, `formes.py`, `coudre.py` … et 54 autres
 - **serveur/** (9) — `monde3d.js`, `marche.js`, `carte.js`, `presence.js`, `monde-jeu.js`, `terrain.js`, `foule.js`, `chemin.js`, `marche.js`
 - **ecrans/** (36) — `carte-ville.js`, `plan.js`, `foule2d.js`, `plans.js`, `carte.js`, `journee.js`, `gens.js`, `terrain.js`, `ville3d.js` … et 27 autres
 
@@ -172,27 +170,27 @@ flowchart TB
 
 *Possede le temps hors-scene : horloges, echeances, diffusion — calcule et propose, ne decide jamais*
 
-**8 fichiers, 6800 lignes.** Porte : `scripts/temps/expose.py`
+**9 fichiers, 6832 lignes.** Porte : `scripts/temps/expose.py`
 
-- **scripts/** (7) — `tick.py`, `presence.py`, `regence.py`, `evaluer.py`, `occupation.py`, `reprise.py`, `jours_relatifs.py`
+- **scripts/** (8) — `tick.py`, `presence.py`, `regence.py`, `evaluer.py`, `occupation.py`, `reprise.py`, `jours_relatifs.py`, `expose.py`
 - **serveur/** (1) — `calendrier.js`
 
 ### 🧠 agents — rang 2
 
-*La cognition des hommes : brief d'entree, journee vecue, ecrits rendus*
+*LES SIEGES, humains comme PNJ : servir un point de vue, recevoir des actes, tenir un fil (le vecu), tenir un brouillard — deux profils (scene / journee), une machinerie*
 
-**8 fichiers, 8199 lignes.** Porte : `scripts/agents/expose.py`
+**10 fichiers, 8507 lignes.** Porte : `scripts/agents/expose.py`
 
-- **scripts/** (6) — `boucle_activation.py`, `depecher.py`, `affecter.py`, `parloir.py`, `dossier.py`, `juger.py`
+- **scripts/** (8) — `boucle_activation.py`, `depecher.py`, `affecter.py`, `parloir.py`, `dossier.py`, `juger.py`, `sieges.py`, `expose.py`
 - **serveur/** (2) — `activations.js`, `regie.js`
 
 ### 📋 plan — rang 2
 
 *Le Grand Plan : cahiers, couverture, criticite, levees — ce que les hommes ecrivent et ce qu'on en tire*
 
-**51 fichiers, 18357 lignes.** Porte : `scripts/plan/expose.py`
+**52 fichiers, 18393 lignes.** Porte : `scripts/plan/expose.py`
 
-- **scripts/** (23) — `criticite.py`, `etat_du_plan.py`, `couverture.py`, `mesures.py`, `tisser.py`, `normaliser_etats.py`, `scinder_moyens.py`, `plan_leves.py`, `corriger_plan.py` … et 14 autres
+- **scripts/** (24) — `criticite.py`, `etat_du_plan.py`, `couverture.py`, `mesures.py`, `tisser.py`, `normaliser_etats.py`, `scinder_moyens.py`, `plan_leves.py`, `corriger_plan.py` … et 15 autres
 - **serveur/** (6) — `echiquier.js`, `atelier.js`, `agenda.js`, `livres.js`, `recherche.js`, `echiquier.js`
 - **ecrans/** (22) — `echiquier.js`, `jetons.js`, `volume.js`, `renvois.js`, `coffret.js`, `marques.js`, `etagere.js`, `portee.js`, `renvois.js` … et 13 autres
 
@@ -200,9 +198,9 @@ flowchart TB
 
 *Le moteur de bataille — EN SURSIS : sa porte deviendra l'adaptateur vers le depot `batailles`*
 
-**48 fichiers, 29047 lignes.** Porte : `scripts/bataille/expose.py`
+**49 fichiers, 29070 lignes.** Porte : `scripts/bataille/expose.py`
 
-- **scripts/** (1) — `bataille.py`
+- **scripts/** (2) — `bataille.py`, `expose.py`
 - **serveur/** (1) — `bataille.js`
 - **ecrans/** (46) — `bataille2d.js`, `dragons.js`, `1-corps.js`, `scenarios.js`, `page.js`, `architecture-page.js`, `incendie-ville.js`, `guet-epreuves.js`, `faits.js` … et 37 autres
 
@@ -210,18 +208,18 @@ flowchart TB
 
 *Ce qui appelle une API payante : portraits, salles, voix, chansons*
 
-**14 fichiers, 2644 lignes.** Porte : `scripts/peinture/expose.py`
+**15 fichiers, 2664 lignes.** Porte : `scripts/peinture/expose.py`
 
-- **scripts/** (10) — `gen_voix.py`, `figures.py`, `nappe.py`, `gen_salles.py`, `generer_chanson.py`, `figure_forces.py`, `medaillons.py`, `composer.py`, `audition_voix.py` … et 1 autres
+- **scripts/** (11) — `gen_voix.py`, `figures.py`, `nappe.py`, `gen_salles.py`, `generer_chanson.py`, `figure_forces.py`, `medaillons.py`, `composer.py`, `audition_voix.py` … et 2 autres
 - **serveur/** (4) — `voix.js`, `medias.js`, `portraits.js`, `voix.js`
 
 ### 📜 scene — rang 4
 
-*LA PEAU : le flux, l'inbox, la montre, les sieges — ce que le joueur voit ; personne ne la lit*
+*LE RENDU du profil scene : le flux, l'inbox, la montre, la mise en scene — ce que le joueur voit ; personne ne la lit*
 
-**39 fichiers, 8764 lignes.** Porte : `scripts/scene/expose.py`
+**39 fichiers, 8507 lignes.** Porte : `scripts/scene/expose.py`
 
-- **scripts/** (5) — `append_flux.py`, `sieges.py`, `tunnel.py`, `regie.py`, `seed_flux.py`
+- **scripts/** (5) — `append_flux.py`, `tunnel.py`, `regie.py`, `seed_flux.py`, `expose.py`
 - **serveur/** (8) — `fils.js`, `action.js`, `bibliotheque.js`, `piece.js`, `vue.js`, `scene.js`, `joueur.js`, `serveur.js`
 - **ecrans/** (26) — `son.js`, `nappe.js`, `calendrier.js`, `illustration.js`, `capture.js`, `galerie.js`, `voix.js`, `actions.js`, `regie.js` … et 17 autres
 
@@ -229,9 +227,9 @@ flowchart TB
 
 *Ils lisent tout et n'ecrivent rien : gardes, mesures, etalons, audit*
 
-**26 fichiers, 5878 lignes.** Porte : `scripts/verifier.mjs`
+**26 fichiers, 5923 lignes.** Porte : `scripts/verifier.mjs`
 
-- **scripts/** (22) — `croisement.py`, `exporter_aurore.py`, `parvenir.py`, `simuler_reveil_maisons.py`, `verifier.mjs`, `croise.js`, `graphe_archi.py`, `scorer_activation_hightower.py`, `essai_occupation.py` … et 13 autres
+- **scripts/** (22) — `croisement.py`, `exporter_aurore.py`, `parvenir.py`, `verifier.mjs`, `simuler_reveil_maisons.py`, `graphe_archi.py`, `croise.js`, `scorer_activation_hightower.py`, `essai_occupation.py` … et 13 autres
 - **serveur/** (4) — `test_siege.js`, `test_marche.js`, `test_piece_http.js`, `test_bibliotheque.js`
 
 ## Les écarts à la cible
@@ -239,29 +237,9 @@ flowchart TB
 | écart | compte | ce que ça veut dire |
 |---|---:|---|
 | orphelins | 0 | un fichier qu'aucun container ne réclame |
-| liens hors porte | 247 | un lien qui entre ailleurs que par la porte |
+| liens hors porte | 222 | un lien qui entre ailleurs que par la porte |
 | dépendances qui remontent | 19 | violation de la loi 2 (rangs) |
-| commandes-bibliothèques | 17 | une commande racine importée comme module |
+| commandes-bibliothèques | 0 | une commande racine importée comme module |
 
 Ces quatre chiffres ne doivent que **descendre**. Ils sont la distance entre
 la cible déclarée et le câblage réel — le chantier, en nombres.
-
-### Les commandes qui sont aussi des bibliothèques
-
-- `scripts/affecter.py`
-- `scripts/ajouter.py`
-- `scripts/appliquer.py`
-- `scripts/boucle_activation.py`
-- `scripts/couverture.py`
-- `scripts/criticite.py`
-- `scripts/depecher.py`
-- `scripts/etat_du_plan.py`
-- `scripts/evaluer.py`
-- `scripts/mesures.py`
-- `scripts/occupation.py`
-- `scripts/parloir.py`
-- `scripts/presence.py`
-- `scripts/regence.py`
-- `scripts/tick.py`
-- `scripts/tisser.py`
-- `scripts/tunnel.py`
