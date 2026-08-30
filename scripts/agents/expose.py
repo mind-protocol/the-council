@@ -38,7 +38,10 @@ from agents.parloir import main as parloir_main  # noqa: E402,F401 — l'entree 
 from agents import depeche  # noqa: E402,F401 — relit cette porte : affecter deja lie
 depecher = depeche  # l'ancien nom, que la facade et boucle_activation demandent
 from agents.depeche import main as depecher_main  # noqa: E402,F401 — l'entree CLI de la facade
-import boucle_activation  # noqa: E402,F401 — relit cette porte : depecher deja lie
+# Descendue au lot 2 : le paquet agents/activation/, plus la commande racine.
+from agents import activation  # noqa: E402,F401 — relit cette porte : depecher deja lie
+boucle_activation = activation  # l'ancien nom, que la facade et les bancs demandent
+from agents.activation import main as boucle_activation_main  # noqa: E402,F401 — l'entree CLI de la facade
 # Descendue au lot 2 : scripts/dossier.py -> agents/matiere.py (§7).
 from agents import matiere  # noqa: E402,F401 — le dossier d'un sujet, rassemble
 from agents.matiere import main as dossier_main  # noqa: E402,F401 — l'entree CLI de la facade

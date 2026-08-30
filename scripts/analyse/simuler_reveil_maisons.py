@@ -323,8 +323,10 @@ def main():
         raise SystemExit("tours et parallele doivent etre positifs")
     if not 0 < args.fraction_depense <= 1:
         raise SystemExit("fraction-depense doit tenir dans ]0, 1]")
-    activation.AFFICHER_LOGS = False
-    activation.PERSISTER_LOGS = False
+    # Lot 2 : les drapeaux vivent dans activation/socle.py — les poser sur
+    # le paquet ne changerait rien a journaliser().
+    activation.socle.AFFICHER_LOGS = False
+    activation.socle.PERSISTER_LOGS = False
     resultat = simuler(tours_max=args.tours, parallele=args.parallele,
                        fraction_depense=args.fraction_depense,
                        verbeux=not args.muet)
