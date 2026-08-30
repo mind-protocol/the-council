@@ -5,6 +5,7 @@ const bibliotheque = require("../plan/bibliotheque"); // meme container : import
 const { RACINE, cheminNotes } = require("../http");
 const { envoyer, inlinerFigure } = require("../http");
 const { monPersonnage, qui, roster, volumesVisibles } = require("../http");
+const { coffretsChambre } = require("../agents").chambreLivres; // LA PORTE serveur des agents
 
 function traiter(req, res, url) {
   if (req.method === "GET") {
@@ -20,8 +21,16 @@ function traiter(req, res, url) {
         // On ne descend que les coffrets dont il reste quelque chose à
         // ouvrir : une boîte vide sur l'étagère est un onglet qui ment.
         const gardees = new Set(liste.map((b) => b.boite).filter(Boolean));
+        // LES COFFRETS DE CHAMBRE (modèle habitant) : des boîtes virtuelles
+        // assemblées à la volée depuis `chambres/`, rien ne s'écrit dans
+        // `etat/`. Le brouillard est décidé dans le module — sa chambre pour
+        // un siège incarné, toutes les chambres à contenu pour la régie, rien
+        // de plus pour un siège du roster sans chambre.
+        let ch = { books: [], boites: [] };
+        try { ch = coffretsChambre(qui(req, url), moi); } catch (e) {}
         return envoyer(res, 200, JSON.stringify({
-          books: liste, boites: boites.filter((c) => gardees.has(c.id)) }));
+          books: liste.concat(ch.books),
+          boites: boites.filter((c) => gardees.has(c.id)).concat(ch.boites) }));
       } catch (e) {
         return envoyer(res, 200, JSON.stringify({ books: [], boites: [] }));
       }

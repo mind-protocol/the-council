@@ -4,4 +4,5 @@ module.exports = {
   activations: require("../domaine/activations"), // sante, previsions, fil MJ
   regie: require("../domaine/regie"),             // chercher dans le flux, le fil d'un personnage
   chambres: require("../domaine/chambres"),      // l'envers du modele habitant : la frise, les salles, une chambre
+  chambreLivres: require("../domaine/chambre-livres"), // les coffrets de chambre de l'onglet livres
 };
