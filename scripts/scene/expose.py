@@ -20,4 +20,5 @@ for _p in (_d, _os.path.join(_d, "noyau")):
 
 from scene import tunnel  # noqa: E402,F401 — le compteur du flux ; lu par append_flux
 from scene import regie  # noqa: E402,F401 — retrouver un moment dans le fil (lecture seule)
+from scene import sieges  # noqa: E402,F401 — s'asseoir, quitter ; recale le cache occupe
 from scene import seed_flux  # noqa: E402,F401 — le beat d'ouverture ; import inerte, l'ecriture ne part que par main()
