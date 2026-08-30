@@ -18,5 +18,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
+from monde import arpentage  # noqa: E402,F401 — lever une carte au pas ; facade scripts/arpenter.py
+arpenter = arpentage  # l'ancien nom reste vivant pour la facade
 from monde import trajets  # noqa: E402,F401 — marcher par les rues ; facade scripts/marche.py
 marche = trajets  # l'ancien nom reste vivant pour la facade
