@@ -168,6 +168,15 @@ du `-p` suffit.
 - **L'élection (la boucle) reste le rattrapeur priorisé** : l'énergie du tissu élit
   qui vivre ; un message en attente pèse sur son destinataire. Le tick ne réveille
   personne : il propose.
+- **Le MJ est un travailleur, pas seulement un guichet** (réalisation du 31.8) :
+  il tient SES affaires d'arbitre — le staging à dépouiller, les relances dues
+  (`en-souffrance.json` de sa chambre, déjà en usage), les inventions à graver,
+  les annales en retard — et **la boucle l'élit comme tout le monde** : son
+  énergie dans le tissu = ce qui pèse sur sa table. Un réveil-dispatch de MJ
+  n'est pas une journée d'homme : son brief est son établi (« N propositions au
+  staging, M fils à relancer »), et sa journée consiste à trancher, graver,
+  relancer. Même chambre, mêmes fils, mêmes journées de travail — la symétrie
+  habitant est complète.
 
 ### Prévoir et rattraper — par destination d'écriture
 
