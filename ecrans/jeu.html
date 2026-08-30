@@ -151,66 +151,8 @@
      un canvas posé par-dessus, calé sur le même cadrage. -->
 <script src="/modules/carte-projection.js"></script>
 <script src="/modules/foule2d.js"></script>
-<!-- la bataille : une lunette posée sur le plan, comme la foule. Elle n'écrit
-     rien dans l'état et ne coûte pas une minute de partie — le jour où une
-     bataille comptera, c'est le MJ qui l'écrira. -->
-<!-- LA CHAÎNE DE LA BATAILLE — L'ORDRE EST CELUI DU MANIFESTE, et il ne se
-     décide plus ici. `bataille/moteur/chaine.js` dit quoi charger, dans quel
-     ordre, et pourquoi ; les raisons de chaque rang y sont écrites une fois
-     pour toutes au lieu d'être recopiées dans quatre commentaires HTML qui
-     dérivaient. Une page ne peut pas lire un manifeste avant de poser ses
-     balises — mais elle peut être VÉRIFIÉE par lui, et c'est ce que fait la
-     dernière balise du bloc.
-
-     CE QUE CETTE LISTE AVAIT DE FAUX, avant qu'on la range sur le manifeste :
-     `roster.js` manquait alors que `bataille2d.js` le lit (les métiers et
-     l'assemblage des corps), et `5-qui-conduit.js` venait après son pourvoyeur
-     au lieu d'avant, contrairement au four. Deux divergences qu'aucun banc ne
-     mesurait, parce qu'aucun banc ne charge cette page-ci. -->
-<script src="/modules/son.js"></script>
-<script src="/modules/bataille/moteur/chaine.js"></script>
-<script src="/modules/bataille/moteur/commun/traces.js"></script>
-<script src="/modules/bataille/moteur/commun/contrats.js"></script>
-<script src="/modules/bataille/moteur/etat.js"></script>
-<script src="/modules/bataille/moteur/monde/topologie.js"></script>
-<script src="/modules/bataille/moteur/monde/navigation.js"></script>
-<script src="/modules/bataille/moteur/monde/mouvement.js"></script>
-<script src="/modules/bataille/moteur/unite/identite.js"></script>
-<script src="/modules/bataille/hasard.js"></script>
-<script src="/modules/bataille/mesures.js"></script>
-<script src="/modules/bataille/roster.js"></script>
-<script src="/modules/survival-stack/1-corps.js"></script>
-<script src="/modules/bataille/corps-adapt.js"></script>
-<script src="/modules/survival-stack/4-envie.js"></script>
-<script src="/modules/survival-stack/3-interpretation.js"></script>
-<script src="/modules/survival-stack/2-reflexion.js"></script>
-<script src="/modules/survival-stack/5-qui-conduit.js"></script>
-<script src="/modules/bataille/reflexion-adapt.js"></script>
-<script src="/modules/bataille/commandement.js"></script>
-<script src="/modules/bataille2d.js"></script>
-<script src="/modules/bataille/moteur/index.js"></script>
-<!-- LE GARDE. Il ne charge rien et ne répare rien : il NOMME ce qui manque, au
-     moment où ça manque, plutôt que de laisser la faute se découvrir en pleine
-     bataille sous la forme d'un `undefined`. Le jour où l'on ajoute un morceau
-     au manifeste et qu'on oublie sa balise ici, la console le dit. -->
-<script>
-  (() => {
-    const absents = window.BatailleChaine
-      ? window.BatailleChaine.manquants("moteur", window) : ["bataille/moteur/chaine.js"];
-    if (absents.length)
-      console.error("jeu.html — la chaîne de la bataille est incomplète : " +
-                    absents.join(", ") + ". Ajoutez la balise manquante.");
-  })();
-</script>
 <script src="/modules/carte-ville-theme.js"></script>
 <script src="/modules/carte-ville.js"></script>
-<!-- tenir sa position pendant que le temps passe : la balade dont l'horloge
-     est décrochée des jambes. Après carte-ville, dont il lit la position. -->
-<script src="/modules/combat.js"></script>
-<!-- ce que le joueur a sous les yeux, envoyé au MJ pendant une bataille : le
-     plan, la foule et le fer composés en une image, centrée sur lui, déposée
-     dans etat/vues/. Après les trois couches qu'elle empile. -->
-<script src="/modules/capture.js"></script>
 <script src="/modules/gens.js"></script>
 <!-- le carnet de rencontres : il lit le fil, il range « Les gens » -->
 <script src="/modules/vus.js"></script>

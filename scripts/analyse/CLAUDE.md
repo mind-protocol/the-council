@@ -10,7 +10,6 @@ dispositif, pas au tour de jeu.
 | `mesurer.py` | la part des répliques du jour sans trace d'aucune pensée. Un seul chiffre, et c'est voulu |
 | `parvenir.py` | est-ce que ça va atteindre le joueur ? à quel point ? quand ? |
 | `croisement.py` | où et quand deux camps se frôlent, et de quelle taille |
-| `croise.js` | ce qui parvient à un siège LÀ OÙ IL EST, sans qu'il ait marché |
 | `verif_plan.js` | les plans de château, mesurés : deux noms qui se marchent dessus |
 | `exporter_aurore.py` | tout ce qui touche un personnage, en `.txt` dans `export/` |
 | `scorer_activation_hightower.py` | la cadence d'activation d'une maison |

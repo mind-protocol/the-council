@@ -8,9 +8,9 @@
  *
  * POURQUOI UN CLIQUET, ET PAS UNE LIMITE À 500. Le dépôt voisin `batailles`
  * refuse tout fichier au-delà de 500 lignes, et cette règle y tient parce
- * qu'elle y a toujours tenu. Ici, 61 fichiers la dépassent déjà — dont
- * `bataille2d.js` à dix mille lignes. Une limite unique en refuserait 61 d'un
- * coup, crierait à chaque édition d'un fichier qu'on est justement en train de
+ * qu'elle y a toujours tenu. Ici, 61 fichiers la dépassaient déjà à
+ * l'installation — le plus gros à dix mille lignes. Une limite unique en
+ * refuserait autant d'un coup, crierait à chaque édition d'un fichier qu'on est justement en train de
  * réduire, et serait débranchée le jour même. Un garde-fou qu'on débranche ne
  * garde rien.
  *
@@ -18,9 +18,9 @@
  * l'aggravation impossible dès l'installation : un fichier déjà gros ne peut
  * plus que MAIGRIR, un fichier neuf naît sous 500 lignes. C'est la seule forme
  * qui marche sur un dépôt qui a déjà dérivé — et c'est le mode d'échec exact
- * qu'on veut fermer, puisque `bataille2d.js` a pris quatre mille lignes AVANT
- * que son extraction commence, et que rien n'empêchait la reprise de poids
- * pendant l'extraction.
+ * qu'on veut fermer : le plus gros fichier du dépôt avait pris quatre mille
+ * lignes AVANT que son extraction commence, et rien n'empêchait la reprise de
+ * poids pendant l'extraction.
  *
  * IL SE TAIT QUAND LE FICHIER MAIGRIT, même s'il reste énorme : dire à
  * quelqu'un qui vient de retirer trois cents lignes que son fichier fait encore

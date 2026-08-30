@@ -4417,57 +4417,17 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 .cv-f-heure{font-variant-numeric:tabular-nums;font-weight:600;min-width:3.6em;}
 .cv-f-compte{opacity:.6;font-variant-numeric:tabular-nums;}
 .cv-foule-barre.marche .cv-f-heure{color:var(--braise);}
-/* — LA BATAILLE — la même discipline que la foule, à l'autre coin : les deux
-     barres ne se marchent pas dessus, et l'on voit d'un coup d'œil laquelle
-     des deux horloges tourne (celle de la ville, ou celle de l'assaut). — */
-.cv-bataille{position:absolute;inset:0;width:100%;height:100%;
-  pointer-events:none;}
-/* — LE BAS DU PLAN EST UN RAIL, et il était disputé par trois barres qui ne se
-     voyaient pas : la marche au centre (`.cv-barre`), le combat au centre lui
-     aussi (`.cv-combat-barre`), et celle-ci à droite. Elle n'avait pas de
-     `nowrap` : à cinq mesures, sa ligne passait sur deux hauteurs, s'élargissait
-     vers la gauche et venait se poser sur « Vous y êtes ». On lisait « 21 en
-     fuite » à cheval sur « 1 dehors ».
-     Deux règles suffisent : elle ne se plie plus, et elle MONTE d'un cran dès
-     qu'une barre centrale s'ouvre. `:has()` le fait sans une ligne de JS — et
-     sans toucher au module du voisin. — */
-.cv-bat-barre{position:absolute;right:10px;bottom:10px;z-index:3;
-  display:flex;align-items:center;gap:.5em;white-space:nowrap;
-  padding:.3em .6em;border-radius:3px;
-  background:color-mix(in srgb,var(--cv-sol) 88%,transparent);
-  border:1px solid var(--cv-bati-trait);
-  font-size:.85em;color:var(--ink);user-select:none;
-  transition:bottom .18s;}
-#ville2d:has(.cv-barre.ouverte) .cv-bat-barre,
-#ville2d:has(.cv-combat-barre.ouverte) .cv-bat-barre{bottom:3.1rem;}
-.cv-bat-barre button{background:none;border:0;cursor:pointer;
-  color:var(--ink);font-size:1.05em;line-height:1;padding:.1em .25em;}
-.cv-bat-barre button:hover{color:var(--braise);}
-.cv-b-etat{font-variant-numeric:tabular-nums;opacity:.85;
-  display:flex;align-items:baseline;gap:.55em;}
-/* L'heure d'abord — c'est elle qu'on cherche quand on revient à l'écran. */
-.cv-b-h{font-weight:600;opacity:1;letter-spacing:.01em;}
-/* Le rapport de force : le seul chiffre qui décide de la nuit. Les deux
-   nombres portent, le mot qui les sépare s'efface. */
-.cv-b-force{opacity:.55;}
-.cv-b-force b{font-weight:600;opacity:1;color:var(--ink);}
-.cv-b-porte{opacity:.8;}
-/* Les pertes suivent l'affaire, elles ne la décident pas : plus petites, et
-   séparées du reste par un filet plutôt que par un point de plus. */
-.cv-b-pertes{opacity:.62;font-size:.92em;
-  padding-left:.55em;
-  border-left:1px solid color-mix(in srgb,var(--cv-bati-trait) 60%,transparent);}
 /* — LE PLEIN ÉCRAN — le seul bouton du plan qui ne parle pas de la fiction :
      il se tient dans le coin, à peine visible, et ne se réveille qu'au survol
      de la carte. — */
 /* — L'ÉCHELLE DU COIN. Trois boutons s'y sont posés l'un après l'autre, chacun
-     calculant sa hauteur dans SON `em` — et comme `.cv-tenir` écrit en .72rem
-     et les icônes en .95em, « dix pixels plus deux virgule cinq em » ne veut
-     pas la même chose d'un bouton à l'autre. Ils se sont recouverts, et c'était
+     calculant sa hauteur dans SON `em` — et entre un bouton en .72rem et des
+     icônes en .95em, « dix pixels plus deux virgule cinq em » ne veut pas la
+     même chose d'un bouton à l'autre. Ils se sont recouverts, et c'était
      inévitable.
      On compte donc en REM, qui est le même pour tout le monde, et l'on tient
      l'échelle ici : un barreau par bouton, dans l'ordre où on les a posés. Le
-     prochain qui vient prend `--cv-coin-4`. — */
+     prochain qui vient prend `--cv-coin-3`, laissé libre. — */
 :root{--cv-coin-1:10px;
       --cv-coin-2:calc(10px + 2.2rem);
       --cv-coin-3:calc(10px + 4.4rem);}
@@ -4492,13 +4452,6 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
    ceci le navigateur peint du noir derrière un plan qui, lui, est clair. */
 #ville2d:fullscreen{background:var(--cv-sol);}
 #ville2d:fullscreen .cv-plein,#ville2d:fullscreen .cv-centrer{opacity:.85;}
-/* En marche, c'est L'HEURE qui s'allume et rien d'autre : c'est elle qui
-   tourne. Toute la ligne en braise, et la hiérarchie qu'on vient d'établir
-   s'effondrait — les nombres du rapport de force reprenaient l'encre du décor
-   pendant que les éclopés passaient en rouge. */
-.cv-bat-barre .cv-b-etat{opacity:.85;}
-.cv-bat-barre.marche .cv-b-etat{opacity:1;}
-.cv-bat-barre.marche .cv-b-h{color:var(--braise);}
 /* Une carte se tire à la main : le glissé doit déplacer la ville, jamais
    surligner « LE CULPUCIER » en bleu. Les noms du plan ne se sélectionnent pas,
    et seuls les repères prennent la souris. */
@@ -4762,55 +4715,6 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
   font-size:.82em;line-height:1.35;letter-spacing:.02em;
   user-select:none;will-change:transform;}
 
-/* — LA FICHE D'UN HOMME. La bulle des maisons prend la couleur du métier
-     qu'elle nomme ; celle-ci n'en prend aucune — elle ne nomme pas un toit,
-     elle nomme quelqu'un, et le fond doit rester le même qu'on survole un
-     chef de corps ou un blessé. Elle passe donc sur l'encre du décor, et la
-     seule couleur qu'elle porte est celle du chiffre. — */
-.cv-bulle-bat{padding:.34em .6em;
-  box-sizing:border-box;max-width:min(430px,calc(100vw - 24px));
-  max-height:calc(100vh - 16px);overflow-y:auto;pointer-events:auto;white-space:normal;
-  background:color-mix(in srgb,var(--cv-sol) 94%,#000);
-  color:var(--ink);}
-.cv-bulle-bat span{display:block;}
-/* La première ligne est l'identité : elle porte seule, et les suivantes
-   s'effacent derrière elle — sinon six lignes de même poids se lisent comme
-   une liste, et l'on ne sait plus qui on regarde. */
-.cv-bulle-bat span:first-child{font-size:1.06em;letter-spacing:.01em;}
-.cv-bulle-bat span+span{opacity:.72;}
-.cv-bulle-bat em{font-style:normal;opacity:.85;
-  color:var(--braise);margin-left:.5em;}
-.cv-bulle-bat i{font-style:italic;opacity:.9;}
-.cv-bulle-bat sup{font-size:.72em;vertical-align:.35em;}
-.cv-mark{display:block;position:sticky;z-index:1;bottom:0;margin:.55em 0 .1em auto;
-  padding:.25em .8em;
-  border:1px solid var(--braise);border-radius:3px;
-  background:color-mix(in srgb,var(--cv-sol) 96%,#000);
-  color:var(--braise);font:inherit;font-weight:700;cursor:pointer;}
-.cv-mark:hover{background:color-mix(in srgb,var(--braise) 12%,transparent);}
-
-/* Le formulaire est séparé de la bulle : celle-ci appartient au survol et peut
-   disparaître ; une remarque commencée appartient au joueur et reste ouverte. */
-.cv-mark-dialog{position:absolute;z-index:8;left:50%;top:50%;
-  transform:translate(-50%,-50%);width:min(520px,calc(100% - 28px));
-  box-sizing:border-box;padding:1rem;border:1px solid var(--braise);border-radius:5px;
-  background:color-mix(in srgb,var(--cv-sol) 97%,#000);color:var(--ink);
-  box-shadow:0 10px 34px rgba(0,0,0,.42);font-size:.9rem;}
-.cv-mark-titre{font:700 1.15rem/1.2 ui-serif,Georgia,serif;}
-.cv-mark-instant{margin:.25rem 0 .85rem;color:var(--muted);font-size:.82rem;}
-.cv-mark-dialog label{display:block;}
-.cv-mark-dialog textarea{display:block;width:100%;box-sizing:border-box;margin:.35rem 0 .75rem;
-  resize:vertical;padding:.55rem;border:1px solid color-mix(in srgb,var(--ink) 25%,transparent);
-  border-radius:3px;background:color-mix(in srgb,var(--cv-sol) 88%,#fff);
-  color:var(--ink);font:inherit;line-height:1.35;}
-.cv-mark-actions{display:flex;justify-content:flex-end;gap:.5rem;}
-.cv-mark-actions button{padding:.35rem .7rem;border:1px solid var(--muted);border-radius:3px;
-  background:transparent;color:var(--ink);font:inherit;cursor:pointer;}
-.cv-mark-actions [data-sauver]{border-color:var(--braise);color:var(--braise);font-weight:700;}
-.cv-mark-statut{min-height:1.2em;margin-top:.65rem;color:var(--muted);font-size:.8rem;}
-.cv-mark-statut code{color:var(--braise);user-select:text;}
-.cv-mark-sauvee textarea,.cv-mark-sauvee [data-annuler]{display:none;}
-
 /* — les enseignes : une marque de métier sur la porte, aux fortes approches.
      DÉSATURÉES, ET CE N'EST PAS UN DÉTAIL. Un emoji sort en couleurs pleines
      et modernes ; posé sur un plan à l'encre, il hurle et il date la page. Le
@@ -4922,50 +4826,6 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
    de l'œil. La couleur ne dit rien de ce qu'on a croisé : c'est au MJ. */
 .cv-barre.halte{border-color:var(--or-joueur);}
 .cv-barre.halte .cv-dit{color:var(--or-joueur);}
-
-/* =========================================================
-   TENIR LA POSITION — le combat, qui est la balade dont
-   l'horloge est décrochée des jambes (ecrans/modules/combat.js).
-   Écrit en fin de fichier à dessein : le bloc est autonome, il
-   n'a rien à reprendre plus haut, et il ne gêne personne.
-   ========================================================= */
-
-/* L'entrée. Elle se tient sous le plein écran, dans le même coin et de la
-   même encre : ce sont les deux boutons du plan qui ne parlent pas de la
-   fiction, ils se ressemblent et ils se font petits. */
-/* (Troisième barreau de l'échelle du coin — voir `--cv-coin-1` plus haut.
-   Le bouton se pose depuis `combat.js` ; seule sa hauteur se décide ici.) */
-.cv-tenir{position:absolute;right:10px;top:var(--cv-coin-3);z-index:3;
-  padding:.22em .6em;line-height:1.3;cursor:pointer;
-  border:1px solid var(--cv-bati-trait);border-radius:3px;
-  background:color-mix(in srgb,var(--cv-sol) 88%,transparent);
-  color:var(--ink);font:inherit;font-size:.72rem;
-  opacity:.3;transition:opacity .15s;}
-#ville2d:hover .cv-tenir{opacity:.8;}
-.cv-tenir:hover{opacity:1;color:var(--braise);}
-
-/* La barre. Au centre bas — la foule tient la gauche, la bataille la droite,
-   et une scène qu'on joue mérite le milieu. Fermée, elle n'existe pas. */
-.cv-combat-barre{position:absolute;left:50%;bottom:10px;z-index:4;
-  transform:translateX(-50%);display:none;align-items:center;gap:.7em;
-  padding:.36em .7em;border-radius:4px;
-  border:1px solid var(--cv-bati-trait);
-  background:color-mix(in srgb,var(--cv-sol) 94%,transparent);
-  font-size:.78rem;color:var(--ink);}
-.cv-combat-barre.ouverte{display:flex;}
-.cv-combat-barre button{background:none;border:0;cursor:pointer;
-  color:inherit;font:inherit;padding:0 .2em;opacity:.75;}
-.cv-combat-barre button:hover{opacity:1;color:var(--braise);}
-
-/* L'heure du monde, et le temps de fiction écoulé. Chiffres tabulaires : une
-   horloge dont les chiffres sautent de largeur à chaque seconde se lit mal,
-   et c'est la seule chose de cette barre qu'on regarde vraiment. */
-.cv-cb-heure{font-variant-numeric:tabular-nums;font-weight:600;min-width:3.6em;}
-.cv-cb-ecoule{font-variant-numeric:tabular-nums;opacity:.6;min-width:4em;}
-/* Quand ça tourne, l'heure prend la braise — c'est le seul signal que la barre
-   se permette. Elle ne dit JAMAIS ce qu'on perçoit : le récit est au MJ. */
-.cv-combat-barre.marche .cv-cb-heure{color:var(--braise);}
-.cv-cb-retirer{opacity:.55;}
 
 /* =========================================================
    VOUS, AU 1:1 — à TOUTE approche. Le point fait 0,55 m

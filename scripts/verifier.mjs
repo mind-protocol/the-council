@@ -12,12 +12,10 @@
  * exigeaient un serveur, et savoir d'avance lesquels sont rouges pour de bonnes
  * raisons. Une verification qu'on ne peut pas invoquer d'un mot n'est pas une
  * verification : c'est une documentation. `batailles` a `node coding/fumee.mjs`
- * et le pose comme une propriete d'architecture ; c'en est une ici aussi,
- * depuis que les quatre bancs qui reclamaient `localhost:3129` lisent le monde
- * par la route en memoire (`scripts/monde/monde_local.js`).
+ * et le pose comme une propriete d'architecture ; c'en est une ici aussi.
  *
- * LE MANIFESTE EST LA DECISION, PAS UNE LISTE. Comme `bataille/moteur/chaine.js`
- * pour l'ordre de chargement : ce qui verifie ce depot est ENONCE ici, une fois,
+ * LE MANIFESTE EST LA DECISION, PAS UNE LISTE : ce qui verifie ce depot est
+ * ENONCE ici, une fois,
  * avec le rang de chaque epreuve et la raison de ce rang. Une epreuve neuve
  * entre par ce fichier, et par lui seul — sinon l'on retombe sur des listes qui
  * divergent en silence, ce que ce depot a deja paye.
@@ -60,53 +58,6 @@ const PY = process.env.PYTHON || "python";
 const EPREUVES = [
   // --- LES GARDES -----------------------------------------------------------
   {
-    id: "banc-moteur", rang: "garde", secondes: 20,
-    commande: ["node", "ecrans/modules/bataille/banc-moteur.js"],
-    pourquoi: "L'etalon du moteur : l'issue et les annales comparees a zero tolerance. "
-      + "C'est celui qui voit un deplacement de blocs.",
-  },
-  {
-    id: "banc-monde", rang: "garde", secondes: 11,
-    commande: ["node", "ecrans/modules/bataille/banc-monde.js"],
-    pourquoi: "La ville sous les pieds : densites, distances au chef, unites.",
-  },
-  {
-    id: "banc-combattant", rang: "garde", secondes: 11,
-    commande: ["node", "ecrans/modules/bataille/banc-combattant.js"],
-    pourquoi: "Les etiquettes de pensee reellement vues par la couche combattant.",
-  },
-  {
-    id: "banc-commandement", rang: "garde", secondes: 0.1,
-    commande: ["node", "ecrans/modules/bataille/banc-commandement.js"],
-    pourquoi: "Le brouillard du commandement : ce qu'une parole transmet, et ce "
-      + "qu'elle ne transmet pas. Douze assertions, sans charger de monde.",
-  },
-  {
-    id: "banc-formation", rang: "garde", secondes: 12,
-    commande: ["node", "ecrans/modules/bataille/banc-formation.js"],
-    pourquoi: "Les formations tiennent leur forme sous le terrain.",
-  },
-  {
-    id: "banc-circulation", rang: "garde", secondes: 1,
-    commande: ["node", "ecrans/modules/bataille/banc-circulation.js"],
-    pourquoi: "La circulation dans les rues : ce qui bouchonne et ce qui passe.",
-  },
-  {
-    id: "banc-pensees", rang: "garde", secondes: 4,
-    commande: ["node", "ecrans/modules/bataille/banc-pensees.js"],
-    pourquoi: "Un comportement qui n'emet rien n'existe pas : les annales sont tenues.",
-  },
-  {
-    id: "banc-reflexion-adapt", rang: "garde", secondes: 0.1,
-    commande: ["node", "ecrans/modules/bataille/banc-reflexion-adapt.js"],
-    pourquoi: "La prise de la couche 2 : onze signaux batis depuis la bataille.",
-  },
-  {
-    id: "banc-qui-conduit", rang: "garde", secondes: 0.1,
-    commande: ["node", "ecrans/modules/survival-stack/banc-qui-conduit.js"],
-    pourquoi: "Qui conduit l'homme, couche par couche.",
-  },
-  {
     id: "banc-tick", rang: "garde", secondes: 0.9,
     commande: [PY, "scripts/analyse/banc_tick.py"],
     pourquoi: "L'etalon du hors-scene : la proposition de `tick.py` sur un `etat/` "
@@ -117,11 +68,6 @@ const EPREUVES = [
     id: "tests-python", rang: "garde", secondes: 0.4,
     commande: [PY, "-m", "unittest", "discover", "-s", "scripts/tests", "-p", "test_*.py"],
     pourquoi: "Les tests unitaires du Python — bibliotheque, plan, mesures.",
-  },
-  {
-    id: "incendie-ville", rang: "garde", secondes: 1.5,
-    commande: ["node", "scripts/tests/incendie-ville.test.mjs"],
-    pourquoi: "La propagation d'un incendie dans la ville.",
   },
   {
     id: "serveur-bibliotheque", rang: "garde", secondes: 0.1,
@@ -146,22 +92,6 @@ const EPREUVES = [
   },
 
   // --- LES MESURES ----------------------------------------------------------
-  {
-    id: "banc-epreuve", rang: "mesure", secondes: 43,
-    commande: ["node", "ecrans/modules/bataille/banc-epreuve.js"],
-    compte: /(\d+) sonde\(s\) rouge\(s\)/,
-    pourquoi: "Quatre sondes rouges de FOND, pas de regression : les cavaliers ne "
-      + "tirent pas d'allure superieure, aucune pique ne recoit de charge, aucun "
-      + "chef n'adapte son ordre apres renseignement. Ces sondes etaient deja la "
-      + "— elles etaient seulement impossibles a lancer, faute de serveur.",
-  },
-  {
-    id: "banc-dynamiques", rang: "mesure", long: true, secondes: 399,
-    commande: ["node", "ecrans/modules/bataille/banc-dynamiques.js"],
-    compte: /(\d+) NON/,
-    pourquoi: "Les quatre sondes de `banc-epreuve` et quatre autres. Sept minutes : "
-      + "hors du passage ordinaire, il ne tourne qu'avec --long.",
-  },
   {
     id: "coherence-etat", rang: "mesure", secondes: 9.4,
     commande: [PY, "scripts/tick.py", "--verifier"],

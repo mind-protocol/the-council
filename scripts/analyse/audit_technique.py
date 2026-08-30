@@ -74,26 +74,6 @@ def mesurer():
     m["sur_2000"] = sum(1 for n, _ in tailles if n > 2000)
     m["plus_gros"] = [{"f": f, "l": n} for n, f in tailles[:8]]
 
-    # le monolithe : sa taille, ses fonctions, sa plus longue fonction
-    mono = "ecrans/modules/bataille2d.js"
-    m["monolithe"] = {"f": mono, "l": lignes_de(mono)}
-    plein = os.path.join(RACINE, mono)
-    if os.path.exists(plein):
-        with open(plein, encoding="utf-8", errors="replace") as fh:
-            src = fh.readlines()
-        depuis = [(i, l) for i, l in enumerate(src) if re.match(r"^  function [A-Za-z_$]", l)]
-        longues = []
-        for k, (i, l) in enumerate(depuis):
-            fin = depuis[k + 1][0] if k + 1 < len(depuis) else len(src)
-            longues.append((fin - i, l.strip().rstrip(" {")))
-        longues.sort(reverse=True)
-        m["monolithe"]["fonctions"] = len(depuis)
-        m["monolithe"]["plus_longue"] = (
-            {"nom": longues[0][1], "l": longues[0][0]} if longues else None
-        )
-        champs = set(re.findall(r"\bh\.([A-Za-z_$][\w$]*)", "".join(src)))
-        m["monolithe"]["champs_sur_h"] = len(champs)
-
     # -- §2 frontieres de module ------------------------------------------
     front = [f for f in code if f.startswith("ecrans/")]
     esm = 0
@@ -116,7 +96,7 @@ def mesurer():
         except OSError:
             pass
     m["globales_window"] = len(globales)
-    for page in ("ecrans/jeu.html", "ecrans/bataille.html"):
+    for page in ("ecrans/jeu.html",):
         try:
             with open(os.path.join(RACINE, page), encoding="utf-8", errors="replace") as fh:
                 texte = fh.read()
@@ -126,7 +106,7 @@ def mesurer():
             pass
 
     # -- §3 verification ---------------------------------------------------
-    bancs = suivis("ecrans/modules/bataille/banc-*.js")
+    bancs = suivis("scripts/analyse/banc-*.js", "scripts/tests/banc-*.js")
     m["bancs"] = len(bancs)
     attaches = []
     for f in bancs:
@@ -189,11 +169,6 @@ def imprimer(m):
              round(m["sur_500"] * 100.0 / max(m["fichiers_code"], 1)), m["sur_1000"], m["sur_2000"]))
     for g in m["plus_gros"][:4]:
         print("                 %6d  %s" % (g["l"], g["f"]))
-    mono = m.get("monolithe", {})
-    if mono.get("plus_longue"):
-        print("     monolithe   %d l., %d fonctions, %d champs sur h ; la plus longue : %s (%d l.)"
-              % (mono["l"], mono["fonctions"], mono["champs_sur_h"],
-                 mono["plus_longue"]["nom"], mono["plus_longue"]["l"]))
     print("  §2 frontieres  %d fichiers front : %d ESM / %d globales-IIFE ; %d globales window.*"
           % (m["front_fichiers"], m["front_esm"], m["front_globals"], m["globales_window"]))
     print("                 balises <script> : %s ; ?v= manuels : %s"

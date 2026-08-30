@@ -13,7 +13,7 @@ couche ``cloches`` dans ``monde/portreal.plan2d.json``.
 POURQUOI UNE COUCHE ET PAS DES REPERES. Un repere est un endroit ou l'on se
 donne rendez-vous ; une cloche est un EMETTEUR, et ce qui la definit n'est pas
 son point mais sa portee. Les meler ferait entrer sept cloches dans l'index de
-recherche des lieux et dans le filtre des portes de `bataille2d.js`, pour un
+recherche des lieux, et dans tout ce qui filtre les portes de la ville, pour un
 gain nul.
 
 QUAND LE LANCER. Apres `plan_ville.py`, qui reecrit `plan2d.json` en entier et

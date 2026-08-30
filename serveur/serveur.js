@@ -32,8 +32,6 @@ const ROUTES = [
   require("./routes/voix"),        // /voix/*
   require("./routes/scene"),       // /scene — le fil servi au navigateur
   require("./routes/foule"),       // POST /foule/journal
-  require("./routes/vue"),         // POST /vue
-  require("./routes/bataille"),    // POST /marque-bataille, commentaires
   require("./routes/agenda"),      // POST /agenda, /notes, /nappe
   require("./routes/piece"),       // POST /piece
   require("./routes/marche"),      // POST /ou, /marche

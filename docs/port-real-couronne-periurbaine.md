@@ -11,9 +11,15 @@
 
 ## 0. La phrase qui commande tout
 
-**À l'échelle de `/bataille`, Port-Réal ne doit pas être une ville posée dans
+**À l'échelle du terrain, Port-Réal ne doit pas être une ville posée dans
 du vide, mais le centre d'un paysage entièrement occupé à la nourrir, la
 chauffer, la vider et la relier à la mer.**
+
+> Ce document a été écrit pour la page `/bataille`, **supprimée du dépôt le 30 août
+> 2026** avec son moteur ; ce qu'elle consommait sera rendu par des appels au dépôt
+> voisin `batailles`. La géométrie décrite ici ne bouge pas pour autant : elle est
+> celle de la vue « La ville » et du terrain, qui la lisent déjà. Là où le texte dit
+> `/bataille`, lire « l'échelle où l'on descend à cent pas ».
 
 Cela interdit quatre raccourcis :
 
@@ -610,7 +616,8 @@ suffit pas si les formes ne racontent rien ; en sortir exige une décision
   à leur exposition ; les bois ont accès et limites d'exploitation.
 - À l'ouverture, Port-Réal reste le sujet principal ; au dézoom, elle devient
   le centre d'un système lisible.
-- La vue `ville` et `/bataille` consomment la même géométrie et la même palette.
+- Toutes les vues qui descendent sur la ville consomment la même géométrie et la
+  même palette — c'est ce qui doit rester vrai de ce qui remplacera `/bataille`.
 
 ### 10.3 Budget de rendu
 

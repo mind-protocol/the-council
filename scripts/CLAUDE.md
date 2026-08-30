@@ -18,7 +18,7 @@ par lune. On peut y ranger, y renommer, y supprimer.
 |---|---|---|
 | *(racine)* | les commandes du tour de jeu | le MJ, les dépêchés, les hooks, le serveur |
 | `noyau/` | les modules partagés, importés jamais tapés | les autres scripts |
-| `monde/` | engendrer le monde 3D, et la bataille cuite | la pipeline, les cahiers |
+| `monde/` | engendrer le monde 3D | la pipeline, les cahiers |
 | `materialisation/` | Peyredragon vers Blender, les vues, les rendus | à la main |
 | `ville/` | Port-Réal : le tissu et sa région | la pipeline |
 | `plan/` | le Grand Plan : lecture, correction, colonnes | à la main, rarement |
@@ -64,11 +64,10 @@ c'est de l'arithmétique de chemins, ça se contrôle sans rien exécuter.
 ## Ne JAMAIS vérifier en important
 
 Beaucoup de ces scripts agissent au chargement : `seed_flux.py` réinitialise
-`etat/flux.jsonl`, `exporter_plan.py` réécrit `exports/`, `bataille.py` cuit une
-bataille. Un « test d'import » qui les balaie détruit une partie en cours. Pour
+`etat/flux.jsonl`, `exporter_plan.py` réécrit `exports/`. Un « test d'import » qui les balaie détruit une partie en cours. Pour
 contrôler qu'un classement n'a rien cassé :
 
-- **`node scripts/verifier.mjs`** — les quatorze étalons du dépôt en 55 s, un
+- **`node scripts/verifier.mjs`** — les sept étalons du dépôt, un
   code de sortie, et rien qui touche `etat/` : chaque épreuve tourne dans son
   propre processus, en dossier temporaire, sur un port éphémère. C'est le
   premier geste après tout déplacement, et il remplace la liste ci-dessous ;
@@ -112,8 +111,7 @@ Stop, déclaré dans `.claude/settings.json`).
 sortie (`node scripts/verifier.mjs`, ou `--long` pour ce qui coûte des minutes).
 Son manifeste est la seule déclaration de ce qui vérifie ce dépôt : une épreuve
 neuve entre par ce fichier, sinon les listes divergent comme elles l'ont déjà
-fait pour l'ordre de chargement. Les bancs eux-mêmes vivent dans `analyse/`,
-`tests/` et `ecrans/modules/bataille/`.
+fait pour l'ordre de chargement. Les bancs eux-mêmes vivent dans `analyse/` et
+`tests/`.
 
-**Le reste** — `bataille.py` (son chemin est cité dans les cahiers in-fiction :
-il ne bouge pas) et `composer.py`.
+**Le reste** — `composer.py`.

@@ -13,7 +13,6 @@
 // calent dessus (voir serveur/CLAUDE.md).
 const fs = require("fs");
 const path = require("path");
-const croiser = require("../croiser");
 const { RACINE } = require("../contexte");
 const { DEBUG_MARCHE_AU_FIL, LIEU3D_DEFAUT, LIEUX3D, PLURIELS, SESSION_SERVEUR,
         _resteMarche, batiAutour, direGens, metier, repereProche } = require("../monde3d");
@@ -208,11 +207,12 @@ try {
     // les murs sont les mêmes à trois heures du matin et à midi, les
     // gens non. Sans elle, une balade décrivait une ville vide.
     gens: direGens(p.gens),
-    // CE QU'ON CROISE DE LA BATAILLE, s'il y en a une de datée. Vu,
-    // entendu, ou trouvé par terre — jamais autre chose. Un fait qui
-    // n'est à portée d'aucun des trois sens ne parvient pas au joueur,
-    // et c'est tout le brouillard de cette partie en une ligne.
-    croise: croiser.autour(RACINE, lieu, x, y, date),
+    // `croise` — ce que le marcheur percevait d'une bataille cuite — a été
+    // retiré avec le moteur de bataille (voir le dépôt `batailles/`). Les
+    // lectures de `pas.croise` plus bas sont toutes gardées et rendent donc
+    // « rien perçu » : c'est l'état correct tant qu'aucune source ne le
+    // remplit. Le jour où les batailles reviennent d'ailleurs, c'est ici
+    // qu'on rebranche ce qu'on voit, entend et trouve par terre.
     fin: !!p.fin,
   };
   // ⚠ DEBUG — voir DEBUG_MARCHE_AU_FIL en tête de fichier. On écrit

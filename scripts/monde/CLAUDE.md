@@ -1,8 +1,7 @@
-# `monde/` — engendrer la ville, et cuire la bataille
+# `monde/` — engendrer la ville
 
-Deux métiers cohabitent ici. **La CHAÎNE** fabrique le monde 3D — le relief, la
-voirie, les maisons, les habitants, le plan 2D. **LE SAC** cuit une bataille à
-l'avance, pour qu'elle ne se calcule pas sous les yeux du joueur.
+Un seul métier ici : **la CHAÎNE** fabrique le monde 3D — le relief, la voirie,
+les maisons, les habitants, le plan 2D.
 
 Les fichiers produits vivent dans `monde/` à la racine du dépôt (`portreal.*.json`,
 `peyredragon.*.json`), jamais dans `etat/` : ils se régénèrent, `etat/` non.
@@ -38,16 +37,17 @@ toute relance.
 `blender -b --python scripts/monde/batir.py`. Il lit le graphe et le terrain, il ne
 les calcule pas.
 
-## Le sac — la bataille cuite
+## Les noms cités dans les cahiers
 
-`sac.js` cuit une bataille au lieu de la calculer en direct : on paie une fois, on
-rejoue autant qu'on veut. `corps_mesure.js` mesure ce que la couche 1 rend sur une
-bataille entière ; `annales.js` relit ce qui s'est produit.
-
-**Le chemin `scripts/monde/sac.js` est cité une quarantaine de fois dans les cahiers
-in-fiction de `etat/books/`**, et `plan_ville.py`, `corps_mesure.js` et `besoins.py`
-le sont aussi. Ces noms-là ne se renomment pas sans casser la journée d'un homme
+**`plan_ville.py` et `besoins.py` sont cités dans les cahiers in-fiction de
+`etat/books/`.** Ces noms-là ne se renomment pas sans casser la journée d'un homme
 dépêché qui suit son cahier.
+
+> Le four de bataille qui vivait ici — `sac.js` et ses mesures — a été supprimé du
+> dépôt le 30 août 2026 ; le remplacement passera par des appels au dépôt voisin
+> `batailles`. Les cahiers qui citaient `scripts/monde/sac.js` pointent donc, pour
+> l'instant, sur un chemin mort : c'est exactement le mal que cette section
+> nommait, et il est ici constaté plutôt que découvert par un dépêché.
 
 ## Deux plumes sur le même monde
 

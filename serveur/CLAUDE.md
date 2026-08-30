@@ -25,8 +25,7 @@ domaine/
   activations.js 565 l.   activations, têtes, criticité, santé, charge, fil du MJ actif
   regie.js       521 l.   filPersonnage, recherche dans le flux, extrait, regie()
   marche.js      394 l.   la montre, la position, ce qu'on longe et perçoit, le sac
-  recherche.js    51 l.   dossiersRecherche
-routes/          21 fichiers, 24 à 244 l. — un par famille d'URL, en-tête disant lesquelles
+routes/          19 fichiers, 24 à 244 l. — un par famille d'URL, en-tête disant lesquelles
 ```
 
 ## Deux contrats

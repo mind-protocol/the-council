@@ -4,7 +4,6 @@ const fs = require("fs");
 const path = require("path");
 const { RACINE } = require("../contexte");
 const { chargeActeurs, criticite, detailActivation, filMjActif, prevoirActivations, resumeActivations, sante } = require("../domaine/activations");
-const { dossiersRecherche } = require("../domaine/recherche");
 const { chercherDansFlux, extraitDuFlux, filPersonnage, regie } = require("../domaine/regie");
 const { envoyer, fichierStatique } = require("../http");
 const { monPersonnage, qui } = require("../siege");
@@ -15,33 +14,8 @@ function traiter(req, res, url) {
     // banc d'essai des voix : ne consomme pas le flux, donc ne double personne
     if (url === "/essai-voix") return fichierStatique(res, "essai-voix.html", "text/html; charset=utf-8");
     if (url === "/essai-son") return fichierStatique(res, "essai-son.html", "text/html; charset=utf-8");
-    // La vue de débug de la couche du corps (`modules/survival-stack/`) : un
-    // combat d'essai à gauche, le journal complet à droite. Elle ne touche à
-    // RIEN — ni état, ni flux, ni horloge : c'est un banc, pas une partie.
-    if (url === "/bataille") return fichierStatique(res, "bataille.html", "text/html; charset=utf-8");
-    // L'inventaire adressable du moteur de bataille. Chaque feature a une
-    // clef stable, une preuve visuelle et, lorsqu'elle est encore enfouie
-    // dans un scénario, un endroit explicite où le dire.
-    if (url === "/architecture-bataille")
-      return fichierStatique(res, "architecture-bataille.html", "text/html; charset=utf-8");
-    if (url === "/architecture-bataille/commentaires") {
-      const fichier = path.join(RACINE, "captures", "bataille-architecture", "commentaires.jsonl");
-      let commentaires = [];
-      try {
-        commentaires = fs.readFileSync(fichier, "utf-8").split(/\r?\n/)
-          .filter(Boolean).map((l) => JSON.parse(l)).reverse();
-      } catch (e) {}
-      return envoyer(res, 200, JSON.stringify({ commentaires }));
-    }
-    // Ce sur quoi le banc est fondé : les dossiers de recherche entiers, lus
-    // à chaque appel dans `docs/recherche/*.md`. Lecture seule, hors partie —
-    // le banc ne touche à rien et celle-ci non plus.
-    if (url === "/recherche") {
-      try { return envoyer(res, 200, JSON.stringify({ dossiers: dossiersRecherche() })); }
-      catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
-    }
     // Un module, ou un module d'une famille : `/modules/monde/relief.js`,
-    // `/modules/bataille/moteur/commun/contrats.js`. Rien qui ressemble à un
+    // `/modules/books/lecture.js`. Rien qui ressemble à un
     // chemin remontant : chaque cran est du minuscule, des chiffres, un tiret
     // ou un souligné — un point ne passe nulle part ailleurs que dans le nom
     // du fichier, donc « .. » ne peut pas se former.

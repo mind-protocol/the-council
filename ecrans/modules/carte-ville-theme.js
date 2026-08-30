@@ -1,7 +1,7 @@
 // carte-ville-theme.js — une seule matière pour tous les plans de Port-Réal.
 //
-// `carte-ville.js` dessine en SVG et le banc `/bataille` compose sur un canvas.
-// Le matériau diffère, pas la carte : les deux lisent ici les mêmes teintes,
+// `carte-ville.js` dessine en SVG, les toiles posées par-dessus composent en
+// pixels. Le matériau diffère, pas la carte : tous lisent ici les mêmes teintes,
 // nuances d'usage et largeurs de voies. Le petit style injecté passe après les
 // feuilles de page et fait de cette table l'autorité d'exécution ; les valeurs
 // restées dans `jeu.css` ne sont plus que le repli si ce script manque.

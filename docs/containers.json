@@ -30,7 +30,6 @@
       "serveur/http.js",
       "serveur/dates.js",
       "serveur/siege.js",
-      "serveur/croiser.js",
       "ecrans/modules/bus.js",
       "ecrans/modules/entites.js",
       "ecrans/modules/nav.js",
@@ -152,7 +151,6 @@
       "serveur/routes/agenda.js",
       "serveur/routes/atelier.js",
       "serveur/domaine/echiquier.js",
-      "serveur/domaine/recherche.js",
       "ecrans/modules/books/*",
       "ecrans/modules/echiquier.js",
       "ecrans/modules/jetons.js",
@@ -162,21 +160,6 @@
       "ecrans/modules/objectifs.js",
       "ecrans/modules/ecrits.js",
       "ecrans/modules/annales.js"
-    ]
-  },
-  "bataille": {
-    "intention": "Le moteur de bataille — EN SURSIS : sa porte deviendra l'adaptateur vers le depot `batailles`",
-    "emoji": "⚔️",
-    "rang": 3,
-    "porte": "scripts/bataille_moteur/expose.py",
-    "fichiers": [
-      "scripts/bataille_moteur/expose.py",
-      "scripts/bataille.py",
-      "serveur/routes/bataille.js",
-      "ecrans/modules/bataille2d.js",
-      "ecrans/modules/bataille/*",
-      "ecrans/modules/survival-stack/*",
-      "ecrans/modules/combat.js"
     ]
   },
   "peinture": {
@@ -213,7 +196,6 @@
       "serveur/routes/piece.js",
       "serveur/routes/fils.js",
       "serveur/routes/joueur.js",
-      "serveur/routes/vue.js",
       "ecrans/modules/actions.js",
       "ecrans/modules/attention.js",
       "ecrans/modules/defilement.js",
@@ -233,7 +215,6 @@
       "ecrans/modules/son.js",
       "ecrans/modules/voix.js",
       "ecrans/modules/illustration.js",
-      "ecrans/modules/capture.js",
       "ecrans/modules/lumiere.js",
       "ecrans/modules/nappe.js",
       "ecrans/modules/blasons.js",
@@ -252,8 +233,7 @@
       "scripts/tests/*",
       "scripts/analyse/*",
       "scripts/migrations/*",
-      "serveur/test_*.js",
-      "ecrans/modules/bataille/banc-*.js"
+      "serveur/test_*.js"
     ]
   }
 }

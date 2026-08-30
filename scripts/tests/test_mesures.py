@@ -22,7 +22,7 @@ class AdressesDeMesureTest(unittest.TestCase):
               "vivres-peyredragon.jours-de-vivres")])
 
     def test_les_references_de_code_inconnues_sont_ignorees(self):
-        texte = "`bataille2d.js` · `h.l1` · `process.argv` · `.cv-foule`"
+        texte = "`carte-ville.js` · `h.l1` · `process.argv` · `.cv-foule`"
         self.assertEqual(
             mesures.adresses_dans(texte, {"vivres-peyredragon"},
                                    autoriser_inconnues=False),

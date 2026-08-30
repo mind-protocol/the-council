@@ -39,7 +39,6 @@ window.CarteVille = (() => {
   // Le glissé en cours. Il vivait dans `brancher()` ; le survol a besoin de
   // savoir qu'on tire la carte pour se taire pendant ce temps.
   let prise = null;
-  let marqueDialogue = null;
 
   const hote = () => document.getElementById(HOTE);
   const esc = (s) => String(s == null ? "" : s)
@@ -210,10 +209,6 @@ window.CarteVille = (() => {
     plein();
     centrer();
     if (window.Foule2d) Foule2d.poser(h, () => vue, { source });
-    // Et la bataille par-dessus la foule, sur sa propre toile encore : ce sont
-    // trois cents corps qui ne suivent pas l'horloge de la ville mais la
-    // seconde réelle. Deux temps, deux couches — on ne les mélange pas.
-    if (window.Bataille2d) Bataille2d.poser(h, () => vue, { source });
   }
 
   function nomsRegion() {
@@ -421,11 +416,6 @@ window.CarteVille = (() => {
   // #2e2820) : une bulle qui écrirait toujours en foncé serait illisible une
   // fois sur deux. On mesure donc le fond et l'on pose l'encre en face.
   let bulle = null, bulleType = null;
-  // Ce que la bataille éclaire en ce moment. On le garde pour ne rappeler le
-  // module que lorsque la sélection CHANGE : un survol traverse des milliers de
-  // `pointermove` sur le même homme, et rallumer la même escouade à chacun
-  // salirait vingt fois par seconde une carte qui ne bouge pas.
-  let soulignait = null;
   // Les deux encres possibles, et leur luminance une fois pour toutes : ce sont
   // le noir et le blanc cassés du plan, pas ceux de l'interface.
   const ENCRE_SOMBRE = .0086;   // #1b1712
@@ -456,11 +446,6 @@ window.CarteVille = (() => {
   // à la retourner un peu tôt pour un nom court. Personne ne voit qu'elle se
   // retourne trente pixels trop tôt ; tout le monde voit une image sautée.
   const MARGE_BULLE = 190, HAUT_BULLE = 26;
-  // La fiche est désormais une vraie loupe : pensée, souvenir de la décision
-  // précédente et quatre couches. On la retourne assez tôt pour qu'elle reste
-  // dans le volet même quand toutes les couches ont quelque chose à dire.
-  const HAUT_BULLE_BAT = 560;
-  const MARGE_BULLE_BAT = 430;
   // Le cadre du volet, relu seulement quand il bouge : `getBoundingClientRect`
   // est gratuit sur une mise en page propre et cher sur une mise en page sale,
   // et l'on ne veut pas dépendre de laquelle des deux on a.
@@ -488,8 +473,8 @@ window.CarteVille = (() => {
   // la porte de la Gadoue et l'on partait pour Culpucier.
   //
   // Une seule fonction rend le repère, et TOUT en dépend : le clic-pour-
-  // marcher, le zoom vers le pointeur, le glissé, le viseur de la bataille et
-  // les seuils de grain. Deux conversions différentes dans la même carte, c'est
+  // marcher, le zoom vers le pointeur, le glissé et les seuils de grain.
+  // Deux conversions différentes dans la même carte, c'est
   // un survol qui nomme une maison et un clic qui part vers une autre.
   //
   //   k  = pixels par mètre (le même sur les deux axes, c'est le point)
@@ -543,266 +528,16 @@ window.CarteVille = (() => {
     return .2126 * v[0] + .7152 * v[1] + .0722 * v[2];
   };
 
-  // ---- CE QU'ON SURVOLE PENDANT UN ASSAUT ----------------------------------
-  // La bataille est peinte sur une toile qui ne prend pas la souris, et il ne
-  // faut surtout pas qu'elle la prenne : trois couches empilées qui se
-  // disputent le pointeur, c'est une carte qu'on ne peut plus tirer. Le plan
-  // garde donc la main et POSE LA QUESTION à `Bataille2d.sous()` — le même
-  // geste que `Foule2d` fait déjà avec `derange()`.
-  //
-  // ELLE PASSE AVANT LA MAISON, et c'est le bon ordre : quand deux mille
-  // hommes traversent une rue, ce qu'on montre du doigt est un homme, pas la
-  // façade derrière lui. La maison reprend la main dès qu'il n'y a personne.
-  const MOTS_ETAT = {
-    colonne: "en marche", forme: "en formation", melee: "au corps à corps",
-    tient: "tient sa position", deroute: "en déroute", repli: "se replie",
-    coureur: "porte un ordre", commande: "commande", pille: "pille",
-    blesse: "à terre, vivant", mort: "mort",
-  };
-  const MOTS_ORDRE = {
-    avancer: "avancer", tenir: "tenir", presser: "presser", replier: "se replier",
-  };
-
-  function ligneDeBataille(s) {
-    const l = [];
-    const t = (c) => (c === "assaut" ? "assaut" : c === "garde" ? "défense" : "ville");
-    if (s.quoi === "porte") {
-      l.push(["<b>" + esc(s.nom) + "</b>", null]);
-      l.push([s.etat === "ouvert" ? "enfoncée"
-              : Math.round(s.part * 100) + " % de battant", null]);
-      if (s.frappeurs) l.push([s.frappeurs + " qui cognent", null]);
-      return l;
-    }
-    if (s.quoi === "figure") {
-      l.push(["<b>" + esc(s.nom) + "</b>", null]);
-      if (s.role) l.push([esc(s.role), null]);
-      l.push(["ne se bat pas", null]);
-      return l;
-    }
-    // Le titre : son nom s'il en a un, son grade sinon. « Un chef d'escouade »
-    // est une identité suffisante — c'est même la seule que quatre cent
-    // soixante-quinze d'entre eux auront jamais.
-    const grade = { roi: "Le roi", tete: "Le chef de corps",
-                    capitaine: "Le porte-bannière", chef: "Chef d'escouade",
-                    coureur: "Un coureur", homme: null }[s.quoi];
-    l.push(["<b>" + esc(s.nom || grade || "Un homme") + "</b>", null]);
-    // LE RÔLE PASSE AVANT LE GRADE, quand il y en a un : « roi — s'il tombe,
-    // tout s'arrête » dit quelque chose, « le roi » sous le nom du roi ne dit
-    // rien du tout. Le grade ne sert qu'à ceux que personne n'a nommés.
-    if (s.role) l.push([esc(s.role), null]);
-    else if (s.nom && grade) l.push([esc(grade.toLowerCase()), null]);
-    // L'ÉTAT, ET AUSSITÔT POURQUOI. « tient » recouvre quatre décisions
-    // différentes dans la machine ; sans `branche`, la bulle affiche le même
-    // mot pour un homme qui souffle, un qui cède le pas et un qui garde un
-    // poste — donc elle n'apprend rien à qui regarde une ligne se défaire.
-    l.push([MOTS_ETAT[s.etat] || esc(s.etat), null]);
-    // LA PENSÉE EST LE PREMIER OUTIL DE DEBUG. Elle ne prétend pas raconter un
-    // monologue intérieur : elle nomme la règle qui tient ses jambes maintenant
-    // et la donnée qui l'a fait gagner. La branche libre ne paraît qu'en repli
-    // pour les anciennes traces, afin de ne jamais afficher deux fois la même
-    // décision.
-    if (s.pensee) {
-      const avant = s.etat === "mort" ? "dernière pensée — j'essayais de "
-                                      : "pensée — j'essaie de ";
-      l.push(["<b>" + avant + esc(s.pensee.action) + "</b>",
-              esc(s.pensee.systeme)]);
-      l.push(["parce que " + esc(s.pensee.raison),
-              s.pensee.depuis.toFixed(1).replace(".", ",") + " s"]);
-      if (s.pensees && s.pensees.length) {
-        const p = s.pensees[0];
-        l.push(["avant — j'essayais de " + esc(p.action),
-                esc(p.systeme) + " · il y a " +
-                p.ilYa.toFixed(1).replace(".", ",") + " s"]);
-      }
-    } else if (s.branche) l.push(["<i>" + esc(s.branche) + "</i>", null]);
-    // CE QUE SON CORPS DIT, A COTE DE CE QUE SA TETE A DECIDE. Les deux lignes
-    // ensemble sont tout l'interet : on lit d'un coup d'oeil quand la couche 1
-    // est d'accord avec la cascade et quand elle ne l'est pas — et le jour ou
-    // elle prend la main, on voit LEQUEL des deux a conduit.
-    if (s.corpsDit)
-      l.push([(s.corpsAgi ? "<b>le corps a agi</b> — " : "son corps : ") +
-              esc(s.corpsDit),
-              s.sangFroid != null ? "sang-froid " + String(s.sangFroid).replace(".", ",") : null]);
-    if (s.exposition != null)
-      l.push(["exposition " + String(s.exposition).replace(".", ",") +
-              " · charge " + String(s.chargeNerveuse).replace(".", ","),
-              s.exposition > 0.65 ? "dans la bouffée" : null]);
-    if (s.empriseCorps != null)
-      l.push(["emprise du corps " + String(s.empriseCorps).replace(".", ","),
-              s.empriseCorps > 0.6 ? "il a la main" : null]);
-    if (s.reflexion) {
-      l.push(["sa réflexion : " + esc(s.reflexion.idee),
-              "tenir " + String(s.reflexion.tient).replace(".", ",")]);
-      l.push(["attendre " + String(s.reflexion.attend).replace(".", ",") +
-              " · chercher l'épaule " + String(s.reflexion.appui).replace(".", ","),
-              s.reflexion.degage == null ? null
-                : "issue " + String(s.reflexion.degage).replace(".", ",")]);
-    }
-    if (s.maniere && s.l3)
-      l.push(["son ordre : " + esc(s.maniere),
-              "lettre " + String(s.l3.lettre).replace(".", ",") +
-              " · place " + String(s.l3.place).replace(".", ",")]);
-    if (s.envie != null)
-      l.push(["sa convoitise " + String(s.envie).replace(".", ","), null]);
-    if (s.conduit)
-      l.push(["arbitre : " + esc(s.conduit) + " tient les jambes",
-              s.conduitBras ? esc(s.conduitBras) + " tient les bras" : null]);
-    // Ce qu'il porte, et jusqu'où ça va. L'allonge est la moitié qui compte :
-    // c'est elle qui dit qui, de lui ou de son vis-à-vis, touchera le premier.
-    if (s.arme)
-      l.push([esc(s.arme), s.allonge ? s.allonge.toFixed(1).replace(".", ",") +
-              " m" : null]);
-    // CE QU'IL SAIT DE SA PROPRE JOURNÉE : sous quel chef, dans quelle aile,
-    // avec quel ordre. C'est mot pour mot ce que le sac promet de retrouver au
-    // matin sur un blessé — on ne fait que le lire du vivant.
-    if (s.escorte) l.push(["de la garde du roi", null]);
-    else if (s.chefDuCorps) {
-      // Une tête ne se présente pas comme servant sous elle-même : à sa ligne,
-      // son corps n'a plus de nom à donner — il n'a qu'un compte.
-      const sous = s.nom === s.chefDuCorps ? "son corps" : esc(s.chefDuCorps);
-      const rang = s.aile
-        ? " · " + s.aile + "<sup>" + (s.aile === 1 ? "re" : "e") + "</sup> aile" : "";
-      l.push([sous + rang, s.vivants ? s.vivants + " debout" : null]);
-    }
-    if (s.quoi === "coureur" && s.porte)
-      l.push(["il porte l'ordre de <b>" + esc(MOTS_ORDRE[s.porte] || s.porte) +
-              "</b>", null]);
-    else if (s.ordre)
-      l.push(["ordre : " + esc(MOTS_ORDRE[s.ordre] || s.ordre) +
-              (s.sourde ? " — <i>n'entend plus rien</i>" : ""), null]);
-    if (s.unite) {
-      l.push(["unité : " + esc(s.unite),
-              s.chefFormation ? "sous " + esc(s.chefFormation) : "sans chef"]);
-      if (s.successionDans != null)
-        l.push(["chef tombé — reprise dans " + s.successionDans.toFixed(1).replace(".", ",") + " s", null]);
-      if (s.destination)
-        l.push(["marche vers " + esc(s.destination),
-                s.calculsAStar + " route" + (s.calculsAStar > 1 ? "s" : "")]);
-      if (s.distanceChef > 0)
-        l.push(["à " + s.distanceChef.toFixed(1).replace(".", ",") + " m de son chef", null]);
-    }
-    if (s.banniere === false) l.push(["sa bannière est à terre", null]);
-    if (s.camp) l.push([t(s.camp), null]);
-
-    // ---- LA MACHINE, EN CLAIR -------------------------------------------------
-    // Les trois entrées de toutes les décisions du fichier — le corps, la tête,
-    // le nombre —, plus ce qui le distingue de son voisin. On les met EN
-    // DERNIER et dans cet ordre parce que la fiche doit rester lisible pour qui
-    // ne débogue pas : le nom, l'état, l'ordre d'abord ; la mécanique ensuite,
-    // pour qui descend jusque-là.
-    //
-    // ON MONTRE LE SEUIL À CÔTÉ DE LA VALEUR, jamais la valeur seule. « morale
-    // 0,21 » ne dit rien ; « 0,21 — rompt à 0,15 » dit qu'il tient à six
-    // centièmes près, ce qui est exactement ce qu'on cherche à savoir en
-    // regardant une aile qui plie.
-    const n2 = (v) => v.toFixed(2).replace(".", ",");
-    if (s.pv != null)
-      l.push([s.entame ? "<b>entamé</b>" : "intact",
-              s.pv + " / " + s.pvMax + " pv"]);
-    if (s.morale != null)
-      l.push(["morale " + n2(s.morale), "rompt à " + n2(s.rompt)]);
-    if (s.souffle != null)
-      l.push([(s.soufflant ? "<b>il souffle</b> " : "souffle ") + n2(s.souffle),
-              s.humeur && s.humeur !== "-" ? esc(s.humeur) : null]);
-    if (s.ennemis != null)
-      l.push([s.amis + " des siens · " + s.ennemis + " en face",
-              s.avantage ? "il a le nombre" : "il ne l'a pas"]);
-    if (s.recule != null) l.push(["il cède le pas encore", s.recule + " s"]);
-    if (s.patience != null && s.patience > 0)
-      l.push(["il patiente encore", n2(s.patience) + " s"]);
-    // Les trois déviations, tirées une fois pour toutes : c'est ce qui explique
-    // que deux hommes du même rang, même morale et même souffle, ne fassent pas
-    // la même chose. `oeil` est rendu à l'endroit — plus il est haut, plus il
-    // est vif — parce que la valeur brute du modèle est un facteur de délai et
-    // qu'elle se lit à l'envers de son nom.
-    if (s.trempe != null)
-      l.push(["cœur " + n2(s.trempe) + " · œil " + n2(s.oeil) +
-              " · fond " + n2(s.fond), null]);
-    return l;
-  }
-
-  // ---- MARQUER UN HOMME ---------------------------------------------------
-  // Le clic GELE le diagnostic et lance la capture avant même que le joueur
-  // écrive : son commentaire peut prendre une minute, l'instant contesté ne
-  // doit pas avancer pendant ce temps-là.
-  function ouvrirMarque(s) {
-    if (!s || !s.debugId || !window.Bataille2d || !Bataille2d.diagnostic) return;
-    if (marqueDialogue) marqueDialogue.remove();
-    const diagnostic = Bataille2d.diagnostic(s.debugId);
-    if (!diagnostic) return;
-    const p = diagnostic.combattant.position;
-    const lieu = CarteVille.toponymie && CarteVille.toponymie.decrire
-      ? CarteVille.toponymie.decrire(p, { rayonAxe: 30, rayonRepere: 240 }) : null;
-    const priseImage = window.Capture && Capture.composer
-      ? Capture.composer({ fenetre: 140,
-          centre: { x: p.x, y: p.y, id: s.debugId,
-                    nom: diagnostic.combattant.nom || s.debugId } })
-      : Promise.reject(new Error("le module de capture n'est pas chargé"));
-
-    const d = document.createElement("div");
-    d.className = "cv-mark-dialog";
-    d.innerHTML = '<div class="cv-mark-titre"></div>' +
-      '<div class="cv-mark-instant"></div>' +
-      '<label>Qu’est-ce qui vous paraît faux ou intéressant ?' +
-        '<textarea rows="5" maxlength="8000" placeholder="Ex. Il part seul alors que son chef attend encore le reste de la vintaine."></textarea></label>' +
-      '<div class="cv-mark-actions"><button type="button" data-annuler>Annuler</button>' +
-        '<button type="button" data-sauver>Enregistrer la marque</button></div>' +
-      '<div class="cv-mark-statut" aria-live="polite">Capture de l’instant en cours…</div>';
-    d.querySelector(".cv-mark-titre").textContent = "Mark — " +
-      (diagnostic.combattant.nom || s.nom || s.debugId);
-    d.querySelector(".cv-mark-instant").textContent = [
-      diagnostic.temps_bataille_s + " s de bataille",
-      lieu && lieu.texte,
-      diagnostic.combattant.pensee &&
-        "j’essaie de " + diagnostic.combattant.pensee.action,
-    ].filter(Boolean).join(" · ");
-    const textarea = d.querySelector("textarea"), statut = d.querySelector(".cv-mark-statut");
-    const sauver = d.querySelector("[data-sauver]");
-    d.querySelector("[data-annuler]").onclick = () => { d.remove(); marqueDialogue = null; };
-    priseImage.then(() => { statut.textContent = "Capture prête — ajoutez votre commentaire."; })
-      .catch((e) => { statut.textContent = "Capture impossible : " + e.message; });
-    sauver.onclick = async () => {
-      const commentaire = textarea.value.trim();
-      if (!commentaire) { textarea.focus(); statut.textContent = "Écrivez un commentaire avant d’enregistrer."; return; }
-      sauver.disabled = true; textarea.disabled = true;
-      statut.textContent = "Enregistrement du dossier…";
-      try {
-        const capture = await priseImage;
-        const r = await fetch("/marque-bataille", {
-          method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ commentaire, diagnostic, lieu,
-                                 image: capture.image, meta: capture.meta }),
-        });
-        const rep = await r.json();
-        if (!r.ok) throw new Error(rep.erreur || ("refus du serveur " + r.status));
-        d.classList.add("cv-mark-sauvee");
-        const h = rep.historique;
-        const allegee = h && h.omis ? " · " + h.conserve +
-          " perceptions récentes gardées, " + h.omis + " anciennes omises" : "";
-        statut.innerHTML = "Marque enregistrée dans <code>" + esc(rep.ecrit) +
-          "</code>" + allegee;
-        sauver.textContent = "Fermer"; sauver.disabled = false;
-        sauver.onclick = () => { d.remove(); marqueDialogue = null; };
-      } catch (e) {
-        sauver.disabled = false; textarea.disabled = false;
-        statut.textContent = "Échec : " + String(e && e.message || e);
-      }
-    };
-    hote().appendChild(d); marqueDialogue = d;
-    textarea.focus();
-  }
-
   // ON PLACE AVANT D'ÉCRIRE, et l'ordre est tout : lire le cadre du volet après
   // avoir changé le texte de la bulle, c'est demander au navigateur de refaire
   // la mise en page du plan entier. Ici la lecture tombe pendant que tout est
   // encore propre, et il n'y a plus une seule lecture après.
   //
-  // La hauteur est passée par l'appelant : une fiche de bataille fait six
-  // lignes là où un nom de maison en fait une, et c'est elle qui décide si la
-  // bulle doit passer au-dessus du curseur pour ne pas sortir du volet.
-  function placerBulle(ev, haut, marge) {
+  // La hauteur est passée par l'appelant : c'est elle qui décide si la bulle
+  // doit passer au-dessus du curseur pour ne pas sortir du volet.
+  function placerBulle(ev, haut) {
     const h = cadreHote || (cadreHote = hote().getBoundingClientRect());
-    const m = marge || MARGE_BULLE;
+    const m = MARGE_BULLE;
     let x = ev.clientX - h.left + 14, y = ev.clientY - h.top + 16;
     if (x + m > h.width) x = Math.max(4, x - m - 26);
     if (y + haut > h.height) y = Math.max(4, y - haut - 26);
@@ -810,90 +545,14 @@ window.CarteVille = (() => {
       Math.round(y) + "px)";
   }
 
-  function survolerBataille(ev) {
-    if (!window.Bataille2d || !Bataille2d.sous || !vue || !svg) return null;
-    // LE CADRE SE RELIT QUAND IL BOUGE, PAS À CHAQUE MOUVEMENT DE SOURIS. Un
-    // `getBoundingClientRect` par `pointermove` est une lecture de mise en page
-    // par image — précisément ce que la bulle des maisons prend soin d'éviter
-    // trente lignes plus bas. On se range derrière le même cache, qui est déjà
-    // vidé par le `ResizeObserver` et par chaque redessin.
-    const r = repere();
-    if (!r) return null;
-    const mpp = 1 / r.k;
-    const [x, y] = enMetres(ev);
-    // LE RAYON SE COMPTE EN PIXELS, PAS EN MÈTRES. À la ville entière un homme
-    // vaut un huitième de pixel : viser au mètre reviendrait à viser un cheveu,
-    // et l'on ne toucherait jamais rien. Sept pixels, c'est la pointe du
-    // curseur — et c'est vrai à toutes les approches.
-    return Bataille2d.sous(x, y, Math.max(1.5, 7 * mpp));
-  }
-
   function survoler(ev) {
     if (!bulle) return;
-    // Le glissé prime : on tire la carte, on ne lit pas les maisons.
-    const s = prise ? null : survolerBataille(ev);
-    // CE QU'ON DÉSIGNE S'ALLUME SUR LA CARTE, pas seulement dans la bulle. La
-    // fiche dit à quelle escouade il appartient ; ça, ça le MONTRE — et montre
-    // du même coup la hampe sous laquelle il se range, qui est la seule chose
-    // du modèle qu'aucun point rouge ne pouvait laisser deviner.
-    if (window.Bataille2d && Bataille2d.souligner) {
-      const sel = s && s._sel && s._sel.formation !== null ? s._sel : null;
-      if (sel !== soulignait) { soulignait = sel; Bataille2d.souligner(sel); }
-    }
-    if (s) {
-      placerBulle(ev, HAUT_BULLE_BAT, MARGE_BULLE_BAT);
-      // LA CLEF DOIT CONTENIR CE QUI BOUGE, sinon la mécanique qu'on vient
-      // d'ajouter reste figée sous le curseur : morale et souffle changent à
-      // chaque battement, et une bulle qui affiche « morale 0,42 » pendant dix
-      // secondes est pire que pas de morale du tout.
-      // ON LES QUANTIFIE AU VINGTIÈME plutôt que de les mettre au centième :
-      // la valeur affichée garde ses deux décimales, mais la bulle ne se
-      // réécrit que lorsqu'elle a bougé assez pour qu'on le voie. C'est le même
-      // marché que partout ici — on ne réécrit que ce qui change.
-      const cran = (v) => (v == null ? "" : Math.round(v * 20));
-      const clef = "bat:" + (s.debugId || "") + ":" + s.quoi + ":" + (s.nom || "") + ":" + s.etat +
-                   ":" + (s.branche || "") +
-                   ":" + (s.pensee ? s.pensee.action + "/" + s.pensee.raison +
-                     "/" + s.pensee.systeme + "/" + Math.floor(s.pensee.depuis) : "") +
-                   ":" + (s.pensees && s.pensees[0] ? s.pensees[0].action +
-                     "/" + s.pensees[0].systeme + "/" + Math.floor(s.pensees[0].ilYa) : "") +
-                   ":" + (s.ordre || "") + ":" + (s.vivants || "") +
-                   ":" + (s.corpsDit || "") + ":" + cran(s.empriseCorps) +
-                   ":" + (s.reflexion ? s.reflexion.idee + "/" +
-                     cran(s.reflexion.tient) + "/" + cran(s.reflexion.attend) +
-                     "/" + cran(s.reflexion.appui) : "") +
-                   ":" + (s.maniere || "") + ":" + cran(s.envie) +
-                   ":" + (s.conduit || "") + ":" + (s.conduitBras || "") +
-                   ":" + (s.destination || "") + ":" + cran(s.distanceChef) +
-                   ":" + cran(s.successionDans) +
-                   ":" + s.pv + ":" + cran(s.morale) + ":" + cran(s.souffle) +
-                   ":" + s.amis + "/" + s.ennemis;
-      if (clef !== bulleType) {
-        bulle.classList.add("cv-bulle-bat");
-        bulle.style.background = "";
-        bulle.style.color = "";
-        bulle.innerHTML = ligneDeBataille(s)
-          .map(([g, d]) => "<span>" + g + (d ? "<em>" + esc(d) + "</em>" : "") +
-                           "</span>").join("");
-        if (s.debugId) {
-          const mark = document.createElement("button");
-          mark.type = "button"; mark.className = "cv-mark"; mark.textContent = "Mark";
-          mark.title = "Geler cet homme, sa perception et sa zone pour laisser un feedback";
-          mark.onclick = (e) => { e.preventDefault(); e.stopPropagation(); ouvrirMarque(s); };
-          bulle.appendChild(mark);
-        }
-        bulle.style.display = "block";
-        bulleType = clef;
-      }
-      return;
-    }
     const cible = prise ? null :
       (ev.target && ev.target.closest && ev.target.closest("path.cv-bati"));
     if (!cible) {
       if (bulleType !== null) { bulle.style.display = "none"; bulleType = null; }
       return;
     }
-    bulle.classList.remove("cv-bulle-bat");
     // ON NE RÉÉCRIT QUE CE QUI CHANGE. Un survol traverse des milliers de
     // pointermove sur la même maison ; recalculer la couleur et réécrire le
     // texte à chacun ferait ramer la seule chose qui devait être instantanée.
@@ -1063,7 +722,6 @@ window.CarteVille = (() => {
     enseignes();
     rafraichirVous();
     if (window.Foule2d) Foule2d.recadrer();
-    if (window.Bataille2d) Bataille2d.recadrer();
   }
 
   // ---- la prise ------------------------------------------------------------
@@ -1153,11 +811,6 @@ window.CarteVille = (() => {
     // collée dans un coin du décor à nommer une maison qu'on ne regarde plus.
     svg.addEventListener("pointerleave", () => {
       if (bulle) { bulle.style.display = "none"; bulleType = null; }
-      // La souris sort : ce qu'elle éclairait s'éteint avec elle, sinon une
-      // escouade reste allumée sur une carte que plus personne ne survole.
-      if (soulignait && window.Bataille2d && Bataille2d.souligner) {
-        soulignait = null; Bataille2d.souligner(null);
-      }
     });
     // PAS DE DOUBLE-CLIC QUI DÉZOOME. Il y en avait un, qui ramenait la carte
     // au cadrage d'origine, et il était une faute pour deux raisons.
@@ -1329,7 +982,7 @@ window.CarteVille = (() => {
   // il se fait petit et il se tient dans le coin.
   //
   // LE SVG SE RECADRE TOUT SEUL (`preserveAspectRatio` fait le travail), LES
-  // TOILES NON. La foule et la bataille sont des canvas en pixels : sans un
+  // TOILES NON. La foule est un canvas en pixels : sans un
   // recadrage explicite, on passe en plein écran et les habitants restent
   // dessinés à l'ancienne taille, dans le coin, à côté de leurs rues. Et
   // `recadrer` REPEINT, il ne retaille pas seulement — en pause il n'y a pas
@@ -1422,7 +1075,6 @@ window.CarteVille = (() => {
           // leur mise en page.
           const cale = () => {
             if (window.Foule2d) Foule2d.recadrer();
-            if (window.Bataille2d) Bataille2d.recadrer();
           };
           cale();
           requestAnimationFrame(() => { cale(); requestAnimationFrame(cale); });
@@ -1729,9 +1381,9 @@ window.CarteVille = (() => {
     }).catch(() => {});
   }
 
-  // LE TRANSPORT DU MJ — arrêter, relancer, accélérer, et rien de plus. Même
-  // règle qu'au combat (voir modules/combat.js) : dans ce mode, c'est la carte
-  // qui tient l'horloge, et le MJ la conduit sans jamais la poser.
+  // LE TRANSPORT DU MJ — arrêter, relancer, accélérer, et rien de plus. Dans
+  // ce mode, c'est la carte qui tient l'horloge, et le MJ la conduit sans
+  // jamais la poser.
   //
   //     {"type":"horloge","action":"pause"}      il s'arrête où il est
   //     {"type":"horloge","action":"marche"}     il repart
@@ -1770,10 +1422,8 @@ window.CarteVille = (() => {
     });
   });
 
-  // `ou` : où se tient le joueur, en mètres. C'est la seule chose que
-  // `combat.js` a besoin de savoir, et elle est déjà résolue ici (`situer`) —
-  // la lui faire recalculer voudrait dire recopier la chaîne entière du lieu
-  // au bâtiment, pour deux nombres qu'on a sous la main.
+  // `ou` : où se tient le joueur, en mètres — déjà résolu ici (`situer`), et
+  // rendu tel quel plutôt que recalculé du lieu au bâtiment par qui le demande.
   return { charger, dessiner, plan: () => plan, ou: () => moi, vue: () => vue && vue.slice(),
            toponymie: {
              chercher: chercherToponyme,

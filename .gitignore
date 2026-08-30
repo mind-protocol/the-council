@@ -1,12 +1,5 @@
 .env
 etat/inbox/*.json
-# Les vues de la carte envoyées par la page pendant une bataille (POST /vue,
-# ecrans/modules/capture.js) : un PNG par siège, réécrit toutes les vingt
-# secondes pour que le MJ puisse VOIR où en est le fer. Même nature que
-# l'inbox — de la matière en transit vers le MJ, jamais de l'état joué —, et
-# quarante kilo-octets réécrits trois fois par minute n'ont rien à faire dans
-# un historique.
-etat/vues/
 # Les tampons de balade : le sac de pas d'une promenade EN COURS, que le
 # serveur déplace dans l'inbox quand elle se ferme. Meme nature que l'inbox —
 # de la matiere en transit vers le MJ, jamais de l'etat joue.
@@ -53,9 +46,9 @@ docs/*.pdf
 # prompt — d'où chaque rendu se refait.
 chansons/
 
-# Les planches du four : 8,8 Mo de SVG écrits pendant une cuisson de bataille
-# (scripts/monde/planches.py et le --planches de sac.js). C'est une fenêtre sur
-# un four qui tourne dix minutes, pas un livrable — même raison que /monde/.
+# Les planches : 8,8 Mo de SVG écrits par scripts/monde/planches.py, dernière
+# étape de la chaîne. C'est une fenêtre sur un four qui tourne dix minutes, pas
+# un livrable — même raison que /monde/.
 /dessins/planches/
 
 # Les copies datees a la main : 99 fichiers, 261 Mo suivis — dont douze copies

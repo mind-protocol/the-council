@@ -14,7 +14,7 @@
 [project]
 name = "le-conseil"
 version = "0.0.0"
-description = "Le Conseil — un jdr narratif solo, sa simulation d'acteurs et son moteur de bataille."
+description = "Le Conseil — un jdr narratif solo et sa simulation d'acteurs."
 requires-python = ">=3.9"
 
 [build-system]
@@ -28,7 +28,7 @@ build-backend = "setuptools.build_meta"
 # (`from etat.expose import tables`) des que scripts/ est sur sys.path.
 packages = [
     "noyau", "etat", "temps", "agents", "plan", "scene", "monde",
-    "bataille", "peinture", "analyse", "figures", "ville",
+    "peinture", "analyse", "figures", "ville",
     "materialisation", "migrations", "tests",
 ]
 

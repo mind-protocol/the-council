@@ -4,6 +4,8 @@
 >
 > Deux écarts assumés au plan ci-dessous, tous deux dits dans `serveur/CLAUDE.md` : la table de dispatch reste une **liste ordonnée** (une `Map` d'égalités exactes ne sait pas dire les routes par préfixe, et il y en a six) ; `serviceMonde` garde `res` et reste dans `monde3d.js`, hors de `domaine/`, parce que c'est un service de fichiers et non un moteur.
 >
+> **Trois fichiers de ce plan n'existent plus** (30 août 2026, sortie du moteur de bataille) : `croiser.js` — cité au §2 comme l'un des trois patrons de module CommonJS —, `domaine/recherche.js` et `routes/bataille.js`, ainsi que `routes/vue.js`. Le lot 6 s'est donc réduit à deux blocs, et `routes/` compte dix-neuf fichiers et non vingt et un. Le raisonnement du plan ne change pas ; ce qu'il nomme, si.
+>
 > **Ce que la comparaison n'a pas vu, et qu'il faut savoir avant le prochain lot.** `POST /marche` et `GET /chemin` avaient perdu leurs `require` au recâblage et rendaient une erreur de référence : aucune des cinquante URL comparées n'allait jusqu'à ce code — l'une n'était pas frappée du tout, l'autre l'était sans ses paramètres. Un `try/catch` de route déguise une référence absente en réponse d'erreur ordinaire. **Une comparaison ne prouve que les chemins qu'elle emprunte** ; c'est l'argument le plus net en faveur du lot 0, qu'on a sauté. Le lot 0 — le harnais des 57 routes — n'a pas été écrit : la preuve a été faite par comparaison des deux serveurs, ce qui ne laisse rien derrière soi. Deux tests durables existent en revanche, tous deux vérifiés par mutation : [`serveur/test_siege.js`](../serveur/test_siege.js) tient le tri par `pour` sur ses deux moitiés (lecture et écriture) et l'écart de front ; [`serveur/test_marche.js`](../serveur/test_marche.js) tient le moteur de la marche — itinéraire stable, minutes non perdues à l'arrondi, position écrite, sac déposé à l'arrivée seulement.
 
 État au 27e jour de la 8e lune (2026-08-27), avant le chantier : **6 345 lignes, 342 Ko, un seul fichier**, dont **3 798 lignes dans un unique callback `createServer`** (L2534 → L6331). 57 routes y sont branchées par une chaîne de `if (url === "…")`, et la plus grosse — `/echiquier` — pèse **1 293 lignes à elle seule**, à l'intérieur du `if`.
@@ -60,7 +62,7 @@ Les cinq routes les plus lourdes concentrent **2 070 lignes** :
 
 ## 2. La cible
 
-Le dépôt a déjà le bon patron : `bibliotheque.js`, `croiser.js`, `voix.js` sont des modules CommonJS, sans dépendance, avec un `module.exports` nommé et un test à côté. On l'étend, on n'invente rien.
+Le dépôt a déjà le bon patron : `bibliotheque.js` et `voix.js` sont des modules CommonJS, sans dépendance, avec un `module.exports` nommé et un test à côté. On l'étend, on n'invente rien.
 
 ```
 serveur/

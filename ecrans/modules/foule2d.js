@@ -259,9 +259,8 @@ window.Foule2d = (() => {
     // portefaix » ne dit pas où aller frapper.
     const portes = new Map();
     // CE QU'ILS FONT, et pas seulement ce qu'ils sont. Le verbe était calculé
-    // à chaque corps — `p.quoi` dit où il est, `p.vers` où il va, et
-    // `Bataille2d.derange` y écrit « fuite » ou « ronde » — puis jeté au profit
-    // d'un compte par métier. Dix portefaix qui FUIENT se lisaient donc « 10
+    // à chaque corps — `p.quoi` dit où il est, `p.vers` où il va — puis jeté au
+    // profit d'un compte par métier. Dix portefaix qui FUIENT se lisaient donc « 10
     // portefaix », mot pour mot comme dix portefaix qui vont au travail : le
     // MJ recevait une rue paisible au milieu d'un assaut.
     //
@@ -280,19 +279,15 @@ window.Foule2d = (() => {
           cel.y0 - y > R || y - (cel.y0 + maille) > R) continue;
       for (let k = 0; k < cel.n; k++) {
         J.ou(cel, k, jour, min, voirie, rangs, p);
-        // Le même veto que pour le dessin : celui qui fuit du fer n'est pas où
-        // sa journée le dit. Une rue qu'on traverse pendant une bataille doit
-        // être vide, et elle ne l'est que si l'on demande à la bataille.
-        if (window.Bataille2d) Bataille2d.derange(cel, k, p);
         const dx = p.x - x, dy = p.y - y;
         if (dx * dx + dy * dy > R2) continue;
         const m = (cel.roles_index && cel.roles_index[cel.role[k]]) || "inconnu";
         let t;
         if (p.quoi === "route") { t = rue; nRue++; }
         else if (p.quoi === "chez") { t = chez; nChez++; }
-        // LA PEUR EST TOUJOURS DEHORS. `derange` rend « sur-place » pour qui
-        // s'est jeté à terre ou reste saisi, avec `fuite` ou `ronde` pour
-        // destination — or ce ne sont pas des services et il n'y a pas de toit
+        // LA PEUR EST TOUJOURS DEHORS. Un homme jeté à terre ou saisi reste
+        // « sur-place », avec `fuite` ou `ronde` pour destination — or ce ne
+        // sont pas des services et il n'y a pas de toit
         // au-dessus. Sans ce test, un homme accroupi au milieu de la rue était
         // compté derrière une porte, et le fichier annonçait « 10 fuite,
         // 1 ronde » dans la colonne des portes où l'on va frapper.
@@ -305,8 +300,8 @@ window.Foule2d = (() => {
         }
         t.set(m, (t.get(m) || 0) + 1);
         // Le verbe, tiré des deux mêmes champs qui viennent de décider la
-        // colonne. `fuite` et `ronde` d'abord parce que ce sont les seuls que
-        // la bataille écrit, et les seuls qu'on ne pardonnerait pas de perdre.
+        // colonne. `fuite` et `ronde` d'abord : ce sont les seuls qu'on ne
+        // pardonnerait pas de perdre.
         const verbe = p.vers === "fuite" ? "fuient"
           : p.vers === "ronde" ? "en ronde"
           : p.quoi === "chez" ? "chez eux"
@@ -317,32 +312,6 @@ window.Foule2d = (() => {
         f.set(m, (f.get(m) || 0) + 1);
       }
     }
-    // ---- CEUX QUI SONT EN ARMES -------------------------------------------
-    // ILS NE SONT PAS DANS LES CELLULES, et c'est pour ça qu'on ne les voyait
-    // pas. La boucle ci-dessus parcourt les corps de `journee.js` — les
-    // habitants, leur journée, leurs services. Les combattants d'une bataille
-    // vivent dans un tout autre tableau, chez `bataille2d`, et aucune ligne ne
-    // les regardait : un marcheur passait à vingt pas de deux cents hommes
-    // rangés devant une porte et rapportait « 426 chez eux ».
-    //
-    // On les compte donc à part, par CAMP et par ÉTAT — c'est ce qui distingue
-    // une garde qui tient d'une garde qui rompt, et c'est la seule chose qu'un
-    // homme voit vraiment quand il arrive sur une rue en armes. On ne les
-    // verse ni dans `croises` ni dans `metiers` : un piquier n'est pas un
-    // portefaix, et les fondre rendrait les deux illisibles.
-    const armes = new Map();      // "camp/état" -> compte
-    let nArmes = 0;
-    if (window.Bataille2d && Bataille2d.troupe) {
-      for (const h of (Bataille2d.troupe() || [])) {
-        if (!h || h.etat === "mort") continue;
-        const dx = h.x - x, dy = h.y - y;
-        if (dx * dx + dy * dy > R2) continue;
-        nArmes++;
-        const cle = (h.camp === "garde" ? "garde" : "assaut") + "/" + h.etat;
-        armes.set(cle, (armes.get(cle) || 0) + 1);
-      }
-    }
-
     const trier = (t) => [...t.entries()].sort((a, b) => b[1] - a[1]);
     // Ceux qu'on croise sont ceux de la rue ET ceux de la place : c'est le
     // même geste — on passe devant eux et ils lèvent la tête.
@@ -360,8 +329,6 @@ window.Foule2d = (() => {
         .map(([v, m]) => [v, [...m.entries()].sort((a, b) => b[1] - a[1]),
                           [...m.values()].reduce((s, n) => s + n, 0)])
         .sort((a, b) => b[2] - a[2]),
-      // CEUX QUI SONT EN ARMES, à part du reste — voir plus haut.
-      en_armes: nArmes, armes: trier(armes),
       // ce qu'on peut aller CHERCHER, et par quelle porte
       toit: nToit, portes: trier(portes), metiers_toit: trier(toit),
       // l'ambiance, et rien de plus
@@ -510,18 +477,8 @@ window.Foule2d = (() => {
         // heure et son début à une autre — invisible sur un piéton, mais c'est
         // par là que les points se mettent à sauter.
         J.ou(cel, k, jour, t.minute, voirie, rangs, P);
-        // Avant tout le reste : un corps différé n'a pas de position du tout, et
-        // la bataille ne doit pas lui en inventer une à l'origine du monde.
+        // Avant tout le reste : un corps différé n'a pas de position du tout.
         if (P.quoi === "differe") continue;
-        // LE DROIT DE VETO DE LA BATAILLE. La journée écrite dit où cet homme
-        // DEVRAIT être ; s'il y a du fer dans sa rue, il n'y est pas. On ne
-        // salit pas `journee.js` pour autant — c'est la couche du dessus qui
-        // reprend la main, et seulement pour ceux qu'elle a pris en charge.
-        // Elle rend vrai quand elle a pris l'homme en charge — et alors sa
-        // vitesse n'est plus celle de sa journée écrite. On la remet à zéro :
-        // la couche de peur avance ses fuyards elle-même, et les extrapoler en
-        // plus les ferait courir deux fois.
-        if (window.Bataille2d && Bataille2d.derange(cel, k, P)) { P.vx = 0; P.vy = 0; }
         // « chez » ne se dessine pas ; « differe » ne se dessine pas ENCORE —
         // son chemin n'est pas tracé, il entrera au nuage suivant.
         if (P.quoi === "chez" || P.quoi === "differe") continue;
@@ -870,8 +827,8 @@ window.Foule2d = (() => {
   // ça se rattrapait à la première période ; EN PAUSE, jamais — et l'horloge
   // démarre en pause. Un chiffre faux qui ne se corrige pas est pire que pas
   // de chiffre.
-  // Le repeint attend l'image, le retaillage non — même raison que dans
-  // `bataille2d` : `carte-ville` appelle ceci depuis `pointermove`, qui n'est
+  // Le repeint attend l'image, le retaillage non :
+  // `carte-ville` appelle ceci depuis `pointermove`, qui n'est
   // pas cadencé sur l'écran, et l'on repeignait donc la foule entière plusieurs
   // fois par image affichée pendant qu'on tire le plan. `sale` reste posé tout
   // de suite : c'est un drapeau que la prochaine image consomme une seule fois,

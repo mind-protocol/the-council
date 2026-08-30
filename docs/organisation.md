@@ -41,7 +41,7 @@ serveur/monde3d.js               954 l.    ce que le serveur en sert
                               33 984 l.    pour UN sujet
 ```
 
-Aucun fichier ne dit que ces six adresses forment un tout. Un changement de format du masque touche les six ; rien ne le signale, et rien ne dit par où l'on entre. C'est la même dispersion pour la bataille (quatre adresses) et pour le plan (trois).
+Aucun fichier ne dit que ces six adresses forment un tout. Un changement de format du masque touche les six ; rien ne le signale, et rien ne dit par où l'on entre. C'était la même dispersion pour le moteur de bataille (quatre adresses, depuis sorti du dépôt — voir §6 D1) et c'est encore celle du plan (trois).
 
 ### ③ Côté navigateur, la porte existe mais n'est pas une règle
 
@@ -74,7 +74,7 @@ C'est le `expose.js` de `batailles` transposé : là-bas, `main.js` est le seul 
 
 Sept containers de **sujet**, deux transverses. Chacun possède son sujet **de bout en bout** — du calcul Python à ce que la page en dessine.
 
-> **Pourquoi par sujet et non par couche technique** (calcul / service / rendu) ? Parce que la douleur mesurée est la dispersion d'un sujet à six adresses (§1②), pas le mélange calcul-rendu. Le rendu est d'ailleurs déjà séparé par le protocole : le serveur sert du JSON, la page le dessine — la frontière technique existe sans qu'on ait à la faire porter par l'arborescence. C'est un écart assumé avec `batailles`, où la Présentation est un container à part : là-bas il y a un seul sujet, ici il y en a sept.
+> **Pourquoi par sujet et non par couche technique** (calcul / service / rendu) ? Parce que la douleur mesurée est la dispersion d'un sujet à six adresses (§1②), pas le mélange calcul-rendu. Le rendu est d'ailleurs déjà séparé par le protocole : le serveur sert du JSON, la page le dessine — la frontière technique existe sans qu'on ait à la faire porter par l'arborescence. C'est un écart assumé avec `batailles`, où la Présentation est un container à part : là-bas il y a un seul sujet, ici il y en a six.
 
 | Container | Possède | Aujourd'hui éparpillé dans |
 |---|---|---|
@@ -84,7 +84,6 @@ Sept containers de **sujet**, deux transverses. Chacun possède son sujet **de b
 | 📋 **plan** | cahiers, couverture, criticité, levées, renvois, exports | `criticite.py`, `couverture.py`, `etat_du_plan.py`, `plan/`, `tisser.py`, `mesures.py` |
 | 🌍 **monde** | la ville : masque, plan, bâti, gens, journées, relief, sa carte et son 3D | `monde/`, `materialisation/`, `ville/`, `ecrans/modules/monde/`, `carte-ville.js`, `serveur/monde3d.js` |
 | 📜 **scène** | le flux, l'inbox, la montre, les items et leur rendu | `append_flux.py`, `tunnel.py`, `fils.py`, `guetteur.sh`, `serveur/routes/`, `ecrans/modules/*.js` |
-| ⚔️ **bataille** | le moteur et ses bancs — **destiné à sortir** (voir §6) | `bataille2d.js`, `bataille/`, `survival-stack/`, `bataille.py` |
 | 📐 **doctrine** | les contrats : `schema.md` (intouchable), `metier.md`, les fiches | `docs/` |
 | 🔬 **bancs** | gardes, mesures, étalons, l'audit | `verifier.mjs`, `scripts/tests/`, `banc-*.js`, `analyse/` |
 
@@ -123,7 +122,6 @@ flowchart TB
     AGENTS["🧠 agents"]
     PLAN["📋 plan"]
     SCENE["📜 scène<br/><i>la peau : flux, inbox, écrans</i>"]
-    BAT["⚔️ bataille<br/><i>en sursis — §6</i>"]
     DOC["📐 doctrine"]
     BANCS["🔬 bancs"]
 
@@ -136,8 +134,6 @@ flowchart TB
     AGENTS --> SCENE
     PLAN --> SCENE
     MONDE --> SCENE
-    BAT --> SCENE
-    MONDE --> BAT
     DOC -. contrats, lus par tous .-> ETAT
     BANCS -. lisent tout, n'écrivent rien .-> SCENE
 ```
@@ -204,15 +200,17 @@ Le piège symétrique est aussi écarté : attendre la fin du design des feature
 
 ---
 
-## 6. Les quatre décisions à trancher — je n'en prends aucune
+## 6. Les quatre décisions — D1 tranchée par le fait, les trois autres ouvertes
 
-**D1 — `⚔️ bataille` est-il un container, ou un appel ?** Le moteur (10 511 + 14 419 + 3 177 l.) est destiné à être remplacé par des appels à `batailles`. Le déclarer container maintenant, c'est lui donner une porte et une fiche qu'il faudra jeter ; ne pas le déclarer, c'est laisser 28 000 lignes hors du modèle pendant des mois. *Ma recommandation : le déclarer, avec sa porte — parce que c'est cette porte qui devient l'adaptateur le jour de la bascule.* Un container qu'on sait mortel se remplace par une porte de même forme ; 28 000 lignes sans porte se remplacent par un chantier.
+**D1 — `⚔️ bataille` est-il un container, ou un appel ? — TRANCHÉ : ni l'un ni l'autre, il sort.** La question portait sur un moteur de 28 000 lignes (10 511 + 14 419 + 3 177 l.) destiné à être remplacé par des appels au dépôt voisin `batailles`. La réponse est tombée par le fait, le **30 août 2026** : le moteur a été **supprimé du dépôt** — écrans, modules, scripts, routes, archives, `etat/bataille.json`, le container de `docs/containers.json` et douze épreuves du manifeste de `verifier.mjs`. Le remplacement se fera par des appels à `batailles/src` ; **la forme de ce branchement reste à décider et n'est écrite nulle part.**
+
+Ce que la décision a coûté et ce qu'elle garde : on avait acté la porte plutôt que le container jetable, en pariant qu'une porte devient l'adaptateur le jour de la bascule. La bascule est arrivée avant que la porte n'existe, et le retrait s'est donc fait par suppression franche plutôt que par substitution — **28 000 lignes sans porte se remplacent par un chantier**, et ce chantier est celui qui reste ouvert aujourd'hui. La leçon vaut pour le prochain sujet qu'on saura mortel : lui donner sa porte AVANT de savoir la date.
 
 **D2 — Une porte Python ou un paquet ?** `expose.py` par container est simple et se lit ; un vrai paquet (`from conseil.temps import ...`) donnerait des imports vérifiables par un outil et supprimerait les **59 `sys.path.insert`** — mais touche l'amorce de tous les fichiers, et le `pyproject.toml` existe déjà pour ça. *Penche pour le paquet*, en une passe, après le lot 1.
 
 **D3 — Où va `scripts/monde/` ?** C'est le plus gros paquet du dépôt (20 317 l.) et il n'est pas du même métier que le reste : c'est de la **cuisson hors ligne** (masques, plans, peuplement), pas du jeu. Container à part entière, ou dossier `four/` du container `monde` ? *Penche pour la seconde* : ce qu'il produit est lu par le monde, sa cuisson n'a pas d'autre client.
 
-**D4 — Les containers sont-ils des dossiers de premier niveau ?** Aujourd'hui l'arborescence est par **langue** (`scripts/`, `serveur/`, `ecrans/`), et la proposition est par **sujet** — les deux ne peuvent pas être vraies au même niveau. Trois options : (a) sujets à la racine, les langues descendent dedans — le plus juste, le plus cher (tous les chemins tapés bougent : impossible, §1①) ; (b) les langues restent, un container est un **triplet nommé** (`scripts/temps/`, `serveur/temps/`, `ecrans/temps/`) que sa fiche unique déclare — praticable, mais la fiche doit exister ou le lien est fictif ; (c) statu quo enrichi : les fiches déclarent les rattachements sans rien bouger. *Penche pour (b)* : c'est ce que fait déjà `bataille` sans le dire.
+**D4 — Les containers sont-ils des dossiers de premier niveau ?** Aujourd'hui l'arborescence est par **langue** (`scripts/`, `serveur/`, `ecrans/`), et la proposition est par **sujet** — les deux ne peuvent pas être vraies au même niveau. Trois options : (a) sujets à la racine, les langues descendent dedans — le plus juste, le plus cher (tous les chemins tapés bougent : impossible, §1①) ; (b) les langues restent, un container est un **triplet nommé** (`scripts/temps/`, `serveur/temps/`, `ecrans/temps/`) que sa fiche unique déclare — praticable, mais la fiche doit exister ou le lien est fictif ; (c) statu quo enrichi : les fiches déclarent les rattachements sans rien bouger. *Penche pour (b)* : c'est ce que faisait déjà le moteur de bataille sans le dire.
 
 ---
 
@@ -220,14 +218,14 @@ Le piège symétrique est aussi écarté : attendre la fin du design des feature
 
 > **D4 acté — le container est un triplet nommé.** Les trois racines restent (`scripts/`, `serveur/`, `ecrans/`) parce que les chemins tapés sont gelés ; un container est **le même nom porté dans les trois**, et **une seule fiche** — `scripts/<nom>/CLAUDE.md` — le déclare de bout en bout. Sans cette fiche, le triplet est fictif : c'est elle qui fait le container, pas la coïncidence de nom.
 >
-> **D1 acté — `bataille` est un container, avec sa porte.** Le jour de la bascule vers `batailles`, on remplace une porte par une porte. Sans elle, on remplacerait 28 000 lignes par un chantier.
+> **D1 acté — le moteur de bataille est sorti du dépôt** (30 août 2026). L'arbre ci-dessous ne porte donc plus de container `bataille` ; ce qui le remplacera sera un appel à `batailles/src`, dont la forme reste à décider (§6 D1).
 
 ### Les trois racines
 
 ```
 scripts/                        L'INTERFACE + le calcul
   <les 38 commandes>            façades gelées : lire les arguments, appeler une porte, imprimer
-  etat/  temps/  agents/  plan/  monde/  scene/  bataille/  peinture/  bancs/
+  etat/  temps/  agents/  plan/  monde/  scene/  peinture/  bancs/
       CLAUDE.md                 LA FICHE — déclare le container dans les trois racines
       expose.py                 LA PORTE — les seules fonctions importables
       <modules>.py              la matière, nommée par ce qu'elle sait
@@ -237,7 +235,7 @@ serveur/                        CE QUE LE SERVEUR EN SERT
   <container>/                            les routes du container, index.js = sa porte
 
 ecrans/                         CE QUE LA PAGE EN DESSINE
-  jeu.html  bataille.html …
+  jeu.html …
   modules/
     <container>/                un dossier = UNE globale, posée par la porte
 ```
@@ -300,10 +298,6 @@ scripts/scene/           📜  le flux, l'inbox, la montre, les sièges
   tunnel.py  regie.py  sieges.py  seed_flux.py
   guetteur.sh              ← guetteur.sh
 
-scripts/bataille_moteur/ ⚔️  D1 : la porte qui deviendra l'adaptateur (le paquet ne peut pas s'appeler `bataille` : la commande gelee `scripts/bataille.py` le masquerait)
-  expose.py                    cuire(ordre) → annales · l'unique point d'entrée
-  cuisson.py               ← bataille.py
-
 scripts/peinture/        🎨  ce qui appelle une API payante (fiche déjà écrite)
   expose.py                    portraits · salles · voix · chansons · médaillons
   ← peinture/* + composer.py
@@ -318,10 +312,9 @@ scripts/bancs/           🔬  gardes, mesures, étalons
 ```
 serveur/
   serveur.js  http.js  contexte.js  dates.js            le socle, sans sujet
-  scene/     index.js  scene.js action.js piece.js fils.js joueur.js vue.js voix.js medias.js
+  scene/     index.js  scene.js action.js piece.js fils.js joueur.js voix.js medias.js
   monde/     index.js  carte.js terrain.js chemin.js foule.js monde-jeu.js monde3d.js presence.js
-  plan/      index.js  livres.js echiquier.js agenda.js atelier.js marche.js recherche.js
-  bataille/  index.js  bataille.js
+  plan/      index.js  livres.js echiquier.js agenda.js atelier.js marche.js
   temps/     index.js  calendrier.js
   agents/    index.js  activations.js regie.js
 ```
@@ -330,11 +323,10 @@ serveur/
 ecrans/modules/
   scene/      actions attention defilement demandes entites fils galerie gestes narration
               nav paroles pensees regie reglages suites visage vue-salle vus son voix
-              illustration capture loupe lumiere nappe blasons calendrier sieges
+              illustration loupe lumiere nappe blasons calendrier sieges
   monde/      carte carte-ville carte-ville-theme carte-projection terrain ville3d geo
               foule2d plan plans reperes gens taches  + le monde/ actuel (journee, relief, nefs…)
   plan/       books/ echiquier jetons renvois retrospective desseins objectifs ecrits annales
-  bataille/   bataille2d + bataille/ + survival-stack/        (28 107 l., en sursis)
   socle/      bus  (le seul module sans sujet : la messagerie interne des écrans)
 ```
 
@@ -352,7 +344,7 @@ L'arbre ci-dessus range 100 % des fichiers ; huit rattachements sont défendable
 |---|---|---|
 | ① | `evaluer.py` — « qui a du temps » | **temps** (la disponibilité est une horloge) ou **plan** (sa docstring parle de goulots et de coûts) |
 | ② | `echiquier` / `jetons` — la table de guerre | **plan** (des croyances datées sur les affaires) ou **scene** (une échelle du décor, ouverte partout) |
-| ③ | `annales.js` — « ce que l'Histoire retiendra » | **plan** ou **scene** — et le mot entrera en collision avec les annales de `bataille` (§6) |
+| ③ | `annales.js` — « ce que l'Histoire retiendra » | **plan** ou **scene** |
 | ④ | `composer.py` — poser une chanson | **peinture** (elle appelle l'API) ou **scene** (c'est un geste du MJ) |
 | ⑤ | `migrations/` | **bancs** (ça ne tourne qu'une fois, comme un étalon) ou un dossier à soi, hors containers |
 | ⑥ | `figures/` — les SVG du mestre | **peinture** ou **plan** (elles illustrent des cahiers) |
