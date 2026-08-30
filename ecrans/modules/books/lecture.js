@@ -107,8 +107,15 @@
   // hommes de la barque. L'emoji qui précède un renvoi dit sa FAMILLE (état,
   // verrou, clef, action) — il ne sert pas à le reconnaître, le numéro suffit.
   const NUMERO = /\b\d{4,6}\b/g;
+  // Une table porte des adresses si sa premiere colonne est un N° (les plans)
+  // OU si ses lignes commencent par un numero (les REGISTRES tamponnes en
+  // serie 9xxxx — D.35, tranche le 31.8 : un fait arrete est adressable).
   const estAdresse = (t) => !!(t.colonnes && t.colonnes.length
-    && /N°/.test(String(t.colonnes[0])));
+    && /N°/.test(String(t.colonnes[0])))
+    || (t.lignes || []).some((l) => {
+      const c = (l.cellules || [])[0];
+      return /^\s*(?:\*\*)?\s*\d{4,6}\b/.test(c == null ? "" : String(c));
+    });
   function numeroDe(l) {
     const c = (l.cellules || [])[0];
     const m = /^\s*(?:\*\*)?\s*(\d{4,6})\b/.exec(c == null ? "" : String(c));

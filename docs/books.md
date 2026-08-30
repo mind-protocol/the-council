@@ -79,6 +79,13 @@ docs/habitant.md). C'est ce qui permet de dispatcher : une action assignée pès
 sur son porteur, pas sur celui qui l'a écrite. Une action sans « Qui » est à
 celui qui tient le cahier.
 
+**Les adresses de registre (D.35, 31.8)** : un fait arrêté est adressable. La
+**série 9** (90000-99999) est réservée aux lignes de registre, tamponnées en
+tête de première cellule par `scripts/adresser_registre.py` (par la porte,
+jamais deux fois). Une ligne qui commence par un numéro s'indexe et s'ouvre
+depuis le fil comme une ligne de plan — la colonne « N° » n'est plus la seule
+porte d'entrée.
+
 ```json
 {
   "id": "affaire-vierge-01",

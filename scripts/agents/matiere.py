@@ -92,9 +92,9 @@ def index_des_lignes():
             tables.append({"colonnes": v.get("colonnes"),
                            "lignes": v.get("lignes") or []})
         for t in tables:
-            cols = t.get("colonnes") or []
-            if not cols or "N°" not in str(cols[0]):
-                continue
+            # Plus de porte « N° » (D.35) : une ligne est adressable si elle
+            # COMMENCE par un numero — les plans l'ont toujours fait, les
+            # registres tamponnes (serie 9xxxx) le font desormais aussi.
             for l in (t.get("lignes") or []):
                 cells = l.get("cellules") if isinstance(l, dict) else l
                 cells = cells or []

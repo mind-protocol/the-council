@@ -19,12 +19,17 @@ function fiches() {
 // la zone du joueur — celle du siège principal —, on rend null : /verbe prend
 // alors son défaut, `mj`.
 // Les arbitres incarnables : `mj` et les `mj-*` qui ont une chambre sur
-// disque — leur existence n'est pas une fiche, c'est leur domicile.
+// disque — leur existence n'est pas une fiche, c'est leur domicile. Et un
+// domicile a un cahier : les dossiers nes de la migration des canaux
+// (mj-aurore, mj-nicolas-reynolds — un relations/ sans claude.md) sont des
+// vestiges du modele deux-MJ, pas des arbitres (tranche le 31.8 : le MJ du
+// siege principal reste `mj`, jamais mj-rhaenyra).
 function arbitres() {
   try {
     return fs.readdirSync(path.join(RACINE, "chambres"))
       .filter((n) => (n === "mj" || n.slice(0, 3) === "mj-") &&
-        fs.statSync(path.join(RACINE, "chambres", n)).isDirectory())
+        fs.statSync(path.join(RACINE, "chambres", n)).isDirectory() &&
+        fs.existsSync(path.join(RACINE, "chambres", n, "claude.md")))
       .sort();
   } catch (e) { return []; }
 }
