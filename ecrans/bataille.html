@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Le cerveau — banc de la couche 1</title>
-<link rel="stylesheet" href="/modules/bataille/page.css?v=20260825-armee-epreuve-3">
+<link rel="stylesheet" href="/modules/bataille/page.css">
 </head>
 <body>
 
@@ -197,19 +197,18 @@
 <script src="/modules/carte-projection.js"></script>
 <script src="/modules/carte-ville-theme.js"></script>
 <script src="/modules/bataille/sources-page.js"></script>
-<script src="/modules/bataille/fond-page.js?v=20260825-geographie-regionale-1"></script>
-<script src="/modules/bataille/inspection-page.js?v=20260825-nord-en-haut-1"></script>
+<script src="/modules/bataille/fond-page.js"></script>
+<script src="/modules/bataille/inspection-page.js"></script>
 <script src="/modules/bataille/sondes-page.js"></script>
 <!-- Le Guet ne dépend d'aucun moteur : il se charge avec la page, pas avec la
      chaîne de la scène, et sa famille est donc lisible avant que le moteur ait
      fini de venir. -->
 <script src="/modules/bataille/guet-epreuves.js"></script>
-<!-- ⚠ CETTE ESTAMPILLE ET CELLE DE `VERSION_BATAILLE`, DANS page.js, SE BOUGENT
-     ENSEMBLE. Celle-ci decide si le navigateur va rechercher `page.js` ; celle
-     de page.js decide s'il va rechercher le MOTEUR. Oublier la premiere rend la
-     seconde inutile : on sert un vieux page.js qui reclame un vieux moteur, et
-     l'ecran montre une bataille d'avant-hier pendant que le banc en mesure une
-     d'aujourd'hui. -->
-<script src="/modules/bataille/page.js?v=20260827-mouvement-sorti-1"></script>
+<!-- Plus d'estampille manuelle nulle part : le serveur envoie `no-store`
+     (mesure le 30) et VERSION_BATAILLE, dans page.js, est devenue l'instant de
+     chargement. Le piege des deux estampilles en serie — bouger l'une sans
+     l'autre servait un vieux page.js qui reclamait un vieux moteur — est mort
+     avec elles. -->
+<script src="/modules/bataille/page.js"></script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Le Conseil</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/jeu.css?v=20260825-geographie-regionale-1">
+<link rel="stylesheet" href="/jeu.css">
 </head>
 <body>
 <div id="lateral" class="ferme">
@@ -150,7 +150,7 @@
      trois hauteurs en volume, mais dessinés — et lisibles la nuit. La foule est
      un canvas posé par-dessus, calé sur le même cadrage. -->
 <script src="/modules/carte-projection.js"></script>
-<script src="/modules/foule2d.js?v=20260825-nord-en-haut-1"></script>
+<script src="/modules/foule2d.js"></script>
 <!-- la bataille : une lunette posée sur le plan, comme la foule. Elle n'écrit
      rien dans l'état et ne coûte pas une minute de partie — le jour où une
      bataille comptera, c'est le MJ qui l'écrira. -->
@@ -185,9 +185,9 @@
 <script src="/modules/survival-stack/3-interpretation.js"></script>
 <script src="/modules/survival-stack/2-reflexion.js"></script>
 <script src="/modules/survival-stack/5-qui-conduit.js"></script>
-<script src="/modules/bataille/reflexion-adapt.js?v=20260825-doctrine-dragon-marques-routes-2-feux-1"></script>
+<script src="/modules/bataille/reflexion-adapt.js"></script>
 <script src="/modules/bataille/commandement.js"></script>
-<script src="/modules/bataille2d.js?v=20260827-mouvement-sorti-1"></script>
+<script src="/modules/bataille2d.js"></script>
 <script src="/modules/bataille/moteur/index.js"></script>
 <!-- LE GARDE. Il ne charge rien et ne répare rien : il NOMME ce qui manque, au
      moment où ça manque, plutôt que de laisser la faute se découvrir en pleine
@@ -203,14 +203,14 @@
   })();
 </script>
 <script src="/modules/carte-ville-theme.js"></script>
-<script src="/modules/carte-ville.js?v=20260825-geographie-regionale-1"></script>
+<script src="/modules/carte-ville.js"></script>
 <!-- tenir sa position pendant que le temps passe : la balade dont l'horloge
      est décrochée des jambes. Après carte-ville, dont il lit la position. -->
 <script src="/modules/combat.js"></script>
 <!-- ce que le joueur a sous les yeux, envoyé au MJ pendant une bataille : le
      plan, la foule et le fer composés en une image, centrée sur lui, déposée
      dans etat/vues/. Après les trois couches qu'elle empile. -->
-<script src="/modules/capture.js?v=20260825-nord-en-haut-1"></script>
+<script src="/modules/capture.js"></script>
 <script src="/modules/gens.js"></script>
 <!-- le carnet de rencontres : il lit le fil, il range « Les gens » -->
 <script src="/modules/vus.js"></script>

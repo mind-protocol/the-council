@@ -17,13 +17,15 @@ const DEJA = ["bataille/hasard.js", "bataille/mesures.js", "survival-stack/1-cor
 
 const $ = (id) => document.getElementById(id);
 const PARAMETRES = new URL(window.location.href).searchParams;
-// ⚠ CETTE ESTAMPILLE SE BOUGE À CHAQUE FOIS QU'ON TOUCHE AU MOTEUR, et l'oubli
-// ne se voit pas : la page charge, les épreuves s'affichent, la bataille tourne
-// — avec l'ANCIEN moteur sorti du cache du navigateur. Le disque et l'écran
-// racontent alors deux scènes différentes, et l'on cherche des heures pourquoi
-// un changement mesuré au banc « n'a rien changé » à l'écran. C'est arrivé le
-// 27 août avec le hoissage de la couche 3.
-const VERSION_BATAILLE = "20260827-mouvement-sorti-1";
+// L'ESTAMPILLE EST L'INSTANT DE CHARGEMENT — plus jamais une constante qu'on
+// bouge à la main. L'ancienne discipline (« se bouge à CHAQUE fois qu'on touche
+// au moteur, et l'oubli ne se voit pas ») a été payée le 27 août : l'écran
+// servait l'ancien moteur pendant que le banc mesurait le nouveau. Le serveur
+// envoie `no-store` (mesuré le 30 : serveur/http.js, envoyer) — le cache ne
+// devrait déjà rien garder ; l'instant rend chaque chargement inratable même si
+// une couche de cache (bfcache, proxy) se croit plus maligne. Un signet reste
+// stable : l'estampille ne vit que le temps de la page.
+const VERSION_BATAILLE = String(Date.now());
 
 // L'URL EST UN SIGNET DE TRAVAIL. Une épreuve, un volet ou un cadrage doit
 // pouvoir être envoyé à quelqu'un sans la phrase « clique là, puis descends ».
