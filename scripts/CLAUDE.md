@@ -8,6 +8,15 @@ hook, par le serveur. Ces chemins sont écrits en dur dans `CLAUDE.md`, dans
 suit son cahier et tombe sur un chemin mort perd sa journée sans que personne le
 sache.
 
+**Et chaque commande est une façade — la matière vit dans les containers.**
+C'est le lot 2 (docs/organisation.md §5, §7) : une commande racine lit ses
+arguments, appelle LA PORTE de son container (`<container>/expose.py`), et
+imprime — trente à soixante lignes, plus personne n'a de raison de l'importer
+pour sa logique (ses réexports de compatibilité gardent les importeurs
+historiques vivants). La matière — modules et paquets nés sous 500 lignes —
+vit dans `temps/`, `plan/`, `agents/`, etc., et chaque fiche
+`<container>/CLAUDE.md` la déclare.
+
 Les dossiers, eux, tiennent ce qui ne se tape pas au tour de jeu : les modules
 qu'on importe, les migrations qui ont déjà tourné, l'outillage qu'on sort une fois
 par lune. On peut y ranger, y renommer, y supprimer.
@@ -83,10 +92,10 @@ contrôler qu'un classement n'a rien cassé :
 
 **Le tour de jeu** — `reprise.py` (la feuille de reprise, premier geste),
 `dossier.py`, `fils.py`, `criticite.py`, `evaluer.py`, `veille.py`.
-⚠ Homonymie à connaître (lot 2 la lèvera) : `fils.py` = *les affaires en cours*
-(plan), tandis que `ecrans/modules/fils.js` = *le fil du récit* (scène) — deux
-containers, un seul mot ; le chemin racine `scripts/fils.py` est gelé, c'est le
-module d'écran qui devra changer de nom (docs/organisation.md §8 ⑧).
+⚠ Homonymie levée côté Python (lot 2) : `fils.py` = *les affaires en cours* —
+sa matière vit dans `plan/affaires.py`, la façade `scripts/fils.py` reste au
+chemin gelé. `ecrans/modules/fils.js` = *le fil du récit* (scène) garde son
+nom pour l'instant (docs/organisation.md §8 ⑧).
 
 **La Règle Zéro** — `depecher.py` (envoyer un homme vivre sa journée),
 `parloir.py` (lui parler pendant qu'il travaille), `presence.py` (qui est à
