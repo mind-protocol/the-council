@@ -20,6 +20,8 @@ for _p in (_d, _os.path.join(_d, "noyau")):
 
 from monde import arpentage  # noqa: E402,F401 — lever une carte au pas ; facade scripts/arpenter.py
 arpenter = arpentage  # l'ancien nom reste vivant pour la facade
+from monde import geographie  # noqa: E402,F401 — la carte de Westeros depuis le mod ; facade scripts/carte_geo.py
+carte_geo = geographie  # l'ancien nom reste vivant pour la facade
 from monde import corps  # noqa: E402,F401 — lister, lier, promouvoir les corps ; facade scripts/corps.py
 from monde import trajets  # noqa: E402,F401 — marcher par les rues ; facade scripts/marche.py
 marche = trajets  # l'ancien nom reste vivant pour la facade
