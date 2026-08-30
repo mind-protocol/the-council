@@ -87,6 +87,13 @@ def charger_declaration():
     return {k: v for k, v in d.items() if not k.startswith("_")}
 
 
+def portes_de(c):
+    """La ou les portes d'un container : `porte` est un chemin, ou une LISTE —
+    une forme par monde (expose.py, index.js, la globale), organisation.md §2."""
+    p = c["porte"]
+    return p if isinstance(p, list) else [p]
+
+
 def rattacher(fichiers, declaration):
     """fichier -> container, par les motifs declares. Le premier qui matche gagne."""
     ou = {}
@@ -184,7 +191,7 @@ def analyser():
         if not a or not b or a == b:
             continue
         arcs[(a, b)] = arcs.get((a, b), 0) + 1
-        if cible != declaration[b]["porte"]:
+        if cible not in portes_de(declaration[b]):
             hors_porte.append((source, cible, a, b))
 
     # les ecarts
@@ -198,7 +205,7 @@ def analyser():
     # pendant le lot 1 (docs/organisation.md §5), c'est elle qui reexporte ce que
     # les commandes offrent, en attendant que le lot 2 les vide. Sans cette
     # exemption le compteur ne pourrait jamais atteindre zero avant le lot 2.
-    porte_de = {c["porte"]: nom for nom, c in declaration.items()}
+    porte_de = {p: nom for nom, c in declaration.items() for p in portes_de(c)}
     commandes_bibliotheques = sorted(
         {cible for source, cible in tous if cible in racine_py
          and porte_de.get(source) != ou.get(cible)})
@@ -297,7 +304,8 @@ def document(r):
         lignes_total = sum(len(lire(os.path.join(RACINE, f)).splitlines()) for f in fichiers)
         L += ["### %s %s — rang %d" % (c["emoji"], nom, c["rang"]), "",
               "*%s*" % c["intention"], "",
-              "**%d fichiers, %d lignes.** Porte : `%s`" % (len(fichiers), lignes_total, c["porte"]),
+              "**%d fichiers, %d lignes.** Porte : %s" % (len(fichiers), lignes_total,
+                                            " · ".join("`%s`" % p for p in portes_de(c))),
               ""]
         for racine in ("scripts/", "serveur/", "ecrans/"):
             lot = [f for f in fichiers if f.startswith(racine)]

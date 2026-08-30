@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const { MAX_FIL, RACINE } = require("../http");
 const { envoyer, inlinerFigure } = require("../http");
-const { rafraichirPortraits } = require("../portraits");
+const { rafraichirPortraits } = require("../peinture").portraits; // LA PORTE serveur de peinture
 const { ecartDe, qui, roster } = require("../http");
 
 function traiter(req, res, url) {

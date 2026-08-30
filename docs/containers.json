@@ -15,7 +15,7 @@
     "mesure l'ECART. C'est voulu : la distance entre les deux est le chantier, et",
     "elle doit etre un chiffre, pas une impression.",
     "",
-    "Format : `nom` -> { intention, rang, porte, fichiers: [motifs glob] }.",
+    "Format : `nom` -> { intention, rang, porte, fichiers: [motifs glob] }. `porte` : un chemin ou une LISTE de chemins - la porte prend une forme par monde (expose.py en Python, index.js cote serveur, la globale du dossier au navigateur), docs/organisation.md §2.",
     "Le RANG est l'etage de dependance : un container ne lit que des rangs",
     "STRICTEMENT inferieurs. C'est la loi 2 de docs/organisation.md, rendue",
     "verifiable."
@@ -55,8 +55,12 @@
     "intention": "Possede le temps hors-scene : horloges, echeances, diffusion — calcule et propose, ne decide jamais",
     "emoji": "⏱️",
     "rang": 1,
-    "porte": "scripts/temps/expose.py",
+    "porte": [
+      "scripts/temps/expose.py",
+      "serveur/temps/index.js"
+    ],
     "fichiers": [
+      "serveur/temps/index.js",
       "scripts/temps/*",
       "scripts/temps/gardes/*",
       "scripts/temps/expose.py",
@@ -74,8 +78,12 @@
     "intention": "La ville : masque, plan, bati, gens, relief — sa cuisson, son service et son ecran",
     "emoji": "🌍",
     "rang": 1,
-    "porte": "scripts/monde/expose.py",
+    "porte": [
+      "scripts/monde/expose.py",
+      "serveur/monde/index.js"
+    ],
     "fichiers": [
+      "serveur/monde/index.js",
       "scripts/monde/*",
       "scripts/materialisation/*",
       "scripts/ville/*",
@@ -112,8 +120,12 @@
     "intention": "LES SIEGES, humains comme PNJ : servir un point de vue, recevoir des actes, tenir un fil (le vecu), tenir un brouillard — deux profils (scene / journee), une machinerie",
     "emoji": "🧠",
     "rang": 2,
-    "porte": "scripts/agents/expose.py",
+    "porte": [
+      "scripts/agents/expose.py",
+      "serveur/agents/index.js"
+    ],
     "fichiers": [
+      "serveur/agents/index.js",
       "scripts/agents/*",
       "scripts/agents/expose.py",
       "scripts/depecher.py",
@@ -131,8 +143,12 @@
     "intention": "Le Grand Plan : cahiers, couverture, criticite, levees — ce que les hommes ecrivent et ce qu'on en tire",
     "emoji": "📋",
     "rang": 2,
-    "porte": "scripts/plan/expose.py",
+    "porte": [
+      "scripts/plan/expose.py",
+      "serveur/plan/index.js"
+    ],
     "fichiers": [
+      "serveur/plan/index.js",
       "scripts/plan/*",
       "scripts/criticite.py",
       "scripts/couverture.py",
@@ -168,8 +184,12 @@
     "intention": "Ce qui appelle une API payante : portraits, salles, voix, chansons",
     "emoji": "🎨",
     "rang": 3,
-    "porte": "scripts/peinture/expose.py",
+    "porte": [
+      "scripts/peinture/expose.py",
+      "serveur/peinture/index.js"
+    ],
     "fichiers": [
+      "serveur/peinture/index.js",
       "scripts/peinture/*",
       "scripts/figures/*",
       "scripts/composer.py",
@@ -183,8 +203,12 @@
     "intention": "LE RENDU du profil scene : le flux, l'inbox, la montre, la mise en scene — ce que le joueur voit ; personne ne la lit",
     "emoji": "📜",
     "rang": 4,
-    "porte": "scripts/scene/expose.py",
+    "porte": [
+      "scripts/scene/expose.py",
+      "serveur/scene/index.js"
+    ],
     "fichiers": [
+      "serveur/scene/index.js",
       "scripts/scene/*",
       "scripts/scene/expose.py",
       "scripts/append_flux.py",

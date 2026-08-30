@@ -1,7 +1,7 @@
 // GET /books, /notes, /nappe, /plis — l'étagère, le carnet et ce qui est parti.
 const fs = require("fs");
 const path = require("path");
-const bibliotheque = require("../bibliotheque");
+const { bibliotheque } = require("../scene"); // LA PORTE serveur de scene
 const { RACINE, cheminNotes } = require("../http");
 const { envoyer, inlinerFigure } = require("../http");
 const { monPersonnage, qui, roster, volumesVisibles } = require("../http");

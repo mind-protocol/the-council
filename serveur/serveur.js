@@ -7,10 +7,16 @@
 // `req` ni `res`, `routes/` pour les URL elles-mêmes, un fichier par famille.
 // Voir serveur/CLAUDE.md et docs/serveur-structuration.md.
 const http = require("http");
-const voix = require("./voix");
+// Les containers voisins entrent par LEUR porte serveur (index.js), jamais
+// par un module interne — docs/organisation.md §2.
+const monde = require("./monde");
+const plan = require("./plan");
+const temps = require("./temps");
+const peinture = require("./peinture");
+const voix = peinture.voix;
 const { PORT } = require("./http");
 const { envoyer } = require("./http");
-const { direLaPeremption } = require("./monde3d");
+const { direLaPeremption } = monde.monde3d;
 
 // L'ORDRE COMPTE, et c'est celui du fichier d'avant : plusieurs routes se
 // reconnaissent par préfixe (`/salles` avant `/salles/`, `/monde/` après
@@ -18,23 +24,23 @@ const { direLaPeremption } = require("./monde3d");
 // qu'en sachant ce qu'on déplace.
 const ROUTES = [
   require("./routes/joueur"),      // /, /moi, /bascule
-  require("./routes/presence"),    // /presence — qui est où, à cette minute
-  require("./routes/atelier"),     // pages d'atelier, /admin, /regie
-  require("./routes/chemin"),      // /chemin, /monde/…
-  require("./routes/medias"),      // /retrospective, /medailles, captures, sons
-  require("./routes/monde-jeu"),   // /salles, /entites, /gens
-  require("./routes/carte"),       // /carte, /ville
-  require("./routes/livres"),      // /books, /notes, /nappe, /plis
-  require("./routes/terrain"),     // /terrain
-  require("./routes/echiquier"),   // /echiquier
+  monde.presence,                  // /presence — qui est où, à cette minute
+  plan.atelier,                    // pages d'atelier, /admin, /regie
+  monde.chemin,                    // /chemin, /monde/…
+  peinture.medias,                 // /retrospective, /medailles, captures, sons
+  monde.mondeJeu,                  // /salles, /entites, /gens
+  monde.carte,                     // /carte, /ville
+  plan.livres,                     // /books, /notes, /nappe, /plis
+  monde.terrain,                   // /terrain
+  plan.echiquier,                  // /echiquier
   require("./routes/fils"),        // /fils, /depeches, /objectifs (GET et POST)
-  require("./routes/calendrier"),  // /calendrier
-  require("./routes/voix"),        // /voix/*
+  temps.calendrier,                // /calendrier
+  peinture.routeVoix,              // /voix/*
   require("./routes/scene"),       // /scene — le fil servi au navigateur
-  require("./routes/foule"),       // POST /foule/journal
-  require("./routes/agenda"),      // POST /agenda, /notes, /nappe
+  monde.foule,                     // POST /foule/journal
+  plan.agenda,                     // POST /agenda, /notes, /nappe
   require("./routes/piece"),       // POST /piece
-  require("./routes/marche"),      // POST /ou, /marche
+  monde.marche,                    // POST /ou, /marche
   require("./routes/action"),      // POST /action — la parole du joueur
 ];
 

@@ -3,8 +3,8 @@
 const fs = require("fs");
 const path = require("path");
 const { RACINE } = require("../http");
-const { chargeActeurs, criticite, detailActivation, filMjActif, prevoirActivations, resumeActivations, sante } = require("../domaine/activations");
-const { chercherDansFlux, extraitDuFlux, filPersonnage, regie } = require("../domaine/regie");
+const { chargeActeurs, criticite, detailActivation, filMjActif, prevoirActivations, resumeActivations, sante } = require("../agents").activations; // LA PORTE serveur des agents
+const { chercherDansFlux, extraitDuFlux, filPersonnage, regie } = require("../agents").regie; // LA PORTE serveur des agents
 const { envoyer, fichierStatique } = require("../http");
 const { monPersonnage, qui } = require("../http");
 

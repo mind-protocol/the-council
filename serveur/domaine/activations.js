@@ -15,7 +15,7 @@ const fs = require("fs");
 const path = require("path");
 const os = require("os");
 const childProcess = require("child_process");
-const bibliotheque = require("../bibliotheque");
+const { bibliotheque } = require("../scene"); // LA PORTE serveur de scene
 const { RACINE } = require("../http");
 const { qui } = require("../http");
 

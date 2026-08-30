@@ -9,10 +9,10 @@
 
 const fs = require("fs");
 const path = require("path");
-const bibliotheque = require("../bibliotheque");
+const { bibliotheque } = require("../scene"); // LA PORTE serveur de scene
 const { RACINE } = require("../http");
-const { numerosDesTetes, planModele } = require("./activations");
-const { portraitDefaut, portraitFrais } = require("../portraits");
+const { numerosDesTetes, planModele } = require("../agents").activations; // LA PORTE serveur des agents
+const { portraitDefaut, portraitFrais } = require("../peinture").portraits; // LA PORTE serveur de peinture
 const { monPersonnage, roster } = require("../http");
 
 function composer(req, url) {
