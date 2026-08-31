@@ -100,6 +100,24 @@ const LIEUX3D = {
     },
     vous: [4644, 2082, 60],
   },
+  braavos: {
+    nom: "Braavos", sous: "la lagune, le Titan et l'archipel",
+    prefixe: "braavos", carte: null, maillage: true,
+    // PROVISOIRE : Braavos possède ses propres fichiers, clonés par une
+    // commande explicite depuis Peyredragon. Cela garde l'identité du lieu
+    // distincte tout en réemployant, pour l'instant, ville, château et salles.
+    sources: ["scripts/monde/braavos.py", "monde/peyredragon.maillage.json",
+              "monde/peyredragon.interieurs.json"],
+    temoin: "monde/braavos.maillage.json",
+    regenerer: "python scripts/monde/braavos.py",
+    vue: [[6100, 1500, 1300], [4400, 2100, 120]],
+    vues: {
+      ville: [[5186, 1689, 430], [4820, 2038, 60]],
+      chateau: [[4459, 2002, 530], [4459, 2099, 140]],
+      salle: [[4820, 1900, 95], [4644, 2082, 60]],
+    },
+    vous: [4644, 2082, 60],
+  },
 };
 const LIEU3D_DEFAUT = "port-real";
 
