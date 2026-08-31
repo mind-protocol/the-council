@@ -250,7 +250,8 @@ def _monde(etat):
         return None
 
 
-def journaliser(avants, apres, etat, certitude="declare", outil=None):
+def journaliser(avants, apres, etat, certitude="declare", outil=None,
+                fichier=None, maison="etat"):
     u"""Ecrit les evenements de tous les volumes touches. Rend leur nombre.
 
     NE LEVE JAMAIS : un journal qui casse une ecriture d'etat serait un
@@ -269,11 +270,17 @@ def journaliser(avants, apres, etat, certitude="declare", outil=None):
                 continue
             for e in evenements_du_volume(a, b):
                 e.update({"quand": quand, "monde": monde, "par": qui,
-                          "outil": par_outil, "certitude": certitude})
+                          "outil": par_outil, "certitude": certitude,
+                          # OU VIT L'AFFAIRE. Elles ont DEUX maisons —
+                          # etat/books (la bibliotheque commune) et
+                          # chambres/<qui>/books (les cahiers a soi). Un
+                          # journal qui n'en couvrirait qu'une ferait croire
+                          # a l'exhaustivite ; le champ les separe.
+                          "maison": maison})
                 lignes.append(json.dumps(e, ensure_ascii=False))
         if not lignes:
             return 0
-        chemin = os.path.join(etat, FICHIER)
+        chemin = os.path.join(etat, fichier or FICHIER)
         dossier = os.path.dirname(chemin)
         if not os.path.isdir(dossier):
             os.makedirs(dossier)

@@ -72,3 +72,8 @@ docs/*.m4a
 docs/*.mp3
 docs/*.mp4
 docs/*.wav
+
+# L empreinte de reconciliation : une copie complete des affaires (2,8 Mo),
+# entierement regenerable a partir du disque. Elle est un CACHE, pas de
+# l etat — la commiter ferait doubler etat/books a chaque passage.
+etat/histoire/empreintes.json

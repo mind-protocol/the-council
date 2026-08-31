@@ -82,3 +82,8 @@ from agents.jugement import main as juger_main  # noqa: E402,F401 — l'entree C
 # de debug des sessions de dev (qui a fait quoi, les appels, les refus).
 from agents import activite  # noqa: E402,F401 — instrument de dev, hors du jeu
 from agents.activite import main as activite_main  # noqa: E402,F401 — l entree CLI de la facade
+
+# Descendue le 31.8 : scripts/reconcilier.py -> agents/reconcilier.py — le
+# journal des affaires ecrites a la main, la ou aucune porte n emet.
+from agents import reconcilier  # noqa: E402,F401 — les deux maisons des affaires
+from agents.reconcilier import main as reconcilier_main  # noqa: E402,F401 — l entree CLI
