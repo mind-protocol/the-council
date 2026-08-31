@@ -329,7 +329,21 @@ def normaliser_rapport_activation(brut, pid, tache, dossier,
         if notes:
             rapport["mutations_reparees"] = notes
             journaliser("mutations.reparees", acteur=pid, nombre=len(notes))
-        applicables, erreurs = filtrer_mutations_applicables(liees)
+        # C'EST L'HOMME QUI A FERME L'ACTION, PAS LA BOUCLE. La premiere
+        # ligne captee par le journal des affaires portait `par: null` et
+        # `outil: boucle_activation.py` : vrai, et inutile — on veut savoir
+        # QUI. `pid` est ici, il suffit de le poser le temps de l'ecriture ;
+        # `bibliotheque.sauver()` le relit dans l'environnement. On restaure
+        # apres, pour ne pas teindre ce qui suit dans le meme processus.
+        _avant_qui = os.environ.get("LE_CONSEIL_QUI")
+        os.environ["LE_CONSEIL_QUI"] = str(pid)
+        try:
+            applicables, erreurs = filtrer_mutations_applicables(liees)
+        finally:
+            if _avant_qui is None:
+                os.environ.pop("LE_CONSEIL_QUI", None)
+            else:
+                os.environ["LE_CONSEIL_QUI"] = _avant_qui
         # L'ERREUR N'EST PAS A LA PLACE QU'ELLE OCCUPE DANS LA LISTE. `valider`
         # rend ses fautes dans l'ordre ou elle les trouve, prefixees de l'indice
         # REEL de la mutation (« mutation 7 : ... ») ; les apparier par position

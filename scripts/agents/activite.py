@@ -310,7 +310,7 @@ def rendre(args):
 
     par = par_homme(acts, hist)
     toutes = not any([args.hommes, args.appels, args.actes, args.refus,
-                      args.reveils, args.bilan])
+                      args.reveils, args.affaires, args.bilan])
 
     if args.json:
         m = matrice(billets)
@@ -441,6 +441,13 @@ def rendre(args):
         print("  de ligne. Ce compte est un PLANCHER, pas une mesure ; ce qui")
         print("  est reellement trace, ce sont les activations ci-dessus.")
 
+    if toutes or args.affaires:
+        # LA MATIERE VIT DANS UNE PIECE NOMMEE : la photo des affaires et la
+        # lecture des journaux n'ont rien a voir avec le comptage des
+        # activations, et n'ont pas a grossir ce fichier.
+        from agents import activite_affaires
+        activite_affaires.rendre(args, _titre)
+
     if toutes or args.bilan:
         _titre("LE BILAN")
         cout = sum(a["cout_usd"] for a in acts)
@@ -476,6 +483,8 @@ def main(argv=None):
     s.add_argument("--actes", action="store_true")
     s.add_argument("--refus", action="store_true")
     s.add_argument("--reveils", action="store_true")
+    s.add_argument("--affaires", action="store_true",
+                   help="la photo des affaires, et ce qui a bouge au journal")
     s.add_argument("--bilan", action="store_true")
     ap.add_argument("--top", type=int, default=15, help="lignes par palmares")
     ap.add_argument("--json", action="store_true")
