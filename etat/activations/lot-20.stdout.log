@@ -1,0 +1,30 @@
+[  0.020s] boucle.demarrage         · sec=False · une_fois=False · heartbeat_s=5.0 · parallele=1
+[  0.024s] etabli.echoue            · raison=ImportError · erreur=cannot import name 'zone' from 'agents.expose' (C:\Users\reyno\le-conseil2\scripts\agents\expose.py)
+[  0.025s] cycle.depart            
+[  0.036s] horloge.lecture         
+[  0.042s] horloge.direct           · origine=rhaenyra · front=rhaenyra · present_s=0.0
+[  0.042s] graphe.lecture          
+[  0.130s] graphe.charge            · noeuds=2816 · aretes=9681
+[  0.245s] diffusion.importance    
+[  0.409s] importance.clusters      · lieux=20 · motifs_max=13 · actifs=2166
+[  0.420s] energie.polarites_horloge · moyenne_minute=67062768.5 · ecart_max_minutes=108.5 · emetteurs=127 · absorbeurs=1 · neutres=0
+[  0.423s] energie.transfert_horloge · transfere=417.231 · propositions=1154 · acteurs=128
+[  0.425s] energie.graphe           · dt_s=0.0 · integration=0.0 · noeuds=2816 · energises=1208 · total=4876.418 · pic=plan-moyens:M12 · maximum=100.0
+[  0.426s] diffusion.calendrier    
+[  0.439s] energie.classement       · classes=80 · personnes=128 · captif=3 · dormant=43
+[  0.440s] energie.calculee         · acteurs=80 · maximum=15.05
+[  0.441s] selection.rejetee        · acteur=aldon-hask · energie=15.05 · raison=deja_passe_dans_rotation · tour=1
+[  0.442s] selection.rejetee        · acteur=ormund-hightower · energie=13.681 · raison=deja_passe_dans_rotation · tour=1
+[  0.443s] selection.rejetee        · acteur=borros-baratheon · energie=13.132 · raison=deja_passe_dans_rotation · tour=1
+[  0.443s] selection.rejetee        · acteur=larys · energie=10.785 · raison=deja_passe_dans_rotation · tour=1
+[  0.444s] selection.rejetee        · acteur=jacaerys · energie=10.77 · raison=deja_passe_dans_rotation · tour=1
+[  0.450s] selection.elue           · acteur=daemon · energie=10.536 · tache=etape:daemon-convoquer-le-trident · energie_tache=1.449 · budget_energie=10 · budget_s=300 · flux_horloge=emet · ecart_horloge_min=108.5 · horloge_pj=rhaenyra
+[  0.451s] acteur.choisi            · acteur=daemon · energie=10.536 · importance=0.23408 · budget=10
+[  0.452s] tache.choisie            · id=etape:daemon-convoquer-le-trident · distance=1 · creee=False · energie=1.449
+ACTIVATION  daemon  energie 10.54 · budget 10 (5 min)  importance 0.234
+  tache etape:daemon-convoquer-le-trident · distance 1 · Une fois la place à lui, faire porter aux seigneurs du Trident — Black
+  front rhaenyra · +0.0s depuis rhaenyra
+[  0.453s] rotation.acteurs_reserves · tour=1 · acteurs=['aldon-hask', 'borros-baratheon', 'daemon', 'jacaerys', 'larys', 'ormund-hightower', 'otto']
+[  0.453s] selection.lot            · nombre=1 · parallele=1
+[  0.454s] energie.reservee         · acteur=daemon · valeur=10.536 · plafond=10
+[  0.473s] appel.depeche            · acteur=daemon · tache=etape:daemon-convoquer-le-trident · fournisseur=runtime-global · sec=False
