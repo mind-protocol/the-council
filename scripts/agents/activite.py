@@ -336,7 +336,9 @@ def rendre(args):
 
     quand = ("tout l'historique" if args.tout
              else ("%g h de JEU" % args.monde if args.monde is not None
-                   else "%g h reelles" % args.heures))
+                   else ("%g min reelles" % args.minutes
+                         if args.minutes is not None
+                         else "%g h reelles" % args.heures)))
     print("ACTIVITE — %s%s" % (quand, (" · %s" % args.qui) if args.qui else ""))
     print("%d activations retenues sur %d · %d billets sur %d · %d canaux"
           % (len(acts), len(acts_tous), len(billets), len(billets_tous),
@@ -473,6 +475,11 @@ def main(argv=None):
     f = ap.add_argument_group("la fenetre")
     f.add_argument("--heures", type=float, default=24.0,
                    help="fenetre en heures REELLES (defaut : 24)")
+    # ON PENSE EN MINUTES QUAND ON DEBUGGE UNE SOIREE. `--heures 0.5` est une
+    # friction que j'ai creee en choisissant l'unite depuis ma logique de
+    # fenetre plutot que depuis celle qui s'en sert.
+    f.add_argument("--minutes", type=float, default=None, metavar="M",
+                   help="fenetre en MINUTES reelles (prime sur --heures)")
     f.add_argument("--monde", type=float, default=None, metavar="H",
                    help="fenetre en heures de JEU (activations seules)")
     f.add_argument("--tout", action="store_true", help="sans fenetre")
@@ -491,6 +498,8 @@ def main(argv=None):
     a = ap.parse_args(argv)
     if a.monde is not None and a.tout:
         ap.error("--monde et --tout se contredisent")
+    if a.minutes is not None:
+        a.heures = a.minutes / 60.0
     return rendre(a)
 
 
