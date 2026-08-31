@@ -24,6 +24,7 @@ elles aussi par la porte.
 | `parloir.py` | `parloir.py` | l'adressage de la parole (le hook-oreille est mort le 31.8.2026) — les verbes en CALL vers l'arbitre (dépôt au canal homme~zone), `--dire` = billet au canal + réveil cast (homme comme zone), la criée `tous` seule au fil jsonl |
 | `jugement.py` | `juger.py` | le juge séparé (claude -p) du hook Stop — dix questions, deux relances au plus |
 | `matiere.py` | `dossier.py` | le dossier d'un sujet, rassemblé dans l'ordre d'autorité |
+| `portage.py` | D.34 (31.8) | les registres portés au réveil-POST du MJ — `matiere_du_message` (nombres + noms propres de l'inbox → `matiere.dossier_registres`, 6 lignes au plus jointes au mot), appelé par `zone.main`, jamais bloquant |
 | `affectation/` | `affecter.py` | une adresse physique pour une chose de la fiction — lecture, controle, cli |
 | `sieges.py` | `scene/sieges.py` (décision du 30 : les sièges sont la machinerie des acteurs, pas la peau) | s'asseoir, quitter : occupé → pas de tête ; vacant → une tête obligatoirement ; l'archive des têtes — façade `scripts/sieges.py` (chemin ULTRA-GELÉ) |
 | `zone.py` | le modèle habitant (docs/habitant.md §3-§4, pas 4) | le réveil en CALL du MJ de zone — `appeler_zone(ville, de, mot, verbe)` (session continue, id uuid5 SANS date, `--session-id` puis `--resume`, verdict sur stdout), `arbitre_de` (l'arbitre d'un homme d'après sa ville ; la zone du joueur = `mj`), `est_une_zone`. Lié APRÈS `depeche` dans la porte (il relit `brief`) |
