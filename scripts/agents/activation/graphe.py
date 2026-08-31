@@ -81,10 +81,51 @@ def sources_de_charge(noeuds, aretes, evaluation):
     return charge
 
 
-def diffuser(sources, adj, noeuds):
+def multiplicateurs(noeuds):
+    """Le multiplicateur de flux de chaque noeud, CENTRE SUR 1.
+
+    LA TOPOLOGIE REND TOUT EGAL PARCE QUE TOUT EST CUMULATIF. Le graphe sait
+    dire ce qui tient a quoi ; il ne sait pas dire ce que l'aventure PERD si
+    un but n'est pas atteint. La note d'importance des etats cibles (ecrite le
+    31.8, sur 100, 158 lignes de 64 volumes) dit exactement cela, et c'est
+    pour ca qu'elle entre ici : deux instruments, deux questions.
+
+    NORMALISE A 1 AUTOUR DE LA MOYENNE — chaque note divisee par la moyenne
+    des notes ECRITES. La masse totale du flux reste donc de l'ordre de ce
+    qu'elle etait : un etat cible a 100 tire environ deux fois plus qu'un
+    etat moyen, un etat a 20 environ deux fois moins, et l'ensemble ne gonfle
+    pas. Sans ce centrage, noter les buts reviendrait a multiplier tout le
+    graphe par un facteur arbitraire.
+
+    UNE CASE VIDE VAUT 1, JAMAIS 0. Dix-sept lignes n'ont pas de note, par
+    choix — « une case vide plutot qu'une note bluffee ». Les compter pour
+    nulles les effacerait du monde ; elles restent neutres.
+    """
+    # UNE NOTE NE COUPE JAMAIS UN RELAIS. L'echelle ecrite commence a 1 —
+    # « 1-19 : plomberie, on peut y renoncer » — et zero n'en fait pas
+    # partie. Un noeud a x0.00 ne relaie plus RIEN : il devient un cul-de-sac
+    # qui tranche tout ce qui passait par lui, ce qui n'est pas « on peut y
+    # renoncer » mais « cela n'existe plus ». Un seul noeud etait dans ce cas
+    # le 31.8 (21000, « Doute populaire ») ; on plancher a 1, soit x0.02 —
+    # negligeable, jamais annulant.
+    notes = [max(1, n["importance"]) for n in noeuds.values()
+             if isinstance(n, dict) and isinstance(n.get("importance"), int)]
+    if not notes:
+        return {}
+    moyenne = float(sum(notes)) / len(notes)
+    if moyenne <= 0:
+        return {}
+    return {nid: max(1, n["importance"]) / moyenne
+            for nid, n in noeuds.items()
+            if isinstance(n, dict) and isinstance(n.get("importance"), int)}
+
+
+def diffuser(sources, adj, noeuds, mults=None):
     total = sum(sources.values())
     if total <= 0:
         return {}
+    if mults is None:
+        mults = multiplicateurs(noeuds)
     src = {k: v / total for k, v in sources.items() if k in adj}
     x = dict(src)
     for _ in range(TOURS_DIFFUSION):
@@ -96,7 +137,11 @@ def diffuser(sources, adj, noeuds):
             if not liens or (nid not in src and genre not in GENRES_RELAIS):
                 retenue += valeur
                 continue
-            part = AMORTISSEMENT * valeur / len(liens)
+            # LE MULTIPLICATEUR PORTE SUR CE QUE LE NOEUD RELAIE, pas sur ce
+            # qu'il recoit : un but qui compte pousse plus loin ce qui le
+            # sert, et l'importance descend donc a tout ce qui pend a lui.
+            # Sur ce qu'il recoit, elle ne ferait qu'engraisser une case.
+            part = AMORTISSEMENT * valeur * mults.get(nid, 1.0) / len(liens)
             for autre in liens:
                 y[autre] += part
         retour = AMORTISSEMENT * retenue + (1.0 - AMORTISSEMENT)
@@ -109,9 +154,10 @@ def diffuser(sources, adj, noeuds):
 def importance(noeuds, aretes, evaluation, source_id, occupes=()):
     adj = adjacence(noeuds, aretes)
     source = "pers:" + source_id
-    atteinte = diffuser({source: 1.0}, adj, noeuds)
+    mults = multiplicateurs(noeuds)   # calcule une fois, servi aux deux
+    atteinte = diffuser({source: 1.0}, adj, noeuds, mults)
     charge = sources_de_charge(noeuds, aretes, evaluation)
-    pression = diffuser(charge, adj, noeuds)
+    pression = diffuser(charge, adj, noeuds, mults)
     max_a = max(atteinte.values() or [1e-12])
     max_p = max(pression.values() or [1e-12])
     scores = {}
@@ -289,6 +335,36 @@ def tache_active(n):
     return not any(mot in etat for mot in ETATS_TERMINES)
 
 
+def tache_accomplie(n):
+    """Vrai seulement si une dependance a produit ce qu'elle promettait.
+
+    `abandonnee` et `annulee` ferment une tache, mais n'accomplissent pas les
+    taches qui en dependent. Elles rendent donc `tache_active` faux sans
+    rendre cette fonction vraie.
+    """
+    if not isinstance(n, dict):
+        return False
+    etat = re.sub(r"[*_]+", "", str(n.get("etat") or "")).strip().lower()
+    return etat.startswith(("fait", "fini", "termin", "accompli"))
+
+
+def tache_executable(nid, noeuds):
+    """Active, et toutes ses dependances sont reellement accomplies."""
+    n = noeuds.get(nid) or {}
+    if not tache_active(n):
+        return False
+    dependances = n.get("depend_de") or []
+    if isinstance(dependances, str):
+        dependances = [dependances]
+    for dependance in dependances:
+        did = str(dependance)
+        if n.get("genre") == "etape" and not did.startswith("etape:"):
+            did = "etape:" + did
+        if not tache_accomplie(noeuds.get(did)):
+            return False
+    return True
+
+
 def empreinte_tache(n):
     """Revision stable du noeud canonique, sans les champs runtime de la regie."""
     if not isinstance(n, dict):
@@ -356,4 +432,3 @@ def acteur_en_repos(etat, pid, present):
     if repos_perime(present, dernier, REPOS_ACTEUR_SECONDES):
         return False
     return float(present) < float(dernier)
-

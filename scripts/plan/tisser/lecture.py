@@ -8,6 +8,7 @@ import os
 import re
 
 import chiffrer  # la grammaire des couts
+import bibliotheque  # les books scindes ; source canonique du container plan
 
 from etat.expose import tables  # LA PORTE de etat/
 
@@ -55,6 +56,15 @@ HYPO = re.compile(r"\bH\d{1,2}\b")
 
 def charger(nom, defaut):
     # Absent -> defaut ; corrompu -> plante (l'ancienne version avalait tout).
+    # Les livres ont quitte le monolithe pour etat/books/. Lire simplement
+    # `books.json` reconstruisait un tissu ampute : 803 noeuds au lieu de
+    # 2 341, 1 870 aretes au lieu de 6 726. La bibliotheque sait choisir le
+    # manifeste scinde ou le repli monolithique ; c'est son unique metier.
+    if nom == "books":
+        if (bibliotheque.est_scindee(ETAT)
+                or os.path.isfile(os.path.join(ETAT, "books.json"))):
+            return bibliotheque.charger(ETAT)
+        return defaut
     d = tables.lire(nom, defaut)
     return d.get(nom, d) if isinstance(d, dict) else d
 
@@ -115,8 +125,12 @@ def nommer(personnages):
             continue
         for forme in (p.get("nom") or "", p["id"].replace("-", " ")):
             k = plat_nom(forme)
-            if len(k) > 4:
-                t[k] = p["id"]
+            if len(k) >= 3:
+                # Deux personnes peuvent porter le meme nom. Le registre les
+                # ordonne avec la personne canonique avant ses homonymes
+                # tardifs (par exemple Nesse la coureuse avant Nesse la
+                # tenanciere) : ne pas laisser la derniere effacer la premiere.
+                t.setdefault(k, p["id"])
     return t
 
 
@@ -128,6 +142,24 @@ def plat_nom(t):
 
 
 A_DESIGNER = re.compile(r"a *designer|a *nommer|case *vide", re.I)
+
+
+def _note_sur_cent(brut):
+    """La note d'importance d'un etat cible, ou None si la case est vide.
+
+    Le champ est ECRIT A LA MAIN, en gras markdown (`**60**`), parfois avec
+    du texte autour. On prend le premier entier de 0 a 100 et rien d'autre :
+    une case vide, un tiret, une phrase sans chiffre rendent None — jamais 0.
+    Une note absente n'est pas une note nulle, et 17 lignes sur 158 sont
+    volontairement vides (« je prefere une case vide a une note bluffee »).
+    """
+    if brut is None:
+        return None
+    m = re.search(r"\d{1,3}", str(brut))
+    if not m:
+        return None
+    n = int(m.group())
+    return n if 0 <= n <= 100 else None
 
 
 def col(d, motif):
@@ -187,8 +219,18 @@ def indexer(books, intentions, mains, plans, evenements, personnages, plis=None)
                              "clef" if "Clef" in titre else
                              "verrou" if "Verrou" in titre else
                              "etat_cible" if "cible" in titre else "piece")
+                    # LA NOTE D'IMPORTANCE MONTE AU TISSU. Ecrite le 31.8 sur
+                    # 158 etats cibles de 64 volumes (colonne « 💯 Importance »,
+                    # notee sur 100), elle dit ce que l'aventure PERD si l'etat
+                    # n'est pas atteint — ce que la topologie ne sait pas dire,
+                    # puisqu'elle rend tout egal parce que tout est cumulatif.
+                    # `graphe.diffuser` en fait un multiplicateur de flux.
+                    # Une case vide reste None : 17 lignes n'ont pas de note, et
+                    # une note absente n'est pas une note nulle.
+                    note = _note_sur_cent(col(d, "💯 Importance"))
                     pose(tete, genre, lid, col(d, "🏷️") or col(d, "L'action"),
                          lieu=col(d, "📍 Où") or col(d, "Où"),
+                         importance=note,
                          etat=(col(d, "⏳ État") or col(d, "🔎 État")
                                or col(d, "⏳ Où ça en est")))
                 elif MOYEN.fullmatch(tete):
@@ -247,7 +289,16 @@ def indexer(books, intentions, mains, plans, evenements, personnages, plis=None)
         for fam, genre in (("etats_cibles", "etat_cible"), ("verrous", "verrou"),
                            ("clefs", "clef"), ("actions", "action")):
             for x in pl.get(fam) or []:
-                pose(x.get("id"), genre, "plan:" + pl["id"], x.get("quoi"))
+                # Le tissu n'est pas seulement une carte d'adresses : la
+                # boucle d'activation s'en sert pour elire ce qui peut etre
+                # fait MAINTENANT. Omettre l'etat et les dependances rendait
+                # toutes les actions eternelles et immediatement executables.
+                # Mesure du 129.4.9 : Otto etait elu sur 72120, pourtant
+                # `faite`, tandis que Criston et Aegon recevaient des actions
+                # dont quatre et trois dependances restaient ouvertes.
+                pose(x.get("id"), genre, "plan:" + pl["id"], x.get("quoi"),
+                     etat=x.get("etat"), depend_de=x.get("depend_de"),
+                     jour_du=x.get("jour_du"), office=x.get("office"))
 
     return noeuds, doubles
 
