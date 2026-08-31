@@ -77,3 +77,8 @@ from agents.matiere import main as dossier_main  # noqa: E402,F401 — l'entree 
 # Stop tape toujours scripts/juger.py, la facade.
 from agents import jugement  # noqa: E402,F401 — le juge separe, en claude -p
 from agents.jugement import main as juger_main  # noqa: E402,F401 — l'entree CLI de la facade
+
+# Descendue le 31.8 : scripts/activite.py -> agents/activite.py — la loupe
+# de debug des sessions de dev (qui a fait quoi, les appels, les refus).
+from agents import activite  # noqa: E402,F401 — instrument de dev, hors du jeu
+from agents.activite import main as activite_main  # noqa: E402,F401 — l entree CLI de la facade
