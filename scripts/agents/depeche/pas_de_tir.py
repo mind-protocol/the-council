@@ -42,6 +42,44 @@ def poser_letagere(neutre, qui):
             else ("   (pose : %s)" % b["salle_id"]) if b.get("salle_id")
             else ""))
         n += 1
+    # SES PROPRES VOLUMES, QUI N'Y ETAIENT PAS. `livre.etagere` lit
+    # `etat/books` — la bibliotheque commune — et rien d'autre. Un homme
+    # recevait donc 82 volumes de la maison et PAS LE SIEN : sa prise en main,
+    # posee dans `chambres/<lui>/books/`, n'existait pas la ou il travaille.
+    # On les copie tels quels, en JSON : c'est sa main qui les ecrira, et un
+    # rendu ne se reecrit pas.
+    sien = os.path.join(RACINE, "chambres", qui, "books")
+    for nom in sorted(os.listdir(sien)) if os.path.isdir(sien) else []:
+        if not nom.endswith(".json"):
+            continue
+        ident = nom[:-5]
+        try:
+            texte = io.open(os.path.join(sien, nom), encoding="utf-8").read()
+        except IOError:
+            continue
+        with io.open(os.path.join(dossier, "%s.json" % ident), "w",
+                     encoding="utf-8", newline="\n") as f:
+            f.write(texte)
+        # ET LE MEME, RENDU LISIBLE. Mesure du 31.8 : DEUX hommes sur deux —
+        # aldon-hask puis tobb — se sont ecrit un lecteur JSON dans leurs
+        # brouillons. La cause etait ici : ils recevaient 82 volumes de la
+        # maison en TEXTE et leur propre cahier en JSON BRUT, seul illisible
+        # de toute l'etagere. « Un rendu ne se reecrit pas » est vrai pour
+        # l'ECRITURE et faux pour la lecture : on sert les deux formes, et
+        # l'index dit laquelle sert a quoi.
+        try:
+            import json as _json
+            rendu = livre.rendre(_json.loads(texte), large=True)
+            with io.open(os.path.join(dossier, "%s.txt" % ident), "w",
+                         encoding="utf-8", newline="\n") as f:
+                f.write(rendu)
+        except Exception:
+            pass
+        index.append("%-34s %s" % (
+            ident,
+            u"— A TOI. Lis le .txt, ecris dans ta chambre (le .json)."))
+        n += 1
+
     # L'INDEX EST UN FICHIER, PLUS UN PARAGRAPHE DU REVEIL. Il pesait 7,2 Ko
     # dans le message pour dire des noms de fichiers ; il est ici, a cote de
     # ce qu'il indexe, et c'est la ou un homme le cherche.
