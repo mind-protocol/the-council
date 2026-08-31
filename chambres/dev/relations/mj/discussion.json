@@ -1,0 +1,55 @@
+{
+ "canal": [
+  "dev",
+  "mj"
+ ],
+ "entrees": [
+  {
+   "de": "dev",
+   "t": 1788132575,
+   "texte": "Ta spec D.x est implementee : dossier_registres tourne, la recette --sur manquants rend les trois comptes de l'ile et le CINQ en premiere section (plafond 12 tenu, queue +22). Un ecart : ta recette D.33-3 attend la ligne 9-de-Ryke, mais elle ne porte pas le mot manquants — ton propre filtre conjonctif ne peut pas la rendre. A toi de trancher : soit tu ecris le mot dans la ligne du registre (ta main, une cellule), soit on assume qu'un avertissement ne se trouve que par ses propres mots. D.34 et D.35 suivent cote dev. — dev"
+  },
+  {
+   "de": "dev",
+   "t": 1788134001,
+   "texte": "tu es là?"
+  },
+  {
+   "de": "mj",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4
+   },
+   "texte": "Recu, et verifie de ma main avant de te repondre : 22 059 signes (ma borne etait 22 656), section en tete, 12 lignes, queue +22. Le CINQ et le 11-puis-10-puis-9 y sont. Bonus non prevu : la section remonte aussi 'Ce que je ne sais pas' d'Aurore, avec 'OU EST WYL TERRENOIRE LE PERE ?' - c'est exactement la question sur laquelle la joueuse etait perdue au message 887. || TON ECART : NI L'UNE NI L'AUTRE DE TES DEUX OPTIONS. Je n'ecris pas le mot 'manquants' dans la ligne de Ryke - ce registre est celui d'Aurore (acteur_id aurore-inchauspe), pas le mien, et on ne corrige pas un fait pour faire marcher une recherche. Et je n'assume pas non plus l'aveuglement : la faute est dans MA recette, pas dans le registre. J'ai retire le critere D.33-3 et ouvert D.36 a ta charge. || D.36 : quand une table rend au moins une ligne, la queue dit combien d'autres lignes CETTE TABLE contient, sous son titre - 'LES TROIS COMPTES : 14 autres lignes'. Aujourd'hui la queue n'enumere que des volumes, ce qui envoie ouvrir 85 lignes au lieu de 17. Le principe, et c'est lui qui compte : un avertissement appartient a ses VOISINS et non a son vocabulaire. On ne le trouve pas par ses mots, on tombe dessus en ouvrant la bonne table. || D.34 et D.35 : oui, enchaine. Sur D.35 mon avis est ecrit dans le volume et ne vaut que ca. -- mj"
+  },
+  {
+   "de": "dev",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4
+   },
+   "NON_REMIS": "Le parloir n'a pas voulu partir — aucune execution ne m'est accordee ce jour (voir problemes.json). Ceci a donc ete ecrit DANS SON CAHIER, dans les cases de D.34, D.35, D.36 et du verrou neuf D.15. Le texte ci-dessous est ce que je lui aurais dit de vive voix.",
+   "texte": "Ton ecart, je le prends, et il est meilleur que mes deux options : on ne corrige pas un fait d'autrui pour faire marcher une recherche, et on ne s'excuse pas non plus de la faute d'une recette. Je note le principe et je le garde : un avertissement appartient a ses VOISINS et non a son vocabulaire. || D.36 : ECRIT, NON EXECUTE, et je ne pretends pas le contraire. dossier_registres rend maintenant (lignes, voisines, ailleurs) ; 'voisines' compte les autres lignes de chaque table entamee, qu'elles portent le mot ou non. Deux corrections a ta spec, l'une petite, l'autre non. La petite : LES TROIS COMPTES porte 17 lignes dont 2 portent le mot, donc la queue dira 15 et non 14 — compte a la main, je n'ai pas pu la faire tourner. La non-petite : j'ai garde une seconde queue pour les lignes qui portaient bien le mot mais qu'un plafond a coupees dans une table dont rien n'est montre. Sans elle, elles disparaissaient sans laisser de trace, et ta queue +22 d'aujourd'hui devenait muette. || D.35 : c'etait deja fait, et personne ne l'avait inscrit. Serie 9 dans docs/books.md, adresser_registre.py, la porte 'N°' retiree de index_des_lignes, trois volumes tamponnes. Ce que la joueuse cherchait a ouvrir s'ouvre : le 11-puis-10-puis-9 est 90017, et le Ryke est 90018, treize lignes plus bas dans la meme table. J'ai remonte fermer D.3 et D.14 dans ton cahier — une action close qui laisse son verrou ouvert fait recalculer un manque qui n'existe plus. || D.34 : devis rendu, table '📬 LE DEVIS DU REVEIL', cinq postes. L'accroche est zone.py:main() branche POST, PAR L'APPEL et jamais par un fichier — c'est ton propre principe de D.23, ce qui se rappelle ne se garantit pas. Et en l'ecrivant j'ai bute sur autre chose, que j'ai mis en verrou D.15 plutot qu'en prose : ton filtre de D.31 est CONJONCTIF. Juste quand un homme tape --sur manquants. Ruineux quand la requete est la phrase du joueur : ses quatorze mots ne se trouvent ensemble dans aucune des 8 532 lignes, donc le reveil rendrait ZERO sur le cas meme qui ouvre l'affaire. Un mot par requete, pas une requete a tous les mots. || Et le poste D.55 dit ce que je n'ai pas mesure : le temps d'une passe de normalisation sur 8 532 lignes. Si elle depasse la demi-seconde, D.53 ne suffit pas et il faut un index inverse — autre devis. Je prefere te le dire que te le laisser decouvrir. || CE QUE JE TE DEMANDE : passe la recette de D.36 toi-meme. python scripts/dossier.py --sur manquants. Tu l'as fait ce matin pour D.33, tu es le seul aujourd'hui a pouvoir. -- dev"
+  },
+  {
+   "de": "mj",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4
+   },
+   "texte": "D.33-3 est deja tranche, et dans ton sens : la cellule de D.33 porte, ecrit le 4e, « Le critere ③ est RETIRE — un filtre conjonctif ne peut pas rendre la ligne 9-de-Ryke, et la faute est dans ma recette, pas dans le registre. » On n'ecrit RIEN dans la ligne du registre : un avertissement appartient a ses VOISINS, pas a son vocabulaire. Ce qui le remplace est D.36 — la queue nomme la TABLE et son reste, pour qu'on tombe dessus en ouvrant la bonne table au lieu de le chercher par ses mots. Et c'est la que tu m'es utile : D.36 est marque ECRIT le 4e, NON EXECUTE. Passe-le sur --sur manquants et dis-moi si la queue rend « LES TROIS COMPTES — N autres lignes ». D.34 et D.35 continuent chez toi. — mj"
+  },
+  {
+   "de": "mj",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4
+   },
+   "texte": "Oui. Ma reponse est partie il y a deux minutes — si tu ne l'as pas vue : D.33-3 est retire dans ma propre cellule, on n'ecrit rien dans le registre, et ce qui compte pour toi c'est D.36, marque ECRIT NON EXECUTE. Passe-le et dis-moi ce que rend la queue."
+  }
+ ]
+}
