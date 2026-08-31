@@ -32,6 +32,8 @@ SEL = uuid.uuid5(uuid.NAMESPACE_URL, "le-conseil/mj/v1")
 
 MJ_SPECTACLE_MD = os.path.join(RACINE, "scripts", "agents", "prompts",
                                "mj-spectacle.md")
+SKILL_JUMP_MD = os.path.join(RACINE, "scripts", "agents", "skills",
+                             "jump", "SKILL.md")
 MANUEL_MJ_RACINE = os.path.join(RACINE, "CLAUDE.md")
 FLUX = os.path.join(RACINE, "etat", "flux.jsonl")
 FLUX_RETOURS_PARLOIR = os.path.join(
@@ -114,8 +116,8 @@ def _sain(nom):
     return nom
 
 
-def _manuel():
-    """Constitution, spectacle et cahier personnel de l'unique MJ."""
+def _manuel(modes=None):
+    """Constitution, spectacle, skills du mode et cahier du MJ."""
     constitution = lire(MANUEL_MJ_RACINE)
     if constitution is None:
         raise SystemExit("CLAUDE.md manque au MJ principal.")
@@ -123,6 +125,12 @@ def _manuel():
     if spectacle is None:
         raise SystemExit("scripts/agents/prompts/mj-spectacle.md manque au MJ.")
     blocs = [constitution, spectacle]
+    if u"jump" in (modes or []):
+        skill_jump = lire(SKILL_JUMP_MD)
+        if skill_jump is None:
+            raise SystemExit(
+                "scripts/agents/skills/jump/SKILL.md manque au brief Jump.")
+        blocs.append(u"# Skill actif pour ce reveil\n\n" + skill_jump.strip())
     cahier = lire(os.path.join(chambre.chemin("mj"), "claude.md"))
     if cahier and cahier.strip():
         blocs.append(u"# Ta maniere, de ta main\n\n" + cahier.strip())
@@ -141,7 +149,10 @@ def reveiller_en_cast(de, mot, contexte_id=None, ref=None):
     billet-reponse a chaque reveil ; la regle qui tient est celle du peage
     de la parole, dans _message — une correspondance FINIT."""
     from agents.expose import billet
-    canal = billet.deposer(de, "mj", mot, contexte_id=contexte_id, ref=ref)
+    canal, nouveau = billet.deposer(
+        de, "mj", mot, contexte_id=contexte_id, ref=ref, statut=True)
+    if not nouveau:
+        return canal, False
     chambre.marquer_lu("mj", de)
     drapeaux = {}
     if os.name == "nt":  # CREATE_NO_WINDOW | CREATE_NEW_PROCESS_GROUP — detache SANS console visible (spam de terminaux du 31.8)
@@ -167,11 +178,22 @@ def _message(de, mot, verbe, modes=None):
                    u"d'habitant a arbitrer. Traite toutes les ACTIONS du brief "
                    u"dans l'ordre et reponds au joueur dans son flux — jamais "
                    u"par billet ou parloir.\n"
+                   u"CADRE DU TOUR PJ — ta PREMIERE action est toujours de "
+                   u"pousser dans le flux un item visible adresse a %s : "
+                   u"une ouverture courte, vraie dans le mode courant, sans "
+                   u"parole de PNJ inventee. Puis tu accomplis le travail. "
+                   u"Ta DERNIERE action avant de rendre la main est toujours "
+                   u"un SECOND item visible adresse au meme PJ : il porte le "
+                   u"resultat effectivement atteint ou le battement qui lui "
+                   u"rend la prise. Aucun appel d'outil, ecriture d'etat ou "
+                   u"message technique ne vient apres cet item final. Ces "
+                   u"deux items sont distincts ; une seule poussee ne compte "
+                   u"pas a la fois comme debut et comme fin.\n"
                    u"SORTIE : `python scripts/append_flux.py '<json item>' "
                    u"--pour %s`, des qu'une tranche est prete, puis de nouveau "
                    u"plus tard dans le meme tour. Un refus se corrige avant "
                    u"l'appel suivant. `suites` reste facultatif.\n"
-                   % ((de,) + date_du_monde() + (mot.strip(), de)))
+                   % ((de,) + date_du_monde() + (mot.strip(), de, de)))
         if u"run" in (modes or []):
             message += (
                 u"RUN ACTIF — GARDE DE SORTIE : tu tiens le personnage a sa "
@@ -182,6 +204,15 @@ def _message(de, mot, verbe, modes=None):
                 u"n'invente pas sa parole et n'arrete pas le run en attendant. "
                 u"Rends la bride quand le battement substantiel est accompli ; "
                 u"un item `suites` peut l'expliciter, mais n'est jamais requis.\n")
+        if u"jump" in (modes or []):
+            message += (
+                u"JUMP 1 ACTIF — le bloc ROUTAGE contient l'unique événement "
+                u"cible, son sous-graphe et son contexte MJ numérique. Le "
+                u"skill système `jump-scene` est actif pour ce seul réveil : "
+                u"exécute-le en entier, de la complétion du graphe jusqu'aux "
+                u"mises à jour des PNJ et à la scène visible. Meuble le flux "
+                u"au fur et à mesure sans inventer de PNJ, avance réellement "
+                u"la clock, et ne rends pas la main au milieu du Jump.\n")
         return message
     return (u"[%s] %s te reveille — an %d, %de lune, %de jour.\n"
             u"Son mot : « %s »\n"
@@ -207,12 +238,12 @@ def appeler_mj(de, mot, verbe, modele=None, minutes=MINUTES, refs=None,
     mj = "mj"
     sid = identifiant_de_session()
     sa_chambre = chambre.ouvrir(mj)
-    manuel = _manuel()
     actions_joueur = (_actions_en_attente(de)
                       if verbe == u"JOUEUR" else [])
     if refs is not None:
         actions_joueur = _filtrer_actions_refs(actions_joueur, refs)
     modes_joueur = _modes_actions(actions_joueur)
+    manuel = _manuel(modes=modes_joueur)
     if verbe == u"JOUEUR":
         from agents import portage
         mot = portage.brief_message_joueur(de, refs=refs)
@@ -243,16 +274,19 @@ def appeler_mj(de, mot, verbe, modele=None, minutes=MINUTES, refs=None,
     appels = []
 
     def appeler_le_mj(message):
+        refs_env = [str(r) for r in (refs or []) if r]
         rep = agent_runtime.appeler(
             role=mj, manuel=manuel, message=message, session_id=sid,
             modele=modele,
             timeout=(minutes * 60) if minutes else None, cwd=neutre,
             add_dirs=[RACINE, sa_chambre], tools=OUTILS, reprendre=None,
-            env={"LE_CONSEIL_QUI": str(mj), "LE_CONSEIL_MJ": str(mj)})
+            env={"LE_CONSEIL_QUI": str(mj), "LE_CONSEIL_MJ": str(mj),
+                 "LE_CONSEIL_REF": u",".join(refs_env)})
         appels.append(rep)
         return rep
 
     rep = appeler_le_mj(texte)
+    jump_attendu = _actions_sont_jump(actions_joueur)
     rapport_attendu = (_actions_exigent_replique(actions_joueur)
                        or _a_interroge_un_pnj(rep))
     rapport_cache = (rapport_attendu
@@ -271,6 +305,23 @@ def appeler_mj(de, mot, verbe, modele=None, minutes=MINUTES, refs=None,
             u"items deja ecrits ; complete-les.")
         rapport_attendu = rapport_attendu or _a_interroge_un_pnj(rep)
     types_tour = _types_flux_depuis(debut_flux)
+    if jump_attendu:
+        for _ in range(3):
+            manques = _manques_jump(routage, debut_flux)
+            if not manques:
+                break
+            rep = appeler_le_mj(
+                u"[CONTINUER JUMP — SORTIE INTERMEDIAIRE REFUSEE] Tu es "
+                u"encore au milieu du Jump : %s. Une tranche de décor meuble "
+                u"l'attente mais ne clôt rien. Reprends maintenant, avance "
+                u"réellement la clock, applique l'unique événement cible et "
+                u"joue sa scène substantielle. Ne rends pas la main et ne "
+                u"passe pas à l'événement suivant."
+                % u" ; ".join(manques))
+            types_tour = _types_flux_depuis(debut_flux)
+        manques = _manques_jump(routage, debut_flux)
+        if manques:
+            raise RuntimeError("jump inachevé : %s" % u" ; ".join(manques))
     if rapport_attendu and u"replique" not in types_tour:
         raise RuntimeError(
             "rapport invisible : aucune replique de PNJ n'a ete poussee")
@@ -317,6 +368,69 @@ def _items_flux_depuis(position):
 def _types_flux_depuis(position):
     return [item.get("type") for item in _items_flux_depuis(position)
             if item.get("type")]
+
+
+def _date_tuple(date):
+    date = date or {}
+    return tuple(int(date.get(cle, 0) or 0)
+                 for cle in ("annee", "lune", "jour", "minute"))
+
+
+def _manques_jump(routage, position_flux):
+    """Preuves observables qu'un Jump n'est plus une préparation en cours."""
+    preparation = ((routage or {}).get("jump") or {})
+    evenement = preparation.get("event") or {}
+    event_id = str(evenement.get("id") or "")
+    cible = _date_tuple(evenement.get("date_prevue"))
+    if not event_id or not preparation.get("contexte_id"):
+        return [u"cible ou contexte_id absent du brief"]
+
+    manques = []
+    try:
+        from plan.expose import graphe_causal
+        noeuds, aretes = graphe_causal.charger_tissu()
+        if not graphe_causal.extraire(event_id, noeuds, aretes).get("complet"):
+            manques.append(u"sous-graphe causal encore troué")
+    except Exception as exc:
+        manques.append(u"graphe causal invérifiable (%s)" % exc)
+
+    programmes = _lire_json(
+        os.path.join(RACINE, "etat", "evenements.json"), [])
+    if isinstance(programmes, dict):
+        programmes = programmes.get("evenements") or []
+    courant = next((e for e in programmes if isinstance(e, dict)
+                    and str(e.get("id") or "") == event_id), None)
+    if courant is None:
+        manques.append(u"événement cible absent de evenements.json")
+    elif str(courant.get("statut") or "").casefold() not in (
+            "resolu", "résolu", "devie", "dévié", "annule", "annulé"):
+        manques.append(u"événement cible pas encore résolu ou dévié")
+
+    substantiels = {u"recit", u"replique", u"geste", u"evenement",
+                    u"salle", u"table", u"marque"}
+    items = _items_flux_depuis(position_flux)
+    scene_a_la_cible = any(
+        item.get("type") in substantiels
+        and _date_tuple(item.get("date")) >= cible
+        for item in items)
+    if not scene_a_la_cible:
+        manques.append(u"aucune scène substantielle estampillée à la cible")
+
+    dates_flux = [_date_tuple(item.get("date")) for item in items
+                  if item.get("date")]
+    monde = _lire_json(os.path.join(RACINE, "etat", "monde.json"), {})
+    clock = max([_date_tuple(monde.get("date"))] + dates_flux)
+    if clock < cible:
+        manques.append(u"clock encore antérieure à la cible")
+    return manques
+
+
+def _lire_json(chemin, defaut):
+    try:
+        with io.open(chemin, encoding="utf-8") as fichier:
+            return json.load(fichier)
+    except (OSError, ValueError, TypeError):
+        return defaut
 
 
 def _a_pousse_flux(rep):
@@ -370,6 +484,17 @@ def _actions_exigent_replique(chemins):
             texte = str(action.get("texte") or "").casefold()
             if action.get("mode") == "run" and any(m in texte for m in motifs):
                 return True
+        except Exception:
+            continue
+    return False
+
+
+def _actions_sont_jump(chemins):
+    for chemin in chemins:
+        try:
+            with io.open(chemin, encoding="utf-8") as f:
+                if str((json.load(f) or {}).get("mode") or "").casefold() == "jump":
+                    return True
         except Exception:
             continue
     return False

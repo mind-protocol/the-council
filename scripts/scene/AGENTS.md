@@ -18,7 +18,8 @@ cette porte : la peau se regarde, elle ne se consomme pas.
 | `flux.py` | LA PLUME : audience déclarée, barrière des deux jours, présence suivie, horloges — un script au flux top-level assumé (~940 l. ; la coupe fine en fonctions est un vrai design, différée au lot-2-features) | `scripts/append_flux.py` |
 | `flux_scribe.py` | les gestes d'écriture sans état de poussée : chemins de l'état, teinte et portrait d'un locuteur, montre d'un livre (toucher, extrait), l'heure, l'avancée de la date | — |
 | `flux_ecrits.py` | deux avis du pousseur : les renvois `[texte](adresse)` doivent résoudre, ce qu'on ANNONCE doit être ÉCRIT | — |
-| `tunnel.py` | le compteur qui refuse le mur : seuils (ITEM, TRANCHE, SUITE, VOIX, FILS), plafond dur (MUR), `--tunnel` pour le mur voulu | `scripts/tunnel.py` (module, pas de CLI) |
+| `flux_transport.py` | verrou inter-processus de l'unique plume et empreinte anti-retry des items identiques pendant 60 secondes | — |
+| `tunnel.py` | le compteur qui refuse le mur : seuils (ITEM, TRANCHE, SUITE, VOIX, FILS), plafond dur (MUR), `--tunnel` pour le mur voulu ; cadence web minimale de 1 500 caractères/minute cumulée entre items bavards | `scripts/tunnel.py` (module, pas de CLI) |
 | `regie.py` | l'outil du MJ de Corneille : retrouver un moment dans le fil — les candidats, jamais le choix | `scripts/regie.py` |
 | `seed_flux.py` | le beat d'ouverture (le conseil noir) — DESTRUCTIF, ne part que par `main()`, l'import est inerte | `scripts/seed_flux.py` |
 

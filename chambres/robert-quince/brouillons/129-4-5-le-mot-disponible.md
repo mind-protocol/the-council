@@ -210,3 +210,23 @@ contredisent deviennent quatre soustractions qu'on peut poser côte à côte. On
 discute pas un total. On discute une soustraction.
 
 — R. Q., castellan, 5e j., 4e lune, an 129, avant sept heures.
+
+## VIII. Au soir — ce que la quatrième réponse change
+
+*Cette réponse porte le 5e et m'est parvenue alors que mon jour et mes billets portent le
+4e. Ce qui suit est donc l'état promis pour le 5e, non un retour accompli le 4e, tant que
+Sarro n'a pas rayé sa date.*
+
+Sarro Vaeth a ouvert son acte du 24e. La chaîne a été faite dans la nuit ; les cinquante
+n'étaient plus employés depuis onze jours. Il réclame désormais **dix-huit hommes** sous
+son nom : douze à la chambre des trois œufs, six au front de la onzième. Tous les autres
+postes rentrent à la muraille cette nuit.
+
+Je raye donc **cinquante manquants**. Je ne remplace pas ces mots par **trente-deux
+revenus** : trente-deux n'est qu'une soustraction, et aucun appel ne l'a encore vu. Sarro
+écrit les dix-huit chez lui ; Hallis appelle le retour chez moi. Les deux livres seront
+rapprochés à l'homme près avant que je dise un nouveau disponible.
+
+La branche 29034 — rayer les cinquante faute de réponse — est morte. L'action 29022 reste
+ouverte jusqu'à l'appel, parce que son terme n'est pas une promesse de retour mais un
+chiffre unique dans les deux rôles.

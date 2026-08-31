@@ -46,6 +46,11 @@ def main():
                     default="journee",
                     help="instructions du brief : journée autonome, réponse "
                          "courte, ou réponse envoyée dans une discussion")
+    ap.add_argument("--beats-jump", action="store_true",
+                    help="demander avec la réponse jusqu'à trois beats "
+                         "d'attente liés au sous-graphe du Jump")
+    ap.add_argument("--event-jump", default=None,
+                    help="id de l'événement cible, requis avec --beats-jump")
     ap.add_argument("--modele", default=None,
                     help="opus | sonnet | fable — defaut : celui de la session")
     ap.add_argument("--minutes", type=int, default=None,
@@ -71,6 +76,10 @@ def main():
     attendre = a.attendre or not a.cast
     if a.mode != "journee" and not attendre:
         ap.error("--mode reponse/discussion exige un call attendu, pas --cast")
+    if a.beats_jump and (a.mode != "reponse" or not a.contexte
+                         or not a.ref or not a.event_jump):
+        ap.error("--beats-jump exige --mode reponse, --event-jump, "
+                 "--contexte et --ref")
 
     if a.salles:
         pj = les_pj()
@@ -134,21 +143,24 @@ def main():
         for qui in gens:
             if depecher(qui, a.mission, a.modele, a.minutes, a.sec,
                         attendre=attendre, contexte_id=a.contexte, ref=a.ref,
-                        mode=a.mode):
+                        mode=a.mode, beats_jump=a.beats_jump,
+                        event_jump=a.event_jump):
                 ok += 1
     else:
         # ILS PARTENT ENSEMBLE. Une journee d'homme se paie en minutes ; sept
         # en file en prendraient sept fois, et une salle entiere ne se
-        # depecherait jamais. Ils n'ont rien a se dire, ne partagent aucun
-        # fichier et n'ecrivent nulle part : chacun a son dossier, sa session
-        # et ses documents de maison, et le seul ecrivain reste ce processus-ci, a la fin.
+        # depecherait jamais. Ils n'ont rien a se dire, mais depuis l'acces au
+        # depot ils peuvent ecrire les memes tables : la reconciliation de fin
+        # de CALL constate la concurrence, sans la prevenir. Ce processus
+        # n'est plus l'unique ecrivain.
         # `--front 1` rend la file a qui veut suivre un echec a la trace.
         import concurrent.futures as cf
         print(u"  (%d de front)" % min(a.front, len(gens)))
         with cf.ThreadPoolExecutor(max_workers=a.front) as pool:
             envoyes = {pool.submit(depecher, q, a.mission, a.modele,
                                    a.minutes, False, True, a.contexte,
-                                   a.ref, a.mode): q
+                                   a.ref, a.mode, a.beats_jump,
+                                   a.event_jump): q
                        for q in gens}
             for fini in cf.as_completed(envoyes):
                 try:

@@ -1,5 +1,5 @@
 // actions.js — la barre unique du joueur : Parler / Agir / Penser / Question /
-// Coulisses / Laisser faire / Composer. Plus de mode « Attendre » : lâcher la
+// Coulisses / Laisser faire / Jump / Composer. Plus de mode « Attendre » : lâcher la
 // bride au MJ fait passer le temps mieux qu'un bouton d'avance.
 "use strict";
 (() => {
@@ -25,6 +25,10 @@
       // dans sa manière. L'instruction est facultative — sans elle, il improvise.
       '<button id="mode-run" title="Laisser le MJ jouer votre personnage — instruction facultative">' +
       '<i class="emb">🎭</i>Laisser faire</button>' +
+      // Jump rejoint le prochain événement défini par le MJ. La préparation
+      // reste hors de la scène ; le joueur reprend la main dans celle-ci.
+      '<button id="mode-jump" title="Préparer puis jouer le prochain événement MJ — un seul">' +
+      '<i class="emb">⏭️</i>Jump</button>' +
       // La main par-dessus le monde : on ne joue plus, on RÉPARE. Ici le MJ
       // sort de son rôle — plus de canon, plus de brouillard, plus rien
       // d'acquis : le joueur est propriétaire de sa partie et peut la changer
@@ -79,6 +83,7 @@
       question: document.getElementById("mode-question"),
       meta: document.getElementById("mode-meta"),
       run: document.getElementById("mode-run"),
+      jump: document.getElementById("mode-jump"),
       intervention: document.getElementById("mode-intervention"),
     };
     const AMORCES = {
@@ -89,6 +94,7 @@
       question: "Ce que vous voulez éclaircir — hors de la scène…",
       meta: "Hors univers : la partie, le casting, une médaille à décerner…",
       run: "Une consigne, ou rien — et l'on vous joue comme on vous connaît…",
+      jump: "Un événement précis, ou rien pour prendre le prochain…",
       intervention: "Ce qu'il faut redresser, développer, ou changer — rien n'est verrouillé…",
     };
     const ENVOIS = {
@@ -99,6 +105,7 @@
       question: '<i class="emb">❓</i>Demander',
       meta: '<i class="emb">🎬</i>Commenter',
       run: '<i class="emb">🎭</i>Laisser faire',
+      jump: '<i class="emb">⏭️</i>Jump',
       intervention: '<i class="emb">✨</i>Intervenir',
     };
     let mode = "dire";
@@ -178,7 +185,7 @@
       const v = champ.value.trim();
       // penser sans objet est permis : on pèse toute la situation. Laisser faire
       // sans consigne aussi : c'est même son usage le plus courant.
-      if (!v && mode !== "penser" && mode !== "run") return;
+      if (!v && mode !== "penser" && mode !== "run" && mode !== "jump") return;
       if (window.Moi && window.Moi.hors_roster && VERBES_HOMME[mode]) {
         envoyerVerbe(mode, v);
         champ.value = "";
@@ -222,16 +229,25 @@
     // ouvre la parole vers lui. On n'envoie rien — on prépare la phrase et on
     // rend la main au joueur, curseur en place. C'est une commodité de saisie,
     // jamais une action : rien ne part tant qu'il n'a pas écrit.
+    function prefixer(nom, separateur) {
+      if (!nom) return;
+      if (mode !== "dire" && mode !== "agir") basculer("dire");
+      const v = champ.value;
+      const echappe = String(nom).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const deja = new RegExp("^\\s*" + echappe + "\\s*[:,]\\s*");
+      if (!deja.test(v)) champ.value = nom + separateur + v.replace(/^\s+/, "");
+      champ.focus();
+      const n = champ.value.length;
+      champ.setSelectionRange(n, n);
+    }
+
     window.Barre = {
       adresser(nom) {
         if (!nom) return;
-        if (mode !== "dire" && mode !== "agir") basculer("dire");
-        const v = champ.value;
-        const deja = new RegExp("^\\s*" + String(nom).replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\s*,");
-        if (!deja.test(v)) champ.value = nom + ", " + v.replace(/^\s+/, "");
-        champ.focus();
-        const n = champ.value.length;
-        champ.setSelectionRange(n, n);
+        prefixer(nom, ", ");
+      },
+      repondre(nom) {
+        prefixer(nom, " : ");
       },
     };
   });
@@ -315,6 +331,9 @@
   Bus.enregistrer("run", (it) =>
     Bus.chronique("chr-run", "Vous laissez faire",
       it.texte || "Sans consigne — on vous joue comme on vous connaît."));
+  Bus.enregistrer("jump", (it) =>
+    Bus.chronique("chr-run", "Jump",
+      it.texte || "Vers le prochain événement défini par le MJ."));
   // L'atelier de chanson. La commande du joueur, puis la fiche rendue : titre,
   // ce que ça raconte, et le fichier .md qu'on vient d'ouvrir au bloc-notes.
   Bus.enregistrer("composer", (it) =>

@@ -16,6 +16,8 @@
 # CE QUI VIT ICI :
 #   --dire   vers un homme : billet au canal de chambre + reveil cast
 #            (billet.ecrire) — present ou absent, plus de distinction ;
+#            `--sans-reveil`, reserve au MJ, depose une notification de fin
+#            de Jump que l'homme lira a son prochain reveil naturel ;
 #            vers `mj` : reserve au front joueur (`--joueur`) et a `dev` ;
 #            vers `tous` : la criee — etat/parloir/tous.jsonl (une criee
 #            n'est pas une paire, elle ne migre pas en canal).
@@ -220,7 +222,10 @@ def rendre_au_joueur(de, joueur, texte, contexte_id=None, ref=None):
     from agents.expose import billet as _b
     from agents.expose import mj as _mj
     from agents import chambre as _ch
-    canal = _b.deposer(de, joueur, texte, contexte_id=contexte_id, ref=ref)
+    canal, nouveau = _b.deposer(
+        de, joueur, texte, contexte_id=contexte_id, ref=ref, statut=True)
+    if not nouveau:
+        return canal, {"duplicate": True, "id": None}
     _pousser_au_flux_web(de, joueur, texte, contexte_id=contexte_id,
                          ref=ref)
     retour = _mj.deposer_retour_parloir(
@@ -234,6 +239,9 @@ def rendre_au_joueur(de, joueur, texte, contexte_id=None, ref=None):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--dire", action="store_true")
+    ap.add_argument(
+        "--sans-reveil", action="store_true",
+        help="notification MJ : deposer le billet sans caster le destinataire")
     # Commandes du front joueur. Le serveur pose --joueur ; une session PNJ
     # qui copie la commande sans ce marqueur est arretee avant tout appel.
     ap.add_argument("--tenter", action="store_true",
@@ -268,6 +276,10 @@ def main():
     ap.add_argument("--clore", default=None,
                     help="archive les fils jsonl restants d'un nom")
     a = ap.parse_args()
+    if a.sans_reveil and not a.dire:
+        raise SystemExit(u"--sans-reveil ne s'emploie qu'avec --dire")
+    if a.sans_reveil and a.de != "mj":
+        raise SystemExit(u"--sans-reveil est reserve aux notifications du MJ")
     contexte_id = (a.contexte or os.environ.get("LE_CONSEIL_CONTEXTE")
                     or None)
     ref = a.ref or os.environ.get("LE_CONSEIL_REF") or None
@@ -340,8 +352,12 @@ def main():
         from agents.expose import billet as _b
         from agents.expose import mj as _mj
         from agents import chambre as _ch
-        canal = _b.deposer(a.de, a.a, u"[%s] %s" % (verbe, mot),
-                           contexte_id=contexte_id, ref=ref)
+        canal, nouveau = _b.deposer(
+            a.de, a.a, u"[%s] %s" % (verbe, mot),
+            contexte_id=contexte_id, ref=ref, statut=True)
+        if not nouveau:
+            print(u"doublon ignore — aucun nouvel appel MJ")
+            return
         # LE CALL (habitant.md §4) : on a besoin du verdict pour continuer.
         verdict = _mj.appeler_mj(a.de, mot, verbe, modele=a.modele)
         # Le verdict est AUSSI une trace : la reponse du MJ, au meme canal.
@@ -375,8 +391,12 @@ def main():
             # mesure du 31.8 : cinq sessions depeche-dev nees des billets des
             # arbitres. Le billet arrive, le developpeur le lit en personne.
             from agents.expose import billet as _b
-            canal = _b.deposer(a.de, a.a, texte,
-                               contexte_id=contexte_id, ref=ref)
+            canal, nouveau = _b.deposer(
+                a.de, a.a, texte, contexte_id=contexte_id, ref=ref,
+                statut=True)
+            if not nouveau:
+                print(u"doublon ignore — aucun nouveau billet a dev")
+                return
             print(u"billet a dev (canal %s) — jamais depeche, il lira"
                   % os.path.relpath(canal, RACINE))
             return
@@ -389,19 +409,36 @@ def main():
             from agents.expose import mj as _mj
             canal, parti = _mj.reveiller_en_cast(
                 a.de, texte, contexte_id=contexte_id, ref=ref)
-            print(u"billet au MJ (canal %s) — reveille en cast"
+            print((u"billet au MJ (canal %s) — reveille en cast" if parti
+                   else u"doublon au MJ (canal %s) — aucun nouveau reveil")
                   % os.path.relpath(canal, RACINE))
             return
         if est_un_joueur_occupe(a.a):
             canal, retour = rendre_au_joueur(
                 a.de, a.a, texte, contexte_id=contexte_id, ref=ref)
+            if retour.get("duplicate"):
+                print(u"doublon ignore — ni canal, ni web, ni flux MJ")
+                return
             print(u"réponse à %s (canal %s) — flux web direct + flux MJ %s"
                   % (a.a, os.path.relpath(canal, RACINE),
                      retour.get("id")))
             return
         from agents.expose import billet as _b
+        if a.sans_reveil:
+            canal, nouveau = _b.deposer(
+                a.de, a.a, texte, contexte_id=contexte_id, ref=ref,
+                statut=True)
+            if not nouveau:
+                print(u"doublon ignore — aucune nouvelle notification")
+                return
+            print(u"notification a %s (canal %s) — sans nouveau reveil"
+                  % (a.a, os.path.relpath(canal, RACINE)))
+            return
         canal, rep = _b.ecrire(a.de, a.a, texte, modele=a.modele,
                                contexte_id=contexte_id, ref=ref)
+        if rep.get("duplicate"):
+            print(u"doublon ignore — aucun nouveau reveil de %s" % a.a)
+            return
         print(u"billet a %s (canal %s) — reveille en cast, log %s"
               % (a.a, os.path.relpath(canal, RACINE),
                  os.path.relpath(rep["log"], RACINE)))

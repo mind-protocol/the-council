@@ -4,6 +4,53 @@
 from agents.depeche.brief import id_item_affaire
 
 
+def _resoudre_mj(numero):
+    """Les numéros 8xxxx vivent dans la chambre MJ, pas dans les cahiers de maison."""
+    if not (80000 <= int(numero) <= 89999):
+        return None
+    from plan.expose import tisser
+    affaires = tisser.charger_affaires_mj(tisser.RACINE)
+    noeuds = {n["id"]: n for n in tisser.noeuds_affaires_mj(affaires)}
+    if numero not in noeuds:
+        return None
+    choisi = noeuds[numero]
+    livre_id = choisi.get("livre_id")
+    livre = next((a for a in affaires if a.get("id") == livre_id), {})
+    aretes = tisser.aretes_affaires_mj(affaires, [])
+    chaine, vus, file = [], {numero}, [numero]
+    while file:
+        courant = file.pop(0)
+        for a in aretes:
+            parent = str(a.get("vers") or "")
+            if (str(a.get("de")) != courant or parent in vus
+                    or parent not in noeuds
+                    or noeuds[parent].get("livre_id") != livre_id):
+                continue
+            vus.add(parent)
+            chaine.append(parent)
+            file.append(parent)
+    lignes = [
+        "Affaire MJ : **%s**." % (livre.get("titre") or livre_id),
+        "Adresse canonique MJ : `%s`." % numero,
+        "Source : `%s`." % livre_id,
+        "",
+        "ITEM DEMANDE — `%s` · %s · %s" % (
+            numero, choisi.get("genre"), choisi.get("quoi")),
+    ]
+    for ident in chaine:
+        n = noeuds[ident]
+        lignes.append("- `%s` · %s · %s" %
+                      (ident, n.get("genre"), n.get("quoi")))
+    lignes.extend([
+        "",
+        "Ce contexte appartient à la préparation du MJ. Réponds seulement "
+        "à la question reçue ; ne décide ni la scène ni son issue globale.",
+    ])
+    return {"id": numero, "affaire": livre.get("titre") or livre_id,
+            "texte": "\n".join(lignes), "chaine": [numero] + chaine,
+            "volumes": [livre_id], "autorite": "mj"}
+
+
 def _charge(chargeur=None):
     if chargeur is None:
         from plan.expose import couverture
@@ -36,6 +83,9 @@ def resoudre(contexte_id, chargeur=None):
     numero = id_item_affaire(contexte_id)
     pieces = _charge(chargeur)
     if numero not in pieces:
+        focus_mj = _resoudre_mj(numero) if chargeur is None else None
+        if focus_mj:
+            return focus_mj
         raise ValueError("l'item d'affaire `%s` n'existe pas dans le plan general"
                          % numero)
 

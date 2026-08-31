@@ -174,7 +174,7 @@ Sixième mode de la barre. Le joueur envoie `{type:"libre", mode:"run", texte}` 
   - Une option = `{id, texte, detail?, groupe?}`. `texte` est une action à la première intention (« Faire seller pour Accalmie »), `detail` ce qu'elle coûte ou sur qui elle tombe (« ser Robert, avant l'aube »). Deux options qui ne peuvent pas tenir ensemble portent le MÊME `groupe` : l'UI les rend exclusives, cocher l'une décoche l'autre. Sans `groupe`, on peut tout cocher.
   - Les suites sortent de ce que le personnage peut RÉELLEMENT faire à cette minute, avec ses hommes, son or et ce qu'il sait — jamais d'une option qu'on lui souffle depuis la régie, jamais étiquetée de sa conséquence.
   - Ce que le joueur en fait revient dans l'inbox en `{type:"suites", retenues:[…], ecartees:[…], ecarte?}`. Les `retenues` se jouent comme des ordres donnés (la salle d'abord : l'homme qu'on appelle, le pli qui part) ; les `ecartees` ne sont pas des refus, seulement du non-retenu — on ne les rejoue pas et on n'en fait pas la morale.
-- L'état s'écrit comme d'habitude, sans exception : ce que tu lui as fait dire va dans `paroles.json`, ce que tu lui as fait faire dans `actes.json`. Les PNJ s'en souviendront et ne feront aucune différence — c'est le prix du mode.
+- L'état s'écrit comme d'habitude, sans exception : ce que tu lui as fait dire va dans `paroles.json`, ce que tu lui as fait faire dans `actes.json`. `scripts/ajouter.py actes` rattache automatiquement le fait à la ligne `⚔️ Actions` quand le call porte ce contexte ; ne recopie pas ces identifiants à la main. Les PNJ s'en souviendront et ne feront aucune différence — c'est le prix du mode.
 
 ## « Intervention » — la main par-dessus le monde
 

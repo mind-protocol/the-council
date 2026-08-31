@@ -51,3 +51,12 @@ Dans les modes `reponse` et `discussion`, consulte l'entrée qui correspond au
 destinataire, au contexte et à la ref. Elle sert de point de départ, jamais de
 preuve : revérifie les faits nécessaires avant de concevoir les mots du moment,
 puis respecte la règle d'envoi propre au mode demandé.
+
+## Relier une action à ce qui s'est réellement produit
+
+Quand ton travail produit un fait inscrit dans `etat/actes.json` et que ce fait
+vient d'une ligne `⚔️ Actions`, écris ensemble `action_id`, `affaire_id` et
+`relation_action` (`produit`, `preuve`, `bloque`, `modifie` ou `annule`). Passe
+par `python scripts/ajouter.py actes ...` : la porte valide le lien et empêche
+les doublons. Ne ferme jamais une action pour fabriquer sa preuve ; l'acte est
+écrit parce que le fait a eu lieu, puis l'action peut être fermée.

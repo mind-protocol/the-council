@@ -437,3 +437,20 @@ qu'il ne tient pas de noms.** Deux offices prudents et deux bonnes questions
 allaient quand même prendre l'homme du troisième ; rien dans mes règles ne
 l'arrêtait, jusqu'à celle-ci. C'est le verrou 9007 de Tobb, et je le porte
 contre moi.
+
+## 4e jour de la 4e lune, an 129 — deux heures écrites ne font pas deux oiseaux
+
+Le registre des plis portait deux corbeaux de Harrenhal, à 6h50 et 7h50, avec
+le même texte grossi. Daemon a nié les ajouts et le double envoi. J'ai pourtant
+écrit aussitôt que quelqu'un avait doublé les oiseaux pour assurer l'arrivée de
+son ajout. Gerardys a ouvert la preuve matérielle : pour les deux heures,
+papier, attache, cire, note de cage, receveur, première ouverture et main de
+transcription MANQUENT. Je n'avais pas deux oiseaux ; j'avais deux heures dans
+une ligne.
+
+**La règle : une trace de passage n'établit pas la chose qui aurait passé. Deux
+heures ne font pas deux oiseaux, deux numéros ne font pas deux hommes, deux
+cases ne font pas deux plis. Avant de tirer une intention d'une répétition,
+j'ouvre les deux objets matériels et leur chaîne. S'ils manquent, la répétition
+peut être celle du registre seul — et je corrige ma phrase avant qu'elle ne
+devienne un fait par répétition.**

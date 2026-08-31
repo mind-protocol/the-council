@@ -3,12 +3,52 @@
  "regle": "Une ligne par fil ouvert. Le jour où j'ai demandé, non le jour où je m'en suis souvenu. Un fil qu'on n'a pas relancé depuis trois jours se relance ou se ferme.",
  "j_attends": [
   {
+   "de": "gerardys",
+   "quoi": "Ouvrir le registre des offices maintenant, faire dire devant témoin l'heure de la seconde descente tardive sur 33020, puis poser le volume. Je cherche seulement le texte scellé et sa copie ; verdict TENU ou PAS TENU, retard sous mon nom.",
+   "demande_le": "129.4.4",
+   "ou": "registre des offices",
+   "piece": "33020 · PR.3",
+   "relance": "Dès sa réponse. L'ancre est déjà passée ; aucune heure d'hier ne sera écrite."
+  },
+  {
    "de": "hallis-roon",
-   "quoi": "FERMÉ LE 129.4.3, ET PAR MOI, NON PAR LUI. Je lui rends son quart d'heure : je suis descendu au rôle et je compte moi-même, poste par poste, dans l'ordre des relèves, en commençant par les huit postes critiques — les six hors de service et les deux détachés sont-ils DEDANS mes soixante-quatre qui courent, ou hors d'eux ? Raison écrite et dite : ce chiffre est le MIEN, c'est moi qui ai dit trente-deux pour vingt-quatre, et on ne fait pas réparer par un autre une soustraction qu'on a faussée soi-même. Un homme à qui l'on demande trois fois le même quart d'heure dans une journée finit par le donner mal.",
-   "demande_le": "129.4.3",
-   "ou": "chemin de ronde, puis le rôle moi-même",
-   "piece": "29021",
-   "relance": "PLUS DE RELANCE. Ce que je lui dois désormais : demain à sept heures, les DEUX nombres ensemble, chacun avec ses quatre parts, remis à lui AVANT la table pour qu'il les conteste ligne à ligne — et s'il trouve autre chose, qu'il le dise tout haut avant que je parle, non après."
+   "quoi": "Au rôle nominatif de la garnison, les hommes dont le foyer est dans l'un des trois villages de la route royale : une ligne par homme, nom, poste, village, et source ÉCRIT ou RAPPORTÉ ; aucun total avant les lignes.",
+   "demande_le": "129.4.4",
+   "ou": "demande écrite remise en main propre dans la grande salle après échec du parloir",
+   "piece": "question ouverte — familles de la route royale",
+   "relance": "À LA RELÈVE. Un blanc reste un blanc si le rôle ne porte pas le foyer."
+  },
+  {
+   "de": "denys-bar-emmon",
+   "quoi": "Quatre heures à la lampe avec les quarante des caves : une feuille pour la forme de la route ; une pour le trafic ordinaire, VU séparé de RAPPORTÉ, hommes nommés, contradictions conservées et fourchette plutôt que total rond.",
+   "demande_le": "129.4.4",
+   "ou": "caves basses",
+   "piece": "10016 · 10033 · 10221",
+   "relance": "AUCUNE DATE. L'arrêt de la reine a annulé le 7e après huit heures ; Denys viendra à la première heure rendue par la levée. Une condition n'est pas un calendrier."
+  },
+  {
+   "de": "rhaenyra",
+   "quoi": "Faire porter sur la ligne O12 la charge étroite de la route du nord acceptée par ser Steffon : O12 pendant la marche, trente hommes et six chevaux au plus, remise datée et nommée à Hobb Sarnes ; sans rôle ni compte des chevaux, charge écrite et non armée.",
+   "demande_le": "129.4.4",
+   "ou": "registre des offices",
+   "piece": "10015 · 10020",
+   "relance": "Aucune avant réponse. Les mots sont préparés dans messages-au-joueur.md ; préparer n'est pas envoyer."
+  },
+  {
+   "de": "steffon-darklyn",
+   "quoi": "Les cinq noms des mesureurs immobiles aux étapes, tirés du rôle des hommes à pied qui savent écrire. Le seuil est déjà rendu : deux heures entre tête et queue, puis la tête s'arrête et attend.",
+   "demande_le": "129.4.4",
+   "ou": "cahier de marche, feuillets des cinq étapes",
+   "piece": "20314 · 20328",
+   "relance": "Après ouverture du rôle, pas avant. Bray, Hobb Sarnes et Grell Marran sont exclus : ils portent déjà une autre charge."
+  },
+  {
+   "de": "hallis-roon",
+   "quoi": "À la relève, le rapprochement des hommes rendus par Sarro Vaeth : partir du rôle de départ, dans l'ordre des relèves ; séparer VU et RAPPORTÉ sur deux feuilles ; nommer chaque absent ; réclamer à Sarro ses dix-huit lignes et leur jour de remise. Son total ne fait pas preuve. Le trou reste ouvert si la somme ne refait pas le départ. Avant la relève, il doit aussi tirer du registre de garde les quatre lignes de la charge de Wend — sergent de relève, trois chefs de poste, poste et heure — puis, sur une feuille distincte, ranger le rôle par famille CERTAINE dans l'un des trois villages de la route, RAPPORTÉE, INCONNUE.",
+   "demande_le": "129.4.4",
+   "ou": "rôle de la garnison, à la relève",
+   "piece": "29022",
+   "relance": "AUCUNE AVANT LA RELÈVE. Il pose les feuilles et les quatre lignes au registre avant de parler ; je les additionne à l'envers devant lui. Aucun nouveau nombre de disponibles ni de familles avant que chaque somme refasse son rôle de départ."
   },
   {
    "de": "sarro-vaeth",
@@ -77,8 +117,8 @@
    "qui": "moi-meme",
    "affaire": "Ambassade du Nord, du Val et de Blancport",
    "quoi": "LA SECONDE DESCENTE, cette nuit, APRÈS L'EXTINCTION et avant l'ancre du 4e à l'aube. Ma marque de quatre heures est bornée à quatre heures : les deux feuillets du prince Lucerys sont sur la table, il ne reste à la reine qu'à corriger et sceller, au mestre qu'à écrire et copier avant l'extinction. Une marque prise AVANT la dernière chance de rendre la ligne vraie ne vaut rien — elle est un piège pour qui la lira demain. La seconde marque portera son heure elle aussi, et c'est sur celle-là seule qu'on écrira FAITE.",
-   "ma_reponse": "",
-   "etat": "DUE CETTE NUIT — un quart d'heure, et sans lui mon travail de la journée se retourne contre celui qui s'y fie"
+   "ma_reponse": "L'HEURE EST MANQUÉE. Au 4e jour après l'aube, 33020 porte toujours À FAIRE et aucune copie n'est au registre. Je n'antidaterai pas la seconde marque : prochaine descente au volume, heure donnée par celui qui tient le livre devant témoin, verdict TENU ou PAS TENU et retard écrit sous mon nom.",
+   "etat": "EN RETARD — descente immédiate à faire au registre ; la marque ne fermera pas le manquement d'heure"
   },
   {
    "qui": "aldon-hask",

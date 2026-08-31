@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime_worker.py", line 46, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime_worker.py", line 23, in main
+    rep = runtime.appeler(**charge["appel"])
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 674, in appeler
+    resultat = _appel_codex(
+        manuel, message, session_id, modele, effort, timeout, cwd,
+        add_dirs, reprendre, environnement, on_event, on_stderr,
+        heartbeat, on_heartbeat)
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 470, in _appel_codex
+    code, _lignes, erreurs, evenements, duree = _executer_flux(
+                                                ~~~~~~~~~~~~~~^
+        commande, message, cwd, env, timeout, on_event, on_stderr,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        heartbeat, on_heartbeat, transcript)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 351, in _executer_flux
+    raise subprocess.TimeoutExpired(commande, timeout)
+subprocess.TimeoutExpired: Command '['codex', 'exec', '--ignore-user-config', '--ignore-rules', '--disable', 'plugins', '--disable', 'apps', '--disable', 'memories', '--disable', 'multi_agent', '--json', '--color', 'never', '--skip-git-repo-check', '--cd', 'C:\\Users\\reyno\\AppData\\Local\\Temp\\depeche-robert-quince-f9ksgumn', '-c', 'project_doc_max_bytes=524288', '--model', 'gpt-5.6-sol', '-c', 'model_reasoning_effort="medium"', '--output-last-message', 'C:\\Users\\reyno\\AppData\\Local\\Temp\\depeche-robert-quince-f9ksgumn\\.dernier-message-41b2a45b5613483db96476ec079eb2a9.txt', '--dangerously-bypass-approvals-and-sandbox', '--add-dir', 'C:\\Users\\reyno\\le-conseil2', '--add-dir', 'C:\\Users\\reyno\\le-conseil2\\chambres\\robert-quince', '-']' timed out after 900 seconds

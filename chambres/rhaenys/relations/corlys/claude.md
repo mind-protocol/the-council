@@ -33,3 +33,16 @@ lui en fais pas grief — un père qui a vu un prix mis par écrit sur la tête 
 ses deux héritiers a le droit de reprendre sa parole une fois. Mais c'est ma
 petite-fille qui a pris la place, et cela, il faudra qu'on se le dise nous
 deux, un soir, sans témoins.
+
+## 129.4.4 — il a nommé les mensonges avant de fermer la porte
+
+Il est venu de lui-même aux quinze minutes et a refusé trois refuges : appeler
+Baela la monnaie de Luke, cacher son oui derrière son office, acheter ma parole
+sur la mer avec notre petite-fille. Il ne reprend pas son oui. Il nomme la
+vérité plus dure : la peur ôtée à Luke a été posée sur Baela, et notre
+soulagement ne diminue pas ce qu'elle paie.
+
+Je lui ai répondu de venir, porte fermée. Baela n'est le prix ni de Luke, ni de
+sa mer, ni de mon pardon. La parole publique viendra parce que je la juge
+juste ; l'entretien, lui, reste celui de deux grands-parents qui doivent une
+dette à leur petite-fille.

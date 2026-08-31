@@ -81,6 +81,12 @@ const EPREUVES = [
     pourquoi: "La route /piece de bout en bout. Ouvre un port EPHEMERE (listen 0) "
       + "et non le 3129 : lancer la verification ne derange pas une partie en cours.",
   },
+  {
+    id: "chainage-actions", rang: "garde", secondes: 0.2,
+    commande: [PY, "scripts/verifier_chainage_actions.py"],
+    pourquoi: "Les actes qui citent une action pointent vers sa vraie affaire ; "
+      + "toute action fermee depuis l'activation possede un fait lie.",
+  },
   // --- LES MESURES ----------------------------------------------------------
   {
     id: "coherence-etat", rang: "mesure", secondes: 9.4,

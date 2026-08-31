@@ -17,6 +17,7 @@ import json
 import os
 import sys
 
+import chainage_actions
 from temps.bouche import croyances_de, se_recoupent
 
 
@@ -30,7 +31,7 @@ from temps.bouche import croyances_de, se_recoupent
 # dit SOUS QUELLE CHARGE. Ser Robert en tient trois, Aldon Hask trois aussi —
 # savoir qu'un cahier tombe sur lui ne dit pas encore de quel chapeau il le
 # porte, ni quel sceau on regarde si l'affaire tourne mal.
-CLES_BOOK = {"id", "lieu_id", "salle_id", "acteur_id", "boite", "prive",
+CLES_BOOK = {"id", "maison_id", "lieu_id", "salle_id", "acteur_id", "boite", "prive",
              "lecteurs", "titre", "sous_titre", "type", "couleur", "embleme",
              "date_maj", "colonnes", "lignes", "pages", "tables", "tenu_par",
              "office"}
@@ -45,6 +46,15 @@ CLES_BOITE = {"id", "lieu_id", "salle_id", "acteur_id", "prive", "lecteurs",
 # qu'on croyait avoir demandée.
 TYPES_BOOK = {"registre", "carnet", "plan", "memento", "dossier", "regle",
               "oeuvre"}
+
+
+def verifier_chainage_actions(e, r):
+    """Les liens action-acte présents doivent pointer vers leur vraie affaire."""
+    racine = os.path.dirname(os.path.dirname(os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__)))))
+    etat = os.path.join(racine, "etat")
+    for erreur in chainage_actions.auditer(etat):
+        r.dire("grave", "chainage actions-actes", erreur)
 
 
 def verifier_pensees(e, r):

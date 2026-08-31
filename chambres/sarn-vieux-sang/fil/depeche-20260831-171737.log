@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime_worker.py", line 46, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime_worker.py", line 23, in main
+    rep = runtime.appeler(**charge["appel"])
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 639, in appeler
+    resultat = _appel_codex(
+        manuel, message, session_id, modele, effort, timeout, cwd,
+        add_dirs, reprendre, environnement, on_event, on_stderr,
+        heartbeat, on_heartbeat, service_tier=service_tier)
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 447, in _appel_codex
+    _poser_session_codex(logique, vrai, modele, transcript,
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         manuel_sha256=manuel_sha256)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 183, in _poser_session_codex
+    _ecrire_json(SESSIONS, d)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 53, in _ecrire_json
+    os.replace(temporaire, chemin)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\reyno\\le-conseil2\\.agents-runtime\\sessions.json.ce351e8ded9b4da0b0d41110202d7cf5.tmp' -> 'C:\\Users\\reyno\\le-conseil2\\.agents-runtime\\sessions.json'

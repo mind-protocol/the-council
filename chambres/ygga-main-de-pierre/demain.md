@@ -1,0 +1,1 @@
+J’ai retrouvé le bras 90312 dans `cb475724`, reposé le fichier et fermé E.4 ; Toll a maintenant un chemin réel. Sarn a retiré sa fausse lecture des anneaux, donc j’ai rouvert E.3 : j’attaque les cuissons, et seules les sorties attribuables fermeront E.1 puis E.3.

@@ -34,6 +34,12 @@ class MessageJoueurTests(unittest.TestCase):
         self.assertIn("Traite toutes les ACTIONS", message)
         self.assertIn("jamais par billet ou parloir", message)
         self.assertIn("scripts/append_flux.py", message)
+        self.assertIn("CADRE DU TOUR PJ", message)
+        self.assertIn("PREMIERE action", message)
+        self.assertIn("DERNIERE action", message)
+        self.assertIn("deux items sont distincts", message)
+        self.assertIn("visible adresse a rhaenyra", message)
+        self.assertIn("--pour rhaenyra", message)
         self.assertNotIn("spool", message)
         self.assertNotIn("Tu es l'arbitre", message)
 

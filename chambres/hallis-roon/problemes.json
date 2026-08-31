@@ -1,5 +1,20 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+ "entrees": [
+  {
+   "date": "129.4.4",
+   "tentative": "Répondre à Steffon Darklyn que le registre de garde, et non celui des granges de Sombreval, doit être ouvert aux archives.",
+   "effet": "Le billet a été inscrit dans le canal, puis le réveil de Darklyn a échoué sur un chemin de curseur invalide visant relations/aldon-hask/.lu.",
+   "attendu": "Inscrire le billet puis réveiller Steffon Darklyn sans toucher un canal tiers.",
+   "etat": "levée pour ce billet : l'inscription est vérifiée dans discussion.json ; ne pas le renvoyer. Cause de l'échec non levée."
+  },
+  {
+   "date": "129.4.4",
+   "tentative": "Porter à Robert Quince mon accusé de préparation des deux feuilles.",
+   "effet": "Le billet a été inscrit dans le canal, puis le réveil a échoué sur un chemin de curseur invalide visant relations/corlys/.lu.",
+   "attendu": "Inscrire le billet puis réveiller Robert Quince sans toucher un canal tiers.",
+   "etat": "levée pour ce billet : l'inscription est vérifiée dans discussion.json ; ne pas le renvoyer. Cause de l'échec non levée."
+  }
+ ]
 }

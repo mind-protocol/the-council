@@ -21,9 +21,10 @@
 # Les autres tables (personnages, relations, maisons, monde, intentions) restent
 # editables a la main : on y modifie une fiche existante, les collisions y sont
 # rares, visibles, et reparables en une ligne.
-import io, json, os, sys, tempfile
+import io, json, os, sys
 
 import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
+import chainage_actions  # le contrat optionnel action -> fait accompli
 
 # entree.py vit dans scripts/etat/ : trois dirname pour remonter a la racine du depot.
 racine = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -74,11 +75,6 @@ def chemin(table, joueur=None):
         "Precisez a qui vous ecrivez : --joueur <personnage_id>." % table)
 
 
-def ecrire_atomique(p, donnees):
-    """Une seule implementation, dans `scripts/tables.py`."""
-    return tables.ecrire(p, donnees)
-
-
 def ajouter(table, enregistrements, joueur=None):
     if table not in TABLES:
         raise SystemExit(
@@ -99,6 +95,13 @@ def ajouter(table, enregistrements, joueur=None):
     connus = set(x.get("id") for x in liste if isinstance(x, dict))
     poses = []
     for e in enregistrements:
+        if table == "actes":
+            e = chainage_actions.completer_depuis_contexte(
+                e, os.path.join(racine, "etat"))
+            try:
+                chainage_actions.valider_reference(e)
+            except ValueError as erreur:
+                raise SystemExit("acte invalide : %s" % erreur)
         eid = e.get("id") if isinstance(e, dict) else None
         if eid and eid in connus:
             print("deja present, ignore : %s" % eid)
@@ -108,7 +111,7 @@ def ajouter(table, enregistrements, joueur=None):
         poses.append(eid or "(sans id)")
     if not poses:
         return []
-    ecrire_atomique(p, donnees)
+    tables.ecrire(p, donnees)
     # --- et elle finit la -------------------------------------------------
     return poses
 

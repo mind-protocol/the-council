@@ -13,6 +13,7 @@ de resolution — au-dela de 10% de pendantes, on repare l'adressage d'abord.
 CE QUE CE PAQUET POSSEDE, decoupe sous le plafond de 500 lignes :
     lecture.py : le vocabulaire canonique, la lecture de l'etat, indexer()
     tissage.py : tisser() et l'entree CLI main()
+    chambre_mj.py : les affaires locales du MJ, namespacées dans le tissu
 
 La commande gelee `scripts/tisser.py` est une FACADE qui appelle main()
 par la porte plan/expose.py.
@@ -21,4 +22,6 @@ from plan.tisser.lecture import (  # noqa: F401
     RACINE, ETAT, SORTIE, CANON, INVERSES, PIECE, MOYEN, OFFICE, HYPO,
     A_DESIGNER, charger, grilles, registres_de, sphere_de, resoudre_code,
     nommer, plat_nom, col, nu, indexer)
+from plan.tisser.chambre_mj import (  # noqa: F401
+    charger_affaires_mj, noeuds_affaires_mj, aretes_affaires_mj)
 from plan.tisser.tissage import tisser, main  # noqa: F401

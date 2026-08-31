@@ -18,6 +18,9 @@ from agents import portage, selecteur_contexte as selecteur
 class SelecteurContexteTests(unittest.TestCase):
     CORPUS = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                           "donnees", "selecteur_reine_10.json")
+
+    def test_aucun_verrou_ne_serialise_les_messages_du_siege(self):
+        self.assertFalse(hasattr(selecteur, "verrou_du_siege"))
     def test_message_joint_exactement_cinq_items_visibles(self):
         with tempfile.TemporaryDirectory() as dossier:
             flux = os.path.join(dossier, "flux.jsonl")
@@ -101,6 +104,28 @@ class SelecteurContexteTests(unittest.TestCase):
         router.assert_called_once()
         self.assertIn("contexte_fourni", document)
         self.assertEqual("table", document["contexte_fourni"]["presence"]["salle"])
+
+    def test_jump_court_circuite_le_selecteur_llm(self):
+        preparation = {"version": "jump/1", "event": {"id": "prochain"},
+                       "contexte_id": "84502"}
+        with tempfile.TemporaryDirectory() as dossier, \
+                mock.patch.object(selecteur, "SORTIES", dossier), \
+                mock.patch.object(selecteur, "action_par_ref", return_value=(
+                    os.path.join(dossier, "action.json"),
+                    {"ref": "r-jump", "mode": "jump", "texte": ""})), \
+                mock.patch.object(selecteur, "index_des_joueurs",
+                                  return_value=[{"id": "rhaenyra"}]), \
+                mock.patch("agents.jump.preparer",
+                           return_value=preparation) as preparer, \
+                mock.patch("agents.routeur_message.router_message",
+                           return_value={"jump": True}) as router, \
+                mock.patch.object(selecteur.runtime, "appeler") as llm:
+            document = selecteur.selectionner("rhaenyra", "r-jump")
+        llm.assert_not_called()
+        preparer.assert_called_once_with("", joueurs=["rhaenyra"])
+        router.assert_called_once()
+        self.assertEqual("jump", document["selection"]["decision"])
+        self.assertEqual(["mj#84502"], document["selection"]["pointeurs"])
 
     def test_les_ids_inventes_sont_rejetes(self):
         with self.assertRaisesRegex(ValueError, "inconnus"):

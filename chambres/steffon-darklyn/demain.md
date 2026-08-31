@@ -1,0 +1,3 @@
+Je raye « trois cents » de la colonne disponible.
+
+J’écris : **aucun départ**. Le compte ne rouvrira qu’avec six lignes complètes : hommes, chevaux, eau, vivres, coques, débarquement.

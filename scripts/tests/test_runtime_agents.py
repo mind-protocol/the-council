@@ -24,14 +24,13 @@ class RuntimeAgentsTest(unittest.TestCase):
                 mock.patch.object(runtime, "_appel_codex",
                                   return_value=resultat), \
                 mock.patch.object(runtime, "_activite",
-                                  return_value=contextlib.nullcontext()), \
-                mock.patch.object(runtime, "_verrou") as verrou:
+                                  return_value=contextlib.nullcontext()):
             rep = runtime.appeler(
                 role="mj", manuel="manuel", message="mot",
                 session_id="session-partagee", cwd=dossier)
 
         self.assertEqual(resultat, rep)
-        verrou.assert_not_called()
+        self.assertFalse(hasattr(runtime, "_verrou"))
 
     def test_voyant_actif_exactement_pendant_le_calcul(self):
         with tempfile.TemporaryDirectory() as d, \
@@ -55,9 +54,12 @@ class RuntimeAgentsTest(unittest.TestCase):
                     "LE_CONSEIL_FOURNISSEUR": "",
                     "LE_CONSEIL_AGENT_PROVIDER": "",
                 }, clear=False):
-            cfg = runtime.choisir("chatgpt", "gpt-5.3-codex-spark", "low")
+            cfg = runtime.choisir("chatgpt", "gpt-5.3-codex-spark", "low",
+                                  fast=True)
             self.assertEqual("codex", cfg["fournisseur"])
             self.assertEqual("gpt-5.3-codex-spark", cfg["modele_codex"])
+            self.assertEqual("low", cfg["effort_codex"])
+            self.assertEqual("fast", cfg["service_tier_codex"])
             self.assertEqual("codex", runtime.fournisseur())
 
     def test_commande_codex_neuve_et_reprise(self):
@@ -69,6 +71,10 @@ class RuntimeAgentsTest(unittest.TestCase):
         self.assertIn("--dangerously-bypass-approvals-and-sandbox", neuve)
         self.assertNotIn("--approve-for-me", neuve)
         self.assertIn("project_doc_max_bytes=524288", neuve)
+        rapide = runtime._commande_codex(
+            "C:\\neutre", "gpt-5.3-codex-spark", "low", [],
+            "C:\\fin.txt", service_tier="fast")
+        self.assertIn('service_tier="fast"', rapide)
         self.assertNotIn("--sandbox", neuve)
         self.assertNotIn("read-only", neuve)
         self.assertNotIn("resume", neuve)

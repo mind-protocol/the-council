@@ -8,8 +8,8 @@ Usage :
     python scripts/ajouter.py paroles '<json>' '<json>' ...
 
 CE FICHIER EST UNE FACADE (docs/organisation.md §2) : la matiere — le
-POURQUOI de la fenetre etroite, les tables d'empilement, l'ecriture
-atomique — vit dans etat/entree.py. Le chemin et la CLI de cette commande
+POURQUOI de la fenetre etroite et les tables d'empilement — vit dans
+etat/entree.py. Le chemin et la CLI de cette commande
 sont geles ; les reexports ci-dessous gardent les anciens noms `ajouter.*`
 vivants pour les importeurs historiques.
 """
@@ -27,7 +27,6 @@ from etat.expose import entree as _entree  # noqa: E402 — LA PORTE de etat/
 
 TABLES = _entree.TABLES
 chemin = _entree.chemin
-ecrire_atomique = _entree.ecrire_atomique
 ajouter = _entree.ajouter
 main = _entree.main
 

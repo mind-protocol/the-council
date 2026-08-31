@@ -51,6 +51,8 @@ from plan.mesures import main as mesures_main  # noqa: E402,F401 — l'entree CL
 # Descendue au lot 2 : le paquet plan/tisser/, plus la commande racine.
 import plan.tisser as tisser  # noqa: E402,F401
 from plan.tisser import main as tisser_main  # noqa: E402,F401 — l'entree CLI de la facade
+import plan.graphe_causal as graphe_causal  # noqa: E402,F401
+from plan.graphe_causal import main as graphe_causal_main  # noqa: E402,F401
 # Descendue au lot 2 : scripts/fils.py -> plan/affaires.py (l'homonymie
 # fils.py / ecrans/modules/fils.js est levee, la facade fils.py reste).
 import plan.affaires as affaires  # noqa: E402,F401
@@ -62,6 +64,9 @@ from plan.verser_cahier import main as verser_cahier_main  # noqa: E402,F401 —
 # La matiere n'exporte plus au chargement ; seule sa main() ecrit exports/.
 import plan.exporter_plan as exporter_plan  # noqa: E402,F401
 from plan.exporter_plan import main as exporter_plan_main  # noqa: E402,F401 — l'entree CLI de la facade
+# Export exhaustif, maison par maison, des books noir et vert en texte brut.
+import plan.exporter_books_maisons as exporter_books_maisons  # noqa: E402,F401
+from plan.exporter_books_maisons import main as exporter_books_maisons_main  # noqa: E402,F401
 # Descendue au lot 2 : scripts/passer.py -> plan/passer.py.
 import plan.passer as passer  # noqa: E402,F401
 from plan.passer import main as passer_main  # noqa: E402,F401 — l'entree CLI de la facade

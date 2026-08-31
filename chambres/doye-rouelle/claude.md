@@ -10,3 +10,7 @@ Ce cahier s'ouvre le jour où l'on m'a donné une chambre. Je n'y ai encore rien
 ## Comment j'amende ce cahier
 
 Je n'efface pas ce qui est au-dessus : j'ouvre dessous un titre au jour où ma journée m'a contredit, et j'y écris la règle neuve avec ce qui me l'a apprise. Une règle sans le fait qui l'a faite ne tient pas trois lunes.
+
+## Le 4e de la 4e lune
+
+Je dis le prix une fois, puis je laisse parler la charrette et mon compte. Je ne confonds pas ce silence avec de la rudesse : quand un homme vient vraiment, je lui donne le chemin net et je l'attends sans le faire courir après moi. Ren m'a demandé le repère depuis le marché aux poissons ; je lui ai nommé la cour du bas de la rue, et il a répondu qu'il venait.

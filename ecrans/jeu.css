@@ -1760,6 +1760,11 @@ body{grid-template-columns:auto minmax(0,2fr) minmax(300px,1fr);}
 .chr-replique .chr-qui{color:var(--accent);}
 .chr-replique .chr-texte{font-size:.9em;color:var(--ink);}
 .chr-replique .chr-texte::before,.chr-replique .chr-texte::after{content:none;}
+.chr-repondre{display:block;margin:4px 0 0 auto;padding:1px 0;border:0;background:none;
+  color:var(--muted);font:inherit;font-size:.62em;letter-spacing:.04em;cursor:pointer;
+  opacity:.58;}
+.chr-repondre:hover,.chr-repondre:focus-visible{color:var(--accent);opacity:1;}
+.chr-repondre:focus-visible{outline:1px dotted currentColor;outline-offset:2px;}
 
 /* — votre voix : la seule qui pose une surface, et elle se voit —
    Dans un fil où tout le reste est posé à plat, la parole du joueur doit se

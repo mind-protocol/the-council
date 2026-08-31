@@ -1,0 +1,6 @@
+{
+  "name": "le-conseil-monde",
+  "private": true,
+  "type": "module",
+  "//": "Les vingt-quatre fichiers de ce dossier sont de VRAIS modules ES, chargés par le navigateur en <script type=module> et par Node en import() dynamique (journee.js, appele par le four et par les bancs). La racine du depot declare type=commonjs pour tout le reste ; sans cette declaration-ci, Node essaierait de lire journee.js en CommonJS et echouerait. C'est le mecanisme Node prevu pour cela : la portee la plus proche gagne."
+}

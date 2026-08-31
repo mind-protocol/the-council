@@ -1,0 +1,368 @@
+====================================================================================================
+DOCUMENT DE MAISON — maison-targaryen-vert
+SOURCE — etat/maisons/maison-targaryen-vert/documents/books/nera-assurer.json
+====================================================================================================
+
+id: nera-assurer
+boite: boite-les-quatre
+type: plan
+embleme: 🎚️
+titre: ASSURER
+couleur: var(--book-carnet)
+sous_titre: 🎚️ Veiller sur les clefs : sont-elles encore sûres, sont-elles encore disponibles ? Volume ouvert au chantier de la vase le 26e jour de la 3e lune, an 61029, de la main de MARLO VASSE. Plage 63000 à 63099.
+pages:
+  [1] **LES CLEFS QUI SONT DES IDÉES** : une clef retenue peut cesser d'être bonne sans qu'on s'en aperçoive. On note ici ce qui la ferait tomber, et à quoi on le verrait.
+      
+      **LES CLEFS QUI SONT DES GENS** : ceux par qui tout passe. SÛRETÉ — que tombe-t-il s'il parle demain matin ? DISPONIBILITÉ — est-il encore là, encore capable, encore d'accord ? Un homme qu'on paie depuis quatorze lunes n'est pas acquis : il est loué.
+      
+      **LA RÈGLE : on peut centraliser la décision. On ne doit jamais centraliser le savoir.**
+  [2] OÙ ÇA EN EST, LE 26e. Deux caches faites, un coffre pauvre en place, une caisse de paie chez le second qui ignore tout du reste. SOUS SURVEILLANCE : Waltyr (63010), Sirel (63011), et Sabbe qui rapporte tout sans arranger. **LA CLEF 63023 EST LA SEULE NON TRANCHÉE DE TOUT LE PLAN, et elle bloque le relevé des portes.**
+  [3] 🧨 **LA VEILLE DES PARIS.** Tout ce plan repose sur cinq choses que je tiens pour vraies sans les avoir vérifiées. Un plan qui ne sait pas qu'il a cessé d'être viable continue de se dérouler jusqu'à la falaise. Chaque pari porte donc **qui le regarde, à partir de quand on le déclare rompu, et ce qu'on fait le jour où il l'est** — écrit maintenant, pendant que ça ne coûte rien, et non le soir où ça arrivera.
+tables:
+  [1]
+    titre: 🏰 Ouverture de l'Affaire — chantier de la vase, 26e jour de la 3e lune
+    colonnes:
+      [1] 🧱 Le champ
+      [2] ✍️ Ce qu'on y écrit
+      [3] 📖 La règle du champ
+      [4] ✅ Rempli ?
+    lignes:
+      [1]
+        cellules:
+          [1] 🏷️ **LE NOM**
+          [2] ASSURER
+          [3] Le verbe dont ce cahier répond, **jamais la solution**.
+          [4] **oui**
+      [2]
+        cellules:
+          [1] 🎯 **L'OBJET**
+          [2] 
+          [3] 
+          [4] 
+      [3]
+        cellules:
+          [1] 🧱 **LE PÉRIMÈTRE — DANS**
+          [2] 
+          [3] 
+          [4] 
+      [4]
+        cellules:
+          [1] 🚫 **LE PÉRIMÈTRE — HORS**
+          [2] 
+          [3] 
+          [4] 
+      [5]
+        cellules:
+          [1] 📌 **L'ÉTAT ACTUEL**
+          [2] 
+          [3] 
+          [4] 
+      [6]
+        cellules:
+          [1] 🔢 **LA PLAGE**
+          [2] 63000 à 63099
+          [3] Un chiffre est une adresse, non un rang : il ne se renumérote jamais.
+          [4] **oui**
+      [7]
+        cellules:
+          [1] 💡 **LA CONCLUSION**
+          [2] 
+          [3] 
+          [4] 
+      [8]
+        cellules:
+          [1] 🔚 **FERMÉE QUAND**
+          [2] 
+          [3] 
+          [4] 
+  [2]
+    titre: 🔗 Affaires liées — les liens écrits, puis les calculés
+    colonnes:
+      [1] 🪢 Le lien
+      [2] 🔗 L'affaire
+      [3] 🔢 Notre pièce
+      [4] 🔢 La leur
+      [5] 📝 Pourquoi
+    lignes:
+      [1]
+        cellules:
+          [1] attendue par
+          [2] INSPECTER
+          [3] 🗝️ 63023
+          [4] ⚔️ 61032
+          [5] 
+      [2]
+        cellules:
+          [1] partage
+          [2] INSPECTER
+          [3] O20 (Néra) 🧭 Le Peigne
+          [4] 
+          [5] 
+  [3]
+    titre: ⛓️ Ce qui pend, et sur qui — calculé, ne pas écrire à la main
+    colonnes:
+      [1] 🧭 Sens
+      [2] 🔢 Notre pièce
+      [3] 🔢 La leur
+      [4] 🔗 L'affaire
+    lignes:
+      [1]
+        cellules:
+          [1] ➡ on nous attend
+          [2] 🗝️ 63023
+          [3] ⚔️ 61032
+          [4] INSPECTER
+  [4]
+    titre: 🔨🪶 Ce qu'on engage, et qui d'autre le veut — calculé, ne pas écrire à la main
+    colonnes:
+      [1] 🔢 La pièce
+      [2] ⚔️ Nos actions
+      [3] 🔗 Aussi engagée par
+    lignes:
+      [1]
+        cellules:
+          [1] O20 (Néra) 🧭 Le Peigne
+          [2] ⚔️ 63030 · ⚔️ 63031
+          [3] INSPECTER
+  [5]
+    titre: 🕳️ Les trous — calculé, ne pas écrire à la main
+    colonnes:
+      [1] 🕳️ Le défaut
+      [2] 🔢 Les pièces
+    lignes:
+      [1]
+        cellules:
+          [1] 🗝️ clef retenue qu'aucune action ne réalise — une décision sans geste
+          [2] 🗝️ 63020
+      [2]
+        cellules:
+          [1] 🪢 référence qui ne tient qu'au registre — la pièce désignée n'est dans aucun cahier
+          [2] 🎯 63000
+      [3]
+        cellules:
+          [1] ↗️ raccourci — le renvoi saute un rang de la chaîne du guide
+          [2] 🗝️ 63020 · 🗝️ 63021
+  [6]
+    titre: 🎯 États cibles
+    colonnes:
+      [1] 🎯 N°
+      [2] 🏷️ L'état
+      [3] ✅ Ce qui doit être vrai
+      [4] 📍 Où
+      [5] 👁️ La preuve
+      [6] ⬆️ Sert
+    lignes:
+      [1]
+        cellules:
+          [1] 63000
+          [2] 🕳️ Rien de ce qui pend n'est trouvable
+          [3] L'or, les livres et les noms ne sont pas au même endroit — et aucun n'est là où je dors
+          [4] —
+          [5] Une fouille de la cabane ne rend que quatre cerfs
+          [6] 60008
+  [7]
+    titre: 🔒 Verrous
+    colonnes:
+      [1] 🔒 N°
+      [2] 🏷️ Le verrou
+      [3] ⛔ Bloque
+      [4] 📌 Ce qui est vrai aujourd'hui
+      [5] 👁️ La preuve
+      [6] 🔓 Levé quand
+    lignes:
+      [1]
+        cellules:
+          [1] 63010
+          [2] 🎭 Waltyr tient deux bouts
+          [3] 63000 · 61001
+          [4] Il a porté la bourse du 21e et ne m'en a jamais rien dit ; il voit la Mérette six jours sur six et se tait
+          [5] Son silence, relevé le 25e
+          [6] Quand je saurai pour qui il l'a portée — ou quand je cesserai d'en dépendre
+      [2]
+        cellules:
+          [1] 63011
+          [2] 📣 Sirel porte mon nom dans la ville
+          [3] 61002
+          [4] Elle a mon devis et va demander partout qui achète du bois ; elle l'a dit en partant
+          [5] Sa dernière phrase, le 26e
+          [6] Quand elle aura placé le lot — ou quand elle trouvera le nom avant moi
+      [3]
+        cellules:
+          [1] 63012
+          [2] 🧱 Hann ne comptera pas les portes sans savoir pourquoi
+          [3] 61001
+          [4] Condition posée le 26e au matin : ou bien quelqu'un ici sait pourquoi, ou bien un seul homme y touche. Le milieu, non
+          [5] Sa phrase, devant moi, assis
+          [6] Quand j'aurai tranché la clef 63023 — et non quand je l'aurai contournée
+  [8]
+    titre: 🗝️ Clefs
+    colonnes:
+      [1] 🗝️ N°
+      [2] 🏷️ La clef
+      [3] 🔓 Ouvre
+      [4] 💡 Le principe
+      [5] 💰 Ce qu'elle coûte et ce qu'elle ferme
+      [6] 👁️ La preuve attendue
+      [7] ⚖️ Décision
+    lignes:
+      [1]
+        cellules:
+          [1] 63020
+          [2] 🪤 Le coffre pauvre
+          [3] 63000
+          [4] Un coffre vide fait chercher plus loin ; un coffre pauvre fait refermer et s'en aller
+          [5] Quatre cerfs perdus si l'on vient
+          [6] On repart déçu
+          [7] **retenue le 26e**
+      [2]
+        cellules:
+          [1] 63021
+          [2] 🗝️ Deux caches, jamais une
+          [3] 63000
+          [4] Ce qui doit rester atteignable par mon second et ce qui doit lui rester inconnu ne peuvent pas être au même endroit
+          [5] Aller à deux endroits au lieu d'un, toutes les nuits
+          [6] Une fouille ne rend rien
+          [7] **retenue le 26e**
+      [3]
+        cellules:
+          [1] 63022
+          [2] 📄 Payé à la feuille, jamais à l'année
+          [3] 63010
+          [4] De l'or qu'on n'a pas gagné se reprend trop facilement — et tient celui qui l'a pris
+          [5] Il faut livrer pour toucher, et j'ai déjà manqué une marée
+          [6] La première feuille encaissée
+          [7] **retenue le 26e**
+      [4]
+        cellules:
+          [1] 63023
+          [2] 🫂 Dire à Hann, ou ne rien lui faire toucher
+          [3] 63012
+          [4] Un homme qu'on fait travailler sur une chose sans lui dire ce qu'elle est se l'explique lui-même — toujours en pire, et toujours à quelqu'un d'autre
+          [5] S'il sait, il peut pendre à cinquante-six ans pour ce qu'il n'a pas demandé. S'il ignore, je porte les portes seul et n'ai gagné aucune heure
+          [6] —
+          [7] ⚠️ **NON TRANCHÉE**
+      [5]
+        cellules:
+          [1] 63024
+          [2] 🎭 Lui faire vendre sans mon nom
+          [3] 63011
+          [4] Elle place le lot pour « un chantier de la vase » : le bois se vend, le nom ne circule pas
+          [5] Elle vendra moins cher sans nom — et elle saura que je ne voulais pas du mien, ce qui est une information en soi
+          [6] Le lot placé, et personne au Crochet ne sait qui l'a scié
+          [7] 
+      [6]
+        cellules:
+          [1] 63025
+          [2] 🌑 Arriver au bout du quai avant elle
+          [3] 63011
+          [4] Le seul moyen qu'elle ne trouve pas le nom avant moi est que je l'aie déjà
+          [5] Une nuit, 1 346 pas, et le risque d'être vu deux fois au même endroit — la sentinelle m'a déjà regardé onze secondes
+          [6] Le nom, tenu de deux bouches, avant qu'elle revienne
+          [7] 
+      [7]
+        cellules:
+          [1] 63026
+          [2] 👂 Ne rien faire, et écouter ce qu'elle rapporte
+          [3] 63011
+          [4] Son tour de ville est un relevé que je ne paie pas : elle va demander à toute la ville ce que je voudrais savoir
+          [5] Elle apprend d'abord, et je l'apprends d'elle — donc je saurai ce qu'elle veut bien me dire
+          [6] Ce qu'elle rapporte au troisième jour, comparé à ce que Nel me dira
+          [7] 
+  [9]
+    titre: ⚔️ Actions
+    colonnes:
+      [1] ⚔️ N°
+      [2] 🏷️ L'action
+      [3] 🗝️ Réalise
+      [4] 📝 Ce qu'on fait
+      [5] 📍 Où
+      [6] 🪶 Office
+      [7] 🧰 Moyens
+      [8] 🔧 Avec quoi
+      [9] ⛓️ Dépend de
+      [10] 📅 Jour dû
+      [11] ⏳ Où ça en est
+      [12] 📅 Jour fait
+      [13] 📝 Note
+    lignes:
+      [1]
+        cellules:
+          [1] 63030
+          [2] 🌑 Porter le paquet à la Grange
+          [3] 63021
+          [4] Seul, après la nuit tombée
+          [5] La Grange
+          [6] O20
+          [7] —
+          [8] 
+          [9] —
+          [10] —
+          [11] faite
+          [12] 26e
+          [13] le 26e à la nuit — neuf volumes sur la poutre haute
+      [2]
+        cellules:
+          [1] 63031
+          [2] 🧮 Compter la bourse de la reine
+          [3] 63022
+          [4] Compter n'est pas dépenser : une bourse qu'on ne sait pas chiffrer ne peut être ni rendue, ni défendue, ni surveillée
+          [5] La Grange
+          [6] O20
+          [7] —
+          [8] 
+          [9] 63030
+          [10] —
+          [11] faite
+          [12] 26e
+          [13] le 26e — quinze dragons et quatre-vingts cerfs, et l'or est VIEUX
+  [10]
+    titre: 🧨 Ce qui ferait renoncer — les paris muets
+    colonnes:
+      [1] 🧨 N°
+      [2] 🏷️ Ce que je tiens pour acquis
+      [3] 📉 Ce qui le casserait
+      [4] 👁️ Qui le verrait
+      [5] 📏 Le seuil
+      [6] 🚪 Ce qu'on fait alors
+    lignes:
+      [1]
+        cellules:
+          [1] 63040
+          [2] 💰 La reine paie ce qu'elle promet
+          [3] Deux feuilles livrées et rien en retour, ou un paiement qui n'est pas ce qui était dit
+          [4] moi, à la remise
+          [5] **deux passages de la Mérette**
+          [6] On cesse d'écrire, on garde l'or, et l'on n'a rien juré — c'est exactement pourquoi je n'ai rien juré
+      [2]
+        cellules:
+          [1] 63041
+          [2] 🕳️ Personne ne sait que l'or est là
+          [3] Une fouille de la cabane, ou Waltyr qui change de ton, ou une question sur la Grange
+          [4] Hann pour la cabane, moi pour Waltyr
+          [5] **une seule fois**
+          [6] Tout quitte la Grange le soir même, et je ne dis pas où ça va — pas même à Hann
+      [3]
+        cellules:
+          [1] 63042
+          [2] 🤐 Hann ne parlera pas
+          [3] Une seconde condition, une demande d'argent, ou le jour où il cesse de me dire ce qui l'inquiète à la troisième phrase
+          [4] moi, et personne d'autre
+          [5] **une fois**
+          [6] Il n'y a plus de second. Je reprends la caisse, je porte tout, et je ne le lui dis pas
+      [4]
+        cellules:
+          [1] 63043
+          [2] 👻 Le chantier du bout ne s'intéresse pas à moi
+          [3] Quelqu'un demande qui a scié le lot ; ou Sirel revient avec une question au lieu d'un prix
+          [4] Sirel, Nel, Mag
+          [5] **une question nommée**
+          [6] Le lot part au moins-disant le jour même, et le mât avec, à perte s'il le faut
+      [5]
+        cellules:
+          [1] 63044
+          [2] 🌕 Les coques partent bien à la pleine lune
+          [3] Manse donne une autre date ; ou les bâches tombent avant le 31e ; ou l'on cesse de travailler de nuit là-bas
+          [4] Nel, par Manse
+          [5] **une contradiction**
+          [6] Ce que je sais ne vaut plus rien à terme : je le vends dans les deux jours, au premier qui paie
+maison_id: maison-targaryen-vert

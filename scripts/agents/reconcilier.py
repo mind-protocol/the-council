@@ -16,6 +16,10 @@ jamais QUI l'a bougee ni QUAND exactement, seulement entre deux passages.
 C'est la meme epistemologie que les jetons de la table de guerre, et elle
 vaut mieux qu'un `par` invente.
 
+Elle est appelée automatiquement après chaque CALL/CAST et après les écritures
+de la bibliothèque serveur. La commande reste la garde manuelle et l'outil de
+diagnostic ; elle ne doit plus être nécessaire au fonctionnement ordinaire.
+
 Elle sert aussi de FILET aux bibliotheques de maison : un homme depeche qui
 ecrit directement dans un document par Write contourne la porte, et seule une
 comparaison au disque le rattrape.
@@ -44,17 +48,18 @@ import documents_maison  # noqa: E402 — les bibliotheques possedees
 RACINE = os.path.dirname(_d)
 ETAT = os.path.join(RACINE, "etat")
 CHAMBRES = os.path.join(RACINE, "chambres")
-EMPREINTES = os.path.join("histoire", "empreintes.json")
+EMPREINTES = histoire.EMPREINTES
 # LE DERNIER ETAT CONNU SANS PERTE. Voir `poser()` : c'est la seule source de
 # `rendre_cellules.py`, et elle ne se laisse remplacer que par une passe qui
 # n'a RIEN vu disparaitre.
-SECOURS = os.path.join("histoire", "empreintes-sans-perte.json")
+SECOURS = histoire.SECOURS
 JOURNAL_CHAMBRES = os.path.join("histoire", "chambres.jsonl")
 
 
 def _lire(chemin):
     try:
-        return json.load(io.open(chemin, encoding="utf-8"))
+        with io.open(chemin, encoding="utf-8") as f:
+            return json.load(f)
     except Exception:
         return None
 
@@ -70,13 +75,26 @@ def maisons():
     out = {}
     par_maison = {}
     for ident, f in documents_maison.sources_livres(ETAT).items():
-        if not ident.startswith("affaire-"):
+        if not (ident.startswith("affaire-")
+                or ident in ("plan-moyens", "plan-offices")):
             continue
         v = _lire(f)
         if v and v.get("id"):
             mid = v.get("maison_id") or documents_maison.SANS_MAISON
             par_maison.setdefault("maison:%s" % mid, {})[v["id"]] = v
     out.update(par_maison)
+    # Les mains sont des documents d'état au même titre que les registres :
+    # leurs mesures, seuils et mandats doivent laisser une transition. On les
+    # enveloppe seulement dans l'empreinte ; le fichier canonique reste intact.
+    for mid in documents_maison.ids_maisons(ETAT, inclure_sans_maison=True):
+        f = os.path.join(documents_maison.dossier(ETAT, mid),
+                         documents_maison.MAINS)
+        v = _lire(f)
+        if isinstance(v, dict):
+            copie = dict(v)
+            copie["id"] = "@mains"
+            copie["_type_document"] = "mains"
+            out.setdefault("maison:%s" % mid, {})["@mains"] = copie
     for f in glob.glob(os.path.join(CHAMBRES, "*", "books", "*.json")):
         qui = f.replace("\\", "/").split("/")[-3]
         v = _lire(f)
@@ -168,7 +186,8 @@ def pertes_de(anciens, volumes):
     return n
 
 
-def passer(vraiment=False, amorcer=False):
+def _passer(vraiment=False, amorcer=False, par=None,
+            outil="reconcilier"):
     u"""Rend (comptes, total, vierge, courant, pertes)."""
     courant = maisons()
     avant = empreinte_posee()
@@ -183,14 +202,14 @@ def passer(vraiment=False, amorcer=False):
         if vierge:
             comptes[maison] = 0
             continue
-        fichier = (histoire.FICHIER if maison == "etat"
-                   else JOURNAL_CHAMBRES)
+        fichier = (JOURNAL_CHAMBRES if maison.startswith("chambre:")
+                   else histoire.FICHIER)
         n = 0
         if vraiment and not amorcer:
             n = histoire.journaliser(anciens, volumes, ETAT,
                                      certitude="constate",
-                                     outil="reconcilier",
-                                     fichier=fichier, maison=maison)
+                                     outil=outil, fichier=fichier,
+                                     maison=maison, par=par)
         else:
             for ident in set(list(anciens) + list(volumes)):
                 a, b = anciens.get(ident), volumes.get(ident)
@@ -209,12 +228,19 @@ def passer(vraiment=False, amorcer=False):
     for maison in sorted(set(avant) - set(courant)):
         comptes[maison] = comptes.get(maison, 0)
 
-    if vraiment:
+    if vraiment and (vierge or total or pertes):
         # `vierge` VAUT AVEUGLE, et c'est tout le point : cette passe n'a
         # compare avec rien, donc son zero de pertes ne prouve rien. La garde
         # se relit a l'APPEL, jamais a la definition.
         poser(courant, sum(pertes.values()), aveugle=vierge)
     return comptes, total, vierge, courant, pertes
+
+
+def passer(vraiment=False, amorcer=False, par=None,
+           outil="reconcilier"):
+    u"""Même passe, sérialisée avec les écritures des bibliothèques."""
+    with histoire.verrou(ETAT):
+        return _passer(vraiment, amorcer, par=par, outil=outil)
 
 
 def main(argv=None):
@@ -224,9 +250,14 @@ def main(argv=None):
                     help=u"emet les evenements et pose l'empreinte")
     ap.add_argument("--amorcer", action="store_true",
                     help=u"pose l'empreinte SANS rien emettre")
+    ap.add_argument("--par", default=None,
+                    help=u"auteur certain de la mutation ; omettre si inconnu")
+    ap.add_argument("--outil", default="reconcilier",
+                    help=u"porte qui a demandé la réconciliation")
     a = ap.parse_args(argv)
     comptes, total, vierge, courant, pertes = passer(a.vraiment or a.amorcer,
-                                                     a.amorcer)
+                                                     a.amorcer, par=a.par,
+                                                     outil=a.outil)
     print(u"RECONCILIER — %d maison(s), %d volume(s)"
           % (len(courant), sum(len(v) for v in courant.values())))
     for maison, volumes in sorted(courant.items()):

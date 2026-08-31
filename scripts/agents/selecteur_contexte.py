@@ -8,14 +8,12 @@ un artefact de routage sous ``.agents-runtime/contextes/``, jamais un fait de
 la fiction et donc jamais une table d'``etat/``.
 """
 import argparse
-import contextlib
 import io
 import json
 import math
 import os
 import re
 import tempfile
-import time
 import unicodedata
 import uuid
 
@@ -405,40 +403,6 @@ def _selection_precedente(document):
     return (document or {}).get("selection") or {}
 
 
-@contextlib.contextmanager
-def verrou_du_siege(personnage, attente=240):
-    """Serialise les sessions jetables afin que l'heritage reste causal."""
-    dossier = os.path.join(SORTIES, personnage)
-    os.makedirs(dossier, exist_ok=True)
-    chemin = os.path.join(dossier, ".selection.lock")
-    debut = time.time()
-    descripteur = None
-    while descripteur is None:
-        try:
-            descripteur = os.open(chemin, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-            os.write(descripteur, str(os.getpid()).encode("ascii"))
-        except FileExistsError:
-            try:
-                perime = time.time() - os.path.getmtime(chemin) > attente + 60
-                if perime:
-                    os.unlink(chemin)
-                    continue
-            except OSError:
-                continue
-            if time.time() - debut >= attente:
-                raise TimeoutError("le selecteur precedent du siege n'est pas termine")
-            time.sleep(0.1)
-    try:
-        yield
-    finally:
-        if descripteur is not None:
-            os.close(descripteur)
-        try:
-            os.unlink(chemin)
-        except OSError:
-            pass
-
-
 def manuel_selecteur(etats, verrous, hommes, joueurs=None):
     """Le systeme complet de cette session jetable."""
     lignes = [
@@ -707,8 +671,48 @@ def _ecrire_sortie(chemin, valeur):
 
 
 def selectionner(personnage, ref, modele=None, timeout=180):
-    with verrou_du_siege(personnage, attente=max(240, timeout + 30)):
+    # Chaque ref est une unité autonome. Deux messages peuvent donc traverser
+    # simultanément le sélecteur et le routeur, jusque dans leurs appels MJ.
+    # Les écritures de sortie restent isolées par ref ; aucun verrou de siège
+    # ne transforme plus le second POST en attente du premier.
+    def executer():
         chemin_action, action = action_par_ref(personnage, ref)
+        # JUMP n'est pas un message à classer dans les affaires du joueur.
+        # C'est une commande de régie : le script choisit une cible unique et
+        # porte son graphe au MJ, sans payer un appel LLM de sélection.
+        if str(action.get("mode") or "").casefold() == "jump":
+            from agents import jump, routeur_message
+            joueurs_jump = [j["id"] for j in index_des_joueurs()]
+            preparation = jump.preparer(
+                str(action.get("texte") or ""), joueurs=joueurs_jump)
+            document = {
+                "version": "selection-contexte/4",
+                "joueur_id": personnage,
+                "ref": ref,
+                "action": os.path.abspath(chemin_action),
+                "selection": {
+                    "decision": "jump",
+                    "pointeurs": (["mj#%s" % preparation["contexte_id"]]
+                                   if preparation.get("contexte_id") else []),
+                    "hommes": [], "routes_hommes": [],
+                    "joueurs_concernes": [], "creation": None,
+                    "ancrages": [],
+                    "motif": "préparer un seul événement puis le jouer",
+                },
+                "contexte_fourni": {"jump": preparation},
+                "appel": {"session_id": None, "provider": "script",
+                          "model": None},
+            }
+            sortie = chemin_sortie(personnage, ref)
+            _ecrire_sortie(sortie, document)
+            try:
+                document["routage"] = routeur_message.router_message(
+                    document, action, modele=modele)
+            except Exception as exc:
+                document["routage"] = {
+                    "erreur": "%s: %s" % (type(exc).__name__, str(exc))}
+            _ecrire_sortie(sortie, document)
+            return document
         plan = modele_du_plan()
         etats, verrous = index_du_plan(modele=plan)
         joueurs = index_des_joueurs()
@@ -811,6 +815,8 @@ def selectionner(personnage, ref, modele=None, timeout=180):
                 "appel": {"session_id": session},
             })
             raise
+
+    return executer()
 
 
 def main(argv=None):

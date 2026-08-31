@@ -124,6 +124,8 @@ class DepecheContextesTests(unittest.TestCase):
                                  "LE_CONSEIL_CONTEXTE"])
             self.assertEqual("r-parole",
                              lancer.call_args.kwargs["env"]["LE_CONSEIL_REF"])
+            self.assertEqual("session-item",
+                             lancer.call_args.kwargs["env"]["LE_CONSEIL_SESSION"])
             self.assertEqual("r-parole",
                              lancer.call_args.kwargs["trace"]["ref"])
             mission_module.archiver_le_prompt.assert_called_once_with(

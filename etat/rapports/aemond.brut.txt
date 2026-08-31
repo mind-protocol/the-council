@@ -1,1 +1,3 @@
-You've hit your session limit · resets 6:30am (Europe/Paris)
+J’ai enfin pris cette chambre de ma propre main. Les livres ne prouvent rien de Lamarck ; mon œil, lui, suffit à ma mémoire.
+
+Cole doit maintenant me donner deux noms : qui répond de Vhagar, et qui répond du ciel au sud. Le pli reste contre moi. À sa réponse, je saurai exactement qui blâmer si l’un ou l’autre manque.

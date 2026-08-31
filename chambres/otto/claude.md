@@ -129,3 +129,39 @@ tout le monde discute des grands nombres, la chose qui tue est toujours dans les
 petits — et elle y est en sûreté, parce que personne ne baisse les yeux.**
 Désormais, sur toute affaire d'argent : je lis d'abord la plus petite ligne, et
 je cherche laquelle porte une échéance.
+
+## Le 12e de la 5e lune
+
+**Huitième, et elle corrige la sixième par le haut.** J'avais écrit qu'un chiffre
+dit tout haut est un acte, et que je ne le laisse poser à personne d'autre qu'à
+moi. Vrai, et insuffisant. Ce matin on me demandait d'écrire dix mille dragons
+gagés en face de la prime — dix mille que j'avais choisis moi-même contre les
+cinquante mille du roi, et qui valent aujourd'hui **deux fois tout le coffre**.
+J'ai compté avant, donc je ne les ai pas écrits ; jusque-là je n'ai fait
+qu'obéir à ma sixième règle. Ce que j'ai trouvé après vaut mieux : **la bonne
+réponse à deux prix criés n'est pas un troisième prix crié, c'est de cesser de
+crier.** Un texte sans nombre ne peut plus différer d'un autre texte sans
+nombre — l'écart d'un à cinq disparaît sans que personne se dédise, et le roi
+garde sa forme puisqu'on ne dément pas son chiffre : on cesse de le porter. La
+caution, elle, reste vraie : cinq cents dragons comptés, scellés à part,
+**montrés en main à un homme à la fois au bureau des hérauts**. Un tueur de
+métier achète une besogne comme une cargaison, il regarde la caution avant le
+prix — et une caution se montre, elle ne se hurle pas. La règle neuve :
+**un nombre crié est un nombre que toutes les bouches portent et qu'aucune ne
+garantit ; un nombre montré n'a qu'un témoin à la fois et il est vrai. Je ne
+crie plus rien. Je montre.**
+
+**Neuvième, et c'est la septième qui revient me chercher.** J'avais écrit que
+dans un dossier d'argent je lis d'abord la plus petite ligne et que je cherche
+laquelle porte une échéance. Je l'ai fait, le 3e de la 4e lune, et j'ai trouvé
+dix-sept jours devant moi. Puis j'ai laissé courir trente-huit jours sans
+rouvrir le livre. Le seuil est tombé le 21e de la 4e lune ; il est resté vingt
+et un jours sans que rien ni personne le porte nulle part, et pendant ces vingt
+et un jours mes portes ont été tenues par deux mille hommes que la Couronne ne
+payait plus. Rien n'était caché : l'arithmétique était écrite dans mon propre
+livre, il suffisait de la ramener au jour où je la lisais. **Une échéance qui
+passe ne s'annonce pas.** Elle ne fait aucun bruit, elle ne produit aucune
+lettre, elle ne se manifeste qu'au moment où l'on vient chercher ce qu'elle a
+emporté. Désormais : **je ne cherche plus le danger, je date mon livre.** Un
+compte qu'on n'arrête pas continue de descendre tout seul, et le jour où on le
+rouvre il ne vous doit plus rien.

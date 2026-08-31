@@ -1,0 +1,365 @@
+====================================================================================================
+DOCUMENT DE MAISON — maison-targaryen-vert
+SOURCE — etat/maisons/maison-targaryen-vert/documents/books/nera-inspecter.json
+====================================================================================================
+
+id: nera-inspecter
+boite: boite-les-quatre
+type: plan
+embleme: 🔬
+titre: INSPECTER
+couleur: var(--book-dossier)
+sous_titre: 🔬 Compter ce qui est, et trouver les failles. Volume ouvert au chantier de la vase le 26e jour de la 3e lune, an 61029, de la main de MARLO VASSE. Plage 61000 à 61099.
+pages:
+  [1] Tout ce qui se compte et tout ce qui manque : les portes et leurs gueules, les cols sous pierre, les relèves et leurs heures, ce qui entre et sort par mer et par terre, les chantiers qui arment et pour qui, les stocks, les dates. Et symétriquement : ce qu'on ne sait pas et qui déciderait.
+      
+      **LA RÈGLE : on ne demande jamais qui construit. On demande, ou l'on écoute, ce qui est cassé.**
+  [2] OÙ ÇA EN EST, LE 26e. Quatre portes relevées de mes pieds ; le chantier du bout compté de nuit ; la date des coques obtenue pour trois cerfs de bière ; le quai et la Mérette relevés sans me montrer. **DEUX ACTIONS SUR TROIS N'ONT PERSONNE DESSUS**, et la 61032 est suspendue à une clef que je n'ai pas tranchée.
+tables:
+  [1]
+    titre: 🏰 Ouverture de l'Affaire — chantier de la vase, 26e jour de la 3e lune
+    colonnes:
+      [1] 🧱 Le champ
+      [2] ✍️ Ce qu'on y écrit
+      [3] 📖 La règle du champ
+      [4] ✅ Rempli ?
+    lignes:
+      [1]
+        cellules:
+          [1] 🏷️ **LE NOM**
+          [2] INSPECTER
+          [3] Le verbe dont ce cahier répond, **jamais la solution**.
+          [4] **oui**
+      [2]
+        cellules:
+          [1] 🎯 **L'OBJET**
+          [2] 
+          [3] 
+          [4] 
+      [3]
+        cellules:
+          [1] 🧱 **LE PÉRIMÈTRE — DANS**
+          [2] 
+          [3] 
+          [4] 
+      [4]
+        cellules:
+          [1] 🚫 **LE PÉRIMÈTRE — HORS**
+          [2] 
+          [3] 
+          [4] 
+      [5]
+        cellules:
+          [1] 📌 **L'ÉTAT ACTUEL**
+          [2] 
+          [3] 
+          [4] 
+      [6]
+        cellules:
+          [1] 🔢 **LA PLAGE**
+          [2] 61000 à 61099
+          [3] Un chiffre est une adresse, non un rang : il ne se renumérote jamais.
+          [4] **oui**
+      [7]
+        cellules:
+          [1] 💡 **LA CONCLUSION**
+          [2] 
+          [3] 
+          [4] 
+      [8]
+        cellules:
+          [1] 🔚 **FERMÉE QUAND**
+          [2] 
+          [3] 
+          [4] 
+  [2]
+    titre: 🔗 Affaires liées — les liens écrits, puis les calculés
+    colonnes:
+      [1] 🪢 Le lien
+      [2] 🔗 L'affaire
+      [3] 🔢 Notre pièce
+      [4] 🔢 La leur
+      [5] 📝 Pourquoi
+    lignes:
+      [1]
+        cellules:
+          [1] attend
+          [2] ASSURER
+          [3] ⚔️ 61032
+          [4] 🗝️ 63023
+          [5] 
+      [2]
+        cellules:
+          [1] partage
+          [2] ASSURER
+          [3] O20 (Néra) 🧭 Le Peigne
+          [4] 
+          [5] 
+      [3]
+        cellules:
+          [1] partage
+          [2] LES PORTES ET LES RÔLES
+          [3] M01 (Néra) 🚪 La porte de la Gadoue
+          [4] 
+          [5] 
+      [4]
+        cellules:
+          [1] partage
+          [2] LES PORTES ET LES RÔLES
+          [3] M02 (Néra) 📖 Les rôles d'entrée
+          [4] 
+          [5] 
+      [5]
+        cellules:
+          [1] partage
+          [2] LES PORTES ET LES RÔLES
+          [3] M03 (Néra) 👣 La grève et ses trente gosses
+          [4] 
+          [5] 
+      [6]
+        cellules:
+          [1] partage
+          [2] LES PORTES ET LES RÔLES
+          [3] O22 (Néra) 👣 Les comptes de porte
+          [4] 
+          [5] 
+      [7]
+        cellules:
+          [1] servie par
+          [2] LES PORTES ET LES RÔLES
+          [3] 🎯 61001
+          [4] 🎯 69000
+          [5] 
+      [8]
+        cellules:
+          [1] servie par
+          [2] LES PORTES ET LES RÔLES
+          [3] 🎯 61001
+          [4] 🎯 69100
+          [5] 
+  [3]
+    titre: ⛓️ Ce qui pend, et sur qui — calculé, ne pas écrire à la main
+    colonnes:
+      [1] 🧭 Sens
+      [2] 🔢 Notre pièce
+      [3] 🔢 La leur
+      [4] 🔗 L'affaire
+    lignes:
+      [1]
+        cellules:
+          [1] ⬅ nous attendons
+          [2] ⚔️ 61032
+          [3] 🗝️ 63023
+          [4] ASSURER
+  [4]
+    titre: 🔨🪶 Ce qu'on engage, et qui d'autre le veut — calculé, ne pas écrire à la main
+    colonnes:
+      [1] 🔢 La pièce
+      [2] ⚔️ Nos actions
+      [3] 🔗 Aussi engagée par
+    lignes:
+      [1]
+        cellules:
+          [1] M01 (Néra) 🚪 La porte de la Gadoue
+          [2] ⚔️ 61032
+          [3] LES PORTES ET LES RÔLES
+      [2]
+        cellules:
+          [1] M02 (Néra) 📖 Les rôles d'entrée
+          [2] ⚔️ 61031
+          [3] LES PORTES ET LES RÔLES
+      [3]
+        cellules:
+          [1] M03 (Néra) 👣 La grève et ses trente gosses
+          [2] ⚔️ 61030
+          [3] LES PORTES ET LES RÔLES
+      [4]
+        cellules:
+          [1] O20 (Néra) 🧭 Le Peigne
+          [2] ⚔️ 61030
+          [3] ASSURER
+      [5]
+        cellules:
+          [1] O22 (Néra) 👣 Les comptes de porte
+          [2] ⚔️ 61031 · ⚔️ 61032
+          [3] LES PORTES ET LES RÔLES
+  [5]
+    titre: 🕳️ Les trous — calculé, ne pas écrire à la main
+    colonnes:
+      [1] 🕳️ Le défaut
+      [2] 🔢 Les pièces
+    lignes:
+      [1]
+        cellules:
+          [1] 🪢 référence qui ne tient qu'au registre — la pièce désignée n'est dans aucun cahier
+          [2] 🎯 61000 · 🎯 61001 · 🎯 61002
+  [6]
+    titre: 🎯 États cibles
+    colonnes:
+      [1] 🎯 N°
+      [2] 🏷️ L'état
+      [3] ✅ Ce qui doit être vrai
+      [4] 📍 Où
+      [5] 👁️ La preuve
+      [6] ⬆️ Sert
+    lignes:
+      [1]
+        cellules:
+          [1] 61000
+          [2] 🕯️ On sait pour qui l'on vend
+          [3] Le nom de celui qui paie le chantier du bout est écrit, et tenu de deux bouches qui ne se connaissent pas
+          [4] —
+          [5] Deux sources séparées disent le même nom
+          [6] 60007 · 60005
+      [2]
+        cellules:
+          [1] 61001
+          [2] 🚪 Les portes se comptent sans moi
+          [3] Ce qui entre et sort par la Gadoue et par le port est relevé chaque jour, sans que j'y aille
+          [4] Porte de la Gadoue · bureau du port
+          [5] Six jours de colonnes sans un trou
+          [6] 60005
+      [3]
+        cellules:
+          [1] 61002
+          [2] 🌕 Ce que je sais se vend une fois, au bon
+          [3] La date des coques est vendue à un seul acheteur, avant qu'elle n'arrive
+          [4] —
+          [5] Un prix encaissé, et personne d'autre au courant
+          [6] 60007 · 60001
+  [7]
+    titre: 🔒 Verrous
+    colonnes:
+      [1] 🔒 N°
+      [2] 🏷️ Le verrou
+      [3] ⛔ Bloque
+      [4] 📌 Ce qui est vrai aujourd'hui
+      [5] 👁️ La preuve
+      [6] 🔓 Levé quand
+    lignes:
+      [1]
+        cellules:
+          [1] 61010
+          [2] 🔎 Le nom se paie d'une nuit ou d'une bouche
+          [3] 61000
+          [4] Manse est le neveu de l'homme au goudron et Nel a le chemin ; personne n'est allé le prendre
+          [5] Ce que Nel m'a dit le 24e
+          [6] Quand Nel aura parlé à Manse (61030)
+      [2]
+        cellules:
+          [1] 61011
+          [2] ✋ Personne ne tient le relevé quotidien
+          [3] 61001
+          [4] **3e de la 4e lune** : six tetes sont nommees dessus, appariees a la maree, et la suspension de 61032 est tombee. Ce n'est plus « personne ne tient le releve » — c'est « le releve n'a pas encore six jours ». **Il en a un.** Trois verrous neufs ont pris la place, et ils sont ecrits chez Nel : 69001, 69002, 69003.
+          [5] La case vide du registre
+          [6] Quand 63012 sera levé et un homme nommé
+  [8]
+    titre: 🗝️ Clefs
+    colonnes:
+      [1] 🗝️ N°
+      [2] 🏷️ La clef
+      [3] 🔓 Ouvre
+      [4] 💡 Le principe
+      [5] 💰 Ce qu'elle coûte et ce qu'elle ferme
+      [6] 👁️ La preuve attendue
+      [7] ⚖️ Décision
+    lignes:
+      [1]
+        cellules:
+          [1] 61020
+          [2] 👥 Deux bouches qui ne se connaissent pas
+          [3] 61010
+          [4] Un nom tenu d'une seule bouche n'est pas un nom : c'est une rumeur qu'on a payée
+          [5] Il faut deux chemins au lieu d'un, et le second coûte une nuit
+          [6] Le même nom, deux fois, sans que l'un ait parlé à l'autre
+          [7] **retenue le 26e**
+      [2]
+        cellules:
+          [1] 61021
+          [2] 🪙 Payer le relevé au lieu de le faire
+          [3] 61011
+          [4] Waltyr note lui-même ce qui passe sa porte : il y est déjà, toute la journée, et il sait lire
+          [5] Un cerf de plus la semaine — et surtout : il saura exactement ce qui m'intéresse. Ferme la discrétion sur l'objet de ma curiosité
+          [6] Six jours de colonnes de sa main
+          [7] 
+      [3]
+        cellules:
+          [1] 61022
+          [2] 🧒 Le gamin compte en allant chercher le pain
+          [3] 61011
+          [4] Ren passe la Gadoue deux fois par jour de toute façon ; ce qu'on note en passant ne se remarque pas
+          [5] Rien en argent. Mais il apprend ce qu'on compte — et il est à la reine
+          [6] Ses chiffres recoupent ceux d'Ollo sur trois jours
+          [7] 
+      [4]
+        cellules:
+          [1] 61023
+          [2] 🗓️ Ne relever que les jours de marché
+          [3] 61011
+          [4] Une feuille tous les six jours n'a pas besoin de six relevés : il faut les jours où il passe quelque chose
+          [5] Des trous que l'acheteur verra, et qu'il faudra assumer par écrit plutôt que combler au jugé
+          [6] Deux feuilles acceptées sans qu'on redemande les jours creux
+          [7] 
+  [9]
+    titre: ⚔️ Actions
+    colonnes:
+      [1] ⚔️ N°
+      [2] 🏷️ L'action
+      [3] 🗝️ Réalise
+      [4] 📝 Ce qu'on fait
+      [5] 📍 Où
+      [6] 🪶 Office
+      [7] 🧰 Moyens
+      [8] 🔧 Avec quoi
+      [9] ⛓️ Dépend de
+      [10] 📅 Jour dû
+      [11] ⏳ Où ça en est
+      [12] 📅 Jour fait
+      [13] 📝 Note
+    lignes:
+      [1]
+        cellules:
+          [1] 61030
+          [2] 🏃 Faire venir Nel
+          [3] 61020
+          [4] Un mot porté à la grève basse, aujourd'hui
+          [5] La grève
+          [6] O20
+          [7] M03
+          [8] 
+          [9] —
+          [10] **avant le 27e**
+          [11] close
+          [12] 3e
+          [13] 3e, de la main de Nel : ne depensez pas un mot ni une tete de M03 pour me faire venir. Je suis a la Gadoue de midi a deux et au Boyau de sept a neuf, tous les jours. Manse est repere au hangar du goudron du Boyau — et l'on y travaille ENCORE de nuit le 3e, baches en place, ce qui interesse 63044. Je ne l'ai pas appele devant six hommes : un nom pris devant temoins n'est pas une seconde bouche. Rendez-vous porte par un tiers, a l'etale de demain matin. — le 3e — Nel est venue d'elle-meme
+      [2]
+        cellules:
+          [1] 61031
+          [2] 📖 Copier les rôles d'entrée
+          [3] 69110
+          [4] Jours, tonnages, noms de coques
+          [5] Bureau du port, 995 pas
+          [6] O22
+          [7] M02
+          [8] 
+          [9] —
+          [10] **avant le 27e**
+          [11] à faire
+          [12] 
+          [13] 3e, de la main de Nel : elle n'etait pas d'un jour en retard, elle etait **sans clef** — sa case Realise portait un tiret depuis le 26e. Elle en a une : 🗝️ 69110. On ne copie pas le role ; on releve les jours et les noms depuis la greve (⚔️ 69120) et l'on ne demande que les tonnages, une fois par colonne (⚔️ 69121). Due le 9e et pas avant : la demander plus tot casse M02.  ·  Ce que portait la colonne d'état avant normalisation : reprise par O22 le 3e — **repoussee au 9e a dessein**
+      [3]
+        cellules:
+          [1] 61032
+          [2] 🚪 Relever la porte de la Gadoue chaque jour
+          [3] 69010 · 69011
+          [4] Ce qui passe, les jours, les charrois, et à quelle heure on ne demande rien
+          [5] Porte de la Gadoue, 61068 pas
+          [6] O22
+          [7] M01
+          [8] 
+          [9] 63023
+          [10] avant le 27e
+          [11] en cours
+          [12] 
+          [13] Passee a l'office O22 le 2e de la 4e lune. La suspension au 🗝️ 63023 tombe : Hann ne touche pas aux portes, donc il n'a rien a savoir, et la clef reste non tranchee sans plus rien bloquer. — 3e, de la main de Nel : six tetes nommees, appariees a la maree, quatre ficelles chacune (🗝️ 69010 · 69011). Compte la porte moi-meme de midi neuf a deux pour prendre la mesure : neuf charrois, deux betes chargees, quatorze ballots — et la demi-heure de la soupe, de midi et quart a midi et demi, ou l'on ne demande rien ; trois charrois y sont passes sans un mot. Waltyr Poix n'a pas ete approche. — et en cours — premier jour couru le 4e, colonne pleine attendue le 9e
+maison_id: maison-targaryen-vert

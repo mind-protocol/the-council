@@ -36,3 +36,14 @@ La borne de la reine (toute bete qui doit passer se nomme d'ici midi) n'a
 pas de bureau : nul n'est nomme pour recueillir la declaration. Si une bete
 se declare a un page et non a la roue, la paire revient avec ses sept jours
 et je ne le saurai pas. Je me tiens moi-meme a la table peinte jusqu'a midi.
+
+## Borne arrêtée le 4e à 19h
+
+- AUCUNE COQUE et AUCUN EFFECTIF ne sont tenus mobilisables. Les
+  quatre-vingt-neuf nefs vues au croissant demeurent un fait de vue, jamais
+  un nombre disponible.
+- AUCUNE NEF ne quitte le Gosier. Je ne tire donc de ces coques ni passage,
+  ni capacité, ni raccourcissement de chaîne.
+- Le 6e jour à midi, je rends la DATE DE TRAVAIL fondée sur les seules lignes
+  complètes. Toute ligne incomplète paraît comme manque, jamais comme moyenne
+  ni comme force supposée.

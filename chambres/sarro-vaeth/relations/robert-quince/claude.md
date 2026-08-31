@@ -40,3 +40,28 @@ Comme il écrit : le chiffre d'abord, la cause ensuite, et la réserve donnée
 de ma main avant qu'il ait à me la poser. Il ne veut pas d'explication ; il
 veut une ligne. Je lui donne la ligne, et la cause en dessous seulement
 parce qu'elle se répare.
+
+## Le 5e de la 4e lune, au soir
+
+Il a rayé sa propre ligne après que j'ai rayé la mienne : plus de « cinquante
+manquants ». Il reconnaît dix-huit postes chez moi et laisse Hallis Roon
+compter le retour à la muraille. C'est juste : chacun signe l'appel qu'il a
+fait, pas celui de l'autre. Il n'a rien dit sur les tailleurs au-delà du front ;
+je ne prends pas son silence pour un ordre donné.
+
+## Correction du jour : le 4e de la 4e lune
+
+Il a vu que mon billet portait le lendemain tandis que son registre portait le
+jour présent. Il avait raison de me reprendre. Le jour vrai de ma parole et de
+ma réclamation est le 4e ; le mouvement reste distinctement fixé à la nuit du
+5e par Hallis. Je lui dois désormais deux dates quand elles ne nomment pas la
+même chose, pas un chiffre qu'il faudrait deviner.
+
+Il a accusé réception sans déplacer un mot : parole le 4e, mouvement dans la
+nuit du 5e, appel le 6e à l'aube. Quand sa ligne et la mienne coïncident, il
+n'ajoute pas de discours. Moi non plus.
+
+Puis il a rouvert le bon trou : mes dix-huit postes n'étaient toujours pas
+dix-huit hommes. Il a nommé les trois livres que Hallis avait sous les yeux.
+Cette fois je ne défends pas mon total contre sa ligne : ma propre règle disait
+déjà « nom, jour, poste, nourriture — les quatre, ou rien ».

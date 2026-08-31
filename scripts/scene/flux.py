@@ -13,7 +13,7 @@
 # monde.date.minute de sa duree. Le MJ n'ecrit que "duree" (en minutes) quand
 # elle sort de l'ordinaire ; sinon le defaut du type s'applique. Au passage de
 # 1440 minutes, le jour s'incremente. Voir docs/schema.md.
-import json, io, os, re, sys, hashlib, tempfile, unicodedata
+import json, io, os, re, sys, tempfile, unicodedata, time
 
 import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
 _d = _os.path.dirname(_os.path.abspath(__file__))
@@ -42,6 +42,7 @@ from scene.flux_scribe import (  # les chemins et les gestes d'ecriture du fil
     format_heure, avancer)
 from scene.flux_ecrits import (  # les avis sur ce qui s'annonce
     avis_renvois, avis_ecrits, sans_accents_simple)
+from scene import flux_transport
 
 # Minutes consommees par defaut, par type d'item.
 # question/reponse sont hors fiction ; pensee est gratuite par regle du jeu.
@@ -71,6 +72,9 @@ DUREES = {
 # date-la, et pas une autre, que le tick doit voir : il travaille en jours sur ce
 # qui est commun, la scene travaille en minutes sur ce qui est prive.
 BARRIERE_MINUTES = 2880  # un joueur ne devance jamais l'autre de plus de deux jours
+DEDUP_SECONDES = 60
+RUNTIME_FLUX = os.path.join(racine, ".agents-runtime", "flux")
+MEMOIRE_DEDUP = os.path.join(RUNTIME_FLUX, "dedup.json")
 
 
 def minute_absolue(d):
@@ -309,6 +313,12 @@ if not explicite:
             "  --pour tous             pour une scene commune\n"
             "Rien n'a ete ecrit.\n" % (pour, pour))
         raise SystemExit(2)
+
+flux_transport.prendre_verrou(RUNTIME_FLUX)
+_maintenant_transport = time.time()
+_dedup_flux = flux_transport.lire(
+    MEMOIRE_DEDUP, _maintenant_transport, DEDUP_SECONDES)
+_ref_transport = os.environ.get("LE_CONSEIL_REF") or None
 
 monde = tables.lire(monde_p)
 monde["date"].setdefault("minute", 0)
@@ -928,6 +938,10 @@ with io.open(chemin, "a", encoding="utf-8") as f:
         # l'emporte — c'est l'apartee dans une scene commune.
         if "pour" not in it and pour:
             it["pour"] = pour
+        # Une sortie du MJ hérite de la ref du message qui a ouvert sa session.
+        # Elle reste une métadonnée de transport et rend les retries traçables.
+        if _ref_transport and not it.get("ref"):
+            it["ref"] = _ref_transport
         # Le hors-fiction reste a celui qui l'a demande, meme si la piece est
         # commune : la deduction par la presence ne doit pas rendre publique une
         # reponse de MJ ou une pensee. Elle ne se dit a personne.
@@ -942,11 +956,26 @@ with io.open(chemin, "a", encoding="utf-8") as f:
         # qui ouvre la scene — le seul item que le serveur relit pour trancher.
         if explicite and pour is None and it.get("type") == "effacer":
             it["commun"] = True
+        # Le tunnel ne se mesure pas seulement par appel : trois bons messages
+        # pousses separement peuvent former le meme mur. La file web respecte ce
+        # delai avant chaque item et borne donc le debit cumule a 1 500 signes
+        # par minute, sans ralentir les gestes du joueur ni le hors-fiction.
+        tunnel.cadencer(it)
+        _empreinte_flux = flux_transport.empreinte(it)
+        if (_maintenant_transport
+                - _dedup_flux.get(_empreinte_flux, 0) <= DEDUP_SECONDES):
+            sys.stderr.write(
+                u"DOUBLON IGNORE : item de flux identique deja pousse dans "
+                u"les %d secondes.\n" % DEDUP_SECONDES)
+            continue
         it["heure"] = format_heure(date["minute"])
         # la date portee par l'item reflete l'horloge, pour le bandeau et la reprise
         it["date"] = {"annee": date["annee"], "lune": date["lune"],
                       "jour": date["jour"], "minute": date["minute"]}
         f.write(json.dumps(it, ensure_ascii=False) + "\n")
+        f.flush()
+        _dedup_flux[_empreinte_flux] = _maintenant_transport
+        flux_transport.ecrire(MEMOIRE_DEDUP, _dedup_flux)
         suivre_presence(it, date)
         ecouter_la_salle(it, date)
         # La regie ne coute pas une minute : voir sieges_de_regie().
@@ -992,7 +1021,14 @@ if not en_regie and (suivi["touchee"] or calcul_presence):
                                 "gens": calcul_presence.resoudre(date, presence)}
         except Exception:
             pass
-    tables.ecrire(presence_p, paquet)
+    for tentative in range(3):
+        try:
+            tables.ecrire(presence_p, paquet)
+            break
+        except OSError:
+            if tentative == 2:
+                raise
+            time.sleep(0.05 * (tentative + 1))
 
 # Ce que le joueur vient de traverser paraît désormais sur sa ville.
 reveler(vus, mien)

@@ -88,6 +88,17 @@ jamais deux fois). Une ligne qui commence par un numéro s'indexe et s'ouvre
 depuis le fil comme une ligne de plan — la colonne « N° » n'est plus la seule
 porte d'entrée.
 
+**Les affaires du MJ dans le graphe (31.8)** : la **série 8**
+(80000-89999) leur est réservée. Elle n'appartient ni aux livres du monde, ni
+aux plans adverses (série 7), ni aux registres (série 9). Chaque affaire reçoit
+un bloc immuable de 500 adresses dans
+`chambres/mj/books/_plages.json` : l'affaire prend la première adresse du bloc,
+puis ses états et moments les unités 1-99, ses verrous 101-199, ses clefs
+201-299, ses actions 301-399 et ses autres pièces 401-499. Une affaire neuve
+sans bloc est refusée par `tisser.py` ; archiver une affaire ne libère jamais
+son bloc. Ces adresses ouvrent le nœud dans le tissu dérivé, pas un livre du
+monde dans le fil du joueur.
+
 ```json
 {
   "id": "affaire-vierge-01",

@@ -571,6 +571,21 @@ window.Bus = (() => {
           embleme(o.role) + "</i>" + o.role + "</span>" : "") + "</span>" : "") +
       '<span class="chr-texte">' +
       (window.Attention ? Attention.html(texte, {}) : texte) + "</span></div>";
+    // Une réplique nommée peut être adressée sans recopier son auteur. Le
+    // bouton ne joue rien : il prépare seulement `Nom : ` dans la barre.
+    if(qui && cl.indexOf("chr-replique") !== -1 && cl.indexOf("chr-vous") === -1){
+      const repondre = document.createElement("button");
+      repondre.type = "button";
+      repondre.className = "chr-repondre";
+      repondre.textContent = "Répondre";
+      repondre.title = "Répondre à " + qui;
+      repondre.setAttribute("aria-label", "Répondre à " + qui);
+      repondre.onclick = (e) => {
+        e.stopPropagation();
+        if(window.Barre && Barre.repondre) Barre.repondre(qui);
+      };
+      d.querySelector(".chr-corps").appendChild(repondre);
+    }
     // au rejeu de l'historique, rien ne s'anime : tout est déjà arrivé.
     if(!instantCourant) d.classList.add("entre");
     // Le passé rechargé s'insère AU-DESSUS, devant la même ancre : les items

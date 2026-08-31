@@ -18,9 +18,11 @@ from plan.tisser.lecture import (RACINE, ETAT, SORTIE, CANON, INVERSES,
                                  grilles, registres_de, sphere_de,
                                  resoudre_code, nommer, plat_nom,
                                  A_DESIGNER, col, nu, indexer)
+from plan.tisser.chambre_mj import charger_affaires_mj, aretes_affaires_mj
 
 def tisser(books, intentions, mains, plans, evenements, personnages=None,
-           joueur=None, lieux_connus=(), plis=None, liens=None):
+           joueur=None, lieux_connus=(), plis=None, liens=None,
+           affaires_mj=None):
     registres = registres_de(books)
     noms = nommer(personnages or [])
     """Une arete par lien reellement ecrit. `flou` = presente, non suivable."""
@@ -277,6 +279,15 @@ def tisser(books, intentions, mains, plans, evenements, personnages=None,
             texte=l.get("pourquoi"), natif=True, auteur=l.get("qui"),
             date=l.get("quand"), justification=l.get("pourquoi"),
             visible_par=l.get("visible_par"), route=l.get("route"))
+
+    # La chambre du MJ fait exception : ses affaires alimentent directement
+    # la projection, avec leur provenance locale et sans devenir de l'état du
+    # monde. Les mêmes règles de canonisation d'arêtes s'appliquent ici.
+    for a in aretes_affaires_mj(affaires_mj or [], evenements):
+        extras = {k: v for k, v in a.items()
+                  if k not in ("de", "vers", "nature", "source", "flou", "texte")}
+        arc(a["de"], a["vers"], a["nature"], a["source"],
+            flou=a.get("flou", False), texte=a.get("texte", ""), **extras)
     return A
 
 
@@ -299,15 +310,17 @@ def main():
     liens = charger("liens", [])
     plans_brut = charger("plans", {})
     plans = plans_brut.get("plans", []) if isinstance(plans_brut, dict) else plans_brut
+    affaires_mj = charger_affaires_mj(RACINE)
 
     noeuds, doubles = indexer(books, intentions, mains, plans, evenements,
-                              personnages, plis)
+                              personnages, plis, affaires_mj)
     jr = charger("journal", {})
     joueur = (jr or {}).get("personnage_joueur_id") if isinstance(jr, dict) else None
     lieux_connus = {l.get("id") for l in charger("lieux", [])
                     if isinstance(l, dict) and l.get("id")}
     aretes = tisser(books, intentions, mains, plans, evenements,
-                    personnages, joueur, lieux_connus, plis, liens)
+                    personnages, joueur, lieux_connus, plis, liens,
+                    affaires_mj)
 
     genres = collections.Counter(n["genre"] for n in noeuds.values())
     print("LE TISSU")

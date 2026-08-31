@@ -1,0 +1,1 @@
+Le registre n’avait pas de voix à me vendre. J’ai donc laissé au clou une demande assez vaste pour que nul n’y voie le nom que je cherche. Le garçon court désormais ; moi, j’attends. Un papier vide enseigne au moins ceci : le désir n’est pas une preuve.

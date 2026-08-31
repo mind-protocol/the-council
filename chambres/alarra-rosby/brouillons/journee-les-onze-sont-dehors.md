@@ -53,13 +53,16 @@ feuilles.
 Ma seconde malle — celle qu'on m'avait écrit qu'il faudrait m'ouvrir — je l'ai ouverte
 moi-même avant qu'on me le demande, et j'ai établi ce qu'elle ne vaut pas : vingt ans de
 lettres des dames de la baie ne certifient pas un mort. **Elles sont écrites d'un seul
-côté.** Six cents dos blancs. Je les descends à Roon avec l'encre et une lampe, et je ne
-lui demande rien — pas un nom, pas un serment, pas la sixième file. Je pose le parchemin
-et je dis une phrase : quarante et une de vos cent quatre-vingt-onze familles sont les
-miennes, et je pars chez elles.
+côté.** Six cents dos blancs. Je les ai descendues à Roon avec l'encre, les plumes et
+une lampe, et je ne lui ai rien demandé — pas un nom, pas un serment, pas la sixième
+file. J'ai posé le parchemin et dit une phrase : quarante et une de vos cent quatre-vingt-onze
+familles sont les miennes, et je pars chez elles. Ce qu'il écrira reste à lui.
 
 Puis les grèves, et les onze. Leur port en face est dû depuis vingt jours sous le nom de
 messire Denys, et personne ne l'a payé. J'ai une barque et je pars par le sud.
+
+Je leur ai porté la place. Je n'écris pas qu'ils l'ont prise : leur choix, leurs noms et
+leur embarquement restent en attente tant qu'ils n'ont pas répondu.
 
 **Je ne porte plus la feuille à Rosby. Je porte les hommes, et la feuille suit.** Une liste
 vraie portée par la mauvaise main devient une convocation — je l'ai écrit le 30e. Onze

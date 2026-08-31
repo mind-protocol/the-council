@@ -317,6 +317,22 @@ def manuel_de(qui, mode="journee", contexte=None):
     metier = lire(METIER)
     if metier is None:
         raise SystemExit("scripts/agents/prompts/metier.md manque au constructeur d'incarnation.")
+    # Le contexte numérique vit déjà dans l'environnement du call. La porte
+    # d'écriture s'en sert : le PNJ ne recopie pas une adresse que le moteur
+    # connaît mieux que lui. Ce correctif est injecté au système ici aussi,
+    # afin que les sessions lancées pendant qu'un fournisseur tient metier.md
+    # ouvert reçoivent immédiatement le contrat courant.
+    metier += u"""
+
+---
+
+# Chaînage automatique des actes
+
+Quand tu écris un acte avec `python scripts/ajouter.py actes ...`, n'ajoute pas
+`action_id`, `affaire_id` ni `relation_action` si ton call porte déjà un
+contexte numérique. La porte les déduit automatiquement de
+`LE_CONSEIL_CONTEXTE` lorsque ce contexte est une ligne `⚔️ Actions`.
+"""
     from agents.expose import chambre as _ch
     cahier = lire(os.path.join(_ch.chemin(qui), "claude.md"))
     if cahier and cahier.strip():

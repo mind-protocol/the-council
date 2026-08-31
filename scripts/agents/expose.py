@@ -33,6 +33,8 @@ from agents import runtime  # noqa: E402,F401
 # de contexte et les hommes avant tout metier de jeu.
 from agents import selecteur_contexte  # noqa: E402,F401
 from agents.selecteur_contexte import main as selectionner_contexte_main  # noqa: E402,F401
+# Jump prépare un événement pour le MJ sans passer par le sélecteur ordinaire.
+from agents import jump  # noqa: E402,F401
 # Miroir des instructions Claude vers Codex. La matiere reste sous prompts/ ;
 # la facade publique scripts/copier_claude_vers_agents.py passe par cette porte.
 from agents.prompts import copier_claude_vers_agents  # noqa: E402,F401
@@ -69,6 +71,11 @@ from agents.mj import main as reveiller_main  # noqa: E402,F401
 # Le pas 5 (habitant.md §4) : ecrire = reveiller — le billet au canal de la
 # paire, puis le cast du destinataire. Lie apres depeche : il relit brief.
 from agents import billet  # noqa: E402,F401 — lu par parloir (--dire vers un homme absent)
+# Boucle d'activation pilotée par le graphe. Liée après depeche : son moteur
+# réutilise la construction canonique des dossiers et les appels d'hommes.
+from agents import activation  # noqa: E402,F401
+boucle_activation = activation
+from agents.activation import main as boucle_activation_main  # noqa: E402,F401
 # Descendue au lot 2 : scripts/dossier.py -> agents/matiere.py (§7).
 from agents import matiere  # noqa: E402,F401 — le dossier d'un sujet, rassemble
 from agents.matiere import main as dossier_main  # noqa: E402,F401 — l'entree CLI de la facade

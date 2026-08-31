@@ -1,0 +1,518 @@
+{
+  "id": "affaire-trajectoire-des-moments-marquants",
+  "titre": "La trajectoire des moments marquants",
+  "sous_titre": "🧭 Relier les faits à venir sans transformer les possibles en destin",
+  "type": "plan",
+  "embleme": "🧭",
+  "couleur": "#6b4f7a",
+  "tenu_par": "mj",
+  "office": "L’ordonnancement des moments importants servis au joueur",
+  "pages": [
+    "**CONTRAT DE LECTURE.**\n\nCette affaire lit les événements et programmes déjà écrits. Elle ne crée aucun fait du monde, ne force aucun canon conditionnel et ne remplace ni evenements.json ni info.json. Pour chaque moment, elle sépare la date où le fait se produit, celle où il atteint le personnage joueur et celle où il devient une scène. Un moment ne peut être servi que si sa cause s’est réellement produite et si son chemin jusqu’au joueur existe.",
+    "**LES TROIS LIGNES.**\n\nPremière ligne : Sombreval pousse l’armée verte vers Repos-des-Freux, tandis que la réserve de trois cents lances prépare une réponse sans garantir son effet. Deuxième ligne : l’envoi éventuel de Lucerys peut conduire à sa mort, laquelle peut armer Sang et Fromage et fermer la paix ; toute cette ligne demeure sous décision et conditions. Troisième ligne : les quatre longueurs de chaîne rendent possible une date de travail, qui synchronise les actions du plan d’entrée. Les grands canons ultérieurs restent des horizons tant que leur arrivée au joueur et leurs dépendances ne sont pas écrites."
+  ],
+  "tables": [
+    {
+      "id": "T.OUVERTURE",
+      "titre": "📖 Ouverture",
+      "colonnes": [
+        "Champ",
+        "Valeur"
+      ],
+      "lignes": [
+        {
+          "cellules": [
+            "Nom",
+            "La trajectoire des moments marquants"
+          ]
+        },
+        {
+          "cellules": [
+            "Objet",
+            "Rendre lisible la trajectoire prévue des moments importants pour le joueur, comme un graphe de causes, de conditions et d’arrivées."
+          ]
+        },
+        {
+          "cellules": [
+            "Entrées",
+            "Les événements importants à venir, les programmes déjà datés, les décisions du joueur et les diffusions qui les rendent connaissables."
+          ]
+        },
+        {
+          "cellules": [
+            "Hors champ",
+            "Décider les issues, inventer une arrivée manquante, changer le canon, produire une parole de PNJ ou écrire directement dans l’état."
+          ]
+        },
+        {
+          "cellules": [
+            "Situation au 4e jour de la 4e lune",
+            "La joueuse sait que Sombreval brûle, pas encore exactement ce qui y est tombé. Elle a réservé trois cents lances pour Repos-des-Freux. Les quatre longueurs de chaîne et la date de travail restent à obtenir. L’envoi de Lucerys reste une décision du joueur."
+          ]
+        },
+        {
+          "cellules": [
+            "Adresses locales",
+            "T.x désigne seulement des repères de cette affaire ; les identifiants d’événements restent les seules références au monde."
+          ]
+        },
+        {
+          "cellules": [
+            "Fenêtre active",
+            "Trois moments proches au maximum. Les horizons plus lointains restent visibles mais dormants."
+          ]
+        },
+        {
+          "cellules": [
+            "Affaire close quand",
+            "Chaque événement majeur possède une source, une condition, une date de survenue, un chemin d’arrivée au joueur et une conséquence aval — ou porte explicitement la mention manquant."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T.MOMENTS",
+      "titre": "🧭 Moments marquants prévus",
+      "colonnes": [
+        "🧭 N°",
+        "📅 Se produit",
+        "👁️ Arrive au joueur",
+        "🔗 Événement source",
+        "⚖️ Statut",
+        "🎬 Moment pour le joueur",
+        "🔀 Ce qui peut le dévier"
+      ],
+      "lignes": [
+        {
+          "cellules": [
+            "T.01",
+            "129.4.3",
+            "129.4.4, par les barques : fumée et cloches seulement",
+            "sac-sombreval / info-les-barques-rentrent-avant-lheure",
+            "Partiellement arrivé",
+            "Le danger devient visible avant que son résultat soit connu.",
+            "Le récit complet de la chute n’est pas encore arrivé."
+          ]
+        },
+        {
+          "cellules": [
+            "T.02",
+            "129.4.4, avant le coucher du soleil",
+            "Le même soir, selon le programme",
+            "prog-corlys-rend-coques-reserve-repos-4e-soir",
+            "Prévu",
+            "L’ordre des trois cents lances devient une réserve nommée et transportable.",
+            "Le nombre de coques disponibles et l’absence d’alarme de Staunton."
+          ]
+        },
+        {
+          "cellules": [
+            "T.03",
+            "129.4.5, à l’aube",
+            "À l’aube : témoignage direct ou absence du retour",
+            "prog-retour-reconnaissance-sombreval-5e-aube",
+            "Prévu",
+            "Sombreval cesse d’être une fumée lointaine : une voix, ou un silence, lui donne du poids.",
+            "La reconnaissance peut ne pas revenir."
+          ]
+        },
+        {
+          "cellules": [
+            "T.04",
+            "129.4.5 puis 129.4.6 à midi",
+            "À la clôture des longueurs puis lors de la fixation de la date",
+            "prog-les-quatre-longueurs-de-chaine → prog-la-date-de-travail-au-6e-a-midi",
+            "Prévu sous dépendance",
+            "Le plan d’entrée cesse d’être une intention : il obtient une date de travail et un rythme commun.",
+            "Les quatre longueurs doivent être closes ; le départ de Gerardys pour Accalmie peut annuler la fixation."
+          ]
+        },
+        {
+          "cellules": [
+            "T.05",
+            "Seulement sur décision du joueur",
+            "La décision est jouée dans la salle",
+            "emissaire-lucerys",
+            "Dévié, non automatique",
+            "Choisir ou refuser que Lucerys porte la parole de sa mère à Accalmie.",
+            "Tout autre messager, toute autre monture, tout autre ordre ou l’absence d’envoi."
+          ]
+        },
+        {
+          "cellules": [
+            "T.06",
+            "129.4.9, seulement si les conditions sont réunies",
+            "129.4.13 par corbeau incertain ; 129.4.17 par confirmation des pêcheurs",
+            "mort-lucerys",
+            "Canon conditionnel dévié",
+            "La guerre devient une perte intime avant de devenir une doctrine.",
+            "Lucerys non envoyé, trajet ou monture différents, conditions d’Accalmie non réunies."
+          ]
+        },
+        {
+          "cellules": [
+            "T.07",
+            "129.5.12, seulement si armé",
+            "129.5.15 par corbeau",
+            "sang-et-fromage",
+            "Dormant sous déclencheur",
+            "La vengeance rend la paix politiquement et humainement presque morte.",
+            "Aucun fils de Rhaenyra tué ou blessé ; déclencheur non armé ; action annulée ou déviée."
+          ]
+        },
+        {
+          "cellules": [
+            "T.08",
+            "129.7.5",
+            "129.7.8",
+            "chute-otto",
+            "À venir, conditions à relire",
+            "Le camp vert change de main et rend sa ligne militaire visible.",
+            "La condition écrite dans l’événement est ambiguë et doit être arbitrée sans la réécrire ici."
+          ]
+        },
+        {
+          "cellules": [
+            "T.09",
+            "129.9.5",
+            "Manquant dans les diffusions lues",
+            "bataille-repos-des-freux",
+            "Horizon canonique, arrivée manquante",
+            "Le prix des choix militaires prend des visages : Rhaenys, Aegon et Aemond.",
+            "Les conditions de bataille et l’effet réel de la réserve ; la réserve ne garantit aucune issue."
+          ]
+        },
+        {
+          "cellules": [
+            "T.10",
+            "130.1.10",
+            "Manquant dans les diffusions lues",
+            "bataille-du-gosier",
+            "Horizon canonique, arrivée manquante",
+            "La maîtrise maritime cesse d’être abstraite : elle coûte Jacaerys et ébranle Corlys.",
+            "Les dépendances causales ne sont pas encore écrites comme une chaîne complète."
+          ]
+        },
+        {
+          "cellules": [
+            "T.11",
+            "130.5.1",
+            "Manquant ; la scène de prise n’est pas définie ici",
+            "chute-port-real",
+            "Horizon canonique, trajectoire incomplète",
+            "La conquête devient gouvernement : captives, fuite d’Aegon et commencement d’un règne dur.",
+            "Les liens depuis Repos-des-Freux et le Gosier sont seulement inférés, pas encodés comme dépendances."
+          ]
+        },
+        {
+          "cellules": [
+            "T.28",
+            "129.4.23",
+            "Le même jour, par le rapport direct de Rulf Corne à Peyredragon",
+            "rulf-cherche-un-peseur",
+            "Dévié : mandat clos en échec",
+            "Aucun remplaçant vérifié n'est nommé. Bral reste retenu chez Rulf et ne prélève plus son quarantième ; la charge de la balance demeure vacante.",
+            "Les deux conditions ont cédé : Bral savait avant sa prise, et les femmes des claies savaient avant tout remplacement que la reine était informée."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T.CAUSES",
+      "titre": "🔗 Liens causaux",
+      "colonnes": [
+        "De",
+        "Relation",
+        "Vers",
+        "Statut du lien",
+        "Preuve"
+      ],
+      "lignes": [
+        {
+          "cellules": [
+            "sac-sombreval",
+            "L’armée verte poursuit sa marche vers Repos-des-Freux",
+            "bataille-repos-des-freux",
+            "Explicite",
+            "Effet écrit de sac-sombreval."
+          ]
+        },
+        {
+          "cellules": [
+            "Ordre joueur : trois cents lances réservées / prog-corlys-rend-coques-reserve-repos-4e-soir",
+            "Prépare une réserve transportable qui attend l’alarme de Staunton",
+            "Réponse possible à Repos-des-Freux",
+            "Explicite pour la préparation, résultat non garanti",
+            "Ordre du joueur et effets du programme."
+          ]
+        },
+        {
+          "cellules": [
+            "prog-les-quatre-longueurs-de-chaine",
+            "Fournit le plancher nécessaire à la fixation d’une date",
+            "prog-la-date-de-travail-au-6e-a-midi",
+            "Explicite",
+            "Dépendance écrite du programme."
+          ]
+        },
+        {
+          "cellules": [
+            "prog-la-date-de-travail-au-6e-a-midi",
+            "Synchronise les actions à rebours du plan d’entrée",
+            "Préparation de l’entrée à Port-Réal",
+            "Explicite",
+            "Effet écrit : synchronisation des actions J-moins."
+          ]
+        },
+        {
+          "cellules": [
+            "Décision du joueur d’envoyer Lucerys dans les conditions prévues",
+            "Arme la possibilité de la rencontre fatale à Accalmie",
+            "mort-lucerys",
+            "Explicite et conditionnel",
+            "Conditions écrites de mort-lucerys."
+          ]
+        },
+        {
+          "cellules": [
+            "mort-lucerys",
+            "Arme le déclencheur de vengeance de Daemon",
+            "sang-et-fromage",
+            "Explicite et conditionnel",
+            "Effets de mort-lucerys et condition d’armement de sang-et-fromage."
+          ]
+        },
+        {
+          "cellules": [
+            "sang-et-fromage",
+            "Brise la possibilité politique de paix et déclenche peur et purges",
+            "Guerre sans retour",
+            "Explicite",
+            "Effets écrits de sang-et-fromage."
+          ]
+        },
+        {
+          "cellules": [
+            "chute-otto",
+            "Criston devient Main et la ligne verte devient militaire",
+            "Trajectoire vers Repos-des-Freux",
+            "Inférence",
+            "Les effets sont explicites ; aucune dépendance directe vers la bataille n’est écrite."
+          ]
+        },
+        {
+          "cellules": [
+            "bataille-repos-des-freux",
+            "Aegon est brisé et Aemond devient Protecteur",
+            "Nouvel équilibre avant la chute de Port-Réal",
+            "Inférence",
+            "Conséquences explicites de la bataille, mais pas de dépendance directe vers chute-port-real."
+          ]
+        },
+        {
+          "cellules": [
+            "bataille-du-gosier",
+            "Jacaerys meurt, le blocus est ébranlé et Corlys vacille",
+            "Affaiblissement des Noirs avant la chute de Port-Réal",
+            "Inférence",
+            "Conséquences explicites de la bataille, mais pas de dépendance directe vers chute-port-real."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T.VERROUS",
+      "titre": "🔒 Verrous",
+      "colonnes": [
+        "🔒 N°",
+        "Verrou",
+        "État",
+        "Ouverture"
+      ],
+      "lignes": [
+        {
+          "cellules": [
+            "T.12",
+            "Confondre la date du fait, la date de sa connaissance et la date de sa scène.",
+            "Fermé",
+            "Les trois dates sont écrites séparément ou la valeur manquante est déclarée."
+          ]
+        },
+        {
+          "cellules": [
+            "T.13",
+            "Servir au joueur un grand canon dont aucun chemin d’information n’est écrit.",
+            "Fermé pour Repos-des-Freux, le Gosier et la chute de Port-Réal",
+            "Une diffusion ou une source incarnée existe dans l’état."
+          ]
+        },
+        {
+          "cellules": [
+            "T.14",
+            "La lettre de la reine doit encore arriver à Gunthor Sombrelyn alors que sa mort rend le programme obsolète.",
+            "Contradiction du monde, non corrigée ici",
+            "Le programme prog-lettre-reine-arrive-a-sombreval-4e est résolu ou dévié dans l’état par la boucle compétente."
+          ]
+        },
+        {
+          "cellules": [
+            "T.15",
+            "Lire un canon conditionnel comme une scène obligatoire.",
+            "Fermé",
+            "La décision du joueur et toutes les conditions de l’événement sont constatées avant activation."
+          ]
+        },
+        {
+          "cellules": [
+            "T.16",
+            "Certaines conditions de chute-otto et de bataille-repos-des-freux sont sémantiquement ambiguës.",
+            "À arbitrer",
+            "Le moteur ou l’autorité canonique tranche leur sens ; cette affaire conserve le texte sans l’interpréter comme certitude."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T.CLEFS",
+      "titre": "🗝️ Clefs de tenue",
+      "colonnes": [
+        "🗝️ N°",
+        "Règle"
+      ],
+      "lignes": [
+        {
+          "cellules": [
+            "T.17",
+            "Toujours séparer survenue, connaissance et scène."
+          ]
+        },
+        {
+          "cellules": [
+            "T.18",
+            "Qualifier chaque lien : explicite, conditionnel, inféré ou manquant."
+          ]
+        },
+        {
+          "cellules": [
+            "T.19",
+            "Recalculer la trajectoire après chaque décision du joueur et chaque tick qui résout ou dévie un événement."
+          ]
+        },
+        {
+          "cellules": [
+            "T.20",
+            "Ne garder que trois moments proches dans la fenêtre active ; les autres restent des horizons, jamais des promesses de scène."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T.ACTIONS",
+      "titre": "⚔️ Actions de tenue",
+      "colonnes": [
+        "⚔️ N°",
+        "🏷️ Action",
+        "📝 Ce qu’on fait",
+        "📍 Où",
+        "👁️ Preuve",
+        "⏳ État",
+        "📅 Jour dû",
+        "📅 Jour fait",
+        "📝 Note"
+      ],
+      "lignes": [
+        {
+          "cellules": [
+            "T.21",
+            "Inventaire initial",
+            "Recenser les événements majeurs, leurs dates, leurs conditions et leurs arrivées écrites.",
+            "evenements.json, info.json, flux.jsonl",
+            "Tables T.MOMENTS et T.CAUSES",
+            "Fait",
+            "129.4.4",
+            "129.4.4",
+            "Les absences et inférences sont conservées comme telles."
+          ]
+        },
+        {
+          "cellules": [
+            "T.22",
+            "Résoudre la lettre obsolète",
+            "Faire traiter par la boucle compétente le programme adressé à Gunthor après la chute de Sombreval.",
+            "prog-lettre-reine-arrive-a-sombreval-4e",
+            "Événement résolu ou dévié dans l’état",
+            "À faire",
+            "Avant le prochain Advance",
+            "",
+            "Cette affaire ne décide pas elle-même de l’issue."
+          ]
+        },
+        {
+          "cellules": [
+            "T.23",
+            "Recalcul après décision",
+            "Mettre à jour les branches actives après chaque décision du joueur et chaque événement résolu ou dévié.",
+            "T.MOMENTS et T.CAUSES",
+            "Statuts et liens concordent avec l’état courant",
+            "Permanent",
+            "À chaque décision ou tick",
+            "",
+            "Un possible abandonné devient dormant ou dévié, pas oublié."
+          ]
+        },
+        {
+          "cellules": [
+            "T.24",
+            "Vérifier avant de servir",
+            "Avant toute scène marquante, vérifier que le fait s’est produit et que son chemin jusqu’au joueur existe.",
+            "evenements.json puis info.json",
+            "Événement produit et entrée d’information correspondante",
+            "Permanent",
+            "Avant chaque scène",
+            "",
+            "Une date canonique seule n’autorise pas une scène."
+          ]
+        },
+        {
+          "cellules": [
+            "T.25",
+            "Conserver les arrivées manquantes",
+            "Marquer manquant plutôt que d’inventer la façon dont un événement lointain atteint le joueur.",
+            "T.MOMENTS et T.VERROUS",
+            "Mention explicite manquant",
+            "Permanent",
+            "À l’ajout de chaque horizon",
+            "",
+            "Repos-des-Freux, le Gosier et Port-Réal sont actuellement concernés."
+          ]
+        },
+        {
+          "cellules": [
+            "T.26",
+            "Armer ou désarmer la branche Lucerys",
+            "Après la décision réelle du joueur, activer ou laisser dormants mort-lucerys et ses descendants.",
+            "T.05 à T.07",
+            "Décision et conditions présentes dans l’état",
+            "En attente de décision",
+            "Au moment de la décision",
+            "",
+            "Aucune anticipation de la décision."
+          ]
+        },
+        {
+          "cellules": [
+            "T.27",
+            "Tenir la fenêtre active",
+            "Maintenir au plus trois moments prochains, les autres restant des horizons documentés.",
+            "T.MOMENTS",
+            "Trois lignes au plus portent un statut actif immédiat",
+            "Permanent",
+            "Après chaque recalcul",
+            "",
+            "La trajectoire guide le rythme sans fabriquer de rails."
+          ]
+        }
+      ]
+    }
+  ]
+}

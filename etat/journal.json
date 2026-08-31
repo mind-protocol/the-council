@@ -15,7 +15,12 @@
     "corlys",
     "rhaenys",
     "jacaerys"
-   ],
+  ,{
+   "date": {"annee": 129, "lune": 5, "jour": 12, "minute": 420},
+   "lieu_id": "peyredragon",
+   "resume": "Le declencheur de vengeance de Daemon n'a jamais ete arme : Lucerys n'est pas mort a Accalmie. Au 12e jour de la 5e lune, les deux hommes payes restent en reserve ; Jaehaerys vit et aucune purge ne suit.",
+   "choix_fait": "JUMP. L'evenement Sang et Fromage est devie sans decision preparatoire de la reine ; aucune autre cible n'est jouee."
+  }],
    "resume": "Premier conseil noir à la Table Peinte, trois jours après les relevailles. La reine a freiné l'élan guerrier (« Nous allons trop vite ! »), fait exposer tous les plans (Harrenhal par Daemon, blocus du Gosier par Corlys, garde de la baie par Rhaenys, ambassades par Jace), jeté un « faites comme bon vous semble » glacial que la table lui a renvoyé, puis tranché : le couronnement d'abord. Plan arrêté : couronne escortée au quai (~jour 18), bannerets de la baie convoqués pour jurer le même jour, cérémonie en plein jour sur le grand escalier face à la mer, Daemon posera la couronne (accepté d'un regard) puis partira pour Harrenhal au matin du 19, flotte appareillée le lendemain du sacre, lettres de Jace scellées après. À noter : Daemon a envoyé un pli mystérieux vers les quais (Mysaria — la reine l'a vu sans connaître le destinataire) ; la reine a mis en doute ses chiffres sur Harrenhal ; le regard de la reine vers la mer a trahi sa peur pour Luke ; elle a laissé Daemon partir sans un mot pour la nuit.",
    "choix_fait": "Le couronnement avant toute offensive ; Daemon couronne puis prend Harrenhal ; blocus au nom d'une reine couronnée ; lettres d'ambassade après le sacre."
   },
@@ -481,6 +486,59 @@
    ],
    "resume": "TABLE PEINTE, 13h07-13h22 LE 4e. La reine ferme Sombreval jusqu'au retour des deux barques de reconnaissance : ne supposer ni Gunthor mort, ni son quai ouvert, et ne faire partir aucun nouvel ordre de débarquement. Ser Steffon propose alors une réserve de trois cents lances pour Repos-des-Freux, sous son ordre jusqu'au débarquement puis sous celui de lord Staunton dans la place. La reine accepte, borne la mission à l'alarme de Staunton et aux murs, charge Corlys d'affecter avant le soir des coques comptées plutôt que supposées, puis clôt le conseil sans ouvrir de troisième affaire.",
    "choix_fait": "MODE LAISSER FAIRE. Fermer deux fils au lieu d'en ouvrir un autre : Sombreval volontairement suspendue jusqu'aux barques ; Repos-des-Freux passé à l'exécution avec trois cents lances réservées, deux commandements successifs et aucune poursuite hors des murs."
+  },
+  {
+   "id": "jump-compte-repos-non-certifie-4e-soir",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4,
+    "minute": 1148
+   },
+   "lieu_id": "peyredragon",
+   "salle": "table-peinte",
+   "participants": [
+    "rhaenyra",
+    "gerardys",
+    "corlys",
+    "steffon-darklyn"
+   ],
+   "resume": "TABLE PEINTE, 19h00-19h08 LE 4e. Le compte promis pour Repos-des-Freux est rendu sans estimation : cinq coques demeurent réservées par l'ordre de la reine, mais aucune n'est certifiée comme transport ; aucune place ni aucun délai ne sont garantis. Corlys ne retire aucune nef du croissant du Gosier sur un rôle incomplet. Steffon retire les trois cents du chiffre transportable et interdit tout départ fondé sur une promesse de registre.",
+   "choix_fait": "JUMP. L'événement du compte du soir est résolu sur une certification nulle : la réserve demeure ordonnée, mais aucun départ n'est possible avant des lignes complètes. Aucun second événement n'est entamé."
+  },
+  {
+   "id": "jump-feuillet-treize-reste-ouvert-5e-matin",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 5,
+    "minute": 427
+   },
+   "lieu_id": "peyredragon",
+   "salle": "table-peinte",
+   "participants": [
+    "rhaenyra",
+    "gerardys"
+   ],
+   "resume": "TABLE PEINTE, 7h00-7h07 LE 5e. Gerardys tente de fermer le feuillet des treize et refuse de transformer les bornes en longueurs : neuf seulement sont mesurées. Sara vaut zéro jour mais son heure n'est inscrite qu'au matin ; Steffon était à sa porte sans feuillet ni heure du dernier relevé ; l'homme du dedans n'a rendu ni heure ni longueur. Marlo reste calculé sur une branche de vingt-quatre ou trente-deux jours. Le plancher du 27e est barré et remplacé par deux bornes encore concurrentes : le 28e ou le 6e de la lune suivante.",
+   "choix_fait": "JUMP. L'événement des quatre longueurs est dévié : le feuillet demeure ouvert et le rendu déjà programmé du 6e à midi reste seul en aval. Aucun second événement n'est entamé."
+  },
+  {
+   "id": "jump-date-travail-calculee-6e-midi",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 6,
+    "minute": 724
+   },
+   "lieu_id": "peyredragon",
+   "salle": "appartements-reine",
+   "participants": [
+    "rhaenyra",
+    "gerardys"
+   ],
+   "resume": "CHAMBRE HAUTE, MIDI LE 6e. Gerardys remet seul à la reine la date de travail du jour d'entrée. Trois chaînes demeurent calculées plutôt que relevées ; la branche tardive du Guet à trente-deux jours commande donc le 6e jour de la lune suivante. Le prochain passage peut encore ramener la date au 28e de la lune courante. La date de travail existe et a été remise, mais elle n'est pas encore arrêtée devant deux témoins.",
+   "choix_fait": "JUMP. Les actions 11026 et 11027 sont accomplies sur une date de travail calculée et mobile ; 11031 demeure à faire. Aucun événement suivant n'est entamé."
   }
  ],
  "scene_courante": ""

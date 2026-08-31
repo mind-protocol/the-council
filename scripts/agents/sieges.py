@@ -49,7 +49,7 @@ from temps.expose import regence  # ce que le siege a decide seul pendant l'abse
 from etat.expose import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
 
 lire = tables.lire      # absent -> defaut ; corrompu -> plante, jamais un defaut
-ecrire = tables.ecrire  # atomique (os.replace) : jamais un fichier a moitie ecrit
+ecrire = tables.ecrire  # direct : une interruption peut laisser un fichier tronque
 
 
 def tetes():

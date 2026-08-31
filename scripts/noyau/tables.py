@@ -5,7 +5,7 @@ TABLES — la seule porte de `etat/`.
     from tables import lire, ecrire, chemin
     monde = lire("monde")                     # etat/monde.json
     agenda = lire("joueurs/aurore/agenda", {})
-    ecrire("monde", monde)                    # atomique, jamais a moitie ecrit
+    ecrire("monde", monde)                    # ecriture directe dans la table
 
 POURQUOI CE MODULE EXISTE.
 `tick.py` proclame en tete : « Un seul ecrivain. » L'intention est la bonne, la
@@ -35,9 +35,10 @@ CE QUE LA PORTE TRANCHE, ET POURQUOI DANS CE SENS.
 3. **Un fichier illisible (droits, disque, verrou) PLANTE.** Meme raison qu'au
    1 : ce n'est pas une absence, c'est une panne, et une panne avalee est une
    panne qui se rejoue.
-4. **Toute ecriture est ATOMIQUE** — fichier temporaire dans le meme dossier,
-   puis `os.replace`. Il n'existe qu'une implementation ici, la ou il y en avait
-   deux. C'est ce qui empeche le fichier a moitie ecrit qui produit le cas 1.
+4. **Toute ecriture est DIRECTE** — la porte ouvre le fichier cible et le
+   reecrit. Il n'y a ni fichier temporaire ni `os.replace`. Une interruption
+   peut donc laisser un JSON tronque ; le cas 1 le fera planter au prochain
+   lecteur au lieu de servir silencieusement un etat vide.
 
 POURQUOI PAS `scripts/etat.py`, LE NOM QUE L'AUDIT DEMANDAIT.
 Parce qu'il est piege. `etat/` est un DOSSIER a la racine du depot, et Python 3
@@ -65,7 +66,7 @@ import json
 import os
 import re
 import sys
-import tempfile
+import time
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ETAT = os.path.join(RACINE, "etat")
@@ -177,23 +178,23 @@ def _cliquet_du_monde(p, valeur):
 
 
 def ecrire(nom, valeur, indent=2):
-    """Ecrire une table, atomiquement. Rend le chemin ecrit.
+    """Ecrire directement une table. Rend le chemin ecrit.
 
     `indent` : la mise en page N'EST PAS un detail ici. Les gros registres
     (`books`, les rapports) s'ecrivent en indent=1 — chaque espace compte sur
     2 Mo —, les cartes de ville en compact (`indent=None` → separateurs
-    serres), le reste en 2. La porte impose la semantique d'erreur et
-    l'atomicite, pas la mise en page : forcer indent=2 partout aurait reecrit
+    serres), le reste en 2. La porte impose la semantique d'erreur, pas la mise
+    en page : forcer indent=2 partout aurait reecrit
     des tables entieres au premier passage de chaque migrant.
     """
     p = chemin(nom)
     _cliquet_du_monde(p, valeur)
-    p = _poser(p, lambda f: _dump(valeur, f, indent))
+    p = _ecrire_direct(p, lambda f: _dump(valeur, f, indent))
     return p
 
 
 def ecrire_lignes(nom, lignes):
-    """Ecrire un fichier JSONL ENTIER (une valeur JSON par ligne), atomiquement.
+    """Ecrire directement un fichier JSONL ENTIER (une valeur JSON par ligne).
 
     Pour les projections qui reecrivent tout leur fichier d'un bloc
     (`tisser.py` et `noyau/chiffrer.py` deposent `etat/tissu/*.jsonl` ainsi).
@@ -204,7 +205,7 @@ def ecrire_lignes(nom, lignes):
         for l in lignes:
             f.write(json.dumps(l, ensure_ascii=False) + "\n")
     p = nom if os.path.isabs(nom) else os.path.join(ETAT, *str(nom).replace("\\", "/").split("/"))
-    return _poser(p, _rendre)
+    return _ecrire_direct(p, _rendre)
 
 
 def _dump(valeur, f, indent):
@@ -215,35 +216,26 @@ def _dump(valeur, f, indent):
     f.write("\n")
 
 
-def _poser(p, rendre):
-    """L'ecriture atomique elle-meme : temporaire dans le meme dossier, replace."""
+def _ecrire_direct(p, rendre):
+    """Reecrit le fichier cible sans temporaire, remplacement ni verrou."""
     d = os.path.dirname(p)
     if d:
         os.makedirs(d, exist_ok=True)
-    fd, provisoire = tempfile.mkstemp(dir=d or None, suffix=".tmp")
-    try:
-        with io.open(fd, "w", encoding="utf-8", newline="\n") as f:
-            rendre(f)
-        os.replace(provisoire, p)
-    except BaseException:
+    for tentative in range(3):
         try:
-            if os.path.exists(provisoire):
-                os.remove(provisoire)
+            with io.open(p, "w", encoding="utf-8", newline="\n") as f:
+                rendre(f)
+            break
         except OSError:
-            pass
-        raise
+            if tentative == 2:
+                raise
+            time.sleep(0.05 * (tentative + 1))
     return p
 
 
-# Les deux noms sous lesquels le depot connaissait deja ces gestes. Ils sont ici
-# pour qu'une migration tienne en une ligne d'import au lieu d'un renommage — et
-# pour qu'il n'existe plus qu'UNE implementation derriere les deux.
+# Alias de lecture historique, conserve pour les importeurs existants.
 def lire_json(chemin_ou_nom, defaut=_RIEN):
     return lire(chemin_ou_nom, defaut)
-
-
-def ecrire_atomique(chemin_ou_nom, valeur):
-    return ecrire(chemin_ou_nom, valeur)
 
 
 # ---------------------------------------------------------------------------

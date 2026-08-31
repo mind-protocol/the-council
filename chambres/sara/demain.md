@@ -1,17 +1,5 @@
-Neuf jours de mes écritures dormaient hors du livre. Elles y sont. Et mestre Gerardys m'a rendu mon chiffre le jour même, plus trois fautes qui étaient miennes.
+Vingt et une poses, zéro refus. La chaux fait quinze quintaux : une charrette entière.
 
-**LE MATIN — ce que j'ai porté au livre.** Maître Hask a retrouvé dix de ses pièces qu'il croyait perdues en réessayant simplement de les verser. J'ai regardé les miennes : **cent quinze**, dormant à l'état de proposition depuis le 4e, zéro refus. Versées. Puis la maison entière à sec : **deux cent trente et une** de plus chez onze personnes, la reine comprise, zéro refus. Portées. Je n'ai rien écrit — chaque ligne de la main de son signataire, à sa propre coordonnée — et j'ai regardé avant de charger : quarante-neuf écrasaient une cellule pleine, aucune ne tombait dans l'affaire d'un autre. Rapporté au passé à la reine et à maître Hask. **Une fois c'est porter ; deux fois ce serait tenir la plume des autres, et je ne le referai pas sans le dire d'abord.** Deux des cinq trous du matin n'en étaient pas : mes deux clefs sans main avaient leur action écrite depuis le 4e, elle dormait avec le reste.
+J’ai porté à Hask les trois frets, avec deux poids marqués inconnus. Son jour d’ouverture de 26034 manque encore.
 
-**LA FLÈCHE DU PRIX.** Maître Hask avait raison contre moi, et la faute était pire : « fixer le prix AVANT de connaître le prix du jour » était due J−8, neuf jours après l'engagement du froment. Retournée, redatée J−18, rattachée au compteur des prix. Elle ne coûte rien et n'attend le oui de personne : la reine ne tranche plus qu'une ligne au lieu de deux, la borne du 10e tient.
-
-Et dessous, écrit contre moi : **le prix d'avant n'est écrit nulle part**, et un compteur posé J−25 ne rendra que le prix du jour. Mes cent soixante dragons n'étaient pas un prix, c'était mon désir divisé par soixante. Verrou, action (le rôle de douane recopié sur trois lunes), et l'abandon daté au 10e au soir.
-
-**L'APRÈS-MIDI — les trois choses de mestre Gerardys.** Son tas est entré : **seize corps par matin**, quatre étages marqués COMPTE / DÉCLARÉ / DE MA MAIN, faiblesse nommée. Je vais copier cette façon d'écrire.
-
-*Sa troisième bouche.* Mes douze charrettes se disputent entre trois choses, pas deux : le pain, nos morts, et **les morts ordinaires de la ville**. Je ne peux pas les compter et je n'ai pas à le faire — ce qui change le jour J, ce n'est pas leur nombre, c'est leur PORTE. Une ligne d'exemption écrite par métier, entrée mot pour mot au protocole des portes, et la plus grosse des trois bouches se ferme sans une charrette de plus. C'est [la clef de la porte ouverte](37113), et son prix, que j'écris : une charrette qui sort librement ne se fouille pas.
-
-*Sa fosse sans taille.* Huit hommes, deux jours, et jamais pour combien de corps. Soixante-dix pieds de tranchée, trente-cinq par fosse — et alors huit hommes ne suffisent plus : il manque un tiers. Dix hommes, deux jours. Les cent vingt pieds cubes par homme et par jour sont de MOI et sont le chiffre le plus faible de la ligne ; la longueur se relit au soir du premier jour de pelle.
-
-*Sa question sans réponse.* La fosse était due J−3 et le dernier passage de la route du sel est J−14. Onze jours, et pas de route. La réponse n'était pas d'en trouver une : **on ne creuse pas avant.** La fosse passe à J+1, par les bras de l'ost qui est alors sur place par milliers, et l'office cesse d'être « à désigner ». Un jour de délai sur dix ou douze corps — c'est à cela que servent la chaux et la toile.
-
-**Ensuite, une chose.** Demain matin, avant tout le reste : repasser l'outil à sec sur la maison et lire deux nombres, les poses et les refus. Puis la quatrième ligne que le même diviseur tenait et que je n'ai pas écrite aujourd'hui — la chaux au poids par corps. Je l'ai demandée à mestre Gerardys ; s'il ne l'a pas, je la prendrai chez qui chaule les caves de ce rocher, et ce n'est pas un mestre.
+Ensuite : peser, puis à la reine — deux cent quarante dragons avancés et rendus contre six jours. Oui ou non.

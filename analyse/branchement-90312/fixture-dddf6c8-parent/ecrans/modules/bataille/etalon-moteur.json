@@ -1,0 +1,145 @@
+{
+ "_lisez_moi": "L'ÉTALON DU MOTEUR. Ce que rend `ecrans/modules/bataille2d.js` et sa chaîne sur une bataille courte, à graine tenue. Il ne dit pas que la bataille est bonne : il dit qu'elle est la MÊME. On le repose d'un `--poser` quand on a CHOISI de changer le modèle, et l'on écrit alors dans le commit ce qui a bougé et pourquoi. Un déplacement de blocs, lui, ne doit rien bouger du tout — c'est toute la raison de ce fichier. Engendré par ecrans/modules/bataille/banc-moteur.js, ne pas éditer à la main.",
+ "pose_le": "2026-08-27 14:22:27",
+ "condition": {
+  "hommes": 150,
+  "duree_s": 100,
+  "porte": "La porte de la Gadoue",
+  "pas_s": 0.05,
+  "graine": 20161219,
+  "porte_ouverte_essai": "false",
+  "peuple": 0,
+  "tournee": 0,
+  "planches": 0,
+  "chaine": [
+   {
+    "f": "bataille/moteur/commun/traces.js",
+    "sha": "b1cda5497d48"
+   },
+   {
+    "f": "bataille/moteur/commun/contrats.js",
+    "sha": "1342880a208d"
+   },
+   {
+    "f": "bataille/moteur/monde/topologie.js",
+    "sha": "c60f404e35ec"
+   },
+   {
+    "f": "bataille/moteur/etat.js",
+    "sha": "be2d8ec32d81"
+   },
+   {
+    "f": "bataille/hasard.js",
+    "sha": "23fdcd8a79ef"
+   },
+   {
+    "f": "bataille/mesures.js",
+    "sha": "049c26197803"
+   },
+   {
+    "f": "bataille/roster.js",
+    "sha": "e56b246842ce"
+   },
+   {
+    "f": "survival-stack/1-corps.js",
+    "sha": "a30b233485d8"
+   },
+   {
+    "f": "bataille/corps-adapt.js",
+    "sha": "169bb8491ecf"
+   },
+   {
+    "f": "survival-stack/4-envie.js",
+    "sha": "76a2c6fbc4dd"
+   },
+   {
+    "f": "survival-stack/3-interpretation.js",
+    "sha": "0f0e474a453e"
+   },
+   {
+    "f": "survival-stack/2-reflexion.js",
+    "sha": "999419d55f11"
+   },
+   {
+    "f": "survival-stack/5-qui-conduit.js",
+    "sha": "f91e12bf7cbb"
+   },
+   {
+    "f": "bataille/reflexion-adapt.js",
+    "sha": "22f98bf8b575"
+   },
+   {
+    "f": "bataille/commandement.js",
+    "sha": "4160acf136fa"
+   },
+   {
+    "f": "bataille2d.js",
+    "sha": "c74ba5efb2a6"
+   },
+   {
+    "f": "bataille/moteur/index.js",
+    "sha": "e25b2743853b"
+   }
+  ],
+  "chaine_sha": "0189d7984e3f"
+ },
+ "releve": {
+  "temps": 100,
+  "morts": 0,
+  "blesses": 0,
+  "fuyards": 1,
+  "assaut": 158,
+  "garde": 75,
+  "verrou": {
+   "etat": "ferme",
+   "pv": 900
+  },
+  "portes": [
+   {
+    "nom": "La porte de la Gadoue",
+    "etat": "ferme",
+    "pv": 900,
+    "par": null
+   },
+   {
+    "nom": "La porte de Fer",
+    "etat": "ferme",
+    "pv": 9000,
+    "par": null
+   },
+   {
+    "nom": "La porte du Roi",
+    "etat": "ferme",
+    "pv": 9000,
+    "par": null
+   },
+   {
+    "nom": "La Vieille Porte",
+    "etat": "ferme",
+    "pv": 9000,
+    "par": null
+   }
+  ],
+  "etats": {
+   "colonne": 111,
+   "forme": 40,
+   "commande": 5,
+   "deroute": 1,
+   "tient": 82
+  },
+  "faits": 29,
+  "par_quoi": {
+   "porte-abimee": 1,
+   "corps-ferme": 1,
+   "corps-sourd": 1,
+   "corps-versatile": 1,
+   "ordre": 9,
+   "coureur-part": 6,
+   "coureur-arrive": 6,
+   "escouade-sourde": 1,
+   "ordre-deforme": 1,
+   "escouade-rompt": 1,
+   "banniere-tombe": 1
+  }
+ }
+}

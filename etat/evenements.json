@@ -1105,44 +1105,9 @@
       "annulé si Daemon perd ses capitaines des manteaux d'or, ou si Mysaria vend les deux noms aux Verts",
       "dévié si la reine l'apprend et l'interdit par écrit avant que les hommes ne soient payés"
     ],
-    "statut": "a-venir",
-    "effets": "Helaena sombre ; Port-Réal bascule dans la peur ; les Verts exécutent et purgent ; toute voie de paix est morte",
-    "diffusion": [
-      {
-        "ou": "peyredragon",
-        "qui": null,
-        "date": {
-          "annee": 129,
-          "lune": 5,
-          "jour": 15
-        },
-        "canal": "corbeau",
-        "fiabilite": 75,
-        "version": "Dans le Donjon Rouge, un enfant a été égorgé sous les yeux de sa mère, qu'on a forcée à choisir lequel de ses fils mourrait. C'était Jaehaerys. Le royaume dira que l'ordre est venu de Peyredragon, et le royaume n'aura pas entièrement tort.",
-        "livree": false
-      },
-      {
-        "ou": "port-real",
-        "qui": [
-          "alicent",
-          "otto",
-          "aegon-ii",
-          "aemond",
-          "criston",
-          "helaena",
-          "larys"
-        ],
-        "date": {
-          "annee": 129,
-          "lune": 5,
-          "jour": 12
-        },
-        "canal": "temoin",
-        "fiabilite": 100,
-        "version": "L'héritier du roi a été égorgé dans ses appartements, la reine Helaena tenue par les bras pendant qu'on la faisait choisir. Les portes étaient gardées. Quelqu'un les a ouvertes.",
-        "livree": false
-      }
-    ]
+    "statut": "devie",
+    "effets": "Le déclencheur n'a pas été armé : Jaehaerys vit, Helaena n'est pas attaquée, Port-Réal ne subit ni meurtre ni purge par cette branche. Sur l'ordre de Rhaenyra, Daemon rappelle les deux hommes, solde seulement leur dû, détruit noms, relais et marques, délie les capitaines des manteaux d'or et coupe les voies préparées.",
+    "diffusion": []
   },
   {
     "id": "ralliement-trident",
@@ -2244,7 +2209,7 @@
       "si le peseur apprend qu'il est decouvert, il part ou se couvre",
       "si les femmes des claies l'apprennent avant qu'il soit remplace, la reine aura su et laisse faire"
     ],
-    "statut": "a-venir",
+    "statut": "devie",
     "effets": "un peseur honnete aux sechoirs, ou une affaire qui eclate au mauvais moment"
   },
   {
@@ -4766,8 +4731,8 @@
       "retarde si ser Steffon n est pas a sa porte ce soir",
       "retarde si dame Sara n a pas sa longueur a l aube"
     ],
-    "statut": "a-venir",
-    "effets": "le feuillet des treize se ferme ; le plancher du 27e se confirme ou monte",
+    "statut": "devie",
+    "effets": "Le 5e a sept heures, le feuillet des treize ne se ferme pas : neuf longueurs seulement sont mesurees. Sara porte zero jour mais son heure n'est inscrite qu'alors ; Steffon etait a sa porte sans avoir recu le feuillet ni l'heure du dernier releve ; l'homme du dedans n'a encore ni heure ni longueur. Marlo reste calcule sur la plus longue connue, fourchue entre vingt-quatre et trente-deux jours. Le plancher quitte donc le 27e : il est au 28e dans la premiere branche ou au 6e de la lune suivante dans la seconde. Le programme du 6e a midi demeure le prochain rendu deja etabli.",
     "diffusion": []
   },
   {
@@ -4789,8 +4754,8 @@
       "retarde si les quatre longueurs manquantes ne sont pas rentrees le 5e au soir",
       "annule si la reine renvoie le mestre a Accalmie avant le 6e"
     ],
-    "statut": "a-venir",
-    "effets": "la DATE DE TRAVAIL existe ; 11026 et 11027 passent faites ; reste a la figer en DATE ARRETEE (11031) devant deux temoins",
+    "statut": "resolu",
+    "effets": "Au 6e a midi, Gerardys remet seul a la reine la date de travail calculee : le 6e jour de la lune suivante, commande par la branche tardive du Guet a trente-deux jours. Elle demeure mobile et peut revenir au 28e de cette lune si le prochain passage prend le nom. 11026 et 11027 passent faites ; 11031 reste a faire devant deux temoins.",
     "diffusion": []
   },
   {
@@ -4834,8 +4799,8 @@
       "si le compte ne permet pas de charger trois cents hommes, rendre le chiffre tenable et ce qui manque avant le coucher du soleil",
       "si une coque doit être retirée au blocus du Gosier, nommer laquelle et ce que son retrait ouvre"
     ],
-    "statut": "a-venir",
-    "effets": "la réserve de Repos-des-Freux devient transportable selon un compte nominatif ; aucun départ n'est déclenché sans l'alarme de Staunton",
+    "statut": "resolu",
+    "effets": "A dix-neuf heures, le compte n'établit aucune coque mobilisable ni aucun effectif transportable : les trois cents sont retirés du disponible, aucune nef n'est prise au croissant du Gosier et aucun départ n'est autorisé. Gerardys fixe au 6e jour à midi le rendu d'une date de travail fondée sur des lignes complètes.",
     "diffusion": []
   }
 ]

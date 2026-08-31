@@ -1,0 +1,3 @@
+J’ai mis Hann en demeure de réunir à l’aube les hommes du Boyau et du Culpucier. Sept lignes restent nues ; je n’y souffrirai ni flatterie ni faux serment.
+
+À la première lumière, je leur porterai moi-même le rôle. Otto pourra bien régner sur ma chambre vide.

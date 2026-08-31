@@ -9,6 +9,7 @@ import re
 
 import chiffrer  # la grammaire des couts
 import bibliotheque  # les books scindes ; source canonique du container plan
+from plan.tisser.chambre_mj import noeuds_affaires_mj
 
 from etat.expose import tables  # LA PORTE de etat/
 
@@ -180,7 +181,8 @@ def nu(t):
 
 # ------------------------------------------------------------ les noeuds
 
-def indexer(books, intentions, mains, plans, evenements, personnages, plis=None):
+def indexer(books, intentions, mains, plans, evenements, personnages, plis=None,
+            affaires_mj=None):
     """Ce qui EXISTE, et sous quelle adresse. Une arete pointe ici ou pend."""
     noeuds = {}          # id -> {genre, ou, quoi}
     doubles = collections.Counter()
@@ -302,6 +304,14 @@ def indexer(books, intentions, mains, plans, evenements, personnages, plis=None)
                 pose(x.get("id"), genre, "plan:" + pl["id"], x.get("quoi"),
                      etat=x.get("etat"), depend_de=x.get("depend_de"),
                      jour_du=x.get("jour_du"), office=x.get("office"))
+
+    # Les affaires du MJ sont une couche locale assumée du graphe. Leurs
+    # adresses sont qualifiées par livre : aucune pièce de chambre ne peut
+    # prendre la place d'une adresse canonique du monde.
+    for n in noeuds_affaires_mj(affaires_mj or []):
+        proprietes = {k: v for k, v in n.items()
+                      if k not in ("id", "genre", "ou", "quoi")}
+        pose(n["id"], n["genre"], n["ou"], n["quoi"], **proprietes)
 
     return noeuds, doubles
 

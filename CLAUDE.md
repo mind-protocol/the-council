@@ -289,7 +289,7 @@ Ne révèle JAMAIS au joueur ce que son personnage ne sait pas :
 
 Après CHAQUE scène ou battement, mets à jour les fichiers `etat/` concernés, sur disque, avant de rendre la main. Aucun fait important ne doit exister seulement dans le texte du chat.
 - Toute promesse, menace, serment, aveu, mensonge, insulte significatif prononcé en scène → `etat/paroles.json` (locuteur, destinataires, témoins). Vaut pour le joueur COMME pour les PNJ.
-- Tout acte significatif → `etat/actes.json`, avec `temoins` et `connu_de` exacts.
+- Tout acte significatif → `etat/actes.json`, avec `temoins` et `connu_de` exacts. Passe par `scripts/ajouter.py actes` : dans un call contextualisé sur une action, la porte ajoute automatiquement `action_id`, `affaire_id` et la relation `preuve`.
 - Les personnages actifs ont leurs pensées et plans dans `etat/intentions.json` : mise à jour **à chaque battement ET après toute scène qui les implique**. Leurs actions hors écran sortent de là, exclusivement.
 - Toute nouvelle qui donne une position, un compte d'hommes ou de nefs, une marche, un siège, un serment prêté → `etat/jetons.json`, la table de guerre (voir `docs/carte.md`). Elle y entre avec sa `certitude` : ce que le joueur CROIT tenir, jamais la vérité. Ce qui n'y est plus vrai en sort ou passe en `rapportee`.
 - Toute nouvelle qui dit où se trouve QUELQU'UN → `etat/vues.json`, la dernière position connue (voir `docs/carte.md`). C'est la croyance du joueur, jamais `personnages.lieu_id` : elle porte sa date, sa source, sa `certitude`, et vieillit toute seule jusqu'à l'oubli. Ce qui n'y est pas n'apparaît sur aucune carte.

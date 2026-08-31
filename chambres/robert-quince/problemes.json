@@ -1,5 +1,38 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+ "entrees": [
+  {
+   "date": "129.4.4",
+   "quoi": "Corriger les cinq clefs que le plan continue de dire absentes : 10015, 10016, 10111, 20313 et 20314.",
+   "tente": "Écrire dans OUVRE les verrous précis 10001, 10004, 10005, 20302 et 20304, puis relire et valider les deux volumes.",
+   "fait_par_appareil": "L'écriture a été acceptée et les JSON validés ; à la relecture finale, les cellules étaient revenues automatiquement aux états cibles 10000, 10000, 10100, 20000 et 20300.",
+   "attendu": "Que la colonne OUVRE conserve l'adresse du verrou précis et que le plan lise les cinq clefs déjà retenues.",
+   "etat": "ouvert — les faits et les actes tiennent ; le graphe ne tient pas la correction. Ne pas prétendre la panne levée."
+  },
+  {
+   "date": "129.4.4",
+   "quoi": "Le plan du matin présente comme trous trois choses déjà écrites dans les volumes : 29015 est copiée et lue depuis le 1er ; 10004 a la clef 10016 retenue et l'action 10033 ; 20302 est levé par O12 et 20324, faite le 26e.",
+   "tente": "Relire chaque verrou contre sa clef, son action, le registre des offices et l'état de l'action avant de refaire l'ouvrage.",
+   "fait_par_appareil": "Il compte l'absence d'un lien lisible comme l'absence du geste et propose de recréer une charge ou une clef qui existe déjà.",
+   "attendu": "Qu'un verrou cesse d'être proposé dès qu'une clef retenue et une action faite ou en cours le ferment, même si le lien a été écrit sous une autre table.",
+   "etat": "ouvert — contourné par relecture manuelle ; aucun ouvrage refait"
+  },
+  {
+   "date": "129.4.4",
+   "quoi": "Porter par le parloir à Hallis Roon ma réponse sur les quatre lignes de la relève et le compte des familles de la route.",
+   "tente": "Un seul billet, vérifié ensuite dans le canal avant toute seconde tentative.",
+   "fait_par_appareil": "Le billet a été écrit, puis le réveil de Hallis a échoué sur un curseur de lecture invalide : chambres/hallis-roon/relations/mj/.lu.",
+   "attendu": "Que le billet soit écrit une fois et Hallis réveillé sans erreur.",
+   "etat": "ouvert — les mots sont déposés ; ne pas les renvoyer. La panne du réveil reste à lever."
+  },
+  {
+   "date": "129.4.4",
+   "quoi": "Répondre par billet à ser Steffon après son acceptation de l'adjonction O12.",
+   "tente": "Un billet unique, puis vérification du canal avant toute reprise.",
+   "fait_par_appareil": "Le réveil a échoué sur des curseurs .lu invalides dans sa chambre. Le même envoi fait séparément n'a pas davantage créé de canal destinataire.",
+   "attendu": "Que la réponse soit écrite une fois et ser Steffon réveillé.",
+   "etat": "ouvert — récidive de la panne Hallis ; réponse gardée dans messages-au-joueur.md pour être dite en grande salle, sans prétendre qu'elle est partie"
+  }
+ ]
 }

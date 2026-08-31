@@ -20,7 +20,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 import tables  # noqa: E402,F401 — la porte unique des ecritures dans etat/
-from etat import entree  # noqa: E402,F401 — une entree a la fois, ecriture atomique ; lu par passer
+from etat import entree  # noqa: E402,F401 — une entree a la fois ; lu par passer
 ajouter = entree  # l'ancien nom reste vivant pour les importeurs historiques (passer, facade ajouter.py)
 from etat import empreintes  # noqa: E402,F401 — le detecteur de fumee (veille) ; l'occupation lit ses fichiers, pas son code
 veille = empreintes  # l'ancien nom reste vivant pour la facade veille.py

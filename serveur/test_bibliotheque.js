@@ -34,10 +34,16 @@ try {
   ecrire(path.join(maison, "moyens-a.json"),
     { id: "moyens-a", maison_id: "maison-a", n: 0 });
   assert.deepStrictEqual(B.charger(racine).map((x) => x.id), ["b", "a", "moyens-a"]);
+  fs.mkdirSync(path.join(racine, "scripts"), { recursive: true });
+  fs.writeFileSync(path.join(racine, "scripts", "reconcilier.py"),
+    "import pathlib,sys\npathlib.Path('journal-appelle.txt').write_text(' '.join(sys.argv[1:]))\n",
+    "utf-8");
   const maisonSession = B.ouvrir(racine);
   maisonSession.livres.find((x) => x.id === "moyens-a").n = 7;
   maisonSession.sauver();
   assert.strictEqual(JSON.parse(fs.readFileSync(path.join(maison, "moyens-a.json"))).n, 7);
+  assert.match(fs.readFileSync(path.join(racine, "journal-appelle.txt"), "utf-8"),
+    /--vraiment --outil serveur:bibliotheque/);
   const nouveau = B.ouvrir(racine);
   nouveau.livres.push({ id: "nouveau", maison_id: "maison-a" });
   nouveau.sauver();

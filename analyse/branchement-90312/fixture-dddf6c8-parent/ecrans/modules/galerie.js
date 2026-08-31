@@ -1,0 +1,379 @@
+// galerie.js — les acteurs en COLONNE, le long du fil, à sa gauche.
+// Chaque acteur a son médaillon rond ; le locuteur s'illumine.
+// Ils furent d'abord en couronne autour de la carte (ils flottaient et mangeaient
+// la table par les bords), puis en bandeau sous elle — mais la carte est à
+// l'autre bout de l'écran : on lisait une réplique à droite et l'on cherchait le
+// visage tout à gauche. Rangés contre la chronique, le locuteur illuminé est à
+// hauteur de la ligne qu'on lit. La mise en place est celle du CSS (flex en
+// colonne), il n'y a rien à calculer ici.
+//
+// La salle ne se déclare pas seulement, elle SE CONSTATE. Un item `salle` est
+// rare — le MJ en pousse un par changement de lieu — alors que la scène, elle,
+// se remplit et se vide en permanence : quelqu'un entre, quelqu'un est appelé,
+// un pêcheur prend la parole devant la cour. Trois règles, donc :
+//   • qui parle ou qui agit EST là — son médaillon apparaît de lui-même ;
+//   • `entrent` / `sortent` sur n'importe quel item font entrer ou sortir
+//     quelqu'un sans redéclarer toute la salle ;
+//   • TOUT LE MONDE EST MONTRÉ. La salle affichait naguère huit visages au
+//     plus, les plus longtemps silencieux passant dans une pastille « et N
+//     autres » — mais un conseil de douze en cachait quatre, et l'on ne savait
+//     plus devant qui l'on parlait. La colonne défile (overflow-y) et le CSS
+//     resserre les médaillons quand elle se remplit : c'est la place qui cède,
+//     jamais la liste.
+"use strict";
+(() => {
+  window.Presents = {};
+
+  let compteur = 0;                // battements écoulés
+  const entendu = new Map();       // id → dernier battement où on l'a entendu
+  const bruts = new Map();         // ce que l'item a écrit, avant complétion
+  let ordre = [];                  // l'ordre d'arrivée dans la salle
+
+  const zone = () => document.getElementById("acteurs");
+
+  function vider() {
+    const z = zone();
+    if (z) z.innerHTML = "";
+    window.Presents = {};
+    entendu.clear();
+    bruts.clear();
+    ordre = [];
+    pose = "";
+  }
+
+  // Un présent : ce que l'item en dit, complété par le registre des gens.
+  function fiche(brut) {
+    const f = window.Gens ? Gens.qui(brut.id) : {};
+    return Object.assign({}, brut, {
+      nom: brut.nom || f.nom || String(brut.id || "").replace(/-/g, " "),
+      titre: brut.titre || f.titre,
+      portrait_svg: brut.portrait_svg || f.portrait_svg,
+    });
+  }
+
+  function entrer(brut, differe) {
+    const id = typeof brut === "string" ? brut : brut && brut.id;
+    if (!id) return;
+    const brutN = typeof brut === "string" ? { id } : brut;
+    // un présent déjà là ne se dédouble pas : on complète ce qu'on sait de lui.
+    // On garde ce que l'ITEM a écrit à part — le registre des gens, quand il
+    // arrivera, doit pouvoir combler ce qu'on avait deviné du seul id.
+    bruts.set(id, Object.assign({}, bruts.get(id) || {}, brutN));
+    window.Presents[id] = fiche(bruts.get(id));
+    if (ordre.indexOf(id) === -1) ordre.push(id);
+    if (!entendu.has(id)) entendu.set(id, compteur);
+    if (!differe) dessiner();
+  }
+
+  function sortir(id) {
+    if (!id) return;
+    delete window.Presents[id];
+    entendu.delete(id);
+    bruts.delete(id);
+    ordre = ordre.filter((x) => x !== id);
+    dessiner();
+  }
+
+  // Quelqu'un vient de parler ou de faire : il est là, et il est frais.
+  function toucher(id) {
+    if (!id || Bus.enArchive()) return;
+    if (!window.Presents[id]) entrer(id);
+    entendu.set(id, ++compteur);
+    dessiner();
+  }
+
+  // Deux façons de ranger les visages, au choix du joueur :
+  //   « salle »   — l'ordre où ils sont entrés, qui ne bouge pas sous l'œil ;
+  //   « récents » — le dernier qui a parlé en tête, puis les autres en
+  //                 descendant. La colonne se réordonne à chaque battement,
+  //                 mais on retrouve d'un coup d'œil qui vient de dire quoi.
+  // Dans les deux cas, tout le monde reste à l'écran : le tri range, il ne
+  // retranche pas.
+  const CLE_TRI = "conseil.gens.tri";
+  // Par défaut : les récents. Une colonne qui suit la conversation vaut mieux
+  // qu'un ordre d'arrivée qu'on a oublié dix répliques plus tôt.
+  let tri = "recents";
+  try { tri = localStorage.getItem(CLE_TRI) || "recents"; } catch (e) {}
+
+  function montres() {
+    const rangs = ordre.slice().sort((a, b) => entendu.get(b) - entendu.get(a));
+    return { visibles: tri === "recents" ? rangs : ordre.slice() };
+  }
+
+  const esc = (s) => String(s == null ? "" : s)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+
+  // Le portrait, son anneau d'office et l'emblème de l'angle sont dessinés par
+  // `visage.js` — la même main que pour la chronique. Ce qui vivait ici (le
+  // recadrage de la fenêtre, la teinte du rôle) y a été porté : deux visages du
+  // même homme à trente centimètres l'un de l'autre ne doivent pas sortir de
+  // deux codes différents.
+  function medaillon(p) {
+    const slot = document.createElement("div");
+    slot.className = "acteur";
+    slot.id = "act-" + p.id;
+    // pas de bulle ici : la parole vit dans le fil, la salle montre les gens.
+    //
+    // L'OFFICE SE LIT SUR LE VISAGE, PAS SOUS LUI. Le titre écrit en toutes
+    // lettres sous le nom coûtait deux lignes par tête et se lisait mal à cette
+    // taille ; son emblème, posé assez grand dans l'angle du portrait, se
+    // reconnaît d'un coup d'œil et ne prend aucune place. Le titre complet
+    // reste dans l'infobulle du médaillon, pour qui veut le mot exact.
+    slot.innerHTML =
+      '<div class="medaillon" id="med-' + p.id + '" title="Parler à ' + esc(p.nom) +
+      (p.titre ? " — " + esc(p.titre) : "") + '">' +
+      Visage.html(p, { classe: "med-rond" }) +
+      '<span class="qui">' + esc(p.nom) + "</span></div>";
+    // Un visage est une adresse : cliquer dessus ouvre la parole vers lui —
+    // le mode passe à Parler, la case s'amorce de son nom, et le joueur écrit
+    // la suite. Rien ne part de ce clic seul.
+    slot.classList.add("adressable");
+    slot.title = "Parler à " + (p.nom || p.id);
+    slot.addEventListener("click", () => {
+      if (window.Barre && Barre.adresser) Barre.adresser(p.nom || p.id);
+    });
+    return slot;
+  }
+
+  let parle = null;
+  let pose = "";                   // les visages actuellement montés, dans l'ordre
+
+  // Les présents restent pleinement visibles tant qu'ils sont là : le silence
+  // ne délave plus les visages.
+  function froideur(slot) {
+    slot.classList.remove("froid", "tres-froid");
+  }
+
+  function dessiner() {
+    const z = zone();
+    if (!z) return;
+    const { visibles } = montres();
+    const veut = visibles.join("|");
+    // Une réplique sur deux ne change PAS qui est là : rebâtir la rangée à
+    // chaque battement rechargerait huit portraits SVG et couperait net
+    // l'illumination du locuteur. On ne remonte les visages que s'ils bougent.
+    if (veut === pose) {
+      visibles.forEach((id) => {
+        const slot = document.getElementById("act-" + id);
+        if (slot) froideur(slot, id);
+      });
+      return;
+    }
+    pose = veut;
+    z.innerHTML = "";
+    visibles.forEach((id) => {
+      const p = window.Presents[id];
+      if (!p) return;
+      const slot = medaillon(p);
+      froideur(slot, id);
+      if (id === parle) slot.classList.add("parle");
+      z.appendChild(slot);
+    });
+    z.appendChild(bascule());
+    z.appendChild(fleche());
+    jauger();
+    // La colonne vient d'être rebâtie : les pastilles étaient dans le DOM
+    // qu'on a jeté. On les repose tout de suite plutôt que d'attendre le
+    // prochain guet — sinon un visage qui entre éteint la salle cinq secondes.
+    if (typeof poser === "function") poser();
+  }
+
+  // La flèche du bas — le seul indice qu'il reste du monde sous la pliure.
+  // La barre de défilement est masquée (une gouttière grise le long d'une
+  // colonne de 118px mangeait un visage sur deux), et sans elle rien ne disait
+  // qu'on pouvait descendre. Elle est `sticky` : elle reste collée au bord bas
+  // pendant qu'on défile, et s'éteint quand on touche le fond.
+  let barre = null;
+  function fleche() {
+    barre = document.createElement("div");
+    barre.className = "acteurs-bas";
+    barre.textContent = "▾";
+    barre.title = "Descendre — il y a d'autres présents";
+    barre.addEventListener("click", () => {
+      const z = zone();
+      if (z) z.scrollBy({ top: Math.round(z.clientHeight * 0.7), behavior: "smooth" });
+    });
+    return barre;
+  }
+
+  // Reste-t-il quelque chose en dessous ? Deux pixels de marge : un fond
+  // atteint au demi-pixel près ne doit pas garder la flèche allumée.
+  function jauger() {
+    const z = zone();
+    if (!z) return;
+    const reste = z.scrollHeight - z.clientHeight - z.scrollTop > 2;
+    z.classList.toggle("peut-descendre", reste);
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const z = zone();
+    if (!z) return;
+    z.addEventListener("scroll", jauger, { passive: true });
+    // La colonne change de hauteur sans qu'on ait redessiné : une fenêtre
+    // qu'on étire, un titre qui passe sur deux lignes quand la police charge.
+    if (window.ResizeObserver) new ResizeObserver(jauger).observe(z);
+    window.addEventListener("resize", jauger);
+  });
+
+  // Le bouton se pose EN DERNIER (avant la seule flèche) : il porte `order:-1`
+  // pour remonter en tête de colonne, et rien du CSS ne compte plus les enfants.
+  function bascule() {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "acteurs-tri";
+    b.textContent = tri === "recents" ? "↕ récents" : "↕ salle";
+    b.title = tri === "recents"
+      ? "Rangés du dernier entendu au plus ancien — cliquer pour l'ordre de la salle"
+      : "Rangés dans l'ordre où ils sont entrés — cliquer pour les plus récents";
+    b.addEventListener("click", () => {
+      tri = tri === "recents" ? "salle" : "recents";
+      try { localStorage.setItem(CLE_TRI, tri); } catch (e) {}
+      pose = "";
+      dessiner();
+    });
+    return b;
+  }
+
+  Bus.enregistrer("salle", (it) => {
+    vider();
+    (it.presents || []).forEach((p) => entrer(p, true));
+    dessiner();
+  });
+
+  // Entrées et sorties : elles peuvent tomber sur N'IMPORTE quel item, parce
+  // qu'elles se produisent en cours de scène. « Le page sort », « ser Robert
+  // entre » — un mot dans l'item suffit, pas besoin de redéclarer la salle.
+  ["salle", "recit", "replique", "geste", "table", "breve", "evenement", "vous"]
+    .forEach((t) => Bus.enregistrer(t, (it) => {
+      (it.entrent || []).forEach((x) => entrer(x));
+      (it.sortent || []).forEach((x) => sortir(typeof x === "string" ? x : x && x.id));
+    }));
+
+  // Parler ou faire, c'est être là. C'est la règle qui répare tout le reste :
+  // le MJ n'a plus à tenir un état de présence à jour pour que la salle soit
+  // juste — il lui suffit de jouer les gens.
+  Bus.enregistrer("replique", (it) => toucher(it.locuteur_id));
+  ["geste", "table"].forEach((t) => Bus.enregistrer(t, (it) => toucher(it.acteur_id)));
+
+  window.activerLocuteur = (id) => {
+    // Le passé rechargé ne fait entrer personne : la salle est celle de MAINTENANT.
+    if (Bus.enArchive()) return;
+    parle = id;
+    if (id && !window.Presents[id]) entrer(id);
+    document.querySelectorAll(".acteur").forEach((a) => a.classList.remove("parle"));
+    const s = document.getElementById("act-" + id);
+    if (s) s.classList.add("parle");
+  };
+
+  // Le registre des gens arrive après les premiers items du flux : les visages
+  // posés en attendant se complètent quand il est là.
+  window.addEventListener("DOMContentLoaded", () => {
+    if (window.Gens && Gens.quand) Gens.quand(() => {
+      ordre.forEach((id) => { window.Presents[id] = fiche(bruts.get(id) || { id }); });
+      pose = "";
+      dessiner();
+    });
+  });
+
+  // Changement de scène : la salle se vide. Le fil, lui, garde tout.
+  Bus.enregistrer("effacer", () => { parle = null; vider(); });
+
+  // ---- le rapprochement avec la présence du monde --------------------------
+  // Se tenir dans une pièce est un fait du MONDE ; le flux, lui, est cloisonné
+  // par audience. Un PNJ que deux scènes se partagent — le mestre, appelé chez
+  // l'une alors qu'il était debout chez l'autre — restait donc affiché dans les
+  // deux salles à la fois, une par écran : aucun `sortent` ne peut l'ôter des
+  // deux, puisqu'il porte forcément une audience.
+  //
+  // `/presence` dit qui partage VRAIMENT notre pièce (et rien de plus : où sont
+  // les autres ne descend pas jusqu'ici). Elle ÔTE et elle AJOUTE.
+  //
+  // Elle a longtemps servi à ôter seulement, au motif qu'entrer était l'affaire
+  // du flux — mais le flux ne nomme que ceux qui parlent. Un conseil de neuf en
+  // affichait six : le mestre debout au fond, Lucerys qui n'avait rien dit,
+  // Nesse à la porte n'existaient nulle part à l'écran alors qu'on les voyait de
+  // ses yeux. Une salle n'est pas la liste de ceux qui ont pris la parole.
+  //
+  // Ce qui vient de la présence entre donc SANS bruit : pas de compteur de
+  // fraîcheur touché, pas de médaillon qui s'illumine — ils sont là, ils se
+  // taisent, et ils descendent d'eux-mêmes au bas de la colonne.
+  // On n'ôte, à l'inverse, que ceux que la présence connaît et place ailleurs :
+  // un pêcheur de passage, absent du fichier, garde son visage.
+  async function rapprocher() {
+    try {
+      const d = await (await fetch("/presence")).json();
+      if (!d || !d.connue) return;                  // partie seule, ou pièce inconnue
+      const ici = new Set((d.avec || []).map((x) => x.id));
+      const moi = window.Moi && window.Moi.personnage_id;
+      if (moi) ici.add(moi);
+      // ceux que la salle porte et que le flux n'a pas nommés
+      (d.avec || []).forEach((x) => {
+        if (window.Presents[x.id]) return;
+        entrer({ id: x.id, nom: x.nom }, true);
+      });
+      dessiner();
+      Object.keys(window.Presents).forEach((id) => {
+        if (ici.has(id)) return;
+        // Inconnu de la présence : on ne tranche pas, le flux a raison.
+        if (!(d.connus || []).includes(id)) return;
+        sortir(id);
+      });
+    } catch (e) {}
+  }
+
+  // ---- la pastille verte : cet homme est DEHORS, en ce moment --------------
+  // Un dépêché (`scripts/depecher.py`) vit sa journée dans sa propre session,
+  // avec un budget de minutes ; `/depeches` dit lesquelles tournent encore.
+  // Le joueur voyait jusqu'ici une salle immobile sans savoir si l'on avait
+  // envoyé quelqu'un ou si plus rien ne venait : la pastille répond à ça, et à
+  // rien d'autre — pas de durée écrite, pas de compte à rebours à l'écran, la
+  // minute restante vit dans l'infobulle pour qui la cherche.
+  //
+  // Elle ne se pose que sur les visages DÉJÀ montés : on n'ajoute personne à la
+  // salle parce qu'il travaille, et on ne dit pas au joueur qu'un absent qu'il
+  // ne voit pas est en train d'être joué.
+  const dehors = new Map();        // id → secondes restantes
+
+  function poser() {
+    document.querySelectorAll("#acteurs .acteur").forEach((slot) => {
+      const id = slot.id.replace(/^act-/, "");
+      // Sur le VISAGE : c'est lui qui épouse le portrait (et qui porte déjà
+      // l'emblème d'office dans l'autre coin). Accrochée au médaillon, la
+      // pastille flottait dans la marge du nom.
+      const hote = slot.querySelector(".visage") || slot.querySelector(".medaillon");
+      if (!hote) return;
+      const reste = dehors.get(id);
+      let p = hote.querySelector(".depeche");
+      if (reste == null) { if (p) p.remove(); return; }
+      if (!p) {
+        p = document.createElement("span");
+        p.className = "depeche";
+        hote.appendChild(p);
+      }
+      p.title = "Il est sorti — on l'attend (encore " +
+        Math.max(1, Math.round(reste / 60)) + " min)";
+    });
+  }
+
+  async function guetter() {
+    try {
+      const d = await (await fetch("/depeches")).json();
+      dehors.clear();
+      (d && d.dehors || []).forEach((x) => dehors.set(x.id, x.reste));
+    } catch (e) { dehors.clear(); }
+    poser();
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    rapprocher();
+    setInterval(rapprocher, 20000);
+    // Une dépêche dure des minutes, mais elle rentre d'un coup : cinq secondes
+    // est le pas qui fait que la pastille s'éteint pendant qu'on regarde, et
+    // non trois battements après le retour de l'homme.
+    guetter();
+    setInterval(guetter, 5000);
+  });
+  // Un changement de salle est le moment où l'on se trompe : on rapproche là,
+  // en plus du battement régulier.
+  ["salle", "effacer"].forEach((t) => Bus.enregistrer(t, () => setTimeout(rapprocher, 300)));
+})();

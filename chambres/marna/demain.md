@@ -1,0 +1,3 @@
+J’ai mis papier et encre de côté pour la voûte. Le double n’existe pas encore, donc P.12 reste ouvert.
+
+Pour la malle, mes mots attendent Elyn. Je ne réciterai rien de mémoire.

@@ -20,6 +20,7 @@ sont des FAÇADES aux chemins gelés : elles passent elles aussi par la porte.
 | `etat_du_plan/` | `etat_du_plan.py` | l'état du plan, toutes affaires confondues (lecture seule) — page, échéances, missions, sections, cli |
 | `mesures/` | `mesures.py` | les adresses de mesure résolues contre `mains.json` — adresses, rapport, seuils |
 | `tisser/` | `tisser.py` | tous les liens projetés dans UNE table d'arêtes — lecture, tissage |
+| `graphe_causal.py` | `graphe_causal.py` | le sous-graphe amont d'un événement ou de tous, avec les trous typés |
 | `affaires.py` | `fils.py` | ce qui court, et qui tient la plume dessus (le nom lève l'homonymie `fils.py`/`fils.js`) |
 | `verser_cahier.py` | `verser_cahier.py` | verser les `cahier2` des rapports dans les registres — refuse, ne devine jamais |
 | `exporter_plan.py` | `exporter_plan.py` | l'export texte brut des cahiers (n'exporte plus à l'import) |

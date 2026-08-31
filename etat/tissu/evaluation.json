@@ -1,29 +1,29 @@
 {
- "noeuds": 1859,
- "aretes": 4871,
+ "noeuds": 2816,
+ "aretes": 9681,
  "goulots": [
   {
    "noeud": "plan-moyens:M12",
    "quoi": "🖋️ Le papier et la plume",
-   "demandes": 143,
+   "demandes": 164,
    "sature": true
   },
   {
    "noeud": "plan-moyens:M16",
    "quoi": "🌊 Les grèves et les mouillages",
-   "demandes": 44,
+   "demandes": 47,
    "sature": true
   },
   {
    "noeud": "plan-moyens:M01",
    "quoi": "⛵ Les voiles du Gosier",
-   "demandes": 37,
+   "demandes": 40,
    "sature": true
   },
   {
    "noeud": "plan-moyens:M18",
    "quoi": "👁️ Les nouvelles",
-   "demandes": 26,
+   "demandes": 35,
    "sature": true
   },
   {
@@ -35,37 +35,43 @@
   {
    "noeud": "plan-moyens:M30",
    "quoi": "🧭 Les éclaireurs et les guides",
-   "demandes": 12,
+   "demandes": 14,
    "sature": false
   },
   {
    "noeud": "plan-moyens:M09",
    "quoi": "💰 L'or du coffre",
-   "demandes": 11,
-   "sature": false
-  },
-  {
-   "noeud": "plan-moyens:M28",
-   "quoi": "🧺 Les marchands des portes",
-   "demandes": 8,
+   "demandes": 14,
    "sature": false
   },
   {
    "noeud": "plan-moyens:M15",
    "quoi": "🏘️ Le bourg",
-   "demandes": 7,
+   "demandes": 13,
+   "sature": false
+  },
+  {
+   "noeud": "nera-moyens:M05",
+   "quoi": "⚖️ Quatre marchés et le prix de tout",
+   "demandes": 13,
    "sature": false
   },
   {
    "noeud": "plan-moyens:M11",
    "quoi": "🐦 Les adresses de corbeaux",
-   "demandes": 7,
+   "demandes": 10,
    "sature": false
   },
   {
-   "noeud": "plan-moyens:M04",
-   "quoi": "🐉 Les dragons",
-   "demandes": 3,
+   "noeud": "nera-moyens:M03",
+   "quoi": "👣 La grève et ses trente gosses",
+   "demandes": 10,
+   "sature": false
+  },
+  {
+   "noeud": "plan-moyens:M28",
+   "quoi": "🧺 Les marchands des portes",
+   "demandes": 9,
    "sature": false
   }
  ],
@@ -76,138 +82,97 @@
    "consommateurs": 15,
    "candidats": [
     {
-     "id": "28021",
-     "quoi": "🪶 Prendre le sous-clerc parmi les quarante affranchis"
+     "id": "28046",
+     "quoi": "🪶 Afficher le périmètre du sous-clerc au coffre, et le porter au regis"
     },
     {
-     "id": "32023",
-     "quoi": "✍️ Faire nommer et assermenter la plume qui écrit sous ma dictée"
-    },
-    {
-     "id": "37320",
-     "quoi": "✍️ Nommer deux plumes pour ce cahier"
+     "id": "72424",
+     "quoi": "Mettre le second feuillet hors de sa manche — et hors du Donjon Rouge"
     }
    ]
   },
   {
    "noeud": "plan-moyens:M30",
    "quoi": "🧭 Les éclaireurs et les guides",
-   "consommateurs": 12,
+   "consommateurs": 14,
    "candidats": [
     {
-     "id": "28021",
-     "quoi": "🪶 Prendre le sous-clerc parmi les quarante affranchis"
-    },
-    {
-     "id": "32023",
-     "quoi": "✍️ Faire nommer et assermenter la plume qui écrit sous ma dictée"
-    },
-    {
-     "id": "37320",
-     "quoi": "✍️ Nommer deux plumes pour ce cahier"
+     "id": "28046",
+     "quoi": "🪶 Afficher le périmètre du sous-clerc au coffre, et le porter au regis"
     }
    ]
   },
   {
    "noeud": "plan-moyens:M09",
    "quoi": "💰 L'or du coffre",
-   "consommateurs": 11,
+   "consommateurs": 14,
    "candidats": [
     {
-     "id": "28021",
-     "quoi": "🪶 Prendre le sous-clerc parmi les quarante affranchis"
-    },
-    {
-     "id": "32023",
-     "quoi": "✍️ Faire nommer et assermenter la plume qui écrit sous ma dictée"
-    },
-    {
-     "id": "37320",
-     "quoi": "✍️ Nommer deux plumes pour ce cahier"
-    }
-   ]
-  },
-  {
-   "noeud": "plan-moyens:M28",
-   "quoi": "🧺 Les marchands des portes",
-   "consommateurs": 8,
-   "candidats": [
-    {
-     "id": "28021",
-     "quoi": "🪶 Prendre le sous-clerc parmi les quarante affranchis"
-    },
-    {
-     "id": "32023",
-     "quoi": "✍️ Faire nommer et assermenter la plume qui écrit sous ma dictée"
-    },
-    {
-     "id": "37320",
-     "quoi": "✍️ Nommer deux plumes pour ce cahier"
+     "id": "28046",
+     "quoi": "🪶 Afficher le périmètre du sous-clerc au coffre, et le porter au regis"
     }
    ]
   },
   {
    "noeud": "plan-moyens:M15",
    "quoi": "🏘️ Le bourg",
-   "consommateurs": 7,
+   "consommateurs": 13,
    "candidats": [
     {
-     "id": "28021",
-     "quoi": "🪶 Prendre le sous-clerc parmi les quarante affranchis"
-    },
+     "id": "28046",
+     "quoi": "🪶 Afficher le périmètre du sous-clerc au coffre, et le porter au regis"
+    }
+   ]
+  },
+  {
+   "noeud": "nera-moyens:M05",
+   "quoi": "⚖️ Quatre marchés et le prix de tout",
+   "consommateurs": 13,
+   "candidats": [
     {
-     "id": "32023",
-     "quoi": "✍️ Faire nommer et assermenter la plume qui écrit sous ma dictée"
-    },
-    {
-     "id": "37320",
-     "quoi": "✍️ Nommer deux plumes pour ce cahier"
+     "id": "28046",
+     "quoi": "🪶 Afficher le périmètre du sous-clerc au coffre, et le porter au regis"
     }
    ]
   },
   {
    "noeud": "plan-moyens:M11",
    "quoi": "🐦 Les adresses de corbeaux",
-   "consommateurs": 7,
+   "consommateurs": 10,
    "candidats": [
     {
-     "id": "28021",
-     "quoi": "🪶 Prendre le sous-clerc parmi les quarante affranchis"
-    },
-    {
-     "id": "32023",
-     "quoi": "✍️ Faire nommer et assermenter la plume qui écrit sous ma dictée"
-    },
-    {
-     "id": "37320",
-     "quoi": "✍️ Nommer deux plumes pour ce cahier"
+     "id": "28046",
+     "quoi": "🪶 Afficher le périmètre du sous-clerc au coffre, et le porter au regis"
     }
    ]
   },
   {
-   "noeud": "plan-moyens:M04",
-   "quoi": "🐉 Les dragons",
-   "consommateurs": 3,
+   "noeud": "nera-moyens:M03",
+   "quoi": "👣 La grève et ses trente gosses",
+   "consommateurs": 10,
    "candidats": [
     {
-     "id": "28021",
-     "quoi": "🪶 Prendre le sous-clerc parmi les quarante affranchis"
-    },
+     "id": "28046",
+     "quoi": "🪶 Afficher le périmètre du sous-clerc au coffre, et le porter au regis"
+    }
+   ]
+  },
+  {
+   "noeud": "plan-moyens:M28",
+   "quoi": "🧺 Les marchands des portes",
+   "consommateurs": 9,
+   "candidats": [
     {
-     "id": "32023",
-     "quoi": "✍️ Faire nommer et assermenter la plume qui écrit sous ma dictée"
-    },
-    {
-     "id": "37320",
-     "quoi": "✍️ Nommer deux plumes pour ce cahier"
+     "id": "28046",
+     "quoi": "🪶 Afficher le périmètre du sous-clerc au coffre, et le porter au regis"
     }
    ]
   }
  ],
- "vacantes": 52,
+ "vacantes": 3,
  "critique": [
   {
-   "maillons": 9,
+   "maillons": 8,
    "chaine": [
     {
      "id": "36024",
@@ -230,25 +195,21 @@
      "quoi": "🧮 Calculer la composition de chaque vague"
     },
     {
-     "id": "26031",
-     "quoi": "✂️ Fixer la répartition blocus / transport"
+     "id": "26035",
+     "quoi": "🧮 Poser le nombre d'hommes à porter"
     },
     {
-     "id": "26036",
-     "quoi": "⛵ Affréter dix coques du banc de l'Est pour le blocus"
+     "id": "5021",
+     "quoi": "✂️ Donner le CHIFFRE des forces de terre au maître des rôles"
     },
     {
-     "id": "28025",
-     "quoi": "⛵ Chiffrer l'affrètement et la caution des patrons"
-    },
-    {
-     "id": "26036",
-     "quoi": "⛵ Affréter dix coques du banc de l'Est pour le blocus"
+     "id": "5020",
+     "quoi": "🔢 Écrire les cinq lignes, trous compris"
     }
    ]
   }
  ],
- "murs_sans_route": 4,
+ "murs_sans_route": 27,
  "murs": [
   {
    "plan": "baratheon",
@@ -267,35 +228,180 @@
   {
    "plan": "couronne",
    "id": "72001",
-   "quoi": "La solde de depart des trois mille n est pas versee",
-   "portee": "on peut le savoir",
+   "quoi": "La solde de depart des trois mille n'est pas versee",
+   "portee": "on peut le savoir — le retard de la colonne est visible de Sombreval, et sa cause se dit au conseil vert dans la semaine",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72002",
+   "quoi": "Le train de siege sort ampute : ni mantelets, ni planchers, ni cordage",
+   "portee": "on peut le savoir : un charroi de mantelets se voit sortir d'un chantier",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72003",
+   "quoi": "Cent vingt lances sans maitre dorment dans la ville qu'on va vider",
+   "portee": "on peut agir dessus, et c'est le seul verrou d'en face qui se leve sans un homme perdu",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72004",
+   "quoi": "La porte de la ville s'achete a l'heure",
+   "portee": "on peut le savoir, et on peut l'acheter aussi : ce qui se vend a la Couronne se vend a tout le monde",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72005",
+   "quoi": "L'homme qui commande la colonne passe ses journees dans la salle du Trone",
+   "portee": "on peut le savoir : un Lord Commandant qui ne quitte pas la cour se voit de la cour",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72006",
+   "quoi": "Le role compte quatre cents lances que la Couronne n'a plus",
+   "portee": "on peut le savoir, et c'est deja su : Harrenhal est rendue depuis le 23e",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72007",
+   "quoi": "On marche sur une ville que personne n'est alle compter",
+   "portee": "hors de portee pour eux tant que personne n'est envoye ; a notre portee, et c'est la meme ignorance qui nous protege",
    "routes": []
   },
   {
    "plan": "couronne",
    "id": "72101",
-   "quoi": "Le conseil ne lui a pas donne Vhagar",
-   "portee": "hors de portee : rien de ce que nous ferons ne changera ce que ce conseil decide en deux jours",
+   "quoi": "La cire du roi n'est pas descendue — et ce n'est plus le conseil qui retient Vhagar, c'est la porte d'Aegon",
+   "portee": "on peut agir dessus, et c'est un piege : le declencheur arme de sa tete dit qu'un dragon de la reine signale en vol au sud de la baie, a portee de Vhagar, le fait monter DANS L'HEURE et aller au-devant, sans autorisation et quel que soit l'ordre du conseil. Montrer un dragon au sud cloue Daeron a Villevieille (verrou 71003 du plan hightower) et decloue Vhagar dans le meme geste. C'est le seul endroit du dossier ou le meme mouvement de la reine sert et dessert a la fois.",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72102",
+   "quoi": "Rien n'est affecte : la bourse est un tas, pas un compte",
+   "portee": "on peut le savoir : une promesse de la Couronne restee impayee devant temoins se sait vite, et c'est exactement ce qu'Otto craint",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72103",
+   "quoi": "Quatre bouches tirent sur la meme caisse et aucune n'a ecrit son chiffre devant les trois autres",
+   "portee": "on peut le savoir — le prix crie s'entend sur les places, et le grain se compte au port",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72104",
+   "quoi": "Le roi paie de sa main, hors du tresor et hors de la Main",
+   "portee": "hors de portee : rien de ce que nous ferons ne decidera ce que le roi sort de sa poche",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72105",
+   "quoi": "Le Guet n'est pas paye, et la porte se vend a l'heure",
+   "portee": "on peut agir dessus : c'est la porte la moins chere de Port-Real, et elle a deja servi a d'autres",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72301",
+   "quoi": "Le role du port ne compte qu'un cote",
+   "portee": "on peut agir dessus",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72302",
+   "quoi": "Le compte n'est signe d'aucun nom",
+   "portee": "on peut agir dessus",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72303",
+   "quoi": "La cassette privee du roi ne couvre pas ce qu'il a crie",
+   "portee": "on peut le savoir — une prime criee a deux tarifs et sans gage se sait vite dans la Gadoue",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72304",
+   "quoi": "Rien de ce que le roi ordonne de vive voix n'est porte a un registre",
+   "portee": "on peut le savoir",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72305",
+   "quoi": "Se cacher d'Otto lui coute un quart d'heure par sortie",
+   "portee": "hors de portee : nous ignorons jusqu'a l'existence de ce passage",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72401",
+   "quoi": "La chaine des mestres porte les deux camps, et le Grand Mestre est assis dessus",
+   "portee": "on peut le savoir, et on peut agir dessus : nous avons Gerardys, qui est du meme ordre et a deja ecrit a Orwyle nommement une fois",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72402",
+   "quoi": "Orwyle donne sa main, jamais son sceau",
+   "portee": "on peut le savoir : il l'a fait devant temoins, deux fois",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72403",
+   "quoi": "La roukerie du Donjon Rouge n'est pas tenue par ceux qui croient la tenir",
+   "portee": "on peut le savoir : ce que la roukerie du Donjon Rouge laisse passer, un mestre achete de l'autre bord peut le dire",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72404",
+   "quoi": "Il existe un second feuillet, et personne ne peut le demander sans prendre le bras d'un mestre",
+   "portee": "on peut agir dessus, et c'est la porte ouverte de cette tranche : il ne reproche a la reine qu'une chose exacte, de ne pas avoir repondu, et ce grief a cesse d'etre le plus grand depuis qu'il a vu ce qu'on fait de sa plume a Port-Real",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72405",
+   "quoi": "Le recit officiel du feu porte deux mains, et l'une des deux le sait",
+   "portee": "on peut le savoir, et on peut le provoquer — mais seulement par Orwyle, et il ne se vendra pas",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72406",
+   "quoi": "Le silence des maisons de la Couronne n'a pas de sanction ecrite",
+   "portee": "on peut le savoir : huit maisons de la Couronne recevront la meme cire dans la meme semaine, et l'une d'elles parlera",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72601",
+   "quoi": "Aemond ne peut pas ecrire le second nom, et la Main ne l'a pas encore ecrit",
+   "portee": "on peut le savoir — la note de la Ver Blanc du 129.4.5 dit qu'on attend un nom a Accalmie et que ce n'est pas un nom de bataille ; elle ne porte pas celui d'Aemond, parce qu'Accalmie ne l'a pas.",
+   "routes": []
+  },
+  {
+   "plan": "couronne",
+   "id": "72602",
+   "quoi": "Il part sans savoir qui d'autre vole vers le sud",
+   "portee": "hors de portee — et c'est la ligne la plus chere du dossier : la troisieme condition d'annulation de mort-lucerys est « annule si Aemond n'est pas a Accalmie au meme moment ». Un vol retarde ici deplace le canon le plus cher du jeu, et personne des deux cotes ne le sait.",
    "routes": []
   }
  ],
  "sourds": [
-  {
-   "echelle": "quartier",
-   "qui": "aemond"
-  },
-  {
-   "echelle": "au loin",
-   "qui": "larys"
-  },
-  {
-   "echelle": "au loin",
-   "qui": "aegon-ii"
-  },
-  {
-   "echelle": "au loin",
-   "qui": "helaena"
-  },
   {
    "echelle": "au loin",
    "qui": "lord-staunton"
@@ -309,15 +415,15 @@
    "qui": "lord-bar-emmon"
   },
   {
-   "echelle": "quartier",
+   "echelle": "au loin",
    "qui": "denys-bar-emmon"
   },
   {
-   "echelle": "quartier",
+   "echelle": "au loin",
    "qui": "merra-sath"
   },
   {
-   "echelle": "quartier",
+   "echelle": "au loin",
    "qui": "wend"
   },
   {
@@ -337,16 +443,16 @@
    "qui": "ordo-sarnes"
   },
   {
-   "echelle": "quartier",
+   "echelle": "au loin",
    "qui": "dorsa-sath"
   },
   {
-   "echelle": "quartier",
+   "echelle": "au loin",
    "qui": "prisonnier-wat"
   },
   {
    "echelle": "au loin",
-   "qui": "jason-lannister"
+   "qui": "robin-darklyn"
   },
   {
    "echelle": "au loin",
@@ -365,7 +471,7 @@
    "qui": "clerc-coll"
   },
   {
-   "echelle": "quartier",
+   "echelle": "au loin",
    "qui": "hallis-roon"
   },
   {
@@ -375,689 +481,283 @@
   {
    "echelle": "au loin",
    "qui": "le-facteur-braavien"
+  },
+  {
+   "echelle": "au loin",
+   "qui": "sarn-vieux-sang"
+  },
+  {
+   "echelle": "au loin",
+   "qui": "bren-racine-grise"
+  },
+  {
+   "echelle": "au loin",
+   "qui": "ygga-main-de-pierre"
+  },
+  {
+   "echelle": "au loin",
+   "qui": "toll-oeil-noir"
+  },
+  {
+   "echelle": "au loin",
+   "qui": "wenna-la-nommeuse"
   }
  ],
  "force": [
   {
-   "qui": "steffon-darklyn",
-   "force": 46,
-   "questions": 5,
-   "actions": 59,
-   "critiques": 5,
+   "qui": "aldon-hask",
+   "force": 39,
+   "questions": 0,
+   "actions": 55,
+   "critiques": 4,
    "goulots": [],
-   "declencheurs": 2,
-   "creux": [
-    {
-     "de": 338,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 382,
-     "pourquoi": null
-    },
-    {
-     "de": 730,
-     "a": 810,
-     "salle": "grande-salle",
-     "minutes": 80,
-     "pourquoi": null
-    },
-    {
-     "de": 820,
-     "a": 1140,
-     "salle": "table-peinte",
-     "minutes": 320,
-     "pourquoi": null
-    },
-    {
-     "de": 1150,
-     "a": 1260,
-     "salle": "grande-salle",
-     "minutes": 110,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 892,
+   "declencheurs": 1,
+   "creux": [],
+   "creux_total": 0,
    "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 338,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 382,
-     "pourquoi": null
-    },
-    {
-     "de": 730,
-     "a": 810,
-     "salle": "grande-salle",
-     "minutes": 80,
-     "pourquoi": null
-    },
-    {
-     "de": 820,
-     "a": 1140,
-     "salle": "table-peinte",
-     "minutes": 320,
-     "pourquoi": null
-    },
-    {
-     "de": 1150,
-     "a": 1260,
-     "salle": "grande-salle",
-     "minutes": 110,
-     "pourquoi": null
-    }
-   ]
+   "questions_posees": []
+  },
+  {
+   "qui": "rhaenyra",
+   "force": 26,
+   "questions": 0,
+   "actions": 8,
+   "critiques": 1,
+   "goulots": [],
+   "declencheurs": 4,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "gerardys",
+   "force": 25,
+   "questions": 0,
+   "actions": 10,
+   "critiques": 0,
+   "goulots": [
+    "plan-moyens:M12"
+   ],
+   "declencheurs": 2,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
   },
   {
    "qui": "rulf-corne",
-   "force": 33,
+   "force": 23,
    "questions": 0,
-   "actions": 20,
-   "critiques": 2,
+   "actions": 21,
+   "critiques": 0,
    "goulots": [
     "plan-moyens:M16"
    ],
    "declencheurs": 0,
    "creux": [],
    "creux_total": 0,
-   "hors_quartier": "loin",
+   "hors_quartier": null,
    "questions_posees": []
   },
   {
-   "qui": "aldon-hask",
-   "force": 29,
-   "questions": 5,
-   "actions": 47,
-   "critiques": 2,
-   "goulots": [],
-   "declencheurs": 1,
-   "creux": [
-    {
-     "de": 338,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 382,
-     "pourquoi": null
-    },
-    {
-     "de": 730,
-     "a": 810,
-     "salle": "grande-salle",
-     "minutes": 80,
-     "pourquoi": null
-    },
-    {
-     "de": 820,
-     "a": 1140,
-     "salle": "table-peinte",
-     "minutes": 320,
-     "pourquoi": null
-    },
-    {
-     "de": 1150,
-     "a": 1260,
-     "salle": "grande-salle",
-     "minutes": 110,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 892,
-   "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 338,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 382,
-     "pourquoi": null
-    },
-    {
-     "de": 730,
-     "a": 810,
-     "salle": "grande-salle",
-     "minutes": 80,
-     "pourquoi": null
-    },
-    {
-     "de": 820,
-     "a": 1140,
-     "salle": "table-peinte",
-     "minutes": 320,
-     "pourquoi": null
-    },
-    {
-     "de": 1150,
-     "a": 1260,
-     "salle": "grande-salle",
-     "minutes": 110,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "gerardys",
-   "force": 27,
-   "questions": 5,
-   "actions": 96,
-   "critiques": 0,
-   "goulots": [
-    "plan-moyens:M12"
-   ],
-   "declencheurs": 2,
-   "creux": [
-    {
-     "de": 435,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 285,
-     "pourquoi": null
-    },
-    {
-     "de": 730,
-     "a": 810,
-     "salle": "grande-salle",
-     "minutes": 80,
-     "pourquoi": null
-    },
-    {
-     "de": 818,
-     "a": 1020,
-     "salle": "archives",
-     "minutes": 202,
-     "pourquoi": null
-    },
-    {
-     "de": 1034,
-     "a": 1140,
-     "salle": "table-peinte",
-     "minutes": 106,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 673,
-   "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 435,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 285,
-     "pourquoi": null
-    },
-    {
-     "de": 730,
-     "a": 810,
-     "salle": "grande-salle",
-     "minutes": 80,
-     "pourquoi": null
-    },
-    {
-     "de": 818,
-     "a": 1020,
-     "salle": "archives",
-     "minutes": 202,
-     "pourquoi": null
-    },
-    {
-     "de": 1034,
-     "a": 1140,
-     "salle": "table-peinte",
-     "minutes": 106,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "corlys",
-   "force": 23,
-   "questions": 3,
-   "actions": 3,
-   "critiques": 1,
-   "goulots": [
-    "plan-moyens:M01"
-   ],
-   "declencheurs": 2,
-   "creux": [
-    {
-     "de": 367,
-     "a": 660,
-     "salle": "roukerie",
-     "minutes": 293,
-     "pourquoi": null
-    },
-    {
-     "de": 666,
-     "a": 780,
-     "salle": "grande-salle",
-     "minutes": 114,
-     "pourquoi": null
-    },
-    {
-     "de": 788,
-     "a": 1080,
-     "salle": "archives",
-     "minutes": 292,
-     "pourquoi": null
-    },
-    {
-     "de": 1088,
-     "a": 1200,
-     "salle": "grande-salle",
-     "minutes": 112,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 811,
-   "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 367,
-     "a": 660,
-     "salle": "roukerie",
-     "minutes": 293,
-     "pourquoi": null
-    },
-    {
-     "de": 666,
-     "a": 780,
-     "salle": "grande-salle",
-     "minutes": 114,
-     "pourquoi": null
-    },
-    {
-     "de": 788,
-     "a": 1080,
-     "salle": "archives",
-     "minutes": 292,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "robert-quince",
+   "qui": "criston",
    "force": 21,
-   "questions": 3,
-   "actions": 26,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 2,
-   "creux": [
-    {
-     "de": 726,
-     "a": 840,
-     "salle": "grande-salle",
-     "minutes": 114,
-     "pourquoi": null
-    },
-    {
-     "de": 842,
-     "a": 1140,
-     "salle": "cour",
-     "minutes": 298,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 412,
-   "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 726,
-     "a": 840,
-     "salle": "grande-salle",
-     "minutes": 114,
-     "pourquoi": null
-    },
-    {
-     "de": 842,
-     "a": 1140,
-     "salle": "cour",
-     "minutes": 298,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "jacaerys",
-   "force": 21,
-   "questions": 3,
-   "actions": 26,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 2,
-   "creux": [
-    {
-     "de": 606,
-     "a": 720,
-     "salle": "cour",
-     "minutes": 114,
-     "pourquoi": null
-    },
-    {
-     "de": 722,
-     "a": 840,
-     "salle": "grande-salle",
-     "minutes": 118,
-     "pourquoi": null
-    },
-    {
-     "de": 842,
-     "a": 1080,
-     "salle": "cour",
-     "minutes": 238,
-     "pourquoi": null
-    },
-    {
-     "de": 1082,
-     "a": 1200,
-     "salle": "grande-salle",
-     "minutes": 118,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 588,
-   "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 722,
-     "a": 840,
-     "salle": "grande-salle",
-     "minutes": 118,
-     "pourquoi": null
-    },
-    {
-     "de": 842,
-     "a": 1080,
-     "salle": "cour",
-     "minutes": 238,
-     "pourquoi": null
-    },
-    {
-     "de": 1082,
-     "a": 1200,
-     "salle": "grande-salle",
-     "minutes": 118,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "alys-grive",
-   "force": 21,
-   "questions": 3,
-   "actions": 21,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 2,
-   "creux": [
-    {
-     "de": 485,
-     "a": 1140,
-     "salle": "bourg",
-     "minutes": 655,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 655,
-   "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 485,
-     "a": 1140,
-     "salle": "bourg",
-     "minutes": 655,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "le-sanglier",
-   "force": 19,
-   "questions": 3,
-   "actions": 39,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 1,
-   "creux": [
-    {
-     "de": 302,
-     "a": 1260,
-     "salle": "porte-dragon",
-     "minutes": 958,
-     "pourquoi": "a son poste — les mains prises, les oreilles libres"
-    }
-   ],
-   "creux_total": 958,
-   "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 302,
-     "a": 1260,
-     "salle": "porte-dragon",
-     "minutes": 958,
-     "pourquoi": "a son poste — les mains prises, les oreilles libres"
-    }
-   ]
-  },
-  {
-   "qui": "marlo-vasse",
-   "force": 19,
    "questions": 0,
-   "actions": 10,
+   "actions": 14,
    "critiques": 0,
    "goulots": [],
    "declencheurs": 2,
    "creux": [],
    "creux_total": 0,
-   "hors_quartier": "siege occupe",
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "corlys",
+   "force": 19,
+   "questions": 0,
+   "actions": 4,
+   "critiques": 0,
+   "goulots": [
+    "plan-moyens:M01"
+   ],
+   "declencheurs": 2,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "otto",
+   "force": 19,
+   "questions": 0,
+   "actions": 19,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 1,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
    "questions_posees": []
   },
   {
    "qui": "sara",
-   "force": 18,
-   "questions": 3,
-   "actions": 14,
+   "force": 19,
+   "questions": 0,
+   "actions": 17,
    "critiques": 0,
    "goulots": [],
    "declencheurs": 1,
-   "creux": [
-    {
-     "de": 338,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 382,
-     "pourquoi": null
-    },
-    {
-     "de": 730,
-     "a": 810,
-     "salle": "grande-salle",
-     "minutes": 80,
-     "pourquoi": null
-    },
-    {
-     "de": 820,
-     "a": 1140,
-     "salle": "table-peinte",
-     "minutes": 320,
-     "pourquoi": null
-    },
-    {
-     "de": 1150,
-     "a": 1260,
-     "salle": "grande-salle",
-     "minutes": 110,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 892,
+   "creux": [],
+   "creux_total": 0,
    "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 338,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 382,
-     "pourquoi": null
-    },
-    {
-     "de": 820,
-     "a": 1140,
-     "salle": "table-peinte",
-     "minutes": 320,
-     "pourquoi": null
-    },
-    {
-     "de": 1150,
-     "a": 1260,
-     "salle": "grande-salle",
-     "minutes": 110,
-     "pourquoi": null
-    }
-   ]
+   "questions_posees": []
+  },
+  {
+   "qui": "aurore-inchauspe",
+   "force": 17,
+   "questions": 0,
+   "actions": 2,
+   "critiques": 0,
+   "goulots": [
+    "plan-moyens:M18"
+   ],
+   "declencheurs": 2,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "marlo-vasse",
+   "force": 17,
+   "questions": 0,
+   "actions": 11,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 1,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
   },
   {
    "qui": "denys-bar-emmon",
-   "force": 14,
-   "questions": 3,
-   "actions": 26,
+   "force": 15,
+   "questions": 0,
+   "actions": 27,
    "critiques": 0,
    "goulots": [],
    "declencheurs": 0,
-   "creux": [
-    {
-     "de": 367,
-     "a": 660,
-     "salle": "roukerie",
-     "minutes": 293,
-     "pourquoi": null
-    },
-    {
-     "de": 666,
-     "a": 780,
-     "salle": "grande-salle",
-     "minutes": 114,
-     "pourquoi": null
-    },
-    {
-     "de": 788,
-     "a": 1080,
-     "salle": "archives",
-     "minutes": 292,
-     "pourquoi": null
-    },
-    {
-     "de": 1088,
-     "a": 1200,
-     "salle": "grande-salle",
-     "minutes": 112,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 811,
+   "creux": [],
+   "creux_total": 0,
    "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 367,
-     "a": 660,
-     "salle": "roukerie",
-     "minutes": 293,
-     "pourquoi": null
-    },
-    {
-     "de": 666,
-     "a": 780,
-     "salle": "grande-salle",
-     "minutes": 114,
-     "pourquoi": null
-    },
-    {
-     "de": 788,
-     "a": 1080,
-     "salle": "archives",
-     "minutes": 292,
-     "pourquoi": null
-    }
-   ]
+   "questions_posees": []
   },
   {
-   "qui": "sarro-vaeth",
-   "force": 12,
-   "questions": 1,
+   "qui": "aegon-ii",
+   "force": 14,
+   "questions": 0,
+   "actions": 7,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 1,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "jacaerys",
+   "force": 13,
+   "questions": 0,
+   "actions": 4,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 2,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "orwyle",
+   "force": 13,
+   "questions": 0,
    "actions": 6,
    "critiques": 0,
    "goulots": [],
    "declencheurs": 1,
-   "creux": [
-    {
-     "de": 726,
-     "a": 810,
-     "salle": "cour",
-     "minutes": 84,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 84,
+   "creux": [],
+   "creux_total": 0,
    "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 726,
-     "a": 810,
-     "salle": "cour",
-     "minutes": 84,
-     "pourquoi": null
-    }
-   ]
+   "questions_posees": []
   },
   {
-   "qui": "rhaenys",
+   "qui": "hann-bourbe",
+   "force": 13,
+   "questions": 0,
+   "actions": 4,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 2,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "robert-quince",
+   "force": 12,
+   "questions": 0,
+   "actions": 3,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 2,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "aemond",
+   "force": 12,
+   "questions": 0,
+   "actions": 5,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 1,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "sarro-vaeth",
+   "force": 12,
+   "questions": 0,
+   "actions": 6,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 1,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "steffon-darklyn",
    "force": 11,
-   "questions": 1,
+   "questions": 0,
    "actions": 2,
    "critiques": 0,
    "goulots": [],
    "declencheurs": 2,
-   "creux": [
-    {
-     "de": 338,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 382,
-     "pourquoi": null
-    },
-    {
-     "de": 730,
-     "a": 810,
-     "salle": "grande-salle",
-     "minutes": 80,
-     "pourquoi": null
-    },
-    {
-     "de": 820,
-     "a": 1140,
-     "salle": "table-peinte",
-     "minutes": 320,
-     "pourquoi": null
-    },
-    {
-     "de": 1150,
-     "a": 1260,
-     "salle": "grande-salle",
-     "minutes": 110,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 892,
+   "creux": [],
+   "creux_total": 0,
    "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 338,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 382,
-     "pourquoi": null
-    }
-   ]
+   "questions_posees": []
   },
   {
    "qui": "mysaria",
@@ -1073,383 +773,173 @@
    "questions_posees": []
   },
   {
-   "qui": "otto",
+   "qui": "alarra-rosby",
    "force": 11,
    "questions": 0,
-   "actions": 4,
+   "actions": 0,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 3,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "marna",
+   "force": 11,
+   "questions": 0,
+   "actions": 0,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 3,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "daemon",
+   "force": 10,
+   "questions": 0,
+   "actions": 1,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 2,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "rhaenys",
+   "force": 10,
+   "questions": 0,
+   "actions": 1,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 2,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "larys",
+   "force": 10,
+   "questions": 0,
+   "actions": 3,
    "critiques": 0,
    "goulots": [],
    "declencheurs": 1,
    "creux": [],
    "creux_total": 0,
-   "hors_quartier": "loin",
+   "hors_quartier": null,
    "questions_posees": []
   },
   {
-   "qui": "alarra-rosby",
-   "force": 11,
-   "questions": 1,
-   "actions": 0,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 3,
-   "creux": [
-    {
-     "de": 367,
-     "a": 660,
-     "salle": "roukerie",
-     "minutes": 293,
-     "pourquoi": null
-    },
-    {
-     "de": 666,
-     "a": 780,
-     "salle": "grande-salle",
-     "minutes": 114,
-     "pourquoi": null
-    },
-    {
-     "de": 788,
-     "a": 1080,
-     "salle": "archives",
-     "minutes": 292,
-     "pourquoi": null
-    },
-    {
-     "de": 1088,
-     "a": 1200,
-     "salle": "grande-salle",
-     "minutes": 112,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 811,
-   "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 367,
-     "a": 660,
-     "salle": "roukerie",
-     "minutes": 293,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "hann-bourbe",
-   "force": 11,
-   "questions": 1,
-   "actions": 2,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 2,
-   "creux": [
-    {
-     "de": 333,
-     "a": 420,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 87,
-     "pourquoi": null
-    },
-    {
-     "de": 723,
-     "a": 780,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 57,
-     "pourquoi": null
-    },
-    {
-     "de": 1203,
-     "a": 1320,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 117,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 261,
-   "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 1203,
-     "a": 1320,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 117,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "marna",
-   "force": 11,
-   "questions": 1,
-   "actions": 0,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 3,
-   "creux": [
-    {
-     "de": 669,
-     "a": 780,
-     "salle": "grande-salle",
-     "minutes": 111,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 111,
-   "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 669,
-     "a": 780,
-     "salle": "grande-salle",
-     "minutes": 111,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "criston",
+   "qui": "ormund-hightower",
    "force": 10,
-   "questions": 1,
+   "questions": 0,
+   "actions": 3,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 1,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "ollo-marran",
+   "force": 10,
+   "questions": 0,
    "actions": 1,
    "critiques": 0,
    "goulots": [],
    "declencheurs": 2,
-   "creux": [
-    {
-     "de": 783,
-     "a": 900,
-     "salle": "cour-donjon-rouge",
-     "minutes": 117,
-     "pourquoi": null
-    },
-    {
-     "de": 1203,
-     "a": 1320,
-     "salle": "tour-blanche",
-     "minutes": 117,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 234,
+   "creux": [],
+   "creux_total": 0,
    "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 783,
-     "a": 900,
-     "salle": "cour-donjon-rouge",
-     "minutes": 117,
-     "pourquoi": null
-    }
-   ]
+   "questions_posees": []
   },
   {
-   "qui": "daemon",
-   "force": 9,
-   "questions": 1,
-   "actions": 0,
+   "qui": "alys-grive",
+   "force": 10,
+   "questions": 0,
+   "actions": 1,
    "critiques": 0,
    "goulots": [],
    "declencheurs": 2,
-   "creux": [
-    {
-     "de": 338,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 382,
-     "pourquoi": null
-    },
-    {
-     "de": 730,
-     "a": 810,
-     "salle": "grande-salle",
-     "minutes": 80,
-     "pourquoi": null
-    },
-    {
-     "de": 820,
-     "a": 1140,
-     "salle": "table-peinte",
-     "minutes": 320,
-     "pourquoi": null
-    },
-    {
-     "de": 1150,
-     "a": 1260,
-     "salle": "grande-salle",
-     "minutes": 110,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 892,
+   "creux": [],
+   "creux_total": 0,
    "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 338,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 382,
-     "pourquoi": null
-    }
-   ]
+   "questions_posees": []
   },
   {
    "qui": "lucerys",
    "force": 9,
-   "questions": 1,
+   "questions": 0,
    "actions": 0,
    "critiques": 0,
    "goulots": [],
    "declencheurs": 2,
-   "creux": [
-    {
-     "de": 332,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 388,
-     "pourquoi": null
-    },
-    {
-     "de": 730,
-     "a": 810,
-     "salle": "grande-salle",
-     "minutes": 80,
-     "pourquoi": null
-    },
-    {
-     "de": 820,
-     "a": 1140,
-     "salle": "table-peinte",
-     "minutes": 320,
-     "pourquoi": null
-    },
-    {
-     "de": 1150,
-     "a": 1260,
-     "salle": "grande-salle",
-     "minutes": 110,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 898,
+   "creux": [],
+   "creux_total": 0,
    "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 332,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 388,
-     "pourquoi": null
-    }
-   ]
+   "questions_posees": []
   },
   {
    "qui": "alicent",
    "force": 9,
-   "questions": 1,
+   "questions": 0,
    "actions": 0,
    "critiques": 0,
    "goulots": [],
    "declencheurs": 2,
-   "creux": [
-    {
-     "de": 674,
-     "a": 780,
-     "salle": "appartements-royaux",
-     "minutes": 106,
-     "pourquoi": null
-    },
-    {
-     "de": 792,
-     "a": 960,
-     "salle": "bois-des-dieux-port-real",
-     "minutes": 168,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 274,
+   "creux": [],
+   "creux_total": 0,
    "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 792,
-     "a": 960,
-     "salle": "bois-des-dieux-port-real",
-     "minutes": 168,
-     "pourquoi": null
-    }
-   ]
+   "questions_posees": []
+  },
+  {
+   "qui": "borros-baratheon",
+   "force": 9,
+   "questions": 0,
+   "actions": 2,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 1,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
   },
   {
    "qui": "elyn-sarnes",
    "force": 9,
-   "questions": 1,
+   "questions": 0,
    "actions": 0,
    "critiques": 0,
    "goulots": [],
    "declencheurs": 2,
-   "creux": [
-    {
-     "de": 669,
-     "a": 780,
-     "salle": "grande-salle",
-     "minutes": 111,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 111,
+   "creux": [],
+   "creux_total": 0,
    "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 669,
-     "a": 780,
-     "salle": "grande-salle",
-     "minutes": 111,
-     "pourquoi": null
-    }
-   ]
+   "questions_posees": []
   },
   {
    "qui": "sabbe",
    "force": 9,
-   "questions": 1,
+   "questions": 0,
    "actions": 0,
    "critiques": 0,
    "goulots": [],
    "declencheurs": 2,
-   "creux": [
-    {
-     "de": 333,
-     "a": 420,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 87,
-     "pourquoi": null
-    },
-    {
-     "de": 723,
-     "a": 780,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 57,
-     "pourquoi": null
-    },
-    {
-     "de": 1203,
-     "a": 1320,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 117,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 261,
+   "creux": [],
+   "creux_total": 0,
    "hors_quartier": null,
-   "questions_posees": [
-    {
-     "de": 1203,
-     "a": 1320,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 117,
-     "pourquoi": null
-    }
-   ]
+   "questions_posees": []
   },
   {
    "qui": "lord-rosby",
@@ -1478,26 +968,13 @@
    "questions_posees": []
   },
   {
-   "qui": "nicolas-reynolds",
+   "qui": "tobb",
    "force": 9,
    "questions": 0,
-   "actions": 0,
+   "actions": 1,
    "critiques": 0,
    "goulots": [],
    "declencheurs": 2,
-   "creux": [],
-   "creux_total": 0,
-   "hors_quartier": null,
-   "questions_posees": []
-  },
-  {
-   "qui": "ormund-hightower",
-   "force": 8,
-   "questions": 0,
-   "actions": 3,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 1,
    "creux": [],
    "creux_total": 0,
    "hors_quartier": null,
@@ -1511,23 +988,47 @@
    "critiques": 0,
    "goulots": [],
    "declencheurs": 2,
-   "creux": [
-    {
-     "de": 433,
-     "a": 660,
-     "salle": "appartements-reine",
-     "minutes": 227,
-     "pourquoi": "en cellule, entre deux offices"
-    },
-    {
-     "de": 793,
-     "a": 1140,
-     "salle": "appartements-reine",
-     "minutes": 347,
-     "pourquoi": "en cellule, entre deux offices"
-    }
-   ],
-   "creux_total": 574,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "le-sanglier",
+   "force": 8,
+   "questions": 0,
+   "actions": 1,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 1,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "sirel-quintaine",
+   "force": 8,
+   "questions": 0,
+   "actions": 1,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 1,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "ren",
+   "force": 8,
+   "questions": 0,
+   "actions": 1,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 1,
+   "creux": [],
+   "creux_total": 0,
    "hors_quartier": null,
    "questions_posees": []
   },
@@ -1545,79 +1046,6 @@
    "questions_posees": []
   },
   {
-   "qui": "tobb",
-   "force": 8,
-   "questions": 0,
-   "actions": 0,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 2,
-   "creux": [],
-   "creux_total": 0,
-   "hors_quartier": "loin",
-   "questions_posees": []
-  },
-  {
-   "qui": "gunthor-darklyn",
-   "force": 7,
-   "questions": 0,
-   "actions": 0,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 1,
-   "creux": [],
-   "creux_total": 0,
-   "hors_quartier": null,
-   "questions_posees": []
-  },
-  {
-   "qui": "orwyle",
-   "force": 7,
-   "questions": 0,
-   "actions": 0,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 1,
-   "creux": [],
-   "creux_total": 0,
-   "hors_quartier": "loin",
-   "questions_posees": []
-  },
-  {
-   "qui": "borros-baratheon",
-   "force": 7,
-   "questions": 0,
-   "actions": 2,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 1,
-   "creux": [],
-   "creux_total": 0,
-   "hors_quartier": null,
-   "questions_posees": []
-  },
-  {
-   "qui": "sirel-quintaine",
-   "force": 7,
-   "questions": 0,
-   "actions": 0,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 1,
-   "creux": [
-    {
-     "de": 319,
-     "a": 1260,
-     "salle": "etal-de-sirel",
-     "minutes": 941,
-     "pourquoi": "a son poste — les mains prises, les oreilles libres"
-    }
-   ],
-   "creux_total": 941,
-   "hors_quartier": null,
-   "questions_posees": []
-  },
-  {
    "qui": "doye-rouelle",
    "force": 7,
    "questions": 0,
@@ -1625,51 +1053,8 @@
    "critiques": 0,
    "goulots": [],
    "declencheurs": 1,
-   "creux": [
-    {
-     "de": 300,
-     "a": 1260,
-     "salle": "culpucier",
-     "minutes": 960,
-     "pourquoi": "a son poste — les mains prises, les oreilles libres"
-    }
-   ],
-   "creux_total": 960,
-   "hors_quartier": null,
-   "questions_posees": []
-  },
-  {
-   "qui": "ren",
-   "force": 7,
-   "questions": 0,
-   "actions": 0,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 1,
-   "creux": [
-    {
-     "de": 333,
-     "a": 420,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 87,
-     "pourquoi": null
-    },
-    {
-     "de": 723,
-     "a": 780,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 57,
-     "pourquoi": null
-    },
-    {
-     "de": 1203,
-     "a": 1320,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 117,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 261,
+   "creux": [],
+   "creux_total": 0,
    "hors_quartier": null,
    "questions_posees": []
   },
@@ -1687,6 +1072,32 @@
    "questions_posees": []
   },
   {
+   "qui": "willa-sechoirs",
+   "force": 6,
+   "questions": 0,
+   "actions": 3,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 0,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "nel-bec",
+   "force": 6,
+   "questions": 0,
+   "actions": 1,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 1,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
    "qui": "prisonnier-wat",
    "force": 6,
    "questions": 0,
@@ -1694,16 +1105,8 @@
    "critiques": 0,
    "goulots": [],
    "declencheurs": 0,
-   "creux": [
-    {
-     "de": 360,
-     "a": 1260,
-     "salle": "cachots",
-     "minutes": 900,
-     "pourquoi": "aux fers, et rien d'autre a faire que penser"
-    }
-   ],
-   "creux_total": 900,
+   "creux": [],
+   "creux_total": 0,
    "hors_quartier": null,
    "questions_posees": []
   },
@@ -1721,23 +1124,54 @@
    "questions_posees": []
   },
   {
-   "qui": "aemond",
+   "qui": "hallis-roon",
+   "force": 6,
+   "questions": 0,
+   "actions": 1,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 0,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "kerra-des-claies",
+   "force": 6,
+   "questions": 0,
+   "actions": 0,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 1,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "nicolas-reynolds",
+   "force": 6,
+   "questions": 0,
+   "actions": 1,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 1,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "helaena",
    "force": 5,
    "questions": 0,
    "actions": 0,
    "critiques": 0,
    "goulots": [],
-   "declencheurs": 0,
-   "creux": [
-    {
-     "de": 744,
-     "a": 840,
-     "salle": "cour-donjon-rouge",
-     "minutes": 96,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 96,
+   "declencheurs": 1,
+   "creux": [],
+   "creux_total": 0,
    "hors_quartier": null,
    "questions_posees": []
   },
@@ -1768,70 +1202,33 @@
    "questions_posees": []
   },
   {
-   "qui": "nel-bec",
+   "qui": "waltyr-poix",
    "force": 5,
    "questions": 0,
-   "actions": 0,
+   "actions": 1,
    "critiques": 0,
    "goulots": [],
    "declencheurs": 1,
-   "creux": [
-    {
-     "de": 337,
-     "a": 720,
-     "salle": "greve-basse",
-     "minutes": 383,
-     "pourquoi": null
-    },
-    {
-     "de": 729,
-     "a": 840,
-     "salle": "porte-de-la-gadoue",
-     "minutes": 111,
-     "pourquoi": null
-    },
-    {
-     "de": 850,
-     "a": 1140,
-     "salle": "greve-basse",
-     "minutes": 290,
-     "pourquoi": null
-    },
-    {
-     "de": 1147,
-     "a": 1260,
-     "salle": "le-boyau",
-     "minutes": 113,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 897,
-   "hors_quartier": null,
-   "questions_posees": []
-  },
-  {
-   "qui": "ollo-marran",
-   "force": 5,
-   "questions": 0,
-   "actions": 0,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 1,
-   "creux": [
-    {
-     "de": 319,
-     "a": 1260,
-     "salle": "bureau-du-port",
-     "minutes": 941,
-     "pourquoi": "a son poste — les mains prises, les oreilles libres"
-    }
-   ],
-   "creux_total": 941,
+   "creux": [],
+   "creux_total": 0,
    "hors_quartier": null,
    "questions_posees": []
   },
   {
    "qui": "bryn-cale",
+   "force": 5,
+   "questions": 0,
+   "actions": 0,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 1,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "jason-lannister",
    "force": 5,
    "questions": 0,
    "actions": 0,
@@ -1896,19 +1293,6 @@
    "questions_posees": []
   },
   {
-   "qui": "robin-darklyn",
-   "force": 5,
-   "questions": 0,
-   "actions": 0,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 1,
-   "creux": [],
-   "creux_total": 0,
-   "hors_quartier": null,
-   "questions_posees": []
-  },
-  {
    "qui": "torgo",
    "force": 5,
    "questions": 0,
@@ -1918,7 +1302,7 @@
    "declencheurs": 0,
    "creux": [],
    "creux_total": 0,
-   "hors_quartier": "loin",
+   "hors_quartier": null,
    "questions_posees": []
   },
   {
@@ -1931,7 +1315,7 @@
    "declencheurs": 0,
    "creux": [],
    "creux_total": 0,
-   "hors_quartier": "hors-plan",
+   "hors_quartier": null,
    "questions_posees": []
   },
   {
@@ -1948,41 +1332,6 @@
    "questions_posees": []
   },
   {
-   "qui": "hallis-roon",
-   "force": 5,
-   "questions": 0,
-   "actions": 0,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 0,
-   "creux": [
-    {
-     "de": 727,
-     "a": 810,
-     "salle": "grande-salle",
-     "minutes": 83,
-     "pourquoi": null
-    },
-    {
-     "de": 817,
-     "a": 1140,
-     "salle": "cachots",
-     "minutes": 323,
-     "pourquoi": null
-    },
-    {
-     "de": 1151,
-     "a": 1260,
-     "salle": "archives",
-     "minutes": 109,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 515,
-   "hors_quartier": null,
-   "questions_posees": []
-  },
-  {
    "qui": "le-facteur-braavien",
    "force": 5,
    "questions": 0,
@@ -1992,7 +1341,7 @@
    "declencheurs": 0,
    "creux": [],
    "creux_total": 0,
-   "hors_quartier": "loin",
+   "hors_quartier": null,
    "questions_posees": []
   },
   {
@@ -2005,11 +1354,11 @@
    "declencheurs": 1,
    "creux": [],
    "creux_total": 0,
-   "hors_quartier": "loin",
+   "hors_quartier": null,
    "questions_posees": []
   },
   {
-   "qui": "aegon-ii",
+   "qui": "wend",
    "force": 4,
    "questions": 0,
    "actions": 1,
@@ -2018,7 +1367,7 @@
    "declencheurs": 0,
    "creux": [],
    "creux_total": 0,
-   "hors_quartier": "loin",
+   "hors_quartier": null,
    "questions_posees": []
   },
   {
@@ -2031,27 +1380,6 @@
    "declencheurs": 0,
    "creux": [],
    "creux_total": 0,
-   "hors_quartier": "loin",
-   "questions_posees": []
-  },
-  {
-   "qui": "waltyr-poix",
-   "force": 4,
-   "questions": 0,
-   "actions": 0,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 1,
-   "creux": [
-    {
-     "de": 316,
-     "a": 1260,
-     "salle": "arche-de-waltyr",
-     "minutes": 944,
-     "pourquoi": "a son poste — les mains prises, les oreilles libres"
-    }
-   ],
-   "creux_total": 944,
    "hors_quartier": null,
    "questions_posees": []
   },
@@ -2063,16 +1391,8 @@
    "critiques": 0,
    "goulots": [],
    "declencheurs": 1,
-   "creux": [
-    {
-     "de": 300,
-     "a": 1260,
-     "salle": "la-gaffe",
-     "minutes": 960,
-     "pourquoi": "a son poste — les mains prises, les oreilles libres"
-    }
-   ],
-   "creux_total": 960,
+   "creux": [],
+   "creux_total": 0,
    "hors_quartier": null,
    "questions_posees": []
   },
@@ -2086,33 +1406,7 @@
    "declencheurs": 0,
    "creux": [],
    "creux_total": 0,
-   "hors_quartier": "loin",
-   "questions_posees": []
-  },
-  {
-   "qui": "larys",
-   "force": 3,
-   "questions": 0,
-   "actions": 0,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 0,
-   "creux": [],
-   "creux_total": 0,
-   "hors_quartier": "loin",
-   "questions_posees": []
-  },
-  {
-   "qui": "helaena",
-   "force": 3,
-   "questions": 0,
-   "actions": 0,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 0,
-   "creux": [],
-   "creux_total": 0,
-   "hors_quartier": "loin",
+   "hors_quartier": null,
    "questions_posees": []
   },
   {
@@ -2155,47 +1449,6 @@
    "questions_posees": []
   },
   {
-   "qui": "wend",
-   "force": 3,
-   "questions": 0,
-   "actions": 0,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 0,
-   "creux": [
-    {
-     "de": 305,
-     "a": 420,
-     "salle": "quai",
-     "minutes": 115,
-     "pourquoi": null
-    },
-    {
-     "de": 725,
-     "a": 1020,
-     "salle": "quai",
-     "minutes": 295,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 410,
-   "hors_quartier": null,
-   "questions_posees": []
-  },
-  {
-   "qui": "willa-sechoirs",
-   "force": 3,
-   "questions": 0,
-   "actions": 0,
-   "critiques": 0,
-   "goulots": [],
-   "declencheurs": 0,
-   "creux": [],
-   "creux_total": 0,
-   "hors_quartier": "loin",
-   "questions_posees": []
-  },
-  {
    "qui": "doss-marran",
    "force": 3,
    "questions": 0,
@@ -2205,7 +1458,7 @@
    "declencheurs": 0,
    "creux": [],
    "creux_total": 0,
-   "hors_quartier": "loin",
+   "hors_quartier": null,
    "questions_posees": []
   },
   {
@@ -2216,21 +1469,13 @@
    "critiques": 0,
    "goulots": [],
    "declencheurs": 0,
-   "creux": [
-    {
-     "de": 729,
-     "a": 810,
-     "salle": "cour",
-     "minutes": 81,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 81,
+   "creux": [],
+   "creux_total": 0,
    "hors_quartier": null,
    "questions_posees": []
   },
   {
-   "qui": "jason-lannister",
+   "qui": "robin-darklyn",
    "force": 3,
    "questions": 0,
    "actions": 0,
@@ -2263,16 +1508,73 @@
    "critiques": 0,
    "goulots": [],
    "declencheurs": 0,
-   "creux": [
-    {
-     "de": 729,
-     "a": 810,
-     "salle": "cour",
-     "minutes": 81,
-     "pourquoi": null
-    }
-   ],
-   "creux_total": 81,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "sarn-vieux-sang",
+   "force": 2,
+   "questions": 0,
+   "actions": 0,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 0,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "bren-racine-grise",
+   "force": 2,
+   "questions": 0,
+   "actions": 0,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 0,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "ygga-main-de-pierre",
+   "force": 2,
+   "questions": 0,
+   "actions": 0,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 0,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "toll-oeil-noir",
+   "force": 2,
+   "questions": 0,
+   "actions": 0,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 0,
+   "creux": [],
+   "creux_total": 0,
+   "hors_quartier": null,
+   "questions_posees": []
+  },
+  {
+   "qui": "wenna-la-nommeuse",
+   "force": 2,
+   "questions": 0,
+   "actions": 0,
+   "critiques": 0,
+   "goulots": [],
+   "declencheurs": 0,
+   "creux": [],
+   "creux_total": 0,
    "hors_quartier": null,
    "questions_posees": []
   }
@@ -2336,12 +1638,12 @@
     "distance_joueur_minutes": null
    },
    {
-    "id": "peseur-bral",
-    "qui": "Bral",
-    "salle": "bascule",
-    "lieu": "La bascule du port",
-    "etat": "arrete",
-    "source": "perime",
+    "id": "bren-racine-grise",
+    "qui": "Bren Racine-Grise",
+    "salle": "clairiere",
+    "lieu": null,
+    "etat": "en-chemin",
+    "source": "routine",
     "distance_joueur_minutes": null
    },
    {
@@ -2429,8 +1731,8 @@
     "id": "orwyle",
     "qui": "Grand Mestre Orwyle",
     "salle": "roukerie-port-real",
-    "lieu": "La roukerie de Port-Real",
-    "etat": "arrete",
+    "lieu": null,
+    "etat": "en-chemin",
     "source": "routine",
     "distance_joueur_minutes": null
    },
@@ -2456,8 +1758,8 @@
     "id": "hann-bourbe",
     "qui": "Hann Bourbe",
     "salle": "le-feu-de-l-aire",
-    "lieu": "Le feu de l'aire, chantier de la vase",
-    "etat": "arrete",
+    "lieu": null,
+    "etat": "en-chemin",
     "source": "routine",
     "distance_joueur_minutes": null
    },
@@ -2480,20 +1782,20 @@
     "distance_joueur_minutes": null
    },
    {
-    "id": "hoy-des-salines",
-    "qui": "Hoy",
-    "salle": "bascule",
-    "lieu": "La bascule du port",
+    "id": "jacaerys",
+    "qui": "Jacaerys Velaryon",
+    "salle": "fosses",
+    "lieu": "Fosses aux dragons, Peyredragon",
     "etat": "arrete",
-    "source": "perime",
+    "source": "routine",
     "distance_joueur_minutes": null
    },
    {
-    "id": "jacaerys",
-    "qui": "Jacaerys Velaryon",
+    "id": "kerra-des-claies",
+    "qui": "Kerra",
     "salle": "appartements-reine",
-    "lieu": null,
-    "etat": "en-chemin",
+    "lieu": "La porte des appartements de la reine, Peyredragon",
+    "etat": "arrete",
     "source": "routine",
     "distance_joueur_minutes": null
    },
@@ -2525,15 +1827,6 @@
     "distance_joueur_minutes": null
    },
    {
-    "id": "prisonnier-vieux",
-    "qui": "Le vieux sans lacets",
-    "salle": "cachots",
-    "lieu": "Les caves basses, Peyredragon",
-    "etat": "arrete",
-    "source": "routine",
-    "distance_joueur_minutes": null
-   },
-   {
     "id": "lucerys",
     "qui": "Lucerys Velaryon",
     "salle": "table-peinte",
@@ -2547,6 +1840,15 @@
     "qui": "Mag la Gaffe",
     "salle": "la-gaffe",
     "lieu": "La Gaffe, sous la porte de la Gadoue",
+    "etat": "arrete",
+    "source": "routine",
+    "distance_joueur_minutes": null
+   },
+   {
+    "id": "marlo-vasse",
+    "qui": "Marlo Vasse",
+    "salle": "porte-de-la-gadoue",
+    "lieu": "Sous l'arche de la Gadoue, Port-Real",
     "etat": "arrete",
     "source": "routine",
     "distance_joueur_minutes": null
@@ -2591,8 +1893,8 @@
     "id": "gerardys",
     "qui": "Mestre Gerardys",
     "salle": "roukerie",
-    "lieu": "La roukerie, Peyredragon",
-    "etat": "arrete",
+    "lieu": null,
+    "etat": "en-chemin",
     "source": "routine",
     "distance_joueur_minutes": null
    },
@@ -2615,6 +1917,15 @@
     "distance_joueur_minutes": null
    },
    {
+    "id": "nicolas-reynolds",
+    "qui": "Nicolas Lesster Reynolds",
+    "salle": "la-souche",
+    "lieu": null,
+    "etat": "en-chemin",
+    "source": "routine",
+    "distance_joueur_minutes": null
+   },
+   {
     "id": "ollo-marran",
     "qui": "Ollo Marran",
     "salle": "bureau-du-port",
@@ -2633,11 +1944,20 @@
     "distance_joueur_minutes": null
    },
    {
+    "id": "prisonnier-vieux",
+    "qui": "Ossy des Bornes",
+    "salle": "cachots",
+    "lieu": "Les caves basses, Peyredragon",
+    "etat": "arrete",
+    "source": "routine",
+    "distance_joueur_minutes": null
+   },
+   {
     "id": "otto",
     "qui": "Otto Hightower",
     "salle": "tour-de-la-main",
-    "lieu": "La tour de la Main, Donjon Rouge",
-    "etat": "arrete",
+    "lieu": null,
+    "etat": "en-chemin",
     "source": "routine",
     "distance_joueur_minutes": null
    },
@@ -2645,8 +1965,8 @@
     "id": "ren",
     "qui": "Ren",
     "salle": "le-feu-de-l-aire",
-    "lieu": "Le feu de l'aire, chantier de la vase",
-    "etat": "arrete",
+    "lieu": null,
+    "etat": "en-chemin",
     "source": "routine",
     "distance_joueur_minutes": null
    },
@@ -2663,8 +1983,8 @@
     "id": "rulf-corne",
     "qui": "Rulf Corne",
     "salle": "quai",
-    "lieu": "Le quai, Peyredragon",
-    "etat": "arrete",
+    "lieu": null,
+    "etat": "en-chemin",
     "source": "routine",
     "distance_joueur_minutes": null
    },
@@ -2672,8 +1992,8 @@
     "id": "sabbe",
     "qui": "Sabbe",
     "salle": "le-feu-de-l-aire",
-    "lieu": "Le feu de l'aire, chantier de la vase",
-    "etat": "arrete",
+    "lieu": null,
+    "etat": "en-chemin",
     "source": "routine",
     "distance_joueur_minutes": null
    },
@@ -2683,6 +2003,15 @@
     "salle": "table-peinte",
     "lieu": "Chambre de la Table Peinte, Peyredragon",
     "etat": "arrete",
+    "source": "routine",
+    "distance_joueur_minutes": null
+   },
+   {
+    "id": "sarn-vieux-sang",
+    "qui": "Sarn Vieux-Sang",
+    "salle": "clairiere",
+    "lieu": null,
+    "etat": "en-chemin",
     "source": "routine",
     "distance_joueur_minutes": null
    },
@@ -2699,8 +2028,8 @@
     "id": "septa-marlow",
     "qui": "Septa Marlow",
     "salle": "septuaire",
-    "lieu": "Le septuaire, Peyredragon",
-    "etat": "arrete",
+    "lieu": null,
+    "etat": "en-chemin",
     "source": "routine",
     "distance_joueur_minutes": null
    },
@@ -2708,8 +2037,8 @@
     "id": "robert-quince",
     "qui": "Ser Robert Quince",
     "salle": "cour",
-    "lieu": "La cour, Peyredragon",
-    "etat": "arrete",
+    "lieu": null,
+    "etat": "en-chemin",
     "source": "routine",
     "distance_joueur_minutes": null
    },
@@ -2737,6 +2066,15 @@
     "salle": "quai",
     "lieu": "Le quai, Peyredragon",
     "etat": "arrete",
+    "source": "routine",
+    "distance_joueur_minutes": null
+   },
+   {
+    "id": "toll-oeil-noir",
+    "qui": "Toll Œil-Noir",
+    "salle": "clairiere",
+    "lieu": null,
+    "etat": "en-chemin",
     "source": "routine",
     "distance_joueur_minutes": null
    },
@@ -2780,8 +2118,17 @@
     "id": "wend",
     "qui": "Wend",
     "salle": "quai",
-    "lieu": "Le quai, Peyredragon",
-    "etat": "arrete",
+    "lieu": null,
+    "etat": "en-chemin",
+    "source": "routine",
+    "distance_joueur_minutes": null
+   },
+   {
+    "id": "wenna-la-nommeuse",
+    "qui": "Wenna la Nommeuse",
+    "salle": "clairiere",
+    "lieu": null,
+    "etat": "en-chemin",
     "source": "routine",
     "distance_joueur_minutes": null
    },
@@ -2791,6 +2138,15 @@
     "salle": "quai",
     "lieu": "Le quai, Peyredragon",
     "etat": "arrete",
+    "source": "routine",
+    "distance_joueur_minutes": null
+   },
+   {
+    "id": "ygga-main-de-pierre",
+    "qui": "Ygga Main-de-Pierre",
+    "salle": "clairiere",
+    "lieu": null,
+    "etat": "en-chemin",
     "source": "routine",
     "distance_joueur_minutes": null
    },
@@ -2890,6 +2246,7 @@
     "salle": "appartements-reine",
     "gens": [
      "Elyn Sarnes",
+     "Kerra",
      "Marna",
      "page-couloir"
     ]
@@ -2907,13 +2264,6 @@
     ]
    },
    {
-    "salle": "bascule",
-    "gens": [
-     "Bral",
-     "Hoy"
-    ]
-   },
-   {
     "salle": "bureau-du-port",
     "gens": [
      "Ollo Marran"
@@ -2926,7 +2276,7 @@
      "Hallis Roon",
      "Hobb du hameau au gue",
      "Le jeune au sourcil fendu",
-     "Le vieux sans lacets",
+     "Ossy des Bornes",
      "Wat du hameau au gue"
     ]
    },
@@ -2934,12 +2284,6 @@
     "salle": "chambre-helaena",
     "gens": [
      "Helaena Targaryen"
-    ]
-   },
-   {
-    "salle": "cour",
-    "gens": [
-     "Ser Robert Quince"
     ]
    },
    {
@@ -2957,6 +2301,7 @@
    {
     "salle": "fosses",
     "gens": [
+     "Jacaerys Velaryon",
      "Sarro Vaeth"
     ]
    },
@@ -2998,14 +2343,6 @@
     ]
    },
    {
-    "salle": "le-feu-de-l-aire",
-    "gens": [
-     "Hann Bourbe",
-     "Ren",
-     "Sabbe"
-    ]
-   },
-   {
     "salle": "passages-maegor",
     "gens": [
      "Larys Strong, dit le Pied-Bot"
@@ -3015,6 +2352,12 @@
     "salle": "porte-de-fer",
     "gens": [
      "guet-du-mur"
+    ]
+   },
+   {
+    "salle": "porte-de-la-gadoue",
+    "gens": [
+     "Marlo Vasse"
     ]
    },
    {
@@ -3033,10 +2376,8 @@
      "Meliss",
      "Nestoro Vhassar",
      "Ordo Sarnes",
-     "Rulf Corne",
      "Tobb",
      "Torgo",
-     "Wend",
      "Willa des Sechoirs",
      "le-garcon-aux-manches-longues",
      "meg-du-fumoir",
@@ -3055,14 +2396,7 @@
      "Alarra Rosby",
      "Corlys Velaryon, le Serpent de Mer",
      "Denys Bar Emmon",
-     "Mestre Gerardys",
      "ossy"
-    ]
-   },
-   {
-    "salle": "roukerie-port-real",
-    "gens": [
-     "Grand Mestre Orwyle"
     ]
    },
    {
@@ -3070,12 +2404,6 @@
     "gens": [
      "Aemond Targaryen",
      "Criston Cole"
-    ]
-   },
-   {
-    "salle": "septuaire",
-    "gens": [
-     "Septa Marlow"
     ]
    },
    {
@@ -3095,1329 +2423,99 @@
      "Ser Steffon Darklyn",
      "garde-tour"
     ]
-   },
-   {
-    "salle": "tour-de-la-main",
-    "gens": [
-     "Otto Hightower"
-    ]
    }
   ],
   "en_chemin": [
    {
-    "qui": "Jacaerys Velaryon",
-    "de": "appartements-reine",
-    "vers": "fosses"
+    "qui": "Bren Racine-Grise",
+    "de": "clairiere",
+    "vers": "lit-des-racines"
+   },
+   {
+    "qui": "Grand Mestre Orwyle",
+    "de": "roukerie-port-real",
+    "vers": "petit-conseil"
+   },
+   {
+    "qui": "Hann Bourbe",
+    "de": "le-feu-de-l-aire",
+    "vers": "la-cale"
+   },
+   {
+    "qui": "Mestre Gerardys",
+    "de": "roukerie",
+    "vers": "table-peinte"
+   },
+   {
+    "qui": "Nicolas Lesster Reynolds",
+    "de": "la-souche",
+    "vers": "clairiere"
+   },
+   {
+    "qui": "Otto Hightower",
+    "de": "tour-de-la-main",
+    "vers": "petit-conseil"
+   },
+   {
+    "qui": "Ren",
+    "de": "le-feu-de-l-aire",
+    "vers": "la-cale"
+   },
+   {
+    "qui": "Rulf Corne",
+    "de": "quai",
+    "vers": "porte-de-mer"
+   },
+   {
+    "qui": "Sabbe",
+    "de": "le-feu-de-l-aire",
+    "vers": "la-cale"
+   },
+   {
+    "qui": "Sarn Vieux-Sang",
+    "de": "clairiere",
+    "vers": "arbre-des-ages"
+   },
+   {
+    "qui": "Septa Marlow",
+    "de": "septuaire",
+    "vers": "appartements-reine"
+   },
+   {
+    "qui": "Ser Robert Quince",
+    "de": "cour",
+    "vers": "porte-dragon"
+   },
+   {
+    "qui": "Toll Œil-Noir",
+    "de": "clairiere",
+    "vers": "bassin-noir"
+   },
+   {
+    "qui": "Wend",
+    "de": "quai",
+    "vers": "porte-de-mer"
+   },
+   {
+    "qui": "Wenna la Nommeuse",
+    "de": "clairiere",
+    "vers": "la-souche"
+   },
+   {
+    "qui": "Ygga Main-de-Pierre",
+    "de": "clairiere",
+    "vers": "etabli"
    }
   ]
  },
  "quartier": {
-  "ancres": [
-   {
-    "qui": "rhaenyra",
-    "salle": "table-peinte",
-    "minute": 777
-   },
-   {
-    "qui": "aurore-inchauspe",
-    "salle": "table-peinte",
-    "minute": 1166
-   },
-   {
-    "qui": "marlo-vasse",
-    "salle": "porte-de-la-gadoue",
-    "minute": 450
-   }
-  ],
+  "ancres": [],
   "rayon_minutes": 20,
-  "dedans": 50,
-  "gens": [
-   "aemond",
-   "alarra-rosby",
-   "aldon-hask",
-   "alicent",
-   "alys-grive",
-   "aurore-inchauspe",
-   "corlys",
-   "criston",
-   "daemon",
-   "denys-bar-emmon",
-   "dorsa-sath",
-   "doye-rouelle",
-   "elyn-sarnes",
-   "garde-levant",
-   "garde-tour",
-   "gerardys",
-   "gib-le-geolier",
-   "hallis-roon",
-   "hann-bourbe",
-   "hobb-treize-pas",
-   "jacaerys",
-   "l-homme-de-la-merette",
-   "le-sanglier",
-   "lucerys",
-   "mag-la-gaffe",
-   "marlo-vasse",
-   "marna",
-   "merra-sath",
-   "nel-bec",
-   "nesse",
-   "ollo-marran",
-   "ossy",
-   "page-couloir",
-   "pate-changeur",
-   "prisonnier-jeune",
-   "prisonnier-vieux",
-   "prisonnier-wat",
-   "ren",
-   "rhaenyra",
-   "rhaenys",
-   "robert-quince",
-   "ruff-le-cordier",
-   "sabbe",
-   "sara",
-   "sarro-vaeth",
-   "septa-marlow",
-   "sirel-quintaine",
-   "steffon-darklyn",
-   "waltyr-poix",
-   "wend"
-  ],
-  "dehors": [
-   {
-    "qui": "aegon-ii",
-    "nom": "Aegon Targaryen, deuxième du nom",
-    "motif": "loin"
-   },
-   {
-    "qui": "doss-marran",
-    "nom": "Doss Marran",
-    "motif": "loin"
-   },
-   {
-    "qui": "guet-du-mur",
-    "nom": "guet-du-mur",
-    "motif": "loin"
-   },
-   {
-    "qui": "hallis-beaupre",
-    "nom": "Hallis Beaupre",
-    "motif": "loin"
-   },
-   {
-    "qui": "helaena",
-    "nom": "Helaena Targaryen",
-    "motif": "loin"
-   },
-   {
-    "qui": "hoy-des-salines",
-    "nom": "Hoy",
-    "motif": "hors-plan"
-   },
-   {
-    "qui": "larys",
-    "nom": "Larys Strong, dit le Pied-Bot",
-    "motif": "loin"
-   },
-   {
-    "qui": "le-facteur-braavien",
-    "nom": "Nestoro Vhassar",
-    "motif": "loin"
-   },
-   {
-    "qui": "le-garcon-aux-manches-longues",
-    "nom": "le-garcon-aux-manches-longues",
-    "motif": "loin"
-   },
-   {
-    "qui": "maron-sec",
-    "nom": "Maron Sec",
-    "motif": "loin"
-   },
-   {
-    "qui": "meg-du-fumoir",
-    "nom": "meg-du-fumoir",
-    "motif": "loin"
-   },
-   {
-    "qui": "meliss-la-claie",
-    "nom": "Meliss",
-    "motif": "loin"
-   },
-   {
-    "qui": "ordo-sarnes",
-    "nom": "Ordo Sarnes",
-    "motif": "loin"
-   },
-   {
-    "qui": "orwyle",
-    "nom": "Grand Mestre Orwyle",
-    "motif": "loin"
-   },
-   {
-    "qui": "otto",
-    "nom": "Otto Hightower",
-    "motif": "loin"
-   },
-   {
-    "qui": "peseur-bral",
-    "nom": "Bral",
-    "motif": "hors-plan"
-   },
-   {
-    "qui": "rulf-corne",
-    "nom": "Rulf Corne",
-    "motif": "loin"
-   },
-   {
-    "qui": "tobb",
-    "nom": "Tobb",
-    "motif": "loin"
-   },
-   {
-    "qui": "torgo",
-    "nom": "Torgo",
-    "motif": "loin"
-   },
-   {
-    "qui": "vieux-pecheur",
-    "nom": "vieux-pecheur",
-    "motif": "loin"
-   },
-   {
-    "qui": "willa-sechoirs",
-    "nom": "Willa des Sechoirs",
-    "motif": "loin"
-   }
-  ]
+  "dedans": 0,
+  "gens": [],
+  "dehors": []
  },
- "creux": [
-  {
-   "qui": "doye-rouelle",
-   "nom": "Doye Rouelle",
-   "salle": "culpucier",
-   "minutes_du_joueur": 18,
-   "par": "marlo-vasse",
-   "creux_total": 960,
-   "creux": [
-    {
-     "de": 300,
-     "a": 1260,
-     "salle": "culpucier",
-     "minutes": 960,
-     "pourquoi": "a son poste — les mains prises, les oreilles libres"
-    }
-   ]
-  },
-  {
-   "qui": "l-homme-de-la-merette",
-   "nom": "l-homme-de-la-merette",
-   "salle": "la-merette",
-   "minutes_du_joueur": 14,
-   "par": "marlo-vasse",
-   "creux_total": 960,
-   "creux": [
-    {
-     "de": 300,
-     "a": 1260,
-     "salle": "la-merette",
-     "minutes": 960,
-     "pourquoi": "a son poste — les mains prises, les oreilles libres"
-    }
-   ]
-  },
-  {
-   "qui": "mag-la-gaffe",
-   "nom": "Mag la Gaffe",
-   "salle": "la-gaffe",
-   "minutes_du_joueur": 2,
-   "par": "marlo-vasse",
-   "creux_total": 960,
-   "creux": [
-    {
-     "de": 300,
-     "a": 1260,
-     "salle": "la-gaffe",
-     "minutes": 960,
-     "pourquoi": "a son poste — les mains prises, les oreilles libres"
-    }
-   ]
-  },
-  {
-   "qui": "le-sanglier",
-   "nom": "Le Sanglier",
-   "salle": "table-peinte",
-   "minutes_du_joueur": 0,
-   "par": "rhaenyra",
-   "creux_total": 958,
-   "creux": [
-    {
-     "de": 302,
-     "a": 1260,
-     "salle": "porte-dragon",
-     "minutes": 958,
-     "pourquoi": "a son poste — les mains prises, les oreilles libres"
-    }
-   ]
-  },
-  {
-   "qui": "pate-changeur",
-   "nom": "pate-changeur",
-   "salle": "le-change",
-   "minutes_du_joueur": 7,
-   "par": "marlo-vasse",
-   "creux_total": 952,
-   "creux": [
-    {
-     "de": 308,
-     "a": 1260,
-     "salle": "le-change",
-     "minutes": 952,
-     "pourquoi": "a son poste — les mains prises, les oreilles libres"
-    }
-   ]
-  },
-  {
-   "qui": "ossy",
-   "nom": "ossy",
-   "salle": "roukerie",
-   "minutes_du_joueur": 15,
-   "par": "rhaenyra",
-   "creux_total": 950,
-   "creux": [
-    {
-     "de": 310,
-     "a": 1260,
-     "salle": "roukerie",
-     "minutes": 950,
-     "pourquoi": "a son poste — les mains prises, les oreilles libres"
-    }
-   ]
-  },
-  {
-   "qui": "ruff-le-cordier",
-   "nom": "ruff-le-cordier",
-   "salle": "quais-de-la-nera",
-   "minutes_du_joueur": 6,
-   "par": "marlo-vasse",
-   "creux_total": 948,
-   "creux": [
-    {
-     "de": 312,
-     "a": 1260,
-     "salle": "quais-de-la-nera",
-     "minutes": 948,
-     "pourquoi": "a son poste — les mains prises, les oreilles libres"
-    }
-   ]
-  },
-  {
-   "qui": "gib-le-geolier",
-   "nom": "Gib",
-   "salle": "cachots",
-   "minutes_du_joueur": 13,
-   "par": "rhaenyra",
-   "creux_total": 946,
-   "creux": [
-    {
-     "de": 314,
-     "a": 1260,
-     "salle": "cachots",
-     "minutes": 946,
-     "pourquoi": "a son poste — les mains prises, les oreilles libres"
-    }
-   ]
-  },
-  {
-   "qui": "page-couloir",
-   "nom": "page-couloir",
-   "salle": "appartements-reine",
-   "minutes_du_joueur": 2,
-   "par": "rhaenyra",
-   "creux_total": 944,
-   "creux": [
-    {
-     "de": 316,
-     "a": 1260,
-     "salle": "appartements-reine",
-     "minutes": 944,
-     "pourquoi": "a son poste — les mains prises, les oreilles libres"
-    }
-   ]
-  },
-  {
-   "qui": "waltyr-poix",
-   "nom": "Waltyr Poix",
-   "salle": "arche-de-waltyr",
-   "minutes_du_joueur": 1,
-   "par": "marlo-vasse",
-   "creux_total": 944,
-   "creux": [
-    {
-     "de": 316,
-     "a": 1260,
-     "salle": "arche-de-waltyr",
-     "minutes": 944,
-     "pourquoi": "a son poste — les mains prises, les oreilles libres"
-    }
-   ]
-  },
-  {
-   "qui": "ollo-marran",
-   "nom": "Ollo Marran",
-   "salle": "bureau-du-port",
-   "minutes_du_joueur": 4,
-   "par": "marlo-vasse",
-   "creux_total": 941,
-   "creux": [
-    {
-     "de": 319,
-     "a": 1260,
-     "salle": "bureau-du-port",
-     "minutes": 941,
-     "pourquoi": "a son poste — les mains prises, les oreilles libres"
-    }
-   ]
-  },
-  {
-   "qui": "sirel-quintaine",
-   "nom": "Sirel Quintaine",
-   "salle": "etal-de-sirel",
-   "minutes_du_joueur": 4,
-   "par": "marlo-vasse",
-   "creux_total": 941,
-   "creux": [
-    {
-     "de": 319,
-     "a": 1260,
-     "salle": "etal-de-sirel",
-     "minutes": 941,
-     "pourquoi": "a son poste — les mains prises, les oreilles libres"
-    }
-   ]
-  },
-  {
-   "qui": "hobb-treize-pas",
-   "nom": "Hobb du hameau au gue",
-   "salle": "cachots",
-   "minutes_du_joueur": 13,
-   "par": "rhaenyra",
-   "creux_total": 900,
-   "creux": [
-    {
-     "de": 360,
-     "a": 1260,
-     "salle": "cachots",
-     "minutes": 900,
-     "pourquoi": "aux fers, et rien d'autre a faire que penser"
-    }
-   ]
-  },
-  {
-   "qui": "prisonnier-jeune",
-   "nom": "Le jeune au sourcil fendu",
-   "salle": "cachots",
-   "minutes_du_joueur": 13,
-   "par": "rhaenyra",
-   "creux_total": 900,
-   "creux": [
-    {
-     "de": 360,
-     "a": 1260,
-     "salle": "cachots",
-     "minutes": 900,
-     "pourquoi": "aux fers, et rien d'autre a faire que penser"
-    }
-   ]
-  },
-  {
-   "qui": "prisonnier-vieux",
-   "nom": "Le vieux sans lacets",
-   "salle": "cachots",
-   "minutes_du_joueur": 13,
-   "par": "rhaenyra",
-   "creux_total": 900,
-   "creux": [
-    {
-     "de": 360,
-     "a": 1260,
-     "salle": "cachots",
-     "minutes": 900,
-     "pourquoi": "aux fers, et rien d'autre a faire que penser"
-    }
-   ]
-  },
-  {
-   "qui": "prisonnier-wat",
-   "nom": "Wat du hameau au gue",
-   "salle": "cachots",
-   "minutes_du_joueur": 13,
-   "par": "rhaenyra",
-   "creux_total": 900,
-   "creux": [
-    {
-     "de": 360,
-     "a": 1260,
-     "salle": "cachots",
-     "minutes": 900,
-     "pourquoi": "aux fers, et rien d'autre a faire que penser"
-    }
-   ]
-  },
-  {
-   "qui": "lucerys",
-   "nom": "Lucerys Velaryon",
-   "salle": "grande-salle",
-   "minutes_du_joueur": 10,
-   "par": "rhaenyra",
-   "creux_total": 898,
-   "creux": [
-    {
-     "de": 332,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 388,
-     "pourquoi": null
-    },
-    {
-     "de": 730,
-     "a": 810,
-     "salle": "grande-salle",
-     "minutes": 80,
-     "pourquoi": null
-    },
-    {
-     "de": 820,
-     "a": 1140,
-     "salle": "table-peinte",
-     "minutes": 320,
-     "pourquoi": null
-    },
-    {
-     "de": 1150,
-     "a": 1260,
-     "salle": "grande-salle",
-     "minutes": 110,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "nel-bec",
-   "nom": "Nel Bec",
-   "salle": "porte-de-la-gadoue",
-   "minutes_du_joueur": 0,
-   "par": "marlo-vasse",
-   "creux_total": 897,
-   "creux": [
-    {
-     "de": 337,
-     "a": 720,
-     "salle": "greve-basse",
-     "minutes": 383,
-     "pourquoi": null
-    },
-    {
-     "de": 729,
-     "a": 840,
-     "salle": "porte-de-la-gadoue",
-     "minutes": 111,
-     "pourquoi": null
-    },
-    {
-     "de": 850,
-     "a": 1140,
-     "salle": "greve-basse",
-     "minutes": 290,
-     "pourquoi": null
-    },
-    {
-     "de": 1147,
-     "a": 1260,
-     "salle": "le-boyau",
-     "minutes": 113,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "aldon-hask",
-   "nom": "Aldon Hask",
-   "salle": "table-peinte",
-   "minutes_du_joueur": 0,
-   "par": "rhaenyra",
-   "creux_total": 892,
-   "creux": [
-    {
-     "de": 338,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 382,
-     "pourquoi": null
-    },
-    {
-     "de": 730,
-     "a": 810,
-     "salle": "grande-salle",
-     "minutes": 80,
-     "pourquoi": null
-    },
-    {
-     "de": 820,
-     "a": 1140,
-     "salle": "table-peinte",
-     "minutes": 320,
-     "pourquoi": null
-    },
-    {
-     "de": 1150,
-     "a": 1260,
-     "salle": "grande-salle",
-     "minutes": 110,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "daemon",
-   "nom": "Daemon Targaryen",
-   "salle": "grande-salle",
-   "minutes_du_joueur": 10,
-   "par": "rhaenyra",
-   "creux_total": 892,
-   "creux": [
-    {
-     "de": 338,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 382,
-     "pourquoi": null
-    },
-    {
-     "de": 730,
-     "a": 810,
-     "salle": "grande-salle",
-     "minutes": 80,
-     "pourquoi": null
-    },
-    {
-     "de": 820,
-     "a": 1140,
-     "salle": "table-peinte",
-     "minutes": 320,
-     "pourquoi": null
-    },
-    {
-     "de": 1150,
-     "a": 1260,
-     "salle": "grande-salle",
-     "minutes": 110,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "rhaenys",
-   "nom": "Rhaenys Targaryen, la Reine Qui Ne Fut Jamais",
-   "salle": "table-peinte",
-   "minutes_du_joueur": 0,
-   "par": "rhaenyra",
-   "creux_total": 892,
-   "creux": [
-    {
-     "de": 338,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 382,
-     "pourquoi": null
-    },
-    {
-     "de": 730,
-     "a": 810,
-     "salle": "grande-salle",
-     "minutes": 80,
-     "pourquoi": null
-    },
-    {
-     "de": 820,
-     "a": 1140,
-     "salle": "table-peinte",
-     "minutes": 320,
-     "pourquoi": null
-    },
-    {
-     "de": 1150,
-     "a": 1260,
-     "salle": "grande-salle",
-     "minutes": 110,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "sara",
-   "nom": "Sara Poulain",
-   "salle": "grande-salle",
-   "minutes_du_joueur": 10,
-   "par": "rhaenyra",
-   "creux_total": 892,
-   "creux": [
-    {
-     "de": 338,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 382,
-     "pourquoi": null
-    },
-    {
-     "de": 730,
-     "a": 810,
-     "salle": "grande-salle",
-     "minutes": 80,
-     "pourquoi": null
-    },
-    {
-     "de": 820,
-     "a": 1140,
-     "salle": "table-peinte",
-     "minutes": 320,
-     "pourquoi": null
-    },
-    {
-     "de": 1150,
-     "a": 1260,
-     "salle": "grande-salle",
-     "minutes": 110,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "steffon-darklyn",
-   "nom": "Ser Steffon Darklyn",
-   "salle": "grande-salle",
-   "minutes_du_joueur": 10,
-   "par": "rhaenyra",
-   "creux_total": 892,
-   "creux": [
-    {
-     "de": 338,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 382,
-     "pourquoi": null
-    },
-    {
-     "de": 730,
-     "a": 810,
-     "salle": "grande-salle",
-     "minutes": 80,
-     "pourquoi": null
-    },
-    {
-     "de": 820,
-     "a": 1140,
-     "salle": "table-peinte",
-     "minutes": 320,
-     "pourquoi": null
-    },
-    {
-     "de": 1150,
-     "a": 1260,
-     "salle": "grande-salle",
-     "minutes": 110,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "alarra-rosby",
-   "nom": "Alarra Rosby",
-   "salle": "table-peinte",
-   "minutes_du_joueur": 0,
-   "par": "rhaenyra",
-   "creux_total": 811,
-   "creux": [
-    {
-     "de": 367,
-     "a": 660,
-     "salle": "roukerie",
-     "minutes": 293,
-     "pourquoi": null
-    },
-    {
-     "de": 666,
-     "a": 780,
-     "salle": "grande-salle",
-     "minutes": 114,
-     "pourquoi": null
-    },
-    {
-     "de": 788,
-     "a": 1080,
-     "salle": "archives",
-     "minutes": 292,
-     "pourquoi": null
-    },
-    {
-     "de": 1088,
-     "a": 1200,
-     "salle": "grande-salle",
-     "minutes": 112,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "corlys",
-   "nom": "Corlys Velaryon, le Serpent de Mer",
-   "salle": "table-peinte",
-   "minutes_du_joueur": 0,
-   "par": "rhaenyra",
-   "creux_total": 811,
-   "creux": [
-    {
-     "de": 367,
-     "a": 660,
-     "salle": "roukerie",
-     "minutes": 293,
-     "pourquoi": null
-    },
-    {
-     "de": 666,
-     "a": 780,
-     "salle": "grande-salle",
-     "minutes": 114,
-     "pourquoi": null
-    },
-    {
-     "de": 788,
-     "a": 1080,
-     "salle": "archives",
-     "minutes": 292,
-     "pourquoi": null
-    },
-    {
-     "de": 1088,
-     "a": 1200,
-     "salle": "grande-salle",
-     "minutes": 112,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "denys-bar-emmon",
-   "nom": "Denys Bar Emmon",
-   "salle": "table-peinte",
-   "minutes_du_joueur": 0,
-   "par": "rhaenyra",
-   "creux_total": 811,
-   "creux": [
-    {
-     "de": 367,
-     "a": 660,
-     "salle": "roukerie",
-     "minutes": 293,
-     "pourquoi": null
-    },
-    {
-     "de": 666,
-     "a": 780,
-     "salle": "grande-salle",
-     "minutes": 114,
-     "pourquoi": null
-    },
-    {
-     "de": 788,
-     "a": 1080,
-     "salle": "archives",
-     "minutes": 292,
-     "pourquoi": null
-    },
-    {
-     "de": 1088,
-     "a": 1200,
-     "salle": "grande-salle",
-     "minutes": 112,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "gerardys",
-   "nom": "Mestre Gerardys",
-   "salle": "table-peinte",
-   "minutes_du_joueur": 0,
-   "par": "rhaenyra",
-   "creux_total": 673,
-   "creux": [
-    {
-     "de": 435,
-     "a": 720,
-     "salle": "table-peinte",
-     "minutes": 285,
-     "pourquoi": null
-    },
-    {
-     "de": 730,
-     "a": 810,
-     "salle": "grande-salle",
-     "minutes": 80,
-     "pourquoi": null
-    },
-    {
-     "de": 818,
-     "a": 1020,
-     "salle": "archives",
-     "minutes": 202,
-     "pourquoi": null
-    },
-    {
-     "de": 1034,
-     "a": 1140,
-     "salle": "table-peinte",
-     "minutes": 106,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "alys-grive",
-   "nom": "Alys Grive",
-   "salle": "galeries",
-   "minutes_du_joueur": 20,
-   "par": "aurore-inchauspe",
-   "creux_total": 655,
-   "creux": [
-    {
-     "de": 485,
-     "a": 1140,
-     "salle": "bourg",
-     "minutes": 655,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "jacaerys",
-   "nom": "Jacaerys Velaryon",
-   "salle": "grande-salle",
-   "minutes_du_joueur": 10,
-   "par": "rhaenyra",
-   "creux_total": 588,
-   "creux": [
-    {
-     "de": 606,
-     "a": 720,
-     "salle": "cour",
-     "minutes": 114,
-     "pourquoi": null
-    },
-    {
-     "de": 722,
-     "a": 840,
-     "salle": "grande-salle",
-     "minutes": 118,
-     "pourquoi": null
-    },
-    {
-     "de": 842,
-     "a": 1080,
-     "salle": "cour",
-     "minutes": 238,
-     "pourquoi": null
-    },
-    {
-     "de": 1082,
-     "a": 1200,
-     "salle": "grande-salle",
-     "minutes": 118,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "septa-marlow",
-   "nom": "Septa Marlow",
-   "salle": "septuaire",
-   "minutes_du_joueur": 14,
-   "par": "rhaenyra",
-   "creux_total": 574,
-   "creux": [
-    {
-     "de": 433,
-     "a": 660,
-     "salle": "appartements-reine",
-     "minutes": 227,
-     "pourquoi": "en cellule, entre deux offices"
-    },
-    {
-     "de": 793,
-     "a": 1140,
-     "salle": "appartements-reine",
-     "minutes": 347,
-     "pourquoi": "en cellule, entre deux offices"
-    }
-   ]
-  },
-  {
-   "qui": "hallis-roon",
-   "nom": "Hallis Roon",
-   "salle": "grande-salle",
-   "minutes_du_joueur": 10,
-   "par": "rhaenyra",
-   "creux_total": 515,
-   "creux": [
-    {
-     "de": 727,
-     "a": 810,
-     "salle": "grande-salle",
-     "minutes": 83,
-     "pourquoi": null
-    },
-    {
-     "de": 817,
-     "a": 1140,
-     "salle": "cachots",
-     "minutes": 323,
-     "pourquoi": null
-    },
-    {
-     "de": 1151,
-     "a": 1260,
-     "salle": "archives",
-     "minutes": 109,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "robert-quince",
-   "nom": "Ser Robert Quince",
-   "salle": "table-peinte",
-   "minutes_du_joueur": 0,
-   "par": "rhaenyra",
-   "creux_total": 412,
-   "creux": [
-    {
-     "de": 726,
-     "a": 840,
-     "salle": "grande-salle",
-     "minutes": 114,
-     "pourquoi": null
-    },
-    {
-     "de": 842,
-     "a": 1140,
-     "salle": "cour",
-     "minutes": 298,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "wend",
-   "nom": "Wend",
-   "salle": "porte-de-mer",
-   "minutes_du_joueur": 16,
-   "par": "aurore-inchauspe",
-   "creux_total": 410,
-   "creux": [
-    {
-     "de": 305,
-     "a": 420,
-     "salle": "quai",
-     "minutes": 115,
-     "pourquoi": null
-    },
-    {
-     "de": 725,
-     "a": 1020,
-     "salle": "quai",
-     "minutes": 295,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "alicent",
-   "nom": "Alicent Hightower",
-   "salle": "septuaire-royal",
-   "minutes_du_joueur": 19,
-   "par": "marlo-vasse",
-   "creux_total": 274,
-   "creux": [
-    {
-     "de": 674,
-     "a": 780,
-     "salle": "appartements-royaux",
-     "minutes": 106,
-     "pourquoi": null
-    },
-    {
-     "de": 792,
-     "a": 960,
-     "salle": "bois-des-dieux-port-real",
-     "minutes": 168,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "hann-bourbe",
-   "nom": "Hann Bourbe",
-   "salle": "la-cale",
-   "minutes_du_joueur": 8,
-   "par": "marlo-vasse",
-   "creux_total": 261,
-   "creux": [
-    {
-     "de": 333,
-     "a": 420,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 87,
-     "pourquoi": null
-    },
-    {
-     "de": 723,
-     "a": 780,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 57,
-     "pourquoi": null
-    },
-    {
-     "de": 1203,
-     "a": 1320,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 117,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "ren",
-   "nom": "Ren",
-   "salle": "la-cale",
-   "minutes_du_joueur": 8,
-   "par": "marlo-vasse",
-   "creux_total": 261,
-   "creux": [
-    {
-     "de": 333,
-     "a": 420,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 87,
-     "pourquoi": null
-    },
-    {
-     "de": 723,
-     "a": 780,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 57,
-     "pourquoi": null
-    },
-    {
-     "de": 1203,
-     "a": 1320,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 117,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "sabbe",
-   "nom": "Sabbe",
-   "salle": "la-cale",
-   "minutes_du_joueur": 8,
-   "par": "marlo-vasse",
-   "creux_total": 261,
-   "creux": [
-    {
-     "de": 333,
-     "a": 420,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 87,
-     "pourquoi": null
-    },
-    {
-     "de": 723,
-     "a": 780,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 57,
-     "pourquoi": null
-    },
-    {
-     "de": 1203,
-     "a": 1320,
-     "salle": "le-feu-de-l-aire",
-     "minutes": 117,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "criston",
-   "nom": "Criston Cole",
-   "salle": "salle-d-armes",
-   "minutes_du_joueur": 19,
-   "par": "marlo-vasse",
-   "creux_total": 234,
-   "creux": [
-    {
-     "de": 783,
-     "a": 900,
-     "salle": "cour-donjon-rouge",
-     "minutes": 117,
-     "pourquoi": null
-    },
-    {
-     "de": 1203,
-     "a": 1320,
-     "salle": "tour-blanche",
-     "minutes": 117,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "elyn-sarnes",
-   "nom": "Elyn Sarnes",
-   "salle": "appartements-reine",
-   "minutes_du_joueur": 2,
-   "par": "aurore-inchauspe",
-   "creux_total": 111,
-   "creux": [
-    {
-     "de": 669,
-     "a": 780,
-     "salle": "grande-salle",
-     "minutes": 111,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "marna",
-   "nom": "Marna",
-   "salle": "appartements-reine",
-   "minutes_du_joueur": 2,
-   "par": "aurore-inchauspe",
-   "creux_total": 111,
-   "creux": [
-    {
-     "de": 669,
-     "a": 780,
-     "salle": "grande-salle",
-     "minutes": 111,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "aemond",
-   "nom": "Aemond Targaryen",
-   "salle": "salle-d-armes",
-   "minutes_du_joueur": 19,
-   "par": "marlo-vasse",
-   "creux_total": 96,
-   "creux": [
-    {
-     "de": 744,
-     "a": 840,
-     "salle": "cour-donjon-rouge",
-     "minutes": 96,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "sarro-vaeth",
-   "nom": "Sarro Vaeth",
-   "salle": "cour",
-   "minutes_du_joueur": 11,
-   "par": "rhaenyra",
-   "creux_total": 84,
-   "creux": [
-    {
-     "de": 726,
-     "a": 810,
-     "salle": "cour",
-     "minutes": 84,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "dorsa-sath",
-   "nom": "Dorsa Sath",
-   "salle": "cour",
-   "minutes_du_joueur": 11,
-   "par": "rhaenyra",
-   "creux_total": 81,
-   "creux": [
-    {
-     "de": 729,
-     "a": 810,
-     "salle": "cour",
-     "minutes": 81,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "merra-sath",
-   "nom": "Merra Sath",
-   "salle": "cour",
-   "minutes_du_joueur": 11,
-   "par": "rhaenyra",
-   "creux_total": 81,
-   "creux": [
-    {
-     "de": 729,
-     "a": 810,
-     "salle": "cour",
-     "minutes": 81,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "garde-tour",
-   "nom": "garde-tour",
-   "salle": "table-peinte",
-   "minutes_du_joueur": 0,
-   "par": "rhaenyra",
-   "creux_total": 43,
-   "creux": [
-    {
-     "de": 797,
-     "a": 840,
-     "salle": "baraques",
-     "minutes": 43,
-     "pourquoi": null
-    }
-   ]
-  },
-  {
-   "qui": "garde-levant",
-   "nom": "Torr",
-   "salle": "grand-escalier",
-   "minutes_du_joueur": 20,
-   "par": "rhaenyra",
-   "creux_total": 42,
-   "creux": [
-    {
-     "de": 798,
-     "a": 840,
-     "salle": "baraques",
-     "minutes": 42,
-     "pourquoi": null
-    }
-   ]
-  }
- ],
+ "creux": [],
  "en_face": [
   {
    "id": "hightower",
@@ -4591,15 +2689,153 @@
    "verrous": [
     {
      "id": "72001",
-     "quoi": "La solde de depart des trois mille n est pas versee",
+     "quoi": "La solde de depart des trois mille n'est pas versee",
      "portee": "on peut le savoir",
-     "vrai": "Il exige d Otto la solde de depart, PAS la prime criee. Sans elle, convocation seule sur l autorite du roi — plus lente, mais LA MARCHE PART QUAND MEME LE 30e, "
+     "vrai": "NON VERSEE AU 129.4.3, et zero dragon affecte : le livre du tresor ne porte pas une piece en face de la solde des trois mille, sur 600 000 dragons au coffre et "
+    },
+    {
+     "id": "72002",
+     "quoi": "Le train de siege sort ampute : ni mantelets, ni planchers, ni cordage",
+     "portee": "on peut le savoir : un charroi de mantelets se voit sortir d'un chantier",
+     "vrai": "La Couronne tient les trois pieces de mat — poutre maitresse, mature, affut — prises sous le sceau du roi le 1er et charriees le jour meme au depot hors les mur"
+    },
+    {
+     "id": "72003",
+     "quoi": "Cent vingt lances sans maitre dorment dans la ville qu'on va vider",
+     "portee": "on peut agir dessus, et c'est le seul verrou d'en face qui se leve sans un homme perdu",
+     "vrai": "Cent vingt lances portees comme venues de Sombreval, debarquees de nuit le 22, destination ecrite : la caserne du guet — ou elles ne sont jamais arrivees, ni pa"
+    },
+    {
+     "id": "72004",
+     "quoi": "La porte de la ville s'achete a l'heure",
+     "portee": "on peut le savoir, et on peut l'acheter aussi : ce qui se vend a la Couronne se vend a tout le monde",
+     "vrai": "Trois sous pour regarder, six pour oublier, douze pour aider a porter, et le nom de garde se deplace de quartier en quartier pour qu'on ne puisse pendre personn"
+    },
+    {
+     "id": "72005",
+     "quoi": "L'homme qui commande la colonne passe ses journees dans la salle du Trone",
+     "portee": "on peut le savoir : un Lord Commandant qui ne quitte pas la cour se voit de la cour",
+     "vrai": "Au 3e de la 4e lune, l'intention de ser Criston Cole n'est ni la levee, ni la solde, ni la route : c'est de faire entrer le prince Aemond dans la salle du Trone"
+    },
+    {
+     "id": "72006",
+     "quoi": "Le role compte quatre cents lances que la Couronne n'a plus",
+     "portee": "on peut le savoir, et c'est deja su : Harrenhal est rendue depuis le 23e",
+     "vrai": "Le registre des levees est de la main du Grand Mestre et porte trois mille cinq cents disponibles, dont quatre cents lances de Strong a Harrenhal — rendue au pr"
+    },
+    {
+     "id": "72007",
+     "quoi": "On marche sur une ville que personne n'est alle compter",
+     "portee": "hors de portee pour eux tant que personne n'est envoye ; a notre portee, et c'est la meme ignorance qui nous protege",
+     "vrai": "Aucune source verte n'a compte depuis le feu du 16e ce que Sombreval tient : ni ses lances, ni ses murs, ni ses coques, ni ce qu'il y a dans ses granges. Ce qu'"
     },
     {
      "id": "72101",
-     "quoi": "Le conseil ne lui a pas donne Vhagar",
-     "portee": "hors de portee : rien de ce que nous ferons ne changera ce que ce conseil decide en deux jours",
-     "vrai": "Le conseil temporise encore une fois. A ce compte le silence vaut refus, et il ne l attendra plus au-dela de deux jours — apres quoi il vole sans permission, co"
+     "quoi": "La cire du roi n'est pas descendue — et ce n'est plus le conseil qui retient Vhagar, c'est la porte d'Aegon",
+     "portee": "on peut agir dessus, et c'est un piege : le declencheur arme de sa tete dit qu'un dragon de la reine signale en vol au sud de la baie, a portee de Vhagar, le fait monter DANS L'HEURE et aller au-devant, sans autorisation et quel que soit l'ordre du conseil. Montrer un dragon au sud cloue Daeron a Villevieille (verrou 71003 du plan hightower) et decloue Vhagar dans le meme geste. C'est le seul endroit du dossier ou le meme mouvement de la reine sert et dessert a la fois.",
+     "vrai": "CINQ JOURS. Le prince avait pose lui-meme la borne — midi du 29e — et elle est passee de quatre jours. La Main a donne l'ambassade contre trois termes acceptes "
+    },
+    {
+     "id": "72102",
+     "quoi": "Rien n'est affecte : la bourse est un tas, pas un compte",
+     "portee": "on peut le savoir : une promesse de la Couronne restee impayee devant temoins se sait vite, et c'est exactement ce qu'Otto craint",
+     "vrai": "600 000 dragons au coffre, 30 000 de revenu la lune, et pas une ligne ecrite en face de ce qui est promis : ni la prime criee le 24e, ni la solde de depart des "
+    },
+    {
+     "id": "72103",
+     "quoi": "Quatre bouches tirent sur la meme caisse et aucune n'a ecrit son chiffre devant les trois autres",
+     "portee": "on peut le savoir",
+     "vrai": "Criston reclame la caisse entiere pour son ost (solde de depart de 3 000 hommes) ; la prime des tetes de Peyredragon a ete criee entre 10 000 et 50 000 dragons "
+    },
+    {
+     "id": "72104",
+     "quoi": "Le roi paie de sa main, hors du tresor et hors de la Main",
+     "portee": "hors de portee : rien de ce que nous ferons ne decidera ce que le roi sort de sa poche",
+     "vrai": "Aegon a paye de sa propre main le premier homme venu reclamer la prime, et cet homme lui a dit lui-meme qu'on criait un prix Porte de la Gadoue et un autre au m"
+    },
+    {
+     "id": "72105",
+     "quoi": "Le Guet n'est pas paye, et la porte se vend a l'heure",
+     "portee": "on peut agir dessus : c'est la porte la moins chere de Port-Real, et elle a deja servi a d'autres",
+     "vrai": "Deux mille manteaux d'or dont la solde ne paie pas le logis, et un tarif etabli sous l'arche de la porte de la Gadoue : trois sous pour regarder, six pour oubli"
+    },
+    {
+     "id": "72301",
+     "quoi": "Le role du port ne compte qu'un cote",
+     "portee": "on peut agir dessus",
+     "vrai": "Neuf fours de la Gadoue et du Culpucier forces en trois semaines, par quittance du Guet, sous paraphe royal — c'est-a-dire par ses propres hommes. Le parti de s"
+    },
+    {
+     "id": "72302",
+     "quoi": "Le compte n'est signe d'aucun nom",
+     "portee": "on peut agir dessus",
+     "vrai": "Le role est clos chaque semaine par le paraphe de l'officier du port, qui est aux estacades jusqu'a la maree basse. Le commis sert le registre, il ne le clot pa"
+    },
+    {
+     "id": "72303",
+     "quoi": "La cassette privee du roi ne couvre pas ce qu'il a crie",
+     "portee": "on peut le savoir",
+     "vrai": "Elle paie un homme largement, deux honorablement, pas dix. Un homme a deja ete paye de sa main le 28e a quatorze heures, sur sa bourse, sans qu'aucune somme fut"
+    },
+    {
+     "id": "72304",
+     "quoi": "Rien de ce que le roi ordonne de vive voix n'est porte a un registre",
+     "portee": "on peut le savoir",
+     "vrai": "Le 28e, en une matinee, il a donne Vhagar a Aemond de sa bouche puis accorde a Criston trois mille hommes et la solde, sans le conseil restreint. Le tresorier a"
+    },
+    {
+     "id": "72305",
+     "quoi": "Se cacher d'Otto lui coute un quart d'heure par sortie",
+     "portee": "hors de portee : nous ignorons jusqu'a l'existence de ce passage",
+     "vrai": "Le passage sous ses appartements sort par les geoles noires et la Promenade des Traitres : dix-huit minutes jusqu'a la cour la ou la porte n'en couterait que qu"
+    },
+    {
+     "id": "72401",
+     "quoi": "La chaine des mestres porte les deux camps, et le Grand Mestre est assis dessus",
+     "portee": "on peut le savoir, et on peut agir dessus : nous avons Gerardys, qui est du meme ordre et a deja ecrit a Orwyle nommement une fois",
+     "vrai": "Le meme homme a pris en cire le couronnement de Rhaenyra mot pour mot — y compris « citoyens », inscrit deux fois — et tient la plume de la decheance d'Aegon. U"
+    },
+    {
+     "id": "72402",
+     "quoi": "Orwyle donne sa main, jamais son sceau",
+     "portee": "on peut le savoir : il l'a fait devant temoins, deux fois",
+     "vrai": "Il ecrit tout ce qu'on lui dicte des faits — les quarante prisonniers, les douze cents brules — mais il a demande DEUX FOIS sous quelle autorite la Citadelle so"
+    },
+    {
+     "id": "72403",
+     "quoi": "La roukerie du Donjon Rouge n'est pas tenue par ceux qui croient la tenir",
+     "portee": "on peut le savoir : ce que la roukerie du Donjon Rouge laisse passer, un mestre achete de l'autre bord peut le dire",
+     "vrai": "Sur trente-deux plis arrives a Port-Real, vingt-trois ont ete remis — et DIX-NEUF de ces vingt-trois sont passes par la main de lord Larys Strong, dont quatre a"
+    },
+    {
+     "id": "72404",
+     "quoi": "Il existe un second feuillet, et personne ne peut le demander sans prendre le bras d'un mestre",
+     "portee": "on peut agir dessus, et c'est la porte ouverte de cette tranche : il ne reproche a la reine qu'une chose exacte, de ne pas avoir repondu, et ce grief a cesse d'etre le plus grand depuis qu'il a vu ce qu'on fait de sa plume a Port-Real",
+     "vrai": "Orwyle a ecrit en mer, du 19 au 21, DEUX relations datees de ce qu'il a vu a Peyredragon : une montrable — exacte, chiffree, sans un adjectif, quarante prisonni"
+    },
+    {
+     "id": "72405",
+     "quoi": "Le recit officiel du feu porte deux mains, et l'une des deux le sait",
+     "portee": "on peut le savoir, et on peut le provoquer",
+     "vrai": "Otto attendait un massacre ; Orwyle a pose sur la table un texte exact ou les quarante sont vivants. Le si_bloque d'Otto s'est applique tel qu'il etait ecrit : "
+    },
+    {
+     "id": "72406",
+     "quoi": "Le silence des maisons de la Couronne n'a pas de sanction ecrite",
+     "portee": "on peut le savoir : huit maisons de la Couronne recevront la meme cire dans la meme semaine, et l'une d'elles parlera",
+     "vrai": "La seconde fournee dit que passe le terme le silence sera tenu pour un refus — mais rien ne dit ce qui suit un refus, et la ligne a ete ajoutee d'une autre encr"
+    },
+    {
+     "id": "72601",
+     "quoi": "Aemond ne peut pas ecrire le second nom, et la Main ne l'a pas encore ecrit",
+     "portee": "on peut le savoir",
+     "vrai": "Lord Borros ne repond a personne tant que deux noms ne sont pas poses : laquelle de ses quatre filles, et le prince qu'on lui donne. Le prince qu'on lui donne, "
+    },
+    {
+     "id": "72602",
+     "quoi": "Il part sans savoir qui d'autre vole vers le sud",
+     "portee": "hors de portee",
+     "vrai": "Lord Larys Strong, interroge le 28e sur qui d'autre a ecrit a Accalmie, n'a ni affirme ni nie qu'un fils de Rhaenyra vole vers le sud sur un jeune dragon — et A"
     }
    ],
    "engendre": [

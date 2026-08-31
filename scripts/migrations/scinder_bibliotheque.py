@@ -69,7 +69,7 @@ def main():
             raise RuntimeError("etat/books.json a changé pendant la copie — rien activé")
         os.replace(preparation, dossier)
         # Le manifeste est le seul commutateur d'autorité. Il vient en dernier.
-        bibliotheque._ecrire_atomique(manifeste, ordre)
+        bibliotheque._ecrire(manifeste, ordre)
     except Exception:
         if os.path.isdir(preparation):
             shutil.rmtree(preparation)

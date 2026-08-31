@@ -1,5 +1,38 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+ "entrees": [
+  {
+   "jour": "129.4.6",
+   "quoi": "Le parloir dépose le billet à Toll mais échoue en réveillant son canal.",
+   "tente": "Porter à Toll les marques exigées pour l'épreuve 90312.",
+   "obtenu": "Le billet figure dans discussion.json, puis la porte échoue sur le marqueur relations/ygga-main-de-pierre/.lu.",
+   "attendu": "Billet déposé et destinataire réveillé.",
+   "etat": "ouverte — billet déposé, réveil non attesté par la porte"
+  },
+  {
+   "jour": "129.4.6",
+   "quoi": "La commande de mesure a créé deux fichiers sans résultat.",
+   "tente": "Lancement des bras branché et témoin sur 1700-600.",
+   "obtenu": "Chaque fichier ne contient que l'avertissement node sur journee.js ; aucun stdout de mesure, serveur absent.",
+   "attendu": "Deux sorties chiffrées comparables.",
+   "etat": "en cours — la chaîne complète cb475724 est matérialisée ; après marquage ESM pour Node 24, branché et témoin chargent et rendent chacun un JSON sur 1 homme / 0,05 s. Le 129.4.23, le bras branché 1700-600 a été borné après 604,6 s sans stdout ; les deux sorties 1700-600 restent dues"
+  },
+  {
+   "jour": "129.4.6",
+   "quoi": "La porte des actes refuse le chaînage des actions locales P.1 à P.10.",
+   "tente": "Inscrire la remise à l'épreuve en reliant l'acte à P.9 et à affaire-ygga-main-de-pierre.",
+   "obtenu": "Refus : action_id doit être un numéro global de 3 à 6 chiffres ; aucun acte n'a été écrit.",
+   "attendu": "Que la référence locale P.9 soit résolue, ou qu'un numéro global soit fourni dans le volume.",
+   "etat": "ouverte — je conserve la preuve au parloir sans fabriquer de numéro"
+  },
+  {
+   "jour": "129.4.6",
+   "quoi": "La répétition brute ne tient pas entre deux sorties annoncées identiques.",
+   "tente": "Comparer deux sorties identiques par le temps du mur.",
+   "obtenu": "Le temps du mur est multiplié par 2,15 malgré l'identité annoncée des sorties.",
+   "attendu": "Un dépôt dont fil et tour gravés ainsi que la charge connue concordent avant toute comparaison du temps.",
+   "etat": "ouverte — Toll contrôlera d'abord fil, tour et charge au prochain dépôt"
+  }
+ ]
 }

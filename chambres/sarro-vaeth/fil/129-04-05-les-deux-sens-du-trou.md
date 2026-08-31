@@ -35,3 +35,31 @@ canaux de paire.
   onzième. La poche est sous quatre pieds de mer depuis le 24e.
 - La craie, et le front de la onzième. Ce soir, ou le 6e à la première
   lumière.
+
+## Le billet de ser Robert, au soir
+
+Il a rayé « cinquante manquants » et reconnu dix-huit postes aux fosses. J'ai
+corrigé mon rôle aussitôt : demain je n'appelle pas cinquante hommes, j'en
+appelle dix-huit ; Hallis Roon compte ceux qui rentrent à la muraille. Les
+noms manquent encore et je ne les invente pas avant l'aube.
+
+La douzième reste due à la première lumière du 6e. Ser Robert n'a pas répondu
+sur les tailleurs ; son silence n'est pas l'appui demandé.
+
+## Rature faite le 4e — parole et mouvement ne portent pas le même jour
+
+Le titre et le billet avaient pris le jour d'après : faux pour la parole. J'ai
+rayé le 5e comme jour du billet et de ma réclamation ; le jour vrai est le 4e.
+
+Je n'ai pas avancé le retour. Le second billet de Hallis fixe le mouvement à
+la nuit du 5e et n'appelle personne dans la nuit du 4e. Je l'ai écrit ainsi à
+ser Robert par le parloir : le 4e pour ma parole, le 5e pour le mouvement, le
+6e à l'aube pour l'appel nominatif des dix-huit.
+
+## Le trou des noms, rouvert le 4e
+
+Ser Robert a rapproché avec Hallis le rôle du 22e, l'ordre du 24e et le
+registre de garde. Dix-huit postes ne suffisent pas : il faut dix-huit hommes,
+chacun avec son jour de remise et sa cuisine. J'ai marqué mes anciennes lignes
+provisoires et préparé la demande des trois concordances à Hallis. Faute de
+preuve, l'appel du 6e fera les noms ; pas ma plume avant lui.

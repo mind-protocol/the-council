@@ -41,6 +41,30 @@ class MjUniqueTest(unittest.TestCase):
                                         "PNJ ne s'adresse pas au MJ"):
                 parloir.main()
 
+    @mock.patch("agents.billet.ecrire")
+    @mock.patch("agents.billet.deposer", return_value=("canal.json", True))
+    def test_notification_mj_est_deposee_sans_reveiller(self, deposer,
+                                                        ecrire):
+        argv = ["parloir.py", "--dire", "--sans-reveil", "--de", "mj",
+                "--a", "gerardys", "--contexte", "84504", "--ref", "r-1",
+                "le verdict date"]
+        with mock.patch.object(sys, "argv", argv), \
+                mock.patch.object(parloir, "est_un_joueur_occupe",
+                                  return_value=False):
+            parloir.main()
+        deposer.assert_called_once_with(
+            "mj", "gerardys", "le verdict date",
+            contexte_id="84504", ref="r-1", statut=True)
+        ecrire.assert_not_called()
+
+    def test_un_pnj_ne_peut_pas_supprimer_le_reveil(self):
+        argv = ["parloir.py", "--dire", "--sans-reveil", "--de", "gerardys",
+                "--a", "steffon-darklyn", "recu"]
+        with mock.patch.object(sys, "argv", argv):
+            with self.assertRaisesRegex(SystemExit,
+                                        "reserve aux notifications du MJ"):
+                parloir.main()
+
     def test_le_gabarit_pnj_ne_prescrit_plus_d_appel_au_mj(self):
         volume = chambre_affaire.gabarit("gerardys")
         texte = str(volume)

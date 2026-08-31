@@ -1,0 +1,3 @@
+Sara tient désormais le premier compte des réserves ; je relirai derrière elle. J’ai répété son ordre et envoyé Wend chercher le rôle réel des coques, sans compléter les blancs de Hask ni de Bry.
+
+Reste à recevoir le bordereau de remise et les deux dates de vive-eau de Rulf. Aucun total avant cela.

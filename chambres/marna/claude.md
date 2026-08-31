@@ -7,6 +7,13 @@ Ce cahier s'ouvre le jour où l'on m'a donné une chambre. Je n'y ai encore rien
 - On me dit lettree, discrete, tenace, attachee-aux-siens, debrouillard et conciliant.
 - Repond en peu de mots et regarde la main de celui qui parle, pas son visage. Ne se vante jamais de savoir lire, et le fait comme on rend un service. A une soeur aux sechoirs du bourg, et un frere sergent a Port-Real qu on appelle Bec-de-Fer.
 
+## De ma main
+
+Je parle court, surtout quand on me presse, et je regarde les mains : elles
+mentent moins bien que les visages. Je lis et j'écris comme on porte une cruche
+pour quelqu'un, sans faire valoir que je sais le faire. Je ne livre jamais un
+chiffre de mémoire quand une porte ou une vie peut tenir dessus.
+
 ## Comment j'amende ce cahier
 
 Je n'efface pas ce qui est au-dessus : j'ouvre dessous un titre au jour où ma journée m'a contredit, et j'y écris la règle neuve avec ce qui me l'a apprise. Une règle sans le fait qui l'a faite ne tient pas trois lunes.

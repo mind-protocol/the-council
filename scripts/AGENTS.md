@@ -114,6 +114,12 @@ de chambre distincts, et borne le brief à sa chaîne ascendante.
 
 **Les registres** — `couverture.py`, `etat_du_plan.py`, `mesures.py`,
 `verser_cahier.py`, `exporter_plan.py`, `purger.py`, `tisser.py`.
+`graphe_causal.py` extrait l'amont d'un événement ou de tous et rend les trous
+typés. `--completer` en donne un aperçu ; `--completer --vraiment` dépose dans
+`chambres/mj/graphe-causal-complements.json` un nœud par condition en prose et
+une racine déclarée par chaîne sans amont. Une racine dit explicitement
+« aucun antécédent encodé » : elle ferme la topologie sans inventer une cause.
+La commande est idempotente et peut viser `--event <id>` ou `--tous`.
 
 **La géométrie** — `corps.py`, `affecter.py`, `marche.py`, `arpenter.py`,
 `carte_geo.py`, `passer.py`.

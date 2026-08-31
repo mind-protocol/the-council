@@ -43,7 +43,7 @@ monde est **le disque** — jamais la conversation.
 - **La mémoire d'un agent est la greffe documentaire** : son brief porte ses travaux ouverts, ses quatre dernières pensées par travail et sa dernière conclusion écrite de sa main (`travaux_ouverts_de`, lecteur canonique unique pour les deux chemins). `intentions.json` ne porte pas sa mémoire — voir Propositions.
 
 ### 🗣️ Parloir
-- `parloir.py --dire` — billet au canal canonique de deux chambres, puis réveil du destinataire.
+- `parloir.py --dire` — billet au canal canonique de deux chambres, puis réveil du destinataire. Pour une notification de clôture du MJ qui n'exige aucune réaction immédiate, `--sans-reveil` dépose seulement le billet ; cette option est réservée au MJ et interdit les cascades d'accusés de réception.
 - Un PNJ peut écrire à un autre habitant, jamais au MJ. Les appels synchrones vers `mj` exigent le marqueur interne `--joueur` posé par le front.
 - Exception de transport, pas d'autorité : si le destinataire est un siège joueur occupé, il n'est pas casté. Le billet devient immédiatement une `reponse` privée dans `etat/flux.jsonl` et une copie append-only sous `.agents-runtime/mj/retours-parloir.jsonl`. Le canal, la réponse et la copie portent le même `contexte_id` et la même `ref`. Le MJ la consomme à son prochain réveil avec la marque « déjà affichée » ; les arrivées pendant son appel restent après son curseur.
 

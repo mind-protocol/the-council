@@ -138,6 +138,15 @@ Alimentée après chaque scène. Un PNJ ressort tes promesses non tenues.
 ### actes.json (les choses FAITES — registre des faits accomplis)
 - `id, date, acteur_id, description, cible_id` (nullable)
 - `connu_de` — [] ids de ceux qui le savent ("tous" possible)
+- Quand l'acte est produit, prouvé, bloqué ou modifié par une action numérotée,
+  les trois champs vont ensemble : `action_id` (numéro global sous forme de
+  chaîne), `affaire_id` (livre `affaire-*` qui porte l'action) et
+  `relation_action` (`produit` | `preuve` | `bloque` | `modifie` | `annule`).
+  `scripts/ajouter.py actes` déduit automatiquement `action_id` et `affaire_id`
+  de `LE_CONSEIL_CONTEXTE` quand le call vise directement une ligne Actions ;
+  la relation déduite est `preuve`. Une fermeture d'action reste conservée dans
+  `histoire/affaires.jsonl` mais ne fabrique et n'exige jamais un acte : l'état
+  du registre n'est pas, à lui seul, un fait du monde.
 Différent de la file evenements : ici c'est le grand livre de ce qui s'est réellement produit.
 
 ### intentions.json (les têtes des PNJ — JAMAIS montré au joueur)

@@ -38,7 +38,8 @@ function traiter(req, res, url) {
         // « Laisser faire » se poste même vide : l'absence de consigne EST la
         // consigne — on joue le personnage comme on le connaît.
         if (action.type === "libre" && ((action.texte || "").trim() ||
-            action.mode === "run" || action.mode === "composer")) {
+            action.mode === "run" || action.mode === "jump" ||
+            action.mode === "composer")) {
           // Une question est hors fiction : elle ne devient jamais une parole
           // prononcée par le personnage. Les coulisses le sont plus encore :
           // on y parle DE la partie, et rien de ce qui s'y dit n'a eu lieu.
@@ -56,6 +57,10 @@ function traiter(req, res, url) {
             // `vous`, à sa place et devant tout le monde.
             : action.mode === "run"
             ? Object.assign({ type: "run", texte: action.texte || "", delai_s: 0, ref }, prive)
+            // Jump est une commande de régie privée : sa préparation ne
+            // constitue ni une parole ni une action du personnage.
+            : action.mode === "jump"
+            ? Object.assign({ type: "jump", texte: action.texte || "", delai_s: 0, ref }, prive)
             // L'atelier : on compose SUR la partie. Rien n'entre dans la
             // fiction, personne ne l'entend, l'horloge ne bouge pas.
             // La main par-dessus le monde : on ne joue pas, on répare. Rien

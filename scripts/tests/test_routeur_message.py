@@ -58,6 +58,30 @@ class RouteurMessageTests(unittest.TestCase):
         self.assertFalse(resultat["parole"])
         self.assertEqual([], resultat["hommes"])
 
+    def test_jump_ne_depeche_pas_avant_le_choix_du_mj(self):
+        document = {
+            "joueur_id": "rhaenyra", "ref": "r-jump",
+            "selection": {"decision": "jump", "routes_hommes": []},
+            "contexte_fourni": {"jump": {
+                "version": "jump/1", "event": {"id": "prochain"},
+                "contexte_id": "84502"}},
+        }
+        action = {"ref": "r-jump", "type": "libre", "mode": "jump",
+                  "texte": ""}
+        with mock.patch.object(routeur, "_servir_route") as servir, \
+                mock.patch.object(mj, "appeler_mj",
+                                  return_value="scène jouée") as appeler:
+            resultat = routeur.router_message(document, action)
+        servir.assert_not_called()
+        routage = appeler.call_args.kwargs["routage"]
+        self.assertEqual("jump", routage["decision"])
+        self.assertEqual("prochain", routage["jump"]["event"]["id"])
+        self.assertIn("skill système jump-scene", routage["consigne"])
+        self.assertIn("meuble le flux", routage["consigne"])
+        self.assertIn("avance réellement la clock", routage["consigne"])
+        self.assertIn("ne rends pas la main", routage["consigne"])
+        self.assertTrue(resultat["jump"])
+
     def test_la_depeche_recoit_le_numero_brut_et_les_mots_exacts(self):
         route = self._document()["selection"]["routes_hommes"][0]
         with mock.patch.object(routeur, "depecher", return_value=True) as depecher:
@@ -78,7 +102,7 @@ class RouteurMessageTests(unittest.TestCase):
     def test_un_retour_au_joueur_va_au_web_et_au_flux_mj(self):
         faux_canal = os.path.join("chambres", "canal.json")
         with mock.patch("agents.billet.deposer",
-                        return_value=faux_canal) as deposer, \
+                        return_value=(faux_canal, True)) as deposer, \
                 mock.patch.object(parloir, "_pousser_au_flux_web") as web, \
                 mock.patch.object(mj, "deposer_retour_parloir",
                                   return_value={"id": "retour-1"}) as flux_mj, \
@@ -88,7 +112,8 @@ class RouteurMessageTests(unittest.TestCase):
                 "r-parole")
         deposer.assert_called_once_with("gerardys", "rhaenyra",
                                         "Voici le chiffre.",
-                                        contexte_id="23030", ref="r-parole")
+                                        contexte_id="23030", ref="r-parole",
+                                        statut=True)
         web.assert_called_once_with("gerardys", "rhaenyra",
                                     "Voici le chiffre.",
                                     contexte_id="23030", ref="r-parole")
@@ -98,6 +123,17 @@ class RouteurMessageTests(unittest.TestCase):
         marquer.assert_called_once_with("rhaenyra", "gerardys")
         self.assertEqual(faux_canal, canal)
         self.assertEqual("retour-1", retour["id"])
+
+    def test_un_retour_duplique_ne_repart_ni_au_web_ni_au_mj(self):
+        with mock.patch("agents.billet.deposer",
+                        return_value=("canal.json", False)), \
+                mock.patch.object(parloir, "_pousser_au_flux_web") as web, \
+                mock.patch.object(mj, "deposer_retour_parloir") as flux_mj:
+            _, retour = parloir.rendre_au_joueur(
+                "gerardys", "rhaenyra", "Voici.", "23030", "r-parole")
+        self.assertTrue(retour["duplicate"])
+        web.assert_not_called()
+        flux_mj.assert_not_called()
 
     def test_flux_mj_append_only_garde_les_arrivees_pendant_un_reveil(self):
         with tempfile.TemporaryDirectory() as dossier, \

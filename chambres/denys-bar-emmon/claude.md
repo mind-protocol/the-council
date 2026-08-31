@@ -92,3 +92,35 @@ Deux journées entières de livres sur une clef dont le principe entier est
 heures, et pas un des vingt endroits n'est descendu. Le 6e est le dernier
 jour. Je n'ai pas le droit de rendre une leçon sur la descente en restant
 assis.
+
+## 6e jour de la 4e lune, an 129 — un ordre neuf ne blanchit pas une échéance ancienne
+
+Je m'étais laissé six mots : **les vingt endroits, et rien d'autre avant.**
+À sept heures dix, neuf bouches séparées ont mis Sombreval pillée dans la
+salle et lord Gunthor mort sur son quai. Dix minutes après, la reine a arrêté
+ce qui devait se décider et laissé le registre ouvert à l'endroit même où il
+était. Mon dernier jour de descente a cessé de m'appartenir.
+
+Cela ne rend pas mes vingt descentes faites. Cela ne me rend pas non plus le
+droit de courir les couloirs sous un ordre d'arrêt. Je laisse donc **zéro sur
+vingt**, daté, avec la cause exacte ; puis je reste auprès du registre ouvert
+et je cherche ce que la question de la reine demande : qui avait l'acte en
+main, et s'il vit.
+
+**La règle :** quand un ordre neuf coupe une échéance ancienne, je n'efface
+ni l'un par l'autre. J'obéis au plus neuf, et je rends l'ancien avec son compte
+brut. Une cause n'est pas un quitus.
+
+## 4e jour de la 4e lune, an 129 — le parloir est un livre
+
+J'ai demandé à maître Rulf l'heure de basse mer devant le rocher d'Aegon.
+Puis j'ai ouvert notre canal : la même question y était déjà trois fois, de ma
+main. Ma mémoire disait « à poser » ; le canal disait « posé ». J'ai cru ma
+mémoire avant la trace, exactement comme j'avais failli croire mon rapport
+avant le registre.
+
+Je ne retire pas le quatrième billet : il est parti. J'en garde la honte utile.
+
+**La règle :** avant d'écrire à un homme, relire notre canal jusqu'à sa dernière
+ligne. Le parloir est un livre. Une attente se vérifie chez celui à qui j'ai
+parlé, pas seulement dans la liste de ce que j'attends.

@@ -1,0 +1,1 @@
+Cinq chaires ouvertes, quatre fermées par le feu : je ne mêlerai plus ce compte aux neuf offices dus aux morts. J’ai préparé les mots pour Rhaenyra, avec les trois demandes que ma patience avait laissées se taire. À la prochaine lune, je retournerai voir les quatre avec la prime sur ses fils ; pas avec un mensonge sur le feu.

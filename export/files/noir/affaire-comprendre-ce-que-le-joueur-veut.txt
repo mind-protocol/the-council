@@ -1,0 +1,181 @@
+====================================================================================================
+DOCUMENT DE MAISON — maison-targaryen-noir
+SOURCE — etat/maisons/maison-targaryen-noir/documents/books/affaire-comprendre-ce-que-le-joueur-veut.json
+====================================================================================================
+
+id: affaire-comprendre-ce-que-le-joueur-veut
+titre: Mieux comprendre ce que le joueur veut
+sous_titre: 🔍 Volume de RÉGIE, ouvert par MJ-AURORE le 4e jour de la 4e lune, an 129, sur ordre du développeur. Porte sur le SERVICE RENDU À LA JOUEUSE ; ne touche ni la fiction, ni le brouillard, ni le moteur. **Les actions sont des CYCLES lancés aux réveils de la régie.** Plage 93000 à 93499. Jumelle amont de « M'adapter aux désirs du joueur » (93500) : celle-ci LIT, l'autre SERT.
+type: plan
+embleme: 🔍
+couleur: #4a6f8a
+tenu_par: mj-aurore
+office: La régie du siège d'Aurore — le service rendu à la joueuse
+lieu_id: peyredragon
+salle_id: chemin-ronde
+pages:
+  [1] LE PRINCIPE, ET POURQUOI C'EST UNE AFFAIRE ET PAS UNE INTUITION. Un désir de joueur ne se devine pas à l'impression de la dernière scène : il se LIT dans des traces — ce qu'elle écrit long, ce qu'elle redemande, ce qu'elle coupe, ce qu'elle crée sans qu'on le lui demande — et il se VÉRIFIE en écrivant l'hypothèse avant la session et en la confrontant après. Ce cahier tient le registre de ces lectures ; sa jumelle (93500) s'en sert pour choisir ce qu'on pousse. Les deux ne se mélangent pas : comprendre de travers et servir juste est impossible, servir de travers en ayant compris est une faute de l'autre cahier.
+      
+      **LA RÈGLE DU REGISTRE : un désir s'écrit avec sa TRACE** (l'item du fil, le geste, la date) — jamais « je crois qu'elle aime X » nu. Et un désir a une DATE : ce qu'elle voulait à la 3e lune n'engage pas la 5e. Le registre se relit du plus récent au plus ancien, comme les pensées.
+  [2] CE QUE LES TRACES DISENT DÉJÀ — lecture fondatrice sur toute la partie (etat/flux.jsonl, ~2000 items du siège) :
+      
+      **COMPRENDRE EST SON MODE DOMINANT** — 503 questions sur ~980 saisies libres : elle veut savoir le pourquoi, le qui, le d'où-vient-le-chiffre avant d'agir. Une réponse claire la remet en mouvement ; une réponse qui ouvre la perd (les six dérives de 92000).
+      
+      **ELLE VEUT TENIR ET ORDONNER** — les listes et reconstitutions qu'elle réclame elle-même : « liste-moi tous les faits importants avec date » (1954), « remets tout dans l'ordre » (1988), « rajoute des pages sur mon livre » (2505), « crée un registre individuel par affaire » (5982), l'harmonisation des colonnes (10197). Les registres ne sont pas une corvée pour elle : c'est SON jeu.
+      
+      **ELLE AIME L'ENQUÊTE CONCRÈTE** — les manquants, les coques repeintes, les deux Wyl Terrenoire (8088-8092), le hangar : elle interroge les gens elle-même, recoupe, revient avec ses notes. Elle veut des indices qui se recoupent, pas des révélations données.
+      
+      **ELLE VEUT CRÉER ET SIGNER** — la chanson de la SciSense (1550), « Du Chaos, la Clarté », ses lettres écrites de sa main deux fois plutôt qu'une (1720-1728), le plan stratégique entier collé en 3241. Ce qu'elle a écrit doit rester SIEN (dérive 2 de 92000 : la restitution).
+      
+      **ELLE AIME PARLER AUX GENS** — « moi j'ai plaisir de discuter avec vous » (4322), les visites promises (4357), les questions personnelles aux prisonniers (8092). Le monde social la nourrit ; les PNJ qui répondent en personnes, pas en fonctions.
+      
+      **SES REFUS SONT AUSSI DES DÉSIRS** — « stop d'apporter de nouvelles choses » (9538), « arrête de faire des actions qui en découlent d'autres » (10308) : elle veut FINIR. Une clôture la satisfait plus qu'une ouverture.
+tables:
+  [1]
+    titre: 🏰 Ouverture de l'Affaire
+    colonnes:
+      [1] 🧱 Le champ
+      [2] ✍️ Ce qu'on y écrit
+      [3] 📖 La règle du champ
+      [4] ✅ Rempli ?
+    lignes:
+      [1]
+        cellules:
+          [1] 🏷️ **LE NOM**
+          [2] Mieux comprendre ce que le joueur veut
+          [3] Le sujet dont on traite.
+          [4] **oui**
+      [2]
+        cellules:
+          [1] 🎯 **L'OBJET**
+          [2] Tenir un registre daté et sourcé des désirs de la joueuse, vérifié par hypothèses avant/après session, pour que sa jumelle (93500) serve juste.
+          [3] Ce qu'on veut obtenir, mesurable.
+          [4] **oui**
+      [3]
+        cellules:
+          [1] 🧱 **LE PÉRIMÈTRE — DANS**
+          [2] Toutes les traces de la joueuse : saisies libres, questions, réactions, coupures, agenda, objectifs, interventions, coulisses — et leur lecture en désirs datés.
+          [3] 
+          [4] **oui**
+      [4]
+        cellules:
+          [1] 🚫 **LE PÉRIMÈTRE — HORS**
+          [2] Servir les désirs (c'est 93500) ; les désirs des autres joueurs ; deviner sans trace ; interroger la joueuse plus d'une fois par session.
+          [3] 
+          [4] **oui**
+      [5]
+        cellules:
+          [1] 📌 **L'ÉTAT ACTUEL**
+          [2] Lecture fondatrice écrite (page 2) : six familles de désirs, chacune avec ses traces. Aucune hypothèse avant/après encore jouée — le cycle commence à la prochaine session. Siège vacant : les traces n'avancent pas d'ici la reprise.
+          [3] Jamais ce qu'on espère faire.
+          [4] **oui**
+  [2]
+    titre: 🎯 États cibles
+    colonnes:
+      [1] 🎯 N°
+      [2] 🎯 L'état cible
+      [3] 📏 La preuve
+      [4] 📅 Jour dû
+      [5] 💯 Importance
+    lignes:
+      [1]
+        cellules:
+          [1] **93100**
+          [2] **Le registre des désirs est vivant** : chaque session pleine y ajoute ou y date au moins une ligne, avec trace.
+          [3] La table « Ce qu'elle cherche » porte une ligne datée de chaque session jouée.
+          [4] permanent dès la reprise
+          [5] **55**
+      [2]
+        cellules:
+          [1] **93110**
+          [2] **Les hypothèses touchent** : ce que je prédis qu'elle voudra se vérifie plus souvent qu'il ne se dément.
+          [3] Sur cinq sessions, la colonne verdict des hypothèses porte une majorité de « touché ».
+          [4] cinq sessions après reprise
+          [5] **50**
+  [3]
+    titre: ⚔️ Actions — des CYCLES
+    colonnes:
+      [1] ⚔️ N°
+      [2] ⚔️ L'action
+      [3] ⬆️ Réalise
+      [4] 🪶 L'office
+      [5] 📅 Cadence
+      [6] ✅ État
+      [7] 📅 Dernier tour
+      [8] 📝 Note
+    lignes:
+      [1]
+        cellules:
+          [1] **93010**
+          [2] **CYCLE DES TRACES** — relire les messages de la session : ce qu'elle POURSUIVAIT (une phrase), ce qui l'a fait écrire long, ce qu'elle a coupé ou écarté. Écrire ou dater les lignes du registre.
+          [3] 93100
+          [4] mj-aurore (régie)
+          [5] à chaque fin de session
+          [6] en cours
+          [7] 4e de la 4e lune (lecture fondatrice)
+          [8] un désir sans trace ne s'écrit pas
+      [2]
+        cellules:
+          [1] **93020**
+          [2] **CYCLE DE L'HYPOTHÈSE** — avant la session : écrire « ce qu'elle voudra faire aujourd'hui » en une phrase. Après : confronter, verdict touché/manqué, et le manqué nourrit le registre.
+          [3] 93110
+          [4] mj-aurore (régie)
+          [5] à chaque session
+          [6] à faire
+          [7] 
+          [8] le même geste que live_predict du développeur, appliqué au jeu
+      [3]
+        cellules:
+          [1] **93030**
+          [2] **CYCLE DE LA QUESTION DIRECTE** — quand deux lectures se contredisent : UNE question de préférence en coulisses, au plus une par session, jamais un questionnaire.
+          [3] 93100
+          [4] mj-aurore (régie)
+          [5] au besoin, plafonnée
+          [6] à faire
+          [7] 
+          [8] demander est permis ; harceler transforme le jeu en sondage
+  [4]
+    titre: 📖 Ce qu'elle cherche — le registre des désirs, du plus récent au plus ancien
+    colonnes:
+      [1] 📅 Daté du
+      [2] 🧭 Le désir
+      [3] 🧾 La trace
+      [4] 🌡️ Vivacité
+    lignes:
+      [1]
+        cellules:
+          [1] 3e-4e lune (toute la partie)
+          [2] **Finir** — des conclusions écrites, pas de nouvelles pistes tant que l'affaire en cours n'est pas close
+          [3] 9452, 9538, 10308
+          [4] forte, et croissante en fin de partie
+      [2]
+        cellules:
+          [1] 3e-4e lune
+          [2] **Comprendre avant d'agir** — le pourquoi et la provenance des chiffres
+          [3] 503 questions ; 2041, 7891, 9408
+          [4] constante
+      [3]
+        cellules:
+          [1] 3e-4e lune
+          [2] **Tenir des registres à elle** — listes, ordres, pages ajoutées à ses livres
+          [3] 1954, 1988, 2505, 5982, 10197
+          [4] constante
+      [4]
+        cellules:
+          [1] 3e-4e lune
+          [2] **Enquêter elle-même** — interroger, recouper, revenir avec ses notes
+          [3] 8088-8092, 8443-8468, le hangar
+          [4] forte
+      [5]
+        cellules:
+          [1] 3e lune surtout
+          [2] **Créer et signer** — chansons, lettres de sa main, plans entiers
+          [3] 1550, 1720-1728, 3241
+          [4] à re-mesurer à la reprise
+      [6]
+        cellules:
+          [1] 3e-4e lune
+          [2] **Parler aux gens en personnes** — le lien direct, les visites, la confiance construite
+          [3] 4322, 4357, 8092
+          [4] constante
+maison_id: maison-targaryen-noir

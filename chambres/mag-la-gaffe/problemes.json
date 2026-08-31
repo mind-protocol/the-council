@@ -1,5 +1,13 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+ "entrees": [
+  {
+   "date": {"annee": 129, "lune": 4, "jour": 4},
+   "tentative": "Inscrire par scripts/ajouter.py l'ouverture de La Gaffe avant le marché.",
+   "resultat": "La porte a refusé deux fois l'écriture de etat/actes.json avec OSError 22, argument invalide.",
+   "attendu": "L'acte d'ouverture devait être ajouté une fois au registre.",
+   "etat": "ouverte"
+  }
+ ]
 }

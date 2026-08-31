@@ -1,0 +1,1 @@
+Treize dragons : sortis du coffre, non remis, aucune quittance. L’action `26051`, la cassette et l’acte existant `acte-26051-sortie-non-remise-3e` concordent. Aucun acte neuf n’était justifié ; je n’ai rien ajouté ni changé.

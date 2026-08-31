@@ -33,7 +33,7 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 # Deux etages de plus qu'a la racine : scripts/plan/ (voir scripts/CLAUDE.md).
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 BOOKS = os.path.join(RACINE, "etat", "books.json")
-from etat.expose import ajouter  # noqa: E402  — on réutilise son écriture atomique et sa fenêtre étroite
+from etat.expose import ajouter  # noqa: E402  — on reutilise sa fenetre etroite
 import bibliotheque  # noqa: E402
 
 

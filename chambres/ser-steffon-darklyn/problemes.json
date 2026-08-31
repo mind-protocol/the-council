@@ -1,0 +1,27 @@
+{
+ "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
+ "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
+ "entrees": [
+  {
+   "date": "129.4.4",
+   "tentative": "Porter à Hallis Roon mon premier ordre par le parloir.",
+   "effet": "Le billet a été écrit, puis le réveil de Roon a échoué sur un chemin de curseur invalide vers relations/mj/.lu.",
+   "attendu": "Le billet devait être écrit et son destinataire réveillé sans erreur.",
+   "etat": "non levée ; l'écriture du billet a été vérifiée avant de ne pas le doubler"
+  },
+  {
+   "date": "129.4.4",
+   "tentative": "Clore mécaniquement les dix lignes de prise en main après accomplissement.",
+   "effet": "La première réécriture a inscrit des marques de fin de ligne littérales et rendu le JSON illisible.",
+   "attendu": "Dix états 'faite' et dix dates sans altérer la syntaxe du volume.",
+   "etat": "levée le 129.4.4 par remplacement ciblé puis validation complète avec ConvertFrom-Json"
+  },
+  {
+   "date": "129.4.4",
+   "tentative": "Porter directement à Robert Quince la demande du rôle vivant et des coques.",
+   "effet": "La commande du parloir a dépassé son délai après avoir confirmé le billet, le canal et le réveil en cast.",
+   "attendu": "La commande devait rendre sa confirmation avant l'expiration du délai.",
+   "etat": "billet remis ; friction technique non levée, aucun second envoi"
+  }
+ ]
+}

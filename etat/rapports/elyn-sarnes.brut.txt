@@ -1,0 +1,3 @@
+Le page ne garde, après une nuit, ni note, ni montée, ni mot du chant de la reine. La forme actuelle n’a aucune prise sur la mémoire.
+
+J’ai ouvert mes cahiers et mes affaires de ma main. Ensuite, il faudra alléger le motif, l’entrer par le LA déjà connu, puis éprouver cette forme nouvelle après une nuit.

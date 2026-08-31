@@ -140,7 +140,7 @@ Reste en l'état : **4 tests unitaires Python pour 127 fichiers**, et **59 `sys.
 
 ### Mesures
 
-- **`scripts/noyau/tables.py` existe** : `lire(nom, defaut)`, `ecrire(nom, valeur)` atomique, une seule implémentation.
+- **`scripts/noyau/tables.py` existe** : `lire(nom, defaut)`, `ecrire(nom, valeur)` directe, une seule implémentation.
 - La sémantique est **tranchée et écrite** : *un JSON abîmé plante ; seule l'absence rend le défaut.* C'est la recommandation 4.2, adoptée dans le bon sens.
 - Les **quatre `lire_json` divergents** sont devenus quatre délégations à la porte, chacune portant la même docstring qui raconte la divergence supprimée. La classe de bug la plus coûteuse de la première passe est fermée.
 - **5 fichiers importent la porte ; 43 écrivent encore sans elle** — et ce dernier chiffre est produit par `tables.py --verifier`, branché dans `verifier.mjs` comme **mesure**, avec le commentaire juste : « ce chiffre ne doit que descendre — il se migre un fichier par commit, pas en un geste aveugle ».

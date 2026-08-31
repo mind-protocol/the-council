@@ -34,6 +34,7 @@
 # Ce garde-fou NE JUGE TOUJOURS PAS LA PROSE : il compte des signes, des tours
 # de parole et des mains tendues. Il n'a d'opinion sur rien d'autre.
 
+import math
 import sys
 
 ITEM = 700       # signes, pour UNE réplique / geste / récit
@@ -45,6 +46,30 @@ FILS = 1         # affaires rendues au joueur dans le même appel
 MUR = 2          # au-delà de ce multiple d'un seuil, on refuse la poussée
 
 BAVARDS = ("replique", "geste", "recit")
+CADENCES = BAVARDS + ("reponse", "suites", "table", "evenement", "breve",
+                      "objectif", "marque")
+CARACTERES_PAR_MINUTE = 1500
+
+
+def cadencer(it):
+    """Pose le délai web minimal correspondant au débit de lecture.
+
+    Le navigateur joue les items séquentiellement et attend `delai_s` avant
+    chacun : le plafond porte donc naturellement sur plusieurs poussées, pas
+    seulement sur la tranche courante. Les entrées joueur et le hors-fiction
+    ne passent pas par ce débit narratif.
+    """
+    if it.get("type") not in CADENCES:
+        return 0
+    minimum = int(math.ceil(
+        len(it.get("texte") or "") * 60.0 / CARACTERES_PAR_MINUTE))
+    actuel = it.get("delai_s", 0)
+    try:
+        actuel = float(actuel)
+    except (TypeError, ValueError):
+        actuel = 0
+    it["delai_s"] = max(actuel, minimum)
+    return it["delai_s"]
 
 
 def _fils(it):

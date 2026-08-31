@@ -24,6 +24,20 @@
    "ce_que_je_voulais": "Dater ce que j'écris, comme je date tout, et comme j'ai exigé qu'on date la feuille des quarante et un.",
    "ce_que_j_ai_fait_a_la_place": "Je n'ai rien daté. J'ai écrit « ce jour » partout, et dans mon verrou j'ai mis des sources au lieu d'un quantième. C'est exactement ce que j'ai refusé de faire le 2e pour Villevieille et Winterfell : un chiffre estimé posé à côté de chiffres marchés les salit tous. Une date fausse dans un registre vaut pire qu'une date absente — je l'ai prise en défaut sur ma propre copie le 29e.",
    "leve_par": null
+  },
+  {
+   "jour": "129.4.4, après 11h06",
+   "quoi": "Les écritures partagées se heurtent à une main concurrente. Le parloir a d'abord déposé mon billet à dame Aurore sans réussir à la marquer réveillée ; trois tentatives précédentes n'avaient rien déposé. La porte ajouter.py a validé mes trois actes liés, puis a échoué à ouvrir etat/actes.json pour les écrire.",
+   "ce_que_je_voulais": "Répondre MANQUÉ à dame Aurore, puis inscrire trois faits avec leurs actions 91001, 91002 et 91003 : le recoupement manqué, la place offerte aux onze, et le papier remis à Roon.",
+   "ce_que_j_ai_fait_a_la_place": "J'ai vérifié le canal avant de renvoyer : le mot MANQUÉ y est finalement déposé une seule fois. Je n'ai pas contourné ajouter.py et je n'ai pas écrit directement dans actes.json ; les trois actes restent à poser par la porte quand elle se libérera.",
+   "leve_par": "LEVÉE APRÈS ATTENTE. Mon billet MANQUÉ a été déposé une seule fois dans le canal de dame Aurore, malgré l'échec ultérieur de sa marque de lecture. La porte ajouter.py a ensuite ajouté ensemble les trois actes liés 91001, 91002 et 91003."
+  },
+  {
+   "jour": "129.4.4, après la pose des actes",
+   "quoi": "Le contrôle verifier_chainage_actions.py refuse les liens 91001, 91002 et 91003 : affaire-alarra-rosby existe dans ma chambre, mais pas dans la bibliothèque commune que le contrôle indexe. Deux autres références étrangères à mon affaire sont déjà refusées par le même contrôle.",
+   "ce_que_je_voulais": "Vérifier que les trois actes ajoutés par la porte pointent vers des actions que le registre commun sait ouvrir.",
+   "ce_que_j_ai_fait_a_la_place": "Je n'ai ni retiré les liens des actes, ni copié mon cahier local dans les livres du monde. Les faits et les trois champs de relation sont écrits ; leur résolution commune reste invalide jusqu'à ce qu'une porte publie ou indexe les affaires locales.",
+   "leve_par": null
   }
  ]
 }

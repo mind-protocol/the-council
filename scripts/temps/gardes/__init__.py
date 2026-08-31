@@ -2,7 +2,7 @@
 """GARDES — l'audit de coherence de etat/ : `python scripts/tick.py --verifier`.
 
 CE QUE CE PAQUET POSSEDE : le Rapport (trois gravites, une gravite mal
-orthographiee PLANTE au lieu de se perdre), les dix-neuf verificateurs
+orthographiee PLANTE au lieu de se perdre), les vingt verificateurs
 repartis par famille de tables, et `verifier()` qui les assemble dans l'ordre.
 
     plan.py      : intentions, mains, couts chiffres, etats du plan,
@@ -29,7 +29,7 @@ from temps.gardes.plan import (  # noqa: F401
     verifier_etats_du_plan, verifier_rapporteurs)
 from temps.gardes.ecrits import (  # noqa: F401
     CLES_BOOK, CLES_BOITE, TYPES_BOOK, verifier_pensees, qui_a_du_temps,
-    verifier_books, verifier_boites)
+    verifier_books, verifier_boites, verifier_chainage_actions)
 from temps.gardes.croyances import (  # noqa: F401
     sources_possibles, verifier_croyances_sans_porteur)
 from temps.gardes.social import (  # noqa: F401
@@ -102,6 +102,7 @@ def verifier(e, en_json=False):
     verifier_mains(e, r)
     verifier_pensees(e, r)
     verifier_books(e, r)
+    verifier_chainage_actions(e, r)
     verifier_registres_derives(e, r)
     verifier_rapporteurs(e, r)
     verifier_etats_du_plan(e, r)

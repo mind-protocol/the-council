@@ -32,7 +32,7 @@ SESSIONS = os.path.join(DOSSIER_RUNTIME, "sessions.json")
 REQUETES = os.path.join(DOSSIER_RUNTIME, "requests")
 ACTIVITES = os.path.join(DOSSIER_RUNTIME, "active")
 
-FOURNISSEURS = {"claude": "claude", "codex": "codex", "chatgpt": "codex"}
+FOURNISSEURS = {"claude": "claude", "codex": "codex", "chatgpt": "codex", "gemini": "gemini"}
 MODELE_CODEX = "gpt-5.3-codex-spark"
 EFFORT_CODEX = "low"
 
@@ -68,9 +68,15 @@ def configuration():
                           d.get("modele_codex") or MODELE_CODEX),
         "effort_codex": (os.environ.get("LE_CONSEIL_CODEX_EFFORT") or
                           d.get("effort_codex") or EFFORT_CODEX),
+        "service_tier_codex": (
+            os.environ.get("LE_CONSEIL_CODEX_SERVICE_TIER") or
+            d.get("service_tier_codex")),
         "modele_claude": (os.environ.get("LE_CONSEIL_CLAUDE_MODELE") or
                            os.environ.get("LE_CONSEIL_CLAUDE_MODEL") or
                            d.get("modele_claude")),
+        "modele_gemini": (os.environ.get("LE_CONSEIL_GEMINI_MODELE") or
+                           os.environ.get("LE_CONSEIL_GEMINI_MODEL") or
+                           d.get("modele_gemini")),
     }
 
 
@@ -78,7 +84,7 @@ def fournisseur():
     return configuration()["fournisseur"]
 
 
-def choisir(nom, modele=None, effort=None):
+def choisir(nom, modele=None, effort=None, fast=None):
     """Pose le choix local global. L'environnement reste prioritaire."""
     canonique = FOURNISSEURS.get(str(nom).casefold())
     if not canonique:
@@ -90,6 +96,10 @@ def choisir(nom, modele=None, effort=None):
             d["modele_codex"] = modele
         if effort:
             d["effort_codex"] = effort
+        if fast is not None:
+            d["service_tier_codex"] = "fast" if fast else None
+    elif canonique == "gemini" and modele:
+        d["modele_gemini"] = modele
     elif modele:
         d["modele_claude"] = modele
     _ecrire_json(CONFIG, d)
@@ -105,6 +115,8 @@ def _modele(provider, demande):
                         "codex" in str(demande).casefold()):
             return str(demande)
         return cfg["modele_codex"]
+    if provider == "gemini":
+        return str(demande) if demande else cfg.get("modele_gemini")
     if demande and not (str(demande).startswith("gpt-") or
                         "codex" in str(demande).casefold()):
         return str(demande)
@@ -117,58 +129,18 @@ def _effort(provider, demande):
     return str(demande) if demande else None
 
 
-@contextlib.contextmanager
-def _verrou(nom, timeout=1800):
-    """Verrou inter-processus : deux CAST d'un meme homme se suivent."""
-    dossier = os.path.join(DOSSIER_RUNTIME, "locks")
-    os.makedirs(dossier, exist_ok=True)
-    propre = hashlib.sha256(str(nom).encode("utf-8")).hexdigest()
-    chemin = os.path.join(dossier, propre + ".lock")
-    f = open(chemin, "a+b")
-    f.seek(0, os.SEEK_END)
-    if f.tell() == 0:
-        f.write(b"\0")
-        f.flush()
-    debut = time.monotonic()
-    pris = False
-    try:
-        while not pris:
-            try:
-                if os.name == "nt":
-                    import msvcrt
-                    f.seek(0)
-                    msvcrt.locking(f.fileno(), msvcrt.LK_NBLCK, 1)
-                else:  # pragma: no cover - banc principal Windows
-                    import fcntl
-                    fcntl.flock(f.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
-                pris = True
-            except (OSError, IOError):
-                if time.monotonic() - debut >= timeout:
-                    raise TimeoutError("session occupee : %s" % nom)
-                time.sleep(0.1)
-        yield
-    finally:
-        if pris:
-            try:
-                if os.name == "nt":
-                    import msvcrt
-                    f.seek(0)
-                    msvcrt.locking(f.fileno(), msvcrt.LK_UNLCK, 1)
-                else:  # pragma: no cover
-                    import fcntl
-                    fcntl.flock(f.fileno(), fcntl.LOCK_UN)
-            except OSError:
-                pass
-        f.close()
+def _service_tier(provider):
+    if provider == "codex":
+        return configuration().get("service_tier_codex")
+    return None
 
 
 @contextlib.contextmanager
 def _activite(role, session_id):
     """Expose une session vraiment en calcul aux voyants de l'ecran.
 
-    Le marqueur est pose seulement apres le verrou de session : un appel en
-    attente derriere un autre n'est donc pas annonce comme actif. Le pid
-    permet au serveur d'ignorer un reste laisse par un worker tue brutalement.
+    Ce marqueur est un voyant, pas un mecanisme d'exclusion. Le pid permet au
+    serveur d'ignorer un reste laisse par un worker tue brutalement.
     """
     os.makedirs(ACTIVITES, exist_ok=True)
     chemin = os.path.join(ACTIVITES, "%s.json" % uuid.uuid4().hex)
@@ -192,35 +164,32 @@ def _session_codex(logique):
 
 
 def _entree_session(logique):
-    with _verrou("registre", timeout=30):
-        return dict(_lire_json(SESSIONS, {}).get(str(logique)) or {})
+    return dict(_lire_json(SESSIONS, {}).get(str(logique)) or {})
 
 
 def _poser_session_codex(logique, thread_id, modele, transcript=None,
                          manuel_sha256=None):
-    with _verrou("registre", timeout=30):
-        d = _lire_json(SESSIONS, {})
-        entree = dict(d.get(str(logique)) or {})
-        entree.update({
-            "codex_thread_id": thread_id,
-            "modele": modele,
-            "dernier_transcript": transcript,
-            "mis_a_jour": dt.datetime.now().astimezone().isoformat(),
-        })
-        if manuel_sha256:
-            entree["manuel_sha256_codex"] = manuel_sha256
-        d[str(logique)] = entree
-        _ecrire_json(SESSIONS, d)
+    d = _lire_json(SESSIONS, {})
+    entree = dict(d.get(str(logique)) or {})
+    entree.update({
+        "codex_thread_id": thread_id,
+        "modele": modele,
+        "dernier_transcript": transcript,
+        "mis_a_jour": dt.datetime.now().astimezone().isoformat(),
+    })
+    if manuel_sha256:
+        entree["manuel_sha256_codex"] = manuel_sha256
+    d[str(logique)] = entree
+    _ecrire_json(SESSIONS, d)
 
 
 def _poser_empreinte_manuel(logique, fournisseur, empreinte):
-    with _verrou("registre", timeout=30):
-        d = _lire_json(SESSIONS, {})
-        entree = dict(d.get(str(logique)) or {})
-        entree["manuel_sha256_%s" % fournisseur] = empreinte
-        entree["mis_a_jour"] = dt.datetime.now().astimezone().isoformat()
-        d[str(logique)] = entree
-        _ecrire_json(SESSIONS, d)
+    d = _lire_json(SESSIONS, {})
+    entree = dict(d.get(str(logique)) or {})
+    entree["manuel_sha256_%s" % fournisseur] = empreinte
+    entree["mis_a_jour"] = dt.datetime.now().astimezone().isoformat()
+    d[str(logique)] = entree
+    _ecrire_json(SESSIONS, d)
 
 
 def _prompt_codex(manuel, cwd):
@@ -416,7 +385,7 @@ def _normaliser_codex(evenements, modele, duree, logique, transcript):
 
 
 def _commande_codex(cwd, modele, effort, add_dirs, transcript_sortie,
-                    thread_id=None):
+                    thread_id=None, service_tier=None):
     commande = [
         "codex", "exec", "--ignore-user-config", "--ignore-rules",
         "--disable", "plugins", "--disable", "apps",
@@ -431,6 +400,8 @@ def _commande_codex(cwd, modele, effort, add_dirs, transcript_sortie,
         "-c", 'model_reasoning_effort=%s' % json.dumps(effort),
         "--output-last-message", transcript_sortie,
     ]
+    if service_tier:
+        commande += ["-c", "service_tier=%s" % json.dumps(service_tier)]
     # Les appels d'agents travaillent directement dans le depot monte. La
     # distinction historique MJ sans sandbox / homme restreint n'avait pas
     # produit d'isolation utile : elle est retiree du contrat du runtime.
@@ -446,7 +417,7 @@ def _commande_codex(cwd, modele, effort, add_dirs, transcript_sortie,
 
 def _appel_codex(manuel, message, logique, modele, effort, timeout, cwd,
                   add_dirs, reprendre, env, on_event, on_stderr, heartbeat,
-                  on_heartbeat):
+                  on_heartbeat, service_tier=None):
     entree = _entree_session(logique)
     thread_id = entree.get("codex_thread_id")
     if reprendre is True and not thread_id:
@@ -459,7 +430,7 @@ def _appel_codex(manuel, message, logique, modele, effort, timeout, cwd,
     final = os.path.join(cwd, ".dernier-message-%s.txt" % uuid.uuid4().hex)
     transcript = os.path.join(cwd, ".codex-%s.jsonl" % uuid.uuid4().hex)
     commande = _commande_codex(cwd, modele, effort, add_dirs, final,
-                               thread_id)
+                               thread_id, service_tier=service_tier)
     code, _lignes, erreurs, evenements, duree = _executer_flux(
         commande, message, cwd, env, timeout, on_event, on_stderr,
         heartbeat, on_heartbeat, transcript)
@@ -563,6 +534,84 @@ def _appel_claude(manuel, message, logique, modele, effort, timeout, cwd,
                        dernier[-400:])
 
 
+
+def _preparer_prompt_gemini(manuel, cwd, reprendre, entree):
+    empreinte = _empreinte_manuel(manuel)
+    injecter = (not reprendre or
+                entree.get("manuel_sha256_gemini") != empreinte)
+    chemin = os.path.join(cwd, "system-prompt-gemini.md")
+    if injecter:
+        with io.open(chemin, "w", encoding="utf-8", newline="\n") as f:
+            f.write(manuel)
+        prompt = chemin
+    else:
+        try:
+            os.remove(chemin)
+        except FileNotFoundError:
+            pass
+        prompt = None
+    return empreinte, prompt, injecter
+
+def _commande_gemini(prompt_systeme, modele, add_dirs, sid, reprendre):
+    # TODO: Ajustez les arguments CLI selon votre vrai binaire Gemini
+    commande = ["gemini"]
+    if prompt_systeme:
+        commande += ["--system-prompt-file", prompt_systeme]
+    for chemin in add_dirs:
+        commande += ["--add-dir", chemin]
+    if modele:
+        commande += ["--model", modele]
+    commande += ["--resume" if reprendre else "--session-id", sid]
+    # Options similaires a claude (sortie json attendue par appeler)
+    commande += ["--output-format", "json"]
+    return commande
+
+def _appel_gemini(manuel, message, logique, modele, effort, timeout, cwd,
+                  add_dirs, tools, settings, reprendre, env):
+    entree = _entree_session(logique)
+    essais = [reprendre] if reprendre is not None else [False, True]
+    dernier = ""
+    for reprise in essais:
+        manuel_sha256, prompt, prompt_injecte = _preparer_prompt_gemini(
+            manuel, cwd, reprise, entree)
+        commande = _commande_gemini(prompt, modele, add_dirs, logique, reprise)
+
+        r = subprocess.run(commande, cwd=cwd, env=env,
+                           input=message.encode("utf-8"),
+                           capture_output=True, timeout=timeout,
+                           **_creation_sans_fenetre())
+        code = r.returncode
+        sortie = r.stdout.decode("utf-8", "replace")
+        erreurs = [r.stderr.decode("utf-8", "replace")]
+
+        try:
+            resultat = json.loads(sortie)
+        except ValueError:
+            resultat = None
+
+        dernier = sortie + "\n" + "\n".join(erreurs)
+        if "already in use" in dernier and reprendre is None:
+            continue
+        if code != 0:
+            raise RuntimeError(("\n".join(erreurs) or
+                                "gemini a quitte avec le code %d" % code)[-800:])
+        if not resultat:
+            raise RuntimeError("le flux Gemini s\'est ferme sans resultat")
+
+        resultat.setdefault("provider", "gemini")
+        resultat.setdefault("logical_session_id", logique)
+        resultat.setdefault("session_id", logique)
+        resultat.setdefault("model", modele or "defaut")
+        _poser_empreinte_manuel(logique, "gemini", manuel_sha256)
+
+        if prompt_injecte and prompt:
+            try:
+                os.remove(prompt)
+            except (OSError, TypeError):
+                pass
+        return resultat
+    raise RuntimeError("ni creation ni reprise Gemini n\'ont abouti : %s" % dernier[-400:])
+
 def appeler(role, manuel, message, session_id, modele=None, effort=None,
             timeout=180, cwd=None, add_dirs=None, tools=None, reprendre=None,
             settings=None, env=None, on_event=None, on_stderr=None,
@@ -571,6 +620,7 @@ def appeler(role, manuel, message, session_id, modele=None, effort=None,
     provider = fournisseur()
     modele = _modele(provider, modele)
     effort = _effort(provider, effort)
+    service_tier = _service_tier(provider)
     cwd = os.path.abspath(cwd or RACINE)
     os.makedirs(cwd, exist_ok=True)
     add_dirs = [os.path.abspath(x) for x in (add_dirs or [])]
@@ -589,7 +639,11 @@ def appeler(role, manuel, message, session_id, modele=None, effort=None,
                 resultat = _appel_codex(
                     manuel, message, session_id, modele, effort, timeout, cwd,
                     add_dirs, reprendre, environnement, on_event, on_stderr,
-                    heartbeat, on_heartbeat)
+                    heartbeat, on_heartbeat, service_tier=service_tier)
+            elif provider == "gemini":
+                resultat = _appel_gemini(
+                    manuel, message, session_id, modele, effort, timeout, cwd,
+                    add_dirs, tools, settings, reprendre, environnement)
             else:
                 resultat = _appel_claude(
                     manuel, message, session_id, modele, effort, timeout, cwd,
@@ -610,6 +664,16 @@ def appeler(role, manuel, message, session_id, modele=None, effort=None,
                     time.time(), succes, erreur_compute)
             except Exception:
                 pass  # la mesure ne doit jamais tuer le travail mesure
+            # Un agent dispose du dépôt et peut écrire un livre directement,
+            # sans passer par bibliotheque.Session. À la fin de CHAQUE call —
+            # succès, erreur ou expiration — on compare donc le disque à
+            # l'empreinte. `constate` reste honnête : une écriture concurrente
+            # peut être prise dans la même passe, on n'invente pas son auteur.
+            try:
+                from agents import reconcilier
+                reconcilier.passer(True, outil="runtime:%s" % provider)
+            except Exception:
+                pass  # l'histoire ne doit jamais tuer la journée d'un homme
 
 
 def lancer_cast(log, trace=None, **appel):

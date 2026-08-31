@@ -42,10 +42,13 @@ Sept lignes sur trente se lisent et se répondent. Ce sont les seules.
 
 ## II. CE QUI EST À MOI ET QUE JE POSE MOI-MÊME
 
-- **⚔️ 9022 — éprouver la seconde descente à mer basse, à vide.** Une matinée,
-  au premier jour de mer basse avant midi, **au plus tard le 8e**. Ce jour-là
-  Tobb ne court nulle part ailleurs, et la feuille doit le savoir avant qu'un
-  autre cahier vienne le prendre. Porté ici en avance, contre moi-même.
+- **⚔️ 9022 — FAITE le 4e au matin.** Descente par les Trois-Anses à mer basse,
+  à vide : 24 minutes jusqu'aux Trois-Anses, 7 minutes à découvert sous le
+  vieux fanal, 15 minutes du fanal à la grève — **46 minutes**. Le fanal n'était
+  tenu à aucun de mes deux passages. Remontée par l'ancienne route en 44 minutes.
+  **Une heure trente en tout**, sans attente sous charge. Elle coûte quinze
+  minutes de plus à la descente, mais ne passe ni la corderie ni la fenêtre de
+  la veuve Tass. Tobb ne court nulle part ailleurs cette matinée.
 - ~~**Les huitièmes jours du sel** : 5e, **13e**, **21e**, **29e**.~~ **FAUX, et
   corrigé le 4e au matin.** J'avais compté la route du sel comme une roue qui
   tourne sans fin, huit jours après huit jours. Elle n'en est pas une. Le mestre

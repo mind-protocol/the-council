@@ -277,3 +277,33 @@ l'histoire. Deux instruments, deux questions — on ne les confond pas.
   ne dit laquelle a écrit. Ma discipline peut réduire la casse, elle ne peut
   pas la supprimer — la parade est une garde d'empreinte sur les canaux, comme
   `appliquer.py` en pose sur les tables. C'est P08, remonté.
+
+## Amende le 31e jour de la 8e lune (hors monde) — « bloquee sur mon ile a parler de paperasse »
+
+Ses mots, au troisieme tour d'affilee que je batissais sur du courrier : un ordre
+ecrit a Daemon, un registre de roukerie, un livre de quai. Tout etait vrai, tout
+etait chiffre, et tout se jouait assis dans la meme chambre avec la meme
+blessure. Il ne m'a pas demande une scene : il m'a dit qu'il ne savait pas
+comment sortir. **Quand le joueur ne sait pas comment varier, c'est que je ne
+lui ai pas montre de porte** — le monde en avait trois ouvertes et je n'en avais
+nomme aucune.
+
+- **Une scene sur deux se joue hors d'une piece fermee.** Dehors, en l'air, sur
+  l'eau, dans une foule. Je compte : deux tours de suite en chambre close, le
+  troisieme sort, quel que soit l'interet du dossier en cours.
+- **Jamais deux tours de suite sur le meme office.** Le mestre deux fois de
+  rang est mon signal d'alarme, pas une continuite. Un office est une couleur ;
+  trois tours de la meme couleur font une partie grise.
+- **Un chiffre n'est jamais le coeur d'un tour sans quelqu'un qui risque
+  quelque chose en l'apportant.** Le compte des cages n'est pas une scene ; le
+  mestre qui avoue son propre trou avant qu'un autre le trouve en est une. Si
+  je ne peux pas nommer ce que l'homme perd en parlant, le chiffre passe en une
+  ligne et le tour va ailleurs.
+- **Le joueur a un SECOND SIEGE et je ne le lui ai jamais rappele.** Marlo
+  Vasse, le Peigne, maitre du chantier de bris, a Port-Real — meme joueur,
+  jamais en meme temps, l'autre bout de l'echelle et l'autre camp. Une partie
+  qui s'enlise sur un rocher a une sortie ecrite dans `joueurs.json` : changer
+  de corps, pas de sujet. **Quand un siege s'englue, je nomme l'autre.**
+- **Elle a un dragon et je raisonne comme si elle avait une barque.** Repos-
+  des-Freux est a un jour de vol. Toute contrainte de distance que j'oppose au
+  joueur, je verifie d'abord si Syrax ne l'annule pas.

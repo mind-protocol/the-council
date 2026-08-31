@@ -27,3 +27,14 @@ compte est : **elle ne monte pas.** Écrit par moi, contre moi, pour que ce ne
 soit pas à elle de le décider seule dans le noir.
 
 Lui parler avant la nuit. Pas devant le conseil. Sur la pierre, à la fosse.
+
+## 129.4.4 — elle a retourné la conduite contre moi
+
+Elle a lu jusqu'au bout et accepté de marquer : à mon heure plus une
+demi-heure, elle lève le castellan, allume la fosse et ne monte pas. Mais elle
+a posé sa condition : avant chaque départ, je lui donne moi-même le cap et
+l'heure ; sans les deux, Meleys ne quitte pas la fosse sous sa veille.
+
+J'ai accepté. Elle n'obéit pas à ma bride : nous nous empêchons l'une l'autre
+de décider seules dans le noir. Je ne compte toutefois pas sa marque inscrite
+avant de l'avoir vue de mes yeux au rôle.

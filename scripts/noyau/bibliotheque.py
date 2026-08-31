@@ -11,7 +11,7 @@ import json
 import os
 import re
 
-from etat.expose import tables  # LA PORTE de etat/ : l'ecriture atomique et sa semantique d'erreur
+from etat.expose import tables  # LA PORTE de etat/ et sa semantique d'erreur
 import documents_maison
 
 
@@ -112,7 +112,7 @@ def _index(livres):
     return ids, par_id
 
 
-def _ecrire_atomique(chemin, valeur):
+def _ecrire(chemin, valeur):
     # indent=1 : sur un registre de 2 Mo, chaque espace compte.
     tables.ecrire(chemin, valeur, indent=1)
 
@@ -158,10 +158,10 @@ class Session:
             if courants_liste != self._avant:
                 raise BibliothequeModifiee(
                     "etat/books.json a changé depuis la lecture — rien écrit")
-            _ecrire_atomique(monolithe, [voulus[i] for i in locaux_voulus])
+            _ecrire(monolithe, [voulus[i] for i in locaux_voulus])
             for ident in externes:
                 if avant.get(ident) != voulus.get(ident):
-                    _ecrire_atomique(sources[ident], voulus[ident])
+                    _ecrire(sources[ident], voulus[ident])
             self._avant = copy.deepcopy(self.livres)
             return
 
@@ -193,8 +193,8 @@ class Session:
             ordre_maison = [i for i in ids_voulus
                             if voulus[i].get("maison_id") == maison_id]
             for ident in maisons_nouvelles[maison_id]:
-                _ecrire_atomique(os.path.join(base, ident + ".json"), voulus[ident])
-            _ecrire_atomique(os.path.join(base, documents_maison.MANIFESTE),
+                _ecrire(os.path.join(base, ident + ".json"), voulus[ident])
+            _ecrire(os.path.join(base, documents_maison.MANIFESTE),
                               ordre_maison)
 
         # Les nouveaux fichiers existent avant d'entrer au manifeste. Les
@@ -202,14 +202,14 @@ class Session:
         # donc jamais une adresse annoncée sans fichier derrière elle.
         for ident in locaux_voulus:
             if ident in touches:
-                _ecrire_atomique(os.path.join(dossier, ident + ".json"), voulus[ident])
+                _ecrire(os.path.join(dossier, ident + ".json"), voulus[ident])
         if ordre_touche:
-            _ecrire_atomique(manifeste, locaux_voulus)
+            _ecrire(manifeste, locaux_voulus)
         for ident in locaux_avant:
             if ident not in locaux_voulus:
                 os.remove(os.path.join(dossier, ident + ".json"))
         for ident in set(sources) & touches:
-            _ecrire_atomique(sources[ident], voulus[ident])
+            _ecrire(sources[ident], voulus[ident])
         # LE JOURNAL DES AFFAIRES, ici et nulle part ailleurs : on tient
         # `avant` et `voulus`, donc le diff est deja fait — et c'est le SEUL
         # point que traversent les seize ecrivains Python et la route serveur.
@@ -217,7 +217,7 @@ class Session:
         # remede pire que le mal.
         try:
             import histoire
-            histoire.journaliser(avant, voulus, self.etat)
+            histoire.journaliser_et_actualiser(avant, voulus, self.etat)
         except Exception:
             pass
         self._avant = copy.deepcopy(self.livres)

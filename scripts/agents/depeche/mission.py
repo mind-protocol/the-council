@@ -46,12 +46,12 @@ import documents_maison
 MODES_BRIEF = ("journee", "reponse", "discussion")
 
 
-def instructions_mode(mode):
+def instructions_mode(mode, beats_jump=False):
     """Une capacite courte n'est pas une journee autonome de plus."""
     if mode not in MODES_BRIEF:
         raise ValueError("mode de brief inconnu : %s" % mode)
     if mode == "reponse":
-        return u"""# Mode réponse
+        base = u"""# Mode réponse
 
 Consulte le fichier `messages-au-joueur.md` indiqué sous `# Ta chambre` si une
 entrée correspond à ce destinataire, à ce contexte ou à cette ref. C'est un
@@ -64,6 +64,19 @@ envoie-la comme dernière réponse de ce call.
 
 N'élargis pas le travail. Ne modifie aucun fichier, n'amende ni mémoire ni
 manière, et n'écris à personne sauf si la demande l'exige explicitement."""
+        if not beats_jump:
+            return base
+        return base + u"""
+
+## Beats d'attente du Jump
+
+Rends un objet JSON nu : `reponse` contient ta réponse normale et
+`beats_attente` contient zéro à trois petits battements que le MJ pourra
+pousser pendant qu'il attend les autres hommes. Chaque beat a `type`
+(`replique`, `geste` ou `recit`), `texte`, `duree` et `noeuds` (au moins un
+identifiant exact du sous-graphe fourni dans la demande). Tu es l'auteur de
+chaque parole ou geste. N'annonce pas le verdict, n'invente aucun fait et ne
+lance aucune autre affaire."""
     if mode == "discussion":
         return u"""# Mode discussion
 
@@ -93,9 +106,9 @@ def cible_rapport(qui, contexte_id=None, brut=False):
 
 
 def mission(qui, brief, consigne, contexte=None, contexte_id=None, ref=None,
-            mode="journee"):
+            mode="journee", billet_de=None, beats_jump=False):
     """Donne l'interface du jour ; l'identité et le contexte vivent au système."""
-    court = instructions_mode(mode)
+    court = instructions_mode(mode, beats_jump=beats_jump)
     if contexte_id is not None:
         contexte_id = id_item_affaire(contexte_id)
     aujourdhui = dict(zip(("annee", "lune", "jour"), date_du_monde()))
@@ -149,8 +162,13 @@ def mission(qui, brief, consigne, contexte=None, contexte_id=None, ref=None,
     # essais). Le curseur n'avance qu'au lancement réussi (marquer_lus, dans
     # depecher) : un départ raté ne mange pas les billets.
     billets = u""
-    for b in (_ch.non_lus(qui)
-              if mode == "journee" and contexte_id is None else []):
+    non_lus = _ch.non_lus(qui) if mode == "journee" else []
+    if contexte_id is not None:
+        non_lus = [b for b in non_lus
+                   if str(b.get("contexte_id") or "") == str(contexte_id)]
+    if billet_de is not None:
+        non_lus = [b for b in non_lus if b.get("de") == billet_de]
+    for b in non_lus:
         d = b.get("date")
         if isinstance(d, dict):
             d = u"%s.%s.%s" % (d.get("annee", u"?"), d.get("lune", u"?"),
@@ -312,8 +330,8 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True,
 
     attendre=False est le CAST : spawn detache (Popen sans wait), stdout vers
     un log dans fil/ de sa chambre, retour immediat {cast, log, session}. Un
-    Le CAST passe par un worker detache. Il prend le meme verrou et sait donc
-    reprendre une session deja nee, comme le CALL.
+    Le CAST passe par un worker detache et sait reprendre une session deja nee,
+    comme le CALL. Aucun verrou ne serialise les appels.
 
     PLUS D'OREILLE : le hook-parloir est mort le 31.8.2026. La session ne
     recoit aucun --settings — une parole qui arrive pendant sa journee est
@@ -366,6 +384,7 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True,
         "env": {"LE_CONSEIL_QUI": str(qui),
                 "LE_CONSEIL_CONTEXTE": str(contexte_id or ""),
                 "LE_CONSEIL_REF": str(ref or ""),
+                "LE_CONSEIL_SESSION": str(sid),
                 "LE_CONSEIL_MODE": str(mode)},
     }
 
@@ -404,8 +423,9 @@ def extraire_json(texte):
 
 
 def depecher(qui, consigne, modele, minutes, sec, attendre=True,
-             contexte_id=None, ref=None, mode="journee"):
-    instructions_mode(mode)  # valide aussi le mode historique
+             contexte_id=None, ref=None, mode="journee", beats_jump=False,
+             event_jump=None, forcer_creux=False):
+    instructions_mode(mode, beats_jump=beats_jump)
     if contexte_id is not None:
         contexte_id = id_item_affaire(contexte_id)
     date = date_du_monde()
@@ -433,7 +453,7 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True,
         empeche = u"aucun dossier"
     elif u"Aucune tete dans intentions.json" in brief:
         empeche = u"pas de tete dans intentions.json"
-    elif u"AUCUN CREUX" in brief:
+    elif u"AUCUN CREUX" in brief and not forcer_creux:
         empeche = u"aucun creux aujourd'hui — il travaille, il ne pense pas"
     if empeche:
         print(u"  %-18s ne part pas — %s" % (qui, empeche))
@@ -445,9 +465,18 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True,
         except ValueError as e:
             print(u"  %-18s ne part pas — %s" % (qui, e))
             return False
+    if beats_jump:
+        from agents import jump_beats as _beats
+        file_beats = _beats.lire(contexte_id, ref)
+        if not file_beats or file_beats.get("event_id") != str(event_jump):
+            print(u"  %-18s ne part pas — file de beats Jump absente" % qui)
+            return False
+        consigne = (consigne.rstrip() + u"\n\nSous-graphe autorisé pour les "
+                    u"beats : " + u", ".join(file_beats["noeuds"]))
     manuel = manuel_de(qui, mode="journee", contexte=contexte)
     texte = mission(qui, brief, consigne, contexte=contexte,
-                    contexte_id=contexte_id, ref=ref, mode=mode)
+                    contexte_id=contexte_id, ref=ref, mode=mode,
+                    beats_jump=beats_jump)
 
     if sec:
         from agents.expose import runtime as _rt2
@@ -518,6 +547,19 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True,
 
     if mode != "journee":
         phrase = (rep.get("result") or u"").strip()
+        if beats_jump:
+            structure, _note = extraire_json(phrase)
+            if not isinstance(structure, dict) or not structure.get("reponse"):
+                print(u"  %-18s ECHEC — réponse Jump structurée absente" % qui)
+                return False
+            from agents import jump_beats as _beats
+            ajoutes = _beats.ajouter(
+                event_jump, contexte_id, ref, qui,
+                structure.get("beats_attente") or [])
+            phrase = str(structure["reponse"]).strip()
+            print(u"  %-18s %d beat(s) d'attente préparé(s)" %
+                  (qui, len(ajoutes)))
+            print(u"REPONSE DE %s :\n%s" % (qui, phrase))
         print(u"  %-18s %5d j. · %3ds — %s : %s"
               % (qui, jetons, round(time.time() - debut), mode,
                  re.sub(r"\s+", u" ", phrase)[:220] or u"(muette)"))

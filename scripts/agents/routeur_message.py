@@ -56,6 +56,7 @@ def router_message(document, action, modele=None):
     joueur = str(document.get("joueur_id") or action.get("joueur_id") or "")
     ref = str(document.get("ref") or action.get("ref") or "")
     selection = document.get("selection") or {}
+    est_jump = str(action.get("mode") or "").casefold() == "jump"
     routes = (list(selection.get("routes_hommes") or [])
               if est_une_parole(action) else [])
     retours = []
@@ -89,10 +90,23 @@ def router_message(document, action, modele=None):
                      "une seconde fois pour cette parole ; lis leur fil ou "
                      "leur retour, puis mets leur reaction en scene."),
     }
+    if est_jump:
+        contexte_mj = {
+            "ref": ref,
+            "decision": "jump",
+            "jump": ((document.get("contexte_fourni") or {}).get("jump")),
+            "consigne": (
+                "JUMP 1 : le skill système jump-scene est injecté dans ce "
+                "réveil. Exécute son processus complet sur cet événement et "
+                "ce contexte_id, meuble le flux pendant les appels, avance "
+                "réellement la clock et ne rends pas la main avant que "
+                "l'événement soit appliqué et sa scène jouée. Aucune décision "
+                "préparatoire ne remonte au joueur."),
+        }
     resultat_mj = mj.appeler_mj(
         joueur, "", u"JOUEUR", modele=modele,
         refs=[ref] if ref else None, routage=contexte_mj)
-    return {"parole": est_une_parole(action),
+    return {"parole": est_une_parole(action), "jump": est_jump,
             "hommes": retours,
             "mj": {"appele": True,
                    "resultat": str(resultat_mj or "")[-500:]}}

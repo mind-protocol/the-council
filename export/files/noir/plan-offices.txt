@@ -1,0 +1,236 @@
+====================================================================================================
+DOCUMENT DE MAISON — maison-targaryen-noir
+SOURCE — etat/maisons/maison-targaryen-noir/documents/books/plan-offices.json
+====================================================================================================
+
+id: plan-offices
+boite: boite-grand-plan
+titre: Les offices
+sous_titre: 🪶 Une capacité permanente d'agir sous une autorité définie. Un office ne possède aucun état cible : les fins sont communes. Il porte des actions, et il répond d'une mesure.
+type: registre
+pages:
+  [1] **CECI EST UN REGISTRE, NON UNE UNITÉ DE TRAVAIL.** On n'y conçoit rien : on y range, et l'on y cherche. Le travail se fait dans les livres de SUJET — Prise de Port-Réal, Défense de Peyredragon, Alliances du Nord — où la chaîne se lit d'un coup d'œil : ce qu'on veut, ce qui bloque, l'idée, le geste. Ici on répond à une autre question : **qu'est-ce que j'ai de cette sorte, tous sujets confondus ?**
+      
+      Rien n'est écrit deux fois. Le sujet montre la chaîne, le registre tient la vérité de chaque pièce. Quand les deux se contredisent, **c'est le registre qui a raison**.
+  [2] UN OFFICE N'EST PAS UNE COUCHE STRATÉGIQUE : il dit qui peut effectivement porter une action, ce qu'il tranche seul, et ce qu'il doit remonter. Il n'a pas son propre plan — il participe au plan commun.
+      
+      **LA MESURE EST UN IDENTIFIANT, PAS UNE PHRASE.** Elle renvoie à un compte tenu ailleurs, qui bouge tout seul, et qu'on peut lire sans demander à personne. Quand la case dit AUCUNE, l'office n'est pas tenu — quel que soit le travail de l'homme, et sans que ce soit sa faute. **Trois cases vides à ce jour, dont la roukerie**, par où sort tout ce qui quitte cette île par écrit.
+      
+      Ce livre ne remplace pas le registre des offices, qui garde ce qui se constate, ce qu'on propose d'améliorer et les deux sceaux. Celui-ci ne dit que ce dont le plan a besoin.
+      
+      LA NUMÉROTATION, ET ELLE EST LA MÊME DANS LES SIX LIVRES. **Un bloc de cent par état cible.** Tout ce qui sert un état vit dans son bloc : le numéro seul dit où chercher, sans qu'on ait à lire une ligne. Les verrous prennent les unités 01 à 09, les clefs les dizaines 10 à 19, les actions le reste, 20 à 99. Ainsi 201 est un verrou de la porte, 210 une clef de ce verrou, 220 une action de cette clef — et tout ce qui commence par 2 est l'affaire de la porte.
+      
+      **Le chiffre est une adresse, non un rang.** Il ne se renumérote pas quand l'ordre change, il ne se reprend jamais pour autre chose, et ce qu'on abandonne garde son numéro pour qu'on sache qu'il a existé. Le type de la chose est dit par son emoji, jamais par son chiffre.
+      
+      Les moyens et les offices ne servent aucun état en particulier : ils ont leurs propres séries, **M01** et suivants, **O01** et suivants.
+colonnes:
+  [1] 🪶 N°
+  [2] 🏷️ L'office
+  [3] 👤 Le titulaire
+  [4] 📿 Ce dont il répond
+  [5] ✔️ Ce qu'il décide seul
+  [6] ✖️ Ce qu'il ne décide pas
+  [7] 📏 La mesure
+lignes:
+  [1]
+    cellules:
+      [1] **O01**
+      [2] 🛡️ Castellan de Peyredragon
+      [3] Ser Robert Quince, onze ans en charge
+      [4] Que ce rocher ne tombe pas, et que la reine sache toujours ce qu'il sait
+      [5] Les murs, les relèves, les tours de garde
+      [6] Ce qui sort de l'île
+      [7] Cent vingt disponibles au moins — **aucune mesure tenue au compte**
+  [2]
+    cellules:
+      [1] **O02**
+      [2] 📋 Maître des rôles, gardien des règles
+      [3] Celui qu'on appelle le Sanglier
+      [4] Que tout homme marqué au rôle soit payé, et que ce qui se décide soit retrouvable
+      [5] Le tarif, le rôle, la relecture au conseil
+      [6] Qui l'on marque et qui l'on renvoie
+      [7] `recrutement-peyredragon.hommes-au-role` · `.solde-due` · et la troisième, dite tout haut à sept heures à partir du 29e : le nombre de gens présents sur l'île qui ne sont sur aucun livre. Premier relevé : trente-six présents, quatre partis.
+  [3]
+    cellules:
+      [1] **O03**
+      [2] 👁️ Maîtresse des nouvelles de la reine
+      [3] Dame Aurore Inchauspé, de La Noiseraie
+      [4] Ce qui se dit de la reine au-delà de deux jours de route — **et les TROIS VOLUMES qui pendent à cet office** : *Ce qui part, et par où* (41000‑41900) · *Retournement de l'opinion populaire dans Port‑Réal* · *Retournement des maisons hésitantes des terres de la Couronne* (repris au prince Jacaerys le 1er de la 4e). Ils suivent la charge, pas la femme.
+      [5] Ses chasses, ses gens, l'ordre de ses questions
+      [6] Promettre quoi que ce soit au nom de la reine
+      [7] Aucune version ne prend quatre jours d'avance sur la sienne
+  [4]
+    cellules:
+      [1] **O04**
+      [2] 🏃 Coureurs de la reine
+      [3] Tobb, de la Claie ; Nesse, du Marais du sud
+      [4] Que la parole de la reine arrive telle qu'elle l'a dite
+      [5] Leur route et leur heure
+      [6] Rien porter qu'on ne leur ait remis devant témoin
+      [7] `coureurs-de-la-reine.courses-en-attente` · `.jours-de-jambes`
+  [5]
+    cellules:
+      [1] **O05**
+      [2] 🌊 Charge des grèves et des mouillages
+      [3] Rulf Corne, maître de port
+      [4] Que rien ne débarque de nuit hors du quai sans que la reine l'apprenne
+      [5] Fermer une crique, poster un guet
+      [6] Retenir une coque qui a payé
+      [7] Quatre signes, et rien d'autre : coque immobile, barque de nuit, pavillon inconnu, large sans rade
+  [6]
+    cellules:
+      [1] **O06**
+      [2] ⚓ Le port de Peyredragon
+      [3] Rulf Corne, vingt-deux ans en charge
+      [4] Que les coques circulent sans danger et que le bourg vive son ordinaire
+      [5] L'ordre des mouillages, la priorité des quais
+      [6] Le négoce avant la vie des gens
+      [7] `port-peyredragon.nefs-en-etat`
+  [7]
+    cellules:
+      [1] **O07**
+      [2] 🐦 La roukerie, et tout ce qui part par écrit
+      [3] Mestre Gerardys, tenu de longue main
+      [4] Ce qui sort de cette île par écrit
+      [5] L'ordre des départs, la garde des adresses
+      [6] Le contenu de ce que la reine dicte
+      [7] **AUCUNE — le plus grand trou du registre**
+  [8]
+    cellules:
+      [1] **O08**
+      [2] 🚪 La porte de mer
+      [3] Wend, sergent, onze ans en charge
+      [4] Ce qu'un homme porte quand il entre — non pas qui il est
+      [5] Fouiller, refuser, retenir une heure
+      [6] Refuser sur le nom ou sur la mine
+      [7] **Le compte des refus**, écrit chaque nuit sur la page du jour et relu chaque semaine par le castellan — écrit le 28e de la 3e lune et tenu depuis ; premier chiffre, neuf refusés dans la nuit du 27e au 28e, nommés avec leur motif. **Cette case portait « AUCUNE ÉCRITE » : elle était fausse depuis cinq jours**, la mesure existant au registre des offices sans avoir jamais été portée ici. Elle s'étend au 2e de la 4e à TROIS nombres, par 🎯 46000 : entrés · sortis · refusés.
+  [9]
+    cellules:
+      [1] **O09**
+      [2] 🧮 Le compte des débarquements au quai
+      [3] Aldon Hask, ancien sous-clerc aux comptes
+      [4] Ce qui entre par le quai, et en quelle quantité
+      [5] La tenue de son compte
+      [6] Ce qu'on laisse entrer
+      [7] **AUCUNE ÉCRITE**
+  [10]
+    cellules:
+      [1] **O10**
+      [2] 🎶 Bardesse de la maison
+      [3] Alys Grive, engagée le 23e
+      [4] Que ce qui se dit de cette maison sorte d'ici et non d'ailleurs
+      [5] Ce qu'elle propose, et son prix dit d'avance
+      [6] Chanter ce qu'on ne lui a pas commandé
+      [7] Une chanson reprise au bourg sans qu'on l'y ait apprise, une fois la lune
+  [11]
+    cellules:
+      [1] **O11**
+      [2] 🧭 Ambassade du Val, du Nord et de Blancport
+      [3] Le prince Jacaerys Velaryon, du 4e jour de la 4e lune
+      [4] Ce qui se promet en son nom hors du royaume de la reine. **Ne porte plus le volume des maisons hésitantes** — rendu à l'office de la voix le 1er de la 4e, trois jours avant son départ.
+      [5] Le chemin, l'ordre des visites, le ton
+      [6] Promettre hors de ce qui est écrit
+      [7] Tout ce qui dépasse : porté à la reine, répondu sous quinze jours
+  [12]
+    cellules:
+      [1] **O12**
+      [2] 🥾 Commandement de l'ost et de la marche
+      [3] **Ser Steffon Darklyn**, chevalier de la Garde Royale. Donné le 26e jour de la 3e lune, an 129, au soir.
+      [4] Mener les hommes sur la route jusqu'à portée de Port-Réal **sans livrer bataille en chemin**, et les y tenir en ordre.
+          
+          **⚖️ LA RÈGLE DU PIED — LE SOL DIT QUI COMMANDE. JAMAIS LE RANG.**
+          · Sur la route et en campagne : **l'ost**. Tout ce qui marche lui obéit, y compris ce qui n'est pas à lui.
+          · Sur l'eau, depuis qu'on retire la planche jusqu'à ce qu'on la repose : **la mer**. Y compris les hommes de l'ost qui sont dessus.
+          · Sur le quai, des deux côtés de l'eau : **le quai**. Qui monte, dans quel ordre, qui descend le premier. L'ost et la mer attendent leur tour comme le reste.
+          · Dans les rues, une fois la porte franchie : **la rue**.
+          · Sur le seuil même — l'arche, le pont, la coupée : **celui qui tient l'arche**, quel que soit son rang.
+          *On change de maître en changeant de pied, et non en changeant d'avis : qui conteste sur place a tort sur place, et conteste après, par écrit, au registre.* *Vaut du premier chargement jusqu'à ce que la dernière vague soit passée, et vaut contre un prince.* **UNE SEULE EXCEPTION, ajoutée par le sergent au rôle et complétée par le castellan lui-même : le quai ne prend pas d'hommes à la garnison sans le castellan, ET LE CASTELLAN DIT NON TANT QU'IL EST SOUS SON PLANCHER.** (Cent dix-neuf disponibles au matin du 27e ; plancher à cent vingt : il est déjà d'un homme en dessous. Trente hommes pris pour un chargement ne le mettent pas sous son plancher — ils lui retirent sa garnison.) Dictée par dame Aurore le 27e à neuf heures, écrite par le Sanglier en l'absence de ser Steffon Darklyn, à qui l'action appartient (40024). **NON SIGNÉE : il faut cinq signatures — l'ost, la mer, le quai, la rue, et celui qui tient l'arche. Deux existent, une est proposée sans réponse, deux cases sont vides.**
+      [5] L'ordre de marche, les étapes, les haltes, le tracé de la route au jour le jour.
+      [6] **Embarquer** (c'est le quai) · **livrer bataille** · engager un dragon · répondre à un banneret.
+      [7] L'ost à portée de Port-Réal **au jour dit**, et pas trois jours après. Binaire.
+    note: Ouverte au conseil du matin du 27e. Une charge n'existe que si elle a **le titre, ce dont elle répond, ce qu'elle décide seule, ce qu'elle ne décide pas, et sa mesure** — la procédure du castellan, 22e jour. Préséance entre ces commandements : **la règle du pied** (à terre l'ost, sur l'eau la flotte, sur le seuil celui qui tient l'arche), écrite mais pas encore signée.
+  [13]
+    cellules:
+      [1] **O13**
+      [2] ⛵ Commandement de la mer
+      [3] **Lord Corlys Velaryon** — PROPOSÉ le 27e à neuf heures, corbeau parti le jour même. **Il est à Lamarck et n'a pas répondu** : la case porte une date d'envoi, pas une date de prise.
+      [4] Les coques **qui portent des hommes** : dix affrétées au banc de l'Est, plus les onze de la maison si on les y emploie.
+          
+          **⚖️ LA RÈGLE DU PIED — LE SOL DIT QUI COMMANDE. JAMAIS LE RANG.**
+          · Sur la route et en campagne : **l'ost**. Tout ce qui marche lui obéit, y compris ce qui n'est pas à lui.
+          · Sur l'eau, depuis qu'on retire la planche jusqu'à ce qu'on la repose : **la mer**. Y compris les hommes de l'ost qui sont dessus.
+          · Sur le quai, des deux côtés de l'eau : **le quai**. Qui monte, dans quel ordre, qui descend le premier. L'ost et la mer attendent leur tour comme le reste.
+          · Dans les rues, une fois la porte franchie : **la rue**.
+          · Sur le seuil même — l'arche, le pont, la coupée : **celui qui tient l'arche**, quel que soit son rang.
+          *On change de maître en changeant de pied, et non en changeant d'avis : qui conteste sur place a tort sur place, et conteste après, par écrit, au registre.* *Vaut du premier chargement jusqu'à ce que la dernière vague soit passée, et vaut contre un prince.* **UNE SEULE EXCEPTION, ajoutée par le sergent au rôle et complétée par le castellan lui-même : le quai ne prend pas d'hommes à la garnison sans le castellan, ET LE CASTELLAN DIT NON TANT QU'IL EST SOUS SON PLANCHER.** (Cent dix-neuf disponibles au matin du 27e ; plancher à cent vingt : il est déjà d'un homme en dessous. Trente hommes pris pour un chargement ne le mettent pas sous son plancher — ils lui retirent sa garnison.) Dictée par dame Aurore le 27e à neuf heures, écrite par le Sanglier en l'absence de ser Steffon Darklyn, à qui l'action appartient (40024). **NON SIGNÉE : il faut cinq signatures — l'ost, la mer, le quai, la rue, et celui qui tient l'arche. Deux existent, une est proposée sans réponse, deux cases sont vides.**
+      [5] La composition des vagues, la route de mer, l'heure d'appareillage, le mouillage d'attente.
+      [6] **Le détroit n'est pas dans cette charge** : le blocus du Gosier reste où il est. Ne décide pas de l'ordre d'embarquement (c'est le quai). **LE FLEUVE A DEUX RIVES ET DEUX MÉTIERS** : maître Rulf Corne tient le port et les grèves, **non le fleuve en armes**. Sur l'eau du fleuve, c'est la mer ; sur les rives, on retombe sous la règle du pied. (Seul point que la table des rencontres ajoutait ; reporté ici le 27e au soir, la table ayant été jugée redondante.)
+      [7] Le nombre d'hommes débarqués **par vague et par jour**, comparé à ce qui était promis.
+    note: Ouverte au conseil du matin du 27e. Une charge n'existe que si elle a **le titre, ce dont elle répond, ce qu'elle décide seule, ce qu'elle ne décide pas, et sa mesure** — la procédure du castellan, 22e jour. Préséance entre ces commandements : **la règle du pied** (à terre l'ost, sur l'eau la flotte, sur le seuil celui qui tient l'arche), écrite mais pas encore signée.
+  [14]
+    cellules:
+      [1] **O14**
+      [2] 🧱 Commandement du quai
+      [3] **Aldon Hask**, maître des deniers. PRIS le 27e à neuf heures, devant la table, **sous une condition qu'il s'est imposée lui-même**.
+      [4] L'ordre d'embarquement et de débarquement : qui monte, sur quelle coque, dans quel ordre, et qui descend le premier de l'autre côté.
+          
+          **⚖️ LA RÈGLE DU PIED — LE SOL DIT QUI COMMANDE. JAMAIS LE RANG.**
+          · Sur la route et en campagne : **l'ost**. Tout ce qui marche lui obéit, y compris ce qui n'est pas à lui.
+          · Sur l'eau, depuis qu'on retire la planche jusqu'à ce qu'on la repose : **la mer**. Y compris les hommes de l'ost qui sont dessus.
+          · Sur le quai, des deux côtés de l'eau : **le quai**. Qui monte, dans quel ordre, qui descend le premier. L'ost et la mer attendent leur tour comme le reste.
+          · Dans les rues, une fois la porte franchie : **la rue**.
+          · Sur le seuil même — l'arche, le pont, la coupée : **celui qui tient l'arche**, quel que soit son rang.
+          *On change de maître en changeant de pied, et non en changeant d'avis : qui conteste sur place a tort sur place, et conteste après, par écrit, au registre.* *Vaut du premier chargement jusqu'à ce que la dernière vague soit passée, et vaut contre un prince.* **UNE SEULE EXCEPTION, ajoutée par le sergent au rôle et complétée par le castellan lui-même : le quai ne prend pas d'hommes à la garnison sans le castellan, ET LE CASTELLAN DIT NON TANT QU'IL EST SOUS SON PLANCHER.** (Cent dix-neuf disponibles au matin du 27e ; plancher à cent vingt : il est déjà d'un homme en dessous. Trente hommes pris pour un chargement ne le mettent pas sous son plancher — ils lui retirent sa garnison.) Dictée par dame Aurore le 27e à neuf heures, écrite par le Sanglier en l'absence de ser Steffon Darklyn, à qui l'action appartient (40024). **NON SIGNÉE : il faut cinq signatures — l'ost, la mer, le quai, la rue, et celui qui tient l'arche. Deux existent, une est proposée sans réponse, deux cases sont vides.**
+      [5] L'ordre de chargement, l'allocation des bras de quai, la priorité entre deux corps qui se présentent en même temps.
+      [6] Ne commande ni la route de mer ni la marche. **Et ne tient plus le compte des débarquements** : il l'a rendu pour ne pas être à la fois celui qui compte et celui qu'on juge sur son compte. **NE PREND PAS D'HOMMES À LA GARNISON SANS LE CASTELLAN — et le castellan dit non tant qu'il est sous son plancher.** C'est la seule exception à la règle du pied, et elle est écrite d'avance plutôt que criée le jour venu.
+      [7] **Une journée d'embarquement sans attente sur le quai.** Le compte est dit tout haut chaque matin par un autre que lui — le clerc reste à nommer.
+    note: Ouverte au conseil du matin du 27e. Une charge n'existe que si elle a **le titre, ce dont elle répond, ce qu'elle décide seule, ce qu'elle ne décide pas, et sa mesure** — la procédure du castellan, 22e jour. Préséance entre ces commandements : **la règle du pied** (à terre l'ost, sur l'eau la flotte, sur le seuil celui qui tient l'arche), écrite mais pas encore signée.
+  [15]
+    cellules:
+      [1] **O15**
+      [2] 🏘️ Commandement de la rue
+      [3] **VIDE.** Ligne ouverte le 27e jour de la 3e lune, an 129, à neuf heures, à la demande de dame Aurore Inchauspé, écrite de la main du Sanglier. **Une ligne sans nom se voit ; un trou ne se voit pas.**
+      [4] Commander dans Port-Réal une fois qu'on y est entrés : le déploiement dans les rues, et ce qu'on fait des quartiers pris.
+          
+          **⚖️ LA RÈGLE DU PIED — LE SOL DIT QUI COMMANDE. JAMAIS LE RANG.**
+          · Sur la route et en campagne : **l'ost**. Tout ce qui marche lui obéit, y compris ce qui n'est pas à lui.
+          · Sur l'eau, depuis qu'on retire la planche jusqu'à ce qu'on la repose : **la mer**. Y compris les hommes de l'ost qui sont dessus.
+          · Sur le quai, des deux côtés de l'eau : **le quai**. Qui monte, dans quel ordre, qui descend le premier. L'ost et la mer attendent leur tour comme le reste.
+          · Dans les rues, une fois la porte franchie : **la rue**.
+          · Sur le seuil même — l'arche, le pont, la coupée : **celui qui tient l'arche**, quel que soit son rang.
+          *On change de maître en changeant de pied, et non en changeant d'avis : qui conteste sur place a tort sur place, et conteste après, par écrit, au registre.* *Vaut du premier chargement jusqu'à ce que la dernière vague soit passée, et vaut contre un prince.* **UNE SEULE EXCEPTION, ajoutée par le sergent au rôle et complétée par le castellan lui-même : le quai ne prend pas d'hommes à la garnison sans le castellan, ET LE CASTELLAN DIT NON TANT QU'IL EST SOUS SON PLANCHER.** (Cent dix-neuf disponibles au matin du 27e ; plancher à cent vingt : il est déjà d'un homme en dessous. Trente hommes pris pour un chargement ne le mettent pas sous son plancher — ils lui retirent sa garnison.) Dictée par dame Aurore le 27e à neuf heures, écrite par le Sanglier en l'absence de ser Steffon Darklyn, à qui l'action appartient (40024). **NON SIGNÉE : il faut cinq signatures — l'ost, la mer, le quai, la rue, et celui qui tient l'arche. Deux existent, une est proposée sans réponse, deux cases sont vides.**
+      [5] —
+      [6] —
+      [7] **Recoupe le volume tenu par ser Steffon Darklyn** (*Entrée et déploiement de l'ost dans les rues*) : le volume existait, la charge n'existait pas. À borner quand elle aura un nom.
+    note: Ouverte au conseil du matin du 27e. Une charge n'existe que si elle a **le titre, ce dont elle répond, ce qu'elle décide seule, ce qu'elle ne décide pas, et sa mesure** — la procédure du castellan, 22e jour. Préséance entre ces commandements : **la règle du pied** (à terre l'ost, sur l'eau la flotte, sur le seuil celui qui tient l'arche), écrite mais pas encore signée.
+  [16]
+    cellules:
+      [1] **O16**
+      [2] 🫅 Garde de la personne de la reine
+      [3] **SER STEFFON DARKLYN — DÉMIS PAR SA PROPRE BORNE À COMPTER DU 30e JOUR DE LA 3e LUNE, AN 129, et il le déclare lui-même avant qu'on le lui trouve.** La case ✖️ de cette ligne, dictée de sa main le 27e, porte : *ne cumule pas avec le commandement de l'ost le jour où l'ost marche*. La première vague est partie le 29e (J−17). **CASE À REMPLIR PAR LA REINE.** Laissée blanche et non fausse. En attendant le nom : la porte est tenue, la mesure ne l'est pas — manquement ouvert et compté à partir de ce matin.
+      [4] Qui approche la reine, à quelle heure, et par quelle porte. La garde de sa chambre, de sa table et de son escalier.
+      [5] Qui tient la porte et à quelles heures ; la relève ; refuser l'entrée à qui il ne connaît pas.
+      [6] **Ne décide pas qui la reine reçoit** — il décide qui passe sans qu'elle l'ait dit. Ne cumule pas avec le commandement de l'ost le jour où l'ost marche : un homme ne garde pas une porte à Peyredragon et une colonne sur une route.
+      [7] PAS UN TROU D'HEURE — mesure COUPÉE au 30e, 3e lune, an 129, midi. AVANT le trait : les trente jours antérieurs, clos et marqués de la main de ser Steffon Darklyn à la coupée avant l'embarquement, quatre heures sans nom déclarées comme trous et non bouchées de mémoire ; deux noms en marge — ser Robert Quince pour l'oreille, Marna pour la plume. APRÈS le trait : chaque heure sous le nom du Sanglier, écrite au moment où elle se produit.
+    note: Mesure exigeante et voulue telle : elle ne se juge pas sur l'absence d'incident — un incident qui n'a pas eu lieu ne prouve rien — mais sur la **continuité du registre**, qui se vérifie à froid, n'importe quand, en remontant.
+  [17]
+    cellules:
+      [1] **O17**
+      [2] **Ce qui entre à Peyredragon**
+      [3] **Nicolas Reynolds**, cadet de Pierrefitte — 28e j., 3e lune, an 129
+      [4] Que rien n'entre dans ce château sans une ligne, par aucun des trois chemins : **le quai, la rampe, la roche.** Une seule main sur les trois, parce que trois comptes séparés ne se recoupent jamais.
+      [5] Descendre voir où il veut sur les trois chemins et écrire ce qu'il voit, y compris quand ça déplaît. **Lire et modifier les six cahiers du plan, sa marque et sa date au bas de ce qu'il change. Poser et retirer des marques sur la table peinte.** Siéger à la Table Peinte à toute heure.
+      [6] **Il n'écrit jamais ce que vaut un homme — seulement si sa charge est tenable.** Il ne commande à personne, ne dispose d'aucun homme, ne dépense pas un dragon de la couronne : il se paie. Le reste de la maison lui est fermé comme à tout le monde.
+      [7] **Ce qui est entré sans une ligne, dit tout haut chaque matin avec les rôles. PLANCHER : ZÉRO.** Compte rendu complet à huit jours, avec ce qui manque, nommé.
+  [18]
+    cellules:
+      [1] O18
+      [2] 🧒 Garde des personnes des princes — ligne ouverte le 30e jour de la 3e lune, an 129, au matin, par ser Steffon Darklyn. **Elle n'existait sur aucun des vingt-deux offices, vérifié une à une.** Motif d'ouverture : on paie pour les têtes des fils de la reine, huit hommes tiennent deux portes jour et nuit depuis la nuit du 28e, et ce dispositif ne vit aujourd'hui que dans huit bouches et la mémoire d'un homme qui embarque.
+      [3] **CASE BLANCHE, ET C'EST VOULU.** Un titre est de la reine ; une case fausse est pire qu'une case vide. Demandé une fois, devant la Table, le 30e avant midi. Ne sera pas redemandé. **Exigence unique portée sur la case : que ce soit un homme qui RESTE sur le rocher** — la charge meurt le jour où celui qui la tient prend la mer.
+      [4] Deux portes tenues sans interruption, jour et nuit, à trois relèves de huit heures, quatre hommes par prince. Que chaque homme de garde sache le nom de son relevant avant de prendre son poste. Et la sortie des deux plus jeunes par la barque si le rocher se ferme.
+      [5] 
+      [6] **LA GARDE DES PRINCES NE SE PRÊTE À RIEN, PAS MÊME À UN FEU** — consigne du 29e, maintenue. Il ne dispose pas des huit pour un autre poste, fût-ce une nuit d'alerte. Il ne décide pas où vont les garçons ; il décide qui passe leur porte.
+      [7] **PAS UN TROU D'HEURE**, la même que O16 et pas une autre : pour chacun des trente derniers jours, on doit retrouver le nom de qui était à la porte de chaque garçon. Une heure sans nom est un manquement et se compte comme tel. **CLAUSE JOINTE, QUI N'EST PAS ENCORE ACCORDÉE : les huit noms portés à cette ligne sortent du rôle d'embarquement et n'y rentrent que de la bouche de la reine.** Sans elle, la mesure est intenable : la garde et la colonne puisent au même vivier, deux hommes déjà repris le 29e, et le rôle de la deuxième vague s'ouvre le 31e au matin.
+embleme: 🪶
+couleur: #5a4a86
+maison_id: maison-targaryen-noir

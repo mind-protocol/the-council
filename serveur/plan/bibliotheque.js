@@ -1,6 +1,7 @@
 // La bibliothèque agrège le reliquat commun et les documents de chaque maison.
 const fs = require("fs");
 const path = require("path");
+const { spawnSync } = require("child_process");
 
 const ID = /^[a-z0-9][a-z0-9._-]*$/;
 
@@ -128,6 +129,18 @@ function ecrireAtomique(fichier, valeur) {
   }
 }
 
+function journaliserEcrituresDirectes(racine) {
+  // Le diff canonique vit en Python avec le lecteur des quatre tables. Le
+  // serveur lui rend la main après son écriture au lieu d'entretenir une
+  // seconde implémentation des transitions en JavaScript.
+  const script = path.join(racine, "scripts", "reconcilier.py");
+  if (!fs.existsSync(script)) return; // racines minimales des tests unitaires
+  const python = process.env.LE_CONSEIL_PYTHON || "python";
+  spawnSync(python, [script, "--vraiment", "--outil", "serveur:bibliotheque"], {
+    cwd: racine, encoding: "utf-8", windowsHide: true,
+  });
+}
+
 function ouvrir(racine) {
   const livres = charger(racine);
   let avant = JSON.parse(JSON.stringify(livres));
@@ -195,6 +208,7 @@ function ouvrir(racine) {
         if (sources.has(id) && touches.includes(id))
           ecrireAtomique(sources.get(id), v.parId.get(id));
       });
+      if (touches.length) journaliserEcrituresDirectes(racine);
       avant = JSON.parse(JSON.stringify(livres));
       manifestesAvant = manifestesMaisons(racine);
     },
