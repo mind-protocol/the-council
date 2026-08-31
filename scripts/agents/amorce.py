@@ -25,8 +25,27 @@ def ouvrir_les_zones(dire=lambda t: None):
     if any(isinstance(p, dict) and p.get("id") == "dev" for p in donnees):
         dire("  ATTENTION : un personnage du monde s'appelle 'dev' — ce nom"
              " est RESERVE au developpeur (docs/habitant.md).")
-    villes = sorted({str(p.get("lieu_id") or "").strip()
-                     for p in donnees if isinstance(p, dict)} - {""})
+    villes = {str(p.get("lieu_id") or "").strip()
+              for p in donnees if isinstance(p, dict)}
+    # LES LIEUX D'ECHEANCES AUSSI (trou signale par le MJ le 31.8 :
+    # ralliement-trident echoit a vivesaigues et personne n'y arbitrait —
+    # une echeance peut pointer une zone qu'aucun personnage n'habite).
+    evenements = tables.lire(os.path.join(chambre.RACINE, "etat",
+                                          "evenements.json"), [])
+    if isinstance(evenements, dict):
+        evenements = (evenements.get("evenements")
+                      or next((v for v in evenements.values()
+                               if isinstance(v, list)), []))
+    for e in evenements or []:
+        if isinstance(e, dict):
+            villes.add(str(e.get("ou") or "").strip())
+            # ... et les lieux de DIFFUSION : une nouvelle a produire quelque
+            # part exige un arbitre la-bas (le cas vivesaigues : l'evenement
+            # n'y est pas, sa diffusion si).
+            for diff in (e.get("diffusion") or []):
+                if isinstance(diff, dict):
+                    villes.add(str(diff.get("ou") or "").strip())
+    villes = sorted(villes - {""})
     # `dev` : le developpeur est un habitant adressable (nom reserve) —
     # une chambre, des billets, des actions assignees ; jamais depeche.
     zones = ["mj", "dev"] + ["mj-" + v.replace("-", "") for v in villes]
