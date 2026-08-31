@@ -47,6 +47,7 @@ from agents.depeche.narrateur import (contrat_rapport_narrateur,
 from agents.depeche.trous import ses_trous, sa_charge_ailleurs, on_lattend
 from agents.depeche.retour import (verser_sur_le_champ, proposer_la_tete,
                                    _poser)
+from agents.depeche.chambre_locale import rendre as rendre_chambre_locale
 
 def mission(qui, brief, consigne, contexte=None):
     """Donne l'interface du jour ; l'identité et le contexte vivent au système."""
@@ -60,6 +61,7 @@ def mission(qui, brief, consigne, contexte=None):
     ajout = ses_trous(qui) + sa_charge_ailleurs(qui) + on_lattend(qui) + ajout
     from agents.expose import chambre as _ch
     sa_chambre = _ch.chemin(qui).replace("\\", "/")
+    chambre_locale = rendre_chambre_locale(_ch.chemin(qui))
     # SON ARBITRE DE ZONE (habitant.md §3, pas 4) : d'apres sa ville — la
     # zone du joueur est `mj`, les autres `mj-<ville>` ; a defaut, `mj`.
     from agents.expose import zone as _zone
@@ -139,6 +141,8 @@ Ta chambre est le dossier `%(chambre)s` — elle est à toi, et à toi seul.
 - `fil/` : les traces de tes journées passées — relis-les si un souvenir te manque.
 - `relations/<untel>/claude.md` : ce que TU retiens de chacun.
 
+%(chambre_locale)s
+
 Rien dans ta chambre ne fait foi sur le monde : elle est ta mémoire et ton
 caractère. Ce qui doit devenir vrai passe par tes gestes dans la journée.
 
@@ -156,6 +160,7 @@ Tes affaires ouvertes, pour mémoire :
 %(travaux_ids)s
 %(ajout)s""" % {
         "chambre": sa_chambre,
+        "chambre_locale": chambre_locale.rstrip(),
         "arbitre": arbitre,
         "hier": hier,
         "depot": depot,
@@ -220,7 +225,29 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True):
     un billet au canal, servi en percept a son prochain reveil.
     """
     from agents.expose import chambre as _ch
-    neutre = tempfile.mkdtemp(prefix="depeche-%s-" % qui)
+    sa_chambre = _ch.ouvrir(qui)
+    # SOUS CLAUDE, IL TRAVAILLE CHEZ LUI. Le `mkdtemp` par depeche avait deux
+    # motifs ecrits, et un seul tenait. « Le selecteur est physique » est faux :
+    # `--add-dir RACINE` monte le depot entier, et hann-bourbe a lu
+    # `chambres/hann-bourbe/../` dans sa session du 31.8. Ne restait que la
+    # decouverte de CLAUDE.md — un sous-dossier du depot aurait colle le
+    # manuel du MJ par-dessus le sien.
+    #
+    # SA CHAMBRE REGLE CE MOTIF-LA SANS LE PRIX. Elle porte son propre
+    # AGENTS.md/CLAUDE.md, donc la decouverte trouve LE SIEN et s'arrete la.
+    # Et le prix du neutre etait reel : ONZE dossiers de projet pour le seul
+    # hann-bourbe, un par depeche, chacun avec un transcript orphelin — le
+    # `--session-id` promet une continuite que le cwd jetable defait. Chez
+    # lui, `livres/` et `ma-memoire/` persistent d'une journee a l'autre, ce
+    # qui est exactement ce qu'on veut d'un homme qui a une memoire.
+    #
+    # CODEX GARDE LE NEUTRE : son manuel s'ecrit en AGENTS.md a la racine du
+    # cwd, et l'ecrire dans sa chambre ecraserait celui qu'on vient de dire
+    # sien. Un fournisseur, un logement.
+    from agents.expose import runtime as _rt
+    sous_claude = (_rt.configuration() or {}).get("fournisseur") == "claude"
+    neutre = (sa_chambre if sous_claude
+              else tempfile.mkdtemp(prefix="depeche-%s-" % qui))
     # SON NOM DANS SON ENVIRONNEMENT. `LE_CONSEIL_QUI` existait comme
     # convention et n'etait JAMAIS posee — une lecture dans tout le depot,
     # zero ecriture. Sans elle, le journal des affaires ne peut pas dire QUI
@@ -228,7 +255,6 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True):
     poser_letagere(neutre, qui)
     # Ce que le message ne porte plus doit exister la ou il pointe.
     poser_la_memoire(neutre, qui)
-    sa_chambre = _ch.ouvrir(qui)
     archiver_le_prompt(qui, sid, manuel, texte)
     from agents.expose import runtime as agent_runtime
     parametres = {
@@ -313,7 +339,16 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True):
               % len(manuel))
         print(u"  mission        : %d caracteres" % len(texte))
         print(u"  outils         : %s" % " ".join(OUTILS))
-        print(u"  lance depuis   : un repertoire neutre, --add-dir %s" % RACINE)
+        # LA LIGNE DISAIT « repertoire neutre » QUOI QU'IL ARRIVE — un texte
+        # fige, qui ment depuis que le cwd depend du fournisseur. Un `--sec`
+        # sert a voir ce qui VA se passer : il rend le vrai chemin.
+        from agents.expose import runtime as _rt2
+        from agents.expose import chambre as _ch2
+        _claude = (_rt2.configuration() or {}).get("fournisseur") == "claude"
+        print(u"  lance depuis   : %s"
+              % (_ch2.chemin(qui) if _claude
+                 else u"un repertoire neutre (jetable)"))
+        print(u"  --add-dir      : %s" % RACINE)
         print(u"─" * 72)
         print(texte)
         return True
