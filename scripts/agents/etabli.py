@@ -17,6 +17,7 @@ import time
 
 from agents import chambre
 from agents.depeche.brief import RACINE, date_du_monde
+from agents.depeche.chambre_locale import rendre as rendre_chambre_locale
 
 
 def _en_jours(d):
@@ -33,31 +34,63 @@ def _en_jours(d):
 ECHEANCE_JOURS = 3
 
 
+def arbitre_du_staging(d):
+    """L'arbitre d'une proposition du staging. LE DESTINATAIRE DECLARE PRIME
+    (`pour` — 16 propositions de mj-portreal disent `pour: mj`, on ne les
+    detourne pas vers leur auteur) ; a defaut, le premier mot du champ
+    `par` (ou `de`) quand c'est un id de zone — les auteurs signent souvent
+    avec une parenthese (« mj-peyredragon (proposition d'un FAIRE ...) »).
+    Tout le reste — champs absents, auteur qui n'est pas une zone — revient
+    au MJ principal : le tas non signe est le sien."""
+    for champ in ("pour", "par", "de"):
+        mots = str(d.get(champ) or u"").split()
+        tete = mots[0] if mots else u""
+        if tete == "mj" or (tete.startswith("mj-") and "-" not in tete[3:]):
+            return tete
+    return "mj"
+
+
+def staging_par_arbitre():
+    """{arbitre: nombre de propositions} du staging, ROUTE par l'auteur.
+
+    Le staging etait au MJ principal seul (pis-aller du 31.8 : le compte non
+    route rendait le tas ENTIER a chaque zone — (19,0,0) partout). La donnee
+    de routage existait pourtant : le champ `par` des propositions. Chaque
+    zone compte desormais LES SIENNES ; l'illisible et le non-signe vont au
+    MJ principal."""
+    staging = os.path.join(RACINE, "etat", "staging")
+    comptes = {}
+    try:
+        noms = os.listdir(staging)
+    except OSError:
+        return comptes
+    for n in noms:
+        c = os.path.join(staging, n)
+        if not os.path.isfile(c) or not n.endswith(".json"):
+            continue
+        try:
+            d = json.load(io.open(c, encoding="utf-8"))
+        except (IOError, OSError, ValueError):
+            d = {}
+        mj = arbitre_du_staging(d if isinstance(d, dict) else {})
+        comptes[mj] = comptes.get(mj, 0) + 1
+    return comptes
+
+
 def comptes_d_etabli(mj):
     """Les trois comptes REELS de la table du MJ — (propositions, echus,
     billets). La seule arithmetique d'etabli : le mot (etabli_de) et le
-    battement de la boucle (veiller_etabli) la partagent — jamais deux
+    battement de la boucle (veiller_etablis) la partagent — jamais deux
     calculs qui divergent. Calcule ICI, par le lanceur, hors sandbox
     (habitant.md : le MJ est un travailleur ; son brief est son etabli).
 
     Les comptes sont REELS, jamais estimes : les fichiers du staging
-    (etat/staging/, les propositions a depouiller), les fils echus de SON
-    en-souffrance (j_attends + on_attend_de_moi dont la date — demande_le,
-    ou depuis pour ce qu'on attend de lui — a plus de ECHEANCE_JOURS jours
-    du monde), et ses billets non lus (chambre.non_lus).
+    ROUTES a lui (etat/staging/, champ `par` — staging_par_arbitre), les
+    fils echus de SON en-souffrance (j_attends + on_attend_de_moi dont la
+    date — demande_le, ou depuis pour ce qu'on attend de lui — a plus de
+    ECHEANCE_JOURS jours du monde), et ses billets non lus (chambre.non_lus).
     """
-    # LE STAGING EST AU MJ PRINCIPAL SEUL (mesure du 31.8 : les comptes
-    # rendaient (19,0,0) pour TOUTES les zones — chaque arbitre se serait
-    # reveille pour un tas qui ne le concerne pas). Les autres arbitres ne
-    # comptent que leur propre table : fils echus et billets.
-    propositions = 0
-    if mj == "mj":
-        staging = os.path.join(RACINE, "etat", "staging")
-        try:
-            propositions = sum(1 for n in os.listdir(staging)
-                               if os.path.isfile(os.path.join(staging, n)))
-        except OSError:
-            propositions = 0
+    propositions = staging_par_arbitre().get(mj, 0)
     souffrance = chambre.en_souffrance(mj)
     aujourd_hui = _en_jours(dict(zip(("annee", "lune", "jour"),
                                      date_du_monde())))
@@ -74,18 +107,124 @@ def comptes_d_etabli(mj):
     return propositions, echus, len(chambre.non_lus(mj))
 
 
+# --- LES ACTIONS ASSIGNEES (demande du dev, 31.8) -------------------------
+#
+# Les affaires des arbitres (ex. chambres/mj/books/affaire-les-grands-buts)
+# portent une table d'actions avec un etat (« a faire », « en cours »,
+# « bloquee », « faite ») et un assigne (colonne 👤 Qui — deja un id de
+# zone dans les affaires du MJ : `mj-accalmie`, pas un nom de lieu). Toute
+# action NON CLOSE doit arriver dans le brief de SON assigne : c'est le mot
+# d'etabli qui la porte. « En cours » au sens du dev = non close (a faire,
+# en cours, bloquee) — au 31.8 toutes les actions des grands buts sont
+# « a faire » ; un filtre strict rendrait un brief vide.
+
+ETATS_OUVERTS_ACTION = ("a faire", "en cours", "bloqu")
+
+
+def _texte_cellule(c):
+    return str(c or u"").replace(u"*", u"").strip()
+
+
+def _colonne(cols, *mots):
+    for i, c in enumerate(cols):
+        if any(m in c for m in mots):
+            return i
+    return None
+
+
+def actions_ouvertes():
+    """Toutes les actions non closes des books des chambres d'arbitres
+    (`mj`, `mj-*`), rendues [{ref, action, etat, ou, assigne, affaire,
+    proprietaire}]. Une table compte si elle porte A LA FOIS une colonne
+    d'etat et une colonne Qui ; un Qui vide ou non-zone retombe sur le
+    proprietaire du book (l'affaire est chez lui, elle reste chez lui)."""
+    import glob
+    import unicodedata
+    chambres_racine = os.path.join(RACINE, "chambres")
+    trouvees = []
+    for chemin in sorted(glob.glob(os.path.join(chambres_racine, "mj*",
+                                                "books", "*.json"))):
+        proprietaire = os.path.basename(os.path.dirname(
+            os.path.dirname(chemin)))
+        try:
+            book = json.load(io.open(chemin, encoding="utf-8"))
+        except (IOError, OSError, ValueError):
+            continue
+        for table in (book.get("tables") or []):
+            cols = [str(c) for c in (table.get("colonnes") or [])]
+            i_etat = _colonne(cols, u"État", u"Etat")
+            i_qui = _colonne(cols, u"Qui")
+            if i_etat is None or i_qui is None:
+                continue
+            i_action = _colonne(cols, u"L'action", u"action") or 1
+            i_ou = _colonne(cols, u"Où", u"Ou ")
+            for ligne in (table.get("lignes") or []):
+                cel = ligne.get("cellules") or []
+                if len(cel) <= max(i_etat, i_qui, i_action):
+                    continue
+                etat = unicodedata.normalize(
+                    "NFKD", _texte_cellule(cel[i_etat]).lower())
+                etat = u"".join(c for c in etat
+                                if not unicodedata.combining(c))
+                if not any(etat.startswith(x) or x in etat
+                           for x in ETATS_OUVERTS_ACTION):
+                    continue
+                qui = _texte_cellule(cel[i_qui])
+                assigne = qui if (qui == "mj" or qui.startswith("mj-")) \
+                    else proprietaire
+                trouvees.append({
+                    "ref": _texte_cellule(cel[0]),
+                    "action": _texte_cellule(cel[i_action]),
+                    "etat": _texte_cellule(cel[i_etat]),
+                    "ou": (_texte_cellule(cel[i_ou])
+                           if i_ou is not None and len(cel) > i_ou else u""),
+                    "assigne": assigne,
+                    "affaire": book.get("id") or os.path.basename(chemin),
+                    "proprietaire": proprietaire,
+                })
+    return trouvees
+
+
+def _section_actions(mj):
+    """La section du mot d'etabli : les actions non closes assignees a CE
+    mj, d'ou qu'elles viennent (les affaires des autres arbitres aussi)."""
+    miennes = [a for a in actions_ouvertes() if a["assigne"] == mj]
+    if not miennes:
+        return u""
+    lignes = [u"", u"⚔️ TES ACTIONS EN COURS — les affaires des arbitres te "
+              u"les assignent, elles t'attendent :"]
+    for a in miennes:
+        chez = (u"" if a["proprietaire"] == mj
+                else u", chez %s" % a["proprietaire"])
+        ou = (u" — %s" % a["ou"]) if a["ou"] else u""
+        lignes.append(u"  - [%s] (%s%s, %s) %s%s"
+                      % (a["ref"], a["affaire"], chez, a["etat"],
+                         a["action"], ou))
+    return u"\n".join(lignes)
+
+
 def etabli_de(mj):
-    """LE MOT d'etabli du MJ. Le mot ne dit que les nombres et l'ordre de
-    traitement ; ses affaires, il les a deja dans sa chambre (books/)."""
+    """LE MOT d'etabli du MJ : comptes, ordre, actions assignees, puis son
+    bureau explicite.
+
+    Dire seulement « tes affaires sont dans books/ » laissait l'arbitre sans
+    les chemins ni les pas a reprendre. Meme contrat que la depeche d'un
+    homme : chaque fichier de sa chambre, puis ref + nom de chaque action non
+    close, affaire locale par affaire locale.
+    """
     propositions, echus, billets = comptes_d_etabli(mj)
-    return (u"ÉTABLI — ta table t'attend : %d propositions au staging, "
-            u"%d fils en souffrance échus, %d billets non lus. "
-            u"Tes affaires sont dans ta chambre (books/). Traite dans "
-            u"l'ordre : mesures d'une passe ; mutations dans l'ordre de tes "
-            u"\"Réalise\" ; ce qui porte \"Qui: <autre>\" part en billet, tu "
-            u"ne l'exécutes pas ; les décisions remontent en billet à dev. "
-            u"Écris tes items de flux dans brouillons/flux-a-pousser.jsonl."
-            % (propositions, echus, billets))
+    mot = (u"ÉTABLI — ta table t'attend : %d propositions au staging, "
+           u"%d fils en souffrance échus, %d billets non lus. "
+           u"Traite dans l'ordre : mesures d'une passe ; mutations dans "
+           u"l'ordre de tes \"Réalise\" ; ce qui porte \"Qui: <autre>\" part "
+           u"en billet, tu ne l'exécutes pas ; les décisions remontent en "
+           u"billet à dev. Écris tes items de flux dans "
+           u"brouillons/flux-a-pousser.jsonl."
+           % (propositions, echus, billets))
+    section = _section_actions(mj)
+    if section:
+        mot += u"\n" + section
+    return mot + u"\n\n" + rendre_chambre_locale(chambre.chemin(mj)).rstrip()
 
 
 # Le cooldown de l'etabli : la boucle bat toutes les quelques secondes, une
@@ -135,22 +274,6 @@ def lancer_etabli_detache(mj, de):
          "--qui", mj, "--de", de, "--etabli"],
         cwd=RACINE, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL, **drapeaux)
-
-
-def veiller_etabli(mj="mj", de="boucle", minutes=COOLDOWN_ETABLI_MINUTES):
-    """LE BATTEMENT historique, un seul MJ : si sa table porte quelque chose
-    — memes comptes que son mot d'etabli — et qu'aucun etabli n'est recent,
-    son etabli part detache. Rend les comptes si lance, None sinon.
-    Gradue, jamais bloquant : l'appelant enveloppe dans son try/except.
-    La boucle appelle desormais veiller_etablis (tous les MJ de joueurs)."""
-    propositions, echus, billets = comptes_d_etabli(mj)
-    if propositions + echus + billets <= 0:
-        return None
-    if etabli_recent(mj, minutes):
-        return None
-    lancer_etabli_detache(mj, de)
-    return {"propositions": propositions, "echus": echus,
-            "billets": billets}
 
 
 # --- LA CADENCE DES MJ DE JOUEURS (decide le 31.8) -----------------------
@@ -236,17 +359,40 @@ def _marquer_jour(mj, jour):
 
 
 def veiller_etablis(de="boucle", minutes=COOLDOWN_ETABLI_MINUTES):
-    """Le battement etendu : pour chaque MJ de joueur, un etabli part si sa
-    table porte quelque chose (les comptes) OU si ce jour de fiction n'a pas
-    encore eu son etabli (la cadence). Le cooldown reel vaut dans les deux
-    cas. Rend {mj: comptes} des lancements, None si aucun."""
+    """Le battement des CADENCES — deux portes d'entree (revu le 31.8, soir :
+    le STAGING ne se scrute plus ici, son depot reveille l'arbitre a la porte
+    meme — noyau/tables.py, « le depot est un evenement, pas un etat ») :
+
+    - MJ DE JOUEURS : comptes OU un etabli par jour de fiction meme a table
+      vide (la cadence historique).
+    - TOUTE ZONE avec des ACTIONS ASSIGNEES ouvertes (actions_ouvertes) :
+      un etabli par JOUR DE FICTION, pas par battement — une action reste
+      ouverte des jours, la reveiller toutes les 30 min serait une tempete.
+
+    Le cooldown reel vaut pour tous. Rend {mj: comptes}, None si aucun."""
     lances = {}
     jour = _jour_du_monde()
-    for mj in arbitres_de_joueurs():
+    joueurs = arbitres_de_joueurs()
+    try:
+        assignes = sorted({a["assigne"] for a in actions_ouvertes()})
+    except Exception as e:  # gradue : un book illisible ne tue pas la veille
+        assignes = []
+        sys.stderr.write(u"(veille : actions_ouvertes en echec — %s)\n"
+                         % str(e)[:120])
+    tous = list(joueurs)
+    for mj in assignes:
+        if mj not in tous and os.path.isdir(chambre.chemin(mj)):
+            tous.append(mj)
+    for mj in tous:
         propositions, echus, billets = comptes_d_etabli(mj)
         table_vide = propositions + echus + billets <= 0
-        if table_vide and _jour_marque(mj) == jour:
-            continue
+        if table_vide:
+            # Table vide : seule la cadence du jour reveille — les MJ de
+            # joueurs (toujours), les zones a actions assignees (idem).
+            if mj not in joueurs and mj not in assignes:
+                continue
+            if _jour_marque(mj) == jour:
+                continue
         if etabli_recent(mj, minutes):
             continue
         _marquer_jour(mj, jour)

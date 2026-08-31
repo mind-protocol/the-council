@@ -164,11 +164,11 @@ def _manuel(mj):
 # lignes) : comptes, mot, cooldown, veille, cadence des MJ de joueurs,
 # ramassage a-lancer. Reexporte ici pour les importeurs historiques
 # (reveiller.py, activation/cli.py appellent zone.etabli_de,
-# zone.veiller_etabli...).
+# zone.veiller_etablis...).
 from agents.etabli import (  # noqa: F401
     ECHEANCE_JOURS, COOLDOWN_ETABLI_MINUTES, MARQUEUR_ETABLI,
     comptes_d_etabli, etabli_de, etabli_recent, marquer_etabli,
-    lancer_etabli_detache, veiller_etabli, veiller_etablis,
+    lancer_etabli_detache, veiller_etablis,
     arbitres_de_joueurs, ramasser_a_lancer)
 
 _ramasser_a_lancer = ramasser_a_lancer  # l'ancien nom interne

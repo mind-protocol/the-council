@@ -73,6 +73,11 @@ from agents.zone import main as reveiller_main  # noqa: E402,F401 — l'entree C
 # Le pas 5 (habitant.md §4) : ecrire = reveiller — le billet au canal de la
 # paire, puis le cast du destinataire. Lie apres depeche : il relit brief.
 from agents import billet  # noqa: E402,F401 — lu par parloir (--dire vers un homme absent)
+# Ne le 31.8 : la veille des zones — les etats cibles charges en energie
+# routes vers les narrateurs par le tissu, qui depechent les journees.
+# Lie apres zone : il le relit (arbitre_de, reveiller_en_cast).
+from agents import focus  # noqa: E402,F401 — lu par la facade scripts/boucle_zones.py
+from agents.focus import main as focus_main  # noqa: E402,F401 — l'entree CLI de la facade
 # Descendue au lot 2 : le paquet agents/activation/, plus la commande racine.
 from agents import activation  # noqa: E402,F401 — relit cette porte : depecher deja lie
 boucle_activation = activation  # l'ancien nom, que la facade et les bancs demandent
