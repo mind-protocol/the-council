@@ -29,7 +29,26 @@ def poser_letagere(neutre, qui):
     etat/books.json, ou il s'est noye pendant huit minutes.
     """
     dossier = os.path.join(neutre, "livres")
-    os.makedirs(dossier)
+    # LE DOSSIER N'EST PLUS NEUF A CHAQUE FOIS. `os.makedirs(dossier)` sans
+    # `exist_ok` supposait le `mkdtemp` d'avant : depuis que Claude lance
+    # l'homme depuis SA CHAMBRE, `livres/` survit d'une journee a l'autre et
+    # le second reveil mourait sur « WinError 183 : Cannot create a file when
+    # that file already exists ». Mesure du 31.8 : hann-bourbe, relance juste
+    # apres la bascule, n'est jamais parti.
+    #
+    # ET L'ETAGERE SE REFAIT, elle ne s'empile pas : un volume qu'il n'a plus
+    # a portee doit DISPARAITRE de son etagere, sinon il lit demain ce qu'il
+    # ne peut plus voir. On vide ce qu'on a pose la veille — jamais autre
+    # chose : sa chambre n'est pas a nous, seul `livres/` l'est.
+    if os.path.isdir(dossier):
+        for vieux in os.listdir(dossier):
+            chemin = os.path.join(dossier, vieux)
+            if os.path.isfile(chemin):
+                try:
+                    os.remove(chemin)
+                except OSError:
+                    pass
+    os.makedirs(dossier, exist_ok=True)
     n = 0
     index = []
     for b in livre.etagere(qui):

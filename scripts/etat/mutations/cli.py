@@ -54,6 +54,26 @@ def main():
         chemin = os.path.join(STAGING, args.proposition)
     if not os.path.isfile(chemin):
         sys.exit("proposition introuvable : {}".format(args.proposition))
+
+    # GARDE 0 : ecartes/ EST UN RETRAIT, ET LA PORTE LE FAIT RESPECTER.
+    # Le dossier ne signifiait rien pour le code : mj-accalmie y avait DEPLACE
+    # un delta reconnu faux, avant meme d'envoyer son dementi, et il a ete
+    # applique de la quand meme le 129.4.3 a 05:02:16 — son seigneur croit
+    # depuis tenir une lettre qui, dans plis.json, est dans la main d'un homme
+    # a Port-Real. Une convention que rien ne fait tenir n'est pas une garde,
+    # c'est un piege pour celui qui s'en sert.
+    # --forcer NE LEVE PAS CELLE-CI : forcer sert a passer outre une empreinte
+    # perimee, pas a defaire la volonte de l'auteur. Le retrait se defait
+    # comme il s'est fait — en remontant le fichier d'un dossier.
+    parts = os.path.abspath(chemin).replace("\\", "/").split("/")
+    if "ecartes" in parts[:-1]:
+        sys.exit(
+            "REFUS : {} est dans un dossier 'ecartes/'.\n"
+            "Un delta depose la a ete RETIRE par son auteur : la porte n'y "
+            "lit pas.\nS'il doit vivre, remonte-le dans etat/staging/ et "
+            "relance."
+            .format(os.path.basename(chemin)))
+
     with io.open(chemin, encoding="utf-8") as f:
         prop = json.load(f)
 
@@ -61,9 +81,33 @@ def main():
     if not mutations:
         sys.exit("aucune mutation dans 'mutations_proposees' — rien a appliquer.")
 
-    if prop.get("applique_le") and not args.forcer:
-        sys.exit("proposition deja appliquee le {} — --forcer pour recommencer."
-                 .format(prop["applique_le"]))
+    if prop.get("applique_le"):
+        # UN AJOUT N'EST PAS UNE AFFECTATION : le rejouer n'ecrit pas la meme
+        # chose, il ecrit une SECONDE fois. Deux zones ont failli fabriquer
+        # des doublons le 129.4.9 en reproposant un lot deja applique, et trois
+        # diffusions strictement jumelles nees du meme mecanisme ont du etre
+        # fusionnees a la main. Certains ajouts se refusent tout seuls a la
+        # validation (une tete, un personnage, une relation, un declencheur
+        # existe deja) ; ceux-la ne se refusent JAMAIS et passent en silence :
+        # croyance_ajouter, ignore_ajouter, diffusion_ajouter,
+        # affaire_action_ajouter, incident_propage.
+        ajouts = sorted({m.get("operation") for m in mutations
+                         if isinstance(m, dict)
+                         and (str(m.get("operation") or "").endswith("ajouter")
+                              or m.get("operation") == "incident_propage")})
+        if ajouts and args.forcer:
+            sys.exit(
+                "REFUS : proposition deja appliquee le {}, et elle porte des "
+                "AJOUTS ({}).\nLes rejouer n'ecrit pas la meme chose : ca "
+                "ecrit une seconde fois.\n--forcer ne couvre pas ce cas : "
+                "ecris un lot neuf qui ne porte que ce qui manque."
+                .format(prop["applique_le"], ", ".join(ajouts)))
+        if not args.forcer:
+            sys.exit("proposition deja appliquee le {} — --forcer pour "
+                     "recommencer.".format(prop["applique_le"]))
+        print("AVERTISSEMENT (forcé) : proposition deja appliquee le {} ; "
+              "elle ne porte que des affectations, le rejeu est idempotent.\n"
+              .format(prop["applique_le"]))
 
     # A QUI sont les croyances de ce lot : --joueur prime, sinon celui que
     # tick.py a inscrit dans la proposition au moment du calcul. Les deux

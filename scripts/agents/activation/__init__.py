@@ -37,13 +37,24 @@ from agents.activation.socle import (  # noqa: F401
     ENERGIE_MAX, ENERGIE_MIN, ENERGIE_ACTIVATION_MIN,
     SECONDES_MONDE_PAR_ENERGIE, DUREE_ACTIVATION_MIN_SECONDES,
     DEMI_VIE_ENERGIE, ECHECS_CONSECUTIFS_MAX, REPOS_ACTEUR_SECONDES,
+    DEMI_VIE_CHARGE_COMPUTE_HEURES, MINUTES_COMPUTE_DEMI_ENERGIE,
+    MINUTES_COMPUTE_DEMI_MJ, CAPACITE_FERMETURE, CAPACITE_REOUVERTURE,
+    HEURES_RETARD_GRACE, HEURES_RETARD_DEMI_ENERGIE,
+    VERSION_FATIGUE_ACTEURS,
     REPOS_PAIRE_SECONDES, TRANSFERT_HORLOGE_MAX, GENRES_RELAIS,
     ETATS_TERMINES, TYPES_RESULTAT_ACTIVITE, secondes_monde_pour_energie,
     energie_pour_secondes, journaliser, lire_json, ecrire_atomique,
     charger_tissu)
 from agents.activation.horloges import (  # noqa: F401
-    minute_absolue, horloge_directe, polarites_horloge_acteurs,
+    minute_absolue, date_civile_acteur, horloge_directe,
+    commettre_lot_horloge,
+    polarites_horloge_acteurs,
     appliquer_polarites_horloge)
+from agents.activation.fatigue import (  # noqa: F401
+    charge_compute_decroissante, instant_fictionnel_secondes,
+    facteur_de_charge, capacite_acteur, capacite_zone,
+    mettre_a_jour_porte, mesurer_fatigue, ajouter_activation,
+    amorcer_fatigue_historique)
 from agents.activation.graphe import (  # noqa: F401
     adjacence, sources_de_charge, diffuser, importance, energie_de_tache,
     clusters_par_lieu, normaliser_par_cluster, calendrier, tache_active,

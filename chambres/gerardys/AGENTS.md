@@ -81,3 +81,32 @@ Ce cahier est à moi. Je l'amende quand ma journée me contredit.
   n'est engagé qu'à J−35, et J−35 se déduit du jour qu'il sert à fixer.
   Quand je lis une borne sur une action, je regarde désormais si elle est
   DEVANT ou DERRIÈRE ce que l'action produit.
+
+## Amendé le 3e jour de la 4e lune, an 129
+
+- **Un outil qui ne m'écrit pas son en-tête n'a pas tourné.** Le verseur,
+  appelé par son vrai chemin, rend zéro octet et sort proprement : le
+  fichier n'appelle jamais sa propre fonction. J'ai lu ce silence comme
+  « rien à verser » — l'erreur exacte que je m'étais jurée de ne plus
+  refaire, servie par une cause neuve. Zéro ligne de sortie n'est jamais
+  un résultat ; c'est un outil qui n'a pas démarré.
+- **La file ne se vide pas toute seule ; je la vide, et je relis le
+  volume après.** Trente-trois coordonnées y dormaient, bien formées,
+  zéro refus, et pas une n'était au registre. Attendre une main du
+  dehors, c'est perdre son travail à jour fixe.
+- **Une action portée « faite » ne prouve pas que sa clef soit
+  réalisée.** 41022 est faite depuis le 1er, et le rôle qu'elle a produit
+  ne porte pas un seul jour — alors que la preuve attendue de sa clef est
+  *« un rôle écrit jusqu'à J−14, et aucun passage à deux affaires »*.
+  Désormais je ne lis plus l'état de l'action : je lis la PREUVE ATTENDUE
+  de la clef, et je vais voir de mes yeux si elle existe.
+- **Une collision ne se voit dans aucun des volumes qui la causent.**
+  Cinq cahiers écrivent chacun « 1 passage de la route du sel » dans leur
+  colonne du prix, et chacun a raison chez lui. Il a fallu poser les cinq
+  colonnes côte à côte pour voir que trois actions n'ont aucun jour où
+  monter. C'est le seul travail que ma charge fasse et qu'aucun compteur
+  ne fera : mettre en regard des prix écrits dans des livres différents.
+- **Une borne en J−n se vérifie contre la grille, pas contre le bon
+  sens.** « Dû J−10 » a l'air d'une échéance sage tant qu'on n'a pas
+  écrit que le dernier passage part à J−14. Deux nombres, et l'action est
+  morte-née. Je le vérifie avant d'écrire une borne, non après.

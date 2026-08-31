@@ -179,7 +179,8 @@
     "🎯 N°",
     "🎯 L'état",
     "📏 La preuve",
-    "📅 Jour dû"
+    "📅 Jour dû",
+    "💯 Importance"
    ],
    "lignes": [
     {
@@ -187,7 +188,8 @@
       "**91000**",
       "**Le bâti arrête**",
       "Sur une cuisson entière : zéro homme relevé à l'intérieur d'un bâti, et zéro segment de pas qui le **traverse**. Le compte s'appelle les **traversées**. ⚠ Deux mots repris le 3e, avant que le fer ne grave : (1) l'état disait « Le mur arrête », or `mur` porte déjà deux choses dans `bataille2d.js` — l'enceinte (l. 3830, 3999, 4833 : « hors les murs », « à l'intérieur des murs », « une ville dont les murs arrêtent une armée mais pas ses habitants ») et la paroi d'une maison (l. 2048, 4874) —, et l'enceinte, elle, arrête déjà : ce qu'on veut opposer est le BÂTI ; (2) la preuve disait « qui le franchisse », or `franchir` est réservé dans ce moteur aux seuils de nombre (8 emplois sur 11 : « le seuil franchi », « franchir les paliers », « franchissent la barre »), et demandait donc un compte de seuils. La faute physique se dit `traverser`, comme partout ailleurs (« traverser la rue », « longer un mur et le traverser en diagonale »).",
-      "J−0"
+      "J−0",
+      "**25**"
      ]
     },
     {
@@ -195,7 +197,8 @@
       "**91100**",
       "**La rue mène**",
       "Un homme qui vise un point derrière un pâté de maisons y arrive par la rue, et le compte de ceux qui n'arrivent jamais ne monte pas.",
-      "J−2"
+      "J−2",
+      "**25**"
      ]
     },
     {
@@ -203,7 +206,8 @@
       "**91200**",
       "**Ça reste jouable**",
       "La cadence de cuisson ne tombe pas sous celle d'aujourd'hui, mesurée avant qu'on touche à quoi que ce soit.",
-      "J−1"
+      "J−1",
+      "**20**"
      ]
     }
    ]

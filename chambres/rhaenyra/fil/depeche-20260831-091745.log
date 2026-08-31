@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime_worker.py", line 44, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime_worker.py", line 23, in main
+    rep = runtime.appeler(**charge["appel"])
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 467, in appeler
+    return _appel_codex(
+        manuel, message, session_id, modele, effort, timeout, cwd,
+        add_dirs, reprendre, environnement, on_event, on_stderr,
+        heartbeat, on_heartbeat)
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 362, in _appel_codex
+    code, _lignes, erreurs, evenements, duree = _executer_flux(
+                                                ~~~~~~~~~~~~~~^
+        commande, message, cwd, env, timeout, on_event, on_stderr,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        heartbeat, on_heartbeat, transcript)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 215, in _executer_flux
+    processus.stdin.write(message)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe

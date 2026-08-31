@@ -202,7 +202,7 @@ def juger(qui, ouvert, dernier):
                         u"fichier et tu rends uniquement l'objet JSON demandé."),
                 message=charge, session_id=str(uuid.uuid4()), modele=MODELE,
                 timeout=180, cwd=neutre, add_dirs=[], tools=[],
-                reprendre=False, ecriture=False)
+                reprendre=False)
         t = (out.get("result") or "").strip()
         t = re.sub(r"^```(?:json)?\s*|\s*```$", "", t).strip()
         d = json.loads(t[t.find("{"):t.rfind("}") + 1])

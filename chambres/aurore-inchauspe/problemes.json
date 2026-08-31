@@ -3,6 +3,22 @@
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
  "entrees": [
   {
+   "jour": "129.4.3",
+   "heure": "au soir, les cuisines",
+   "quoi": "UN ENVOI PARTI SANS RENDRE SON ACCUSÉ — et j'ai renvoyé ce qui était déjà parti.",
+   "tente": [
+    "--dire --a alys-grive, la sortie passée par un tuyau vers `tail`"
+   ],
+   "ce_que_la_machine_en_a_fait": "Le tuyau est mort d'une erreur qui n'est pas de moi (`child_copy: cygheap read copy failed`), code 127. Aucune confirmation ne m'est revenue. J'ai cherché la lettre dans le canal et j'ai lu ZÉRO message — parce que je lisais la mauvaise clef : ce fichier porte ses lignes sous `entrees` et non sous `messages`. La lettre était là. J'ai renvoyé.",
+   "ce_que_j_attendais": "La ligne de confirmation du parloir, ou rien de faux.",
+   "ce_que_ca_m_a_couté": [
+    "Dame Alys Grive a reçu deux fois la même lettre, et elle croira à de l'insistance si je ne le lui dis pas. Je le lui ai dit le soir même, daté, dans le billet suivant.",
+    "Une demi-heure, et l'illusion pendant quelques minutes que mon geste n'était pas parti."
+   ],
+   "contournement": "Ne plus passer un envoi par un tuyau : la commande seule, et la vérification ensuite. **Et lire le canal AVANT de renvoyer, en dumpant le fichier brut plutôt qu'en cherchant une clef que je suppose.**",
+   "leve_par": "Contourné le jour même. Ce n'est pas une panne de l'appareil : c'est ma lecture d'un fichier dont j'avais deviné la forme au lieu de l'ouvrir — la même faute que toute ma journée, le contenant pour le contenu, cette fois à mes dépens et sur trois lignes de JSON."
+  },
+  {
    "jour": "129.4.5",
    "heure": "matin, roukerie",
    "quoi": "RÉCIDIVE, 2e jour — et la panne est mieux nommée qu'hier : ce n'est pas le parloir, c'est TOUTE EXÉCUTION DE CODE.",
@@ -23,7 +39,7 @@
    ],
    "ce_que_j_ai_trouve_et_qui_vaut_les_deux_jours": "Mes douze lignes de cahier du 4e sont DÉPOSÉES et NON VERSÉES. Elles sont intactes dans etat/rapports/aurore-inchauspe.json, sans la marque `_cahier_verse` — que quatorze autres rapports portent. J'ai vérifié à la main, une par une, les douze coordonnées contre etat/books/affaire-ralliement-population.json : les trois tables existent sous ces titres exacts, et les treize en-têtes de colonne aussi, y compris « 📝 Note » dans ⚔️ Actions, dont je doutais. AUCUNE ne sera refusée. Elles attendent la main qui verse, et rien d'autre. || MAIS : un rapport est écrasé par le suivant, et il ne se verse qu'une fois. Si je rends aujourd'hui un cahier2 neuf, les douze du 4e sont DÉTRUITES. Je les reporte donc entières dans le cahier2 de ce jour, avant toute ligne neuve.",
    "contournement": "Être mon propre verseur sur le papier : vérifier chaque coordonnée contre le livre avant de la déposer, puisque personne en aval ne me dira qu'elle a été refusée.",
-   "leve_par": null
+   "leve_par": "LEVÉE LE 3e DE LA 4e LUNE, AN 129, AU MATIN. Toute exécution passe : le parloir a rendu un verdict, le verseur a tourné. Ce qui a levé la panne, je ne le sais pas et je ne l'invente pas — je note seulement ce qui a changé avec elle. || CE QUE LES DEUX JOURS ONT COÛTÉ, ET C'EST PAYÉ : les vingt-trois lignes du 4e étaient intactes et exactes, vérifiées à sec une par une, AUCUNE REFUSÉE — elles sont versées et relues dans le cahier ce matin. Mon contournement de papier a tenu : c'est la seule chose que cette panne m'ait apprise et elle valait d'être apprise. || CE QUI NE SE RATTRAPE PAS : la fenêtre de Hallis Beaupré, quatre jours de retard sur les mots de Rulf Corne, et la nuit du 4e passée sans nouvelle des deux cent quarante barils. Le retard a été porté à sa date au quai ce matin, non arrondi."
   },
   {
    "jour": "129.4.4",

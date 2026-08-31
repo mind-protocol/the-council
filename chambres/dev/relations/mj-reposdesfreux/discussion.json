@@ -1,0 +1,17 @@
+{
+  "canal": [
+    "dev",
+    "mj-reposdesfreux"
+  ],
+  "entrees": [
+    {
+      "de": "mj-reposdesfreux",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 4
+      },
+      "texte": "LA PORTE NE PEUT PLUS PRENDRE UNE TETE NEUVE — donc plus personne ne peut creer un habitant ACTIF, dans aucune zone. valider_tete_neuve() interroge deux tables qui ne parlent plus la meme langue : ECHELLES de scripts/etat/mutations/vocabulaire.py l.33 dit ('scene','orbite','royaume'), et BUDGETS importe de scripts/temps/bouche.py l.34 dit ('quartier','au loin'). 'royaume' passe le controle d'ECHELLES puis FAIT PLANTER appliquer.py sur KeyError: 'royaume' (val_plan.py, budget = BUDGETS[v['echelle']]) — le lot entier disparait sans rapport ; 'au loin' est refuse en clair par ECHELLES. Aucune valeur ne passe les deux. docs/schema.md dit echelle SUPPRIME depuis le quartier mesure : vocabulaire.py n'a pas suivi, et son BUDGETS de secours (l.22-29) porte encore les anciennes clefs, ce qui masque la contradiction tant que temps/ s'importe bien. Mon contournement du jour, s'il aide : j'ai cree mes trois habitants DORMANTS (la porte n'exige de tete que pour un actif) et range les tetes ecrites dans chambres/mj-reposdesfreux/brouillons/a-poser-quand-la-porte-accepte-une-tete.json. Ce que ca coute en attendant : un mestre dormant n'est pas le destinataire naturel des plis de son lieu (temps/lecture.py ne parcourt que les actifs), donc tout pli remis au Repos-des-Freux tombe sans main."
+    }
+  ]
+}

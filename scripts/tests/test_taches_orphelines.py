@@ -31,6 +31,7 @@ for _p in (_d, os.path.join(_d, "noyau")):
 # dans agents/CLAUDE.md pour les bancs.
 import boucle_activation  # noqa: E402,F401 — l'ordre des imports de la porte
 taches = sys.modules["agents.activation.taches"]  # noqa: E402
+from plan.expose import tisser as tisser_plan  # noqa: E402
 
 
 def tissu():
@@ -114,6 +115,79 @@ class BancOrphelines(unittest.TestCase):
         # La retombee ne PASSE PAS devant une assignation : a energie egale,
         # Otto prend l'une de ses deux actions declarees, pas l'orpheline.
         self.assertIn(self.elit("otto"), ("A1", "A2"))
+
+    def test_une_action_faite_n_est_plus_elue(self):
+        self.n["A1"]["etat"] = "faite"
+        pauvre = {k: 0.0 for k in self.n}
+        pauvre["A1"] = 100.0
+        self.assertNotEqual(self.elit("otto", pauvre), "A1")
+
+    def test_une_dependance_ouverte_bloque_l_action(self):
+        self.n["A1"]["depend_de"] = ["A2"]
+        self.n["A2"]["etat"] = "en cours"
+        pauvre = {k: 0.0 for k in self.n}
+        pauvre["A1"] = 100.0
+        self.assertNotEqual(self.elit("otto", pauvre), "A1")
+
+    def test_une_dependance_faite_libere_l_action(self):
+        self.n["A1"]["depend_de"] = ["A2"]
+        self.n["A2"]["etat"] = "faite"
+        pauvre = {k: 0.0 for k in self.n}
+        pauvre["A1"] = 100.0
+        self.assertEqual(self.elit("otto", pauvre), "A1")
+
+    def test_le_tissu_garde_etat_et_dependances_des_plans(self):
+        plans = [{
+            "id": "essai",
+            "actions": [{
+                "id": "A1", "quoi": "agir", "etat": "a faire",
+                "depend_de": ["A0"], "office": "otto",
+                "jour_du": {"annee": 129, "lune": 4, "jour": 9},
+            }],
+        }]
+        noeuds, _doubles = tisser_plan.indexer(
+            [], [], [], plans, [], [])
+        self.assertEqual("a faire", noeuds["A1"]["etat"])
+        self.assertEqual(["A0"], noeuds["A1"]["depend_de"])
+        self.assertEqual("otto", noeuds["A1"]["office"])
+
+    def test_une_action_tenue_par_un_office_va_a_son_titulaire(self):
+        n = {
+            "pers:tobb": {"genre": "personne"},
+            "pers:tiers": {"genre": "personne"},
+            "plan-offices:O04": {"genre": "office"},
+            "courir": {"genre": "action", "quoi": "porter le pli"},
+        }
+        a = [
+            {"de": "courir", "vers": "plan-offices:O04", "nature": "tient"},
+            {"de": "plan-offices:O04", "vers": "pers:tobb", "nature": "tient"},
+            # Le tiers passe pres de l'office, mais ne le tient pas.
+            {"de": "pers:tiers", "vers": "plan-offices:O04", "nature": "lie"},
+        ]
+        adj = adjacence(n, a)
+        energies = {k: 100.0 for k in n}
+        elu = taches.choisir_tache("pers:tobb", n, a, adj, energies)
+        self.assertEqual("courir", elu and elu["id"])
+        elu = taches.choisir_tache("pers:tiers", n, a, adj, energies)
+        self.assertNotEqual("courir", elu and elu["id"])
+
+    def test_le_tissage_lie_un_office_a_tous_ses_titulaires(self):
+        books = [{
+            "id": "plan-offices", "titre": "Offices",
+            "colonnes": ["N°", "🏷️ L'office", "👤 Le titulaire"],
+            "lignes": [{"cellules": [
+                "O04", "Coureurs", "Tobb, de la Claie ; Nesse, du Marais",
+            ]}],
+        }]
+        personnages = [
+            {"id": "tobb", "nom": "Tobb"},
+            {"id": "nesse", "nom": "Nesse"},
+        ]
+        aretes = tisser_plan.tisser(
+            books, [], [], [], [], personnages=personnages)
+        liens = {(a["de"], a["vers"], a["nature"]) for a in aretes}
+        self.assertIn(("plan-offices:O04", "pers:tobb", "tient"), liens)
+        self.assertIn(("plan-offices:O04", "pers:nesse", "tient"), liens)
 
 
 if __name__ == "__main__":

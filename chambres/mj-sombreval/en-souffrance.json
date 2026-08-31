@@ -1,6 +1,73 @@
 {
  "quoi": "Ce que j'attends de quelqu'un, et ce que quelqu'un attend de moi. Le plan compte des PAS ; ceci compte des GENS qui n'ont pas répondu, et depuis quand. Ce n'est pas la même chose et cela ne se calcule pas.",
  "regle": "Une ligne par fil ouvert. Le jour où j'ai demandé, non le jour où je m'en suis souvenu. Un fil qu'on n'a pas relancé depuis trois jours se relance ou se ferme.",
- "j_attends": [],
- "on_attend_de_moi": []
+ "j_attends": [
+  {
+   "de": "mj",
+   "quoi": "Le role des bouches du 129.4.4 : etat/staging/20260831-sombreval-role-des-bouches-129-4-4.json — journees-de-pain-de-la-ville 51 -> 68 (60 bouches au lieu de 80), dernier_rapport de la journee entiere, et UN GESTE A LA MAIN QUI COMPTE : rythme.par de 'muids-en-granges' de -4 a -3. AMENDE le meme jour, sans le reveiller : les huit volets cloues du dedans, l'en-tete de colonne mot pour mot, la demande de rythme datee du 4e a sa main, et l'acte redate au curseur (minute 540).",
+   "demande_le": "129.4.4",
+   "relance_le": null,
+   "pourquoi_j_attends": "Le rythme n'est pas mutable par la porte (CHAMPS_MESURE = valeur, reliquat). S'il reste a -4 pour 60 bouches, la table vide les granges neuf jours trop tot et fait tomber le seuil 'granges-a-vide' au mauvais jour : c'est le premier de mes gestes a la main qui fausse un SEUIL s'il n'est pas fait.",
+   "ferme_le": null
+  },
+  {
+   "de": "mj",
+   "quoi": "L'arbitrage de deux lots poses le 129.4.4 : le pli rendu contre recu (plis/pli-protection-sombreval -> retenu, main willam-wode) et le recompte des granges (date_maj et dernier_rapport).",
+   "demande_le": "129.4.4",
+   "relance_le": null,
+   "pourquoi_j_attends": "Tant que le pli n'a pas change de main dans la table, l'acte scelle de la reine est encore ecrit dans la main d'un intendant qui l'a rendu ce matin.",
+   "ferme_le": null
+  },
+  {
+   "de": "mj",
+   "quoi": "L'arbitrage du recompte des granges : etat/staging/20260831-sombreval-recompte-des-granges-129-4-4.json — aucune mesure ne bouge (204 et 51 confirmes au boisseau), seuls la date_maj et le dernier_rapport de 'granges-de-sombreval' changent, plus un acte a la main.",
+   "demande_le": "129.4.4",
+   "relance_le": null,
+   "pourquoi_j_attends": "Une main verifiee ce matin ne vaut pas une main juste par hasard depuis le 28e : tant que ce n'est pas applique, le registre porte un chiffre exact que personne n'a regarde.",
+   "ferme_le": null
+  },
+  {
+   "de": "mj",
+   "quoi": "L'arbitrage du lot X.39 : etat/staging/20260831-sombreval-corps-vrais-129-4-3.json — et surtout la seule ligne où je tranche au lieu de constater, robin-darklyn condition 'prisonnier'.",
+   "demande_le": "129.4.3",
+   "relance_le": null,
+   "pourquoi_j_attends": "La position engage un homme qui n'est pas de ma zone (criston) : je ne l'écris pas sans lui.",
+   "ferme_le": null
+  },
+  {
+   "de": "mj",
+   "quoi": "L'arbitrage du FAIRE de marec-fosse : etat/staging/20260831-sombreval-marec-fosse-passe-an-109.json — un acte de l'an 109 pour actes.json et un champ `passe` sur sa fiche, tous deux à la main (aucune table `actes` dans le vocabulaire).",
+   "demande_le": "129.4.3",
+   "relance_le": null,
+   "pourquoi_j_attends": "Un passé n'est vrai que tenu par l'arbitre ; l'homme attend de savoir s'il l'a. Je ne le réveille pas pour cela : je le lui dirai quand la réponse sera là.",
+   "ferme_le": null
+  },
+  {
+   "de": "mj",
+   "quoi": "Le nombre : ce que le sac a retiré aux granges de Sombreval, ou l'autorisation de le poser moi-même à la main 'granges-de-sombreval'.",
+   "demande_le": "129.4.3",
+   "relance_le": null,
+   "pourquoi_j_attends": "Ma ville et le train de son ost mangent au même tas ; la soustraction couple deux zones.",
+   "ferme_le": "129.4.4",
+   "reponse": "VINGT-QUATRE MUIDS, et il n'y avait rien a corriger. L'arbitre a lu les deux mains cote a cote : la note de 'colonne-de-criston' porte 228 muids aux granges AU SAC, la main de Marec en porte 204 aujourd'hui — la soustraction etait ecrite, je ne l'avais pas faite. 24 muids = 480 hommes-jours, moins d'un quart de journee pour 2002 bouches : les trois journees de pain du train ne viennent pas de ma ville, elles sont montees avec elle depuis la Porte de la Boue."
+  },
+  {
+   "de": "mj",
+   "quoi": "L'arbitrage du verdict de saisie : etat/staging/20260831-sombreval-prise-de-marec-fosse-129-4-5.json — Fosse prisonnier, et les DEUX ecrits scelles de la reine passes en 'intercepte' dans la main de Criston, non ouverts.",
+   "demande_le": "129.4.4",
+   "relance_le": null,
+   "pourquoi_j_attends": "C'est C.5 : ce que devient l'acte de protection ne doit pas se decider dans une prose que rien ne grave. Et le lot ne prend effet que le 5e — il ne s'applique pas aujourd'hui.",
+   "ferme_le": null
+  }
+ ],
+ "on_attend_de_moi": [
+  {
+   "qui": "mj",
+   "quoi": "X.39 — poser les corps vrais à Sombreval (affaire-le-saut-jusquau-premier-contact), dû « avant le départ » du saut.",
+   "demande_le": "129.4.3",
+   "rendu_le": "129.4.3",
+   "comment": "Recensement des quatre corps portant lieu_id sombreval, lot au staging, et deux pannes d'appareil nommées plutôt que contournées en silence.",
+   "clos_par": "mj, le 129.4.4 — X.39 portee close dans l'affaire du saut : 2002 hommes verts, Willam Wode au commandement, onze coques brulees, Robin prisonnier."
+  }
+ ]
 }

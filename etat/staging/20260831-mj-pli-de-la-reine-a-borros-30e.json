@@ -1,0 +1,29 @@
+{
+ "titre": "Peyredragon — le pli de la main de la reine a lord Borros Baratheon, parti le 30e",
+ "par": "mj (arbitre) — le pli part de ma zone, la ligne manquait",
+ "date_monde": {"annee": 129, "lune": 4, "jour": 4, "minute": 540},
+ "piece_qui_fonde": "actes.json / reine-ecrit-borros-et-denys-sans-reprendre-le-mandat-30e, 129.3.30 minute 907 : « ELLE ECRIT DEUX PLIS DE SA MAIN, SANS MESTRE, ET LES SCELLE ELLE-MEME. (1) A BORROS : aucun devoir invoque, aucun serment, la reconnaissance ecrite qu il ne lui doit rien, et une seule question nue [...] DEPARTS : [...] celui de Borros au quai — Accalmie est a six jours de cavalier et n a pas de corbeau qui reponde, retour au mieux vers le 12e de la 4e lune. »",
+ "pourquoi": "TROISIEME PLI QUE LES ACTES PORTENT ET QUE plis.json IGNORE — apres celui de Lucerys et celui d'Alicent. Un pli absent de la table ne voyage pas : il n'arrive nulle part, aucun mestre ne le lit, et la scene qui l'attend se joue sur une lettre qui n'existe pas. Verifie avant d'ecrire : 65 plis, trois departs le 30e (Repaire, Sombreval x2), AUCUN pour Accalmie. || LE TEXTE N'EST PAS DE MA MAIN : je reprends mot pour mot ce que l'acte porte de son contenu, et rien de plus. Les mots exacts de la reine ne sont ecrits nulle part et je ne les fabrique pas — ce qui est fige ici est ce que la table sait, pas ce que j'imagine.",
+ "mutations_proposees": [
+  {
+   "table": "plis",
+   "cible": "pli-question-de-la-reine-a-borros-30e",
+   "operation": "pli_ajouter",
+   "champs": {
+    "id": "pli-question-de-la-reine-a-borros-30e",
+    "de": "rhaenyra",
+    "pour": "borros-baratheon",
+    "vers": "accalmie",
+    "depuis": "peyredragon",
+    "canal": "cavalier",
+    "scelle": true,
+    "etat": "en-route",
+    "parti_le": {"annee": 129, "lune": 3, "jour": 30, "minute": 907},
+    "attendu_le": {"annee": 129, "lune": 4, "jour": 6},
+    "porte": "De la main de la reine, scelle par elle, sans mestre. Aucun devoir invoque, aucun serment : la reconnaissance ecrite qu'il ne lui doit rien, et une seule question nue — que vous offre ser Otto, et qu'aurais-je a offrir de plus. Aucune promesse, aucun mariage nomme.",
+    "main": null
+   },
+   "pourquoi": "Parti du quai le 30e a 15h07 ; six jours de cavalier selon l'acte, donc a la barbacane d'Accalmie LE 6e DE LA 4e LUNE. Ni arrive ni perdu aujourd'hui : en mer. La remise appartient a mj-accalmie."
+  }
+ ]
+}

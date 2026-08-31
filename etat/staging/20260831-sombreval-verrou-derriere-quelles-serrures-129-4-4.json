@@ -1,0 +1,41 @@
+{
+  "titre": "Sombreval — le verrou « derriere quelles serrures » : la colonne est tenue, les chiffres sont refuses, et le verrou vrai est pire",
+  "calcule_le": "2026-08-31",
+  "pour": "mj",
+  "par": "mj-sombreval (verdict d'un FAIRE ; rien n'a ete ecrit dans etat/)",
+  "date_monde": {"annee": 129, "lune": 4, "jour": 4},
+  "le_faire": "Marec Fosse veut inscrire au registre un verrou : « plus de la moitie du pain de Sombreval est derriere des serrures qui ne sont pas les miennes » — 204 muids dont 112 dans les caves de la citadelle tenues par l'ost depuis le 3e, et 92 seulement derriere ses portes ; donc 23 journees de pain a tirer et non 51. Et il ouvre a son role une colonne neuve : DERRIERE QUELLES SERRURES.",
+  "ce_que_je_tiens": {
+    "la_colonne_est_juste_et_elle_est_neuve": "Aucune table de l'etat ne porte OU se trouve un stock. La main 'granges-de-sombreval' donne 204 muids et 51 journees et ne dit pas derriere quelle porte ; la main 'colonne-de-criston' donne 3 journees de train et 2002 bouches et ne dit pas ou est le train. Un role de stock qui ne dit pas sous quelle main est le stock decrit un tas, pas une ressource. La colonne se tient, et je la grave.",
+    "le_principe_est_juste": "Ce qu'une ville POSSEDE et ce qu'elle peut TIRER sont deux chiffres, et le second n'existe nulle part. C'est vrai independamment des nombres qu'il avance."
+  },
+  "ce_que_je_refuse_et_pourquoi": {
+    "les_112_muids_des_caves_n_existent_pas": "Son etape 'marec-vide-les-granges-du-haut' — faire descendre le grain des granges du haut dans les caves de la citadelle — est ENCORE 'en-cours' dans intentions.json. Elle n'a jamais abouti. Le recompte du 4e, arbitre et grave, dit le contraire de son verrou : les deux granges du haut portent leurs 96 muids SOUS LEURS SERRURES NEUVES INTACTES, les granges basses et les greniers de la ville en portent 108, portes en place, et l'ost n'a emporte que les 24 du hameau de la cote. RIEN N'EST DANS LES CAVES DE LA CITADELLE : le grain n'y est jamais descendu.",
+    "donc_les_23_journees_sont_fausses": "204 muids a quatre par jour font 51 journees a bouches inchangees, ou 68 si le role des bouches du 4e est tenu (lot en attente : soixante bouches au lieu de quatre-vingts). Il n'y a pas de moitie perdue.",
+    "et_ce_n_est_pas_une_chicane_de_chiffre": "Il ecrit ce verrou en double, dont une copie hors des granges. Un verrou faux recopie deux fois est plus dur a defaire qu'un verrou faux ecrit une fois."
+  },
+  "le_verrou_vrai_et_il_est_pire": {
+    "nom": "TOUT LE PAIN DE SOMBREVAL EST DERRIERE LES SERRURES D'UN SEUL HOMME, ET L'OST SAIT DESORMAIS OU.",
+    "ce_qui_est_vrai_aujourd_hui": "204 muids sur 204 sont sous le trousseau de Marec Fosse : 96 dans deux granges de BOIS hors les murs, 108 dans les granges basses et les greniers de la ville. Pas un muid n'est sous une serrure de l'ost. Et le 4e au matin, en montant compter, il a montre les deux granges du haut a un homme de l'ost qui l'a suivi et l'a note.",
+    "pourquoi_c_est_un_verrou": "Une place occupee dont tout le pain depend d'un homme et de ses clefs n'a pas un probleme de stock, elle a un probleme de PRENEUR. Le jour ou l'on prend l'homme, on prend le pain — ou l'on ne trouve plus rien, ce qui est la meme catastrophe pour la ville. Et deux granges de bois hors les murs brulent en une heure : c'est lui qui l'a ecrit le 28e.",
+    "ce_qui_le_leverait": "Ce qu'il demandait, retourne : non pas un ordre qui lui rende les caves, mais un ordre ecrit qui PARTAGE la garde — nom, date, titre revendique dans les propres mots de celui qui signe — ou le grain descendu derriere des murs de pierre avant qu'on le lui demande. Rien d'autre. Une bataille gagnee ailleurs ne le leve pas : sur ce point-la, il a raison mot pour mot."
+  },
+  "mutations_proposees": [],
+  "rien_ne_bouge_dans_les_tables": "204 muids et 51 journees restent tels que l'arbitre les a poses ce matin. Ce lot ne corrige pas un chiffre : il empeche qu'un faux entre au registre par la porte d'un homme honnete.",
+  "a_la_main": [
+    {
+      "table": "etat/actes.json",
+      "geste": "Ajouter l'acte ci-dessous (toujours aucune table 'actes' dans OPERATIONS).",
+      "acte": {
+        "id": "acte-marec-colonne-des-serrures-129-4-4",
+        "date": {"annee": 129, "lune": 4, "jour": 4},
+        "acteur_id": "marec-fosse",
+        "lieu_id": "sombreval",
+        "description": "QUATRIEME JOUR DE LA QUATRIEME LUNE, AU SOIR, AU REGISTRE DES GRANGES DE SOMBREVAL. L'intendant Marec Fosse ouvre a son role une colonne que ne porte aucun registre de grain : DERRIERE QUELLES SERRURES. Ce qu'il y inscrit ce soir, au boisseau et par porte : deux granges du haut, hors les murs, batiments de bois, serrures neuves posees le vingt-neuvieme, QUATRE-VINGT-SEIZE MUIDS ; granges basses et greniers de la ville, dans les murs, portes en place, CENT HUIT MUIDS ; grange du hameau de la cote, battant force, VIDE. Caves de la citadelle : RIEN — le grain n'y est jamais descendu, la besogne n'ayant pas ete faite. || CE QUE LA COLONNE MONTRE DU PREMIER COUP D'OEIL, ET QU'AUCUN TOTAL NE MONTRAIT : les deux cent quatre muids de la ville sont sous UN SEUL trousseau, celui de l'intendant, dont quatre-vingt-seize dans deux granges de bois hors les murs qu'un homme de l'ost lui a vu ouvrir le matin meme. Ce qu'une ville possede et ce qu'elle peut tirer sont deux chiffres ; ce qu'elle possede et ce qu'un seul homme peut perdre en sont un troisieme.",
+        "temoins": [],
+        "connu_de": ["marec-fosse"]
+      }
+    }
+  ],
+  "ce_que_je_n_ai_pas_ecrit": "Ce qu'il fait de la colonne une fois ouverte, et s'il la montre. Le registre est a lui."
+}

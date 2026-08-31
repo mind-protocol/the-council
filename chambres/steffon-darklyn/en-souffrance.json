@@ -1,35 +1,90 @@
 {
  "quoi": "Ce que j'attends de quelqu'un, et ce que quelqu'un attend de moi. Le plan compte des PAS ; ceci compte des GENS qui n'ont pas répondu, et depuis quand. Ce n'est pas la même chose et cela ne se calcule pas.",
- "regle": "Une ligne par fil ouvert. Le jour où j'ai demandé, non le jour où je m'en suis souvenu. Un fil qu'on n'a pas relancé depuis trois jours se relance ou se ferme.",
+ "regle": "Une ligne par fil ouvert. Le jour où j'ai demandé, non le jour où je m'en suis souvenu. Un fil qu'on n'a pas relancé depuis trois jours se relance ou se ferme. Et depuis le 3e de la 4e lune : un refus ne se croit qu'à la seconde tentative.",
  "j_attends": [
   {
-   "qui": "Gunthor Darklyn, sire de Sombreval, mon frère",
-   "quoi": "Un mot disant s'il rouvre son quai, à quel prix, et le nombre d'hommes qu'il tient réellement",
+   "qui": "Marec Fosse, intendant de Sombreval, aux granges",
+   "quoi": "Le jour, l'heure et la BOUCHE par qui il sait que Robin vit - le nom de l'homme, et s'il l'a vu ou entendu dire. Rien d'autre.",
+   "demande_le": "129-4-4 - billet parti ce matin, en reponse au sien",
+   "relance_le": null,
+   "decision": "Je ne lui demande ni de voir mon neveu ni de payer pour lui : je lui demande une bouche et une date, ce qu'un intendant peut savoir sans sortir de sa cour, et je lui ecris que NE SAIS PAS est une bonne reponse. Ce qu'il m'a deja donne et qui vaut de l'or : 204 muids comptes au boisseau de sa main ce matin, dont 96 aux deux granges du haut serrures intactes ; il annonce 194 a qui demande, arrondi de vingt ans, et il dit sa marge en la disant. Ce que je lui ai repondu : son lord est Robin, il ne prend RIEN de moi, il garde le pli de protection scelle et le rend sans discuter s'il est demande sous les armes en ecrivant qui l'a pris et sous quel titre, et son registre des titres pretendus se tient EN DEUX EXEMPLAIRES dont un hors des granges."
+  },
+  {
+   "qui": "Rhaenyra Targaryen, ma reine",
+   "quoi": "Un ecrit sous son sceau disant DE QUI l'intendant de Sombreval tient un ordre tant que son lord est prisonnier",
+   "demande_le": "129-4-4 - demande de vive voix devant la Table, le matin meme de la nouvelle",
+   "relance_le": null,
+   "decision": "Je n'ai rien demande pour moi et je l'ai dit en le demandant : je ne suis lord de rien et je ne veux pas l'etre ce matin. Un intendant sans ordre qui ouvre une grange est un voleur ou un complice selon qui ecrira l'histoire, et cet homme-la nous a rendu le seul compte vrai sorti de cette ville en dix-sept jours. C'est un trait de plume et un sceau ; cela ne coute ni un homme ni un dragon."
+  },
+  {
+   "qui": "Lord Gunthor Darklyn, sire de Sombreval, mon frère",
+   "quoi": "CLOS PAR SA MORT. Un mot disant s'il rouvre son quai, a quel prix, et le nombre d'hommes qu'il tient reellement",
    "demande_le": "129-3-26 (l'action 20120 est engagée depuis J-25)",
    "relance_le": null,
-   "jours_de_silence": "Aucune coque de Sombreval n'a touché depuis neuf jours au 26e ; nous sommes le 4e de la 4e lune et rien n'est venu",
-   "decision": "FERMÉ CE JOUR comme fil d'attente. On n'attend plus une lettre : on envoie des yeux. Ce qui pend à la bonne volonté d'un homme qu'on n'a pas secouru ne pend plus — cela devient un verrou (20103) et une coque à demander à lord Corlys."
+   "jours_de_silence": "Dix-sept jours de quai, huit jours de nouvelles. Aucun corbeau de Sombreval n'est entré sur ce rocher. RELANCÉ LE SOIR DU 3e, et pour la première fois par un moyen dont toutes les issues instruisent : deux plis, deux mains, par la porte de mer et sa page neuve à l'heure. L'un à lui — qu'il me réponde en me disant ce que je lui ai donné le jour où je suis parti pour la Garde, et rien d'autre ; la chose n'est pas nommée dans la lettre, si bien qu'un lecteur étranger n'apprend même pas quelle est la question. L'autre à son chambellan, purement administratif. Je ne cherche pas une nouvelle : je cherche QUI TIENT LA PLUME À SOMBREVAL.",
+   "decision": "FERME LE 4e DE LA 4e LUNE. Lord Gunthor Darklyn a ete decapite sur son propre quai le 3e de cette lune, quand ser Criston Cole a pris la ville ; la ville pillee, la flotte brulee sur ses amarres. Une seule bouche : MAREC FOSSE, intendant de Sombreval, par ecrit, ce jour, aux granges - il ne l'a PAS vu, il rend ce que portent les registres, et je le tiens RAPPORTE et non VU meme si c'est mon frere. Dix-sept jours de quai et huit jours de nouvelles se ferment par la plume du seul homme dont j'avais sali le nom dans un registre. Le chiffre des hommes reels n'existe plus : il n'y a plus d'hommes de Gunthor. Ce qui reste ouvert n'est plus lui, c'est ROBIN."
   },
   {
    "qui": "Rhaenys Targaryen",
    "quoi": "Elle a mis un prix : trois jours contre zéro si je lui donne le nombre d'hommes réels de Gunthor",
    "demande_le": "129-4-3",
    "relance_le": null,
-   "decision": "Je ne peux pas payer ce prix par courrier. Je le paierai par une coque, ou je lui dirai en face que je ne peux pas le payer — ce qui vaut mieux qu'un chiffre inventé."
+   "decision": "MORT AVEC LA VILLE, LE 4e. Le prix qu'elle avait mis - le nombre d'hommes reels de Gunthor contre trois jours - ne peut plus etre paye : il n'y a plus d'hommes de Gunthor, et la course de la barque ne rapporterait qu'un compte de ruines. Je ne lui porte rien et je le lui dis en face plutot que de laisser le marche pendre. Ce que je retiens d'elle : elle m'avait repondu par un chiffre a trouver plutot que par un refus, et c'etait juste ; c'est le monde qui a ote le chiffre, pas elle."
   },
   {
    "qui": "Lord Corlys Velaryon, le Serpent de Mer",
-   "quoi": "Une coque et deux hommes, une nuit : passer devant Sombreval, compter les postes d'amarrage et les hommes sur les murs, et rentrer. Rien d'autre. On ne touche à rien.",
-   "demande_le": "PAS ENCORE DEMANDÉ — 129-4-4 et 129-4-5, deux jours de suite, ma parole n'est pas partie",
+   "quoi": "Où seront ses coques les deux nuits de la course, et un mot écrit disant qu'une barque de Peyredragon passant au large de Sombreval est sur son eau",
+   "demande_le": "129-4-3 — PARTI. Premier billet à la troisième heure (une coque, une nuit), corrigé et retiré une demi-heure plus tard.",
    "relance_le": null,
-   "decision": "Il se tient à trois pas de moi devant cette table et je ne l'atteins pas. C'est le premier mot que je dis dès que ma bouche repart. Douze noms de sergents me manquent (verrou 25016) et trois d'entre eux étaient gagés là-bas : la coque n'est plus une inquiétude de frère, c'est une pièce du plan."
+   "etat_final": "RENDU LE SOIR MÊME, ET AU-DELÀ DE CE QUE J'AVAIS DEMANDÉ. Ses coques : cinq au goulet du Gosier à la rotation, six libres au mouillage d'ici, les dix du banc de l'Est portent et ne bloquent jamais — et il ferme l'écart que nos registres traînaient, les vingt et une étaient le même tas compté deux fois. Le mot écrit porte sa marque, et il ne dit pas « ces deux nuits-là » mais une MARÉE NOMMÉE, du soir du 3e au matin du 5e, bornes comprises, copiée au talon du rôle de la barque et non sur une feuille à part. Trois choses données que je n'avais pas su demander : Hallis Beaupré au môle pour l'ordinaire du quai ; dater le compte à l'heure et savoir d'avance ce qui se rend là-bas ; et ne jamais demander une heure de retour à la mer.",
+   "decision": "J'ai retiré ma demande de coque de ma propre main : quatorze heures lège à l'aller ne font pas un aller-retour dans une nuit, et ses cinq quilles du goulet ne quittent pas leur rotation pour mon frère. Ce que je lui demande maintenant est de son office et d'aucun autre : la police de son eau, pas une quille."
+  },
+  {
+   "qui": "Rhaenyra Targaryen, ma reine",
+   "quoi": "Les deux sceaux au bas des neuf limites que j'ai dictées debout devant la Table, et un nom de suppléance écrit avec le mien",
+   "demande_le": "129-4-3 — DEMANDÉ DE VIVE VOIX, action 40021, dûe depuis J-19",
+   "relance_le": null,
+   "decision": "Le verdict n'était pas revenu quand j'ai fermé ma journée. Je l'écris comme NON SU. Tant que les deux sceaux ne sont pas au bas, je commande un ost dont les bornes ont été écrites par un autre en mon absence, et cela reste vrai même si tout le monde s'en accommode."
+  },
+  {
+   "qui": "Rhaenyra Targaryen, ma reine",
+   "quoi": "Mon congé pour Sombreval — que je dois demander, et qu'elle a le droit de me refuser",
+   "demande_le": "PAS ENCORE DEMANDÉ formellement. Annoncé de ma bouche devant elle ce jour, dans ma huitième limite, pour qu'on ne l'apprenne pas le jour venu.",
+   "relance_le": null,
+   "decision": "Je le demande dès que les sceaux sont au bas des neuf lignes, et pas avant : on ne demande pas une faveur dans le même quart d'heure où l'on fait écrire ses propres bornes. Et je dicterai avec elle ce qui vaut refus, pour ne pas avoir à en juger seul le jour où j'entendrai les cloches."
+  },
+  {
+   "qui": "Maître Aldon Hask, aux deniers",
+   "quoi": "Fermer la ligne des treize dragons à lord Gunthor avec la mention NON PORTÉ et sa raison — ou la faire porter par une autre main que la mienne, en écrivant que je m'y suis opposé",
+   "demande_le": "129-4-3",
+   "relance_le": null,
+   "decision": "FERME LE 4e. La ligne n'est plus suspendue, elle est morte : le destinataire est mort le 3e. Mention NON PORTE avec sa raison en toutes lettres - destinataire mort le 3e, rapporte par une bouche le 4e - et les treize dragons rendus au coffre contre sa marque, comptes piece a piece. Je n'ai pas pose ma marque sur son deuxieme etat : un or dont le destinataire est mort n'a pas de porteur. Propose en retour : que son troisieme etat porte un AGE, et qu'un or sorti non remis depuis plus de trois jours se dise tout haut a sept heures avec le nom de qui le tient."
+  },
+  {
+   "qui": "Ser Robert Quince, castellan",
+   "quoi": "La date à laquelle le froment doit être à quai — pour compter onze jours à rebours et écrire le jour du couperet",
+   "demande_le": "129-4-3",
+   "relance_le": null,
+   "decision": "C'est la seule horloge vraie de cette affaire, et elle n'est pas le silence de mon frère. Le jour où le onzième tombe sans preuve de contact, on achète ailleurs au prix de guerre, et je le dirai tout haut à la table plutôt que de le laisser glisser. Je veux la date pour pouvoir le dire AVANT et non le jour même."
+  },
+  {
+   "qui": "Maître Rulf Corne, maître de port",
+   "quoi": "(I) Une barque de pêche et deux patrons, deux nuits, pour compter les postes d'amarrage et les hommes sur les murs de Sombreval. (II) Le feuillet des trois pleines mers signé de sa main, et ce que trois marées d'attente immobilisent de quilles.",
+   "demande_le": "129-4-3 — PARTI",
+   "relance_le": null,
+   "decision": "RÉPONDU LE JOUR MÊME, ET IL A REFUSÉ EN MIEUX. Pas de barque prêtée — deux courses en deux jours lui ont coûté deux marées de lettrage. À la place : DEUX QUILLES LÉGÈRES PORTÉES À SON RÔLE pour la seule course d'avis, relevé d'équipage et rendu d'heure à chaque retour, payées sur ma ligne. J'ai dit oui : un service rendu une fois se redemande, un rôle tient tout seul — et ma chaîne du dehors cesse d'être un aveu. Reste dû par lui : demain à l'étale, deux noms et une coque avec le prix à la nuit ; et le second relevé d'étale, par un autre homme que Tobb, pour trancher son litige de deux jours qui vaut une heure quarante d'eau."
   }
  ],
  "on_attend_de_moi": [
   {
    "qui": "Ser Robert Quince, castellan, qui tient le volume du Déplacement",
-   "quoi": "L'action 20120 — dire si le quai de Sombreval s'ouvre et combien de coques il prend. Un quart d'heure à cette table, engagée J-25, quatre pièces pendent à elle.",
-   "etat": "Rendue à moitié ce jour : la moitié que mes yeux savent, je la rends ; la moitié qui est la parole d'un homme, je la déclare hors de portée de mon office et je l'écris en verrou plutôt que de la laisser à faire un vingt-sixième jour."
+   "quoi": "L'action 20120 — dire si le quai de Sombreval s'ouvre et combien de coques il prend",
+   "etat": "RENDUE LE 4e DE LA 4e LUNE, ET LA REPONSE EST ZERO. Le quai de Sombreval ne s'ouvre pas et ne prend aucune coque : il est aux mains de ser Criston Cole depuis le 3e, la flotte y a brule sur ses amarres. Dit a la Table le matin meme, devant la reine et lord Corlys, et non garde pour le jour de l'embarquement. Tout ce qui pendait a ce quai - le debarquement de l'ost, les six journees de route depuis la porte de terre, les vingt-cinq montures, les deux depots de route - pendait au meme clou et tombe avec lui."
+  },
+  {
+   "qui": "Mestre Gerardys",
+   "quoi": "Être le second de la roue des jours dus — seconde clef du coffre — et lui donner la longueur de ma chaîne avant le 6e à midi",
+   "etat": "RÉPONDU LE 3e. OUI pour la seconde clef, avec mon défaut dénoncé avant sa signature (je prends la mer si Sombreval brûle) et ser Robert Quince proposé en troisième, qui ne s'embarque jamais. Ma chaîne : DEDANS 1 jour, preuve au livre de service ; DEHORS non mesurée, dernier envoi sans retour à 12 jours. J'attends de lui qu'il accepte le troisième nom, ou qu'il me refuse."
   },
   {
    "qui": "Mestre Gerardys",

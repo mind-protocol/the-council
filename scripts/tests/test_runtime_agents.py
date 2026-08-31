@@ -5,6 +5,7 @@ import tempfile
 import unittest
 from unittest import mock
 import sys
+import contextlib
 
 SCRIPTS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if SCRIPTS not in sys.path:
@@ -14,6 +15,38 @@ from agents import runtime, trace
 
 
 class RuntimeAgentsTest(unittest.TestCase):
+    def test_deux_reveils_ne_passent_pas_par_un_verrou_de_session(self):
+        resultat = {"result": "fait", "provider": "codex"}
+        with tempfile.TemporaryDirectory() as dossier, \
+                mock.patch.object(runtime, "fournisseur", return_value="codex"), \
+                mock.patch.object(runtime, "_modele", return_value="modele"), \
+                mock.patch.object(runtime, "_effort", return_value="low"), \
+                mock.patch.object(runtime, "_appel_codex",
+                                  return_value=resultat), \
+                mock.patch.object(runtime, "_activite",
+                                  return_value=contextlib.nullcontext()), \
+                mock.patch.object(runtime, "_verrou") as verrou:
+            rep = runtime.appeler(
+                role="mj", manuel="manuel", message="mot",
+                session_id="session-partagee", cwd=dossier)
+
+        self.assertEqual(resultat, rep)
+        verrou.assert_not_called()
+
+    def test_voyant_actif_exactement_pendant_le_calcul(self):
+        with tempfile.TemporaryDirectory() as d, \
+                mock.patch.object(runtime, "ACTIVITES", os.path.join(d, "active")):
+            with runtime._activite("mestre-gerardys", "jour-12"):
+                fichiers = os.listdir(runtime.ACTIVITES)
+                self.assertEqual(1, len(fichiers))
+                with open(os.path.join(runtime.ACTIVITES, fichiers[0]),
+                          encoding="utf-8") as f:
+                    marqueur = json.load(f)
+                self.assertEqual("mestre-gerardys", marqueur["homme"])
+                self.assertEqual("jour-12", marqueur["session"])
+                self.assertEqual(os.getpid(), marqueur["pid"])
+            self.assertEqual([], os.listdir(runtime.ACTIVITES))
+
     def test_switch_global_et_alias_chatgpt(self):
         with tempfile.TemporaryDirectory() as d, \
                 mock.patch.object(runtime, "DOSSIER_RUNTIME", d), \
@@ -33,7 +66,10 @@ class RuntimeAgentsTest(unittest.TestCase):
             ["C:\\chambre"], "C:\\fin.txt")
         self.assertEqual(["codex", "exec"], neuve[:2])
         self.assertIn("--ignore-user-config", neuve)
-        self.assertIn("workspace-write", neuve)
+        self.assertIn("--approve-for-me", neuve)
+        self.assertIn("project_doc_max_bytes=524288", neuve)
+        self.assertNotIn("--sandbox", neuve)
+        self.assertNotIn("read-only", neuve)
         self.assertNotIn("resume", neuve)
         self.assertEqual("-", neuve[-1])
 
@@ -41,11 +77,93 @@ class RuntimeAgentsTest(unittest.TestCase):
             "C:\\neutre", "gpt-5.3-codex-spark", "low", [],
             "C:\\fin.txt", "thread-123")
         self.assertEqual(["resume", "thread-123", "-"], reprise[-3:])
+        self.assertIn("--approve-for-me", reprise)
+        self.assertNotIn("--sandbox", reprise)
+        self.assertNotIn("read-only", reprise)
 
-        lecture = runtime._commande_codex(
-            "C:\\neutre", "gpt-5.3-codex-spark", "low", [],
-            "C:\\fin.txt", ecriture=False)
-        self.assertEqual("read-only", lecture[lecture.index("--sandbox") + 1])
+    def test_commande_codex_mj_n_a_aucun_sandbox(self):
+        commande = runtime._commande_codex(
+            "C:\\neutre", "gpt-5.6-luna", "low", ["C:\\depot"],
+            "C:\\fin.txt", sans_sandbox=True)
+        self.assertIn("--dangerously-bypass-approvals-and-sandbox", commande)
+        self.assertNotIn("--approve-for-me", commande)
+        self.assertNotIn("--sandbox", commande)
+        self.assertNotIn("read-only", commande)
+
+    def test_manuel_codex_n_est_injecte_qu_a_la_creation_ou_si_change(self):
+        with tempfile.TemporaryDirectory() as dossier:
+            manuel = "MANUEL V1"
+            empreinte, injecte = runtime._preparer_prompt_codex(
+                manuel, dossier, None, {})
+            self.assertTrue(injecte)
+            self.assertTrue(os.path.exists(os.path.join(dossier, "AGENTS.md")))
+
+            runtime._retirer_prompt_codex(dossier)
+            meme, injecte = runtime._preparer_prompt_codex(
+                manuel, dossier, "thread-1",
+                {"manuel_sha256_codex": empreinte})
+            self.assertEqual(empreinte, meme)
+            self.assertFalse(injecte)
+            self.assertFalse(os.path.exists(os.path.join(dossier, "AGENTS.md")))
+
+            autre, injecte = runtime._preparer_prompt_codex(
+                "MANUEL V2", dossier, "thread-1",
+                {"manuel_sha256_codex": empreinte})
+            self.assertNotEqual(empreinte, autre)
+            self.assertTrue(injecte)
+            self.assertTrue(os.path.exists(os.path.join(dossier, "AGENTS.md")))
+
+    def test_commande_claude_ne_peut_plus_etre_read_only(self):
+        commande = runtime._commande_claude(
+            "C:\\systeme.md", None, None, [], [], None,
+            "session-juge", False, False)
+        outils = commande[commande.index("--tools") + 1].split(",")
+        for outil in ("Read", "Grep", "Glob", "Bash", "Write", "Edit"):
+            self.assertIn(outil, outils)
+
+    def test_manuel_claude_n_est_injecte_qu_a_la_creation_ou_si_change(self):
+        with tempfile.TemporaryDirectory() as dossier:
+            manuel = "MANUEL V1"
+            empreinte, prompt, injecte = runtime._preparer_prompt_claude(
+                manuel, dossier, False, {})
+            self.assertTrue(injecte)
+            self.assertIsNotNone(prompt)
+            self.assertTrue(os.path.exists(prompt))
+
+            runtime._retirer_prompt_claude(dossier)
+            meme, prompt, injecte = runtime._preparer_prompt_claude(
+                manuel, dossier, True,
+                {"manuel_sha256_claude": empreinte})
+            self.assertEqual(empreinte, meme)
+            self.assertFalse(injecte)
+            self.assertIsNone(prompt)
+
+            autre, prompt, injecte = runtime._preparer_prompt_claude(
+                "MANUEL V2", dossier, True,
+                {"manuel_sha256_claude": empreinte})
+            self.assertNotEqual(empreinte, autre)
+            self.assertTrue(injecte)
+            self.assertTrue(os.path.exists(prompt))
+
+    def test_reprise_claude_sans_changement_omet_le_prompt_systeme(self):
+        commande = runtime._commande_claude(
+            None, None, None, [], [], None,
+            "session-mj", True, False, sans_sandbox=True)
+        self.assertNotIn("--system-prompt-file", commande)
+
+    def test_commande_claude_mj_n_est_pas_restreinte(self):
+        commande = runtime._commande_claude(
+            "C:\\systeme.md", None, None, ["C:\\depot"], [], None,
+            "session-mj", False, False, sans_sandbox=True)
+        self.assertIn("--dangerously-skip-permissions", commande)
+        self.assertNotIn("--restricted", commande)
+        self.assertNotIn("--permission-mode", commande)
+
+    def test_seuls_les_mj_sortent_du_sandbox(self):
+        self.assertTrue(runtime._est_mj("mj"))
+        self.assertTrue(runtime._est_mj("mj-peyredragon"))
+        self.assertFalse(runtime._est_mj("rhaenyra"))
+        self.assertFalse(runtime._est_mj("mjestre-gerardys"))
 
     def test_normalise_le_jsonl_codex_dans_le_contrat_historique(self):
         rep = runtime._normaliser_codex([

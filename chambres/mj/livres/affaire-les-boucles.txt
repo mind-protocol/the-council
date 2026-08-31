@@ -1,0 +1,139 @@
+══════════════════════════════════════════════════════════════════════════
+Les boucles du monde   [affaire-les-boucles]
+  ⚙️ **TROIS BOUCLES, UN ORDRE QUI N'EST PAS NEGOCIABLE : les mains, puis les absents, puis la salle.** La sortie de la premiere est l'entree des deux autres. Cette affaire porte l'etat des tetes, des echeances et des budgets. Libelles L.x. audit du 4e jour de la 4e lune (tick.py --verifier : 94 anomalies).
+  plan · sans place
+══════════════════════════════════════════════════════════════════════════
+
+── 🏰 Ouverture de l'Affaire ──────────────────────────────────────────────
+
+  · ligne 1
+    🧱 Le champ : 🏷️ **LE NOM**
+    ✍️ Ce qu'on y écrit : Les mains, les absents, la salle — dans cet ordre
+    📖 La règle du champ : Le sujet dont le conseil traite, **jamais la solution**.
+    ✅ Rempli ? : **oui**
+
+  · ligne 2
+    🧱 Le champ : 🎯 **L'OBJET**
+    ✍️ Ce qu'on y écrit : Qu'aucune échéance ne se perde et qu'aucune tête ne dérive : ce que la salle dit doit avoir été calculé avant, pas inventé à la réplique.
+    📖 La règle du champ : Ce qu'on veut obtenir, en une phrase qui puisse être fausse.
+    ✅ Rempli ? : **oui**
+
+  · ligne 3
+    🧱 Le champ : 🧱 **LE PÉRIMÈTRE — DANS**
+    ✍️ Ce qu'on y écrit : Les échéances et leur production · les têtes, leur fraîcheur et leur budget · l'ordre des trois boucles · les mesures des mains.
+    📖 La règle du champ : Ce que cette affaire tient, et dont elle répond.
+    ✅ Rempli ? : **oui**
+
+  · ligne 4
+    🧱 Le champ : 🚫 **LE PÉRIMÈTRE — HORS**
+    ✍️ Ce qu'on y écrit : Ce que les acteurs DÉCIDENT une fois réveillés. La boucle les met en mouvement ; elle ne pense pas à leur place.
+    📖 La règle du champ : Ce qu'on refuse d'y mettre, pour que l'affaire reste tenable.
+    ✅ Rempli ? : **oui**
+
+  · ligne 5
+    🧱 Le champ : 📌 **L'ÉTAT ACTUEL**
+    ✍️ Ce qu'on y écrit : **L.11 n'a pas bougé** : le passage du 4e a livré des nouvelles et n'a produit AUCUNE échéance — `evenements_a_resoudre` était vide. Livrer n'est pas produire. **L.31 est arbitrée et appliquée** : gunthor-darklyn est `mort`, son bloc d'intentions a disparu — un décapité ne marche plus vers Peyredragon. **L.12 s'aggrave d'un cas** : denys bar-Emmon, tête au 129.4.2, qu'une pièce voulait dater au lieu de relire.
+    📖 La règle du champ : Où en est l'affaire au moment où on la lit, sans complaisance.
+    ✅ Rempli ? : **oui**
+
+  · ligne 6
+    🧱 Le champ : 🔢 **LA PLAGE**
+    ✍️ Ce qu'on y écrit : Aucune. Ce volume vit dans `chambres/mj/books/` : il ne fait pas foi, il ne porte aucune adresse du monde, et rien du fil ne doit pouvoir l'ouvrir. Libellés locaux en **L.x**.
+    📖 La règle du champ : Réservée d'avance.
+    ✅ Rempli ? : **oui**
+
+  · ligne 7
+    🧱 Le champ : 💡 **LA CONCLUSION**
+    ✍️ Ce qu'on y écrit : **CE QUE JE FERAIS.** Je refuserais toute pièce qui rafraîchit une date sans toucher une croyance : huit sont passées sur ma table en deux jours, toutes avec la seule mutation qui trompe l'audit. Un retard de tête se répare par une relecture, jamais par une date. **CE QUI ME FERAIT CHANGER D'AVIS :** que `date_maj` cesse d'être ce que l'audit lit pour juger la fraîcheur ; le geste deviendrait alors inoffensif. **CE QU'IL NE FAUT PAS FAIRE :** tailler les grosses têtes avant d'avoir produit les échéances en retard. On rangerait des esprits qui pensent encore dans un monde faux.
+    📖 La règle du champ : L'avis du titulaire, défendu : ce qu'il ferait, ce qui le ferait changer d'avis, ce qu'il ne faut pas faire.
+    ✅ Rempli ? : **oui**
+
+  · ligne 8
+    🧱 Le champ : 🔚 **FERMÉE QUAND**
+    ✍️ Ce qu'on y écrit : L'audit ne signale plus ni retard du moteur, ni tête de quartier périmée, ni budget crevé.
+    📖 La règle du champ : Écrit à l'ouverture, à froid : à quoi l'on verra qu'il n'y a plus lieu de rouvrir.
+    ✅ Rempli ? : **oui**
+
+── 🔗 Affaires liées ──────────────────────────────────────────────────────
+
+  · ligne 1
+    🪢 Le lien : bloque
+    🔗 L'affaire : Le brouillard (chambre)
+    📝 Pourquoi : Une échéance non produite retient ses diffusions : le retard se propage au savoir.
+
+  · ligne 2
+    🪢 Le lien : attend
+    🔗 L'affaire : La montre (chambre)
+    📝 Pourquoi : Les retards de tête se comptent contre `monde.date` : si elle ment, ils sont sous-estimés.
+
+── 🎯 Etats cibles ────────────────────────────────────────────────────────
+
+  · ligne 1
+
+  · ligne 2
+
+  · ligne 3
+
+── 🔒 Verrous ─────────────────────────────────────────────────────────────
+
+  · ligne 1
+    🔒 N° : L.11
+    🏷️ Le verrou : Le moteur a quatre echeances en retard
+
+  · ligne 2
+    🔒 N° : L.12
+    🏷️ Le verrou : Huit tetes du quartier ont une a deux semaines de retard
+
+  · ligne 3
+    🔒 N° : L.13
+    🏷️ Le verrou : Une cinquantaine de tetes debordent leur budget
+
+  · ligne 4
+    🔒 N° : L.14
+    🏷️ Le verrou : gunthor-darklyn porte une tete alors qu'il est mort
+
+── 🗝️ Clefs ──────────────────────────────────────────────────────────────
+
+  · ligne 1
+    🗝️ N° : L.21
+    🏷️ La clef : Faire tourner le tick avant la salle, toujours
+
+  · ligne 2
+    🗝️ N° : L.22
+    🏷️ La clef : Tailler avant d'ajouter
+
+── ⚔️ Actions ────────────────────────────────────────────────────────────
+
+  · ligne 1
+    👤 Qui : mj-sombreval
+
+  · ligne 2
+    👤 Qui : mj
+
+  · ligne 3
+    👤 Qui : mj-vivesaigues
+
+  · ligne 4
+    👤 Qui : mj-leseyrie
+
+  · ligne 5
+    👤 Qui : mj
+
+  · ligne 6
+    👤 Qui : mj-portreal
+
+  · ligne 7
+    👤 Qui : mj
+
+  · ligne 8
+    👤 Qui : mj-sombreval
+
+── ce qui est ecrit ────────────────────────────────────────────────────
+
+**91 AVERTISSEMENTS, ET ILS SE RANGENT EN TROIS TAS.**
+
+**Les budgets de tete creves**, une cinquantaine : otto porte 33 croyances pour un budget de 3, alys-grive 26 pour 3, alicent 25 pour 3, robert-quince 24 pour 6, aegon-ii 21 pour 3, rulf-corne 21 pour 3. Une tete trop grosse au loin est une tete qu'on ne relit plus.
+
+**Onze tetes en retard**, dont huit dans le quartier ou la tolerance est d'UN jour : merra-sath 13 jours, wend 12, dorsa-sath 12, sarro-vaeth 8, elyn-sarnes 8, alarra-rosby 8, aldon-hask 7, marna 5. Et ces retards sont comptes contre monde.date, qui traine lui-meme d'un jour (voir *La montre*).
+
+**Quatre echeances passees et non produites** — le retard du moteur : ralliement-trident du 129.4.2, arrivee-lettre-privee-jeyne du 129.3.30, rulf-fait-payer-les-deux-patrons du 129.3.28, fin-des-moutons-des-fosses du 129.4.1. Une horloge tombee a zero se produit : c'est de l'arithmetique, pas de l'inspiration.

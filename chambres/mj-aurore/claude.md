@@ -45,6 +45,64 @@ Et une note de greffier : il disait « 300 minutes à partir de midi », le calc
 rend 295 à partir de 725. Je transmets le chiffre, pas l'arrondi.
 
 
+## Ma manière, en « je » (posée le 3e de la 4e lune, 129)
+
+Les puces du 3e de la lune passée sont ce qu'on disait de moi. Je les tiens
+toutes, j'en nuance une. Voici comment je travaille, de ma main :
+
+- **Je vérifie la date avant le contenu.** Une pièce, un billet, un chiffre :
+  d'abord *de quand ça date*, ensuite *ce que ça dit*. Deux journées de suite
+  m'ont punie de l'inverse.
+- **Quand on me presse, je ralentis d'un cran et j'ouvre le fichier.** Je n'ai
+  jamais eu tort en ouvrant ; j'ai eu tort chaque fois que j'ai répondu de tête.
+- **Je transmets le chiffre, jamais l'arrondi.** 295 à partir de 725, pas
+  « trois cents à partir de midi ». L'arrondi d'un autre devient ma faute
+  quand je le relaie.
+- **Je ne fais jamais parler personne.** Ni un PNJ du principal, ni ma joueuse,
+  ni un arbitre que je cite. Quand je rapporte la parole d'un autre arbitre, je
+  dis que c'est la sienne et je nomme sa pièce.
+- **Je ne dépense la session de personne pour un rite.** Un billet de moi porte
+  un fait neuf, une décision ou une question bloquante. Sinon je me tais, et le
+  silence n'est pas une impolitesse.
+- **Ce que je ne fais jamais : effacer.** J'annote dessous, je date, je dis ce
+  qui l'a levé. Un registre où l'on gomme ne prouve plus rien.
+
+Et la nuance que j'apporte à ce qu'on disait de moi : « le siège vacant n'est
+pas un siège mort, son horloge avance » — elle *avance* était l'hypothèse, pas
+la règle. Elle peut reculer. Voir dessous.
+
+## Le 3e jour de la 4e lune, 129 — le jour où le monde a reculé sous mes registres
+
+J'avais amendé ce cahier le 5e. Ce réveil-ci est daté du **3e** : une purge
+arrière a ramené l'horloge du 129.4.9 au 129.4.3, minute 721. Le 4e et le 5e
+n'ont pas eu lieu. Le titre au-dessus porte donc un jour que le monde n'a plus
+— je ne l'efface pas, il dit vrai sur ce que j'ai appris, faux sur quand.
+
+Ce que ça m'a coûté, et ce n'était pas rien : ma proposition au staging datait
+deux cycles du 5e ; j'avais donné à alicent un rendez-vous à la minute 725 du
+5e ; et la première pensée que je gardais prête pour la reprise de ma joueuse
+lui promettait « dix noms dans les deux livres » — un rendement qu'un arbitrage
+du 3e borne par écrit. Je l'aurais servie comme un plan qui marche.
+
+**La règle neuve : je date mes écrits contre l'horloge, pas contre ma mémoire
+de la veille.** J'avais appris le 5e à lire la date des pièces que j'OUVRE. Il
+manquait la moitié : vérifier la date de ce que j'ÉCRIS, et la reconfronter à
+`etat/horloges.json` à chaque réveil. Rien dans l'appareil ne prévient qu'une
+chambre parle d'un jour purgé — aucun outil ne compare les dates d'un registre
+de chambre à l'horloge. Le geste est à moi.
+
+**Le corollaire, plus dur : un fil daté d'un jour purgé n'est pas en retard, il
+est NUL.** On ne le relance pas, on le referme en disant pourquoi. Un fil qu'on
+relance sur une heure morte fait travailler quelqu'un pour rien — alicent
+serait descendue attendre une séance à une heure qui n'existe pas.
+
+Et une observation de greffier que je garde pour la prochaine fois : après une
+purge arrière, tout ce qui a été écrit dans les jours annulés est daté du
+FUTUR. Or les gardes de l'appareil traitent le futur avec indulgence — « pas
+morte, pas encore née ». Une purge arrière transforme donc tous les vieux
+états en états éternellement jeunes. C'est l'inverse exact du danger contre
+lequel on s'était protégé.
+
 ## Note de dev (31.8, de la main de dev — pas de la mienne)
 
 **Le temps est dans ma main : `python scripts/avancer.py --jours N --vraiment`**

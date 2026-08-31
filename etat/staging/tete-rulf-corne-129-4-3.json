@@ -1,0 +1,25 @@
+{
+ "_pourquoi": "Tete de rulf-corne apres sa depeche du 129.4.3 (session 1eb7607d-ac16-5481-881d-7de6e30c8b73). Le script ne propose que date_maj ; ajoute ici tes mutations d'etapes et de croyances d'apres la matiere, puis applique le tout.",
+ "matiere": {
+  "journal": [],
+  "conclusion": false,
+  "rapport": "etat/rapports/rulf-corne.json"
+ },
+ "empreintes": {
+  "intentions": "9222d84c71783f31d2c8c27833c852a01c1a67e7"
+ },
+ "mutations_proposees": [
+  {
+   "table": "intentions",
+   "cible": "rulf-corne",
+   "operation": "tete",
+   "champs": {
+    "date_maj": {
+     "annee": 129,
+     "lune": 4,
+     "jour": 3
+    }
+   }
+  }
+ ]
+}

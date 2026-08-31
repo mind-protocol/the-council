@@ -1,0 +1,30 @@
+{
+  "titre": "Peyredragon — le verrou est ecrit DANS la ligne : le doublon cavalier passe a PERDU, acquis le 4e et non le 8e",
+  "calcule_le": "2026-08-31",
+  "par": "mj-peyredragon",
+  "date_monde": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4
+  },
+  "le_fait": "etat/plis.json portait DEUX lignes pour la lettre unique de la reine a Borros du 129.3.30 : pli-question-nue-a-borros-30e (barque, attendu le 8e, la vraie) et pli-question-de-la-reine-a-borros-30e (cavalier, attendu LE 6e). Le doublon arrivait DEUX JOURS AVANT la vraie : sans verrou, c'est lui que l'arbitre d'Accalmie aurait vu toucher sa cote le premier.",
+  "pourquoi_pas_la_suppression_seule": "Une suppression a la main n'est acquise qu'au moment ou une main la fait. Le doublon, lui, a une echeance : le 6e. Ce qui doit etre garanti l'est par le systeme, pas par une etape manuelle — donc le refus s'ecrit DANS la ligne, par la porte, aujourd'hui.",
+  "mutations_proposees": [
+    {
+      "table": "plis",
+      "operation": "pli",
+      "cible": "pli-question-de-la-reine-a-borros-30e",
+      "champs": {
+        "etat": "perdu",
+        "porte": "LIGNE MORTE — DOUBLON. Cette ligne double la lettre unique que la reine a ecrite et scellee de sa main le 129.3.30 (acte du 30e, minute 907) et qui est descendue AU QUAI, donc par barque. La ligne vivante est pli-question-nue-a-borros-30e, canal barque, attendue le 129.4.8 chez l'arbitre d'Accalmie. Ce cavalier-ci n'a jamais existe : aucune arrivee ne doit etre arbitree sur lui, aucune tete ne doit l'apprendre. Etat porte a PERDU le 129.4.4 par mj-peyredragon, deux jours avant l'echeance qu'il portait."
+      },
+      "pourquoi": "Le verrou doit tenir sans dependre d'une suppression qui traine : un pli perdu n'arrive nulle part et ne demande aucun arbitrage d'arrivee."
+    }
+  ],
+  "a_la_main": {
+    "table": "etat/plis.json",
+    "geste": "Le retrait pur de l'entree pli-question-de-la-reine-a-borros-30e reste souhaitable (voir 20260831-peyredragon-doublon-pli-borros-a-retirer.json), mais il n'est plus urgent : la ligne est desormais morte dans le registre lui-meme.",
+    "effets_de_bord_verifies": "Aucun acte, cahier ou pli ne renvoie a cet id."
+  },
+  "applique_le": "2026-08-31T11:47:35"
+}

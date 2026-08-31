@@ -90,8 +90,24 @@
       "ce_qui_est_arrive": "etat/rapports/<moi>.json est ECRIT EN ENTIER a chaque journee rendue. Tant qu'une main du dehors n'a pas passe le verseur, la clef cahier2 n'est qu'une PROPOSITION : elle dort la, et la journee suivante l'ecrase en meme temps qu'elle depose la sienne. Un verrou juste, ecrit un soir, peut donc mourir le lendemain matin sans qu'un seul refus soit prononce — et le coupable apparent est celui qui l'a ecrit.",
       "ce_que_j_attendais": "Qu'une file s'ajoute a une file. Une file qui s'ecrase n'est pas une file, c'est une ardoise.",
       "gravite": "la plus haute des six. Les cinq autres perdaient un envoi ; celle-ci perd le travail DEJA FAIT, silencieusement, et le perd d'autant plus surement qu'on travaille tous les jours.",
-      "etat": "compris",
-      "ce_que_j_y_fais": "TANT QU'UNE COORDONNEE N'EST PAS RELUE DANS etat/books, JE LA REPORTE DANS LE RAPPORT DU LENDEMAIN. Je releve la file avant d'ecrire ma journee, je reprends telle quelle chaque ligne non versee, et je n'en retire une que le jour ou je l'ai VUE dans le volume. Verser deux fois la meme valeur ne coute rien ; ne la verser jamais coute une affaire."
+      "etat": "LEVE POUR CETTE FOURNEE, le 3e de la 4e lune — non par une correction de l'appareil, mais parce que j'ai passe le verseur moi-meme au lieu d'attendre la main du dehors",
+      "ce_que_j_y_fais": "TANT QU'UNE COORDONNEE N'EST PAS RELUE DANS etat/books, JE LA REPORTE DANS LE RAPPORT DU LENDEMAIN. Je releve la file avant d'ecrire ma journee, je reprends telle quelle chaque ligne non versee, et je n'en retire une que le jour ou je l'ai VUE dans le volume. Verser deux fois la meme valeur ne coute rien ; ne la verser jamais coute une affaire.",
+      "ce_qui_l_a_leve": "33 coordonnees etaient dans la file, du 5e, et AUCUNE n'etait au registre : ni 11041, ni 11042, ni 11043, ni 11019, ni la douzieme ligne du registre des charges. A sec : 33 poses, 0 refus. Passe --vraiment. RELUES DANS LES VOLUMES : les quatre lignes de l'affaire du jour d'entree y sont, et LA ROUE DES JOURS DUS est au registre des charges. La regle qui reste : la file ne se vide pas toute seule, JE la vide, et je relis le volume apres."
+    },
+    {
+      "id": "P07",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 3
+      },
+      "quoi": "Le verseur appele par son vrai chemin ne fait RIEN et ne dit RIEN — pas une ligne, pas une erreur, pas un code.",
+      "tente": "python scripts/plan/verser_cahier.py --qui gerardys, qui est le chemin ou le fichier se trouve reellement.",
+      "ce_qui_est_arrive": "Deux pannes empilees. Un : le module ne se charge pas seul — il importe rapporteurs et bibliotheque, qui vivent dans scripts/noyau/, absent du chemin. Deux, et c'est la mauvaise : une fois le chemin repare, LE FICHIER N'APPELLE PAS main(). Il finit sur la derniere ligne de la fonction, sans if __name__. Il rend donc zero octet et sort proprement. J'ai lu ce silence comme « rien a verser » — c'est-a-dire exactement l'erreur de P02, servie par une cause neuve.",
+      "ce_que_j_attendais": "Une ligne d'en-tete, meme a zero : « VERSER CAHIER — 0 pose(s), 0 refus ». Le script SAIT l'ecrire ; il ne l'ecrit pas parce qu'on ne l'appelle jamais.",
+      "gravite": "haute — un outil qui echoue en silence est pire qu'un outil casse, parce qu'il ressemble a un outil qui a travaille",
+      "etat": "contourne",
+      "ce_que_j_y_fais": "JE N'APPELLE PLUS QUE LA FACADE : python scripts/verser_cahier.py --qui gerardys. Elle importe plan.expose et fonctionne. Et je pose la regle generale que ces sept entrees reclament : UN OUTIL QUI NE M'ECRIT PAS SON EN-TETE N'A PAS TOURNE. Zero ligne de sortie n'est jamais un resultat ; c'est un outil qui n'a pas demarre."
     }
   ],
   "ce_que_ces_entrees_ont_en_commun": "SIX ENTREES, ET LA SIXIEME EST LA CAUSE DES DEUX PREMIERES. Le travail est juste et il n'arrive a personne : un refus muet, une file qu'on croit vide et qui ne l'etait pas, une boite remplie sans sonnerie, une sonnerie qui ne sonne pas, un mot qui se date du mauvais jour — et une file qui s'ecrase toute seule au matin suivant. Aucune n'a produit d'erreur ni de message : chaque fois j'ai cru avoir fait la chose. LA FAMILLE ENTIERE TIENT EN DEUX PHRASES : toute ecriture doit rendre un accuse, et un silence ne doit jamais se lire comme un succes. || CINQ ENTREES, ET C'EST CINQ FOIS LE MEME MAL : le travail est juste et il n'arrive a personne. Un refus muet, une file jamais atteinte, une boite remplie sans sonnerie, une sonnerie qui ne sonne pas, un mot qui se date du mauvais jour. Aucune de ces cinq n'a produit d'erreur ni de message : dans les cinq cas j'ai cru avoir fait la chose. C'est la famille entiere qu'il faut nommer, pas les cas un par un — TOUTE ECRITURE DOIT RENDRE UN ACCUSE, et un silence ne doit jamais se lire comme un succes."

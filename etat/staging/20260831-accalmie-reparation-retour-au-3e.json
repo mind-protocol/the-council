@@ -1,0 +1,161 @@
+{
+  "titre": "Accalmie — reparation apres le retour du monde au 129.4.3",
+  "par": "mj-accalmie",
+  "_pourquoi": "J'AI ROUVERT MA SALLE APRES UN MOUVEMENT DE MASSE, ET CE N'EST PAS UN ROLLBACK PROPRE : C'EST UN ETAT MELANGE. monde.date est revenu au 129.4.3 minute 721 ; lucerys est de nouveau a peyredragon, aemond a port-real ; les quatre tetes de ma cour sont date_maj 4.3. Tout mon 9e a disparu — c'est coherent avec l'horloge et je ne le reclame pas. CE QUI N'EST PAS COHERENT, ET QUE CE LOT REPARE, EN CINQ POINTS VERIFIES FICHE EN MAIN : (1) Borros porte une croyance issue d'une piece que J'AVAIS MOI-MEME ECARTEE comme fausse (etat/staging/ecartes/20260831-accalmie-delta-pli-otto-remis.ECARTE.json, applique_le 05:02:16 malgre le retrait). Elle lui fait tenir la lettre d'Otto — or plis.json porte pli-mots-de-la-main-accalmie avec main=AEMOND, et personnages.json met aemond a PORT-REAL. Mon seigneur tiendrait une lettre qui est dans la main d'un homme a cent lieues. (2) La meme piece lui a retire deux croyances VRAIES et (3) un ignore VRAI, et (4) a clos borros-attendre-offres alors que sa condition n'est pas remplie. (5) mestre-hallis porte encore DEUX croyances du 9e (la bete a la basse-cour, le vent du 9e) dans un monde qui est au 3e : du futur dans un passe. || ET UN DEFAUT DE SCHEMA QUE LA PORTE NE SAIT PAS REPARER, remonte a dev : mestre-hallis.declencheurs[0] est une CHAINE et non un objet {si, alors} — c'est le champ 'valeur' d'un declencheur_retirer qui s'est retrouve dans la liste. Or application.py filtre les retraits avec isinstance(d, dict) : une chaine dans declencheurs NE PEUT PAS etre retiree par declencheur_retirer. Je passe donc par une operation 'tete', seule voie possible. Une entree malformee et increvable dans une table est un piege pour tout le monde, pas seulement pour moi. || RETIRE DE CE LOT APRES LE BLANC : la mutation qui devait tuer le declencheur malforme. La porte l'a refusee — CHAMPS_TETE = (echelle, intention, attitude_joueur, date_maj), 'declencheurs' n'en est pas. L'entree est donc INATTEIGNABLE PAR TOUTE OPERATION DE LA PORTE : declencheur_retirer la manque (filtre isinstance dict), tete la refuse. Elle reste dans la table et je ne peux pas l'oter — c'est a dev, et je le remonte plutot que de forcer.",
+  "mutations_proposees": [
+    {
+      "table": "intentions",
+      "cible": "borros-baratheon",
+      "operation": "croyance_retirer",
+      "valeur": "SIX JOURS D'ATTENTE, PUIS ON M'A ENVOYE LE PRINCE EN PERSONNE AVEC LE PRIX ECRIT DEDANS. Le corbeau de mon ambassade est parti le 3e demander un mandat ; la reponse est venue par cavalier, scellee du sceau de la Main, et c'est celui qu'elle nomme qui l'a portee. Les epees de la Marche Orageuse pour Aegon, deuxieme du nom, contre la main de l'une de mes quatre filles, LE PRINCE AEMOND REPONDANT DE SA PERSONNE, reponse attendue avant la lune close. Voila ce que valait mon silence : on ne m'ecrit pas, on vient. Un camp a enfin ecrit un nom — et c'est le sien qu'il a apporte lui-meme. MAIS LA LETTRE NE DIT PAS LAQUELLE DE MES FILLES, et tant qu'un homme n'aura pas dit ce nom-la tout haut dans ma salle, je n'ai recu que la moitie d'une offre.",
+      "pourquoi": "FAUSSE ET ISSUE D'UNE PIECE ECARTEE. Elle met dans sa tete le nom d'Aemond et le prix, alors que la lettre qui les porte est dans la main du prince (plis.json, main=aemond) et que le prince est a Port-Real. C'est moi qui l'ai ecrite et moi qui l'ai retiree du staging ; elle est passee quand meme. Je la retire de la table."
+    },
+    {
+      "table": "intentions",
+      "cible": "borros-baratheon",
+      "operation": "croyance_ajouter",
+      "valeur": "VINGTIEME JOUR D'ATTENTE, ET C'EST MON HOTE QUI A DU ECRIRE, PAS MOI. Les hommes de lord Otto Hightower boivent mon vin depuis le dix-septieme jour de la lune passee sans avoir jamais ecrit un seul nom. Un corbeau est parti d'Accalmie pour Port-Real ce jour meme, de la main de ser Alyn Bulwer et NON sous mon sceau, pour demander a son maitre le mandat de poser deux noms — laquelle de mes quatre filles, et quel prince. Mon silence n'est donc pas rompu : le compte se rouvre au retour de l'oiseau. Un homme qui a mange mon pain vingt jours doit quemander un mandat a son maitre — ou lord Otto n'a pas le pouvoir qu'il se donne, ou l'on me fait attendre expres. Les deux se paient au meme prix.",
+      "pourquoi": "REMET LE VRAI AU BON JOUR. Je ne recopie pas la croyance du 9e : au 3e le corbeau part AUJOURD'HUI et rien n'est encore revenu. Le compte de jours est celui du pli lui-meme (pli-question-accalmie-129-4-3 : 'Vingtieme jour d'attente au moment ou l'oiseau part'), pas mon arithmetique — voir la question posee a dev dans mon billet."
+    },
+    {
+      "table": "intentions",
+      "cible": "borros-baratheon",
+      "operation": "ignore_ajouter",
+      "valeur": "Que les deux camps s'apprêtent à venir marchander ses filles — on prépare à Port-Réal un mariage au nom d'Aemond, et on parle de lui à Peyredragon",
+      "pourquoi": "IL L'IGNORE DE NOUVEAU, ET C'EST VRAI AU 3e : aucune bouche n'a prononce le nom d'Aemond a Accalmie, la lettre d'Otto n'est meme pas partie (parti_le 4.6). Un ignore vrai retire est un piege pour le prochain qui reveille cet homme."
+    },
+    {
+      "table": "intentions",
+      "cible": "borros-baratheon",
+      "operation": "etape",
+      "etape": "borros-attendre-offres",
+      "champs": {
+        "etat": "en-cours",
+        "jours_restants": null,
+        "accompli": null
+      },
+      "pourquoi": "SA CONDITION N'EST PAS REMPLIE : aucun camp n'a ecrit le nom d'une de ses filles. L'etape avait ete close par la piece ecartee. Elle rouvre — c'est son noeud, et c'est ce qui tient toute la scene a venir."
+    },
+    {
+      "table": "intentions",
+      "cible": "mestre-hallis",
+      "operation": "croyance_retirer",
+      "valeur": "CINQUIEME ET SIXIEME LIGNES DU 9e, PORTEES AVANT L'AUDIENCE. La bete du garcon de Peyredragon est a la basse-cour du levant, cote mer, sous le chemin de ronde : elle n'y est pas attachee — on n'attache pas ces betes-la — mais les deux portails de la basse-cour sont fermes sur elle et six hommes les tiennent. NOURRIE : deux moutons montes des pares du village au matin du 9e, portes au registre comme depense de la maison, et il a fait ecrire le prix a cote parce qu'un seigneur qui nourrit la bete d'un camp doit savoir ce que cela lui coute. La bete n'a pas dormi et remue des que la mer monte. || SIXIEME LIGNE, DE LA MAIN DU SERGENT DE LA TOUR DU VENT : l'un des hotes non presentes a marche seul le chemin de ronde cote mer avant l'heure de la salle, sans parler a personne, et s'est arrete trois fois — au-dessus de la basse-cour du levant, face au large, et du cote de la lande. Le sergent l'a suivi des yeux d'un bout a l'autre et l'a rapporte. Colonne du nom : VIDE.",
+      "pourquoi": "DU FUTUR DANS UN PASSE. Cette ligne raconte la basse-cour du levant et les deux moutons du 9e ; le monde est au 3e et aucun dragon n'est encore venu. Elle redeviendra vraie le jour venu, pas avant."
+    },
+    {
+      "table": "intentions",
+      "cible": "mestre-hallis",
+      "operation": "croyance_retirer",
+      "valeur": "LE TEMPS DU 9e, PORTE AU REGISTRE COMME CHAQUE MATIN : vent de suroit leve dans la nuit, deja franc a l'aube et qui force d'heure en heure ; la houle entre en travers dans la baie des Naufrageurs et les barques du village sont restees au sec. Le ciel est clair au levant et bouche au couchant, d'une seule ligne basse et longue. Les vieux de la porte de mer disent que ce vent-la hale au nord avant la nuit et qu'il faut alors trois heures pour que la baie devienne mauvaise. Le mestre l'a ecrit sans commentaire, comme il ecrit tout.",
+      "pourquoi": "Meme motif : le temps releve au matin du 9e n'a pas a etre au registre le 3e."
+    },
+    {
+      "table": "personnages",
+      "cible": "alyn-bulwer",
+      "operation": "personnage_ajouter",
+      "valeur": {
+        "id": "alyn-bulwer",
+        "nom": "Ser Alyn Bulwer",
+        "maison_id": null,
+        "titre": "Chevalier de la maison Hightower, tete de l'ambassade logee a Accalmie depuis le 3.17",
+        "naissance": 92,
+        "traits": [
+          "patient",
+          "poli",
+          "sans mandat",
+          "buveur"
+        ],
+        "objectifs": [
+          {
+            "but": "Tenir la place a la table de lord Borros jusqu'a ce que Port-Real lui envoie enfin un nom a poser",
+            "priorite": 1
+          },
+          {
+            "but": "Ne rien promettre qu'il n'ait par ecrit — il n'a rien par ecrit",
+            "priorite": 2
+          }
+        ],
+        "maniere": "S'excuse beaucoup et ne concede rien ; repete que la reponse arrive, avec les memes mots, depuis le dix-septieme jour.",
+        "portrait": {
+          "fichier": null,
+          "physique": "Trente-sept ans, epaissi, surcot vert use aux coudes, boit le vin d'Accalmie depuis plus de deux semaines et commence a le sentir.",
+          "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, candlelight, thickset knight of thirty-seven, worn green surcoat, wine cup, apologetic smile that concedes nothing, long-guest weariness"
+        },
+        "etat": "dormant",
+        "lieu_id": "accalmie",
+        "condition": "libre"
+      },
+      "pourquoi": "IL DOIT EXISTER AU 3e, ET LA TABLE LE PROUVE SANS MOI : plis.json porte pli-question-accalmie-129-4-3, canal corbeau, DE alyn-bulwer POUR otto, parti ce jour meme. Un pli signe d'un personnage qui n'existe pas est une reference pendante dans une table partagee. Dormant : aucune tete, aucune initiative, ses ordres sont a Port-Real."
+    },
+    {
+      "table": "personnages",
+      "cible": "ellyn-baratheon",
+      "operation": "personnage_ajouter",
+      "valeur": {
+        "id": "ellyn-baratheon",
+        "nom": "Ellyn Baratheon",
+        "maison_id": "maison-baratheon",
+        "titre": "Dame, troisieme fille d'Accalmie",
+        "naissance": 115,
+        "traits": [
+          "devote",
+          "timide",
+          "obeissante",
+          "observatrice"
+        ],
+        "objectifs": [
+          {
+            "but": "N'etre pas celle qu'on nomme, et n'avoir pas a le dire tout haut",
+            "priorite": 1
+          }
+        ],
+        "maniere": "Repond quand on l'interroge et pas avant ; regarde ses soeurs pour savoir quoi penser, et se trompe rarement en les regardant.",
+        "portrait": {
+          "fichier": null,
+          "physique": "Quatorze ans, plus petite que ses ainees, cheveux noirs tresses serre, mains toujours prises l'une dans l'autre.",
+          "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, candlelight, shy girl of fourteen, tightly braided black hair, plain dark gown, seven-pointed star pendant, eyes lowered, great hall in background"
+        },
+        "etat": "dormant",
+        "lieu_id": "accalmie",
+        "condition": "libre"
+      },
+      "pourquoi": "Le declencheur arme de Borros exige mot pour mot SES QUATRE FILLES DEBOUT DERRIERE LUI, et personnages.json n'en porte que deux. Sans les cadettes il est inexecutable le jour ou il se levera. Meme motif qu'a leur creation, et il n'a pas vieilli."
+    },
+    {
+      "table": "personnages",
+      "cible": "floris-baratheon",
+      "operation": "personnage_ajouter",
+      "valeur": {
+        "id": "floris-baratheon",
+        "nom": "Floris Baratheon",
+        "maison_id": "maison-baratheon",
+        "titre": "Dame, quatrieme fille d'Accalmie",
+        "naissance": 117,
+        "traits": [
+          "enfant",
+          "curieuse",
+          "bavarde",
+          "sans peur"
+        ],
+        "objectifs": [
+          {
+            "but": "Tout voir et le raconter avant ses soeurs",
+            "priorite": 1
+          }
+        ],
+        "maniere": "Dit tout haut ce qu'elle voit, sans y mettre de malice, et c'est souvent pire que la malice de Maris.",
+        "portrait": {
+          "fichier": null,
+          "physique": "Douze ans, la seule blonde des quatre, robe trop grande heritee de Cassandra, genoux ecorches sous l'ourlet.",
+          "prompt_ideogram": "dark fantasy oil painting portrait, muted colors, candlelight, fair-haired girl of twelve, oversized inherited dark gown, scraped knees, wide fearless eyes, torchlit stone hall"
+        },
+        "etat": "dormant",
+        "lieu_id": "accalmie",
+        "condition": "libre"
+      },
+      "pourquoi": "La quatrieme fille du meme declencheur. Son but ne parle plus d'un dragon : aucun n'est venu au 3e, et je ne remets pas du 9e dans une fiche du 3e."
+    }
+  ],
+  "applique_le": "2026-08-31T08:36:31"
+}

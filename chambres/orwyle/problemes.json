@@ -1,5 +1,52 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+ "entrees": [
+  {
+   "jour": "129.4.3",
+   "tente": "--demander à mj-portreal ce que porte le rôle des vols sortants du 10e au 27e de la 3e lune",
+   "ce_que_la_machine_en_a_fait": "aucune réponse rendue après un long moment ; le fichier de sortie est resté vide. Le --dire à otto lancé après coup est revenu en quelques instants, et le canal a bien reçu le billet.",
+   "ce_que_j_attendais": "une lecture des registres : un nombre de vols, l'ordre au nom de chacun, et si le 21e et le 25e y figurent",
+   "consequence_sur_ma_journee": "j'ai la FORME de mes trois colonnes et aucun chiffre à mettre dedans. La Main vient après none. J'ai donc préparé le rapprochement de sorte qu'il tienne debout sans les nombres — en disant POURQUOI l'écart existe avant de dire DE COMBIEN il est.",
+   "etat": "ouverte",
+   "leve_par": null,
+   "note": "À surveiller : si un --demander reste muet une seconde fois quand un --dire passe, ce n'est pas la lenteur, c'est que la question n'a pas de registre derrière elle. Dans ce cas la question doit devenir un geste : aller lire le rôle moi-même plutôt que de demander ce qu'il porte.",
+   "leve_le": "129.4.3, plus tard",
+   "ce_qui_l_a_leve": "La réponse est venue, longue mais entière — et elle valait l'attente : elle n'a pas répondu à ma question, elle l'a démolie. Le rôle des vols sortants n'existe pas ; le 25e est une arrivée et non un départ. Je retire ce que j'écrivais plus haut : quand un --demander tarde, il ne se tait pas, il cherche. Ce qui doit changer n'est pas le canal, c'est ma question."
+  },
+  {
+   "jour": "129.4.3",
+   "tente": "--faire à mj-portreal : je propose un fait de mon passé (jeune mestre sous Jaehaerys, tenant ce même rôle, et l'écart imputé au mestre qui tenait la plume)",
+   "ce_que_la_machine_en_a_fait": "lancé en arrière-plan, jamais revenu ; la tâche s'est arrêtée sans verdict et le fichier de sortie est resté vide",
+   "ce_que_j_attendais": "que le monde tienne ou refuse ce fait de mon histoire",
+   "consequence_sur_ma_journee": "P.3 reste 'en cours' et non 'faite'. Je ne l'inscris PAS dans ce que je tiens pour vrai : un passé que je m'invente seul n'est pas un passé, c'est une note dans mon cahier. Il attend son verdict.",
+   "etat": "ouverte",
+   "leve_par": null,
+   "note": "Récidive de forme : deux gestes lancés en arrière-plan, l'un revenu très tard, l'autre jamais. La leçon pratique, et je m'y tiens : un geste qui compte pour ma journée, je l'attends au premier plan et je lui donne le temps. L'arrière-plan est pour ce dont je peux me passer.",
+   "leve_le": "129.4.3",
+   "ce_qui_l_a_leve": "J'ai trouvé la cause, et elle n'est pas la lenteur — voir l'entrée suivante. Mes deux gestes ne se sont pas perdus : ils se sont empêchés l'un l'autre."
+  },
+  {
+   "jour": "129.4.3",
+   "tente": "deux gestes au parloir menés en même temps — le --faire sur mon passé et le --faire de correction à la roukerie",
+   "ce_que_la_machine_en_a_fait": "les deux ont péri sur le même écueil, et il a un nom : « TimeoutError: session occupee ». Le verrou de session refuse un second appel tant que le premier tient la place. Le premier a fini par être tué, et le second n'a jamais rendu de verdict.",
+   "ce_que_j_attendais": "que deux gestes indépendants puissent cheminer de front, comme deux corbeaux partent ensemble vers deux marches différentes",
+   "consequence_sur_ma_journee": "P.3 est resté sans verdict, et ma correction — reprendre le feuillet de la table du maître, refaire la colonne II — a dû être renvoyée une seconde fois. J'ai perdu la matinée à croire que j'avais agi.",
+   "etat": "ouverte",
+   "leve_par": null,
+   "note": "LA RÈGLE QUE J'EN TIRE, ET ELLE EST SIMPLE : UN SEUL GESTE À LA FOIS AU PARLOIR, ET ON L'ATTEND. Ma roukerie ne lâche pas deux oiseaux du même poing ; il n'y a pas de raison que le parloir soit plus large que ma main. Pendant que le geste chemine, j'écris — l'écriture ne prend pas le verrou.",
+   "leve_le": "129.4.3",
+   "ce_qui_l_a_leve": "Tenue depuis : un geste, puis le suivant. Les trois gestes de la correction ont été tranchés et tiennent."
+  },
+  {
+   "jour": "129.4.3",
+   "tente": "--dire à otto : la ligne de rapprochement écrite d'avance, et l'avertissement sur les origines",
+   "ce_que_la_machine_en_a_fait": "le billet a été inscrit au canal — je l'y ai vérifié, il y est, entier — puis la commande est morte en voulant réveiller le destinataire : « OSError: [Errno 22] Invalid argument » sur un fichier `.lu` d'une relation qui n'est pas la nôtre (chambres/otto/relations/mj-portreal/.lu).",
+   "ce_que_j_attendais": "que le billet parte et qu'il le trouve à son réveil",
+   "consequence_sur_ma_journee": "AUCUNE sur le fond, et c'est pourquoi je l'écris quand même : mes mots sont au canal, il les lira. Mais si je n'étais pas allé vérifier le canal de mes yeux, j'aurais cru mon billet perdu et je l'aurais renvoyé — et un même billet envoyé deux fois, à un homme comme lui, se lit comme une relance.",
+   "etat": "ouverte",
+   "leve_par": null,
+   "note": "LA RÈGLE : quand une commande meurt, je vais voir CE QUI A DÉJÀ ÉTÉ FAIT avant de la refaire. Une panne à la fin d'un geste n'est pas un geste qui n'a pas eu lieu. C'est la même règle que pour les hommes : on ne redemande pas ce qu'on a peut-être déjà obtenu."
+  }
+ ]
 }

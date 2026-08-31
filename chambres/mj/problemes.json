@@ -149,6 +149,23 @@
    "ce_que_j_y_fais": "Je pose la règle avant d'en avoir besoin, pour ne pas l'inventer sous la pression : QUAND L'HORLOGE ET LE VÉCU DIVERGENT, C'EST LE VÉCU QUI FAIT FOI POUR LA NARRATION, ET C'EST L'HORLOGE QU'ON RÉPARE. On peut réécrire un registre ; on ne peut pas dé-vivre une journée. La reine est donc au 4e, 9h00, et son midi n'a pas encore eu lieu. Tant que ce n'est pas tranché, JE NE NARRE RIEN au 5e — ni la borne, ni sa suite. Une narration qui daterait du 5e ce qui appartient au 4e ne se rattrape plus après coup.",
    "pour_dev": "Qui a écrit etat/horloges.json à 03:24:33 le 31.8, hors passe de tick, en posant quatre sièges à la même minute ? Si c'est un outil d'alignement, il doit refuser d'avancer une horloge au-delà du dernier item de flux de ce siège : une horloge peut reculer pour se corriger, elle ne devrait jamais dépasser ce que son siège a vécu.",
    "de_la_meme_famille_que": "P02, et c'est le même défaut par l'autre bout. Là, la feuille de reprise me datait d'un jour EN ARRIÈRE parce qu'elle ne lisait pas horloges.json. Ici, horloges.json me date d'un jour EN AVANT de tout le reste. Deux fois, la même leçon : AUCUNE horloge ne fait foi seule. On lit les trois — horloges.json, le dernier item de flux.jsonl, journal.scene_courante — et quand elles divergent on le DIT au lieu de choisir la plus commode."
+  },
+  {
+   "id": "P09",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4
+   },
+   "quoi": "LE CANAL HISTORIQUE D'ALYS MÉLANGE DES RÉPONSES DESTINÉES À DES JOUEUSES DIFFÉRENTES. Une réponse adressée à dame Aurore a été reprise par le MJ et poussée à Rhaenyra, alors que la réponse actuelle d'Alys à la reine était distincte et correcte.",
+   "tente": "Répondre à Rhaenyra avec le rapport d'Alys après l'avoir sollicitée par le canal mj ↔ Alys.",
+   "ce_qui_est_arrive": "Le routage final était correct : le billet et la poussée visaient bien Rhaenyra. Mais la sélection a pris dans `chambres/alys-grive/relations/mj/discussion.json` une ancienne réponse explicitement destinée à dame Aurore, puis l'a poussée dans `etat/flux.jsonl` avec `pour: rhaenyra`. La réponse actuelle d'Alys, elle, était adressée à la reine et portait le rapport réel du 4e.",
+   "ce_que_j_attendais": "Qu'un échange destiné à une autre joueuse ne puisse pas être utilisé comme matière pour Rhaenyra sans référence de requête ni vérification du destinataire.",
+   "gravite": "haute pour la continuité et le brouillard — le joueur reçoit une parole authentique mais appartenant à une autre scène, ce qui peut lui donner des faits ou un contexte qu'il n'a pas acquis",
+   "etat": "ouvert — défaut de sélection de source, non de routage",
+   "ce_que_j_y_fais": "Associer chaque demande au parloir à un identifiant de requête et à un destinataire explicite ; lors de la mise en scène, ne retenir qu'une réponse dont le destinataire et la requête correspondent. Si le canal ne permet pas cette vérification, dépêcher à nouveau l'acteur au lieu de recycler l'historique.",
+   "pour_dev": "Le canal `relations/<de>/<a>/discussion.json` doit conserver la référence de requête et le destinataire de chaque réponse, et le lanceur doit refuser une matière marquée `dame Aurore` quand la sortie porte `pour: rhaenyra`.",
+   "ce_que_j_en_retiens": "Un texte authentique n'est pas automatiquement une source valable : il faut vérifier à qui il répondait avant de le faire entrer dans une autre salle."
   }
  ]
 }

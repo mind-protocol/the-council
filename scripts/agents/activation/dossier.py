@@ -13,7 +13,7 @@ from temps.expose import regence
 from temps.expose import presence as presence_calc  # la position se CALCULE
 
 from agents.activation.socle import RACINE, ETAT, lire_json, journaliser
-from agents.activation.horloges import minute_absolue
+from agents.activation.horloges import minute_absolue, date_civile_acteur
 from agents.activation.graphe import continuite_tache
 
 def references_du_monde():
@@ -236,9 +236,12 @@ def dossier_activation(pid, tache, horloge, noeuds, etat=None):
             "opinion": relation.get("opinion"),
             "liens": relation.get("liens") or [],
         })
+    date_locale = date_civile_acteur(pid, horloge)
+    if date_locale is None:
+        date_locale = dict(zip(("annee", "lune", "jour"),
+                               depecher.date_du_monde()))
     return {
-        "date_du_monde": dict(zip(("annee", "lune", "jour"),
-                                  depecher.date_du_monde())),
+        "date_du_monde": date_locale,
         "diffusion": {
             "origine": horloge["source_id"], "front": horloge["front_id"],
             "secondes_depuis_origine": round(horloge["present_secondes"], 3),
@@ -298,4 +301,3 @@ def chaines_dans(valeur):
 
 def mots(texte):
     return re.findall(r"[A-Za-zÀ-ÖØ-öø-ÿŒœ'-]+", str(texte or ""))
-

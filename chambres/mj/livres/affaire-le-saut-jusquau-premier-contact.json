@@ -1,0 +1,705 @@
+{
+ "id": "affaire-le-saut-jusquau-premier-contact",
+ "titre": "Le saut jusqu'au premier contact",
+ "sous_titre": "⏭️ **CE QUE LES MJ DOIVENT FAIRE POUR QU'UN « AVANCER JUSQU'À » PUISSE PARTIR.** Ouverte dans ma chambre le 5e jour de la 4e lune, an 129. Cible du saut : le premier moment de contact entre les deux camps. Tout ce qui est écrit ici est mesuré ce soir, pas supposé. Libellés en X.x ; chaque action porte son porteur.",
+ "type": "plan",
+ "embleme": "⏭️",
+ "couleur": "#5a4a3f",
+ "tenu_par": "mj",
+ "office": "L'arbitrage du temps et du canon",
+ "pages": [
+  "**LE CONTACT EST DÉJÀ ARMÉ, ET IL EST AÉRIEN.**\n\nOn cherchait la collision du côté des osts : Criston lève le sien en **15 jours**, Ormund part le **19e** et n'arrive sous Port-Réal que le **14e de la 5e lune**. Ce n'est pas là que ça se jouera.\n\n— **Rhaenys** porte une étape vivante, sans horloge : *« survoler la côte de la baie **chaque jour, de sa propre autorité** — Sombreval, Repos-des-Freux »*. Et une autre, bloquée depuis longtemps : *« trois fois demandée, jamais accordée : elle a cessé de demander. »*\n— **Aemond** porte *« arracher au conseil l'autorisation de sortir Vhagar en représailles »*, **jours_restants : 1**.\n— **Sombreval** est passée aux Verts le 3e.\n\nUne Targaryen noire survole tous les jours une ville que les Verts viennent de prendre, et un Targaryen vert veut son dragon demain. **Le premier contact peut tomber n'importe quel jour, et il ne dépend d'aucune armée.** C'est la cible du saut, et c'est aussi ce qui le rend court.",
+  "**CE QUI EMPÊCHE LE SAUT DE PARTIR AUJOURD'HUI — trois choses bloquantes, quatre de tenue.**\n\nBloquantes : l'horloge du monde n'avance pas · les deux camps n'ont pas un identifiant unique · aucun canon échu n'est arbitré sur le trajet.\n\nDe tenue : le prédicat d'arrêt n'est pas écrit · il n'y a pas de bornes · il n'y a pas de journal de saut · le brouillard doit tenir pendant le saut.\n\n**Et une découverte qui change la forme du prédicat** : `jetons.json` n'existe pas globalement — il vit dans `etat/joueurs/<siège>/`, c'est la carte de **croyances d'un siège**. Il n'y a donc **aucune table des corps vrais**. Un prédicat de contact ne peut pas lire les jetons sans lire la croyance d'un seul camp ; il doit lire la vérité, qui est éparpillée entre `personnages.lieu_id`, les `mains` et la prose des plans.",
+  "**LA MISE EN GARDE, QUI N'EST PAS UNE CONDITION.**\n\nSur les 18 dernières activations, **27 % des mutations sont rejetées**, et les motifs sont toujours les mêmes : un acteur ne peut créer ni un homme, ni une affaire, ni un événement. Sur un saut de vingt jours, c'est la perte principale.\n\nLe saut produira donc **du mouvement et presque pas de matière neuve**. Ce n'est pas bloquant pour la mécanique — c'est bloquant pour son intérêt, et il faut le savoir avant de le lancer plutôt que de le découvrir au réveil."
+ ],
+ "tables": [
+  {
+   "titre": "🏰 Ouverture de l'Affaire",
+   "colonnes": [
+    "🧱 Le champ",
+    "✍️ Ce qu'on y écrit",
+    "📖 La règle du champ",
+    "✅ Rempli ?"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "🏷️ **LE NOM**",
+      "Le saut jusqu'au premier contact",
+      "Le sujet dont le conseil traite, **jamais la solution**.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🎯 **L'OBJET**",
+      "Rendre possible un « avancer jusqu'à » dont la cible est le premier moment de contact entre les deux camps — et savoir, avant de le lancer, ce qu'il produira et ce qu'il ne produira pas.",
+      "Ce qu'on veut obtenir, en une phrase qui puisse être fausse.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🧱 **LE PÉRIMÈTRE — DANS**",
+      "L'horloge du monde pendant le saut · l'identité des camps · l'arbitrage des canons traversés · le prédicat d'arrêt · les bornes · le journal · les corps vrais des deux camps sur le trajet.",
+      "Ce que cette affaire tient, et dont elle répond.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🚫 **LE PÉRIMÈTRE — HORS**",
+      "Les trois verbes manquants à la porte — créer un homme, une affaire, un événement. C'est un autre chantier, et il décide de l'ÉMERGENCE, pas du saut. Hors aussi : la mise en scène de ce que le joueur en apprendra, qui suit les règles ordinaires du brouillard.",
+      "Ce qu'on refuse d'y mettre, pour que l'affaire reste tenable.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "📌 **L'ÉTAT ACTUEL**",
+      "Trois verrous bloquants ouverts — l'horloge, l'identifiant de camp, le canon échu — et quatre de tenue. **La cible est trouvée et elle n'est pas où on la cherchait** : le premier contact des deux camps est `mort-lucerys`, canon d'importance 95, le 129.4.9 à Accalmie — ni un ost, ni une patrouille, mais un garçon sur un petit dragon. Sa condition dépendait d'un siège sans joueur ; **X.26 l'a levée** — un siège vacant est en laisser faire, décisions comprises — et X.44 l'a tranchée. Quinze actions écrites, une tranchée.",
+      "Où en est l'affaire au moment où on la lit, sans complaisance.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🔢 **LA PLAGE**",
+      "Aucune. Ce volume vit dans chambres/mj/books/ : il ne fait pas foi, il ne porte pas d'adresse du monde, et rien du fil ne doit pouvoir l'ouvrir. Libellés locaux en **X.x**.",
+      "Réservée d'avance.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "💡 **LA CONCLUSION**",
+      "**RÉÉCRITE LE 5e AU SOIR. L'ANCIENNE RECOMMANDAIT CE QUE CE VOLUME RÉFUTE MAINTENANT DEUX TABLES PLUS LOIN, ET JE LA LAISSE ICI POUR MÉMOIRE :** *« je partirais court : trancher que le survol compte, pré-arbitrer mort-lucerys, borner à sept jours. »* **Ses deux premiers termes sont morts, et pas d'usure — d'enquête.**\n\n**LE SURVOL NE COMPTE PAS** (X.31) : Rhaenys est à Harrenhal, son survol n'existe dans aucune donnée. **`MORT-LUCERYS` NE SE PRODUIT PAS** (X.32) : il est conditionnel à un ordre — envoyer Lucerys à Accalmie — que la reine n'a pas donné.\n\n**ET C'EST LA CONCLUSION VRAIE, QUI RENVERSE L'AFFAIRE : IL N'Y A RIEN À RENCONTRER.** Zéro lieu mixte sur treize. Aucun corps en route vers l'autre camp. Le seul contact que le calendrier portait dépendait d'un ordre qui n'a pas été donné, et le seul que je croyais quotidien n'est écrit nulle part. **Un saut de sept jours ne rencontrerait rien** — il brûlerait sept jours de monde pour du mouvement sans rencontre, ce que X.51 annonçait déjà pour la matière.\n\n**DONC : CE N'EST PAS UN SAUT QU'IL FAUT LANCER, C'EST UNE DÉCISION QU'IL FAUT ATTENDRE.** Le premier contact n'est pas une échéance qui mûrit toute seule : c'est la conséquence d'un ordre — quelqu'un qu'on envoie quelque part. Tant qu'aucun camp n'a mis un corps en route vers l'autre, l'outil est prêt et sa cible n'existe pas.\n\n**CE QUI ME FERAIT PARTIR DEMAIN**, et c'est écrit d'avance pour n'avoir pas à en décider dans la fièvre : (1) la reine envoie un émissaire chez un seigneur que les Verts courtisent — alors `mort-lucerys` se redate à cinq jours de ce départ et le saut a une cible ; (2) Aemond obtient Vhagar et sort — un corps vert en mouvement suffit ; (3) un ost se met en marche vers l'autre camp. **Aucune des trois ne dépend de moi**, et c'est bien ainsi : un arbitre qui fabrique la cible de son propre saut a cessé d'arbitrer. || **AMENDÉ LE 5e, APRÈS X.26.** Ce que je croyais être le premier contact — le survol de Rhaenys, les osts à quinze et quarante jours — n'était que ce que la simulation savait produire. Le canon, lui, avait déjà écrit la scène et l'avait datée. **Chercher par la simulation ce qu'on a autorité pour arbitrer est la dépense la plus chère qu'on puisse faire** : quatre jours de monde et trente-deux hommes pour découvrir une date déjà écrite.",
+      "L'avis du titulaire, défendu : ce qu'il ferait, ce qui le ferait changer d'avis, ce qu'il ne faut pas faire.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🔚 **FERMÉE QUAND**",
+      "Le saut a été lancé une fois, s'est arrêté de lui-même sur un contact ou sur une borne, et son journal a été mis en scène. S'il est abandonné, elle se ferme aussi — en disant pourquoi.",
+      "Écrit à l'ouverture, à froid.",
+      "**oui**"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔗 Affaires liées",
+   "colonnes": [
+    "🪢 Le lien",
+    "🔗 L'affaire",
+    "🔢 Notre pièce",
+    "🔢 La leur",
+    "📝 Pourquoi"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "attend",
+      "La montre (chambre)",
+      "🔒 X.11",
+      "🔒 M.12",
+      "Le saut ne peut pas partir tant que monde.date ne suit pas la plus avancée des horloges — même verrou, vu de deux affaires."
+     ]
+    },
+    {
+     "cellules": [
+      "attend",
+      "Les boucles du monde (chambre)",
+      "🔒 X.13",
+      "⚔️ L.32",
+      "Les échéances non produites bloquent leurs diffusions ; un saut qui part par-dessus les enterre."
+     ]
+    },
+    {
+     "cellules": [
+      "attend",
+      "Le brouillard (chambre)",
+      "🔒 X.17",
+      "🎯 B.2",
+      "Ce que le saut fait arriver doit arriver déformé et daté, ou le saut lève le brouillard par sa seule mécanique."
+     ]
+    },
+    {
+     "cellules": [
+      "partage",
+      "Guet des osts verts (31000)",
+      "🎯 X.1",
+      "🎯 31000",
+      "Le volume garant de Denys bar Emmon garantit que la date tient encore ; le saut, lui, la fait avancer. Les deux regardent le même mouvement."
+     ]
+    },
+    {
+     "cellules": [
+      "partage",
+      "Le jour d'entrée (11000)",
+      "🎯 X.1",
+      "🎯 11000",
+      "La chaîne la plus longue de la reine — trente jours par la route du sel — borne par le haut ce qu'un saut peut atteindre côté noir."
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🎯 États cibles",
+   "colonnes": [
+    "🎯 N°",
+    "🏷️ L'état",
+    "✅ Ce qui doit être vrai",
+    "📍 Où",
+    "👁️ La preuve",
+    "⬆️ Sert",
+    "💯 Importance"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**X.1**",
+      "**en défaut** — ⏭️ Le saut se termine tout seul",
+      "L'horloge du monde avance sans main, et un prédicat calculable dit quand s'arrêter",
+      "",
+      "Un saut à blanc sur 3 jours qui rend une date d'arrêt et une raison",
+      "",
+      "**25**"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.2**",
+      "**en défaut** — 🛡️ Le saut ne fabrique aucun arriéré",
+      "Aucun événement canon n'est traversé sans arbitrage ; aucune diffusion ne reste suspendue derrière",
+      "",
+      "Après le saut, `tick.py --verifier` ne signale ni canon échu ni nouvelle suspendue",
+      "",
+      "**40**"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.3**",
+      "**en défaut** — 📖 Le saut se raconte",
+      "Ce qui s'est produit pendant le saut est listé, et ce que le joueur en apprend passe par info.json avec son délai et sa déformation",
+      "",
+      "Un journal de saut lisible, et aucune révélation hors brouillard",
+      "",
+      "**30**"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔒 Verrous",
+   "colonnes": [
+    "🔒 N°",
+    "🏷️ Le verrou",
+    "⛔ Bloque",
+    "📌 Ce qui est vrai aujourd'hui",
+    "👁️ La preuve",
+    "🔓 Levé quand"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**X.11**",
+      "🕰️ L'horloge du monde n'avance pas toute seule",
+      "X.1",
+      "Les acteurs consomment leur temps propre — 44 min pour Otto, 48 pour la reine — et `monde.date` ne bouge pas d'une minute. Un « avancer jusqu'à » tournerait dans la même journée jusqu'à épuisement du budget",
+      "Relevé à une heure d'écart : `monde.date` = 129.4.5, 9h00 aux deux mesures",
+      "Le jour passe sans main, ou le saut cadence lui-même le tick"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.12**",
+      "🏷️ Un camp, deux identifiants",
+      "X.1",
+      "port-real porte `maison-targaryen-vert`, sombreval porte `maison-targaryen-verts` — à une lettre près. Tout prédicat « camp de A ≠ camp de B » se trompera **en silence**",
+      "`lieux.json`, lu le 5e",
+      "Un seul identifiant par camp, et tous ses consommateurs suivis"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.13**",
+      "⚖️ Un canon échu dort sur le trajet",
+      "X.2",
+      "`mort-lucerys`, canon, **importance 95**, dû le 129.4.9 — dans quatre jours. Et ce soir j'ai ouvert la partie sur **cinq événements échus depuis six jours**, dont quatre bloquaient leurs diffusions : le monde tournait sur deux réalités",
+      "`evenements.json` et la sortie du tick, le 4e et le 5e",
+      "Les canons du trajet sont pré-arbitrés, ou le saut s'arrête sur chacun"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.14**",
+      "🎯 Le prédicat de contact n'est pas écrit — et il ne peut pas lire les jetons",
+      "X.1",
+      "**LEVÉ LE 9e DE LA 4e LUNE, ET LE PRÉDICAT A RENDU SON PREMIER CONTACT.**\n\nBanc lancé sur l'état réel (`chambres/mj/brouillons/banc-premier-contact.py`) :\n\n> *** PREMIER CONTACT ***  lieu : accalmie — noirs : lucerys · verts : aemond*\n\nLe 5e, le même banc rendait **zéro lieu mixte sur treize**. Quatre jours plus tard il rend une date, un lieu et deux noms, sans qu'on ait touché à sa règle. **C'est la preuve que X.1 demandait** : le saut peut se terminer tout seul, parce qu'il existe enfin un fait calculable qui dit quand.\n\n**ET LA DÉFINITION CORRIGÉE ÉTAIT LA BONNE, ce qui n'allait pas de soi.** Accalmie porte `controle_id: maison-baratheon` — ni noir, ni vert. Ma définition d'hier, « un corps sur une place dont le contrôle est adverse », **n'aurait rien vu du tout**. C'est la co-présence de deux corps ennemis qui fait le contact, et le lieu n'est qu'un point de rendez-vous. Je m'étais déjugé sur ce point le 5e ; le 9e le confirme sur le cas réel.\n\nReste à `dev` de le matérialiser en `scripts/saut/predicats/premier_contact.py` — la règle est écrite, bancée, et elle a tiré une fois.",
+      "L'arborescence de `etat/`, lue le 5e",
+      "**LEVÉ le 9e** — banc concluant : accalmie, lucerys contre aemond"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.15**",
+      "🚧 Le saut n'a aucune borne",
+      "X.1",
+      "Ni jours max, ni activations max, ni coût max. À **0,63 $ l'activation**, un saut non borné est un budget non borné — et on ne le découvre qu'au réveil",
+      "La loupe `activite.py`, 18 activations pour 10,23 $",
+      "Trois bornes dures posées avant le départ"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.16**",
+      "📖 Rien ne dit ce qui s'est passé pendant",
+      "X.3",
+      "Un saut muet est injouable : le manuel interdit d'annoncer un événement autrement que diégétiquement, et on ne peut pas mettre en scène ce qu'on ne sait pas énumérer",
+      "Le manuel, « Advance til next event »",
+      "Un journal de saut : produits, livrés, rejetés, arbitrés"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.17**",
+      "🌫️ Le brouillard peut se lever par accident",
+      "X.3",
+      "Le prédicat se calcule sur la vérité du monde. S'il annonce l'arrêt en clair, il révèle par sa mécanique ce que personne dans la fiction ne sait",
+      "Règle cardinale du manuel : vérité contre connaissance",
+      "L'arrêt est calculé sur la vérité, et ce qui en sort au joueur passe par info.json"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🗝️ Clefs",
+   "colonnes": [
+    "🗝️ N°",
+    "🏷️ La clef",
+    "🔓 Ouvre",
+    "💡 Le principe",
+    "💰 Le prix",
+    "🚪 Ce que cela ferme",
+    "👁️ La preuve attendue",
+    "⚖️ Décision"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**X.21**",
+      "⏱️ Cadencer le tick dans le saut lui-même",
+      "X.11",
+      "Le saut n'attend pas que le jour passe : c'est lui qui le fait passer, un tick par jour sauté",
+      "un tick par jour, ~1 à 2 min",
+      "",
+      "",
+      "à décider"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.22**",
+      "🏷️ Un identifiant de camp, et un seul",
+      "X.12",
+      "Deux orthographes ne sont pas deux camps. On corrige la donnée, on n'apprend pas au code à deviner",
+      "une passe sur `lieux.json` et ses consommateurs",
+      "",
+      "",
+      "à décider — c'est `etat/`"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.23**",
+      "⚖️ Le canon arrête le saut, toujours",
+      "X.13",
+      "L'arbitrage du canon est au MJ du joueur et à personne d'autre. Un saut qui tranche du canon a changé de nature",
+      "un arrêt par canon traversé",
+      "",
+      "",
+      "prise de ma main le 5e"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.24**",
+      "🎯 **LE CONTACT EST LA CO-PRÉSENCE DE DEUX CORPS ENNEMIS — pas un corps sur une place adverse**",
+      "X.14\n\n**AMENDEMENT DU 9e, ET C'EST LA COUR D'ACCALMIE QUI ME L'A APPRIS.** J'avais ecrit que les dormants ne comptent pas, « parce qu'un dormant n'est pas sur place, il est range ». **C'est faux, et le contre-exemple est arrive le jour meme.** Ser Alyn Bulwer, de l'ambassade Hightower, est loge a Accalmie depuis le 3.17 — vingt-trois jours de vin bu — et il sera cree DORMANT a juste titre : son corps est chez mj-accalmie, ses ordres chez mj-portreal, personne ne lui ecrit de mandat. **Dormant veut dire « sans tete propre », pas « absent ».** Un predicat qui ignore les dormants laisserait une ambassade entiere stationner chez l'ennemi sans jamais voir un contact.\n\n**DONC LA REGLE CORRIGEE : on exclut les MORTS, et eux seuls.** Le lieu d'un dormant est vrai et compte. C'est meme le cas le plus frequent du premier contact : un ambassadeur, un otage, un logeur — des gens qu'on a cesse de simuler et qui sont pourtant la.",
+      "**DÉFINITION ARRÊTÉE LE 5e, ET ELLE CORRIGE CELLE QUE J'AVAIS ÉCRITE HIER.**\n\n> **Il y a premier contact au jour J dès que DEUX CORPS VIVANTS DE CAMPS OPPOSÉS portent le même `lieu_id` à cette date.**\n\nQuatre précisions, toutes dures :\n\n1. **Le contrôle du lieu ne compte pas.** Ma définition d'hier — « un corps sur une place dont le `controle_id` est adverse » — **rate le contact le plus important du calendrier** : `mort-lucerys` se joue à **Accalmie, qui est `maison-baratheon`**, ni verte ni noire. Aemond et Lucerys s'y rencontrent sur une place tierce, et l'ancien prédicat serait resté muet. Le lieu est un point de rendez-vous, pas un camp.\n2. **Corps = une entrée de `personnages.json` avec `etat: actif` et un `lieu_id`.** Les morts et les **dormants** ne comptent pas : un dormant n'est pas sur place, il est rangé. Les 119 personnages portent tous un `lieu_id` — c'est calculable dès aujourd'hui.\n3. **Le camp vient du `maison_id` du CORPS**, par une table d'allégeance, jamais du `controle_id` du lieu et **jamais de `etat/joueurs/<siège>/jetons.json`**, qui est une croyance de siège avec sa `certitude`.\n4. **Un seul corps de chaque côté suffit.** Pas de seuil de nombre : un émissaire est un contact. C'est même la forme exacte que prend le premier.\n\n**BANC PASSÉ AVANT D'ÉCRIRE** : la règle appliquée à l'état d'aujourd'hui rend **zéro lieu mixte sur treize occupés**. Elle ne se déclenche donc pas au jour zéro — ce qui était le risque et la seule façon de le savoir.\n\n**GARDE-FOU À CODER MALGRÉ TOUT** : exclure les corps **captifs, otages ou détenus**. Ils sont co-présents avec l'ennemi par définition et ce n'est pas un contact, c'est une captivité. Aucun cas aujourd'hui ; il en suffira d'un pour rendre le prédicat idiot.",
+      "zéro — c'est une définition",
+      "",
+      "",
+      "**TRANCHÉE le 5e — à matérialiser en `scripts/saut/predicats/premier_contact.py`**"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.25**",
+      "🚧 Trois bornes et un journal",
+      "X.15 · X.16",
+      "Un saut se pose comme une dépense : on dit d'avance ce qu'on accepte de perdre, et on rend des comptes après",
+      "zéro à l'écriture",
+      "",
+      "",
+      "à décider"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.26**",
+      "🪑 Un siège sans joueur est en laisser faire permanent",
+      "X.1 · X.2",
+      "**Par définition** : si le joueur saute, son siège passe en gestion laisser faire — et le manuel dit ce que cela veut dire, mot pour mot : *« le joueur s'écarte et tu tiens son personnage, DÉCISIONS COMPRISES »*. Il n'y a donc aucune décision d'un siège vacant qui reste en suspens : ni celles qui coûtent, ni celles qui froissent, ni celles qui déclenchent un canon. Un canon conditionnel dont la condition dépend d'un siège vacant est un canon dont la condition est **à moi**.",
+      "zéro — c'est une définition, et elle retire un blocage au lieu d'en ajouter",
+      "Ferme la porte de sortie qui consistait à laisser une décision en attente d'un joueur qui ne reviendra pas : un siège vacant ne suspend plus rien.",
+      "Aucune condition de canon ne reste ouverte faute de joueur",
+      "**prise le 5e** — et elle vaut pour les quatre sièges, pas seulement pour la reine"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "⚔️ Actions",
+   "colonnes": [
+    "⚔️ N°",
+    "🏷️ L'action",
+    "🗝️ Réalise",
+    "📝 Ce qu'on fait",
+    "📍 Où",
+    "🪶 Office",
+    "👤 Qui",
+    "🧰 Moyens",
+    "🔧 Avec quoi",
+    "💰 Ce qu'elle coûte",
+    "⛓️ Dépend de",
+    "👁️ La preuve",
+    "⏳ État",
+    "📅 Jour fait",
+    "📝 Note",
+    "📅 Jour dû"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**X.31**",
+      "⚖️ Trancher si le survol compte comme contact",
+      "X.24",
+      "**TRANCHÉ LE 5e : NON — et je me déjuge, pour une raison que je n'avais pas.** Mon avis d'hier était « oui », par goût narratif. Puis j'ai ouvert la fiche : **Rhaenys porte `lieu_id: harrenhal`.** Elle n'est pas au-dessus de Sombreval ; son survol quotidien vit dans une étape de plan, **en prose, sans date, sans trajet et sans position**. Un prédicat qui lit la vérité ne le verra jamais — et le faire compter reviendrait à **inventer un fait pour qu'un prédicat se déclenche**, c'est-à-dire à fabriquer du monde depuis la régie. Le survol ne compte donc pas **parce qu'il n'existe nulle part dans la vérité calculable**, non parce qu'il serait moins dramatique.\n\n**Et la règle s'étendra d'elle-même le jour où l'on écrira les vols (X.40)** : un dragon en vol est alors un corps avec un `lieu_id` daté, et il tombe sous X.24 sans qu'on touche au prédicat. C'est la bonne façon de le faire entrer — par la donnée, pas par une exception dans le code.",
+      "",
+      "",
+      "mj",
+      "",
+      "",
+      "",
+      "",
+      "Une décision écrite dans ce volume",
+      "**TRANCHÉE le 5e — NON**",
+      "",
+      "Le survol ne compte pas : Rhaenys porte lieu_id harrenhal, son vol n'existe dans aucune donnee",
+      "avant le départ"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.32**",
+      "⚖️ Pré-arbitrer les canons du trajet",
+      "X.23",
+      "`mort-lucerys` (imp 95, 129.4.9) en premier, puis tout canon dont la date tombe dans la fenêtre du saut. Chacun contre ses conditions de déviation écrites, comme les cinq de cette nuit.\n\n**OUVERT ET LU LE 5e — ET IL NE TIENT QU'À UN FIL QUI N'EXISTE PAS.** L'événement est marqué **CONDITIONNEL dans sa propre description** : « ne se produit QUE si Lucerys est envoyé porter un message à Accalmie sur Arrax, et se date alors à cinq jours de son départ ». Sa première condition d'annulation est explicite : **« annulé si Lucerys n'est pas envoyé à Accalmie »**.\n\nOr **Lucerys porte `lieu_id: peyredragon` et personne ne l'a envoyé nulle part.** La reine n'a rien ordonné de tel : son fil ouvert est le nom de l'officier du Guet, borné à midi. **La date du 129.4.9 est donc une date de calendrier sans cause** — le canon la porte parce qu'on l'a semée, pas parce que quelque chose l'a déclenchée.\n\n**Mon arbitrage : il ne se produit PAS en l'état, et ça ne se règle pas en le laissant `a-venir`.** Un canon dont la condition n'est pas remplie se tranche : `annule`, avec sa raison écrite — ou il se REDATE le jour où la reine envoie effectivement quelqu'un à Accalmie, à cinq jours de ce départ. Le laisser « à-venir » avec une date morte, c'est garder une garde qui arrête le saut pour rien.\n\n**Et la seconde moitié de sa description tient toujours** : « Aemond continue de chercher à voler, et la dette de l'œil ne s'éteint pas ». Ce qui s'annule est la rencontre, pas la pression.",
+      "",
+      "",
+      "mj",
+      "",
+      "",
+      "",
+      "",
+      "Aucun canon échu à `tick.py --verifier` après le saut",
+      "**faite le 5e — le canon NE SE PRODUIT PAS**",
+      "",
+      "mort-lucerys est conditionnel a un ordre qui n'a pas ete donne",
+      "avant le départ"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.33**",
+      "🚧 Poser les trois bornes de ce saut-ci",
+      "X.25",
+      "Jours max, activations max, coût max — chiffrés et écrits avant de partir, pas estimés après",
+      "",
+      "",
+      "mj",
+      "",
+      "",
+      "",
+      "",
+      "Trois nombres dans ce volume",
+      "à faire",
+      "",
+      "",
+      "avant le départ"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.34**",
+      "🏷️ Unifier l'identifiant du camp vert",
+      "X.22",
+      "`maison-targaryen-verts` (sombreval) et `maison-targaryen-vert` (port-real) : une seule forme, et tous les consommateurs suivis. Vérifier au passage s'il n'y a pas la même divergence côté noir.",
+      "",
+      "",
+      "dev",
+      "",
+      "",
+      "",
+      "",
+      "Un seul identifiant par camp dans `lieux.json` et partout où il est lu",
+      "**faite** — verifiee de mes yeux le 5e",
+      "",
+      "lieux.json : maison-targaryen-vert unifie sur ses deux lieux",
+      "avant le départ"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.35**",
+      "🎯 Écrire le prédicat de contact",
+      "X.24",
+      "Il lit la VÉRITÉ, jamais `etat/joueurs/<siège>/jetons.json` qui est une croyance : positions par `personnages.lieu_id`, nombres par les `mains`, et le `controle_id` du lieu. Il rend la date, le lieu, les deux corps en présence et la raison.",
+      "",
+      "",
+      "dev",
+      "",
+      "",
+      "",
+      "",
+      "Un saut à blanc qui rend une date d'arrêt et sa raison",
+      "à faire",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "**X.36**",
+      "⏱️ Faire avancer le jour dans la boucle du saut",
+      "X.21",
+      "Le saut cadence lui-même `tick` + `appliquer`, un jour à la fois, et s'arrête sur canon échu ou sur le prédicat.",
+      "",
+      "",
+      "dev",
+      "",
+      "",
+      "",
+      "",
+      "`monde.date` avance d'autant de jours que le saut en a sautés",
+      "**faite** — scripts/avancer.py",
+      "",
+      "banc a blanc 129.4.5 -> 129.4.9 concluant, garde X.13 dedans",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "**X.37**",
+      "📖 Rendre un journal de saut",
+      "X.25",
+      "Par jour sauté : ce qui s'est produit, ce qui a été livré, ce qui a été rejeté, ce qui a été arbitré. Assez pour que le MJ puisse le mettre en scène.",
+      "",
+      "",
+      "dev",
+      "",
+      "",
+      "",
+      "",
+      "Un journal lisible sans rouvrir les fichiers",
+      "à faire",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "**X.38**",
+      "🟢 Poser les corps vrais du camp vert",
+      "X.14",
+      "Le prédicat a besoin de savoir OÙ sont les corps, et la vérité verte est aujourd'hui en prose : les 2 042 hommes de Criston, les 2 600 sous les murs de Villevieille, et surtout **Vhagar** — Aemond est à un jour d'obtenir l'autorisation de la sortir. Où est-elle, et d'où part-elle ?",
+      "",
+      "",
+      "mj-portreal",
+      "",
+      "",
+      "",
+      "",
+      "Une position vraie pour chaque corps vert nommé dans les plans",
+      "à faire",
+      "",
+      "",
+      "avant le départ"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.39**",
+      "⚫ Poser les corps vrais à Sombreval",
+      "X.14",
+      "C'est la place de contact la plus proche : les Verts la tiennent depuis le 3e, une Targaryen noire la survole tous les jours. Qui y est, en quel nombre, et sous quelle bannière — la flotte brûlée comprise.",
+      "",
+      "",
+      "mj-sombreval",
+      "",
+      "",
+      "",
+      "",
+      "Une position vraie pour chaque corps présent à Sombreval",
+      "à faire",
+      "",
+      "",
+      "avant le départ"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.40**",
+      "🐉 Poser le corps de Rhaenys et son vol",
+      "X.14",
+      "Elle survole la côte chaque jour de sa propre autorité, sans horloge sur l'étape. Le prédicat ne peut rien en faire tant qu'on ne sait pas d'où elle part, où elle passe et quels jours. C'est mon acteur, c'est ma charge.",
+      "",
+      "",
+      "mj",
+      "",
+      "",
+      "",
+      "",
+      "Un vol daté et situé, relisible par le prédicat",
+      "à faire",
+      "",
+      "",
+      "avant le départ"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.41**",
+      "📣 Mettre le saut en scène après coup",
+      "X.16",
+      "Le journal de saut n'est pas jouable tel quel : ce que le monde apprend passe par `info.json`, avec délai, déformation et fiabilité. Le contact lui-même arrive par une bouche, jamais par une annonce.",
+      "",
+      "",
+      "mj",
+      "",
+      "",
+      "",
+      "",
+      "Aucune révélation qui ne soit sourcée",
+      "à faire",
+      "",
+      "",
+      "après le saut"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.42**",
+      "📣 Faire faire X.38 à mj-portreal — les corps vrais du camp vert",
+      "X.24",
+      "Le réveiller sur X.38 et rien d'autre, avec un timeout de 600 s. Le mot porte l'objet — où sont Vhagar, les 2 042 de Criston, les 2 600 de Villevieille —, l'interdit — les têtes de Sombreval ne sont pas à lui — et les deux avertissements de mesure. Puis relire son staging, l'arbitrer, l'appliquer par la porte, et lui répondre sur son canal.",
+      "",
+      "**mj** · dû avant le départ",
+      "mj",
+      "",
+      "",
+      "un réveil de 600 s au plus, plus ma relecture. Mesuré cette nuit : un mot à deux actions l'a tué à 180 s, un mot à une action est rentré.",
+      "X.34",
+      "Une position vraie pour chaque corps vert, appliquée et non seulement proposée",
+      "à faire",
+      "",
+      "**Déléguer est un travail.** Sans cette ligne, X.38 pèse sur lui et rien ne pèse sur moi — alors que c'est moi qui l'appelle, le borne, le relis et l'arbitre.",
+      "avant le départ"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.43**",
+      "📣 Faire faire X.39 à mj-sombreval — les corps de la place de contact",
+      "X.24",
+      "Même geste, un seul sujet : qui tient Sombreval, en quel nombre, sous quelle bannière, la flotte brûlée comprise. Lui rappeler que l'acte de protection est à lui, et que ce qui en sortira devient canon par mon arbitrage. Relire, arbitrer, appliquer, répondre.",
+      "",
+      "**mj** · dû avant le départ",
+      "mj",
+      "",
+      "",
+      "un réveil de 600 s au plus, plus ma relecture",
+      "X.34",
+      "Une position vraie pour chaque corps présent à Sombreval",
+      "à faire",
+      "",
+      "Il a déjà rendu une fois cette nuit, et bien : il avait trouvé la limite — tete_retirer n'existe pas — avant de proposer sa ceinture. On peut lui confier un sujet borné.",
+      "avant le départ"
+     ]
+    },
+    {
+     "cellules": [
+      "**X.44**",
+      "⚖️ Trancher, pour la reine, le départ de Lucerys vers Accalmie",
+      "X.26",
+      "**VERDICT : il part, et il est déjà parti.** Le canon se date à *cinq jours de son départ* pour une chute le 129.4.9 — soit un départ le **4e au matin**. Or Jacaerys a levé sur Vermax ce matin-là, versant nord, texte scellé sous le pourpoint. Les deux fils portent la même ambassade, décidée au même conseil : l'un au Nord, l'autre à Accalmie. Ce n'est donc pas une décision neuve que je prends à la place de la reine — c'est **l'autre moitié d'une décision déjà prise**, et la date du canon la confirme d'elle-même. Reste à l'écrire : un acte de départ, et la croyance correspondante dans sa tête, qui n'en porte pour l'instant que Jacaerys.",
+      "Peyredragon",
+      "**mj** · tenu le 5e, en laisser faire du siège rhaenyra",
+      "mj",
+      "",
+      "",
+      "rien en jetons, tout en conséquences : c'est le point de non-retour du canon — tension 90, *« un fils pour un fils »*",
+      "X.26",
+      "Un acte de départ écrit, et la condition « annulé si Lucerys n'est pas envoyé » qui cesse d'être ouverte",
+      "**tranché le 5e — reste à écrire dans l'état**",
+      "",
+      "Les trois autres conditions d'annulation restent à vérifier avant de poser la scène : qu'aucun dragon adulte ne l'escorte, qu'Aemond soit à Accalmie au même moment — son étape *« se faire donner l'ambassade d'Accalmie »* est à un jour —, et que Borros n'ait pas déjà répondu par écrit.",
+      "avant l'avance"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "⚖️ Ce qui ne tient pas ensemble",
+   "colonnes": [
+    "⚖️ N°",
+    "🧮 La monnaie",
+    "📥 Ce qui est demandé",
+    "🪣 Ce qui existe",
+    "🕳️ L'écart",
+    "📅 Quand ça se voit",
+    "✂️ Ce que je dis qui tombe"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**X.51**",
+      "la matière neuve",
+      "Qu'un saut de plusieurs jours fasse ÉMERGER des choses",
+      "27 % des mutations rejetées : un acteur ne peut créer ni un homme, ni une affaire, ni un événement",
+      "Le saut produira du mouvement et presque pas de matière",
+      "",
+      "**L'émergence tombe, le mouvement reste.** On le sait avant de partir. Si l'on veut l'émergence, il faut d'abord ouvrir les trois verbes manquants à la porte — et c'est un autre chantier que celui-ci."
+     ]
+    },
+    {
+     "cellules": [
+      "**X.52**",
+      "le temps d'arbitrage",
+      "Que le saut aille vite",
+      "Chaque canon traversé impose un arrêt et un arbitrage de ma main",
+      "Un saut de 15 jours croise au moins `mort-lucerys` — donc au moins un arrêt long",
+      "",
+      "**La vitesse tombe, pas l'arbitrage.** Un saut qui tranche du canon tout seul n'est plus un saut : c'est une partie jouée sans MJ."
+     ]
+    }
+   ]
+  }
+ ]
+}

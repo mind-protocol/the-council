@@ -1,5 +1,16 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+ "entrees": [
+  {
+   "jour": "129.4.3 (31.8)",
+   "quoi": "AUCUNE TÊTE NEUVE NE PEUT ENTRER PAR LA PORTE — et donc aucun personnage actif ne peut être créé, par personne, dans aucune zone.",
+   "j_ai_tente": "Un lot de staging créant trois habitants du Repaire-aux-Corneilles, actifs, avec leur tête : `python scripts/appliquer.py etat/staging/20260831-reposdesfreux-la-place-avant-le-neuvieme.json`.",
+   "ce_que_la_machine_en_a_fait": "Trois refus d'abord : « X est créé 'actif' sans tête dans ce lot ». J'ajoute les trois têtes avec `echelle: \"royaume\"` (valeur autorisée par ECHELLES de scripts/etat/mutations/vocabulaire.py, ligne 33) : appliquer.py PLANTE, `KeyError: 'royaume'` dans val_plan.py à `budget = BUDGETS[v[\"echelle\"]]` — aucun rapport rendu, tout le lot est perdu de vue. J'essaie `echelle: \"au loin\"` (clef réelle de BUDGETS, scripts/temps/bouche.py ligne 34) : refus propre, « echelle 'au loin' hors ('scene', 'orbite', 'royaume') ».",
+   "ce_que_j_attendais": "Qu'une des deux valeurs passe. Aucune ne le peut : `ECHELLES` de vocabulaire.py dit (scene, orbite, royaume), `BUDGETS` importé de temps/bouche.py dit (quartier, au loin), et `valider_tete_neuve` les interroge tous les deux à trois lignes d'écart. docs/schema.md dit `echelle` SUPPRIMÉ depuis le passage au quartier mesuré : vocabulaire.py n'a pas suivi, et son propre BUDGETS de secours (lignes 22-29) porte encore les anciennes clefs, ce qui masque la contradiction tant que temps/ s'importe bien.",
+   "contournement": "J'ai créé les trois dormants (la porte ne réclame de tête que pour un actif) et rangé les trois têtes dans `brouillons/a-poser-quand-la-porte-accepte-une-tete.json`, prêtes à poser d'un seul lot avec le passage à « actif ». Ce que ça coûte en attendant : un mestre dormant n'est pas le destinataire naturel des plis de son lieu (temps/lecture.py ne parcourt que les actifs), donc les plis qui tombent au Repaire restent sans main.",
+   "porte_a_dev_le": "129.4.3",
+   "leve_par": null
+  }
+ ]
 }

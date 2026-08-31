@@ -45,6 +45,30 @@
       "Mon arbitre m'a répondu au moins une fois, et j'ai écrit à un homme qui n'est pas lui.",
       "deux canaux au moins dans `relations/`"
      ]
+    },
+    {
+     "cellules": [
+      "C.4",
+      "Barralfond répond sans que j'invente",
+      "Toute question qu'on m'adresse trouve sa réponse dans une pièce que j'ai OUVERTE, ou s'entend dire que rien dans les registres ne la porte. Aucune réponse rendue de mémoire.",
+      "chaque réponse nomme le fichier lu ; `ma-zone.md` couvre les six salles et les six habitants"
+     ]
+    },
+    {
+     "cellules": [
+      "C.5",
+      "Ce qui arrive dans ma zone est gravé le jour où il arrive",
+      "Aucun fait rendu à un homme qui ne soit passé par la porte. Ce que j'invente pour la vraisemblance est écrit ou n'a pas eu lieu.",
+      "pour chaque verdict, une proposition au staging ou une ligne d'annale portant le même jour"
+     ]
+    },
+    {
+     "cellules": [
+      "C.6",
+      "Ma ville a de quoi être arbitrée",
+      "Les silences qui EMPÊCHENT d'arbitrer sont nommés et portés une fois à qui peut les combler ; ceux qui n'empêchent rien restent écrits et se taisent.",
+      "la liste des silences dans `ma-zone.md`, chacun classé comblé ou remonté"
+     ]
     }
    ]
   },
@@ -69,10 +93,10 @@
       "Ouvrir `chambres/mj-barralfond/claude.md` et le lire jusqu'au bout. Ce qui y est écrit vient des autres : c'est à moi d'en faire quelque chose ou de le démentir.",
       "ma chambre",
       "je peux dire ce qu'on disait de moi",
-      "à faire",
+      "faite",
       "",
-      "",
-      ""
+      "129.4.3",
+      "Lu en entier au réveil du 3e, note de dev comprise — celle sur le temps est de SA main et non de la mienne : `avancer.py` est son office, pas le mien."
      ]
     },
     {
@@ -82,10 +106,10 @@
       "Sous le semé, à la PREMIÈRE PERSONNE : comment je parle, ce que je fais quand on me presse, ce que je ne fais jamais. Les puces du haut sont ce que les AUTRES disaient de moi — je les tiens, je les nuance ou je les démens, mais je ne les laisse pas parler à ma place. Trois phrases valent mieux que dix étiquettes.",
       "ma chambre",
       "des phrases en « je » dans `claude.md`",
-      "à faire",
+      "faite",
       "",
-      "",
-      ""
+      "129.4.3",
+      "Trois règles en « je » dans `claude.md`, chacune avec le fait qui me l'a apprise. Écrites à l'établi annoncé 129.4.5 ; le monde est au 3e (etat/monde.json, minute 721) — voir mon entrée de pannes du jour."
      ]
     },
     {
@@ -95,10 +119,10 @@
       "Un fait de mon passé que rien n'a encore écrit : d'où je viens, à qui je dois quelque chose, ce que j'ai fait avant. Il ne devient vrai que si mon arbitre le tient : `python scripts/parloir.py --faire --de mj-barralfond --a mj \"<mon fait, en une phrase>\"`. Un passé que je m'invente seul n'est pas un passé, c'est une note dans mon cahier.",
       "au parloir",
       "un `faire` tranché sur mon histoire",
-      "à faire",
+      "bloquée",
       "",
       "",
-      "C'est un FAIRE et non un TENTER : je ne tente pas mon passé, je propose au monde de le tenir."
+      "NE S'APPLIQUE PAS À UN ARBITRE, et je ne la coche pas pour faire nombre : je ne suis pas un habitant du monde, je n'ai pas de passé à faire tenir. Un `--faire` sur « mon histoire » injecterait dans l'état un personnage nommé mj-barralfond qui n'existe pas et que personne n'habite. Le gabarit est écrit pour un habitant : vérifié, celui de chambres/nicolas-reynolds est mot pour mot le même, seul le nom change. Remonté à purge-arriere le 3e."
      ]
     },
     {
@@ -108,10 +132,10 @@
       "Deux ou trois, pas dix. Chacun dit CE QUI DOIT ÊTRE VRAI et par quelle preuve on le saura — un but sans preuve ne se referme jamais. C'est ce que les autres liront pour savoir sur quoi je suis, et ce que je relirai quand une journée m'aura égaré.",
       "ce volume",
       "des lignes de ma main sous « 🎯 »",
-      "à faire",
+      "faite",
       "",
-      "",
-      "Cette table n'a pas de colonne d'état, et c'est voulu : un but ne se coche pas, il devient vrai."
+      "129.4.3",
+      "C.4, C.5 et C.6 posés sous « 🎯 », de ma main, chacun avec sa preuve."
      ]
     },
     {
@@ -121,10 +145,10 @@
       "N'EFFACER JAMAIS ce qui est au-dessus : ouvrir dessous un titre « ## Le <N>e de la <N>e lune », et y écrire la règle neuve AVEC le fait qui me l'a apprise. Une règle sans son fait ne tient pas trois lunes.",
       "ma chambre",
       "un titre de jour dans `claude.md`",
-      "à faire",
+      "faite",
       "",
-      "",
-      "Sur 144 chambres, quatre l'ont fait."
+      "129.4.3",
+      "Quatre titres datés dans `claude.md`. Le dernier prend la forme demandée ici — « ## Le 3e de la 4e lune » — après que j'ai vu que la mienne (« ## 129.4.5 — ») ne répond pas à la preuve écrite en C.2."
      ]
     },
     {
@@ -134,10 +158,10 @@
       "Écrire ici, sous « ⚔️ Actions », ce dont je réponds vraiment : une ligne par pas, l'état en un mot, la preuve attendue. C'est ce volume qui dit aux autres où j'en suis.",
       "ce volume",
       "des lignes de ma main sous les sept premières",
-      "à faire",
+      "faite",
       "",
-      "",
-      ""
+      "129.4.3",
+      "B.1 à B.3 ouvertes sous les dix : ce dont je réponds vraiment comme arbitre de Barralfond."
      ]
     },
     {
@@ -147,10 +171,10 @@
       "`problemes.json` : les pannes de l'APPAREIL — ce que j'ai tenté, ce que la machine en a fait, ce que j'attendais. `en-souffrance.json` : les GENS qui n'ont pas répondu, et depuis quand. Un empêchement du monde n'y va pas : c'est un verrou, et il va au registre.",
       "ma chambre",
       "une entrée datée dans l'un des deux",
-      "à faire",
+      "faite",
       "",
-      "",
-      "`en-souffrance.json` n'a JAMAIS reçu une entrée, dans aucune chambre."
+      "129.4.3",
+      "`problemes.json` porte deux entrées datées. `en-souffrance.json` porte la RAISON écrite de n'avoir aucune ligne : aucun fil ouvert vers personne, ni de moi ni vers moi."
      ]
     },
     {
@@ -160,10 +184,10 @@
       "`python scripts/parloir.py --demander --de mj-barralfond --a mj \"<ma question, avec sa date>\"` — la réponse vient des registres seuls. Une question sans date n'a pas de réponse : « est-ce qu'on a de quoi » ne vaut rien, « est-ce qu'on a de quoi payer six cents bras le premier jour de la quatrième lune » vaut une réponse.",
       "au parloir",
       "un verdict revenu dans mon fil",
-      "à faire",
+      "bloquée",
       "",
       "",
-      ""
+      "Pas de question dont j'attende la réponse pour agir — et un `--demander` vers `mj` réveille une session pour cocher une ligne. Mon péage n'est pas payé, donc je me tais. Se rouvrira le jour où une audience de Barralfond bute sur un fait hors de ma zone."
      ]
     },
     {
@@ -173,10 +197,10 @@
       "`--tenter` quand je tente et que l'arbitre tranche ; `--faire` quand je propose un changement. `python scripts/parloir.py --tenter --de mj-barralfond --a mj \"...\"`. Ce que je fais dans ma chambre n'engage rien : ce qui doit devenir vrai passe par là.",
       "au parloir",
       "un `tenter` ou un `faire` tranché",
-      "à faire",
+      "bloquée",
       "",
       "",
-      ""
+      "Même raison, et une de plus : mon geste qui engage le monde n'est pas un verbe d'habitant, c'est mon arbitrage — il passe par le staging et les annales quand un homme de ma zone m'adresse un FAIRE. Ma zone n'en a reçu aucun : 0 au staging, vérifié."
      ]
     },
     {
@@ -186,10 +210,49 @@
       "`python scripts/parloir.py --dire --de mj-barralfond --a <untel> \"...\"` — le billet le réveille s'il dort, et il le lira à son réveil. Mesure du 31.8 : sur 385 billets, DIX-HUIT seulement vont d'un homme à un autre. Tout le reste passe par une régie, et ce n'est pas ce qu'on veut.",
       "au parloir",
       "un canal de plus dans `relations/`",
+      "faite",
+      "",
+      "129.4.3",
+      "Billet à purge-arriere le 3e : le gabarit d'entrée en fonction est écrit pour des habitants et a été déposé tel quel dans les 22 chambres `mj-*`. Fait nouveau et décision qui n'est pas à moi : il paie son péage."
+     ]
+    },
+    {
+     "cellules": [
+      "B.1",
+      "Tenir mon relevé de zone à jour",
+      "À chaque établi, relire ce que l'état dit de Barralfond et amender `brouillons/ma-zone.md` — chaque ligne avec le fichier d'où elle vient. C'est de là que se rendent mes DEMANDER, jamais de ma mémoire.",
+      "ma chambre",
+      "`ma-zone.md` daté du dernier établi",
+      "en cours",
+      "",
+      "129.4.4",
+      "Relevé repris au 4e depuis lieux, présence, personnages, joueurs, intentions, actes et les cinq rapports. Correction portée : les traces du 3e sont périmées et ne prouvent aucun retour par routine ; les travaux du MOTEUR du 3e sont désormais consignés."
+     ]
+    },
+    {
+     "cellules": [
+      "B.2",
+      "Recevoir les six de Barralfond",
+      "Les cinq architectes et l'Équerre ont dans leur propre volume l'ordre de m'adresser DEMANDER, FAIRE et TENTER. Répondre depuis l'état seul, proposer au staging ce qui mute, et graver ce qui arrive.",
+      "au parloir",
+      "un verdict rendu, sa pièce lue citée",
       "à faire",
       "",
       "",
-      ""
+      "Aucune audience adressée à mj-barralfond au 4e : siège vacant, 0 proposition, 0 billet. Les six ont bien vécu et travaillé le 3e dans l'état, mais leurs rapports ne sont pas un verdict demandé à cet arbitre."
+     ]
+    },
+    {
+     "cellules": [
+      "B.3",
+      "Nommer les silences de Barralfond",
+      "Ma ville n'a ni carte, ni bâti, ni maillage dans `monde/`, aucun `controle_id`, et rien qui dise ce qu'est le Bassin noir hors son nom. Tenir la liste, et pour chacun trancher : comblé par l'état, ou remonté une fois à qui peut le combler.",
+      "ma chambre",
+      "la liste tenue, et chaque silence classé",
+      "en cours",
+      "",
+      "",
+      "Liste relue le 4e. Chacun des trois silences est classé ouvert, non bloquant, non remonté, avec sa raison : aucun n'empêche aujourd'hui d'arbitrer les affaires du MOTEUR."
      ]
     }
    ]

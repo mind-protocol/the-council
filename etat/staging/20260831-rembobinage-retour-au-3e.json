@@ -1,0 +1,38 @@
+{
+  "titre": "Rembobinage — les deux hommes rentrent, le monde reste au 3e",
+  "par": "mj",
+  "mutations_proposees": [
+    {
+      "table": "personnages",
+      "cible": "lucerys",
+      "operation": "personnage",
+      "champs": {
+        "lieu_id": "peyredragon"
+      },
+      "pourquoi": "REMBOBINAGE SUR ORDRE. Le monde revient au 129.4.3 : le depart du 5e n a pas eu lieu. Lucerys n est jamais parti pour Accalmie ; il rentre a Peyredragon, ou il attend toujours qu on lui donne une mission."
+    },
+    {
+      "table": "personnages",
+      "cible": "aemond",
+      "operation": "personnage",
+      "champs": {
+        "lieu_id": "port-real"
+      },
+      "pourquoi": "REMBOBINAGE SUR ORDRE. Son ambassade et sa sortie de Vhagar tombaient les 6e et 8e ; ces jours n ont plus eu lieu. Il rentre a Port-Real, avec ses deux etapes vivantes non jouees."
+    },
+    {
+      "table": "evenements",
+      "cible": "mort-lucerys",
+      "operation": "evenement",
+      "champs": {
+        "date_prevue": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 9
+        }
+      },
+      "pourquoi": "REMBOBINAGE. Je l avais redate au 10e sur le fait d un depart le 5e ; ce depart est defait, donc la redatation tombe avec lui. Retour a sa date ecrite, 129.4.9, et sa premiere condition d annulation redevient pleinement ouverte : Lucerys n est pas envoye a Accalmie."
+    }
+  ],
+  "applique_le": "2026-08-31T06:45:24"
+}

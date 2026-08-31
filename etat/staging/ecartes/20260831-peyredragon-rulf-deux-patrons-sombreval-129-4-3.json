@@ -1,0 +1,48 @@
+{
+ "titre": "Peyredragon — Rulf Corne entend separement ses deux patrons rentres de Sombreval, le 129.4.3",
+ "calcule_le": "2026-08-31",
+ "par": "mj-peyredragon (arbitrage d'un TENTER ; rien n'a ete ecrit dans etat/)",
+ "date_monde": {
+  "annee": 129,
+  "lune": 4,
+  "jour": 3
+ },
+ "pieces_lues": [
+  "etat/evenements.json, 'sac-sombreval' — canon, date_prevue 129.4.3, Criston arrive le 3e ; ses diffusions vers peyredragon sont datees du 4e (barque, fiabilite 45, « on ne sait pas si lord Gunthor tient encore la citadelle ») et du 6e (temoin, fiabilite 90, la decapitation). AUCUNE n'est livree : le 3e, ce rocher ne sait rien.",
+  "etat/books/affaire-jour-dentree.json, verrou 11006 — le quai de Sombreval est ferme par lord Gunthor, et la route du sel part de ce quai-la.",
+  "etat/actes.json, acte-rulf-les-onze-coques-du-20e-2e et acte-rulf-rend-les-trois-choses-a-aurore-2e-soir — la methode de Rulf : chaque ligne marquee VU ou DIT, les hommes interroges SEULS et sans qu'on leur souffle le nom, comme pour les sept portes.",
+  "etat/evenements.json, 'prog-corbeau-des-treize-dragons-arrive-3e' — le corbeau des neuf mots n'atteint Sombreval que ce soir vers dix heures : rien de l'accord n'est encore su la-bas quand les deux patrons en sont partis."
+ ],
+ "arbitrage": "Les deux hommes rapportent la meme chose du PORT et deux choses differentes de la BANNIERE — l'un a vu, l'autre a entendu — et aucun des deux ne sait ce qu'est devenu lord Gunthor. C'est exactement ce que l'etat autorise le 3e : la nouvelle du sac n'atteint ce rocher que le 4e, et la mort de Darklyn le 6e. Le prix est reel et il est porte a l'acte : la matinee de maree du maitre de port, et le second patron qui a compris qu'on le tenait a l'ecart.",
+ "mutations_proposees": [],
+ "a_la_main": {
+  "table": "etat/actes.json",
+  "geste": "Ajouter l'acte ci-dessous en fin de liste.",
+  "acte": {
+   "id": "acte-rulf-les-deux-patrons-de-sombreval-3e",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3,
+    "minute": 420
+   },
+   "acteur_id": "rulf-corne",
+   "lieu_id": "peyredragon",
+   "description": "LE QUAI DE PEYREDRAGON, A LA MAREE DU MATIN LE 3e DE LA 4e LUNE. Rulf Corne entend SEPAREMENT ses deux patrons rentres de Sombreval, chacun a un bout du quai, sans qu'aucun sache ce que l'autre a dit — la procedure des sept portes, appliquee a des nouvelles et non a des noms. || (1) LE PORT, ET LES DEUX LE DISENT PAREIL, MARQUE VU : au depart, le quai de Sombreval etait toujours ferme, rien ne charge aux marches de la ville, ils ont pris leur fret au mouillage du dehors ; et la flotte de Darklyn etait entiere sur ses amarres, pas une quille sortie. || (2) LA BANNIERE, ET ILS NE DISENT PAS LA MEME CHOSE. Le premier a VU, une heure avant la nuit tombante du 2e, de la poussiere et une colonne sur la crete de la route de terre, sous une banniere qu'il ne savait pas lire a cette distance : longue, sombre, avec du clair dessus. Le second n'a rien vu a terre : on lui a DIT, a la planche, par un lamaneur de Sombreval, de deraper avant le jour, parce que les hommes du roi sont sur la route. VU d'un cote, DIT de l'autre, et pres de deux heures d'ecart entre leurs heures — l'un compte depuis la derniere lanterne, l'autre depuis l'etale. || (3) LORD GUNTHOR DARKLYN : AUCUN DES DEUX NE SAIT. Le premier l'a vu vivant sur son propre quai a l'aube du 2e, donnant des ordres sur la chaine. Le second a entendu dans une taverne qu'il etait sorti au-devant de la colonne avec vingt chevaux. Pas un mot de la citadelle, ni de l'un ni de l'autre. || LE PRIX : la matinee de maree du maitre de port y passe ; et le second patron a compris qu'on le tenait a l'ecart du premier — il le dira au bourg le soir meme, et le prochain homme que Rulf separera arrivera en le sachant.",
+   "temoins": [
+    "wend"
+   ],
+   "connu_de": [
+    "rulf-corne",
+    "wend"
+   ]
+  },
+  "pourquoi": "L'issue d'un TENTER est un fait du monde : non gravee, elle n'a pas eu lieu. Aucune operation du vocabulaire ne porte un acte ; il se pose a la main."
+ },
+ "verse_par_mj_le": "2026-08-31 (129.4.3, minute 721)",
+ "actes_verses": [
+  "acte-rulf-les-deux-patrons-de-sombreval-3e"
+ ],
+ "applique_le": "2026-08-31T09:00:00",
+ "note_mj": "Les actes de ce bloc ont ete verses A LA MAIN par mj via scripts/ajouter.py actes. Ils n'etaient PAS dans mutations_proposees : la porte appliquer.py n'a aucune operation pour la table actes, et elle repondait 'aucune mutation — rien a appliquer' sur le ton d'un succes. Tout le bloc est verse ; la piece est close."
+}

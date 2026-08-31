@@ -29,7 +29,6 @@ import re
 import subprocess
 import sys
 import tempfile
-import time
 import uuid
 
 from agents import chambre
@@ -45,6 +44,8 @@ MJ_ZONE_MD = os.path.join(RACINE, "scripts", "agents", "prompts",
 # final) : servie EN PLUS de mj-zone.md quand la zone est `mj`.
 MJ_SPECTACLE_MD = os.path.join(RACINE, "scripts", "agents", "prompts",
                                "mj-spectacle.md")
+MANUEL_MJ_RACINE = os.path.join(RACINE, "CLAUDE.md")
+FLUX = os.path.join(RACINE, "etat", "flux.jsonl")
 
 # PLUS DE PLAFOND SUR UNE SESSION (31.8). « Trois minutes est un verdict, pas
 # une journee » supposait qu'un arbitre repond vite ; la mesure dit autre
@@ -138,26 +139,70 @@ def arbitre_de(qui):
     return zone_de(ville)
 
 
+def identifiants_de_charge(mj):
+    """Comptes runtime qui appartiennent a la meme capacite de zone.
+
+    Le MJ principal absorbe toutes les zones physiques des sieges joueurs;
+    les autres arbitres n'ont qu'un nom. Le tri rend le registre stable.
+    """
+    mj = zone_de(mj)
+    if mj != "mj":
+        return [mj]
+    from etat.expose import tables
+    donnees = tables.lire(os.path.join(RACINE, "etat", "personnages.json"), [])
+    if isinstance(donnees, dict):
+        donnees = donnees.get("personnages") or []
+    joueurs = tables.lire(os.path.join(RACINE, "etat", "joueurs.json"), [])
+    if isinstance(joueurs, dict):
+        joueurs = joueurs.get("joueurs") or joueurs.get("sieges") or []
+    comptes = {"mj"}
+    for joueur in joueurs:
+        if not isinstance(joueur, dict):
+            continue
+        # Le siege principal demeure l'identite historique de `mj`, meme
+        # lorsque l'occupation mesuree est momentanement vacante. Sans cela,
+        # fermer la page ferait disparaitre d'un coup toute la charge comptee
+        # hier sous `mj-peyredragon`.
+        if not joueur.get("occupe") and joueur.get("role") != "principal":
+            continue
+        lieu = _lieu_de(
+            joueur.get("personnage_id") or joueur.get("id"), donnees)
+        if lieu:
+            comptes.add(zone_de(lieu))
+    return sorted(comptes)
+
+
 def _manuel(mj):
-    """mj-zone.md, puis mj-spectacle.md si la zone est celle du joueur (le
-    meme role plus trois charges — habitant.md, les roles), puis le claude.md
-    de SA chambre — sa maniere, de sa main, en dernier : la voix la plus
-    proche de lui a le dernier mot (meme coupe que manuel_de)."""
-    manuel = lire(MJ_ZONE_MD)
-    if manuel is None:
+    """Constitution racine pour le MJ principal, puis zone, spectacle et
+    cahier personnel.
+
+    `CLAUDE.md` est le Manuel du MJ canonique : Regle Zero, parloir, salle,
+    discipline du flux. Il n'etait auparavant jamais servi aux sessions de
+    zone, parce que leur cwd est neutre. On ne le donne qu'a `mj` : l'injecter
+    a `mj-sombreval` ou `mj-portreal` leur attribuerait la partie et le joueur
+    du principal. Le cahier de chambre reste dernier, comme dans manuel_de.
+    """
+    zone = lire(MJ_ZONE_MD)
+    if zone is None:
         raise SystemExit("scripts/agents/prompts/mj-zone.md manque a la zone.")
+    blocs = []
+    if mj == "mj":
+        constitution = lire(MANUEL_MJ_RACINE)
+        if constitution is None:
+            raise SystemExit("CLAUDE.md manque au MJ principal.")
+        blocs.append(constitution)
+    blocs.append(zone)
     if mj == "mj":
         spectacle = lire(MJ_SPECTACLE_MD)
         if spectacle is None:
             raise SystemExit(
                 "scripts/agents/prompts/mj-spectacle.md manque a la zone du "
                 "joueur.")
-        manuel += u"\n\n---\n\n" + spectacle
+        blocs.append(spectacle)
     cahier = lire(os.path.join(chambre.chemin(mj), "claude.md"))
     if cahier and cahier.strip():
-        manuel += (u"\n\n---\n\n# Ta maniere, de ta main\n\n"
-                   + cahier.strip() + u"\n")
-    return manuel
+        blocs.append(u"# Ta maniere, de ta main\n\n" + cahier.strip())
+    return u"\n\n---\n\n".join(blocs) + u"\n"
 
 
 # L'ETABLI VIT DANS agents/etabli.py (extrait le 31.8, limite des 500
@@ -201,10 +246,33 @@ def reveiller_en_cast(mj, de, mot):
     return canal, True
 
 
-def _message(de, mot, verbe):
+def _message(de, mot, verbe, modes=None):
     """Le reveil ne porte que deux choses : qui te reveille, et voici son
     mot — plus l'etiquette du moment (habitant.md §4 : la date est une
     etiquette, jamais un verrou)."""
+    if verbe == u"JOUEUR":
+        message = (u"[JOUEUR] %s vient de parler ou d'agir — an %d, %de "
+                   u"lune, %de jour.\n%s\n"
+                   u"Ce reveil est une adresse de travail, pas une voix "
+                   u"d'habitant a arbitrer. Traite toutes les ACTIONS du brief "
+                   u"dans l'ordre et reponds au joueur dans son flux — jamais "
+                   u"par billet ou parloir.\n"
+                   u"SORTIE : `python scripts/append_flux.py '<json item>' "
+                   u"--pour %s`, des qu'une tranche est prete, puis de nouveau "
+                   u"plus tard dans le meme tour. Un refus se corrige avant "
+                   u"l'appel suivant. `suites` reste facultatif.\n"
+                   % ((de,) + date_du_monde() + (mot.strip(), de)))
+        if u"run" in (modes or []):
+            message += (
+                u"RUN ACTIF — GARDE DE SORTIE : tu tiens le personnage a sa "
+                u"place. Une transition, une porte qui s'ouvre, un rapport "
+                u"annonce ou un homme qui attend ne sont PAS une reponse. "
+                u"Continue jusqu'au contenu substantiel et a ses consequences. "
+                u"Si un PNJ doit parler, depeche-le ou interroge sa session : "
+                u"n'invente pas sa parole et n'arrete pas le run en attendant. "
+                u"Rends la bride quand le battement substantiel est accompli ; "
+                u"un item `suites` peut l'expliciter, mais n'est jamais requis.\n")
+        return message
     return (u"[%s] %s te reveille — an %d, %de lune, %de jour.\n"
             u"Son mot : « %s »\n"
             u"Tu es l'arbitre : ce mot est la voix d'un autre — reponds en "
@@ -237,7 +305,13 @@ def appeler_zone(ville, de, mot, verbe, modele=None, minutes=MINUTES):
     sid = identifiant_de_session(mj)
     sa_chambre = chambre.ouvrir(mj)
     manuel = _manuel(mj)
-    texte = _message(de, mot, verbe)
+    actions_joueur = (_actions_en_attente(de)
+                      if verbe == u"JOUEUR" else [])
+    modes_joueur = _modes_actions(actions_joueur)
+    if verbe == u"JOUEUR":
+        from agents import portage
+        mot = portage.brief_message_joueur(de)
+    texte = _message(de, mot, verbe, modes=modes_joueur)
 
     # LE PAS-DE-TIR EST STABLE, ET C'EST UNE CONDITION DE LA MEMOIRE (mesure
     # du 30.8, reveils-jouets du pas 4) : un --session-id n'est unique que
@@ -246,67 +320,140 @@ def appeler_zone(ville, de, mot, verbe, modele=None, minutes=MINUTES):
     # fixe par MJ, hors du depot (la decouverte de CLAUDE.md remonte
     # l'arborescence), rend le conflit d'id — donc le --resume.
     neutre = os.path.join(tempfile.gettempdir(), "le-conseil-zones", mj)
-    # Meme raison qu'a la depeche : sans son nom pose ici, le journal des
-    # affaires attribue a « un outil » ce qu'une regie a decide.
-    env = dict(os.environ, LE_CONSEIL_QUI=str(mj), LE_CONSEIL_MJ=str(mj))
     os.makedirs(neutre, exist_ok=True)
     from agents.expose import runtime as agent_runtime
-    rep = agent_runtime.appeler(
-        role=mj, manuel=manuel, message=texte, session_id=sid,
-        modele=modele,
-        timeout=(minutes * 60) if minutes else None, cwd=neutre,
-        add_dirs=[RACINE, sa_chambre], tools=OUTILS, reprendre=None,
-        env={"LE_CONSEIL_QUI": str(mj), "LE_CONSEIL_MJ": str(mj)})
+    debut_flux = _position_flux()
+    appels = []
+
+    def appeler_le_mj(message):
+        rep = agent_runtime.appeler(
+            role=mj, manuel=manuel, message=message, session_id=sid,
+            modele=modele,
+            timeout=(minutes * 60) if minutes else None, cwd=neutre,
+            add_dirs=[RACINE, sa_chambre], tools=OUTILS, reprendre=None,
+            env={"LE_CONSEIL_QUI": str(mj), "LE_CONSEIL_MJ": str(mj)})
+        appels.append(rep)
+        return rep
+
+    rep = appeler_le_mj(texte)
+    rapport_attendu = (_actions_exigent_replique(actions_joueur)
+                       or _a_interroge_un_pnj(rep))
+    rapport_cache = (rapport_attendu
+                     and u"replique" not in _types_flux_depuis(debut_flux))
+    if rapport_cache:
+        rep = appeler_le_mj(
+            u"[CONTINUER LE RUN — SORTIE REFUSEE] Tu as rendu la main avant "
+            u"d'avoir accompli le laisser-faire. Reprends exactement ou tu "
+            u"t'es arrete. Une "
+            u"porte qui s'ouvre ou un rapport annonce n'est qu'une amorce. "
+            u"Obtiens la parole des PNJ par depeche/parloir si elle est "
+            u"necessaire. Si tu as deja obtenu leur rapport, un resume en "
+            u"`recit` le cache au joueur : pousse au moins une `replique` "
+            u"avec `locuteur_id`, tiree de leurs mots reels, puis joue ses "
+            u"consequences. `suites` n'est pas obligatoire. N'efface pas les "
+            u"items deja ecrits ; complete-les.")
+        rapport_attendu = rapport_attendu or _a_interroge_un_pnj(rep)
+    types_tour = _types_flux_depuis(debut_flux)
+    if rapport_attendu and u"replique" not in types_tour:
+        raise RuntimeError(
+            "rapport invisible : aucune replique de PNJ n'a ete poussee")
     sys.stderr.write(u"(zone : %s, %s, session %s)\n" % (
         mj, rep.get("provider") or "agent", sid[:8]))
-    _pousser_le_spool(mj)
+    # L'inbox est une file, pas une memoire. Le modele ne porte plus la
+    # suppression : le lanceur connait exactement les pieces presentes AVANT
+    # le tour et ne retire que celles-la, seulement apres un appel reussi a la
+    # porte et une vraie ecriture constatee. Un POST arrive pendant la session
+    # reste donc pour le reveil suivant.
+    if (actions_joueur and types_tour
+            and any(_a_pousse_flux(r) for r in appels)):
+        _retirer_actions(actions_joueur)
     _ramasser_a_lancer(mj)
     return (rep.get("result") or u"").strip()
 
 
-def _pousser_le_spool(mj):
-    """LE LANCEUR POUSSE AU FLUX — meme motif que le vecu (trace.deposer).
+def _position_flux():
+    try:
+        return os.path.getsize(FLUX)
+    except OSError:
+        return 0
 
-    Mesure du 31.8 : le sandbox du reveil -p a bloque `python append_flux.py`
-    au MJ — sa reponse, ecrite et prete, est restee prisonniere d'un fichier.
-    Le MJ ecrit donc ses items dans SA chambre (brouillons/flux-a-pousser.jsonl,
-    un item JSON par ligne, l'audience en clef `pour`) et c'est ICI, hors
-    sandbox, que la porte se passe. Le spool est vide apres la poussee ; un
-    item illisible reste en place et se dit sur stderr — rien ne se perd en
-    silence."""
-    spool = os.path.join(chambre.chemin(mj), "brouillons",
-                         "flux-a-pousser.jsonl")
-    if not os.path.exists(spool):
-        return
-    restes = []
-    with io.open(spool, encoding="utf-8", errors="replace") as f:
-        lignes = [l.strip() for l in f if l.strip()]
-    for ligne in lignes:
+
+def _items_flux_depuis(position):
+    """Items reellement ajoutes depuis le reveil, sans intermediaire."""
+    try:
+        with open(FLUX, "rb") as f:
+            f.seek(position)
+            brut = f.read().decode("utf-8", "replace")
+    except OSError:
+        return []
+    items = []
+    for ligne in brut.splitlines():
         try:
             item = json.loads(ligne)
-            audience = item.get("pour") or "tous"
-            if isinstance(audience, list):
-                audience = ",".join(audience)
-            r = subprocess.run(
-                [sys.executable, os.path.join(RACINE, "scripts",
-                                              "append_flux.py"),
-                 ligne, "--pour", str(audience)],
-                cwd=RACINE, capture_output=True, timeout=60)
-            if r.returncode != 0:
-                restes.append(ligne)
-                sys.stderr.write(u"(spool %s : refus — %s)\n" % (
-                    mj, r.stdout.decode("utf-8", "replace").strip()[:160]))
-        except Exception as e:
-            restes.append(ligne)
-            sys.stderr.write(u"(spool %s : %s)\n" % (mj, str(e)[:120]))
-    with io.open(spool, "w", encoding="utf-8", newline="\n") as f:
-        f.write(u"\n".join(restes) + (u"\n" if restes else u""))
+            if isinstance(item, dict):
+                items.append(item)
+        except ValueError:
+            continue
+    return items
 
 
-MOT_DU_POST = (u"je viens d'agir — mon action t'attend dans l'inbox, "
-               u"et ma parole au flux.")
+def _types_flux_depuis(position):
+    return [item.get("type") for item in _items_flux_depuis(position)
+            if item.get("type")]
 
 
+def _a_pousse_flux(rep):
+    return any("append_flux.py" in str(geste)
+               for geste in (rep.get("gestes") or []))
+
+
+def _actions_en_attente(personnage):
+    dossier = os.path.join(RACINE, "etat", "inbox", _sain(personnage))
+    if not os.path.isdir(dossier):
+        return []
+    return [os.path.join(dossier, nom) for nom in sorted(os.listdir(dossier))
+            if nom.startswith("action-") and nom.endswith(".json")
+            and os.path.isfile(os.path.join(dossier, nom))]
+
+
+def _modes_actions(chemins):
+    modes = []
+    for chemin in chemins:
+        try:
+            with io.open(chemin, encoding="utf-8") as f:
+                mode = (json.load(f) or {}).get("mode")
+            if mode and mode not in modes:
+                modes.append(str(mode))
+        except Exception:
+            continue
+    return modes
+
+
+def _actions_exigent_replique(chemins):
+    motifs = (u"rapport", u"parole", u"replique", u"réplique")
+    for chemin in chemins:
+        try:
+            with io.open(chemin, encoding="utf-8") as f:
+                action = json.load(f) or {}
+            texte = str(action.get("texte") or "").casefold()
+            if action.get("mode") == "run" and any(m in texte for m in motifs):
+                return True
+        except Exception:
+            continue
+    return False
+
+
+def _a_interroge_un_pnj(rep):
+    gestes = u"\n".join(str(g) for g in (rep.get("gestes") or []))
+    return "parloir.py" in gestes or "depecher.py" in gestes
+
+
+def _retirer_actions(chemins):
+    for chemin in chemins:
+        try:
+            os.remove(chemin)
+        except FileNotFoundError:
+            pass
 def main():
     """L'entree de scripts/reveiller.py, la facade (habitant.md pas 5 : le
     guetteur meurt). Le serveur la spawn DETACHEE sur le POST du joueur — le
@@ -348,11 +495,11 @@ def main():
                            modele=a.modele, minutes=minutes))
     else:
         mot = u" ".join(a.texte)
+        verbe = u"POST"
         if not mot:
-            # D.34 — le portage des registres : quand le reveil part sans
-            # texte (le POST du serveur), le lanceur joint au mot ce que les
-            # registres arretent sur le message en inbox (agents/portage.py).
-            from agents import portage
-            mot = MOT_DU_POST + portage.matiere_du_message(a.de)
-        print(appeler_zone(a.qui, a.de, mot, u"POST", modele=a.modele,
+            # D.34 — appeler_zone construit le brief court du message joueur :
+            # inbox exacte, fin du fil avec numeros de lignes, trois adresses
+            # de registres au plus.
+            verbe = u"JOUEUR"
+        print(appeler_zone(a.qui, a.de, mot, verbe, modele=a.modele,
                            minutes=minutes))

@@ -587,7 +587,7 @@
         "canal": "rumeur",
         "fiabilite": 30,
         "version": "Ce qui remonte par les marchands de la route de la Dent d'Or, avec quinze jours de retard et trois bouches de trop : la fille de Viserys aurait brule trois mille hommes du roi sur une route de la baie, avec deux betes ou peut-etre trois, et personne n'aurait survecu pour dire lesquelles. On dit aussi qu'elle est morte en couches, et on le dit dans la meme phrase.",
-        "livree": true
+        "livree": false
       },
       {
         "ou": "accalmie",
@@ -604,7 +604,7 @@
         "canal": "rumeur",
         "fiabilite": 35,
         "version": "Par des marchands remontes de Pointe-Aigue : la reine de Peyredragon aurait fait crier dans ses septs que marcher en armes sans declaration appelle le feu, et un septon y aurait repondu en chaire que ce qui a brule une armee brulera un jour un champ de ble. On ne s'accorde pas sur qui a parle le dernier. Rien, dans ce qu'on rapporte, ne concerne les Terres de l'Orage.",
-        "livree": true
+        "livree": false
       },
       {
         "ou": "peyredragon",
@@ -619,7 +619,7 @@
         "canal": "barque",
         "fiabilite": 80,
         "version": "De la Ver Blanc, contre paiement, trois lignes : lord Otto Hightower est a Accalmie depuis le dix-septieme jour et n'a toujours pas de reponse. On y attend un nom, et ce n'est pas un nom de bataille. En marge, d'une autre main : la maison Baratheon a quatre filles et pas un fils, et l'ainee s'appelle Cassandra.",
-        "livree": true
+        "livree": false
       },
       {
         "ou": "peyredragon",
@@ -635,7 +635,7 @@
         "canal": "barque",
         "fiabilite": 50,
         "version": "Deux patrons de coque venus de la cote de l'orage disent qu'on rassemble sous les murs d'Accalmie : des feux de camp par centaines dans la lande et les chemins pleins de cavaliers depuis une semaine. Aucun des deux ne sait pour qui l'on rassemble, et l'un jure n'avoir vu planter la-bas d'autre banniere que le cerf.",
-        "livree": true
+        "livree": false
       }
     ]
   },
@@ -1003,7 +1003,7 @@
     "date_prevue": {
       "annee": 129,
       "lune": 4,
-      "jour": 10
+      "jour": 9
     },
     "type": "canon",
     "importance": 95,
@@ -1020,7 +1020,7 @@
       "annulé si Aemond n'est pas à Accalmie au même moment",
       "dévié si Borros a déjà donné sa réponse par écrit avant l'arrivée de l'émissaire"
     ],
-    "statut": "a-venir",
+    "statut": "devie",
     "effets": "point de non-retour : monde.tension → 90 ; phase → guerre-ouverte ; Rhaenyra brisée de deuil ; Daemon promet 'un fils pour un fils'",
     "diffusion": [
       {
@@ -1174,7 +1174,7 @@
         "canal": "corbeau",
         "fiabilite": 65,
         "version": "Les serments du Trident arrivent par paquets et se contredisent sur les comptes : Blackwood se déclare et promet quinze cents lances, Bracken jure le contraire pour la seule raison que Blackwood a juré, et Vivesaigues garde le silence. Ce qui est sûr : le Conflans se battra chez lui.",
-        "livree": true
+        "livree": false
       },
       {
         "ou": "rosby",
@@ -1322,7 +1322,7 @@
         "canal": "barque",
         "fiabilite": 45,
         "version": "Les barques de pêche rentrent avant l'heure : Sombreval brûle du côté du port et on entend les cloches depuis la mer. On ne sait pas si lord Gunthor tient encore la citadelle, ni combien sont sortis par la porte de terre.",
-        "livree": true
+        "livree": false
       },
       {
         "ou": "peyredragon",
@@ -1335,7 +1335,7 @@
         "canal": "temoin",
         "fiabilite": 90,
         "version": "Des fuyards de Sombreval sont débarqués sur le rocher : la ville est pillée, la flotte brûlée sur ses amarres, et lord Gunthor Darklyn a été décapité sur son propre quai devant ses gens. Le premier homme qui a hissé vos couleurs est mort en les portant.",
-        "livree": true
+        "livree": false
       },
       {
         "ou": "port-real",
@@ -1354,7 +1354,7 @@
         "canal": "corbeau",
         "fiabilite": 75,
         "version": "Ser Criston Cole écrit que Sombreval est reprise au nom du roi, que le traître a payé, et que les brûlés de la route royale sont vengés. Il ne dit rien du nombre de maisons vidées ni de ce que ses hommes ont emporté.",
-        "livree": true
+        "livree": false
       },
       {
         "ou": "stokeworth",
@@ -2662,7 +2662,7 @@
         "canal": "rumeur",
         "fiabilite": 55,
         "version": "Rien ne monte plus par l'eau depuis douze jours et la ville le sent au prix du poisson. On dit que c'est le Serpent de Mer. On dit aussi que la reine a jure tout haut, devant trois cents personnes, qu'elle ne le ferait jamais.",
-        "livree": true
+        "livree": false
       }
     ]
   },
@@ -2705,6 +2705,22 @@
         "fiabilite": 50,
         "version": "Par les charretiers de la route : Sombreval et le Repaire-aux-Corneilles ont recu de Peyredragon un papier scelle qui les met sous la garde de la reine, remis en main propre par un cavalier qui a attendu la copie signee. On ne dit pas ce qu'il y a dedans. On dit qui l'a eu - et Rosby n'y est pas.",
         "livree": true
+      },
+      {
+        "ou": "peyredragon",
+        "qui": [
+          "robert-quince",
+          "aurore-inchauspe"
+        ],
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 1
+        },
+        "canal": "bouche",
+        "fiabilite": 90,
+        "version": "Le cavalier de la route du nord est rentre avec la copie signee de lord Staunton, et avec ce qu'il a vu en attendant deux jours dans la cour du Repaire : un mestre qui tient un registre d'oiseaux ou la colonne de Peyredragon est a zero depuis la lune derniere, et un lord qui ecrit toutes les nuits des lettres qu'aucun oiseau ne peut porter. Le Repaire-aux-Corneilles n'a pas cesse de repondre a la reine : il n'a plus de quoi.",
+        "livree": false
       }
     ]
   },
@@ -4775,6 +4791,30 @@
     ],
     "statut": "a-venir",
     "effets": "la DATE DE TRAVAIL existe ; 11026 et 11027 passent faites ; reste a la figer en DATE ARRETEE (11031) devant deux temoins",
+    "diffusion": []
+  },
+  {
+    "id": "prog-retour-reconnaissance-sombreval-5e-aube",
+    "date_prevue": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 5,
+      "minute": 300
+    },
+    "type": "programme",
+    "importance": 55,
+    "description": "A l ordre de la reine, Gerardys doit la reveiller a l aube avec la premiere parole des deux barques parties reconnaitre Sombreval ; si aucune barque ne rentre, ce silence doit lui etre rapporte a la meme heure.",
+    "lieu_id": "peyredragon",
+    "acteurs": [
+      "gerardys",
+      "rulf-corne"
+    ],
+    "conditions": [
+      "si une barque rentre avant l aube, retenir l homme qui a vu et porter sa parole exacte a la reine",
+      "si aucune barque ne rentre, ne pas reporter le reveil : leur absence est le rapport"
+    ],
+    "statut": "a-venir",
+    "effets": "livrer a Rhaenyra le premier temoignage direct sur le port de Sombreval, ou le non-retour des reconnaissances",
     "diffusion": []
   }
 ]

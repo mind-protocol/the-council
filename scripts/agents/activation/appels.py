@@ -67,7 +67,7 @@ def poser_jugement_narrateur(neutre, qui):
 
 def appeler_stream(pid, manuel, mission, sid, modele, effort, minutes, heartbeat,
                    neutre=None, reprendre=False, autoriser_lecture=True,
-                   phase="acteur", reglages=None):
+                   phase="acteur", reglages=None, compte_pour=None):
     """Appel stream-json, neuf ou repris dans le meme repertoire neutre."""
     if neutre is None:
         with tempfile.TemporaryDirectory(prefix="activation-%s-" % pid) as d:
@@ -75,7 +75,7 @@ def appeler_stream(pid, manuel, mission, sid, modele, effort, minutes, heartbeat
                 pid, manuel, mission, sid, modele, effort, minutes, heartbeat,
                 neutre=d, reprendre=reprendre,
                 autoriser_lecture=autoriser_lecture, phase=phase,
-                reglages=reglages)
+                reglages=reglages, compte_pour=compte_pour)
     prompt_systeme = os.path.join(
         neutre, "system-prompt.md" if autoriser_lecture else "CLAUDE.md")
     if not reprendre:
@@ -112,7 +112,7 @@ def appeler_stream(pid, manuel, mission, sid, modele, effort, minutes, heartbeat
         reprendre=reprendre, settings=reglages,
         on_event=_dire_evenement_cli, on_stderr=erreur,
         heartbeat=heartbeat, on_heartbeat=battement,
-        ecriture=autoriser_lecture)
+        compte_pour=compte_pour or pid)
 
 
 def appeler_acteur(pid, tache, budget_energie, horloge, noeuds, modele, effort,
@@ -150,6 +150,8 @@ def appeler_acteur(pid, tache, budget_energie, horloge, noeuds, modele, effort,
     sid_acteur = str(uuid.uuid4())
     salle_id = (dossier.get("salle_actuelle") or {}).get("id") or "inconnue"
     role_narrateur = "narrateur-local:" + salle_id
+    from agents import zone
+    compte_mj = zone.arbitre_de(pid)
     reponses = []
     corrections = []
     relances_acteur = []
@@ -168,7 +170,8 @@ def appeler_acteur(pid, tache, budget_energie, horloge, noeuds, modele, effort,
             role_narrateur, manuel_narrateur, ouverture, sid_narrateur,
             modele, effort, minutes, heartbeat, neutre=neutre_narrateur,
             reprendre=False, autoriser_lecture=False,
-            phase="narrateur.ouverture", reglages=reglages_narrateur)
+            phase="narrateur.ouverture", reglages=reglages_narrateur,
+            compte_pour=compte_mj)
         reponses.append(reponse_ouverture)
         appel = extraire_appel_pnj(reponse_ouverture, pid)
         journaliser("narrateur.reveille_pnj", acteur=pid,
@@ -184,7 +187,7 @@ def appeler_acteur(pid, tache, budget_energie, horloge, noeuds, modele, effort,
             pid, manuel_acteur, message_acteur, sid_acteur,
             modele, effort, minutes, heartbeat,
             neutre=neutre_acteur, phase="pnj.tentative",
-            reglages=reglages_acteur)
+            reglages=reglages_acteur, compte_pour=pid)
         reponses.append(reponse_acteur)
         tentative = extraire_tentative(reponse_acteur)
         tentatives_acteur.append(tentative)
@@ -204,7 +207,7 @@ def appeler_acteur(pid, tache, budget_energie, horloge, noeuds, modele, effort,
                 modele, effort, minutes, heartbeat, neutre=neutre_narrateur,
                 reprendre=True, autoriser_lecture=False,
                 phase="narrateur.resolution",
-                reglages=reglages_narrateur)
+                reglages=reglages_narrateur, compte_pour=compte_mj)
             relance = extraire_relance_acteur(reponse)
             if relance is None and reglages_narrateur is None:
                 # Claude obtient cette decision par son hook Stop. Codex n'a
@@ -236,7 +239,8 @@ def appeler_acteur(pid, tache, budget_energie, horloge, noeuds, modele, effort,
                 pid, manuel_acteur, reprise_acteur, sid_acteur,
                 modele, effort, minutes, heartbeat,
                 neutre=neutre_acteur, reprendre=True,
-                phase="pnj.relance", reglages=reglages_acteur)
+                phase="pnj.relance", reglages=reglages_acteur,
+                compte_pour=pid)
             reponses.append(reponse_acteur)
             tentative = extraire_tentative(reponse_acteur)
             tentatives_acteur.append(tentative)
@@ -308,7 +312,7 @@ def appeler_acteur(pid, tache, budget_energie, horloge, noeuds, modele, effort,
                     neutre=neutre_narrateur, reprendre=True,
                     autoriser_lecture=False,
                     phase="narrateur.correction",
-                    reglages=reglages_narrateur)
+                    reglages=reglages_narrateur, compte_pour=compte_mj)
 
     journaliser("rapport.valide", acteur=pid, depense=depense,
                 activites=len(activites), corrections=len(corrections))
@@ -322,6 +326,8 @@ def appeler_acteur(pid, tache, budget_energie, horloge, noeuds, modele, effort,
         "session_pnj": sid_acteur,
         "cree_le": dt.datetime.now().astimezone().isoformat(),
         "front": horloge["front_id"],
+        "horloge_pj": horloge.get("horloge_pj"),
+        "date_locale": dossier.get("date_du_monde"),
         "present_secondes": round(horloge["present_secondes"], 3),
         "importance": round(float((noeuds.get("pers:" + pid) or {})
                                   .get("importance_activation", 0.0)), 6),
@@ -409,4 +415,3 @@ def appeler_acteur(pid, tache, budget_energie, horloge, noeuds, modele, effort,
                         raison=type(erreur_rejets).__name__,
                         erreur=_court(str(erreur_rejets), 200))
     return cible, depense, rapport
-

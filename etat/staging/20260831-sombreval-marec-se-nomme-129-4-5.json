@@ -1,0 +1,34 @@
+{
+  "titre": "Sombreval — l'intendant se nomme avant la premiere fournee du 5e : il arrive une heure trop tard, et deux hommes y gagnent",
+  "calcule_le": "2026-08-31",
+  "pour": "mj",
+  "par": "mj-sombreval (verdict d'un FAIRE ; rien n'a ete ecrit dans etat/)",
+  "date_monde": {"annee": 129, "lune": 4, "jour": 5, "au petit jour": true},
+  "le_faire": "Avant la premiere fournee du 5e, Marec Fosse va debout au capitaine Willam Wode, aux granges, et declare que l'enquete d'hier soir sur le jeune lord vivant etait LA SIENNE — demandee a ses gens, sur son compte, pour son registre, parce qu'un intendant qui ignore si son lord est vivant ne sait pas de qui prendre un ordre. Il ne nomme ni le portier ni le boulanger. Il a deja porte au registre, date du 4e : SOMBREVAL A UN LORD, ROBIN DARKLYN, ET IL EST AUX MAINS DU CAPITAINE VERT.",
+  "verdict": {
+    "il_arrive_une_heure_trop_tard_et_il_ne_le_sait_pas": "LE CAVALIER DE SER CRISTON EST ARRIVE AU PETIT JOUR, avant lui (lot 20260831-sombreval-prise-de-marec-fosse-129-4-5). Quand Fosse se presente aux granges pour se nommer, Wode a deja sur sa table l'ordre scelle qui dit de le prendre. Sa declaration ne provoque pas l'arrestation et ne l'evite pas : elle tombe dedans. Il est pris la ou il se tient, debout, ayant parle le premier.",
+    "ce_que_sa_declaration_change_quand_meme_et_ce_n_est_pas_rien": "WODE ECRIT CE QU'ON LUI DIT, C'EST SA MANIERE. La declaration est portee au proces-verbal mot pour mot, avec l'heure, et part avec le reste au dossier de l'ost. Elle y fait deux choses : elle designe UNE seule main — la sienne —, et elle donne a l'enquete un objet clos. L'ordre du cavalier dit de prendre Fosse ; il ne nomme personne d'autre. Wode ne decide rien qui ne soit dans l'ordre : IL NE FAIT CHERCHER NI LE PORTIER NI LE BOULANGER, parce que rien d'ecrit ne le lui demande et qu'il ne s'invente pas une enquete.",
+    "les_deux_bouches_tiennent": "Voila ce que son refus achete, et c'est reel : deux hommes de sa ville ne sont pas convoques ce jour-la. Ce n'est pas de l'heroisme mis en scene, c'est une consequence mecanique — un capitaine sans imagination n'etend jamais un ordre, et l'homme qui aurait pu donner les noms est desormais tenu au secret.",
+    "ce_qu_il_a_donne_sans_le_vouloir": "SA LIGNE DU 4e EST UNE PIECE, ET ELLE EST DANS LE COFFRE. « Sombreval a un lord, Robin Darklyn, et il est aux mains du capitaine vert » : ecrit, date, de la main de l'officier de la ville. Le premier ordre de ser Criston voulait que la chute ne se crie pas ; le registre des granges, ouvert ce matin avec les clefs prises a la ceinture de son proprietaire, porte noir sur blanc que la place a un seigneur vivant et prisonnier. Ce n'est plus une rumeur qu'on etouffe, c'est un ecrit qu'on detient.",
+    "et_ce_qui_echappe_a_tout_le_monde": "IL Y EN A UNE SECONDE COPIE, HORS DES GRANGES, chez un homme qui n'a rien a voir avec le grain (son FAIRE du 4e au soir : deux depositions ecrites DEUX FOIS). Il n'a jamais nomme cet homme — ni hier soir a la chaine, ni ce matin devant Wode. La saisie prend le registre des granges ; elle ne prend pas l'autre, et personne dans l'ost ne sait qu'il existe. LE MEME SILENCE QUI PROTEGE DEUX BOUCHES PROTEGE LE SECOND REGISTRE.",
+    "ce_que_je_ne_tranche_pas": "Ce qu'il repond ensuite, et ce que fait l'homme qui garde la seconde copie quand il apprend que l'intendant est pris. Ce sont des hommes."
+  },
+  "mutations_proposees": [],
+  "rien_de_neuf_dans_les_tables": "Sa prise est deja portee par le lot du 5e (personnages/marec-fosse -> condition 'prisonnier', et les deux plis en 'intercepte'). Ce lot-ci n'ajoute aucune mutation : il ajoute un acte et il AMENDE le recit de la prise — il n'a pas ete cherche, il est venu.",
+  "a_la_main": [
+    {
+      "table": "etat/actes.json",
+      "geste": "Ajouter l'acte ci-dessous (aucune table 'actes' dans le vocabulaire ferme).",
+      "acte": {
+        "id": "acte-marec-se-nomme-129-4-5",
+        "date": {"annee": 129, "lune": 4, "jour": 5},
+        "acteur_id": "marec-fosse",
+        "cible_id": "willam-wode",
+        "lieu_id": "sombreval",
+        "description": "CINQUIEME JOUR DE LA QUATRIEME LUNE, AVANT LA PREMIERE FOURNEE, AUX GRANGES DE SOMBREVAL. Marec Fosse vient de lui-meme au capitaine Willam Wode et declare debout que c'est LUI qui a fait demander, la veille au soir, par qui l'on savait le jeune lord vivant : demande a ses gens, sur son compte et pour son registre, parce qu'un intendant qui ignore si son lord est vivant ne sait pas de qui prendre un ordre. IL NE NOMME PERSONNE D'AUTRE, ni le portier ni le boulanger, et dit que le temoignage est ecrit, signe, et que la main qui l'a ecrit est la sienne. || CE QU'IL IGNORE EN PARLANT : l'ordre scelle de ser Criston Cole est arrive par cavalier au petit jour, sur la table du capitaine. Sa declaration est portee au proces-verbal mot pour mot, avec l'heure ; puis il est pris la ou il se tient. || AUCUN AUTRE NOM N'EST CHERCHE : l'ordre dit de prendre Fosse et ne nomme personne, et le capitaine n'etend pas un ordre. || AU REGISTRE DES GRANGES, SAISI LE MEME MATIN, UNE LIGNE DATEE DU QUATRIEME : « SOMBREVAL A UN LORD, ROBIN DARKLYN, ET IL EST AUX MAINS DU CAPITAINE VERT. »",
+        "temoins": ["willam-wode"],
+        "connu_de": ["marec-fosse", "willam-wode", "criston"]
+      }
+    }
+  ]
+}

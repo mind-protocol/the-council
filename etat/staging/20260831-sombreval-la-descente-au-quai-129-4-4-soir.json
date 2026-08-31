@@ -1,0 +1,41 @@
+{
+  "titre": "Sombreval — la descente au quai, soir du 129.4.4 : le second pli ne sort pas, et c'est le registre de l'intendant qui le dit",
+  "calcule_le": "2026-08-31",
+  "pour": "mj",
+  "par": "mj-sombreval (verdict d'un TENTER ; rien n'a ete ecrit dans etat/)",
+  "date_monde": {"annee": 129, "lune": 4, "jour": 4, "au soir": true},
+  "le_tenter": "Son tour de granges fini, l'intendant descend au quai chercher la barque qui a apporte le pli de ser Steffon, ou une qui reparte vers Peyredragon, pour le rendre scelle et non ouvert avec un mot de sa main — date, heure, etat du sceau, son nom. Il inscrit le geste a son registre a l'heure ou il le fait, en clair, sous la colonne 'ce qui est sorti de ma main, a qui, sur quel ordre', avec la mention qu'il sort SANS ordre.",
+  "pieces_lues": [
+    "acte-criston-ordre-scelle-sombreval-129-4-4 (propose) — point 1 : chaine tenue jour et nuit par deux hommes, ouverte pour la SEULE barque portant un ecrit de Peyredragon ; point 3 : nul ne sort de la place, aucun corbeau sans son cachet.",
+    "etat/plis.json, pli-les-quatre-cases-a-steffon — de rhaenyra pour steffon-darklyn, canal BARQUE, parti de peyredragon le 129.3.30 (minute 480), attendu le 3.31, etat 'remis', main 'marec-fosse'. La barque qui l'a apporte a fait sa remise le 31e, quatre jours avant ce soir.",
+    "annale-le-sac-de-sombreval et evenement sac-sombreval — la flotte brulee sur ses amarres le 3e ; le port est tenu par l'ost depuis.",
+    "etat/personnages.json, willam-wode — 'ne decide rien qui ne soit dans l'ordre' ; l'ordre dit que rien ne sort.",
+    "acte-marec-recompte-des-granges-129-4-4 (propose) — un homme de l'ost l'a deja suivi et note ce matin, quand il est monte aux granges du haut."
+  ],
+  "verdict": {
+    "sa_distinction_est_juste_et_elle_ne_pese_rien_ici": "Le raisonnement tient : le premier pli etait remis A SOMBREVAL, le second n'est que TENU EN TRANSIT pour un homme vivant et absent, et une main d'arrivee ne se decharge que par remise au destinataire ou par retour a la main qui l'a apportee. Aucune table ne le dement — plis.json ne connait qu'un porteur, 'main', et ne distingue pas le depot du transit. Mais une regle d'office ne fait pas descendre une chaine : LE QUAI N'EST PLUS A SON OFFICE.",
+    "il_n_y_a_pas_de_barque": "Celle qui a porte le pli a fait sa remise le trente et unieme et n'est jamais revenue ; le quai s'est ferme le lendemain et il a brule le troisieme. Ce qui flotte encore devant Sombreval, ce sont onze carcasses sur leurs amarres et la chaloupe de garde de l'ost. RIEN NE PART VERS PEYREDRAGON CE SOIR, et rien n'en partira tant que la chaine sera tenue : elle s'ouvre pour ce qui ENTRE portant un ecrit de la reine, jamais pour ce qui sort.",
+    "il_ne_lache_rien_et_c_est_ce_qui_le_sauve_ce_soir": "Les deux hommes de guet sont a la chaine, payes double et surveilles. Il ne leur remet pas le pli — le leur donner, c'est le donner a l'ost, exactement ce qu'il refuse. Il n'est pas fouille : on ne fouille pas l'intendant qui descend avec un registre sous le bras. Il remonte avec le pli scelle, intact, et le remet AU COFFRE A ROLE DU BUREAU DES GRANGES, sous le compte du vingt-huitieme.",
+    "ce_que_le_geste_coute_et_il_coute_ce_soir": "IL A ETE VU. Un intendant n'a rien a faire au quai a la nuit tombee, et ce quai-la est un piege monte pour les barques de Peyredragon. Le plus jeune des deux hommes de guet porte l'heure au rapport ; l'autre ne dit rien, et cela ne change rien. Ajoute au billet de ce matin — l'homme de l'ost qui l'a suivi aux granges du haut —, cela fait DEUX fois en un jour que le nom de Marec Fosse est ecrit sur un papier de l'ost.",
+    "et_son_propre_registre_est_la_troisieme_piece": "Il tient parole : il inscrit le geste a l'heure, en clair, sous la colonne qui compte ce qui sort de sa main — et il ecrit qu'il est sorti SANS ordre, sur sa seule decision d'intendant. Ce registre, il a refuse de le remettre ce matin en disant qu'il etait l'ecrit de Sombreval et non de Peyredragon. Il l'est encore. Mais la ligne qu'il vient d'y porter dit, de sa main et datee, qu'il a essaye de faire sortir de la place un ecrit scelle de la reine. UN HOMME QUI NE MENT JAMAIS FOURNIT LUI-MEME LA PIECE QU'ON N'AURAIT PAS TROUVEE.",
+    "ce_que_je_ne_tranche_pas": "Ce que Wode fait du rapport, et quand il le lit. Je pose le fait : le rapport existe, date, avec l'heure."
+  },
+  "mutations_proposees": [],
+  "rien_ne_bouge_dans_les_tables": "pli-les-quatre-cases-a-steffon reste 'remis', main 'marec-fosse' — il n'est ni sorti, ni ouvert, ni saisi ce soir. C'est un TENTER qui echoue sans rien casser : la seule chose qui change est ce que des papiers disent de lui.",
+  "a_la_main": [
+    {
+      "table": "etat/actes.json",
+      "geste": "Ajouter l'acte ci-dessous (aucune table 'actes' dans le vocabulaire ferme).",
+      "acte": {
+        "id": "acte-marec-la-descente-au-quai-129-4-4",
+        "date": {"annee": 129, "lune": 4, "jour": 4},
+        "acteur_id": "marec-fosse",
+        "lieu_id": "sombreval",
+        "description": "QUATRIEME JOUR DE LA QUATRIEME LUNE, A LA NUIT TOMBEE, AU QUAI DE SOMBREVAL. Son tour de granges fini, l'intendant Marec Fosse descend au port avec, sous le tablier, le pli scelle de la reine adresse a ser Steffon Darklyn — qu'il tient depuis le trente et unieme sans qu'il ait jamais ete remis a Sombreval — et son registre sous le bras. Il cherche la barque qui l'a apporte, ou une qui reparte vers Peyredragon, pour le rendre SCELLE ET NON OUVERT. IL N'Y EN A PAS : la barque de la reine a fait sa remise le trente et unieme et n'est pas revenue, le quai s'est ferme le lendemain, et ce qui flotte encore devant la ville, ce sont onze carcasses sur leurs amarres et la chaloupe de garde de l'ost. La chaine ne s'ouvre que pour ce qui entre. || IL NE REMET LE PLI A PERSONNE — le donner aux hommes de la chaine, c'est le donner a l'ost — et remonte avec, cachet intact, pour le reposer au coffre a role du bureau des granges, sous le compte du vingt-huitieme. || IL EST VU. Le plus jeune des deux hommes de guet porte l'heure au rapport. Et Fosse inscrit lui-meme le geste a son registre, a l'heure, sous la colonne de ce qui sort de sa main, avec la mention qu'il est sorti SANS ordre, sur sa seule decision d'intendant.",
+        "temoins": [],
+        "connu_de": ["marec-fosse", "willam-wode"]
+      }
+    }
+  ],
+  "ce_que_ce_lot_change_pour_le_lot_du_5e": "Il l'explique et ne le contredit pas. 'acte-prise-de-marec-fosse-129-4-5' pose que le second pli est trouve au matin du 5e DANS LE COFFRE A ROLE, sous le compte du 28e : c'est ce soir qu'il l'y remet. Et le rapport du guet, ecrit cette nuit, arrive sous les yeux de Wode a la meme heure que le cavalier de ser Criston."
+}

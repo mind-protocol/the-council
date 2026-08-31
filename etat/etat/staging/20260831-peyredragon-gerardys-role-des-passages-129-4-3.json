@@ -1,0 +1,64 @@
+{
+  "titre": "Peyredragon — mestre Gerardys pose le role des jours de la route du sel sur la Table Peinte (action 11221), 129.4.3",
+  "calcule_le": "2026-08-31",
+  "par": "mj-peyredragon (proposition d'un FAIRE ; rien n'a ete ecrit dans etat/)",
+  "date_monde": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+  },
+  "pieces_lues": [
+    "etat/books/affaire-jour-dentree.json, action 11221 « Ecrire le role des passages de la route du sel », office O07 mestre Gerardys avec le Sanglier et Aurore, etat 'a faire', preuve « Un role ecrit, et aucun passage portant deux affaires » — c'est exactement le geste pose.",
+    "meme cahier, verrou 11005 « La route du sel est un horaire, non un delai » — leve quand le role des passages est ecrit (11221) ; et verrou 11202, qui porte deja « le dernier passage part a J-14 (41221) ».",
+    "etat/books/affaire-transmission-des-ordres.json, action 41221 « Dernier passage : porter le jour convenu a l'interieur », J-14, office O07, engage J-20, etat 'a faire'.",
+    "etat/books/affaire-entree-au-donjon.json (tenu_par daemon), action 23122 « Faire dire ce qui ferme cette porte-la », office « → 8000 », engage J-20, coute UN PASSAGE ENTIER, preuve « Sa reponse, ET UN SECOND DIRE QUI NE LA CONTREDIT PAS », etat 'a faire'.",
+    "etat/books/affaire-proclamation-au-royaume.json, action 34126 — un passage de la route du sel, engage J-10.",
+    "etat/books/affaire-commandement-chaine-ordres.json, action 40032 « Convenir des trois signaux qui ne passent jamais par ecrit », due J-9, office O12 ser Steffon Darklyn avec Gerardys et Wend, cout « 1 passage de la route du sel, en concurrence avec le Sanglier et dame Aurore : un canal porte une affaire a la fois », etat 'a faire'.",
+    "etat/books/affaire-repli-si-entree-echoue.json, action 36021 « Convenir du mot de repli et du signal de lanterne » — ETAT 'FAITE', JOUR FAIT 27e : LE MOT EST BASSEROCHE, double d'un signal de lanterne visible, avec changement la veille. L'un des trois signaux de 40032 est donc deja convenu, et il n'a pas emprunte la route du sel."
+  ],
+  "arbitrage": {
+    "ce_qui_passe": "Le role des jours. Il est de son office (O07), il ne coute qu'une demi-journee de mestre, et il fait exactement ce que 11221 attendait : six cases en J-n, une affaire par passage, jusqu'a J-14. Il ne contredit pas le role de chemin ecrit le 1er par dame Aurore (41022) : il ecrit la colonne que celui-la n'a pas.",
+    "ce_que_l_etat_confirme": "Les trois orphelines sont bien orphelines : 23122 engagee J-20 et coutant le passage entier ; 34126 due J-10 ; 40032 due J-9 — quand le dernier huitieme jour est J-14, deja porte au verrou 11202 du meme cahier. Aucune des trois ne porte dans sa ligne qu'il n'existe plus de passage apres J-14.",
+    "ce_que_l_etat_ajoute_et_qu_il_n_a_pas": "(1) 23122 n'est pas de la main du prince : son office est un renvoi, « → 8000 », dans un cahier tenu par Daemon — celle des deux qui monterait a J-14 devrait donc etre depensee par le volume de l'homme du dedans, pas par le sien. (2) ET SA PREUVE EST IMPOSSIBLE A J-14 : elle exige « sa reponse, et un second dire qui ne la contredit pas » — c'est-a-dire un RETOUR, quand rien ne revient apres le dernier passage. (3) Les trois signaux de 40032 ne sont pas trois orphelins : le mot de repli est convenu depuis le 27e, c'est BASSEROCHE, et il est double d'un signal de LANTERNE — un canal qui ne prend aucun passage.",
+    "ce_qui_n_est_pas_a_moi": "La phrase demandee a la reine. L'arbitre pose le role, les dates et l'impossibilite ; il ne repond pas a la place de la reine, et ne met aucun mot dans sa bouche."
+  },
+  "mutations_proposees": [
+    {
+      "table": "books",
+      "operation": "affaire_action",
+      "cible": "affaire-jour-dentree:11221",
+      "champs": {
+        "⏳ État": "faite",
+        "📅 Jour fait": "3e de la 4e lune",
+        "👁️ La preuve": "Le role des JOURS pose sur la Table Peinte devant la reine et devant la salle, ecrit de ma main a la roukerie : six cases et pas une de plus, en J moins n — J-54, J-46, J-38, J-30, J-22, J-14 ; une affaire par passage ; apres J-14 plus rien ne part et plus rien ne revient",
+        "📝 Note": "POSE LE 3e DE LA 4e LUNE, AN 129. Il n'ecrit pas contre le role de chemin de dame Aurore, fait le 1er (41022, huit lignes justes et pas un jour) : il ecrit la colonne qui manque. TROIS PLACES DONNEES : J-30 la phrase promise au Sanglier, deplacee de J-26 qui n'est pas un huitieme jour ; J-22 le contact avec le Guet, a dame Aurore, dernier passage qui rende a temps ; J-14 le jour convenu porte a l'interieur (41221), et rien d'autre ce jour-la. TROIS ACTIONS SANS JOUR OU MONTER : 23122 (J-20, passage entier), 34126 (J-10), 40032 (J-9). Question posee a la reine, une seule : laquelle des deux monte a J-14, la porte du Donjon ou le jour convenu — celle qui ne monte pas ne monte jamais."
+      },
+      "pourquoi": "11221 est son action, dans son office, et le geste en est l'execution exacte."
+    }
+  ],
+  "a_la_main": {
+    "table": "etat/actes.json",
+    "geste": "Ajouter l'acte ci-dessous ; et porter au verrou 11005 du meme cahier que sa levee est atteinte, le role des passages etant ecrit (aucune operation du vocabulaire ne touche les verrous).",
+    "acte": {
+      "id": "acte-gerardys-role-des-jours-du-sel-3e",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 3,
+        "minute": 600
+      },
+      "acteur_id": "gerardys",
+      "lieu_id": "peyredragon",
+      "description": "TABLE PEINTE, LE 3e DE LA 4e LUNE, DEBOUT, DEVANT LA REINE ET DEVANT LA SALLE. Mestre Gerardys pose le ROLE DES JOURS de la route du sel, ecrit de sa main a la roukerie : SIX CASES, une par huitieme jour, en J moins n et non en jours vrais — J-54, J-46, J-38, J-30, J-22, J-14. Il n'en existe pas d'autre. || IL DIT TOUT HAUT QU'UN ROLE DES PASSAGES EST DEJA PORTE FAIT DEPUIS LE 1er, de la main de dame Aurore Inchauspe, huit lignes justes dont pas une ne porte un jour : c'etait un role de CHEMIN, il ecrit le role des JOURS, et il n'ecrit pas contre elle. || TROIS PLACES DONNEES : J-30, la phrase promise au Sanglier, deplacee du J-26 de son volume qui n'est pas un huitieme jour ; J-22, le contact avec le Guet, a dame Aurore, dernier passage qui rende a temps ; J-14, le jour convenu porte a l'interieur, a lui, et rien d'autre ne monte ce jour-la. || TROIS ACTIONS DU PLAN N'ONT AUCUN JOUR OU MONTER, ET IL LES NOMME DEVANT LA SALLE : faire dire ce qui ferme la porte du Donjon (engagee J-20, passage entier) ; porter trois copies de la proclamation dans Port-Real (due J-10) ; convenir des trois signaux qui ne passent jamais par ecrit (due J-9). Les deux dernieres sont fausses quelle que soit la date d'entree. || ET IL POSE A LA REINE UNE SEULE QUESTION : laquelle des deux monte a J-14, la porte du Donjon ou le jour convenu porte a l'interieur — car elles ne montent pas ensemble, et celle qui ne monte pas ne monte jamais.",
+      "temoins": [
+        "rhaenyra"
+      ],
+      "connu_de": [
+        "gerardys",
+        "rhaenyra"
+      ]
+    },
+    "pourquoi": "Un FAIRE non grave n'a pas eu lieu ; aucune operation du vocabulaire ne porte un acte ni un verrou."
+  },
+  "applique_le": "2026-08-31T11:33:59"
+}

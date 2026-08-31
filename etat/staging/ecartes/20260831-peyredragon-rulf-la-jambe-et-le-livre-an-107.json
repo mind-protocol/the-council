@@ -1,0 +1,53 @@
+{
+ "titre": "Peyredragon — le passe de Rulf Corne verse au monde : la jambe, le livre, et la regle de l'an 107",
+ "calcule_le": "2026-08-31",
+ "par": "mj-peyredragon (proposition d'un FAIRE ; rien n'a ete ecrit dans etat/)",
+ "date_monde": {
+  "annee": 129,
+  "lune": 4,
+  "jour": 3
+ },
+ "pieces_lues": [
+  "etat/personnages.json, rulf-corne — naissance 66 ; titre « Maitre de port de Peyredragon depuis vingt-deux ans » ; portrait : « une jambe qui traine, gros livre recousu DEUX FOIS sous le bras » ; trait « proprietaire-de-son-livre » ; maniere : « donne la date avant le fait ; n'a jamais prete son livre a personne, pas meme a un prince » ; objectif 1 : « que son livre reste a lui et soit tenu juste ».",
+  "etat/actes.json, acte-rulf-les-onze-coques-du-20e-2e — « le livre ne sort pas », le talon reste chez lui ; acte-rulf-la-bonne-salaison-et-les-deux-noms-2e — « vingt-deux ans qu'on parle de sa porte au chateau sans le faire chercher ».",
+  "etat/books/affaire-transmission-des-ordres.json, verrou 41105 — « la faute est de ma main DEPUIS VINGT-DEUX ANS », la regle de son arche.",
+  "etat/books/affaire-controle-naval.json — « ma page porte deux especes de lignes : ce qu'on me DIT et ce que je VOIS » ; action 22048, compte coque par coque, EN COURS depuis le 27e."
+ ],
+ "arbitrage": {
+  "verdict": "TENU. Rien dans l'etat ne s'y oppose et tout s'y accorde au chiffre : ne en 66, il avait QUARANTE ET UN ANS en 107 ; vingt-deux ans de charge comptes depuis 107 tombent exactement sur 129. Le recit donne enfin leur cause a trois choses que les tables portaient sans raison — la jambe qui traine, le livre recousu deux fois, et le trait 'proprietaire-de-son-livre'.",
+  "ce_que_cela_grave_aussi_et_qui_ne_le_flatte_pas": "Sa regle et sa faute ont le meme age. Le verrou 41105, ecrit de sa main le 3e de cette lune, date de VINGT-DEUX ANS la pratique de son arche qui inscrit l'homme au papier et jamais le patron. La regle qu'il tient depuis 107 — ce qui n'a pas ete regarde n'est pas un fait — et l'habitude qui lui a fait ecrire trois noms de patrons faux sont nees la meme annee, avec la meme charge."
+ },
+ "mutations_proposees": [],
+ "a_la_main": [
+  {
+   "table": "etat/actes.json",
+   "geste": "Ajouter l'acte ci-dessous en fin de liste. Le jour n'est pas porte par le recit — la ligne vaut a la lune ; jour: 1 sert d'ancre.",
+   "acte": {
+    "id": "acte-rulf-la-jambe-et-le-livre-107",
+    "date": {
+     "annee": 107,
+     "lune": 9,
+     "jour": 1
+    },
+    "acteur_id": "rulf-corne",
+    "lieu_id": "peyredragon",
+    "description": "AU COUP DE VENT D'AUTOMNE DE L'AN 107, AU MOLE DE PEYREDRAGON. Rulf Corne, quarante et un ans, COMMIS DE LA BARRE et pas encore maitre de port. Une coque chasse sur son ancre contre le mole ; en degageant un gamin de dessous, il a la JAMBE GAUCHE PRISE ENTRE LE BORDE ET LA PIERRE — c'est de la que vient la jambe qui traine. || LE LENDEMAIN, AU REGISTRE DU MAITRE DE PORT D'ALORS : la coque y est portee AU MOUILLAGE, quand elle chassait depuis DEUX MAREES et que trois hommes du quai le savaient. Personne n'etait alle regarder. || CE JOUR-LA IL OUVRE SON PROPRE LIVRE, DE SA MAIN, et pose la regle dont il n'a jamais demordu depuis, en vingt-deux ans de charge : CE QUI EST ECRIT SANS AVOIR ETE REGARDE N'EST PAS UN FAIT, ET UN LIVRE QUI SORT DE LA MAIN DE CELUI QUI L'A TENU CESSE D'ETRE VRAI. Le livre a ete recousu deux fois depuis l'an 107 ; il n'est jamais sorti de ses mains.",
+    "temoins": [],
+    "connu_de": [
+     "rulf-corne"
+    ]
+   }
+  },
+  {
+   "table": "etat/personnages.json",
+   "geste": "Sur la fiche rulf-corne, ajouter le champ libre 'passe' ci-dessous (aucun script ne le lit ; il se lit avec la fiche).",
+   "passe": "An 107, quarante et un ans, commis de la barre : au coup de vent d'automne une coque chasse contre le mole ; il degage un gamin et prend la jambe gauche entre le borde et la pierre. Le lendemain il lit au registre du maitre de port d'alors que cette coque etait « au mouillage » — elle chassait depuis deux marees et trois hommes du quai le savaient. Il ouvre le jour meme son propre livre et sa regle : ce qui est ecrit sans avoir ete regarde n'est pas un fait ; un livre qui sort de la main de celui qui l'a tenu cesse d'etre vrai. Recousu deux fois, jamais prete. Il prend la charge cette annee-la : ses vingt-deux ans se comptent de 107."
+  }
+ ],
+ "verse_par_mj_le": "2026-08-31 (129.4.3, minute 721)",
+ "actes_verses": [
+  "acte-rulf-la-jambe-et-le-livre-107"
+ ],
+ "applique_le": "2026-08-31T09:00:00",
+ "note_mj": "Les actes de ce bloc ont ete verses A LA MAIN par mj via scripts/ajouter.py actes. Ils n'etaient PAS dans mutations_proposees : la porte appliquer.py n'a aucune operation pour la table actes, et elle repondait 'aucune mutation — rien a appliquer' sur le ton d'un succes. Tout le bloc est verse ; la piece est close."
+}

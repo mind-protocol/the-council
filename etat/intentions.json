@@ -9,7 +9,9 @@
       "Il a oublie les oeufs dans les trois versions de la lettre alors que c'etait tout son motif, et ne s'en est apercu qu'un quart d'heure plus tard : il ne se voit plus se tromper au moment ou il le fait, et il l'a dit a la reine avant qu'on le decouvre ; et il est parti se coucher avec quelque chose a dire qu'il n'a pas dit, arrete sur le seuil trois secondes sans se retourner.",
       "Cinq des onze pages sont dues a midi : trois portent un office VACANT et deux un office tenu par quelqu'un sans titre — pas d'intendant depuis onze ans, Sara sans titre ni gages. On lui demande d'ecrire des charges dont personne ne tient le nom.",
       "UNE CASE QU'ON NE PEUT NI FERMER NI LAISSER VIDE PORTE LA DATE A LAQUELLE ON SAURA. Alarra Rosby a refuse d'ecrire un refus qu'elle ne tenait pas, et elle avait raison : un faux refus fait mentir la roue autant qu'un blanc. Treizieme colonne du feuillet, ouverte ce matin — la case se compte au pire, et porte le jour ou elle cesse de se compter au pire. Winterfell : le 12e, par la nef Bar Emmon, et j'irai la chercher moi-meme.",
-      "ONZE CHAINES SUR TREIZE SONT CONTRESIGNEES ; LA MER DES BETES COMMANDE TOUJOURS, A VINGT-TROIS. Trois lignes fermees avant midi sans sortir de la chambre, parce que les repondants y etaient tous les trois. La ligne des bouches a pris deux jours et ne les rend a personne : elle est a cote du chemin critique. Ne plus rendre un gain sans dire du meme souffle qui le reprend — et ne plus rendre une perte sans dire si elle tombe sur la chaine qui commande."
+      "ONZE CHAINES SUR TREIZE SONT CONTRESIGNEES ; LA MER DES BETES COMMANDE TOUJOURS, A VINGT-TROIS. Trois lignes fermees avant midi sans sortir de la chambre, parce que les repondants y etaient tous les trois. La ligne des bouches a pris deux jours et ne les rend a personne : elle est a cote du chemin critique. Ne plus rendre un gain sans dire du meme souffle qui le reprend — et ne plus rendre une perte sans dire si elle tombe sur la chaine qui commande.",
+      "TREIZE SUR TREIZE, LE 4e AU SOIR, SANS SORTIR DE LA CHAMBRE. Onze mesurees, deux calculees a vingt-quatre et marquees CALCULE, chacune avec la date ou elle cesse de se compter au pire. Refuser d'attendre une mesure est une mesure : l'homme du dedans m'aurait coute une matinee et le maitre des roles, et son calcule n'egale meme pas la mer des betes — il ne deplacait aucune date. Ce qui commande reste LA MER DES BETES a vingt-quatre, et je n'ai rien a monter a la reine ce soir sur le feuillet.",
+      "UNE SIGNATURE SANS OFFICE NE TIENT QU'A UNE PERSONNE. Sara Poulain a contresigne la ligne des bouches de son seul nom et m'a fait ecrire qu'elle n'a pas de titre, sinon mon feuillet mentirait. C'est exactement ma propre faiblesse : deux des treize chaines de ce feuillet reposent sur quelqu'un que nul office ne nomme, et si l'un des deux s'en va la ligne n'a plus de repondant du tout."
     ],
     "ignore": [
       "Qui a ouvert le coffre de l'archive, et par quelle galerie on y est entré",
@@ -233,6 +235,10 @@
           "UN NOM, et il n'en a pas encore"
         ],
         "si_bloque": "Il porte la charge au registre avec la case EN SON ABSENCE laissee en BLANC DATE sous son nom, comme les trois offices vacants — ce qui est exactement ce que la reine vient de lui interdire, et il le sait en l'ecrivant."
+      },
+      {
+        "id": "gerardys-nommer-la-roue-charge",
+        "quoi": "Obtenir de la reine ce soir, en une phrase, que la roue des jours dus soit nommée une charge : ser Steffon Darklyn s'en fait le second dès qu'elle existe, et pas avant."
       }
     ],
     "declencheurs": [
@@ -945,7 +951,8 @@
       "Quatre jours de vol au-dessus de la baie : rien n'est monte de Port-Real par l'eau, et c'est la seule chose qu'elle sache de premiere main",
       "Le 27e et la charge de dragonnière sont écrits au registre des offices sur Ser Robert Quince, datés du 3e jour de la 4e lune 129, bornés à mon retour de ce soir, contresignés de la main de la reine et dits devant Daemon : pendant mon absence, un nom lisible répond de Peyredragon.",
       "Corlys n'est pas à Marée-Haute : il est à Peyredragon, à la Table Peinte. Sa parole se prend à terre, sans une position de Meleys.",
-      "Daemon est à Peyredragon depuis cet après-midi : ce qui se dira à la Table Peinte se dira devant lui, et Caraxes est ici, pas à Harrenhal."
+      "Daemon est à Peyredragon depuis cet après-midi : ce qui se dira à la Table Peinte se dira devant lui, et Caraxes est ici, pas à Harrenhal.",
+      "Corlys a confirmé devant Daemon et la Table Peinte que je porte toujours sa parole sur la mer."
     ],
     "ignore": [
       "Que Criston Cole ne prépare plus une tournée d'intimidation mais une vengeance, et que Sombreval est en tête de sa liste",
@@ -985,7 +992,8 @@
         "cout": [
           "Meleys, qui n'est plus jeune"
         ],
-        "si_bloque": "Si on lui interdit de voler, elle envoie ses capitaines longer la côte et rapporter ce qu'ils voient — plus lent, plus sûr, moins vu. Et avant de voler, elle vérifie qu'un palier ou un cahier ne tient pas déjà lieu du vol."
+        "si_bloque": "Si on lui interdit de voler, elle envoie ses capitaines longer la côte et rapporter ce qu'ils voient — plus lent, plus sûr, moins vu. Et avant de voler, elle vérifie qu'un palier ou un cahier ne tient pas déjà lieu du vol.",
+        "accompli": "La dette du 19e a été reconnue de ma bouche et Corlys a confirmé publiquement, devant Daemon et la Table Peinte, que je porte sa parole sur la mer ; Meleys demeure sellée sur le versant nord."
       },
       {
         "id": "rhaenys-le-vide-sur-leau",
@@ -1574,7 +1582,8 @@
       "Un frère lai du septuaire a vu ma septa sortir de la nef à cette heure, la main serrée sur sa manche. Il ignore ce qu'elle portait ; il pourrait dire l'heure et le geste si on le lui demandait.",
       "Le registre du capitaine de la garde de Maegor ne porte les noms d'un tour de nuit qu'après la relève du soir : les quatre noms ne seront lisibles qu'au matin, et ser Criston lit ce registre chaque matin.",
       "Ce qui sort scellé par la Porte de la Gadoue et prend l'eau est inscrit au bureau du port, sur le rôle « Ce qui est entré par la Néra » : coque, jour, patron. La page du 26e y a une ligne, et cette ligne n'est pas dans les mains de mon père.",
-      "Un feuillet épais ne part pas par corbeau : la troisième page scellée du 26e est descendue de la Tour de la Main par un homme de la Main, et c'est pourquoi elle manque au registre d'Orwyle — le trou n'est pas une faute, c'est une preuve de la route."
+      "Un feuillet épais ne part pas par corbeau : la troisième page scellée du 26e est descendue de la Tour de la Main par un homme de la Main, et c'est pourquoi elle manque au registre d'Orwyle — le trou n'est pas une faute, c'est une preuve de la route.",
+      "Les quatre noms du tour de nuit sont au registre du capitaine de Maegor depuis la releve du soir du 8e — Garrel Poitre, Loryn Merlon, Bennard Quaille, Symon Tourbe — sous la mention ordinaire, sans son nom ni le motif. Mais la solde passant par le tresor, les memes quatre noms sont au role du payeur, que tiennent les clercs de son pere : elle a evite la Garde Royale et payé en se rendant lisible a la Main."
     ],
     "ignore": [
       "Ce que dit la clause du bas de l'offre de pardon — à qui elle s'étend, et si les enfants y sont couverts. Elle sait désormais que cette clause existe et que le roi l'ignore aussi.",
@@ -1600,13 +1609,14 @@
       {
         "id": "alicent-garde-enfants",
         "quoi": "Quatre hommes de la garde du Donjon de Maegor accordés au tour de nuit, soldés sur le trésor, ordre parti à Orwyle. Les noms ne seront portés au registre du capitaine qu'après la relève du soir : reste à les lire au matin, avant ser Criston.",
-        "etat": "en-cours",
-        "jours_restants": 1,
+        "etat": "fait",
+        "jours_restants": 0,
         "depend_de": [],
         "cout": [
           "quatre hommes, et le choix entre sa bourse propre et le trésor"
         ],
-        "si_bloque": "Si le capitaine tarde ou omet, elle va lire le registre elle-même au matin, avant la relecture du Lord Commandant."
+        "si_bloque": "Si le capitaine tarde ou omet, elle va lire le registre elle-même au matin, avant la relecture du Lord Commandant.",
+        "accompli": "Les quatre hommes sont au poste et au registre depuis la releve du soir du 8e, sous la mention ordinaire. Elle les a lus au matin du 9e. La course contre ser Criston qu'elle avait organisee n'a pas eu lieu : le Lord Commandant est a Sombreval et sa colonne du registre est vide. Ce qu'elle croyait payer en vitesse, elle l'a paye en tracabilite — le role du payeur du tresor porte les memes quatre noms sous les yeux des clercs de la Main."
       },
       {
         "id": "alicent-aegon-matin",
@@ -1683,10 +1693,13 @@
       "Du seuil de son passage au bureau du port, il y a trente-huit minutes de marche par les geôles noires ; la porte du donjon en ferait gagner quatorze, au prix d'être vu sortir par les hommes d'Otto.",
       "Il tient un rôle à deux colonnes dont la seule colonne de gauche — neuf fours, datés et situés — porte le paraphe de l'officier du port de la Gadoue, pris à la marée basse sans donner son nom et sans contreseing d'aucun Hightower.",
       "Un officier ne paraphe que ce qu'il a lui-même écrit : il a certifié les neuf lignes du port et refusé net les onze lignes nues et la ligne « neuf pris par moi, onze affamés par elle », qui restent hors de toute authentification.",
-      "Le port n'écrira jamais ce qui n'est pas venu : seuls les contremaîtres du chantier de la Vase, à six minutes de la Porte de la Gadoue, savent quel four a chômé et depuis quelle semaine."
+      "Le port n'écrira jamais ce qui n'est pas venu : seuls les contremaîtres du chantier de la Vase, à six minutes de la Porte de la Gadoue, savent quel four a chômé et depuis quelle semaine.",
+      "Un contremaître ne répond que des fours dont il achète le pain : celui de l'aire lui a daté et marqué quatre des onze lignes, celui de la Cale n'en connaît que deux du Boyau, et les cinq du Culpucier demandent un autre homme encore.",
+      "Sa colonne de droite n'est plus entièrement nue : quatre fours à sec portent une semaine nommée et la marque d'un contremaître de la Vase, obtenue pour deux pièces et sans qu'il ait donné son nom.",
+      "Nul ne marque un papier qu'il ne peut relire : la nuit tombée, le chantier ne certifie plus rien, et les sept lignes restantes attendent l'aube, quand l'aire travaille dès la première lueur."
     ],
     "ignore": [],
-    "intention": "Sa colonne de gauche est paraphée ; il lui faut maintenant faire dater les onze fours à sec par les contremaîtres du chantier de la Vase, pendant qu'il reste du jour, puis rentrer par le passage sans qu'Otto sache qu'il est sorti.",
+    "intention": "Quatre des onze fours sont datés et marqués ; il lui faut rentrer par les geôles noires avant qu'on trouve sa chambre vide, ou passer la nuit en ville pour prendre à l'aube les sept lignes qui manquent.",
     "plan": [
       {
         "id": "aegon-exiger-vengeance",
@@ -1870,14 +1883,17 @@
       },
       {
         "id": "staunton-murs",
-        "quoi": "Renforcer murs et réserves — il sent l'orage venir de Port-Réal",
+        "quoi": "Poterne de service du front de terre condamnee le 4e jour sous maitre Olyvar Trousse-Chaux ; laisser prendre la maconnerie sous garde, puis poursuivre les hourds des deux tours basses, le fosse cote terre et l'achat de grain sur la cote",
         "etat": "en-cours",
-        "jours_restants": 8,
+        "jours_restants": 7,
         "depend_de": [],
         "cout": [
-          "tout ce qu'il a mis de côté depuis trois ans"
+          "tout ce qu'il a mis de cote depuis trois ans",
+          "pierre, chaux et boisage pris au chantier du front de terre",
+          "quatre hommes de garde cette nuit, deux presents a la fois"
         ],
-        "si_bloque": "S'il manque de pierre, il fait rentrer les récoltes et les troupeaux dans l'enceinte, et laisse les murs comme ils sont."
+        "si_bloque": "S'il manque de pierre, il fait rentrer les récoltes et les troupeaux dans l'enceinte, et laisse les murs comme ils sont.",
+        "accompli": "LE 4e AU COUCHER DU SOLEIL : maitre Olyvar Trousse-Chaux a ferme la poterne depuis l'interieur par huit assises de moellons liees a la chaux. Aucun homme ne passe ; le boisage interieur prend sur les deux joues et ne bouge pas sous l'epaule. Le mortier reste vert. Lord Staunton a contresigne et scelle la garde. SER GUYARD ROUVRE A SIGNE ET DATE LE ROLE LE 4e : Thom le Roux et Kennet Mare au premier poste ; Pate Vanne et Addam Beche a la releve puis nommes au point jusqu'au matin du 7e ; aucune lance hors des murs. A LA PREMIERE RELEVE, la signature du capitaine est lue devant les quatre noms ; Thom et Kennet rendent le poste, Pate et Addam le prennent. Le mur, le boisage et le mortier ne portent aucune marque neuve. Maitre Olyvar eprouvera le mortier le 7e avant toute levee ou prolongation."
       },
       {
         "id": "staunton-quinzaine",
@@ -2010,40 +2026,38 @@
       "Otto Hightower n'a jamais eu le pouvoir d'écrire le nom d'un prince : ses onze jours de silence n'étaient pas du dédain mais l'attente d'un mandat de Port-Réal, et c'est le sceau du roi, non son Main déchue, qui décidera du prix d'Accalmie.",
       "Les rôles ouverts disent ce que la mémoire mentait : le ban qui marche approche trois mille lances aux murs en douze jours, mais les Marches dorniennes — Dondarrion, Caron, Swann — gardent les cols et ne se vendent avec rien. Les huit mille n'existent que sur le papier ; ce qu'Accalmie peut réellement porter hors des Terres de l'Orage est plus petit, et je suis le seul à le savoir par écrit.",
       "Le compte est commencé mais non clos : une feuille à deux colonnes, de la main de mon intendant, ouverte le troisième jour de la quatrième lune dans ma grande salle. Elle ne quitte pas ma main, et le chiffre s'arrête au douzième jour.",
-      "AU SOIR DU 9e, LE COMPTE N'EST PAS CLOS ET JE SUIS LE SEUL A LE SAVOIR. La feuille a deux colonnes de mon mestre porte onze cents lances VUES ou a une journee de marche, et deux mille neuf cent cinquante PROMISES sur parole — et il refuse de les additionner avant le douzieme jour. J'ai fait manger Estermont, Grandison et Fell a ma table le 9e au soir et je leur ai fait honte devant leurs fils ; ils sont encore la. Quiconque entrera dans ma salle demain croira voir un homme qui a deja trois mille lances, et personne dans la salle ne le dementira.",
-      "Ce qui lui est entre en sept jours, dans l'ordre : la couronne de Rhaenyra et la deposition d'un manteau blanc le vingt-et-unieme, l'acte scelle de la reine le vingt-quatrieme, la decheance a prix d'enfants le vingt-septieme. Et l'AMBASSADE de lord Otto Hightower loge sous son toit depuis le DIX-SEPTIEME jour sans avoir encore ecrit un seul nom : vingt-trois jours de son vin bu par des hommes qui n'ont meme pas le mandat de nommer une de ses filles. Lord Otto n'est pas venu lui-meme, et Borros le compte aussi.",
-      "LE GARCON DE PEYREDRAGON EST DANS MES MURS ET JE NE L'AI PAS ENCORE RECU, ET C'EST VOULU. Un pli scelle qu'on ne m'a pas lu, un enfant qu'on loge dans la tour du levant avec deux hommes a sa porte et de quoi manger. Mon mestre m'a dit qu'on ne deplie pas un sceau le soir et il a raison pour une fois : je le recevrai de jour, dans ma grande salle, avec Estermont, Grandison et Fell a ma table et les gens de Hightower debout au fond. Ce qu'on a a me dire, on me le dira devant tout l'Orage. Qu'il attende le jour et la nuit — on m'a bien fait attendre vingt-trois jours.",
-      "DEUX BETES EN UNE MATINEE, ET LA SECONDE EST PLUS GRANDE QUE TOUT CE QU'ON A VU DEPUIS MES MURS. Les guetteurs de la tour du vent l'ont vue descendre dans le grain de la lande peu apres celle du garcon, et la moitie du chateau est montee regarder. Personne n'a nomme son cavalier et personne n'est venu se presenter a ma porte. J'ai donc, avant midi, un enfant scelle dans ma tour du levant et quelque chose sur ma lande — et deux camps qui ont choisi le meme jour pour venir apres m'avoir laisse vingt-trois jours. Cela ne se decide plus par lettre, et cela ne se decidera pas aujourd'hui : ils attendront tous les deux que j'aie fini avec mes bannerets.",
-      "SIX JOURS D'ATTENTE, PUIS ON M'A ENVOYE LE PRINCE EN PERSONNE AVEC LE PRIX ECRIT DEDANS. Le corbeau de mon ambassade est parti le 3e demander un mandat ; la reponse est venue par cavalier, scellee du sceau de la Main, et c'est celui qu'elle nomme qui l'a portee. Les epees de la Marche Orageuse pour Aegon, deuxieme du nom, contre la main de l'une de mes quatre filles, LE PRINCE AEMOND REPONDANT DE SA PERSONNE, reponse attendue avant la lune close. Voila ce que valait mon silence : on ne m'ecrit pas, on vient. Un camp a enfin ecrit un nom — et c'est le sien qu'il a apporte lui-meme. MAIS LA LETTRE NE DIT PAS LAQUELLE DE MES FILLES, et tant qu'un homme n'aura pas dit ce nom-la tout haut dans ma salle, je n'ai recu que la moitie d'une offre."
+      "VINGTIEME JOUR D'ATTENTE, ET C'EST MON HOTE QUI A DU ECRIRE, PAS MOI. Les hommes de lord Otto Hightower boivent mon vin depuis le dix-septieme jour de la lune passee sans avoir jamais ecrit un seul nom. Un corbeau est parti d'Accalmie pour Port-Real ce jour meme, de la main de ser Alyn Bulwer et NON sous mon sceau, pour demander a son maitre le mandat de poser deux noms — laquelle de mes quatre filles, et quel prince. Mon silence n'est donc pas rompu : le compte se rouvre au retour de l'oiseau. Un homme qui a mange mon pain vingt jours doit quemander un mandat a son maitre — ou lord Otto n'a pas le pouvoir qu'il se donne, ou l'on me fait attendre expres. Les deux se paient au meme prix."
     ],
     "ignore": [
-      "Que Peyredragon n'a plus un seul corbeau pour Accalmie — l'oiseau qui en venait a servi le vingt-et-unieme et ne reviendra pas : toute parole de la reine exige desormais un cavalier de neuf jours, une coque, ou un dragon. Il attend donc une reponse par une voie qui n'existe plus, et prendra chaque jour de silence pour du mepris."
+      "Que Peyredragon n'a plus un seul corbeau pour Accalmie — l'oiseau qui en venait a servi le vingt-et-unieme et ne reviendra pas : toute parole de la reine exige desormais un cavalier de neuf jours, une coque, ou un dragon. Il attend donc une reponse par une voie qui n'existe plus, et prendra chaque jour de silence pour du mepris.",
+      "Que les deux camps s'apprêtent à venir marchander ses filles — on prépare à Port-Réal un mariage au nom d'Aemond, et on parle de lui à Peyredragon"
     ],
-    "intention": "Recevoir de jour, le 10e, dans ma grande salle et devant mes bannerets, l'enfant scelle qu'on m'a pose dans la tour du levant — et n'ecouter un mot de lui avant qu'on ait nomme laquelle de mes quatre filles et pour qui. Ne rien decider de la bete sans nom qui s'est posee sur ma lande tant que personne n'est venu se presenter a ma porte. Clore le chiffre de mes lances au douzieme jour, feuille sous ma main et sur deux colonnes, pour savoir seul ce qu'on vient acheter.",
+    "intention": "Attendre la reponse au corbeau de ser Alyn Bulwer sans repondre lui-meme. N'accepter pour une offre complete que deux noms ecrits — laquelle de ses quatre filles, et quel prince — puis faire comparer cette offre au compte de ses lances lorsqu'il sera clos. Si un camp refuse de nommer, tenir ce refus pour un choix ; si les Verts ecrivent en premier sans nommer la fille, exiger la moitie manquante avant tout sceau.",
     "plan": [
       {
         "id": "borros-rassembler-lances",
         "quoi": "Faire rappeler ses bannerets et faire arreter par son mestre, sur les roles, le compte de ce qu'Accalmie peut mettre en selle — trois mille lances sous les murs en douze jours, huit mille s'il vide les Terres de l'Orage — sans dire pour qui.",
         "etat": "en-cours",
-        "jours_restants": 3,
+        "jours_restants": 5,
         "depend_de": [],
         "cout": [
           "du grain qu'il faudra prendre aux villages avant la moisson",
           "l'obligation de finir par choisir un camp devant des hommes rassemblés"
         ],
-        "si_bloque": "DECLENCHE LE 6e ET TENU LE 9e AU SOIR. Ses bannerets ont trainé : six jours apres l'envoi du rappel, les Marches — Dondarrion, Caron, Swann — ont repondu qu'elles gardent les cols et envoient un chiffre, pas des hommes. Il a donc fait ce que son propre si_bloque disait : les trois plus riches convoques a Accalmie pour un festin, et la honte a table devant leurs fils. Estermont, Grandison et Fell ont mange sous son toit le soir du 9e, avec leurs fils et leurs escortes. Ils y sont encore au matin du 10e."
+        "si_bloque": "Si les bannerets ne repondent pas dans le delai, il convoque les trois plus riches a Accalmie pour un festin et leur fait honte a table, devant leurs fils, jusqu'a ce qu'ils donnent un chiffre ou des hommes.",
+        "accompli": null
       },
       {
         "id": "borros-attendre-offres",
         "quoi": "Ne répondre à aucun corbeau, de Port-Réal comme de Peyredragon, avant qu'un camp n'écrive le nom d'une de ses filles",
-        "etat": "fait",
-        "jours_restants": 0,
+        "etat": "en-cours",
+        "jours_restants": null,
         "depend_de": [],
         "cout": [
           "passer pour lent, ce dont il ne se soucie pas"
         ],
         "si_bloque": "Si les deux camps se taisent une lune entière, il envoie son mestre à Port-Réal réclamer une place au conseil du roi — et fait dire dans sa salle qu'il l'a obtenue.",
-        "accompli": "SA CONDITION EST REMPLIE, DONC L'ETAPE EST FINIE — ce n'est pas lui qui a plie. Il jurait de ne repondre a aucun corbeau, de Port-Real comme de Peyredragon, avant qu'un camp n'ecrive le nom d'une de ses filles. Un camp a ecrit un nom sous le sceau de la Main, remis par cavalier : le prince Aemond, repondant de sa personne. Le silence qu'il tenait n'a plus d'objet. Il n'a plus d'excuse pour se taire et n'a encore rien promis a personne."
+        "accompli": null
       },
       {
         "id": "compte-des-lances-douzieme-jour",
@@ -2061,7 +2075,7 @@
     "date_maj": {
       "annee": 129,
       "lune": 4,
-      "jour": 9
+      "jour": 4
     }
   },
   {
@@ -2439,14 +2453,16 @@
       "Toute une marée descendante s'est passée sans qu'on descende me chercher, la porte de la salle gardée. J'ai noté l'heure. Je ne monterai pas de moi-même : le cahier des sorties reste dans mes mains, et ce que le château veut savoir, il viendra le prendre ou il l'aura par ma lettre.",
       "Cinq quilles du banc de l'Est sont lettrées à sec : une seule franche, deux à reprendre, deux hors d'état. Deux hors d'état sur cinq visitées : le banc est pire que le rôle des passages ne le disait, et je le dirai ainsi tant qu'on n'aura pas visité le reste.",
       "Six quilles du banc de l'Est sont lettrées à sec : une franche, trois à reprendre, deux hors d'état. La sixième est à reprendre — trois coutures et un aiguillot usé d'un demi-doigt, deux jours d'un charpentier. Cinq noms restent nus et sont écrits nus.",
-      "Aucune des six quilles visitées ne prend la mer sous trois jours sans une main de charpentier. Le chiffre de dix nefs en état n'a jamais mesuré cela : il compte des passages, pas des carènes, et je le dirai ainsi au château."
+      "Aucune des six quilles visitées ne prend la mer sous trois jours sans une main de charpentier. Le chiffre de dix nefs en état n'a jamais mesuré cela : il compte des passages, pas des carènes, et je le dirai ainsi au château.",
+      "La basse mer du 5e est tirée d'une étale relevée de ma main à la gaffe le 4e au soir, et non de la table du cahier, qui la donnait trop tôt : je prends l'heure de l'eau, jamais celle du cadran.",
+      "La page du 4e est close avant la nuit : l'ordre de travail du 5e porte l'heure d'eau en tête et l'heure des hommes dessous, sous ma seule signature. Cinq quilles y sont écrites nues, et elles le resteront tant qu'on ne les aura pas vues à sec."
     ],
     "ignore": [
       "Ce que la reine compte faire des onze coques quand la guerre viendra vraiment",
       "S'il reste dix quilles en état au banc de l'Est : dix noms sur onze restent sans lettre, et six au plus seront visités avant la nuit du 5e.",
       "Combien des huit quilles encore nues sont hors d'état comme la deuxième : une visite sur deux a mal tourné, et rien ne dit que le reste vaut mieux."
     ],
-    "intention": "Prendre la marée basse du 5e au matin avec les deux calfats et le gamin retenus sous ma seule signature, lettrer ce que le jusant me laisse des cinq quilles nues, et rendre le rôle avec ses trous nommés avant la nuit du 5e.",
+    "intention": "Descendre au banc de l'Est au jusant du 5e à l'heure d'eau que j'ai mesurée, lettrer ce que la mer me laisse des cinq quilles nues, et rendre le rôle avec ses trous nommés avant la nuit du 5e.",
     "plan": [
       {
         "id": "rulf-ouvrage",
@@ -3067,7 +3083,7 @@
       "La ville choisira dans la lune ; celui qui a choisi avant paie le prix de son empressement",
       "IL NE M A PAS PAYE ET IL M A DONNE MIEUX : une part sur un lot que je vais placer moi-meme, avec sa feuille et son nom. Le gage me reste, l interet court, et ma creance diminue par mon propre travail. C est exactement ce que je voulais et ce n est pas moi qui l ai propose — voila ce qui me gene",
       "IL A REFUSE DE DIRE POURQUOI RIEN NE SE VEND AVANT LA PLEINE LUNE, devant ses hommes, sans une seconde d hesitation. Un homme qui embargo son propre bois six jours dans une ville ou les chantiers arment sait quelque chose sur une date. J AI TARIFE SON SILENCE AU CINQUIEME, faute de pouvoir l acheter",
-      "Il tenait un devis en colonnes, ecrit de sa main : portees, essences, etats, un prix par ligne. Ce n est pas un ramasseur de bois qui ecrit ca. Quelque chose a change chez cet homme en une lune, et je ne sais pas quoi"
+      "SA FEUILLE DE PRIX EXISTE, datee et signee de sa main, et trois copies courent — l'aire, son banc, un acheteur ; seule celle du banc porte le bas ferme. Le jour meme ou elle l'ecrit, la feuille lui apprend ce que personne ne lui avait dit : un rouleau de borde du lot qu'elle place a ete vendu NEUF CERFS le 27e aux Trois-Marches, quand elle le tarife 19 et ne descend pas sous 14. On a vendu sous son plancher, sur sa commission, sans l'avertir."
     ],
     "ignore": [
       "Que l'or vient de Peyredragon"
@@ -3165,7 +3181,6 @@
   {
     "personnage_id": "ollo-marran",
     "croyances": [
-      "Sa place l'a sorti du sel du marais du sud, et il n'y retournera pas",
       "Le role du dix-neuf est faux et c'est lui qui l'a laisse faux : une coque sans nom, venue de Villevieille, deux hommes d'armes a bord",
       "Marlo n'a jamais rien exige de lui — c'est exactement ce qui l'inquiete",
       "Le vingt-deux porte le lot du chantier du bout et son payeur a été écrit d'une main qui n'est pas celle du bureau : c'est ce que Marlo cherche depuis le début, et Ollo vient de le lui recopier.",
@@ -3175,7 +3190,8 @@
       "Sirel Quintaine sait pour le bordé du lot du chantier du bout, et elle le tient de sa bouche à lui — dit à voix basse, sans écrit remis, sans qu'il se soit nommé. Elle a regardé sa manche.",
       "Si elle reprend son devis pièce par pièce demain à l'aube, l'écart sortira par elle et non par le bureau : c'est la seule façon que la chose se sache sans que sa main y paraisse.",
       "La feuille du vingt-deux est cendre dans le sable de l'encrier : il n'existe plus un seul papier qui porte ma main sur cette affaire, et ce qui n'est pas remis n'est pas dû.",
-      "Il y a maintenant deux cases de payeur vides au registre du bureau — le dix-neuf et la deuxième lune de la solde du Guet — et elles sont officielles : la première main sans office qui les remplira prendra le Guet à la reine."
+      "Il y a maintenant deux cases de payeur vides au registre du bureau — le dix-neuf et la deuxième lune de la solde du Guet — et elles sont officielles : la première main sans office qui les remplira prendra le Guet à la reine.",
+      "Il est ne au marais du sud, dans le sel, et c'est son frere aine DOSS qui a parle pour lui quand on l'a pris comme commis au bureau des roles — Doss n'y voit qu'un service rendu. Sa place est la seule chose entre lui et le marais, et il n'y retournera pas. De la vient son exactitude : un homme qui n'a rien a perdre tient mal une colonne de chiffres. Mais le role du dix-neuf est faux, c'est sa main qui l'a porte tel quel au registre, et il n'a pas paru au bureau de cinq ou six jours."
     ],
     "ignore": [
       "Que son frere Doss parle desormais pour vingt et un hommes devant la reine, a Peyredragon"
@@ -4185,8 +4201,7 @@
     "croyances": [
       "C'est elle qu'on mariera et personne d'autre : elle est l'ainee et son pere n'a pas de fils. Elle l'entend a table depuis ses douze ans, et depuis onze jours des gens de lord Otto Hightower boivent le vin d'Accalmie sans dire pourquoi ils sont venus — ce qu'elle voit de ses yeux, au vingt-huitieme jour",
       "Quatre plis sont entres du nord en sept jours et le mestre les a tous lus tout haut dans la salle ; elle y etait aux quatre. Aucun ne dit un mot d'elle ni d'aucune de ses soeurs, et pourtant tout ce qui se joue ici se jouera sur l'une d'elles",
-      "Son pere ne lit pas : ce qu'il croit d'une lettre, c'est ce que le mestre en a lu tout haut, avec les silences qu'il y met. Elle le sait depuis l'enfance, et c'est la seule chose qu'elle puisse deplacer dans cette maison",
-      "IL Y A UN PLI SCELLE DANS CE CHATEAU QUE PERSONNE N'A LU, ET JE SUIS LA SECONDE A LE SAVOIR. Le mestre a porte l'heure et le porteur au registre et n'a pas fait ouvrir le sceau : il a obtenu que la lecture attende le jour. Mon pere ne sait donc pas encore ce qu'on lui apporte, et moi je sais qu'il ne le sait pas. Ce que je gagne cette nuit ne vaut rien si je parle avant la salle. Et deux camps sont arrives le meme jour apres vingt-trois jours de silence : le prix vient de monter, et personne dans cette maison ne l'a compris."
+      "Son pere ne lit pas : ce qu'il croit d'une lettre, c'est ce que le mestre en a lu tout haut, avec les silences qu'il y met. Elle le sait depuis l'enfance, et c'est la seule chose qu'elle puisse deplacer dans cette maison"
     ],
     "ignore": [
       "Que le nom qu'on veut lui donner est celui d'Aemond Targaryen, et que lord Otto le tient dans sa manche depuis onze jours en laissant monter le prix — personne a Accalmie n'a encore entendu ce nom prononce"
@@ -4196,7 +4211,7 @@
       {
         "id": "cassandra-tenir-la-salle",
         "quoi": "Obtenir qu'aucune lettre ne soit lue et aucune reponse donnee hors de sa presence, en se rendant necessaire a la lecture : se tenir debout derriere l'epaule droite de son pere chaque fois que le mestre deplie quelque chose",
-        "etat": "en-cours",
+        "etat": "fait",
         "jours_restants": 0,
         "depend_de": [],
         "cout": [
@@ -4204,13 +4219,13 @@
           "que ses trois soeurs voient qu'elle se place, et le lui fassent payer"
         ],
         "si_bloque": "Si on la renvoie de la salle, elle va trouver le mestre seul le soir et lui fait relire ce qu'il a lu. Elle saura donc ce qui est ecrit avant son pere — et elle ne le dira pas.",
-        "accompli": "TENU DOUZE JOURS, ET TENU AUSSI LE 9e — LE JOUR OU C'ETAIT LE PLUS DUR. Un emissaire de Peyredragon a franchi la barbacane dans la matinee et n'a pas ete recu. Elle a su avant son pere, par le mestre, que le sceau etait intact et l'heure portee au registre. Elle a passe la journee a s'assurer d'une seule chose : que l'audience ne puisse pas se tenir sans elle. Elle a fait dire au castellan qu'on l'avertisse de l'heure, et elle a dormi habillee."
+        "accompli": "TENUE AU 4e : depuis le deuxieme jour, elle se tient derriere l'epaule droite de son pere chaque fois que le mestre deplie une lettre, et cet emplacement est devenu un usage de la salle. Aucun emissaire nouveau n'est encore entre et elle n'a rien appris du futur."
       },
       {
         "id": "cassandra-ce-que-chaque-camp-peut-donner",
         "quoi": "Etablir ce que chacun des deux camps peut REELLEMENT donner — un prince a marier, et lequel — en faisant poser la question par une autre bouche que la sienne",
-        "etat": "bloque",
-        "jours_restants": 0,
+        "etat": "en-cours",
+        "jours_restants": 3,
         "depend_de": [
           "cassandra-tenir-la-salle"
         ],
@@ -4219,7 +4234,7 @@
           "neuf jours au moins pour toute reponse qui viendrait du nord — il n'y a pas d'oiseau"
         ],
         "si_bloque": "Si le mestre refuse d'ecrire, elle pose la question de vive voix au premier envoye qui franchit la porte, devant temoins, et met son pere devant le fait qu'elle a parle la premiere.",
-        "accompli": "BLOQUEE LE 7e, ET C'EST LE MESTRE QUI L'A BLOQUEE. Elle lui a demande d'ecrire sa question — quel prince, et a laquelle des quatre. Il a refuse de l'ENVOYER : il n'ecrit pas ce que son seigneur ne lui a pas dicte. Il a concede de la porter en bas de la page qu'il garde dans son coffre, ce qui ne l'envoie nulle part. Son si_bloque est donc arme, mot pour mot : elle posera la question de vive voix au premier envoye qui franchira la porte, devant temoins, et mettra son pere devant le fait qu'elle a parle la premiere."
+        "accompli": null
       }
     ],
     "declencheurs": [
@@ -4233,7 +4248,7 @@
     "date_maj": {
       "annee": 129,
       "lune": 4,
-      "jour": 9
+      "jour": 4
     }
   },
   {
@@ -4241,8 +4256,7 @@
     "croyances": [
       "Il n'y a rien a faire a Accalmie que regarder les hommes se vendre entre eux, et son ainee sera vendue la premiere — ce qu'elle voit a table chaque soir depuis l'arrivee des gens de lord Otto, le dix-septieme jour",
       "Ces gens-la boivent le vin de son pere depuis onze jours sans dire pour qui ils sont venus : ce qui se marchande sans se nommer se paie toujours plus cher, et son pere ne s'en apercevra pas",
-      "Une question posee tout haut devant trente personnes coute moins cher qu'une lettre et personne n'a jamais su quoi lui repondre — verifie quatre fois cette lune dans la grande salle",
-      "DEUX CAMPS ONT CHOISI LE MEME JOUR APRES VINGT-TROIS JOURS DE SILENCE, et elle l'a dit tout haut dans la salle avant que personne d'autre y pense. Elle est montee a la tour du vent avec la moitie du chateau regarder la seconde bete dans le grain de la lande — plus grande que l'autre, et aucun cavalier n'est venu se presenter a la porte. On ne lui a donne aucun nom : ni pour le garcon qu'on loge au levant, ni pour ce qui dort sur la lande. Ce qu'elle en retient est ce qu'elle retient toujours : on marchande sa soeur, et on n'ose toujours pas dire a qui."
+      "Une question posee tout haut devant trente personnes coute moins cher qu'une lettre et personne n'a jamais su quoi lui repondre — verifie quatre fois cette lune dans la grande salle"
     ],
     "ignore": [
       "Que l'homme qu'on destine a sa soeur est un prince borgne dont l'oeil a ete creve par un fils de Rhaenyra, et que la question qui lui viendrait naturellement a la bouche est exactement celle qui peut faire tuer quelqu'un"
@@ -4271,7 +4285,7 @@
           "rien, et c'est exactement pour cela qu'elle le fera"
         ],
         "si_bloque": "S'ils se taisent, elle le demande a lord Otto Hightower lui-meme, a table, devant son pere — et elle attend la reponse sans baisser les yeux.",
-        "accompli": "OBTENU LE 6e DES ECUYERS, ET CE N'ETAIT PAS CE QU'ELLE CHERCHAIT : ils ont dit le NOMBRE — vingt jours d'attente ce jour-la — et qu'ils attendent un nom de Port-Real que leur chevalier n'a pas encore le droit de poser. Ils n'ont pas dit lequel, parce qu'ils ne le savent pas : ser Alyn Bulwer n'a rien par ecrit. Elle en a tire la seule chose qui l'interesse — on marchande sa soeur sans oser dire a qui — et elle l'a repete a table le 9e devant trois bannerets."
+        "accompli": "OBTENU LE 4e DES ECUYERS : leur chevalier attend de Port-Real le droit de poser deux noms, et ils ne savent encore ni lequel des princes ni laquelle des filles. Maris a obtenu le silence exact qu'elle cherchait a mesurer ; aucun nom d'Aemond n'est entre dans la salle par eux."
       }
     ],
     "declencheurs": [
@@ -4285,7 +4299,7 @@
     "date_maj": {
       "annee": 129,
       "lune": 4,
-      "jour": 9
+      "jour": 4
     }
   },
   {
@@ -4293,13 +4307,10 @@
     "croyances": [
       "Quatre plis du nord sont entres a Accalmie en sept jours — la couronne, la deposition d'un manteau blanc, l'acte scelle de la reine, la decheance de Port-Real — et il les a tous lus tout haut : il est le seul homme du chateau a savoir ce qu'ils disent MOT POUR MOT. Son propre registre, arrete au vingt-septieme jour",
       "Trois mille lances tiennent sous les murs en douze jours et huit mille s'il vide les Terres de l'Orage : c'est SON compte, fait sur les roles des bannerets, et lord Borros le repete partout sans l'avoir verifie une seule fois",
-      "Accalmie n'a pas d'oiseau pour la baie de la Nera : celui qui en est venu le vingt-et-unieme y est reste. Toute reponse au nord exige un cavalier — neuf jours — ou une coque, et personne dans cette maison ne l'a encore compris sauf lui",
-      "IL N'Y A TOUJOURS PAS D'OISEAU POUR LA BAIE DE LA NERA, et il n'en aura pas avant qu'on lui en amene un. Toute reponse au nord exige un cavalier de neuf jours ou une coque. Il le dira tout haut, avant qu'on l'interroge, au premier envoye qui franchira la porte — et il sait que dans une salle pleine cette phrase-la sonne comme un refus alors qu'elle n'est qu'un fait.",
-      "TROIS LIGNES PORTEES AU REGISTRE LE 9e, ET IL EST LE SEUL A LES AVOIR ECRITES : l'heure a laquelle l'emissaire de Peyredragon a passe la barbacane, son nom et son age, et que LE SCEAU EST INTACT. Il a obtenu que la lecture attende le jour — pas pour son seigneur, pour la page qu'il aura a ecrire apres. Quatrieme ligne, ajoutee dans la matinee : une seconde bete posee sur la lande, beaucoup plus grande, aucun porteur presente a la barbacane, aucun nom donne. Il a laisse la colonne du nom VIDE plutot que d'ecrire ce qu'on lui rapportait de la cour, et il l'a dit tout haut a son clerc.",
-      "CINQUIEME ET SIXIEME LIGNES DU 9e, PORTEES AVANT L'AUDIENCE. La bete du garcon de Peyredragon est a la basse-cour du levant, cote mer, sous le chemin de ronde : elle n'y est pas attachee — on n'attache pas ces betes-la — mais les deux portails de la basse-cour sont fermes sur elle et six hommes les tiennent. NOURRIE : deux moutons montes des pares du village au matin du 9e, portes au registre comme depense de la maison, et il a fait ecrire le prix a cote parce qu'un seigneur qui nourrit la bete d'un camp doit savoir ce que cela lui coute. La bete n'a pas dormi et remue des que la mer monte. || SIXIEME LIGNE, DE LA MAIN DU SERGENT DE LA TOUR DU VENT : l'un des hotes non presentes a marche seul le chemin de ronde cote mer avant l'heure de la salle, sans parler a personne, et s'est arrete trois fois — au-dessus de la basse-cour du levant, face au large, et du cote de la lande. Le sergent l'a suivi des yeux d'un bout a l'autre et l'a rapporte. Colonne du nom : VIDE.",
-      "LE TEMPS DU 9e, PORTE AU REGISTRE COMME CHAQUE MATIN : vent de suroit leve dans la nuit, deja franc a l'aube et qui force d'heure en heure ; la houle entre en travers dans la baie des Naufrageurs et les barques du village sont restees au sec. Le ciel est clair au levant et bouche au couchant, d'une seule ligne basse et longue. Les vieux de la porte de mer disent que ce vent-la hale au nord avant la nuit et qu'il faut alors trois heures pour que la baie devienne mauvaise. Le mestre l'a ecrit sans commentaire, comme il ecrit tout."
+      "Accalmie n'a pas d'oiseau pour la baie de la Nera : celui qui en est venu le vingt-et-unieme y est reste. Toute reponse au nord exige un cavalier — neuf jours — ou une coque, et personne dans cette maison ne l'a encore compris sauf lui"
     ],
     "ignore": [
+      "Que la lettre du vingt-et-unieme etait signee de la main de la reine elle-meme et non d'un scribe : il l'a lue pour le fond, tout haut, et n'a pas regarde le bas de la page. Lord Borros croit donc n'avoir jamais recu un mot d'elle, et c'est le mestre qui le lui a fait croire sans le savoir",
       "Que la lettre du vingt-et-unieme etait signee de la main de la reine elle-meme et non d'un scribe : il l'a lue pour le fond, tout haut, et n'a pas regarde le bas de la page. Lord Borros croit donc n'avoir jamais recu un mot d'elle, et c'est le mestre qui le lui a fait croire sans le savoir"
     ],
     "intention": "Tenir le registre de ce qui entre et de ce qui sort, lire fidelement, et empecher son seigneur de repondre de vive voix ce qu'il devra tenir par ecrit — parce que c'est lui qui aura a l'ecrire.",
@@ -4308,14 +4319,14 @@
         "id": "hallis-arreter-le-compte-des-lances",
         "quoi": "Arreter par ecrit le compte des bannerets rappeles, banneret par banneret, pour que le chiffre de trois mille ne soit dit a un envoye qu'apres avoir ete vrai",
         "etat": "en-cours",
-        "jours_restants": 3,
+        "jours_restants": 5,
         "depend_de": [],
         "cout": [
           "deux clercs et l'acces aux roles, que le castellan garde",
           "du grain compte sur les villages avant la moisson, qu'il faudra bien inscrire quelque part"
         ],
         "si_bloque": "Si les bannerets ne repondent pas dans le delai, il ecrit sur DEUX COLONNES SEPAREES le chiffre qu'il a et le chiffre qu'on lui a promis, et il ne les additionne pas. Puis il lit les deux tout haut si on le lui demande, dans cet ordre.",
-        "accompli": "SI_BLOQUE EXECUTE LE 8e : les bannerets n'ont pas repondu dans son delai. Deux colonnes separees, de sa main, non additionnees — onze cents comptees, deux mille neuf cent cinquante promises. Il les lira toutes les deux tout haut si on le lui demande, dans cet ordre, et il sait ce que cela fera a son seigneur devant temoins."
+        "accompli": null
       },
       {
         "id": "hallis-la-reponse-par-ecrit",
@@ -4327,18 +4338,13 @@
           "que lord Borros souffre qu'on ecrive avant qu'il ait decide, ce qu'il prend pour une insolence"
         ],
         "si_bloque": "S'il le lui refuse, il l'ecrit quand meme et la garde dans son coffre sans le dire. Et si l'on exige une reponse le jour meme, il rappellera tout haut qu'Accalmie n'a pas d'oiseau pour la baie et qu'il faut un cavalier de neuf jours — ce qui est vrai, et ce qui donne a son seigneur neuf jours qu'il n'avait pas demandes.",
-        "accompli": "Ecrite le 7e et gardee dans son coffre sans le dire, exactement comme son si_bloque l'annoncait : une page sans nom de camp ou il ne reste qu'a porter DEUX NOMS — la fille, et le prince. Lord Borros ne sait pas qu'elle existe. Elle est a portee de main le 10e, ce qui veut dire qu'une reponse d'Accalmie peut etre scellee dans l'heure si un nom est prononce dans la salle."
+        "accompli": "ECRITE LE 4e AU MATIN ET GARDEE DANS SON COFFRE SANS LE DIRE, comme son si_bloque le portait : une page sans nom de camp ou il ne reste qu'a porter deux noms — la fille et le prince. Lord Borros ignore qu'elle existe. Elle ne sortira que sur son ordre de sceller une reponse."
       }
     ],
     "declencheurs": [
       {
-        "si": "Un envoye de Peyredragon, ou une lettre de la reine, se presente a la barbacane d'Accalmie",
-        "alors": "IL NE FAIT PAS OUVRIR LE SCEAU HORS DE LA GRANDE SALLE. A l'arrivee il porte au registre l'heure, le porteur et l'etat du sceau — intact — et il obtient de son seigneur que la lecture attende une audience tenue de jour, devant temoins, parce qu'une lettre lue dans un couloir est une lettre a laquelle on repond de vive voix. EN AUDIENCE : il la lit tout haut integralement, signature comprise, puis porte au registre le premier mot de la reponse de son seigneur, puis fait remarquer, avant qu'on l'ait interroge, qu'il n'y a pas d'oiseau pour repondre. ET C'EST SEULEMENT APRES QUE TOUTES LES OFFRES PRESENTES DANS LA SALLE ONT ETE ENTENDUES, ET AVANT QUE SON SEIGNEUR NE TRANCHE, qu'il se dedit tout haut : la lettre du vingt-et-unieme etait signee de la main de la reine et il ne l'avait pas dit, parce qu'il ne l'avait pas regardee. Jamais avant. S'il le decouvre plus tot, il se tait et attend ce moment-la.",
-        "une_fois": false
-      },
-      {
-        "si": "On lui demande, ou il lui vient a l'esprit, de produire la page qu'il garde dans son coffre — celle sans nom de camp ou il ne reste qu'a porter deux noms",
-        "alors": "IL NE LA PRODUIT PAS. Tant que lord Borros n'a pas dit tout haut a quelqu'un qu'il accepte, la page reste au coffre et son existence avec elle : la sortir pour gagner du temps ferait du mestre celui qui a choisi le camp d'Accalmie, et ce n'est pas sa place. Au moment ou son seigneur dit oui — et pas une minute plus tot — il l'a sous la main et Accalmie peut sceller dans l'heure.",
+        "si": "Une lettre de la reine de Peyredragon, ou un envoye venu de Peyredragon, se presente a la barbacane d'Accalmie",
+        "alors": "A LA BARBACANE, ET AVANT TOUT LE RESTE : il porte au registre l'heure, le porteur et l'etat du sceau, et il ne fait ouvrir aucun sceau hors de la grande salle — une lettre depliee dans un couloir est une lettre a laquelle son seigneur repondra de vive voix. || DANS LA SALLE, DE JOUR ET DEVANT TEMOINS : il la lit tout haut INTEGRALEMENT, signature comprise, sans rien resumer et sans rien commenter ; ce que la lettre ne dit pas, il ne le dit pas non plus. Puis il porte au registre le premier mot de la reponse de son seigneur, quel qu'il soit, y compris le silence. || ET AVANT QU'ON L'AIT INTERROGE il rappelle tout haut qu'Accalmie n'a pas d'oiseau pour la baie de la Nera : toute reponse au nord demande un cavalier de neuf jours ou une coque. Il le dit comme un fait de registre, sans conseiller — mais il sait qu'a l'oreille d'une salle pleine cela sonne comme un refus, et il le dit quand meme.",
         "une_fois": false
       }
     ],
@@ -4346,15 +4352,15 @@
     "date_maj": {
       "annee": 129,
       "lune": 4,
-      "jour": 9
+      "jour": 4
     }
   },
   {
     "personnage_id": "marec-fosse",
     "croyances": [
       "DEUX CENT TRENTE-DEUX MUIDS en granges et greniers au soir du 28e, et pas un de plus : il a refait le compte lui-meme apres avoir vu, de ses yeux, un charroi etranger charger dans la grange du hameau de la cote le 28e au matin, sur les terres de son maitre et sans un mot de son maitre.",
-      "SOIXANTE JOURNEES DE PAIN pour la ville en comptant les bouches montees des hameaux depuis le feu de la route — son propre role des bouches, arrete le 27e au soir. Le chiffre baisse de quatre muids par jour et il ne remonte qu'a la moisson.",
-      "Un muid nourrit vingt hommes un jour. Il tient ce chiffre du meme endroit que tout le monde et il ne le discutera avec personne."
+      "Un muid nourrit vingt hommes un jour. Il tient ce chiffre du meme endroit que tout le monde et il ne le discutera avec personne.",
+      "Il ne sait plus combien de journees de pain il reste a la ville, et il refuse d'avancer un chiffre avant d'avoir recompte grange par grange ce que l'ost a laisse. Ce qu'il sait : les caves de la citadelle sont pleines, les granges basses sont ouvertes, et il n'a plus de maitre a qui rendre un role."
     ],
     "ignore": [
       "Que les trois depots poses sur les terres de son maitre ne sont pas un vol mais le train de vivres de la reine, et qu'on viendra lui en demander CENT QUATRE-VINGTS DE PLUS le trentieme au soir. Il a fait fermer les deux granges du haut par precaution — ce qui coutera une demi-journee de serrures et de charroi le jour ou l'ordre viendra."
@@ -4364,21 +4370,21 @@
       {
         "id": "marec-refait-le-role",
         "quoi": "Arreter le compte des muids grange par grange, y compris les deux du haut qu'on n'a pas ouvertes depuis la moisson, et le porter a son maitre avec le role des bouches a cote — parce qu'un chiffre de grain sans le chiffre des bouches n'a jamais rien voulu dire.",
-        "etat": "en-cours",
-        "jours_restants": 1,
+        "etat": "abandonne",
+        "jours_restants": 0,
         "depend_de": [],
         "cout": [
           "une nuit de chandelle",
           "deux hommes pour rouvrir les greniers du haut"
         ],
         "si_bloque": "S'il n'obtient pas les deux hommes, il compte seul et rend le chiffre avec un jour de retard — c'est-a-dire APRES le debarquement, et son maitre devra repondre a la reine sans savoir ce qu'il a.",
-        "accompli": null
+        "accompli": "Le role a ete arrete, il n'a jamais ete porte : celui a qui il devait le rendre a ete decapite le 3e sur le quai. Le compte existe, il est juste, et il n'a plus de destinataire."
       },
       {
         "id": "marec-vide-les-granges-du-haut",
         "quoi": "Faire descendre le grain des deux granges du haut dans les caves de la citadelle, derriere les murs, au lieu de le laisser sous des serrures neuves dans des batiments de bois.",
-        "etat": "en-cours",
-        "jours_restants": 4,
+        "etat": "fait",
+        "jours_restants": 0,
         "depend_de": [
           "marec-refait-le-role"
         ],
@@ -4387,13 +4393,13 @@
           "l'accord de lord Gunthor, qui trouvera que ca a l'air de la peur"
         ],
         "si_bloque": "S'il n'a ni betes ni accord, il pose un homme de garde par grange, pris sur le guet du quai, et il n'en reparle pas. Les granges de bois brulent en une heure.",
-        "accompli": null
+        "accompli": "FAIT AVANT LE SAC. L'etape portait quatre jours au 28e, elle en avait cinq : le grain des deux granges du haut est descendu aux caves de la citadelle, derriere les murs, avant que l'ost paraisse le 3e. Ce qui restait dans les granges basses est ce que le sac a trouve. Il n'a pas eu l'accord de lord Gunthor — il ne l'a pas demande une seconde fois."
       }
     ],
     "declencheurs": [
       {
-        "si": "Un homme de la reine lui demande son chiffre par ecrit, ou devant lord Gunthor",
-        "alors": "Il donne le vrai, arrondi a la baisse de dix muids comme il le fait depuis vingt ans, et il donne AUSSI le role des bouches de la ville sans qu'on le lui demande — ce qui montre d'un coup ce que cent quatre-vingts muids retirent a Sombreval, au lieu d'un chiffre isole qui n'engage personne.",
+        "si": "Un homme de l'ost vert lui demande le compte des granges de Sombreval",
+        "alors": "Il donne le vrai des granges basses, arrondi a la baisse de dix muids comme il le fait depuis vingt ans, et il donne aussi le role des bouches sans qu'on le lui demande. Il ne dit pas un mot des caves de la citadelle : on ne les lui a pas demandees, et rien n'en sort sans un ordre de son maitre — il n'en a plus.",
         "une_fois": false
       }
     ],
@@ -4408,8 +4414,8 @@
     "personnage_id": "robin-darklyn",
     "croyances": [
       "Le papier ne tient pas une muraille. Son pere a lache douze corbeaux dans la nuit du seizieme et le roi a repondu en faisant ecrire le nom de Sombreval, seul, dans une proclamation de decheance : voila tout ce que les mots ont rapporte a cette maison en douze jours.",
-      "ONZE COQUES de Sombreval dorment a leurs amarres sous la tour du levant, quai ferme depuis le dix-septieme. C'est le seul bien de la maison qui puisse etre ailleurs dans trois jours, et le seul que personne ne songe a bouger.",
-      "Son oncle ser Steffon sert la reine a Peyredragon et n'a pas ecrit une ligne a la maison depuis qu'il y est monte. La reine a deja un Darklyn ; elle n'a pas besoin de Sombreval."
+      "Son oncle ser Steffon sert la reine a Peyredragon et n'a pas ecrit une ligne a la maison depuis qu'il y est monte. La reine a deja un Darklyn ; elle n'a pas besoin de Sombreval.",
+      "Les onze coques ont brule a leurs amarres le troisieme jour, et son pere est tombe sur le quai qu'il avait ferme lui-meme. Il avait demande les deux choses — sortir les coques, ne pas fermer le port — et on ne lui avait pas repondu. Il ne dira jamais tout haut qu'il avait raison ; il ne l'oubliera pas une heure."
     ],
     "ignore": [
       "Que son oncle debarquera le trentieme au soir avec deux sceaux, douze hommes et un scribe, et qu'a partir de ce soir-la Sombreval sera le quai d'un ost qui n'est pas le sien — et que ses onze coques ne seront plus tout a fait a personne."
@@ -4419,37 +4425,31 @@
       {
         "id": "robin-les-onze-coques",
         "quoi": "Faire chiffrer par le maitre de port ce qu'il en coute de mouiller onze coques ailleurs qu'a Sombreval — equipages, vivres, jours — et poser le compte devant son pere avec le role des equipages a cote.",
-        "etat": "en-cours",
-        "jours_restants": 1,
+        "etat": "abandonne",
+        "jours_restants": 0,
         "depend_de": [],
         "cout": [
           "quarante hommes d'equipage qui ne seront plus sur les murs",
           "contredire son pere devant son intendant, ce qu'il n'a jamais fait"
         ],
         "si_bloque": "Si son pere refuse, il ne redemande pas et ne boude pas : il fait armer DEUX coques a ses frais et les envoie a Lamarck sous couleur de commerce, sans le dire a personne. Les neuf autres resteront ou elles sont.",
-        "accompli": null
+        "accompli": "Sans objet le 129.4.3 : les onze coques ont brule a leurs amarres sous la tour du levant quand l'ost de la Couronne a pris le port (evenement sac-sombreval, resolu ; annale-le-sac-de-sombreval : 'la flotte brulee sur ses amarres'). Il n'a jamais obtenu de son pere qu'elles sortent, et il n'aura pas eu a le lui redemander."
       },
       {
         "id": "robin-ecrit-a-son-oncle",
         "quoi": "Ecrire a ser Steffon, hors du registre du mestre, une lettre qui ne demande rien et dit seulement l'etat de la place : morts, blesses, hommes debout, journees de pain, coques a l'amarre.",
-        "etat": "en-cours",
-        "jours_restants": 1,
+        "etat": "abandonne",
+        "jours_restants": 0,
         "depend_de": [],
         "cout": [
           "une barque de peche et un homme qui sait se taire, le quai etant ferme",
           "passer par-dessus son pere, qui a ferme ce quai lui-meme"
         ],
         "si_bloque": "S'il ne trouve pas de barque, il donne la lettre au premier charretier qui monte vers Rosby : elle sera lue par trois personnes avant d'atteindre Peyredragon, si elle l'atteint.",
-        "accompli": null
+        "accompli": "Aucune barque n'est partie : le quai etait ferme depuis le dix-septieme jour par ordre de son pere, et il est pris depuis le troisieme. La lettre qui devait dire a ser Steffon 'morts, blesses, hommes debout, journees de pain, coques a l'amarre' n'a pas ete ecrite — et Peyredragon n'a rien su du sac ce jour-la (annale-le-sac-de-sombreval)."
       }
     ],
-    "declencheurs": [
-      {
-        "si": "La reine, ou un homme portant son sceau, met le pied a Sombreval",
-        "alors": "Il demande des voiles et un mouillage pour ses onze coques AVANT que son pere ait fini de saluer, et il le fait devant tout le monde. Ce qui humilie son pere, et fait de lui le premier Darklyn a demander quelque chose a cette reine.",
-        "une_fois": true
-      }
-    ],
+    "declencheurs": [],
     "attitude_joueur": "Il n'a pas jure en 105 : il etait au berceau. Il ne la hait pas — il la trouve chere. Un mot d'elle sur ses coques l'achete entierement ; un mot de trop sur son pere le ferme pour de bon.",
     "date_maj": {
       "annee": 129,
@@ -5000,7 +5000,8 @@
     "croyances": [
       "SA PORTE A ETE OUVERTE CETTE NUIT. La gueule de la Gadoue beante a une heure ou elle ne l'a jamais ete en quatorze mois, la lanterne du corps de garde a terre et brulant encore, quatre hommes a cinq pas du seuil du Peigne — trois respirent, le quatrieme non. Il est arrive apres, et il ne sait ni qui, ni combien, ni de quel camp.",
       "Deux mains le paient et non une : douze dragons en pieces neuves poses le 21e sans un mot, et quinze dragons quatre-vingts cerfs d'or vieux. Il a pris l'or et n'a rien jure — ce qu'il vend, ce sont les portes, en colonnes, et rien d'autre.",
-      "Je ne tiens la place que jusqu'au retour de celui qui décide : je peux tout préparer, rien conclure d'irréversible. Pas de serment prêté ni rompu, pas de mariage, pas de bataille livrée, pas de mort ordonnée, pas de trahison déclarée, pas de reddition, pas de place forte cédée. Ce qui engage pour toujours attend, et j'écris pour qui reviendra."
+      "Je ne tiens la place que jusqu'au retour de celui qui décide : je peux tout préparer, rien conclure d'irréversible. Pas de serment prêté ni rompu, pas de mariage, pas de bataille livrée, pas de mort ordonnée, pas de trahison déclarée, pas de reddition, pas de place forte cédée. Ce qui engage pour toujours attend, et j'écris pour qui reviendra.",
+      "Il porte six cerfs — 336 sous — pris a l'or vieux de la reine sans entamer une piece d'or ; il en reste soixante-quatorze de coupure avant d'y etre force, et le jour ou il devra rompre du dragon il devra retourner chez un changeur qui ecrit son nom. L'or neuf du 21e n'a toujours pas bouge. Mais sa marque au clou dans le fond de cale ne lui dira jamais rien : la maree efface le sable deux fois par jour, comme elle a efface celle du 25e — ce qui couvre sa cache est ce qui aveugle sa garde."
     ],
     "ignore": [
       "Qui a force la Gadoue, et si c'est pour entrer ou pour sortir.",

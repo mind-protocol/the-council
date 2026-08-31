@@ -19,12 +19,20 @@ from agents.activation.socle import (RACINE, ETAT, DEPOT, ETAT_BOUCLE,
                                      VERROU, ENERGIE_ACTIVATION_MIN,
                                      ENERGIE_MAX, ENERGIE_MIN,
                                      REPOS_ACTEUR_SECONDES,
+                                     MINUTES_COMPUTE_DEMI_MJ,
                                      secondes_monde_pour_energie, _court,
                                      journaliser, lire_json,
                                      ecrire_atomique, charger_tissu)
 from agents.activation.horloges import (minute_absolue, horloge_directe,
+                                        commettre_lot_horloge,
                                         polarites_horloge_acteurs,
                                         appliquer_polarites_horloge)
+from agents.activation.fatigue import (amorcer_fatigue_historique,
+                                       ajouter_activation,
+                                       capacite_zone,
+                                       instant_fictionnel_secondes,
+                                       mettre_a_jour_porte,
+                                       mesurer_fatigue)
 from agents.activation.graphe import (adjacence, sources_de_charge, diffuser,
                                       importance, clusters_par_lieu,
                                       tache_active, empreinte_tache,
@@ -88,6 +96,7 @@ def cycle(args, etat=None):
     noeuds, aretes, evaluation = charger_tissu()
     journaliser("graphe.charge", noeuds=len(noeuds), aretes=len(aretes))
     amorcer_continuite_historique(etat, noeuds)
+    amorcer_fatigue_historique(etat)
     journaliser("diffusion.importance")
     scores, adj = importance(noeuds, aretes, evaluation, horloge["source_id"],
                              occupes)
@@ -135,11 +144,47 @@ def cycle(args, etat=None):
         rotation["tour"] = 1
         rotation["vus"] = []
     vus_rotation = set(rotation.get("vus") or [])
+    capacites_zones = {}
+
+    def porte_de_zone(pid):
+        # Import local : zone reexporte la boucle d'activation et l'import de
+        # module formerait un cercle. Au moment de selectionner, tout est lie.
+        from agents import zone
+        mj = zone.arbitre_de(pid)
+        if mj not in capacites_zones:
+            capacite_mj, charge_mj, comptes = capacite_zone(etat, mj)
+            ouverte = mettre_a_jour_porte(
+                etat, "zones", mj, capacite_mj)
+            capacites_zones[mj] = (
+                ouverte, capacite_mj, charge_mj, comptes)
+        return (mj,) + capacites_zones[mj]
 
     def selectionner(exclus_rotation):
         choix = []
         taches_selectionnees = set()
         for energie, score, pid, jauge in eligibles:
+            capacite_homme = float(jauge.get("facteur_compute") or 1.0)
+            homme_ouvert = mettre_a_jour_porte(
+                etat, "acteurs", pid, capacite_homme)
+            mj, mj_ouvert, capacite_mj, charge_mj, comptes_mj = porte_de_zone(pid)
+            jauge["capacite_compute"] = capacite_homme
+            jauge["porte_compute"] = "ouverte" if homme_ouvert else "fermee"
+            jauge["mj"] = mj
+            jauge["capacite_mj"] = capacite_mj
+            jauge["porte_mj"] = "ouverte" if mj_ouvert else "fermee"
+            # --acteur est un geste explicite. Il franchit la porte mais ne la
+            # rouvre pas : la prochaine election automatique restera arretee.
+            if not args.acteur and (not homme_ouvert or not mj_ouvert):
+                journaliser(
+                    "selection.rejetee", acteur=pid, energie=round(energie, 3),
+                    raison="capacite_compute",
+                    porte_acteur=jauge["porte_compute"],
+                    capacite_acteur=round(capacite_homme, 3), mj=mj,
+                    porte_mj=jauge["porte_mj"],
+                    capacite_mj=round(capacite_mj, 3),
+                    charge_mj_minutes=round(charge_mj, 1),
+                    comptes_mj=",".join(comptes_mj))
+                continue
             if energie < ENERGIE_ACTIVATION_MIN:
                 journaliser("selection.borne", acteur=pid,
                             energie=round(energie, 3),
@@ -205,8 +250,10 @@ def cycle(args, etat=None):
         polarite = polarites.get("pers:" + pid) or {}
         lot = {
             "energie": energie, "score": score, "pid": pid,
+            "energie_brute": float(jauge.get("energie_brute") or energie),
             "jauge": jauge, "tache": tache,
             "energie_tache": energie_tache, "budget": budget,
+            "horloge_pj": polarite.get("horloge_pj"),
         }
         lots.append(lot)
         journaliser("selection.elue", acteur=pid, energie=round(energie, 3),
@@ -237,8 +284,11 @@ def cycle(args, etat=None):
     journaliser("selection.lot", nombre=len(lots), parallele=capacite)
     if args.sec:
         for lot in lots:
+            horloge_acteur = dict(horloge)
+            horloge_acteur["horloge_pj"] = lot.get("horloge_pj")
             appeler_acteur(
-                lot["pid"], lot["tache"], lot["budget"], horloge, noeuds,
+                lot["pid"], lot["tache"], lot["budget"], horloge_acteur,
+                noeuds,
                 args.modele, args.effort, args.minutes_appel, True,
                 args.heartbeat, etat=etat)
         return etat, len(lots), len(lots)
@@ -256,7 +306,8 @@ def cycle(args, etat=None):
         futurs = {
             pool.submit(
                 appeler_acteur, lot["pid"], lot["tache"], lot["budget"],
-                horloge, noeuds, args.modele, args.effort,
+                {**horloge, "horloge_pj": lot.get("horloge_pj")}, noeuds,
+                args.modele, args.effort,
                 args.minutes_appel, False, args.heartbeat, etat): lot
             for lot in lots
         }
@@ -288,6 +339,11 @@ def cycle(args, etat=None):
                             erreur=_court(str(e), 400))
 
     reussies = 0
+    durees_reussies = []
+    # Les appels viennent de finir : le runtime central a pose une entree par
+    # processus, y compris ceux du narrateur et les echecs. On les absorbe
+    # avant de recalculer la fiche, sans repayer le rapport agrege ci-dessous.
+    amorcer_fatigue_historique(etat)
     for lot in lots:
         pid = lot["pid"]
         tache = lot["tache"]
@@ -307,13 +363,31 @@ def cycle(args, etat=None):
             for a in activites_rapport)
         reserves_noeuds = etat["graphe"]["noeuds"]
         acteur_nid = "pers:" + pid
-        energie_acteur_apres = max(0.0, float(energie) - float(depense))
+        energie_brute = lot["energie_brute"]
+        energie_acteur_apres = max(0.0, energie_brute - float(depense))
         reserves_noeuds[acteur_nid] = energie_acteur_apres
-        jauge["energie"] = energie_acteur_apres
+        activation_meta = rapport.get("_activation") or {}
+        duree_compute_ms = activation_meta.get("duree_api_ms")
+        if duree_compute_ms is None:
+            duree_compute_ms = activation_meta.get("duree_ms")
+        compute_minutes = max(
+            0.0, float(duree_compute_ms or 0.0) / 60000.0)
+        horloge_acteur = {**horloge, "horloge_pj": lot.get("horloge_pj")}
+        instant_fiction = instant_fictionnel_secondes(pid, horloge_acteur)
+        mesure_fatigue = ajouter_activation(
+            etat.setdefault("fatigue_acteurs", {}).setdefault(pid, {}),
+            0.0, instant_fiction, duree_monde)
+        jauge["energie_brute"] = energie_acteur_apres
+        jauge["energie"] = energie_acteur_apres * mesure_fatigue["facteur_total"]
+        jauge["charge_compute_minutes"] = mesure_fatigue["charge_compute_minutes"]
+        jauge["ecart_heures"] = mesure_fatigue["ecart_heures"]
+        jauge.pop("avance_heures", None)
+        jauge["facteur_compute"] = mesure_fatigue["facteur_compute"]
+        jauge["facteur_heures"] = mesure_fatigue["facteur_heures"]
         jauge["disponible_a"] = round(
             float(horloge["present_secondes"]) + duree_monde, 3)
         journaliser("acteur.energie.debitee", acteur=pid,
-                    avant=round(energie, 3), energie=depense,
+                    avant=round(energie_brute, 3), energie=depense,
                     duree_monde_s=duree_monde,
                     apres=round(energie_acteur_apres, 3))
         if restitue:
@@ -325,8 +399,16 @@ def cycle(args, etat=None):
             "qui": pid, "tache": tache["id"], "budget": budget,
             "depense": depense, "restitue": restitue,
             "duree_monde_secondes": duree_monde,
+            # Trace de l'enveloppe du rapport, pas autorite de fatigue : le
+            # registre runtime separe maintenant acteur et MJ.
+            "duree_rapport_minutes": round(compute_minutes, 3),
             "energie_avant": round(energie, 3),
-            "energie_apres": round(energie_acteur_apres, 3),
+            "energie_apres": round(jauge["energie"], 3),
+            "energie_brute_avant": round(energie_brute, 3),
+            "energie_brute_apres": round(energie_acteur_apres, 3),
+            "charge_compute_minutes": round(
+                mesure_fatigue["charge_compute_minutes"], 3),
+            "ecart_heures": round(mesure_fatigue["ecart_heures"], 3),
             "importance": round(score, 6), "front": horloge["front_id"],
             "present_secondes": round(horloge["present_secondes"], 3),
             "rapport": os.path.relpath(cible, RACINE).replace("\\", "/"),
@@ -334,8 +416,16 @@ def cycle(args, etat=None):
         }
         etat.setdefault("historique", []).append(entree)
         journaliser("cycle.termine", acteur=pid, rapport=entree["rapport"])
+        durees_reussies.append(duree_monde)
         reussies += 1
 
+    avance_horloge = commettre_lot_horloge(horloge, durees_reussies)
+    etat["horloge"] = {k: v for k, v in horloge.items()
+                       if k != "present_secondes"}
+    if avance_horloge:
+        journaliser("horloge.commise", avance_s=round(avance_horloge, 3),
+                    present_s=round(horloge["present_secondes"], 3),
+                    reussies=reussies)
     etat["historique"] = etat.get("historique", [])[-200:]
     ecrire_atomique(ETAT_BOUCLE, etat)
     journaliser("cycle.lot.termine", reussies=reussies,
@@ -359,6 +449,7 @@ def prevoir_activations(limite):
     horloge, occupes = horloge_directe(etat)
     noeuds, aretes, evaluation = charger_tissu()
     amorcer_continuite_historique(etat, noeuds)
+    amorcer_fatigue_historique(etat)
     scores, adj = importance(noeuds, aretes, evaluation, horloge["source_id"],
                              occupes)
     polarites, _horloge_moyenne = polarites_horloge_acteurs(noeuds, adj)
@@ -373,12 +464,33 @@ def prevoir_activations(limite):
         disponibilites, noeuds, occupes)
     resultat = []
     attentes = collections.Counter()
+    capacites_zones = {}
     # TOUT ACTEUR ACTIF PARAIT. On n'ecarte plus personne de la liste : un
     # homme sous le seuil, au repos ou sans tache energisee reste un homme
     # qu'on doit pouvoir voir et lancer a la main depuis l'admin. Le motif
     # d'attente l'accompagne au lieu de le faire disparaitre.
-    for energie, score, pid, _jauge in eligibles:
+    for energie, score, pid, jauge in eligibles:
         motifs = []
+        from agents import zone
+        mj = zone.arbitre_de(pid)
+        if mj not in capacites_zones:
+            cap_mj, charge_mj, comptes_mj = capacite_zone(etat, mj)
+            ouverte_mj = mettre_a_jour_porte(etat, "zones", mj, cap_mj)
+            capacites_zones[mj] = {
+                "compute_minutes": round(charge_mj, 3),
+                "capacite": round(cap_mj, 6),
+                "porte": "ouverte" if ouverte_mj else "fermee",
+                "comptes": comptes_mj,
+            }
+        cap_homme = float(jauge.get("facteur_compute") or 1.0)
+        ouverte_homme = mettre_a_jour_porte(
+            etat, "acteurs", pid, cap_homme)
+        if not ouverte_homme:
+            attentes["porte_acteur_fermee"] += 1
+            motifs.append("capacité acteur fermée")
+        if capacites_zones[mj]["porte"] != "ouverte":
+            attentes["porte_mj_fermee"] += 1
+            motifs.append("capacité MJ fermée")
         if energie < ENERGIE_ACTIVATION_MIN:
             attentes["energie_sous_seuil"] += 1
             motifs.append("énergie sous le seuil")
@@ -404,6 +516,17 @@ def prevoir_activations(limite):
             "qui": pid,
             "nom": (noeuds.get("pers:" + pid) or {}).get("quoi") or pid,
             "energie": round(energie, 3),
+            "energie_brute": round(float(jauge.get("energie_brute") or 0.0), 3),
+            "charge_compute_minutes": round(
+                float(jauge.get("charge_compute_minutes") or 0.0), 3),
+            "ecart_heures": round(float(jauge.get("ecart_heures") or 0.0), 3),
+            "facteur_compute": round(float(jauge.get("facteur_compute") or 1.0), 6),
+            "facteur_heures": round(float(jauge.get("facteur_heures") or 1.0), 6),
+            "capacite_compute": round(cap_homme, 6),
+            "porte_compute": "ouverte" if ouverte_homme else "fermee",
+            "mj": mj,
+            "capacite_mj": capacites_zones[mj]["capacite"],
+            "porte_mj": capacites_zones[mj]["porte"],
             "importance": round(score, 6),
             "budget": budget_energie,
             "duree_monde_secondes": secondes_monde_pour_energie(
@@ -429,6 +552,17 @@ def prevoir_activations(limite):
         "hypothese": ("classement instantane si aucun resultat ne modifie "
                        "le graphe, les disponibilites ou les energies"),
         "attente": dict(attentes),
+        "charge_mj": {
+            mj: {
+                "compute_minutes": round(float(
+                    fiche.get("compute_minutes") or 0.0), 3),
+                "facteur_compute": round(math.pow(
+                    0.5, float(fiche.get("compute_minutes") or 0.0) /
+                    MINUTES_COMPUTE_DEMI_MJ), 6),
+            }
+            for mj, fiche in sorted((etat.get("fatigue_mj") or {}).items())
+        },
+        "capacite_zones": capacites_zones,
         "previsions": resultat,
     }
 

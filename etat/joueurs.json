@@ -29,7 +29,7 @@
       "sarro-vaeth",
       "merra-sath"
     ],
-    "occupe": false,
+    "occupe": true,
     "alterne_avec": "marlo-vasse",
     "laisser_faire": true,
     "note": "LAISSER FAIRE PERMANENT (decide le 31.8) : personne ne s'assoit, la machine la joue comme un absent (tete dans intentions.json, boucle d'activation), et son siege ANCRE le quartier malgre occupe:false — voir ancres() dans scripts/temps/presence_quartier.py. `occupe` reste la mesure et reste faux ; s'asseoir vraiment reprendrait la main sans rien casser."
@@ -42,7 +42,8 @@
     "role": "second",
     "pnj": [],
     "occupe": false,
-    "arbitre": "mj-aurore"
+    "arbitre": "mj-aurore",
+    "laisser_faire": true
   },
   {
     "jeton": "vase-rateau-6031",
@@ -77,7 +78,7 @@
     ],
     "occupe": false,
     "arbitre": "mj-barralfond",
-    "note": "ARBITRE DECLARE le 5e j. : mj-barralfond, et ce n'est pas un choix, c'est ce que les deux routages disent deja — serveur/routes/joueur.js:45 rend a ce siege `mj-` + son lieu_id sans tirets, et scripts/agents/zone.py arbitre_de() rend zone_de('barralfond'). Ni mj-nicolas-reynolds ni mj-nicolasreynolds : ces deux chambres sont nees de la panne du premier etabli (l'id de zone renormalise en chemin), aucune n'est adressable par le joueur. Siege cree le 28e j., 3e lune, an 129 ; deplace a Barralfond le 3e j., 4e lune. VACANT : il a une tete dans intentions.json et le monde le joue comme un absent. Barralfond ne vit vraiment que quand on s'y assoit — python scripts/sieges.py --asseoir nicolas-reynolds --vraiment. Ses cinq architectes touchent au MOTEUR, jamais a l'etat joue.",
+    "note": "ARBITRE DECLARE : mj-barralfond. SANS DATE, ET C'EST VOULU (retouche par mj-barralfond le 4e j., 4e lune) : cette ligne portait « le 5e j. », un jour depuis repris par une passe d'arriere — une declaration d'appareil datee d'un jour repris est la seule chose ici qui puisse redevenir fausse toute seule, alors que le fait, lui, ne depend d'aucune date. Retouche a main nue faute de porte : `joueurs` n'est pas une table du vocabulaire ferme des mutations (books, evenements, intentions, jetons, lieux, mains, monde, personnages, plis, relations) — ce fichier est de l'appareil, pas de l'etat joue. Ce n'est pas un choix, c'est ce que les deux routages disent deja — serveur/routes/joueur.js:45 rend a ce siege `mj-` + son lieu_id sans tirets, et scripts/agents/zone.py arbitre_de() rend zone_de('barralfond'). Ni mj-nicolas-reynolds ni mj-nicolasreynolds : ces deux chambres sont nees de la panne du premier etabli (l'id de zone renormalise en chemin), aucune n'est adressable par le joueur. Siege cree le 28e j., 3e lune, an 129 ; deplace a Barralfond le 3e j., 4e lune. VACANT : il a une tete dans intentions.json et le monde le joue comme un absent. Barralfond ne vit vraiment que quand on s'y assoit — python scripts/sieges.py --asseoir nicolas-reynolds --vraiment. Ses cinq architectes touchent au MOTEUR, jamais a l'etat joue.",
     "lieu": "barralfond",
     "salle": "la-souche",
     "assis_a": 1786739430.477

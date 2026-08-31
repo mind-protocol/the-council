@@ -85,3 +85,30 @@ celle de mes affaires ; elle ne contient jamais ce que je bloque chez autrui.
 même attelage. Le sceau qu'ils attendent et la phrase qui leur manque voyagent
 ensemble, ou l'on aura fait deux écrits pour une seule vérité — ce qui est
 exactement le défaut que je reproche aux autres.
+
+## 129.4.3 — Le prix se dit avant le nom
+
+**Ce qui me l'a apprise.** Le plan me servait une ligne d'office ouverte et vide
+depuis le 27e — le commandement de la rue — et j'ai cherché la matinée entière
+quel homme y poser. Je cherchais mal. Le même matin, le maître des deniers
+m'écrivait le seul chiffre qui manquait à cette ligne : huit cent cinquante-sept
+dragons la lune, la solde des deux mille manteaux d'or, une rente d'occupation
+qu'aucun de ses six postes ne pouvait porter sans mentir. **La case était vide
+non pas faute d'homme, mais faute de prix.** On ne prend pas une charge dont on
+ignore ce qu'elle porte ; on ne la refuse pas non plus : on se tait, et la ligne
+reste blanche douze jours.
+
+**La règle.** Quand j'ouvre une charge, **je dis d'abord ce qu'elle porte, ce
+qu'elle coûte et ce qu'elle interdit — le nom vient après, et de lui-même.**
+Dans cette maison une charge se PREND, et qui la prend dicte ses bornes avant de
+sortir de la salle : c'est ainsi que maître Hask a pris le quai et s'en est
+retiré la moitié tout seul. Une reine qui pose un nom sur une case vide s'achète
+un homme qui obéit ; une reine qui pose un prix s'achète un homme qui se borne.
+
+**Le corollaire, appris de travers le même soir.** J'ai voulu donner la première
+des seize copies au patron de la barque qui sortait, pour le couvrir. Un
+sauf-conduit **couvre celui qui arrête, non celui qui passe** : cette barque
+n'est lisible que par la station qui tient sa propre copie. Quand j'ajoute un
+geste à l'ordre qu'un homme de métier a rangé, je regarde d'abord dans quel
+ordre il l'a rangé — le sien était celui du risque, le mien celui de
+l'affection.

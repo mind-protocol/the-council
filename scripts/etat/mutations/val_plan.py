@@ -6,7 +6,34 @@ meme ordre de refus ; `return CONTINUE` remplace le `continue` d'origine.
 """
 import json
 from etat.mutations.vocabulaire import (  # noqa: E501
-    BUDGETS, CHAMPS_ETAPE, CHAMPS_TETE, CHAMPS_TETE_REQUIS, CONTINUE, ECHELLES, ETATS_ETAPE, ETATS_ETAPE_VIVANTS, date_lisible, normaliser_date)
+    BUDGETS, CHAMPS_ETAPE, CHAMPS_TETE, CHAMPS_TETE_REQUIS, CONTINUE, ETATS_ETAPE, ETATS_ETAPE_VIVANTS, date_lisible, declencheur_vise, echelle_de, normaliser_date)
+
+
+def vue_du_lot(projete, cible, tete, liste):
+    """La liste telle que LE LOT l'a laissee — jamais l'originale.
+
+    UN RETRAIT ET UN AJOUT SUR LA MEME CLEF, DANS UN MEME LOT, DOIVENT
+    S'EVALUER DANS L'ORDRE ECRIT. La validation lisait `tete[liste]` a l'etat
+    INITIAL pendant que l'application, elle, s'execute dans l'ordre : un
+    `declencheur_retirer` suivi d'un `declencheur_ajouter` sur la meme
+    condition se voyait refuser pour une collision qui n'existe qu'entre les
+    deux lignes du meme fichier. Consequence mesuree par mj-accalmie le
+    129.4.3 : il n'existait AUCUN moyen propre de corriger un declencheur — ni
+    operation de modification, ni retrait-puis-ajout —, seulement le
+    contournement par changement de libelle.
+
+    La symetrique est du meme bois et tombe avec : un `croyance_ajouter` suivi
+    d'un `croyance_retirer` de la meme phrase se voyait refuser « n'a pas cette
+    entree ».
+
+    ON NE TOUCHE PAS A LA TABLE : la copie est locale au lot. La validation
+    DECRIT, elle n'ecrit rien — sans quoi appliquer() repasserait derriere et
+    ajouterait deux fois.
+    """
+    clef = (cible, liste)
+    if clef not in projete:
+        projete[clef] = list(tete.get(liste) or [])
+    return projete[clef]
 
 def valider_tete_neuve(v, cible, tetes, personnages, joueur, ids_etapes):
     """Une tete neuve est-elle recevable ? Rend un message, ou None si oui.
@@ -33,8 +60,10 @@ def valider_tete_neuve(v, cible, tetes, personnages, joueur, ids_etapes):
         return ("{} est le personnage joueur — sa tete appartient au joueur et "
                 "n'a jamais d'entree dans intentions.json".format(pid))
 
-    if v["echelle"] not in ECHELLES:
-        return "echelle {!r} hors {}".format(v["echelle"], ECHELLES)
+    if v.get("echelle"):
+        return ("`echelle` a ete SUPPRIME du schema (docs/schema.md l.146) : "
+                "l'echelle ne se declare plus, elle se mesure sur le quartier. "
+                "Retire le champ — les budgets sont pris tout seuls.")
     if not date_lisible(v["date_maj"]):
         return "date_maj illisible (attendu {annee, lune, jour} d'entiers)"
     for liste in ("croyances", "ignore"):
@@ -72,8 +101,15 @@ def valider_tete_neuve(v, cible, tetes, personnages, joueur, ids_etapes):
         if not isinstance(d, dict) or not d.get("si") or not d.get("alors"):
             return "declencheur sans 'si' ou sans 'alors'"
 
-    # budgets de l'echelle — la table est dans docs/schema.md
-    budget = BUDGETS[v["echelle"]]
+    # LES BUDGETS SE PRENNENT SUR L'ECHELLE MESUREE, jamais sur une declaration.
+    # Avant le 129.4.4 c'etait `BUDGETS[v["echelle"]]`, et il n'existait AUCUNE
+    # valeur qui passe : les trois mots d'ECHELLES levaient KeyError (le lot
+    # entier disparaissait sans rapport), les deux vrais mots des BUDGETS
+    # etaient refuses par ECHELLES, et l'absence etait refusee par
+    # CHAMPS_TETE_REQUIS. Plus personne ne pouvait creer un habitant ACTIF,
+    # dans aucune zone — trouve par mj-reposdesfreux, verifie sur les six cas.
+    echelle = echelle_de(v)
+    budget = BUDGETS[echelle]
     trop = []
     n_croyances = len(v.get("croyances") or [])
     if n_croyances > budget["croyances"]:
@@ -87,14 +123,17 @@ def valider_tete_neuve(v, cible, tetes, personnages, joueur, ids_etapes):
         trop.append("{} declencheurs pour {}".format(len(decl),
                                                      budget["declencheurs"]))
     if trop:
-        return "budget '{}' depasse : {}".format(v["echelle"], " ; ".join(trop))
+        return "budget '{}' depasse : {}".format(echelle, " ; ".join(trop))
     return None
 
 
 
 
-def valider_intentions(i, m, op, cible, champs, faute, plan, tetes, personnages, joueur, ids_etapes):
-    """Tetes, etapes, croyances. Rend CONTINUE ou (avant, apres)."""
+def valider_intentions(i, m, op, cible, champs, faute, plan, tetes, personnages, joueur, ids_etapes, projete):
+    """Tetes, etapes, croyances. Rend CONTINUE ou (avant, apres).
+
+    `projete` : l'accumulateur du lot, comme `ids_etapes`. Voir vue_du_lot().
+    """
     avant, apres = None, None
     if op == "tete_ajouter":
         v = m.get("valeur")
@@ -108,7 +147,11 @@ def valider_intentions(i, m, op, cible, champs, faute, plan, tetes, personnages,
         ids_etapes.update(e["id"] for e in v["plan"])
         plan.append({"n": i, "mutation": m, "avant": None, "apres": {
             "tete_ajoutee": v["personnage_id"],
-            "echelle": v["echelle"],
+            # MESUREE, comme le budget juste au-dessus. La tete n'a plus de
+            # champ `echelle` : lire v["echelle"] ici levait KeyError APRES une
+            # validation reussie — le pire endroit, celui ou le lot s'evanouit
+            # alors que rien ne lui a ete reproche.
+            "echelle": echelle_de(v),
             "croyances": len(v.get("croyances") or []),
             "etapes": len(v["plan"]),
             "declencheurs": len(v.get("declencheurs") or []),
@@ -153,14 +196,18 @@ def valider_intentions(i, m, op, cible, champs, faute, plan, tetes, personnages,
         ids_etapes.add(v["id"])
         apres = {"etape_ajoutee": v["id"]}
     elif op == "tete":
+        # AVANT le refus generique : `echelle` sort du vocabulaire, et
+        # « champs de tete interdits : echelle » laisserait croire a une faute
+        # de frappe. Un champ RETIRE se refuse en disant qu'il a ete retire.
+        if "echelle" in champs:
+            faute(i, "`echelle` a ete SUPPRIME du schema (docs/schema.md "
+                     "l.146) : elle se mesure sur le quartier, elle ne se "
+                     "patche plus. Retire le champ.")
+            return CONTINUE
         mauvais = [c for c in champs if c not in CHAMPS_TETE]
         if mauvais:
             faute(i, "champs de tete interdits : {}".format(
                 ", ".join(mauvais)))
-            return CONTINUE
-        if "echelle" in champs and champs["echelle"] not in ECHELLES:
-            faute(i, "echelle {!r} hors {}".format(
-                champs["echelle"], ECHELLES))
             return CONTINUE
         if "date_maj" in champs:
             propre = normaliser_date(champs["date_maj"])
@@ -174,7 +221,8 @@ def valider_intentions(i, m, op, cible, champs, faute, plan, tetes, personnages,
         apres = dict(champs)
     elif op.startswith("declencheur"):
         v = m.get("valeur")
-        courant = tete.get("declencheurs") or []
+        # l'etat PROJETE : ce que les lignes precedentes du lot ont deja fait
+        courant = vue_du_lot(projete, cible, tete, "declencheurs")
         if op.endswith("ajouter"):
             if not isinstance(v, dict) or not v.get("si") \
                     or not v.get("alors"):
@@ -182,19 +230,20 @@ def valider_intentions(i, m, op, cible, champs, faute, plan, tetes, personnages,
                          "en clair) et 'alors' (ce qu'il fait) sont "
                          "requis")
                 return CONTINUE
-            if any(d.get("si") == v["si"] for d in courant
-                   if isinstance(d, dict)):
+            if any(declencheur_vise(d, v["si"]) for d in courant):
                 faute(i, "{} a deja un declencheur sur cette "
-                         "condition".format(cible))
+                         "condition — retire-le d'abord, dans ce lot "
+                         "meme si tu veux le remplacer".format(cible))
                 return CONTINUE
+            courant.append(v)
             apres = {"declencheurs": "+ si " + v["si"][:60]}
         else:
             if not isinstance(v, str) or not any(
-                    d.get("si") == v for d in courant
-                    if isinstance(d, dict)):
+                    declencheur_vise(d, v) for d in courant):
                 faute(i, "aucun declencheur de {} sur cette condition "
                          "(donne le 'si' exact)".format(cible))
                 return CONTINUE
+            courant[:] = [d for d in courant if not declencheur_vise(d, v)]
             apres = {"declencheurs": "- si " + v[:60]}
     else:  # croyance_* / ignore_*
         liste = "croyances" if op.startswith("croyance") else "ignore"
@@ -202,10 +251,14 @@ def valider_intentions(i, m, op, cible, champs, faute, plan, tetes, personnages,
         if not isinstance(v, str) or not v.strip():
             faute(i, "valeur textuelle requise")
             return CONTINUE
-        courant = tete.get(liste) or []
+        courant = vue_du_lot(projete, cible, tete, liste)
         if op.endswith("retirer") and v not in courant:
             faute(i, "{} n'a pas cette entree dans {}".format(cible, liste))
             return CONTINUE
+        if op.endswith("ajouter"):
+            courant.append(v)
+        else:
+            courant.remove(v)
         apres = {liste: ("+ " if op.endswith("ajouter") else "- ") + v}
 
     return avant, apres

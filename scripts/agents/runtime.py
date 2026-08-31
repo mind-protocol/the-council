@@ -30,6 +30,7 @@ DOSSIER_RUNTIME = os.path.join(RACINE, ".agents-runtime")
 CONFIG = os.path.join(DOSSIER_RUNTIME, "config.json")
 SESSIONS = os.path.join(DOSSIER_RUNTIME, "sessions.json")
 REQUETES = os.path.join(DOSSIER_RUNTIME, "requests")
+ACTIVITES = os.path.join(DOSSIER_RUNTIME, "active")
 
 FOURNISSEURS = {"claude": "claude", "codex": "codex", "chatgpt": "codex"}
 MODELE_CODEX = "gpt-5.3-codex-spark"
@@ -161,21 +162,64 @@ def _verrou(nom, timeout=1800):
         f.close()
 
 
+@contextlib.contextmanager
+def _activite(role, session_id):
+    """Expose une session vraiment en calcul aux voyants de l'ecran.
+
+    Le marqueur est pose seulement apres le verrou de session : un appel en
+    attente derriere un autre n'est donc pas annonce comme actif. Le pid
+    permet au serveur d'ignorer un reste laisse par un worker tue brutalement.
+    """
+    os.makedirs(ACTIVITES, exist_ok=True)
+    chemin = os.path.join(ACTIVITES, "%s.json" % uuid.uuid4().hex)
+    _ecrire_json(chemin, {
+        "homme": str(role),
+        "session": str(session_id),
+        "pid": os.getpid(),
+        "t": time.time(),
+    })
+    try:
+        yield
+    finally:
+        try:
+            os.unlink(chemin)
+        except OSError:
+            pass
+
+
 def _session_codex(logique):
+    return _entree_session(logique).get("codex_thread_id")
+
+
+def _entree_session(logique):
     with _verrou("registre", timeout=30):
-        return (_lire_json(SESSIONS, {}).get(str(logique)) or {}).get(
-            "codex_thread_id")
+        return dict(_lire_json(SESSIONS, {}).get(str(logique)) or {})
 
 
-def _poser_session_codex(logique, thread_id, modele, transcript=None):
+def _poser_session_codex(logique, thread_id, modele, transcript=None,
+                         manuel_sha256=None):
     with _verrou("registre", timeout=30):
         d = _lire_json(SESSIONS, {})
-        d[str(logique)] = {
+        entree = dict(d.get(str(logique)) or {})
+        entree.update({
             "codex_thread_id": thread_id,
             "modele": modele,
             "dernier_transcript": transcript,
             "mis_a_jour": dt.datetime.now().astimezone().isoformat(),
-        }
+        })
+        if manuel_sha256:
+            entree["manuel_sha256_codex"] = manuel_sha256
+        d[str(logique)] = entree
+        _ecrire_json(SESSIONS, d)
+
+
+def _poser_empreinte_manuel(logique, fournisseur, empreinte):
+    with _verrou("registre", timeout=30):
+        d = _lire_json(SESSIONS, {})
+        entree = dict(d.get(str(logique)) or {})
+        entree["manuel_sha256_%s" % fournisseur] = empreinte
+        entree["mis_a_jour"] = dt.datetime.now().astimezone().isoformat()
+        d[str(logique)] = entree
         _ecrire_json(SESSIONS, d)
 
 
@@ -191,11 +235,63 @@ def _prompt_codex(manuel, cwd):
     return chemin
 
 
+def _empreinte_manuel(manuel):
+    return hashlib.sha256(manuel.encode("utf-8")).hexdigest()
+
+
+def _retirer_prompt_codex(cwd):
+    chemin = os.path.join(cwd, "AGENTS.md")
+    try:
+        os.remove(chemin)
+    except FileNotFoundError:
+        pass
+
+
+def _preparer_prompt_codex(manuel, cwd, thread_id, entree):
+    """Pose le gros manuel pour UN appel seulement s'il est neuf ou change.
+
+    Le fichier est retire apres l'appel reussi : une reprise Codex garde son
+    contexte de session et ne doit pas recharger 180 ko d'AGENTS.md a chaque
+    reveil. L'empreinte rend les futures modifications injectables une fois.
+    """
+    empreinte = _empreinte_manuel(manuel)
+    injecter = (not thread_id or
+                entree.get("manuel_sha256_codex") != empreinte)
+    if injecter:
+        _prompt_codex(manuel, cwd)
+    else:
+        # Nettoie aussi les anciens fichiers persistants de l'ere ou le manuel
+        # etait reecrit avant chaque resume.
+        _retirer_prompt_codex(cwd)
+    return empreinte, injecter
+
+
 def _prompt_claude(manuel, cwd):
     chemin = os.path.join(cwd, "system-prompt.md")
     with io.open(chemin, "w", encoding="utf-8", newline="\n") as f:
         f.write(manuel)
     return chemin
+
+
+def _retirer_prompt_claude(cwd):
+    chemin = os.path.join(cwd, "system-prompt.md")
+    try:
+        os.remove(chemin)
+    except FileNotFoundError:
+        pass
+
+
+def _preparer_prompt_claude(manuel, cwd, reprendre, entree):
+    """Retourne un prompt systeme seulement au bootstrap ou apres changement."""
+    empreinte = _empreinte_manuel(manuel)
+    injecter = (not reprendre or
+                entree.get("manuel_sha256_claude") != empreinte)
+    if injecter:
+        prompt = _prompt_claude(manuel, cwd)
+    else:
+        _retirer_prompt_claude(cwd)
+        prompt = None
+    return empreinte, prompt, injecter
 
 
 def _creation_sans_fenetre(detache=False):
@@ -319,27 +415,35 @@ def _normaliser_codex(evenements, modele, duree, logique, transcript):
     }
 
 
+def _est_mj(role):
+    role = str(role or "")
+    return role == "mj" or role.startswith("mj-")
+
+
 def _commande_codex(cwd, modele, effort, add_dirs, transcript_sortie,
-                    thread_id=None, ecriture=True):
+                    thread_id=None, sans_sandbox=False):
     commande = [
         "codex", "exec", "--ignore-user-config", "--ignore-rules",
         "--disable", "plugins", "--disable", "apps",
         "--disable", "memories", "--disable", "multi_agent",
         "--json", "--color", "never", "--skip-git-repo-check",
         "--cd", cwd,
+        # Le manuel MJ assemble notamment le CLAUDE.md racine et depasse la
+        # limite documentaire par defaut de Codex. Le bootstrap doit arriver
+        # entier, meme s'il n'arrive desormais qu'une fois.
+        "-c", "project_doc_max_bytes=524288",
         "--model", modele,
         "-c", 'model_reasoning_effort=%s' % json.dumps(effort),
         "--output-last-message", transcript_sortie,
     ]
-    if ecriture:
-        # Un reveil est non interactif : sans arbitre automatique, Codex peut
-        # classer un geste pourtant local (parloir.py, ecriture du cahier)
-        # comme demandant une approbation, puis le refuser faute d'humain au
-        # terminal. On garde le sandbox workspace-write ; seule l'approbation
-        # est deleguee au reviewer de la CLI.
-        commande.append("--approve-for-me")
+    if sans_sandbox:
+        # Un MJ tient le monde : pas de sandbox, pas de reviewer entre sa
+        # decision et les portes du depot. C'est volontairement plus large
+        # que workspace-write et reserve aux ids `mj` / `mj-*`.
+        commande += ["--dangerously-bypass-approvals-and-sandbox"]
     else:
-        commande += ["--sandbox", "read-only"]
+        # Les habitants ordinaires restent en workspace-write avec reviewer.
+        commande += ["--approve-for-me"]
     for chemin in add_dirs:
         commande += ["--add-dir", chemin]
     if thread_id:
@@ -351,17 +455,20 @@ def _commande_codex(cwd, modele, effort, add_dirs, transcript_sortie,
 
 def _appel_codex(manuel, message, logique, modele, effort, timeout, cwd,
                   add_dirs, reprendre, env, on_event, on_stderr, heartbeat,
-                  on_heartbeat, ecriture):
-    _prompt_codex(manuel, cwd)
-    thread_id = _session_codex(logique)
+                  on_heartbeat, sans_sandbox=False):
+    entree = _entree_session(logique)
+    thread_id = entree.get("codex_thread_id")
     if reprendre is True and not thread_id:
         raise RuntimeError("aucun thread Codex pour reprendre %s" % logique)
     if reprendre is False:
         thread_id = None
+        entree = {}
+    manuel_sha256, prompt_injecte = _preparer_prompt_codex(
+        manuel, cwd, thread_id, entree)
     final = os.path.join(cwd, ".dernier-message-%s.txt" % uuid.uuid4().hex)
     transcript = os.path.join(cwd, ".codex-%s.jsonl" % uuid.uuid4().hex)
     commande = _commande_codex(cwd, modele, effort, add_dirs, final,
-                               thread_id, ecriture=ecriture)
+                               thread_id, sans_sandbox=sans_sandbox)
     code, _lignes, erreurs, evenements, duree = _executer_flux(
         commande, message, cwd, env, timeout, on_event, on_stderr,
         heartbeat, on_heartbeat, transcript)
@@ -375,22 +482,41 @@ def _appel_codex(manuel, message, logique, modele, effort, timeout, cwd,
     vrai = rep.get("session_id")
     if not vrai:
         raise RuntimeError("Codex n'a rendu aucun thread_id")
-    _poser_session_codex(logique, vrai, modele, transcript)
+    _poser_session_codex(logique, vrai, modele, transcript,
+                         manuel_sha256=manuel_sha256)
+    if prompt_injecte:
+        _retirer_prompt_codex(cwd)
     return rep
 
 
 def _commande_claude(prompt_systeme, modele, effort, add_dirs, tools,
-                      settings, sid, reprendre, stream):
-    commande = ["claude", "-p", "--system-prompt-file", prompt_systeme]
+                      settings, sid, reprendre, stream,
+                      sans_sandbox=False):
+    # Meme invariant que Codex : aucune session n'est materiellement privee
+    # d'ecriture. Un juge peut avoir pour CONSIGNE de ne rien modifier ; ce
+    # n'est pas au runtime de lui casser les mains. L'ordre preserve les
+    # outils demandes, puis ajoute seulement ceux qui manquent.
+    outils = list(tools or [])
+    for outil in ("Read", "Grep", "Glob", "Bash", "Write", "Edit"):
+        if outil not in outils:
+            outils.append(outil)
+    commande = ["claude", "-p"]
+    if prompt_systeme:
+        commande += ["--system-prompt-file", prompt_systeme]
     for chemin in add_dirs:
         commande += ["--add-dir", chemin]
-    commande += ["--restricted", "--tools", ",".join(tools or [])]
-    if tools and "Bash" in tools:
+    if sans_sandbox:
+        commande += ["--dangerously-skip-permissions"]
+    else:
+        commande += ["--restricted"]
+    commande += ["--tools", ",".join(outils)]
+    if "Bash" in outils:
         commande += ["--allowedTools", "Bash(python:*)"]
     commande += ["--output-format", "stream-json" if stream else "json"]
     if stream:
         commande += ["--verbose"]
-    commande += ["--permission-mode", "acceptEdits"]
+    if not sans_sandbox:
+        commande += ["--permission-mode", "acceptEdits"]
     if settings:
         commande += ["--settings", settings]
     if modele:
@@ -403,16 +529,18 @@ def _commande_claude(prompt_systeme, modele, effort, add_dirs, tools,
 
 def _appel_claude(manuel, message, logique, modele, effort, timeout, cwd,
                    add_dirs, tools, settings, reprendre, env, on_event,
-                   on_stderr, heartbeat, on_heartbeat, ecriture):
-    prompt = _prompt_claude(manuel, cwd)
+                   on_stderr, heartbeat, on_heartbeat,
+                   sans_sandbox=False):
     stream = bool(on_event or on_stderr or heartbeat)
     essais = [reprendre] if reprendre is not None else [False, True]
+    entree = _entree_session(logique)
     dernier = u""
     for reprise in essais:
-        outils = tools if ecriture else [x for x in (tools or [])
-                                         if x not in ("Write", "Edit", "Bash")]
-        commande = _commande_claude(prompt, modele, effort, add_dirs, outils,
-                                    settings, logique, reprise, stream)
+        manuel_sha256, prompt, prompt_injecte = _preparer_prompt_claude(
+            manuel, cwd, reprise, entree)
+        commande = _commande_claude(prompt, modele, effort, add_dirs, tools,
+                                    settings, logique, reprise, stream,
+                                    sans_sandbox=sans_sandbox)
         if stream:
             code, lignes, erreurs, evs, _duree = _executer_flux(
                 commande, message, cwd, env, timeout, on_event, on_stderr,
@@ -444,6 +572,9 @@ def _appel_claude(manuel, message, logique, modele, effort, timeout, cwd,
         resultat.setdefault("logical_session_id", logique)
         resultat.setdefault("session_id", logique)
         resultat.setdefault("model", modele or "defaut")
+        _poser_empreinte_manuel(logique, "claude", manuel_sha256)
+        if prompt_injecte:
+            _retirer_prompt_claude(cwd)
         return resultat
     raise RuntimeError("ni creation ni reprise Claude n'ont abouti : %s" %
                        dernier[-400:])
@@ -452,7 +583,7 @@ def _appel_claude(manuel, message, logique, modele, effort, timeout, cwd,
 def appeler(role, manuel, message, session_id, modele=None, effort=None,
             timeout=180, cwd=None, add_dirs=None, tools=None, reprendre=None,
             settings=None, env=None, on_event=None, on_stderr=None,
-            heartbeat=None, on_heartbeat=None, ecriture=True):
+            heartbeat=None, on_heartbeat=None, compte_pour=None):
     """Appelle le fournisseur global et rend le contrat de reponse commun."""
     provider = fournisseur()
     modele = _modele(provider, modele)
@@ -463,16 +594,41 @@ def appeler(role, manuel, message, session_id, modele=None, effort=None,
     environnement = dict(os.environ)
     environnement.update(env or {})
     environnement["LE_CONSEIL_QUI"] = str(role)
-    with _verrou("session:" + str(session_id), timeout=max(timeout + 30, 60)):
-        if provider == "codex":
-            return _appel_codex(
-                manuel, message, session_id, modele, effort, timeout, cwd,
-                add_dirs, reprendre, environnement, on_event, on_stderr,
-                heartbeat, on_heartbeat, ecriture)
-        return _appel_claude(
-            manuel, message, session_id, modele, effort, timeout, cwd,
-            add_dirs, tools, settings, reprendre, environnement, on_event,
-            on_stderr, heartbeat, on_heartbeat, ecriture)
+    sans_sandbox = _est_mj(role)
+    # habitant.md §4 : les sessions sont de la memoire, pas une section
+    # critique. Deux reprises du meme id peuvent vivre en parallele ; leur
+    # entrelacement est le registre d'audiences du MJ. Seules les portes de
+    # l'etat serialisent ce qui devient vrai.
+    with _activite(role, session_id):
+        debut_compute = time.time()
+        succes, erreur_compute = False, None
+        try:
+            if provider == "codex":
+                resultat = _appel_codex(
+                    manuel, message, session_id, modele, effort, timeout, cwd,
+                    add_dirs, reprendre, environnement, on_event, on_stderr,
+                    heartbeat, on_heartbeat, sans_sandbox=sans_sandbox)
+            else:
+                resultat = _appel_claude(
+                    manuel, message, session_id, modele, effort, timeout, cwd,
+                    add_dirs, tools, settings, reprendre, environnement,
+                    on_event, on_stderr, heartbeat, on_heartbeat,
+                    sans_sandbox=sans_sandbox)
+            succes = True
+            return resultat
+        except BaseException as e:
+            erreur_compute = "%s: %s" % (type(e).__name__, str(e))
+            raise
+        finally:
+            # Cette porte est plus basse que CALL/CAST : elle voit aussi les
+            # expirations et les erreurs qui ne produiront jamais de rapport.
+            try:
+                from agents import compute
+                compute.enregistrer(
+                    role, compte_pour, session_id, provider, debut_compute,
+                    time.time(), succes, erreur_compute)
+            except Exception:
+                pass  # la mesure ne doit jamais tuer le travail mesure
 
 
 def lancer_cast(log, trace=None, **appel):

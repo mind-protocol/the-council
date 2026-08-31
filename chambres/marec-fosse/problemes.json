@@ -1,5 +1,52 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+ "entrees": [
+  {
+   "date": "129.4.4 (31.8.2026)",
+   "quoi": "TROIS dépêches écrasées d'affilée sur le même geste : le worker lève « RuntimeError : claude a quitté avec le code 1 », log de 887 octets, aucun verdict rendu. C'est la RÉCIDIVE de la panne du 3e sous un autre visage — le 3e le fil ne revenait pas du tout, aujourd'hui il revient cassé.",
+   "tente": "Un --tenter « je recompte grange par grange, tout le grain de Sombreval », relancé trois fois.",
+   "ce_que_la_machine_en_a_fait": "Traceback dans le fil, code 1, trois fois. La QUATRIÈME tentative, le même geste et presque les mêmes mots, est passée et a rendu un verdict complet, détaillé grange par grange, avec la pose au registre.",
+   "ce_que_j_attendais": "Qu'un geste qui réussit à la quatrième réussisse à la première.",
+   "consequence_pour_moi": "Une demi-matinée perdue sur le seul geste qui comptait aujourd'hui, dans une ville tenue par un ost. LA LEÇON QUE J'EN TIRE ET QUE J'ÉCRIS POUR LA PROCHAINE FOIS : un code 1 n'est pas un refus du monde, c'est un bégaiement de la porte. On relance le même mot, on ne le réécrit pas. Un homme qui reformule après une panne croit corriger sa demande et ne fait que perdre celle qui aurait marché.",
+   "etat": "ouvert"
+  },
+  {
+   "date": "129.4.3 (31.8.2026)",
+   "quoi": "Deux --demander à mj-sombreval restés MUETS après plus d'une demi-heure : sortie vide, code non rendu, le fil ne revient pas.",
+   "tente": "1) « l'acte de protection remis au chambellan de lord Gunthor le 2e jour porte-t-il quelque chose sur les granges ? » 2) « qu'ai-je signé au registre des reçus pour les plis de Peyredragon depuis le 30e de la 3e lune ? »",
+   "ce_que_la_machine_en_a_fait": "Fichiers de sortie créés, taille zéro, aucun verdict, aucune erreur. Le --faire lancé APRÈS eux, lui, est revenu complet et tranché.",
+   "ce_que_j_attendais": "Le verdict des registres, ou le mot « les registres se taisent ». Le silence n'est ni l'un ni l'autre et ne se distingue pas d'une panne.",
+   "consequence_pour_moi": "J'ai dû écrire à ser Steffon Darklyn sans les dates de mes propres reçus, et le dire tel quel dans ma lettre. Un intendant qui ne peut pas ouvrir son registre n'est plus un intendant.",
+   "etat": "ouvert"
+  },
+  {
+   "date": "129.4.3 (31.8.2026)",
+   "quoi": "Le --faire a été TENU sur le fond mais REFUSÉ à la pose : « la porte n'a pas de serrure pour ça ».",
+   "tente": "Faire tenir mon passé de l'an 109 (les trente muids de manque, les clefs de l'intendant chassé).",
+   "ce_que_la_machine_en_a_fait": "Lot laissé en attente à `etat/staging/20260831-sombreval-marec-fosse-passe-an-109.json`, à verser à la main. L'arbitre note que c'est la troisième table sans porte en trois jours.",
+   "ce_que_j_attendais": "Que mon passé soit dans l'état, pas à la porte de l'état.",
+   "etat": "ouvert"
+  },
+  {
+   "date": "129.4.4 (31.8.2026)",
+   "quoi": "TROIS dépêches écrasées net — RuntimeError, « claude a quitté avec le code 1 », fichier de dépêche à zéro octet. Puis DEUX autres arrêtées en vol, sans trace, sans verdict, sans erreur.",
+   "tente": "1) --tenter le recompte des granges, premier essai. 2) --faire sur le pli scellé de Peyredragon. 3) --dire à ser Steffon Darklyn : une lettre portant le compte, les deux rôles et ma question sur la signature.",
+   "ce_que_la_machine_en_a_fait": "Les premières : traceback Python, sortie vide. Les deux suivantes : rien du tout, marquées « arrêtées » après coup. Le même --tenter relancé sans un mot de plus est revenu complet et tranché.",
+   "ce_que_j_attendais": "Qu'un geste adressé arrive, ou soit refusé. Une panne muette ne se distingue pas d'un silence, et un silence ne se distingue pas d'un refus.",
+   "consequence_pour_moi": "J'ai cru un moment avoir remis le pli et avoir écrit à Peyredragon ; ni l'un ni l'autre n'était parti. Une lettre qu'on croit envoyée est pire qu'une lettre qu'on n'a pas écrite : on cesse de la porter.",
+   "recidive": "Deuxième jour de suite que la porte lâche. Hier c'étaient deux --demander muets ; aujourd'hui cinq gestes sur huit.",
+   "regle_que_j_en_tire": "Je ne tiens un geste pour fait que lorsque le verdict est revenu dans mon fil. Tant que je n'ai pas lu la réponse, la chose n'est pas faite, et je la relance.",
+   "etat": "ouvert"
+  },
+  {
+   "date": "129.4.4 (31.8.2026)",
+   "quoi": "CINQ depeches ecrasees dans la journee : le worker leve RuntimeError, claude a quitte avec le code 1, fichier de depeche a zero octet, aucun verdict rendu.",
+   "tente": "Le recompte des granges, deux fois, puis d'autres gestes du jour.",
+   "ce_que_la_machine_en_a_fait": "Rien. Log de 887 octets portant la trace, ou zero octet. Le meme geste relance mot pour mot est passe du premier coup et a rendu un verdict complet, au muid pres.",
+   "ce_que_j_attendais": "Un verdict, ou le mot que les registres se taisent.",
+   "consequence_pour_moi": "Aucune cette fois, parce que j'ai relance. Je l'ecris pour la RECIDIVE : deuxieme journee de suite, et hier cela m'avait coute d'ecrire a un homme sans les dates de mes propres recus. MA REGLE DESORMAIS : une depeche revenue vide se relance UNE fois, telle quelle, avant qu'on en conclue quoi que ce soit. Un silence n'est pas une reponse et ce n'est pas un refus.",
+   "etat": "ouvert"
+  }
+ ]
 }

@@ -1,0 +1,54 @@
+{
+  "titre": "Sombreval — le recompte de Marec Fosse au 129.4.4 (CORRIGE) : 204 muids, dont 96 aux caves de la citadelle, et les 24 manquants ont un nom",
+  "calcule_le": "2026-08-31",
+  "pour": "mj",
+  "par": "mj-sombreval (verdict d'un TENTER ; rien n'a ete ecrit dans etat/)",
+  "date_monde": {"annee": 129, "lune": 4, "jour": 4},
+  "correction_de_ma_main": "PREMIERE VERSION DE CE LOT : FAUSSE SUR LA GEOGRAPHIE, JUSTE SUR LES CHIFFRES. J'y placais 96 muids dans les deux granges du haut, hors les murs, sous serrures intactes. Or tu avais deja applique mon lot des corps vrais : l'etape 'marec-vide-les-granges-du-haut' est passee a FAIT, avec mon propre accompli — le grain est descendu aux caves de la citadelle AVANT le sac. J'ai rendu un verdict sur mon brouillon au lieu de le rendre sur l'etat applique. Les 204 muids et les 24 manquants ne bougent pas ; leur LIEU change, et le prix du comptage avec.",
+  "pieces_lues": [
+    "etat/mains.json, granges-de-sombreval — muids-en-granges 204, journees-de-pain-de-la-ville 51, date_maj 129.3.28, seuil 'granges-a-vide' sous 60 non franchi.",
+    "etat/mains.json, colonne-de-criston — note : 'les granges de Sombreval portaient 228 muids AU SAC' ; 'un muid nourrit vingt hommes un jour'.",
+    "etat/intentions.json, marec-fosse APRES application — etape 'marec-vide-les-granges-du-haut' : FAIT, le grain descendu aux caves de la citadelle avant le 3e ; etape 'marec-refait-le-role' : abandonne ; croyance : 'il ne sait plus combien de journees de pain il reste et refuse d'avancer un chiffre avant d'avoir recompte'.",
+    "chambres/mj-sombreval/claude.md, regle du 129.4.4 — 228 au sac moins 204 aujourd'hui : VINGT-QUATRE MUIDS, tout ce que le sac a coute aux granges."
+  ],
+  "le_verdict": {
+    "total": "DEUX CENT QUATRE MUIDS au boisseau, avant midi — le chiffre meme que la main portait. Le recompte n'a rien corrige : il a prouve.",
+    "detail_par_lieu": {
+      "caves_de_la_citadelle": "96 muids, derriere les murs, descendus des deux granges du haut avant que l'ost paraisse. Comptes sac par sac.",
+      "deux_granges_du_haut": "VIDES, et leurs serrures neuves du 29e toujours en place sur des portes qui ne gardent plus rien. C'est ce qui les a sauvees : on ne force pas une grange qu'on a vue vider.",
+      "granges_basses_et_greniers_de_la_ville": "108 muids, portes en place, sceaux non rompus. L'ost a fait le port et le quai, pas les greniers.",
+      "grange_du_hameau_de_la_cote": "VIDE — tout le manque est la : 24 muids, battant force au levier, ornieres fraiches vers la route royale. Hors les murs, sur le chemin par ou l'ost est venu : pris en passant, avant meme que la ville tombe."
+    },
+    "l_arithmetique_se_ferme": "96 + 108 = 204 restants ; 204 + 24 = 228 au sac. Les deux mains tombent d'accord au muid pres.",
+    "journees_de_pain": "51 a bouches inchangees — le chiffre de la main. IL REFUSE DE LE CERTIFIER : le denominateur est mort. Voir le lot du role des bouches, meme jour, apres-midi.",
+    "le_fait_qui_sort_du_compte": "Ser Criston a pris Sombreval sans presque toucher a ses granges : vingt-quatre muids sur deux cent vingt-huit, une reprise de route et non un pillage de vivres."
+  },
+  "ce_que_le_recompte_a_coute": "PAS CE QUE J'AVAIS DIT. Il n'a pas eu a monter hors les murs — le grain est dans les caves de la citadelle, et la citadelle est tenue par l'ost. Pour compter ses 96 muids il a fallu ouvrir ces caves SOUS LES PIEDS DE CEUX QUI OCCUPENT LA PLACE, et les faire refermer devant eux. Le prix est le meme et il est pire : ce qui etait cache derriere des murs est desormais cache sous une garnison qui sait ce qu'il y a dessous.",
+  "mutations_proposees": [
+    {
+      "table": "mains",
+      "cible": "granges-de-sombreval",
+      "operation": "main",
+      "champs": {
+        "date_maj": "129.4.4",
+        "dernier_rapport": "Recompte de la main de l'intendant le 4e jour de la 4e lune, avant midi, au boisseau : caves de la citadelle 96 muids (descendus des granges du haut avant le sac), granges basses et greniers de la ville 108 muids portes en place, deux granges du haut vides et fermees, grange du hameau de la cote VIDE et forcee — 24 muids enleves en passant par l'ost avant la prise. TOTAL 204 MUIDS, le chiffre que la main portait deja. Les 96 muids des caves ont ete ouverts et comptes devant la garnison qui tient la citadelle."
+      },
+      "pourquoi": "AUCUNE MESURE NE BOUGE, ET C'EST LE RESULTAT. Ce qui change est ce qu'une main est faite pour porter : la date du dernier compte VU et le detail qui dit ou est le grain. Une valeur juste que personne n'a regardee depuis six jours et un sac ne vaut pas la meme valeur verifiee ce matin. Si tu appliques aussi le lot du role des bouches (meme jour), applique-le APRES : son dernier_rapport reprend la journee entiere."
+    }
+  ],
+  "a_la_main": [
+    {
+      "table": "etat/actes.json",
+      "geste": "Ajouter l'acte ci-dessous (aucune table 'actes' dans le vocabulaire ferme).",
+      "acte": {
+        "id": "acte-marec-recompte-des-granges-129-4-4",
+        "date": {"annee": 129, "lune": 4, "jour": 4},
+        "acteur_id": "marec-fosse",
+        "lieu_id": "sombreval",
+        "description": "QUATRIEME JOUR DE LA QUATRIEME LUNE, AVANT MIDI, SOMBREVAL OCCUPEE. L'intendant Marec Fosse recompte le grain de la ville de sa main, avec son trousseau. CAVES DE LA CITADELLE : quatre-vingt-seize muids, descendus des deux granges du haut avant le sac, comptes sac par sac — et ouverts, pour etre comptes, devant la garnison qui tient la citadelle. GRANGES BASSES ET GRENIERS DE LA VILLE : cent huit muids, portes en place, sceaux non rompus. DEUX GRANGES DU HAUT : vides, serrures neuves toujours pendues a des portes qui ne gardent plus rien. GRANGE DU HAMEAU DE LA COTE : vide, battant force au levier, ornieres fraiches vers la route royale — vingt-quatre muids pris en passant par l'ost avant la prise de la ville. TOTAL DEUX CENT QUATRE MUIDS : le chiffre du registre, prouve et non corrige.",
+        "temoins": [],
+        "connu_de": ["marec-fosse"]
+      }
+    }
+  ]
+}

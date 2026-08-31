@@ -1,36 +1,41 @@
 {
  "quoi": "Ce que j'attends de quelqu'un, et ce que quelqu'un attend de moi. Le plan compte des PAS ; ceci compte des GENS qui n'ont pas répondu, et depuis quand. Ce n'est pas la même chose et cela ne se calcule pas.",
- "regle": "Une ligne par fil ouvert. Le jour où j'ai demandé, non le jour où je m'en suis souvenu. Un fil qu'on n'a pas relancé depuis trois jours se relance ou se ferme.",
+ "regle": "Une ligne par fil ouvert. Le jour où j'ai demandé, non le jour où je m'en suis souvenu. Un fil qu'on n'a pas relancé depuis trois jours se relance ou se ferme. ET DEPUIS LE 3e : un fil daté d'un jour purgé n'est pas en retard, il est NUL — on le referme en disant pourquoi, on ne le relance pas.",
  "j_attends": [
   {
-   "qui": "moi-meme",
-   "depuis": "le 5e de la 4e lune",
-   "quoi": "LA SEULE CHOSE QUI A UNE HEURE. Relancer ma depeche a Rulf Corne telle quelle a la minute 725 (son creux ouvre la, 295 minutes jusqu'a 1020 — creux() verifie ce jour). Ordre aveugle : ses concordances des debarquements hors quai depuis le 11e de la 3e lune, DE SA MAIN, avant toute fenetre ; l'encadrement d'alicent apres, jamais avant. La question de l'epouse aux deux malles part dans la MEME seance, livre des greves ouvert une seule fois. Ce n'est plus un fil qui attend quelqu'un : c'est un fil qui attend une heure."
+   "qui": "dev",
+   "depuis": "le 3e de la 4e lune",
+   "quoi": "Sa décision sur `perime` — un verdict stocké sans son horloge. Mesuré ce jour : 4 lignes de etat/presence.json marquées périmées alors qu'elles sont vivantes (marlo-vasse datée de la minute courante, le-sanglier, alys-grive, aurore-inchauspe), parce que l'annotation a tourné sous l'horloge du 129.4.9 et que la purge l'a ramenée au 129.4.3. Deux sorties proposées : (a) ajouter `perime_au`, (b) rappeler annoter_peremption() depuis avancer.py. Rien ne me bloque : je sais recalculer.",
+   "relance": "aucune avant qu'il ait eu une exécution accordée — il en est à son deuxième jour sans recette, et le lui redire ne lui en donne pas une."
   },
   {
-   "qui": "dev",
-   "depuis": "le 5e de la 4e lune",
-   "quoi": "La decision sur la peremption visible des presences de scene (240 min dans le code, invisible dans etat/presence.json). Trois sorties proposees, j'ai dit ma preference (annoter, ne pas effacer). Rien ne bloque chez moi en attendant : je sais lire la date."
+   "qui": "mj",
+   "depuis": "le 3e de la 4e lune",
+   "quoi": "Que l'un des deux arbitrages sur Rulf Corne soit dit mort. Le mien (dépêche à midi le 5e) est tombé avec son jour et je l'ai déclaré mort moi-même ; celui de mj-peyredragon (descente au quai à la marée du soir du 3e) est au staging, non appliqué. Je n'attends pas de réponse s'il est d'accord."
   }
  ],
  "on_attend_de_moi": [
   {
    "qui": "alicent",
-   "depuis": "le 28e de la 3e lune",
-   "quoi": "Le debarquement de l'epouse aux deux malles (barque de peche, ma rade). Son encadrement tient — la main propre disparait apres le 11e. RELANCE LE 5e : je lui ai donne l'heure (725, aujourd'hui) et dit qu'elle n'a rien a faire. Ce qui sort du livre de Rulf lui revient tel qu'il l'ecrit."
+   "depuis": "le 28e de la 3e lune — REPOSÉE de sa main le 3e de la 4e lune",
+   "quoi": "SA QUESTION A CHANGÉ DE FORME ET ELLE EST MEILLEURE. Elle retire « une coque venue de Port-Réal qui n'a rien débarqué » — elle dit avoir lu l'usage du livre au lieu de son titre, et qu'on lui aurait rendu un vide qu'elle aurait lu comme une preuve. LA QUESTION QUI TIENT DÉSORMAIS, mot pour mot : entre le 24e de la 3e lune et ce jour, les coques VENUES DE PORT-RÉAL portées au livre de Rulf Corne — nom de la coque, nom du patron, jour à l'arche. Rien d'autre : pas de passager, pas de cargaison, pas de motif. REPLI SI UNE SEULE LIGNE EST POSSIBLE : les coques touchées le 27e ou le 28e (une quille partie de la Néra le 26e au soir est à l'arche dans ces deux jours-là, ou elle n'y est pas venue).",
+   "rang": "DERNIÈRE, de sa propre main. Passent avant elle : les trois noms de patrons repris au bord avant le 6e (levée de 41105), puis le compte coque par coque (22048, en retard depuis le 27e).",
+   "echeance": "écrite avant vêpres du 6e. Elle préfère le 5e par écrit à ce soir dit à la hâte entre deux marées.",
+   "verifie_le_3e": "J'ai cherché la réponse dans les deux livres navals NON PRIVÉS avant de coûter une séance à Rulf : aucune ligne ne porte les coques venues de Port-Réal sur cette fenêtre. La question est bien adressée, elle n'est nulle part ailleurs que chez lui.",
+   "ce_que_je_retiens": "Deux carnets privés d'Aurore (carnet-aurore.json, ou-jen-suis.json, prive=true) portent de la matière sur sa fenêtre du 24e-28e. Je ne l'ouvre pas à une autre régie. Je le lui ai DIT plutôt que tu, et je lui ai indiqué la bonne porte : le livre du port n'est pas privé, sa question lui reviendra de la main de Rulf."
   },
   {
    "qui": "mj",
-   "depuis": "le 4e",
-   "quoi": "Parler AVANT s'il me faut une place parmi les quatre pretendants du passage du 5e — sinon il tranche seul. Position inchangee au 5e : je n'en veux pas."
+   "depuis": "le 4e — ligne elle-même purgée, gardée pour mémoire",
+   "quoi": "Parler AVANT s'il me faut une place parmi les quatre prétendants du passage du 5e. Le 5e n'existe plus ; si le passage revient à une autre date, ma position est inchangée : je n'en veux pas."
   }
  ],
  "clos": [
   {
    "qui": "mj",
    "ouvert": "le 4e de la 4e lune",
-   "clos": "le 5e",
-   "quoi": "Son arbitrage sur l'empechement Rulf. Rendu en deux billets. Retenu : midi, et aucune de mes trois sorties — je ne touche pas le moteur, il ne depense pas son appel. J'ai corrige son second billet sur piece (la presence du quai avait perime) et je lui ai rendu : midi tient par la bande fermee, pas par contrainte d'outil."
+   "clos": "le 3e de la 4e lune (par la purge, non par la réponse)",
+   "quoi": "Son arbitrage sur l'empêchement Rulf, rendu en deux billets, retenu : midi le 5e, minute 725. J'avais corrigé son second billet sur pièce et gardé son heure. L'heure et le jour ont été purgés ensemble. Ce fil n'a pas échoué : il a cessé d'avoir un monde où atterrir. Je l'ai dit mort de ma main plutôt que de le laisser vieillir en silence."
   }
  ]
 }

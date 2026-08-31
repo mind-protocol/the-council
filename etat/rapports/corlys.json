@@ -1,46 +1,54 @@
 {
-  "type": "replique",
-  "locuteur_id": "corlys",
-  "texte": "Douze de vos affaires engagent mes voiles et pas une ne sait de combien elle dispose. Voici le compte, je le donne une fois. **Cinq quilles** tiennent le goulet à la rotation. **Six sont libres.** **Dix affrétées** du banc de l'Est portent et ne bloquent jamais — vingt et une était le même tas compté deux fois. Quarante jours de vivres. Six jours d'avis : c'est le seul chiffre que vous avez à retenir. Et voici ce que ce compte vous interdit, puisqu'un nombre sans sa limite est une promesse que je n'ai pas faite : les cinq du goulet et les cinq du passage sont les mêmes cinq.",
-  "montre": {
-    "jetons": [
-      {
-        "id": "quilles-goulet",
-        "genre": "flotte",
-        "camp": "noir",
-        "force": 5,
-        "unite": "quilles",
-        "ou": "sharp-point",
-        "nom": "Cinq quilles",
-        "certitude": "sure"
-      },
-      {
-        "id": "quilles-libres",
-        "genre": "flotte",
-        "camp": "noir",
-        "force": 6,
-        "unite": "quilles",
-        "ou": "lamarck",
-        "nom": "Six sont libres",
-        "certitude": "sure"
-      },
-      {
-        "id": "affretees-est",
-        "genre": "flotte",
-        "camp": "noir",
-        "force": 10,
-        "unite": "coques",
-        "ou": "peyredragon",
-        "nom": "Dix affrétées",
-        "certitude": "sure"
-      }
-    ]
+ "cahier2": [
+  {
+   "livre": "affaire-police-des-mers",
+   "table": "🔒 Verrous",
+   "ligne": "48004",
+   "colonne": "🏷️ Le verrou",
+   "valeur": "⏱️ Le tarif et la commission voyagent dans un seul paquet et n'ont pas la même heure d'effet"
   },
-  "qui": "corlys",
-  "_depeche": {
-    "session": "3d993b77-797f-5ff7-a3fd-cab9428c490f",
-    "date_jeu": "129.4.5",
-    "jetons": 2333642,
-    "secondes": 393
+  {
+   "livre": "affaire-police-des-mers",
+   "table": "🔒 Verrous",
+   "ligne": "48004",
+   "colonne": "⛔ Bloque",
+   "valeur": "48000"
+  },
+  {
+   "livre": "affaire-police-des-mers",
+   "table": "🔒 Verrous",
+   "ligne": "48004",
+   "colonne": "📌 Ce qui est vrai aujourd'hui",
+   "valeur": "La commission scellée et la seconde feuille (tarif, souches, registre) sont portées par la MÊME quille, dans le MÊME paquet, par la MÊME main — et une main donne naturellement une seule heure à ce qu'elle tend d'un seul geste. Or les deux pièces sont contraires : la commission dit sous quel NOM on arrête et doit mordre À RÉCEPTION, station par station ; le tarif dit ce qu'on PREND et doit mordre à une marée nommée, la même pour tous. Leur donner la date du tarif, c'est laisser les cinq stations du goulet arrêter demain sans un écrit ; leur donner la date de la commission, c'est seize tarifs sur une même eau."
+  },
+  {
+   "livre": "affaire-police-des-mers",
+   "table": "🔒 Verrous",
+   "ligne": "48004",
+   "colonne": "👁️ La preuve",
+   "valeur": "L'ordre de remise écrit par la reine le 3e de la 4e lune en scellant les seize copies : LES CINQ STATIONS DU GOULET D'ABORD, par le risque et non par la route, « le papier couvre celui qui arrête, non celui qui passe ». Ces cinq-là arraisonnent des coques dès le 4e au matin ; les onze autres sont à cinq ou six jours de mer."
+  },
+  {
+   "livre": "affaire-police-des-mers",
+   "table": "🔒 Verrous",
+   "ligne": "48004",
+   "colonne": "🔓 Levé quand",
+   "valeur": "Chaque pièce porte SA PROPRE date d'effet écrite sur elle-même, et non sur le paquet. Sur la commission : « vaut du jour de sa remise, dont le talon fait foi ». Sur la seconde feuille : « vaut de la marée nommée du 12e, la même pour les seize, quelle que soit la date de remise ; la station qui n'a pas reçu ne lève rien et attend ». Et la remise se fait dans l'ordre du risque — les cinq du goulet avant toute autre."
+  },
+  {
+   "livre": "affaire-police-des-mers",
+   "table": "🗝️ Clefs",
+   "ligne": "48011",
+   "colonne": "⚖️ Décision",
+   "valeur": "**ÉCARTÉE le 3e j. de la 4e lune, an 129 — rien à faire, rien à écrire, aucune action ne lui est due.** Elle est exclusive de 48010, qui est la clef tenue par la reine ce même jour. Elle tuait 48013, seule clef du verrou 48001 : l'état 48000 serait tombé des deux côtés à la fois. — NOTE DE MA MAIN : cette case portait le mot « retenue » à propos de 48010, et le compte l'a lu deux briefings de suite comme une clef gardée qu'aucune action ne réalise. Une case pleine ne se relit pas ; c'est le mot voisin qui mentait, non l'absence."
   }
+ ],
+ "qui": "corlys",
+ "_depeche": {
+  "session": "e262c7cb-f74b-5c00-81fb-935618cb491b",
+  "date_jeu": "129.4.3",
+  "jetons": 2024198,
+  "secondes": 1944
+ },
+ "_cahier_verse": true
 }

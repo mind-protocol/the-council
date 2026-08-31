@@ -18,6 +18,7 @@
 const fs = require("fs");
 const path = require("path");
 const { RACINE } = require("../http");
+const { locales: horlogesLocales } = require("./horloges-acteurs");
 // Le composant de portrait du jeu, reutilise tel quel.
 const { portraitDefaut, portraitFrais } = require("../peinture").portraits;
 
@@ -82,10 +83,10 @@ function canaux() {
  *   `rapport`    — quand une session a rendu : la durée réelle d'une journée.
  *   `session`    — un fil déposé dans sa chambre : ce qu'il a vécu.
  */
-function evenements() {
+function evenements(canauxLus, habitantsLus) {
   const ev = [];
   let sansHeure = 0;
-  for (const c of canaux()) {
+  for (const c of canauxLus || canaux()) {
     for (const e of c.entrees) {
       const t = quand(e);
       if (t === null) { sansHeure += 1; continue; }
@@ -109,7 +110,7 @@ function evenements() {
               tache: h.tache, budget: h.budget, depense: h.depense,
               importance: h.importance });
   }
-  for (const qui of habitants()) {
+  for (const qui of habitantsLus || habitants()) {
     const fil = path.join(CHAMBRES, qui, "fil");
     let fichiers = [];
     try { fichiers = fs.readdirSync(fil); } catch (e) { continue; }
@@ -200,14 +201,14 @@ function ecritsDe(qui) {
 }
 
 /** Le tableau des sept familles pour une chambre : combien, et la dernière. */
-function gestesDe(qui) {
+function gestesDe(qui, canauxLus, boucleLue) {
   const fil = gestesDuFil(qui);
   const ecrits = ecritsDe(qui);
   const cahier = ecrits.find((x) => x.quoi === "son cahier");
   const demain = ecrits.find((x) => x.quoi === "sa conclusion");
   let verbes = 0, paroles = 0, dernierMot = null, premierMot = null;
   let dernierVerbe = null, premierVerbe = null;
-  for (const c of canaux()) {
+  for (const c of canauxLus || canaux()) {
     if (c.a !== qui && c.b !== qui) continue;
     for (const e of c.entrees) {
       if (e.de !== qui) continue;
@@ -238,7 +239,7 @@ function gestesDe(qui) {
   } catch (e) { filT = []; }
   const filDernier = filT.length ? filT[filT.length - 1] : null;
   const filPremier = filT.length ? filT[0] : null;
-  const boucle = lire(path.join(ETAT, "activations", "boucle.json"), {}) || {};
+  const boucle = boucleLue || lire(path.join(ETAT, "activations", "boucle.json"), {}) || {};
   const jauge = ((boucle.acteurs || {})[qui]) || {};
   const vieux = ecrits.length ? ecrits[ecrits.length - 1].t : null;
   return {
@@ -385,6 +386,8 @@ function sessions(limite) {
       tache: a.tache || (d.tache || null),
       budget: a.budget || null,
       cout_usd: Number(a.cout_usd) || 0,
+      horloge_pj: a.horloge_pj || null,
+      date_locale: a.date_locale || null,
       monde0, monde1: monde1 > monde0 ? monde1 : monde0 + 1,
       gestes,
     });
@@ -439,6 +442,7 @@ function chambre(qui) {
   const jauge = ((boucle.acteurs || {})[qui]) || null;
   return {
     id: qui, zone: estZone(qui),
+    horloge_locale: horlogesLocales([qui])[qui] || null,
     // LE SIGNAL DE DÉRIVE, et c'est le plus utile de la fiche : un cahier
     // qui porte une section datée est un cahier qu'il a repris en main.
     cahier_amende: cahier.includes("## Amend"),
@@ -480,6 +484,7 @@ function rapport(fichier) {
     budget: a.budget || null, budget_secondes: a.budget_secondes || null,
     importance: a.importance == null ? null : a.importance,
     front: a.front || null, present_secondes: a.present_secondes || null,
+    horloge_pj: a.horloge_pj || null, date_locale: a.date_locale || null,
     tache: a.tache || d.tache || null,
     issue: act.issue || null,
     energie_depensee: act.energie_depensee == null ? null
@@ -518,7 +523,10 @@ function salles() {
 
 /** Le paquet de l'onglet : les lignes de la frise, ses événements, les salles. */
 function vueChambres() {
-  const { evenements: ev, sans_heure } = evenements();
+  const tous = habitants();
+  const canauxLus = canaux();
+  const boucle = lire(path.join(ETAT, "activations", "boucle.json"), {}) || {};
+  const { evenements: ev, sans_heure } = evenements(canauxLus, tous);
   const compte = {};
   for (const e of ev) {
     for (const qui of [e.de, e.vers]) {
@@ -532,16 +540,18 @@ function vueChambres() {
       if (e.genre === "activation" && qui === e.de) c.activations += 1;
     }
   }
-  const boucle = lire(path.join(ETAT, "activations", "boucle.json"), {}) || {};
   for (const [id, j] of Object.entries(boucle.acteurs || {})) {
     if (compte[id]) { compte[id].energie = j.energie; continue; }
   }
-  const tous = habitants();
   const lignes = Object.values(compte).sort((a, b) =>
     (b.zone - a.zone) || (b.dernier - a.dernier));
   // Les sept familles pour CHAQUE ligne : c'est ce qui rend le silence
   // visible sans avoir a ouvrir une chambre apres l'autre.
-  for (const l of lignes) l.gestes = gestesDe(l.id);
+  const heures = horlogesLocales(lignes.map((l) => l.id));
+  for (const l of lignes) {
+    l.gestes = gestesDe(l.id, canauxLus, boucle);
+    l.horloge_locale = heures[l.id] || null;
+  }
   // LE PORTRAIT, PAR LE COMPOSANT QUI EXISTE DEJA (serveur/portraits.js) :
   // le meme visage qu'a l'ecran de jeu, la meme silhouette de secours, la
   // meme teinte tiree du nom. On ne redessine pas un rond ici.
@@ -555,7 +565,7 @@ function vueChambres() {
     lignes, evenements: ev, sans_heure,
     muettes: tous.filter((x) => !compte[x]).length,
     chambres: tous.length,
-    canaux: canaux().length,
+    canaux: canauxLus.length,
     salles: salles(),
     lu_a: Date.now(),
   };

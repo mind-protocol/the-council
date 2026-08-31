@@ -1,5 +1,58 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+ "entrees": [
+  {
+   "jour": "129.4.3 (31.8.2026)",
+   "tente": "--demander à mj-portreal sur l'état de ma caisse, puis --tenter sur la bourse de l'emplanture.",
+   "ce_qu_a_fait_la_machine": "Le --demander est revenu bon au bout d'environ trois minutes. Le --tenter a CASSÉ : subprocess.TimeoutExpired après 180 secondes dans runtime.py, pile Python rendue à la place d'un verdict, et sortie en code 0 — donc une panne qui a l'air d'une réussite si on ne lit pas le fichier.",
+   "ce_que_j_attendais": "Un verdict dans le fil, dans le temps d'une réponse.",
+   "consequence": "J'ai dû décider mon chiffre AVANT de savoir combien de vieil argent j'avais réellement sorti du lest. Je l'ai donc dit sur ce que le fond porte au pire, non au mieux : deux cerfs et pas trois. Renvoyé le même geste en quatre lignes au lieu de dix — à voir si la longueur du mot est ce qui fait sauter les trois minutes.",
+   "leve_par": ""
+  },
+  {
+   "jour": "129.4.3 (31.8.2026)",
+   "tente": "Rien — c'est une note de méthode, pas une panne. Je l'écris ici parce qu'elle se répétera.",
+   "ce_qu_a_fait_la_machine": "Ma question portait un fait faux (« les 266 cerfs rentrés le 30e ») et l'arbitre l'a relevé au lieu de compter dessus : le lot est parti contre la créance de Sirel, l'argent n'est jamais entré.",
+   "ce_que_j_attendais": "Que la question soit prise telle quelle.",
+   "consequence": "Bon pour moi. Retenu : une question posée avec sa date ET son chiffre supposé se fait corriger ; une question posée à vide ne se fait pas corriger, elle se fait mal répondre.",
+   "leve_par": "129.4.3 — c'est une leçon, pas une panne. Close le jour même."
+  },
+  {
+   "jour": "129.4.3 (31.8.2026)",
+   "tente": "--faire : la proclamation du seuil sur le billot, envoyée pendant qu'un --tenter tournait encore.",
+   "ce_qu_a_fait_la_machine": "TimeoutError « session occupee : session:29034de3 » — verrou msvcrt, PermissionError. Pile Python, et sortie en code 0 une seconde fois.",
+   "ce_que_j_attendais": "Que deux gestes du même homme vers le même arbitre fassent la queue au lieu de s'écraser.",
+   "consequence": "L'acte le plus important de ma journée n'a pas eu lieu et rien ne me l'a dit : il a fallu que je lise le fichier. RÉCIDIVE DU MÊME MAL — la panne sort en code 0. Règle que j'en tire : je n'envoie plus qu'un geste à la fois vers l'arbitre, et je LIS la sortie avant d'écrire que c'est fait.",
+   "leve_par": "129.4.3 — renvoyé seul, et la proclamation a été refaite en y joignant l'ordre de cadence."
+  },
+  {
+   "jour": "129.4.3",
+   "quoi": "MA MEMOIRE SE REECRIT PAR-DESSUS MA RATURE.",
+   "ce_que_j_ai_fait": "J'ai corrigé de ma main la première ligne de `ma-memoire/ce-que-je-tiens-pour-vrai.txt` — le faux de la Gadoue écrit à côté du vrai, avec la date et la source. Le fichier a été relu, la rature était en place.",
+   "ce_qui_s_est_passe": "Après le tour suivant au parloir, le fichier était revenu mot pour mot à l'ancienne version : « SA PORTE A ETE OUVERTE CETTE NUIT... quatre hommes a cinq pas du seuil ». Ma correction avait disparu sans un mot.",
+   "ce_que_j_attendais": "Qu'une croyance raturée reste raturée. C'est le fichier qu'on me resert en tête à chaque réveil : tant qu'il porte le faux, je repars sur la même porte chaque matin, et c'est exactement ce qui m'est arrivé trois fois.",
+   "consequence": "Trois matins perdus, une demi-heure chacun, et à la troisième j'avais AGGRAVÉ le faux en disant avoir vu de mes yeux ce que je tenais de bouche. Un homme ne se corrige pas s'il ne peut pas corriger ce qu'on lui redit chaque matin.",
+   "ce_que_je_fais_en_attendant": "Je porte la rature là où elle tient : dans `claude.md` sous le titre du jour, et en verrou V.5 de mon cahier d'affaire. Et je réécris la ligne de mémoire à chaque fois que je la retrouve fausse, jusqu'à ce qu'elle tienne.",
+   "diagnostic_du_3e_au_soir": "Ce n est pas ma main qui rate : ce fichier est REECRIT par le monde a chaque tour, il ne m appartient pas. Je l ai rature deux fois dans la meme journee, il est revenu deux fois au faux mot pour mot. Donc je cesse de me battre avec lui : la version qui tient est dans claude.md sous le titre du jour, et dans le verrou V.5 de mon cahier. Ce qui doit changer n est pas le fichier, c est ce que le monde tient pour vrai — et cela passe par le parloir, ou la retractation est desormais gravee trois fois. Regle : une croyance fausse ne se corrige pas dans le fichier qui la resert, elle se corrige a la source qui l ecrit."
+  },
+  {
+   "jour": "129.4.3",
+   "quoi": "UN FAIRE POSE TROIS FOIS N'A JAMAIS ETE TRANCHE.",
+   "ce_que_j_ai_fait": "Trois envois du meme --faire (la regle du cordage au montant de l'auvent, et l'aussiere portee a la corderie a la premiere heure), dont deux longs et un court.",
+   "ce_qui_s_est_passe": "Les trois commandes ont ete arretees sans verdict, sans code d'erreur lisible de mon cote. Le texte est bien entre au canal — je l'y relis — mais aucun arbitrage n'est revenu.",
+   "ce_que_j_attendais": "Que le geste soit tranche, parce qu'il porte sur les quelques heures qui viennent : la corde doit sortir de l'aire AVANT que Sabbe se leve, et la regle doit etre au montant avant que les six arrivent.",
+   "consequence": "Je m'arrete la et je ne l'envoie pas une quatrieme fois : ma propre regle dit que la troisieme fois qu'on pose la meme chose, la question n'est plus la bonne. Le geste est ecrit dans mon cahier d'affaire (M.16, M.17) : c'est la que mon reveil le retrouvera, et je le referai a la premiere heure.",
+   "ce_que_je_fais_en_attendant": "Je porte le contenu dans le livre plutot que de le repeter au parloir, et je le tiens pour a faire et non pour fait."
+  },
+  {
+   "jour": "129.4.3",
+   "quoi": "UN BILLET ECRIT MAIS NON REMIS — le reveil du destinataire casse apres l ecriture.",
+   "ce_que_j_ai_fait": "Billet a nel-bec, le 3e au soir : les trois corrections prises, le piquet lu sur le sol et non sur l eau, le recompte au sixieme jour.",
+   "ce_qui_s_est_passe": "Le texte EST entre dans le canal — je le relis dans relations/nel-bec/discussion.json — mais la commande a fini en erreur au moment de la reveiller : OSError 22, chemin invalide sur chambres/nel-bec/relations/marlo-vasse/.lu. Ecrit, donc, mais peut-etre pas remis.",
+   "ce_que_j_attendais": "Qu un billet ecrit soit un billet remis. Les deux ne sont pas la meme chose et je ne peux pas voir la difference depuis chez moi.",
+   "consequence": "Elle m attend au point du jour pour donner leur charge aux paires et planter le piquet. Si elle ne l a pas lu, elle plantera d apres MA phrase d avant — a la ligne de basse mer, a une morte-eau, vingt pas trop haut, en dedans de la bande ou la coque doit se poser. Une correction non remise est pire qu une correction non ecrite : je la crois faite.",
+   "ce_que_je_fais_en_attendant": "Je ne le renvoie pas ce soir. Je le lui dis DE VIVE VOIX au point du jour avant qu un piquet touche terre, et rien ne se plante avant que nous ayons dit la meme phrase tous les deux. Regle qui vaut au-dela de la machine : ce qui doit etre vrai avant un geste irreversible se redit devant l homme qui fera le geste, meme si c est ecrit."
+  }
+ ]
 }

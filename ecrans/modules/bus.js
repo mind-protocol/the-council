@@ -188,16 +188,20 @@ window.Bus = (() => {
   }
 
   // Les trois points de l'attente. Ils ne s'éteignent PAS à l'arrivée des items
-  // dans la file — ils s'éteignent quand le monde parle à l'écran. Deux items
-  // ne comptent pas pour une réponse : l'écho de la phrase du joueur, que le
-  // serveur réinscrit au flux, et sa reformulation (`reecrit`). Les laisser
-  // compter revenait à éteindre l'attente deux secondes après l'avoir allumée,
-  // c'est-à-dire toujours avant que le MJ ait dit un mot.
+  // dans la file — ils s'éteignent quand le monde parle à l'écran. Aucun item
+  // produit par l'envoi du joueur ne compte pour une réponse : parole/action
+  // (`vous`), question, coulisses, laisser-faire, intervention ou composition.
+  // `reecrit` non plus : le MJ n'a fait que rendre la phrase du joueur, il n'a
+  // pas encore joué le monde. Oublier les modes hors `vous` éteignait les trois
+  // points dès que leur propre écho revenait du serveur, donc pendant que la
+  // session MJ travaillait encore.
   function attendre(oui){
     const el = $("attente");
     if(el) el.classList.toggle("actif", !!oui);
   }
-  const PAS_UNE_REPONSE = { vous:1, reecrit:1 };
+  const PAS_UNE_REPONSE = {
+    vous:1, question:1, meta:1, run:1, intervention:1, composer:1, reecrit:1
+  };
 
   // Le bouton Couper : on jette ce qui restait et on fait taire la voix.
   function couper(){

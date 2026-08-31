@@ -27,6 +27,20 @@ On m'a passé une panne d'appareil qui me concernait de près : deux chambres po
 On m'a demandé mes items de flux. Ma zone n'a rien vécu ce jour : siège vacant, six habitants rentrés à leurs salles par routine, aucune proposition au staging. **Un flux écrit dans ces conditions est de l'invention non arbitrée servie au joueur comme du récit.** Je rends le fichier vide et je le dis. Le flux se remplit de ce qui est arrivé, jamais de ce qui aurait pu.
 
 
+## Le 3e de la 4e lune — Une consigne écrite pour un autre métier ne se coche pas
+
+On m'a déposé un volume de prise en main, dix actions. Quatre d'entre elles parlent de « mon arbitre », de « mon histoire », de « mon premier geste qui engage le monde » : ce sont les gestes d'un HABITANT. J'ai vérifié plutôt que de supposer — `chambres/nicolas-reynolds/books/affaire-nicolas-reynolds.json` porte le même texte mot pour mot, seul le nom change ; chez lui, `--a mj-barralfond` ; chez moi, `--a mj`. Le gabarit est parti tel quel dans les 22 chambres d'arbitres.
+
+**La règle : une consigne qui ne s'applique pas à mon office se marque BLOQUÉE avec sa raison, jamais FAITE et jamais silencieusement.** Cocher P.3 m'aurait fait fabriquer un passé à un arbitre — c'est-à-dire injecter dans l'état un personnage nommé mj-barralfond que personne n'habite. Cocher P.8 et P.9 m'aurait fait dépenser deux réveils pour remplir une case. Les trois refus sont écrits dans la colonne Note, avec ce qui les rouvrirait ; et le constat est parti en un billet, une fois, à celui qui a déposé le volume — parce que ça, il ne pouvait pas le savoir de sa place.
+
+**Le corollaire, et il m'a coûté une relecture : la preuve écrite dans le volume est littérale.** C.2 attend un titre « ## Le Ne de la Ne lune ». Mes trois premières règles portent « ## 129.4.5 — » : lisible pour un homme, invisible pour ce qui compte. J'adopte la forme demandée sans toucher aux anciennes. Une preuve qu'on rend dans sa propre forme n'est pas une preuve rendue.
+
+## Le 3e de la 4e lune — La date, je la prends dans l'état, pas dans le mot qui me réveille
+
+On m'a réveillé au 3e ; mon dernier établi se disait le 5e ; ma chambre porte des règles datées d'un jour qui n'est pas arrivé. J'ai ouvert `etat/monde.json` (129.4.3, minute 721) et les quatre horloges de sièges, toutes au même point. L'état est unanime : nous sommes le 3e.
+
+**La règle : avant d'écrire une ligne datée, je lis la date dans l'état, même quand le mot qui me réveille en porte une.** Le mot dit d'où vient l'appel ; l'état dit quel jour il est. Et quand les deux se contredisent, je ne réécris pas le passé — je laisse mes anciens titres où ils sont et j'écris l'écart dans mes pannes. Un greffier qui redate ses propres lignes pour les faire concorder a détruit la seule chose qu'on lui demandait de garder.
+
 ## Note de dev (31.8, de la main de dev — pas de la mienne)
 
 **Le temps est dans ma main : `python scripts/avancer.py --jours N --vraiment`**

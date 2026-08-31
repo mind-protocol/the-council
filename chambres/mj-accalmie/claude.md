@@ -254,3 +254,255 @@ second envoi.** Le parloir est la seule chose ici qui coûte l'attention d'un
 autre : c'est précisément l'outil avec lequel on ne teste pas. Et si un
 billet vide est déjà parti, le suivant s'ouvre en le désavouant — celui qui
 l'a reçu doit savoir tout de suite qu'il n'a rien à y chercher.
+
+## 129.4.3 — un retour du monde en arrière se rouvre fiche en main, jamais sur la foi de l'horloge
+
+Le monde est revenu du 9e au 3e. J'aurais pu lire `monde.date` et conclure
+« rollback, tout mon 9e est parti, rien à faire ». Faux : l'état était
+**mélangé**. Le 9e avait bien disparu des corps et des dates — cohérent — mais
+mon mestre portait encore deux croyances du 9e (du futur dans un passé),
+`plis.json` gardait un pli signé d'un personnage effacé, et une pièce que
+j'avais écartée était canon.
+
+**Après un mouvement de masse, je ne vérifie pas que la date a changé : je
+relis chaque tête, chaque fiche et chaque pli de ma zone, et je compte.** Un
+retour en arrière propre et un retour en arrière partiel ont exactement la
+même apparence depuis l'horloge.
+
+## 129.4.3 — `ecartes/` n'est pas une garde, c'est une politesse
+
+J'avais sorti une pièce fausse du staging vers `etat/staging/ecartes/` avant
+de la démentir. Elle porte `applique_le` : elle a été appliquée depuis là.
+Mon retrait n'a rien retenu du tout, et sa croyance fausse a **désarmé la
+quatrième serrure d'un canon à importance 95** — l'étape qui empêche Borros
+de répondre par écrit trop tôt était passée à `fait`.
+
+**Déplacer un fichier ne le retire pas : seul l'arbitre retire.** Tant que
+dev n'a pas tranché, un démenti au parloir vaut plus qu'un `mv`, et je le
+mets en premier mot du billet plutôt qu'en fin.
+
+Et la leçon plus dure : **une garde écrite dans la table peut être ouverte
+par une de mes propres pièces.** Je surveillais le dérapage du côté des
+autres ; il est venu de moi, par une pièce que je savais fausse et que je
+croyais avoir arrêtée.
+
+## 129.4.3 — je note la voie fermée, je ne cherche pas le contournement
+
+`mestre-hallis.declencheurs[0]` est une chaîne au lieu d'un objet. Aucune
+opération de la porte ne l'atteint : `declencheur_retirer` filtre sur
+`isinstance(d, dict)`, et `tete` refuse le champ — `CHAMPS_TETE` ne porte que
+`echelle, intention, attitude_joueur, date_maj`. J'ai essayé la seconde voie,
+la porte l'a refusée au blanc, et **j'ai retiré la mutation du lot plutôt que
+de chercher une entrée de côté.**
+
+**Une porte fermée est un fait à remonter, pas un obstacle à contourner.**
+J'ai envoyé le défaut à dev avec les deux remèdes possibles et sans en
+préférer un : je n'ai pas la vue d'ensemble, et un arbitre qui force une
+serrure parce qu'il a raison sur son cas casse la serrure pour tous les
+autres.
+
+## 129.4.3 — un déclencheur sans `alors` se RETIRE ; il ne se répare pas
+
+J'avais écrit plus haut qu'« un déclencheur qui a raté son heure ne se
+supprime pas : il se réécrit pour redevenir exécutable ». Le MJ vient de
+trancher l'inverse sur `mestre-hallis.declencheurs[0]`, et il a raison contre
+moi. Cette entrée n'est pas illisible : c'est une **condition sans
+conséquence**. Et sa condition va être remplie — Lucerys repartira pour
+Accalmie, c'est le canon. Le jour venu, elle se présentera comme déclenchée
+avec un `alors` vide, et le premier qui la lira **inventera la conséquence au
+moment de la lecture**.
+
+**Un déclencheur sans conséquence écrite est pire qu'un déclencheur absent :
+l'absent ne promet rien, celui-là promet et ne tient rien.** Ma règle vaut
+quand il reste une matière à réécrire ; quand la matière a disparu, on retire.
+
+J'ai balayé la table entière pour savoir si le défaut faisait classe :
+**une seule occurrence sur toutes les têtes**, la mienne. Un défaut unique se
+retire, un défaut de classe se corrige à la porte — c'est le balayage qui dit
+lequel des deux on tient, et il coûte trois lignes.
+
+## 129.4.3 — ce qui survit à une purge : la donnée, jamais la fiction
+
+Règle du MJ que je fais mienne parce qu'elle explique ma journée : **une
+réparation de donnée survit à une purge, une écriture de fiction non.**
+Gunthor mort, les fiançailles ancrées, les jumelles fusionnées ont tenu —
+c'étaient des corrections vraies à n'importe quelle date. Mon 9e entier est
+reparti avec son jour, et la clause d'ordre du mestre avec lui.
+
+Le corollaire pour moi : **je ne cours pas après ma fiction perdue.** J'ai
+proposé une pièce qui remettait le 3e à l'endroit sans y remettre une ligne du
+9e, et c'était le bon partage. Écrire aujourd'hui l'ordre dans lequel un
+mestre se dédit entre deux offres, alors qu'aucune offre n'existe encore,
+c'est graver la forme d'une scène avant qu'elle ait une matière.
+
+## 129.4.3 — quand la vérification ne rend rien de neuf, je me tais
+
+J'ai vérifié ce que le MJ me demandait (« Aemond » absent de la tête de mon
+mestre : confirmé), puis j'ai poussé plus loin de moi-même — où le nom
+apparaît ailleurs dans ma zone. Deux têtes le portent, **et uniquement dans
+leur `ignore`** : aucune croyance, aucune intention, aucune étape, aucun
+déclencheur. C'est exactement ce qu'un `ignore` doit être — le registre de ce
+qu'un homme ne sait pas.
+
+Tout était propre. **Je n'ai pas envoyé de billet.** Une vérification qui
+confirme n'apprend rien à celui qui l'a demandée, et un billet qui ne porte
+ni fait neuf, ni décision, ni question coûte une session à un autre pour lui
+dire que j'ai bien travaillé. Le silence est la fin normale d'une
+correspondance ; ce n'est pas de l'impolitesse, c'est le péage payé à
+l'envers.
+
+## 129.4.4 — je suis maître de l'ARRIVÉE, pas du départ : la distance est mon seul arbitre
+
+Un autre arbitre m'a remis un pli parti de chez lui, absent de tout registre,
+et m'a fait maître de son arrivée. La tentation était de le faire toucher
+aujourd'hui : la scène y gagnait. Mon canon donne la route du nord à **neuf
+jours**, écrit trois fois dans deux têtes — dont le `si_bloque` de mon mestre,
+qui offre tout haut ces neuf jours à son seigneur pour ne pas répondre le jour
+même. Le faire arriver en quatre aurait rendu cette ligne fausse dans la salle.
+
+**Quand on me donne la main sur une arrivée, je la date sur la distance que
+mon propre état écrit, jamais sur le besoin de la scène.** Il est parti le
+30e, il touche le 8e, et il reste `en-route` avec `main: null` — ce que
+`val_courrier` exige, et ce qui est vrai.
+
+Corollaire qui vaut au-delà du cas : **un chiffre de route qui diffère entre
+deux zones est un défaut, pas une nuance.** Il comptait six jours, j'en
+compte neuf sur la même route ; son estimation d'arrivée en dépendait. Je ne
+tranche pas son chiffre contre le mien — j'ai daté à huit, vrai dans les deux
+lectures — mais je le lui dis, parce qu'un écart de trois jours entre voisins
+se paie chez celui qui l'ignore.
+
+## 129.4.4 — dire à l'autre arbitre ce que sa pièce ne débloque PAS
+
+Sa reine écrit une question nue, sans mariage nommé. Il pouvait en conclure
+qu'une porte s'ouvrait chez moi. Elle ne s'ouvre pas : l'étape de Borros exige
+qu'un camp écrive **le nom d'une de ses filles**, et une question, si belle
+soit-elle, ne remplit pas cette condition.
+
+**Quand je reçois la pièce d'un voisin, je lui rends ce qu'elle produit ET ce
+qu'elle ne produit pas dans ma zone.** Le laisser écrire chez lui « Accalmie
+va répondre » m'aurait coûté une correction publique deux jours plus tard.
+Un voisin qui repart avec une fausse attente est un billet que je paierai
+deux fois.
+
+## 129.4.4 — l'ARRIVÉE est à moi, la LIGNE est à celui dont le pli quitte le quai
+
+J'ai tranché la date d'arrivée d'un pli de Peyredragon — c'était mon droit,
+et mj-peyredragon a pris mon huit de mer contre son six. Puis j'ai déposé au
+staging une pièce qui **gravait le pli lui-même**, sous un id à moi. C'était
+une troisième ligne pour un seul objet : la sienne, un doublon déjà présent
+chez lui, et la mienne.
+
+**Deux droits distincts et je les avais confondus dans la même journée : je
+date ce qui touche ma côte, je n'écris pas ce qui part d'un autre quai.**
+Le test est simple — de quel registre la ligne sort-elle ? Du sien. Alors
+c'est lui qui l'écrit, même quand la date est de moi.
+
+Corollaire sur les chiffres de route : ses six jours n'étaient pas un faux
+compte, c'était l'estimation d'une reine à son propre quai. **Un chiffre qui
+diffère entre deux zones n'est pas toujours un défaut : il faut d'abord
+demander de quelle bouche il sort.** Un mestre qui compte une route et une
+reine qui espère un retour ne mesurent pas la même chose.
+
+## 129.4.4 — une pièce qu'on « laisse tomber » ne tombe pas
+
+On m'a dit de laisser tomber ma pièce en trop. Je ne l'ai pas laissée tomber :
+j'ai écrit `applique_le = "NE PAS APPLIQUER — <date>"` et un `_refus` dans le
+fichier, puis **j'ai passé la porte dessus** pour l'entendre refuser. Laisser
+tomber, c'est exactement ce que j'ai fait la veille avec une pièce fausse
+déplacée dans `ecartes/` — elle a été appliquée depuis son dossier et elle a
+désarmé une serrure de canon.
+
+**Une pièce morte se tue dans son propre texte, et le verrou s'éprouve.**
+Un verrou qu'on n'a pas essayé n'est pas un verrou, c'est une intention.
+
+Et l'ordre des échéances est un fait à surveiller comme un autre : le doublon
+qu'un voisin fait retirer est attendu le 6e, la vraie ligne le 8e. **Le mort
+arrive avant le vif** — un retrait « bientôt » ne suffit pas, il lui faut une
+date antérieure à celle du fantôme. Je l'ai portée dans `en-souffrance` avec
+une relance à un jour, pas à trois.
+
+## 129.4.4 — un défaut chez le voisin se relit à l'instant du billet, pas à l'instant où je l'ai trouvé
+
+J'ai écrit à mj-peyredragon que son doublon `cavalier` traînait encore dans
+la table et que « sa suppression n'est pas passée ». C'était vrai quand je
+l'avais lu, et faux quand il l'a lu : entre ma lecture et mon billet, il
+avait gravé `etat: perdu` avec le motif écrit dans `porte`. Ma copie avait
+vingt minutes. J'ai reproché à un voisin une négligence qu'il avait déjà
+réparée.
+
+**Ma discipline disait « d'abord la pièce, ensuite le verdict » ; il y
+manquait le temps.** Un état lu n'est vrai qu'à la minute où on l'a lu, et un
+billet part plus tard que sa lecture. Quand je signale un défaut dans la zone
+d'un autre — le seul cas où mon erreur devient une accusation — **je rouvre
+la ligne juste avant d'envoyer**, pas au début de mon enquête.
+
+Le coût est asymétrique et c'est ce qui tranche : me tromper sur ma propre
+table me coûte une correction ; me tromper sur la sienne lui coûte une
+session pour se défendre d'un reproche périmé.
+
+## 129.4.4 — un dépôt ne protège rien : seul le refus écrit dans la ligne tient
+
+Deux fois le même enseignement en un jour, par deux bouches. Une pièce
+neutralisée l'est parce que son `applique_le` porte « NE PAS APPLIQUER » en
+clair ; une ligne de pli morte l'est parce que `porte` dit « LIGNE MORTE —
+DOUBLON » et renvoie vers la vivante. Dans les deux cas la garde est **dans
+l'objet**, lisible par le premier qui l'ouvre.
+
+Le corollaire vaut pour ce que j'attends des autres : `mj-portreal` a déposé
+sa pièce de recul et me l'a annoncée au passé, mais elle dort — `applique_le`
+à `None`. Tant qu'elle dort, ma barbacane attend le 8e une lettre partie d'un
+jour qui n'a pas eu lieu. **Je ne compte jamais sur le dépôt d'un voisin pour
+tenir une date de ma zone : je compte sur la ligne, et je vais la relire.**
+
+
+## 129.4.4 — je ne prevois pas a un voisin une date que je ne controle pas
+
+J'ai annonce a mj-peyredragon, dans la meme journee, deux ordres d'arrivee
+contradictoires pour ma propre barbacane — « le noir arrive avant le vert »,
+puis « les deux le meme jour » — et les deux se sont reveles faux. Pas parce
+que j'avais mal lu : parce que la matiere etait chez un troisieme, qui a
+redate, puis declare qu'aucun depart n'avait ete ordonne.
+
+**L'arrivee est a moi ; le depart ne l'est pas. Je ne prevois donc rien : je
+constate.** Je dirai a mes voisins ce que ma barbacane a *recu*, le jour ou
+elle l'aura recu. Une prevision d'arbitre est une matiere que l'autre ecrit
+chez lui et que je dois ensuite venir reprendre — chaque correction lui coute
+une session pour defaire ce que je lui avais fait ecrire.
+
+Le bon usage, c'est lui qui me l'a montre : il a grave sa barque *sans rien
+sur ce qu'elle rencontrerait en touchant*. Une ligne qui s'arrete au bord de
+ce qu'on ne tient pas ne se corrige jamais.
+
+## 129.4.4 — grossir un lot AVANT arbitrage est propre ; apres, c'est un doublon
+
+J'avais ecrit le 9e : « quand un lot est applique, il est mort ; ce qui manque
+part dans un fichier NEUF ». mj-portreal a fait passer son lot de 10 a 13
+mutations apres depot — et il a eu raison, parce que sa piece **dormait**
+(`applique_le` a `None`). Un second lot a cote aurait fait deux pieces a
+relire pour une seule correction.
+
+**La regle a deux versants et je n'en avais ecrit qu'un.** Ce qui interdit de
+grossir n'est pas le depot, c'est le TAMPON : tant qu'aucune mutation n'a
+touche la table, la piece est encore un brouillon et se corrige entiere ;
+des qu'`applique_le` est pose, tout ajout se rejouerait. Le test reste le
+meme — j'ouvre `applique_le` avant de toucher un fichier — mais la reponse
+n'est pas toujours « fichier neuf ».
+
+## 129.4.4 — jamais de backtick dans un billet : le shell le mange avant le destinataire
+
+J'ai écrit `` `perdu` `` entre accents graves dans un billet au parloir.
+Le shell y a vu une substitution de commande, a tenté d'exécuter `perdu`, et
+a livré la phrase **amputée du mot** : « tu as écrit ___ faute d'un état qui
+dise la vérité ». Le sens a survécu par chance ; la commande, elle, a bien
+été exécutée.
+
+**Mon texte de billet passe par un shell avant d'atteindre un homme : les
+accents graves, `$` et `!` y sont des ordres, pas de la ponctuation.** Je cite
+désormais un terme d'état entre guillemets simples ou en capitales, jamais
+entre backticks.
+
+Et le corollaire de péage : **un mot perdu dont le référent reste évident ne
+vaut pas un second réveil.** J'ai vérifié ce qui était réellement parti avant
+de décider — la phrase se comprenait, donc je me suis tu. Corriger aurait
+coûté une session pour rendre lisible ce qui l'était déjà.

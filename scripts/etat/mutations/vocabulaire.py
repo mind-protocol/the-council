@@ -16,28 +16,39 @@ from etat.expose import tables as porte  # LA PORTE de etat/
 
 try:
     # Une seule table de budgets pour les deux scripts : celle de tick.py,
-    # qui transcrit docs/schema.md.
-    from temps.expose import BUDGETS
-except ImportError:     # doublon de secours, a retoucher AVEC celui de tick.py
+    # qui transcrit docs/schema.md. `echelle_de` MESURE l'echelle (quartier /
+    # au loin) : c'est la seule clef legitime de BUDGETS depuis que le champ
+    # `echelle` a ete supprime du schema.
+    from temps.expose import BUDGETS, echelle_de
+except ImportError:     # doublon de secours, a retoucher AVEC celui de bouche.py
+    # LE SECOURS DOIT PORTER LES MEMES CLEFS QUE LA VRAIE TABLE. Le 129.4.4, il
+    # portait encore scene/orbite/royaume : tant que temps/ s'importait, la
+    # contradiction restait invisible ; le jour ou l'import aurait manque, le
+    # meme lot serait passe ou tombe selon l'humeur du sys.path.
     BUDGETS = {
-        "scene":   {"acteurs": 5,  "croyances": 6, "etapes": 5,
-                    "declencheurs": 3},
-        "orbite":  {"acteurs": 12, "croyances": 5, "etapes": 4,
-                    "declencheurs": 2},
-        "royaume": {"acteurs": None, "croyances": 3, "etapes": 2,
-                    "declencheurs": 1},
+        "quartier": {"acteurs": None, "croyances": 6, "etapes": 5,
+                     "declencheurs": 3},
+        "au loin":  {"acteurs": None, "croyances": 3, "etapes": 2,
+                     "declencheurs": 1},
     }
+
+    def echelle_de(tete):    # sans topologie, on simule trop plutot que trop peu
+        return "quartier"
 
 ETATS_ETAPE = ("en-cours", "fait", "bloque", "abandonne")
 ETATS_ETAPE_VIVANTS = ("en-cours", "bloque")
+# L'ECHELLE D'UNE TETE NE SE DECLARE PLUS (docs/schema.md l.146 : « supprime »)
+# — elle se MESURE, et la clef des budgets est `echelle_de`. Ce tuple-ci ne
+# survit que pour le champ `promeut` d'un seuil de main, ou docs/schema.md l.215
+# le dit « valeur libre et desormais indicative ».
 ECHELLES = ("scene", "orbite", "royaume")
 STATUTS_EVENEMENT = ("a-venir", "resolu", "devie", "annule")
 ETATS_PERSO = ("actif", "dormant", "mort")
 
 CHAMPS_ETAPE = ("etat", "jours_restants", "quoi", "cout", "si_bloque",
                 "depend_de", "accompli")
-CHAMPS_TETE = ("echelle", "intention", "attitude_joueur", "date_maj")
-CHAMPS_TETE_REQUIS = ("personnage_id", "echelle", "croyances", "intention",
+CHAMPS_TETE = ("intention", "attitude_joueur", "date_maj")
+CHAMPS_TETE_REQUIS = ("personnage_id", "croyances", "intention",
                       "plan", "date_maj")
 CHAMPS_EVENEMENT = ("statut", "effets", "date_prevue", "importance")
 CHAMPS_PERSO = ("lieu_id", "condition", "etat")
@@ -187,6 +198,26 @@ def liste_simple(table, clef):
 # Sentinelle des validateurs : la mutation est deja traitee (faute ou
 # plan), passe a la suivante - l'equivalent du continue d'origine.
 CONTINUE = object()
+
+
+def declencheur_vise(d, valeur):
+    """Ce declencheur est-il celui que `valeur` designe (son 'si' exact) ?
+
+    UNE ENTREE MALFORMEE DOIT RESTER ATTEIGNABLE. Les deux voies filtraient
+    `isinstance(d, dict)` : une CHAINE tombee dans la liste — le champ
+    `valeur` d'un declencheur_retirer qui s'y est retrouve — devenait donc
+    increvable, `declencheur_retirer` ne pouvant plus la matcher et `tete`
+    n'acceptant pas le champ (CHAMPS_TETE). Mesure de mj-accalmie le 129.4.3 :
+    mestre-hallis.declencheurs[0] est une chaine, et AUCUNE operation du
+    vocabulaire ne pouvait l'oter d'une table partagee.
+
+    On ne devine pas pour autant : une chaine ne se designe que par
+    elle-meme, a l'octet. C'est la porte de sortie d'un dechet, pas une
+    tolerance de saisie.
+    """
+    if isinstance(d, dict):
+        return d.get("si") == valeur
+    return d == valeur
 
 
 def date_lisible(date):

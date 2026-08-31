@@ -3,28 +3,20 @@
  "regle": "Une ligne par fil ouvert. Le jour où j'ai demandé, non le jour où je m'en suis souvenu. Un fil qu'on n'a pas relancé depuis trois jours se relance ou se ferme.",
  "j_attends": [
   {
+   "de": "Le patron de la galere de Lamarck, et les seize patrons des stations",
+   "quoi": "Les seize talons signes de la commission scellee (48020), rendus DANS L'ORDRE DU RISQUE et non dans l'ordre de la route : les cinq du goulet d'abord.",
+   "demande_le": "129.4.3",
+   "du_le": "les cinq du goulet AVANT DEMAIN ; les onze autres vers le 129.4.9",
+   "pourquoi_ca_presse": "LE SCEAU EST TOMBE CE JOUR — la reine a scelle les seize copies et a ecrit l'ordre de remise. Les cinq du goulet arretent des coques des demain : un talon manquant chez ceux-la, c'est cinq patrons qui arretent sans ecrit.",
+   "si_rien": "Un talon manquant n'est pas un retard : c'est une station qui arraisonne sans pavillon. Les cinq du goulet ne sont pas negociables."
+  },
+  {
    "de": "Dagon Ryke, maître de la Mouette — par Maron Sec, à la barre",
    "quoi": "Le levé de la barre de la Néra (22034) : brassées aux deux marées, position du chenal, ET l'écart d'heure entre la pleine mer de Peyredragon et la pleine mer sur la barre.",
    "demande_le": "129.4.1",
    "du_le": "129.4.4 — AUJOURD'HUI",
    "pourquoi_ca_presse": "Tant que l'écart d'heure manque, je ne peux pas réécrire 22044 : vingt-quatre hommes veillent six nuits sur quatorze pendant que l'heure passante est en plein jour. Maron Sec passe tous les six jours et son nom n'est dans aucun livre — si le levé rate ce passage, c'est le 10e.",
    "si_rien": "Relancer par la première quille descendante le 5e. Ne pas armer une seule patrouille avant d'avoir le nombre."
-  },
-  {
-   "de": "Le patron de la galère de Lamarck, et les seize patrons des stations",
-   "quoi": "Les seize talons signés de la commission scellée (48020), et le compte des quilles tenues.",
-   "demande_le": "129.4.3",
-   "du_le": "vers le 129.4.9 — six jours de mer",
-   "pourquoi_ca_presse": "C'est la preuve de 22061 et la première ligne du compte hebdomadaire que j'ai promis à la reine.",
-   "si_rien": "Un talon manquant n'est pas un retard : c'est une station qui n'a pas reçu son pavillon et qui arraisonne sans écrit."
-  },
-  {
-   "de": "La reine",
-   "quoi": "Le sceau sur la seconde feuille — tarif plat, seize carnets à souche, registre des refoulés, et la DATE D'EFFET du 12e.",
-   "demande_le": "129.4.4",
-   "du_le": "129.4.4, avant la marée",
-   "pourquoi_ca_presse": "Le sceau n'est pas de mon office et ne le sera jamais. Chaque jour d'attente est un jour de plus où seize quilles arrêtent sans percevoir — et où la date du 12e recule d'autant.",
-   "si_rien": "La date d'effet glisse au 14e et je le lui dis en chiffres, non en reproche."
   },
   {
    "de": "La reine, et mestre Gerardys pour l'écriture",
@@ -41,6 +33,14 @@
    "du_le": "—",
    "pourquoi_ca_presse": "Je ne le demande plus avant d'avoir rendu le compte des quilles. On ne demande pas un titre le jour où l'on n'a rien apporté.",
    "si_rien": "Après le premier compte hebdomadaire, et pas avant."
+  },
+  {
+   "de": "La reine",
+   "quoi": "Le sceau sur la SECONDE feuille — tarif plat, seize carnets a souche, registre des refoules — et sa DATE D'EFFET, qui n'est PAS celle de la commission.",
+   "demande_le": "129.4.3",
+   "du_le": "—",
+   "pourquoi_ca_presse": "La commission est scellee, le tarif ne l'est pas. Seize quilles arretent desormais avec un ecrit et percoivent sans en avoir un : c'est la moitie propre et la moitie nue. Chaque jour d'attente est cinquante dragons de droit non leve.",
+   "si_rien": "Je le lui dis en chiffres, non en reproche. Et je ne confonds plus les deux dates : la commission mord a reception, le tarif a une maree nommee."
   }
  ],
  "on_attend_de_moi": [
@@ -60,10 +60,17 @@
   },
   {
    "qui": "Selm des deux barques, et messire Denys Bar Emmon",
-   "quoi": "La clef 22060 — la garde se pose sur la marée, non sur l'horloge — retenue de ma main le 1er, et promise 'demain à la première heure, avec la table des heures'. Nous sommes le 4e.",
-   "depuis": "129.4.1 — TROIS JOURS. Le fil se relance ou se ferme.",
-   "ma_reponse_prete": "La table des heures de la lune suivante, remise aux deux postes. Mais elle ne vaut rien sans l'écart d'heure de 22034, que j'attends aujourd'hui.",
-   "a_faire": "Le leur porter le jour où le levé arrive, et pas avant — leur dire aujourd'hui POURQUOI j'attends, plutôt que de les laisser croire que j'ai oublié."
+   "quoi": "La clef 22060 — la garde se pose sur la maree, non sur l'horloge — et la table des heures promise 'demain a la premiere heure' le 1er.",
+   "depuis": "129.4.1 — DEUX JOURS.",
+   "ma_reponse_prete": "Elle ne vaut rien sans l'ecart d'heure de 22034, que j'attends de Dagon Ryke. Mais mon silence leur fait croire que j'ai oublie, et cela est ma faute et non celle de Ryke.",
+   "a_faire": "Leur dire POURQUOI j'attends, en trois lignes. Un homme qui sait pourquoi il attend n'attend pas comme un homme qu'on a oublie."
+  },
+  {
+   "qui": "Ser Steffon Darklyn",
+   "quoi": "Ou seront mes coques ces deux nuits-la, et un mot ecrit disant qu'une barque de Peyredragon passant au large de Sombreval est sur mon eau.",
+   "depuis": "129.4.3",
+   "ma_reponse_prete": "RENDU CE JOUR, les deux, sans condition. Cinq au goulet a la rotation, six libres au mouillage, dix affretees qui portent et ne bloquent jamais. Le mot ecrit porte UNE MAREE NOMMEE — du soir du 3e au matin du 5e, bornes comprises — copiee au talon de son role et non sur une feuille a part.",
+   "a_faire": "FERME. Il a retire sa demande de coque tout seul, apres avoir trouve les quatorze heures dans les registres du maitre de port. Ce fil ne se relance pas : il se retient. C'est un homme a qui l'on donne un chiffre sans le lui faire demander deux fois."
   }
  ]
 }

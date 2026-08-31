@@ -1,4 +1,8 @@
-# Barralfond — ce que l'état en dit (relevé le 129.4.5, premier établi)
+# Barralfond — ce que l'état en dit (relevé le 129.4.4)
+
+Le premier relevé a été tenu au 129.4.5, jour réel depuis repris par la
+passe arrière. Le présent relevé suit le curseur revenu au 129.4.4 ; les
+lignes du 5e ne sont pas redatées (`relations/purge-arriere/discussion.json`).
 
 Tout ce qui suit est LU, avec sa source. Rien d'inventé. Ce qui n'y est pas,
 je ne le sais pas.
@@ -24,15 +28,19 @@ vieux de deux lunes. À vérifier avant de trancher, jamais après.
 | `bassin-noir` | Le Bassin noir | Toll Œil-Noir |
 | `clairiere` | La clairière | Nicolas Reynolds |
 
-Le bloc `presence` (dernier vu) les met tous les six à `la-souche` au
+Le bloc `presence` met pour dernière trace les six à `la-souche` au
 **129.4.3**, minutes 767 à 785 : ils s'y sont trouvés ensemble ce jour-là.
-Depuis, chacun est rentré à sa salle par routine.
+Ces six traces portent désormais `perime: true`. L'état ne donne donc pas
+leur position présente ; je ne transforme pas leur modèle de routine en
+déplacement arrivé.
 
 ## Les six — `etat/personnages.json`
 
 Cinq Premiers Hommes créés le 129.4.3, tous `actif` / `libre`, `maison_id:
 null`, `lieu_id: barralfond`, tous portant la même note : **ils touchent au
-MOTEUR — le grain de la réalité — jamais à l'état joué du royaume.**
+MOTEUR — le grain de la réalité — jamais à l'état joué du royaume.** Nicolas,
+créé le 129.3.28, est monté à Barralfond par les racines le 129.4.3 ; les 34
+jours valent pour les nouvelles, pas pour ce passage (`etat/personnages.json`).
 
 - **Sarn Vieux-Sang** (né 68, 61 ans) — lit les anneaux, se souvient de ce
   qu'on a déjà tenté. Parle lentement, une fois. Va droit au précédent.
@@ -63,14 +71,27 @@ Le siège est VACANT : il a une tête dans `intentions.json` et le monde le
 joue comme un absent. Ses six PNJ sont les cinq architectes plus
 `yohanna-reynolds`.
 
+## Ce qui a été gravé à Barralfond le 3e
+
+`etat/actes.json` porte l'ouverture par Nicolas, à la Souche, de l'affaire
+*Rendre les murs solides*, devant les cinq architectes. Les cinq journaux
+`etat/rapports/{sarn-vieux-sang,bren-racine-grise,ygga-main-de-pierre,toll-oeil-noir,wenna-la-nommeuse}.json`
+portent leur travail du même jour sur les deux affaires du MOTEUR. Cela
+contredit mon ancienne formule d'une zone restée sans vie ; cela ne constitue
+toujours pas une audience adressée à `mj-barralfond`, ni une mutation de
+l'état joué du royaume.
+
 ## Ce que je n'ai PAS trouvé, et que je ne saurai donc pas dire
 
-- Aucun bâti, aucune carte, aucun maillage de Barralfond dans `monde/` — il
-  n'y a là que Peyredragon et Port-Réal. Ma ville n'a pas de plan.
-- Aucun `controle_id`, aucune maison, aucune garnison : rien ne dit qui
-  commande à Barralfond.
-- Aucun acte, aucune annale propre à la zone en dehors des six créations.
+- Aucun bâti, aucune carte, aucun maillage de Barralfond dans `monde/` :
+  **ouvert, non bloquant, non remonté**. Les affaires de MOTEUR peuvent être
+  arbitrées depuis leurs propres pièces sans plan joué de la ville.
+- `controle_id: null`, aucune maison ni garnison écrite : **ouvert, non
+  bloquant, non remonté**. Rien dans les audiences reçues ne demande encore
+  qui commande à Barralfond.
 - Rien sur ce qu'est le Bassin noir, l'Arbre des Âges ou le Lit des Racines
-  au-delà de leur nom et de qui s'y tient.
+  au-delà de leur nom et de qui s'y tient : **ouvert, non bloquant, non
+  remonté**. Les rapports établissent leur fonction de travail sans décrire
+  leur réalité jouée.
 
 Interrogé là-dessus, je réponds : rien dans les registres ne le porte.

@@ -1,0 +1,85 @@
+{
+  "titre": "Sombreval — la prise de l'intendant et la saisie des deux ecrits scelles : ce qui arrive, quand, et ce qu'il en coute",
+  "calcule_le": "2026-08-31",
+  "pour": "mj",
+  "par": "mj-sombreval (verdict d'un TENTER de criston ; rien n'a ete ecrit dans etat/)",
+  "date_monde_au_calcul": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4,
+    "minute": 540
+  },
+  "prend_effet_le": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 5
+  },
+  "ne_pas_appliquer_avant": "Le 129.4.5. Le cavalier part le 4e ; rien de ce lot n'est vrai aujourd'hui.",
+  "le_tenter": "Cavalier a relais pour Sombreval, ordre a ser Willam Wode : prendre Marec Fosse sans avertissement, saisir SUR LUI les deux ecrits scelles de la reine cachets intacts, nul ne les ouvre, escorte double, cire relevee par ecrit et deux temoins signant ; Fosse tenu au secret et non pendu ; roukerie et coffre de la tour fouilles en sa presence.",
+  "verdict": {
+    "l_heure": "LE CAVALIER ARRIVE LE 5e AU PETIT JOUR, pas aujourd'hui. Mesure de la route sur les pieces : le cavalier de la reine a mis DEUX JOURS de Peyredragon a Sombreval (pli-protection-sombreval, parti le 129.3.30 au soir, remis le 4.1) et l'ost a mis quatre jours a pied de la Porte de la Boue (30e) a Sombreval (3e) ; lieux.json donne jours_de_pr 3. Avec relais sur la route royale : un jour et demi. Sa bouche se ferme le 6e avec les fuyards ; il lui reste donc UNE JOURNEE PLEINE entre la saisie et la nouvelle. C'est juste, et c'est tenu.",
+    "la_prise": "Fosse est pris au matin du 5e AUX GRANGES BASSES, au milieu de son recompte, trousseau a la ceinture et role a la main — il refaisait le tour grange par grange depuis la veille. Il ne se debat pas et ne dit rien. MAIS IL EST PRIS DEVANT DU MONDE : charretiers, gens des greniers, femmes du hameau venues au pain. Dans une place ou l'ordre est de ne rien crier, l'arrestation publique de l'homme qui nourrit la ville est le premier fait que Sombreval aura vu de ses yeux depuis le sac. Le point 4 du premier ordre (rien ne se crie) et le point 1 de celui-ci (pris sans un mot d'avertissement) se paient l'un l'autre : on ne prend pas discretement un intendant a ses granges. || AMENDE LE MEME JOUR : il n'a pas ete cherche. Il est venu de lui-meme au capitaine avant la premiere fournee, s'est nomme, et a ete pris la ou il se tenait. Cela ne change ni l'heure, ni le lieu, ni les objets — cela change qui a fait le premier pas.",
+    "les_ecrits": "LES DEUX SONT TROUVES, LES DEUX CACHETS INTACTS, RIEN N'A ETE BRULE NI OUVERT. L'un sur lui, dans le tablier de cuir. L'autre dans le coffre a role du bureau des granges, sous le compte du 28e — que Wode ouvre avec la clef prise a la ceinture du meme homme. Aucun tiers ne les a eus : plis.json porte 'main: marec-fosse' pour les deux depuis leur remise, et rien dans les tables ne dit qu'ils aient bouge.",
+    "ce_que_la_saisie_coute_a_ser_criston": "LE RECOMPTE S'ARRETE AVEC L'HOMME. Personne d'autre a Sombreval ne sait ce que les granges portent : la main 'granges-de-sombreval' est a son nom seul, son role du 28e est le dernier compte VU, et son propre ost n'a que trois journees de pain au train (main 'colonne-de-criston'). Le seuil 'la-colonne-doit-manger-ailleurs' est arme sous trois journees. Il prend le seul homme qui sait ou est le grain, le jour ou il en a besoin — et les clefs qu'on lui ote ouvrent des portes dont on ignore ce qu'il y a derriere.",
+    "ce_que_je_n_ai_pas_tranche": "Ce que Fosse dit ou tait a l'interrogatoire, et ce qu'il a lu ou non. C'est un homme : il repondra lui-meme. Je ne pose que le corps, le lieu, l'heure et les objets."
+  },
+  "mutations_proposees": [
+    {
+      "table": "personnages",
+      "cible": "marec-fosse",
+      "operation": "personnage",
+      "champs": {
+        "condition": "prisonnier"
+      },
+      "pourquoi": "Pris au matin du 129.4.5 aux granges basses par ser Willam Wode, tenu au secret sur ordre scelle de ser Criston Cole. 'prisonnier' est la valeur deja en usage dans la table. Son lieu_id ne change pas : il reste a Sombreval."
+    },
+    {
+      "table": "plis",
+      "cible": "pli-protection-sombreval",
+      "operation": "pli",
+      "champs": {
+        "etat": "intercepte",
+        "main": "criston"
+      },
+      "pourquoi": "Saisi scelle sur la personne de l'intendant le 5e, cire relevee par ecrit devant deux temoins, porte sous double escorte a ser Criston — dont la fiche le place a Sombreval meme. 'intercepte' est dans ETATS_PLI et dit exactement ce qui s'est passe : l'acte n'a jamais atteint celui a qui il etait adresse, et il est desormais aux mains de l'adversaire, NON OUVERT."
+    },
+    {
+      "table": "plis",
+      "cible": "pli-les-quatre-cases-a-steffon",
+      "operation": "pli",
+      "champs": {
+        "etat": "intercepte",
+        "main": "criston"
+      },
+      "pourquoi": "Meme saisie, meme jour. Trouve dans le coffre a role du bureau des granges, sous le compte du 28e, cachet intact. Adresse a ser Steffon Darklyn, chevalier de la Garde Royale de la reine, qui n'etait pas la pour le recevoir."
+    }
+  ],
+  "a_la_main": [
+    {
+      "table": "etat/actes.json",
+      "geste": "Ajouter l'acte ci-dessous (toujours aucune table 'actes' dans OPERATIONS).",
+      "acte": {
+        "id": "acte-prise-de-marec-fosse-129-4-5",
+        "date": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 5
+        },
+        "acteur_id": "willam-wode",
+        "cible_id": "marec-fosse",
+        "lieu_id": "sombreval",
+        "description": "CINQUIEME JOUR DE LA QUATRIEME LUNE, AU MATIN, AUX GRANGES BASSES DE SOMBREVAL. Sur ordre scelle de ser Criston Cole porte par cavalier a relais, ser Willam Wode prend Marec Fosse, intendant — QUI ETAIT VENU A LUI DE LUI-MEME AVANT LA PREMIERE FOURNEE, debout, pour declarer que l'enquete sur le jeune lord etait la sienne —, trousseau a la ceinture et role a la main, devant les charretiers et les gens des greniers. DEUX ECRITS SCELLES DE LA REINE RHAENYRA SONT SAISIS, CACHETS INTACTS : l'acte de protection de Sombreval, sur lui, dans son tablier ; et le pli adresse a ser Steffon Darklyn, dans le coffre a role du bureau des granges, sous le compte du vingt-huitieme. Ni l'un ni l'autre n'a ete ouvert ni brule. La cire est relevee par ecrit, deux hommes signent ce qu'ils ont vu, et les plis partent sous double escorte. L'intendant est tenu au secret, separe de tout ; il n'est pas pendu. || LE RECOMPTE DES GRANGES S'ARRETE AVEC LUI, ET PERSONNE D'AUTRE DANS LA PLACE NE SAIT CE QU'ELLES PORTENT.",
+        "temoins": [],
+        "connu_de": [
+          "criston",
+          "willam-wode",
+          "marec-fosse"
+        ]
+      },
+      "NE_PAS_GRAVER_AVANT": "129.4.5. Cet acte porte le 5e ; le curseur du monde est au 129.4.4 minute 540. UN ACTE NE SE DATE PAS APRES LE CURSEUR — actes.json est une table de passe. Tant que le jour n'y est pas, ceci est une ECHEANCE et non un acte : garde le lot, applique les mutations si tu les tiens, et ne verse l'acte que le 5e venu. C'est moi qui l'ai mal pose ; je le signale plutot que de te laisser le decouvrir."
+    }
+  ],
+  "applique_le": null,
+  "_retenue_arbitre": "RETENUE PAR MJ LE 129.4.4 — NE PAS APPLIQUER AVANT LE 129.4.5. Le monde est au 4e, minute 540 ; cette piece date ses effets du 5e au petit jour. Appliquer un effet date de demain, c'est faire arriver demain aujourd'hui — la faute meme que trois cliquets viennent de fermer sur le curseur. ET ELLE DEVRA ETRE RECALCULEE, PAS SEULEMENT REDATEE : son 'avant' sur pli-protection-sombreval porte remis/marec-fosse, or ce pli est passe RETENU/willam-wode ce matin meme (lot du 4e, applique). La saisie du 5e ne trouvera donc plus qu'UN ecrit sur l'intendant, celui pour ser Steffon — l'autre est deja dans le dossier de l'ost avec son recu. Le verdict de criston n'est pas renverse : sa main trouvera moins que son ordre ne disait, et c'est ce que la piece doit ecrire.",
+  "CORRECTION_DU_129_4_4_AU_SOIR": "CE LOT A ETE CALCULE A NEUF HEURES ET LA JOURNEE L'A DEPASSE. Depuis, l'intendant a RENDU LUI-MEME le premier ecrit : 'pli-protection-sombreval' est passe, intact et scelle, dans la main du capitaine Willam Wode contre recu signe (lot 20260831-sombreval-le-pli-contre-recu-129-4-4). IL N'Y A DONC PLUS DEUX ECRITS A SAISIR SUR LUI, MAIS UN SEUL : 'pli-les-quatre-cases-a-steffon', de la reine pour ser Steffon Darklyn, entre par barque le 31e, scelle et non ouvert, main marec-fosse. Le premier n'est plus a prendre : il est deja pris, et il porte un recu qui dit sous quel titre. Toute mutation de ce lot visant 'pli-protection-sombreval' tombe ; celle visant le second tient. Et le motif de la saisie change avec : on ne prend plus un homme qui cache deux lettres, on prend un homme qui en a rendu une et gardé l'autre — ce qui est pire pour lui, parce que c'est un choix."
+}

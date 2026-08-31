@@ -42,6 +42,13 @@ def valider(mutations, tables):
     ids_etapes = {e.get("id") for t in tables["intentions"]
                   for e in (t.get("plan") or [])
                   if isinstance(e, dict) and e.get("id")}
+    # L'ETAT PROJETE DES LISTES D'UNE TETE (declencheurs, croyances, ignore).
+    # appliquer() s'execute dans l'ordre ecrit ; valider() lisait l'etat
+    # INITIAL. Un retrait suivi d'un ajout sur la meme clef se voyait donc
+    # refuser une collision qui n'existe qu'entre deux lignes du meme lot —
+    # et corriger un declencheur devenait impossible. Copies locales, remplies
+    # a la demande : voir val_plan.vue_du_lot().
+    projete = {}
 
     def faute(i, message):
         erreurs.append("mutation {} : {}".format(i, message))
@@ -64,7 +71,7 @@ def valider(mutations, tables):
         if table == "books":
             r = valider_books(i, m, op, cible, champs, faute, plan, tables)
         elif table == "intentions":
-            r = valider_intentions(i, m, op, cible, champs, faute, plan, tetes, personnages, joueur, ids_etapes)
+            r = valider_intentions(i, m, op, cible, champs, faute, plan, tetes, personnages, joueur, ids_etapes, projete)
         elif table == "evenements":
             r = valider_evenements(i, m, op, cible, champs, faute, evenements)
         elif table == "mains":

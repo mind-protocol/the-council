@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime_worker.py", line 44, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime_worker.py", line 23, in main
+    rep = runtime.appeler(**charge["appel"])
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 476, in appeler
+    return _appel_claude(
+        manuel, message, session_id, modele, effort, timeout, cwd,
+        add_dirs, tools, settings, reprendre, environnement, on_event,
+        on_stderr, heartbeat, on_heartbeat, ecriture)
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 424, in _appel_claude
+    r = subprocess.run(commande, cwd=cwd, env=env,
+                       input=message.encode("utf-8"),
+                       capture_output=True, timeout=timeout,
+                       **_creation_sans_fenetre())
+  File "C:\Users\reyno\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\reyno\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 1222, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\reyno\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 1665, in _communicate
+    raise TimeoutExpired(self.args, orig_timeout)
+subprocess.TimeoutExpired: Command '['claude', '-p', '--system-prompt-file', 'C:\\Users\\reyno\\le-conseil2\\chambres\\tobb\\system-prompt.md', '--add-dir', 'C:\\Users\\reyno\\le-conseil2', '--add-dir', 'C:\\Users\\reyno\\le-conseil2\\chambres\\tobb', '--restricted', '--tools', 'Read,Grep,Glob,Bash,Write,Edit', '--allowedTools', 'Bash(python:*)', '--output-format', 'json', '--permission-mode', 'acceptEdits', '--session-id', '164b1894-b084-550d-8895-ea6a8764686e']' timed out after 900 seconds

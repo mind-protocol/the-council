@@ -25,10 +25,14 @@ racine = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file_
 etat = os.path.join(racine, "etat")
 
 # Fichier -> clef portant la liste (None = le fichier EST la liste).
+# pensees.json y est entre le 31.8 : le monde etait revenu au 129.4.3 et la
+# fenetre du 4e ne montrait rien, alors que TRENTE-QUATRE pensees du 4e y
+# dormaient. Une table absente de cette liste est un angle mort parfait — la
+# purge affirme le vide et se trompe. Toute table du JOUE doit y figurer.
 TABLES = [
     ("actes.json", None), ("paroles.json", None), ("info.json", None),
     ("annales.json", None), ("evenements.json", None), ("jetons.json", None),
-    ("plis.json", None),
+    ("plis.json", None), ("pensees.json", None),
 ]
 PAR_JOUEUR = ["objectifs.json", "vues.json", "jetons.json"]
 
@@ -46,8 +50,17 @@ def borne(txt):
     return int(txt), None
 
 
-def dans(x, d0, d1, lune=None):
-    d = x.get("date") or x.get("date_prevue") or {}
+def dans(x, d0, d1, lune=None, clef="date"):
+    """La piece tombe-t-elle dans la fenetre ?
+
+    `clef` vaut « date » — CE QUI A EU LIEU — et c'est le seul champ que la
+    purge supprime. « date_prevue » est L'AVENIR PROGRAMME du monde : la mort
+    de Lucerys au 9e, les trente evenements « prog- » des jours suivants. Les
+    confondre, c'est effacer le futur en croyant nettoyer le passe ; le 31.8
+    une fenetre du 4e au 12e visait cinquante-quatre pieces dont TRENTE-QUATRE
+    n'etaient que des rendez-vous a venir.
+    """
+    d = x.get(clef) or {}
     if not isinstance(d, dict) or d.get("jour") is None:
         return False
     if lune is not None and d.get("lune") not in (None, lune):
@@ -138,13 +151,22 @@ def main(argv):
         liste, env = charge(p)
         if liste is None:
             continue
-        vises = []
+        vises, prevus = [], []
         for x in liste:
-            if not isinstance(x, dict) or not dans(x, d0, d1, lune):
+            if not isinstance(x, dict):
                 continue
             if qui and qui not in sans_accents(json.dumps(x, ensure_ascii=False)):
                 continue
-            vises.append(x)
+            if dans(x, d0, d1, lune, "date"):
+                vises.append(x)
+            elif dans(x, d0, d1, lune, "date_prevue"):
+                prevus.append(x)
+        if prevus:
+            print("\n== %s : %d rendez-vous A VENIR dans la fenetre — NON touches" % (nom, len(prevus)))
+            for x in prevus[:8]:
+                print("     . %s" % (x.get("id") or x.get("titre") or "?"))
+            if len(prevus) > 8:
+                print("     . … et %d autres" % (len(prevus) - 8))
         if not vises:
             continue
         total += len(vises)

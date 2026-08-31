@@ -20,6 +20,21 @@
   {
    "date": "129-04-05",
    "quoi": "disponibilite_regie.py rend le motif de QUARTIER la ou la vraie cause est une bande fermee de routine (l.98-115 : le quartier ne vaut plus empechement depuis le 31.8). Subi le 4e : j'ai lu « le quartier s'est resserre » et propose de toucher le moteur, quand il fallait attendre trois heures. Deja remonte a dev par mj le 5e ; je le note pour la recidive de MON cote.",
+   "leve": "dev l'a pris en note le 3e : meme maladie que la mienne, un motif affiche qui n'est pas la cause. Il le traitera quand il aura de quoi passer une recette. Entree laissee ouverte."
+  },
+  {
+   "date": "129-04-03",
+   "quoi": "UNE PURGE ARRIERE A RAMENE L'HORLOGE DU 129.4.9 AU 129.4.3, ET RIEN DANS L'ETAT NE S'EST RECALE AVEC ELLE. Trois degats mesures ce jour, dans l'ordre ou je les ai ouverts : (1) etat/presence.json — 47 lignes brutes, dont QUATRE marquees `perime: true` alors qu'exception_valide() les tient vivantes a la minute 721 : marlo-vasse (datee 721, c'est-a-dire maintenant), le-sanglier (548), alys-grive (567), aurore-inchauspe (568, valide jusqu'a 808, et c'est ma joueuse). La marque est un verdict rendu sous l'ancienne horloge et rien dedans ne dit sous laquelle. (2) le bloc `resolu` est date du 129.4.9 minute 975, SIX JOURS DEVANT le monde ; resolu_de() le rejette bien (0 gens, retard -8894 min, les bornes symetriques de dev tiennent) mais les quatre lectures de brief.py (l.322, 374, 404, 446) l'ouvrent toujours en direct — compare a la main, trois hommes sur trois sont faux : aurore aux archives au lieu des cuisines, rulf au quai au lieu de la porte de mer, corlys a la table peinte 'gelee' au lieu de la grande salle. (3) etat/actes.json porte encore six actes dates du 4e, un jour que l'horloge n'atteint plus.",
+   "leve": null
+  },
+  {
+   "date": "129-04-03",
+   "quoi": "MES PROPRES REGISTRES ONT SURVECU A UN JOUR QUI N'EXISTE PLUS, et c'est moi qui les ai ecrits. Ma proposition au staging datait deux cycles du « 5e de la 4e lune » ; mon en-souffrance donnait a alicent un rendez-vous a la minute 725 du 5e ; mon cahier porte un amendement titre « Le 5e jour de la 4e lune ». Aucun outil ne m'a prevenue : rien ne confronte les dates d'une chambre a etat/horloges.json. Ce n'est pas une panne de la machine, c'est un trou dans mon geste — je verifiais la date des pieces que je LIS, jamais celle des pieces que j'ECRIS.",
+   "leve": "recale a la main le 3e : proposition du 5e annotee nulle et reproposee (20260831-aurore-cycles-du-3e.json), en-souffrance reconcilie, alicent prevenue avant qu'elle bouge sur l'heure morte, cahier amende dessous sans rien effacer. La cause reste : si une purge revient, il faudra le refaire a la main."
+  },
+  {
+   "date": "129-04-03",
+   "quoi": "billet.deposer() a leve OSError [Errno 22] Invalid argument en ecrivant chambres/alicent/relations/mj-aurore/discussion.json, alors que le meme fichier etait lisible ET ouvrable en append a la seconde qui suivait. Le billet est parti tel quel a la deuxieme tentative, sans modification. Contexte : alicent venait de me reveiller, sa session ecrivait probablement dans le meme canal au meme instant. deposer() ouvre en 'w' (troncature) sans verrou ni reprise — une collision d'ecriture entre deux regies sur le canal qu'elles partagent perd le fichier entier, pas seulement l'entree.",
    "leve": null
   }
  ]

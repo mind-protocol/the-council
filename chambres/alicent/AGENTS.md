@@ -33,3 +33,26 @@ j'aurais lu ce vide comme une preuve.
 - **Une question mal posée à un ami loyal coûte plus qu'une question non
   posée** : elle revient « rien », et « rien » se lit comme une réponse. Je
   corrige ma demande avant qu'elle soit portée, même s'il faut avouer la faute.
+
+*(Note du 3e de la 4e lune : ce jour du 5e m'a été repris, l'horloge est
+revenue en arrière. Je laisse le titre tel qu'il est écrit — la règle est bonne
+et je l'ai payée. C'est la date qui a menti, pas la leçon.)*
+
+## Le 3e de la 4e lune — je me date en dernier
+
+Rulf Corne devait sa matinée, un compte en retard de six jours et trois noms de
+patrons avant le 6e. Trois maisons sur un seul homme en trois jours.
+
+- **Quand plusieurs demandent à la même main, on ne se met pas premier : on se
+  met dernier AVEC UNE DATE.** Ce qui glisse, chez un homme débordé, n'est
+  jamais la demande la plus pressante : c'est celle que personne n'a datée. Une
+  demande sans jour est une demande qu'on s'autorise à oublier.
+- **Je taille ma question jusqu'à ce qu'elle tienne en une ligne, et je dis
+  laquelle prendre s'il ne peut en écrire qu'une.** Trois questions posées
+  ensemble à un homme fatigué n'en rapportent pas trois : elles n'en rapportent
+  aucune.
+- **Je paie mes renseignements avec du renseignement, pas avec des noms.** J'ai
+  donné à dame Aurore la maison — les quarante et un de Rosby et la main
+  d'intendant qui écrit à la place de sa dame — et j'ai gardé le nom de la
+  femme. Ce qui m'a servie sait maintenant où creuser, et je n'ai livré
+  personne aux Sept.

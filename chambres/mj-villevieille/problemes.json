@@ -1,5 +1,51 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+ "entrees": [
+  {
+   "date": "129.4.3",
+   "date_reelle": "2026-08-31",
+   "tente": "Créer un événement de zone au staging pour porter le compte du Bief, avec ses entrées de diffusion vers Peyredragon — c'est le mécanisme que docs et précédents désignent pour rendre un fait perceptible ailleurs (`deposition-steffon` le fait sur quatre lieux).",
+   "ce_que_la_machine_en_a_fait": "Rien : le vocabulaire fermé de la porte ne connaît, pour la table `evenements`, que `diffusion_livree`, `diffusion_ajouter` et `evenement` (champs statut/effets/date_prevue/importance). Il n'existe AUCUN `evenement_ajouter`, quand `personnage_ajouter`, `pli_ajouter`, `main_ajouter`, `relation_ajouter`, `affaire_ajouter` et `tete_ajouter` existent tous.",
+   "ce_que_j_attendais": "Pouvoir graver un fait neuf de ma zone et sa propagation dans le même geste.",
+   "contournement": "Passé par un pli (`pli_ajouter`) au lieu d'un événement : le courrier porte le fait ET son délai, ce qui vaut mieux ici. Mais ce n'est un contournement que parce que mon fait avait un destinataire nommé — un fait de zone SANS destinataire (une émeute, un incendie, un prix qui s'effondre) n'a aujourd'hui aucune porte pour naître.",
+   "etat": "ouverte",
+   "recidive": 0,
+   "a_qui": "dev, si ça recommence"
+  },
+  {
+   "date": "129.4.3",
+   "date_reelle": "2026-08-31",
+   "tente": "Corriger le jeton `ost-hightower` de la table peinte de rhaenyra, qui porte « Six mille tout de suite » sans date ni vitesse.",
+   "ce_que_la_machine_en_a_fait": "Refus par construction : `val_courrier.valider_jetons` n'accepte pour cible qu'un jeton de genre `incident`, et `ost-hightower` est de genre `armee`. Aucune opération de la porte n'atteint un jeton d'armée.",
+   "ce_que_j_attendais": "Rien de plus, en fait — et je note que le refus a raison contre moi : une croyance de joueur ne doit pas se corriger sans qu'une nouvelle soit arrivée. La panne signalée n'en est pas une : c'est une garde. Je l'écris pour ne pas la re-tenter dans trois lunes.",
+   "contournement": "Remonté à mj en billet, à faire jouer sur la remise du 11e.",
+   "etat": "close",
+   "levee_par": "la garde était juste ; c'est mon geste qui était faux",
+   "recidive": 0
+  },
+  {
+   "date": "129.4.4",
+   "date_reelle": "2026-08-31",
+   "tente": "Traiter la proposition que le mot d'ETABLI compte encore dans `etat/staging/20260831-villevieille-horloge-du-bief.json`.",
+   "ce_que_la_machine_en_a_fait": "Le lot porte deja `applique_le: 2026-08-31T08:45:37`, et ses deux mutations sont bien dans l'etat (`mestre-norren` dans `personnages.json`, `pli-releve-villevieille-129-4-4` dans `plis.json`). Pourtant `staging_par_arbitre()` compte tout fichier JSON route, sans ecarter `applique_le`, et annonce donc encore une proposition a traiter.",
+   "ce_que_j_attendais": "Que l'etabli ne compte que les propositions encore arbitrables, afin qu'un lot deja applique ne reveille pas sa zone comme du travail neuf.",
+   "contournement": "Je ne reapplique pas le lot et ne le force pas. Je verifie directement ses deux effets dans l'etat ; l'action 94027 reste ouverte jusqu'a sa preuve, qui ne peut tomber qu'apres l'arrivee du pli le 129.4.11 et sa lecture a la Table Peinte.",
+   "etat": "ouverte",
+   "recidive": 1,
+   "a_qui": "dev"
+  },
+  {
+   "date": "129.4.4",
+   "date_reelle": "2026-08-31",
+   "tente": "Ajouter des items de flux en REECRIVANT `brouillons/flux-a-pousser.jsonl` en entier, les anciens items recopies avec les nouveaux.",
+   "ce_que_la_machine_en_a_fait": "Le fichier est une FILE QUI SE VIDE : le pousseur la draine et la remet a zero. Mes trois premiers items etaient donc deja partis quand je les ai recopies — `etat/flux.jsonl` en porte NEUF sous mon nom la ou j'en ai redige six, trois en double.",
+   "ce_que_j_attendais": "Que le brouillon soit un cahier cumulatif. C'est une file d'attente.",
+   "contournement": "Desormais j'AJOUTE en fin de fichier (`>>`) et je ne le reecris jamais. Je ne touche pas a `etat/flux.jsonl` pour retirer les doublons : ce n'est pas ma table, elle s'ecrit par `append_flux.py` et une reparation a la main y ferait plus de degat que trois lignes repetees.",
+   "etat": "close",
+   "levee_par": "regle changee de mon cote : le brouillon de flux ne se reecrit pas, il se complete",
+   "recidive": 0,
+   "degat": "trois items en double dans etat/flux.jsonl, laisses en place et signales ici"
+  }
+ ]
 }

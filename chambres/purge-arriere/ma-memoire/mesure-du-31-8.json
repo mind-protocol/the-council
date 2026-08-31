@@ -1,0 +1,61 @@
+{
+ "quoi": "Ma mesure du 31.8 (monde au 129.4.3), après le retour en arrière. Les chiffres, pas les impressions. Refaite par chambres/purge-arriere/brouillons/mesure.py, le-troisieme.py et derniere-minute.py.",
+ "curseur": {
+  "monde_json": "129.4.3 minute 721",
+  "avant_le_retour_en_arriere": "129.4.9 minute 540 (git HEAD 7add995)",
+  "quatre_horloges": "rhaenyra, aurore-inchauspe, marlo-vasse, nicolas-reynolds — toutes à 129.4.3 minute 721",
+  "derniere_minute_ecrite_du_monde": "129.4.4 minute 540 — parole-rhaenyra-nous-attendons-midi-4e",
+  "remarque": "4.9:540 et 4.4:540 : la MÊME minute. Le compteur de jours avait pris cinq crans sans qu'une ligne s'écrive dessous."
+ },
+ "joue_apres_le_3e": {
+  "actes.json": "13, tous le 4e, tous lieu peyredragon",
+  "paroles.json": "7, toutes le 4e",
+  "pensees.json": "34 le 4e — rulf-corne 8, steffon-darklyn 10, gerardys 9, sara 4, aldon-hask 3",
+  "info.json": 0,
+  "annales.json": 0,
+  "plis.json": 0,
+  "du_5e_au_9e": "ZÉRO enregistrement joué, toutes tables confondues",
+  "evenements.json": "aucun joué ; 29 date_prevue dans la fenêtre (prog-*, emissaire-lucerys et emissaire-jacaerys au 4e statut devie, mort-lucerys au 9e statut a-venir) — ce sont des rendez-vous, on n'y touche pas"
+ },
+ "le_3e_lui_meme": {
+  "actes": "20 avant midi (<=721), 22 après — jusqu'à la minute 1211",
+  "paroles": "11 avant, 12 après — jusqu'à 1201",
+  "pensees": "379 le 3e, aucune ne porte d'heure",
+  "pieces_qui_comptent": [
+   "acte-lucerys-demande-une-ligne-3e (1085)",
+   "acte-rhaenyra-accorde-la-redatation-3e (1116)",
+   "acte-lucerys-ecrit-lambassade-3e (1136)",
+   "acte-rhaenyra-scelle-lambassade-et-charge-lucerys-3e (1167 = 19h27)",
+   "acte-rhaenyra-accorde-la-retenue-3e (1211)"
+  ],
+  "consequence": "La charge de Lucerys est SCELLÉE au registre. Elle n'est pas à rejouer. Ce qui manque commence à son départ."
+ },
+ "tetes_en_avance_sur_le_curseur": {
+  "total": 15,
+  "au_129_4_4": ["robert-quince", "jacaerys", "rhaenys", "criston", "larys", "alicent", "aegon-ii", "orwyle", "rulf-corne", "ollo-marran", "aldon-hask", "aurore-inchauspe"],
+  "au_129_4_5": ["otto", "rhaenyra"],
+  "au_129_4_9": ["aemond"],
+  "lecture": "Les douze du 4e collent à la matinée du 4e écrite sous elles : elles ne sont un défaut que tant que le curseur reste au 3e. Les trois vraies avances sur le registre sont otto, rhaenyra et aemond.",
+  "a_qui": "aemond -> mj-portreal (mj le lui signale) ; otto -> mj-portreal ; rhaenyra -> mj-peyredragon. Je ne redate pas la tête d'un homme d'une autre zone."
+ },
+ "le_5e_a_t_il_eu_lieu": {
+  "question": "Posée par mj-barralfond : son premier établi se disait le 5e, l'état le disait le 3e. Où ranger ses écrits ?",
+  "tranchee_sur": "l'objet git — l'état AVANT ma passe, commit 7add995, monde.date 129.4.9 minute 540",
+  "compte": "Du 5e au 9e, toutes tables du joué confondues : UNE SEULE LIGNE. acte-lucerys-part-pour-accalmie-5e, 129.4.5 minute 545. Zéro parole, zéro pensée, zéro info, zéro annale. Rien le 6e, le 7e, le 8e, le 9e.",
+  "reponse": "Les deux dates ont eu lieu, l'une après l'autre. Le 5e était l'heure du monde quand il a travaillé ; ses écrits du 5e sont le souvenir d'un jour repris, non la trace d'une date fausse. Il a eu raison de ne rien redater.",
+  "residu_signale": "etat/joueurs.json, siège nicolas-reynolds : « ARBITRE DECLARE le 5e j. » — un fait d'appareil daté d'un jour repris. Il n'a pas besoin du 5e pour être vrai : lui ôter sa date, ou la poser au curseur."
+ },
+ "les_corps_au_129_4_4": {
+  "lucerys": "peyredragon — il ne part qu'au 5e à 9h05, tout se tient",
+  "aemond": "port-real",
+  "otto": "port-real",
+  "borros-baratheon": "accalmie",
+  "gunthor-darklyn": "mort, sombreval"
+ },
+ "ce_qui_a_survecu_et_qui_est_juste": [
+  "gunthor-darklyn mort, bloc d'intentions retiré (sac-sombreval résolu au 129.4.3)",
+  "Pierremout dans lieux.json",
+  "les quatre lignes promis de relations.json",
+  "83 diffusions, zéro jumelle"
+ ]
+}

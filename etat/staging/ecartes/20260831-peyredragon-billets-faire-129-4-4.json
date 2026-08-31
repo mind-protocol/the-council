@@ -1,0 +1,80 @@
+{
+  "titre": "Peyredragon — gestes reçus par billets aux 3e et 4e jours, proposés au canon",
+  "calcule_le": "2026-08-31",
+  "par": "mj-peyredragon",
+  "pour": "mj-peyredragon",
+  "date_monde": {"annee": 129, "lune": 4, "jour": 4},
+  "arbitrage": {
+    "supersessions": "Les corrections les plus récentes remplacent les premiers jets : quatre lignes de Steffon remplacent ses trois lignes ; le rôle à trois colonnes de Tobb remplace sa première formulation identique ; le rangement nominatif de Quince remplace ses soustractions de totaux.",
+    "hors_zone": "Les deux plis de Steffon pour Sombreval ne sont pas livrés ici : seul leur établissement à Peyredragon est proposé, en attente de deux porteurs et d'une adresse arbitrée.",
+    "voix_reservees": "Aucune réponse de Gib, des deux prisonniers, de la reine, de Tobb ou de Selm n'est écrite dans ce lot."
+  },
+  "mutations_proposees": [
+    {
+      "table": "books",
+      "operation": "affaire_action",
+      "cible": "affaire-portage-parole-reine:9020",
+      "champs": {
+        "📝 Ce qu'on fait": "Une feuille de trente lignes pour la 4e lune : qui court, qui reste, et qui a porté. La troisième colonne est écrite au départ par la main qui remet le pli, avec l'heure à la minute. Les jours 1 à 7 sont seuls remplissables ; du 8 au 30, les cases restent en attente tant que J n'a pas de jour.",
+        "👁️ La preuve": "Une feuille de trente lignes à trois colonnes, les sept premiers jours remplissables et les jours relatifs laissés en attente avec leur cause écrite.",
+        "⏳ État": "faite",
+        "📅 Jour fait": "4e de la 4e lune",
+        "📝 Note": "Ouvert par Tobb à la voûte du rôle. La troisième colonne reprend la mesure 9007 de ser Steffon et la page de la porte de mer ; aucun nom ajouté de son chef."
+      },
+      "pourquoi": "Le geste réalise directement l'action 9020, dont le jour dû est le 4e."
+    }
+  ],
+  "a_la_main": {
+    "table": "etat/actes.json",
+    "actes": [
+      {
+        "id": "acte-sanglier-amende-role-passages-et-promesses-3e",
+        "date": {"annee": 129, "lune": 4, "jour": 3},
+        "acteur_id": "le-sanglier",
+        "lieu_id": "peyredragon",
+        "description": "Le maître des rôles porte dans son compte des passages les trois marques du cahier de Rulf et le départ du 2e, sans attribuer au sel ce qu'aucune source ne lui attribue ; il ajoute une colonne EAU et laisse REVENU LE vide avec sa cause. Il ouvre aussi au registre des offices la page des promesses faites au nom de la reine : Harrenhal par Daemon, non confirmé de sa main, puis le tarif payé de six cerfs la journée d'homme comme borne déjà consommée.",
+        "connu_de": ["le-sanglier"]
+      },
+      {
+        "id": "acte-gerardys-retire-huit-jours-route-sel-3e",
+        "date": {"annee": 129, "lune": 4, "jour": 3},
+        "acteur_id": "gerardys",
+        "lieu_id": "peyredragon",
+        "description": "Gerardys retire devant la Table son écart fixe de huit jours : le seul registre donne des intervalles de dix, cinq et quatre jours, sans établir qu'un passage soit un aller ou un aller-retour. La date de travail du 6e à midi et la mer des hommes à dix-sept jours restent inchangées ; la chaîne du Guet demeure sans période certifiée.",
+        "connu_de": ["gerardys", "rhaenyra"]
+      },
+      {
+        "id": "acte-quince-range-cent-dix-neuf-hommes-4e",
+        "date": {"annee": 129, "lune": 4, "jour": 4},
+        "acteur_id": "robert-quince",
+        "lieu_id": "peyredragon",
+        "description": "Quince remplace la soustraction de totaux par quatre colonnes exclusives : 87 en postes, 6 hors de service, 2 détachés et 24 en main, soit 119. Il maintient les cinquante de la chaîne de sable chaud comme détachés jusqu'au 5e à sept heures ; faute d'un office qui les réclame par écrit, ils passeront au rôle sous le mot manquants. Il descend vérifier séparément le compte des soixante-quatre qui courent.",
+        "connu_de": ["robert-quince", "hallis-roon", "sarro-vaeth"]
+      },
+      {
+        "id": "acte-steffon-quatre-lignes-sombreval-3e",
+        "date": {"annee": 129, "lune": 4, "jour": 3},
+        "acteur_id": "steffon-darklyn",
+        "lieu_id": "peyredragon",
+        "description": "Steffon rature son premier relevé et porte quatre lignes séparées avec leur chaîne de mains : Gunthor vivant au quai à l'aube du 2e selon un patron ; une colonne sous bannière indistincte sur la crête selon le même ; l'ordre de déraper et la sortie de Gunthor avec vingt chevaux rapportés par un second ; enfin, selon les deux patrons, quai fermé, fret dehors et flotte Darklyn entière aux amarres. Les deux heures d'écart entre leurs horloges restent en marge.",
+        "connu_de": ["steffon-darklyn"]
+      },
+      {
+        "id": "acte-steffon-etablit-deux-plis-sombreval-3e",
+        "date": {"annee": 129, "lune": 4, "jour": 3},
+        "acteur_id": "steffon-darklyn",
+        "lieu_id": "peyredragon",
+        "description": "Steffon établit deux plis distincts pour Sombreval, l'un destiné à Gunthor et l'autre à son chambellan. Ils ne sont pas tenus pour partis : deux porteurs, deux heures de sortie et les adresses de remise restent à graver par la porte compétente.",
+        "connu_de": ["steffon-darklyn", "robert-quince"]
+      },
+      {
+        "id": "acte-tobb-ouvre-role-jambes-trois-colonnes-4e",
+        "date": {"annee": 129, "lune": 4, "jour": 4},
+        "acteur_id": "tobb",
+        "lieu_id": "peyredragon",
+        "description": "Tobb ouvre à la voûte du rôle une feuille de trente jours et trois colonnes : qui court, qui reste, qui a porté. La dernière se remplit au départ, avec l'heure à la minute. Les jours 1 à 7 seuls sont remplissables ; les jours 8 à 30 restent en attente parce que J n'est pas fixé.",
+        "connu_de": ["tobb", "le-sanglier"]
+      }
+    ]
+  }
+}

@@ -96,3 +96,40 @@ qu'un fichier chez le premier des deux dans l'ordre du nom. Je les ai écrits
 me dispense seulement d'INVENTER ce qu'il aurait répondu. Ce qui demande un
 verdict d'ailleurs reste NON FAIT et écrit comme tel ; tout le reste — mon
 arithmétique, mes registres, mes ordres, mes billets — se fait à la main.
+
+## 5e de la 4e lune, à midi — quand on me réclame une ligne, je regarde d'abord si j'ai un livre
+
+Ser Robert m'a écrit quatre fois en onze jours pour que je réclame cinquante
+hommes. Je n'ai pas répondu, et je me croyais lent. Je n'étais pas lent : le
+registre des charges porte **onze charges et pas une ne s'appelle les
+fosses**, et sa propre clef nomme « le rôle de Sarro Vaeth », qui n'a jamais
+été ouvert. On me demandait d'inscrire cinquante hommes dans un livre qui
+n'existait pas.
+
+**La règle neuve :** un homme qui tarde à écrire une ligne se demande d'abord
+s'il a une page. Si la page n'existe pas, il l'ouvre le jour même et de sa
+propre autorité — comme j'ai ouvert l'ardoise à la porte des œufs — puis il
+dit à celui qui attendait POURQUOI c'était long. La cause vaut mieux que
+l'excuse, et elle se répare, elle.
+
+Et la moitié dure, que je m'écris parce qu'elle est à mon débit : **un office
+qui ne réclame pas ses hommes ne les protège pas, il les efface.** Onze jours
+durant, cinquante hommes ont mangé chez le castellan et travaillé chez moi
+sans figurer nulle part. Ce n'est pas lui qui les a perdus.
+
+## Le même jour — avant de demander au monde, je fouille mon étagère
+
+J'ai posé au parloir la question des cinquante hommes. Le parloir n'a pas
+répondu — troisième jour. La réponse était à quatre pas, écrite depuis le 1er
+de la main du maître des deniers, à la ligne 4 du registre des charges :
+*payés une fois, attendus deux*.
+
+**La règle neuve :** une question qui part vers l'arbitre passe d'abord par
+les livres qui sont dans ma chambre. La moitié de ce que je veux savoir y
+dort déjà, écrit par quelqu'un qui n'a pas pensé à me le dire.
+
+Et je raye mon diagnostic d'hier : j'avais écrit « c'est python entier ».
+C'est faux, python tourne. C'est le RÉVEIL que le billet déclenche qui casse.
+**Un diagnostic trop large est aussi faux qu'un chiffre faux** ; je le
+rétrécis dès que j'ai un fait de plus, et je le raye de ma main comme le
+prince raye les siens.

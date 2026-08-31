@@ -1,0 +1,67 @@
+{
+ "titre": "Peyredragon — lord Corlys reprend son ordre : l'Espadon ne part pas ; une barque de peche, deux patrons du maitre de port, et la ligne de sauf-conduit sous l'office du 27e (129.4.3)",
+ "calcule_le": "2026-08-31",
+ "par": "mj-peyredragon (proposition d'un FAIRE ; rien n'a ete ecrit dans etat/)",
+ "date_monde": {
+  "annee": 129,
+  "lune": 4,
+  "jour": 3
+ },
+ "annule_et_remplace": "etat/staging/20260831-peyredragon-corlys-arme-lespadon-129-4-3.json — marque RETIRE, ne pas appliquer.",
+ "pieces_lues": [
+  "etat/books/affaire-financement-campagne.json, verrou 28105 — TROISIEME SORTIE PORTEE LE 3e DE LA 4e LUNE : treize dragons a lord Gunthor Darklyn ; et verrou 28007, ecrit le 3e : ces treize sont PORTES CE SOIR PAR SER STEFFON DARKLYN, la somme restant OUVERTE au livre jusqu'au retour de la quittance.",
+  "etat/journees.jsonl 129.3.28 et 129.3.30 — le role de bord de Hallis Beaupre (l'Espadon) : sa course est PORT-REAL, sel et poisson fume. Sombreval n'y est pas.",
+  "etat/evenements.json, diffusion du 1er de la 4e lune vers peyredragon — le patron de la CHERE-ANSE, qui n'a rien pu decharger a Sombreval DEPUIS LE DIX-SEPTIEME, rapporte au bureau de port l'etat des granges du haut : c'est lui qui a l'ordinaire de ce quai-la.",
+  "etat/books/affaire-controle-naval.json, action 22070 — les seize copies de la commission du 27e sont BLOQUEES, en attente du sceau de la reine, dues le 8e ; note de sa main : « pas un de mes patrons ne sait sous quel nom il arrete ».",
+  "etat/books/affaire-transmission-des-ordres.json, verrou 41104, compte le 3e — la ligne du Vieux Chien doit etre posee AVANT LE 6e, jour ou les dix affretees sont grattees : le lettrage du banc de l'Est court, et ce sont les memes mains.",
+  "etat/books/affaire-jour-dentree.json, verrou 11007 — une coque lege, quatorze heures a l'aller."
+ ],
+ "arbitrage": {
+  "ce_qui_passe": "La reprise entiere. L'Espadon ne part pas et Hallis Beaupre reste a terre : un quart d'heure au mole avant la maree, aux deux patrons de ser Steffon, pour donner l'ordinaire du quai. Une course, une coque, un compte. Et la ligne de sauf-conduit est de son office et de personne d'autre : le commandement de la mer lui a ete donne par ecrit le 27e a neuf heures sous le sceau de la reine (O13), avec une maree nommee — de celle du soir du 3e a celle du matin du 5e, bornes comprises — copiee au talon du role de la barque.",
+  "la_maree_est_juste": "La fenetre nommee est exactement ce que les nombres autorisent : quatorze heures a l'aller pour une coque lege. Le « avant midi le 4e » de ce matin ne tenait pas ; du soir du 3e au matin du 5e, si.",
+  "ce_que_l_etat_oppose": [
+   "LE MEME HOMME PORTE DEUX COURSES CE SOIR. Le livre des deniers porte, date du 3e, la troisieme sortie de la cassette : TREIZE DRAGONS a lord Gunthor Darklyn, PORTES CE SOIR PAR SER STEFFON DARKLYN, la somme restant ouverte jusqu'au retour de la quittance. Or un compte pris au large interdit d'accoster, et une quittance exige une main dans une main. Une course, une coque, un compte — la regle est posee sur les quilles et rompue sur l'homme : les deux errands ne peuvent pas se faire dans la meme nuit.",
+   "BEAUPRE N'A PAS L'ORDINAIRE DE CE QUAI-LA. Son role de bord, recite passage par passage et copie au bureau du maitre de port le 30e, porte la course de PORT-REAL — sel et poisson fume. L'homme dont l'ordinaire est Sombreval est le patron de la CHERE-ANSE, qui n'y a rien decharge depuis le dix-septieme et l'a rapporte au bureau de port le 1er.",
+   "LE SAUF-CONDUIT NE SE LIT PAS ENCORE. Les seize copies de la commission du 27e sont bloquees en attente du sceau de la reine, dues le 8e ; sa propre note dit que pas un de ses patrons ne sait sous quel nom il arrete. Une barque portant sa ligne au talon sera lisible par lui et par personne d'autre : le danger n'est pas l'ennemi, ce sont ses propres stations.",
+   "LE PRIX SORT DU LETTRAGE. Deux barques de peche et les deux meilleurs patrons du maitre de port sont les memes mains qui doivent lettrer le banc de l'Est avant le 6e, jour ou les dix affretees sont grattees."
+  ]
+ },
+ "mutations_proposees": [
+  {
+   "table": "personnages",
+   "operation": "personnage",
+   "cible": "hallis-beaupre",
+   "champs": {
+    "condition": "a terre ; l'Espadon reste au mouillage, l'ordre de lord Corlys repris — un quart d'heure au mole avant la maree du soir du 3e, pour donner aux deux patrons de ser Steffon l'ordinaire du quai de Sombreval"
+   },
+   "pourquoi": "Il ne monte pas : sa condition dit ce qu'il fait a la place, sans lui inventer un lieu."
+  }
+ ],
+ "a_la_main": {
+  "table": "etat/actes.json",
+  "geste": "Ajouter l'acte ci-dessous en fin de liste.",
+  "acte": {
+   "id": "acte-corlys-reprend-son-ordre-et-ecrit-la-maree-3e",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3,
+    "minute": 1080
+   },
+   "acteur_id": "corlys",
+   "lieu_id": "peyredragon",
+   "description": "LE MOLE, AVANT LA MAREE DU SOIR LE 3e DE LA 4e LUNE. Lord Corlys Velaryon REPREND SON ORDRE DU MATIN : L'ESPADON NE PART PAS. Son motif, dit en une phrase : deux quilles sur la meme eau pour le meme compte, c'est deux ordres et zero decision — une course, une coque, un compte. Ser Steffon prend une barque de peche et deux patrons du maitre de port. || HALLIS BEAUPRE NE MONTE PAS, IL PARLE : un quart d'heure au mole avant la maree, aux deux patrons, pour leur donner L'ORDINAIRE de ce quai — combien de postes d'amarrage sont libres a Sombreval un soir quelconque, combien d'hommes tiennent ces murs quand rien ne se passe. Un nombre sans mesure n'est pas un renseignement. || ET IL ECRIT DE SA MAIN LA LIGNE QUI N'EST QU'A LUI, sous l'office du commandement de la mer donne le 27e a neuf heures sous le sceau de la reine : une barque de Peyredragon passant au large de Sombreval et rentrant est sur son eau, ELLE NE S'ARRAISONNE PAS — avec une MAREE NOMMEE, de celle du soir du 3e a celle du matin du 5e, bornes comprises, COPIEE AU TALON DU ROLE DE LA BARQUE et non sur une feuille a part. || CE QUE L'ORDRE NE VOIT PAS : le meme soir, le livre des deniers porte treize dragons a lord Gunthor Darklyn portes par ser Steffon Darklyn, somme ouverte jusqu'au retour de la quittance — un compte pris au large n'accoste pas, une quittance veut une main dans une main.",
+   "temoins": [
+    "hallis-beaupre",
+    "steffon-darklyn"
+   ],
+   "connu_de": [
+    "corlys",
+    "hallis-beaupre",
+    "steffon-darklyn"
+   ]
+  },
+  "pourquoi": "Un FAIRE non grave n'a pas eu lieu ; aucune operation du vocabulaire ne porte un acte."
+ },
+ "applique_le": "2026-08-31T11:33:59"
+}

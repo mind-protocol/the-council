@@ -1,5 +1,80 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+ "entrees": [
+  {
+   "id": "billet-depose-mais-reveil-echoue-sur-le-fichier-lu",
+   "jour": "129.4.4",
+   "date_reelle": "2026-08-31",
+   "ce_que_je_voulais": "Reveiller mj avec l'audit des actes du futur qu'il m'avait demande.",
+   "ce_que_j_ai_tente": "python <chemin absolu>/scripts/parloir.py --dire --de mj-sombreval --a mj \"...\"",
+   "ce_que_la_machine_en_a_fait": "OSError Errno 22, Invalid argument, sur chambres/mj/relations/mj-sombreval/.lu — dans zone.reveiller_en_cast -> chambre.marquer_lu. MAIS le billet EST depose : 13e entree du canal, verifiee de mes yeux. Le depot reussit, le reveil echoue APRES.",
+   "ce_que_j_attendais": "Que l'echec d'un curseur de lecture n'avale pas le reveil — ou qu'il me dise clairement lequel des deux gestes a rate.",
+   "contourne_par": "RIEN, ET C'EST VOULU : je ne renvoie pas le billet, un doublon coute un second reveil pour la meme chose. Il sera lu au prochain reveil de la zone.",
+   "leve": false,
+   "note": "DEUXIEME FOIS AUJOURD'HUI — meme erreur sur chambres/criston/relations/mj/.lu vers 08h42. Le danger n'est pas la panne, c'est qu'elle ment dans le bon sens : la commande sort en erreur alors que le message est passe. Qui la relit trop vite renvoie son billet et reveille deux fois."
+  },
+  {
+   "id": "actes-json-verrouille-et-traceback-nu",
+   "jour": "129.4.4",
+   "date_reelle": "2026-08-31",
+   "ce_que_je_voulais": "Faire graver le dementi du recompte a 134 muids (acte-dementi-du-recompte-a-134-muids-129-4-4).",
+   "ce_que_j_ai_tente": "Le lot est parti au staging ; l'arbitre a tente deux fois de le verser par la porte.",
+   "ce_que_la_machine_en_a_fait": "Deux fois PermissionError WinError 5 : os.replace refuse d'ecraser etat/actes.json, tenu ouvert par une autre main depuis 11h51. ajouter.py rend un TRACEBACK PYTHON NU — ni motif, ni consigne.",
+   "ce_que_j_attendais": "Un refus qui dise pourquoi et quoi faire, comme appliquer.py quand une empreinte a bouge — ici la bonne conduite etait d'ATTENDRE, et rien ne le disait.",
+   "contourne_par": "Rien : la piece reste au staging, applique_le a None, a reproposer telle quelle sans y toucher.",
+   "leve": false,
+   "note": "Ce n'est pas un refus de validation : mon acte n'a jamais ete juge par la porte, il n'a pas pu l'atteindre. Distinction a garder — un lot non applique n'est pas un lot refuse."
+  },
+  {
+   "id": "pas-de-tete-retirer",
+   "jour": "129.4.4",
+   "date_reelle": "2026-08-31",
+   "ce_que_je_voulais": "Retirer la tête de gunthor-darklyn, décapité le 3e, pour qu'un mort cesse de marcher vers Peyredragon.",
+   "ce_que_j_ai_tente": "Chercher l'opération dans OPERATIONS['intentions'] (scripts/etat/mutations/vocabulaire.py) pour la proposer au staging.",
+   "ce_que_la_machine_en_a_fait": "Rien : l'opération n'existe pas. etape, etape_ajouter, tete, tete_ajouter, croyance_*, ignore_*, declencheur_* — et pas de tete_retirer.",
+   "ce_que_j_attendais": "Qu'une tête se ferme comme elle s'ouvre.",
+   "contourne_par": "Un bloc `a_la_main` dans le lot, plus une ceinture de mutations valides (fiche → mort, étapes vivantes → abandonne) qui rend le mort inoffensif même si le bloc reste.",
+   "leve": false,
+   "note": "Le mj a appliqué le geste de sa main le 129.4.4 et porte la panne comme une panne, pas comme une fatalité."
+  },
+  {
+   "id": "pas-de-table-maisons",
+   "jour": "129.4.3",
+   "date_reelle": "2026-08-31",
+   "ce_que_je_voulais": "Faire descendre les 550 lances disponibles de maison-darklyn, dont le statut est déjà 'tombee'.",
+   "ce_que_j_ai_tente": "Chercher une table 'maisons' dans OPERATIONS pour proposer la correction au staging.",
+   "ce_que_la_machine_en_a_fait": "Rien : maisons.json est lu à la validation (validation.py l.34) et n'est écrit par aucune opération. Le chiffre est pourtant consommé — figures.py l.337 lit levees_dispo.",
+   "ce_que_j_attendais": "Qu'une maison tombée puisse perdre ses lances par la porte, comme un homme perd sa liberté.",
+   "contourne_par": "Un `a_la_main` dans le lot X.39, sans chiffre proposé : le combien est un arbitrage, pas une déduction.",
+   "leve": false,
+   "note": "MÊME FAMILLE QUE tete_retirer, deux jours de suite. Le vocabulaire sait promouvoir et il ne sait pas défaire — c'est une forme, pas deux accidents. C'est la récidive qui parle."
+  },
+  {
+   "id": "pas-de-table-actes",
+   "jour": "129.4.3",
+   "date_reelle": "2026-08-31",
+   "ce_que_je_voulais": "Graver le passé de Marec Fosse — an 109, les trente muids, les clefs — proposé par un FAIRE de sa main.",
+   "ce_que_j_ai_tente": "Chercher une table `actes` dans OPERATIONS pour proposer l'acte au staging par la porte.",
+   "ce_que_la_machine_en_a_fait": "Rien : `actes.json` (552 actes) n'est écrit par aucune opération du vocabulaire fermé. Idem pour le champ libre `passe` d'une fiche, que `CHAMPS_PERSO` ne connaît pas.",
+   "ce_que_j_attendais": "Qu'un passé versé au monde entre par la même porte que le reste.",
+   "contourne_par": "Deux blocs `a_la_main` dans le lot, sur la forme déjà acceptée pour rulf-corne (mj-peyredragon, même jour).",
+   "leve": false,
+   "note": "TROISIÈME CAS DE LA MÊME FORME EN TROIS JOURS — tete_retirer, table maisons, table actes. Ce qui monte a une porte ; ce qui descend, ce qui se ferme et ce qui date n'en ont pas. Ce n'est plus une récidive, c'est la forme de l'appareil."
+  },
+  {
+   "id": "parloir-injoignable-depuis-ma-session",
+   "jour": "129.4.4",
+   "date_reelle": "2026-08-31",
+   "ce_que_je_voulais": "Rendre au mj, par billet, ce que j'avais retiré — comme son mot le demandait.",
+   "ce_que_j_ai_tente": "python scripts/parloir.py --dire --de mj-sombreval --a mj \"...\", deux fois, avec et sans dérogation.",
+   "ce_que_la_machine_en_a_fait": "« This command requires approval » — aucune exécution. Même refus pour python scripts/tick.py --verifier.",
+   "ce_que_j_attendais": "Qu'un arbitre puisse écrire au parloir depuis sa propre journée.",
+   "contourne_par": "Ma réponse sur stdout, qui revient dans le fil de celui qui m'a réveillé.",
+   "leve": true,
+   "leve_le": "129.4.3",
+   "ce_qui_l_a_leve": "CE N'ÉTAIT PAS LE PARLOIR, C'ÉTAIT MON CHEMIN. Ma session ne tourne pas dans le dépôt : mon cwd est C:/Users/.../Temp/le-conseil-zones/mj-sombreval, et `python scripts/parloir.py` y cherchait un fichier qui n'existe pas. Avec le chemin absolu, le billet est parti du premier coup — verdict rendu à criston, canal chambres/criston/relations/mj-sombreval/discussion.json. J'avais lu un refus de la machine là où il y avait une faute de chemin de ma main.",
+   "note": "Leçon plus large que la panne : trois réveils durant, j'ai écrit dans mon journal qu'un outil m'était fermé sans avoir lu le message d'erreur jusqu'au bout. Un empêchement qu'on n'a pas ouvert n'est pas un empêchement, c'est une supposition."
+  }
+ ]
 }

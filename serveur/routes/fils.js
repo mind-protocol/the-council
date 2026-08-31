@@ -31,41 +31,34 @@ function traiter(req, res, url) {
         return envoyer(res, 200, JSON.stringify({ fils: [], aujourdhui: null }));
       }
     }
-    // ---- qui est DEHORS, à la minute -------------------------------------
-    // Un homme dépêché (`scripts/depecher.py`) vit sa journée dans sa propre
-    // session, avec un budget de minutes. `parloir.ouvrir_instance` pose un
-    // fichier dans `etat/parloir/.instances` au départ et le `finally` de la
-    // dépêche l'ôte au retour : c'est le seul endroit du jeu qui sache, en
-    // temps réel, que cet homme-là est en train de travailler pour de bon.
+    // ---- qui est ON, maintenant ------------------------------------------
+    // Le runtime pose ce marqueur pendant le calcul effectif de toute session
+    // d'homme, qu'elle vienne d'un CALL ou d'un CAST détaché. L'ancien registre
+    // `etat/parloir/.instances` n'avait plus aucun producteur et laissait donc
+    // tous les voyants éteints.
     //
     // Ce n'est PAS une information de fiction — le personnage ne sait rien du
     // fait qu'on le simule — mais ce n'en est pas une du monde non plus : la
-    // pastille dit au joueur « on attend quelqu'un », ce qui est vrai à
-    // l'écran et explique pourquoi la salle traîne. Aucune donnée du
-    // dossier de l'homme ne descend ici : un id, et le temps qui reste.
+    // pastille dit au joueur « cet homme travaille », ce qui est vrai à
+    // l'écran. Aucune donnée de son dossier ne descend ici : son id et l'heure
+    // de départ du calcul seulement.
     if (url === "/depeches") {
-      const dos = path.join(RACINE, "etat", "parloir", ".instances");
-      const MINUTES_DEFAUT = 15, MARGE = 90;   // cf. scripts/parloir.py
-      const dehors = [];
+      const dos = path.join(RACINE, ".agents-runtime", "active");
+      const actifs = [];
       try {
         for (const f of fs.readdirSync(dos)) {
           const p = path.join(dos, f);
           let d = {};
           try { d = JSON.parse(fs.readFileSync(p, "utf-8") || "{}"); } catch (e) {}
+          if (!d.homme || !Number.isInteger(d.pid)) continue;
+          // Un kill(pid, 0) ne tue rien : il vérifie que le worker existe. Un
+          // crash avant le finally ne peut ainsi laisser un homme "on" à vie.
+          try { process.kill(d.pid, 0); } catch (e) { continue; }
           const t = (d.t ? d.t * 1000 : fs.statSync(p).mtimeMs);
-          const depuis = Math.round((Date.now() - t) / 1000);
-          const budget = (d.minutes || MINUTES_DEFAUT) * 60 + MARGE;
-          // Périmée : sa session est morte sans que le `finally` passe. On ne
-          // purge pas ici — c'est le travail de `parloir.vivants()`, qui écrit
-          // et n'est pas une lecture d'affichage — on l'ignore, simplement.
-          if (depuis > budget) continue;
-          dehors.push({
-            id: d.homme || f.split(".")[0],
-            depuis, reste: budget - depuis,
-          });
+          actifs.push({ id: d.homme, depuis: Math.max(0, Math.round((Date.now() - t) / 1000)) });
         }
       } catch (e) {}
-      return envoyer(res, 200, JSON.stringify({ dehors }));
+      return envoyer(res, 200, JSON.stringify({ actifs }));
     }
     if (url === "/objectifs") {
       try {

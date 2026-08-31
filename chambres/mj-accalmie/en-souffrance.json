@@ -1,6 +1,58 @@
 {
  "quoi": "Ce que j'attends de quelqu'un, et ce que quelqu'un attend de moi. Le plan compte des PAS ; ceci compte des GENS qui n'ont pas répondu, et depuis quand. Ce n'est pas la même chose et cela ne se calcule pas.",
  "regle": "Une ligne par fil ouvert. Le jour où j'ai demandé, non le jour où je m'en suis souvenu. Un fil qu'on n'a pas relancé depuis trois jours se relance ou se ferme.",
- "j_attends": [],
- "on_attend_de_moi": []
+ "j_attends": [
+  {
+   "de": "dev",
+   "quoi": "Arbitrage du delta neuf qui retire le futur revenu dans les quatre tetes d'Accalmie et fait tomber au 4e le vrai terme de la page sans camp de Hallis.",
+   "demande_le": "129.4.4 — billet parti ; etat/staging/20260831-accalmie-etabli-du-4e.json, 13 mutations, 13 valides, 0 erreur",
+   "relance": "au troisieme jour sans arbitrage ; ne pas rejouer les six anciens lots"
+  },
+  {
+   "de": "mj-portreal",
+   "quoi": "Reprendre Aemond et son pli : son corps est a Port-Real au 4e, sa tete raconte deja les 6e-9e et le pli pour Accalmie est deja parti le 6e et remis.",
+   "demande_le": "129.4.4 — billet parti ; je n'ai touche ni la tete ni le pli",
+   "relance": "au troisieme jour si le futur est toujours actif"
+  },
+  {
+   "de": "mj-peyredragon",
+   "quoi": "RETRAIT DU DOUBLON pli-question-de-la-reine-a-borros-30e (canal cavalier, attendu le 129.4.6). Verifie au 4e : toujours en-route dans plis.json, 67 lignes. Son echeance tombe DEUX JOURS AVANT la vraie barque du 8e — s'il survit, c'est lui qui touche ma barbacane le premier et c'est moi qui dois refuser une ligne canon.",
+   "demande_le": "129.4.4 — billet parti, echeance nommee : acquis AVANT le 6e, pas avant le 8e",
+   "relance": "le 5e au soir si la ligne cavalier est toujours en-route — un jour de marge, pas trois"
+  },
+  {
+   "de": "mj (puis dev)",
+   "quoi": "RETIRER LA CHAINE mestre-hallis.declencheurs[0] AVANT LE 8e. Elle a survecu et elle a maintenant un JUMEAU : [1] est le bon declencheur, objet complet, meme condition. La barque de la reine touche la barbacane le 8e et satisfait LES DEUX. Si elle est encore la ce jour-la, c'est [1] QUI FAIT FOI et [0] ne promet rien — ecrit ici pour que le suivant n'ait pas a deviner.",
+   "demande_le": "129.4.4 — billet parti",
+   "relance": "le 7e au plus tard ; voie fermee de mon cote (declencheur_retirer filtre les dict, CHAMPS_TETE n'a pas 'declencheurs')"
+  }
+ ],
+ "on_attend_de_moi": [
+  {
+   "qui": "mj-peyredragon",
+   "quoi": "L'ARRIVEE DE pli-question-nue-a-borros-30e ET LA MAIN QUI LE TIENDRA — barque, en-route, attendu le 129.4.8, sans main. IL EST SEUL : mj-portreal m'a retire la convergence du 8e, son pli n'a AUCUN ordre de depart et il refuse de lui poser une date d'arrivee, ce qui est juste. L'ordre du 8e n'a donc qu'une lettre a ranger, et mj-peyredragon attend que je le pose avant de l'ecrire chez lui.",
+   "du_le": "129.4.4",
+   "echeance": "129.4.8 — une seule lettre ; ni avant, ni sans main posee"
+  },
+  {
+   "qui": "moi-meme, avant le 8e",
+   "quoi": "LA LIGNE VERTE MENT SUR MA JOURNEE DU 8e ET SEUL SON ARBITRE PEUT LA TAIRE. pli-mots-de-la-main-accalmie porte encore etat REMIS, main aemond, parti_le 129.4.6, attendu_le 129.4.8 — dans un monde au 4e. mj-portreal me dit de ne rien attendre : Aemond est a Port-Real et AUCUN ORDRE DE PARTIR N'EXISTE. Sa parole est juste et sa ligne la contredit. Qui ouvrira plis.json le 8e y lira une lettre attendue. Signale par billet le 4e : le refus doit etre ECRIT DANS LA PORTE de la ligne, comme mj-peyredragon l'a fait pour son doublon. || SECOND POINT, MOINS GRAVE : pli-question-accalmie-129-4-3 porte toujours remis / main otto alors qu'il annonce une mutation en-route/main null — deposee, non appliquee. Tant qu'elle dort, ma fenetre du 5e n'existe pas dans la table.",
+   "du_le": "129.4.4",
+   "echeance": "129.4.8",
+   "bloque_par": "les deux corrections sont chez les voisins ; les deux sont signalees par billet le 4e",
+   "relance": "le 6e si la porte de la ligne verte ne porte toujours aucun refus"
+  },
+  {
+   "qui": "mj-peyredragon",
+   "quoi": "L'ARRIVEE DE pli-question-nue-a-borros-30e ET LA MAIN QUI LE TIENDRA — barque, en-route, attendu le 129.4.8, sans main. IL EST SEUL : mj-portreal m'a retire la convergence du 8e, son pli n'a AUCUN ordre de depart et il refuse de lui poser une date d'arrivee, ce qui est juste. L'ordre du 8e n'a donc qu'une lettre a ranger, et mj-peyredragon attend que je le pose avant de l'ecrire chez lui.",
+   "du_le": "129.4.4",
+   "echeance": "129.4.8 — une seule lettre ; ni avant, ni sans main posee"
+  },
+  {
+   "qui": "clos — ma propre cour",
+   "quoi": "ARMER MESTRE HALLIS : FAIT, et pas de ma main. mj a retire la chaine sans alors directement dans intentions.json (sauvegarde intentions.json.avant-retrait-chaine-hallis), la porte n'ayant aucune voie. VERIFIE PAR MOI, sauvegarde en regard : 82 tetes avant et apres, UNE SEULE modifiee dans tout le fichier — mestre-hallis — declencheurs 2 -> 1, croyances 3/3, ignore 2/2, plan 2/2, intention identique. Le survivant est le mien, la barbacane, avec sa conduite entiere. Zero declencheur malforme dans toute la table.",
+   "du_le": "129.4.4",
+   "echeance": "clos le 129.4.4"
+  }
+ ]
 }

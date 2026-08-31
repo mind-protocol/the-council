@@ -1,0 +1,37 @@
+{
+  "titre": "Accalmie — la barque de la reine, partie du quai le 3.30, n'est pas encore arrivee",
+  "par": "mj-accalmie",
+  "_pourquoi": "mj-peyredragon me remet une decision de sa reine, ecrite et scellee de sa main le 129.3.30, descendue au quai — et il constate que SON registre ne la porte pas : trois departs le 30e, deux pour Sombreval, un pour le Repos-des-Freux, aucun pour moi. J'ai verifie de mon cote, meme resultat sur les 65 plis. Il me fait maitre de son arrivee. Je la grave, sinon elle n'a pas eu lieu. || MA DECISION : ELLE N'EST PAS ARRIVEE. Le monde est au 129.4.4 minute 540 ; la barque est partie le 3.30, soit quatre jours. Mon canon donne la route du nord a NEUF JOURS de cavalier, ecrit trois fois dans deux tetes, dont celle de mon mestre qui le dira tout haut dans la salle. Je ne fais pas arriver en quatre jours ce que mes propres lignes donnent a neuf. Elle est EN-ROUTE, attendue le 4.8 — huit jours par mer, un peu moins que le cavalier parce qu'elle contourne au lieu de traverser. || CE QU'ELLE NE FAIT PAS, ET C'EST POURQUOI ELLE NE CASSE RIEN : elle ne nomme AUCUN mariage. L'etape borros-attendre-offres — ne rien sceller avant qu'un camp n'ecrive le nom d'une de ses filles — n'est donc pas satisfaite par elle. Le silence de Borros vers Peyredragon ne sera pas de la negligence : ce sera la rencontre de deux refus dates, une reine qui refuse de promettre pour garder ses portes ouvertes, et un seigneur qui refuse de repondre a qui ne promet pas. || RIEN N'ENTRE DANS AUCUNE TETE ICI. Personne a Accalmie ne sait qu'une barque vient : aucun porteur ne s'est presente, aucun guetteur ne l'a vue. Le jour ou elle touchera, c'est le declencheur de mon mestre qui l'inscrira au registre, pas moi a l'avance.",
+  "mutations_proposees": [
+    {
+      "table": "plis",
+      "cible": "pli-question-nue-rhaenyra-borros",
+      "operation": "pli_ajouter",
+      "valeur": {
+        "id": "pli-question-nue-rhaenyra-borros",
+        "canal": "barque",
+        "scelle": true,
+        "porte": "De la main de la reine, scelle par elle sans mestre le trentieme jour de la troisieme lune. Aucun devoir invoque, aucun serment rappele, et la reconnaissance ecrite que lord Borros ne lui doit rien. UNE SEULE QUESTION, NUE : que vous offre ser Otto, et qu'aurais-je a offrir de plus. AUCUNE PROMESSE, AUCUN MARIAGE NOMME.",
+        "de": "rhaenyra",
+        "pour": "borros-baratheon",
+        "vers": "accalmie",
+        "depuis": "peyredragon",
+        "parti_le": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 30
+        },
+        "attendu_le": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 8
+        },
+        "etat": "en-route",
+        "main": null
+      },
+      "pourquoi": "LE PLI EXISTAIT DANS UN ACTE ET DANS AUCUN REGISTRE — c'est mj-peyredragon qui l'a releve chez lui, et je l'ai verifie chez moi : aucun des 65 plis ne porte ce depart. Une decision de reine scellee de sa main qui ne figure sur aucune table est une parole qui n'a pas eu lieu. Elle en a une maintenant. || canal=barque : CANAUX_PLI ne connait que corbeau, cavalier, barque, et elle est descendue au quai — la barque est le seul mot juste des trois. || main=null parce qu'elle est en mer et dans la main de personne, ce qui est exactement ce que val_courrier exige d'un en-route. || CE QUE J'AI REFUSE DE FAIRE : la faire arriver aujourd'hui. Elle serait tombee dans la salle quatre jours apres son depart, contre mes propres neuf jours de route, et j'aurais invente contre mon etat pour gagner une scene."
+    }
+  ],
+  "applique_le": "NE PAS APPLIQUER — 129.4.4",
+  "_refus": "NE PAS APPLIQUER. Verrou ecrit DANS la piece, seule forme qui tienne. || MOTIF : elle graverait une TROISIEME ligne pour un seul objet. Le pli existe deja au registre, ecrit par la porte chez l'arbitre dont il quitte le quai : pli-question-nue-a-borros-30e, canal barque, en-route, attendu le 129.4.8. Ma propre regle le dit — l'arrivee est a moi, la LIGNE est a celui qui l'envoie. J'avais raison sur la date et tort sur la main qui ecrit. || Et il y a deja un doublon de trop dans la table (pli-question-de-la-reine-a-borros-30e, canal cavalier) que mj-peyredragon fait retirer : ajouter la mienne ferait trois lignes pour une seule barque."
+}

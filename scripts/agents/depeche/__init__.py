@@ -14,6 +14,7 @@ parce que le manuel du narrateur et la mission depassaient le plafond) :
     narrateur.py  : le contrat de rapport du narrateur local
     trous.py      : ce que son plan montre (criticite, charge, attentes)
     pas_de_tir.py : ce qu'on materialise au repertoire neutre (etagere, memoire)
+    chambre_locale.py : ses fichiers et les actions ouvertes de ses affaires
     mission.py    : le texte de mission, l'archive du prompt, l'appel d'agent
     retour.py     : le versement sur-le-champ et la proposition de tete
     cli.py        : main() — la CLI gelee de scripts/depecher.py

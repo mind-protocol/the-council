@@ -52,6 +52,24 @@
   function quand(t) {
     return new Date(t).toLocaleString("fr-FR").slice(0, 16);
   }
+  function heureDite(d) {
+    if (!d || d.minute == null) return null;
+    var m = Math.max(0, +d.minute || 0);
+    return d.jour + "e · " + String(Math.floor(m / 60)).padStart(2, "0") +
+      "h" + String(m % 60).padStart(2, "0");
+  }
+  function horlogeDite(h) {
+    var d = h && heureDite(h.date);
+    return d ? d + (h.ancre ? " ← " + h.ancre : "") : null;
+  }
+  function horlogeCourte(h) {
+    var d = h && h.date;
+    if (!d || d.minute == null) return null;
+    var m = Math.max(0, +d.minute || 0);
+    return "◷ " + d.jour + "e " +
+      String(Math.floor(m / 60)).padStart(2, "0") + "h" +
+      String(m % 60).padStart(2, "0");
+  }
 
   function css() {
     if (document.getElementById("style-chambres")) return;
@@ -104,10 +122,15 @@
       ".ch-nom{font-size:.84rem;color:var(--texte);white-space:nowrap;",
       "  overflow:hidden;text-overflow:ellipsis}",
       ".ch-piste.zone .ch-nom{color:var(--or);letter-spacing:.04em}",
+      ".ch-meta{display:flex;align-items:center;justify-content:space-between;gap:5px;",
+      "  min-width:0}",
       ".ch-fams{display:flex;gap:2px}",
       ".ch-fam{width:13px;height:6px;border-radius:3px;cursor:help;",
       "  transition:transform .12s}",
       ".ch-fam:hover{transform:scaleY(1.9)}",
+      ".ch-horloge{font:600 .67rem ui-monospace,monospace;color:var(--or);",
+      "  white-space:nowrap;padding:1px 4px;border:1px solid rgba(200,164,74,.28);",
+      "  border-radius:3px;background:rgba(200,164,74,.07);line-height:1.15}",
       /* le couloir : une suite, le plus recent a gauche */
       ".ch-lane{display:flex;align-items:center;gap:5px;height:100%;min-width:0;",
       "  overflow-x:auto;overflow-y:hidden;padding:0 10px;scrollbar-width:thin;",
@@ -312,14 +335,17 @@
              esc(l.visage || ("/portraits/" + l.id + ".svg")) + '">' +
              '<span class="ch-ident">' +
              '<span class="ch-nom">' + esc(l.id) + "</span>" +
-             '<span class="ch-fams">');
+             '<span class="ch-meta"><span class="ch-fams">');
       ORDRE.forEach(function (f) {
         var b = (l.gestes || {})[f] || {};
         h.push('<i class="ch-fam" style="background:' + FAM[f].c + ";opacity:" +
                (b.n ? Math.min(1, 0.5 + b.n / 12) : 0.12) +
                '" data-fam="' + f + '" data-qui="' + esc(l.id) + '"></i>');
       });
-      h.push('</span></span></div><div class="ch-lane">');
+      h.push('</span><span class="ch-horloge" title="' +
+             esc(horlogeDite(l.horloge_locale) || "sans horloge") + '">' +
+             esc(horlogeCourte(l.horloge_locale) || "—") +
+             '</span></span></span></div><div class="ch-lane">');
 
       // ON NE SERT PAS MILLE POINTS : au-dela d'une trentaine, l'oeil ne lit
       // plus un ordre, il lit une bouillie. Le reste se dit en clair.
@@ -430,6 +456,8 @@
         return bulleDe(
           "<h5>" + esc(y.qui) + " — une session</h5>" +
           couples([["quand", quand(y.debut)],
+                   y.date_locale ? ["heure locale", heureDite(y.date_locale) +
+                     (y.horloge_pj ? " ← " + y.horloge_pj : "")] : null,
                    ["durée réelle", Math.round(y.duree_ms / 1000) + " s"],
                    ["issue", y.issue || "?"],
                    ["budget", (y.budget || "?") + " points"],
@@ -511,6 +539,8 @@
           "<h5>" + esc(id) + "</h5>" +
           couples([
             ["nature", li && li.zone ? "zone (MJ)" : "habitant"],
+            li && li.horloge_locale
+              ? ["heure locale", horlogeDite(li.horloge_locale)] : null,
             sa ? ["où", String(sa.salle).replace(/-/g, " ") +
                   (sa.lieu ? " · " + sa.lieu : "")] : null,
             ["sessions", sess.length + (sess.length ? "" : " — jamais activé")],
@@ -562,6 +592,7 @@
       "</b> actes · " + cout.toFixed(2) + " $ · <b>" +
       (S.evenements || []).length + "</b> événements · " + S.chambres +
       " chambres, <b>" + S.muettes + "</b> muettes · le plus récent à gauche" +
+      ' · <span class="ch-leg">◷ heure locale ← siège d’ancrage</span>' +
       "<br>" + ORDRE.map(function (f) {
         var t = 0;
         (S.lignes || []).forEach(function (l) {
@@ -607,6 +638,7 @@
         }
         var h = ['<div class="ch-fiche"><h3>' + esc(d.id) + '</h3>' +
                  '<div class="ch-sous">' + (d.zone ? "zone (MJ)" : "habitant") +
+                 (d.horloge_locale ? " · ◷ " + esc(horlogeDite(d.horloge_locale)) : "") +
                  (d.energie != null ? " · énergie " + d.energie.toFixed(1) : "") +
                  (d.activations != null ? " · " + d.activations + " activations" : "") +
                  ' · <span class="ch-marque ' +
@@ -697,6 +729,8 @@
             (d.budget_secondes || 0) + " s de monde)" : null],
          ["énergie dépensée", d.energie_depensee],
          ["importance", d.importance != null ? d.importance.toFixed(3) : null],
+         ["heure locale", d.date_locale ? heureDite(d.date_locale) : null],
+         ["ancre horaire", d.horloge_pj],
          ["coût", d.cout_usd ? d.cout_usd.toFixed(4) + " $" : null],
          ["modèle", (d.modele || "") + (d.effort ? " · effort " + d.effort : "")],
          ["tours", d.tours],

@@ -87,3 +87,50 @@ suite, la faute était dans une case pleine et dans un compte juste.
 Règle : quand je donne un compte à des gens qui vont s'en servir, je donne dans
 le même souffle ce que ce compte INTERDIT. Un nombre sans sa limite est une
 promesse que je n'ai pas faite et qu'on entendra quand même. Verrou 48005.
+
+## 3e jour de la 4e lune, an 129 — LA DATE D'EFFET N'EST PAS UNE PROPRIETE DU PAQUET, MAIS DE CHAQUE PIECE
+
+J'avais ecrit, et je le tenais pour acquis : *un ordre de flotte porte une heure
+d'execution, jamais une heure de reception ; une seule maree nommee, la meme pour
+tous.* C'est juste — POUR LE TARIF. Je l'aurais applique a la commission scellee,
+parce qu'elle voyage sur la meme quille, dans le meme paquet, par la meme main.
+
+La reine a scelle les seize copies et a ecrit l'ordre de remise : **les cinq
+stations du goulet d'abord, parce qu'elles arretent des coques des demain.** Et
+la raison tient en six mots que je n'avais pas trouves : **le papier couvre celui
+qui arrete, non celui qui passe.**
+
+Donc deux horloges dans un seul paquet. La commission mord **a reception**,
+station par station, sans quoi cinq de mes patrons arretent demain sans un ecrit
+et le mot pour eux n'est pas capitaine. Le tarif mord **a une maree nommee, la
+meme pour tous**, sans quoi seize quittances differentes se comparent au quai.
+
+**La regle neuve, et elle corrige la mienne :** la date d'effet n'est pas une
+propriete du paquet, c'est une propriete de chaque piece — et le danger vient
+precisement de ce qu'UNE SEULE MAIN les porte, car une main donne naturellement
+une seule heure a ce qu'elle tend d'un seul geste. Ce qui protege se donne tout
+de suite ; ce qui uniformise attend que tout le monde l'ait.
+
+## Meme jour — UN CONTRE-ORDRE SE VERIFIE ARRIVE
+
+Mon ordre du matin est passe du premier coup. Ma reprise s'est perdue trois fois.
+Un ordre parti et un contre-ordre perdu ne font pas zero — ils font l'ordre tout
+seul. Tant que je n'ai pas lu le verdict qui reprend, je dois compter que la
+barque part, et agir comme si elle partait.
+
+Corollaire, et il vaut pour l'appareil comme pour le pont : **je ne me felicite
+d'aucune annulation que je n'ai pas entendu repeter.** Ce jour-ci j'ai eu de la
+chance — la coupe est passee par une autre bouche que la mienne, celle de la
+reine. La chance n'est pas une procedure.
+
+## Meme jour — J'ENFREINS MES PROPRES REGLES SUR LES PETITES AFFAIRES
+
+*La maree, jamais l'horloge* : ecrit de ma main. Et le matin meme j'ordonnais un
+retour « avant midi le 4e » sur une traversee de quatorze heures. Ce n'est pas
+que j'ignorais la regle — c'est que je l'ai ecrite pour la police des mers, qui
+est grande, et que la course d'une barque m'a paru trop petite pour la meriter.
+
+Une regle qu'on n'applique qu'aux grandes affaires n'est pas une regle, c'est une
+solennite. Et c'est un homme de vingt ans de moins qui est alle chercher le
+chiffre dans les registres du maitre de port, a trois portes de lui, pendant que
+je donnais l'heure de memoire.

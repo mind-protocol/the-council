@@ -183,7 +183,8 @@
     "🎯 N°",
     "🎯 L'état cible",
     "📏 La preuve",
-    "📅 Jour dû"
+    "📅 Jour dû",
+    "💯 Importance"
    ],
    "lignes": [
     {
@@ -191,7 +192,8 @@
       "**90100**",
       "**La bataille a du sens en cuisson**",
       "`python scripts/bataille.py --cuire` rend une nuit dont les comptes tiennent debout et se reproduisent : ordres déformés, déclencheurs tombés, initiatives, coureurs. La référence du 14 août est **5, 5, 14 et 54** — un écart se dit et s'explique, il ne s'arrondit pas.",
-      "J−6"
+      "J−6",
+      "**25**"
      ]
     },
     {
@@ -199,7 +201,8 @@
       "**90200**",
       "**La bataille est visible sur l'interface**",
       "La nuit cuite se regarde dans le jeu, pas seulement dans un sac : on voit la ligne céder, la panique courir, la rue bouchonner. Ce que la vue de bataille dépose au MJ toutes les trente secondes doit montrer la même chose que ce que la stack a décidé.",
-      "J−3"
+      "J−3",
+      "**30**"
      ]
     },
     {
@@ -207,7 +210,8 @@
       "**90300**",
       "**Rien ne tourne hors de la stack**",
       "Aucune décision d'homme ne sort plus de la cascade de `soldat()`. `bataille2d.js` ne garde que le sol, le temps et le rendu ; tout ce qui pense est dans `survival-stack/`.",
-      "J−0"
+      "J−0",
+      "**20**"
      ]
     }
    ]

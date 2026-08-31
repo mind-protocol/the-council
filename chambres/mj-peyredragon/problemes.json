@@ -1,5 +1,20 @@
 {
- "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
- "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
+  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
+  "entrees": [
+    {
+      "date_monde": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 3
+      },
+      "date_reelle": "2026-08-31",
+      "tente": "affaire_action sur affaire-controle-naval:22070 (la reine scelle les seize copies)",
+      "ce_que_la_machine_en_a_fait": "\"action '22070' introuvable dans affaire-controle-naval\"",
+      "cause": "prochaine_ligne_action exige l'egalite exacte de la cellule N° apres strip('*'). Cette ligne porte « **22070** — j'ouvre le bloc 2207x pour les actions ; 2203x et 2204x sont pleins » : toute action dont la cellule N° porte un commentaire est INATTEIGNABLE par la porte.",
+      "attendu": "le patch de l'etat et de la note, comme pour 11221 et 8124 le meme jour",
+      "contournement": "porte a la main dans le lot etat/staging/20260831-peyredragon-rhaenyra-scelle-les-seize-copies-129-4-3.json",
+      "recidive_probable": "oui : rien n'empeche d'ecrire un commentaire dans une cellule N°, et le refus ne dit pas pourquoi il ne trouve pas"
+    }
+  ]
 }

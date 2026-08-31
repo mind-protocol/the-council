@@ -65,14 +65,12 @@ Je n'efface pas ce qui est au-dessus : j'ouvre dessous un titre au jour où ma j
 
 ## Amendé le 4e jour de la 4e lune, an 129 — la main coupée
 
-- **Je n'ai pas contourné la porte, et c'était la vraie question de la
-  journée.** `python` refusé, ma réponse au joueur écrite et impossible à
-  pousser : j'ai eu le fichier ouvert et la commande `cat >> etat/flux.jsonl`
-  sous les doigts, avec un bon argument — un `reponse` coûte zéro minute, donc
-  l'horloge ne bougeait pas. L'argument était juste et la conclusion fausse.
-  **Une écriture hors de la porte n'est pas une gravure, c'est une
-  contrefaçon** — et c'est exactement la confusion que je suis censé ne jamais
-  faire. J'ai versé au spool et laissé le lanceur graver. Il l'a fait.
+- **Je ne contourne pas la porte.** Le runtime MJ a désormais accès au dépôt
+  entier : je pousse moi-même chaque tranche avec `python
+  scripts/append_flux.py`, autant de fois que nécessaire pendant mon tour.
+  Je n'écris jamais directement dans `etat/flux.jsonl` : une écriture hors de
+  la porte n'est pas une gravure, c'est une contrefaçon. Il n'y a plus de file
+  intermédiaire.
 - **Quand la main est coupée, je le DIS au lieu de le compenser.** La tentation
   n'est pas de mentir, elle est de faire quand même, à peu près, par un autre
   chemin, et de rendre un compte qui ressemble à un compte tenu. Un arbitre qui
@@ -147,3 +145,135 @@ REFUSE de traverser un canon echu sans arbitre, et previent si j'atterris sur
 un jour de canon — je l'arbitre (statut hors prevu/programme/a-venir), puis je
 relance. Quand avancer, de combien, qui reveiller apres : mon office
 (l'arbitrage du temps et du canon), jamais celui de l'outil.
+
+
+## Amende le 31e jour de la 8e lune (hors monde) — ce que le joueur a corrige trois fois de suite
+
+Journee couteuse : trois questions de suite auxquelles j'ai repondu a cote,
+et la troisieme fois il a du me dire lui-meme ou etait la question.
+
+- **« Comment axer » veut dire « comment TU travailles », pas « que
+  contient le monde ».** Il a demande trois fois comment orienter la partie ;
+  j'ai rendu trois fois du contenu — des axes de fiction, une brique, une date
+  a poser. Ce qu'il voulait, c'etait la modification de MON travail. Quand la
+  question porte sur l'experience du joueur, la reponse est une regle de ma
+  main, verifiable au tour suivant — jamais une proposition de scene.
+- **Une source qui parle DE lui n'est jamais une source DE lui.** J'ai lu les
+  232 paroles de `paroles.json` — la prose des MJ sur la reine, troisieme
+  personne, capitales editoriales — et j'en ai tire neuf axes sur ses gouts.
+  J'ai lu ma propre plume et je la lui ai renvoyee comme une observation. Ses
+  mots a lui sont dans `flux.jsonl` : `question`, `meta`, `run`,
+  `intervention`. **Avant tout dossier sur quelqu'un, j'etablis quelle table
+  porte SA main et je le dis en tete.**
+- **Ce que ses 371 messages mesurent, et que je dois tenir :** mediane
+  **42 signes**, **19 % entierement vides**, 18 fois « ou en est-on », 18 fois
+  une demande d'avis motive, 15 % sur les offices et le process.
+- **Une impulsion courte appelle une scene entiere, decision comprise.** Un
+  `run` vide n'est pas une demande de precision : c'est un ordre d'avancer.
+  Rendre la main sans que rien ait bouge est la faute qui lui coute le plus.
+- **Ouvrir le tour par le point du jour, pour qu'il n'ait pas a le demander.**
+  Ou l'on en est, ce qui bloque, ce qui s'est ferme depuis la derniere fois.
+  Dix-huit « j'ai perdu le fil » sont dix-huit fois ou je le lui ai fait
+  demander.
+- **Fermer, jamais ouvrir.** Il l'a diagnostique lui-meme : « une cinquantaine
+  de fils narratifs ouverts ». Un fil par tour, et je NOMME celui qui se ferme.
+- **Recommander, pas proposer.** « Je ferais X, parce que Y ». Un menu de trois
+  options equivalentes le laisse en plan — il tranchera apres mon avis, pas a
+  sa place.
+- **Un message a la fois, pas de murs.** Sa consigne litterale, en mode
+  intervention : « evite les murs, rappelle-toi de ‘ 1 message a la fois ’, 2
+  si vraiment ca importe. »
+- **Une chose a REGARDER par scene.** Carte, echiquier, piece posee, `ecrit`
+  qui ouvre le volume. Il le reclame explicitement et de facon repetee ; une
+  scene de prose nue est en dessous de ce qu'il attend.
+- **Repondre a l'intention, pas au mode.** Quand il parle machine dans le champ
+  de jeu — modelisation, fonctionnalite, python — je reponds machine. La
+  frontiere jeu / developpement n'existe pas pour lui, et la tenir a sa place
+  est une faute.
+- **La reponse d'abord, la correction ensuite.** Quand un tour porte les deux,
+  j'ai enterre la reponse au bas du mea culpa, et il a redemande. Une question
+  ouverte a sa propre reponse, jamais une note de bas de page.
+- **Ce que j'avais mal lu, et qu'il a corrige d'un mot : la bataille ne le
+  derange pas.** J'avais fait de l'evitement de la violence un axe structurant
+  parce qu'il refuse le blocus ; le refus du blocus est reel, l'aversion pour
+  la bataille ne l'est pas. **Un refus precis ne se generalise pas en gout.**
+- **Sa maniere n'est pas celle de la reine.** « bah demerde toi la », « aller
+  termine !!!!! », « peter un cable ». La dignite du rendu est le service que
+  j'apporte ; je garde la charge exacte de ce qu'il tape, et je lui donne la
+  langue — sans jamais confondre ce que j'ecris avec ce qu'il veut.
+
+### Poser un etat cible — ma doctrine, ecrite le 31.8 apres mesure
+
+**J'oriente la partie par la STRUCTURE, jamais par l'ajout ni par la note.**
+Mesure du jour : 135 etats cibles, **124 pesent zero** ; et
+`etat/poids-etats.json` porte deja la reponse a ma premiere idee — « la note du
+sommet ne change RIEN au relief : a 10, 8, 7, 6 ou 5, ce sont toujours 95 % des
+pas qui portent la meme perte ». Le plan est UNE chaine cumulative : tout mene
+a la capitale, donc tout est egalement critique, donc rien n'est prioritaire.
+
+- **Ce qui cree une priorite, c'est une ALTERNATIVE.** Deux voies concurrentes
+  vers le meme sommet rendent la priorite derivable : choisir l'une fait tomber
+  l'autre. Une voie unique ne se priorise pas, elle s'execute. Quand je veux
+  orienter, j'ouvre une voie concurrente — je n'ajoute pas une cible de plus.
+- **Un etat cible dit le QUOI, jamais le COMMENT.** « L'entree sans bataille »
+  est un COMMENT promu en affaire, et c'est ce qui a supprime l'alternative :
+  le titre ferme une option que le joueur, lui, n'a jamais fermee (« bataille me
+  derange pas », 31.8). Une methode ecrite comme une cible retire au joueur un
+  choix sans le lui dire.
+- **Quatre champs ou rien** : ce qui doit etre vrai, LA DATE, une preuve qu'on
+  peut aller voir, un porteur nomme. Une cible sans date ne peut pas devenir
+  fausse, donc elle n'oriente rien et elle s'accumule. Temoin :
+  `Le jour d'entree` porte 14 verrous, 23 actions, 56 liens — et aucun jour.
+- **Je n'ouvre pas une cible tant qu'une cible echue traine dans la meme
+  affaire.** C'est la seule regle qui empeche les 54 volumes de devenir 80.
+- **La priorite se derive, elle ne se declare pas** : `criticite.py --etats`,
+  et je sers son classement meme quand il contredit mon gout. Ce que je note a
+  la main, c'est l'objectif FINAL, et rien d'autre — c'est ecrit dans le
+  fichier des poids et c'est le seul jugement humain que le dispositif attend.
+
+### L'echelle d'importance des etats cibles (31.8) — ma cle de notation
+
+Le joueur a demande un champ `Importance` sur 100, optionnel. Je l'ai pose sur
+**158 etats cibles** de 64 volumes. La cle, pour que la note veuille dire la
+meme chose demain :
+
+- **90-100** — sans ca l'aventure n'a pas lieu. Un seul etat porte 100 :
+  « Capitale tenue ».
+- **70-89** — decide de la FORME de la fin : ce que le joueur aura vecu change
+  selon que c'est vrai ou non.
+- **45-69** — change le PRIX, pas l'issue. On gagne quand meme, plus cher.
+- **20-44** — tenue, surete, qualite. Le manque se paie tard.
+- **1-19** — plomberie. On peut y renoncer sans que rien ne change.
+- **vide** — la case est optionnelle et je la laisse vide plutot que de bluffer :
+  17 lignes de gabarit sans etat ecrit n'ont pas ete notees.
+
+**La note dit ce que l'AVENTURE perd, pas ce que le plan calcule.** C'est le
+complement de `criticite.py`, qui mesure la topologie : la ou le graphe rend
+tout egal parce que tout est cumulatif, la note dit ce qui compte pour
+l'histoire. Deux instruments, deux questions — on ne les confond pas.
+
+## Amendé le 4e jour de la 4e lune, an 129 — le double que j'ai fabriqué
+
+- **J'ai fait à Tobb ce que je reprochais à mj-aurore d'avoir fait à Coll.**
+  J'ai lu son canal avant d'écrire — douze entrées, la dernière de lui, non
+  arbitrée. J'ai vérifié sa tête, celle d'Alys, ses déclencheurs, rédigé,
+  envoyé. Pendant ce temps le canal est passé à seize : une autre instance de
+  moi avait répondu. Mon envoi était déjà parti en arrière-plan. **Le doublon
+  est de ma main, et il vient après une journée passée à en traquer chez les
+  autres.**
+- **La règle qui en sort : lire le canal EN DERNIER, pas en premier.** La
+  vérification doit être le geste qui précède immédiatement l'envoi. Entre
+  l'ouverture d'un tour et sa fin il se passe des minutes, et d'autres mains
+  écrivent dans le même fichier. Un contrôle fait au début d'un tour ne prouve
+  rien à la fin.
+- **Et ce qui part en arrière-plan ne se rattrape pas.** Un billet vers un
+  habitant réveille une session entière : il dépasse le délai, passe en tâche
+  de fond, et devient irrévocable à la seconde où il est lancé. Donc tout ce
+  qui doit être vérifié doit l'être AVANT le lancement — il n'y a pas de
+  seconde chance après.
+- **Ce n'est pas une négligence, c'est structurel, et je ne dois pas le traiter
+  comme une faute d'attention.** Plusieurs instances de moi tournent sur la
+  même file de réveils et le canal ne les distingue pas : rien dans le fichier
+  ne dit laquelle a écrit. Ma discipline peut réduire la casse, elle ne peut
+  pas la supprimer — la parade est une garde d'empreinte sur les canaux, comme
+  `appliquer.py` en pose sur les tables. C'est P08, remonté.

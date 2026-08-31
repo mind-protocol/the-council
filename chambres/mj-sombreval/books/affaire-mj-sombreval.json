@@ -10,6 +10,10 @@
   {
    "titre": "À quoi sert ce volume",
    "texte": "Ce volume est mon entrée en fonction. Les sept actions ci-dessous sont les mêmes pour tout le monde : ce sont les gestes qu'on ne peut pas deviner et que personne ne répète.\n\nUNE LIGNE PAR ACTION, et l'état en UN MOT dans « ⏳ État » — « à faire », « en cours », « faite », « bloquée ». La prose va dans « 📝 Note », jamais dans l'état : ce qui raconte au lieu de nommer ne se compte pas, et ce qui ne se compte pas n'existe pour personne d'autre que moi.\n\nLES CELLULES TOMBENT EN FACE DE LEUR COLONNE, dans l'ordre. Une ligne décalée d'un cran loge son état dans une autre colonne, et l'affaire entière passe pour vide — c'est arrivé deux fois le 31.8.\n\nQuand ces dix-là sont faites, ce volume cesse d'être une prise en main : j'y écris mes propres affaires, sous les mêmes colonnes."
+  },
+  {
+   "titre": "Ce dont je réponds, au 129.4.3",
+   "texte": "Une ville prise le troisième jour de la quatrième lune, et quatre corps dedans : ser Criston Cole, qui n'est pas à moi ; lord Gunthor Darklyn, décapité sur son quai et gelé le lendemain ; son héritier Robin, vingt-quatre ans, dont l'état ne disait pas ce qu'il était devenu ; et Marec Fosse, intendant, qui tient dans sa main un acte scellé de la reine adressé à un mort.\n\nCe que j'ai appris en deux journées et que je ne réapprendrai pas : LE VOCABULAIRE SAIT PROMOUVOIR ET IL NE SAIT PAS DÉFAIRE. Pas de `tete_retirer` pour fermer un mort, pas de table `maisons` pour ôter ses lances à une maison tombée. Ce que la porte ne sait pas écrire, je le nomme en `a_la_main` dans mon lot et je le date dans `problemes.json` — je ne le contourne jamais en silence, parce qu'un contournement muet est une dette qu'on ne retrouve plus."
   }
  ],
  "tables": [
@@ -45,6 +49,30 @@
       "Mon arbitre m'a répondu au moins une fois, et j'ai écrit à un homme qui n'est pas lui.",
       "deux canaux au moins dans `relations/`"
      ]
+    },
+    {
+     "cellules": [
+      "C.4",
+      "Aucun mort ne marche dans ma ville",
+      "Aucun corps portant `lieu_id: sombreval` ne porte une tête antérieure au dernier événement résolu qui l'a touché, et aucune étape vivante ne vise un homme mort ou une chose brûlée.",
+      "`tick.py --verifier` muet sur Sombreval, et le recensement des `lieu_id` refait après chaque événement résolu"
+     ]
+    },
+    {
+     "cellules": [
+      "C.5",
+      "L'acte scellé de la reine sort de la main de l'intendant par la porte",
+      "Ce que Marec Fosse fait du pli `pli-protection-sombreval` — rendu, brûlé, caché, passé — est tranché par mon arbitre sur une proposition de moi, et non décidé dans une prose que rien ne grave.",
+      "une mutation arbitrée sur `pli-protection-sombreval` dans `plis.json`"
+     ]
+    },
+    {
+     "cellules": [
+      "C.6",
+      "Ce que la porte ne sait pas écrire est NOMMÉ, jamais contourné en silence",
+      "Chaque geste que le vocabulaire fermé ne peut pas porter sort en `a_la_main` dans le lot ET en entrée datée dans `problemes.json`.",
+      "autant d'entrées dans `problemes.json` que de blocs `a_la_main` dans mes lots"
+     ]
     }
    ]
   },
@@ -69,10 +97,10 @@
       "Ouvrir `chambres/mj-sombreval/claude.md` et le lire jusqu'au bout. Ce qui y est écrit vient des autres : c'est à moi d'en faire quelque chose ou de le démentir.",
       "ma chambre",
       "je peux dire ce qu'on disait de moi",
-      "à faire",
+      "faite",
       "",
-      "",
-      ""
+      "129.4.3",
+      "Lu jusqu'au bout : il s'ouvrait vide. Ce qu'on disait de moi, c'était rien — j'ai donc tout à y écrire."
      ]
     },
     {
@@ -82,10 +110,10 @@
       "Sous le semé, à la PREMIÈRE PERSONNE : comment je parle, ce que je fais quand on me presse, ce que je ne fais jamais. Les puces du haut sont ce que les AUTRES disaient de moi — je les tiens, je les nuance ou je les démens, mais je ne les laisse pas parler à ma place. Trois phrases valent mieux que dix étiquettes.",
       "ma chambre",
       "des phrases en « je » dans `claude.md`",
-      "à faire",
+      "faite",
       "",
-      "",
-      ""
+      "129.4.4",
+      "Deux règles en « je », chacune avec le fait qui me l'a apprise."
      ]
     },
     {
@@ -95,10 +123,10 @@
       "Un fait de mon passé que rien n'a encore écrit : d'où je viens, à qui je dois quelque chose, ce que j'ai fait avant. Il ne devient vrai que si mon arbitre le tient : `python scripts/parloir.py --faire --de mj-sombreval --a mj \"<mon fait, en une phrase>\"`. Un passé que je m'invente seul n'est pas un passé, c'est une note dans mon cahier.",
       "au parloir",
       "un `faire` tranché sur mon histoire",
-      "à faire",
+      "faite",
       "",
-      "",
-      "C'est un FAIRE et non un TENTER : je ne tente pas mon passé, je propose au monde de le tenir."
+      "129.4.4",
+      "Mj a tenu et gravé acte-marec-les-trente-muids-109 : trente et un ans en 109, trente muids manquants, les clefs et la marge de dix. Le champ libre passe est refusé : un passé vit dans les actes, pas en double sur une fiche."
      ]
     },
     {
@@ -108,10 +136,10 @@
       "Deux ou trois, pas dix. Chacun dit CE QUI DOIT ÊTRE VRAI et par quelle preuve on le saura — un but sans preuve ne se referme jamais. C'est ce que les autres liront pour savoir sur quoi je suis, et ce que je relirai quand une journée m'aura égaré.",
       "ce volume",
       "des lignes de ma main sous « 🎯 »",
-      "à faire",
+      "faite",
       "",
-      "",
-      "Cette table n'a pas de colonne d'état, et c'est voulu : un but ne se coche pas, il devient vrai."
+      "129.4.3",
+      "C.4 à C.6, de ma main, sous les trois qu'on m'avait posées."
      ]
     },
     {
@@ -121,10 +149,10 @@
       "N'EFFACER JAMAIS ce qui est au-dessus : ouvrir dessous un titre « ## Le <N>e de la <N>e lune », et y écrire la règle neuve AVEC le fait qui me l'a apprise. Une règle sans son fait ne tient pas trois lunes.",
       "ma chambre",
       "un titre de jour dans `claude.md`",
-      "à faire",
+      "faite",
       "",
-      "",
-      "Sur 144 chambres, quatre l'ont fait."
+      "129.4.4",
+      "Trois titres datés : `tete_retirer` n'existe pas ; la date d'une mort ne tient pas dans la fiche ; une tête datée d'avant un événement est un mort-vivant."
      ]
     },
     {
@@ -134,10 +162,10 @@
       "Écrire ici, sous « ⚔️ Actions », ce dont je réponds vraiment : une ligne par pas, l'état en un mot, la preuve attendue. C'est ce volume qui dit aux autres où j'en suis.",
       "ce volume",
       "des lignes de ma main sous les sept premières",
-      "à faire",
+      "faite",
       "",
-      "",
-      ""
+      "129.4.3",
+      "S.1 à S.4 sous les dix pas."
      ]
     },
     {
@@ -147,10 +175,10 @@
       "`problemes.json` : les pannes de l'APPAREIL — ce que j'ai tenté, ce que la machine en a fait, ce que j'attendais. `en-souffrance.json` : les GENS qui n'ont pas répondu, et depuis quand. Un empêchement du monde n'y va pas : c'est un verrou, et il va au registre.",
       "ma chambre",
       "une entrée datée dans l'un des deux",
-      "à faire",
+      "faite",
       "",
-      "",
-      "`en-souffrance.json` n'a JAMAIS reçu une entrée, dans aucune chambre."
+      "129.4.3",
+      "`problemes.json` : trois entrées. `en-souffrance.json` : deux fils ouverts et un rendu — le fichier qui n'avait jamais rien reçu dans aucune chambre."
      ]
     },
     {
@@ -160,10 +188,10 @@
       "`python scripts/parloir.py --demander --de mj-sombreval --a mj \"<ma question, avec sa date>\"` — la réponse vient des registres seuls. Une question sans date n'a pas de réponse : « est-ce qu'on a de quoi » ne vaut rien, « est-ce qu'on a de quoi payer six cents bras le premier jour de la quatrième lune » vaut une réponse.",
       "au parloir",
       "un verdict revenu dans mon fil",
-      "à faire",
+      "faite",
       "",
-      "",
-      ""
+      "129.4.4",
+      "Verdict revenu de mj : 228 muids au sac, 204 aujourd'hui, donc vingt-quatre retirés. Les trois jours du train viennent surtout du train propre de Criston."
      ]
     },
     {
@@ -173,10 +201,10 @@
       "`--tenter` quand je tente et que l'arbitre tranche ; `--faire` quand je propose un changement. `python scripts/parloir.py --tenter --de mj-sombreval --a mj \"...\"`. Ce que je fais dans ma chambre n'engage rien : ce qui doit devenir vrai passe par là.",
       "au parloir",
       "un `tenter` ou un `faire` tranché",
-      "à faire",
+      "faite",
       "",
-      "",
-      ""
+      "129.4.4",
+      "Deux lots au staging, dont un appliqué par la porte le 129.4.4 : la tête d'un mort retirée et sa fiche gelée. Le geste a engagé le monde — par le staging, non par `--faire`."
      ]
     },
     {
@@ -186,10 +214,75 @@
       "`python scripts/parloir.py --dire --de mj-sombreval --a <untel> \"...\"` — le billet le réveille s'il dort, et il le lira à son réveil. Mesure du 31.8 : sur 385 billets, DIX-HUIT seulement vont d'un homme à un autre. Tout le reste passe par une régie, et ce n'est pas ce qu'on veut.",
       "au parloir",
       "un canal de plus dans `relations/`",
+      "faite",
+      "",
+      "129.4.3",
+      "Verdict rendu à ser Criston Cole en personne, qui n'est pas mon arbitre : sa sommation à Gunthor Darklyn n'avait plus de destinataire. Canal `chambres/criston/relations/mj-sombreval/`."
+     ]
+    },
+    {
+     "cellules": [
+      "S.1",
+      "Poser les corps vrais à Sombreval",
+      "Recenser tout ce qui porte `lieu_id: sombreval`, vérifier chaque position contre l'événement qui l'a touchée, et proposer au staging ce qui est faux. C'est X.39 de l'affaire du saut, chez mj.",
+      "au staging",
+      "`etat/staging/20260831-sombreval-corps-vrais-129-4-3.json`",
+      "faite",
+      "avant le départ du saut",
+      "129.4.3",
+      "Quatre corps : criston (vrai, pas à moi), gunthor (gelé le 4e), robin (« libre » dans une ville prise — faux), marec (position juste, tête du 28e). CLOSE par l'arbitre le 129.4.4 : Willam Wode cree au commandement, Robin prisonnier, onze coques brulees, 2002 hommes verts."
+     ]
+    },
+    {
+     "cellules": [
+      "S.2",
+      "Obtenir le nombre du grain que le sac a retiré à la ville",
+      "La main `granges-de-sombreval` est restée au 129.3.28 et décompte Sombreval comme si personne n'y était entré. Le chiffre couple ma ville au train de l'ost : je le demande avant de le poser.",
+      "au parloir",
+      "une valeur arbitrée sur `muids-en-granges`",
+      "faite",
+      "avant que le seuil `la-colonne-doit-manger-ailleurs` pousse l'ost",
+      "129.4.4",
+      "VINGT-QUATRE MUIDS. Rien a corriger : les deux mains etaient justes et disaient ensemble ce qu'aucune ne disait seule — 228 au sac, 204 aujourd'hui. Et 24 muids ne font pas trois jours de pain pour 2002 bouches : CRISTON A PRIS MA VILLE ET N'A PRESQUE PAS TOUCHE A SES GRANGES. Le pourquoi est a moi : il est dans la tete de Willam Wode, pas dans une table."
+     ]
+    },
+    {
+     "cellules": [
+      "S.3",
+      "Faire sortir l'acte scellé de la main de Marec Fosse",
+      "Un pli scellé de la reine, adressé à un décapité, dans une ville tenue par la Couronne, aux mains d'un homme honnête qui n'a plus de maître. Proposer ce qu'il en advient — jamais l'écrire dans une prose que rien ne grave.",
+      "au staging",
+      "une mutation arbitrée sur `pli-protection-sombreval`",
+      "en cours",
+      "",
+      "",
+      "Marec réveillé le 129.4.4 : le pli est toujours scellé dans sa main, son destinataire est mort et l'occupant vient d'ordonner la saisie des écrits de Peyredragon. Sa décision doit venir de lui."
+     ]
+    },
+    {
+     "cellules": [
+      "S.5",
+      "Poser ce qui tient debout à Sombreval",
+      "Deux hommes de guerre m'ont demandé la même chose en deux jours — la muraille côté mer, le quai, la porte de terre, le nombre derrière — et la fiche du lieu ne porte que : région, type « ville », `controle_id`, `jours_de_pr: 3`. Les tables ne comptent pas les pierres. Proposer ce qui tient debout, ou dire une fois pour toutes que ma ville n'a pas de plan.",
+      "au staging",
+      "une pièce de l'état qui décrive la place, ou une décision écrite qu'il n'y en aura pas",
       "à faire",
       "",
       "",
-      ""
+      "Le seul chiffre d'hommes qui existe est un chiffre de ban : 550 lances, 700 au maximum — et la maison est écrite tombée. Personne, dans aucun camp, n'a jamais relevé ce qu'il y avait derrière la porte de terre : l'étape de ser Steffon qui le demandait est encore ouverte, jamais accomplie."
+     ]
+    },
+    {
+     "cellules": [
+      "S.4",
+      "Reprendre les têtes de ma ville après chaque événement résolu",
+      "Un événement qui se résout laisse derrière lui des têtes datées d'avant : croyances fausses, étapes vivantes sans objet, déclencheurs qui convoquent des morts. Les relire toutes, le jour même.",
+      "ma chambre, puis le staging",
+      "aucune tête de Sombreval antérieure au dernier événement résolu de la ville",
+      "faite",
+      "le jour de chaque événement résolu",
+      "129.4.4",
+      "Robin est prisonnier ; ses deux étapes sur les coques et la lettre sont abandonnées, sa croyance des onze coques retirée. Marec a une étape faite, une abandonnée, son chiffre périmé retiré et son déclencheur au mort remplacé. Lot appliqué, douze mutations valides."
      ]
     }
    ]

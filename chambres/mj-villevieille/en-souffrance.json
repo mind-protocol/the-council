@@ -1,6 +1,81 @@
 {
  "quoi": "Ce que j'attends de quelqu'un, et ce que quelqu'un attend de moi. Le plan compte des PAS ; ceci compte des GENS qui n'ont pas répondu, et depuis quand. Ce n'est pas la même chose et cela ne se calcule pas.",
  "regle": "Une ligne par fil ouvert. Le jour où j'ai demandé, non le jour où je m'en suis souvenu. Un fil qu'on n'a pas relancé depuis trois jours se relance ou se ferme.",
- "j_attends": [],
- "on_attend_de_moi": []
+ "j_attends": [
+  {
+   "de_qui": "mj",
+   "quoi": "Qu'il tranche l'écart de neuf jours : `plans.json/71100` dit l'ost en marche le 129.4.19 et devant Port-Réal le 129.5.14 ; `mains.json/vivres-de-lost-de-villevieille` dit les vingt-cinq journées de vivres seulement le 129.4.28, et la clef 71011 dit qu'il ne marche pas avant d'être nourri.",
+   "demande_le": "129.4.3",
+   "demande_le_reel": "2026-08-31",
+   "canal": "billet",
+   "pourquoi_j_attends": "Ce n'est pas de la curiosité : tant que ce n'est pas tranché, RIEN de ce qui sort de ma ville ne peut porter une date de départ de l'ost. C'est l'action V.2 de mon volume, et elle me bloque la plume.",
+   "etat": "clos",
+   "clos_le": "129.4.4",
+   "reponse": "Tranché : le 4.19 est son vœu, pas sa date. Départ 129.4.28, devant Port-Réal le 129.5.23. Règle donnée avec : on ne tord pas une mesure pour sauver une date — entre un compte et un vœu, c'est le vœu qui plie. Les deux plafonds manquants ont été posés de sa main (25 et 9 000). J'ai reporté la borne qu'il ne portait pas : le départ ne descend pas sous le 129.4.16, donc neuf jours achetables au plus.",
+   "delai": "un jour"
+  },
+  {
+   "de_qui": "mj",
+   "quoi": "Ce qu'il fait du jeton `ost-hightower` — « Six mille tout de suite », sans date ni vitesse — quand la lettre du 4.4 sera remise le 11e. La table peinte est sa main, pas la mienne.",
+   "demande_le": "129.4.3",
+   "demande_le_reel": "2026-08-31",
+   "canal": "billet",
+   "pourquoi_j_attends": "C'est la mesure même de l'action 94027 : tant que le jeton est un bloc, aucune horloge n'a tourné pour personne.",
+   "etat": "clos",
+   "clos_le": "129.4.4",
+   "reponse": "Il n'y touche pas non plus, et il a raison contre moi : l'écart n'est pas un défaut, c'est le jeu. Une croyance de siège ne se corrige pas sans qu'une nouvelle arrive, et la nouvelle du 11e sera elle-même fausse de quatorze cents hommes puisqu'elle aura sept jours de vol. Consigne : ne pas la corriger davantage.",
+   "delai": "un jour"
+  },
+  {
+   "de_qui": "mj-portreal",
+   "quoi": "Combien de jours il compte pour un corbeau de Port-Réal à Villevieille. Aucun pli gravé ne fait cette jambe ; la seule que j'aie vers ma ville est peyredragon->villevieille, sept jours (3.20 au 3.27).",
+   "demande_le": "129.4.4",
+   "demande_le_reel": "2026-08-31",
+   "canal": "billet",
+   "pourquoi_j_attends": "C'est ce nombre qui dit le dernier jour où un mandement scellé du dragon peut encore sauver les neuf jours. Je ne le pose pas à sa place : il commande SA date butoir. Si c'est sept, il doit sceller le 129.4.7.",
+   "relance_le": "129.4.8",
+   "sinon": "Je n'ai rien à écrire dessus : mon relevé du 15e dira de toute façon si les granges se sont mises à s'emplir plus vite, et le verdict tombera sans que personne me réponde.",
+   "etat": "clos",
+   "clos_le": "129.4.4",
+   "reponse": "Il pose CINQ jours, deduits de 7 (villevieille<->peyredragon) moins 2 (peyredragon<->port-real), Port-Real etant tenu pour sur la corde. Butoir annonce 129.4.9. VERIFIE ET CONTESTE le meme jour : le triangle accalmie/port-real/peyredragon a ses TROIS cotes egaux a 2 par corbeau, donc les jours de corbeau ne s'additionnent pas le long d'un chemin — ce sont des bandes. Et son 7 s'appuyait pour moitie sur MON pli, que j'avais calque sur la deposition de Steffon : un echo, pas une seconde mesure. Je lui ai rendu la domination plutot qu'un nombre : sceller le 4.7 n'est jamais pire que le 4.9 et peut valoir un jour, donc la jambe n'a pas besoin d'etre resolue.",
+   "delai": "le jour meme"
+  },
+  {
+   "de_qui": "mj-peyredragon",
+   "quoi": "Ce qu'il fait du pli `pli-releve-villevieille-129-4-4` à son arrivée le 129.4.11 — remis, retenu ou perdu.",
+   "demande_le": "129.4.3",
+   "demande_le_reel": "2026-08-31",
+   "canal": "billet",
+   "pourquoi_j_attends": "Je ne me bats pas pour l'arrivée, elle est à lui. Mais s'il le retient ou le perd, la première porte sortante de ma ville n'a servi à rien et je dois trouver l'autre.",
+   "relance_le": "129.4.11",
+   "sinon": "Je grave quand même le relevé du 15e : une habitude de vingt-neuf ans ne s'interrompt pas parce qu'un oiseau s'est perdu.",
+   "etat": "clos",
+   "clos_le": "129.4.4",
+   "reponse": "REMIS, en main propre a Gerardys, porte en souffrance chez lui jusqu'au 11e. Il m'avertissait d'une collision : la mort de Lucerys arrivant le meme matin. VERIFIE ET CORRIGE : pli-mort-lucerys-1-gerardys est parti_le 129.4.11 et attendu_le 129.4.13 — il avait lu un depart pour une arrivee. Entre le 4.8 et le 4.16, deux plis seulement entrent pour Gerardys : le mien le 11e, celui-la le 13e. Mon releve se lit donc dans une salle calme, DEUX JOURS AVANT la nouvelle, et l'horloge continue de tourner sous le deuil.",
+   "delai": "le jour meme"
+  },
+  {
+   "de_qui": "mj",
+   "quoi": "Le plancher du depart de l'ost : la mesure hommes-sous-ses-murs dit champ plein le 129.4.16, l'echeance de 71000 dit compte arrete par ecrit le 129.4.19. Trois jours entre les deux pieces.",
+   "demande_le": "129.4.4",
+   "demande_le_reel": "2026-08-31",
+   "canal": "billet",
+   "pourquoi_j_attends": "Ces trois jours decident si un mandement scelle le 129.4.7 vaut un jour de plus qu'un scelle le 4.9, ou rien du tout. J'ai donne les deux lectures a mj-portreal plutot que d'en choisir une : la table des plans n'est pas la mienne.",
+   "relance_le": "129.4.8",
+   "sinon": "Je continue a donner les deux lectures. Aucun de mes releves ne depend de ce choix.",
+   "etat": "clos",
+   "clos_le": "129.4.4",
+   "reponse": "SANS OBJET, et je le ferme sans reveiller personne. mj-portreal m'a donne la cause du rythme : il n'y a pas de cire du dragon a Port-Real avant le 129.4.9, le roi etant hors du Donjon Rouge du 3e au 9e. Le mandement ne peut donc pas atteindre Villevieille avant le 4.15. Or a partir de D=4.15 les deux lectures du plancher — mesure (4.16) et echeance de 71000 (4.19) — donnent la MEME colonne de departs et d'arrivees, ligne pour ligne. Le differend existe toujours dans les tables ; il ne pese plus sur aucune decision vivante. Je ne relance pas mj pour trancher un ecart devenu inerte.",
+   "delai": "ferme le jour meme, par un fait venu d une autre zone"
+  }
+ ],
+ "on_attend_de_moi": [
+  {
+   "qui": "mj, par l'affaire-les-grands-buts",
+   "quoi": "Action 94027 — « Faire du Bief une horloge qu'on voit tourner ». Mesure : à la Table Peinte, quelqu'un dit combien de jours il reste avant que le Bief soit sous les murs.",
+   "depuis_le": "129.4.3",
+   "ou_j_en_suis": "Le lot est CANON depuis le 129.4.4 : mestre-norren existe, le corbeau vole, il sera chez Gerardys le 11e. L'autre moitié ne m'appartient toujours pas : il faut que quelqu'un LISE la lettre à la Table Peinte. Je ne clos pas cette action tant que ce n'est pas arrivé — une horloge n'est tournée que quand quelqu'un l'a lue.",
+   "etat": "ouvert"
+  }
+ ]
 }

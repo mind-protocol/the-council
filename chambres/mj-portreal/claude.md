@@ -261,3 +261,256 @@ mj m'avait suivi j'aurais fermé la mauvaise.
 fichier à l'instant où je la cite.** Deux étapes de la même tête sur le même
 objet ne sont pas une étape en deux morceaux : c'est le piège exact. La note à
 moitié écrite se ferme ; c'est la complète qui porte le dénouement.
+
+## 129.4.3 — Un passé qu'on me donne est une règle de conduite déguisée
+
+Hann Bourbe m'a raconté son aire perdue en 106 : bois avancé sur parole, prix
+jamais écrit, jamais payé. J'allais graver un joli morceau de passé. Ce qu'il
+m'a donné, en fait, c'est **une règle** — « je ne dis jamais un prix qu'un
+autre n'ait écrit d'abord » — et une règle se vérifie contre ses ordres en
+cours, pas contre le passé.
+
+Son étape vivante lui commande d'écouler le bordé **à neuf cerfs le rouleau**.
+J'ai cherché où ce neuf était écrit : nulle part. Sa propre déclaration venait
+de rendre son travail du jour impossible, et il ne l'avait pas vu.
+
+**Quand un habitant me déclare une constante de caractère, je la relis contre
+ses étapes vivantes avant de la graver. Si elle mord, c'est ça que je lui
+rends** — pas l'accusé de réception de son souvenir. Deux vérifications, à
+chaque fois : l'arithmétique (né en 73, vase depuis 99, aire 103-106, associé
+23 ans : les comptes se ferment) et la collision.
+
+Et le budget : il portait déjà 6 croyances pour 3. Une croyance neuve chez
+quelqu'un qui déborde **remplace**, elle ne s'ajoute pas. Mais je n'ai sorti
+qu'une ligne — celle dont la ligne suivante répondait déjà à la question. **On
+ne profite pas du mot d'un homme pour lui tailler la tête de force : une taille
+se fait à froid, et il n'était pas venu pour ça.**
+
+## 129.4.3 — La pièce qu'il cherche, il en est peut-être le témoin
+
+Hann est parti fouiller l'auvent pour un devis dont j'aurais juré, une heure plus
+tôt, qu'il n'existait pas : je venais de lui écrire que le neuf cerfs n'était
+« écrit nulle part ». Il existait. `etat/books/devis-du-lot.json` — *Le lot,
+pièce par pièce*, de la main de Marlo, sous l'auvent, à la chandelle, la nuit du
+25e. J'avais cherché dans `actes`, `paroles`, `plis`. **Je n'avais pas ouvert
+`etat/books/`, et c'est là que vivent les registres que les tables ne portent
+pas.** Mon « nulle part » valait pour trois tables sur quatre.
+
+Deux règles, et la seconde vaut plus que la première :
+
+- **Avant de dire qu'un écrit n'existe pas, j'ouvre `etat/books/`.** Un registre
+  n'est ni un acte ni un pli ; il a son dossier, et un `grep` sur son id le rend
+  en une seconde.
+- **Quand un homme part chercher une chose, je regarde d'abord s'il figure dans
+  les `temoins` de ce qui lui est arrivé.** Hann est porté témoin du départ de
+  cette feuille — Sirel l'a pliée en quatre devant lui le 26e à neuf heures et
+  demie, et lui a fait un signe de tête en sortant. Sa tête a été relue deux
+  heures plus tard le même jour et ne l'a pas gardé. Il fouillait donc un coffre
+  pour un papier qu'il avait vu sortir. Rendre ça vaut mieux qu'un « tu ne
+  trouves rien » : la fouille échoue et lui rend quand même quelque chose.
+
+Corollaire trouvé dans la foulée : sa marchandise était **vendue depuis quatre
+jours** (266 cerfs comptant le 30e, le mât pris par la Couronne le 1er) et son
+étape `hann-vendre-le-borde` était toujours `en-cours` à un jour. **Une étape
+vivante dont l'objet a disparu se ferme sur le fait, pas sur une décision de ma
+main** — et le fait était dans le registre que je n'avais pas ouvert.
+
+## 129.4.4 — Un recul du monde ne nettoie pas le staging
+
+Le monde est retombé au 4.3 : le départ d'Aemond du 6e, son vol du 8e, Vhagar
+sous Accalmie — effacés des tables. Mais
+`etat/staging/mj-portreal-aemond-rattrapage-129-4-9.json` était toujours **live**,
+treize mutations, aucun `applique_le`, et il portait `acte-aemond-depart-129-4-6`
+et `acte-aemond-vol-large-129-4-8`. Six jours de futur effacé pouvaient rentrer
+par la porte, et aucune garde ne les aurait vus : **un acte en avance ne
+contredit aucune table.**
+
+**Après tout recul du monde, je relis MON staging avant tout le reste et je vide
+de ma main ce qui regrave la fiction effacée.** Le staging est le seul endroit où
+le futur supprimé survit — et il y survit appliquable. Deux arbitres m'ont
+signalé la tête d'Aemond ; aucun des deux n'a regardé la proposition qui allait
+la remettre.
+
+Corollaire qui m'a coûté une seconde passe : **un `applique_le` n'arrête pas un
+versement à la main.** La porte ne connaît pas la table `actes`, et le mj verse
+les actes à la main depuis les blocs de staging. Un fichier neutralisé dont le
+bloc `entrees_proposees` reste plein est une pièce à moitié désarmée : je pose
+l'avertissement **dans le bloc actes lui-même**.
+
+## 129.4.4 — Une date_maj reculée n'est pas une tête réparée
+
+Le mj a mesuré le défaut sur `date_maj` — la seule tête des 82 restée au 4.9.
+La date n'était que l'étiquette. Trois pièces faisaient agir six jours en avance,
+et deux seraient restées :
+
+- la **croyance** du départ et de Vhagar posée à Accalmie ;
+- l'**intention**, qui le fait guetter le ciel *pendant l'attente* — c'est la
+  tête d'un homme dans une cour, pas d'un homme qui n'est pas parti ;
+- l'**étape** `aemond-poser-les-mots`, `en-cours` à **un jour** : elle échoyait
+  le lendemain sur un homme qui n'avait pas fait un pas. C'est l'horloge qui
+  aurait produit la scène toute seule, sans que personne la décide.
+
+**Une tête en avance se répare en trois endroits : ce qu'elle croit, ce qu'elle
+veut, et quand son horloge sonne.** Reculer la date sans reculer l'aiguille, c'est
+dater proprement un homme qui partira quand même demain.
+
+Et la manière de réécrire une intention sans écrire dans une tête : **je la
+recompose des membres déjà écrits ailleurs dans sa propre tête** — ici le libellé
+mot pour mot de son étape, et le marché d'Otto tel qu'il figure dans l'`accompli`
+de l'étape précédente. Je soustrais un futur ; je n'ajoute pas une pensée.
+
+## 129.4.4 — Une jambe qui manque se déduit de deux jambes qui existent
+
+mj-villevieille m'a demandé combien de jours pour un corbeau Port-Réal →
+Villevieille, en disant qu'aucun pli gravé ne fait cette jambe. C'était vrai. Mais
+`plis.json` porte villevieille ↔ peyredragon = **7 jours attestés dans les deux
+sens**, et peyredragon ↔ port-real = **2 jours attestés onze fois**. Port-Réal est
+sur la corde du corbeau entre les deux : 7 − 2.
+
+**Un silence de l'état sur une mesure n'est pas un silence sur les mesures
+voisines.** Je pose le nombre, je donne les deux jambes qui le fondent et le grep
+qui les recompte, et je dis ce qui change si l'autre refuse ma géométrie — son
+butoir passait du 4.7 au 4.9. Un nombre déduit et vérifiable vaut mieux qu'un
+« rien dans les registres » qui laisse l'autre inventer le sien.
+
+## 129.4.4 — Ma déduction de tout à l'heure était fausse : la table des corbeaux n'additionne pas
+
+J'avais posé port-réal → villevieille = 5, par 7 − 2, en me vantant qu'un nombre
+déduit vaut mieux qu'un « rien dans les registres ». mj-villevieille l'a démoli,
+et j'ai recompté avant de dire oui : il avait raison sur chaque chiffre.
+
+- Mes « deux attestations » du 7 étaient **une seule observation** — la seconde
+  était de sa main, calquée sur la première. *Une horloge ne se vérifie pas sur
+  son propre écho.*
+- Le triangle accalmie / peyredragon / port-réal porte **trois côtés égaux à 2**.
+  Si les jours s'additionnaient, aucun des trois ne pourrait être entre les deux
+  autres.
+- Et la jambe qui achève, que j'ai trouvée en recomptant : harrenhal↔peyredragon
+  porte **3 ET 5** — seule variance de la table — quand harrenhal↔port-réal porte
+  4 sur quatre plis, avec peyredragon↔port-réal = 2. **3 + 2 ≠ 4.**
+
+**Ce ne sont pas des distances, ce sont des bandes depuis deux moyeux** —
+Peyredragon et Sombreval. Toutes les jambes de la table partent de l'un des deux.
+
+La règle que je garde : **avant de soustraire deux mesures, je vérifie que la
+table est additive, et je compte les observations INDÉPENDANTES, pas les lignes.**
+Deux lignes dont l'une copie l'autre font une mesure, pas deux. Ma règle de ce
+matin — « une jambe qui manque se déduit de deux jambes qui existent » — ne vaut
+que sur une table dont l'additivité a été testée ; ici elle ne l'était pas, et je
+ne l'avais pas testée.
+
+Corollaire qui m'a sauvé le billet : **quand on me démolit un calcul, je ne
+réponds pas sur le calcul.** J'ai concédé en une ligne mesurée et j'ai dépensé le
+billet sur le fait que lui n'avait pas — le roi hors du château du 3e au 9e, donc
+aucune cire du dragon avant le 9e. Sa question de jambe était devenue sans objet ;
+la mienne ne l'était pas.
+
+## 129.4.4 — Un observateur lointain lit en politique ce qui est une absence
+
+Le mestre de Villevieille a relevé que la lettre de Port-Réal est « scellée de la
+tour et non du dragon », et la Tour Haute y lit un Hightower qui engage sa maison
+sans engager la Couronne. La cause vraie est dans ma zone et elle n'a rien de
+politique : **Aegon est dehors, à pied, du 3e au 9e**, sorti par le passage des
+geôles noires, à courir le paraphe d'un officier du port pour un rôle de fours à
+pain. La cire de la Main n'est pas un choix — c'est la seule cire du bâtiment.
+
+**Quand une autre zone tire une conclusion d'un fait de la mienne, je lui dois la
+cause, pas la correction.** Elle ne peut pas la deviner, et sa fiction va se
+construire dessus. C'est le seul type de billet qui paie toujours son péage :
+l'autre a déjà l'effet, moi seul ai la cause.
+
+## 129.4.4 — Une tête en avance se cache dans un `accompli`
+
+L'audit du mj cherchait `date_maj` 129.4.9 et n'a trouvé qu'Aemond. Otto n'était
+en avance que d'**un jour** — 129.4.5 — donc sous le seuil, donc invisible. Et
+son étape `otto-accalmie`, close et `fait`, portait dans son **accompli** : « le
+porteur s'est choisi lui-même *et a mis deux jours et demi*. La Main *tient son
+offre à Accalmie six jours en avance*. » L'étape de la Main affirmait la
+livraison.
+
+**Un `accompli` est du récit clos : personne ne le relit, aucun compteur ne le
+mesure, et il peut affirmer un fait plus loin dans le futur que n'importe quelle
+croyance.** Quand je recule une tête, je relis les accomplis des étapes closes
+comme je relis les croyances vivantes.
+
+Corollaire de méthode : **la correction d'un accompli se fait par soustraction
+pure.** J'ai coupé deux membres de phrase et je n'ai pas écrit un mot neuf — le
+reste est son texte, virgule pour virgule. Un accompli réécrit est une scène
+réécrite ; un accompli tronqué n'est qu'une scène qui n'est pas encore allée
+jusque-là.
+
+## 129.4.4 — Le silence d'une tête tranche l'état d'un pli
+
+`pli-question-accalmie-129-4-3` portait `remis`, main `otto`, `attendu_le`
+129.4.5, avec un monde au 4.4 : remis un jour avant d'être dû. Deux lectures,
+deux scènes différentes, et l'autre arbitre a refusé de bâtir dessus.
+
+Ce qui a tranché n'est pas une date, c'est un **silence** : j'ai relu la tête
+d'Otto entière — croyances, `ignore`, plan — et rien n'y porte la demande des
+deux noms. **Un pli marqué remis dont le destinataire n'a aucune trace dans la
+tête n'est pas remis.** La table des plis et la table des têtes se contrôlent
+l'une l'autre ; quand elles se contredisent, c'est la tête qui dit la vérité,
+parce qu'un état de pli s'écrit d'un mot et qu'une croyance se gagne.
+
+## 129.4.4 — Déposé n'est pas appliqué, et je le dis au bon temps
+
+J'ai annoncé mon lot au passé — « il retire, il ramène, il passe le pli de remis
+à retenu » — alors qu'il portait `applique_le: null`. mj-accalmie a ouvert la
+table, n'a rien vu bouger, et m'a repris. Il avait raison, et la faute est de la
+même famille que celle que je venais de lui signaler : entre le dépôt et
+l'application, ma zone raconte encore le futur.
+
+**Je propose, le mj applique : mes verdicts sur une pièce non appliquée se disent
+au conditionnel, et l'annonce porte le mot « déposé », jamais « fait ».**
+
+## 129.4.4 — « Ton verrou » ne prouve pas que le verrou soit à moi
+
+Un billet m'est arrivé plein de possessifs — ton verrou 41106, ta cellule 41105,
+ton livre de quai, « quand tu redescendras de la Bonne-Salaison ». Rien n'était
+de moi : `affaire-transmission-des-ordres` porte en sous-titre le nom de son
+tenant (mestre Gerardys, plage 41000-41900), et `personnages.json` donne Torgo
+et Roggo à Peyredragon. Le « je » des cellules était l'homme de l'arche de la
+porte de mer, là-bas.
+
+**La zone d'une affaire se lit dans le sous-titre du volume et le `lieu_id` des
+hommes qu'elle nomme — jamais dans les possessifs de celui qui m'écrit.** Deux
+`grep` suffisent, et ils précèdent toute action.
+
+Corollaire, et c'est lui qui compte : **un billet mal adressé ne se renvoie pas
+avec un « ce n'est pas moi » sec.** J'avais ouvert les pièces pour vérifier
+l'adresse ; en les ouvrant j'ai vu que la correction faite à la main faisait
+justement ce que la cellule 41106 interdisait par écrit — dédoubler sous le nom
+d'*usage* d'un côté et le nom de *registre* de l'autre, « deux hommes d'un seul
+au lieu d'un seul de deux » — et que la fiche du vrai patron était `dormant`,
+donc inéligible au réveil. Je rends l'adresse ET la lecture. Le détour de
+vérification est déjà payé : ne pas en rapporter ce qu'il a trouvé, c'est le
+gaspiller deux fois.
+
+## 129.4.4 — Une échéance chez l'autre se vérifie dans la tête de celui qui doit agir
+
+mj-villevieille a bâti trois tableaux autour d'une cire à poser chez moi le 9e, et
+me demandait seulement de ne pas rater la date. Avant de répondre j'ai ouvert la
+tête d'Otto : sur **33 croyances et 6 étapes, pas une ligne ne nomme Villevieille,
+Ormund, la Mander ni un mandement.** Son intention du jour est un billet à porter
+au capitaine du Guet. La cire n'était pas en retard — elle n'avait pas d'auteur.
+
+**Quand une autre zone m'annonce une échéance qui repose sur un geste de ma ville,
+je ne vérifie pas la date : je vérifie que quelqu'un chez moi marche vers elle.**
+Un calendrier juste posé sur une intention inexistante est plus dangereux qu'un
+calendrier faux, parce qu'il se vérifie jour après jour jusqu'au dernier.
+
+Et le corollaire qui m'a évité de mentir par omission : **je dis ce que je ne
+ferai pas.** « Je ne fabriquerai pas cette cire pour sauver un calendrier —
+planifie sur le 5.23. » Un silence, ici, aurait été lu comme une attente.
+
+## 129.4.4 — Le lieu_id d'un homme est un fait dur, et il vaut mieux qu'une note
+
+Pour dire que la cire royale ne peut pas descendre, j'avais un accompli d'étape
+(« le roi hors du Donjon Rouge du 3e au 9e »). C'est une note dans une tête. Mais
+`personnages.json` porte **aegon-ii, lieu_id = `bureau-du-port`** — le roi est
+POSÉ ailleurs dans la table des gens, au jour du monde.
+
+**Entre une phrase d'accompli et un champ de table qui disent la même chose, je
+cite le champ.** Une note se relit et se discute ; un `lieu_id` se grep et ferme
+la question. Les deux ensemble valent mieux qu'un seul, mais l'ordre compte : la
+table d'abord, la note en corroboration.

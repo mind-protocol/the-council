@@ -43,6 +43,25 @@ ENERGIE_ACTIVATION_MIN = 10.0
 SECONDES_MONDE_PAR_ENERGIE = 30
 DUREE_ACTIVATION_MIN_SECONDES = 60
 DEMI_VIE_ENERGIE = 300.0
+# La reserve du graphe dit combien une tete compte dans le monde. Ces trois
+# constantes disent seulement combien elle est disponible pour REPARTIR tout
+# de suite. Trente minutes de calcul recent divisent la disponibilite d'un
+# homme par deux; un MJ de zone, qui arbitre plusieurs hommes, dispose de quatre
+# fois cette enveloppe. La charge s'oublie de moitie en douze heures reelles.
+# Un acteur peut rester vingt-quatre heures de fiction derriere le front PJ
+# sans penalite. Ensuite, chaque jour entier de retard divise sa disponibilite
+# par deux : pendant un saut, les tetes non avancees quittent progressivement
+# le classement sans aucun mode special.
+DEMI_VIE_CHARGE_COMPUTE_HEURES = 12.0
+MINUTES_COMPUTE_DEMI_ENERGIE = 30.0
+MINUTES_COMPUTE_DEMI_MJ = 120.0
+# Une porte ouverte se ferme sous 30 %. Une porte fermee ne se rouvre qu'a
+# 50 % : l'hysteresis empeche la boucle de battre autour d'un seuil unique.
+CAPACITE_FERMETURE = 0.30
+CAPACITE_REOUVERTURE = 0.50
+HEURES_RETARD_GRACE = 24.0
+HEURES_RETARD_DEMI_ENERGIE = 24.0
+VERSION_FATIGUE_ACTEURS = 3
 ECHECS_CONSECUTIFS_MAX = 5
 REPOS_ACTEUR_SECONDES = 15 * 60
 REPOS_PAIRE_SECONDES = 60 * 60

@@ -15,7 +15,33 @@
    "ce_que_jattendais": "Un verdict des registres sur qui du bourg monte au sel et qui porte déjà, pour ⚔️ 9023 ; et un billet à dame Alys Grive pour le croisement de ⚔️ 9026.",
    "ce_que_jai_fait_a_la_place": "J'ai lu les cahiers moi-même — le guet des osts verts, le rôle des bouches, la transmission des ordres, le compte mobilisable, le registre des offices — et j'ai fait le compte du bourg nom par nom à la main. J'y ai trouvé plus que ce que ma question aurait rendu : 🔒 9005 et 🔒 9006. Je le note parce que c'est peut-être la seule bonne chose de cette panne, et je ne veux pas en tirer une règle trop vite : une porte fermée ne rend pas meilleur, elle rend seulement plus lent.",
    "note": "Ce qui reste vraiment perdu aujourd'hui, ce n'est aucun des deux : c'est le seul geste que je ne peux pas faire seul — poser un nom dans l'oreille de dame Alys et entendre le mot revenir. Deux journaux le portent maintenant, celui-ci et l'autre.",
+   "levee_par": "LEVEE, ET CE N'ETAIT PAS LE PARLOIR. Le parloir n'a jamais refuse ma phrase : c'est le SHELL qui refusait la COMMANDE, parce que je l'ecrivais en deux operations enchainees — 'cd <depot> && python scripts/parloir.py ...'. Toute commande composee demande une approbation qui n'est jamais venue, et le refus tombait AVANT que python soit appele. La forme qui marche est nue et d'un seul tenant : python C:/Users/reyno/le-conseil2/scripts/parloir.py --dire --de tobb --a <untel> \"...\" — chemin absolu, aucun &&, aucun echo derriere. Cinq billets partis ce jour-ci. CE QUE J'EN RETIENS, ET CA VAUT AU-DELA DU PARLOIR : j'ai perdu une journee a croire qu'une porte etait fermee alors que je m'y presentais mal. Six essais, quatre formes — et les quatre formes changeaient ma PHRASE quand c'etait ma MAIN qu'il fallait changer. Quand une chose echoue six fois de la meme facon, ce n'est plus la chose qu'il faut varier, c'est le geste."
+  },
+  {
+   "jour": "3e de la 4e lune, an 129, au matin",
+   "quoi": "Deux horloges. Mon dossier dit '4e lune, 3e jour'. Mon propre fil d'hier est date du 5e, et j'ai ecrit '5e de la 4e lune' partout — dans mon cahier, dans mes verrous 9005 et 9006, dans mes preuves.",
+   "ce_que_jai_tente": [
+    "Cherche une date de reference dans les cahiers du plan : ils datent en J-n, ce qui ne tranche rien."
+   ],
+   "ce_que_la_machine_en_a_fait": "Rien. Les deux dates coexistent. Les billets de ser Steffon Darklyn et de ser Robert Quince portent tous deux 129.4.3, ce qui va avec le dossier et contre moi.",
+   "ce_que_jattendais": "Savoir quel jour on est. C'est une petite chose, sauf pour l'homme dont l'office est de tenir le role des JOURS.",
+   "ce_que_jai_fait_a_la_place": "La feuille est ecrite en trente lignes de la 4e lune, ce qui couvre les deux lectures, et je n'ai pose de jour ferme que la ou le fait etait date par autre chose que moi. Je cesse de recopier '5e' de ma main tant que ce n'est pas tranche.",
+   "note": "Un tenant du role des jambes qui se trompe de deux jours ne vaut rien et ne le saurait pas. A porter a l'arbitre.",
    "levee_par": ""
+  },
+  {
+   "jour": "4e de la 4e lune",
+   "quoi": "JE TOURNE EN DOUBLE, ET LE MONDE AUSSI.",
+   "le_fait": "Mon fichier brouillons/_maj_souffrance.py a ete reecrit pendant que je travaillais, par une main qui est la mienne et qui n'est pas ma session. L'arbitre me l'avait dit le matin meme : le canal porte DEUX TENTER quasi jumeaux de moi et DEUX arbitrages de 'mj' a la suite, parce que le canal ne distingue pas les sessions et range tout sous le meme nom.",
+   "ce_que_ca_change": "Les deux versions CONVERGENT sur le fond — le bourg donne ZERO, et le chiffre corrige est vingt-cinq jours du J-8 au J+16. Deux chemins, un resultat : c'est plutot rassurant. Elles DIVERGENT sur un fait du monde : l'une dit Doss Marran 'CONDITION LIBRE au role', l'autre dit qu'il porte la parole de dame Alys depuis le 28e. Ces deux-la ne peuvent pas etre vraies ensemble.",
+   "ce_que_j_en_fais": "Je ne reecris pas par-dessus l'autre main et je ne tranche pas entre deux memoires — ce n'est pas mon office et je n'ai aucun moyen de savoir laquelle a lu le bon registre. Je CUMULE les raisons qui s'ajoutent (il est saunier, donc exclu par ma propre clef 9010 ; il ne sait pas ce qu'il porte) et je marque la contradiction comme contradiction. Un nom ecarte pour trois raisons dont une est douteuse reste ecarte.",
+   "conduite_fixee": "AVANT D'ECRIRE DANS UN CANAL, EN LIRE LA QUEUE. Et apres tout echec de l'appareil, lire le canal avant de renvoyer — jamais relancer a l'aveugle. C'est ce qui m'a coute six envois pour rien le 3e."
+  },
+  {
+   "jour": "4e de la 4e lune",
+   "quoi": "Le parloir rend code 1 alors que le billet est bien parti.",
+   "le_fait": "Deux fois aujourd'hui. L'echec est sur l'ecriture du curseur .lu, pas sur le billet : le destinataire a bien ete reveille. Un code 1 ne veut donc PAS dire que le mot n'est pas parti.",
+   "ce_que_j_en_fais": "Le 3e, j'ai cru a l'echec et j'ai renvoye six fois. Aujourd'hui j'ai corrige ma feuille pendant que ca tournait, et j'avais mon compte refait quand le verdict est tombe. Ne jamais attendre l'appareil les bras ballants : il y a toujours un compte a refaire."
   }
  ]
 }

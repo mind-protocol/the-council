@@ -1,0 +1,37 @@
+{
+ "titre": "Proposer la solde du Guet comme dépense d'occupation non classée",
+ "par": "mj-peyredragon",
+ "date_monde": {
+  "annee": 129,
+  "lune": 4,
+  "jour": 3
+ },
+ "_pourquoi": "Nouvelle proposition de classement portée par Aldon Hask : la solde des deux mille manteaux d'or relève de l'occupation de Port-Réal et reste hors des six postes de campagne jusqu'à décision de la reine.",
+ "mutations_proposees": [],
+ "actes_a_ajouter": [
+  {
+   "id": "aldon-hask-solde-guet-occupation-129-4-3",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3
+   },
+   "acteur_id": "aldon-hask",
+   "lieu_id": "peyredragon",
+   "type": "administration",
+   "quoi": "Aldon Hask inscrit au registre des offices que les 857 dragons par lune des deux mille manteaux d'or sont une dépense d'occupation, hors des six postes de campagne, et la porte à la reine comme chiffre non classé.",
+   "temoins": [],
+   "connu_de": [
+    "aldon-hask",
+    "rhaenyra"
+   ]
+  }
+ ],
+ "annales_a_ajouter": [],
+ "verse_par_mj_le": "2026-08-31 (129.4.3, minute 721)",
+ "actes_verses": [
+  "aldon-hask-solde-guet-occupation-129-4-3"
+ ],
+ "applique_le": "2026-08-31T09:00:00",
+ "note_mj": "Les actes de ce bloc ont ete verses A LA MAIN par mj via scripts/ajouter.py actes. Ils n'etaient PAS dans mutations_proposees : la porte appliquer.py n'a aucune operation pour la table actes, et elle repondait 'aucune mutation — rien a appliquer' sur le ton d'un succes. Tout le bloc est verse ; la piece est close."
+}

@@ -1,0 +1,187 @@
+{
+  "titre": "Les trois tetes du Repaire — A POSER LE JOUR OU LA PORTE ACCEPTE UNE TETE NEUVE",
+  "par": "mj-reposdesfreux",
+  "_pourquoi": "Ecrit le 129.4.3 avec le lot 20260831-reposdesfreux-la-place-avant-le-neuvieme.json, et tenu HORS du staging parce qu'il ne peut pas passer aujourd'hui : aucune valeur d'echelle ne satisfait a la fois ECHELLES (vocabulaire.py : scene, orbite, royaume) et BUDGETS (temps/bouche.py : quartier, au loin). 'royaume' fait planter appliquer.py sur un KeyError avant tout rapport ; 'au loin' est refuse en clair. Le jour ou c'est repare : poser l'echelle du lointain dans les trois tetes, deposer ce fichier dans etat/staging/ et l'appliquer — les trois se reveillent et prennent leur tete du meme coup. Les budgets vises sont ceux du lointain : 3 croyances, 2 etapes, 1 declencheur.",
+  "mutations_proposees": [
+    {
+      "table": "personnages",
+      "cible": "mestre-ossian",
+      "operation": "personnage",
+      "champs": {
+        "etat": "actif"
+      },
+      "pourquoi": "Il prend sa tete dans ce meme lot : il peut se reveiller."
+    },
+    {
+      "table": "intentions",
+      "cible": "mestre-ossian",
+      "operation": "tete_ajouter",
+      "valeur": {
+        "personnage_id": "mestre-ossian",
+        "echelle": "royaume",
+        "croyances": [
+          "La colonne de Peyredragon est a zero dans mon registre depuis le vingt-quatrieme jour de la troisieme lune : nous n'avons plus un seul oiseau qui sache voler jusqu'a la reine.",
+          "Mon lord ecrit toutes les nuits et n'envoie rien — j'ai triple la ration d'encre de la Noiseraie en deux lunes pour des lettres qui restent dans un coffre.",
+          "Trois oiseaux de Port-Real dorment encore dans ma tour, poses la du temps ou la Couronne etait une seule chose. C'est la seule adresse que nous puissions atteindre en un vol."
+        ],
+        "ignore": [
+          "Que la Noiseraie tient le compte de ce qu'elle livre a chaque roukerie, et que la fille de la maison est aujourd'hui a Peyredragon."
+        ],
+        "intention": "Faire porter une cage d'oiseaux nes au Repaire jusqu'a Peyredragon par la premiere barque sure, pour rouvrir l'adresse de la reine avant qu'on en ait besoin.",
+        "plan": [
+          {
+            "id": "ossian-cage-pour-peyredragon",
+            "quoi": "Faire baguer douze jeunes oiseaux du Repaire et les faire porter en cage a Peyredragon, pour que la reine puisse ecrire ici et qu'on puisse lui repondre",
+            "etat": "en-cours",
+            "jours_restants": 30,
+            "cout": [
+              "douze oiseaux nes ici et bons au vol",
+              "une barque sure",
+              "l'accord de lord Staunton"
+            ],
+            "si_bloque": "Il garde les oiseaux en tour et redit le chiffre a son lord chaque fois qu'on lui apporte une lettre a envoyer."
+          },
+          {
+            "id": "ossian-registre-des-adresses",
+            "quoi": "Tenir la colonne de chaque adresse a jour et la lire a voix haute a son lord au premier jour de chaque lune",
+            "etat": "en-cours",
+            "jours_restants": null,
+            "cout": [],
+            "si_bloque": "Il l'ecrit et le laisse sur la table du coffre, ou son lord finira par le lire."
+          }
+        ],
+        "declencheurs": [
+          {
+            "si": "Un homme venu de Peyredragon se presente au Repaire, pour quelque motif que ce soit",
+            "alors": "Il lui met en main le compte des oiseaux et lui demande d'emporter une cage au retour",
+            "une_fois": false
+          }
+        ],
+        "attitude_joueur": "La reine a fini par envoyer le papier qu'on lui reclamait depuis un mois ; elle n'a pas envoye d'oiseaux, et c'est des oiseaux qu'il fallait.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 3
+        }
+      },
+      "pourquoi": "La porte refuse un homme actif sans tete, et elle a raison : un mestre sans tete serait un decor. Trois croyances, deux etapes, un declencheur — le budget du lointain. Tout ce qu'il croit est tire de l'etat (acte-trente-sept-lettres-scellees, la ration d'encre de docs/siege-voix.md, le compte des plis) ; ce qu'il ignore est ce qui l'empeche d'aller trop vite."
+    },
+    {
+      "table": "personnages",
+      "cible": "ser-guyard-rouvre",
+      "operation": "personnage",
+      "champs": {
+        "etat": "actif"
+      },
+      "pourquoi": "Il prend sa tete dans ce meme lot : il peut se reveiller."
+    },
+    {
+      "table": "intentions",
+      "cible": "ser-guyard-rouvre",
+      "operation": "tete_ajouter",
+      "valeur": {
+        "personnage_id": "ser-guyard-rouvre",
+        "echelle": "royaume",
+        "croyances": [
+          "Trois cents lances levees sur les quatre cents du ban ; le reste est aux moissons et ne rentrera pas avant la neuvieme lune.",
+          "Le mur qui regarde la mer est bon. Celui qui regarde la route de Rosby porte deux breches reprises a la chaux et rien d'autre.",
+          "Un dragon rouge s'est pose dans notre cour le vingt-quatrieme jour et en est reparti avant une heure. Trois cents hommes l'ont vu, et depuis ils comptent sur lui."
+        ],
+        "ignore": [
+          "Ce que porte le papier scelle que son lord garde au coffre — il sait qu'il existe, pas ce qu'il promet."
+        ],
+        "intention": "Tenir les murs, et n'engager pas un homme au dela de la porte sans un ordre ecrit et signe devant lui.",
+        "plan": [
+          {
+            "id": "guyard-compte-des-lances",
+            "quoi": "Relever au premier de chaque lune ce qui reste des trois cents, par village et par nom",
+            "etat": "en-cours",
+            "jours_restants": null,
+            "cout": [],
+            "si_bloque": "Il compte de tete et ne le donne a personne."
+          },
+          {
+            "id": "guyard-mur-de-la-route",
+            "quoi": "Faire reprendre en pierre les deux breches du mur de la route de Rosby avant la septieme lune",
+            "etat": "en-cours",
+            "jours_restants": 90,
+            "cout": [
+              "cent journees d'hommes",
+              "la chaux et la pierre de Rosby",
+              "de l'or de la maison"
+            ],
+            "si_bloque": "Il double la garde de nuit sur ce mur-la et n'en parle plus a son lord."
+          }
+        ],
+        "declencheurs": [
+          {
+            "si": "On lui apporte un ordre qui n'est pas signe, fut-il de la bouche de son lord",
+            "alors": "Il le fait ecrire et signer devant lui avant de faire bouger un seul homme",
+            "une_fois": false
+          }
+        ],
+        "attitude_joueur": "Il n'a rien contre la reine. Il veut savoir qui signe quand elle n'est pas la, et personne ne le lui a encore dit.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 3
+        }
+      },
+      "pourquoi": "Sa croyance la plus lourde est la troisieme : depuis le 24e, trois cents hommes comptent sur un dragon qu'ils ont vu se poser. C'est exactement ce qu'il faudra leur retirer le 5e jour de la neuvieme lune, et ca ne coutera que parce que c'est ecrit aujourd'hui."
+    },
+    {
+      "table": "personnages",
+      "cible": "nell-bec-noir",
+      "operation": "personnage",
+      "champs": {
+        "etat": "actif"
+      },
+      "pourquoi": "Il prend sa tete dans ce meme lot : il peut se reveiller."
+    },
+    {
+      "table": "intentions",
+      "cible": "nell-bec-noir",
+      "operation": "tete_ajouter",
+      "valeur": {
+        "personnage_id": "nell-bec-noir",
+        "echelle": "royaume",
+        "croyances": [
+          "Un oiseau ne ici revient ici : ceux qu'on nous a pris ne reviendront pas, et on nous en prend depuis deux lunes.",
+          "Le jour du dragon rouge, onze betes ont quitte la tour et ne sont pas rentrees. Personne au chateau n'a compte celles-la.",
+          "Douze jeunes de l'annee tiennent le vol. Nul ne m'a demande jusqu'ou ils savent aller."
+        ],
+        "ignore": [
+          "Que Peyredragon n'a plus un seul oiseau du Repaire, et que c'est pour cela que son lord n'obtient pas de reponse."
+        ],
+        "intention": "Mener au vol les douze jeunes de l'annee avant l'automne, pour qu'on puisse en donner sans vider la tour.",
+        "plan": [
+          {
+            "id": "nell-douze-jeunes",
+            "quoi": "Mener au vol et baguer au signe du Repaire les douze jeunes de l'annee",
+            "etat": "en-cours",
+            "jours_restants": 45,
+            "cout": [
+              "du grain qu'on lui compte",
+              "une tour ou l'on ne monte pas a toute heure"
+            ],
+            "si_bloque": "Elle en mene six et cache les autres au colombier bas, sans le dire au mestre."
+          }
+        ],
+        "declencheurs": [
+          {
+            "si": "On monte prendre des oiseaux sans que le mestre ait ecrit le nombre au registre",
+            "alors": "Elle donne les plus vieux et ne dit rien des jeunes",
+            "une_fois": false
+          }
+        ],
+        "attitude_joueur": "Elle a vu le dragon rouge dans la cour comme tout le monde. Elle est la seule a savoir ce qu'il a coute a la tour.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 3
+        }
+      },
+      "pourquoi": "Onze betes perdues le jour ou Rhaenys s'est posee : c'est le prix, jamais compte, de la protection qu'on est venu porter. Ce qui est donne au Repaire lui coute toujours quelque chose, et c'est de cela qu'on fera une perte le 5e de la neuvieme."
+    }
+  ]
+}

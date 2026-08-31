@@ -304,10 +304,15 @@ def canal(a, b, creer=True):
 
 
 def _entrees(fichier):
+    """Les entrees d'un canal. ABSENT rend [] ; ABIME plante, et c'est voulu.
+
+    Un canal qui ne se lit pas est une correspondance en danger, pas une
+    correspondance vide : le rendre vide ici ferait ecrire par-dessus au
+    premier billet suivant. La porte tient cette semantique (noyau/tables.py
+    points 1 et 2) — on ne la reecrit pas a la main."""
     if not os.path.exists(fichier):
         return []
-    with io.open(fichier, encoding="utf-8") as f:
-        d = json.load(f)
+    d = tables.lire(fichier, {})
     return d.get("entrees") or [] if isinstance(d, dict) else []
 
 
@@ -322,9 +327,13 @@ def verser_histoire(a, b, entrees):
     fichier = canal(a, b)
     existantes = _entrees(fichier)
     total = entrees + existantes
-    with io.open(fichier, "w", encoding="utf-8", newline="\n") as f:
-        json.dump({"canal": sorted((a, b)), "entrees": total},
-                  f, ensure_ascii=False, indent=1)
+    # ATOMIQUE par la porte. C'est le SECOND ecrivain du meme fichier que
+    # billet.deposer(), et il tronquait de la meme facon : c'est cette troncature
+    # qui fabrique le JSON a moitie ecrit qu'un lecteur simultane ramasse.
+    # Corriger un seul des deux ecrivains n'aurait ferme que la moitie de la
+    # fenetre — une garde posee d'un seul cote d'une porte a deux battants.
+    tables.ecrire(fichier, {"canal": sorted((a, b)), "entrees": total},
+                  indent=1)
     for qui, autre in ((a, b), (b, a)):
         with io.open(_curseur(qui, autre), "w",
                      encoding="utf-8", newline="\n") as f:

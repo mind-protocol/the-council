@@ -1,0 +1,64 @@
+{
+ "titre": "Peyredragon — la reine scelle les seize copies de la commission du 27e (22070) et tranche la nuit de ser Steffon (129.4.3)",
+ "calcule_le": "2026-08-31",
+ "par": "mj-peyredragon (proposition d'un FAIRE ; rien n'a ete ecrit dans etat/)",
+ "date_monde": {
+  "annee": 129,
+  "lune": 4,
+  "jour": 3
+ },
+ "pieces_lues": [
+  "etat/books/affaire-controle-naval.json, action 22070 — etat BLOQUEE, due le 8e ; office : « LA REINE, ET ELLE SEULE, POUR LE SCEAU — un capitaine ne scelle pas ce qui doit le couvrir » ; mestre Gerardys pour la copie, la date et l'enregistrement au registre des plis ; note : « ARRETEE SUR UN SEUL GESTE... elle attend le sceau de la reine. Tant qu'elle n'est pas faite, tout homme que j'envoie arreter un marchand le fait au nom d'une maison privee. » Pli remis au mestre le 1er a 23h, parti le 2e a la premiere heure.",
+  "meme action — L'ORDRE DE REMISE EST CELUI DU RISQUE, NON CELUI DE LA DISTANCE : les cinq stations du goulet d'abord, qui arretent des coques des demain ; l'embouchure ensuite ; le banc de l'Est en dernier. Preuve attendue : seize recus signes au cahier du maitre de port, un par patron, et le registre des plis qui porte la date de depart de chacune des seize copies.",
+  "etat/books/affaire-financement-campagne.json, verrous 28007 et 28105 — treize dragons a lord Gunthor Darklyn (onze de la lune, deux d'arriere), portes ce soir par ser Steffon Darklyn, TROISIEME sortie de la cassette depuis le 26e ; la somme reste OUVERTE jusqu'au retour de la quittance ; et : tant que la maison ne paie pas, le chiffre de sept heures du maitre des deniers MONTE.",
+  "etat/staging/20260831-peyredragon-corlys-reprend-son-ordre-129-4-3.json — la barque de peche de ce soir sort sous la ligne de lord Corlys copiee au talon du role, maree nommee du soir du 3e au matin du 5e."
+ ],
+ "arbitrage": {
+  "ce_qui_passe": "Le sceau, entier : c'est le seul geste que 22070 attendait, et il n'appartient qu'a elle par la lettre meme de l'action. Les seize copies partent par les mains du mestre, l'heure au registre des plis — ce qui est exactement la preuve exigee. Et la coupe de la nuit de ser Steffon tient : la regle d'une course, une coque, un compte, portee des quilles a l'homme.",
+  "ce_que_l_ordre_ecrit_oppose_a_la_premiere_copie": "L'ordre de remise est ecrit et il est celui du RISQUE : les cinq stations du goulet d'abord, qui arretent des coques des demain. Une copie remise au patron de la barque de ce soir ne rend pas son talon lisible : le papier couvre CELUI QUI ARRETE, non celui qui passe. Ce sont les stations qui doivent le tenir pour savoir sous quel nom elles arretent ; la barque, elle, ne sera lue que par la station qui aura recu la sienne.",
+  "le_prix_ecrit_de_la_coupe": "La quittance des treize dragons reste ouverte au livre du maitre des deniers, et son propre verrou dit que le chiffre de sept heures MONTE tant que la maison ne paie pas. La reine gagne une coque qui part propre et paie en arriere qui grossit, sur un creancier dont le quai est ferme et dont plus rien n'est entre ici depuis le 2e."
+ },
+ "mutations_proposees": [],
+ "pourquoi_aucune_mutation": "LA PORTE NE PEUT PAS ATTEINDRE 22070, et c'est un defaut d'appareil, non du monde : la cellule N° de cette ligne porte « **22070** — j'ouvre le bloc 2207x pour les actions ; 2203x et 2204x sont pleins », et prochaine_ligne_action exige une egalite exacte apres depouillement des asterisques. L'operation affaire_action rend « action '22070' introuvable ». Deux issues, toutes deux a la main : nettoyer la cellule N° a « **22070** » et porter le commentaire a la note, ou patcher la ligne directement. Le patch est ci-dessous.",
+ "a_la_main_22070": {
+  "table": "etat/books/affaire-controle-naval.json",
+  "ligne": "table ⚔️ Actions, ligne dont la cellule N° commence par **22070**",
+  "champs": {
+   "⏳ État": "en cours",
+   "📝 Note": "SCELLEE PAR LA REINE ELLE-MEME A LA TABLE PEINTE, LE 3e DE LA 4e LUNE, AVANT LA MAREE DU SOIR — cinq jours avant son terme. Le geste unique qui l'arretait est fait : les seize copies portent la cire. Elles partent par les mains de mestre Gerardys, l'heure de chacune notee au registre des plis. La reine a donne la premiere copie au patron de la barque qui sort ce soir, avant qu'il largue — HORS DE L'ORDRE DU RISQUE ECRIT PAR LORD CORLYS, qui met les cinq stations du goulet d'abord. Reste due : la remise aux quinze autres coffres contre recu signe, terme le 8e."
+  }
+ },
+ "a_la_main": {
+  "table": "etat/actes.json",
+  "geste": "Ajouter l'acte ci-dessous en fin de liste.",
+  "acte": {
+   "id": "acte-rhaenyra-scelle-les-seize-et-coupe-la-nuit-de-steffon-3e",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3,
+    "minute": 1110
+   },
+   "acteur_id": "rhaenyra",
+   "lieu_id": "peyredragon",
+   "description": "TABLE PEINTE, AVANT LA MAREE DU SOIR LE 3e DE LA 4e LUNE. LA REINE APPOSE ELLE-MEME SON SCEAU SUR LES SEIZE COPIES de la commission du 27e — le commandement de la mer sous l'office O13 —, cinq jours avant leur terme. C'etait le seul geste au monde que l'action attendait : lord Corlys ne l'avait jamais reclame, il l'avait consigne — tant qu'elle n'est pas faite, tout homme qu'il envoie arrete un marchand AU NOM D'UNE MAISON PRIVEE, et la barque qui passe ce soir au large de Sombreval porte au talon un sauf-conduit que ses propres stations ne savent pas lire. || LES SEIZE PARTENT PAR LES MAINS DE MESTRE GERARDYS, l'heure de chacune notee au registre des plis ; la premiere copie va au patron de la barque de ce soir avant qu'il largue. || ET ELLE TRANCHE CE QUE LE MEME SOIR DEMANDAIT A UN SEUL HOMME : ser Steffon Darklyn ne peut pas a la fois porter treize dragons de main en main a lord Gunthor Darklyn et commander une coque a qui elle interdit d'accoster. LA QUITTANCE DES TREIZE ATTEND ; LA COQUE PART LA PREMIERE. Une course, une coque, un compte — la regle est de lord Corlys, elle la fait tenir sur l'homme aussi.",
+   "temoins": [
+    "gerardys",
+    "steffon-darklyn"
+   ],
+   "connu_de": [
+    "rhaenyra",
+    "gerardys",
+    "steffon-darklyn",
+    "corlys"
+   ]
+  },
+  "pourquoi": "Un FAIRE non grave n'a pas eu lieu ; aucune operation du vocabulaire ne porte un acte."
+ },
+ "verse_par_mj_le": "2026-08-31 (129.4.3, minute 721)",
+ "actes_verses": [
+  "acte-rhaenyra-scelle-les-seize-et-coupe-la-nuit-de-steffon-3e"
+ ],
+ "applique_le": "2026-08-31T09:00:00",
+ "note_mj": "Les actes de ce bloc ont ete verses A LA MAIN par mj via scripts/ajouter.py actes. Ils n'etaient PAS dans mutations_proposees : la porte appliquer.py n'a aucune operation pour la table actes, et elle repondait 'aucune mutation — rien a appliquer' sur le ton d'un succes. Tout le bloc est verse ; la piece est close."
+}

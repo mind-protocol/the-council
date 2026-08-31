@@ -89,7 +89,8 @@ def tisser(books, intentions, mains, plans, evenements, personnages=None,
                             trouve = "a_designer"
                         else:
                             for nom, pid in noms.items():
-                                if nom in pn:
+                                if re.search(r"(?:^| )" + re.escape(nom)
+                                             + r"(?: |$)", pn):
                                     trouve = "pers:" + pid
                                     break
                         arc(tete, trouve or "?", "tient", "books/actions",
@@ -111,20 +112,31 @@ def tisser(books, intentions, mains, plans, evenements, personnages=None,
                 elif est_ver and PIECE.fullmatch(tete):
                     for n in PIECE.findall(col(d, "Bloque")):
                         arc(tete, n, "bloque", "books/verrous")
-                elif (MOYEN.fullmatch(tete) or OFFICE.fullmatch(tete))                         and col(d, "Qui le tient").strip():
+                elif MOYEN.fullmatch(tete) or OFFICE.fullmatch(tete):
                     # UN MOYEN A UN PORTEUR, et c'est ce qui en fait un point
-                    # de rupture : « un seul mestre pour tout ».
-                    pn = plat_nom(col(d, "Qui le tient"))
-                    cible = None
+                    # de rupture : « un seul mestre pour tout ». Les offices
+                    # nomment la meme chose « Le titulaire » et peuvent en
+                    # avoir plusieurs ; les perdre faisait passer leurs
+                    # actions pour des taches sans maitre.
+                    porteur = col(d, "Qui le tient") or col(d, "titulaire")
+                    if not porteur.strip():
+                        continue
+                    pn = plat_nom(porteur)
+                    cibles = set()
                     if pn.strip() in ("moi", "moi meme", "la reine"):
-                        cible = "pers:" + (joueur or "rhaenyra")
+                        cibles.add("pers:" + (joueur or "rhaenyra"))
                     for nom, pid in noms.items():
-                        if nom in pn:
-                            cible = "pers:" + pid
-                            break
-                    arc(lid + ":" + tete, cible or "?", "tient",
-                        "books/moyens", flou=cible is None,
-                        texte=col(d, "Qui le tient"))
+                        if re.search(r"(?:^| )" + re.escape(nom)
+                                     + r"(?: |$)", pn):
+                            cibles.add("pers:" + pid)
+                    source = resoudre_code(tete, lid, registres)
+                    if cibles:
+                        for cible in sorted(cibles):
+                            arc(source, cible, "tient", "books/moyens",
+                                texte=porteur)
+                    else:
+                        arc(source, "?", "tient", "books/moyens", flou=True,
+                            texte=porteur)
                 elif est_lie:
                     nature = nu(col(d, "Le lien")) or "lie"
                     nous = PIECE.findall(col(d, "Notre pièce"))
@@ -358,4 +370,3 @@ def main():
             os.path.relpath(p, RACINE), os.path.relpath(q, RACINE)))
         print("Derive et regenerable — les fichiers restent la source.")
     return 0
-

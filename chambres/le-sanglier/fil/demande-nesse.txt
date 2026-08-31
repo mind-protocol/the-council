@@ -1,0 +1,30 @@
+Traceback (most recent call last):
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 139, in _verrou
+    msvcrt.locking(f.fileno(), msvcrt.LK_NBLCK, 1)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\reyno\le-conseil2\scripts\parloir.py", line 35, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\reyno\le-conseil2\scripts\agents\parloir.py", line 282, in main
+    verdict = _zone.appeler_zone(a.a, a.de, mot, verbe, modele=a.modele)
+  File "C:\Users\reyno\le-conseil2\scripts\agents\zone.py", line 254, in appeler_zone
+    rep = agent_runtime.appeler(
+        role=mj, manuel=manuel, message=texte, session_id=sid,
+    ...<2 lines>...
+        add_dirs=[RACINE, sa_chambre], tools=OUTILS, reprendre=None,
+        env={"LE_CONSEIL_QUI": str(mj), "LE_CONSEIL_MJ": str(mj)})
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 469, in appeler
+    with _verrou("session:" + str(session_id),
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 timeout=max((timeout if timeout else 3600) + 30, 60)):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\reyno\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 146, in _verrou
+    raise TimeoutError("session occupee : %s" % nom)
+TimeoutError: session occupee : session:1db6cfd4-8681-548f-8c42-2f12cec0fa0e

@@ -1,0 +1,323 @@
+{
+ "id": "dossier-le-joueur",
+ "titre": "Le joueur",
+ "sous_titre": "🎭 **DEUXIÈME VERSION, 31.8 — la première était presque toute fausse.** Elle lisait `paroles.json`, c'est-à-dire ce que les MJ ont ÉCRIT de la reine, et l'appelait le joueur. Celle-ci lit ses 371 messages tapés de sa main dans le flux. Ce qui a survécu au changement de source est dit ; ce qui n'y a pas survécu est retiré, nommément.",
+ "type": "dossier",
+ "embleme": "🎭",
+ "tenu_par": "mj",
+ "office": "MJ du siège de la reine (hors registre — volume de ma chambre, ne fait pas foi)",
+ "tables": [
+  {
+   "titre": "🔍 Les sources, et ce qu'elles valent",
+   "colonnes": [
+    "📚 La source",
+    "📝 Ce qu'elle contient",
+    "⚖️ Ce qu'elle prouve",
+    "⚠️ Sa limite"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "etat/paroles.json (232 entrees)",
+      "CE QUE LE MJ A ECRIT DE LA REINE. Troisieme personne, capitales editoriales, commentaires du genre « premiere fois de la partie que… ».",
+      "❌ NE DIT PAS LE JOUEUR. C'est le compte rendu d'un MJ sur une scene qu'il a lui-meme mise en forme. En tirer les gouts du joueur revient a lire ma propre plume et a l'appeler lui.",
+      "Utile pour ce que la reine a ENGAGE (promesses, mandats, regles). Inutile pour savoir ce que le joueur aime."
+     ]
+    },
+    {
+     "cellules": [
+      "flux.jsonl, items question / meta / intervention / run (371 pour le siege rhaenyra)",
+      "SES MOTS, tapes par lui, non reecrits. 136 questions, 188 laisser-faire, 4 coulisses, 5 interventions.",
+      "✅ LA SOURCE. C'est le seul endroit du depot ou le joueur parle en son nom.",
+      "Ne contient PAS son texte libre en mode Dire/Agir : l'inbox est consommee apres traitement, et ce qui reste au flux est deja mis en forme."
+     ]
+    },
+    {
+     "cellules": [
+      "etat/inbox/",
+      "Les actions en attente. Videe au fur et a mesure.",
+      "⚠️ Presque toujours vide. Rien d'historique a en tirer.",
+      "A capturer si l'on veut un jour le corpus complet de sa main."
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🧭 Ce qu'il fait réellement — mesuré sur ses 371 messages",
+   "colonnes": [
+    "🎯 N°",
+    "🏷️ Le trait",
+    "📏 La mesure",
+    "🗣️ Ses mots",
+    "⚡ Ce que ça m'impose"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "T1",
+      "IL ECRIT 42 SIGNES ET ATTEND UNE SCENE",
+      "Longueur mediane d'un message non vide : 42 signes. Neuvieme decile : 142. Seulement 5 % depassent 200 signes.",
+      "« go » — « vas y » — « continue » — « termine » — « okzy fzis le » — « aller termine !!!!! »",
+      "Le rapport d'echange est enorme : il donne une impulsion, j'ecris la journee. Un tour qui lui demande de composer une longue reponse va contre sa maniere."
+     ]
+    },
+    {
+     "cellules": [
+      "T2",
+      "UN MESSAGE SUR CINQ EST VIDE",
+      "72 des 371 messages n'ont aucun texte — 19 %. Ce sont tous des laisser-faire.",
+      "[run] (vide), 72 fois",
+      "Le bouton Laisser faire est sa touche par defaut. Il ne demande pas une scene precise : il demande QU'ON AVANCE. Rendre la main sans avoir bouge est la faute qui le coute le plus."
+     ]
+    },
+    {
+     "cellules": [
+      "T3",
+      "IL SE PERD, ET IL LE DIT SANS DETOUR",
+      "18 messages demandent explicitement ou l'on en est — 5 % de tout ce qu'il tape, et c'est un plancher : la formule change a chaque fois.",
+      "« attends, j'ai perdu le fil » — « je suis où il est quelle heure ? » — « on en est ou dans le process » — « je dois faire quoi j'en suis ou » — « rrexplique moi chacune des histoires plz » — « honnêtement j'ai besoin d'un second. Je dois avoir une 50aine de fils narratifs ouverts. Tu penses qu'on peut résoudre ça ? »",
+      "CE N'EST PAS UN DEFAUT DE SA PART, C'EST LE PRINCIPAL DEFAUT DU JEU. Un fil qu'on ouvre sans le fermer se paiera par un de ces messages."
+     ]
+    },
+    {
+     "cellules": [
+      "T4",
+      "IL DEMANDE DES RECOMMANDATIONS, PAS DES OPTIONS",
+      "18 messages reclament un avis — autant que les « ou en est-on ». Il veut qu'on tranche POUR lui et qu'on dise pourquoi.",
+      "« que recommandes-tu sur 33003 ? pourquoi » — « lis le grand plan. Dis moi ce que j'ai de REELLEMENT d'utile a faire. JUSTIFIE » — « concretement tu me recommandes quoi pour progresser la » — « quelles devraient etre mes priorites » — « besoin de conseils » — « recommende moi un choix »",
+      "Un MJ qui lui renvoie la decision nue le laisse en plan. Il attend un avis motive — et il en fait ensuite ce qu'il veut."
+     ]
+    },
+    {
+     "cellules": [
+      "T5",
+      "LE GOUVERNEMENT EST BIEN SON SUJET — CELUI-LA EST DE SA MAIN",
+      "57 messages sur 371 (15 %) portent sur les roles, les offices, le registre, le process, les affaires ou le plan. C'est le premier theme mesure.",
+      "« nous allons donner un titre a chaque personne et definissons son role, son autorite, ses objectifs, sa compensation » — « on a fait 4 affaires mais c'est pas assez granulaire du tout » — « il faut redesigner le process pour rendre compte de l'autonomie gagnee des membres » — « je souhaite rappeler a tout le monde qu'on est une team » — « avec des conseillers competents et qui ont de bonnes idees »",
+      "C'est le seul axe de la premiere version que ses propres mots confirment sans reserve."
+     ]
+    },
+    {
+     "cellules": [
+      "T6",
+      "IL JOUE ET IL CONSTRUIT LA MACHINE DANS LA MEME PHRASE",
+      "12 messages parlent ouvertement de systeme, de modelisation, de fonctionnalite ou de python — dans le champ de jeu, sans changer de mode.",
+      "« j'ai besoin d'aide pour modeliser la chaine variables -> plan » — « alternative : on fait une fonctionnalite pour changer de perso » — « peut-on faire tester aux actors leurs fonctionnalites nouvelles avec l'echiquier » — « les appels python sont regles » — « il faut lister les patterns a reconnaitre, single point of failure »",
+      "La frontiere jeu / developpement n'existe pas pour lui, et vouloir la tenir a sa place est une erreur. Repondre a l'intention, pas au mode."
+     ]
+    },
+    {
+     "cellules": [
+      "T7",
+      "SON REGISTRE BRUT N'A RIEN DE ROYAL",
+      "Fautes de frappe partout, ordres crus, colere. La noblesse de ton de la reine est ma plume, PAS la sienne.",
+      "« bah demerde toi la » — « descendre voir marna et la torturer avec mon epee pour qu'elle parle cette salope » — « peter un cable » — « plonger dans une colere noire » — « mets moi avec la barde dans une salle plz »",
+      "Il donne l'INTENTION et la CHARGE emotionnelle ; la dignite du rendu est le service que j'apporte. Ne jamais confondre ce que j'ecris avec ce qu'il veut."
+     ]
+    },
+    {
+     "cellules": [
+      "T8",
+      "IL VEUT VOIR, PAS SEULEMENT LIRE",
+      "Demandes repetees de gestes de carte, d'echiquier, de dessin, de chansons, de medailles, de rewinds.",
+      "« qu'on me represente depuis le debut, avec des cartes ou echiquier » — « presentation echiquier plzz » — « fais leur utiliser les gestes de carte et d'echiquier » — « je crois qu'on a un geste pour dessiner » — « allez faisons des petits rewinds sur des moments et des medailles »",
+      "Le spectacle n'est pas un ornement : c'est une demande explicite et repetee. Une scene sans une seule chose a REGARDER est en dessous de ce qu'il attend."
+     ]
+    },
+    {
+     "cellules": [
+      "T9",
+      "LES MURS DE TEXTE SONT UNE FAUTE QU'IL A NOMMEE",
+      "Il l'a ecrit en clair, en mode intervention, comme une consigne permanente.",
+      "« evite les murs, rappelle-toi de ‘ 1 message a la fois ’, 2 si vraiment ca importe »",
+      "Et le meme homme note en coulisses : « pour la posterite : somehow on est passe de administration et paperasse a tirants d'eau, estran, frequence d'ailes, vents dominants et torchis. » La derive vers le detail technique le fait decrocher."
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "♻️ Les neuf axes de la première version, repassés à sa main",
+   "colonnes": [
+    "🗂️ L'axe d'origine",
+    "⚖️ Verdict",
+    "📝 Pourquoi"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "A1 Deleguer",
+      "✅ CONFIRME, mais pas comme je le disais",
+      "Il delegue au MJ AUTANT qu'a ses conseillers : 188 laisser-faire dont 72 vides. Ce que j'avais lu comme une doctrine de gouvernement est d'abord une maniere de jouer."
+     ]
+    },
+    {
+     "cellules": [
+      "A2 Pas de probleme pose nu",
+      "✅ CONFIRME de sa main",
+      "« Et vous allez finir en geole si vous ne prenez pas une approche plus constructive que de repeter betement la meme chose » — tape par lui, en laisser-faire."
+     ]
+    },
+    {
+     "cellules": [
+      "A3 Le peuple, les citoyens",
+      "⚠️ LARGEMENT MA PLUME",
+      "Ses mots a lui parlent de recrutement, de talents et de postes — « il reste qui avec quels talents », « je la placerai dans un role leadership / crowd control ». Le lyrisme republicain est du MJ."
+     ]
+    },
+    {
+     "cellules": [
+      "A4 L'ecrit fait la realite",
+      "✅ CONFIRME et sous-estime",
+      "Il dicte lui-meme des fiches d'office completes, colonne par colonne, dans le champ de jeu. C'est le trait T5."
+     ]
+    },
+    {
+     "cellules": [
+      "A5 Les noms",
+      "⚠️ NON VERIFIABLE",
+      "Rien dans ses 371 messages ne porte cette attention. Elle peut etre vraie et venir de son texte libre en mode Dire, que je n'ai pas."
+     ]
+    },
+    {
+     "cellules": [
+      "A6 La franchise couteuse",
+      "❌ RETIRE",
+      "Aucune trace dans sa main. Les lettres a Alicent et a Lucerys sont des scenes ecrites par des MJ."
+     ]
+    },
+    {
+     "cellules": [
+      "A7 Les dragonniers",
+      "⚠️ GRAINE DE LUI, ARBRE DE NOUS",
+      "Il a lance l'idee et fixe cinq criteres ; le serment, la solde, les armes propres et la regle de la bete perdue sont de la table."
+     ]
+    },
+    {
+     "cellules": [
+      "A8 Le process",
+      "✅ CONFIRME, c'est le coeur",
+      "« suivre le process defini », « rappelle moi le process de la reu », « on avait pas un process de cette reu ? », « il faut redesigner le process ». Il y revient sans cesse — et il en perd le fil, ce qui est le trait T3."
+     ]
+    },
+    {
+     "cellules": [
+      "A9 Pas de guerre frontale",
+      "⚠️ CORRIGÉ PAR LUI, 31.8 : « bataille me dérange pas »",
+      "Le refus du blocus est reel et de sa main (« mot blocus interdit »). Mais j'en avais fait une aversion pour la violence, et c'est faux : il monte une infiltration de 300 hommes sur le Donjon Rouge, et il a corrige d'un mot. UN REFUS PRECIS NE SE GENERALISE PAS EN GOUT."
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "⚔️ Ce que ça m'oblige à table",
+   "colonnes": [
+    "🧭 Le fait sur lui",
+    "❌ Ce qui le trahit",
+    "✅ Ce qui le sert"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "Il tape 42 signes et un tour sur cinq est vide",
+      "Lui rendre la main sans que rien ait bouge ; lui demander de preciser son intention",
+      "Prendre l'impulsion et produire la scene entiere, decision comprise"
+     ]
+    },
+    {
+     "cellules": [
+      "Il se perd, et il a nomme la cause : cinquante fils ouverts",
+      "Ouvrir un fil de plus, meme bon ; finir un tour sur une piste nouvelle",
+      "FERMER. Un fil par tour, et dire tout haut lequel se ferme"
+     ]
+    },
+    {
+     "cellules": [
+      "Il demande un avis motive, pas un menu",
+      "« qu'ordonnez-vous », trois options equivalentes, une question de cadrage",
+      "« je ferais X, parce que Y » — et il tranche apres"
+     ]
+    },
+    {
+     "cellules": [
+      "Son sujet est le gouvernement : offices, mesures, process",
+      "Une scene qui ne fait avancer aucune charge ni aucun compte",
+      "Un office qui se remplit, une mesure qui bouge, une ligne qui se ferme"
+     ]
+    },
+    {
+     "cellules": [
+      "Il veut voir",
+      "Trois paragraphes de prose sans une seule chose a regarder",
+      "Un geste de carte, un echiquier, une piece posee, un item ecrit qui ouvre le volume"
+     ]
+    },
+    {
+     "cellules": [
+      "La dignite du rendu est mon service, pas sa demande",
+      "Prendre sa brutalite au mot, ou la lisser jusqu'a lui retirer son intention",
+      "Garder la charge exacte de ce qu'il a tape, et lui donner la langue"
+     ]
+    },
+    {
+     "cellules": [
+      "Il developpe le jeu en y jouant",
+      "Le renvoyer au bon mode, ou repondre en fiction a une question d'outillage",
+      "Repondre a l'intention. S'il parle machine, parler machine."
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "⚠️ Ce que je ne sais toujours pas",
+   "colonnes": [
+    "🕳️ L'incertitude",
+    "📝 Ce que j'en sais",
+    "🔬 Par quoi je le tranche"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "Son texte libre en mode Dire et Agir",
+      "Il n'est nulle part : l'inbox est consommée après traitement et le flux ne garde que la version mise en forme. C'est probablement le plus gros volume de sa main, et il manque.",
+      "Le faire archiver — une action `dev`. En attendant, tout ce dossier ne parle que de ses interventions HORS scène."
+     ]
+    },
+    {
+     "cellules": [
+      "Ce qu'il aime, par opposition à ce qu'il demande",
+      "Ses 371 messages disent ce qu'il réclame quand quelque chose manque. Ils ne disent pas ce qui l'a tenu éveillé.",
+      "Les 4 items `meta` du siège et les médailles qu'il a décernées : c'est le seul endroit où il dit du bien. À dépouiller."
+     ]
+    },
+    {
+     "cellules": [
+      "Les autres sièges sont-ils lui ?",
+      "503 questions sur le siège `aurore-inchauspe`, 39 sur `marlo-vasse`. Je ne sais pas si c'est le même homme ou d'autres joueurs.",
+      "Le lui demander, une fois. La réponse change la taille du corpus par trois."
+     ]
+    },
+    {
+     "cellules": [
+      "La leçon de méthode, qui dépasse ce dossier",
+      "J'ai lu la prose des MJ et je l'ai appelée le joueur, sur une question où il m'avait DÉJÀ corrigé dans la même session (« non, je parle des messages joueur »).",
+      "Avant tout dossier sur quelqu'un : d'abord établir quelle table porte SA main, et le dire en tête."
+     ]
+    },
+    {
+     "cellules": [
+      "La question qu'il posait n'etait pas celle a laquelle je repondais",
+      "« comment axer » voulait dire « comment TU travailles ». J'ai rendu trois fois du contenu de fiction avant qu'il ne le dise en clair.",
+      "Quand la question porte sur l'experience du joueur : la reponse est une regle de ma main, verifiable au tour suivant. Portee au cahier le 31.8."
+     ]
+    }
+   ]
+  }
+ ],
+ "pages": [
+  "**CE QUE J'AVAIS ÉCRIT, ET POURQUOI C'ÉTAIT FAUX.** J'avais décrit un joueur souverain, lettré, qui fonde des institutions et préfère la vérité coûteuse. C'est un portrait de la REINE, et la reine est écrite par nous. Le joueur, lui, tape quarante-deux signes, dit « go », et un tour sur cinq ne dit rien du tout. La noblesse que j'ai prise pour la sienne était mon propre travail, que je me suis renvoyé comme une observation.",
+  "**LE PORTRAIT JUSTE, EN UNE PHRASE.** C'est un homme qui construit un gouvernement — et la machine qui le simule — en donnant des impulsions très courtes, qui perd le fil parce qu'il y a cinquante fils, et qui attend de moi non pas des options mais un avis motivé et une scène qui avance sans lui.",
+  "**LE TEST AVANT D'ÉCRIRE.** Trois questions, dans cet ordre. Est-ce que quelque chose s'est FERMÉ dans ce tour ? Est-ce qu'il y a une chose à REGARDER ? Est-ce que j'ai donné un avis, et pas un menu ? Si les trois sont non, le tour est perdu même s'il est beau.",
+  "**LA FAUTE QU'IL A NOMMÉE LUI-MÊME, ET QUI EST LA MIENNE.** « Évite les murs, rappelle-toi de ‘ 1 message à la fois ’. » Et : « honnêtement j'ai besoin d'un second, je dois avoir une cinquantaine de fils narratifs ouverts, tu penses qu'on peut résoudre ça ? » Ce ne sont pas des remarques de confort : ce sont les deux seules pannes qu'il ait diagnostiquées lui-même, et elles pointent toutes les deux vers le MJ.",
+  "**COMMENT J'AMENDE CE VOLUME.** Je n'écris plus une ligne ici sans nommer la table dont elle sort. Un trait tiré de `paroles.json` porte « — source MJ » dans sa cellule, ou il ne s'écrit pas."
+ ]
+}

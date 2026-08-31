@@ -26,24 +26,13 @@ function traiter(req, res, url) {
           : path.join(RACINE, "etat", "inbox");
         // L'adresse de la ligne, partagée entre l'inbox et le flux : c'est
         // par elle que le MJ retrouve la phrase à reformuler.
-        const ref = "v" + Date.now().toString(36) +
+        const maintenant = Date.now();
+        const ref = "v" + maintenant.toString(36) +
           Math.random().toString(36).slice(2, 6);
-        if (action.type === "libre") action.ref = ref;
+        action.ref = ref;
         fs.mkdirSync(dossier, { recursive: true });
-        fs.writeFileSync(path.join(dossier, "action-" + Date.now() + ".json"),
-          JSON.stringify(action, null, 2), "utf-8");
-        // LE GUETTEUR EST MORT (habitant.md pas 5) : c'est le POST qui
-        // réveille le MJ du joueur, en habitant — spawn détaché, l'inbox
-        // garde l'acte si le réveil rate.
-        try {
-          const { spawn } = require("child_process");
-          const p = spawn(process.env.PYTHON || "python",
-            [path.join(RACINE, "scripts", "reveiller.py"),
-             "--de", (siege && siege.personnage_id) || "joueur"],
-            { cwd: RACINE, detached: true, stdio: "ignore",
-              windowsHide: true });  // sinon chaque action ouvre une console
-          p.unref();
-        } catch (e) { /* un reveil rate ne perd rien : l'inbox garde l'acte */ }
+        const cheminAction = path.join(dossier, "action-" + maintenant + ".json");
+        fs.writeFileSync(cheminAction, JSON.stringify(action, null, 2), "utf-8");
         // Ce que le joueur dit ou fait entre dans le flux : sans cela, sa parole
         // n'existe que dans le navigateur et disparaît au premier rechargement.
         // « Laisser faire » se poste même vide : l'absence de consigne EST la
@@ -58,24 +47,24 @@ function traiter(req, res, url) {
           // est DIT ou FAIT, en revanche, se joue devant tout le monde.
           const prive = siege ? { pour: siege.personnage_id } : {};
           const item = action.mode === "question"
-            ? Object.assign({ type: "question", texte: action.texte, delai_s: 0 }, prive)
+            ? Object.assign({ type: "question", texte: action.texte, delai_s: 0, ref }, prive)
             : action.mode === "meta"
-            ? Object.assign({ type: "meta", texte: action.texte, delai_s: 0 }, prive)
+            ? Object.assign({ type: "meta", texte: action.texte, delai_s: 0, ref }, prive)
             // Lâcher la bride n'est pas un geste dans la fiction : personne
             // dans la salle ne voit le joueur s'écarter. Ce qui suivra, en
             // revanche, sera bien du personnage — le MJ le poussera en
             // `vous`, à sa place et devant tout le monde.
             : action.mode === "run"
-            ? Object.assign({ type: "run", texte: action.texte || "", delai_s: 0 }, prive)
+            ? Object.assign({ type: "run", texte: action.texte || "", delai_s: 0, ref }, prive)
             // L'atelier : on compose SUR la partie. Rien n'entre dans la
             // fiction, personne ne l'entend, l'horloge ne bouge pas.
             // La main par-dessus le monde : on ne joue pas, on répare. Rien
             // de ce qui se dit ici n'a été prononcé dans la salle — mais ce
             // qu'on y demande change le fil et l'état pour de bon.
             : action.mode === "intervention"
-            ? Object.assign({ type: "intervention", texte: action.texte, delai_s: 0 }, prive)
+            ? Object.assign({ type: "intervention", texte: action.texte, delai_s: 0, ref }, prive)
             : action.mode === "composer"
-            ? Object.assign({ type: "composer", texte: action.texte || "", delai_s: 0 }, prive)
+            ? Object.assign({ type: "composer", texte: action.texte || "", delai_s: 0, ref }, prive)
             : Object.assign(
                 { type: "vous", mode: action.mode || "dire", texte: action.texte, delai_s: 0,
                   joueur_id: siege ? siege.personnage_id : undefined,
@@ -155,7 +144,20 @@ function traiter(req, res, url) {
           fs.appendFileSync(path.join(RACINE, "etat", "flux.jsonl"),
             JSON.stringify(item) + "\n", "utf-8");
         }
-        return envoyer(res, 200, JSON.stringify({ ok: true }));
+        // LE GUETTEUR EST MORT (habitant.md pas 5) : le POST reveille le MJ
+        // APRES que l'action et sa ligne de flux existent. Chaque reveil porte
+        // la ref exacte de son moment ; deux POST peuvent donc reprendre la
+        // meme session en parallele sans depouiller la meme inbox.
+        try {
+          const { spawn } = require("child_process");
+          const p = spawn(process.env.PYTHON || "python",
+            [path.join(RACINE, "scripts", "reveiller.py"),
+             "--de", (siege && siege.personnage_id) || "joueur"],
+            { cwd: RACINE, detached: true, stdio: "ignore",
+              windowsHide: true });  // sinon chaque action ouvre une console
+          p.unref();
+        } catch (e) { /* un reveil rate ne perd rien : l'inbox garde l'acte */ }
+        return envoyer(res, 200, JSON.stringify({ ok: true, ref }));
       } catch (e) {
         return envoyer(res, 400, JSON.stringify({ ok: false, erreur: String(e) }));
       }

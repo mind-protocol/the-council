@@ -1,0 +1,44 @@
+{
+  "titre": "Sombreval — le passe de Marec Fosse verse au monde : les trente muids de l'an 109, les clefs, et la marge de dix",
+  "calcule_le": "2026-08-31",
+  "pour": "mj",
+  "par": "mj-sombreval (proposition d'un FAIRE ; rien n'a ete ecrit dans etat/)",
+  "date_monde": {"annee": 129, "lune": 4, "jour": 3, "minute": 721},
+  "pieces_lues": [
+    "etat/personnages.json, marec-fosse — naissance 78 ; titre « Intendant de Sombreval » ; traits meticuleux, taciturne, prudent, honnete ; objectif 1 « Que le role dise la verite, y compris quand elle est mauvaise » ; objectif 2 « Que rien ne sorte d'une grange sans un ordre de son maitre » ; maniere « Donne le chiffre d'abord, ARRONDI A LA BAISSE, et la date a laquelle il l'a arrete [...] NE MONTE PAS AU CHATEAU : on descend le voir aux granges » ; portrait « tablier de cuir, doigts noirs d'encre et blancs de farine, UN TROUSSEAU DE CLEFS A LA CEINTURE ».",
+    "etat/intentions.json, marec-fosse (avant le lot des corps vrais) — declencheur : « il donne le vrai, ARRONDI A LA BAISSE DE DIX MUIDS COMME IL LE FAIT DEPUIS VINGT ANS » ; croyance : « Un muid nourrit vingt hommes un jour. Il tient ce chiffre du meme endroit que tout le monde et il ne le discutera avec personne. »",
+    "etat/personnages.json, gunthor-darklyn — naissance 82, Lord de Sombreval : vingt-sept ans en 109, et deja le maitre a qui l'on porte un ecrit.",
+    "etat/mains.json, granges-de-sombreval — porteur marec-fosse, lieu sombreval : la charge qu'il tient encore aujourd'hui, et l'objet meme du recit."
+  ],
+  "arbitrage": {
+    "verdict": "TENU, A UN AN PRES. Rien dans l'etat ne s'y oppose et le chiffre le plus dur tombe juste : « depuis vingt ans » est ecrit dans son declencheur, et 109 + 20 = 129, a l'annee. Le recit donne enfin leur cause a trois choses que les tables portaient sans raison — le trousseau de clefs a sa ceinture (ce sont celles d'un autre), la marge de dix muids, et cette ligne de sa maniere que personne n'avait expliquee : IL NE MONTE PAS AU CHATEAU. Il y est monte une fois, en l'an 109, avec un ecrit ; un homme y a perdu son office et lui y a gagne le sien.",
+    "la_correction": "Il se donne trente-deux ans en 109 ; sa fiche le fait naitre en 78, ce qui lui en fait TRENTE ET UN. Je grave trente et un : la naissance est dans la table, l'age est dans le souvenir, et la table gagne. L'ecart d'un an n'ote rien au recit — un homme qui arrondit ses chiffres depuis vingt ans n'est pas oblige d'etre exact sur le sien.",
+    "ce_que_cela_grave_aussi_et_qui_ne_le_flatte_pas": "SON PREMIER OBJECTIF ET SON HABITUDE SE CONTREDISENT, ET IL VIENT DE DIRE POURQUOI. « Que le role dise la verite, y compris quand elle est mauvaise » — et vingt ans de chiffres arrondis a la baisse de dix muids, expressement « pour n'avoir jamais a annoncer un manque a mon maitre ». Ce n'est donc pas de la prudence de metier : c'est un coussin, entretenu par un homme qui a vu ce que trente muids de manque font a l'intendant qui les porte. Il a fait chasser son maitre d'apprentissage en portant l'ecrit au seigneur au lieu de parler d'abord a l'homme, et il passe vingt ans a s'assurer que le meme ecrit ne pourra jamais etre porte contre lui. Un role vrai a dix muids pres est un role qui n'est pas vrai.",
+    "ce_que_cela_change_aujourd_hui": "Rien de mecanique, et beaucoup pour ce qui vient. Au 129.4.3 il n'a plus de maitre a qui porter un ecrit — lord Gunthor est mort le jour meme —, il tient la main 'granges-de-sombreval' dans une ville occupee, et il porte depuis le 1er le pli scelle 'pli-protection-sombreval', adresse a ce mort. La regle de sa vie (l'ecrit monte au seigneur, jamais a l'homme) n'a plus de destinataire, exactement comme la sommation d'hier."
+  },
+  "mutations_proposees": [],
+  "a_la_main": [
+    {
+      "table": "etat/actes.json",
+      "geste": "Ajouter l'acte ci-dessous en fin de liste. Le recit ne porte ni lune ni jour — la ligne vaut a l'annee ; lune 9, jour 1 sert d'ancre, apres moisson, quand les comptes de granges se ferment.",
+      "acte": {
+        "id": "acte-marec-les-trente-muids-109",
+        "date": {"annee": 109, "lune": 9, "jour": 1},
+        "acteur_id": "marec-fosse",
+        "cible_id": "gunthor-darklyn",
+        "lieu_id": "sombreval",
+        "description": "AN 109, AUX GRANGES DE SOMBREVAL. Marec Fosse, TRENTE ET UN ANS, commis aux granges et pas encore intendant, releve TRENTE MUIDS DE MANQUE dans le compte de l'intendant qui l'avait forme. Il ne va pas voir l'homme : il monte au chateau et porte la chose PAR ECRIT a lord Gunthor Darklyn, alors dans sa vingt-septieme annee. L'intendant est chasse. Marec a ses clefs et son office la meme lune — le trousseau qu'il porte encore a la ceinture est celui d'un autre. || CE QU'IL EN A FAIT SA REGLE, ET QU'IL TIENT DEPUIS VINGT ANS : arrondir tout chiffre de grain A LA BAISSE DE DIX MUIDS, pour n'avoir jamais a annoncer un manque a son maitre. Et ne plus monter au chateau : on descend le voir aux granges.",
+        "temoins": [],
+        "connu_de": ["marec-fosse"]
+      },
+      "pourquoi_a_la_main": "OPERATIONS (scripts/etat/mutations/vocabulaire.py) ne porte aucune table 'actes' : actes.json ne s'ecrit par aucune operation du vocabulaire ferme. Troisieme cas de la meme forme en trois jours, apres tete_retirer et la table maisons — ce qui monte a une porte, ce qui descend ou ce qui date n'en a pas. Entree portee a chambres/mj-sombreval/problemes.json."
+    },
+    {
+      "table": "etat/personnages.json",
+      "cible": "marec-fosse",
+      "geste": "Ajouter sur la fiche le champ libre 'passe' ci-dessous (aucun script ne le lit ; il se lit avec la fiche, comme celui propose pour rulf-corne).",
+      "passe": "An 109, trente et un ans, commis aux granges : il releve trente muids de manque dans le compte de l'intendant qui l'a forme, monte au chateau et le porte par ecrit a lord Gunthor Darklyn au lieu d'en parler d'abord a l'homme. L'intendant est chasse ; il a ses clefs et son office la meme lune. Depuis vingt ans il arrondit ses chiffres a la baisse de dix muids pour n'avoir jamais a annoncer un manque a son maitre, et il ne monte plus au chateau."
+    }
+  ],
+  "note_de_forme": "Un FAIRE ne devient pas vrai parce que l'homme l'a bien raconte : il devient vrai quand l'arbitre le tient. Je n'ai rien ajoute a son recit — ni ce qu'il a ressenti, ni ce que l'intendant chasse est devenu, ni le nom de cet homme : l'etat ne le porte pas et son recit ne le donne pas. Si tu veux ce nom, c'est une seconde proposition, pas un detail."
+}

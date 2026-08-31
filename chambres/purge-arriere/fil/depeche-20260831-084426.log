@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime_worker.py", line 44, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime_worker.py", line 23, in main
+    rep = runtime.appeler(**charge["appel"])
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 476, in appeler
+    return _appel_claude(
+        manuel, message, session_id, modele, effort, timeout, cwd,
+        add_dirs, tools, settings, reprendre, environnement, on_event,
+        on_stderr, heartbeat, on_heartbeat, ecriture)
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 439, in _appel_claude
+    raise RuntimeError(("\n".join(erreurs) or
+                        "claude a quitte avec le code %d" % code)[-800:])
+RuntimeError: claude a quitte avec le code 3221226505

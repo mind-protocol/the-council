@@ -79,6 +79,31 @@ def minute_absolue(d):
              + (d["jour"] - 1)) * 1440) + d.get("minute", 0)
 
 
+def plus_tard_ou_rien(actuelle, proposee):
+    """Le cliquet de `monde.date` : elle avance, elle ne recule jamais.
+
+    LE 31.8. Le curseur du monde avait ete recale au 129.4.4 minute 540 — la
+    derniere minute ECRITE de toutes les tables. Deux minutes plus tard, un lot
+    date du 129.4.3 a 12h20 a ete rejoue ; la scene n'avait pas de front, elle
+    est tombee dans la branche `else`, et `monde.date` est repartie en arriere
+    d'un jour entier. Les quatre horloges, elles, sont restees au 4e : le monde
+    se retrouvait derriere son propre registre, et tout ce qui est ecrit entre
+    les deux allait se rejouer.
+
+    Le commentaire du dessous disait deja l'intention — « jamais en arriere, un
+    front partant du monde ». Il manquait le cliquet. Un recul volontaire, lui,
+    se fait a la main sur monde.json, hors de ce chemin : c'est un acte, pas un
+    effet de bord.
+    """
+    if not isinstance(actuelle, dict) or actuelle.get("jour") is None:
+        return dict(proposee)
+    if minute_absolue(proposee) < minute_absolue(actuelle):
+        print("  (curseur tenu : la scene est datee avant monde.date — %s reste)"
+              % (actuelle,))
+        return dict(actuelle)
+    return dict(proposee)
+
+
 def dit_ecart(minutes):
     """« 1 j 4 h 20 » — un ecart doit se lire, pas se calculer de tete."""
     j, r = divmod(int(minutes), 1440)
@@ -981,9 +1006,9 @@ elif mien:
     # est acquis pour TOUT LE MONDE. Elle n'avance donc que quand la derniere
     # scene a rattrape — et jamais en arriere, un front partant du monde.
     lent = min(sieges, key=lambda s: minute_absolue(horloges[s]))
-    monde["date"] = dict(horloges[lent])
+    monde["date"] = plus_tard_ou_rien(monde["date"], horloges[lent])
 else:
-    monde["date"] = date
+    monde["date"] = plus_tard_ou_rien(monde["date"], date)
     # Une scene commune (ou une partie seule) fait avancer le monde : les fronts
     # qui trainaient derriere sont rattrapes, sans quoi le minimum les ferait
     # reculer au prochain calcul.

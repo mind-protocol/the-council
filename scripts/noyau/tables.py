@@ -124,6 +124,58 @@ def existe(nom):
     return os.path.exists(chemin(nom))
 
 
+def _cliquet_du_monde(p, valeur):
+    """`monde.date` ne recule pas par la porte. Elle avance, ou elle ne bouge pas.
+
+    LE 31.8, DEUX FOIS DANS LA MEME HEURE. Le curseur du monde avait ete recale
+    au 129.4.4 minute 540 — la derniere minute ECRITE de toutes les tables, la
+    reine disant « Nous attendons midi ». Deux minutes plus tard il portait
+    129.4.3 minute 740 : un lot rejoue, date du 3e, l'avait tire en arriere par
+    `scene/flux.py`. J'ai pose la un cliquet, et quatre minutes apres le fichier
+    portait 129.4.3 minute 721 — la valeur d'AVANT le recalage, revenue seule.
+    Ce second recul n'est pas passe par flux : c'est une ECRITURE PERDUE. Un
+    processus avait lu `monde.json` avant le recalage, a travaille, et a reecrit
+    son exemplaire entier apres — sans jamais relire le disque.
+
+    D'ou le cliquet ICI et non chez un appelant : la porte est le seul point que
+    tous les deposants traversent, et une ecriture perdue est par definition le
+    fait de celui qui ne sait pas qu'il ecrase. Chaque ecriture de `monde.json`
+    relit donc la date du disque et garde la plus tardive des deux.
+
+    LE MONDE PEUT ENCORE RECULER — mais alors on le dit : `RECUL_VOULU=1` dans
+    l'environnement. Un recul est un acte, jamais un effet de bord. C'est la
+    difference entre avancer et recaler, et elle ne se voit dans aucune table :
+    elle se voit six jours plus tard, quand une scene deja ecrite se rejoue.
+    """
+    try:
+        if os.path.basename(p) != "monde.json" or os.path.dirname(os.path.abspath(p)) != ETAT:
+            return
+        if not isinstance(valeur, dict) or not isinstance(valeur.get("date"), dict):
+            return
+        if os.environ.get("RECUL_VOULU"):
+            return
+        if not os.path.exists(p):
+            return
+        with io.open(p, encoding="utf-8") as f:
+            ancienne = json.loads(f.read()).get("date")
+        if not isinstance(ancienne, dict) or ancienne.get("jour") is None:
+            return
+
+        def minutes(d):
+            return ((((d.get("annee", 0) * 12 + (d.get("lune", 1) - 1)) * 30)
+                     + (d.get("jour", 1) - 1)) * 1440) + d.get("minute", 0)
+
+        if minutes(valeur["date"]) < minutes(ancienne):
+            sys.stderr.write(
+                u"(porte : monde.date ne recule pas — %s propose, %s garde. "
+                u"RECUL_VOULU=1 si le recul est voulu.)\n"
+                % (valeur["date"], ancienne))
+            valeur["date"] = ancienne
+    except Exception as e:
+        # La porte ne plante jamais pour un garde-fou : l'ecriture reste bonne.
+        sys.stderr.write(u"(porte : cliquet du monde en echec — %s)\n" % str(e)[:160])
+
+
 def ecrire(nom, valeur, indent=2):
     """Ecrire une table, atomiquement. Rend le chemin ecrit.
 
@@ -134,7 +186,9 @@ def ecrire(nom, valeur, indent=2):
     l'atomicite, pas la mise en page : forcer indent=2 partout aurait reecrit
     des tables entieres au premier passage de chaque migrant.
     """
-    p = _poser(chemin(nom), lambda f: _dump(valeur, f, indent))
+    p = chemin(nom)
+    _cliquet_du_monde(p, valeur)
+    p = _poser(p, lambda f: _dump(valeur, f, indent))
     _signaler_depot_staging(p, valeur)
     return p
 

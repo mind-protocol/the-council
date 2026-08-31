@@ -13,7 +13,10 @@ from agents.activation.socle import (ENERGIE_MAX, ENERGIE_MIN,
                                      ENERGIE_ACTIVATION_MIN, ETAT,
                                      lire_json, journaliser)
 from agents.activation.horloges import appliquer_polarites_horloge
-from agents.activation.graphe import (tache_active, tache_disponible,
+from agents.activation.fatigue import (instant_fictionnel_secondes,
+                                       mesurer_fatigue)
+from agents.activation.graphe import (tache_active, tache_executable,
+                                      tache_disponible,
                                       acteur_en_repos, empreinte_tache,
                                       continuite_tache, energie_de_tache,
                                       clusters_par_lieu,
@@ -30,6 +33,25 @@ def choisir_tache(acteur, noeuds, aretes, adj, energies, etat=None,
     """
     etat = etat or {}
     titulaires = collections.defaultdict(set)
+    affectations_declarees = set()
+
+    # Un office ou un moyen est lui-meme tenu par des personnes. Une action
+    # peut donc etre attribuee a O04 sans nommer Tobb et Nesse a chaque ligne.
+    # On resout d'abord ce cran intermediaire, avant d'attribuer les taches.
+    porteurs_intermediaires = collections.defaultdict(set)
+    for a in aretes:
+        if a.get("flou") or a.get("nature") != "tient":
+            continue
+        de, vers = a.get("de"), a.get("vers")
+        if de not in noeuds or vers not in noeuds:
+            continue
+        if (noeuds[de].get("genre") in ("office", "moyen")
+                and noeuds[vers].get("genre") == "personne"):
+            porteurs_intermediaires[de].add(vers)
+        elif (noeuds[vers].get("genre") in ("office", "moyen")
+              and noeuds[de].get("genre") == "personne"):
+            porteurs_intermediaires[vers].add(de)
+
     for a in aretes:
         # « tient » est l'assignation d'une action de plan ; « poursuit » est
         # l'etape que porte une TETE. Les deux sont des appartenances, et ne
@@ -45,10 +67,21 @@ def choisir_tache(acteur, noeuds, aretes, adj, energies, etat=None,
             continue
         de, vers = a.get("de"), a.get("vers")
         if de in noeuds and vers in noeuds:
-            if tache_active(noeuds[de]) and noeuds[vers].get("genre") == "personne":
-                titulaires[de].add(vers)
-            elif tache_active(noeuds[vers]) and noeuds[de].get("genre") == "personne":
-                titulaires[vers].add(de)
+            tache, porteur = None, None
+            if tache_active(noeuds[de]):
+                tache, porteur = de, vers
+            elif tache_active(noeuds[vers]):
+                tache, porteur = vers, de
+            if tache:
+                genre_porteur = noeuds[porteur].get("genre")
+                if genre_porteur == "personne":
+                    titulaires[tache].add(porteur)
+                    affectations_declarees.add(tache)
+                elif (a.get("nature") == "tient"
+                      and genre_porteur in ("office", "moyen", "vacant")):
+                    affectations_declarees.add(tache)
+                    titulaires[tache].update(
+                        porteurs_intermediaires.get(porteur) or ())
 
     # Celles qu'un `tient` renvoie vers un noeud `vacant` : l'ecriteau
     # « personne ne tient ceci » est une donnee, pas un trou.
@@ -102,6 +135,11 @@ def choisir_tache(acteur, noeuds, aretes, adj, energies, etat=None,
             titulaires[nid] = {maitre}
 
     def appartient_ou_vacante(nid):
+        # Sans aucune affectation, le repli historique par proximite reste
+        # permis. Mais une affectation explicite dont le titulaire n'a pas pu
+        # etre resolu est un trou a reparer, pas une invitation a tous.
+        if nid in affectations_declarees:
+            return acteur in titulaires.get(nid, set())
         return not titulaires.get(nid) or acteur in titulaires[nid]
 
     directes = []
@@ -113,7 +151,8 @@ def choisir_tache(acteur, noeuds, aretes, adj, energies, etat=None,
             autre = a.get("vers")
         elif a.get("vers") == acteur and a.get("nature") in ("poursuit", "tient"):
             autre = a.get("de")
-        if autre and tache_active(noeuds[autre]) and appartient_ou_vacante(autre) \
+        if autre and tache_executable(autre, noeuds) \
+                and appartient_ou_vacante(autre) \
                 and tache_disponible(etat, autre, noeuds, present) \
                 and float(energies.get(autre, 0.0)) >= ENERGIE_MIN:
             # L'assignation explicite passe avant le simple fait que l'acteur
@@ -132,7 +171,7 @@ def choisir_tache(acteur, noeuds, aretes, adj, energies, etat=None,
     while file:
         ici, chemin = file.popleft()
         d = len(chemin) - 1
-        if (ici != acteur and tache_active(noeuds[ici])
+        if (ici != acteur and tache_executable(ici, noeuds)
                 and appartient_ou_vacante(ici)
                 and tache_disponible(etat, ici, noeuds, present)
                 and float(energies.get(ici, 0.0)) >= ENERGIE_MIN):
@@ -231,8 +270,10 @@ def mettre_a_jour_energie_graphe(etat, horloge, scores, noeuds, adj,
 
 
 def mettre_a_jour_energies(etat, horloge, scores, energies_graphe,
-                           disponibilites, noeuds, occupes):
+                           disponibilites, noeuds, occupes,
+                           maintenant_mur=None):
     acteurs = etat.setdefault("acteurs", {})
+    fatigue_acteurs = etat.setdefault("fatigue_acteurs", {})
     present = horloge["present_secondes"]
     nouvelle_vague = etat.get("source_cle") != horloge["source_cle"]
     if nouvelle_vague:
@@ -257,9 +298,20 @@ def mettre_a_jour_energies(etat, horloge, scores, energies_graphe,
             continue
         score = max(0.0, min(1.0, scores.get(nid, 0.0)))
         a = acteurs.setdefault(pid, {"energie": 0.0, "activations": 0})
-        # Projection de compatibilite pour l'admin. L'autorite est desormais
-        # l'overlay ``graphe.noeuds``, pas cette fiche d'acteur.
-        a["energie"] = float(energies_graphe.get(nid, 0.0))
+        # La reserve topologique reste intacte. La disponibilite effective
+        # baisse seulement selon le calcul recent et le retard fictionnel.
+        brute = float(energies_graphe.get(nid, 0.0))
+        instant_fiction = instant_fictionnel_secondes(pid, horloge)
+        mesure = mesurer_fatigue(
+            fatigue_acteurs.setdefault(pid, {}), instant_fiction,
+            maintenant_mur)
+        a["energie_brute"] = brute
+        a["energie"] = brute * mesure["facteur_total"]
+        a["charge_compute_minutes"] = mesure["charge_compute_minutes"]
+        a["ecart_heures"] = mesure["ecart_heures"]
+        a.pop("avance_heures", None)
+        a["facteur_compute"] = mesure["facteur_compute"]
+        a["facteur_heures"] = mesure["facteur_heures"]
         a["mis_a_jour_a"] = present
         a["importance"] = score
         a["disponible_a"] = disponible

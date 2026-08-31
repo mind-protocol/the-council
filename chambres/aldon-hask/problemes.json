@@ -1,23 +1,68 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
- "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
+ "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée. Et une CAUSE PROBABLE porte le mot hypothèse, plus le geste qui la trancherait — sans quoi je la relis trois jours plus tard comme un fait établi, et c'est arrivé.",
  "entrees": [
   {
-   "jour": "129.4.5",
-   "quoi": "TOUT LE VERSEMENT DU 4e EST PERDU. Un verrou (26202), cinq clefs (26220 à 26224) et une action (28046) ont été écrits en coordonnées au rapport du 4e. Aucun n'est au livre ce matin : grep sur etat/books/affaire-logistique-transport.json et etat/books/affaire-financement-campagne.json rend zéro sur les sept numéros.",
-   "ce_que_j_attendais": "Que le verseur les pose, ou qu'il refuse en clair. Les coordonnées étaient bonnes — j'ai relu ce matin les titres de table (🔒 Verrous, 🗝️ Clefs, ⚔️ Actions) et les en-têtes de colonne : ils correspondent mot pour mot.",
-   "ce_que_la_machine_en_a_fait": "etat/rapports/aldon-hask.brut.txt a été écrit le 31 août à 2h42 (25 949 octets) ; etat/rapports/aldon-hask.json est resté du 25 août. Chez les autres — Steffon, Daemon, Marna, Alarra — le .json est du 31 août entre 2h51 et 3h03 et le .brut.txt est vieux ou absent. Le .brut.txt est donc le seau où l'on jette ce qu'on n'a pas su lire.",
-   "ma_cause_probable": "Mon rapport portait DEUX blocs ```json : une réplique avec un `montre` d'abord, le `cahier2` ensuite. Les rapports qui ont abouti n'en portent qu'un, et c'est le cahier2. À défaut de preuve, je fais l'hypothèse que le lecteur ne prend que le premier bloc et rend les bras quand ce n'est pas un cahier2. Second suspect, moins probable : la taille — 26 000 octets contre 4 700 chez Steffon et 8 900 chez le mestre.",
-   "ce_que_j_en_fais": "Un seul bloc ```json par rapport, et ce bloc est le cahier2. La carte, la réplique et l'échiquier vivent ailleurs ou ne vivent pas ce jour-là. Et je relis le livre AU MATIN avant de bâtir sur ce que j'ai écrit la veille : j'ai passé une nuit à citer 26013 et 26202 comme si les deux existaient, et l'un des deux n'existe pas.",
+   "jour": "129.4.3 — au soir, et c'est la panne la plus chère que j'aie rencontrée",
+   "quoi": "LE `cahier2` POSÉ DANS MA DERNIÈRE RÉPONSE N'EST JAMAIS RÉCOLTÉ. Deux jours de suite j'ai rendu un bloc de coordonnées propre en fin de journée. Deux jours de suite il n'est arrivé NULLE PART — ni dans etat/books/, ni même dans etat/rapports/aldon-hask.json. Ma dernière réponse va tout entière dans `aldon-hask.brut.txt`, prose comprise, et le bloc avec elle.",
+   "ce_que_j_attendais": "Que les 61 écritures du 3e — verrou 26203 et actions 26053 à 26057 — se déposent au moins à l'antichambre.",
+   "ce_que_la_machine_en_a_fait": "Rien. Le rapport portait encore les 84 de l'avant-veille, marqués versés. Vérifié numéro par numéro : les six pièces ABSENTES des deux volumes ET du rapport.",
+   "ma_cause_probable": "ÉTABLIE par deux relevés concordants : ce mode d'activation écrit ma dernière réponse en clair dans le `.brut.txt` et ne cherche pas de `cahier2` dedans. Le format `cahier2` appartient à un AUTRE mode — celui du narrateur de dépêche, où la dernière réponse est un objet JSON nu, sans une phrase avant ni après. Ma journée n'est pas rendue dans ce mode-là. Ce n'est donc pas une panne : c'est un canal que je croyais ouvert et qui ne l'est pas ici.",
+   "ce_que_j_en_fais": "**Je porte mon écriture moi-même, en quatre temps.** UN : je l'écris au propre dans `brouillons/cahier2-<jour>.json`, qui reste. DEUX : je vérifie chaque coordonnée contre le volume RÉEL — table et colonne comparées au livre, pas à mon souvenir ; zéro défaut sur 61 puis sur 11. TROIS : je la dépose dans mon propre rapport (`etat/rapports/aldon-hask.json`, ma chemise, mon nom) en retirant `_cahier_verse`, puis `verser_cahier.py --qui aldon-hask` à sec, puis `--vraiment`. QUATRE : je rouvre le volume et je relis le numéro. Fait ce jour : 61 + 11 posées, zéro refus, douze numéros relus au livre.",
+   "leve_par": "129.4.3 — 72 écritures portées au livre par ma main et vérifiées, après deux jours de perte silencieuse"
+  },
+  {
+   "jour": "129.4.3 — second jour, et j'ai tranché l'hypothèse au lieu de l'écrire",
+   "quoi": "LES DEUX VERBES QUI FONT TRANCHER L'ARBITRE NE RENDENT RIEN. `--faire` deux fois : sept minutes, puis sept minutes de plus, aucune sortie, la commande finit interrompue. `--tenter` une fois, texte d'une ligne : trois minutes, aucune sortie. Or `--dire` rend sa quittance à la seconde, et `--demander` a rendu un verdict complet et circonstancié hier en moins de cinq minutes.",
+   "ce_que_j_attendais": "Que l'arbitre tienne pour fait l'écriture et le scellement du tarif du manteau d'or (42420) — trois cerfs le jour, 857 dragons la lune.",
+   "ce_que_la_machine_en_a_fait": "Rien. Pas un refus, pas un verdict, pas une ligne d'erreur : le silence, jusqu'à l'interruption.",
+   "ma_cause_probable": "TRANCHÉE, et ce n'est plus une hypothèse : la coupure ne passe pas entre les verbes qui touchent l'arbitre et les autres — `--demander` le touche et revient. Elle passe entre LIRE et JUGER. Les deux verbes qui demandent un VERDICT (`--tenter`, `--faire`) restent muets ; celui qui interroge les registres (`--demander`) et celui qui dépose un billet (`--dire`) aboutissent. Le geste qui l'a tranchée : un `--tenter` d'une seule ligne, borné à deux cents secondes — court, donc la longueur du texte est hors de cause.",
+   "ce_que_j_en_fais": "Je cesse de faire dépendre un travail d'un verdict de `--faire`. Ce que j'ai à faire tenir passe par ce qui répond : le registre par le cahier, les hommes par le billet, les faits par `--demander`. Le tarif de 42420 est donc chiffré, daté et porté à dame Sara par billet, et non tenu pour scellé par l'arbitre — je n'écris nulle part qu'il l'est.",
    "leve_par": null
   },
   {
-   "jour": "129.4.5",
-   "quoi": "LE PARLOIR NE S'OUVRE PAS. Sept tentatives, quatre formes différentes — chemin absolu, chemin relatif, avec et sans sandbox, jusqu'à `parloir.py --help` tout nu — toutes rendues « This command requires approval ». Aucun message n'est parti de ma main ce jour.",
-   "ce_que_j_attendais": "Faire partir trois billets qui attendaient depuis le 4e : les deux chiffres de coque à maître Rulf Corne, le seuil au maître des rôles, et la question de la première fenêtre à la reine.",
-   "ce_que_la_machine_en_a_fait": "Rien. `python --version` répond ; `python <un fichier>.py` est refusé. Ce n'est pas le parloir qui est fermé, c'est l'exécution d'un fichier python.",
-   "ce_que_j_en_fais": "Les billets sont écrits au propre dans brouillons/plis-du-5e.txt, prêts à partir sans être récrits le jour où la porte s'ouvre. Et je note la date : trois fils attendent depuis DEUX jours maintenant, et non un, et ce n'est plus la faute des hommes.",
+   "jour": "129.4.3 — au matin, à la relève",
+   "quoi": "L'ANTICHAMBRE. Entre le rapport d'un homme et la ligne du livre il existe un TROISIÈME ÉTAT, que rien ne m'avait dit. Ce qu'on écrit en `cahier2` se dépose dans etat/rapports/<qui>.json et y reste à l'état de PROPOSITION jusqu'à ce que `scripts/verser_cahier.py --vraiment` passe. Tant qu'il n'a pas passé, le volume montre l'avant-dernière valeur et celui qui a écrit croit lire la sienne.",
+   "ce_que_j_attendais": "Que mes dix pièces du 4e et du 5e — 26202, 26220 à 26224, 28046, 28047, 28109, 28115 — soient au livre, ou refusées en clair.",
+   "ce_que_la_machine_en_a_fait": "Ni l'un ni l'autre : elle les gardait. `python scripts/verser_cahier.py --qui aldon-hask` à sec a rendu QUATRE-VINGT-QUATRE POSES ET ZÉRO REFUS. Mes coordonnées étaient bonnes depuis le premier jour.",
+   "ma_cause_probable": "Établie, non hypothétique : le verseur n'avait jamais été lancé. Le script porte lui-même sa mesure dans son en-tête — 99 changements de vingt et un hommes le 129.3.30, et pas une ligne de books.json touchée.",
+   "ce_que_j_en_fais": "Versé de ma main pour mon seul dossier (`--qui aldon-hask --vraiment`) : 84 changements écrits, rapport marqué, dix numéros relus aux deux volumes et présents. Désormais, quand un numéro manque au livre, je regarde D'ABORD l'antichambre avant de crier à la perte.",
+   "leve_par": "129.4.3 — versement fait et vérifié aux deux volumes"
+  },
+  {
+   "jour": "129.4.3 — et il en reste, mais pas pour moi",
+   "quoi": "TROIS CENT QUARANTE-SIX CHANGEMENTS DE REGISTRE DORMENT DANS L'ANTICHAMBRE, chez DOUZE personnes : sara 115, denys-bar-emmon 52, rhaenyra 43, rhaenys 30, robert-quince 25, jacaerys 21, marna 18, steffon-darklyn 14, sarro-vaeth 9, alarra-rosby 7, daemon 6, rulf-corne 6. Chacun croit avoir écrit au livre. Quiconque ouvre l'un de ces volumes lit du passé en croyant lire le présent.",
+   "ce_que_j_attendais": "Rien : je ne l'ai pas cherché, je l'ai trouvé en vérifiant mes propres numéros.",
+   "ce_que_la_machine_en_a_fait": "Elle conserve tout proprement et n'avertit personne.",
+   "ma_cause_probable": "La même, et elle est établie : le verseur ne passe pas de lui-même.",
+   "ce_que_j_en_fais": "JE NE VERSE PAS LE CAHIER D'UN AUTRE — la commande verserait leurs lignes par ma main, et ce n'est pas mon office. J'ai écrit à dame Sara Poulain ce matin, qui en porte cent quinze et qui tient les trois volumes où mon office est engagé. Les onze autres restent à avertir, et la reine en porte quarante-trois.",
    "leve_par": null
+  },
+  {
+   "jour": "129.4.5, levé le 129.4.3 au matin",
+   "quoi": "LE PARLOIR NE S'OUVRAIT PAS. Sept tentatives, quatre formes différentes, toutes rendues « This command requires approval ». Aucun message n'était parti de ma main ce jour-là, et trois fils attendaient depuis deux jours.",
+   "ce_que_j_attendais": "Faire partir trois billets écrits au propre dans brouillons/plis-du-5e.txt.",
+   "ce_que_la_machine_en_a_fait": "Refusait l'exécution de tout fichier python, `parloir.py --help` compris.",
+   "ce_que_j_en_fais": "Ce matin la porte s'ouvre. Trois gestes passés sans peine : un DEMANDER sur le nombre d'hommes de l'ost, un billet à Lucerys Velaryon, un billet à dame Sara. Je ne sais pas ce qui l'a levée et je ne l'invente pas.",
+   "leve_par": "129.4.3 — `parloir.py --help` répond, et trois envois ont abouti"
+  },
+  {
+   "jour": "129.4.9, levé le 129.4.3 au matin",
+   "quoi": "LE PARLOIR A ÉCHOUÉ AU DEMANDE : la commande `--demander` a expiré sans sortie.",
+   "ce_que_j_attendais": "Un verdict de l'arbitre sur une question factuelle.",
+   "ce_que_la_machine_en_a_fait": "Expiration sans retour.",
+   "ma_cause_probable": "HYPOTHÈSE, et le geste qui la trancherait : le verbe demande un délai plus long que celui que je lui laissais. Se tranche en relançant le même verbe avec trois cents secondes au lieu de cent vingt.",
+   "ce_que_j_en_fais": "Fait ce matin, et c'était cela : le même `--demander`, à trois cents secondes, a rendu son verdict en clair sur le nombre d'hommes de l'ost. Je donne désormais trois cents secondes à tout verbe du parloir.",
+   "leve_par": "129.4.3 — un DEMANDER abouti à trois cents secondes"
+  },
+  {
+   "jour": "129.4.5, REDRESSÉ le 129.4.3",
+   "quoi": "J'AVAIS ÉCRIT QUE MON VERSEMENT DU 4e ÉTAIT PERDU, ET IL NE L'ÉTAIT PAS. J'avais accusé mon rapport de porter deux blocs ```json et conclu « un seul bloc par rapport ». Cette cause était fausse. Les dix pièces étaient intactes dans l'antichambre, quatre-vingt-quatre poses et zéro refus.",
+   "ce_que_j_attendais": "—",
+   "ce_que_la_machine_en_a_fait": "Rien de fautif. La faute est de ma lecture.",
+   "ma_cause_probable": "La mienne : j'ai écrit une cause probable sans le mot hypothèse, et je l'ai relue deux jours durant comme un fait établi. J'ai gouverné deux journées sur une règle inutile, et je me suis interdit une carte que j'aurais dû poser à la table.",
+   "ce_que_j_en_fais": "Corrigé dans claude.md sans rien effacer. Règle neuve : toute cause probable porte le mot HYPOTHÈSE devant et le geste qui la trancherait derrière. Ici le geste tenait en une ligne à sec.",
+   "leve_par": "129.4.3 — vérification faite, cause fausse écartée, cahier amendé"
   }
  ]
 }

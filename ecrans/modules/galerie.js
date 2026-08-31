@@ -321,18 +321,17 @@
     } catch (e) {}
   }
 
-  // ---- la pastille verte : cet homme est DEHORS, en ce moment --------------
-  // Un dépêché (`scripts/depecher.py`) vit sa journée dans sa propre session,
-  // avec un budget de minutes ; `/depeches` dit lesquelles tournent encore.
+  // ---- la pastille verte : cet homme est ON, en ce moment -------------------
+  // `/depeches` reflète les sessions réellement en calcul dans le runtime,
+  // qu'elles soient synchrones ou détachées.
   // Le joueur voyait jusqu'ici une salle immobile sans savoir si l'on avait
   // envoyé quelqu'un ou si plus rien ne venait : la pastille répond à ça, et à
-  // rien d'autre — pas de durée écrite, pas de compte à rebours à l'écran, la
-  // minute restante vit dans l'infobulle pour qui la cherche.
+  // rien d'autre — pas de durée supposée ni de compte à rebours à l'écran.
   //
   // Elle ne se pose que sur les visages DÉJÀ montés : on n'ajoute personne à la
   // salle parce qu'il travaille, et on ne dit pas au joueur qu'un absent qu'il
   // ne voit pas est en train d'être joué.
-  const dehors = new Map();        // id → secondes restantes
+  const actifs = new Set();
 
   function poser() {
     document.querySelectorAll("#acteurs .acteur").forEach((slot) => {
@@ -342,32 +341,30 @@
       // pastille flottait dans la marge du nom.
       const hote = slot.querySelector(".visage") || slot.querySelector(".medaillon");
       if (!hote) return;
-      const reste = dehors.get(id);
       let p = hote.querySelector(".depeche");
-      if (reste == null) { if (p) p.remove(); return; }
+      if (!actifs.has(id)) { if (p) p.remove(); return; }
       if (!p) {
         p = document.createElement("span");
         p.className = "depeche";
         hote.appendChild(p);
       }
-      p.title = "Il est sorti — on l'attend (encore " +
-        Math.max(1, Math.round(reste / 60)) + " min)";
+      p.title = "On — sa session travaille en ce moment";
     });
   }
 
   async function guetter() {
     try {
       const d = await (await fetch("/depeches")).json();
-      dehors.clear();
-      (d && d.dehors || []).forEach((x) => dehors.set(x.id, x.reste));
-    } catch (e) { dehors.clear(); }
+      actifs.clear();
+      (d && d.actifs || []).forEach((x) => actifs.add(x.id));
+    } catch (e) { actifs.clear(); }
     poser();
   }
 
   window.addEventListener("DOMContentLoaded", () => {
     rapprocher();
     setInterval(rapprocher, 20000);
-    // Une dépêche dure des minutes, mais elle rentre d'un coup : cinq secondes
+    // Une session peut finir d'un coup : cinq secondes
     // est le pas qui fait que la pastille s'éteint pendant qu'on regarde, et
     // non trois battements après le retour de l'homme.
     guetter();

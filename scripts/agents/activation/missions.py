@@ -24,7 +24,10 @@ def mission_activation(pid, tache, budget, horloge, noeuds, dossier):
     p = dossier.get("personnage") or {}
     lieu = p.get("lieu") or p.get("lieu_id") or "lieu inconnu"
     affaire = intitule_tache_activation(tache, dossier)
-    return """%(annee)s AC · %(lune)se lune · %(jour)se jour — %(lieu)s
+    minute = date.get("minute")
+    heure = (" · %02dh%02d" % (int(minute) // 60, int(minute) % 60)
+             if isinstance(minute, (int, float)) else "")
+    return """%(annee)s AC · %(lune)se lune · %(jour)se jour%(heure)s — %(lieu)s
 
 Tu as %(secondes)d secondes devant toi.
 
@@ -42,6 +45,7 @@ résiste ou constate précisément ce qui t'arrête. Arrête-toi quand le temps 
         "annee": date.get("annee") or "?",
         "lune": date.get("lune") or "?",
         "jour": date.get("jour") or "?",
+        "heure": heure,
         "lieu": lieu,
         "secondes": secondes_monde_pour_energie(budget),
         "affaire": affaire,
@@ -274,4 +278,3 @@ Reprends la même tâche avec ça en main, et fais le geste suivant. Rends
 seulement l'objet `tentative` prévu par ton système.
 """ % {"tache": tache.get("quoi") or tache.get("id"),
        "message": relance["message"]}
-

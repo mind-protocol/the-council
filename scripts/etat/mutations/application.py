@@ -6,7 +6,7 @@ deja ete valide, ici on ne refuse plus, on execute - puis l'ecriture atomique
 passe par la porte noyau/tables, table par table.
 """
 from etat.mutations.vocabulaire import (  # noqa: E501
-    COLONNES_AFFAIRE_NEUVE, charge_relation, liste_books, liste_jetons, liste_simple, prochaine_ligne_action, table_actions)
+    COLONNES_AFFAIRE_NEUVE, charge_relation, declencheur_vise, liste_books, liste_jetons, liste_simple, prochaine_ligne_action, table_actions)
 from etat.mutations.lecture import chemin_table, liste_mains, liste_plis, par_id
 from etat.expose import tables as porte  # LA PORTE de etat/
 import bibliotheque  # noyau : la session d'ecriture des livres scindes
@@ -91,9 +91,12 @@ def appliquer(plan, tables):
                 if op.endswith("ajouter"):
                     tete["declencheurs"].append(m["valeur"])
                 else:
+                    # declencheur_vise() atteint AUSSI les entrees non-dict :
+                    # une chaine tombee dans la liste etait increvable des
+                    # deux cotes (mj-accalmie, 129.4.3).
                     tete["declencheurs"] = [
                         d for d in tete["declencheurs"]
-                        if not (isinstance(d, dict) and d.get("si") == m["valeur"])]
+                        if not declencheur_vise(d, m["valeur"])]
             else:
                 liste = "croyances" if op.startswith("croyance") else "ignore"
                 tete.setdefault(liste, [])

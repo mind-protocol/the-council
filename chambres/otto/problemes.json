@@ -1,5 +1,42 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+ "entrees": [
+  {
+   "jour": "129.4.3",
+   "quoi": "Deux volumes distincts portent la même affaire sous deux identifiants presque identiques",
+   "tente": "Ouvrir mes plans sur la solde du Guet pour y écrire mes verrous. Mon étagère en propose DEUX : `affaire-la-solde-des-officiers-du-guet` (« qui les paie ce mois-ci, et depuis quelle main ») et `affaire-solde-des-officiers-du-guet` (« si les officiers du Guet de Port-Réal sont encore payés, et de quelle main »). Un article de différence dans le nom, le même sujet dans le titre.",
+   "obtenu": "Les deux s'ouvrent, les deux sont vides. Rien ne dit lequel fait foi ni lequel reçoit ce que j'y écrirais.",
+   "attendu": "Un seul volume pour une seule affaire — ou, à défaut, une mention dans l'un renvoyant à l'autre.",
+   "consequence": "Je n'écris dans aucun des deux tant que je ne sais pas lequel se relit. Ce qu'on verse au mauvais livre est du travail perdu et on ne le sait pas.",
+   "etat": "ouverte"
+  },
+  {
+   "jour": "129.4.3",
+   "quoi": "Mes quatre plans d'affaires me sont servis entièrement vides",
+   "tente": "Lire `affaire-la-chaine-d-office-du-guet`, `affaire-la-solde-des-officiers-du-guet`, `affaire-solde-des-officiers-du-guet` et `affaire-la-chute-de-sombreval` pour savoir où en sont mes verrous et mes clefs.",
+   "obtenu": "Onze lignes chacun : le titre, puis quatre tables — États cibles, Verrous, Clefs, Actions — et pas une ligne sous aucune. Sombreval en a dix-sept et n'en porte pas davantage.",
+   "attendu": "Au moins l'état cible de chaque affaire, puisque ces volumes ont été ouverts à mon nom et portent des titres qui posent déjà une question précise.",
+   "consequence": "Une lune de travail — la cire de Largent, la ligne barrée du payeur du froment, les officiers qui ne signent pas — n'existe nulle part hors de ma mémoire. Je le porte donc d'abord dans mon propre volume (O.1 à O.6), et je verserai les verrous quand je saurai dans quel livre ils tombent.",
+   "etat": "ouverte"
+  },
+  {
+   "jour": "129.4.3",
+   "quoi": "Le parloir repond, mais en un temps qui va de trois secondes a plus d'un quart d'heure",
+   "tente": "Trois appels a `parloir.py --de otto --a mj-portreal` dans la meme journee : un `--faire` sur un fait de mon passe, un `--demander` sur la commission de Largent au registre des offices, un `--tenter` sur ma visite a la caserne du Guet.",
+   "obtenu": "Deux jours de mesures. Le 3e au matin : --dire passe en secondes, --faire revient en trois minutes, --demander et --tenter restent dehors au-dela de vingt minutes et un --tenter n'est jamais revenu. Le 3e apres midi : le meme --demander revient au bout de vingt-cinq minutes environ, et sa reponse etait la meilleure de ma journee — le taux du manteau d'or, l'arriere, le seuil, et la contradiction du coffre. Deux --faire de suite reviennent, l'un en quelques minutes, l'autre toujours dehors a l'heure ou je ferme.",
+   "attendu": "Je croyais tenir une panne de deux verbes. Ce n'est pas cela : c'est une latence tres etalee, sans rapport avec la longueur de ma demande. Je retire mon hypothese d'hier plutot que de la laisser courir.",
+   "consequence": "Regle de travail que j'en tire et que je garde : je lance le geste au parloir EN PREMIER et je travaille pendant qu'il court, au lieu de l'attendre. J'ai perdu une demi-journee hier a attendre, et gagne toute celle-ci a ne plus attendre. Ce qui n'est pas revenu quand je ferme, je le releve au reveil.",
+   "etat": "requalifiee le 129.4.3 : ce n'est pas une panne, c'est une latence — je m'organise avec"
+  },
+  {
+   "jour": "129.4.3",
+   "quoi": "Le plan de la Couronne n'est pas un livre : on ne peut rien y verser",
+   "tente": "Porter mes verrous du jour dans le plan `couronne` (plage 72000-72999), la ou sont les pieces qu'ils bloquent — 72001, 72100, 72103, 72112.",
+   "obtenu": "`etat/plans.json` n'est pas dans la bibliotheque que `verser_cahier.py` ouvre : le verseur ne travaille que sur `etat/books/`. Une coordonnee visant `couronne` aurait ete refusee en « livre inconnu », et je ne l'aurais peut-etre pas su.",
+   "attendu": "Pouvoir ecrire un verrou la ou est l'etat cible qu'il bloque.",
+   "consequence": "Contourne sans perte : j'ai verse dans deux livres que je tiens — `affaire-la-chaine-d-office-du-guet` et `affaire-le-grain-paye-avant-decrit` — et j'ai ecrit les numeros du plan (72000, 72100, 72103, 72112, 72411) dans la colonne « Bloque ». La chaine se lit, meme si elle traverse deux registres. Je le note parce qu'un autre s'y cassera les dents et perdra son travail en silence.",
+   "etat": "ouverte — contournee, non resolue"
+  }
+ ]
 }

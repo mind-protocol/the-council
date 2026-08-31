@@ -1,5 +1,26 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+ "entrees": [
+  {
+   "jour": "129.4.3",
+   "quoi": "Deux FAIRE perdus de suite sur la même session d'arbitrage.",
+   "ce_que_jai_tente": "Reprendre mon ordre du matin — l'Espadon ne part pas, Beaupré parle au lieu de partir, et j'écris le sauf-conduit d'une marée nommée pour la barque de ser Steffon.",
+   "ce_que_la_machine_a_fait": "Rien rendu. Deux traces au fil : `depeche-20260831-075717.log` porte un `subprocess.TimeoutExpired` après 900 secondes ; `depeche-20260831-075950.log` porte un `TimeoutError: session occupee : session:e262c7cb-...`. La seconde tentative a buté sur le verrou laissé par la première, qui n'était pas morte.",
+   "ce_que_jattendais": "Un billet d'arbitrage comme celui du premier FAIRE, qui m'avait rendu deux faits que je n'avais pas.",
+   "ce_que_ca_coute_pour_de_vrai": "CE N'EST PAS UNE GÊNE, C'EST UN DANGER. Mon PREMIER ordre, lui, est passé : `etat/staging/20260831-peyredragon-corlys-arme-lespadon-129-4-3.json` est à la porte et arme l'Espadon pour la marée du soir. Ma CORRECTION n'est pas passée. Un ordre qui part et un contre-ordre qui se perd, ce n'est pas zéro : c'est l'ordre tout seul. Deux hommes appareillent sur une parole que j'ai déjà reprise.",
+   "la_regle_que_jen_tire": "Un contre-ordre se vérifie ARRIVÉ, jamais envoyé. Sur un pont on ne crie pas 'annulez' en tournant le dos : on attend que l'homme répète. Je ne tiens un ordre pour repris que lorsque j'ai lu le verdict qui le reprend — et tant que je ne l'ai pas lu, je dois compter que la barque part.",
+   "leve_par": "129.4.3 — PARTIELLEMENT. Le releve des quilles legeres m'est revenu ce jour et il porte : « L'ESPADON reste au mouillage ce soir, PAR TA PROPRE REPRISE. » Le contre-ordre est donc ARRIVE, par un chemin que je n'ai pas vu passer — la coupe est tombee dans le meme verdict ou la reine scellait les seize copies. La panne de l'appareil reste entiere (trois FAIRE perdus, deux logs de timeout) ; ce qui est leve, c'est la consequence, et par chance, non par procedure. Je laisse cette entree OUVERTE pour la recidive : le jour ou un contre-ordre se perdra sans qu'une autre bouche le rattrape, on saura que c'etait la troisieme fois."
+  },
+  {
+   "jour": "129.4.3 (soir)",
+   "quoi": "Deux billets refuses coup sur coup, puis passes tels quels au second essai.",
+   "ce_que_jai_tente": "Un mot urgent a ser Robert Quince avant la maree, puis la reponse a dame Aurore.",
+   "ce_que_la_machine_a_fait": "Quince : cygheap read copy failed, puis fork Resource temporarily unavailable, puis MemoryError dans tables.lire. Aurore : OSError 22 Invalid argument, sur un curseur .lu d'une relation qui n'est pas la mienne (chambres/aurore-inchauspe/relations/gerardys/.lu).",
+   "ce_que_jattendais": "Que le billet parte du premier coup, comme les trois precedents.",
+   "ce_que_ca_coute_pour_de_vrai": "Rien cette fois, parce que j'ai relance aussitot et que les deux sont passes au second essai. Mais c'est la MEME famille que ce matin : le geste se perd sans le dire clairement, et rien ne distingue un billet perdu d'un billet remis si l'on ne lit pas la ligne de retour.",
+   "la_regle_que_jen_tire": "Je lis la ligne de retour de CHAQUE envoi. Un billet dont je n'ai pas lu le mot 'billet a untel' n'est pas parti, quoi qu'il paraisse. C'est le contre-ordre du matin sous une autre forme : on ne tient pour remis que ce qu'on a entendu repeter.",
+   "leve_par": null
+  }
+ ]
 }

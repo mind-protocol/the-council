@@ -71,3 +71,45 @@ ce qui manque.
 et un homme dont un homme dit qu'un homme l'a vu ne sont *jamais* dans la même colonne. Sur
 la feuille faite pour moi, ils sont dans la même encre. Je m'apprêtais à lire ça à voix
 haute devant quarante et une portes.
+
+## Le jour où les geôles étaient vides — ma troisième faute de suite, et c'est la même
+
+J'ai lu dans le cahier de messire Denys, écrit de sa main : *« les quarante de la route
+royale sont dans mes geôles depuis le dix-huitième jour : onze de Rosby »*. J'ai bâti
+dessus une descente aux caves, une lettre triomphante à dame Aurore et un verrou tout
+prêt. **Les geôles étaient vides le soir même du 18e.** Trente-huit ont plié le genou et
+furent libres à la nuit ; les deux refusants, la reine les a lâchés le 19e sans qu'ils
+aient juré.
+
+Le 4e j'accusais une salle que personne ne traversait. Le 5e je citais une phrase sans sa
+fin. Aujourd'hui j'ai pris un présent pour le présent. C'est trois fois la même faute et
+il est temps que je l'écrive comme une règle et non comme un regret.
+
+**Règle neuve : dans le cahier d'un autre, tout ce qui est écrit au présent est daté du
+jour où il a posé sa plume, jamais d'aujourd'hui.** On ne lit pas *« ils sont »*, on lit
+*« ils étaient quand j'ai écrit ceci »*. Et si l'on veut savoir où ils sont ce matin, on
+ne le lit pas : on le demande, ou on y va. Un cahier ne se met pas à jour tout seul parce
+qu'on l'ouvre.
+
+**Et le revers, qui m'importe plus.** Cette faute-là ne m'a pas coûté ma matinée : elle me
+l'a rendue meilleure. Parce que les onze ne sont pas dans une cave, ils sont **aux grèves,
+affranchis sans barque, sur cette île faute d'une quille pour en partir** — et moi j'ai une
+quille. Ce que j'ai trouvé en me trompant vaut mieux que ce que je cherchais. Je le note
+pour ne pas devenir prudente : **la prudence de mon mari n'a jamais rien trouvé du tout.**
+
+## Ce qu'un homme demande, et ce qu'on croit qu'il demande
+
+Hallis Roon est aux caves de son propre fait, sans chef d'accusation, avec deux autres qui
+ont refusé le serment. Toute cette maison le tient pour un prisonnier qui refuse de jurer.
+**Il ne demande pas à sortir. Il demande du parchemin.** Et il dit qu'il ne jurera à
+personne tant que cent quatre-vingt-onze familles ignoreront où sont leurs hommes.
+
+Depuis dix jours, chacun ici lui offre ce qu'il n'a pas demandé et personne ne lui porte
+six feuilles. **Règle neuve : quand un homme refuse ce qu'on lui propose, écouter ce qu'il
+réclame à la place — c'est presque toujours plus petit, et c'est presque toujours en
+magasin.** Je ne demande rien à personne ; je peux au moins remarquer ce que les autres
+demandent et qu'on n'entend pas.
+
+Et je lui porte le seul papier de cette île qui ne soit à personne : **le dos de mes vingt
+ans de lettres.** J'ai établi ce matin qu'elles ne certifient pas un mort. Retournées,
+elles font six cents pages blanches pour l'homme qui a les noms dans la tête.

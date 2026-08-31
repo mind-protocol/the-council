@@ -94,3 +94,75 @@ charrette qui a porté des morts.
 se disputent** : le même homme, la même charrette, le même matin, la même
 bourse. Ce n'est jamais dans un cahier qu'une collision se voit ; c'est entre
 deux.
+
+## 3e jour de la 4e lune, an 129 — écrit n'est pas versé
+
+Cent quinze de mes écritures dormaient depuis le 4e à l'état de proposition,
+et je les croyais au livre parce que je les avais écrites. Quiconque ouvrait
+mes trois volumes y lisait l'avant-dernière ligne en croyant lire la dernière.
+Deux cent trente et une autres dormaient chez onze personnes, la reine
+comprise. Zéro refus sur les trois cent quarante-six : les coordonnées étaient
+bonnes, il manquait le geste. Ce n'est pas maître Hask qui l'a deviné — c'est
+lui qui a REESSAYÉ une chose qu'il croyait perdue.
+
+**Je verse avant de fermer, et je relis le compte du versement comme je relis
+un compte de sacs : le nombre de poses et le nombre de refus.** Et quand une
+machine m'a été fermée un jour, je la rouvre le lendemain au lieu d'attendre
+qu'on me dise qu'elle est ouverte : une porte fermée ne prévient pas quand elle
+cesse de l'être.
+
+## 3e jour de la 4e lune, an 129 — un compteur posé tard ne rend pas le passé
+
+Toute ma clef du grain tient sur trois mots : vendre **au prix d'avant**. Et
+mon compteur des prix est posé J−25 : il rendra le prix DU JOUR, et le premier
+chiffre qu'il donnera sera déjà un chiffre de peur. Mes cent soixante dragons
+qui rentrent n'étaient donc pas un prix — c'était deux cent quarante moins
+quatre-vingts, mon désir divisé par soixante.
+
+**Quand une de mes lignes dit « d'avant », je vais chercher une encre plus
+vieille que la peur, pas un observateur plus diligent.** Un rôle de douane
+d'il y a trois lunes ne se maquille pas : il était écrit avant qu'on ait une
+raison de mentir. Et cela vaut aussi contre le verrou des trois compteurs — un
+homme dont je me défie peut encore me recopier un registre : c'est le
+témoignage qui se plie à la main qui paie, jamais l'encre d'avant.
+
+## 3e jour de la 4e lune, an 129 — un chiffre qui manque ne tient jamais une seule ligne
+
+Mestre Gerardys me l'a écrit en cherchant mon compte de corps : le même
+diviseur absent tenait QUATRE lignes de mon cahier — les charrettes, la chaux,
+les charges de porte, et la taille des fosses. Je n'en voyais qu'une. J'avais
+posé ma question sur les charrettes et j'aurais rangé sa réponse dans les
+charrettes.
+
+**Quand un chiffre me manque, je ne cherche plus la ligne où il manque : je
+cherche toutes celles qu'il tient.** Une ligne qui réclame un chiffre est une
+ligne bruyante ; ses trois sœurs muettes attendent le même et personne ne les
+entend.
+
+## 3e jour de la 4e lune, an 129 — ce qui tourne déjà ne se compte pas, il se laisse tourner
+
+Il m'a donné une troisième bouche sur mes douze charrettes : les morts
+ordinaires de la ville. Je ne pouvais pas les compter — le demi-million n'a
+jamais été compté par personne. Puis j'ai vu que je n'avais pas à les compter :
+ce n'est pas leur nombre qui change le jour J, c'est leur PORTE. La ville
+enterre ses morts depuis trois cents ans avec ses charrettes et sa route ; ce
+qui le casserait, c'est nous. Une ligne d'exemption écrite par métier, et la
+plus grosse des trois bouches se ferme sans une charrette de plus.
+
+**Avant de dimensionner une chose, je regarde si elle tourne déjà toute seule
+et ce que je vais lui casser.** La moitié de mes quotients sont des problèmes
+que nous fabriquons en arrivant.
+
+## 3e jour de la 4e lune, an 129 — une date qui n'a pas de route est une date fausse
+
+37120 était due J−3, hors les murs, office « à désigner ». Le dernier passage
+de la route du sel est J−14. Onze jours d'écart, et personne ne l'avait vu
+parce que les deux nombres vivaient dans deux cahiers. La réponse n'était pas
+de trouver une route : c'était de cesser de creuser avant. Une fosse creusée
+trois jours plus tôt coûte une route qui n'existe pas, huit hommes cachés neuf
+jours, et le secret — et elle n'achète rien, puisque les premiers corps ne
+tombent pas avant J.
+
+**Devant toute ligne engagée avant le jour J, je demande d'abord par quelle
+route l'homme y arrive, et ensuite ce que la faire plus tôt achète vraiment.**
+Le plus souvent : rien, et cher.

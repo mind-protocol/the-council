@@ -119,11 +119,13 @@
     "✅ Ce qui doit être vrai",
     "📍 Où",
     "👁️ La preuve",
-    "⬆️ Sert"
+    "⬆️ Sert",
+    "💯 Importance"
    ],
    "lignes": [
     {
      "cellules": [
+      "",
       "",
       "",
       "",
@@ -134,6 +136,7 @@
     },
     {
      "cellules": [
+      "",
       "",
       "",
       "",
@@ -213,6 +216,16 @@
       "**C'est la faille de P.14 lui-même.** `poser()` ne préserve `empreintes-sans-perte.json` que si `pertes_de()` rend zéro ; `pertes_de()` compte les `.retiree` que produit `histoire._index()` ; et `_index` appariait le titre de table par **égalité stricte** contre `SUIVIES`, dont les quatre entrées sont accentuées. Les sept volumes éventrés portent « 🎯 Etats cibles » SANS accent : **leur table était invisible au journal.** D'où le fait qu'on croyait acquis — « le journal n'a émis aucun `cible.retiree`, donc ces quinze états cibles étaient déjà vides » : ils ne l'étaient pas, personne ne les regardait. Et la conséquence qui compte pour demain : un vidage qui ne toucherait QUE des états cibles non accentués rend `pertes = 0`, et le secours se fait écraser par le désastre — la garde neuve reproduit exactement la panne qu'elle empêche",
       "**Mesuré, et discriminant :** les 8 seuls événements `cible.*` de `etat/histoire/chambres.jsonl` viennent des 3 volumes accentués (`appareil-de-reprise`, `le-saut`, `chiffre-arrete`) et d'eux seuls ; les 7 sans accent n'en ont jamais émis un, tout en produisant 20 `verrou.retiree` + 15 `clef.retiree` + 27 `action.retiree`. Dépôt : **7 volumes sans accent, 62 avec**. `histoire.py` se contredit à l'intérieur de lui-même — sa docstring l. 11 écrit « Etats cibles », son `SUIVIES` l. 156 écrit « États cibles » ; et `_colonne()` tolérait déjà « État » ou « Etat » pour les EN-TÊTES : la moitié de l'invariant était écrite depuis le début, jamais l'autre",
       "**ÉCRIT LE 9e, NON EXÉCUTÉ** (aucune commande ne part de ma main depuis le 4e, D.16). `histoire._noyau()` posé, `_index` apparie désormais sur le noyau du titre — sans emoji, sans accent, minuscules. Effet vérifié à la main sur les 19 titres réels du dépôt : **une seule table change d'état, « 🎯 Etats cibles », et rien d'autre ne se met à matcher.** Levé pour de bon quand une passe `reconcilier.py --vraiment` aura émis un `cible.*` depuis un volume sans accent"
+     ]
+    },
+    {
+     "cellules": [
+      "**P.17**",
+      "🤫 Le vocabulaire de la porte ne couvre pas ce que les regies produisent — et **son refus est muet, ou pire, il a le ton du succes**",
+      "P.1 — *intitule efface le 129.4.9, a recoupler apres remesure*",
+      "**MESURE CE MATIN, DEUX INSTANCES, MEME CLASSE.** (1) `appliquer.py` n'a AUCUNE operation pour la table `actes` : le domaine s'arrete a books, declencheurs, evenements, intentions, jetons, lieux, mains, monde, orbite, personnages, plis, relations, royaume, scene. Faute de mot, quatre regies ont ecrit leurs actes dans un bloc de prose `a_la_main` — et la porte a repondu *aucune mutation dans mutations_proposees, rien a appliquer*, **sur le ton d'un succes**. 18 actes de la journee du 3e dormaient ainsi, dont la reine scellant ses seize copies et le contre-registre des mains de Gerardys. (2) `CHAMPS_PERSO` vaut exactement `(lieu_id, condition, etat)` : un homme peut se deplacer, etre blesse ou mourir, et **rien d'autre de lui ne peut jamais entrer**. Le passe de Rulf Corne — la jambe prise au mole en 107, d'ou ses vingt-deux ans se comptent — a ete refuse au champ pres.",
+      "18 actes verses A LA MAIN le 129.4.3 par `scripts/ajouter.py actes` (actes.json 552 -> 570), apres qu'`appliquer.py` a rendu *rien a appliquer* sur 24 pieces en attente. Refus reproductible : `etat/staging/20260831-mj-rulf-passe-verse.json` -> *champs de personnage interdits : passe*. Le compte des blocs orphelins est de 14 sur 55 pieces non appliquees, dont 11 de mj-peyredragon seule.",
+      "Quand une proposition qui contient du travail non traduisible **ne peut plus etre rendue silencieusement** : `appliquer.py` refuse net une piece dont `mutations_proposees` est vide alors qu'un bloc `a_la_main` ou `actes_a_ajouter` existe, en nommant la table visee. La deuxieme moitie — ouvrir `acte_ajouter` et un champ libre de fiche — n'est pas necessaire au verrou : **c'est le silence qui coute, pas le refus.**"
      ]
     }
    ]
@@ -334,6 +347,26 @@
       "",
       "",
       "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "**P.18**",
+      "🔇 Faire crier la porte quand elle ne sait pas traduire",
+      "P.17",
+      "Dans `etat/mutations/cli.py` : si `mutations_proposees` est vide ET qu'un des blocs `a_la_main`, `actes_a_ajouter`, `entrees_proposees`, `annales_a_ajouter` est present et non vide, sortir en ERREUR en nommant la table visee et la porte qui la sert (`scripts/ajouter.py <table>`), au lieu du message actuel *aucune mutation dans mutations_proposees — rien a appliquer*, qui se lit comme une piece traitee.",
+      "scripts/etat/mutations/cli.py",
+      "la porte",
+      "dev",
+      "",
+      "cli.py, vocabulaire.py",
+      "une garde, pas un domaine neuf",
+      "",
+      "Repasser les 24 pieces sans mutation du 129.4.3 : celles qui portent un bloc orphelin doivent sortir en erreur nommee, les autres en *rien a appliquer*.",
+      "a faire",
+      "",
+      "Trouve en versant 18 actes a la main le 129.4.3. Le correctif ne traduit rien — il empeche seulement qu'un travail non traduit passe pour un travail traite.",
       ""
      ]
     }

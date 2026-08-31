@@ -21,8 +21,48 @@ def minute_absolue(d):
              + int(d["jour"]) - 1) * 1440 + int(d.get("minute") or 0))
 
 
+def date_civile_acteur(pid, horloge, horloges=None):
+    """Rend l'heure civile locale de l'acteur au debut de son activation.
+
+    Les horloges persistantes appartiennent aux sieges. La selection a deja
+    calcule de quel siege l'acteur herite et le porte dans ``horloge_pj`` ; un
+    siege activable garde toutefois sa propre horloge en priorite. Le temps
+    ecoule depuis l'ancrage de la vague s'ajoute a cette heure locale, sans
+    ajouter une seconde fois l'ecart entre le siege principal et le front.
+    """
+    if horloges is None:
+        horloges = lire_json(os.path.join(ETAT, "horloges.json"), {})
+    horloges = horloges if isinstance(horloges, dict) else {}
+    horloge = horloge if isinstance(horloge, dict) else {}
+    ancres = (pid, horloge.get("horloge_pj"), horloge.get("front_id"),
+              horloge.get("source_id"))
+    ancre = next((horloges.get(a) for a in ancres
+                  if a and isinstance(horloges.get(a), dict)), None)
+    if ancre is None or minute_absolue(ancre) is None:
+        return None
+
+    present = float(horloge.get("present_secondes") or 0.0)
+    base = float(horloge.get("base_secondes") or 0.0)
+    ecoulees = max(0.0, present - base)
+    minute = minute_absolue(ancre) + int(ecoulees // 60.0)
+    jour_absolu, minute_du_jour = divmod(minute, 1440)
+    mois_absolu, jour_zero = divmod(jour_absolu, 30)
+    annee, lune_zero = divmod(mois_absolu, 12)
+    return {
+        "annee": annee,
+        "lune": lune_zero + 1,
+        "jour": jour_zero + 1,
+        "minute": minute_du_jour,
+    }
+
+
 def horloge_directe(ancien, maintenant=None):
-    """Rend le present de la vague en secondes depuis son origine PJ."""
+    """Rend le present explicite de la vague depuis son origine PJ.
+
+    Le mur mesure le compute, jamais la fiction. Seuls les lots reussis
+    augmentent `commis_secondes`; attendre dix minutes devant un processus ne
+    fait donc plus passer dix minutes dans le monde.
+    """
     maintenant = time.time() if maintenant is None else maintenant
     horloges = lire_json(os.path.join(ETAT, "horloges.json"), {})
     sieges = lire_json(os.path.join(ETAT, "joueurs.json"), [])
@@ -79,11 +119,10 @@ def horloge_directe(ancien, maintenant=None):
     front_cle = "%s:%s" % (front.get("personnage_id"), front_min)
     h = (ancien or {}).get("horloge") or {}
     if h.get("source_cle") == source_cle and h.get("front_cle") == front_cle:
-        ancre = float(h.get("ancre_mur") or maintenant)
-        present = base + max(0.0, maintenant - ancre)
+        commis = max(0.0, float(h.get("commis_secondes") or 0.0))
     else:
-        ancre = maintenant
-        present = base
+        commis = 0.0
+    present = base + commis
     return {
         "source_id": source_id,
         "source_minute": source_min,
@@ -92,10 +131,22 @@ def horloge_directe(ancien, maintenant=None):
         "front_minute": front_min,
         "front_cle": front_cle,
         "base_secondes": base,
-        "ancre_mur": ancre,
+        "commis_secondes": commis,
         "present_secondes": present,
         "lu_a": maintenant,
     }, ({s.get("personnage_id") for s in occupes} | sans_tete)
+
+
+def commettre_lot_horloge(horloge, durees_reussies):
+    """Avance une vague parallele de sa duree la plus longue, jamais la somme."""
+    durees = [max(0.0, float(x or 0.0)) for x in durees_reussies]
+    avance = max(durees) if durees else 0.0
+    horloge["commis_secondes"] = (
+        max(0.0, float(horloge.get("commis_secondes") or 0.0)) + avance)
+    horloge["present_secondes"] = (
+        float(horloge.get("base_secondes") or 0.0)
+        + horloge["commis_secondes"])
+    return avance
 
 
 def polarites_horloge_acteurs(noeuds, adj):
@@ -249,4 +300,3 @@ def appliquer_polarites_horloge(cibles, polarites, adj):
     journaliser("energie.transfert_horloge", transfere=round(transfere, 3),
                 propositions=len(propositions), acteurs=len(polarites))
     return resultat
-

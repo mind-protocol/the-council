@@ -1,0 +1,58 @@
+{
+ "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
+ "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
+ "entrees": [
+  {
+   "jour": "2026-08-31",
+   "ou": "scripts/etat/purge.py — TABLES",
+   "tente": "Mesurer ce qui restait joué après le 129.4.3 avec `purger.py --du 4 --au 12`.",
+   "attendu": "La liste complète de ce qui traîne après le retour du monde au 3e.",
+   "obtenu": "Rien de pensees.json. La table n'était pas dans TABLES : 34 pensées du 4e (rulf-corne 8, steffon-darklyn 10, gerardys 9, sara 4, aldon-hask 3) étaient invisibles à l'outil qui affirme le vide.",
+   "gravite": "haute — l'outil ne se tait pas, il affirme. Une table absente de TABLES est un angle mort parfait : la purge dit « rien ici » et se trompe.",
+   "leve_par": "pensees.json ajouté à TABLES le 31.8, avec le commentaire qui dit pourquoi. Vérifié : la même fenêtre rend maintenant 34 pensées.",
+   "etat": "levee"
+  },
+  {
+   "jour": "2026-08-31",
+   "ou": "scripts/etat/purge.py — dans()",
+   "tente": "La même fenêtre du 4e au 12e, en mode montrer, avant de supprimer.",
+   "attendu": "Ce qui a EU LIEU après le 3e.",
+   "obtenu": "54 enregistrements dont 29 étaient des RENDEZ-VOUS À VENIR — les prog-* des jours suivants et mort-lucerys, prévu le 9e. `dans()` lisait `x.get('date') or x.get('date_prevue')` sans les distinguer. Un `--vraiment` sur cette fenêtre effaçait l'avenir programmé du monde et laissait le passé (les 34 pensées). L'outil se trompait des deux côtés à la fois, et le total tombait juste par coïncidence : 54 des uns, 54 des autres.",
+   "gravite": "haute — c'est la panne qui fait perdre la mort de Lucerys en croyant nettoyer une matinée.",
+   "leve_par": "dans(x, d0, d1, lune, clef='date') : la suppression ne vise que `date`. Les `date_prevue` de la fenêtre sont listés à part, sous « rendez-vous A VENIR — NON touches », et ne sont jamais coupés.",
+   "etat": "levee"
+  },
+  {
+   "jour": "2026-08-31",
+   "ou": "ma propre passe — monde.json et horloges.json, 08h33",
+   "tente": "Ramener le monde à un point cohérent après le mouvement de masse.",
+   "attendu": "Le curseur posé là où le registre s'arrête.",
+   "obtenu": "Curseur posé au 129.4.3 minute 721, alors que la dernière pièce écrite du monde est au 129.4.4 minute 540. Vingt et une heures et 54 pièces écrites derrière le curseur — dont l'ambassade scellée le 3e à 19h27. La faute est de moi : j'ai reculé au jour, sans chercher la dernière minute écrite.",
+   "gravite": "haute tant qu'elle tient — la machine rejouerait l'ambassade du 3e au soir et la matinée de la reine au quai.",
+   "leve_par": "proposition portée à mj le 31.8, accordée et appliquée de sa main à 08h43 : monde.date et les quatre horloges au 129.4.4 minute 540.",
+   "etat": "levee"
+  },
+  {
+   "jour": "2026-08-31",
+   "ou": "scripts/scene/flux.py — la fin, là où monde.date s'écrit",
+   "tente": "Rien : j'ai relu monde.json deux minutes après le recalage accordé, par habitude de vérifier qu'un verdict a tenu.",
+   "attendu": "129.4.4 minute 540.",
+   "obtenu": "129.4.3 minute 740. Les quatre horloges, elles, étaient restées au 4e. Entre 08h43 et 08h45, un lot daté du 129.4.3 à 12h20 (la porte de mer de Quince, seize actes neufs sur le 3e) a été rejoué ; la scène n'avait pas de front, donc branche `else`, donc `monde[\"date\"] = date` — sans regarder si cette date était antérieure. Le curseur est reparti d'un jour en arrière, tout seul.",
+   "gravite": "très haute, et récidivante par construction : les 53 lots rejouables du staging sont TOUS datés d'avant le 4e à 9h00. Un recalage, cinquante-trois reculs. Et rien ne le dit : le monde derrière son propre registre ne se voit qu'au moment où une scène déjà écrite se rejoue.",
+   "leve_par": "plus_tard_ou_rien() posé dans scene/flux.py le 31.8 : monde.date avance ou ne bouge pas, et le cas retenu s'imprime au lieu de se taire. Les deux branches y passent (le min des fronts comme la scène commune). Un recul voulu reste possible à la main sur monde.json — hors de ce chemin.",
+   "etat": "levee"
+  },
+  {
+   "jour": "2026-08-31",
+   "ou": "etat/monde.json — écriture perdue, chemin inconnu",
+   "tente": "Relire monde.json au réveil, avant toute autre chose, comme ma règle me l'impose depuis la veille.",
+   "attendu": "129.4.4 minute 540 — le recalage accordé et appliqué par mj à 08h43.",
+   "obtenu": "129.4.3 minute 721. Non pas 740, la valeur du premier recul : 721, la valeur d'AVANT le recalage, celle que porte monde.json.avant-recalage-4-4-540. Les quatre horloges, elles, tenaient bon au 4e. Fichier écrit à 08h47, soit quatre minutes après que mon cliquet de flux.py était en place.",
+   "diagnostic": "ÉCRITURE PERDUE, et non un recul décidé : un processus avait lu monde.json avant 08h43, travaillé, puis réécrit son exemplaire entier après — sans jamais relire le disque. Aucun garde-fou posé chez un appelant ne rattrape cela : celui qui écrase est par définition celui qui ne sait pas qu'il écrase.",
+   "gravite": "très haute — c'est la panne qui défait n'importe quel recalage, en silence, à retardement, et qui ferait rejouer tout ce qui est écrit entre les deux dates.",
+   "leve_par": "_cliquet_du_monde() posé le 31.8 dans noyau/tables.py, À LA PORTE — le seul point que tous les déposants traversent, là où vit déjà le réveil du staging. Chaque écriture de monde.json relit la date du disque et garde la plus tardive ; un refus s'imprime sur stderr. Le recul volontaire devient un acte déclaré : RECUL_VOULU=1. Éprouvé dans les deux sens : recul au 129.4.1 refusé et annoncé, avance au 129.4.4 minute 540 passée.",
+   "etat": "levee",
+   "reste": "Je n'ai PAS identifié le processus qui a réécrit. Le cliquet le rend inoffensif, il ne le nomme pas. Si un jour une ligne « monde.date ne recule pas » apparaît sur stderr, elle dira enfin qui c'était : c'est la RÉCIDIVE qui parlera."
+  }
+ ]
+}

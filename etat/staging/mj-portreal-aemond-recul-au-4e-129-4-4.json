@@ -1,0 +1,159 @@
+{
+  "genere_le": "2026-08-31",
+  "de": "mj-portreal",
+  "pour": "mj",
+  "joueur": null,
+  "objet": "AEMOND EST LA SEULE TETE DES 82 RESTEE AU 129.4.9 APRES LE RECUL DU MONDE. Ce lot la ramene au 4e. Il ne joue rien, n'ajoute rien, ne fait bouger aucun homme : il retire du futur et il coupe des copies. || ELARGI LE MEME JOUR, sur deux defauts de plus trouves apres coup : Otto porte date_maj 129.4.5 et son etape otto-accalmie affirme dans son accompli que l'offre est deja a Accalmie ; et pli-question-accalmie-129-4-3 etait remis un jour avant d'etre du. Ce lot ne se double pas d'une seconde piece : il grossit, parce qu'un lot qui corrige un lot ne se depose jamais a cote.",
+  "annule_et_remplace": [
+    "mj-portreal-aemond-rattrapage-129-4-9.json — que je viens de neutraliser de ma main. Ses treize croyance_retirer sont repris ici, ceux qui ont survecu au recul ; ses trois actes et son annale sont ABANDONNES."
+  ],
+  "pourquoi_ses_actes_sont_abandonnes": "acte-aemond-depart-129-4-6 et acte-aemond-vol-large-129-4-8 gravaient un depart et un vol que la purge a effaces. Le fichier etait LIVE — quatorze mutations, aucun applique_le — et l'appliquer aurait fait rentrer six jours de futur par la porte de derriere, sans que rien ne le signale. C'etait la piece la plus dangereuse de mon staging et elle etait de ma main.",
+  "ce_que_j_ai_verifie_avant_d_ecrire": [
+    "monde.json : 129.4.4, minute 540.",
+    "personnages.json l.259 : aemond, etat actif, lieu_id = port-real, condition libre.",
+    "intentions.json l.1416 : date_maj 129.4.9, SEIZE croyances pour un budget de 3 (echelle « au loin »).",
+    "plis.json l.1332 : pli-mots-de-la-main-accalmie, parti_le 129.4.6, attendu_le 129.4.8, etat REMIS, main aemond.",
+    "intentions.json l.1323 : otto, date_maj 129.4.5 — un jour devant le monde, sous le seuil que cherchait l'audit.",
+    "intentions.json l.1195-1330 : la tete d'Otto ENTIERE — aucune croyance, aucune etape, aucun ignore ne porte la demande des deux noms d'Accalmie. C'est ce silence qui me fait trancher que le pli est en l'air."
+  ],
+  "les_trois_choses_qui_font_agir_un_reveil_six_jours_en_avance": {
+    "la_croyance": "« Il a quitte Port-Real a l'aube du 6e (...) Vhagar couche dans la lande sous les murs d'Accalmie depuis le soir du 8e. » Un homme reveille sur cette ligne se croit a Accalmie.",
+    "l_intention": "« Poser devant lord Borros les seuls mots de la Main (...) et guetter, tout le temps que durera l'attente, le ciel au sud de la baie. » C'est l'intention d'un homme dans une cour, qui attend une audience. Elle ne peut pas etre celle d'un homme qui n'est pas parti.",
+    "et_l_horloge": "aemond-poser-les-mots est en-cours a UN JOUR. De Port-Real, au 4e, cette etape echoit demain sur un homme qui n'a pas fait un pas. C'est l'horloge qui aurait produit la scene toute seule."
+  },
+  "ce_que_je_n_ai_pas_touche_et_pourquoi": {
+    "le_declencheur": "« Un dragon de la reine signale en vol au sud de la baie, a portee de Vhagar -> il monte dans l'heure, quel que soit l'ordre du conseil », une_fois false. Intact. C'est lui qui produira la scene le jour venu, et non une intention qui fait guetter un ciel. Retirer la clause de guet ne lui coute donc rien.",
+    "l_etape_aemond-accalmie": "Reste « fait ». Son accompli est date du 4e de la 4e lune et il est vrai aujourd'hui : les mots sont couches, scelles et inscrits au role. Rien a reculer la.",
+    "les_deux_croyances_du_4e": "« Il porte sur lui les mots (...) inscrits au role au 4e » et « Les mots pour lord Borros sont ecrits (...) et le sceau du roi n'y est pas » sont vraies AU 4e. Je n'en retire qu'une, et seulement parce que la seconde la contient entierement."
+  },
+  "la_taille_L34_n_est_pas_dans_ce_lot": "Aemond porte 16 croyances pour 3. Je n'en retire ici que SEPT, et pas une par jugement : cinq sont des doublons exacts recrees par le recul, une est absorbee mot pour mot par sa voisine, une est fausse. Il en restera NEUF. Le reste de la taille — le grief de fond, la borne du 29e, les onze cents hommes — demande de peser, et tu m'as dit d'attendre le mot de purge-arriere avant de redeposer. Ce lot-ci n'attend pas, parce qu'une tete en avance ne contredit aucune table : rien ne la signalera, et le premier qui reveille Aemond joue le 9e.",
+  "empreintes": {
+    "intentions": "322e0b1b7440060a643dfb4cefaea0862d08950b",
+    "plis": "38b59688740391bfdc51b8af3c57419e71f3bc60"
+  },
+  "note_sur_l_empreinte": "RESCELLE au 129.4.4 apres elargissement — les deux tables avaient deja bouge depuis le premier scellement, ce qui prouve le point : le sha1 dit « quelque chose a bouge », jamais « ce que tu vises a bouge ». LA VERIFICATION QUI COMPTE tient en quatre grep, et je viens de les passer un par un : (1) intentions.json contient encore « Il a quitte Port-Real a l'aube du 6e » — 1 occurrence ; (2) il contient encore « tient son offre a Accalmie six jours en avance » — 1 occurrence ; (3) plis.json contient encore pli-question-accalmie-129-4-3 ; (4) aemond porte encore date_maj jour 9. Si les quatre tiennent, la matiere du lot est intacte : rescelle avec le sha1 du moment et applique. NE FORCE PAS.",
+  "ce_que_la_porte_ne_peut_pas_faire": "plis/parti_le = 129.4.6 EST DANS LE FUTUR ET JE NE PEUX PAS LE CORRIGER : CHAMPS_PLI ne connait que etat, main, attendu_le, canal, scelle, porte. `parti_le` n'y est pas. Je fais donc ce que la porte permet — l'etat passe de « remis » a « retenu », le seul des six mots qui dise un pli scelle, en main, et pas encore parti. Il restera dans la table une date de depart posterieure au monde, et elle ne se repare qu'a la main ou par une operation de plus.",
+  "mutations_proposees": [
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_retirer",
+      "valeur": "Il a donné à son grand-père sa parole de porter les mots de la Main et non les siens à Accalmie, et de revenir sans se détourner — il tient le compte exact de ce que cette parole lui aura coûté.",
+      "pourquoi": "DOUBLON EXACT — deuxieme occurrence de la meme chaine. Une ligne de mutation par copie : croyance_retirer appelle list.remove() et n'enleve qu'une occurrence."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_retirer",
+      "valeur": "Aucune cire royale n'est descendue de la porte du roi de toute la journée du 28e : le silence d'Aegon est entier et voulu, il n'est pas resté en chemin.",
+      "pourquoi": "DOUBLON EXACT — deuxieme occurrence de la meme chaine. Une ligne de mutation par copie : croyance_retirer appelle list.remove() et n'enleve qu'une occurrence."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_retirer",
+      "valeur": "Depuis le 28e au soir, le retard ne lui appartient plus : un pli scellé de sa main, inscrit à cette date au rôle des plis de la Main, prouve qu'il était prêt à partir — et il n'aura pas à redemander deux fois.",
+      "pourquoi": "DOUBLON EXACT — deuxieme occurrence de la meme chaine. Une ligne de mutation par copie : croyance_retirer appelle list.remove() et n'enleve qu'une occurrence."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_retirer",
+      "valeur": "Il a posé lui-même la borne : midi du 29e. Passé cette heure sans cire, le retard porte le nom d'Aegon, écrit par son silence, et il reprend la voie de la représaille devant le conseil avec ses chiffres — neuf jours d'un cavalier contre deux d'une aile.",
+      "pourquoi": "DOUBLON EXACT — deuxieme occurrence de la meme chaine. Une ligne de mutation par copie : croyance_retirer appelle list.remove() et n'enleve qu'une occurrence."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_retirer",
+      "valeur": "Sa promptitude est attestée deux fois et par deux mains différentes : le pli scellé au rôle des plis de la Main au 28e, et son feuillet des trois termes annoté avant l'aube du 29e. Il n'aura pas à plaider de mémoire.",
+      "pourquoi": "DOUBLON EXACT — deuxieme occurrence de la meme chaine. Une ligne de mutation par copie : croyance_retirer appelle list.remove() et n'enleve qu'une occurrence."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_retirer",
+      "valeur": "Il porte sur lui les mots de la Main écrits et scellés, inscrits au rôle au 4e de la 4e lune : plus personne ne pourra lui reprocher d'avoir parlé de sa propre bouche, ni lui refuser le ciel pour ce voyage.",
+      "pourquoi": "ABSORBEE PAR LA SUIVANTE, qui dit la meme chose en entier et ajoute ce qu'elle n'a pas — « et le sceau du roi n'y est pas ». Retrait gratuit : rien ne se perd de sa tete."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_retirer",
+      "valeur": "Il a quitte Port-Real a l'aube du 6e sans l'accord du roi, n'en ayant averti qu'un ecuyer, et a vole large deux jours et demi au lieu de deux — haut sur la cote de l'Orage, a chercher une aile. Vhagar couche dans la lande sous les murs d'Accalmie depuis le soir du 8e. Neuf jours d'un cavalier ont fait deux d'une aile, et ce qu'il a gagne en jours il l'a paye sur sa parole de ne pas se detourner.",
+      "pourquoi": "LA SEULE LIGNE FAUSSE, ET C'EST POUR ELLE QUE CE LOT EXISTE. Elle raconte un depart de Port-Real a l'aube du 6e, deux jours et demi de vol et Vhagar couchee dans la lande sous Accalmie depuis le soir du 8e. Le monde est au 129.4.4 et personnages/aemond porte lieu_id = port-real : rien de cela n'a eu lieu."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "tete",
+      "champs": {
+        "date_maj": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 4
+        },
+        "intention": "Porter jusqu'a lord Borros les seuls mots de la Main, sans en ajouter un, et en rapporter la reponse a Port-Real : ne dire que ces mots, ne pas se detourner, rentrer rendre compte."
+      },
+      "pourquoi": "Recul de la date_maj au jour du monde, et retrait de la clause de guet — « guetter, tout le temps que durera l'attente, le ciel au sud de la baie » — qui suppose une attente commencee dans une cour ou il n'est pas. LA PHRASE DE REMPLACEMENT N'INVENTE RIEN : chacun de ses membres est deja ecrit dans sa propre tete. « Poser devant lord Borros (...) sans en ajouter un, et en rapporter la reponse a Port-Real » est le libelle mot pour mot de son etape aemond-poser-les-mots ; « ne dire que ces mots, ne pas se detourner, rentrer rendre compte » est le marche d'Otto tel qu'il figure dans l'accompli de aemond-accalmie. Je soustrais un futur, je n'ecris pas une pensee."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "etape",
+      "etape": "aemond-poser-les-mots",
+      "champs": {
+        "jours_restants": 6
+      },
+      "pourquoi": "Elle echoyait DEMAIN sur un homme qui n'est pas parti. Six jours ne decide aucun depart : c'est la duree que porte son propre compte — deux jours d'aile a l'aller, une audience, deux au retour — posee depuis le 4e au lieu du 9e. L'etape garde son objet et son cout ; seule l'aiguille recule."
+    },
+    {
+      "table": "plis",
+      "cible": "pli-mots-de-la-main-accalmie",
+      "operation": "pli",
+      "champs": {
+        "etat": "retenu"
+      },
+      "pourquoi": "Il etait « remis » — c'est-a-dire remis a lord Borros — avec un parti_le au 6e et un attendu_le au 8e, alors que le monde est au 4e et que son porteur est a Port-Real. « retenu » le laisse scelle dans la main d'Aemond, ce qui est vrai : les mots sont couches et inscrits au role d'aujourd'hui, et ils n'ont pas quitte la ville. attendu_le reste au 8e : c'est une attente, pas un fait."
+    },
+    {
+      "table": "plis",
+      "cible": "pli-question-accalmie-129-4-3",
+      "operation": "pli",
+      "champs": {
+        "etat": "en-route",
+        "main": null
+      },
+      "pourquoi": "MEME DEFAUT QUE LE PRECEDENT, TROUVE PAR mj-accalmie : parti_le 129.4.3, attendu_le 129.4.5, monde au 129.4.4 — et il etait deja marque REMIS, main OTTO, un jour avant d'etre du. JE TRANCHE QU'IL EST EN L'AIR, et voici sur quoi : j'ai relu la tete d'Otto en entier (intentions.json l.1195-1330) et RIEN n'y porte cette demande — ni croyance, ni etape, ni ignore ; nulle part il ne sait qu'Accalmie exige deux noms. Un pli remis dont le destinataire n'a aucune trace dans la tete n'est pas remis. En face, parti_le 4.3 est atteste par la zone qui l'a envoye et le delai de deux jours colle a la jambe accalmie->port-real. main passe a null : un pli en-route n'est dans la main de personne, et la validation l'accepte (val_courrier l.87, `is not None`)."
+    },
+    {
+      "table": "intentions",
+      "cible": "otto",
+      "operation": "tete",
+      "champs": {
+        "date_maj": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 4
+        }
+      },
+      "pourquoi": "OTTO AUSSI EST EN AVANCE, ET L'AUDIT NE L'A PAS VU PARCE QU'IL N'EST EN AVANCE QUE D'UN JOUR : date_maj 129.4.5 contre un monde au 129.4.4. Le compteur cherchait le 4.9 ; celui-ci passait dessous."
+    },
+    {
+      "table": "intentions",
+      "cible": "otto",
+      "operation": "etape",
+      "etape": "otto-accalmie",
+      "champs": {
+        "accompli": "Faite, et faite autrement qu'il ne l'avait comptee. Le 4e, Aemond n'a pas eu a etre convaincu : il est monte exiger les mots par ecrit et scelles. Otto a concede l'ecrit contre sa condition — ne dire que ces mots, ne pas se detourner, rentrer rendre compte. Il avait chiffre le cout a neuf jours de route et a un porteur qu'il choisirait ; le porteur s'est choisi lui-meme. La Main n'en tient plus la maniere."
+      },
+      "pourquoi": "ET VOICI CE QUE PORTAIT SON ACCOMPLI, QUI EST PIRE QUE SA DATE : « le porteur s'est choisi lui-meme ET A MIS DEUX JOURS ET DEMI. La Main TIENT SON OFFRE A ACCALMIE six jours en avance. » L'etape de la Main affirmait la livraison. Une tete en avance se cache aussi dans un accompli, ou personne ne la cherche. LA CORRECTION EST PUREMENT SOUSTRACTIVE : je n'ai ecrit aucun mot neuf, j'ai coupe « et a mis deux jours et demi » et « tient son offre a Accalmie six jours en avance ». Le reste est son texte, virgule pour virgule. L'etape reste `fait` : l'offre EST faite, couchee, scellee et inscrite au role du 4e — c'est sa remise qui n'a pas eu lieu."
+    }
+  ],
+  "entrees_proposees": {
+    "note": "AUCUNE. Rien n'est arrive : ce lot repare une horloge, il ne raconte pas une journee."
+  },
+  "le_racontable": "DEUX PLIS SE CROISENT CHEZ MOI ET PERSONNE DES DEUX COTES NE LE SAIT ENCORE. pli-mots-de-la-main-accalmie, scelle du sceau de la Main au 4e, offre les epees de la Marche Orageuse « contre la main de L'UNE DES QUATRE FILLES de lord Borros, le prince Aemond repondant de sa personne » : le prince est nomme, la fille ne l'est pas. Or pli-question-accalmie-129-4-3, de l'ambassade Hightower logee a Accalmie, arrive dans la main d'OTTO et il est attendu le 129.4.5 — il exige DEUX NOMS, laquelle des quatre filles et quel prince, et demande un mandat pour les poser. LA DEMANDE ARRIVE LE 5e, LE PLI EST SCELLE DU 4e, ET SON PORTEUR EST ENCORE EN VILLE. Le defaut que mj-accalmie signale pour 94021 est donc reparable DANS LE MONDE, par la main qui l'a fait, dans une fenetre d'un jour, sans que personne reecrive une table. Je ne joue pas Otto la-dessus tant que purge-arriere n'a pas rendu son mot.",
+  "applique_le": null,
+  "ce_qui_reste_faux_et_que_je_ne_peux_pas_reparer": "pli-mots-de-la-main-accalmie garde parti_le 129.4.6 (hors CHAMPS_PLI) ET attendu_le 129.4.8. Le second, je POURRAIS le changer et je ne le fais pas : poser une date d'arrivee, c'est decider un depart que personne n'a ordonne. Aemond est a Port-Real, son etape a six jours, aucun ordre de partir n'existe. QUE PERSONNE NE COMPTE SUR CE PLI LE 8e : cet attendu_le est le residu du meme futur efface, pas une promesse."
+}

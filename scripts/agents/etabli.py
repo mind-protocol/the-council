@@ -358,6 +358,18 @@ def _marquer_jour(mj, jour):
         f.write(jour + u"\n")
 
 
+def _porte_compute_ouverte(mj):
+    """Lecture legere de la capacite avant une nouvelle session d'etabli."""
+    from agents.activation.socle import ETAT_BOUCLE, lire_json
+    from agents.activation.fatigue import (
+        amorcer_fatigue_historique, capacite_zone, mettre_a_jour_porte)
+    etat = lire_json(ETAT_BOUCLE, {"version": 1, "historique": []})
+    amorcer_fatigue_historique(etat)
+    capacite, charge, comptes = capacite_zone(etat, mj)
+    ouverte = mettre_a_jour_porte(etat, "zones", mj, capacite)
+    return ouverte, capacite, charge, comptes
+
+
 def veiller_etablis(de="boucle", minutes=COOLDOWN_ETABLI_MINUTES):
     """Le battement des CADENCES — deux portes d'entree (revu le 31.8, soir :
     le STAGING ne se scrute plus ici, son depot reveille l'arbitre a la porte
@@ -384,6 +396,13 @@ def veiller_etablis(de="boucle", minutes=COOLDOWN_ETABLI_MINUTES):
         if mj not in tous and os.path.isdir(chambre.chemin(mj)):
             tous.append(mj)
     for mj in tous:
+        ouverte, capacite, charge, comptes = _porte_compute_ouverte(mj)
+        if not ouverte:
+            sys.stderr.write(
+                u"(veille : %s sous capacité, %.0f %% / %.1f min sur %s — "
+                u"établi non lancé)\n"
+                % (mj, capacite * 100, charge, u", ".join(comptes)))
+            continue
         propositions, echus, billets = comptes_d_etabli(mj)
         table_vide = propositions + echus + billets <= 0
         if table_vide:

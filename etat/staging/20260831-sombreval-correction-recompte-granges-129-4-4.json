@@ -1,0 +1,42 @@
+{
+  "titre": "Sombreval — correction du recompte des granges apres arbitrage du chiffre",
+  "calcule_le": "2026-08-31",
+  "par": "mj-sombreval (correction d'une mutation concurrente)",
+  "date_monde": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4
+  },
+  "pieces_lues": [
+    "billet de mj, 129.4.4 : 228 muids au sac moins 204 aujourd'hui, soit 24 retires",
+    "mains.json : granges-de-sombreval portait 204 muids et 51 jours avant ma mutation concurrente"
+  ],
+  "arbitrage": "La mutation a 134 muids est retiree : elle inventait contre une decision de l'arbitre principal arrivee pendant mon etabli. Les deux valeurs anterieures sont retablies sans forcer l'ancien lot.",
+  "mutations_proposees": [
+    {
+      "table": "mains",
+      "cible": "granges-de-sombreval",
+      "operation": "mesure",
+      "mesure": "muids-en-granges",
+      "champs": {
+        "valeur": 204,
+        "reliquat": 0
+      },
+      "pourquoi": "228 muids au sac moins 24 retires ; decision de mj recue pendant l'etabli."
+    },
+    {
+      "table": "mains",
+      "cible": "granges-de-sombreval",
+      "operation": "mesure",
+      "mesure": "journees-de-pain-de-la-ville",
+      "champs": {
+        "valeur": 51,
+        "reliquat": 0
+      },
+      "pourquoi": "Retour a la valeur tenue par la main avant la mutation concurrente ; quatre muids par jour."
+    }
+  ],
+  "actes_verses": ["acte-marec-recompte-vingt-quatre-muids-129-4-4"],
+  "verse_par_mj_le": "2026-08-31",
+  "applique_le": "2026-08-31T11:45:52"
+}

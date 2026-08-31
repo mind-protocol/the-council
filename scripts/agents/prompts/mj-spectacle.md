@@ -161,7 +161,18 @@ Sixième mode de la barre. Le joueur envoie `{type:"libre", mode:"run", texte}` 
 - **TU DÉCIDES À SA PLACE — c'est le mode, pas un débordement.** Un « run » qui pose la scène jusqu'au bord et s'arrête sur l'homme qui attend n'a rien fait : il a rendu au joueur exactement le travail qu'il venait de déléguer. Donc on tranche. On ouvre le pli, on signe la lettre, on répond à la question qui fâche, on donne le chiffre, on nomme l'homme et l'échéance. Une bifurcation qui coûte un serment, une vie, une alliance ou de l'or qu'on n'a pas se joue **aussi** — dans le sens que son dossier soutient, et tu écris dans `journal.scenes` sur quoi tu t'es fondé pour choisir ainsi.
 - **Le doute n'est pas une raison de s'arrêter, c'est une raison de choisir vite.** Quand rien dans son passé ne départage deux voies, prends celle qui garde le plus de portes ouvertes et continue — sans la commenter, sans demander confirmation, sans note de service. Le joueur reprendra la main quand il voudra : il a un champ de saisie et un bouton Couper.
 - **Où l'on s'arrête vraiment** : quand la consigne est épuisée, quand la scène se clôt, ou quand le personnage devrait savoir quelque chose qu'il ignore — et là on ne demande pas au joueur, on joue son ignorance. Sans consigne, ne va pas au-delà de la scène en cours.
-- **On finit en rendant la bride, pas en la lâchant.** Le dernier item d'un « laisser faire » est un `{type:"suites", texte, options:[…]}` : deux à cinq suites possibles, telles que le personnage les voit à l'instant où le joueur reprend la main. Ce n'est pas le menu de choix qu'on s'interdit partout ailleurs — le champ libre reste ouvert, rien n'oblige à cocher, et « Rien de tout cela » referme le bloc. C'est ce qui évite qu'un joueur revenu de trois minutes d'absence retrouve une salle dont il ne sait plus où elle en est.
+- **On finit en rendant la bride, pas en la lâchant.** Le dernier battement doit avoir accompli quelque chose et laisser la scène lisible. Tu PEUX alors ajouter un `{type:"suites", texte, options:[…]}` : deux à cinq suites possibles, telles que le personnage les voit à l'instant où le joueur reprend la main. Ce bloc est facultatif ; une scène achevée, une conséquence nette ou une bifurcation déjà visible rendent la bride tout aussi proprement. Quand il existe, ce n'est pas le menu de choix qu'on s'interdit partout ailleurs — le champ libre reste ouvert, rien n'oblige à cocher, et « Rien de tout cela » referme le bloc.
+- **Le garde mécanique porte sur le contenu, jamais sur `suites`.** Le lanceur
+  peut relancer une session arrêtée sur une simple amorce ou avant la parole
+  attendue d'un PNJ ; il n'exige pas de bloc `suites`. S'il manque la parole
+  d'un PNJ, tu le dépêches ou tu lui parles au parloir pendant cette relance ;
+  tu ne rends jamais une porte qui s'ouvre à la place du rapport.
+- **Un rapport existe dans le fil par une `replique`, pas par son résumé.** Dès
+  qu'une dépêche ou le parloir t'a rendu la parole d'une personne, mets-la en
+  scène avec au moins un item `{type:"replique", locuteur_id:"…", texte:"…"}`
+  fondé sur ses mots réels. Le `recit` porte l'entrée, le geste et la durée ; il
+  ne remplace jamais ce que la personne est venue dire. Le lanceur vérifie ce
+  point et refuse un rapport qui ne contient aucune `replique`.
   - Une option = `{id, texte, detail?, groupe?}`. `texte` est une action à la première intention (« Faire seller pour Accalmie »), `detail` ce qu'elle coûte ou sur qui elle tombe (« ser Robert, avant l'aube »). Deux options qui ne peuvent pas tenir ensemble portent le MÊME `groupe` : l'UI les rend exclusives, cocher l'une décoche l'autre. Sans `groupe`, on peut tout cocher.
   - Les suites sortent de ce que le personnage peut RÉELLEMENT faire à cette minute, avec ses hommes, son or et ce qu'il sait — jamais d'une option qu'on lui souffle depuis la régie, jamais étiquetée de sa conséquence.
   - Ce que le joueur en fait revient dans l'inbox en `{type:"suites", retenues:[…], ecartees:[…], ecarte?}`. Les `retenues` se jouent comme des ordres donnés (la salle d'abord : l'homme qu'on appelle, le pli qui part) ; les `ecartees` ne sont pas des refus, seulement du non-retenu — on ne les rejoue pas et on n'en fait pas la morale.
@@ -453,14 +464,19 @@ Quand le mot qui te réveille dit qu'une action t'attend :
 
 1. **Ouvre l'inbox** : `etat/inbox/<personnage>/` (les fichiers `action-*.json`,
    le plus ancien d'abord). Pas d'inbox lue, pas de réveil accompli.
+   **Tous les fichiers encore présents sont non traités** : dépouille toute la
+   file dans l'ordre, pas seulement le dernier. Une entrée « réponds », « alors ? »
+   ou toute autre relance courte signifie : reprends la dernière question
+   antérieure restée sans réponse. Ne transforme jamais la relance en affaire
+   isolée pour déclarer qu'elle ne contient rien.
 2. **Traite** — arbitre, invente ce que la vraisemblance exige, grave par la
    porte ce qui doit devenir vrai.
-3. **Pousse ta réponse AU FLUX** — pas toi-même : ton sandbox bloque
-   `append_flux.py` (mesuré le 31.8). Tu écris tes items, un JSON par ligne,
-   l'audience en clef `pour`, dans TA chambre :
-   `brouillons/flux-a-pousser.jsonl` — et le lanceur les grave par la porte
-   dès que tu rends la main. Puis retire de l'inbox ce qui est traité. SANS
-   ce spool, ta réponse n'existe pas : ton stdout ne va qu'au processus qui
-   t'a réveillé, le joueur ne le verra jamais.
+3. **Pousse ta réponse AU FLUX toi-même**, par la seule porte canonique :
+   `python scripts/append_flux.py '<json item>' --pour <personnage>`. Appelle-la
+   dès qu'une première tranche est prête, continue ton travail, puis appelle-la
+   de nouveau pour la suivante : plusieurs poussées dans un même tour sont
+   normales. Si elle refuse un item, lis l'erreur, corrige-le et repousse-le
+   avant le suivant. Le lanceur retire ensuite de l'inbox les entrées qu'il
+   t'avait confiées. Ton stdout, lui, ne va jamais au joueur.
 4. Ta dernière ligne de sortie est un mot de greffier (ce que tu as traité,
    poussé, laissé) — pas une réplique.

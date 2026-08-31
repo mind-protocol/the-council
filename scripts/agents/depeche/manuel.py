@@ -415,6 +415,9 @@ def manuel_narrateur_local(contexte):
     annee = date.get("annee") or "inconnue"
     lune = date.get("lune") or "inconnue"
     jour = date.get("jour") or "inconnu"
+    minute = date.get("minute")
+    heure = (u" à %02dh%02d" % (int(minute) // 60, int(minute) % 60)
+             if isinstance(minute, (int, float)) else u"")
     lieu = salle.get("nom") or salle.get("id") or "lieu non établi"
     acteur = (personnage.get("nom") or contexte.get("acteur_candidat") or
               "acteur non établi")
@@ -436,7 +439,7 @@ peut diverger du récit connu : le dossier de l'activation fait autorité sur ce
 qui s'est réellement produit ici.
 
 Date présente : %(jour)se jour de la %(lune)se lune de l'an %(annee)s après la
-Conquête.
+Conquête%(heure)s.
 Lieu présent : %(lieu)s.
 Acteur appelé : %(acteur)s.
 Affaire qui exerce maintenant une pression sur lui : %(affaire)s.
@@ -465,6 +468,11 @@ autre personne, obstacle matériel, distance, délai, usage social, ordre déjà
 donné ou ressource réellement absente. Les gens compétents règlent le
 routinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou
 un véritable arbitrage peut seul engager.
+
+L'heure ci-dessus est l'heure locale AU DÉBUT du battement. Les durées des
+activités la font avancer. Ne déduis jamais le soir, la nuit, l'aube ou un
+changement de jour des mots de l'affaire : ces conditions n'existent que si
+l'heure initiale plus les durées les atteint, ou si le dossier les établit.
 
 ## Vérité et inconnues
 
@@ -517,6 +525,7 @@ sert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.
         "annee": annee,
         "lune": lune,
         "jour": jour,
+        "heure": heure,
         "lieu": lieu,
         "acteur": acteur,
         "affaire": affaire,

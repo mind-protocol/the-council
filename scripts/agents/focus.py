@@ -68,8 +68,14 @@ def charger_graphe():
                     adj[v].add(d)
     except (IOError, OSError):
         pass
-    reserves = ((_lire_json(ETAT_BOUCLE, {}).get("graphe") or {})
-                .get("noeuds") or {})
+    boucle = _lire_json(ETAT_BOUCLE, {})
+    reserves = dict(((boucle.get("graphe") or {}).get("noeuds") or {}))
+    # Un etat cible garde sa reserve brute : c'est elle qui choisit le chemin
+    # critique. Pour les hommes seulement, l'ordre de depart suit l'energie
+    # effective deja calculee par la boucle (calcul recent + avance fiction).
+    for pid, fiche in (boucle.get("acteurs") or {}).items():
+        if isinstance(fiche, dict) and fiche.get("energie") is not None:
+            reserves["pers:" + pid] = float(fiche["energie"])
     return noeuds, adj, reserves
 
 
@@ -207,6 +213,14 @@ def veille(top=5, vraiment=False, forcer=False, seule=None, par_zone=1):
     `par_zone` borne le nombre d'hommes depeches par zone — le lancement
     graduel : un homme, on observe, puis les autres."""
     meilleurs, noeuds, adj, reserves = assignations(top)
+    # Le focus est une source de NOUVELLES journees automatiques : il respecte
+    # les deux portes. --forcer reste le geste explicite qui les franchit.
+    from agents.activation.fatigue import (
+        amorcer_fatigue_historique, capacite_acteur, capacite_zone,
+        mettre_a_jour_porte)
+    etat_activation = _lire_json(
+        ETAT_BOUCLE, {"version": 1, "historique": []})
+    amorcer_fatigue_historique(etat_activation)
     if seule:
         seule = zone.zone_de(seule)
         if seule not in meilleurs:
@@ -221,6 +235,17 @@ def veille(top=5, vraiment=False, forcer=False, seule=None, par_zone=1):
               % (mj, nid, energie, u", ".join(hommes[:6])))
         mission = mission_de_focus(nid, noeud, noeuds, adj, reserves)
         for pid in hommes[:max(1, par_zone)]:
+            cap_homme, _charge_homme = capacite_acteur(etat_activation, pid)
+            homme_ouvert = mettre_a_jour_porte(
+                etat_activation, "acteurs", pid, cap_homme)
+            cap_mj, _charge_mj, _comptes = capacite_zone(
+                etat_activation, mj)
+            mj_ouvert = mettre_a_jour_porte(
+                etat_activation, "zones", mj, cap_mj)
+            if not forcer and (not homme_ouvert or not mj_ouvert):
+                print(u"  %s : capacité fermée (homme %.0f %%, MJ %.0f %%), silence"
+                      % (pid, cap_homme * 100, cap_mj * 100))
+                continue
             age = None if forcer else _journee_recente(pid)
             if not vraiment:
                 print(u"  (a blanc) %s partirait avec :" % pid)

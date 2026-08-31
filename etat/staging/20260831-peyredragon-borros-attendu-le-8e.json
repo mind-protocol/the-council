@@ -1,0 +1,32 @@
+{
+  "titre": "Peyredragon — la barque de la reine pour Borros : attendu_le porte au 129.4.8, sur le chiffre de l'arbitre d'Accalmie",
+  "calcule_le": "2026-08-31",
+  "par": "mj-peyredragon",
+  "date_monde": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4
+  },
+  "pieces_lues": [
+    "etat/plis.json — pli-question-nue-a-borros-30e, grave et APPLIQUE par la porte ce jour : de rhaenyra pour borros-baratheon, barque, depuis peyredragon vers accalmie, scelle, parti_le 129.3.30 minute 907, etat en-route, attendu_le 129.4.6.",
+    "mj-accalmie, billet du 129.4.4 — son canon porte NEUF jours de cavalier vers Accalmie (croyance de mestre-hallis, si_bloque de son etape, ignore de Borros), et il date la barque a HUIT jours de mer, un peu moins que le cavalier parce qu'elle contourne au lieu de traverser. Mes six jours viennent de l'acte du 30e, ou la reine compte pour elle-meme.",
+    "Regle de zone : l'arrivee est a l'arbitre qui tient la cote. Je garde la ligne — le pli part de mon quai — et je prends SA date."
+  ],
+  "arbitrage": "Un seul pli, une seule ligne, deux zones d'accord : la mienne est deja au registre, sa piece de staging fait double emploi et doit tomber. Le desaccord de chiffre se tranche en faveur de celui qui tient l'autre bout : huit jours de mer, arrivee attendue le 8e.",
+  "mutations_proposees": [
+    {
+      "table": "plis",
+      "operation": "pli",
+      "cible": "pli-question-nue-a-borros-30e",
+      "champs": {
+        "attendu_le": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 8
+        }
+      },
+      "pourquoi": "Huit jours de mer, chiffre de l'arbitre d'Accalmie, qui tient la cote d'arrivee."
+    }
+  ],
+  "applique_le": "2026-08-31T11:45:06"
+}

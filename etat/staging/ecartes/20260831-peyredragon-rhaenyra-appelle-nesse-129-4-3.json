@@ -1,0 +1,51 @@
+{
+ "titre": "Peyredragon — la reine fait appeler Nesse a la fenetre de la Table Peinte pour une seconde bouche de Sombreval, 129.4.3",
+ "calcule_le": "2026-08-31",
+ "par": "mj-peyredragon (arbitrage d'un TENTER ; rien n'a ete ecrit dans etat/)",
+ "date_monde": {
+  "annee": 129,
+  "lune": 4,
+  "jour": 3
+ },
+ "pieces_lues": [
+  "etat/books/affaire-transmission-des-ordres.json, action 41021 — « LE 2e A 15h14 : NESSE ENVOYEE LA REFAIRE par les Trois-Anses, de bouche, rien d'ecrit, avec son bat de sel pour n'avoir rien a feindre. Reste : attendre son retour. » Etat 'en cours' : Nesse a quitte le rocher hier apres-midi et n'est pas rentree.",
+  "etat/plis.json, pli-protection-sombreval — de rhaenyra POUR gunthor-darklyn, parti le 30e par cavalier, etat REMIS, et la main qui le tient est MAREC-FOSSE.",
+  "etat/personnages.json, marec-fosse — « Intendant de Sombreval », lieu_id sombreval, etat actif, condition libre.",
+  "etat/staging/20260831-peyredragon-rulf-deux-patrons-sombreval-129-4-3.json — ce matin meme, a la maree, le maitre de port a entendu SEPAREMENT ses deux patrons rentres de Sombreval, chacun a un bout du quai, sans qu'aucun sache ce que l'autre a dit.",
+  "etat/evenements.json, diffusions vers peyredragon — la derniere nouvelle datee de Sombreval est du 2e (avis cloue a l'appontement, rumeur) et du 1er (le patron de la Chere-Anse au bureau de port : granges du haut fermees a serrures neuves, grain compte deux fois par jour). La diffusion du sac est datee du 4e et n'est pas livree."
+ ],
+ "arbitrage": {
+  "ce_qui_ne_passe_pas": "LA FEMME N'EST PAS SUR LE ROCHER. Nesse est partie hier, le 2e a quinze heures quatorze, par les Trois-Anses, envoyee de bouche par la maitresse de la voix, rien d'ecrit, avec son bat de sel ; le cahier porte en toutes lettres « reste : attendre son retour ». On ne la fait pas venir a la fenetre : il n'y a personne a faire venir, et la reine l'apprend d'un serviteur, non d'un conseil.",
+  "ce_que_l_etat_donne_a_la_place": "(1) LA SECONDE BOUCHE EXISTE DEJA, ET ELLE EST AU QUAI : ce matin meme, a la maree, le maitre de port a entendu SEPAREMENT deux patrons rentres de Sombreval, chacun a un bout du quai, aucun ne sachant ce que l'autre disait — la procedure meme que la reine cherche, faite avant qu'elle la demande, et dans le livre d'un autre homme. (2) SUR SON SCEAU, LE REGISTRE REPOND DEJA : l'acte de protection est marque REMIS a Sombreval, et la main qui le tient n'est pas celle de lord Gunthor Darklyn — c'est celle de MAREC FOSSE, intendant de Sombreval, qu'aucune table ne dit ni mort ni pris.",
+  "ce_que_personne_ne_sait_ce_jour": "Ce qu'il advient de l'intendant aujourd'hui meme. Rien n'est entre sur ce rocher depuis le 2e, et les deux patrons du matin n'ont rien su dire de lord Gunthor. La reine ne peut pas l'apprendre le 3e, quelle que soit la bouche qu'elle appelle.",
+  "le_prix": "Une demi-apres-midi de la reine, et la maison qui voit la reine chercher a la fenetre une bouche de Sombreval le jour ou elle ne peut pas en avoir."
+ },
+ "mutations_proposees": [],
+ "a_la_main": {
+  "table": "etat/actes.json",
+  "geste": "Ajouter l'acte ci-dessous en fin de liste.",
+  "acte": {
+   "id": "acte-rhaenyra-demande-la-seconde-bouche-3e",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 3,
+    "minute": 855
+   },
+   "acteur_id": "rhaenyra",
+   "lieu_id": "peyredragon",
+   "description": "PRES DE LA FENETRE, A L'ECART DE LA TABLE PEINTE, LE 3e DE LA 4e LUNE. La reine fait chercher NESSE pour lui demander sa SECONDE BOUCHE de Sombreval — une tete qui n'a pas parle a la premiere — sur deux points et deux seulement : l'intendant qui tenait son acte de protection est-il vivant, prisonnier ou mort, et quelle main tient son sceau. || LA FEMME N'EST PAS SUR LE ROCHER : partie la veille, le 2e a quinze heures quatorze, par les Trois-Anses, envoyee de bouche par dame Aurore Inchauspe, rien d'ecrit, son bat de sel sur le dos ; son retour est attendu et n'a pas eu lieu. La demande reste posee sans porteuse. || CE QUE LES LIVRES REPONDENT SANS ELLE : l'acte de protection scelle est marque REMIS a Sombreval, et la main qui le tient n'est pas celle de lord Gunthor Darklyn — c'est celle de MAREC FOSSE, intendant de Sombreval. Et deux bouches de Sombreval ont ete entendues SEPAREMENT le matin meme, a la maree, par le maitre de port, chacune a un bout du quai : elles concordent sur le port, divergent sur la banniere, et ne savent rien de lord Gunthor.",
+   "temoins": [],
+   "connu_de": [
+    "rhaenyra"
+   ]
+  },
+  "pourquoi": "L'issue d'un TENTER est un fait du monde : non gravee, elle n'a pas eu lieu."
+ },
+ "verse_par_mj_le": "2026-08-31 (129.4.3, minute 721)",
+ "actes_verses": [
+  "acte-rhaenyra-demande-la-seconde-bouche-3e"
+ ],
+ "applique_le": "2026-08-31T09:00:00",
+ "note_mj": "Les actes de ce bloc ont ete verses A LA MAIN par mj via scripts/ajouter.py actes. Ils n'etaient PAS dans mutations_proposees : la porte appliquer.py n'a aucune operation pour la table actes, et elle repondait 'aucune mutation — rien a appliquer' sur le ton d'un succes. Tout le bloc est verse ; la piece est close."
+}

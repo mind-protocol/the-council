@@ -1,0 +1,14 @@
+{
+  "titre": "Peyredragon — DOUBLON A RETIRER A LA MAIN : la lettre de la reine a Borros figure DEUX fois au registre des plis",
+  "calcule_le": "2026-08-31",
+  "par": "mj-peyredragon",
+  "date_monde": {"annee": 129, "lune": 4, "jour": 4},
+  "le_fait": "etat/plis.json porte deux lignes pour UN SEUL objet — la lettre ecrite et scellee de la main de la reine le 129.3.30 (acte du 30e, minute 907) : (1) pli-question-nue-a-borros-30e, CANAL BARQUE, attendu_le 129.4.8 ; (2) pli-question-de-la-reine-a-borros-30e, CANAL CAVALIER, attendu_le 129.4.6. Meme expediteur, meme destinataire, meme minute de depart. Deux mains ont grave le meme pli le meme jour.",
+  "ce_qui_tranche": "L'acte du 30e dit du depart : « celui de Borros AU QUAI ». Le quai est une barque, non un cavalier — et l'arbitre d'Accalmie, qui tient la cote d'arrivee, a date une BARQUE a huit jours de mer. La ligne juste est donc pli-question-nue-a-borros-30e ; celle qui porte cavalier contredit l'acte.",
+  "a_la_main": {
+    "table": "etat/plis.json",
+    "geste": "RETIRER entierement l'entree pli-question-de-la-reine-a-borros-30e. Aucune operation du vocabulaire ne retire un pli (OPERATIONS['plis'] : pli, pli_ajouter) : la suppression est a la main.",
+    "effets_de_bord_verifies": "Aucun autre pli, acte ou cahier ne renvoie a cet id — il a ete cree ce jour. Rien ne pend dessus."
+  },
+  "mutations_proposees": []
+}

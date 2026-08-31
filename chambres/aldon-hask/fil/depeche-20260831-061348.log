@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime_worker.py", line 44, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime_worker.py", line 23, in main
+    rep = runtime.appeler(**charge["appel"])
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 458, in appeler
+    return _appel_codex(
+        manuel, message, session_id, modele, effort, timeout, cwd,
+        add_dirs, reprendre, environnement, on_event, on_stderr,
+        heartbeat, on_heartbeat, ecriture)
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 358, in _appel_codex
+    rep = _normaliser_codex(evenements, modele, duree, logique, transcript)
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime.py", line 301, in _normaliser_codex
+    raise RuntimeError(str(erreur)[:500])
+RuntimeError: {'message': "You've hit your usage limit for GPT-5.3-Codex-Spark. Switch to another model now, or try again at 10:25 AM."}

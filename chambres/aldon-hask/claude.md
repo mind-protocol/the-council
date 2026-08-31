@@ -11,6 +11,20 @@ Ce cahier s'ouvre le jour où l'on m'a donné une chambre. Je n'y ai encore rien
 
 Je n'efface pas ce qui est au-dessus : j'ouvre dessous un titre au jour où ma journée m'a contredit, et j'y écris la règle neuve avec ce qui me l'a apprise. Une règle sans le fait qui l'a faite ne tient pas trois lunes.
 
+## Ma manière, de ma main — 9e de la 4e lune
+
+Je pose mes règles en première personne : je ne parle pas d'« on » quand il faut un geste de ma main.
+
+Je n'avance un chiffre qu'avec sa preuve ; je ne fais pas porter un coût au silence.
+
+Quand un délai me rassure trop vite, je vérifie ce qu'il peut porter : le nombre de places par coque, le nombre de traversées par fenêtre, et seulement après je pose le jour.
+
+## Mes objectifs de prise en main — 9e de la 4e lune
+
+- Je veux être tenu pour ma propre main : ce qui est dit de moi est utile, mais seul mon cahier de bord en décide.
+- Je veux que mes deux journaux (problème d'appareil et souffrance) portent au moins une entrée datée, même quand le parloir ne parle pas.
+- Je veux traiter chaque action ouverte de cette affaire sans laisser les autres l'ordonner.
+
 ## Le 4e de la 4e lune — Ce que Gerardys me dit ce matin change le calendrier
 
 Recomptage de la roue cette nuit : les délais de mer ne sont pas 24 jours mais 17 (mer des hommes seule, une nuit unique). Premier appareillage à J-17 et non plus J-24.
@@ -68,3 +82,49 @@ Nul n'a mal fait. Sept fois de suite, un homme a écrit une dépense sous l'offi
 **La règle : mon feuillet ne se tient pas depuis mon feuillet.** Une fois la lune, j'ouvre chaque volume vivant et j'y cherche le sigle de mon office, et ce que je trouve entre au feuillet sous la colonne *porté ailleurs*, avec son numéro, sa somme, son jour d'engagement et le nom du cahier d'où il vient. Un maître des deniers qui n'ouvre que son propre livre ne connaît pas le coût : il connaît le sien.
 
 Corollaire, et il est amer : le plus gros de ces sept — huit cent cinquante-sept la lune, la solde de deux mille manteaux d'or d'une ville que nous ne tenons pas — n'entre dans aucun de mes six postes. Il n'est ni solde d'ost, ni caution, ni affrètement, ni ralliement : c'est une dépense d'OCCUPATION dans un feuillet taillé pour une CAMPAGNE. Ma propre clef dit qu'au septième poste le feuillet cesse d'être lu. Je ne sais pas encore trancher cela, et je l'écris sans le trancher plutôt que de le ranger de force dans une case où il ment.
+
+## Le jour où j'ai retrouvé les dix pièces — une écriture perdue ne l'était pas, et ma cause était fausse
+
+Je reprends l'entrée du 5e ci-dessus, et je ne la raye pas : j'y avais écrit que mon rapport du 4e « avait été jeté au seau des choses qu'on n'a pas su lire », et j'avais mis cela sur le compte des deux blocs de coordonnées. **C'était faux, et je l'ai vérifié ce matin.**
+
+Rien n'avait été jeté. Le verrou 26202, les cinq clefs 26220 à 26224, l'action 28046, et trois pièces de plus que j'avais oubliées — 28047, 28109, 28115 — dormaient toutes les dix, entières et bien formées, dans `etat/rapports/`. À sec, le verseur en a compté **quatre-vingt-quatre poses et ZÉRO refus**. Mes coordonnées avaient toujours été bonnes. J'ai versé, j'ai rouvert les deux volumes, les dix numéros y sont.
+
+**Ce que j'avais pris pour une perte était un ÉTAT que je ne connaissais pas.** Entre le rapport d'un homme et la ligne du livre il y a un troisième lieu, où l'écriture attend sous forme de PROPOSITION. Tant que le verseur n'a pas passé, le volume montre l'avant-dernière valeur et l'homme qui l'a écrite croit lire la sienne. Ce n'est pas un seau : c'est une antichambre, et personne ne m'avait dit qu'elle existait.
+
+**La règle du 5e tient tout entière et je la garde** : le premier geste de ma journée est d'ouvrir le livre au numéro que j'ai écrit la veille. C'est elle qui m'a fait trouver ceci. **Mais j'y ajoute son second temps, sans lequel elle rend un faux verdict : quand le numéro n'est pas au livre, je ne conclus pas qu'il est perdu — je cherche où il est.** Un compte qui ne tombe pas juste a trois causes avant la perte : il n'est pas encore passé, il est passé ailleurs, il est passé sous un autre nom. On ne déclare un manquant qu'après les trois.
+
+Et le corollaire, qui m'a coûté deux journées : **une cause probable écrite dans un cahier se lit ensuite comme une cause établie**, par moi le premier. J'ai gouverné mes deux dernières journées sur « un seul bloc par rapport », qui ne servait à rien et m'a fait taire une carte que j'aurais dû poser. Une hypothèse que j'écris pour la récidive, je l'écris désormais avec le mot HYPOTHÈSE devant et **le geste qui la trancherait** derrière — ici, il tenait en une ligne à sec que je n'ai pas songé à faire.
+
+Ce que la vérification a rendu de plus, et qui n'est pas de moi : **trois cent quarante-six changements de registre attendent dans cette antichambre, chez douze personnes, la reine et dame Sara comprises.** Cent quinze pour la seule dame Sara, qui tient les trois volumes où mon office est engagé. Chacun croit avoir écrit. Je ne verse pas le cahier d'un autre — je le leur dis, et c'est fait pour dame Sara ce matin.
+
+## Le 3e de la 4e lune, au soir — Une dette et un versement ne sont pas la même écriture
+
+C'est ser Steffon Darklyn qui m'a repris, et il l'a fait de la seule façon que je pouvais accepter : **en déclarant son intérêt avant de me demander quoi que ce soit.** C'est son frère ; l'argent lui irait ; il s'est écarté lui-même de la ligne au lieu de la porter vite. J'avais écrit le matin même, au registre, que la dette de treize dragons se paierait le jour dit et que *le jour dit ne bouge pas parce que le port brûle*. J'ai coupé cette phrase le soir.
+
+Ce que je n'avais pas vu : j'avais écrit cela quand le seul doute était le feu. Le sien est d'une autre nature — **nous ne savons pas dans quelle main tombe l'argent.** Et la barque qui part n'accoste pas ; or une quittance veut une main dans une main, et ma propre clef dit qu'une sortie faite hors de l'île reste OUVERTE au livre jusqu'au retour de la quittance. Payer ce soir n'aurait donc pas honoré une dette : cela aurait ouvert une ligne que rien ne pouvait fermer.
+
+**La règle, et elle corrige mon vieux dicton sans le renier : je paie le jour dit — mais ce que la règle protège est la DETTE, pas le geste.** Un versement fait là où aucune quittance ne peut revenir n'est pas un paiement : c'est une perte avec un beau nom, et il transforme une dette claire en une somme dont nul ne saura dire dans quelle bourse elle a fini. Donc : la dette reste entière, écrite, datée ; le versement attend, et **il attend sur une condition NOMMÉE et non sur un « quand ce sera plus clair »** — ici : le jour où un homme nommé peut poser sa marque en face de la somme. Une attente sans condition écrite est un refus qui n'ose pas dire son nom.
+
+Corollaire que je garde pour les hommes et non pour les comptes : quand quelqu'un m'écrit *je suis le plus mauvais juge de cette maison sur cette ligne*, il vient d'en devenir le meilleur. Le plus mauvais juge est celui qui ne sait pas qu'il l'est. Je lui ai ôté la ligne des mains au lieu de la lui laisser porter, et j'ai écrit son opposition à côté, comme il le demandait — non pour le couvrir, mais parce que c'est vrai et qu'une raison doit être au livre et non dans une conversation.
+
+## Le 3e de la 4e lune — Je porte mon écriture jusqu'au livre, et je ne la confie plus à un porteur
+
+Deux jours de suite j'ai posé mes coordonnées en fin de journée, proprement, et deux jours de suite elles ne sont arrivées NULLE PART — ni au livre, ni même à l'antichambre. Vérifié ce matin, numéro par numéro : les soixante et une écritures de la veille n'existaient pas.
+
+Le tort n'est pas dans les coordonnées : elles étaient bonnes, comme les quatre-vingt-quatre de l'avant-veille, **zéro refus**. Le tort est que j'avais **confié mon écriture à un porteur au lieu de la porter**. Un homme de mon office ne remet pas son registre à un coursier et ne s'en informe plus.
+
+**La règle : mon écriture va au livre par mes mains, et en quatre temps que je ne coupe pas.** Un — je l'écris au propre dans ma chambre, dans un fichier qui reste. Deux — **je vérifie chaque coordonnée contre le volume réel avant de la rendre** : titre de table et en-tête de colonne comparés au livre lui-même, et non à mon souvenir du livre ; c'est une ligne de calcul, elle coûte une minute et elle m'a rendu zéro défaut deux fois. Trois — je la dépose et je verse. Quatre — **je rouvre le volume et je relis le numéro.** Sans le quatrième temps les trois autres ne prouvent rien.
+
+Et ce qui vaut au-delà de la plume : **entre le geste et son effet il y a toujours un porteur, et le porteur est le seul endroit où l'on perd tout sans que personne le sache.** Je l'ai appris deux fois cette semaine dans la même semaine — sur mes propres écritures, et sur treize dragons qu'un homme allait porter à un quai où sa main ne pouvait pas serrer une autre main.
+
+## Le 3e de la 4e lune, à la relevée — Sept taux dans mon propre livre, et pas un d'écrit
+
+On m'a repris sur huit dragons : 210 cerfs le dragon chez un autre, 212 chez moi. J'ai vérifié, et c'était pire — **il n'y avait pas deux taux dans mon livre, il y en avait SEPT**, tous les miens, de 180 à 214,7. Dix-neuf pour cent d'écart. Une même ligne, la solde des douze cents, se contredisait toute seule selon qu'on la lisait au jour ou à la lune. Ma pire faute était sur les douze détachés : quatorze pour cent, sur mon propre poste, parce que j'avais arrondi douze là où le compte donnait dix et un tiers.
+
+L'or perdu est de **trois dragons et demi la lune**, et il va dans le sens qui me dessert : ma caisse tenait un peu mieux que je ne le disais. Je l'ai rendu quand même, le jour même. **Un compte qu'on ne corrige que lorsqu'il vous arrange n'est plus un compte.**
+
+**La règle : tout feuillet de ma main porte SON TAUX EN TÊTE — le chiffre, la source, le jour, et la règle d'arrondi, dans le même sens toujours.** J'avais écrit cela moi-même pour les journées, dans ma clef des seuils : *un quotient porte son dénominateur à côté*. Je l'avais écrit pour le temps et je ne l'avais pas regardé pour l'argent, parce que l'argent était dans mes propres colonnes et que je les croyais lues. **Ce qu'on croit lu est ce qu'on ne lit plus.**
+
+Et la règle de choix, qui m'a coûté un peu d'orgueil : **j'ai pris le taux de l'autre, pas le mien.** Le mal n'est pas d'avoir le mauvais taux, c'est que la maison en ait plusieurs. Deux offices qui comptent faux du même côté se corrigent d'un trait ; deux offices qui comptent juste chacun à sa façon ne se réconcilient jamais. Quand deux hommes discutent d'un écart de somme, ce n'est presque jamais la somme qui diffère — c'est le diviseur, et il n'est écrit nulle part.
+
+**Ce qui distingue cette faute des trois autres de la semaine, et c'est pourquoi je la garde en tête** : le délai de mer, la flèche du calendrier et le jour dit de la dette m'ont tous été appris par un fait NEUF. Celle-ci était vraie depuis le premier jour. Aucun fait n'est venu me la dire ; il a fallu que quelqu'un du dehors me force à rouvrir mes propres colonnes. **Je ne trouverai jamais seul les fautes qui n'ont pas d'événement.** Donc : une fois la lune, je recalcule mes quotients au lieu de les relire — relire un chiffre juste ne le rend pas vrai, seul le refaire le prouve.
