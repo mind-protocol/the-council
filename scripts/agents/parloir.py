@@ -24,6 +24,9 @@
 #   --tenter / --faire / --demander : les verbes (habitant.md §3) — la
 #            demande ET le verdict se deposent au CANAL homme~zone, le
 #            verdict revient en CALL (zone.appeler_zone, inchange).
+#   --penser : un reveil de soi-meme — la pensee est un cast a soi
+#            (depecher detache, la pensee en elan du jour) ; aucun arbitre,
+#            aucun canal : le vecu et demain.md se deposent chez lui.
 #
 # Usage :
 #     python scripts/parloir.py --dire --de mj --a le-sanglier "Reviens au quai"
@@ -194,6 +197,12 @@ def main():
                     help="je propose un changement au monde")
     ap.add_argument("--demander", action="store_true",
                     help="que dit le monde ? — reponse depuis l'etat seul")
+    # PENSER (habitant.md §3) : un reveil de soi-meme — la pensee est un
+    # cast a soi. Aucun arbitre, aucun canal : la pensee part en elan du
+    # jour, la session vit ce moment interieur, le vecu et la conclusion
+    # (demain.md, fil/) se deposent chez lui par la machinerie existante.
+    ap.add_argument("--penser", action="store_true",
+                    help="un reveil de soi-meme — cast a soi, aucun arbitre")
     ap.add_argument("--modele", default=None,
                     help="modele du reveil (verbes et --dire)")
     ap.add_argument("--de", default=None)
@@ -233,6 +242,20 @@ def main():
             for c in glob.glob(os.path.join(CURSEURS, "%s.*" % fil)):
                 os.remove(c)
         print(u"fil(s) clos : %s" % (u", ".join(vises) or u"aucun"))
+        return
+
+    if a.penser:
+        if not (a.de and a.texte):
+            raise SystemExit(u"--penser veut --de et un texte (sa pensee)")
+        if a.a:
+            raise SystemExit(u"--penser ne prend pas de --a : on se "
+                             u"reveille soi-meme")
+        pensee = u" ".join(a.texte)
+        _sain(a.de)
+        # Le cast a soi : la pensee est l'elan particulier du jour
+        # (mission(), « L'elan particulier de ce jour »).
+        from agents.expose import depecher as _dep
+        _dep.depecher(a.de, pensee, a.modele, 15, False, attendre=False)
         return
 
     verbe = (u"TENTER" if a.tenter else u"FAIRE" if a.faire
