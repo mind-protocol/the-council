@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """RUNTIME — une seule porte vers les CLI d'agents Claude et Codex.
 
-Le jeu connait des sessions logiques (un homme, un jour ; un MJ de zone ;
+Le jeu connait des sessions logiques (un homme, un jour ; l'unique MJ ;
 un narrateur d'activation). Le fournisseur, lui, a son propre identifiant de
 thread. Ce module garde cette traduction et rend toujours le vieux contrat
 Claude ``{result, usage, ...}`` aux appelants.
@@ -415,13 +415,8 @@ def _normaliser_codex(evenements, modele, duree, logique, transcript):
     }
 
 
-def _est_mj(role):
-    role = str(role or "")
-    return role == "mj" or role.startswith("mj-")
-
-
 def _commande_codex(cwd, modele, effort, add_dirs, transcript_sortie,
-                    thread_id=None, sans_sandbox=False):
+                    thread_id=None):
     commande = [
         "codex", "exec", "--ignore-user-config", "--ignore-rules",
         "--disable", "plugins", "--disable", "apps",
@@ -436,14 +431,10 @@ def _commande_codex(cwd, modele, effort, add_dirs, transcript_sortie,
         "-c", 'model_reasoning_effort=%s' % json.dumps(effort),
         "--output-last-message", transcript_sortie,
     ]
-    if sans_sandbox:
-        # Un MJ tient le monde : pas de sandbox, pas de reviewer entre sa
-        # decision et les portes du depot. C'est volontairement plus large
-        # que workspace-write et reserve aux ids `mj` / `mj-*`.
-        commande += ["--dangerously-bypass-approvals-and-sandbox"]
-    else:
-        # Les habitants ordinaires restent en workspace-write avec reviewer.
-        commande += ["--approve-for-me"]
+    # Les appels d'agents travaillent directement dans le depot monte. La
+    # distinction historique MJ sans sandbox / homme restreint n'avait pas
+    # produit d'isolation utile : elle est retiree du contrat du runtime.
+    commande += ["--dangerously-bypass-approvals-and-sandbox"]
     for chemin in add_dirs:
         commande += ["--add-dir", chemin]
     if thread_id:
@@ -455,7 +446,7 @@ def _commande_codex(cwd, modele, effort, add_dirs, transcript_sortie,
 
 def _appel_codex(manuel, message, logique, modele, effort, timeout, cwd,
                   add_dirs, reprendre, env, on_event, on_stderr, heartbeat,
-                  on_heartbeat, sans_sandbox=False):
+                  on_heartbeat):
     entree = _entree_session(logique)
     thread_id = entree.get("codex_thread_id")
     if reprendre is True and not thread_id:
@@ -468,7 +459,7 @@ def _appel_codex(manuel, message, logique, modele, effort, timeout, cwd,
     final = os.path.join(cwd, ".dernier-message-%s.txt" % uuid.uuid4().hex)
     transcript = os.path.join(cwd, ".codex-%s.jsonl" % uuid.uuid4().hex)
     commande = _commande_codex(cwd, modele, effort, add_dirs, final,
-                               thread_id, sans_sandbox=sans_sandbox)
+                               thread_id)
     code, _lignes, erreurs, evenements, duree = _executer_flux(
         commande, message, cwd, env, timeout, on_event, on_stderr,
         heartbeat, on_heartbeat, transcript)
@@ -490,8 +481,7 @@ def _appel_codex(manuel, message, logique, modele, effort, timeout, cwd,
 
 
 def _commande_claude(prompt_systeme, modele, effort, add_dirs, tools,
-                      settings, sid, reprendre, stream,
-                      sans_sandbox=False):
+                      settings, sid, reprendre, stream):
     # Meme invariant que Codex : aucune session n'est materiellement privee
     # d'ecriture. Un juge peut avoir pour CONSIGNE de ne rien modifier ; ce
     # n'est pas au runtime de lui casser les mains. L'ordre preserve les
@@ -505,18 +495,13 @@ def _commande_claude(prompt_systeme, modele, effort, add_dirs, tools,
         commande += ["--system-prompt-file", prompt_systeme]
     for chemin in add_dirs:
         commande += ["--add-dir", chemin]
-    if sans_sandbox:
-        commande += ["--dangerously-skip-permissions"]
-    else:
-        commande += ["--restricted"]
+    commande += ["--dangerously-skip-permissions"]
     commande += ["--tools", ",".join(outils)]
     if "Bash" in outils:
         commande += ["--allowedTools", "Bash(python:*)"]
     commande += ["--output-format", "stream-json" if stream else "json"]
     if stream:
         commande += ["--verbose"]
-    if not sans_sandbox:
-        commande += ["--permission-mode", "acceptEdits"]
     if settings:
         commande += ["--settings", settings]
     if modele:
@@ -529,8 +514,7 @@ def _commande_claude(prompt_systeme, modele, effort, add_dirs, tools,
 
 def _appel_claude(manuel, message, logique, modele, effort, timeout, cwd,
                    add_dirs, tools, settings, reprendre, env, on_event,
-                   on_stderr, heartbeat, on_heartbeat,
-                   sans_sandbox=False):
+                   on_stderr, heartbeat, on_heartbeat):
     stream = bool(on_event or on_stderr or heartbeat)
     essais = [reprendre] if reprendre is not None else [False, True]
     entree = _entree_session(logique)
@@ -539,8 +523,7 @@ def _appel_claude(manuel, message, logique, modele, effort, timeout, cwd,
         manuel_sha256, prompt, prompt_injecte = _preparer_prompt_claude(
             manuel, cwd, reprise, entree)
         commande = _commande_claude(prompt, modele, effort, add_dirs, tools,
-                                    settings, logique, reprise, stream,
-                                    sans_sandbox=sans_sandbox)
+                                    settings, logique, reprise, stream)
         if stream:
             code, lignes, erreurs, evs, _duree = _executer_flux(
                 commande, message, cwd, env, timeout, on_event, on_stderr,
@@ -594,7 +577,6 @@ def appeler(role, manuel, message, session_id, modele=None, effort=None,
     environnement = dict(os.environ)
     environnement.update(env or {})
     environnement["LE_CONSEIL_QUI"] = str(role)
-    sans_sandbox = _est_mj(role)
     # habitant.md §4 : les sessions sont de la memoire, pas une section
     # critique. Deux reprises du meme id peuvent vivre en parallele ; leur
     # entrelacement est le registre d'audiences du MJ. Seules les portes de
@@ -607,13 +589,12 @@ def appeler(role, manuel, message, session_id, modele=None, effort=None,
                 resultat = _appel_codex(
                     manuel, message, session_id, modele, effort, timeout, cwd,
                     add_dirs, reprendre, environnement, on_event, on_stderr,
-                    heartbeat, on_heartbeat, sans_sandbox=sans_sandbox)
+                    heartbeat, on_heartbeat)
             else:
                 resultat = _appel_claude(
                     manuel, message, session_id, modele, effort, timeout, cwd,
                     add_dirs, tools, settings, reprendre, environnement,
-                    on_event, on_stderr, heartbeat, on_heartbeat,
-                    sans_sandbox=sans_sandbox)
+                    on_event, on_stderr, heartbeat, on_heartbeat)
             succes = True
             return resultat
         except BaseException as e:

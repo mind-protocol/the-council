@@ -9,11 +9,9 @@ reveil (ce qu'on lui a dit), ses gestes (les outils, dans l'ordre), ses
 paroles. C'est de la memoire, pas de la verite — la regle de geographie de
 chambre.py s'applique.
 
-POURQUOI PAS UN HOOK STOP. Les habitants se lancent en `--restricted`
-(mesure du 30.8 : c'est l'isolation des hooks parasites), et --restricted
-ignore AUSSI les settings du projet — aucun hook ne battra jamais dans une
-session d'habitant. Le depot est donc fait PAR LE LANCEUR : mission appelle
-`deposer()` apres un call, et en fin de cast.
+POURQUOI PAS UN HOOK STOP. Le vecu appartient au contrat du jeu, pas a la
+configuration locale d'un fournisseur. Le depot est donc fait PAR LE
+LANCEUR : mission appelle `deposer()` apres un call, et en fin de cast.
 """
 import glob
 import io

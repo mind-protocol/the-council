@@ -7,19 +7,17 @@ Usage :
 
     python scripts/tick.py --jours 3
     python scripts/tick.py --jusqu-a 129.3.20
-        Calcule la fenetre depuis monde.date jusqu'a la cible, ecrit une
-        PROPOSITION dans etat/tick-<AAAAMMJJ-HHMMSS>.json, et imprime
-        un resume lisible.
+        Calcule la fenetre depuis monde.date jusqu'a la cible et imprime
+        un resume lisible. Rien n'est ecrit.
 
     python scripts/tick.py --jours 3 --acteur daemon --acteur corlys
         Restreint le calcul a ces acteurs (repetable).
 
-Le script ne decide RIEN. Il lit etat/ et n'ecrit que sous etat/ :
-le MJ seul relit, arbitre et applique dans etat/*.json. Un seul ecrivain.
+Le script ne decide et n'ecrit rien.
 
 CE FICHIER EST UNE FACADE (docs/organisation.md §2) : la matiere vit dans le
-container temps/ — calendrier, lecture, bouche, mains, scelle, rumeur,
-gardes/, mutations, fenetre, resume. Les regles de calcul sont en tete de
+container temps/ — calendrier, lecture, bouche, mains, rumeur,
+gardes/, fenetre, resume. Les regles de calcul sont en tete de
 temps/fenetre.py ; la reference normative du format reste docs/schema.md
 (calendrier : 12 lunes de 30 jours). Le chemin et la CLI de cette commande
 sont geles ; les reexports ci-dessous gardent les anciens noms `tick.*`
@@ -55,8 +53,6 @@ from temps.bouche import (ECHELLES, BUDGETS, TOLERANCE_MAJ,  # noqa: E402,F401
 from temps.mains import (rythme_de, borner, au_plancher,  # noqa: E402,F401
                          decompter, porteur_absent, couts_chiffres,
                          chiffrer_cout, seuil_franchi)
-from temps.scelle import (STAGING, TABLES_MUTABLES, CROYANCES,  # noqa: E402,F401
-                          chemin_scelle, empreintes_etat, ecrire_proposition)
 from temps.rumeur import (CERTITUDES, LENTEUR_RUMEUR,  # noqa: E402,F401
                           SAUT_RUMEUR_MINIMUM, PORTEE_SAUT_RUMEUR,
                           VOISINS_PAR_RUMEUR, SILENCE_RUMEUR,
@@ -73,16 +69,14 @@ from temps.gardes import (GRAVITES, Rapport, verifier,  # noqa: E402,F401
                           verifier_personnages, verifier_plis,
                           verifier_rumeurs, verifier_occupation, siege_par_id,
                           verifier_sieges, verifier_audiences,
-                          verifier_affectations, verifier_registres_derives,
-                          verifier_activations)
+                          verifier_affectations, verifier_registres_derives)
 from temps.fenetre import calculer, tick  # noqa: E402,F401
 from temps.resume import resumer  # noqa: E402,F401
 
 
 def main():
     ap = argparse.ArgumentParser(
-        description="Moteur arithmetique du hors-scene (lit etat/, "
-                    "n'ecrit que dans etat/)")
+        description="Moteur arithmetique du hors-scene (lecture seule)")
     ap.add_argument("--verifier", action="store_true",
                     help="audit de coherence de etat/ (code 1 si anomalie)")
     ap.add_argument("--json", dest="en_json", action="store_true",
@@ -94,9 +88,7 @@ def main():
     ap.add_argument("--acteur", action="append", default=[], metavar="ID",
                     help="restreint le calcul a cet acteur (repetable)")
     ap.add_argument("--joueur", default=None, metavar="ID",
-                    help="personnage_id dont les croyances (jetons, vues, "
-                         "objectifs) seront scellees et appliquees. Inscrit "
-                         "dans la proposition ; appliquer.py le reprend.")
+                    help="personnage_id dont les croyances sont lues")
     args = ap.parse_args()
 
     e = Etat()

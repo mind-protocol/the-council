@@ -280,7 +280,6 @@ Prénoms non canon (Rosby, Stokeworth, Staunton…) : en inventer de plausibles,
 ## Conventions
 - Calendrier : 12 lunes de 30 jours. Toute arithmétique de date (horloges des plans, dates de diffusion, délais de route) suit cette règle.
 - La vérité vit dans `etat/*.json` ; le joueur ne voit que `info.json` + ce que ses scènes lui montrent.
-- `etat/staging/` — propositions de mutations, jamais l'état. `scripts/tick.py` y écrit ce qui tombe (horloges échues, événements à résoudre, nouvelles à livrer, déclencheurs à évaluer) ; le MJ seul relit, arbitre et applique. Un seul écrivain.
-- **Appliquer une proposition** : `python scripts/appliquer.py <fichier> [--vraiment]`. Le tick rédige d'office les mutations purement arithmétiques dans `mutations_proposees` (horloges décomptées, nouvelles marquées livrées) ; le MJ ajoute les siennes à la main dans la même liste, puis applique en un geste. Le vocabulaire des mutations est FERMÉ — aucun chemin JSON arbitraire — et fait autorité dans la docstring de `scripts/appliquer.py`. Trois gardes : l'empreinte sha1 des tables au moment du calcul (refus si un autre écrivain est passé), la validation intégrale avant toute écriture (une mutation invalide annule le lot), et le marquage `applique_le` contre la double application. Une proposition écrite à la main qui ne dépend d'aucune horloge peut omettre `empreintes` : la garde de fraîcheur ne s'applique alors pas.
+- Les habitants ont accès au dépôt et modifient directement les fichiers d'`etat/` qu'ils sont les mieux placés pour tenir.
 - Portraits : `ecrans/portraits/<personnage-id>.svg` (médaillons héraldiques stylisés en attendant de vraies images).
 - Toute mutation d'état est écrite sur disque à la fin de la scène/du battement, jamais gardée en mémoire seulement.

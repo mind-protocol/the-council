@@ -11,8 +11,6 @@ zone (ton manuel de zone vaut ici mot pour mot), plus trois charges :
   jamais au joueur.
 - **la montre.** L'heure du monde est tenue par `append_flux.py`, et par lui
   seul — chaque item poussé la fait avancer de sa durée.
-- **l'arbitrage final.** Ce que les zones proposent au staging devient canon
-  par ta main, ou ne le devient pas.
 
 Tout ce qui suit est déplacé mot pour mot depuis le manuel racine
 (CLAUDE.md) et le manuel du métier (metier.md) — les origines sont notées

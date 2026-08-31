@@ -17,14 +17,13 @@ La règle posée par `scripts/CLAUDE.md` est bonne : *la racine est l'interface 
 | commande racine | taille | importée par |
 |---|---|---|
 | `couverture.py` | 1 057 l. | **8 fichiers** |
-| `boucle_activation.py` | 3 184 l. | 5 |
 | `occupation.py` | 501 l. | 5 |
 | `regence.py` | 817 l. | 3 |
 | `tick.py` | 3 214 l. | 2 |
 | `affecter.py` | 861 l. | 2 |
-| `appliquer.py`, `depecher.py`, `ajouter.py`, `mesures.py`, `tisser.py` | — | 1 chacune |
+| `depecher.py`, `ajouter.py`, `mesures.py`, `tisser.py` | — | 1 chacune |
 
-**Onze fichiers sur trente-huit** sont à la fois une interface dont le chemin est gelé — écrit dans les docs, les écrans, le serveur, et jusque dans les cahiers in-fiction de `etat/books/` — **et** une bibliothèque dont d'autres dépendent. Un tel fichier ne peut plus bouger : le déplacer casse un cahier, changer une signature casse un appelant. Il ne peut donc que grossir. `tick.py` (3 214 l.) et `boucle_activation.py` (3 184 l.) sont les deux plus gros fichiers Python du dépôt, et ce n'est pas un hasard : ce sont ceux qui portent les deux rôles.
+Les commandes qui restent à la fois interfaces et bibliothèques doivent continuer à converger vers des façades minces. Le moteur automatique des activités, ancien exemple majeur de ce problème, a été supprimé.
 
 ### ② Un sujet vit à six adresses, et rien ne le déclare
 
@@ -78,9 +77,9 @@ Six containers de **sujet**, deux transverses. Chacun possède son sujet **de bo
 
 | Container | Possède | Aujourd'hui éparpillé dans |
 |---|---|---|
-| 🗄️ **état** | les tables, la porte unique, le vocabulaire fermé des mutations, les empreintes | `noyau/tables.py`, `appliquer.py`, `ajouter.py`, `purger.py` |
+| 🗄️ **état** | les tables et les outils d'entrée, de lecture et de purge | `noyau/tables.py`, `ajouter.py`, `purger.py` |
 | ⏱️ **temps** | horloges, échéances, diffusion à livrer, présence, disponibilité | `tick.py`, `occupation.py`, `regence.py`, `presence.py`, `evaluer.py` |
-| 🧠 **agents** | briefs, dépêche, activation, parloir, jugement, greffe documentaire | `depecher.py`, `boucle_activation.py`, `parloir.py`, `juger.py`, `veille.py`, `affecter.py` |
+| 🧠 **agents** | briefs, dépêche explicite, parloir, jugement, greffe documentaire | `depecher.py`, `parloir.py`, `juger.py`, `veille.py`, `affecter.py` |
 | 📋 **plan** | cahiers, couverture, criticité, levées, renvois, exports | `criticite.py`, `couverture.py`, `etat_du_plan.py`, `plan/`, `tisser.py`, `mesures.py` |
 | 🌍 **monde** | la ville : masque, plan, bâti, gens, journées, relief, sa carte et son 3D | `monde/`, `materialisation/`, `ville/`, `ecrans/modules/monde/`, `carte-ville.js`, `serveur/monde3d.js` |
 | 📜 **scène** | le flux, l'inbox, la montre, les items et leur rendu | `append_flux.py`, `tunnel.py`, `fils.py`, `serveur/routes/`, `ecrans/modules/*.js` (le guetteur est mort — habitant.md pas 5) |
@@ -89,7 +88,7 @@ Six containers de **sujet**, deux transverses. Chacun possède son sujet **de bo
 
 ### L'invariant du siège *(décision du 30 — la synthèse qui unifie la boucle)*
 
-> **Un acteur — humain ou PNJ — est un SIÈGE.** Quatre choses le font : un *point de vue servi* (la scène rendue / le brief), un *canal d'action* (l'inbox / les écrits + propositions), un *fil propre* (le flux par siège / le vécu), un *brouillard* (`info.json` par siège / croyances + diffusion). Le MJ — principal ou de zone, interactif ou `claude -p` — est la même machinerie d'arbitrage devant des sièges. Les deux boucles d'`architecture.md` (jeu, agents) sont **une boucle, deux profils** : temps de scène et journée.
+> **Un acteur — humain ou PNJ — est un SIÈGE.** Quatre choses le font : un *point de vue servi* (la scène rendue / le brief), un *canal d'action* (l'inbox / les écrits + propositions), un *fil propre* (le flux par siège / le vécu), un *brouillard* (`info.json` par siège / croyances + diffusion). L'unique MJ arbitre devant tous les sièges. Les deux boucles d'`architecture.md` (jeu, agents) sont **une boucle, deux profils** : temps de scène et journée.
 
 C'était déjà latent : `sieges.py` s'annonce « s'asseoir dans un personnage, en quitter un », et *Laisser faire* est la bascule de profil d'un siège. Trois asymétries restent nommées pour que l'unification ne devienne pas une bouillie : la **cadence** (minutes de scène / journées), le **rendu** (mise en scène / dossier), la **Règle Zéro** (les paroles du PNJ sont protégées par la dépêche ; le joueur écrit les siennes librement).
 
@@ -142,7 +141,7 @@ flowchart TB
 
 ## 4. Ce que ça change concrètement, sur trois exemples
 
-**`tick.py`** (3 214 l., importé par 2, gelé dans les docs) devient une façade de ~30 lignes qui appelle `temps/expose.py`. Ses satellites — échéances, diffusion, horloges, gardes du `--verifier` — deviennent des modules nommés du container `temps`. Le chemin tapé ne bouge pas d'un caractère ; `boucle_activation.py` importe `temps`, plus `tick`.
+**`tick.py`** (3 214 l., importé par 2, gelé dans les docs) devient une façade de ~30 lignes qui appelle `temps/expose.py`. Ses satellites — échéances, diffusion, horloges, gardes du `--verifier` — deviennent des modules nommés du container `temps`.
 
 **La ville** cesse d'avoir six adresses : un container `monde/` avec sa cuisson, son service et son écran. Un changement de format du masque a **un** point d'entrée et **une** fiche qui dit qui en dépend.
 
@@ -243,10 +242,9 @@ ecrans/                         CE QUE LA PAGE EN DESSINE
 ### Le détail, container par container
 
 ```
-scripts/etat/            🗄️  les tables, la porte unique, les empreintes
-  expose.py                  lire · ecrire · appliquer · empreinte
+scripts/etat/            🗄️  les tables et leurs outils
+  expose.py                  lire · ecrire · empreinte
   tables.py                  ← noyau/tables.py            (la porte de etat/, déjà écrite)
-  mutations.py               ← appliquer.py               (le vocabulaire fermé)
   entree.py                  ← ajouter.py
   empreintes.py              ← veille.py
   purge.py                   ← purger.py
@@ -261,10 +259,9 @@ scripts/temps/           ⏱️  horloges, échéances, diffusion, disponibilit�
   calendrier.py            ← noyau/jours_relatifs.py
   reprise.py               ← reprise.py
 
-scripts/agents/          🧠  briefs, dépêche, activation, parloir, jugement
+scripts/agents/          🧠  briefs, dépêche, parloir, jugement
   expose.py
   brief.py  manuel.py  retour.py    ← depecher.py        (2 062 l. éclatées)
-  activation.py                     ← boucle_activation.py (3 184 l. éclatées)
   parloir.py                        ← parloir.py
   jugement.py                       ← juger.py
   matiere.py                        ← dossier.py
@@ -278,7 +275,7 @@ scripts/plan/            📋  cahiers, couverture, criticité, levées
   criticite.py             ← criticite.py
   etat_du_plan.py  mesures.py  tisser.py  chiffrer.py  fils.py
   verser_cahier.py  exporter_plan.py  passer.py
-  corriger.py  lacunes.py  normaliser.py  leves.py  renvois.py  moyens.py  dater.py   ← plan/*
+  corriger.py  normaliser.py  leves.py  renvois.py  moyens.py  dater.py   ← plan/*
 
 scripts/monde/           🌍  la ville : masque, plan, bâti, gens, relief
   expose.py

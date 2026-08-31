@@ -7,7 +7,7 @@ Ce fichier REEXPORTE ce que les importeurs consomment reellement aujourd'hui,
 rien de plus.
 
 Le tick est decoupe : la matiere vit dans les modules du container
-(calendrier, lecture, bouche, mains, scelle, rumeur, gardes/, mutations,
+(calendrier, lecture, bouche, mains, rumeur, gardes/,
 fenetre, resume) et les symboles ci-dessous en viennent directement.
 `scripts/tick.py` n'est plus qu'une facade CLI — reexportee ici uniquement
 pour les importeurs historiques du module (tests).
@@ -37,6 +37,5 @@ import jours_relatifs  # noqa: E402,F401 — le calendrier relatif (noyau, lot 3
 from temps.calendrier import jour_absolu, date_de, fmt  # noqa: E402,F401
 from temps.lecture import CANAUX_PLI, Etat, jours_de_route  # noqa: E402,F401
 from temps.bouche import BUDGETS, echelle_de  # noqa: E402,F401 — BUDGETS n'a pas de sens sans sa clef : elle se MESURE (echelle_de), elle ne se declare plus
-from temps.scelle import ecrire_proposition, empreintes_etat  # noqa: E402,F401
 import tick  # noqa: E402,F401 — la facade CLI, gardee pour les tests qui l'importent
 from temps import reprise  # noqa: E402,F401 — la feuille de reprise (lecture seule) ; hors contrainte d'ordre

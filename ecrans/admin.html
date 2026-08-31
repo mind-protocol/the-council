@@ -259,19 +259,6 @@
   .act-mj-item details pre { max-height: 14rem; margin: .3rem 0 0; overflow: auto;
     white-space: pre-wrap; color: #8e8378; font: inherit; }
   .act-liste { min-height: 0; overflow: auto; border-right: 1px solid var(--bord); background: #171411; }
-  .act-previsions { padding: .65rem .7rem .75rem; border-bottom: 1px solid var(--bord);
-    background: #15120f; }
-  .act-previsions h3 { margin: 0 0 .15rem; color: var(--or); font-size: .75rem;
-    font-weight: normal; letter-spacing: .09em; text-transform: uppercase; }
-  .act-previsions > p { margin: 0 0 .55rem; color: #786d62; font-size: .67rem; }
-  .act-previsions > p time { color: #a18d75; white-space: nowrap; }
-  .act-prevue { display: grid; grid-template-columns: 24px 1fr auto; gap: .18rem .45rem;
-    padding: .38rem .45rem; border-top: 1px dashed #342c25; }
-  .act-prevue .rang { grid-row: 1 / 3; align-self: center; color: var(--or);
-    font: .72rem ui-monospace, monospace; }
-  .act-prevue strong { font-size: .77rem; font-weight: normal; }
-  .act-prevue .act-tache { grid-column: 2 / 4; font-size: .7rem; }
-  .act-prevue .act-energie { font-size: .68rem; }
   .act-ligne { width: 100%; display: grid; grid-template-columns: 1fr auto; gap: .2rem .65rem;
     text-align: left; border: 0; border-bottom: 1px solid #2a241e; background: transparent;
     color: var(--texte); padding: .75rem .85rem; font: inherit; cursor: pointer; }
@@ -368,9 +355,8 @@
   <button data-onglet="mains">Les mains</button>
   <button data-onglet="tissu">Le tissu</button>
   <button data-onglet="graphe">Le graphe</button>
-  <button data-onglet="activations">Activations</button>
+  <button data-onglet="activations">Archives d’activations</button>
   <button data-onglet="chambres">Les chambres</button>
-  <button data-onglet="charge">La charge</button>
   <button data-onglet="sante">La santé</button>
   <button data-onglet="maison">La maison</button>
   <button data-onglet="travail">Le travail</button>
@@ -384,7 +370,6 @@
   <section id="graphe"></section>
   <section id="activations"></section>
   <section id="chambres"></section>
-  <section id="charge"></section>
   <section id="sante"></section>
   <section id="maison"></section>
   <section id="travail"></section>
@@ -467,122 +452,11 @@ document.querySelectorAll("nav button").forEach((b) => b.onclick = () => {
     }
   });
   if (b.dataset.onglet === "activations") {
-    chargerActivations().then(() => {
-      actualiserPrevisionsActivations();
-      actualiserFilMjActif();
-    });
+    chargerActivations().then(() => actualiserFilMjActif());
   }
   if (b.dataset.onglet === "chambres") chargerChambres();
-  if (b.dataset.onglet === "charge") chargerCharge();
   if (b.dataset.onglet === "sante") chargerSante();
 });
-
-// ---------------------------------------------------------------- LA CHARGE
-// Importance contre activations. Le quadrant qui compte est en bas a droite :
-// importance haute, zero activation — ce qui pese sur la partie et que la
-// boucle n'a jamais fait bouger.
-
-const CHARGE = { d: null, tri: "importance" };
-
-async function chargerCharge() {
-  $("#charge").innerHTML = '<h2>La charge</h2><p class="pale">lecture…</p>';
-  try {
-    const r = await fetch("/admin/charge", { cache: "no-store" });
-    CHARGE.d = await r.json();
-  } catch (e) {
-    $("#charge").innerHTML = '<h2>La charge</h2><div class="alertes">'
-      + '<div class="grave">' + esc(String(e.message || e)) + "</div></div>";
-    return;
-  }
-  rendreCharge();
-}
-
-function rendreCharge() {
-  const d = CHARGE.d || {};
-  const acteurs = (d.acteurs || []).filter((a) => a.importance > 0 || a.activations > 0);
-  if (!acteurs.length) {
-    $("#charge").innerHTML = '<h2>La charge</h2><p class="pale">aucun acteur suivi.</p>';
-    return;
-  }
-  const seuil = d.seuil || 0;
-  const maxAct = Math.max(1, ...acteurs.map((a) => a.activations));
-  const maxImp = Math.max(0.001, ...acteurs.map((a) => a.importance));
-
-  // Le nuage. Un SVG, pas un canvas : on veut pouvoir survoler chaque point
-  // et lire le nom sans code de rendu.
-  const L = 900, H = 420, mg = { g: 54, d: 18, h: 16, b: 34 };
-  const px = (v) => mg.g + (v / maxImp) * (L - mg.g - mg.d);
-  const py = (v) => H - mg.b - (v / maxAct) * (H - mg.h - mg.b);
-  const xSeuil = px(seuil);
-
-  let pts = "";
-  acteurs.forEach((a) => {
-    const x = px(a.importance), y = py(a.activations);
-    const r = 3 + Math.min(9, Math.sqrt(Math.max(0, a.energie)) * 1.1);
-    const muet = a.importance > seuil && a.activations === 0;
-    const couleur = a.assis ? "var(--violet)"
-      : muet ? "var(--rouge)"
-      : a.repos_restant_s > 0 ? "var(--pale)" : "var(--or)";
-    pts += '<g class="pt"><circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1)
-      + '" r="' + r.toFixed(1) + '" fill="' + couleur + '" fill-opacity="'
-      + (muet ? ".85" : ".45") + '" stroke="' + couleur + '"></circle>'
-      + "<title>" + esc(a.nom) + " — importance " + a.importance.toFixed(2)
-      + ", " + a.activations + " activation(s), énergie " + a.energie.toFixed(1)
-      + (a.repos_restant_s > 0
-        ? ", repos " + (a.repos_restant_s / 86400).toFixed(1) + " j" : "")
-      + (a.echelle ? ", " + esc(a.echelle) : "") + "</title></g>";
-    if (muet || a.activations > maxAct * .45 || a.importance > maxImp * .55) {
-      pts += '<text class="etiq" x="' + (x + r + 4).toFixed(1) + '" y="'
-        + (y + 3.5).toFixed(1) + '">' + esc(a.nom) + "</text>";
-    }
-  });
-
-  const muets = acteurs.filter((a) => a.importance > seuil && a.activations === 0)
-    .sort((x, y) => y.importance - x.importance);
-  const moteurs = acteurs.filter((a) => a.importance > seuil && a.activations > 0)
-    .sort((x, y) => y.activations - x.activations);
-  const gourmands = acteurs.filter((a) => a.importance <= seuil && a.activations > 2)
-    .sort((x, y) => y.activations - x.activations);
-
-  const ligne = (a) => "<tr><td>" + esc(a.nom) + '</td><td class="pale">'
-    + esc(a.echelle || "—") + '</td><td class="num">' + a.importance.toFixed(2)
-    + '</td><td class="num">' + a.activations + '</td><td class="num">'
-    + a.energie.toFixed(1) + '</td><td class="num">'
-    + (a.repos_restant_s > 0 ? (a.repos_restant_s / 86400).toFixed(1) + " j" : "—")
-    + "</td></tr>";
-  const tableau = (titre, lot, note) => !lot.length ? "" :
-    "<h2>" + titre + ' <span class="compte">' + lot.length + "</span></h2>"
-    + (note ? '<p class="pale">' + note + "</p>" : "")
-    + "<table><thead><tr><th>Acteur</th><th>Échelle</th><th>Importance</th>"
-    + "<th>Activations</th><th>Énergie</th><th>Repos</th></tr></thead><tbody>"
-    + lot.map(ligne).join("") + "</tbody></table>";
-
-  $("#charge").innerHTML =
-    "<h2>Le nuage — importance contre activations</h2>"
-    + '<p class="pale">Taille du point : énergie disponible. '
-    + '<span style="color:var(--rouge)">Rouge</span> : important et jamais activé. '
-    + '<span style="color:var(--violet)">Violet</span> : siège occupé. '
-    + '<span style="color:var(--pale)">Gris</span> : en repos. '
-    + "Seuil (médiane des importances vives) : " + seuil.toFixed(3) + ".</p>"
-    + '<svg class="nuage" viewBox="0 0 ' + L + " " + H + '" preserveAspectRatio="xMidYMid meet">'
-    + '<line x1="' + mg.g + '" y1="' + (H - mg.b) + '" x2="' + (L - mg.d)
-    + '" y2="' + (H - mg.b) + '" stroke="var(--bord)"></line>'
-    + '<line x1="' + mg.g + '" y1="' + mg.h + '" x2="' + mg.g + '" y2="'
-    + (H - mg.b) + '" stroke="var(--bord)"></line>'
-    + '<line x1="' + xSeuil.toFixed(1) + '" y1="' + mg.h + '" x2="' + xSeuil.toFixed(1)
-    + '" y2="' + (H - mg.b) + '" stroke="var(--bord)" stroke-dasharray="3 4"></line>'
-    + '<text class="axe" x="' + (L - mg.d) + '" y="' + (H - 12) + '" text-anchor="end">importance →</text>'
-    + '<text class="axe" x="6" y="' + (mg.h + 10) + '">activations ↑</text>'
-    + pts + "</svg>"
-    + tableau("Le quadrant qui compte — important, jamais activé", muets,
-        "Ce qui pèse sur la partie et que la boucle n'a pas fait bouger. "
-        + "Un acteur en repos long y est normal ; un acteur disponible n'y est pas.")
-    + tableau("Les moteurs", moteurs)
-    + tableau("Beaucoup d'activations pour peu de poids", gourmands,
-        "Candidats à la rétrogradation d'échelle.")
-    + '<p class="pale">' + (d.total_activations || 0) + " activation(s) au total, tour "
-    + esc(d.tour == null ? "?" : d.tour) + ".</p>";
-}
 
 // ---------------------------------------------------------------- LA SANTÉ
 // `tick.py --verifier` produisait deja tout ceci ; il sortait dans un
@@ -841,7 +715,7 @@ const G = {
   suivreTempsReel: true, tempsBaseJours: 0, tempsBaseMur: null,
   horlogeCle: null, horlogeSource: null, horlogeActive: null,
   maintenant: 0, dernierRendu: 0, acteursActives: new Set(),
-  actionsActivation: { passees: [], futures: [], hypothese: "", erreur: "" },
+  actionsActivation: { passees: [], erreur: "" },
   actionsActivationEnCours: false, actionsFerme: false,
 };
 window.__grapheAdmin = G;
@@ -2021,7 +1895,7 @@ function ouvrirActionActivationGraphe(id) {
 }
 function rendreActionsActivationGraphe() {
   const e=document.getElementById("graph-actions-activation");if(!e)return;
-  const a=G.actionsActivation,passees=a.passees||[],futures=a.futures||[];
+  const a=G.actionsActivation,passees=a.passees||[];
   const ligne=(x,futur)=>{
     const id=x.tache_id||"",existe=G.parId.has(id);
     const flux=x.flux_horloge?(" · "+x.flux_horloge+" "+
@@ -2041,12 +1915,9 @@ function rendreActionsActivationGraphe() {
       '</span><span class="action-quand">'+esc(quand+attente)+'</span><span class="action-quoi">'+
       esc(x.tache||id||"action inconnue")+'</span></button>';
   };
-  let h='<div class="graph-actions-tete"><strong>Actions choisies</strong><span>'+passees.length+
-    ' passées · '+futures.length+' futures</span><button class="graph-actions-fermer" '+
+  let h='<div class="graph-actions-tete"><strong>Archives d’activations</strong><span>'+passees.length+
+    ' passées</span><button class="graph-actions-fermer" '+
     'title="Fermer" aria-label="Fermer la vue énergie">×</button></div>';
-  h+='<div class="graph-actions-groupe"><h4>Futures · ordre actuel</h4>'+
-    (futures.length?futures.map(x=>ligne(x,true)).join(''):
-      '<div class="graph-actions-vide">Aucune tâche future assez énergisée.</div>')+'</div>';
   h+='<div class="graph-actions-groupe"><h4>Passées · réellement activées</h4>'+
     (passees.length?passees.map(x=>ligne(x,false)).join(''):
       '<div class="graph-actions-vide">Aucune activation passée.</div>')+'</div>';
@@ -2064,10 +1935,9 @@ async function chargerActionsActivationGraphe() {
   try {
     const r=await fetch("/admin/activations",{cache:"no-store"}),d=await r.json();
     if(!r.ok||d.erreur)throw new Error(d.erreur||("HTTP "+r.status));
-    G.actionsActivation={passees:d.activations||[],futures:((d.previsions||{}).previsions)||[],
-      hypothese:((d.previsions||{}).hypothese)||"",erreur:((d.previsions||{}).erreur)||""};
+    G.actionsActivation={passees:d.activations||[],erreur:""};
   } catch(erreur) {
-    G.actionsActivation={passees:[],futures:[],hypothese:"",erreur:String(erreur.message||erreur)};
+    G.actionsActivation={passees:[],erreur:String(erreur.message||erreur)};
   } finally {G.actionsActivationEnCours=false;rendreActionsActivationGraphe();}
 }
 function rendreGraphe(d) {
@@ -2129,7 +1999,7 @@ function rendreGraphe(d) {
     setTimeout(()=>{if(document.getElementById("graphe").classList.contains("actif")&&cadrerGraphe(G.principal))G.cadreValide=true;},750);});
 }
 
-const A = { chargee: false, activations: [], previsions: [], hypothese: "", attente: {}, actualiseLe: null,
+const A = { chargee: false, activations: [],
   selection: null, details: new Map(), filMjCle: null };
 
 function heureActivation(x) {
@@ -2261,31 +2131,8 @@ async function actualiserFilMjActif(forcer=false) {
   } finally { actualisationFilMjEnCours=false; }
 }
 
-function htmlPrevisionsActivations() {
-  const actualise = A.actualiseLe ? ' · <time>actualisé à ' +
-    esc(new Date(A.actualiseLe).toLocaleTimeString("fr-FR")) + '</time>' : '';
-  const attente = A.attente || {};
-  let vide = 'Aucun acteur n’a actuellement assez d’énergie.';
-  if (attente.repos_acteur) vide = attente.repos_acteur +
-    ' acteur(s) chargé(s), mais encore en repos causal.';
-  else if (attente.aucune_tache_disponible) vide = attente.aucune_tache_disponible +
-    ' acteur(s) chargé(s), sans tâche disponible (bloquée, terminée ou en refroidissement).';
-  else if (attente.tache_sous_seuil) vide = attente.tache_sous_seuil +
-    ' tâche(s) encore sous le seuil d’activation.';
-  return A.previsions.length ? '<div class="act-previsions" id="act-previsions"><h3>À venir selon la physique</h3><p>' +
-    esc(A.hypothese || 'ordre instantané, conditionnel aux résultats futurs') + actualise + '</p>' +
-    A.previsions.map((x) => '<div class="act-prevue"><span class="rang">' + esc(x.rang) +
-      '</span><strong>' + esc(x.nom) + '</strong><span class="act-energie">⚡ ' +
-      esc(x.energie) + ' · ' + esc(Math.round(x.importance * 1000) / 10) +
-      '% · fenêtre ' + esc(dureeMonde(x.duree_monde_secondes)) +
-      '</span><span class="act-tache">' + esc(x.tache) + '</span></div>').join('') +
-    '</div>' : '<div class="act-previsions" id="act-previsions"><h3>À venir selon la physique</h3>' +
-    '<p>' + esc(vide) + actualise + '</p></div>';
-}
-
 function rendreListeActivations() {
   const e = document.getElementById("activations");
-  const previsions = htmlPrevisionsActivations();
   let liste = "";
   if (!A.activations.length) {
     liste = '<div class="act-vide">Aucune activation déposée.</div>';
@@ -2307,8 +2154,8 @@ function rendreListeActivations() {
     'title="Sélectionnez une activation" aria-label="Copier le contenu de l’activation sélectionnée">CC</button>' +
     '<button id="act-relire">Relire</button></div></div><div class="act-corps"><aside class="act-mj" id="act-mj">' +
     '<div class="act-vide">Lecture du fil du MJ actif…</div></aside><div class="act-liste">' +
-    previsions + liste + '</div><div class="act-detail" id="act-detail"><div class="act-vide">' +
-    (A.activations.length ? 'Cliquez une activation pour lire l’appel entier.' : 'La boucle n’a encore rien activé.') +
+    liste + '</div><div class="act-detail" id="act-detail"><div class="act-vide">' +
+    (A.activations.length ? 'Cliquez une archive pour lire l’appel entier.' : 'Aucune archive d’activation.') +
     '</div></div></div></div>';
   document.getElementById("act-relire").onclick = () => chargerActivations(true);
   document.getElementById("act-copier").onclick = copierActivationSelectionnee;
@@ -2361,10 +2208,6 @@ async function chargerActivations(forcer) {
     const d = await r.json();
     if (!r.ok || d.erreur) throw new Error(d.erreur || ("HTTP " + r.status));
     A.activations = d.activations || [];
-    A.previsions = ((d.previsions || {}).previsions) || [];
-    A.hypothese = ((d.previsions || {}).hypothese) || "";
-    A.attente = ((d.previsions || {}).attente) || {};
-    A.actualiseLe = Date.now();
     A.chargee = true;
     const selection = A.selection && A.activations.find((x) => x.id === A.selection);
     rendreListeActivations();
@@ -2372,31 +2215,6 @@ async function chargerActivations(forcer) {
     if (selection) ouvrirActivation(selection);
   } catch (erreur) {
     e.innerHTML = '<div class="act-erreur">Activations illisibles : ' + esc(erreur.message) + '</div>';
-  }
-}
-
-let actualisationPrevisionsEnCours = false;
-async function actualiserPrevisionsActivations() {
-  const panneau = document.getElementById("activations");
-  if (actualisationPrevisionsEnCours || document.hidden || !A.chargee ||
-      !panneau.classList.contains("actif")) return;
-  actualisationPrevisionsEnCours = true;
-  try {
-    const r = await fetch("/admin/activations/previsions", { cache: "no-store" });
-    const d = await r.json();
-    if (!r.ok || d.erreur || (d.previsions || {}).erreur) {
-      throw new Error(d.erreur || (d.previsions || {}).erreur || ("HTTP " + r.status));
-    }
-    A.previsions = ((d.previsions || {}).previsions) || [];
-    A.hypothese = ((d.previsions || {}).hypothese) || "";
-    A.attente = ((d.previsions || {}).attente) || {};
-    A.actualiseLe = Date.now();
-    const bloc = document.getElementById("act-previsions");
-    if (bloc) bloc.outerHTML = htmlPrevisionsActivations();
-  } catch (_erreur) {
-    // La dernière prévision valide reste visible si un calcul ponctuel échoue.
-  } finally {
-    actualisationPrevisionsEnCours = false;
   }
 }
 
@@ -2680,10 +2498,9 @@ charger().then(()=>{
   if(onglet)document.querySelector('nav button[data-onglet="'+CSS.escape(onglet)+'"]').click();
 });
 setInterval(relireHorloges,1000);
-setInterval(actualiserPrevisionsActivations,5000);
 setInterval(actualiserFilMjActif,2000);
 document.addEventListener("visibilitychange",()=>{
-  if(!document.hidden){actualiserPrevisionsActivations();actualiserFilMjActif();}
+  if(!document.hidden)actualiserFilMjActif();
 });
 setInterval(()=>{
   if(document.getElementById("graphe").classList.contains("actif"))

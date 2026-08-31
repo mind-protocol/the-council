@@ -3501,21 +3501,6 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 .md-t3,.md-t4{font-size:.88em;color:var(--muted);}
 .chr-fil .chr-texte strong{color:var(--ink);}
 .md-puce{color:var(--muted);}
-/* Un arbitre incarné observe : la ligne discrète au-dessus de son fil. */
-.fil-observation{margin:0 0 4px;padding-left:10px;font-size:.66em;
-  color:var(--muted);font-style:italic;
-  border-left:2px solid var(--bord);}
-/* Le champ du poste d'observation : un billet du dev au MJ observé — un
-   textarea et un bouton, rien de la barre des verbes. */
-#fil-mj-envoi{display:flex;flex-direction:column;gap:4px;padding:6px 0 2px;}
-#fil-mj-envoi textarea{min-height:44px;resize:vertical;padding:6px 8px;
-  font:inherit;font-size:.78em;color:var(--ink);background:var(--paper);
-  border:1px solid var(--bord);border-radius:3px;}
-#fil-mj-envoi button{align-self:flex-end;padding:3px 12px;font:inherit;
-  font-size:.72em;cursor:pointer;color:var(--braise);
-  background:none;border:1px solid var(--braise);border-radius:2px;}
-#fil-mj-envoi button:disabled{opacity:.45;cursor:default;}
-
 /* ---- la régie : le siège de Corneille ------------------------------------
    Hors fiction, et ça doit se voir : un cadre froid dans un fil qui ne l'est
    pas. Ce bloc n'est pas un moment de la partie — c'est une lecture, posée là

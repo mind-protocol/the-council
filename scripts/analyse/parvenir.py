@@ -56,7 +56,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
     if _p not in _sys.path:
         _sys.path.insert(0, _p)
 
-from agents.expose import boucle_activation as activation  # noqa: E402  (tissu, genres relais)
+from diffusion import GENRES_RELAIS  # noqa: E402 — physique partagee, sans moteur
 from etat.expose import tables  # LA PORTE de etat/ : une lecture, une ecriture, une semantique d'erreur
 
 # CE QUI PORTE UNE NOUVELLE, ET CE QUI N'EN PORTE PAS.
@@ -74,6 +74,19 @@ from etat.expose import tables  # LA PORTE de etat/ : une lecture, une ecriture,
 # dans liens.json. C'est exactement l'ensemble que `tisser.py` marque deja
 # `connaissance: true`, plus les routes.
 CANAUX = {"revele", "achemine", "route"}
+
+
+def charger_tissu():
+    """Lecture locale du tissu pour cet instrument d'analyse."""
+    dossier = os.path.join(ETAT, "tissu")
+    noeuds = tables.lire(os.path.join(dossier, "noeuds.json"), {})
+    aretes = []
+    with io.open(os.path.join(dossier, "aretes.jsonl"), encoding="utf-8") as f:
+        for ligne in f:
+            if ligne.strip():
+                aretes.append(json.loads(ligne))
+    evaluation = tables.lire(os.path.join(dossier, "evaluation.json"), {})
+    return noeuds, aretes, evaluation
 
 
 def porte_une_nouvelle(a):
@@ -225,7 +238,7 @@ def trajet(depart, siege, noeuds, adj, par_presence, lieux):
         if ici == cible:
             break
         n = noeuds.get(ici) or {}
-        if ici != depart and n.get("genre") not in activation.GENRES_RELAIS:
+        if ici != depart and n.get("genre") not in GENRES_RELAIS:
             continue
         for suivant, a in adj.get(ici) or []:
             route = a.get("route") if isinstance(a.get("route"), dict) else {}
@@ -332,7 +345,7 @@ def main():
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
 
-    noeuds, aretes, evaluation = activation.charger_tissu()
+    noeuds, aretes, evaluation = charger_tissu()
     adj, par_presence = construire(noeuds, aretes, evaluation)
     lieux = lieux_par_id()
     sieges = sieges_occupes()

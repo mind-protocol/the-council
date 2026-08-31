@@ -1,5 +1,10 @@
 # Relecture de la refonte des manuels — 30.8.2026
 
+> **Archive de conception, supersedee le 31.8.2026.** Cette fiche documente
+> l'essai des MJ de zone. Le runtime courant n'en conserve aucun : un seul
+> `mj`, servi par `scripts/agents/mj.py`, arbitre tous les sièges. Les mentions
+> `mj-*`, `zone.py` et `mj-zone.md` ci-dessous sont historiques.
+
 Rien n'est commité : tout est dans l'arbre de travail, à relire. La règle
 suivie : **déplacement à l'identique** — tout texte existant qui change de
 fichier a été copié mot pour mot (script d'extraction, pas de retape) ; seules

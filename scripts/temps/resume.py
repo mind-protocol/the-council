@@ -1,27 +1,23 @@
 # -*- coding: utf-8 -*-
-"""RESUME — le meme calcul, en francais, pour le MJ.
+"""RESUME — le calcul de la fenetre, en francais, pour le MJ.
 
-CE QUE CE MODULE POSSEDE : l'impression lisible d'une proposition de tick —
+CE QUE CE MODULE POSSEDE : l'impression lisible du calcul d'un tick —
 les mains d'abord (c'est l'ordre de la boucle, et l'ordre de lecture), puis
 les pensees, les seuils, les evenements, les nouvelles, les bouches, les
-rumeurs, le courrier, les etapes, les declencheurs, et le rappel des deux
-commandes d'appliquer.py.
+rumeurs, le courrier, les etapes et les declencheurs.
 
 CE QU'IL REFUSE : calculer quoi que ce soit — il ne fait que dire ce que
-fenetre.calculer() a deja pose dans la proposition.
+fenetre.calculer() a deja calcule.
 
-CONSOMMATEURS : fenetre.py (tick() l'appelle apres avoir ecrit).
+CONSOMMATEURS : fenetre.py.
 """
 
 
-import os
-
 from temps.calendrier import fmt
 from temps.bouche import FENETRE_ROYAUME
-from temps.lecture import RACINE
 
 
-def resumer(prop, chemin):
+def resumer(prop):
     """Le meme calcul, en francais, pour le MJ."""
     f = prop["fenetre"]
     print("Fenetre : {} -> {} ({} jour(s))".format(
@@ -165,10 +161,6 @@ def resumer(prop, chemin):
                       "oreille, fiabilite basse. Personne ne l'a apportee.")
             if s["note_du_mj"]:
                 print("      ta crainte : {}".format(s["note_du_mj"]))
-        if prop.get("rumeurs_qui_sautent"):
-            print("      ECRIS le 'contenu' de chaque saut dans les mutations : "
-                  "une rumeur se deforme A CHAQUE bouche, et le script n'invente "
-                  "aucune prose. Sans contenu, appliquer.py refuse le lot.")
         for i in prop.get("rumeurs_immobiles") or []:
             print("  [immobile] {} ({}) — rien de neuf depuis {} jours (derniere "
                   "prise {}) : fais-la avancer ou eteins-la.".format(
@@ -227,14 +219,3 @@ def resumer(prop, chemin):
     print("\nTetes a rafraichir ({}) : {}".format(
         len(prop["tetes_a_rafraichir"]),
         ", ".join(t["personnage_id"] for t in prop["tetes_a_rafraichir"])))
-
-    print("\n{} mutation(s) arithmetique(s) deja redigee(s) dans la proposition "
-          "(horloges, nouvelles marquees livrees).".format(
-              len(prop.get("mutations_proposees") or [])))
-    print("Ajoute les tiennes a la main dans 'mutations_proposees', puis :")
-    print("  python scripts/appliquer.py {}            # blanc"
-          .format(os.path.basename(chemin)))
-    print("  python scripts/appliquer.py {} --vraiment # ecrit"
-          .format(os.path.basename(chemin)))
-    print("\nProposition ecrite : {}".format(
-        os.path.relpath(chemin, RACINE).replace("\\", "/")))

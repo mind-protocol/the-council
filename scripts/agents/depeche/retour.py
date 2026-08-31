@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-"""RETOUR — ce qu'on fait du rapport quand l'homme rentre : le versement
-sur-le-champ (pensees, travaux), et la proposition de tete.
-"""
+"""RETOUR — versement sur-le-champ des pensees et travaux du rapport."""
 import io
 import json
 import os
@@ -82,63 +80,6 @@ def verser_sur_le_champ(rapport, qui, date):
         print(u"  (%d pensee(s) refusee(s) : pas de source, pas de pensee)"
               % sans_source)
     return pose
-
-
-def proposer_la_tete(rapport, qui, date, sid):
-    """Au retour d'une depeche, la tenue de la tete cesse d'etre un geste
-    qu'on oublie : une proposition tombe en staging, comme apres un tick.
-
-    Treize tetes en retard au 30 aout — dont Hask, gele huit jours de jeu
-    pendant que ses cahiers vivaient — et une seule cause : rien dans la
-    boucle ne reecrivait `intentions.json`, la tenue etait un geste manuel.
-
-    CE QUE LE SCRIPT PROPOSE : l'arithmetique seule — `date_maj` au jour de
-    la depeche. Il n'invente ni etape franchie ni croyance : un rapport ne
-    declare pas structurellement « etape X faite », le deduire du texte
-    serait une decision, et la machine donne la matiere, jamais la decision.
-    Le MJ ajoute ses mutations (etapes, croyances) dans la MEME proposition
-    avant `appliquer.py <fichier> --vraiment` — la `matiere` ci-dessous est
-    la pour ca.
-
-    Un fichier par homme et par jour de jeu (deterministe, re-ecrase par une
-    depeche ulterieure du meme jour) ; rien si l'homme n'a pas de tete (PJ,
-    dormant) ou si sa tete est deja au jour.
-    """
-    tetes = _liste_etat("intentions.json", "intentions")
-    tete = next((t for t in tetes if t.get("personnage_id") == qui), None)
-    if not tete:
-        return None
-    quand = {"annee": date[0], "lune": date[1], "jour": date[2]}
-    if tete.get("date_maj") == quand:
-        return None
-
-    with io.open(os.path.join(ETAT, "intentions.json"), "rb") as f:
-        sceau = __import__("hashlib").sha1(f.read()).hexdigest()
-    matiere = {
-        "journal": ["%s → %s" % (j.get("quoi", ""), j.get("resultat", "—"))
-                    for j in (rapport.get("journal") or [])
-                    if isinstance(j, dict)],
-        "conclusion": bool(rapport.get("conclusion")) or any(
-            t.get("conclusion") for t in rapport.get("travaux") or []
-            if isinstance(t, dict)),
-        "rapport": "etat/rapports/%s.json" % qui,
-    }
-    cible = os.path.join(ETAT, "staging",
-                         "tete-%s-%d-%d-%d.json" % (qui, *date))
-    tables.ecrire(cible, {
-        "_pourquoi": ("Tete de %s apres sa depeche du %d.%d.%d (session %s). "
-                      "Le script ne propose que date_maj ; ajoute ici tes "
-                      "mutations d'etapes et de croyances d'apres la matiere, "
-                      "puis applique le tout." % ((qui,) + date + (sid,))),
-        "matiere": matiere,
-        "empreintes": {"intentions": sceau},
-        "mutations_proposees": [{
-            "table": "intentions", "cible": qui, "operation": "tete",
-            "champs": {"date_maj": quand},
-        }],
-    }, indent=1)
-    print(u"  %-18s tete a tenir → %s" % (qui, os.path.relpath(cible, RACINE)))
-    return cible
 
 
 def _poser(chemin, contenu):

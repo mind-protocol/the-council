@@ -102,8 +102,8 @@ nom pour l'instant (docs/organisation.md §8 ⑧).
 est mort le 31.8), `presence.py` (qui est à portée, et ses creux).
 
 **Le monde qui tourne** — `tick.py` (le calcul, n'écrit jamais dans `etat/`),
-`appliquer.py` (l'écriture gardée), `ajouter.py` (une entrée à la fois),
-`boucle_activation.py`, `occupation.py`, `sieges.py`, `regence.py`.
+`ajouter.py` (une entrée à la fois),
+`occupation.py`, `sieges.py`, `regence.py`.
 
 **Le fil et l'écran** — `append_flux.py` (la seule plume du flux et de l'horloge),
 `tunnel.py` et `carte_muette.py` sont ses compteurs, `seed_flux.py`, `regie.py`

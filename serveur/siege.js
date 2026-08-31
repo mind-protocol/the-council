@@ -141,20 +141,6 @@ function qui(req, url) {
   // `hors_roster` dit au front de router ses gestes vers /verbe et non /action.
   if (jeton.slice(0, 6) === "homme:") {
     const id = jeton.slice(6);
-    // Un arbitre est un habitant comme un autre (habitant.md §1) : `mj` et les
-    // `mj-*` n'ont pas de fiche dans personnages.json, leur existence est leur
-    // CHAMBRE sur disque. Le siège fabriqué porte `mj` : le front cache alors
-    // la barre des verbes — un arbitre ne s'adresse pas de verbes à lui-même,
-    // sa page est un poste d'observation de son fil.
-    if (id === "mj" || id.slice(0, 3) === "mj-") {
-      try {
-        if (fs.statSync(path.join(RACINE, "chambres", id)).isDirectory()) {
-          return { jeton: jeton, personnage_id: id,
-                   nom: "L'arbitre (" + id + ")", hors_roster: true, mj: true };
-        }
-      } catch (e) {}
-      return null;
-    }
     try {
       const p = JSON.parse(fs.readFileSync(
         path.join(RACINE, "etat", "personnages.json"), "utf-8"))

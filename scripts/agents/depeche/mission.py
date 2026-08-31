@@ -2,18 +2,17 @@
 """MISSION — le texte de mission servi a l'homme, l'etagere posee dans sa
 session, l'archive du prompt, et l'appel par la porte Claude/Codex.
 
-L'ISOLATION EST MESUREE, PAS SUPPOSEE (docs/habitant.md pas 2, reveils-jouets
-du 30.8) : `--restricted --tools <liste>` remplace `--allowedTools`.
-  - --restricted ignore les settings USER et PROJET — les hooks parasites de
-    la machine ne frappent plus (deux reveils d'essai sur trois y finissaient
-    leur vie) — et garde les outils nommes par --tools ;
+L'HOMME TRAVAILLE AVEC ACCES AU DEPOT (decision du 31.8) : la sandbox des
+calls n'a pas produit d'isolation utile et a ete retiree du runtime commun.
+Les outils nommes par --tools restent son vocabulaire, pas une frontiere de
+permission ;
   - LE HOOK-OREILLE EST MORT LE 31.8.2026 : le sursis qui passait un
     --settings explicite pour armer `parloir.py --ecouter` est leve. Un
     homme en session n'entend plus en cours de route — une parole qui lui
     arrive est un billet au canal de sa chambre, servi en percept a son
     prochain reveil (l'anachronisme absorbe, c'est le modele) ;
-  - Write/Edit dans la chambre montee (--add-dir) exigent
-    --permission-mode acceptEdits, deja pose.
+  - sa chambre et le depot restent montes ensemble : la premiere porte sa
+    memoire, le second porte les sources et les portes qu'il doit employer.
 
 CALL ET CAST (habitant.md §4) : on appelle quand on a besoin de la reponse
 (attendre=True — le comportement historique), on depeche quand on lance une
@@ -39,14 +38,9 @@ from agents.depeche.brief import (RACINE, ETAT, DEPOT_RAPPORTS,
                                   dossier_journee)
 from agents.depeche.pas_de_tir import (poser_letagere,  # noqa: F401 — reexporte
                                        poser_la_memoire)
-from agents.depeche.manuel import (manuel_de, contexte_message,
-                                   message_tentative, manuel_narrateur_local,
-                                   memoire_activation, etagere_systeme)
-from agents.depeche.narrateur import (contrat_rapport_narrateur,
-                                      _mission_historique)
+from agents.depeche.manuel import manuel_de, contexte_message
 from agents.depeche.trous import ses_trous, sa_charge_ailleurs, on_lattend
-from agents.depeche.retour import (verser_sur_le_champ, proposer_la_tete,
-                                   _poser)
+from agents.depeche.retour import verser_sur_le_champ, _poser
 from agents.depeche.chambre_locale import rendre as rendre_chambre_locale
 
 def mission(qui, brief, consigne, contexte=None):
@@ -62,10 +56,9 @@ def mission(qui, brief, consigne, contexte=None):
     from agents.expose import chambre as _ch
     sa_chambre = _ch.chemin(qui).replace("\\", "/")
     chambre_locale = rendre_chambre_locale(_ch.chemin(qui))
-    # SON ARBITRE DE ZONE (habitant.md §3, pas 4) : d'apres sa ville — la
-    # zone du joueur est `mj`, les autres `mj-<ville>` ; a defaut, `mj`.
-    from agents.expose import zone as _zone
-    arbitre = _zone.arbitre_de(qui)
+    # Un seul MJ arbitre tous les gestes. Le lieu de l'homme reste une
+    # information de fiction ; il ne fabrique plus une autorite runtime.
+    arbitre = "mj"
     # LES BILLETS ENTRENT EN PERCEPT (habitant.md §3) : « Untel t'a écrit :
     # "…" » — jamais une invitation à ouvrir un fichier (2/2 ignorée aux
     # essais). Le curseur n'avance qu'au lancement réussi (marquer_lus, dans
@@ -115,7 +108,7 @@ lecture.
 
 ## Ton arbitre, et tes trois verbes
 
-Ton arbitre de zone est `%(arbitre)s`. Quand ton geste engage le monde, tu le
+Ton MJ est `%(arbitre)s`. Quand ton geste engage le monde, tu le
 lui adresses par l'un des trois verbes — le verdict revient comme retour de
 commande, dans le fil de ta pensée :
 
@@ -183,10 +176,6 @@ def archiver_le_prompt(qui, sid, manuel, texte):
     balaie : on pouvait donc lire toute la journee d'un homme sans jamais savoir
     ce qu'il avait recu en entrant. La question « il est coherent » ou « on le
     re-briefe a chaque reveil » n'avait pas de piece pour la trancher.
-
-    La boucle d'activation, elle, archive deja son `system_prompt` dans
-    `etat/activations/` — c'est le meme geste, porte au chemin manuel, qui
-    etait le seul des deux a n'avoir aucune trace.
 
     On ecrit AVANT l'appel et non apres : une session qui meurt en cours doit
     laisser son prompt, sinon il manque exactement quand il sert le plus.
@@ -378,8 +367,8 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True):
               % (qui, os.path.relpath(rep["log"], RACINE)))
         return True
 
-    # LE VECU AU FIL, TOUJOURS — pas de hook possible sous --restricted :
-    # c'est le lanceur qui depose (habitant.md pas 6).
+    # LE VECU AU FIL, TOUJOURS : le lanceur le depose explicitement, sans
+    # faire dependre la memoire de l'homme d'un hook de fournisseur.
     from agents.expose import trace as _tr
     try:
         _tr.deposer(qui, sid, etiquette=u"%d.%d.%d" % date,
@@ -421,7 +410,6 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True):
     cible = os.path.join(DEPOT_RAPPORTS, "%s.json" % qui)
     tables.ecrire(cible, rapport)
     verse = verser_sur_le_champ(rapport, qui, date)
-    proposer_la_tete(rapport, qui, date, sid)
 
     p = sum(len(t.get("pensees", []) or []) for t in rapport.get("travaux", []) or [])
     print(u"  %-18s %2d pensee(s) [%d versee(s)] · %2d etape(s) · %s · %5d j. · %3ds → %s%s"

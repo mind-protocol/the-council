@@ -209,7 +209,7 @@ except Exception:
 # LE FIL DE SALLE. Ce qui se dit devant un habitant entre dans sa chambre —
 # `chambres/` appartient au container `agents/`, donc on APPELLE, on n'ecrit
 # pas d'ici. Jamais bloquant : une chambre qui refuse ne doit pas empecher une
-# poussee, comme `regence.consigner` dans la boucle d'activation. La plume de
+# poussee, comme les registres de passation historiques. La plume de
 # l'horloge passe avant la memoire de qui que ce soit.
 try:
     from agents.expose import salle as salle_entendue

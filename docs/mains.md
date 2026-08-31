@@ -248,12 +248,12 @@ Dans l'ordre, avant la boucle des absents :
 2. **Servir les coûts.** Toute étape de `plan` dont un `cout` cite une adresse de mesure est
    vérifiée ici : si la mesure ne couvre pas, l'étape passe `bloque` et `si_bloque`
    s'applique. Sans jugement, et avant que la boucle des absents ne tourne.
-3. **Peser les seuils.** Franchissement → écrire dans la proposition de staging la promotion
-   du porteur et l'`affaire` telle quelle, à charge du MJ d'en faire une scène. Retour du bon
+3. **Peser les seuils.** Franchissement → le porteur écrit sa promotion et l'`affaire`
+   telle quelle, à charge du MJ d'en faire une scène. Retour du bon
    côté → `franchi_le: null`.
 4. **Proposer la ligne du matin.** Une par main au plus, trois à cinq au total pour « ce
    qui s'est fait sans vous ». `tick.py` propose, le MJ coupe.
-5. **Ne jamais écrire dans `etat/`** : tout par `etat/staging/`, comme le reste.
+5. **Écrire directement dans `etat/`** ce que le porteur est le mieux placé pour tenir.
 
 `tick.py --verifier` doit signaler :
 - une mesure sans `rythme`, dont `rythme.jours` est nul ou négatif, ou dont un `depend_de`

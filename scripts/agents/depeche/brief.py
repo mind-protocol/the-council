@@ -254,16 +254,14 @@ def travaux_ouverts_de(qui):
     La mémoire d'un dépêché n'est pas sa tête d'`intentions.json` (treize
     têtes en retard au 30 août, dont Hask gelé huit jours de jeu pendant
     qu'il se corrigeait neuf fois par écrit) : c'est ses pensées datées et
-    sa dernière conclusion de sa main. `memoire_activation()` savait déjà
-    les servir (`travaux_ouverts`), mais AUCUN chemin ne les peuplait —
-    ni ici, ni la boucle d'activation, dont le `travaux = []` était codé
-    en dur. L'homme reprend là où SA plume s'est arrêtée, pas là où le
+    sa dernière conclusion de sa main. `memoire_du_jour()` sait les servir
+    par `travaux_ouverts`. L'homme reprend là où SA plume s'est arrêtée, pas là où le
     dernier quart d'heure l'a laissé.
 
     Lecture bornée : le dernier rapport (`etat/rapports/<qui>.json`), et si
     aucun travail n'y porte de conclusion, la première conclusion trouvée en
     remontant les archives (`etat/archive/travaux/<date>/<qui>.json`), une
-    seule. Quatre pensées par travail, comme la boucle d'activation.
+    seule. Quatre pensées par travail.
     """
     ouverts = []
 

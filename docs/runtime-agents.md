@@ -1,6 +1,6 @@
-# Fournisseur des réveils
+# Fournisseur des appels d'agents
 
-Tous les réveils passent par `scripts/agents/runtime.py`. La fiction conserve
+Tous les appels passent par `scripts/agents/runtime.py`. La fiction conserve
 ses identifiants de session ; l'adapter traduit ceux-ci vers les identifiants
 de thread propres à Claude ou à Codex et rend, dans les deux cas, le contrat
 historique `result`, `usage`, `duration_ms`, `session_id`.
@@ -29,8 +29,7 @@ aussi être définis par `LE_CONSEIL_CODEX_MODELE` et
 ## Chemins couverts
 
 - journée d'un homme, en CALL ou en CAST ;
-- réveil et établi d'un MJ de zone ;
-- narrateur et acteur de la boucle d'activation ;
+- réveil de l'unique MJ ;
 - juge séparé ;
 - dépôt du vécu depuis les événements JSONL Codex.
 

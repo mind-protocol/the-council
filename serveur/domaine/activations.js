@@ -278,20 +278,6 @@ function filMjActif() {
   return valeur;
 }
 
-function prevoirActivations() {
-  let previsions = { previsions: [], erreur: null };
-  try {
-    previsions = JSON.parse(childProcess.execFileSync("python",
-      [path.join(RACINE, "scripts", "boucle_activation.py"), "--prevoir", "8"],
-      { cwd: RACINE, encoding: "utf-8", timeout: 5000,
-        windowsHide: true, maxBuffer: 2 * 1024 * 1024 }));
-  } catch (e) {
-    previsions = { previsions: [], erreur: String(e.message || e) };
-  }
-  return { previsions,
-    en_cours: fs.existsSync(path.join(DEPOT_ACTIVATIONS, ".boucle.lock")) };
-}
-
 // LA CRITICITE DU PLAN, servie a cote des registres — jamais dedans.
 //
 // Une colonne « perte » posee dans `books.json` serait effacee au prochain
@@ -405,58 +391,6 @@ function sante() {
   }
 }
 
-// La charge des acteurs : importance contre activations. Le quadrant qui
-// compte est « importance haute, zero activation » — les menaces qui
-// chargent en silence pendant qu'on regarde ailleurs.
-function chargeActeurs() {
-  const { etat } = rapportsEtJournalActivations();
-  const personnages = lireJsonSansFaillir(path.join(RACINE, "etat", "personnages.json"), []);
-  const listeP = Array.isArray(personnages) ? personnages : (personnages.personnages || []);
-  const fiches = new Map(listeP.map((p) => [p.id, p]));
-  const intentions = lireJsonSansFaillir(path.join(RACINE, "etat", "intentions.json"), []) || [];
-  // L'ÉCHELLE NE SE DÉCLARE PLUS, elle se mesure : `evaluer.py --json` dépose
-  // la liste des gens du quartier (même composante connexe qu'un siège occupé,
-  // vingt minutes de marche au plus). Le champ `echelle` d'intentions.json a
-  // disparu — il recopiait à la main ce que la topologie calcule, et mentait
-  // dès que l'homme avait bougé.
-  const echelles = new Map((Array.isArray(intentions) ? intentions : [])
-    .map((t) => [t.personnage_id || t.id, ouQuartier(t.personnage_id || t.id)]));
-  const sieges = lireJsonSansFaillir(path.join(RACINE, "etat", "joueurs.json"), []);
-  const listeS = (sieges && (sieges.sieges || sieges)) || [];
-  const assis = new Set((Array.isArray(listeS) ? listeS : [])
-    .filter((s) => s && s.occupe).map((s) => s.personnage_id));
-
-  const base = Number((etat.horloge || {}).base_secondes) || 0;
-  const acteurs = Object.entries(etat.acteurs || {}).map(([id, a]) => {
-    const fiche = fiches.get(id) || {};
-    const repos = Number(a.disponible_a) || 0;
-    return {
-      id, nom: fiche.nom || id, titre: fiche.titre || "",
-      lieu_id: fiche.lieu_id || "",
-      importance: Number(a.importance) || 0,
-      energie: Number(a.energie) || 0,
-      activations: Number(a.activations) || 0,
-      echelle: echelles.get(id) || "",
-      assis: assis.has(id),
-      // Le repos est une date en secondes de monde : ce qui compte a l'ecran,
-      // c'est ce qu'il en RESTE a partir de maintenant.
-      repos_restant_s: Math.max(0, repos - base),
-    };
-  });
-  acteurs.sort((x, y) => y.importance - x.importance);
-
-  // Le seuil de « ca compte » n'a pas de verite : la mediane des importances
-  // non nulles separe mieux que n'importe quelle constante ecrite en dur.
-  const vives = acteurs.map((a) => a.importance).filter((v) => v > 0).sort((x, y) => x - y);
-  const seuil = vives.length ? vives[Math.floor(vives.length / 2)] : 0;
-  return {
-    acteurs, seuil,
-    total_activations: (etat.historique || []).length,
-    tour: (etat.rotation_activation || {}).tour || null,
-    lu_a: Date.now(),
-  };
-}
-
 function resumeActivations() {
   const { etat, parSession } = rapportsEtJournalActivations();
   const personnages = lireJsonSansFaillir(path.join(RACINE, "etat", "personnages.json"), []);
@@ -501,7 +435,7 @@ function resumeActivations() {
       architecture,
     };
   });
-  return { activations, ...prevoirActivations() };
+  return { activations };
 }
 
 function detailActivation(session) {
@@ -568,5 +502,5 @@ function detailActivation(session) {
 }
 
 module.exports = { numerosDesTetes, ouQuartier, lireJsonSansFaillir, rapportsEtJournalActivations,
-  transcriptClaude, filMjActif, prevoirActivations, planModele, criticite, sante,
-  chargeActeurs, resumeActivations, detailActivation, DEPOT_ACTIVATIONS };
+  transcriptClaude, filMjActif, planModele, criticite, sante,
+  resumeActivations, detailActivation, DEPOT_ACTIVATIONS };

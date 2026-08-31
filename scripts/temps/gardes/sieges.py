@@ -6,7 +6,7 @@ CE QUE CE MODULE POSSEDE : les verificateurs de ce qui tient au DEHORS du jeu
 tout seul), les sieges vacants qui doivent une tete et la clause de regence,
 les audiences du flux a plusieurs, les affectations au monde engendre, les
 registres derives (un index ecrit a la main est un index qui va mentir), et
-les activations (un taux de perte est une panne, pas une statistique).
+les archives de sessions (une perte est une panne, pas une statistique).
 
 CE QU'IL REFUSE : rafraichir quoi que ce soit — il renvoie aux commandes
 (sieges.py --rafraichir, regence.py --poser, couverture.py --registres).
@@ -155,12 +155,8 @@ def verifier_sieges(e, r):
                    "personnage n'agira pas hors ecran tant qu'on ne lui en "
                    "ecrit pas une")
         else:
-            # LA CLAUSE DE REGENCE. Le garde mecanique de
-            # `boucle_activation.py` refuse deja les rapports qui franchissent
-            # la ligne, mais un homme qui l'ignore y va, se fait refuser et
-            # perd un passage de correction a chaque fois. La clause dans sa
-            # tete est ce qui evite le mur ; le garde est ce qui le rattrape
-            # quand il l'oublie. On veut les deux.
+            # LA CLAUSE DE REGENCE reste une consigne pour toute dépêche
+            # manuelle effectuée au nom d'un siège vacant.
             if not regence.clause_posee(e.intention_par_id.get(pid)):
                 r.dire("avertissement", pid,
                        "siege vacant dont la tete ne porte pas la clause de "
@@ -326,76 +322,3 @@ def verifier_registres_derives(e, r):
                    "docs/echiquier.md)".format(a, n))
 
 
-def verifier_activations(e, r):
-    """Ce que la boucle d'activation a produit, et ce qui a ete jete.
-
-    LE SILENCE DES REJETS EST LE PIRE DEFAUT QU'ON AIT EU. Le 10 aout, 326
-    mutations sur 355 etaient refusees — 92 % — pour une seule et meme cause :
-    le narrateur citait son resultat sous la clef `cite` quand le validateur
-    lisait `resultat_id`. La boucle a tourne des nuits entieres en produisant
-    presque rien, et rien nulle part ne le disait. Un taux de perte est une
-    panne, pas une statistique : il doit crier des le premier tour.
-    """
-    depot = os.path.join(ETAT, "activations")
-    if not os.path.isdir(depot):
-        return
-
-    # LE CUMUL DE TOUJOURS EST UNE MAUVAISE MESURE, et c'est la lecon du
-    # 10 aout au soir : la panne `resultat_id` etait REPAREE, et le taux
-    # affichait encore 78 % parce que les 326 rejets d'avant la reparation
-    # dorment sur le disque et y dormiront toujours. Un taux qu'aucune
-    # correction ne peut faire baisser ne signale plus rien.
-    # On mesure donc la FENETRE RECENTE — c'est elle qui dit l'etat de la
-    # boucle maintenant — et le cumul ne sort qu'en note, pour memoire.
-    FENETRE = 25
-
-    def depouiller(noms):
-        retenues, rejetees, causes = 0, 0, {}
-        for nom in noms:
-            try:
-                with io.open(os.path.join(depot, nom), encoding="utf-8") as fh:
-                    rapport = json.load(fh)
-            except (ValueError, OSError):
-                continue
-            if not isinstance(rapport, dict):
-                continue
-            retenues += len(rapport.get("mutations_proposees") or [])
-            for jetee in rapport.get("mutations_rejetees") or []:
-                rejetees += 1
-                if isinstance(jetee, dict):
-                    cause = str(jetee.get("erreur") or "sans cause")[:80]
-                    causes[cause] = causes.get(cause, 0) + 1
-        return retenues, rejetees, causes
-
-    # Les rapports sont horodates dans leur nom : le tri alphabetique est
-    # l'ordre chronologique, et on n'a pas a interroger le disque.
-    noms = sorted(n for n in os.listdir(depot)
-                  if n.endswith(".json") and n != "boucle.json")
-    if not noms:
-        return
-    recents = noms[-FENETRE:]
-    retenues, rejetees, causes = depouiller(recents)
-    total = retenues + rejetees
-    if not total:
-        return
-    part = 100.0 * rejetees / total
-    niveau = "grave" if part >= 25 else ("avertissement" if part >= 5
-                                         else "note")
-    r.dire(niveau, "activations",
-           "{} mutations sur {} jetees ({:.0f} %) sur les {} derniers "
-           "rapports — la boucle produit {} changement(s) applicable(s)".format(
-               rejetees, total, part, len(recents), retenues))
-    for cause, combien in sorted(causes.items(), key=lambda x: -x[1])[:3]:
-        r.dire(niveau, "activations",
-               "  {} fois : {}".format(combien, cause))
-
-    if len(noms) > len(recents):
-        cum_ret, cum_rej, _ = depouiller(noms)
-        cum_total = cum_ret + cum_rej
-        if cum_total:
-            r.dire("note", "activations",
-                   "pour memoire, depuis le premier rapport : {} sur {} "
-                   "jetees ({:.0f} %) en {} rapports — ce chiffre porte les "
-                   "pannes deja reparees et ne baissera jamais".format(
-                       cum_rej, cum_total, 100.0 * cum_rej / cum_total,
-                       len(noms)))

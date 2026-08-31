@@ -12,7 +12,7 @@ lignes rouges et le crible lexical (temps/regence.py), la clause, le registre
 de passation et le main (temps/regence_passation.py) — vit dans le container
 temps/, avec tout son POURQUOI en tete. Le chemin et la CLI de cette commande
 sont geles ; les reexports ci-dessous gardent les anciens noms `regence.*`
-vivants (boucle_activation et sieges passent deja par la porte temps/expose,
+vivants (sieges passe deja par la porte temps/expose,
 qui rend le meme module).
 """
 import sys

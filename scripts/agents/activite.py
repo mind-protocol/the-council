@@ -56,9 +56,8 @@ def _lire(chemin, defaut):
 
 
 def est_zone(qui):
-    """La convention du parloir : « mj », « mj-aurore »… sont des regies."""
-    q = qui or ""
-    return q == "mj" or q.startswith("mj-")
+    """L'unique compte de maitre du jeu."""
+    return (qui or "") == "mj"
 
 
 def _duree(secondes):

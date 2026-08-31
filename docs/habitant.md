@@ -1,4 +1,4 @@
-# Le modèle habitant — chambres, réveils, arbitres
+# Le modèle habitant — chambres, réveils, un seul MJ
 
 Conçu le 30e jour de la 8e lune 2026, en une soirée : deux essais vécus (les réveils
 de Gerardys), une mesure de concurrence, et sept inversions successives. Ce document
@@ -14,8 +14,8 @@ JSON à parser, un répertoire jetable (`mkdtemp`). Le nouveau est presque le mo
 Unix : **chaque être pensant a un domicile, des fichiers qu'il reprend, des canaux
 vers ceux qu'il connaît, et une session qui est sa mémoire.**
 
-- **Tout ce qui pense est un habitant** : les hommes, les MJ de zone, le MJ du
-  joueur. Même machinerie de réveil, même chambre, mêmes canaux. Le joueur est
+- **Tout ce qui pense est un habitant** : les hommes et l'unique MJ. Même
+  machinerie de réveil, même chambre, mêmes canaux. Le joueur est
   l'exception qui confirme : sa « chambre » est son navigateur, sa session c'est lui.
 - **La chronologie d'exécution est libre** (l'anachronisme) : on peut jouer la
   journée d'hier aujourd'hui, deux moments d'un même homme en parallèle. Ce n'est
@@ -33,7 +33,7 @@ vers ceux qu'il connaît, et une session qui est sa mémoire.**
 ## 2. La chambre — le domicile
 
 ```
-chambres/<id>/                     hommes ET mj (mj, mj-peyredragon, mj-portreal…)
+chambres/<id>/                     habitants humains et unique MJ (`mj`)
    claude.md                       sa manière, DE SA MAIN — seedée une fois depuis la
                                    fiche, plus jamais touchée par nous ; sa dérive est
                                    la personnalité qui évolue (pour un MJ : son style)
@@ -54,8 +54,7 @@ chambres/<id>/                     hommes ET mj (mj, mj-peyredragon, mj-portreal
 
 **La seule règle, et elle est de géographie : rien dans `chambres/` ne fait foi.**
 La chambre est de la mémoire et du caractère ; la vérité vit dans `etat/`, et tout
-ce qui doit devenir vrai passe par la porte (`tables`, versements, staging) — la
-garde `porte-etat` le tient déjà mécaniquement. Une chambre peut se tromper sur le
+ce qui doit devenir vrai s'écrit dans `etat/`. Une chambre peut se tromper sur le
 monde ; c'est même son droit.
 
 **Les deux JSON sont une invention d'habitant, promue au template.** Le mestre
@@ -110,7 +109,7 @@ nom par geste, l'homme et le joueur font les mêmes) :
 | geste | ce que c'est | résolution |
 |---|---|---|
 | **PARLER** — « Maître Hask, … » | une parole adressée | vers un arbitre : call ; vers un homme : billet au canal + réveil cast |
-| **AGIR** — « je pars sur mon cheval », « je déplace ce livre » | un geste qui engage le monde (absorbe l'ancien TENTER **et** FAIRE) | l'arbitre tranche en coulisse — issue incertaine : il décide ; mutation mécanique : proposition → staging |
+| **AGIR** — « je pars sur mon cheval », « je déplace ce livre » | un geste qui engage le monde (absorbe l'ancien TENTER **et** FAIRE) | l'arbitre tranche l'incertain ; l'homme écrit directement ce qu'il sait avoir produit |
 | **PENSER** — « et si la roue… » | **un réveil de soi-même** : la pensée est un cast à soi — sa session vit ce moment intérieur, le vécu et la conclusion se déposent chez lui | aucun arbitre : ça reste en chambre (prévoir librement) |
 | **QUESTION** — « l'histoire de ceci ? » | demander ce que le monde dit | l'arbitre répond **depuis l'état seulement** — Règle Zéro intacte |
 | **INTERVENTION** — la main par-dessus | hors fiction : on répare, on ne joue pas | réservé au siège de régie (joueur/dev), jamais un geste d'homme dépêché |
@@ -123,7 +122,7 @@ ignorée sous la pression de l'élan).
 
 > **Tout le monde peut appeler tout le monde, n'importe quand, en parallèle.**
 > **Les sessions sont de la mémoire ; la mémoire supporte le désordre** — c'est l'anachronisme.
-> **La vérité n'a qu'un point de sérialisation : l'état** — empreintes, staging, la porte, l'arbitrage.
+> **La vérité vit dans l'état** — les habitants y écrivent directement.
 > **Chaque réveil porte son moment** — la date, le creux, « qui te réveille » : une étiquette, jamais un verrou.
 
 Mesuré (trois réveils-jouets) : deux `--resume` concurrents sur la même session
@@ -145,38 +144,27 @@ en désordre — ce que l'anachronisme accepte déjà. Personne n'est sérialis�
 | écrire un billet à un absent | cast (et l'écriture RÉVEILLE le destinataire — le geste d'écrire est le réveilleur, aucun démon) |
 | homme → MJ : TENTER / DEMANDER | **call** — le verdict revient sur stdout, dans le fil de sa pensée |
 | MJ → homme : une réplique doit sortir (Règle Zéro) | **call** |
-| MJ ↔ MJ avec besoin de réponse (passation…) | **call** |
 
 Filet des cycles d'appels : les arêtes sync sont courtes et dirigées ; le timeout
 du `-p` suffit.
 
 ### Les rôles
 
-- **Un seul rôle MJ.** MJ = l'arbitre d'une zone, session continue (`--resume` —
-  il tient ses fils, son réveil ne porte que « qui te réveille, et voici son mot »).
-  **Zone = une ville** pour le moment (`mj-peyredragon`, `mj-portreal`…) — en
-  anachronisme, un homme n'est pas « dans une salle », la zone-salle n'a pas de
-  référent. La zone du joueur (`mj`) porte trois choses en plus : **le spectacle**
-  (le flux), **la montre** (`append_flux` seul), **l'arbitrage final** (staging,
-  canon). Quand la zone est la scène, le MJ du joueur absorbe le rôle : un seul
-  arbitre par pièce.
+- **Un seul MJ, nommé `mj`.** Sa session est continue (`--resume`) : il tient
+  ses fils et son réveil ne porte que « qui te réveille, et voici son mot ».
+  Le lieu d'un homme reste une donnée de fiction ; il ne fabrique ni autorité,
+  ni session, ni chambre supplémentaire. Le MJ tient le spectacle et la montre.
 - **Le guetteur meurt.** Le serveur (seul processus permanent) lance
-  `claude -p --resume <mj>` sur le POST du joueur — le MJ du joueur est un habitant
+  `claude -p --resume <mj>` sur le POST du joueur — l'unique MJ est un habitant
   comme les autres. Le battement hors-acte devient un réveil de plus (élection ou
   cron). La supervision devient un siège : `claude --resume <mj>` en interactif
   quand le dev veut piloter, rendu en sortant.
 - **L'élection (la boucle) reste le rattrapeur priorisé** : l'énergie du tissu élit
   qui vivre ; un message en attente pèse sur son destinataire. Le tick ne réveille
   personne : il propose.
-- **Le MJ est un travailleur, pas seulement un guichet** (réalisation du 31.8) :
-  il tient SES affaires d'arbitre — le staging à dépouiller, les relances dues
-  (`en-souffrance.json` de sa chambre, déjà en usage), les inventions à graver,
-  les annales en retard — et **la boucle l'élit comme tout le monde** : son
-  énergie dans le tissu = ce qui pèse sur sa table. Un réveil-dispatch de MJ
-  n'est pas une journée d'homme : son brief est son établi (« N propositions au
-  staging, M fils à relancer »), et sa journée consiste à trancher, graver,
-  relancer. Même chambre, mêmes fils, mêmes journées de travail — la symétrie
-  habitant est complète.
+- **Le MJ n'est pas élu par la boucle des acteurs.** Il se réveille sur un POST
+  joueur ou sur un verbe qui exige son verdict. La veille de focus dépêche les
+  hommes directement ; elle ne crée aucun narrateur géographique intermédiaire.
 - **`dev` est un nom réservé** (31.8) : le développeur est un habitant adressable
   — sa chambre est `chambres/dev/`, on lui écrit un billet (`--a dev`), on lui
   assigne des actions (« Qui : dev »). Il n'est jamais dépêché (pas de fiche,
@@ -199,7 +187,7 @@ mémoire de l'homme. Le speculatif capitalise ; seule la consolidation attend so
 | leçon | mesure |
 |---|---|
 | Le pas-de-tir neutre gagne (variante B) | naître dans le dépôt coûte ~+50 k jetons/tour (le manuel racine remonte par la découverte) ET expose aux hooks du projet |
-| **L'isolation des hooks : `--restricted`** (mesuré le 30.8) | `--restricted --tools Bash,Read,Write…` ignore les settings user ET projet (zéro hook parasite au réveil-jouet, Bash vivant) — c'est le mode de lancement des habitants ; conséquence : aucun hook ne bat jamais chez un habitant, le vécu se dépose par le lanceur (`trace.deposer`), pas par hook Stop |
+| La sandbox des calls n'a pas fait ses preuves (tranché le 31.8) | Le mode `--restricted` a été retiré : les habitants sont lancés avec accès au dépôt. Le vécu reste déposé par le lanceur (`trace.deposer`), car cette mémoire ne doit pas dépendre d'un hook de fournisseur. |
 | Le billet-fichier ne suffit pas | 2/2 ignoré sous la pression de l'élan → billet en percept dans le brief |
 | Le besoin homme→MJ est réel | 3/3 : premier geste = parloir vers l'arbitre |
 | Le rapport JSON est un artefact RPC | il disparaît au profit des écrits de chambre + versements + une phrase |
@@ -210,27 +198,22 @@ mémoire de l'homme. Le speculatif capitalise ; seule la consolidation attend so
 Chaque étape est commitable et se vérifie par un réveil-banc. Le code vit dans le
 container `agents/` ; `chambres/` est de la donnée.
 
-1. **`agents/chambre.py` + `agents/prompts/mj-zone.md`** — le domicile (chemin,
-   ouvrir — claude.md seedé une fois —, canal canonique, non-lus) et le manuel de
-   l'arbitre (électeur-greffier, jamais auteur, réponses depuis l'état). Rien ne
-   casse. *(cast : délégable)*
-2. **Le lancement** (`depeche/mission.py`) — pas-de-tir neutre conservé, chambre
-   montée `--add-dir`, outils +Write/Edit, **neutralisation des hooks hérités**
-   (mesurer `--setting-sources`), spawn détaché pour les casts. Le hook-oreille du
+1. **`agents/chambre.py` + `agents/mj.py`** — le domicile commun et le réveil
+   de l'unique MJ, électeur-greffier, jamais auteur de la parole d'un PNJ.
+2. **Le lancement** (`depeche/mission.py`) — chambre et dépôt accessibles,
+   outils +Write/Edit, accès direct sans sandbox, spawn détaché pour les casts.
+   Le hook-oreille du
    parloir, qui vivait en sursis par `--settings`, est mort le 31.8 : les canaux
    des chambres ont pris la relève — plus personne n'entend en cours de session.
 3. **Le brief** (`depeche/brief.py`) — section chambre au chemin absolu, billets en
    percept, claude.md perso joint au système, le gabarit JSON retiré. → **réveil-banc
    n°3** : le billet-percept est-il répondu ?
-4. **Les verbes** (`metier.md` + `parloir.py` + le MJ de zone en session continue) —
-   TENTER/FAIRE/DEMANDER en call (stdout), l'adresse `~mj-<ville>`, le narrateur de
-   la boucle devient officiellement MJ de zone. → **réveil-banc n°4** : les verbes
-   canalisent-ils ce que le parloir absorbait ? *(les manuels : ta voix — relecture
-   avant commit)*
+4. **Les verbes** (`metier.md` + `parloir.py` + `mj.py`) —
+   TENTER/FAIRE/DEMANDER en call vers la seule adresse `mj`.
 5. **Écrire = réveiller** — `--dire` spawn le destinataire détaché ; le serveur
    lance le MJ sur POST ; le guetteur s'éteint. → **réveil-banc n°5** : un ping-pong
    homme↔homme réel.
-6. **Le vécu** (`agents/trace.py`, appelé par le lanceur — pas de hook : `--restricted` les ignore tous) — transcript + dépôt dans
+6. **Le vécu** (`agents/trace.py`, appelé par le lanceur, indépendamment des hooks) — transcript + dépôt dans
    `fil/` ; `vecu.py --md` comme vue lisible. *(délégable)*
 7. **Les migrations douces** — les fils `~mj` du parloir vers `relations/`, la
    dépêche manuelle branchée sur `chambre.ouvrir()` au premier réveil. *(délégable)*

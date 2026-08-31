@@ -3,7 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 const { RACINE } = require("../http");
-const { chargeActeurs, criticite, detailActivation, filMjActif, prevoirActivations, resumeActivations, sante } = require("../agents").activations; // LA PORTE serveur des agents
+const { criticite, detailActivation, filMjActif, resumeActivations, sante } = require("../agents").activations; // LA PORTE serveur des agents
 const { chercherDansFlux, extraitDuFlux, filPersonnage, regie } = require("../agents").regie; // LA PORTE serveur des agents
 const { vueChambres, chambre, rapport } = require("../agents").chambres; // LA PORTE serveur des agents
 const { portraitDefaut, portraitFrais } = require("../peinture").portraits; // le composant de portrait du jeu
@@ -91,10 +91,6 @@ function traiter(req, res, url) {
       try { return envoyer(res, 200, JSON.stringify(resumeActivations())); }
       catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
     }
-    if (url === "/admin/activations/previsions") {
-      try { return envoyer(res, 200, JSON.stringify(prevoirActivations())); }
-      catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
-    }
     if (url === "/admin/sante") {
       try { return envoyer(res, 200, JSON.stringify(sante())); }
       catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
@@ -108,10 +104,6 @@ function traiter(req, res, url) {
     // plan que les livres eux-memes affichent.
     if (url === "/criticite") {
       try { return envoyer(res, 200, JSON.stringify(criticite(monPersonnage(req, url)))); }
-      catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
-    }
-    if (url === "/admin/charge") {
-      try { return envoyer(res, 200, JSON.stringify(chargeActeurs())); }
       catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
     }
     if (url === "/admin/activations/mj-actif") {

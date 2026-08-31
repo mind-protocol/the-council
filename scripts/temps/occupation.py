@@ -7,9 +7,9 @@
 POURQUOI CE FICHIER EXISTE. `etat/joueurs.json` portait un champ `occupe`
 tenu a la main. Personne ne le rebasculait : les quatre sieges sont restes a
 `true` pendant que deux d'entre eux n'etaient plus joues. Or `occupe` a un
-effet dur — `boucle_activation.py` EXCLUT les sieges occupes de la file
-d'activation. Deux sieges se sont donc retrouves ni joues par un humain, ni
-actives par la machine : ils dormaient. Et rien ne pouvait le voir, parce que
+effet dur : les outils de siège distinguent les personnages tenus par un
+humain des sièges vacants. Deux sièges se sont donc retrouvés associés à une
+présence qui n'existait plus. Et rien ne pouvait le voir, parce que
 le seul invariant tenu par `tick.py --verifier` etait « occupe -> pas de tete »
 — un etat parfaitement coherent avec lui-meme, et faux.
 
@@ -22,14 +22,14 @@ RECEMMENT. Ce n'est pas une declaration, c'est une mesure.
 Rien d'autre. Le champ `occupe` de `etat/joueurs.json` reste ecrit, mais
 seulement comme CACHE de ce calcul, pour que les lecteurs existants (le
 serveur, `depecher.py`, `append_flux.py`, `parvenir.py`…) n'aient pas a
-apprendre a mesurer. Il se recalcule au debut de la boucle d'activation et par
+apprendre a mesurer. Il se recalcule explicitement par
 `sieges.py`.
 
 QUELS FICHIERS DE VEILLE COMPTENT — la regle, et sa raison.
 
 `etat/veille/` melange des noms de session de toutes provenances :
-`aurore-inchauspe.json` (le siege), `mj-aurore.json` (sa regie),
-`mj-nicolas.json`, `mj.json` (le MJ principal), plus des noms courts abandonnes
+`aurore-inchauspe.json` (le siege), `mj.json` (l'unique MJ), d'anciens noms
+de regies `mj-*`, plus des noms courts abandonnes
 (`aurore.json`, `marlo.json`) et des bricoles (`fix-verif.json`,
 `mj-monde.json`). Un nom de session est libre : `veille.py <ce-que-je-veux>`
 cree le fichier.
@@ -42,13 +42,12 @@ Pourquoi celle-la :
 
   * Le signal voulu est « la session de CE joueur respire ». `personnage_id`
     est le seul nom dont on sache avec certitude a quel siege il appartient.
-  * `mj.json` est ambigu PAR CONSTRUCTION : le MJ principal tient le monde et
-    plusieurs PNJ, il ne designe aucun siege. Le compter rendrait un siege
+  * `mj.json` ne designe aucun siege : l'unique MJ tient le monde pour tous.
+    Le compter rendrait un siege
     occupe parce que quelqu'un d'autre travaille — exactement le mensonge
     qu'on repare.
-  * `mj-<nom>` designe bien une regie de siege, mais par une convention que
-    rien n'applique et que rien ne verifie. On ne devine pas : on laisse le
-    siege le DECLARER. C'est une ligne dans son entree, et elle se relit.
+  * les anciens noms `mj-*` sont des traces de regies retirees et ne comptent
+    jamais implicitement.
   * Les noms courts (`aurore.json`, `marlo.json`) sont des veilles mortes.
     Les prendre au plus recent ne coute rien aujourd'hui ; le jour ou une
     session les reveille, ils ressusciteraient une mesure qui ne veut plus

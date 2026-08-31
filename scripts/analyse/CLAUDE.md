@@ -12,15 +12,6 @@ dispositif, pas au tour de jeu.
 | `croisement.py` | où et quand deux camps se frôlent, et de quelle taille |
 | `verif_plan.js` | les plans de château, mesurés : deux noms qui se marchent dessus |
 | `exporter_aurore.py` | tout ce qui touche un personnage, en `.txt` dans `export/` |
-| `scorer_activation_hightower.py` | la cadence d'activation d'une maison |
-| `chercher_activation_hightower.py` | cherche les paramètres, en lecture seule |
-| `simuler_reveil_maisons.py` | combien de tours pour réveiller les grandes maisons |
-
-**Un banc rejoue le vrai code, il ne le réécrit pas.** `simuler_reveil_maisons.py`
-rejoue EXACTEMENT l'élection de `boucle_activation.cycle` — même diffusion
-d'importance, même énergie, mêmes polarités — mais n'appelle aucun modèle et
-n'écrit rien. Un banc qui réimplémente la mécanique mesure sa copie, pas le jeu.
-
 **Un compteur d'occurrences n'est pas une mesure.** `mesurer.py` a été taillé de
 six chiffres à un seul : les cinq autres comptaient des lignes sans savoir ce
 qu'elles valaient. Avant d'ajouter un chiffre ici, dire ce qu'il ferait changer.

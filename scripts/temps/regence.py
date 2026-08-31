@@ -314,15 +314,6 @@ def _passages(rapport):
                              str(activite["blocage"])))
     if activation.get("suite"):
         passages.append(("la suite qu'il annonce", str(activation["suite"])))
-    for mutation in (rapport or {}).get("mutations_proposees") or []:
-        if not isinstance(mutation, dict):
-            continue
-        valeur = mutation.get("valeur")
-        if not isinstance(valeur, str):
-            valeur = json.dumps(valeur, ensure_ascii=False)
-        passages.append(("mutation %s/%s sur %s"
-                         % (mutation.get("table"), mutation.get("operation"),
-                            mutation.get("cible")), valeur))
     return passages
 
 

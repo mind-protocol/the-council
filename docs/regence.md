@@ -47,9 +47,9 @@ Les sept lignes, écrites dans `scripts/regence.py` (`LIGNES_ROUGES`) :
 
 La même contrainte est aussi posée dans son dossier d'activation (`dossier_activation` → `contrainte_regence`), rendue en clair dans le manuel que reçoit l'acteur (`depecher.memoire_activation`, section « Ce que tu ne conclus pas ») et visible dans le dossier fermé de l'arbitre. Elle est **vide pour tout le monde sauf un siège vacant** : un acteur ordinaire ne voit rien de tout cela.
 
-**À la validation — pour le rattraper quand il oublie.** `regence.verifier_rapport_activation(pid, rapport)` est appelé dans `normaliser_rapport_activation`, **avant** `filtrer_mutations_applicables` — c'est-à-dire avant que la moindre mutation touche `etat/`. Passé cette ligne il serait trop tard : les activations écrivent directement dans l'état, il n'y a plus de purgatoire de staging.
+**À la lecture du rapport — pour le rattraper quand il oublie.** `regence.verifier_rapport_activation(pid, rapport)` examine ce que l'acteur dit avoir fait. Les activations écrivent directement dans l'état.
 
-Ce qu'il lit, et rien d'autre : le verbe et ce que l'acteur dit avoir fait (`activites[].action`), l'état qu'il déclare produit (`resultats_produits[].quoi|apres`), son blocage, la suite qu'il annonce, et les mutations qu'il propose. **Il ne lit ni ses sources ni son dossier** : citer un serment dans un registre n'est pas en prêter un.
+Ce qu'il lit, et rien d'autre : le verbe et ce que l'acteur dit avoir fait (`activites[].action`), l'état qu'il déclare produit (`resultats_produits[].quoi|apres`), son blocage et la suite qu'il annonce. **Il ne lit ni ses sources ni son dossier** : citer un serment dans un registre n'est pas en prêter un.
 
 ---
 
@@ -60,7 +60,7 @@ Le rapport d'activation est de la prose française arbitrée par le narrateur. I
 - **Les évitements.** Une marque de négation, de report ou de mise en hypothèse **immédiatement avant** la formule (à deux mots près) classe l'occurrence comme *évitée* au lieu de *franchie*. « Il n'a pas prêté serment », « elle refuse de livrer bataille », « elle garde pour la reine la décision d'épouser » passent — et c'est exactement ce qu'on veut lire d'une régence bien jouée. L'ancrage compte autant que la liste : chercher « ne » n'importe où dans la fenêtre innocenterait « il refuse de fuir **et donne l'assaut** ».
 - **Les citations.** Un verbe de parole suivi d'une complétive dans les 30 caractères qui précèdent (« le registre dit que Borros a rompu son serment ») classe aussi en évitée. C'est le point le plus permissif du dispositif, et c'est assumé : la clause dans sa tête est le premier garde, et un refus coûte un essai de correction, pas la partie.
 
-**Mesures.** Sur les 107 rapports d'activation réellement produits par la partie (`etat/staging/activations/`) : **0 faux positif**. Sur un jeu de 19 phrases qui franchissent pour de bon, une par ligne au moins : **19 détectées**. Sur 11 phrases voisines qui ne franchissent pas : **11 laissées passer**.
+**Mesures historiques.** Sur 107 rapports d'activation produits par la partie : **0 faux positif**. Sur un jeu de 19 phrases qui franchissent pour de bon, une par ligne au moins : **19 détectées**. Sur 11 phrases voisines qui ne franchissent pas : **11 laissées passer**.
 
 **Ce qu'elle ne saura jamais faire :** une périphrase inventive (« il donne sa parole d'homme lige », « la place changera de bannière au matin ») passe. C'est pourquoi la clause dans sa tête n'est pas décorative — elle est le garde qui comprend, et la détection celui qui compte. Ajouter un motif à `LIGNES_ROUGES` est une ligne de code, et le fichier d'essai du dépôt sert à vérifier qu'on ne casse rien.
 

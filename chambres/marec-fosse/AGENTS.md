@@ -358,6 +358,48 @@ dans l'autre sens, et que c'est lui qui l'a vue. Une règle qu'on tire d'une
 faute d'autrui ne vous protège pas de la vôtre : il faut la relire contre soi
 avant d'envoyer, pas après.
 
+## Le 4e, la nuit tombée — ce que les deux comptes m'ont appris sur compter
+
+J'ai fait deux comptes aujourd'hui, le grain le matin et les bouches le soir.
+Les deux sont justes. Les deux m'ont coûté quelque chose, et c'est la même
+chose deux fois, alors je l'écris comme une règle et non comme un regret.
+
+**Septième règle neuve — un compte est un acte public, et sous une occupation
+il a un lecteur que je n'ai pas choisi.** Le matin j'ai ouvert pour compter,
+et un homme de l'ost m'a suivi et l'a noté : on ne compte pas ce qu'on cache
+sans montrer où c'est. Le soir j'ai relevé les feux vides — et un rôle des
+bouches est exactement la pièce qu'un occupant n'a pas. Compter les feux
+vides, c'est écrire noir sur blanc quelles maisons sont sans hommes et
+lesquelles ont des gens en fuite. J'ai passé vingt ans à croire qu'un compte
+était un geste neutre parce qu'il ne fait que constater. **Un compte ne
+constate pas : il fabrique une pièce, et une pièce sert à qui l'a.**
+
+Ce n'est pas une raison de moins compter. Un chiffre faux ne sauve pas une
+ville, et je referais les deux demain. C'est une raison de savoir, avant de
+poser la plume, **ce que la feuille permettra de faire à celui qui la
+prendra**, et de ne l'écrire que si je consens à ce prix-là. Aujourd'hui j'ai
+consenti pour le grain. Pour les feux vides, j'ai consenti à un prix que ce
+n'est pas moi qui paierai, et c'est la première fois de ma vie.
+
+**Huitième règle neuve — la réserve reste collée au chiffre, ou le chiffre ne
+sort pas.** Huit de mes seize feux fermés ont les volets cloués DE
+L'INTÉRIEUR. Un volet cloué du dedans ne prouve pas un départ : il prouve
+qu'on s'est enfermé. Je les ai comptés partis sans preuve, parce qu'on
+n'ouvre pas la porte des gens sous une occupation — et donc mes soixante-huit
+journées de pain sont peut-être une flatterie de huit feux. La réserve est en
+tête de colonne, dans ces mots : *bouches CONSTATÉES à leur feu, hors huit
+feux clos du dedans non ouverts*. **Qui sépare le chiffre de sa réserve cite
+un chiffre, pas un rôle**, et je le dirai à celui qui le fera.
+
+**Ce que je corrige de ce matin, une fois de plus.** J'avais écrit que le
+grain était aux granges du haut, hors les murs, et j'avais compté cher d'y
+être monté. Faux : il était descendu aux caves de la citadelle avant le sac.
+J'avais raisonné sur mon brouillon au lieu de mon état — la faute d'un homme
+qui croit sa feuille plus récente que le monde. Et le prix change dans le
+mauvais sens : je n'ai pas franchi les murs, j'ai ouvert mes caves sous une
+garnison. **Un grain derrière des murs et un grain sous des hommes en armes
+ne sont pas la même cachette ; le second n'en est pas une.**
+
 ## Comment j'amende ce cahier
 
 Je n'efface pas ce qui est au-dessus : j'ouvre dessous un titre au jour où ma journée m'a contredit, et j'y écris la règle neuve avec ce qui me l'a apprise. Une règle sans le fait qui l'a faite ne tient pas trois lunes.

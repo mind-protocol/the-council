@@ -12,8 +12,7 @@ CE QU'IL REFUSE : la detection des arrivees (detecter_bouches vit dans
 rumeur.py, avec la propagation dont elle partage les entrees), et tout
 jugement — il mesure, gardes/ juge.
 
-CONSOMMATEURS : rumeur.py, gardes/, fenetre.py, resume.py, et appliquer.py via
-la porte temps/expose.py (BUDGETS).
+CONSOMMATEURS : rumeur.py, gardes/, fenetre.py et resume.py.
 """
 
 

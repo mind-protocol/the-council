@@ -4,12 +4,11 @@
 LA SEULE REGLE, ET ELLE EST DE GEOGRAPHIE : RIEN DANS chambres/ NE FAIT FOI.
 La chambre est de la memoire et du caractere ; la verite vit dans etat/, et
 tout ce qui doit devenir vrai passe par la porte (tables, versements,
-staging). Une chambre peut se tromper sur le monde — c'est meme son droit.
+etat). Une chambre peut se tromper sur le monde — c'est meme son droit.
 
-Tout ce qui pense a une chambre : les hommes, les MJ de zone (mj,
-mj-peyredragon…), le MJ du joueur. Memes fonctions pour tous, aucune branche
-speciale — un MJ sans fiche dans personnages.json recoit simplement un cahier
-plus nu.
+Tout ce qui pense a une chambre : les hommes et l'unique MJ. Memes fonctions
+pour tous ; un MJ sans fiche dans personnages.json recoit simplement un
+cahier plus nu.
 
     chambres/<id>/
        claude.md            sa maniere, DE SA MAIN — seedee UNE FOIS depuis la
@@ -85,14 +84,8 @@ def chemin(qui):
 
 
 def _arbitre(qui):
-    """Son arbitre de zone, ou « mj ». Import TARDIF et enveloppe : `zone`
-    relit la porte des agents, et une chambre doit pouvoir s'ouvrir meme si
-    la topologie est muette."""
-    try:
-        from agents import zone
-        return zone.arbitre_de(qui) or "mj"
-    except Exception:
-        return "mj"
+    """L'unique MJ ; la geographie ne fabrique plus d'arbitre."""
+    return "mj"
 
 
 def _fiche(qui):

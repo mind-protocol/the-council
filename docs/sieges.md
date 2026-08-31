@@ -113,7 +113,7 @@ Ce qu'`--ouvrir` fait, dans l'ordre :
    - pas de portrait, pas de voix, pas de corps lié, pas de routine
    - aucun nom dans `pnj[]` → personne ne lui obéit
 
-`--fermer <id>` fait le chemin inverse et **n'écrit rien dans `etat/`** : il dépose dans `etat/staging/` un **brouillon de tête** — objectifs `en-cours` → étapes horlogées, `vues`/`jetons` récents → croyances, événements résolus dont aucune diffusion ne l'a touché → `ignore`, derniers résumés de `journal.scenes` → `intention`, `relations` vers le joueur principal → `attitude_joueur`. Le MJ le relit, l'arbitre, l'applique. Un seul écrivain, comme partout ailleurs.
+`--fermer <id>` fait le chemin inverse : il prépare la tête — objectifs `en-cours` → étapes horlogées, `vues`/`jetons` récents → croyances, événements résolus dont aucune diffusion ne l'a touché → `ignore`, derniers résumés de `journal.scenes` → `intention`, `relations` vers le joueur principal → `attitude_joueur` — puis l'écrit directement dans `etat/`.
 
 C'est le geste le plus dangereux du système — quitter Rhaenyra sans lui écrire de tête la met en sommeil pour trois lunes — et c'est aujourd'hui celui qui est le moins outillé.
 
@@ -164,7 +164,7 @@ Peu de chose, et c'est bon signe. La section « Les sièges — changer de perso
 |---|---|---|
 | 1 | `--ouvrir` : roster, dossier, inbox, veille, horloge, gabarits, **liste des trous** | ouvrir un siège cesse d'être un rite ; on voit ce qui manque avant de s'asseoir |
 | 2 | La dérivation croyances → `vues`/`jetons` et plan → `objectifs` | le joueur s'assoit devant un monde peuplé au lieu d'une carte blanche |
-| 3 | `--fermer` : brouillon de tête en staging | quitter un siège cesse d'être le geste qui peut casser la partie |
+| 3 | `--fermer` : écriture de la tête | quitter un siège cesse d'être le geste qui peut casser la partie |
 | 4 | Les deux gabarits `agents/prompts/metier.md` / `charge.md` + le test du siège mort | on arrête d'ouvrir des fauteuils qui ne meuvent rien |
 | 5 | Gardes `tick.py --verifier` : PNJ à deux sièges, siège occupé sans `pnj`, dossier incomplet | la faute se voit au tick au lieu de se voir en séance |
 | 6 | Un siège ouvert pour de bon, en cobaye — `gerardys` ou `robert-quince`, tous deux `scene` | la preuve par l'usage : si ça prend plus d'une demi-heure, le §5 est faux |

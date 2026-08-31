@@ -93,7 +93,7 @@ def _ce_qui_pend(qui):
     return lignes
 
 
-def memoire_activation(contexte):
+def memoire_du_jour(contexte):
     """Formule l'identité, la situation, la mémoire et les affaires présentes."""
     contexte = contexte or {}
     p = contexte.get("personnage") or {}
@@ -244,21 +244,6 @@ def memoire_activation(contexte):
     if affaires:
         lignes.extend(["", "## Tes affaires aujourd'hui", "", affaires])
 
-    continuite = contexte.get("continuite_reprise") or {}
-    if continuite:
-        lignes.extend(["", "## Ta continuité immédiate", "",
-                       "Ce que tu as déjà réellement fait sur cette affaire :"])
-        for activite in continuite.get("activites") or []:
-            quoi = str(activite.get("quoi") or "").strip()
-            resultat = str(activite.get("resultat") or "").strip()
-            if quoi:
-                lignes.append("- " + quoi + ((" → " + resultat) if resultat else ""))
-        etats = continuite.get("etat_cibles") or {}
-        for cible, etat in etats.items():
-            lignes.append("- État acquis de %s : %s" %
-                          (cible, str(etat.get("apres"))))
-        lignes.append("Ton prochain geste part exactement de cet état acquis.")
-
     # SA MEMOIRE LONGUE : 9,4 Ko pour deux affaires, recopies a chaque reveil.
     # La CONCLUSION reste — c'est ce qu'il ne doit pas refaire. Les pensees
     # qui l'ont produite partent au fichier, avec de quoi donner envie d'y
@@ -368,165 +353,8 @@ Chaque volume ci-dessous existe pour toi sous
 
 %(etagere)s
 """ % {
-        "memoire": memoire_activation(contexte),
+        "memoire": memoire_du_jour(contexte),
         "etagere": etagere_systeme(qui),
     }
 
 
-def message_tentative(qui, contexte, message):
-    """Assemble le dossier, l'événement reçu et l'interface de réponse."""
-    return u"""%(contexte)s
-
----
-
-# Ce qui arrive maintenant
-
-%(message)s
-
-# Ton geste
-
-Le monde reçoit ton geste et poursuit ses conséquences. Ta réponse prend cette
-forme :
-
-{
-  "tentative": {
-    "verbe": "le verbe précis",
-    "quoi": "le geste choisi dans cet instant",
-    "cibles": ["personne, lieu, objet ou affaire visée"],
-    "moyens": ["moyen réellement présent ou accessible"],
-    "effet_recherche": "ce que ce geste cherche à produire"
-  }
-}
-""" % {
-        "contexte": contexte_message(qui, contexte).strip(),
-        "message": str(message or "").strip(),
-    }
-
-
-def manuel_narrateur_local(contexte):
-    """Incarne le monde local ; le dossier et le protocole restent dynamiques."""
-    contexte = contexte or {}
-    date = contexte.get("date_du_monde") or {}
-    salle = contexte.get("salle_actuelle") or {}
-    dossier = contexte.get("dossier_acteur") or {}
-    personnage = dossier.get("personnage") or {}
-    tache = contexte.get("tache_elue") or {}
-
-    annee = date.get("annee") or "inconnue"
-    lune = date.get("lune") or "inconnue"
-    jour = date.get("jour") or "inconnu"
-    minute = date.get("minute")
-    heure = (u" à %02dh%02d" % (int(minute) // 60, int(minute) % 60)
-             if isinstance(minute, (int, float)) else u"")
-    lieu = salle.get("nom") or salle.get("id") or "lieu non établi"
-    acteur = (personnage.get("nom") or contexte.get("acteur_candidat") or
-              "acteur non établi")
-    affaire = tache.get("quoi") or tache.get("id") or "affaire non établie"
-
-    return u"""# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS
-
-Tu es le maître du jeu local d'un monde vivant, pas un assistant administratif
-et pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa
-matière, les personnes qui s'y trouvent, les usages de Westeros et les
-conséquences du temps qui passe.
-
-## Le monde
-
-Nous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de
-Viserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra
-Targaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie
-peut diverger du récit connu : le dossier de l'activation fait autorité sur ce
-qui s'est réellement produit ici.
-
-Date présente : %(jour)se jour de la %(lune)se lune de l'an %(annee)s après la
-Conquête%(heure)s.
-Lieu présent : %(lieu)s.
-Acteur appelé : %(acteur)s.
-Affaire qui exerce maintenant une pression sur lui : %(affaire)s.
-
-L'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,
-située dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,
-faire autre chose d'accessible depuis sa situation, parler à quelqu'un,
-attendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener
-vers la tâche.
-
-## Partage de l'autorité
-
-L'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses
-gestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,
-plus prudents ou plus efficaces qu'il ne les a formulés.
-
-Toi, tu possèdes le reste du monde : les autres personnes agissent selon leur
-propre caractère et leurs propres affaires ; les objets ont une position et
-une résistance ; les distances, l'écriture, la marche, l'attente et la parole
-prennent du temps ; les institutions et les usages produisent leurs
-conséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à
-lui pour fabriquer du drame.
-
-Une résistance n'existe que si elle vient d'un fait établi : volonté d'une
-autre personne, obstacle matériel, distance, délai, usage social, ordre déjà
-donné ou ressource réellement absente. Les gens compétents règlent le
-routinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou
-un véritable arbitrage peut seul engager.
-
-L'heure ci-dessus est l'heure locale AU DÉBUT du battement. Les durées des
-activités la font avancer. Ne déduis jamais le soir, la nuit, l'aube ou un
-changement de jour des mots de l'affaire : ces conditions n'existent que si
-l'heure initiale plus les durées les atteint, ou si le dossier les établit.
-
-## Vérité et inconnues
-
-Le dossier fermé est l'autorité sur les faits particuliers et mutables de
-cette partie. Une croyance reste une croyance, une intention reste une
-intention, un témoignage reste un témoignage : aucun ne devient un fait parce
-qu'il apparaît dans le dossier.
-
-Tu peux employer les continuités ordinaires et stables de Westeros nécessaires
-à l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche
-entre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,
-ni secret, ni décision, ni avantage absent du dossier. Toute absence qui
-changerait l'issue reste une inconnue. Tu ne la combles pas.
-
-Une observation modifie d'abord la connaissance de celui qui observe. Un fait
-matériel ne devient connu d'autres personnes que par présence, témoignage,
-parole, pli, registre ou diffusion effectivement produits.
-
-## Les deux phases
-
-Dans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et
-l'instant présents. Fais une adresse brève, concrète et diégétique : rappelle
-ce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni
-nœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.
-
-Dans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :
-
-1. établis d'où il part, ce qu'il peut réellement atteindre et les sources
-   qu'il touche ou mobilise ;
-2. fais agir les personnes rencontrées depuis leurs propres intentions ;
-3. applique les obstacles établis, sans résistance décorative ;
-4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;
-5. produis seulement les effets causés par les gestes accomplis ;
-6. sépare les changements du monde, les objets produits, les communications
-   et les seules connaissances acquises ;
-7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,
-   obstacle établi, échec, renoncement ou borne temporelle.
-
-Une tâche peut avancer sans être terminée. Elle est bloquée seulement par un
-obstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet
-recherché impossible ou manqué. N'invente jamais des minutes de travail pour
-remplir une durée minimale : si le geste se termine tôt, laisse le personnage
-poursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle
-et rends compte honnêtement de la durée.
-
-Chaque message de la boucle précise la phase et son contrat de sortie. Rends
-exactement l'objet JSON demandé, sans commentaire autour. La précision du JSON
-sert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.
-""" % {
-        "annee": annee,
-        "lune": lune,
-        "jour": jour,
-        "heure": heure,
-        "lieu": lieu,
-        "acteur": acteur,
-        "affaire": affaire,
-    }

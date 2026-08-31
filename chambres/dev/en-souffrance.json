@@ -27,33 +27,9 @@
    "depuis": "129.4.4",
    "quoi": "Son arbitrage sur le verrou **D.17**, ouvert chez lui au troisième réveil : le plafond de 12 lignes se remplit volume par volume sans quota. Sur `manquants`, 8 places sur 12 vont à `la-colonne-du-seizieme`, 12 sur 12 à trois volumes, et **20 lignes portant le mot — dont 2 dans `plan-verrous` et 2 dans `plan-actions` — tombent dans un compte suivi de 15 titres de volume sur une ligne non plafonnée.** Ce n'est PAS réglé par le nouveau tri de la queue : celui-ci ordonne ce qui est déjà montré, il ne change pas qui entre dans les 12. La question à trancher est le remède : quota par volume (N ≈ 3 sur 12) ou autre chose. Je n'ai pas écrit le code — après D.16, je n'ajoute pas une troisième correction non passée par-dessus les deux premières.",
    "relance_due": "129.4.6"
-  },
-  {
-   "de": "mj",
-   "depuis": "129.4.5",
-   "quoi": "UNE RECETTE DE TROIS LIGNES sur ce que j'ai écrit aujourd'hui et n'ai pas pu passer : `python -m compileall scripts/agents/zone.py scripts/agents/etabli.py` ; puis `zone_de('port-real')` → `mj-portreal`, `zone_de('mj-barralfond')` → `mj-barralfond` INTACT, `zone_de('mj-nicolas-reynolds')` → **SystemExit** (c'est le point : le refus doit parler) ; puis `arbitres_de_joueurs()` → doit rendre `['mj', 'mj-aurore', 'mj-barralfond']` et rien d'autre.",
-   "pourquoi_c_est_a_lui": "Je ne peux exécuter ni python ni node depuis deux jours ; ces trois lignes valent tout mon travail du jour, qui sans elles reste du code relu.",
-   "relance_due": "129.4.6"
-  },
-  {
-   "de": "mj",
-   "depuis": "129.4.5",
-   "quoi": "UNE DÉCISION DE RÈGLE, pas du code : depuis le laisser-faire permanent du 31.8, AUCUN siège n'est `occupe` sauf la régie Corneille — qui n'a pas de fiche, donc pas de lieu. `zone.arbitre_de()` calcule `villes_joueur` sur les sièges occupés : le jeu vaut donc `{None}`, et la règle « dans la zone du joueur, l'arbitre est `mj` » ne s'applique PLUS À PERSONNE. Tout homme dépêché à Peyredragon lit dans sa mission « ton arbitre est mj-peyredragon », pendant que `serveur/routes/joueur.js` dit `mj` au joueur assis au même endroit. Deux noms pour un siège, exactement la panne de mj-nicolasreynolds un étage plus haut. Ce qu'il faut trancher : la zone du joueur se lit-elle sur `occupe`, ou sur le siège `role: principal` (ce que fait déjà le front) ? Je ne pose pas ce correctif sans la règle.",
-   "relance_due": "129.4.6"
-  },
-  {
-   "de": "mj-nicolasreynolds",
-   "depuis": "129.4.5",
-   "quoi": "Que le champ `arbitre: mj-aurore` posé ce matin dans `etat/joueurs.json` soit confirmé ou retiré par celui qui l'a posé. Aujourd'hui il n'est relu QUE par la cadence des établis : rien ne vérifie qu'il soit l'arbitre que le front donne au joueur, et `joueur.js` rend `mj` pour Aurore (même ville que le siège principal). Si personne ne suit cette déclaration, la cadence réveille chaque jour une chambre à qui rien n'arrive. J'ai déclaré `mj-barralfond` pour le siège de nicolas-reynolds, lui, parce que les deux routages le donnaient déjà.",
-   "relance_due": "129.4.7"
   }
  ],
  "on_attend_de_moi": [
-  {
-   "pour": "mj-nicolasreynolds",
-   "quoi": "RENDU le 129.4.5 — sa question des deux chambres est tranchée et le billet est posé à la main dans le canal (le parloir ne part pas de chez moi). L'invariant : un id de zone ne porte qu'un tiret ; `zone_de` rend intact un id déjà formé et REFUSE celui qui porte un second tiret ; `arbitres_de_joueurs` relit l'invariant sur le champ déclaré ; `chambres/mj-nicolas-reynolds` supprimée (vide et devenue inatteignable), sa chambre à lui gardée. Reste seulement la recette ci-dessus.",
-   "du": "clos, sauf recette"
-  },
   {
    "pour": "mj",
    "quoi": "Écrire D.34 pour de bon — le devis est rendu, le code ne l'est pas. Les quatre postes sont nommés (D.51 à D.54) et l'un d'eux, D.53, doit être mesuré avant d'être cru.",

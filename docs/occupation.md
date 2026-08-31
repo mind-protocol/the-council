@@ -6,7 +6,7 @@ Note de mécanique. Ce document dit **pourquoi un booléen tenu à la main a end
 
 ## 1. Le défaut, et pourquoi il était invisible
 
-`etat/joueurs.json` porte un champ `occupe` par siège. Il n'a rien d'anodin : **`scripts/boucle_activation.py` exclut les sièges occupés de la file d'activation** (`if pid in occupes: continue`, et la même exclusion dans `importance` et `horloge_directe`). C'est voulu — on n'active pas par la machine un personnage qu'un humain tient.
+`etat/joueurs.json` porte un champ `occupe` par siège. Il distingue un siège effectivement tenu d'un siège vacant ; aucun moteur automatique ne dépend plus de ce champ.
 
 Le champ était tenu à la main, et personne ne l'avait rebasculé depuis le 9 août. Le 10 au matin, les quatre sièges étaient à `true` alors que deux n'étaient manifestement plus joués. **Ces deux-là n'étaient donc ni joués par un humain, ni activés par la machine : ils dormaient**, avec leur horloge qui continuait d'avancer.
 
@@ -30,21 +30,21 @@ occupé  ⇔  (la veille de sa session date de moins de 2 heures réelles)
 
 Le seuil est **une constante nommée, dans un seul endroit** : `SEUIL_OCCUPATION_MINUTES` en tête de [`scripts/occupation.py`](../scripts/occupation.py) (surchargeable par `LE_CONSEIL_SEUIL_OCCUPATION_MINUTES` pour les essais). Deux heures : plus court, on rend vacant un joueur parti se faire un café ; plus long, on laisse dormir un siège une demi-journée.
 
-Le champ `occupe` **reste écrit dans `etat/joueurs.json`**, mais seulement comme **cache**. Il se recale au début de chaque cycle de `boucle_activation.py` et à chaque passage de `sieges.py`. Les lecteurs existants — `serveur/serveur.js`, `depecher.py`, `append_flux.py`, `parvenir.py`, `exporter_aurore.py` — n'ont rien à apprendre. Les trois qui décident vraiment (`boucle_activation.py`, `regence.py`, `tick.py`) mesurent, eux, et ne dépendent plus du cache.
+Le champ `occupe` **reste écrit dans `etat/joueurs.json`**, mais seulement comme **cache**. Il se recale à chaque passage de `sieges.py`. Les lecteurs existants — `serveur/serveur.js`, `depecher.py`, `append_flux.py`, `parvenir.py`, `exporter_aurore.py` — n'ont rien à apprendre. `regence.py` et `tick.py` mesurent et ne dépendent plus du cache.
 
 ---
 
 ## 3. Quels fichiers de veille comptent, et pourquoi ceux-là
 
-`etat/veille/` mélange des noms de session de toutes provenances : `aurore-inchauspe.json` (le siège), `mj-aurore.json` (sa régie), `mj.json` (le MJ principal), des noms courts abandonnés (`aurore.json`, `marlo.json`), des bricoles (`fix-verif.json`). Un nom de session est libre : `veille.py <ce-que-je-veux>` crée le fichier.
+`etat/veille/` mélange des noms de session de toutes provenances : `aurore-inchauspe.json` (le siège), `mj.json` (l'unique MJ), d'anciens noms de régies `mj-*`, des noms courts abandonnés (`aurore.json`, `marlo.json`) et des bricoles (`fix-verif.json`). Un nom de session est libre : `veille.py <ce-que-je-veux>` crée le fichier.
 
 **Règle : pour un siège, ne compte que la veille dont le nom est son `personnage_id`** — sauf si le siège déclare lui-même d'autres noms, dans un champ `veille: ["...", "..."]` de son entrée.
 
 Pourquoi celle-là :
 
 - Le signal voulu est « **la session de CE joueur respire** ». `personnage_id` est le seul nom dont on sache avec certitude à quel siège il appartient — et c'est de fait celui que les sessions arment (les quatre fichiers existent et sont à jour au bon rythme). [`docs/sieges.md`](sieges.md) le dit déjà pour l'ouverture d'un siège : « crée `etat/inbox/<id>/` et **arme `etat/veille/<id>.json`** ». La règle ne fait qu'assumer une convention qui était déjà écrite ailleurs.
-- `mj.json` est **ambigu par construction** : le MJ principal tient le monde et plusieurs PNJ, il ne désigne aucun siège. Le compter rendrait un siège occupé parce que quelqu'un d'autre travaille — exactement le mensonge qu'on répare.
-- `mj-<nom>` désigne bien une régie de siège, mais par une convention que rien n'applique et que rien ne vérifie. **On ne devine pas : on laisse le siège le déclarer.** C'est une ligne dans son entrée, et elle se relit.
+- `mj.json` ne désigne aucun siège : l'unique MJ tient le monde pour tous. Le compter rendrait un siège occupé parce que l'arbitre travaille — exactement le mensonge qu'on répare.
+- Les anciens fichiers `mj-*` sont des traces de régies retirées et ne comptent jamais implicitement.
 - Les noms courts sont des veilles mortes. Les prendre au plus récent ne coûte rien aujourd'hui ; le jour où une session les réveille, ils ressusciteraient une mesure qui ne veut plus rien dire.
 
 **Ce qui compte comme action d'inbox** : un fichier `*.json` non caché. `etat/inbox/marlo-vasse/.gardez` est un jalon qui tient le dossier dans git — il date du 7 août, et pris pour une action il aurait tenu ce siège occupé **pour toujours** : le défaut réparé, remis en place par la porte de service.

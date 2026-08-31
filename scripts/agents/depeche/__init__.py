@@ -10,13 +10,12 @@ CE QUE CE PAQUET POSSEDE, decoupe sous le plafond de 500 lignes
 (docs/organisation.md §7 voulait brief/manuel/retour — la coupe est plus fine
 parce que le manuel du narrateur et la mission depassaient le plafond) :
     brief.py      : les constantes, la lecture du monde, le brief d'un homme
-    manuel.py     : la memoire d'activation, l'etagere, les manuels servis
-    narrateur.py  : le contrat de rapport du narrateur local
+    manuel.py     : la memoire du jour, l'etagere, les manuels servis
     trous.py      : ce que son plan montre (criticite, charge, attentes)
     pas_de_tir.py : ce qu'on materialise au repertoire neutre (etagere, memoire)
     chambre_locale.py : ses fichiers et les actions ouvertes de ses affaires
     mission.py    : le texte de mission, l'archive du prompt, l'appel d'agent
-    retour.py     : le versement sur-le-champ et la proposition de tete
+    retour.py     : le versement sur-le-champ
     cli.py        : main() — la CLI gelee de scripts/depecher.py
 
 La commande gelee `scripts/depecher.py` est une FACADE qui appelle main()
@@ -29,10 +28,7 @@ from agents.depeche.brief import (  # noqa: F401
     a_convoquer, les_pj, salles_peuplees, dans_la_salle, positions,
     position_de, dans_le_rayon, travaux_ids)
 from agents.depeche.manuel import (  # noqa: F401
-    memoire_activation, etagere_systeme, manuel_de, contexte_message,
-    message_tentative, manuel_narrateur_local)
-from agents.depeche.narrateur import (  # noqa: F401
-    contrat_rapport_narrateur)
+    memoire_du_jour, etagere_systeme, manuel_de, contexte_message)
 from agents.depeche.trous import (  # noqa: F401
     TROUS_MONTRES, TROUS_AILLEURS, ses_trous, sa_charge_ailleurs, on_lattend)
 from agents.depeche.pas_de_tir import (  # noqa: F401
@@ -40,6 +36,5 @@ from agents.depeche.pas_de_tir import (  # noqa: F401
 from agents.depeche.mission import (  # noqa: F401
     DEPECHES, mission, archiver_le_prompt,
     appeler, extraire_json, depecher)
-from agents.depeche.retour import (  # noqa: F401
-    verser_sur_le_champ, proposer_la_tete)
+from agents.depeche.retour import verser_sur_le_champ  # noqa: F401
 from agents.depeche.cli import main  # noqa: F401

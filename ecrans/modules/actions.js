@@ -9,10 +9,9 @@
       '<div id="mode-input" data-mode="dire">' +
       '<button id="mode-dire" class="actif"><i class="emb">💬</i>Parler</button>' +
       '<button id="mode-agir"><i class="emb">✋</i>Agir</button>' +
-      // Le troisième verbe de l'habitant (habitant.md §3) : FAIRE, la mutation
-      // proposée. Il n'apparaît qu'en incarnant un homme hors roster — un PJ
-      // classique agit par la scène, pas par le staging.
-      '<button id="mode-faire" hidden title="Proposer une mutation du monde : déplacer, verser, remettre — l\'arbitre tranche">' +
+      // Le troisième verbe de l'habitant (habitant.md §3) : FAIRE.
+      // Il n'apparaît qu'en incarnant un homme hors roster.
+      '<button id="mode-faire" hidden title="Changer le monde : déplacer, verser, remettre">' +
       '<i class="emb">🤲</i>Faire</button>' +
       '<button id="mode-penser" title="Peser la situation : ce que vous savez, ce qui s\'offre, ce que ça coûte">' +
       '<i class="emb">💭</i>Penser</button>' +
@@ -85,7 +84,7 @@
     const AMORCES = {
       dire: "Vos prochaines paroles…",
       agir: "Ce que vous faites…",
-      faire: "Ce que vous changez au monde — l'arbitre tranche…",
+      faire: "Ce que vous changez au monde…",
       penser: "Ce que vous pesez — ou rien, et vous pesez tout",
       question: "Ce que vous voulez éclaircir — hors de la scène…",
       meta: "Hors univers : la partie, le casting, une médaille à décerner…",
@@ -136,12 +135,12 @@
     }
     Object.keys(boutons).forEach((k) => (boutons[k].onclick = () => basculer(k)));
 
-    // ---- l'homme hors roster parle à son arbitre, pas à la scène ---------
+    // ---- l'homme hors roster parle au MJ, pas à la scène -----------------
     // Incarner un homme quelconque (siège fabriqué par /bascule) change le
     // canal : ses gestes passent par POST /verbe (habitant.md §3) — tenter,
-    // faire, demander, dire — et le verdict de l'arbitre revient DANS la
+    // faire, demander, dire — et le verdict du MJ revient DANS la
     // réponse, en synchrone. Le call réveille un vrai `claude -p` : une à
-    // trois minutes au premier réveil d'une zone, d'où l'attente affichée.
+    // le réveil peut durer : la page affiche l'attente du CALL.
     // Un PJ du roster ne passe JAMAIS par ici : son chemin /action est intact.
     // penser = un reveil de soi (cast) : la reponse HTTP est un accuse,
     // la pensee vit dans sa chambre — d'ou son retour dans la barre.
@@ -158,13 +157,12 @@
       if (att) att.classList.add("actif");
       btn.disabled = true;
       const corps = { de: moi.personnage_id, verbe: VERBES_HOMME[m], texte: texte };
-      if (moi.arbitre) corps.a = moi.arbitre;
       fetch("/verbe", { method: "POST",
         headers: { "Content-Type": "application/json" }, body: JSON.stringify(corps) })
         .then((r) => r.json())
-        .then((d) => Bus.chronique("chr-reponse", "L'arbitre",
+        .then((d) => Bus.chronique("chr-reponse", "Le MJ",
           (d && (d.verdict || d.erreur)) || "(pas de verdict)"))
-        .catch((e) => Bus.chronique("chr-reponse", "L'arbitre",
+        .catch((e) => Bus.chronique("chr-reponse", "Le MJ",
           "Le verdict n'est pas revenu : " + e))
         .finally(() => {
           if (att) att.classList.remove("actif");
@@ -198,7 +196,7 @@
     // parallèle de nous) — on attend cette réponse-là plutôt que d'en refaire
     // une. Hors roster : Faire apparaît, et les modes qui parlent au MJ du
     // JOUEUR (penser, coulisses, laisser faire, intervention) se rangent — cet
-    // homme-là n'a que ses quatre verbes vers son arbitre.
+    // homme-là n'a que ses quatre verbes vers le MJ.
     (function tailler(essais) {
       // == et non === : avant que bus.js ait pose son null initial, Moi est
       // UNDEFINED — le === laissait filer ce cas et la taille n'avait jamais

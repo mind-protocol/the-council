@@ -8,10 +8,9 @@ n'est plus qu'un sommaire qui les appelle dans l'ordre :
 
     les mains d'abord, acteurs simules, evenements a resoudre, nouvelles a
     livrer, le courrier, etapes, la bouche, la rumeur, declencheurs, tetes en
-    retard, mutations proposees, les pensees.
+    retard et les pensees.
 
-Et tick() : la cible n'avance que dans un sens, la proposition s'ecrit dans
-etat/tick-<horodatage>.json, le resume s'imprime.
+Et tick() : la cible n'avance que dans un sens et le resume s'imprime.
 
 Regles de calcul (ce que docs/schema.md ne tranche pas l'est ici, au plus
 simple) :
@@ -35,12 +34,10 @@ simple) :
   du lieu (le mestre), jamais dans celle du `pour`. `evenements.diffusion` reste
   en place a cote : c'est une coexistence, pas un remplacement.
 
-CE QU'IL REFUSE : decider. Il lit etat/ et n'ecrit qu'une PROPOSITION sous
-etat/ : le MJ seul relit, arbitre et applique (scripts/appliquer.py).
+CE QU'IL REFUSE : decider ou ecrire.
 
 CONSOMMATEURS : la facade scripts/tick.py (--jours / --jusqu-a).
 """
-import os
 import sys
 from datetime import datetime
 
@@ -49,8 +46,6 @@ from temps.bouche import TOLERANCE_MAJ, FENETRE_ROYAUME, echelle_de, etapes_de
 from temps.mains import (rythme_de, au_plancher, decompter, porteur_absent,
                          chiffrer_cout, seuil_franchi)
 from temps.rumeur import detecter_bouches, propager_rumeurs
-from temps import mutations
-from temps.scelle import STAGING, empreintes_etat, ecrire_proposition
 from temps.gardes.ecrits import qui_a_du_temps
 from temps.resume import resumer
 
@@ -443,10 +438,6 @@ def calculer(e, cible, restriction, joueur=None):
     # --- tetes en retard une fois la fenetre franchie
     rafraichir = _phase_retards(simules, fin)
 
-    # --- mutations proposees : STRICTEMENT ce qui est arithmetique
-    muts = mutations.rediger(mains, franchissements, avancent, plis_remis,
-                             rumeurs, nouvelles, jours, cible)
-
     # --- LES PENSEES : ce que chacun a touche, et s'il a de quoi parler.
     # Apres les mains (dont elle peut lire les mesures) et avant la salle, dont
     # elle est l'entree : un conseiller qui n'a rien touche n'a rien a dire, et
@@ -456,9 +447,6 @@ def calculer(e, cible, restriction, joueur=None):
     return {
         "genere_le": datetime.now().isoformat(timespec="seconds"),
         "joueur": joueur,
-        "empreintes": empreintes_etat(joueur),
-        "avertissement": "Proposition — le MJ arbitre et applique lui-meme "
-                         "dans etat/*.json. Ce fichier n'est pas de l'etat.",
         "fenetre": fenetre,
         "mains": mains,
         "seuils_franchis": franchissements,
@@ -480,7 +468,6 @@ def calculer(e, cible, restriction, joueur=None):
         "etapes_en_attente": attendent,
         "declencheurs_a_evaluer": declencheurs,
         "tetes_a_rafraichir": rafraichir,
-        "mutations_proposees": muts,
     }
 
 
@@ -489,11 +476,5 @@ def tick(e, cible, restriction, joueur=None):
         sys.exit("cible {} anterieure a monde.date {} — le tick n'avance "
                  "que dans un sens".format(fmt(cible), fmt(e.date)))
     prop = calculer(e, cible, restriction, joueur)
-    base = "tick-{}".format(datetime.now().strftime("%Y%m%d-%H%M%S"))
-    nom, n = base + ".json", 1
-    while os.path.isfile(os.path.join(STAGING, nom)):   # deux ticks a la seconde
-        n += 1
-        nom = "{}-{}.json".format(base, n)
-    chemin = ecrire_proposition(nom, prop)
-    resumer(prop, chemin)
+    resumer(prop)
     return 0

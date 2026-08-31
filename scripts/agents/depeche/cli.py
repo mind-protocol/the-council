@@ -15,8 +15,7 @@ from agents.depeche.brief import (RACINE, ETAT, DEPOT_RAPPORTS, lire,
                                   dans_la_salle, dans_le_rayon,
                                   les_pj, salles_peuplees)
 from agents.depeche.mission import depecher, appeler, extraire_json
-from agents.depeche.retour import (verser_sur_le_champ, proposer_la_tete,
-                                   _poser)
+from agents.depeche.retour import verser_sur_le_champ, _poser
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)

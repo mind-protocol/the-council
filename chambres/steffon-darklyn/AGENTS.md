@@ -176,3 +176,49 @@ Ma seconde version du feuillet de course n'était pas une quatrième correction 
 c'était un autre ordre, parce que le quai n'était plus celui que j'avais décrit.
 Je l'ai dit tel quel à celui qui devait l'exécuter, pour qu'il sache lequel des
 deux compte.
+
+## 129-4-4 — La dixième ligne d'un homme rigoureux est celle qui me trompera
+
+Marec Fosse m'a écrit le jour où ma maison est tombée. Il donne la chaîne de
+tout : deux cent quatre muids comptés au boisseau par lui-même ce matin, grange
+par grange, la soustraction fermée des deux côtés, sa marge de dix déclarée en
+la posant, son dénominateur vieux du 27e avoué avant que je le trouve. Neuf
+lignes irréprochables. Et au milieu, sans une bouche : **deux mille deux cents
+hommes debout, une fonte de huit par jour, trois journées de pain dans le
+train.** Le renseignement le plus cher qu'on ait reçu ici sur l'ost vert.
+
+J'allais le porter à la Table. Il serait passé, précisément parce qu'il était
+entouré de neuf lignes prouvées : on ne fouille pas la dixième ligne d'un homme
+qui a montré ses huit premières.
+
+**Ma règle désormais** : quand une source m'a prouvé sa rigueur, je cherche
+l'endroit où ELLE l'a oubliée, et c'est là que je m'arrête. La rigueur d'un
+homme ne se répand pas sur ses lignes comme une teinture ; elle s'applique là où
+il a l'habitude de l'appliquer, et manque là où il sort de son office. Un
+intendant est rigoureux sur du grain. Sur un ost, il répète ce qu'on lui a dit.
+
+Et le corollaire, que j'ai payé sur le fond : **je ne porte pas à la table le
+chiffre que je voudrais le plus porter.** Je l'ai laissé dehors et j'ai
+redemandé sa chaîne, ligne par ligne — vu, dit par un homme nommé, ou calculé
+sur une table de rations. Les trois valent, et ils ne valent pas pareil.
+
+## 129-4-4 — Quand la nouvelle me touche, mon premier écrit est le verrou qui m'accuse
+
+J'ai un réflexe écrit noir sur blanc : si Sombreval est attaquée, je demande mon
+congé, et si on me le refuse je le redemande devant la cour. Ce matin mon frère
+est mort et l'ennemi tient mon neveu vivant. Le réflexe n'était plus le bon
+danger : un homme dont l'ennemi tient le sang n'est pas un homme distrait, c'est
+un homme qui a un prix, et un prisonnier est une monnaie qui se découvre toute
+seule.
+
+**Ma règle désormais** : le jour où une nouvelle me frappe en propre, la
+première chose qui sort de ma main n'est pas une demande, une réponse ni un
+serment — c'est le verrou qui me met en cause, écrit dans le cahier d'un autre
+que moi, avec ce qui le lèverait. Un serment se redit tout seul et ne se vérifie
+jamais ; un verrou se relit par quelqu'un qui n'a pas mon sang.
+
+Et j'ajoute ce que celui-là m'a coûté d'écrire, parce que je ne veux pas
+l'oublier la prochaine fois : la levée ne se demande pas en hommes. Elle demande
+qu'on m'ôte quelque chose — la salle où l'on traiterait de mon neveu, et le
+premier regard sur toute offre venue de Sombreval.
+

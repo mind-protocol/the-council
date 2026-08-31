@@ -52,7 +52,6 @@ ont un mode à blanc.** La règle sans exception : on lance sans `--vraiment`,
 | `reparer_renvois.py` | écrit le NUMÉRO de l'office là où le cahier n'a qu'un nom d'homme |
 | `scinder_moyens.py` | sépare « 🧰 Moyens » en numéros d'un côté, prose de l'autre |
 | `normaliser.py` | le vocabulaire des liens du tissu — 34 natures pour 15 intentions |
-| `lacunes.py` | qui compte dans l'histoire sans avoir de quoi y travailler |
 | `plan_leves.py` | les marches de Marlo en carte de métro — un SVG |
 | `cens.py` | compte les CELLULES pleines table par table, et refuse qu'une passe en fasse baisser le compte |
 

@@ -189,41 +189,7 @@ def ecrire(nom, valeur, indent=2):
     p = chemin(nom)
     _cliquet_du_monde(p, valeur)
     p = _poser(p, lambda f: _dump(valeur, f, indent))
-    _signaler_depot_staging(p, valeur)
     return p
-
-
-def _signaler_depot_staging(p, valeur):
-    """UN DEPOT AU STAGING REVEILLE SON ARBITRE — ici, a la porte, parce que
-    c'est le seul point que TOUS les deposants traversent (retour.py, tick,
-    les sessions des MJ : mj-zone.md leur impose la porte). Decide par le dev
-    le 31.8 : « pourquoi une veille ? le mieux c'est de trigger direct » —
-    le depot est un evenement, pas un etat a scruter ; l'ancienne veille par
-    battement ne vivait que si la boucle tournait.
-
-    Le reveil est l'ETABLI detache de l'arbitre route (champ `pour` puis
-    `par`/`de` — agents/etabli.py), PAS un billet : quarante depots feraient
-    quarante billets qui ne paient aucun peage, quand le cooldown d'etabli
-    (30 min) coalesce naturellement les rafales. Import paresseux et gradue :
-    la porte ne DOIT jamais planter ni ralentir pour un reveil — un echec se
-    dit sur stderr et l'ecriture reste bonne."""
-    try:
-        dossier = os.path.dirname(os.path.abspath(p))
-        if (os.path.basename(dossier) != "staging"
-                or not p.endswith(".json")
-                or os.path.dirname(dossier) != os.path.abspath(ETAT)):
-            return
-        from agents import etabli  # paresseux : noyau ne paie agents qu'ici
-        mj = etabli.arbitre_du_staging(valeur if isinstance(valeur, dict)
-                                       else {})
-        if etabli.etabli_recent(mj):
-            return
-        etabli.lancer_etabli_detache(mj, "depot")
-        sys.stderr.write(u"(porte : depot %s -> etabli %s lance)\n"
-                         % (os.path.basename(p), mj))
-    except Exception as e:
-        sys.stderr.write(u"(porte : reveil du depot %s en echec — %s)\n"
-                         % (os.path.basename(p), str(e)[:160]))
 
 
 def ecrire_lignes(nom, lignes):

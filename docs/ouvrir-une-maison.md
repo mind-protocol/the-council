@@ -137,9 +137,9 @@ Elles coûtent moins cher maintenant qu'après quatre plans écrits :
   et l'on n'en verra les dégâts que dans trois lunes.
 - **`equilibre` et `contredit` n'ont pas de domicile** : on ne peut pas encore
   demander « qu'est-ce qui contredit ceci ? » à travers les deux camps.
-- **Le vocabulaire d'`appliquer.py` est fermé**, et c'est le goulot réel de cette
-  chaîne : il ne sait ni créer un personnage, ni écrire `relations.json` et
-  `mains.json`, ni muter le champ `declencheurs` d'une tête existante. Or ouvrir
+- **L'ouverture traverse plusieurs tables**, et c'est le goulot réel de cette
+  chaîne : elle doit créer un personnage, écrire `relations.json` et
+  `mains.json`, et muter le champ `declencheurs` d'une tête existante. Or ouvrir
   une maison fait exactement ces quatre choses. Les quatre premières ouvertures
   ont toutes fini par un bloc « à la main » — c'est-à-dire par la perte des gardes
   que le script existe pour donner.

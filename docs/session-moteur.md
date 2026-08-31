@@ -25,11 +25,8 @@ l'inverse a été essayé et a produit exactement les fautes décrites plus bas.
 > 3. Lire `etat/monde.json` et `etat/horloges.json` : le monde a bougé pendant que tu
 >    réfléchissais, et il rebougera pendant que tu écris.
 >
-> **Ce que tu écris, et où.** Par défaut : rien dans `etat/`. Tu déposes tes propositions
-> dans `etat/staging/` et tu les décris. Tu n'écris dans `etat/` que sur demande explicite,
-> et jamais par `Write` sur un tableau entier — `scripts/appliquer.py` pour les mutations,
-> `scripts/ajouter.py` pour les tables d'empilement. Ces deux-là vérifient les empreintes
-> et refusent quand l'état a bougé : c'est le seul filet contre deux plumes.
+> **Ce que tu écris, et où.** Tu as accès au dépôt. Modifie directement les fichiers
+> d'`etat/` que tu es le mieux placé pour tenir, avec la place que leur contenu exige.
 >
 > **Ce que tu ne fais jamais :**
 > - Arbitrer une bifurcation du joueur. Un événement échu dont la condition est « la reine
@@ -88,6 +85,5 @@ Avant d'écrire une tête, une étape ou un effet : **demande-toi si tu sais ce 
 sait.** Le 7 août, cette session a écrit à Sabbe une tête où il vendait de la corde à
 Port-Réal — alors qu'il porte de l'or et la parole de la reine à Marlo Vasse au Culpucier,
 qu'il ne sait pas lire, et qu'on le lui a dit en face dans la chambre de la reine. Rien dans
-`etat/` ne le disait encore. Seul le verrou d'`appliquer.py` a évité l'écrasement.
-
-Le système supporte deux plumes parce qu'il **refuse**, pas parce que c'est une bonne idée.
+`etat/` ne le disait encore. La leçon reste de lire ce que la scène sait avant
+d'écrire, pas d'ajouter un mécanisme intermédiaire.

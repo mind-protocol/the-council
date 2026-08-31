@@ -1,6 +1,6 @@
 # La voix de la reine — siège du second joueur
 
-Document de conception. Titulaire imposée : **Aurore Inchauspé**, maison Inchauspé (`aurore-inchauspe`, `maison-inchauspe`, siège `la-noiseraie`). Fichier compagnon : `etat/staging/20260806-160000-siege-voix.json` — rien de ce qui suit n'est écrit dans `etat/`.
+Document de conception. Titulaire imposée : **Aurore Inchauspé**, maison Inchauspé (`aurore-inchauspe`, `maison-inchauspe`, siège `la-noiseraie`). Rien de ce qui suit n'est écrit dans `etat/`.
 
 Date de référence : **129 AC, 3e lune, 21e jour**. La scène d'entrée se joue au matin, dans la chambre de la Table Peinte.
 
@@ -32,7 +32,7 @@ Arbitré hors de ce document. Rappel opérationnel seulement :
 - `aurore-inchauspe`, 29 ans (née en 100 AC), fille aînée de `maison-inchauspe`, siège `la-noiseraie` (2 jours de Port-Réal, côte nord de la baie de la Néra, entre Rosby et Sombreval).
 - **Le négoce, c'est l'encre** — le brou de noix, brune et tenace, bon marché, qui approvisionne les roukeries et les mestres de la moitié du royaume. Elle ne possède pas le message : elle possède le médium.
 - **La pupille circulante** : élevée entre huit et dix-huit ans dans cinq maisons — Rosby, Stokeworth, Sombreval, Lamarck, et **l'Île-aux-Pinces** (Celtigar). Elle appelle les grands par le nom de leur nourrice et connaît leurs cuisines mieux que leurs armoiries.
-- Fiche complète, blason, or et levées : `personnage_a_ajouter`, `maison_a_ajouter` et `lieu_a_ajouter` dans le fichier de staging, à coller à la main (le vocabulaire de `appliquer.py` ne crée ni personnage, ni maison, ni lieu).
+- Fiche complète, blason, or et levées restent à écrire dans les tables correspondantes.
 - **Sa faille** : elle a été élevée chez des gens qui vont devoir choisir, et son père vend l'encre aux deux camps à deux jours de route de Port-Réal. Personne à cette table ne saura si elle est fidèle ou seulement bien placée. Cette tension ne se résout pas — c'est le moteur du siège.
 
 ---
@@ -54,7 +54,7 @@ Porte-parole du bourg sous les murs, cinquantaine, donne toujours le chiffre ava
 - `si_bloqué` : elle le fait quand même cette fois-ci, le dit tout haut là où on l'entend, et envoie quelqu'un d'autre la prochaine.
 
 ### 3. `septa-marlow` — la chaire
-Dormante ; le staging la promeut `actif` et lui donne une tête d'`orbite`. Neuf septons à portée de barque dans la baie. **La chaire ne s'achète pas, elle se convainc — et elle ajoute toujours sa phrase.**
+Dormante ; sa mise en jeu la promeut `actif` et lui donne une tête d'`orbite`. Neuf septons à portée de barque dans la baie. **La chaire ne s'achète pas, elle se convainc — et elle ajoute toujours sa phrase.**
 - Étape d'Aurore : `voix-la-chaire` — **6 jours**, dépend de la proclamation.
 - Étape de la septa : `marlow-porter-la-phrase` — **6 jours** — trois barques, neuf visites, 300 dragons d'aumône et de cire « qu'elle refusera d'appeler un paiement ».
 - Coût pour Aurore : l'accord de Marlow, 300 dragons, **et la phrase que chaque septon ajoutera et qu'elle ne pourra pas retirer**.
@@ -74,7 +74,7 @@ Maître de port depuis vingt-deux ans, incorruptible, n'a jamais prêté son liv
 - Ce qu'il porte déjà, de sa seule mémoire : Peyredragon a doublé sa ration cette lune ; **Repos-des-Freux a triplé la sienne en deux lunes.** (Le siège de Repos-des-Freux tombe à la 9e lune. Elle ne le sait pas et ne peut pas le savoir : elle a le chiffre, pas la cause.)
 
 ### Support — `aldon-hask` (optionnel)
-Compteur des débarquements au quai, méticuleux, rancunier, dormant. Étape `voix-aldon-bruit-du-quai` proposée en posture permanente : à côté du compte des débarquements, la phrase que chaque équipage rapporte du feu et le chiffre de morts qu'il donne — nom du navire, port, date. **Cette mutation ne s'applique que s'il a une tête d'intentions** ; sinon la retirer du lot, `appliquer.py` refuserait l'ensemble.
+Compteur des débarquements au quai, méticuleux, rancunier, dormant. Étape `voix-aldon-bruit-du-quai` proposée en posture permanente : à côté du compte des débarquements, la phrase que chaque équipage rapporte du feu et le chiffre de morts qu'il donne — nom du navire, port, date. Elle suppose qu'il ait une tête d'intentions.
 
 ---
 
@@ -119,7 +119,7 @@ Matériau (à jouer, pas à réciter) :
 
 La démonstration entière du métier tient dans la deuxième : **le fait le plus important du règne a été distancé par le feu**, parce que le feu voyage seul et qu'une cérémonie a besoin qu'on la raconte. Aucun conseiller de Rhaenyra ne pense en ces termes.
 
-Ces quatre choses entrent dans `info.json` — voir `info_a_ajouter` dans le staging. `source: "temoin"`, fiabilité 80 à 90 : **le témoignage est sûr quant aux propos, pas quant à ce qu'ils affirment.**
+Ces quatre choses entrent dans `info.json`. `source: "temoin"`, fiabilité 80 à 90 : **le témoignage est sûr quant aux propos, pas quant à ce qu'ils affirment.**
 
 ### Ce que chacun a à perdre, et l'objection qu'il lève
 
@@ -182,7 +182,7 @@ Délais, calculés sur les `jours_de_pr` réels depuis Peyredragon (corbeau ≈ 
 - **Coût en retard** : le plus faible. Elle peut partir dans l'heure — corbeaux le 21 au soir, baie le 22. **Mais revendiquer cinq jours après, c'est revendiquer une chose que le royaume a déjà jugée sans elle** : la version de Darklyn (« descendue du ciel pour sauver son vassal ») est plus flatteuse, et cette version-là l'écrase de sa propre main.
 - **Ce qui se retournera** : elle devient l'agresseur du royaume par écrit et sous son sceau. Toute maison hésitante des Terres de l'Orage et du Conflans a désormais une pièce à produire. C'est l'acte que `borros-baratheon` fera lire tout haut devant Otto ; et c'est ce que Lucerys trouvera à Accalmie le 4e jour de la 4e lune.
 
-### Version B — la justice sur des hommes en armes  *(retenue dans le staging)*
+### Version B — la justice sur des hommes en armes  *(version retenue)*
 > *« Ce n'étaient pas des sujets. C'étaient douze cents hommes en armes qui marchaient sans déclaration sur une ville qui avait prêté serment. Ils ont été sommés. Ils n'ont pas répondu. Quarante d'entre eux sont vivants et nourris. »*
 
 - **Canaux** : le corbeau particulier, écrit un par un (`corbeau`, **85**) — Sombreval, Pointe-Aigue, l'Île-aux-Pinces, Repos-des-Freux, **et Port-Réal en préemption** ; l'acte scellé porté à Rosby par un cavalier nommé (`cavalier`, **90**, arrivée le 26) ; le héraut au bourg le soir même (`temoin`, 80) ; six chanteurs vers le Conflans (`rumeur`, 30, arrivée 4e lune jour 2).
@@ -201,7 +201,7 @@ Délais, calculés sur les `jours_de_pr` réels depuis Peyredragon (corbeau ≈ 
 
 ## E. Ce qui lui revient — trois échos, 8 à 12 jours
 
-Ils reviennent **par les mêmes routes et les mêmes gens** qu'Aurore a nommés au conseil, pour que le joueur reconnaisse les voix. Entrées prêtes dans le staging.
+Ils reviennent **par les mêmes routes et les mêmes gens** qu'Aurore a nommés au conseil, pour que le joueur reconnaisse les voix.
 
 **Écho 1 — la chanson chantée de travers.** *4e lune, jour 1 (dix jours)*, à l'auberge du gué de Rosby, **chez Hanna**. Le refrain repris n'est pas celui qui a été écrit : « douze cents lances sans bannière » se chante mal, « **trois mille hommes sans sépulture** » se chante bien. Deux syllabes de moins. Un couplet que personne n'a composé dit que la reine est restée dans la cendre à regarder. Hanna dit qu'on la lui a apprise et qu'elle ne sait plus par qui. *Le chiffre de la chanson et celui de la lettre de Darklyn sont désormais le même, et il n'est plus rattrapable.* (`rosby`, `rumeur`, fiabilité 20.)
 
@@ -229,10 +229,8 @@ Le cinquième n'a pas d'échéance et n'en aura jamais : trois issues, toutes co
 
 ---
 
-## Application
+## Écriture
 
-`etat/staging/20260806-160000-siege-voix.json` — **20 mutations**, plus quatre charges à coller à la main (`maison_a_ajouter`, `lieu_a_ajouter`, `personnage_a_ajouter`, `objectifs_a_ajouter`, `info_a_ajouter` : ces tables ne sont pas dans le vocabulaire fermé de `appliquer.py`).
-
-Ordre : coller la maison, le lieu et le personnage **d'abord** — sans quoi `tete_ajouter` échoue sur « personnage inconnu » et annule le lot entier. Puis blanc, puis `--vraiment`, puis `tick.py --verifier`.
-
-Pas d'`empreintes` : proposition écrite à la main, sans horloge calculée, la garde de fraîcheur ne s'applique pas. **Le lot suppose la version B.** Pour A ou C, remplacer les neuf diffusions de proclamation par celles décrites plus haut avant d'appliquer ; les trois échos de E dépendent eux aussi de la version retenue.
+Ce document reste une conception. Pour la jouer, écrire directement la maison,
+le lieu et le personnage, puis leurs objectifs, informations et diffusions dans
+les tables correspondantes. **La conception suppose la version B.**

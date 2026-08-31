@@ -18,7 +18,6 @@
 const fs = require("fs");
 const path = require("path");
 const { RACINE } = require("../http");
-const { locales: horlogesLocales } = require("./horloges-acteurs");
 // Le composant de portrait du jeu, reutilise tel quel.
 const { portraitDefaut, portraitFrais } = require("../peinture").portraits;
 
@@ -30,7 +29,7 @@ function lire(p, defaut) {
   catch (e) { return defaut; }
 }
 
-function estZone(id) { return id === "mj" || id.startsWith("mj-"); }
+function estZone(id) { return id === "mj"; }
 
 /** Les habitants : un dossier de `chambres/`, et rien d'autre. */
 function habitants() {
@@ -442,7 +441,6 @@ function chambre(qui) {
   const jauge = ((boucle.acteurs || {})[qui]) || null;
   return {
     id: qui, zone: estZone(qui),
-    horloge_locale: horlogesLocales([qui])[qui] || null,
     // LE SIGNAL DE DÉRIVE, et c'est le plus utile de la fiche : un cahier
     // qui porte une section datée est un cahier qu'il a repris en main.
     cahier_amende: cahier.includes("## Amend"),
@@ -547,10 +545,8 @@ function vueChambres() {
     (b.zone - a.zone) || (b.dernier - a.dernier));
   // Les sept familles pour CHAQUE ligne : c'est ce qui rend le silence
   // visible sans avoir a ouvrir une chambre apres l'autre.
-  const heures = horlogesLocales(lignes.map((l) => l.id));
   for (const l of lignes) {
     l.gestes = gestesDe(l.id, canauxLus, boucle);
-    l.horloge_locale = heures[l.id] || null;
   }
   // LE PORTRAIT, PAR LE COMPOSANT QUI EXISTE DEJA (serveur/portraits.js) :
   // le meme visage qu'a l'ecran de jeu, la meme silhouette de secours, la

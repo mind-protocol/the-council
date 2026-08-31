@@ -1,28 +1,17 @@
 # -*- coding: utf-8 -*-
-"""REVEILLER — le reveil du MJ du joueur sur le POST (habitant.md pas 5 :
+"""REVEILLER — le reveil de l'unique MJ sur le POST (habitant.md pas 5 :
 le guetteur meurt, le geste du joueur EST le reveilleur).
 
     python scripts/reveiller.py --de rhaenyra
     python scripts/reveiller.py --de rhaenyra --timeout 900
-    python scripts/reveiller.py --qui mj-portreal --de otto "on force la porte"
-    python scripts/reveiller.py --qui mj --de dev --etabli
-
-`--etabli` : la journee-etabli du MJ (habitant.md : le MJ est un travailleur)
-— le mot devient son etabli (staging, fils echus, billets non lus), calcule
-par le lanceur hors sandbox (zone.etabli_de), verbe ETABLI.
-
-Le plafond de l'appel est de DIX MINUTES (--timeout, en secondes). Les trois
-minutes de `zone.MINUTES` bornent les appels DIRIGES du parloir — une question,
-une reponse ; un reveil sur POST ouvre une journee entiere, et coupe a 180 s il
-mourait au milieu de son tour sans que rien ne le dise (le serveur le spawn
-detache et ne lit pas sa sortie).
+    python scripts/reveiller.py --de otto "on force la porte"
 
 Le serveur la spawn DETACHEE sur POST /action (serveur/routes/action.js) ;
-elle appelle zone.appeler_zone — session continue du MJ, verdict sur stdout
+elle appelle mj.appeler_mj — session continue du MJ, verdict sur stdout
 (que personne ne lit ici : le MJ ecrit lui-meme au flux, c'est sa montre).
 
 CE FICHIER EST UNE FACADE (docs/organisation.md §2) : la matiere vit dans le
-container agents/, module zone.py.
+container agents/, module mj.py.
 """
 import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
 _d = _os.path.dirname(_os.path.abspath(__file__))

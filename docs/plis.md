@@ -90,11 +90,11 @@ encore tenu les comptes, pas un lieu sans corbeaux.
 `en-route` → `remis`, `main` = le **destinataire naturel du lieu** :
 
 1. le mestre présent sur place (titre contenant « mestre », la roukerie d'abord),
-2. à défaut, rien : `main` reste `null` et la proposition le signale — au MJ de
+2. à défaut, rien : `main` reste `null` et le calcul le signale — au MJ de
    dire dans quelle main ça tombe.
 
 Ce n'est JAMAIS le `pour` : c'est tout l'intérêt. Le script ne décide rien de
-plus, et n'écrit que sous `etat/staging/`.
+plus et n'écrit pas dans `etat/`.
 
 `--verifier` signale :
 
@@ -102,18 +102,6 @@ plus, et n'écrit que sous `etat/staging/`.
 - un corbeau parti d'un lieu dont la roukerie n'a pas (ou plus) d'oiseau pour la
   destination ;
 - un pli `remis` (ou `ouvert`) sans `main`.
-
-## Vocabulaire de mutation
-
-Fermé, comme le reste (`scripts/appliquer.py` fait autorité) :
-
-    {table: "plis", cible: <pli_id>, operation: "pli",
-     champs: {etat | main | attendu_le | canal | scelle | porte}}
-
-    {table: "plis", operation: "pli_ajouter", valeur: <objet pli complet>}
-
-    {table: "lieux", cible: <lieu_id>, operation: "roukerie",
-     champs: {<lieu_id d'origine>: <entier >= 0>}}
 
 ## La bouche — le deuxième porteur
 
@@ -235,13 +223,10 @@ c'est le plancher du trouble.
   `risque[]` ne sont jamais plafonnés, ni un saut qui atteint le joueur. Sans ce
   plafond, six jours proposaient vingt et un sauts — et une proposition qu'on ne
   relit plus vaut une proposition vide.
-- **Ce que le script écrit** : le saut, sa date, sa source, et la certitude
-  **dégradée**. Et une mutation `incident_propage` dont le **`contenu` est laissé
-  à `null`** : `appliquer.py` refuse le lot tant que le MJ n'a pas écrit ce qui
-  se dit là-bas. **Le script n'invente aucune prose** — c'est le seul endroit du
-  jeu où le brouillard se fabrique, et une machine n'a rien à y faire. Le refus
-  vérifie aussi que la certitude a bien décru, et qu'un endroit ne prend pas deux
-  fois.
+- **Ce que le script calcule** : le saut, sa date, sa source et la certitude
+  **dégradée**. Le contenu reste à écrire par un homme. **Le script n'invente
+  aucune prose** — c'est le seul endroit du jeu où le brouillard se fabrique,
+  et une machine n'a rien à y faire.
 
 ### Une rumeur qui atteint le joueur
 
@@ -322,8 +307,8 @@ d'être anonyme sans devenir pour autant un acteur qu'on simule.
 
 **Ce qui est couvert** : l'écrit qui voyage et peut être retenu, perdu, lu par le
 mauvais homme ; l'homme qui arrive et vide son sac ; le bruit qui gagne de
-proche en proche en se dégradant. Les trois sont tenus par `tick.py`, aucun
-n'écrit de prose, et tous passent par `etat/staging/`.
+proche en proche en se dégradant. Les trois sont calculés par `tick.py`, qui
+n'écrit pas de prose ; les habitants inscrivent directement leurs effets.
 
 **Ce qui reste à `diffusion`** : les nouvelles qu'un MJ veut poser à date fixe
 sans se soucier de la route, et tout l'existant, qui continue de tourner. Le
@@ -339,17 +324,9 @@ est tombée, il en reste trois :
    entre dans les `croyances` ; avec les trois porteurs, c'est un arbitrage du MJ
    à chaque arrivée. Tant que c'est à la main, `diffusion` reste plus commode
    pour les nouvelles de masse — et c'est la vraie raison de sa survie.
-3. **La migration du reste** : `scripts/migrations/migrer_plis.py` couvre les canaux
-   d'objet ; il faudrait son équivalent pour convertir les entrées `rumeur` en
+3. **La migration du reste** : il faudrait convertir les entrées `rumeur` en
    incidents, et les `temoin` en relais nommés — ce dernier cas est désormais
    une conversion mécanique, puisque la cible existe.
 4. **Le jour où plus aucune entrée `diffusion` non livrée ne reste**, retirer le
    champ du schéma et la boucle de `tick.py` — pas avant : une nouvelle en vol
    qu'on jette est une information que le monde perd.
-
-## Migration
-
-`scripts/migrations/migrer_plis.py` convertit les entrées `evenements.diffusion` de canal
-`corbeau`/`cavalier`/`barque` en plis, et écrit sa sortie dans `etat/staging/`.
-Il ne touche jamais `etat/`. `rumeur` et `temoin` sont laissés à `diffusion` :
-ce ne sont pas des objets.

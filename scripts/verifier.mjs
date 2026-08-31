@@ -65,13 +65,6 @@ const PY = process.env.PYTHON || "python";
 const EPREUVES = [
   // --- LES GARDES -----------------------------------------------------------
   {
-    id: "banc-tick", rang: "garde", secondes: 0.9,
-    commande: [PY, "scripts/analyse/banc_tick.py"],
-    pourquoi: "L'etalon du hors-scene : la proposition de `tick.py` sur un `etat/` "
-      + "fige, comparee clef par clef. La seule epreuve des 3 200 lignes qui "
-      + "calculent les horloges, les echeances et les nouvelles.",
-  },
-  {
     id: "tests-python", rang: "garde", secondes: 0.4,
     commande: [PY, "-m", "unittest", "discover", "-s", "scripts/tests", "-p", "test_*.py"],
     pourquoi: "Les tests unitaires du Python — bibliotheque, plan, mesures.",
@@ -88,16 +81,6 @@ const EPREUVES = [
     pourquoi: "La route /piece de bout en bout. Ouvre un port EPHEMERE (listen 0) "
       + "et non le 3129 : lancer la verification ne derange pas une partie en cours.",
   },
-  {
-    id: "porte-etat", rang: "garde", secondes: 2.6,
-    commande: [PY, "scripts/noyau/tables.py", "--verifier"],
-    compte: /^(\d+) fichier\(s\)/m,
-    pourquoi: "Personne n'ecrit dans `etat/` sans passer par la porte unique. "
-      + "Mesure nee a 45, descendue a 0 par groupes (un commit par groupe), "
-      + "promue GARDE le jour du zero : le quarante-sixieme ecrivain sauvage "
-      + "est refuse ici, pas decouvert trois lunes plus tard.",
-  },
-
   // --- LES MESURES ----------------------------------------------------------
   {
     id: "coherence-etat", rang: "mesure", secondes: 9.4,

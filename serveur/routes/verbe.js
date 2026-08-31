@@ -1,12 +1,10 @@
 // POST /verbe — les trois verbes de l'habitant depuis le front (habitant.md §3).
-// {de, verbe: tenter|faire|demander|dire, texte, a?} → parloir en SYNCHRONE,
-// le verdict de l'arbitre revient dans la réponse HTTP — le même retour de
+// {de, verbe: tenter|faire|demander|dire, texte} → parloir en SYNCHRONE,
+// le verdict du MJ revient dans la réponse HTTP — le même retour de
 // commande que lit un homme dépêché, servi au joueur qui incarne.
 //
-// `a` est optionnel : sans lui, l'arbitre est `mj` (la zone du joueur). Le
-// front qui incarne un homme d'une autre ville passera son `mj-<ville>`.
-// Timeout large (le call réveille un vrai `claude -p`, 1 à 3 minutes au
-// premier réveil d'une zone) — la page doit attendre, c'est un CALL.
+// Tous les gestes qui engagent le monde vont au seul MJ (`mj`).
+// Timeout large : la page doit attendre le verdict, c'est un CALL.
 const path = require("path");
 const { execFile } = require("child_process");
 const { RACINE } = require("../http");
@@ -33,7 +31,7 @@ function traiter(req, res, url) {
           { ok: false, erreur: "il faut de, verbe (tenter|faire|demander|dire) et texte" }));
       }
       const args = [path.join(RACINE, "scripts", "parloir.py"), drapeau,
-                    "--de", String(d.de), "--a", String(d.a || "mj"),
+                    "--de", String(d.de), "--a", "mj",
                     String(d.texte)];
       execFile(process.env.PYTHON || "python", args,
         { cwd: RACINE, timeout: 300000, maxBuffer: 4 * 1024 * 1024,

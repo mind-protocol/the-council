@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""LA PORTE du container 🗄️ etat — les tables, l'ecriture gardee, l'entree.
+"""LA PORTE du container 🗄️ etat — les tables et l'entree.
 
 La regle (docs/organisation.md §2) : on n'entre dans un container que par sa
-porte — `from etat.expose import ...`, jamais `import appliquer`.
+porte — `from etat.expose import ...`.
 Ce fichier REEXPORTE ce que les importeurs consomment reellement aujourd'hui,
 rien de plus.
 
@@ -20,8 +20,6 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 import tables  # noqa: E402,F401 — la porte unique des ecritures dans etat/
-from etat import mutations  # noqa: E402,F401 — le vocabulaire ferme des mutations ; lu par boucle_activation
-appliquer = mutations  # l'ancien nom reste vivant pour les importeurs historiques (boucle_activation, facade)
 from etat import entree  # noqa: E402,F401 — une entree a la fois, ecriture atomique ; lu par passer
 ajouter = entree  # l'ancien nom reste vivant pour les importeurs historiques (passer, facade ajouter.py)
 from etat import empreintes  # noqa: E402,F401 — le detecteur de fumee (veille) ; l'occupation lit ses fichiers, pas son code

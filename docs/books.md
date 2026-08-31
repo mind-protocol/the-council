@@ -74,7 +74,7 @@ c'est-à-dire à l'endroit où l'on cesse d'écrire ce qui gêne.
 
 **L'assignation (31.8)** : la table `⚔️ Actions` d'une affaire porte une colonne
 **« Qui »** — l'id de l'HABITANT qui porte l'action : un homme (`gerardys`), un
-arbitre (`mj`, `mj-portreal`), ou **`dev`** (le développeur — nom réservé, voir
+arbitre unique (`mj`), ou **`dev`** (le développeur — nom réservé, voir
 docs/habitant.md). C'est ce qui permet de dispatcher : une action assignée pèse
 sur son porteur, pas sur celui qui l'a écrite. Une action sans « Qui » est à
 celui qui tient le cahier.

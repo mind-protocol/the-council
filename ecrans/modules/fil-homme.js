@@ -1,5 +1,5 @@
 // fil-homme.js — le fil PAR HOMME : ce que voit un joueur qui incarne un
-// habitant hors roster (ou un arbitre). Sa mémoire, jamais le flux public :
+// habitant hors roster. Sa mémoire, jamais le flux public :
 // le rendu /scene se tait, et l'on peint GET /fil-homme à sa place — la
 // conclusion de veille en tête, le vécu de ses sessions, les billets de ses
 // canaux. La conversation d'incarnation (échos + verdicts d'actions.js) passe
@@ -99,62 +99,6 @@
       // silence. Le sondage continue (bandeau, heure), mais plus rien du flux
       // public ne se peint — le fil de cet homme est SA mémoire.
       Object.keys(Bus.rendus).forEach((k) => Bus.enregistrer(k, () => {}));
-      // 2. Un arbitre incarné n'a pas les verbes d'un homme : sa page observe.
-      // À la place de la barre, UN champ minimal — un billet du dev à ce MJ,
-      // par le POST /verbe existant (de:"dev", habitant réservé ; le canal
-      // dev~<mj> naît tout seul côté parloir).
-      if (moi.mj) {
-        const barre = document.getElementById("fil-actions");
-        if (barre) {
-          barre.hidden = true;
-          const envoi = document.createElement("div");
-          envoi.id = "fil-mj-envoi";
-          // la ligne d'observation vit AU-DESSUS du champ, pas en tête du fil
-          const note = document.createElement("div");
-          note.className = "fil-observation";
-          note.textContent =
-            "Poste d'observation — sa session se pilote par claude --resume";
-          envoi.appendChild(note);
-          const champ = document.createElement("textarea");
-          champ.placeholder = "Un billet à " + (moi.nom || moi.personnage_id) + "…";
-          const btn = document.createElement("button");
-          btn.innerHTML = '<i class="emb">✉️</i>Envoyer';
-          btn.onclick = () => {
-            const v = champ.value.trim();
-            if (!v || btn.disabled) return;
-            // écho local : le billet part de la main du dev
-            const d = Bus.chronique("chr-billet chr-fil", "dev", md(v));
-            const q = d && d.querySelector(".chr-qui");
-            if (q) {
-              const s = document.createElement("span");
-              s.className = "chr-billet-date";
-              s.textContent = "à l'instant";
-              q.appendChild(s);
-            }
-            champ.value = "";
-            btn.disabled = true;
-            fetch("/verbe", { method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ de: "dev", verbe: "dire",
-                a: moi.personnage_id, texte: v }) })
-              .then((r) => r.json())
-              .then((r) => {
-                // le retour du POST, s'il y en a un — sinon silence
-                const t = r && (r.verdict || r.erreur);
-                if (t) Bus.chronique("chr-reponse", "Retour", md(t));
-              })
-              .catch((e) => Bus.chronique("chr-reponse", "Retour",
-                "Le billet n'est pas parti : " + e))
-              .finally(() => { btn.disabled = false; });
-          };
-          champ.onkeydown = (e) => {
-            if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); btn.click(); }
-          };
-          envoi.appendChild(champ);
-          envoi.appendChild(btn);
-          barre.parentNode.insertBefore(envoi, barre);
-        }
-      }
       fetch("/fil-homme")
         .then((r) => r.json())
         .then((d) => {

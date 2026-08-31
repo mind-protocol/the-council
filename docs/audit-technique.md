@@ -44,7 +44,7 @@ Deux constats de fond en sortent, et ils comptent plus que le tableau.
 
 - **278 fichiers de code, 118 393 lignes** (était : 271 / 124 718 — le rangement de `scripts/` a supprimé 6 300 lignes mortes).
 - **59 dépassent 500 lignes** (21 %), **20 dépassent 1 000**, **6 dépassent 2 000**.
-- Les quatre plus gros : `ecrans/modules/bataille2d.js` (**10 511**), `scripts/tick.py` (3 214), `scripts/boucle_activation.py` (3 184), `scripts/monde/plan_ville.py` (2 494).
+- Cette mesure est un instantané historique ; le moteur automatique des activités cité dans l'audit a depuis été supprimé.
 - Le monolithe, inchangé au chiffre près : **10 511 lignes**, **195 fonctions** au premier niveau, **158 champs distincts** sur l'objet `h`, et `soldat(h, dt)` toujours à **858 lignes**.
 
 ### Ce qui est fait

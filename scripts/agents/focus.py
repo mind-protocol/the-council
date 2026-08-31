@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FOCUS — la veille des zones : les journees d'hommes partent sur les
+"""FOCUS — les journees d'hommes partent sur les
 etats cibles les plus charges du tissu.
 
 NE LE 31.8, corrige dans l'heure : la premiere passe reveillait les
@@ -8,13 +8,12 @@ c'est de lancer des hommes sur leurs journees plutot ». La couche
 narrateur saute ; la boucle depeche DIRECTEMENT (depecher.py --cast), et
 la mission du jour porte le focus.
 
-La matiere qui decide est le graphe lui-meme : les reserves d'energie des
-noeuds `etat_cible` (overlay etat/activations/boucle.json), routees vers
-les zones par les PERSONNES du tissu — a distance <= 3 du noeud,
+La matiere qui decide est le graphe lui-meme : l'importance ecrite sur les
+noeuds `etat_cible`, routee vers
+les lieux par les PERSONNES du tissu — a distance <= 3 du noeud,
 ponderees 1/distance. AUCUNE table d'adresses plan->zone : le tissu
-suffit. Par zone servie : l'etat cible ou elle pese le plus, et ses
-hommes ranges par (distance au fil, reserve d'energie) — `--hommes N`
-en depeche N par zone (defaut 1).
+suffit. Par lieu servi : l'etat cible ou il pese le plus, et ses hommes
+ranges par (distance au fil, importance).
 
 CADENCE par homme (marqueur en chambre, 60 min reelles) : une journee en
 cast vit sans nous, on ne re-depeche pas un homme dont la journee court.
@@ -31,12 +30,9 @@ import sys
 import time
 
 from agents import chambre
-from agents import zone
 from agents.depeche.brief import RACINE
 
 TISSU = os.path.join(RACINE, "etat", "tissu")
-ETAT_BOUCLE = os.path.join(RACINE, "etat", "activations", "boucle.json")
-
 PROFONDEUR_ROUTAGE = 3      # distance max noeud -> personne dans le tissu
 PROFONDEUR_AUTOUR = 2       # distance max pour les verrous/clefs du brief
 CADENCE_FOCUS_MINUTES = 60  # minutes REELLES entre deux veilles d'un meme narrateur
@@ -51,7 +47,7 @@ def _lire_json(chemin, defaut):
 
 
 def charger_graphe():
-    """Le tissu (noeuds, adjacence) et les reserves d'energie de l'overlay."""
+    """Le tissu et ses poids explicites, sans overlay d'un moteur autonome."""
     noeuds = _lire_json(os.path.join(TISSU, "noeuds.json"), {})
     adj = collections.defaultdict(set)
     try:
@@ -68,15 +64,9 @@ def charger_graphe():
                     adj[v].add(d)
     except (IOError, OSError):
         pass
-    boucle = _lire_json(ETAT_BOUCLE, {})
-    reserves = dict(((boucle.get("graphe") or {}).get("noeuds") or {}))
-    # Un etat cible garde sa reserve brute : c'est elle qui choisit le chemin
-    # critique. Pour les hommes seulement, l'ordre de depart suit l'energie
-    # effective deja calculee par la boucle (calcul recent + avance fiction).
-    for pid, fiche in (boucle.get("acteurs") or {}).items():
-        if isinstance(fiche, dict) and fiche.get("energie") is not None:
-            reserves["pers:" + pid] = float(fiche["energie"])
-    return noeuds, adj, reserves
+    poids = {nid: float((n or {}).get("importance") or 0.0)
+             for nid, n in noeuds.items()}
+    return noeuds, adj, poids
 
 
 def etats_cibles_charges(noeuds, reserves, n):
@@ -132,27 +122,17 @@ def autour(nid, noeuds, adj, reserves, n=3):
 
 
 def assignations(top=5):
-    """Route chaque narrateur vers SON etat cible du top.
-
-    Pour chaque ville touchee par un noeud du top, le narrateur est
-    `zone.arbitre_de(<un homme de la ville>)` — la seule fabrique, joueur
-    absorbe compris. Un narrateur tire l'etat cible ou SA ville pese le
-    plus (energie x poids) ; une ville sans poids ce tour reste en silence.
-    """
+    """Choisit l'etat cible le plus charge pour chaque lieu touche."""
     noeuds, adj, reserves = charger_graphe()
     cibles = etats_cibles_charges(noeuds, reserves, top)
-    meilleurs = {}  # mj -> (score, energie, nid, noeud, hommes_de_sa_ville)
+    meilleurs = {}  # lieu -> (score, energie, nid, noeud, hommes_du_lieu)
     for energie, nid in cibles:
         poids, hommes = routage(nid, noeuds, adj, reserves)
         for ville, p in poids.items():
-            try:
-                mj = zone.arbitre_de(hommes[ville][0])
-            except SystemExit:
-                continue  # ville dont l'id ne fait pas une zone : on passe
             score = energie * p
-            if score > meilleurs.get(mj, (0.0,))[0]:
-                meilleurs[mj] = (score, energie, nid, noeuds[nid],
-                                 hommes[ville])
+            if score > meilleurs.get(ville, (0.0,))[0]:
+                meilleurs[ville] = (score, energie, nid, noeuds[nid],
+                                    hommes[ville])
     return meilleurs, noeuds, adj, reserves
 
 
@@ -207,45 +187,25 @@ def _depecher_en_cast(pid, mission):
     return True
 
 
-def veille(top=5, vraiment=False, forcer=False, seule=None, par_zone=1):
+def veille(top=5, vraiment=False, forcer=False, seul_lieu=None, par_lieu=1):
     """Une passe : calcule les focus, depeche les journees dues. Rend le
-    nombre de journees parties (0 a blanc). `seule` borne a UNE zone,
-    `par_zone` borne le nombre d'hommes depeches par zone — le lancement
+    nombre de journees parties (0 a blanc). `seul_lieu` borne a un lieu,
+    `par_lieu` borne le nombre d'hommes depeches par lieu — le lancement
     graduel : un homme, on observe, puis les autres."""
     meilleurs, noeuds, adj, reserves = assignations(top)
-    # Le focus est une source de NOUVELLES journees automatiques : il respecte
-    # les deux portes. --forcer reste le geste explicite qui les franchit.
-    from agents.activation.fatigue import (
-        amorcer_fatigue_historique, capacite_acteur, capacite_zone,
-        mettre_a_jour_porte)
-    etat_activation = _lire_json(
-        ETAT_BOUCLE, {"version": 1, "historique": []})
-    amorcer_fatigue_historique(etat_activation)
-    if seule:
-        seule = zone.zone_de(seule)
-        if seule not in meilleurs:
-            print(u"%s n'a aucun focus ce tour (zones servies : %s)"
-                  % (seule, u", ".join(sorted(meilleurs)) or u"aucune"))
+    if seul_lieu:
+        if seul_lieu not in meilleurs:
+            print(u"%s n'a aucun focus ce tour (lieux servis : %s)"
+                  % (seul_lieu, u", ".join(sorted(meilleurs)) or u"aucun"))
             return 0
-        meilleurs = {seule: meilleurs[seule]}
+        meilleurs = {seul_lieu: meilleurs[seul_lieu]}
     partis = 0
-    for mj in sorted(meilleurs):
-        score, energie, nid, noeud, hommes = meilleurs[mj]
+    for lieu in sorted(meilleurs):
+        score, energie, nid, noeud, hommes = meilleurs[lieu]
         print(u"%-18s <- [%s] %.1f — hommes du fil : %s"
-              % (mj, nid, energie, u", ".join(hommes[:6])))
+              % (lieu, nid, energie, u", ".join(hommes[:6])))
         mission = mission_de_focus(nid, noeud, noeuds, adj, reserves)
-        for pid in hommes[:max(1, par_zone)]:
-            cap_homme, _charge_homme = capacite_acteur(etat_activation, pid)
-            homme_ouvert = mettre_a_jour_porte(
-                etat_activation, "acteurs", pid, cap_homme)
-            cap_mj, _charge_mj, _comptes = capacite_zone(
-                etat_activation, mj)
-            mj_ouvert = mettre_a_jour_porte(
-                etat_activation, "zones", mj, cap_mj)
-            if not forcer and (not homme_ouvert or not mj_ouvert):
-                print(u"  %s : capacité fermée (homme %.0f %%, MJ %.0f %%), silence"
-                      % (pid, cap_homme * 100, cap_mj * 100))
-                continue
+        for pid in hommes[:max(1, par_lieu)]:
             age = None if forcer else _journee_recente(pid)
             if not vraiment:
                 print(u"  (a blanc) %s partirait avec :" % pid)
@@ -259,13 +219,13 @@ def veille(top=5, vraiment=False, forcer=False, seule=None, par_zone=1):
                 partis += 1
                 print(u"  %s : journee partie en cast" % pid)
     if not meilleurs:
-        print("aucun etat cible charge ne touche une zone habitee.")
+        print("aucun etat cible charge ne touche un lieu habite.")
     return partis
 
 
 def main():
     ap = argparse.ArgumentParser(
-        description="la veille des zones : un etat cible charge par narrateur")
+        description="veille de focus : un etat cible charge par lieu")
     ap.add_argument("--top", type=int, default=5,
                     help="profondeur du classement des etats cibles (defaut 5)")
     ap.add_argument("--vraiment", action="store_true",
@@ -274,10 +234,10 @@ def main():
                     help="minutes reelles entre deux passes (0 = une passe)")
     ap.add_argument("--forcer", action="store_true",
                     help="ignorer la cadence de veille (marqueur en chambre)")
-    ap.add_argument("--zone", default=None, metavar="mj-sombreval",
-                    help="borner la passe a cette seule zone (id ou ville)")
+    ap.add_argument("--lieu", default=None, metavar="sombreval",
+                    help="borner la passe a ce seul lieu")
     ap.add_argument("--hommes", type=int, default=1,
-                    help="journees depechees par zone et par passe (defaut 1)")
+                    help="journees depechees par lieu et par passe (defaut 1)")
     a = ap.parse_args()
     if a.top <= 0:
         ap.error("--top doit etre positif")
@@ -285,7 +245,7 @@ def main():
         ap.error("une boucle a blanc ne montre rien de neuf : --vraiment, "
                  "ou une passe seche sans --intervalle")
     while True:
-        veille(a.top, a.vraiment, a.forcer, a.zone, a.hommes)
+        veille(a.top, a.vraiment, a.forcer, a.lieu, a.hommes)
         if not a.intervalle:
             return 0
         time.sleep(a.intervalle * 60)

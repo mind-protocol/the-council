@@ -14,37 +14,6 @@ function fiches() {
   } catch (e) { return []; }
 }
 
-// L'arbitre d'un homme hors roster : le MJ de SA zone (habitant.md §3 — le
-// front qui incarne un homme d'une autre ville passe son `mj-<ville>`). Dans
-// la zone du joueur — celle du siège principal —, on rend null : /verbe prend
-// alors son défaut, `mj`.
-// Les arbitres incarnables : `mj` et les `mj-*` qui ont une chambre sur
-// disque — leur existence n'est pas une fiche, c'est leur domicile. Et un
-// domicile a un cahier : les dossiers nes de la migration des canaux
-// (mj-aurore, mj-nicolas-reynolds — un relations/ sans claude.md) sont des
-// vestiges du modele deux-MJ, pas des arbitres (tranche le 31.8 : le MJ du
-// siege principal reste `mj`, jamais mj-rhaenyra).
-function arbitres() {
-  try {
-    return fs.readdirSync(path.join(RACINE, "chambres"))
-      .filter((n) => (n === "mj" || n.slice(0, 3) === "mj-") &&
-        fs.statSync(path.join(RACINE, "chambres", n)).isDirectory() &&
-        fs.existsSync(path.join(RACINE, "chambres", n, "claude.md")))
-      .sort();
-  } catch (e) { return []; }
-}
-
-function arbitreDe(id, ps, l) {
-  const p = ps.find((x) => x.id === id);
-  const principal = (l || []).find((s) => s.role === "principal");
-  const fp = principal && ps.find((x) => x.id === principal.personnage_id);
-  const zone = (fp && fp.lieu_id) || null;
-  if (!p || !p.lieu_id || !zone || p.lieu_id === zone) return null;
-  // La partie ville d'un id de zone se normalise SANS TIRETS (même règle
-  // que agents/zone.py : "port-real" → "mj-portreal", jamais "mj-port-real").
-  return "mj-" + p.lieu_id.replace(/-/g, "");
-}
-
 function traiter(req, res, url) {
   if (req.method === "GET") {
     if (url === "/") {
@@ -71,11 +40,6 @@ function traiter(req, res, url) {
       const moi = j ? { personnage_id: j.personnage_id, nom: j.nom || "", regie: !!j.regie } : null;
       if (moi && j.hors_roster) {
         moi.hors_roster = true;
-        // Un arbitre incarné n'a pas d'arbitre : sa page est un poste
-        // d'observation, le front cache la barre des verbes sur ce drapeau.
-        moi.mj = !!j.mj;
-        // L'arbitre de ses verbes — le front le passera tel quel à /verbe.
-        moi.arbitre = j.mj ? null : arbitreDe(j.personnage_id, ps, l);
       }
       return envoyer(res, 200, JSON.stringify({
         multi: !!l,
@@ -86,10 +50,6 @@ function traiter(req, res, url) {
         hommes: ps.filter((p) => !dedans.has(p.id))
           .map((p) => ({ personnage_id: p.id, nom: p.nom || p.id }))
           .sort((a, b) => a.nom.localeCompare(b.nom, "fr")),
-        // Les arbitres, incarnables au même titre (habitant.md — un MJ est
-        // un habitant) : le front les groupe sous les hommes.
-        arbitres: l ? arbitres().map((id) => ({
-          personnage_id: id, nom: "L'arbitre (" + id + ")" })) : [],
       }));
     }
     // Débug — changer de siège sans rouvrir l'URL au jeton. On ne rend JAMAIS
@@ -109,9 +69,6 @@ function traiter(req, res, url) {
       // s'écrit dans joueurs.json — le roster reste le roster.
       let jeton = cible && cible.jeton;
       if (!jeton && vers && fiches().some((p) => p.id === vers)) jeton = "homme:" + vers;
-      // Un arbitre se prend comme un homme : même jeton fabriqué, même
-      // serrure — c'est siege.js qui vérifie que sa chambre existe.
-      if (!jeton && vers && arbitres().indexOf(vers) !== -1) jeton = "homme:" + vers;
       if (!jeton) return envoyer(res, 404, JSON.stringify({ erreur: vers }));
       res.writeHead(302, {
         "Set-Cookie": "jeton=" + encodeURIComponent(jeton) + "; Path=/; Max-Age=31536000; SameSite=Lax",

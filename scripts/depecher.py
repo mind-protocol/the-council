@@ -8,10 +8,9 @@ Usage :
     python scripts/depecher.py --qui sara --mission "..."   consigne du jour
 
 CE FICHIER EST UNE FACADE (docs/organisation.md §2) : la matiere vit dans le
-container agents/depeche/ — brief, manuel, narrateur, trous, mission, retour,
+container agents/depeche/ — brief, manuel, trous, mission, retour,
 cli. Le chemin et la CLI de cette commande sont geles ; les reexports
-ci-dessous gardent les anciens noms `depecher.*` vivants pour les importeurs
-historiques (boucle_activation).
+ci-dessous gardent les noms `depecher.*` utiles a la commande publique.
 """
 import sys
 
@@ -33,9 +32,6 @@ date_du_monde = _depeche.date_du_monde
 travaux_ouverts_de = _depeche.travaux_ouverts_de
 brief_de = _depeche.brief_de
 manuel_de = _depeche.manuel_de
-manuel_narrateur_local = _depeche.manuel_narrateur_local
-message_tentative = _depeche.message_tentative
-contrat_rapport_narrateur = _depeche.contrat_rapport_narrateur
 poser_letagere = _depeche.poser_letagere
 poser_la_memoire = _depeche.poser_la_memoire
 extraire_json = _depeche.extraire_json

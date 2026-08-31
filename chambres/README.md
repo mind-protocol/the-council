@@ -1,6 +1,6 @@
 # chambres/ — les domiciles des habitants
 
-Une chambre par être pensant (hommes, MJ de zone, MJ du joueur) : son
+Une chambre par être pensant (les habitants et l'unique MJ `mj`) : son
 `claude.md` (sa main, jamais la nôtre), `problemes.json` (les pannes de
 l'appareil), `en-souffrance.json` (ses fils ouverts), `fil/`, `books/`,
 `brouillons/`, `relations/<autre>/` (fiche subjective + canal

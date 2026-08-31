@@ -38,9 +38,6 @@ modules. Son chemin et sa CLI (`--verifier`, `--jours`, `--jusqu-a`,
 
 ## Décisions actées
 
-- **D-a (scelle.py)** : le vocabulaire d'état (staging) — `TABLES_MUTABLES`,
-  `CROYANCES`, l'écriture scellée — est **candidat à `etat/` le jour où un
-  second écrivain apparaît**. Pas avant : rien sans consommateur réel.
 - **D-b (gardes/)** : conceptuellement du **banc** (lit tout, n'écrit rien) —
   **réexamen vers `bancs/` après le lot 2**. La tension est notée dans
   `gardes/__init__.py`, on ne déménage pas deux fois.
@@ -55,17 +52,16 @@ modules. Son chemin et sa CLI (`--verifier`, `--jours`, `--jusqu-a`,
 
 ## Frontières
 
-- **Lecture seule sur `etat/`**, une seule écriture (`scelle.ecrire_proposition`),
-  refusée hors `etat/`.
+- **Lecture seule sur `etat/`** : le tick calcule et affiche ; les habitants
+  écrivent eux-mêmes ce qu'ils produisent.
 - Les gardes **signalent, ne réparent jamais** ; les notes n'entrent pas dans
   le code de sortie.
-- Aucune prose machinale : la `version` d'une rumeur, le contenu d'un saut,
-  c'est le MJ qui l'écrit — `appliquer.py` refuse un lot sans contenu.
+- Aucune prose machinale : la `version` d'une rumeur et le contenu d'un saut
+  viennent d'un homme.
 
 ## Consommateurs
 
-`appliquer.py` (BUDGETS, empreintes), `migrations/migrer_plis.py` (Etat,
-plis), `boucle_activation.py` / `sieges.py` / `regence.py` (occupation,
-regence), `serveur/domaine/activations.js` (`--verifier --json` →
+`sieges.py` / `regence.py` (occupation, regence),
+`serveur/domaine/activations.js` (`--verifier --json` →
 /admin/sante), `scripts/tests/essai_occupation.py` (les invariants de
 `verifier_occupation`).

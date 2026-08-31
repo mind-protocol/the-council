@@ -38,7 +38,7 @@ from temps.gardes.social import (  # noqa: F401
 from temps.gardes.sieges import (  # noqa: F401
     verifier_occupation, siege_par_id, verifier_sieges,
     verifier_audiences, verifier_affectations,
-    verifier_registres_derives, verifier_activations)
+    verifier_registres_derives)
 
 GRAVITES = ("grave", "avertissement", "note")
 
@@ -111,7 +111,6 @@ def verifier(e, en_json=False):
     verifier_rumeurs(e, r)
     verifier_croyances_sans_porteur(e, r)
     verifier_affectations(e, r)
-    verifier_activations(e, r)
     verifier_audiences(e, r)
     r.imprimer_json() if en_json else r.imprimer()
     # Les 'note' sont informatives : elles ne font pas echouer l'audit. La

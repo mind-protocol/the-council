@@ -16,14 +16,12 @@
 # CE QUI VIT ICI :
 #   --dire   vers un homme : billet au canal de chambre + reveil cast
 #            (billet.ecrire) — present ou absent, plus de distinction ;
-#            vers une zone (mj, mj-*) : billet au canal + reveil CAST de la
-#            zone (les zones sont des institutions publiques : le canal
-#            s'ouvre au premier mot) ;
+#            vers `mj` : billet au canal + reveil CAST du MJ ;
 #            vers `tous` : la criee — etat/parloir/tous.jsonl (une criee
 #            n'est pas une paire, elle ne migre pas en canal).
 #   --tenter / --faire / --demander : les verbes (habitant.md §3) — la
 #            demande ET le verdict se deposent au CANAL homme~zone, le
-#            verdict revient en CALL (zone.appeler_zone, inchange).
+#            verdict revient en CALL (`mj.appeler_mj`).
 #   --penser : un reveil de soi-meme — la pensee est un cast a soi
 #            (depecher detache, la pensee en elan du jour) ; aucun arbitre,
 #            aucun canal : le vecu et demain.md se deposent chez lui.
@@ -32,7 +30,7 @@
 #     python scripts/parloir.py --dire --de mj --a le-sanglier "Reviens au quai"
 #     python scripts/parloir.py --tenter --de gerardys --a mj "je pars sur mon cheval"
 #     python scripts/parloir.py --demander --de gerardys --a mj "que disent les registres ?"
-#     python scripts/parloir.py --dire --de mj --a mj-aurore "Gerardys est a toi"
+#     python scripts/parloir.py --dire --de dev --a mj "Le joueur a poste"
 #     python scripts/parloir.py --dire --de mj --a tous "On ouvre la salle"
 #     python scripts/parloir.py --fils                      (les fils restants)
 import argparse
@@ -162,37 +160,17 @@ def ecouter(qui, avancer=True):
 
 
 def est_un_mj(qui):
-    """Convention, et c'est la seule de tout le fichier : un identifiant qui
-    commence par « mj » est une regie — `mj`, `mj-aurore`, `mj-nlr`. Tout le
-    reste est quelqu'un qui travaille, et a qui l'on ecrit un billet."""
-    return qui == "mj" or qui.startswith("mj-")
-
-
-def _reveiller_zone_detachee(mj, de, texte):
-    """Le reveil CAST d'une zone — spawn detache de scripts/reveiller.py
-    (le motif de zone.lancer_etabli_detache). On lance une vie, on ne la
-    regarde pas vivre : la suite arrive par les canaux."""
-    drapeaux = {}
-    if os.name == "nt":  # CREATE_NO_WINDOW | CREATE_NEW_PROCESS_GROUP — detache SANS console visible (spam de terminaux du 31.8)
-        drapeaux["creationflags"] = 0x08000000 | 0x00000200
-    else:
-        drapeaux["start_new_session"] = True
-    subprocess.Popen(
-        [sys.executable, os.path.join(RACINE, "scripts", "reveiller.py"),
-         "--qui", mj, "--de", de, texte],
-        cwd=RACINE, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL, **drapeaux)
+    """Le seul identifiant de maitre du jeu."""
+    return qui == "mj"
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--dire", action="store_true")
     # LES VERBES (docs/habitant.md §3) : l'acces de l'homme au monde, par le
-    # meme adressage que --dire. La resolution est la convention est_un_mj,
-    # et elle seule : `mj` et `mj-*` -> un MJ de zone, appele en CALL (le
-    # verdict est le retour de commande, dans le fil de sa pensee).
+    # meme adressage que --dire : seul `mj` peut les arbitrer en CALL.
     ap.add_argument("--tenter", action="store_true",
-                    help="je tente — l'arbitre de zone tranche en coulisse")
+                    help="je tente — le MJ tranche en coulisse")
     ap.add_argument("--faire", action="store_true",
                     help="je propose un changement au monde")
     ap.add_argument("--demander", action="store_true",
@@ -244,6 +222,10 @@ def main():
         print(u"fil(s) clos : %s" % (u", ".join(vises) or u"aucun"))
         return
 
+    if a.de and a.de.startswith("mj-"):
+        raise SystemExit(
+            u"les MJ de zone ont ete retires ; la seule identite MJ est `mj`")
+
     if a.penser:
         if not (a.de and a.texte):
             raise SystemExit(u"--penser veut --de et un texte (sa pensee)")
@@ -266,7 +248,7 @@ def main():
                              % verbe.lower())
         if not est_un_mj(a.a):
             raise SystemExit(
-                u"un verbe s'adresse a un arbitre de zone (mj, mj-*), pas a "
+                u"un verbe s'adresse au MJ (`mj`), pas a "
                 u"%r — pour parler a quelqu'un : --dire" % a.a)
         mot = u" ".join(a.texte)
         _sain(a.de)
@@ -275,11 +257,11 @@ def main():
         # Imports tardifs — la porte lie zone et billet apres parloir
         # (l'ordre des imports d'expose.py est une contrainte).
         from agents.expose import billet as _b
-        from agents.expose import zone as _zone
+        from agents.expose import mj as _mj
         from agents import chambre as _ch
         canal = _b.deposer(a.de, a.a, u"[%s] %s" % (verbe, mot))
         # LE CALL (habitant.md §4) : on a besoin du verdict pour continuer.
-        verdict = _zone.appeler_zone(a.a, a.de, mot, verbe, modele=a.modele)
+        verdict = _mj.appeler_mj(a.de, mot, verbe, modele=a.modele)
         # Le verdict est AUSSI une trace : la reponse du MJ, au meme canal.
         _b.deposer(a.a, a.de, verdict)
         # L'echange a ete vecu en direct des deux cotes : le re-servir en
@@ -294,6 +276,9 @@ def main():
             raise SystemExit(u"--dire veut --de, --a et un texte")
         texte = u" ".join(a.texte)
         _sain(a.de), _sain(a.a)
+        if a.a.startswith("mj-"):
+            raise SystemExit(
+                u"les MJ de zone ont ete retires ; adresse ce mot a `mj`")
         if a.a == TOUS:
             # LA CRIEE : pas une paire — le fil jsonl demeure.
             fil = dire(a.de, a.a, texte)
@@ -313,15 +298,11 @@ def main():
                   % os.path.relpath(canal, RACINE))
             return
         if est_un_mj(a.a):
-            # Une zone est une institution publique : le canal s'ouvre au
-            # premier mot, et le mot part avec le reveil (cast) — DOSE par
-            # le cooldown anti-tempete de zone.reveiller_en_cast (31.8).
-            from agents.expose import zone as _z
-            canal, parti = _z.reveiller_en_cast(a.a, a.de, texte)
-            print(u"billet a %s (canal %s) — %s"
-                  % (a.a, os.path.relpath(canal, RACINE),
-                     u"zone reveillee en cast" if parti else
-                     u"cast recent, le billet attend son prochain reveil"))
+            # Le mot part au canal puis reveille l'unique MJ en cast.
+            from agents.expose import mj as _mj
+            canal, parti = _mj.reveiller_en_cast(a.de, texte)
+            print(u"billet au MJ (canal %s) — reveille en cast"
+                  % os.path.relpath(canal, RACINE))
             return
         from agents.expose import billet as _b
         canal, rep = _b.ecrire(a.de, a.a, texte, modele=a.modele)

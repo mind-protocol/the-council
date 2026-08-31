@@ -28,7 +28,7 @@
 # JSON, touche les cellules visees, et redonne le tout. Ce qu'il n'a pas nomme
 # n'a pas bouge.
 #
-# BLANC PAR DEFAUT, comme scripts/appliquer.py. Il dit ce qu'il ferait, ligne
+# BLANC PAR DEFAUT. Il dit ce qu'il ferait, ligne
 # par ligne, et n'ecrit qu'avec --vraiment.
 #
 # Usage :
@@ -56,7 +56,7 @@ import bibliotheque
 
 racine = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 LIVRES = os.path.join(racine, "etat", "books.json")
-STAGING = os.path.join(racine, "etat")
+ETAT_CIBLE = os.path.join(racine, "etat")
 
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -279,7 +279,7 @@ def main():
         sys.stdout.write(AIDE)
         return 2
     if not os.path.isfile(chemin):
-        chemin = os.path.join(STAGING, os.path.basename(chemin))
+        chemin = os.path.join(ETAT_CIBLE, os.path.basename(chemin))
     if not os.path.isfile(chemin):
         sys.stdout.write(u"proposition introuvable : %s\n" % args[0])
         return 2
@@ -289,7 +289,7 @@ def main():
 
     # GARDE 1 — on relit la bibliothèque MAINTENANT, pas plus tôt. La session
     # gardera cette version pour refuser une écriture concurrente du même livre.
-    session = bibliotheque.ouvrir(STAGING)
+    session = bibliotheque.ouvrir(ETAT_CIBLE)
     livres = session.livres
 
     corrections = prop.get("corrections") or []

@@ -116,6 +116,8 @@ const textes = (r) => r.corps.items.map((it) => it.texte);
     { type: "recit", texte: "9 sans audience, APRÈS le seuil" },    // personne
   ];
   fs.mkdirSync(etat, { recursive: true });
+  // Un ancien dossier mj-* ne doit plus suffire a fabriquer un siege.
+  fs.mkdirSync(path.join(racine, "chambres", "mj-sombreval"), { recursive: true });
   fs.writeFileSync(path.join(etat, "flux.jsonl"),
     flux.map((it) => JSON.stringify(it)).join("\n") + "\n", "utf-8");
 
@@ -132,11 +134,19 @@ const textes = (r) => r.corps.items.map((it) => it.texte);
   const serveur = childProcess.spawn(process.execPath,
     [path.join(__dirname, "serveur.js"), String(port)], {
       cwd: path.join(__dirname, ".."),
-      env: Object.assign({}, process.env, { CONSEIL_RACINE: racine, VOIX_API: "0" }),
+      env: Object.assign({}, process.env, { CONSEIL_RACINE: racine,
+        VOIX_API: "0", CONSEIL_SANS_REVEIL: "1" }),
       stdio: ["ignore", "pipe", "pipe"],
     });
   try {
     await attendreServeur(serveur);
+
+    const identite = await demander(port, "/moi", "jr");
+    assert.ok(!Object.prototype.hasOwnProperty.call(identite.corps, "arbitres"),
+      "/moi expose encore les anciens arbitres geographiques");
+    const ancienMj = await demander(port, "/bascule?vers=mj-sombreval", "jr");
+    assert.strictEqual(ancienMj.status, 404,
+      "un dossier mj-* permet encore de fabriquer un siege");
 
     // ---- 1. la lecture : chacun reçoit exactement le sien ------------------
     assert.deepStrictEqual(textes(await demander(port, "/scene", "jr")), [
@@ -211,6 +221,9 @@ const textes = (r) => r.corps.items.map((it) => it.texte);
     console.log("tri par `pour` (lecture et écriture): OK");
   } finally {
     serveur.kill();
-    fs.rmSync(racine, { recursive: true, force: true });
+    if (serveur.exitCode === null)
+      await new Promise((resolve) => serveur.once("exit", resolve));
+    fs.rmSync(racine, { recursive: true, force: true,
+      maxRetries: 10, retryDelay: 100 });
   }
 })().catch((e) => { console.error(e); process.exitCode = 1; });

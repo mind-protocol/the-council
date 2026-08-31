@@ -10,7 +10,7 @@ la regle des veilles qui comptent, les deux marques de main (assis_a,
 quitte_a), le refus de rendre vacant un siege sans tete — vit dans
 temps/occupation.py, avec tout son POURQUOI en tete. Le chemin et la CLI de
 cette commande sont geles ; les reexports ci-dessous gardent les anciens noms
-`occupation.*` vivants (regence, sieges, boucle_activation et les tests
+`occupation.*` vivants (regence, sieges et les tests
 passent deja par la porte temps/expose, qui rend le meme module).
 """
 import sys

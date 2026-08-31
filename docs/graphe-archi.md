@@ -118,7 +118,7 @@ flowchart TB
 
 **5 fichiers, 403 lignes.** Porte : `scripts/etat/expose.py`
 
-- **scripts/** (5) — `tables.py`, `appliquer.py`, `ajouter.py`, `purger.py`, `veille.py`
+- **scripts/** (4) — `tables.py`, `ajouter.py`, `purger.py`, `veille.py`
 
 ### 🔩 socle — rang 0
 
@@ -192,7 +192,7 @@ flowchart TB
 
 **24 fichiers, 5475 lignes.** Porte : `scripts/verifier.mjs`
 
-- **scripts/** (20) — `croisement.py`, `exporter_aurore.py`, `parvenir.py`, `simuler_reveil_maisons.py`, `graphe_archi.py`, `verifier.mjs`, `essai_occupation.py`, `scorer_activation_hightower.py`, `chercher_activation_hightower.py` … et 11 autres
+- **scripts/** — `croisement.py`, `exporter_aurore.py`, `parvenir.py`, `graphe_archi.py`, `verifier.mjs`, `essai_occupation.py`…
 - **serveur/** (4) — `test_siege.js`, `test_marche.js`, `test_piece_http.js`, `test_bibliotheque.js`
 
 ## Les écarts à la cible

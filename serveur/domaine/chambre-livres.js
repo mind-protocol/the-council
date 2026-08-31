@@ -32,8 +32,7 @@ function lireJson(p, defaut) {
   try { return JSON.parse(fs.readFileSync(p, "utf-8")); } catch (e) { return defaut; }
 }
 
-// Le nom d'un habitant : sa fiche s'il en a une ; un arbitre n'a pas de fiche,
-// son existence est sa chambre (habitant.md §1).
+// Le nom d'un habitant : sa fiche s'il en a une ; le MJ n'a pas de fiche.
 function carteDesNoms() {
   const noms = {};
   const liste = lireJson(path.join(RACINE, "etat", "personnages.json"), []);
@@ -43,8 +42,7 @@ function carteDesNoms() {
   return noms;
 }
 function nomDe(noms, id) {
-  if (id === "mj" || String(id || "").slice(0, 3) === "mj-")
-    return "L'arbitre (" + id + ")";
+  if (id === "mj") return "Le MJ";
   return noms[id] || String(id || "").replace(/-/g, " ");
 }
 
@@ -90,8 +88,7 @@ function ficheVide(md) {
 // Le claude.md de semis : l'habitant y dit lui-même qu'il n'a rien écrit.
 // Il compte pour la porte du COFFRET (une chambre qui n'a que ça n'en a pas),
 // mais s'il y a coffret, il s'y range — c'est sa manière, elle se lit.
-// Deux formes de semis : celle des hommes (« ce qui suit est ce qu'on disait
-// de moi ») et celle des MJ de zone (« Ce cahier s'ouvre vide »).
+// Deux formes historiques de semis restent lisibles dans les archives.
 const estSemis = (md) => md.indexOf("Je n'y ai encore rien écrit") !== -1
   || md.indexOf("Ce cahier s'ouvre vide") !== -1;
 
@@ -109,7 +106,7 @@ function depuisDit(d, aujourdhui) {
   return (n === 1 ? "hier" : "il y a " + n + " j.") + " (" + dateDite(d) + ")";
 }
 // Le jour du monde : l'horloge de l'habitant s'il en tient une, celle du
-// siège principal à défaut — un arbitre n'a pas d'horloge.
+// siège principal à défaut — le MJ n'a pas d'horloge.
 function jourDuMonde(h) {
   const horloges = lireJson(path.join(RACINE, "etat", "horloges.json"), {});
   if (horloges[h]) return jourAbs(horloges[h]);

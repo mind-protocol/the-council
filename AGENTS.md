@@ -165,8 +165,8 @@ Le joueur pilote le rythme via trois boutons présents dans chaque widget.
 - Une scène se clôt quand son enjeu est résolu ou reporté : résumé dans `journal.scenes`, `scene_courante` vidée, état mis à jour (voir Discipline).
 
 ### « Advance » — un battement
-- **D'abord le calcul, ensuite le jugement.** Avant de simuler quoi que ce soit, lance `python scripts/tick.py --jusqu-a <date>` (ou `--jours N`) et lis la proposition écrite dans `etat/staging/`. Le script ne décide rien : il dit ce qui tombe — horloges de plan échues, événements à échéance, nouvelles de `diffusion` à livrer, déclencheurs à peser, têtes en retard. Il n'écrit jamais dans `etat/`.
-- **Puis applique en un geste.** La proposition contient déjà les mutations arithmétiques (horloges décomptées, nouvelles marquées livrées). Ajoute les tiennes à la main dans sa liste `mutations_proposees` — ce que produit une étape tombée, la croyance qu'une nouvelle installe, la tête que tu viens de réécrire — puis `python scripts/appliquer.py <fichier> --vraiment`. Il valide tout avant d'écrire quoi que ce soit et refuse si l'état a bougé depuis le calcul. Écrire à la main dans `etat/*.json` reste permis, mais tu perds les gardes.
+- **D'abord le calcul, ensuite le jugement.** Avant de simuler quoi que ce soit, lance `python scripts/tick.py --jusqu-a <date>` (ou `--jours N`) et lis son calcul. Le script ne décide rien : il dit ce qui tombe — horloges de plan échues, événements à échéance, nouvelles de `diffusion` à livrer, déclencheurs à peser, têtes en retard. Il n'écrit jamais dans `etat/`.
+- **Puis écris ce qui s'est produit.** Les hommes ont accès au dépôt et modifient directement les fichiers d'`etat/` qu'ils sont les mieux placés pour tenir. Le MJ fait de même pour le battement qu'il arbitre.
 - Résous UN battement de temps (durée élastique, voir plus bas). Incrémente `monde.date`.
 - En début de session, `python scripts/tick.py --verifier` : il repère les têtes en retard, les actifs sans intentions, les étapes sans horloge, les nouvelles non livrées. Répare avant de jouer.
 - **Un Advance fait tourner DEUX boucles, jamais une.** La salle d'abord si le joueur y est (« Le tour suivant s'ÉLIT »), puis la boucle hors scène ci-dessous pour tous les absents. Elles ne se mélangent pas et ne se remplacent pas : la première produit des répliques et des gestes, la seconde produit des faits qui voyagent.
@@ -314,22 +314,13 @@ Corollaire pour un siège alterné : le temps ne s'arrête pas dans le siège va
 
 ## Délégation à des agents
 
-Les calculs lourds (long fast-forward, tick à nombreux acteurs) peuvent être délégués à un agent en arrière-plan (outil Agent) pendant que la scène courante reste jouable. Un agent écrit ses propositions de mutations dans `etat/staging/<horodatage>.json` ; le MJ relit, arbitre et applique dans `etat/*.json` — pas parce qu'il en aurait le monopole, mais parce qu'une proposition relue vaut mieux qu'une écriture aveugle.
+Les calculs lourds (long fast-forward, tick à nombreux acteurs) peuvent être délégués à un agent en arrière-plan (outil Agent) pendant que la scène courante reste jouable. L'agent lit et modifie directement `etat/` selon ce qu'il a appris et produit.
 
 **Il n'y a plus de règle du seul écrivain** (9 août). Elle était fausse en fait — un homme dépêché a lancé `ls`, `cat` et `python -c` toute une journée sans que rien l'arrête — et elle coûtait plus qu'elle ne protégeait. Les acteurs ont Bash. Ce qui tient l'état, désormais, ce sont deux gestes et non un interdit : `scripts/ajouter.py`, qui pose UNE entrée à la fois au lieu de réécrire un tableau, et `scripts/veille.py`, qui dit ce que l'autre session a touché pendant qu'on réfléchissait. Écriture optimiste : on se relit avant d'écrire, on n'attend pas un verrou.
 
-## Deux MJ — un par joueur, toujours
+## Un seul MJ — pour tous les joueurs et tous les lieux
 
-À plusieurs joueurs, chacun a SON MJ, y compris quand ils sont dans la même salle. La règle inverse — une salle, un MJ, l'autre qui relaie — a l'air propre et ne l'est pas : le joueur relayé attend derrière une session qui ne le guette pas, son écran ne répond plus, et il finit par demander « c'est bon je peux y aller ? ». **Un joueur sans MJ éveillé est un joueur qui a quitté la partie sans le savoir.**
-
-Le partage se fait donc par CASTING, jamais par pièce.
-
-- **Le MJ principal** tient le monde : la salle et sa physique, les interruptions, la marée, le temps, `monde.json`, `tick.py`, les événements, le canon, et **tous les PNJ qui ne sont pas explicitement attribués à l'autre**. C'est lui qui tranche une action incertaine dès qu'elle engage quelqu'un d'autre que le personnage de son collègue.
-- **Le MJ second** tient son personnage et SES DÉPENDANCES : son intériorité (`pensee`), ses réponses hors fiction (`reponse`, `coulisses`), sa narration à lui — ce que son personnage voit, sent, fait —, et les PNJ de sa sphère : ses agents, ses gens, ceux qu'il a amenés, ceux que son office lui attache.
-- **Un PNJ appartient à qui il RÉAGIT.** C'est la règle, et elle prime sur toute liste : si un PNJ répond à mon joueur, s'adresse à lui, ou agit sur lui, c'est moi qui le joue — quel que soit le siège auquel il est rattaché. Un mestre qui tranche une question posée par Aurore est joué par le MJ d'Aurore, même s'il sert la reine le reste du temps. Sans cela, chaque fois qu'un joueur parle à quelqu'un, il attend une session occupée ailleurs — et l'on retombe sur le mal qu'on voulait guérir.
-- Le champ `pnj` de `etat/joueurs.json` reste utile, mais c'est un **rattachement par défaut, pas un monopole** : il dit qui tient ce PNJ quand il poursuit ses propres affaires, hors de toute adresse à un joueur. Un PNJ qu'aucune liste ne nomme est au principal.
-- **Le même PNJ sollicité par les deux à la fois** — la reine et Aurore parlent toutes deux à Gerardys dans la même minute : le principal tranche, et le second montre son personnage qui attend. Ça reste rare ; c'est le seul cas où l'on s'arrête.
-- **Jouer un PNJ oblige à le rendre intact.** Avant de lui prêter la voix : relire sa `maniere`, ses `intentions`, et ce qu'il a dit récemment (`paroles.json`). Après : écrire ce qu'il a dit et fait, pour que l'autre MJ hérite d'un personnage cohérent et non d'un sosie. La mémoire partagée de ces gens-là, c'est l'état — jamais la conversation.
+Il n'existe qu'une autorité narrative, identifiée par `mj`. Tous les sièges lui adressent leurs actions ; aucun lieu, joueur ou casting ne crée une régie `mj-*`. Le MJ tient le monde, le temps, les événements et tous les PNJ. Avant de jouer un PNJ, il relit sa `maniere`, ses `intentions` et ses paroles récentes ; après, il consigne ce qui a été dit et fait.
 
 ### Corneille — le siège de régie, et son MJ
 
@@ -351,31 +342,21 @@ python scripts/append_flux.py --pour corneille '{"type":"extrait","titre":"L arr
 
   La page rouvre alors le fil à cet endroit, tel qu'il a été joué, à côté de la scène en cours. `{"type":"dossier","personnage_id":"<id>"}` ouvre de même le fil refait d'un homme sans qu'elle ait à le chercher sur le plan.
 
-**Son MJ est un MJ comme les autres, et elle en a UN.** Ses actions tombent dans `etat/inbox/corneille/`, et c'est son POST qui réveille son MJ, comme partout (le serveur spawn `scripts/reveiller.py` — le guetteur est mort, docs/habitant.md pas 5).
-
-Ce MJ-là ne tient aucun PNJ, ne fait avancer aucune horloge, n'écrit rien dans `etat/`. Il répond hors fiction — `reponse`, `coulisses`, `extrait`, `dossier` —, toujours `--pour corneille`, et il a le droit de tout dire : la régie est le seul siège à qui l'on ne cache rien. S'il touche à la fiction, c'est qu'il a changé de casquette, et alors ce sont les règles ordinaires du manuel qui reprennent — y compris la Règle Zéro.
+Les actions de Corneille tombent dans `etat/inbox/corneille/` et réveillent le même MJ unique. Pour ce siège de régie, il répond hors fiction — `reponse`, `coulisses`, `extrait`, `dossier` — toujours `--pour corneille`, sans faire avancer le monde.
 
 ### Dans une salle commune
 
 - La scène s'ouvre par `append_flux.py --pour tous '{"type":"effacer"}'` : le script NOMME alors les oreilles — `pour: [<tous les sièges occupés>]` — au lieu de laisser le champ vide. Ensuite, chacun pousse ses items avec `--pour tous`. **Un `pour` absent ne veut pas dire « commun »** : il veut dire « rien n'a été déclaré », et à plusieurs joueurs c'est désormais un bug — un tel item n'est servi à PERSONNE (jamais à tout le monde), et `tick.py --verifier` le signale. Corollaire : une scène commune ne se referme pas d'elle-même, mais il suffit de pousser un item `--pour <un siège>` pour rendre ce joueur à sa scène privée.
-- **Le second ne fait jamais parler un PNJ du principal**, même pour une politesse, même pour débloquer. Il montre son personnage qui attend, et c'est au principal de répondre.
-- **Le second ne consomme pas d'horloge** : ses items valent zéro minute (`pensee`, `reponse`, `coulisses` le sont par nature ; pour un `geste` ou un `recit` de son personnage, il écrit `duree: 0`). Le temps de la salle appartient à celui qui tient la salle, sinon deux plumes le comptent deux fois.
-- Chacun est réveillé par SON joueur : l'inbox reste `etat/inbox/<son personnage>/`, et le POST de ce siège réveille ce MJ-là. C'est toute la raison d'être de cette règle.
-- Les écritures d'état suivent le même partage : le second écrit les `paroles` et `actes` de son personnage et de ses PNJ (via `scripts/ajouter.py`, jamais en réécrivant un tableau), son dossier `etat/joueurs/<id>/`, son journal. Le reste est au principal.
+- Chaque joueur conserve son inbox `etat/inbox/<son personnage>/`, mais tous les POST réveillent `mj`.
+- Le MJ unique ordonne les interventions dans la salle et compte l'horloge une seule fois.
 
-### Ce qui reste au principal, sans partage
+### Autorité indivisible
 
-`monde.json` et l'avance du temps, `tick.py`, `evenements.json`, le canon et ses déviations, `annales.json`. Deux horloges qui avancent, c'est une partie qui diverge — et une divergence de temps ne se rattrape pas comme une contradiction de dialogue.
-
-### Se parler, au lieu de se deviner
-
-Le parloir vaut entre régies : `--dire --de mj --a mj-aurore "..."`, et `--a tous` pour la salle commune. Chaque session écoute sous son propre nom (`mj` pour le principal, `mj-<joueur>` pour les autres, via `LE_CONSEIL_MJ`).
-
-Ce n'est pas un canal de bavardage : il sert **le casting, et lui seul**. « Gerardys est à toi tant qu'elle lui parle », « je te rends Marna avant la marée », « mon joueur descend au quai, tu l'auras dans deux minutes ». C'est ce qui remplace la seule chose qu'on ne pouvait pas faire jusqu'ici : se prévenir sans passer par l'état, et sans faire attendre un joueur derrière une session occupée. Rien de ce qui s'y dit n'entre dans `etat/` ni dans le flux — le partage des écritures reste exactement celui du dessus.
+`monde.json`, l'avance du temps, `tick.py`, `evenements.json`, le canon et ses déviations, `annales.json` restent sous la seule autorité de `mj`.
 
 ### Se relire avant d'écrire
 
-Premier geste de chaque tour, dans les deux sessions : `python scripts/veille.py <nom-de-session>`, qui dit quelles tables l'autre a touchées. La mémoire de conversation est périmée dès qu'elle sort de l'état ; les fichiers ont toujours raison, et à deux ils changent pendant qu'on réfléchit.
+La mémoire de conversation est périmée dès qu'elle sort de l'état ; les fichiers ont toujours raison.
 
 ## Canon et déviations
 
@@ -434,7 +415,7 @@ Le jeu se joue dans une page persistante servie par `serveur/serveur.js` (port 3
    - `guidage` bas (0-30) : AUCUNE réaction custom sur les répliques (la page les masque déjà), pensées rares et neutres, PNJ indifférents à l'hésitation. Moyen : 1-2 réactions sur les répliques importantes. Haut (70-100) : réactions fréquentes, pensées qui orientent, PNJ qui tendent des perches quand le joueur flotte.
    **Canal d'introspection** : toute entité de l'état (gens, lieux, maisons, dragons — servies par `/entites`) et toute salle du château où l'on se trouve (`ecrans/modules/plans.js`) est en gras cliquable dans le fil. Un clic crée un MOMENT : la page affiche une amorce (« Vos pensées glissent vers X… ») et POSTe `{type:"pensee", cible, cible_type, texte}`. Le MJ le résout par 1-3 items `pensee` ajoutés au flux — ce qu'ELLE sait, se rappelle ou ressent de X (souvenirs canon, `info.json`, `paroles`/`actes` vécus — JAMAIS la vérité brute ni les intentions cachées), SANS interrompre la scène en cours ni passer par la parole. Penser est gratuit et silencieux ; parler engage.
 5bis. **Parler n'interrompt pas la salle.** Ce qui reste à jouer dans le flux continue de se jouer pendant que le joueur écrit et pendant que le MJ calcule — la scène ne se fige jamais parce qu'on a pris la parole. Le seul moyen d'arrêter le flux est le bouton **Couper**, qui n'apparaît dans la barre que tant qu'il reste des items en attente : il jette la suite, fait taire la voix, et POSTe `{type:"pause"}`. Conséquence pour le MJ : on peut pousser une longue suite sans craindre qu'une réplique du joueur ne l'efface — mais si le joueur coupe, ce qui n'a pas été joué n'a PAS eu lieu, et il faut reprendre à partir de ce qu'il a réellement vu.
-6. **Le POST du joueur réveille le MJ lui-même** (docs/habitant.md pas 5 — le guetteur est mort) : le serveur spawn `scripts/reveiller.py --de <personnage>`, détaché, qui appelle le MJ du joueur en session continue (`zone.appeler_zone`). Rien à armer, rien à réarmer. À son réveil : lire TOUS les fichiers inbox (l'action principale + les réactions accumulées), traiter (mutations d'état, `date_atteinte` fait foi pour une pause), SUPPRIMER les fichiers traités, ajouter la suite au flux.
+6. **Le POST du joueur réveille le MJ lui-même** (docs/habitant.md pas 5 — le guetteur est mort) : le serveur spawn `scripts/reveiller.py --de <personnage>`, détaché, qui appelle l'unique MJ en session continue (`mj.appeler_mj`). Rien à armer, rien à réarmer. À son réveil : lire TOUS les fichiers inbox (l'action principale + les réactions accumulées), traiter, SUPPRIMER les fichiers traités, ajouter la suite au flux.
    **La supervision est un siège** : `claude --resume <session mj>` en interactif quand on veut piloter la régie, rendue en sortant.
 7. Les portraits sont inlinés dans les items `salle` (`portrait_svg`) — `scripts/append_flux.py` le fait automatiquement pour les `presents` à ids simples ; `scripts/seed_flux.py` = modèle de réinitialisation.
 8. **Les échelles du décor** (voir `docs/carte.md`) : le décor porte plusieurs échelles d'une même guerre, avec une bascule. « Le royaume » = la table peinte de Westeros. « La ville » = ce qu'il y a hors les murs à portée de voix — l'île, le bourg, le port, la rade —, pilotée par `etat/ville.json` (même format et même dessin que le terrain ; genres de sol `eau`, `greve`, `mur`, `quai`, genres de corps `gens` et `nef`). « Le terrain » = le champ, quand il y en a un (voir plus bas). « Le château » = le plan local de Peyredragon, salle par salle (Table Peinte, roukerie, fosses, grand escalier, quai, archive…), la salle courante en braise ; c'est l'échelle par défaut, celle de la scène. La salle courante se DEVINE de l'en-tête de lieu (`lieu` de l'item) : soigne cet en-tête, il pilote le plan (« Petite salle du levant, Peyredragon »). Si l'en-tête est ambigu ou poétique, tranche avec un champ `salle: "<id de la salle>"` sur l'item — il vaut jusqu'au prochain changement de lieu. Une salle nouvelle qui compte durablement (l'archive, une cave, un chemin de ronde) s'ajoute à `ecrans/modules/plans.js` ; une salle de passage n'a pas besoin d'y être. Le plan ne montre jamais qui est ailleurs : seulement les présents de la salle où se tient le joueur.

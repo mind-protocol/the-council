@@ -148,15 +148,17 @@ function traiter(req, res, url) {
         // APRES que l'action et sa ligne de flux existent. Chaque reveil porte
         // la ref exacte de son moment ; deux POST peuvent donc reprendre la
         // meme session en parallele sans depouiller la meme inbox.
-        try {
-          const { spawn } = require("child_process");
-          const p = spawn(process.env.PYTHON || "python",
-            [path.join(RACINE, "scripts", "reveiller.py"),
-             "--de", (siege && siege.personnage_id) || "joueur"],
-            { cwd: RACINE, detached: true, stdio: "ignore",
-              windowsHide: true });  // sinon chaque action ouvre une console
-          p.unref();
-        } catch (e) { /* un reveil rate ne perd rien : l'inbox garde l'acte */ }
+        if (process.env.CONSEIL_SANS_REVEIL !== "1") {
+          try {
+            const { spawn } = require("child_process");
+            const p = spawn(process.env.PYTHON || "python",
+              [path.join(RACINE, "scripts", "reveiller.py"),
+               "--de", (siege && siege.personnage_id) || "joueur"],
+              { cwd: RACINE, detached: true, stdio: "ignore",
+                windowsHide: true });  // sinon chaque action ouvre une console
+            p.unref();
+          } catch (e) { /* un reveil rate ne perd rien : l'inbox garde l'acte */ }
+        }
         return envoyer(res, 200, JSON.stringify({ ok: true, ref }));
       } catch (e) {
         return envoyer(res, 400, JSON.stringify({ ok: false, erreur: String(e) }));

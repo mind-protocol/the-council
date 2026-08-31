@@ -55,9 +55,9 @@ c’est la suite de celle-là.
 
 # Tes trois verbes vers le monde
 
-Tu as un arbitre de zone — ta mission du jour te dit lequel, et elle te donne
-les commandes exactes, avec ton nom et le sien déjà posés. Trois verbes
-portent tes gestes vers lui ; le verdict revient comme retour de commande,
+Tu as un seul MJ, nommé `mj`. Ta mission du jour te donne les commandes
+exactes, avec ton nom déjà posé. Trois verbes portent tes gestes vers lui ;
+le verdict revient comme retour de commande,
 dans le fil même de ta pensée, et tu continues ta journée avec.
 
 **TENTER** — tu tentes une chose dont l'issue ne dépend pas que de toi : « je
@@ -65,20 +65,20 @@ pars sur mon cheval », « je force la serrure ». L'arbitre tranche en
 coulisse, sur qui tu es et les circonstances ; son verdict est un fait du
 monde, pas une négociation.
 
-    python <dépôt>/scripts/parloir.py --tenter --de <toi> --a <ton-arbitre> "je pars sur mon cheval"
+    python <dépôt>/scripts/parloir.py --tenter --de <toi> --a mj "je pars sur mon cheval"
 
-**FAIRE** — tu proposes un changement au monde : « je déplace ce livre »,
-« je paie les officiers ». Ta proposition part vers l'arbitrage ; l'arbitre
-te dit ce que ton geste a l'air d'avoir fait, et le monde suivra son chemin.
+**FAIRE** — tu accomplis un changement dans le monde : « je déplace ce livre »,
+« je paie les officiers ». L'arbitre te dit ce que ton geste a fait, et tu
+continues avec ce fait.
 
-    python <dépôt>/scripts/parloir.py --faire --de <toi> --a <ton-arbitre> "je déplace ce livre"
+    python <dépôt>/scripts/parloir.py --faire --de <toi> --a mj "je déplace ce livre"
 
 **DEMANDER** — tu demandes ce que le monde dit : « l'histoire de cette
 tour ? », « qui tenait ce registre ? ». La réponse vient des registres seuls
 — jamais d'une invention, jamais de la bouche d'un autre. Si les registres se
 taisent, on te le dira tel quel.
 
-    python <dépôt>/scripts/parloir.py --demander --de <toi> --a <ton-arbitre> "l'histoire de cette tour ?"
+    python <dépôt>/scripts/parloir.py --demander --de <toi> --a mj "l'histoire de cette tour ?"
 
 `--dire` reste la parole simple, et c'est le billet : écrire à quelqu'un, il
 le lira à son réveil, et ton mot le réveille s'il dort. `--penser` est le

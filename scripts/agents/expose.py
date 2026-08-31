@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""LA PORTE du container 🧠 agents — depeche, activation, parloir, affectation.
+"""LA PORTE du container 🧠 agents — depeche, parloir, jugement, affectation.
 
 La regle (docs/organisation.md §2) : on n'entre dans un container que par sa
 porte — `from agents.expose import ...`, jamais `import depecher`.
@@ -7,13 +7,8 @@ Ce fichier REEXPORTE ce que les importeurs consomment reellement aujourd'hui,
 rien de plus.
 
 Tant que le lot 2 n'a pas vide les commandes, importer cette porte execute
-`affecter`, `parloir`, `depecher` et `boucle_activation` — et, par leurs
-propres imports, les portes `etat` et `temps`. C'est le comportement courant
-des importeurs actuels, pas un effet nouveau.
-
-L'ORDRE DES IMPORTS EST UNE CONTRAINTE : `depecher` et `boucle_activation`,
-basculees sur cette porte, relisent `agents.expose` PENDANT son chargement ;
-`affecter` (et `depecher` pour la boucle) doivent donc etre lies avant.
+`affecter`, `parloir` et `depecher` — et, par leurs propres imports, les portes
+`etat` et `temps`. C'est le comportement courant des importeurs actuels.
 """
 
 import os as _os, sys as _sys  # le chemin des freres : scripts/ et scripts/noyau/
@@ -39,12 +34,10 @@ from agents import runtime  # noqa: E402,F401
 from agents.prompts import copier_claude_vers_agents  # noqa: E402,F401
 from agents.prompts.copier_claude_vers_agents import main as copier_claude_vers_agents_main  # noqa: E402,F401
 # Le vecu (habitant.md pas 6) : depouille un transcript -p et le depose dans
-# fil/ — appele par le lanceur, jamais par hook (--restricted les ignore tous).
+# fil/ — appele par le lanceur, jamais confie a un hook de fournisseur.
 from agents import trace  # noqa: E402,F401 — lu par la facade scripts/vecu.py
 # Pas 7 : les fils etat/parloir/ vers les canaux des chambres (une seule fois).
 from agents import parloir_migration  # noqa: E402,F401 — lu par scripts/migrer_parloir.py
-# L'amorce des zones : un mj-<ville> par ville habitee, chambres ouvertes d'avance.
-from agents import amorce  # noqa: E402,F401 — ouvrir_les_zones
 # La salle : ce qu'un habitant entend la ou il se tient. Lu par
 # scene/flux.py au moment de la poussee — le seul endroit qui tienne a
 # la fois la piece, la presence et le texte. Depend de `chambre`, lie
@@ -63,25 +56,18 @@ from agents import parloir  # noqa: E402,F401 — l'adressage de la parole
 from agents.parloir import main as parloir_main  # noqa: E402,F401 — l'entree CLI de la facade
 # Descendue au lot 2 : le paquet agents/depeche/, plus la commande racine.
 from agents import depeche  # noqa: E402,F401 — relit cette porte : affecter deja lie
-depecher = depeche  # l'ancien nom, que la facade et boucle_activation demandent
+depecher = depeche  # l'ancien nom, que la facade publique demande
 from agents.depeche import main as depecher_main  # noqa: E402,F401 — l'entree CLI de la facade
-# Le pas 4 (habitant.md §3-§4) : le reveil en CALL du MJ de zone — session
-# continue sans date, verdict sur stdout. Lie APRES depeche : il relit
-# agents.depeche.brief, qui doit etre charge.
-from agents import zone  # noqa: E402,F401 — lu par parloir (les verbes) et mission (l'arbitre)
-from agents.zone import main as reveiller_main  # noqa: E402,F401 — l'entree CLI de scripts/reveiller.py
+# Le reveil en CALL de l'unique MJ — session continue sans date, verdict sur
+# stdout. Lie apres depeche : il relit agents.depeche.brief.
+from agents import mj  # noqa: E402,F401 — lu par parloir et le serveur
+from agents.mj import main as reveiller_main  # noqa: E402,F401
 # Le pas 5 (habitant.md §4) : ecrire = reveiller — le billet au canal de la
 # paire, puis le cast du destinataire. Lie apres depeche : il relit brief.
 from agents import billet  # noqa: E402,F401 — lu par parloir (--dire vers un homme absent)
-# Ne le 31.8 : la veille des zones — les etats cibles charges en energie
-# routes vers les narrateurs par le tissu, qui depechent les journees.
-# Lie apres zone : il le relit (arbitre_de, reveiller_en_cast).
-from agents import focus  # noqa: E402,F401 — lu par la facade scripts/boucle_zones.py
+# La veille de focus depeche directement les hommes sur les etats cibles.
+from agents import focus  # noqa: E402,F401 — lu par scripts/veille_focus.py
 from agents.focus import main as focus_main  # noqa: E402,F401 — l'entree CLI de la facade
-# Descendue au lot 2 : le paquet agents/activation/, plus la commande racine.
-from agents import activation  # noqa: E402,F401 — relit cette porte : depecher deja lie
-boucle_activation = activation  # l'ancien nom, que la facade et les bancs demandent
-from agents.activation import main as boucle_activation_main  # noqa: E402,F401 — l'entree CLI de la facade
 # Descendue au lot 2 : scripts/dossier.py -> agents/matiere.py (§7).
 from agents import matiere  # noqa: E402,F401 — le dossier d'un sujet, rassemble
 from agents.matiere import main as dossier_main  # noqa: E402,F401 — l'entree CLI de la facade

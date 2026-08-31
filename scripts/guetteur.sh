@@ -1,7 +1,7 @@
 #!/bin/sh
 # MORT le 30.8.2026 (docs/habitant.md pas 5, confirme par le dev) : remplace
 # par le reveil habitant du serveur — POST /action spawn scripts/reveiller.py,
-# le MJ du joueur est un habitant en session continue. Plus rien ne doit
+# l'unique MJ est un habitant en session continue. Plus rien ne doit
 # l'armer ; la suppression physique est laissee au dev.
 #
 # Guetteur d'inbox : attend qu'un fichier NOUVEAU apparaisse dans etat/inbox/,
@@ -16,8 +16,8 @@
 # rien recevoir. Un reamorcage oublie se repare donc tout seul au cycle
 # suivant, au lieu de durer jusqu'a ce que le joueur s'en apercoive.
 #
-# A DEUX MJ : chaque session guette SON joueur. On passe le dossier en premier
-# argument (ou par GUETTEUR_DIR) :
+# Chaque inbox de joueur peut etre guettee separement. On passe le dossier en
+# premier argument (ou par GUETTEUR_DIR) :
 #     scripts/guetteur.sh etat/inbox/daemon [fichiers deja connus...]
 # Sans argument de dossier, c'est etat/inbox/ — le comportement d'une partie
 # seule, inchange.

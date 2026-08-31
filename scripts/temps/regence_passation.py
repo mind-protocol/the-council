@@ -177,21 +177,6 @@ def _engagements(rapport):
                     "quoi": _court(quoi, 240),
                     "cible": resultat.get("cible"),
                 })
-    for mutation in (rapport or {}).get("mutations_proposees") or []:
-        if not isinstance(mutation, dict):
-            continue
-        if mutation.get("table") not in ("plis", "relations", "evenements",
-                                          "books", "mains"):
-            continue
-        valeur = mutation.get("valeur")
-        if not isinstance(valeur, str):
-            valeur = json.dumps(valeur, ensure_ascii=False)
-        engagements.append({
-            "genre": "%s/%s" % (mutation.get("table"),
-                                 mutation.get("operation")),
-            "quoi": _court(valeur, 240),
-            "cible": mutation.get("cible"),
-        })
     if activation.get("suite"):
         engagements.append({"genre": "suite annoncée",
                             "quoi": _court(activation["suite"], 240),

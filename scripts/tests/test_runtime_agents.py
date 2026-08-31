@@ -66,7 +66,8 @@ class RuntimeAgentsTest(unittest.TestCase):
             ["C:\\chambre"], "C:\\fin.txt")
         self.assertEqual(["codex", "exec"], neuve[:2])
         self.assertIn("--ignore-user-config", neuve)
-        self.assertIn("--approve-for-me", neuve)
+        self.assertIn("--dangerously-bypass-approvals-and-sandbox", neuve)
+        self.assertNotIn("--approve-for-me", neuve)
         self.assertIn("project_doc_max_bytes=524288", neuve)
         self.assertNotIn("--sandbox", neuve)
         self.assertNotIn("read-only", neuve)
@@ -77,18 +78,10 @@ class RuntimeAgentsTest(unittest.TestCase):
             "C:\\neutre", "gpt-5.3-codex-spark", "low", [],
             "C:\\fin.txt", "thread-123")
         self.assertEqual(["resume", "thread-123", "-"], reprise[-3:])
-        self.assertIn("--approve-for-me", reprise)
+        self.assertIn("--dangerously-bypass-approvals-and-sandbox", reprise)
+        self.assertNotIn("--approve-for-me", reprise)
         self.assertNotIn("--sandbox", reprise)
         self.assertNotIn("read-only", reprise)
-
-    def test_commande_codex_mj_n_a_aucun_sandbox(self):
-        commande = runtime._commande_codex(
-            "C:\\neutre", "gpt-5.6-luna", "low", ["C:\\depot"],
-            "C:\\fin.txt", sans_sandbox=True)
-        self.assertIn("--dangerously-bypass-approvals-and-sandbox", commande)
-        self.assertNotIn("--approve-for-me", commande)
-        self.assertNotIn("--sandbox", commande)
-        self.assertNotIn("read-only", commande)
 
     def test_manuel_codex_n_est_injecte_qu_a_la_creation_ou_si_change(self):
         with tempfile.TemporaryDirectory() as dossier:
@@ -148,22 +141,16 @@ class RuntimeAgentsTest(unittest.TestCase):
     def test_reprise_claude_sans_changement_omet_le_prompt_systeme(self):
         commande = runtime._commande_claude(
             None, None, None, [], [], None,
-            "session-mj", True, False, sans_sandbox=True)
+            "session-homme", True, False)
         self.assertNotIn("--system-prompt-file", commande)
 
-    def test_commande_claude_mj_n_est_pas_restreinte(self):
+    def test_commande_claude_homme_n_est_pas_restreinte(self):
         commande = runtime._commande_claude(
             "C:\\systeme.md", None, None, ["C:\\depot"], [], None,
-            "session-mj", False, False, sans_sandbox=True)
+            "session-homme", False, False)
         self.assertIn("--dangerously-skip-permissions", commande)
         self.assertNotIn("--restricted", commande)
         self.assertNotIn("--permission-mode", commande)
-
-    def test_seuls_les_mj_sortent_du_sandbox(self):
-        self.assertTrue(runtime._est_mj("mj"))
-        self.assertTrue(runtime._est_mj("mj-peyredragon"))
-        self.assertFalse(runtime._est_mj("rhaenyra"))
-        self.assertFalse(runtime._est_mj("mjestre-gerardys"))
 
     def test_normalise_le_jsonl_codex_dans_le_contrat_historique(self):
         rep = runtime._normaliser_codex([
