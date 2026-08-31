@@ -226,6 +226,11 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True):
     """
     from agents.expose import chambre as _ch
     neutre = tempfile.mkdtemp(prefix="depeche-%s-" % qui)
+    # SON NOM DANS SON ENVIRONNEMENT. `LE_CONSEIL_QUI` existait comme
+    # convention et n'etait JAMAIS posee — une lecture dans tout le depot,
+    # zero ecriture. Sans elle, le journal des affaires ne peut pas dire QUI
+    # a ferme une action : il ne verrait qu'un nom d'outil.
+    env = dict(os.environ, LE_CONSEIL_QUI=str(qui))
     poser_letagere(neutre, qui)
     # Ce que le message ne porte plus doit exister la ou il pointe.
     poser_la_memoire(neutre, qui)
@@ -264,7 +269,7 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True):
             drapeaux["start_new_session"] = True
         with io.open(entree, "rb") as fin, io.open(log, "wb") as flog:
             subprocess.Popen(base + ["--session-id", sid], cwd=neutre,
-                             stdin=fin, stdout=flog,
+                             stdin=fin, stdout=flog, env=env,
                              stderr=subprocess.STDOUT, **drapeaux)
         return {"cast": True, "log": log, "session": sid}
 
@@ -272,7 +277,7 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True):
     for tentative in (["--session-id", sid], ["--resume", sid]):
         # La mission passe par stdin pour la meme raison que le manuel par
         # un fichier : 11 ko d'argument s'ajoutent a tout le reste.
-        r = subprocess.run(base + tentative, cwd=neutre,
+        r = subprocess.run(base + tentative, cwd=neutre, env=env,
                            input=texte.encode("utf-8"),
                            capture_output=True, timeout=minutes * 60)
         out = r.stdout.decode("utf-8", "replace")

@@ -160,6 +160,16 @@ class Session:
         for ident in ids_avant:
             if ident not in voulus:
                 os.remove(os.path.join(dossier, ident + ".json"))
+        # LE JOURNAL DES AFFAIRES, ici et nulle part ailleurs : on tient
+        # `avant` et `voulus`, donc le diff est deja fait — et c'est le SEUL
+        # point que traversent les seize ecrivains Python et la route serveur.
+        # Envelopped : un journal qui casserait une ecriture d'etat serait un
+        # remede pire que le mal.
+        try:
+            import histoire
+            histoire.journaliser(avant, voulus, self.etat)
+        except Exception:
+            pass
         self._avant = copy.deepcopy(self.livres)
 
 
