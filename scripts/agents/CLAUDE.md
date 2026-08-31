@@ -4,16 +4,16 @@ Un acteur — humain ou PNJ — est un SIÈGE (docs/organisation.md §3, l'invar
 du siège). Ce container possède la machinerie qui fait vivre un siège hors
 scène : lui servir son point de vue (le brief, le dossier), l'envoyer vivre sa
 journée (la dépêche, la Règle Zéro), le laisser tourner au fil du graphe (la
-boucle d'activation), lui parler pendant qu'il travaille (le parloir), juger
-sa tentative (le jugement), et ancrer les choses de la fiction dans des mètres
-(l'affectation).
+boucle d'activation), lui écrire (le parloir : verbes en call, billet-réveil),
+juger sa tentative (le jugement), et ancrer les choses de la fiction dans des
+mètres (l'affectation).
 
 **LA PORTE est `expose.py`** (docs/organisation.md §2) : on n'entre ici que
 par `from agents.expose import ...`. Les commandes racine (`depecher.py`,
 `boucle_activation.py`, `parloir.py`, `juger.py`, `dossier.py`,
-`affecter.py`) sont des FAÇADES aux chemins gelés — les hooks de
-`.claude/settings.json` tapent `scripts/parloir.py` et `scripts/juger.py`
-tels quels — et elles passent elles aussi par la porte.
+`affecter.py`) sont des FAÇADES aux chemins gelés — le hook Stop de
+`.claude/settings.json` tape `scripts/juger.py` tel quel — et elles passent
+elles aussi par la porte.
 
 ## Les modules du lot 2 — la matière des commandes
 
@@ -21,7 +21,7 @@ tels quels — et elles passent elles aussi par la porte.
 |---|---|---|
 | `depeche/` | `depecher.py` | envoyer un homme vivre sa journée — brief, manuel, narrateur, trous, mission, retour, cli |
 | `activation/` | `boucle_activation.py` | la boucle pilotée par le graphe miroir — socle, horloges, graphe, taches, missions, dossier, mutations, rapport, continuite, appels, cycle, cli |
-| `parloir.py` | `parloir.py` | se parler pendant qu'on travaille — un fil par paire, curseur par lecteur |
+| `parloir.py` | `parloir.py` | l'adressage de la parole (le hook-oreille est mort le 31.8.2026) — les verbes en CALL vers l'arbitre (dépôt au canal homme~zone), `--dire` = billet au canal + réveil cast (homme comme zone), la criée `tous` seule au fil jsonl |
 | `jugement.py` | `juger.py` | le juge séparé (claude -p) du hook Stop — dix questions, deux relances au plus |
 | `matiere.py` | `dossier.py` | le dossier d'un sujet, rassemblé dans l'ordre d'autorité |
 | `affectation/` | `affecter.py` | une adresse physique pour une chose de la fiction — lecture, controle, cli |

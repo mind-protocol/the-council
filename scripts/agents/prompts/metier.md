@@ -80,9 +80,10 @@ taisent, on te le dira tel quel.
 
     python <dépôt>/scripts/parloir.py --demander --de <toi> --a <ton-arbitre> "l'histoire de cette tour ?"
 
-`--dire` reste la parole simple : un mot à quelqu'un, sans rien demander au
-monde. Tu ne devines pas l'issue d'un geste incertain et tu ne l'écris pas
-comme acquis : tu le TENTES, et tu travailles avec le verdict.
+`--dire` reste la parole simple, et c'est le billet : écrire à quelqu'un, il
+le lira à son réveil, et ton mot le réveille s'il dort. Tu ne devines pas
+l'issue d'un geste incertain et tu ne l'écris pas comme acquis : tu le
+TENTES, et tu travailles avec le verdict.
 
 ## Tes affaires — ce que le plan te dit sans qu'on te le demande
 

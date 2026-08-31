@@ -216,8 +216,9 @@ container `agents/` ; `chambres/` est de la donnée.
    casse. *(cast : délégable)*
 2. **Le lancement** (`depeche/mission.py`) — pas-de-tir neutre conservé, chambre
    montée `--add-dir`, outils +Write/Edit, **neutralisation des hooks hérités**
-   (mesurer `--setting-sources`), spawn détaché pour les casts. *(le point hooks se
-   mesure d'abord)*
+   (mesurer `--setting-sources`), spawn détaché pour les casts. Le hook-oreille du
+   parloir, qui vivait en sursis par `--settings`, est mort le 31.8 : les canaux
+   des chambres ont pris la relève — plus personne n'entend en cours de session.
 3. **Le brief** (`depeche/brief.py`) — section chambre au chemin absolu, billets en
    percept, claude.md perso joint au système, le gabarit JSON retiré. → **réveil-banc
    n°3** : le billet-percept est-il répondu ?

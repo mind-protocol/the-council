@@ -341,6 +341,18 @@ def non_lus(qui):
     return nouveaux
 
 
+def marquer_lu(qui, autre):
+    """Avance le curseur de QUI sur son canal avec AUTRE, et lui seul — pour
+    un echange vecu en direct (verbe en call, mot porte par un reveil de
+    zone) : re-servir ces entrees en percept au prochain reveil serait du
+    double. Les autres canaux ne bougent pas."""
+    n = len(_entrees(canal(qui, autre, creer=False)))
+    c = _curseur(qui, autre)
+    os.makedirs(os.path.dirname(c), exist_ok=True)
+    with io.open(c, "w", encoding="utf-8", newline="\n") as f:
+        f.write(u"%d" % n)
+
+
 def marquer_lus(qui):
     """Avance tous ses curseurs a la fin des canaux : son reveil a tout vu.
     A appeler quand le brief est parti — pas avant, pour qu'un lancement

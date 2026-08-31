@@ -2,7 +2,6 @@
 """APPELS — poser le jugement du narrateur, l'appel claude en stream avec
 heartbeat, et appeler_acteur : toute la sequence d'une activation.
 """
-import concurrent.futures
 import datetime as dt
 import hashlib
 import io
@@ -31,7 +30,6 @@ from agents.activation.graphe import continuite_tache
 from agents.activation.missions import (mission_activation,
                                         contexte_narrateur_activation,
                                         mission_ouverture_narrateur,
-                                        mission_veille_narrateur,
                                         mission_resolution_narrateur,
                                         mission_correction_narrateur,
                                         extraire_appel_pnj,
@@ -98,7 +96,8 @@ def appeler_stream(pid, manuel, mission, sid, modele, effort, minutes, heartbeat
     # sortie du hook : « le narrateur a reveille None au lieu de otto », sept
     # fois, plus quatre JSON malformes. Un --settings explicite frappe encore
     # sous --restricted (mesure de mission.py) : le hook de jugement du
-    # narrateur et le parloir de l'acteur restent donc charges, et eux seuls.
+    # narrateur reste donc charge, et lui seul (l'oreille-parloir de
+    # l'acteur est morte le 31.8.2026 — les canaux ont pris la releve).
     commande = ["claude", "-p", "--output-format", "stream-json",
                 "--verbose", "--restricted"]
     if autoriser_lecture:
@@ -238,7 +237,10 @@ def appeler_acteur(pid, tache, budget_energie, horloge, noeuds, modele, effort,
             prefix="acteur-%s-" % pid) as neutre_acteur:
         reglages_narrateur = poser_jugement_narrateur(
             neutre_narrateur, pid)
-        reglages_acteur = depecher.poser_le_parloir(neutre_acteur, pid)
+        # LE HOOK-OREILLE EST MORT (31.8.2026) : l'acteur ne recoit plus de
+        # --settings — une parole qui lui arrive est un billet au canal de sa
+        # chambre, servi en percept a son prochain reveil (habitant.md §3).
+        reglages_acteur = None
         reponse_ouverture = appeler_stream(
             role_narrateur, manuel_narrateur, ouverture, sid_narrateur,
             modele, effort, minutes, heartbeat, neutre=neutre_narrateur,
@@ -251,35 +253,15 @@ def appeler_acteur(pid, tache, budget_energie, horloge, noeuds, modele, effort,
         message_acteur = depecher.message_tentative(
             pid, dossier, appel["message"])
 
-        # LE NARRATEUR VEILLE PENDANT QU'IL TRAVAILLE. Sa session se terminait
-        # sur l'appel, et il ne revenait qu'a l'arbitrage : on lui demandait de
-        # guider un homme qui n'existait pas encore. On le relance donc EN
-        # PARALLELE de l'acteur, sur la meme session, avec pour seul travail de
-        # le suivre au parloir et de le depanner. Un echec de cette veille ne
-        # doit jamais coûter l'activation : elle est en marge, pas au milieu.
-        def veiller():
-            try:
-                return appeler_stream(
-                    role_narrateur, manuel_narrateur,
-                    mission_veille_narrateur(pid, tache, appel),
-                    sid_narrateur, modele, effort, minutes, heartbeat,
-                    neutre=neutre_narrateur, reprendre=True,
-                    autoriser_lecture=True, phase="narrateur.veille",
-                    reglages=reglages_narrateur)
-            except BaseException as e:
-                journaliser("narrateur.veille_echouee", acteur=pid,
-                            raison=type(e).__name__, erreur=_court(str(e), 200))
-                return None
-
-        with concurrent.futures.ThreadPoolExecutor(
-                max_workers=2, thread_name_prefix="veille") as duo:
-            veille = duo.submit(veiller)
-            reponse_acteur = appeler_stream(
-                pid, manuel_acteur, message_acteur, sid_acteur,
-                modele, effort, minutes, heartbeat,
-                neutre=neutre_acteur, phase="pnj.tentative",
-                reglages=reglages_acteur)
-            veille.cancel()
+        # LA VEILLE-PARLOIR EST MORTE AVEC LE HOOK-OREILLE (31.8.2026) : le
+        # narrateur suivait l'acteur au parloir pendant qu'il travaillait ;
+        # plus rien n'arme cette oreille — l'acteur travaille seul, et ce
+        # qu'on veut lui dire est un billet qu'il lira a son prochain reveil.
+        reponse_acteur = appeler_stream(
+            pid, manuel_acteur, message_acteur, sid_acteur,
+            modele, effort, minutes, heartbeat,
+            neutre=neutre_acteur, phase="pnj.tentative",
+            reglages=reglages_acteur)
         reponses.append(reponse_acteur)
         tentative = extraire_tentative(reponse_acteur)
         tentatives_acteur.append(tentative)

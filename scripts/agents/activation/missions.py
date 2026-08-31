@@ -87,13 +87,11 @@ Ouvre le battement local dans %(salle)s.
 La physique a élu %(acteur)s pour l'affaire suivante :
 %(tache)s
 
-TU LE SUIS PENDANT QU'IL TRAVAILLE, ET TU LE GUIDES. Un fil reste ouvert entre
-sa session et la tienne : sers-t'en dès qu'il part de travers, cherche une
-chose qui est dans ton dossier, ou s'engage vers un mur que tu vois et pas lui.
-On ne le laisse pas se cogner pour le plaisir de l'arbitrer après.
+IL TRAVAILLE SEUL DANS SA SESSION. Tu ne peux plus lui parler au milieu de sa
+route (l'oreille du parloir est morte le 31.8.2026) : ce que tu veux lui dire
+est un billet, qu'il lira à son prochain réveil —
 
     python scripts/parloir.py --dire --de mj --a %(acteur)s "<le fait qui lui manque, en une phrase>"
-    python scripts/parloir.py --ecouter --qui mj
 
 TU RECOMMANDES ET TU DÉPANNES — TU N'ORDONNES PAS. Il décide de sa journée ;
 toi, tu lui évites de la perdre.
@@ -137,38 +135,6 @@ et rends seulement cet objet, sans phrase autour :
         "minutes": round(budget_secondes / 60),
         "minimum": min(DUREE_ACTIVATION_MIN_SECONDES, budget_secondes),
     }
-
-
-def mission_veille_narrateur(pid, tache, appel):
-    """Ce que le narrateur fait pendant que son homme travaille : le suivre."""
-    return """PHASE 1bis — VEILLER SUR TON HOMME PENDANT QU'IL TRAVAILLE
-
-Tu viens de réveiller %(acteur)s sur : %(tache)s
-Il est en train de vivre sa journée EN CE MOMENT, dans sa propre session.
-
-Ton seul travail maintenant, pendant environ deux minutes : rester là et le
-dépanner. Tu ne rédiges rien, tu n'arbitres rien, tu ne rends aucun rapport.
-
-Fais ceci, en boucle, jusqu'à ce que tu aies tenu deux minutes :
-
-    python scripts/parloir.py --ecouter --qui mj
-    sleep 15
-
-S'il dit quelque chose, s'il bute, s'il cherche une chose que tu as dans ton
-dossier, réponds-lui :
-
-    python scripts/parloir.py --dire --de mj --a %(acteur)s "<ta recommandation ou ton dépannage>"
-
-TU RECOMMANDES ET TU DÉPANNES, TU N'ORDONNES PAS. Une porte qu'il ne voyait
-pas et qu'il reste libre de ne pas prendre ; ou le fait technique net —
-l'adresse exacte, l'id sous lequel une chose existe, le registre où elle est
-écrite, le nom réel de ce qu'il a mal nommé. Parle-lui autant qu'il en a
-besoin : un homme qu'on aide bien vaut mieux qu'un quota respecté.
-
-Le silence est normal et ne coûte rien : la plupart du temps il travaille très
-bien seul, et tu n'as rien à dire. Au bout de deux minutes, réponds simplement
-`{"veille": "finie"}` et arrête-toi.
-""" % {"acteur": pid, "tache": tache.get("quoi") or tache.get("id")}
 
 
 def mission_resolution_narrateur(pid, tache, budget_energie,

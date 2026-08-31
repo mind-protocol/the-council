@@ -98,8 +98,8 @@ chemin gelé. `ecrans/modules/fils.js` = *le fil du récit* (scène) garde son
 nom pour l'instant (docs/organisation.md §8 ⑧).
 
 **La Règle Zéro** — `depecher.py` (envoyer un homme vivre sa journée),
-`parloir.py` (lui parler pendant qu'il travaille), `presence.py` (qui est à
-portée, et ses creux).
+`parloir.py` (lui écrire : verbes en call, billet-réveil — le hook-oreille
+est mort le 31.8), `presence.py` (qui est à portée, et ses creux).
 
 **Le monde qui tourne** — `tick.py` (le calcul, n'écrit jamais dans `etat/`),
 `appliquer.py` (l'écriture gardée), `ajouter.py` (une entrée à la fois),

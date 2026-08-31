@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
-"""MISSION — le texte de mission servi a l'homme, l'etagere et le parloir
-poses dans sa session, l'archive du prompt, et l'appel claude -p.
+"""MISSION — le texte de mission servi a l'homme, l'etagere posee dans sa
+session, l'archive du prompt, et l'appel claude -p.
 
 L'ISOLATION EST MESUREE, PAS SUPPOSEE (docs/habitant.md pas 2, reveils-jouets
 du 30.8) : `--restricted --tools <liste>` remplace `--allowedTools`.
   - --restricted ignore les settings USER et PROJET — les hooks parasites de
     la machine ne frappent plus (deux reveils d'essai sur trois y finissaient
     leur vie) — et garde les outils nommes par --tools ;
-  - un fichier passe EXPLICITEMENT par --settings frappe ENCORE : le
-    parloir-hook des depeches, qui passe deja par --settings, continue donc
-    de battre en mode call. C'est un sursis, pas un avenir : le modele
-    habitant remplace ce hook par les canaux des chambres (transition
-    assumee, pas 3-5 du chantier) ;
+  - LE HOOK-OREILLE EST MORT LE 31.8.2026 : le sursis qui passait un
+    --settings explicite pour armer `parloir.py --ecouter` est leve. Un
+    homme en session n'entend plus en cours de route — une parole qui lui
+    arrive est un billet au canal de sa chambre, servi en percept a son
+    prochain reveil (l'anachronisme absorbe, c'est le modele) ;
   - Write/Edit dans la chambre montee (--add-dir) exigent
     --permission-mode acceptEdits, deja pose.
 
@@ -35,10 +35,12 @@ from etat.expose import tables
 from agents.depeche.brief import (RACINE, ETAT, DEPOT_RAPPORTS,
                                   livre,
                                   OUTILS, PARLOIR_PY, travaux_ids,
-                                  OUTIL_PARLOIR, SEL, lire, date_du_monde,
+                                  SEL, lire, date_du_monde,
                                   identifiant_de_session, brief_de,
                                   feuille_de_route, travaux_ouverts_de,
                                   dossier_journee)
+from agents.depeche.pas_de_tir import (poser_letagere,  # noqa: F401 — reexporte
+                                       poser_la_memoire)
 from agents.depeche.manuel import (manuel_de, contexte_message,
                                    message_tentative, manuel_narrateur_local,
                                    memoire_activation, etagere_systeme)
@@ -125,12 +127,10 @@ TENTER : tu tentes, l'arbitre tranche en coulisse. FAIRE : tu proposes un
 changement au monde. DEMANDER : tu demandes ce que le monde dit — la réponse
 vient des registres seuls.
 
-Le parloir apporte aussi une parole au milieu de ton travail. Lorsqu'une
-parole y arrive, cette commande porte ta réponse dans la pièce :
+Écrire à quelqu'un, c'est le billet : il le lira à son réveil, et ton mot le
+réveille s'il dort.
 
-    python %(parloir)s --dire --de %(qui)s --a %(arbitre)s "..."
-
-Puis ta journée continue depuis ce nouvel échange.
+    python %(parloir)s --dire --de %(qui)s --a <untel> "..."
 
 ## Ta chambre
 
@@ -170,142 +170,6 @@ Tes affaires ouvertes, pour mémoire :
     }
 
 
-def poser_letagere(neutre, qui):
-    """Materialise ses volumes en fichiers, un par volume, dans son dossier.
-
-    C'EST LE SELECTEUR, ET IL EST PHYSIQUE. On aurait pu lui donner le
-    lecteur en Bash et lui dire de s'en servir ; mais un outil qu'on autorise
-    par motif de commande se contourne, et une consigne ne verrouille rien.
-    La ou il travaille, il n'EXISTE que ce qu'il peut ouvrir. Le carnet de la
-    reine n'est pas refuse : il n'est pas la.
-
-    Effet de bord heureux : Grep sur ./livres/ lui donne la recherche
-    plein-texte de son etagere, ce qui est exactement le geste d'un homme qui
-    cherche dans ses registres — et qui evite les 547 000 jetons de
-    etat/books.json, ou il s'est noye pendant huit minutes.
-    """
-    dossier = os.path.join(neutre, "livres")
-    os.makedirs(dossier)
-    n = 0
-    index = []
-    for b in livre.etagere(qui):
-        with io.open(os.path.join(dossier, "%s.txt" % b.get("id")), "w",
-                     encoding="utf-8", newline="\n") as f:
-            f.write(livre.rendre(b, large=True))
-        index.append("%-34s %s%s" % (
-            b.get("id"), b.get("titre") or "",
-            ("   (porte par %s)" % b["acteur_id"]) if b.get("acteur_id")
-            else ("   (pose : %s)" % b["salle_id"]) if b.get("salle_id")
-            else ""))
-        n += 1
-    # L'INDEX EST UN FICHIER, PLUS UN PARAGRAPHE DU REVEIL. Il pesait 7,2 Ko
-    # dans le message pour dire des noms de fichiers ; il est ici, a cote de
-    # ce qu'il indexe, et c'est la ou un homme le cherche.
-    with io.open(os.path.join(dossier, "_index.txt"), "w", encoding="utf-8",
-                 newline="\n") as f:
-        f.write("LES VOLUMES A TA PORTEE — %d" % n + chr(10))
-        f.write("Chacun s'ouvre sous ./livres/<identifiant>.txt ;"
-                " Grep cherche dans leur texte." + chr(10) * 2)
-        f.write((chr(10)).join(sorted(index)) + chr(10))
-    return n
-
-
-def poser_la_memoire(neutre, qui, contexte=None):
-    """Materialise au pas-de-tir ce que le message ne porte plus.
-
-    LE PENDANT OBLIGE DE LA COMPRESSION. Sortir les croyances et les pensees
-    du message ne vaut que si elles EXISTENT quelque part qu'il puisse ouvrir :
-    un pointeur vers rien est pire qu'un percept trop long. Deux fichiers,
-    ecrits ici parce que ce sont des lectures de `etat/` mises en forme pour
-    lui — sa chambre, elle, est a lui, et nous n'y ecrivons pas sa memoire.
-
-    Rend {croyances, pensees} : le nombre de lignes posees de chaque cote.
-    """
-    dossier = os.path.join(neutre, "ma-memoire")
-    os.makedirs(dossier, exist_ok=True)
-    # `contexte` est un confort, pas une dependance : les deux chemins d'appel
-    # (depeche et boucle d'activation) ne l'ont pas tous les deux sous la main,
-    # et un fichier qui manque parce qu'un argument manquait serait exactement
-    # le pointeur mort qu'on cherche a eviter. A defaut, on relit la tete.
-    intention = (contexte or {}).get("intention")
-    if not intention:
-        tetes = tables.lire(os.path.join(RACINE, "etat", "intentions.json"), [])
-        if isinstance(tetes, dict):
-            tetes = tetes.get("intentions") or []
-        intention = next((t for t in tetes
-                          if isinstance(t, dict)
-                          and t.get("personnage_id") == qui), {})
-
-    croyances = [str(x) for x in (intention.get("croyances") or []) if x]
-    if croyances:
-        with io.open(os.path.join(dossier, "ce-que-je-tiens-pour-vrai.txt"),
-                     "w", encoding="utf-8", newline=chr(10)) as f:
-            f.write("CE QUE JE TIENS POUR VRAI" + chr(10))
-            f.write("La derniere en tete. Rien ici n'est prouve : c'est ce que"
-                    " je crois," + chr(10) + "et j'ai le droit de me tromper."
-                    + chr(10) * 2)
-            for x in croyances:
-                f.write("- " + x + chr(10) * 2)
-
-    pensees = [p for p in _pensees_de(qui)]
-    if pensees:
-        with io.open(os.path.join(dossier, "ce-que-jai-appris.txt"), "w",
-                     encoding="utf-8", newline=chr(10)) as f:
-            f.write("CE QUE J'AI APPRIS" + chr(10))
-            f.write("Mes pensees datees, la plus recente en tete." + chr(10) * 2)
-            for x in pensees:
-                d = x.get("date") or {}
-                f.write("[%s.%s.%s] %s" % (d.get("annee"), d.get("lune"),
-                                           d.get("jour"),
-                                           str(x.get("texte") or "")))
-                if x.get("source"):
-                    f.write(chr(10) + "   (source : %s)" % x["source"])
-                f.write(chr(10) * 2)
-    return {"croyances": len(croyances), "pensees": len(pensees)}
-
-
-def _pensees_de(qui):
-    """Ses pensees, la plus recente en tete. Lecture par la porte."""
-    d = tables.lire(os.path.join(RACINE, "etat", "pensees.json"), [])
-    if isinstance(d, dict):
-        d = d.get("pensees") or []
-    siennes = [p for p in d if isinstance(p, dict) and p.get("qui") == qui]
-
-    def rang(p):
-        j = p.get("date") or {}
-        return (j.get("annee", 0), j.get("lune", 0), j.get("jour", 0))
-    return sorted(siennes, key=rang, reverse=True)
-
-
-def poser_le_parloir(neutre, qui):
-    """Le hook qui lui met une oreille. Rend le chemin du fichier de reglages.
-
-    UN HOOK N'EST PAS UNE HORLOGE : il bat apres chaque appel d'OUTIL, et
-    seulement la. Un homme qui reflechit longtemps sans rien ouvrir n'entend
-    rien pendant ce temps. En pratique cela suffit — sa journee entiere est
-    faite de Read et de Grep —, mais c'est la limite du procede et il faut la
-    connaitre avant de s'etonner d'un silence.
-
-    Le matcher est `*` a dessein : on veut l'entendre au plus tot, pas
-    seulement quand il lit. Le cout est nul tant que personne ne lui parle —
-    `parloir.py --ecouter` n'ecrit RIEN sans message neuf, et un hook muet
-    n'entre pas dans le contexte.
-    """
-    d = os.path.join(neutre, ".claude")
-    os.makedirs(d, exist_ok=True)
-    cible = os.path.join(d, "settings.json")
-    py = sys.executable.replace("\\", "/")
-    ecoute = "%s %s --ecouter --qui %s --hook" % (py, PARLOIR_PY, qui)
-    with io.open(cible, "w", encoding="utf-8", newline="\n") as f:
-        f.write(json.dumps({
-            "env": {"LE_CONSEIL_QUI": qui},
-            "hooks": {
-                "PostToolUse": [{"matcher": "*", "hooks": [
-                    {"type": "command", "command": ecoute, "timeout": 15}]}],
-            }}, ensure_ascii=False, indent=2))
-    return cible
-
-
 DEPECHES = os.path.join(ETAT, "depeches")
 
 
@@ -335,8 +199,7 @@ def archiver_le_prompt(qui, sid, manuel, texte):
     }, indent=1)
 
 
-def appeler(qui, manuel, texte, sid, modele, minutes, parloir=True,
-            attendre=True):
+def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True):
     """Tente --session-id ; retombe sur --resume si l'id a deja servi.
 
     LE MANUEL PASSE PAR --system-prompt-file. Windows plafonne une ligne a
@@ -355,9 +218,11 @@ def appeler(qui, manuel, texte, sid, modele, minutes, parloir=True,
     un log dans fil/ de sa chambre, retour immediat {cast, log, session}. Un
     cast ne sait pas retomber sur --resume (personne ne lit sa sortie a
     temps) : il part en --session-id sec, et un id deja servi se lira dans
-    son log. Pas de parloir en cast : sa fin de session n'est pas connue, on
-    ne laisse pas d'oreilles orphelines — les canaux des chambres prennent
-    la releve (habitant.md, pas 3-5).
+    son log.
+
+    PLUS D'OREILLE : le hook-parloir est mort le 31.8.2026. La session ne
+    recoit aucun --settings — une parole qui arrive pendant sa journee est
+    un billet au canal, servi en percept a son prochain reveil.
     """
     from agents.expose import chambre as _ch
     neutre = tempfile.mkdtemp(prefix="depeche-%s-" % qui)
@@ -370,32 +235,15 @@ def appeler(qui, manuel, texte, sid, modele, minutes, parloir=True,
                  encoding="utf-8", newline="\n") as f:
         f.write(manuel)
     archiver_le_prompt(qui, sid, manuel, texte)
-    # LE FIL PORTE LA SESSION, PAS L'HOMME. Deux dépêches du même acteur
-    # peuvent tourner en même temps — la mienne et celle de la boucle
-    # d'activation, le 9 août — et sous un seul nom elles se volaient les
-    # messages. Le jeton vient de l'identifiant de session : deterministe,
-    # donc retrouvable, et distinct par instance.
-    identite = qui
-    parloir = parloir and attendre  # jamais d'oreille orpheline sur un cast
-    if parloir:
-        from agents.expose import parloir as _p
-        identite = _p.ouvrir_instance(qui, sid.replace("-", "")[:8],
-                                      os.path.basename(neutre), minutes)
-    reglages = poser_le_parloir(neutre, identite) if parloir else None
 
     # --restricted --tools : l'isolation mesuree (voir l'en-tete). Bash est
-    # entier dans OUTILS : OUTIL_PARLOIR (un motif Bash) n'a plus a s'ajouter.
+    # entier dans OUTILS.
     base = ["claude", "-p",
             "--system-prompt-file", prompt_systeme,
             "--add-dir", RACINE, "--add-dir", sa_chambre,
             "--restricted", "--tools", ",".join(OUTILS)]
     if attendre:
         base += ["--output-format", "json"]
-    if reglages:
-        # Un --settings explicite frappe encore sous --restricted (mesure) :
-        # le hook du parloir est charge sans dependre de la reconnaissance du
-        # repertoire neutre comme projet.
-        base += ["--settings", reglages]
     base += ["--permission-mode", "acceptEdits"]
     if modele:
         base += ["--model", modele]
@@ -421,33 +269,21 @@ def appeler(qui, manuel, texte, sid, modele, minutes, parloir=True,
         return {"cast": True, "log": log, "session": sid}
 
     dernier = u""
-    try:
-        for tentative in (["--session-id", sid], ["--resume", sid]):
-            # La mission passe par stdin pour la meme raison que le manuel par
-            # un fichier : 11 ko d'argument s'ajoutent a tout le reste.
-            r = subprocess.run(base + tentative, cwd=neutre,
-                               input=texte.encode("utf-8"),
-                               capture_output=True, timeout=minutes * 60)
-            out = r.stdout.decode("utf-8", "replace")
-            err = r.stderr.decode("utf-8", "replace")
-            if "already in use" in out + err:
-                continue  # la session existe deja : on la reprend en place
-            if not out.strip():
-                raise RuntimeError((err or "aucune sortie").strip()[:400])
-            return json.loads(out)
-        raise RuntimeError("ni --session-id ni --resume n'ont abouti : %s"
-                           % dernier[:200])
-    finally:
-        # SA SESSION EST FINIE : ELLE N'ECOUTE PLUS. Sans ce `finally`, une
-        # depeche morte laisse son instance ouverte, et l'on continue de lui
-        # parler dans un fil que plus personne ne lit — trois orphelines
-        # tramaient deja apres les essais du 9 aout.
-        if parloir and identite != qui:
-            try:
-                from agents.expose import parloir as _p
-                _p.fermer_instance(identite)
-            except Exception:
-                pass
+    for tentative in (["--session-id", sid], ["--resume", sid]):
+        # La mission passe par stdin pour la meme raison que le manuel par
+        # un fichier : 11 ko d'argument s'ajoutent a tout le reste.
+        r = subprocess.run(base + tentative, cwd=neutre,
+                           input=texte.encode("utf-8"),
+                           capture_output=True, timeout=minutes * 60)
+        out = r.stdout.decode("utf-8", "replace")
+        err = r.stderr.decode("utf-8", "replace")
+        if "already in use" in out + err:
+            continue  # la session existe deja : on la reprend en place
+        if not out.strip():
+            raise RuntimeError((err or "aucune sortie").strip()[:400])
+        return json.loads(out)
+    raise RuntimeError("ni --session-id ni --resume n'ont abouti : %s"
+                       % dernier[:200])
 
 
 def extraire_json(texte):

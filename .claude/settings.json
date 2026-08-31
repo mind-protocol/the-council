@@ -2,16 +2,6 @@
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python \"$CLAUDE_PROJECT_DIR/scripts/parloir.py\" --ecouter --qui \"${LE_CONSEIL_MJ:-mj}\" --hook",
-            "timeout": 15
-          }
-        ]
-      },
-      {
         "matcher": "Write|Edit",
         "hooks": [
           {

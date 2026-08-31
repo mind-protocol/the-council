@@ -49,9 +49,10 @@ from agents import salle  # noqa: E402,F401 — lu par scene/flux.py (le fil de 
 from agents import affectation  # noqa: E402,F401 — LE resolveur d'adresses ; lu par depecher, marche, tick
 affecter = affectation
 from agents.affectation import main as affecter_main  # noqa: E402,F401 — l'entree CLI de la facade
-# Descendue au lot 2 : agents/parloir.py, plus la commande racine (les hooks
-# PostToolUse tapent toujours scripts/parloir.py, la facade).
-from agents import parloir  # noqa: E402,F401 — parler a un homme depeche ; lu par depecher
+# Descendue au lot 2 : agents/parloir.py, plus la commande racine. Le
+# hook-oreille est mort le 31.8.2026 : parloir n'est plus qu'un adressage
+# (verbes en call, --dire en billet-reveil, la criee `tous`).
+from agents import parloir  # noqa: E402,F401 — l'adressage de la parole
 from agents.parloir import main as parloir_main  # noqa: E402,F401 — l'entree CLI de la facade
 # Descendue au lot 2 : le paquet agents/depeche/, plus la commande racine.
 from agents import depeche  # noqa: E402,F401 — relit cette porte : affecter deja lie

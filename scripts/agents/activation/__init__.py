@@ -52,7 +52,7 @@ from agents.activation.graphe import (  # noqa: F401
 from agents.activation.taches import (  # noqa: F401
     choisir_tache, mettre_a_jour_energie_graphe, mettre_a_jour_energies)
 from agents.activation.missions import (  # noqa: F401
-    mission_activation, mission_ouverture_narrateur, mission_veille_narrateur,
+    mission_activation, mission_ouverture_narrateur,
     mission_resolution_narrateur, mission_correction_narrateur,
     mission_relance_acteur, extraire_appel_pnj, extraire_tentative,
     extraire_relance_acteur, intitule_tache_activation)

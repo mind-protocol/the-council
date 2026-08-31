@@ -35,10 +35,11 @@ SEL = uuid.uuid5(uuid.NAMESPACE_URL, "le-conseil/depeches/v5")
 # la chambre est montee par --add-dir dans mission.appeler.
 OUTILS = ["Read", "Grep", "Glob", "Bash", "Write", "Edit"]
 
-# LE PARLOIR — sa bouche, quand on lui parle pendant sa journee. Il l'appelle
-# par Bash, qu'il a desormais en entier (voir l'en-tete).
+# LE PARLOIR — sa bouche : les verbes vers son arbitre et le billet (--dire).
+# Il l'appelle par Bash, qu'il a en entier. L'oreille (hook --ecouter) est
+# morte le 31.8.2026 : une parole recue est un billet au canal, en percept
+# au prochain reveil.
 PARLOIR_PY = os.path.join(RACINE, "scripts", "parloir.py").replace("\\", "/")
-OUTIL_PARLOIR = "Bash(python %s:*)" % PARLOIR_PY
 
 def lire(chemin, defaut=None):
     if not os.path.exists(chemin):
