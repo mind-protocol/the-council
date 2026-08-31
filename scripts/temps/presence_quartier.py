@@ -29,7 +29,15 @@ from temps.presence import (
 # Le quartier se recalcule à chaque fois. Il n'est jamais stocké.
 
 def ancres():
-    """Les sièges occupés, CHACUN À SON HEURE — et c'est le point délicat.
+    """Les sièges qui ancrent le quartier, CHACUN À SON HEURE.
+
+    Deux façons d'ancrer : être OCCUPÉ (la mesure de occupation.py), ou
+    déclarer `laisser_faire: true` dans etat/joueurs.json — le laisser faire
+    PERMANENT, décidé le 31.8 pour la reine : personne ne s'assoit, la machine
+    la joue comme un absent, mais le monde fin (déplacements, creux, pensées)
+    continue de se calculer autour d'elle. Sans cette ancre : aucun siège
+    occupé, quartier vide, personne ne pense — un monde d'horloges sans
+    intériorité, ce qui n'est pas ce qu'on veut observer.
 
     `monde.date` porte l'horloge la moins avancée (ce jour : 390, quand la
     reine est à 422 et Aurore à 1077). Résoudre tout le monde là-dessus rend
@@ -42,7 +50,8 @@ def ancres():
     chateau = Chateau(tables.lire("chemins.json", {}))
     out = []
     for x in tables.lire("joueurs.json", []) or []:
-        if not isinstance(x, dict) or not x.get("occupe"):
+        if not isinstance(x, dict) or not (x.get("occupe")
+                                           or x.get("laisser_faire")):
             continue
         pid = x.get("personnage_id")
         if not pid or x.get("regie"):
@@ -77,7 +86,7 @@ def quartier(rayon=RAYON_MINUTES):
     dedans, dehors = {}, {}
     if not points:
         return {"ancres": [], "dedans": {}, "dehors": {},
-                "vide": "aucun siege occupe n'a de position resolue"}
+                "vide": "aucun siege occupe ou en laisser-faire n'a de position resolue"}
 
     vus = {}
     for a in points:

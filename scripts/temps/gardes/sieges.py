@@ -177,7 +177,11 @@ def verifier_sieges(e, r):
             r.dire("grave", pid,
                    "siege pour un personnage absent de personnages.json")
     verifier_occupation(e, r)
-    if e.sieges and e.joueur and e.joueur in e.sieges_vacants:
+    if (e.sieges and e.joueur and e.joueur in e.sieges_vacants
+            and not siege_par_id(e, e.joueur).get("laisser_faire")):
+        # Un siege en LAISSER FAIRE PERMANENT (etat/joueurs.json) est vacant
+        # par definition et pour longtemps : le journal peut continuer de le
+        # designer comme personnage du joueur sans que ce soit une anomalie.
         r.dire("avertissement", "journal",
                "journal.personnage_joueur_id vaut '{}' alors que son siege "
                "est marque vacant".format(e.joueur))

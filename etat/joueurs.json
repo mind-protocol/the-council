@@ -29,8 +29,10 @@
       "sarro-vaeth",
       "merra-sath"
     ],
-    "occupe": true,
-    "alterne_avec": "marlo-vasse"
+    "occupe": false,
+    "alterne_avec": "marlo-vasse",
+    "laisser_faire": true,
+    "note": "LAISSER FAIRE PERMANENT (decide le 31.8) : personne ne s'assoit, la machine la joue comme un absent (tete dans intentions.json, boucle d'activation), et son siege ANCRE le quartier malgre occupe:false — voir ancres() dans scripts/temps/presence_quartier.py. `occupe` reste la mesure et reste faux ; s'asseoir vraiment reprendrait la main sans rien casser."
   },
   {
     "jeton": "varech-ancre-5278",
