@@ -1,0 +1,25 @@
+{
+ "_pourquoi": "Tete de jacaerys apres sa depeche du 129.4.5 (session b4301eef-d94b-5a5f-ad2f-1a43bae306c8). Le script ne propose que date_maj ; ajoute ici tes mutations d'etapes et de croyances d'apres la matiere, puis applique le tout.",
+ "matiere": {
+  "journal": [],
+  "conclusion": false,
+  "rapport": "etat/rapports/jacaerys.json"
+ },
+ "empreintes": {
+  "intentions": "45fa9af7ff07aefd84e986526b7688de164e602f"
+ },
+ "mutations_proposees": [
+  {
+   "table": "intentions",
+   "cible": "jacaerys",
+   "operation": "tete",
+   "champs": {
+    "date_maj": {
+     "annee": 129,
+     "lune": 4,
+     "jour": 5
+    }
+   }
+  }
+ ]
+}

@@ -10,6 +10,7 @@ import re
 from agents.expose import depecher  # le script d'appel canonique
 from etat.expose import tables
 from temps.expose import regence
+from temps.expose import presence as presence_calc  # la position se CALCULE
 
 from agents.activation.socle import RACINE, ETAT, lire_json, journaliser
 from agents.activation.horloges import minute_absolue
@@ -148,7 +149,18 @@ def dossier_activation(pid, tache, horloge, noeuds, etat=None):
     presence = lire_json(os.path.join(ETAT, "presence.json"), {})
     if not isinstance(presence, dict):
         presence = {}
-    resolus = ((presence.get("resolu") or {}).get("gens") or {})
+    # `resolu` EST UN CACHE, ET IL A UNE DATE : on la compare a l'horloge avant
+    # de s'en servir. Mesure le 129.4.5 : le monde au 5e minute 540, le cache
+    # date du 4e minute 540 — un jour entier de retard, servi tel quel a un
+    # acteur comme la piece ou il se tient et les gens qui l'entourent. Trop
+    # vieux, on ne degrade pas vers la ligne brute (qui ment de la meme facon,
+    # en plus vieux) : ON RECALCULE, c'est le seul repli qui dise le vrai.
+    resolus, _retard = presence_calc.resolu_de(presence)
+    if not resolus:
+        try:
+            resolus = presence_calc.resoudre()
+        except Exception:
+            resolus = ((presence.get("resolu") or {}).get("gens") or {})
     position = resolus.get(pid) or {}
     salle_id = position.get("salle")
     salle_nom = position.get("lieu")

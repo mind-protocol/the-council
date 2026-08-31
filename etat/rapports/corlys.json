@@ -1,82 +1,46 @@
 {
- "qui": "corlys",
- "journal": [
-  {
-   "heure": "17h30",
-   "duree": 25,
-   "lieu": "chambre de la Table Peinte, Peyredragon",
-   "quoi": "Corlys, la reine ayant refusé son feuillet et poussé son cahier ouvert vers lui, expose la fourche non par la bouche mais par les pièces : clefs 48010 et 48011 sur la même serrure 48003, verrou 48001 et sa clef unique 48013",
-   "resultat": "Argument porté en numéros devant la table : B ferme 48013, donc la seule clef de 48001, donc 48000 tombe des deux côtés — ce que le rapport de recette (200 contre 50) ne montrait pas. Décision de la reine encore pendante ; 48021 reste en attente d'une bouche, pas d'une marée."
+  "type": "replique",
+  "locuteur_id": "corlys",
+  "texte": "Douze de vos affaires engagent mes voiles et pas une ne sait de combien elle dispose. Voici le compte, je le donne une fois. **Cinq quilles** tiennent le goulet à la rotation. **Six sont libres.** **Dix affrétées** du banc de l'Est portent et ne bloquent jamais — vingt et une était le même tas compté deux fois. Quarante jours de vivres. Six jours d'avis : c'est le seul chiffre que vous avez à retenir. Et voici ce que ce compte vous interdit, puisqu'un nombre sans sa limite est une promesse que je n'ai pas faite : les cinq du goulet et les cinq du passage sont les mêmes cinq.",
+  "montre": {
+    "jetons": [
+      {
+        "id": "quilles-goulet",
+        "genre": "flotte",
+        "camp": "noir",
+        "force": 5,
+        "unite": "quilles",
+        "ou": "sharp-point",
+        "nom": "Cinq quilles",
+        "certitude": "sure"
+      },
+      {
+        "id": "quilles-libres",
+        "genre": "flotte",
+        "camp": "noir",
+        "force": 6,
+        "unite": "quilles",
+        "ou": "lamarck",
+        "nom": "Six sont libres",
+        "certitude": "sure"
+      },
+      {
+        "id": "affretees-est",
+        "genre": "flotte",
+        "camp": "noir",
+        "force": 10,
+        "unite": "coques",
+        "ou": "peyredragon",
+        "nom": "Dix affrétées",
+        "certitude": "sure"
+      }
+    ]
   },
-  {
-   "heure": "17h55",
-   "duree": 15,
-   "lieu": "chambre de la Table Peinte, Peyredragon",
-   "quoi": "Corlys relit sa propre colonne « ce que cela ferme » à la clef 48011 et constate qu'elle nommait la chute de 48000 sans nommer le chemin par lequel elle tombe",
-   "resultat": "Colonne corrigée de sa main : l'exclusion porte désormais le numéro de la clef tuée (48013) et du verrou qu'elle seule lève (48001)."
+  "qui": "corlys",
+  "_depeche": {
+    "session": "3d993b77-797f-5ff7-a3fd-cab9428c490f",
+    "date_jeu": "129.4.5",
+    "jetons": 2333642,
+    "secondes": 393
   }
- ],
- "travaux": [
-  {
-   "travail_id": "13h08-18h00",
-   "dernier_travail": {
-    "annee": 129,
-    "lune": 4,
-    "jour": 3
-   },
-   "pensees": [
-    {
-     "date": {
-      "annee": 129,
-      "lune": 4,
-      "jour": 3
-     },
-     "source": "La reine, chambre de la Table Peinte, cinq heures et demie de relevée",
-     "texte": "UNE OPTION NE SE COMPARE PAS PAR CE QU'ELLE RAPPORTE MAIS PAR CE QU'ELLE FERME AILLEURS. J'ai porté ma fourche en deux chiffres — cinquante contre deux cents — et la reine a eu raison de ne pas prendre le feuillet : sur les deux chiffres seuls, B gagne quatre fois et mon avis n'était qu'une humeur de vieux capitaine. Le motif ne se voyait qu'en pièces : B (48011) ouvre 48003 comme A (48010), mais elle FERME 48013, qui est la seule clef du verrou 48001. Une clef qui en tue une autre dans une autre serrure ne se chiffre nulle part sur sa propre ligne. Tant que ma colonne « ce que cela ferme » disait des phrases au lieu de dire des numéros, personne — moi compris — ne pouvait voir la seconde perte."
-    },
-    {
-     "date": {
-      "annee": 129,
-      "lune": 4,
-      "jour": 3
-     },
-     "source": "Clef 48010, colonne du prix, relue devant la table",
-     "texte": "MES DEUX CHIFFRES MENTAIENT PAR LE HAUT SUR B. Deux cents la semaine, oui — mais à partir du quinzième jour, parce que l'action 48021 attend la parole tranchée et que d'ici là aucune des seize quilles ne lève un cerf. Sur la première quinzaine, A pose cent dragons à la cassette et B zéro. Un rendement hebdomadaire écrit sans le délai de première recette est un chiffre à moitié dit, et c'est moi qui l'ai posé ainsi devant ma reine ce matin."
-    },
-    {
-     "date": {
-      "annee": 129,
-      "lune": 4,
-      "jour": 3
-     },
-     "source": "Verrou 48003 et clef 48011, relus l'un contre l'autre",
-     "texte": "LA VRAIE MESURE D'UNE OPTION EST CE QU'IL EN COÛTE DE S'ÊTRE TROMPÉ. A se répare en dragons : le registre 48012 rendra un compte dans une lune et un droit plat se relève d'un mot. B ne se répare par rien — la première somme gardée en mer ne laisse aucun manque constatable, et une rançon sous le sceau de la reine ne se rattrape par aucune proclamation. C'est la seule chose qu'aucune des deux colonnes de recette ne pouvait dire, et c'est la seule qui aurait dû décider."
-    }
-   ],
-   "conclusion": null
-  }
- ],
- "cahier2": [
-  {
-   "livre": "affaire-police-des-mers",
-   "table": "🗝️ Clefs",
-   "ligne": "48011",
-   "colonne": "🚪 Ce que cela ferme",
-   "valeur": "Ferme le droit plat (48010). **Et ferme, ce qui ne se voit sur aucune colonne de recette : la clef 48013.** Une rançon sous le sceau de la reine rend indicible la parole publique neuve — *police des mers, non blocus* — et 48013 est la SEULE clef du verrou 48001, le refus du 19e. B ne met donc pas seulement 48003 en jeu : elle tue la clef de 48001, et 48000 tombe des deux côtés à la fois. La différence dernière n'est pas cinquante contre deux cents : A se corrige en dragons, B ne se corrige par rien — la première somme gardée en mer ne laisse aucun manque constatable. — Porté à la reine et corrigé de ma main, 3e de la 4e lune, an 129, Corlys Velaryon (O13)."
-  },
-  {
-   "livre": "affaire-police-des-mers",
-   "table": "🗝️ Clefs",
-   "ligne": "48011",
-   "colonne": "💡 Le principe",
-   "valeur": "**200 dragons la semaine sur le papier · 14 jours — et zéro cerf levé pendant ces quatorze jours,** puisque l'action 48021 attend la parole tranchée et que seize quilles arrêtent sans percevoir d'ici là. Première quinzaine comparée : 48010 pose cent dragons à la cassette, 48011 en pose zéro. Un dixième de ce que porte la cale, estimé sur le pont contre barème, par un homme juré à chaque station, avec recours à terre pour l'estimation contestée. **C'est quatre fois le droit plat au régime établi, et je l'écris sans le rogner : celui qui minore le chiffre de l'option qu'il combat ment à sa reine, et se fait démentir au second comptage.**"
-  }
- ],
- "_depeche": {
-  "session": "e262c7cb-f74b-5c00-81fb-935618cb491b",
-  "date_jeu": "129.4.3",
-  "jetons": 534908,
-  "secondes": 129
- },
- "_cahier_verse": true
 }

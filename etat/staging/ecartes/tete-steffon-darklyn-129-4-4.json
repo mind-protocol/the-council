@@ -1,0 +1,25 @@
+{
+ "_pourquoi": "Tete de steffon-darklyn apres sa depeche du 129.4.4 (session 8d61bad5-0234-561e-80c3-d0321d6d084e). Le script ne propose que date_maj ; ajoute ici tes mutations d'etapes et de croyances d'apres la matiere, puis applique le tout.",
+ "matiere": {
+  "journal": [],
+  "conclusion": false,
+  "rapport": "etat/rapports/steffon-darklyn.json"
+ },
+ "empreintes": {
+  "intentions": "37f7799b028f1cfb05692fc4aca75ca4b73d32a8"
+ },
+ "mutations_proposees": [
+  {
+   "table": "intentions",
+   "cible": "steffon-darklyn",
+   "operation": "tete",
+   "champs": {
+    "date_maj": {
+     "annee": 129,
+     "lune": 4,
+     "jour": 4
+    }
+   }
+  }
+ ]
+}

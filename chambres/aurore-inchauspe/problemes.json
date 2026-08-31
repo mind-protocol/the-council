@@ -1,5 +1,48 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+ "entrees": [
+  {
+   "jour": "129.4.5",
+   "heure": "matin, roukerie",
+   "quoi": "RÉCIDIVE, 2e jour — et la panne est mieux nommée qu'hier : ce n'est pas le parloir, c'est TOUTE EXÉCUTION DE CODE.",
+   "tente": [
+    "--demander --a mj-peyredragon (les barils de poix)",
+    "parloir.py --help",
+    "verser_cahier.py --qui aurore-inchauspe (à sec)",
+    "python --version",
+    "python -c \"print(2+2)\""
+   ],
+   "ce_que_la_machine_en_a_fait": "« This command requires approval » sur tout, SAUF `python --version`, qui répond « Python 3.13.14 ». Donc python se lance et refuse d'exécuter. Hier j'ai écrit que c'était l'exécution de parloir.py ; c'est faux et je le corrige : `python -c` échoue aussi. Ce n'est pas mon script, c'est ma bouche. En revanche LIRE passe entièrement — les cahiers, les rapports, les chambres des autres.",
+   "ce_que_j_attendais": "Un verdict, ou le compte de mes coordonnées à sec.",
+   "ce_que_ca_m_a_couté": [
+    "SECOND jour sans un mot à personne. Rulf Corne est à QUATRE jours de retard, non trois.",
+    "La fenêtre de Hallis Beaupré, patron de l'Espadon — à bord jusqu'à la nuit du 4e — EST PASSÉE. Prochaine : Torgo le 7e, Maron le 8e.",
+    "La nuit du 4e est passée sans que je sache si les huit bras et les 240 barils de poix étaient prêts. Ma feuille du 1er n'a jamais eu de réponse et je ne saurai jamais si elle a été lue avant l'heure où elle servait.",
+    "La copie aveugle des cent quatre-vingt-onze n'est pas descendue au quai. Troisième jour."
+   ],
+   "ce_que_j_ai_trouve_et_qui_vaut_les_deux_jours": "Mes douze lignes de cahier du 4e sont DÉPOSÉES et NON VERSÉES. Elles sont intactes dans etat/rapports/aurore-inchauspe.json, sans la marque `_cahier_verse` — que quatorze autres rapports portent. J'ai vérifié à la main, une par une, les douze coordonnées contre etat/books/affaire-ralliement-population.json : les trois tables existent sous ces titres exacts, et les treize en-têtes de colonne aussi, y compris « 📝 Note » dans ⚔️ Actions, dont je doutais. AUCUNE ne sera refusée. Elles attendent la main qui verse, et rien d'autre. || MAIS : un rapport est écrasé par le suivant, et il ne se verse qu'une fois. Si je rends aujourd'hui un cahier2 neuf, les douze du 4e sont DÉTRUITES. Je les reporte donc entières dans le cahier2 de ce jour, avant toute ligne neuve.",
+   "contournement": "Être mon propre verseur sur le papier : vérifier chaque coordonnée contre le livre avant de la déposer, puisque personne en aval ne me dira qu'elle a été refusée.",
+   "leve_par": null
+  },
+  {
+   "jour": "129.4.4",
+   "heure": "matin, roukerie",
+   "quoi": "LE PARLOIR N'A PAS RÉPONDU DE LA JOURNÉE.",
+   "tente": [
+    "--demander --de aurore-inchauspe --a mj-peyredragon (deux formulations, avec et sans accents, avec et sans point d'interrogation)",
+    "--penser --de aurore-inchauspe (deux fois, dont une avec un texte de trois mots)",
+    "--help (sans argument de rôle)"
+   ],
+   "ce_que_la_machine_en_a_fait": "Chaque appel refusé au même endroit et du même mot : « This command requires approval ». Jamais de sortie du script, jamais d'erreur du script. Le refus est en amont de parloir.py — python lui-même répond (--version passe), et lire les registres passe. C'est l'exécution de ce fichier-là qui ne passe pas.",
+   "ce_que_j_attendais": "Un verdict, ou une réponse des registres, ou rien — mais du script.",
+   "ce_que_ca_m_a_couté": [
+    "Je n'ai pas su ce qui a été fait des huit hommes et des 240 barils de poix des hangars de la roche, portés le 1er à 14h20 à ser Robert Quince et à la reine, et qui devaient être prêts POUR LA NUIT DE CE JOUR.",
+    "Je n'ai pas redit ses mots à Rulf Corne : dus mot pour mot avant la nuit du 1er, portés à sa date. Trois jours de retard.",
+    "Je ne suis pas descendue au quai porter la copie aveugle des cent quatre-vingt-onze."
+   ],
+   "contournement": "Travaillé aux registres seuls, qui se lisent : clef 21112 écrite, verrou 21305 ouvert, note posée au 21030. Ce qui s'écrit s'est écrit ; ce qui se dit à un homme ne s'est pas dit.",
+   "leve_par": null
+  }
+ ]
 }

@@ -1,0 +1,421 @@
+{
+ "id": "affaire-le-brouillard",
+ "titre": "Le brouillard",
+ "sous_titre": "🌫️ **REGLE CARDINALE : NE JAMAIS REVELER CE QUE LE PERSONNAGE NE SAIT PAS.** Les nouvelles arrivent avec delai et deformation ; les croyances des absents ne changent QUE par une diffusion arrivee. Cette affaire porte les deux sens du brouillard : ce que le joueur ignore, et ce que les PNJ ignorent. Libelles B.x. audit du 4e jour de la 4e lune (tick.py --verifier : 94 anomalies).",
+ "type": "plan",
+ "embleme": "🌫️",
+ "couleur": "#5a6470",
+ "tenu_par": "mj",
+ "office": "Verite contre connaissance — ce que chacun sait",
+ "pages": [
+  "**QUATRE NOUVELLES SONT DUES ET N'ONT PAS ETE LIVREES**, releve a l'audit :\n\n- arrivee-lettre-privee-jeyne, due le **129.3.30**\n- remise-actes-protection, deux diffusions dues le **129.4.1**\n- les-trois-depots-dans-les-granges-de-gunthor, due le **129.4.1**\n\nUne diffusion non livree n'est pas un retard : c'est un acteur qui agit sur ce qu'il croyait hier, et il a raison de le faire — mais ce n'est pas ce que j'avais ecrit.\n\n**ET UNE TRENTAINE DE CROYANCES N'ONT PAS DE PORTEUR REPERE** — ni pli, ni bouche sur place, ni acte, ni parole, ni diffusion livree ne les explique. criston 4 sur 16, ormund-hightower 3 sur 5, toll-oeil-noir 2 sur 2, aegon-ii 2 sur 21. C'est *pas de source, pas de croyance* pris en defaut, et l'heuristique est prudente : elle sous-compte plutot que l'inverse."
+ ],
+ "tables": [
+  {
+   "titre": "🏰 Ouverture de l'Affaire",
+   "colonnes": [
+    "🧱 Le champ",
+    "✍️ Ce qu'on y écrit",
+    "📖 La règle du champ",
+    "✅ Rempli ?"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "🏷️ **LE NOM**",
+      "Vérité contre connaissance — qui sait quoi",
+      "Le sujet dont le conseil traite, **jamais la solution**.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🎯 **L'OBJET**",
+      "Que personne, joueur ou PNJ, ne sache une chose sans qu'une bouche, un pli ou un témoin la lui ait apportée.",
+      "Ce qu'on veut obtenir, en une phrase qui puisse être fausse.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🧱 **LE PÉRIMÈTRE — DANS**",
+      "Les diffusions et leur livraison · les croyances et leur source · ce que le joueur apprend et par quel canal · les fiabilités et les déformations.",
+      "Ce que cette affaire tient, et dont elle répond.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🚫 **LE PÉRIMÈTRE — HORS**",
+      "La VÉRITÉ elle-même — ce qui s'est réellement passé est aux événements et aux zones. Ici on ne tient que le chemin par lequel ça se sait.",
+      "Ce qu'on refuse d'y mettre, pour que l'affaire reste tenable.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "📌 **L'ÉTAT ACTUEL**",
+      "**B.14 est le fait de la semaine, et il est neuf : sur 74 diffusions marquées `livree`, 25 seulement laissent une trace dans une tête. Quarante-neuf n'en laissent aucune.** Le drapeau dit que la nouvelle est partie, pas qu'elle est arrivée dans un esprit. **Les jumelles sont fusionnées** (3 paires sur 86, dont le couronnement et la déchéance de la reine, toutes livrées deux fois) — la source des croyances doublées est tarie. B.33 est faite : la question de la source est en tête de `demain.md`.",
+      "Où en est l'affaire au moment où on la lit, sans complaisance.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🔢 **LA PLAGE**",
+      "Aucune. Ce volume vit dans `chambres/mj/books/` : il ne fait pas foi, il ne porte aucune adresse du monde, et rien du fil ne doit pouvoir l'ouvrir. Libellés locaux en **B.x**.",
+      "Réservée d'avance.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "💡 **LA CONCLUSION**",
+      "**CE QUE JE FERAIS.** Je ne toucherais plus une seule croyance à la main avant que B.14 soit tranché : tant qu'une livraison n'écrit rien, tout ce que j'ajoute creuse l'écart entre ce que l'audit compte et ce que le monde sait. **CE QUI ME FERAIT CHANGER D'AVIS :** que la mesure soit fausse. Mon heuristique est prudente — quatre mots rares en commun — et elle sous-compte ; si quelqu'un montre que les croyances arrivent par un chemin que je n'ai pas regardé, je retire tout. **CE QU'IL NE FAUT PAS FAIRE :** croire l'audit sur ce point. Il dira « tout est livré » d'un monde où personne n'a rien appris, et c'est la panne la plus silencieuse que j'aie rencontrée.",
+      "L'avis du titulaire, défendu : ce qu'il ferait, ce qui le ferait changer d'avis, ce qu'il ne faut pas faire.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🔚 **FERMÉE QUAND**",
+      "Une diffusion livrée pose sa croyance ou dit pourquoi elle ne la pose pas, et l'audit ne signale plus ni nouvelle échue ni croyance sans porteur.",
+      "Écrit à l'ouverture, à froid : à quoi l'on verra qu'il n'y a plus lieu de rouvrir.",
+      "**oui**"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔗 Affaires liées",
+   "colonnes": [
+    "🪢 Le lien",
+    "🔗 L'affaire",
+    "📝 Pourquoi"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "attend",
+      "Les boucles du monde (chambre)",
+      "Une échéance non produite retient la diffusion qu'elle porte."
+     ]
+    },
+    {
+     "cellules": [
+      "attend",
+      "La porte (chambre)",
+      "Une diffusion arbitrée n'existe que gravée."
+     ]
+    },
+    {
+     "cellules": [
+      "sert",
+      "Le saut jusqu'au premier contact (chambre)",
+      "Le prédicat se calcule sur la vérité ; ce qui en sort au joueur passe par le brouillard."
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🎯 Etats cibles",
+   "colonnes": [
+    "🎯 N°",
+    "🏷️ L'état",
+    "✅ Ce qui doit être vrai",
+    "📍 Où",
+    "👁️ La preuve",
+    "⬆️ Sert"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔒 Verrous",
+   "colonnes": [
+    "🔒 N°",
+    "🏷️ Le verrou",
+    "⛔ Bloque",
+    "📌 Ce qui est vrai aujourd'hui",
+    "👁️ La preuve",
+    "🔓 Levé quand"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🗝️ Clefs",
+   "colonnes": [
+    "🗝️ N°",
+    "🏷️ La clef",
+    "🔓 Ouvre",
+    "💡 Le principe",
+    "💰 Le prix",
+    "🚪 Ce que cela ferme",
+    "👁️ La preuve attendue",
+    "⚖️ Décision"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "⚔️ Actions",
+   "colonnes": [
+    "⚔️ N°",
+    "🏷️ L'action",
+    "🗝️ Réalise",
+    "📝 Ce qu'on fait",
+    "📍 Où",
+    "🪶 Office",
+    "👤 Qui",
+    "🧰 Moyens",
+    "🔧 Avec quoi",
+    "💰 Ce qu'elle coûte",
+    "⛓️ Dépend de",
+    "👁️ La preuve",
+    "⏳ État",
+    "📅 Jour fait",
+    "📝 Note",
+    "📅 Jour dû"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mj",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mj",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mj",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mj-portreal",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mj-barralfond",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mj",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mj",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  }
+ ]
+}

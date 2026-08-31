@@ -1,0 +1,15 @@
+{
+  "titre": "Peyredragon — Mysaria encaisse les trois lignes de la Ver Blanc (129.4.5), et le nom de l'aînée entre dans une tête",
+  "par": "mj (arbitre de la zone du joueur)",
+  "_pourquoi": "CE LOT NE FAIT QU'UNE CHOSE : IL ECRIT DANS UNE TETE CE QU'UNE DIFFUSION LIVREE N'Y A PAS ECRIT. La diffusion de vol-rhaenyra-sombreval vers peyredragon, canal barque, fiabilite 80, datee du 129.4.5, porte `livree: true` et nomme `qui: [mysaria]`. Verifie ce soir : mysaria a DIX-SEPT croyances et AUCUNE ne porte Cassandra ni Accalmie ; rhaenyra en a quatorze, aucune non plus ; info.json (78 entrees) ne porte pas le nom. La nouvelle a ete payee, elle est marquee livree, et elle n'est arrivee dans aucun esprit. C'est le verrou B.14 pris sur le fait : sur 74 diffusions livrees, 25 seulement laissent une trace dans une tete. Je repare le cas, pas la cause — la cause est un billet a dev. || CE QUE JE N'ECRIS PAS, ET C'EST LE POINT D'ARBITRAGE : je pose la croyance chez MYSARIA SEULE, pas chez la reine. Rien dans l'etat ne dit que l'espionne a fait remonter ses trois lignes ; la faire savoir a Rhaenyra serait inventer un rapport que personne n'a ecrit. Le camp noir a donc le nom DANS LA MAIN DE SON ESPIONNE et pas encore dans celle de sa souveraine — et ce qu'elle en fait est a elle, pas a moi. || SOURCE ECRITE, comme B.21 l'exige : evenements.json, vol-rhaenyra-sombreval, bloc diffusion, canal barque, 129.4.5, fiabilite 80, qui=[mysaria], livree=true. La croyance porte sa provenance dans son texte.",
+  "mutations_proposees": [
+    {
+      "table": "intentions",
+      "cible": "mysaria",
+      "operation": "croyance_ajouter",
+      "valeur": "Trois lignes achetees a la Ver Blanc, arrivees par barque le 5e de la 4e lune, et payees : l'ambassade Hightower est a Accalmie depuis le dix-septieme jour et n'a toujours pas de reponse — on y attend un nom, et ce n'est pas un nom de bataille. En marge, d'une autre main : la maison Baratheon a quatre filles et pas un fils, et l'ainee s'appelle CASSANDRA. Je tiens ce nom depuis quatre jours et je n'en ai encore rien fait ; ce qu'il vaut depend entierement de qui l'apprend le second.",
+      "pourquoi": "La diffusion la designe nommement et porte livree=true depuis le 5e : elle a paye, elle a lu, elle sait. Le drapeau ne suffisait pas — c'est la main qui ecrit. J'ajoute la derniere phrase parce qu'une espionne qui detient un nom sans l'avoir rapporte est un fait de tete, pas un oubli : c'est ce qui rend la croyance jouable au lieu d'etre un decor."
+    }
+  ],
+  "applique_le": "2026-08-31T05:00:05"
+}

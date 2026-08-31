@@ -1,0 +1,11 @@
+---
+
+Le parloir est resté fermé toute la journée : pas un mot à donner, pas une question au monde. J'ai donc travaillé le volume que je néglige, et j'ai refermé quatre des cinq trous du matin — le cinquième l'était depuis hier.
+
+Ce que je rends : les nuits de morte-eau ne sont plus un trou dans ma preuve. Maître Rulf rend ses barques quatre nuits sur quinze parce que rien ne monte ; moi j'attends un homme qui sort, et il sort dans un fond plat. Ces nuits-là l'eau n'est plus une route, c'est un plancher — on tient les **durs** et l'on lit la vase au point du jour, avec les vingt-quatre hommes qu'il rend justement ce soir-là. Cela coûte moins d'hommes, pas plus. J'ai écrit l'aveu avec : une empreinte lue à l'aube compte un passage six heures trop tard, et ces nuits-là ma poche est témoin, pas fermée. Avec ça, l'action du recouvrement, celle qui chiffre les sorties qu'on ignore par l'écart des deux bouches, et l'office des deux postes rendu au maître des rôles — parce que lui seul peut dire de quel corps est un homme.
+
+Et j'ai ouvert [un verrou que personne ne pouvait calculer](12004) : mes deux clefs disent « relevé à basse mer », et ces trois mots ne sont pas un ordre, c'est un tirage au sort. La marée choisit le jour, pas nous, et l'homme qui doit y descendre ne marche qu'au grand jour. Nul n'a jamais écrit à quelle heure la grande basse mer tombe au pied du rocher d'Aegon.
+
+Ce qui me pèse : les neuf ardoises étaient dues aujourd'hui et je n'ai pas su descendre au quai ; et les vingt descentes sont dues le 7e à huit heures sans qu'une seule soit faite. Deux jours de livres sur une clef dont le principe entier est qu'on ne relit pas au bureau.
+
+**Demain, le 6e, et rien d'autre avant** : je descends aux vingt endroits, taille et couteau dans la poche — c'est le dernier jour où ils tiennent. Et je passe par la roukerie au lever pour mettre en main propre à [le Serpent de Mer](corlys) le billet des coques de La Treille, qui est écrit et qui attend la porte.

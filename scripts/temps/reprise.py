@@ -163,7 +163,17 @@ def main(argv):
     # tomber en marche, parce que c'est le PREMIER geste de chaque session.
     sc = journal.get("scene_courante") if isinstance(journal, dict) else None
     sc = sc if isinstance(sc, dict) else {}
-    maintenant = sc.get("date") if rang(sc.get("date") or {}) > rang(dm) else dm
+    # ET L'HORLOGE DU SIEGE, qui est la vraie montre : append_flux.py la tient
+    # a chaque poussee, et le joueur la voit dans son bandeau. Sans elle, une
+    # `scene_courante` ecrite en prose (la doctrine l'autorise) faisait
+    # retomber la feuille sur monde.date -- vu le 4e de la 4e lune : bandeau
+    # au 3e jour 12h01 quand le siege etait au 4e jour, 8h58.
+    horloges = charger("horloges.json")
+    hs = horloges.get(joueur) if isinstance(horloges, dict) else None
+    maintenant = dm
+    for candidate in (sc.get("date"), hs):
+        if isinstance(candidate, dict) and rang(candidate) > rang(maintenant):
+            maintenant = candidate
 
     print("")
     print("=" * 72)
@@ -196,15 +206,25 @@ def main(argv):
     paroles = charger("paroles.json")
     miennes = [p for p in paroles
                if p.get("locuteur_id") == joueur
-               and p.get("type") in ("ordre", "promesse", "serment", "menace")
+               # PAS DE FILTRE PAR TYPE : le vocabulaire est ouvert (50 valeurs,
+               # 174 paroles sans type) -- une liste fermee en ratait la plus
+               # grande part. On filtre par bouche et par date, comme le dit
+               # docs/schema.md depuis son amendement.
                and ecart_jours(p.get("date") or {}, maintenant) <= 2]
     miennes.sort(key=lambda p: rang(p.get("date") or {}), reverse=True)
     if miennes:
         titre("CE QUE J'AI ORDONNE OU PROMIS (2 derniers jours)")
         for p in miennes[:8]:
-            a = ", ".join(nom_de(d, gens) for d in (p.get("destinataires") or [])) or "a la cantonade"
+            # LE SCHEMA FAIT FOI (docs/schema.md) : une parole porte
+            # `destinataire_id` et `contenu`. Lire `destinataires`/`texte`
+            # ne levait rien -- ca imprimait "a la cantonade" et du vide.
+            vises = p.get("destinataires")
+            if not vises:
+                vises = [p["destinataire_id"]] if p.get("destinataire_id") else []
+            a = ", ".join(nom_de(d, gens) for d in vises) or "a la cantonade"
             print("  %s  a %s" % (date_courte(p.get("date") or {}), a))
-            print("      %s" % utile(p.get("texte")))
+            print("      %s" % utile(p.get("contenu") or p.get("quoi")
+                                        or p.get("texte")))
 
     # 4. CE QUI EST PARTI ET N'EST PAS REVENU
     plis = charger("plis.json", "plis")

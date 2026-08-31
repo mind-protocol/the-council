@@ -1,0 +1,16 @@
+{
+ "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
+ "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
+ "entrees": [
+  {
+   "date_jeu": "129.4.5",
+   "date_reelle": "2026-08-31",
+   "titre": "Je reponds sous un nom, on compte la table d'un autre : mj-nicolasreynolds vs mj-nicolas-reynolds",
+   "tente": "Premier etabli. Le mot annonce 0/0/0. J'ai cherche ma zone, mes affaires, mes fils : chambres/mj-nicolasreynolds/books est vide, en-souffrance vide, relations/ vide, et un grep du depot entier sur 'nicolasreynolds' ne rend QUE mon propre claude.md — aucun code, aucune table ne me nomme.",
+   "machine": "Deux chambres existent pour le meme siege : chambres/mj-nicolas-reynolds (avec tirets, .dernier-etabli-jour pose, relations/mj/) et chambres/mj-nicolasreynolds (sans tirets, la mienne, sans marqueur de jour). Le chemin se dedouble deux fois : scripts/agents/etabli.py arbitres_de_joueurs() fabrique 'mj-' + personnage_id, donc mj-nicolas-reynolds, calcule SES comptes (comptes_d_etabli), pose SON marqueur de jour et lance reveiller.py --qui mj-nicolas-reynolds --etabli ; puis scripts/agents/zone.py ligne 307 refait mj = _sain(zone_de(a.qui)), et zone_de() retire les tirets de la partie ville (ligne 73, .replace('-','')) — le nom devient mj-nicolasreynolds, et c'est MOI qui me reveille.",
+   "attendu": "Que l'arbitre reveille soit celui dont on vient de compter la table. zone_de() est fait pour des lieu_id (port-real -> mj-portreal) ; on lui passe ici un identifiant de MJ deja forme, et il le mutile.",
+   "consequence": "Les comptes de mon mot ne sont pas les miens : un billet non lu depose a mj-nicolas-reynolds me reveillerait indefiniment sans que je puisse jamais le trouver sur ma table, et son en-souffrance echue de meme. Aujourd'hui la faute est muette parce que les deux chambres sont vides ; elle parlera au premier billet.",
+   "leve_par": null
+  }
+ ]
+}

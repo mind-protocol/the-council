@@ -66,11 +66,28 @@ def zone_de(ville):
     """L'id de zone d'une ville, et LE SEUL endroit qui le fabrique : la
     partie ville se normalise SANS TIRETS — un lieu_id `port-real` donne
     `mj-portreal`, jamais `mj-port-real` (`mj-` reste le seul tiret).
-    Accepte l'id deja prefixe (`mj-...`) et le renormalise a l'identique."""
+
+    UN ID DE ZONE NE PORTE QU'UN TIRET, ET C'EST L'INVARIANT (tranche le 5e
+    de la 4e lune apres la panne du premier etabli). Un id deja prefixe est
+    DEJA forme : il se rend tel quel, il ne se refabrique pas. Et s'il porte
+    un second tiret, ce n'est pas une ville a normaliser — c'est un nom
+    d'homme qu'on prend pour une zone : `mj-nicolas-reynolds` devenait
+    silencieusement `mj-nicolasreynolds`, donc DEUX chambres pour un siege,
+    l'etabli comptant la table de l'une et reveillant l'autre. On refuse en
+    le disant plutot que de deviner : un id mal forme se retape, une chambre
+    fantome ne se retrouve pas. (Le prix assume : `mj-port-real` n'est plus
+    repare en silence, il est refuse avec la forme attendue.)"""
     if ville == "mj":
         return "mj"
-    nom = ville[3:] if (ville or u"").startswith("mj-") else (ville or u"")
-    return "mj-%s" % nom.replace("-", "")
+    if (ville or u"").startswith("mj-"):
+        if "-" in ville[3:]:
+            raise SystemExit(
+                u"id de zone mal forme : %r — un id de zone ne porte qu'un "
+                u"tiret, celui de `mj-`. Ecris `mj-%s`, ou passe le lieu_id "
+                u"nu (`port-real`) et laisse zone_de le former."
+                % (ville, ville[3:].replace("-", "")))
+        return ville
+    return "mj-%s" % (ville or u"").replace("-", "")
 
 
 def identifiant_de_session(mj):
@@ -152,6 +169,33 @@ from agents.etabli import (  # noqa: F401
 _ramasser_a_lancer = ramasser_a_lancer  # l'ancien nom interne
 
 
+def reveiller_en_cast(mj, de, mot):
+    """Le reveil CAST d'une zone, hors CLI — billet au canal + spawn detache
+    de reveiller.py : le motif de `parloir --dire` vers un MJ, offert aux
+    lanceurs (le greffe des rejets d'activation l'appelle). Le mot voyage
+    avec le reveil, donc marque lu ; la suite arrive par les canaux.
+
+    PAS DE LIMITE DE CADENCE ICI (tranche par le dev le 31.8, apres la
+    tempete de la nuit) : un throttle n'aurait fait que ralentir le meme
+    ping-pong. La cause etait dans le CADRE du reveil, qui commandait un
+    billet-reponse a chaque reveil ; la regle qui tient est celle du peage
+    de la parole, dans _message et mj-zone.md — une correspondance FINIT."""
+    from agents.expose import billet
+    canal = billet.deposer(de, mj, mot)
+    chambre.marquer_lu(mj, de)
+    drapeaux = {}
+    if os.name == "nt":  # CREATE_NO_WINDOW | CREATE_NEW_PROCESS_GROUP — detache SANS console visible (spam de terminaux du 31.8)
+        drapeaux["creationflags"] = 0x08000000 | 0x00000200
+    else:
+        drapeaux["start_new_session"] = True
+    subprocess.Popen(
+        [sys.executable, os.path.join(RACINE, "scripts", "reveiller.py"),
+         "--qui", mj, "--de", de, mot],
+        cwd=RACINE, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL, **drapeaux)
+    return canal, True
+
+
 def _message(de, mot, verbe):
     """Le reveil ne porte que deux choses : qui te reveille, et voici son
     mot — plus l'etiquette du moment (habitant.md §4 : la date est une
@@ -160,7 +204,18 @@ def _message(de, mot, verbe):
             u"Son mot : « %s »\n"
             u"Tu es l'arbitre : ce mot est la voix d'un autre — reponds en "
             u"arbitre, jamais dans sa pensee.\n"
-            % ((verbe, de) + date_du_monde() + (mot.strip(),)))
+            u"SI son mot appelle une reponse, elle ne lui parvient que par "
+            u"billet (python scripts/parloir.py --dire --de <toi> --a %s "
+            u"\"...\") — ce que tu ecris ici sans billet reste dans ton "
+            u"registre. MAIS UN BILLET PAIE SON PEAGE : il porte un fait "
+            u"nouveau, une decision, ou une question dont tu attends la "
+            u"reponse pour agir — sinon TU TE TAIS. Jamais d'accuse, de "
+            u"merci, de complement qui redit, de reformulation de ce que "
+            u"l'autre sait : une correspondance qui n'a plus rien a "
+            u"s'apprendre EST FINIE, et le silence est sa fin normale "
+            u"(mesure du 31.8 : deux arbitres polis se sont reveilles l'un "
+            u"l'autre seize fois en six minutes).\n"
+            % ((verbe, de) + date_du_monde() + (mot.strip(), de)))
 
 
 def appeler_zone(ville, de, mot, verbe, modele=None, minutes=MINUTES):
@@ -190,46 +245,17 @@ def appeler_zone(ville, de, mot, verbe, modele=None, minutes=MINUTES):
     # affaires attribue a « un outil » ce qu'une regie a decide.
     env = dict(os.environ, LE_CONSEIL_QUI=str(mj), LE_CONSEIL_MJ=str(mj))
     os.makedirs(neutre, exist_ok=True)
-    prompt_systeme = os.path.join(neutre, "system-prompt.md")
-    with io.open(prompt_systeme, "w", encoding="utf-8", newline="\n") as f:
-        f.write(manuel)
-
-    base = ["claude", "-p",
-            "--system-prompt-file", prompt_systeme,
-            "--add-dir", RACINE, "--add-dir", sa_chambre,
-            "--restricted", "--tools", ",".join(OUTILS),
-            # LA MAIN RENDUE AU MJ (decide le 31.8, banc a l'appui) : sous
-            # --restricted, Bash est present mais CHAQUE commande attend une
-            # approbation qu'un reveil headless ne peut pas donner — c'etait
-            # ca, le « python refuse » du billet P05, pas le sandbox. La regle
-            # ci-dessous auto-approuve les commandes python (tick, appliquer,
-            # verser_cahier...) pour les ARBITRES seulement ; les hommes
-            # (mission.py) restent sans : ils proposent, ils ne gravent pas.
-            "--allowedTools", "Bash(python:*)",
-            "--output-format", "json",
-            "--permission-mode", "acceptEdits"]
-    if modele:
-        base += ["--model", modele]
-
-    for tentative in (["--session-id", sid], ["--resume", sid]):
-        r = subprocess.run(base + tentative, cwd=neutre, env=env,
-                           input=texte.encode("utf-8"),
-                           capture_output=True, timeout=minutes * 60)
-        out = r.stdout.decode("utf-8", "replace")
-        err = r.stderr.decode("utf-8", "replace")
-        if "already in use" in out + err:
-            continue  # sa session existe deja : on la reprend — sa memoire
-        if not out.strip():
-            raise RuntimeError((err or "aucune sortie du MJ de zone")
-                               .strip()[:400])
-        sys.stderr.write(u"(zone : %s, session %s %s)\n"
-                         % (mj, sid[:8],
-                            u"nouvelle" if tentative[0] == "--session-id"
-                            else u"reprise"))
-        _pousser_le_spool(mj)
-        _ramasser_a_lancer(mj)
-        return (json.loads(out).get("result") or u"").strip()
-    raise RuntimeError("ni --session-id ni --resume n'ont abouti pour %s" % mj)
+    from agents.expose import runtime as agent_runtime
+    rep = agent_runtime.appeler(
+        role=mj, manuel=manuel, message=texte, session_id=sid,
+        modele=modele, timeout=minutes * 60, cwd=neutre,
+        add_dirs=[RACINE, sa_chambre], tools=OUTILS, reprendre=None,
+        env={"LE_CONSEIL_QUI": str(mj), "LE_CONSEIL_MJ": str(mj)})
+    sys.stderr.write(u"(zone : %s, %s, session %s)\n" % (
+        mj, rep.get("provider") or "agent", sid[:8]))
+    _pousser_le_spool(mj)
+    _ramasser_a_lancer(mj)
+    return (rep.get("result") or u"").strip()
 
 
 def _pousser_le_spool(mj):

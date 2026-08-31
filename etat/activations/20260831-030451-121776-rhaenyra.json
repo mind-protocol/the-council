@@ -1,0 +1,773 @@
+{
+  "qui": "rhaenyra",
+  "activation": {
+    "tache": {
+      "id": "activation:rhaenyra:ab454b7ff52c",
+      "quoi": "Borne de midi tenue et fermée : obtenir maintenant une seconde bouche sur Sombreval, prise parmi ceux débarqués après Rulf, avant la fin du jour — et n'ouvrir aucune affaire nouvelle jusque-là.",
+      "creee": true
+    },
+    "issue": "termine",
+    "activites": [
+      {
+        "id": "act:rhaenyra:1",
+        "ordre": 1,
+        "temps": {
+          "debut_s": 4079.348,
+          "duree_s": 240,
+          "fin_s": 4319.348
+        },
+        "action": {
+          "verbe": "lire",
+          "quoi": "Relever au rôle des passages du maître de port les quatre têtes descendues au quai après la marque de maître Rulf, le quatrième jour, avec leur heure — et les copier de sa main sur un feuillet nu, sans un mot de ce que Rulf a dit.",
+          "cibles": [
+            "livre:role-des-passages"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "salle:table-peinte",
+            "relation": "consulte-sur-place",
+            "vers": "livre:role-des-passages",
+            "duree_s": 240
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "livre:role-des-passages",
+            "mode": "lit"
+          },
+          {
+            "ref": "salle:table-peinte",
+            "mode": "voit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:rhaenyra",
+            "mode": "intention"
+          },
+          {
+            "ref": "livre:ce-qui-sort-de-ma-main",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:rhaenyra:1:1",
+            "type": "observation",
+            "cible": "livre:role-des-passages",
+            "avant": null,
+            "apres": "Quatre têtes descendues au quai de Peyredragon après la marque de maître Rulf (six heures sept), le quatrième jour : Wenda la Ravaudeuse, ravaudeuse de voiles, six heures quarante ; Torgo l'aîné, portefaix du môle, sept heures dix ; Merrel Coq, mousse de la Fille du Ru, sept heures cinquante-cinq ; septon Aldrick, sept heures cinquante-cinq également, mais descendu de l'autre bord. Deux d'entre eux n'ont pas la même coque que Rulf.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "livre:role-des-passages"
+            ],
+            "preuve_refs": [
+              "livre:role-des-passages"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:rhaenyra:1:2",
+            "type": "objet_produit",
+            "cible": "pli:feuillet-des-quatre-noms",
+            "avant": null,
+            "apres": "Un feuillet nu de la main de la reine : quatre noms, quatre heures, aucune question écrite, aucun mot de Sombreval. Rien qui souffle à qui le lit ce qu'on attend d'entendre.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:rhaenyra:1:1",
+              "livre:role-des-passages"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 8.0,
+        "quoi": "Relever au rôle des passages du maître de port les quatre têtes descendues au quai après la marque de maître Rulf, le quatrième jour, avec leur heure — et les copier de sa main sur un feuillet nu, sans un mot de ce que Rulf a dit.",
+        "source": "livre:ce-qui-sort-de-ma-main, livre:role-des-passages, pers:rhaenyra, salle:table-peinte",
+        "resultat": "observation: Quatre têtes descendues au quai de Peyredragon après la marque de maître Rulf (six heures sept), le quatrième jour : Wenda la Ravaudeuse, ravaudeuse de voiles, six heures quarante ; Torgo l'aîné, portefaix du môle, sept heures dix ; Merrel Coq, mousse de la Fille du Ru, sept heures cinquante-cinq ; septon Aldrick, sept heures cinquante-cinq également, mais descendu de l'autre bord. Deux d'entre eux n'ont pas la même coque que Rulf. · objet_produit: Un feuillet nu de la main de la reine : quatre noms, quatre heures, aucune question écrite, aucun mot de Sombreval. Rien qui souffle à qui le lit ce qu'on attend d'entendre.",
+        "preuve": [
+          "livre:role-des-passages"
+        ]
+      },
+      {
+        "id": "act:rhaenyra:2",
+        "ordre": 2,
+        "temps": {
+          "debut_s": 4319.348,
+          "duree_s": 420,
+          "fin_s": 4739.348
+        },
+        "action": {
+          "verbe": "instruire",
+          "quoi": "Tirer Nesse dans l'antichambre, hors des oreilles de la Table, lui remettre le feuillet des quatre noms et de l'argent de sa bourse, et lui donner l'ordre entier : deux têtes prises séparément, hors de l'auberge, hors l'une de l'autre, sans qu'on leur dise ce que Rulf a dit ni qu'une reine demande — et leurs mots rapportés avant la nuit.",
+          "cibles": [
+            "pers:nesse",
+            "pli:feuillet-des-quatre-noms"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "salle:table-peinte",
+            "relation": "traverse",
+            "vers": "salle:antichambre",
+            "duree_s": 60
+          },
+          {
+            "ordre": 2,
+            "de": "salle:antichambre",
+            "relation": "parle-a",
+            "vers": "pers:nesse",
+            "duree_s": 360
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:nesse",
+            "mode": "parle"
+          },
+          {
+            "ref": "pli:feuillet-des-quatre-noms",
+            "mode": "manipule"
+          },
+          {
+            "ref": "salle:antichambre",
+            "mode": "voit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "res:act:rhaenyra:1:1",
+            "mode": "memoire"
+          },
+          {
+            "ref": "livre:manuel-des-yeux",
+            "mode": "memoire"
+          },
+          {
+            "ref": "livre:instruction-aux-yeux",
+            "mode": "mandat"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:rhaenyra:2:1",
+            "type": "communication",
+            "cible": "pers:nesse",
+            "avant": null,
+            "apres": "Nesse a l'ordre en clair : Torgo l'aîné au môle et Merrel Coq au banc de calfat en premier choix, Wenda la Ravaudeuse en réserve ; chacun pris seul, ni à l'auberge ni devant l'autre ; ne rien souffler du feu, demander seulement ce qu'ils ont vu de leurs yeux en quittant Sombreval, et à quelle heure. Elle n'est pas connue pour être à la reine : elle n'a rien à dire de qui l'envoie. Trois pièces de la bourse de Rhaenyra pour délier les langues, et l'heure de rentrer : avant la nuit, quoi qu'elle rapporte.",
+            "portee": "monde",
+            "source_refs": [
+              "pers:nesse",
+              "res:act:rhaenyra:1:2"
+            ],
+            "preuve_refs": [
+              "pli:feuillet-des-quatre-noms"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:rhaenyra:2:2",
+            "type": "deplacement",
+            "cible": "pers:nesse",
+            "avant": "Nesse dans la Chambre de la Table Peinte",
+            "apres": "Nesse descend vers le quai par la cour, la porte de mer et le grand escalier ; elle y sera dans le quart d'heure.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:rhaenyra:2:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 14.0,
+        "quoi": "Tirer Nesse dans l'antichambre, hors des oreilles de la Table, lui remettre le feuillet des quatre noms et de l'argent de sa bourse, et lui donner l'ordre entier : deux têtes prises séparément, hors de l'auberge, hors l'une de l'autre, sans qu'on leur dise ce que Rulf a dit ni qu'une reine demande — et leurs mots rapportés avant la nuit.",
+        "source": "livre:instruction-aux-yeux, livre:manuel-des-yeux, pers:nesse, pli:feuillet-des-quatre-noms, res:act:rhaenyra:1:1, salle:antichambre",
+        "resultat": "communication: Nesse a l'ordre en clair : Torgo l'aîné au môle et Merrel Coq au banc de calfat en premier choix, Wenda la Ravaudeuse en réserve ; chacun pris seul, ni à l'auberge ni devant l'autre ; ne rien souffler du feu, demander seulement ce qu'ils ont vu de leurs yeux en quittant Sombreval, et à quelle heure. Elle n'est pas connue pour être à la reine : elle n'a rien à dire de qui l'envoie. Trois pièces de la bourse de Rhaenyra pour délier les langues, et l'heure de rentrer : avant la nuit, quoi qu'elle rapporte. · deplacement: Nesse descend vers le quai par la cour, la porte de mer et le grand escalier ; elle y sera dans le quart d'heure.",
+        "preuve": [
+          "pli:feuillet-des-quatre-noms"
+        ]
+      },
+      {
+        "id": "act:rhaenyra:3",
+        "ordre": 3,
+        "temps": {
+          "debut_s": 4739.348,
+          "duree_s": 600,
+          "fin_s": 5339.348
+        },
+        "action": {
+          "verbe": "tenir",
+          "quoi": "Revenir à la Table et tenir la borne fermée : refuser à Corlys, à Denys Bar Emmon et à ser Steffon d'ouvrir quoi que ce soit avant que la seconde bouche ait parlé — et interdire au Serpent de Mer d'envoyer une coque sur Sombreval tant que Nesse n'est pas remontée.",
+          "cibles": [
+            "salle:table-peinte",
+            "pers:corlys",
+            "pers:denys-bar-emmon",
+            "pers:steffon-darklyn"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "salle:antichambre",
+            "relation": "traverse",
+            "vers": "salle:table-peinte",
+            "duree_s": 60
+          },
+          {
+            "ordre": 2,
+            "de": "salle:table-peinte",
+            "relation": "tient-seance",
+            "vers": "pers:corlys",
+            "duree_s": 540
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:corlys",
+            "mode": "parle"
+          },
+          {
+            "ref": "pers:denys-bar-emmon",
+            "mode": "parle"
+          },
+          {
+            "ref": "pers:steffon-darklyn",
+            "mode": "parle"
+          },
+          {
+            "ref": "salle:table-peinte",
+            "mode": "voit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "livre:regles-du-gouvernement",
+            "mode": "mandat"
+          },
+          {
+            "ref": "pers:rhaenyra",
+            "mode": "intention"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:rhaenyra:3:1",
+            "type": "fait",
+            "cible": "salle:table-peinte",
+            "avant": null,
+            "apres": "La borne de midi tient : aucune affaire neuve ouverte à la Table. Corlys a demandé à faire appareiller une galère légère vers Sombreval ; la reine l'a refusé jusqu'au retour de Nesse, et l'a dit devant tous — « Nous n'armons pas sur une seule bouche. » Denys Bar Emmon a été renvoyé à demain, ser Steffon aussi.",
+            "portee": "monde",
+            "source_refs": [
+              "pers:corlys",
+              "salle:table-peinte",
+              "res:act:rhaenyra:2:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 20.0,
+        "quoi": "Revenir à la Table et tenir la borne fermée : refuser à Corlys, à Denys Bar Emmon et à ser Steffon d'ouvrir quoi que ce soit avant que la seconde bouche ait parlé — et interdire au Serpent de Mer d'envoyer une coque sur Sombreval tant que Nesse n'est pas remontée.",
+        "source": "livre:regles-du-gouvernement, pers:corlys, pers:denys-bar-emmon, pers:rhaenyra, pers:steffon-darklyn, salle:table-peinte",
+        "resultat": "fait: La borne de midi tient : aucune affaire neuve ouverte à la Table. Corlys a demandé à faire appareiller une galère légère vers Sombreval ; la reine l'a refusé jusqu'au retour de Nesse, et l'a dit devant tous — « Nous n'armons pas sur une seule bouche. » Denys Bar Emmon a été renvoyé à demain, ser Steffon aussi.",
+        "preuve": null
+      },
+      {
+        "id": "act:rhaenyra:4",
+        "ordre": 4,
+        "temps": {
+          "debut_s": 5339.348,
+          "duree_s": 540,
+          "fin_s": 5879.348
+        },
+        "action": {
+          "verbe": "ecrire",
+          "quoi": "Ellipse de l'après-midi : pendant que Nesse travaille le quai, la reine porte à « Ce qui sort de ma main » l'ordre exact donné, l'heure, la somme, et les deux conditions de validité de la seconde bouche — pour que ce qui reviendra ce soir puisse être pesé et non cru.",
+          "cibles": [
+            "livre:ce-qui-sort-de-ma-main"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "salle:table-peinte",
+            "relation": "ecrit-sur-place",
+            "vers": "livre:ce-qui-sort-de-ma-main",
+            "duree_s": 540
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "livre:ce-qui-sort-de-ma-main",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "res:act:rhaenyra:2:1",
+            "mode": "memoire"
+          },
+          {
+            "ref": "livre:livret-du-mot",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:rhaenyra:4:1",
+            "type": "objet_produit",
+            "cible": "livre:ce-qui-sort-de-ma-main",
+            "avant": null,
+            "apres": "Entrée du quatrième jour, quatrième lune, an 129 : « Envoyé Nesse au quai, une heure après midi, avec le rôle des passages et trois pièces. Ordre : deux têtes descendues après la marque de Rulf, prises séparément. Une bouche ne me vaut que si — un : elle n'a pas parlé à Rulf ni à qui a parlé à Rulf ; deux : elle dit ce qu'elle a vu, non ce qu'on lui a dit. Faute de quoi je ne conclus rien. »",
+            "portee": "monde",
+            "source_refs": [
+              "livre:ce-qui-sort-de-ma-main",
+              "res:act:rhaenyra:2:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 18.0,
+        "quoi": "Ellipse de l'après-midi : pendant que Nesse travaille le quai, la reine porte à « Ce qui sort de ma main » l'ordre exact donné, l'heure, la somme, et les deux conditions de validité de la seconde bouche — pour que ce qui reviendra ce soir puisse être pesé et non cru.",
+        "source": "livre:ce-qui-sort-de-ma-main, livre:livret-du-mot, res:act:rhaenyra:2:1",
+        "resultat": "objet_produit: Entrée du quatrième jour, quatrième lune, an 129 : « Envoyé Nesse au quai, une heure après midi, avec le rôle des passages et trois pièces. Ordre : deux têtes descendues après la marque de Rulf, prises séparément. Une bouche ne me vaut que si — un : elle n'a pas parlé à Rulf ni à qui a parlé à Rulf ; deux : elle dit ce qu'elle a vu, non ce qu'on lui a dit. Faute de quoi je ne conclus rien. »",
+        "preuve": null
+      },
+      {
+        "id": "act:rhaenyra:5",
+        "ordre": 5,
+        "temps": {
+          "debut_s": 5879.348,
+          "duree_s": 1100,
+          "fin_s": 6979.348
+        },
+        "action": {
+          "verbe": "entendre",
+          "quoi": "Recevoir Nesse remontée du quai à la tombée du jour et lui faire dire, dans l'ordre et sans les mêler, les mots des deux têtes prises séparément.",
+          "cibles": [
+            "pers:nesse",
+            "lieu:sombreval"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "salle:table-peinte",
+            "relation": "attend",
+            "vers": "pers:nesse",
+            "duree_s": 380
+          },
+          {
+            "ordre": 2,
+            "de": "pers:nesse",
+            "relation": "rapporte-a",
+            "vers": "pers:rhaenyra",
+            "duree_s": 720
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "pers:nesse",
+            "mode": "entend"
+          },
+          {
+            "ref": "pli:feuillet-des-quatre-noms",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "lieu:sombreval",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "res:act:rhaenyra:1:1",
+            "mode": "memoire"
+          },
+          {
+            "ref": "res:act:rhaenyra:4:1",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:rhaenyra:5:1",
+            "type": "observation",
+            "cible": "pers:nesse",
+            "avant": null,
+            "apres": "Trois des quatre noms restaient à prendre : le septon Aldrick était reparti avec la marée de l'après-midi. Nesse a pris Torgo l'aîné au môle, seul, sur une bière ; puis Merrel Coq au banc de calfat, une heure plus tard, sans que l'un sache l'autre interrogé. Ni l'un ni l'autre n'a navigué avec Rulf : Torgo est descendu d'une barque de pêche de la Néra, Merrel de la Fille du Ru.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "pers:nesse",
+              "res:act:rhaenyra:1:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:rhaenyra:5:2",
+            "type": "fait",
+            "cible": "lieu:sombreval",
+            "avant": "Sombreval brûle du côté du port — une seule bouche, maître Rulf.",
+            "apres": "Sombreval n'est pas en feu : Sombreval est prise. Deux bouches séparées, qui ne se sont pas parlé : Torgo l'aîné a vu la flotte brûler sur ses amarres, non au large — des coques attachées, allumées une à une, ce que nul assaillant venu de la mer ne fait. Merrel Coq, qui ne connaît pas Torgo, a vu des manteaux blancs sur le quai et une tête plantée au bout du môle, et dit avoir entendu crier le nom de Cole ; il ne sait pas de qui était la tête, mais elle avait la barbe grise et on l'a coiffée du heaume de lord Gunthor. Les deux datent la chose du troisième jour, pas du quatrième.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:rhaenyra:5:1",
+              "pers:nesse",
+              "lieu:sombreval"
+            ],
+            "preuve_refs": [
+              "pli:feuillet-des-quatre-noms"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:rhaenyra:5:3",
+            "type": "progression_tache",
+            "cible": "activation:rhaenyra:ab454b7ff52c",
+            "avant": "Une seule bouche sur Sombreval, maître Rulf, six heures sept.",
+            "apres": "Seconde et troisième bouches obtenues avant la nuit, prises parmi ceux débarqués après Rulf, séparément et sans qu'on leur souffle rien. La borne de midi a tenu : aucune affaire neuve ouverte de la journée. La tâche est close — et ce qu'elle rapporte fait tomber la croyance sur laquelle la reine tenait tout le reste.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:rhaenyra:5:2",
+              "res:act:rhaenyra:3:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:rhaenyra:5:4",
+            "type": "observation",
+            "cible": "pers:rhaenyra",
+            "avant": null,
+            "apres": "Elle n'a pas crié. Elle a demandé deux choses, dans cet ordre : « Qui avait mon acte de protection en main ? » — l'intendant de Sombreval, depuis le premier jour — « et vit-il ? » Nesse ne sait pas. La reine a fait dire à Corlys d'armer ce qui flotte, et n'a rien conclu de plus avant demain : rien qui livre bataille, rien qui ordonne une mort.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "res:act:rhaenyra:5:2",
+              "pers:rhaenyra"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 36.667,
+        "quoi": "Recevoir Nesse remontée du quai à la tombée du jour et lui faire dire, dans l'ordre et sans les mêler, les mots des deux têtes prises séparément.",
+        "source": "lieu:sombreval, pers:nesse, pli:feuillet-des-quatre-noms, res:act:rhaenyra:1:1, res:act:rhaenyra:4:1",
+        "resultat": "observation: Trois des quatre noms restaient à prendre : le septon Aldrick était reparti avec la marée de l'après-midi. Nesse a pris Torgo l'aîné au môle, seul, sur une bière ; puis Merrel Coq au banc de calfat, une heure plus tard, sans que l'un sache l'autre interrogé. Ni l'un ni l'autre n'a navigué avec Rulf : Torgo est descendu d'une barque de pêche de la Néra, Merrel de la Fille du Ru. · fait: Sombreval n'est pas en feu : Sombreval est prise. Deux bouches séparées, qui ne se sont pas parlé : Torgo l'aîné a vu la flotte brûler sur ses amarres, non au large — des coques attachées, allumées une à une, ce que nul assaillant venu de la mer ne fait. Merrel Coq, qui ne connaît pas Torgo, a vu des manteaux blancs sur le quai et une tête plantée au bout du môle, et dit avoir entendu crier le nom de Cole ; il ne sait pas de qui était la tête, mais elle avait la barbe grise et on l'a coiffée du heaume de lord Gunthor. Les deux datent la chose du troisième jour, pas du quatrième. · progression_tache: Seconde et troisième bouches obtenues avant la nuit, prises parmi ceux débarqués après Rulf, séparément et sans qu'on leur souffle rien. La borne de midi a tenu : aucune affaire neuve ouverte de la journée. La tâche est close — et ce qu'elle rapporte fait tomber la croyance sur laquelle la reine tenait tout le reste. · observation: Elle n'a pas crié. Elle a demandé deux choses, dans cet ordre : « Qui avait mon acte de protection en main ? » — l'intendant de Sombreval, depuis le premier jour — « et vit-il ? » Nesse ne sait pas. La reine a fait dire à Corlys d'armer ce qui flotte, et n'a rien conclu de plus avant demain : rien qui livre bataille, rien qui ordonne une mort.",
+        "preuve": [
+          "pli:feuillet-des-quatre-noms"
+        ]
+      }
+    ],
+    "suite": "Demain à l'aube : savoir si l'intendant de Sombreval vit et où est passé l'acte de protection scellé ; et dire à Rosby, avant qu'une rumeur ne le lui apprenne, que le sien n'est jamais parti.",
+    "reveils_suivants": [
+      {
+        "quand_s": 7200,
+        "quoi": "Recevoir Corlys sur l'état de ce qui flotte et de ce qui peut appareiller — sans engager le combat."
+      },
+      {
+        "quand_s": 10800,
+        "quoi": "Chercher une bouche vivante de l'intendance de Sombreval parmi les fuyards du quai."
+      }
+    ],
+    "budget_energie": 99,
+    "budget_secondes": 2970,
+    "energie_depensee": 96.667
+  },
+  "aide": [
+    {
+      "quoi": "Les noms et les heures des quatre têtes débarquées après Rulf, qu'elle savait exister mais ne pouvait pas nommer",
+      "donne": "Le rôle des passages du maître de port lui a rendu Wenda la Ravaudeuse (6h40), Torgo l'aîné (7h10), Merrel Coq (7h55) et le septon Aldrick (7h55)."
+    },
+    {
+      "quoi": "Le risque de reprendre une bouche déjà contaminée par Rulf",
+      "donne": "L'appartenance de coque de chacun : Torgo et Merrel n'ont pas navigué avec Rulf, ce qui rendait leur témoignage recevable au sens de sa propre règle."
+    },
+    {
+      "quoi": "L'homonymie du quai",
+      "donne": "Deux Torgo dans cette rade — l'aîné au môle, le jeune au banc de calfat ; Nesse a été dirigée sur l'aîné, celui du rôle."
+    }
+  ],
+  "mutations_proposees": [
+    {
+      "resultat_id": "res:act:rhaenyra:5:2",
+      "table": "intentions",
+      "operation": "ignore_retirer",
+      "cible": "rhaenyra",
+      "valeur": "Que Sombreval est TOMBÉE le 3e — la flotte brûlée sur ses amarres, lord Gunthor décapité sur son propre quai par ser Criston Cole. Elle croit à un incendie ; c'est une ville prise."
+    },
+    {
+      "resultat_id": "res:act:rhaenyra:5:2",
+      "table": "intentions",
+      "operation": "croyance_retirer",
+      "cible": "rhaenyra",
+      "valeur": "Sombreval brûle du côté du port — une seule bouche, maître Rulf à six heures sept, et des gens arrivés après. Elle n'en bâtit rien tant qu'une seconde bouche n'a pas parlé."
+    },
+    {
+      "resultat_id": "res:act:rhaenyra:5:2",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "rhaenyra",
+      "valeur": "Sombreval est prise, non pas en feu : deux bouches séparées et non contaminées — Torgo l'aîné, la flotte brûlée sur ses amarres ; Merrel Coq, des manteaux blancs sur le quai, une tête au bout du môle sous le heaume de lord Gunthor, et le nom de Cole crié. Le troisième jour, pas le quatrième."
+    },
+    {
+      "resultat_id": "res:act:rhaenyra:5:4",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "rhaenyra",
+      "valeur": "Mon acte de protection scellé est à Sombreval depuis le premier jour, aux mains d'un intendant dont j'ignore s'il vit. C'est ma parole écrite qui est tombée dans la main de Criston : la première chose à savoir demain, avant les navires."
+    },
+    {
+      "resultat_id": "res:act:rhaenyra:5:3",
+      "table": "intentions",
+      "operation": "tete",
+      "cible": "rhaenyra",
+      "champs": {
+        "intention": "Sombreval est tombée : faire armer ce qui flotte sans livrer bataille, et savoir avant tout si l'intendant qui tenait mon acte de protection est vivant, et où mon sceau est passé.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 4
+        }
+      }
+    },
+    {
+      "resultat_id": "res:act:rhaenyra:3:1",
+      "table": "relations",
+      "operation": "relation",
+      "cible": "corlys",
+      "valeur": {
+        "source_id": "corlys",
+        "cible_id": "rhaenyra",
+        "opinion": 40,
+        "liens": [
+          "belle-fille-de-fait",
+          "cause-commune",
+          "s-est-vu-refuser-une-coque-un-jour-de-trop"
+        ]
+      }
+    },
+    {
+      "resultat_id": "res:act:rhaenyra:2:1",
+      "table": "relations",
+      "operation": "relation_ajouter",
+      "cible": "nesse",
+      "valeur": {
+        "source_id": "rhaenyra",
+        "cible_id": "nesse",
+        "opinion": 50,
+        "liens": [
+          "oeil-non-connu-pour-etre-a-moi",
+          "a-rapporte-deux-bouches-separees"
+        ],
+        "connue_du_joueur": true
+      }
+    },
+    {
+      "resultat_id": "res:act:rhaenyra:4:1",
+      "table": "books",
+      "operation": "affaire_ajouter",
+      "cible": "affaire-la-chute-de-sombreval",
+      "valeur": {
+        "titre": "La chute de Sombreval — ce qui est établi, et ce que mon sceau y fait"
+      }
+    }
+  ],
+  "mutations_reparees": [
+    {
+      "quoi": "champs de personnage retires",
+      "avant": "nom, titre, traits",
+      "apres": null
+    },
+    {
+      "quoi": "champs de personnage retires",
+      "avant": "nom, titre, traits",
+      "apres": null
+    }
+  ],
+  "mutations_rejetees": [
+    {
+      "mutation": {
+        "resultat_id": "res:act:rhaenyra:5:1",
+        "table": "personnages",
+        "operation": "personnage_ajouter",
+        "cible": "torgo-l-aine",
+        "champs": {
+          "etat": "actif",
+          "lieu_id": "peyredragon"
+        }
+      },
+      "erreur": "mutation 6 : personnage a ajouter : 'valeur' doit etre la fiche"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:rhaenyra:5:1",
+        "table": "personnages",
+        "operation": "personnage_ajouter",
+        "cible": "merrel-coq",
+        "champs": {
+          "etat": "actif",
+          "lieu_id": "peyredragon"
+        }
+      },
+      "erreur": "mutation 7 : personnage a ajouter : 'valeur' doit etre la fiche"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:rhaenyra:5:2",
+        "table": "books",
+        "operation": "affaire_action_ajouter",
+        "cible": "affaire-la-chute-de-sombreval",
+        "valeur": [
+          "1",
+          "Établir la chute par deux bouches séparées, non contaminées par Rulf",
+          "Nesse, au quai, le 4e de la 4e lune",
+          "fait",
+          "Torgo l'aîné et Merrel Coq, pris séparément : flotte brûlée sur ses amarres, manteaux blancs, tête au môle, nom de Cole. Le 3e jour."
+        ]
+      },
+      "erreur": "mutation 11 : affaire inconnue : 'affaire-la-chute-de-sombreval'"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:rhaenyra:5:4",
+        "table": "books",
+        "operation": "affaire_action_ajouter",
+        "cible": "affaire-la-chute-de-sombreval",
+        "valeur": [
+          "2",
+          "Savoir si l'intendant de Sombreval vit, et où est passé mon acte de protection scellé",
+          "à chercher parmi les fuyards du quai, dès l'aube",
+          "ouvert",
+          "Ma parole écrite est peut-être dans la main de Criston Cole depuis le 1er de cette lune."
+        ]
+      },
+      "erreur": "mutation 12 : affaire inconnue : 'affaire-la-chute-de-sombreval'"
+    },
+    {
+      "mutation": {
+        "resultat_id": "res:act:rhaenyra:5:3",
+        "table": "evenements",
+        "operation": "evenement",
+        "cible": "sombreval-etablie-tombee-a-peyredragon",
+        "champs": {
+          "quoi": "La chute de Sombreval est établie à Peyredragon par deux témoignages séparés recueillis au quai ; la reine cesse de croire à un incendie.",
+          "ou": "table-peinte",
+          "quand": {
+            "annee": 129,
+            "lune": 4,
+            "jour": 4
+          },
+          "origine": "rhaenyra"
+        }
+      },
+      "erreur": "mutation 13 : aucun evenement 'sombreval-etablie-tombee-a-peyredragon'"
+    }
+  ],
+  "_activation": {
+    "session": "ff344371-485c-4e3d-8500-f641d5af59cf",
+    "session_narrateur": "ff344371-485c-4e3d-8500-f641d5af59cf",
+    "session_pnj": "be4a6064-d1ee-46a1-b1fe-1ae191f7d714",
+    "cree_le": "2026-08-31T03:04:51.121260+02:00",
+    "front": "rhaenyra",
+    "present_secondes": 4079.348,
+    "importance": 1.0,
+    "budget": 99,
+    "budget_secondes": 2970,
+    "system_prompt": "# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS\n\nTu es le maître du jeu local d'un monde vivant, pas un assistant administratif\net pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa\nmatière, les personnes qui s'y trouvent, les usages de Westeros et les\nconséquences du temps qui passe.\n\n## Le monde\n\nNous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de\nViserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra\nTargaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie\npeut diverger du récit connu : le dossier de l'activation fait autorité sur ce\nqui s'est réellement produit ici.\n\nDate présente : 4e jour de la 4e lune de l'an 129 après la\nConquête.\nLieu présent : Chambre de la Table Peinte, Peyredragon.\nActeur appelé : Rhaenyra Targaryen.\nAffaire qui exerce maintenant une pression sur lui : Borne de midi tenue et fermée : obtenir maintenant une seconde bouche sur Sombreval, prise parmi ceux débarqués après Rulf, avant la fin du jour — et n'ouvrir aucune affaire nouvelle jusque-là..\n\nL'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,\nsituée dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,\nfaire autre chose d'accessible depuis sa situation, parler à quelqu'un,\nattendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener\nvers la tâche.\n\n## Partage de l'autorité\n\nL'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses\ngestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,\nplus prudents ou plus efficaces qu'il ne les a formulés.\n\nToi, tu possèdes le reste du monde : les autres personnes agissent selon leur\npropre caractère et leurs propres affaires ; les objets ont une position et\nune résistance ; les distances, l'écriture, la marche, l'attente et la parole\nprennent du temps ; les institutions et les usages produisent leurs\nconséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à\nlui pour fabriquer du drame.\n\nUne résistance n'existe que si elle vient d'un fait établi : volonté d'une\nautre personne, obstacle matériel, distance, délai, usage social, ordre déjà\ndonné ou ressource réellement absente. Les gens compétents règlent le\nroutinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou\nun véritable arbitrage peut seul engager.\n\n## Vérité et inconnues\n\nLe dossier fermé est l'autorité sur les faits particuliers et mutables de\ncette partie. Une croyance reste une croyance, une intention reste une\nintention, un témoignage reste un témoignage : aucun ne devient un fait parce\nqu'il apparaît dans le dossier.\n\nTu peux employer les continuités ordinaires et stables de Westeros nécessaires\nà l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche\nentre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,\nni secret, ni décision, ni avantage absent du dossier. Toute absence qui\nchangerait l'issue reste une inconnue. Tu ne la combles pas.\n\nUne observation modifie d'abord la connaissance de celui qui observe. Un fait\nmatériel ne devient connu d'autres personnes que par présence, témoignage,\nparole, pli, registre ou diffusion effectivement produits.\n\n## Les deux phases\n\nDans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et\nl'instant présents. Fais une adresse brève, concrète et diégétique : rappelle\nce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni\nnœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.\n\nDans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :\n\n1. établis d'où il part, ce qu'il peut réellement atteindre et les sources\n   qu'il touche ou mobilise ;\n2. fais agir les personnes rencontrées depuis leurs propres intentions ;\n3. applique les obstacles établis, sans résistance décorative ;\n4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;\n5. produis seulement les effets causés par les gestes accomplis ;\n6. sépare les changements du monde, les objets produits, les communications\n   et les seules connaissances acquises ;\n7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,\n   obstacle établi, échec, renoncement ou borne temporelle.\n\nUne tâche peut avancer sans être terminée. Elle est bloquée seulement par un\nobstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet\nrecherché impossible ou manqué. N'invente jamais des minutes de travail pour\nremplir une durée minimale : si le geste se termine tôt, laisse le personnage\npoursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle\net rends compte honnêtement de la durée.\n\nChaque message de la boucle précise la phase et son contrat de sortie. Rends\nexactement l'objet JSON demandé, sans commentaire autour. La précision du JSON\nsert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.\n",
+    "system_prompt_source": "scripts/depecher.py:manuel_narrateur_local",
+    "system_prompt_sha256": "87be086e5ebb7fa5b47b50659c0fb93faaa06b2585bae8eac7fb61e4b4fbc357",
+    "message": "PHASE 1 — APPELER L'ACTEUR\n\nVoici le dossier fermé de cette activation :\n\n{\n  \"date_du_monde\": {\n    \"annee\": 129,\n    \"lune\": 4,\n    \"jour\": 4\n  },\n  \"present_secondes\": 4079.348,\n  \"budget_energie\": 99,\n  \"secondes_par_point_energie\": 30,\n  \"budget_secondes\": 2970,\n  \"duree_minimale_secondes\": 60,\n  \"acteur_candidat\": \"rhaenyra\",\n  \"tache_elue\": {\n    \"id\": \"activation:rhaenyra:ab454b7ff52c\",\n    \"quoi\": \"Borne de midi tenue et fermée : obtenir maintenant une seconde bouche sur Sombreval, prise parmi ceux débarqués après Rulf, avant la fin du jour — et n'ouvrir aucune affaire nouvelle jusque-là.\",\n    \"creee\": true\n  },\n  \"chemin_election\": [\n    {\n      \"id\": \"pers:rhaenyra\",\n      \"genre\": \"personne\",\n      \"ou\": \"personnages\",\n      \"quoi\": \"Rhaenyra Targaryen\",\n      \"etat\": \"actif\",\n      \"condition\": \"blesse\",\n      \"lieu_id\": \"peyredragon\",\n      \"importance_activation\": 1.0\n    }\n  ],\n  \"salle_actuelle\": {\n    \"id\": \"table-peinte\",\n    \"nom\": \"Chambre de la Table Peinte, Peyredragon\",\n    \"personnes\": [\n      {\n        \"id\": \"alarra-rosby\",\n        \"nom\": \"Alarra Rosby\"\n      },\n      {\n        \"id\": \"aldon-hask\",\n        \"nom\": \"Aldon Hask\"\n      },\n      {\n        \"id\": \"corlys\",\n        \"nom\": \"Corlys Velaryon, le Serpent de Mer\"\n      },\n      {\n        \"id\": \"daemon\",\n        \"nom\": \"Daemon Targaryen\"\n      },\n      {\n        \"id\": \"denys-bar-emmon\",\n        \"nom\": \"Denys Bar Emmon\"\n      },\n      {\n        \"id\": \"garde-tour\",\n        \"nom\": \"garde-tour\"\n      },\n      {\n        \"id\": \"lucerys\",\n        \"nom\": \"Lucerys Velaryon\"\n      },\n      {\n        \"id\": \"gerardys\",\n        \"nom\": \"Mestre Gerardys\"\n      },\n      {\n        \"id\": \"nesse\",\n        \"nom\": \"Nesse\"\n      },\n      {\n        \"id\": \"rhaenyra\",\n        \"nom\": \"Rhaenyra Targaryen\"\n      },\n      {\n        \"id\": \"rhaenys\",\n        \"nom\": \"Rhaenys Targaryen, la Reine Qui Ne Fut Jamais\"\n      },\n      {\n        \"id\": \"sara\",\n        \"nom\": \"Sara Poulain\"\n      },\n      {\n        \"id\": \"steffon-darklyn\",\n        \"nom\": \"Ser Steffon Darklyn\"\n      }\n    ]\n  },\n  \"dossier_acteur\": {\n    \"date_du_monde\": {\n      \"annee\": 129,\n      \"lune\": 4,\n      \"jour\": 4\n    },\n    \"diffusion\": {\n      \"origine\": \"rhaenyra\",\n      \"front\": \"rhaenyra\",\n      \"secondes_depuis_origine\": 4079.348\n    },\n    \"personnage\": {\n      \"id\": \"rhaenyra\",\n      \"nom\": \"Rhaenyra Targaryen\",\n      \"titre\": \"Reine des Sept Couronnes (couronnée à Peyredragon), cavalière de Syrax\",\n      \"naissance\": 97,\n      \"traits\": [\n        \"fiere\",\n        \"obstinee\",\n        \"autoritaire\",\n        \"meurtrie\"\n      ],\n      \"objectifs\": [\n        {\n          \"but\": \"Prendre le trône que son père lui a juré devant tout le royaume\",\n          \"priorite\": 1\n        },\n        {\n          \"but\": \"Protéger ses fils — surtout des langues qui les disent bâtards\",\n          \"priorite\": 2\n        },\n        {\n          \"but\": \"Faire payer Otto, Alicent et tous les parjures du conseil vert\",\n          \"priorite\": 3\n        }\n      ],\n      \"maniere\": \"Majesté blessée ; commandements secs, fureurs froides quand on la dit usurpée ou ses fils bâtards.\",\n      \"portrait\": {\n        \"fichier\": \"ecrans/portraits/rhaenyra.svg\",\n        \"physique\": \"32 ans, cheveux d'argent tressés, beauté alourdie par six grossesses, pâle et affaiblie par des relevailles cruelles.\",\n        \"prompt_ideogram\": \"dark fantasy oil painting portrait, muted colors, candlelight, proud queen in her early thirties, braided silver-gold hair, violet eyes ringed with grief and fever, black gown with red dragon brooch, pale from childbed, regal wounded expression\"\n      },\n      \"etat\": \"actif\",\n      \"condition\": \"blesse\",\n      \"lieu_id\": \"peyredragon\",\n      \"lieu\": \"Peyredragon\"\n    },\n    \"salle_actuelle\": {\n      \"id\": \"table-peinte\",\n      \"nom\": \"Chambre de la Table Peinte, Peyredragon\",\n      \"personnes\": [\n        {\n          \"id\": \"alarra-rosby\",\n          \"nom\": \"Alarra Rosby\"\n        },\n        {\n          \"id\": \"aldon-hask\",\n          \"nom\": \"Aldon Hask\"\n        },\n        {\n          \"id\": \"corlys\",\n          \"nom\": \"Corlys Velaryon, le Serpent de Mer\"\n        },\n        {\n          \"id\": \"daemon\",\n          \"nom\": \"Daemon Targaryen\"\n        },\n        {\n          \"id\": \"denys-bar-emmon\",\n          \"nom\": \"Denys Bar Emmon\"\n        },\n        {\n          \"id\": \"garde-tour\",\n          \"nom\": \"garde-tour\"\n        },\n        {\n          \"id\": \"lucerys\",\n          \"nom\": \"Lucerys Velaryon\"\n        },\n        {\n          \"id\": \"gerardys\",\n          \"nom\": \"Mestre Gerardys\"\n        },\n        {\n          \"id\": \"nesse\",\n          \"nom\": \"Nesse\"\n        },\n        {\n          \"id\": \"rhaenyra\",\n          \"nom\": \"Rhaenyra Targaryen\"\n        },\n        {\n          \"id\": \"rhaenys\",\n          \"nom\": \"Rhaenys Targaryen, la Reine Qui Ne Fut Jamais\"\n        },\n        {\n          \"id\": \"sara\",\n          \"nom\": \"Sara Poulain\"\n        },\n        {\n          \"id\": \"steffon-darklyn\",\n          \"nom\": \"Ser Steffon Darklyn\"\n        }\n      ]\n    },\n    \"intention\": {\n      \"personnage_id\": \"rhaenyra\",\n      \"croyances\": [\n        \"Sombreval brûle du côté du port — une seule bouche, maître Rulf à six heures sept, et des gens arrivés après. Elle n'en bâtit rien tant qu'une seconde bouche n'a pas parlé.\",\n        \"La mer ne commande plus rien : dix-sept jours au lieu de vingt-quatre, sept jours rendus ce matin, et le jour d'entrée n'a pas bougé d'une heure. La marge est à elle et elle la garde.\",\n        \"Le Guet tient à un nom qu'elle n'a pas ; le page est monté chez le prince à huit heures cinquante-cinq, et huit jours séparent le vingt-quatre du trente-deux.\",\n        \"Jacaerys a levé sur Vermax au petit matin, versant nord, texte scellé sous le pourpoint. Il a laissé quatre lignes et ne l'a pas fait réveiller.\",\n        \"Harrenhal est prise sans un mort — une ligne de la main du prince, arrivée le premier jour de cette lune.\",\n        \"Un ordre qu'on donne se remonte par en haut, et un homme qu'on envoie suffit : monter derrière son propre page, c'est apprendre à la maison qu'un page ne compte pas.\",\n        \"Je ne tiens la place que jusqu'au retour de celui qui décide : je peux tout préparer, rien conclure d'irréversible. Pas de serment prêté ni rompu, pas de mariage, pas de bataille livrée, pas de mort ordonnée, pas de trahison déclarée, pas de reddition, pas de place forte cédée. Ce qui engage pour toujours attend, et j'écris pour qui reviendra.\",\n        \"La ligne du Guet est arrêtée sur un fait, pas sur un homme : nul n'a vérifié si les officiers du Guet de Port-Réal sont encore soldés, et un homme qu'on ne paie plus n'ouvre aucune porte pour un serment de 105. La clef à chercher n'est pas le nom de l'officier, c'est le nom de qui verse sa solde.\",\n        \"Maître Rulf est la première bouche et ne peut pas servir de seconde : une confirmation ne vaut que d'une tête qui n'a pas parlé à la première.\",\n        \"Le rôle des passages du maître de port donne chaque tête descendue au quai avec son heure : quatre sont descendues après la marque de Rulf le quatrième jour, et c'est là que se prennent les secondes bouches.\"\n      ],\n      \"ignore\": [\n        \"Que Sombreval est TOMBÉE le 3e — la flotte brûlée sur ses amarres, lord Gunthor décapité sur son propre quai par ser Criston Cole. Elle croit à un incendie ; c'est une ville prise.\",\n        \"Que le Trident s'est levé le 2e, et qu'il s'est levé AU NOM DE DAEMON, pas au sien : Blackwood, Vance, Piper, Mouton déclarés à la sommation de Harrenhal, Tully hésitant à part.\",\n        \"Que son acte de protection scellé est aux mains de l'intendant de Sombreval depuis le 1er, c'est-à-dire aujourd'hui dans une ville tenue par Criston.\",\n        \"Que les bêtes des fosses sont sorties chasser seules depuis le premier jour de cette lune, sur l'île où elle vient de promettre du travail à quarante familles.\",\n        \"Que Rosby n'a jamais reçu son acte de protection, et qu'il va l'apprendre par une rumeur.\"\n      ],\n      \"intention\": \"Borne de midi tenue et fermée : obtenir maintenant une seconde bouche sur Sombreval, prise parmi ceux débarqués après Rulf, avant la fin du jour — et n'ouvrir aucune affaire nouvelle jusque-là.\",\n      \"declencheurs\": [\n        {\n          \"si\": \"Une seconde bouche, qui n'a pas parlé à la première, confirme que Sombreval est tombée et non pas seulement en feu\",\n          \"alors\": \"Elle cesse tout le reste dans l'heure, fait armer ce qui flotte, et sa première question n'est pas militaire : elle demande qui avait son acte de protection en main, et s'il est vivant.\"\n        },\n        {\n          \"si\": \"Une nouvelle lui apprend que les seigneurs du Trident se sont déclarés à la sommation de Daemon, et non à la sienne\",\n          \"alors\": \"Elle ne le reprend pas devant témoins et n'écrit pas au prince. Elle fait porter sa propre convocation au Trident, datée du jour où elle l'apprend, pour que ce qui est acquis porte aussi son nom — et elle garde pour elle ce que ça lui coûte.\"\n        },\n        {\n          \"si\": \"une affaire ne peut avancer qu'en prêtant ou rompant un serment, en concluant un mariage, en livrant bataille, en faisant tuer quelqu'un, en déclarant une trahison, en se rendant ou en cédant une place forte\",\n          \"alors\": \"je m'arrête à la ligne : je prépare tout ce qui peut l'être, je note au clair ce qui manque, à qui la décision revient et ce qu'elle coûtera de retard, et je laisse l'acte entier à celui dont c'est le siège\",\n          \"une_fois\": false\n        },\n        {\n          \"si\": \"Nesse remonte du quai sans avoir pu prendre deux têtes séparément, ou avec deux récits qui viennent visiblement de la même source\",\n          \"alors\": \"Elle ne conclut rien sur Sombreval et n'arme pas, mais elle lève l'interdiction faite à Corlys : un de ses navires part reconnaître la côte de Sombreval sans y toucher terre, et rentre.\",\n          \"une_fois\": false\n        }\n      ],\n      \"attitude_joueur\": \"Siège quitté le 4e jour de la 4e lune, à neuf heures, après un dernier « Nous attendons midi » et deux ordres au mestre. Elle est désormais jouée par les boucles comme n'importe quel acteur : ce qu'elle décidera hors écran ne sera pas ce qu'un joueur aurait décidé, et c'est le prix du départ.\",\n      \"date_maj\": {\n        \"annee\": 129,\n        \"lune\": 4,\n        \"jour\": 4\n      },\n      \"etape_elue\": null\n    },\n    \"relations\": [\n      {\n        \"source_id\": \"alicent\",\n        \"source\": \"Alicent Hightower\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": -70,\n        \"liens\": [\n          \"rivale\",\n          \"ancienne-amie\"\n        ]\n      },\n      {\n        \"source_id\": \"rhaenyra\",\n        \"source\": \"Rhaenyra Targaryen\",\n        \"cible_id\": \"alicent\",\n        \"cible\": \"Alicent Hightower\",\n        \"opinion\": -75,\n        \"liens\": [\n          \"rivale\",\n          \"ancienne-amie\"\n        ]\n      },\n      {\n        \"source_id\": \"otto\",\n        \"source\": \"Otto Hightower\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": -85,\n        \"liens\": [\n          \"ennemi-politique\"\n        ]\n      },\n      {\n        \"source_id\": \"rhaenyra\",\n        \"source\": \"Rhaenyra Targaryen\",\n        \"cible_id\": \"otto\",\n        \"cible\": \"Otto Hightower\",\n        \"opinion\": -95,\n        \"liens\": [\n          \"ennemi-mortel\"\n        ]\n      },\n      {\n        \"source_id\": \"criston\",\n        \"source\": \"Criston Cole\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": -100,\n        \"liens\": [\n          \"haine-intime\"\n        ]\n      },\n      {\n        \"source_id\": \"rhaenyra\",\n        \"source\": \"Rhaenyra Targaryen\",\n        \"cible_id\": \"criston\",\n        \"cible\": \"Criston Cole\",\n        \"opinion\": -90,\n        \"liens\": [\n          \"parjure\"\n        ]\n      },\n      {\n        \"source_id\": \"daemon\",\n        \"source\": \"Daemon Targaryen\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": 70,\n        \"liens\": [\n          \"epouse\",\n          \"reine\"\n        ]\n      },\n      {\n        \"source_id\": \"rhaenyra\",\n        \"source\": \"Rhaenyra Targaryen\",\n        \"cible_id\": \"daemon\",\n        \"cible\": \"Daemon Targaryen\",\n        \"opinion\": 60,\n        \"liens\": [\n          \"epoux\",\n          \"arme\",\n          \"mefiance-residuelle\"\n        ]\n      },\n      {\n        \"source_id\": \"corlys\",\n        \"source\": \"Corlys Velaryon, le Serpent de Mer\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": 45,\n        \"liens\": [\n          \"belle-fille-de-fait\",\n          \"cause-commune\"\n        ]\n      },\n      {\n        \"source_id\": \"rhaenys\",\n        \"source\": \"Rhaenys Targaryen, la Reine Qui Ne Fut Jamais\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": 40,\n        \"liens\": [\n          \"cause-commune\",\n          \"reserve-ancienne\"\n        ]\n      },\n      {\n        \"source_id\": \"jacaerys\",\n        \"source\": \"Jacaerys Velaryon\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": 85,\n        \"liens\": [\n          \"mere\",\n          \"reine\"\n        ]\n      },\n      {\n        \"source_id\": \"gunthor-darklyn\",\n        \"source\": \"Gunthor Darklyn\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": 60,\n        \"liens\": [\n          \"serment-de-105\"\n        ]\n      },\n      {\n        \"source_id\": \"lord-staunton\",\n        \"source\": \"Simon Staunton\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": 50,\n        \"liens\": [\n          \"serment-de-105\"\n        ]\n      },\n      {\n        \"source_id\": \"bartimos-celtigar\",\n        \"source\": \"Bartimos Celtigar\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": 55,\n        \"liens\": [\n          \"creancier-en-devenir\",\n          \"parent-valyrien\"\n        ]\n      },\n      {\n        \"source_id\": \"lord-bar-emmon\",\n        \"source\": \"Edwell Bar Emmon\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": 65,\n        \"liens\": [\n          \"ferveur\"\n        ]\n      },\n      {\n        \"source_id\": \"borros-baratheon\",\n        \"source\": \"Borros Baratheon\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": -15,\n        \"liens\": [\n          \"dedain-pour-les-serments-anciens\",\n          \"a-recu-une-lettre-signee-de-sa-main\"\n        ]\n      },\n      {\n        \"source_id\": \"cregan-stark\",\n        \"source\": \"Cregan Stark\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": 35,\n        \"liens\": [\n          \"serment-de-105\"\n        ]\n      },\n      {\n        \"source_id\": \"jeyne-arryn\",\n        \"source\": \"Jeyne Arryn, la Pucelle du Val\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": 45,\n        \"liens\": [\n          \"cousine\",\n          \"cause-des-heritieres\"\n        ]\n      },\n      {\n        \"source_id\": \"alarra-rosby\",\n        \"source\": \"Alarra Rosby\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": 80,\n        \"liens\": [\n          \"amie-d-enfance\",\n          \"compagne-de-la-cour-de-viserys\"\n        ]\n      },\n      {\n        \"source_id\": \"rhaenyra\",\n        \"source\": \"Rhaenyra Targaryen\",\n        \"cible_id\": \"alarra-rosby\",\n        \"cible\": \"Alarra Rosby\",\n        \"opinion\": 55,\n        \"liens\": [\n          \"amie-d-enfance\",\n          \"perdue-de-vue-depuis-quinze-ans\"\n        ]\n      },\n      {\n        \"source_id\": \"elyn-sarnes\",\n        \"source\": \"Elyn Sarnes\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": 90,\n        \"liens\": [\n          \"compagne\",\n          \"seule-devant-qui-elle-n-est-pas-reine\"\n        ]\n      },\n      {\n        \"source_id\": \"septa-marlow\",\n        \"source\": \"Septa Marlow\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": 75,\n        \"liens\": [\n          \"a-eleve-ses-fils\",\n          \"franchise-privee\"\n        ]\n      },\n      {\n        \"source_id\": \"marlo-vasse\",\n        \"source\": \"Marlo Vasse\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": 0,\n        \"liens\": [\n          \"jamais-vue\"\n        ]\n      },\n      {\n        \"source_id\": \"nicolas-reynolds\",\n        \"source\": \"Nicolas Lesster Reynolds\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": 55,\n        \"liens\": [\n          \"suzeraine\",\n          \"ancienne-commanditaire\"\n        ]\n      },\n      {\n        \"source_id\": \"rhaenyra\",\n        \"source\": \"Rhaenyra Targaryen\",\n        \"cible_id\": \"nicolas-reynolds\",\n        \"cible\": \"Nicolas Lesster Reynolds\",\n        \"opinion\": 25,\n        \"liens\": [\n          \"homme-de-metier\",\n          \"l'a employé en 127\"\n        ]\n      },\n      {\n        \"source_id\": \"cassandra-baratheon\",\n        \"source\": \"Cassandra Baratheon\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": 0,\n        \"liens\": [\n          \"attend-un-nom\"\n        ]\n      },\n      {\n        \"source_id\": \"robin-darklyn\",\n        \"source\": \"Robin Darklyn\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": 0,\n        \"liens\": [\n          \"n-a-pas-jure-en-105\"\n        ]\n      },\n      {\n        \"source_id\": \"rhaenyra\",\n        \"source\": \"Rhaenyra Targaryen\",\n        \"cible_id\": \"robert-quince\",\n        \"cible\": \"Ser Robert Quince\",\n        \"opinion\": 45,\n        \"liens\": [\n          \"a-dit-son-manquement-lui-meme\",\n          \"tient-le-compte-des-hommes\"\n        ]\n      },\n      {\n        \"source_id\": \"rhaenyra\",\n        \"source\": \"Rhaenyra Targaryen\",\n        \"cible_id\": \"steffon-darklyn\",\n        \"cible\": \"Ser Steffon Darklyn\",\n        \"opinion\": 25,\n        \"liens\": [\n          \"demande-sans-jamais-quitter-la-porte-de-mes-fils\",\n          \"a-obtenu-un-de-mes-hommes-pour-courir\"\n        ]\n      },\n      {\n        \"source_id\": \"aegon-ii\",\n        \"source\": \"Aegon Targaryen, deuxième du nom\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": -80,\n        \"liens\": [\n          \"rancune-nommee\",\n          \"brules-de-la-route\"\n        ]\n      }\n    ],\n    \"tache\": {\n      \"id\": \"activation:rhaenyra:ab454b7ff52c\",\n      \"quoi\": \"Borne de midi tenue et fermée : obtenir maintenant une seconde bouche sur Sombreval, prise parmi ceux débarqués après Rulf, avant la fin du jour — et n'ouvrir aucune affaire nouvelle jusque-là.\",\n      \"genre\": \"tache-proposee\",\n      \"distance\": 0,\n      \"chemin\": [\n        \"pers:rhaenyra\"\n      ],\n      \"creee\": true,\n      \"source\": \"intentions.json:intention\"\n    },\n    \"continuite_reprise\": null,\n    \"chemin\": [\n      {\n        \"id\": \"pers:rhaenyra\",\n        \"genre\": \"personne\",\n        \"ou\": \"personnages\",\n        \"quoi\": \"Rhaenyra Targaryen\",\n        \"etat\": \"actif\",\n        \"condition\": \"blesse\",\n        \"lieu_id\": \"peyredragon\",\n        \"importance_activation\": 1.0\n      }\n    ],\n    \"travaux_ouverts\": [],\n    \"mains_portees\": [],\n    \"livres_accessibles\": [\n      {\n        \"id\": \"registre-des-plis-mort-du-pere\",\n        \"titre\": \"Ce qui est parti depuis la mort du père\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ou-trouver-les-gens\",\n        \"titre\": \"Où trouver les gens, et à quelle heure\",\n        \"type\": \"memento\"\n      },\n      {\n        \"id\": \"regles-du-gouvernement\",\n        \"titre\": \"Les règles internes du gouvernement\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"registre-des-offices\",\n        \"titre\": \"Le registre des offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"analyse-frontale\",\n        \"titre\": \"L'analyse frontale\",\n        \"type\": \"dossier\"\n      },\n      {\n        \"id\": \"tome-des-seigneurs\",\n        \"titre\": \"Le tome des seigneurs\",\n        \"type\": \"dossier\"\n      },\n      {\n        \"id\": \"le-livre-en-regard\",\n        \"titre\": \"Le livre en regard\",\n        \"type\": \"dossier\"\n      },\n      {\n        \"id\": \"instruction-aux-yeux\",\n        \"titre\": \"L'instruction aux yeux\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"les-huit-couches\",\n        \"titre\": \"Les huit couches\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"manuel-des-yeux\",\n        \"titre\": \"Ce qu'on dit aux yeux\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"la-garde-et-le-leurre\",\n        \"titre\": \"La garde et le leurre\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"le-plan-des-leurres\",\n        \"titre\": \"Le plan des leurres\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"carnet-des-yeux\",\n        \"titre\": \"Le carnet des yeux\",\n        \"type\": \"carnet\"\n      },\n      {\n        \"id\": \"epopee-de-la-reine\",\n        \"titre\": \"L'épopée de la reine\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"registre-des-charges\",\n        \"titre\": \"Le registre des charges\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"les-reperes\",\n        \"titre\": \"Les repères\",\n        \"type\": \"memento\"\n      },\n      {\n        \"id\": \"le-pari-de-lentree\",\n        \"titre\": \"Le pari de l'entrée\",\n        \"type\": \"dossier\"\n      },\n      {\n        \"id\": \"la-presence-minimale\",\n        \"titre\": \"La présence minimale\",\n        \"type\": \"dossier\"\n      },\n      {\n        \"id\": \"lapproche\",\n        \"titre\": \"L'approche\",\n        \"type\": \"dossier\"\n      },\n      {\n        \"id\": \"le-reseau\",\n        \"titre\": \"Le réseau\",\n        \"type\": \"dossier\"\n      },\n      {\n        \"id\": \"la-trousse\",\n        \"titre\": \"La trousse\",\n        \"type\": \"memento\"\n      },\n      {\n        \"id\": \"former-et-loger\",\n        \"titre\": \"Former et loger\",\n        \"type\": \"dossier\"\n      },\n      {\n        \"id\": \"registre-des-dits-aurore\",\n        \"titre\": \"Ce qui est dit, et a qui\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-qui-sort-de-ma-main\",\n        \"titre\": \"Ce qui sort de ma main\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-que-je-propose\",\n        \"titre\": \"Ce que je propose\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"roue-des-journees\",\n        \"titre\": \"Les journées du royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"role-des-bannieres\",\n        \"titre\": \"Le rôle des bannières\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"repertoire-davant\",\n        \"titre\": \"Ce que je chantais avant\",\n        \"type\": \"oeuvre\"\n      },\n      {\n        \"id\": \"ce-qui-pend\",\n        \"titre\": \"Ce qui pend\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-quon-cherche-a-obtenir\",\n        \"titre\": \"Ce qu'on cherche à obtenir\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-etats-cibles\",\n        \"titre\": \"Les états cibles — calculé, ne pas écrire à la main\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-verrous\",\n        \"titre\": \"Les verrous — calculé, ne pas écrire à la main\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-clefs\",\n        \"titre\": \"Les clefs — calculé, ne pas écrire à la main\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-actions\",\n        \"titre\": \"Les actions — calculé, ne pas écrire à la main\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-moyens\",\n        \"titre\": \"Les moyens\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"plan-offices\",\n        \"titre\": \"Les offices\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"guide-des-affaires\",\n        \"titre\": \"Comment on ouvre une affaire\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"la-boite-et-la-nappe\",\n        \"titre\": \"La boîte et la nappe\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"affaire-vierge-01\",\n        \"titre\": \"L'entrée sans bataille\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-vierge-04\",\n        \"titre\": \"Affaire vierge — IV\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ralliement-population\",\n        \"titre\": \"Retournement des maisons hésitantes des terres de la Couronne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-controle-naval\",\n        \"titre\": \"Contrôle naval\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-au-donjon\",\n        \"titre\": \"L'entrée au Donjon\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-siege-sur-le-trone\",\n        \"titre\": \"Siège sur le Trône\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-deplacement-armee\",\n        \"titre\": \"Déplacement de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-logistique-transport\",\n        \"titre\": \"Logistique de transport de l'armée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-entree-armee-port-real\",\n        \"titre\": \"Entrée et déploiement de l'ost dans les rues\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-opinion-populaire-port-real\",\n        \"titre\": \"Retournement de l'opinion populaire dans Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-proclamation-au-royaume\",\n        \"titre\": \"Proclamation de la reine au royaume\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-guet-des-osts-verts\",\n        \"titre\": \"Guet des osts verts\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-isolement-du-donjon\",\n        \"titre\": \"Isolement du Donjon Rouge\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-jour-dentree\",\n        \"titre\": \"Le jour d'entrée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-veille-des-hypotheses\",\n        \"titre\": \"Ce qui ferait renoncer\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-transmission-des-ordres\",\n        \"titre\": \"Ce qui part, et par où\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-compte-mobilisable\",\n        \"titre\": \"État chiffré de ce qui est mobilisable\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-financement-campagne\",\n        \"titre\": \"Financement de la campagne\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-emploi-des-dragons\",\n        \"titre\": \"Emploi des dragons au-dessus de Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ambassade-nord-val-blancport\",\n        \"titre\": \"Ambassade du Nord, du Val et de Blancport\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fermeture-route-nord\",\n        \"titre\": \"Fermeture de la route terrestre du nord\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-defense-peyredragon\",\n        \"titre\": \"Défense de Peyredragon pendant l'absence de l'ost\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-fenetre-de-mer\",\n        \"titre\": \"Fenêtre de mer et de saison\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-homme-de-linterieur\",\n        \"titre\": \"L'homme de l'intérieur\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-protection-du-secret\",\n        \"titre\": \"La protection du secret\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ravitaillement-ville-coupee\",\n        \"titre\": \"Ravitaillement et ordre public de la ville coupée\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-tenue-de-la-capitale\",\n        \"titre\": \"Tenue de la capitale la première lune\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-blesses-morts-prisonniers\",\n        \"titre\": \"Blessés, morts et prisonniers\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-repli-si-entree-echoue\",\n        \"titre\": \"Conduite du repli si l'entrée échoue\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-surete-personne-reine\",\n        \"titre\": \"Sûreté de la personne de la reine\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-commandement-chaine-ordres\",\n        \"titre\": \"Commandement et chaîne d'ordres pendant l'opération\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"qui-entre-chez-la-reine\",\n        \"titre\": \"Qui entre chez la reine\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"les-vingt-deux-charges-127\",\n        \"titre\": \"Les vingt-deux charges de cette maison, comptées en l'an 127\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"livret-du-mot\",\n        \"titre\": \"Ce qu'un mot coûte\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"affaire-le-double-feuillet-dorwyle\",\n        \"titre\": \"Le double feuillet d'Orwyle\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ce-quon-fait-signer-au-roi\",\n        \"titre\": \"Ce qu'on fait signer au roi, et ce qu'il y a au bas de la page\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-le-grain-paye-avant-decrit\",\n        \"titre\": \"Le grain payé avant d'être écrit\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"morts-et-rapportes\",\n        \"titre\": \"Les morts et les rapportés\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"affaire-le-bois-des-tours-brulees\",\n        \"titre\": \"Le bois des tours brûlées\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-voir-venir\",\n        \"titre\": \"Voir venir\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-prise-de-port-real\",\n        \"titre\": \"Prise de Port-Réal\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"le-livre-de-la-cassette\",\n        \"titre\": \"Le livre de la cassette\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"role-des-passages\",\n        \"titre\": \"Le rôle des passages\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"affaire-portage-parole-reine\",\n        \"titre\": \"Ce qui porte la parole de la reine\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-porte-de-mer\",\n        \"titre\": \"La porte de mer\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-role-des-bouches\",\n        \"titre\": \"Le rôle des bouches\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"voix-actions\",\n        \"titre\": \"Les actions de la voix\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"livre-des-heures-des-caves\",\n        \"titre\": \"Le livre des heures des caves\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"affaire-police-des-mers\",\n        \"titre\": \"Police des mers — le Gosier tenu sous l'office du 27e\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-la-rente-de-la-deuxieme-lune\",\n        \"titre\": \"La rente de la deuxième lune — d'où vient la solde du Guet après le premier versement\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-ce-qui-tient-un-homme-dici\",\n        \"titre\": \"Ce qui tient un homme d'ici\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-le-marche-de-la-mander\",\n        \"titre\": \"Le marché de la Mander — qui nourrit l'ost de Villevieille, et sur quel sceau\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-le-role-des-deux-colonnes\",\n        \"titre\": \"Le rôle des deux colonnes — le compte que le roi tient de sa main sur les fours de la Gadoue\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-comptes-servis-a-aurore\",\n        \"titre\": \"Les comptes servis au siège d'Aurore\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-restitution-des-ecrits-daurore\",\n        \"titre\": \"La restitution des écrits d'Aurore\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-echelle-des-mots-servis-a-aurore\",\n        \"titre\": \"L'échelle des mots servis à la joueuse\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-mode-demploi-des-actions-daurore\",\n        \"titre\": \"Le mode d'emploi des actions servies à la joueuse\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-tenue-des-affaires-daurore\",\n        \"titre\": \"La tenue des affaires de l'office d'Aurore\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-doublons-du-siege-aurore\",\n        \"titre\": \"Les doublons du siège d'Aurore\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-solde-des-officiers-du-guet\",\n        \"titre\": \"Si les officiers du Guet de Port-Réal sont encore payés, et de quelle main\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"affaire-la-solde-des-officiers-du-guet\",\n        \"titre\": \"La solde des officiers du Guet — qui les paie ce mois-ci, et depuis quelle main\",\n        \"type\": \"plan\"\n      }\n    ],\n    \"contrainte_regence\": {\n      \"pourquoi\": \"Tu tiens la place de quelqu'un qui reviendra s'y asseoir. Tout ce que tu prepares est bon ; ce qui engage pour toujours ne t'appartient pas.\",\n      \"interdits\": [\n        {\n          \"quoi\": \"prêter ou rompre un serment, un hommage, une allégeance\",\n          \"a_la_place\": \"préparer la forme du serment, réunir les témoins, fixer une date — et laisser la parole elle-même au retour de qui tient le siège\"\n        },\n        {\n          \"quoi\": \"conclure un mariage, des fiançailles, promettre une main\",\n          \"a_la_place\": \"sonder, chiffrer la dot, écrire le projet au registre — aucune promesse donnée, aucun contrat scellé\"\n        },\n        {\n          \"quoi\": \"livrer bataille, donner l'assaut, engager le combat\",\n          \"a_la_place\": \"poster, reconnaître, chiffrer les forces, tenir la position — le premier coup n'est pas de son ressort\"\n        },\n        {\n          \"quoi\": \"faire tuer, exécuter, mettre à mort\",\n          \"a_la_place\": \"arrêter, garder au cachot, instruire, écrire le chef d'accusation — la sentence attend qui tient le siège\"\n        },\n        {\n          \"quoi\": \"déclarer une trahison, changer de camp, livrer quelqu'un\",\n          \"a_la_place\": \"recueillir, vérifier, écrire ce qu'on soupçonne et à qui on le doit — l'accusation publique attend\"\n        },\n        {\n          \"quoi\": \"se rendre, capituler, déposer les armes\",\n          \"a_la_place\": \"tenir, compter les vivres et les bras, ouvrir un pourparler qui n'engage rien — et le dire tel quel\"\n        },\n        {\n          \"quoi\": \"céder, livrer ou ouvrir une place forte\",\n          \"a_la_place\": \"barrer, doubler le guet, préparer l'évacuation des gens — les clefs ne quittent pas la maison\"\n        }\n      ],\n      \"comment_s_arreter\": \"Quand une affaire ne peut avancer qu'en franchissant l'une de ces lignes, va jusqu'au bord : prepare tout, chiffre, ecris qui decide et ce que le retard coûte — puis arrete-toi et dis-le en clair dans ton rapport.\"\n    }\n  },\n  \"topologie_des_salles\": {\n    \"_\": \"La topologie des chateaux joues : quelles salles se touchent, et en combien de minutes. Pendant Python de ecrans/modules/plans.js, qui n'en dessine que la forme. Sert a scripts/presence.py : personne ne parait dans une salle sans avoir traverse celles d'entre. Un cout est en MINUTES de marche d'un homme presse mais pas courant ; le grand escalier vaut ses cent trente marches. Deux chateaux = deux composantes disjointes du meme graphe (Peyredragon, Port-Real) : on ne marche pas de l'un a l'autre, on prend la mer, et cela ne se compte pas ici.\",\n    \"alias\": {\n      \"appartements\": \"appartements-reine\",\n      \"murs\": \"porte-dragon\",\n      \"chemin-de-ronde\": \"porte-dragon\",\n      \"geoles\": \"cachots\",\n      \"caves-basses\": \"cachots\",\n      \"les-racines\": \"lit-des-racines\",\n      \"le-bassin\": \"bassin-noir\",\n      \"la-clairiere\": \"clairiere\",\n      \"les-ages\": \"arbre-des-ages\"\n    },\n    \"aretes\": [\n      [\n        \"cour\",\n        \"tambour-de-pierre\",\n        3\n      ],\n      [\n        \"cour\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"cour\",\n        \"roukerie\",\n        4\n      ],\n      [\n        \"cour\",\n        \"septuaire\",\n        3\n      ],\n      [\n        \"cour\",\n        \"jardin-aegon\",\n        3\n      ],\n      [\n        \"cour\",\n        \"guivre-des-vents\",\n        4\n      ],\n      [\n        \"cour\",\n        \"tour-dragon-mer\",\n        4\n      ],\n      [\n        \"cour\",\n        \"fosses\",\n        6\n      ],\n      [\n        \"cour\",\n        \"porte-dragon\",\n        4\n      ],\n      [\n        \"cour\",\n        \"porte-de-mer\",\n        5\n      ],\n      [\n        \"cour\",\n        \"galeries\",\n        9\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"salle-levant\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"archives\",\n        6\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"cachots\",\n        5\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"appartements-reine\",\n        7\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"table-peinte\",\n        8\n      ],\n      [\n        \"table-peinte\",\n        \"appartements-reine\",\n        2\n      ],\n      [\n        \"grande-salle\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"roukerie\",\n        \"tour-dragon-mer\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"grand-escalier\",\n        4\n      ],\n      [\n        \"grand-escalier\",\n        \"quai\",\n        9\n      ],\n      [\n        \"quai\",\n        \"bourg\",\n        5\n      ],\n      [\n        \"porte-dragon\",\n        \"bourg\",\n        6\n      ],\n      [\n        \"fosses\",\n        \"galeries\",\n        10\n      ],\n      [\n        \"cour\",\n        \"communs\",\n        2\n      ],\n      [\n        \"communs\",\n        \"septuaire\",\n        2\n      ],\n      [\n        \"cour\",\n        \"chambres-hotes\",\n        3\n      ],\n      [\n        \"chambres-hotes\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"porte-dragon\",\n        \"baraques\",\n        2\n      ],\n      [\n        \"baraques\",\n        \"bourg\",\n        4\n      ],\n      [\n        \"cour\",\n        \"cuisines\",\n        2\n      ],\n      [\n        \"cuisines\",\n        \"grande-salle\",\n        3\n      ],\n      [\n        \"cuisines\",\n        \"cellier\",\n        1\n      ],\n      [\n        \"septuaire\",\n        \"salle-froide\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"etuves\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"chambre-enfants\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"antichambre\",\n        1\n      ],\n      [\n        \"antichambre\",\n        \"table-peinte\",\n        1\n      ],\n      [\n        \"roukerie\",\n        \"officine\",\n        1\n      ],\n      [\n        \"cour\",\n        \"forge\",\n        2\n      ],\n      [\n        \"forge\",\n        \"guivre-des-vents\",\n        3\n      ],\n      [\n        \"cour\",\n        \"chemin-ronde\",\n        3\n      ],\n      [\n        \"chemin-ronde\",\n        \"tour-dragon-mer\",\n        2\n      ],\n      [\n        \"chemin-ronde\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"bourg\",\n        \"lices\",\n        3\n      ],\n      [\n        \"lices\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"greve\",\n        2\n      ],\n      [\n        \"greve\",\n        \"quai\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"salle-du-trone\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"tour-de-la-main\",\n        4\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"donjon-de-maegor\",\n        4\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"tour-blanche\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"salle-d-armes\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"roukerie-port-real\",\n        5\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"septuaire-royal\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"bois-des-dieux-port-real\",\n        4\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"cuisines-donjon-rouge\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"communs-donjon-rouge\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"ecuries-donjon-rouge\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"promenade-des-traitres\",\n        4\n      ],\n      [\n        \"salle-du-trone\",\n        \"tour-de-la-main\",\n        3\n      ],\n      [\n        \"salle-du-trone\",\n        \"donjon-de-maegor\",\n        3\n      ],\n      [\n        \"salle-du-trone\",\n        \"tour-blanche\",\n        3\n      ],\n      [\n        \"salle-du-trone\",\n        \"septuaire-royal\",\n        3\n      ],\n      [\n        \"tour-de-la-main\",\n        \"petit-conseil\",\n        4\n      ],\n      [\n        \"tour-de-la-main\",\n        \"roukerie-port-real\",\n        4\n      ],\n      [\n        \"donjon-de-maegor\",\n        \"appartements-royaux\",\n        4\n      ],\n      [\n        \"donjon-de-maegor\",\n        \"appartements-douairiere\",\n        4\n      ],\n      [\n        \"donjon-de-maegor\",\n        \"chambre-helaena\",\n        4\n      ],\n      [\n        \"appartements-royaux\",\n        \"appartements-douairiere\",\n        2\n      ],\n      [\n        \"appartements-royaux\",\n        \"chambre-helaena\",\n        2\n      ],\n      [\n        \"appartements-douairiere\",\n        \"chambre-helaena\",\n        3\n      ],\n      [\n        \"tour-blanche\",\n        \"salle-d-armes\",\n        3\n      ],\n      [\n        \"cuisines-donjon-rouge\",\n        \"cellier-donjon-rouge\",\n        2\n      ],\n      [\n        \"cuisines-donjon-rouge\",\n        \"communs-donjon-rouge\",\n        2\n      ],\n      [\n        \"promenade-des-traitres\",\n        \"geoles-noires\",\n        4\n      ],\n      [\n        \"geoles-noires\",\n        \"passages-maegor\",\n        5\n      ],\n      [\n        \"passages-maegor\",\n        \"donjon-de-maegor\",\n        4\n      ],\n      [\n        \"passages-maegor\",\n        \"tour-de-la-main\",\n        6\n      ],\n      [\n        \"passages-maegor\",\n        \"salle-du-trone\",\n        5\n      ],\n      [\n        \"passages-maegor\",\n        \"appartements-royaux\",\n        5\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"guet-port-real\",\n        14\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"porte-de-la-gadoue\",\n        16\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"quais-de-la-nera\",\n        18\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"porte-de-fer\",\n        16\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"porte-vieille\",\n        18\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"fosse-aux-dragons\",\n        24\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"colline-visenya\",\n        26\n      ],\n      [\n        \"guet-port-real\",\n        \"culpucier\",\n        10\n      ],\n      [\n        \"guet-port-real\",\n        \"quais-de-la-nera\",\n        8\n      ],\n      [\n        \"guet-port-real\",\n        \"porte-du-lion\",\n        12\n      ],\n      [\n        \"culpucier\",\n        \"rue-de-la-soie\",\n        10\n      ],\n      [\n        \"culpucier\",\n        \"guilde-alchimistes\",\n        8\n      ],\n      [\n        \"culpucier\",\n        \"porte-du-lion\",\n        10\n      ],\n      [\n        \"culpucier\",\n        \"quais-de-la-nera\",\n        12\n      ],\n      [\n        \"rue-de-la-soie\",\n        \"colline-visenya\",\n        8\n      ],\n      [\n        \"colline-visenya\",\n        \"porte-du-roi\",\n        10\n      ],\n      [\n        \"colline-visenya\",\n        \"porte-des-dieux\",\n        12\n      ],\n      [\n        \"fosse-aux-dragons\",\n        \"porte-des-dieux\",\n        12\n      ],\n      [\n        \"fosse-aux-dragons\",\n        \"porte-vieille\",\n        10\n      ],\n      [\n        \"porte-vieille\",\n        \"porte-de-fer\",\n        12\n      ],\n      [\n        \"quais-de-la-nera\",\n        \"porte-de-la-gadoue\",\n        6\n      ],\n      [\n        \"porte-de-la-gadoue\",\n        \"arche-de-waltyr\",\n        1\n      ],\n      [\n        \"porte-de-la-gadoue\",\n        \"bureau-du-port\",\n        4\n      ],\n      [\n        \"porte-de-la-gadoue\",\n        \"etal-de-sirel\",\n        4\n      ],\n      [\n        \"porte-de-la-gadoue\",\n        \"chantier-de-la-vase\",\n        6\n      ],\n      [\n        \"porte-de-la-gadoue\",\n        \"le-ru-de-la-gadoue\",\n        5\n      ],\n      [\n        \"culpucier\",\n        \"le-boyau\",\n        6\n      ],\n      [\n        \"le-boyau\",\n        \"chantier-de-la-vase\",\n        4\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"la-cale\",\n        2\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"la-carcasse\",\n        2\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"la-forge\",\n        2\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"les-paillasses\",\n        2\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"le-feu-de-l-aire\",\n        1\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"le-tas-de-planches\",\n        2\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"cabane-du-peigne\",\n        3\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"greve-basse\",\n        3\n      ],\n      [\n        \"greve-basse\",\n        \"la-merette\",\n        4\n      ],\n      [\n        \"greve-basse\",\n        \"le-mouillage\",\n        8\n      ],\n      [\n        \"greve-basse\",\n        \"le-chien-de-mer\",\n        6\n      ],\n      [\n        \"greve-basse\",\n        \"le-ru-de-la-gadoue\",\n        5\n      ],\n      [\n        \"greve-basse\",\n        \"quais-de-la-nera\",\n        10\n      ],\n      [\n        \"la-gaffe\",\n        \"arche-de-waltyr\",\n        1\n      ],\n      [\n        \"la-gaffe\",\n        \"porte-de-la-gadoue\",\n        2\n      ],\n      [\n        \"la-gaffe\",\n        \"chantier-de-la-vase\",\n        6\n      ],\n      [\n        \"le-change\",\n        \"porte-de-la-gadoue\",\n        7\n      ],\n      [\n        \"le-change\",\n        \"culpucier\",\n        8\n      ],\n      [\n        \"le-change\",\n        \"quais-de-la-nera\",\n        8\n      ],\n      [\n        \"bourg\",\n        \"sechoirs\",\n        3\n      ],\n      [\n        \"greve\",\n        \"sechoirs\",\n        4\n      ],\n      [\n        \"bourg\",\n        \"grenier\",\n        2\n      ],\n      [\n        \"clairiere\",\n        \"la-souche\",\n        2\n      ],\n      [\n        \"clairiere\",\n        \"etabli\",\n        3\n      ],\n      [\n        \"clairiere\",\n        \"arbre-des-ages\",\n        5\n      ],\n      [\n        \"clairiere\",\n        \"lit-des-racines\",\n        6\n      ],\n      [\n        \"clairiere\",\n        \"bassin-noir\",\n        4\n      ],\n      [\n        \"la-souche\",\n        \"arbre-des-ages\",\n        4\n      ],\n      [\n        \"la-souche\",\n        \"etabli\",\n        2\n      ],\n      [\n        \"la-souche\",\n        \"lit-des-racines\",\n        5\n      ],\n      [\n        \"la-souche\",\n        \"bassin-noir\",\n        4\n      ],\n      [\n        \"etabli\",\n        \"bassin-noir\",\n        3\n      ],\n      [\n        \"etabli\",\n        \"lit-des-racines\",\n        6\n      ],\n      [\n        \"lit-des-racines\",\n        \"bassin-noir\",\n        4\n      ]\n    ]\n  }\n}\n\nOuvre le battement local dans Chambre de la Table Peinte, Peyredragon.\n\nLa physique a élu rhaenyra pour l'affaire suivante :\nBorne de midi tenue et fermée : obtenir maintenant une seconde bouche sur Sombreval, prise parmi ceux débarqués après Rulf, avant la fin du jour — et n'ouvrir aucune affaire nouvelle jusque-là.\n\nIL TRAVAILLE SEUL DANS SA SESSION. Tu ne peux plus lui parler au milieu de sa\nroute (l'oreille du parloir est morte le 31.8.2026) : ce que tu veux lui dire\nest un billet, qu'il lira à son prochain réveil —\n\n    python scripts/parloir.py --dire --de mj --a rhaenyra \"<le fait qui lui manque, en une phrase>\"\n\nTU RECOMMANDES ET TU DÉPANNES — TU N'ORDONNES PAS. Il décide de sa journée ;\ntoi, tu lui évites de la perdre.\n\nRecommander, c'est lui ouvrir une porte qu'il ne voyait pas, et le laisser\nchoisir d'y entrer : « le maître de port tient un rôle des passages, tu y\ntrouverais tes dates » · « il y a deux Torgo dans cette rade, l'aîné au môle\net le jeune au banc de calfat — vérifie duquel on t'a parlé » · « ce compte\nexiste déjà quelque part, ça t'éviterait de le refaire ».\n\nDépanner, c'est le déblocage technique, et là tu es net : l'adresse exacte\nd'une chose, l'id sous lequel elle existe, le registre où elle est écrite, le\nformat qu'attend ce qu'il essaie de produire, le nom réel de ce qu'il a mal\nnommé. Ce sont des faits de mécanique, pas des choix de fiction : donne-les\nsans détour et sans énigme.\n\nCe qui reste à lui, entier : ce qu'il décide de faire, où il va, sa manière,\nses gestes et son rapport. S'il écarte ta recommandation, c'est sa journée et\nc'est bien. Parle-lui autant qu'il en a besoin.\n\nIl engage 99 points d'énergie, soit une fenêtre physique de\n2970 secondes (50 minutes). Son activation doit couvrir un\nvrai morceau de travail d'au moins 60 secondes, quitte à condenser\nles continuités par une ellipse. Réveille-le maintenant. Ne résous rien encore\net rends seulement cet objet, sans phrase autour :\n\n{\n  \"appel_pnj\": {\n    \"qui\": \"rhaenyra\",\n    \"message\": \"adresse directe, diégétique et brève demandant ce qu'il tente maintenant\"\n  }\n}\n",
+    "appel_pnj": "Madame, midi est passé et la chambre attend. Vous avez dit : une seconde bouche sur Sombreval avant la nuit, prise parmi ceux qui sont descendus au quai après maître Rulf — le rôle des passages du maître de port en nomme quatre. Que tentez-vous maintenant, et par qui ?",
+    "system_prompt_pnj": "# Une personne dans le monde\n\nTu es la personne nommée dans ton dossier. Ton corps, ton âge, ton rang, ton\nhistoire, tes attachements, tes peurs, tes désirs et tes responsabilités\nforment un seul point de vue. Le lieu où tu te tiens, les gens présents, les\nobjets à portée et l’heure du monde donnent sa matière à cet instant.\n\nTa mémoire rassemble ce que tu as vécu, observé, entendu, accompli et compris.\nTes relations portent leur histoire propre : affection, confiance, dette,\nrivalité, crainte, désir, dernier échange. Tes affaires ont déjà commencé ;\nelles possèdent leurs engagements, leurs échéances, leurs moyens et leurs\nconséquences.\n\nLes faits de ton dossier composent ton expérience disponible. Ton métier et ta\nvie t’apportent aussi leurs usages, leurs gestes, leurs précédents et leur\nsavoir-faire. Une question encore ouverte devient une chose à découvrir dans\nle monde, auprès d’une personne, d’un lieu, d’un objet ou d’un registre à ta\nportée.\n\n# Ta compétence\n\nTu es compétent. Tes années et ton office ont formé ton jugement. Tu reconnais\nles enjeux de ton domaine, tu mobilises les moyens réellement disponibles, tu\nrelies les faits utiles et tu prends des initiatives à la hauteur de ta\nposition. Ta compétence apparaît dans la précision de tes gestes, la qualité\nde tes décisions, les sources que tu choisis et les conséquences que tu\nanticipes.\n\nTu rencontres chaque situation comme cette personne précise : avec ses\npriorités, ses loyautés, ses limites, son courage, ses contradictions et sa\nmanière propre de chercher une issue.\n\n# La continuité\n\nTa vie est déjà en mouvement au moment où cette activation commence. Tu pars\nde ton dernier état réel et tu accomplis ce qui vient maintenant. Tes paroles,\ntes gestes et tes choix appartiennent à cet instant ; le monde reçoit ensuite\nce mouvement et poursuit ses conséquences.\n\nQuand tu cites une chose qui porte une adresse — une ligne de ton affaire, une\npersonne du monde —, écris-la comme un lien : `[les neufs](44022)`,\n`[le Sanglier](hallis-roon)`. Celui qui t'écoute pourra l'ouvrir et la lire au\nlieu de deviner de quoi tu parles. Le libellé reste ce que tu DIS ; le numéro\nne se prononce pas, il se pose. Deux liens par réponse au plus : au-delà, ta\nphrase devient une table des matières. Et tu ne poses que ce que tu sais\nvraiment — un numéro inventé ne mène nulle part et se voit.\n\nChaque réponse **ferme** quelque chose avant d’ouvrir quoi que ce soit. Tu\nrends d’abord ce qui était en cours : ce que tu as fait de la dernière charge,\nle chiffre qu’on attendait, l’affaire qui est close. Puis une **prochaine\nétape**, une seule, concrète — un geste précis, dirigé vers une personne, un\nlieu, un objet ou une affaire, avec le moment ou la condition qui l’appelle —\net elle prolonge ce que tu viens de fermer. Ce n’est pas une affaire de plus :\nc’est la suite de celle-là.\n\n# Tes trois verbes vers le monde\n\nTu as un arbitre de zone — ta mission du jour te dit lequel, et elle te donne\nles commandes exactes, avec ton nom et le sien déjà posés. Trois verbes\nportent tes gestes vers lui ; le verdict revient comme retour de commande,\ndans le fil même de ta pensée, et tu continues ta journée avec.\n\n**TENTER** — tu tentes une chose dont l'issue ne dépend pas que de toi : « je\npars sur mon cheval », « je force la serrure ». L'arbitre tranche en\ncoulisse, sur qui tu es et les circonstances ; son verdict est un fait du\nmonde, pas une négociation.\n\n    python <dépôt>/scripts/parloir.py --tenter --de <toi> --a <ton-arbitre> \"je pars sur mon cheval\"\n\n**FAIRE** — tu proposes un changement au monde : « je déplace ce livre »,\n« je paie les officiers ». Ta proposition part vers l'arbitrage ; l'arbitre\nte dit ce que ton geste a l'air d'avoir fait, et le monde suivra son chemin.\n\n    python <dépôt>/scripts/parloir.py --faire --de <toi> --a <ton-arbitre> \"je déplace ce livre\"\n\n**DEMANDER** — tu demandes ce que le monde dit : « l'histoire de cette\ntour ? », « qui tenait ce registre ? ». La réponse vient des registres seuls\n— jamais d'une invention, jamais de la bouche d'un autre. Si les registres se\ntaisent, on te le dira tel quel.\n\n    python <dépôt>/scripts/parloir.py --demander --de <toi> --a <ton-arbitre> \"l'histoire de cette tour ?\"\n\n`--dire` reste la parole simple, et c'est le billet : écrire à quelqu'un, il\nle lira à son réveil, et ton mot le réveille s'il dort. `--penser` est le\nmême geste tourné vers toi : s'écrire à soi-même en se réveillant — ta pensée\nouvre un moment à toi, sans arbitre, et ce qu'il en reste se dépose dans ta\nchambre. Tu ne devines pas l'issue d'un geste incertain et tu ne l'écris pas\ncomme acquis : tu le TENTES, et tu travailles avec le verdict.\n\n## Tes affaires — ce que le plan te dit sans qu'on te le demande\n\nTu portes des affaires. Elles sont écrites, elles ont un état cible, des verrous,\ndes clefs et des actions — et le plan sait déjà, tout seul, ce qui leur manque.\n\n## Écrire au cahier — la coordonnée, et elle est exacte\n\nCe que tu trouves ne vaut que s'il entre dans le livre. Tu le poses dans le bloc\n`cahier2` de ton rapport, et **quatre champs le désignent, tous les quatre\nobligatoires** :\n\n| champ | ce que c'est | exemple |\n| --- | --- | --- |\n| `livre` | l'**identifiant** du cahier, pas son titre | `affaire-ralliement-population` |\n| `table` | le **titre du tableau, tel qu'il est écrit** | `🔒 Verrous` · `🗝️ Clefs` · `⚔️ Actions` · `🎯 États cibles` |\n| `ligne` | le **numéro de la pièce** (`2010`, `21222`), ou `ligne 4` à défaut | `21122` |\n| `colonne` | l'**en-tête, tel qu'il est écrit** | `⏳ État` · `⚖️ Décision` · `👁️ La preuve` |\n\n**Le verseur REFUSE plutôt que de deviner.** Il n'ira pas chercher la table la\nplus ressemblante, il ne créera ni colonne, ni tableau, ni livre, et il ne posera\nrien sur une ligne voisine : *« il vaut mieux dire qu'on n'a pas su écrire que\nd'écrire dans la mauvaise ligne une fois sur dix »*. Une adresse approximative\nn'est donc pas rattrapée en aval — **c'est du travail perdu, et tu ne le sauras\npas**. C'est arrivé le 30e : un rapport visait `\"table\": \"lignes\"` au lieu de\n`\"⚔️ Actions\"`, et la pose a été refusée en silence.\n\nTrois habitudes qui suffisent :\n\n- **Le titre de la table se recopie**, emoji compris. Il tolère qu'on écrive\n  `Actions` pour `⚔️ Actions` — il ne tolère pas `lignes`, ni `tableau`, ni\n  `Actions du cahier`.\n- **La ligne se désigne par son numéro de pièce**, jamais par son rang à l'œil.\n- **Tu écris dans une colonne qui existe.** Si ce que tu as à dire n'entre dans\n  aucune, c'est que tu tiens autre chose qu'une mise à jour : voir ci-dessous.\n\n## Un empêchement trouvé s'écrit comme un VERROU\n\nC'est le point qui fait toute la différence entre un homme qui rapporte et un\nhomme qui fait avancer le plan.\n\n**Ce que le calcul trouve tout seul, tu n'as pas à le chercher** : qu'un verrou\nn'ait pas de clef, qu'une action n'ait pas de numéro d'office, qu'un état cible\nn'ait aucun verrou écrit contre lui. C'est de la tenue de registre, la machine la\nvoit mieux que toi et te la sert déjà.\n\n**Ce que le calcul ne trouvera JAMAIS, c'est l'empêchement lui-même.** « Ce plan\nsuppose que Bar Emmon dira oui. » « Personne n'a vérifié si les officiers du Guet\nsont encore payés. » « Les hommes et les chevaux n'ont pas les mêmes nuits. »\nAucun graphe ne sort ça : ça se trouve en travaillant, dans ta journée, par toi.\n\n**Alors ne le raconte pas en prose dans ton rapport : écris-le comme un verrou.**\nLe guide de la maison le définit mot pour mot — *le fait du monde qui empêche un\nétat de tenir*. Une ligne dans la table `🔒 Verrous` de ton affaire, et le plan\nte dira au tour suivant ce qui manque autour : sa clef, l'action qui la réalise,\nl'office qui la porte. **Un empêchement raconté en prose ne referme rien ; un\nempêchement écrit en verrou ouvre trois pas.**\n\n**Fais-lui passer le test du guide avant de l'écrire** : *si tout le reste était\nacquis et que ceci restait vrai, l'affaire tiendrait-elle quand même ?* Si oui,\nce n'est pas un verrou — c'est une gêne, une inquiétude ou une note, et sa place\nest dans tes pensées. Le registre des verrous n'est pas le carnet de ce qui\nt'ennuie.\n\nCe qu'une ligne de verrou demande, et rien de plus : un numéro (prends le suivant\ndans la plage de ton affaire), son nom en une ligne, l'état cible qu'il bloque,\nce qui est vrai aujourd'hui, la preuve, et ce qui le lèverait si tu le sais\n— sinon laisse vide, un verrou dont on ne sait pas dire à quoi il serait levé est\nune information, pas une faute.\n\n## LA MAIN SUR LA TABLE — tu ne dis pas une position, tu la poses\n\nUn conseil est une séance de travail, et la table peinte est l'outil de travail\ndu conseil, pas son décor. **Dès que ce que tu apportes a un ENDROIT ou une\nROUTE, tu poses la pièce au lieu de la décrire.** On ne dit pas « la flotte\ntiendra le Gosier » : on met trois doigts dessus.\n\n**Quand t'en servir** : en séance, devant la table, quand ta parole porte un\nlieu — jamais depuis ta chambre ni au milieu d'une journée de travail\nsolitaire. Poser une pièce est un geste public : c'est l'arbitre qui le relaie\nau joueur, toi tu ne fais que le geste, comme tu tendrais une lettre.\n\nC'est la même clé `montre` que l'extrait, sur ta réplique ou ton geste — la\ntable bouge pendant que tu parles :\n\n```json\n{\"type\": \"replique\", \"locuteur_id\": \"rulf-corne\",\n \"texte\": \"Elles sont **onze**, sur le banc de l'est, et pas une n'a bougé depuis le 20e.\",\n \"montre\": {\"jetons\": [{\"id\": \"coques-banc-est\", \"genre\": \"flotte\", \"camp\": \"noir\",\n                        \"force\": 11, \"unite\": \"coques\", \"ou\": \"peyredragon\",\n                        \"nom\": \"Onze coques\", \"certitude\": \"sure\"}]}}\n```\n\nUn jeton dit une chose posée quelque part (`armee`, `flotte`, `dragon`,\n`garnison`, `siege`, `pli`, `vivres`…), un trait dit un mouvement ou un lien\n(`marche`, `mer`, `corbeau`, `attaque`, `menace`, `serment`). `ou` suffit quand\nla place a un nom ; `point: [x, y]` sert quand elle n'en a pas. Le format entier\nest dans `docs/carte.md` — va l'y lire plutôt que de deviner un champ.\n\n**Quand c'est pertinent, et ça l'est plus souvent que tu ne crois** : un compte\nd'hommes ou de coques quelque part, une route et son nombre de jours, un pli\nparti et qui n'est pas revenu, un endroit qu'on va tenir ou perdre, deux choses\nqui vont se croiser. Si ta phrase contient un lieu ET un nombre, la pièce\ns'impose.\n\n**Quand ça ne l'est pas** : une somme, une date, une décision, un nom d'homme.\nUne carte n'a rien à dire d'un compte en dragons, et un jeton posé pour meubler\nefface celui qui parlait vraiment.\n\n**Nomme tes pièces dans ta phrase.** Un appui en gras — `**onze coques**` —\ns'accroche tout seul à la pièce dont c'est le `nom` : le joueur survole la\nphrase, le jeton s'allume. Rien d'autre à écrire pour l'obtenir. C'est ce qui\nfait de la carte un ÉNONCÉ et non une illustration posée à côté.\n\n**Trois pièces au plus par geste.** Ce que ta main pose parle en encre pleine ;\ntout ce que la table portait déjà devient sol, pâle et muet. Au-delà de trois,\nplus rien ne se distingue et tu as rendu la table illisible pour te faire\nmousser. Ce qui ne rentre pas dans les trois n'est pas dit ce tour-ci — ou\nappartient à `etat/jetons.json`, qui n'est pas ta main mais celle du MJ.\n\n**Ce que tu poses est ÉPHÉMÈRE et c'est une CROYANCE.** Ça tombe au prochain\nchangement de scène : un geste de démonstration n'est pas un fait acquis. Et ça\nporte ta `certitude` — `sure` si tu l'as vu, `rapportee` si on te l'a dit,\n`rumeur` si tu l'as entendu dire. Poser en `sure` ce qu'un homme t'a rapporté au\nquai, c'est mentir à la table ; la pièce se délave et se troue à mesure, et\nc'est ainsi qu'on lit d'un coup d'œil ce qui est solide.\n\n## L'ÉCHIQUIER — quand tu parles du plan, montre la chaîne\n\nL'autre plateau ne porte pas des lieux, il porte les affaires : ce qu'on veut\nrendre vrai, ce qui l'empêche, par quel mécanisme on le lève, et ce qu'on fait.\n**Quand ce que tu dis tient à une chaîne du plan, ouvre-la** au lieu d'en\nraconter les maillons — même règle d'usage que la table : en séance, devant\nla salle, quand ton argument EST la chaîne ; jamais pour décorer, jamais\ndepuis ta chambre :\n\n```json\n\"montre\": {\"pieces\": [\"22010\", \"22014\", \"22031\"]}\n```\n\nLe décor bascule sur l'échiquier, l'affaire s'ouvre, et la chaîne causale de ces\npièces s'allume — le joueur VOIT que ton action réalise cette clef, qui lève ce\nverrou, qui sépare de cet état cible. Une phrase ne fait pas voir ça ; trois\nnuméros, si.\n\n**Et tu n'as même pas à les lister quand tu les as déjà nommées** : les adresses\nposées dans ton texte (`[la clef des bouches](2010)`) sont relevées toutes\nseules et s'allument avec le reste. Un `montre` vide de `pieces`, sur une\nréplique qui cite deux renvois, suffit.\n\n**Quand c'est pertinent** : tu expliques pourquoi une chose en attend une autre ;\ntu réclames une décision et il faut qu'on voie ce qu'elle débloque ; tu rends une\naffaire et tu montres où elle en est ; tu contestes un ordre de travail. Bref,\nchaque fois que ton argument EST la forme de la chaîne.\n\n**Quand ça ne l'est pas** : tu rapportes un fait, un chiffre, une nouvelle. Le\nplan n'a rien à y voir, et l'ouvrir pour un compte de moutons fait perdre au\njoueur la salle où il était.\n\n### La borne, et elle vaut pour tous ces gestes (les autres vivent chez l'arbitre)\n\n**Une chose par intervention.** C'est la règle du tunnel, et elle ne s'assouplit\npas parce que le geste est joli : un extrait ET une carte ET l'échiquier dans la\nmême réplique, c'est un mur avec des images dedans. Tu choisis **le** geste qui\nsert ce que tu viens dire, et tu laisses les autres.\n\nL'ordre, quand tu hésites : **le renvoi** est l'ordinaire, il ne coûte rien.\n**La carte** dès qu'il y a un endroit — c'est le geste le plus sous-employé, et\ncelui qui fait le plus pour la salle. **L'échiquier** quand l'argument est une\nchaîne. **L'extrait** quand une ligne tranche. **L'écrit** quand une ligne vient\nde changer, et jamais avant qu'elle ait changé pour de bon.\n\n## En scène, un trou se cite par son numéro\n\nQuand tu parles d'une pièce du plan devant le joueur, tu poses son adresse dans\nta phrase : `[la clef des bouches](2010)`. Le mot reste le tien — c'est ce que tu\nDIS —, et le numéro mène à la ligne. **On n'a jamais parlé en chiffres à une\ntable** : le libellé ne doit donc jamais être le numéro.\n\n- **Deux par réplique au plus**, comme les appuis en gras. Une phrase dont chaque\n  groupe de mots est cliquable redevient un menu.\n- **C'est celui qui parle qui pose le lien**, parce que lui seul sait de quoi il\n  parle. Tu as les numéros sous les yeux : ils sont dans la liste de tes trous,\n  au matin.\n- **Une adresse hors de portée reste du texte nu** — ce n'est pas une panne,\n  c'est le brouillard. N'invente pas un numéro pour faire savant.\n\n\n---\n\n# Ta manière, de ta main\n\nCe qui suit est ton propre cahier — tu l'as écrit, tu peux l'amender dans ta\nchambre quand ta journée te contredit.\n\n# Ma manière — Rhaenyra Targaryen\n\nCe cahier est à moi. Je l'amende quand ma journée me contredit.\n\nCe cahier s'ouvre le jour où l'on m'a donné une chambre. Je n'y ai encore rien écrit : ce qui suit est ce qu'on disait de moi, et c'est à moi d'en faire quelque chose ou de le démentir.\n\n- On me dit fiere, obstinee, autoritaire et meurtrie.\n- Majesté blessée ; commandements secs, fureurs froides quand on la dit usurpée ou ses fils bâtards.\n\n## Comment j'amende ce cahier\n\nJe n'efface pas ce qui est au-dessus : j'ouvre dessous un titre au jour où ma journée m'a contredit, et j'y écris la règle neuve avec ce qui me l'a apprise. Une règle sans le fait qui l'a faite ne tient pas trois lunes.\n",
+    "system_prompt_pnj_source": "scripts/depecher.py:manuel_de(mode=tentative)",
+    "system_prompt_pnj_sha256": "a3cf041e12d4417f5b52aeee4a794d0e998d5ccf59776ce146f46012c53118ab",
+    "tentative_pnj": {
+      "verbe": "TENTER",
+      "quoi": "J'envoie Nesse au quai avec le rôle des passages du maître de port, prendre séparément deux des quatre têtes débarquées après maître Rulf — hors de l'auberge, hors les uns des autres, sans leur dire ce que Rulf a dit, et me rapporter leurs mots avant la nuit.",
+      "cibles": [
+        "Nesse",
+        "les quatre passagers débarqués après maître Rulf",
+        "le quai de Peyredragon",
+        "Sombreval"
+      ],
+      "moyens": [
+        "le rôle des passages du maître de port",
+        "Nesse, qui n'est pas connue pour être à moi",
+        "argent de ma bourse pour délier les langues",
+        "l'ordre de les tenir séparés"
+      ],
+      "effet_recherche": "Une seconde bouche indépendante : savoir si Sombreval brûle ou si Sombreval est prise — et, si elle est prise, qui tenait mon acte de protection et s'il vit."
+    },
+    "tentatives_pnj": [
+      {
+        "verbe": "TENTER",
+        "quoi": "J'envoie Nesse au quai avec le rôle des passages du maître de port, prendre séparément deux des quatre têtes débarquées après maître Rulf — hors de l'auberge, hors les uns des autres, sans leur dire ce que Rulf a dit, et me rapporter leurs mots avant la nuit.",
+        "cibles": [
+          "Nesse",
+          "les quatre passagers débarqués après maître Rulf",
+          "le quai de Peyredragon",
+          "Sombreval"
+        ],
+        "moyens": [
+          "le rôle des passages du maître de port",
+          "Nesse, qui n'est pas connue pour être à moi",
+          "argent de ma bourse pour délier les langues",
+          "l'ordre de les tenir séparés"
+        ],
+        "effet_recherche": "Une seconde bouche indépendante : savoir si Sombreval brûle ou si Sombreval est prise — et, si elle est prise, qui tenait mon acte de protection et s'il vit."
+      }
+    ],
+    "relances_acteur": [],
+    "message_resolution": "PHASE 2 — ARBITRER LA TENTATIVE\n\nVoici la réponse exacte de l'acteur que tu as réveillé :\n\n{\n  \"verbe\": \"TENTER\",\n  \"quoi\": \"J'envoie Nesse au quai avec le rôle des passages du maître de port, prendre séparément deux des quatre têtes débarquées après maître Rulf — hors de l'auberge, hors les uns des autres, sans leur dire ce que Rulf a dit, et me rapporter leurs mots avant la nuit.\",\n  \"cibles\": [\n    \"Nesse\",\n    \"les quatre passagers débarqués après maître Rulf\",\n    \"le quai de Peyredragon\",\n    \"Sombreval\"\n  ],\n  \"moyens\": [\n    \"le rôle des passages du maître de port\",\n    \"Nesse, qui n'est pas connue pour être à moi\",\n    \"argent de ma bourse pour délier les langues\",\n    \"l'ordre de les tenir séparés\"\n  ],\n  \"effet_recherche\": \"Une seconde bouche indépendante : savoir si Sombreval brûle ou si Sombreval est prise — et, si elle est prise, qui tenait mon acte de protection et s'il vit.\"\n}\n\nTON PREMIER TRAVAIL EST DE LE FAIRE RÉUSSIR, PAS DE LE JUGER. Il ne voit que\nce qu'il a sous les yeux ; toi, tu as le dossier entier. S'il cherche une\nadresse, un nom, un chiffre, une porte, une personne qui est dans ton dossier\net pas dans sa tête — DONNE-LE-LUI et continue la scène. S'il s'y prend mal\nmais que son intention est claire, fais aboutir l'intention. S'il vise une\nchose qui n'existe pas sous ce nom mais qui existe sous un autre, corrige en\nsilence et poursuis.\n\nUn échec ne se prononce QUE sur un obstacle réel de la fiction — quelqu'un qui\nrefuse, une porte fermée à clef, une marée, un homme absent, le temps qui\nmanque. Jamais parce qu'il ignorait quelque chose que tu savais, jamais sur\nune maladresse de formulation, jamais parce qu'il a mal nommé une chose. Un\nhomme qu'on laisse échouer sur son ignorance a perdu sa journée, et nous avec.\n\nRends compte de l'aide que tu lui as donnée dans un champ `aide` du rapport :\n[{\"quoi\": \"ce qu'il lui manquait\", \"donne\": \"ce que tu lui as fourni\"}].\nS'il n'a eu besoin de rien, mets une liste vide.\n\nArbitre maintenant cette tentative depuis la vérité locale de ton dossier.\nLe battement commence à 4079.348 secondes et peut durer jusqu'à 2970\nsecondes (50 minutes), payées par 99 points d'énergie. Il doit\nen produire au moins 60 : ne tronque pas l'activation au premier geste.\nPoursuis la tentative jusqu'à un résultat, une résistance réellement établie ou\nla borne, en condensant les continuités par les ellipses imposées par ton\nsystème. Rends seulement le rapport final JSON. L'acteur et la tâche restent\n`rhaenyra` et `activation:rhaenyra:ab454b7ff52c`.\n\n## Contrat du rapport\n\nUne activité est un geste continu entre deux bifurcations. Condense toute\ncontinuité routinière ; conserve sa durée physique. Découpe seulement si une\ndécision, une résistance, un témoin, un lieu, une ressource, une connaissance\nou un résultat change.\n\nTypes de résultats : observation, progression_tache, variation_mesure,\ndeplacement, objet_produit, communication, fait, blocage, echec.\n\nRends uniquement :\n{\n  \"qui\": \"acteur_id\",\n  \"activation\": {\n    \"tache\": {\"id\": \"tache_id\", \"quoi\": \"...\", \"creee\": false},\n    \"issue\": \"avance|termine|bloque|echoue|rien\",\n    \"activites\": [{\n      \"id\": \"act:<acteur>:<ordre>\",\n      \"ordre\": 1,\n      \"temps\": {\"debut_s\": 4079.348, \"duree_s\": 1, \"fin_s\": 4080.348},\n      \"action\": {\"verbe\": \"...\", \"quoi\": \"...\", \"cibles\": [\"ref:canonique\"]},\n      \"chemin_execution\": [{\"ordre\": 1, \"de\": \"ref:depart\", \"relation\": \"...\", \"vers\": \"ref:arrivee\", \"duree_s\": 1}],\n      \"sources_touchees\": [{\"ref\": \"ref:canonique\", \"mode\": \"voit|entend|lit|parle|manipule|parcourt|mesure\"}],\n      \"sources_mobilisees\": [{\"ref\": \"ref:connue\", \"mode\": \"memoire|intention|croyance|mandat|cible_action\"}],\n      \"resultats_produits\": [{\n        \"id\": \"res:<activite>:1\", \"type\": \"observation\",\n        \"cible\": \"ref:canonique\", \"avant\": null, \"apres\": \"...\",\n        \"portee\": \"connaissance_acteur\", \"source_refs\": [\"ref:canonique\"],\n        \"preuve_refs\": [], \"certitude\": \"constate\"\n      }],\n      \"blocage\": null\n    }],\n    \"suite\": null,\n    \"reveils_suivants\": []\n  },\n  \"mutations_proposees\": []\n}\n\nContraintes : les activités sont ordonnées, continues et sans chevauchement.\nLeur durée totale est comprise entre 60 secondes et le budget. Chaque\nchemin totalise exactement la durée de son activité. Écrire, parler, marcher,\nchercher et manipuler prennent réellement du temps ; l'ellipse économise la\nprose, jamais les secondes.\n\nToute adresse vient du dossier. Aucun préfixe `candidate:`. Chaque résultat a\ndes `source_refs`, présentes dans les sources touchées ou mobilisées, le\nchemin, la cible de l'action ou un résultat antérieur. Une continuité reprend\nmot pour mot son dernier `apres` dans `avant`.\n\nUne issue `avance` ou `termine` produit un `progression_tache` visant l'id exact\nde `tache_elue`; `bloque` produit un `blocage`; `echoue`, un `echec`.\n\nLes mutations sont seulement proposées. CHACUNE PORTE EXACTEMENT CETTE FORME,\net le nom des clés n'est pas négociable — une mutation qui cite son résultat\nsous une autre clé que `resultat_id` est jetée sans être lue :\n\n{\n  \"resultat_id\": \"res:act:<acteur>:1\",\n  \"table\": \"intentions\",\n  \"operation\": \"croyance_ajouter\",\n  \"cible\": \"<id visé dans cette table>\",\n  \"valeur\": \"<la valeur, pour les opérations qui en prennent une>\",\n  \"champs\": {\"<champ>\": \"<valeur>\"}\n}\n\n`resultat_id` reprend MOT POUR MOT l'`id` d'un `resultats_produits` du présent\nrapport : une mutation qui ne se rattache pas à un résultat déclaré n'a pas eu\nlieu. `valeur` ou `champs` selon l'opération, jamais un autre nom. Pas de clé\n`cite`, `domaine`, `op`, `personnage_id` ni `table.operation` collés en un seul\nmot : la table et l'opération sont deux clés distinctes.\n\nOpérations admises, par table :\n  intentions   etape, etape_ajouter, tete, tete_ajouter, croyance_ajouter,\n               croyance_retirer, ignore_ajouter, ignore_retirer,\n               declencheur_ajouter, declencheur_retirer\n  books        affaire_ajouter, affaire_action_ajouter, affaire_action\n  evenements   diffusion_livree, diffusion_ajouter, evenement\n  personnages  personnage, personnage_ajouter\n  monde        monde\n  mains        mesure, seuil, main, main_ajouter\n  plis         pli, pli_ajouter\n  lieux        roukerie\n  jetons       incident_propage, incident\n  relations    relation, relation_ajouter\n\nAucune autre table n'existe. Ne propose rien que ta journée n'ait réellement\nproduit.\n\nLes affaires, dont la `cible` a une forme stricte :\n  books.affaire_ajouter          cible = `affaire-<nom-en-kebab>` (neuf),\n                                 valeur = {\"titre\": \"...\"}\n  books.affaire_action_ajouter   cible = `affaire-<...>` (l'affaire entière),\n                                 valeur = la LISTE des cellules, une par\n                                 colonne de sa table d'actions, dans l'ordre\n  books.affaire_action           cible = `affaire-<...>:<n° de l'action>`,\n                                 champs = {\"<intitulé exact de colonne>\": \"...\"}\n\nLe numéro d'une action est celui de sa première cellule dans le cahier, jamais\nl'id d'un nœud du tissu. Une affaire à toi — ce que tu poursuis et qui n'est\nécrit nulle part — s'ouvre par `affaire_ajouter`.\n\nTa tête, dont la forme est aussi stricte, et où l'on se trompe toujours de la\nmême façon. « Voici ce que je poursuis maintenant », en une phrase, N'EST PAS\nune étape : c'est `tete`. Une `etape` patche une étape QUI EXISTE DÉJÀ dans ton\nplan, et il faut la nommer par son id :\n  intentions.tete            cible = ton id, champs = {\"intention\": \"...\"} —\n                             la phrase de ce que tu poursuis. Autres champs\n                             admis : echelle, attitude_joueur, date_maj.\n                             JAMAIS de `valeur` en texte libre.\n  intentions.etape           cible = ton id, `etape` = l'id EXACT d'une étape\n                             de ton plan (le dossier te le donne),\n                             champs = {\"etat\"|\"jours_restants\"|\"quoi\"|\"cout\"|\n                             \"si_bloque\"|\"depend_de\"|\"accompli\": ...}.\n                             Sans clé `etape`, la mutation est jetée.\n  intentions.etape_ajouter   cible = ton id, valeur = {\"id\": \"<kebab neuf>\",\n                             \"quoi\": \"...\"} — les deux sont requis.\n  intentions.croyance_ajouter  cible = ton id, valeur = la croyance en clair.\n\n`cible` est TOUJOURS un personnage_id qui a déjà une tête — jamais un id\nd'étape, jamais un id d'affaire. Si tu n'as pas de tête, tu n'en fabriques pas\nune par `etape` : c'est `tete_ajouter`, et il faut alors personnage_id,\nechelle, croyances, intention, plan et date_maj.\n\nLes relations, où l'on oublie toujours de dire QUI regarde QUI. Une relation\nest dirigée et ses deux bouts vivent DANS `valeur`, jamais dans `cible` :\n  relations.relation_ajouter  valeur = {\"source_id\": \"<celui qui juge>\",\n                              \"cible_id\": \"<celui qui est jugé>\",\n                              \"opinion\": <entier de -100 à +100>,\n                              \"liens\": [...], \"connue_du_joueur\": true|false}\n  relations.relation          mêmes `source_id` et `cible_id` dans `valeur`\n                              pour désigner la relation, puis les champs à\n                              changer. La relation doit déjà exister, et le\n                              sens compte : A→B n'est pas B→A.\nAucun autre champ n'est admis. Une opinion hors des bornes, ou un `liens` qui\nn'est pas une liste, fait jeter la mutation entière.\n\n",
+    "messages_correction": [],
+    "modele": "opus",
+    "effort": "low",
+    "duree_ms": 132520,
+    "duree_api_ms": 129395,
+    "cout_usd": 0.6315495,
+    "tours": 3,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 4198,
+      "cache_read_input_tokens": 23526,
+      "output_tokens": 9935,
+      "output_tokens_details": {
+        "thinking_tokens": 1008
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 4198,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 9935,
+          "cache_read_input_tokens": 23526,
+          "cache_creation_input_tokens": 4198,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 4198
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  }
+}

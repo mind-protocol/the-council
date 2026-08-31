@@ -41,7 +41,8 @@
     "depuis": 1479,
     "role": "second",
     "pnj": [],
-    "occupe": false
+    "occupe": false,
+    "arbitre": "mj-aurore"
   },
   {
     "jeton": "vase-rateau-6031",
@@ -75,7 +76,8 @@
       "wenna-la-nommeuse"
     ],
     "occupe": false,
-    "note": "Siege cree le 28e j., 3e lune, an 129 ; deplace a Barralfond le 3e j., 4e lune. VACANT : il a une tete dans intentions.json et le monde le joue comme un absent. Barralfond ne vit vraiment que quand on s'y assoit — python scripts/sieges.py --asseoir nicolas-reynolds --vraiment. Ses cinq architectes touchent au MOTEUR, jamais a l'etat joue.",
+    "arbitre": "mj-barralfond",
+    "note": "ARBITRE DECLARE le 5e j. : mj-barralfond, et ce n'est pas un choix, c'est ce que les deux routages disent deja — serveur/routes/joueur.js:45 rend a ce siege `mj-` + son lieu_id sans tirets, et scripts/agents/zone.py arbitre_de() rend zone_de('barralfond'). Ni mj-nicolas-reynolds ni mj-nicolasreynolds : ces deux chambres sont nees de la panne du premier etabli (l'id de zone renormalise en chemin), aucune n'est adressable par le joueur. Siege cree le 28e j., 3e lune, an 129 ; deplace a Barralfond le 3e j., 4e lune. VACANT : il a une tete dans intentions.json et le monde le joue comme un absent. Barralfond ne vit vraiment que quand on s'y assoit — python scripts/sieges.py --asseoir nicolas-reynolds --vraiment. Ses cinq architectes touchent au MOTEUR, jamais a l'etat joue.",
     "lieu": "barralfond",
     "salle": "la-souche",
     "assis_a": 1786739430.477

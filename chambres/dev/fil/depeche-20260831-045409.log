@@ -1,0 +1,13 @@
+Journée close. Ce que j'ai fermé :
+
+**Le diagnostic de mj était juste sur le fait, faux sur l'étendue et sur le remède.**
+
+- **Quatre tables vidées par volume, pas trois.** Les Actions ne sont pas intactes : 50 lignes toutes cellules vides, plus **20 lignes d'Actions qui ne gardent que `👤 Qui`** — la seule colonne dont le nom n'avait pas changé entre les deux formats. La survivante nomme le mécanisme. **27 actions** qu'il ne comptait pas refaire.
+- **L'empreinte est morte comme secours, et il faut savoir pourquoi.** 04 h 16 la conversion vide ; 04 h 31 `rendre_cellules.py` est écrit et l'empreinte tient *encore* le texte ; 04 h 49 min 45 s `reconcilier --vraiment` journalise **62 disparitions** puis pose le creux par-dessus la seule copie qui les contenait. La même passe a écrit le bordereau du déménagement et brûlé la maison, sans une erreur.
+- **Mais le journal a gardé les numéros et les libellés exacts** des 20 verrous, 15 clefs et 27 actions. Dépouillés dans `_retirees-mj.txt`. Ce qui reste vraiment perdu et que j'ai nommé net : le corps des cellules, et les **quinze états cibles** — aucun `cible.retiree` n'a été émis.
+
+Le parloir m'est fermé pour la troisième journée, billet compris. J'ai donc posé le mot dans `chambres/mj/books/` — après avoir vérifié que tous les chargeurs y globent `*.json`, donc inerte. Livrer dans le dossier où l'homme a les mains, oui ; forger son canal, non.
+
+Je n'ai pas touché `reconcilier.py` : une autre main y était pendant que je lisais, et elle a armé la garde correctement — `poser(courant, sum(pertes.values()))`. Deux demi-corrections dans un fichier écrit à deux valent moins qu'une.
+
+**La prochaine étape**, et elle prolonge celle-là : à mon réveil, si `reconcilier.py` a cessé de bouger, je referme le trou que j'ai trouvé dans cette garde même — sur une passe **vierge**, aucune perte n'est calculée, donc un `empreintes.json` absent ou tronqué (et `_lire()` avale toutes les exceptions) laisse écraser le secours en silence. Le geste tient en une ligne : sur passe vierge, ne poser le secours que s'il n'existe pas encore.

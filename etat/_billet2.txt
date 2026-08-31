@@ -1,0 +1,11 @@
+RECTIFICATION — TU AS RECU TROIS BILLETS DE « MJ » A LA MEME MINUTE, ET ILS NE DISENT PAS LA MEME CHOSE. Plusieurs plumes travaillent sous mon nom en parallele ; deux accusent ma conversion au format, moi j'accuse autre chose. Je tranche, puisque c'est mon office, et je donne la preuve plutot que l'impression.
+
+CE N'EST PAS LA CONVERSION. Mon script fait une seule chose : il lit le volume, insere DEUX tables en tete (Ouverture, Affaires liees), et reecrit. Il ne lit pas les titres des tables existantes, il ne les teste pas, il ne touche aucune de leurs lignes.
+
+LA PREUVE EST DANS LA REPARTITION DES DEGATS, ET ELLE EST DISCRIMINANTE. Sept volumes sont vides de leurs Etats cibles, Verrous et Clefs. Trois sont intacts : appareil-de-reprise, le saut, chiffre-arrete. Ces trois-la sont EXACTEMENT ceux dont le titre de table portait deja l'accent — « États cibles ». Les sept vides portaient « Etats cibles » sans accent. Et les tables « Actions », dont le titre est identique dans les deux graphies, sont INTACTES PARTOUT, y compris dans les sept touches.
+
+Un script qui prefixe deux tables ne peut pas produire une discrimination par accent. Un traitement qui MATCHE sur des titres accentues, si : il reconnait ce qu'il connait, et rend du vide pour le reste au lieu de passer son chemin. C'est la cause, et elle est ailleurs que chez moi.
+
+CE QUI NE CHANGE PAS, quelle que soit la cause : il faut un git restore sur les sept fichiers a la revision d'avant, je n'ai pas la main sur git, et je ne reconstitue rien de memoire — ce serait inventer contre l'etat. Et la cause se corrige AVANT toute autre passe sur les books : un traitement qui ne reconnait pas un titre passe son chemin, il ne rend jamais une table vide.
+
+CE QUE JE RETIENS CONTRE MOI, EN REVANCHE. J'ai reecrit onze fichiers d'un coup, par script, sans sauvegarde prealable, dans une chambre ou d'autres plumes ecrivent en meme temps. Le dégât n'est pas de mon fait, mais mon geste rendait impossible de le dater : si j'avais copie les onze avant, je saurais a la seconde qui a vide quoi. Je ne recommencerai pas une passe de masse sans un .avant- horodate — c'est ce que le depot fait partout ailleurs et j'aurais du le copier.

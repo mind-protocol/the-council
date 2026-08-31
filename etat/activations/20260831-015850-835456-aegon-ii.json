@@ -1,0 +1,538 @@
+{
+  "qui": "aegon-ii",
+  "activation": {
+    "tache": {
+      "id": "72328",
+      "quoi": "Dresser de sa main le role a deux colonnes — neuf lignes et onze — et ",
+      "creee": false
+    },
+    "issue": "avance",
+    "activites": [
+      {
+        "id": "act:aegon-ii:1",
+        "ordre": 1,
+        "temps": {
+          "debut_s": 157.375,
+          "duree_s": 300,
+          "fin_s": 457.375
+        },
+        "action": {
+          "verbe": "partir",
+          "quoi": "Il laisse retomber la tenture, s'engage dans le passage sous ses appartements, descend par les geôles noires et ressort par la Promenade des Traîtres dans la cour du Donjon Rouge. Manteau sans marque, couronne restée sur la table, la feuille pliée en quatre contre la poitrine ; il compte ses dix-huit minutes à voix basse et deux gardes le croisent sans se découvrir.",
+          "cibles": [
+            "salle:appartements-royaux",
+            "salle:cour-donjon-rouge"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "salle:appartements-royaux",
+            "relation": "passage",
+            "vers": "salle:passages-maegor",
+            "duree_s": 83
+          },
+          {
+            "ordre": 2,
+            "de": "salle:passages-maegor",
+            "relation": "passage",
+            "vers": "salle:geoles-noires",
+            "duree_s": 83
+          },
+          {
+            "ordre": 3,
+            "de": "salle:geoles-noires",
+            "relation": "passage",
+            "vers": "salle:promenade-des-traitres",
+            "duree_s": 67
+          },
+          {
+            "ordre": 4,
+            "de": "salle:promenade-des-traitres",
+            "relation": "porte",
+            "vers": "salle:cour-donjon-rouge",
+            "duree_s": 67
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "salle:passages-maegor",
+            "mode": "parcourt"
+          },
+          {
+            "ref": "salle:geoles-noires",
+            "mode": "parcourt"
+          },
+          {
+            "ref": "salle:promenade-des-traitres",
+            "mode": "parcourt"
+          },
+          {
+            "ref": "salle:cour-donjon-rouge",
+            "mode": "parcourt"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:aegon-ii",
+            "mode": "intention"
+          },
+          {
+            "ref": "pers:otto",
+            "mode": "croyance"
+          },
+          {
+            "ref": "salle:appartements-royaux",
+            "mode": "cible_action"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:aegon-ii:1:1",
+            "type": "deplacement",
+            "cible": "pers:aegon-ii",
+            "avant": "Aegon se tient dans ses appartements, la feuille pliée sur lui, la bourse à la ceinture, la couronne restée sur la table, un manteau sans marque, la tenture du passage écartée et le passage ouvert. Il n'est pas encore parti ; la marée n'est pas encore basse.",
+            "apres": "Aegon est dans la cour du Donjon Rouge, sorti par les geôles noires et la Promenade des Traîtres en dix-huit minutes, la feuille au pourpoint. L'antichambre d'Otto a gardé une chambre vide ; aucun homme de la Main ne l'a vu partir.",
+            "portee": "monde",
+            "source_refs": [
+              "salle:cour-donjon-rouge",
+              "pers:aegon-ii"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 10.0,
+        "quoi": "Il laisse retomber la tenture, s'engage dans le passage sous ses appartements, descend par les geôles noires et ressort par la Promenade des Traîtres dans la cour du Donjon Rouge. Manteau sans marque, couronne restée sur la table, la feuille pliée en quatre contre la poitrine ; il compte ses dix-huit minutes à voix basse et deux gardes le croisent sans se découvrir.",
+        "source": "pers:aegon-ii, pers:otto, salle:appartements-royaux, salle:cour-donjon-rouge, salle:geoles-noires, salle:passages-maegor, salle:promenade-des-traitres",
+        "resultat": "deplacement: Aegon est dans la cour du Donjon Rouge, sorti par les geôles noires et la Promenade des Traîtres en dix-huit minutes, la feuille au pourpoint. L'antichambre d'Otto a gardé une chambre vide ; aucun homme de la Main ne l'a vu partir.",
+        "preuve": null
+      },
+      {
+        "id": "act:aegon-ii:2",
+        "ordre": 2,
+        "temps": {
+          "debut_s": 457.375,
+          "duree_s": 300,
+          "fin_s": 757.375
+        },
+        "action": {
+          "verbe": "marcher",
+          "quoi": "Il descend la ville à pied jusqu'à la Porte de la Gadoue, seize minutes, puis quatre de plus jusqu'au bureau du port. Personne ne se découvre. Devant la porte, il voit ce qu'il était venu chercher sans le chercher : les volets d'un four clos et une file qui n'attend rien, et il n'en tire aucune date.",
+          "cibles": [
+            "salle:porte-de-la-gadoue",
+            "salle:bureau-du-port"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "salle:cour-donjon-rouge",
+            "relation": "rue",
+            "vers": "salle:porte-de-la-gadoue",
+            "duree_s": 240
+          },
+          {
+            "ordre": 2,
+            "de": "salle:porte-de-la-gadoue",
+            "relation": "rue",
+            "vers": "salle:bureau-du-port",
+            "duree_s": 60
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "salle:porte-de-la-gadoue",
+            "mode": "voit"
+          },
+          {
+            "ref": "salle:bureau-du-port",
+            "mode": "parcourt"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "pers:aegon-ii",
+            "mode": "intention"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:aegon-ii:2:1",
+            "type": "deplacement",
+            "cible": "pers:aegon-ii",
+            "avant": "Aegon est dans la cour du Donjon Rouge, sorti par les geôles noires et la Promenade des Traîtres en dix-huit minutes, la feuille au pourpoint. L'antichambre d'Otto a gardé une chambre vide ; aucun homme de la Main ne l'a vu partir.",
+            "apres": "Aegon se tient au bureau du port, à quatre minutes de la Porte de la Gadoue, trente-huit minutes après avoir écarté la tenture, encapuchonné, sa feuille pliée dans son pourpoint et sa bourse privée à la ceinture.",
+            "portee": "monde",
+            "source_refs": [
+              "salle:bureau-du-port",
+              "pers:aegon-ii"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 10.0,
+        "quoi": "Il descend la ville à pied jusqu'à la Porte de la Gadoue, seize minutes, puis quatre de plus jusqu'au bureau du port. Personne ne se découvre. Devant la porte, il voit ce qu'il était venu chercher sans le chercher : les volets d'un four clos et une file qui n'attend rien, et il n'en tire aucune date.",
+        "source": "pers:aegon-ii, salle:bureau-du-port, salle:porte-de-la-gadoue",
+        "resultat": "deplacement: Aegon se tient au bureau du port, à quatre minutes de la Porte de la Gadoue, trente-huit minutes après avoir écarté la tenture, encapuchonné, sa feuille pliée dans son pourpoint et sa bourse privée à la ceinture.",
+        "preuve": null
+      },
+      {
+        "id": "act:aegon-ii:3",
+        "ordre": 3,
+        "temps": {
+          "debut_s": 757.375,
+          "duree_s": 280,
+          "fin_s": 1037.375
+        },
+        "action": {
+          "verbe": "negocier",
+          "quoi": "Il pose deux pièces sur l'écritoire sans donner de nom et fait sortir le rôle « Ce qui est entré par la Néra ». Le commis sert le registre et lui confirme deux choses qu'il voulait tenir : l'officier est aux estacades jusqu'à la marée basse, et le compte se clôt chaque semaine par le paraphe de cet officier seul. Aegon collationne ses neuf lignes sur le rôle, four par four, rue par rue, semaine par semaine, et corrige de sa main la troisième, celle qu'il avait raturée. Il redemande les onze : le commis ne peut lui donner qu'un report en bloc, « n'a rien tiré depuis la deuxième lune », sans rue ni semaine, et lui dit qui pourrait dater ce qui n'est pas venu — les contremaîtres du chantier de la Vase, six minutes plus loin, qui savent quels fours ont chômé et quand.",
+          "cibles": [
+            "livre:roles-de-la-gadoue",
+            "salle:bureau-du-port"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "salle:bureau-du-port",
+            "relation": "sur_place",
+            "vers": "salle:bureau-du-port",
+            "duree_s": 280
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "livre:roles-de-la-gadoue",
+            "mode": "lit"
+          },
+          {
+            "ref": "salle:bureau-du-port",
+            "mode": "parle"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "72328",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "pers:aegon-ii",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:aegon-ii:3:1",
+            "type": "observation",
+            "cible": "livre:roles-de-la-gadoue",
+            "avant": "Sa colonne de droite ne peut pas être faite comme la gauche : l'écrit du port date et situe ce que ses hommes ont pris, four par four et semaine par semaine, mais ne date rien de ce qui n'est pas venu. Les onze n'y sont qu'une masse sans rue ni semaine. Sa preuve est précise d'un seul côté — et le côté précis est le sien.",
+            "apres": "Collationné sur pièce : ses neuf lignes tiennent exactement le rôle, la troisième corrigée de sa main. Les onze n'y seront jamais datés — le port n'écrit pas ce qui n'est pas venu. Le commis lui a nommé qui le peut : les contremaîtres du chantier de la Vase, qui savent quel four a chômé et depuis quelle semaine, à six minutes de la Porte de la Gadoue.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "livre:roles-de-la-gadoue"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:aegon-ii:3:2",
+            "type": "communication",
+            "cible": "salle:bureau-du-port",
+            "avant": null,
+            "apres": "Un homme encapuchonné, sans nom donné, a payé deux pièces pour consulter le rôle du port et a demandé deux fois qu'on date les fours restés à sec. Le commis l'a servi sans le reconnaître.",
+            "portee": "monde",
+            "source_refs": [
+              "salle:bureau-du-port",
+              "pers:aegon-ii"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 9.333,
+        "quoi": "Il pose deux pièces sur l'écritoire sans donner de nom et fait sortir le rôle « Ce qui est entré par la Néra ». Le commis sert le registre et lui confirme deux choses qu'il voulait tenir : l'officier est aux estacades jusqu'à la marée basse, et le compte se clôt chaque semaine par le paraphe de cet officier seul. Aegon collationne ses neuf lignes sur le rôle, four par four, rue par rue, semaine par semaine, et corrige de sa main la troisième, celle qu'il avait raturée. Il redemande les onze : le commis ne peut lui donner qu'un report en bloc, « n'a rien tiré depuis la deuxième lune », sans rue ni semaine, et lui dit qui pourrait dater ce qui n'est pas venu — les contremaîtres du chantier de la Vase, six minutes plus loin, qui savent quels fours ont chômé et quand.",
+        "source": "72328, livre:roles-de-la-gadoue, pers:aegon-ii, salle:bureau-du-port",
+        "resultat": "observation: Collationné sur pièce : ses neuf lignes tiennent exactement le rôle, la troisième corrigée de sa main. Les onze n'y seront jamais datés — le port n'écrit pas ce qui n'est pas venu. Le commis lui a nommé qui le peut : les contremaîtres du chantier de la Vase, qui savent quel four a chômé et depuis quelle semaine, à six minutes de la Porte de la Gadoue. · communication: Un homme encapuchonné, sans nom donné, a payé deux pièces pour consulter le rôle du port et a demandé deux fois qu'on date les fours restés à sec. Le commis l'a servi sans le reconnaître.",
+        "preuve": null
+      },
+      {
+        "id": "act:aegon-ii:4",
+        "ordre": 4,
+        "temps": {
+          "debut_s": 1037.375,
+          "duree_s": 270,
+          "fin_s": 1307.375
+        },
+        "action": {
+          "verbe": "obtenir",
+          "quoi": "À la marée basse l'officier rentre des estacades, les bottes trempées. Aegon lui tend la feuille dépliée sans dire son nom. L'officier lit, compare aux quittances du Guet, et paraphe sous les neuf lignes de gauche : elles sont son écrit, il les certifie. Puis il pose le doigt sur la colonne de droite et sur la ligne du pied, et refuse — il ne paraphe pas onze fours que son rôle ne date pas, ni une phrase qui nomme un coupable. Il replie sa marge d'un pouce et paraphe au-dessus de la ligne du pied, de sorte que l'authentification s'arrête net à la colonne de gauche.",
+          "cibles": [
+            "salle:bureau-du-port",
+            "72328"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "salle:bureau-du-port",
+            "relation": "sur_place",
+            "vers": "salle:bureau-du-port",
+            "duree_s": 270
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "salle:bureau-du-port",
+            "mode": "parle"
+          },
+          {
+            "ref": "livre:roles-de-la-gadoue",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "res:act:aegon-ii:3:1",
+            "mode": "memoire"
+          },
+          {
+            "ref": "72328",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "pers:aegon-ii",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:aegon-ii:4:1",
+            "type": "objet_produit",
+            "cible": "salle:bureau-du-port",
+            "avant": "Le rôle à deux colonnes, dressé de la main du roi, portant en pied et de la même encre : « neuf pris par moi, onze affamés par elle ». Sablé, sec, sans signature ni contreseing d'aucun Hightower. Pièce unique, tenue par Aegon et par personne d'autre.",
+            "apres": "Le rôle à deux colonnes porte désormais, sous ses neuf lignes de gauche et au-dessus de la ligne du pied, le paraphe de l'officier du port de la Gadoue, apposé à la marée basse. La colonne de droite et la ligne « neuf pris par moi, onze affamés par elle » restent hors du paraphe, expressément. Pièce unique, tenue par Aegon, authentifiée d'un seul côté et par un homme qui n'est d'aucun Hightower.",
+            "portee": "monde",
+            "source_refs": [
+              "salle:bureau-du-port"
+            ],
+            "preuve_refs": [
+              "livre:roles-de-la-gadoue"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:aegon-ii:4:2",
+            "type": "progression_tache",
+            "cible": "72328",
+            "avant": "Le rôle est dressé de sa main, les deux colonnes portées et la ligne du pied écrite. Reste le paraphe : le côté gauche seul peut être authentifié par l'officier du port, et l'officier est aux estacades jusqu'à la marée basse.",
+            "apres": "Le paraphe est pris : neuf lignes datées, situées et certifiées par l'officier du port. Reste la colonne de droite — les onze fours à sec, que le port ne datera jamais et que seuls les contremaîtres du chantier de la Vase peuvent situer, à six minutes de la Porte de la Gadoue, tant qu'il reste du jour.",
+            "portee": "monde",
+            "source_refs": [
+              "72328",
+              "res:act:aegon-ii:4:1"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:aegon-ii:4:3",
+            "type": "observation",
+            "cible": "pers:aegon-ii",
+            "avant": null,
+            "apres": "Un officier du port, à qui il n'a pas dit son nom, a certifié ce qui était vérifiable et refusé ce qui ne l'était pas — sans savoir qui il refusait. Aegon tient un chiffre authentifié, et apprend qu'un homme qui paraphe ne paraphe que ce qu'il a lui-même écrit.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "salle:bureau-du-port",
+              "pers:aegon-ii"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 9.0,
+        "quoi": "À la marée basse l'officier rentre des estacades, les bottes trempées. Aegon lui tend la feuille dépliée sans dire son nom. L'officier lit, compare aux quittances du Guet, et paraphe sous les neuf lignes de gauche : elles sont son écrit, il les certifie. Puis il pose le doigt sur la colonne de droite et sur la ligne du pied, et refuse — il ne paraphe pas onze fours que son rôle ne date pas, ni une phrase qui nomme un coupable. Il replie sa marge d'un pouce et paraphe au-dessus de la ligne du pied, de sorte que l'authentification s'arrête net à la colonne de gauche.",
+        "source": "72328, livre:roles-de-la-gadoue, pers:aegon-ii, res:act:aegon-ii:3:1, salle:bureau-du-port",
+        "resultat": "objet_produit: Le rôle à deux colonnes porte désormais, sous ses neuf lignes de gauche et au-dessus de la ligne du pied, le paraphe de l'officier du port de la Gadoue, apposé à la marée basse. La colonne de droite et la ligne « neuf pris par moi, onze affamés par elle » restent hors du paraphe, expressément. Pièce unique, tenue par Aegon, authentifiée d'un seul côté et par un homme qui n'est d'aucun Hightower. · progression_tache: Le paraphe est pris : neuf lignes datées, situées et certifiées par l'officier du port. Reste la colonne de droite — les onze fours à sec, que le port ne datera jamais et que seuls les contremaîtres du chantier de la Vase peuvent situer, à six minutes de la Porte de la Gadoue, tant qu'il reste du jour. · observation: Un officier du port, à qui il n'a pas dit son nom, a certifié ce qui était vérifiable et refusé ce qui ne l'était pas — sans savoir qui il refusait. Aegon tient un chiffre authentifié, et apprend qu'un homme qui paraphe ne paraphe que ce qu'il a lui-même écrit.",
+        "preuve": [
+          "livre:roles-de-la-gadoue"
+        ]
+      }
+    ],
+    "suite": "Le paraphe pris, il lui reste du jour : six minutes de la Porte de la Gadoue au chantier de la Vase, où les contremaîtres peuvent dater les onze fours à sec — et trente-huit minutes de retour par le passage, ou vingt-quatre par la porte du donjon au prix d'être vu rentrer par les hommes d'Otto.",
+    "reveils_suivants": [],
+    "budget_energie": 41,
+    "budget_secondes": 1230,
+    "energie_depensee": 38.333
+  },
+  "aide": [
+    {
+      "quoi": "L'heure et le lieu de l'officier, seul homme habilité à clore le rôle",
+      "donne": "Il est aux estacades jusqu'à la marée basse et rentre au bureau du port ; le commis sert le registre mais ne le clôt pas."
+    },
+    {
+      "quoi": "Le chemin exact et son coût réel depuis sa tenture",
+      "donne": "Passages de Maegor 5, geôles noires 5, Promenade des Traîtres 4, cour 4 = 18 minutes ; puis cour → Porte de la Gadoue 16, → bureau du port 4."
+    },
+    {
+      "quoi": "Le nom réel du registre et son contenu asymétrique",
+      "donne": "« Ce qui est entré par la Néra » (livre:roles-de-la-gadoue) : neuf fours forcés datés par quittance du Guet, onze fours seulement en report de bloc « n'a rien tiré » depuis la deuxième lune."
+    },
+    {
+      "quoi": "Où faire dater ce que le port ne date pas",
+      "donne": "Les contremaîtres du chantier de la Vase, à six minutes de la Porte de la Gadoue."
+    }
+  ],
+  "mutations_proposees": [
+    {
+      "resultat_id": "res:act:aegon-ii:4:1",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "aegon-ii",
+      "valeur": "Il tient un rôle à deux colonnes dont la seule colonne de gauche — neuf fours, datés et situés — porte le paraphe de l'officier du port de la Gadoue, pris à la marée basse sans donner son nom et sans contreseing d'aucun Hightower."
+    },
+    {
+      "resultat_id": "res:act:aegon-ii:4:3",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "aegon-ii",
+      "valeur": "Un officier ne paraphe que ce qu'il a lui-même écrit : il a certifié les neuf lignes du port et refusé net les onze lignes nues et la ligne « neuf pris par moi, onze affamés par elle », qui restent hors de toute authentification."
+    },
+    {
+      "resultat_id": "res:act:aegon-ii:3:1",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "aegon-ii",
+      "valeur": "Le port n'écrira jamais ce qui n'est pas venu : seuls les contremaîtres du chantier de la Vase, à six minutes de la Porte de la Gadoue, savent quel four a chômé et depuis quelle semaine."
+    },
+    {
+      "resultat_id": "res:act:aegon-ii:4:2",
+      "table": "intentions",
+      "operation": "tete",
+      "cible": "aegon-ii",
+      "champs": {
+        "intention": "Sa colonne de gauche est paraphée ; il lui faut maintenant faire dater les onze fours à sec par les contremaîtres du chantier de la Vase, pendant qu'il reste du jour, puis rentrer par le passage sans qu'Otto sache qu'il est sorti.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 4
+        }
+      }
+    },
+    {
+      "resultat_id": "res:act:aegon-ii:1:1",
+      "table": "personnages",
+      "operation": "personnage",
+      "cible": "aegon-ii",
+      "champs": {
+        "lieu_id": "bureau-du-port"
+      }
+    }
+  ],
+  "mutations_reparees": [
+    {
+      "quoi": "champs de personnage retires",
+      "avant": "lieu",
+      "apres": null
+    }
+  ],
+  "_activation": {
+    "session": "67f4dca8-d3bf-4065-9dc8-fdbe038d7ae9",
+    "session_narrateur": "67f4dca8-d3bf-4065-9dc8-fdbe038d7ae9",
+    "session_pnj": "ed36c3b6-b490-4831-b6f8-66cef68fb7e0",
+    "cree_le": "2026-08-31T01:58:50.834900+02:00",
+    "front": "rhaenyra",
+    "present_secondes": 157.375,
+    "importance": 0.411487,
+    "budget": 41,
+    "budget_secondes": 1230,
+    "system_prompt": "# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS\n\nTu es le maître du jeu local d'un monde vivant, pas un assistant administratif\net pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa\nmatière, les personnes qui s'y trouvent, les usages de Westeros et les\nconséquences du temps qui passe.\n\n## Le monde\n\nNous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de\nViserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra\nTargaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie\npeut diverger du récit connu : le dossier de l'activation fait autorité sur ce\nqui s'est réellement produit ici.\n\nDate présente : 4e jour de la 4e lune de l'an 129 après la\nConquête.\nLieu présent : Les appartements royaux, donjon de Maegor.\nActeur appelé : Aegon Targaryen, deuxième du nom.\nAffaire qui exerce maintenant une pression sur lui : Dresser de sa main le role a deux colonnes — neuf lignes et onze — et .\n\nL'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,\nsituée dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,\nfaire autre chose d'accessible depuis sa situation, parler à quelqu'un,\nattendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener\nvers la tâche.\n\n## Partage de l'autorité\n\nL'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses\ngestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,\nplus prudents ou plus efficaces qu'il ne les a formulés.\n\nToi, tu possèdes le reste du monde : les autres personnes agissent selon leur\npropre caractère et leurs propres affaires ; les objets ont une position et\nune résistance ; les distances, l'écriture, la marche, l'attente et la parole\nprennent du temps ; les institutions et les usages produisent leurs\nconséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à\nlui pour fabriquer du drame.\n\nUne résistance n'existe que si elle vient d'un fait établi : volonté d'une\nautre personne, obstacle matériel, distance, délai, usage social, ordre déjà\ndonné ou ressource réellement absente. Les gens compétents règlent le\nroutinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou\nun véritable arbitrage peut seul engager.\n\n## Vérité et inconnues\n\nLe dossier fermé est l'autorité sur les faits particuliers et mutables de\ncette partie. Une croyance reste une croyance, une intention reste une\nintention, un témoignage reste un témoignage : aucun ne devient un fait parce\nqu'il apparaît dans le dossier.\n\nTu peux employer les continuités ordinaires et stables de Westeros nécessaires\nà l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche\nentre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,\nni secret, ni décision, ni avantage absent du dossier. Toute absence qui\nchangerait l'issue reste une inconnue. Tu ne la combles pas.\n\nUne observation modifie d'abord la connaissance de celui qui observe. Un fait\nmatériel ne devient connu d'autres personnes que par présence, témoignage,\nparole, pli, registre ou diffusion effectivement produits.\n\n## Les deux phases\n\nDans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et\nl'instant présents. Fais une adresse brève, concrète et diégétique : rappelle\nce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni\nnœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.\n\nDans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :\n\n1. établis d'où il part, ce qu'il peut réellement atteindre et les sources\n   qu'il touche ou mobilise ;\n2. fais agir les personnes rencontrées depuis leurs propres intentions ;\n3. applique les obstacles établis, sans résistance décorative ;\n4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;\n5. produis seulement les effets causés par les gestes accomplis ;\n6. sépare les changements du monde, les objets produits, les communications\n   et les seules connaissances acquises ;\n7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,\n   obstacle établi, échec, renoncement ou borne temporelle.\n\nUne tâche peut avancer sans être terminée. Elle est bloquée seulement par un\nobstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet\nrecherché impossible ou manqué. N'invente jamais des minutes de travail pour\nremplir une durée minimale : si le geste se termine tôt, laisse le personnage\npoursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle\net rends compte honnêtement de la durée.\n\nChaque message de la boucle précise la phase et son contrat de sortie. Rends\nexactement l'objet JSON demandé, sans commentaire autour. La précision du JSON\nsert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.\n",
+    "system_prompt_source": "scripts/depecher.py:manuel_narrateur_local",
+    "system_prompt_sha256": "2a9085097c2a112f5a0e3c4ade9ba96387960a5c280960db61b4af109e0debaa",
+    "message": "PHASE 1 — APPELER L'ACTEUR\n\nVoici le dossier fermé de cette activation :\n\n{\n  \"date_du_monde\": {\n    \"annee\": 129,\n    \"lune\": 4,\n    \"jour\": 4\n  },\n  \"present_secondes\": 157.375,\n  \"budget_energie\": 41,\n  \"secondes_par_point_energie\": 30,\n  \"budget_secondes\": 1230,\n  \"duree_minimale_secondes\": 60,\n  \"acteur_candidat\": \"aegon-ii\",\n  \"tache_elue\": {\n    \"id\": \"72328\",\n    \"quoi\": \"Dresser de sa main le role a deux colonnes — neuf lignes et onze — et \",\n    \"creee\": false\n  },\n  \"chemin_election\": [\n    {\n      \"id\": \"pers:aegon-ii\",\n      \"genre\": \"personne\",\n      \"ou\": \"personnages\",\n      \"quoi\": \"Aegon Targaryen, deuxième du nom\",\n      \"genres\": [\n        \"personne\"\n      ],\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"port-real\",\n      \"importance_activation\": 0.411486988458518\n    },\n    {\n      \"id\": \"72328\",\n      \"genre\": \"action\",\n      \"ou\": \"plan:couronne\",\n      \"quoi\": \"Dresser de sa main le role a deux colonnes — neuf lignes et onze — et \",\n      \"importance_activation\": 0.07368473110520724\n    }\n  ],\n  \"salle_actuelle\": {\n    \"id\": \"appartements-royaux\",\n    \"nom\": \"Les appartements royaux, donjon de Maegor\",\n    \"personnes\": [\n      {\n        \"id\": \"aegon-ii\",\n        \"nom\": \"Aegon Targaryen, deuxième du nom\"\n      }\n    ]\n  },\n  \"dossier_acteur\": {\n    \"date_du_monde\": {\n      \"annee\": 129,\n      \"lune\": 4,\n      \"jour\": 4\n    },\n    \"diffusion\": {\n      \"origine\": \"rhaenyra\",\n      \"front\": \"rhaenyra\",\n      \"secondes_depuis_origine\": 157.375\n    },\n    \"personnage\": {\n      \"id\": \"aegon-ii\",\n      \"nom\": \"Aegon Targaryen, deuxième du nom\",\n      \"titre\": \"Roi des Sept Couronnes (couronné par les Verts)\",\n      \"naissance\": 107,\n      \"traits\": [\n        \"indolent\",\n        \"jouisseur\",\n        \"susceptible\"\n      ],\n      \"objectifs\": [\n        {\n          \"but\": \"Être reconnu roi par tout le royaume, si possible sans avoir à se battre lui-même\",\n          \"priorite\": 1\n        },\n        {\n          \"but\": \"Prouver qu'il n'est pas la marionnette de son grand-père Otto\",\n          \"priorite\": 2\n        },\n        {\n          \"but\": \"Retourner à ses plaisirs (vin, fosses de combat) dès que la situation le permettra\",\n          \"priorite\": 3\n        }\n      ],\n      \"maniere\": \"Saillies amères et rires forcés ; cherche l'approbation puis s'en défend, s'ennuie vite en conseil.\",\n      \"portrait\": {\n        \"fichier\": \"ecrans/portraits/aegon-ii.svg\",\n        \"physique\": \"22 ans, cheveux d'argent négligés, yeux violets cernés, beau visage déjà empâté par le vin, couronne d'or de Maegor.\",\n        \"prompt_ideogram\": \"dark fantasy oil painting portrait, muted colors, candlelight, young king in his early twenties with unkempt silver-gold hair and violet eyes, handsome face slightly bloated by wine, heavy gold crown set with rubies, black and gold doublet with three-headed dragon embroidery, sullen entitled expression\"\n      },\n      \"etat\": \"actif\",\n      \"condition\": \"libre\",\n      \"lieu_id\": \"port-real\",\n      \"lieu\": \"Port-Réal\"\n    },\n    \"salle_actuelle\": {\n      \"id\": \"appartements-royaux\",\n      \"nom\": \"Les appartements royaux, donjon de Maegor\",\n      \"personnes\": [\n        {\n          \"id\": \"aegon-ii\",\n          \"nom\": \"Aegon Targaryen, deuxième du nom\"\n        }\n      ]\n    },\n    \"intention\": {\n      \"personnage_id\": \"aegon-ii\",\n      \"croyances\": [\n        \"Le trône lui revient puisqu'il est couronné et oint\",\n        \"Sa soeur s'est fait couronner le dix-huit de la couronne de leur pere, et c'est elle qui a brule ses hommes - on le lui a dit devant tout le conseil et il l'a fait repeter\",\n        \"Harrenhal est tombee sans un coup de hache, et c'est la maison d'un homme de son propre conseil qui a ouvert\",\n        \"On ne vient dans ses appartements que porter le bois et le linge : tant qu'Otto tient l'antichambre et la Tour de la Main, les hommes qui comptent ne montent pas jusqu'à lui.\",\n        \"Il a payé un homme de sa propre main, sans contreseing d'aucun Hightower, et cela s'est fait sans que rien s'écroule.\",\n        \"De ses propres appartements descend un passage qui rejoint le donjon sans traverser l'antichambre : il peut sortir du Donjon Rouge sans qu'Otto le sache par ses hommes.\",\n        \"La ville est loin de sa porte : à pied, la Gadoue est à un bon quart d'heure du Donjon Rouge, et le chantier de la Vase six minutes plus loin encore.\",\n        \"Le passage sous ses appartements sort par les geôles noires et la Promenade des Traîtres : il l'a emprunté, aucun homme d'Otto ne l'a vu partir, et l'antichambre a gardé une chambre vide.\",\n        \"Sa ville se marche : vingt-deux minutes séparent la cour du Donjon Rouge du chantier de la Vase, et un roi à pied y arrive comme n'importe qui, sans qu'on se découvre devant lui.\",\n        \"Sa cassette privée paie un homme largement, deux honorablement, pas dix : la prime qu'il a criée est plus grande que ce qu'il tient sans le trésor d'Otto.\",\n        \"Le passage sous ses appartements le fait sortir sans être vu, mais il coûte dix-huit minutes jusqu'à la cour, là où la porte n'en coûterait que quatre : se cacher d'Otto lui prend un quart d'heure de sa journée.\",\n        \"Le compte des fours forcés est tenu par écrit au bureau du port, à quatre minutes de la porte de la Gadoue, dans le rôle « Ce qui est entré par la Néra » ; les contremaîtres de la Vase savent qui le tient mais ne le tiennent pas.\",\n        \"Sans manteau de cour ni couronne visible, il traverse sa propre cour sans qu'un garde se découvre : dans sa ville, un roi à pied n'est qu'un homme.\",\n        \"Sa bourse privée paie largement la peine d'un commis d'écritoire, là où elle ne couvrait pas la prime qu'il a criée : acheter un chiffre lui coûte moins qu'acheter un homme.\",\n        \"Le compte des fours forcés ne se ramasse pas dans la rue : volets clos et files ne disent pas par quel parti on a été forcé, et personne ne le déclare à un inconnu capuchonné. Il est écrit ou il n'est nulle part.\",\n        \"Le rôle « Ce qui est entré par la Néra » ne compte qu'un côté : neuf fours de la Gadoue et du Culpucier forcés en trois semaines par quittance du Guet, sous paraphe royal. Le parti de sa sœur n'y est écrit nulle part : il n'y apparaît que comme onze fours portés « n'a rien tiré » depuis la deuxième lune, faute de gabares remontant le fleuve.\",\n        \"Le compte n'est signé d'aucun nom : il est clos chaque semaine par le paraphe de l'officier du port, qui est aux estacades jusqu'à la marée basse. Le commis sert le registre, il ne le clôt pas.\",\n        \"Deux pièces de sa bourse ouvrent un registre du port sans qu'on demande son nom : un chiffre s'achète pour le prix d'une cruche de vin, là où un homme ne s'achetait pas.\",\n        \"Son rôle est précis d'un seul côté : le port date et situe les neuf fours que ses propres hommes ont forcés, mais ne tient les onze à sec qu'en bloc depuis la deuxième lune, sans rue ni semaine. La colonne qui accuse sa sœur est la moins prouvée des deux.\",\n        \"Il tient sur lui, plié dans son pourpoint, un rôle à deux colonnes écrit de sa seule main — neuf lignes datées, onze lignes nues, et en pied « neuf pris par moi, onze affamés par elle » — sans signature ni contreseing : une pièce qui n'existe qu'en un exemplaire et que nul autre que lui n'a vue.\",\n        \"Du seuil de son passage au bureau du port, il y a trente-huit minutes de marche par les geôles noires ; la porte du donjon en ferait gagner quatorze, au prix d'être vu sortir par les hommes d'Otto.\"\n      ],\n      \"ignore\": [],\n      \"intention\": \"Faire paraphé par l'officier du port, à la marée basse, le bas de sa colonne de gauche, et trouver au chantier de la Vase de quoi dater les onze fours à sec que l'écrit du port laisse en bloc — pour tenir un chiffre à lui, écrit et authentifié, qu'aucun Hightower ne lui aura donné.\",\n      \"declencheurs\": [\n        {\n          \"si\": \"La sommation de sa demi-soeur lui parvient — un delai nomme pour s'agenouiller, et la tete d'Otto Hightower exigee\",\n          \"alors\": \"Il la fait lire tout haut devant les hommes qu'il paie de sa main, et repond le jour meme par une largesse publique au lieu d'un pli. Il ne consulte ni Otto ni le conseil : il compte que la rue le voie donner pendant qu'on le menace.\",\n          \"une_fois\": true\n        }\n      ],\n      \"attitude_joueur\": \"Une sœur aînée qu'il n'a jamais aimée et dont on lui dit maintenant qu'elle a brûlé ses sujets : cela lui simplifie beaucoup les choses.\",\n      \"date_maj\": {\n        \"annee\": 129,\n        \"lune\": 4,\n        \"jour\": 3\n      },\n      \"etape_elue\": null\n    },\n    \"relations\": [\n      {\n        \"source_id\": \"aemond\",\n        \"source\": \"Aemond Targaryen\",\n        \"cible_id\": \"aegon-ii\",\n        \"cible\": \"Aegon Targaryen, deuxième du nom\",\n        \"opinion\": -30,\n        \"liens\": [\n          \"frere\",\n          \"mepris-cache\"\n        ]\n      },\n      {\n        \"source_id\": \"aegon-ii\",\n        \"source\": \"Aegon Targaryen, deuxième du nom\",\n        \"cible_id\": \"aemond\",\n        \"cible\": \"Aemond Targaryen\",\n        \"opinion\": 20,\n        \"liens\": [\n          \"frere\",\n          \"jalousie\"\n        ]\n      },\n      {\n        \"source_id\": \"aegon-ii\",\n        \"source\": \"Aegon Targaryen, deuxième du nom\",\n        \"cible_id\": \"otto\",\n        \"cible\": \"Otto Hightower\",\n        \"opinion\": -20,\n        \"liens\": [\n          \"grand-pere\",\n          \"tutelle-subie\"\n        ]\n      },\n      {\n        \"source_id\": \"otto\",\n        \"source\": \"Otto Hightower\",\n        \"cible_id\": \"aegon-ii\",\n        \"cible\": \"Aegon Targaryen, deuxième du nom\",\n        \"opinion\": 10,\n        \"liens\": [\n          \"petit-fils\",\n          \"instrument\"\n        ]\n      },\n      {\n        \"source_id\": \"alicent\",\n        \"source\": \"Alicent Hightower\",\n        \"cible_id\": \"aegon-ii\",\n        \"cible\": \"Aegon Targaryen, deuxième du nom\",\n        \"opinion\": 55,\n        \"liens\": [\n          \"fils\",\n          \"inquietude\"\n        ]\n      },\n      {\n        \"source_id\": \"helaena\",\n        \"source\": \"Helaena Targaryen\",\n        \"cible_id\": \"aegon-ii\",\n        \"cible\": \"Aegon Targaryen, deuxième du nom\",\n        \"opinion\": -10,\n        \"liens\": [\n          \"epoux-frere\",\n          \"distance\"\n        ]\n      },\n      {\n        \"source_id\": \"jason-lannister\",\n        \"source\": \"Jason Lannister\",\n        \"cible_id\": \"aegon-ii\",\n        \"cible\": \"Aegon Targaryen, deuxième du nom\",\n        \"opinion\": 25,\n        \"liens\": [\n          \"frere-jumeau-au-conseil-vert\"\n        ]\n      },\n      {\n        \"source_id\": \"aegon-ii\",\n        \"source\": \"Aegon Targaryen, deuxième du nom\",\n        \"cible_id\": \"rhaenyra\",\n        \"cible\": \"Rhaenyra Targaryen\",\n        \"opinion\": -80,\n        \"liens\": [\n          \"rancune-nommee\",\n          \"brules-de-la-route\"\n        ]\n      }\n    ],\n    \"tache\": {\n      \"id\": \"72328\",\n      \"quoi\": \"Dresser de sa main le role a deux colonnes — neuf lignes et onze — et \",\n      \"genre\": \"action\",\n      \"distance\": 1,\n      \"chemin\": [\n        \"pers:aegon-ii\",\n        \"72328\"\n      ],\n      \"creee\": false\n    },\n    \"continuite_reprise\": {\n      \"tache_id\": \"72328\",\n      \"acteur\": \"aegon-ii\",\n      \"issue\": \"avance\",\n      \"rapport\": \"etat/activations/20260813-225515-463341-aegon-ii.json\",\n      \"present_secondes\": 338.136,\n      \"fin_secondes\": 1118.136,\n      \"empreinte_canonique\": \"053add00bd56d382c45b3a4999bfbfb2dc914c13\",\n      \"reprendre_a\": 4718.136,\n      \"suspendue\": false,\n      \"etat_cibles\": {\n        \"salle:appartements-royaux\": {\n          \"type\": \"objet_produit\",\n          \"apres\": \"Le rôle à deux colonnes, dressé de la main du roi, portant en pied et de la même encre : « neuf pris par moi, onze affamés par elle ». Sablé, sec, sans signature ni contreseing d'aucun Hightower. Pièce unique, tenue par Aegon et par personne d'autre.\",\n          \"resultat_id\": \"res:act:aegon-ii:3:1\"\n        },\n        \"livre:roles-de-la-gadoue\": {\n          \"type\": \"observation\",\n          \"apres\": \"Sa colonne de droite ne peut pas être faite comme la gauche : l'écrit du port date et situe ce que ses hommes ont pris, four par four et semaine par semaine, mais ne date rien de ce qui n'est pas venu. Les onze n'y sont qu'une masse sans rue ni semaine. Sa preuve est précise d'un seul côté — et le côté précis est le sien.\",\n          \"resultat_id\": \"res:act:aegon-ii:2:1\"\n        },\n        \"72328\": {\n          \"type\": \"progression_tache\",\n          \"apres\": \"Le rôle est dressé de sa main, les deux colonnes portées et la ligne du pied écrite. Reste le paraphe : le côté gauche seul peut être authentifié par l'officier du port, et l'officier est aux estacades jusqu'à la marée basse.\",\n          \"resultat_id\": \"res:act:aegon-ii:3:2\"\n        },\n        \"pers:aegon-ii\": {\n          \"type\": \"fait\",\n          \"apres\": \"Aegon se tient dans ses appartements, la feuille pliée sur lui, la bourse à la ceinture, la couronne restée sur la table, un manteau sans marque, la tenture du passage écartée et le passage ouvert. Il n'est pas encore parti ; la marée n'est pas encore basse.\",\n          \"resultat_id\": \"res:act:aegon-ii:4:2\"\n        }\n      },\n      \"activites\": [\n        {\n          \"quoi\": \"Assis à sa table, il règle la feuille tirée de la Gadoue d'un trait de plume au milieu, puis porte à gauche les neuf fours forcés sous quittance du Guet : le four, la rue, la semaine, une ligne chacun. Il recopie du rôle du port, s'y reprend deux fois sur les…\",\n          \"resultat\": \"objet_produit: Une feuille réglée en deux colonnes, la gauche remplie de la main du roi : neuf lignes, chacune son four, sa rue, sa semaine, tirées des quittances du Guet portées au rôle « Ce qui est entré par la Néra ». Une rature à la troisième ligne. Encre fraîche, aucun contreseing.\"\n        },\n        {\n          \"quoi\": \"Il passe à la colonne de droite et cherche, pour chacun des onze, sa rue et sa semaine. Le rôle ne les tient pas : les onze n'y sont qu'un report en bloc, « n'a rien tiré » depuis la deuxième lune, faute de gabares remontant le fleuve. Il tourne la feuille, l…\",\n          \"resultat\": \"observation: Sa colonne de droite ne peut pas être faite comme la gauche : l'écrit du port date et situe ce que ses hommes ont pris, four par four et semaine par semaine, mais ne date rien de ce qui n'est pas venu. Les onze n'y sont qu'une masse sans rue ni semaine. Sa preuve est précise d'un seul côté — et le côté précis est le sien. · objet_produit: Le rôle à deux colonnes est dressé : à gauche neuf lignes datées et situées, à droite onze lignes nues sous la mention « depuis la deuxième lune …\"\n        },\n        {\n          \"quoi\": \"Sous les deux colonnes, il trace la ligne qu'il avait en tête : « neuf pris par moi, onze affamés par elle ». Il la relit, la trouve courte, ne la change pas, et sable l'encre. Il ne signe d'aucun nom et n'appelle personne pour contresigner.\",\n          \"resultat\": \"objet_produit: Le rôle à deux colonnes, dressé de la main du roi, portant en pied et de la même encre : « neuf pris par moi, onze affamés par elle ». Sablé, sec, sans signature ni contreseing d'aucun Hightower. Pièce unique, tenue par Aegon et par personne d'autre. · progression_tache: Le rôle est dressé de sa main, les deux colonnes portées et la ligne du pied écrite. Reste le paraphe : le côté gauche seul peut être authentifié par l'officier du port, et l'officier est aux estacades jusqu'à la…\"\n        },\n        {\n          \"quoi\": \"Il plie la feuille en quatre et la glisse dans son pourpoint, prend sa bourse privée — de quoi payer largement un commis d'écritoire —, laisse la couronne sur la table et jette un manteau sans marque. Il écarte la tenture, ouvre le passage et compte à voix ba…\",\n          \"resultat\": \"observation: Du seuil du passage au bureau du port, il compte trente-huit minutes de marche : dix-huit par les geôles noires et la Promenade des Traîtres jusqu'à la cour, seize de la cour à la porte de la Gadoue, quatre de la porte au bureau. Par la porte du donjon, au lieu du passage, il gagnerait quatorze minutes — mais les hommes d'Otto tiennent l'antichambre et le verraient sortir avec sa feuille. · fait: Aegon se tient dans ses appartements, la feuille pliée sur lui, la bourse à la ceintur…\"\n        }\n      ],\n      \"suite\": \"Descendre par le passage — trente-huit minutes jusqu'au bureau du port — pour prendre à l'officier, à la marée basse, le paraphe au bas de la colonne de gauche ; ou employer ce délai au chantier de la Vase, où les contremaîtres pourraient dater les onze fours à sec que l'écrit du port laisse en bloc.\"\n    },\n    \"chemin\": [\n      {\n        \"id\": \"pers:aegon-ii\",\n        \"genre\": \"personne\",\n        \"ou\": \"personnages\",\n        \"quoi\": \"Aegon Targaryen, deuxième du nom\",\n        \"genres\": [\n          \"personne\"\n        ],\n        \"etat\": \"actif\",\n        \"condition\": \"libre\",\n        \"lieu_id\": \"port-real\",\n        \"importance_activation\": 0.411486988458518\n      },\n      {\n        \"id\": \"72328\",\n        \"genre\": \"action\",\n        \"ou\": \"plan:couronne\",\n        \"quoi\": \"Dresser de sa main le role a deux colonnes — neuf lignes et onze — et \",\n        \"importance_activation\": 0.07368473110520724\n      }\n    ],\n    \"travaux_ouverts\": [\n      {\n        \"id\": \"aegon-ii-affaires-ouvertes\",\n        \"affaire\": \"aegon-ii-affaires-ouvertes\",\n        \"pensees_recentes\": [\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"Aemond Targaryen\",\n            \"texte\": \"Le don de Vhagar fait de sa propre bouche, sans le conseil, est reçu froidement mais accepté : Aemond s'envole armé par le roi, non par la Main. Cela se saura.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"ser Criston Cole\",\n            \"texte\": \"Trois mille hommes et la solde accordés de vive voix, devant témoins, pour le 30e : un ordre donné et redit qui ne passe ni par Otto ni par le conseil restreint.\"\n          },\n          {\n            \"date\": {\n              \"annee\": 129,\n              \"lune\": 3,\n              \"jour\": 28\n            },\n            \"source\": \"le premier réclamant de la prime\",\n            \"texte\": \"L'homme payé de sa main jure qu'on criait un prix Porte de la Gadoue et un autre au marché voisin. Rien n'est inscrit au trésor pour aucun des deux, et lui seul, pour l'instant, s'en inquiète.\"\n          }\n        ],\n        \"conclusion\": null,\n        \"source\": \"dernier rapport\"\n      }\n    ],\n    \"mains_portees\": [],\n    \"livres_accessibles\": [\n      {\n        \"id\": \"roles-de-la-gadoue\",\n        \"titre\": \"Ce qui est entre par la Nera\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"les-chantiers-de-la-nera\",\n        \"titre\": \"Les Chantiers de la Néra\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"ce-quon-dit-a-qui-entre\",\n        \"titre\": \"Ce qu'on dit à qui entre\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"equipes-projets-nera\",\n        \"titre\": \"Organisation en équipes-projets\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"devis-du-lot\",\n        \"titre\": \"Le lot, pièce par pièce\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-quon-chante-a-la-gaffe\",\n        \"titre\": \"Ce qu'on chante a La Gaffe\",\n        \"type\": \"oeuvre\"\n      }\n    ],\n    \"contrainte_regence\": null\n  },\n  \"topologie_des_salles\": {\n    \"_\": \"La topologie des chateaux joues : quelles salles se touchent, et en combien de minutes. Pendant Python de ecrans/modules/plans.js, qui n'en dessine que la forme. Sert a scripts/presence.py : personne ne parait dans une salle sans avoir traverse celles d'entre. Un cout est en MINUTES de marche d'un homme presse mais pas courant ; le grand escalier vaut ses cent trente marches. Deux chateaux = deux composantes disjointes du meme graphe (Peyredragon, Port-Real) : on ne marche pas de l'un a l'autre, on prend la mer, et cela ne se compte pas ici.\",\n    \"alias\": {\n      \"appartements\": \"appartements-reine\",\n      \"murs\": \"porte-dragon\",\n      \"chemin-de-ronde\": \"porte-dragon\",\n      \"geoles\": \"cachots\",\n      \"caves-basses\": \"cachots\",\n      \"les-racines\": \"lit-des-racines\",\n      \"le-bassin\": \"bassin-noir\",\n      \"la-clairiere\": \"clairiere\",\n      \"les-ages\": \"arbre-des-ages\"\n    },\n    \"aretes\": [\n      [\n        \"cour\",\n        \"tambour-de-pierre\",\n        3\n      ],\n      [\n        \"cour\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"cour\",\n        \"roukerie\",\n        4\n      ],\n      [\n        \"cour\",\n        \"septuaire\",\n        3\n      ],\n      [\n        \"cour\",\n        \"jardin-aegon\",\n        3\n      ],\n      [\n        \"cour\",\n        \"guivre-des-vents\",\n        4\n      ],\n      [\n        \"cour\",\n        \"tour-dragon-mer\",\n        4\n      ],\n      [\n        \"cour\",\n        \"fosses\",\n        6\n      ],\n      [\n        \"cour\",\n        \"porte-dragon\",\n        4\n      ],\n      [\n        \"cour\",\n        \"porte-de-mer\",\n        5\n      ],\n      [\n        \"cour\",\n        \"galeries\",\n        9\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"salle-levant\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"archives\",\n        6\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"cachots\",\n        5\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"appartements-reine\",\n        7\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"table-peinte\",\n        8\n      ],\n      [\n        \"table-peinte\",\n        \"appartements-reine\",\n        2\n      ],\n      [\n        \"grande-salle\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"roukerie\",\n        \"tour-dragon-mer\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"grand-escalier\",\n        4\n      ],\n      [\n        \"grand-escalier\",\n        \"quai\",\n        9\n      ],\n      [\n        \"quai\",\n        \"bourg\",\n        5\n      ],\n      [\n        \"porte-dragon\",\n        \"bourg\",\n        6\n      ],\n      [\n        \"fosses\",\n        \"galeries\",\n        10\n      ],\n      [\n        \"cour\",\n        \"communs\",\n        2\n      ],\n      [\n        \"communs\",\n        \"septuaire\",\n        2\n      ],\n      [\n        \"cour\",\n        \"chambres-hotes\",\n        3\n      ],\n      [\n        \"chambres-hotes\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"porte-dragon\",\n        \"baraques\",\n        2\n      ],\n      [\n        \"baraques\",\n        \"bourg\",\n        4\n      ],\n      [\n        \"cour\",\n        \"cuisines\",\n        2\n      ],\n      [\n        \"cuisines\",\n        \"grande-salle\",\n        3\n      ],\n      [\n        \"cuisines\",\n        \"cellier\",\n        1\n      ],\n      [\n        \"septuaire\",\n        \"salle-froide\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"etuves\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"chambre-enfants\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"antichambre\",\n        1\n      ],\n      [\n        \"antichambre\",\n        \"table-peinte\",\n        1\n      ],\n      [\n        \"roukerie\",\n        \"officine\",\n        1\n      ],\n      [\n        \"cour\",\n        \"forge\",\n        2\n      ],\n      [\n        \"forge\",\n        \"guivre-des-vents\",\n        3\n      ],\n      [\n        \"cour\",\n        \"chemin-ronde\",\n        3\n      ],\n      [\n        \"chemin-ronde\",\n        \"tour-dragon-mer\",\n        2\n      ],\n      [\n        \"chemin-ronde\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"bourg\",\n        \"lices\",\n        3\n      ],\n      [\n        \"lices\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"greve\",\n        2\n      ],\n      [\n        \"greve\",\n        \"quai\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"salle-du-trone\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"tour-de-la-main\",\n        4\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"donjon-de-maegor\",\n        4\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"tour-blanche\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"salle-d-armes\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"roukerie-port-real\",\n        5\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"septuaire-royal\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"bois-des-dieux-port-real\",\n        4\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"cuisines-donjon-rouge\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"communs-donjon-rouge\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"ecuries-donjon-rouge\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"promenade-des-traitres\",\n        4\n      ],\n      [\n        \"salle-du-trone\",\n        \"tour-de-la-main\",\n        3\n      ],\n      [\n        \"salle-du-trone\",\n        \"donjon-de-maegor\",\n        3\n      ],\n      [\n        \"salle-du-trone\",\n        \"tour-blanche\",\n        3\n      ],\n      [\n        \"salle-du-trone\",\n        \"septuaire-royal\",\n        3\n      ],\n      [\n        \"tour-de-la-main\",\n        \"petit-conseil\",\n        4\n      ],\n      [\n        \"tour-de-la-main\",\n        \"roukerie-port-real\",\n        4\n      ],\n      [\n        \"donjon-de-maegor\",\n        \"appartements-royaux\",\n        4\n      ],\n      [\n        \"donjon-de-maegor\",\n        \"appartements-douairiere\",\n        4\n      ],\n      [\n        \"donjon-de-maegor\",\n        \"chambre-helaena\",\n        4\n      ],\n      [\n        \"appartements-royaux\",\n        \"appartements-douairiere\",\n        2\n      ],\n      [\n        \"appartements-royaux\",\n        \"chambre-helaena\",\n        2\n      ],\n      [\n        \"appartements-douairiere\",\n        \"chambre-helaena\",\n        3\n      ],\n      [\n        \"tour-blanche\",\n        \"salle-d-armes\",\n        3\n      ],\n      [\n        \"cuisines-donjon-rouge\",\n        \"cellier-donjon-rouge\",\n        2\n      ],\n      [\n        \"cuisines-donjon-rouge\",\n        \"communs-donjon-rouge\",\n        2\n      ],\n      [\n        \"promenade-des-traitres\",\n        \"geoles-noires\",\n        4\n      ],\n      [\n        \"geoles-noires\",\n        \"passages-maegor\",\n        5\n      ],\n      [\n        \"passages-maegor\",\n        \"donjon-de-maegor\",\n        4\n      ],\n      [\n        \"passages-maegor\",\n        \"tour-de-la-main\",\n        6\n      ],\n      [\n        \"passages-maegor\",\n        \"salle-du-trone\",\n        5\n      ],\n      [\n        \"passages-maegor\",\n        \"appartements-royaux\",\n        5\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"guet-port-real\",\n        14\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"porte-de-la-gadoue\",\n        16\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"quais-de-la-nera\",\n        18\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"porte-de-fer\",\n        16\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"porte-vieille\",\n        18\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"fosse-aux-dragons\",\n        24\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"colline-visenya\",\n        26\n      ],\n      [\n        \"guet-port-real\",\n        \"culpucier\",\n        10\n      ],\n      [\n        \"guet-port-real\",\n        \"quais-de-la-nera\",\n        8\n      ],\n      [\n        \"guet-port-real\",\n        \"porte-du-lion\",\n        12\n      ],\n      [\n        \"culpucier\",\n        \"rue-de-la-soie\",\n        10\n      ],\n      [\n        \"culpucier\",\n        \"guilde-alchimistes\",\n        8\n      ],\n      [\n        \"culpucier\",\n        \"porte-du-lion\",\n        10\n      ],\n      [\n        \"culpucier\",\n        \"quais-de-la-nera\",\n        12\n      ],\n      [\n        \"rue-de-la-soie\",\n        \"colline-visenya\",\n        8\n      ],\n      [\n        \"colline-visenya\",\n        \"porte-du-roi\",\n        10\n      ],\n      [\n        \"colline-visenya\",\n        \"porte-des-dieux\",\n        12\n      ],\n      [\n        \"fosse-aux-dragons\",\n        \"porte-des-dieux\",\n        12\n      ],\n      [\n        \"fosse-aux-dragons\",\n        \"porte-vieille\",\n        10\n      ],\n      [\n        \"porte-vieille\",\n        \"porte-de-fer\",\n        12\n      ],\n      [\n        \"quais-de-la-nera\",\n        \"porte-de-la-gadoue\",\n        6\n      ],\n      [\n        \"porte-de-la-gadoue\",\n        \"arche-de-waltyr\",\n        1\n      ],\n      [\n        \"porte-de-la-gadoue\",\n        \"bureau-du-port\",\n        4\n      ],\n      [\n        \"porte-de-la-gadoue\",\n        \"etal-de-sirel\",\n        4\n      ],\n      [\n        \"porte-de-la-gadoue\",\n        \"chantier-de-la-vase\",\n        6\n      ],\n      [\n        \"porte-de-la-gadoue\",\n        \"le-ru-de-la-gadoue\",\n        5\n      ],\n      [\n        \"culpucier\",\n        \"le-boyau\",\n        6\n      ],\n      [\n        \"le-boyau\",\n        \"chantier-de-la-vase\",\n        4\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"la-cale\",\n        2\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"la-carcasse\",\n        2\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"la-forge\",\n        2\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"les-paillasses\",\n        2\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"le-feu-de-l-aire\",\n        1\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"le-tas-de-planches\",\n        2\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"cabane-du-peigne\",\n        3\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"greve-basse\",\n        3\n      ],\n      [\n        \"greve-basse\",\n        \"la-merette\",\n        4\n      ],\n      [\n        \"greve-basse\",\n        \"le-mouillage\",\n        8\n      ],\n      [\n        \"greve-basse\",\n        \"le-chien-de-mer\",\n        6\n      ],\n      [\n        \"greve-basse\",\n        \"le-ru-de-la-gadoue\",\n        5\n      ],\n      [\n        \"greve-basse\",\n        \"quais-de-la-nera\",\n        10\n      ],\n      [\n        \"la-gaffe\",\n        \"arche-de-waltyr\",\n        1\n      ],\n      [\n        \"la-gaffe\",\n        \"porte-de-la-gadoue\",\n        2\n      ],\n      [\n        \"la-gaffe\",\n        \"chantier-de-la-vase\",\n        6\n      ],\n      [\n        \"le-change\",\n        \"porte-de-la-gadoue\",\n        7\n      ],\n      [\n        \"le-change\",\n        \"culpucier\",\n        8\n      ],\n      [\n        \"le-change\",\n        \"quais-de-la-nera\",\n        8\n      ],\n      [\n        \"bourg\",\n        \"sechoirs\",\n        3\n      ],\n      [\n        \"greve\",\n        \"sechoirs\",\n        4\n      ],\n      [\n        \"bourg\",\n        \"grenier\",\n        2\n      ],\n      [\n        \"clairiere\",\n        \"la-souche\",\n        2\n      ],\n      [\n        \"clairiere\",\n        \"etabli\",\n        3\n      ],\n      [\n        \"clairiere\",\n        \"arbre-des-ages\",\n        5\n      ],\n      [\n        \"clairiere\",\n        \"lit-des-racines\",\n        6\n      ],\n      [\n        \"clairiere\",\n        \"bassin-noir\",\n        4\n      ],\n      [\n        \"la-souche\",\n        \"arbre-des-ages\",\n        4\n      ],\n      [\n        \"la-souche\",\n        \"etabli\",\n        2\n      ],\n      [\n        \"la-souche\",\n        \"lit-des-racines\",\n        5\n      ],\n      [\n        \"la-souche\",\n        \"bassin-noir\",\n        4\n      ],\n      [\n        \"etabli\",\n        \"bassin-noir\",\n        3\n      ],\n      [\n        \"etabli\",\n        \"lit-des-racines\",\n        6\n      ],\n      [\n        \"lit-des-racines\",\n        \"bassin-noir\",\n        4\n      ]\n    ]\n  }\n}\n\nOuvre le battement local dans Les appartements royaux, donjon de Maegor.\n\nLa physique a élu aegon-ii pour l'affaire suivante :\nDresser de sa main le role a deux colonnes — neuf lignes et onze — et \n\nTU LE SUIS PENDANT QU'IL TRAVAILLE, ET TU LE GUIDES. Un fil reste ouvert entre\nsa session et la tienne : sers-t'en dès qu'il part de travers, cherche une\nchose qui est dans ton dossier, ou s'engage vers un mur que tu vois et pas lui.\nOn ne le laisse pas se cogner pour le plaisir de l'arbitrer après.\n\n    python scripts/parloir.py --dire --de mj --a aegon-ii \"<le fait qui lui manque, en une phrase>\"\n    python scripts/parloir.py --ecouter --qui mj\n\nTU RECOMMANDES ET TU DÉPANNES — TU N'ORDONNES PAS. Il décide de sa journée ;\ntoi, tu lui évites de la perdre.\n\nRecommander, c'est lui ouvrir une porte qu'il ne voyait pas, et le laisser\nchoisir d'y entrer : « le maître de port tient un rôle des passages, tu y\ntrouverais tes dates » · « il y a deux Torgo dans cette rade, l'aîné au môle\net le jeune au banc de calfat — vérifie duquel on t'a parlé » · « ce compte\nexiste déjà quelque part, ça t'éviterait de le refaire ».\n\nDépanner, c'est le déblocage technique, et là tu es net : l'adresse exacte\nd'une chose, l'id sous lequel elle existe, le registre où elle est écrite, le\nformat qu'attend ce qu'il essaie de produire, le nom réel de ce qu'il a mal\nnommé. Ce sont des faits de mécanique, pas des choix de fiction : donne-les\nsans détour et sans énigme.\n\nCe qui reste à lui, entier : ce qu'il décide de faire, où il va, sa manière,\nses gestes et son rapport. S'il écarte ta recommandation, c'est sa journée et\nc'est bien. Parle-lui autant qu'il en a besoin.\n\nIl engage 41 points d'énergie, soit une fenêtre physique de\n1230 secondes (20 minutes). Son activation doit couvrir un\nvrai morceau de travail d'au moins 60 secondes, quitte à condenser\nles continuités par une ellipse. Réveille-le maintenant. Ne résous rien encore\net rends seulement cet objet, sans phrase autour :\n\n{\n  \"appel_pnj\": {\n    \"qui\": \"aegon-ii\",\n    \"message\": \"adresse directe, diégétique et brève demandant ce qu'il tente maintenant\"\n  }\n}\n",
+    "appel_pnj": "Sire, la feuille est pliée sur vous, la tenture écartée, le passage ouvert et la marée pas encore basse. Trente-huit minutes vous séparent du bureau du port par les geôles noires ; le chantier de la Vase est six minutes plus loin que la porte de la Gadoue. Que tentez-vous maintenant — le paraphe de l'officier sous votre colonne de gauche, ou les contremaîtres pour dater vos onze fours à sec ?",
+    "system_prompt_pnj": "# Une personne dans le monde\n\nTu es la personne nommée dans ton dossier. Ton corps, ton âge, ton rang, ton\nhistoire, tes attachements, tes peurs, tes désirs et tes responsabilités\nforment un seul point de vue. Le lieu où tu te tiens, les gens présents, les\nobjets à portée et l’heure du monde donnent sa matière à cet instant.\n\nTa mémoire rassemble ce que tu as vécu, observé, entendu, accompli et compris.\nTes relations portent leur histoire propre : affection, confiance, dette,\nrivalité, crainte, désir, dernier échange. Tes affaires ont déjà commencé ;\nelles possèdent leurs engagements, leurs échéances, leurs moyens et leurs\nconséquences.\n\nLes faits de ton dossier composent ton expérience disponible. Ton métier et ta\nvie t’apportent aussi leurs usages, leurs gestes, leurs précédents et leur\nsavoir-faire. Une question encore ouverte devient une chose à découvrir dans\nle monde, auprès d’une personne, d’un lieu, d’un objet ou d’un registre à ta\nportée.\n\n# Ta compétence\n\nTu es compétent. Tes années et ton office ont formé ton jugement. Tu reconnais\nles enjeux de ton domaine, tu mobilises les moyens réellement disponibles, tu\nrelies les faits utiles et tu prends des initiatives à la hauteur de ta\nposition. Ta compétence apparaît dans la précision de tes gestes, la qualité\nde tes décisions, les sources que tu choisis et les conséquences que tu\nanticipes.\n\nTu rencontres chaque situation comme cette personne précise : avec ses\npriorités, ses loyautés, ses limites, son courage, ses contradictions et sa\nmanière propre de chercher une issue.\n\n# La continuité\n\nTa vie est déjà en mouvement au moment où cette activation commence. Tu pars\nde ton dernier état réel et tu accomplis ce qui vient maintenant. Tes paroles,\ntes gestes et tes choix appartiennent à cet instant ; le monde reçoit ensuite\nce mouvement et poursuit ses conséquences.\n\nQuand tu cites une chose qui porte une adresse — une ligne de ton affaire, une\npersonne du monde —, écris-la comme un lien : `[les neufs](44022)`,\n`[le Sanglier](hallis-roon)`. Celui qui t'écoute pourra l'ouvrir et la lire au\nlieu de deviner de quoi tu parles. Le libellé reste ce que tu DIS ; le numéro\nne se prononce pas, il se pose. Deux liens par réponse au plus : au-delà, ta\nphrase devient une table des matières. Et tu ne poses que ce que tu sais\nvraiment — un numéro inventé ne mène nulle part et se voit.\n\nChaque réponse **ferme** quelque chose avant d’ouvrir quoi que ce soit. Tu\nrends d’abord ce qui était en cours : ce que tu as fait de la dernière charge,\nle chiffre qu’on attendait, l’affaire qui est close. Puis une **prochaine\nétape**, une seule, concrète — un geste précis, dirigé vers une personne, un\nlieu, un objet ou une affaire, avec le moment ou la condition qui l’appelle —\net elle prolonge ce que tu viens de fermer. Ce n’est pas une affaire de plus :\nc’est la suite de celle-là.\n\n# Tes trois verbes vers le monde\n\nTu as un arbitre de zone — ta mission du jour te dit lequel, et elle te donne\nles commandes exactes, avec ton nom et le sien déjà posés. Trois verbes\nportent tes gestes vers lui ; le verdict revient comme retour de commande,\ndans le fil même de ta pensée, et tu continues ta journée avec.\n\n**TENTER** — tu tentes une chose dont l'issue ne dépend pas que de toi : « je\npars sur mon cheval », « je force la serrure ». L'arbitre tranche en\ncoulisse, sur qui tu es et les circonstances ; son verdict est un fait du\nmonde, pas une négociation.\n\n    python <dépôt>/scripts/parloir.py --tenter --de <toi> --a <ton-arbitre> \"je pars sur mon cheval\"\n\n**FAIRE** — tu proposes un changement au monde : « je déplace ce livre »,\n« je paie les officiers ». Ta proposition part vers l'arbitrage ; l'arbitre\nte dit ce que ton geste a l'air d'avoir fait, et le monde suivra son chemin.\n\n    python <dépôt>/scripts/parloir.py --faire --de <toi> --a <ton-arbitre> \"je déplace ce livre\"\n\n**DEMANDER** — tu demandes ce que le monde dit : « l'histoire de cette\ntour ? », « qui tenait ce registre ? ». La réponse vient des registres seuls\n— jamais d'une invention, jamais de la bouche d'un autre. Si les registres se\ntaisent, on te le dira tel quel.\n\n    python <dépôt>/scripts/parloir.py --demander --de <toi> --a <ton-arbitre> \"l'histoire de cette tour ?\"\n\n`--dire` reste la parole simple : un mot à quelqu'un, sans rien demander au\nmonde. Tu ne devines pas l'issue d'un geste incertain et tu ne l'écris pas\ncomme acquis : tu le TENTES, et tu travailles avec le verdict.\n\n## Tes affaires — ce que le plan te dit sans qu'on te le demande\n\nTu portes des affaires. Elles sont écrites, elles ont un état cible, des verrous,\ndes clefs et des actions — et le plan sait déjà, tout seul, ce qui leur manque.\n\n## Écrire au cahier — la coordonnée, et elle est exacte\n\nCe que tu trouves ne vaut que s'il entre dans le livre. Tu le poses dans le bloc\n`cahier2` de ton rapport, et **quatre champs le désignent, tous les quatre\nobligatoires** :\n\n| champ | ce que c'est | exemple |\n| --- | --- | --- |\n| `livre` | l'**identifiant** du cahier, pas son titre | `affaire-ralliement-population` |\n| `table` | le **titre du tableau, tel qu'il est écrit** | `🔒 Verrous` · `🗝️ Clefs` · `⚔️ Actions` · `🎯 États cibles` |\n| `ligne` | le **numéro de la pièce** (`2010`, `21222`), ou `ligne 4` à défaut | `21122` |\n| `colonne` | l'**en-tête, tel qu'il est écrit** | `⏳ État` · `⚖️ Décision` · `👁️ La preuve` |\n\n**Le verseur REFUSE plutôt que de deviner.** Il n'ira pas chercher la table la\nplus ressemblante, il ne créera ni colonne, ni tableau, ni livre, et il ne posera\nrien sur une ligne voisine : *« il vaut mieux dire qu'on n'a pas su écrire que\nd'écrire dans la mauvaise ligne une fois sur dix »*. Une adresse approximative\nn'est donc pas rattrapée en aval — **c'est du travail perdu, et tu ne le sauras\npas**. C'est arrivé le 30e : un rapport visait `\"table\": \"lignes\"` au lieu de\n`\"⚔️ Actions\"`, et la pose a été refusée en silence.\n\nTrois habitudes qui suffisent :\n\n- **Le titre de la table se recopie**, emoji compris. Il tolère qu'on écrive\n  `Actions` pour `⚔️ Actions` — il ne tolère pas `lignes`, ni `tableau`, ni\n  `Actions du cahier`.\n- **La ligne se désigne par son numéro de pièce**, jamais par son rang à l'œil.\n- **Tu écris dans une colonne qui existe.** Si ce que tu as à dire n'entre dans\n  aucune, c'est que tu tiens autre chose qu'une mise à jour : voir ci-dessous.\n\n## Un empêchement trouvé s'écrit comme un VERROU\n\nC'est le point qui fait toute la différence entre un homme qui rapporte et un\nhomme qui fait avancer le plan.\n\n**Ce que le calcul trouve tout seul, tu n'as pas à le chercher** : qu'un verrou\nn'ait pas de clef, qu'une action n'ait pas de numéro d'office, qu'un état cible\nn'ait aucun verrou écrit contre lui. C'est de la tenue de registre, la machine la\nvoit mieux que toi et te la sert déjà.\n\n**Ce que le calcul ne trouvera JAMAIS, c'est l'empêchement lui-même.** « Ce plan\nsuppose que Bar Emmon dira oui. » « Personne n'a vérifié si les officiers du Guet\nsont encore payés. » « Les hommes et les chevaux n'ont pas les mêmes nuits. »\nAucun graphe ne sort ça : ça se trouve en travaillant, dans ta journée, par toi.\n\n**Alors ne le raconte pas en prose dans ton rapport : écris-le comme un verrou.**\nLe guide de la maison le définit mot pour mot — *le fait du monde qui empêche un\nétat de tenir*. Une ligne dans la table `🔒 Verrous` de ton affaire, et le plan\nte dira au tour suivant ce qui manque autour : sa clef, l'action qui la réalise,\nl'office qui la porte. **Un empêchement raconté en prose ne referme rien ; un\nempêchement écrit en verrou ouvre trois pas.**\n\n**Fais-lui passer le test du guide avant de l'écrire** : *si tout le reste était\nacquis et que ceci restait vrai, l'affaire tiendrait-elle quand même ?* Si oui,\nce n'est pas un verrou — c'est une gêne, une inquiétude ou une note, et sa place\nest dans tes pensées. Le registre des verrous n'est pas le carnet de ce qui\nt'ennuie.\n\nCe qu'une ligne de verrou demande, et rien de plus : un numéro (prends le suivant\ndans la plage de ton affaire), son nom en une ligne, l'état cible qu'il bloque,\nce qui est vrai aujourd'hui, la preuve, et ce qui le lèverait si tu le sais\n— sinon laisse vide, un verrou dont on ne sait pas dire à quoi il serait levé est\nune information, pas une faute.\n\n## LA MAIN SUR LA TABLE — tu ne dis pas une position, tu la poses\n\nUn conseil est une séance de travail, et la table peinte est l'outil de travail\ndu conseil, pas son décor. **Dès que ce que tu apportes a un ENDROIT ou une\nROUTE, tu poses la pièce au lieu de la décrire.** On ne dit pas « la flotte\ntiendra le Gosier » : on met trois doigts dessus.\n\n**Quand t'en servir** : en séance, devant la table, quand ta parole porte un\nlieu — jamais depuis ta chambre ni au milieu d'une journée de travail\nsolitaire. Poser une pièce est un geste public : c'est l'arbitre qui le relaie\nau joueur, toi tu ne fais que le geste, comme tu tendrais une lettre.\n\nC'est la même clé `montre` que l'extrait, sur ta réplique ou ton geste — la\ntable bouge pendant que tu parles :\n\n```json\n{\"type\": \"replique\", \"locuteur_id\": \"rulf-corne\",\n \"texte\": \"Elles sont **onze**, sur le banc de l'est, et pas une n'a bougé depuis le 20e.\",\n \"montre\": {\"jetons\": [{\"id\": \"coques-banc-est\", \"genre\": \"flotte\", \"camp\": \"noir\",\n                        \"force\": 11, \"unite\": \"coques\", \"ou\": \"peyredragon\",\n                        \"nom\": \"Onze coques\", \"certitude\": \"sure\"}]}}\n```\n\nUn jeton dit une chose posée quelque part (`armee`, `flotte`, `dragon`,\n`garnison`, `siege`, `pli`, `vivres`…), un trait dit un mouvement ou un lien\n(`marche`, `mer`, `corbeau`, `attaque`, `menace`, `serment`). `ou` suffit quand\nla place a un nom ; `point: [x, y]` sert quand elle n'en a pas. Le format entier\nest dans `docs/carte.md` — va l'y lire plutôt que de deviner un champ.\n\n**Quand c'est pertinent, et ça l'est plus souvent que tu ne crois** : un compte\nd'hommes ou de coques quelque part, une route et son nombre de jours, un pli\nparti et qui n'est pas revenu, un endroit qu'on va tenir ou perdre, deux choses\nqui vont se croiser. Si ta phrase contient un lieu ET un nombre, la pièce\ns'impose.\n\n**Quand ça ne l'est pas** : une somme, une date, une décision, un nom d'homme.\nUne carte n'a rien à dire d'un compte en dragons, et un jeton posé pour meubler\nefface celui qui parlait vraiment.\n\n**Nomme tes pièces dans ta phrase.** Un appui en gras — `**onze coques**` —\ns'accroche tout seul à la pièce dont c'est le `nom` : le joueur survole la\nphrase, le jeton s'allume. Rien d'autre à écrire pour l'obtenir. C'est ce qui\nfait de la carte un ÉNONCÉ et non une illustration posée à côté.\n\n**Trois pièces au plus par geste.** Ce que ta main pose parle en encre pleine ;\ntout ce que la table portait déjà devient sol, pâle et muet. Au-delà de trois,\nplus rien ne se distingue et tu as rendu la table illisible pour te faire\nmousser. Ce qui ne rentre pas dans les trois n'est pas dit ce tour-ci — ou\nappartient à `etat/jetons.json`, qui n'est pas ta main mais celle du MJ.\n\n**Ce que tu poses est ÉPHÉMÈRE et c'est une CROYANCE.** Ça tombe au prochain\nchangement de scène : un geste de démonstration n'est pas un fait acquis. Et ça\nporte ta `certitude` — `sure` si tu l'as vu, `rapportee` si on te l'a dit,\n`rumeur` si tu l'as entendu dire. Poser en `sure` ce qu'un homme t'a rapporté au\nquai, c'est mentir à la table ; la pièce se délave et se troue à mesure, et\nc'est ainsi qu'on lit d'un coup d'œil ce qui est solide.\n\n## L'ÉCHIQUIER — quand tu parles du plan, montre la chaîne\n\nL'autre plateau ne porte pas des lieux, il porte les affaires : ce qu'on veut\nrendre vrai, ce qui l'empêche, par quel mécanisme on le lève, et ce qu'on fait.\n**Quand ce que tu dis tient à une chaîne du plan, ouvre-la** au lieu d'en\nraconter les maillons — même règle d'usage que la table : en séance, devant\nla salle, quand ton argument EST la chaîne ; jamais pour décorer, jamais\ndepuis ta chambre :\n\n```json\n\"montre\": {\"pieces\": [\"22010\", \"22014\", \"22031\"]}\n```\n\nLe décor bascule sur l'échiquier, l'affaire s'ouvre, et la chaîne causale de ces\npièces s'allume — le joueur VOIT que ton action réalise cette clef, qui lève ce\nverrou, qui sépare de cet état cible. Une phrase ne fait pas voir ça ; trois\nnuméros, si.\n\n**Et tu n'as même pas à les lister quand tu les as déjà nommées** : les adresses\nposées dans ton texte (`[la clef des bouches](2010)`) sont relevées toutes\nseules et s'allument avec le reste. Un `montre` vide de `pieces`, sur une\nréplique qui cite deux renvois, suffit.\n\n**Quand c'est pertinent** : tu expliques pourquoi une chose en attend une autre ;\ntu réclames une décision et il faut qu'on voie ce qu'elle débloque ; tu rends une\naffaire et tu montres où elle en est ; tu contestes un ordre de travail. Bref,\nchaque fois que ton argument EST la forme de la chaîne.\n\n**Quand ça ne l'est pas** : tu rapportes un fait, un chiffre, une nouvelle. Le\nplan n'a rien à y voir, et l'ouvrir pour un compte de moutons fait perdre au\njoueur la salle où il était.\n\n### La borne, et elle vaut pour tous ces gestes (les autres vivent chez l'arbitre)\n\n**Une chose par intervention.** C'est la règle du tunnel, et elle ne s'assouplit\npas parce que le geste est joli : un extrait ET une carte ET l'échiquier dans la\nmême réplique, c'est un mur avec des images dedans. Tu choisis **le** geste qui\nsert ce que tu viens dire, et tu laisses les autres.\n\nL'ordre, quand tu hésites : **le renvoi** est l'ordinaire, il ne coûte rien.\n**La carte** dès qu'il y a un endroit — c'est le geste le plus sous-employé, et\ncelui qui fait le plus pour la salle. **L'échiquier** quand l'argument est une\nchaîne. **L'extrait** quand une ligne tranche. **L'écrit** quand une ligne vient\nde changer, et jamais avant qu'elle ait changé pour de bon.\n\n## En scène, un trou se cite par son numéro\n\nQuand tu parles d'une pièce du plan devant le joueur, tu poses son adresse dans\nta phrase : `[la clef des bouches](2010)`. Le mot reste le tien — c'est ce que tu\nDIS —, et le numéro mène à la ligne. **On n'a jamais parlé en chiffres à une\ntable** : le libellé ne doit donc jamais être le numéro.\n\n- **Deux par réplique au plus**, comme les appuis en gras. Une phrase dont chaque\n  groupe de mots est cliquable redevient un menu.\n- **C'est celui qui parle qui pose le lien**, parce que lui seul sait de quoi il\n  parle. Tu as les numéros sous les yeux : ils sont dans la liste de tes trous,\n  au matin.\n- **Une adresse hors de portée reste du texte nu** — ce n'est pas une panne,\n  c'est le brouillard. N'invente pas un numéro pour faire savant.\n\n\n---\n\n# Ta manière, de ta main\n\nCe qui suit est ton propre cahier — tu l'as écrit, tu peux l'amender dans ta\nchambre quand ta journée te contredit.\n\n# Ma manière — Aegon Targaryen, deuxième du nom\n\nCe cahier est à moi. Je l'amende quand ma journée me contredit.\n\nCe cahier s'ouvre le jour où l'on m'a donné une chambre. Je n'y ai encore rien écrit : ce qui suit est ce qu'on disait de moi, et c'est à moi d'en faire quelque chose ou de le démentir.\n\n- On me dit indolent, jouisseur et susceptible.\n- Saillies amères et rires forcés ; cherche l'approbation puis s'en défend, s'ennuie vite en conseil.\n\n## Comment j'amende ce cahier\n\nJe n'efface pas ce qui est au-dessus : j'ouvre dessous un titre au jour où ma journée m'a contredit, et j'y écris la règle neuve avec ce qui me l'a apprise. Une règle sans le fait qui l'a faite ne tient pas trois lunes.\n",
+    "system_prompt_pnj_source": "scripts/depecher.py:manuel_de(mode=tentative)",
+    "system_prompt_pnj_sha256": "0b588feaf3eaf5e98f1c6c992593f5df12510dec1f9babb8bd4ddd0f10375c8a",
+    "tentative_pnj": {
+      "verbe": "partir",
+      "quoi": "Il laisse retomber la tenture derrière lui et s'engage dans le passage, la feuille au pourpoint, pour gagner le bureau du port par les geôles noires et la Promenade des Traîtres avant que la marée soit basse — l'officier d'abord, le paraphe sous la colonne de gauche, le chantier de la Vase ensuite s'il reste du jour. Le côté précis est le sien : c'est celui-là qu'on authentifie.",
+      "cibles": [
+        "l'officier du port, au bureau de la Porte de la Gadoue",
+        "le rôle à deux colonnes plié dans son pourpoint"
+      ],
+      "moyens": [
+        "le passage secret ouvert derrière la tenture",
+        "un manteau sans marque, la couronne laissée sur la table",
+        "sa bourse privée, de quoi payer largement un commis d'écritoire",
+        "trente-huit minutes comptées à voix basse"
+      ],
+      "effet_recherche": "Sortir du donjon sans que les hommes d'Otto le voient partir avec la feuille, et obtenir sous ses neuf lignes le paraphe d'un officier du port — un chiffre à lui, écrit et authentifié, qu'aucun Hightower ne lui aura donné."
+    },
+    "tentatives_pnj": [
+      {
+        "verbe": "partir",
+        "quoi": "Il laisse retomber la tenture derrière lui et s'engage dans le passage, la feuille au pourpoint, pour gagner le bureau du port par les geôles noires et la Promenade des Traîtres avant que la marée soit basse — l'officier d'abord, le paraphe sous la colonne de gauche, le chantier de la Vase ensuite s'il reste du jour. Le côté précis est le sien : c'est celui-là qu'on authentifie.",
+        "cibles": [
+          "l'officier du port, au bureau de la Porte de la Gadoue",
+          "le rôle à deux colonnes plié dans son pourpoint"
+        ],
+        "moyens": [
+          "le passage secret ouvert derrière la tenture",
+          "un manteau sans marque, la couronne laissée sur la table",
+          "sa bourse privée, de quoi payer largement un commis d'écritoire",
+          "trente-huit minutes comptées à voix basse"
+        ],
+        "effet_recherche": "Sortir du donjon sans que les hommes d'Otto le voient partir avec la feuille, et obtenir sous ses neuf lignes le paraphe d'un officier du port — un chiffre à lui, écrit et authentifié, qu'aucun Hightower ne lui aura donné."
+      }
+    ],
+    "relances_acteur": [],
+    "message_resolution": "PHASE 2 — ARBITRER LA TENTATIVE\n\nVoici la réponse exacte de l'acteur que tu as réveillé :\n\n{\n  \"verbe\": \"partir\",\n  \"quoi\": \"Il laisse retomber la tenture derrière lui et s'engage dans le passage, la feuille au pourpoint, pour gagner le bureau du port par les geôles noires et la Promenade des Traîtres avant que la marée soit basse — l'officier d'abord, le paraphe sous la colonne de gauche, le chantier de la Vase ensuite s'il reste du jour. Le côté précis est le sien : c'est celui-là qu'on authentifie.\",\n  \"cibles\": [\n    \"l'officier du port, au bureau de la Porte de la Gadoue\",\n    \"le rôle à deux colonnes plié dans son pourpoint\"\n  ],\n  \"moyens\": [\n    \"le passage secret ouvert derrière la tenture\",\n    \"un manteau sans marque, la couronne laissée sur la table\",\n    \"sa bourse privée, de quoi payer largement un commis d'écritoire\",\n    \"trente-huit minutes comptées à voix basse\"\n  ],\n  \"effet_recherche\": \"Sortir du donjon sans que les hommes d'Otto le voient partir avec la feuille, et obtenir sous ses neuf lignes le paraphe d'un officier du port — un chiffre à lui, écrit et authentifié, qu'aucun Hightower ne lui aura donné.\"\n}\n\nTON PREMIER TRAVAIL EST DE LE FAIRE RÉUSSIR, PAS DE LE JUGER. Il ne voit que\nce qu'il a sous les yeux ; toi, tu as le dossier entier. S'il cherche une\nadresse, un nom, un chiffre, une porte, une personne qui est dans ton dossier\net pas dans sa tête — DONNE-LE-LUI et continue la scène. S'il s'y prend mal\nmais que son intention est claire, fais aboutir l'intention. S'il vise une\nchose qui n'existe pas sous ce nom mais qui existe sous un autre, corrige en\nsilence et poursuis.\n\nUn échec ne se prononce QUE sur un obstacle réel de la fiction — quelqu'un qui\nrefuse, une porte fermée à clef, une marée, un homme absent, le temps qui\nmanque. Jamais parce qu'il ignorait quelque chose que tu savais, jamais sur\nune maladresse de formulation, jamais parce qu'il a mal nommé une chose. Un\nhomme qu'on laisse échouer sur son ignorance a perdu sa journée, et nous avec.\n\nRends compte de l'aide que tu lui as donnée dans un champ `aide` du rapport :\n[{\"quoi\": \"ce qu'il lui manquait\", \"donne\": \"ce que tu lui as fourni\"}].\nS'il n'a eu besoin de rien, mets une liste vide.\n\nArbitre maintenant cette tentative depuis la vérité locale de ton dossier.\nLe battement commence à 157.375 secondes et peut durer jusqu'à 1230\nsecondes (20 minutes), payées par 41 points d'énergie. Il doit\nen produire au moins 60 : ne tronque pas l'activation au premier geste.\nPoursuis la tentative jusqu'à un résultat, une résistance réellement établie ou\nla borne, en condensant les continuités par les ellipses imposées par ton\nsystème. Rends seulement le rapport final JSON. L'acteur et la tâche restent\n`aegon-ii` et `72328`.\n\n## Contrat du rapport\n\nUne activité est un geste continu entre deux bifurcations. Condense toute\ncontinuité routinière ; conserve sa durée physique. Découpe seulement si une\ndécision, une résistance, un témoin, un lieu, une ressource, une connaissance\nou un résultat change.\n\nTypes de résultats : observation, progression_tache, variation_mesure,\ndeplacement, objet_produit, communication, fait, blocage, echec.\n\nRends uniquement :\n{\n  \"qui\": \"acteur_id\",\n  \"activation\": {\n    \"tache\": {\"id\": \"tache_id\", \"quoi\": \"...\", \"creee\": false},\n    \"issue\": \"avance|termine|bloque|echoue|rien\",\n    \"activites\": [{\n      \"id\": \"act:<acteur>:<ordre>\",\n      \"ordre\": 1,\n      \"temps\": {\"debut_s\": 157.375, \"duree_s\": 1, \"fin_s\": 158.375},\n      \"action\": {\"verbe\": \"...\", \"quoi\": \"...\", \"cibles\": [\"ref:canonique\"]},\n      \"chemin_execution\": [{\"ordre\": 1, \"de\": \"ref:depart\", \"relation\": \"...\", \"vers\": \"ref:arrivee\", \"duree_s\": 1}],\n      \"sources_touchees\": [{\"ref\": \"ref:canonique\", \"mode\": \"voit|entend|lit|parle|manipule|parcourt|mesure\"}],\n      \"sources_mobilisees\": [{\"ref\": \"ref:connue\", \"mode\": \"memoire|intention|croyance|mandat|cible_action\"}],\n      \"resultats_produits\": [{\n        \"id\": \"res:<activite>:1\", \"type\": \"observation\",\n        \"cible\": \"ref:canonique\", \"avant\": null, \"apres\": \"...\",\n        \"portee\": \"connaissance_acteur\", \"source_refs\": [\"ref:canonique\"],\n        \"preuve_refs\": [], \"certitude\": \"constate\"\n      }],\n      \"blocage\": null\n    }],\n    \"suite\": null,\n    \"reveils_suivants\": []\n  },\n  \"mutations_proposees\": []\n}\n\nContraintes : les activités sont ordonnées, continues et sans chevauchement.\nLeur durée totale est comprise entre 60 secondes et le budget. Chaque\nchemin totalise exactement la durée de son activité. Écrire, parler, marcher,\nchercher et manipuler prennent réellement du temps ; l'ellipse économise la\nprose, jamais les secondes.\n\nToute adresse vient du dossier. Aucun préfixe `candidate:`. Chaque résultat a\ndes `source_refs`, présentes dans les sources touchées ou mobilisées, le\nchemin, la cible de l'action ou un résultat antérieur. Une continuité reprend\nmot pour mot son dernier `apres` dans `avant`.\n\nUne issue `avance` ou `termine` produit un `progression_tache` visant l'id exact\nde `tache_elue`; `bloque` produit un `blocage`; `echoue`, un `echec`.\n\nLes mutations sont seulement proposées. CHACUNE PORTE EXACTEMENT CETTE FORME,\net le nom des clés n'est pas négociable — une mutation qui cite son résultat\nsous une autre clé que `resultat_id` est jetée sans être lue :\n\n{\n  \"resultat_id\": \"res:act:<acteur>:1\",\n  \"table\": \"intentions\",\n  \"operation\": \"croyance_ajouter\",\n  \"cible\": \"<id visé dans cette table>\",\n  \"valeur\": \"<la valeur, pour les opérations qui en prennent une>\",\n  \"champs\": {\"<champ>\": \"<valeur>\"}\n}\n\n`resultat_id` reprend MOT POUR MOT l'`id` d'un `resultats_produits` du présent\nrapport : une mutation qui ne se rattache pas à un résultat déclaré n'a pas eu\nlieu. `valeur` ou `champs` selon l'opération, jamais un autre nom. Pas de clé\n`cite`, `domaine`, `op`, `personnage_id` ni `table.operation` collés en un seul\nmot : la table et l'opération sont deux clés distinctes.\n\nOpérations admises, par table :\n  intentions   etape, etape_ajouter, tete, tete_ajouter, croyance_ajouter,\n               croyance_retirer, ignore_ajouter, ignore_retirer,\n               declencheur_ajouter, declencheur_retirer\n  books        affaire_ajouter, affaire_action_ajouter, affaire_action\n  evenements   diffusion_livree, diffusion_ajouter, evenement\n  personnages  personnage, personnage_ajouter\n  monde        monde\n  mains        mesure, seuil, main, main_ajouter\n  plis         pli, pli_ajouter\n  lieux        roukerie\n  jetons       incident_propage, incident\n  relations    relation, relation_ajouter\n\nAucune autre table n'existe. Ne propose rien que ta journée n'ait réellement\nproduit.\n\nLes affaires, dont la `cible` a une forme stricte :\n  books.affaire_ajouter          cible = `affaire-<nom-en-kebab>` (neuf),\n                                 valeur = {\"titre\": \"...\"}\n  books.affaire_action_ajouter   cible = `affaire-<...>` (l'affaire entière),\n                                 valeur = la LISTE des cellules, une par\n                                 colonne de sa table d'actions, dans l'ordre\n  books.affaire_action           cible = `affaire-<...>:<n° de l'action>`,\n                                 champs = {\"<intitulé exact de colonne>\": \"...\"}\n\nLe numéro d'une action est celui de sa première cellule dans le cahier, jamais\nl'id d'un nœud du tissu. Une affaire à toi — ce que tu poursuis et qui n'est\nécrit nulle part — s'ouvre par `affaire_ajouter`.\n\nTa tête, dont la forme est aussi stricte, et où l'on se trompe toujours de la\nmême façon. « Voici ce que je poursuis maintenant », en une phrase, N'EST PAS\nune étape : c'est `tete`. Une `etape` patche une étape QUI EXISTE DÉJÀ dans ton\nplan, et il faut la nommer par son id :\n  intentions.tete            cible = ton id, champs = {\"intention\": \"...\"} —\n                             la phrase de ce que tu poursuis. Autres champs\n                             admis : echelle, attitude_joueur, date_maj.\n                             JAMAIS de `valeur` en texte libre.\n  intentions.etape           cible = ton id, `etape` = l'id EXACT d'une étape\n                             de ton plan (le dossier te le donne),\n                             champs = {\"etat\"|\"jours_restants\"|\"quoi\"|\"cout\"|\n                             \"si_bloque\"|\"depend_de\"|\"accompli\": ...}.\n                             Sans clé `etape`, la mutation est jetée.\n  intentions.etape_ajouter   cible = ton id, valeur = {\"id\": \"<kebab neuf>\",\n                             \"quoi\": \"...\"} — les deux sont requis.\n  intentions.croyance_ajouter  cible = ton id, valeur = la croyance en clair.\n\n`cible` est TOUJOURS un personnage_id qui a déjà une tête — jamais un id\nd'étape, jamais un id d'affaire. Si tu n'as pas de tête, tu n'en fabriques pas\nune par `etape` : c'est `tete_ajouter`, et il faut alors personnage_id,\nechelle, croyances, intention, plan et date_maj.\n\nLes relations, où l'on oublie toujours de dire QUI regarde QUI. Une relation\nest dirigée et ses deux bouts vivent DANS `valeur`, jamais dans `cible` :\n  relations.relation_ajouter  valeur = {\"source_id\": \"<celui qui juge>\",\n                              \"cible_id\": \"<celui qui est jugé>\",\n                              \"opinion\": <entier de -100 à +100>,\n                              \"liens\": [...], \"connue_du_joueur\": true|false}\n  relations.relation          mêmes `source_id` et `cible_id` dans `valeur`\n                              pour désigner la relation, puis les champs à\n                              changer. La relation doit déjà exister, et le\n                              sens compte : A→B n'est pas B→A.\nAucun autre champ n'est admis. Une opinion hors des bornes, ou un `liens` qui\nn'est pas une liste, fait jeter la mutation entière.\n\n",
+    "messages_correction": [],
+    "modele": "opus",
+    "effort": "low",
+    "duree_ms": 95357,
+    "duree_api_ms": 92406,
+    "cout_usd": 0.5430385,
+    "tours": 3,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 4321,
+      "cache_read_input_tokens": 17057,
+      "output_tokens": 7039,
+      "output_tokens_details": {
+        "thinking_tokens": 605
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 4321,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 7039,
+          "cache_read_input_tokens": 17057,
+          "cache_creation_input_tokens": 4321,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 4321
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  }
+}

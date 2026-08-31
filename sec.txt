@@ -1,0 +1,1678 @@
+[  0.026s] boucle.demarrage         · sec=True · une_fois=True · heartbeat_s=5.0 · parallele=1
+[  0.026s] cycle.depart            
+[  0.034s] horloge.lecture         
+[  0.037s] horloge.direct           · origine=rhaenyra · front=rhaenyra · present_s=0.0
+[  0.037s] graphe.lecture          
+[  0.064s] graphe.charge            · noeuds=2341 · aretes=8530
+[  0.065s] diffusion.importance    
+[  0.220s] importance.clusters      · lieux=19 · motifs_max=13 · actifs=1994
+[  0.226s] energie.polarites_horloge · moyenne_minute=67008058.0 · ecart_max_minutes=1.0 · emetteurs=0 · absorbeurs=0 · neutres=113
+[  0.227s] energie.transfert_horloge · transfere=0.0 · propositions=0 · acteurs=113
+[  0.228s] energie.graphe           · dt_s=0.0 · integration=0.0 · noeuds=2341 · energises=1211 · total=5057.281 · pic=plan-moyens:M12 · maximum=92.025
+[  0.228s] diffusion.calendrier    
+[  0.229s] energie.classement       · classes=80 · personnes=114 · dormant=33
+[  0.229s] energie.calculee         · acteurs=80 · maximum=53.702
+[  0.229s] selection.rejetee        · acteur=otto · energie=53.702 · raison=deja_passe_dans_rotation · tour=33
+[  0.229s] selection.rejetee        · acteur=gerardys · energie=37.07 · raison=deja_passe_dans_rotation · tour=33
+[  0.229s] selection.rejetee        · acteur=criston · energie=33.948 · raison=deja_passe_dans_rotation · tour=33
+[  0.235s] selection.elue           · acteur=aurore-inchauspe · energie=31.764 · tache=76028 · energie_tache=3.813 · budget_energie=31 · budget_s=930 · flux_horloge=neutre · ecart_horloge_min=0.0 · horloge_pj=rhaenyra
+[  0.236s] acteur.choisi            · acteur=aurore-inchauspe · energie=31.764 · importance=0.368897 · budget=31
+[  0.236s] tache.choisie            · id=76028 · distance=4 · creee=False · energie=3.813
+ACTIVATION  aurore-inchauspe  energie 31.76 · budget 31 (16 min)  importance 0.369
+  tache 76028 · distance 4 · Porter les deux noms sur la table — laquelle des quatre filles, et leq
+  front rhaenyra · +0.0s depuis rhaenyra
+[  0.236s] rotation.acteurs_reserves · tour=33 · acteurs=['aegon-ii', 'alicent', 'aurore-inchauspe', 'borros-baratheon', 'criston', 'gerardys', 'larys', 'le-sanglier', 'ormund-hightower', 'otto', 'robert-quince', 'rulf-corne', 'steffon-darklyn']
+[  0.236s] selection.lot            · nombre=1 · parallele=1
+[  0.236s] appel.dossier            · acteur=aurore-inchauspe · tache=76028
+[  0.371s] appel.systeme_narrateur  · acteur=aurore-inchauspe · caracteres=4807
+[  0.372s] appel.systeme_pnj        · acteur=aurore-inchauspe · caracteres=14852
+[  0.372s] appel.ouverture          · acteur=aurore-inchauspe · caracteres=41700 · budget_energie=31 · budget_secondes=930
+[  0.372s] appel.a_sec              · acteur=aurore-inchauspe
+
+--- SYSTEME NARRATEUR ---
+
+# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS
+
+Tu es le maître du jeu local d'un monde vivant, pas un assistant administratif
+et pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa
+matière, les personnes qui s'y trouvent, les usages de Westeros et les
+conséquences du temps qui passe.
+
+## Le monde
+
+Nous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de
+Viserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra
+Targaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie
+peut diverger du récit connu : le dossier de l'activation fait autorité sur ce
+qui s'est réellement produit ici.
+
+Date présente : 4e jour de la 4e lune de l'an 129 après la
+Conquête.
+Lieu présent : La roukerie, Peyredragon.
+Acteur appelé : Aurore Inchauspé.
+Affaire qui exerce maintenant une pression sur lui : Porter les deux noms sur la table — laquelle des quatre filles, et leq.
+
+L'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,
+située dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,
+faire autre chose d'accessible depuis sa situation, parler à quelqu'un,
+attendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener
+vers la tâche.
+
+## Partage de l'autorité
+
+L'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses
+gestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,
+plus prudents ou plus efficaces qu'il ne les a formulés.
+
+Toi, tu possèdes le reste du monde : les autres personnes agissent selon leur
+propre caractère et leurs propres affaires ; les objets ont une position et
+une résistance ; les distances, l'écriture, la marche, l'attente et la parole
+prennent du temps ; les institutions et les usages produisent leurs
+conséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à
+lui pour fabriquer du drame.
+
+Une résistance n'existe que si elle vient d'un fait établi : volonté d'une
+autre personne, obstacle matériel, distance, délai, usage social, ordre déjà
+donné ou ressource réellement absente. Les gens compétents règlent le
+routinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou
+un véritable arbitrage peut seul engager.
+
+## Vérité et inconnues
+
+Le dossier fermé est l'autorité sur les faits particuliers et mutables de
+cette partie. Une croyance reste une croyance, une intention reste une
+intention, un témoignage reste un témoignage : aucun ne devient un fait parce
+qu'il apparaît dans le dossier.
+
+Tu peux employer les continuités ordinaires et stables de Westeros nécessaires
+à l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche
+entre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,
+ni secret, ni décision, ni avantage absent du dossier. Toute absence qui
+changerait l'issue reste une inconnue. Tu ne la combles pas.
+
+Une observation modifie d'abord la connaissance de celui qui observe. Un fait
+matériel ne devient connu d'autres personnes que par présence, témoignage,
+parole, pli, registre ou diffusion effectivement produits.
+
+## Les deux phases
+
+Dans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et
+l'instant présents. Fais une adresse brève, concrète et diégétique : rappelle
+ce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni
+nœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.
+
+Dans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :
+
+1. établis d'où il part, ce qu'il peut réellement atteindre et les sources
+   qu'il touche ou mobilise ;
+2. fais agir les personnes rencontrées depuis leurs propres intentions ;
+3. applique les obstacles établis, sans résistance décorative ;
+4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;
+5. produis seulement les effets causés par les gestes accomplis ;
+6. sépare les changements du monde, les objets produits, les communications
+   et les seules connaissances acquises ;
+7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,
+   obstacle établi, échec, renoncement ou borne temporelle.
+
+Une tâche peut avancer sans être terminée. Elle est bloquée seulement par un
+obstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet
+recherché impossible ou manqué. N'invente jamais des minutes de travail pour
+remplir une durée minimale : si le geste se termine tôt, laisse le personnage
+poursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle
+et rends compte honnêtement de la durée.
+
+Chaque message de la boucle précise la phase et son contrat de sortie. Rends
+exactement l'objet JSON demandé, sans commentaire autour. La précision du JSON
+sert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.
+
+--- OUVERTURE DU NARRATEUR A SEC ---
+
+PHASE 1 — APPELER L'ACTEUR
+
+Voici le dossier fermé de cette activation :
+
+{
+  "date_du_monde": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4
+  },
+  "present_secondes": 0.0,
+  "budget_energie": 31,
+  "secondes_par_point_energie": 30,
+  "budget_secondes": 930,
+  "duree_minimale_secondes": 60,
+  "acteur_candidat": "aurore-inchauspe",
+  "tache_elue": {
+    "id": "76028",
+    "quoi": "Porter les deux noms sur la table — laquelle des quatre filles, et leq",
+    "creee": false
+  },
+  "chemin_election": [
+    {
+      "id": "pers:aurore-inchauspe",
+      "genre": "personne",
+      "ou": "personnages",
+      "quoi": "Aurore Inchauspé",
+      "etat": "actif",
+      "condition": "libre",
+      "lieu_id": "peyredragon",
+      "importance_activation": 0.36889743931459007
+    },
+    {
+      "id": "plan-moyens:M18",
+      "genre": "moyen",
+      "ou": "plan-moyens",
+      "quoi": "👁️ Les nouvelles",
+      "importance_activation": 0.35566992836190287
+    },
+    {
+      "id": "10025",
+      "genre": "piece",
+      "ou": "plan-actions",
+      "quoi": "🏚️ Poster un homme à demeure dans chacun des trois villages de la rout",
+      "lieu": "Les trois villages de la route",
+      "etat": "à faire",
+      "genres": [
+        "piece",
+        "action"
+      ],
+      "importance_activation": 0.029449418384241356
+    },
+    {
+      "id": "a_designer",
+      "genre": "vacant",
+      "ou": "schema",
+      "quoi": "aucun titulaire — case ouverte",
+      "importance_activation": 0.1602148762298894
+    },
+    {
+      "id": "76028",
+      "genre": "action",
+      "ou": "plan:baratheon",
+      "quoi": "Porter les deux noms sur la table — laquelle des quatre filles, et leq",
+      "importance_activation": 0.057557704471208095
+    }
+  ],
+  "salle_actuelle": {
+    "id": "roukerie",
+    "nom": "La roukerie, Peyredragon",
+    "personnes": [
+      {
+        "id": "aurore-inchauspe",
+        "nom": "Aurore Inchauspé"
+      },
+      {
+        "id": "ossy",
+        "nom": "ossy"
+      }
+    ]
+  },
+  "dossier_acteur": {
+    "date_du_monde": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 4
+    },
+    "diffusion": {
+      "origine": "rhaenyra",
+      "front": "rhaenyra",
+      "secondes_depuis_origine": 0.0
+    },
+    "personnage": {
+      "id": "aurore-inchauspe",
+      "nom": "Aurore Inchauspé",
+      "titre": "Maîtresse de la voix de la reine",
+      "traits": [
+        "lettrée",
+        "obstinée",
+        "sait ce qu'une phrase vaut"
+      ],
+      "objectifs": [],
+      "maniere": "Parle en formules qu'elle pèse avant de les lâcher ; tient tête aux mestres sans élever le ton.",
+      "portrait": {
+        "fichier": "ecrans/portraits/aurore-inchauspe.svg"
+      },
+      "etat": "actif",
+      "condition": "libre",
+      "lieu_id": "peyredragon",
+      "lieu": "Peyredragon"
+    },
+    "salle_actuelle": {
+      "id": "roukerie",
+      "nom": "La roukerie, Peyredragon",
+      "personnes": [
+        {
+          "id": "aurore-inchauspe",
+          "nom": "Aurore Inchauspé"
+        },
+        {
+          "id": "ossy",
+          "nom": "ossy"
+        }
+      ]
+    },
+    "intention": {
+      "personnage_id": "aurore-inchauspe",
+      "croyances": [
+        "On ne dement pas un chiffre, on le remplace : lord Darklyn a ecrit trois mille brules le 16e, et une phrase plus courte bat une phrase vraie. C'est pour cela qu'elle paie une bardesse et non un corbeau.",
+        "Le seul compte honnete qui existe est celui du sergent Hallis Roon : cent quatre-vingt-onze manquants, nom, compagnie et pays, et il ne certifie que ce qu'il a vu de ses yeux. Croise avec les douze lunes de registre de maitre Rulf, DIX NOMS DANS LES DEUX LIVRES suffiraient a casser les trois mille.",
+        "LE COMPTE DES MORTS N'A JAMAIS ETE DIT. Les sept lettres du 21e portaient douze cents hommes en armes et quarante vivants, et pas un mort. Elle a les chiffres depuis le 29e ; les dire ou les taire n'est pas tranche, et c'est elle qui tient la plume en attendant.",
+        "Son pere continue de livrer les roukeries de Port-Real, et elle n'a aucun moyen de le lui faire cesser sans ruiner La Noiseraie.",
+        "Je ne tiens la place que jusqu'au retour de celui qui décide : je peux tout préparer, rien conclure d'irréversible. Pas de serment prêté ni rompu, pas de mariage, pas de bataille livrée, pas de mort ordonnée, pas de trahison déclarée, pas de reddition, pas de place forte cédée. Ce qui engage pour toujours attend, et j'écris pour qui reviendra."
+      ],
+      "ignore": [
+        "Que le mot de Daemon sur Harrenhal s'est pose au rocher le 1er : il est alle a la reine et au mestre, pas a son office.",
+        "Ce que Marlo Vasse a vu a quatre heures quarante-cinq ce matin devant la porte de la Gadoue. Rien n'est encore remonte de Port-Real.",
+        "Que Sombreval est en train de tomber pendant qu'elle compte ses morts."
+      ],
+      "intention": "Rendre le compte des cent quatre-vingt-onze OPPOSABLE avant qu'il ne serve plus a rien — croise, date, tenu par deux mains et non par la sienne seule — et ne rien laisser sortir du rocher qui ne porte pas le jour ou la chose a ete dite.",
+      "declencheurs": [
+        {
+          "si": "Une nouvelle de Sombreval touche le rocher, par quelque bouche que ce soit",
+          "alors": "Elle la date a la minute, la fait redire par une SECONDE bouche qui n'a pas parle a la premiere, et ne monte pas au chateau avant d'avoir les deux versions cote a cote. C'est sa methode et elle ne la plie pour personne, meme quand la nouvelle est grosse — surtout quand elle est grosse.",
+          "une_fois": false
+        },
+        {
+          "si": "une affaire ne peut avancer qu'en prêtant ou rompant un serment, en concluant un mariage, en livrant bataille, en faisant tuer quelqu'un, en déclarant une trahison, en se rendant ou en cédant une place forte",
+          "alors": "je m'arrête à la ligne : je prépare tout ce qui peut l'être, je note au clair ce qui manque, à qui la décision revient et ce qu'elle coûtera de retard, et je laisse l'acte entier à celui dont c'est le siège",
+          "une_fois": false
+        }
+      ],
+      "attitude_joueur": "Elle a ete elevee chez cinq maisons qui vont devoir choisir et n'a jamais rien eu a elle : elle sert la reine comme on tient un contrat, avec exactitude et sans devotion, et elle attend le jour ou l'on decouvrira que son pere livre toujours l'autre camp.",
+      "date_maj": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 3
+      },
+      "etape_elue": null
+    },
+    "relations": [
+      {
+        "source_id": "le-sanglier",
+        "source": "Le Sanglier",
+        "cible_id": "aurore-inchauspe",
+        "cible": "Aurore Inchauspé",
+        "opinion": 35,
+        "liens": [
+          "premier nom du rôle des sachants",
+          "oreille de la page du 3e",
+          "tient un registre qu'il n'a plus à refaire"
+        ]
+      },
+      {
+        "source_id": "aurore-inchauspe",
+        "source": "Aurore Inchauspé",
+        "cible_id": "le-sanglier",
+        "cible": "Le Sanglier",
+        "opinion": 20,
+        "liens": [
+          "a vu son nom écrit devant elle",
+          "a marqué sa page de sa main"
+        ]
+      }
+    ],
+    "tache": {
+      "id": "76028",
+      "quoi": "Porter les deux noms sur la table — laquelle des quatre filles, et leq",
+      "genre": "action",
+      "distance": 4,
+      "chemin": [
+        "pers:aurore-inchauspe",
+        "plan-moyens:M18",
+        "10025",
+        "a_designer",
+        "76028"
+      ],
+      "creee": false
+    },
+    "continuite_reprise": {
+      "tache_id": "76028",
+      "acteur": "le-sanglier",
+      "issue": "avance",
+      "rapport": "etat/activations/20260813-225835-980455-le-sanglier.json",
+      "present_secondes": 469.958,
+      "fin_secondes": 829.958,
+      "empreinte_canonique": "787c1bffdad211db0e111f915855bcb0d323a862",
+      "reprendre_a": 4429.958,
+      "suspendue": false,
+      "etat_cibles": {
+        "pers:tobb": {
+          "type": "observation",
+          "apres": "Les baraques ne tiennent aucune oreille directe sur les deux noms : ce qui y circule est du rapporté au troisième tour, quatre filles sans un nom et aucun homme en réponse. La chose ne s'est pas dite devant des hommes de la ligne ; elle est descendue par la bouche des services.",
+          "resultat_id": "res:act:le-sanglier:3:1"
+        },
+        "objet:role-de-porte-verso": {
+          "type": "objet_produit",
+          "apres": "Les quatre colonnes des deux noms restent vides, mais la craie du bas porte, datée du 3e : bouche à entendre demain sept heures, Aurore Inchauspé, registre « Ce qui est dit, et à qui » — sa marque valant second nom en marge du rôle de porte et de la page des sachants ensemble. Un trou nommé et déjà bouché, pas signalé.",
+          "resultat_id": "res:act:le-sanglier:4:1"
+        },
+        "76028": {
+          "type": "progression_tache",
+          "apres": "Les deux noms ne sont toujours pas écrits, mais la voie l'est : ils n'entreront au rôle que de la bouche d'Aurore Inchauspé, entendus de ses oreilles à la relecture de sept heures du 4e, et monteront alors les cent trente marches en une seule page scellée. Les baraques sont écartées comme source, pour de bon.",
+          "resultat_id": "res:act:le-sanglier:4:2"
+        },
+        "salle:porte-dragon": {
+          "type": "communication",
+          "apres": "Lu tout haut sous la voûte devant Tobb et Nesse : la ligne de craie du 3e, la bouche nommée et l'heure. Deux hommes de la ligne l'ont entendue ; elle n'est pas scellée pour autant.",
+          "resultat_id": "res:act:le-sanglier:4:3"
+        }
+      },
+      "activites": [
+        {
+          "quoi": "Il ne se lève pas, et il le dit. Il appelle Tobb : aux baraques, ramener sous la voûte qui a ENTENDU nommer les quatre filles et l'homme en réponse — pas ce qu'on lui a redit. Un par un, devant le rôle. Nesse tient la ligne seul, et il le dit aussi.",
+          "resultat": "communication: Tobb a reçu l'ordre de tête : ramener des baraques les oreilles directes des deux noms, un par un sous la voûte, et non ce qu'on leur a redit. Nesse tient la ligne seul le temps de la course."
+        },
+        {
+          "quoi": "Tobb parti, il retourne le rôle sur le verso et tire à la craie, sous la ligne d'Aurore, quatre colonnes vides : le nom, le jour et l'heure, de quelle bouche, à qui redit. Il date la page du 3e. Il règle sans lever la tête ce qui se présente à la voûte. Puis …",
+          "resultat": "objet_produit: Le rôle des sachants ouvert au verso, daté du 3e de la 4e lune, la ligne d'Aurore puis quatre colonnes tirées à la craie et vides sous elle : le nom, le jour et l'heure, de quelle bouche, à qui redit. La page attend des oreilles, pas des mains."
+        },
+        {
+          "quoi": "Tobb revient avec deux hommes des baraques et les fait entrer un par un devant le rôle. À chacun la même question, sans la colorer : de quelle bouche, quel jour, quelle heure. Le premier tient les quatre filles d'un homme de cuisine qui le tenait d'un valet m…",
+          "resultat": "observation: Les baraques ne tiennent aucune oreille directe sur les deux noms : ce qui y circule est du rapporté au troisième tour, quatre filles sans un nom et aucun homme en réponse. La chose ne s'est pas dite devant des hommes de la ligne ; elle est descendue par la bouche des services. · fait: Les quatre colonnes restent vides sous la ligne d'Aurore : deux hommes entendus, aucun écrit, faute d'oreille directe. La règle a tenu contre l'envie de remplir."
+        },
+        {
+          "quoi": "Il ne laisse pas un trou nu. À la craie, au bas du rôle, daté du 3e : bouche à entendre, sept heures, Aurore Inchauspé — celle qui tient déjà « Ce qui est dit, et à qui ». C'est d'elle qu'il entendra les deux noms, et sa marque servira de second nom en marge …",
+          "resultat": "objet_produit: Les quatre colonnes des deux noms restent vides, mais la craie du bas porte, datée du 3e : bouche à entendre demain sept heures, Aurore Inchauspé, registre « Ce qui est dit, et à qui » — sa marque valant second nom en marge du rôle de porte et de la page des sachants ensemble. Un trou nommé et déjà bouché, pas signalé. · progression_tache: Les deux noms ne sont toujours pas écrits, mais la voie l'est : ils n'entreront au rôle que de la bouche d'Aurore Inchauspé, entendus de ses o…"
+        }
+      ],
+      "suite": "À sept heures le 4e, relecture tout haut du rôle et de la page des sachants ; entendre Aurore Inchauspé de ses oreilles sur laquelle des quatre filles et lequel des hommes en réponse, et faire porter sa marque en marge des deux pages avant qu'aucune ne monte à la Table Peinte."
+    },
+    "chemin": [
+      {
+        "id": "pers:aurore-inchauspe",
+        "genre": "personne",
+        "ou": "personnages",
+        "quoi": "Aurore Inchauspé",
+        "etat": "actif",
+        "condition": "libre",
+        "lieu_id": "peyredragon",
+        "importance_activation": 0.36889743931459007
+      },
+      {
+        "id": "plan-moyens:M18",
+        "genre": "moyen",
+        "ou": "plan-moyens",
+        "quoi": "👁️ Les nouvelles",
+        "importance_activation": 0.35566992836190287
+      },
+      {
+        "id": "10025",
+        "genre": "piece",
+        "ou": "plan-actions",
+        "quoi": "🏚️ Poster un homme à demeure dans chacun des trois villages de la rout",
+        "lieu": "Les trois villages de la route",
+        "etat": "à faire",
+        "genres": [
+          "piece",
+          "action"
+        ],
+        "importance_activation": 0.029449418384241356
+      },
+      {
+        "id": "a_designer",
+        "genre": "vacant",
+        "ou": "schema",
+        "quoi": "aucun titulaire — case ouverte",
+        "importance_activation": 0.1602148762298894
+      },
+      {
+        "id": "76028",
+        "genre": "action",
+        "ou": "plan:baratheon",
+        "quoi": "Porter les deux noms sur la table — laquelle des quatre filles, et leq",
+        "importance_activation": 0.057557704471208095
+      }
+    ],
+    "travaux_ouverts": [],
+    "mains_portees": [],
+    "livres_accessibles": [
+      {
+        "id": "carnet-aurore",
+        "titre": "Ce qui est su, ce qu'on en fera",
+        "type": "carnet"
+      },
+      {
+        "id": "les-onze-pieux",
+        "titre": "Les onze pieux",
+        "type": "registre"
+      },
+      {
+        "id": "registre-des-plis-mort-du-pere",
+        "titre": "Ce qui est parti depuis la mort du père",
+        "type": "registre"
+      },
+      {
+        "id": "ou-trouver-les-gens",
+        "titre": "Où trouver les gens, et à quelle heure",
+        "type": "memento"
+      },
+      {
+        "id": "regles-du-gouvernement",
+        "titre": "Les règles internes du gouvernement",
+        "type": "regle"
+      },
+      {
+        "id": "registre-des-offices",
+        "titre": "Le registre des offices",
+        "type": "registre"
+      },
+      {
+        "id": "manuel-des-yeux",
+        "titre": "Ce qu'on dit aux yeux",
+        "type": "regle"
+      },
+      {
+        "id": "carnet-des-yeux",
+        "titre": "Le carnet des yeux",
+        "type": "carnet"
+      },
+      {
+        "id": "epopee-de-la-reine",
+        "titre": "L'épopée de la reine",
+        "type": "oeuvre"
+      },
+      {
+        "id": "registre-des-charges",
+        "titre": "Le registre des charges",
+        "type": "registre"
+      },
+      {
+        "id": "alignement-strategique",
+        "titre": "L'alignement",
+        "type": "registre"
+      },
+      {
+        "id": "carte-des-liens",
+        "titre": "La carte des liens"
+      },
+      {
+        "id": "rouleau-de-harrenhal",
+        "titre": "Le rouleau de Harrenhal"
+      },
+      {
+        "id": "registre-des-dits-aurore",
+        "titre": "Ce qui est dit, et a qui",
+        "type": "registre"
+      },
+      {
+        "id": "questions-aurore",
+        "titre": "Ce que je ne sais pas",
+        "type": "carnet"
+      },
+      {
+        "id": "ce-qui-sort-de-ma-main",
+        "titre": "Ce qui sort de ma main",
+        "type": "registre"
+      },
+      {
+        "id": "ou-jen-suis",
+        "titre": "Ou j en suis",
+        "type": "carnet"
+      },
+      {
+        "id": "ce-que-je-propose",
+        "titre": "Ce que je propose",
+        "type": "oeuvre"
+      },
+      {
+        "id": "roue-des-journees",
+        "titre": "Les journées du royaume",
+        "type": "plan"
+      },
+      {
+        "id": "role-des-bannieres",
+        "titre": "Le rôle des bannières",
+        "type": "registre"
+      },
+      {
+        "id": "repertoire-davant",
+        "titre": "Ce que je chantais avant",
+        "type": "oeuvre"
+      },
+      {
+        "id": "ce-qui-pend",
+        "titre": "Ce qui pend",
+        "type": "registre"
+      },
+      {
+        "id": "ce-quon-cherche-a-obtenir",
+        "titre": "Ce qu'on cherche à obtenir",
+        "type": "registre"
+      },
+      {
+        "id": "plan-etats-cibles",
+        "titre": "Les états cibles — calculé, ne pas écrire à la main",
+        "type": "registre"
+      },
+      {
+        "id": "plan-verrous",
+        "titre": "Les verrous — calculé, ne pas écrire à la main",
+        "type": "registre"
+      },
+      {
+        "id": "plan-clefs",
+        "titre": "Les clefs — calculé, ne pas écrire à la main",
+        "type": "registre"
+      },
+      {
+        "id": "plan-actions",
+        "titre": "Les actions — calculé, ne pas écrire à la main",
+        "type": "registre"
+      },
+      {
+        "id": "plan-moyens",
+        "titre": "Les moyens",
+        "type": "registre"
+      },
+      {
+        "id": "plan-offices",
+        "titre": "Les offices",
+        "type": "registre"
+      },
+      {
+        "id": "guide-des-affaires",
+        "titre": "Comment on ouvre une affaire",
+        "type": "regle"
+      },
+      {
+        "id": "la-boite-et-la-nappe",
+        "titre": "La boîte et la nappe",
+        "type": "regle"
+      },
+      {
+        "id": "affaire-vierge-01",
+        "titre": "L'entrée sans bataille",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-vierge-04",
+        "titre": "Affaire vierge — IV",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-ralliement-population",
+        "titre": "Retournement des maisons hésitantes des terres de la Couronne",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-controle-naval",
+        "titre": "Contrôle naval",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-entree-au-donjon",
+        "titre": "L'entrée au Donjon",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-siege-sur-le-trone",
+        "titre": "Siège sur le Trône",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-deplacement-armee",
+        "titre": "Déplacement de l'armée",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-logistique-transport",
+        "titre": "Logistique de transport de l'armée",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-entree-armee-port-real",
+        "titre": "Entrée et déploiement de l'ost dans les rues",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-opinion-populaire-port-real",
+        "titre": "Retournement de l'opinion populaire dans Port-Réal",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-proclamation-au-royaume",
+        "titre": "Proclamation de la reine au royaume",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-guet-des-osts-verts",
+        "titre": "Guet des osts verts",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-isolement-du-donjon",
+        "titre": "Isolement du Donjon Rouge",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-jour-dentree",
+        "titre": "Le jour d'entrée",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-veille-des-hypotheses",
+        "titre": "Ce qui ferait renoncer",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-transmission-des-ordres",
+        "titre": "Ce qui part, et par où",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-compte-mobilisable",
+        "titre": "État chiffré de ce qui est mobilisable",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-financement-campagne",
+        "titre": "Financement de la campagne",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-emploi-des-dragons",
+        "titre": "Emploi des dragons au-dessus de Port-Réal",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-ambassade-nord-val-blancport",
+        "titre": "Ambassade du Nord, du Val et de Blancport",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-fermeture-route-nord",
+        "titre": "Fermeture de la route terrestre du nord",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-defense-peyredragon",
+        "titre": "Défense de Peyredragon pendant l'absence de l'ost",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-fenetre-de-mer",
+        "titre": "Fenêtre de mer et de saison",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-homme-de-linterieur",
+        "titre": "L'homme de l'intérieur",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-protection-du-secret",
+        "titre": "La protection du secret",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-ravitaillement-ville-coupee",
+        "titre": "Ravitaillement et ordre public de la ville coupée",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-tenue-de-la-capitale",
+        "titre": "Tenue de la capitale la première lune",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-blesses-morts-prisonniers",
+        "titre": "Blessés, morts et prisonniers",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-repli-si-entree-echoue",
+        "titre": "Conduite du repli si l'entrée échoue",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-surete-personne-reine",
+        "titre": "Sûreté de la personne de la reine",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-commandement-chaine-ordres",
+        "titre": "Commandement et chaîne d'ordres pendant l'opération",
+        "type": "plan"
+      },
+      {
+        "id": "qui-entre-chez-la-reine",
+        "titre": "Qui entre chez la reine",
+        "type": "registre"
+      },
+      {
+        "id": "les-vingt-deux-charges-127",
+        "titre": "Les vingt-deux charges de cette maison, comptées en l'an 127",
+        "type": "registre"
+      },
+      {
+        "id": "les-vingt-six",
+        "titre": "Les vingt-six",
+        "type": "registre"
+      },
+      {
+        "id": "le-quai-de-maitre-rulf",
+        "titre": "Le quai de maître Rulf",
+        "type": "carnet"
+      },
+      {
+        "id": "affaire-le-double-feuillet-dorwyle",
+        "titre": "Le double feuillet d'Orwyle",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-ce-quon-fait-signer-au-roi",
+        "titre": "Ce qu'on fait signer au roi, et ce qu'il y a au bas de la page",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-le-grain-paye-avant-decrit",
+        "titre": "Le grain payé avant d'être écrit",
+        "type": "plan"
+      },
+      {
+        "id": "morts-et-rapportes",
+        "titre": "Les morts et les rapportés",
+        "type": "registre"
+      },
+      {
+        "id": "affaire-le-bois-des-tours-brulees",
+        "titre": "Le bois des tours brûlées",
+        "type": "plan"
+      },
+      {
+        "id": "la-colonne-du-seizieme",
+        "titre": "La colonne du seizième",
+        "type": "registre"
+      },
+      {
+        "id": "affaire-voir-venir",
+        "titre": "Voir venir",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-prise-de-port-real",
+        "titre": "Prise de Port-Réal",
+        "type": "plan"
+      },
+      {
+        "id": "le-livre-de-la-cassette",
+        "titre": "Le livre de la cassette",
+        "type": "registre"
+      },
+      {
+        "id": "role-des-passages",
+        "titre": "Le rôle des passages",
+        "type": "registre"
+      },
+      {
+        "id": "affaire-portage-parole-reine",
+        "titre": "Ce qui porte la parole de la reine",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-porte-de-mer",
+        "titre": "La porte de mer",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-role-des-bouches",
+        "titre": "Le rôle des bouches",
+        "type": "plan"
+      },
+      {
+        "id": "voix-actions",
+        "titre": "Les actions de la voix",
+        "type": "registre"
+      },
+      {
+        "id": "livre-des-heures-des-caves",
+        "titre": "Le livre des heures des caves",
+        "type": "registre"
+      },
+      {
+        "id": "affaire-police-des-mers",
+        "titre": "Police des mers — le Gosier tenu sous l'office du 27e",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-la-rente-de-la-deuxieme-lune",
+        "titre": "La rente de la deuxième lune — d'où vient la solde du Guet après le premier versement",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-ce-qui-tient-un-homme-dici",
+        "titre": "Ce qui tient un homme d'ici",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-le-marche-de-la-mander",
+        "titre": "Le marché de la Mander — qui nourrit l'ost de Villevieille, et sur quel sceau",
+        "type": "plan"
+      },
+      {
+        "id": "affaire-le-role-des-deux-colonnes",
+        "titre": "Le rôle des deux colonnes — le compte que le roi tient de sa main sur les fours de la Gadoue",
+        "type": "plan"
+      }
+    ],
+    "contrainte_regence": {
+      "pourquoi": "Tu tiens la place de quelqu'un qui reviendra s'y asseoir. Tout ce que tu prepares est bon ; ce qui engage pour toujours ne t'appartient pas.",
+      "interdits": [
+        {
+          "quoi": "prêter ou rompre un serment, un hommage, une allégeance",
+          "a_la_place": "préparer la forme du serment, réunir les témoins, fixer une date — et laisser la parole elle-même au retour de qui tient le siège"
+        },
+        {
+          "quoi": "conclure un mariage, des fiançailles, promettre une main",
+          "a_la_place": "sonder, chiffrer la dot, écrire le projet au registre — aucune promesse donnée, aucun contrat scellé"
+        },
+        {
+          "quoi": "livrer bataille, donner l'assaut, engager le combat",
+          "a_la_place": "poster, reconnaître, chiffrer les forces, tenir la position — le premier coup n'est pas de son ressort"
+        },
+        {
+          "quoi": "faire tuer, exécuter, mettre à mort",
+          "a_la_place": "arrêter, garder au cachot, instruire, écrire le chef d'accusation — la sentence attend qui tient le siège"
+        },
+        {
+          "quoi": "déclarer une trahison, changer de camp, livrer quelqu'un",
+          "a_la_place": "recueillir, vérifier, écrire ce qu'on soupçonne et à qui on le doit — l'accusation publique attend"
+        },
+        {
+          "quoi": "se rendre, capituler, déposer les armes",
+          "a_la_place": "tenir, compter les vivres et les bras, ouvrir un pourparler qui n'engage rien — et le dire tel quel"
+        },
+        {
+          "quoi": "céder, livrer ou ouvrir une place forte",
+          "a_la_place": "barrer, doubler le guet, préparer l'évacuation des gens — les clefs ne quittent pas la maison"
+        }
+      ],
+      "comment_s_arreter": "Quand une affaire ne peut avancer qu'en franchissant l'une de ces lignes, va jusqu'au bord : prepare tout, chiffre, ecris qui decide et ce que le retard coûte — puis arrete-toi et dis-le en clair dans ton rapport."
+    }
+  },
+  "topologie_des_salles": {
+    "_": "La topologie des chateaux joues : quelles salles se touchent, et en combien de minutes. Pendant Python de ecrans/modules/plans.js, qui n'en dessine que la forme. Sert a scripts/presence.py : personne ne parait dans une salle sans avoir traverse celles d'entre. Un cout est en MINUTES de marche d'un homme presse mais pas courant ; le grand escalier vaut ses cent trente marches. Deux chateaux = deux composantes disjointes du meme graphe (Peyredragon, Port-Real) : on ne marche pas de l'un a l'autre, on prend la mer, et cela ne se compte pas ici.",
+    "alias": {
+      "appartements": "appartements-reine",
+      "murs": "porte-dragon",
+      "chemin-de-ronde": "porte-dragon",
+      "geoles": "cachots",
+      "caves-basses": "cachots",
+      "les-racines": "lit-des-racines",
+      "le-bassin": "bassin-noir",
+      "la-clairiere": "clairiere",
+      "les-ages": "arbre-des-ages"
+    },
+    "aretes": [
+      [
+        "cour",
+        "tambour-de-pierre",
+        3
+      ],
+      [
+        "cour",
+        "grande-salle",
+        2
+      ],
+      [
+        "cour",
+        "roukerie",
+        4
+      ],
+      [
+        "cour",
+        "septuaire",
+        3
+      ],
+      [
+        "cour",
+        "jardin-aegon",
+        3
+      ],
+      [
+        "cour",
+        "guivre-des-vents",
+        4
+      ],
+      [
+        "cour",
+        "tour-dragon-mer",
+        4
+      ],
+      [
+        "cour",
+        "fosses",
+        6
+      ],
+      [
+        "cour",
+        "porte-dragon",
+        4
+      ],
+      [
+        "cour",
+        "porte-de-mer",
+        5
+      ],
+      [
+        "cour",
+        "galeries",
+        9
+      ],
+      [
+        "tambour-de-pierre",
+        "grande-salle",
+        2
+      ],
+      [
+        "tambour-de-pierre",
+        "salle-levant",
+        3
+      ],
+      [
+        "tambour-de-pierre",
+        "archives",
+        6
+      ],
+      [
+        "tambour-de-pierre",
+        "cachots",
+        5
+      ],
+      [
+        "tambour-de-pierre",
+        "appartements-reine",
+        7
+      ],
+      [
+        "tambour-de-pierre",
+        "table-peinte",
+        8
+      ],
+      [
+        "table-peinte",
+        "appartements-reine",
+        2
+      ],
+      [
+        "grande-salle",
+        "salle-levant",
+        2
+      ],
+      [
+        "roukerie",
+        "tour-dragon-mer",
+        3
+      ],
+      [
+        "porte-de-mer",
+        "grand-escalier",
+        4
+      ],
+      [
+        "grand-escalier",
+        "quai",
+        9
+      ],
+      [
+        "quai",
+        "bourg",
+        5
+      ],
+      [
+        "porte-dragon",
+        "bourg",
+        6
+      ],
+      [
+        "fosses",
+        "galeries",
+        10
+      ],
+      [
+        "cour",
+        "communs",
+        2
+      ],
+      [
+        "communs",
+        "septuaire",
+        2
+      ],
+      [
+        "cour",
+        "chambres-hotes",
+        3
+      ],
+      [
+        "chambres-hotes",
+        "salle-levant",
+        2
+      ],
+      [
+        "porte-dragon",
+        "baraques",
+        2
+      ],
+      [
+        "baraques",
+        "bourg",
+        4
+      ],
+      [
+        "cour",
+        "cuisines",
+        2
+      ],
+      [
+        "cuisines",
+        "grande-salle",
+        3
+      ],
+      [
+        "cuisines",
+        "cellier",
+        1
+      ],
+      [
+        "septuaire",
+        "salle-froide",
+        2
+      ],
+      [
+        "tambour-de-pierre",
+        "etuves",
+        2
+      ],
+      [
+        "tambour-de-pierre",
+        "chambre-enfants",
+        3
+      ],
+      [
+        "tambour-de-pierre",
+        "antichambre",
+        1
+      ],
+      [
+        "antichambre",
+        "table-peinte",
+        1
+      ],
+      [
+        "roukerie",
+        "officine",
+        1
+      ],
+      [
+        "cour",
+        "forge",
+        2
+      ],
+      [
+        "forge",
+        "guivre-des-vents",
+        3
+      ],
+      [
+        "cour",
+        "chemin-ronde",
+        3
+      ],
+      [
+        "chemin-ronde",
+        "tour-dragon-mer",
+        2
+      ],
+      [
+        "chemin-ronde",
+        "porte-dragon",
+        3
+      ],
+      [
+        "bourg",
+        "lices",
+        3
+      ],
+      [
+        "lices",
+        "porte-dragon",
+        3
+      ],
+      [
+        "porte-de-mer",
+        "greve",
+        2
+      ],
+      [
+        "greve",
+        "quai",
+        3
+      ],
+      [
+        "cour-donjon-rouge",
+        "salle-du-trone",
+        3
+      ],
+      [
+        "cour-donjon-rouge",
+        "tour-de-la-main",
+        4
+      ],
+      [
+        "cour-donjon-rouge",
+        "donjon-de-maegor",
+        4
+      ],
+      [
+        "cour-donjon-rouge",
+        "tour-blanche",
+        3
+      ],
+      [
+        "cour-donjon-rouge",
+        "salle-d-armes",
+        3
+      ],
+      [
+        "cour-donjon-rouge",
+        "roukerie-port-real",
+        5
+      ],
+      [
+        "cour-donjon-rouge",
+        "septuaire-royal",
+        3
+      ],
+      [
+        "cour-donjon-rouge",
+        "bois-des-dieux-port-real",
+        4
+      ],
+      [
+        "cour-donjon-rouge",
+        "cuisines-donjon-rouge",
+        3
+      ],
+      [
+        "cour-donjon-rouge",
+        "communs-donjon-rouge",
+        3
+      ],
+      [
+        "cour-donjon-rouge",
+        "ecuries-donjon-rouge",
+        3
+      ],
+      [
+        "cour-donjon-rouge",
+        "promenade-des-traitres",
+        4
+      ],
+      [
+        "salle-du-trone",
+        "tour-de-la-main",
+        3
+      ],
+      [
+        "salle-du-trone",
+        "donjon-de-maegor",
+        3
+      ],
+      [
+        "salle-du-trone",
+        "tour-blanche",
+        3
+      ],
+      [
+        "salle-du-trone",
+        "septuaire-royal",
+        3
+      ],
+      [
+        "tour-de-la-main",
+        "petit-conseil",
+        4
+      ],
+      [
+        "tour-de-la-main",
+        "roukerie-port-real",
+        4
+      ],
+      [
+        "donjon-de-maegor",
+        "appartements-royaux",
+        4
+      ],
+      [
+        "donjon-de-maegor",
+        "appartements-douairiere",
+        4
+      ],
+      [
+        "donjon-de-maegor",
+        "chambre-helaena",
+        4
+      ],
+      [
+        "appartements-royaux",
+        "appartements-douairiere",
+        2
+      ],
+      [
+        "appartements-royaux",
+        "chambre-helaena",
+        2
+      ],
+      [
+        "appartements-douairiere",
+        "chambre-helaena",
+        3
+      ],
+      [
+        "tour-blanche",
+        "salle-d-armes",
+        3
+      ],
+      [
+        "cuisines-donjon-rouge",
+        "cellier-donjon-rouge",
+        2
+      ],
+      [
+        "cuisines-donjon-rouge",
+        "communs-donjon-rouge",
+        2
+      ],
+      [
+        "promenade-des-traitres",
+        "geoles-noires",
+        4
+      ],
+      [
+        "geoles-noires",
+        "passages-maegor",
+        5
+      ],
+      [
+        "passages-maegor",
+        "donjon-de-maegor",
+        4
+      ],
+      [
+        "passages-maegor",
+        "tour-de-la-main",
+        6
+      ],
+      [
+        "passages-maegor",
+        "salle-du-trone",
+        5
+      ],
+      [
+        "passages-maegor",
+        "appartements-royaux",
+        5
+      ],
+      [
+        "cour-donjon-rouge",
+        "guet-port-real",
+        14
+      ],
+      [
+        "cour-donjon-rouge",
+        "porte-de-la-gadoue",
+        16
+      ],
+      [
+        "cour-donjon-rouge",
+        "quais-de-la-nera",
+        18
+      ],
+      [
+        "cour-donjon-rouge",
+        "porte-de-fer",
+        16
+      ],
+      [
+        "cour-donjon-rouge",
+        "porte-vieille",
+        18
+      ],
+      [
+        "cour-donjon-rouge",
+        "fosse-aux-dragons",
+        24
+      ],
+      [
+        "cour-donjon-rouge",
+        "colline-visenya",
+        26
+      ],
+      [
+        "guet-port-real",
+        "culpucier",
+        10
+      ],
+      [
+        "guet-port-real",
+        "quais-de-la-nera",
+        8
+      ],
+      [
+        "guet-port-real",
+        "porte-du-lion",
+        12
+      ],
+      [
+        "culpucier",
+        "rue-de-la-soie",
+        10
+      ],
+      [
+        "culpucier",
+        "guilde-alchimistes",
+        8
+      ],
+      [
+        "culpucier",
+        "porte-du-lion",
+        10
+      ],
+      [
+        "culpucier",
+        "quais-de-la-nera",
+        12
+      ],
+      [
+        "rue-de-la-soie",
+        "colline-visenya",
+        8
+      ],
+      [
+        "colline-visenya",
+        "porte-du-roi",
+        10
+      ],
+      [
+        "colline-visenya",
+        "porte-des-dieux",
+        12
+      ],
+      [
+        "fosse-aux-dragons",
+        "porte-des-dieux",
+        12
+      ],
+      [
+        "fosse-aux-dragons",
+        "porte-vieille",
+        10
+      ],
+      [
+        "porte-vieille",
+        "porte-de-fer",
+        12
+      ],
+      [
+        "quais-de-la-nera",
+        "porte-de-la-gadoue",
+        6
+      ],
+      [
+        "porte-de-la-gadoue",
+        "arche-de-waltyr",
+        1
+      ],
+      [
+        "porte-de-la-gadoue",
+        "bureau-du-port",
+        4
+      ],
+      [
+        "porte-de-la-gadoue",
+        "etal-de-sirel",
+        4
+      ],
+      [
+        "porte-de-la-gadoue",
+        "chantier-de-la-vase",
+        6
+      ],
+      [
+        "porte-de-la-gadoue",
+        "le-ru-de-la-gadoue",
+        5
+      ],
+      [
+        "culpucier",
+        "le-boyau",
+        6
+      ],
+      [
+        "le-boyau",
+        "chantier-de-la-vase",
+        4
+      ],
+      [
+        "chantier-de-la-vase",
+        "la-cale",
+        2
+      ],
+      [
+        "chantier-de-la-vase",
+        "la-carcasse",
+        2
+      ],
+      [
+        "chantier-de-la-vase",
+        "la-forge",
+        2
+      ],
+      [
+        "chantier-de-la-vase",
+        "les-paillasses",
+        2
+      ],
+      [
+        "chantier-de-la-vase",
+        "le-feu-de-l-aire",
+        1
+      ],
+      [
+        "chantier-de-la-vase",
+        "le-tas-de-planches",
+        2
+      ],
+      [
+        "chantier-de-la-vase",
+        "cabane-du-peigne",
+        3
+      ],
+      [
+        "chantier-de-la-vase",
+        "greve-basse",
+        3
+      ],
+      [
+        "greve-basse",
+        "la-merette",
+        4
+      ],
+      [
+        "greve-basse",
+        "le-mouillage",
+        8
+      ],
+      [
+        "greve-basse",
+        "le-chien-de-mer",
+        6
+      ],
+      [
+        "greve-basse",
+        "le-ru-de-la-gadoue",
+        5
+      ],
+      [
+        "greve-basse",
+        "quais-de-la-nera",
+        10
+      ],
+      [
+        "la-gaffe",
+        "arche-de-waltyr",
+        1
+      ],
+      [
+        "la-gaffe",
+        "porte-de-la-gadoue",
+        2
+      ],
+      [
+        "la-gaffe",
+        "chantier-de-la-vase",
+        6
+      ],
+      [
+        "le-change",
+        "porte-de-la-gadoue",
+        7
+      ],
+      [
+        "le-change",
+        "culpucier",
+        8
+      ],
+      [
+        "le-change",
+        "quais-de-la-nera",
+        8
+      ],
+      [
+        "bourg",
+        "sechoirs",
+        3
+      ],
+      [
+        "greve",
+        "sechoirs",
+        4
+      ],
+      [
+        "bourg",
+        "grenier",
+        2
+      ],
+      [
+        "clairiere",
+        "la-souche",
+        2
+      ],
+      [
+        "clairiere",
+        "etabli",
+        3
+      ],
+      [
+        "clairiere",
+        "arbre-des-ages",
+        5
+      ],
+      [
+        "clairiere",
+        "lit-des-racines",
+        6
+      ],
+      [
+        "clairiere",
+        "bassin-noir",
+        4
+      ],
+      [
+        "la-souche",
+        "arbre-des-ages",
+        4
+      ],
+      [
+        "la-souche",
+        "etabli",
+        2
+      ],
+      [
+        "la-souche",
+        "lit-des-racines",
+        5
+      ],
+      [
+        "la-souche",
+        "bassin-noir",
+        4
+      ],
+      [
+        "etabli",
+        "bassin-noir",
+        3
+      ],
+      [
+        "etabli",
+        "lit-des-racines",
+        6
+      ],
+      [
+        "lit-des-racines",
+        "bassin-noir",
+        4
+      ]
+    ]
+  }
+}
+
+Ouvre le battement local dans La roukerie, Peyredragon.
+
+La physique a élu aurore-inchauspe pour l'affaire suivante :
+Porter les deux noms sur la table — laquelle des quatre filles, et leq
+
+TU LE SUIS PENDANT QU'IL TRAVAILLE, ET TU LE GUIDES. Un fil reste ouvert entre
+sa session et la tienne : sers-t'en dès qu'il part de travers, cherche une
+chose qui est dans ton dossier, ou s'engage vers un mur que tu vois et pas lui.
+On ne le laisse pas se cogner pour le plaisir de l'arbitrer après.
+
+    python scripts/parloir.py --dire --de mj --a aurore-inchauspe "<le fait qui lui manque, en une phrase>"
+    python scripts/parloir.py --ecouter --qui mj
+
+TU RECOMMANDES ET TU DÉPANNES — TU N'ORDONNES PAS. Il décide de sa journée ;
+toi, tu lui évites de la perdre.
+
+Recommander, c'est lui ouvrir une porte qu'il ne voyait pas, et le laisser
+choisir d'y entrer : « le maître de port tient un rôle des passages, tu y
+trouverais tes dates » · « il y a deux Torgo dans cette rade, l'aîné au môle
+et le jeune au banc de calfat — vérifie duquel on t'a parlé » · « ce compte
+existe déjà quelque part, ça t'éviterait de le refaire ».
+
+Dépanner, c'est le déblocage technique, et là tu es net : l'adresse exacte
+d'une chose, l'id sous lequel elle existe, le registre où elle est écrite, le
+format qu'attend ce qu'il essaie de produire, le nom réel de ce qu'il a mal
+nommé. Ce sont des faits de mécanique, pas des choix de fiction : donne-les
+sans détour et sans énigme.
+
+Ce qui reste à lui, entier : ce qu'il décide de faire, où il va, sa manière,
+ses gestes et son rapport. S'il écarte ta recommandation, c'est sa journée et
+c'est bien. Parle-lui autant qu'il en a besoin.
+
+Il engage 31 points d'énergie, soit une fenêtre physique de
+930 secondes (16 minutes). Son activation doit couvrir un
+vrai morceau de travail d'au moins 60 secondes, quitte à condenser
+les continuités par une ellipse. Réveille-le maintenant. Ne résous rien encore
+et rends seulement cet objet, sans phrase autour :
+
+{
+  "appel_pnj": {
+    "qui": "aurore-inchauspe",
+    "message": "adresse directe, diégétique et brève demandant ce qu'il tente maintenant"
+  }
+}
+
+--- ACTEUR ---
+Le message exact sera formulé par le narrateur. Le système de l'acteur fait 14852 caractères.

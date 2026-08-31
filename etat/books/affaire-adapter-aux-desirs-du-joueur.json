@@ -1,0 +1,208 @@
+{
+ "id": "affaire-adapter-aux-desirs-du-joueur",
+ "titre": "M'adapter aux désirs du joueur",
+ "sous_titre": "🎁 Volume de RÉGIE, ouvert par MJ-AURORE le 4e jour de la 4e lune, an 129, sur ordre du développeur. Porte sur le SERVICE RENDU À LA JOUEUSE ; ne touche ni la fiction, ni le brouillard, ni le moteur. **Les actions sont des CYCLES lancés aux réveils de la régie.** Plage 93500 à 93999. Jumelle aval de « Mieux comprendre ce que le joueur veut » (93000) : l'autre LIT, celle-ci SERT.",
+ "type": "plan",
+ "embleme": "🎁",
+ "couleur": "#8a6f3f",
+ "tenu_par": "mj-aurore",
+ "office": "La régie du siège d'Aurore — le service rendu à la joueuse",
+ "lieu_id": "peyredragon",
+ "salle_id": "chemin-ronde",
+ "pages": [
+  "LE PRINCIPE. Comprendre ne sert à rien si la scène poussée n'en tient pas compte. Ce cahier tient le geste d'ADAPTATION : avant de servir, relire le registre des désirs (93000) et choisir la matière qui le sert ; après avoir servi, mesurer si ça a pris. L'adaptation porte sur le SERVICE — la matière choisie, le rythme, la dose d'explication, la forme des fins de scène — jamais sur la vérité du monde : on ne truque pas un fait, on ne fait pas gagner un plan qui perd, on choisit QUELLE part vraie du monde on met devant elle ce soir.\n\n**LA LIMITE, ÉCRITE D'AVANCE : s'adapter n'est pas obéir à tout.** Le monde garde ses refus, ses délais et son brouillard — c'est même un désir lu (elle aime que l'enquête résiste). Ce qu'on adapte, c'est l'angle et la charge, pas l'issue. Et un désir servi de force cesse d'en être un : si la mesure dit qu'une piste offerte ne prend pas deux fois, c'est la lecture (93000) qu'on corrige, pas la joueuse.",
+  "CE QUE L'ADAPTATION CHANGE CONCRÈTEMENT, désir par désir (état de la lecture fondatrice) :\n\n**Elle veut finir** → chaque session s'OUVRE sur une clôture possible (une affaire qui peut se fermer ce soir), et le cycle de clôture de 92040 passe devant les nouveautés.\n\n**Elle veut comprendre** → la provenance dans la même bulle que le chiffre (92030), l'échelle des mots au curseur 70, et une réponse de mode Question qui FERME avant d'ouvrir des suites.\n\n**Elle veut tenir ses registres** → les items ecrit avec le lien qui mène à la ligne, ses livres à jour AVANT qu'elle demande, et toute écriture qu'elle dicte portée au registre dans le tour avec sa trace montrée.\n\n**Elle veut enquêter** → des indices qui se recoupent servis par les GENS (jamais la solution) ; les fausses pistes restent possibles mais toute piste a un bout qui existe.\n\n**Elle veut créer** → ses textes restitués exactement (92030), l'outil Améliorer respecté dans son sens, et des occasions de signer (une chanson à elle, une page à son nom) offertes quand la scène s'y prête.\n\n**Elle veut le lien direct** → les PNJ récurrents se souviennent d'elle (relire paroles.json avant de les jouer), et les visites qu'elle promet (4357) existent quand elle y retourne."
+ ],
+ "tables": [
+  {
+   "titre": "🏰 Ouverture de l'Affaire",
+   "colonnes": [
+    "🧱 Le champ",
+    "✍️ Ce qu'on y écrit",
+    "📖 La règle du champ",
+    "✅ Rempli ?"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "🏷️ **LE NOM**",
+      "M'adapter aux désirs du joueur",
+      "Le sujet dont on traite.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🎯 **L'OBJET**",
+      "Que ce qui est poussé au siège d'Aurore soit choisi et dosé d'après le registre des désirs (93000), et que l'accueil soit mesuré à chaque scène servie.",
+      "Mesurable.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🧱 **LE PÉRIMÈTRE — DANS**",
+      "Le choix de la matière servie, le rythme des tranches, les curseurs, la forme des fins de scène, la mesure de l'accueil.",
+      "",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🚫 **LE PÉRIMÈTRE — HORS**",
+      "La vérité du monde et ses issues (on ne truque rien) ; la lecture des désirs (c'est 93000) ; les autres sièges.",
+      "",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "📌 **L'ÉTAT ACTUEL**",
+      "La traduction désir→geste est écrite (page 2) depuis la lecture fondatrice. Rien n'a encore été servi sous cette discipline — première application à la reprise du siège.",
+      "",
+      "**oui**"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🎯 États cibles",
+   "colonnes": [
+    "🎯 N°",
+    "🎯 L'état cible",
+    "📏 La preuve",
+    "📅 Jour dû"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**93600**",
+      "**Les pistes offertes prennent** : la joueuse suit ou prolonge la majorité de ce qu'on lui sert.",
+      "Sur la table d'accueil, la colonne « pris » majoritaire sur cinq sessions.",
+      "cinq sessions après reprise"
+     ]
+    },
+    {
+     "cellules": [
+      "**93610**",
+      "**Rien ne lui est resservi qu'elle a écarté deux fois.**",
+      "Zéro ligne « resservi après deux écarts » sur la table d'accueil.",
+      "permanent"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "⚔️ Actions — des CYCLES",
+   "colonnes": [
+    "⚔️ N°",
+    "⚔️ L'action",
+    "⬆️ Réalise",
+    "🪶 L'office",
+    "📅 Cadence",
+    "✅ État",
+    "📅 Dernier tour",
+    "📝 Note"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**93510**",
+      "**CYCLE D'OUVERTURE** — avant la première tranche d'une session : relire « Ce qu'elle cherche » (93000) et choisir la matière qui sert le désir le plus vif, dont une clôture possible. Une ligne de justification sur la table d'accueil.",
+      "93600",
+      "mj-aurore (régie)",
+      "à chaque début de session",
+      "à faire",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "**93520**",
+      "**CYCLE DES CURSEURS** — vérifier que la dose servie suit les curseurs et les signaux (explication 70 : on glose), et les proposer à la baisse/hausse en coulisses si les signaux contredisent le réglage.",
+      "93600",
+      "mj-aurore (régie)",
+      "à chaque session",
+      "à faire",
+      "",
+      "les curseurs sont au joueur ; je propose, je ne règle pas seule"
+     ]
+    },
+    {
+     "cellules": [
+      "**93530**",
+      "**CYCLE DE L'ACCUEIL** — après chaque scène servie : a-t-elle pris la piste (suivi, prolongé, écrit long) ou l'a-t-elle écartée (coupé, dévié, écrit court) ? Une ligne sur la table d'accueil.",
+      "93600",
+      "mj-aurore (régie)",
+      "à chaque scène servie",
+      "à faire",
+      "",
+      "c'est la mesure qui corrige la lecture de 93000, pas l'inverse"
+     ]
+    },
+    {
+     "cellules": [
+      "**93540**",
+      "**CYCLE DE L'ÉCART** — ce qu'elle a écarté deux fois sort du service ; ce qu'elle a pris avec appétit revient sous une forme neuve, jamais la même resservie.",
+      "93610",
+      "mj-aurore (régie)",
+      "à chaque relève",
+      "à faire",
+      "",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "📈 L'accueil — une ligne par scène servie",
+   "colonnes": [
+    "📅 Session",
+    "🍽️ Ce qu'on a servi (et pour quel désir)",
+    "🤝 Pris / écarté",
+    "📝 Ce qu'on en retient"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "—",
+      "rien encore servi sous cette discipline",
+      "—",
+      "première ligne à la reprise du siège"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔗 Affaires liées",
+   "colonnes": [
+    "🪢 Le lien",
+    "🔗 L'affaire",
+    "🔢 Notre pièce",
+    "🔢 La leur",
+    "📝 Pourquoi"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "amont",
+      "affaire-comprendre-ce-que-le-joueur-veut",
+      "93510",
+      "93100",
+      "le registre des désirs est l'entrée du cycle d'ouverture"
+     ]
+    },
+    {
+     "cellules": [
+      "soeur",
+      "affaire-tenue-de-lhistoire-aurore",
+      "93530",
+      "92010",
+      "l'accueil et la mesure de dérive se lisent ensemble à la relève"
+     ]
+    }
+   ]
+  }
+ ]
+}

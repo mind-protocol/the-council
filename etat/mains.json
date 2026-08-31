@@ -1,873 +1,881 @@
 {
- "mains": [
-  {
-   "id": "vivres-peyredragon",
-   "quoi": "Ce que l'ile a dans ses celliers : la maisonnee, la garnison, et ce que la guerre a fait monter de bouches",
-   "porteur": {
-    "type": "lieu",
-    "id": "peyredragon"
-   },
-   "lieu_id": "peyredragon",
-   "mandat": null,
-   "mesure": [
+  "mains": [
     {
-     "id": "jours-de-vivres",
-     "quoi": "jours de vivres pour la maisonnee et la garnison au rythme actuel",
-     "valeur": 79,
-     "unite": "jours",
-     "rythme": {
-      "par": -1
-     },
-     "reliquat": 0,
-     "plancher": 0,
-     "plafond": 240,
-     "depend_de": []
-    }
-   ],
-   "seuils": [
-    {
-     "id": "cellier-court",
-     "mesure_id": "jours-de-vivres",
-     "quand": "sous",
-     "valeur": 30,
-     "promeut": "orbite",
-     "affaire": "Un mois de vivres, et personne dont ce soit la charge. Acheter au prix de la guerre, rationner, ou renvoyer des bouches sur le continent.",
-     "franchi_le": null
-    }
-   ],
-   "dernier_rapport": null,
-   "date_maj": "129.3.22"
-  },
-  {
-   "id": "recrutement-peyredragon",
-   "quoi": "Ce qui s'inscrit sous la voute de la porte du Dragon, et ce qu'on doit a ceux qui s'y sont inscrits",
-   "porteur": {
-    "type": "personnage",
-    "id": "le-sanglier"
-   },
-   "lieu_id": "peyredragon",
-   "mandat": null,
-   "mesure": [
-    {
-     "id": "hommes-au-role",
-     "quoi": "hommes marques au role, en sus de la garnison de ser Robert",
-     "valeur": 27,
-     "unite": "hommes",
-     "rythme": {
-      "par": 3,
-      "jours": 2
-     },
-     "reliquat": 1,
-     "plancher": 0,
-     "plafond": 400,
-     "depend_de": [
-      "vivres-peyredragon.jours-de-vivres"
-     ]
+      "id": "vivres-peyredragon",
+      "quoi": "Ce que l'ile a dans ses celliers : la maisonnee, la garnison, et ce que la guerre a fait monter de bouches",
+      "porteur": {
+        "type": "lieu",
+        "id": "peyredragon"
+      },
+      "lieu_id": "peyredragon",
+      "mandat": null,
+      "mesure": [
+        {
+          "id": "jours-de-vivres",
+          "quoi": "jours de vivres pour la maisonnee et la garnison au rythme actuel",
+          "valeur": 73,
+          "unite": "jours",
+          "rythme": {
+            "par": -1
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": 240,
+          "depend_de": []
+        }
+      ],
+      "seuils": [
+        {
+          "id": "cellier-court",
+          "mesure_id": "jours-de-vivres",
+          "quand": "sous",
+          "valeur": 30,
+          "promeut": "orbite",
+          "affaire": "Un mois de vivres, et personne dont ce soit la charge. Acheter au prix de la guerre, rationner, ou renvoyer des bouches sur le continent.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": null,
+      "date_maj": "129.3.22"
     },
     {
-     "id": "solde-due",
-     "quoi": "cerfs dus aux hommes marques et non payes",
-     "valeur": 30,
-     "unite": "cerfs",
-     "rythme": {
-      "par": 6
-     },
-     "reliquat": 0,
-     "plancher": 0,
-     "plafond": null,
-     "depend_de": []
-    }
-   ],
-   "seuils": [
-    {
-     "id": "solde-intenable",
-     "mesure_id": "solde-due",
-     "quand": "sur",
-     "valeur": 2000,
-     "promeut": "scene",
-     "affaire": "On ne peut plus payer ce qui a ete promis sous la voute : trouver l'or, ou renvoyer des hommes deja armes qui savent ou sont les armes.",
-     "franchi_le": null
+      "id": "recrutement-peyredragon",
+      "quoi": "Ce qui s'inscrit sous la voute de la porte du Dragon, et ce qu'on doit a ceux qui s'y sont inscrits",
+      "porteur": {
+        "type": "personnage",
+        "id": "le-sanglier"
+      },
+      "lieu_id": "peyredragon",
+      "mandat": null,
+      "mesure": [
+        {
+          "id": "hommes-au-role",
+          "quoi": "hommes marques au role, en sus de la garnison de ser Robert",
+          "valeur": 36,
+          "unite": "hommes",
+          "rythme": {
+            "par": 3,
+            "jours": 2
+          },
+          "reliquat": 1,
+          "plancher": 0,
+          "plafond": 400,
+          "depend_de": [
+            "vivres-peyredragon.jours-de-vivres"
+          ]
+        },
+        {
+          "id": "solde-due",
+          "quoi": "cerfs dus aux hommes marques et non payes",
+          "valeur": 66,
+          "unite": "cerfs",
+          "rythme": {
+            "par": 6
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": null,
+          "depend_de": []
+        }
+      ],
+      "seuils": [
+        {
+          "id": "solde-intenable",
+          "mesure_id": "solde-due",
+          "quand": "sur",
+          "valeur": 2000,
+          "promeut": "scene",
+          "affaire": "On ne peut plus payer ce qui a ete promis sous la voute : trouver l'or, ou renvoyer des hommes deja armes qui savent ou sont les armes.",
+          "franchi_le": null
+        },
+        {
+          "id": "file-tarie",
+          "mesure_id": "hommes-au-role",
+          "quand": "sous",
+          "valeur": 1,
+          "promeut": "orbite",
+          "affaire": "Plus personne ne se presente sous la voute. Le Sanglier en connait la raison et la donnera en un nombre, sans la commenter.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": {
+        "date": {
+          "annee": 129,
+          "lune": 3,
+          "jour": 22,
+          "minute": 574
+        },
+        "a": "rhaenyra",
+        "par": "le-sanglier",
+        "quoi": "24 au role dont 4 du Marais du sud et 6 du bourg ; 6 seulement ont les jambes ; 300 cerfs de solde dus. Chiffres donnes sans arrondi et verifies au role avant d etre dits.",
+        "fiabilite": "sure"
+      },
+      "date_maj": "129.3.22"
     },
     {
-     "id": "file-tarie",
-     "mesure_id": "hommes-au-role",
-     "quand": "sous",
-     "valeur": 1,
-     "promeut": "orbite",
-     "affaire": "Plus personne ne se presente sous la voute. Le Sanglier en connait la raison et la donnera en un nombre, sans la commenter.",
-     "franchi_le": null
-    }
-   ],
-   "dernier_rapport": {
-    "date": {
-     "annee": 129,
-     "lune": 3,
-     "jour": 22,
-     "minute": 574
-    },
-    "a": "rhaenyra",
-    "par": "le-sanglier",
-    "quoi": "24 au role dont 4 du Marais du sud et 6 du bourg ; 6 seulement ont les jambes ; 300 cerfs de solde dus. Chiffres donnes sans arrondi et verifies au role avant d etre dits.",
-    "fiabilite": "sure"
-   },
-   "date_maj": "129.3.22"
-  },
-  {
-   "id": "marais-sud-peyredragon",
-   "quoi": "Le sel que tirent les vingt et un hommes du marais du sud",
-   "porteur": {
-    "type": "personnage",
-    "id": "doss-marran"
-   },
-   "lieu_id": "peyredragon",
-   "mandat": null,
-   "mesure": [
-    {
-     "id": "muids-de-sel",
-     "quoi": "muids de sel en reserve au bourg",
-     "valeur": 14,
-     "unite": "muids",
-     "rythme": {
-      "par": 1,
-      "jours": 2
-     },
-     "reliquat": 1,
-     "plancher": 0,
-     "plafond": 40,
-     "depend_de": []
-    }
-   ],
-   "seuils": [
-    {
-     "id": "plus-de-sel",
-     "mesure_id": "muids-de-sel",
-     "quand": "sous",
-     "valeur": 3,
-     "promeut": "orbite",
-     "affaire": "Plus de sel au bourg : ce qu'on peche pourrit sur place, et Doss Marran parlera de ses vingt et un hommes avant de parler du sel.",
-     "franchi_le": null
-    }
-   ],
-   "dernier_rapport": null,
-   "date_maj": "129.3.22"
-  },
-  {
-   "id": "sechoirs-peyredragon",
-   "quoi": "Ce que les sechoirs du bourg mettent de cote, tant qu'ils ont du sel et du fil",
-   "porteur": {
-    "type": "personnage",
-    "id": "willa-sechoirs"
-   },
-   "lieu_id": "peyredragon",
-   "mandat": null,
-   "mesure": [
-    {
-     "id": "poisson-seche",
-     "quoi": "muids de poisson seche en reserve, ce qui tiendra si le port se ferme",
-     "valeur": 40,
-     "unite": "muids",
-     "rythme": {
-      "par": 2
-     },
-     "reliquat": 0,
-     "plancher": 0,
-     "plafond": 200,
-     "depend_de": [
-      "marais-sud-peyredragon.muids-de-sel"
-     ]
-    }
-   ],
-   "seuils": [
-    {
-     "id": "sechoirs-a-l-arret",
-     "mesure_id": "poisson-seche",
-     "quand": "sous",
-     "valeur": 10,
-     "promeut": "orbite",
-     "affaire": "Les sechoirs n'ont plus rien a ecouler : le bourg cesse de vendre, et ce qui nourrissait l'ile en sus des celliers cesse d'arriver.",
-     "franchi_le": null
-    }
-   ],
-   "dernier_rapport": null,
-   "date_maj": "129.3.22"
-  },
-  {
-   "id": "port-peyredragon",
-   "quoi": "Garder le port en etat de travailler pendant qu'on fait la guerre avec",
-   "porteur": {
-    "type": "personnage",
-    "id": "rulf-corne"
-   },
-   "lieu_id": "peyredragon",
-   "mandat": null,
-   "mesure": [
-    {
-     "id": "nefs-en-etat",
-     "quoi": "nefs du port en etat de prendre la mer sous trois jours",
-     "valeur": 10,
-     "unite": "nefs",
-     "rythme": {
-      "par": 1,
-      "jours": 4
-     },
-     "reliquat": 1,
-     "plancher": 0,
-     "plafond": 14,
-     "depend_de": []
-    }
-   ],
-   "seuils": [
-    {
-     "id": "port-a-sec",
-     "mesure_id": "nefs-en-etat",
-     "quand": "sous",
-     "valeur": 4,
-     "promeut": "orbite",
-     "affaire": "Moins de quatre coques en etat : ce qui doit partir de l'ile ne partira pas quand on le voudra, et Rulf le sait depuis huit jours.",
-     "franchi_le": null
-    }
-   ],
-   "dernier_rapport": null,
-   "date_maj": "129.3.22"
-  },
-  {
-   "id": "coureurs-de-la-reine",
-   "quoi": "Ce que les deux jetons de plomb portent d'un bout de l'ile a l'autre : les courses confiees, et ce qu'il reste de jambes pour les porter",
-   "porteur": {
-    "type": "personnage",
-    "id": "nesse"
-   },
-   "lieu_id": "peyredragon",
-   "mandat": "Office cree et borne par la reine le 22e jour de la 3e lune 129 (livre Les regles internes du gouvernement, TROISIEME OFFICE) : que sa parole arrive telle qu'elle l'a dite ; passage partout, a toute heure, sans attendre derriere aucune porte ; aucun ecrit qu'on ne leur ait remis devant temoin ; nourris a sa table, payes sur sa bourse au tarif fixe par le sergent au role ; deux jetons de plomb, et le castellan apporte le troisieme avec la main qui le tient.",
-   "mesure": [
-    {
-     "id": "courses-en-attente",
-     "quoi": "courses confiees aux deux jetons et pas encore portees",
-     "valeur": 4,
-     "unite": "courses",
-     "rythme": {
-      "par": 1,
-      "jours": 2
-     },
-     "reliquat": 0,
-     "plancher": 0,
-     "plafond": null,
-     "depend_de": []
+      "id": "marais-sud-peyredragon",
+      "quoi": "Le sel que tirent les vingt et un hommes du marais du sud",
+      "porteur": {
+        "type": "personnage",
+        "id": "doss-marran"
+      },
+      "lieu_id": "peyredragon",
+      "mandat": null,
+      "mesure": [
+        {
+          "id": "muids-de-sel",
+          "quoi": "muids de sel en reserve au bourg",
+          "valeur": 17,
+          "unite": "muids",
+          "rythme": {
+            "par": 1,
+            "jours": 2
+          },
+          "reliquat": 1,
+          "plancher": 0,
+          "plafond": 40,
+          "depend_de": []
+        }
+      ],
+      "seuils": [
+        {
+          "id": "plus-de-sel",
+          "mesure_id": "muids-de-sel",
+          "quand": "sous",
+          "valeur": 3,
+          "promeut": "orbite",
+          "affaire": "Plus de sel au bourg : ce qu'on peche pourrit sur place, et Doss Marran parlera de ses vingt et un hommes avant de parler du sel.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": null,
+      "date_maj": "129.3.22"
     },
     {
-     "id": "jours-de-jambes",
-     "quoi": "jours de course qu'il reste aux deux avant que l'un des deux ne tienne plus, faute de releve",
-     "valeur": 10,
-     "unite": "jours",
-     "rythme": {
-      "par": -1
-     },
-     "reliquat": 0,
-     "plancher": 0,
-     "plafond": 30,
-     "depend_de": []
-    }
-   ],
-   "seuils": [
-    {
-     "id": "courses-en-souffrance",
-     "mesure_id": "courses-en-attente",
-     "quand": "sur",
-     "valeur": 6,
-     "promeut": "orbite",
-     "affaire": "Nesse monte dire lesquelles des paroles de la reine ne sont pas parties, sans rien autour, et JE N'EN SAIS RIEN pour le reste : il faut un troisieme jeton de plomb - celui que le castellan a ordre d'apporter avec la main qui le tient - ou renoncer a des paroles deja donnees.",
-     "franchi_le": null
+      "id": "sechoirs-peyredragon",
+      "quoi": "Ce que les sechoirs du bourg mettent de cote, tant qu'ils ont du sel et du fil",
+      "porteur": {
+        "type": "personnage",
+        "id": "willa-sechoirs"
+      },
+      "lieu_id": "peyredragon",
+      "mandat": null,
+      "mesure": [
+        {
+          "id": "poisson-seche",
+          "quoi": "muids de poisson seche en reserve, ce qui tiendra si le port se ferme",
+          "valeur": 52,
+          "unite": "muids",
+          "rythme": {
+            "par": 2
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": 200,
+          "depend_de": [
+            "marais-sud-peyredragon.muids-de-sel"
+          ]
+        }
+      ],
+      "seuils": [
+        {
+          "id": "sechoirs-a-l-arret",
+          "mesure_id": "poisson-seche",
+          "quand": "sous",
+          "valeur": 10,
+          "promeut": "orbite",
+          "affaire": "Les sechoirs n'ont plus rien a ecouler : le bourg cesse de vendre, et ce qui nourrissait l'ile en sus des celliers cesse d'arriver.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": null,
+      "date_maj": "129.3.22"
     },
     {
-     "id": "jambes-usees",
-     "mesure_id": "jours-de-jambes",
-     "quand": "sous",
-     "valeur": 3,
-     "promeut": "orbite",
-     "affaire": "Le garcon boite et le cache pour ne pas etre renvoye au role ; sa mere le dira avant lui. Donner du repos et perdre la moitie des courses du jour, ou lever un troisieme coureur contre la regle des deux jetons.",
-     "franchi_le": null
-    }
-   ],
-   "dernier_rapport": null,
-   "date_maj": {
-    "annee": 129,
-    "lune": 3,
-    "jour": 23
-   }
-  },
-  {
-   "id": "bris-coque-du-quinze",
-   "quoi": "Demonter la coque de commerce echouee le 15 sur la vase, avant que la vive-eau du 27 la reprenne",
-   "porteur": {
-    "type": "personnage",
-    "id": "hann-bourbe"
-   },
-   "lieu_id": "port-real",
-   "mandat": "Hann tient l'aire et les six hommes. Depuis le 23e jour : halage a l'elingue par la greve basse, jamais par la porte ; et interdiction de rien descendre aux chantiers du quai avant que Marlo y soit alle lui-meme. || 1er de la 4e lune : LA COQUE EST VIDEE (1890 cerfs descendus, plafond atteint) et la vive-eau est passee ; ce qui n'a pas ete remonte avant la montante est ecrit perdu. Hann n'a rendu aucun des six et n'en a pas demande la permission.",
-   "mesure": [
-    {
-     "id": "bois-descendu",
-     "quoi": "Valeur du bois, du fer et du cordage deja descendus a terre (1 dragon d'or = 210 cerfs)",
-     "unite": "cerfs",
-     "valeur": 1890,
-     "rythme": {
-      "par": 0,
-      "jours": 1
-     },
-     "reliquat": 0,
-     "plancher": 0,
-     "plafond": 1890,
-     "depend_de": []
+      "id": "port-peyredragon",
+      "quoi": "Garder le port en etat de travailler pendant qu'on fait la guerre avec",
+      "porteur": {
+        "type": "personnage",
+        "id": "rulf-corne"
+      },
+      "lieu_id": "peyredragon",
+      "mandat": null,
+      "mesure": [
+        {
+          "id": "nefs-en-etat",
+          "quoi": "nefs du port en etat de prendre la mer sous trois jours",
+          "valeur": 11,
+          "unite": "nefs",
+          "rythme": {
+            "par": 1,
+            "jours": 4
+          },
+          "reliquat": 3,
+          "plancher": 0,
+          "plafond": 14,
+          "depend_de": []
+        }
+      ],
+      "seuils": [
+        {
+          "id": "port-a-sec",
+          "mesure_id": "nefs-en-etat",
+          "quand": "sous",
+          "valeur": 4,
+          "promeut": "orbite",
+          "affaire": "Moins de quatre coques en etat : ce qui doit partir de l'ile ne partira pas quand on le voudra, et Rulf le sait depuis huit jours.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": null,
+      "date_maj": "129.3.22"
     },
     {
-     "id": "jours-avant-vive-eau",
-     "quoi": "Jours avant la grande maree qui disperse ce qui reste",
-     "unite": "jours",
-     "valeur": 0,
-     "rythme": {
-      "par": 0,
-      "jours": 1
-     },
-     "reliquat": 0,
-     "plancher": 0,
-     "plafond": null,
-     "depend_de": []
-    }
-   ],
-   "seuils": [
-    {
-     "id": "vive-eau-arrivee",
-     "mesure_id": "jours-avant-vive-eau",
-     "quand": "sous",
-     "valeur": 1,
-     "promeut": "orbite",
-     "affaire": "La grande maree est sur la coque et il reste du bois dessus : Hann veut savoir si l'on sacrifie une nuit d'hommes a tout descendre en catastrophe, ou si l'on laisse la mer prendre le reste.",
-     "franchi_le": {
-      "annee": 129,
-      "lune": 4,
-      "jour": 1
-     }
+      "id": "coureurs-de-la-reine",
+      "quoi": "Ce que les deux jetons de plomb portent d'un bout de l'ile a l'autre : les courses confiees, et ce qu'il reste de jambes pour les porter",
+      "porteur": {
+        "type": "personnage",
+        "id": "nesse"
+      },
+      "lieu_id": "peyredragon",
+      "mandat": "Office cree et borne par la reine le 22e jour de la 3e lune 129 (livre Les regles internes du gouvernement, TROISIEME OFFICE) : que sa parole arrive telle qu'elle l'a dite ; passage partout, a toute heure, sans attendre derriere aucune porte ; aucun ecrit qu'on ne leur ait remis devant temoin ; nourris a sa table, payes sur sa bourse au tarif fixe par le sergent au role ; deux jetons de plomb, et le castellan apporte le troisieme avec la main qui le tient.",
+      "mesure": [
+        {
+          "id": "courses-en-attente",
+          "quoi": "courses confiees aux deux jetons et pas encore portees",
+          "valeur": 7,
+          "unite": "courses",
+          "rythme": {
+            "par": 1,
+            "jours": 2
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": null,
+          "depend_de": []
+        },
+        {
+          "id": "jours-de-jambes",
+          "quoi": "jours de course qu'il reste aux deux avant que l'un des deux ne tienne plus, faute de releve",
+          "valeur": 4,
+          "unite": "jours",
+          "rythme": {
+            "par": -1
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": 30,
+          "depend_de": []
+        }
+      ],
+      "seuils": [
+        {
+          "id": "courses-en-souffrance",
+          "mesure_id": "courses-en-attente",
+          "quand": "sur",
+          "valeur": 6,
+          "promeut": "orbite",
+          "affaire": "Nesse monte dire lesquelles des paroles de la reine ne sont pas parties, sans rien autour, et JE N'EN SAIS RIEN pour le reste : il faut un troisieme jeton de plomb - celui que le castellan a ordre d'apporter avec la main qui le tient - ou renoncer a des paroles deja donnees.",
+          "franchi_le": {
+            "annee": 129,
+            "lune": 4,
+            "jour": 9
+          }
+        },
+        {
+          "id": "jambes-usees",
+          "mesure_id": "jours-de-jambes",
+          "quand": "sous",
+          "valeur": 3,
+          "promeut": "orbite",
+          "affaire": "Le garcon boite et le cache pour ne pas etre renvoye au role ; sa mere le dira avant lui. Donner du repos et perdre la moitie des courses du jour, ou lever un troisieme coureur contre la regle des deux jetons.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": null,
+      "date_maj": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 23
+      }
     },
     {
-     "id": "coque-epuisee",
-     "mesure_id": "bois-descendu",
-     "quand": "sur",
-     "valeur": 1850,
-     "promeut": "orbite",
-     "affaire": "La coque est videe : Hann vient dire ce qu'elle a rendu au total, et demander ce qu'on fait des six hommes maintenant qu'il n'y a plus rien sur l'aire.",
-     "franchi_le": {
-      "annee": 129,
-      "lune": 4,
-      "jour": 1
-     }
-    }
-   ],
-   "dernier_rapport": {
-    "annee": 129,
-    "lune": 4,
-    "jour": 1
-   },
-   "date_maj": {
-    "annee": 129,
-    "lune": 4,
-    "jour": 1
-   }
-  },
-  {
-   "id": "livre-des-heures-des-caves",
-   "quoi": "Le livre des heures des caves basses : qui est enferme, depuis quand, sur l'ordre de qui, et pour quel motif ecrit",
-   "porteur": {
-    "type": "personnage",
-    "id": "gib-le-geolier"
-   },
-   "lieu_id": "peyredragon",
-   "mandat": null,
-   "mesure": [
-    {
-     "id": "lignes-sans-motif",
-     "quoi": "prisonniers detenus sans chef d'accusation ecrit en face de leur nom",
-     "valeur": 2,
-     "unite": "lignes",
-     "rythme": {
-      "par": 0
-     },
-     "reliquat": 0,
-     "plancher": 0,
-     "plafond": 60,
-     "depend_de": []
-    }
-   ],
-   "seuils": [
-    {
-     "id": "trop-de-lignes-vides",
-     "mesure_id": "lignes-sans-motif",
-     "quand": "sur",
-     "valeur": 6,
-     "promeut": "orbite",
-     "affaire": "Le livre des caves compte plus de lignes vides que de motifs. Gib ne ment pas et ne refuse pas : il ecrit ce qu'on lui dit, et ce qu'il ecrit devient la memoire de cette maison. Un jour quelqu'un le relira.",
-     "franchi_le": null
-    }
-   ],
-   "dernier_rapport": null,
-   "date_maj": "129.3.28"
-  },
-  {
-   "id": "caves-basses-peyredragon",
-   "quoi": "Les quarante prisonniers de la route de Sombreval dans les caves basses : ce qu'ils mangent, ce qu'ils coutent, et combien tiennent debout",
-   "porteur": {
-    "type": "personnage",
-    "id": "gib-le-geolier"
-   },
-   "lieu_id": "peyredragon",
-   "mandat": null,
-   "mesure": [
-    {
-     "id": "prisonniers-debout",
-     "quoi": "prisonniers vivants et capables de tenir debout",
-     "valeur": 40,
-     "unite": "hommes",
-     "rythme": {
-      "par": 0
-     },
-     "reliquat": 0,
-     "plancher": 0,
-     "plafond": 40,
-     "depend_de": []
+      "id": "bris-coque-du-quinze",
+      "quoi": "Demonter la coque de commerce echouee le 15 sur la vase, avant que la vive-eau du 27 la reprenne",
+      "porteur": {
+        "type": "personnage",
+        "id": "hann-bourbe"
+      },
+      "lieu_id": "port-real",
+      "mandat": "Hann tient l'aire et les six hommes. Depuis le 23e jour : halage a l'elingue par la greve basse, jamais par la porte ; et interdiction de rien descendre aux chantiers du quai avant que Marlo y soit alle lui-meme. || 1er de la 4e lune : LA COQUE EST VIDEE (1890 cerfs descendus, plafond atteint) et la vive-eau est passee ; ce qui n'a pas ete remonte avant la montante est ecrit perdu. Hann n'a rendu aucun des six et n'en a pas demande la permission.",
+      "mesure": [
+        {
+          "id": "bois-descendu",
+          "quoi": "Valeur du bois, du fer et du cordage deja descendus a terre (1 dragon d'or = 210 cerfs)",
+          "unite": "cerfs",
+          "valeur": 1890,
+          "rythme": {
+            "par": 0,
+            "jours": 1
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": 1890,
+          "depend_de": []
+        },
+        {
+          "id": "jours-avant-vive-eau",
+          "quoi": "Jours avant la grande maree qui disperse ce qui reste",
+          "unite": "jours",
+          "valeur": 0,
+          "rythme": {
+            "par": 0,
+            "jours": 1
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": null,
+          "depend_de": []
+        }
+      ],
+      "seuils": [
+        {
+          "id": "vive-eau-arrivee",
+          "mesure_id": "jours-avant-vive-eau",
+          "quand": "sous",
+          "valeur": 1,
+          "promeut": "orbite",
+          "affaire": "La grande maree est sur la coque et il reste du bois dessus : Hann veut savoir si l'on sacrifie une nuit d'hommes a tout descendre en catastrophe, ou si l'on laisse la mer prendre le reste.",
+          "franchi_le": {
+            "annee": 129,
+            "lune": 4,
+            "jour": 1
+          }
+        },
+        {
+          "id": "coque-epuisee",
+          "mesure_id": "bois-descendu",
+          "quand": "sur",
+          "valeur": 1850,
+          "promeut": "orbite",
+          "affaire": "La coque est videe : Hann vient dire ce qu'elle a rendu au total, et demander ce qu'on fait des six hommes maintenant qu'il n'y a plus rien sur l'aire.",
+          "franchi_le": {
+            "annee": 129,
+            "lune": 4,
+            "jour": 1
+          }
+        }
+      ],
+      "dernier_rapport": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 1
+      },
+      "date_maj": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 1
+      }
     },
     {
-     "id": "journees-de-geole",
-     "quoi": "ce que la geole coute par jour, pain, eau et deux hommes de garde",
-     "valeur": 3,
-     "unite": "journees",
-     "rythme": {
-      "par": 0
-     },
-     "reliquat": 0,
-     "plancher": 0,
-     "plafond": 20,
-     "depend_de": []
-    }
-   ],
-   "seuils": [
-    {
-     "id": "un-prisonnier-meurt",
-     "mesure_id": "prisonniers-debout",
-     "quand": "sous",
-     "valeur": 40,
-     "promeut": "orbite",
-     "affaire": "Un des quarante est mort dans les caves. Quarante vivants et nourris est un chiffre qui a ete ecrit, scelle et envoye au royaume — il cesse d'etre vrai, et c'est le geolier qui tient le livre des heures.",
-     "franchi_le": null
-    }
-   ],
-   "dernier_rapport": null,
-   "date_maj": "129.3.28"
-  },
-  {
-   "id": "quilles-velaryon",
-   "quoi": "Ce que Velaryon tient reellement a la mer : les quilles de guerre du croissant du Gosier, et le nombre de jours que le grain de Lamarck leur permet encore d'y rester",
-   "porteur": {
-    "type": "personnage",
-    "id": "bryn-cale"
-   },
-   "lieu_id": "lamarck",
-   "mandat": null,
-   "mesure": [
-    {
-     "id": "quilles-tenues",
-     "quoi": "quilles de guerre tenues a la mer sur le croissant, sans radoub depuis le 19e",
-     "valeur": 89,
-     "unite": "nefs",
-     "rythme": {
-      "par": -1,
-      "jours": 3
-     },
-     "reliquat": 1,
-     "plancher": 0,
-     "plafond": 90,
-     "depend_de": []
+      "id": "livre-des-heures-des-caves",
+      "quoi": "Le livre des heures des caves basses : qui est enferme, depuis quand, sur l'ordre de qui, et pour quel motif ecrit",
+      "porteur": {
+        "type": "personnage",
+        "id": "gib-le-geolier"
+      },
+      "lieu_id": "peyredragon",
+      "mandat": null,
+      "mesure": [
+        {
+          "id": "lignes-sans-motif",
+          "quoi": "prisonniers detenus sans chef d'accusation ecrit en face de leur nom",
+          "valeur": 2,
+          "unite": "lignes",
+          "rythme": {
+            "par": 0
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": 60,
+          "depend_de": []
+        }
+      ],
+      "seuils": [
+        {
+          "id": "trop-de-lignes-vides",
+          "mesure_id": "lignes-sans-motif",
+          "quand": "sur",
+          "valeur": 6,
+          "promeut": "orbite",
+          "affaire": "Le livre des caves compte plus de lignes vides que de motifs. Gib ne ment pas et ne refuse pas : il ecrit ce qu'on lui dit, et ce qu'il ecrit devient la memoire de cette maison. Un jour quelqu'un le relira.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": null,
+      "date_maj": "129.3.28"
     },
     {
-     "id": "jours-de-mer-tenables",
-     "quoi": "jours que le croissant peut encore tenir a la mer sur le grain de Lamarck",
-     "valeur": 4,
-     "unite": "jours",
-     "rythme": {
-      "par": -1,
-      "jours": 1
-     },
-     "reliquat": 0,
-     "plancher": 0,
-     "plafond": 11,
-     "depend_de": []
-    }
-   ],
-   "seuils": [
-    {
-     "id": "le-croissant-se-defait",
-     "mesure_id": "jours-de-mer-tenables",
-     "quand": "sous",
-     "valeur": 3,
-     "promeut": "orbite",
-     "affaire": "Trois jours de grain : la police des mers se levera d'elle-meme, sans que personne l'ait decide, et le Gosier rouvrira parce qu'on n'a pas su nourrir quatre-vingt-dix coques. Corlys ne le dira pas — il en fera un choix.",
-     "franchi_le": null
+      "id": "caves-basses-peyredragon",
+      "quoi": "Les quarante prisonniers de la route de Sombreval dans les caves basses : ce qu'ils mangent, ce qu'ils coutent, et combien tiennent debout",
+      "porteur": {
+        "type": "personnage",
+        "id": "gib-le-geolier"
+      },
+      "lieu_id": "peyredragon",
+      "mandat": null,
+      "mesure": [
+        {
+          "id": "prisonniers-debout",
+          "quoi": "prisonniers vivants et capables de tenir debout",
+          "valeur": 40,
+          "unite": "hommes",
+          "rythme": {
+            "par": 0
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": 40,
+          "depend_de": []
+        },
+        {
+          "id": "journees-de-geole",
+          "quoi": "ce que la geole coute par jour, pain, eau et deux hommes de garde",
+          "valeur": 3,
+          "unite": "journees",
+          "rythme": {
+            "par": 0
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": 20,
+          "depend_de": []
+        }
+      ],
+      "seuils": [
+        {
+          "id": "un-prisonnier-meurt",
+          "mesure_id": "prisonniers-debout",
+          "quand": "sous",
+          "valeur": 40,
+          "promeut": "orbite",
+          "affaire": "Un des quarante est mort dans les caves. Quarante vivants et nourris est un chiffre qui a ete ecrit, scelle et envoye au royaume — il cesse d'etre vrai, et c'est le geolier qui tient le livre des heures.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": null,
+      "date_maj": "129.3.28"
     },
     {
-     "id": "la-mer-ne-porte-plus-l-ost",
-     "mesure_id": "quilles-tenues",
-     "quand": "sous",
-     "valeur": 60,
-     "promeut": "orbite",
-     "affaire": "Sous soixante quilles, les dix coques affretees et les onze de la maison ne suffisent plus a passer l'ost en trois vagues : la part LA MER du Grand Plan devient impossible, et Peyredragon l'apprendra le jour ou elle voudra embarquer.",
-     "franchi_le": null
-    }
-   ],
-   "dernier_rapport": null,
-   "date_maj": "129.3.28"
-  },
-  {
-   "id": "grenier-stokeworth",
-   "quoi": "Ce que la grange de Stokeworth peut donner avant la moisson, et ce que la porte peut tenir avec",
-   "porteur": {
-    "type": "personnage",
-    "id": "harwyn-bourrel"
-   },
-   "lieu_id": "stokeworth",
-   "mandat": null,
-   "mesure": [
-    {
-     "id": "muids-en-grange",
-     "quoi": "Grain en grange et dans les deux granges basses",
-     "unite": "muids",
-     "valeur": 882,
-     "rythme": {
-      "par": -6,
-      "jours": 1
-     },
-     "note": "Règle établie en scène le 28e par ser Steffon Darklyn : un muid nourrit vingt hommes un jour. Cent vingt bouches au château et au bourg haut = six muids par jour. Prochaine moisson : cinquième lune.",
-     "reliquat": 0
+      "id": "quilles-velaryon",
+      "quoi": "Ce que Velaryon tient reellement a la mer : les quilles de guerre du croissant du Gosier, et le nombre de jours que le grain de Lamarck leur permet encore d'y rester",
+      "porteur": {
+        "type": "personnage",
+        "id": "bryn-cale"
+      },
+      "lieu_id": "lamarck",
+      "mandat": null,
+      "mesure": [
+        {
+          "id": "quilles-tenues",
+          "quoi": "quilles de guerre tenues a la mer sur le croissant, sans radoub depuis le 19e",
+          "valeur": 89,
+          "unite": "nefs",
+          "rythme": {
+            "par": -1,
+            "jours": 3
+          },
+          "reliquat": 1,
+          "plancher": 0,
+          "plafond": 90,
+          "depend_de": []
+        },
+        {
+          "id": "jours-de-mer-tenables",
+          "quoi": "jours que le croissant peut encore tenir a la mer sur le grain de Lamarck",
+          "valeur": 0,
+          "unite": "jours",
+          "rythme": {
+            "par": -1,
+            "jours": 1
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": 11,
+          "depend_de": []
+        }
+      ],
+      "seuils": [
+        {
+          "id": "le-croissant-se-defait",
+          "mesure_id": "jours-de-mer-tenables",
+          "quand": "sous",
+          "valeur": 3,
+          "promeut": "orbite",
+          "affaire": "Trois jours de grain : la police des mers se levera d'elle-meme, sans que personne l'ait decide, et le Gosier rouvrira parce qu'on n'a pas su nourrir quatre-vingt-dix coques. Corlys ne le dira pas — il en fera un choix.",
+          "franchi_le": {
+            "annee": 129,
+            "lune": 4,
+            "jour": 5
+          }
+        },
+        {
+          "id": "la-mer-ne-porte-plus-l-ost",
+          "mesure_id": "quilles-tenues",
+          "quand": "sous",
+          "valeur": 60,
+          "promeut": "orbite",
+          "affaire": "Sous soixante quilles, les dix coques affretees et les onze de la maison ne suffisent plus a passer l'ost en trois vagues : la part LA MER du Grand Plan devient impossible, et Peyredragon l'apprendra le jour ou elle voudra embarquer.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": null,
+      "date_maj": "129.3.28"
     },
     {
-     "id": "solde-en-retard",
-     "quoi": "Solde due aux soixante hommes payés de la porte",
-     "unite": "cerfs",
-     "valeur": 2760,
-     "rythme": {
-      "par": 120,
-      "jours": 1
-     },
-     "note": "Deux lunes de retard. Monte de 120 par jour tant que le seigneur ne paie pas ; c'est le coût de l'étape harwyn-remettre-les-soixante-en-etat.",
-     "reliquat": 0
-    }
-   ],
-   "seuils": [
-    {
-     "id": "plus-de-quoi-nourrir-un-ost",
-     "mesure_id": "muids-en-grange",
-     "quand": "sous",
-     "valeur": 360,
-     "promeut": "orbite",
-     "affaire": "Il ne peut plus nourrir six journées d'un ost de passage sans que sa propre maison jeûne avant la moisson — Monte la tête de harwyn-bourrel de 'royaume' à 'orbite' : à partir de là, l'homme a une affaire qui mord et il ira la porter dehors.",
-     "franchi_le": null
+      "id": "grenier-stokeworth",
+      "quoi": "Ce que la grange de Stokeworth peut donner avant la moisson, et ce que la porte peut tenir avec",
+      "porteur": {
+        "type": "personnage",
+        "id": "harwyn-bourrel"
+      },
+      "lieu_id": "stokeworth",
+      "mandat": null,
+      "mesure": [
+        {
+          "id": "muids-en-grange",
+          "quoi": "Grain en grange et dans les deux granges basses",
+          "unite": "muids",
+          "valeur": 846,
+          "rythme": {
+            "par": -6,
+            "jours": 1
+          },
+          "note": "Règle établie en scène le 28e par ser Steffon Darklyn : un muid nourrit vingt hommes un jour. Cent vingt bouches au château et au bourg haut = six muids par jour. Prochaine moisson : cinquième lune.",
+          "reliquat": 0
+        },
+        {
+          "id": "solde-en-retard",
+          "quoi": "Solde due aux soixante hommes payés de la porte",
+          "unite": "cerfs",
+          "valeur": 3480,
+          "rythme": {
+            "par": 120,
+            "jours": 1
+          },
+          "note": "Deux lunes de retard. Monte de 120 par jour tant que le seigneur ne paie pas ; c'est le coût de l'étape harwyn-remettre-les-soixante-en-etat.",
+          "reliquat": 0
+        }
+      ],
+      "seuils": [
+        {
+          "id": "plus-de-quoi-nourrir-un-ost",
+          "mesure_id": "muids-en-grange",
+          "quand": "sous",
+          "valeur": 360,
+          "promeut": "orbite",
+          "affaire": "Il ne peut plus nourrir six journées d'un ost de passage sans que sa propre maison jeûne avant la moisson — Monte la tête de harwyn-bourrel de 'royaume' à 'orbite' : à partir de là, l'homme a une affaire qui mord et il ira la porter dehors.",
+          "franchi_le": null
+        },
+        {
+          "id": "la-porte-ne-tient-plus-la-nuit",
+          "mesure_id": "solde-en-retard",
+          "quand": "sur",
+          "valeur": 3600,
+          "promeut": "orbite",
+          "affaire": "Trois lunes de solde : quarante des soixante dorment chez eux et la porte n'est plus tenue la nuit — C'est le si_bloque de harwyn-remettre-les-soixante-en-etat qui s'applique, et il ne le dit à personne — donc rien ne remonte, et c'est le sujet.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": null,
+      "date_maj": {
+        "annee": 129,
+        "lune": 3,
+        "jour": 28
+      }
     },
     {
-     "id": "la-porte-ne-tient-plus-la-nuit",
-     "mesure_id": "solde-en-retard",
-     "quand": "sur",
-     "valeur": 3600,
-     "promeut": "orbite",
-     "affaire": "Trois lunes de solde : quarante des soixante dorment chez eux et la porte n'est plus tenue la nuit — C'est le si_bloque de harwyn-remettre-les-soixante-en-etat qui s'applique, et il ne le dit à personne — donc rien ne remonte, et c'est le sujet.",
-     "franchi_le": null
-    }
-   ],
-   "dernier_rapport": null,
-   "date_maj": {
-    "annee": 129,
-    "lune": 3,
-    "jour": 28
-   }
-  },
-  {
-   "id": "granges-de-sombreval",
-   "quoi": "Ce que Sombreval a en granges, et le nombre de journees de pain que ca laisse a la ville",
-   "porteur": {
-    "type": "personnage",
-    "id": "marec-fosse"
-   },
-   "lieu_id": "sombreval",
-   "mandat": null,
-   "mesure": [
-    {
-     "id": "muids-en-granges",
-     "quoi": "muids de grain en granges et greniers de Sombreval, les trois depots de la reine deja preleves",
-     "valeur": 228,
-     "unite": "muids",
-     "rythme": {
-      "par": -4,
-      "jours": 1
-     },
-     "reliquat": 0,
-     "plancher": 0,
-     "plafond": 900,
-     "depend_de": []
+      "id": "granges-de-sombreval",
+      "quoi": "Ce que Sombreval a en granges, et le nombre de journees de pain que ca laisse a la ville",
+      "porteur": {
+        "type": "personnage",
+        "id": "marec-fosse"
+      },
+      "lieu_id": "sombreval",
+      "mandat": null,
+      "mesure": [
+        {
+          "id": "muids-en-granges",
+          "quoi": "muids de grain en granges et greniers de Sombreval, les trois depots de la reine deja preleves",
+          "valeur": 204,
+          "unite": "muids",
+          "rythme": {
+            "par": -4,
+            "jours": 1
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": 900,
+          "depend_de": []
+        },
+        {
+          "id": "journees-de-pain-de-la-ville",
+          "quoi": "journees de pain pour les bouches de Sombreval, hameaux montes depuis le feu de la route compris",
+          "valeur": 51,
+          "unite": "jours",
+          "rythme": {
+            "par": -1,
+            "jours": 1
+          },
+          "reliquat": 0,
+          "plancher": 0,
+          "plafond": 240,
+          "depend_de": []
+        }
+      ],
+      "seuils": [
+        {
+          "id": "granges-a-vide",
+          "mesure_id": "muids-en-granges",
+          "quand": "sous",
+          "valeur": 60,
+          "promeut": "orbite",
+          "affaire": "Sombreval a donne son pain a l'ost de la reine et ne passe plus la lune. Trois voies, et aucune n'est bonne : acheter a Rosby au prix de la guerre, rationner une ville qui vient d'enterrer ses morts, ou reprendre sur la route ce qu'on a charge.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": null,
+      "date_maj": "129.3.28"
     },
     {
-     "id": "journees-de-pain-de-la-ville",
-     "quoi": "journees de pain pour les bouches de Sombreval, hameaux montes depuis le feu de la route compris",
-     "valeur": 57,
-     "unite": "jours",
-     "rythme": {
-      "par": -1,
-      "jours": 1
-     },
-     "reliquat": 0,
-     "plancher": 0,
-     "plafond": 240,
-     "depend_de": []
-    }
-   ],
-   "seuils": [
-    {
-     "id": "granges-a-vide",
-     "mesure_id": "muids-en-granges",
-     "quand": "sous",
-     "valeur": 60,
-     "promeut": "orbite",
-     "affaire": "Sombreval a donne son pain a l'ost de la reine et ne passe plus la lune. Trois voies, et aucune n'est bonne : acheter a Rosby au prix de la guerre, rationner une ville qui vient d'enterrer ses morts, ou reprendre sur la route ce qu'on a charge.",
-     "franchi_le": null
-    }
-   ],
-   "dernier_rapport": null,
-   "date_maj": "129.3.28"
-  },
-  {
-   "id": "tresor-de-la-couronne",
-   "quoi": "Ce qu'Otto Hightower a reellement en caisse, et ce que la Couronne doit deja aux deux mille manteaux d'or",
-   "porteur": {
-    "type": "personnage",
-    "id": "otto"
-   },
-   "lieu_id": "port-real",
-   "mandat": null,
-   "mesure": [
-    {
-     "id": "dragons-en-caisse",
-     "quoi": "Or disponible au tresor du Donjon Rouge, hors assignations deja gagees",
-     "unite": "cerfs",
-     "valeur": 1940000,
-     "rythme": {
-      "par": -21000,
-      "jours": 1
-     },
-     "reliquat": 0,
-     "note": "POSE, et voici sur quoi. ETABLI (acte-hask-retire-lassignation-2e, de la bouche de maitre Hask le 2e) : grain, sel et poisson faisaient UN CINQUIEME de la recette de l'an 118 ; le vin et ce qu'une cour achete en festoyant, LES QUATRE AUTRES. La cour ne festoie plus depuis la mort de Viserys et le Gosier est ferme aux marchands depuis le 24e : les quatre cinquiemes sont donc a l'arret et seul le pain revient de lui-meme. La descente de 21 000 cerfs le jour (100 dragons) est la difference entre ce que la Couronne depense en guerre et le cinquieme qui rentre encore. ECHELLE : la caisse de Peyredragon porte 29 366 dragons, soit 6,17 millions de cerfs — le tresor royal est ici pose a moins d'un tiers de celui de sa rivale, ce qui est le sens de deux temoignages independants (Criston : la prime a ete criee et n'est gagee sur rien, la Main a fait proclamer un prix qu'elle n'a pas l'or de payer ; la reine, devant temoins : un prix qui change de place en place n'est gage sur rien)."
+      "id": "tresor-de-la-couronne",
+      "quoi": "Ce qu'Otto Hightower a reellement en caisse, et ce que la Couronne doit deja aux deux mille manteaux d'or",
+      "porteur": {
+        "type": "personnage",
+        "id": "otto"
+      },
+      "lieu_id": "port-real",
+      "mandat": null,
+      "mesure": [
+        {
+          "id": "dragons-en-caisse",
+          "quoi": "Or disponible au tresor du Donjon Rouge, hors assignations deja gagees",
+          "unite": "cerfs",
+          "valeur": 1814000,
+          "rythme": {
+            "par": -21000,
+            "jours": 1
+          },
+          "reliquat": 0,
+          "note": "POSE, et voici sur quoi. ETABLI (acte-hask-retire-lassignation-2e, de la bouche de maitre Hask le 2e) : grain, sel et poisson faisaient UN CINQUIEME de la recette de l'an 118 ; le vin et ce qu'une cour achete en festoyant, LES QUATRE AUTRES. La cour ne festoie plus depuis la mort de Viserys et le Gosier est ferme aux marchands depuis le 24e : les quatre cinquiemes sont donc a l'arret et seul le pain revient de lui-meme. La descente de 21 000 cerfs le jour (100 dragons) est la difference entre ce que la Couronne depense en guerre et le cinquieme qui rentre encore. ECHELLE : la caisse de Peyredragon porte 29 366 dragons, soit 6,17 millions de cerfs — le tresor royal est ici pose a moins d'un tiers de celui de sa rivale, ce qui est le sens de deux temoignages independants (Criston : la prime a ete criee et n'est gagee sur rien, la Main a fait proclamer un prix qu'elle n'a pas l'or de payer ; la reine, devant temoins : un prix qui change de place en place n'est gage sur rien)."
+        },
+        {
+          "id": "arriere-de-solde-du-guet",
+          "quoi": "Solde due par la Couronne aux deux mille manteaux d'or et non versee",
+          "unite": "cerfs",
+          "valeur": 78000,
+          "rythme": {
+            "par": 6000,
+            "jours": 1
+          },
+          "reliquat": 0,
+          "note": "ETABLI POUR LE TAUX : deux mille manteaux a TROIS CERFS LE JOUR font 6 000 cerfs le jour, soit 857 dragons la lune a 210 cerfs le dragon — c'est le compte exact que le prince Daemon a signe de sa main pour la reine (action 23038). La Couronne paie les MEMES hommes au MEME taux. POSE : sept jours d'arriere au 4e, ce qui date le decrochage du 27e — le jour ou la deche ance a ete criee sur deux places avec deux chiffres differents, donc le jour ou l'or a commence a manquer visiblement."
+        }
+      ],
+      "seuils": [
+        {
+          "id": "le-guet-cesse-de-repondre-a-la-couronne",
+          "mesure_id": "arriere-de-solde-du-guet",
+          "quand": "sur",
+          "valeur": 180000,
+          "promeut": "orbite",
+          "affaire": "Un mois entier de solde du Guet impaye : les manteaux d'or cessent de tenir les portes pour qui ne les paie plus. Otto doit alors choisir entre gager le tresor sur la solde et renoncer a la prime criee sur les tetes — les deux ne tiennent pas dans le meme coffre. ET C'EST LA CLEF 23015 DE LA REINE QUI DEVIENT VRAIE SANS QU'ELLE Y SOIT POUR RIEN : le corps qui recoit la porte est deja dedans, et il est paye par l'autre bourse.",
+          "franchi_le": null
+        },
+        {
+          "id": "la-prime-n-est-plus-payable",
+          "mesure_id": "dragons-en-caisse",
+          "quand": "sous",
+          "valeur": 600000,
+          "promeut": "orbite",
+          "affaire": "Le tresor ne couvre plus a la fois la solde de l'ost de ser Criston et la prime criee sur les tetes de la reine et de ses fils. Otto le sait avant tout le monde et ne le dira pas au conseil : il le dira ailleurs. Ce qui remonte au royaume, ce n'est pas le chiffre — c'est qu'un prix cesse d'etre paye, et qu'on l'apprend par ceux qui viennent le reclamer.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": null,
+      "date_maj": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 4
+      }
     },
     {
-     "id": "arriere-de-solde-du-guet",
-     "quoi": "Solde due par la Couronne aux deux mille manteaux d'or et non versee",
-     "unite": "cerfs",
-     "valeur": 42000,
-     "rythme": {
-      "par": 6000,
-      "jours": 1
-     },
-     "reliquat": 0,
-     "note": "ETABLI POUR LE TAUX : deux mille manteaux a TROIS CERFS LE JOUR font 6 000 cerfs le jour, soit 857 dragons la lune a 210 cerfs le dragon — c'est le compte exact que le prince Daemon a signe de sa main pour la reine (action 23038). La Couronne paie les MEMES hommes au MEME taux. POSE : sept jours d'arriere au 4e, ce qui date le decrochage du 27e — le jour ou la deche ance a ete criee sur deux places avec deux chiffres differents, donc le jour ou l'or a commence a manquer visiblement."
-    }
-   ],
-   "seuils": [
-    {
-     "id": "le-guet-cesse-de-repondre-a-la-couronne",
-     "mesure_id": "arriere-de-solde-du-guet",
-     "quand": "sur",
-     "valeur": 180000,
-     "promeut": "orbite",
-     "affaire": "Un mois entier de solde du Guet impaye : les manteaux d'or cessent de tenir les portes pour qui ne les paie plus. Otto doit alors choisir entre gager le tresor sur la solde et renoncer a la prime criee sur les tetes — les deux ne tiennent pas dans le meme coffre. ET C'EST LA CLEF 23015 DE LA REINE QUI DEVIENT VRAIE SANS QU'ELLE Y SOIT POUR RIEN : le corps qui recoit la porte est deja dedans, et il est paye par l'autre bourse.",
-     "franchi_le": null
+      "id": "grain-de-port-real",
+      "quoi": "Ce qui entre de grain dans Port-Real par le fleuve et par le port, et le nombre de journees de pain que la ville a devant elle",
+      "porteur": {
+        "type": "personnage",
+        "id": "ambroise-kell"
+      },
+      "lieu_id": "port-real",
+      "mandat": null,
+      "mesure": [
+        {
+          "id": "muids-entres-par-jour",
+          "quoi": "Grain entrant chaque jour par les portes du fleuve et les quais",
+          "unite": "muids",
+          "valeur": 1850,
+          "rythme": {
+            "par": -25,
+            "jours": 1
+          },
+          "reliquat": 0,
+          "note": "ETABLI (acte-hask-retire-lassignation-2e) : DEUX MILLE MUIDS DE GRAIN ENTRENT DANS PORT-REAL CHAQUE JOUR quel que soit l'homme sur le Trone, pour un demi-million de bouches. POSE pour la pente : -25 le jour, l'effritement lent du au Gosier ferme depuis le 24e et aux patrons qui se detournent — trois d'entre eux s'en sont deja plaints au bureau de port de Peyredragon. Ce n'est pas le blocus qui mord ici, c'est la reputation du blocus."
+        },
+        {
+          "id": "journees-de-pain",
+          "quoi": "Journees de pain devant la ville, greniers et reserves prives compris",
+          "unite": "jours",
+          "valeur": 34,
+          "rythme": {
+            "par": 0,
+            "jours": 1
+          },
+          "reliquat": 0,
+          "note": "POSE. Le chiffre ne se decompte PAS tout seul : il est recalcule par le MJ quand `muids-entres-par-jour` s'ecarte durablement des 2 000, parce qu'une ville mange ce qui entre et n'entame ses greniers que sur la difference. Regle de conversion, ETABLIE en scene le 28e par ser Steffon et tenue par l'intendant de Sombreval : UN MUID NOURRIT VINGT HOMMES UN JOUR. Trente-quatre journees est le chiffre d'une ville qui n'a pas encore compris qu'elle est assiegee."
+        }
+      ],
+      "seuils": [
+        {
+          "id": "la-ville-compte-ses-jours",
+          "mesure_id": "journees-de-pain",
+          "quand": "sous",
+          "valeur": 20,
+          "promeut": "orbite",
+          "affaire": "Vingt journees de pain : le prix du grain double sur les marches et les gens commencent a stocker, ce qui accelere tout. C'EST ICI QUE LE SERMENT DE PRESERVATION DE LA REINE SE PAIE : elle a jure de couper la ville sans l'affamer, et le compte dit que les deux ne tiennent plus ensemble. Elle l'apprendra par une bouche, en retard, et sans le chiffre.",
+          "franchi_le": null
+        },
+        {
+          "id": "le-fleuve-ne-nourrit-plus",
+          "mesure_id": "muids-entres-par-jour",
+          "quand": "sous",
+          "valeur": 1200,
+          "promeut": "orbite",
+          "affaire": "Moins de douze cents muids : la ville entame ses greniers tous les jours et non plus par a-coups. Le controleur des portes du fleuve est le premier a le voir sur son livre, et le seul — personne au Donjon ne lui a jamais demande ce chiffre dans ce sens-la.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": null,
+      "date_maj": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 4
+      }
     },
     {
-     "id": "la-prime-n-est-plus-payable",
-     "mesure_id": "dragons-en-caisse",
-     "quand": "sous",
-     "valeur": 600000,
-     "promeut": "orbite",
-     "affaire": "Le tresor ne couvre plus a la fois la solde de l'ost de ser Criston et la prime criee sur les tetes de la reine et de ses fils. Otto le sait avant tout le monde et ne le dira pas au conseil : il le dira ailleurs. Ce qui remonte au royaume, ce n'est pas le chiffre — c'est qu'un prix cesse d'etre paye, et qu'on l'apprend par ceux qui viennent le reclamer.",
-     "franchi_le": null
-    }
-   ],
-   "dernier_rapport": null,
-   "date_maj": {
-    "annee": 129,
-    "lune": 4,
-    "jour": 4
-   }
-  },
-  {
-   "id": "grain-de-port-real",
-   "quoi": "Ce qui entre de grain dans Port-Real par le fleuve et par le port, et le nombre de journees de pain que la ville a devant elle",
-   "porteur": {
-    "type": "personnage",
-    "id": "ambroise-kell"
-   },
-   "lieu_id": "port-real",
-   "mandat": null,
-   "mesure": [
-    {
-     "id": "muids-entres-par-jour",
-     "quoi": "Grain entrant chaque jour par les portes du fleuve et les quais",
-     "unite": "muids",
-     "valeur": 2000,
-     "rythme": {
-      "par": -25,
-      "jours": 1
-     },
-     "reliquat": 0,
-     "note": "ETABLI (acte-hask-retire-lassignation-2e) : DEUX MILLE MUIDS DE GRAIN ENTRENT DANS PORT-REAL CHAQUE JOUR quel que soit l'homme sur le Trone, pour un demi-million de bouches. POSE pour la pente : -25 le jour, l'effritement lent du au Gosier ferme depuis le 24e et aux patrons qui se detournent — trois d'entre eux s'en sont deja plaints au bureau de port de Peyredragon. Ce n'est pas le blocus qui mord ici, c'est la reputation du blocus."
+      "id": "vivres-de-lost-de-villevieille",
+      "quoi": "Ce qui est contracte pour nourrir l'ost d'Ormund Hightower, et les dix journees qui manquent avant qu'il puisse marcher",
+      "porteur": {
+        "type": "personnage",
+        "id": "ormund-hightower"
+      },
+      "lieu_id": "villevieille",
+      "mandat": null,
+      "mesure": [
+        {
+          "id": "journees-contractees",
+          "quoi": "Journees de vivres contractees et livrables aux quais avant la pleine lune",
+          "unite": "jours",
+          "valeur": 17,
+          "rythme": {
+            "par": 1,
+            "jours": 3
+          },
+          "reliquat": 0,
+          "note": "ETABLI, de sa propre croyance : QUINZE JOURS DE VIVRES SUR VINGT-CINQ sont contractes au cours d'avant-guerre, livrables aux quais avant la pleine lune, SANS QU'UN GRENIER DE VILLEVIEILLE AIT ETE DESCELLE. Les dix qui manquent montent lentement — un jour tous les trois jours — parce que la moitie des seigneurs de la Mander attendent de voir qui paie, et qu'il achete sur sa propre bourse tant qu'aucun mandement royal ne lui parvient : la lettre d'Otto est scellee de la tour et non du dragon."
+        },
+        {
+          "id": "hommes-sous-ses-murs",
+          "quoi": "Hommes rassembles sous les murs de Villevieille",
+          "unite": "hommes",
+          "valeur": 3600,
+          "rythme": {
+            "par": 200,
+            "jours": 1
+          },
+          "reliquat": 0,
+          "note": "POSE sur sa propre estimation : SIX MILLE HOMMES SOUS SES MURS EN UNE LUNE, NEUF EN DEUX. Deux cents par jour tient exactement cette courbe. Le Bief ne marchera pas d'un bloc : Hautjardin est aux mains d'un enfant."
+        }
+      ],
+      "seuils": [
+        {
+          "id": "lost-du-bief-peut-marcher",
+          "mesure_id": "journees-contractees",
+          "quand": "sur",
+          "valeur": 25,
+          "promeut": "orbite",
+          "affaire": "Vingt-cinq journees de vivres : Ormund Hightower n'a plus de raison ecrite de rester chez lui, et il en avait fait sa condition. L'ost du Bief entre dans la guerre. La nouvelle met des semaines a remonter la cote — mais elle part le jour ou le dernier contrat est signe, pas le jour ou il marche.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": null,
+      "date_maj": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 4
+      }
     },
     {
-     "id": "journees-de-pain",
-     "quoi": "Journees de pain devant la ville, greniers et reserves prives compris",
-     "unite": "jours",
-     "valeur": 34,
-     "rythme": {
-      "par": 0,
-      "jours": 1
-     },
-     "reliquat": 0,
-     "note": "POSE. Le chiffre ne se decompte PAS tout seul : il est recalcule par le MJ quand `muids-entres-par-jour` s'ecarte durablement des 2 000, parce qu'une ville mange ce qui entre et n'entame ses greniers que sur la difference. Regle de conversion, ETABLIE en scene le 28e par ser Steffon et tenue par l'intendant de Sombreval : UN MUID NOURRIT VINGT HOMMES UN JOUR. Trente-quatre journees est le chiffre d'une ville qui n'a pas encore compris qu'elle est assiegee."
+      "id": "colonne-de-criston",
+      "quoi": "L'ost de la Couronne devant Sombreval : ce qu'il a de pain apres le sac, et ce qui lui reste d'hommes debout",
+      "porteur": {
+        "type": "personnage",
+        "id": "criston"
+      },
+      "lieu_id": "sombreval",
+      "mandat": null,
+      "mesure": [
+        {
+          "id": "journees-de-pain-du-train",
+          "quoi": "Journees de pain dans le train de l'ost, apres ce qui a ete pris a Sombreval",
+          "unite": "jours",
+          "valeur": 3,
+          "rythme": {
+            "par": -1,
+            "jours": 1
+          },
+          "reliquat": 0,
+          "note": "POSE, mais sur une arithmetique etablie. Regle du 28e : UN MUID NOURRIT VINGT HOMMES UN JOUR. Les granges de Sombreval portaient 228 muids au sac ; une colonne de deux mille bouches en consomme cent le jour. Neuf journees suppose donc qu'il a pris moins de la moitie de ce qu'il y avait — un sac n'est pas un inventaire, et ce qui brule ne se mange pas. LIE : la main `granges-de-sombreval` decompte le meme grain du cote de la ville. Les deux mains mangent au meme tas, ET C'EST VOULU."
+        },
+        {
+          "id": "hommes-debout",
+          "quoi": "Hommes de l'ost encore en etat de marcher",
+          "unite": "hommes",
+          "valeur": 2002,
+          "rythme": {
+            "par": -8,
+            "jours": 1
+          },
+          "reliquat": 0,
+          "note": "ETABLI POUR LE CHIFFRE (acte-feuillet-des-breches, releve de la maison : 2050 contre 9500). La fonte de huit par jour est la fonte ordinaire d'une colonne en campagne — malades, blesses du sac, deserteurs — et non des pertes au combat."
+        }
+      ],
+      "seuils": [
+        {
+          "id": "la-colonne-doit-manger-ailleurs",
+          "mesure_id": "journees-de-pain-du-train",
+          "quand": "sous",
+          "valeur": 3,
+          "promeut": "orbite",
+          "affaire": "Trois journees de pain : ser Criston doit reprendre la route ou prendre une autre ville, et il ne peut pas attendre l'or d'Otto pour le faire. C'est l'ost vert qui continue vers Repos-des-Freux — ecrit d'avance dans les effets du sac de Sombreval — et c'est la faim qui le pousse, pas la strategie. Lord Simon Staunton tient un acte de protection de la reine, remis en main propre le 3e.",
+          "franchi_le": null
+        }
+      ],
+      "dernier_rapport": null,
+      "date_maj": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 4
+      }
     }
-   ],
-   "seuils": [
-    {
-     "id": "la-ville-compte-ses-jours",
-     "mesure_id": "journees-de-pain",
-     "quand": "sous",
-     "valeur": 20,
-     "promeut": "orbite",
-     "affaire": "Vingt journees de pain : le prix du grain double sur les marches et les gens commencent a stocker, ce qui accelere tout. C'EST ICI QUE LE SERMENT DE PRESERVATION DE LA REINE SE PAIE : elle a jure de couper la ville sans l'affamer, et le compte dit que les deux ne tiennent plus ensemble. Elle l'apprendra par une bouche, en retard, et sans le chiffre.",
-     "franchi_le": null
-    },
-    {
-     "id": "le-fleuve-ne-nourrit-plus",
-     "mesure_id": "muids-entres-par-jour",
-     "quand": "sous",
-     "valeur": 1200,
-     "promeut": "orbite",
-     "affaire": "Moins de douze cents muids : la ville entame ses greniers tous les jours et non plus par a-coups. Le controleur des portes du fleuve est le premier a le voir sur son livre, et le seul — personne au Donjon ne lui a jamais demande ce chiffre dans ce sens-la.",
-     "franchi_le": null
-    }
-   ],
-   "dernier_rapport": null,
-   "date_maj": {
-    "annee": 129,
-    "lune": 4,
-    "jour": 4
-   }
-  },
-  {
-   "id": "vivres-de-lost-de-villevieille",
-   "quoi": "Ce qui est contracte pour nourrir l'ost d'Ormund Hightower, et les dix journees qui manquent avant qu'il puisse marcher",
-   "porteur": {
-    "type": "personnage",
-    "id": "ormund-hightower"
-   },
-   "lieu_id": "villevieille",
-   "mandat": null,
-   "mesure": [
-    {
-     "id": "journees-contractees",
-     "quoi": "Journees de vivres contractees et livrables aux quais avant la pleine lune",
-     "unite": "jours",
-     "valeur": 15,
-     "rythme": {
-      "par": 1,
-      "jours": 3
-     },
-     "reliquat": 0,
-     "note": "ETABLI, de sa propre croyance : QUINZE JOURS DE VIVRES SUR VINGT-CINQ sont contractes au cours d'avant-guerre, livrables aux quais avant la pleine lune, SANS QU'UN GRENIER DE VILLEVIEILLE AIT ETE DESCELLE. Les dix qui manquent montent lentement — un jour tous les trois jours — parce que la moitie des seigneurs de la Mander attendent de voir qui paie, et qu'il achete sur sa propre bourse tant qu'aucun mandement royal ne lui parvient : la lettre d'Otto est scellee de la tour et non du dragon."
-    },
-    {
-     "id": "hommes-sous-ses-murs",
-     "quoi": "Hommes rassembles sous les murs de Villevieille",
-     "unite": "hommes",
-     "valeur": 2400,
-     "rythme": {
-      "par": 200,
-      "jours": 1
-     },
-     "reliquat": 0,
-     "note": "POSE sur sa propre estimation : SIX MILLE HOMMES SOUS SES MURS EN UNE LUNE, NEUF EN DEUX. Deux cents par jour tient exactement cette courbe. Le Bief ne marchera pas d'un bloc : Hautjardin est aux mains d'un enfant."
-    }
-   ],
-   "seuils": [
-    {
-     "id": "lost-du-bief-peut-marcher",
-     "mesure_id": "journees-contractees",
-     "quand": "sur",
-     "valeur": 25,
-     "promeut": "orbite",
-     "affaire": "Vingt-cinq journees de vivres : Ormund Hightower n'a plus de raison ecrite de rester chez lui, et il en avait fait sa condition. L'ost du Bief entre dans la guerre. La nouvelle met des semaines a remonter la cote — mais elle part le jour ou le dernier contrat est signe, pas le jour ou il marche.",
-     "franchi_le": null
-    }
-   ],
-   "dernier_rapport": null,
-   "date_maj": {
-    "annee": 129,
-    "lune": 4,
-    "jour": 4
-   }
-  },
-  {
-   "id": "colonne-de-criston",
-   "quoi": "L'ost de la Couronne devant Sombreval : ce qu'il a de pain apres le sac, et ce qui lui reste d'hommes debout",
-   "porteur": {
-    "type": "personnage",
-    "id": "criston"
-   },
-   "lieu_id": "sombreval",
-   "mandat": null,
-   "mesure": [
-    {
-     "id": "journees-de-pain-du-train",
-     "quoi": "Journees de pain dans le train de l'ost, apres ce qui a ete pris a Sombreval",
-     "unite": "jours",
-     "valeur": 9,
-     "rythme": {
-      "par": -1,
-      "jours": 1
-     },
-     "reliquat": 0,
-     "note": "POSE, mais sur une arithmetique etablie. Regle du 28e : UN MUID NOURRIT VINGT HOMMES UN JOUR. Les granges de Sombreval portaient 228 muids au sac ; une colonne de deux mille bouches en consomme cent le jour. Neuf journees suppose donc qu'il a pris moins de la moitie de ce qu'il y avait — un sac n'est pas un inventaire, et ce qui brule ne se mange pas. LIE : la main `granges-de-sombreval` decompte le meme grain du cote de la ville. Les deux mains mangent au meme tas, ET C'EST VOULU."
-    },
-    {
-     "id": "hommes-debout",
-     "quoi": "Hommes de l'ost encore en etat de marcher",
-     "unite": "hommes",
-     "valeur": 2050,
-     "rythme": {
-      "par": -8,
-      "jours": 1
-     },
-     "reliquat": 0,
-     "note": "ETABLI POUR LE CHIFFRE (acte-feuillet-des-breches, releve de la maison : 2050 contre 9500). La fonte de huit par jour est la fonte ordinaire d'une colonne en campagne — malades, blesses du sac, deserteurs — et non des pertes au combat."
-    }
-   ],
-   "seuils": [
-    {
-     "id": "la-colonne-doit-manger-ailleurs",
-     "mesure_id": "journees-de-pain-du-train",
-     "quand": "sous",
-     "valeur": 3,
-     "promeut": "orbite",
-     "affaire": "Trois journees de pain : ser Criston doit reprendre la route ou prendre une autre ville, et il ne peut pas attendre l'or d'Otto pour le faire. C'est l'ost vert qui continue vers Repos-des-Freux — ecrit d'avance dans les effets du sac de Sombreval — et c'est la faim qui le pousse, pas la strategie. Lord Simon Staunton tient un acte de protection de la reine, remis en main propre le 3e.",
-     "franchi_le": null
-    }
-   ],
-   "dernier_rapport": null,
-   "date_maj": {
-    "annee": 129,
-    "lune": 4,
-    "jour": 4
-   }
-  }
- ]
+  ]
 }

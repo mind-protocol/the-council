@@ -951,6 +951,15 @@ if salle_entendue is not None and not en_regie:
 if not en_regie and (suivi["touchee"] or calcul_presence):
     paquet = {"presence": presence}
     if calcul_presence:
+        # LA LIGNE BRUTE SE DENONCE. `ou_est()` fait tomber une exception passe
+        # son quart, mais le fichier gardait la ligne telle quelle : un arbitre
+        # qui l'ouvrait avant de trancher — le geste correct — lisait un fait
+        # mort avec l'air d'un fait vif. On n'efface pas (la derniere position
+        # connue sert a savoir d'ou l'homme repart), on annote.
+        try:
+            paquet["presence"] = calcul_presence.annoter_peremption(presence, date)
+        except Exception:
+            pass
         try:
             paquet["resolu"] = {"date": dict(date),
                                 "gens": calcul_presence.resoudre(date, presence)}

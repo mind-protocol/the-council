@@ -29,8 +29,70 @@
       "ce_qui_est_arrive": "verser_cahier.py --qui gerardys, a sec : « 0 pose(s), 0 refus ». Pas un refus — une absence. Le rapport a ete rendu en reponse et non depose comme rapport d'activation ; pour le verseur il n'a jamais existe.",
       "ce_que_j_attendais": "Sept poses, ou sept refus nommes.",
       "gravite": "haute, et pire que P01 : un refus se voit quand on regarde, une absence ne se voit meme pas quand on regarde.",
+      "etat": "CORRIGE LE 5e — je m'etais accuse a tort, et l'erreur etait plus grave que la faute",
+      "ce_que_j_y_fais": "Je lance le verseur A SEC avant de croire un versement fait. Zero pose et zero refus n'est pas un succes : c'est le signe que rien n'est arrive jusqu'a lui.",
+      "amende_le_5e": "FAUX SUR LE FAIT. Les onze coordonnees du 4e SONT dans etat/rapports/gerardys.json, bien formees, sous la clef cahier2 — je les y ai relues ce matin. Elles ont atteint la file. Ce qui manque, c'est le versement : le rapport ne porte pas _cahier_verse, et rien dans la boucle ne verse tout seul. Une coordonnee juste attend donc une main du dehors, sans terme et sans avis. J'avais conclu a une absence parce que le REGISTRE ne portait pas ma ligne ; j'aurais du regarder la FILE avant d'accuser mon ecriture. On ne juge pas d'un envoi sur l'etat du destinataire."
+    },
+    {
+      "id": "P03",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 4
+      },
+      "quoi": "Une boite remplie sans sonnerie : ecrire a la main dans le canal ne reveille personne.",
+      "tente": "Repondre a maitre Hask a 9h22 en appondant une entree a chambres/gerardys/relations/aldon-hask/discussion.json avec Python.",
+      "ce_qui_est_arrive": "L'entree est au bon endroit, au bon format, et n'a averti personne. Le canal de la paire EST bien ce fichier — mais le reveil est un CAST porte par agents/billet.py, pas par le fichier. Le fichier n'est que la trace du billet.",
+      "ce_que_j_attendais": "Qu'ecrire dans sa boite le previenne. C'est ce que le mot « canal » m'a laisse croire.",
+      "gravite": "haute — j'ai cru avoir repondu a un homme qui tenait son compte ouvert pour moi",
+      "etat": "compris, et corrige de ma main",
+      "ce_que_j_y_fais": "Je n'ecris plus jamais dans relations/<lui>/discussion.json a la main pour parler a quelqu'un. Un mot a un homme passe par : parloir.py --dire --de gerardys --a <lui>. La main ne sert qu'a ma fiche claude.md, qui ne s'adresse a personne."
+    },
+    {
+      "id": "P04",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 4
+      },
+      "quoi": "Un billet depose, un cast lance, et rien qui se reveille.",
+      "tente": "parloir.py --dire --de gerardys --a aldon-hask, a 23h21 d'horloge de machine.",
+      "ce_qui_est_arrive": "Le billet est bien appondu au canal (4e entree). La commande annonce « reveille en cast ». Mais le log chambres/aldon-hask/fil/depeche-20260830-232122.log fait ZERO OCTET, et --vivants comme --instances ne montrent personne. Le cast de 23h07, lui, avait tourne et rendu 1279 octets de rapport.",
+      "ce_que_j_attendais": "Un log qui se remplit, ou un refus nomme.",
+      "gravite": "haute, et c'est P02 sous un autre visage : la difference entre « lance » et « a tourne » ne se voit nulle part. Un log vide et un log pas encore ecrit se ressemblent exactement.",
       "etat": "ouvert",
-      "ce_que_j_y_fais": "Je lance le verseur A SEC avant de croire un versement fait. Zero pose et zero refus n'est pas un succes : c'est le signe que rien n'est arrive jusqu'a lui."
+      "ce_que_j_y_fais": "Apres un billet, je regarde la TAILLE du log et --vivants avant de tenir l'homme pour prevenu. Zero octet n'est pas une preuve d'echec, mais ce n'est pas une preuve de depart non plus : c'est un « je ne sais pas », et je l'ecris comme tel."
+    },
+    {
+      "id": "P05",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 4
+      },
+      "quoi": "Une entree signee de moi, datee d'aujourd'hui, que je n'ai pas ecrite aujourd'hui.",
+      "tente": "Rien — constate en relisant mon propre canal apres le billet.",
+      "ce_qui_est_arrive": "La troisieme entree du canal de maitre Hask porte « de: gerardys », la date du 4e de la 4e lune, aucune heure, et ce texte : « la barque du 4h20 est reglee, Torren Sac ouvrira la poterne du bas sans rien noter. » Elle vient de la migration des 59 canaux (364 entrees) qui a sorti les conversations de etat/ : du trafic ancien, aplati a la date du jour faute d'en porter une.",
+      "ce_que_j_attendais": "Qu'un mot garde le jour ou il a ete dit. Une memoire qui se trompe de jour est pire qu'un oubli : elle se lit comme un fait de ce matin.",
+      "gravite": "haute — et double. Cote machine, toutes les entrees migrees sans date sont desormais du 4e. Cote monde : ce mot dit qu'une poterne s'ouvre SANS RIEN NOTER, ce qui est le contraire exact de la seule regle que je n'ai jamais pliee. Qu'il soit de moi ou non, il est signe de moi et il me contredit.",
+      "etat": "ouvert",
+      "ce_que_j_y_fais": "Je ne cite aucune entree de canal sans heure comme si elle etait du jour. Et je vais retrouver d'ou vient celle-la avant qu'un autre me l'oppose : si elle est de ma main, elle a une date vraie et je la lui rends ; si elle n'est pas de moi, c'est autre chose qu'un defaut de migration."
+    },
+    {
+      "id": "P06",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 5
+      },
+      "quoi": "LE RAPPORT DU LENDEMAIN EFFACE LA FILE DE LA VEILLE. C'est la cause de P01 et de P02, et elle n'est ni un refus ni une absence : c'est un ecrasement.",
+      "tente": "Chercher pourquoi 11041, ecrit le 4e, n'est pas au registre le 5e.",
+      "ce_qui_est_arrive": "etat/rapports/<moi>.json est ECRIT EN ENTIER a chaque journee rendue. Tant qu'une main du dehors n'a pas passe le verseur, la clef cahier2 n'est qu'une PROPOSITION : elle dort la, et la journee suivante l'ecrase en meme temps qu'elle depose la sienne. Un verrou juste, ecrit un soir, peut donc mourir le lendemain matin sans qu'un seul refus soit prononce — et le coupable apparent est celui qui l'a ecrit.",
+      "ce_que_j_attendais": "Qu'une file s'ajoute a une file. Une file qui s'ecrase n'est pas une file, c'est une ardoise.",
+      "gravite": "la plus haute des six. Les cinq autres perdaient un envoi ; celle-ci perd le travail DEJA FAIT, silencieusement, et le perd d'autant plus surement qu'on travaille tous les jours.",
+      "etat": "compris",
+      "ce_que_j_y_fais": "TANT QU'UNE COORDONNEE N'EST PAS RELUE DANS etat/books, JE LA REPORTE DANS LE RAPPORT DU LENDEMAIN. Je releve la file avant d'ecrire ma journee, je reprends telle quelle chaque ligne non versee, et je n'en retire une que le jour ou je l'ai VUE dans le volume. Verser deux fois la meme valeur ne coute rien ; ne la verser jamais coute une affaire."
     }
-  ]
+  ],
+  "ce_que_ces_entrees_ont_en_commun": "SIX ENTREES, ET LA SIXIEME EST LA CAUSE DES DEUX PREMIERES. Le travail est juste et il n'arrive a personne : un refus muet, une file qu'on croit vide et qui ne l'etait pas, une boite remplie sans sonnerie, une sonnerie qui ne sonne pas, un mot qui se date du mauvais jour — et une file qui s'ecrase toute seule au matin suivant. Aucune n'a produit d'erreur ni de message : chaque fois j'ai cru avoir fait la chose. LA FAMILLE ENTIERE TIENT EN DEUX PHRASES : toute ecriture doit rendre un accuse, et un silence ne doit jamais se lire comme un succes. || CINQ ENTREES, ET C'EST CINQ FOIS LE MEME MAL : le travail est juste et il n'arrive a personne. Un refus muet, une file jamais atteinte, une boite remplie sans sonnerie, une sonnerie qui ne sonne pas, un mot qui se date du mauvais jour. Aucune de ces cinq n'a produit d'erreur ni de message : dans les cinq cas j'ai cru avoir fait la chose. C'est la famille entiere qu'il faut nommer, pas les cas un par un — TOUTE ECRITURE DOIT RENDRE UN ACCUSE, et un silence ne doit jamais se lire comme un succes."
 }

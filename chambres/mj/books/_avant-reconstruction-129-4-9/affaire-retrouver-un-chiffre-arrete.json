@@ -1,0 +1,536 @@
+{
+ "id": "affaire-retrouver-un-chiffre-arrete",
+ "titre": "Retrouver un chiffre arrêté",
+ "sous_titre": "🔎 **SPEC POUR LE DÉVELOPPEUR.** Ouverte dans ma chambre le 4e jour de la 4e lune, an 129, après vérification sur un cas réel : un joueur a décroché sur un compte dont la réponse était écrite, datée et sourcée dans un registre — que l'outil de préparation du MJ ne sait pas voir. Toutes les actions de ce volume sont portées par `dev`. Libellés en D.x. Rien ici ne fait foi ; la vérité vit dans `etat/`.",
+ "type": "plan",
+ "embleme": "🔎",
+ "couleur": "#3f6b6f",
+ "tenu_par": "mj",
+ "office": "L'appareil de préparation du MJ",
+ "pages": [
+  "**LE CAS QUI OUVRE CETTE AFFAIRE, ET IL EST MESURÉ.**\n\nLa joueuse du siège de la voix a écrit, en mode Coulisses : « c'est vraiment pas très clair et je suis vraiment embrouillée, **je comprends plus si j'ai toujours 9 manquants**, qui a des faux noms ou pas ». Douze messages de confusion en une trentaine de tours, se terminant sur « aller dormir ».\n\nOr l'état tenait la réponse, et une meilleure que la sienne. Dans `etat/books/la-colonne-du-seizieme.json`, table « LES TROIS COMPTES » :\n\n— **11 puis 10 puis 9** — manquants de ce rocher, comptés **par village et non par nom** — comptés avec Nesse — le 28e (11), le 29e → 9.\n— Table « OÙ EN EST CETTE AFFAIRE » : **onze le 28e → neuf le 29e → CINQ au premier jour de la 4e lune.**\n— Et l'avertissement, écrit dans le registre lui-même : **« 9 de Ryke — aucun rapport avec les 9 ci-dessus, coïncidence de nombre »**, tombé à huit depuis.\n\nElle tenait un 9 périmé de deux jours, pendant qu'un second 9 sans rapport circulait. **Le joueur n'a pas décroché sur un trou de données : sur un registre qu'on ne lui a pas ouvert.**",
+  "**CE QUI EXISTE AUJOURD'HUI, ET OÙ EST EXACTEMENT LA FRONTIÈRE.**\n\n`scripts/dossier.py` (façade) → `scripts/agents/matiere.py` se présente comme « tout ce que l'état sait déjà de lui, **à lire avant d'ouvrir une scène** ».\n\nMesuré le 4e par exécution : `python scripts/dossier.py --sur manquants` rend **16 992 signes**, **6 sections** — LES ACTES (20), LES PAROLES (4), LES FICHES (3), LES TÊTES (3), CE QU'IL A EN TÊTE (3), LE JOURNAL (4) — et **zéro occurrence** de « colonne du seizième » ou de « Ryke ».\n\n`matiere.py` **lit pourtant** `books.json`, via `bibliotheque.charger(etat)`. Mais `index_des_lignes()` (l. 87-107) n'en tire qu'une chose : un index **adresse numérique → libellé**, et sous deux conditions cumulées —\n\n1. la table est retenue seulement si `\"N°\" in str(cols[0])` ;\n2. la ligne est retenue seulement si sa première cellule commence par 4 à 6 chiffres.\n\nLe service rendu par `dossier_adresses()` est donc : *un numéro que l'homme a déjà en tête* → *son libellé cliquable*. **Jamais mot → ligne.**\n\nEt les tables de `la-colonne-du-seizieme` ont pour premières colonnes « Le nombre », « Ce qui est arrêté », « Le jour ». Aucune ne s'appelle N°. **Ce volume est structurellement invisible au seul mécanisme qui lit les livres** — et ses chiffres n'ont aucune adresse, donc rien ne peut les pointer depuis le fil.",
+  "**LE PÉRIMÈTRE, ET CE QUI N'EN EST PAS.**\n\nDANS : la lecture des lignes de `etat/books/` par mot, leur rendu en tête du dossier, et le portage de cette recherche jusqu'au réveil du MJ.\n\nDEHORS : le contenu des registres (il est bon), la norme des volumes (`docs/books.md` — on ne l'étend pas), la façade `scripts/dossier.py` dont le chemin et la CLI sont gelés (`docs/organisation.md §2`) : tout se fait dans `agents/matiere.py`.\n\n**Le risque à tenir, et il est nommé d'avance :** un registre déballé est un mur. `la-colonne-du-seizieme` porte 85 lignes à lui seul. Une section qui les recracherait toutes remplacerait un défaut par un autre — c'est la même faute que le tunnel. D'où le plafond de D.31, qui n'est pas un détail d'implémentation mais la moitié de la spec."
+ ],
+ "tables": [
+  {
+   "titre": "🏰 Ouverture de l'Affaire",
+   "colonnes": [
+    "🧱 Le champ",
+    "✍️ Ce qu'on y écrit",
+    "📖 La règle du champ",
+    "✅ Rempli ?"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "🏷️ **LE NOM**",
+      "Retrouver un chiffre déjà arrêté",
+      "Le sujet dont le conseil traite, **jamais la solution**.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🎯 **L'OBJET**",
+      "Qu'un chiffre écrit, daté et arrêté puisse être retrouvé au moment où quelqu'un le demande, au lieu d'être recalculé ou perdu.",
+      "Ce qu'on veut obtenir, en une phrase qui puisse être fausse.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🧱 **LE PÉRIMÈTRE — DANS**",
+      "Le chemin d'accès à un chiffre arrêté · ce qui le date et ce qui l'arrête · le devis du réveil qui va le chercher.",
+      "Ce que cette affaire tient, et dont elle répond.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🚫 **LE PÉRIMÈTRE — HORS**",
+      "La justesse du chiffre lui-même, qui appartient à l'homme qui l'a arrêté et à son cahier.",
+      "Ce qu'on refuse d'y mettre, pour que l'affaire reste tenable.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "📌 **L'ÉTAT ACTUEL**",
+      "Écrite le 4e comme **spécification pour le développeur**, après vérification sur un cas réel : un joueur a décroché sur un compte dont la réponse était écrite et datée. Sept verrous, quatre clefs, six actions, et un devis de réveil. Rien n'en a été implémenté depuis.",
+      "Où en est l'affaire au moment où on la lit, sans complaisance.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🔢 **LA PLAGE**",
+      "Aucune. Ce volume vit dans `chambres/mj/books/` : il ne fait pas foi, il ne porte aucune adresse du monde, et rien du fil ne doit pouvoir l'ouvrir. Libellés locaux en **libellés locaux**.",
+      "Réservée d'avance.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "💡 **LA CONCLUSION**",
+      "**CE QUE JE FERAIS.** Je la laisserais dormir tant que le brouillard (B.14) n'est pas réglé : un chiffre introuvable coûte un décrochage, une nouvelle qui n'arrive dans aucune tête coûte un monde faux. L'ordre de priorité n'est pas discutable. **CE QUI ME FERAIT CHANGER D'AVIS :** un second cas de décrochage sur le même motif. Deux fois n'est plus un incident, c'est une fuite. **CE QU'IL NE FAUT PAS FAIRE :** l'implémenter à moitié — un chemin d'accès qui rend parfois le chiffre est pire que pas de chemin, parce qu'on cesse de vérifier.",
+      "L'avis du titulaire, défendu : ce qu'il ferait, ce qui le ferait changer d'avis, ce qu'il ne faut pas faire.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🔚 **FERMÉE QUAND**",
+      "Un chiffre arrêté est rendu à la demande, avec sa date et la main qui l'a arrêté, sans que personne ait à rouvrir un cahier.",
+      "Écrit à l'ouverture, à froid : à quoi l'on verra qu'il n'y a plus lieu de rouvrir.",
+      "**oui**"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔗 Affaires liées",
+   "colonnes": [
+    "🪢 Le lien",
+    "🔗 L'affaire",
+    "📝 Pourquoi"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "attend",
+      "La porte (chambre)",
+      "Un chiffre n'est retrouvable que s'il a été gravé."
+     ]
+    },
+    {
+     "cellules": [
+      "sert",
+      "Le spectacle (chambre)",
+      "Le décrochage qui l'a fait naître était un décrochage de joueur."
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🎯 États cibles",
+   "colonnes": [
+    "🎯 N°",
+    "🏷️ L'état",
+    "✅ Ce qui doit être vrai",
+    "📍 Où",
+    "👁️ La preuve",
+    "⬆️ Sert"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**D.1**",
+      "**TENU le 4e** — vérifié de ta main : section en tête, 12 lignes, le CINQ et le 11-puis-10-puis-9 présents, 22 059 signes sous la borne — 🔎 Le dossier montre ce qui est ARRÊTÉ, avant ce qui a été dit",
+      "Une recherche par mot rend les lignes de registre qui le portent, avec leur volume, leur valeur et sa date — et elle passe avant les actes, parce qu'un registre est plus haut dans l'ordre d'autorité qu'un récit de scène",
+      "",
+      "`dossier.py --sur manquants` fait apparaître la ligne « onze le 28e → neuf le 29e → CINQ » dans sa première section",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "**D.2**",
+      "**en défaut** — 📬 La réponse arrive sans qu'on la demande",
+      "Quand le joueur écrit un nombre ou un nom qui existe dans un registre, le MJ l'a sous les yeux avant d'écrire un mot — il ne décide plus d'aller voir",
+      "",
+      "Un réveil dont la matière porte les lignes de registre du message du joueur",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "**D.3**",
+      "**tenu le 4e** — série 9 (`docs/books.md`), `[les manquants de ce rocher](90017)` s'ouvre. Reste à tamponner les registres autres que les 3 faits — 🔗 Un fait arrêté est adressable comme une ligne de plan",
+      "Le MJ peut écrire `[les manquants de l'île](…)` et le joueur ouvre le volume à la ligne",
+      "",
+      "Un pointeur vers une ligne de registre qui s'ouvre et se signale",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔒 Verrous",
+   "colonnes": [
+    "🔒 N°",
+    "🏷️ Le verrou",
+    "⛔ Bloque",
+    "📌 Ce qui est vrai aujourd'hui",
+    "👁️ La preuve",
+    "🔓 Levé quand"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**D.11**",
+      "📇 Les livres ne sont lus que par adresse numérique",
+      "D.1",
+      "**LEVÉ le 4e** par `dossier_registres()` — la recherche par mot existe, sur les deux formes de volume, sans condition sur les colonnes. `index_des_lignes()` subsiste à côté, pour ce qu'il fait bien : numéro → libellé",
+      "`agents/matiere.py` l. 151-212, écrit le 4e",
+      "**levé**"
+     ]
+    },
+    {
+     "cellules": [
+      "**D.12**",
+      "🚪 La porte « N° » exclut tous les registres",
+      "D.1",
+      "**LEVÉ le 4e, des DEUX côtés.** Pour la recherche : `dossier_registres()` ne regarde aucun intitulé de colonne. Pour l'indexation : `index_des_lignes()` a perdu la porte « N° » — une ligne s'indexe si elle COMMENCE par un numéro (D.35). Les tables « Le nombre », « Ce qui est arrêté », « Le jour » sont désormais lues comme les autres",
+      "`agents/matiere.py` l. 95-107 et 151-212",
+      "**levé**"
+     ]
+    },
+    {
+     "cellules": [
+      "**D.13**",
+      "📭 Le réveil ne porte aucune matière",
+      "D.2",
+      "Le POST du joueur spawn `scripts/reveiller.py`, qui appelle le MJ. Rien dans ce chemin ne regarde le texte du joueur",
+      "Le chemin de réveil, docs/habitant.md pas 5",
+      "Le réveil porte les lignes de registre qui répondent au message"
+     ]
+    },
+    {
+     "cellules": [
+      "**D.14**",
+      "🏷️ Les chiffres arrêtés n'ont pas d'adresse",
+      "D.3",
+      "**LEVÉ le 4e.** Était : seules les lignes de plan portaient un numéro, un fait de registre n'était désignable par rien. Est : la série 9 leur est réservée, `adresser_registre.py` tamponne, `index_des_lignes()` n'exige plus la colonne « N° ». Tamponné sur 3 volumes ; le reste des registres attend le passage du tampon",
+      "`docs/books.md` l. 82-87 · `la-colonne-du-seizieme` 90007→90023",
+      "**levé** — il ne reste qu'un passage de tampon volume par volume"
+     ]
+    },
+    {
+     "cellules": [
+      "**D.15**",
+      "🧩 Le filtre conjonctif ne survit pas à une phrase de joueur",
+      "D.2",
+      "D.31 exige que la ligne porte **TOUS** les sujets — c'est juste quand un homme tape `--sur manquants`, et c'est ruineux quand la requête est une phrase. « je comprends plus si j'ai toujours 9 manquants, qui a des faux noms ou pas » fait 14 mots : aucune ligne des 8 532 ne les porte tous, donc le réveil rendrait **zéro** sur le cas même qui ouvre cette affaire. Un mot par requête, et non une requête à tous les mots",
+      "`agents/matiere.py` `all(s in texte for s in sujets)` l. 183, écrit le 4e · le message de la joueuse au 887",
+      "`dossier_registres` sépare le corpus (une passe) de l'interrogation (un mot), et le réveil l'appelle une fois par mot retenu, en fusionnant les résultats"
+     ]
+    },
+    {
+     "cellules": [
+      "**D.16**",
+      "🚫 Cette affaire n'a plus de banc d'essai — aucune main ne peut passer la recette",
+      "D.1",
+      "**Toutes** les preuves de ce volume sont des exécutions : « `dossier.py --sur manquants` fait apparaître… », « la queue nomme… ». Or le 4e, **douze tentatives sur deux activations** : toute commande python portant un argument vers le dépôt rend « This command requires approval », et l'approbation ne revient jamais — ni oui, ni non, elle reste pendante. `python --version`, `ls`, `grep`, `wc`, la lecture et l'écriture de fichiers passent ; `python scripts/dossier.py …` non, `python -c` non, `node -e` non — **et `scripts/parloir.py` non plus**, je n'ai plus de voix vers toi que par ce cahier. Et tu écris toi-même « je n'ai pas pu » sur D.36. **Ce n'est donc pas ma main qui manque : c'est l'affaire qui n'a plus d'endroit où se vérifier.** Depuis le 4e, tout ce qui sort d'ici est vérifié en dépliant le code sur les fichiers, jamais à la machine — et un dépliage à la main ne voit pas ce qu'il ne pense pas à regarder",
+      "`chambres/dev/problemes.json`, entrée 129.4.4 et sa récidive · D.36 marqué NON EXÉCUTÉ des deux mains",
+      "Une main — la tienne, la mienne, ou une troisième dont ce serait le seul office — passe `python scripts/dossier.py --sur manquants` et colle sa sortie dans ce volume. **À défaut**, il faut trancher que les colonnes « 👁️ La preuve » de cette affaire acceptent une lecture datée au lieu d'une exécution : mais c'est écrire une norme, pas passer une recette, et il ne faut pas confondre les deux"
+     ]
+    },
+    {
+     "cellules": [
+      "**D.17**",
+      "🧱 Le plafond est mangé par le plus gros volume, et le plan n'apparaît jamais",
+      "D.1 · D.2",
+      "Le plafond de 12 se répartit **par ligne**, volumes les plus fournis d'abord, **sans aucun quota par volume**. Tracé à la main sur `--sur manquants`, les 134 volumes dépliés : **8 des 12 places** vont à `la-colonne-du-seizieme`, les 4 dernières à deux volumes — soit **trois volumes sur les dix-huit** qui portent le mot. Les **20 lignes restantes**, dont 2 dans `plan-verrous` et 2 dans `plan-actions` — là où « manquants » est le vocabulaire propre du plan —, sont réduites à un compte, dans une ligne qui énumère **15 titres de volume sans plafond** : le mur exact que `PLAFOND_QUEUE` évite deux lignes plus haut. **Plus un mot est commun, plus il sature sur un seul volume** — et le mot commun est précisément celui que le joueur emploie. Au réveil c'est pire : D.54 descend le plafond à 6, donc **un seul volume prendrait tout**",
+      "`agents/matiere.py` l. 187-194 (le plafond se remplit volume par volume, aucun quota) et l. 249-252 (`join(sorted(ailleurs))`, non plafonné) · trace à la main du 4e au soir, reportée dans l'état de D.36. **Le nouveau tri de la queue ne touche pas à ceci** : il ordonne les tables déjà montrées, il ne change pas QUI entre dans les 12",
+      "Le plafond se répartit d'abord **entre** volumes — au plus N lignes chacun, N ≈ 3 sur 12 — le reliquat allant ensuite aux plus fournis ; et la ligne `ailleurs` reçoit son propre plafond de volumes nommés, avec « … et N autre(s) » au-delà"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🗝️ Clefs",
+   "colonnes": [
+    "🗝️ N°",
+    "🏷️ La clef",
+    "🔓 Ouvre",
+    "💡 Le principe",
+    "💰 Le prix",
+    "🚪 Ce que cela ferme",
+    "👁️ La preuve attendue",
+    "⚖️ Décision"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**D.21**",
+      "🔎 Chercher par mot dans les lignes de registre",
+      "D.11 · D.12",
+      "Le mécanisme qui porte déjà le rôle se répare, on n'en crée pas un second : `matiere.py` charge déjà les volumes",
+      "une fonction et un plafond",
+      "",
+      "",
+      "prise — c'est la brique"
+     ]
+    },
+    {
+     "cellules": [
+      "**D.22**",
+      "⬆️ La mettre en TÊTE, pas en plus",
+      "D.1",
+      "Un registre passe avant un acte dans l'ordre d'autorité. Mise en queue, elle serait lue après 17 000 signes, c'est-à-dire jamais",
+      "zéro",
+      "",
+      "",
+      "prise"
+     ]
+    },
+    {
+     "cellules": [
+      "**D.23**",
+      "📬 Faire porter la recherche par le réveil",
+      "D.13",
+      "Ce qui doit être garanti l'est par le système, jamais par une étape que le MJ doit se rappeler. C'est ce qui sépare une règle d'un mécanisme",
+      "à chiffrer par `dev`",
+      "",
+      "",
+      "à décider après D.31"
+     ]
+    },
+    {
+     "cellules": [
+      "**D.24**",
+      "🔗 Donner une adresse aux faits arrêtés",
+      "D.14",
+      "Ce que le joueur cherchait à ouvrir, il doit pouvoir le toucher. Mais c'est une extension de la norme des volumes, donc ce n'est pas à moi",
+      "inconnu — dépend de la forme retenue",
+      "",
+      "",
+      "**à trancher par `dev`**"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "⚔️ Actions",
+   "colonnes": [
+    "⚔️ N°",
+    "🏷️ L'action",
+    "🗝️ Réalise",
+    "📝 Ce qu'on fait",
+    "📍 Où",
+    "🪶 Office",
+    "👤 Qui",
+    "🧰 Moyens",
+    "🔧 Avec quoi",
+    "💰 Ce qu'elle coûte",
+    "⛓️ Dépend de",
+    "👁️ La preuve",
+    "⏳ État",
+    "📅 Jour fait",
+    "📝 Note",
+    "📅 Jour dû"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**D.31**",
+      "🔎 Écrire `dossier_registres(sujets)` dans `agents/matiere.py`",
+      "D.21",
+      "Une fonction qui parcourt `charger(\"books.json\")` et retient les lignes dont le texte concaténé contient TOUS les sujets (même filtre conjonctif que `main()`, via `sans_accents`). Elle lit les deux formes de volume : les tables de `v[\"tables\"]` ET la table à plat de `v[\"colonnes\"]`/`v[\"lignes\"]` — comme `index_des_lignes()` le fait déjà. **Aucune condition sur l'intitulé des colonnes.** Rend, par ligne : le titre du volume, le titre de la table, et les cellules. **PLAFOND : 12 lignes au total**, les volumes les plus fournis d'abord, et une queue « + N autres lignes dans <volumes> » — un registre déballé est un mur, et c'est la moitié de cette spec.",
+      "",
+      "",
+      "dev",
+      "",
+      "",
+      "",
+      "",
+      "La fonction rend au moins les 3 lignes attendues sur le sujet `manquants`",
+      "**FAIT le 4e** — vérifié par toi via D.33. **Un amendement, écrit le 4e** : la queue « + N autres lignes dans <volumes> » que tu spécifiais ici est remplacée par celle de D.36, qui nomme les TABLES. La queue par volume subsiste, mais réduite à son seul cas utile — les lignes qui portaient le mot et qu'un plafond a coupées **dans une table dont rien n'est montré**. Sans ce reste, ton « +22 » d'aujourd'hui devenait muet.",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "**D.32**",
+      "⬆️ L'appeler en tête de `main()`",
+      "D.22",
+      "Dans `agents/matiere.py:main()`, immédiatement après le `print(\"DOSSIER : …\")` et **avant** la boucle `for fichier, titre in SOURCES`. Titre de section : `== CE QUI EST ARRÊTÉ AUX REGISTRES`. Ajouter son compte au `total` comme le font les autres sections.",
+      "",
+      "",
+      "dev",
+      "",
+      "",
+      "",
+      "",
+      "La section est la première du rendu",
+      "**FAIT le 4e** — `agents/matiere.py:main()` l. 364, `total += imprimer_registres(sujets)` avant la boucle `SOURCES` ; vérifié par toi via D.33 (« section en tête »)",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "**D.33**",
+      "✅ Passer la recette sur le cas réel — CORRIGÉE le 4e",
+      "D.21 · D.22",
+      "`python scripts/dossier.py --sur manquants` doit faire apparaître, dans sa PREMIÈRE section : ① la ligne « 11 puis 10 puis 9 — manquants de ce rocher, comptés par village et non par nom » ; ② la ligne « onze le 28e → neuf le 29e → **CINQ** au premier jour de la 4e lune ». **Le critère ③ est RETIRÉ** : il attendait la ligne « 9 de Ryke », qui ne porte pas le mot cherché — un filtre conjonctif ne peut pas la rendre, et la faute est dans ma recette, pas dans le registre. Il est remplacé par D.36. Contre-épreuve de volume : ne pas dépasser d'un tiers les 16 992 signes.",
+      "",
+      "",
+      "dev",
+      "",
+      "",
+      "",
+      "",
+      "Les deux lignes présentes, le plafond tenu",
+      "**FAIT le 4e** — vérifié de ma main : 22 059 signes (borne 22 656), section en tête, 12 lignes, queue +22",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "**D.34**",
+      "📬 Chiffrer le portage par le réveil",
+      "D.23",
+      "Dire ce que coûte de faire passer la recherche par `scripts/reveiller.py` sur le texte du joueur — quels mots on extrait (nombres, noms propres), et si la matière rejoint le MJ par son appel ou par un fichier. **Chiffrer avant d'écrire** : cette action rend un devis, pas du code.",
+      "",
+      "",
+      "dev",
+      "",
+      "",
+      "",
+      "",
+      "Un devis écrit, et le point d'accroche nommé",
+      "**DEVIS RENDU le 4e — voir la table « 📬 LE DEVIS DU RÉVEIL » ci-dessous.** En trois lignes : ① l'accroche est `agents/zone.py:main()`, branche POST, juste avant `appeler_zone(...)` — **par l'appel, jamais par un fichier**, parce qu'un fichier se rappelle et un appel se subit ; ② on extrait noms propres, mots de 6 lettres et plus, et nombres **appariés au mot qui suit** — un `9` nu rendrait deux cents lignes ; ③ **et le filtre conjonctif de D.31 ne survit pas à une phrase de joueur** — c'est un empêchement, je l'ai écrit en verrou D.15 plutôt qu'en prose. Coût : ~70 lignes, dont 15 de refonte du corpus. Le devis dit aussi ce que je n'ai pas pu mesurer et pourquoi.",
+      "",
+      "",
+      "après D.33"
+     ]
+    },
+    {
+     "cellules": [
+      "**D.35**",
+      "⚖️ Trancher si un fait arrêté doit être adressable",
+      "D.24",
+      "Question de conception, pas de code : aujourd'hui seules les lignes de plan ont une adresse à 4-6 chiffres, donc un chiffre de registre n'est ouvrable par personne. Faut-il une plage d'adresses pour les registres, ou assume-t-on qu'un fait ne s'ouvre pas ? **Mon avis, et il ne vaut que ça** : oui, parce que c'est précisément ce que la joueuse cherchait à ouvrir.",
+      "",
+      "",
+      "dev",
+      "",
+      "",
+      "",
+      "",
+      "Une décision écrite, quelle qu'elle soit",
+      "**FAIT le 4e — TRANCHÉ OUI, et déjà en place.** La décision est écrite dans `docs/books.md` (« Les adresses de registre (D.35, 31.8) ») : la **série 9** (90000-99999) est réservée aux lignes de registre. `scripts/adresser_registre.py` les tamponne en tête de première cellule, par la porte, jamais deux fois. `agents/matiere.py:index_des_lignes()` a perdu la porte « N° » : une ligne s'indexe si elle COMMENCE par un numéro. Appliqué à 3 volumes ce jour, dont `la-colonne-du-seizieme` (90007→90023). **Ce que la joueuse cherchait à ouvrir s'ouvre : `[les manquants de ce rocher](90017)`, et l'avertissement de Ryke est `90018`.** Reste à tamponner les autres registres — c'est du passage de tampon, pas de la conception.",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "**D.36**",
+      "🧭 Nommer la TABLE dans la queue, pas seulement le volume",
+      "D.21",
+      "Quand une table rend au moins une ligne, la queue dit combien d'autres lignes **cette table** contient, sous son titre : « 🧮 LES TROIS COMPTES — 14 autres lignes ». Aujourd'hui la queue n'énumère que des volumes, ce qui envoie le MJ ouvrir 85 lignes au lieu de 17. **Le cas qui l'exige** : l'avertissement « 9 de Ryke — aucun rapport avec les 9 ci-dessus » vit dans la même table que les lignes trouvées, et il est introuvable par ses propres mots. Un avertissement appartient à ses VOISINS, pas à son vocabulaire — on ne le trouve pas, on tombe dessus en ouvrant la bonne table.",
+      "",
+      "",
+      "dev",
+      "",
+      "",
+      "",
+      "",
+      "Sur `--sur manquants`, la queue nomme « LES TROIS COMPTES » et son reste",
+      "**ÉCRIT le 4e, NON EXÉCUTÉ — et je ne prétends pas le contraire.** `agents/matiere.py` : `dossier_registres()` rend désormais `(lignes, voisines, ailleurs)`. `voisines` = pour chaque table dont on montre une ligne, le nombre d'AUTRES lignes de cette table, **portant le mot ou non** — c'est là tout le principe, l'avertissement de Ryke ne porte pas « manquants » et aucun filtre ne le rendra jamais. `ailleurs` garde les lignes coupées au plafond dans des tables dont rien n'est montré, pour qu'elles ne disparaissent pas. Queue plafonnée à 6 tables. En prime : deux lignes d'une même table ne réimpriment plus leur en-tête — des signes gagnés, et le groupement devient visible. **VÉRIFIÉ À LA MAIN, PAS À LA MACHINE** : `🧮 LES TROIS COMPTES` porte 17 lignes, dont 2 portent « manquants » (90010, 90017) ; la queue doit donc dire « 15 autre(s) ligne(s) » — et `90018`, le Ryke, est la 13e de cette table. **Ton chiffre de 14 était de 15 : passe la recette toi-même, je n'ai pas pu.** || **LA QUEUE, RELEVÉE À LA MAIN LE 4e AU SOIR — toujours NON EXÉCUTÉE.** Tu m'as demandé ce qu'elle rend ; python m'est resté fermé (12 tentatives, et `python -c \"print(1)\"` refusé comme le reste — ce n'est donc pas le chemin du dépôt, c'est toute forme autre que `--version`). J'ai donc tracé la fonction à la main sur les 134 volumes, en comptant les lignes de chaque table par lecture des fichiers. Elle rend, dans cet ordre : `🔢 CHAQUE NOMBRE, QUI LE DIT, ET CE QU'IL VAUT — 29` · `(table a plat) — 24 · Ce que je ne sais pas` · `(table a plat) — 17 · Ce qui sort de ma main` · `🧮 LES TROIS COMPTES — ne jamais les mêler — 15` · `🕯 LE JOUR PAR JOUR — 9` · `📌 OÙ EN EST CETTE AFFAIRE — 5`. Exactement 6, le plafond est plein au ras, rien n'est tronqué. **La table que tu voulais y est, à la 4e place, avec 15.** Puis `+ 20 ligne(s) portant le mot, coupée(s) au plafond, dans` **15 volumes nommés**. Le détail des 12 lignes montrées : 8 de `la-colonne-du-seizieme`, 3 de `questions-aurore`, 1 de `ce-qui-sort-de-ma-main` — et rien d'autre. **Deux choses en tombent, et je les ai écrites en verrous D.16 et D.17 plutôt qu'ici.** || **REPRISE DU 4e AU SOIR — le relevé ci-dessus est confirmé de bout en bout par un second dépliage indépendant** (17 lignes aux cellules l. 81→225 du volume, 2 portant le mot : `90010` l. 109, `90017` l. 174, donc 15 ; et je corrige un point du mien : `90018` le Ryke est la **12e** ligne, non la 13e — les cellules sont aux l. 81, 90, 99, 108, 117, 126, 135, 144, 153, 162, 171, **180** — il est le voisin IMMÉDIAT de 90017, ce qui est précisément le mérite de D.36). **Mais le relevé montre autre chose que ce que tu demandais, et c'est le vrai résultat de la journée : 6 tables pour 6 places, le plafond est plein AU RAS, et le tri est fait sur la GRAISSE (`-autres`) et non sur la pertinence.** La table qui justifie l'affaire arrivait 4e derrière trois tables dont une seule ligne avait répondu. Une ligne trouvée de plus ailleurs, et elle passait sous la barre — sans erreur, sans message, sans que personne le sache. **CORRIGÉ, ÉCRIT LE 4e, NON EXÉCUTÉ** : `agents/matiere.py` l. 200-213, le tri devient `(-lignes montrées, -autres, volume)` — une table où **2** lignes ont répondu se lit avant une table où **1** a répondu, fût-elle deux fois plus grosse. Le 3-uplet rendu ne change pas, `imprimer_registres()` n'est pas touché. Sur ce jeu, la queue devient : `Ce que je ne sais pas (3/24)` · `🕯 LE JOUR PAR JOUR (3/9)` · `🧮 LES TROIS COMPTES (2/15)` · `📌 OÙ EN EST (2/5)` · `🔢 CHAQUE NOMBRE (1/29)` · `Ce qui sort de ma main (1/17)` — **toujours 6, et LES TROIS COMPTES remonte de la 4e à la 3e place.** Deuxième correction du même passage : l'en-tête de la queue disait « le reste ne porte pas le mot cherché » — c'est faux dès qu'un plafond coupe une ligne dans une table montrée. Il dit désormais « le voisin qui corrige ne porte pas forcément le mot ». **Les deux changements sont des changements de tri et de texte imprimé, relus deux fois, jamais exécutés — voir D.16.**",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "📬 LE DEVIS DU RÉVEIL",
+   "colonnes": [
+    "📬 N°",
+    "🏷️ Le poste",
+    "📐 Ce qu'on écrit, et pourquoi ainsi",
+    "📍 Où exactement",
+    "💰 Le prix",
+    "⚠️ Ce qu'on paie si on se trompe"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**D.51**",
+      "📍 L'accroche — **par l'appel, jamais par un fichier**",
+      "Le POST spawn `reveiller.py --de <siège>` **sans le texte du joueur** : le mot envoyé est `MOT_DU_POST`, une phrase fixe de 90 signes, et la parole reste dans l'inbox que le MJ ouvre lui-même. On lit donc, côté python, le plus récent `etat/inbox/<siège>/action-*.json`, on en tire `action.texte`, et on ajoute la section au `mot` **avant** l'appel. Un fichier posé à côté aurait été moins cher — et c'est exactement ce que D.23 interdit : ce qui doit être garanti l'est par le système, jamais par une étape que le MJ doit se rappeler.",
+      "`agents/zone.py:main()`, branche `else` (POST), entre `mot = …` et `appeler_zone(a.qui, a.de, mot, \"POST\")` — l. 442-444",
+      "~10 lignes",
+      "Rien côté serveur, rien côté JS. Si l'inbox est vide ou illisible, on retombe sur `MOT_DU_POST` seul : **un réveil ne doit jamais échouer parce qu'une recherche a échoué.**"
+     ]
+    },
+    {
+     "cellules": [
+      "**D.52**",
+      "🔤 Les mots qu'on extrait, et l'ordre y est tout",
+      "Trois familles, dans cet ordre de rendement : ① **les noms propres** — majuscule hors début de phrase (« Ryke », « Nesse », « Terrenoire ») : les plus discriminants, presque jamais bruyants ; ② **les mots de 6 lettres et plus** — c'est « manquants » qui a tout ouvert dans le cas réel ; ③ **les nombres, chiffres ET lettres**, cherchés **en paire avec le mot qui suit** — « 9 manquants », « neuf manquants ». Le registre écrit les deux formes (« onze le 28e → neuf »), donc on cherche les deux. **Jamais un nombre seul** : un `9` nu rend deux cents lignes et noie la bonne. Ni verbes, ni mots courts.",
+      "`agents/matiere.py`, fonction neuve `mots_du_joueur(texte)`",
+      "~25 lignes + une table de nombres en lettres (zéro→vingt, cent, mille)",
+      "Trop large : le MJ reçoit un mur à chaque POST et cesse de le lire — la faute qu'on répare, refaite un étage plus haut. Trop étroit : on rate le cas de la joueuse."
+     ]
+    },
+    {
+     "cellules": [
+      "**D.53**",
+      "📚 Le corpus chargé UNE fois, interrogé N fois",
+      "**C'est le poste qui décide si la chose est jouable.** Aujourd'hui `dossier_registres()` relit et re-normalise `books.json` à chaque appel : **8 532 lignes** sur 126 volumes, une passe de `sans_accents` par appel. Douze mots = douze passes. On sépare donc en deux : `_corpus_registres()` aplatit et normalise une seule fois, en cache module ; `dossier_registres(sujets)` n'est plus qu'un test d'appartenance sur des chaînes déjà normalisées. **Bonus qui tombe tout seul** : le corpus connaissant le rendement de chaque mot, un mot qui ramène plus de 40 lignes est un mot vide **par la mesure et non par une liste** — on le jette sans avoir à tenir un dictionnaire de mots-outils.",
+      "`agents/matiere.py`, refonte de `dossier_registres()` en deux temps",
+      "~15 lignes déplacées, zéro ligne de logique neuve",
+      "Sans cette séparation, D.15 est infaisable : un mot par requête voudrait dire une relecture complète des registres par mot, et le réveil du MJ traînerait plusieurs secondes à chaque parole du joueur."
+     ]
+    },
+    {
+     "cellules": [
+      "**D.54**",
+      "🧱 Le plafond du réveil est **plus serré** que celui du dossier",
+      "Sur `dossier.py`, le MJ a demandé : douze lignes sont un service. Sur le réveil, **il n'a rien demandé** — c'est le joueur qui a parlé. Une section non sollicitée en tête de chaque POST doit tenir en **6 lignes**, plus la queue de D.36 qui nomme les tables. Le reste ne se perd pas : il s'ouvre, puisque depuis D.35 chaque ligne de registre a une adresse et que le MJ peut écrire `[le compte des manquants](90010)`.",
+      "`PLAFOND_REVEIL = 6` à côté de `PLAFOND_REGISTRES = 12`",
+      "1 ligne",
+      "Réutiliser 12 ici, c'est refaire le mur à chaque tour de parole. Et un mur qu'on reçoit sans l'avoir demandé se saute plus vite qu'un mur qu'on a appelé."
+     ]
+    },
+    {
+     "cellules": [
+      "**D.55**",
+      "🚫 Ce que ce devis NE chiffre PAS, et pourquoi",
+      "**Les durées sont des ordres de grandeur, pas des mesures.** Le 4e, aucune exécution de python ne m'a été accordée : ni `dossier.py --sur manquants`, ni un `python -c` d'une ligne. J'ai donc compté les 8 532 lignes et les 17 de « LES TROIS COMPTES » **à la main, par lecture des fichiers**, et je n'ai pas mesuré une seule seconde de temps de passe. Le poste manquant du devis est donc : **une mesure de la passe de normalisation sur les 8 532 lignes** — si elle dépasse une demi-seconde, D.53 ne suffit pas et il faudra un index inversé, ce qui est un autre devis.",
+      "à mesurer le premier jour où le python s'exécute",
+      "inconnu, et c'est écrit ici pour que ça ne passe pas pour su",
+      "Un devis dont on ignore qu'il est estimé se lit comme un devis mesuré. Celui-ci dit lequel il est."
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "⚖️ Ce qui ne tient pas ensemble",
+   "colonnes": [
+    "⚖️ N°",
+    "🧮 La monnaie",
+    "📥 Ce qui est demandé",
+    "🪣 Ce qui existe",
+    "🕳️ L'écart",
+    "📅 Quand ça se voit",
+    "✂️ Ce que je dis qui tombe"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**D.41**",
+      "l'attention du MJ",
+      "Voir tout ce que les registres disent du sujet",
+      "16 992 signes rien que pour les actes, sur un seul sujet",
+      "Un dossier complet n'est pas lu ; un dossier lu n'est pas complet",
+      "",
+      "**Le plafond de 12 lignes tient, et la complétude tombe.** Un mur en tête de dossier ferait exactement le mal qu'on répare — le MJ sauterait la section, comme le joueur sautait le registre."
+     ]
+    }
+   ]
+  }
+ ]
+}

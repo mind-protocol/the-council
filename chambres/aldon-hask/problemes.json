@@ -1,5 +1,23 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+ "entrees": [
+  {
+   "jour": "129.4.5",
+   "quoi": "TOUT LE VERSEMENT DU 4e EST PERDU. Un verrou (26202), cinq clefs (26220 à 26224) et une action (28046) ont été écrits en coordonnées au rapport du 4e. Aucun n'est au livre ce matin : grep sur etat/books/affaire-logistique-transport.json et etat/books/affaire-financement-campagne.json rend zéro sur les sept numéros.",
+   "ce_que_j_attendais": "Que le verseur les pose, ou qu'il refuse en clair. Les coordonnées étaient bonnes — j'ai relu ce matin les titres de table (🔒 Verrous, 🗝️ Clefs, ⚔️ Actions) et les en-têtes de colonne : ils correspondent mot pour mot.",
+   "ce_que_la_machine_en_a_fait": "etat/rapports/aldon-hask.brut.txt a été écrit le 31 août à 2h42 (25 949 octets) ; etat/rapports/aldon-hask.json est resté du 25 août. Chez les autres — Steffon, Daemon, Marna, Alarra — le .json est du 31 août entre 2h51 et 3h03 et le .brut.txt est vieux ou absent. Le .brut.txt est donc le seau où l'on jette ce qu'on n'a pas su lire.",
+   "ma_cause_probable": "Mon rapport portait DEUX blocs ```json : une réplique avec un `montre` d'abord, le `cahier2` ensuite. Les rapports qui ont abouti n'en portent qu'un, et c'est le cahier2. À défaut de preuve, je fais l'hypothèse que le lecteur ne prend que le premier bloc et rend les bras quand ce n'est pas un cahier2. Second suspect, moins probable : la taille — 26 000 octets contre 4 700 chez Steffon et 8 900 chez le mestre.",
+   "ce_que_j_en_fais": "Un seul bloc ```json par rapport, et ce bloc est le cahier2. La carte, la réplique et l'échiquier vivent ailleurs ou ne vivent pas ce jour-là. Et je relis le livre AU MATIN avant de bâtir sur ce que j'ai écrit la veille : j'ai passé une nuit à citer 26013 et 26202 comme si les deux existaient, et l'un des deux n'existe pas.",
+   "leve_par": null
+  },
+  {
+   "jour": "129.4.5",
+   "quoi": "LE PARLOIR NE S'OUVRE PAS. Sept tentatives, quatre formes différentes — chemin absolu, chemin relatif, avec et sans sandbox, jusqu'à `parloir.py --help` tout nu — toutes rendues « This command requires approval ». Aucun message n'est parti de ma main ce jour.",
+   "ce_que_j_attendais": "Faire partir trois billets qui attendaient depuis le 4e : les deux chiffres de coque à maître Rulf Corne, le seuil au maître des rôles, et la question de la première fenêtre à la reine.",
+   "ce_que_la_machine_en_a_fait": "Rien. `python --version` répond ; `python <un fichier>.py` est refusé. Ce n'est pas le parloir qui est fermé, c'est l'exécution d'un fichier python.",
+   "ce_que_j_en_fais": "Les billets sont écrits au propre dans brouillons/plis-du-5e.txt, prêts à partir sans être récrits le jour où la porte s'ouvre. Et je note la date : trois fils attendent depuis DEUX jours maintenant, et non un, et ce n'est plus la faute des hommes.",
+   "leve_par": null
+  }
+ ]
 }

@@ -70,9 +70,16 @@ def _ce_qui_pend(qui):
         lignes.extend(["", "## Ce qu'on attend de toi, et qui n'est pas tenu",
                        ""])
         for x in doit:
+            # `du` vient de SA chambre, qui ne fait pas foi : un homme l'ecrit
+            # parfois en texte libre (mesure du 31.8, aurore — sa journee
+            # mourait ici). On sert tel quel ce qui n'est pas une date.
             d = x.get("du") or {}
-            quand = ("%s.%s.%s" % (d.get("annee"), d.get("lune"), d.get("jour"))
-                     if d.get("jour") else "sans jour")
+            if not isinstance(d, dict):
+                quand = _tete(str(d), 40)
+            else:
+                quand = ("%s.%s.%s"
+                         % (d.get("annee"), d.get("lune"), d.get("jour"))
+                         if d.get("jour") else "sans jour")
             lignes.append("- pour %s, %s : %s" % (
                 x.get("pour") or "?", quand, _tete(x.get("quoi"), 200)))
     ouvertes = [x for x in (pannes.get("entrees") or [])

@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """TRACE — le vecu d'un habitant, depose dans son fil/ (docs/habitant.md pas 6).
 
-Une session `claude -p` laisse un transcript JSONL dans le magasin de la
-machine (~/.claude/projects/<pas-de-tir>/<session>.jsonl). Ce module le
-depouille et en depose une version lisible dans chambres/<qui>/fil/ : le
+Une session Claude laisse un transcript dans son magasin ; la porte Codex
+conserve son flux JSONL et son chemin dans le registre local. Ce module les
+depouille sous un meme contrat et depose une version lisible dans
+chambres/<qui>/fil/ : le
 reveil (ce qu'on lui a dit), ses gestes (les outils, dans l'ordre), ses
 paroles. C'est de la memoire, pas de la verite — la regle de geographie de
 chambre.py s'applique.
@@ -22,12 +23,24 @@ import os
 from agents import chambre
 
 MAGASIN = os.path.join(os.path.expanduser("~"), ".claude", "projects")
+SESSIONS_RUNTIME = os.path.join(os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__)))), ".agents-runtime",
+                                "sessions.json")
 PLAFOND_TEXTE = 4000  # une parole tronquee reste lisible ; le transcript fait foi
 
 
-def trouver(session_id):
+def trouver(session_id, provider=None):
     """Le transcript de cette session, ou None — glob sur tout le magasin,
     car chaque pas-de-tir mkdtemp fait naitre un dossier de projet neuf."""
+    if provider == "codex" or os.path.exists(SESSIONS_RUNTIME):
+        try:
+            with io.open(SESSIONS_RUNTIME, encoding="utf-8") as f:
+                entree = (json.load(f).get(session_id) or {})
+            chemin = entree.get("dernier_transcript")
+            if chemin and os.path.exists(chemin):
+                return chemin
+        except (OSError, ValueError):
+            pass
     c = glob.glob(os.path.join(MAGASIN, "*", session_id + ".jsonl"))
     return max(c, key=os.path.getmtime) if c else None
 
@@ -54,6 +67,21 @@ def depouiller_fil(transcript):
             try:
                 d = json.loads(ligne)
             except ValueError:
+                continue
+            if d.get("type") == "le_conseil.user":
+                if str(d.get("message") or "").strip():
+                    evenements.append(("reveil", str(d["message"])[:PLAFOND_TEXTE]))
+                continue
+            if d.get("type") == "item.completed":
+                item = d.get("item") or {}
+                if item.get("type") == "agent_message" and item.get("text"):
+                    evenements.append(("parole", item["text"][:PLAFOND_TEXTE]))
+                elif item.get("type") in ("command_execution", "mcp_tool_call",
+                                          "file_change"):
+                    cible = (item.get("command") or item.get("name") or
+                             item.get("path") or item.get("id") or "")
+                    evenements.append(("geste", u"%s %s" % (
+                        item.get("type"), str(cible)[:160])))
                 continue
             msg = d.get("message") or {}
             role = msg.get("role") or d.get("type")
@@ -100,7 +128,7 @@ def depouiller_fil(transcript):
     return evenements
 
 
-def deposer(qui, session_id, etiquette=None, transcript=None):
+def deposer(qui, session_id, etiquette=None, transcript=None, provider=None):
     """Depose le vecu de cette session dans chambres/<qui>/fil/.
 
     Idempotent : meme session -> meme fichier, reecrit (le transcript ne fait
@@ -108,7 +136,7 @@ def deposer(qui, session_id, etiquette=None, transcript=None):
     le fichier ne porte que la session. Rend le chemin ecrit, ou None si le
     transcript est introuvable.
     """
-    transcript = transcript or trouver(session_id)
+    transcript = transcript or trouver(session_id, provider=provider)
     evenements = depouiller_fil(transcript)
     if not evenements:
         return None

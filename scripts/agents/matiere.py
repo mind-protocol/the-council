@@ -143,15 +143,27 @@ def dossier_adresses(elements):
 # main(), et le PLAFOND est la moitie de la spec — un registre deballe est un
 # mur (le meme mal que le tunnel).
 PLAFOND_REGISTRES = 12
+# La queue nomme des TABLES a ouvrir ; six suffisent, au-dela on redevient un
+# mur et personne n'en ouvre aucune.
+PLAFOND_QUEUE = 6
 
 
 def dossier_registres(sujets):
     """Les lignes de etat/books/ qui portent TOUS les sujets.
 
-    Rend (lignes, restes) : au plus PLAFOND_REGISTRES tuples
-    (volume, table, cellules), volumes les plus fournis d'abord, et le
-    compte de ce qui n'est pas montre par volume — la queue du rendu."""
+    Rend (lignes, voisines, ailleurs) :
+
+    - `lignes` : au plus PLAFOND_REGISTRES tuples (volume, table, cellules),
+      volumes les plus fournis d'abord ;
+    - `voisines` : pour CHAQUE table dont on montre au moins une ligne,
+      (volume, table, nombre d'AUTRES lignes de cette table) — qu'elles
+      portent le mot cherche ou non. C'est D.36, et c'est le coeur : un
+      avertissement appartient a ses VOISINS et non a son vocabulaire ;
+    - `ailleurs` : {volume: n} des lignes qui portaient bien le mot mais que
+      le plafond a coupees, dans des tables dont rien n'est montre. Sans
+      cela, elles disparaitraient sans laisser de trace."""
     par_volume = {}
+    taille = {}                       # (volume, table) -> lignes au total
     for v in charger("books.json"):
         titre_v = str(v.get("titre") or v.get("id") or "?")
         tables = list(v.get("tables") or [])
@@ -160,7 +172,10 @@ def dossier_registres(sujets):
                            "lignes": v.get("lignes") or []})
         for t in tables:
             titre_t = str(t.get("titre") or "")
-            for l in (t.get("lignes") or []):
+            toutes = t.get("lignes") or []
+            taille[(titre_v, titre_t)] = (
+                taille.get((titre_v, titre_t), 0) + len(toutes))
+            for l in toutes:
                 cells = (l.get("cellules") if isinstance(l, dict) else l) or []
                 texte = sans_accents(" ".join(str(c) for c in cells)
                                      + " " + str((l.get("note") or "")
@@ -168,32 +183,72 @@ def dossier_registres(sujets):
                 if all(s in texte for s in sujets):
                     par_volume.setdefault(titre_v, []).append((titre_t, cells))
     ordre = sorted(par_volume.items(), key=lambda kv: -len(kv[1]))
-    lignes, restes = [], {}
+    lignes, montrees, coupees = [], {}, {}
     for volume, trouvees in ordre:
         for titre_t, cells in trouvees:
+            cle = (volume, titre_t)
             if len(lignes) < PLAFOND_REGISTRES:
                 lignes.append((volume, titre_t, cells))
+                montrees[cle] = montrees.get(cle, 0) + 1
             else:
-                restes[volume] = restes.get(volume, 0) + 1
-    return lignes, restes
+                coupees[cle] = coupees.get(cle, 0) + 1
+
+    # D.36 — le compte est celui de TOUTE la table, moins ce qu'on en montre,
+    # et non celui des seules lignes qui portent le mot : « 9 de Ryke, aucun
+    # rapport avec les 9 ci-dessus » ne porte pas le mot « manquants », donc
+    # aucun filtre ne le rendra jamais. On ne le trouve pas, on tombe dessus.
+    voisines = []
+    for (volume, titre_t), n in montrees.items():
+        autres = taille.get((volume, titre_t), n) - n
+        if autres > 0:
+            voisines.append((volume, titre_t, autres, n))
+    # L'ordre est celui de la PERTINENCE, non celui de la graisse : une table
+    # ou 2 lignes ont repondu se lit avant une table ou 1 seule a repondu,
+    # meme si la seconde est trois fois plus grosse. Trie sur -autres seul,
+    # « LES TROIS COMPTES » (17 lignes, 2 trouvees) passait derriere « CHAQUE
+    # NOMBRE » (30 lignes, 1 trouvee) et se retrouvait 6e sur 6 au plafond :
+    # le cas fondateur de cette affaire tenait a une place. Verifie a la main
+    # le 4e sur --sur manquants, la machine m'etant fermee.
+    voisines.sort(key=lambda x: (-x[3], -x[2], x[0]))
+    voisines = [(vol, tab, aut) for vol, tab, aut, _ in voisines]
+
+    ailleurs = {}
+    for (volume, titre_t), n in coupees.items():
+        if (volume, titre_t) in montrees:
+            continue                  # deja compte dans ses voisines
+        ailleurs[volume] = ailleurs.get(volume, 0) + n
+    return lignes, voisines, ailleurs
 
 
 def imprimer_registres(sujets):
     """La section, PREMIERE du dossier : un registre est plus haut dans
     l'ordre d'autorite qu'un recit de scene. Rend le nombre de lignes."""
-    lignes, restes = dossier_registres(sujets)
+    lignes, voisines, ailleurs = dossier_registres(sujets)
     if not lignes:
         return 0
     print("\n== CE QUI EST ARRETE AUX REGISTRES  (%d)" % len(lignes))
+    entete = None
     for volume, table, cells in lignes:
         nettes = [re.sub(r"\*\*", "", str(c)).strip() for c in cells if
                   str(c).strip()]
-        print("  [%s%s]" % (volume, (" — " + table) if table else ""))
+        # Deux lignes de la meme table ne redemandent pas leur en-tete : ca
+        # coute des signes et ca cache le groupement, qui est l'information.
+        if (volume, table) != entete:
+            entete = (volume, table)
+            print("  [%s%s]" % (volume, (" — " + table) if table else ""))
         print("      " + " · ".join(nettes)[:400])
-    if restes:
-        print("      + %d autres ligne(s) dans %s" % (
-            sum(restes.values()),
-            ", ".join(sorted(restes))))
+    if voisines:
+        print("\n   OUVRIR CES TABLES — le voisin qui corrige ne porte pas")
+        print("   forcement le mot : on ne le trouve pas, on tombe dessus.")
+        for volume, table, n in voisines[:PLAFOND_QUEUE]:
+            print("     %s — %d autre(s) ligne(s)  · %s"
+                  % (table or "(table a plat)", n, volume))
+        if len(voisines) > PLAFOND_QUEUE:
+            print("     … et %d autre(s) table(s) entamee(s)"
+                  % (len(voisines) - PLAFOND_QUEUE))
+    if ailleurs:
+        print("   + %d ligne(s) portant le mot, coupee(s) au plafond, dans %s"
+              % (sum(ailleurs.values()), ", ".join(sorted(ailleurs))))
     return len(lignes)
 
 

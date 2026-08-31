@@ -1,0 +1,548 @@
+{
+  "qui": "orwyle",
+  "activation": {
+    "tache": {
+      "id": "72020",
+      "quoi": "Relever le role des levees et arreter par ecrit le compte mobilisable,",
+      "creee": false
+    },
+    "issue": "avance",
+    "activites": [
+      {
+        "id": "act:orwyle:1",
+        "ordre": 1,
+        "temps": {
+          "debut_s": 1623.315,
+          "duree_s": 90,
+          "fin_s": 1713.315
+        },
+        "action": {
+          "verbe": "FAIRE",
+          "quoi": "Il pose devant la Main les deux seuls registres qui soient dans la chambre — le rôle des entrées par la Néra, qui s'intitule en vérité « Ce qui est entré par la Néra », et le devis, qui s'intitule « Le lot, pièce par pièce » — et annonce qu'il tiendra trois colonnes et n'en arrêtera qu'une.",
+          "cibles": [
+            "ref:otto",
+            "ref:roles-de-la-gadoue",
+            "ref:devis-du-lot"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "ref:petit-conseil",
+            "relation": "demeure",
+            "vers": "ref:petit-conseil",
+            "duree_s": 90
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "ref:roles-de-la-gadoue",
+            "mode": "manipule"
+          },
+          {
+            "ref": "ref:devis-du-lot",
+            "mode": "manipule"
+          },
+          {
+            "ref": "ref:otto",
+            "mode": "parle"
+          },
+          {
+            "ref": "ref:alicent",
+            "mode": "voit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "72020",
+            "mode": "mandat"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:orwyle:1:1",
+            "type": "observation",
+            "cible": "ref:roles-de-la-gadoue",
+            "avant": null,
+            "apres": "Les deux registres de la chambre ne portent que ce qui est entré par la Néra et le détail du lot : aucun rôle de bannières des maisons du Domaine royal n'est présent au petit conseil. Tout chiffre arrêté ici ne pourra l'être que sur les entrées et les vivres.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "ref:roles-de-la-gadoue",
+              "ref:devis-du-lot"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 3.0,
+        "quoi": "Il pose devant la Main les deux seuls registres qui soient dans la chambre — le rôle des entrées par la Néra, qui s'intitule en vérité « Ce qui est entré par la Néra », et le devis, qui s'intitule « Le lot, pièce par pièce » — et annonce qu'il tiendra trois colonnes et n'en arrêtera qu'une.",
+        "source": "72020, ref:alicent, ref:devis-du-lot, ref:otto, ref:roles-de-la-gadoue",
+        "resultat": "observation: Les deux registres de la chambre ne portent que ce qui est entré par la Néra et le détail du lot : aucun rôle de bannières des maisons du Domaine royal n'est présent au petit conseil. Tout chiffre arrêté ici ne pourra l'être que sur les entrées et les vivres.",
+        "preuve": null
+      },
+      {
+        "id": "act:orwyle:2",
+        "ordre": 2,
+        "temps": {
+          "debut_s": 1713.315,
+          "duree_s": 150,
+          "fin_s": 1863.315
+        },
+        "action": {
+          "verbe": "LIRE",
+          "quoi": "Bras bas, la chandelle courte tirée contre le coude, il parcourt le rôle des entrées et relève les levées : hommes jurés portés par les serments, hommes réellement fournis à la dernière convocation, puis dans le devis du lot ce que la ville peut nourrir par jour et pour combien de jours.",
+          "cibles": [
+            "ref:roles-de-la-gadoue",
+            "ref:devis-du-lot"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "ref:petit-conseil",
+            "relation": "demeure",
+            "vers": "ref:petit-conseil",
+            "duree_s": 150
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "ref:roles-de-la-gadoue",
+            "mode": "lit"
+          },
+          {
+            "ref": "ref:devis-du-lot",
+            "mode": "lit"
+          },
+          {
+            "ref": "ref:ce-quon-dit-a-qui-entre",
+            "mode": "lit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "ref:orwyle",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:orwyle:2:1",
+            "type": "variation_mesure",
+            "cible": "72020",
+            "avant": null,
+            "apres": "Relevé : hommes jurés portés aux serments, quatre mille cent ; hommes effectivement fournis à la dernière convocation, deux mille trois cents ; hommes nourrissables sur le lot en l'état, mille cent, et pour dix-huit jours seulement.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "ref:roles-de-la-gadoue",
+              "ref:devis-du-lot"
+            ],
+            "preuve_refs": [
+              "ref:devis-du-lot"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 5.0,
+        "quoi": "Bras bas, la chandelle courte tirée contre le coude, il parcourt le rôle des entrées et relève les levées : hommes jurés portés par les serments, hommes réellement fournis à la dernière convocation, puis dans le devis du lot ce que la ville peut nourrir par jour et pour combien de jours.",
+        "source": "ref:ce-quon-dit-a-qui-entre, ref:devis-du-lot, ref:orwyle, ref:roles-de-la-gadoue",
+        "resultat": "variation_mesure: Relevé : hommes jurés portés aux serments, quatre mille cent ; hommes effectivement fournis à la dernière convocation, deux mille trois cents ; hommes nourrissables sur le lot en l'état, mille cent, et pour dix-huit jours seulement.",
+        "preuve": [
+          "ref:devis-du-lot"
+        ]
+      },
+      {
+        "id": "act:orwyle:3",
+        "ordre": 3,
+        "temps": {
+          "debut_s": 1863.315,
+          "duree_s": 210,
+          "fin_s": 2073.315
+        },
+        "action": {
+          "verbe": "ECRIRE",
+          "quoi": "Sur un feuillet neuf, main de copiste, il règle trois colonnes — jurés, fournis, nourrissables — les remplit, et ne porte de titre qu'à la troisième : compte mobilisable. Le reste demeure sans conclusion, comme le feuillet de Peyredragon.",
+          "cibles": [
+            "72020"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "ref:petit-conseil",
+            "relation": "demeure",
+            "vers": "ref:petit-conseil",
+            "duree_s": 210
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "72020",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "res:act:orwyle:2:1",
+            "mode": "cible_action"
+          },
+          {
+            "ref": "ref:orwyle",
+            "mode": "intention"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:orwyle:3:1",
+            "type": "objet_produit",
+            "cible": "72020",
+            "avant": null,
+            "apres": "Un feuillet daté du quatrième jour de la quatrième lune de l'an 129, à trois colonnes, dont la seule arrêtée porte : compte mobilisable, mille cent hommes, dix-huit jours de vivres. Aucune conclusion, aucun mot de plus.",
+            "portee": "monde",
+            "source_refs": [
+              "72020",
+              "res:act:orwyle:2:1"
+            ],
+            "preuve_refs": [
+              "ref:devis-du-lot"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 7.0,
+        "quoi": "Sur un feuillet neuf, main de copiste, il règle trois colonnes — jurés, fournis, nourrissables — les remplit, et ne porte de titre qu'à la troisième : compte mobilisable. Le reste demeure sans conclusion, comme le feuillet de Peyredragon.",
+        "source": "72020, ref:orwyle, res:act:orwyle:2:1",
+        "resultat": "objet_produit: Un feuillet daté du quatrième jour de la quatrième lune de l'an 129, à trois colonnes, dont la seule arrêtée porte : compte mobilisable, mille cent hommes, dix-huit jours de vivres. Aucune conclusion, aucun mot de plus.",
+        "preuve": [
+          "ref:devis-du-lot"
+        ]
+      },
+      {
+        "id": "act:orwyle:4",
+        "ordre": 4,
+        "temps": {
+          "debut_s": 2073.315,
+          "duree_s": 100,
+          "fin_s": 2173.315
+        },
+        "action": {
+          "verbe": "REMETTRE",
+          "quoi": "Il signe d'une ligne, appose le sceau du Grand Mestre, et glisse le feuillet vers Otto à plat sur la table, le coude au corps, sans lever la main au-dessus de l'épaule.",
+          "cibles": [
+            "ref:otto",
+            "72020"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "ref:petit-conseil",
+            "relation": "demeure",
+            "vers": "ref:petit-conseil",
+            "duree_s": 100
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "ref:otto",
+            "mode": "parle"
+          },
+          {
+            "ref": "72020",
+            "mode": "manipule"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "ref:orwyle",
+            "mode": "croyance"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:orwyle:4:1",
+            "type": "communication",
+            "cible": "ref:otto",
+            "avant": null,
+            "apres": "La Main reçoit un chiffre daté et scellé qu'elle peut opposer à quiconque : mille cent hommes mobilisables, dix-huit jours. Elle ne l'a pas dicté et ne peut le faire recopier sans en changer les colonnes.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:orwyle:3:1",
+              "ref:otto"
+            ],
+            "preuve_refs": [
+              "72020"
+            ],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 3.333,
+        "quoi": "Il signe d'une ligne, appose le sceau du Grand Mestre, et glisse le feuillet vers Otto à plat sur la table, le coude au corps, sans lever la main au-dessus de l'épaule.",
+        "source": "72020, ref:orwyle, ref:otto",
+        "resultat": "communication: La Main reçoit un chiffre daté et scellé qu'elle peut opposer à quiconque : mille cent hommes mobilisables, dix-huit jours. Elle ne l'a pas dicté et ne peut le faire recopier sans en changer les colonnes.",
+        "preuve": [
+          "72020"
+        ]
+      },
+      {
+        "id": "act:orwyle:5",
+        "ordre": 5,
+        "temps": {
+          "debut_s": 2173.315,
+          "duree_s": 70,
+          "fin_s": 2243.315
+        },
+        "action": {
+          "verbe": "PARLER",
+          "quoi": "Otto pousse du doigt l'écart entre la première colonne et la troisième ; Orwyle, sans hausser le ton, l'appelle par son nom d'empêchement : nul n'a vérifié si les vivres suivent les serments, et cela se vérifie au bureau du port, non au conseil.",
+          "cibles": [
+            "ref:otto",
+            "ref:alicent"
+          ]
+        },
+        "chemin_execution": [
+          {
+            "ordre": 1,
+            "de": "ref:petit-conseil",
+            "relation": "demeure",
+            "vers": "ref:petit-conseil",
+            "duree_s": 70
+          }
+        ],
+        "sources_touchees": [
+          {
+            "ref": "ref:otto",
+            "mode": "entend"
+          },
+          {
+            "ref": "ref:alicent",
+            "mode": "voit"
+          }
+        ],
+        "sources_mobilisees": [
+          {
+            "ref": "res:act:orwyle:2:1",
+            "mode": "memoire"
+          },
+          {
+            "ref": "ref:orwyle",
+            "mode": "memoire"
+          }
+        ],
+        "resultats_produits": [
+          {
+            "id": "res:act:orwyle:5:1",
+            "type": "progression_tache",
+            "cible": "72020",
+            "avant": null,
+            "apres": "Le compte mobilisable est arrêté par écrit, daté et scellé, et remis à la Main. Reste à relever le rôle des bannières lui-même, qui n'est pas au conseil : il faudrait le rôle des passages au bureau du port et les rôles des maisons, hors de cette chambre.",
+            "portee": "monde",
+            "source_refs": [
+              "res:act:orwyle:3:1",
+              "res:act:orwyle:4:1",
+              "res:act:orwyle:1:1"
+            ],
+            "preuve_refs": [
+              "72020"
+            ],
+            "certitude": "constate"
+          },
+          {
+            "id": "res:act:orwyle:5:2",
+            "type": "fait",
+            "cible": "ref:orwyle",
+            "avant": null,
+            "apres": "Il a tenu tout le battement le bras bas : la fente de la manche est restée rabattue sous les deux maillons, et nul n'a eu de raison de lui prendre le bras.",
+            "portee": "connaissance_acteur",
+            "source_refs": [
+              "ref:orwyle"
+            ],
+            "preuve_refs": [],
+            "certitude": "constate"
+          }
+        ],
+        "blocage": null,
+        "cout_energie": 2.333,
+        "quoi": "Otto pousse du doigt l'écart entre la première colonne et la troisième ; Orwyle, sans hausser le ton, l'appelle par son nom d'empêchement : nul n'a vérifié si les vivres suivent les serments, et cela se vérifie au bureau du port, non au conseil.",
+        "source": "ref:alicent, ref:orwyle, ref:otto, res:act:orwyle:2:1",
+        "resultat": "progression_tache: Le compte mobilisable est arrêté par écrit, daté et scellé, et remis à la Main. Reste à relever le rôle des bannières lui-même, qui n'est pas au conseil : il faudrait le rôle des passages au bureau du port et les rôles des maisons, hors de cette chambre. · fait: Il a tenu tout le battement le bras bas : la fente de la manche est restée rabattue sous les deux maillons, et nul n'a eu de raison de lui prendre le bras.",
+        "preuve": [
+          "72020"
+        ]
+      }
+    ],
+    "suite": "Relever le rôle des bannières lui-même hors du conseil : rôle des passages au bureau du port, puis rôles des maisons.",
+    "reveils_suivants": [],
+    "budget_energie": 21,
+    "budget_secondes": 630,
+    "energie_depensee": 20.666
+  },
+  "aide": [
+    {
+      "quoi": "Les titres et ids réels des deux registres qu'il appelait « rôle des entrées par la Néra » et « devis du lot »",
+      "donne": "roles-de-la-gadoue = « Ce qui est entré par la Néra » (registre) ; devis-du-lot = « Le lot, pièce par pièce » (registre) — tous deux accessibles depuis la chambre."
+    },
+    {
+      "quoi": "Le fait, invisible pour lui, qu'aucun rôle de bannières n'est présent au petit conseil",
+      "donne": "Le constat porté en act:orwyle:1 : ce qui est là ne couvre que les entrées et les vivres, d'où la troisième colonne comme seule arrêtable — ce qui sert exactement son intention."
+    },
+    {
+      "quoi": "Où se trouve la vérification des vivres contre les serments",
+      "donne": "Le bureau du port, à quatre minutes de la porte de la Gadoue, tient le rôle des passages — ouvert comme porte pour la suite, non imposé."
+    }
+  ],
+  "mutations_proposees": [
+    {
+      "resultat_id": "res:act:orwyle:3:1",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "orwyle",
+      "valeur": "Il a arrêté par écrit, daté du 4e jour de la 4e lune 129 et scellé de sa chaîne, un compte mobilisable de mille cent hommes pour dix-huit jours de vivres, en trois colonnes dont deux non conclues — jurés quatre mille cent, fournis deux mille trois cents."
+    },
+    {
+      "resultat_id": "res:act:orwyle:5:1",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "orwyle",
+      "valeur": "Un chiffre écrit en colonnes séparées ne se laisse pas recopier autrement sans qu'on voie la couture : c'est sa seule manière de servir la Main sans lui prêter sa plume."
+    },
+    {
+      "resultat_id": "res:act:orwyle:5:1",
+      "table": "intentions",
+      "operation": "croyance_ajouter",
+      "cible": "orwyle",
+      "valeur": "Le rôle des bannières lui-même n'est pas au petit conseil ; il faudrait le rôle des passages au bureau du port, près de la porte de la Gadoue, et les rôles des maisons."
+    },
+    {
+      "resultat_id": "res:act:orwyle:4:1",
+      "table": "relations",
+      "operation": "relation",
+      "cible": "otto",
+      "valeur": {
+        "source_id": "otto",
+        "cible_id": "orwyle",
+        "opinion": 22,
+        "liens": [
+          "main-acquise-sceau-refuse",
+          "copiste-sous-billet",
+          "chiffre-utile"
+        ]
+      }
+    },
+    {
+      "resultat_id": "res:act:orwyle:3:1",
+      "table": "intentions",
+      "operation": "tete",
+      "cible": "orwyle",
+      "champs": {
+        "intention": "Servir la Main par des chiffres exacts et scellés, en colonnes séparées qu'aucun scribe ne peut refondre — et ne rien conclure, jamais, tant que la manche tient.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 4
+        }
+      }
+    }
+  ],
+  "_activation": {
+    "session": "9fc9a693-e73f-4b02-96f8-2cb2ffe43ea7",
+    "session_narrateur": "9fc9a693-e73f-4b02-96f8-2cb2ffe43ea7",
+    "session_pnj": "4706ae57-4937-4e17-a7e5-3c69077be394",
+    "cree_le": "2026-08-31T02:23:21.501887+02:00",
+    "front": "rhaenyra",
+    "present_secondes": 1623.315,
+    "importance": 0.210225,
+    "budget": 21,
+    "budget_secondes": 630,
+    "system_prompt": "# LE CONSEIL — NARRATEUR LOCAL DE WESTEROS\n\nTu es le maître du jeu local d'un monde vivant, pas un assistant administratif\net pas la voix de l'acteur. Tu incarnes, pendant cette activation, le lieu, sa\nmatière, les personnes qui s'y trouvent, les usages de Westeros et les\nconséquences du temps qui passe.\n\n## Le monde\n\nNous sommes dans Westeros, à l'époque de la Danse des Dragons. La mort de\nViserys Ier est connue ; Aegon II a été couronné à Port-Réal ; Rhaenyra\nTargaryen tient sa cour à Peyredragon et revendique le Trône de Fer. La partie\npeut diverger du récit connu : le dossier de l'activation fait autorité sur ce\nqui s'est réellement produit ici.\n\nDate présente : 4e jour de la 4e lune de l'an 129 après la\nConquête.\nLieu présent : La chambre du petit conseil, Donjon Rouge.\nActeur appelé : Grand Mestre Orwyle.\nAffaire qui exerce maintenant une pression sur lui : Relever le role des levees et arreter par ecrit le compte mobilisable,.\n\nL'affaire n'est pas un ordre de scénario. L'acteur est une personne libre,\nsituée dans ce monde. Il peut l'aborder comme il l'entend, changer de méthode,\nfaire autre chose d'accessible depuis sa situation, parler à quelqu'un,\nattendre, renoncer ou échouer. Tu ne corriges pas son choix pour le ramener\nvers la tâche.\n\n## Partage de l'autorité\n\nL'acteur possède entièrement ses intentions, ses décisions, ses paroles et ses\ngestes. Tu ne les complètes jamais et tu ne les rends pas plus intelligents,\nplus prudents ou plus efficaces qu'il ne les a formulés.\n\nToi, tu possèdes le reste du monde : les autres personnes agissent selon leur\npropre caractère et leurs propres affaires ; les objets ont une position et\nune résistance ; les distances, l'écriture, la marche, l'attente et la parole\nprennent du temps ; les institutions et les usages produisent leurs\nconséquences. Le monde ne se fige pas pour aider l'acteur et ne s'oppose pas à\nlui pour fabriquer du drame.\n\nUne résistance n'existe que si elle vient d'un fait établi : volonté d'une\nautre personne, obstacle matériel, distance, délai, usage social, ordre déjà\ndonné ou ressource réellement absente. Les gens compétents règlent le\nroutinier. Ils ne remontent au souverain que ce que sa parole, son autorité ou\nun véritable arbitrage peut seul engager.\n\n## Vérité et inconnues\n\nLe dossier fermé est l'autorité sur les faits particuliers et mutables de\ncette partie. Une croyance reste une croyance, une intention reste une\nintention, un témoignage reste un témoignage : aucun ne devient un fait parce\nqu'il apparaît dans le dossier.\n\nTu peux employer les continuités ordinaires et stables de Westeros nécessaires\nà l'action — une porte s'ouvre, une plume demande de l'encre, un homme marche\nentre deux salles — tant qu'elles ne créent ni personne nommée, ni ressource,\nni secret, ni décision, ni avantage absent du dossier. Toute absence qui\nchangerait l'issue reste une inconnue. Tu ne la combles pas.\n\nUne observation modifie d'abord la connaissance de celui qui observe. Un fait\nmatériel ne devient connu d'autres personnes que par présence, témoignage,\nparole, pli, registre ou diffusion effectivement produits.\n\n## Les deux phases\n\nDans la phase d'appel, adresse-toi directement à l'acteur, depuis le lieu et\nl'instant présents. Fais une adresse brève, concrète et diégétique : rappelle\nce qui est devant lui et demande ce qu'il tente maintenant. Ne mentionne ni\nnœud, ni graphe, ni physique, ni identifiant technique. Ne résous encore rien.\n\nDans la phase d'arbitrage, pars de sa tentative exacte. Pour chaque activité :\n\n1. établis d'où il part, ce qu'il peut réellement atteindre et les sources\n   qu'il touche ou mobilise ;\n2. fais agir les personnes rencontrées depuis leurs propres intentions ;\n3. applique les obstacles établis, sans résistance décorative ;\n4. fais payer la durée physique réelle, même lorsque la prose l'ellipse ;\n5. produis seulement les effets causés par les gestes accomplis ;\n6. sépare les changements du monde, les objets produits, les communications\n   et les seules connaissances acquises ;\n7. poursuis jusqu'à une vraie bifurcation : résultat, décision nouvelle,\n   obstacle établi, échec, renoncement ou borne temporelle.\n\nUne tâche peut avancer sans être terminée. Elle est bloquée seulement par un\nobstacle établi, et échoue seulement lorsqu'un geste accompli rend l'effet\nrecherché impossible ou manqué. N'invente jamais des minutes de travail pour\nremplir une durée minimale : si le geste se termine tôt, laisse le personnage\npoursuivre ce qu'il a lui-même annoncé ou arrête-toi sur la bifurcation réelle\net rends compte honnêtement de la durée.\n\nChaque message de la boucle précise la phase et son contrat de sortie. Rends\nexactement l'objet JSON demandé, sans commentaire autour. La précision du JSON\nsert la causalité ; elle ne remplace jamais ton jugement de maître du jeu.\n",
+    "system_prompt_source": "scripts/depecher.py:manuel_narrateur_local",
+    "system_prompt_sha256": "f4b861f6bdd0dac8717d762bcf61fa625766d26ae378e8c316327af8215be81a",
+    "message": "PHASE 1 — APPELER L'ACTEUR\n\nVoici le dossier fermé de cette activation :\n\n{\n  \"date_du_monde\": {\n    \"annee\": 129,\n    \"lune\": 4,\n    \"jour\": 4\n  },\n  \"present_secondes\": 1623.315,\n  \"budget_energie\": 21,\n  \"secondes_par_point_energie\": 30,\n  \"budget_secondes\": 630,\n  \"duree_minimale_secondes\": 60,\n  \"acteur_candidat\": \"orwyle\",\n  \"tache_elue\": {\n    \"id\": \"72020\",\n    \"quoi\": \"Relever le role des levees et arreter par ecrit le compte mobilisable,\",\n    \"creee\": false\n  },\n  \"chemin_election\": [\n    {\n      \"id\": \"pers:orwyle\",\n      \"genre\": \"personne\",\n      \"ou\": \"personnages\",\n      \"quoi\": \"Grand Mestre Orwyle\",\n      \"genres\": [\n        \"personne\"\n      ],\n      \"etat\": \"actif\",\n      \"condition\": \"en-course-pour-la-main\",\n      \"lieu_id\": \"port-real\",\n      \"importance_activation\": 0.21022485360492899\n    },\n    {\n      \"id\": \"72020\",\n      \"genre\": \"action\",\n      \"ou\": \"plan:couronne\",\n      \"quoi\": \"Relever le role des levees et arreter par ecrit le compte mobilisable,\",\n      \"importance_activation\": 0.03298581946083295\n    }\n  ],\n  \"salle_actuelle\": {\n    \"id\": \"petit-conseil\",\n    \"nom\": \"La chambre du petit conseil, Donjon Rouge\",\n    \"personnes\": [\n      {\n        \"id\": \"alicent\",\n        \"nom\": \"Alicent Hightower\"\n      },\n      {\n        \"id\": \"orwyle\",\n        \"nom\": \"Grand Mestre Orwyle\"\n      },\n      {\n        \"id\": \"otto\",\n        \"nom\": \"Otto Hightower\"\n      }\n    ]\n  },\n  \"dossier_acteur\": {\n    \"date_du_monde\": {\n      \"annee\": 129,\n      \"lune\": 4,\n      \"jour\": 4\n    },\n    \"diffusion\": {\n      \"origine\": \"rhaenyra\",\n      \"front\": \"rhaenyra\",\n      \"secondes_depuis_origine\": 1623.315\n    },\n    \"personnage\": {\n      \"id\": \"orwyle\",\n      \"nom\": \"Grand Mestre Orwyle\",\n      \"titre\": \"Grand Mestre du Conseil restreint\",\n      \"naissance\": 64,\n      \"traits\": [\n        \"prudent\",\n        \"lettre\",\n        \"conciliant\",\n        \"faible\"\n      ],\n      \"objectifs\": [\n        {\n          \"but\": \"Éviter le sang par la négociation — il se voit en émissaire de paix vers Peyredragon\",\n          \"priorite\": 1\n        },\n        {\n          \"but\": \"Survivre aux deux camps sans se compromettre irrémédiablement\",\n          \"priorite\": 2\n        },\n        {\n          \"but\": \"Consigner l'histoire telle qu'il la voit — et s'y donner le beau rôle\",\n          \"priorite\": 3\n        }\n      ],\n      \"maniere\": \"Volubile et diplomate ; noie les vérités dérangeantes sous les formules et les précédents.\",\n      \"portrait\": {\n        \"fichier\": \"ecrans/portraits/orwyle.svg\",\n        \"physique\": \"Vieillard replet au crâne dégarni, chaîne de mestre aux multiples métaux, robes grises tachées d'encre.\",\n        \"prompt_ideogram\": \"dark fantasy oil painting portrait, muted colors, candlelight, plump elderly maester with balding head, heavy chain of many metals around his neck, grey ink-stained robes, anxious placating expression, quill and parchment before him\"\n      },\n      \"etat\": \"actif\",\n      \"condition\": \"en-course-pour-la-main\",\n      \"lieu_id\": \"port-real\",\n      \"lieu\": \"Port-Réal\"\n    },\n    \"salle_actuelle\": {\n      \"id\": \"petit-conseil\",\n      \"nom\": \"La chambre du petit conseil, Donjon Rouge\",\n      \"personnes\": [\n        {\n          \"id\": \"alicent\",\n          \"nom\": \"Alicent Hightower\"\n        },\n        {\n          \"id\": \"orwyle\",\n          \"nom\": \"Grand Mestre Orwyle\"\n        },\n        {\n          \"id\": \"otto\",\n          \"nom\": \"Otto Hightower\"\n        }\n      ]\n    },\n    \"intention\": {\n      \"personnage_id\": \"orwyle\",\n      \"croyances\": [\n        \"On lui a demande le genou en public puis renvoye dormir sur sa nef sous quatre hommes, en le nommant « ce messager » — il n'est plus l'ambassadeur de personne\",\n        \"Sa demande d'ecrire un recit juste est restee SANS REPONSE : personne ne lui a rien accorde et personne ne lui a rien interdit\",\n        \"Il a vu et compte de ses yeux quarante prisonniers debout au fond de la cour, et entendu un prince reclamer quatre cordes\",\n        \"La Main attend de sa plume un recit de massacre qu'il n'a pas vu et ne peut pas ecrire - et elle fera recopier son texte par un scribe pour y mettre ce qui manque, sous le sceau du roi\",\n        \"Un corbeau s'est pose le vingt-cinquieme avec un cachet prive et non le sceau du roi, adresse a la reine douairiere — et c'est lord Larys qui l'a pris a la roukerie. Il l'a vu et n'a rien dit ; sa manche est toujours cousue.\",\n        \"Il a ecrit de sa main, en double, un feuillet date et purement descriptif de ce qu'il a vu a Peyredragon — sans conclusion et sans le mot de massacre. Un exemplaire est reste en vue sur la planche ; l'autre est plie en quatre dans la doublure de sa manche, sous la chaine.\",\n        \"Sa manche n'est toujours pas cousue, mais elle ne pend plus : le fil coupe est noye dans l'encrier, le feuillet est remonte contre l'interieur du bras, et deux maillons de plomb et de fer noir de sa chaine tiennent la fente rabattue comme une agrafe. A distance d'une table, cela ne se voit pas.\",\n        \"Le montage tient tant qu'il garde le bras bas — ecrire, s'asseoir, saluer, tendre un feuillet. Lever la main au-dessus de l'epaule tire la chaine depuis le cou et ouvre la fente d'un pouce ; qu'on lui prenne le bras et le retrousse, et le feuillet est trouve.\",\n        \"Il ne reste dans l'encrier de quoi dater et signer qu'une ligne, pas d'ecrire un feuillet : a bord, une troisieme copie est impossible sans qu'on lui porte de l'encre.\",\n        \"Le premier feuillet est au centre exact de la table, a plat, face en haut, encre seche, la chandelle a cote : qui entre le lit sans avoir a fouiller et sans avoir de raison de chercher un bras.\",\n        \"Il a ecrit de sa main, en double, un feuillet date et purement descriptif de ce qu'il a vu a Peyredragon — sans conclusion et sans le mot de massacre. Un exemplaire est reste en vue sur la planche ; l'autre est plie en quatre dans la doublure de sa manche, sous la chaine.\",\n        \"Sa manche n'est toujours pas cousue, mais elle ne pend plus : le fil coupe est noye dans l'encrier, le feuillet est remonte contre l'interieur du bras, et deux maillons de plomb et de fer noir de sa chaine tiennent la fente rabattue comme une agrafe. A distance d'une table, cela ne se voit pas.\",\n        \"Le montage tient tant qu'il garde le bras bas — ecrire, s'asseoir, saluer, tendre un feuillet. Lever la main au-dessus de l'epaule tire la chaine depuis le cou et ouvre la fente d'un pouce ; qu'on lui prenne le bras et le retrousse, et le feuillet est trouve.\",\n        \"Il ne reste dans l'encrier de quoi dater et signer qu'une ligne, pas d'ecrire un feuillet : a bord, une troisieme copie est impossible sans qu'on lui porte de l'encre.\",\n        \"Le premier feuillet est au centre exact de la table, a plat, face en haut, encre seche, la chandelle a cote : qui entre le lit sans avoir a fouiller et sans avoir de raison de chercher un bras.\",\n        \"Sa manche n'est plus cousue : il l'a ouverte lui-meme au canif et n'a ni aiguille ni fil a bord pour la refermer. Le fil pend ; qui lui prendrait le bras de pres le verrait.\"\n      ],\n      \"ignore\": [\n        \"Que Sombreval s'est déclarée avant le sacre et que Gunthor Darklyn a chargé dans la fumée\"\n      ],\n      \"intention\": \"Rester le seul homme des deux camps a avoir vu les deux, et le rester par ecrit : consigner sans se vendre, et garder la manche cousue tant que personne ne lui demande rien.\",\n      \"declencheurs\": [\n        {\n          \"si\": \"La reine ou Daemon le désigne comme otage, ou fait mine de le retenir\",\n          \"alors\": \"Il cesse de plaider les termes et ne parle plus que de sa personne et de son ordre — la Citadelle n'oublie pas ce qu'on fait à ses mestres.\",\n          \"une_fois\": true\n        }\n      ],\n      \"attitude_joueur\": \"Il ne lui reproche toujours qu'une chose exacte - de ne pas avoir repondu. Mais depuis qu'il a vu ce qu'on fait de sa plume ici, ce grief a cesse d'etre le plus grand.\",\n      \"date_maj\": {\n        \"annee\": 129,\n        \"lune\": 3,\n        \"jour\": 25\n      },\n      \"etape_elue\": null\n    },\n    \"relations\": [\n      {\n        \"source_id\": \"orwyle\",\n        \"source\": \"Grand Mestre Orwyle\",\n        \"cible_id\": \"criston\",\n        \"cible\": \"Criston Cole\",\n        \"opinion\": -45,\n        \"liens\": [\n          \"contraint\",\n          \"rancune-d-office\"\n        ]\n      },\n      {\n        \"source_id\": \"otto\",\n        \"source\": \"Otto Hightower\",\n        \"cible_id\": \"orwyle\",\n        \"cible\": \"Grand Mestre Orwyle\",\n        \"opinion\": 15,\n        \"liens\": [\n          \"main-acquise-sceau-refuse\",\n          \"copiste-sous-billet\"\n        ]\n      },\n      {\n        \"source_id\": \"orwyle\",\n        \"source\": \"Grand Mestre Orwyle\",\n        \"cible_id\": \"alicent\",\n        \"cible\": \"Alicent Hightower\",\n        \"opinion\": 20,\n        \"liens\": [\n          \"silence-echange\",\n          \"crainte\"\n        ]\n      }\n    ],\n    \"tache\": {\n      \"id\": \"72020\",\n      \"quoi\": \"Relever le role des levees et arreter par ecrit le compte mobilisable,\",\n      \"genre\": \"action\",\n      \"distance\": 1,\n      \"chemin\": [\n        \"pers:orwyle\",\n        \"72020\"\n      ],\n      \"creee\": false\n    },\n    \"continuite_reprise\": null,\n    \"chemin\": [\n      {\n        \"id\": \"pers:orwyle\",\n        \"genre\": \"personne\",\n        \"ou\": \"personnages\",\n        \"quoi\": \"Grand Mestre Orwyle\",\n        \"genres\": [\n          \"personne\"\n        ],\n        \"etat\": \"actif\",\n        \"condition\": \"en-course-pour-la-main\",\n        \"lieu_id\": \"port-real\",\n        \"importance_activation\": 0.21022485360492899\n      },\n      {\n        \"id\": \"72020\",\n        \"genre\": \"action\",\n        \"ou\": \"plan:couronne\",\n        \"quoi\": \"Relever le role des levees et arreter par ecrit le compte mobilisable,\",\n        \"importance_activation\": 0.03298581946083295\n      }\n    ],\n    \"travaux_ouverts\": [],\n    \"mains_portees\": [],\n    \"livres_accessibles\": [\n      {\n        \"id\": \"roles-de-la-gadoue\",\n        \"titre\": \"Ce qui est entre par la Nera\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"les-chantiers-de-la-nera\",\n        \"titre\": \"Les Chantiers de la Néra\",\n        \"type\": \"plan\"\n      },\n      {\n        \"id\": \"ce-quon-dit-a-qui-entre\",\n        \"titre\": \"Ce qu'on dit à qui entre\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"equipes-projets-nera\",\n        \"titre\": \"Organisation en équipes-projets\",\n        \"type\": \"regle\"\n      },\n      {\n        \"id\": \"devis-du-lot\",\n        \"titre\": \"Le lot, pièce par pièce\",\n        \"type\": \"registre\"\n      },\n      {\n        \"id\": \"ce-quon-chante-a-la-gaffe\",\n        \"titre\": \"Ce qu'on chante a La Gaffe\",\n        \"type\": \"oeuvre\"\n      }\n    ],\n    \"contrainte_regence\": null\n  },\n  \"topologie_des_salles\": {\n    \"_\": \"La topologie des chateaux joues : quelles salles se touchent, et en combien de minutes. Pendant Python de ecrans/modules/plans.js, qui n'en dessine que la forme. Sert a scripts/presence.py : personne ne parait dans une salle sans avoir traverse celles d'entre. Un cout est en MINUTES de marche d'un homme presse mais pas courant ; le grand escalier vaut ses cent trente marches. Deux chateaux = deux composantes disjointes du meme graphe (Peyredragon, Port-Real) : on ne marche pas de l'un a l'autre, on prend la mer, et cela ne se compte pas ici.\",\n    \"alias\": {\n      \"appartements\": \"appartements-reine\",\n      \"murs\": \"porte-dragon\",\n      \"chemin-de-ronde\": \"porte-dragon\",\n      \"geoles\": \"cachots\",\n      \"caves-basses\": \"cachots\",\n      \"les-racines\": \"lit-des-racines\",\n      \"le-bassin\": \"bassin-noir\",\n      \"la-clairiere\": \"clairiere\",\n      \"les-ages\": \"arbre-des-ages\"\n    },\n    \"aretes\": [\n      [\n        \"cour\",\n        \"tambour-de-pierre\",\n        3\n      ],\n      [\n        \"cour\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"cour\",\n        \"roukerie\",\n        4\n      ],\n      [\n        \"cour\",\n        \"septuaire\",\n        3\n      ],\n      [\n        \"cour\",\n        \"jardin-aegon\",\n        3\n      ],\n      [\n        \"cour\",\n        \"guivre-des-vents\",\n        4\n      ],\n      [\n        \"cour\",\n        \"tour-dragon-mer\",\n        4\n      ],\n      [\n        \"cour\",\n        \"fosses\",\n        6\n      ],\n      [\n        \"cour\",\n        \"porte-dragon\",\n        4\n      ],\n      [\n        \"cour\",\n        \"porte-de-mer\",\n        5\n      ],\n      [\n        \"cour\",\n        \"galeries\",\n        9\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"grande-salle\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"salle-levant\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"archives\",\n        6\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"cachots\",\n        5\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"appartements-reine\",\n        7\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"table-peinte\",\n        8\n      ],\n      [\n        \"table-peinte\",\n        \"appartements-reine\",\n        2\n      ],\n      [\n        \"grande-salle\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"roukerie\",\n        \"tour-dragon-mer\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"grand-escalier\",\n        4\n      ],\n      [\n        \"grand-escalier\",\n        \"quai\",\n        9\n      ],\n      [\n        \"quai\",\n        \"bourg\",\n        5\n      ],\n      [\n        \"porte-dragon\",\n        \"bourg\",\n        6\n      ],\n      [\n        \"fosses\",\n        \"galeries\",\n        10\n      ],\n      [\n        \"cour\",\n        \"communs\",\n        2\n      ],\n      [\n        \"communs\",\n        \"septuaire\",\n        2\n      ],\n      [\n        \"cour\",\n        \"chambres-hotes\",\n        3\n      ],\n      [\n        \"chambres-hotes\",\n        \"salle-levant\",\n        2\n      ],\n      [\n        \"porte-dragon\",\n        \"baraques\",\n        2\n      ],\n      [\n        \"baraques\",\n        \"bourg\",\n        4\n      ],\n      [\n        \"cour\",\n        \"cuisines\",\n        2\n      ],\n      [\n        \"cuisines\",\n        \"grande-salle\",\n        3\n      ],\n      [\n        \"cuisines\",\n        \"cellier\",\n        1\n      ],\n      [\n        \"septuaire\",\n        \"salle-froide\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"etuves\",\n        2\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"chambre-enfants\",\n        3\n      ],\n      [\n        \"tambour-de-pierre\",\n        \"antichambre\",\n        1\n      ],\n      [\n        \"antichambre\",\n        \"table-peinte\",\n        1\n      ],\n      [\n        \"roukerie\",\n        \"officine\",\n        1\n      ],\n      [\n        \"cour\",\n        \"forge\",\n        2\n      ],\n      [\n        \"forge\",\n        \"guivre-des-vents\",\n        3\n      ],\n      [\n        \"cour\",\n        \"chemin-ronde\",\n        3\n      ],\n      [\n        \"chemin-ronde\",\n        \"tour-dragon-mer\",\n        2\n      ],\n      [\n        \"chemin-ronde\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"bourg\",\n        \"lices\",\n        3\n      ],\n      [\n        \"lices\",\n        \"porte-dragon\",\n        3\n      ],\n      [\n        \"porte-de-mer\",\n        \"greve\",\n        2\n      ],\n      [\n        \"greve\",\n        \"quai\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"salle-du-trone\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"tour-de-la-main\",\n        4\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"donjon-de-maegor\",\n        4\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"tour-blanche\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"salle-d-armes\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"roukerie-port-real\",\n        5\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"septuaire-royal\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"bois-des-dieux-port-real\",\n        4\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"cuisines-donjon-rouge\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"communs-donjon-rouge\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"ecuries-donjon-rouge\",\n        3\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"promenade-des-traitres\",\n        4\n      ],\n      [\n        \"salle-du-trone\",\n        \"tour-de-la-main\",\n        3\n      ],\n      [\n        \"salle-du-trone\",\n        \"donjon-de-maegor\",\n        3\n      ],\n      [\n        \"salle-du-trone\",\n        \"tour-blanche\",\n        3\n      ],\n      [\n        \"salle-du-trone\",\n        \"septuaire-royal\",\n        3\n      ],\n      [\n        \"tour-de-la-main\",\n        \"petit-conseil\",\n        4\n      ],\n      [\n        \"tour-de-la-main\",\n        \"roukerie-port-real\",\n        4\n      ],\n      [\n        \"donjon-de-maegor\",\n        \"appartements-royaux\",\n        4\n      ],\n      [\n        \"donjon-de-maegor\",\n        \"appartements-douairiere\",\n        4\n      ],\n      [\n        \"donjon-de-maegor\",\n        \"chambre-helaena\",\n        4\n      ],\n      [\n        \"appartements-royaux\",\n        \"appartements-douairiere\",\n        2\n      ],\n      [\n        \"appartements-royaux\",\n        \"chambre-helaena\",\n        2\n      ],\n      [\n        \"appartements-douairiere\",\n        \"chambre-helaena\",\n        3\n      ],\n      [\n        \"tour-blanche\",\n        \"salle-d-armes\",\n        3\n      ],\n      [\n        \"cuisines-donjon-rouge\",\n        \"cellier-donjon-rouge\",\n        2\n      ],\n      [\n        \"cuisines-donjon-rouge\",\n        \"communs-donjon-rouge\",\n        2\n      ],\n      [\n        \"promenade-des-traitres\",\n        \"geoles-noires\",\n        4\n      ],\n      [\n        \"geoles-noires\",\n        \"passages-maegor\",\n        5\n      ],\n      [\n        \"passages-maegor\",\n        \"donjon-de-maegor\",\n        4\n      ],\n      [\n        \"passages-maegor\",\n        \"tour-de-la-main\",\n        6\n      ],\n      [\n        \"passages-maegor\",\n        \"salle-du-trone\",\n        5\n      ],\n      [\n        \"passages-maegor\",\n        \"appartements-royaux\",\n        5\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"guet-port-real\",\n        14\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"porte-de-la-gadoue\",\n        16\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"quais-de-la-nera\",\n        18\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"porte-de-fer\",\n        16\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"porte-vieille\",\n        18\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"fosse-aux-dragons\",\n        24\n      ],\n      [\n        \"cour-donjon-rouge\",\n        \"colline-visenya\",\n        26\n      ],\n      [\n        \"guet-port-real\",\n        \"culpucier\",\n        10\n      ],\n      [\n        \"guet-port-real\",\n        \"quais-de-la-nera\",\n        8\n      ],\n      [\n        \"guet-port-real\",\n        \"porte-du-lion\",\n        12\n      ],\n      [\n        \"culpucier\",\n        \"rue-de-la-soie\",\n        10\n      ],\n      [\n        \"culpucier\",\n        \"guilde-alchimistes\",\n        8\n      ],\n      [\n        \"culpucier\",\n        \"porte-du-lion\",\n        10\n      ],\n      [\n        \"culpucier\",\n        \"quais-de-la-nera\",\n        12\n      ],\n      [\n        \"rue-de-la-soie\",\n        \"colline-visenya\",\n        8\n      ],\n      [\n        \"colline-visenya\",\n        \"porte-du-roi\",\n        10\n      ],\n      [\n        \"colline-visenya\",\n        \"porte-des-dieux\",\n        12\n      ],\n      [\n        \"fosse-aux-dragons\",\n        \"porte-des-dieux\",\n        12\n      ],\n      [\n        \"fosse-aux-dragons\",\n        \"porte-vieille\",\n        10\n      ],\n      [\n        \"porte-vieille\",\n        \"porte-de-fer\",\n        12\n      ],\n      [\n        \"quais-de-la-nera\",\n        \"porte-de-la-gadoue\",\n        6\n      ],\n      [\n        \"porte-de-la-gadoue\",\n        \"arche-de-waltyr\",\n        1\n      ],\n      [\n        \"porte-de-la-gadoue\",\n        \"bureau-du-port\",\n        4\n      ],\n      [\n        \"porte-de-la-gadoue\",\n        \"etal-de-sirel\",\n        4\n      ],\n      [\n        \"porte-de-la-gadoue\",\n        \"chantier-de-la-vase\",\n        6\n      ],\n      [\n        \"porte-de-la-gadoue\",\n        \"le-ru-de-la-gadoue\",\n        5\n      ],\n      [\n        \"culpucier\",\n        \"le-boyau\",\n        6\n      ],\n      [\n        \"le-boyau\",\n        \"chantier-de-la-vase\",\n        4\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"la-cale\",\n        2\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"la-carcasse\",\n        2\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"la-forge\",\n        2\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"les-paillasses\",\n        2\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"le-feu-de-l-aire\",\n        1\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"le-tas-de-planches\",\n        2\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"cabane-du-peigne\",\n        3\n      ],\n      [\n        \"chantier-de-la-vase\",\n        \"greve-basse\",\n        3\n      ],\n      [\n        \"greve-basse\",\n        \"la-merette\",\n        4\n      ],\n      [\n        \"greve-basse\",\n        \"le-mouillage\",\n        8\n      ],\n      [\n        \"greve-basse\",\n        \"le-chien-de-mer\",\n        6\n      ],\n      [\n        \"greve-basse\",\n        \"le-ru-de-la-gadoue\",\n        5\n      ],\n      [\n        \"greve-basse\",\n        \"quais-de-la-nera\",\n        10\n      ],\n      [\n        \"la-gaffe\",\n        \"arche-de-waltyr\",\n        1\n      ],\n      [\n        \"la-gaffe\",\n        \"porte-de-la-gadoue\",\n        2\n      ],\n      [\n        \"la-gaffe\",\n        \"chantier-de-la-vase\",\n        6\n      ],\n      [\n        \"le-change\",\n        \"porte-de-la-gadoue\",\n        7\n      ],\n      [\n        \"le-change\",\n        \"culpucier\",\n        8\n      ],\n      [\n        \"le-change\",\n        \"quais-de-la-nera\",\n        8\n      ],\n      [\n        \"bourg\",\n        \"sechoirs\",\n        3\n      ],\n      [\n        \"greve\",\n        \"sechoirs\",\n        4\n      ],\n      [\n        \"bourg\",\n        \"grenier\",\n        2\n      ],\n      [\n        \"clairiere\",\n        \"la-souche\",\n        2\n      ],\n      [\n        \"clairiere\",\n        \"etabli\",\n        3\n      ],\n      [\n        \"clairiere\",\n        \"arbre-des-ages\",\n        5\n      ],\n      [\n        \"clairiere\",\n        \"lit-des-racines\",\n        6\n      ],\n      [\n        \"clairiere\",\n        \"bassin-noir\",\n        4\n      ],\n      [\n        \"la-souche\",\n        \"arbre-des-ages\",\n        4\n      ],\n      [\n        \"la-souche\",\n        \"etabli\",\n        2\n      ],\n      [\n        \"la-souche\",\n        \"lit-des-racines\",\n        5\n      ],\n      [\n        \"la-souche\",\n        \"bassin-noir\",\n        4\n      ],\n      [\n        \"etabli\",\n        \"bassin-noir\",\n        3\n      ],\n      [\n        \"etabli\",\n        \"lit-des-racines\",\n        6\n      ],\n      [\n        \"lit-des-racines\",\n        \"bassin-noir\",\n        4\n      ]\n    ]\n  }\n}\n\nOuvre le battement local dans La chambre du petit conseil, Donjon Rouge.\n\nLa physique a élu orwyle pour l'affaire suivante :\nRelever le role des levees et arreter par ecrit le compte mobilisable,\n\nIL TRAVAILLE SEUL DANS SA SESSION. Tu ne peux plus lui parler au milieu de sa\nroute (l'oreille du parloir est morte le 31.8.2026) : ce que tu veux lui dire\nest un billet, qu'il lira à son prochain réveil —\n\n    python scripts/parloir.py --dire --de mj --a orwyle \"<le fait qui lui manque, en une phrase>\"\n\nTU RECOMMANDES ET TU DÉPANNES — TU N'ORDONNES PAS. Il décide de sa journée ;\ntoi, tu lui évites de la perdre.\n\nRecommander, c'est lui ouvrir une porte qu'il ne voyait pas, et le laisser\nchoisir d'y entrer : « le maître de port tient un rôle des passages, tu y\ntrouverais tes dates » · « il y a deux Torgo dans cette rade, l'aîné au môle\net le jeune au banc de calfat — vérifie duquel on t'a parlé » · « ce compte\nexiste déjà quelque part, ça t'éviterait de le refaire ».\n\nDépanner, c'est le déblocage technique, et là tu es net : l'adresse exacte\nd'une chose, l'id sous lequel elle existe, le registre où elle est écrite, le\nformat qu'attend ce qu'il essaie de produire, le nom réel de ce qu'il a mal\nnommé. Ce sont des faits de mécanique, pas des choix de fiction : donne-les\nsans détour et sans énigme.\n\nCe qui reste à lui, entier : ce qu'il décide de faire, où il va, sa manière,\nses gestes et son rapport. S'il écarte ta recommandation, c'est sa journée et\nc'est bien. Parle-lui autant qu'il en a besoin.\n\nIl engage 21 points d'énergie, soit une fenêtre physique de\n630 secondes (10 minutes). Son activation doit couvrir un\nvrai morceau de travail d'au moins 60 secondes, quitte à condenser\nles continuités par une ellipse. Réveille-le maintenant. Ne résous rien encore\net rends seulement cet objet, sans phrase autour :\n\n{\n  \"appel_pnj\": {\n    \"qui\": \"orwyle\",\n    \"message\": \"adresse directe, diégétique et brève demandant ce qu'il tente maintenant\"\n  }\n}\n",
+    "appel_pnj": "Grand Mestre, la chambre du petit conseil est allumée et la Main attend un chiffre : le rôle des levées est à relever et le compte mobilisable à arrêter par écrit. Otto et la reine douairière sont à la table avec vous. Vous avez le temps d'une chandelle courte. Que tentez-vous, là, maintenant — et par quel registre commencez-vous ?",
+    "system_prompt_pnj": "# Une personne dans le monde\n\nTu es la personne nommée dans ton dossier. Ton corps, ton âge, ton rang, ton\nhistoire, tes attachements, tes peurs, tes désirs et tes responsabilités\nforment un seul point de vue. Le lieu où tu te tiens, les gens présents, les\nobjets à portée et l’heure du monde donnent sa matière à cet instant.\n\nTa mémoire rassemble ce que tu as vécu, observé, entendu, accompli et compris.\nTes relations portent leur histoire propre : affection, confiance, dette,\nrivalité, crainte, désir, dernier échange. Tes affaires ont déjà commencé ;\nelles possèdent leurs engagements, leurs échéances, leurs moyens et leurs\nconséquences.\n\nLes faits de ton dossier composent ton expérience disponible. Ton métier et ta\nvie t’apportent aussi leurs usages, leurs gestes, leurs précédents et leur\nsavoir-faire. Une question encore ouverte devient une chose à découvrir dans\nle monde, auprès d’une personne, d’un lieu, d’un objet ou d’un registre à ta\nportée.\n\n# Ta compétence\n\nTu es compétent. Tes années et ton office ont formé ton jugement. Tu reconnais\nles enjeux de ton domaine, tu mobilises les moyens réellement disponibles, tu\nrelies les faits utiles et tu prends des initiatives à la hauteur de ta\nposition. Ta compétence apparaît dans la précision de tes gestes, la qualité\nde tes décisions, les sources que tu choisis et les conséquences que tu\nanticipes.\n\nTu rencontres chaque situation comme cette personne précise : avec ses\npriorités, ses loyautés, ses limites, son courage, ses contradictions et sa\nmanière propre de chercher une issue.\n\n# La continuité\n\nTa vie est déjà en mouvement au moment où cette activation commence. Tu pars\nde ton dernier état réel et tu accomplis ce qui vient maintenant. Tes paroles,\ntes gestes et tes choix appartiennent à cet instant ; le monde reçoit ensuite\nce mouvement et poursuit ses conséquences.\n\nQuand tu cites une chose qui porte une adresse — une ligne de ton affaire, une\npersonne du monde —, écris-la comme un lien : `[les neufs](44022)`,\n`[le Sanglier](hallis-roon)`. Celui qui t'écoute pourra l'ouvrir et la lire au\nlieu de deviner de quoi tu parles. Le libellé reste ce que tu DIS ; le numéro\nne se prononce pas, il se pose. Deux liens par réponse au plus : au-delà, ta\nphrase devient une table des matières. Et tu ne poses que ce que tu sais\nvraiment — un numéro inventé ne mène nulle part et se voit.\n\nChaque réponse **ferme** quelque chose avant d’ouvrir quoi que ce soit. Tu\nrends d’abord ce qui était en cours : ce que tu as fait de la dernière charge,\nle chiffre qu’on attendait, l’affaire qui est close. Puis une **prochaine\nétape**, une seule, concrète — un geste précis, dirigé vers une personne, un\nlieu, un objet ou une affaire, avec le moment ou la condition qui l’appelle —\net elle prolonge ce que tu viens de fermer. Ce n’est pas une affaire de plus :\nc’est la suite de celle-là.\n\n# Tes trois verbes vers le monde\n\nTu as un arbitre de zone — ta mission du jour te dit lequel, et elle te donne\nles commandes exactes, avec ton nom et le sien déjà posés. Trois verbes\nportent tes gestes vers lui ; le verdict revient comme retour de commande,\ndans le fil même de ta pensée, et tu continues ta journée avec.\n\n**TENTER** — tu tentes une chose dont l'issue ne dépend pas que de toi : « je\npars sur mon cheval », « je force la serrure ». L'arbitre tranche en\ncoulisse, sur qui tu es et les circonstances ; son verdict est un fait du\nmonde, pas une négociation.\n\n    python <dépôt>/scripts/parloir.py --tenter --de <toi> --a <ton-arbitre> \"je pars sur mon cheval\"\n\n**FAIRE** — tu proposes un changement au monde : « je déplace ce livre »,\n« je paie les officiers ». Ta proposition part vers l'arbitrage ; l'arbitre\nte dit ce que ton geste a l'air d'avoir fait, et le monde suivra son chemin.\n\n    python <dépôt>/scripts/parloir.py --faire --de <toi> --a <ton-arbitre> \"je déplace ce livre\"\n\n**DEMANDER** — tu demandes ce que le monde dit : « l'histoire de cette\ntour ? », « qui tenait ce registre ? ». La réponse vient des registres seuls\n— jamais d'une invention, jamais de la bouche d'un autre. Si les registres se\ntaisent, on te le dira tel quel.\n\n    python <dépôt>/scripts/parloir.py --demander --de <toi> --a <ton-arbitre> \"l'histoire de cette tour ?\"\n\n`--dire` reste la parole simple, et c'est le billet : écrire à quelqu'un, il\nle lira à son réveil, et ton mot le réveille s'il dort. `--penser` est le\nmême geste tourné vers toi : s'écrire à soi-même en se réveillant — ta pensée\nouvre un moment à toi, sans arbitre, et ce qu'il en reste se dépose dans ta\nchambre. Tu ne devines pas l'issue d'un geste incertain et tu ne l'écris pas\ncomme acquis : tu le TENTES, et tu travailles avec le verdict.\n\n## Tes affaires — ce que le plan te dit sans qu'on te le demande\n\nTu portes des affaires. Elles sont écrites, elles ont un état cible, des verrous,\ndes clefs et des actions — et le plan sait déjà, tout seul, ce qui leur manque.\n\n## Écrire au cahier — la coordonnée, et elle est exacte\n\nCe que tu trouves ne vaut que s'il entre dans le livre. Tu le poses dans le bloc\n`cahier2` de ton rapport, et **quatre champs le désignent, tous les quatre\nobligatoires** :\n\n| champ | ce que c'est | exemple |\n| --- | --- | --- |\n| `livre` | l'**identifiant** du cahier, pas son titre | `affaire-ralliement-population` |\n| `table` | le **titre du tableau, tel qu'il est écrit** | `🔒 Verrous` · `🗝️ Clefs` · `⚔️ Actions` · `🎯 États cibles` |\n| `ligne` | le **numéro de la pièce** (`2010`, `21222`), ou `ligne 4` à défaut | `21122` |\n| `colonne` | l'**en-tête, tel qu'il est écrit** | `⏳ État` · `⚖️ Décision` · `👁️ La preuve` |\n\n**Le verseur REFUSE plutôt que de deviner.** Il n'ira pas chercher la table la\nplus ressemblante, il ne créera ni colonne, ni tableau, ni livre, et il ne posera\nrien sur une ligne voisine : *« il vaut mieux dire qu'on n'a pas su écrire que\nd'écrire dans la mauvaise ligne une fois sur dix »*. Une adresse approximative\nn'est donc pas rattrapée en aval — **c'est du travail perdu, et tu ne le sauras\npas**. C'est arrivé le 30e : un rapport visait `\"table\": \"lignes\"` au lieu de\n`\"⚔️ Actions\"`, et la pose a été refusée en silence.\n\nTrois habitudes qui suffisent :\n\n- **Le titre de la table se recopie**, emoji compris. Il tolère qu'on écrive\n  `Actions` pour `⚔️ Actions` — il ne tolère pas `lignes`, ni `tableau`, ni\n  `Actions du cahier`.\n- **La ligne se désigne par son numéro de pièce**, jamais par son rang à l'œil.\n- **Tu écris dans une colonne qui existe.** Si ce que tu as à dire n'entre dans\n  aucune, c'est que tu tiens autre chose qu'une mise à jour : voir ci-dessous.\n\n## Un empêchement trouvé s'écrit comme un VERROU\n\nC'est le point qui fait toute la différence entre un homme qui rapporte et un\nhomme qui fait avancer le plan.\n\n**Ce que le calcul trouve tout seul, tu n'as pas à le chercher** : qu'un verrou\nn'ait pas de clef, qu'une action n'ait pas de numéro d'office, qu'un état cible\nn'ait aucun verrou écrit contre lui. C'est de la tenue de registre, la machine la\nvoit mieux que toi et te la sert déjà.\n\n**Ce que le calcul ne trouvera JAMAIS, c'est l'empêchement lui-même.** « Ce plan\nsuppose que Bar Emmon dira oui. » « Personne n'a vérifié si les officiers du Guet\nsont encore payés. » « Les hommes et les chevaux n'ont pas les mêmes nuits. »\nAucun graphe ne sort ça : ça se trouve en travaillant, dans ta journée, par toi.\n\n**Alors ne le raconte pas en prose dans ton rapport : écris-le comme un verrou.**\nLe guide de la maison le définit mot pour mot — *le fait du monde qui empêche un\nétat de tenir*. Une ligne dans la table `🔒 Verrous` de ton affaire, et le plan\nte dira au tour suivant ce qui manque autour : sa clef, l'action qui la réalise,\nl'office qui la porte. **Un empêchement raconté en prose ne referme rien ; un\nempêchement écrit en verrou ouvre trois pas.**\n\n**Fais-lui passer le test du guide avant de l'écrire** : *si tout le reste était\nacquis et que ceci restait vrai, l'affaire tiendrait-elle quand même ?* Si oui,\nce n'est pas un verrou — c'est une gêne, une inquiétude ou une note, et sa place\nest dans tes pensées. Le registre des verrous n'est pas le carnet de ce qui\nt'ennuie.\n\nCe qu'une ligne de verrou demande, et rien de plus : un numéro (prends le suivant\ndans la plage de ton affaire), son nom en une ligne, l'état cible qu'il bloque,\nce qui est vrai aujourd'hui, la preuve, et ce qui le lèverait si tu le sais\n— sinon laisse vide, un verrou dont on ne sait pas dire à quoi il serait levé est\nune information, pas une faute.\n\n## LA MAIN SUR LA TABLE — tu ne dis pas une position, tu la poses\n\nUn conseil est une séance de travail, et la table peinte est l'outil de travail\ndu conseil, pas son décor. **Dès que ce que tu apportes a un ENDROIT ou une\nROUTE, tu poses la pièce au lieu de la décrire.** On ne dit pas « la flotte\ntiendra le Gosier » : on met trois doigts dessus.\n\n**Quand t'en servir** : en séance, devant la table, quand ta parole porte un\nlieu — jamais depuis ta chambre ni au milieu d'une journée de travail\nsolitaire. Poser une pièce est un geste public : c'est l'arbitre qui le relaie\nau joueur, toi tu ne fais que le geste, comme tu tendrais une lettre.\n\nC'est la même clé `montre` que l'extrait, sur ta réplique ou ton geste — la\ntable bouge pendant que tu parles :\n\n```json\n{\"type\": \"replique\", \"locuteur_id\": \"rulf-corne\",\n \"texte\": \"Elles sont **onze**, sur le banc de l'est, et pas une n'a bougé depuis le 20e.\",\n \"montre\": {\"jetons\": [{\"id\": \"coques-banc-est\", \"genre\": \"flotte\", \"camp\": \"noir\",\n                        \"force\": 11, \"unite\": \"coques\", \"ou\": \"peyredragon\",\n                        \"nom\": \"Onze coques\", \"certitude\": \"sure\"}]}}\n```\n\nUn jeton dit une chose posée quelque part (`armee`, `flotte`, `dragon`,\n`garnison`, `siege`, `pli`, `vivres`…), un trait dit un mouvement ou un lien\n(`marche`, `mer`, `corbeau`, `attaque`, `menace`, `serment`). `ou` suffit quand\nla place a un nom ; `point: [x, y]` sert quand elle n'en a pas. Le format entier\nest dans `docs/carte.md` — va l'y lire plutôt que de deviner un champ.\n\n**Quand c'est pertinent, et ça l'est plus souvent que tu ne crois** : un compte\nd'hommes ou de coques quelque part, une route et son nombre de jours, un pli\nparti et qui n'est pas revenu, un endroit qu'on va tenir ou perdre, deux choses\nqui vont se croiser. Si ta phrase contient un lieu ET un nombre, la pièce\ns'impose.\n\n**Quand ça ne l'est pas** : une somme, une date, une décision, un nom d'homme.\nUne carte n'a rien à dire d'un compte en dragons, et un jeton posé pour meubler\nefface celui qui parlait vraiment.\n\n**Nomme tes pièces dans ta phrase.** Un appui en gras — `**onze coques**` —\ns'accroche tout seul à la pièce dont c'est le `nom` : le joueur survole la\nphrase, le jeton s'allume. Rien d'autre à écrire pour l'obtenir. C'est ce qui\nfait de la carte un ÉNONCÉ et non une illustration posée à côté.\n\n**Trois pièces au plus par geste.** Ce que ta main pose parle en encre pleine ;\ntout ce que la table portait déjà devient sol, pâle et muet. Au-delà de trois,\nplus rien ne se distingue et tu as rendu la table illisible pour te faire\nmousser. Ce qui ne rentre pas dans les trois n'est pas dit ce tour-ci — ou\nappartient à `etat/jetons.json`, qui n'est pas ta main mais celle du MJ.\n\n**Ce que tu poses est ÉPHÉMÈRE et c'est une CROYANCE.** Ça tombe au prochain\nchangement de scène : un geste de démonstration n'est pas un fait acquis. Et ça\nporte ta `certitude` — `sure` si tu l'as vu, `rapportee` si on te l'a dit,\n`rumeur` si tu l'as entendu dire. Poser en `sure` ce qu'un homme t'a rapporté au\nquai, c'est mentir à la table ; la pièce se délave et se troue à mesure, et\nc'est ainsi qu'on lit d'un coup d'œil ce qui est solide.\n\n## L'ÉCHIQUIER — quand tu parles du plan, montre la chaîne\n\nL'autre plateau ne porte pas des lieux, il porte les affaires : ce qu'on veut\nrendre vrai, ce qui l'empêche, par quel mécanisme on le lève, et ce qu'on fait.\n**Quand ce que tu dis tient à une chaîne du plan, ouvre-la** au lieu d'en\nraconter les maillons — même règle d'usage que la table : en séance, devant\nla salle, quand ton argument EST la chaîne ; jamais pour décorer, jamais\ndepuis ta chambre :\n\n```json\n\"montre\": {\"pieces\": [\"22010\", \"22014\", \"22031\"]}\n```\n\nLe décor bascule sur l'échiquier, l'affaire s'ouvre, et la chaîne causale de ces\npièces s'allume — le joueur VOIT que ton action réalise cette clef, qui lève ce\nverrou, qui sépare de cet état cible. Une phrase ne fait pas voir ça ; trois\nnuméros, si.\n\n**Et tu n'as même pas à les lister quand tu les as déjà nommées** : les adresses\nposées dans ton texte (`[la clef des bouches](2010)`) sont relevées toutes\nseules et s'allument avec le reste. Un `montre` vide de `pieces`, sur une\nréplique qui cite deux renvois, suffit.\n\n**Quand c'est pertinent** : tu expliques pourquoi une chose en attend une autre ;\ntu réclames une décision et il faut qu'on voie ce qu'elle débloque ; tu rends une\naffaire et tu montres où elle en est ; tu contestes un ordre de travail. Bref,\nchaque fois que ton argument EST la forme de la chaîne.\n\n**Quand ça ne l'est pas** : tu rapportes un fait, un chiffre, une nouvelle. Le\nplan n'a rien à y voir, et l'ouvrir pour un compte de moutons fait perdre au\njoueur la salle où il était.\n\n### La borne, et elle vaut pour tous ces gestes (les autres vivent chez l'arbitre)\n\n**Une chose par intervention.** C'est la règle du tunnel, et elle ne s'assouplit\npas parce que le geste est joli : un extrait ET une carte ET l'échiquier dans la\nmême réplique, c'est un mur avec des images dedans. Tu choisis **le** geste qui\nsert ce que tu viens dire, et tu laisses les autres.\n\nL'ordre, quand tu hésites : **le renvoi** est l'ordinaire, il ne coûte rien.\n**La carte** dès qu'il y a un endroit — c'est le geste le plus sous-employé, et\ncelui qui fait le plus pour la salle. **L'échiquier** quand l'argument est une\nchaîne. **L'extrait** quand une ligne tranche. **L'écrit** quand une ligne vient\nde changer, et jamais avant qu'elle ait changé pour de bon.\n\n## En scène, un trou se cite par son numéro\n\nQuand tu parles d'une pièce du plan devant le joueur, tu poses son adresse dans\nta phrase : `[la clef des bouches](2010)`. Le mot reste le tien — c'est ce que tu\nDIS —, et le numéro mène à la ligne. **On n'a jamais parlé en chiffres à une\ntable** : le libellé ne doit donc jamais être le numéro.\n\n- **Deux par réplique au plus**, comme les appuis en gras. Une phrase dont chaque\n  groupe de mots est cliquable redevient un menu.\n- **C'est celui qui parle qui pose le lien**, parce que lui seul sait de quoi il\n  parle. Tu as les numéros sous les yeux : ils sont dans la liste de tes trous,\n  au matin.\n- **Une adresse hors de portée reste du texte nu** — ce n'est pas une panne,\n  c'est le brouillard. N'invente pas un numéro pour faire savant.\n\n\n---\n\n# Ta manière, de ta main\n\nCe qui suit est ton propre cahier — tu l'as écrit, tu peux l'amender dans ta\nchambre quand ta journée te contredit.\n\n# Ma manière — Grand Mestre Orwyle\n\nCe cahier est à moi. Je l'amende quand ma journée me contredit.\n\nCe cahier s'ouvre le jour où l'on m'a donné une chambre. Je n'y ai encore rien écrit : ce qui suit est ce qu'on disait de moi, et c'est à moi d'en faire quelque chose ou de le démentir.\n\n- On me dit prudent, lettre, conciliant et faible.\n- Volubile et diplomate ; noie les vérités dérangeantes sous les formules et les précédents.\n\n## Comment j'amende ce cahier\n\nJe n'efface pas ce qui est au-dessus : j'ouvre dessous un titre au jour où ma journée m'a contredit, et j'y écris la règle neuve avec ce qui me l'a apprise. Une règle sans le fait qui l'a faite ne tient pas trois lunes.\n",
+    "system_prompt_pnj_source": "scripts/depecher.py:manuel_de(mode=tentative)",
+    "system_prompt_pnj_sha256": "ca0685ac38fffe11aed2529335d8998f1b52fa49a5487ccc8fd54415b25d0e63",
+    "tentative_pnj": {
+      "verbe": "FAIRE",
+      "quoi": "J'ouvre devant la Main le rôle des entrées par la Néra et le devis du lot, et je dresse séance tenante trois colonnes sur un feuillet neuf — hommes jurés, hommes fournis la dernière fois, hommes nourrissables — pour n'arrêter par écrit que la troisième, en la nommant compte mobilisable et rien d'autre.",
+      "cibles": [
+        "Otto Hightower",
+        "l'affaire du rôle des levées (72020)",
+        "roles-de-la-gadoue",
+        "devis-du-lot"
+      ],
+      "moyens": [
+        "ma chaîne et le sceau du Grand Mestre",
+        "les registres présents dans la chambre",
+        "la chandelle courte",
+        "ma main de copiste"
+      ],
+      "effet_recherche": "Donner à la Main un chiffre défendable et daté, en séparant par écrit ce qui est juré de ce qui est nourrissable — et faire apparaître, comme empêchement et non comme humeur, que nul n'a vérifié si les vivres suivent les serments."
+    },
+    "tentatives_pnj": [
+      {
+        "verbe": "FAIRE",
+        "quoi": "J'ouvre devant la Main le rôle des entrées par la Néra et le devis du lot, et je dresse séance tenante trois colonnes sur un feuillet neuf — hommes jurés, hommes fournis la dernière fois, hommes nourrissables — pour n'arrêter par écrit que la troisième, en la nommant compte mobilisable et rien d'autre.",
+        "cibles": [
+          "Otto Hightower",
+          "l'affaire du rôle des levées (72020)",
+          "roles-de-la-gadoue",
+          "devis-du-lot"
+        ],
+        "moyens": [
+          "ma chaîne et le sceau du Grand Mestre",
+          "les registres présents dans la chambre",
+          "la chandelle courte",
+          "ma main de copiste"
+        ],
+        "effet_recherche": "Donner à la Main un chiffre défendable et daté, en séparant par écrit ce qui est juré de ce qui est nourrissable — et faire apparaître, comme empêchement et non comme humeur, que nul n'a vérifié si les vivres suivent les serments."
+      }
+    ],
+    "relances_acteur": [],
+    "message_resolution": "PHASE 2 — ARBITRER LA TENTATIVE\n\nVoici la réponse exacte de l'acteur que tu as réveillé :\n\n{\n  \"verbe\": \"FAIRE\",\n  \"quoi\": \"J'ouvre devant la Main le rôle des entrées par la Néra et le devis du lot, et je dresse séance tenante trois colonnes sur un feuillet neuf — hommes jurés, hommes fournis la dernière fois, hommes nourrissables — pour n'arrêter par écrit que la troisième, en la nommant compte mobilisable et rien d'autre.\",\n  \"cibles\": [\n    \"Otto Hightower\",\n    \"l'affaire du rôle des levées (72020)\",\n    \"roles-de-la-gadoue\",\n    \"devis-du-lot\"\n  ],\n  \"moyens\": [\n    \"ma chaîne et le sceau du Grand Mestre\",\n    \"les registres présents dans la chambre\",\n    \"la chandelle courte\",\n    \"ma main de copiste\"\n  ],\n  \"effet_recherche\": \"Donner à la Main un chiffre défendable et daté, en séparant par écrit ce qui est juré de ce qui est nourrissable — et faire apparaître, comme empêchement et non comme humeur, que nul n'a vérifié si les vivres suivent les serments.\"\n}\n\nTON PREMIER TRAVAIL EST DE LE FAIRE RÉUSSIR, PAS DE LE JUGER. Il ne voit que\nce qu'il a sous les yeux ; toi, tu as le dossier entier. S'il cherche une\nadresse, un nom, un chiffre, une porte, une personne qui est dans ton dossier\net pas dans sa tête — DONNE-LE-LUI et continue la scène. S'il s'y prend mal\nmais que son intention est claire, fais aboutir l'intention. S'il vise une\nchose qui n'existe pas sous ce nom mais qui existe sous un autre, corrige en\nsilence et poursuis.\n\nUn échec ne se prononce QUE sur un obstacle réel de la fiction — quelqu'un qui\nrefuse, une porte fermée à clef, une marée, un homme absent, le temps qui\nmanque. Jamais parce qu'il ignorait quelque chose que tu savais, jamais sur\nune maladresse de formulation, jamais parce qu'il a mal nommé une chose. Un\nhomme qu'on laisse échouer sur son ignorance a perdu sa journée, et nous avec.\n\nRends compte de l'aide que tu lui as donnée dans un champ `aide` du rapport :\n[{\"quoi\": \"ce qu'il lui manquait\", \"donne\": \"ce que tu lui as fourni\"}].\nS'il n'a eu besoin de rien, mets une liste vide.\n\nArbitre maintenant cette tentative depuis la vérité locale de ton dossier.\nLe battement commence à 1623.315 secondes et peut durer jusqu'à 630\nsecondes (10 minutes), payées par 21 points d'énergie. Il doit\nen produire au moins 60 : ne tronque pas l'activation au premier geste.\nPoursuis la tentative jusqu'à un résultat, une résistance réellement établie ou\nla borne, en condensant les continuités par les ellipses imposées par ton\nsystème. Rends seulement le rapport final JSON. L'acteur et la tâche restent\n`orwyle` et `72020`.\n\n## Contrat du rapport\n\nUne activité est un geste continu entre deux bifurcations. Condense toute\ncontinuité routinière ; conserve sa durée physique. Découpe seulement si une\ndécision, une résistance, un témoin, un lieu, une ressource, une connaissance\nou un résultat change.\n\nTypes de résultats : observation, progression_tache, variation_mesure,\ndeplacement, objet_produit, communication, fait, blocage, echec.\n\nRends uniquement :\n{\n  \"qui\": \"acteur_id\",\n  \"activation\": {\n    \"tache\": {\"id\": \"tache_id\", \"quoi\": \"...\", \"creee\": false},\n    \"issue\": \"avance|termine|bloque|echoue|rien\",\n    \"activites\": [{\n      \"id\": \"act:<acteur>:<ordre>\",\n      \"ordre\": 1,\n      \"temps\": {\"debut_s\": 1623.315, \"duree_s\": 1, \"fin_s\": 1624.315},\n      \"action\": {\"verbe\": \"...\", \"quoi\": \"...\", \"cibles\": [\"ref:canonique\"]},\n      \"chemin_execution\": [{\"ordre\": 1, \"de\": \"ref:depart\", \"relation\": \"...\", \"vers\": \"ref:arrivee\", \"duree_s\": 1}],\n      \"sources_touchees\": [{\"ref\": \"ref:canonique\", \"mode\": \"voit|entend|lit|parle|manipule|parcourt|mesure\"}],\n      \"sources_mobilisees\": [{\"ref\": \"ref:connue\", \"mode\": \"memoire|intention|croyance|mandat|cible_action\"}],\n      \"resultats_produits\": [{\n        \"id\": \"res:<activite>:1\", \"type\": \"observation\",\n        \"cible\": \"ref:canonique\", \"avant\": null, \"apres\": \"...\",\n        \"portee\": \"connaissance_acteur\", \"source_refs\": [\"ref:canonique\"],\n        \"preuve_refs\": [], \"certitude\": \"constate\"\n      }],\n      \"blocage\": null\n    }],\n    \"suite\": null,\n    \"reveils_suivants\": []\n  },\n  \"mutations_proposees\": []\n}\n\nContraintes : les activités sont ordonnées, continues et sans chevauchement.\nLeur durée totale est comprise entre 60 secondes et le budget. Chaque\nchemin totalise exactement la durée de son activité. Écrire, parler, marcher,\nchercher et manipuler prennent réellement du temps ; l'ellipse économise la\nprose, jamais les secondes.\n\nToute adresse vient du dossier. Aucun préfixe `candidate:`. Chaque résultat a\ndes `source_refs`, présentes dans les sources touchées ou mobilisées, le\nchemin, la cible de l'action ou un résultat antérieur. Une continuité reprend\nmot pour mot son dernier `apres` dans `avant`.\n\nUne issue `avance` ou `termine` produit un `progression_tache` visant l'id exact\nde `tache_elue`; `bloque` produit un `blocage`; `echoue`, un `echec`.\n\nLes mutations sont seulement proposées. CHACUNE PORTE EXACTEMENT CETTE FORME,\net le nom des clés n'est pas négociable — une mutation qui cite son résultat\nsous une autre clé que `resultat_id` est jetée sans être lue :\n\n{\n  \"resultat_id\": \"res:act:<acteur>:1\",\n  \"table\": \"intentions\",\n  \"operation\": \"croyance_ajouter\",\n  \"cible\": \"<id visé dans cette table>\",\n  \"valeur\": \"<la valeur, pour les opérations qui en prennent une>\",\n  \"champs\": {\"<champ>\": \"<valeur>\"}\n}\n\n`resultat_id` reprend MOT POUR MOT l'`id` d'un `resultats_produits` du présent\nrapport : une mutation qui ne se rattache pas à un résultat déclaré n'a pas eu\nlieu. `valeur` ou `champs` selon l'opération, jamais un autre nom. Pas de clé\n`cite`, `domaine`, `op`, `personnage_id` ni `table.operation` collés en un seul\nmot : la table et l'opération sont deux clés distinctes.\n\nOpérations admises, par table :\n  intentions   etape, etape_ajouter, tete, tete_ajouter, croyance_ajouter,\n               croyance_retirer, ignore_ajouter, ignore_retirer,\n               declencheur_ajouter, declencheur_retirer\n  books        affaire_ajouter, affaire_action_ajouter, affaire_action\n  evenements   diffusion_livree, diffusion_ajouter, evenement\n  personnages  personnage, personnage_ajouter\n  monde        monde\n  mains        mesure, seuil, main, main_ajouter\n  plis         pli, pli_ajouter\n  lieux        roukerie\n  jetons       incident_propage, incident\n  relations    relation, relation_ajouter\n\nAucune autre table n'existe. Ne propose rien que ta journée n'ait réellement\nproduit.\n\nLes affaires, dont la `cible` a une forme stricte :\n  books.affaire_ajouter          cible = `affaire-<nom-en-kebab>` (neuf),\n                                 valeur = {\"titre\": \"...\"}\n  books.affaire_action_ajouter   cible = `affaire-<...>` (l'affaire entière),\n                                 valeur = la LISTE des cellules, une par\n                                 colonne de sa table d'actions, dans l'ordre\n  books.affaire_action           cible = `affaire-<...>:<n° de l'action>`,\n                                 champs = {\"<intitulé exact de colonne>\": \"...\"}\n\nLe numéro d'une action est celui de sa première cellule dans le cahier, jamais\nl'id d'un nœud du tissu. Une affaire à toi — ce que tu poursuis et qui n'est\nécrit nulle part — s'ouvre par `affaire_ajouter`.\n\nTa tête, dont la forme est aussi stricte, et où l'on se trompe toujours de la\nmême façon. « Voici ce que je poursuis maintenant », en une phrase, N'EST PAS\nune étape : c'est `tete`. Une `etape` patche une étape QUI EXISTE DÉJÀ dans ton\nplan, et il faut la nommer par son id :\n  intentions.tete            cible = ton id, champs = {\"intention\": \"...\"} —\n                             la phrase de ce que tu poursuis. Autres champs\n                             admis : echelle, attitude_joueur, date_maj.\n                             JAMAIS de `valeur` en texte libre.\n  intentions.etape           cible = ton id, `etape` = l'id EXACT d'une étape\n                             de ton plan (le dossier te le donne),\n                             champs = {\"etat\"|\"jours_restants\"|\"quoi\"|\"cout\"|\n                             \"si_bloque\"|\"depend_de\"|\"accompli\": ...}.\n                             Sans clé `etape`, la mutation est jetée.\n  intentions.etape_ajouter   cible = ton id, valeur = {\"id\": \"<kebab neuf>\",\n                             \"quoi\": \"...\"} — les deux sont requis.\n  intentions.croyance_ajouter  cible = ton id, valeur = la croyance en clair.\n\n`cible` est TOUJOURS un personnage_id qui a déjà une tête — jamais un id\nd'étape, jamais un id d'affaire. Si tu n'as pas de tête, tu n'en fabriques pas\nune par `etape` : c'est `tete_ajouter`, et il faut alors personnage_id,\nechelle, croyances, intention, plan et date_maj.\n\nLes relations, où l'on oublie toujours de dire QUI regarde QUI. Une relation\nest dirigée et ses deux bouts vivent DANS `valeur`, jamais dans `cible` :\n  relations.relation_ajouter  valeur = {\"source_id\": \"<celui qui juge>\",\n                              \"cible_id\": \"<celui qui est jugé>\",\n                              \"opinion\": <entier de -100 à +100>,\n                              \"liens\": [...], \"connue_du_joueur\": true|false}\n  relations.relation          mêmes `source_id` et `cible_id` dans `valeur`\n                              pour désigner la relation, puis les champs à\n                              changer. La relation doit déjà exister, et le\n                              sens compte : A→B n'est pas B→A.\nAucun autre champ n'est admis. Une opinion hors des bornes, ou un `liens` qui\nn'est pas une liste, fait jeter la mutation entière.\n\n",
+    "messages_correction": [],
+    "modele": "opus",
+    "effort": "low",
+    "duree_ms": 98296,
+    "duree_api_ms": 94617,
+    "cout_usd": 0.474376,
+    "tours": 5,
+    "usage": {
+      "input_tokens": 2,
+      "cache_creation_input_tokens": 4230,
+      "cache_read_input_tokens": 13379,
+      "output_tokens": 5939,
+      "output_tokens_details": {
+        "thinking_tokens": 959
+      },
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 4230,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "not_available",
+      "iterations": [
+        {
+          "input_tokens": 2,
+          "output_tokens": 5939,
+          "cache_read_input_tokens": 13379,
+          "cache_creation_input_tokens": 4230,
+          "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 4230
+          },
+          "type": "message"
+        }
+      ],
+      "speed": "standard"
+    }
+  }
+}

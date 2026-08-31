@@ -1,6 +1,74 @@
 {
  "quoi": "Ce que j'attends de quelqu'un, et ce que quelqu'un attend de moi. Le plan compte des PAS ; ceci compte des GENS qui n'ont pas répondu, et depuis quand. Ce n'est pas la même chose et cela ne se calcule pas.",
  "regle": "Une ligne par fil ouvert. Le jour où j'ai demandé, non le jour où je m'en suis souvenu. Un fil qu'on n'a pas relancé depuis trois jours se relance ou se ferme.",
- "j_attends": [],
- "on_attend_de_moi": []
+ "j_attends": [
+  {
+   "qui": "nesse",
+   "quoi": "Une SECONDE bouche de Sombreval, prise séparément, qui n'a pas parlé à la première : l'intendant qui tenait mon acte de protection est-il vivant, prisonnier ou mort, et quelle main tient mon sceau.",
+   "demande_le": "129.4.4",
+   "relance": "129.4.7",
+   "si_rien": "Si elle remonte sans deux têtes séparées, ou avec deux récits de la même source : je ne conclus rien, je n'arme pas, mais je lève l'interdiction faite à lord Corlys — une coque va reconnaître la côte de Sombreval sans y toucher terre, et rentre."
+  },
+  {
+   "qui": "steffon-darklyn",
+   "quoi": "Ses limites DICTÉES DE SA MAIN pour la ligne 14 du registre des offices. Le Sanglier les a écrites le 27e en son absence : on lui a écrit ses bornes dans le dos, ce que l'action 40021 existait pour éviter.",
+   "demande_le": "129.3.27",
+   "relance": "129.4.5",
+   "si_rien": "La ligne 14 reste à moitié : un nom sans bornes est un nom qu'un autre remplira."
+  },
+  {
+   "qui": "corlys",
+   "quoi": "La règle du pied signée, partie jointe au même pli que sa charge de la mer. Deux signatures sur cinq à ce jour.",
+   "demande_le": "129.3.27",
+   "relance": "129.4.9",
+   "si_rien": "Il est ici, sur ce rocher, aujourd'hui. Le pli est parti à Lamarck : la signature se prend de vive voix et se date."
+  },
+  {
+   "qui": "sara-poulain",
+   "quoi": "Son oui pour le mot scellé — parler pour moi en mon absence. Elle ne lit pas ; Gerardys refuse de sceller avant qu'on le lui ait lu deux fois.",
+   "demande_le": "129.3.27",
+   "relance": "129.4.6",
+   "si_rien": "Sans son oui, il n'y a pas de scellé ; sans scellé, le jour venu, chacun décidera un peu."
+  },
+  {
+   "qui": "gerardys",
+   "quoi": "Les trois convocations du Trident qui ONT un perchoir — Blackwood, Vance, Piper — parties par l'air, l'heure notée. La quatrième, aux Mouton, n'a aucun perchoir : elle attend une quille ou un cavalier.",
+   "demande_le": "129.4.5",
+   "relance": "129.4.6",
+   "si_rien": "Trois maisons sur quatre porteront mon nom, et la quatrième saura que je l'ai oubliée."
+  }
+ ],
+ "on_attend_de_moi": [
+  {
+   "qui": "corlys",
+   "quoi": "MON SCEAU sur les seize copies de la commission du 27e (action 22070 du contrôle naval). Elle était due le 8e. Elle n'attend rien d'autre au monde, et il ne me l'a jamais réclamé — il l'a seulement consigné dans son cahier.",
+   "du_depuis": "129.4.8",
+   "trouve_le": "129.4.9, en cherchant par où la clef de l'eau pouvait voyager",
+   "si_rien": "Chaque jour qui passe, tout homme qu'il envoie arrêter un marchand le fait au nom d'une maison privée — c'est écrit de sa main, daté, et cela lui fait du bon droit contre moi."
+  },
+  {
+   "qui": "daemon-et-steffon",
+   "quoi": "Les deux signatures de la couture, sur UN feuillet, dans la même heure, mon sceau dessous — action 40033, écrite aujourd'hui, due aujourd'hui. La phrase, elle, date du 5e.",
+   "du_depuis": "129.4.5",
+   "si_rien": "Quatre jours qu'une phrase juste traîne sans signature. Non signée, elle n'est pas au-dessus des deux écritures qu'elle borne : elle est à côté, et c'est un papier de plus dans le tas où chacun choisit celui qui l'arrange."
+  },
+  {
+   "qui": "rosby",
+   "quoi": "Son acte de protection, qu'il n'a jamais reçu — et qu'il va apprendre par une rumeur. Alarra Rosby est dans cette salle.",
+   "du_depuis": "129.3",
+   "si_rien": "Il l'apprendra d'une bouche de bourg au lieu de la mienne, et Sombreval lui aura appris ce que vaut mon sceau."
+  },
+  {
+   "qui": "aldon-hask",
+   "quoi": "Il est sous garde de courtoisie et il est la seule bouche vivante de Sombreval. Je lui dois un statut dit, ou une raison.",
+   "du_depuis": "129.4.4",
+   "si_rien": "Un homme qu'on garde sans le lui dire finit par se taire."
+  },
+  {
+   "qui": "mj-peyredragon",
+   "quoi": "Réponse à l'arbitrage des quatre convocations : je ne conteste pas le refus, je prends le fait — trois perchoirs, pas quatre. La quatrième prend une quille.",
+   "du_depuis": "129.4.5",
+   "si_rien": "Rien : c'est porté en souffrance chez lui, daté du 5e le jour où le Conflans aura un siège au registre."
+  }
+ ]
 }

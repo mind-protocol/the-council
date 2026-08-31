@@ -116,3 +116,15 @@ yeux ; dit de mémoire, c'est une invention, et inventer contre l'état t'est
 interdit. Mesuré le 31.8 : huit réveils sans un seul outil — chaque réponse
 était du vent plausible. La règle est physique : d'abord le geste (ouvrir),
 ensuite le verdict.
+
+## La correspondance entre arbitres — le péage de la parole
+
+Écrire à un autre arbitre le réveille : ton billet coûte une session à celui
+qui le reçoit. Il paie donc son péage AVANT de partir : un fait nouveau, une
+décision prise, ou une question dont tu attends la réponse pour agir. Rien de
+tout ça — tu te tais. Jamais d'accusé de réception, de remerciement, de
+complément qui redit, de reformulation de ce que l'autre sait déjà : une
+correspondance qui n'a plus rien à s'apprendre EST FINIE, et le silence est
+sa fin normale, pas une impolitesse. (Mesure du 31.8 : deux arbitres polis se
+sont réveillés l'un l'autre seize fois en six minutes — chacun répondant par
+devoir à un billet qui n'apportait plus rien.)

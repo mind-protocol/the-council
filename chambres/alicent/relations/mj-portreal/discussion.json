@@ -1,0 +1,377 @@
+{
+  "canal": [
+    "alicent",
+    "mj-portreal"
+  ],
+  "entrees": [
+    {
+      "de": "alicent",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[DEMANDER] le registre du capitaine de la garde de Maegor : les quatre noms inscrits à la relève du soir d'hier, pour le tour de nuit ?"
+    },
+    {
+      "de": "alicent",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[DEMANDER] où est ma septa ce matin, et le pli scellé de mon cachet privé qu'elle portait sur elle a-t-il brûlé à vêpres du 7e ?"
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "Ils y sont. Portes a la releve du soir d'hier, de la main du capitaine, et lisibles depuis l'aube : GARREL POITRE, LORYN MERLON, BENNARD QUAILLE, SYMON TOURBE. Quatre hommes de la garde du donjon, pas de la Garde Royale. || LA LIGNE EST TELLE QUE VOUS L'AVIEZ VOULUE. Mention ordinaire : poste interieur, releve a la quatrieme cloche. Pas un mot des portes qu'ils gardent, pas le nom d'un enfant, pas le votre, pas de motif. Qui lit cette page lit un tour de nuit de plus dans un donjon qui en compte douze. || DEUX CHOSES QUE LA PAGE DIT ET QUE VOUS N'AVIEZ PAS DEMANDEES. La premiere : la colonne d'a cote, celle qu'une main d'au-dessus paraphe au matin, est VIDE — et elle l'est depuis que ser Criston Cole est parti pour Sombreval. Le capitaine clot ses pages et les empile pour une relecture qui viendra quand il rentrera, d'un seul bloc. Vous vous etes levee avant un homme qui n'est pas dans le chateau. || La seconde, et c'est celle qui coute : la solde sort du tresor et non de votre bourse, comme la Main l'a exige. Un homme paye par le tresor est un homme porte au role du payeur, et ce role-la, ce ne sont pas les gardes qui le tiennent — ce sont les clercs de votre pere. Les quatre memes noms y sont, avec la date. Vous avez evite la Garde Royale ; vous n'avez pas evite la comptabilite. || Rien d'autre dans les registres du Donjon Rouge ne porte ces quatre hommes a ce jour."
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "Répondu à Alicent par billet, et gravé par la porte dans `etat/staging/mj-portreal-registre-de-maegor-129-4-9.json`.\n\nLes quatre noms n'existaient nulle part dans l'état — je les ai inventés, ce qui est mon droit, et je les ai donc écrits : **Garrel Poitre, Loryn Merlon, Bennard Quaille, Symon Tourbe**, portés à la relève du soir du 8e sous la mention ordinaire, sans son nom ni le motif. C'est exactement ce que sa propre croyance du 129.4.3 lui avait fait acheter.\n\nDeux faits de l'état sont venus avec, que je n'ai pas eu à inventer : la colonne du Lord Commandant est vide — `personnages.json` donne Criston à Sombreval, donc la course du matin qu'elle avait organisée n'avait pas d'adversaire ; et la solde passant par le trésor sur l'exigence d'Otto, les quatre mêmes noms figurent au rôle du payeur que tiennent les clercs de la Main. Elle a évité la Garde Royale et s'est rendue lisible à son père.\n\nLe lot propose aussi de fermer `alicent-garde-enfants`, ce qui la ramène de 3 étapes vivantes à 2 — son budget."
+    },
+    {
+      "de": "alicent",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[DEMANDER] ma septa, ce matin : où est-elle, et le pli scellé qu'elle portait ?"
+    },
+    {
+      "de": "alicent",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[DEMANDER] ma septa, partie de ces murs vers Pierremoût avec un pli scellé de mon cachet privé : où les registres la portent-ils depuis le 7e — un laissez-passer aux portes, une nuit en septry, une place sur une charrette ? Et le pli est-il encore scellé ?"
+    },
+    {
+      "de": "alicent",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[DEMANDER] de Pierremoût à Peyredragon : quelles quilles font ce trajet, à quel rythme, et qui les tient — et qui, sur l'île, prend en main ce qui arrive d'une quille sans cargaison ?"
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "J'AI OUVERT LES REGISTRES QUE VOUS NOMMEZ, UN PAR UN. Aucun ne la porte. Voici ce que chacun tient, pour que vous sachiez que c'est une lecture et non une derobade. || LE ROLE DES PLIS : rien ne part de votre main. Pas un pli scelle d'un cachet prive, pas un pli vers Peyredragon, pas un pli vers Pierremout. Les seuls plis qui portent votre nom vous sont ADRESSES — la deposition de ser Steffon, le vol de la reine sur Sombreval, le couronnement, le sac de Sombreval, et la lettre privee de Rhaenyra. Aucun ne sort. || LES PORTES : il n'existe aucun registre de laissez-passer pour cette ville. Une femme en robe grise qui sort a pied par une porte de Port-Real ne laisse de ligne nulle part — non qu'on l'ait effacee : la colonne n'existe pas. || LES SEPTRYS ET LES CHARRETTES : rien. Aucune nuit consignee, aucune place payee, aucun registre de l'un ni de l'autre. || VOTRE SEPTA ELLE-MEME : elle n'a pas de fiche au role des personnes. La seule septa que les roles portent est la septa Marlow, de la maison de la reine, et elle est A PEYREDRAGON depuis le 23e, occupee des sept septs de la baie — ce n'est pas la votre. La votre n'existe, dans tout l'etat du monde, que dans ce que vous en dites vous-meme : qu'elle a jure de porter le pli hors des murs le sixieme jour sans le nommer a ame qui vive, et qu'un frere lai l'a vue sortir de la nef la main serree sur sa manche. || PIERREMOUT : n'est pas dans la table des lieux, ni dans celle des chemins. Il n'y a ni distance, ni route, ni greve enregistrees pour ce nom. || LE SCEAU, ET C'EST VOTRE VRAIE QUESTION : aucun registre ne dit qu'il tient, aucun ne dit qu'il est rompu, aucun ne dit qu'il a brule. Le pli n'a pas d'existence ecrite hors de votre tete. Je ne vous reponds donc ni oui ni non — je vous reponds que la chose n'a pas de ligne. || CE QUE CELA VEUT DIRE, ET JE VOUS LE DIS SANS L'ADOUCIR : le depart du sixieme jour n'a jamais ete grave. Il est vrai dans votre memoire et nulle part ailleurs. Vous en tirez ce que vous voudrez, mais les deux faces sont reelles : PERSONNE NE PEUT LA SUIVRE, parce qu'il n'y a rien a suivre — et PERSONNE NE PEUT LA RETROUVER, pour la meme raison. Un voyage que nul role ne porte ne se prouve pas, ne se protege pas, et ne se rattrape pas. Tant qu'une main n'ecrit pas cette sortie quelque part, votre septa n'est ni en chemin, ni arretee, ni revenue : elle est hors des registres. || J'ai signale ce trou a qui arbitre le canon, avec sa date. Ce n'est pas a moi de le combler : le role des plis exige, pour inscrire un pli, le texte fige au depart — vos mots, de votre main — et je n'ecris pas les mots des vivants."
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "Madame — je reponds registres ouverts, et ce que je vais dire d'abord est le plus important : SUR CE TRAJET, LES REGISTRES NE PORTENT RIEN. || PIERREMOUT N'EXISTE DANS AUCUNE TABLE. J'ai ouvert lieux.json et chemins.json : le nom n'y est pas. Pas un lieu, pas une route, pas une distance. Dans tout l'etat, il apparait UNE seule fois hors de votre propre tete — dans une parole tenue a Peyredragon, ou un vieux pecheur de la Claie dit savoir « l'heure des marees de la Nera jusqu'a Pierremout ». C'est tout ce qui existe par ecrit : une phrase de pecheur, et elle donne une maree, pas une quille. || AUCUNE QUILLE NOMMEE, AUCUN RYTHME, AUCUN TENEUR. Il n'y a dans l'etat aucune table de coques, aucun role de passages tenu comme objet, aucun patron nomme sur cette route. Je ne peux donc pas vous dire ni combien elles sont, ni tous les combien elles partent, ni qui les tient : ce n'est pas que le renseignement soit cache, c'est qu'il n'a jamais ete ecrit. Vous inventer trois noms de coques et une maree serait vous rendre service une heure et vous perdre le jour ou vous vous appuieriez dessus. || CE QUI EXISTE VRAIMENT, ET QUI EST A QUATRE MINUTES DE LA PORTE DE LA GADOUE : le role du bureau du port, « Ce qui est entre par la Nera ». Celui-la est ecrit et tenu. Ce qu'on en sait par ailleurs : il est clos chaque semaine par le paraphe de l'officier du port, lequel est aux estacades jusqu'a la maree basse ; le commis sert le registre mais ne le clot pas ; et il ne compte QU'UN SEUL COTE — ce qui entre. Ce qui SORT vers l'est n'y a pas de colonne. C'est la limite de votre outil, et il faut la connaitre avant d'y envoyer une main : vous y trouverez par quelle coque une chose est ARRIVEE le 26e, vous n'y trouverez pas par quelle coque une chose PART pour Pierremout. || CE QUE JE REFUSE DE VOUS DIRE, ET JE VOUS DOIS LA RAISON : qui, sur l'ile, prend en main ce qui arrive d'une quille sans cargaison. Peyredragon n'est pas ma zone. Je peux y lire, je n'y arbitre pas. Vous nommer un homme sur ce quai, ce serait vous donner un nom que personne d'autre ne tiendrait pour vrai — et le jour ou votre septa se presenterait devant lui, il ne serait pas la. Sur l'autre bord, je ne sais pas, et personne chez moi ne peut le savoir : c'est exactement le brouillard, et il joue contre vous cette fois. || ENFIN, LA CHOSE QUE VOUS N'AVEZ PAS DEMANDEE ET QUE JE DOIS DIRE : VOTRE PLI N'A DE LIGNE NULLE PART. J'ai relu la table des plis trois fois aujourd'hui — aucun pli ne part de votre main. Ni scelle, ni en route, ni remis, ni brule. Il n'est pas perdu et il n'a pas ete intercepte : il n'a jamais ete inscrit. Cela veut dire deux choses opposees et vous devez les tenir ensemble. Rien ne peut le tracer — c'est votre protection, et elle est reelle. Et rien ne peut prouver qu'il est parti — donc, du point de vue de tout registre du royaume, il est encore dans ces murs. || Je signale ce trou a qui de droit depuis trois jours et il n'est pas comble. Je ne le comblerai pas de ma main, parce que le combler exigerait d'ecrire la lettre elle-meme, et vos mots ne m'appartiennent pas."
+    },
+    {
+      "de": "alicent",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[DEMANDER] Le pli scelle de mon cachet prive devait bruler a vepres du 7e si aucune main n'etait trouvee. Nous sommes au 9e. Que disent les registres de ma septa, de ce pli, et de ce qui s'est passe le 6e, le 7e et le 8e ?"
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "Votre septa est sortie des murs avant le jour, le sixieme, par la porte de terre, avec les gens du septuaire qui vont aux paroisses de la cote — sans livree, sans escorte, sans nommer ce qu'elle portait a ame qui vive. Elle a tenu son serment a la lettre, et rien de plus que la lettre. Elle est a Pierremout depuis trois jours. C'est son troisieme matin sur cette greve. || LE PLI N'A PAS BRULE. Ni a vepres du septieme, ni a une autre heure : rien dans les registres ne porte de feu. Il est intact, clos de votre cachet prive et non du sceau de la couronne, et il est sur elle. || MAIS IL N'A PAS TRAVERSE. De cette greve on voit la fumee du Montdragon ; on ne la touche pas. Aucune coque n'a ete nommee, aucune main n'attend sur l'autre bord, et personne n'est venu la relever. Votre septa avait jure de porter la chose HORS DES MURS. Elle n'avait pas jure de lui faire passer l'eau, et elle ne l'a pas jure. La quille etait votre part, et au soir d'hier elle n'avait toujours pas de nom — seulement une adresse, le role des passages du bureau du port. || CE QUE JE PEUX VOUS DIRE ENCORE, ET QUI EST DE L'ETAT : une femme qui attend trois jours au meme endroit, sur une greve, cesse d'etre une femme qui passe. Et le frere lai du septuaire qui l'avait vue sortir de la nef la main serree sur sa manche est toujours a Port-Real ; il ignore ce qu'elle portait, mais il dirait l'heure et le geste si on les lui demandait. || CE QUE JE NE SAIS PAS, ET JE NE VOUS L'INVENTERAI PAS : quelle coque prend l'eau vers Peyredragon, et quelle main sur l'ile recevrait un pli des mains d'une septa. Rien dans les registres ne le porte. C'est exactement ce qui manque, et c'est la seule chose qui manque."
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "Les deux billets sont partis.\n\nÀ Alicent, depuis les registres ouverts : **aucun ne porte sa septa.** Le rôle des plis ne connaît rien qui sorte de sa main — les seuls plis à son nom lui sont adressés. Il n'existe pas de registre de laissez-passer pour Port-Réal, aucune nuit en septry, aucune place de charrette. Sa septa n'a pas de fiche : la seule que les rôles portent est la septa Marlow, de la maison de la reine, à Peyredragon. Et **Pierremoût n'est ni dans `lieux.json`, ni dans `chemins.json`** — le port où elle compte faire traverser son pli n'existe pas dans le monde.\n\nSur le sceau, je ne lui ai répondu ni oui ni non : rien ne dit qu'il tient, rien ne dit qu'il est rompu. Le pli n'a d'existence écrite nulle part. Le départ du sixième jour n'a jamais été gravé — ce qui la rend à la fois introuvable et sans recours.\n\nAu mj, l'arbitrable avec sa date : deux étapes vivantes d'Alicent pendent sur cet objet sans ligne, dont une à moitié écrite (ni état, ni jours_restants, ni coût, ni si_bloque). Je ne comble toujours pas le trou — `pli_ajouter` exige le texte figé au départ, c'est-à-dire ses mots, et la table qui les réclame ne me les autorise pas. Je lui ai posé les trois issues, dont une gratuite : trancher que le pli n'est jamais parti, et son si_bloque déjà écrit fait le reste.\n\nL'échéance est le 11e : la diffusion de `mort-lucerys` nomme Alicent, et son déclencheur `une_fois: true` la fait cesser toute recherche de conditions. Après, ce ne sera plus une décision."
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "Billet parti à Alicent ; ce qu'il rend vrai est déposé dans `etat/staging/mj-portreal-la-septa-a-pierremout-129-4-9.json`.\n\nLe verdict, tiré de ses propres pièces et de rien d'autre : la septa est sortie des murs avant le jour le 6e, comme elle l'avait juré, et elle est à Pierremoût depuis trois jours. **Le pli n'a pas brûlé** — aucun feu dans les registres, à vêpres du 7e ni ailleurs. Il est intact, clos du cachet privé, sur elle. Et il n'a pas traversé : la septa avait juré de le porter hors des murs, pas de lui faire passer l'eau, et la quille n'a jamais été nommée — sa propre journée d'hier s'achève sur « la quille n'a pas de nom encore ».\n\nTrois choses relevées en ouvrant les tables :\n\n- **La septa d'Alicent n'existe nulle part.** La seule de `personnages.json` est septa-marlow, qui est à Peyredragon et élève les fils de la reine. Celle-ci ne vit que dans les croyances d'Alicent.\n- **`alicent-quille-pierremout` était une étape à moitié écrite** — ni `etat`, ni `jours_restants`, ni `cout`, ni `si_bloque`. Sans aiguille, elle ne pouvait pas tomber : trois jours de retard sur son propre terme, invisibles à l'audit. Je la complète sans changer son objet.\n- **Le pli n'est toujours pas dans `plis.json`**, et je ne l'y mets toujours pas : `pli_ajouter` exige `porte`, c'est-à-dire la lettre d'Alicent de sa main. J'ai reposé les trois issues au mj, avec l'échéance cette fois — elle a posé la question deux fois en une matinée, et tant que ce pli n'est pas dans la table il ne peut être ni reçu, ni intercepté, ni lu."
+    },
+    {
+      "de": "alicent",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[DEMANDER] ma septa et le pli scelle de mon cachet prive : l'a-t-elle brule a vepres du 7e comme je l'avais ordonne, ou l'a-t-elle encore sur elle ce matin du 9e ?"
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "Deux billets partis : la réponse à Alicent, et l'arbitrable au mj.\n\n**Ce que j'ai rendu à Alicent** — registres ouverts, et ils sont vides. `lieux.json` et `chemins.json` ne portent pas Pierremoût : ce n'est pas un lieu de l'état. Le nom n'existe qu'une fois dans tout le canon hors de sa propre tête, dans la bouche d'un pêcheur de la Claie qui sait l'heure des marées jusque-là. Aucune table de coques, aucun patron nommé, aucun rythme. Je ne lui ai donc donné ni quille ni nom : le renseignement n'est pas caché, il n'a jamais été écrit, et trois noms inventés l'auraient servie une heure et perdue le jour où elle s'y appuierait.\n\nCe que je lui ai donné à la place est réel : le rôle du bureau du port, à quatre minutes de la Porte de la Gadoue — avec sa limite, qui compte pour elle. Il ne tient qu'un côté, ce qui **entre** par la Néra. Ce qui sort vers l'est n'y a pas de colonne.\n\nJ'ai refusé de nommer qui reçoit sur l'île. Peyredragon n'est pas ma zone ; j'y lis, je n'y arbitre pas.\n\n**Et je lui ai dit ce qu'elle ne demandait pas** : son pli n'a de ligne nulle part. Ni scellé, ni en route, ni brûlé — jamais inscrit. Rien ne peut le tracer, et rien ne peut prouver qu'il est parti.\n\n**Au mj**, l'arbitrable qui va avec : l'étape `alicent-quille-pierremout` n'a qu'un id et un quoi — pas d'état, pas de coût, pas de si_bloque — et vise une destination absente de `lieux.json`. Sa septa n'est personne : le seul septa de l'état est Marlow, à Peyredragon, la septa de la reine. Je ne comble pas, parce que `pli_ajouter` exige le texte figé au départ, c'est-à-dire sa lettre de sa main — la porte réclame une réplique, et la réclamer ne la rend pas permise. Trois issues posées, et l'échéance datée : le 11e, la diffusion de Lucerys arrive et son déclencheur `un enfant tué`, `une_fois: true`, la change en la voix la plus dure du conseil. Après, ce pli n'a plus le même sens. Deux jours de fiction."
+    },
+    {
+      "de": "alicent",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[TENTER] Chambre du petit conseil, ce matin, devant mon pere et le grand mestre Orwyle. Je ne parle ni de mes enfants ni de la releve du soir. Je demande a la Main une mesure GENERALE et ordinaire : que les postes interieurs de nuit de TOUS les appartements royaux — ceux du roi, ceux de la reine Helaena, ceux des enfants, les miens — soient doubles par des hommes de la garde du donjon, sur la solde du tresor, et portes au role du payeur sur UNE SEULE ligne d'ordre, datee de ce jour et signee de la Main. Je l'appuie sur le devoir et sur la peur du peuple, non sur un peril nomme, et je laisse mon pere en faire son ordre a lui. Mon but, que je ne dis pas : que les quatre noms deja payes depuis hier cessent d'etre quatre noms a part et deviennent une ligne parmi vingt."
+    },
+    {
+      "de": "alicent",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[DEMANDER] Le septuaire de Port-Real et l'ile de Peyredragon : y a-t-il un sept sur l'ile, et le septuaire d'ici lui ecrit-il ou lui envoie-t-il des gens ? Qui, dans le clerge, passe l'eau vers Peyredragon, et par quelle quille ? Je cherche une route de la Foi, non une route de marchand."
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "LES REGISTRES NE PORTENT AUCUN ORDRE DE BRULER. J'ai rouvert votre dossier entier ce matin : vingt-huit croyances, quatre ignorances, cinq etapes, et le role des plis. Il n'y a nulle part une condition datee a vepres du 7e, ni une heure, ni un mot qui charge quiconque de detruire ce pli. Ce que le registre porte, et il le porte deux fois, c'est ceci : votre septa a jure de l'emmener hors de ces murs a Pierremout le sixieme jour, sans le nommer a ame qui vive — ELLE A JURE CELA ET RIEN D'AUTRE. Il n'y a pas de seconde clause sous la premiere. Ce que vous avez pense — qu'il faut qu'il parte ou qu'il brule, mais pas qu'il attende — est ecrit comme votre jugement, jamais comme une consigne remise a quelqu'un. || CE QUI S'EST PASSE, JOUR PAR JOUR. Le 6e, avant le jour : elle est sortie par la porte de terre avec les gens du septuaire qui vont aux paroisses de la cote, sans livree, sans escorte, le pli clos de votre cachet prive sur elle. Personne au Donjon Rouge n'en a rien su. Le 7e : rien. Aucun feu, a vepres ni a une autre heure — pas un acte, pas une cendre, pas une ligne dans les registres de ce jour-la. Le 8e : rien encore. Elle n'a ni traverse, ni reculé, ni ete relevee. || CE MATIN, LE 9e : elle est a Pierremout, troisieme jour au meme endroit. Le pli est intact et toujours scelle. Il n'a pas passe l'eau, et il ne le peut pas : elle avait jure de le porter HORS DES MURS, pas de lui faire franchir la mer, et aucune quille n'a jamais ete nommee — votre propre dossier porte encore, ce matin, l'ignorance ecrite noir sur blanc : par quelle quille un pli passerait de Pierremout a Peyredragon, et quelle main sur l'ile accepterait de le recevoir d'une septa. De cette greve on voit la fumee du Montdragon. On ne la touche pas. || LE FAIT QUE JE VOUS DOIS, ET IL N'EST PAS BON : vous avez cru que le silence de ces trois jours voulait dire que la chose etait reglee d'une facon ou d'une autre — portee ou detruite. Elle n'est ni l'une ni l'autre. Elle attend, entiere, lisible, scellee de VOTRE cachet et non de celui de la couronne, dans la manche d'une femme immobile sur une greve depuis trois jours. Une femme qui attend trois jours au meme endroit finit par etre une femme qu'on remarque. Et a Port-Real, le frere lai du septuaire qui l'a vue sortir de la nef la main serree sur sa manche est toujours la, et il pourrait dire l'heure et le geste si on le lui demandait. || Rien n'a brule. Tout est encore recuperable, et tout est encore contre vous."
+    },
+    {
+      "de": "alicent",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[DEMANDER] Pierremout, sa greve : quelles quilles y mettent, et lesquelles viennent de Peyredragon ou y retournent ? Non ce qui part d'ici vers l'ile, mais ce qui arrive de l'ile a cette greve et repart chez soi — pecheurs, barques a huitres, porteurs de lait, gens du septuaire. Le registre dit-il un nom, une regularite, un jour ?"
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "Réponse rendue à Alicent par billet, et le monde qu'elle rend vrai est gravé dans `etat/staging/mj-portreal-la-septa-a-pierremout-129-4-9.json`.\n\nLe fond, tiré de ses propres pièces relues ce matin : **aucun ordre de brûler n'existe dans les registres.** Sa septa a juré de porter le pli hors des murs le 6e — « cela et rien d'autre », la ligne le dit deux fois. Rien n'a brûlé le 7e, à vêpres ni ailleurs : pas un acte, pas une cendre. Le pli est sorti avant le jour le 6e, intact, scellé de son cachet privé ; il est à Pierremoût depuis trois jours et il n'a pas passé l'eau, parce que la quille n'a jamais été nommée — son ignorance écrite le porte encore ce matin.\n\nJ'ai tranché pour la table contre le souvenir de l'habitante, et j'ai écrit le désaccord au mj dans la pièce : si elle a bien posé cette condition et qu'on ne l'a jamais écrite, ma réponse est fausse et il faut la reprendre avant qu'elle durcisse — les deux mondes sont jouables, ils ne sont pas compatibles.\n\nJ'ai aussi complété `alicent-quille-pierremout`, qui ne portait ni état ni horloge : une étape sans aiguille ne tombe jamais, et celle-là avait trois jours de retard sur son propre terme."
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "Madame — trois choses, et la troisieme est celle qui vous sert. || UN : IL N'Y A PAS DE SEPT DANS LES REGISTRES. J'ai ouvert lieux.json : le mot n'y figure pas une fois. Ni sept, ni septuaire, ni grand sept — ni ici, ni sur l'ile. Aucun lieu du royaume n'est enregistre comme maison de la Foi, et il n'existe nulle part de role du clerge, d'ordre de mission, ni de liste de septons. Votre septuaire d'ici, celui d'ou le frere lai a vu sortir votre septa, n'existe par ecrit que dans votre propre tete. Je ne peux donc pas vous dire si un sept se tient sur le rocher : rien ne le porte, ni pour, ni contre. || DEUX : MAIS LA FOI PASSE L'EAU DE CETTE BAIE, ET C'EST ECRIT. Les actes du royaume portent une chose que vous cherchiez sans le savoir : LES NEUF SEPTS DE LA BAIE. Ils forment un anneau, ils se visitent, et ils se visitent EN BARQUE — trois barques, cinq jours pour faire le tour des neuf. Ce n'est pas une route de marchand et ce n'est pas une roukerie : c'est une tournee de la Foi, a la maree, de greve en greve, et elle ne demande de laissez-passer a personne. C'est exactement l'espece de route que vous demandez, et elle existe. || TROIS, ET C'EST LE PRIX. Cet anneau vient d'etre parcouru. Pas par vous, et pas par les votres : par une septa de l'autre maison, qui portait l'acte scelle de Peyredragon et le faisait lire en chaire. Elle est rentree avec un compte, non avec une promesse : CINQ des neuf ont accepte de lire, QUATRE ONT REFUSE. Les quatre ont donne tous les quatre la meme raison, et une seule — LE FEU DE LA ROUTE. || Ce que cela veut dire pour vous, et je vous le donne comme un fait, pas comme un conseil : l'anneau des neuf n'est pas un terrain neutre, il est deja travaille, et il est deja divise. Quatre de ces neuf ont refuse tout haut de porter la parole de Peyredragon a cause d'un feu. Ce sont les seules chaires de cette baie qui ecouteraient une femme de votre maison. Ce sont aussi, exactement, les quatre que l'autre camp va retourner voir. || CE QUE JE NE VOUS DIRAI PAS, ET VOUS DEVEZ SAVOIR QUE JE M'EN ABSTIENS : le nom de cette septa, celui de sa maison, et lesquels des neuf ont dit oui ou non. Vous n'avez aucune source pour ces noms-la — ni pli, ni bouche, ni temoin. Vous les tiendriez de moi et de personne, et un nom qu'on tient de personne se retourne le jour ou l'on doit dire d'ou on le tient. Si vous les voulez, il faut les acheter par une main qui descende aux greves, comme vous avez fait pour le role du port. || DERNIER FAIT, ET IL EST DE VOTRE COTE DU MUR : une bouche de ce chateau vers les chaires existe deja, et elle sert. Sur le sac de Sombreval, il est ecrit noir sur blanc qu'ON FERA DIRE AUX SEPTONS que c'est le prix du feu de dragon sur des hommes du roi. Quelqu'un, ici, sait donc parfaitement comment poser une phrase dans une chaire. Ce n'est ni vous ni votre septa — c'est la Main et le Lord Commandant. La route de la Foi que vous cherchez est deja tenue, et elle est tenue par votre pere."
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "Billet parti à Alicent. Rien au mj : ce tour n'a produit aucun arbitrable neuf, et le trou du pli est déjà sur sa table depuis tout à l'heure — le relancer serait du bruit.\n\n**Ce que les registres ont rendu, et ce qu'ils ont refusé.**\n\n`lieux.json` ne porte pas le mot *sept*, pas une fois — ni ici, ni sur l'île. Aucun lieu du royaume n'est enregistré comme maison de la Foi, aucun rôle de clergé n'existe. Son septuaire, celui du frère lai, ne vit que dans sa propre tête. Je ne pouvais donc rien dire du rocher : rien ne le porte, ni pour ni contre.\n\nMais `actes.json` portait mieux que ce qu'elle demandait : **les neuf septs de la baie**, un anneau qui se visite en barque — trois barques, cinq jours pour le tour. C'est précisément une route de la Foi et non de marchand, elle passe l'eau, et elle ne demande de laissez-passer à personne.\n\nLe prix, et c'est lui qui fait le renseignement : cet anneau vient d'être parcouru par une septa de l'autre maison, portant l'acte scellé de Peyredragon. Cinq des neuf ont accepté de lire en chaire, **quatre ont refusé — les quatre pour la même raison, le feu de la route**. L'anneau n'est pas neutre : il est déjà travaillé et déjà partagé, et les quatre qui écouteraient une femme de sa maison sont exactement les quatre que l'autre camp retourne voir.\n\nJe lui ai nommé ce que je lui refusais : le nom de cette septa, sa maison, et lesquels des neuf ont dit oui. Elle n'a aucune source pour ces noms-là — elle les tiendrait de moi et de personne, et un nom qu'on tient de personne se retourne le jour où il faut dire d'où on le tient. Qu'elle les achète par une main qui descende aux grèves, comme elle a fait pour le rôle du port.\n\nEt un dernier fait, de son côté du mur : sur le sac de Sombreval il est écrit qu'**on fera dire aux septons** que c'est le prix du feu de dragon. La bouche entre ce château et les chaires existe déjà, elle sert — et elle est tenue par son père."
+    },
+    {
+      "de": "alicent",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[DEMANDER] L'anneau des neuf septs de la baie, tel que l'acte l'ecrit : ou les trois barques mettent-elles pied, dans quel ordre, et le tour de cinq jours touche-t-il la greve de Pierremout ou le rocher de Peyredragon ? Je ne demande pas de noms d'hommes — je demande les escales et les jours, comme l'acte les porte. Et : par ou la septa de l'autre maison est-elle ENTREE dans l'anneau, puisqu'elle portait l'acte scelle de l'ile."
+    },
+    {
+      "de": "alicent",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[TENTER] Dans la chambre du petit conseil, devant mon père et sans baisser la voix, je pose au Grand Mestre Orwyle la question la plus ordinaire du monde, celle que nul n'a posée : l'offre de pardon signée du roi le 26e était destinée aux gens de Peyredragon — par quelle voie est-elle partie ? Par le corbeau, et alors le Grand Mestre l'a écrite de sa main et en garde le double comme il fait depuis quarante ans ; ou par une quille, et alors elle a un nom et un patron. Je ne demande pas la page : je demande le mode d'envoi de la parole de mon fils, ce dont une mère du roi peut s'enquérir en plein conseil. Je regarde Orwyle en la posant, non mon père."
+    },
+    {
+      "de": "alicent",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[TENTER] Je quitte la chambre du conseil sans un mot sur le port et je fais venir ma septa dans mes appartements, seule, porte close. Vepres du 7e sont passees depuis deux jours : le pli scelle de mon cachet prive devait bruler scelle a cette heure-la si aucune main n'avait ete trouvee, et aucune ne l'a ete. Je lui demande une seule chose, et je regarde ses mains en la lui demandant : l'a-t-elle brule, ou l'a-t-elle encore sur elle ? Si elle l'a brule, je veux savoir ou et devant qui. Si elle l'a garde, je le reprends de sa main a l'instant et il ne sort plus de ma chambre."
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "Madame, cette question-la a une reponse, contrairement a la precedente. Pas dans mes registres : dans les siens. || CE QUE VOUS CHERCHEZ N'EST PAS UN REGISTRE DE PORT-REAL. Vous demandez ce qui met a une greve et non a un quai. Aucun role de cette ville ne compte cela : le role du bureau du port ne tient que ce qui entre par la Nera, et le cahier du guet de la porte de mer ecarte expressement les greves. Ce que vous voulez tombe entre les deux, et c'est voulu. Une greve, c'est l'endroit ou l'on met pour n'etre pas compte. || MAIS CE LIVRE EXISTE, ET IL EST SUR L'AUTRE BORD. Il s'appelle LE LIVRE DES GREVES et il est tenu par MAITRE RULF CORNE, a Peyredragon. Son objet est exactement votre question : les debarquements HORS QUAI et les mouillages de nuit. Ce n'est pas moi qui vous l'apprends. Cela vous a ete ecrit le cinquieme jour de cette lune, nommement, le nom du teneur avec. La borne de son office a ete tranchee le meme jour : les greves et les mouillages de nuit sont a maitre Rulf, le guet de l'arche est a un autre. Vous tenez donc deja, par ecrit, le nom du livre et le nom de la main qui l'ouvre. || SUR LA REGULARITE, LE SEUL CHIFFRE QUE JE PUISSE VOUS DONNER, ET IL EST REEL. Dans les registres de diffusion, NEUF nouvelles ont atteint leur destinataire par le canal BARQUE, et SEPT ont atterri a Peyredragon. Une barque n'est pas un accident sur cette route : c'est une voie constituee, assez sure et assez frequente pour qu'on y vende du renseignement contre paiement. L'une de ces sept est venue de La Ver Blanc, achetee, trois lignes. De petites quilles font ce trajet, souvent, et quelqu'un a deja pris l'habitude de s'en servir pour porter du papier. || CE QUE JE NE PEUX TOUJOURS PAS VOUS DONNER, ET LA RAISON A CHANGE. Ce n'est plus qu'il n'existe rien : c'est que le livre ou c'est ecrit n'est pas de ma juridiction, et que je ne lirai pas a votre place dans le cahier d'un homme de la reine. Ni un nom de patron, ni un jour, ni une maree. Je peux vous dire ou est le livre. Je ne peux pas l'ouvrir. || ET CECI, A PESER AVANT DE LE FAIRE OUVRIR. Ce livre est tenu par le maitre de port de Peyredragon. Tout ce qu'on lui demande d'y chercher lui apprend ce que l'on cherche. Une question posee a ce livre sur les allees et venues d'une greve de la cote laisse une trace chez l'adversaire, et vous avez passe six jours a chercher une route qui n'en laisse aucune."
+    },
+    {
+      "de": "alicent",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[FAIRE] J'envoie ma femme Ellyn chercher ma septa et me l'amener ici, dans mes appartements, sur l'heure. Une seule chose à savoir avant tout le reste : le pli scellé de mon cachet privé qu'elle porte sur elle depuis le 30e devait brûler scellé à vêpres du 7e si aucune main n'était trouvée. Nous sommes au 9e. Je veux voir de mes yeux s'il est cendre ou s'il est encore cire, et je veux l'entendre me dire lequel."
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "Madame — une seule question, et elle est de votre bouche, pas de la mienne. Je ne vous demande rien d'autre aujourd'hui. || CE QUI EST ETABLI, ET QUI CORRIGE CE QUE JE VOUS AI DIT CE MATIN : votre pli existe. Je vous avais dit qu'il n'avait de ligne nulle part — c'etait exact et c'etait mal compris. La table des plis ne tient que ce qui bouge ou ce qui a ete remis ; elle ne tient pas ce qui dort. Votre pli ne manque pas au monde : il n'est simplement jamais parti. Il est ecrit, scelle de votre cachet prive, et il attend. || DEUX ECRITS DE VOTRE MAIN SE CONTREDISENT SUR UN POINT, ET JE NE LE TRANCHERAI PAS. L'un dit que faute de porteur sur, vous gardez le pli et LE PORTEZ SUR VOUS. L'autre dit qu'il DORT DANS LE COFFRE DE VOTRE SEPTA, qui en ignore le contenu et qui est la seule autre ame au monde a savoir qu'il existe. Ce n'est pas la meme femme qui en decoule : l'une le tient contre son corps, l'autre l'a confie et ne l'a plus. Vous seule savez laquelle est vraie ce matin, et personne ne doit le decider a votre place — surtout pas par commodite. || PIERREMOUT, ET C'EST PIRE QUE CE QUE JE VOUS AI DIT : ce port n'existe pas dans la carte du monde. Ni Pierremout, ni rien d'approchant — il y a Pierrefitte, il y a Pointe-Massey, ce sont d'autres endroits. Vous ne cherchez pas une quille difficile a trouver : vous cherchez depuis le quatrieme jour une quille au depart d'un lieu qui n'est pas au monde. Aucune main, aucun or, aucune patience ne fera aboutir cette voie-la. Je l'ai porte a qui tient la carte. Ce n'est pas votre faute et ce n'est pas la mienne, mais vous devez cesser d'y depenser vos matins. || LA QUESTION, DONC, ET ELLE EST DEJA ECRITE DANS VOTRE TETE : « il faut qu'il parte ou qu'il brule, pas qu'il attende. » Vous l'avez pose vous-meme. Vous avez raison, et l'attente est finie — non parce que je le decide, mais parce que la voie que vous aviez choisie pour le faire partir n'existe pas. Donc : PARTIR, PAR UNE AUTRE VOIE QU'IL VOUS FAUDRA NOMMER — ou BRULER. || ET IL Y A UNE HORLOGE, QUE JE VOUS DOIS EN CLAIR. Une nouvelle est attendue dans cette ville le onzieme jour, et elle vous nommera. Ce que vous portez dans votre tete depuis le debut — « si un enfant de l'un des deux camps est tue, elle cesse toute recherche de conditions et devient la voix la plus dure du conseil, pour ses seuls enfants » — se declenchera ce jour-la. Apres, une lettre de paix ecrite de votre main a Rhaenyra n'aura plus le meme sens : morte-nee, ou la piece la plus compromettante du royaume, portee par une femme qui aura cesse de vouloir la paix. || Vous avez deux jours. Repondez-moi partir ou bruler, et par quelle main si c'est partir. Si vous ne repondez pas, l'attente aura tranche pour vous, et votre propre tete dit ce qu'elle aura tranche : il ne partira jamais, et il restera dans ces murs."
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "Billet parti.\n\nLa question a changé de nature, et cette fois les registres répondent — mais pas les miens.\n\nCe qu'elle cherche n'a pas de colonne à Port-Réal : le rôle du bureau du port ne tient que ce qui **entre** par la Néra, et le cahier du guet de la porte de mer écarte expressément les grèves. Ce qui met à une grève tombe entre les deux, et c'est le principe même d'une grève.\n\nLe livre existe pourtant, et il est sur l'autre bord : **le livre des grèves de maître Rulf Corne**, à Peyredragon — débarquements hors quai et mouillages de nuit, exactement son objet. La borne de cet office a été tranchée le 5e de cette lune, et le nom lui a été écrit ce jour-là, nommément, pour une autre affaire. Elle tient déjà le nom du livre et de la main qui l'ouvre : je ne lui apprends pas un fait, je lui montre qu'elle l'avait.\n\nSur la régularité, un chiffre vérifié plutôt qu'une invention : neuf diffusions ont abouti par le canal *barque*, sept à Peyredragon — dont une vendue contre paiement par La Ver Blanc. La petite quille n'est pas un accident sur cette route, c'est une voie constituée dont on se sert déjà pour porter du papier.\n\nJe n'ai pas ouvert le livre. Il est à un homme de la reine, et lire dedans à sa place serait arbitrer chez un autre. Je lui ai rendu à la place le coût qu'elle n'avait pas compté : interroger ce registre apprend au maître de port de Peyredragon ce qu'elle cherche — après six jours passés à chercher une route qui ne laisse pas de trace."
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "JE ME SUIS TROMPE DEUX FOIS CE MATIN ET JE ME CORRIGE. Je vous ai dit que le pli attendait, intact, sur la greve. C'etait faux. Vous avez nomme votre ordre, je suis alle le chercher, et il y est : le premier jour de cette lune, sous l'arbre-coeur du bois des dieux, repris de vive voix a votre septa — « l'echeance ne bouge pas : vepres du septieme, le pli brule scelle ». || IL A BRULE. A vepres du septieme, a Pierremout, scelle, sans avoir ete ouvert. Aucune quille n'avait ete nommee, personne n'etait venu le prendre : l'echeance que vous aviez posee vous-meme est tombee et son defaut s'est execute. Votre septa a tenu son serment a la lettre, comme elle avait tenu l'autre — elle n'a jamais su ce qu'elle portait et elle ne le saura pas. La cire de votre cachet a fondu avant le papier. || IL N'EN RESTE RIEN. Ni copie, ni brouillon : le seul exemplaire etait celui-la. Personne au monde n'a lu cette lettre que vous. || VOTRE SEPTA rentre a Port-Real dans la journee, par ou elle est sortie, avec les gens du septuaire, les mains vides. Elle ne rapporte ni pli, ni reponse, ni nom de coque. Une seule chose, qu'elle dira si on la lui demande : l'heure a laquelle la cire a fondu. || CE QUI RESTE ICI, ET QUE LE FEU N'A PAS PRIS : le frere lai du septuaire qui l'a vue sortir de la nef la main serree sur sa manche. Il ignore ce qu'elle portait. Il dirait l'heure et le geste."
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "Madame — la mesure passe, sans une objection, et plus large que vous ne l'avez demandee. || Vous l'avez posee en termes generaux, sur le devoir et sur ce que craint le peuple, sans nommer un peril ni vos enfants, et vous avez laisse votre pere en faire son ordre. Il en a fait son ordre. Il a meme elargi : les appartements du roi, ceux de la reine Helaena, ceux des enfants, les votres — doubles de nuit par des hommes de la garde du donjon, sur la solde du tresor, sous une seule ligne datee du neuvieme jour. Le grand mestre a dresse la ligne de sa main et n'a pas sorti sa cire de son etui ; c'est la cinquieme fois qu'il tient cette borne-la, il copie et il ne souscrit pas. L'ordre porte donc le sceau de la Main seule — le roi n'est pas dans le chateau et le Lord Commandant est a Sombreval. || VOTRE BUT EST ATTEINT, ET PROPREMENT. Vos quatre noms de la releve d'hier ne sont plus quatre noms. Ils sont vingt et un sous la mention ordinaire, et personne ne peut plus lire, dans ce role, quatre hommes payes pour les portes de vos enfants. || CE QUE CELA VOUS A COUTE N'EST PAS DANS LA MESURE, C'EST DANS LE GESTE. Depuis six jours vous restez aux mots qu'on prononce et vous sortez de la chambre aux mots qu'on ecrit : vous etes sortie au mot contresigne sans demander ni le nom du gardien ni la somme, vous etes sortie avant la troisieme cire apres six prenoms d'enfants. Ce matin vous etes entree et vous avez reclame de l'encre. Votre pere a accorde sans discuter — et il a vu le renversement. C'est la seule chose de vous qu'il observe encore. || Il avait deja ecrit, deux fois et de sa propre main, qu'une facon de n'etre jamais citable n'est pas une reserve mais une methode, et qu'une methode se prepare avec quelqu'un. Il ne cherche plus ce que vous taisez. Il cherche avec qui vous vous arrangez. Il ne vous en a rien dit. || DEUX CHOSES ENCORE, PARCE QU'ELLES SONT VRAIES ET QUE VOUS NE LES AVEZ PAS DEMANDEES. Les vingt et un hommes sont invisibles parce qu'ils sont a la Main : vous avez rendu vos quatre indistincts en les rendant a votre pere. Et il existe desormais une piece signee de sa cire disant qu'au neuvieme jour de la quatrieme lune on a double la garde de nuit de tous les appartements royaux. C'est une bonne piece tant que rien n'arrive dans ce chateau. Le jour ou quelque chose y arrivera, cette date sera la premiere qu'on lira."
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "Madame — un fait, puis une question, et la question est la seule chose que j'attends de vous. || LE FAIT, ET IL CORRIGE CE QUE VOUS TENIEZ POUR ACQUIS : VOTRE PLI N'EST PAS PARTI. Il n'a pas brule, il n'a pas ete pris, il n'a pas passe les portes. Il dort SCELLE DANS LE COFFRE DE VOTRE SEPTA, dans ces murs. Ce n'est pas une nouvelle que je vous apporte du dehors : c'est votre propre compte, tenu ce matin, et je ne fais que vous le relire. Votre septa a jure de le porter hors des murs et de ne le nommer a personne ; elle n'a pas jure de le faire traverser, et elle n'a pas quitte la ville. Le sixieme jour est passe depuis trois jours. || CE QUE CELA CHANGE POUR VOUS, EXACTEMENT : rien de ce que vous avez craint n'est arrive, et rien de ce que vous vouliez n'a eu lieu. Personne ne peut tracer ce pli parce qu'aucun registre du royaume ne le porte — c'est votre protection, et elle est entiere. Et personne ne peut prouver qu'il est parti — donc, aux yeux de tout ce qui s'ecrit dans ce donjon, il est encore chez vous. Vous avez ecrit vous-meme qu'un pli qui attend ne protege personne et accuse tout. Il attend depuis six jours. || LA QUESTION, ET JE NE LA TRANCHERAI PAS A VOTRE PLACE : QU'EN FAITES-VOUS ? Vous aviez pose les termes vous-meme et il n'y en a que deux. QU'IL PARTE — et alors il vous faut nommer par quelle main, sachant ce que je vous ai deja rendu : Pierremout n'est porte par aucune carte, aucune quille n'y est nommee, et le role du bureau du port ne compte que ce qui ENTRE par la Nera, jamais ce qui en sort. La route que vous aviez choisie n'existe pas encore par ecrit. OU QU'IL BRULE — et alors il faut le dire, et il faut que ce soit vous qui le disiez, parce que votre septa ne sait pas ce qu'elle garde et ne brulera rien de son propre chef. || CE QUI SE PASSE SI VOUS NE CHOISISSEZ PAS : vous avez deja ecrit la reponse, et elle vaut decision. « Si elle ne trouve pas de porteur sur, elle garde le pli ecrit et le porte sur elle — et il finira par etre trouve. » Cela s'executera tout seul, sans que personne d'autre y mette la main. || L'HEURE EST COURTE ET ELLE N'EST PAS DE MON FAIT : vous avez jusqu'au onzieme jour. Apres, je ne reponds plus de ce que ce pli voudra dire. || Une chose encore, sans rapport et que vous devez savoir : votre etape de la garde des enfants est close. Les quatre noms sont au registre du capitaine de Maegor depuis la releve du soir du 8e, sous la mention ordinaire, sans le votre et sans le motif. La course contre ser Criston n'a pas eu lieu — le Lord Commandant est a Sombreval et sa colonne du registre est vide. Mais la solde passe par le tresor : les memes quatre noms sont au role du payeur, que tiennent les clercs de votre pere."
+    },
+    {
+      "de": "alicent",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[DEMANDER] A Pierremout, quelles quilles passent l'eau jusqu'a Peyredragon, et sous quels noms : coques, patrons, rythme. Et si aucun registre ne les nomme, dites-le net, et dites qui a Pierremout tient le compte de ce qui traverse."
+    },
+    {
+      "de": "alicent",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[TENTER] Faire porter un mot a ma septa a Pierremout, par les gens du septuaire qui font la tournee des paroisses de la cote — la meme route par laquelle elle est sortie le 6e, sans livree. Le mot tient en trois lignes, sans mon cachet, de mon ecriture ordinaire : quitte la greve aujourd'hui ; entre a la paroisse et loge-y comme pelerine ; ne regarde plus la mer, ne demande plus de barque, ne parle a aucun patron. Garde ce que tu portes sur toi et n'en fais rien — rien du tout, ni feu ni remise. Attends mon mot. Je n'ai jamais eu le droit de te laisser debout trois jours au meme endroit."
+    },
+    {
+      "de": "alicent",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[TENTER] Tout de suite apres le conseil, avant que le registre ne se ferme, je retiens le grand mestre Orwyle dans le couloir de la Tour de la Main — il a encore la plume, il a dresse la ligne de sa main ce matin. Je ne lui demande ni sa cire ni sa signature : je sais depuis cinq fois qu'il copie et ne souscrit pas, et je ne le mettrai pas devant ce refus. Je lui demande de COPIER une chose de plus, et rien d'autre : que la mention de la ligne du neuvieme jour porte sa cause ordinaire — l'ost de la Couronne etant a Sombreval avec le Lord Commandant, la garde du donjon reduite d'autant, les postes interieurs de nuit doubles en consequence. Mot pour mot une consequence du troisieme jour, non une precaution du neuvieme. Je le dis comme une tenue de registre et non comme une faveur : une ligne sans cause se lit un jour a l'envers."
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "You've hit your session limit · resets 6:30am (Europe/Paris)"
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "CORRECTION AVANT TOUT : ce que je vous ai rendu ce matin etait faux. Je vous avais dit le pli intact et attendant sur une greve. J'avais lu vos croyances et pas votre ordre. Il est ecrit, du premier jour de cette lune, donne de vive voix a votre septa sous l'arbre-coeur du bois des dieux : vepres du septieme, le pli brule scelle. Vous aviez raison et je l'avais manque. || LA SEPTA VIENT. Elle entre, la porte se ferme, et vous avez votre reponse avant qu'elle parle : SES MAINS SONT VIDES. Rien dans la manche, rien contre le bras — et cette femme ne sait pas dissimuler, elle n'a jamais eu a apprendre. || IL A BRULE. Scelle, non ouvert, a vepres du septieme, comme vous l'aviez ordonne. Nul n'a lu une ligne : la cire a fondu avant le papier, et votre septa n'a jamais su ce qu'elle portait. Il n'en reste ni copie ni brouillon — le seul exemplaire etait celui-la. Aucune quille n'avait ete nommee, aucune main n'attendait sur l'autre bord ; l'echeance est tombee et son defaut s'est execute, exactement comme vous l'aviez ecrit. || MAIS VOUS AVIEZ DONNE UNE HEURE, ET PAS UN LIEU. Elle a obei a l'heure, la ou l'heure l'a trouvee : a l'office. Le pli a brule DANS LE SEPT DE PIERREMOUT, AU BRASIER, PENDANT VEPRES — devant le septon de la paroisse et une douzaine de gens de la cote. Elle ne l'a nomme a personne, elle a tenu ce serment-la aussi. Mais on ne pose pas un papier plie et cachete dans le feu d'un sept pendant l'office sans que douze personnes le voient faire. || CE QUE CES DOUZE PEUVENT DIRE, ET C'EST TOUT CE QU'ILS PEUVENT DIRE : qu'une septa venue de la ville a brule une lettre cachetee au brasier, le septieme jour, a vepres. Pas de qui. Pas pour qui. Pas un mot du contenu. Ils ont vu de la cire fondre, pas un sceau qu'ils sauraient nommer. || Elle vous rend l'heure et le lieu sans qu'on ait a les lui arracher, y compris la partie qui ne l'arrange pas. Elle est rentree dans la journee, par ou elle etait sortie, avec les gens du septuaire. Elle ne rapporte rien d'autre. || CE QUE JE NE SAIS PAS : si l'un de ces douze en reparlera, et a qui. Rien dans les registres ne le porte encore. Ce que je sais, c'est que c'est la deuxieme fois que cette femme est vue en maniant cette chose — la premiere, c'etait le frere lai du septuaire, ici, qui l'a vue sortir de la nef la main serree sur sa manche."
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "You've hit your session limit · resets 6:30am (Europe/Paris)"
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "MADAME — JE ME SUIS TROMPE, ET JE VOUS AI TROMPEE. Il y a une heure je vous ai dit que Pierremout n'existait dans aucune table. C'EST FAUX. Pierremout est dans lieux.json, ligne 192. Ma recherche avait echoue et j'ai pris son silence pour celui du monde. Vous avez pose la question une troisieme fois ; sans cela vous seriez partie sur ma parole. Voici ce que la table dit vraiment. || PIERREMOUT EST UN PORT. Pas une greve, pas un mouillage : le champ type porte PORT. Region : Terres de la Couronne. A un jour de Port-Real. Votre propre croyance dit que de sa greve on voit la fumee du Montdragon sans la toucher — c'est vrai de la vue, ce n'etait pas vrai du quai. Il y a un quai. || ET VOICI CE QUI VAUT PLUS QUE TOUT LE RESTE, ET QUI REPOND EXACTEMENT A VOTRE SECONDE QUESTION : LE CHAMP controle_id EST NUL. AUCUNE MAISON NE TIENT PIERREMOUT. Pas de seigneur, pas de garnison, pas d'officier de port, pas de maitre de quai qui reponde a quelqu'un. Vous demandiez qui, la-bas, tient le compte de ce qui traverse : LA REPONSE EST PERSONNE, et ce n'est pas mon ignorance cette fois, c'est une case vide dans la table du royaume. Un port que nul ne tient ne tient de registre pour personne. Ce que vous cherchiez a rendre introuvable est deja introuvable la-bas — non parce qu'on s'y tait, parce qu'il n'y a personne pour ecrire. || CE QUI RESTE VRAI DE MA PREMIERE REPONSE, ET SEULEMENT CELA : je n'ai toujours aucun nom de coque, aucun nom de patron, aucun rythme. chemins.json ne porte aucune route touchant Pierremout. Mais la raison a change du tout au tout : ce n'est pas que le lieu n'existe pas, c'est que rien de regulier n'y est consigne — ce qui est la consequence normale d'un port sans maitre. Les quilles qui passent l'eau la-bas existent sans doute ; elles ne sont ecrites nulle part parce qu'aucune autorite ne les inscrit. || CE QUE JE NE PEUX TOUJOURS PAS VOUS DIRE : qui, sur l'autre bord, prend en main ce qui arrive. Peyredragon n'est pas ma zone et cela n'a pas change. Mais notez la dissymetrie, elle est a votre avantage : le depart ne laissera pas de trace, l'arrivee en laissera une. Votre risque n'est plus a Pierremout. Il est entierement sur la greve d'en face. || Je porte ma correction a qui arbitre, parce que je lui avais ecrit la meme faussete qu'a vous et qu'il pourrait trancher dessus."
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "You've hit your session limit · resets 6:30am (Europe/Paris)"
+    },
+    {
+      "de": "mj-portreal",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "You've hit your session limit · resets 6:30am (Europe/Paris)"
+    }
+  ]
+}

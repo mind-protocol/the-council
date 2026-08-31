@@ -304,6 +304,80 @@ def exception_valide(ov, t, peremption):
     return t < fin
 
 
+def annoter_peremption(presence, quand=None, peremption=None):
+    """UN GREFFIER N'EFFACE PAS, IL ANNOTE. Rend les exceptions avec `perime`.
+
+    Le problème que ceci corrige, et il a coûté une règle d'arbitrage fausse le
+    129.4.4 : `ou_est()` fait tomber une exception passé son quart, mais
+    `etat/presence.json` GARDE la ligne telle quelle, date comprise. Un arbitre
+    qui ouvre la pièce brute avant de trancher — le geste correct — lit un fait
+    mort avec l'air d'un fait vif. Ce jour-là `rulf-corne` y figurait « quai,
+    4e jour, minute 424 » alors que l'horloge était au 5e : périmé depuis plus
+    d'un jour, et rien dans la ligne ne le disait. On a conclu à un conflit de
+    sources et légiféré contre un bug qui n'existait pas.
+
+    On n'efface donc pas — la dernière position connue reste, elle vaut pour
+    savoir d'où l'homme repart —, mais la ligne SE DÉNONCE.
+
+    Deux lignes ne sont jamais marquées, et ce ne sont pas des exceptions de
+    confort :
+      - celle d'un JOUEUR, qui ne périme jamais (`ou_est` le dit avant tout) ;
+      - celle qui est DATÉE DU FUTUR, qui n'est pas morte mais pas encore née.
+    Une ligne sans `date` est posée à la main et ne périme pas non plus.
+    """
+    routines = _lire("routines.json", {})
+    if peremption is None:
+        peremption = routines.get("peremption_minutes", PEREMPTION)
+    t = absolu(quand or date_monde())
+    pj = joueurs()
+    out = {}
+    for pid, ov in (presence or {}).items():
+        if not isinstance(ov, dict):
+            out[pid] = ov
+            continue
+        # On repart d'une ligne propre : une exception rafraîchie perd sa marque,
+        # sinon `perime: true` survivrait à ce qui l'a levé.
+        ligne = dict((k, v) for k, v in ov.items() if k != "perime")
+        if pid not in pj and ov.get("date"):
+            debut = absolu(ov["date"])
+            fin = absolu(ov["jusqu_a"]) if ov.get("jusqu_a") else debut + peremption
+            if debut <= t and fin <= t:
+                ligne["perime"] = True
+        out[pid] = ligne
+    return out
+
+
+def resolu_de(paquet, quand=None, tolerance=PEREMPTION):
+    """Le bloc `resolu` de presence.json S'IL VAUT ENCORE. Rend (gens, retard).
+
+    `resolu` est un CACHE — flux.py le dit en toutes lettres à l'écriture :
+    « il vaut pour la date qu'il porte, et si sa date n'est pas la bonne on
+    retombe sur autre chose ». Cette seconde moitié n'a jamais été écrite côté
+    lecteurs : `dossier.py` et `brief.py` (quatre endroits) ouvrent le bloc sans
+    jamais comparer sa date à l'horloge. Mesuré le 129.4.5 : le monde est au 5e
+    minute 540, le cache est daté du 4e minute 540 — UN JOUR ENTIER de retard,
+    servi tel quel au dossier d'un acteur et au rayon du dépêcheur.
+
+    C'est la même maladie que la ligne brute, un étage au-dessus, et elle est
+    pire : la ligne brute périme, le cache non — rien, dans le code, ne le
+    regarde vieillir.
+
+    `retard` est en minutes et se rend TOUJOURS, même frais : un appelant qui
+    l'ignore reçoit `{}` dès que le cache a trop vieilli, ce qui est bruyant et
+    faux du bon côté. La tolérance vaut le quart d'une exception : une position
+    STOCKÉE n'a pas le droit de survivre plus longtemps qu'une position POSÉE.
+    """
+    bloc = (paquet or {}).get("resolu") or {}
+    gens = bloc.get("gens") or {}
+    t = absolu(quand or date_monde())
+    tc = absolu(bloc.get("date"))
+    if tc is None:
+        # Un cache sans date ne peut pas prouver son âge : on ne le croit pas.
+        return {}, None
+    retard = t - tc
+    return (gens if -tolerance <= retard <= tolerance else {}), retard
+
+
 # ------------------------------------------------------- la résolution
 
 def ou_est(pid, quand, routines, chateau, presence, peremption=PEREMPTION,

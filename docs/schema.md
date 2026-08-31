@@ -114,12 +114,26 @@ Un fil délégué ne remonte JAMAIS dans le rail : il remonte dans la scène, en
 - `scene_courante` — état du beat en cours (nullable)
 
 ### paroles.json (les choses DITES — mémoire verbale des PNJ)
-- `id, date, locuteur_id, destinataire_id`
-- `contenu` — citation ou résumé fidèle
-- `type` — "serment" | "promesse" | "menace" | "mensonge" | "revelation" | "insulte" | "confidence"
+- `id, date, locuteur_id`
+- **le destinataire** — `destinataire_id` (un seul) **ou** `destinataires` (liste
+  d'ids). Les deux sont légitimes ; un lecteur lit la liste d'abord, puis l'id seul.
+- **le texte** — `contenu` (la forme de référence), **ou** `quoi`, **ou** `texte`.
+  Les trois sont légitimes ; un lecteur les lit dans cet ordre et n'en suppose aucune.
+- `type` — **vocabulaire OUVERT.** Le noyau historique est "serment" | "promesse" |
+  "menace" | "mensonge" | "revelation" | "insulte" | "confidence" ; l'usage en a
+  produit une cinquantaine d'autres ("ordre", "declaration", "rapport", "decision",
+  "instruction", "avertissement", "conseil", "aveu"…), et le champ peut être absent.
+  **Conséquence pour qui lit : un filtre sur une liste fermée de types en rate la
+  plus grande part.** Filtrer par `locuteur_id` et par date, pas par `type`.
 - `temoins` — [] qui d'autre l'a entendu
 - `poids` — 1-3 : importance pour la rancune/confiance future
 Alimentée après chaque scène. Un PNJ ressort tes promesses non tenues.
+
+> **Amendé le 30 août 2026** (voie 3, arbitrée par le développeur), après un audit
+> des 665 paroles : 383 en `contenu`, 152 en `quoi`, 130 en `texte` ; 358 en
+> `destinataire_id`, 280 en `destinataires` ; 50 valeurs de `type` distinctes et
+> 174 entrées sans type. Le schéma est aligné sur ce que les écritures ont produit
+> plutôt que l'inverse — aucune donnée n'a été réécrite.
 
 ### actes.json (les choses FAITES — registre des faits accomplis)
 - `id, date, acteur_id, description, cible_id` (nullable)

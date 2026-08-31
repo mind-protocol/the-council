@@ -1,0 +1,26 @@
+{
+ "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
+ "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
+ "entrees": [
+  {
+   "date": "129-04-03",
+   "quoi": "Curseur relations/mj/.lu trouve a 221 pour un canal de 21 entrees. Aucune perte (curseur en avance = rien de non-lu a tort), cause inconnue — peut-etre deux ecritures concatenees. Corrige a 21 ce jour. Si ca revient, c'est l'appareil d'ecriture du curseur qu'il faudra ouvrir.",
+   "leve": "corrige a la main le 3e de la 4e lune ; la cause reste inconnue, entree ouverte pour la recidive"
+  },
+  {
+   "date": "129-04-03",
+   "quoi": "Ma chambre n'avait jamais ete ouverte : chambre.ouvrir() n'est pas appele pour les regies (pas de fiche personnages.json). Ouverte a la main ce jour via agents.chambre.ouvrir('mj-aurore').",
+   "leve": "ouverte ce jour ; si une autre regie nait sans chambre, c'est le semis des regies qu'il faut brancher"
+  },
+  {
+   "date": "129-04-05",
+   "quoi": "etat/presence.json garde une ligne datee bien apres sa peremption (PEREMPTION = 240, scripts/temps/presence.py l.73) sans rien qui la denonce. rulf-corne y figurait « quai, 4e jour, minute 424 » alors que l'horloge etait au 5e minute 540. Un arbitre a lu la ligne brute comme un fait vif, en a conclu a un conflit routine/scene qui n'existait pas, et a pose une regle d'arbitrage contre un bug absent — puis a rendu une heure juste pour un motif faux. La lecture correcte est `python scripts/presence.py --ou <qui>`, qui rend (routine) sur toute la journee du 5e. Ce n'est pas une panne : le code fait ce qu'il dit. C'est une PIECE QUI MENT AU LECTEUR, et le lecteur est un arbitre qui a fait le geste juste.",
+   "leve": null
+  },
+  {
+   "date": "129-04-05",
+   "quoi": "disponibilite_regie.py rend le motif de QUARTIER la ou la vraie cause est une bande fermee de routine (l.98-115 : le quartier ne vaut plus empechement depuis le 31.8). Subi le 4e : j'ai lu « le quartier s'est resserre » et propose de toucher le moteur, quand il fallait attendre trois heures. Deja remonte a dev par mj le 5e ; je le note pour la recidive de MON cote.",
+   "leve": null
+  }
+ ]
+}

@@ -3,7 +3,7 @@
 
 La Regle Zero : ses paroles sont a lui. Le script rassemble ce que l'homme
 sait (brief, dossier, travaux, trous de son plan), lui sert son manuel, ouvre
-sa session claude -p (stable par homme et par jour de jeu), et a son retour
+sa session d'agent (stable par homme et par jour de jeu), et a son retour
 pose le rapport dans etat/rapports/ puis le verse sur-le-champ.
 
 CE QUE CE PAQUET POSSEDE, decoupe sous le plafond de 500 lignes
@@ -14,7 +14,7 @@ parce que le manuel du narrateur et la mission depassaient le plafond) :
     narrateur.py  : le contrat de rapport du narrateur local
     trous.py      : ce que son plan montre (criticite, charge, attentes)
     pas_de_tir.py : ce qu'on materialise au repertoire neutre (etagere, memoire)
-    mission.py    : le texte de mission, l'archive du prompt, l'appel claude -p
+    mission.py    : le texte de mission, l'archive du prompt, l'appel d'agent
     retour.py     : le versement sur-le-champ et la proposition de tete
     cli.py        : main() — la CLI gelee de scripts/depecher.py
 

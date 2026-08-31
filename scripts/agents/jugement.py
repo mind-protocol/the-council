@@ -12,7 +12,7 @@
 #
 # ─────────────────────────────────────────────────────────────────────────────
 # LE JUGE N'EST PAS LUI. Un homme qui se note lui-meme a la fin de sa journee
-# se donne 8. On appelle donc un juge separe, en `claude -p`, et on lui donne
+# se donne 8. On appelle donc un juge separe, par la porte globale, et on lui donne
 # ce que l'homme a REELLEMENT OUVERT — ses Read, ses Grep, tires du
 # transcript — et pas seulement ce qu'il raconte avoir fait. C'est la que se
 # voit la difference entre un homme qui est alle au banc et un homme qui a
@@ -35,8 +35,9 @@ import io
 import json
 import os
 import re
-import subprocess
 import sys
+import tempfile
+import uuid
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
@@ -116,6 +117,17 @@ def depouiller(transcript, plafond=24000):
                 d = json.loads(ligne)
             except ValueError:
                 continue
+            if d.get("type") == "item.completed":
+                item = d.get("item") or {}
+                if item.get("type") == "agent_message" and item.get("text"):
+                    dernier = item["text"]
+                elif item.get("type") in ("command_execution", "mcp_tool_call",
+                                          "file_change"):
+                    cible = (item.get("command") or item.get("name") or
+                             item.get("path") or "")
+                    ouvert.append(u"%s %s" % (item.get("type"),
+                                               str(cible)[:120]))
+                continue
             msg = d.get("message") or {}
             if d.get("type") != "assistant" and msg.get("role") != "assistant":
                 continue
@@ -182,11 +194,15 @@ def juger(qui, ouvert, dernier):
     recommencer sa journee a un homme qui l'a bien faite."""
     charge = charge_du_juge(qui, ouvert, dernier)
     try:
-        r = subprocess.run(
-            ["claude", "-p", "--output-format", "json", "--model", MODELE],
-            input=charge.encode("utf-8"), capture_output=True, timeout=180,
-            cwd=os.environ.get("TEMP") or RACINE)
-        out = json.loads(r.stdout.decode("utf-8", "replace"))
+        from agents.expose import runtime as agent_runtime
+        with tempfile.TemporaryDirectory(prefix="juge-agent-") as neutre:
+            out = agent_runtime.appeler(
+                role="juge:%s" % qui,
+                manuel=(u"Tu es un juge indépendant. Tu ne modifies aucun "
+                        u"fichier et tu rends uniquement l'objet JSON demandé."),
+                message=charge, session_id=str(uuid.uuid4()), modele=MODELE,
+                timeout=180, cwd=neutre, add_dirs=[], tools=[],
+                reprendre=False, ecriture=False)
         t = (out.get("result") or "").strip()
         t = re.sub(r"^```(?:json)?\s*|\s*```$", "", t).strip()
         d = json.loads(t[t.find("{"):t.rfind("}") + 1])
@@ -277,5 +293,3 @@ def main():
                       "reason": relance(manques, note,
                                         RELANCES_MAX - faites - 1)},
                      ensure_ascii=False))
-
-

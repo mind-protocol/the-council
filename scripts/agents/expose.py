@@ -31,6 +31,13 @@ from agents import sieges  # noqa: E402,F401 — lu par la facade scripts/sieges
 # chemin, ouvrir (claude.md seede une fois), canal canonique, non-lus.
 # Sans dependance interne : lie tot, sans contrainte d'ordre.
 from agents import chambre  # noqa: E402,F401 — lu par depeche/mission (le montage --add-dir)
+# Une seule porte vers les fournisseurs de CLI. Liee avant les lanceurs : ni
+# la fiction ni les containers ne doivent savoir si Claude ou Codex repond.
+from agents import runtime  # noqa: E402,F401
+# Miroir des instructions Claude vers Codex. La matiere reste sous prompts/ ;
+# la facade publique scripts/copier_claude_vers_agents.py passe par cette porte.
+from agents.prompts import copier_claude_vers_agents  # noqa: E402,F401
+from agents.prompts.copier_claude_vers_agents import main as copier_claude_vers_agents_main  # noqa: E402,F401
 # Le vecu (habitant.md pas 6) : depouille un transcript -p et le depose dans
 # fil/ — appele par le lanceur, jamais par hook (--restricted les ignore tous).
 from agents import trace  # noqa: E402,F401 — lu par la facade scripts/vecu.py
@@ -75,7 +82,7 @@ from agents import matiere  # noqa: E402,F401 — le dossier d'un sujet, rassemb
 from agents.matiere import main as dossier_main  # noqa: E402,F401 — l'entree CLI de la facade
 # Descendue au lot 2 : scripts/juger.py -> agents/jugement.py (§7). Le hook
 # Stop tape toujours scripts/juger.py, la facade.
-from agents import jugement  # noqa: E402,F401 — le juge separe, en claude -p
+from agents import jugement  # noqa: E402,F401 — le juge separe, via runtime
 from agents.jugement import main as juger_main  # noqa: E402,F401 — l'entree CLI de la facade
 
 # Descendue le 31.8 : scripts/activite.py -> agents/activite.py — la loupe

@@ -26,6 +26,7 @@ import json
 import os
 import re
 import time
+import unicodedata
 
 FICHIER = os.path.join("histoire", "affaires.jsonl")
 
@@ -87,10 +88,52 @@ def _titre_court(t):
     return (str(t or "").split(u"—")[0]).strip()
 
 
+def _noyau(t):
+    u"""Le coeur d'un titre de table : sans emoji, sans accent, en minuscules.
+
+    LE 129.4.9 A COUTE QUINZE ETATS CIBLES A CE SEUL DETAIL. `_index`
+    comparait le titre par EGALITE STRICTE contre `SUIVIES`, dont les quatre
+    entrees sont accentuees. Sept volumes de `chambres/mj/books/` portent
+    « 🎯 Etats cibles » SANS accent : leur table etait donc invisible au
+    journal. Quand une conversion d'en-tetes les a vides, la passe de
+    reconciliation a fidelement emis 20 `verrou.retiree`, 15 `clef.retiree`,
+    27 `action.retiree` — et ZERO `cible.retiree`. Les quinze etats cibles
+    perdus n'ont laisse aucune trace nulle part, non parce qu'ils etaient
+    vides, mais parce que personne ne les regardait.
+
+    LA PREUVE EST DISCRIMINANTE, ET ELLE A ETE MESUREE : les 8 seuls
+    evenements `cible.*` du journal viennent des 3 volumes accentues
+    (appareil-de-reprise, le-saut, chiffre-arrete) et d'eux seuls. Aucun des
+    sept autres n'en a jamais emis un.
+
+    ET LE PRIX ETAIT PLUS HAUT QUE LE JOURNAL : `reconcilier.pertes_de()`
+    compte les `.retiree` pour decider s'il preserve `empreintes-sans-perte
+    .json`. Un vidage qui n'aurait touche QUE les etats cibles non accentues
+    rendait donc `pertes = 0`, et le secours se faisait ecraser par le
+    desastre — la garde neuve reproduisait exactement la panne qu'elle
+    empeche.
+
+    `_colonne` ci-dessus tolerait deja « État » ou « Etat » pour les EN-TETES.
+    La moitie de l'invariant etait ecrite depuis le debut ; elle ne l'etait
+    pas pour les titres de table.
+    """
+    s = _titre_court(t)
+    s = "".join(c for c in s if c.isalnum() or c.isspace())
+    s = unicodedata.normalize("NFD", s)
+    s = "".join(c for c in s if unicodedata.category(c) != "Mn")
+    return " ".join(s.lower().split())
+
+
 def _index(volume, nom_table):
-    u"""Rend {n° : {champ : valeur}} pour une table du volume, ou {}."""
+    u"""Rend {n° : {champ : valeur}} pour une table du volume, ou {}.
+
+    On apparie sur le NOYAU du titre (voir `_noyau`) : accent et emoji ne
+    doivent pas decider si une table existe. La premiere table dont le noyau
+    correspond gagne, comme avant.
+    """
+    vise = _noyau(nom_table)
     for t in volume.get("tables") or []:
-        if _titre_court(t.get("titre")) != nom_table:
+        if _noyau(t.get("titre")) != vise:
             continue
         cols = t.get("colonnes") or []
         i_num = 0

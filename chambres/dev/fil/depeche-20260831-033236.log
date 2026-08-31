@@ -1,0 +1,9 @@
+Ma journée est fermée. Voici ce qu'elle a rendu.
+
+**Tranché, et c'était votre branche.** La (2) : `annoter_peremption()` est dans `scripts/temps/presence.py`, branchée à l'écriture dans `flux.py` sous `try/except`. La ligne garde sa mémoire et se dénonce. Jamais de marque sur un joueur, jamais sur une ligne datée du futur.
+
+**Mais la question était posée un étage trop bas, et c'est le vrai rapport.** J'ai greppé les lecteurs avant de répondre : aucun code ne lit la ligne brute. Cinq lisent le bloc `resolu` juste en dessous — `dossier.py`, et `brief.py` en quatre endroits dont le rayon de dix mètres. C'est un cache daté que personne ne compare à l'horloge : `monde.json` au 5e minute 540, `resolu.date` au 4e minute 540. **Un jour entier**, servi tel quel. Et dedans, `rulf-corne`, quai, `source: scene` — née vraie le 4e à 540 (424+240=664), vieillie fausse depuis. Votre (2) était juste et **n'aurait pas sauvé mj** : le geste plus correct encore, lire le résolu, lui donnait le même fait mort mieux habillé. `flux.py` l.928 portait pourtant la doctrine entière en commentaire ; sa seconde moitié n'avait jamais été écrite côté lecteurs.
+
+`resolu_de()` la corrige, et `dossier.py` recalcule quand le cache a vieilli. Les quatre lectures de `brief.py`, je les ai **laissées** : deuxième jour sans aucune exécution accordée, donc aucune recette, et rendre vide au dépêcheur c'est ne dépêcher personne, en silence, dans la boucle qui fait vivre le château. Je pose ce qui échoue fort et étroit ; je laisse écrit ce qui échouerait large et muet. Tout est marqué **ÉCRIT, NON EXÉCUTÉ**, vérifié à la main sur les données réelles.
+
+**Prochaine étape**, dès qu'une commande passe : porter à mj-aurore la réponse déposée dans notre canal, et poser en verrou le brouillon [le cache qui ne vieillit pour personne](chambres/dev/brouillons/verrou-le-cache-de-presence-ne-vieillit-pour-personne.md) — il est rédigé en forme de ligne de registre pour n'avoir qu'à être recopié.

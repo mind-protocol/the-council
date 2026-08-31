@@ -1,0 +1,25 @@
+{
+ "_pourquoi": "Tete de corlys apres sa depeche du 129.4.5 (session 3d993b77-797f-5ff7-a3fd-cab9428c490f). Le script ne propose que date_maj ; ajoute ici tes mutations d'etapes et de croyances d'apres la matiere, puis applique le tout.",
+ "matiere": {
+  "journal": [],
+  "conclusion": false,
+  "rapport": "etat/rapports/corlys.json"
+ },
+ "empreintes": {
+  "intentions": "a5bf4829e52487b37a9363aa7299f18ee6a43351"
+ },
+ "mutations_proposees": [
+  {
+   "table": "intentions",
+   "cible": "corlys",
+   "operation": "tete",
+   "champs": {
+    "date_maj": {
+     "annee": 129,
+     "lune": 4,
+     "jour": 5
+    }
+   }
+  }
+ ]
+}

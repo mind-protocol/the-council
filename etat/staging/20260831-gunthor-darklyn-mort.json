@@ -1,0 +1,64 @@
+{
+  "titre": "Sombreval — geler Gunthor Darklyn, mort le 129.4.3 sur son quai",
+  "calcule_le": "2026-08-31",
+  "par": "mj-sombreval (proposition ; rien n'a ete ecrit dans etat/)",
+  "date_monde": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4
+  },
+  "note": "Piece qui fonde le lot : etat/evenements.json, evenement 'sac-sombreval', statut 'resolu', date_prevue 129.4.3, lieu sombreval, acteurs criston + gunthor-darklyn — 'la ville est pillee, la flotte brulee, lord Gunthor Darklyn decapite pour trahison', et la diffusion du 4e le dit tout haut : 'decapite sur son propre quai devant ses gens'. Sa fiche personnages.json porte deja condition 'mort' et lieu 'sombreval' mais etat 'dormant' : c'est cet etat-la que le tick relit. Sa tete vit encore dans intentions.json (5 croyances, etapes gunthor-sacre 'bloque', gunthor-ecrit-de-la-reine 'en-cours', gunthor-la-chaine-du-quai 'en-cours') et le fait marcher vers Peyredragon. LA PIECE PRINCIPALE DE CE LOT NE PASSE PAS PAR LE VOCABULAIRE : il n'existe pas d'operation 'tete_retirer' (OPERATIONS['intentions'] : etape, etape_ajouter, tete, tete_ajouter, croyance_*, ignore_*, declencheur_*). Voir 'a_la_main' ci-dessous : c'est une suppression de bloc, a ta main et sous ton arbitrage. Les mutations ci-dessous sont la ceinture — appliquees seules, elles rendent le mort inoffensif meme si le bloc reste une nuit de plus. Aucune empreinte posee : le lot est a relire, pas a appliquer les yeux fermes.",
+  "a_la_main": {
+    "table": "etat/intentions.json",
+    "geste": "Retirer entierement le bloc dont personnage_id = 'gunthor-darklyn' (croyances, ignore, intention, plan, declencheurs, attitude_joueur, date_maj).",
+    "pourquoi": "Un mort n'a pas de tete. Tant que le bloc existe, le premier qui le relit fait voyager un decapite vers la reine, avec l'etape 'ecrire a Peyredragon et demander un ecrit' et le declencheur 'un ecrit scelle de la reine NOMMANT Sombreval lui est remis en main propre' — declencheur desormais impossible, puisque l'acte scelle est arrive et que celui a qui il etait adresse est mort.",
+    "effets_de_bord_verifies": "Le declencheur 'gunthor-la-chaine-du-quai' depend de 'gunthor-ecrit-de-la-reine' — les deux partent avec le bloc, aucun renvoi ne reste dans le vide. Le pli 'pli-protection-sombreval' (plis.json) porte pour: gunthor-darklyn, etat 'remis', main 'marec-fosse' : il n'est PAS touche par ce lot et ne doit pas l'etre — l'acte existe, il est a Sombreval, et c'est de la matiere pour ma ville."
+  },
+  "mutations_proposees": [
+    {
+      "table": "personnages",
+      "cible": "gunthor-darklyn",
+      "operation": "personnage",
+      "champs": {
+        "etat": "mort"
+      },
+      "pourquoi": "Il etait 'dormant' avec condition 'mort' — un etat qui autorise encore la promotion et la relecture. 'mort' est dans ETATS_PERSO et ferme la fiche. Mort le 3e jour de la 4e lune de l'an 129, a Sombreval, decapite par ser Criston Cole sur son propre quai devant ses gens (evenement sac-sombreval). Le lieu_id 'sombreval' et la condition 'mort' sont deja justes : rien d'autre a toucher. Si tu veux la date et la circonstance DANS la fiche, elles n'ont pas de champ : CHAMPS_PERSO = (lieu_id, condition, etat). Elles sont gravees a l'evenement, et je les redis ici pour ton annale."
+    },
+    {
+      "table": "intentions",
+      "cible": "gunthor-darklyn",
+      "operation": "etape",
+      "etape": "gunthor-ecrit-de-la-reine",
+      "champs": {
+        "etat": "abandonne",
+        "jours_restants": 0,
+        "accompli": "Sans objet : l'ecrit demande EXISTAIT et etait arrive. L'acte de protection scelle de la reine a ete remis en main propre a Sombreval le 1er de la quatrieme lune (pli-protection-sombreval, etat 'remis'). Il est mort le 3e sans que la demande soit close."
+      },
+      "pourquoi": "Etape vivante ('en-cours') d'un homme decapite : c'est elle qui le fait ecrire a Peyredragon."
+    },
+    {
+      "table": "intentions",
+      "cible": "gunthor-darklyn",
+      "operation": "etape",
+      "etape": "gunthor-la-chaine-du-quai",
+      "champs": {
+        "etat": "abandonne",
+        "jours_restants": 0,
+        "accompli": "La chaine du quai n'a pas retenu ce qui est venu : l'ost de la Couronne a pris le port le 3e, la flotte a brule sur ses amarres et le quai garde est devenu le lieu de son execution."
+      },
+      "pourquoi": "Seconde etape vivante ('en-cours'), et le quai qu'elle gardait est celui ou il est tombe."
+    },
+    {
+      "table": "intentions",
+      "cible": "gunthor-darklyn",
+      "operation": "etape",
+      "etape": "gunthor-sacre",
+      "champs": {
+        "etat": "abandonne",
+        "jours_restants": 0
+      },
+      "pourquoi": "'bloque' compte parmi les etats vivants (ETATS_ETAPE_VIVANTS = en-cours, bloque) : trois vivantes pour un budget de deux. Elle etait deja resolue dans les faits — il avait envoye son frere avec la banniere — et son objet est mort avec lui."
+    }
+  ],
+  "applique_le": "2026-08-31T02:07:41"
+}

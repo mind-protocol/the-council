@@ -1,0 +1,25 @@
+{
+ "_pourquoi": "Tete de alarra-rosby apres sa depeche du 129.4.5 (session 1eb2531e-5036-5f5a-b1ae-be30dd13e5bf). Le script ne propose que date_maj ; ajoute ici tes mutations d'etapes et de croyances d'apres la matiere, puis applique le tout.",
+ "matiere": {
+  "journal": [],
+  "conclusion": false,
+  "rapport": "etat/rapports/alarra-rosby.json"
+ },
+ "empreintes": {
+  "intentions": "45fa9af7ff07aefd84e986526b7688de164e602f"
+ },
+ "mutations_proposees": [
+  {
+   "table": "intentions",
+   "cible": "alarra-rosby",
+   "operation": "tete",
+   "champs": {
+    "date_maj": {
+     "annee": 129,
+     "lune": 4,
+     "jour": 5
+    }
+   }
+  }
+ ]
+}

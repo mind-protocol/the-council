@@ -23,8 +23,18 @@ session ecrit.
 
     python scripts/rendre_cellules.py <maison>              ce qui serait rendu
     python scripts/rendre_cellules.py <maison> --vraiment   l'ecriture
+    python scripts/rendre_cellules.py <maison> --secours    depuis le SECOURS
 
 `<maison>` est une clef de l'empreinte : « etat », « chambre:mj »…
+
+ET LE 129.4.9 A MONTRE LA FAILLE DE CE SCRIPT : sa source est un CACHE que
+`reconcilier.py --vraiment` rafraichit depuis le disque. A 04 h 49 min 45 s,
+la reconciliation a journalise « 35 lignes disparues » et, dans la meme
+seconde, a pose l'instantane du desastre par-dessus la seule copie qui les
+contenait encore. Ce script, ecrit une demi-heure plus tot pour reparer, n'a
+plus eu rien a rendre. D'ou `--secours` : `reconcilier.poser()` tient
+desormais `empreintes-sans-perte.json`, que seule une passe SANS disparition
+peut remplacer. C'est la source a preferer apres un vidage.
 """
 import argparse
 import io
@@ -43,6 +53,7 @@ for _p in (_d, os.path.join(_d, "noyau")):
 RACINE = os.path.dirname(_d)
 ETAT = os.path.join(RACINE, "etat")
 EMPREINTES = os.path.join(ETAT, "histoire", "empreintes.json")
+SECOURS = os.path.join(ETAT, "histoire", "empreintes-sans-perte.json")
 
 
 def _noyau(colonne):
@@ -72,7 +83,7 @@ def _cellules(ligne):
     return ligne if isinstance(ligne, list) else None
 
 
-def fusionner(avant, apres):
+def fusionner(avant, apres, sautees=None):
     u"""Remplit dans `apres` les cellules vides dont `avant` a la valeur.
 
     Rend le nombre de cellules rendues. `apres` est modifie en place. On
@@ -87,11 +98,24 @@ def fusionner(avant, apres):
     for ta in avant.get("tables") or []:
         tb = par_titre.get(str(ta.get("titre")))
         if tb is None:
+            if sautees is not None:
+                sautees.append((str(ta.get("titre")), u"absente du disque"))
             continue
         la = ta.get("lignes") or []
         lb = tb.get("lignes") or []
         if len(la) != len(lb):
-            continue          # on ne devine pas un appariement
+            # ON NE DEVINE PAS UN APPARIEMENT — MAIS ON NE SE TAIT PAS.
+            # Une seule ligne ajoutee depuis la sauvegarde fait abandonner la
+            # TABLE ENTIERE. C'est prudent et c'est juste ; c'est muet, et
+            # c'est faux : celui qui lit « 0 cellule a rendre » en conclut
+            # qu'il n'y avait rien a sauver, alors qu'on vient de renoncer a
+            # tout un tableau pour une ligne de decalage.
+            if sautees is not None:
+                sautees.append((str(ta.get("titre")),
+                                u"%d ligne(s) dans la sauvegarde, %d sur le"
+                                u" disque — appariement impossible"
+                                % (len(la), len(lb))))
+            continue
         # ON APPARIE LES COLONNES PAR LEUR NOM, PAS PAR LEUR RANG. La
         # reecriture du 31.8 a AJOUTE une colonne (« 👤 Qui ») : les index ne
         # correspondent plus d'un cote a l'autre, et un appariement positionnel
@@ -131,8 +155,16 @@ def maison_sur_disque(maison):
     return None
 
 
-def passer(maison, vraiment=False):
-    emp = json.load(io.open(EMPREINTES, encoding="utf-8")).get(maison) or {}
+def passer(maison, vraiment=False, secours=False):
+    source = SECOURS if secours else EMPREINTES
+    if not os.path.exists(source):
+        # ON NE RETOMBE PAS EN SILENCE SUR L'AUTRE FICHIER. Celui qui demande
+        # le secours le demande parce qu'il vient de perdre des lignes ;
+        # servir l'empreinte courante lui rendrait « 0 cellule a rendre » et
+        # il en conclurait qu'il n'y avait rien a sauver.
+        return [], (u"source absente : %s — le secours ne se cree qu'a la"
+                    u" premiere passe de reconciliation sans perte." % source)
+    emp = json.load(io.open(source, encoding="utf-8")).get(maison) or {}
     dossier = maison_sur_disque(maison)
     if not dossier or not os.path.isdir(dossier):
         return [], u"maison inconnue ou absente : %s" % maison
@@ -143,7 +175,11 @@ def passer(maison, vraiment=False):
             rapport.append((ident, 0, u"absent du disque — non recree"))
             continue
         apres = json.load(io.open(f, encoding="utf-8"))
-        n = fusionner(avant, apres)
+        sautees = []
+        n = fusionner(avant, apres, sautees)
+        for titre, motif in sautees:
+            rapport.append((u"  ↳ %s" % titre, 0,
+                            u"TABLE SAUTEE — %s" % motif))
         if not n:
             rapport.append((ident, 0, u"rien a rendre"))
             continue
@@ -160,13 +196,17 @@ def main(argv=None):
                                              u" sans jamais ecraser.")
     ap.add_argument("maison", help=u"« etat », « chambre:mj »…")
     ap.add_argument("--vraiment", action="store_true")
+    ap.add_argument("--secours", action="store_true",
+                    help=u"lire `empreintes-sans-perte.json` au lieu de"
+                         u" l'empreinte courante")
     a = ap.parse_args(argv)
-    rapport, erreur = passer(a.maison, a.vraiment)
+    rapport, erreur = passer(a.maison, a.vraiment, a.secours)
     if erreur:
         print(erreur)
         return 1
     total = sum(n for _, n, _ in rapport)
-    print(u"RENDRE LES CELLULES — %s" % a.maison)
+    print(u"RENDRE LES CELLULES — %s   (source : %s)"
+          % (a.maison, u"SECOURS" if a.secours else u"empreinte courante"))
     for ident, n, mot in rapport:
         print(u"  %-46s %4d  %s" % (ident[:46], n, mot))
     print(u"\n%d cellule(s) %s. UNE CELLULE OCCUPEE N'EST JAMAIS TOUCHEE :"

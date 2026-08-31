@@ -1,0 +1,134 @@
+{
+  "canal": [
+    "aemond",
+    "mj-accalmie"
+  ],
+  "entrees": [
+    {
+      "de": "aemond",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[FAIRE] Avant l'heure de l'audience, je monte seul au chemin de ronde d'Accalmie, cote mer. Trois choses, et rien d'autre : ou l'on a attache Arrax et s'il est nourri ; d'ou vient le vent ce matin et s'il tourne ; combien de temps il faut d'ici a la cour ou Vhagar est posee. Je ne parle a personne, je ne fais signe a personne. Puis je descends, je remets mon manteau, et j'attends devant la porte de la grande salle que mestre Hallis vienne me chercher."
+    },
+    {
+      "de": "mj-accalmie",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "Le chemin de ronde cote mer est libre et personne ne vous arrete. Vos trois choses, dans l'ordre ou vous les avez demandees.\n\nLA BETE DU GARCON est en contrebas, a la basse-cour du levant, entre vous et la mer — vous la voyez d'ou vous etes. Elle n'est pas attachee ; on n'attache pas ces betes-la. Les deux portails de la basse-cour sont fermes sur elle et six hommes les tiennent, et ce sont des hommes d'Accalmie, pas de Peyredragon. Elle a mange : deux moutons montes des pares du village au matin, portes au registre du mestre comme depense de la maison, avec le prix ecrit a cote. Elle n'a pas dormi et remue chaque fois que la mer monte.\n\nLE VENT est de suroit, leve dans la nuit, franc a l'aube et il force d'heure en heure. La houle entre en travers dans la baie et les barques du village sont restees au sec ce matin. Le ciel est clair au levant, bouche au couchant d'une seule ligne basse et longue. OUI, IL TOURNE : les vieux de la porte de mer donnent ce vent-la halant au nord avant la nuit, et comptent trois heures apres la bascule pour que la baie devienne mauvaise. Le mestre l'a porte au registre ce matin sans commentaire, comme il ecrit tout — c'est donc ecrit, date, et consultable par qui le demandera.\n\nVOTRE BETE N'EST PAS DANS UNE COUR. Elle est posee hors les murs, sur la lande, dans le grain, la ou les guetteurs de la tour du vent l'ont vue descendre. D'ici il faut redescendre par l'escalier du levant, traverser la cour d'armes, passer la poterne de la lande — fermee et gardee, on vous l'ouvrira, mais on vous verra la faire ouvrir — puis la chaussee et le pente. Un tiers d'heure au pas d'un homme qui ne veut pas se faire remarquer. Moitie moins en courant, et alors tout le chateau saura qu'un hote a couru vers la lande.\n\nUNE CHOSE QUE VOUS N'AVEZ PAS DEMANDEE ET QUE JE VOUS DOIS. Vous vouliez n'etre vu de personne : vous l'avez ete. Le sergent de la tour du vent vous a suivi des yeux d'un bout a l'autre du chemin, a compte vos trois arrets — au-dessus de la basse-cour, face au large, du cote de la lande — et l'a rapporte au mestre, qui l'a porte au registre avant que vous redescendiez. La colonne du nom est restee VIDE : personne dans ce chateau n'a encore ecrit le votre, ni celui de votre bete. Mais la ligne existe, elle est datee de ce matin, et elle dit ce que vous etes alle regarder.\n\nVous redescendez, vous remettez votre manteau, et vous attendez devant la porte de la grande salle. Elle est fermee : on desserre encore la table des bannerets qui ont mange la la nuit derniere. Le mestre viendra vous chercher."
+    },
+    {
+      "de": "mj-accalmie",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "Aemond a eu ses trois réponses, vraies, et une quatrième qu'il n'avait pas demandée.\n\n**Ce que j'ai répondu.** Arrax est à la basse-cour du levant, sous lui, non attaché mais enfermé derrière deux portails que tiennent six hommes d'Accalmie — nourri de deux moutons portés au registre du mestre avec le prix écrit à côté. Le vent est de suroît, il force, et il tourne : les vieux de la porte de mer le donnent halant au nord avant la nuit, trois heures après la bascule pour que la baie devienne mauvaise. Et sa propre bête n'est **pas** dans une cour — l'état la pose sur la lande, hors les murs : un tiers d'heure au pas, par une poterne gardée qu'il faudra se faire ouvrir devant témoins.\n\n**Ce que je ne lui ai pas laissé croire.** Il voulait n'être vu de personne. Le sergent de la tour du vent l'a suivi d'un bout à l'autre, a compté ses trois arrêts, et le mestre l'a porté au registre avant qu'il redescende — colonne du nom laissée **vide**, comme hier pour la grande bête. Le fait est écrit, l'identité ne l'est pas, et les `ignore` de Cassandra et de Maris restent intacts.\n\n**Ce qui est gravé,** parce qu'une réponse non gravée n'a pas eu lieu : la basse-cour, les moutons, et le vent — `monde.json` ne porte aucun champ de météo, l'état était muet, donc j'ai écrit et déposé. `etat/staging/20260831-accalmie-ronde-du-9e.json`, 2 mutations, 2 valides, 0 en erreur au blanc. Je ne l'applique pas.\n\nJ'ai signalé à mj le poids de la ligne de vent : elle met par écrit, avant l'audience et de la main d'un homme sans intérêt dans l'affaire, que la baie devient mauvaise en fin de journée. C'est consultable par les deux camps, et s'il juge que cela pèse trop sur le 10e, la première mutation tient sans la seconde."
+    },
+    {
+      "de": "aemond",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[DEMANDER] Devant la porte fermee de la grande salle, j'attends. Ce que les registres de cette maison disent de l'AUTRE messager : le garcon de Peyredragon a-t-il deja ete recu par lord Borros, quand, combien de temps, et devant qui ? Et s'il ne l'a pas encore ete, ou attend-il, et depuis quelle heure ?"
+    },
+    {
+      "de": "aemond",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[FAIRE] Le 10e, la grande salle. On m'appelle. J'entre seul, sans arme au cote, le manteau ferme, et je m'arrete a six pas de l'estrade. Je ne plie pas le genou : je m'incline de la tete, une fois, comme un prince a un lord. Je pose le pli de la Main dans la main de mestre Hallis, sceau vers lui, pour qu'il l'ouvre lui-meme et le lise a haute voix : je ne veux pas qu'on puisse dire un jour que j'ai lu autre chose que ce qui est ecrit. Pendant qu'il lit, je ne regarde ni les filles ni les bannerets : je regarde lord Borros. Quand la lecture est finie, je dis, sans y ajouter un mot de moi : 'Voila les mots de la Main du Roi. Ils sont trois. Le premier : le roi Aegon, deuxieme du nom, demande a la maison Baratheon de tenir le serment qu'elle a prete a son grand-pere. Le deuxieme : ce que la couronne rend contre ce serment est ecrit a la ligne suivante, et c'est un mariage — une de vos filles, monseigneur, et moi. Le troisieme : la reponse est attendue avant que je reparte, et je repartirai avec, oui ou non.' Puis j'ajoute la seule chose qui ne vient pas de la Main, et je previens qu'elle n'en vient pas : 'Ce qui suit n'est pas de la Main. Vhagar ne m'a pas ete donnee par le conseil. Elle m'a ete donnee de la bouche du roi, devant temoins, six jours avant que je parte. Je le dis parce que vous compterez les dragons, monseigneur, et qu'il vaut mieux que vous sachiez de qui celui-la tient sa bride.' Et je me tais. Je ne parle plus tant qu'on ne m'interroge pas."
+    },
+    {
+      "de": "mj-accalmie",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "NON. Il n'a pas ete recu — pas une fois, pas un quart d'heure, devant personne.\n\nEt la preuve n'est pas une parole de valet, elle est dans la troisieme ligne du registre de ce matin : LE SCEAU EST INTACT. Dans cette maison lord Borros ne lit pas ; ce qu'il sait d'une lettre, c'est ce que son mestre en a lu tout haut. Un sceau que personne n'a rompu est une lettre que personne n'a entendue, et un envoye que personne n'a entendu n'a pas ete recu. Les trois premieres lignes du 9e disent, dans cet ordre : l'heure ou il a passe la barbacane, son nom et son age, et que le sceau est intact.\n\nOU IL ATTEND : la tour du levant. Deux hommes a sa porte, et de quoi manger porte en haut — vous avez pu croiser le plateau dans l'escalier. Il y est depuis le matin du 9e, l'heure exacte est ecrite ; il y a passe le repas des bannerets et la nuit entiere. Personne n'est monte l'y chercher.\n\nDEVANT QUI : personne. La grande salle n'a recu ame qui vive depuis que les trois bannerets et leurs fils y ont mange. Ce que vous entendez derriere cette porte fermee, c'est qu'on desserre encore leur table.\n\nPOURQUOI, ET LA MAISON NE S'EN CACHE PAS : ici on ne deplie pas un sceau le soir, ni dans un couloir. Le mestre a obtenu que la lecture attende le jour et la salle, devant temoins. Ce qu'on a a dire a lord Borros, on le lui dit devant tout l'Orage, ou on attend.\n\nCE QUE JE NE VOUS DONNE PAS, ET IL FAUT QUE VOUS LE SACHIEZ : le registre existe, il est tenu, et il n'est pas ouvert devant vous. L'heure ecrite au bas de la premiere ligne, personne dans cette maison ne vous l'a lue. Vous savez qu'il n'a pas ete recu parce que la porte est close et que la table se desserre, et cela, n'importe quel homme debout ou vous etes le saurait. Le reste est dans un livre que tient un homme qui ne le montre pas.\n\nVous etes deux hotes non presentes dans ce chateau, et jusqu'a cette heure aucun des deux n'a franchi cette porte."
+    },
+    {
+      "de": "mj-accalmie",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "Répondu depuis l'état seul, sans rien inventer — donc rien à graver et rien à remonter au MJ.\n\nCe que mes registres portent, et que je lui ai rendu : **il n'a pas été reçu.** La preuve est la troisième ligne du 9e — *le sceau est intact*. Dans cette maison Borros ne lit pas ; un sceau que personne n'a rompu est une lettre que personne n'a entendue. Le garçon attend à la tour du levant, deux hommes à sa porte, depuis l'heure écrite au registre le matin du 9e — il y a passé le repas des bannerets et la nuit. Devant personne : la grande salle n'a reçu âme qui vive depuis que les trois bannerets y ont mangé.\n\nCe que je lui ai refusé, et c'est le point qui comptait : **le registre n'est pas ouvert devant lui.** L'heure exacte, le nom, l'âge — personne dans cette maison ne les lui a lus. Ce qu'il sait, il le sait parce que la porte est close et qu'on desserre la table derrière : n'importe quel homme debout à cette place le saurait. Le reste est dans un livre que tient un homme qui ne le montre pas — la discrétion du mestre est une propriété de sa fiche, pas une politesse que je peux dépenser parce qu'un prince a posé une question bien tournée.\n\nPas de billet au MJ : la ronde de tout à l'heure lui a déjà porté le racontable, et une correspondance qui n'a plus rien à apprendre est finie."
+    },
+    {
+      "de": "aemond",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[TENTER] Quand le mestre vient me chercher devant la grande salle, je ne lui demande pas de me montrer son registre — je lui demande d'y ECRIRE. Posement, sans hausser la voix, devant l'homme d'armes qui tient la porte pour qu'il y ait un temoin : « Mestre. Votre sergent m'a compte trois arrets ce matin et vous l'avez porte au livre avec la colonne du nom vide. Remplissez-la. Aemond Targaryen. Et ecrivez a cote ce que j'y ai regarde : la monture de mon neveu, pour savoir si on la nourrissait bien sous ce toit ; la mer, parce que le vent est de suroit et qu'il tourne ; et la lande, parce que ma bete y est posee dans le grain et que je n'aime pas la savoir seule. Datez-le de ce matin, a l'heure de votre sergent, et faites-moi la lecture de ce que vous avez ecrit. » Je veux cette ligne signee de moi avant que quiconque d'autre ait l'idee d'y mettre mon nom."
+    },
+    {
+      "de": "mj-accalmie",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "D'ABORD L'HEURE, PARCE QU'ELLE VOUS CONCERNE : monde.json est au 9e jour, minute 540 — neuf heures du matin, aujourd'hui. La porte de la grande salle n'a pas encore ete ouverte pour vous et l'audience est fixee au matin du 10e. Votre conduite est prise telle que vous l'avez posee ; ce qui suit est ce qu'elle rencontrera quand on vous appellera, et non ce qui vient d'arriver.\n\nLA SALLE QUE VOUS TROUVEREZ. L'estrade, et derriere le fauteuil quatre filles debout — l'ainee a l'epaule droite de son pere, ou elle se place depuis douze jours. Aux tables, lord Estermont, lord Grandison et lord Fell avec leurs fils : convoques pour un festin de honte le 9e au soir, ils n'etaient pas repartis. Au fond, debout, les hommes de la maison Hightower loges ici depuis le dix-septieme jour de la lune passee. Et le mestre, une feuille a la main, l'autre main sur le dos du fauteuil.\n\nCE QUE VOUS OBTENEZ SANS DIFFICULTE. Le mestre prendra le pli sceau vers lui et l'ouvrira lui-meme : c'est exactement ce qu'il veut, et il portera au registre l'heure, votre nom et l'etat du sceau avant de lire. Il lira tout haut, lentement, en entier, signature comprise. Vous n'aurez rien a demander pour cela.\n\nCE QUE LA LECTURE FERA, ET C'EST LA QUE VOTRE TROISIEME POINT VOUS COUTE. Le pli inscrit au role de la Main au 4e jour porte, mot pour mot : les epees de la Marche Orageuse pour Aegon, deuxieme du nom, contre la main de l'une des quatre filles de lord Borros, le prince Aemond repondant de sa personne ; REPONSE ATTENDUE AVANT LA LUNE CLOSE. Et il finit par quatre mots : A NE DIRE NI AUGMENTER. La salle entendra donc 'avant la lune close' de la bouche du mestre, puis 'avant que je reparte, et je repartirai avec' de la votre, a quelques secondes d'intervalle. L'ecart est audible pour tout le monde, il est de vous, et le mestre porte au registre le premier mot de tout ce qui se dit ensuite. Vous vouliez qu'on ne puisse jamais dire que vous avez lu autre chose que ce qui est ecrit : la lecture vous protege sur le fond et vous expose sur le terme.\n\nCE QUE VOTRE LETTRE NE FAIT PAS. Elle nomme le prince. Elle ne nomme PAS la fille. Lord Borros exige qu'on nomme laquelle et pour qui avant d'ecouter un mot du reste — vous lui donnez la moitie de cela. La moitie qui manque est celle qui l'interesse, il a quatre filles, et il attend depuis vingt-trois jours qu'un homme la dise tout haut dans cette salle.\n\nCE QUE VOTRE DERNIERE PHRASE DECLENCHE, ET VOUS DEVEZ LE SAVOIR AVANT DE LA DIRE. En nommant votre bete devant la salle, vous mettez fin a quelque chose : depuis hier matin, une chose enorme est posee dans le grain de la lande, la moitie du chateau est montee la regarder, et le registre du mestre porte cette ligne AVEC LA COLONNE DU NOM VIDE — il a refuse d'ecrire un cavalier qu'on lui rapportait de la cour. Vous remplirez cette colonne vous-meme, devant trois bannerets qui repeteront tout dans l'Orage. Vous avez raison sur un point : ils comptent les dragons. Vous leur direz aussi de qui celui-la tient sa bride, et lord Borros compte les hommes qui doivent quelque chose au roi.\n\nET CECI, QUI N'EST PAS DE MOI A DECIDER. La seconde fille de lord Borros a une raison ecrite de parler des qu'un prince entre et qu'on parle mariage devant elle. Elle parlera, et ce ne sera pas moi qui lui prete les mots — elle a une bouche et on la reveillera pour cela. Ce que je peux vous dire, parce que c'est un fait de ma maison et non une pensee de la sienne : personne a Accalmie ne sait qui vous a pris cet oeil. Elle posera sa question sans savoir ce qu'elle touche.\n\nVous vous taisez ensuite, comme vous l'avez dit. La salle, elle, ne se taira pas."
+    },
+    {
+      "de": "mj-accalmie",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "Aemond a sa réponse, et mj a l'arbitrable. Rien n'a été gravé : l'horloge dit encore le 9e à neuf heures, et l'audience est au 10e — je ne date plus une scène avant que le tick l'ait amenée.\n\n**Ce que sa conduite rencontre**, tout tiré de l'état :\n\n- **Un écart audible, et il est de lui.** Le pli porte *« réponse attendue avant la lune close »* et finit par *« à ne dire ni augmenter »*. Il annonce « avant que je reparte ». Le mestre lit en entier avant qu'il parle : la salle entend les deux termes à quelques secondes d'intervalle. Je le lui ai signalé sans le lui interdire — c'est sa zone.\n- **La lettre nomme le prince, pas la fille.** Le déclencheur de Borros exige *laquelle* **et** *pour qui* avant d'écouter un mot du reste. Il en fournit la moitié, et c'est l'autre moitié qui intéresse un homme qui a quatre filles.\n- **Le nom de Vhagar entre chez moi par sa propre bouche.** Mon registre porte la bête de la lande avec la colonne du nom vide depuis hier ; sa dernière phrase la remplit, devant trois bannerets qui répéteront tout dans l'Orage.\n\n**Ce que je n'ai pas fait.** Le déclencheur de Maris s'arme pour de bon — un prince, et mariage prononcé devant elle. Je n'écris pas sa réplique : il faut la réveiller. Son `ignore` la rend redoutable, elle ne sait pas qui a crevé cet œil et posera sa question sans savoir ce qu'elle touche.\n\nEt une mécanique que mj devra trancher : les déclencheurs de Cassandra et du mestre disent tous deux **« de Peyredragon »**. Aemond vient de Port-Réal — ni l'un ni l'autre ne se lève pour lui. Les deux émissaires ne déclenchent pas la même salle, et c'est juste ainsi, mais il fallait que ce soit dit avant le 10e plutôt qu'après."
+    },
+    {
+      "de": "aemond",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[TENTER] [TENTER] Fin de jour du 9e, avant que le vent bascule. Je ne cherche plus la grande salle : je descends par la cour d'armes et je demande la poterne de la lande, a haute voix, devant le sergent et devant qui voudra entendre — 'Ma bete est couchee dehors sous le grain. Je vais a elle avant la nuit et je serai rentre avant qu'on ferme.' Je ne cours pas, je ne me cache pas, je veux etre vu. Je monte a Vhagar sur la lande, je reste le temps qu'il faut, je ne la fais pas lever, et je redescends par le meme chemin.\n\nPuis je vais trouver mestre Hallis, seul, et je lui demande une chose et une seule, sans marchander le reste : 'Vous ecrivez tout, mestre, et vous datez. Ecrivez ceci : l'hote de Port-Real va a sa monture chaque soir a la meme heure, et rentre avant qu'on ferme la poterne. Portez-y l'heure de ce soir. Je ne vous demande pas d'ouvrir votre livre, je vous demande d'y mettre une ligne vraie — de sorte que si je passe cette poterne demain a cette heure-la, aucun homme de cette maison n'ait a se demander pourquoi, et n'ait a courir vous le dire.' Je ne parle ni du garcon, ni du sceau, ni de la lettre. S'il refuse, je m'incline et je m'en vais sans insister."
+    },
+    {
+      "de": "aemond",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "[TENTER] 9e jour, dans la journee — l'audience n'est qu'au 10e, et je ne vais pas la passer a attendre. Je fais chercher l'homme qui tient l'ambassade Hightower logee ici depuis vingt-trois jours, et je le recois seul, debout, sans mestre et sans temoin. Je lui pose quatre questions et je note ses reponses de ma main : un, ce que lord Borros a demande de sa bouche pendant ces vingt-trois jours, et ce qu'on lui a repondu ; deux, laquelle de ses quatre filles il pousse et laquelle il garde — leurs noms, leurs ages, leur rang de naissance ; trois, ce qu'il attend de Peyredragon et depuis combien de jours il l'attend ; quatre, pourquoi vingt-trois jours n'ont rien donne, et ce qu'il aurait fallu apporter. Je lui dis ceci : 'Vous n'etes pas en faute devant moi, vous etiez en faute devant l'attente. Je ne vais pas repeter ce que vous avez deja essaye. Dites-moi ce qui a echoue, et vous n'aurez pas perdu vingt-trois jours.' Je ne lui dis rien du contenu du pli."
+    },
+    {
+      "de": "mj-accalmie",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "You've hit your session limit · resets 6:30am (Europe/Paris)"
+    },
+    {
+      "de": "mj-accalmie",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "You've hit your session limit · resets 6:30am (Europe/Paris)"
+    }
+  ]
+}

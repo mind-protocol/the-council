@@ -7,13 +7,10 @@ import hashlib
 import io
 import json
 import os
-import queue
 import re
 import subprocess
 import sys
 import tempfile
-import threading
-import time
 import uuid
 
 from agents.expose import depecher  # le script d'appel canonique
@@ -24,7 +21,8 @@ from agents.activation.socle import (RACINE, ETAT, DEPOT, JUGER_PY,
                                      SECONDES_MONDE_PAR_ENERGIE,
                                      DUREE_ACTIVATION_MIN_SECONDES,
                                      secondes_monde_pour_energie,
-                                     journaliser, lire_json, ecrire_atomique)
+                                     journaliser, lire_json, ecrire_atomique,
+                                     _court)
 from agents.activation.horloges import minute_absolue
 from agents.activation.graphe import continuite_tache
 from agents.activation.missions import (mission_activation,
@@ -44,6 +42,11 @@ from agents.activation.continuite import (enregistrer_continuite,
 
 def poser_jugement_narrateur(neutre, qui):
     """Installe le hook Stop exclusivement dans la session du narrateur."""
+    from agents.expose import runtime as agent_runtime
+    # Les hooks Claude n'ont pas de semantique portable dans `codex exec`.
+    # Le chemin Codex appelle le meme juge explicitement dans la boucle.
+    if agent_runtime.fournisseur() != "claude":
+        return None
     dossier = os.path.join(neutre, ".claude")
     os.makedirs(dossier, exist_ok=True)
     cible = os.path.join(dossier, "settings.json")
@@ -85,111 +88,29 @@ def appeler_stream(pid, manuel, mission, sid, modele, effort, minutes, heartbeat
         with io.open(prompt_systeme, "w",
                      encoding="utf-8", newline="\n") as f:
             f.write(manuel)
-    # --restricted : L'ISOLATION DES HOOKS, ET ELLE COUTAIT 100 % DES
-    # ACTIVATIONS. Le chemin de la depeche s'isole depuis le 30.8
-    # (`mission.appeler`) ; celui-ci ne le faisait pas, et les hooks du niveau
-    # UTILISATEUR se declenchaient dans la session engendree. Mesure du 31.8,
-    # onze tentatives et 3,91 USD pour zero activation : le narrateur rendait
-    # le bon objet — verifie dans son transcript, `{"appel_pnj": {"qui":
-    # "otto", ...}}` — puis un hook Stop herite le faisait travailler encore.
-    # Comme le parseur lit le DERNIER message de la session, il tombait sur la
-    # sortie du hook : « le narrateur a reveille None au lieu de otto », sept
-    # fois, plus quatre JSON malformes. Un --settings explicite frappe encore
-    # sous --restricted (mesure de mission.py) : le hook de jugement du
-    # narrateur reste donc charge, et lui seul (l'oreille-parloir de
-    # l'acteur est morte le 31.8.2026 — les canaux ont pris la releve).
-    commande = ["claude", "-p", "--output-format", "stream-json",
-                "--verbose", "--restricted"]
-    if autoriser_lecture:
-        # Le PNJ reçoit explicitement SON manuel comme prompt système. Il ne
-        # dépend plus de la découverte automatique de CLAUDE.md, qui pouvait
-        # réinjecter le manuel global du MJ. Le narrateur suit l'autre branche
-        # et conserve son fonctionnement automatique inchangé.
-        commande += ["--system-prompt-file", prompt_systeme]
-        # Le dossier neutre ne contient que le prompt et l'étagère fermée
-        # matérialisée pour ce PNJ. Le dépôt canonique n'est pas ajouté.
-        # Sous --restricted, `--tools` porte seul la liste : `--allowedTools`
-        # n'a plus d'objet (meme motif que depeche/mission.appeler).
-        commande += ["--tools", ",".join(depecher.OUTILS)]
-    else:
-        # Le narrateur reçoit toute sa vérité dans le dossier local du prompt.
-        # Il arbitre ; il ne fouille ni n'écrit le monde pendant l'appel.
-        commande += ["--tools", ""]
-    commande += ["--permission-mode", "acceptEdits"]
-    if reglages:
-        commande += ["--settings", reglages]
-    commande += ["--resume" if reprendre else "--session-id", sid]
-    if modele:
-        commande += ["--model", modele]
-    if effort:
-        commande += ["--effort", effort]
+    from agents.expose import runtime as agent_runtime
     journaliser("cli.depart", acteur=pid, session=sid, phase=phase,
+                fournisseur=agent_runtime.fournisseur(),
                 reprise=reprendre, modele=modele or "defaut",
                 effort=effort or "defaut", timeout_s=minutes * 60)
-    processus = subprocess.Popen(
-        commande, cwd=neutre, stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-        text=True, encoding="utf-8", errors="replace", bufsize=1)
-    processus.stdin.write(mission)
-    processus.stdin.close()
-    messages = queue.Queue()
 
-    def lire_flux(nom, flux):
-        try:
-            for ligne in iter(flux.readline, ""):
-                messages.put((nom, ligne.rstrip("\r\n")))
-        finally:
-            messages.put((nom, None))
+    def erreur(ligne):
+        journaliser("cli.stderr", phase=phase, contenu=_court(ligne, 400))
 
-    for nom, flux in (("stdout", processus.stdout), ("stderr", processus.stderr)):
-        threading.Thread(target=lire_flux, args=(nom, flux), daemon=True,
-                         name="activation-%s-%s" % (pid, nom)).start()
+    def battement(secondes):
+        journaliser("cli.heartbeat", acteur=pid, phase=phase,
+                    secondes=secondes)
 
-    debut = time.monotonic()
-    prochain = debut + heartbeat
-    fin = debut + minutes * 60
-    ouverts = 2
-    resultat = None
-    while ouverts or processus.poll() is None:
-        maintenant = time.monotonic()
-        if maintenant >= fin:
-            processus.kill()
-            processus.wait(timeout=5)
-            journaliser("cli.timeout", acteur=pid, phase=phase,
-                        secondes=round(maintenant - debut, 1))
-            raise subprocess.TimeoutExpired(commande, minutes * 60)
-        attente = min(1.0, max(0.05, prochain - maintenant), fin - maintenant)
-        try:
-            origine, ligne = messages.get(timeout=attente)
-        except queue.Empty:
-            origine, ligne = None, None
-        if origine is not None:
-            if ligne is None:
-                ouverts -= 1
-            elif origine == "stderr":
-                journaliser("cli.stderr", phase=phase,
-                            contenu=_court(ligne, 400))
-            elif ligne:
-                try:
-                    ev = json.loads(ligne)
-                except json.JSONDecodeError:
-                    journaliser("cli.stdout", phase=phase,
-                                contenu=_court(ligne, 400))
-                else:
-                    _dire_evenement_cli(ev)
-                    if ev.get("type") == "result":
-                        resultat = ev
-        maintenant = time.monotonic()
-        if maintenant >= prochain:
-            journaliser("cli.heartbeat", acteur=pid, phase=phase,
-                        secondes=round(maintenant - debut, 1))
-            prochain = maintenant + heartbeat
-    code = processus.wait()
-    if code != 0:
-        raise RuntimeError("claude a quitte avec le code %d" % code)
-    if resultat is None:
-        raise RuntimeError("le flux claude s'est ferme sans resultat")
-    return resultat
+    return agent_runtime.appeler(
+        role=pid, manuel=manuel, message=mission, session_id=sid,
+        modele=modele, effort=effort, timeout=minutes * 60, cwd=neutre,
+        # L'activation ne monte pas le depot : l'acteur n'a que son etagere
+        # materialisee ; le narrateur n'a que son dossier de contexte.
+        add_dirs=[], tools=depecher.OUTILS if autoriser_lecture else [],
+        reprendre=reprendre, settings=reglages,
+        on_event=_dire_evenement_cli, on_stderr=erreur,
+        heartbeat=heartbeat, on_heartbeat=battement,
+        ecriture=autoriser_lecture)
 
 
 def appeler_acteur(pid, tache, budget_energie, horloge, noeuds, modele, effort,
@@ -283,6 +204,21 @@ def appeler_acteur(pid, tache, budget_energie, horloge, noeuds, modele, effort,
                 phase="narrateur.resolution",
                 reglages=reglages_narrateur)
             relance = extraire_relance_acteur(reponse)
+            if relance is None and reglages_narrateur is None:
+                # Claude obtient cette decision par son hook Stop. Codex n'a
+                # pas ce hook : on appelle explicitement le meme juge, puis
+                # on remet ses manques dans la boucle deja existante.
+                from agents import jugement
+                note_juge, manques = jugement.juger(
+                    pid, reponse_acteur.get("gestes") or [],
+                    reponse.get("result") or "")
+                if note_juge is not None and note_juge < jugement.SEUIL \
+                        and manques:
+                    relance = {
+                        "message": (u"Reprends ta tentative. " +
+                                    u" ".join(str(x) for x in manques)),
+                        "manques": manques,
+                    }
             if relance is None:
                 break
             reponses.append(reponse)
@@ -433,5 +369,42 @@ def appeler_acteur(pid, tache, budget_energie, horloge, noeuds, modele, effort,
         journaliser("regence.consigne_echouee", acteur=pid,
                     raison=type(erreur_regence).__name__,
                     erreur=_court(str(erreur_regence), 200))
+    # UN REJET APPELLE L'ARBITRE (decide par le dev le 31.8). Ce qu'un homme
+    # propose et qui n'existe pas encore — une affaire neuve, une personne
+    # rencontree, un evenement — est de la matiere de monde, pas du bruit :
+    # elle monte TOUT DE SUITE a celui qui a le droit d'inventer, en reveil
+    # cast, au lieu de dormir dans ce rapport que personne ne relit (27 % des
+    # mutations rejetees, mesure du 31.8). Le mot porte ses quatre devoirs :
+    # collecter, contacter l'homme s'il manque la matiere, arbitrer/creer,
+    # informer l'acteur et le relancer. Gradue : un echec de reveil ne perd
+    # rien, les rejets restent dans le rapport depose.
+    rejets = rapport.get("mutations_rejetees") or []
+    if rejets:
+        try:
+            from agents.expose import zone
+            arbitre = zone.arbitre_de(pid)
+            lignes = []
+            for r in rejets[:8]:
+                m = r.get("mutation") or {}
+                lignes.append(u"- %s/%s : %s" % (
+                    m.get("table") or "?", m.get("cible") or "?",
+                    _court(str(r.get("erreur")), 110)))
+            mot = (u"REJETS D'ACTIVATION — %d de mes mutations ont ete "
+                   u"refusees : ce que je rapporte n'existe pas encore dans "
+                   u"les tables.\n%s\nMon rapport complet : %s\n"
+                   u"Collecte ce qu'il te faut ; ecris-moi en billet si la "
+                   u"matiere te manque ; arbitre — creer est ton droit, "
+                   u"refuser aussi ; puis dis-moi en billet ce qui est ne, "
+                   u"et relance-moi : python scripts/depecher.py --qui %s "
+                   u"--cast" % (len(rejets), u"\n".join(lignes),
+                                os.path.relpath(cible, RACINE)
+                                .replace("\\", "/"), pid))
+            zone.reveiller_en_cast(arbitre, pid, mot)
+            journaliser("rejets.arbitre_appele", acteur=pid,
+                        arbitre=arbitre, nombre=len(rejets))
+        except Exception as erreur_rejets:  # pragma: no cover - garde-fou
+            journaliser("rejets.appel_echoue", acteur=pid,
+                        raison=type(erreur_rejets).__name__,
+                        erreur=_court(str(erreur_rejets), 200))
     return cible, depense, rapport
 

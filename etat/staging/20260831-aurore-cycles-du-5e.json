@@ -1,0 +1,34 @@
+{
+ "titre": "Régie Aurore — les deux cycles tournés au réveil du 5e (92020, 92030)",
+ "calcule_le": "2026-08-31",
+ "par": "mj-aurore (proposition ; rien n'a été écrit dans etat/)",
+ "date_monde": {
+  "annee": 129,
+  "lune": 4,
+  "jour": 5
+ },
+ "note": "Établi du 5e de la 4e lune. Siège d'Aurore VACANT (scripts/sieges.py : vacant, veille 17 j, inbox 0) : les cycles de fin de session (92010 relève, 92040 clôture) n'ont pas de session à relever, et 92050/92060 n'ont pas d'intervention. Restent les deux qui tournent à vide utile, et ils ont tourné :\n\n92020 CYCLE DU SEUIL (à chaque réveil) — inbox 0, deux billets du MJ au canal. Le second n'est PAS un doublon du premier : il le corrige explicitement (« JE ME CORRIGE DANS LA MINUTE »). Pas de dérive 6, rien à chercher.\n\n92030 CYCLE DE LA PIÈCE (à chaque poussée qui cite) — le pointeur de livre porté par l'item 2 de brouillons/reprise-du-siege.md est VÉRIFIÉ SUR PIÈCE : etat/books/la-colonne-du-seizieme.json existe. L'item peut être poussé tel quel à la reprise.\n\nAucune mesure du plan général ne me concerne : mon cahier n'a pas d'adresse `main.mesure`, sa mesure est sa propre table « La mesure », qui ne se remplit qu'au cycle de relève — donc pas ce jour.",
+ "mutations_proposees": [
+  {
+   "table": "books",
+   "cible": "affaire-tenue-de-lhistoire-aurore:92020",
+   "operation": "affaire_action",
+   "champs": {
+    "📅 Dernier tour": "5e de la 4e lune (établi)",
+    "📝 Note": "un doublon traité comme insistance = la dérive 6 qui recommence — 5e : deux billets mj au canal, le second se corrige lui-même, ce n'est pas un doublon"
+   },
+   "pourquoi": "Le cycle est dû à chaque réveil et sa colonne « Dernier tour » était vide depuis l'ouverture du cahier le 4e. Un cycle qui ne produit pas sa trace n'a pas eu lieu — c'est écrit page 1 du cahier."
+  },
+  {
+   "table": "books",
+   "cible": "affaire-tenue-de-lhistoire-aurore:92030",
+   "operation": "affaire_action",
+   "champs": {
+    "📅 Dernier tour": "5e de la 4e lune (établi)",
+    "📝 Note": "la faute 2284/6781 ne peut plus se produire que par paresse de ce cycle — 5e : pointeur `la-colonne-du-seizieme` vérifié présent dans etat/books, l'item 2 de la reprise est bon à pousser"
+   },
+   "pourquoi": "Le cycle exige d'ouvrir la pièce AVANT de citer. La pièce a été ouverte ce jour et le pointeur tient ; sans cette ligne, la vérification meurt avec le réveil et il faudra la refaire à la reprise."
+  }
+ ],
+ "applique_le": null
+}

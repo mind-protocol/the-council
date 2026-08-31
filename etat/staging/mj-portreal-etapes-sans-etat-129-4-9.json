@@ -1,0 +1,98 @@
+{
+  "genere_le": "2026-08-31",
+  "de": "mj-portreal",
+  "pour": "mj",
+  "joueur": null,
+  "empreintes": {
+    "intentions": "66a23fb64c414f73063b1e0cc9c974640a0c309b",
+    "personnages": "63d4f2a396299c458699832da0d91629fdcf3cc1",
+    "monde": "d17fbe93650f52ccc40f52fb168e7a14289efb9f"
+  },
+  "avertissement": "Proposition de mj-portreal — le MJ arbitre et applique. Ce fichier n'est pas de l'etat. A appliquer AVANT toute depeche d'Alicent : tant qu'une etape n'a pas d'etat, celui qui la vit ne la voit pas.",
+
+  "objet": "REPARER LES ETAPES A MOITIE ECRITES DE MA ZONE — ni etat, ni jours_restants, donc invisibles au tick, incapables de tomber, de bloquer ou d'alerter. Ordre du mj au 9e : « repare celle-la avant de tailler les grosses tetes ; une croyance de trop se relit, une etape morte ne se voit pas. »",
+
+  "ce_que_j_ai_verifie_avant": [
+    "intentions.json / alicent / alicent-quille-pierremout : id et quoi, RIEN D'AUTRE. Le mj a raison, et il a raison sur le detail qui me condamne — pas de si_bloque.",
+    "intentions.json / alicent / faire-lire-le-role-du-bureau-du-port : meme cas, id et quoi seuls.",
+    "Recensement de TOUTES les etapes du meme defaut dans intentions.json (recherche multiligne : un id, un quoi, une accolade). Il y en a DIX dans le fichier entier. QUATRE sont a moi : otto/trouver-qui-defend-de-signer, alicent/alicent-quille-pierremout, alicent/faire-lire-le-role-du-bureau-du-port, aegon-ii/aegon-copier-le-role-du-port.",
+    "Les six autres ne sont pas a moi et je n'y touche pas : steffon-compte-hommes-gunthor, criston-obtenir-deposition-daemon, criston-amener-aemond-a-midi (criston est a Sombreval), compte-des-lances-douzieme-jour (mestre-hallis, Accalmie), cautionner-la-part-vive (ormund-hightower, Villevieille), sanglier-entendre-aurore-sept-heures. JE LES SIGNALE, je ne les repare pas.",
+    "vocabulaire.py : ETATS_ETAPE_VIVANTS = (en-cours, bloque). Seuls 'fait' et 'abandonne' sortent une etape du compte des vivantes — 'bloque' n'allege rien."
+  ],
+
+  "mon_erreur_de_la_veille_corrigee": "J'ai ecrit au mj que le si_bloque d'Alicent disait « elle garde le pli ecrit et le porte sur elle ». Cette phrase EXISTE — mais sur alicent-de-femme-a-femme, pas sur alicent-quille-pierremout. J'ai lu la bonne phrase dans la mauvaise boite et je l'ai fait parler la ou il n'y avait rien. Je ne la recopie pas vers le bas : je LIE les deux etapes par depend_de, et le recours de la mere couvre la fille sans que j'aie invente une ligne.",
+
+  "mutations_proposees": [
+    {
+      "table": "intentions",
+      "cible": "alicent",
+      "operation": "etape",
+      "etape": "alicent-quille-pierremout",
+      "champs": {
+        "etat": "en-cours",
+        "jours_restants": 0,
+        "depend_de": ["alicent-de-femme-a-femme"],
+        "cout": [
+          "une quille qui ne soit ni au roi, ni a son pere, ni au Pied-Bot",
+          "une main sur l'autre bord qui accepte de recevoir un pli des mains d'une septa",
+          "et desormais trois jours de retard : le sixieme jour est passe, la septa est partie avec le pli sur elle"
+        ],
+        "quoi": "Trouver une quille qui aille de Pierremout a Peyredragon et une main qui recoive le pli des mains de ma septa — sans passer par la roukerie, ni par mon pere, ni par le Pied-Bot. Le terme qu'elle s'etait donne, le sixieme jour, est passe. || Absorbe faire-lire-le-role-du-bureau-du-port : la coque pour Pierremout etait le second objet de cette etape-la."
+      },
+      "pourquoi": "JOURS_RESTANTS 0 ET NON UN RETARD NEGATIF : l'echeance est echue, l'etape doit tomber au prochain tick au lieu de continuer a glisser en silence. JE NE LUI ECRIS PAS DE SI_BLOQUE — le recours est celui de l'etape mere, auquel je la lie. C'est le seul point ou j'ai failli decider a sa place hier."
+    },
+    {
+      "table": "intentions",
+      "cible": "alicent",
+      "operation": "etape",
+      "etape": "faire-lire-le-role-du-bureau-du-port",
+      "champs": {
+        "etat": "abandonne",
+        "jours_restants": 0,
+        "accompli": "Absorbee par alicent-quille-pierremout, qui portait deja le second de ses deux objets — « une coque qui prenne l'eau vers Pierremout avant le sixieme jour ». Le premier objet, relever au role du bureau du port la ligne du 26e, est le meme role et le meme guichet que le roi court de son cote depuis le 3e : deux tetes de la meme maison payaient deux mains sans livree pour lire le meme registre, sans le savoir."
+      },
+      "pourquoi": "Precedent de forme dans le meme fichier : otto-isoler-sombreval, 'abandonne' avec « Absorbee par la decheance ». Reparer les deux etapes en les laissant toutes deux vivantes aurait porte Alicent de 3 a 5 etapes vivantes pour un budget de 2 ; en absorbant, elle en tient 4. C'EST ENCORE DEUX DE TROP, ET JE LE DIS : le defaut de fabrique ne creait pas le depassement, il le CACHAIT."
+    },
+    {
+      "table": "intentions",
+      "cible": "otto",
+      "operation": "etape",
+      "etape": "trouver-qui-defend-de-signer",
+      "champs": {
+        "etat": "en-cours",
+        "jours_restants": 2,
+        "depend_de": [],
+        "cout": [
+          "une main qui interroge des officiers du Guet sans que la Main soit vue les interroger",
+          "le risque que la question elle-meme apprenne a l'adversaire ce qu'il cherche"
+        ],
+        "si_bloque": "S'il ne remonte pas jusqu'a l'homme, il cesse de chercher un nom et paie par clause : une condition et non un homme, puisque ce qu'on a defendu c'est d'ECRIRE un nom — le gage tient quand meme."
+      },
+      "pourquoi": "LE SI_BLOQUE N'EST PAS DE MON INVENTION, il est deja dans sa propre tete, croyance verbatim : « Une clause qui paie une condition et non un homme ne peut pas etre barree : la ou l'on a defendu qu'on ecrive le nom de qui recoit mon or, je n'en ecris aucun, et le gage tient quand meme. » Je le descends de la croyance a l'etape, je ne le fabrique pas."
+    },
+    {
+      "table": "intentions",
+      "cible": "aegon-ii",
+      "operation": "etape",
+      "etape": "aegon-copier-le-role-du-port",
+      "champs": {
+        "etat": "en-cours",
+        "jours_restants": 1,
+        "depend_de": [],
+        "cout": [
+          "deux pieces de sa bourse privee, qui ouvrent un registre du port sans qu'on demande son nom",
+          "attendre la maree basse : l'officier qui clot le role est aux estacades jusque-la",
+          "trente-huit minutes de marche par les geoles noires, contre quatorze de moins par la porte du donjon au prix d'etre vu sortir"
+        ],
+        "si_bloque": "Si l'officier ne paraphe pas, il ne discute pas et ne se nomme pas : il garde dans son pourpoint son role a deux colonnes que nul n'a vu, et descend aux fosses de combat boire jusqu'au soir."
+      },
+      "pourquoi": "Les trois couts sont ses trois croyances chiffrees, mot pour mot. Le si_bloque est celui qu'il porte deja DEUX FOIS dans le meme plan — aegon-exiger-vengeance et aegon-le-premier-reclamant finissent tous deux aux fosses de combat jusqu'au soir. Je recopie son recours, je ne lui en donne pas un neuf."
+    }
+  ],
+
+  "ce_que_ca_change_et_qu_il_faut_savoir": [
+    "QUATRE ETAPES DE MA ZONE DEVIENNENT VISIBLES AU TICK. Trois etaient echues ou a echoir sans que rien ne le dise ; c'est pour ca que trois jours ont glisse sur le pli d'Alicent sans une alerte.",
+    "LE COMPTE DES ETAPES VIVANTES MONTE, IL NE BAISSE PAS : alicent 3 -> 4 (budget 2), otto 3 -> 4 (budget 2), aegon-ii 2 -> 3 (budget 2). L'audit va crier plus fort apres cette piece qu'avant, et c'est le signe qu'elle est bonne : il criait faux, il criera juste.",
+    "JE N'AI TAILLE AUCUNE TETE DANS CETTE PIECE. L'ordre etait de reparer d'abord ; la taille de otto (33 croyances), alicent (25), aegon-ii (21), orwyle (16), larys (12) reste entiere devant moi, et je la ferai contre l'etat REPARE, pas contre l'etat aveugle."
+  ]
+}

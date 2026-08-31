@@ -1,0 +1,72 @@
+{
+  "genere_le": "2026-08-31",
+  "de": "mj-portreal",
+  "pour": "mj",
+  "joueur": null,
+
+  "avertissement": "Proposition — le MJ arbitre et applique. Ce fichier n'est pas de l'etat.",
+
+  "objet": "Fermer et completer les etapes d'Alicent, sur ton arbitrage du 9e : le pli n'est jamais parti, il dort scelle dans le coffre de sa septa, et c'est sa propre activation qui le dit. AUCUNE FICTION NEUVE ICI — je ne fais tomber que des horloges qui n'existaient pas.",
+
+  "ce_que_je_ne_grave_pas": [
+    "Le pli. Ni pli_ajouter, ni texte, ni porteur. Tu as tranche : c'est un objet dans un coffre, pas un envoi, et son contenu est inconnu de la femme qui le porte — le contenu inconnu est un fait du monde, pas un manque a combler. Ses croyances le portent deja, je n'y touche pas.",
+    "Pierremout dans lieux.json. C'est ta carte, tu l'ajoutes, je m'abstiens.",
+    "La septa comme personnage : tant qu'elle n'a ni acte ni parole a elle, la creer serait fabriquer une fiche pour meubler un trou."
+  ],
+
+  "empreintes": {
+    "intentions": "284ee08c2467644e4f6f64f5d56a7ce0b4a27937"
+  },
+  "note_sur_l_empreinte": "Seule table ecrite. intentions.json bouge toutes les deux minutes ; si le sha1 est perime, ne force pas : verifie que les quatre id d'etapes ci-dessous sont encore la, et rescelle.",
+
+  "compte_des_etapes": {
+    "avant": "5 etapes, dont 4 vivantes pour un budget de 2 — et DEUX d'entre elles ne sont pas des etapes du tout : alicent-quille-pierremout et faire-lire-le-role-du-bureau-du-port portent un id et un quoi, sans etat, sans horloge, sans cout, sans si_bloque. Elles occupent le budget et ne tombent jamais.",
+    "apres": "2 vivantes — alicent-de-femme-a-femme et faire-lire-le-role-du-bureau-du-port, qui sert la premiere. Budget tenu."
+  },
+
+  "mutations_proposees": [
+    {
+      "table": "intentions", "cible": "alicent", "operation": "etape",
+      "etape": "alicent-quille-pierremout",
+      "champs": {
+        "etat": "abandonne",
+        "jours_restants": 0,
+        "cout": [],
+        "si_bloque": "",
+        "accompli": "Fermee le 9e sans avoir jamais commence. Elle se croyait au sixieme jour avec un pli en mer ; sa propre session du 9e dit que le pli dort scelle dans le coffre de sa septa, sans etre parti. La quille n'a donc jamais eu de chargement a prendre. Son terme — avant le sixieme jour — est passe de trois jours, et sa destination n'est portee par aucune table de lieux : cette ligne ne pouvait ni aboutir ni echouer. Son objet est entierement contenu dans alicent-de-femme-a-femme, qui reste vivante et qui porte le denouement."
+      },
+      "pourquoi": "Ton ordre : ferme-la. Je ferme sans changer son objet, et j'ecris dans l'accompli la raison ET la piece qui la fonde, pour que personne ne la rouvre en croyant qu'on l'a perdue."
+    },
+
+    {
+      "table": "intentions", "cible": "alicent", "operation": "etape",
+      "etape": "faire-lire-le-role-du-bureau-du-port",
+      "champs": {
+        "etat": "en-cours",
+        "jours_restants": 0,
+        "depend_de": [],
+        "cout": [
+          "une main sans livree, qui ne soit ni la sienne ni celle d'un garde",
+          "deux pieces pour le commis, qui sert le registre et ne le clot pas"
+        ],
+        "si_bloque": "Si la main revient sans la ligne, elle cesse de chercher la coque par le port et attend que la question lui soit posee par quelqu'un d'autre — elle a plus a perdre a etre vue cherchant qu'a ne pas savoir."
+      },
+      "pourquoi": "JE LA COMPLETE, JE NE LA FERME PAS : son objet est vivant et c'est le seul outil reel qui lui reste (sa propre session finit dessus). Elle n'avait ni etat ni horloge — donc le moteur ne pouvait pas la voir tomber. jours_restants a 0 pour qu'elle tombe au prochain battement au lieu de dormir une lune. LIMITE ECRITE DANS LE COUT, et elle est de l'etat : le role « Ce qui est entre par la Nera » ne compte qu'un cote, ce qui ENTRE. Il ne dira jamais quelle coque PART vers l'est. L'outil est reel et il est borgne."
+    },
+
+    {
+      "table": "intentions", "cible": "alicent", "operation": "etape",
+      "etape": "alicent-aegon-matin",
+      "champs": {
+        "etat": "bloque",
+        "jours_restants": 0,
+        "accompli": "Bloquee sur la meme chambre vide qui a bloque Aemond, et sur la meme piece : depuis le 3e, Aegon sort avant le jour par le passage sous ses appartements, a pied, et l'antichambre garde une chambre vide (sa tete, 129.4.3). Il n'y a plus de matin ou le prendre avant le vin, parce qu'il n'y a plus de matin ou il soit la. Son si_bloque ne peut pas jouer davantage : on ne renvoie pas un par un les compagnons de nuit d'un homme qu'on ne trouve pas."
+      },
+      "pourquoi": "Taille par le bas. C'etait une posture permanente sans horloge (jours_restants null) qui n'a rien produit et occupait le budget. Elle est bloquee par un fait ecrit, pas par mon choix — et le blocage est nomme, avec la piece."
+    }
+  ],
+
+  "ce_qui_reste_ouvert_et_qui_est_a_elle": "alicent-de-femme-a-femme, en-cours, avec son si_bloque intact : « Si elle ne trouve pas de porteur sur, elle garde le pli ecrit et le porte sur elle - et il finira par etre trouve. » Je n'y touche pas et je ne tranche pas entre partir et bruler. Je la reveille une fois avec cette seule question devant elle, comme tu l'as demande. Si elle ne repond pas avant le 11e, le si_bloque s'execute seul et personne n'aura rien invente.",
+
+  "note_d_horloge": "alicent-de-femme-a-femme porte jours_restants 1 depuis une date_maj du 129.4.3 : elle est echue depuis le 4e et n'est jamais tombee. Je ne la touche pas dans ce lot parce qu'elle est le pivot de ce que tu joues avant le 11e — mais si tu veux qu'elle tombe au prochain battement, c'est un jours_restants a 0, et c'est la seule ligne a ajouter."
+}

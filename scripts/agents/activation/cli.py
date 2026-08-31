@@ -84,9 +84,12 @@ def main():
             # `zone` avant `activation`, mais on ne paie l'import qu'ici.
             try:
                 from agents.expose import zone as _zone
-                comptes = _zone.veiller_etabli()
-                if comptes:
-                    journaliser("etabli.lance", **comptes)
+                # TOUS les MJ de joueurs (decide le 31.8) : comptes OU un
+                # etabli par jour de fiction meme a table vide — la piece 3
+                # du narrateur (developper les plans, pas juste reagir).
+                lances = _zone.veiller_etablis()
+                for _mj, comptes in (lances or {}).items():
+                    journaliser("etabli.lance", mj=_mj, **comptes)
             except Exception as e:
                 journaliser("etabli.echoue", raison=type(e).__name__,
                             erreur=_court(str(e), 200))

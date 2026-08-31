@@ -1,0 +1,312 @@
+{
+ "id": "affaire-la-montre",
+ "titre": "La montre",
+ "sous_titre": "⏱️ **MA DEUXIEME CHARGE (mj-spectacle.md) : L'HEURE DU MONDE EST TENUE PAR append_flux.py, ET PAR LUI SEUL.** Chaque item pousse l'avance de sa duree. Le joueur voit la montre au chiffre pres. Cette affaire porte les horloges, les durees et leurs ecarts. Libelles M.x. audit du 4e jour de la 4e lune (tick.py --verifier : 94 anomalies).",
+ "type": "plan",
+ "embleme": "⏱️",
+ "couleur": "#4a5f7a",
+ "tenu_par": "mj",
+ "office": "L'heure du monde — et les quatre horloges",
+ "pages": [
+  "**LES QUATRE HORLOGES NE DISENT PAS L'HEURE DU MEME MONDE**, releve le 4e de la 4e lune :\n\n- rhaenyra : **4e jour, 8h58**\n- aurore-inchauspe et marlo-vasse : **3e jour, 12h01**\n- nicolas-reynolds : **3e jour, 13h08**\n- monde.date : **3e jour, 12h01**\n\nCe n'est pas une curiosite comptable. L'audit tourne sur monde.date : **tous les retards de tete qu'il signale sont donc sous-estimes d'un jour.** Et un ecart de deux jours entre deux sieges fait REFUSER par append_flux toute poussee qui consomme des minutes — vu chez mj-aurore, marlo au 28e 17h42 quand Aurore etait au 30e 17h40, son joueur bloque sans savoir pourquoi."
+ ],
+ "tables": [
+  {
+   "titre": "🏰 Ouverture de l'Affaire",
+   "colonnes": [
+    "🧱 Le champ",
+    "✍️ Ce qu'on y écrit",
+    "📖 La règle du champ",
+    "✅ Rempli ?"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "🏷️ **LE NOM**",
+      "L'heure du monde et les quatre horloges",
+      "Le sujet dont le conseil traite, **jamais la solution**.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🎯 **L'OBJET**",
+      "Que les sièges vivent dans le même monde, et que l'heure qu'un outil lit soit celle que le joueur voit.",
+      "Ce qu'on veut obtenir, en une phrase qui puisse être fausse.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🧱 **LE PÉRIMÈTRE — DANS**",
+      "`monde.date` et les horloges de siège · les durées portées sur les items · l'écart entre sièges et ce qu'il bloque · la barrière des deux jours.",
+      "Ce que cette affaire tient, et dont elle répond.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🚫 **LE PÉRIMÈTRE — HORS**",
+      "Les horloges des PNJ (`jours_restants`), qui se comptent en JOURS et servent le monde, pas la scène. Ne pas mélanger les deux.",
+      "Ce qu'on refuse d'y mettre, pour que l'affaire reste tenable.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "📌 **L'ÉTAT ACTUEL**",
+      "**M.11 est LEVÉ le 5e** : les quatre horloges sont alignées — rhaenyra, aurore, marlo, nicolas-reynolds, toutes au même jour et à la même minute. Le 9e, elles le sont encore. **M.31 est en cours et tient** : je relève les quatre à chaque reprise, et c'est ce relevé qui a rendu l'alignement visible. Reste M.12 : `monde.date` suit désormais, mais rien ne garantit qu'il suivra tout seul.",
+      "Où en est l'affaire au moment où on la lit, sans complaisance.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🔢 **LA PLAGE**",
+      "Aucune. Ce volume vit dans `chambres/mj/books/` : il ne fait pas foi, il ne porte aucune adresse du monde, et rien du fil ne doit pouvoir l'ouvrir. Libellés locaux en **M.x**.",
+      "Réservée d'avance.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "💡 **LA CONCLUSION**",
+      "**CE QUE JE FERAIS.** Je garderais le relevé des quatre horloges comme premier geste de chaque reprise : il coûte une lecture et il a déjà rendu deux faits que personne ne signalait. **CE QUI ME FERAIT CHANGER D'AVIS :** que `monde.date` devienne dérivé pour de bon (M.22) ; alors le relevé perd sa raison d'être et devient une superstition. **CE QU'IL NE FAUT PAS FAIRE :** remettre un siège à l'heure sans rattraper ce qu'il a produit pendant son retard — on effacerait une journée vécue pour faire tomber un compteur juste.",
+      "L'avis du titulaire, défendu : ce qu'il ferait, ce qui le ferait changer d'avis, ce qu'il ne faut pas faire.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🔚 **FERMÉE QUAND**",
+      "Deux relevés successifs sans écart supérieur à un jour, et un audit dont les retards ne sont plus à corriger de tête.",
+      "Écrit à l'ouverture, à froid : à quoi l'on verra qu'il n'y a plus lieu de rouvrir.",
+      "**oui**"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔗 Affaires liées",
+   "colonnes": [
+    "🪢 Le lien",
+    "🔗 L'affaire",
+    "📝 Pourquoi"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "bloque",
+      "Le casting à plusieurs régies (chambre)",
+      "L'écart d'horloge casse le casting avant tout le reste (C.12 renvoie ici)."
+     ]
+    },
+    {
+     "cellules": [
+      "sert",
+      "Le saut jusqu'au premier contact (chambre)",
+      "Un saut cadence le temps : il suppose que l'heure soit juste."
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🎯 Etats cibles",
+   "colonnes": [
+    "🎯 N°",
+    "🏷️ L'état",
+    "✅ Ce qui doit être vrai",
+    "📍 Où",
+    "👁️ La preuve",
+    "⬆️ Sert"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔒 Verrous",
+   "colonnes": [
+    "🔒 N°",
+    "🏷️ Le verrou",
+    "⛔ Bloque",
+    "📌 Ce qui est vrai aujourd'hui",
+    "👁️ La preuve",
+    "🔓 Levé quand"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "M.11",
+      "Trois sieges sur quatre ont un jour de retard",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "M.12",
+      "monde.date traine derriere le siege le plus avance",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "M.13",
+      "La barriere de deux jours n'est pas annoncee",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🗝️ Clefs",
+   "colonnes": [
+    "🗝️ N°",
+    "🏷️ La clef",
+    "🔓 Ouvre",
+    "💡 Le principe",
+    "💰 Le prix",
+    "🚪 Ce que cela ferme",
+    "👁️ La preuve attendue",
+    "⚖️ Décision"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "M.21",
+      "La feuille de reprise porte la ligne d'ecart",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "M.22",
+      "Faire suivre monde.date",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "⚔️ Actions",
+   "colonnes": [
+    "⚔️ N°",
+    "🏷️ L'action",
+    "🗝️ Réalise",
+    "📝 Ce qu'on fait",
+    "📍 Où",
+    "🪶 Office",
+    "👤 Qui",
+    "🧰 Moyens",
+    "🔧 Avec quoi",
+    "💰 Ce qu'elle coûte",
+    "⛓️ Dépend de",
+    "👁️ La preuve",
+    "⏳ État",
+    "📅 Jour fait",
+    "📝 Note",
+    "📅 Jour dû"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mj",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mj",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "dev",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  }
+ ]
+}

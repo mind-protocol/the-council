@@ -173,8 +173,8 @@ def _reveiller_zone_detachee(mj, de, texte):
     (le motif de zone.lancer_etabli_detache). On lance une vie, on ne la
     regarde pas vivre : la suite arrive par les canaux."""
     drapeaux = {}
-    if os.name == "nt":  # DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP
-        drapeaux["creationflags"] = 0x00000008 | 0x00000200
+    if os.name == "nt":  # CREATE_NO_WINDOW | CREATE_NEW_PROCESS_GROUP — detache SANS console visible (spam de terminaux du 31.8)
+        drapeaux["creationflags"] = 0x08000000 | 0x00000200
     else:
         drapeaux["start_new_session"] = True
     subprocess.Popen(
@@ -303,16 +303,25 @@ def main():
         # distinction d'instance : le billet part au canal, le destinataire
         # le recoit en percept a son prochain reveil — que ce reveil soit
         # celui qu'on caste a l'instant ou un autre deja en cours.
+        if a.a == "dev":
+            # DEV N'EST JAMAIS DEPECHE (docs/habitant.md, nom reserve) — et
+            # mesure du 31.8 : cinq sessions depeche-dev nees des billets des
+            # arbitres. Le billet arrive, le developpeur le lit en personne.
+            from agents.expose import billet as _b
+            canal = _b.deposer(a.de, a.a, texte)
+            print(u"billet a dev (canal %s) — jamais depeche, il lira"
+                  % os.path.relpath(canal, RACINE))
+            return
         if est_un_mj(a.a):
             # Une zone est une institution publique : le canal s'ouvre au
-            # premier mot, et le mot part avec le reveil (cast).
-            from agents.expose import billet as _b
-            from agents import chambre as _ch
-            canal = _b.deposer(a.de, a.a, texte)
-            _reveiller_zone_detachee(a.a, a.de, texte)
-            _ch.marquer_lu(a.a, a.de)  # le mot voyage avec le reveil
-            print(u"billet a %s (canal %s) — zone reveillee en cast"
-                  % (a.a, os.path.relpath(canal, RACINE)))
+            # premier mot, et le mot part avec le reveil (cast) — DOSE par
+            # le cooldown anti-tempete de zone.reveiller_en_cast (31.8).
+            from agents.expose import zone as _z
+            canal, parti = _z.reveiller_en_cast(a.a, a.de, texte)
+            print(u"billet a %s (canal %s) — %s"
+                  % (a.a, os.path.relpath(canal, RACINE),
+                     u"zone reveillee en cast" if parti else
+                     u"cast recent, le billet attend son prochain reveil"))
             return
         from agents.expose import billet as _b
         canal, rep = _b.ecrire(a.de, a.a, texte, modele=a.modele)

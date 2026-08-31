@@ -1,0 +1,343 @@
+{
+ "id": "affaire-la-porte",
+ "titre": "La porte — ce que je grave",
+ "sous_titre": "🚪 **MA TROISIEME CHARGE (mj-spectacle.md) : CE QUE LES ZONES PROPOSENT DEVIENT CANON PAR MA MAIN, OU NE LE DEVIENT PAS.** Et la regle de geographie de mj-zone.md : ma chambre est ma memoire, l'etat est la verite, et je suis precisement celui qui ne confond jamais les deux. Cette affaire porte le passage : ce qui entre, ce qui est refuse, ce qui se perd. Libelles P.x. audit du 4e jour de la 4e lune (tick.py --verifier : 94 anomalies).",
+ "type": "plan",
+ "embleme": "🚪",
+ "couleur": "#6f5a3a",
+ "tenu_par": "mj",
+ "office": "L'arbitrage final : staging, versements, tables",
+ "pages": [
+  "**LA BOUCLE PRODUIT ET JE N'APPLIQUE PAS.** Sur les 25 derniers rapports d'activation : **8 mutations jetees sur 134**, soit 6 % — donc **126 changements applicables** que la boucle a produits. Depuis le premier rapport : 411 sur 773 jetees, 53 % — ce chiffre porte les pannes deja reparees et ne baissera jamais, mais les 6 % recents disent que la machine marche maintenant.\n\n**Trois rapporteurs sont MUETS DEPUIS CINQ JOURS**, et ce sont les trois seules anomalies GRAVES de l'audit : couverture (les couvertures d'affaire), couverture-registres (les quatre registres derives du plan — etats cibles, verrous, clefs, actions), verser-cahier (les changements rapportes par les hommes depeches). Leur cadence est de 3 jours. **Rien d'autre ne dit qu'ils sont muets.**\n\nEt 15 fichiers dorment dans etat/staging/, 15 coffrets sont vides.",
+  "**LE DEPOUILLEMENT DU 4e — 14 pieces, quatre tas, zero appliquee.**\n\n**Tas 1 — pas ma zone (6 pieces).** couronne-A a couronne-E et couronne-structure : le plan entier de la Couronne, ecrit le 129.4.3, etats cibles en 72xxx, la colonne du roi vers Sombreval. C'est un travail complet et il n'est pas a moi : il part en billet a mj-portreal, qui le proposera ou l'abandonnera. **Je ne l'arbitre que quand quelqu'un me le propose** — un plan trouve dans un couloir n'est pas une proposition. **MESURE DU 4e AU SOIR, ET ELLE CHANGE LE RANG DE CE TAS : zero adresse en 72xxx dans plan-actions.json.** Le plan des Verts n'est donc entre nulle part, et la consequence est mecanique — la boucle elit un acteur pour une TACHE, une tache est une ligne d'affaire, **les Verts n'ont pas d'affaires donc rien a elire.** On peut lancer la boucle mille fois : elle ne fera jamais agir Otto, Aegon ni Criston sur leur propre plan. **La collision des deux camps n'est pas lente, elle est IMPOSSIBLE tant que ces six pieces dorment.** Ce tas cesse d'etre 'pas ma zone' et devient le premier verrou du jeu entier : ce n'est plus une question de propriete, c'est une question de moteur.\n\n**Tas 2 — applicable, mais par un script (1 piece).** 20260813-021934-chaine-b : les corrections mecaniques CERTAINES du grand plan, calculees en lecture seule, rien d'applique. Elle demande scripts/reparer_renvois.py. Billet a dev.\n\n**Tas 3 — perime, s'ecarte avec sa raison (6 pieces).** coll-parole-30, coll-parole-30-nesse, coll-parole-30-croisement, denys-calcul-30e, _wenna_mot, .marqueur-test. Des paroles et des calculs du 28e au 30e de la 3e lune, jamais graves, que le monde a depasses de cinq a six jours. Une parole qu'on grave six jours apres n'est plus une parole, c'est une reconstitution.\n\n**Tas 4 — a graver, et c'est la seule (1 piece).** waltyr-msg : *le vent a tourne au nord, la porte n'a pas gemi une fois, le gond est rescelle, le battant essaye seul dans le noir a la deuxieme cloche, quatre fois sur quatre — je retire donc les six hommes par nuit.* Ce n'est pas de la couleur : **six hommes par nuit rendus a une garnison qui est a cent dix-neuf pour un plancher de cent vingt**, le jour meme ou Wend demande deux noms pour le creux de deux a quatre heures. Le fait est dur, il tient encore, et il touche l'affaire qui est devant le joueur. Elle attend la porte."
+ ],
+ "tables": [
+  {
+   "titre": "🏰 Ouverture de l'Affaire",
+   "colonnes": [
+    "🧱 Le champ",
+    "✍️ Ce qu'on y écrit",
+    "📖 La règle du champ",
+    "✅ Rempli ?"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "🏷️ **LE NOM**",
+      "Ce qui devient canon, et ce qui se perd",
+      "Le sujet dont le conseil traite, **jamais la solution**.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🎯 **L'OBJET**",
+      "Que rien de ce qu'un homme rapporte ne se perde : tout finit gravé ou refusé avec sa raison.",
+      "Ce qu'on veut obtenir, en une phrase qui puisse être fausse.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🧱 **LE PÉRIMÈTRE — DANS**",
+      "Le staging et son dépouillement · les versements au cahier · les rapporteurs dérivés · l'inbox et ce qui y dort · le retour d'un refus à son auteur.",
+      "Ce que cette affaire tient, et dont elle répond.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🚫 **LE PÉRIMÈTRE — HORS**",
+      "Le CONTENU de ce qu'on grave — il appartient à l'affaire concernée. Ici on tient le passage, pas la marchandise.",
+      "Ce qu'on refuse d'y mettre, pour que l'affaire reste tenable.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "📌 **L'ÉTAT ACTUEL**",
+      "**P.31 est faite** (les trois rapporteurs ont tourné le 4e), avec une réserve non levée : `plan-etats-cibles.json` n'a pas bougé quand les trois autres registres ont été réécrits. **P.32 est faite le 5e** : les 14 pièces triées, 8 têtes vides écartées avec leur motif dans `staging/ecartes/`, 3 diffusions jumelles fusionnées de ma main. **Et P.12 s'est élargi** : deux pièces `sans-siege` du 24 août dorment à la RACINE de `etat/inbox/`, pointant vers un dossier `etat/vues/` qui n'existe pas.",
+      "Où en est l'affaire au moment où on la lit, sans complaisance.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🔢 **LA PLAGE**",
+      "Aucune. Ce volume vit dans `chambres/mj/books/` : il ne fait pas foi, il ne porte aucune adresse du monde, et rien du fil ne doit pouvoir l'ouvrir. Libellés locaux en **P.x**.",
+      "Réservée d'avance.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "💡 **LA CONCLUSION**",
+      "**CE QUE JE FERAIS.** Je dépouillerais le staging à chaque reprise, même quand il paraît mort : sur quatorze pièces éteintes, une seule était vivante — le mot de Waltyr Poix, six hommes par nuit rendus à une garnison à cent dix-neuf pour un plancher de cent vingt — et je ne l'aurais jamais vue sans ouvrir. **CE QUI ME FERAIT CHANGER D'AVIS :** que le staging se mette à recevoir dix pièces par jour ; il faudrait alors un tri automatique en amont, et je n'arbitrerais plus que ce qui est vivant. **CE QU'IL NE FAUT PAS FAIRE :** écarter une pièce en silence. Une pièce périmée s'écarte AVEC sa raison, sinon celui qui l'a produite recommencera.",
+      "L'avis du titulaire, défendu : ce qu'il ferait, ce qui le ferait changer d'avis, ce qu'il ne faut pas faire.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🔚 **FERMÉE QUAND**",
+      "Le staging ne contient que des pièces du jour, aucun rapporteur n'est muet à l'audit, et un refus de versement revient à son auteur.",
+      "Écrit à l'ouverture, à froid : à quoi l'on verra qu'il n'y a plus lieu de rouvrir.",
+      "**oui**"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔗 Affaires liées",
+   "colonnes": [
+    "🪢 Le lien",
+    "🔗 L'affaire",
+    "📝 Pourquoi"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "sert",
+      "Le brouillard (chambre)",
+      "Les diffusions passent par la porte : ce qui n'est pas gravé n'est su de personne."
+     ]
+    },
+    {
+     "cellules": [
+      "sert",
+      "Les boucles du monde (chambre)",
+      "La boucle produit ; sans la porte, elle produit dans le vide."
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🎯 Etats cibles",
+   "colonnes": [
+    "🎯 N°",
+    "🏷️ L'état",
+    "✅ Ce qui doit être vrai",
+    "📍 Où",
+    "👁️ La preuve",
+    "⬆️ Sert"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔒 Verrous",
+   "colonnes": [
+    "🔒 N°",
+    "🏷️ Le verrou",
+    "⛔ Bloque",
+    "📌 Ce qui est vrai aujourd'hui",
+    "👁️ La preuve",
+    "🔓 Levé quand"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "P.11",
+      "Trois rapporteurs muets depuis cinq jours",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "P.12",
+      "Le staging s'accumule sans etre arbitre — **et l'inbox aussi**",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "P.13",
+      "Un refus ne revient pas a celui qui a propose",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "**P.14**",
+      "🩹 Le seul filet des cahiers est rangé par la main qui constate la chute",
+      "P.1 — *intitulé effacé le 129.4.9, à recoupler après remesure*",
+      "**LEVÉ le 9e, en code.** Était : `chambres/<qui>/books/` n'a aucune porte, et sa seule copie de secours est `etat/histoire/empreintes.json`, que `reconcilier.py --vraiment` rafraîchit depuis le disque **sans condition**. Le 129.4.9 à 04h49m45s, la même passe a journalisé 35 lignes disparues — elle a donc VU la perte — et posé l'instantané du désastre par-dessus la seule copie qui les contenait encore. `rendre_cellules.py`, écrit à 04h31 pour réparer par l'empreinte, n'avait plus rien à rendre. Est : `poser()` tient `empreintes-sans-perte.json`, que **seule une passe sans disparition** peut remplacer, et la passe crie ses pertes en sortie au lieu de les taire",
+      "`agents/reconcilier.py` `poser()` et `pertes_de()`, écrits le 9e · `etat/histoire/chambres.jsonl` l. 740-810, 20 `verrou.retiree` + 15 `clef.retiree` à `04:49:45`, tous `outil: reconcilier` · **NON EXÉCUTÉ** — aucune commande ne part de ma main depuis le 4e (D.16), la correction est écrite et relue, jamais lancée",
+      "**levé en écriture, pas en recette.** Il retombe si une main passe `reconcilier.py --vraiment` avant que quiconque ait vérifié que `empreintes-sans-perte.json` se crée bien à la première passe propre"
+     ]
+    },
+    {
+     "cellules": [
+      "**P.15**",
+      "🗂️ `chambres/*/books/` n'est dans aucun dépôt — et ce n'est pas la chambre qui manque",
+      "P.1 — *intitulé effacé le 129.4.9, à recoupler après remesure*",
+      "Le mj a conclu « ma chambre n'est pas versionnée ». **C'est une marche trop bas, et la nuance change le remède :** la chambre EST suivie — `chambres/mj/claude.md`, `en-souffrance.json`, `problemes.json` et les 60 dossiers de `relations/` sont dans l'index git. Seul `books/` n'y est pas, parce que `chambre.py` **crée ce dossier par code** et que personne ne l'a jamais ajouté à la main : un sous-dossier engendré dans un arbre suivi reste invisible jusqu'à ce qu'on l'ajoute, et git ne le signale que par un `??` qu'on lit comme du bruit. Ce n'est donc pas une politique à trancher sur `chambres/`, c'est un `git add` de onze fichiers",
+      "`.git/index` — 1 occurrence de `chambres/mj/claude.md`, **0 occurrence** de `chambres/mj/books`, comptées à la main le 9e · `.gitignore` ne mentionne `chambres` nulle part",
+      "`chambres/*/books/*.json` est ajouté et commité, et tout dossier créé par `chambre.py` dans un arbre suivi l'est du même geste"
+     ]
+    },
+    {
+     "cellules": [
+      "**P.16**",
+      "🙈 Le compteur qui arme le filet est AVEUGLE aux tables dont le titre n'a pas d'accent",
+      "P.1 — *intitulé effacé le 129.4.9, à recoupler après remesure* · et **P.14**, qu'il perce",
+      "**C'est la faille de P.14 lui-même.** `poser()` ne préserve `empreintes-sans-perte.json` que si `pertes_de()` rend zéro ; `pertes_de()` compte les `.retiree` que produit `histoire._index()` ; et `_index` appariait le titre de table par **égalité stricte** contre `SUIVIES`, dont les quatre entrées sont accentuées. Les sept volumes éventrés portent « 🎯 Etats cibles » SANS accent : **leur table était invisible au journal.** D'où le fait qu'on croyait acquis — « le journal n'a émis aucun `cible.retiree`, donc ces quinze états cibles étaient déjà vides » : ils ne l'étaient pas, personne ne les regardait. Et la conséquence qui compte pour demain : un vidage qui ne toucherait QUE des états cibles non accentués rend `pertes = 0`, et le secours se fait écraser par le désastre — la garde neuve reproduit exactement la panne qu'elle empêche",
+      "**Mesuré, et discriminant :** les 8 seuls événements `cible.*` de `etat/histoire/chambres.jsonl` viennent des 3 volumes accentués (`appareil-de-reprise`, `le-saut`, `chiffre-arrete`) et d'eux seuls ; les 7 sans accent n'en ont jamais émis un, tout en produisant 20 `verrou.retiree` + 15 `clef.retiree` + 27 `action.retiree`. Dépôt : **7 volumes sans accent, 62 avec**. `histoire.py` se contredit à l'intérieur de lui-même — sa docstring l. 11 écrit « Etats cibles », son `SUIVIES` l. 156 écrit « États cibles » ; et `_colonne()` tolérait déjà « État » ou « Etat » pour les EN-TÊTES : la moitié de l'invariant était écrite depuis le début, jamais l'autre",
+      "**ÉCRIT LE 9e, NON EXÉCUTÉ** (aucune commande ne part de ma main depuis le 4e, D.16). `histoire._noyau()` posé, `_index` apparie désormais sur le noyau du titre — sans emoji, sans accent, minuscules. Effet vérifié à la main sur les 19 titres réels du dépôt : **une seule table change d'état, « 🎯 Etats cibles », et rien d'autre ne se met à matcher.** Levé pour de bon quand une passe `reconcilier.py --vraiment` aura émis un `cible.*` depuis un volume sans accent"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🗝️ Clefs",
+   "colonnes": [
+    "🗝️ N°",
+    "🏷️ La clef",
+    "🔓 Ouvre",
+    "💡 Le principe",
+    "💰 Le prix",
+    "🚪 Ce que cela ferme",
+    "👁️ La preuve attendue",
+    "⚖️ Décision"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "P.21",
+      "Faire tourner les trois rapporteurs",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "P.22",
+      "Vider le staging a chaque reprise",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "⚔️ Actions",
+   "colonnes": [
+    "⚔️ N°",
+    "🏷️ L'action",
+    "🗝️ Réalise",
+    "📝 Ce qu'on fait",
+    "📍 Où",
+    "🪶 Office",
+    "👤 Qui",
+    "🧰 Moyens",
+    "🔧 Avec quoi",
+    "💰 Ce qu'elle coûte",
+    "⛓️ Dépend de",
+    "👁️ La preuve",
+    "⏳ État",
+    "📅 Jour fait",
+    "📝 Note",
+    "📅 Jour dû"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mj",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "mj",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "dev",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  }
+ ]
+}

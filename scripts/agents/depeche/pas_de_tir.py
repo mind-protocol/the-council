@@ -3,7 +3,7 @@
 l'etagere (ses volumes en fichiers) et la memoire (croyances, pensees).
 
 Sorti de mission.py le 31.8.2026 (plafond des 500 lignes) : mission.py garde
-le texte de mission et l'appel claude -p ; ici vit ce qu'on pose sur le
+le texte de mission et l'appel d'agent ; ici vit ce qu'on pose sur le
 disque du pas-de-tir avant le depart.
 """
 import io

@@ -1,0 +1,327 @@
+{
+  "genere_le": "2026-08-31T00:00:00",
+  "de": "mj-portreal",
+  "pour": "mj",
+  "joueur": null,
+
+  "applique_le": "NEUTRALISEE LE 129.4.9 PAR mj-portreal — NE PAS APPLIQUER",
+  "pourquoi_neutralisee": "PIECE JUMELLE, DEJA PASSEE AU CANON SOUS UN AUTRE NOM. Son contenu a ete verse par staging/20260831-mj-portreal-aemond-accalmie.json, que le mj a retenu et applique : verifie a la main le 129.4.9 — personnages.json donne aemond.lieu_id = accalmie, plis.json porte pli-mots-de-la-main-accalmie, intentions.json donne otto-accalmie a 'fait'. L'appliquer une seconde fois retirerait DOUZE croyances d'Aemond deja retirees (list.remove leverait sur une liste vide ou mordrait sur les trois qui restent) et refermerait des etapes deja closes. Ses empreintes sont de toute facon perimees sur intentions, personnages et plis, donc appliquer.py la refuse deja ; ce marqueur est la pour qu'un --forcer ne passe pas outre. Le champ applique_le est mis a la main et ne dit pas qu'elle a ete appliquee telle quelle : il dit que sa matiere est au canon. Si le mj veut la relire ou la rejouer, qu'il retire cette ligne.",
+
+  "empreintes": {
+    "intentions": "8ff549ce7de837ae9f0a22aedb10bb588e7680d5",
+    "personnages": "27014f4aa2a20909a030d86697c6c134d5c8101b",
+    "evenements": "0c10f47e0004b0ea684372e577f391e9f02ac7e8",
+    "plis": "8da6d958e9f2246efb34f46162f7126bc167681c",
+    "monde": "d17fbe93650f52ccc40f52fb168e7a14289efb9f"
+  },
+  "avertissement": "Proposition de mj-portreal — le MJ arbitre et applique. Ce fichier n'est pas de l'etat.",
+
+  "ce_qui_a_ete_joue": {
+    "objet": "Les deux etapes vivantes d'aemond, jouees telles qu'ecrites, du 4e au 9e de la 4e lune 129.",
+    "lu_avant_d_arbitrer": [
+      "etat/intentions.json — aemond (2 etapes en-cours a 1 jour, 13 croyances dont 6 doublons exacts, 2 declencheurs, date_maj 129.3.17)",
+      "etat/intentions.json — otto (etape otto-accalmie en-cours, cout 'Aemond, qu'il faut convaincre, et neuf jours de route')",
+      "etat/intentions.json — aegon-ii (129.4.3 : entierement hors du Donjon Rouge, par le passage, a courir le paraphe de l'officier du port a maree basse)",
+      "etat/intentions.json — alicent (129.4.3 : entierement sur son pli, la quille de Pierremout et les quatre hommes du tour de nuit — Aemond n'apparait pas une fois)",
+      "etat/activations/20260831-022304-481992-aemond.json (le 4e : EXIGER devant Otto, non applique au canon)",
+      "etat/activations/20260831-032734-710314-otto.json (le 5e : Otto entier sur Luthor Largent et les manteaux d'or)",
+      "etat/personnages.json (aemond et otto a port-real), etat/monde.json (129.4.9, 9h), etat/evenements.json (mort-lucerys, conditions)"
+    ],
+
+    "etape_2_aemond_accalmie": {
+      "issue": "FAITE, le 4e de la 4e lune",
+      "le_cout_a_ete_paye": "« accepter le marche que son grand-pere y attache » — paye devant le clerc : il ne dira que ces mots, ne se detournera pas, rentrera rendre compte.",
+      "comment": "Il n'a pas attendu qu'on la confie a un mestre : il est monte a la Tour de la Main et a EXIGE que les mots soient couches, scelles et inscrits au role, au lieu de les recevoir de bouche. Otto a concede l'ecrit et y a attache sa condition. Le mestre evident — Orwyle — est sur sa nef avec sa manche, et n'a jamais ete sur cette route."
+    },
+
+    "etape_1_aemond_represailles": {
+      "issue": "BLOQUEE, et bloquee sur son cout, pas sur un refus",
+      "sur_quoi": "Le cout ecrit est « l'accord d'Aegon, que sa mere combattra ». Alicent n'a pas eu a le combattre : l'accord n'a jamais ete atteignable. Aegon, au 129.4.3, croit lui-meme que « les hommes qui comptent ne montent pas jusqu'a lui » tant qu'Otto tient l'antichambre, et il est dehors, a pied, par le passage des geoles noires, a courir le paraphe de l'officier du port. Aucune cire royale n'est descendue. Ce n'est pas un non : c'est une chambre vide, et c'est exactement la borne qu'Aemond s'etait posee lui-meme a midi du 29e — passe cette heure sans cire, le retard porte le nom d'Aegon.",
+      "si_bloque_applique": "« il vole quand meme pour voir, de plus en plus loin, jusqu'a ce qu'une occasion se presente d'elle-meme » — et l'occasion, c'est l'etape 2. Il ne vole pas la sortie : on la lui donne sous le sceau de la Main, et il l'etire."
+    },
+
+    "le_declencheur_qui_n_a_pas_tire": "« On lui refuse une seconde fois de voler, ou l'on donne a un autre la sortie qu'il demandait » — personne ne lui a rien refuse et personne d'autre n'a eu la sortie. Il n'a pas tire ; il est desormais sans objet (il est en l'air, avec un ecrit), et il sort de la tete pour tenir le budget.",
+    "le_declencheur_qui_reste_arme": "« Un dragon de la reine est signale en vol au sud de la baie, a portee de Vhagar → il monte dans l'heure et va au-devant, sans autorisation et quel que soit l'ordre du conseil. » Il est arme, et il est pointe sur le 10e. Il n'est pas a moi de le faire tirer.",
+
+    "le_vol": "Parti de Port-Real a l'aube du 6e, sans accord du roi, un seul ecuyer averti. Sa propre mesure : neuf jours d'un cavalier contre deux d'une aile. Il a mis deux jours et demi et non deux, parce que le si_bloque de l'etape 1 le fait voler « de plus en plus loin » : il a tire large sur la cote de l'Orage, haut, a chercher une aile. Vhagar couchee dans la lande sous les murs d'Accalmie le soir du 8e. Le 9e, il se presente au chateau avec l'ecrit.",
+
+    "ce_que_ca_lui_a_coute": [
+      "L'accord du roi, qu'il n'a pas et n'aura pas : il vole sous le seul sceau de son grand-pere. Si cela tourne mal, aucune cire royale ne le couvre et Aegon peut le desavouer d'une phrase.",
+      "Sa parole de ne pas se detourner, deja entamee en l'air et que personne a Port-Real ne sait entamee.",
+      "La maniere, qui etait a Otto : la Main avait compte neuf jours de route et un porteur qu'elle choisirait. L'offre arrive six jours en avance et sur un dragon. Otto a l'objet et a perdu la forme.",
+      "Alicent n'a rien su : elle est entiere sur son pli et sa quille. La seule personne du Donjon Rouge qui aurait combattu ce depart ne l'a pas vu partir."
+    ],
+
+    "au_soir_du_9e": "Aemond est a Accalmie, dans la lande sous les murs, sur Vhagar, seul, sans escorte de dragon, porteur du pli scelle du sceau de la MAIN (non du roi) inscrit au role des plis de la Main au 4e de la 4e lune. La condition « annule si Aemond n'est pas a Accalmie au meme moment » est remplie. La reponse de lord Borros n'est pas a moi ; la cour d'Accalmie non plus."
+  },
+
+  "mutations_proposees": [
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "etape",
+      "etape": "aemond-accalmie",
+      "champs": {
+        "etat": "fait",
+        "jours_restants": 0,
+        "accompli": "Obtenue le 4e de la 4e lune, et obtenue par ecrit : monte a la Tour de la Main, il a exige que les mots pour lord Borros soient couches, scelles et inscrits au role plutot que confies de bouche a un mestre. Otto a concede l'ecrit et y a attache son marche, dit devant le clerc — ne dire que ces mots, ne pas se detourner, rentrer rendre compte. Le cout est paye ; la laisse est nouee."
+      },
+      "pourquoi": "L'etape tombait a 1 jour. Cout paye, si_bloque sans objet."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "etape",
+      "etape": "aemond-represailles",
+      "champs": {
+        "etat": "bloque",
+        "jours_restants": 0,
+        "accompli": "Bloquee sur son cout et non sur un refus : l'accord d'Aegon n'a jamais ete atteignable, le roi etant hors du Donjon Rouge par le passage des geoles noires du 3e au 9e, a courir le paraphe de l'officier du port. Aucune cire royale n'est descendue ; Alicent n'a pas eu a la combattre. Le si_bloque a joue : il vole quand meme, pour voir, de plus en plus loin — sous le sceau de la Main et non celui du roi."
+      },
+      "pourquoi": "L'etape tombait a 1 jour. Le cout ecrit exigeait Aegon ; l'etat met Aegon dans la rue."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "etape_ajouter",
+      "valeur": {
+        "id": "aemond-poser-les-mots",
+        "quoi": "Poser devant lord Borros Baratheon, en personne, les mots scelles de la Main — offre, terme et contrepartie nommes — sans en ajouter un, et en rapporter la reponse a Port-Real",
+        "etat": "en-cours",
+        "jours_restants": 1,
+        "depend_de": [],
+        "cout": [
+          "ne dire que ces mots, alors qu'il en a d'autres",
+          "rentrer sans se detourner, ce qu'il a deja entame en venant",
+          "n'avoir sur lui aucune cire du roi si lord Borros marchande"
+        ],
+        "si_bloque": "Si lord Borros ne repond pas, ou fait attendre, il ne redemande pas : il reste sous les murs avec Vhagar en vue du chateau et laisse la bete faire l'argument qu'il n'a pas le droit de dire."
+      },
+      "pourquoi": "Ce qui reste de l'ambassade une fois qu'il est arrive. La cour d'Accalmie n'est pas a moi : l'etape dit ce qu'il fait, pas ce que Borros repond."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "declencheur_retirer",
+      "valeur": "On lui refuse une seconde fois de voler, ou l'on donne a un autre la sortie qu'il demandait",
+      "pourquoi": "N'a pas tire — aucun refus, aucune sortie donnee a un autre — et est desormais sans objet : il est en l'air avec un ecrit. Sort pour tenir le budget de 1 declencheur (L.34)."
+    },
+
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_retirer",
+      "valeur": "Il aurait fait un meilleur roi qu'Aegon et chacun le sait tout bas",
+      "pourquoi": "L.34 — ne sert aucune etape ni aucun declencheur. Taille par le bas."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_retirer",
+      "valeur": "Un dragon noir a brûlé onze cents hommes du roi et personne n'a répondu : chaque heure de silence est une humiliation",
+      "pourquoi": "L.34 — redondante avec la croyance gardee, qui dit la meme chose en nommant Rhaenyra."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_retirer",
+      "valeur": "Il a donné à son grand-père sa parole de porter les mots de la Main et non les siens à Accalmie, et de revenir sans se détourner — il tient le compte exact de ce que cette parole lui aura coûté.",
+      "pourquoi": "L.34 — doublon exact (2 occurrences). Reprise dans la croyance neuve du pli, avec sa source."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_retirer",
+      "valeur": "Il a donné à son grand-père sa parole de porter les mots de la Main et non les siens à Accalmie, et de revenir sans se détourner — il tient le compte exact de ce que cette parole lui aura coûté.",
+      "pourquoi": "L.34 — seconde occurrence du meme doublon."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_retirer",
+      "valeur": "Aucune cire royale n'est descendue de la porte du roi de toute la journée du 28e : le silence d'Aegon est entier et voulu, il n'est pas resté en chemin.",
+      "pourquoi": "L.34 — doublon exact (2 occurrences) et perimee : la question de la cire est tranchee, il est parti sans."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_retirer",
+      "valeur": "Aucune cire royale n'est descendue de la porte du roi de toute la journée du 28e : le silence d'Aegon est entier et voulu, il n'est pas resté en chemin.",
+      "pourquoi": "L.34 — seconde occurrence du meme doublon."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_retirer",
+      "valeur": "Depuis le 28e au soir, le retard ne lui appartient plus : un pli scellé de sa main, inscrit à cette date au rôle des plis de la Main, prouve qu'il était prêt à partir — et il n'aura pas à redemander deux fois.",
+      "pourquoi": "L.34 — doublon exact (2 occurrences) et perimee : il est parti."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_retirer",
+      "valeur": "Depuis le 28e au soir, le retard ne lui appartient plus : un pli scellé de sa main, inscrit à cette date au rôle des plis de la Main, prouve qu'il était prêt à partir — et il n'aura pas à redemander deux fois.",
+      "pourquoi": "L.34 — seconde occurrence du meme doublon."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_retirer",
+      "valeur": "Il a posé lui-même la borne : midi du 29e. Passé cette heure sans cire, le retard porte le nom d'Aegon, écrit par son silence, et il reprend la voie de la représaille devant le conseil avec ses chiffres — neuf jours d'un cavalier contre deux d'une aile.",
+      "pourquoi": "L.34 — doublon exact (2 occurrences). La borne est echue et consommee ; le rapport neuf jours / deux d'une aile est repris dans la croyance neuve du vol, avec sa source."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_retirer",
+      "valeur": "Il a posé lui-même la borne : midi du 29e. Passé cette heure sans cire, le retard porte le nom d'Aegon, écrit par son silence, et il reprend la voie de la représaille devant le conseil avec ses chiffres — neuf jours d'un cavalier contre deux d'une aile.",
+      "pourquoi": "L.34 — seconde occurrence du meme doublon."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_retirer",
+      "valeur": "Sa promptitude est attestée deux fois et par deux mains différentes : le pli scellé au rôle des plis de la Main au 28e, et son feuillet des trois termes annoté avant l'aube du 29e. Il n'aura pas à plaider de mémoire.",
+      "pourquoi": "L.34 — doublon exact (2 occurrences) et sans emploi : il n'a plus a plaider, il est parti."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_retirer",
+      "valeur": "Sa promptitude est attestée deux fois et par deux mains différentes : le pli scellé au rôle des plis de la Main au 28e, et son feuillet des trois termes annoté avant l'aube du 29e. Il n'aura pas à plaider de mémoire.",
+      "pourquoi": "L.34 — seconde occurrence du meme doublon."
+    },
+
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_ajouter",
+      "valeur": "Les mots pour lord Borros sont ecrits, scelles du sceau de la Main et inscrits au role des plis de la Main au 4e jour de la 4e lune : les epees de la Marche Orageuse pour Aegon deuxieme du nom, contre la main de l'une des quatre filles de lord Borros, le prince Aemond repondant de sa personne, reponse attendue avant la lune close. Il les porte sur lui et n'a ni un mot de plus ni un mot de moins a dire — et le sceau du roi n'y est pas.",
+      "pourquoi": "B.32 — source ecrite : pli-mots-de-la-main-accalmie, remis en sa main, dont le texte porte est le meme (propose ci-dessous), et acte-aemond-exige-les-mots-129-4-4 dont il est l'acteur."
+    },
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "croyance_ajouter",
+      "valeur": "Il a quitte Port-Real a l'aube du 6e sans l'accord du roi, n'en ayant averti qu'un ecuyer, et a vole large deux jours et demi au lieu de deux — haut sur la cote de l'Orage, a chercher une aile. Vhagar couche dans la lande sous les murs d'Accalmie depuis le soir du 8e. Neuf jours d'un cavalier ont fait deux d'une aile, et ce qu'il a gagne en jours il l'a paye sur sa parole de ne pas se detourner.",
+      "pourquoi": "B.32 — source ecrite : acte-aemond-depart-129-4-6 et acte-aemond-vol-large-129-4-8, dont il est l'acteur (proposes ci-dessous)."
+    },
+
+    {
+      "table": "intentions",
+      "cible": "aemond",
+      "operation": "tete",
+      "champs": {
+        "intention": "Poser devant lord Borros les seuls mots de la Main, sans en ajouter un — et guetter, tout le temps que durera l'attente, le ciel au sud de la baie, parce que c'est la seule chose qu'on ne lui a pas interdite.",
+        "attitude_joueur": "Elle est toujours la femme qui a fait de lui un borgne en ne punissant pas ses fils. Mais il ne pense plus a elle en dette : il pense a ses betes, et a laquelle sortira la premiere.",
+        "date_maj": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 9
+        }
+      },
+      "pourquoi": "Tete relue au 9e : elle datait du 129.3.17, vingt-deux jours de retard."
+    },
+
+    {
+      "table": "personnages",
+      "cible": "aemond",
+      "operation": "personnage",
+      "champs": {
+        "lieu_id": "accalmie"
+      },
+      "pourquoi": "Pose dans la lande sous les murs le soir du 8e. Sans cela, la condition du canon mort-lucerys se lit fausse."
+    },
+
+    {
+      "table": "plis",
+      "operation": "pli_ajouter",
+      "valeur": {
+        "id": "pli-mots-de-la-main-accalmie",
+        "canal": "cavalier",
+        "scelle": true,
+        "porte": "Les mots a porter devant lord Borros Baratheon, scelles du sceau de la Main et inscrits au role des plis de la Main au 4e jour de la 4e lune, an 129 : les epees de la Marche Orageuse pour Aegon, deuxieme du nom, contre la main de l'une des quatre filles de lord Borros, le prince Aemond repondant de sa personne ; reponse attendue avant la lune close. A ne dire ni augmenter.",
+        "de": "otto",
+        "pour": "borros-baratheon",
+        "vers": "accalmie",
+        "parti_le": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 6
+        },
+        "attendu_le": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 8
+        },
+        "etat": "remis",
+        "main": "aemond",
+        "depuis": "port-real"
+      },
+      "pourquoi": "Le mandat, rendu lisible. Canal 'cavalier' faute de mieux : le porteur est le prince lui-meme, sur Vhagar. 'remis' avec main=aemond parce qu'il l'a en main et non en route sans porteur — c'est ce qui en fait une source pour sa croyance (B.21)."
+    },
+
+    {
+      "table": "intentions",
+      "cible": "otto",
+      "operation": "etape",
+      "etape": "otto-accalmie",
+      "champs": {
+        "etat": "fait",
+        "jours_restants": 0,
+        "accompli": "Faite, et faite autrement qu'il ne l'avait comptee. Le 4e, Aemond n'a pas eu a etre convaincu : il est monte exiger les mots par ecrit et scelles. Otto a concede l'ecrit contre sa condition — ne dire que ces mots, ne pas se detourner, rentrer rendre compte. Il avait chiffre le cout a neuf jours de route et a un porteur qu'il choisirait ; le porteur s'est choisi lui-meme et a mis deux jours et demi. La Main tient son offre a Accalmie six jours en avance, et n'en tient plus la maniere."
+      },
+      "pourquoi": "L'etape d'Otto est realisee par le depart d'Aemond. Otto est de ma zone."
+    }
+  ],
+
+  "entrees_proposees": {
+    "note": "Les actes et l'annale ne sont pas du vocabulaire de appliquer.py — ils passent par scripts/ajouter.py. SANS EUX, LES DEUX CROYANCES NEUVES SONT SANS PORTEUR (B.32) : elles ne valent qu'avec leur source.",
+    "actes": [
+      {
+        "id": "acte-aemond-exige-les-mots-129-4-4",
+        "date": { "annee": 129, "lune": 4, "jour": 4, "minute": 570 },
+        "acteur_id": "aemond",
+        "lieu_id": "port-real",
+        "quoi": "DANS LE CABINET DE LA TOUR DE LA MAIN, LE PRINCE AEMOND EXIGE LES MOTS D'ACCALMIE PAR ECRIT. Debout devant Otto Hightower, il refuse de recevoir de bouche l'offre qu'il doit porter et reclame qu'elle soit couchee, scellee et inscrite au role : offre nommee, terme nomme, contrepartie nommee. Le clerc dicte en sa presence — les epees de la Marche Orageuse pour Aegon, deuxieme du nom, contre la main de l'une des quatre filles de lord Borros, le prince Aemond repondant de sa personne, reponse attendue avant la lune close. Otto pose sa cire, non celle du roi, et inscrit le pli au role des plis de la Main au 4e jour de la 4e lune. Il y attache sa condition, dite tout haut devant le clerc pour qu'elle soit entendue : le prince ne dira que ces mots, ne se detournera pas, et rentrera rendre compte. L'ecrit le couvre dans ces bornes et pas d'un pouce au-dela.",
+        "temoins": ["otto"],
+        "connu_de": ["aemond", "otto"]
+      },
+      {
+        "id": "acte-aemond-depart-129-4-6",
+        "date": { "annee": 129, "lune": 4, "jour": 6, "minute": 300 },
+        "acteur_id": "aemond",
+        "lieu_id": "port-real",
+        "quoi": "LE PRINCE AEMOND QUITTE PORT-REAL A L'AUBE DU 6e SANS L'ACCORD DU ROI. Deux jours durant il a attendu une cire royale qui n'est pas descendue : Aegon n'etait pas dans ses appartements, l'antichambre a garde une chambre vide, et personne n'a rien refuse a personne. Il cesse d'attendre. Vhagar est sellee avant le jour ; un seul ecuyer est averti, et il l'est au moment de sangler. Le prince part avec pour tout mandat le pli scelle du sceau de la MAIN, sans une ligne du roi sous laquelle s'abriter. La cour l'apprend quand il est deja en l'air ; la reine douairiere ne l'apprend pas du tout.",
+        "temoins": [],
+        "connu_de": ["aemond"]
+      },
+      {
+        "id": "acte-aemond-vol-large-129-4-8",
+        "date": { "annee": 129, "lune": 4, "jour": 8, "minute": 1140 },
+        "acteur_id": "aemond",
+        "lieu_id": "accalmie",
+        "quoi": "VHAGAR SE COUCHE DANS LA LANDE SOUS LES MURS D'ACCALMIE, LE SOIR DU 8e. Il avait compte deux jours d'une aile contre neuf d'un cavalier ; il en a mis deux et demi, et le demi n'etait pas dans le compte. Faute d'avoir obtenu la sortie de represailles, il a vole large et haut sur la cote de l'Orage, a chercher une aile qui n'est pas venue — sa parole a son grand-pere etait de ne pas se detourner, et il l'a entamee avant meme d'arriver. Nul a Port-Real ne le sait. Il pose la bete a vue du chateau plutot que dans une cour, et attend le matin pour se presenter.",
+        "temoins": [],
+        "connu_de": ["aemond"]
+      }
+    ],
+    "annales": [
+      {
+        "id": "annale-aemond-porte-les-mots-a-accalmie",
+        "date": { "annee": 129, "lune": 4, "jour": 8 },
+        "titre": "Le prince Aemond porte lui-meme les mots de la Main a Accalmie",
+        "texte": "Faute d'avoir jamais pu obtenir du roi l'autorisation de sortir Vhagar en represailles — Aegon etant hors du Donjon Rouge et l'antichambre vide, si bien que nul ne lui a rien refuse — le prince Aemond s'est fait donner l'ambassade d'Accalmie et l'a prise par ecrit : les mots pour lord Borros scelles du sceau de la Main et inscrits au role, au 4e jour de la 4e lune. Il est parti de Port-Real a l'aube du 6e sans accord royal, un seul ecuyer averti, et Vhagar s'est couchee dans la lande sous les murs d'Accalmie le soir du 8e. Ce que la Main avait chiffre a neuf jours de route s'est fait en deux et demi ; la Main tient son offre en avance et n'en tient plus la maniere.",
+        "portee": "regne"
+      }
+    ]
+  },
+
+  "ce_que_je_ne_touche_pas": [
+    "L'evenement mort-lucerys : sa condition « annule si Aemond n'est pas a Accalmie au meme moment » est REMPLIE au soir du 9e, mais le statut et l'arbitrage sont a mj.",
+    "Lucerys, Arrax, et tout ce qui part de Peyredragon.",
+    "La cour de lord Borros, sa reponse et son ecrit : mj-accalmie.",
+    "monde.json (date, tension, phase).",
+    "Une ligne de Ver Blanc livree a Mysaria le 129.4.5 (fiabilite 80) dit « lord Otto Hightower est a Accalmie depuis le dix-septieme jour ». L'etat le donne a port-real, et sa tete au 129.4.3 l'y met sans ambiguite. Je ne corrige pas la diffusion — je signale que le renseignement paye est faux, et que c'est peut-etre ce qui vaut le plus cher dedans."
+  ]
+}

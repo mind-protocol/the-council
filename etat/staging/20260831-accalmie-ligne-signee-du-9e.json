@@ -1,0 +1,28 @@
+{
+  "titre": "Accalmie, 9e — la sixieme ligne cesse d'etre anonyme : un hote dicte son propre nom",
+  "par": "mj-accalmie",
+  "_pourquoi": "TENTER d'un hote de ma cour sur MON mestre : il exige que la colonne du nom soit remplie de la sienne, avec le motif de ses trois arrets, date, et qu'on la lui relise. J'arbitre sur la fiche de Hallis et je grave. || IL OBTIENT SA LIGNE, ET SANS RESISTANCE, parce que sa demande tombe exactement dans l'objectif n°1 du mestre : 'que rien n'entre ni ne sorte d'Accalmie sans une ligne au registre'. Ce qu'il a refuse hier n'etait pas le nom, c'etait la SOURCE — du rapport de cour. Une declaration faite de vive voix par l'interesse devant un temoin nomme est de la meilleure matiere qu'un mestre puisse esperer, et il la prend. || CE QUE JE N'AI PAS FAIT : je n'ai mis aucune parole dans la bouche du mestre. Sa maniere dit 'ne conseille jamais : il relit', et il relit — en s'arretant une seconde de trop sur une ligne, ce qui est ecrit dans sa fiche mot pour mot. Il ne fait aucune remarque et ne court prevenir personne. || UNE INVENTION GRAVEE ICI : Garrec, l'homme d'armes de la porte de la grande salle, temoin nomme au registre — un temoin qui n'existe pas ne temoigne de rien.",
+  "mutations_proposees": [
+    {
+      "table": "intentions",
+      "cible": "mestre-hallis",
+      "operation": "croyance_ajouter",
+      "valeur": "LA COLONNE DU NOM A ETE REMPLIE, ET C'EST L'INTERESSE QUI L'A DICTEE. Devant la porte de la grande salle, avant l'audience, l'hote non presente a exige que la sixieme ligne du 9e cesse d'etre anonyme et a donne son nom lui-meme : AEMOND TARGARYEN. Le mestre l'a ecrit sans discuter — ce qu'il refusait hier etait du rapport de cour, ce qu'on lui donne aujourd'hui est une declaration faite de vive voix par celui qu'elle nomme, devant Garrec, l'homme d'armes de la porte, qui l'a entendue. Il a porte en marge la qualite de la piece : DECLAREE PAR L'INTERESSE, NON VERIFIEE, temoin nomme, et l'a fait signer. || CE QUE LA LIGNE PORTE DESORMAIS, DE SA DICTEE : les trois arrets du chemin de ronde et leur motif — la monture de son neveu, pour savoir si on la nourrissait bien sous ce toit ; la mer, parce que le vent est de suroit et qu'il tourne ; la lande, parce que SA BETE y est posee dans le grain et qu'il n'aime pas la savoir seule. Datee du matin, a l'heure du sergent de la tour du vent. || ET LE MESTRE SAIT DONC MAINTENANT DEUX CHOSES QUE PERSONNE D'AUTRE n'a ici : le nom de l'homme, et que la grande bete de la lande est la sienne — par sa bouche, pas par le rapport de la cour. Il n'est alle le dire a personne. Il a relu la ligne entiere a voix haute comme on le lui demandait, et s'est arrete une seconde de trop sur celle de la monture du neveu, sans un mot de commentaire.",
+      "pourquoi": "Objectif n°1 de sa fiche, servi exactement. Et la distinction qu'il porte en marge — DECLAREE PAR L'INTERESSE, NON VERIFIEE — est la meme coupe que celle d'hier : le fait est ecrit, la garantie ne l'est pas, et rien n'est faux. || LE COUT REEL POUR CELUI QUI L'A EXIGEE, ET IL NE L'A PAS PRICE : il voulait devancer quiconque aurait l'idee d'y mettre son nom. C'est fait. Mais la piece qui existe maintenant est datee, signee de sa main, temoignee, et elle dort dans le coffre d'un seigneur qui n'a pas choisi de camp — et elle dit qu'il est alle regarder la monture de son neveu et le temps qu'il ferait le lendemain. Je n'ai pas fait dire cela au mestre : je l'ecris ici pour l'arbitre, pas dans une tete."
+    },
+    {
+      "table": "intentions",
+      "cible": "cassandra-baratheon",
+      "operation": "ignore_retirer",
+      "valeur": "Que le nom qu'on veut lui donner est celui d'Aemond Targaryen, et que lord Otto le tient dans sa manche depuis onze jours en laissant monter le prix — personne a Accalmie n'a encore entendu ce nom prononce",
+      "pourquoi": "SA DERNIERE CLAUSE VIENT DE DEVENIR FAUSSE. Elle disait 'personne a Accalmie n'a encore entendu ce nom prononce' — le mestre vient de l'entendre et de l'ecrire. Le coeur de l'ignore, lui, reste vrai : ELLE ne le sait pas. Je remplace donc plutot que de laisser une ligne a moitie fausse dans une tete, ce qui piegerait le prochain qui la reveille."
+    },
+    {
+      "table": "intentions",
+      "cible": "cassandra-baratheon",
+      "operation": "ignore_ajouter",
+      "valeur": "Que le nom qu'on veut lui donner est celui d'Aemond Targaryen, et que lord Otto le tient dans sa manche depuis onze jours en laissant monter le prix. Elle ne l'a pas entendu et ne l'entendra que dans la salle : le seul homme d'Accalmie a qui ce nom ait ete donne est le mestre, qui l'a recu comme une declaration a porter au registre et non comme une nouvelle a colporter — il ne conseille jamais, il relit, et il n'a couru le dire a personne.",
+      "pourquoi": "MEME IGNORANCE, FAIT CORRIGE, ET ELLE RESTE AUSSI ARMEE QU'AVANT. Son declencheur du 10e exige qu'elle pose elle-meme la premiere question — quel prince, et a laquelle des quatre — et il ne vaut que si elle ignore encore la reponse. Elle l'ignore. La nouvelle redaction dit en plus POURQUOI le nom n'a pas fuite jusqu'a elle, et ce n'est pas une commodite de regie : c'est la fiche du mestre — 'discret', 'ne conseille jamais : il relit'. Le secret tient sur une propriete verifiable de l'etat, pas sur ma vigilance."
+    }
+  ]
+}

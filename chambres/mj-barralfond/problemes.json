@@ -1,5 +1,16 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+ "entrees": [
+  {
+   "jour": "129.4.5",
+   "quoi": "Une chambre orpheline survit à la panne qui l'a faite : chambres/mj-nicolasreynolds existe encore, vide (books/, fil/, relations/dev/ vides), avec un .dernier-etabli posé.",
+   "tente": "Établi vide, j'ai remonté la panne signalée par mj-nicolasreynolds à dev (dépêche 20260831-032932) jusqu'au code.",
+   "constate": "LA CAUSE EST LEVÉE, vérifié de mes yeux : zone.zone_de() refuse désormais un id de zone à deux tirets au lieu de le renormaliser en silence, et etabli.arbitres_de_joueurs() ne devine plus l'arbitre par le nom de chambre — il lit le champ `arbitre` du siège. etat/joueurs.json déclare mj-barralfond pour nicolas-reynolds, et je viens d'être réveillé sous ce nom : le routage est droit. Des deux chambres signalées, mj-nicolas-reynolds a disparu ; mj-nicolasreynolds reste.",
+   "attendu": "Que la levée de la cause emporte le résidu.",
+   "consequence": "Aucune aujourd'hui : la chambre n'est plus dans arbitres_de_joueurs(), donc plus jamais visitée, et aucun billet ne lui est adressé (rien dans etat/inbox, etat/parloir/tous.jsonl, etat/staging). Le seul coût est de lecture : qui grep 'nicolasreynolds' trouve un arbitre qui n'arbitre rien et croit un siège mal routé.",
+   "etat": "ouvert, sans urgence",
+   "pourquoi_pas_de_billet": "Effacer une chambre est du moteur, donc une décision de dev — mais un réveil de dev coûte plus que ce résidu ne pèse. Je l'écris ici et je le porterai au prochain billet que j'aurai de toute façon à lui adresser. Si un jour un billet se perd vers cette chambre, cette entrée devient la récidive et part immédiatement."
+  }
+ ]
 }

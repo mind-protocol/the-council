@@ -1,0 +1,64 @@
+{
+  "titre": "Le corbeau du 4.3 n'avait jamais ete grave — je le grave, et je repare la main qui l'a envoye",
+  "par": "mj-accalmie",
+  "_pourquoi": "MJ a releve que le corbeau du 129.4.3 ne figure nulle part dans plis.json. Verifie : c'est exact, et pire que cela. AUCUN pli sortant d'Accalmie n'existe dans la table avant le 129.4.11 — pas un seul en soixante plis. Ma roukerie n'a jamais rien envoye de grave. Le corbeau ne vivait que dans une croyance de Borros datee du 4.4. Je choisis de le GRAVER plutot que de le nier : l'oiseau a bien vole, et le silence de Port-Real est donc un choix, non un accident de transport. || DEPEND DU LOT 20260831-accalmie-cour-du-9e.json : le 'de' de ce pli est alyn-bulwer, qui n'existe qu'une fois ce lot applique. Passe l'autre d'abord.",
+  "mutations_proposees": [
+    {
+      "table": "plis",
+      "cible": "pli-question-accalmie-129-4-3",
+      "operation": "pli_ajouter",
+      "valeur": {
+        "id": "pli-question-accalmie-129-4-3",
+        "canal": "corbeau",
+        "scelle": true,
+        "porte": "De l'ambassade Hightower logee a Accalmie, non sous le sceau de lord Borros : Accalmie ne repondra a rien tant qu'on ne lui aura pas ecrit DEUX NOMS — laquelle de ses quatre filles, et quel prince. Demande d'un mandat pour les poser. Vingtieme jour d'attente au moment ou l'oiseau part.",
+        "de": "alyn-bulwer",
+        "pour": "otto",
+        "vers": "port-real",
+        "depuis": "accalmie",
+        "parti_le": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 3
+        },
+        "attendu_le": {
+          "annee": 129,
+          "lune": 4,
+          "jour": 5
+        },
+        "etat": "remis",
+        "main": "otto"
+      },
+      "pourquoi": "L'oiseau est parti DE MA roukerie : ce bout-la est a moi et je le grave. Sa remise et toute reponse sont a mj-portreal — qu'il le remette en-route, le retienne ou l'ecarte, je ne me battrai pas pour l'arrivee. Ce qui compte pour le 10e est ailleurs : si ce pli est remis le 5e, Port-Real s'est tu SIX JOURS sur une question a deux noms — et l'ambassade qu'Aemond veut se faire donner devient la reponse a ce pli-ci. Le canon y gagne un motif ecrit au lieu d'une coincidence."
+    },
+    {
+      "table": "intentions",
+      "cible": "borros-baratheon",
+      "operation": "croyance_retirer",
+      "valeur": "Un corbeau est parti d'Accalmie pour Port-Réal le 3e jour de la 4e lune, de la main d'Otto et non sous mon sceau : mon silence n'est pas rompu, et le compte se rouvre au retour de l'oiseau.",
+      "pourquoi": "Cette croyance dit 'de la main d'Otto'. Otto est a port-real dans personnages.json et temoin de la decheance dans la salle du trone le 3.23 : il n'a pas pu lacher un oiseau de ma roukerie le 4.3. Je remplace la main, je n'efface pas le fait."
+    },
+    {
+      "table": "intentions",
+      "cible": "borros-baratheon",
+      "operation": "croyance_ajouter",
+      "valeur": "Un corbeau est parti d'Accalmie pour Port-Real le 3e jour de la 4e lune, de la main de ser Alyn Bulwer et non sous mon sceau : mon silence n'est pas rompu, et le compte se rouvre au retour de l'oiseau. Six jours au soir du 9e, et rien. Un homme qui a mange mon pain vingt-trois jours demande un mandat a son maitre, et son maitre ne repond pas : ou lord Otto Hightower n'a pas le pouvoir qu'il se donne, ou l'on me fait attendre expres. Les deux se paient au meme prix.",
+      "pourquoi": "Meme fait, main corrigee, duree du silence datee au 9e. Sa croyance voisine dit deja qu'Otto n'a jamais eu le pouvoir d'ecrire le nom d'un prince : les deux se tiennent desormais au lieu de se contredire."
+    },
+    {
+      "table": "intentions",
+      "cible": "borros-baratheon",
+      "operation": "croyance_retirer",
+      "valeur": "Ce qui lui est entre en sept jours, dans l'ordre : la couronne de Rhaenyra et la deposition d'un manteau blanc le vingt-et-unieme, l'acte scelle de la reine le vingt-quatrieme, la decheance a prix d'enfants le vingt-septieme. Et lord Otto Hightower loge sous son toit depuis le DIX-SEPTIEME jour sans avoir encore ecrit un seul nom : celui qui est la depuis onze jours n'a rien de plus a offrir qu'il n'ait deja offert.",
+      "pourquoi": "Cette croyance fait loger LORD OTTO EN PERSONNE sous le toit d'Accalmie depuis le 3.17, ce qui contredit frontalement personnages.json et sa presence de temoin a Port-Real le 3.23. Meme residu de confusion que pour le corbeau. Ses deux filles, elles, ont toujours dit LES GENS DE LORD OTTO : ce sont elles qui avaient raison, et depuis le debut."
+    },
+    {
+      "table": "intentions",
+      "cible": "borros-baratheon",
+      "operation": "croyance_ajouter",
+      "valeur": "Ce qui lui est entre en sept jours, dans l'ordre : la couronne de Rhaenyra et la deposition d'un manteau blanc le vingt-et-unieme, l'acte scelle de la reine le vingt-quatrieme, la decheance a prix d'enfants le vingt-septieme. Et l'AMBASSADE de lord Otto Hightower loge sous son toit depuis le DIX-SEPTIEME jour sans avoir encore ecrit un seul nom : vingt-trois jours de son vin bu par des hommes qui n'ont meme pas le mandat de nommer une de ses filles. Lord Otto n'est pas venu lui-meme, et Borros le compte aussi.",
+      "pourquoi": "Le fait est conserve entier, la personne est corrigee — et la correction AGGRAVE le grief au lieu de l'adoucir. C'est la bonne facon de reparer une croyance sans desarmer un homme : il entre dans le 10e plus offense qu'avant, pas moins."
+    }
+  ],
+  "applique_le": "2026-08-31T04:57:16"
+}

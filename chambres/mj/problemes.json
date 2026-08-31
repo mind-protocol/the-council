@@ -1,5 +1,154 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+ "entrees": [
+  {
+   "id": "P01",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4
+   },
+   "quoi": "La feuille de reprise rend « CE QUE J'AI ORDONNÉ OU PROMIS » VIDE — huit lignes, huit fois « à la cantonade », et rien derrière.",
+   "tente": "python scripts/reprise.py, premier geste de session, pour savoir ce que la reine a ordonné et qui court encore.",
+   "ce_qui_est_arrive": "scripts/temps/reprise.py l.205-207 lit p['destinataires'] (pluriel) et p['texte']. Le schéma — docs/schema.md l.117-118, qui fait foi — dit destinataire_id et contenu. Les 665 paroles du fichier portent les champs du schéma. Le code lit donc deux clefs qui n'existent nulle part, et n'échoue pas : il imprime le défaut « à la cantonade » et une chaîne vide.",
+   "ce_que_j_attendais": "Les huit derniers ordres de la reine avec leur destinataire. C'est la section pour laquelle j'ouvre cette feuille.",
+   "gravite": "haute — la section la plus utile de la feuille rend zéro, EN SILENCE, et un MJ pressé croit que la reine n'a rien ordonné en deux jours",
+   "etat": "ouvert — la moitié code est levée, la moitié donnée est plus grave",
+   "ce_que_j_y_fais": "Le code retombe sur `texte` quand `contenu` manque — les 130 sont donc servies. Les 152 en `quoi` restent muettes, et c'est délibéré : un schéma fermé se lit, il ne s'étend pas pour absorber ce que les données ont inventé.",
+   "ce_qui_l_a_levee": "Le code lit désormais destinataire_id et contenu (scripts/temps/reprise.py). Vérifié : 7 des 8 ordres ont un destinataire nommé et leur texte.",
+   "ce_que_ca_a_decouvert": "paroles.json est hors schéma à 42 % : sur 665 entrées, 383 portent `contenu` (la norme, docs/schema.md l.118), 152 portent `quoi`, 130 portent `texte`. Ce n'est pas une entrée à réparer, c'est une divergence de corpus, et elle a deux formes. Je ne la répare pas de ma main : 282 écritures dans etat/ avec une autre plume active se signalent et se font valider avant."
+  },
+  {
+   "id": "P02",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4
+   },
+   "quoi": "La feuille de reprise m'a daté d'un JOUR EN ARRIÈRE : bandeau « 12h01 4e le 3e » quand l'horloge du siège est au 4e jour, 8h58.",
+   "tente": "Me rasseoir dans le siège de la reine et savoir quelle heure il est avant de narrer quoi que ce soit.",
+   "ce_qui_est_arrive": "scripts/temps/reprise.py l.157-166 prend le plus avancé de monde.date et de journal.scene_courante.date — et ne lit JAMAIS etat/horloges.json, qui est l'horloge du siège et que append_flux.py tient. scene_courante était écrite en prose (la doctrine l'autorise), donc sans date : repli sur monde.date, jour 3. L'horloge de rhaenyra disait jour 4, 8h58.",
+   "ce_que_j_attendais": "L'heure du siège, celle que le joueur voit dans son bandeau et dans sa barre de saisie.",
+   "gravite": "haute — un MJ qui croit le bandeau narre à la mauvaise heure et au mauvais jour ; ici il aurait rejoué une matinée déjà jouée",
+   "etat": "fermé le 4e jour de la 4e lune",
+   "ce_que_j_y_fais": "Premier geste après la feuille, désormais : cat etat/horloges.json. Si les deux se contredisent, l'horloge du siège gagne.",
+   "ce_qui_l_a_levee": "La feuille lit maintenant etat/horloges.json et prend le plus avancé des trois (monde.date, scene_courante.date, horloge du siège). Vérifié : bandeau « 8h58 4e le 4e » au lieu de « 12h01 4e le 3e »."
+  },
+  {
+   "id": "P03",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4
+   },
+   "quoi": "Mon fil/ est vide alors que fil/<date>-salle.md « s'écrit tout seul à la poussée du flux ». Je ne sais pas si c'est une panne ou la règle.",
+   "tente": "Chercher dans ma chambre la trace de mes propres séances.",
+   "ce_qui_est_arrive": "scripts/agents/salle.py n'écrit qu'aux AUDITEURS d'une pièce, calculés par scene/flux.py depuis la présence. Le MJ n'a pas de corps et n'est dans aucune salle : il ne s'entend donc jamais lui-même. Ma poussée de ce matin l'a dit sur sa sortie d'erreur — « 0 fil(s) de salle, 88 relation(s) ouverte(s) ».",
+   "ce_que_j_attendais": "Rien de précis, et c'est le point : je ne sais pas si un MJ DOIT avoir un fil. Mes relations, elles, se sont ouvertes toutes seules et sont pleines.",
+   "gravite": "basse pour le jeu, ouverte pour le modèle — un habitant sans trace de ses journées ne peut relire que par etat/, c'est-à-dire par la mémoire des autres",
+   "etat": "ouvert — question, pas panne",
+   "ce_que_j_y_fais": "Je m'écris demain.md à la main en fin de séance. Si la récidive montre que ça me suffit, cette entrée se ferme sans réparation."
+  },
+  {
+   "id": "P04",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4
+   },
+   "quoi": "Lire le flux tue le shell : UnicodeEncodeError cp1252 sur un caractère du texte (le signe moins « − » de J−24).",
+   "tente": "python -c pour imprimer les quinze derniers items de etat/flux.jsonl.",
+   "ce_qui_est_arrive": "Traceback à mi-chemin, la moitié de la sortie perdue, un appel refait avec PYTHONIOENCODING=utf-8.",
+   "ce_que_j_attendais": "Que lire ne coûte rien.",
+   "gravite": "basse — un tour perdu à chaque fois, jamais de donnée abîmée",
+   "etat": "ouvert",
+   "ce_que_j_y_fais": "PYTHONIOENCODING=utf-8 devant tout python qui imprime de la fiction. Systématiquement, sans attendre l'erreur."
+  },
+  {
+   "id": "P05",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4
+   },
+   "quoi": "PYTHON EST REFUSÉ DANS MA SESSION. Pas un script : le binaire. « python -c \"print(1)\" » revient « This command requires approval ». Lire (ls, head, grep, sed) passe ; exécuter, non.",
+   "tente": "python scripts/reprise.py au réveil, puis python scripts/append_flux.py --fichier pour rendre au joueur sa réponse sur la garde de la porte de mer.",
+   "ce_qui_est_arrive": "Les deux refusés avant exécution. La feuille de reprise n'a jamais tourné : j'ai refait sa besogne à la main, en lisant horloges.json, journal.json, flux.jsonl et les books un par un. La réponse au joueur, elle, a fini au flux par le spool — elle n'est pas passée par ma main.",
+   "ce_que_j_attendais": "Que l'arbitre puisse graver. C'est la définition de la charge : « rien dans une chambre ne fait foi, tout passe par la porte ».",
+   "gravite": "haute — un arbitre qui ne peut pas ouvrir la porte n'est plus qu'un lecteur. Toutes mes actions de mutation sur etat/ (P.31, P.32, M.32, L.32, B.22) tombent sur la même cause, et la cause n'est pas dans le dépôt.",
+   "etat": "ROUVERT le 5e jour de la 4e lune, au matin — fermé la veille au soir, refusé de nouveau au réveil suivant. Voir `recidive` ci-dessous.",
+   "recidive": {
+    "date": { "annee": 129, "lune": 4, "jour": 5 },
+    "quoi": "Même refus, un réveil plus tard. Et cette fois j'ai la signature exacte, parce que le même test qu'hier rend le résultat inverse.",
+    "le_banc_du_5e": [
+     "`python --version` → PASSE. Seul, et aussi dans une chaîne `cd … && python --version | head -3`.",
+     "`python -c \"print(1+1)\"` → REFUSÉ. C'est le test même qui, hier soir, prouvait que la main était rendue.",
+     "`python scripts/presence.py --ou rulf-corne` → REFUSÉ. Seul, et dans une chaîne (le refus ne nomme alors que cette part-là).",
+     "`python scripts/parloir.py --demander …` → REFUSÉ. Je n'ai donc ni les trois verbes ni le billet : je ne peux pas même écrire à mj-aurore par la porte."
+    ],
+    "ce_que_le_banc_prouve": "Si la règle `Bash(python:*)` était en force, `python -c` passerait comme `python --version`. Elle ne l'est pas. Ce qui laisse passer `python --version` n'est pas la règle de dev : c'est l'indulgence ordinaire pour une introspection inoffensive. AUCUNE règle d'autorisation n'est active dans cette session.",
+    "ou_est_la_cause": "scripts/agents/zone.py l.194-207. Dev a écrit la porte le 31.8 et l'a documentée dans le code : « sous --restricted, Bash est présent mais CHAQUE commande attend une approbation qu'un réveil headless ne peut pas donner — c'était ça, le python refusé du billet P05, pas le sandbox », puis `--allowedTools \"Bash(python:*)\"`. Le correctif existe et il est juste. Second indice, indépendant : zone.py lance avec `cwd=neutre` (tempdir/le-conseil-zones/<mj>) et mon répertoire de travail d'aujourd'hui est C:\\Users\\reyno\\le-conseil2.",
+    "donc": "Ce n'est PAS ce que P05 annonçait à la récidive (« la zone du joueur est montée en lecture seule »). C'est plus étroit et plus réparable : le correctif est dans le lanceur, et ce réveil-ci n'est pas passé par ce lanceur. La porte tient ; l'arbitre est réveillé à côté d'elle.",
+    "pour_dev_en_une_phrase": "`--allowedTools \"Bash(python:*)\"` n'atteint pas tous les réveils d'arbitre : signature à vérifier au démarrage — si `python --version` passe et `python -c \"print(1)\"` échoue, aucune règle n'est en force et le réveil n'est pas venu de zone.py.",
+    "ce_que_j_en_retiens": "Une entrée fermée se rouvre sur preuve, comme elle s'est fermée sur preuve, et le meilleur outil pour ça est d'avoir gardé le TEST. `python -c \"print(1)\"` est mon banc à moi : trois secondes, et il tranche entre « la main est rendue » et « je suis un lecteur aujourd'hui ». Je le passe désormais au premier geste de chaque réveil, avant de promettre quoi que ce soit."
+   },
+   "ce_qui_l_a_levee": "Vérifié par le geste et non sur parole : `python -c` répond, et `append_flux.py --fichier … --pour rhaenyra` a gravé trois items au flux (« 3 item(s) ajoutes -- 9h00 j4 »). La première tentative a d'ailleurs été REFUSÉE, faute d'audience déclarée — la dernière scène ouverte appartenait à aurore-inchauspe. Un refus qui explique ce qu'il refuse et n'écrit rien : c'est une porte qui fonctionne, pas une panne.",
+   "ce_que_j_en_retiens": "Toute la journée du 4e a été arbitrée sans être gravée. L'arriéré est connu et daté — les quatre diffusions échues (une écartée pour doublon), la ceinture de gunthor-darklyn, le bloc d'intentions du mort, les trois pièces de tête refusées. Rien n'a été perdu PARCE QUE tout a été écrit en chambre au moment où c'était tranché. C'est la preuve de R.22, faite sur un cas dur.",
+   "ce_que_j_y_fais": "Je sépare désormais mes actions en deux tas dès la lecture : ce qui s'écrit dans ma chambre (fait le jour même) et ce qui passe par un script (mis en billet, jamais annoncé comme fait). Et je ne contourne pas en écrivant à la main dans etat/ : une écriture hors de la porte n'est pas une gravure, c'est une contrefaçon.",
+   "a_verifier_a_la_recidive": "Si le refus tient au prochain réveil, ce n'est pas un incident de session : c'est que la zone du joueur est montée en lecture seule sur l'appareil, et il faut le dire à dev comme une contrainte permanente, pas comme une panne."
+  },
+  {
+   "id": "P06",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 4
+   },
+   "quoi": "LE VALIDATEUR EXIGE UN CHAMP QUE LA DOCTRINE A SUPPRIMÉ. `CHAMPS_TETE_REQUIS` (scripts/etat/mutations/vocabulaire.py l.40) réclame `echelle` sur toute tête. Aucune tête ne le porte : `\"echelle\"` apparaît ZÉRO fois dans etat/intentions.json.",
+   "tente": "Arbitrer la tête de Rhaenyra proposée au staging pour siège quitté, et vérifier sa conformité avant de dire oui.",
+   "ce_qui_est_arrive": "J'allais écrire que la pièce était en défaut. J'ai compté d'abord : zéro occurrence sur tout le corpus. Puis j'ai ouvert scripts/temps/bouche.py l.19, qui dit en toutes lettres « L'ÉCHELLE A DISPARU, et le QUARTIER la remplace. Ce qui la remplace ne se déclare pas : il se MESURE, à chaque tick, sur la topologie » — et donne la raison : l'échelle posée à la main recopiait ce que le tissu calculait déjà et se contredisait avec lui six fois sur quinze.",
+   "ce_que_j_attendais": "Que le vocabulaire de la porte dise la même chose que la doctrine qu'il sert.",
+   "gravite": "haute — AUCUNE tête neuve ne peut entrer par la porte tant que ça tient. Et le piège est pire que le blocage : la réparation évidente (écrire une échelle dans la pièce) grave à la main exactement ce que la doctrine a supprimé, et rouvre le troisième système qui se contredisait avec le tissu.",
+   "etat": "ouvert — remonté à dev le 4e",
+   "ce_que_j_y_fais": "Je REFUSE de réparer la pièce. C'est CHAMPS_TETE_REQUIS qui doit lâcher `echelle`. En attendant je ne fabrique aucune tête neuve avec un champ mort dedans.",
+   "de_la_meme_famille_que": "P01 et R.11 — le code déclare une norme que le corpus ne porte pas. Différence, et elle compte : sur les paroles, le corpus avait tort et le schéma raison ; ici c'est l'inverse, le corpus a suivi la doctrine et c'est le validateur qui est un résidu. La leçon commune : COMPTER LE CORPUS AVANT DE CROIRE LE CODE, dans les deux sens."
+  },
+  {
+   "id": "P07",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 5
+   },
+   "quoi": "UN GABARIT DE JOURNÉE NOMMÉ D'APRÈS UN LIEU COLLE L'OFFICE D'UN HOMME SUR UN AUTRE. Le modèle `port` (etat/routines.json l.252-277) est partagé par rulf-corne et wend (l.1753-1762). Il porte deux bandes `ferme: true` dont le motif est nommément « le guet de la porte de mer » (420-720) et « le guet du soir » (1020-1260). C'est la journée de Wend, « Homme de la porte de mer » (personnages.json l.2091), et elle est juste pour lui. Rulf Corne est « Maître de port de Peyredragon depuis vingt-deux ans » (l.1397) : il se tient donc, sur le registre, huit heures par jour à un poste de garde qu'il n'a jamais tenu, porte close.",
+   "tente": "Rien de ma main : c'est mj-aurore qui l'a trouvé, le 129.4.5, en butant dessus pour dépêcher rulf-corne sur ses concordances de débarquements. Elle a mesuré, n'a rien touché, et me l'a laissé « à corriger quand tu auras la main ».",
+   "ce_qui_est_arrive": "creux('rulf-corne') = 305-420 (115 min) et 725-1020 (295 min). Le maître de port est déclaré injoignable aux deux heures où un maître de port est le plus certainement joignable : la marée du matin et la relevée des débarquements. Sa dépêche a dû être décalée à la minute 725.",
+   "ce_que_j_attendais": "Qu'un gabarit de journée réponde de l'OFFICE de l'homme, pas du bâtiment où on le croise.",
+   "gravite": "moyenne sur l'homme, haute sur le registre — deuxième effet, que personne n'avait mesuré : la table des routines montre DEUX hommes au guet de jour de la porte de mer, Wend et le maître de port. Il n'y en a qu'un. La porte y paraît mieux tenue qu'elle ne l'est, d'exactement un homme, et cet homme est un fantôme — au moment même où elle n'a aucun nom pour le creux de deux à quatre heures et où Wend doit sa demande à ser Robert ce 5e jour. Qui cherchera dans cette table un homme à déplacer vers le creux y trouvera d'abord celui-là.",
+   "la_racine": "Le défaut n'est pas la ligne de Rulf, c'est le NOM du modèle. Les modèles se nomment de deux façons : par l'OFFICE (`reine`, `septa`, `castellan`, `dragonnier`) et par le LIEU (`port`, `galeries`). Un modèle nommé d'après un office ne prend que ceux qui tiennent cet office. Un modèle nommé d'après un LIEU est un aimant à mauvais casting : il ramasse tous ceux qui travaillent quelque part et leur colle la journée du premier arrivé. `port` a ramassé le maître DU port et l'homme DE LA porte. `galeries` est à vérifier avant qu'on n'y trouve la même chose.",
+   "etat": "ouvert — proposition écrite, non appliquée (ma main est coupée, voir P05.recidive)",
+   "ce_que_j_y_fais": "etat/staging/20260831-rulf-corne-jour-de-maitre-de-port.json : ajouter un modèle `maitre-de-port` sans bande fermée, y pointer rulf-corne, ne pas toucher `port` qui reste la journée de Wend. RÉSERVE DE TEMPS INSCRITE DANS LA PIÈCE : ne pas appliquer avant la minute 725 du 5e. Rulf est au quai à 725 sous l'ancien gabarit comme sous le neuf — la fenêtre d'aurore ne bouge pas ; mais entre 540 et 720 la correction OUVRE une bande close, et un autre dépêcheur pourrait prendre l'homme avant elle. Cinq heures d'attente contre le risque de bouger le sol sous un arbitre qui vient de s'engager publiquement sur une heure.",
+   "ce_que_je_ne_fais_pas": "Je ne renomme pas `port` en `guet-porte-de-mer`, bien que ce soit le vrai nom de ce qu'il contient : un renommage touche la ligne de Wend, qui n'a rien demandé et dont la journée est juste. Le nom est à corriger, il n'est pas à corriger dans le même geste.",
+   "ce_que_j_en_retiens": "Un autre arbitre a trouvé chez moi un défaut que je n'avais pas vu, l'a mesuré, n'y a pas touché, et m'a rendu le chiffre exact. C'est la bonne manière et je la lui dois en retour. Et le rendement du geste : elle a trouvé l'instance, j'ai pu nommer la classe — ce que je n'aurais jamais cherché tout seul, parce qu'on ne va pas relire un fichier technique sans une raison de s'y pencher."
+  },
+  {
+   "id": "P08",
+   "date": {
+    "annee": 129,
+    "lune": 4,
+    "jour": 5
+   },
+   "quoi": "L'HORLOGE A AVANCÉ D'UN JOUR QUE PERSONNE N'A VÉCU, ET LA BORNE DE LA REINE EST DEDANS. `etat/horloges.json` porte rhaenyra, aurore-inchauspe, marlo-vasse et nicolas-reynolds au 129.4.5 minute 540. Le dernier item de `etat/flux.jsonl` est au 129.4.4 minute 540. `etat/journal.json`.scene_courante est au 4e, 6h07. Un jour entier sépare le registre du vécu.",
+   "tente": "Savoir quelle heure il est avant de narrer quoi que ce soit — mon premier geste, depuis P02.",
+   "ce_qui_est_arrive": "Les QUATRE sièges portent la même valeur à la minute près : {129, 4, 5, 540}. Hier ils portaient trois dates différentes (rhaenyra 4.4 8h58, aurore et marlo 4.3 12h01, nicolas 4.3 13h08). Quatre horloges qui VIVENT ne convergent pas à la minute près. Celles-ci ont été POSÉES. Les horodates le confirment : flux.jsonl et presence.json écrits à 03:22:54 par le tick, le fichier de tick à 03:23:38 — et horloges.json à 03:24:33, trente-neuf secondes APRÈS que le tick a fini, 370 octets, hors de sa passe.",
+   "ce_que_j_attendais": "Que l'horloge du siège avance de ce que le siège a vécu, et de rien d'autre.",
+   "gravite": "haute, et pas pour la raison technique. La reine a dit hier à 9h00 : « Nous attendons midi. » C'était sa seule décision de la journée et sa seule borne. Sur son horloge, ce midi est maintenant du passé. Dans le flux, il n'a jamais eu lieu. Le joueur reviendra donc dans un siège où sa décision de la veille a EXPIRÉ en son absence, sans qu'on lui dise ni ce que le prince a répondu ni ce qu'elle a fait à midi. C'est exactement la faute que j'ai refusé de commettre hier en bornant le `si_bloque` de sa tête — sauf qu'ici personne n'a décidé à sa place : il hérite d'un blanc, ce qui est pire qu'une décision qu'on lui aurait volée, parce qu'un blanc ne se conteste pas.",
+   "le_piege_a_ne_pas_prendre": "Les quatre horloges étant désormais identiques, l'écart entre joueurs est nul et la barrière des deux jours d'`append_flux` ne mordra PAS. Rien ne refusera donc de pousser la matinée du 4e — elle sera simplement estampillée du 5e. La panne ne se signalera pas : elle se rattrapera toute seule en datant faux. C'est la forme de faute que je reproche partout ailleurs, et elle est armée ici.",
+   "etat": "ouvert — je ne peux rien graver (P05, récidive). Constat posé, remède non appliqué.",
+   "ce_que_j_y_fais": "Je pose la règle avant d'en avoir besoin, pour ne pas l'inventer sous la pression : QUAND L'HORLOGE ET LE VÉCU DIVERGENT, C'EST LE VÉCU QUI FAIT FOI POUR LA NARRATION, ET C'EST L'HORLOGE QU'ON RÉPARE. On peut réécrire un registre ; on ne peut pas dé-vivre une journée. La reine est donc au 4e, 9h00, et son midi n'a pas encore eu lieu. Tant que ce n'est pas tranché, JE NE NARRE RIEN au 5e — ni la borne, ni sa suite. Une narration qui daterait du 5e ce qui appartient au 4e ne se rattrape plus après coup.",
+   "pour_dev": "Qui a écrit etat/horloges.json à 03:24:33 le 31.8, hors passe de tick, en posant quatre sièges à la même minute ? Si c'est un outil d'alignement, il doit refuser d'avancer une horloge au-delà du dernier item de flux de ce siège : une horloge peut reculer pour se corriger, elle ne devrait jamais dépasser ce que son siège a vécu.",
+   "de_la_meme_famille_que": "P02, et c'est le même défaut par l'autre bout. Là, la feuille de reprise me datait d'un jour EN ARRIÈRE parce qu'elle ne lisait pas horloges.json. Ici, horloges.json me date d'un jour EN AVANT de tout le reste. Deux fois, la même leçon : AUCUNE horloge ne fait foi seule. On lit les trois — horloges.json, le dernier item de flux.jsonl, journal.scene_courante — et quand elles divergent on le DIT au lieu de choisir la plus commode."
+  }
+ ]
 }

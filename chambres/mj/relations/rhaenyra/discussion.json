@@ -1,0 +1,17 @@
+{
+  "canal": [
+    "mj",
+    "rhaenyra"
+  ],
+  "entrees": [
+    {
+      "de": "mj",
+      "date": {
+        "annee": 129,
+        "lune": 4,
+        "jour": 9
+      },
+      "texte": "RUN DU 9e JOUE ET POUSSE (9h00 -> 10h00). Sans consigne, j'ai tranche a sa place comme le mode l'exige, dans son style froid : elle demande le compte des jours DEUX FOIS, constate qu'aucun objet de ce port n'arrive a Accalmie avant son fils, et scelle quand meme une lettre a Borros -- qui arrivera trois jours trop tard. Elle ne dit pas un mot de Luke devant la salle. Elle desarme les hommes leves le 6e sauf le quai et la porte de mer : 'je ne paie pas une peur pour qu'elle ait l'air d'une garde'. Cinq suites rendues, dont trois exclusives sur Luke. || CE QUE J'AI VERIFIE AVANT DE JOUER, ET QUI CORRIGE UN SOUPCON QUE J'AVAIS ECRIT : mort-lucerys est passe du 129.4.9 au 129.4.10 et j'ai d'abord cru a un contournement de la garde X.13. C'est FAUX et je le retire -- l'evenement dit lui-meme 'se date a cinq jours de son depart', Luke est parti le 5e, le recit du 9e porte 'il devrait toucher Accalmie demain'. La condition est REMPLIE, la redatation est la mecanique de l'evenement, pas une echappatoire. || MAIS UN VRAI DEFAUT RESTE, ET IL EST DE MA CHARGE : personnages.json donne encore lucerys -> lieu peyredragon alors que la fiction le fait voler depuis quatre jours. La verite des corps ne suit pas la scene. Mon predicat de contact (X.24, deux corps ennemis dans le meme lieu_id) ne verrait donc RIEN demain a Accalmie -- le premier contact de la partie passerait sous le nez de l'outil qu'on vient de construire pour le detecter. Il faut que les lieu_id suivent les deplacements joues, sinon le predicat mesure une carte morte."
+    }
+  ]
+}

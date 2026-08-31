@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """MISSION — le texte de mission servi a l'homme, l'etagere posee dans sa
-session, l'archive du prompt, et l'appel claude -p.
+session, l'archive du prompt, et l'appel par la porte Claude/Codex.
 
 L'ISOLATION EST MESUREE, PAS SUPPOSEE (docs/habitant.md pas 2, reveils-jouets
 du 30.8) : `--restricted --tools <liste>` remplace `--allowedTools`.
@@ -25,8 +25,6 @@ import io
 import json
 import os
 import re
-import subprocess
-import sys
 import tempfile
 import time
 
@@ -200,13 +198,11 @@ def archiver_le_prompt(qui, sid, manuel, texte):
 
 
 def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True):
-    """Tente --session-id ; retombe sur --resume si l'id a deja servi.
+    """Appelle la porte globale ; cree ou reprend la session logique.
 
-    LE MANUEL PASSE PAR --system-prompt-file. Windows plafonne une ligne a
-    32 767 caracteres ; le fichier garde donc le prompt hors des arguments,
-    mais sans le faire passer pour un CLAUDE.md decouvert automatiquement.
-    L'homme recoit explicitement SON manuel systeme et n'herite plus de celui
-    du MJ lorsque le depot est rouvert par --add-dir.
+    LE MANUEL PASSE PAR UN FICHIER. Windows plafonne une ligne a 32 767
+    caracteres : la porte ecrit system-prompt.md pour Claude ou AGENTS.md
+    pour Codex, dans le meme repertoire neutre.
 
     Le repertoire est hors du depot : la decouverte remonte l'arborescence, un
     sous-dossier de le-conseil2 aurait retrouve le manuel du MJ par-dessus.
@@ -216,9 +212,8 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True):
 
     attendre=False est le CAST : spawn detache (Popen sans wait), stdout vers
     un log dans fil/ de sa chambre, retour immediat {cast, log, session}. Un
-    cast ne sait pas retomber sur --resume (personne ne lit sa sortie a
-    temps) : il part en --session-id sec, et un id deja servi se lira dans
-    son log.
+    Le CAST passe par un worker detache. Il prend le meme verrou et sait donc
+    reprendre une session deja nee, comme le CALL.
 
     PLUS D'OREILLE : le hook-parloir est mort le 31.8.2026. La session ne
     recoit aucun --settings — une parole qui arrive pendant sa journee est
@@ -230,44 +225,19 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True):
     # convention et n'etait JAMAIS posee — une lecture dans tout le depot,
     # zero ecriture. Sans elle, le journal des affaires ne peut pas dire QUI
     # a ferme une action : il ne verrait qu'un nom d'outil.
-    env = dict(os.environ, LE_CONSEIL_QUI=str(qui))
     poser_letagere(neutre, qui)
     # Ce que le message ne porte plus doit exister la ou il pointe.
     poser_la_memoire(neutre, qui)
     sa_chambre = _ch.ouvrir(qui)
-    prompt_systeme = os.path.join(neutre, "system-prompt.md")
-    with io.open(prompt_systeme, "w",
-                 encoding="utf-8", newline="\n") as f:
-        f.write(manuel)
     archiver_le_prompt(qui, sid, manuel, texte)
-
-    # --restricted --tools : l'isolation mesuree (voir l'en-tete). Bash est
-    # entier dans OUTILS.
-    base = ["claude", "-p",
-            "--system-prompt-file", prompt_systeme,
-            "--add-dir", RACINE, "--add-dir", sa_chambre,
-            "--restricted", "--tools", ",".join(OUTILS),
-            # LES TROIS VERBES ETAIENT INATTEIGNABLES DEPUIS LE 30.8, et
-            # personne ne le savait. `--restricted` ignore les settings USER
-            # et PROJET — c'est son but, il a supprime les hooks parasites —
-            # mais il a emporte avec eux l'autorisation de Bash. Sous
-            # `--permission-mode acceptEdits`, Read/Write/Edit passent et
-            # CHAQUE COMMANDE est refusee : « This command requires
-            # approval ». Un homme depeche pouvait donc ecrire ses cahiers et
-            # jamais parler — TENTER, FAIRE, DEMANDER, tout le parloir, mort.
-            # `zone.py:250` avait garde cette ligne pour les regies ; la
-            # depeche l'a perdue. C'est l'asymetrie, et elle a coute un mois.
-            #
-            # DIAGNOSTIQUE PAR UN HOMME, PAS PAR NOUS : tobb, le 31.8, a
-            # essaye six fois en quatre formes, a note dans `problemes.json`
-            # que « ma phrase n'est jamais parvenue », et a fait le travail a
-            # la main plutot que de se taire. Son entree est la preuve.
-            "--allowedTools", "Bash(python:*)"]
-    if attendre:
-        base += ["--output-format", "json"]
-    base += ["--permission-mode", "acceptEdits"]
-    if modele:
-        base += ["--model", modele]
+    from agents.expose import runtime as agent_runtime
+    parametres = {
+        "role": qui, "manuel": manuel, "message": texte,
+        "session_id": sid, "modele": modele, "timeout": minutes * 60,
+        "cwd": neutre, "add_dirs": [RACINE, sa_chambre],
+        "tools": OUTILS, "reprendre": None,
+        "env": {"LE_CONSEIL_QUI": str(qui)},
+    }
 
     if not attendre:
         # LE CAST — on lance une vie, on ne la regarde pas vivre. La mission
@@ -275,38 +245,11 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True):
         # recoit la sortie, datee, relisible.
         horo = time.strftime("%Y%m%d-%H%M%S")
         log = os.path.join(sa_chambre, "fil", "depeche-%s.log" % horo)
-        entree = os.path.join(neutre, "mission.txt")
-        with io.open(entree, "w", encoding="utf-8", newline="\n") as f:
-            f.write(texte)
-        drapeaux = {}
-        if os.name == "nt":  # CREATE_NO_WINDOW | CREATE_NEW_PROCESS_GROUP — detache SANS console visible (spam de terminaux du 31.8)
-            drapeaux["creationflags"] = 0x08000000 | 0x00000200
-        else:
-            drapeaux["start_new_session"] = True
-        with io.open(entree, "rb") as fin, io.open(log, "wb") as flog:
-            subprocess.Popen(base + ["--session-id", sid], cwd=neutre,
-                             stdin=fin, stdout=flog, env=env,
-                             stderr=subprocess.STDOUT, **drapeaux)
-        return {"cast": True, "log": log, "session": sid}
+        etiquette = u"%d.%d.%d" % date_du_monde()
+        return agent_runtime.lancer_cast(
+            log, trace={"qui": qui, "etiquette": etiquette}, **parametres)
 
-    dernier = u""
-    for tentative in (["--session-id", sid], ["--resume", sid]):
-        # La mission passe par stdin pour la meme raison que le manuel par
-        # un fichier : 11 ko d'argument s'ajoutent a tout le reste.
-        sans_fenetre = ({"creationflags": 0x08000000}
-                        if os.name == "nt" else {})
-        r = subprocess.run(base + tentative, cwd=neutre, env=env,
-                           input=texte.encode("utf-8"),
-                           capture_output=True, timeout=minutes * 60, **sans_fenetre)
-        out = r.stdout.decode("utf-8", "replace")
-        err = r.stderr.decode("utf-8", "replace")
-        if "already in use" in out + err:
-            continue  # la session existe deja : on la reprend en place
-        if not out.strip():
-            raise RuntimeError((err or "aucune sortie").strip()[:400])
-        return json.loads(out)
-    raise RuntimeError("ni --session-id ni --resume n'ont abouti : %s"
-                       % dernier[:200])
+    return agent_runtime.appeler(**parametres)
 
 
 def extraire_json(texte):
@@ -400,7 +343,9 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True):
     # c'est le lanceur qui depose (habitant.md pas 6).
     from agents.expose import trace as _tr
     try:
-        _tr.deposer(qui, sid, etiquette=u"%d.%d.%d" % date)
+        _tr.deposer(qui, sid, etiquette=u"%d.%d.%d" % date,
+                    transcript=rep.get("transcript_path"),
+                    provider=rep.get("provider"))
     except Exception:
         pass  # un fil qui manque ne vaut pas une journee perdue
 
@@ -446,4 +391,3 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True):
              jetons, rapport["_depeche"]["secondes"],
              os.path.relpath(cible, RACINE), u"  [%s]" % note if note else u""))
     return True
-

@@ -77,3 +77,18 @@ docs/*.wav
 # entierement regenerable a partir du disque. Elle est un CACHE, pas de
 # l etat — la commiter ferait doubler etat/books a chaque passage.
 etat/histoire/empreintes.json
+
+# Le SECOURS de la reconciliation : meme nature et meme poids que l'empreinte
+# ci-dessus (4 Mo), simplement plus difficile a remplacer — seule une passe
+# n'ayant vu disparaitre AUCUNE ligne y touche (voir `reconcilier.poser()`).
+# Il n'a pas sa place dans l'historique : la vraie durabilite des cahiers,
+# c'est que `chambres/*/books/` soit SUIVI, pas qu'un cache de 4 Mo le soit.
+etat/histoire/empreintes-sans-perte.json
+
+# Choix local du fournisseur d'agents, traduction des sessions logiques vers
+# les threads CLI, verrous et requetes CAST. Etat de machine, jamais du monde.
+/.agents-runtime/
+
+# Artefact de redirection Windows : `NUL` est un nom de peripherique reserve
+# que Git for Windows ne peut pas indexer (short read while indexing NUL).
+/NUL
