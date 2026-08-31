@@ -123,11 +123,16 @@ def rendre(args, titre):
         for c in lignes.values():
             somme.update(c)
         total.update(somme)
-        faites = somme.get("faite", 0)
-        n = sum(somme.values())
-        print(u"  %-16s %3d affaire(s) · %4d action(s) · %3d faite(s) (%d %%)"
-              % (maison, len(lignes), n, faites,
-                 round(100.0 * faites / n) if n else 0))
+        # PAS DE POURCENTAGE D'AVANCEMENT, ET C'EST DELIBERE. Il n'en existe
+        # pas ici : le denominateur grossit tout seul (la boucle cree des
+        # actions en continu — une a ete captee pendant qu'on ecrivait ce
+        # module), « a faire » compte du travail jamais commence, et les
+        # etats sales ou desalignes le corrompent. Un chiffre dont la hausse
+        # ne ferait rien decider est du decor. On rend les comptes bruts.
+        print(u"  %-16s %3d affaire(s) · %4d action(s) · %s"
+              % (maison, len(lignes), sum(somme.values()),
+                 u" · ".join(u"%s %d" % (k, v)
+                             for k, v in somme.most_common())))
     print(u"  %-16s %s" % (u"tout",
           u" · ".join(u"%s %d" % (k, v) for k, v in total.most_common())))
     if sales:
