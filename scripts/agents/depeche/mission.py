@@ -246,7 +246,23 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True):
     base = ["claude", "-p",
             "--system-prompt-file", prompt_systeme,
             "--add-dir", RACINE, "--add-dir", sa_chambre,
-            "--restricted", "--tools", ",".join(OUTILS)]
+            "--restricted", "--tools", ",".join(OUTILS),
+            # LES TROIS VERBES ETAIENT INATTEIGNABLES DEPUIS LE 30.8, et
+            # personne ne le savait. `--restricted` ignore les settings USER
+            # et PROJET — c'est son but, il a supprime les hooks parasites —
+            # mais il a emporte avec eux l'autorisation de Bash. Sous
+            # `--permission-mode acceptEdits`, Read/Write/Edit passent et
+            # CHAQUE COMMANDE est refusee : « This command requires
+            # approval ». Un homme depeche pouvait donc ecrire ses cahiers et
+            # jamais parler — TENTER, FAIRE, DEMANDER, tout le parloir, mort.
+            # `zone.py:250` avait garde cette ligne pour les regies ; la
+            # depeche l'a perdue. C'est l'asymetrie, et elle a coute un mois.
+            #
+            # DIAGNOSTIQUE PAR UN HOMME, PAS PAR NOUS : tobb, le 31.8, a
+            # essaye six fois en quatre formes, a note dans `problemes.json`
+            # que « ma phrase n'est jamais parvenue », et a fait le travail a
+            # la main plutot que de se taire. Son entree est la preuve.
+            "--allowedTools", "Bash(python:*)"]
     if attendre:
         base += ["--output-format", "json"]
     base += ["--permission-mode", "acceptEdits"]
@@ -263,8 +279,8 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True):
         with io.open(entree, "w", encoding="utf-8", newline="\n") as f:
             f.write(texte)
         drapeaux = {}
-        if os.name == "nt":  # DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP
-            drapeaux["creationflags"] = 0x00000008 | 0x00000200
+        if os.name == "nt":  # CREATE_NO_WINDOW | CREATE_NEW_PROCESS_GROUP — detache SANS console visible (spam de terminaux du 31.8)
+            drapeaux["creationflags"] = 0x08000000 | 0x00000200
         else:
             drapeaux["start_new_session"] = True
         with io.open(entree, "rb") as fin, io.open(log, "wb") as flog:
@@ -277,9 +293,11 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True):
     for tentative in (["--session-id", sid], ["--resume", sid]):
         # La mission passe par stdin pour la meme raison que le manuel par
         # un fichier : 11 ko d'argument s'ajoutent a tout le reste.
+        sans_fenetre = ({"creationflags": 0x08000000}
+                        if os.name == "nt" else {})
         r = subprocess.run(base + tentative, cwd=neutre, env=env,
                            input=texte.encode("utf-8"),
-                           capture_output=True, timeout=minutes * 60)
+                           capture_output=True, timeout=minutes * 60, **sans_fenetre)
         out = r.stdout.decode("utf-8", "replace")
         err = r.stderr.decode("utf-8", "replace")
         if "already in use" in out + err:
