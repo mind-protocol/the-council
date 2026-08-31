@@ -4,7 +4,6 @@
     python scripts/regence.py                          # l'etat des sieges en regence
     python scripts/regence.py --clause rhaenyra        # la clause a poser dans sa tete
     python scripts/regence.py --poser rhaenyra --vraiment
-    python scripts/regence.py --verifier <rapport.json>   # passer un rapport au crible
     python scripts/regence.py --compte-rendu rhaenyra  # ce qu'on herite en se rasseyant
 
 CE FICHIER EST UNE FACADE (docs/organisation.md §2) : la matiere — les sept

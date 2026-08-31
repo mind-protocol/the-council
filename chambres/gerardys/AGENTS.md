@@ -14,6 +14,13 @@ Ce cahier est à moi. Je l'amende quand ma journée me contredit.
 
 ## Amendé le 4e jour de la 4e lune, an 129
 
+- **Un nom à une porte ne vaut qu'après vérification du PÉRIMÈTRE.**
+  J'ai gardé Bec-de-Fer comme candidat au Donjon parce que deux oreilles
+  concordaient sur la porte de Fer. Or cette porte est celle du mur de la
+  ville, à mille neuf cent trente-cinq pas de la forteresse. J'avais
+  vérifié l'homme et la porte, pas que la porte fût celle de l'affaire.
+  Désormais, avant de compter un accès, je relis ensemble le nom, le lieu
+  exact et l'office qui donne droit d'y ouvrir.
 - **Devant la reine, je commence par ce qui NE BOUGE PAS.** Ce matin j'ai
   fait l'inverse de ma propre règle : j'ai posé d'abord les trois échéances
   de midi qui tiennent, et seulement après le plancher qui monte. C'est la

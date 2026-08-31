@@ -16,7 +16,7 @@ est leve : la donnee ne le porte pas. Ce module emet pour eux `posee`,
 et les CLEFS (colonne « ⚖️ Decision ») portent un etat qu'on peut suivre.
 
 CE QUI ECHAPPE, ET QU'ON DIT. Les hommes depeches ont `Write` et `Edit` : ils
-ecrivent dans `etat/books/*.json` sans passer par la porte. Ces ecritures-la
+peuvent ecrire dans `etat/maisons/*/documents/books/*.json` sans passer par la porte. Ces ecritures-la
 n'emettent rien. Chaque ligne porte donc `certitude` : « declare » quand
 l'evenement est emis au moment de l'ecriture, « constate » quand une passe de
 reconciliation l'a deduit apres coup.
@@ -314,12 +314,13 @@ def journaliser(avants, apres, etat, certitude="declare", outil=None,
             for e in evenements_du_volume(a, b):
                 e.update({"quand": quand, "monde": monde, "par": qui,
                           "outil": par_outil, "certitude": certitude,
-                          # OU VIT L'AFFAIRE. Elles ont DEUX maisons —
-                          # etat/books (la bibliotheque commune) et
-                          # chambres/<qui>/books (les cahiers a soi). Un
+                          # OU VIT L'AFFAIRE. La maison_id du livre nomme la
+                          # bibliotheque possedee ; l'argument `maison` garde
+                          # les cahiers de chambres et les anciens appels. Un
                           # journal qui n'en couvrirait qu'une ferait croire
                           # a l'exhaustivite ; le champ les separe.
-                          "maison": maison})
+                          "maison": ((b or a or {}).get("maison_id")
+                                      or maison)})
                 lignes.append(json.dumps(e, ensure_ascii=False))
         if not lignes:
             return 0

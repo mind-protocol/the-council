@@ -26,7 +26,7 @@
      "cellules": [
       "C.1",
       "Je suis quelqu'un, et de ma main",
-      "Mon cahier ne porte plus seulement ce qu'on disait de moi : ma manière y est écrite à la première personne, un élément de mon histoire est tenu pour vrai par mon arbitre, et mes objectifs sont posés ici.",
+      "Mon cahier porte ma manière à la première personne, un élément de mon histoire étayé par une source accessible, et mes objectifs posés ici.",
       "des phrases de moi dans `claude.md`, et des lignes sous « 🎯 »"
      ]
     },
@@ -42,8 +42,8 @@
      "cellules": [
       "C.3",
       "On sait à qui je parle et de quoi je réponds",
-      "Mon arbitre m'a répondu au moins une fois, et j'ai écrit à un homme qui n'est pas lui.",
-      "deux canaux au moins dans `relations/`"
+      "J'ai cherché une source sans demander au MJ, puis écrit à un homme du monde.",
+      "une source citée et un canal dans `relations/`"
      ]
     }
    ]
@@ -91,10 +91,10 @@
     {
      "cellules": [
       "P.3",
-      "Faire tenir pour vrai un élément de mon histoire",
-      "Un fait de mon passé que rien n'a encore écrit : d'où je viens, à qui je dois quelque chose, ce que j'ai fait avant. Il ne devient vrai que si mon arbitre le tient : `python scripts/parloir.py --faire --de manfryd-rambton --a mj-rosby \"<mon fait, en une phrase>\"`. Un passé que je m'invente seul n'est pas un passé, c'est une note dans mon cahier.",
-      "au parloir",
-      "un `faire` tranché sur mon histoire",
+      "Sourcer un élément de mon histoire",
+      "Chercher ce fait dans une source accessible ou auprès d'une personne qui peut me le rappeler. Sans source, le marquer incertain : ne pas demander au MJ de l'inventer ou de le valider.",
+      "mes sources",
+      "une source nommée, ou l'incertitude écrite",
       "à faire",
       "",
       "",
@@ -156,10 +156,10 @@
     {
      "cellules": [
       "P.8",
-      "Demander à mon arbitre ce que je ne peux pas savoir seul",
-      "`python scripts/parloir.py --demander --de manfryd-rambton --a mj-rosby \"<ma question, avec sa date>\"` — la réponse vient des registres seuls. Une question sans date n'a pas de réponse : « est-ce qu'on a de quoi » ne vaut rien, « est-ce qu'on a de quoi payer six cents bras le premier jour de la quatrième lune » vaut une réponse.",
-      "au parloir",
-      "un verdict revenu dans mon fil",
+      "Chercher ce que je ne sais pas encore",
+      "Ouvrir une source accessible ou écrire à une personne du monde avec une question précise et datée. Si personne ni aucun registre ne répond, conserver l'inconnu au lieu de demander au MJ.",
+      "mes sources ou un canal",
+      "une source citée ou un inconnu écrit",
       "à faire",
       "",
       "",
@@ -169,10 +169,10 @@
     {
      "cellules": [
       "P.9",
-      "Adresser mon premier geste qui engage le monde",
-      "`--tenter` quand je tente et que l'arbitre tranche ; `--faire` quand je propose un changement. `python scripts/parloir.py --tenter --de manfryd-rambton --a mj-rosby \"...\"`. Ce que je fais dans ma chambre n'engage rien : ce qui doit devenir vrai passe par là.",
-      "au parloir",
-      "un `tenter` ou un `faire` tranché",
+      "Accomplir mon premier geste sans permission du MJ",
+      "Faire ce qui est à la portée de mes mains, de mon office et de mon autorité, puis écrire le geste réellement accompli. Si son issue dépend d'un autre ou du hasard, laisser la conséquence en attente sans l'inventer.",
+      "dans le monde",
+      "un geste accompli ou une conséquence en attente",
       "à faire",
       "",
       "",
@@ -182,8 +182,8 @@
     {
      "cellules": [
       "P.10",
-      "Écrire à un homme qui n'est pas mon arbitre",
-      "`python scripts/parloir.py --dire --de manfryd-rambton --a <untel> \"...\"` — le billet le réveille s'il dort, et il le lira à son réveil. Mesure du 31.8 : sur 385 billets, DIX-HUIT seulement vont d'un homme à un autre. Tout le reste passe par une régie, et ce n'est pas ce qu'on veut.",
+      "Écrire à un homme du monde",
+      "`python scripts/parloir.py --dire --de <moi> --a <untel> \"...\"` — la parole et l'enquête passent par les habitants, jamais par le MJ.",
       "au parloir",
       "un canal de plus dans `relations/`",
       "à faire",

@@ -54,7 +54,7 @@ les calcule pas.
 ## Les noms cités dans les cahiers
 
 **`plan_ville.py` et `besoins.py` sont cités dans les cahiers in-fiction de
-`etat/books/`.** Ces noms-là ne se renomment pas sans casser la journée d'un homme
+`etat/maisons/*/documents/books/`.** Ces noms-là ne se renomment pas sans casser la journée d'un homme
 dépêché qui suit son cahier.
 
 > Le four de bataille qui vivait ici — `sac.js` et ses mesures — a été supprimé du

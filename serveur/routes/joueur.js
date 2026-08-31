@@ -14,6 +14,12 @@ function fiches() {
   } catch (e) { return []; }
 }
 
+function mjDisponible() {
+  try {
+    return fs.statSync(path.join(RACINE, "chambres", "mj")).isDirectory();
+  } catch (e) { return false; }
+}
+
 function traiter(req, res, url) {
   if (req.method === "GET") {
     if (url === "/") {
@@ -40,6 +46,7 @@ function traiter(req, res, url) {
       const moi = j ? { personnage_id: j.personnage_id, nom: j.nom || "", regie: !!j.regie } : null;
       if (moi && j.hors_roster) {
         moi.hors_roster = true;
+        moi.mj = !!j.mj;
       }
       return envoyer(res, 200, JSON.stringify({
         multi: !!l,
@@ -50,6 +57,10 @@ function traiter(req, res, url) {
         hommes: ps.filter((p) => !dedans.has(p.id))
           .map((p) => ({ personnage_id: p.id, nom: p.nom || p.id }))
           .sort((a, b) => a.nom.localeCompare(b.nom, "fr")),
+        // Le MJ unique est un poste d'observation, jamais un personnage ni
+        // le retour des anciens arbitres géographiques.
+        arbitres: l && mjDisponible()
+          ? [{ personnage_id: "mj", nom: "MJ" }] : [],
       }));
     }
     // Débug — changer de siège sans rouvrir l'URL au jeton. On ne rend JAMAIS
@@ -69,6 +80,7 @@ function traiter(req, res, url) {
       // s'écrit dans joueurs.json — le roster reste le roster.
       let jeton = cible && cible.jeton;
       if (!jeton && vers && fiches().some((p) => p.id === vers)) jeton = "homme:" + vers;
+      if (!jeton && vers === "mj" && mjDisponible()) jeton = "homme:mj";
       if (!jeton) return envoyer(res, 404, JSON.stringify({ erreur: vers }));
       res.writeHead(302, {
         "Set-Cookie": "jeton=" + encodeURIComponent(jeton) + "; Path=/; Max-Age=31536000; SameSite=Lax",

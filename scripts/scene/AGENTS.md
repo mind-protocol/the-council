@@ -29,6 +29,9 @@ cette porte : la peau se regarde, elle ne se consomme pas.
 - **Une seule plume du flux** (`flux.py`), append-only ; le flux ne se coupe
   qu'à la main. Les avis (tunnel, acteurs inconnus, renvois, écrits) nomment
   ce qui cloche ; seul le plafond dur du tunnel refuse.
+- Une `reponse` de parloir est hors fiction : elle peut porter un
+  `locuteur_id` pour le rendu web sans déplacer cet homme dans la présence et
+  sans être arrêtée par la barrière temporelle des scènes.
 - `sieges.py` vit désormais dans `agents/` (décision du 30, organisation.md §3 :
   les sièges sont la machinerie des acteurs, pas la peau).
 - `flux.py` lit l'occupation et la régence par la porte de

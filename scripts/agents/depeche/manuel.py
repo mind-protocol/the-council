@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""MANUEL — la memoire d'activation, l'etagere systeme et les manuels
+"""MANUEL — la mémoire de journée, les documents de maison et les manuels
 servis a l'homme depeche (journee, tentative, narrateur local).
 """
 import io
@@ -9,10 +9,10 @@ import re
 import sys
 
 from etat.expose import tables
+import documents_maison
 from agents import chambre  # sa main : le cahier fait foi sur sa maniere
 
 from agents.depeche.brief import (RACINE, ETAT, METIER, lire, date_du_monde,
-                                  livre,
                                   brief_de, dossier_journee, feuille_de_route,
                                   travaux_ouverts_de, travaux_ids, positions,
                                   _voix_incarnee,
@@ -274,7 +274,11 @@ def memoire_du_jour(contexte):
     # 30.8 et RIEN ne les servait : on remplissait une memoire que personne ne
     # relisait. Ce sont les deux seules choses du reveil qui portent des GENS
     # et des PANNES — le plan compte des pas, pas des fils ouverts.
-    lignes.extend(_ce_qui_pend(p.get("id")))
+    # Un appel lie a une piece du plan a deja son affaire et sa chaine. Les
+    # attentes generales de l'homme sont vraies, mais les recopier ici lui
+    # rendrait onze autres sujets au moment precis ou on lui en confie un.
+    if not contexte.get("contexte_affaire"):
+        lignes.extend(_ce_qui_pend(p.get("id")))
 
     mains = contexte.get("mains_portees") or []
     if mains:
@@ -287,32 +291,22 @@ def memoire_du_jour(contexte):
     return "\n".join(lignes).strip() or "Ton identité ouvre cet instant."
 
 
-def etagere_systeme(qui):
-    """Liste fermee des livres que le verrou de ``livre`` laisse ouvrir."""
-    gens = tables.lire(os.path.join(ETAT, "personnages.json"), [])
-    if isinstance(gens, dict):
-        gens = gens.get("personnages") or []
-    noms = {g.get("id"): g.get("nom") or g.get("id") for g in gens}
-    siens, maison = livre.index(qui, noms)
-    blocs = []
-    if siens:
-        blocs.extend(["Les tiens — sur toi, tu les ouvres sans te lever :",
-                      *siens])
-    # UN INDEX DE POINTEURS N'A RIEN A FAIRE EN PERCEPT. Les volumes de la
-    # maison faisaient 66 lignes et 7,2 Ko a chaque reveil, pour dire des
-    # noms de fichiers. Ils sont poses sur le disque par `poser_letagere`,
-    # et leur index avec : on donne leur NOMBRE, qui dit l echelle, et
-    # l adresse — le reste est un Grep de sa part.
-    if maison:
-        if blocs:
-            blocs.append("")
-        blocs.append("Ceux de la maison présents là où tu es : %d volumes,"
-                     " listés dans `./livres/_index.txt` (titre, porteur,"
-                     " salle). Grep sur `./livres/` cherche dans leur texte."
-                     % len(maison))
-    if not blocs:
-        blocs.append("Ton étagère est vide à cet instant.")
-    return "\n".join(blocs)
+def documents_systeme(qui):
+    """Liste exacte des documents de maison autorises au prompt systeme."""
+    maison_id, chemins = documents_maison.documents_pour(ETAT, qui)
+    if not maison_id:
+        return (u"Tu n'es rattaché à aucune maison dans personnages.json. "
+                u"Aucun document de maison ne t'est attribué.")
+    lignes = [u"Ta maison documentaire est `%s`. Pour le moment, tous ses "
+              u"documents te sont accessibles :" % maison_id, u""]
+    lignes.extend((u"- `%s`" % os.path.abspath(p).replace("\\", "/")
+                   for p in chemins) if chemins else [u"- aucun document"])
+    lignes.extend([
+        u"",
+        u"Cette liste est exhaustive. Un autre fichier du dépôt n'est pas une "
+        u"source de ton personnage, même si l'accès technique permet de le lire.",
+    ])
+    return u"\n".join(lignes)
 
 
 def manuel_de(qui, mode="journee", contexte=None):
@@ -336,25 +330,33 @@ Ce qui suit est ton propre cahier — tu l'as écrit, tu peux l'amender dans ta
 chambre quand ta journée te contredit.
 
 """ + cahier.strip() + u"\n")
+    messages = os.path.abspath(os.path.join(
+        _ch.chemin(qui), _ch.MESSAGES_AU_JOUEUR)).replace("\\", "/")
+    metier += (u"""
+
+---
+
+# Ta chambre
+
+Le cahier où tu prépares tes messages aux personnages joueurs est :
+`%s`
+
+Ce chemin est le même quel que soit le répertoire depuis lequel ton
+fournisseur te lance.
+""" % messages)
+    metier += (u"""
+
+---
+
+# Les documents de ta maison
+
+%s
+""" % documents_systeme(qui))
     return metier
 
 
 def contexte_message(qui, contexte):
     """Place le dossier vivant dans le message de situation."""
-    return u"""# Ton dossier
-
-%(memoire)s
-
-## Les livres présents à ta portée
-
-Chaque volume ci-dessous existe pour toi sous
-`./livres/<identifiant>.txt`. Tu peux l'ouvrir ou chercher un mot dans cette
-étagère matérialisée.
-
-%(etagere)s
-""" % {
-        "memoire": memoire_du_jour(contexte),
-        "etagere": etagere_systeme(qui),
-    }
+    return u"# Ton dossier\n\n%s\n" % memoire_du_jour(contexte)
 
 

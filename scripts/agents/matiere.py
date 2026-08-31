@@ -149,7 +149,7 @@ PLAFOND_QUEUE = 6
 
 
 def dossier_registres(sujets):
-    """Les lignes de etat/books/ qui portent TOUS les sujets.
+    """Les lignes des livres de maison qui portent TOUS les sujets.
 
     Rend (lignes, voisines, ailleurs) :
 

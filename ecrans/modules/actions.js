@@ -135,17 +135,20 @@
     }
     Object.keys(boutons).forEach((k) => (boutons[k].onclick = () => basculer(k)));
 
-    // ---- l'homme hors roster parle au MJ, pas à la scène -----------------
-    // Incarner un homme quelconque (siège fabriqué par /bascule) change le
-    // canal : ses gestes passent par POST /verbe (habitant.md §3) — tenter,
-    // faire, demander, dire — et le verdict du MJ revient DANS la
+    // ---- le JOUEUR assis hors roster parle au MJ --------------------------
+    // Incarner un homme quelconque (siège fabriqué par /bascule) reste un
+    // geste de joueur : ses actions passent par POST /verbe et portent côté
+    // serveur le marqueur --joueur. Un PNJ autonome n'emprunte jamais ce
+    // canal. Le verdict du MJ revient DANS la
     // réponse, en synchrone. Le call réveille un vrai `claude -p` : une à
     // le réveil peut durer : la page affiche l'attente du CALL.
     // Un PJ du roster ne passe JAMAIS par ici : son chemin /action est intact.
     // penser = un reveil de soi (cast) : la reponse HTTP est un accuse,
     // la pensee vit dans sa chambre — d'ou son retour dans la barre.
-    const VERBES_HOMME = { dire: "dire", agir: "tenter", faire: "faire",
-                           question: "demander", penser: "penser" };
+    const VERBES_JOUEUR_HORS_ROSTER = {
+      dire: "dire", agir: "tenter", faire: "faire",
+      question: "demander", penser: "penser"
+    };
     function envoyerVerbe(m, texte) {
       const moi = window.Moi;
       // Écho immédiat : /verbe n'inscrit rien au flux de la scène, le sondage
@@ -156,7 +159,8 @@
       const att = document.getElementById("attente");
       if (att) att.classList.add("actif");
       btn.disabled = true;
-      const corps = { de: moi.personnage_id, verbe: VERBES_HOMME[m], texte: texte };
+      const corps = { de: moi.personnage_id,
+        verbe: VERBES_JOUEUR_HORS_ROSTER[m], texte: texte };
       fetch("/verbe", { method: "POST",
         headers: { "Content-Type": "application/json" }, body: JSON.stringify(corps) })
         .then((r) => r.json())
@@ -293,7 +297,13 @@
 
   // Hors fiction : une question posée au narrateur, et sa réponse.
   Bus.enregistrer("question", (it) => Bus.chronique("chr-question", "Question", it.texte));
-  Bus.enregistrer("reponse", (it) => Bus.chronique("chr-reponse", "Le narrateur", it.texte));
+  Bus.enregistrer("reponse", (it) => {
+    const p = it.locuteur_id && window.Gens ? Gens.qui(it.locuteur_id) : null;
+    const nom = it.qui || (p && p.nom) || "Le narrateur";
+    const entree = Bus.chronique("chr-reponse", nom, it.texte,
+      p ? { avatar: p.portrait_svg, role: p.titre } : undefined);
+    if (p && window.Gens) Gens.marquer(entree, it.locuteur_id);
+  });
 
   // Hors univers : la loge. On y parle de la partie elle-même, jamais dedans —
   // aucun PNJ n'entend, l'horloge ne bouge pas, rien n'entre dans l'état.

@@ -11,9 +11,6 @@ import sys
 import uuid
 
 from plan.expose import bibliotheque  # LA PORTE de plan/
-# LE SEUL point de contact du paquet avec livre et bibliotheque (noyau,
-# container plan) : les autres modules reprennent `livre` d'ici.
-from plan.expose import livre  # le tri des volumes vit la-bas, et nulle part ailleurs
 from agents.expose import affecter  # LE resolveur d'adresses
 from etat.expose import tables  # LA PORTE de etat/
 
@@ -35,8 +32,9 @@ SEL = uuid.uuid5(uuid.NAMESPACE_URL, "le-conseil/depeches/v5")
 # la chambre est montee par --add-dir dans mission.appeler.
 OUTILS = ["Read", "Grep", "Glob", "Bash", "Write", "Edit"]
 
-# LE PARLOIR — sa bouche : les verbes vers son arbitre et le billet (--dire).
-# Il l'appelle par Bash, qu'il a en entier. L'oreille (hook --ecouter) est
+# LE PARLOIR — sa bouche vers les autres habitants : le billet (--dire).
+# Il l'appelle par Bash, qu'il a en entier. Aucun verbe ne va vers le MJ.
+# L'oreille (hook --ecouter) est
 # morte le 31.8.2026 : une parole recue est un billet au canal, en percept
 # au prochain reveil.
 PARLOIR_PY = os.path.join(RACINE, "scripts", "parloir.py").replace("\\", "/")
@@ -79,8 +77,38 @@ def date_du_monde():
     return max(jours)
 
 
-def identifiant_de_session(qui, date):
-    """Stable par homme et par jour de jeu. Deterministe : aucun registre."""
+def id_item_affaire(contexte_id):
+    """Ramene une reference humaine au numero canonique d'une piece.
+
+    Dans un ``etat/maisons/*/documents/books/affaire-*.json``, l'adresse vit dans la premiere cellule
+    des tables Etat/Verrou/Clef/Action. Le gras et l'emoji sont du rendu ; le
+    vrai id est le nombre seul, globalement unique dans le graphe. On tolere
+    donc les formes vues dans les cahiers et dans la parole : ``23030``,
+    ``#23030``, ``n° 23030``, ``Nº23030`` ou ``⚔️ **23030**``. Une entree qui
+    contient deux numeros differents reste ambigue et est refusee.
+    """
+    brut = str(contexte_id).strip()
+    numeros = re.findall(r"(?<!\d)(\d{3,6})(?!\d)", brut)
+    uniques = list(dict.fromkeys(numeros))
+    if len(uniques) != 1:
+        detail = ("aucun numero d'item" if not uniques else
+                  "plusieurs numeros d'item : %s" % ", ".join(uniques))
+        raise ValueError(
+            "contexte d'affaire invalide (%s ; exemple : n° 23030)" % detail)
+    return uniques[0]
+
+
+def identifiant_de_session(qui, date, contexte_id=None):
+    """L'identite logique d'un appel d'homme, sans registre.
+
+    Sans contexte, le contrat historique reste intact : une session par homme
+    et par jour de jeu. Avec l'id d'un item d'affaire, la session appartient a
+    cet item et le suit d'un jour a l'autre. Deux items ne peuvent donc plus
+    partager par accident l'historique du meme homme.
+    """
+    if contexte_id is not None:
+        contexte_id = id_item_affaire(contexte_id)
+        return str(uuid.uuid5(SEL, "%s/contexte/%s" % (qui, contexte_id)))
     return str(uuid.uuid5(SEL, "%s/%d.%d.%d" % ((qui,) + date)))
 
 
@@ -130,7 +158,6 @@ def brief_de(qui):
                if p.get("qui") == qui]
     concl = [c for c in _liste_etat("conclusions.json", "conclusions")
              if c.get("qui") == qui]
-    livres = _liste_etat("books.json", "books")
 
     out = ["== SA JOURNEE — ce que l'etat en dit"]
     if not l:
@@ -147,23 +174,10 @@ def brief_de(qui):
                   l.get("questions") or 0))
     out.append("")
     out.append("  SES CREUX — quand il a le temps, et OU il se tient alors :")
-    par_salle = {}
     for c in l.get("questions_posees") or l.get("creux") or []:
         out.append("    %s -> %s  %-20s %4d min%s" % (
             _heure(c["de"]), _heure(c["a"]), c["salle"], c["minutes"],
             "   (%s)" % c["pourquoi"] if c.get("pourquoi") else ""))
-        par_salle.setdefault(c["salle"], 0)
-    # CE QUI EST A PORTEE DE CES SALLES-LA : les livres qu'on peut y ouvrir.
-    a_portee = [b for b in livres if b.get("salle_id") in par_salle]
-    sien = [b for b in livres if b.get("acteur_id") == qui]
-    if a_portee or sien:
-        out.append("")
-        out.append("  CE QU'IL PEUT TOUCHER SANS SORTIR DE SES CREUX :")
-        for b in sien:
-            out.append("    (sur lui) %s — %s" % (b.get("id"), b.get("titre")))
-        for b in a_portee:
-            out.append("    [%s] %s — %s" % (b.get("salle_id"), b.get("id"),
-                                             b.get("titre")))
     if concl:
         out.append("")
         out.append("  CE QU'IL A DEJA CONCLU, de sa main (ne pas le refaire) :")

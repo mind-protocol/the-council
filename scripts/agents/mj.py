@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 """MJ — le reveil du seul maitre du jeu.
 
-Un homme en journee a trois verbes vers son arbitre — TENTER, FAIRE,
-DEMANDER — et chacun est un APPEL : on a besoin du verdict pour continuer,
-le `-p` imbrique est le mecanisme d'attente, la reponse est un retour de
-commande (habitant.md §4, call et cast).
+Le joueur reveille le MJ par son POST ou par un verbe du front. Les PNJ ne
+l'appellent plus : ils agissent depuis leur etat et leurs sources, sans
+demander de permission, d'information ou de verdict.
 
 LA SESSION DU MJ EST SA MEMOIRE. Son identifiant est deterministe et SANS
 date : il ne repart jamais de zero. Il n'existe plus d'arbitre geographique
@@ -35,6 +34,10 @@ MJ_SPECTACLE_MD = os.path.join(RACINE, "scripts", "agents", "prompts",
                                "mj-spectacle.md")
 MANUEL_MJ_RACINE = os.path.join(RACINE, "CLAUDE.md")
 FLUX = os.path.join(RACINE, "etat", "flux.jsonl")
+FLUX_RETOURS_PARLOIR = os.path.join(
+    RACINE, ".agents-runtime", "mj", "retours-parloir.jsonl")
+CURSEUR_RETOURS_PARLOIR = os.path.join(
+    RACINE, ".agents-runtime", "mj", "retours-parloir.lu")
 
 # PLUS DE PLAFOND SUR UNE SESSION (31.8). « Trois minutes est un verdict, pas
 # une journee » supposait qu'un arbitre repond vite ; la mesure dit autre
@@ -54,6 +57,55 @@ ETABLI_MINUTES = None
 def identifiant_de_session():
     """Stable pour l'unique MJ, sans date : sa session est sa memoire."""
     return str(uuid.uuid5(SEL, "mj"))
+
+
+def deposer_retour_parloir(de, joueur, texte, contexte_id=None, ref=None):
+    """Flux append-only des réponses déjà rendues au navigateur du joueur."""
+    os.makedirs(os.path.dirname(FLUX_RETOURS_PARLOIR), exist_ok=True)
+    entree = {"id": str(uuid.uuid4()), "de": str(de),
+              "joueur": str(joueur), "texte": str(texte),
+              "contexte_id": (str(contexte_id) if contexte_id else None),
+              "ref": (str(ref) if ref else None)}
+    with io.open(FLUX_RETOURS_PARLOIR, "a", encoding="utf-8",
+                 newline="\n") as f:
+        f.write(json.dumps(entree, ensure_ascii=False) + u"\n")
+    return entree
+
+
+def _position_retours_parloir():
+    try:
+        with io.open(CURSEUR_RETOURS_PARLOIR, encoding="utf-8") as f:
+            return int(f.read().strip() or 0)
+    except (OSError, ValueError):
+        return 0
+
+
+def _retours_parloir_non_lus():
+    debut = _position_retours_parloir()
+    try:
+        fin = os.path.getsize(FLUX_RETOURS_PARLOIR)
+        with open(FLUX_RETOURS_PARLOIR, "rb") as f:
+            f.seek(min(debut, fin))
+            brut = f.read(fin - min(debut, fin)).decode("utf-8", "replace")
+    except OSError:
+        return [], debut
+    entrees = []
+    for ligne in brut.splitlines():
+        try:
+            valeur = json.loads(ligne)
+            if isinstance(valeur, dict):
+                entrees.append(valeur)
+        except ValueError:
+            continue
+    return entrees, fin
+
+
+def _marquer_retours_parloir_lus(position):
+    os.makedirs(os.path.dirname(CURSEUR_RETOURS_PARLOIR), exist_ok=True)
+    temporaire = CURSEUR_RETOURS_PARLOIR + ".%s.tmp" % uuid.uuid4().hex
+    with io.open(temporaire, "w", encoding="utf-8", newline="\n") as f:
+        f.write(str(int(position)))
+    os.replace(temporaire, CURSEUR_RETOURS_PARLOIR)
 
 
 def _sain(nom):
@@ -77,10 +129,10 @@ def _manuel():
     return u"\n\n---\n\n".join(blocs) + u"\n"
 
 
-def reveiller_en_cast(de, mot):
-    """Le reveil CAST du MJ, hors CLI — billet au canal + spawn detache
+def reveiller_en_cast(de, mot, contexte_id=None, ref=None):
+    """Reveil autorise du MJ (front joueur ou dev) — billet + spawn detache
     de reveiller.py : le motif de `parloir --dire` vers un MJ, offert aux
-    lanceurs (le greffe des rejets d'activation l'appelle). Le mot voyage
+    lanceurs explicites. Le mot voyage
     avec le reveil, donc marque lu ; la suite arrive par les canaux.
 
     PAS DE LIMITE DE CADENCE ICI (tranche par le dev le 31.8, apres la
@@ -89,7 +141,7 @@ def reveiller_en_cast(de, mot):
     billet-reponse a chaque reveil ; la regle qui tient est celle du peage
     de la parole, dans _message — une correspondance FINIT."""
     from agents.expose import billet
-    canal = billet.deposer(de, "mj", mot)
+    canal = billet.deposer(de, "mj", mot, contexte_id=contexte_id, ref=ref)
     chambre.marquer_lu("mj", de)
     drapeaux = {}
     if os.name == "nt":  # CREATE_NO_WINDOW | CREATE_NEW_PROCESS_GROUP — detache SANS console visible (spam de terminaux du 31.8)
@@ -149,19 +201,34 @@ def _message(de, mot, verbe, modes=None):
             % ((verbe, de) + date_du_monde() + (mot.strip(), de)))
 
 
-def appeler_mj(de, mot, verbe, modele=None, minutes=MINUTES):
-    """Reveille l'unique MJ en CALL et rend son verdict sur stdout."""
+def appeler_mj(de, mot, verbe, modele=None, minutes=MINUTES, refs=None,
+               routage=None):
+    """Traite un appel du front joueur et rend son verdict sur stdout."""
     mj = "mj"
     sid = identifiant_de_session()
     sa_chambre = chambre.ouvrir(mj)
     manuel = _manuel()
     actions_joueur = (_actions_en_attente(de)
                       if verbe == u"JOUEUR" else [])
+    if refs is not None:
+        actions_joueur = _filtrer_actions_refs(actions_joueur, refs)
     modes_joueur = _modes_actions(actions_joueur)
     if verbe == u"JOUEUR":
         from agents import portage
-        mot = portage.brief_message_joueur(de)
+        mot = portage.brief_message_joueur(de, refs=refs)
     texte = _message(de, mot, verbe, modes=modes_joueur)
+    retours_parloir, position_retours = _retours_parloir_non_lus()
+    if retours_parloir:
+        texte += (u"\n\nRETOURS DU PARLOIR DEJA AFFICHES AUX JOUEURS :\n"
+                  + json.dumps(retours_parloir, ensure_ascii=False, indent=2)
+                  + u"\nIls sont deja dans le flux web : ne les repousse pas. "
+                    u"Mets seulement leurs consequences en scene.\n")
+    if routage:
+        texte += (u"\n\nROUTAGE DE CONTEXTE DEJA EXECUTE POUR CETTE ACTION :\n"
+                  + json.dumps(routage, ensure_ascii=False, indent=2)
+                  + u"\nCe bloc est une adresse de travail hors fiction. "
+                    u"Respecte notamment l'interdit de doubler une route "
+                    u"d'homme deja servie.\n")
 
     # LE PAS-DE-TIR EST STABLE, ET C'EST UNE CONDITION DE LA MEMOIRE (mesure
     # du 30.8, reveils-jouets du pas 4) : un --session-id n'est unique que
@@ -207,6 +274,7 @@ def appeler_mj(de, mot, verbe, modele=None, minutes=MINUTES):
     if rapport_attendu and u"replique" not in types_tour:
         raise RuntimeError(
             "rapport invisible : aucune replique de PNJ n'a ete poussee")
+    _marquer_retours_parloir_lus(position_retours)
     sys.stderr.write(u"(mj : %s, session %s)\n" % (
         rep.get("provider") or "agent", sid[:8]))
     # L'inbox est une file, pas une memoire. Le modele ne porte plus la
@@ -276,6 +344,21 @@ def _modes_actions(chemins):
         except Exception:
             continue
     return modes
+
+
+def _filtrer_actions_refs(chemins, refs):
+    """Isole les actions que le selecteur vient effectivement de router."""
+    refs = {str(ref) for ref in refs}
+    retenues = []
+    for chemin in chemins:
+        try:
+            with io.open(chemin, encoding="utf-8") as f:
+                action = json.load(f) or {}
+            if str(action.get("ref") or "") in refs:
+                retenues.append(chemin)
+        except Exception:
+            continue
+    return retenues
 
 
 def _actions_exigent_replique(chemins):

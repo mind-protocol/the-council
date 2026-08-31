@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""PAS-DE-TIR — ce qu'on materialise dans le repertoire neutre d'un reveil :
-l'etagere (ses volumes en fichiers) et la memoire (croyances, pensees).
+"""PAS-DE-TIR — la memoire materialisee pour un reveil.
 
 Sorti de mission.py le 31.8.2026 (plafond des 500 lignes) : mission.py garde
 le texte de mission et l'appel d'agent ; ici vit ce qu'on pose sur le
@@ -11,104 +10,7 @@ import os
 
 from etat.expose import tables
 
-from agents.depeche.brief import RACINE, livre
-
-
-def poser_letagere(neutre, qui):
-    """Materialise ses volumes en fichiers, un par volume, dans son dossier.
-
-    C'EST LE SELECTEUR, ET IL EST PHYSIQUE. On aurait pu lui donner le
-    lecteur en Bash et lui dire de s'en servir ; mais un outil qu'on autorise
-    par motif de commande se contourne, et une consigne ne verrouille rien.
-    La ou il travaille, il n'EXISTE que ce qu'il peut ouvrir. Le carnet de la
-    reine n'est pas refuse : il n'est pas la.
-
-    Effet de bord heureux : Grep sur ./livres/ lui donne la recherche
-    plein-texte de son etagere, ce qui est exactement le geste d'un homme qui
-    cherche dans ses registres — et qui evite les 547 000 jetons de
-    etat/books.json, ou il s'est noye pendant huit minutes.
-    """
-    dossier = os.path.join(neutre, "livres")
-    # LE DOSSIER N'EST PLUS NEUF A CHAQUE FOIS. `os.makedirs(dossier)` sans
-    # `exist_ok` supposait le `mkdtemp` d'avant : depuis que Claude lance
-    # l'homme depuis SA CHAMBRE, `livres/` survit d'une journee a l'autre et
-    # le second reveil mourait sur « WinError 183 : Cannot create a file when
-    # that file already exists ». Mesure du 31.8 : hann-bourbe, relance juste
-    # apres la bascule, n'est jamais parti.
-    #
-    # ET L'ETAGERE SE REFAIT, elle ne s'empile pas : un volume qu'il n'a plus
-    # a portee doit DISPARAITRE de son etagere, sinon il lit demain ce qu'il
-    # ne peut plus voir. On vide ce qu'on a pose la veille — jamais autre
-    # chose : sa chambre n'est pas a nous, seul `livres/` l'est.
-    if os.path.isdir(dossier):
-        for vieux in os.listdir(dossier):
-            chemin = os.path.join(dossier, vieux)
-            if os.path.isfile(chemin):
-                try:
-                    os.remove(chemin)
-                except OSError:
-                    pass
-    os.makedirs(dossier, exist_ok=True)
-    n = 0
-    index = []
-    for b in livre.etagere(qui):
-        with io.open(os.path.join(dossier, "%s.txt" % b.get("id")), "w",
-                     encoding="utf-8", newline="\n") as f:
-            f.write(livre.rendre(b, large=True))
-        index.append("%-34s %s%s" % (
-            b.get("id"), b.get("titre") or "",
-            ("   (porte par %s)" % b["acteur_id"]) if b.get("acteur_id")
-            else ("   (pose : %s)" % b["salle_id"]) if b.get("salle_id")
-            else ""))
-        n += 1
-    # SES PROPRES VOLUMES, QUI N'Y ETAIENT PAS. `livre.etagere` lit
-    # `etat/books` — la bibliotheque commune — et rien d'autre. Un homme
-    # recevait donc 82 volumes de la maison et PAS LE SIEN : sa prise en main,
-    # posee dans `chambres/<lui>/books/`, n'existait pas la ou il travaille.
-    # On les copie tels quels, en JSON : c'est sa main qui les ecrira, et un
-    # rendu ne se reecrit pas.
-    sien = os.path.join(RACINE, "chambres", qui, "books")
-    for nom in sorted(os.listdir(sien)) if os.path.isdir(sien) else []:
-        if not nom.endswith(".json"):
-            continue
-        ident = nom[:-5]
-        try:
-            texte = io.open(os.path.join(sien, nom), encoding="utf-8").read()
-        except IOError:
-            continue
-        with io.open(os.path.join(dossier, "%s.json" % ident), "w",
-                     encoding="utf-8", newline="\n") as f:
-            f.write(texte)
-        # ET LE MEME, RENDU LISIBLE. Mesure du 31.8 : DEUX hommes sur deux —
-        # aldon-hask puis tobb — se sont ecrit un lecteur JSON dans leurs
-        # brouillons. La cause etait ici : ils recevaient 82 volumes de la
-        # maison en TEXTE et leur propre cahier en JSON BRUT, seul illisible
-        # de toute l'etagere. « Un rendu ne se reecrit pas » est vrai pour
-        # l'ECRITURE et faux pour la lecture : on sert les deux formes, et
-        # l'index dit laquelle sert a quoi.
-        try:
-            import json as _json
-            rendu = livre.rendre(_json.loads(texte), large=True)
-            with io.open(os.path.join(dossier, "%s.txt" % ident), "w",
-                         encoding="utf-8", newline="\n") as f:
-                f.write(rendu)
-        except Exception:
-            pass
-        index.append("%-34s %s" % (
-            ident,
-            u"— A TOI. Lis le .txt, ecris dans ta chambre (le .json)."))
-        n += 1
-
-    # L'INDEX EST UN FICHIER, PLUS UN PARAGRAPHE DU REVEIL. Il pesait 7,2 Ko
-    # dans le message pour dire des noms de fichiers ; il est ici, a cote de
-    # ce qu'il indexe, et c'est la ou un homme le cherche.
-    with io.open(os.path.join(dossier, "_index.txt"), "w", encoding="utf-8",
-                 newline="\n") as f:
-        f.write("LES VOLUMES A TA PORTEE — %d" % n + chr(10))
-        f.write("Chacun s'ouvre sous ./livres/<identifiant>.txt ;"
-                " Grep cherche dans leur texte." + chr(10) * 2)
-        f.write((chr(10)).join(sorted(index)) + chr(10))
-    return n
+from agents.depeche.brief import RACINE
 
 
 def poser_la_memoire(neutre, qui, contexte=None):
@@ -124,8 +26,8 @@ def poser_la_memoire(neutre, qui, contexte=None):
     """
     dossier = os.path.join(neutre, "ma-memoire")
     os.makedirs(dossier, exist_ok=True)
-    # `contexte` est un confort, pas une dependance : les deux chemins d'appel
-    # (depeche et boucle d'activation) ne l'ont pas tous les deux sous la main,
+    # `contexte` est un confort, pas une dependance : tous les appels explicites
+    # ne l'ont pas sous la main,
     # et un fichier qui manque parce qu'un argument manquait serait exactement
     # le pointeur mort qu'on cherche a eviter. A defaut, on relit la tete.
     intention = (contexte or {}).get("intention")

@@ -1,4 +1,4 @@
-# Les livres — `etat/books/`
+# Les livres — `etat/maisons/<maison_id>/documents/books/`
 
 Un **livre** est un OBJET du monde : un registre posé sur une table, un carnet
 qu'on porte sous le bras. Il porte du JSON, il se consulte à l'écran sous
@@ -14,14 +14,16 @@ est et qui l'ouvre. Il est vérifié par `python scripts/tick.py --verifier`.
 
 ## Le stockage
 
-Chaque volume vit dans `etat/books/<id>.json`. `etat/books/_ordre.json` est la
-liste ordonnée de leurs identifiants et la seule autorité sur l'ordre de
-l'étagère. Le nom du fichier et le champ `id` doivent être identiques.
+Chaque volume vit dans le dossier documentaire de sa maison.
+`documents/books/_ordre.json` est la liste ordonnée des identifiants de cette
+maison et la seule autorité sur leur ordre. Le nom du fichier, le champ `id` et
+le champ `maison_id` doivent désigner cette adresse.
 
-Le vieux tableau `etat/books.json` reste lisible uniquement tant que le
-manifeste `_ordre.json` n'existe pas. Dès que ce manifeste est présent, le
-dossier est l'unique source de vérité : une copie partielle ou un retour
-silencieux au monolithe est interdit.
+Les lecteurs techniques agrègent ces bibliothèques par la porte
+`bibliotheque.py`. `etat/books/_ordre.json` reste un manifeste vide de
+compatibilité : aucun volume de maison n'y fait plus autorité. Les documents
+qui ne peuvent être attribués sans invention vivent sous
+`etat/maisons/_sans-maison/documents/books/` et ne sont servis à aucun PNJ.
 
 Un fichier de volume porte un objet, sans tableau englobant :
 
@@ -287,7 +289,7 @@ du joueur, pas une entrée d'état.
 
 Une seule règle, et elle suffit :
 
-- **Avant d'écrire un livre, relire `etat/books.json` en entier.** À deux MJ,
+- **Avant d'écrire un livre, ouvrir une session de la bibliothèque agrégée.** À deux MJ,
   l'autre a pu créer le même pendant que vous écriviez. Deux livres de même
   titre donnent deux onglets identiques à l'écran.
 - **On remplace par `id`, on n'ajoute pas.** Pour compléter un livre existant,

@@ -1,0 +1,5 @@
+Je m’incline.
+
+« Ordre reçu, Votre Grâce. Je prends les trois cents sous mon commandement jusqu’au débarquement. Elles attendront l’alarme de lord Staunton. Aucune poursuite hors des murs. »
+
+Je fais dater l’ordre à 13 h 15. Six clauses séparées. Lord Corlys y portera le nombre et le nom des coques avant ce soir. Trois cents réservées ne signifie pas trois cents déjà présentes : je fais ouvrir le compte.

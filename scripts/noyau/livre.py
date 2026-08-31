@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# LIVRE — ouvrir un volume, et un seul, pour quelqu'un de nomme.
+# LIVRE — ouvrir un volume de la maison de quelqu'un de nomme.
 #
 # POURQUOI CE SCRIPT EXISTE. `etat/books.json` fait 2,1 Mo — environ 547 000
 # jetons. On ne le lit pas : on s'y noie. Un homme depeche a qui l'on disait
@@ -37,6 +37,7 @@ for _p in (_d, _os.path.join(_d, "noyau")):
         _sys.path.insert(0, _p)
 
 import bibliotheque
+import documents_maison
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
@@ -58,52 +59,8 @@ def _charger(nom, defaut):
 
 
 def etagere(qui):
-    """Les volumes que `qui` peut ouvrir — exactement ce que `GET /books`
-    lui servirait. Rend une liste de dicts, deja resolus (les coffrets ont
-    donne leur place aux volumes qu'ils contiennent)."""
-    livres = _charger("books.json", [])
-    boites = _charger("boites.json", [])
-    if isinstance(boites, dict):
-        boites = boites.get("boites", [])
-    gens = _charger("personnages.json", [])
-    if isinstance(gens, dict):
-        gens = gens.get("personnages", [])
-
-    ou = {p.get("id"): p.get("lieu_id") for p in gens}
-    ici = ou.get(qui)
-    coffret = {c.get("id"): c for c in boites}
-
-    for b in livres:
-        c = coffret.get(b.get("boite"))
-        if not c:
-            continue
-        # Range dans un coffret : le volume perd sa place et prend la sienne.
-        b["lieu_id"] = c.get("lieu_id")
-        b["salle_id"] = c.get("salle_id")
-        b["acteur_id"] = c.get("acteur_id")
-        b["prive"] = bool(c.get("prive"))
-        # `lecteurs` ne se remplace pas, il s'AJOUTE : un coffret reserve peut
-        # contenir un volume plus reserve encore, jamais moins.
-        if c.get("lecteurs"):
-            b["lecteurs"] = ([q for q in b["lecteurs"] if q in c["lecteurs"]]
-                             if b.get("lecteurs") else list(c["lecteurs"]))
-
-    def chateau(b):
-        a = b.get("acteur_id")
-        return ou[a] if (a and a in ou) else b.get("lieu_id")
-
-    def visible(b):
-        # `lecteurs` ne donne rien, il retire.
-        if b.get("lecteurs") and qui not in b["lecteurs"]:
-            return False
-        if b.get("acteur_id") and b["acteur_id"] == qui:
-            return True
-        if b.get("prive") and b.get("acteur_id"):
-            return False
-        ch = chateau(b)
-        return (not ch) or (not ici) or (ch == ici)
-
-    return [b for b in livres if visible(b)]
+    """Tous les volumes de sa maison, sans filtre interne pour le moment."""
+    return documents_maison.livres_pour(ETAT, qui)
 
 
 def index(qui, noms):

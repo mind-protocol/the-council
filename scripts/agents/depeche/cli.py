@@ -11,6 +11,7 @@ import time
 
 from agents.depeche.brief import (RACINE, ETAT, DEPOT_RAPPORTS, lire,
                                   date_du_monde, identifiant_de_session,
+                                  id_item_affaire,
                                   a_convoquer, brief_de,
                                   dans_la_salle, dans_le_rayon,
                                   les_pj, salles_peuplees)
@@ -35,6 +36,16 @@ def main():
                     help="combien partent ensemble (1 = en file)")
     ap.add_argument("--mission", default="",
                     help="consigne du jour, en plus de son brief")
+    ap.add_argument("--contexte", default=None, metavar="N_ITEM",
+                    help="numero d'un item d'affaire generale (ex. 23030, "
+                         "#23030 ou 'n° 23030') : session et fil de chambre "
+                         "distincts pour cet item")
+    ap.add_argument("--ref", default=None,
+                    help="ref du message joueur à conserver dans la session")
+    ap.add_argument("--mode", choices=("journee", "reponse", "discussion"),
+                    default="journee",
+                    help="instructions du brief : journée autonome, réponse "
+                         "courte, ou réponse envoyée dans une discussion")
     ap.add_argument("--modele", default=None,
                     help="opus | sonnet | fable — defaut : celui de la session")
     ap.add_argument("--minutes", type=int, default=None,
@@ -52,7 +63,14 @@ def main():
     ap.add_argument("--attendre", action="store_true",
                     help="forcer le call (deja le defaut ; prime sur --cast)")
     a = ap.parse_args()
+    if a.contexte is not None:
+        try:
+            a.contexte = id_item_affaire(a.contexte)
+        except ValueError as e:
+            ap.error(str(e))
     attendre = a.attendre or not a.cast
+    if a.mode != "journee" and not attendre:
+        ap.error("--mode reponse/discussion exige un call attendu, pas --cast")
 
     if a.salles:
         pj = les_pj()
@@ -115,20 +133,23 @@ def main():
         # Les casts n'ont pas besoin d'un pool : ils partent detaches.
         for qui in gens:
             if depecher(qui, a.mission, a.modele, a.minutes, a.sec,
-                        attendre=attendre):
+                        attendre=attendre, contexte_id=a.contexte, ref=a.ref,
+                        mode=a.mode):
                 ok += 1
     else:
         # ILS PARTENT ENSEMBLE. Une journee d'homme se paie en minutes ; sept
         # en file en prendraient sept fois, et une salle entiere ne se
         # depecherait jamais. Ils n'ont rien a se dire, ne partagent aucun
         # fichier et n'ecrivent nulle part : chacun a son dossier, sa session
-        # et son etagere, et le seul ecrivain reste ce processus-ci, a la fin.
+        # et ses documents de maison, et le seul ecrivain reste ce processus-ci, a la fin.
         # `--front 1` rend la file a qui veut suivre un echec a la trace.
         import concurrent.futures as cf
         print(u"  (%d de front)" % min(a.front, len(gens)))
         with cf.ThreadPoolExecutor(max_workers=a.front) as pool:
             envoyes = {pool.submit(depecher, q, a.mission, a.modele,
-                                   a.minutes, False): q for q in gens}
+                                   a.minutes, False, True, a.contexte,
+                                   a.ref, a.mode): q
+                       for q in gens}
             for fini in cf.as_completed(envoyes):
                 try:
                     if fini.result():
@@ -141,8 +162,14 @@ def main():
               % (ok, len(gens)))
         return
     if not a.sec:
-        print(u"\n%d/%d rentres. Leurs pensees sont versees ; leurs changements "
-              u"de registre sont des PROPOSITIONS." % (ok, len(gens)))
-        print(u"  python scripts/verser_cahier.py             # a sec, montre tout")
-        print(u"  python scripts/verser_cahier.py --vraiment  # ecrit dans books.json")
+        if a.mode != "journee":
+            print(u"\n%d/%d %s(s) rendue(s). Aucun rapport de journee ni mot "
+                  u"de reprise n'a ete ecrit."
+                  % (ok, len(gens), a.mode))
+        else:
+            print(u"\n%d/%d rentres. Leurs pensees sont versees ; leurs "
+                  u"changements de registre sont des PROPOSITIONS."
+                  % (ok, len(gens)))
+            print(u"  python scripts/verser_cahier.py             # a sec, montre tout")
+            print(u"  python scripts/verser_cahier.py --vraiment  # écrit dans les documents de maison")
 

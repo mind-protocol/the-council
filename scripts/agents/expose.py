@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""LA PORTE du container 🧠 agents — depeche, parloir, jugement, affectation.
+"""LA PORTE du container 🧠 agents — depeche, parloir, affectation.
 
 La regle (docs/organisation.md §2) : on n'entre dans un container que par sa
 porte — `from agents.expose import ...`, jamais `import depecher`.
@@ -29,6 +29,10 @@ from agents import chambre  # noqa: E402,F401 — lu par depeche/mission (le mon
 # Une seule porte vers les fournisseurs de CLI. Liee avant les lanceurs : ni
 # la fiction ni les containers ne doivent savoir si Claude ou Codex repond.
 from agents import runtime  # noqa: E402,F401
+# Premiere couche des POST joueur : une session jetable choisit les pointeurs
+# de contexte et les hommes avant tout metier de jeu.
+from agents import selecteur_contexte  # noqa: E402,F401
+from agents.selecteur_contexte import main as selectionner_contexte_main  # noqa: E402,F401
 # Miroir des instructions Claude vers Codex. La matiere reste sous prompts/ ;
 # la facade publique scripts/copier_claude_vers_agents.py passe par cette porte.
 from agents.prompts import copier_claude_vers_agents  # noqa: E402,F401
@@ -51,30 +55,23 @@ affecter = affectation
 from agents.affectation import main as affecter_main  # noqa: E402,F401 — l'entree CLI de la facade
 # Descendue au lot 2 : agents/parloir.py, plus la commande racine. Le
 # hook-oreille est mort le 31.8.2026 : parloir n'est plus qu'un adressage
-# (verbes en call, --dire en billet-reveil, la criee `tous`).
+# (--dire entre habitants ; calls vers le MJ réservés au front joueur).
 from agents import parloir  # noqa: E402,F401 — l'adressage de la parole
 from agents.parloir import main as parloir_main  # noqa: E402,F401 — l'entree CLI de la facade
 # Descendue au lot 2 : le paquet agents/depeche/, plus la commande racine.
 from agents import depeche  # noqa: E402,F401 — relit cette porte : affecter deja lie
 depecher = depeche  # l'ancien nom, que la facade publique demande
 from agents.depeche import main as depecher_main  # noqa: E402,F401 — l'entree CLI de la facade
-# Le reveil en CALL de l'unique MJ — session continue sans date, verdict sur
-# stdout. Lie apres depeche : il relit agents.depeche.brief.
+# Le reveil en CALL de l'unique MJ par le front joueur — session continue.
+# Lie apres depeche : il relit agents.depeche.brief.
 from agents import mj  # noqa: E402,F401 — lu par parloir et le serveur
 from agents.mj import main as reveiller_main  # noqa: E402,F401
 # Le pas 5 (habitant.md §4) : ecrire = reveiller — le billet au canal de la
 # paire, puis le cast du destinataire. Lie apres depeche : il relit brief.
 from agents import billet  # noqa: E402,F401 — lu par parloir (--dire vers un homme absent)
-# La veille de focus depeche directement les hommes sur les etats cibles.
-from agents import focus  # noqa: E402,F401 — lu par scripts/veille_focus.py
-from agents.focus import main as focus_main  # noqa: E402,F401 — l'entree CLI de la facade
 # Descendue au lot 2 : scripts/dossier.py -> agents/matiere.py (§7).
 from agents import matiere  # noqa: E402,F401 — le dossier d'un sujet, rassemble
 from agents.matiere import main as dossier_main  # noqa: E402,F401 — l'entree CLI de la facade
-# Descendue au lot 2 : scripts/juger.py -> agents/jugement.py (§7). Le hook
-# Stop tape toujours scripts/juger.py, la facade.
-from agents import jugement  # noqa: E402,F401 — le juge separe, via runtime
-from agents.jugement import main as juger_main  # noqa: E402,F401 — l'entree CLI de la facade
 
 # Descendue le 31.8 : scripts/activite.py -> agents/activite.py — la loupe
 # de debug des sessions de dev (qui a fait quoi, les appels, les refus).

@@ -144,16 +144,17 @@ function traiter(req, res, url) {
           fs.appendFileSync(path.join(RACINE, "etat", "flux.jsonl"),
             JSON.stringify(item) + "\n", "utf-8");
         }
-        // LE GUETTEUR EST MORT (habitant.md pas 5) : le POST reveille le MJ
-        // APRES que l'action et sa ligne de flux existent. Chaque reveil porte
-        // la ref exacte de son moment ; deux POST peuvent donc reprendre la
-        // meme session en parallele sans depouiller la meme inbox.
+        // PREMIERE COUCHE : le POST ne reveille plus le MJ. Il ouvre une
+        // session jetable de selection, sans reprise, APRES que l'action et sa
+        // ligne de flux existent. La ref isole exactement ce message : deux
+        // POST concurrents ne selectionnent jamais le meme morceau d'inbox.
         if (process.env.CONSEIL_SANS_REVEIL !== "1") {
           try {
             const { spawn } = require("child_process");
             const p = spawn(process.env.PYTHON || "python",
-              [path.join(RACINE, "scripts", "reveiller.py"),
-               "--de", (siege && siege.personnage_id) || "joueur"],
+              [path.join(RACINE, "scripts", "selectionner_contexte.py"),
+               "--de", (siege && siege.personnage_id) || "joueur",
+               "--ref", ref],
               { cwd: RACINE, detached: true, stdio: "ignore",
                 windowsHide: true });  // sinon chaque action ouvre une console
             p.unref();

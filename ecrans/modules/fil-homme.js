@@ -99,6 +99,11 @@
       // silence. Le sondage continue (bandeau, heure), mais plus rien du flux
       // public ne se peint — le fil de cet homme est SA mémoire.
       Object.keys(Bus.rendus).forEach((k) => Bus.enregistrer(k, () => {}));
+      // Le MJ incarné observe son fil ; il ne s'envoie pas de verbes à lui-même.
+      if (moi.mj) {
+        const barre = document.getElementById("fil-actions");
+        if (barre) barre.hidden = true;
+      }
       fetch("/fil-homme")
         .then((r) => r.json())
         .then((d) => {
@@ -106,6 +111,12 @@
           if (!zone) return;
           // ce que la course du premier sondage a pu peindre s'efface
           zone.innerHTML = "";
+          if (moi.mj) {
+            const note = document.createElement("div");
+            note.className = "fil-observation";
+            note.textContent = "Poste d’observation — session du MJ";
+            zone.appendChild(note);
+          }
           for (const e of (d && d.fil) || []) peindre(e, moi);
           zone.scrollTop = zone.scrollHeight;
         })

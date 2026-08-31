@@ -71,12 +71,12 @@ Ce sont des secondes epoch, écrites automatiquement. On n'y touche pas à la ma
 ```
 ERREUR occupation : le siege 'nicolas-reynolds' n'est plus actif (veille perimee (10 h))
 mais n'a AUCUNE tete dans intentions.json. On le laisse marque occupe : le rendre
-vacant le livrerait a la boucle d'activation sans savoir ce qu'il veut.
+vacant empêcherait toute dépêche cohérente en son nom.
 ```
 
-La raison est directe : un siège vacant **entre dans la file d'activation** (voir [`docs/regence.md`](regence.md)), et un acteur activé sans tête est un acteur que la machine va faire agir sans savoir ce qu'il veut. Un basculement silencieux vers un état impossible est précisément le défaut qu'on répare ; on ne le remplace pas par un autre. La sortie est écrite dans le message : lui écrire sa tête, puis `sieges.py --quitter <id> --vraiment`.
+La raison est directe : une dépêche au nom d'un siège sans tête le ferait agir sans savoir ce qu'il veut. La sortie est écrite dans le message : lui écrire sa tête, puis `sieges.py --quitter <id> --vraiment`.
 
-**Et la garde ne s'arrête pas au refus d'écrire.** Un cache est une commodité ; la file d'activation, non. `horloge_directe` **exclut de la file tout siège mesuré vacant qui n'a pas de tête**, exactement comme s'il était encore assis, et le journalise (`sieges.vacant_sans_tete`). Sans quoi il suffirait que la mesure bascule pendant qu'on ne regarde pas — c'est le propre d'une mesure — pour qu'un personnage sans tête soit élu et joué. Il redevient activable le jour où on lui en écrit une, pas avant.
+**Et la garde ne s'arrête pas au refus d'écrire.** Un cache est une commodité : les vérifications signalent tout siège vacant sans tête afin qu'aucune dépêche ne parte en son nom.
 
 ---
 
@@ -133,7 +133,7 @@ Le harnais monte un `etat/` temporaire à chaque cas (veilles vieillies à la ma
 
 - **On n'a pas changé la définition de l'inbox.** « Au moins un fichier » est la règle arrêtée, et elle a un angle mort : un inbox qu'on ne vide jamais tient un siège occupé pour toujours. On ne l'a pas corrigée en douce (ce serait décider à la place du propriétaire) ; on l'a **rendue visible** par l'avertissement « inbox dormant ». Le jour où l'on veut trancher, c'est une ligne dans `mesurer`.
 - **Le seuil ne s'adapte à rien.** Deux heures pour tout le monde, quel que soit le rythme de la partie.
-- **Rien ne surveille en continu.** Le recalage a lieu quand quelque chose passe : un cycle d'activation, un appel à `sieges.py`. Entre deux, le cache vieillit — et `tick.py --verifier` est là pour le dire.
+- **Rien ne surveille en continu.** Le recalage a lieu lors d'un appel à `sieges.py`. Entre deux, le cache vieillit — et `tick.py --verifier` est là pour le dire.
 - **Le serveur ne mesure pas.** Il lit le cache, comme avant. Une page ouverte pendant qu'un siège bascule verra l'ancienne valeur jusqu'au rechargement.
 
 ---
@@ -142,9 +142,9 @@ Le harnais monte un `etat/` temporaire à chaque cas (veilles vieillies à la ma
 
 Ce paragraphe n'a **pas** été appliqué. Il se placerait dans « Les sièges — changer de personnage », juste après la phrase « Le champ `occupe` dit où l'on est assis en ce moment, et toute la règle en découle ».
 
-> **« Occupé » ne se déclare pas : ça se mesure.** Un siège est occupé quand la veille de sa session date de moins de deux heures réelles, ou quand son inbox porte une action non traitée. Rien d'autre. Le champ `occupe` de `etat/joueurs.json` n'est plus qu'un cache de ce calcul, recalé au départ de chaque cycle d'activation et à chaque passage de `scripts/sieges.py` — et `python scripts/sieges.py` affiche désormais la MESURE, avec l'âge de la veille et le compte de l'inbox, jamais le drapeau brut.
+> **« Occupé » ne se déclare pas : ça se mesure.** Un siège est occupé quand la veille de sa session date de moins de deux heures réelles, ou quand son inbox porte une action non traitée. Rien d'autre. Le champ `occupe` de `etat/joueurs.json` n'est plus qu'un cache de ce calcul, recalé à chaque passage de `scripts/sieges.py` — et `python scripts/sieges.py` affiche désormais la MESURE, avec l'âge de la veille et le compte de l'inbox, jamais le drapeau brut.
 >
-> **Pourquoi ça n'est pas un détail de tenue d'état.** Un siège occupé est EXCLU de la file d'activation. Un drapeau qu'on oublie de rebasculer produit donc un personnage que personne ne joue et que la machine n'active pas : il dort, son horloge avance, et l'on ne s'en aperçoit qu'en revenant s'asseoir. C'est arrivé du 9 au 10 août sur deux sièges à la fois, sous des notes qui disaient l'inverse du drapeau — et l'ancien invariant ne pouvait rien voir, puisqu'il mesurait la cohérence du fichier avec lui-même.
+> **Pourquoi ça n'est pas un détail de tenue d'état.** Un drapeau oublié ment sur le siège réellement tenu et fausse les outils qui protègent la perspective du joueur.
 >
 > **Ce qui est refusé, même demandé.** Un rafraîchissement ne rend jamais vacant un siège sans tête : il garde le cache et crie. Écrivez-lui d'abord ce qu'il veut, croit et poursuit, puis `python scripts/sieges.py --quitter <id> --vraiment`.
 >

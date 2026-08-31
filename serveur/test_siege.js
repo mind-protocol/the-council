@@ -45,7 +45,8 @@ function demander(port, chemin, jeton) {
       method: "GET", headers: jeton ? { cookie: "jeton=" + jeton } : {} }, (res) => {
       let rendu = "";
       res.on("data", (c) => { rendu += c; });
-      res.on("end", () => resolve({ status: res.statusCode, corps: JSON.parse(rendu) }));
+      res.on("end", () => resolve({ status: res.statusCode,
+        corps: rendu ? JSON.parse(rendu) : null, headers: res.headers }));
     });
     req.once("error", reject);
     req.end();
@@ -118,6 +119,7 @@ const textes = (r) => r.corps.items.map((it) => it.texte);
   fs.mkdirSync(etat, { recursive: true });
   // Un ancien dossier mj-* ne doit plus suffire a fabriquer un siege.
   fs.mkdirSync(path.join(racine, "chambres", "mj-sombreval"), { recursive: true });
+  fs.mkdirSync(path.join(racine, "chambres", "mj"), { recursive: true });
   fs.writeFileSync(path.join(etat, "flux.jsonl"),
     flux.map((it) => JSON.stringify(it)).join("\n") + "\n", "utf-8");
 
@@ -142,11 +144,19 @@ const textes = (r) => r.corps.items.map((it) => it.texte);
     await attendreServeur(serveur);
 
     const identite = await demander(port, "/moi", "jr");
-    assert.ok(!Object.prototype.hasOwnProperty.call(identite.corps, "arbitres"),
-      "/moi expose encore les anciens arbitres geographiques");
+    assert.deepStrictEqual(identite.corps.arbitres,
+      [{ personnage_id: "mj", nom: "MJ" }],
+      "/moi ne rend pas exactement le MJ unique");
     const ancienMj = await demander(port, "/bascule?vers=mj-sombreval", "jr");
     assert.strictEqual(ancienMj.status, 404,
       "un dossier mj-* permet encore de fabriquer un siege");
+    const basculeMj = await demander(port, "/bascule?vers=mj", "jr");
+    assert.strictEqual(basculeMj.status, 302,
+      "le MJ unique n'est plus accessible par /bascule");
+    const identiteMj = await demander(port, "/moi", "homme:mj");
+    assert.strictEqual(identiteMj.corps.moi.personnage_id, "mj");
+    assert.strictEqual(identiteMj.corps.moi.mj, true,
+      "le front ne reconnaît pas le poste d'observation du MJ");
 
     // ---- 1. la lecture : chacun reçoit exactement le sien ------------------
     assert.deepStrictEqual(textes(await demander(port, "/scene", "jr")), [

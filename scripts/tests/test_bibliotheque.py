@@ -21,6 +21,11 @@ def ecrire_json(chemin, valeur):
         json.dump(valeur, f, ensure_ascii=False)
 
 
+def lire_json(chemin):
+    with open(chemin, encoding="utf-8") as f:
+        return json.load(f)
+
+
 class BibliothequeTest(unittest.TestCase):
     def test_le_monolithe_reste_le_repli(self):
         with tempfile.TemporaryDirectory() as etat:
@@ -95,6 +100,36 @@ class BibliothequeTest(unittest.TestCase):
             restes = [n for n in os.listdir(os.path.join(etat, "books"))
                       if n.endswith(".tmp") or n.startswith(".bibliotheque-")]
             self.assertEqual([], restes)
+
+    def test_les_livres_de_maison_rejoignent_la_bibliotheque(self):
+        with tempfile.TemporaryDirectory() as etat:
+            ecrire_json(os.path.join(etat, "books", "_ordre.json"), ["commun"])
+            ecrire_json(os.path.join(etat, "books", "commun.json"),
+                        {"id": "commun"})
+            ecrire_json(os.path.join(etat, "maisons.json"),
+                        [{"id": "maison-a"}])
+            base = os.path.join(etat, "maisons", "maison-a", "documents", "books")
+            ecrire_json(os.path.join(base, "_ordre.json"), ["moyens-a"])
+            ecrire_json(os.path.join(base, "moyens-a.json"),
+                        {"id": "moyens-a", "maison_id": "maison-a", "n": 0})
+
+            self.assertEqual(["commun", "moyens-a"],
+                             [x["id"] for x in B.charger(etat)])
+            session = B.ouvrir(etat)
+            session.livres[1]["n"] = 1
+            session.sauver()
+            self.assertEqual(1, B.charger(etat)[1]["n"])
+            with open(os.path.join(base, "moyens-a.json"), encoding="utf-8") as f:
+                self.assertEqual(1, json.load(f)["n"])
+
+            session = B.ouvrir(etat)
+            session.livres.append({"id": "nouveau", "maison_id": "maison-a"})
+            session.sauver()
+            self.assertEqual(["moyens-a", "nouveau"],
+                             lire_json(os.path.join(base, "_ordre.json")))
+            self.assertTrue(os.path.isfile(os.path.join(base, "nouveau.json")))
+            self.assertEqual(["commun"],
+                             lire_json(os.path.join(etat, "books", "_ordre.json")))
 
 
 if __name__ == "__main__":

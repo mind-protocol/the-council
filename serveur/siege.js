@@ -141,6 +141,18 @@ function qui(req, url) {
   // `hors_roster` dit au front de router ses gestes vers /verbe et non /action.
   if (jeton.slice(0, 6) === "homme:") {
     const id = jeton.slice(6);
+    // Le MJ UNIQUE n'est pas une fiche du monde : son existence est sa
+    // chambre. Les anciens `mj-<ville>` restent morts ; seul `mj` ouvre ce
+    // poste d'observation éphémère.
+    if (id === "mj") {
+      try {
+        if (fs.statSync(path.join(RACINE, "chambres", "mj")).isDirectory()) {
+          return { jeton: jeton, personnage_id: "mj", nom: "MJ",
+                   hors_roster: true, mj: true };
+        }
+      } catch (e) {}
+      return null;
+    }
     try {
       const p = JSON.parse(fs.readFileSync(
         path.join(RACINE, "etat", "personnages.json"), "utf-8"))
@@ -170,10 +182,7 @@ function monPersonnage(req, url) {
   return moi;
 }
 
-// QUI VOIT QUEL VOLUME — le tri de l'étagère, en un seul endroit.
-// Les boîtes d'abord (un volume rangé prend la place de son coffret), puis les
-// trois règles : les `lecteurs` nommés retirent, un porteur garde son privé,
-// et le reste se lit dans le château où l'on est.
+// QUI VOIT QUEL VOLUME — tous les documents de sa maison, pour le moment.
 //
 // PARTAGÉ AVEC L'ÉCHIQUIER, et c'est la raison d'être de cette fonction : le
 // damier lisait `books.json` en entier, sans tri. Un homme de Port-Réal qui
@@ -182,13 +191,11 @@ function monPersonnage(req, url) {
 // ouvrir dans les livres n'a rien à faire sur le damier ; deux tris qui
 // divergent finissent par montrer à l'un le plan de l'autre.
 function volumesVisibles(tous, moi) {
-  // Où est chacun : c'est la fiche qui le dit, jamais le livre.
-  const ou = {};
+  const maison = {};
   try {
     JSON.parse(fs.readFileSync(path.join(RACINE, "etat", "personnages.json"), "utf-8"))
-      .forEach((p) => { ou[p.id] = p.lieu_id || null; });
+      .forEach((p) => { maison[p.id] = p.maison_id || null; });
   } catch (e) {}
-  const ici = moi ? (ou[moi] || null) : null;
   // Les BOÎTES (etat/boites.json) : un coffret posé sur une table ou porté
   // sous le bras, où l'on range des volumes. Une boîte donne sa PLACE à ce
   // qu'elle contient — un volume rangé n'a plus de salle, plus de porteur,
@@ -218,21 +225,8 @@ function volumesVisibles(tous, moi) {
         : c.lecteurs.slice();
     }
   });
-  // Le château d'un volume : celui où il est posé, ou celui où se trouve
-  // l'homme qui le porte — sa fiche d'abord, le `lieu_id` du livre à défaut
-  // (un porteur sans fiche reste où on l'a écrit).
-  const chateau = (b) => (b.acteur_id && ou[b.acteur_id] !== undefined)
-    ? ou[b.acteur_id] : (b.lieu_id || null);
-  const liste = tous.filter((b) => {
-    // `lecteurs` ne donne rien, il retire : le volume garde ses règles de
-    // lieu, mais qui n'y est pas nommé ne l'ouvre pas.
-    if (Array.isArray(b.lecteurs) && b.lecteurs.length
-        && b.lecteurs.indexOf(moi) === -1) return false;
-    if (b.acteur_id && b.acteur_id === moi) return true;
-    if (b.prive && b.acteur_id) return false;
-    const ch = chateau(b);
-    return !ch || !ici || ch === ici;
-  });
+  const maMaison = moi ? (maison[moi] || null) : null;
+  const liste = maMaison ? tous.filter((b) => b.maison_id === maMaison) : [];
   return { liste, boites };
 }
 

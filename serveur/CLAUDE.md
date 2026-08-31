@@ -22,7 +22,7 @@ portraits.js      71 l.   teinteDuNom, portraitDefaut, portraitFrais, rafraichir
 monde3d.js       954 l.   graphe piéton, bâti, repères, péremption, serviceMonde
 domaine/
   echiquier.js  1302 l.   le moteur de plan : cahiers, chaînes, détecteurs, X/Z, missions
-  activations.js 565 l.   activations, têtes, criticité, santé, charge, fil du MJ actif
+  activations.js            archives historiques, criticité, santé, fil du MJ actif
   regie.js       521 l.   filPersonnage, recherche dans le flux, extrait, regie()
   marche.js      394 l.   la montre, la position, ce qu'on longe et perçoit, le sac
 routes/          19 fichiers, 24 à 244 l. — un par famille d'URL, en-tête disant lesquelles
@@ -74,9 +74,11 @@ Quatre tests montent une partie miniature dans un dossier temporaire (`CONSEIL_R
 node serveur/test_siege.js && node serveur/test_marche.js && node serveur/test_piece_http.js && node serveur/test_bibliotheque.js
 ```
 
-**`test_marche.js` tient le moteur de la marche** : le même couple de points rend le même itinéraire deux fois, la polyligne part du point cliqué et n'est jamais plus courte que la ligne droite, quatre tronçons à 0,3 minute paient **une** minute et gardent le reste (sans ce report, un kilomètre coûterait zéro), la position et le bandeau sont écrits, et le sac ne tombe dans l'inbox qu'à l'arrivée — le guetteur du MJ ne se réveille pas par tronçon. Il monte le monde 3D en **jonction** (1,2 Go : on ne le copie pas) et se déclare sans objet si le bâti n'a pas été engendré. Attention en le retouchant : les jonctions se défont par `rmdirSync` nu, jamais par un effacement récursif qui suivrait le lien et viderait `monde/`.
+**`test_marche.js` tient le moteur de la marche** : le même couple de points rend le même itinéraire deux fois, la polyligne part du point cliqué et n'est jamais plus courte que la ligne droite, quatre tronçons à 0,3 minute paient **une** minute et gardent le reste (sans ce report, un kilomètre coûterait zéro), la position et le bandeau sont écrits, et le sac ne tombe dans l'inbox qu'à l'arrivée — le sélecteur de contexte ne se lance pas par tronçon. Il monte le monde 3D en **jonction** (1,2 Go : on ne le copie pas) et se déclare sans objet si le bâti n'a pas été engendré. Attention en le retouchant : les jonctions se défont par `rmdirSync` nu, jamais par un effacement récursif qui suivrait le lien et viderait `monde/`.
 
-**`test_siege.js` tient le brouillard** : trois sièges, un flux de dix items dont six portent une audience, et l'on vérifie que chacun reçoit **exactement** le sien — la liste, dans l'ordre, pas « au moins » ni « pas trop ». Il couvre les deux moitiés, parce qu'elles se ferment l'une l'autre : la lecture (`GET /scene`, dont le verrou par en bas — passé la ligne du dernier arrivé, un item sans `pour` ne part chez personne) et l'écriture (`POST /action`, qui estampe la parole du joueur de l'audience de sa scène). Il a été **vérifié par mutation** : désarmer le verrou de lecture le fait tomber sur « la reine ne reçoit pas exactement sa scène », retirer l'estampille d'écriture sur « une question hors fiction a fuité ». Un test de brouillard qui n'a jamais été vu échouer ne prouve rien.
+**`test_siege.js` tient le brouillard** : trois sièges, un flux de dix items dont six portent une audience, et l'on vérifie que chacun reçoit **exactement** le sien — la liste, dans l'ordre, pas « au moins » ni « pas trop ». Il couvre les deux moitiés, parce qu'elles se ferment l'une l'autre : la lecture (`GET /scene`, dont le verrou par en bas — passé la ligne du dernier arrivé, un item sans `pour` ne part chez personne) et l'écriture (`POST /action`, qui estampe la parole du joueur de l'audience de sa scène). Il vérifie aussi que `/moi` et `/bascule` exposent seulement le poste d'observation `mj`, tandis qu'un dossier `mj-<ville>` ne suffit jamais à recréer un arbitre géographique. Il a été **vérifié par mutation** : désarmer le verrou de lecture le fait tomber sur « la reine ne reçoit pas exactement sa scène », retirer l'estampille d'écriture sur « une question hors fiction a fuité ». Un test de brouillard qui n'a jamais été vu échouer ne prouve rien.
+
+`POST /action` ne choisit ni homme ni contexte : il persiste l'action et spawn seulement `selectionner_contexte.py` avec sa `ref`. Le processus Python écrit l'artefact `selection-contexte/4`, route toute action vers le MJ sur cette ref exacte et, pour `dire|parler`, sert auparavant les hommes sélectionnés dans leurs sessions d'item. Le serveur ne doit jamais dupliquer ce routage.
 
 ## Ce qui reste à faire
 

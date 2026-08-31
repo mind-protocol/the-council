@@ -16,20 +16,18 @@
 # CE QUI VIT ICI :
 #   --dire   vers un homme : billet au canal de chambre + reveil cast
 #            (billet.ecrire) — present ou absent, plus de distinction ;
-#            vers `mj` : billet au canal + reveil CAST du MJ ;
+#            vers `mj` : reserve au front joueur (`--joueur`) et a `dev` ;
 #            vers `tous` : la criee — etat/parloir/tous.jsonl (une criee
 #            n'est pas une paire, elle ne migre pas en canal).
-#   --tenter / --faire / --demander : les verbes (habitant.md §3) — la
-#            demande ET le verdict se deposent au CANAL homme~zone, le
-#            verdict revient en CALL (`mj.appeler_mj`).
+#   --tenter / --faire / --demander : commandes du FRONT JOUEUR seulement.
+#            Un PNJ agit depuis son etat et ses sources ; il ne demande ni
+#            permission, ni information, ni verdict au MJ.
 #   --penser : un reveil de soi-meme — la pensee est un cast a soi
 #            (depecher detache, la pensee en elan du jour) ; aucun arbitre,
 #            aucun canal : le vecu et demain.md se deposent chez lui.
 #
 # Usage :
 #     python scripts/parloir.py --dire --de mj --a le-sanglier "Reviens au quai"
-#     python scripts/parloir.py --tenter --de gerardys --a mj "je pars sur mon cheval"
-#     python scripts/parloir.py --demander --de gerardys --a mj "que disent les registres ?"
 #     python scripts/parloir.py --dire --de dev --a mj "Le joueur a poste"
 #     python scripts/parloir.py --dire --de mj --a tous "On ouvre la salle"
 #     python scripts/parloir.py --fils                      (les fils restants)
@@ -164,11 +162,80 @@ def est_un_mj(qui):
     return qui == "mj"
 
 
+def appel_mj_autorise(de, joueur=False):
+    """Seul le front joueur et le developpeur peuvent reveiller le MJ.
+
+    L'identite ``de`` peut nommer un personnage joue : c'est donc le marqueur
+    explicite ``--joueur``, pose par le serveur, qui distingue son geste de
+    celui d'une session PNJ portant le meme nom.
+    """
+    return bool(joueur) or de == "dev"
+
+
+def est_un_joueur_occupe(qui):
+    """Un siège occupé se sert au navigateur ; on ne caste jamais sa peau."""
+    try:
+        from etat.expose import tables
+        joueurs = tables.lire(os.path.join(RACINE, "etat", "joueurs.json"), [])
+        if isinstance(joueurs, dict):
+            joueurs = joueurs.get("joueurs") or []
+        return any(isinstance(j, dict) and j.get("occupe")
+                   and not j.get("regie")
+                   and (j.get("personnage_id") or j.get("id")) == qui
+                   for j in joueurs)
+    except Exception:
+        return False
+
+
+def _nom_de(qui):
+    try:
+        from etat.expose import tables
+        gens = tables.lire(os.path.join(RACINE, "etat", "personnages.json"), [])
+        if isinstance(gens, dict):
+            gens = gens.get("personnages") or []
+        fiche = next((p for p in gens if isinstance(p, dict)
+                      and p.get("id") == qui), {})
+        return str(fiche.get("nom") or qui)
+    except Exception:
+        return str(qui)
+
+
+def _pousser_au_flux_web(de, joueur, texte, contexte_id=None, ref=None):
+    """Passe par l'unique plume du flux ; une réponse ne déplace personne."""
+    item = {"type": "reponse", "locuteur_id": de,
+            "qui": _nom_de(de), "texte": texte, "duree": 0}
+    if contexte_id is not None:
+        item["contexte_id"] = str(contexte_id)
+    if ref:
+        item["ref"] = str(ref)
+    commande = [sys.executable, os.path.join(RACINE, "scripts", "append_flux.py"),
+                json.dumps(item, ensure_ascii=False), "--pour", joueur]
+    return subprocess.run(commande, cwd=RACINE, check=True,
+                          stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                          text=True, encoding="utf-8")
+
+
+def rendre_au_joueur(de, joueur, texte, contexte_id=None, ref=None):
+    """Billet reçu par un joueur : canal, web immédiat, puis flux du MJ."""
+    from agents.expose import billet as _b
+    from agents.expose import mj as _mj
+    from agents import chambre as _ch
+    canal = _b.deposer(de, joueur, texte, contexte_id=contexte_id, ref=ref)
+    _pousser_au_flux_web(de, joueur, texte, contexte_id=contexte_id,
+                         ref=ref)
+    retour = _mj.deposer_retour_parloir(
+        de, joueur, texte, contexte_id=contexte_id, ref=ref)
+    # Le siège l'a reçu à l'écran : son prochain passage en PNJ ne doit pas le
+    # relire comme un percept neuf.
+    _ch.marquer_lu(joueur, de)
+    return canal, retour
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--dire", action="store_true")
-    # LES VERBES (docs/habitant.md §3) : l'acces de l'homme au monde, par le
-    # meme adressage que --dire : seul `mj` peut les arbitrer en CALL.
+    # Commandes du front joueur. Le serveur pose --joueur ; une session PNJ
+    # qui copie la commande sans ce marqueur est arretee avant tout appel.
     ap.add_argument("--tenter", action="store_true",
                     help="je tente — le MJ tranche en coulisse")
     ap.add_argument("--faire", action="store_true",
@@ -181,8 +248,14 @@ def main():
     # (demain.md, fil/) se deposent chez lui par la machinerie existante.
     ap.add_argument("--penser", action="store_true",
                     help="un reveil de soi-meme — cast a soi, aucun arbitre")
+    ap.add_argument("--joueur", action="store_true",
+                    help="appel emis par le front d'un joueur")
     ap.add_argument("--modele", default=None,
                     help="modele du reveil (verbes et --dire)")
+    ap.add_argument("--contexte", default=None,
+                    help="id d'item d'affaire à conserver avec ce mot")
+    ap.add_argument("--ref", default=None,
+                    help="ref du message joueur à conserver avec ce mot")
     ap.add_argument("--de", default=None)
     ap.add_argument("--a", default=None)
     ap.add_argument("texte", nargs="*")
@@ -195,6 +268,9 @@ def main():
     ap.add_argument("--clore", default=None,
                     help="archive les fils jsonl restants d'un nom")
     a = ap.parse_args()
+    contexte_id = (a.contexte or os.environ.get("LE_CONSEIL_CONTEXTE")
+                    or None)
+    ref = a.ref or os.environ.get("LE_CONSEIL_REF") or None
 
     if a.fils:
         if not fils():
@@ -250,6 +326,11 @@ def main():
             raise SystemExit(
                 u"un verbe s'adresse au MJ (`mj`), pas a "
                 u"%r — pour parler a quelqu'un : --dire" % a.a)
+        if not appel_mj_autorise(a.de, a.joueur):
+            raise SystemExit(
+                u"un PNJ ne demande plus de verdict au MJ : il agit depuis "
+                u"son etat et ses sources ; si l'issue lui echappe, il la "
+                u"laisse en attente sans l'inventer")
         mot = u" ".join(a.texte)
         _sain(a.de)
         # LA TRACE PHYSIQUE D'ABORD : la demande entre au CANAL homme~zone —
@@ -259,11 +340,12 @@ def main():
         from agents.expose import billet as _b
         from agents.expose import mj as _mj
         from agents import chambre as _ch
-        canal = _b.deposer(a.de, a.a, u"[%s] %s" % (verbe, mot))
+        canal = _b.deposer(a.de, a.a, u"[%s] %s" % (verbe, mot),
+                           contexte_id=contexte_id, ref=ref)
         # LE CALL (habitant.md §4) : on a besoin du verdict pour continuer.
         verdict = _mj.appeler_mj(a.de, mot, verbe, modele=a.modele)
         # Le verdict est AUSSI une trace : la reponse du MJ, au meme canal.
-        _b.deposer(a.a, a.de, verdict)
+        _b.deposer(a.a, a.de, verdict, contexte_id=contexte_id, ref=ref)
         # L'echange a ete vecu en direct des deux cotes : le re-servir en
         # percept au prochain reveil serait du double.
         _ch.marquer_lu(a.de, a.a)
@@ -293,19 +375,33 @@ def main():
             # mesure du 31.8 : cinq sessions depeche-dev nees des billets des
             # arbitres. Le billet arrive, le developpeur le lit en personne.
             from agents.expose import billet as _b
-            canal = _b.deposer(a.de, a.a, texte)
+            canal = _b.deposer(a.de, a.a, texte,
+                               contexte_id=contexte_id, ref=ref)
             print(u"billet a dev (canal %s) — jamais depeche, il lira"
                   % os.path.relpath(canal, RACINE))
             return
         if est_un_mj(a.a):
-            # Le mot part au canal puis reveille l'unique MJ en cast.
+            if not appel_mj_autorise(a.de, a.joueur):
+                raise SystemExit(
+                    u"un PNJ ne s'adresse pas au MJ ; parle a un habitant "
+                    u"du monde, agis, ou conserve l'inconnu")
+            # Le mot du joueur (ou de dev) part au canal puis reveille le MJ.
             from agents.expose import mj as _mj
-            canal, parti = _mj.reveiller_en_cast(a.de, texte)
+            canal, parti = _mj.reveiller_en_cast(
+                a.de, texte, contexte_id=contexte_id, ref=ref)
             print(u"billet au MJ (canal %s) — reveille en cast"
                   % os.path.relpath(canal, RACINE))
             return
+        if est_un_joueur_occupe(a.a):
+            canal, retour = rendre_au_joueur(
+                a.de, a.a, texte, contexte_id=contexte_id, ref=ref)
+            print(u"réponse à %s (canal %s) — flux web direct + flux MJ %s"
+                  % (a.a, os.path.relpath(canal, RACINE),
+                     retour.get("id")))
+            return
         from agents.expose import billet as _b
-        canal, rep = _b.ecrire(a.de, a.a, texte, modele=a.modele)
+        canal, rep = _b.ecrire(a.de, a.a, texte, modele=a.modele,
+                               contexte_id=contexte_id, ref=ref)
         print(u"billet a %s (canal %s) — reveille en cast, log %s"
               % (a.a, os.path.relpath(canal, RACINE),
                  os.path.relpath(rep["log"], RACINE)))

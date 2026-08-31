@@ -184,8 +184,9 @@ Le quartier règle le RAFRAÎCHISSEMENT (croyances relues, horloges décomptées
 
 La provenance d'une croyance ne vit PAS ici : elle vit dans `evenements.diffusion`. Ici, seulement la tête.
 
-### mains.json (les mains — ce qui avance sans qu'on décide)
+### `maisons/<maison_id>/documents/mains.json` (les mains — ce qui avance sans qu'on décide)
 Une entrée par affaire qui court. Orthogonal à `intentions.json` : la tête dit ce qu'un acteur veut et décide, les mains disent où en sont ses affaires. Un acteur peut avoir les deux (Daemon), une tête seule (un intrigant), ou des mains seules (un sergent recruteur). **Aucun budget** : c'est de l'arithmétique, simulée à chaque tick AVANT tout le reste. Le personnage joueur n'a pas de tête, mais il a des mains.
+- l'objet racine porte `maison_id` et `mains[]` ; chaque entrée appartient à ce document de maison
 - `id` — kebab-case (`recrutement-peyredragon`, `radoub-flotte-velaryon`)
 - `quoi` — l'affaire, en clair
 - `porteur` — {`type`: "personnage" | "maison" | "lieu", `id`}. `id` peut être `null` : une affaire sans porteur tourne quand même, et personne n'en rend compte.
@@ -239,9 +240,9 @@ Chaîne : **une source touchée → du travail → des pensées datées → une 
 **Ce qui a disparu, et pourquoi** — `travaux.json` en entier. L'**excitation** était un compteur qui montait sans sources et retombait d'un point par jour : il disait qui avait *envie* de parler, jamais qui avait de *quoi*. L'état **`mur`** d'une conclusion se calculait au lieu de se constater. Le marquage **`servie`** était tenu 11 fois sur 613, et son absence faisait conclure à 98 % de travail perdu. Ce qui les remplace n'est pas un autre compteur : c'est la **journée** — le quartier où l'homme se tient, les **creux** qu'elle lui laisse, les sources à portée de ces creux. `presence.py` la mesure, `evaluer.py` en tire la feuille de route (qui a du temps, combien de questions, dans quelle salle), `depecher.py` la lit. Note de conception : `docs/boucle-acteurs.md`.
 
 ### conclusions.json (ce qu'un homme a conclu, de sa main)
-- `qui`, `date`, `affaire`, `livre` (l'`id` du cahier de `books.json`), `texte`
+- `qui`, `date`, `affaire`, `livre` (l'`id` du cahier dans les documents de sa maison), `texte`
 
-**Une conclusion est écrite ou elle ne l'est pas** — plus d'état mûri par un compteur. Quand elle l'est, elle part dans son cahier de `books.json`, où le joueur peut aller la lire ; les pensées en cours, elles, restent cachées. Même garde que le `contenu: null` d'une rumeur qui saute. **La machine ne l'écrit jamais** : le texte est de la main de celui qui tient la charge.
+**Une conclusion est écrite ou elle ne l'est pas** — plus d'état mûri par un compteur. Quand elle l'est, elle part dans le cahier de sa maison, où le joueur peut aller la lire ; les pensées en cours, elles, restent cachées. Même garde que le `contenu: null` d'une rumeur qui saute. **La machine ne l'écrit jamais** : le texte est de la main de celui qui tient la charge.
 
 ### plans.json (les plans d'en face — JAMAIS montré au joueur)
 

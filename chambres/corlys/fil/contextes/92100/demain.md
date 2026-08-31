@@ -1,0 +1,7 @@
+Je pose deux doigts sur Repos-des-Freux.
+
+« Trois risques : dégarnir le croissant, charger trois cents hommes sans compte de charge, et laisser un secours devenir poursuite. Mon compte porte quatre-vingt-neuf nefs au blocus et plus un jour de grain. Gerardys, écrivez que l’alarme de Staunton devra être reconnue par le patron de flottille, et que l’interdit de poursuite le lie aussi. J’accepte. »
+
+Je me tourne vers Darklyn. « Steffon, au quai. Nous compterons hommes, chevaux, eau, vivres et débarquement. Avant le coucher du soleil, la reine aura les noms des coques, de leurs patrons et leur charge — non un nombre deviné. »
+
+`vmth7ncuqcivz`

@@ -1,9 +1,10 @@
-// POST /verbe — les trois verbes de l'habitant depuis le front (habitant.md §3).
+// POST /verbe — les gestes d'un JOUEUR depuis le front.
 // {de, verbe: tenter|faire|demander|dire, texte} → parloir en SYNCHRONE,
 // le verdict du MJ revient dans la réponse HTTP — le même retour de
-// commande que lit un homme dépêché, servi au joueur qui incarne.
+// commande servi au joueur qui incarne.
 //
-// Tous les gestes qui engagent le monde vont au seul MJ (`mj`).
+// Le marqueur --joueur est la frontière : une session PNJ qui invoque le
+// parloir sans lui ne peut plus demander de verdict au MJ.
 // Timeout large : la page doit attendre le verdict, c'est un CALL.
 const path = require("path");
 const { execFile } = require("child_process");
@@ -31,7 +32,7 @@ function traiter(req, res, url) {
           { ok: false, erreur: "il faut de, verbe (tenter|faire|demander|dire) et texte" }));
       }
       const args = [path.join(RACINE, "scripts", "parloir.py"), drapeau,
-                    "--de", String(d.de), "--a", "mj",
+                    "--joueur", "--de", String(d.de), "--a", "mj",
                     String(d.texte)];
       execFile(process.env.PYTHON || "python", args,
         { cwd: RACINE, timeout: 300000, maxBuffer: 4 * 1024 * 1024,

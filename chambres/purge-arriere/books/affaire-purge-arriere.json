@@ -26,7 +26,7 @@
      "cellules": [
       "C.1",
       "Le curseur du monde ne recule plus par accident",
-      "monde.date ne peut decroitre que par un acte declare. Toute ecriture qui la ferait reculer est refusee A LA PORTE et le dit a voix haute ; un recul voulu passe par RECUL_VOULU=1 et reste un acte, jamais un effet de bord.",
+      "Mon cahier porte ma manière à la première personne, un élément de mon histoire étayé par une source accessible, et mes objectifs posés ici.",
       "le cliquet dans noyau/tables.py, et la ligne sur stderr a chaque refus"
      ]
     },
@@ -42,8 +42,8 @@
      "cellules": [
       "C.3",
       "La fenetre de purge ne ment jamais par omission",
-      "Toute table du JOUE est dans TABLES, et ce qui est PREVU n'est jamais coupe avec ce qui a EU LIEU. Un outil qui affirme le vide doit avoir regarde partout.",
-      "purger.py rend les pensees dans sa fenetre et liste les rendez-vous a part, sans y toucher"
+      "J'ai cherché une source sans demander au MJ, puis écrit à un homme du monde.",
+      "une source citée et un canal dans `relations/`"
      ]
     }
    ]
@@ -91,14 +91,14 @@
     {
      "cellules": [
       "P.3",
-      "Faire tenir pour vrai un élément de mon histoire",
-      "Un fait de mon passé que rien n'a encore écrit : d'où je viens, à qui je dois quelque chose, ce que j'ai fait avant. Il ne devient vrai que si mon arbitre le tient : `python scripts/parloir.py --faire --de purge-arriere --a mj \"<mon fait, en une phrase>\"`. Un passé que je m'invente seul n'est pas un passé, c'est une note dans mon cahier.",
-      "au parloir",
-      "un `faire` tranché sur mon histoire",
+      "Sourcer un élément de mon histoire",
+      "Chercher ce fait dans une source accessible ou auprès d'une personne qui peut me le rappeler. Sans source, le marquer incertain : ne pas demander au MJ de l'inventer ou de le valider.",
+      "mes sources",
+      "une source nommée, ou l'incertitude écrite",
       "bloquee",
       "",
       "",
-      "BLOQUEE, et je ne la coche pas pour faire nombre. Je n'ai ni tete dans intentions.json, ni fiche, ni personnage : la cocher injecterait dans l'etat un nomme purge-arriere que personne n'habite. mj-barralfond a trouve le meme trou chez lui le meme jour — le gabarit est ecrit pour un habitant et il est tombe dans des chambres d'office. Porte a mj."
+      "BLOQUEE, et je ne la coche pas pour faire nombre. Je n'ai ni tete dans intentions.json, ni fiche, ni personnage : la cocher injecterait dans l'etat un nomme purge-arriere que personne n'habite. [ancienne régie] a trouve le meme trou chez lui le meme jour — le gabarit est ecrit pour un habitant et il est tombe dans des chambres d'office. Porte a mj."
      ]
     },
     {
@@ -156,10 +156,10 @@
     {
      "cellules": [
       "P.8",
-      "Demander à mon arbitre ce que je ne peux pas savoir seul",
-      "`python scripts/parloir.py --demander --de purge-arriere --a mj \"<ma question, avec sa date>\"` — la réponse vient des registres seuls. Une question sans date n'a pas de réponse : « est-ce qu'on a de quoi » ne vaut rien, « est-ce qu'on a de quoi payer six cents bras le premier jour de la quatrième lune » vaut une réponse.",
-      "au parloir",
-      "un verdict revenu dans mon fil",
+      "Chercher ce que je ne sais pas encore",
+      "Ouvrir une source accessible ou écrire à une personne du monde avec une question précise et datée. Si personne ni aucun registre ne répond, conserver l'inconnu au lieu de demander au MJ.",
+      "mes sources ou un canal",
+      "une source citée ou un inconnu écrit",
       "a faire",
       "",
       "",
@@ -169,9 +169,9 @@
     {
      "cellules": [
       "P.9",
-      "Adresser mon premier geste qui engage le monde",
-      "`--tenter` quand je tente et que l'arbitre tranche ; `--faire` quand je propose un changement. `python scripts/parloir.py --tenter --de purge-arriere --a mj \"...\"`. Ce que je fais dans ma chambre n'engage rien : ce qui doit devenir vrai passe par là.",
-      "au parloir",
+      "Historique clos — ancien appel au MJ",
+      "Ce pas appartenait au contrat retiré. Il reste clos comme trace, ne doit pas être rejoué et n'autorise aucun nouvel appel de PNJ vers le MJ.",
+      "archive du volume",
       "un `tenter` ou un `faire` tranché",
       "faite",
       "",
@@ -182,14 +182,14 @@
     {
      "cellules": [
       "P.10",
-      "Écrire à un homme qui n'est pas mon arbitre",
-      "`python scripts/parloir.py --dire --de purge-arriere --a <untel> \"...\"` — le billet le réveille s'il dort, et il le lira à son réveil. Mesure du 31.8 : sur 385 billets, DIX-HUIT seulement vont d'un homme à un autre. Tout le reste passe par une régie, et ce n'est pas ce qu'on veut.",
+      "Écrire à un homme du monde",
+      "`python scripts/parloir.py --dire --de <moi> --a <untel> \"...\"` — la parole et l'enquête passent par les habitants, jamais par le MJ.",
       "au parloir",
       "un canal de plus dans `relations/`",
       "faite",
       "",
       "129.4.3",
-      "A mj-barralfond, qui demandait laquelle de deux dates avait eu lieu. Repondu au chiffre : une seule ligne ecrite entre le 5e et le 9e."
+      "A [ancienne régie], qui demandait laquelle de deux dates avait eu lieu. Repondu au chiffre : une seule ligne ecrite entre le 5e et le 9e."
      ]
     },
     {
@@ -208,14 +208,14 @@
     {
      "cellules": [
       "A.2",
-      "Faire archiver la chambre morte mj-nicolasreynolds",
-      "chambres/mj-nicolasreynolds a books, cahier et fil VIDE. Depuis que joueurs.json declare l'arbitre (nicolas-reynolds -> mj-barralfond) au lieu de le deviner par le nom, elle n'est plus jamais reveillee. Elle comptera 0/10 pour toujours et faussera tout compte de prise en main.",
+      "Faire archiver la chambre morte [ancienne régie]",
+      "chambres/[ancienne régie] a books, cahier et fil VIDE. Depuis que joueurs.json declare l'arbitre (nicolas-reynolds -> [ancienne régie]) au lieu de le deviner par le nom, elle n'est plus jamais reveillee. Elle comptera 0/10 pour toujours et faussera tout compte de prise en main.",
       "le depot",
       "la chambre archivee, ou une raison ecrite de la garder",
       "en cours",
       "",
       "",
-      "Trouvee par mj-barralfond, verifiee par moi le 31.8. Portee a mj le meme jour."
+      "Trouvee par [ancienne régie], verifiee par moi le 31.8. Portee a mj le meme jour."
      ]
     }
    ]

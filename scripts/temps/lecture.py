@@ -21,6 +21,8 @@ import sys
 from temps.expose import occupation  # qui est ASSIS — mesure, pas drapeau
 from temps.calendrier import jour_absolu
 from etat.expose import tables  # LA PORTE de etat/
+import documents_maison
+import bibliotheque
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ETAT = os.path.join(RACINE, "etat")
@@ -57,13 +59,12 @@ class Etat(object):
         self.intentions = charger("intentions", [])
         # Qui a une place dans la journee du chateau (etat/routines.json).
         self.routines = set((charger("routines", {}) or {}).get("gens") or {})
-        # Les mains. Fichier absent = pas d'mains, et rien ne casse.
-        brut = charger("mains", {})
-        self.mains = brut.get("mains", []) if isinstance(brut, dict) else brut
-        # Les livres poses dans les salles ou portes par quelqu'un (docs/books.md).
-        # Fichier absent = pas de livres, et rien ne casse.
-        brut = charger("books", [])
-        self.books = brut.get("books", []) if isinstance(brut, dict) else brut
+        # Les mesures appartiennent desormais aux maisons. Le calcul les voit
+        # toutes ensemble, sans perdre la maison d'autorite de chaque entree.
+        self.mains = documents_maison.charger_mains(ETAT)
+        # La bibliotheque agrege les documents des maisons. Leur place reste
+        # une propriete de fiction ; leur autorite de stockage est la maison.
+        self.books = bibliotheque.charger(ETAT)
         # Les coffrets ou l'on range les volumes (docs/books.md). Une boite
         # donne sa place a ce qu'elle contient ; fichier absent = pas de
         # boites, et les livres gardent chacun la leur.

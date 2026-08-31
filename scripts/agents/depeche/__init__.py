@@ -10,9 +10,9 @@ CE QUE CE PAQUET POSSEDE, decoupe sous le plafond de 500 lignes
 (docs/organisation.md §7 voulait brief/manuel/retour — la coupe est plus fine
 parce que le manuel du narrateur et la mission depassaient le plafond) :
     brief.py      : les constantes, la lecture du monde, le brief d'un homme
-    manuel.py     : la memoire du jour, l'etagere, les manuels servis
+    manuel.py     : la memoire du jour, les documents de maison, les manuels servis
     trous.py      : ce que son plan montre (criticite, charge, attentes)
-    pas_de_tir.py : ce qu'on materialise au repertoire neutre (etagere, memoire)
+    pas_de_tir.py : la memoire materialisee au repertoire de travail
     chambre_locale.py : ses fichiers et les actions ouvertes de ses affaires
     mission.py    : le texte de mission, l'archive du prompt, l'appel d'agent
     retour.py     : le versement sur-le-champ
@@ -23,16 +23,15 @@ par la porte agents/expose.py.
 """
 from agents.depeche.brief import (  # noqa: F401
     RACINE, ETAT, DEPOT_RAPPORTS, METIER, MANUEL_MJ, SEL, OUTILS, PARLOIR_PY,
-    livre, lire, date_du_monde, identifiant_de_session,
+    lire, date_du_monde, id_item_affaire, identifiant_de_session,
     feuille_de_route, brief_de, travaux_ouverts_de, dossier_journee,
     a_convoquer, les_pj, salles_peuplees, dans_la_salle, positions,
     position_de, dans_le_rayon, travaux_ids)
 from agents.depeche.manuel import (  # noqa: F401
-    memoire_du_jour, etagere_systeme, manuel_de, contexte_message)
+    memoire_du_jour, documents_systeme, manuel_de, contexte_message)
 from agents.depeche.trous import (  # noqa: F401
     TROUS_MONTRES, TROUS_AILLEURS, ses_trous, sa_charge_ailleurs, on_lattend)
-from agents.depeche.pas_de_tir import (  # noqa: F401
-    poser_letagere, poser_la_memoire)
+from agents.depeche.pas_de_tir import poser_la_memoire  # noqa: F401
 from agents.depeche.mission import (  # noqa: F401
     DEPECHES, mission, archiver_le_prompt,
     appeler, extraire_json, depecher)

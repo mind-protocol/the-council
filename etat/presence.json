@@ -338,16 +338,6 @@
       },
       "perime": true
     },
-    "corlys": {
-      "salle": "table-peinte",
-      "lieu": "Table Peinte, Peyredragon",
-      "date": {
-        "annee": 129,
-        "lune": 4,
-        "jour": 4,
-        "minute": 787
-      }
-    },
     "daemon": {
       "salle": "table-peinte",
       "lieu": "Table Peinte, Peyredragon",
@@ -431,7 +421,7 @@
         "annee": 129,
         "lune": 4,
         "jour": 4,
-        "minute": 788
+        "minute": 796
       }
     },
     "rulf-corne": {
@@ -444,16 +434,6 @@
         "minute": 581
       }
     },
-    "steffon-darklyn": {
-      "salle": "table-peinte",
-      "lieu": "Table Peinte, Peyredragon",
-      "date": {
-        "annee": 129,
-        "lune": 4,
-        "jour": 4,
-        "minute": 791
-      }
-    },
     "rhaenyra": {
       "salle": "table-peinte",
       "lieu": "Table Peinte, Peyredragon",
@@ -461,7 +441,7 @@
         "annee": 129,
         "lune": 4,
         "jour": 4,
-        "minute": 791
+        "minute": 800
       }
     }
   },
@@ -470,7 +450,7 @@
       "annee": 129,
       "lune": 4,
       "jour": 4,
-      "minute": 792
+      "minute": 802
     },
     "gens": {
       "rhaenyra": {
@@ -528,10 +508,10 @@
         "source": "routine"
       },
       "corlys": {
-        "salle": "table-peinte",
-        "lieu": "Table Peinte, Peyredragon",
+        "salle": "archives",
+        "lieu": "L'archive, Peyredragon",
         "etat": "arrete",
-        "source": "scene"
+        "source": "routine"
       },
       "criston": {
         "salle": "cour-donjon-rouge",
@@ -576,43 +556,16 @@
         "source": "routine"
       },
       "garde-levant": {
-        "salle": "quai",
+        "salle": "baraques",
         "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "grand-escalier",
-        "vers": "baraques",
-        "vers_lieu": null,
-        "prochaine": "bourg",
-        "route": [
-          "grand-escalier",
-          "quai",
-          "bourg",
-          "baraques"
-        ],
-        "franchi": 1,
-        "pas": 0.6,
-        "arrive_dans": 6
+        "etat": "arrete",
+        "source": "routine"
       },
       "garde-tour": {
-        "salle": "cour",
+        "salle": "baraques",
         "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "table-peinte",
-        "vers": "baraques",
-        "vers_lieu": null,
-        "prochaine": "porte-dragon",
-        "route": [
-          "table-peinte",
-          "tambour-de-pierre",
-          "cour",
-          "porte-dragon",
-          "baraques"
-        ],
-        "franchi": 2,
-        "pas": 0.25,
-        "arrive_dans": 5
+        "etat": "arrete",
+        "source": "routine"
       },
       "gerardys": {
         "salle": "table-peinte",
@@ -675,24 +628,10 @@
         "source": "routine"
       },
       "kerra-des-claies": {
-        "salle": "cour",
+        "salle": "baraques",
         "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "appartements-reine",
-        "vers": "baraques",
-        "vers_lieu": null,
-        "prochaine": "porte-dragon",
-        "route": [
-          "appartements-reine",
-          "tambour-de-pierre",
-          "cour",
-          "porte-dragon",
-          "baraques"
-        ],
-        "franchi": 2,
-        "pas": 0.5,
-        "arrive_dans": 4
+        "etat": "arrete",
+        "source": "routine"
       },
       "l-homme-de-la-merette": {
         "salle": "la-merette",
@@ -912,23 +851,10 @@
         "source": "routine"
       },
       "septa-marlow": {
-        "salle": "tambour-de-pierre",
-        "lieu": null,
-        "etat": "en-chemin",
-        "source": "routine",
-        "de": "septuaire",
-        "vers": "appartements-reine",
-        "vers_lieu": "Appartements de la reine, Peyredragon",
-        "prochaine": "appartements-reine",
-        "route": [
-          "septuaire",
-          "cour",
-          "tambour-de-pierre",
-          "appartements-reine"
-        ],
-        "franchi": 2,
-        "pas": 0.857,
-        "arrive_dans": 1
+        "salle": "appartements-reine",
+        "lieu": "Appartements de la reine, Peyredragon",
+        "etat": "arrete",
+        "source": "routine"
       },
       "sirel-quintaine": {
         "salle": "etal-de-sirel",
@@ -937,10 +863,10 @@
         "source": "routine"
       },
       "steffon-darklyn": {
-        "salle": "table-peinte",
-        "lieu": "Table Peinte, Peyredragon",
+        "salle": "grande-salle",
+        "lieu": "Grande salle, Peyredragon",
         "etat": "arrete",
-        "source": "scene"
+        "source": "routine"
       },
       "tobb": {
         "salle": "bourg",

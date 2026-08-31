@@ -72,6 +72,34 @@ function lireCroyance(nom, siege, defaut) {
   try { return JSON.parse(fs.readFileSync(p, "utf-8")); } catch (e) { return defaut; }
 }
 
+// Les mesures sont possedees par les maisons mais la regie les montre comme
+// un seul ensemble. Les ids restent globaux et un doublon est une faute.
+function lireMainsMaisons() {
+  let maisons = [];
+  try {
+    const brut = JSON.parse(fs.readFileSync(path.join(RACINE, "etat", "maisons.json"), "utf-8"));
+    maisons = (Array.isArray(brut) ? brut : (brut.maisons || []))
+      .map((m) => m && m.id).filter(Boolean);
+  } catch (e) {}
+  maisons.push("_sans-maison");
+  const resultat = [], vus = new Set();
+  maisons.forEach((maison) => {
+    const fichier = path.join(RACINE, "etat", "maisons", maison,
+      "documents", "mains.json");
+    if (!fs.existsSync(fichier)) return;
+    const brut = JSON.parse(fs.readFileSync(fichier, "utf-8"));
+    if (!brut || brut.maison_id !== maison)
+      throw new Error(fichier + " doit porter maison_id=" + maison);
+    (brut.mains || []).forEach((main) => {
+      if (!main || !main.id || vus.has(main.id))
+        throw new Error("main absente ou en double : " + ((main && main.id) || "?"));
+      vus.add(main.id);
+      resultat.push(Object.assign({ maison_id: maison }, main));
+    });
+  });
+  return resultat;
+}
+
 // L'heure de CE joueur. Le front de chacun vit dans `etat/horloges.json`
 // (tenu par scripts/append_flux.py) ; `monde.date` n'est que le minimum des
 // fronts — la date acquise pour tout le monde, celle du tick. Servir celle-là
@@ -114,4 +142,5 @@ function resoudrePresence(date) {
   return gens;
 }
 
-module.exports = { RACINE, PORT, MAX_FIL, cheminEtat, cheminNotes, lireCroyance, dateDe, resoudrePresence };
+module.exports = { RACINE, PORT, MAX_FIL, cheminEtat, cheminNotes,
+  lireCroyance, lireMainsMaisons, dateDe, resoudrePresence };

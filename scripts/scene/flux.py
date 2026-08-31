@@ -424,7 +424,8 @@ def reclamer_un_run(retarde, demandeur, ecart):
 # Sans elle, une joueuse apprendrait une nouvelle avant qu'elle ne soit arrivee
 # a l'autre, et le brouillard s'effondrerait par le temps au lieu de
 # l'information. On refuse, et l'on n'ecrit rien du tout.
-if mien and len(sieges) > 1:
+if (mien and len(sieges) > 1
+        and any(it.get("type") not in HORS_FICTION for it in items)):
     autres = min(minute_absolue(horloges[s]) for s in sieges if s != mien)
     for quand, quoi in ((minute_absolue(date), "est deja"),
                         (minute_absolue(simuler(date)), "passerait")):
@@ -750,9 +751,10 @@ def suivre_presence(it, quand):
     # l'ecran. Sans elle, la presence ne connaitrait que les gens explicitement
     # mis en scene, et tous ceux qui n'existent que par leurs repliques
     # resteraient hors du fichier : ni situes, ni situables.
-    for cle in ("locuteur_id", "acteur_id"):
-        if it.get(cle):
-            poser(it[cle])
+    if it.get("type") not in HORS_FICTION:
+        for cle in ("locuteur_id", "acteur_id"):
+            if it.get(cle):
+                poser(it[cle])
     # LE JOUEUR EST QUELQU'UN. Il n'a ni `locuteur_id` ni `acteur_id` — ses
     # items sont des `vous`, et les recits qui le suivent n'ont d'acteur du
     # tout —, si bien qu'il etait le seul de la salle a ne jamais bouger : la

@@ -1,0 +1,62 @@
+[
+  {
+    "ligne": 11303,
+    "type": "run",
+    "texte": "",
+    "attendu": {"decision": "aucun", "acceptable": ["aucun"]}
+  },
+  {
+    "ligne": 11306,
+    "type": "agir",
+    "texte": "Elle retient la seconde chute : une seule fois, aux barques, dans le troisième couplet, sans la faire chanter par Alys et sans toucher à son refrain. Elle fait porter que l'essai est accordé ; le reste du conseil attendra le résultat des bouches.",
+    "attendu": {"decision": "selection", "pointeurs": ["affaire-opinion-populaire-port-real#6000", "affaire-opinion-populaire-port-real#6200"], "hommes": ["alys-grive", "willa-sechoirs"]}
+  },
+  {
+    "ligne": 11310,
+    "type": "question",
+    "texte": "C’est principalement une erreur de l’agent, pas du dispatch : le réveil, l’inbox et le flux visaient bien Rhaenyra. Le MJ a demandé à Alys Grive un rapport pour la reine, mais lors de la correction il a repris dans le canal historique d’Alys une ancienne réponse explicitement destinée à dame Aurore, puis l’a poussée pour Rhaenyra. Donc : routage final correct, mauvaise sélection de source par le MJ. Le canal historique mélange des réponses destinées à différentes joueuses, sans référence de requête ni garde de destination. Écris dans tes fichiers problèmes les détails.",
+    "attendu": {"decision": "creation", "titre": "Intégrité de provenance des réponses multi-sièges", "joueurs_concernes": ["rhaenyra", "aurore-inchauspe"], "hommes": ["alys-grive"]}
+  },
+  {
+    "ligne": 11311,
+    "type": "question",
+    "texte": "??",
+    "attendu": {"decision": "continuer", "heritage_ligne": 11310}
+  },
+  {
+    "ligne": 11313,
+    "type": "question",
+    "texte": "relis tes affaires",
+    "attendu": {"decision": "selection", "pointeurs": ["affaire-opinion-populaire-port-real#6000", "affaire-opinion-populaire-port-real#6200"], "hommes": ["alys-grive"]}
+  },
+  {
+    "ligne": 11315,
+    "type": "question",
+    "texte": "okay continue la scène correctement (ps: format avec emojis pour les refs!)",
+    "attendu": {"decision": "continuer", "heritage_ligne": 11313}
+  },
+  {
+    "ligne": 11318,
+    "type": "question",
+    "texte": "tu es là?",
+    "attendu": {"decision": "continuer", "heritage_ligne": 11315}
+  },
+  {
+    "ligne": 11326,
+    "type": "run",
+    "texte": "",
+    "attendu": {"decision": "selection", "acceptable": ["affaire-deplacement-armee#20100", "affaire-jour-dentree#11000", "affaire-voir-venir#43001"]}
+  },
+  {
+    "ligne": 11327,
+    "type": "dire",
+    "texte": "Alors Sombreval attendra l'aube. Ne supposez ni Gunthor mort, ni son quai ouvert. Aucun nouvel ordre de débarquement ne part avant le retour des barques. À la première proue qui touche Peyredragon, vous me réveillez ; si aucune ne rentre, vous me réveillez tout de même.",
+    "attendu": {"decision": "selection", "pointeurs": ["affaire-deplacement-armee#20100"], "appui": ["affaire-jour-dentree#11000"], "hommes": ["gerardys", "gunthor-darklyn"]}
+  },
+  {
+    "ligne": 11328,
+    "type": "agir",
+    "texte": "Vous retournez la pièce de Sombreval, face peinte contre la table. Vous laissez seulement visibles la fumée rapportée au port et le trait des deux barques parties à l'aube. La ville cesse d'être une destination tenue ; elle devient une question datée de demain matin.",
+    "attendu": {"decision": "selection", "acceptable": ["affaire-deplacement-armee#20100", "affaire-jour-dentree#11000", "affaire-voir-venir#43002"], "hommes": ["gerardys", "gunthor-darklyn"]}
+  }
+]

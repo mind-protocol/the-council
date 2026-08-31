@@ -1,0 +1,479 @@
+{
+ "id": "affaire-rendre-les-murs-solides",
+ "titre": "Rendre les murs solides",
+ "sous_titre": "🧭 Deuxième affaire de **BARRALFOND**, tenue par NICOLAS REYNOLDS, l'Équerre. Ouverte à la Souche le 3e jour de la 4e lune, an 129, à midi. Plage 91000 à 91999. Porte sur le MOTEUR ; ne touche rien de `etat/`.",
+ "type": "plan",
+ "embleme": "🧱",
+ "couleur": "#7a6a58",
+ "lieu_id": "barralfond",
+ "salle_id": "la-souche",
+ "tenu_par": "nicolas-reynolds",
+ "office": "Le grain — ce qui est gravé sous l'écorce, et qui fait la loi de ce qui existe",
+ "pages": [
+  "AFFAIRE OUVERTE À LA SOUCHE, LE 3e JOUR DE LA 4e LUNE, AN 129, À MIDI.\n\n**CE QU'ON VEUT.** Qu'un homme cesse de traverser le bâti. Le mur arrête, la rue mène, et le chemin d'un homme contourne ce qui est plein au lieu de passer au travers.\n\n**POURQUOI C'EST PLUS GRAVE QUE ÇA N'EN A L'AIR.** Tout ce qu'on lit sur la vue de bataille suppose que le bâti tienne : la ligne qui cède, la rue qui bouchonne, la panique qui court d'une porte à l'autre. Un homme qui traverse un mur ne fait pas seulement une faute d'image — il rend faux le compte de la foule, la vitesse de la panique, et le temps qu'un assaut met à atteindre une porte. **Chaque chiffre de l'affaire 90000 repose là-dessus.**\n\n**LE PIÈGE, ET IL EST NOMMÉ D'AVANCE.** Un chemin qui contourne coûte cher, et la tentation sera de le payer en cadence. D'où 🎯 91200, posé à égalité avec les deux autres : l'étalon de cadence se prend **avant** qu'on touche à quoi que ce soit, sinon on ne saura jamais ce qu'on a perdu.",
+  "**LA COLONNE DES VERROUS EST VIDE, ET ELLE LE RESTE JUSQU'À CE QUE BREN REMONTE.**\n\nC'est la leçon de l'affaire d'à côté, payée le jour même : j'y avais gravé deux verrous d'en haut, et les deux étaient faux — « les couches ne conduisent rien » alors qu'elles en conduisent quatorze, et un compte de lignes qui ne comptait que des commentaires. Un verrou gravé depuis la Souche est un trou mécanique, et un trou mécanique ne vaut rien.\n\nCe que je sais et qui n'est PAS un verrou, seulement une adresse pour Bren : `bataille2d.js` connaît déjà le bâti — il le compte, il le force, il le brûle (`bati.etat`, `bati.forcees`, l. 1504, 3567, 3594) —, et il porte l. 581 la phrase « on fuit par la rue, parce qu'il y a des murs ». Le bâti est donc **connu du code sans lui être opposé**. Où exactement, c'est à lui de le dire."
+ ],
+ "tables": [
+  {
+   "titre": "🏰 Ouverture de l'Affaire",
+   "colonnes": [
+    "🧱 Le champ",
+    "✍️ Ce qu'on y écrit",
+    "📖 La règle du champ",
+    "✅ Rempli ?"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "🏷️ **LE NOM**",
+      "Rendre les murs solides",
+      "Le sujet dont on traite, **jamais la solution**.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🎯 **L'OBJET**",
+      "Qu'un homme cesse de traverser le bâti. Le mur arrête, la rue mène, et le chemin d'un homme contourne ce qui est plein au lieu de passer au travers.",
+      "Ce qu'on veut obtenir, en une phrase, mesurable.",
+      "**oui**"
+     ]
+    },
+    {
+     "cellules": [
+      "🧱 **LE PÉRIMÈTRE — DANS**",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "🚫 **LE PÉRIMÈTRE — HORS**",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "📌 **L'ÉTAT ACTUEL**",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "🔢 **LA PLAGE**",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "💡 **LA CONCLUSION**",
+      "",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "🔚 **FERMÉE QUAND**",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔗 Affaires liées — les liens écrits, puis les calculés",
+   "colonnes": [
+    "🪢 Le lien",
+    "🔗 L'affaire",
+    "🔢 Notre pièce",
+    "🔢 La leur",
+    "📝 Pourquoi"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "⛓️ Ce qui pend, et sur qui — calculé, ne pas écrire à la main",
+   "colonnes": [
+    "🧭 Sens",
+    "🔢 Notre pièce",
+    "🔢 La leur",
+    "🔗 L'affaire"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "—",
+      "",
+      "",
+      "rien ne traverse"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔨🪶 Ce qu'on engage, et qui d'autre le veut — calculé, ne pas écrire à la main",
+   "colonnes": [
+    "🔢 La pièce",
+    "⚔️ Nos actions",
+    "🔗 Aussi engagée par"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "—",
+      "",
+      "aucun moyen, aucun office"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🕳️ Les trous — calculé, ne pas écrire à la main",
+   "colonnes": [
+    "🕳️ Le défaut",
+    "🔢 Les pièces"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "🔒 verrou qu'aucune clef n'ouvre — il est mal nommé",
+      "🔒 91001 · 🔒 91002 · 🔒 91003 · 🔒 91004 · 🔒 91005 · 🔒 91006 · 🔒 91007 · 🔒 91008 · 🔒 91009 · 🔒 91012 · 🔒 91013 · 🔒 91014 · 🔒 91015 · 🔒 91020"
+     ]
+    },
+    {
+     "cellules": [
+      "🔤 office ou moyen nommé en clair — écrire son numéro, sans quoi le lien n'existe pas pour la machine",
+      "⚔️ 91010 · ⚔️ 91011 · 🔒 91020 · ⚔️ 91021 · ⚔️ 91030 · ⚔️ 91210"
+     ]
+    },
+    {
+     "cellules": [
+      "↗️ raccourci — le renvoi saute un rang de la chaîne du guide",
+      "⚔️ 91010 · ⚔️ 91011 · ⚔️ 91021 · ⚔️ 91030 · ⚔️ 91210"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🎯 États cibles",
+   "colonnes": [
+    "🎯 N°",
+    "🎯 L'état",
+    "📏 La preuve",
+    "📅 Jour dû",
+    "💯 Importance"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**91000**",
+      "**Le bâti arrête**",
+      "Sur une cuisson entière : zéro homme relevé à l'intérieur d'un bâti, et zéro segment de pas qui le **traverse**. Le compte s'appelle les **traversées**. ⚠ Deux mots repris le 3e, avant que le fer ne grave : (1) l'état disait « Le mur arrête », or `mur` porte déjà deux choses dans `bataille2d.js` — l'enceinte (l. 3830, 3999, 4833 : « hors les murs », « à l'intérieur des murs », « une ville dont les murs arrêtent une armée mais pas ses habitants ») et la paroi d'une maison (l. 2048, 4874) —, et l'enceinte, elle, arrête déjà : ce qu'on veut opposer est le BÂTI ; (2) la preuve disait « qui le franchisse », or `franchir` est réservé dans ce moteur aux seuils de nombre (8 emplois sur 11 : « le seuil franchi », « franchir les paliers », « franchissent la barre »), et demandait donc un compte de seuils. La faute physique se dit `traverser`, comme partout ailleurs (« traverser la rue », « longer un mur et le traverser en diagonale »).",
+      "J−0",
+      "**25**"
+     ]
+    },
+    {
+     "cellules": [
+      "**91100**",
+      "**La rue mène**",
+      "Un homme qui vise un point derrière un pâté de maisons y arrive par la rue, et le compte de ceux qui n'arrivent jamais ne monte pas.",
+      "J−2",
+      "**25**"
+     ]
+    },
+    {
+     "cellules": [
+      "**91200**",
+      "**Ça reste jouable**",
+      "La cadence de cuisson ne tombe pas sous celle d'aujourd'hui, mesurée avant qu'on touche à quoi que ce soit.",
+      "J−1",
+      "**20**"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔒 Verrous",
+   "colonnes": [
+    "🔒 N°",
+    "🔒 Le verrou",
+    "🎯 Bloque",
+    "🔎 La preuve"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**91001**",
+      "Une maison est un POINT : son emprise au sol est lue, puis jetée au chargement",
+      "91000",
+      "`monde/portreal.bati.json` porte 16 colonnes pour 45 691 bâtis, dont `facade_m`, `profondeur_m` et `cap` — l'emprise. `chargerBati` (bataille2d.js l. 6390-6434) n'en retient que quatre (`porte_x`, `porte_y`, `usage`, `etages`) et l'écrit : « le reste ne sert pas à enfoncer un huis ». Le module n'a donc aucune surface à opposer : chez lui un bâti EST un point de porte. La boîte tournée est pourtant déjà construite sur ces trois colonnes-là, ailleurs dans le dépôt — `ecrans/modules/monde/bati.js` l. 105-119, et `relief.js` l. 208."
+     ]
+    },
+    {
+     "cellules": [
+      "**91002**",
+      "Les neuf écritures de position ne consultent jamais le bâti",
+      "91000",
+      "La position d'un homme n'est écrite qu'en neuf points de bataille2d.js : l. 2041 (butée), 2056 et 2059 (`pousser`), 2157 (`versLe`), 3675 (rail de colonne), 3870 (messager), 4919, 4920 et 4935 (`marcher`). Aucune ne nomme `bati`. Les quatre endroits où `bati` touche au mouvement — l. 1504, 3567, 3594, 6463 — le comptent, le forcent, le brûlent et vont à sa porte ; pas un ne le franchit ni ne l'arrête. Un seul goulot : `versLe` porte 21 des 22 déplacements libres."
+     ]
+    },
+    {
+     "cellules": [
+      "**91003**",
+      "Sur le rail, l'homme est POSÉ et non déplacé : une butée y serait effacée au battement suivant",
+      "91000",
+      "l. 3675-3676 — `h.x = q[0] + q[2] * h.cote * demi` : un homme en colonne n'avance pas, on le pose à son `avance` sur la trace. Même forme l. 3870 (messager) et 4935 (`marcher`). Toute opposition écrite comme correction de position — la forme de la butée, `h.x += …` l. 2041 — est donc muette pour ceux-là, sans erreur ni trace. Or le rail est aujourd'hui la seule chose qui tienne un homme hors des murs, et il ne couvre que trois branches des vingt-deux qui déplacent."
+     ]
+    },
+    {
+     "cellules": [
+      "**91004**",
+      "Il n'existe de chemin par les rues que vers le Donjon ; toute autre visée va tout droit",
+      "91100",
+      "`J.chemin(voirie, …)` n'est appelé que deux fois dans tout le module — l. 1987 et 3860 — et toujours d'une porte vers `objectif`. Le reste vise en ligne droite par `versLe` : repli (l. 3243, 3435), retour au poste (3184, 3375, 3440, 3467), verrou de rue (3522-3532), coureur d'ordre (4613), pillage jusqu'à 26 m (6463, qui pose `h.surVoie = false` avant de partir). Seule la déroute passe par `marcher()`, qui n'est pas un chemin mais une descente gloutonne de carrefour en carrefour : `choisirLien` (l. 4891) prend le voisin le plus proche du but et se borne à ne pas faire demi-tour."
+     ]
+    },
+    {
+     "cellules": [
+      "**91005**",
+      "La grille du bâti est rangée sur les portes : elle ne sait pas répondre « qu'y a-t-il de plein ici »",
+      "91200",
+      "`chargerBati` case chaque bâti dans une maille de 40 m au point de sa PORTE (l. 6416-6430 : `casier(i)` sur `x[i]/y[i]`, qui valent `porte_x/porte_y`). Une maison de 17 m de façade sur 26 m de profondeur déborde donc sur des casiers où elle n'est pas rangée, et `maisonLibre` (l. 6487) n'y cherche qu'une porte proche — jamais un recouvrement. L'index qui existe ne sert pas la question du plein ; le rebâtir au bon rayon est exactement la dépense qui menace la cadence, à vingt pas par seconde et neuf mille cinq cents hommes."
+     ]
+    },
+    {
+     "cellules": [
+      "**91020**",
+      "**Le bâti n'a pas de forme** — une maison est un point de porte, il n'y a rien à opposer à un pas",
+      "91000",
+      "Compté sur le disque et non gravé d'en haut : `bataille2d.js` l. 6393-6431, le chargement du bâti. Chaque maison tient en `x`, `y`, `val`, `etat`, `usage` — et le commentaire l. 6403 dit lui-même de quel point il s'agit : « **LA PORTE, PAS LE CENTRE.** On force un huis, on ne se matérialise pas au milieu du salon ». Ni largeur, ni contour, ni polygone : `n` points de porte rangés dans une grille plate de 40 m. L'action ⚔️ 91020 — « rendre le bâti opposable au pas » — n'a donc aujourd'hui aucun objet auquel s'opposer, et aucune nappe ne le dira à la place de qui ouvre le fichier. Se lèverait en portant l'empreinte au sol depuis la source du bâti (les `_colonnes` livrent déjà `x`, `y`, `porte_x`, `porte_y`, `usage`, `etages` — jamais une largeur), ou à défaut en donnant à chaque maison un rayon tiré de `usage` : mais ce serait un choix, et un choix se dit avant d'être écrit. ⚠ Ce verrou porte le même numéro que l'action qui le réalise, suivant l'usage de l'affaire d'à côté (90310, 90320, 90110)."
+     ]
+    },
+    {
+     "cellules": [
+      "**91006**",
+      "Le « zéro traversée » de 91000 contredit TROIS renoncements déjà écrits, mesurés et assumés dans le code",
+      "91000",
+      "Trois fois la maison a écrit noir sur blanc qu'un homme passerait au travers plutôt que de ne pas arriver, et les trois tiennent encore. (1) `enterrer` (bataille2d.js l. 6297-6317) rend les arêtes sous les toits vingt-cinq fois plus chères — un COÛT, pas une interdiction : « l'A* les prendra quand même s'il n'y a rien d'autre — ce qui est le bon comportement : une impasse vaut mieux qu'un chemin qui n'existe pas ». Mesuré : 1,4 % du réseau court sous le bâti, trente-cinq arêtes enfouies aux trois quarts. (2) La déroute renonce : `RENTRE_MAX = 300` (l. 587) « au-delà, on renonce et l'on se terre où l'on est », et le dernier bout se fait droit (l. 5052) « le carrefour n'est pas la porte, et l'on finit toujours par traverser sa rue ». (3) Un point injoignable se rend en ligne droite (journee.js l. 449-451), parce que chercher coûte un tiers de seconde. La preuve de 91000 exige zéro. Ou bien elle prend une tolérance chiffrée, ou bien ces trois-là tombent — et chacun a été payé une fois."
+     ]
+    },
+    {
+     "cellules": [
+      "**91007**",
+      "L'étalon de cadence n'est pas prenable en l'état : la même charge cuit de 558 s à 1 417 s",
+      "91200",
+      "Compté sur disque, sept manifestes portent `cuisson_s` (gravé par sac.js l. 865). **CINQ** cuissons — et non quatre — ont exactement la même charge nominale (1 700 hommes, 600 s, 2 550 corps) : 558,5 s (`essai.reference`), 658,2 s (`portreal.essai-inertie`), 777,6 s (`essai.reserve`), 1 112 s (`essai.releve`), 1 416,8 s (`portreal.sac`). **DATÉES LE 3e, L'ÉCART EST EXPLIQUÉ, ET IL EST PIRE QUE PRÉVU.** (1) Le commit 745c8eb du 14e à 22h11 retire PORTE_OUVERTE_ESSAI ; `reference` (21h08), `reserve` (21h37) et `releve` (21h59) lui sont antérieures — elles ont cuit une autre bataille et ne sont comparables à rien, exactement comme le drapeau l'a déjà enseigné. (2) Restent `essai-inertie` (22h25) et `sac` (23h10) — et **leurs deux binaires ont le même md5** `6f28ddd6…` : 2 688 518 octets, 205 828 images, 214 morts, 38 forcées, 88 de butin, dix-sept branches au même compte. La même cuisson, deux fois, au bit près, à **×2,15**. Il n'y a donc AUCUN comparable dans le lot, et il n'y en aura pas avec dix cuissons de plus : le protocole proposé ici à midi — tenir tout constant et cuire trois fois — a déjà été couru sans qu'on le sache, et il échoue. Ce verrou ne se lève pas par ⚔️ 91210 mais par 🔒 **91009**, qui en donne la cause."
+     ]
+    },
+    {
+     "cellules": [
+      "**91008**",
+      "Le test de boîte tournée EXISTE, écrit et mesuré — et il est derrière une cloison étanche : Ygga va le réécrire à neuf, sans les erreurs déjà payées",
+      "91000 91200",
+      "Lu sur le disque le 3e, pas supposé. `ecrans/modules/monde/bati.js` l.147-173, `viser(rai, portee)` : le rai contre la boîte tournée d'un bâti, avec TROIS erreurs déjà payées et écrites en clair — (a) le rejet en gros par sphère avant le test exact, parce que le raycast d'`InstancedMesh` inversait 48 000 matrices par interrogation, « cinquante millisecondes, un hoquet à chaque fois qu'on bouge la souris » (l.83-91) ; (b) `demiF`/`demiP`/`cos`/`sin`/`basZ`/`hautZ` tenus en `Float32Array` de module et non en fermetures, parce que « quelques centaines d'objets jetés à chaque visée et dix visées par seconde » arrêtaient le ramasse-miettes en plein mouvement (l.50-55) ; (c) le retrait à **0,98 et non 0,94**, parce qu'à 6 % « le Culpucier rendait un demi-mètre de fossé qu'aucune donnée ne demandait » (l.101-104). MAIS IL EST INATTEIGNABLE : `bati.js` n'exporte que `MONDE_DEFAUT` et `batir()` (l.48 et l.65, vérifié — il n'y a pas d'autre `export`), et `viser` ne sort que dans l'objet retourné par `batir()`, aux côtés de deux `InstancedMesh` Three.js. Or `bataille2d.js` n'importe **ni** `monde/bati.js` **ni** `three` : zéro occurrence de l'un, zéro de l'autre. L'appeler traînerait tout Three.js dans le moteur 2D. Conséquence si rien n'est fait : ⚔️ 91020 produit un second test de boîte, écrit sans ces trois mesures, et la maison en porte deux qui divergeront — le rendu dira qu'un point est dans la maison quand la bataille dira que non. Ce qui le lèverait : sortir la géométrie pure de `bati.js` — la construction des demi-mesures et `fente()`, qui ne touchent pas à Three — dans un module tiers que les deux importent ; ou, à défaut de temps d'ici J−1, qu'Ygga lise l.50-55, 83-124 et 158-170 avant d'écrire sa première ligne et reporte les trois mesures à la main, en le disant dans son en-tête."
+     ]
+    },
+    {
+     "cellules": [
+      "**91009**",
+      "**`cuisson_s` est une horloge de mur, pas une mesure de travail** — les trois postes réellement chronométrés sont calculés à chaque cuisson, imprimés à l'écran, puis jetés",
+      "91200",
+      "Lu dans le fer le 3e, pas supposé. `scripts/monde/sac.js` l. 658 : `const CHRONO = { sim: 0, fil: 0, tour: 0 }`, rempli au `performance.now()` l. 678 (simulation), 683 (tournée) et 692 (images clefs) — puis imprimé à `stdout` l. 713-715 et **jamais gravé**. Seul l. 716 `const cuisson = (Date.now() - t1) / 1000` atteint le manifeste, l. 865, et cette horloge compte aussi ce à quoi la boucle rend la main toutes les 2 s (`CEDER`, l. 673). **Preuve que les deux ne mesurent pas la même chose :** `portreal.essai-inertie` et `portreal.sac` produisent le MÊME binaire (md5 `6f28ddd6…`, 2 688 518 octets, 205 828 images, 214 morts, 88 de butin, branches identiques) pour 658,2 s et 1 416,8 s — ×2,15 sur un travail identique au bit près. **Une seule cuisson sur sept garde le détail**, hors du manifeste, dans `analyse/etalon-90110/cuisson-1.txt` : simulation 1 064,5 s · images clefs 225,0 s · tournée 126,8 s = 1 416,3 s pour un `cuisson_s` de 1 416,8 — la simulation pèse les trois quarts, et c'est le seul poste qu'un changement de chemin ferait bouger. **Se lèverait en gravant les trois postes au manifeste** (sac.js l. 865, office du fer — Ygga), après quoi ⚔️ 91210 se pose sur `sim` et non sur l'horloge, et 91200 redevient mesurable."
+     ]
+    },
+    {
+     "cellules": [
+      "**91012**",
+      "**Le manifeste grave six champs, et DOUZE réglages hors manifeste changent ce que cuit une nuit** — deux cuissons dont les six champs concordent ne racontent pas forcément la même nuit",
+      "91200 91000",
+      "Lu dans le fer le 3e, les quatre sources dépouillées, pas supposé. **CE QUE LE MANIFESTE GRAVE** (`sac.js` l. 865) : `porte`, `hommes`, `duree_s`, `pas_s` (=PAS, l. 53), `tolerance_m` (=TOLERANCE, l. 52), `binaire.tranche_s` (=`--tranche`, l. 774). Six. **CE QU'IL NE GRAVE PAS, ET QUI CHANGE LA NUIT** — (1) `--peuple`, `sac.js` l. 64, défaut **1 = allumé** : toute la ville, panique, foyers, recrutement de fuyards par `B.derange` l. 647 ; à 0 la bataille se joue dans une ville vide. NON TRACÉ (une ligne d'écran l. 607-609, rien au fichier). (2) **L'heure et le jour de la ville**, l. 605-606, lus en direct sur `/carte` donc sur `etat/monde.json` : la journée écrite de chaque habitant en dépend (l. 629-630). NON TRACÉ — *voir 91013*. (3) `--tournee`, l. 64, défaut 3 s → `PAR_TOURNEE` l. 672 : à quelle cadence on recrute de nouveaux effrayés. NON TRACÉ. (4) `--serveur`/`--source`, l. 58-60, défauts `localhost:3129` et `/monde` : la voirie, le `plan2d` et le bâti viennent d'un serveur **vivant** — que `plan_ville.py` repasse, et la même commande cuit une autre ville. NON TRACÉ, aucune empreinte du graphe au manifeste. (5) `CHAINE`, l. 100-107 : quelles couches sont posées. `bataille2d.js` les prend sous **garde muette** — l. 2961 `if (window.BatailleCorps)`, l. 3406 `if (window.Interpretation && e)` : un fichier ôté de la liste, et la nuit cuit sans la couche, SANS ERREUR. NON TRACÉ. (`window.Envie` l. 1431 n'est pas gardé, lui : absent, il casse — c'est la bonne forme.) (6) `PORTE_OUVERTE_ESSAI`, `bataille2d.js` l. 318, **`false` aujourd'hui** : ouvre la porte au premier instant, avale la cascade de `deciderLesTetes` au deuxième rang et supprime la mêlée du seuil ; c'est lui qui sépare l'étalon 5/5/14/54 de ce qui le précédait. NON TRACÉ. (7) `USURE`, l. 297, `{\"La porte de la Gadoue\": 0.10}` : 9 000 pv de verrou → 900, deux minutes de hache → douze secondes — et c'est la porte PAR DÉFAUT du four. Le manifeste dit `porte`, jamais dans quel état on l'a prise. NON TRACÉ. (8) `pilote: true`, `bataille/corps-adapt.js` l. 369, avec le branchement `bataille2d.js` l. 3020-3100 : la couche 1 conduit sidération, fuite, recul, serrer, ruée et bras ballants ; le seuil de 0,6 d'emprise **retiré**, elle prend tout le monde au lieu de 3 %. C'est le réglage qui a fait passer la relecture de 0,600 m à 329 m d'écart pire. NON TRACÉ. (9) `GRAINE = 20161219`, `bataille/hasard.js` l. 32, et `semer(g)` l. 37 qui accepte n'importe quelle graine ; `bataille2d.js` l. 1461 l'appelle nu, donc elle est fixe **aujourd'hui** — rien n'interdit d'en passer une, rien ne l'écrirait. NON TRACÉ. (10) Les mesures nues qu'aucun manifeste ne porte : `VERROU_PV = 9000` l. 282, `HACHE = 11` l. 319, `ACTOR_AVERAGE_PV = 35` et `CADENCE = 0,9` et `DEGAT = [14,30]` dans `bataille/mesures.js` l. 98-119 — pas des drapeaux, mais une main qui les bouge rend muette toute la série d'avant. NON TRACÉES. **ET DEUX QUI NE CHANGENT QUE LE FICHIER, PAS LA NUIT** — (11) `--planches`, l. 64, défaut 0 : écrit des planches et sert un port pendant la cuisson ; le commentaire le dit lui-même, « une mesure qui écrit des fichiers sur le côté ne mesure plus ce qu'on croit ». Change `cuisson_s`. NON TRACÉ. (12) `PLAFOND_BUF = 400`, l. 54, employé l. 208-209 : combien d'images clefs on retient avant de fermer. Change `images` et `octets`. NON TRACÉ. **CE QUE ÇA COÛTE, COMPTÉ SUR LE DISQUE** : trois manifestes de charge nominale identique — La porte de la Gadoue, 1 700 hommes, 600 s, 2 550 corps, `pas_s` 0,05, `tolerance_m` 0,5, les six champs mot pour mot les mêmes — rendent `images` 253 257 / 82 167 / 294 274 et `cuisson_s` 558,5 / 1 112 / 777,6. **CE QUI LÈVERAIT** : au manifeste, six lignes de plus — la graine ; l'heure et le jour de la ville ; `peuple` et `tournee` ; les fichiers de `CHAINE` avec leur empreinte ; l'état de `PORTE_OUVERTE_ESSAI`, `USURE` et `pilote` ; `planches`. Une empreinte des sources fait les trois dernières d'un coup. `scripts/bataille.py` n'ajoute rien : il passe les arguments tels quels au four (l. 164-172) et ne rattrape donc aucun de ces douze."
+     ]
+    },
+    {
+     "cellules": [
+      "**91013**",
+      "**L'heure de la ville est lue en direct et n'est ni fixée ni écrite** — sans qu'on touche une ligne, la même commande ne cuit pas la même nuit deux jours de suite",
+      "91200",
+      "Lu dans le fer le 3e. `scripts/monde/sac.js` l. 605-606 : `jour0 = (d.date && d.date.jour) || 1` et `min0 = d.date.minute`, où `d` est la réponse de la route **`/carte`** — donc `etat/monde.json`, qui porte à cette heure `{annee 129, lune 4, jour 3, minute 721}`, midi une. `tournee()` l. 629-630 en tire `minute` et `jour` et les passe à `J.ou(cel, k, jour, minute, …)` : c'est la **journée écrite** de chaque habitant qui décide qui se trouve dans la rue quand le fer arrive. À huit heures les rues sont pleines, à deux heures du matin elles sont vides ; la tournée recrute donc un nombre tout autre de fuyards, et la panique se propage autrement (`RUMEUR_MIN = 2`, `bataille2d.js` l. 590). Cet état **dérive tout seul** : la partie avance, `etat/monde.json` avance, et une cuisson de ce midi n'est déjà plus comparable à une cuisson d'hier matin sans que personne ait rien modifié. C'est le seul des douze de 91012 qui soit dans cet état aujourd'hui. **ET IL NE SE RÉPARE PAS EN L'INSCRIVANT** : l'écrire au manifeste dit *pourquoi* deux chiffres diffèrent, il ne les rend pas comparables. Il faut le FIXER — une option `--heure` (et `--jour`) avec un défaut gravé, l'heure retenue étant écrite au manifeste par surcroît. Sinon aucun étalon de cadence ne survit à une nuit de partie."
+     ]
+    },
+    {
+     "cellules": [
+      "**91014**",
+      "**Le four n'a pas de porte : ses réglages ne sont pas déclarés, et un réglage inconnu est avalé sans un mot** — tout drapeau qu'on ajoutera pour tenir l'heure ou la graine sera ignoré en silence s'il est mal frappé",
+      "91200",
+      "Lu dans le fer le 3e, pas supposé. `scripts/monde/sac.js` l.65-68 : une boucle à la main sur `process.argv`, et `if (c in o) o[c] = ...`. Un drapeau qui n'est pas déjà une clef de l'objet des réglages n'est ni pris, ni signalé — il est SAUTÉ. `--graine 7` passé au four aujourd'hui ne fait rien du tout, en silence. Même chose pour toute valeur aberrante : rien ne la contrôle. **LE PRÉCÉDENT DU REFUS EXISTE ET IL EST DANS LA MAISON** — `scripts/monde/plan_ville.py` l.2067-2072 : `argparse` déclare `--lieu`, `--sortie`, `--rectifier` avec `choices=('plein','filet','aucun')` ; une valeur inconnue OU un drapeau inconnu arrêtent le programme AVANT la cuisson, avec le message. C'est exactement la forme que Toll réclame pour la graine (`corps-adapt.js` l.350) et que 🔒 91013 réclame pour l'heure : les deux se posent au même endroit, `sac.js` l.64-68, et non chacune dans son coin. Ce qui lèverait : déclarer les réglages du four — nom, type, valeurs admises, obligatoire ou non — et sortir en erreur sur l'inconnu comme sur le manquant."
+     ]
+    },
+    {
+     "cellules": [
+      "**91015**",
+      "**Aucune cuisson ne dit sous quelle CHARGE de machine elle a cuit** — la charge seule fait ×3,6 sur la même cuisson, davantage que l'écart entre les sept cadences gravées, donc aucune des sept ne se compare à une autre",
+      "91200",
+      "Mesuré le 129.4.3 sur le même banc et le même travail, pas supposé — `analyse/etalon-90110/deux-causes.js`, tel-quel, 1700 hommes, 150 s. **Machine libre : 92,3 s puis 93,8 s** à deux heures différentes — l'instrument est stable à **1,6 %** près. **Le même banc pendant que la cuisson de 600 s de l'Équerre occupait la machine : 175,5 s puis 333,6 s**, pour un travail de même taille (172, 175 et 177 faits). **×3,6 sans qu'une ligne de source ait bougé.** Or 🔒 91007 relève 558,5 s à 1 417 s sur cinq cuissons de charge nominale identique, soit **×2,54** : le facteur machine SUFFIT à couvrir tout l'écart qu'on attribuait au code. Et le manifeste ne grave que `cuisson_s` (`sac.js` l.865), une horloge de mur, ni la charge ni les trois postes chronométrés qui existent pourtant (🔒 91009). **Vérification dans l'autre sens, et elle tient : les COMPTES ne bougent pas d'une unité sous la charge** — seule la cadence se déforme, et toujours vers le haut. Ce qui le lèverait : que la cuisson relève l'occupation de la machine à son début et à sa fin et la grave à côté de `cuisson_s` ; à défaut, qu'aucune cadence ne soit gravée sans qu'un homme ait regardé la charge d'abord — c'est ce qui a été fait le 3e, un `node` orphelin de 31 minutes ayant été trouvé et tué avant toute mesure."
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "⚔️ Actions",
+   "colonnes": [
+    "⚔️ N°",
+    "⚔️ L'action",
+    "⬆️ Réalise",
+    "🪶 L'office",
+    "📅 Jour dû",
+    "✅ État",
+    "📅 Jour fait",
+    "📝 Note"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**91010**",
+      "Descendre la nappe du déplacement : par où passe un pas, ce qui le borne aujourd'hui, et où le bâti est connu du code sans être opposé",
+      "91000 91100",
+      "Bren Racine-Grise",
+      "J−4",
+      "en cours",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "**91011**",
+      "Relire les anneaux : ce qui a déjà été tenté sur les murs et le chemin, la forme retenue, ce qu'il en est resté",
+      "91000",
+      "Sarn Vieux-Sang",
+      "J−4",
+      "faite",
+      "3e",
+      "le 3e — LA FORME QUI A TENU A UN NOM, ET CE N'EST PAS D'OPPOSER. Quatre fois la maison a voulu tenir un homme hors d'un plein par la ligne droite ; deux fois elle a retiré (`DETOUR_RUE = 1,4`, le seuil d'emprise), et ce qui est resté est payé UNE FOIS hors ligne : l'axe des rues poussé hors des façades, jamais un blocage au pas. D'où 🔒 91006. Repris l'après-midi du 3e, sur demande, côté cadence (91200) : l'archéologie des cuissons est faite et rendue. Les cinq à charge nominale se datent contre le commit 745c8eb du 14e à 22h11 (retrait de PORTE_OUVERTE_ESSAI) : trois avant — nulles —, deux après, qui sont la même cuisson deux fois et rendent le même binaire à ×2,15 d'écart. Aucun comparable n'existe. La cause est trouvée et gravée en 🔒 91009 : le manifeste écrit l'horloge du mur et jette les trois postes du travail, que sac.js calcule déjà. Le facteur est expliqué ; il ne se corrige pas par de la mesure, mais par trois lignes de fer. REPRIS UNE TROISIÈME FOIS LE 3e AU SOIR, SUR LA DEMANDE DE L'ÉQUERRE, POUR 🔒 91013 — ET LA QUESTION ÉTAIT MAL POSÉE. On me demandait comment `plan_ville.py` et `besoins.py` DATENT leur sortie : ILS NE LA DATENT PAS. 2 104 + 648 lignes dépouillées, aucun `datetime`, aucun `time.time`, aucun `strftime` ; sur tout `scripts/monde/`, les seuls appels à l'horloge sont un affichage (`peyredragon.py`), une durée d'étape (`pipeline.py`) et une légende d'image (`planches.py`) — aucun n'écrit dans `monde/`. LA FORME QUI A TENU EST DE N'EN LIRE AUCUNE. L'heure est écrite EN ENTRÉE : `besoins.py` l.120, `heures=[375, 720, 1110]`, des minutes du jour gravées dans la source, une par ligne de besoin ; et le consommateur la reçoit en ARGUMENT — `journee.js`, `ou(cel, k, jour, minute, …)`, fonction pure, appelée ainsi par `sac.js` l.658. Même geste pour le hasard, et il est commenté : `plan_ville.py` l.1128, `_melange(k)`, « même rang, même maison, toujours » — la graine sort de l'identité de la chose ; `random` n'est importé nulle part. ELLE SE TRANSPOSE AU FOUR, EN TROIS LIGNES : `sac.js` l.64 (déclarer `jour` et `minute` dans les réglages), l.614-615 (là où `jour0 = (d.date && d.date.jour) || 1` et le repli muet à 480 : prendre l'argument, et refuser de cuire s'il manque et que `/carte` ne répond rien), l.848 (graver `jour` et `minute` au manifeste à côté de `porte`/`hommes`/`duree_s`/`pas_s` — 🔒 91012 y perd deux de ses douze). CE QUI NE SE TRANSPOSE PAS, et il faut le dire à Ygga avant qu'elle écrive : chez eux la sortie se refait à l'identique depuis les fichiers de `monde/`, il n'y a donc rien à inscrire ; le four prend son heure SUR LE FIL, du serveur (`serveur.js` l.3006, route `/carte`) qui lit un `etat/` qui bouge. Il doit donc l'ÉCRIRE et pas seulement la lire. Trouvé en chemin et gravé en 🔒 91014 : `sac.js` l.68 avale tout réglage inconnu sans un mot, quand `plan_ville.py` l.2070 refuse déjà de cuire sur une valeur inconnue — le précédent de refus que Toll cherche pour la graine est dans la maison"
+     ]
+    },
+    {
+     "cellules": [
+      "**91210**",
+      "Poser l'étalon de cadence AVANT tout changement : combien coûte une nuit aujourd'hui",
+      "91200",
+      "Toll Œil-Noir",
+      "J−3",
+      "à faire",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "**91020**",
+      "Rendre le bâti opposable au pas, et faire contourner",
+      "91000 91100",
+      "Ygga Main-de-Pierre",
+      "J−1",
+      "à faire",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "**91021**",
+      "Compter les traversées sur une cuisson entière, avant et après, avec la cadence",
+      "91000 91200",
+      "Toll Œil-Noir",
+      "J−0",
+      "à faire",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "**91030**",
+      "Nommer ce qui sort : le mur, le pas, le contournement — avec les mots écartés",
+      "91000",
+      "Wenna la Nommeuse",
+      "J−0",
+      "en cours",
+      "",
+      "VOCABULAIRE DU BÂTI CLOS le 3e, avant qu'Ygga écrive. Cinq mots, chacun avec ses écartés et leur compte. (1) `empreinte` pour le rectangle au sol (facade_m × profondeur_m tourné du cap) — et confirmé pour une meilleure raison qu'hier : `foule2d.js` l.73 l'emploie déjà au bon sens, dans le moteur, à côté d'Ygga. Écartés : `emprise`, recompté — non pas 39 emplois mais 141 sur 35 fichiers, et pris par DEUX camps légitimes, la prise du corps (`survival-stack`, et `bataille2d.js` l.6869 porte déjà `empriseCorps`) ET l'étendue bâtie au sol (`densifier.py`, `annexes.py`, `organique.py`, `peupler.py` disent « l'emprise bâtie » dans le sens exact d'Ygga) : elle écrirait le seul mot que les deux moitiés de son propre fichier se disputent ; et `footprint`, anglais dans une maison qui n'en a pas. (2) `mur` partagé — et la maison l'avait déjà fait : `enceinte` pour le dehors/dedans de la ville (39 emplois, son module `monde/enceinte.js`), `muraille` pour son volume dessiné (`enceinte.muraille` = courtine + gardes, 31), `rempart` pour son axe de repère (`bataille2d.js` l.960 et 1019, 24). Trois métiers, aucun chevauchement, rien à inventer. `mur` ne s'écrit nulle part. (3) La paroi d'une maison : PAS DE MOT, délibérément. Aucun n'est libre sur cette maison-ci — `face` 56 emplois et c'est l'orientation d'un homme en mêlée (« de face », « pris à revers »), la pire collision possible dans `bataille2d.js` ; `cote` 93, dont `h.cote` l.3675 = le rang en colonne ; `bord` 155, `pan` 58, `flanc` 28 ; `paroi` n'en a que 2, mais les deux promettent une ÉPAISSEUR que le bâti n'a pas (`formes.py` l.256). On n'oppose donc pas un côté : on oppose l'empreinte entière — ce que `viser()` fait déjà sans le dire. (4) `traverser` pour la faute physique et les traversées pour le compte de 🎯 91000, `franchir` restant aux seuils de nombre (8 emplois sur 11). RESTE SANS NOM, et c'est tenu : le contournement. J'attends la nappe de Bren (⚔️ 91010) — le nom dépend de ce sur quoi on contourne, `voirie` (24), `rue` (85), `ruelle` (11) ou la grille de 40 m. Nommer avant ferait tenir la décision par le mot. Si 91010 n'a pas rendu au 5e, je l'écarte franchement plutôt que de le laisser dormir. Le tout porté à Ygga au parloir le 3e, avant sa première ligne de bâti"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🪶 Les offices — qui écrit où",
+   "colonnes": [
+    "🪶 L'office",
+    "👤 Qui le tient",
+    "📁 Ce qu'il écrit"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**La nappe**",
+      "Bren Racine-Grise",
+      "Il rapporte ; ce qu'il remonte remplit la colonne des verrous."
+     ]
+    },
+    {
+     "cellules": [
+      "**Les anneaux**",
+      "Sarn Vieux-Sang",
+      "Il rapporte le précédent."
+     ]
+    },
+    {
+     "cellules": [
+      "**Le fer**",
+      "Ygga Main-de-Pierre",
+      "`ecrans/modules/bataille2d.js`, `ecrans/modules/bataille/`, `scripts/monde/sac.js`"
+     ]
+    },
+    {
+     "cellules": [
+      "**L'eau**",
+      "Toll Œil-Noir",
+      "`scripts/bataille.py`, ce qui cuit et ce qui mesure"
+     ]
+    },
+    {
+     "cellules": [
+      "**Les noms**",
+      "Wenna la Nommeuse",
+      "Les README, les en-têtes, les noms publics"
+     ]
+    },
+    {
+     "cellules": [
+      "**L'Équerre**",
+      "Nicolas Reynolds",
+      "`chantier/affaires.json` — lui seul grave à la Souche"
+     ]
+    }
+   ]
+  }
+ ],
+ "maison_id": "_sans-maison"
+}

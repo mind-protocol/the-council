@@ -50,7 +50,7 @@ def depouiller_fil(transcript):
     (un outil, sa cible), 'parole' (un texte de lui), 'entendu' (ce que le
     parloir lui a repondu — une voix EN SA PRESENCE fait partie du vecu,
     un resultat d'outil ordinaire n'en fait pas partie). Plus complet que
-    jugement.depouiller, qui ne garde que le dernier mot pour juger :
+    le lecteur d'archives, qui ne garde que le dernier mot :
     ici on garde la journee entiere, c'est de la memoire.
     """
     evenements = []
@@ -126,7 +126,8 @@ def depouiller_fil(transcript):
     return evenements
 
 
-def deposer(qui, session_id, etiquette=None, transcript=None, provider=None):
+def deposer(qui, session_id, etiquette=None, transcript=None, provider=None,
+            contexte_id=None, ref=None):
     """Depose le vecu de cette session dans chambres/<qui>/fil/.
 
     Idempotent : meme session -> meme fichier, reecrit (le transcript ne fait
@@ -138,13 +139,16 @@ def deposer(qui, session_id, etiquette=None, transcript=None, provider=None):
     evenements = depouiller_fil(transcript)
     if not evenements:
         return None
-    fil = os.path.join(chambre.chemin(qui), "fil")
-    if not os.path.isdir(fil):
-        os.makedirs(fil)
+    fil = chambre.fil(qui, contexte_id=contexte_id, creer=True)
     nom = u"%s-%s.md" % (etiquette or u"session", session_id[:8])
     chemin = os.path.join(fil, nom)
     lignes = [u"# Vécu de %s — %s" % (qui, etiquette or session_id[:8]),
-              u"", u"session `%s`" % session_id, u""]
+              u"", u"session `%s`" % session_id]
+    if contexte_id is not None:
+        lignes.append(u"contexte `%s`" % contexte_id)
+    if ref:
+        lignes.append(u"origine `%s`" % ref)
+    lignes.append(u"")
     for genre, texte in evenements:
         if genre == "entendu":
             lignes.append(u"")

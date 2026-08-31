@@ -91,6 +91,14 @@ def test_le_depot_ordinaire_empile_toujours(paire):
     assert e[0]["date"] == {"annee": 129, "lune": 4, "jour": 4}
 
 
+def test_le_depot_conserve_contexte_et_ref(paire):
+    billet.deposer("alicent", "mj-aurore", u"le mot lié",
+                   contexte_id="23030", ref="r-parole")
+    entree = _entrees(paire)[0]
+    assert entree["contexte_id"] == "23030"
+    assert entree["ref"] == "r-parole"
+
+
 def test_verser_histoire_conserve_ce_qui_etait_la(paire):
     """Le SECOND ecrivain du meme fichier. Il tronquait pareil : sa correction
     est de la meme main, sinon la fenetre restait ouverte d'un cote."""

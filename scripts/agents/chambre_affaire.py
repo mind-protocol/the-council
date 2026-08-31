@@ -21,12 +21,12 @@ sept pas d'origine etaient TOUS MECANIQUES — lire, amender, ouvrir, tenir,
 demander, tenter, ecrire — et pas un seul ne portait sur QUI IL EST. Ils
 etaient batis depuis l'outillage disponible au lieu de l'etre depuis ce qu'un
 habitant neuf doit devenir. Trois pas sont donc entres DEVANT les autres : sa
-maniere ecrite a la premiere personne, un element de son histoire qu'il fait
-tenir pour vrai par son arbitre, et ses objectifs poses sous « 🎯 ».
+maniere ecrite a la premiere personne, un element de son histoire qu'il
+source sans l'inventer, et ses objectifs poses sous « 🎯 ».
 
 TROIS MOUVEMENTS, ET L'ORDRE COMPTE. QUI JE SUIS (P.1-P.5) : on ne tient pas
 des registres avant d'etre quelqu'un. CE QUE JE TIENS (P.6-P.7). LES AUTRES
-(P.8-P.10) — on parle a son arbitre avant de parler aux hommes.
+(P.8-P.10) — on cherche, on agit, puis on parle aux hommes.
 """
 
 PAGE = (
@@ -59,7 +59,7 @@ CIBLES_LIGNES = [
     [u"C.1", u"Je suis quelqu'un, et de ma main",
      u"Mon cahier ne porte plus seulement ce qu'on disait de moi : ma "
      u"manière y est écrite à la première personne, un élément de mon "
-     u"histoire est tenu pour vrai par mon arbitre, et mes objectifs sont "
+     u"histoire est étayé par une source accessible, et mes objectifs sont "
      u"posés ici.",
      u"des phrases de moi dans `claude.md`, et des lignes sous « 🎯 »"],
     [u"C.2", u"Ma chambre est tenue de ma main",
@@ -67,13 +67,13 @@ CIBLES_LIGNES = [
      u"ont chacun une entrée ou une raison écrite de n'en pas avoir.",
      u"`claude.md` contient un titre « ## Le Ne de la Ne lune »"],
     [u"C.3", u"On sait à qui je parle et de quoi je réponds",
-     u"Mon arbitre m'a répondu au moins une fois, et j'ai écrit à un homme "
-     u"qui n'est pas lui.",
-     u"deux canaux au moins dans `relations/`"],
+     u"J'ai cherché une source sans demander au MJ, puis écrit à un homme "
+     u"du monde.",
+     u"une source citée et un canal dans `relations/`"],
 ]
 
 
-def _actions(qui, arbitre, chambre):
+def _actions(qui, chambre):
     u"""Les dix pas, en TROIS MOUVEMENTS, avec leur commande exacte.
 
     LA PREMIERE VERSION N'AVAIT QUE LES SEPT MECANIQUES — lire, amender,
@@ -101,17 +101,14 @@ def _actions(qui, arbitre, chambre):
          u"place. Trois phrases valent mieux que dix étiquettes.",
          u"ma chambre", u"des phrases en « je » dans `claude.md`",
          u"à faire", u"", u"", u""],
-        [u"P.3", u"Faire tenir pour vrai un élément de mon histoire",
+        [u"P.3", u"Sourcer un élément de mon histoire",
          u"Un fait de mon passé que rien n'a encore écrit : d'où je viens, à "
-         u"qui je dois quelque chose, ce que j'ai fait avant. Il ne devient "
-         u"vrai que si mon arbitre le tient : `python %s --faire --de %s --a "
-         u"%s \"<mon fait, en une phrase>\"`. Un passé que je m'invente seul "
-         u"n'est pas un passé, c'est une note dans mon cahier."
-         % (p, qui, arbitre),
-         u"au parloir", u"un `faire` tranché sur mon histoire",
-         u"à faire", u"", u"",
-         u"C'est un FAIRE et non un TENTER : je ne tente pas mon passé, je "
-         u"propose au monde de le tenir."],
+         u"qui je dois quelque chose, ce que j'ai fait avant. Je le cherche "
+         u"dans une source accessible ou auprès d'une personne qui peut me "
+         u"le rappeler. Sans source, je le marque incertain : je ne demande "
+         u"pas au MJ de l'inventer ou de le valider.",
+         u"mes sources", u"une source nommée, ou l'incertitude écrite",
+         u"à faire", u"", u"", u""],
         [u"P.4", u"Poser mes objectifs sous « 🎯 Ce que je veux »",
          u"Deux ou trois, pas dix. Chacun dit CE QUI DOIT ÊTRE VRAI et par "
          u"quelle preuve on le saura — un but sans preuve ne se referme "
@@ -147,36 +144,33 @@ def _actions(qui, arbitre, chambre):
          u"`en-souffrance.json` n'a JAMAIS reçu une entrée, dans aucune "
          u"chambre."],
         # --- III. LES AUTRES ------------------------------------------
-        [u"P.8", u"Demander à mon arbitre ce que je ne peux pas savoir seul",
-         u"`python %s --demander --de %s --a %s \"<ma question, avec sa "
-         u"date>\"` — la réponse vient des registres seuls. Une question sans "
-         u"date n'a pas de réponse : « est-ce qu'on a de quoi » ne vaut rien, "
-         u"« est-ce qu'on a de quoi payer six cents bras le premier jour de "
-         u"la quatrième lune » vaut une réponse." % (p, qui, arbitre),
-         u"au parloir", u"un verdict revenu dans mon fil",
+        [u"P.8", u"Chercher ce que je ne sais pas encore",
+         u"Ouvrir une source accessible ou écrire à une personne du monde "
+         u"avec une question précise et datée. Si personne ni aucun registre "
+         u"ne peut répondre, conserver l'inconnu au lieu de demander au MJ.",
+         u"mes sources ou un canal", u"une source citée ou un inconnu écrit",
          u"à faire", u"", u"", u""],
-        [u"P.9", u"Adresser mon premier geste qui engage le monde",
-         u"`--tenter` quand je tente et que l'arbitre tranche ; `--faire` "
-         u"quand je propose un changement. `python %s --tenter --de %s --a %s "
-         u"\"...\"`. Ce que je fais dans ma chambre n'engage rien : ce qui "
-         u"doit devenir vrai passe par là." % (p, qui, arbitre),
-         u"au parloir", u"un `tenter` ou un `faire` tranché",
+        [u"P.9", u"Accomplir mon premier geste sans permission du MJ",
+         u"Faire ce qui est à la portée de mes mains, de mon office et de mon "
+         u"autorité, puis écrire le geste réellement accompli. Si son issue "
+         u"dépend d'un autre ou du hasard, laisser la conséquence en attente "
+         u"sans l'inventer et poursuivre ce que je peux faire.",
+         u"dans le monde", u"un geste accompli ou une conséquence en attente",
          u"à faire", u"", u"", u""],
-        [u"P.10", u"Écrire à un homme qui n'est pas mon arbitre",
+        [u"P.10", u"Écrire à un homme du monde",
          u"`python %s --dire --de %s --a <untel> \"...\"` — le billet le "
          u"réveille s'il dort, et il le lira à son réveil. Mesure du 31.8 : "
          u"sur 385 billets, DIX-HUIT seulement vont d'un homme à un autre. "
-         u"Tout le reste passe par une régie, et ce n'est pas ce qu'on "
-         u"veut." % (p, qui),
+         u"La parole et l'enquête passent désormais par le monde, jamais par "
+         u"le MJ." % (p, qui),
          u"au parloir", u"un canal de plus dans `relations/`",
          u"à faire", u"", u"", u""],
     ]
 
 
-def gabarit(qui, nom=None, office=None, arbitre=None, chambre=None):
+def gabarit(qui, nom=None, office=None, chambre=None):
     u"""Le volume de prise en main d'un homme. Meme forme que les affaires de
     `etat/books` — donc `reconcilier.maisons()` le voit et le journal le suit."""
-    arbitre = arbitre or "mj"
     chambre = chambre or ("chambres/%s" % qui)
     return {
         "id": "affaire-%s" % qui,
@@ -192,6 +186,6 @@ def gabarit(qui, nom=None, office=None, arbitre=None, chambre=None):
              "lignes": [{"cellules": l} for l in CIBLES_LIGNES]},
             {"titre": u"⚔️ Actions", "colonnes": ACTIONS,
              "lignes": [{"cellules": l}
-                        for l in _actions(qui, arbitre, chambre)]},
+                        for l in _actions(qui, chambre)]},
         ],
     }

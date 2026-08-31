@@ -1,0 +1,72 @@
+{
+ "maison_id": "maison-velaryon",
+ "mains": [
+  {
+   "id": "quilles-velaryon",
+   "quoi": "Ce que Velaryon tient reellement a la mer : les quilles de guerre du croissant du Gosier, et le nombre de jours que le grain de Lamarck leur permet encore d'y rester",
+   "porteur": {
+    "type": "personnage",
+    "id": "bryn-cale"
+   },
+   "lieu_id": "lamarck",
+   "mandat": null,
+   "mesure": [
+    {
+     "id": "quilles-tenues",
+     "quoi": "quilles de guerre tenues a la mer sur le croissant, sans radoub depuis le 19e",
+     "valeur": 89,
+     "unite": "nefs",
+     "rythme": {
+      "par": -1,
+      "jours": 3
+     },
+     "reliquat": 1,
+     "plancher": 0,
+     "plafond": 90,
+     "depend_de": []
+    },
+    {
+     "id": "jours-de-mer-tenables",
+     "quoi": "jours que le croissant peut encore tenir a la mer sur le grain de Lamarck",
+     "valeur": 0,
+     "unite": "jours",
+     "rythme": {
+      "par": -1,
+      "jours": 1
+     },
+     "reliquat": 0,
+     "plancher": 0,
+     "plafond": 11,
+     "depend_de": []
+    }
+   ],
+   "seuils": [
+    {
+     "id": "le-croissant-se-defait",
+     "mesure_id": "jours-de-mer-tenables",
+     "quand": "sous",
+     "valeur": 3,
+     "promeut": "orbite",
+     "affaire": "Trois jours de grain : la police des mers se levera d'elle-meme, sans que personne l'ait decide, et le Gosier rouvrira parce qu'on n'a pas su nourrir quatre-vingt-dix coques. Corlys ne le dira pas — il en fera un choix.",
+     "franchi_le": {
+      "annee": 129,
+      "lune": 4,
+      "jour": 5
+     }
+    },
+    {
+     "id": "la-mer-ne-porte-plus-l-ost",
+     "mesure_id": "quilles-tenues",
+     "quand": "sous",
+     "valeur": 60,
+     "promeut": "orbite",
+     "affaire": "Sous soixante quilles, les dix coques affretees et les onze de la maison ne suffisent plus a passer l'ost en trois vagues : la part LA MER du Grand Plan devient impossible, et Peyredragon l'apprendra le jour ou elle voudra embarquer.",
+     "franchi_le": null
+    }
+   ],
+   "dernier_rapport": null,
+   "date_maj": "129.3.28",
+   "maison_id": "maison-velaryon"
+  }
+ ]
+}

@@ -99,7 +99,7 @@ class MessageJoueurTests(unittest.TestCase):
             self.assertNotIn("cache", brief)
             self.assertIn("REGISTRE CIBLE", brief)
 
-    def test_message_habitant_reste_un_arbitrage(self):
+    def test_message_du_front_joueur_reste_un_arbitrage(self):
         with mock.patch.object(mj, "date_du_monde",
                                return_value=(129, 4, 4)):
             message = mj._message("daemon", "mon rapport", "POST")

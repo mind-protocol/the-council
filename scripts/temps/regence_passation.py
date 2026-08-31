@@ -3,7 +3,7 @@
 #
 # La seconde moitie de l'ancien scripts/regence.py (lot 2) : la clause (une
 # croyance et un declencheur, jamais un champ invente), le registre
-# etat/joueurs/<id>/regence.jsonl (consigner, compte rendu, remise), l'etat
+# etat/joueurs/<id>/regence.jsonl (lecture, compte rendu, remise), l'etat
 # des regences et le main de la commande. La lecture, les sept lignes rouges
 # et le crible lexical vivent dans regence.py, qui reexporte d'ici.
 from __future__ import print_function
@@ -17,7 +17,8 @@ import sys
 
 from etat.expose import tables  # LA PORTE de etat/ : poser_clause lit et ecrit par elle
 from temps.regence import (
-    ETAT, RACINE, date_du_monde, dire_date, est_en_regence, franchissements, horloge_de, lire_json, lire_table, nom_de, sieges, sieges_occupes, sieges_vacants, texte_du_refus)
+    ETAT, RACINE, date_du_monde, dire_date, est_en_regence, horloge_de,
+    lire_json, lire_table, nom_de, sieges, sieges_occupes, sieges_vacants)
 # --------------------------------------------------------------------------
 # La clause dans sa tete
 # --------------------------------------------------------------------------
@@ -153,81 +154,6 @@ def lire_registre(pid):
     return entrees
 
 
-def _engagements(rapport):
-    """Ce qui, dans ce rapport, lie le siege apres coup.
-
-    Trois sources, et pas d'invention : ce qu'il a dit a quelqu'un, ce qu'il a
-    ecrit dans une table qui garde (plis, relations, evenements, books), et la
-    suite qu'il annonce lui-meme.
-    """
-    activation = (rapport or {}).get("activation") or {}
-    engagements = []
-    for activite in activation.get("activites") or []:
-        if not isinstance(activite, dict):
-            continue
-        for resultat in activite.get("resultats_produits") or []:
-            if not isinstance(resultat, dict):
-                continue
-            if resultat.get("type") not in ("communication", "objet_produit"):
-                continue
-            quoi = resultat.get("apres") or resultat.get("quoi")
-            if quoi:
-                engagements.append({
-                    "genre": resultat.get("type"),
-                    "quoi": _court(quoi, 240),
-                    "cible": resultat.get("cible"),
-                })
-    if activation.get("suite"):
-        engagements.append({"genre": "suite annoncée",
-                            "quoi": _court(activation["suite"], 240),
-                            "cible": None})
-    return engagements
-
-
-def _faits(rapport):
-    activation = (rapport or {}).get("activation") or {}
-    faits = []
-    for activite in activation.get("activites") or []:
-        if not isinstance(activite, dict):
-            continue
-        quoi = activite.get("quoi") or (activite.get("action") or {}).get("quoi")
-        if quoi:
-            faits.append({"quoi": _court(quoi, 240),
-                          "resultat": _court(activite.get("resultat") or "", 240)})
-    return faits
-
-
-def consigner(pid, rapport, fichier=None, horloge=None):
-    """Pose au registre ce que ce siege vient de decider seul.
-
-    Appele apres le depot du rapport d'activation. N'ecrit rien pour un
-    acteur ordinaire : seul un siege peut se faire heriter.
-    """
-    if not est_en_regence(pid):
-        return None
-    activation = (rapport or {}).get("activation") or {}
-    franchies, evitees = franchissements(rapport)
-    enregistrement = {
-        "genre": "activation",
-        "a": dt.datetime.now().astimezone().isoformat(),
-        "date_monde": horloge or horloge_de(pid),
-        "qui": pid,
-        "tache": (activation.get("tache") or {}).get("quoi"),
-        "issue": activation.get("issue"),
-        "faits": _faits(rapport),
-        "engagements": _engagements(rapport),
-        "lignes_evitees": [{"code": f["code"], "extrait": f["extrait"]}
-                            for f in evitees],
-        "lignes_franchies": [{"code": f["code"], "extrait": f["extrait"]}
-                              for f in franchies],
-        "rapport": (os.path.relpath(fichier, RACINE).replace("\\", "/")
-                     if fichier else None),
-        "remis": False,
-    }
-    _ligne(registre_de(pid), enregistrement)
-    return enregistrement
-
-
 def compte_rendu(pid):
     """Le texte de passation : ce qu'on hérite en se rasseyant."""
     entrees = [e for e in lire_registre(pid)
@@ -336,7 +262,7 @@ def etat_des_regences():
         print("  %-22s %s" % (pid, " · ".join(marques)))
     occupes = sorted(sieges_occupes())
     if occupes:
-        print("\nassis (jamais activés) : " + ", ".join(occupes))
+        print("\nassis : " + ", ".join(occupes))
 
 
 def main():
@@ -347,11 +273,6 @@ def main():
                     help="afficher la clause de régence à poser dans sa tête")
     ap.add_argument("--poser", metavar="PERSONNAGE_ID",
                     help="écrire la clause dans sa tête (avec --vraiment)")
-    ap.add_argument("--verifier", metavar="RAPPORT.JSON",
-                    help="passer un rapport d'activation au crible des "
-                         "lignes rouges")
-    ap.add_argument("--qui", metavar="PERSONNAGE_ID",
-                    help="avec --verifier : forcer l'acteur du rapport")
     ap.add_argument("--compte-rendu", metavar="PERSONNAGE_ID",
                     dest="compte_rendu",
                     help="ce qu'on hérite en se rasseyant (sans le marquer "
@@ -366,25 +287,6 @@ def main():
         return
     if args.poser:
         poser_clause(args.poser, args.vraiment)
-        return
-    if args.verifier:
-        rapport = lire_json(args.verifier, None)
-        if rapport is None:
-            sys.exit("rapport illisible : %s" % args.verifier)
-        pid = args.qui or rapport.get("qui")
-        franchies, evitees = franchissements(rapport)
-        print("acteur : %s (%s)" % (
-            pid, "en régence" if est_en_regence(pid) else "acteur ordinaire"))
-        for f in evitees:
-            print("  évitée   « %s » dans %s : %s"
-                  % (f["code"], f["ou"], f["extrait"]))
-        for f in franchies:
-            print("  FRANCHIE « %s » dans %s : %s"
-                  % (f["code"], f["ou"], f["extrait"]))
-        if not franchies:
-            print("  aucune ligne franchie.")
-        elif est_en_regence(pid):
-            print("\n" + texte_du_refus(pid, franchies))
         return
     if args.compte_rendu:
         texte, _ = compte_rendu(args.compte_rendu)

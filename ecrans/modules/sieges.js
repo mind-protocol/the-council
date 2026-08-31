@@ -32,11 +32,13 @@
       // Les hommes hors roster : tout le reste du monde, incarnable au même
       // titre qu'un siège — le serveur les sert déjà triés par nom.
       const hommes = (d && d.hommes) || [];
+      const arbitres = (d && d.arbitres) || [];
       if (!d || !d.multi ||
-          (sieges.length < 2 && !hommes.length)) return;
+          (sieges.length < 2 && !hommes.length && !arbitres.length)) return;
       const moi = d.moi && d.moi.personnage_id;
       const mien = sieges.find((s) => s.personnage_id === moi)
         || hommes.find((s) => s.personnage_id === moi)
+        || arbitres.find((s) => s.personnage_id === moi)
         || (d.moi ? { personnage_id: moi, nom: d.moi.nom } : null);
 
       zone.hidden = false;
@@ -60,6 +62,9 @@
       liste.innerHTML = sieges.map(choix).join("") +
         (hommes.length
           ? '<div class="siege-groupe">Les hommes</div>' + hommes.map(choix).join("")
+          : "") +
+        (arbitres.length
+          ? '<div class="siege-groupe">Le MJ</div>' + arbitres.map(choix).join("")
           : "");
 
       bouton.onclick = (e) => {

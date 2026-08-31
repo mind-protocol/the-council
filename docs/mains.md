@@ -140,7 +140,7 @@ le manuel interdit d'y toucher.**
 
 ---
 
-## 3 — `etat/mains.json` — forme et exemples
+## 3 — `etat/maisons/<maison_id>/documents/mains.json` — forme et exemples
 
 Trois entrées volontairement dissemblables : un homme sans tête, un grand seigneur qui en a
 une, et une affaire portée par une maison sans personne dessus.

@@ -1,0 +1,68 @@
+{
+ "maison_id": "maison-stokeworth",
+ "mains": [
+  {
+   "id": "grenier-stokeworth",
+   "quoi": "Ce que la grange de Stokeworth peut donner avant la moisson, et ce que la porte peut tenir avec",
+   "porteur": {
+    "type": "personnage",
+    "id": "harwyn-bourrel"
+   },
+   "lieu_id": "stokeworth",
+   "mandat": null,
+   "mesure": [
+    {
+     "id": "muids-en-grange",
+     "quoi": "Grain en grange et dans les deux granges basses",
+     "unite": "muids",
+     "valeur": 846,
+     "rythme": {
+      "par": -6,
+      "jours": 1
+     },
+     "note": "Règle établie en scène le 28e par ser Steffon Darklyn : un muid nourrit vingt hommes un jour. Cent vingt bouches au château et au bourg haut = six muids par jour. Prochaine moisson : cinquième lune.",
+     "reliquat": 0
+    },
+    {
+     "id": "solde-en-retard",
+     "quoi": "Solde due aux soixante hommes payés de la porte",
+     "unite": "cerfs",
+     "valeur": 3480,
+     "rythme": {
+      "par": 120,
+      "jours": 1
+     },
+     "note": "Deux lunes de retard. Monte de 120 par jour tant que le seigneur ne paie pas ; c'est le coût de l'étape harwyn-remettre-les-soixante-en-etat.",
+     "reliquat": 0
+    }
+   ],
+   "seuils": [
+    {
+     "id": "plus-de-quoi-nourrir-un-ost",
+     "mesure_id": "muids-en-grange",
+     "quand": "sous",
+     "valeur": 360,
+     "promeut": "orbite",
+     "affaire": "Il ne peut plus nourrir six journées d'un ost de passage sans que sa propre maison jeûne avant la moisson — Monte la tête de harwyn-bourrel de 'royaume' à 'orbite' : à partir de là, l'homme a une affaire qui mord et il ira la porter dehors.",
+     "franchi_le": null
+    },
+    {
+     "id": "la-porte-ne-tient-plus-la-nuit",
+     "mesure_id": "solde-en-retard",
+     "quand": "sur",
+     "valeur": 3600,
+     "promeut": "orbite",
+     "affaire": "Trois lunes de solde : quarante des soixante dorment chez eux et la porte n'est plus tenue la nuit — C'est le si_bloque de harwyn-remettre-les-soixante-en-etat qui s'applique, et il ne le dit à personne — donc rien ne remonte, et c'est le sujet.",
+     "franchi_le": null
+    }
+   ],
+   "dernier_rapport": null,
+   "date_maj": {
+    "annee": 129,
+    "lune": 3,
+    "jour": 28
+   },
+   "maison_id": "maison-stokeworth"
+  }
+ ]
+}

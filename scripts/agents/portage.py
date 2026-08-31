@@ -48,7 +48,7 @@ def sujets_du_texte(texte):
     return sujets[:8]
 
 
-def matiere_du_message(personnage):
+def matiere_du_message(personnage, actions=None):
     """La section « CE QUE LES REGISTRES ARRETENT » pour les messages du
     personnage en inbox (les fichiers action-*.json presents sont les non
     traites ; le lanceur les retire apres une vraie poussee) — ou u"" si rien
@@ -56,7 +56,9 @@ def matiere_du_message(personnage):
     try:
         from agents import matiere
         textes = []
-        for _chemin, action in reversed(_actions_en_attente(personnage)):
+        actions = (_actions_en_attente(personnage)
+                   if actions is None else actions)
+        for _chemin, action in reversed(actions):
             if action.get("texte"):
                 textes.append(str(action["texte"]))
         if not textes:
@@ -187,9 +189,13 @@ def fil_du_joueur(personnage, limite=FIL_MAX, visibles=None):
     return u"\n".join(out)
 
 
-def brief_message_joueur(personnage):
+def brief_message_joueur(personnage, refs=None):
     """Le seul contexte repete a chaque POST du joueur."""
     actions = _actions_en_attente(personnage)
+    if refs is not None:
+        refs = {str(ref) for ref in refs}
+        actions = [(chemin, action) for chemin, action in actions
+                   if str(action.get("ref") or "") in refs]
     visibles = _items_visibles_du_flux(personnage)
     inbox = os.path.abspath(os.path.join(RACINE, "etat", "inbox", personnage))
     out = [u"== BRIEF MESSAGE JOUEUR — %s" % personnage,
@@ -208,7 +214,7 @@ def brief_message_joueur(personnage):
                 "L%d" % ligne_flux if ligne_flux else
                 "INTROUVABLE — l'inbox est la source de cette action"))
     out.extend([u"", fil_du_joueur(personnage, visibles=visibles)])
-    registres = matiere_du_message(personnage).strip()
+    registres = matiere_du_message(personnage, actions=actions).strip()
     if registres:
         out.extend([u"", registres])
     out.extend([

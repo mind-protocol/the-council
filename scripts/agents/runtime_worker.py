@@ -28,7 +28,9 @@ def main():
                 vecu.deposer(trace["qui"], charge["appel"]["session_id"],
                               etiquette=trace.get("etiquette"),
                               transcript=rep.get("transcript_path"),
-                              provider=rep.get("provider"))
+                              provider=rep.get("provider"),
+                              contexte_id=trace.get("contexte_id"),
+                              ref=trace.get("ref"))
             except Exception:
                 pass
         print(json.dumps(rep, ensure_ascii=False), flush=True)

@@ -56,7 +56,7 @@ HYPO = re.compile(r"\bH\d{1,2}\b")
 
 def charger(nom, defaut):
     # Absent -> defaut ; corrompu -> plante (l'ancienne version avalait tout).
-    # Les livres ont quitte le monolithe pour etat/books/. Lire simplement
+    # Les livres ont quitte le monolithe pour les fonds de maison. Lire simplement
     # `books.json` reconstruisait un tissu ampute : 803 noeuds au lieu de
     # 2 341, 1 870 aretes au lieu de 6 726. La bibliotheque sait choisir le
     # manifeste scinde ou le repli monolithique ; c'est son unique metier.
@@ -65,6 +65,9 @@ def charger(nom, defaut):
                 or os.path.isfile(os.path.join(ETAT, "books.json"))):
             return bibliotheque.charger(ETAT)
         return defaut
+    if nom == "mains":
+        import documents_maison
+        return documents_maison.charger_mains(ETAT)
     d = tables.lire(nom, defaut)
     return d.get(nom, d) if isinstance(d, dict) else d
 
@@ -289,9 +292,9 @@ def indexer(books, intentions, mains, plans, evenements, personnages, plis=None)
         for fam, genre in (("etats_cibles", "etat_cible"), ("verrous", "verrou"),
                            ("clefs", "clef"), ("actions", "action")):
             for x in pl.get(fam) or []:
-                # Le tissu n'est pas seulement une carte d'adresses : la
-                # boucle d'activation s'en sert pour elire ce qui peut etre
-                # fait MAINTENANT. Omettre l'etat et les dependances rendait
+                # Le tissu n'est pas seulement une carte d'adresses : les
+                # outils de lecture disent ce qui peut être fait MAINTENANT.
+                # Omettre l'etat et les dependances rendait
                 # toutes les actions eternelles et immediatement executables.
                 # Mesure du 129.4.9 : Otto etait elu sur 72120, pourtant
                 # `faite`, tandis que Criston et Aegon recevaient des actions

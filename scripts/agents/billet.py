@@ -12,9 +12,8 @@ paire, meme format que les canaux poses a la main (de, date, texte — l'heure
 quand on la sait). RIEN dans chambres/ ne fait foi : un billet est de la
 parole, pas de la verite.
 
-PAS DE GARDE DE CREUX ICI, et c'est voulu : la garde de depecher (« aucun
-creux — il travaille ») protege la boucle d'activation, qui propose. Un
-billet ne propose pas : quelqu'un t'a ecrit, tu te reveilles — l'anachronisme
+PAS DE GARDE DE CREUX ICI, et c'est voulu. Un billet ne propose pas :
+quelqu'un t'a ecrit, tu te reveilles — l'anachronisme
 accepte que ce moment de ta vie se joue maintenant.
 """
 import os
@@ -30,7 +29,7 @@ class CanalAbime(Exception):
     """Le canal de la paire ne se lit pas. On ne repart JAMAIS a vide."""
 
 
-def deposer(de, a, texte):
+def deposer(de, a, texte, contexte_id=None, ref=None):
     """Appose une entree au canal canonique de la paire ; rend son chemin.
 
     UN BILLET NE DOIT JAMAIS POUVOIR EFFACER UNE CORRESPONDANCE, et jusqu'au
@@ -77,11 +76,16 @@ def deposer(de, a, texte):
             % (fichier, type(d).__name__, de, a))
     d.setdefault("canal", sorted((de, a)))
     annee, lune, jour = date_du_monde()
-    d.setdefault("entrees", []).append({
+    entree = {
         "de": de,
         "date": {"annee": annee, "lune": lune, "jour": jour},
         "texte": texte,
-    })
+    }
+    if contexte_id is not None:
+        entree["contexte_id"] = str(contexte_id)
+    if ref:
+        entree["ref"] = str(ref)
+    d.setdefault("entrees", []).append(entree)
     tables.ecrire(fichier, d)
     return fichier
 
@@ -107,8 +111,9 @@ def _reveiller(qui, modele=None, minutes=MINUTES):
     return rep
 
 
-def ecrire(de, a, texte, modele=None, minutes=MINUTES):
+def ecrire(de, a, texte, modele=None, minutes=MINUTES, contexte_id=None,
+           ref=None):
     """Le geste entier : depose le billet, puis reveille le destinataire en
     cast. Rend (chemin_du_canal, {cast, log, session})."""
-    fichier = deposer(de, a, texte)
+    fichier = deposer(de, a, texte, contexte_id=contexte_id, ref=ref)
     return fichier, _reveiller(a, modele=modele, minutes=minutes)

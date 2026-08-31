@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Stockage commun des livres, compatible avec le monolithe et les volumes.
+"""Porte commune des livres, désormais rangés par maison.
 
-Le dossier n'est actif que si ``etat/books/_ordre.json`` existe. Cela permet
-de migrer les lecteurs avant les écrivains sans jamais deviner quelle copie
-fait foi. Une bibliothèque activée est stricte : volume absent, identifiant
-dupliqué ou fichier dont l'id ne correspond pas à son nom font échouer la
-lecture au lieu de retomber silencieusement sur ``books.json``.
+La lecture agrège ``etat/maisons/*/documents/books``. Le manifeste historique
+``etat/books/_ordre.json`` reste un repli de migration vide ; toute écriture
+nouvelle exige une ``maison_id`` connue et rejoint directement son fonds.
 """
 import io
 import copy
@@ -14,6 +12,7 @@ import os
 import re
 
 from etat.expose import tables  # LA PORTE de etat/ : l'ecriture atomique et sa semantique d'erreur
+import documents_maison
 
 
 NOM_ID = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
@@ -60,12 +59,14 @@ def chemins_source(etat):
     """Tous les fichiers dont la date doit invalider un cache de lecture."""
     dossier, manifeste, monolithe = _chemins(etat)
     if not os.path.isfile(manifeste):
-        return [monolithe]
-    return [manifeste] + [os.path.join(dossier, i + ".json")
-                          for i in _ordre(manifeste)]
+        locaux = [monolithe]
+    else:
+        locaux = [manifeste] + [os.path.join(dossier, i + ".json")
+                                 for i in _ordre(manifeste)]
+    return locaux + documents_maison.chemins_source(etat)
 
 
-def charger(etat):
+def _charger_locaux(etat):
     dossier, manifeste, monolithe = _chemins(etat)
     if not os.path.isfile(manifeste):
         livres = _lire_json(monolithe)
@@ -86,6 +87,12 @@ def charger(etat):
             raise BibliothequeInvalide(
                 "books/%s.json porte l'id %r" % (ident, livre.get("id")))
         livres.append(livre)
+    return livres
+
+
+def charger(etat):
+    livres = _charger_locaux(etat) + documents_maison.charger_livres(etat)
+    _index(livres)  # les ids restent globaux, meme si leurs sources sont scindees
     return livres
 
 
@@ -123,6 +130,7 @@ class Session:
         self.etat = etat
         self.livres = charger(etat)
         self._avant = copy.deepcopy(self.livres)
+        self._manifestes_maisons = documents_maison.manifestes_livres(etat)
 
     def sauver(self):
         dossier, manifeste, monolithe = _chemins(self.etat)
@@ -130,18 +138,39 @@ class Session:
         ids_voulus, voulus = _index(self.livres)
         courants_liste = charger(self.etat)
         ids_courants, courants = _index(courants_liste)
+        sources = documents_maison.sources_livres(self.etat)
+        nouveaux = set(voulus) - set(avant)
+        maisons_valides = set(documents_maison.ids_maisons(
+            self.etat, inclure_sans_maison=True))
+        maisons_nouvelles = {}
+        for ident in nouveaux:
+            maison_id = voulus[ident].get("maison_id")
+            if maison_id not in maisons_valides:
+                raise BibliothequeInvalide(
+                    "un nouveau livre doit porter une maison_id connue : %s" % ident)
+            maisons_nouvelles.setdefault(maison_id, []).append(ident)
+        externes = set(sources) | nouveaux
+        locaux_avant = [i for i in ids_avant if i not in externes]
+        locaux_voulus = [i for i in ids_voulus if i not in externes]
+        locaux_courants = [i for i in ids_courants if i not in externes]
 
         if not os.path.isfile(manifeste):
             if courants_liste != self._avant:
                 raise BibliothequeModifiee(
                     "etat/books.json a changé depuis la lecture — rien écrit")
-            _ecrire_atomique(monolithe, self.livres)
+            _ecrire_atomique(monolithe, [voulus[i] for i in locaux_voulus])
+            for ident in externes:
+                if avant.get(ident) != voulus.get(ident):
+                    _ecrire_atomique(sources[ident], voulus[ident])
             self._avant = copy.deepcopy(self.livres)
             return
 
         touches = {i for i in set(avant) | set(voulus) if avant.get(i) != voulus.get(i)}
-        ordre_touche = ids_avant != ids_voulus
-        if ordre_touche and ids_courants != ids_avant:
+        if any(i in externes and i not in voulus for i in externes):
+            raise BibliothequeInvalide(
+                "un document de maison ne se supprime pas par la bibliothèque globale")
+        ordre_touche = locaux_avant != locaux_voulus
+        if ordre_touche and locaux_courants != locaux_avant:
             raise BibliothequeModifiee(
                 "books/_ordre.json a changé depuis la lecture — rien écrit")
         conflits = [i for i in touches if courants.get(i) != avant.get(i)]
@@ -149,17 +178,38 @@ class Session:
             raise BibliothequeModifiee(
                 "volume modifié depuis la lecture : %s — rien écrit" % conflits[0])
 
+        # Un livre neuf entre directement dans la bibliothèque de sa maison.
+        # Le fichier existe avant le manifeste, comme pour la bibliothèque
+        # historique ; une autre session qui a bougé ce manifeste fait refuser.
+        manifestes_courants = documents_maison.manifestes_livres(self.etat)
+        for maison_id in maisons_nouvelles:
+            avant_manifeste = self._manifestes_maisons.get(maison_id)
+            courant_manifeste = manifestes_courants.get(maison_id)
+            if avant_manifeste != courant_manifeste:
+                raise BibliothequeModifiee(
+                    "documents de %s modifiés depuis la lecture — rien écrit"
+                    % maison_id)
+            base = documents_maison.dossier_livres(self.etat, maison_id)
+            ordre_maison = [i for i in ids_voulus
+                            if voulus[i].get("maison_id") == maison_id]
+            for ident in maisons_nouvelles[maison_id]:
+                _ecrire_atomique(os.path.join(base, ident + ".json"), voulus[ident])
+            _ecrire_atomique(os.path.join(base, documents_maison.MANIFESTE),
+                              ordre_maison)
+
         # Les nouveaux fichiers existent avant d'entrer au manifeste. Les
         # anciens en sortent avant d'être supprimés. Un lecteur ne rencontre
         # donc jamais une adresse annoncée sans fichier derrière elle.
-        for ident in ids_voulus:
+        for ident in locaux_voulus:
             if ident in touches:
                 _ecrire_atomique(os.path.join(dossier, ident + ".json"), voulus[ident])
         if ordre_touche:
-            _ecrire_atomique(manifeste, ids_voulus)
-        for ident in ids_avant:
-            if ident not in voulus:
+            _ecrire_atomique(manifeste, locaux_voulus)
+        for ident in locaux_avant:
+            if ident not in locaux_voulus:
                 os.remove(os.path.join(dossier, ident + ".json"))
+        for ident in set(sources) & touches:
+            _ecrire_atomique(sources[ident], voulus[ident])
         # LE JOURNAL DES AFFAIRES, ici et nulle part ailleurs : on tient
         # `avant` et `voulus`, donc le diff est deja fait — et c'est le SEUL
         # point que traversent les seize ecrivains Python et la route serveur.
@@ -171,6 +221,7 @@ class Session:
         except Exception:
             pass
         self._avant = copy.deepcopy(self.livres)
+        self._manifestes_maisons = documents_maison.manifestes_livres(self.etat)
 
 
 def ouvrir(etat):

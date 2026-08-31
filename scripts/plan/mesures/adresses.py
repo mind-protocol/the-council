@@ -3,19 +3,17 @@
 l'etat, la resolution des adresses `main.mesure` et les offices du plan.
 """
 import io
-import json
 import os
 import re
 import sys
 import unicodedata
 
 import bibliotheque
+import documents_maison
 
 # Trois etages de plus qu'a la racine : scripts/plan/mesures/.
 racine = os.path.dirname(os.path.dirname(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__)))))
-livres_json = os.path.join(racine, "etat", "books.json")
-mains_json = os.path.join(racine, "etat", "mains.json")
 decoupage_md = os.path.join(racine, "docs", "decoupage.md")
 
 LIVRE_OFFICES = "plan-offices"
@@ -92,13 +90,7 @@ def charger_livres():
 
 
 def charger_mains():
-    if not os.path.exists(mains_json):
-        return []
-    with io.open(mains_json, encoding="utf-8") as f:
-        d = json.load(f)
-    if isinstance(d, dict):
-        d = d.get("mains") or []
-    return d if isinstance(d, list) else []
+    return documents_maison.charger_mains(os.path.join(racine, "etat"))
 
 
 def index_des_mesures(mains):

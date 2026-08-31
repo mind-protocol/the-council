@@ -13,6 +13,9 @@ cahier plus nu.
     chambres/<id>/
        claude.md            sa maniere, DE SA MAIN — seedee UNE FOIS depuis la
                             fiche, plus jamais touchee par nous
+       messages-au-joueur.md
+                            ce qu'il prepare pour les personnages joueurs ;
+                            brouillon, jamais preuve d'un envoi
        problemes.json       les pannes de l'APPAREIL qu'il rencontre
        en-souffrance.json   les fils ouverts : ce qu'il attend, ce qu'on attend
        fil/                 les traces de ses sessions
@@ -36,6 +39,7 @@ en tete et pas une entree : la doctrine est de nous, le contenu est de lui.
 import io
 import json
 import os
+import re
 
 from etat.expose import tables  # LA PORTE de etat/ — meme pour une lecture
 
@@ -53,6 +57,19 @@ ENTETE = u"Ce cahier est à moi. Je l'amende quand ma journée me contredit."
 # elle est trop bonne pour rester dans une seule chambre.
 PROBLEMES = "problemes.json"
 EN_SOUFFRANCE = "en-souffrance.json"
+MESSAGES_AU_JOUEUR = "messages-au-joueur.md"
+
+GABARIT_MESSAGES_AU_JOUEUR = u"""# Messages préparés aux personnages joueurs
+
+Ce cahier contient les messages que je prépare pendant ma journée. Préparer
+n'est pas envoyer : seule la parole effectivement passée par un canal fait foi.
+
+Pour chaque message, je note le destinataire, l'item d'affaire et la ref quand
+je les connais, les faits que j'ai vérifiés, puis les mots que je propose.
+
+## À porter
+
+"""
 
 GABARIT_PROBLEMES = {
     "quoi": u"Les pannes de l'APPAREIL, non les empêchements du monde. Un "
@@ -83,9 +100,29 @@ def chemin(qui):
     return os.path.join(CHAMBRES, qui)
 
 
-def _arbitre(qui):
-    """L'unique MJ ; la geographie ne fabrique plus d'arbitre."""
-    return "mj"
+def segment_contexte(contexte_id):
+    """Le numero global d'item, directement employe comme nom de fil."""
+    brut = str(contexte_id).strip()
+    if not re.fullmatch(r"\d+", brut):
+        raise ValueError(
+            "le contexte doit etre le numero brut d'un item d'affaire "
+            "generale (ex. 23030)")
+    return brut
+
+
+def fil(qui, contexte_id=None, creer=False):
+    """Le fil de chambre de cet appel.
+
+    Le fil historique reste ``fil/``. Un item d'affaire recoit son propre fil
+    ``fil/contextes/<segment>/`` : logs, vecu et note de reprise y demeurent
+    ensemble, sans melange avec une autre affaire du meme homme.
+    """
+    base = os.path.join(chemin(qui), "fil")
+    dossier = (base if contexte_id is None else
+               os.path.join(base, "contextes", segment_contexte(contexte_id)))
+    if creer:
+        os.makedirs(dossier, exist_ok=True)
+    return dossier
 
 
 def _fiche(qui):
@@ -186,6 +223,10 @@ def ouvrir(qui):
     if not os.path.exists(cahier):
         with io.open(cahier, "w", encoding="utf-8", newline="\n") as f:
             f.write(_seed(qui))
+    messages = os.path.join(dossier, MESSAGES_AU_JOUEUR)
+    if not os.path.exists(messages):
+        with io.open(messages, "w", encoding="utf-8", newline="\n") as f:
+            f.write(GABARIT_MESSAGES_AU_JOUEUR)
     for nom, gabarit in ((PROBLEMES, GABARIT_PROBLEMES),
                          (EN_SOUFFRANCE, GABARIT_EN_SOUFFRANCE)):
         fichier = os.path.join(dossier, nom)
@@ -210,10 +251,7 @@ def ouvrir(qui):
                     # 144 volumes seraient sous-titres « ce dont je réponds »
                     # — un gabarit qui ne nomme personne.
                     fiche.get("titre") or fiche.get("office"),
-                    # SON ARBITRE, pour que les commandes de la prise en main
-                    # soient copiables telles quelles. Import tardif : zone
-                    # relit cette porte.
-                    _arbitre(qui), os.path.relpath(dossier, RACINE)),
+                    chambre=os.path.relpath(dossier, RACINE)),
                 ensure_ascii=False, indent=1) + "\n")
     return dossier
 
@@ -367,10 +405,15 @@ def non_lus(qui):
                 lu = 0
         for e in entrees[lu:]:
             if e.get("de") != qui:
-                nouveaux.append({"avec": autre, "de": e.get("de"),
-                                 "date": e.get("date"),
-                                 "heure": e.get("heure"),
-                                 "texte": e.get("texte")})
+                entree = {"avec": autre, "de": e.get("de"),
+                          "date": e.get("date"),
+                          "heure": e.get("heure"),
+                          "texte": e.get("texte")}
+                if e.get("contexte_id") is not None:
+                    entree["contexte_id"] = str(e["contexte_id"])
+                if e.get("ref"):
+                    entree["ref"] = str(e["ref"])
+                nouveaux.append(entree)
     return nouveaux
 
 

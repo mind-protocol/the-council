@@ -14,10 +14,10 @@ monde est **le disque** — jamais la conversation.
 | 🗄️ **État** | `etat/` | La seule vérité : un fait qui n'y est pas écrit n'existe pas |
 | ⏱️ **Arithmétique** | `tick.py` | Calcule le temps hors-scène ; ne décide et n'écrit jamais |
 | 🧠 **Agents** | `depecher.py`, `sieges.py`, sessions PNJ | Les appels explicites aux personnes : point de vue, journée demandée, fil et brouillard |
-| 🗣️ **Parloir** | `parloir.py`, `etat/parloir/`, hooks `PostToolUse` | Le fil régie↔agent pendant qu'une session vit — hors fiction |
+| 🗣️ **Parloir** | `parloir.py`, canaux des chambres | Les billets entre habitants ; retour vers un joueur au web et au flux d'entrée MJ, sans canal de requête PNJ→MJ |
 | 🎭 **MJ** | `scripts/agents/mj.py` + session continue + `CLAUDE.md` | Une seule autorité de jeu : met en scène et arbitre ; n'invente jamais une parole |
 | 📜 **Flux & Rendu** | `append_flux.py`, `etat/flux.jsonl`, `serveur/`, `ecrans/modules/` | Ce que le joueur voit : append-only, curseur client, une page persistante |
-| 📥 **Inbox** | `etat/inbox/`, `reveiller.py` (spawné par le serveur — le guetteur est mort, habitant.md pas 5) | Les actes du joueur qui réveillent le MJ ; rien d'autre ne le réveille |
+| 📥 **Inbox & sélection** | `etat/inbox/`, `selectionner_contexte.py`, `.agents-runtime/contextes/` | Chaque acte du joueur ouvre une sélection jetable avant toute autorité de jeu |
 | 📐 **Doctrine** | `docs/` | Les contrats : `schema.md` (format, intouchable), `agents/prompts/metier.md`, `carte.md`, les fiches de conception |
 
 ## Les modules par container
@@ -27,7 +27,7 @@ monde est **le disque** — jamais la conversation.
 - **Ce qui s'est passé** : `actes.json`, `paroles.json`, `annales.json` — avec `temoins`/`connu_de` exacts.
 - **Ce que chacun croit** : `intentions.json` (têtes des absents), `info.json` (ce qui est parvenu au joueur), `jetons.json`/`vues.json` (la table de guerre, croyances datées), `diffusion` dans les événements.
 - **Ce que chacun a écrit** : `books/` (un fichier par volume), `pensees.json`, `conclusions.json`, `rapports/` (le dernier rendu de chaque homme), `archive/travaux/` (les journées passées).
-- **Les mesures** : `mains.json`, `horloges.json`, `leves.json` — l'arithmétique sans opinion.
+- **Les mesures** : `maisons/<id>/documents/mains.json`, agrégées par la porte commune — l'arithmétique sans opinion.
 - **Les sièges** : `joueurs.json`, `joueurs/<id>/` (brouillard par siège), `voix.json`.
 - **La trace des injections** : `depeches/` — le prompt réellement reçu par chaque session dépêchée, archivé avant l'appel.
 
@@ -38,11 +38,14 @@ monde est **le disque** — jamais la conversation.
 ### 🧠 Agents
 - `depecher.py` — le chemin manuel : brief (`dossier_journee`), manuel système (`manuel_de`), session `claude -p`, retour (`verser_sur_le_champ`).
 - Il n'existe plus de chemin automatique : une personne travaille uniquement après une dépêche ou un message explicite.
+- `selectionner_contexte.py` — première couche d'un POST joueur : session neuve sans reprise, sérialisée par siège ; reçoit cinq items visibles, le contexte précédent, les joueurs dans la salle, les personnes nommées, les candidats classés et les arbres `action → clef → verrou → état` de toutes les pièces détectées. Son système décrit le modèle d'affaire et porte tous les états cibles et verrous. Les messages faibles héritent du contexte précédent, sauf si le message courant nomme une personne : le nom devient alors une contrainte de routage et interdit `continuer`. Les noms présents seulement dans le fil restent du contexte. Une sélection non vide doit ancrer chaque pointeur par une citation du fil ; un incident multi-sièges impose une proposition de création. `joueurs_concernes` et `hommes` (PNJ seulement) restent séparés. Chaque homme est associé à un pointeur dans `routes_hommes`. L'artefact `selection-contexte/4` est écrit sous `.agents-runtime/contextes/`.
+- `agents/routeur_message.py` — deuxième couche : toute action va au MJ sur sa seule `ref`. Pour `dire|parler`, les hommes sélectionnés reçoivent auparavant les mots exacts par une dépêche contextuelle ; le numéro après `#` devient le `contexte_id` stable de leur session et de leur fil. `contexte_id` et la `ref` d'origine sont propagés ensemble dans le prompt, son archive, l'environnement du runtime, la trace de session, le canal du parloir, la réponse web et le spool MJ. Le bilan est joint au réveil MJ pour interdire une seconde dépêche du même homme.
 - **La mémoire d'un agent est la greffe documentaire** : son brief porte ses travaux ouverts, ses quatre dernières pensées par travail et sa dernière conclusion écrite de sa main (`travaux_ouverts_de`, lecteur canonique unique pour les deux chemins). `intentions.json` ne porte pas sa mémoire — voir Propositions.
 
 ### 🗣️ Parloir
-- `parloir.py` — fils nommés `de~a.jsonl`, écoute par hook `PostToolUse` (bat après un appel d'outil, pas au temps).
-- La règle : on transmet la **question** et les **faits**, jamais la réplique. Rien de ce qui s'y dit n'entre dans l'état par lui-même.
+- `parloir.py --dire` — billet au canal canonique de deux chambres, puis réveil du destinataire.
+- Un PNJ peut écrire à un autre habitant, jamais au MJ. Les appels synchrones vers `mj` exigent le marqueur interne `--joueur` posé par le front.
+- Exception de transport, pas d'autorité : si le destinataire est un siège joueur occupé, il n'est pas casté. Le billet devient immédiatement une `reponse` privée dans `etat/flux.jsonl` et une copie append-only sous `.agents-runtime/mj/retours-parloir.jsonl`. Le canal, la réponse et la copie portent le même `contexte_id` et la même `ref`. Le MJ la consomme à son prochain réveil avec la marque « déjà affichée » ; les arrivées pendant son appel restent après son curseur.
 
 ### 🎭 MJ
 - La session Claude qui tient le manuel (`CLAUDE.md`) : boucle d'élection de la salle, boucle hors-scène, boucle des mains — dans cet ordre.
@@ -54,8 +57,10 @@ monde est **le disque** — jamais la conversation.
 - `serveur/serveur.js` (port 3129, unique) — sert `/scene` cumulé, `/entites`, la régie.
 - `ecrans/modules/` — un type d'item = un module (galerie, paroles, gestes, carte, jetons, books, echiquier, terrain, ville…).
 
-### 📥 Inbox
-- La page POSTe → `etat/inbox/<siège>/action-*.json` ; le serveur spawn `scripts/reveiller.py` (détaché) qui réveille l'unique MJ `mj` en session continue — le guetteur est mort (habitant.md pas 5) ; lecture de TOUT, traitement, suppression.
+### 📥 Inbox & sélection
+- La page POSTe → `etat/inbox/<siège>/action-*.json` ; le serveur spawn `scripts/selectionner_contexte.py --de <siège> --ref <ref>` en détaché.
+- Le sélecteur ouvre toujours une session neuve (`reprendre=False`), mais hérite explicitement du dernier contexte résolu pour les messages faibles. Il choisit ou propose le contexte, sépare joueurs et PNJ concernés, puis écrit `.agents-runtime/contextes/<siège>/<ref>.json`.
+- Le routeur sert ensuite les hommes d'une parole dans leurs sessions d'item, appelle le MJ sur la `ref` exacte et lui joint les routes déjà servies. Les autres actions vont seulement au MJ. L'action reste dans l'inbox jusqu'à ce que le MJ ait réellement écrit au flux.
 
 ### 📐 Doctrine
 - `schema.md` — le format, jamais modifié par personne.
@@ -69,11 +74,15 @@ monde est **le disque** — jamais la conversation.
 ```mermaid
 flowchart LR
     subgraph BOUCLE["LA boucle des sièges — deux profils"]
-        SJ["💺 siège · profil SCÈNE<br/>(le joueur)"] -->|"actes : POST 📥 inbox"| MJ["🎭 MJ unique<br/>session continue"]
+        SJ["💺 siège · profil SCÈNE<br/>(le joueur)"] -->|"actes : POST 📥 inbox"| SC["🔎 sélecteur de contexte<br/>session neuve"]
+        SC --> RT["📨 routeur · ref exacte"]
+        RT -->|"toute action"| MJ["🎭 autorité de jeu"]
+        RT -->|"parler · contexte_id"| H["🧠 hommes sélectionnés"]
+        H -->|"retours déjà servis"| MJ
         MJ -->|"point de vue : 📜 flux (append_flux)"| SJ
-        MJ -->|"point de vue : brief (depecher / activation)"| SP["💺 siège · profil JOURNÉE<br/>(le PNJ en session)"]
+        MJ -->|"point de vue : brief (dépêche explicite)"| SP["💺 siège · profil JOURNÉE<br/>(le PNJ en session)"]
         SP -->|"actes et écrits rendus"| E[(🗄️ État)]
-        MJ <-->|"🗣️ parloir (hors fiction)"| SP
+        SP -->|"🗣️ billets"| AH["autres habitants"]
     end
     subgraph TEMPS["Boucle du temps (hors scène)"]
         T[⏱️ tick] -->|calcul lu par les habitants| E
@@ -98,6 +107,7 @@ flowchart LR
 3. **Le brouillard est par siège et par tête** : `info.json` et `diffusion` sont les seuls canaux par lesquels une croyance change. *(Frontière vraie pour les personnages, poreuse pour le parloir — voir Propositions.)*
 4. **Le flux est append-only et la montre lui appartient** : `append_flux.py` est le seul à faire avancer `monde.date.minute`.
 5. **La Règle Zéro** : le MJ n'écrit jamais la parole d'un PNJ — il dépêche.
+6. **Autonomie des PNJ** : un PNJ ne demande au MJ ni permission, ni information, ni verdict. Il agit, cherche dans le monde ou conserve l'inconnu.
 
 ---
 
@@ -107,9 +117,7 @@ Numérotées dans l'ordre où je les poserais. ①② sont **posées** (30 août
 le reste est à décider.
 
 ### ① ✅ La greffe documentaire servie à l'entrée *(fait)*
-`travaux_ouverts_de()` dans `depecher.py`, branché dans les DEUX chemins
-(le `travaux = []` de la boucle d'activation était codé en dur : aucun agent,
-par aucun chemin, ne recevait ses propres écrits avant ça). Un homme reprend
+`travaux_ouverts_de()` dans `depecher.py`. Un homme reprend
 là où sa plume s'est arrêtée. Complément posé le même soir : `etat/depeches/`
 archive le prompt réellement injecté, avant l'appel.
 
@@ -129,12 +137,8 @@ cahiers et pensées, où c'est déjà). `date_maj` cesse de mimer la fraîcheur
 d'une mémoire : il date un contrat. Touche `docs/schema.md` → sa propre
 passe, avec migration.
 
-### ⑤ Un seul constructeur de dossier pour les deux chemins
-`dossier_journee()` (manuel) et `dossier_activation()` (boucle) recouvrent
-80 % des mêmes lectures avec deux codes. ① a unifié les travaux ; finir le
-geste — un seul builder, deux profils (journée / activation bornée) — pour
-que le prochain champ ajouté ne manque plus jamais d'un côté. C'est le
-défaut qui a produit ① : un champ existant, servi nulle part.
+### ⑤ Un seul constructeur de dossier
+`dossier_journee()` est le constructeur unique des dépêches explicites.
 
 ### ⑥ L'hygiène des snapshots `.avant-*`
 Soixante-quinze `books.json.avant-*` à la racine d'`etat/`, et l'audit du

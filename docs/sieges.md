@@ -175,4 +175,4 @@ Le pas 6 est le seul qui prouve quelque chose. Les cinq autres sont des hypothè
 
 ## 10. Ce qui se passe pendant qu'un siège est vacant
 
-Ce document parle d'ouvrir et de fermer un siège. Ce qu'il fait **entre les deux** vit dans [`docs/regence.md`](regence.md) : il entre dans la file d'activation comme un acteur ordinaire, il n'a pas le droit d'engager le joueur de façon irréversible (sept lignes, vérifiées à la validation du rapport), et ce qu'il décide seul est consigné puis rendu en se rasseyant.
+Ce document parle d'ouvrir et de fermer un siège. Vacant, il ne rejoint aucune file automatique. Une dépêche explicite faite en son nom reste bornée par les sept lignes de [`docs/regence.md`](regence.md).

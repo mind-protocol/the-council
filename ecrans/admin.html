@@ -1896,13 +1896,9 @@ function ouvrirActionActivationGraphe(id) {
 function rendreActionsActivationGraphe() {
   const e=document.getElementById("graph-actions-activation");if(!e)return;
   const a=G.actionsActivation,passees=a.passees||[];
-  const ligne=(x,futur)=>{
+  const ligne=(x)=>{
     const id=x.tache_id||"",existe=G.parId.has(id);
-    const flux=x.flux_horloge?(" · "+x.flux_horloge+" "+
-      (Number(x.ecart_horloge_minutes)>=0?"+":"")+
-      Math.round(Number(x.ecart_horloge_minutes)||0)+" min"):"";
-    const quand=futur?("#"+(x.rang||"?")+" · ⚡ "+(x.energie==null?"?":x.energie)+flux):
-      heureActivation(x.termine_le);
+    const quand=heureActivation(x.termine_le);
     // TOUT ACTEUR ACTIF EST CLIQUABLE. On grisait le bouton des qu'une tache
     // n'etait pas un noeud du graphe — une tache creee depuis l'intention d'un
     // homme, par exemple —, et l'acteur devenait injoignable depuis l'admin.
@@ -1919,7 +1915,7 @@ function rendreActionsActivationGraphe() {
     ' passées</span><button class="graph-actions-fermer" '+
     'title="Fermer" aria-label="Fermer la vue énergie">×</button></div>';
   h+='<div class="graph-actions-groupe"><h4>Passées · réellement activées</h4>'+
-    (passees.length?passees.map(x=>ligne(x,false)).join(''):
+    (passees.length?passees.map(x=>ligne(x)).join(''):
       '<div class="graph-actions-vide">Aucune activation passée.</div>')+'</div>';
   if(a.erreur)h+='<div class="graph-actions-vide">'+esc(a.erreur)+'</div>';
   e.innerHTML=h;

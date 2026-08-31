@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 u"""RECONCILIER — le journal des affaires ecrites A LA MAIN.
 
-DEUX MAISONS, ET UNE SEULE AVAIT UNE PORTE. Les affaires vivent a deux
-adresses : `etat/books/` — la bibliotheque commune, dont `bibliotheque.
-Session.sauver()` emet desormais le journal — et `chambres/<qui>/books/`, les
+DEUX TYPES DE MAISONS, ET UNE SEULE AVAIT UNE PORTE. Les affaires vivent dans
+les documents de chaque maison — dont `bibliotheque.Session.sauver()` emet le
+journal — et dans `chambres/<qui>/books/`, les
 cahiers a soi. Cette seconde maison N'A AUCUNE PORTE : `chambre.py` cree le
 dossier et s'arrete la ; les 9 affaires du MJ y sont ecrites a la main, par
 Write et Edit. Il n'existe donc aucun point d'emission a instrumenter.
@@ -16,8 +16,8 @@ jamais QUI l'a bougee ni QUAND exactement, seulement entre deux passages.
 C'est la meme epistemologie que les jetons de la table de guerre, et elle
 vaut mieux qu'un `par` invente.
 
-Elle sert aussi de FILET a la bibliotheque commune : un homme depeche qui
-ecrit dans `etat/books/*.json` par Write contourne la porte, et seule une
+Elle sert aussi de FILET aux bibliotheques de maison : un homme depeche qui
+ecrit directement dans un document par Write contourne la porte, et seule une
 comparaison au disque le rattrape.
 
     python scripts/reconcilier.py              ce qui serait emis
@@ -39,6 +39,7 @@ for _p in (_d, os.path.join(_d, "noyau")):
         sys.path.insert(0, _p)
 
 import histoire  # noqa: E402 — noyau : le seul frere importable
+import documents_maison  # noqa: E402 — les bibliotheques possedees
 
 RACINE = os.path.dirname(_d)
 ETAT = os.path.join(RACINE, "etat")
@@ -61,19 +62,21 @@ def _lire(chemin):
 def maisons():
     u"""Rend {maison : {id_volume : volume}} pour les deux adresses.
 
-    Une « maison » est `etat` pour la bibliotheque commune, et
+    Une « maison » est `maison:<id>` pour une bibliotheque possedee, et
     `chambre:<qui>` pour chaque cahier. On garde le nom du proprietaire dans
     la clef : c'est ce qui permettra de lire le journal du MJ seul, ou celui
     d'un personnage seul, sans les melanger.
     """
     out = {}
-    commune = {}
-    for f in glob.glob(os.path.join(ETAT, "books", "affaire-*.json")):
+    par_maison = {}
+    for ident, f in documents_maison.sources_livres(ETAT).items():
+        if not ident.startswith("affaire-"):
+            continue
         v = _lire(f)
         if v and v.get("id"):
-            commune[v["id"]] = v
-    if commune:
-        out["etat"] = commune
+            mid = v.get("maison_id") or documents_maison.SANS_MAISON
+            par_maison.setdefault("maison:%s" % mid, {})[v["id"]] = v
+    out.update(par_maison)
     for f in glob.glob(os.path.join(CHAMBRES, "*", "books", "*.json")):
         qui = f.replace("\\", "/").split("/")[-3]
         v = _lire(f)

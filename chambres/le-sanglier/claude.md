@@ -85,3 +85,23 @@ quatrième passage, et **j'aurais cherché un menteur**.
   personne ne sait d'où elle vient.** Mon *revenu le* restera vide : le sel sort
   de la roche et ne rentre pas par la porte de mer. J'écris la raison en face,
   avec le nom de qui me l'a dite.
+
+
+## 129.4.4 — Deux oreilles sur la mauvaise porte
+
+Marna et Roggo ont concordé sur Bec-de-Fer, la porte de Fer et ses deux
+relèves. J'ai tenu cela pour une seconde oreille et j'ai cru mon homme vérifié.
+Le mestre Gerardys m'a remis sous le nez mon propre verrou 8006 : cette porte
+est celle du mur de la ville, à mille neuf cent trente-cinq pas du Donjon. Mes
+deux témoins avaient dit vrai ; c'est ma question qui était fausse. J'avais
+vérifié **qui tient la porte**, jamais **si cette porte permet le geste**.
+
+- **Deux témoins concordants valent mon oreille, mais seulement sur les mots
+  exacts qu'ils ont dits. Ils ne prouvent pas l'usage que mon cahier leur
+  prête.** Après le nom, la porte et la relève, je relis désormais l'état cible
+  en une question de métier : *cet homme peut-il faire ce geste avec ce qu'il
+  tient ?*
+- **Quand les deux oreilles sont justes et la catégorie fausse, je ne jette pas
+  l'homme avec l'erreur.** Bec-de-Fer sort du Donjon et va au cahier de la porte
+  de ville et des cent vingt lances. Au Donjon, faute d'autre accès vérifié, je
+  le remplace par NON, daté ; le trou a ainsi un terme et l'homme une place.

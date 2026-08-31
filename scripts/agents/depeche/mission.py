@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-"""MISSION — le texte de mission servi a l'homme, l'etagere posee dans sa
-session, l'archive du prompt, et l'appel par la porte Claude/Codex.
+"""MISSION — le texte de mission servi a l'homme, l'archive du prompt, et
+l'appel par la porte Claude/Codex.
 
 L'HOMME TRAVAILLE AVEC ACCES AU DEPOT (decision du 31.8) : la sandbox des
 calls n'a pas produit d'isolation utile et a ete retiree du runtime commun.
@@ -30,50 +30,144 @@ import time
 from etat.expose import tables
 
 from agents.depeche.brief import (RACINE, ETAT, DEPOT_RAPPORTS,
-                                  livre,
                                   OUTILS, PARLOIR_PY, travaux_ids,
                                   SEL, lire, date_du_monde,
-                                  identifiant_de_session, brief_de,
+                                  id_item_affaire, identifiant_de_session, brief_de,
                                   feuille_de_route, travaux_ouverts_de,
                                   dossier_journee)
-from agents.depeche.pas_de_tir import (poser_letagere,  # noqa: F401 — reexporte
-                                       poser_la_memoire)
+from agents.depeche.pas_de_tir import poser_la_memoire
 from agents.depeche.manuel import manuel_de, contexte_message
+from agents.depeche.contexte_affaire import focaliser
 from agents.depeche.trous import ses_trous, sa_charge_ailleurs, on_lattend
 from agents.depeche.retour import verser_sur_le_champ, _poser
 from agents.depeche.chambre_locale import rendre as rendre_chambre_locale
+import documents_maison
 
-def mission(qui, brief, consigne, contexte=None):
+MODES_BRIEF = ("journee", "reponse", "discussion")
+
+
+def instructions_mode(mode):
+    """Une capacite courte n'est pas une journee autonome de plus."""
+    if mode not in MODES_BRIEF:
+        raise ValueError("mode de brief inconnu : %s" % mode)
+    if mode == "reponse":
+        return u"""# Mode réponse
+
+Consulte le fichier `messages-au-joueur.md` indiqué sous `# Ta chambre` si une
+entrée correspond à ce destinataire, à ce contexte ou à cette ref. C'est un
+brouillon, pas une source ni un message déjà envoyé : revérifie les faits
+nécessaires avant de t'en servir.
+
+Vérifie seulement les informations nécessaires dans les sources pointées par
+le dossier. Conçois une réponse exacte et adaptée à la personne incarnée, puis
+envoie-la comme dernière réponse de ce call.
+
+N'élargis pas le travail. Ne modifie aucun fichier, n'amende ni mémoire ni
+manière, et n'écris à personne sauf si la demande l'exige explicitement."""
+    if mode == "discussion":
+        return u"""# Mode discussion
+
+Consulte le fichier `messages-au-joueur.md` indiqué sous `# Ta chambre` si une
+entrée correspond à ce destinataire, à ce contexte ou à cette ref. C'est un
+brouillon, pas une source ni un message déjà envoyé : revérifie les faits
+nécessaires avant de t'en servir.
+
+Vérifie seulement les informations nécessaires dans les sources pointées par
+le dossier. Conçois une réponse exacte et adaptée à la personne incarnée, puis
+envoie-la une seule fois avec la commande de canal exacte donnée dans la
+demande.
+
+N'élargis pas le travail. Ne modifie aucun fichier, n'amende ni mémoire ni
+manière, et ne lance aucune autre discussion. Ta dernière réponse confirme
+seulement l'envoi."""
+    return None
+
+
+def cible_rapport(qui, contexte_id=None, brut=False):
+    """Le depot historique, sans collision entre deux affaires d'un homme."""
+    nom = str(qui)
+    if contexte_id is not None:
+        nom += "--contexte-" + id_item_affaire(contexte_id)
+    return os.path.join(DEPOT_RAPPORTS,
+                        nom + (".brut.txt" if brut else ".json"))
+
+
+def mission(qui, brief, consigne, contexte=None, contexte_id=None, ref=None,
+            mode="journee"):
     """Donne l'interface du jour ; l'identité et le contexte vivent au système."""
-    depot = os.path.join(RACINE, "").replace("\\", "/")
+    court = instructions_mode(mode)
+    if contexte_id is not None:
+        contexte_id = id_item_affaire(contexte_id)
     aujourdhui = dict(zip(("annee", "lune", "jour"), date_du_monde()))
     contexte = contexte or dossier_journee(qui, brief)
-    ajout = (u"\n## L'élan particulier de ce jour\n\n" + consigne.strip() + u"\n"
+    if contexte_id is not None and not contexte.get("contexte_affaire"):
+        contexte = focaliser(contexte, contexte_id)
+    titre_consigne = (u"La demande" if court else
+                      u"L'élan particulier de ce jour")
+    ajout = (u"\n## %s\n\n%s\n" % (titre_consigne, consigne.strip())
              if consigne and consigne.strip() else u"")
+    if contexte_id is not None:
+        ajout = (u"\n## Le fil de cette affaire\n\n"
+                 u"Cet appel appartient à l'item d'affaire `%s`. Ta session, "
+                 u"ton vécu et ton mot de reprise sont ceux de cet item ; ne "
+                 u"les confonds pas avec une autre affaire.\n" % contexte_id
+                 + ajout)
+    if ref:
+        ajout = (u"\n## Origine de cet appel\n\n"
+                 u"Le message joueur qui a ouvert cet appel porte la ref "
+                 u"`%s`. Conserve-la avec toute réponse liée à ce message.\n"
+                 % ref) + ajout
     # Ses cahiers d'abord — c'est ce dont il répond. Puis ce qui tombe sur lui
     # de dehors, et qu'aucun chemin ne lui portait.
-    ajout = ses_trous(qui) + sa_charge_ailleurs(qui) + on_lattend(qui) + ajout
+    if mode == "journee" and contexte_id is None:
+        ajout = ses_trous(qui) + sa_charge_ailleurs(qui) + on_lattend(qui) + ajout
     from agents.expose import chambre as _ch
     sa_chambre = _ch.chemin(qui).replace("\\", "/")
-    chambre_locale = rendre_chambre_locale(_ch.chemin(qui))
-    # Un seul MJ arbitre tous les gestes. Le lieu de l'homme reste une
-    # information de fiction ; il ne fabrique plus une autorite runtime.
-    arbitre = "mj"
+    if mode != "journee":
+        chambre_locale = u""
+    elif contexte_id is None:
+        chambre_locale = rendre_chambre_locale(_ch.chemin(qui))
+    else:
+        focus = contexte["contexte_affaire"]
+        volume = (focus.get("volumes") or [None])[0]
+        source = u""
+        if volume:
+            canonique = documents_maison.sources_livres(ETAT).get(volume)
+            _maison, autorises = documents_maison.documents_pour(ETAT, qui)
+            if canonique and canonique in autorises:
+                source = u" Le cahier source est `%s`." % canonique.replace("\\", "/")
+            else:
+                source = (u" Le cahier `%s` n'appartient pas aux documents "
+                          u"de ta maison : ne l'ouvre pas." % volume)
+        chambre_locale = (u"## Le dossier local de cet item\n\n"
+                           u"Ton fil propre est `%s`.%s N'inventorie pas le "
+                           u"reste de ta chambre pour cet appel.\n" % (
+                               _ch.fil(qui, contexte_id).replace("\\", "/"),
+                               source))
     # LES BILLETS ENTRENT EN PERCEPT (habitant.md §3) : « Untel t'a écrit :
     # "…" » — jamais une invitation à ouvrir un fichier (2/2 ignorée aux
     # essais). Le curseur n'avance qu'au lancement réussi (marquer_lus, dans
     # depecher) : un départ raté ne mange pas les billets.
     billets = u""
-    for b in _ch.non_lus(qui):
+    for b in (_ch.non_lus(qui)
+              if mode == "journee" and contexte_id is None else []):
         d = b.get("date")
         if isinstance(d, dict):
             d = u"%s.%s.%s" % (d.get("annee", u"?"), d.get("lune", u"?"),
                                d.get("jour", u"?"))
         quand = u" (%s%s)" % (d or u"", u", %s" % b["heure"]
                               if b.get("heure") else u"")
-        billets += (u"\n%s t'a écrit%s : « %s »\n"
+        provenance = []
+        if b.get("contexte_id") is not None:
+            provenance.append(u"contexte %s" % b["contexte_id"])
+        if b.get("ref"):
+            provenance.append(u"ref %s" % b["ref"])
+        provenance = (u" [%s]" % u" · ".join(provenance)
+                      if provenance else u"")
+        billets += (u"\n%s t'a écrit%s%s : « %s »\n"
                     % (b.get("de") or b.get("avec"),
                        quand if quand != u" ()" else u"",
+                       provenance,
                        (b.get("texte") or u"").strip()))
     if billets:
         billets = (u"\n## On t'a écrit\n" + billets +
@@ -81,12 +175,25 @@ def mission(qui, brief, consigne, contexte=None):
                    u" Réponds-y à ta façon — dans tes gestes, tes cahiers, ou en"
                    u" notant ta réponse dans ta chambre pour la lui porter.\n")
     ajout = billets + ajout
+    if court:
+        return u"""%(contexte)s
+
+---
+
+%(instructions)s
+%(ajout)s""" % {
+            "contexte": contexte_message(qui, contexte).strip(),
+            "instructions": court,
+            "ajout": ajout,
+        }
     # LA OU IL S'ETAIT LAISSE : le mot qu'il s'est laisse hier (demain.md,
     # ecrit par depecher en fin de journee) se relit en tete de la journee
     # neuve — puis sera ecrase par la conclusion de ce soir. L'ordre :
     # injecte au reveil N+1, ecrase en fin de N+1.
     hier = u""
-    chemin_demain = os.path.join(_ch.chemin(qui), "demain.md")
+    chemin_demain = (os.path.join(_ch.chemin(qui), "demain.md")
+                     if contexte_id is None else
+                     os.path.join(_ch.fil(qui, contexte_id), "demain.md"))
     if os.path.exists(chemin_demain):
         with io.open(chemin_demain, encoding="utf-8") as f:
             mot_dhier = f.read().strip()
@@ -100,25 +207,20 @@ def mission(qui, brief, consigne, contexte=None):
 
 # Cette journée
 %(hier)s
-Ton contexte vivant est déjà auprès de toi. Le dépôt %(depot)s matérialise le
-monde que tes yeux et tes mains peuvent consulter. Ton étagère se trouve dans
-`./livres/`, un fichier par volume. `Read`, `Grep` et `Glob` servent à toucher
-ces sources ; `Grep` localise un passage dans les grands journaux avant sa
-lecture.
+Ton contexte vivant est déjà auprès de toi. Les documents de ta maison sont
+énumérés dans ton prompt système. `Read`, `Grep` et `Glob` servent à les
+consulter directement à leur adresse canonique.
 
-## Ton arbitre, et tes trois verbes
+## Tu agis sans demander au MJ
 
-Ton MJ est `%(arbitre)s`. Quand ton geste engage le monde, tu le
-lui adresses par l'un des trois verbes — le verdict revient comme retour de
-commande, dans le fil de ta pensée :
+Tu ne demandes au MJ ni permission, ni information, ni verdict. Tu lis les
+sources auxquelles tu as accès, tu décides selon ta tête et tu accomplis les
+gestes qui sont à ta portée. Écris directement ce que tu as réellement fait.
 
-    python %(parloir)s --tenter --de %(qui)s --a %(arbitre)s "je pars sur mon cheval"
-    python %(parloir)s --faire --de %(qui)s --a %(arbitre)s "je déplace ce livre"
-    python %(parloir)s --demander --de %(qui)s --a %(arbitre)s "l'histoire de cette tour ?"
-
-TENTER : tu tentes, l'arbitre tranche en coulisse. FAIRE : tu proposes un
-changement au monde. DEMANDER : tu demandes ce que le monde dit — la réponse
-vient des registres seuls.
+Si une conséquence dépend d'un autre, du hasard ou d'un fait absent de tes
+sources, n'invente pas son issue : écris ton geste ou ton intention, laisse la
+conséquence en attente, puis poursuis ce que tu peux faire. Un inconnu reste
+inconnu jusqu'à ce qu'une personne ou une source du monde te l'apporte.
 
 Écrire à quelqu'un, c'est le billet : il le lira à son réveil, et ton mot le
 réveille s'il dort.
@@ -154,13 +256,12 @@ Tes affaires ouvertes, pour mémoire :
 %(ajout)s""" % {
         "chambre": sa_chambre,
         "chambre_locale": chambre_locale.rstrip(),
-        "arbitre": arbitre,
         "hier": hier,
-        "depot": depot,
         "parloir": PARLOIR_PY,
         "qui": qui,
         "aujourdhui": json.dumps(aujourdhui, ensure_ascii=False),
-        "travaux_ids": travaux_ids(qui),
+        "travaux_ids": (travaux_ids(qui) if contexte_id is None else
+                         "- `%s` — seul item de cet appel." % contexte_id),
         "ajout": ajout,
         "contexte": contexte_message(qui, contexte).strip(),
     }
@@ -169,7 +270,8 @@ Tes affaires ouvertes, pour mémoire :
 DEPECHES = os.path.join(ETAT, "depeches")
 
 
-def archiver_le_prompt(qui, sid, manuel, texte):
+def archiver_le_prompt(qui, sid, manuel, texte, contexte_id=None, ref=None,
+                       mode="journee"):
     """Garde sur disque CE QUI A REELLEMENT ETE INJECTE, avant l'appel.
 
     Le manuel partait dans un `mkdtemp` que personne ne relit et que le systeme
@@ -185,13 +287,17 @@ def archiver_le_prompt(qui, sid, manuel, texte):
     return tables.ecrire(os.path.join(DEPECHES, "%s-%s.json" % (horo, qui)), {
         "qui": qui,
         "session": sid,
+        "contexte_id": contexte_id,
+        "ref": ref,
+        "mode": mode,
         "date_jeu": "%s.%s.%s" % date_du_monde(),
         "system_prompt": manuel,
         "mission": texte,
     }, indent=1)
 
 
-def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True):
+def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True,
+            contexte_id=None, ref=None, mode="journee"):
     """Appelle la porte globale ; cree ou reprend la session logique.
 
     LE MANUEL PASSE PAR UN FICHIER. Windows plafonne une ligne a 32 767
@@ -213,6 +319,8 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True):
     recoit aucun --settings — une parole qui arrive pendant sa journee est
     un billet au canal, servi en percept a son prochain reveil.
     """
+    if contexte_id is not None:
+        contexte_id = id_item_affaire(contexte_id)
     from agents.expose import chambre as _ch
     sa_chambre = _ch.ouvrir(qui)
     # SOUS CLAUDE, IL TRAVAILLE CHEZ LUI. Le `mkdtemp` par depeche avait deux
@@ -241,10 +349,10 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True):
     # convention et n'etait JAMAIS posee — une lecture dans tout le depot,
     # zero ecriture. Sans elle, le journal des affaires ne peut pas dire QUI
     # a ferme une action : il ne verrait qu'un nom d'outil.
-    poser_letagere(neutre, qui)
     # Ce que le message ne porte plus doit exister la ou il pointe.
     poser_la_memoire(neutre, qui)
-    archiver_le_prompt(qui, sid, manuel, texte)
+    archiver_le_prompt(qui, sid, manuel, texte, contexte_id=contexte_id,
+                       ref=ref, mode=mode)
     from agents.expose import runtime as agent_runtime
     parametres = {
         "role": qui, "manuel": manuel, "message": texte,
@@ -255,7 +363,10 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True):
         "timeout": (minutes * 60) if minutes else None,
         "cwd": neutre, "add_dirs": [RACINE, sa_chambre],
         "tools": OUTILS, "reprendre": None,
-        "env": {"LE_CONSEIL_QUI": str(qui)},
+        "env": {"LE_CONSEIL_QUI": str(qui),
+                "LE_CONSEIL_CONTEXTE": str(contexte_id or ""),
+                "LE_CONSEIL_REF": str(ref or ""),
+                "LE_CONSEIL_MODE": str(mode)},
     }
 
     if not attendre:
@@ -263,10 +374,12 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True):
         # part par un fichier tenu ouvert en stdin ; le fil de sa chambre
         # recoit la sortie, datee, relisible.
         horo = time.strftime("%Y%m%d-%H%M%S")
-        log = os.path.join(sa_chambre, "fil", "depeche-%s.log" % horo)
+        fil = _ch.fil(qui, contexte_id=contexte_id, creer=True)
+        log = os.path.join(fil, "depeche-%s.log" % horo)
         etiquette = u"%d.%d.%d" % date_du_monde()
         return agent_runtime.lancer_cast(
-            log, trace={"qui": qui, "etiquette": etiquette}, **parametres)
+            log, trace={"qui": qui, "etiquette": etiquette,
+                        "contexte_id": contexte_id, "ref": ref}, **parametres)
 
     return agent_runtime.appeler(**parametres)
 
@@ -290,9 +403,13 @@ def extraire_json(texte):
     return None, u"aucun objet JSON dans la reponse"
 
 
-def depecher(qui, consigne, modele, minutes, sec, attendre=True):
+def depecher(qui, consigne, modele, minutes, sec, attendre=True,
+             contexte_id=None, ref=None, mode="journee"):
+    instructions_mode(mode)  # valide aussi le mode historique
+    if contexte_id is not None:
+        contexte_id = id_item_affaire(contexte_id)
     date = date_du_monde()
-    sid = identifiant_de_session(qui, date)
+    sid = identifiant_de_session(qui, date, contexte_id=contexte_id)
     brief = brief_de(qui)
     # LA GARDE PORTE SUR CE QUI EMPECHE SA JOURNEE, pas sur un mot du dossier.
     # Elle cherchait « CONVOCATION », que l'ancien brief tenait de
@@ -322,12 +439,26 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True):
         print(u"  %-18s ne part pas — %s" % (qui, empeche))
         return False
     contexte = dossier_journee(qui, brief)
+    if contexte_id is not None:
+        try:
+            contexte = focaliser(contexte, contexte_id)
+        except ValueError as e:
+            print(u"  %-18s ne part pas — %s" % (qui, e))
+            return False
     manuel = manuel_de(qui, mode="journee", contexte=contexte)
-    texte = mission(qui, brief, consigne, contexte=contexte)
+    texte = mission(qui, brief, consigne, contexte=contexte,
+                    contexte_id=contexte_id, ref=ref, mode=mode)
 
     if sec:
+        from agents.expose import runtime as _rt2
+        from agents.expose import chambre as _ch2
         print(u"═" * 72)
         print(u"%s   session %s" % (qui, sid))
+        if contexte_id is not None:
+            print(u"  contexte       : %s" % contexte_id)
+            print(u"  fil de chambre : %s" % os.path.relpath(
+                _ch2.fil(qui, contexte_id), RACINE))
+        print(u"  mode           : %s" % mode)
         print(u"  prompt système : %d caractères (nouvelle version seule)"
               % len(manuel))
         print(u"  mission        : %d caracteres" % len(texte))
@@ -335,8 +466,6 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True):
         # LA LIGNE DISAIT « repertoire neutre » QUOI QU'IL ARRIVE — un texte
         # fige, qui ment depuis que le cwd depend du fournisseur. Un `--sec`
         # sert a voir ce qui VA se passer : il rend le vrai chemin.
-        from agents.expose import runtime as _rt2
-        from agents.expose import chambre as _ch2
         _claude = (_rt2.configuration() or {}).get("fournisseur") == "claude"
         print(u"  lance depuis   : %s"
               % (_ch2.chemin(qui) if _claude
@@ -349,7 +478,8 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True):
     debut = time.time()
     try:
         rep = appeler(qui, manuel, texte, sid, modele, minutes,
-                      attendre=attendre)
+                      attendre=attendre, contexte_id=contexte_id, ref=ref,
+                      mode=mode)
     except Exception as e:
         print(u"  %-18s ECHEC — %s" % (qui, e))
         return False
@@ -357,7 +487,10 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True):
     # LE LANCEMENT A PRIS : son reveil a tout vu — les billets sont lus.
     # Avant ce point (echec du depart), les curseurs n'ont pas bouge.
     from agents.expose import chambre as _ch
-    _ch.marquer_lus(qui)
+    # Le brief focalise n'a pas servi les billets generaux : il ne doit donc
+    # pas les consommer en silence. Ils restent pour le prochain reveil large.
+    if mode == "journee" and contexte_id is None:
+        _ch.marquer_lus(qui)
 
     if not attendre:
         # Parti en cast : sa journee vit sans nous. Pas de rapport a parser —
@@ -373,7 +506,8 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True):
     try:
         _tr.deposer(qui, sid, etiquette=u"%d.%d.%d" % date,
                     transcript=rep.get("transcript_path"),
-                    provider=rep.get("provider"))
+                    provider=rep.get("provider"),
+                    contexte_id=contexte_id, ref=ref)
     except Exception:
         pass  # un fil qui manque ne vaut pas une journee perdue
 
@@ -382,19 +516,30 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True):
     jetons = (u_.get("input_tokens", 0) + u_.get("cache_read_input_tokens", 0)
               + u_.get("cache_creation_input_tokens", 0))
 
+    if mode != "journee":
+        phrase = (rep.get("result") or u"").strip()
+        print(u"  %-18s %5d j. · %3ds — %s : %s"
+              % (qui, jetons, round(time.time() - debut), mode,
+                 re.sub(r"\s+", u" ", phrase)[:220] or u"(muette)"))
+        return True
+
     if rapport is None:
         # PLUS UN ECHEC : le gabarit JSON est retire (habitant.md pas 3).
         # Sa derniere reponse est une phrase d'homme ; sa journee vit dans
         # sa chambre (fil/, brouillons/, cahiers) et ses versements.
         phrase = (rep.get("result") or u"").strip()
-        brut = os.path.join(DEPOT_RAPPORTS, "%s.brut.txt" % qui)
+        brut = cible_rapport(qui, contexte_id, brut=True)
         _poser(brut, phrase)
         # LE MOT SUR SA TABLE : sa conclusion s'ecrit dans sa chambre,
         # ECRASEE a chaque journee — c'est le mot le plus recent qui compte,
         # le fil garde l'historique. Elle sera reinjectee a son prochain
         # reveil (« La ou tu t'etais laisse », mission()).
         if phrase:
-            with io.open(os.path.join(_ch.chemin(qui), "demain.md"), "w",
+            mot = (os.path.join(_ch.chemin(qui), "demain.md")
+                   if contexte_id is None else
+                   os.path.join(_ch.fil(qui, contexte_id, creer=True),
+                                "demain.md"))
+            with io.open(mot, "w",
                          encoding="utf-8", newline="\n") as f:
                 f.write(phrase + u"\n")
         print(u"  %-18s %5d j. · %3ds — sa phrase : %s"
@@ -405,9 +550,11 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True):
     rapport.setdefault("qui", qui)
     rapport["_depeche"] = {
         "session": sid, "date_jeu": "%d.%d.%d" % date,
+        "contexte_id": contexte_id,
+        "ref": ref,
         "jetons": jetons, "secondes": round(time.time() - debut),
     }
-    cible = os.path.join(DEPOT_RAPPORTS, "%s.json" % qui)
+    cible = cible_rapport(qui, contexte_id)
     tables.ecrire(cible, rapport)
     verse = verser_sur_le_champ(rapport, qui, date)
 

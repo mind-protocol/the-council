@@ -1,0 +1,59 @@
+{
+ "maison_id": "maison-darklyn",
+ "mains": [
+  {
+   "id": "granges-de-sombreval",
+   "quoi": "Ce que Sombreval a en granges, et le nombre de journees de pain que ca laisse a la ville",
+   "porteur": {
+    "type": "personnage",
+    "id": "marec-fosse"
+   },
+   "lieu_id": "sombreval",
+   "mandat": null,
+   "mesure": [
+    {
+     "id": "muids-en-granges",
+     "quoi": "muids de grain en granges et greniers de Sombreval, les trois depots de la reine deja preleves",
+     "valeur": 204,
+     "unite": "muids",
+     "rythme": {
+      "par": -4,
+      "jours": 1
+     },
+     "reliquat": 0,
+     "plancher": 0,
+     "plafond": 900,
+     "depend_de": []
+    },
+    {
+     "id": "journees-de-pain-de-la-ville",
+     "quoi": "journees de pain pour les bouches de Sombreval, hameaux montes depuis le feu de la route compris",
+     "valeur": 68,
+     "unite": "jours",
+     "rythme": {
+      "par": -1,
+      "jours": 1
+     },
+     "reliquat": 0,
+     "plancher": 0,
+     "plafond": 240,
+     "depend_de": []
+    }
+   ],
+   "seuils": [
+    {
+     "id": "granges-a-vide",
+     "mesure_id": "muids-en-granges",
+     "quand": "sous",
+     "valeur": 60,
+     "promeut": "orbite",
+     "affaire": "Sombreval a donne son pain a l'ost de la reine et ne passe plus la lune. Trois voies, et aucune n'est bonne : acheter a Rosby au prix de la guerre, rationner une ville qui vient d'enterrer ses morts, ou reprendre sur la route ce qu'on a charge.",
+     "franchi_le": null
+    }
+   ],
+   "dernier_rapport": "EN TETE DE COLONNE : bouches CONSTATEES a leur feu, hors huit feux clos du dedans non ouverts. Journee du 4e, deux comptes de la main de l'intendant. MATIN, le grain au boisseau : caves de la citadelle 96 muids, granges basses et greniers 108, granges du haut vides, grange du hameau de la cote forcee et videe — 24 muids pris par l'ost avant la prise. Total 204, le chiffre du registre, prouve. APRES-MIDI, les bouches paroisse par paroisse dans les murs : 80 au role du 27e, moins 23 morts du sac constates, moins 16 feux fermes (porte de terre et barques), plus 19 montes des hameaux — SOIXANTE bouches a la charge de la maison. Trois muids par jour au lieu de quatre : 68 journees de pain. L'ost n'est pas compte dans ce role. Huit des seize feux fermes ont les volets cloues de l'interieur et sont comptes partis sans preuve : si l'on y vit encore, le denominateur est court d'au plus huit feux et les 68 journees sont trop hautes. Correction demandee le meme jour par le porteur, non faite par la porte : rythme de muids-en-granges de -4 a -3.",
+   "date_maj": "129.4.4",
+   "maison_id": "maison-darklyn"
+  }
+ ]
+}

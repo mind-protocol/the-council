@@ -4,7 +4,7 @@
 tapé — par le MJ à son tour de jeu, par un homme dépêché dans sa journée, par un
 hook, par le serveur. Ces chemins sont écrits en dur dans `CLAUDE.md`, dans
 `docs/`, dans `ecrans/`, dans `serveur/`, et jusque dans les cahiers in-fiction de
-`etat/books/` que lisent les dépêchés. **Ils ne se déplacent pas.** Un homme qui
+`etat/maisons/<id>/documents/books/` que les prompts des dépêchés listent. **Ils ne se déplacent pas.** Un homme qui
 suit son cahier et tombe sur un chemin mort perd sa journée sans que personne le
 sache.
 
@@ -100,6 +100,9 @@ nom pour l'instant (docs/organisation.md §8 ⑧).
 **La Règle Zéro** — `depecher.py` (envoyer un homme vivre sa journée),
 `parloir.py` (lui écrire : verbes en call, billet-réveil — le hook-oreille
 est mort le 31.8), `presence.py` (qui est à portée, et ses creux).
+`depecher.py --contexte <N°>` (par exemple `23030`, `#23030` ou `n° 23030`)
+normalise l'adresse globale d'une pièce d'affaire, ouvre une session et un fil
+de chambre distincts, et borne le brief à sa chaîne ascendante.
 
 **Le monde qui tourne** — `tick.py` (le calcul, n'écrit jamais dans `etat/`),
 `ajouter.py` (une entrée à la fois),
@@ -107,8 +110,7 @@ est mort le 31.8), `presence.py` (qui est à portée, et ses creux).
 
 **Le fil et l'écran** — `append_flux.py` (la seule plume du flux et de l'horloge),
 `tunnel.py` et `carte_muette.py` sont ses compteurs, `seed_flux.py`, `regie.py`
-(le siège de Corneille), `guetteur.sh` (à réarmer EN PREMIER), `juger.py` (hook
-Stop, déclaré dans `.claude/settings.json`).
+(le siège de Corneille), `guetteur.sh` (à réarmer EN PREMIER).
 
 **Les registres** — `couverture.py`, `etat_du_plan.py`, `mesures.py`,
 `verser_cahier.py`, `exporter_plan.py`, `purger.py`, `tisser.py`.

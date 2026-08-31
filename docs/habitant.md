@@ -97,21 +97,20 @@ habitants fait partie de la partie. Les fils `~mj` d'`etat/parloir/` migrent ver
 les `relations/` à mesure que les chambres s'ouvrent — une conversation n'est pas
 de la vérité, elle n'avait rien à faire dans `etat/`.
 
-## 3. Les verbes — l'accès de l'homme au monde
+## 3. Les gestes — le PNJ agit, le joueur demande l'arbitrage
 
-Un homme en journée a trois verbes vers son arbitre, symétriques des boutons du
-joueur (prouvé nécessaire : 3/3 réveils d'essai, son premier geste de communication
-fut `parloir --dire --a mj`) :
-
-**Le lexique est UNIQUE et c'est celui du joueur** (normalisé le 31.8 — un seul
-nom par geste, l'homme et le joueur font les mêmes) :
+Un PNJ en journée n'a aucun canal vers le MJ. Il lit ses sources, agit dans la
+mesure de ses moyens et écrit ce qu'il a réellement accompli. Si l'issue dépend
+d'un autre, du hasard ou d'un fait absent, il laisse la conséquence en attente
+sans l'inventer. Les verbes synchrones vers `mj` appartiennent uniquement au
+front d'un joueur et portent le marqueur technique `--joueur`.
 
 | geste | ce que c'est | résolution |
 |---|---|---|
-| **PARLER** — « Maître Hask, … » | une parole adressée | vers un arbitre : call ; vers un homme : billet au canal + réveil cast |
-| **AGIR** — « je pars sur mon cheval », « je déplace ce livre » | un geste qui engage le monde (absorbe l'ancien TENTER **et** FAIRE) | l'arbitre tranche l'incertain ; l'homme écrit directement ce qu'il sait avoir produit |
-| **PENSER** — « et si la roue… » | **un réveil de soi-même** : la pensée est un cast à soi — sa session vit ce moment intérieur, le vécu et la conclusion se déposent chez lui | aucun arbitre : ça reste en chambre (prévoir librement) |
-| **QUESTION** — « l'histoire de ceci ? » | demander ce que le monde dit | l'arbitre répond **depuis l'état seulement** — Règle Zéro intacte |
+| **PARLER** — « Maître Hask, … » | une parole adressée | billet à un habitant + réveil cast ; jamais vers le MJ pour un PNJ |
+| **AGIR** — « je pars sur mon cheval », « je déplace ce livre » | un geste qui engage le monde | le PNJ écrit le geste accompli ; l'issue hors de sa portée reste en attente |
+| **PENSER** — « et si la roue… » | un réveil de soi-même | ça reste en chambre, sans arbitre |
+| **CHERCHER** — « l'histoire de ceci ? » | apprendre ce que le monde sait | lire une source ou écrire à une personne ; sinon conserver l'inconnu |
 | **INTERVENTION** — la main par-dessus | hors fiction : on répare, on ne joue pas | réservé au siège de régie (joueur/dev), jamais un geste d'homme dépêché |
 
 Les billets entre hommes entrent dans le brief **en percept** — « Hask t'a écrit :
@@ -120,16 +119,15 @@ ignorée sous la pression de l'élan).
 
 ## 4. Le runtime — la règle en quatre lignes
 
-> **Tout le monde peut appeler tout le monde, n'importe quand, en parallèle.**
+> **Tout habitant peut écrire à tout habitant, n'importe quand, en parallèle.**
 > **Les sessions sont de la mémoire ; la mémoire supporte le désordre** — c'est l'anachronisme.
 > **La vérité vit dans l'état** — les habitants y écrivent directement.
 > **Chaque réveil porte son moment** — la date, le creux, « qui te réveille » : une étiquette, jamais un verrou.
 
 Mesuré (trois réveils-jouets) : deux `--resume` concurrents sur la même session
 réussissent tous deux, même id, transcript unique aux branches entrelacées — pas de
-verrou natif, pas de crash. Pour un **arbitre**, l'entrelacement est son registre
-d'audiences (le MJ est débottlenecké : tout le monde peut et doit lui parler à la
-fois). Pour un **homme**, deux réveils simultanés sont deux moments de sa vie joués
+verrou natif, pas de crash. Pour le **MJ**, l'entrelacement ne porte plus que
+les audiences des joueurs. Pour un **homme**, deux réveils simultanés sont deux moments de sa vie joués
 en désordre — ce que l'anachronisme accepte déjà. Personne n'est sérialisé.
 
 ### Call et cast — la synchronicité se décide par arête, jamais par système
@@ -142,11 +140,61 @@ en désordre — ce que l'anachronisme accepte déjà. Personne n'est sérialis�
 |---|---|
 | lancer une journée, une activation | cast |
 | écrire un billet à un absent | cast (et l'écriture RÉVEILLE le destinataire — le geste d'écrire est le réveilleur, aucun démon) |
-| homme → MJ : TENTER / DEMANDER | **call** — le verdict revient sur stdout, dans le fil de sa pensée |
+| joueur → MJ : geste du front | **call** — le verdict revient à l'interface |
 | MJ → homme : une réplique doit sortir (Règle Zéro) | **call** |
 
 Filet des cycles d'appels : les arêtes sync sont courtes et dirigées ; le timeout
 du `-p` suffit.
+
+Un appel d'homme peut nommer l'item d'affaire qu'il sert :
+
+```bash
+python scripts/depecher.py --qui gerardys --contexte 23030 --mission "..."
+```
+
+Le drapeau `--mode` choisit les instructions, sans changer l'identité de
+session ni le contexte :
+
+```bash
+python scripts/depecher.py --qui gerardys --contexte 23030 \
+  --mode reponse --mission "Quel est le chiffre ?"
+```
+
+- `reponse` : vérifier le strict nécessaire, concevoir une réponse, la rendre
+  comme dernière réponse du call ;
+- `discussion` : vérifier, concevoir, puis envoyer une fois par la commande de
+  canal fournie dans la demande ; le routeur des paroles choisit ce mode
+  automatiquement ;
+- `journee` : comportement autonome historique, conservé par défaut.
+
+Chaque chambre possède `messages-au-joueur.md`. En `journee`, l'habitant y
+prépare les messages que ses affaires appellent, avec destinataire, contexte,
+ref, faits vérifiés et mots proposés. Le cahier n'est pas un canal : rien de ce
+qui y est écrit n'est encore dit. En `reponse` et `discussion`, l'entrée
+pertinente est relue comme brouillon, ses faits sont revérifiés, puis le mode
+court applique sa propre règle d'envoi.
+
+Les deux modes courts sont des calls attendus : ils refusent `--cast`. Ils ne
+modifient ni mémoire ni manière et ne produisent ni rapport de journée ni mot
+de reprise.
+
+Le contexte désigne le **numéro de la pièce** dans une affaire générale.
+`23030`, `#23030`, `n° 23030`, `Nº23030` et la forme Markdown `**23030**`
+sont normalisés vers la même adresse canonique `23030`. Un nom de volume ou
+`affaire-…#P.3` n'est pas une adresse ; deux numéros distincts dans la même
+entrée sont refusés comme ambigus. Ce numéro est global : les affaires le
+rendent dans leur première colonne `N°` et le plan refuse qu'il soit pris
+ailleurs. Sans `--contexte`, la session reste celle de
+l'homme pour le jour de jeu. Avec `--contexte`, elle est stable par couple
+homme/item, même lorsque le jour change.
+Chaque item possède aussi son propre fil sous
+`chambres/<homme>/fil/contextes/<N°>/` : logs, vécu et mot de reprise ne se
+mélangent plus avec ceux d'une autre affaire.
+
+Le même numéro focalise le dossier : l'homme reçoit la pièce demandée, son
+cahier source, son état, sa preuve attendue et la chaîne ascendante jusqu'à
+l'état qu'elle sert. Ses autres trous, attentes et inventaires de chambre ne
+sont pas injectés dans cet appel.
 
 ### Les rôles
 
@@ -156,14 +204,11 @@ du `-p` suffit.
   ni session, ni chambre supplémentaire. Le MJ tient le spectacle et la montre.
 - **Le guetteur meurt.** Le serveur (seul processus permanent) lance
   `claude -p --resume <mj>` sur le POST du joueur — l'unique MJ est un habitant
-  comme les autres. Le battement hors-acte devient un réveil de plus (élection ou
-  cron). La supervision devient un siège : `claude --resume <mj>` en interactif
+  comme les autres. La supervision devient un siège : `claude --resume <mj>` en interactif
   quand le dev veut piloter, rendu en sortant.
-- **L'élection (la boucle) reste le rattrapeur priorisé** : l'énergie du tissu élit
-  qui vivre ; un message en attente pèse sur son destinataire. Le tick ne réveille
-  personne : il propose.
-- **Le MJ n'est pas élu par la boucle des acteurs.** Il se réveille sur un POST
-  joueur ou sur un verbe qui exige son verdict. La veille de focus dépêche les
+- **Aucune élection automatique.** Le tick ne réveille personne : il propose.
+- **Le MJ se réveille seulement sur un POST joueur, un verbe du front marqué
+  `--joueur`, ou une intervention de `dev`.** Une dépêche explicite appelle les
   hommes directement ; elle ne crée aucun narrateur géographique intermédiaire.
 - **`dev` est un nom réservé** (31.8) : le développeur est un habitant adressable
   — sa chambre est `chambres/dev/`, on lui écrit un billet (`--a dev`), on lui
@@ -189,7 +234,7 @@ mémoire de l'homme. Le speculatif capitalise ; seule la consolidation attend so
 | Le pas-de-tir neutre gagne (variante B) | naître dans le dépôt coûte ~+50 k jetons/tour (le manuel racine remonte par la découverte) ET expose aux hooks du projet |
 | La sandbox des calls n'a pas fait ses preuves (tranché le 31.8) | Le mode `--restricted` a été retiré : les habitants sont lancés avec accès au dépôt. Le vécu reste déposé par le lanceur (`trace.deposer`), car cette mémoire ne doit pas dépendre d'un hook de fournisseur. |
 | Le billet-fichier ne suffit pas | 2/2 ignoré sous la pression de l'élan → billet en percept dans le brief |
-| Le besoin homme→MJ est réel | 3/3 : premier geste = parloir vers l'arbitre |
+| L'appel homme→MJ concentrait la dépendance | ancienne mesure : 3/3 premiers gestes allaient au MJ ; ce résultat motive désormais son retrait, pas sa conservation |
 | Le rapport JSON est un artefact RPC | il disparaît au profit des écrits de chambre + versements + une phrase |
 | `--resume` interactif d'une session `-p` | à mesurer (une minute) — c'est le mécanisme du siège de supervision |
 
@@ -208,8 +253,9 @@ container `agents/` ; `chambres/` est de la donnée.
 3. **Le brief** (`depeche/brief.py`) — section chambre au chemin absolu, billets en
    percept, claude.md perso joint au système, le gabarit JSON retiré. → **réveil-banc
    n°3** : le billet-percept est-il répondu ?
-4. **Les verbes** (`metier.md` + `parloir.py` + `mj.py`) —
-   TENTER/FAIRE/DEMANDER en call vers la seule adresse `mj`.
+4. **La frontière joueur/PNJ** (`metier.md` + `parloir.py` + `mj.py`) —
+   les appels synchrones vers `mj` exigent `--joueur` ; un PNJ cherche, agit
+   ou conserve l'inconnu sans réveiller le MJ.
 5. **Écrire = réveiller** — `--dire` spawn le destinataire détaché ; le serveur
    lance le MJ sur POST ; le guetteur s'éteint. → **réveil-banc n°5** : un ping-pong
    homme↔homme réel.

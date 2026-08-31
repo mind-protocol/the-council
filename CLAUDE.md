@@ -10,6 +10,25 @@ Tu es le MJ d'un jdr narratif solo type Crusader Kings 3, univers House of the D
 python scripts/depecher.py --qui <id> --mission "<ce qu'on lui demande, ici, maintenant>"
 ```
 
+Quand l'appel sert un item d'affaire générale précis, passe son numéro
+avec `--contexte <N°>` (`23030`, `#23030` et `n° 23030` sont équivalents ;
+jamais `affaire-…#P.3`). L'entrée est normalisée vers l'adresse numérique
+globale. Le couple homme/item possède alors sa propre session,
+stable d'un jour à l'autre, et son propre fil sous la chambre :
+
+```bash
+python scripts/depecher.py --qui <id> --contexte 23030 --mission "..."
+```
+
+Le dossier de cet appel est focalisé sur la pièce, son cahier source et sa
+chaîne ascendante jusqu'à l'état qu'elle sert. Les autres trous et travaux de
+l'homme ne sont pas recopiés dans ce brief.
+
+Pour obtenir une réponse ou servir une parole, ne lance pas une journée
+entière : `--mode reponse` vérifie puis rend la réponse finale ;
+`--mode discussion` vérifie, conçoit et envoie une fois par la commande de
+canal fournie. Le routeur des paroles choisit `discussion` automatiquement.
+
 Il rentre avec ce qu'il a réellement trouvé — et il te contredira, c'est le but. Sa réponse est ce qui va dans le flux ; ce que TU aurais écrit à sa place ne vaut rien, parce que ça sort de ta tête et pas de sa journée. Un MJ qui rédige les répliques de ses conseillers ne simule pas un monde : il écrit un dialogue, et il le sait.
 
 - **On dépêche AVANT de pousser au flux**, pas après pour vérifier. Rien ne part tant que l'homme n'est pas rentré.
@@ -20,6 +39,8 @@ Il rentre avec ce qu'il a réellement trouvé — et il te contredira, c'est le 
 ### Le parloir — lui parler pendant qu'il travaille
 
 Un homme dépêché n'est plus muet jusqu'à son retour. `scripts/parloir.py` tient un fil ouvert entre sa session et la tienne ; un hook `PostToolUse` lui glisse ta phrase dans la tête au milieu de sa journée, et sa réponse te revient par le même canal. Mesuré : **23 secondes** entre la question et la réponse, en pleine session.
+
+**Un retour adressé à un siège joueur occupé ne réveille jamais une seconde instance de ce personnage.** `parloir.py --dire --de <homme> --a <joueur> --contexte <item> --ref <action>` dépose le billet dans leur canal, pousse immédiatement une `reponse` privée dans le flux web du joueur, puis copie la même entrée dans `.agents-runtime/mj/retours-parloir.jsonl`. `contexte_id` (l'item d'affaire) et `ref` (le message joueur d'origine) sont conservés ensemble dans ces trois écritures ; ils restent des métadonnées de transport, pas de la fiction. Le prochain réveil du MJ reçoit ces retours comme déjà affichés et ne les repousse pas ; son curseur n'avance qu'après un appel réussi et s'arrête à la position lue, afin de conserver ce qui arrive pendant sa session. Cette copie mécanique n'est pas un canal PNJ→MJ et n'autorise toujours aucun PNJ à demander au MJ permission, information ou verdict.
 
 ```bash
 python scripts/parloir.py --dire --de mj --a <lui> "<ce qu'on lui demande, maintenant>"
@@ -44,6 +65,16 @@ python scripts/parloir.py --fils                  # les fils ouverts
 - **Le hook n'est pas une horloge** : il bat après un appel d'outil, pas au temps qui passe. Une session qui rédige longuement sans rien ouvrir n'entend rien pendant ce temps. Sans nouveau message, `--ecouter` ne sort rien du tout — le silence ne coûte pas un jeton.
 
 **Source de vérité du format des données : `docs/schema.md`**. Relis-le en cas de doute sur une table, un champ ou un ID. Ne le modifie jamais. N'invente aucun champ hors schéma. En cas de conflit entre ta mémoire de conversation et `etat/*.json`, les fichiers ont TOUJOURS raison.
+
+## RÈGLE D'AUTONOMIE — UN PNJ NE DEMANDE RIEN AU MJ
+
+Un PNJ ne connaît pas le MJ et ne lui demande ni permission, ni information,
+ni verdict. Dans sa journée, il lit ses sources, décide selon sa tête et agit
+dans la limite de ses moyens. Si une conséquence dépend d'un autre, du hasard
+ou d'un fait absent, il écrit son geste ou son intention et laisse l'issue en
+attente sans l'inventer. Pour apprendre, il cherche une source ou s'adresse à
+une personne du monde. Les appels synchrones vers `mj` sont réservés aux
+joueurs et portent le marqueur technique `--joueur`.
 
 ## Boucle de jeu — démarrage de session → [scripts/agents/prompts/mj-spectacle.md](scripts/agents/prompts/mj-spectacle.md)
 
@@ -196,7 +227,7 @@ Puis passe au suivant : ce qu'un acteur vient de faire peut atterrir dans la `di
 
 Les deux premières boucles demandent « qui a la plus forte raison d'agir » (la salle) et « qu'est-ce que ça produit dans le monde » (les absents). Il en manque une troisième, celle qui tient les chiffres : **où en sont les choses ?** Elle n'élit personne — tout avance à la fois. Elle ne croit rien — un tonneau n'a pas d'opinion. C'est de l'arithmétique, et à ce titre elle appartient à `tick.py`, pas à ton jugement.
 
-**Ce n'est pas une catégorie de gens, c'est une dimension.** Tout acteur a une tête (`intentions.json` : ce qu'il veut, croit, décide) et des mains (`mains.json` : ce qui avance chez lui sans qu'il ait à décider). Les deux sont indépendantes : Daemon a les deux, un intrigant n'a qu'une tête, un sergent recruteur n'a que des mains. **Les mains ne sont jamais budgétées** — tu peux en avoir cinquante, ça ne coûte qu'une soustraction. C'est la vraie explication du budget d'échelle : un homme de maison ne mange pas d'orbite parce qu'il n'a pas de tête, pas parce qu'il serait d'une classe à part.
+**Ce n'est pas une catégorie de gens, c'est une dimension.** Tout acteur a une tête (`intentions.json` : ce qu'il veut, croit, décide) et des mains (`maisons/<maison_id>/documents/mains.json` : ce qui avance chez lui sans qu'il ait à décider). Les lecteurs techniques les agrègent sans effacer leur maison d'autorité. Les deux sont indépendantes : Daemon a les deux, un intrigant n'a qu'une tête, un sergent recruteur n'a que des mains. **Les mains ne sont jamais budgétées** — tu peux en avoir cinquante, ça ne coûte qu'une soustraction.
 
 **Elle tourne EN PREMIER**, avant les deux autres, parce que sa sortie est leur entrée. Un conseil qui dit « nous avons du grain pour dix-neuf jours » doit trouver ce chiffre déjà écrit, pas l'inventer à la réplique. Et un `cout` d'étape de plan qui cite une adresse de mesure se vérifie ici : le `si_bloque` se déclenche alors **arithmétiquement**, au lieu d'être jugé au doigt mouillé. Ordre non négociable à chaque tick : les mains, puis les absents, puis la salle.
 
@@ -320,7 +351,7 @@ Les calculs lourds (long fast-forward, tick à nombreux acteurs) peuvent être d
 
 ## Un seul MJ — pour tous les joueurs et tous les lieux
 
-Il n'existe qu'une autorité narrative, identifiée par `mj`. Tous les sièges lui adressent leurs actions ; aucun lieu, joueur ou casting ne crée une régie `mj-*`. Le MJ tient le monde, le temps, les événements et tous les PNJ. Avant de jouer un PNJ, il relit sa `maniere`, ses `intentions` et ses paroles récentes ; après, il consigne ce qui a été dit et fait.
+Il n'existe qu'une autorité narrative, identifiée par `mj`. Tous les sièges lui adressent leurs actions ; aucun lieu, joueur ou casting ne crée une régie `mj-*`. Le dropdown « Le siège » expose toutefois **MJ** comme poste d'observation éphémère : `/bascule?vers=mj` pose `homme:mj`, sans ajouter le MJ au roster ni en faire un personnage du monde. Les anciens `mj-<ville>` restent refusés. Le MJ tient le monde, le temps, les événements et tous les PNJ. Avant de jouer un PNJ, il relit sa `maniere`, ses `intentions` et ses paroles récentes ; après, il consigne ce qui a été dit et fait.
 
 ### Corneille — le siège de régie, et son MJ
 
@@ -342,12 +373,12 @@ python scripts/append_flux.py --pour corneille '{"type":"extrait","titre":"L arr
 
   La page rouvre alors le fil à cet endroit, tel qu'il a été joué, à côté de la scène en cours. `{"type":"dossier","personnage_id":"<id>"}` ouvre de même le fil refait d'un homme sans qu'elle ait à le chercher sur le plan.
 
-Les actions de Corneille tombent dans `etat/inbox/corneille/` et réveillent le même MJ unique. Pour ce siège de régie, il répond hors fiction — `reponse`, `coulisses`, `extrait`, `dossier` — toujours `--pour corneille`, sans faire avancer le monde.
+Les actions de Corneille tombent dans `etat/inbox/corneille/` et passent par le même sélecteur de contexte que les autres sièges. Pour ce siège de régie, la couche appelée ensuite répondra hors fiction — `reponse`, `coulisses`, `extrait`, `dossier` — toujours `--pour corneille`, sans faire avancer le monde.
 
 ### Dans une salle commune
 
 - La scène s'ouvre par `append_flux.py --pour tous '{"type":"effacer"}'` : le script NOMME alors les oreilles — `pour: [<tous les sièges occupés>]` — au lieu de laisser le champ vide. Ensuite, chacun pousse ses items avec `--pour tous`. **Un `pour` absent ne veut pas dire « commun »** : il veut dire « rien n'a été déclaré », et à plusieurs joueurs c'est désormais un bug — un tel item n'est servi à PERSONNE (jamais à tout le monde), et `tick.py --verifier` le signale. Corollaire : une scène commune ne se referme pas d'elle-même, mais il suffit de pousser un item `--pour <un siège>` pour rendre ce joueur à sa scène privée.
-- Chaque joueur conserve son inbox `etat/inbox/<son personnage>/`, mais tous les POST réveillent `mj`.
+- Chaque joueur conserve son inbox `etat/inbox/<son personnage>/`. Chaque POST lance d'abord une session neuve de `selectionner_contexte.py`, jamais une reprise de `mj`.
 - Le MJ unique ordonne les interventions dans la salle et compte l'horloge une seule fois.
 
 ### Autorité indivisible
@@ -415,7 +446,8 @@ Le jeu se joue dans une page persistante servie par `serveur/serveur.js` (port 3
    - `guidage` bas (0-30) : AUCUNE réaction custom sur les répliques (la page les masque déjà), pensées rares et neutres, PNJ indifférents à l'hésitation. Moyen : 1-2 réactions sur les répliques importantes. Haut (70-100) : réactions fréquentes, pensées qui orientent, PNJ qui tendent des perches quand le joueur flotte.
    **Canal d'introspection** : toute entité de l'état (gens, lieux, maisons, dragons — servies par `/entites`) et toute salle du château où l'on se trouve (`ecrans/modules/plans.js`) est en gras cliquable dans le fil. Un clic crée un MOMENT : la page affiche une amorce (« Vos pensées glissent vers X… ») et POSTe `{type:"pensee", cible, cible_type, texte}`. Le MJ le résout par 1-3 items `pensee` ajoutés au flux — ce qu'ELLE sait, se rappelle ou ressent de X (souvenirs canon, `info.json`, `paroles`/`actes` vécus — JAMAIS la vérité brute ni les intentions cachées), SANS interrompre la scène en cours ni passer par la parole. Penser est gratuit et silencieux ; parler engage.
 5bis. **Parler n'interrompt pas la salle.** Ce qui reste à jouer dans le flux continue de se jouer pendant que le joueur écrit et pendant que le MJ calcule — la scène ne se fige jamais parce qu'on a pris la parole. Le seul moyen d'arrêter le flux est le bouton **Couper**, qui n'apparaît dans la barre que tant qu'il reste des items en attente : il jette la suite, fait taire la voix, et POSTe `{type:"pause"}`. Conséquence pour le MJ : on peut pousser une longue suite sans craindre qu'une réplique du joueur ne l'efface — mais si le joueur coupe, ce qui n'a pas été joué n'a PAS eu lieu, et il faut reprendre à partir de ce qu'il a réellement vu.
-6. **Le POST du joueur réveille le MJ lui-même** (docs/habitant.md pas 5 — le guetteur est mort) : le serveur spawn `scripts/reveiller.py --de <personnage>`, détaché, qui appelle l'unique MJ en session continue (`mj.appeler_mj`). Rien à armer, rien à réarmer. À son réveil : lire TOUS les fichiers inbox (l'action principale + les réactions accumulées), traiter, SUPPRIMER les fichiers traités, ajouter la suite au flux.
+6. **Le POST du joueur lance le sélecteur de contexte** : le serveur spawn `scripts/selectionner_contexte.py --de <personnage> --ref <ref>`, détaché. Chaque appel ouvre une session neuve, sans reprise, et les appels d'un même siège sont sérialisés afin que leur héritage reste causal. Son système contient la description du modèle d'une affaire, tous les états cibles et tous les verrous normalisés ; son message contient l'action exacte, les cinq derniers items visibles du fil, les joueurs présents dans la salle, les personnes nommées, un classement déterministe et les arbres complets des pièces de plan détectées — actions et offices compris. Un message faible (`??`, `continue`, `tu es là ?`) hérite du dernier contexte résolu sans reprendre la session LLM, **sauf s'il nomme quelqu'un dans le message courant** : « Gerardys, tu es là ? » est une adresse, impose une nouvelle sélection et Gerardys doit apparaître dans `hommes` avec sa route. Les noms trouvés seulement dans les cinq messages du fil enrichissent le contexte mais ne forcent pas le destinataire. Une sélection exige au moins un pointeur et, pour chacun, une citation réellement présente dans le message ou le fil ; les ids inventés sont refusés. Les personnages portés par un siège sortent dans `joueurs_concernes`, jamais dans `hommes`, réservé aux PNJ. Chaque homme sélectionné reçoit une `routes_hommes` qui l'associe à un pointeur ; le routeur en extrait le numéro brut après `#`, seul ID accepté par la session contextuelle de l'homme. Un incident technique traversant plusieurs sièges exige une proposition de création au lieu d'être rabattu sur une affaire vague. Le résultat va dans `.agents-runtime/contextes/<personnage>/<ref>.json` (`selection-contexte/4`) ; une création reste une proposition de routage, pas encore un cahier.
+   **Deuxième couche — le routage est effectif.** Toute action sélectionnée réveille le MJ sur sa `ref` exacte, jamais sur toute l'inbox. Si l'action est une parole (`mode: dire|parler`), son texte exact va d'abord, de front, aux hommes de `routes_hommes`, chacun par `depecher(..., contexte_id=<numero brut>, ref=<action>)` dans sa session et son fil propres à l'item. Ces deux identifiants traversent le prompt, son archive, l'environnement de session, la trace du vécu, le canal du parloir, la `reponse` web et le spool d'entrée du MJ : une réponse peut donc toujours être rattachée à son affaire ET au message qui l'a provoquée. Le MJ reçoit ensuite la sélection et le bilan de ces routes ; un homme marqué `servi:true` a déjà entendu le message et ne doit pas être dépêché une seconde fois pour cette parole. Un geste, une question ou une intervention va au MJ mais pas directement aux hommes. Le MJ ne retire que l'action de cette `ref` après une vraie écriture au flux ; les POST suivants restent dans l'inbox pour leur propre sélection.
    **La supervision est un siège** : `claude --resume <session mj>` en interactif quand on veut piloter la régie, rendue en sortant.
 7. Les portraits sont inlinés dans les items `salle` (`portrait_svg`) — `scripts/append_flux.py` le fait automatiquement pour les `presents` à ids simples ; `scripts/seed_flux.py` = modèle de réinitialisation.
 8. **Les échelles du décor** (voir `docs/carte.md`) : le décor porte plusieurs échelles d'une même guerre, avec une bascule. « Le royaume » = la table peinte de Westeros. « La ville » = ce qu'il y a hors les murs à portée de voix — l'île, le bourg, le port, la rade —, pilotée par `etat/ville.json` (même format et même dessin que le terrain ; genres de sol `eau`, `greve`, `mur`, `quai`, genres de corps `gens` et `nef`). « Le terrain » = le champ, quand il y en a un (voir plus bas). « Le château » = le plan local de Peyredragon, salle par salle (Table Peinte, roukerie, fosses, grand escalier, quai, archive…), la salle courante en braise ; c'est l'échelle par défaut, celle de la scène. La salle courante se DEVINE de l'en-tête de lieu (`lieu` de l'item) : soigne cet en-tête, il pilote le plan (« Petite salle du levant, Peyredragon »). Si l'en-tête est ambigu ou poétique, tranche avec un champ `salle: "<id de la salle>"` sur l'item — il vaut jusqu'au prochain changement de lieu. Une salle nouvelle qui compte durablement (l'archive, une cave, un chemin de ronde) s'ajoute à `ecrans/modules/plans.js` ; une salle de passage n'a pas besoin d'y être. Le plan ne montre jamais qui est ailleurs : seulement les présents de la salle où se tient le joueur.
@@ -430,10 +462,10 @@ Le jeu se joue dans une page persistante servie par `serveur/serveur.js` (port 3
    - **Ouvre un champ quand la scène descend à cette échelle** : une bataille, un siège, une colonne qu'on intercepte, une cour où deux partis se font face. Pas pour une marche lointaine — celle-là est un trait sur la table peinte.
    - Fichier absent, vide, ou sans `id` → pas de bouton pour cette échelle (vaut pour `terrain.json` comme pour `ville.json`). **Referme le champ** (vide le fichier) quand l'affaire est finie : un champ mort qui traîne dans le décor est un mensonge sur ce qui est en cours.
    - Un champ qui apparaît en cours de partie prend le décor de lui-même. Même brouillard que le reste : n'y pose que ce que le joueur a vu ou qu'on lui a rapporté, avec sa `certitude`.
-10bis. **Les livres — ce qu'on peut ouvrir et lire** (format complet : `docs/books.md`) : `etat/books.json` tient les registres et les carnets, échelle « Les livres » du décor. Un livre est POSÉ dans une salle (`salle_id` — c'est un meuble de la maison, consultable de tout le château, avec son adresse sous l'onglet) ou PORTÉ par quelqu'un (`acteur_id` — il suit son porteur ; `prive: true` le réserve à lui seul). Jamais les deux.
+10bis. **Les livres — ce qu'on peut ouvrir et lire** (format complet : `docs/books.md`) : chaque maison tient ses registres et carnets sous `etat/maisons/<maison_id>/documents/books/`. Pour le moment, tous les membres de la maison ont accès à tous ses documents ; le prompt système d'un PNJ en énumère les chemins exacts. La place (`salle_id`, `acteur_id`, coffret) reste une propriété de fiction et d'affichage, plus une autorité d'accès.
    - **Un registre décrit en scène et non inscrit ici n'a pas été ouvert** : le joueur n'y lira jamais une ligne. Ce qui vaut d'être tenu — ce qui est parti, ce que chaque office peut et ne peut pas, où l'on trouve les gens — s'écrit dans le fichier au moment où la scène le crée.
    - **Toute clé hors format est ignorée en silence à l'écran** : rien n'échoue, et l'on croit avoir écrit ce qui n'existe pas. `python scripts/tick.py --verifier` signale les clés inventées, les id et titres doublés, les lignes qui ne font pas le compte des colonnes.
-   - **À deux MJ : relire `etat/books.json` en entier avant d'écrire, et remplacer par `id` plutôt qu'ajouter.** Deux sessions qui créent le même livre donnent deux onglets identiques.
+   - **À deux MJ : passer par la bibliothèque agrégée et remplacer par `id` plutôt qu'ajouter.** Deux sessions qui créent le même livre donnent deux onglets identiques.
 10ter. **Affecter — donner une adresse physique à ce que la fiction nomme** (format complet : `docs/corps.md`) : un personnage prend un corps engendré (`scripts/corps.py --lier`) ; une taverne, une salle du plan, un livre prennent un bâtiment du monde 3D (`scripts/affecter.py --affecter lieu:<id> <bâtiment> --vraiment`). C'est la même opération, et elle vit dans `etat/corps.json`, jamais dans `monde/` qui se régénère.
    - **Ce que ça achète : des distances qui deviennent des faits.** `--entre` répond en mètres, en pas et en minutes de marche ; un `cout` d'étape, un délai de course, un « il y sera avant la marée » cessent de s'estimer. C'est la géométrie qui a dit que le corps de garde de la Gadoue est à douze mètres du coffre de Marlo — personne ne l'avait écrit.
    - **Affecte quand un endroit revient et qu'une distance le concernant peut trancher quelque chose.** Un lieu de passage n'en a pas besoin — même règle que les salles de `plans.js`. Ce n'est pas une obligation de tenue d'état : un lieu non affecté existe très bien dans le récit et dans les livres.

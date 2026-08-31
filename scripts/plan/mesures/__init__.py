@@ -8,7 +8,7 @@ La faute symetrique est pire : un compte qui avance seul dans mains.json et
 qu'aucun office ne cite ne remontera jamais a personne.
 
 Ce paquet ne repare rien, n'arbitre rien, et n'ecrit NULLE PART. Il resout
-les adresses citees dans etat/books.json contre etat/mains.json, nomme les
+les adresses citees dans les livres contre les mains de maison, nomme les
 adresses mortes, les mesures orphelines, et les offices sans compte. Avec
 --seuils, il confronte les hypotheses du plan aux valeurs du jour.
 

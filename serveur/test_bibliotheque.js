@@ -28,6 +28,22 @@ try {
   deux.sauver();
   assert.deepStrictEqual(B.charger(racine).map((x) => x.n), [2, 1]);
 
+  ecrire(path.join(racine, "etat", "maisons.json"), [{ id: "maison-a" }]);
+  const maison = path.join(racine, "etat", "maisons", "maison-a", "documents", "books");
+  ecrire(path.join(maison, "_ordre.json"), ["moyens-a"]);
+  ecrire(path.join(maison, "moyens-a.json"),
+    { id: "moyens-a", maison_id: "maison-a", n: 0 });
+  assert.deepStrictEqual(B.charger(racine).map((x) => x.id), ["b", "a", "moyens-a"]);
+  const maisonSession = B.ouvrir(racine);
+  maisonSession.livres.find((x) => x.id === "moyens-a").n = 7;
+  maisonSession.sauver();
+  assert.strictEqual(JSON.parse(fs.readFileSync(path.join(maison, "moyens-a.json"))).n, 7);
+  const nouveau = B.ouvrir(racine);
+  nouveau.livres.push({ id: "nouveau", maison_id: "maison-a" });
+  nouveau.sauver();
+  assert.deepStrictEqual(JSON.parse(fs.readFileSync(path.join(maison, "_ordre.json"))),
+    ["moyens-a", "nouveau"]);
+
   const trois = B.ouvrir(racine);
   const quatre = B.ouvrir(racine);
   trois.livres.find((x) => x.id === "a").n = 3;

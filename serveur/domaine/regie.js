@@ -20,7 +20,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const { RACINE } = require("../http");
+const { RACINE, lireMainsMaisons } = require("../http");
 const { absolues, dateCourte, jourAbsolu } = require("../http");
 const { DEPOT_ACTIVATIONS, lireJsonSansFaillir, ouQuartier } = require("./activations");
 const { qui } = require("../http");
@@ -358,7 +358,7 @@ function regie() {
   echeances.sort((a, b) => a.jours - b.jours);
 
   // ---- 3. les mains ---------------------------------------------------
-  const mains = (((lire("mains.json", {}) || {}).mains) || []).map((a) => {
+  const mains = lireMainsMaisons().map((a) => {
     const mesures = (a.mesure || []).map((m) => {
       const par = (m.rythme && typeof m.rythme.par === "number") ? m.rythme.par : 0;
       // Le seuil le plus proche dans le temps, à ce rythme-là. C'est le

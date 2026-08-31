@@ -7,7 +7,7 @@ percept au prochain reveil — et le geste d'ecrire est le reveilleur.
 
 Usage :
     python scripts/parloir.py --dire --de mj --a le-sanglier "Reviens au quai"
-    python scripts/parloir.py --tenter --de gerardys --a mj "je pars sur mon cheval"
+    python scripts/parloir.py --dire --de gerardys --a hask "Que porte le livre ?"
     python scripts/parloir.py --dire --de mj --a tous "On ouvre la salle"
     python scripts/parloir.py --fils                      (les fils restants)
 

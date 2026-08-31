@@ -79,7 +79,7 @@ Six containers de **sujet**, deux transverses. Chacun possède son sujet **de bo
 |---|---|---|
 | 🗄️ **état** | les tables et les outils d'entrée, de lecture et de purge | `noyau/tables.py`, `ajouter.py`, `purger.py` |
 | ⏱️ **temps** | horloges, échéances, diffusion à livrer, présence, disponibilité | `tick.py`, `occupation.py`, `regence.py`, `presence.py`, `evaluer.py` |
-| 🧠 **agents** | briefs, dépêche explicite, parloir, jugement, greffe documentaire | `depecher.py`, `parloir.py`, `juger.py`, `veille.py`, `affecter.py` |
+| 🧠 **agents** | briefs, dépêche explicite, parloir, greffe documentaire | `depecher.py`, `parloir.py`, `veille.py`, `affecter.py` |
 | 📋 **plan** | cahiers, couverture, criticité, levées, renvois, exports | `criticite.py`, `couverture.py`, `etat_du_plan.py`, `plan/`, `tisser.py`, `mesures.py` |
 | 🌍 **monde** | la ville : masque, plan, bâti, gens, journées, relief, sa carte et son 3D | `monde/`, `materialisation/`, `ville/`, `ecrans/modules/monde/`, `carte-ville.js`, `serveur/monde3d.js` |
 | 📜 **scène** | le flux, l'inbox, la montre, les items et leur rendu | `append_flux.py`, `tunnel.py`, `fils.py`, `serveur/routes/`, `ecrans/modules/*.js` (le guetteur est mort — habitant.md pas 5) |
@@ -186,7 +186,7 @@ La question a été posée : faut-il ce refactor, puis un second pour les featur
 | bruit de fond (deux co-présents se sont parlé → entrée de `diffusion` canal rumeur/témoin, zéro appel LLM) | ⏱️ `temps` (le tick pose les entrées) + 🗄️ `etat` (la table existe) | non — un module de plus |
 | le billet (un homme écrit *à* quelqu'un ; arrive au brief de sa prochaine dépêche) | 🧠 `agents` (le brief) + 🗄️ `etat` (plis) | non |
 | rencontres jouées (tours alternés sur les sessions `--resume` existantes, fil au parloir) | 🧠 `agents` (`rencontres.py`, `election.py`) + 📜 `scene` (le greffage : événement + témoins + diffusion) | non |
-| le **vécu** (un fil par homme, pour le debug : index chronologique ancré — jamais une source ; les gestes archivés depuis `depouiller()` au hook Stop, le seul morceau périssable) | 🧠 `agents` (c'est son `introspect()` — le seul container sans viz) + 🗄️ `etat` (`journaux/<homme>/`) | non — et il passe AVANT rencontres et MJs : leur debug en dépendra, et un MJ-rôle hérite d'un vécu gratuitement |
+| le **vécu** (un fil par homme, pour le debug : index chronologique ancré — jamais une source) | 🧠 `agents` (c'est son `introspect()` — le seul container sans viz) + 🗄️ `etat` (`journaux/<homme>/`) | non — et il passe AVANT rencontres et MJs : leur debug en dépendra, et un MJ-rôle hérite d'un vécu gratuitement |
 | MJs via `claude -p`, prompt dédié (un MJ devient un **rôle** de la même machinerie que les hommes) | 🧠 `agents` (la dépêche se généralise : `depecher(rôle, manuel)`) + 📐 `doctrine` (les manuels par rôle, comme `agents/prompts/metier.md`) | **non structurel — mais c'est LA feature qui doit informer l'éclatement d'`agents`** : séparer le générique au rôle (session, resume, brief, retour, jugement) du propre à l'homme (greffe, tête, pensées) |
 
 D'où **le refactor en deux vitesses** (et pas deux refactors) :
@@ -263,7 +263,6 @@ scripts/agents/          🧠  briefs, dépêche, parloir, jugement
   expose.py
   brief.py  manuel.py  retour.py    ← depecher.py        (2 062 l. éclatées)
   parloir.py                        ← parloir.py
-  jugement.py                       ← juger.py
   matiere.py                        ← dossier.py
   affectation.py                    ← affecter.py
 

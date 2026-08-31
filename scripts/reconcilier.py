@@ -5,8 +5,8 @@ u"""RECONCILIER — le journal des affaires ecrites a la main.
     python scripts/reconcilier.py --vraiment   emet et pose l'empreinte
     python scripts/reconcilier.py --amorcer    pose l'empreinte SANS emettre
 
-Les affaires ont deux maisons : `etat/books/`, dont la porte emet le journal
-toute seule, et `chambres/<qui>/books/`, qui n'a AUCUNE porte — on y ecrit par
+Les affaires ont deux types de maisons : les documents de `etat/maisons/`, dont
+la porte emet le journal toute seule, et `chambres/<qui>/books/`, qui n'a AUCUNE porte — on y ecrit par
 Write et Edit. Ce script est le seul moyen de savoir ce qui y a bouge.
 
 CE FICHIER EST UNE FACADE (docs/organisation.md §2) : la matiere vit dans le
