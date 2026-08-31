@@ -5,7 +5,8 @@ const path = require("path");
 const { RACINE } = require("../http");
 const { chargeActeurs, criticite, detailActivation, filMjActif, prevoirActivations, resumeActivations, sante } = require("../agents").activations; // LA PORTE serveur des agents
 const { chercherDansFlux, extraitDuFlux, filPersonnage, regie } = require("../agents").regie; // LA PORTE serveur des agents
-const { vueChambres, chambre } = require("../agents").chambres; // LA PORTE serveur des agents
+const { vueChambres, chambre, rapport } = require("../agents").chambres; // LA PORTE serveur des agents
+const { portraitDefaut, portraitFrais } = require("../peinture").portraits; // le composant de portrait du jeu
 const { envoyer, fichierStatique } = require("../http");
 const { monPersonnage, qui } = require("../http");
 
@@ -52,9 +53,31 @@ function traiter(req, res, url) {
     // L'ENVERS DU MODELE HABITANT. Lecture seule de `chambres/` et des
     // traces d'activite : la frise (qui s'est reveille, qui a parle a qui,
     // quand), la bande des salles, le detail d'une chambre au clic.
+    // LES PORTRAITS PAR URL, ET C'EST UNE MESURE DE POIDS. Le jeu les
+    // inline partout ; pour la frise des chambres, 56 visages inlines
+    // faisaient 459 Ko sur 738 — les deux tiers du paquet, retransmis a
+    // chaque chargement. Servis par URL ils partent en parallele, le
+    // navigateur les garde, et la vue s'affiche sans les attendre.
+    const mvisage = url.match(/^\/portraits\/([a-z0-9_-]+)\.svg$/);
+    if (mvisage) {
+      const svg = portraitFrais(mvisage[1]) || portraitDefaut(mvisage[1]);
+      res.writeHead(200, { "Content-Type": "image/svg+xml; charset=utf-8",
+                           "Cache-Control": "max-age=60" });
+      return res.end(svg);
+    }
     if (url === "/admin/chambres") {
       try { return envoyer(res, 200, JSON.stringify(vueChambres())); }
       catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
+    }
+    // LE RAPPORT ENTIER D'UNE SESSION, redemande au clic : la vue
+    // d'ensemble n'en porte que le strict necessaire.
+    const mr = url.match(/^\/admin\/chambres\/rapport\/([0-9][0-9a-zA-Z._-]*\.json)$/);
+    if (mr) {
+      try {
+        const d = rapport(mr[1]);
+        if (!d) return envoyer(res, 404, JSON.stringify({ erreur: "pas de rapport" }));
+        return envoyer(res, 200, JSON.stringify(d));
+      } catch (e) { return envoyer(res, 500, JSON.stringify({ erreur: String(e.message || e) })); }
     }
     const mc = url.match(/^\/admin\/chambres\/([a-z0-9-]+)$/);
     if (mc) {

@@ -12,6 +12,7 @@ import json
 import os
 import sys
 from etat.expose import tables as porte  # LA PORTE de etat/
+import bibliotheque  # noyau : il sait lire les livres scindes comme le monolithe
 
 SCRIPTS = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 RACINE = os.path.dirname(SCRIPTS)
@@ -55,6 +56,16 @@ def chemin_table(nom, joueur=None):
 
 
 def lire(nom, joueur=None):
+    # LES LIVRES NE SONT PLUS UN FICHIER, ET CE CHEMIN NE LE SAVAIT PAS.
+    # `scinder_bibliotheque.py` a eclate `etat/books.json` en un volume par
+    # fichier sous `etat/books/` ; ici on visait encore le monolithe, donc
+    # `chemin_table("books")` tombait sur un chemin mort et `porte.lire`
+    # sortait par `sys.exit`. Mesure du 31.8 : toute activation qui produisait
+    # une mutation mourait a l'application, apres que l'homme ait vecu sa
+    # journee et que le rapport ait ete normalise — le travail etait fait et
+    # jete. `bibliotheque` sait lire les deux formes ; on lui demande.
+    if nom == "books":
+        return bibliotheque.charger(ETAT)
     try:
         return porte.lire(chemin_table(nom, joueur))
     except porte.TableAbimee as e:

@@ -428,17 +428,36 @@ def main():
     ap.add_argument("--de", required=True,
                     help="qui reveille — le personnage du siege qui a poste")
     ap.add_argument("--modele", default=None)
+    # LE REVEIL DU MJ N'EST PAS UN VERDICT DE TROIS MINUTES. `MINUTES = 3`
+    # borne les appels DIRIGES du parloir — une question, une reponse. Un
+    # reveil sur POST, lui, ouvre une journee : le MJ lit l'inbox, relit le
+    # flux, pese la salle, ecrit sa tranche. Coupe a 180 s, il meurt au milieu
+    # de son tour et le joueur ne recoit rien — sans qu'aucune trace ne le
+    # dise, puisque le serveur le spawn DETACHE et ne lit pas sa sortie.
+    # Dix minutes, donc, et reglable pour le banc.
+    ap.add_argument("--timeout", type=float, default=600.0, metavar="SECONDES",
+                    help="plafond de l'appel, en secondes (defaut : 600)")
     ap.add_argument("--etabli", action="store_true",
                     help="la journee-etabli : le mot est SON etabli (staging, "
                          "fils echus, billets), calcule ici, hors sandbox")
     ap.add_argument("texte", nargs="*",
                     help="son mot (defaut : va lire l'inbox et le flux)")
     a = ap.parse_args()
+    if a.timeout <= 0:
+        ap.error("le timeout se compte en secondes et doit etre positif")
+    minutes = a.timeout / 60.0
     if a.etabli:
         mj = _sain(zone_de(a.qui))
         marquer_etabli(mj)  # le cooldown vaut pour tous les chemins
         print(appeler_zone(mj, a.de, etabli_de(mj), u"ETABLI",
-                           modele=a.modele, minutes=ETABLI_MINUTES))
+                           modele=a.modele, minutes=minutes))
     else:
-        mot = u" ".join(a.texte) or MOT_DU_POST
-        print(appeler_zone(a.qui, a.de, mot, u"POST", modele=a.modele))
+        mot = u" ".join(a.texte)
+        if not mot:
+            # D.34 — le portage des registres : quand le reveil part sans
+            # texte (le POST du serveur), le lanceur joint au mot ce que les
+            # registres arretent sur le message en inbox (agents/portage.py).
+            from agents import portage
+            mot = MOT_DU_POST + portage.matiere_du_message(a.de)
+        print(appeler_zone(a.qui, a.de, mot, u"POST", modele=a.modele,
+                           minutes=minutes))

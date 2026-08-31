@@ -9,6 +9,8 @@ from etat.mutations.vocabulaire import (  # noqa: E501
     COLONNES_AFFAIRE_NEUVE, charge_relation, liste_books, liste_jetons, liste_simple, prochaine_ligne_action, table_actions)
 from etat.mutations.lecture import chemin_table, liste_mains, liste_plis, par_id
 from etat.expose import tables as porte  # LA PORTE de etat/
+import bibliotheque  # noyau : la session d'ecriture des livres scindes
+from etat.mutations.lecture import ETAT
 
 def appliquer(plan, tables):
     """Mute les structures en memoire. Rend l'ensemble des tables touchees."""
@@ -166,4 +168,16 @@ def appliquer(plan, tables):
 def ecrire(nom, donnees, joueur=None):
     """Ecriture atomique par la porte. Fins de ligne LF desormais — l'ancien
     newline="\\r\\n" n'etait justifie nulle part et divergeait du reste."""
+    # LES LIVRES PASSENT PAR LEUR SESSION, JAMAIS PAR UN FICHIER. Depuis la
+    # scission (`migrations/scinder_bibliotheque.py`), ecrire un monolithe
+    # `etat/books.json` a cote de `etat/books/` creerait deux copies qui font
+    # foi en meme temps — exactement ce que la fiche de `bibliotheque`
+    # interdit. Sa `Session` compare volume par volume et refuse le lot si un
+    # autre l'a touche entre-temps : c'est l'ecriture optimiste dont deux
+    # plumes ont besoin.
+    if nom == "books":
+        session = bibliotheque.ouvrir(ETAT)
+        session.livres = ((donnees.get("books") or donnees.get("livres") or [])
+                          if isinstance(donnees, dict) else donnees)
+        return session.sauver()
     porte.ecrire(chemin_table(nom, joueur), donnees)

@@ -90,8 +90,15 @@ function evenements() {
       const t = quand(e);
       if (t === null) { sansHeure += 1; continue; }
       const de = e.de || null;
+      // LE TEXTE, PAS SEULEMENT SA LONGUEUR. La frise ne portait que `taille`,
+      // et la bulle devait renvoyer le lecteur « lire dans la chambre » — un
+      // survol qui repond « va voir ailleurs » n'a pas repondu.
+      const txt = String(e.texte || "");
       ev.push({ genre: "mot", t, de, vers: de === c.a ? c.b : c.a,
-                taille: String(e.texte || "").length });
+                taille: txt.length, extrait: txt.slice(0, 260),
+                coupe: txt.length > 260,
+                jour: e.date || null,
+                verbe: e.verbe || null, verdict: e.verdict || null });
     }
   }
   const boucle = lire(path.join(ETAT, "activations", "boucle.json"), {}) || {};
@@ -198,29 +205,53 @@ function gestesDe(qui) {
   const ecrits = ecritsDe(qui);
   const cahier = ecrits.find((x) => x.quoi === "son cahier");
   const demain = ecrits.find((x) => x.quoi === "sa conclusion");
-  let verbes = 0, paroles = 0, dernierMot = null;
+  let verbes = 0, paroles = 0, dernierMot = null, premierMot = null;
+  let dernierVerbe = null, premierVerbe = null;
   for (const c of canaux()) {
     if (c.a !== qui && c.b !== qui) continue;
     for (const e of c.entrees) {
       if (e.de !== qui) continue;
-      if (verbeDe(e.texte)) verbes += 1; else paroles += 1;
+      const estVerbe = !!verbeDe(e.texte);
+      if (estVerbe) verbes += 1; else paroles += 1;
       const t = quand(e);
-      if (t && (!dernierMot || t > dernierMot)) dernierMot = t;
+      if (!t) continue;
+      if (estVerbe) {
+        if (!dernierVerbe || t > dernierVerbe) dernierVerbe = t;
+        if (!premierVerbe || t < premierVerbe) premierVerbe = t;
+      } else {
+        if (!dernierMot || t > dernierMot) dernierMot = t;
+        if (!premierMot || t < premierMot) premierMot = t;
+      }
     }
   }
+  // LE FIL PORTE LES HEURES QUE LE COMPTE JETAIT. `percevoir`, `lire` et
+  // `subi` rendaient `t: null` — cinq familles sur sept sans date, et une
+  // bulle qui ne pouvait pas repondre « quand ». Les mtimes du fil les
+  // donnent : c'est la meme source qui a servi a les compter.
+  let filT = [];
+  try {
+    const d = path.join(CHAMBRES, qui, "fil");
+    filT = fs.readdirSync(d).map((f) => {
+      try { return Math.round(fs.statSync(path.join(d, f)).mtimeMs); }
+      catch (e) { return null; }
+    }).filter(Boolean).sort((a, b) => a - b);
+  } catch (e) { filT = []; }
+  const filDernier = filT.length ? filT[filT.length - 1] : null;
+  const filPremier = filT.length ? filT[0] : null;
   const boucle = lire(path.join(ETAT, "activations", "boucle.json"), {}) || {};
   const jauge = ((boucle.acteurs || {})[qui]) || {};
+  const vieux = ecrits.length ? ecrits[ecrits.length - 1].t : null;
   return {
-    percevoir: { n: fil.percevoir || jauge.activations || 0, t: null },
-    lire: { n: fil.lire, t: null },
+    percevoir: { n: fil.percevoir || jauge.activations || 0,
+                 t: filDernier, premier: filPremier },
+    lire: { n: fil.lire, t: filDernier, premier: filPremier },
     ecrire: { n: ecrits.length, t: ecrits.length ? ecrits[0].t : null,
-              amende: !!(cahier && cahier.t) },
-    verbe: { n: verbes, t: null },
-    parler: { n: paroles, t: dernierMot },
-    conclure: { n: demain ? 1 : 0, t: demain ? demain.t : null },
-    subi: { n: (() => { try {
-      return fs.readdirSync(path.join(CHAMBRES, qui, "fil")).length;
-    } catch (e) { return 0; } })(), t: null },
+              premier: vieux, amende: !!(cahier && cahier.t) },
+    verbe: { n: verbes, t: dernierVerbe, premier: premierVerbe },
+    parler: { n: paroles, t: dernierMot, premier: premierMot },
+    conclure: { n: demain ? 1 : 0, t: demain ? demain.t : null,
+                premier: demain ? demain.t : null },
+    subi: { n: filT.length, t: filDernier, premier: filPremier },
   };
 }
 
@@ -249,12 +280,38 @@ const EMOJI_RESULTAT = {
 // repartis sur les huit types. Le pas prend donc le glyphe de son premier
 // resultat ; un blocage l'emporte, parce qu'un pas qui bute n'est pas un pas
 // qui produit.
-function emojiActe(a) {
-  if (!a) return "◦";
-  if (a.blocage) return "⛔";
-  var r = (a.resultats_produits || [])[0];
-  var t = r && (r.type || r.genre);
-  return EMOJI_RESULTAT[t] || "◦";
+// CE QU'UN PAS A FAIT, DIT EN FRANCAIS. Le meme constat que pour l'emoji, et
+// la meme source : `activite.type` est nul 703 fois sur 703, le vocabulaire
+// vit sur les RESULTATS. Sans ce libelle, toute infobulle s'appelait « un
+// pas » — l'emoji distinguait, les mots non. Corriger un contournement sans
+// recenser les autres lecteurs du meme champ laisse la faute vivante ailleurs.
+const NOM_RESULTAT = {
+  observation: "il a regardé", progression_tache: "il a avancé",
+  variation_mesure: "un chiffre a bougé", deplacement: "il s'est déplacé",
+  objet_produit: "il a produit", communication: "il a parlé",
+  fait: "un fait acquis", blocage: "il a buté", echec: "un échec",
+};
+
+/** Le type derive d'un pas : celui de son premier resultat, blocage en tete. */
+function typeActe(a) {
+  if (!a) return null;
+  if (a.blocage) return "blocage";
+  const r = (a.resultats_produits || [])[0];
+  return (r && (r.type || r.genre)) || null;
+}
+
+function emojiActe(a) { return EMOJI_RESULTAT[typeActe(a)] || "◦"; }
+
+function nomActe(a) {
+  const t = typeActe(a);
+  // Plusieurs resultats de natures differentes : on nomme le premier et l'on
+  // DIT qu'il y en a d'autres, plutot que de choisir en silence.
+  const autres = new Set(((a && a.resultats_produits) || [])
+    .map((r) => r.type || r.genre).filter(Boolean));
+  const nom = NOM_RESULTAT[t] || "un pas";
+  return autres.size > 1
+    ? nom + " (+" + (autres.size - 1) + " autre" + (autres.size > 2 ? "s" : "") + ")"
+    : nom;
 }
 
 function sessions(limite) {
@@ -272,15 +329,43 @@ function sessions(limite) {
     if (!Number.isFinite(debut)) continue;
     const duree = Math.max(1000, Number(a.duree_ms) || 1000);
     const act = d.activation || {};
-    const gestes = (act.activites || []).map((x) => {
+    const gestes = (act.activites || []).map((x, i) => {
       const t = x.temps || {};
+      const ac = x.action || {};
+      // LE CHEMIN DIT LE « OU », ET RIEN D'AUTRE NE LE DIT. `cibles` nomme ce
+      // sur quoi il agit ; seul `chemin_execution` nomme l'endroit d'ou il le
+      // fait et celui qu'il atteint. Une bulle sans ca laisse croire que tout
+      // se passe au meme endroit — c'est faux la moitie du temps.
+      const ch = x.chemin_execution || [];
+      const ou = ch.length
+        ? { de: ch[0].de || null,
+            vers: ch[ch.length - 1].vers || null,
+            relation: ch[0].relation || null,
+            etapes: ch.length }
+        : null;
       return {
-        quoi: String(x.quoi || "").slice(0, 400),
+        quoi: String(x.quoi || ac.quoi || "").slice(0, 400),
+        verbe: ac.verbe || x.type || null,
         type: x.type || null,
         emoji: emojiActe(x),
+        nature: nomActe(x),
+        type_derive: typeActe(x),
         cout: Number(x.cout_energie) || 0,
         debut_s: Number(t.debut_s) || 0,
         duree_s: Number(t.duree_s) || 0,
+        rang: Number(x.ordre) || i + 1,
+        ou: ou,
+        cibles: (ac.cibles || []).slice(0, 6),
+        // {ref, mode} — le mode est la moitie de l'information : « voit » et
+        // « entend » ne se valent pas quand on juge ce qu'un homme peut savoir.
+        touche: (x.sources_touchees || []).slice(0, 6),
+        mobilise: (x.sources_mobilisees || []).slice(0, 6),
+        sorties: (x.resultats_produits || []).slice(0, 4).map((r) => ({
+          type: r.type || null, cible: r.cible || null,
+          certitude: r.certitude || null,
+          apres: String(r.apres || "").slice(0, 300),
+        })),
+        blocage: x.blocage || null,
       };
     });
     // La fenetre de monde couverte par la session : elle sert a placer les
@@ -290,6 +375,11 @@ function sessions(limite) {
       ? Math.max(...gestes.map((g) => g.debut_s + g.duree_s)) : 1;
     sortie.push({
       qui: d.qui || n.replace(/^[0-9-]+-/, "").replace(/\.json$/, ""),
+      // Le nom du rapport : c'est la clef par laquelle le clic redemande TOUT
+      // le detail, sans qu'on ait a le porter dans la vue d'ensemble.
+      fichier: n,
+      session: a.session || a.session_pnj || null,
+      modele: a.modele || null,
       debut, fin: debut + duree, duree_ms: duree,
       issue: act.issue || null,
       tache: a.tache || (d.tache || null),
@@ -369,6 +459,48 @@ function chambre(qui) {
   };
 }
 
+/**
+ * UN RAPPORT ENTIER, POUR LE CLIC. La vue d'ensemble porte le strict
+ * necessaire — sinon 120 rapports complets font des megaoctets a chaque
+ * chargement. Le detail exact se redemande a la piece, quand on le veut.
+ */
+function rapport(fichier) {
+  if (!/^[0-9][0-9a-z._-]*\.json$/.test(fichier)) return null;
+  const d = lire(path.join(ETAT, "activations", fichier), null);
+  if (!d) return null;
+  const a = d._activation || {};
+  const act = d.activation || {};
+  return {
+    fichier, qui: d.qui || null,
+    session: a.session || null, session_pnj: a.session_pnj || null,
+    cree_le: a.cree_le || null, duree_ms: a.duree_ms || null,
+    duree_api_ms: a.duree_api_ms || null, cout_usd: a.cout_usd || 0,
+    modele: a.modele || null, effort: a.effort || null,
+    tours: a.tours || null, usage: a.usage || null,
+    budget: a.budget || null, budget_secondes: a.budget_secondes || null,
+    importance: a.importance == null ? null : a.importance,
+    front: a.front || null, present_secondes: a.present_secondes || null,
+    tache: a.tache || d.tache || null,
+    issue: act.issue || null,
+    energie_depensee: act.energie_depensee == null ? null
+                    : act.energie_depensee,
+    phrase: act.phrase || act.conclusion || null,
+    activites: (act.activites || []).map((x) => ({
+      ordre: x.ordre, quoi: x.quoi, cible_id: x.cible_id || null,
+      source: x.source || null, resultat: x.resultat || null,
+      preuve: x.preuve || null, blocage: x.blocage || null,
+      cout_energie: x.cout_energie, temps: x.temps || null,
+      emoji: emojiActe(x), nature: nomActe(x), type_derive: typeActe(x),
+      sources_touchees: x.sources_touchees || [],
+      resultats_produits: (x.resultats_produits || []).map((r) => ({
+        type: r.type || null, cible: r.cible || null,
+        avant: r.avant || null, apres: r.apres || null,
+      })),
+    })),
+    mutations: (d.mutations || act.mutations || []).length,
+  };
+}
+
 /** La bande des salles : qui se tient où, d'après ce qu'une scène a constaté. */
 function salles() {
   const p = lire(path.join(ETAT, "presence.json"), {}) || {};
@@ -413,9 +545,10 @@ function vueChambres() {
   // LE PORTRAIT, PAR LE COMPOSANT QUI EXISTE DEJA (serveur/portraits.js) :
   // le meme visage qu'a l'ecran de jeu, la meme silhouette de secours, la
   // meme teinte tiree du nom. On ne redessine pas un rond ici.
-  for (const l of lignes) {
-    l.portrait = portraitFrais(l.id) || portraitDefaut(l.id);
-  }
+  // LE VISAGE PAR URL, PAS INLINE : voir la route /portraits/<id>.svg. Inliner
+  // les 56 SVG pesait 459 Ko sur 738 — les deux tiers du paquet, renvoyes a
+  // chaque chargement, devant une vue qui ne peut rien afficher avant.
+  for (const l of lignes) l.visage = "/portraits/" + l.id + ".svg";
   return {
     familles: FAMILLES,
     sessions: sessions(120),
@@ -605,4 +738,4 @@ function filHomme(id, avant) {
   return { fil, debut, total };
 }
 
-module.exports = { vueChambres, chambre, filHomme, FAMILLES };
+module.exports = { vueChambres, chambre, filHomme, rapport, FAMILLES };
