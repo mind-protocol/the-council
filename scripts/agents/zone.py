@@ -46,14 +46,19 @@ MJ_ZONE_MD = os.path.join(RACINE, "scripts", "agents", "prompts",
 MJ_SPECTACLE_MD = os.path.join(RACINE, "scripts", "agents", "prompts",
                                "mj-spectacle.md")
 
-# LE FILET DES CYCLES (habitant.md §4) : les aretes sync sont courtes et
-# dirigees ; le timeout du -p suffit. Trois minutes est un verdict, pas
-# une journee.
-MINUTES = 3
-
-# L'ETABLI, lui, EST une journee (habitant.md : le MJ est un travailleur) :
-# trancher, graver, relancer ne tient pas dans le filet d'un verdict.
-ETABLI_MINUTES = 8
+# PLUS DE PLAFOND SUR UNE SESSION (31.8). « Trois minutes est un verdict, pas
+# une journee » supposait qu'un arbitre repond vite ; la mesure dit autre
+# chose. Le 31.8, hann-bourbe a fait son P.10, pose sa question a
+# mj-portreal, et la session de l'arbitre a ete tuee a 180 secondes : le
+# traceback est remonte dans la pensee de l'homme, sa journee entiere est
+# partie, zero octet ecrit.
+#
+# CE PLAFOND NE PROTEGEAIT DE RIEN. Un processus rend la main quand il a fini
+# — le couperet n'evite aucune fuite, il coupe seulement du travail en cours.
+# `None` = pas d'expiration. Les deux noms restent pour qui veut borner
+# explicitement un appel.
+MINUTES = None
+ETABLI_MINUTES = None
 
 
 def est_une_zone(qui):
@@ -248,7 +253,8 @@ def appeler_zone(ville, de, mot, verbe, modele=None, minutes=MINUTES):
     from agents.expose import runtime as agent_runtime
     rep = agent_runtime.appeler(
         role=mj, manuel=manuel, message=texte, session_id=sid,
-        modele=modele, timeout=minutes * 60, cwd=neutre,
+        modele=modele,
+        timeout=(minutes * 60) if minutes else None, cwd=neutre,
         add_dirs=[RACINE, sa_chambre], tools=OUTILS, reprendre=None,
         env={"LE_CONSEIL_QUI": str(mj), "LE_CONSEIL_MJ": str(mj)})
     sys.stderr.write(u"(zone : %s, %s, session %s)\n" % (
@@ -314,24 +320,27 @@ def main():
     ap.add_argument("--de", required=True,
                     help="qui reveille — le personnage du siege qui a poste")
     ap.add_argument("--modele", default=None)
-    # LE REVEIL DU MJ N'EST PAS UN VERDICT DE TROIS MINUTES. `MINUTES = 3`
-    # borne les appels DIRIGES du parloir — une question, une reponse. Un
-    # reveil sur POST, lui, ouvre une journee : le MJ lit l'inbox, relit le
-    # flux, pese la salle, ecrit sa tranche. Coupe a 180 s, il meurt au milieu
-    # de son tour et le joueur ne recoit rien — sans qu'aucune trace ne le
-    # dise, puisque le serveur le spawn DETACHE et ne lit pas sa sortie.
-    # Dix minutes, donc, et reglable pour le banc.
-    ap.add_argument("--timeout", type=float, default=600.0, metavar="SECONDES",
-                    help="plafond de l'appel, en secondes (defaut : 600)")
+    # PLUS DE PLAFOND, ET LES DIX MINUTES ETAIENT DEJA UNE RUSTINE. Le 31.8
+    # au matin j'avais releve ce reveil de 180 s a 600 parce qu'un MJ coupe
+    # en plein tour ne rend rien au joueur, sans laisser de trace (le serveur
+    # le spawn DETACHE et ne lit pas sa sortie). La bonne question n'etait
+    # pas « a combien » : c'etait « de quoi ce plafond protege-t-il ». De
+    # rien — un processus rend la main quand il a fini. Ce qu'il faisait, en
+    # revanche, se mesure : une journee d'homme perdue le meme jour.
+    # Defaut : pas d'expiration. Le drapeau reste, pour un banc qui veut
+    # borner explicitement.
+    ap.add_argument("--timeout", type=float, default=None, metavar="SECONDES",
+                    help="borner l'appel a N secondes ; par defaut la session"
+                         " n'expire pas")
     ap.add_argument("--etabli", action="store_true",
                     help="la journee-etabli : le mot est SON etabli (staging, "
                          "fils echus, billets), calcule ici, hors sandbox")
     ap.add_argument("texte", nargs="*",
                     help="son mot (defaut : va lire l'inbox et le flux)")
     a = ap.parse_args()
-    if a.timeout <= 0:
+    if a.timeout is not None and a.timeout <= 0:
         ap.error("le timeout se compte en secondes et doit etre positif")
-    minutes = a.timeout / 60.0
+    minutes = (a.timeout / 60.0) if a.timeout else None
     if a.etabli:
         mj = _sain(zone_de(a.qui))
         marquer_etabli(mj)  # le cooldown vaut pour tous les chemins

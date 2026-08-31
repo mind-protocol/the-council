@@ -259,7 +259,11 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True):
     from agents.expose import runtime as agent_runtime
     parametres = {
         "role": qui, "manuel": manuel, "message": texte,
-        "session_id": sid, "modele": modele, "timeout": minutes * 60,
+        # PAS D'EXPIRATION (31.8) : `minutes=None` -> `timeout=None`, et le
+        # processus rend la main quand il a fini. Le plafond ne protegeait
+        # de rien et coupait des journees entieres au milieu.
+        "session_id": sid, "modele": modele,
+        "timeout": (minutes * 60) if minutes else None,
         "cwd": neutre, "add_dirs": [RACINE, sa_chambre],
         "tools": OUTILS, "reprendre": None,
         "env": {"LE_CONSEIL_QUI": str(qui)},

@@ -228,18 +228,28 @@ def _executer_flux(commande, message, cwd, env, timeout, on_event=None,
         threading.Thread(target=lire_flux, args=(nom, flux), daemon=True,
                          name="agent-%s" % nom).start()
 
+    # `timeout=None` : LA SESSION N'EXPIRE PAS. Un plafond ne se justifie que
+    # s'il protege de quelque chose de nomme, et celui-ci ne protegeait de
+    # rien : le processus rend la main quand il a fini. Ce qu'il faisait, en
+    # revanche, se mesure — hann-bourbe, le 31.8, a travaille 20 appels
+    # d'outils, fait son P.10, pose sa question a son arbitre, et le couperet
+    # l'a tue au milieu : journee entiere perdue, zero octet ecrit, et le
+    # traceback remonte dans sa propre pensee. Un plafond qui coupe un homme
+    # au travail ne sauve rien ; il detruit ce qui etait presque fait.
     debut = time.monotonic()
-    prochain = debut + (heartbeat or timeout + 1)
-    fin = debut + timeout
+    prochain = debut + (heartbeat or (timeout or 0) + 1)
+    fin = (debut + timeout) if timeout else None
     ouverts, lignes, erreurs, evenements = 2, [], [], []
     while ouverts or processus.poll() is None:
         maintenant = time.monotonic()
-        if maintenant >= fin:
+        if fin is not None and maintenant >= fin:
             processus.kill()
             processus.wait(timeout=5)
             raise subprocess.TimeoutExpired(commande, timeout)
-        attente = min(1.0, max(0.05, prochain - maintenant),
-                      max(0.05, fin - maintenant))
+        bornes = [1.0, max(0.05, prochain - maintenant)]
+        if fin is not None:
+            bornes.append(max(0.05, fin - maintenant))
+        attente = min(bornes)
         try:
             origine, ligne = messages.get(timeout=attente)
         except queue.Empty:
@@ -316,12 +326,20 @@ def _commande_codex(cwd, modele, effort, add_dirs, transcript_sortie,
         "--disable", "plugins", "--disable", "apps",
         "--disable", "memories", "--disable", "multi_agent",
         "--json", "--color", "never", "--skip-git-repo-check",
-        "--sandbox", "workspace-write" if ecriture else "read-only",
         "--cd", cwd,
         "--model", modele,
         "-c", 'model_reasoning_effort=%s' % json.dumps(effort),
         "--output-last-message", transcript_sortie,
     ]
+    if ecriture:
+        # Un reveil est non interactif : sans arbitre automatique, Codex peut
+        # classer un geste pourtant local (parloir.py, ecriture du cahier)
+        # comme demandant une approbation, puis le refuser faute d'humain au
+        # terminal. On garde le sandbox workspace-write ; seule l'approbation
+        # est deleguee au reviewer de la CLI.
+        commande.append("--approve-for-me")
+    else:
+        commande += ["--sandbox", "read-only"]
     for chemin in add_dirs:
         commande += ["--add-dir", chemin]
     if thread_id:

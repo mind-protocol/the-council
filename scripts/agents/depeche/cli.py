@@ -38,8 +38,9 @@ def main():
                     help="consigne du jour, en plus de son brief")
     ap.add_argument("--modele", default=None,
                     help="opus | sonnet | fable — defaut : celui de la session")
-    ap.add_argument("--minutes", type=int, default=15,
-                    help="delai avant abandon d'un homme")
+    ap.add_argument("--minutes", type=int, default=None,
+                    help="borner l'appel a N minutes ; par defaut la"
+                         " session n'expire pas")
     ap.add_argument("--sec", action="store_true",
                     help="montre tout, n'appelle rien, ne coute rien")
     # CALL ou CAST (docs/habitant.md §4). Le DEFAUT reste le call — attendre

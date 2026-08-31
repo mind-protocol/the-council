@@ -37,8 +37,13 @@ def main():
                     help="modele transmis au script d'appel")
     ap.add_argument("--effort", default="low",
                     help="effort de raisonnement transmis au CLI, ex. low")
-    ap.add_argument("--minutes-appel", type=int, default=15,
-                    help="timeout technique de l'appel (pas le budget fictionnel)")
+    # 0 = PAS D'EXPIRATION, et c'est le defaut (31.8). Un plafond de session
+    # ne protege de rien : le processus rend la main quand il a fini. Il
+    # coupe seulement du travail en cours — mesure le meme jour, une journee
+    # d'homme entiere perdue a 180 s, zero octet ecrit.
+    ap.add_argument("--minutes-appel", type=int, default=0,
+                    help="borner l'appel a N minutes ; 0 = la session"
+                         " n'expire pas (defaut)")
     ap.add_argument("--max-activations", type=int, default=0,
                     help="0 = sans plafond")
     ap.add_argument("--heartbeat", type=float, default=5.0,
@@ -48,10 +53,10 @@ def main():
     ap.add_argument("--prevoir", type=int, default=0, metavar="N",
                     help="rendre les N prochains candidats en JSON, sans ecriture")
     args = ap.parse_args()
-    if (args.intervalle <= 0 or args.minutes_appel <= 0 or
+    if (args.intervalle <= 0 or args.minutes_appel < 0 or
             args.heartbeat <= 0 or args.parallele <= 0):
-        ap.error("intervalle, minutes-appel, heartbeat et parallele "
-                 "doivent etre positifs")
+        ap.error("intervalle, heartbeat et parallele doivent etre positifs ; "
+                 "minutes-appel accepte 0 (pas d'expiration)")
     if args.prevoir < 0:
         ap.error("prevoir doit etre positif")
     if args.prevoir:

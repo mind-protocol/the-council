@@ -92,7 +92,8 @@ def appeler_stream(pid, manuel, mission, sid, modele, effort, minutes, heartbeat
     journaliser("cli.depart", acteur=pid, session=sid, phase=phase,
                 fournisseur=agent_runtime.fournisseur(),
                 reprise=reprendre, modele=modele or "defaut",
-                effort=effort or "defaut", timeout_s=minutes * 60)
+                effort=effort or "defaut",
+                   timeout_s=(minutes * 60) if minutes else None)
 
     def erreur(ligne):
         journaliser("cli.stderr", phase=phase, contenu=_court(ligne, 400))
@@ -103,7 +104,8 @@ def appeler_stream(pid, manuel, mission, sid, modele, effort, minutes, heartbeat
 
     return agent_runtime.appeler(
         role=pid, manuel=manuel, message=mission, session_id=sid,
-        modele=modele, effort=effort, timeout=minutes * 60, cwd=neutre,
+        modele=modele, effort=effort,
+        timeout=(minutes * 60) if minutes else None, cwd=neutre,
         # L'activation ne monte pas le depot : l'acteur n'a que son etagere
         # materialisee ; le narrateur n'a que son dossier de contexte.
         add_dirs=[], tools=depecher.OUTILS if autoriser_lecture else [],
