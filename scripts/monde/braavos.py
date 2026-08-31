@@ -14,6 +14,7 @@ import json
 import os
 import shutil
 import sys
+import time
 
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -127,6 +128,13 @@ def engendrer():
         source = os.path.join(source_gens, nom)
         if os.path.isfile(source):
             shutil.copyfile(source, os.path.join(destination_gens, nom))
+
+    # Le témoin doit être postérieur au copieur pour que le serveur puisse
+    # distinguer une copie fraîche d'une copie à relancer, même sur un volume
+    # dont les horloges de fichiers ont un léger décalage.
+    date_sortie = max(time.time(), os.path.getmtime(__file__) + 0.01)
+    for chemin in _fichiers_attendus():
+        os.utime(chemin, (date_sortie, date_sortie))
 
     return verifier()
 
