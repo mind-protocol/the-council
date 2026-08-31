@@ -404,10 +404,30 @@ def rendre(args):
                   % (len(q.get("dedans") or {}), sum(motifs.values())))
             for k, n in motifs.most_common():
                 print("    %-12s %4d" % (k, n))
-            print("  RAPPEL (31.8) : « dehors » ne veut plus dire injoignable —")
-            print("  ils gardent leur journee et se depechent ; seul leur budget")
-            print("  de questions tombe a zero. « ilot » en revanche est une")
-            print("  topologie trouee, et ceux-la sont vraiment perdus.")
+            # CES TROIS MOTS NE DISENT PAS LA MEME CHOSE, et j'avais ecrit ici
+            # qu'« ilot » etait une topologie trouee : c'est FAUX, et un
+            # lecteur en a tire une conclusion de regime. Le code (voir
+            # temps/presence_quartier.py l.97-110) dit :
+            #   hors-plan  la salle n'est dans AUCUNE arete — le vrai trou
+            #   ilot       la salle est connue, mais dans une autre COMPOSANTE
+            #   loin       meme composante, au-dela du rayon de marche
+            print("  hors-plan : la salle n'est dans aucune arete — LE seul trou,")
+            print("              et il se rebouche dans chemins.json.")
+            print("  ilot      : salle connue, autre composante connexe. Pour la")
+            print("              cour verte c'est Port-Real : on ne va pas de la")
+            print("              Table Peinte au Donjon Rouge a pied, il y a la")
+            print("              mer. Relier les deux serait une faute de")
+            print("              fiction, pas une reparation.")
+            print("  loin      : meme composante, trop loin a pied.")
+            print("  AUCUN DES TROIS N'EST INJOIGNABLE (31.8) : tous gardent leur")
+            print("  journee et se depechent ; seul le budget de questions")
+            print("  spontanees tombe a zero, faute d'ancre a portee.")
+            anc = q.get("ancres") or []
+            print("  ANCRES DU QUARTIER : %d — %s"
+                  % (len(anc), ", ".join("%s/%s" % (a.get("qui"), a.get("salle"))
+                                         for a in anc) or "aucune"))
+            print("  Une seule ancre = un seul chateau servi. Le levier n'est pas")
+            print("  la topologie, c'est le nombre de sieges assis.")
 
     if toutes or args.reveils:
         _titre("LES REVEILS — ce qu'on en sait, et c'est peu")
