@@ -87,3 +87,8 @@ from agents.activite import main as activite_main  # noqa: E402,F401 — l entre
 # journal des affaires ecrites a la main, la ou aucune porte n emet.
 from agents import reconcilier  # noqa: E402,F401 — les deux maisons des affaires
 from agents.reconcilier import main as reconcilier_main  # noqa: E402,F401 — l entree CLI
+
+# Descendue le 31.8 : remettre les cellules effacees par une reecriture,
+# sans jamais ecraser ce qui est occupe.
+from agents import rendre_cellules  # noqa: E402,F401
+from agents.rendre_cellules import main as rendre_cellules_main  # noqa: E402,F401

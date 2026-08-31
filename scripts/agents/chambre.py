@@ -84,6 +84,17 @@ def chemin(qui):
     return os.path.join(CHAMBRES, qui)
 
 
+def _arbitre(qui):
+    """Son arbitre de zone, ou « mj ». Import TARDIF et enveloppe : `zone`
+    relit la porte des agents, et une chambre doit pouvoir s'ouvrir meme si
+    la topologie est muette."""
+    try:
+        from agents import zone
+        return zone.arbitre_de(qui) or "mj"
+    except Exception:
+        return "mj"
+
+
 def _fiche(qui):
     """La fiche de personnages.json, ou {} — un MJ n'en a pas, et c'est bien."""
     donnees = tables.lire(os.path.join(RACINE, "etat", "personnages.json"), [])
@@ -191,6 +202,26 @@ def ouvrir(qui):
                      newline="\n") as f:
             f.write(json.dumps(gabarit, ensure_ascii=False, indent=1)
                     + "\n")
+    # SON AFFAIRE A LUI, vide. Meme regle que le claude.md : semee une fois,
+    # jamais retouchee — si le fichier existe, c'est sa main.
+    from agents import chambre_affaire
+    fiche = _fiche(qui)
+    volume = os.path.join(dossier, "books", "affaire-%s.json" % qui)
+    if not os.path.exists(volume):
+        with io.open(volume, "w", encoding="utf-8", newline="\n") as f:
+            f.write(json.dumps(
+                chambre_affaire.gabarit(
+                    qui, fiche.get("nom") or qui,
+                    # C'EST `titre` QUE PORTENT LES FICHES : 119 sur 119,
+                    # et ni `office` ni `charge` n'existent. Sans ca, les
+                    # 144 volumes seraient sous-titres « ce dont je réponds »
+                    # — un gabarit qui ne nomme personne.
+                    fiche.get("titre") or fiche.get("office"),
+                    # SON ARBITRE, pour que les commandes de la prise en main
+                    # soient copiables telles quelles. Import tardif : zone
+                    # relit cette porte.
+                    _arbitre(qui), os.path.relpath(dossier, RACINE)),
+                ensure_ascii=False, indent=1) + "\n")
     return dossier
 
 
