@@ -145,9 +145,16 @@ Trois conséquences qui font le sujet :
 - **Un homme sans creux ne pense pas ce jour-là.** Le castellan dont la journée
   est pavée de bandes fermées n'a aucune question, quelle que soit sa force.
   C'est ça, le coût d'un mandat : on l'occupe.
-- **Un homme hors quartier n'a pas de creux** (il n'a pas de journée). Il ne
-  pense pas non plus. C'est le budget qui se resserre tout seul sur ce que le
-  joueur peut atteindre.
+- **Un homme hors quartier garde sa journée et ses creux.** Ce qu'il perd est
+  son BUDGET DE QUESTIONS spontanées, et lui seul : il ne pense pas de
+  lui-même pour un joueur qui ne peut pas l'entendre. **Mais on le dépêche
+  comme n'importe qui** — être loin retire au joueur le moyen de l'atteindre,
+  pas au MJ celui de l'appeler. C'est donc le budget, et non l'existence,
+  qui se resserre sur ce que le joueur peut atteindre.
+  (Corrigé le 31.8 : les creux n'étaient calculés que pour le quartier, et
+  `mission.py` refuse de dépêcher qui n'a « AUCUN CREUX » — 44 hommes sur
+  78, dont toute la cour verte de Port-Réal, ne partaient pas quand on les
+  appelait. `creux()` calculait pourtant très bien pour eux.)
 - Les creux sont **la seule ressource** que les questions consomment. Plus de
   `AFFAIRES_PAR_JOUR = 2` posé à la main : deux travaux tenaient parce que la
   journée n'en contenait pas plus. Maintenant la journée le dit elle-même.

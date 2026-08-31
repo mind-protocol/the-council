@@ -97,21 +97,40 @@ def force_narrative(A, N, dire, joueur=None):
 
     # LE QUARTIER ET LES CREUX. C'est ici que la force cesse de decider seule :
     # elle REPARTIT un budget de temps existant, elle n'en fabrique pas. Un
-    # homme hors quartier n'a pas de journee ; un homme dont la journee est
-    # pavee de bandes fermees n'a pas de creux. Ni l'un ni l'autre ne pense, si
+    # homme dont la journee est pavee de bandes fermees n'a pas de creux, si
     # fort soit-il — et c'est ca, le cout d'un mandat : on l'occupe.
-    creux_de, motif = {}, {}
+    #
+    # MAIS LE QUARTIER NE SUPPRIME PLUS LA JOURNEE (31.8). On ne calculait les
+    # creux QUE pour `dedans`, et un homme au loin ressortait « aucun creux ».
+    # Deux consequences, dont la seconde etait un vrai degat :
+    #   - `mission.py` refuse de depecher qui n'a « AUCUN CREUX » : 44 hommes
+    #     sur 78, dont TOUTE la cour verte de Port-Real, etaient injoignables.
+    #     Le MJ les appelait, ils ne partaient pas.
+    #   - c'etait faux dans les termes du code : `creux()` calcule tres bien
+    #     pour eux — 42 des 44 ont leur fiche de routine, et Aegon II rend
+    #     2 creux, 260 minutes, dans la cour du Donjon Rouge.
+    # Etre loin ne retire pas sa journee a un homme : ca retire au JOUEUR le
+    # moyen de l'atteindre par lui-meme. On calcule donc pour tout le monde, et
+    # le quartier ne borne plus que le BUDGET DE QUESTIONS spontanees, qui est
+    # le seul endroit ou il devait mordre.
+    creux_de, motif, au_loin = {}, {}, set()
     try:
         from temps.expose import presence as mod_presence
         q = mod_presence.quartier()
         rout, chem, _ = mod_presence.charger()
         chat = mod_presence.Chateau(chem)
         pj, fiches = mod_presence.joueurs(), (rout.get("gens") or {})
-        motif.update(q.get("dehors") or {})
-        for pid in q.get("dedans") or {}:
+        dehors = q.get("dehors") or {}
+        au_loin = set(dehors)
+        for pid in list(q.get("dedans") or {}) + list(dehors):
             c = mod_presence.creux(pid, rout, chat)
             if c:
                 creux_de[pid] = c
+                # Le motif du dehors reste dit — il explique pourquoi il ne
+                # posera pas de question de lui-meme —, mais il ne vaut plus
+                # empechement : il a ses heures, et on peut le depecher.
+                if pid in dehors:
+                    motif[pid] = dehors[pid]
             # Un muet se dit POURQUOI il est muet, sinon on repare la mauvaise
             # chose : un siege occupe est normal, une journee fermee est un
             # choix, une fiche manquante est une faute.
@@ -120,7 +139,7 @@ def force_narrative(A, N, dire, joueur=None):
             elif pid not in fiches:
                 motif[pid] = "sans routine"
             else:
-                motif[pid] = "journee fermee"
+                motif[pid] = dehors.get(pid) or "journee fermee"
     except Exception as e:
         dire("  (quartier indisponible : {})".format(str(e)[:80]))
 
@@ -144,8 +163,12 @@ def force_narrative(A, N, dire, joueur=None):
                        "questions_posees": []})
     lignes.sort(key=lambda x: -x["force"])
 
-    # Le budget se calcule sur les SEULS eligibles — ceux qui ont un creux.
-    eligibles = [l for l in lignes if l["creux"]]
+    # Le budget se calcule sur les SEULS eligibles — ceux qui ont un creux ET
+    # que le joueur peut atteindre. C'est ICI, et nulle part ailleurs, que le
+    # quartier doit mordre : une question spontanee que personne n'entendra ne
+    # vaut pas une orbite. Un homme au loin garde sa journee et se depeche ;
+    # il ne pense simplement pas de lui-meme pour le joueur.
+    eligibles = [l for l in lignes if l["creux"] and l["qui"] not in au_loin]
     n = len(eligibles)
     for rang, l in enumerate(eligibles):
         if n < PLANCHER_QUANTILES:
