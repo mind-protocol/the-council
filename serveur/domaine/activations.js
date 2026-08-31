@@ -15,7 +15,14 @@ const fs = require("fs");
 const path = require("path");
 const os = require("os");
 const childProcess = require("child_process");
-const { bibliotheque } = require("../plan"); // LA PORTE serveur du plan
+// LA PORTE serveur du plan, MAIS A L'APPEL — c'est ici que naissait le cycle
+// agents -> activations -> plan -> livres/echiquier -> agents. Requerir la
+// porte du plan au chargement tire TOUTES ses routes derriere elle, et
+// celles-ci redemandent la porte des agents encore vide : `.chambreLivres` et
+// `.activations` rendaient `undefined`. On ne prend d'ici que `bibliotheque`,
+// et seulement dans deux fonctions : la differer coupe le cycle sans sortir de
+// la porte. (`require` est mis en cache — le report ne coute rien.)
+const plan = () => require("../plan").bibliotheque;
 const { RACINE } = require("../http");
 const { qui } = require("../http");
 
@@ -306,7 +313,7 @@ const cachePlanModele = new Map();
 // bilan, à la criticité et à l'écran.
 function planModele(vueDe) {
   const siege = vueDe || "__defaut__";
-  const entrees = bibliotheque.cheminsSource(RACINE).concat([
+  const entrees = plan().cheminsSource(RACINE).concat([
                    path.join(RACINE, "etat", "boites.json"),
                    path.join(RACINE, "etat", "personnages.json"),
                    path.join(RACINE, "etat", "journal.json"),
@@ -343,7 +350,7 @@ function criticite(vueDe) {
   // note portee de 5 a 8 change tous les scores en aval. L'oublier de la clef
   // donnait un ecran qui ne bougeait pas d'un dixieme apres une renotation, et
   // rien pour le dire — le meme piege que le script oublie, une porte plus loin.
-  const cles = bibliotheque.cheminsSource(RACINE).concat([
+  const cles = plan().cheminsSource(RACINE).concat([
                 path.join(RACINE, "etat", "poids-etats.json"),
                 path.join(RACINE, "scripts", "criticite.py"),
                 path.join(RACINE, "scripts", "bibliotheque.py"),
