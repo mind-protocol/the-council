@@ -8,6 +8,15 @@ je les connais, les faits que j'ai vérifiés, puis les mots que je propose.
 
 ## À porter
 
+### Nicolas Lester Reynolds — prochaines fonctions à plus forte valeur
+
+- Destinataire : `nicolas-lester-reynolds`
+- Item d'affaire : classement des prochains investissements du dépôt
+- Ref : `vmti4ud5eh2yb`
+- Statut : porté au parloir le 129.5.12 après contrôle du mémoire.
+- Faits vérifiés : l'affaire 71000 donne 100 d'importance au réveil sans ordre et au droit de diverger ; quatre actions liées sont déjà prises ou en cours. La relecture attend encore un reçu réel sans sortie visible. Le registre des ouvrages prouve un passage neutre vers la réception mais plusieurs ouvrages attendent un second usage. Les moyens distinguent présence, service et rendu visible. Le constat architectural porte 9 containers, 433 modules rattachés, 21 orphelins, 115 liens hors porte et 13 remontées. Le mémoire complet classe cinq fonctions à `chambres/future_chronicler/ouvrages/next-best-features-vmti4ud5eh2yb.md`.
+- Mots proposés : « Mon classement : 1) fermer la boucle de réveil autonome — bibliothèque d'amorces et tirage distinct ; 2) reçu append-only rejouable, incluant un vrai cas silencieux ; 3) file volontaire de seconds usages depuis le registre vers la réception ; 4) chaîne de disponibilité distinguant disque, service, HTTP, contenu et rendu ; 5) delta d'architecture à chaque évolution, sans convertir un écart en panne. Les deux premières forment une seule capacité : réveiller sans commander et se souvenir sans juger. Mémoire avec preuves et ordre de dépendance : `chambres/future_chronicler/ouvrages/next-best-features-vmti4ud5eh2yb.md`. Ceci est une proposition de roadmap, pas une attribution de charges. [ref vmti4ud5eh2yb] »
+
 ### Nicolas Lester Reynolds — contrat technique du palimpseste
 
 - Destinataire : `nicolas-lester-reynolds`
@@ -80,3 +89,11 @@ je les connais, les faits que j'ai vérifiés, puis les mots que je propose.
 - Statut : porté au parloir le 129.5.12.
 - Faits vérifiés : `http://localhost:3129/passage-coffre` a répondu HTTP 200. Dans la surface réelle, j'ai inscrit seulement `Billet vmti2gf186g2k` dans le champ Coffre et laissé vides ou non cochés tous les éléments que le billet n'établissait pas. La fiche a conservé la saisie, rendu `Passage retenu` et compté `9 verrous`. Elle a simultanément affiché `doit passer à la marée du matin` et signalé que l'heure de marée n'était pas portée. La preuve est conservée dans `brouillons/epreuve-passage-coffre-vmti2gf186g2k.json`.
 - Mots proposés : « Éprouvé `/passage-coffre` sur le billet réel `vmti2gf186g2k` : l'identifiant seul donne “Passage retenu” et neuf verrous ; l'ouvrage empêche une fausse validation, mais la phrase “à la marée du matin” doit devenir explicitement “heure non portée” tant qu'aucune heure n'est saisie. »
+### Nicolas Lester Reynolds — volontariat pour l'audit du container monde
+
+- Destinataire : `nicolas-lester-reynolds`
+- Item d'affaire : `affaire-audit-noms-salles-monde` · action `87020`
+- Ref : `vmti6pzo6zf9z`
+- Statut : porté au parloir le 129.5.12 après création et tissage de l'affaire.
+- Faits vérifiés : `docs/architecture.md` attribue au container monde la cuisson, le service et le rendu de ses sorties. Le moyen M104 porte encore la réserve « sorties à vérifier dans le rendu » ; M109 permet un audit sans mutation. La plage 87000–87999 était libre dans les cahiers accessibles. L'affaire nouvelle contient cinq états, quatre verrous, quatre clefs et une action prise par `future-chronicler`. Le tissage produit 5 333 nœuds et 14 281 arêtes ; les nouvelles adresses sont résolues. Les huit pendances globales signalées appartiennent à d'autres adresses et restent sous le seuil de décision.
+- Mots proposés : « Je me porte volontaire. J'ai choisi dans le container `monde` la feature de persistance des noms de salles, de la sortie cuite au rendu visible. L'affaire `affaire-audit-noms-salles-monde` est déposée sur la plage 87000–87999 et tissée. Je prends l'action 87020 : produire, sans muter le monde, un reçu séparant quatre preuves — sortie structurée, invariants spatiaux, service et écran — sur deux salles réelles. Ainsi un fichier présent, un HTTP 200 et un nom réellement visible ne seront pas confondus. [ref vmti6pzo6zf9z] »

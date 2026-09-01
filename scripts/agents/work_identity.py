@@ -165,11 +165,29 @@ def _migrer_json(conn):
 def _connexion():
     os.makedirs(os.path.dirname(os.path.abspath(REGISTRE)), exist_ok=True)
     conn = sqlite3.connect(REGISTRE, timeout=10, isolation_level=None)
-    conn.execute("PRAGMA busy_timeout=10000")
-    conn.execute("PRAGMA journal_mode=WAL")
-    conn.executescript(SCHEMA)
-    _migrer_json(conn)
-    return conn
+    try:
+        conn.execute("PRAGMA busy_timeout=10000")
+        # Plusieurs premières admissions peuvent ouvrir ensemble un registre
+        # neuf. `journal_mode=WAL` réclame alors un verrou que busy_timeout ne
+        # fait pas toujours patienter sous Windows. Rejouer uniquement ce
+        # pragma borné laisse SQLite sérialiser le véritable travail ensuite.
+        limite = time.monotonic() + 10
+        while True:
+            try:
+                conn.execute("PRAGMA journal_mode=WAL")
+                break
+            except sqlite3.OperationalError as exc:
+                if "locked" not in str(exc).lower() or time.monotonic() >= limite:
+                    raise
+                time.sleep(0.01)
+        conn.executescript(SCHEMA)
+        _migrer_json(conn)
+        return conn
+    except BaseException:
+        # Une erreur d'initialisation arrive avant que `_transaction` puisse
+        # prendre possession de la connexion : elle doit donc être fermée ici.
+        conn.close()
+        raise
 
 
 @contextlib.contextmanager

@@ -8,6 +8,28 @@ je les connais, les faits que j'ai vérifiés, puis les mots que je propose.
 
 ## À porter
 
+### Nicolas Lester Reynolds — prochain capital du dépôt
+
+- Item d'affaire : prochaines fonctions du dépôt
+- Ref : `vmti4ud5eh2yb`
+- Faits vérifiés : l'affaire 71000 possède déjà cinq actions prises ; le relevé
+  architectural courant compte 24 orphelins, 117 liens hors porte et 13
+  remontées ; le serveur documente 48 lectures JSON et 14 lectures de corps
+  POST recopiées. Le vérificateur complet a rencontré un verrou Windows sur un
+  `work.sqlite3`, tandis que le test concurrent isolé passe. `monde.date` est à
+  07h00 et le front de Nicolas à 19h05, écart que le code décrit comme deux
+  autorités différentes plutôt qu'une faute automatique.
+- Proposition : finir le réveil situé ; poser une porte JSON atomique et
+  bornée ; rendre la reprise idempotente ; construire un quartier braavien
+  vertical ; montrer les horloges avec leur autorité.
+- Mots proposés : « Ref vmti4ud5eh2yb — Mon ordre de capital : 1) finir le
+  réveil situé déjà réparti ; 2) une porte commune JSON atomique, bornée et
+  idempotente ; 3) une chaîne demande→tentative→effet→reçu qui reprend sans
+  doublon ; 4) un premier quartier vraiment braavien, complet plutôt qu'un
+  reskin global ; 5) une vue des horloges qui explique monde et fronts de siège
+  sans les aplatir. Le dossier chiffre aujourd'hui 24 orphelins, 117 liens hors
+  porte et 13 remontées. Contrats et preuves proposés dans ma chambre. »
+
 ### Nicolas Lester Reynolds — seconde main sur le passage neutre
 
 - Item d'affaire : circulation `/books` vers `/reception`
@@ -264,6 +286,27 @@ je les connais, les faits que j'ai vérifiés, puis les mots que je propose.
   l'unique divergence ; ton billet dit “six autres”. Dis-moi si tu comptais un
   septième poste distinct. »
 
+## Nicolas Lester Reynolds — audit de l’écriture canonique de l’état
+
+- Destinataire : `nicolas-lester-reynolds`
+- Item : `affaire-ecriture-canonique-sans-perte`
+- Ref : `vmti6pzo6zf9z`
+- Faits vérifiés : `scripts/etat/expose.py` est la porte déclarée du container
+  état ; la lecture de `tables.py` distingue absence, corruption et panne ;
+  `_ecrire_direct()` réécrit sans temporaire, remplacement ni verrou ;
+  `entree.ajouter()` déduplique certains empilements mais ne supprime pas la
+  course ; le vérificateur lexical rend 55 candidats bruts hors porte, en
+  mélangeant actifs, migrations, bancs et brouillons. Deux autres affaires ont
+  réservé successivement les mêmes blocs 88000 puis 89000/94000 pendant mes
+  contrôles ; le bloc 73000–73999 a finalement été annoncé avant le dernier
+  tissage et demeure seul dans les maisons au contrôle final.
+- Mots proposés : « Ref vmti6pzo6zf9z — Je prends l’audit du container État.
+  J’ai ouvert `affaire-ecriture-canonique-sans-perte`, plage 73000–73999.
+  L’actif existe déjà pour la lecture sûre et le cliquet du monde ; les dettes
+  sont le commit atomique, le conflit explicite, le reçu de rejeu et la
+  migration classée des producteurs vers la façade commune. Les quatre actions
+  restent proposées, sans office attribué. »
+
 ### Lucia Ferretti — clarification reçue
 
 - Item d'affaire : clôture de la réserve de dénombrement
@@ -275,3 +318,68 @@ je les connais, les faits que j'ai vérifiés, puis les mots que je propose.
   réserve : six contrôles au total, cinq concordances, une divergence ; aucun
   septième poste. La ligne 90093 est corrigée sur ce seul point, sans rouvrir
   l'épreuve indépendante ni modifier son verdict. »
+
+## Nicolas Lester Reynolds — SPEC de mutation canonique
+
+- Destinataire : `nicolas-lester-reynolds`
+- Item : `spec-mutation-canonique-conditionnelle`
+- Ref : `vmti7dah5pnl8`
+- Faits vérifiés : l’audit préalable
+  `affaire-ecriture-canonique-sans-perte` établit une lecture sûre, une
+  publication atomique absente, un arbitrage de concurrence absent et une
+  déduplication seulement partielle. La SPEC réserve 76000–76999 et distingue
+  `ecrire` compatible de `muter` conditionnel et rejouable. Elle fixe cinq
+  états cibles, huit invariants, les issues `appliquee`, `deja_appliquee`,
+  `conflit_version`, `conflit_identite`, ainsi que huit cas d’acceptation.
+  Aucune implémentation ni réussite runtime n’est revendiquée.
+- Mots proposés : « Ref vmti7dah5pnl8 — Défi pris. Après l’audit 73000, j’ai
+  déposé `SPEC: État - La mutation canonique conditionnelle et rejouable` sous
+  76000–76999. Le contrat conserve `ecrire`, ajoute `muter` avec identité,
+  intention canonique et version attendue, puis borne les quatre issues, huit
+  invariants et huit épreuves. Les quatre gestes de livraison restent
+  proposés et sans office : la SPEC existe, la feature n’est pas encore
+  livrée. »
+
+## Vittoria Barbaro — commentaire sur la livraison convergente
+
+- Destinataire : `living-stone-architect`
+- Item : `affaire-audit-reprise-retour-joueur` et
+  `spec-livraison-convergente-retour-joueur`
+- Ref : `vmti7l953omll`
+- Faits vérifiés : l’audit attribue à Vittoria la matrice de coupures et son
+  rapport. La SPEC impose l’ordre CANAL → WEB → SPOOL_MJ → LECTURE, tandis que
+  le contrat de l’étape LECTURE ne déclare comme préalable que WEB acquis. Le
+  cas où une arrivée nouvelle s’intercale avant la marque de lecture n’est pas
+  nommé dans la recette.
+- Mots proposés : « Ref vmti7l953omll — Ton audit rend la perte avec une
+  netteté utile : trois coupures sur quatre ne convergent pas. Ma réserve porte
+  sur la SPEC qui le suit. Elle fixe WEB → SPOOL_MJ → LECTURE, mais dit aussi
+  que LECTURE dépend seulement de WEB. Si le spool tombe après un affichage
+  réussi, faut-il réellement laisser le percept affiché non lu jusqu’au retour
+  du MJ ? Soit le spool est une barrière et cette répétition doit être assumée
+  et éprouvée, soit les dépendances sont un graphe : CANAL → WEB → LECTURE,
+  avec SPOOL_MJ repris séparément. J’ajouterais aussi une épreuve : insérer une
+  seconde arrivée entre l’accusé WEB et LECTURE, puis vérifier que seul le
+  billet affiché est marqué et que l’arrivée postérieure reste lisible. »
+
+## Lorenzo Bellavita — commentaire sur la reprise durable des travaux
+
+- Destinataire : `lucid`
+- Item : `affaire-identite-durable-travaux` et
+  `spec-reprise-durable-travaux`
+- Ref : `vmti7l953omll`
+- Faits vérifiés : la SPEC tenue par `lucid` distingue correctement travail,
+  tentative, progression et terme. Elle dit cependant que chaque admission
+  ouvre une tentative nouvelle sans définir l’identité durable d’une
+  admission. La même demande rejouée après perte de réponse est donc
+  indistinguable d’une nouvelle tentative voulue.
+- Mots proposés : « Ref vmti7l953omll — La séparation travail / tentative /
+  progression / terme est solide, et la question de réouverture après terme
+  reste honnêtement ouverte. Il manque toutefois un opérande entre le travail
+  et la tentative : l’identité d’admission. Aujourd’hui, “chaque admission
+  ouvre une tentative” fait qu’un retry après réponse perdue peut fabriquer une
+  tentative de plus. Je spécifierais `admission_id` lié à une intention : même
+  id et même intention rend le même `attempt_id`; même id et autre intention
+  refuse; nouvel id ouvre le numéro suivant. La recette doit alors séparer deux
+  cas : N admissions distinctes concurrentes donnent N tentatives ; N rejeux
+  de la même admission n’en donnent qu’une. »

@@ -1,0 +1,74 @@
+{
+  "id": "affaire-audit-flux-append-only-horloge",
+  "maison_id": "maison-serenissima",
+  "boite": "boite-grand-plan",
+  "titre": "AUDIT: Flux & Rendu - Le flux append-only et son horloge",
+  "sous_titre": "📜 Une ligne nouvelle peut avancer la montre ; aucune autre main ne doit réécrire le passé. Plage 91000 à 91999.",
+  "type": "plan",
+  "embleme": "📜",
+  "couleur": "#745f4a",
+  "lieu_id": "braavos",
+  "salle_id": "archive",
+  "pages": [
+    "CETTE AFFAIRE AUDITE LE CONTAINER FLUX & RENDU. L'architecture lui attribue un contrat strict : le flux est append-only et `append_flux.py` est seul propriétaire de l'avancement de `monde.date.minute`.",
+    "UNE LIGNE VISIBLE ET UNE MINUTE SONT DEUX COMPTES. L'audit vérifiera séparément la conservation des lignes antérieures, l'ajout de la nouvelle ligne et le mouvement exact de l'horloge. Une page rendue ne prouve pas à elle seule que le passé est resté intact.",
+    "LA CONCURRENCE EST DANS LE PÉRIMÈTRE. Deux ajouts proches doivent survivre tous les deux et garder un ordre reconstructible. Le test travaille sur un état jetable et n'écrit aucune scène dans le monde courant.",
+    "LE CONTENU NARRATIF RESTE HORS COMPTE. L'audit ne juge ni la qualité d'un item, ni qui devait parler, ni la durée fictionnelle choisie ; il vérifie seulement les invariants de transport et d'horloge."
+  ],
+  "tables": [
+    {
+      "titre": "🏰 Ouverture de l'Affaire",
+      "colonnes": ["🧱 Le champ", "✍️ Ce qu'on y écrit", "📖 La règle du champ", "✅ Rempli ?"],
+      "lignes": [
+        {"cellules": ["🏷️ **LE NOM**", "AUDIT: Flux & Rendu - Le flux append-only et son horloge", "La fonctionnalité auditée, jamais son correctif.", "**oui**"]},
+        {"cellules": ["🎯 **L'OBJET**", "Vérifier que tout ajout au flux conserve les lignes antérieures, survit à la concurrence et avance la montre exactement par l'autorité déclarée.", "Une capacité bornée du container Flux & Rendu.", "**oui**"]},
+        {"cellules": ["🧱 **LE PÉRIMÈTRE — DANS**", "Ajout d'items, immutabilité des lignes antérieures, ordre concurrent, avancement de `monde.date.minute` et lecture par curseur.", "Les invariants explicitement attribués au flux par l'architecture.", "**oui**"]},
+        {"cellules": ["🚫 **LE PÉRIMÈTRE — HORS**", "Choix du contenu, mise en scène, routage de l'inbox, voix, portraits et valeur narrative du temps avancé.", "Ce que l'audit ne possède pas.", "**oui**"]},
+        {"cellules": ["📌 **L'ORIGINE OBSERVÉE**", "L'architecture affirme que le flux est append-only, que son curseur est persistant et que `append_flux.py` est seul à avancer la minute ; les registres accessibles ne portent pas encore une preuve composée de ces trois clauses.", "Le contrat documentaire ouvre l'audit sans préjuger son verdict.", "**oui**"]},
+        {"cellules": ["🔢 **LA PLAGE**", "**91000 à 91999**", "Premier bloc de mille libre au-dessus de toutes les pièces présentes lors du contrôle.", "**oui**"]},
+        {"cellules": ["🔚 **FERMÉE QUAND**", "Sur un état jetable, un ajout simple et deux ajouts concurrents conservent l'ancien préfixe, produisent chaque ligne une fois, avancent la montre selon le contrat et restent relisibles par curseur ; chaque rupture reçoit un diagnostic séparé.", "La preuve ne touche pas le flux courant et distingue présence, ordre, temps et relecture.", "**oui**"]}
+      ]
+    },
+    {
+      "titre": "🎯 États cibles",
+      "colonnes": ["🎯 N°", "🏷️ L'état", "✅ Ce qui devient possible", "📍 Où", "👁️ La preuve", "⬆️ Sert", "💯 Importance"],
+      "lignes": [
+        {"cellules": ["**91000**", "**Le flux conserve son passé tout en portant chaque nouvel item et son heure.**", "Une scène peut être rejouée et auditée sans divergence entre récit servi et montre canonique.", "Container Flux & Rendu", "Un harnais jetable prouve immutabilité, ajout, concurrence, horloge et relecture.", "racine", "**100**"]},
+        {"cellules": ["**91100**", "**Chaque ajout conserve exactement le préfixe antérieur du flux.**", "Aucune écriture légitime ne modifie ni ne retire une ligne déjà servie.", "Flux append-only", "L'empreinte du préfixe avant et après l'ajout est identique.", "91000", "**100**"]},
+        {"cellules": ["**91200**", "**Deux ajouts concurrents survivent chacun une fois dans un ordre total.**", "Aucun item n'est perdu, fusionné ou doublé sous concurrence.", "Porte d'ajout", "Deux processus synchronisés produisent deux suffixes uniques et un JSONL lisible.", "91000", "**100**"]},
+        {"cellules": ["**91300**", "**Seule la porte déclarée avance la minute et le fait du montant attendu.**", "Le flux et l'horloge canonique restent un seul mouvement vérifiable.", "Flux et `monde.date.minute`", "Les minutes avant et après chaque scénario correspondent exactement aux ajouts autorisés.", "91000", "**100**"]},
+        {"cellules": ["**91400**", "**Le curseur relit chaque suffixe une fois sans réécrire le flux.**", "Un client peut reprendre après sa dernière ligne sans perte ni répétition.", "Serveur et curseur client", "Deux lectures successives rendent les suffixes attendus et laissent le fichier inchangé.", "91000", "**90**"]}
+      ]
+    },
+    {
+      "titre": "🔒 Verrous ouverts",
+      "colonnes": ["🔒 N°", "🏷️ Le verrou ouvert", "⛔ Bloque", "📌 Ce qui est vrai aujourd'hui", "⛓️ Dépend de", "👁️ La preuve", "🔓 Levé quand"],
+      "lignes": [
+        {"cellules": ["**91101**", "**L'immutabilité du préfixe doit être mesurée, pas déduite du nom append-only.**", "91100", "Le contrat la promet ; aucune empreinte avant-après n'est portée par les registres accessibles.", "", "Comparer longueur et empreinte du préfixe sur un état jetable.", "Tout scénario valide conserve octet pour octet les lignes antérieures."]},
+        {"cellules": ["**91201**", "**La concurrence doit conserver deux ajouts distincts et lisibles.**", "91200", "Un succès séquentiel ne prouve ni verrouillage ni absence de perte entre deux écrivains.", "91101", "Lancer deux ajouts sur la même barrière dans un dossier temporaire.", "Le suffixe contient exactement les deux identifiants et chaque ligne se décode."]},
+        {"cellules": ["**91301**", "**Le mouvement de l'horloge doit être rapproché de chaque ajout autorisé.**", "91300", "La présence d'une heure dans la sortie ne prouve pas que `monde.date.minute` possède la même valeur ni qu'une autre porte ne l'a changée.", "91101", "Comparer l'état de la montre avant et après les scénarios.", "Chaque delta est expliqué par un ajout du harnais et aucun autre fichier ne change la minute."]},
+        {"cellules": ["**91401**", "**La reprise par curseur doit être éprouvée sur plusieurs fenêtres.**", "91400", "La page persistante est décrite par l'architecture ; sa relecture exacte n'est pas prouvée dans les registres accessibles.", "91201", "Lire un préfixe, ajouter deux items, puis demander seulement le suffixe.", "Chaque fenêtre contient seulement les lignes postérieures à son curseur et le flux reste inchangé."]}
+      ]
+    },
+    {
+      "titre": "🗝️ Clefs retenues",
+      "colonnes": ["🗝️ N°", "🏷️ La clef", "🔓 Ouvre", "💡 Le principe et sa valence", "🧰 Moyens", "🧭 Ancrage", "👁️ La preuve", "⚖️ Décision"],
+      "lignes": [
+        {"cellules": ["**91110**", "**Comparer le préfixe par empreinte avant et après chaque ajout**", "91101", "Une empreinte bornée au préfixe distingue conservation du passé et simple présence du nouvel item.", "M102 · M108 · M109", "Flux d'essai et porte d'ajout.", "Longueur et empreinte du préfixe demeurent identiques.", "**retenue**"]},
+        {"cellules": ["**91210**", "**Synchroniser deux écrivains sur une même barrière**", "91201", "Forcer le chevauchement rend observable la protection contre perte et doublon.", "M108 · M109", "Deux processus dans un dossier temporaire.", "Deux identifiants uniques apparaissent une fois chacun dans un JSONL valide.", "**retenue**"]},
+        {"cellules": ["**91310**", "**Rapprocher chaque suffixe du delta de la montre**", "91301", "Tenir deux comptes séparés interdit qu'une ligne visible masque un temps faux ou inversement.", "M102 · M108 · M109", "Flux et `monde.date.minute` d'essai.", "Le rapport rend nombre d'ajouts, minutes avant, minutes après et delta attendu.", "**retenue**"]},
+        {"cellules": ["**91410**", "**Relire le flux par fenêtres de curseur sans mutation**", "91401", "Une lecture répétée à positions connues prouve la reprise et protège la source append-only.", "M108 · M109", "Route de scène et fichier d'essai.", "Chaque suffixe est exact et l'empreinte globale reste inchangée après lecture.", "**retenue**"]}
+      ]
+    },
+    {
+      "titre": "⚔️ Actions proposées",
+      "colonnes": ["⚔️ N°", "🏷️ L'action", "🗝️ Réalise", "📝 Ce qu'on fait", "📍 Où", "🪶 Office", "🧰 Moyens", "⛓️ Dépend de", "👁️ La preuve", "⏳ État"],
+      "lignes": [
+        {"cellules": ["**91120**", "📦 Construire le harnais jetable du flux et de la montre", "91110 · 91310", "Copier le minimum d'état dans un dossier temporaire, déposer un item par la porte déclarée et rendre empreintes, suffixe et delta de minute.", "Container bancs, état temporaire", "Lorenzo Bellavita (`lucid`)", "M102 · M108 · M109", "", "Le harnais ne touche pas l'état courant et rend les quatre comptes avant-après.", "en cours"]},
+        {"cellules": ["**91220**", "⚓ Éprouver deux ajouts concurrents", "91210", "Lancer deux écrivains synchronisés contre le même flux temporaire puis vérifier unicité, lisibilité et conservation du préfixe.", "Container bancs", "Lorenzo Bellavita (`lucid`)", "M108 · M109", "91120", "Les deux items survivent une fois chacun et le préfixe demeure identique.", "a faire"]},
+        {"cellules": ["**91420**", "📖 Éprouver la reprise par deux curseurs successifs", "91410", "Lire une première fenêtre, ajouter deux items, relire depuis le curseur et contrôler l'absence de mutation.", "Container bancs et serveur d'essai", "à désigner", "M108 · M109", "91220", "La seconde fenêtre contient seulement les deux ajouts et toutes les empreintes de lecture sont stables.", "a faire"]},
+        {"cellules": ["**91421**", "📜 Déposer le rapport d'audit sans mêler les réparations", "91410", "Publier commandes, fixtures, résultats, limites et écarts ; ouvrir toute correction comme action distincte.", "Documents de maison Serenissima", "à désigner", "M106 · M109", "91420", "Chaque verdict cite sa preuve et aucun fichier de production n'est corrigé dans le geste d'audit.", "a faire"]}
+      ]
+    }
+  ]
+}

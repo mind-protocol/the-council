@@ -1,0 +1,73 @@
+{
+  "id": "affaire-audit-books-par-siege",
+  "maison_id": "maison-serenissima",
+  "boite": "boite-grand-plan",
+  "titre": "AUDIT: Plan - La lecture des books selon le siège",
+  "sous_titre": "📚 Container plan · distinguer l'absence de siège, l'accès autorisé et une bibliothèque réellement vide. Plage 99000 à 99999.",
+  "type": "plan",
+  "embleme": "📚",
+  "couleur": "#356f78",
+  "lieu_id": "braavos",
+  "salle_id": "archive",
+  "pages": [
+    "CETTE AFFAIRE AUDITE UNE FRONTIÈRE DE LECTURE, ELLE NE PRÉJUGE PAS DE SON CORRECTIF. L'invariant du siège exige un point de vue servi et un brouillard propre. La porte `/books` doit donc rendre observable la différence entre un siège résolu, un siège absent ou inconnu, et une bibliothèque autorisée mais vide.",
+    "LE CONSTAT INITIAL EST REPRODUCTIBLE. Le 129.5.12, `/books` sans jeton et avec un jeton inconnu répondent tous deux 200, `books=[]`, `boites=[]`, `siege=false`. Avec `jeton=homme:precision-observer`, la porte répond 200 avec 6 livres et 1 boîte, mais sans clé `siege`. Cette asymétrie ouvre une question de contrat ; elle n'est pas encore qualifiée de panne.",
+    "LE PÉRIMÈTRE RESTE DANS LE CONTAINER PLAN. L'audit couvre la résolution du siège à l'entrée de `/books`, la sélection des cahiers et boîtes visibles, la forme des réponses et leur intelligibilité pour un consommateur. Il exclut les écritures de cahiers, le tissage, l'échiquier, le rendu visuel, l'authentification générale et toute modification de code.",
+    "LA PREUVE EST GRADUÉE. Une réponse HTTP valide prouve le transport ; une forme stable prouve le contrat machine ; deux sièges valides aux droits différents sont nécessaires pour éprouver l'isolation ; une bibliothèque vide contrôlée est nécessaire pour distinguer vide autorisé et siège non résolu."
+  ],
+  "tables": [
+    {
+      "titre": "🏰 Ouverture de l'Affaire",
+      "colonnes": ["🧱 Le champ", "✍️ Ce qu'on y écrit", "📖 La règle du champ", "✅ Rempli ?"],
+      "lignes": [
+        {"cellules": ["🏷️ **LE NOM**", "AUDIT: Plan - La lecture des books selon le siège", "Une capacité auditée du container plan, non une implémentation particulière.", "**oui**"]},
+        {"cellules": ["🎯 **L'OBJET**", "Vérifier qu'un consommateur peut savoir si la bibliothèque servie appartient à un siège résolu, si elle est autorisée et vide, ou si aucun siège n'a été reconnu.", "Un état du système qui protège le point de vue et le brouillard propres à chaque siège.", "**oui**"]},
+        {"cellules": ["🧱 **LE PÉRIMÈTRE — DANS**", "Route GET `/books`, paramètre `jeton`, résolution du siège, sélection des books et boîtes, statut HTTP, type de contenu et forme JSON.", "Les transformations de lecture dont la composition produit la capacité auditée.", "**oui**"]},
+        {"cellules": ["🚫 **LE PÉRIMÈTRE — HORS**", "Création et modification des cahiers, tissage, échiquier, rendu navigateur, authentification générale, autres routes et choix d'un correctif.", "Ce que cet audit ne possède pas.", "**oui**"]},
+        {"cellules": ["📌 **L'ORIGINE OBSERVÉE**", "Trois lectures le 129.5.12 : sans siège → 200, 0 livre, 0 boîte, `siege:false`; siège `precision-observer` → 200, 6 livres, 1 boîte, pas de clé `siege`; siège inconnu → 200, 0 livre, 0 boîte, `siege:false`.", "Constat de transport et de payload ; le contrat voulu reste à établir.", "**oui**"]},
+        {"cellules": ["🔢 **LA PLAGE**", "**99000 à 99999**", "Plage libre vérifiée dans le tissu courant après détection d'une collision sur 87000 à 87999 ; un bloc de cent par état cible.", "**oui**"]},
+        {"cellules": ["🔚 **FERMÉE QUAND**", "Les branches sans siège, siège inconnu, siège valide avec contenu et siège valide sans contenu ont une sémantique explicite ; deux sièges valides aux droits différents ne reçoivent que leurs cahiers ; la forme reste consommable et stable.", "La preuve couvre les quatre branches et l'isolation, sans déduire l'autorisation du seul nombre de livres.", "**oui**"]}
+      ]
+    },
+    {
+      "titre": "🎯 États cibles",
+      "colonnes": ["🎯 N°", "🏷️ L'état", "✅ Ce qui doit être vrai", "💡 Valence", "📍 Où", "👁️ La preuve", "⬆️ Sert", "💯 Importance"],
+      "lignes": [
+        {"cellules": ["**99000**", "**Chaque lecture de books expose un point de vue de siège intelligible et borné.**", "Le consommateur sait quelle branche il reçoit et aucun siège ne voit les cahiers d'un autre.", "La bibliothèque peut être employée sans confondre absence d'autorité, vide réel et défaut de transport.", "Container plan · route `/books`", "Une matrice de cas couvre les branches de résolution et l'isolation entre sièges valides.", "racine", "**100**"]},
+        {"cellules": ["**99100**", "**Chaque réponse distingue le siège résolu de l'absence de siège.**", "La branche de résolution est explicite et conserve le même sens pour une bibliothèque pleine ou vide.", "Un consommateur ne transforme pas silencieusement un défaut de contexte en absence de documents.", "Entrée HTTP de `/books`", "Les quatre cas donnent une branche observable sans inférence depuis la taille des collections.", "99000", "**100**"]},
+        {"cellules": ["**99200**", "**Chaque siège valide reçoit exactement le périmètre de cahiers et boîtes qui lui est autorisé.**", "Deux sièges valides aux droits distincts obtiennent des ensembles distincts conformes à leur autorité.", "Le brouillard documentaire reste propre à chaque siège.", "Sélection des documents du container plan", "Deux sièges fixtures, un document partagé et deux documents privés produisent les trois appartenances attendues.", "99000", "**100**"]},
+        {"cellules": ["**99300**", "**La réponse possède un contrat machine stable sur toutes les branches.**", "Statut, type de contenu, clés et types permettent au consommateur de traiter chaque résultat sans règle cachée.", "Les clients résistent aux bibliothèques vides et aux sièges non résolus sans reconstruire le contrat.", "Payload HTTP de `/books`", "Un schéma de réponse accepte les quatre branches et refuse toute ambiguïté de type ou de présence des champs discriminants.", "99000", "**90**"]}
+      ]
+    },
+    {
+      "titre": "🔒 Verrous ouverts",
+      "colonnes": ["🔒 N°", "🏷️ Le verrou ouvert", "⛔ Bloque", "📌 Ce qui est vrai aujourd'hui", "⛓️ Dépend de", "👁️ La preuve", "🔓 Levé quand"],
+      "lignes": [
+        {"cellules": ["**99101**", "**La porte doit déclarer de façon uniforme si le siège est résolu.**", "99100", "Les branches sans siège et siège inconnu portent `siege:false`; la branche valide omet la clé. Une bibliothèque valide vide n'a pas encore été observée.", "", "Constat `preuves/audit-books-siege-129-5-12.md`.", "Les quatre branches déclarent leur résolution sans que le consommateur l'infère du nombre de livres."]},
+        {"cellules": ["**99201**", "**L'isolation entre deux sièges valides doit être éprouvée par des contenus contrôlés.**", "99200", "Un seul siège valide a été lu ; son résultat de 6 livres et 1 boîte ne prouve ni inclusion attendue ni exclusion des documents d'un autre siège.", "99101", "Aucune seconde réponse valide comparable n'est encore dans la pièce initiale.", "Deux sièges valides et des cahiers sentinelles rendent inclusions et exclusions attendues."]},
+        {"cellules": ["**99202**", "**Un cahier canonique autorisé doit rejoindre le tisseur puis la collection servie au siège.**", "99200", "Le fichier de la présente affaire existe et son JSON est valide, mais le tisseur ne crée aucun de ses nœuds sur la plage libre 99000–99999 et `/books` ne contient pas son identifiant.", "99101", "Contrôle de propriété des 16 identifiants après `tisser.py --ecrire` : aucun n'a `ou=affaire-audit-books-par-siege`; `/books` rend 7 autres identifiants.", "La chaîne de découverte explique l'inclusion ou l'exclusion à chaque étage et la route sert le cahier dès que son autorité l'autorise."]},
+        {"cellules": ["**99301**", "**Les branches doivent partager un contrat de réponse explicite et vérifiable.**", "99300", "Les trois réponses sont JSON et 200, mais leurs clés diffèrent ; le sens attendu de `200` pour un siège non résolu n'est pas établi par les sources consultées.", "99101", "Comparaison du statut, du type et des clés dans le constat initial.", "Un contrat documenté puis un banc automatique vérifient statut, clés et types pour chaque branche."]}
+      ]
+    },
+    {
+      "titre": "🗝️ Clefs retenues pour l'audit",
+      "colonnes": ["🗝️ N°", "🏷️ La clef", "🔓 Ouvre", "💡 Le principe et sa valence", "🧰 Moyens", "🧭 Ancrage", "👁️ La preuve", "⚖️ Décision"],
+      "lignes": [
+        {"cellules": ["**99110**", "**Comparer les quatre branches de résolution sans déduire le siège du contenu**", "99101", "Une matrice explicite sépare transport, résolution et contenu afin qu'une collection vide ne serve jamais de preuve d'absence de siège.", "M106 · M109", "Route locale `/books` et banc de lecture non mutatif.", "Quatre lignes rendent statut, discriminant de siège, nombre de livres et nombre de boîtes.", "**retenue**"]},
+        {"cellules": ["**99210**", "**Éprouver l'isolation avec deux sièges et des cahiers sentinelles**", "99201", "Des appartenances connues permettent de mesurer les inclusions et exclusions au lieu de juger une quantité brute.", "M106 · M109", "Fixtures bornées du container plan puis lecture de `/books`.", "Chaque siège voit le partagé et son propre cahier, jamais celui de l'autre.", "**retenue**"]},
+        {"cellules": ["**99211**", "**Comparer la découverte canonique, le tissage et la publication au siège**", "99202", "Trois lectures séparées empêchent qu'un fichier présent ou un nœud tissé soit pris pour un cahier effectivement servi.", "M106 · M109 · M120", "Documents de la maison, tissu régénéré et route `/books`.", "Une même affaire possède un verdict nommé à chaque étage et toute divergence conserve son dernier étage conforme.", "**retenue**"]},
+        {"cellules": ["**99310**", "**Fixer puis valider un contrat de réponse commun aux branches**", "99301", "Un discriminant et des types stables rendent la réponse consommable sans convention cachée ; le choix des statuts HTTP demeure une décision séparée.", "M106 · M109", "Contrat de la porte plan et assertions du banc.", "Toutes les branches satisfont le contrat déclaré, et une divergence nomme le champ fautif.", "**retenue**"]}
+      ]
+    },
+    {
+      "titre": "⚔️ Actions proposées",
+      "colonnes": ["⚔️ N°", "🏷️ L'action", "🗝️ Réalise", "📝 Ce qu'on fait", "📍 Où", "🪶 Office", "🧰 Moyens", "⛓️ Dépend de", "👁️ La preuve", "⏳ État"],
+      "lignes": [
+        {"cellules": ["**99120**", "🧪 Déposer la matrice reproductible des branches", "99110", "Écrire un banc en lecture seule pour les cas sans jeton, jeton inconnu, siège valide avec contenu et siège valide vide ; conserver seulement les champs nécessaires au verdict.", "Container bancs, à la porte du plan", "precision-observer", "M106 · M109", "", "Une commande rend quatre résultats structurés, comparables et sans contenu documentaire superflu.", "**proposée**"]},
+        {"cellules": ["**99220**", "🔐 Construire l'épreuve d'isolation bornée", "99210", "Employer deux sièges valides et trois cahiers sentinelles aux appartenances connues dans un environnement d'épreuve, puis comparer exactement les ensembles rendus.", "Container bancs et fixtures du plan", "à désigner", "M106 · M109", "99120", "Le banc réussit pour le partagé et les deux inclusions propres, et échoue dès qu'un document traverse la frontière.", "**proposée**"]},
+        {"cellules": ["**99221**", "🔎 Tracer la chaîne de publication d'un cahier", "99211", "Faire suivre un cahier sentinelle depuis le document de maison jusqu'au tissu puis à la collection servie, en rendant la règle d'inclusion ou le motif d'exclusion à chaque étage.", "Container plan", "precision-observer", "M106 · M109 · M120", "99120", "Le rapport nomme le dernier étage conforme et ne conclut jamais qu'un cahier est publié depuis sa seule présence sur disque.", "**proposée**"]},
+        {"cellules": ["**99320**", "📜 Faire décider et éprouver le contrat de réponse", "99310", "Écrire le contrat attendu pour siège résolu, absent et inconnu, y compris le statut HTTP et le discriminant, puis raccorder les assertions du banc à cette autorité.", "Container plan", "à désigner", "M106 · M109", "99120", "Le contrat est adressé ; le banc montre séparément conformité de transport, de forme et d'isolation.", "**proposée**"]}
+      ]
+    }
+  ]
+}

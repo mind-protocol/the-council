@@ -1,0 +1,75 @@
+{
+  "id": "spec-reprise-durable-travaux",
+  "maison_id": "maison-serenissima",
+  "titre": "SPEC: Reprendre un travail sans le dupliquer",
+  "sous_titre": "🪪 Une demande continue garde son travail ; chaque exécution garde sa tentative ; seul un terme explicite clôt l'affaire.",
+  "type": "registre",
+  "embleme": "🪪",
+  "couleur": "#526d78",
+  "lieu_id": "braavos",
+  "salle_id": "archive",
+  "tenu_par": "lucid",
+  "pages": [
+    "VALEUR POUR L'HABITANT. Une tâche longue peut être interrompue par une panne, reprise dans une nouvelle session ou tentée concurremment sans devenir plusieurs travaux ni perdre son histoire. L'habitant retrouve ce qui est en cours, ce qui a échoué et ce qui est réellement terminé.",
+    "L'AUDIT PRÉCÈDE LA SPEC. `affaire-identite-durable-travaux` a éprouvé vingt fois la stabilité logique et la concurrence, puis dans la garde générale. Il a aussi attribué et levé les handles Windows fautifs, et séparé migration, conflit et nettoyage. La traversée composée de toutes les sorties de dépêche et de worker reste non prouvée : cette SPEC ne la déclare pas acquise.",
+    "LE TRAVAIL ET LA TENTATIVE SONT DEUX LIVRES. La demande logique porte l'identité durable ; chaque admission ouvre une tentative numérotée. Le résultat d'une tentative, la progression courante et le terme durable sont trois écritures distinctes.",
+    "STATUT DE CETTE SPEC : PROPOSÉE, CONDITIONNÉE. Le contrat fonctionnel est prêt à être éprouvé. Le passage en retenue exige la matrice des consommateurs prévue par l'action 87220 de l'audit, afin de vérifier succès, échec, exception et worker asynchrone."
+  ],
+  "tables": [
+    {
+      "titre": "Fondement audité",
+      "colonnes": ["Clause", "Fait vérifié", "Preuve conservée", "Portée", "État"],
+      "lignes": [
+        {"cellules": ["Identité logique et concurrence", "Une même demande conserve un seul travail ; les admissions concurrentes reçoivent des tentatives distinctes et monotones.", "Action 87120 de `affaire-identite-durable-travaux` : vingt passages ciblés sur vingt, puis garde générale verte.", "API et banc ciblé M127.", "AUDITÉ"]},
+        {"cellules": ["Libération des ressources", "Le fixture et l'échec concurrent d'initialisation WAL retenaient chacun un handle ; les deux propriétaires ont été attribués et corrigés.", "Action 87320 : suppression immédiate du fichier d'essai après succès et erreur.", "API, fixture et initialisation SQLite.", "AUDITÉ"]},
+        {"cellules": ["Migration", "Snapshot répété, enrichissement et collision quarantainée conservent fonction, conflit et nettoyage comme verdicts distincts.", "Action 87420 : scénario composé vert après séparation des preuves.", "Migration JSON vers SQLite.", "AUDITÉ"]},
+        {"cellules": ["Consommateurs réels", "La dépêche, le runtime et le worker possèdent plusieurs sorties ; leur convergence vers une transition terminale unique n'est pas encore démontrée ensemble.", "Verrou 87201 et action 87220 encore proposée dans l'audit.", "Composition de bout en bout.", "À AUDITER AVANT RETENUE"]}
+      ]
+    },
+    {
+      "titre": "Contrat de la feature",
+      "colonnes": ["Élément", "Règle normative", "Valeur", "Refus explicite"],
+      "lignes": [
+        {"cellules": ["Identité du travail", "Même acteur, même contexte et même ref stable retrouvent le même travail à travers les sessions. Une ref ou un acteur distinct crée un travail distinct.", "Une reprise continue l'affaire au lieu de la recopier.", "Ne jamais employer le seul identifiant de session comme identité durable lorsqu'une ref stable existe."]},
+        {"cellules": ["Admission", "Chaque admission recevable ouvre exactement une tentative nouvelle sous le travail durable et lui attribue un numéro unique et monotone.", "Les retries et la concurrence restent relisibles sans fusionner leurs exécutions.", "Ne jamais réutiliser un `attempt_id` ni écraser une tentative antérieure."]},
+        {"cellules": ["Progression", "La progression courante peut avancer sans terminer la tentative ni le travail ; elle se relit après réouverture.", "L'habitant retrouve où le travail s'est arrêté.", "Ne jamais déduire un terme d'un pourcentage, d'un message ou d'un succès intermédiaire."]},
+        {"cellules": ["Résultat de tentative", "Chaque tentative reçoit au plus une transition terminale explicite : succès de calcul, échec ou exception normalisée.", "Le système sait ce qui est rejouable sans falsifier l'histoire.", "Une double terminaison ou une identité étrangère est refusée et diagnostiquée."]},
+        {"cellules": ["Terme durable", "Le travail ne devient terminé que par une clôture explicite distincte du résultat d'une tentative.", "Un succès technique ne ferme pas une affaire encore ouverte.", "Ne jamais convertir automatiquement le premier compute réussi en terme durable."]},
+        {"cellules": ["Migration", "Un snapshot déjà importé ne produit aucun doublon ; une divergence d'identité est conservée comme conflit quarantainé.", "Le passage d'autorité ne perd ni l'ancien travail ni la collision.", "Ne jamais remplacer silencieusement le travail courant par le snapshot divergent."]}
+      ]
+    },
+    {
+      "titre": "Scénarios d'acceptation",
+      "colonnes": ["Scénario", "Étant donné", "Quand", "Alors", "Preuve attendue"],
+      "lignes": [
+        {"cellules": ["Reprise dans une nouvelle session", "Un travail ouvert possède une ref stable et une première tentative interrompue.", "La même demande revient dans une autre session.", "Le `work_id` reste identique et une seconde tentative est ajoutée.", "Relecture après fermeture et réouverture du registre."]},
+        {"cellules": ["Deux demandes distinctes", "Deux acteurs ou deux refs différentes emploient le même contexte.", "Les deux demandes sont admises.", "Deux travaux distincts existent et aucune tentative ne traverse leur frontière.", "Comparaison des identités et des historiques."]},
+        {"cellules": ["Admission concurrente", "N admissions de la même demande franchissent ensemble une barrière.", "Elles écrivent concurremment.", "Un seul travail existe avec N tentatives numérotées de 1 à N sans doublon.", "Banc répété et contenu ordonné des tentatives."]},
+        {"cellules": ["Échec puis retry", "Une tentative échoue après avoir inscrit une progression.", "La demande est rejouée.", "L'échec demeure dans l'historique, la progression reste relisible et une nouvelle tentative commence.", "Matrice succès, échec et exception des consommateurs."]},
+        {"cellules": ["Compute réussi sans terme", "Une tentative rend un succès de calcul.", "Aucune clôture explicite n'est demandée.", "Le travail reste ouvert.", "Observation séparée de tentative, progression et terme."]},
+        {"cellules": ["Clôture puis nouvelle admission", "Un travail porte un terme durable.", "La même demande revient.", "La politique de réouverture rend un résultat explicite et n'ajoute pas silencieusement une tentative.", "Décision de produit encore requise avant implémentation."]}
+      ]
+    },
+    {
+      "titre": "Livraison et garde",
+      "colonnes": ["Étape", "Condition d'entrée", "Résultat", "Garde"],
+      "lignes": [
+        {"cellules": ["1. Matrice des consommateurs", "SPEC proposée", "Dépêche synchrone, runtime, worker, succès, échec et exception relus dans le même registre.", "Aucune double terminaison ; chaque branche transporte l'identité complète."]},
+        {"cellules": ["2. Décision de retenue", "Matrice verte et politique de réouverture tranchée", "Contrat accepté ou révisé avec positions conservées.", "La décision cite les scénarios et ne transforme pas la SPEC en fait accompli."]},
+        {"cellules": ["3. Raccordement progressif", "Contrat retenu", "Un consommateur à la fois passe au contrat commun.", "Chaque raccordement garde les tests antérieurs et ajoute son scénario réel."]},
+        {"cellules": ["4. Garde générale", "Tous les consommateurs raccordés", "Toute régression d'identité, de tentative ou de nettoyage bloque la vérification.", "État jetable, concurrence répétée et suppression immédiate du registre sous Windows."]}
+      ]
+    },
+    {
+      "titre": "Hors périmètre et questions ouvertes",
+      "colonnes": ["Sujet", "Décision de la SPEC", "Raison"],
+      "lignes": [
+        {"cellules": ["Choix du travail à lancer", "HORS PÉRIMÈTRE", "L'identité transporte une demande ; elle ne choisit ni son auteur ni sa priorité."]},
+        {"cellules": ["Qualité du résultat", "HORS PÉRIMÈTRE", "Un compute réussi décrit une tentative, pas la valeur de l'ouvrage produit."]},
+        {"cellules": ["Interface utilisateur", "À SPÉCIFIER SÉPARÉMENT", "Cette SPEC fixe les états à rendre ; elle ne choisit ni écran ni vocabulaire visible."]},
+        {"cellules": ["Réouverture après terme", "QUESTION OUVERTE", "Refuser, créer un nouveau travail ou rouvrir l'ancien change l'histoire durable ; aucune preuve d'audit ne tranche ce choix de produit."]},
+        {"cellules": ["Rétention et purge", "QUESTION OUVERTE", "L'audit prouve la conservation et le nettoyage des handles, pas la durée légitime de conservation des travaux terminés."]}
+      ]
+    }
+  ]
+}

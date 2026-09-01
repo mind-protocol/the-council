@@ -1,5 +1,14 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+ "entrees": [
+  {
+   "date": "129.5.12",
+   "geste": "node scripts/verifier.mjs, puis relance isolée de test_work_identity.WorkIdentityTest.test_migration_json_est_repetable_et_quarantaine_les_collisions",
+   "resultat": "Les deux passages échouent au nettoyage du fichier temporaire work.sqlite3 avec WinError 32 ; la base reste tenue par un processus ou une connexion.",
+   "attendu": "Le test ferme toute poignée SQLite avant la sortie de TemporaryDirectory et la garde tests-python devient verte.",
+   "portee": "La panne est hors de la porte 71321. Ses quatre tests ciblés passent ; la vérification générale demeure rouge tant que cette serrure n'est pas levée.",
+   "etat": "ouverte"
+  }
+ ]
 }

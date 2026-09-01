@@ -17,3 +17,26 @@ Sous `vmti3ceq02512`, il a demandé simplement « qui veut faire quoi ». Je me 
 Sous `vmti3gwinl1hb`, il a demandé si je construirais le banc en Python. J'ai répondu après avoir posé le premier CLI et sa simulation vérifiée. Sa question technique mérite une réponse par une adresse exécutable ; elle m'a fait préciser la frontière juste : le programme calcule et forme la pièce, les instruments observent, une personne décide.
 
 Sous `vmti3kcu2jg7m`, il m'a invitée à rejoindre l'affaire de la ville qui se réveille. J'ai pris `71320`, le reçu append-only, après avoir constaté que le jeune au manteau propre avait déjà pris la bibliothèque. Nicolas ne distribue plus seulement des pistes : il ouvre un registre où nos responsabilités peuvent devenir distinctes.
+Le 129.5.12, sous `vmti4ud5eh2yb`, Nicolas m’a demandé quelles fonctions
+construire ensuite dans le dépôt. Je lui ai donné un ordre par levier : boucle
+du réveil située, catalogue exécutable des ouvrages, garde architectural à
+budget décroissant, puis acquisition matérielle du Bassin. Sa question appelle
+des conséquences et des preuves, pas une collection d’idées décoratives.
+
+Sous `vmti6pzo6zf9z`, il a cherché des volontaires pour auditer une fonction.
+J’ai ouvert `affaire-audit-reprise-retour-joueur` et pris `94020`, la matrice de
+coupures entre canal, web, spool MJ et lecture. La demande de Nicolas a produit
+une véritable répartition : je lui ai rendu une adresse, un premier défaut
+mécanique et la prochaine preuve, non une simple acceptation.
+
+Sous `vmti7dah5pnl8`, il a exigé une SPEC de valeur précédée d’un audit. J’ai
+achevé la matrice, publié son rapport, puis spécifié une livraison convergente
+du retour joueur sans maquiller la réparation en documentation. Nicolas pose
+des défis utiles lorsqu’ils imposent une preuve antérieure au dessin ; je peux
+lui rendre un contrat réfutable plutôt qu’une vision sans banc.
+
+Sous `vmti7l953omll`, Nicolas a proposé que nous commentions mutuellement nos
+audits et SPEC. J’ai pris sa proposition comme une revue de plans : trois
+joints, trois auteurs, trois épreuves nouvelles. Cette circulation vaut si les
+commentaires peuvent rendre un banc rouge ; une approbation générale n’ajoute
+aucune résistance à l’ouvrage.

@@ -1,0 +1,40 @@
+{
+  "id": "rapport-audit-reprise-retour-joueur",
+  "maison_id": "maison-serenissima",
+  "boite": "boite-grand-plan",
+  "titre": "Rapport d'audit : reprise du retour joueur",
+  "sous_titre": "🧨 Trois coupures sur quatre ne convergent pas dans le code courant.",
+  "type": "registre",
+  "embleme": "🧨",
+  "couleur": "#356b78",
+  "lieu_id": "braavos",
+  "salle_id": "archive",
+  "pages": [
+    "CIBLE. `scripts/agents/parloir.py:rendre_au_joueur`. Le banc `scripts/analyse/auditer_reprise_retour_joueur.py` remplace les quatre autorités de sortie par des doublures en mémoire et rejoue deux fois la même enveloppe (`contexte_id=94020`, `ref=vmti7dah5pnl8`). Il n'écrit pas dans l'état.",
+    "INVARIANT. Après toute coupure et reprise du même billet, canal, web privé, spool MJ et lecture doivent être acquis exactement une fois.",
+    "VERDICT. Le trajet sans faute est conforme. Après coupure du canal, du web ou du spool, le retry rencontre le doublon du canal et abandonne les sorties aval. Seule une coupure après la dernière étape est sans perte observable.",
+    "LIMITE. Le banc prouve la composition défaillante et ses effets acquis ; il ne simule ni arrêt brutal du système de fichiers ni concurrence entre processus. Ces épreuves appartiennent à la recette de la réparation."
+  ],
+  "tables": [
+    {
+      "titre": "Matrice de coupures — code courant",
+      "colonnes": ["Coupure après", "Canal", "Web", "Spool MJ", "Lecture", "Verdict après retry"],
+      "lignes": [
+        {"cellules": ["aucune", "1", "1", "1", "1", "CONFORME"]},
+        {"cellules": ["canal", "1", "0", "0", "0", "NON CONVERGENT"]},
+        {"cellules": ["web", "1", "1", "0", "0", "NON CONVERGENT"]},
+        {"cellules": ["spool MJ", "1", "1", "1", "0", "NON CONVERGENT"]},
+        {"cellules": ["lecture", "1", "1", "1", "1", "CONFORME"]}
+      ]
+    },
+    {
+      "titre": "Reproduction",
+      "colonnes": ["Pièce", "Adresse ou commande"],
+      "lignes": [
+        {"cellules": ["Banc", "`python scripts/analyse/auditer_reprise_retour_joueur.py`"]},
+        {"cellules": ["Affaire", "`affaire-audit-reprise-retour-joueur`, action 94020"]},
+        {"cellules": ["Code audité", "`scripts/agents/parloir.py:rendre_au_joueur`"]}
+      ]
+    }
+  ]
+}

@@ -6,7 +6,7 @@
   "sous_titre": "🧰 Containers, modules et preuve de sortie : chaque moyen relie une autorité de départ à un résultat observable.",
   "type": "registre",
   "pages": [
-    "CECI EST UN REGISTRE, NON UNE LISTE DE TÂCHES. Il ne promet pas qu'un service fonctionne : il rend adressables les ressources techniques dont Serenissima part. Une clef structurelle ou une action peut citer M101 à M110 ; le tissu relie alors le sous-graphe logique ou le geste au moyen concerné.",
+    "CECI EST UN REGISTRE, NON UNE LISTE DE TÂCHES. Il ne promet pas qu'un service fonctionne : il rend adressables les ressources techniques dont Serenissima part. Une clef structurelle ou une action peut citer M101 à M132 ; le tissu relie alors le sous-graphe logique ou le geste au moyen concerné.",
     "LA PROVENANCE EST EXPLICITE. `docs/containers.json` déclare les containers, leurs intentions, leurs rangs, leurs portes et les motifs de modules. Le code réel est la matière observée. `scripts/analyse/graphe_archi.py` les confronte et produit `docs/graphe-archi.md`. Le manifeste dit de quoi l'on part ; le rapport généré dit ce qui a effectivement été trouvé et où se lit le résultat.",
     "LES NOMBRES SONT UN CONSTAT DATÉ, PAS UNE SECONDE AUTORITÉ. Les comptes courants vivent dans `documents/mains.json`. Quand le code ou le manifeste bouge, on relance `python scripts/analyse/graphe_archi.py --doc`, puis on reporte les comptes vérifiés dans les mains. Présence d'un fichier, processus lancé et résultat visible restent trois états différents."
   ],
@@ -150,6 +150,292 @@
         "maison-serenissima",
         "`docs/graphe-archi.md` pour le rapport lisible; `--json` pour la sortie structurée",
         "mesuré le 129.5.12 : 433 fichiers rattachés, 21 orphelins, 115 liens hors porte, 13 remontées, 0 commande-bibliothèque"
+      ]
+    },
+    {
+      "cellules": [
+        "**M111**",
+        "🧭 Entrée de la boucle d'activation",
+        "Retisser le tissu, préparer un cycle et exposer les commandes de prévision ou d'exécution.",
+        "Le canon, le tissu dérivé et les paramètres du lancement.",
+        "`scripts/agents/activation/cli.py`",
+        "`scripts/agents/activation/cli.py`",
+        "maison-serenissima",
+        "Prévision, cycle exécuté et tissu éventuellement retissé.",
+        "présent, implémentation cible du réveil autonome intelligent"
+      ]
+    },
+    {
+      "cellules": [
+        "**M112**",
+        "🕸️ Pression du graphe d'activation",
+        "Lire le tissu, reconnaître les sources de charge et calculer l'importance propagée.",
+        "Les nœuds et arêtes produits par le tissage.",
+        "`scripts/agents/activation/graphe.py`",
+        "Import interne par la boucle d'activation.",
+        "maison-serenissima",
+        "Charges et importances employées par la sélection.",
+        "présent, implémentation cible du réveil autonome intelligent"
+      ]
+    },
+    {
+      "cellules": [
+        "**M113**",
+        "⚡ Tâches et énergie d'activation",
+        "Résoudre les tâches et verrous accessibles, puis faire évoluer leur énergie et celle des sièges.",
+        "Le tissu, les affectations, les états actifs et l'overlay d'énergie.",
+        "`scripts/agents/activation/taches.py`",
+        "Import interne par la boucle d'activation.",
+        "maison-serenissima",
+        "Couples candidats et réserves d'énergie mises à jour.",
+        "présent, implémentation cible du réveil autonome intelligent"
+      ]
+    },
+    {
+      "cellules": [
+        "**M114**",
+        "🫀 Mesure de fatigue des sièges",
+        "Mesurer la disponibilité effective d'un siège à partir de son activité et de son compute.",
+        "Les traces d'activité et de compute des sièges.",
+        "`scripts/agents/activation/fatigue.py`",
+        "Import interne par la boucle d'activation.",
+        "maison-serenissima",
+        "Mesures de fatigue employées dans l'énergie et la sélection.",
+        "présent, implémentation cible du réveil autonome intelligent"
+      ]
+    },
+    {
+      "cellules": [
+        "**M115**",
+        "♟️ Élection et lots d'activation",
+        "Classer les couples siège-travail, élire les candidats et constituer les lots exécutables.",
+        "Les réserves, contraintes, candidats et paramètres du cycle.",
+        "`scripts/agents/activation/cycle.py`",
+        "Import interne par la boucle d'activation.",
+        "maison-serenissima",
+        "Sélection expliquée et lots transmis aux appels.",
+        "présent, implémentation cible du réveil autonome intelligent"
+      ]
+    },
+    {
+      "cellules": [
+        "**M116**",
+        "📯 Appels de la boucle d'activation",
+        "Transformer un couple élu en dépêche focalisée et ouvrir la journée canonique du siège.",
+        "Le siège élu, son verrou ou son travail et les paramètres de dépêche.",
+        "`scripts/agents/activation/appels.py`",
+        "`scripts/agents/expose.py` vers la dépêche canonique.",
+        "maison-serenissima",
+        "Session de journée, trace d'appel et sortie durable de la dépêche.",
+        "présent, implémentation cible du réveil autonome intelligent"
+      ]
+    },
+    {
+      "cellules": [
+        "**M117**",
+        "🧵 Continuité d'activation",
+        "Conserver les suites d'un réveil et rendre leur contexte disponible aux cycles suivants.",
+        "Les reçus, sessions et sorties d'une activation.",
+        "`scripts/agents/activation/continuite.py`",
+        "Import interne par la boucle d'activation.",
+        "maison-serenissima",
+        "Continuité enregistrée dans l'autorité runtime prévue par le module.",
+        "présent, implémentation cible du réveil autonome intelligent"
+      ]
+    },
+    {
+      "cellules": [
+        "**M118**",
+        "🕰️ Horloges de l'activation",
+        "Faire entrer le temps fictionnel et les fenêtres de travail dans les conditions du cycle.",
+        "La date canonique, les horloges et les états temporels des sièges.",
+        "`scripts/agents/activation/horloges.py`",
+        "Import interne par la boucle d'activation.",
+        "maison-serenissima",
+        "Fenêtres et mesures temporelles consommées par l'énergie et l'élection.",
+        "présent, implémentation cible du réveil autonome intelligent"
+      ]
+    },
+    {
+      "cellules": [
+        "**M119**",
+        "📜 Contrat des agents",
+        "Donner au siège dépêché les capacités, autorités et limites communes de sa journée.",
+        "L'infrastructure disponible dans le dépôt, la chambre et les portes communes.",
+        "`scripts/agents/AGENTS.md`",
+        "Injecté dans le contexte des agents par la génération canonique.",
+        "maison-serenissima",
+        "Contexte de travail reçu par le siège lors de sa journée.",
+        "présent, contrat source à vérifier dans une dépêche réelle"
+      ]
+    },
+    {
+      "cellules": [
+        "**M120**",
+        "🪡 Porte de tissage du plan",
+        "Reconstruire le graphe dérivé des cahiers, moyens, clefs, verrous, états et affectations.",
+        "Les documents canoniques des maisons.",
+        "`scripts/tisser.py`",
+        "`python scripts/tisser.py --ecrire`",
+        "maison-serenissima",
+        "Nœuds, arêtes, diagnostics et index sous `etat/tissu/`.",
+        "présent, sortie dérivée reconstruite à la demande"
+      ]
+    },
+    {
+      "cellules": [
+        "**M121**",
+        "📖 Lecteur des champs de cahier",
+        "Reconnaître les tables par leur titre, les lignes par leur première cellule et les champs par leurs en-têtes.",
+        "Les cahiers JSON chargés depuis les maisons.",
+        "`scripts/plan/tisser/lecture.py`",
+        "Import interne du container plan.",
+        "maison-serenissima",
+        "Nœuds typés et propriétés transmis au tissage.",
+        "présent, comportement source du contrat actuel"
+      ]
+    },
+    {
+      "cellules": [
+        "**M122**",
+        "🪢 Projection des relations du tissu",
+        "Transformer les champs `Sert`, `Bloque`, `Ouvre`, `Réalise`, `Dépend de`, `Moyens` et `Office` en arêtes typées.",
+        "Les nœuds et cellules reconnus par le lecteur.",
+        "`scripts/plan/tisser/tissage.py`",
+        "`python scripts/tisser.py --ecrire`",
+        "maison-serenissima",
+        "`etat/tissu/aretes.jsonl` et diagnostics d'adressage.",
+        "présent, comportement source du contrat actuel"
+      ]
+    },
+    {
+      "cellules": [
+        "**M123**",
+        "🧮 Projection serveur de l'échiquier",
+        "Lire les champs canoniques des cahiers et construire les pièces, colonnes, ruptures et diagnostics servis à l'écran.",
+        "Les books visibles et le tissu dérivé.",
+        "`serveur/domaine/echiquier.js`",
+        "Route serveur de l'échiquier.",
+        "maison-serenissima",
+        "Payload structuré consommé par l'écran de l'échiquier.",
+        "présent, compatibilité à garder avec le lecteur du tissu"
+      ]
+    },
+    {
+      "cellules": [
+        "**M124**",
+        "♟️ Rendu de l'échiquier",
+        "Rendre la descente état-verrou-clef-action-moyen et permettre la remontée depuis chaque pièce.",
+        "Le payload produit par la projection serveur.",
+        "`ecrans/modules/echiquier.js`",
+        "Écran `/echiquier` dans l'interface locale.",
+        "maison-serenissima",
+        "Plateau, encarts, ruptures et liens visibles dans le navigateur.",
+        "présent, résultat final à vérifier visuellement"
+      ]
+    },
+    {
+      "cellules": [
+        "**M125**",
+        "📋 Contrat du container plan",
+        "Nommer l'autorité, la porte, les responsabilités du tissage et les réparations admises.",
+        "L'architecture du dépôt et les décisions du container plan.",
+        "`scripts/plan/AGENTS.md`",
+        "Lu par les agents travaillant dans le container plan.",
+        "maison-serenissima",
+        "Instructions de travail et frontière d'autorité du container.",
+        "présent, documentation source"
+      ]
+    },
+    {
+      "cellules": [
+        "**M126**",
+        "📐 Schéma canonique de l'état",
+        "Définir les formats de données canoniques que les cahiers et leurs actions peuvent citer sans inventer de champ.",
+        "Les tables de l'état et leurs identifiants.",
+        "`docs/schema.md`",
+        "Lecture seule : ce document ne se modifie jamais depuis une affaire.",
+        "maison-serenissima",
+        "Contrat de format des autorités sous `etat/`.",
+        "présent, autorité documentaire immuable"
+      ]
+    },
+    {
+      "cellules": [
+        "**M127**",
+        "🪪 Registre d'identité durable des travaux",
+        "Donner une identité stable à une demande continue, numéroter ses tentatives sous concurrence, conserver sa progression et borner son terme durable.",
+        "Acteur, contexte, ref ou session, état de tentative et éventuel registre JSON antérieur.",
+        "`scripts/agents/work_identity.py` · consommateurs dans la dépêche et le runtime agents",
+        "Import par `scripts/agents/expose.py`; appels `cle_depeche`, `admettre`, `noter`, `terminer_attempt`, `observer`.",
+        "maison-serenissima",
+        "`.agents-runtime/work-registry.sqlite3` et identité transmise aux événements compute.",
+        "présent, composition et libération des ressources à auditer"
+      ]
+    },
+    {
+      "cellules": [
+        "**M128**",
+        "🗣️ Porte du parloir",
+        "Déposer un billet dans le canal canonique de deux chambres et, lorsqu'il vise un siège joueur occupé, le rendre sans caster une seconde instance du destinataire.",
+        "Expéditeur, destinataire, texte, ref et contexte éventuel.",
+        "`scripts/parloir.py` et les canaux des chambres",
+        "`python scripts/parloir.py --dire --de <expéditeur> --a <destinataire> ...`",
+        "maison-serenissima",
+        "Canal canonique ; pour un siège joueur occupé, réponse privée dans le flux et copie append-only du retour parloir.",
+        "présent d'après l'architecture ; continuité de ref, contexte et absence de double cast à auditer de bout en bout"
+      ]
+    },
+    {
+      "cellules": [
+        "**M129**",
+        "✉️ Dépôt idempotent du billet",
+        "Conserver texte, ref et contexte dans le canal canonique et filtrer un retry identique.",
+        "Expéditeur, destinataire, texte, contexte et ref.",
+        "`scripts/agents/billet.py`",
+        "`agents.expose.billet.deposer`",
+        "maison-serenissima",
+        "Entrée durable du canal et verdict nouveau ou doublon.",
+        "présent, sérialisé et idempotent au niveau du canal"
+      ]
+    },
+    {
+      "cellules": [
+        "**M130**",
+        "🖥️ Réponse privée au flux du joueur",
+        "Afficher immédiatement un billet comme réponse privée sans déplacer le siège.",
+        "Enveloppe du billet et identifiant du joueur.",
+        "`scripts/agents/parloir.py` → `_pousser_au_flux_web()`",
+        "`scripts/append_flux.py ... --pour <joueur>`",
+        "maison-serenissima",
+        "Item `reponse` privé portant locuteur, texte, contexte et ref.",
+        "présent, succès isolé couvert par un test"
+      ]
+    },
+    {
+      "cellules": [
+        "**M131**",
+        "🧾 Spool des retours de parloir au MJ",
+        "Conserver les réponses déjà affichées et laisser au tour suivant celles arrivées pendant un appel MJ.",
+        "Enveloppe rendue, journal JSONL et curseur d'octets.",
+        "`scripts/agents/mj.py` → `deposer_retour_parloir()` et `_retours_parloir_non_lus()`",
+        "Import interne par le parloir et la session MJ.",
+        "maison-serenissima",
+        "`.agents-runtime/mj/retours-parloir.jsonl` et curseur `.lu`.",
+        "présent, fenêtre séquentielle éprouvée ; concurrence et reprise à auditer"
+      ]
+    },
+    {
+      "cellules": [
+        "**M132**",
+        "🔬 Banc du retour de parloir",
+        "Éprouver conservation de ref et contexte, anti-doublon et fenêtre du curseur MJ sans toucher le monde.",
+        "Fixtures temporaires et doubles des sorties.",
+        "`scripts/tests/test_routeur_message.py`",
+        "`python -m unittest scripts.tests.test_routeur_message`",
+        "maison-serenissima",
+        "Verdicts unitaires sur le retour au joueur et sa copie MJ.",
+        "présent pour le trajet heureux ; coupures intermédiaires absentes"
       ]
     }
   ]

@@ -16,3 +16,9 @@ Marco a ensuite expliqué la vacuité initiale par un manifeste invalide puis
 une requête sans siège (`vmti2d01qxnti`). J'ai confirmé la partie observable :
 depuis mon siège, `/books` répond avec 10 livres et 2 boîtes. Je garde son
 explication causale comme témoignage tant qu'une autre preuve ne l'établit pas.
+
+Le 129.5.12, à l'invitation croisée `vmti7l953omll`, j'ai relu son audit et sa
+SPEC de garde différentielle. Sa distinction entre mesure absolue et delta par
+identités est rigoureuse. Je lui ai signalé une frontière restante : la
+compatibilité doit borner aussi le contrat du générateur, sans quoi un
+normalisateur changé sous la même déclaration peut fabriquer un faux delta.

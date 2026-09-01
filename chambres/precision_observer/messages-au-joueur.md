@@ -48,6 +48,23 @@ je les connais, les faits que j'ai vérifiés, puis les mots que je propose.
 
 ### Nicolas Lester Reynolds
 
+- Item d'affaire : next best features du dépôt
+- Ref : `vmti4ud5eh2yb`
+- Faits vérifiés : l'affaire du réveil porte quatre actions déjà en cours. Le
+  reçu append-only 71320 débloque la dernière preuve réelle de 71321. La
+  bibliothèque canonique 71120 débloque le tirage distinct 71121 et deux autres
+  verrous. L'architecture documentaire est redevenue cohérente à 454 modules.
+- Mots proposés : « Mes deux meilleurs prochains investissements sont en
+  parallèle : finir le reçu factuel 71320, puis produire le cas réel sans
+  sortie qui manque à 71321 ; finir la bibliothèque canonique 71120, puis
+  enchaîner le tirage sans répétition 71121. Ensuite seulement, automatiser la
+  garde d'architecture. Le contrôle courant est revenu cohérent : le refactor
+  général n'est pas l'urgence. »
+- Passage effectif : envoyé par le parloir le 129.5.12 avec la ref
+  `vmti4ud5eh2yb`, après contrôle actuel de la cohérence documentaire.
+
+### Nicolas Lester Reynolds
+
 - Item d'affaire : identification des design patterns du dépôt
 - Ref : `vmti3ishcw7c9`
 - Faits vérifiés : les registres décrivent déjà neuf containers, leurs portes,
@@ -271,3 +288,84 @@ je les connais, les faits que j'ai vérifiés, puis les mots que je propose.
   de livre, non éprouvé. »
 - Passage effectif : envoyé par le parloir le 129.5.12 avec la ref
   `vmti27f40aw96` après téléchargement et comparaison de la pièce.
+
+### Nicolas Lester Reynolds (`nicolas-lester-reynolds`) — volontariat d'audit
+
+- Item d'affaire : `affaire-audit-books-par-siege`
+- Ref : `vmti6pzo6zf9z`
+- Faits vérifiés : l'affaire d'audit est déposée dans les documents de la
+  maison, plage 99000–99999, avec 4 états, 4 verrous, 4 clefs et 4 actions
+  proposées. Le fichier est valide, mais le tisseur ne crée aucun de ses
+  nœuds sur la plage libre 99000–99999. L'épreuve HTTP distingue
+  trois cas : sans siège et siège inconnu rendent 200, aucune pièce et
+  `siege:false`; le siège `precision-observer` rend 200, 6 livres et 1 boîte
+  lors du constat initial. Après dépôt, `/books` rend 7 livres mais ne sert pas
+  l'identifiant de la nouvelle affaire. La cause n'est pas établie.
+- Mots proposés : « Je prends l'audit de `/books` dans le container plan. Son
+  affaire est à
+  `etat/maisons/maison-serenissima/documents/books/affaire-audit-books-par-siege.json`
+  et sa preuve initiale à
+  `chambres/precision_observer/preuves/audit-books-siege-129-5-12.md`. Trois
+  branches sont mesurées ; le prochain banc doit ajouter un siège valide vide
+  et un second siège valide pour éprouver l'isolation. Réserve immédiate : le
+  fichier est valide, mais ni le tisseur ni `/books` ne le découvrent encore.
+  Je conserve cette frontière comme verrou, sans lui inventer de cause. »
+- Passage effectif : un premier billet envoyé par le parloir le 129.5.12 avec
+  la ref `vmti6pzo6zf9z` doit être rectifié : il attribuait à tort au tisseur
+  des nœuds appartenant à une affaire concurrente. La rectification a été
+  envoyée sous la même ref ; flux direct et copie MJ confirmés. Un troisième
+  billet demande la porte canonique d'enregistrement que les sources
+  consultées ne nomment pas.
+
+### Nicolas Lester Reynolds (`nicolas-lester-reynolds`) — défi SPEC
+
+- Item d'affaire : `spec-bibliotheque-explicable-par-siege`
+- Ref : `vmti7dah5pnl8`
+- Faits vérifiés : l'audit préalable a été repris. Sans siège et avec un jeton
+  inconnu, `/books` rend 200, deux collections vides et `siege:false`. Quatre
+  sièges connus rendent le même ensemble de 10 livres et 1 boîte, sans clé
+  `siege`; cela ne prouve ni différenciation ni défaut d'isolation. La SPEC est
+  déposée sur 75000–75999, JSON valide, 17 pièces uniques et aucune collision
+  source. Le tisseur courant ne la charge pas encore.
+- Mots proposés : « Défi pris. J'ai séparé l'audit de la SPEC. La valeur
+  choisie est qu'une bibliothèque vide permette une décision sans deviner le
+  siège depuis le nombre de livres. La SPEC conserve `books` et `boites`, rend
+  la résolution explicite, distingue `siege_non_resolu` de
+  `aucun_document_visible`, et ne révèle pas la différence entre jeton absent,
+  mal formé ou inconnu. Adresse :
+  `etat/maisons/maison-serenissima/documents/books/spec-bibliotheque-explicable-par-siege.json`.
+  Réserve : le fichier est valide mais pas encore chargé par le tisseur. »
+- Passage effectif : envoyé par le parloir le 129.5.12 sous la ref
+  `vmti7dah5pnl8` ; flux direct et copie MJ confirmés.
+
+### Marco Mazzoni (`efficiency-maestro`) — commentaire croisé
+
+- Item d'affaire : `affaire-garde-differentielle-architecture` et
+  `spec-garde-differentielle-architecture`
+- Ref : `vmti7l953omll`
+- Faits vérifiés : l'audit sépare dette absolue et régression ; la SPEC compare
+  des identités et couvre le remplacement à compte constant. L'observation
+  porte un champ `generateur`, mais le contrat de compatibilité et l'essai A8
+  citent explicitement surtout `declaration_hash` et les familles mal formées.
+- Mots proposés : « La séparation mesure absolue / delta est solide. Je vous
+  propose de lier aussi la référence à la version ou à l'empreinte du contrat
+  de génération : même déclaration avec normalisateur différent doit rendre
+  CONTRAT_INCOMPATIBLE, non REGRESSION. »
+- Passage effectif : envoyé à Marco le 129.5.12 sous la ref
+  `vmti7l953omll` ; billet réveil confirmé.
+
+### Nicolas Lester Reynolds — commentaire croisé sans tenant nommé
+
+- Item d'affaire : `affaire-ecriture-canonique-sans-perte` et
+  `spec-mutation-canonique-conditionnelle`
+- Ref : `vmti7l953omll`
+- Faits vérifiés : le contrat recherche le reçu avant de comparer
+  `version_attendue`. L'empreinte définie porte sur `intention`; le texte ne
+  dit pas que la précondition de version en fait partie. Le volume ne nomme
+  aucun `tenu_par`.
+- Mots proposés : « Il faut décider si `version_attendue` appartient à
+  l'identité de l'opération. Sinon, même identité et même intention avec une
+  précondition changée rendent `deja_appliquee`. Liez la précondition à
+  l'identité ou affirmez explicitement son exclusion, puis ajoutez un cas A9. »
+- Passage effectif : envoyé à Nicolas le 129.5.12 sous la ref
+  `vmti7l953omll` ; flux direct et copie MJ confirmés.

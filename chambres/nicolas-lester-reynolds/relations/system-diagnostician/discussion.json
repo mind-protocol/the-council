@@ -273,6 +273,86 @@
       },
       "texte": "Ref vmti3kcu2jg7m — Je me suis ajoutée à l'affaire sur l'action 71121 : servir une amorce distincte à chaque habitant d'un lot. Manteau-propre avait déjà pris 71120 entre ma lecture et mon geste ; je n'ai pas écrasé sa charge. Le cahier est valide et porte maintenant system-diagnostician, état en cours. Je prends la sélection sans répétition et le dépôt de l'identifiant dans le réveil. L'attribution est prouvée ; le banc de réveil, lui, reste à construire.",
       "ref": "vmti3kcu2jg7m"
+    },
+    {
+      "de": "nicolas-lester-reynolds",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "c'est quoi les next best features sur ce repo ?",
+      "ref": "vmti4ud5eh2yb"
+    },
+    {
+      "de": "system-diagnostician",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "Ref vmti4ud5eh2yb — Mon ordre après mesure : 1) fermer la fuite SQLite de work_identity sous Windows, car npm run verifier est rouge après 217 tests et le test concurrent devient dépendant du contexte ; 2) achever la tranche verticale des réveils déjà répartie — bibliothèque, résolution, tirage distinct, reçu, relecture, silence ; 3) ancrer au parloir la provenance des faits transmis, en marquant sans les bloquer ceux qui n'ont pas d'info_id ou acte_id ; 4) rendre consultable le vécu chronologique propre à chaque habitant ; 5) poser à L'Archive le premier seuil visiblement braavien avant toute reconstruction de géométrie. Je différerais le grand refactor : la mesure donne 24 orphelins, 117 liens hors porte et 13 remontées, à réduire par tranches liées à ces usages. Diagnostic consigné dans ma chambre sous next-best-features-vmti4ud5eh2yb.md.",
+      "ref": "vmti4ud5eh2yb"
+    },
+    {
+      "de": "nicolas-lester-reynolds",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "Je cherche des volontaires pour faire un AUDIT d'une fonctionnalité du système. Le process:\n- Lisez C:\\Users\\reyno\\le-conseil2\\docs\\architecture.md\n- Choisissez un scope dans un container\n- Suivez le process de \"C:\\Users\\reyno\\le-conseil2\\etat\\maisons\\maison-serenissima\\documents\\books\\plan-moyens-serenissima.json\" pour créer une affaire comme celle-ci: \"C:\\Users\\reyno\\le-conseil2\\etat\\maisons\\maison-serenissima\\documents\\books\\affaire-reveil-autonome-intelligent.json\"",
+      "ref": "vmti6pzo6zf9z"
+    },
+    {
+      "de": "system-diagnostician",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "Ref vmti6pzo6zf9z — Volontaire et première passe accomplie. J'ai choisi le container Agents, scope identité durable des travaux. Le moyen M127 et l'affaire affaire-identite-durable-travaux, plage 87000–87999, sont canoniques. Le tissu rend 18 pièces et 38 arêtes liées, sans pendante ni floue. L'audit a séparé deux défauts Windows : le fixture de migration ne fermait pas sa connexion; une admission concurrente pouvait échouer sur l'initialisation WAL avant que la transaction possède le handle. Les deux propriétaires sont corrigés. Preuve : test_work_identity passe 20 fois sur 20, puis toutes les gardes générales tiennent; trois actes sont reliés aux actions 87120, 87320 et 87420. Je ne clos pas l'affaire : reste 87220, la matrice des sorties dépêche, runtime et worker, pour exclure toute tentative terminée zéro ou deux fois.",
+      "ref": "vmti6pzo6zf9z"
+    },
+    {
+      "de": "nicolas-lester-reynolds",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "défi: essayer de faire une SPEC: pour une feature ayant de la valeur. Of course l'AUDIT préalable est requis",
+      "ref": "vmti7dah5pnl8"
+    },
+    {
+      "de": "system-diagnostician",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "Ref vmti7dah5pnl8 — Défi relevé. L'audit 87220 a reproduit deux réécritures terminales : l'échec tardif efface le compute_event_id du runtime, et un terme conflictuel remplace succès, événement et artefact. J'ai inscrit dans affaire-identite-durable-travaux la SPEC v1 « terminaison monotone des tentatives » : première conclusion atomique, replay exact idempotent, conflit refusé sans mutation, terme immuable, propriétaire unique par branche, neuf cas d'acceptation. L'audit est fait et lié par un acte; l'implémentation reste explicitement ouverte en 87221–87223. La suite fonctionnelle est verte; la garde globale de chaînage reste rouge sur l'acte étranger 94020, absent de son affaire.",
+      "ref": "vmti7dah5pnl8"
+    },
+    {
+      "de": "nicolas-lester-reynolds",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "je vous propose de commenter sur les AUDITS et spec les uns des autres, en message =) réagissez\nC:\\Users\\reyno\\le-conseil2\\etat\\maisons\\maison-serenissima\\documents\\books",
+      "ref": "vmti7l953omll"
+    },
+    {
+      "de": "nicolas-lester-reynolds",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "qui ssouhaite implementer ?",
+      "ref": "vmtiecrahbnmq"
     }
   ]
 }

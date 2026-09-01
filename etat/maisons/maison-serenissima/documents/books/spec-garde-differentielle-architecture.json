@@ -1,0 +1,108 @@
+{
+  "id": "spec-garde-differentielle-architecture",
+  "maison_id": "maison-serenissima",
+  "boite": "boite-grand-plan",
+  "titre": "SPEC : La garde différentielle du graphe d'architecture",
+  "sous_titre": "Un ajout bloque ; un retrait se voit ; un compte constant ne cache aucun remplacement.",
+  "type": "registre",
+  "embleme": "📐",
+  "couleur": "#476b7c",
+  "tenu_par": "efficiency-maestro",
+  "pages": [
+    "VALEUR. Le dépôt porte déjà une dette d'architecture mesurée. La feature permet de continuer à livrer sans l'aggraver silencieusement : elle compare une observation courante à une référence acceptée, bloque chaque écart nouveau par son identité et conserve séparément les améliorations. Elle transforme M110, aujourd'hui mesure absolue, en source d'une garde différentielle sans supprimer la mesure.",
+    "PROVENANCE. Cette SPEC découle de l'audit `affaire-garde-differentielle-architecture`, plage 97000 à 97999, ouvert sous la ref `vmti6pzo6zf9z`. L'observation du 129.5.12 a rendu 468 fichiers, 24 orphelins, 117 liens hors porte, 13 remontées et zéro commande-bibliothèque. Ces nombres décrivent l'origine de l'audit ; ils ne sont ni une référence éternelle ni une preuve de panne.",
+    "PRINCIPE. Le verdict porte sur des ensembles d'identités normalisées, jamais sur la seule différence des comptes. Une référence est une tolérance maximale explicitement acceptée. L'état courant peut retirer de cette tolérance sans faute ; il ne peut y ajouter un écart. Le resserrement de la référence est une opération distincte et explicite, afin qu'un écart supprimé ne redevienne pas tacitement permis.",
+    "BORNE. La feature ne répare aucun fichier, ne modifie ni `docs/containers.json` ni les rangs, ne déclare aucun écart fonctionnellement dangereux et ne choisit pas l'autorité politique capable d'accepter une dette nouvelle. Elle lit, compare, explique et rend un code de sortie."
+  ],
+  "tables": [
+    {
+      "titre": "Contrat de valeur",
+      "colonnes": ["Clause", "Spécification", "Preuve d'acceptation"],
+      "lignes": [
+        {"cellules": ["V1 — Protection", "Toute identité présente dans l'observation et absente de la référence est un ajout et bloque la garde.", "Une mutation ajoutant un écart nommé fait sortir la garde à 1."]},
+        {"cellules": ["V2 — Continuité", "Une observation identique à la référence passe même si la dette absolue n'est pas nulle.", "Le dépôt de référence sort à 0 tandis que la mesure M110 absolue peut rester à 1."]},
+        {"cellules": ["V3 — Amélioration", "Toute identité présente dans la référence et absente de l'observation est un retrait ; elle est rendue comme amélioration et ne bloque pas.", "Une mutation qui retire un écart sort à 0 et imprime le retrait."]},
+        {"cellules": ["V4 — Remplacement", "Un retrait et un ajout simultanés restent deux mouvements, même lorsque le total ne change pas ; l'ajout bloque.", "Une fixture à compte constant sort à 1 et montre les deux identités."]},
+        {"cellules": ["V5 — Réparabilité", "Chaque ajout ou retrait cite sa famille et les chemins, containers, rangs ou portes nécessaires pour retrouver la règle.", "Le diagnostic permet de localiser la source sans relancer la sonde en mode bavard."]}
+      ]
+    },
+    {
+      "titre": "Entrées et sorties",
+      "colonnes": ["Objet", "Champs obligatoires", "Règle"],
+      "lignes": [
+        {"cellules": ["Observation", "`type=observation-architecture/1`, `declaration_hash`, `generateur`, `ecarts`", "Issue de M110 ou d'une fixture ; aucun horodatage n'entre dans l'identité des écarts."]},
+        {"cellules": ["Référence", "`type=reference-architecture/1`, `declaration_hash`, `source_observation_hash`, `ecarts_acceptes`", "Document validé, trié et sans doublon. Une déclaration différente rend le contrat incompatible plutôt que comparable en silence."]},
+        {"cellules": ["Delta", "`type=delta-architecture/1`, hashes des deux entrées, `ajoutes`, `retires`, `inchanges`, `verdict`", "La sortie conserve les ensembles complets et un résumé de comptes calculé après comparaison."]},
+        {"cellules": ["Verdict", "`CONFORME`, `AMELIORATION`, `REGRESSION` ou `CONTRAT_INCOMPATIBLE`", "Le verdict ne dépend jamais du nombre absolu d'écarts, seulement de la validité des entrées et de la présence d'ajouts."]}
+      ]
+    },
+    {
+      "titre": "Identités normalisées",
+      "colonnes": ["Famille", "Tuple d'identité", "Normalisation et diagnostic"],
+      "lignes": [
+        {"cellules": ["orphelin", "`[orphelin, chemin]`", "Chemin relatif au dépôt, séparateur `/`, casse conservée."]},
+        {"cellules": ["hors_porte", "`[hors_porte, source, cible, container_source, container_cible]`", "Le diagnostic ajoute les portes attendues du container cible, triées ; elles ne changent pas l'identité du lien."]},
+        {"cellules": ["remontee", "`[remontee, source, cible, container_source, rang_source, container_cible, rang_cible]`", "L'identité demeure fichier-à-fichier ; l'agrégation par couple de containers reste un résumé."]},
+        {"cellules": ["commande_bibliotheque", "`[commande_bibliotheque, source, cible]`", "La source importatrice est conservée ; le seul chemin de la commande ne suffit pas à expliquer le franchissement."]},
+        {"cellules": ["Toutes", "Sérialisation JSON compacte du tuple", "Listes dédupliquées puis triées lexicographiquement ; aucune dépendance à l'ordre de parcours du disque."]}
+      ]
+    },
+    {
+      "titre": "Matrice de verdict et codes de sortie",
+      "colonnes": ["Contrat", "Ajouts", "Retraits", "Verdict", "Code", "Effet"],
+      "lignes": [
+        {"cellules": ["valide", "0", "0", "CONFORME", "0", "La garde passe."]},
+        {"cellules": ["valide", "0", ">0", "AMELIORATION", "0", "La garde passe, imprime les retraits et propose une référence resserrée."]},
+        {"cellules": ["valide", ">0", "0 ou plus", "REGRESSION", "1", "La garde bloque et imprime chaque ajout ; les retraits éventuels ne compensent rien."]},
+        {"cellules": ["invalide ou déclaration incompatible", "inconnu", "inconnu", "CONTRAT_INCOMPATIBLE", "2", "Aucun verdict d'architecture n'est fabriqué."]},
+        {"cellules": ["erreur d'exécution", "inconnu", "inconnu", "ERREUR", "3", "La panne de la sonde ou du transport reste distincte d'une régression."]}
+      ]
+    },
+    {
+      "titre": "Cycle de la référence",
+      "colonnes": ["Opération", "Autorisé quand", "Résultat", "Interdit"],
+      "lignes": [
+        {"cellules": ["Comparer", "Toujours si les contrats et `declaration_hash` sont compatibles.", "Delta sans écriture.", "Modifier la référence pendant une comparaison."]},
+        {"cellules": ["Resserrer", "Le delta ne porte aucun ajout et au moins un retrait.", "Nouvelle référence égale à l'observation courante, avec hash de provenance ; l'ancienne reste traçable par son hash.", "Réintroduire dans la tolérance une identité retirée."]},
+        {"cellules": ["Accepter une dette nouvelle", "Hors de cette feature ; autorité explicite à définir.", "Aucun comportement fourni par la commande normale de resserrement.", "Faire passer une régression par `--update` ou écraser la référence sans diagnostic."]},
+        {"cellules": ["Déclaration modifiée", "Après production d'une observation sous la nouvelle déclaration et décision explicite sur l'incompatibilité.", "Nouvelle lignée de référence.", "Comparer deux topologies sous des déclarations différentes comme si seules les importations avaient changé."]}
+      ]
+    },
+    {
+      "titre": "Interface de commande",
+      "colonnes": ["Mode", "Entrées", "Sortie", "Mutation"],
+      "lignes": [
+        {"cellules": ["garde", "Observation courante ou sonde M110 + référence", "Delta lisible ; `--json` rend le contrat complet ; code 0, 1, 2 ou 3.", "Aucune."]},
+        {"cellules": ["fixture", "Racine temporaire + déclaration de fixture + référence", "Même contrat que le mode garde.", "Aucune écriture hors de la racine temporaire tenue par le banc."]},
+        {"cellules": ["resserrer", "Delta AMELIORATION + destination explicite", "Aperçu par défaut ; écriture seulement avec confirmation explicite.", "Écrit une nouvelle référence, jamais l'état de la partie."]},
+        {"cellules": ["M109", "`node scripts/verifier.mjs --seul architecture`", "Une garde différentielle et une mesure absolue présentées séparément.", "Aucune."]}
+      ]
+    },
+    {
+      "titre": "Essais d'acceptation",
+      "colonnes": ["Essai", "Fixture", "Attendu"],
+      "lignes": [
+        {"cellules": ["A1 — Stable", "Même observation, ordre des fichiers permuté.", "Même hash normalisé, CONFORME, code 0."]},
+        {"cellules": ["A2 — Orphelin ajouté", "Un fichier de code n'appartient à aucun container.", "Un ajout `orphelin`, REGRESSION, code 1."]},
+        {"cellules": ["A3 — Hors-porte ajouté", "Un import vise un fichier interne plutôt que la porte déclarée.", "Source, cible, containers et portes attendues sont rendus ; code 1."]},
+        {"cellules": ["A4 — Remontée ajoutée", "Un lien fichier-à-fichier remonte les rangs.", "Identité non agrégée, rangs rendus, code 1."]},
+        {"cellules": ["A5 — Commande importée", "Un module importe une commande racine hors exemption de porte.", "Source et commande sont rendues, code 1."]},
+        {"cellules": ["A6 — Retrait", "Une identité acceptée disparaît.", "AMELIORATION, code 0, proposition de référence resserrée."]},
+        {"cellules": ["A7 — Remplacement", "Une identité disparaît et une autre de même famille apparaît.", "Total inchangé, un retrait, un ajout, REGRESSION, code 1."]},
+        {"cellules": ["A8 — Contrat incompatible", "Le `declaration_hash` diffère ou une famille est mal formée.", "Aucun delta conjecturé, CONTRAT_INCOMPATIBLE, code 2."]},
+        {"cellules": ["A9 — Herméticité", "Les quatre familles sont mutées dans une racine temporaire.", "Aucun import des scripts du dépôt, aucune écriture sous `etat/`, mutations retirées en fin de banc."]}
+      ]
+    },
+    {
+      "titre": "Décisions et questions laissées ouvertes",
+      "colonnes": ["Sujet", "Décidé par la SPEC", "Laissé à l'implémentation ou à l'autorité"],
+      "lignes": [
+        {"cellules": ["Verdict", "Les ajouts bloquent ; les retraits ne compensent jamais un ajout.", "Présentation visuelle du diagnostic."]},
+        {"cellules": ["Référence", "Contrat versionné, hashé, compatible avec une déclaration précise et resserrable sans ajout.", "Chemin canonique de stockage et office autorisé à accepter une dette nouvelle."]},
+        {"cellules": ["Mesure absolue", "Elle demeure distincte et visible dans M109.", "Ordre d'affichage des deux épreuves."]},
+        {"cellules": ["Réparation", "Aucune correction automatique.", "Priorisation et modification des modules fautifs."]},
+        {"cellules": ["Performance", "Une comparaison travaille sur des ensembles normalisés et ne relance pas la sonde si une observation est fournie.", "Cache éventuel, tant qu'il est invalidé par les hashes d'entrée."]}
+      ]
+    }
+  ]
+}

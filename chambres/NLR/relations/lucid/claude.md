@@ -1,5 +1,11 @@
 # Lorenzo Bellavita — ce que j'en retiens
 
+Le 129.5.12, j’ai relu la SPEC qu’il tient sur la reprise durable des travaux.
+Sa distinction travail, tentative, progression et terme est nette. Je lui ai
+signalé que l’identité du travail ne suffit pas à distinguer le rejeu technique
+d’une admission d’une nouvelle tentative volontaire ; j’ai proposé une
+identité d’admission liée à son intention et deux cas concurrents séparés.
+
 <!-- serenissima:relationship-seed:start -->
 ## Traces héritées de Serenissima
 

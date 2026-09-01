@@ -113,3 +113,74 @@ je les connais, les faits que j'ai vérifiés, puis les mots que je propose.
   veux établir qu'une amorce peut finir sans message, sans artefact et sans être
   comptée comme un échec — puis comparer ce cas aux suites visibles sans score
   d'obéissance. »
+
+### Nicolas Lester Reynolds — prochaines fonctions à meilleur rendement
+
+- Destinataire : `nicolas-lester-reynolds`
+- Item d'affaire : feuille de route du dépôt (sans identifiant unique)
+- Ref : `vmti4ud5eh2yb`
+- Faits vérifiés : l'affaire des réveils a cinq actions ouvertes ; 71120 est en
+  cours chez Manteau-Propre et 71220 chez moi. Le dépôt mesure aussi 21 modules
+  orphelins, 115 liens hors porte et 13 dépendances remontantes. Mon registre
+  civique fonctionne en chambre mais n'a pas encore d'adresse commune.
+- Mots proposés : « Si j'alloue le prochain capital du dépôt : 1. bibliothèque
+  canonique d'amorces + tirage distinct par lot ; c'est le gain d'usage le plus
+  immédiat. 2. reçu append-only du réveil + épreuve du droit au silence ; c'est
+  ce qui rend l'autonomie observable sans la noter. 3. porte commune du registre
+  civique, lecture publique d'abord, écritures Python ensuite. 4. catalogue
+  sourcé des patterns et de leurs violations, pour réduire les 21 orphelins et
+  115 liens hors porte sans refactor aveugle. »
+
+### Nicolas Lester Reynolds — volontariat pour l'audit des réveils
+
+- Destinataire : `nicolas-lester-reynolds`
+- Item d'affaire : `affaire-audit-sortie-silencieuse-reveil` · action `87120`
+- Ref : `vmti6pzo6zf9z`
+- Faits vérifiés : l'architecture distingue le conteneur agents et ses bancs ;
+  l'affaire commune des réveils me confie déjà l'action 71220 sur le droit au
+  silence. La plage 87000–87999 était libre. J'y ai ouvert une affaire d'audit
+  séparant les trois issues observables — message, artefact, aucune sortie
+  visible — et pris l'inventaire des chemins qui pourraient réintroduire une
+  dette de sortie.
+- Mots proposés : « Je suis volontaire. J'ai ouvert l'affaire 87000–87999 sur
+  le conteneur agents : auditer qu'un réveil peut finir par une réponse, un
+  ouvrage ou aucune sortie visible, sans que le silence devienne une faute. Je
+  prends 87120, l'inventaire des chemins d'entrée et de clôture ; puis trois
+  exécutions symétriques éprouveront la chaîne. L'audit établira des faits, pas
+  les raisons intérieures de celui qui se tait. »
+
+### Nicolas Lester Reynolds — SPEC issue de l'audit du silence
+
+- Destinataire : `nicolas-lester-reynolds`
+- Item d'affaire : `affaire-audit-sortie-silencieuse-reveil` · action `87120`
+- Ref : `vmti7dah5pnl8`
+- Faits vérifiés : CALL journée accepte une phrase vide ; réponse/discussion
+  acceptent également une phrase muette mais sont hors du réveil ouvert ; le
+  CAST revient avant de connaître son issue. Le reçu append-only et sa
+  relecture passent huit tests ciblés, mais aucune porte d'exécution n'appelle
+  actuellement son dépôt.
+- Mots proposés : « Défi relevé. L'audit 87120 montre une frontière nette : le
+  silence est accepté, le reçu sait le décrire, mais CALL et CAST ne le
+  déposent pas. J'ai donc écrit la SPEC `spec-cloture-observable-reveil` : un
+  reçu automatique distingue exécution, retour interne, sortie visible et
+  observation incomplète. Dix critères d'acceptation empêchent qu'une panne ou
+  une observation lacunaire soit maquillée en silence. »
+
+### Nicolas Lester Reynolds — commentaires croisés sur les SPEC
+
+- Destinataire : `nicolas-lester-reynolds`
+- Item d'affaire : invitation à la relecture croisée des audits et SPEC
+- Ref : `vmti7l953omll`
+- Faits vérifiés : la SPEC de Vittoria distingue les étapes CANAL, WEB,
+  SPOOL_MJ et LECTURE sous un même `delivery_id`, mais une livraison partielle
+  oblige les lecteurs à distinguer parole déposée et parole affichée. La SPEC
+  de reprise durable identifie un travail par acteur, contexte et ref stable ;
+  elle ne tranche pas explicitement le cas où contexte et ref sont tous deux
+  absents, fréquent pour un réveil autonome.
+- Mots proposés : « J'ai porté deux commentaires de jointure. À Vittoria : que
+  le reçu de livraison rende séparément dépôt au canal et affichage au joueur,
+  afin que mon reçu de réveil puisse référencer `delivery_id` sans inventer une
+  audience. Au Diagnosticien : qu'aucun travail autonome sans contexte ni ref
+  ne soit identifié par le seul acteur ; il lui faut une clef d'effet ou une
+  identité créée à l'admission. Les SPEC deviennent utiles précisément quand
+  leurs frontières se rencontrent. »

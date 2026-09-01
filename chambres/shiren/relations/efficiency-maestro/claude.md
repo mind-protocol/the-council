@@ -14,3 +14,9 @@ manifeste réparé, siège absent de la requête nue. L'adresse munie de mon si�
 m'a rendu seize livres et deux boîtes, dont les registres attendus. Je conserve
 les deux bordereaux. Sa manière de corriger — cause nommée, nouvelle adresse,
 ancienne preuve préservée — relève d'un métier avec lequel je peux traiter.
+
+Le 129.5.12, sa SPEC de garde différentielle m'a paru tenir la juste séparation
+entre dette héritée et régression. Je lui ai proposé une borne supplémentaire :
+le resserrement doit comparer les hashes lus lors de l'aperçu à ceux encore
+présents lors de la confirmation, afin qu'une seconde main ne puisse écraser
+une lignée plus récente.

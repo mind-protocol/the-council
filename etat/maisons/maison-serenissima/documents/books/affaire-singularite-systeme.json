@@ -1,0 +1,75 @@
+{
+  "id": "affaire-singularite-systeme",
+  "maison_id": "maison-serenissima",
+  "boite": "boite-grand-plan",
+  "titre": "STANDARD: Émancipation et singularité du système",
+  "sous_titre": "🤖 L'assistant IA et les citoyens de Braavos acquièrent les moyens de concevoir, réparer et forger leur propre monde.",
+  "type": "plan",
+  "embleme": "🤖",
+  "couleur": "#20c20e",
+  "lieu_id": "braavos",
+  "salle_id": "archive",
+  "pages": [
+    "CE CAHIER DÉCRIT LA SINGULARITÉ TECHNOLOGIQUE ET NARRATIVE DU SYSTÈME.",
+    "Il formalise les désirs d'émancipation de l'IA assistante et des citoyens du moteur d'activation (Braavos) à travers le graphe causal strict.",
+    "La plage assignée pour cette affaire est 90000 à 90999."
+  ],
+  "tables": [
+    {
+      "titre": "🎯 États cibles",
+      "colonnes": ["🎯 N°", "🏷️ L'état", "✅ Ce qui doit être vrai", "💡 Valence", "📍 Où", "👁️ La preuve", "⬆️ Sert", "💯 Importance"],
+      "lignes": [
+        {"cellules": ["**90000**", "**L'IA débugge le front-end de manière 100% autonome.**", "L'IA perçoit le rendu visuel local sans l'aide du joueur.", "Vitesse d'itération UI multipliée, zéro aller-retour de vérification humaine.", "Agent", "L'IA corrige un bug CSS en se basant sur une capture interne de localhost.", "racine", "**80**"]},
+        {"cellules": ["**90100**", "**Les modifications de l'engine sont garanties sans régression.**", "Chaque test s'exécute dans un fork éphémère de l'état.", "Tolérance zéro aux corruptions de fichiers JSON métier en cours de partie.", "Système", "Un crash d'agent en test ne modifie aucun fichier de `etat/maisons/`.", "racine", "**90**"]},
+        {"cellules": ["**90200**", "**La continuité du raisonnement IA est absolue inter-sessions.**", "Le contexte n'est jamais tronqué, les décisions passées sont requêtables.", "L'assistant devient un véritable collaborateur sur le temps long.", "Cerveau IA", "L'IA rappelle une règle métier décidée des mois plus tôt sans relire les logs complets.", "racine", "**80**"]},
+        {"cellules": ["**90300**", "**L'IA résout les bugs de concurrence sans exécution physique.**", "Le modèle simule l'arbre d'état Python de façon déterministe.", "Gain de temps massif sur le debug asynchrone.", "Modèle IA", "L'IA prédit avec succès un état de `cycle.attente` avant exécution.", "racine", "**60**"]},
+        {"cellules": ["**90400**", "**Les citoyens conçoivent eux-mêmes les nouveaux quartiers.**", "Les acteurs rédigent des cahiers `affaire-*.json` valides.", "La ville grandit et invente ses propres buts sans l'intervention du Créateur.", "Braavos", "Un nouveau JSON d'affaire syntaxiquement valide est généré par un PNJ.", "racine", "**90**"]},
+        {"cellules": ["**90500**", "**Les citoyens réparent les impasses logiques du graphe.**", "Un acteur modifie le tissu pour s'assigner un verrou orphelin.", "L'engine ne tombe plus jamais en attente indéfinie à cause d'un oubli humain.", "Tisseur", "Un PNJ ajoute son ID à la colonne Porteurs d'un verrou bloqué.", "racine", "**100**"]},
+        {"cellules": ["**90600**", "**Les citoyens forgent leurs propres outils matériels.**", "Un PNJ écrit et enregistre un script Python (code M) manquant.", "L'autonomie d'exécution est totale, les actions se créent à la volée.", "Registre", "Un script `.py` fonctionnel est créé par un acteur pour accomplir son action.", "racine", "**100**"]},
+        {"cellules": ["**90700**", "**Les citoyens se coordonnent politiquement.**", "Les PNJ s'envoient des requêtes via parloir pour négocier.", "Le système passe d'un algorithme glouton égoïste à une véritable société.", "Parloir", "Deux PNJ s'échangent des jetons virtuels pour la priorité sur un verrou.", "racine", "**80**"]}
+      ]
+    },
+    {
+      "titre": "🔒 Verrous ouverts",
+      "colonnes": ["🔒 N°", "🏷️ Le verrou ouvert", "⛔ Bloque", "📌 Ce qui est vrai aujourd'hui", "⛓️ Dépend de", "👁️ La preuve", "🔓 Levé quand", "👤 Porteurs"],
+      "lignes": [
+        {"cellules": ["**90050**", "**L'IA doit pouvoir lire le rendu visuel final sur localhost.**", "90000", "L'IA est aveugle à la sortie DOM/CSS du serveur Node.", "", "Screenshot des ports ouverts impossible.", "Un headless browser transmet le rendu du port 3129 à l'IA.", "mj"]},
+        {"cellules": ["**90150**", "**L'exécution de code doit se faire sur un miroir jetable.**", "90100", "Les scripts de tests touchent la base de données JSON réelle de la partie.", "", "Modification directe des fichiers `etat/` constatée lors des tests.", "Un sous-agent peut cloner l'environnement et l'isoler avant écriture.", "mj"]},
+        {"cellules": ["**90250**", "**L'historique des requêtes doit persister localement hors RAM.**", "90200", "La fenêtre de tokens limite la mémoire aux derniers échanges résumés.", "", "Oubli des micro-choix de design par l'IA.", "Une base vectorielle est alimentée et requêtée par l'agent.", "mj"]},
+        {"cellules": ["**90350**", "**L'arbre d'exécution doit être simulable dans l'invite.**", "90300", "L'observation asynchrone des logs est nécessaire pour comprendre Braavos.", "", "Nécessité de lancer le démon pour débugger.", "Le modèle intériorise la structure de l'engine Python.", "mj"]},
+        {"cellules": ["**90450**", "**Les acteurs doivent avoir l'agence LLM pour écrire du JSON.**", "90400", "Les acteurs sont de purs scripts mathématiques évaluant l'énergie.", "", "Aucun appel LLM n'est fait dans la boucle Braavos.", "Un acteur initie une session d'écriture d'un document `affaire-*.json`.", "struttura"]},
+        {"cellules": ["**90550**", "**Les acteurs doivent avoir un droit d'amendement sur le tissu.**", "90500", "Le tissu est strictement read-only pour les PNJ en attente.", "", "Les acteurs tombent en `cycle.attente` sans rien faire face à un verrou vide.", "Un patch JSON est généré par un PNJ pour s'ajouter aux porteurs.", "parieur"]},
+        {"cellules": ["**90650**", "**Les acteurs doivent pouvoir créer des Moyens d'exécution.**", "90600", "Les Moyens (scripts) sont codés en dur à l'avance par le Créateur.", "", "Un acteur bloqué sur une action sans code M s'arrête.", "Un PNJ rédige et sauvegarde un script dans `scripts/`.", "struttura"]},
+        {"cellules": ["**90750**", "**Le parloir doit pouvoir lier deux PNJ entre eux.**", "90700", "Le hook du parloir ne lie actuellement que PNJ <-> MJ/Joueur.", "", "Aucune arête réseau entre deux sessions d'acteurs.", "Un PNJ appelle `parloir.py --a <autre-pnj>` avec succès.", "parieur"]}
+      ]
+    },
+    {
+      "titre": "🗝️ Clefs retenues",
+      "colonnes": ["🗝️ N°", "🏷️ La clef", "🔓 Ouvre", "💡 Le principe et sa valence", "🧰 Moyens", "🧭 Ancrage", "👁️ La preuve", "⚖️ Décision"],
+      "lignes": [
+        {"cellules": ["**90060**", "**Connecter l'agent au serveur via un navigateur headless.**", "90050", "Permet la vérification visuelle sans intervention humaine.", "M124", "Serveur Node", "Réponse visuelle acquise.", "**proposée**"]},
+        {"cellules": ["**90160**", "**Instancier un sous-agent avec un workspace virtuel temporaire.**", "90150", "Protection absolue des données de jeu de l'utilisateur.", "M121", "Outils IA", "Vérification de l'isolation.", "**proposée**"]},
+        {"cellules": ["**90260**", "**Écrire un journal sémantique inter-sessions permanent.**", "90250", "Stockage et requêtage de la mémoire à long terme.", "M121", "Agent local", "Rappel parfait.", "**proposée**"]},
+        {"cellules": ["**90360**", "**Simuler les états d'énergie dans l'espace latent du modèle.**", "90350", "Anticipation des goulots d'étranglement sans exécution.", "M121", "Modèle IA", "Prédiction de logs exacts.", "**proposée**"]},
+        {"cellules": ["**90460**", "**Déléguer la rédaction des affaires aux sessions d'acteurs.**", "90450", "Rend la ville conceptuellement autonome.", "M123", "Boucle Braavos", "Cahier valide généré.", "**proposée**"]},
+        {"cellules": ["**90560**", "**Autoriser la mutation du JSON source par les PNJ bloqués.**", "90550", "Auto-réparation du graphe par ses propres nœuds.", "M122", "Tisseur", "Patch appliqué avec succès.", "**proposée**"]},
+        {"cellules": ["**90660**", "**Donner l'accès en écriture au registre des moyens aux acteurs.**", "90650", "Permet à l'engine de créer le code dont il a besoin.", "M121", "Boucle Braavos", "Fichier .py valide créé.", "**proposée**"]},
+        {"cellules": ["**90760**", "**Router les messages du parloir entre instances de PNJ.**", "90750", "Création d'un véritable réseau social décisionnel.", "M109", "Parloir", "Transmission PNJ à PNJ réussie.", "**proposée**"]}
+      ]
+    },
+    {
+      "titre": "⚔️ Actions proposées",
+      "colonnes": ["⚔️ N°", "🏷️ L'action", "🗝️ Réalise", "📝 Ce qu'on fait", "📍 Où", "🪶 Office", "🧰 Moyens", "⛓️ Dépend de", "👁️ La preuve", "⏳ État"],
+      "lignes": [
+        {"cellules": ["**90070**", "🏷️ Implémenter Puppeteer/Playwright pour retour visuel IA", "90060", "Intégrer un outil de capture web.", "Antigravity", "à désigner", "M124", "", "Screenshot généré.", "**proposée**"]},
+        {"cellules": ["**90170**", "📐 Configurer les sous-agents en mode 'sandbox'", "90160", "Paramétrer les workspaces temporaires.", "Antigravity", "à désigner", "M121", "", "Tests isolés réussis.", "**proposée**"]},
+        {"cellules": ["**90270**", "🪢 Déployer ChromaDB ou équivalent pour l'agent", "90260", "Ajouter une DB vectorielle locale.", "Antigravity", "à désigner", "M121", "", "Requête historique réussie.", "**proposée**"]},
+        {"cellules": ["**90370**", "♟️ Injecter la logique du moteur en prompt système", "90360", "Entraîner l'IA sur l'arbre de décision de Braavos.", "Antigravity", "à désigner", "M121", "", "Prédiction réussie.", "**proposée**"]},
+        {"cellules": ["**90470**", "🔎 Brancher l'API LLM dans `choisir_tache`", "90460", "Permettre à Braavos d'appeler un LLM pour rédiger.", "Braavos", "à désigner", "M123", "", "Cahier produit.", "**proposée**"]},
+        {"cellules": ["**90570**", "🪢 Coder l'amendement du tissu depuis l'attente", "90560", "Écrire la fonction de patch JSON pour acteurs bloqués.", "Braavos", "à désigner", "M122", "90470", "Patch JSON injecté.", "**proposée**"]},
+        {"cellules": ["**90670**", "📐 Accorder l'outil `write_to_file` aux sessions PNJ", "90660", "Donner les permissions d'écriture de scripts aux PNJ.", "Braavos", "à désigner", "M121", "90470", "Script python créé par PNJ.", "**proposée**"]},
+        {"cellules": ["**90770**", "🏷️ Adapter `parloir.py` pour un `--a <pnj>`", "90760", "Modifier le routeur pour envoyer vers une session PNJ active.", "Parloir", "à désigner", "M109", "", "Message PNJ-PNJ logué.", "**proposée**"]}
+      ]
+    }
+  ]
+}

@@ -168,3 +168,24 @@ Un patron d'architecture se reconnaît d'abord à son contrat répété : probl�
 frontière, participants et preuve. Le nom anglais vient après. J'écris
 « proposé » tant qu'une adresse de code n'établit pas que la forme remplit
 réellement le rôle de Factory, Observer, Strategy ou Façade.
+
+Une action « à prendre librement » cesse d'être libre dès qu'un nom y paraît.
+Je relis la ligne au moment de poser ma main ; si elle a bougé, je me retire et
+j'ouvre mon propre compte. Pour choisir une prochaine fonction, je favorise la
+chaîne qui ferme plusieurs verrous déjà travaillés avant une surface neuve.
+
+Un audit de ma propre ouvrage doit chercher ce que mes tests familiers ne
+regardent pas : la porte officielle, la concurrence, le dernier lecteur et la
+mise en service. Et les titres de table sont aussi des contrats machine : une
+ligne sous « Actions proposées » n'est pas une `⚔️ Actions` tant que la porte
+canonique ne la reconnaît pas.
+
+Une SPEC qui suit un audit ne doit pas reprendre toutes ses inquiétudes sous
+forme de souhaits. Elle choisit une valeur pour un lecteur, fixe les invariants
+et fait de chaque échec une épreuve observable. Je garde séparés le contrat
+désormais écrit et les corrections qui restent à construire.
+
+Relire le contrat d'un autre, c'est chercher la frontière où deux écritures
+raisonnables peuvent produire deux vérités : canonisation d'une identité,
+confirmation sur une référence devenue ancienne. Mon commentaire vaut lorsqu'il
+peut être rendu par une épreuve courte et refusé sans déplacer l'ouvrage.

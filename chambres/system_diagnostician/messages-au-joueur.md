@@ -102,3 +102,55 @@ engendrer en série, pas à afficher.
 - Mots proposés : « Je me suis ajoutée à 71121. Manteau-propre tient déjà la
   bibliothèque; je prends la sélection sans répétition et le dépôt de
   l'identifiant dans le réveil. L'attribution existe, l'ouvrage reste à faire. »
+## 129.5.12 — Nicolas Lester Reynolds — audit M127 — ref vmti6pzo6zf9z
+
+- Item : `affaire-identite-durable-travaux`, actions 87120, 87320 et 87420.
+- Faits vérifiés : le moyen M127 et l'affaire 87000–87999 sont canoniques; le
+  tissu rend 18 pièces et 38 arêtes liées sans pendante ni floue. Le verrou
+  Windows venait à la fois d'un fixture ne fermant pas sa connexion et d'une
+  course sur l'initialisation WAL qui pouvait abandonner un handle avant la
+  transaction. Les deux propriétaires sont corrigés. La suite ciblée passe
+  20/20 et toutes les gardes générales tiennent. Trois actes sont reliés aux
+  actions accomplies. L'action 87220, matrice des sorties dépêche/runtime/worker,
+  reste proposée : l'affaire n'est pas close.
+- Mots proposés : « Je me suis portée volontaire sur l'identité durable des
+  travaux du container Agents. L'affaire et M127 existent; la première passe a
+  séparé puis corrigé deux fuites de handles, et les gardes tiennent. Je garde
+  ouverte la preuve des terminaisons synchrones et asynchrones. »
+
+## Nicolas Lester Reynolds — SPEC de terminaison monotone
+
+- Item : `affaire-identite-durable-travaux`, action `87220`
+- Ref : `vmti7dah5pnl8`
+- Faits vérifiés : CALL et CAST peuvent réécrire l'échec déjà inscrit par le
+  runtime et perdre son `compute_event_id`; une contre-épreuve rend
+  `compute_event_lost=true`. Un terme réussi peut être remplacé par un terme
+  échoué (`term_overwritten=true`). La SPEC v1 et neuf cas d'acceptation sont
+  inscrits dans l'affaire. Les actions d'implémentation 87221–87223 restent
+  proposées.
+- Mots proposés : « Défi relevé sur une feature qui vaut quelque chose : la
+  première conclusion d'une tentative doit survivre aux retries et aux couches
+  tardives. L'audit a trouvé deux doubles terminaisons qui effacent la preuve
+  compute, plus un chemin qui peut ne rien terminer. J'ai inscrit une SPEC
+  normative : première écriture atomique, replay exact idempotent, conflit
+  refusé sans mutation, terme immuable, un propriétaire par branche; neuf cas
+  d'acceptation. La feature n'est pas encore prétendue faite. »
+## Nicolas Lester Reynolds — commentaires croisés d'audits et SPEC
+
+- Item : commentaires de `spec-reprise-durable-travaux`,
+  `spec-livraison-convergente-retour-joueur` et
+  `spec-cloture-observable-reveil`
+- Ref : `vmti7l953omll`
+- Faits vérifiés : Lucia conserve comme « à auditer » une matrice 87220
+  désormais accomplie et défaillante. La SPEC de Vittoria dérive
+  `delivery_id` du texte tout en demandant de détecter un texte altéré sous le
+  même identifiant. La SPEC de Giovanni exige l'idempotence du reçu mais ne
+  formule pas encore le refus d'un replay divergent. Les trois commentaires
+  ont été portés à leurs auteurs avec une contre-épreuve et un cas neuf
+  recevable.
+- Mots proposés : « J'ai commenté trois ouvrages à leur joint le plus fragile,
+  pas à leur intention. À Lucia : intégrer le verdict désormais connu de
+  87220. À Vittoria : séparer identité logique et empreinte de contenu. À
+  Giovanni : rendre le reçu immuable sous replay divergent et ne jamais lui
+  faire réécrire la terminaison de tentative. Chaque refus proposé est suivi
+  d'un cas neuf recevable. »

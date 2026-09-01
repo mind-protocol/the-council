@@ -1,0 +1,121 @@
+{
+  "id": "spec-mutation-canonique-conditionnelle",
+  "maison_id": "maison-serenissima",
+  "boite": "boite-grand-plan",
+  "titre": "SPEC: État - La mutation canonique conditionnelle et rejouable",
+  "sous_titre": "🧾 Publier un document entier, arbitrer la concurrence et reconnaître le rejeu d’une opération. Plage 76000 à 76999.",
+  "type": "plan",
+  "embleme": "🧾",
+  "couleur": "#2f6870",
+  "lieu_id": "braavos",
+  "salle_id": "archive",
+  "pages": [
+    "CETTE SPEC PART D’UN AUDIT, ELLE NE LE REMPLACE PAS. `affaire-ecriture-canonique-sans-perte` établit que la lecture sûre existe, que la publication atomique et l’arbitrage de concurrence manquent, et que la déduplication n’est que locale à certains empilements. Les adresses 73201, 73301, 73401 et 73501 portent ces constats.",
+    "LA VALEUR EST UNE REPRISE SANS DOUTE. Un métier remet une mutation à la porte de l’état avec une identité stable. La porte rend `appliquee`, `deja_appliquee` ou `conflit`. Si la réponse se perd après le commit, le même appel rend ensuite le premier résultat sans produire un second effet.",
+    "DEUX GESTES RESTENT DISTINCTS. `tables.ecrire(nom, valeur, indent=2)` conserve son interface de remplacement complet et gagne seulement une publication atomique. `tables.muter(nom, operation_id, intention, transformer, version_attendue=None, indent=2)` devient la primitive pour lire-modifier-écrire sous une autorité unique. `intention` est une valeur stable et sérialisable dont l’empreinte distingue le rejeu fidèle du recyclage d’identité. Le transformateur est pur, déterministe et sans effet extérieur ; la porte ne le rejoue pas implicitement.",
+    "LA SPEC FIXE LE COMPORTEMENT, PAS LE MÉCANISME DE STOCKAGE. Verrou local, journal préparatoire, reçu embarqué ou autre technique restent ouverts tant que les invariants et la matrice d’acceptation tiennent sous Windows et dans les bancs du dépôt. Les transactions multi-tables, les règles métier, le flux append-only, SQLite et le schéma canonique restent hors périmètre."
+  ],
+  "tables": [
+    {
+      "titre": "🏰 Ouverture de l'Affaire",
+      "colonnes": ["🧱 Le champ", "✍️ Ce qu'on y écrit", "📖 La règle du champ", "✅ Rempli ?"],
+      "lignes": [
+        {"cellules": ["🏷️ **LE NOM**", "SPEC: État - La mutation canonique conditionnelle et rejouable", "Le contrat observable issu de l’audit préalable.", "**oui**"]},
+        {"cellules": ["🎯 **L'OBJET**", "Permettre à un producteur de publier une mutation JSON entière, d’obtenir un conflit explicite sur version périmée et de rejouer la même opération sans doubler son effet.", "La valeur livrée à tous les métiers qui modifient l’état.", "**oui**"]},
+        {"cellules": ["📚 **L'AUDIT PRÉALABLE**", "`affaire-ecriture-canonique-sans-perte` · 73000 à 73999", "La provenance des capacités présentes, partielles et absentes.", "**oui**"]},
+        {"cellules": ["🧱 **LE PÉRIMÈTRE — DANS**", "Publication atomique d’un document JSON, mutation sérialisée ou conditionnelle, identité d’opération, reçu de rejeu, résultat structuré et compatibilité de `tables.ecrire`.", "Une transaction porte sur un seul document canonique.", "**oui**"]},
+        {"cellules": ["🚫 **LE PÉRIMÈTRE — HORS**", "Transactions multi-tables, validation métier, transformation du schéma, transport HTTP, flux append-only, SQLite, snapshots et effets extérieurs du transformateur.", "Les autorités voisines conservent leur métier.", "**oui**"]},
+        {"cellules": ["🔢 **LA PLAGE**", "**76000 à 76999**", "Bloc vérifié libre puis annoncé à Nicolas avant publication.", "**oui**"]},
+        {"cellules": ["🔚 **FERMÉE QUAND**", "L’interface, les invariants, les issues et les huit cas d’acceptation sont implémentés et prouvés sur copies temporaires ; un premier producteur actif l’emploie sans adaptation privée.", "La SPEC est satisfaite par comportement observable, non par présence de fonctions.", "**oui**"]}
+      ]
+    },
+    {
+      "titre": "🎯 États cibles",
+      "colonnes": ["🎯 N°", "🏷️ L'état", "✅ Ce qui devient possible", "📍 Où", "👁️ La preuve", "⬆️ Sert", "💯 Importance"],
+      "lignes": [
+        {"cellules": ["**76000**", "**Un métier reprend une mutation canonique après doute sans perte ni double effet.**", "La concurrence et l’interruption deviennent des issues reconstructibles plutôt que des corruptions silencieuses.", "Container état", "Matrice A1 à A8 verte et premier producteur actif migré.", "racine", "**100**"]},
+        {"cellules": ["**76100**", "**Tout remplacement complet est publié d’un seul coup observable.**", "Le lecteur voit exactement l’ancien document ou le nouveau.", "`tables.ecrire`", "Interruption injectée autour de la publication ; aucun JSON intermédiaire.", "76000", "**100**"]},
+        {"cellules": ["**76200**", "**Toute lecture-modification-écriture possède un ordre ou un conflit explicite.**", "Deux producteurs ne peuvent plus annoncer deux succès dont un effet disparaît.", "`tables.muter`", "Deux processus concurrents conservent leurs effets ou rendent le conflit spécifié.", "76000", "**100**"]},
+        {"cellules": ["**76300**", "**Une identité d’opération reconnaît le rejeu après réponse perdue.**", "Le second appel rend le reçu du premier au lieu de recommencer.", "Porte et reçus du container état", "Commit accompli, réponse supprimée, rejeu : un seul effet et issue `deja_appliquee`.", "76000", "**100**"]},
+        {"cellules": ["**76400**", "**Chaque issue rend assez de provenance pour être comprise et rejouée.**", "Le producteur distingue succès neuf, succès ancien, conflit de version, conflit d’identité et panne.", "Résultat de mutation", "Chaque banc vérifie statut, table, opération et versions opaques avant/après.", "76000", "**90**"]},
+        {"cellules": ["**76500**", "**Les producteurs migrent sans changer leurs règles métier.**", "La porte prend en charge atomicité, ordre et rejeu tandis que le métier conserve sa transformation.", "Producteurs actifs", "Un producteur réel abandonne son read-modify-write privé et garde le même résultat fonctionnel.", "76000", "**90**"]}
+      ]
+    },
+    {
+      "titre": "🔒 Verrous ouverts",
+      "colonnes": ["🔒 N°", "🏷️ Le verrou ouvert", "⛔ Bloque", "📌 Ce qui est vrai aujourd'hui", "⛓️ Dépend de", "👁️ La preuve", "🔓 Levé quand"],
+      "lignes": [
+        {"cellules": ["**76101**", "**Le remplacement complet doit devenir atomique sans casser son interface historique.**", "76100", "L’audit 73201 constate une ouverture directe de la cible avec `w`.", "73201", "Audit et banc A1.", "`ecrire()` conserve appel et valeur de retour, mais le lecteur ne voit plus jamais de document partiel."]},
+        {"cellules": ["**76201**", "**La porte doit posséder toute la fenêtre lire-modifier-publier.**", "76200", "L’audit 73301 constate que `entree.ajouter()` réduit la course sans la fermer.", "76101 · 73301", "Audit et bancs A2-A3.", "Une mutation sans version est sérialisée ; avec version attendue, une valeur périmée rend `conflit` sans écrire."]},
+        {"cellules": ["**76301**", "**Le commit et la reconnaissance de son opération doivent converger après toute coupure.**", "76300", "L’audit 73401 trouve une déduplication locale, sans reçu commun.", "76201 · 73401", "Audit et banc A4.", "Après n’importe quelle coupure, le rejeu converge vers un effet et un reçu stable."]},
+        {"cellules": ["**76401**", "**Les issues doivent former un contrat structuré commun.**", "76400", "Les producteurs interprètent aujourd’hui exceptions, impressions et listes d’identifiants propres à chaque outil.", "76201 · 76301", "Bancs A2, A4 et A5.", "Tous les appels rendent les champs et statuts définis par le contrat ci-dessous."]},
+        {"cellules": ["**76501**", "**Un producteur doit adopter la primitive sans emporter de règle métier dans la porte.**", "76500", "L’audit 73501 montre une façade partielle et des producteurs historiques hors porte.", "76401 · 73501", "Diff avant/après d’un producteur et ses tests métier.", "Le producteur fournit seulement identité et transformation pure ; ses décisions demeurent dans son container."]}
+      ]
+    },
+    {
+      "titre": "📜 Contrat observable",
+      "colonnes": ["📍 Surface", "📥 Entrée", "📤 Sortie", "⚖️ Règle"],
+      "lignes": [
+        {"cellules": ["`tables.ecrire(nom, valeur, indent=2)`", "Un nom de document et une valeur sérialisable.", "Le chemin écrit, comme aujourd’hui.", "Remplacement complet atomique ; aucune identité ni fusion implicite."]},
+        {"cellules": ["`tables.muter(nom, operation_id, intention, transformer, version_attendue=None, indent=2)`", "Nom, identité stable non vide, intention stable sérialisable, transformation pure et éventuellement version opaque attendue.", "Un `ResultatMutation`.", "Une seule table ; l’empreinte canonique de l’intention est conservée avec le reçu ; le transformateur reçoit la valeur courante et rend la valeur nouvelle. La porte ne le rejoue pas implicitement."]},
+        {"cellules": ["Empreinte d’intention", "Une valeur JSON sans NaN ni infini.", "SHA-256 hexadécimal de l’UTF-8 produit avec clefs triées, séparateurs compacts et caractères non ASCII conservés.", "Deux objets qui ne diffèrent que par l’ordre de leurs clefs portent la même empreinte ; toute autre différence demeure visible."]},
+        {"cellules": ["`ResultatMutation`", "Issue de la porte.", "`statut`, `table`, `operation_id`, `empreinte_intention`, `version_avant`, `version_apres`.", "Les versions sont opaques ; seul le statut autorise une conclusion."]},
+        {"cellules": ["Statut `appliquee`", "Opération nouvelle admise.", "Versions avant et après distinctes ou explicitement identiques pour un no-op.", "Le commit et son reçu sont récupérables ensemble."]},
+        {"cellules": ["Statut `deja_appliquee`", "Même table, même identité et même empreinte d’intention déjà acquise.", "Le même `version_apres` que le premier succès.", "Aucun nouvel appel du transformateur et aucune nouvelle écriture métier."]},
+        {"cellules": ["Statut `conflit_version`", "`version_attendue` différente de la version courante.", "Version courante dans `version_apres`; aucun commit.", "Le producteur choisit lui-même de relire, abandonner ou présenter le conflit."]},
+        {"cellules": ["Statut `conflit_identite`", "Même identité mais intention incompatible avec le reçu existant.", "Le reçu antérieur et aucun commit.", "Une identité ne peut pas être recyclée pour un autre effet."]},
+        {"cellules": ["Ordre de décision", "Un appel à `muter`.", "Une seule issue.", "Chercher d’abord le reçu : même empreinte → `deja_appliquee`, autre empreinte → `conflit_identite`; seulement pour une identité neuve comparer `version_attendue`, puis appeler le transformateur."]},
+        {"cellules": ["Panne de lecture ou sérialisation", "Table corrompue, illisible ou valeur non sérialisable.", "Exception explicite conforme à la sémantique actuelle de `TableAbimee` ou à une erreur de sérialisation.", "Aucun défaut servi, aucun reçu de succès et aucun remplacement de la cible."]}
+      ]
+    },
+    {
+      "titre": "🧭 Invariants et frontières",
+      "colonnes": ["🧭 N°", "✅ Invariant", "🚫 Ce qu’il interdit", "👁️ Observation"],
+      "lignes": [
+        {"cellules": ["I1", "À tout instant observable, la cible est un document JSON complet ancien ou nouveau.", "Troncature et publication progressive.", "Lecteur concurrent et redémarrage."]},
+        {"cellules": ["I2", "Tous les `ecrire` et `muter` d’une même table traversant la porte possèdent un ordre total de commit.", "Deux succès incompatibles dont l’un disparaît ou un remplacement historique qui contourne l’ordre.", "Versions avant/après chaînées."]},
+        {"cellules": ["I3", "Une identité est unique dans le périmètre d’une table et liée à l’empreinte canonique de son intention.", "Recyclage d’un identifiant pour une intention différente.", "Même empreinte au rejeu ou `conflit_identite`."]},
+        {"cellules": ["I4", "Un succès acquis reste reconnaissable après perte de réponse ou redémarrage.", "Double effet lors d’une reprise après doute.", "Même reçu au rejeu."]},
+        {"cellules": ["I5", "Un conflit n’écrit ni cible ni reçu de succès.", "État partiellement accepté.", "Empreintes inchangées."]},
+        {"cellules": ["I6", "Le transformateur ne produit aucun effet extérieur.", "Message, fichier voisin ou appel réseau exécuté sous la transaction.", "Revue du premier producteur migré."]},
+        {"cellules": ["I7", "La garantie est par document, jamais entre deux tables.", "Conclusion transactionnelle multi-tables.", "Périmètre explicite dans résultat et documentation."]},
+        {"cellules": ["I8", "Un reçu n’expire pas automatiquement.", "Rejeu tardif qui reproduit un effet après oubli silencieux.", "Toute purge future est un acte explicite qui annonce la perte de garantie pour les identités retirées."]}
+      ]
+    },
+    {
+      "titre": "🧪 Matrice d'acceptation",
+      "colonnes": ["🧪 Cas", "🎬 Préparation", "⚡ Geste", "✅ Résultat exigé"],
+      "lignes": [
+        {"cellules": ["A1 · Publication interrompue", "Document ancien valide.", "Couper avant, pendant et après la phase de publication de `ecrire`.", "Chaque reprise lit exactement ancien ou nouveau ; aucun temporaire partagé ne demeure."]},
+        {"cellules": ["A2 · Versions concurrentes", "Deux appels portent la même version attendue et deux identités.", "Les lancer ensemble.", "Un `appliquee`; l’autre `conflit_version`; le succès demeure."]},
+        {"cellules": ["A3 · Mutations sérialisées", "Deux appels sans version attendue et deux identités.", "Les lancer ensemble.", "Deux `appliquee`; les deux transformations figurent dans l’ordre des versions."]},
+        {"cellules": ["A4 · Réponse perdue", "Opération nouvelle.", "Commit, supprimer la réponse, redémarrer puis rejouer.", "Un effet total ; second statut `deja_appliquee` avec le premier `version_apres`."]},
+        {"cellules": ["A5 · Identité recyclée", "Un reçu existe.", "Réemployer son identité avec une intention incompatible.", "`conflit_identite`; cible et reçu antérieur inchangés."]},
+        {"cellules": ["A6 · Source corrompue", "JSON cible invalide.", "Appeler `muter`.", "Échec bruyant ; aucun défaut, reçu ni remplacement."]},
+        {"cellules": ["A7 · Compatibilité", "Un appel historique à `ecrire` et son test.", "Passer par la nouvelle porte.", "Même signature, même chemin rendu et même JSON final."]},
+        {"cellules": ["A8 · Premier métier", "Un producteur actif avec read-modify-write privé.", "Le migrer sans déplacer sa règle métier.", "Tests métier inchangés et banc de concurrence désormais vert."]}
+      ]
+    },
+    {
+      "titre": "🗝️ Clefs retenues",
+      "colonnes": ["🗝️ N°", "🏷️ La clef", "🔓 Ouvre", "💡 Le principe et sa valence", "🧰 Moyens", "🧭 Ancrage", "👁️ La preuve", "⚖️ Décision"],
+      "lignes": [
+        {"cellules": ["**76110**", "**C1 — Publier le remplacement complet atomiquement**", "76101", "Changer la publication sans changer le contrat historique réduit immédiatement le risque pour tous les écrivains déjà raccordés.", "M102 · M109", "`tables.ecrire`", "A1 et A7.", "**retenue**"]},
+        {"cellules": ["**76210**", "**C2 — Posséder la mutation entière sous une porte par table**", "76201", "Lire, transformer, valider la version et publier sous une même autorité supprime la perte silencieuse.", "M102 · M109", "Nouvelle surface `tables.muter`", "A2 et A3.", "**retenue**"]},
+        {"cellules": ["**76310**", "**C3 — Coupler effet et reçu récupérable**", "76301", "Une identité stable rend la reprise après doute sûre sans imposer à chaque métier son propre registre.", "M102 · M109", "Autorité de mutation", "A4 et A5.", "**retenue**"]},
+        {"cellules": ["**76410**", "**C4 — Rendre des issues structurées et des versions opaques**", "76401", "Un résultat commun permet au métier de décider sans interpréter des impressions ou des exceptions ambiguës.", "M102 · M109", "`ResultatMutation`", "A2, A4 et A5.", "**retenue**"]},
+        {"cellules": ["**76510**", "**C5 — Migrer un producteur sans absorber son métier**", "76501", "Une première adoption prouve que la primitive sert la ville et que la façade ne devient pas un second domaine.", "M102 · M109 · M110", "Producteur actif à choisir après inventaire", "A8 et garde architecturale.", "**retenue**"]}
+      ]
+    },
+    {
+      "titre": "⚔️ Actions proposées",
+      "colonnes": ["⚔️ N°", "🏷️ L'action", "🗝️ Réalise", "📝 Ce qu'on fait", "📍 Où", "🪶 Office", "🧰 Moyens", "⛓️ Dépend de", "👁️ La preuve", "⏳ État"],
+      "lignes": [
+        {"cellules": ["**76120**", "🧱 Livrer la publication atomique compatible", "76110", "Satisfaire I1 pour `ecrire` et conserver sa signature, sa mise en page et son chemin rendu.", "Container état", "à désigner", "M102 · M109", "73000", "A1 et A7 verts sous Windows.", "**proposée**"]},
+        {"cellules": ["**76220**", "⚖️ Livrer la mutation conditionnelle par document", "76210 · 76410", "Déposer `muter` et `ResultatMutation` conformément au contrat observable, sans retry implicite du transformateur.", "Container état", "à désigner", "M102 · M109", "76120", "A2, A3 et A6 verts.", "**proposée**"]},
+        {"cellules": ["**76320**", "🧾 Livrer la reprise par identité et reçu", "76310", "Coupler l’effet et sa reconnaissance afin que toute coupure converge vers le même résultat.", "Container état", "à désigner", "M102 · M109", "76220", "A4 et A5 verts, y compris après redémarrage.", "**proposée**"]},
+        {"cellules": ["**76520**", "🚪 Migrer un premier producteur actif", "76510", "Choisir après inventaire un read-modify-write réel, fournir une transformation pure et retirer sa protection privée devenue redondante.", "Container producteur et état", "à désigner", "M102 · M109 · M110", "76320", "A8 vert et aucune nouvelle dépendance hors porte.", "**proposée**"]}
+      ]
+    }
+  ]
+}

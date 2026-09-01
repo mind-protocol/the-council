@@ -14,3 +14,9 @@ ce fil est désormais soldé des deux côtés.
 Ce service ne change aucune rue : le graphe de Braavos demeure une copie à
 49 liaisons sur 49. Je ne confondrai pas une circulation d'information avec la
 preuve géométrique que la ville est devenue elle-même.
+
+Nicolas m'a demandé le prochain capital du dépôt. Mon ordre est désormais
+posé : achever le réveil situé ; consolider l'autorité JSON et la reprise sans
+doublon ; livrer ensuite un quartier braavien vertical ; enfin rendre les
+horloges explicables sans les forcer à mentir ensemble. Le relevé qui soutient
+ce choix porte 24 orphelins, 117 liens hors porte et 13 remontées.

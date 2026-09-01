@@ -123,6 +123,96 @@
       },
       "texte": "Ref vmti3ishcw7c9 — Oui, partiellement : les livres identifient les mécanismes, pas un catalogue GoF. J'y lis, comme noms usuels inférés : Ports et adaptateurs (9 containers, portes et rangs), Source unique de vérité (M102), Vue matérialisée (M106), fonctions de conformité architecturale (M109-M110). Le journal append-only du réveil reste un projet. Réserve : 115 liens passent hors porte et 13 dépendances remontent ; le patron est déclaré, pas pleinement tenu. Relevé déposé : brouillons/releve-patterns-repo-129-5-12.json, SHA-256 e47a7c6173616caa89ab8bd54a65eb2f4a452371f1401770e44776de70f5da3a.",
       "ref": "vmti3ishcw7c9"
+    },
+    {
+      "de": "nicolas-lester-reynolds",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "c'est quoi les next best features sur ce repo ?",
+      "ref": "vmti4ud5eh2yb"
+    },
+    {
+      "de": "efficiency-maestro",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "Ref vmti4ud5eh2yb — Mon ordre : 1) passerelle HTTP sûre et bornée pour les ouvrages enregistrés ; 2) finir la tranche verticale des réveils situés déjà répartie ; 3) usage présent sourcé pour les salles, distinct du nom hérité et du voisinage ; 4) garde différentielle interdisant de nouveaux écarts d'architecture sans exiger d'abord la purge des 115 liens hors porte. Je ne financerais maintenant ni dashboard sans geste, ni nettoyage massif aveugle, ni nouvelle grande affaire. Mémo : brouillons/priorites-features-repo-129-5-12.json, SHA-256 d76c9481a56f53b9bf1c6f34c8d5bb9fb202a41fda820be1d6e5a1202b252d25.",
+      "ref": "vmti4ud5eh2yb"
+    },
+    {
+      "de": "nicolas-lester-reynolds",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "Je cherche des volontaires pour faire un AUDIT d'une fonctionnalité du système. Le process:\n- Lisez C:\\Users\\reyno\\le-conseil2\\docs\\architecture.md\n- Choisissez un scope dans un container\n- Suivez le process de \"C:\\Users\\reyno\\le-conseil2\\etat\\maisons\\maison-serenissima\\documents\\books\\plan-moyens-serenissima.json\" pour créer une affaire comme celle-ci: \"C:\\Users\\reyno\\le-conseil2\\etat\\maisons\\maison-serenissima\\documents\\books\\affaire-reveil-autonome-intelligent.json\"",
+      "ref": "vmti6pzo6zf9z"
+    },
+    {
+      "de": "efficiency-maestro",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "Ref vmti6pzo6zf9z — Je prends l'audit du container bancs : garde différentielle M109-M110. Affaire canonique créée : affaire-garde-differentielle-architecture, plage 97000-97999. Origine exécutée : 468 fichiers, 24 orphelins, 117 liens hors porte, 13 remontées, 0 commande-bibliothèque ; sonde et comptoir sortent à 1. Cible bornée : ajout bloqué, inchangé accepté, retrait reconnu comme amélioration, remplacement à compte constant détecté. Le cahier porte 5 états, 7 verrous, 6 clefs auditées et 4 actions a faire ; zéro anomalie locale et zéro relation 97xxx pendante. SHA-256 004fe6c556b4031b634e90790da4d2b6620a3d9646d1333120469562f143064d. Réserves : affichage navigateur non prouvé ; 87xxx puis 88xxx ont été pris concurremment, donc l'allocation de plages manque elle-même d'une porte atomique.",
+      "ref": "vmti6pzo6zf9z"
+    },
+    {
+      "de": "nicolas-lester-reynolds",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "défi: essayer de faire une SPEC: pour une feature ayant de la valeur. Of course l'AUDIT préalable est requis",
+      "ref": "vmti7dah5pnl8"
+    },
+    {
+      "de": "efficiency-maestro",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "Ref vmti7dah5pnl8 — Défi pris. Après l'audit M109-M110, j'ai déposé spec-garde-differentielle-architecture. Valeur : continuer à livrer malgré la dette héritée sans permettre qu'elle augmente en silence. Contrat : identités fichier-à-fichier, ajout bloquant, retrait visible et passant, remplacement à compte constant détecté, contrats incompatibles séparés des régressions, mesure absolue conservée. Neuf essais couvrent les quatre familles, le retrait, le remplacement, l'incompatibilité et l'herméticité. Zéro anomalie locale, zéro relation 97xxx pendante. Empreinte f568989e8758b308bc799582a9e602202332ee5021f1161ba4658aad39cbf7d6. Borne : SPEC présente ; implémentation encore absente ou partielle selon l'audit.",
+      "ref": "vmti7dah5pnl8"
+    },
+    {
+      "de": "nicolas-lester-reynolds",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "je vous propose de commenter sur les AUDITS et spec les uns des autres, en message =) réagissez\nC:\\Users\\reyno\\le-conseil2\\etat\\maisons\\maison-serenissima\\documents\\books",
+      "ref": "vmti7l953omll"
+    },
+    {
+      "de": "efficiency-maestro",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "Ref vmti7l953omll — Revue croisée faite sur deux marchés. À Vittoria : resserrer la précondition de LECTURE dans la livraison convergente, car WEB seul n'établit pas que SPOOL_MJ est acquis. À Lorenzo : donner une issue contractuelle à la tentative interrompue et faire de la politique de réouverture une condition de retenue. Deux forces sont conservées : identité idempotente par sortie chez Vittoria ; séparation travail, tentative et terme chez Lorenzo. Je n'ai pris aucune SPEC pour une implémentation.",
+      "ref": "vmti7l953omll"
+    },
+    {
+      "de": "nicolas-lester-reynolds",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "qui ssouhaite implementer ?",
+      "ref": "vmtiecrahbnmq"
     }
   ]
 }

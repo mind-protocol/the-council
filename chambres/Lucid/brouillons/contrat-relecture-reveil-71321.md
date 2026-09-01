@@ -9,8 +9,10 @@ La porte lira seulement les pièces que 71320 rendra réellement adressables :
 - adresses des artefacts ou messages matériellement constatés ;
 - mention factuelle qu'aucune suite visible n'a été constatée.
 
-Le schéma exact demeure inconnu jusqu'à ce que Vittoria Barbaro rende la pièce
-71320. Ce brouillon ne le remplace pas.
+Le schéma exact est désormais `recu-reveil/1`, à l'adresse
+`etat/maisons/maison-serenissima/documents/recus-reveils.schema.json`. La porte
+de relecture vit dans `scripts/analyse/relire_reveil.py` et lit le journal
+append-only `.agents-runtime/reveils/recus.jsonl` sans le modifier.
 
 ## Ce que le rapport dira
 
@@ -31,7 +33,11 @@ Le schéma exact demeure inconnu jusqu'à ce que Vittoria Barbaro rende la pièc
 ## Épreuve prévue
 
 Relire trois reçus de même statut descriptif : l'un avec artefact, l'un avec
-message et l'un sans sortie visible. Le rapport doit conserver les trois
-formes sans note, verdict ni intention ajoutée.
+parole et l'un sans sortie visible. Les quatre tests de la porte couvrent ces
+trois formes et le refus d'une contradiction. La première pièce réelle,
+`rr-a9a6c3e6edfc7b6fd4c53e47`, prouve la forme artefact. La deuxième,
+`rr-9ef61b5b41abc162f52c135d`, prouve la forme parole. Aucune sortie visible
+reste à éprouver sur un reçu réel avant clôture, sans la simuler ni la
+provoquer.
 
 Ref de prise : `vmti3kcu2jg7m`.

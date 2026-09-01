@@ -1,0 +1,75 @@
+{
+  "id": "affaire-ecriture-canonique-sans-perte",
+  "maison_id": "maison-serenissima",
+  "boite": "boite-grand-plan",
+  "titre": "AUDIT: État - L’écriture canonique sans perte",
+  "sous_titre": "🗄️ Faire qu’une mutation JSON canonique soit entière ou absente, refuse les conflits et ne se répète pas. Plage 73000 à 73999.",
+  "type": "plan",
+  "embleme": "🗄️",
+  "couleur": "#315f67",
+  "lieu_id": "braavos",
+  "salle_id": "archive",
+  "pages": [
+    "CETTE AFFAIRE AUDITE UNE CAPACITÉ DU CONTAINER ÉTAT. La vérité canonique n’est sûre que si une mutation interrompue laisse l’ancienne valeur ou la nouvelle, si deux écrivains ne se recouvrent pas en silence et si le rejeu du même geste ne produit pas deux effets.",
+    "LE PÉRIMÈTRE EST PLUS ÉTROIT QUE LE MOT PERSISTANCE. Il couvre la porte `scripts/etat/expose.py`, la lecture et l’écriture JSON de `scripts/noyau/tables.py`, puis les producteurs qui doivent la traverser. Le transport HTTP, le flux scénique append-only, SQLite, les snapshots Git, la validation métier et toute modification de `docs/schema.md` restent hors de cette affaire.",
+    "L’AUDIT SÉPARE LES GARANTIES. La lecture refuse déjà corruption, absence sans défaut et panne d’accès ; le cliquet de `monde.date` empêche un recul ordinaire. En revanche `_ecrire_direct()` annonce et réalise une réécriture de la cible sans temporaire, remplacement ni verrou. `entree.ajouter()` déduplique certains empilements par identifiant mais reconnaît lui-même qu’il ne supprime pas la course.",
+    "LES COMPTES BRUTS NE SONT PAS DES VERDICTS. `python scripts/noyau/tables.py --verifier` signale 55 fichiers Python candidats hors porte au 12e jour, parmi lesquels se trouvent scripts actifs, migrations, tests et brouillons. La sonde d’architecture trouve séparément des imports qui contournent la porte déclarée. La fermeture exige un inventaire classé des producteurs actifs, pas la disparition artificielle de tout exemple ou banc."
+  ],
+  "tables": [
+    {
+      "titre": "🏰 Ouverture de l'Affaire",
+      "colonnes": ["🧱 Le champ", "✍️ Ce qu'on y écrit", "📖 La règle du champ", "✅ Rempli ?"],
+      "lignes": [
+        {"cellules": ["🏷️ **LE NOM**", "AUDIT: État - L’écriture canonique sans perte", "La capacité recherchée dans le container état.", "**oui**"]},
+        {"cellules": ["🎯 **L'OBJET**", "Garantir qu’une mutation JSON canonique est indivisible, refuse une version périmée et reconnaît le rejeu d’une même opération.", "Un état du système qui protège la seule vérité courante.", "**oui**"]},
+        {"cellules": ["🧱 **LE PÉRIMÈTRE — DANS**", "`scripts/etat/expose.py`, `scripts/noyau/tables.py`, les mutations JSON qu’ils servent et la migration mesurable de leurs producteurs actifs.", "Les transformations possédées par le container état.", "**oui**"]},
+        {"cellules": ["🚫 **LE PÉRIMÈTRE — HORS**", "Transport et tailles de requêtes HTTP, flux scénique append-only, SQLite, snapshots Git, règles métier, forme des tables et modification de `docs/schema.md`.", "Les autres autorités restent propriétaires de leurs garanties.", "**oui**"]},
+        {"cellules": ["📌 **L'ORIGINE OBSERVÉE**", "La porte commune est déclarée et la lecture échoue bruyamment sur une table abîmée. L’écriture cible reste directe ; l’empilement relit au dernier instant et déduplique quelques tables, sans verrou ni contrôle général de version.", "Constat tiré des moyens M102 et M110, puis du code réellement exécuté.", "**oui**"]},
+        {"cellules": ["🔢 **LA PLAGE**", "**73000 à 73999**", "Bloc non adjacent vérifié libre dans toutes les maisons puis annoncé à Nicolas après deux collisions de réservation ; un bloc de cent par état cible.", "**oui**"]},
+        {"cellules": ["🔚 **FERMÉE QUAND**", "Une campagne reproductible prouve interruption, concurrence et rejeu : après chaque cas, la table reste valide ; aucune mutation acceptée n’est perdue ; une opération rejouée ne produit qu’un effet ; les producteurs actifs passent par la porte commune.", "La preuve porte les quatre garanties, leurs limites et un compte classé des exceptions restantes.", "**oui**"]}
+      ]
+    },
+    {
+      "titre": "🎯 États cibles",
+      "colonnes": ["🎯 N°", "🏷️ L'état", "✅ Ce qui devient possible", "📍 Où", "👁️ La preuve", "⬆️ Sert", "💯 Importance"],
+      "lignes": [
+        {"cellules": ["**73000**", "**La vérité JSON de Braavos survit aux interruptions, aux écrivains concurrents et aux rejeux.**", "Une panne ou une répétition cesse de pouvoir fabriquer une table tronquée, une écriture perdue ou un double effet silencieux.", "Container état", "Campagne d’épreuve combinant arrêt injecté, deux producteurs et rejeu de la même opération sur des copies temporaires.", "racine", "**100**"]},
+        {"cellules": ["**73100**", "**Une lecture distingue absence légitime, corruption et panne d’accès.**", "Un défaut ne peut plus transformer une mémoire abîmée en état vide plausible.", "Porte des tables", "Fixtures absente, invalide et illisible ; seul le cas absent avec défaut rend ce défaut.", "73000", "**100**"]},
+        {"cellules": ["**73200**", "**Une mutation interrompue laisse l’ancienne table ou la nouvelle, jamais un entre-deux.**", "Le prochain lecteur retrouve toujours un document JSON complet.", "Porte des tables", "Interruption injectée à chaque phase du commit ; toutes les lectures rendent exactement avant ou après.", "73000", "**100**"]},
+        {"cellules": ["**73300**", "**Deux producteurs ne peuvent pas s’effacer mutuellement sans refus visible.**", "La concurrence aboutit à deux effets conservés ou à un conflit explicite et rejouable.", "Porte des mutations", "Deux processus partent de la même empreinte ; aucun succès annoncé ne disparaît du résultat final.", "73000", "**100**"]},
+        {"cellules": ["**73400**", "**Le rejeu de la même opération canonique ne produit qu’un effet.**", "Une reprise après doute devient sûre sans que chaque métier réinvente sa déduplication.", "Porte des mutations", "Le même identifiant d’opération est soumis deux fois ; le second passage rend le reçu du premier sans nouvelle mutation.", "73000", "**90**"]},
+        {"cellules": ["**73500**", "**Les producteurs actifs traversent une porte commune dont l’écart se mesure honnêtement.**", "Une garantie posée dans la porte atteint réellement les écritures de la ville et une régression augmente un compte visible.", "Container état et bancs", "Inventaire classé des producteurs actifs, migrations, bancs et brouillons ; garde qui refuse tout nouvel actif hors porte.", "73000", "**100**"]}
+      ]
+    },
+    {
+      "titre": "🔒 Verrous ouverts",
+      "colonnes": ["🔒 N°", "🏷️ Le verrou ouvert", "⛔ Bloque", "📌 Ce qui est vrai aujourd'hui", "⛓️ Dépend de", "👁️ La preuve", "🔓 Levé quand"],
+      "lignes": [
+        {"cellules": ["**73201**", "**Chaque réécriture doit être publiée par un remplacement atomique.**", "73200", "`_ecrire_direct()` ouvre la cible avec `w` et documente qu’une interruption peut laisser un JSON tronqué.", "", "Contrat et corps de `scripts/noyau/tables.py`.", "Un temporaire privé est écrit, synchronisé puis remplacé atomiquement ; les restes et échecs sont traités explicitement."]},
+        {"cellules": ["**73301**", "**Toute mutation fondée sur une lecture doit sérialiser son effet ou refuser une empreinte périmée.**", "73300", "`entree.ajouter()` réduit la fenêtre entre lecture et écriture mais ne la ferme pas ; `tables.ecrire()` ne porte ni verrou ni version attendue.", "73201", "Deux ajouts concurrents sur la même copie peuvent encore relire la même version puis se recouvrir.", "Le commit compare une version ou tient un verrou jusqu’à publication et rend le conflit comme résultat nommé."]},
+        {"cellules": ["**73401**", "**Une opération rejouable doit porter une identité stable et un reçu durable.**", "73400", "La déduplication par `id` existe dans `entree.ajouter()` pour huit familles d’empilement ; la porte générale des mutations n’a ni identité d’opération ni reçu.", "73301", "Comparer l’API générale des tables à l’exception locale des empilements.", "Une identité fournie au premier appel suffit à reconnaître tous ses rejeux sans répéter l’effet."]},
+        {"cellules": ["**73501**", "**Les producteurs actifs doivent entrer par `scripts/etat/expose.py` et les exceptions doivent être classées.**", "73500", "La porte est déclarée mais ses importeurs historiques n’ont pas tous basculé. Le vérificateur lexical rend 55 candidats bruts, y compris des bancs et brouillons.", "73201 · 73301 · 73401", "`tables.py --verifier` et `graphe_archi.py --json` rendent deux mesures de nature différente.", "Tout producteur actif traverse la façade ; migrations, tests et archives admis sont identifiés séparément et tout nouvel écart actif échoue au banc."]}
+      ]
+    },
+    {
+      "titre": "🗝️ Clefs",
+      "colonnes": ["🗝️ N°", "🏷️ La clef", "🔓 Ouvre", "💡 La transformation et sa valeur", "🧰 Moyens", "🧭 Ancrage dans le code cible", "👁️ La preuve attendue", "🔎 Audit du code"],
+      "lignes": [
+        {"cellules": ["**73210**", "**C1 — Publier chaque document par commit atomique**", "73201", "Écrire dans un temporaire privé du même volume, vider les tampons, synchroniser puis remplacer la cible fait de la publication un seul changement observable.", "M102 · M109", "`scripts/noyau/tables.py` → `_ecrire_direct()`.", "Une interruption injectée avant, pendant et après publication ne produit que l’ancienne ou la nouvelle valeur.", "**absente** — la cible est aujourd’hui ouverte et tronquée directement."]},
+        {"cellules": ["**73310**", "**C2 — Comparer ou sérialiser la version lue avant de muter**", "73301", "Une mutation conditionnelle ou verrouillée transforme une écriture perdue en composition réussie ou en conflit explicite.", "M102 · M109", "`scripts/etat/entree.py` → `ajouter()` ; `scripts/noyau/tables.py` → `ecrire()`.", "Deux producteurs simultanés ne peuvent tous deux annoncer un succès dont un seul subsiste.", "**absente** — la fenêtre est courte mais aucune exclusion ni version ne la ferme."]},
+        {"cellules": ["**73410**", "**C3 — Reconnaître une opération stable et rendre son reçu**", "73401", "L’identité fournie par l’appelant permet à la porte de rendre le premier résultat au rejeu sans répéter la mutation.", "M102 · M109", "Précédent local : `scripts/etat/entree.py` → ensemble `connus`.", "Deux appels de même identité produisent une mutation et deux réponses cohérentes portant le même reçu.", "**partielle** — disponible seulement pour certains empilements dont les éléments portent un `id`."]},
+        {"cellules": ["**73510**", "**C4 — Faire traverser la façade commune et mesurer ses exceptions**", "73501", "Classer les producteurs avant migration évite de confondre code actif, banc, migration et brouillon tout en empêchant un nouveau contournement actif.", "M102 · M109 · M110", "`scripts/etat/expose.py` et `scripts/noyau/tables.py` → `verifier()`.", "Le rapport nomme chaque exception, sa classe et sa raison ; le compte des actifs hors porte tombe à zéro et ne remonte plus.", "**partielle** — façade et deux sondes existent, mais les importeurs historiques et les faux positifs demeurent."]}
+      ]
+    },
+    {
+      "titre": "⚔️ Actions proposées",
+      "colonnes": ["⚔️ N°", "🏷️ L'action", "🗝️ Réalise", "📝 Ce qu'on fait", "📍 Où", "🪶 Office", "🧰 Moyens", "⛓️ Dépend de", "👁️ La preuve", "⏳ État"],
+      "lignes": [
+        {"cellules": ["**73220**", "🧱 Remplacer la réécriture directe par un commit atomique", "73210", "Introduire un temporaire privé sur le même volume, synchroniser son contenu, publier par remplacement atomique et nettoyer les restes sans masquer une panne durable.", "Container état", "à désigner", "M102 · M109", "", "Banc d’interruption : après chaque point de chute, la cible vaut exactement avant ou après et aucun temporaire partagé ne demeure.", "**proposée**"]},
+        {"cellules": ["**73320**", "⚖️ Déposer une primitive de mutation avec conflit explicite", "73310", "Offrir une mutation qui tient l’exclusion jusqu’au commit ou compare une empreinte attendue, puis rendre succès, conflit ou panne comme résultats distincts.", "Container état", "à désigner", "M102 · M109", "73220", "Banc multiprocessus : deux ajouts simultanés sont tous deux conservés ou l’un reçoit un conflit rejouable ; aucune perte silencieuse.", "**proposée**"]},
+        {"cellules": ["**73420**", "🧾 Ajouter l’identité d’opération et le reçu de rejeu", "73410", "Étendre la primitive de mutation avec une identité optionnelle fournie par le métier et une trace minimale permettant de rendre le résultat déjà acquis.", "Container état", "à désigner", "M102 · M109", "73320", "Un même appel exécuté, interrompu après commit puis rejoué ne modifie la table qu’une fois.", "**proposée**"]},
+        {"cellules": ["**73520**", "🚪 Classer puis migrer les producteurs actifs vers la façade", "73510", "Séparer actifs, migrations, bancs, archives et brouillons dans le diagnostic ; migrer les actifs vers `scripts/etat/expose.py` et poser une garde différentielle contre tout nouvel écart.", "Containers état et bancs", "à désigner", "M102 · M109 · M110", "73220 · 73320 · 73420", "Rapport classé, zéro producteur actif hors façade et test rouge dès qu’un nouvel actif contourne la porte.", "**proposée**"]}
+      ]
+    }
+  ]
+}

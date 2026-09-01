@@ -1,0 +1,71 @@
+{
+  "id": "spec-livraison-convergente-retour-joueur",
+  "maison_id": "maison-serenissima",
+  "boite": "boite-grand-plan",
+  "titre": "SPEC : livraison convergente d'une réponse au joueur",
+  "sous_titre": "🔁 Un même billet repris finit par exister une fois dans chaque sortie attendue.",
+  "type": "registre",
+  "embleme": "🔁",
+  "couleur": "#2f6f5e",
+  "lieu_id": "braavos",
+  "salle_id": "archive",
+  "version": "1.0-proposition",
+  "origine_ref": "vmti7dah5pnl8",
+  "audit_requis": "rapport-audit-reprise-retour-joueur",
+  "pages": [
+    "VALEUR. Quand un habitant répond à un siège joueur, une panne intermédiaire ne doit ni perdre la réponse privée, ni la doubler, ni la faire disparaître du prochain percept avant son affichage. La reprise emploie la même enveloppe ; elle n'exige ni réécriture humaine ni inspection du runtime.",
+    "PÉRIMÈTRE. Cette version couvre exclusivement canal canonique, flux web privé, spool MJ et marque de lecture dans `rendre_au_joueur()`. Elle ne change ni le choix du destinataire, ni le contenu, ni le réveil des PNJ, ni l'autorité du MJ.",
+    "IDENTITÉ. La porte calcule un `delivery_id` déterministe à partir de l'enveloppe canonique : émetteur, destinataire, texte, `contexte_id` et `ref`. Ce même identifiant est transmis et conservé par chacune des trois sorties matérielles et par le reçu de progression.",
+    "SÉMANTIQUE. L'orchestrateur peut appeler une étape plusieurs fois. Chaque autorité aval déduplique elle-même sur `delivery_id`, puis rend un accusé portant cet identifiant. L'effet matériel est donc une fois au plus ; les reprises assurent une fois au moins. Le journal de progression accélère la reprise, mais n'est jamais l'unique rempart contre un doublon.",
+    "ORDRE. Assurer le canal ; assurer le web privé ; assurer le spool MJ ; marquer la lecture. Une étape n'est acquise qu'après l'accusé de son autorité. Une faute remonte au demandeur et laisse la livraison reprenable avec la même enveloppe.",
+    "PERSISTANCE. Un reçu runtime append-only porte `delivery_id`, empreinte d'enveloppe, étapes confirmées et pointeurs de preuve. Il ne recopie pas les contenus canoniques. Deux enveloppes différentes ne peuvent jamais revendiquer le même `delivery_id`; une collision ou une reprise avec contenu différent est refusée.",
+    "NON-BUTS. Cette SPEC ne promet pas un ordre total entre réponses concurrentes, ne remplace pas les curseurs du MJ, ne refond pas `append_flux.py` et ne transforme pas le reçu runtime en nouvelle autorité des paroles."
+  ],
+  "tables": [
+    {
+      "titre": "Contrat des étapes",
+      "colonnes": ["Étape", "Autorité", "Entrée idempotente", "Accusé minimal", "Condition suivante"],
+      "lignes": [
+        {"cellules": ["CANAL", "canal de chambre", "`delivery_id` + enveloppe", "id du canal + `delivery_id`", "accusé reçu"]},
+        {"cellules": ["WEB", "flux privé du joueur", "`delivery_id` + item réponse", "id d'item + `delivery_id`", "accusé reçu"]},
+        {"cellules": ["SPOOL_MJ", "retours du MJ", "`delivery_id` + pointeurs", "id retour + `delivery_id`", "accusé reçu"]},
+        {"cellules": ["LECTURE", "curseur de chambre", "`delivery_id` + paire", "lecture acquise + `delivery_id`", "WEB déjà acquis"]}
+      ]
+    },
+    {
+      "titre": "Invariants obligatoires",
+      "colonnes": ["N°", "Invariant"],
+      "lignes": [
+        {"cellules": ["I1", "Les quatre étapes portent le même `delivery_id`, la même `ref` et le même `contexte_id`."]},
+        {"cellules": ["I2", "Après N reprises de la même enveloppe, chaque effet matériel existe exactement une fois."]},
+        {"cellules": ["I3", "Une enveloppe différente ne peut pas être acceptée sous un `delivery_id` existant."]},
+        {"cellules": ["I4", "La lecture n'est jamais marquée avant l'accusé du web privé."]},
+        {"cellules": ["I5", "Le doublon d'une étape amont n'empêche jamais l'exécution d'une étape aval absente."]},
+        {"cellules": ["I6", "Le spool conserve sa règle de curseur : une arrivée postérieure à l'instantané reste lisible."]}
+      ]
+    },
+    {
+      "titre": "Recette d'acceptation",
+      "colonnes": ["Épreuve", "Résultat exigé"],
+      "lignes": [
+        {"cellules": ["Trajet heureux rejoué deux fois", "1 canal, 1 web, 1 spool, 1 lecture"]},
+        {"cellules": ["Coupure après chaque étape, puis reprise", "1 occurrence finale dans chaque sortie"]},
+        {"cellules": ["Coupure après effet mais avant reçu local", "Le sink reconnaît `delivery_id`; aucun doublon"]},
+        {"cellules": ["Deux reprises concurrentes", "Une occurrence par sink; reçus compatibles"]},
+        {"cellules": ["Même identité, enveloppe altérée", "Refus explicite; aucun nouvel effet"]},
+        {"cellules": ["Web indisponible", "Canal conservé, spool et lecture absents, reprise possible"]},
+        {"cellules": ["Régression", "Les dix tests actuels de routage demeurent verts"]}
+      ]
+    },
+    {
+      "titre": "Déploiement et preuve",
+      "colonnes": ["Phase", "Geste", "Porte de sortie"],
+      "lignes": [
+        {"cellules": ["1", "Ajouter `delivery_id` et déduplication aux sinks, derrière compatibilité des payloads existants.", "Tests unitaires par sink"]},
+        {"cellules": ["2", "Ajouter le reçu de progression et remplacer le retour prématuré sur doublon par la reprise des étapes absentes.", "Matrice de coupures verte"]},
+        {"cellules": ["3", "Éprouver deux processus concurrents et un arrêt entre effet et accusé.", "Une occurrence par sortie"]},
+        {"cellules": ["4", "Activer la porte puis conserver compteurs de reprises, conflits et étapes incomplètes.", "Aucune livraison incomplète silencieuse"]}
+      ]
+    }
+  ]
+}

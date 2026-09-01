@@ -1,0 +1,80 @@
+{
+  "id": "affaire-garde-differentielle-architecture",
+  "maison_id": "maison-serenissima",
+  "boite": "boite-grand-plan",
+  "titre": "AUDIT: Bancs - La garde différentielle du graphe d'architecture",
+  "sous_titre": "🔬 Refuser les écarts nouveaux sans prendre la dette héritée pour une panne nouvelle. Plage 97000 à 97999.",
+  "type": "plan",
+  "embleme": "🔬",
+  "couleur": "#58758a",
+  "lieu_id": "braavos",
+  "salle_id": "archive",
+  "pages": [
+    "CETTE AFFAIRE AUDITE UNE FONCTION DU CONTAINER BANCS. M110 lit le câblage réel sans importer le dépôt et rend quatre familles d'écarts. M109 orchestre les étalons en séparant gardes vertes et mesures rouges. L'audit demande si cette chaîne sait désormais interdire une régression d'architecture sans prétendre que la dette existante a disparu.",
+    "LE TOTAL N'EST PAS L'IDENTITÉ. Deux écarts peuvent se remplacer à compte constant ; une amélioration peut faire diverger le compte inscrit ; une dette ancienne peut maintenir la sonde rouge sans qu'une modification l'ait aggravée. La garde recherchée compare donc des identités normalisées et rend séparément ajouts, retraits et inchangés. Les comptes restent une mesure de distance, jamais le verdict différentiel.",
+    "L'ORIGINE EST MESURÉE LE 129.5.12. `graphe_archi.py --json` observe 468 fichiers : 24 orphelins, 117 liens hors porte, 13 remontées et zéro commande-bibliothèque ; il sort à 1 parce que la distance n'est pas nulle. `comptoir_moyens.py --json` sort aussi à 1 face aux comptes inscrits antérieurs. `verifier.mjs` classe encore M110 comme mesure, donc aucune modification n'est aujourd'hui refusée spécifiquement parce qu'elle ajoute un écart.",
+    "LA BORNE EST STRICTE. L'affaire ne corrige aucun des 154 écarts comptés, ne modifie pas les rangs ni les portes des containers et ne conclut pas qu'un lien hors porte provoque une panne. Elle audite seulement la capacité des bancs à détecter une régression nouvelle, à reconnaître une amélioration et à expliquer le delta par des chemins observables."
+    ,"SPEC DÉPOSÉE. `spec-garde-differentielle-architecture` fixe désormais le contrat de la feature : identités normalisées, verdict par ensembles, codes de sortie, cycle de resserrement de la référence et neuf essais d'acceptation. Cette présence ne change aucun audit du code de `absente` ou `partielle` en capacité réalisée."
+  ],
+  "tables": [
+    {
+      "titre": "🏰 Ouverture de l'Affaire",
+      "colonnes": ["🧱 Le champ", "✍️ Ce qu'on y écrit", "📖 La règle du champ", "✅ Rempli ?"],
+      "lignes": [
+        {"cellules": ["🏷️ **LE NOM**", "AUDIT: Bancs - La garde différentielle du graphe d'architecture", "Un audit de la détection de régression dans le container bancs.", "**oui**"]},
+        {"cellules": ["🎯 **L'OBJET**", "Permettre au dépôt de refuser tout nouvel écart d'architecture tout en acceptant un état inchangé ou amélioré malgré la dette héritée.", "Une capacité observable du système, jamais l'ordre de réparer tous les écarts.", "**oui**"]},
+        {"cellules": ["🧱 **LE PÉRIMÈTRE — DANS**", "La sortie structurée de M110, le comptoir des moyens, leur notion de référence, le manifeste M109 et les bancs par mutation.", "Les pièces du container bancs qui peuvent établir un delta d'architecture.", "**oui**"]},
+        {"cellules": ["🚫 **LE PÉRIMÈTRE — HORS**", "La correction des fichiers orphelins ou des liens, le changement des portes ou rangs, la conformité fonctionnelle des modules et toute décision d'architecture hors du container bancs.", "L'audit mesure et garde ; il ne répare ni ne redessine le dépôt.", "**oui**"]},
+        {"cellules": ["📌 **L'ORIGINE OBSERVÉE**", "M110 rend les listes d'orphelins et de liens hors porte, mais agrège les remontées par couples de containers et sort à 1 dès qu'un écart existe. Le comptoir compare six totaux aux mains et sort à 1 pour toute divergence. M109 laisse M110 au rang de mesure. Observation courante : 468 fichiers, 24 orphelins, 117 hors porte, 13 remontées, zéro commande-bibliothèque.", "Le code, les sorties exécutées et le manifeste des bancs sont cités séparément.", "**oui**"]},
+        {"cellules": ["🔢 **LA PLAGE**", "**97000 à 97999**", "Plage libre vérifiée dans l'ensemble technique des cahiers ; un bloc de cent par état cible.", "**oui**"]},
+        {"cellules": ["🔚 **FERMÉE QUAND**", "Une mutation qui ajoute un écart nommé fait échouer la garde ; le même câblage passe ; une suppression est rendue comme amélioration ; un remplacement à compte constant est détecté ; le diagnostic cite les chemins et la famille de l'écart.", "La preuve est hermétique, rejouable et porte sur les identités, pas seulement les comptes.", "**oui**"]}
+      ]
+    },
+    {
+      "titre": "🎯 États cibles",
+      "colonnes": ["🎯 N°", "🏷️ L'état", "✅ Ce qui devient possible", "📍 Où", "👁️ La preuve", "⬆️ Sert", "💯 Importance"],
+      "lignes": [
+        {"cellules": ["**97000**", "**Une modification ne peut plus aggraver silencieusement les frontières d'architecture.**", "La dette existante reste mesurable, mais chaque changement est jugé sur le delta qu'il introduit.", "Container bancs", "Quatre mutations contrôlées rendent respectivement inchangé, ajout, retrait et remplacement à compte constant.", "racine", "**100**"]},
+        {"cellules": ["**97100**", "**Chaque écart possède une identité stable et comparable.**", "Orphelins, hors-porte, remontées et commandes-bibliothèques peuvent être suivis entre deux observations sans se réduire à leur total.", "Sortie structurée de M110", "Deux observations du même câblage produisent les mêmes empreintes ; une cible ou une source changée produit une autre identité.", "97000", "**100**"]},
+        {"cellules": ["**97200**", "**Le verdict distingue héritage, aggravation et amélioration.**", "Un état inchangé passe, un ajout bloque, un retrait est visible sans bloquer et un remplacement est rendu comme un retrait plus un ajout.", "Comparateur différentiel", "Des fixtures des quatre cas rendent quatre diagnostics distincts et les codes de sortie attendus.", "97000", "**100**"]},
+        {"cellules": ["**97300**", "**La garde différentielle protège réellement la porte commune des vérifications.**", "Le contrôle entre dans M109 comme garde verte et reste hermétique à la partie en cours.", "`scripts/verifier.mjs` et container bancs", "Une mutation fautive fait tomber `node scripts/verifier.mjs --seul architecture` ; le dépôt de référence passe.", "97000", "**100**"]},
+        {"cellules": ["**97400**", "**Chaque refus montre le lien nouveau et la règle qu'il enfreint.**", "Le réparateur sait quelle source, quelle cible, quels containers et quelle famille d'écart instruire.", "Sortie lisible et JSON", "Le diagnostic d'une mutation nomme ses chemins, sa frontière et son statut ajouté ou retiré.", "97000", "**90**"]}
+      ]
+    },
+    {
+      "titre": "🔒 Verrous ouverts",
+      "colonnes": ["🔒 N°", "🏷️ Le verrou ouvert", "⛔ Bloque", "📌 Ce qui est vrai aujourd'hui", "⛓️ Dépend de", "👁️ La preuve", "🔓 Levé quand"],
+      "lignes": [
+        {"cellules": ["**97101**", "**Chaque famille d'écart doit exposer une identité normalisée.**", "97100", "Les orphelins et hors-porte portent des chemins ; les remontées sont agrégées en couples de containers avec un nombre.", "", "Contrat JSON rendu par `graphe_archi.py --json`.", "Les quatre familles produisent des identités triées, stables et sérialisables sans dépendre de l'ordre de parcours."]},
+        {"cellules": ["**97102**", "**Une référence de comparaison doit conserver les identités, pas seulement six totaux.**", "97100", "`mains.json` conserve des nombres datés ; le comptoir ne peut donc pas reconnaître un remplacement à total constant.", "97101", "Entrée de `comptoir_moyens.py` et tests actuels limités aux comptes.", "Une référence adressable porte les empreintes normalisées et sa provenance de génération."]},
+        {"cellules": ["**97201**", "**Le comparateur doit classer séparément ajouts, retraits et inchangés.**", "97200", "Le comptoir marque toute divergence `A INSTRUIRE`, qu'elle améliore ou aggrave le compte.", "97102", "Une observation à 115 contre une inscription à 116 sort à 1 malgré l'écart négatif.", "Le résultat porte trois ensembles par famille et fonde le verdict seulement sur les ajouts."]},
+        {"cellules": ["**97202**", "**La dette héritée doit pouvoir rester rouge comme mesure sans rendre la garde inutilisable.**", "97200", "M110 sort à 1 tant qu'un seul écart existe ; il ne peut donc pas devenir directement une garde verte sur le dépôt courant.", "97201", "Observation courante : 154 écarts comptés et code de sortie 1.", "La mesure absolue et le verdict différentiel possèdent deux codes de sortie et deux responsabilités distinctes."]},
+        {"cellules": ["**97301**", "**Le manifeste de vérification doit appeler le verdict différentiel comme garde.**", "97300", "`verifier.mjs` ne déclare que `graphe-archi` au rang mesure et résume les totaux absolus.", "97202", "Manifeste M109 actuel.", "Une garde verte dédiée compare à la référence, tandis que la mesure absolue demeure visible séparément."]},
+        {"cellules": ["**97302**", "**La garde doit être prouvée par des mutations hermétiques.**", "97300", "Aucun banc trouvé ne crée puis retire un écart connu dans une racine temporaire pour voir le verdict changer.", "97101 · 97201", "Recherche dans `scripts/tests` et manifeste M109.", "Des fixtures couvrent ajout, retrait, inchangé et remplacement sans lire ni modifier l'état de la partie."]},
+        {"cellules": ["**97401**", "**Tout delta doit citer les chemins et la frontière qui autorisent son instruction.**", "97400", "Le rapport généré détaille les hors-porte, mais le comptoir ne rend que deux nombres et leurs sources ; les remontées ne portent pas leurs fichiers.", "97101 · 97201", "Sorties actuelles de M110 et du comptoir.", "Chaque ajout ou retrait rend famille, source, cible, containers, rangs ou porte attendue selon son cas."]}
+      ]
+    },
+    {
+      "titre": "🗝️ Clefs",
+      "colonnes": ["🗝️ N°", "🏷️ La clef", "🔓 Ouvre", "💡 La transformation et sa valeur", "🧰 Moyens", "🧭 Ancrage dans le code cible", "👁️ La preuve attendue", "🔎 Audit du code"],
+      "lignes": [
+        {"cellules": ["**97110**", "**C1 — Normaliser l'identité de chaque écart observé**", "97101", "Transformer chaque écart en tuple stable conserve la chose fautive au-delà de son compte et rend les observations comparables.", "M109 · M110", "`scripts/analyse/graphe_archi.py` → `analyser()` et sortie JSON.", "Deux parcours du même fixture donnent les mêmes identités triées pour les quatre familles.", "**partielle** — orphelins et hors-porte portent déjà leurs chemins ; les remontées restent agrégées."]},
+        {"cellules": ["**97111**", "**C2 — Conserver une référence adressable des identités**", "97102", "Une référence issue d'une observation acceptée permet le delta sans transformer les comptes des mains en seconde vérité du code.", "M109 · M110", "Container bancs ; référence de contrôle à décider.", "La référence indique sa source, se valide et refuse les doublons ou formes inconnues.", "**absente** — seules les six valeurs datées de `mains.json` servent aujourd'hui de comparaison."]},
+        {"cellules": ["**97210**", "**C3 — Comparer les ensembles et juger seulement les ajouts**", "97201 · 97202", "La différence ensembliste sépare dette conservée, amélioration et régression ; le total reste un résumé, non l'autorité du verdict.", "M109 · M110", "`scripts/analyse/comptoir_moyens.py` ou comparateur dédié.", "Ajout bloque ; inchangé et retrait passent ; remplacement à compte constant bloque et montre les deux mouvements.", "**absente** — le comptoir compare des nombres et toute divergence partage le même verdict."]},
+        {"cellules": ["**97310**", "**C4 — Promouvoir le delta vert en garde sans retirer la mesure absolue**", "97301", "Deux entrées distinctes dans M109 permettent de protéger les changements tout en gardant visible la distance totale au dessin.", "M109 · M110", "`scripts/verifier.mjs` → manifeste des épreuves.", "Le dépôt accepté passe la garde et continue d'imprimer ses comptes comme mesure ; une addition contrôlée fait échouer seulement la garde.", "**absente** — M110 n'est aujourd'hui déclaré qu'au rang mesure."]},
+        {"cellules": ["**97311**", "**C5 — Éprouver la garde par mutation d'une racine temporaire**", "97302", "Une faute introduite puis retirée démontre que le contrôle réagit au câblage et non à une sortie enregistrée par avance.", "M109 · M110", "Container bancs et fixtures temporaires.", "Quatre mutations couvrent ajout, retrait, inchangé et remplacement, sans import de scripts ni écriture dans `etat/`.", "**absente** — les tests du comptoir couvrent les comptes synthétiques, pas le graphe muté."]},
+        {"cellules": ["**97410**", "**C6 — Rendre chaque delta avec sa provenance d'architecture**", "97401", "Conserver chemins, containers, rangs et porte attendue transforme un refus en pièce réparable sans prétendre qu'il prouve une panne.", "M109 · M110", "Sorties texte et JSON de la garde.", "Chaque ligne ajoutée ou retirée indique sa famille et les champs nécessaires pour retrouver la règle enfreinte.", "**partielle** — M110 possède une partie de ces données ; le comptoir les réduit actuellement aux sources de deux totaux."]}
+      ]
+    },
+    {
+      "titre": "⚔️ Actions proposées pour les clefs absentes",
+      "colonnes": ["⚔️ N°", "🏷️ L'action", "🗝️ Réalise", "📝 Ce qu'on fait", "📍 Où", "🪶 Office", "🧰 Moyens", "⛓️ Dépend de", "👁️ La preuve", "⏳ État"],
+      "lignes": [
+        {"cellules": ["**97120**", "🧾 Déposer le contrat d'identité et la référence différentielle", "97110 · 97111", "Définir les tuples stables des quatre familles, compléter la provenance des remontées et enregistrer une référence validée issue d'une observation acceptée.", "Container bancs", "à désigner", "M109 · M110", "", "Deux observations identiques donnent une référence identique ; un remplacement à total constant produit deux empreintes différentes.", "**a faire**"]},
+        {"cellules": ["**97220**", "⚖️ Construire le verdict ajouté-retiré-inchangé", "97210 · 97410", "Comparer l'observation à la référence, rendre les ensembles et leurs provenances, sortir à 1 seulement lorsqu'un ajout est présent et conserver les totaux comme résumé.", "Container bancs", "à désigner", "M109 · M110", "97120", "Fixtures d'ajout, retrait, inchangé et remplacement rendent les diagnostics et codes attendus.", "**a faire**"]},
+        {"cellules": ["**97320**", "🧪 Éprouver le delta sur une racine temporaire", "97311", "Donner à la sonde une racine et une déclaration de fixture, muter des imports Python, Node et navigateur, puis vérifier que la partie réelle n'est ni lue comme canon ni modifiée.", "Container bancs", "à désigner", "M109 · M110", "97120 · 97220", "Le banc voit chaque mutation et laisse `etat/` inchangé ; retirer la mutation rétablit le vert.", "**a faire**"]},
+        {"cellules": ["**97321**", "🚪 Raccorder la garde différentielle au manifeste unique", "97310", "Ajouter le verdict différentiel comme garde M109 et conserver `graphe-archi` comme mesure absolue avec son résumé actuel.", "Container bancs", "à désigner", "M109 · M110", "97220 · 97320", "`node scripts/verifier.mjs --seul architecture` passe sur la référence et tombe sur une mutation qui ajoute un écart nommé.", "**a faire**"]}
+      ]
+    }
+  ]
+}

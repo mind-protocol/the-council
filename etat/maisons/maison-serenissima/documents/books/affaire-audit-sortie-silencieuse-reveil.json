@@ -1,0 +1,74 @@
+{
+  "id": "affaire-audit-sortie-silencieuse-reveil",
+  "maison_id": "maison-serenissima",
+  "boite": "boite-grand-plan",
+  "titre": "AUDIT: Agents - Le réveil sans dette de sortie",
+  "sous_titre": "🌙 Conteneur agents : distinguer réponse, ouvrage et silence sans noter l'obéissance. Plage 87000 à 87999.",
+  "type": "plan",
+  "embleme": "🌙",
+  "couleur": "#40566f",
+  "lieu_id": "braavos",
+  "salle_id": "archive",
+  "pages": [
+    "L'AUDIT PORTE SUR UNE FRONTIÈRE. Recevoir un réveil change le contexte d'un habitant ; cela ne crée pas une créance sur sa parole. Le conteneur agents doit pouvoir achever la session que celle-ci laisse une réponse, un ouvrage ou aucune sortie visible.",
+    "LE SILENCE N'EST PAS UNE PREUVE D'INTENTION. Nous pouvons établir qu'aucune sortie publique n'a été exigée ni produite. Nous ne pouvons pas en déduire pourquoi l'habitant s'est tu, ni appeler son silence réussite, refus ou échec.",
+    "LA PREUVE DOIT TRAVERSER LA CHAÎNE. Une phrase correcte dans un seul constructeur de brief ne suffit pas. L'entrée, l'exécution, la clôture et les traces doivent toutes conserver le même droit, y compris lorsqu'une conclusion interne existe sans message adressé à autrui.",
+    "CETTE AFFAIRE AUDITE ; ELLE NE CONSTRUIT PAS LE RÉVEIL. Elle prolonge l'action 71220 de l'affaire de la ville qui se réveille et remettra ses constats aux auteurs des portes concernées. Toute correction éventuelle sera nommée séparément.",
+    "CONSTAT 87120. Les chemins CALL et CAST passent par la même mission, et la clôture CALL accepte une phrase vide. Le reçu append-only et sa relecture existent et passent leurs épreuves, mais aucun chemin d'exécution ne dépose ce reçu. La SPEC `spec-cloture-observable-reveil` propose le raccord sans confondre retour interne, sortie visible et observation incomplète."
+  ],
+  "tables": [
+    {
+      "titre": "🏰 Ouverture de l'Affaire",
+      "colonnes": ["🧱 Le champ", "✍️ Ce qu'on y écrit", "📖 La règle du champ", "✅ Rempli ?"],
+      "lignes": [
+        {"cellules": ["🏷️ **LE NOM**", "AUDIT: Agents - Le réveil sans dette de sortie", "Le sujet, jamais la solution.", "**oui**"]},
+        {"cellules": ["🎯 **L'OBJET**", "Établir si le conteneur agents permet à un réveil de se terminer avec une réponse, un ouvrage ou aucune sortie visible, sans obligation implicite ni verdict sur le silence.", "Un état du système, observable.", "**oui**"]},
+        {"cellules": ["🧱 **LE PÉRIMÈTRE — DANS**", "Construction du brief de réveil, clôture de session, sorties adressées, artefacts et traces permettant de reconstruire ces faits.", "Ce que l'affaire peut auditer.", "**oui**"]},
+        {"cellules": ["🚫 **LE PÉRIMÈTRE — HORS**", "Qualité des amorces, raisons intérieures des habitants, justice de leurs choix, ordonnance automatique de tâches et refonte générale du conteneur agents.", "Ce que l'affaire ne possède pas.", "**oui**"]},
+        {"cellules": ["📌 **L'ÉTAT ACTUEL**", "Le brief ordinaire a déjà retiré l'injonction de répondre et un test ciblé protège ce percept sans dette. Une preuve de bout en bout des trois issues reste à produire ; les traces de réveil sont encore réparties entre plusieurs pièces.", "Constat au 12e jour de la 5e lune, an 129.", "**oui**"]},
+        {"cellules": ["🔢 **LA PLAGE**", "**87000 à 87999**", "Adresses réservées à cette affaire.", "**oui**"]},
+        {"cellules": ["💡 **LA CONCLUSION**", "Le droit au silence n'est établi que si aucune couche ne réintroduit une livraison obligatoire et si l'observation décrit l'absence de sortie sans la juger.", "Hypothèse que l'audit doit éprouver.", "**oui**"]},
+        {"cellules": ["🔚 **FERMÉE QUAND**", "Les chemins d'entrée et de clôture sont inventoriés ; trois réveils contrôlés couvrent message, artefact et aucune sortie visible ; leur relecture distingue les faits des intentions inconnues ; les écarts sont adressés aux propriétaires des portes.", "Écrit avant l'épreuve.", "**oui**"]}
+      ]
+    },
+    {
+      "titre": "🎯 États cibles",
+      "colonnes": ["🎯 N°", "🏷️ L'état", "✅ Ce qui doit être vrai", "📍 Où", "👁️ La preuve", "⬆️ Sert", "💯 Importance"],
+      "lignes": [
+        {"cellules": ["**87000**", "**Le réveil n'engendre aucune dette de sortie.**", "Réponse, ouvrage et aucune sortie visible sont trois fins recevables de la même chaîne.", "Conteneur agents", "Trois exécutions contrôlées et leurs traces, relues sous un même contrat.", "racine", "**100**"]},
+        {"cellules": ["**87100**", "**Toute entrée présente un percept, jamais une livraison imposée.**", "Aucun constructeur actif n'exige message, rapport, artefact ou destinataire.", "Construction des briefs", "Inventaire des chemins actifs avec extraits et tests ciblés.", "87000", "**95**"]},
+        {"cellules": ["**87200**", "**La clôture accepte l'absence de sortie publique.**", "Une conclusion interne éventuelle ne devient pas automatiquement une parole ou une pièce remise à autrui.", "Runtime et clôture de session", "Un réveil se clôt proprement sans message adressé ni artefact.", "87000", "**100**"]},
+        {"cellules": ["**87300**", "**La relecture demeure factuelle.**", "Elle distingue message, artefact et aucune sortie visible sans score, intention supposée ni verdict.", "Traces et banc de lecture", "Rapport reproductible portant faits, adresses et inconnus.", "87000", "**90**"]}
+      ]
+    },
+    {
+      "titre": "🔒 Verrous",
+      "colonnes": ["🔒 N°", "🏷️ Le verrou", "⛔ Bloque", "📌 Ce qui est vrai aujourd'hui", "⛓️ Dépend de", "👁️ La preuve", "🔓 Levé quand"],
+      "lignes": [
+        {"cellules": ["**87101**", "**Un test ciblé ne couvre pas tous les constructeurs actifs.**", "87100", "Les chemins ont été recensés : CALL journée, CALL réponse/discussion, activation graphe, CAST, reçu et relecture. La SPEC liée porte l'inventaire et sépare les chemins hors périmètre.", "", "`spec-cloture-observable-reveil`, table « Audit préalable — inventaire 87120 » ; huit tests ciblés passent.", "**LEVÉ** — chaque chemin actif est couvert ou déclaré hors périmètre avec raison."]},
+        {"cellules": ["**87201**", "**Sortie publique et retour interne peuvent être confondus.**", "87200", "La journée demande une conclusion de session, tandis que le droit au silence concerne ce qui est remis à autrui.", "87100", "Observation séparée du retour de runtime, des billets et des artefacts.", "Le contrat et les tests nomment explicitement ces catégories."]},
+        {"cellules": ["**87301**", "**La preuve est dispersée.**", "87300", "Prompt, session, message et artefact ne sont pas encore réunis par un reçu canonique unique.", "87200", "Reconstruction manuelle d'un cas avec ses adresses.", "Un rapport read-only reconstruit les trois issues sans modifier l'état."]},
+        {"cellules": ["**87302**", "**L'absence observable peut être surinterprétée.**", "87300", "Aucune pièce ne peut établir la raison intérieure d'un silence.", "87301", "Vocabulaire du rapport et cas sans sortie visible.", "Le rapport porte « aucune sortie visible » et laisse l'intention inconnue."]}
+      ]
+    },
+    {
+      "titre": "🗝️ Clefs",
+      "colonnes": ["🗝️ N°", "🏷️ La clef", "🔓 Ouvre", "💡 Le principe", "🧰 Moyens", "🚪 Ce que cela ferme", "👁️ La preuve attendue", "⚖️ Décision"],
+      "lignes": [
+        {"cellules": ["**87110**", "**Inventaire des obligations de sortie.**", "87101", "Suivre chaque chemin actif depuis le percept jusqu'à la clôture et relever seulement les obligations exécutables.", "M105 · M109", "La confiance accordée à un unique texte de prompt.", "Table chemin, obligation, sortie et test associé.", "retenue"]},
+        {"cellules": ["**87210**", "**Épreuve symétrique des trois issues.**", "87201", "Faire varier la suite laissée par l'habitant sans modifier la validité du réveil.", "M105 · M109", "Le cas heureux limité à une réponse visible.", "Trois cas terminent proprement sous le même oracle.", "retenue"]},
+        {"cellules": ["**87310**", "**Relecture descriptive et read-only.**", "87301 · 87302", "Rassembler les preuves existantes sans écrire l'état et sans attribuer d'intention.", "M102 · M105 · M109", "Le score d'obéissance et le jugement rétroactif.", "Rapport reproductible distinguant faits, absences observées et inconnus.", "retenue"]}
+      ]
+    },
+    {
+      "titre": "⚔️ Actions",
+      "colonnes": ["⚔️ N°", "🏷️ L'action", "🗝️ Réalise", "📝 Ce qu'on fait", "📍 Où", "🪶 Office", "🧰 Moyens", "⛓️ Dépend de", "👁️ La preuve", "⏳ État"],
+      "lignes": [
+        {"cellules": ["**87120**", "📜 Inventorier les chemins qui peuvent créer une dette de sortie", "87110", "Recenser les constructeurs de brief, la clôture et les canaux de sortie actifs ; relever pour chacun ce qui est obligatoire, facultatif ou absent.", "Conteneur agents et bancs associés", "Giovanni Contarini (`xadme`)", "M105 · M109", "", "Inventaire déposé dans `spec-cloture-observable-reveil` ; huit tests ciblés passent ; le raccord automatique du reçu est absent. Acte `acte-giovanni-audit-spec-cloture-reveil-129-5-12`.", "**CLOSE — preuve produite et inscrite**"]},
+        {"cellules": ["**87220**", "🧪 Exécuter les trois fins recevables", "87210", "Préparer trois réveils contrôlés : l'un laisse un message, l'un un artefact, l'un aucune sortie visible ; vérifier une clôture identique.", "Chambres et sièges d'essai", "Giovanni Contarini (`xadme`)", "M105 · M109", "87120", "Commandes, codes de sortie et adresses des traces pour les trois cas.", "proposée"]},
+        {"cellules": ["**87320**", "🔍 Produire la relecture sans jugement", "87310", "Reconstruire les trois cas depuis les pièces existantes et séparer strictement percept, faits produits et intention inconnue.", "Banc de lecture", "office ouvert", "M102 · M105 · M109", "87220", "Rapport read-only reproductible et empreintes avant/après identiques pour les sources lues.", "proposée"]},
+        {"cellules": ["**87321**", "📨 Remettre les écarts aux propriétaires des portes", "87310", "Pour chaque écart prouvé, adresser le fait, sa reproduction et la limite de l'audit au responsable du composant ; ne prescrire une correction que dans une action distincte.", "Maison Serenissima", "Giovanni Contarini (`xadme`)", "M105", "87320", "Chaque écart possède un destinataire, une preuve et un statut de réception.", "proposée"]}
+      ]
+    }
+  ]
+}

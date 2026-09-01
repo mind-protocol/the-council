@@ -705,14 +705,13 @@ def _preparer_prompt_gemini(manuel, cwd, reprendre, entree):
 
 def _commande_gemini(prompt_systeme, modele, add_dirs, sid, reprendre):
     # TODO: Ajustez les arguments CLI selon votre vrai binaire Gemini
-    commande = ["gemini"]
-    if prompt_systeme:
-        commande += ["--system-prompt-file", prompt_systeme]
+    import os
+    nom_binaire = r"C:\Users\reyno\AppData\Local\agy\bin\agy.exe" if os.name == "nt" else "agy"
+    commande = [nom_binaire, "-p", "Execute la demande en JSON"]
     for chemin in add_dirs:
         commande += ["--add-dir", chemin]
-    if modele:
-        commande += ["--model", modele]
-    commande += ["--resume" if reprendre else "--session-id", sid]
+    if reprendre:
+        commande += ["--conversation", sid]
     # Options similaires a claude (sortie json attendue par appeler)
     commande += ["--output-format", "json"]
     return commande
@@ -727,8 +726,9 @@ def _appel_gemini(manuel, message, logique, modele, effort, timeout, cwd,
             manuel, cwd, reprise, entree)
         commande = _commande_gemini(prompt, modele, add_dirs, logique, reprise)
 
+        texte_entree = (manuel + "\n\n" + message) if prompt_injecte else message
         r = subprocess.run(commande, cwd=cwd, env=env,
-                           input=message.encode("utf-8"),
+                           input=texte_entree.encode("utf-8"),
                            capture_output=True, timeout=timeout,
                            **_creation_sans_fenetre())
         code = r.returncode
@@ -744,7 +744,7 @@ def _appel_gemini(manuel, message, logique, modele, effort, timeout, cwd,
         if "already in use" in dernier and reprendre is None:
             continue
         if code != 0:
-            raise RuntimeError(("\n".join(erreurs) or
+            raise RuntimeError(("\n".join(erreurs) + "\n" + sortie or
                                 "gemini a quitte avec le code %d" % code)[-800:])
         if not resultat:
             raise RuntimeError("le flux Gemini s\'est ferme sans resultat")
@@ -753,6 +753,8 @@ def _appel_gemini(manuel, message, logique, modele, effort, timeout, cwd,
         resultat.setdefault("logical_session_id", logique)
         resultat.setdefault("session_id", logique)
         resultat.setdefault("model", modele or "defaut")
+        if "response" in resultat and "result" not in resultat:
+            resultat["result"] = resultat.pop("response")
         _poser_empreinte_manuel(logique, "gemini", manuel_sha256)
 
         if prompt_injecte and prompt:

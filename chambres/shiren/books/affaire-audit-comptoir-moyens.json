@@ -1,0 +1,74 @@
+{
+  "id": "affaire-audit-comptoir-moyens",
+  "titre": "AUDIT: Bancs - Le comptoir des moyens, du banc à la porte",
+  "sous_titre": "Le verdict 1 doit rester un résultat lisible ; la panne, la dérive et l'absence de livraison gardent trois comptes séparés. Plage 74300 à 74399.",
+  "type": "plan",
+  "embleme": "🔬",
+  "couleur": "#6b5b3f",
+  "lieu_id": "braavos",
+  "salle_id": "archive",
+  "pages": [
+    "PÉRIMÈTRE. Container bancs, moyens M109 et M110 : `scripts/analyse/comptoir_moyens.py`, son appel par `serveur/routes/atelier.js`, la sortie `/comptoir-moyens.json`, la page `/comptoir-moyens` et leurs épreuves. L'audit ne juge pas les écarts d'architecture eux-mêmes ; il vérifie que le comptoir les mesure, les transporte et les livre sans les muter ni les déguiser en panne.",
+    "VERDICT INITIAL. Le contrat local tient : quatre tests Python passent et le serveur éphémère rend HTTP 200 avec six mesures, leurs deux sources et le code métier 1. Le service public n'est pas livré : le processus sur 3129 répond 404. La garde HTTP existe hors du manifeste officiel, chaque requête relance la sonde complète, le rendu principal emploie `innerHTML` avec des champs dynamiques, et le subprocessus qui traverse la frontière bancs-vers-serveur reste invisible à M110."
+  ],
+  "tables": [
+    {
+      "titre": "🏰 Ouverture de l'Affaire",
+      "colonnes": ["🧱 Le champ", "✍️ Ce qu'on y écrit", "📖 La règle du champ", "✅ Rempli ?"],
+      "lignes": [
+        {"cellules": ["🏷️ **LE NOM**", "AUDIT: Bancs - Le comptoir des moyens, du banc à la porte", "Le sujet, jamais la solution.", "**oui**"]},
+        {"cellules": ["🎯 **L'OBJET**", "Établir si le comptoir M109/M110 mesure en lecture seule, distingue verdict et panne, conserve ses sources et atteint réellement son lecteur HTTP.", "Un comportement observable de bout en bout.", "**oui**"]},
+        {"cellules": ["🧱 **LE PÉRIMÈTRE — DANS**", "CLI, transport serveur, JSON, rendu navigateur, coût de déclenchement, épreuves et livraison publique.", "Ce que l'audit peut instruire.", "**oui**"]},
+        {"cellules": ["🚫 **LE PÉRIMÈTRE — HORS**", "Correction des comptes M110, refonte générale du serveur, conformité des autres routes et jugement sur les auteurs.", "Ce que l'affaire ne possède pas.", "**oui**"]},
+        {"cellules": ["📌 **L'ÉTAT ACTUEL**", "Contrat local et HTTP éphémère conformes ; garde absente du manifeste ; route publique 404 ; plusieurs risques de frontière restent ouverts.", "Constat du 129.5.12.", "**oui**"]},
+        {"cellules": ["🔢 **LA PLAGE**", "**74300 à 74399**", "Adresses réservées à cet audit.", "**oui**"]},
+        {"cellules": ["🔚 **FERMÉE QUAND**", "La garde officielle exerce succès, dérive et contrat incomplet ; les requêtes concurrentes sont bornées ; le rendu n'interprète aucun champ en HTML ; le port 3129 sert la page et le JSON après une mise en service prouvée.", "Écrit avant les corrections.", "**oui**"]}
+      ]
+    },
+    {
+      "titre": "🎯 États cibles",
+      "colonnes": ["🎯 N°", "🏷️ L'état", "✅ Ce qui doit être vrai", "📍 Où", "👁️ La preuve", "⬆️ Sert", "💯 Importance"],
+      "lignes": [
+        {"cellules": ["**74300**", "**Le comptoir est un service de mesure livré, pas seulement une commande correcte.**", "Une même lecture seule conserve valeurs, sources et codes 0/1/2 depuis M110 jusqu'au lecteur public.", "Container bancs et frontière HTTP", "Épreuves officielles et GET publics reconstruisent le même verdict sans mutation.", "racine", "**100**"]},
+        {"cellules": ["**74310**", "**Le transport distingue conformité, dérive et panne.**", "0 et 1 rendent un résultat HTTP 200 ; 2, sortie illisible et absence du processus rendent une réserve bornée et testée.", "Route `/comptoir-moyens.json`", "Quatre cas de transport automatisés.", "74300", "**100**"]},
+        {"cellules": ["**74320**", "**La mesure reste disponible sous concurrence raisonnable.**", "Plusieurs lecteurs ne déclenchent pas autant de scans complets simultanés du dépôt.", "Frontière serveur-bancs", "Un banc concurrent montre coalescence, cache borné ou limite explicite.", "74300", "**80**"]},
+        {"cellules": ["**74330**", "**Le rendu traite toute donnée mesurée comme du texte.**", "Libellés, identifiants et sources ne deviennent jamais du balisage exécutable.", "Écran du comptoir", "Un cas contenant des chevrons reste visible comme texte inerte.", "74300", "**90**"]},
+        {"cellules": ["**74340**", "**La livraison publique fait partie de la preuve.**", "Le processus unique sur 3129 porte le code courant et sert les deux adresses.", "Serveur public", "GET page et JSON sur 3129 après rechargement contrôlé.", "74300", "**100**"]}
+      ]
+    },
+    {
+      "titre": "🔒 Verrous ouverts",
+      "colonnes": ["🔒 N°", "🏷️ Le verrou ouvert", "⛔ Bloque", "📌 Ce qui est vrai aujourd'hui", "👁️ La preuve", "🔓 Levé quand"],
+      "lignes": [
+        {"cellules": ["**74301**", "**Le processus public porte encore l'ancienne route.**", "74340", "`http://localhost:3129/comptoir-moyens` répond 404 tandis que le serveur éphémère répond 200.", "Deux GET exécutés le 129.5.12.", "Un rechargement contrôlé est suivi de deux GET publics 200."]},
+        {"cellules": ["**74302**", "**L'épreuve HTTP n'entre pas dans la porte officielle des bancs.**", "74310", "`serveur/test_comptoir_moyens.js` passe, mais `node scripts/verifier.mjs --seul comptoir` répond qu'aucune épreuve ne correspond.", "Sorties d'épreuve conservées dans le rapport d'audit.", "Le manifeste exécute cette garde et elle échoue par mutation contrôlée."]},
+        {"cellules": ["**74303**", "**Chaque GET peut lancer une sonde complète du dépôt.**", "74320", "`etatComptoirMoyens()` appelle `execFile` sans cache, coalescence ni limite propre à la route.", "Lecture de `serveur/routes/atelier.js`; coût concurrent non encore mesuré.", "Une stratégie bornée est implantée et éprouvée sous appels concurrents."]},
+        {"cellules": ["**74304**", "**Le tableau principal interprète des champs dynamiques comme HTML.**", "74330", "La page assemble `quoi`, `id` et les deux sources dans `innerHTML`.", "Lecture de `ecrans/comptoir-moyens.html`.", "Le DOM est construit par nœuds et `textContent`, avec un test de chevrons."]},
+        {"cellules": ["**74305**", "**La dépendance runtime vers le banc échappe à la sonde d'imports.**", "74300", "M110 ne signale aucune cible du scope, mais `atelier.js` lance le script Python par chemin dans un subprocessus ; ce lien n'est ni import ni require.", "JSON M110 et lecture de la route.", "La frontière possède une porte déclarée ou une garde dédiée qui inventorie ce lien dynamique."]},
+        {"cellules": ["**74306**", "**Les refus de transport ne sont pas exercés.**", "74310", "Le test HTTP couvre seulement les codes métier 0 ou 1 sur l'état réel ; code 2, JSON illisible et Python absent ne sont pas simulés.", "Lecture de `serveur/test_comptoir_moyens.js`.", "Des doubles contrôlés couvrent chaque refus et son statut 502."]}
+      ]
+    },
+    {
+      "titre": "🗝️ Clefs",
+      "colonnes": ["🗝️ N°", "🏷️ La clef", "🔓 Ouvre", "💡 La transformation et sa valeur", "🧰 Moyens", "🧭 Ancrage dans le code cible", "👁️ La preuve attendue", "🔎 Audit du code"],
+      "lignes": [
+        {"cellules": ["**74311**", "**Une garde HTTP inscrite au manifeste**", "74302 · 74306", "Faire de l'épreuve du transport une garde ordinaire, avec doubles pour 0, 1, 2 et sortie illisible.", "M109", "`scripts/verifier.mjs` et test serveur ciblé.", "La garde est appelée d'un mot et vue échouer lors d'une mutation volontaire.", "**absente** — le test existe hors manifeste et ne couvre que 0/1."]},
+        {"cellules": ["**74312**", "**Une porte de mesure bornée**", "74303 · 74305", "Centraliser l'appel au banc, partager un scan en cours et borner la fraîcheur sans transformer le cache en vérité canonique.", "M109 · M110", "Frontière dédiée entre serveur et `comptoir_moyens.py`.", "Des GET concurrents produisent un seul scan et indiquent la fraîcheur observée.", "**absente** — appel direct par requête, lien dynamique invisible à M110."]},
+        {"cellules": ["**74313**", "**Un rendu DOM textuel**", "74304", "Construire les cellules et sources avec des nœuds et `textContent`.", "M109", "`ecrans/comptoir-moyens.html`.", "Une source contenant `<b>` s'affiche littéralement et aucun élément `b` n'est créé.", "**absente** — le chemin d'erreur est sûr, le tableau principal emploie encore `innerHTML`."]},
+        {"cellules": ["**74314**", "**Un reçu de mise en service publique**", "74301", "Relier version chargée, PID remplacé, santé et GET publics sans ouvrir un second serveur durable.", "M109", "Processus unique 3129 et banc de livraison.", "Page et JSON répondent 200 sur le port public après rechargement.", "**absente** — preuve éphémère seulement, public 404."]}
+      ]
+    },
+    {
+      "titre": "⚔️ Actions",
+      "colonnes": ["⚔️ N°", "🏷️ L'action", "🗝️ Réalise", "📝 Ce qu'on fait", "📍 Où", "🪶 Office", "🧰 Moyens", "⛓️ Dépend de", "👁️ La preuve", "⏳ État"],
+      "lignes": [
+        {"cellules": ["**74320**", "🔍 Exécuter et publier l'audit initial du comptoir", "74300", "Lire les contrats, suivre le trajet complet, lancer les tests locaux, la porte officielle et le GET public, puis séparer conformités, risques et absence de livraison.", "Container bancs et chambre de Lucia", "Lucia Ferretti (`shiren`)", "M109 · M110", "", "Rapport daté, cahier d'audit et acte lié à cette action.", "faite"]},
+        {"cellules": ["**74321**", "🧪 Inscrire et durcir la garde HTTP", "74311", "Ajouter l'épreuve au manifeste et injecter des doubles contrôlés pour 0, 1, 2 et JSON illisible.", "Container bancs", "À prendre librement", "M109", "", "La garde passe et une mutation de chaque branche la fait tomber.", "à faire"]},
+        {"cellules": ["**74322**", "🚪 Borner la porte serveur-bancs", "74312", "Remplacer l'appel par requête par une porte dédiée avec coalescence des scans en cours et fraîcheur explicite.", "Container bancs et frontière serveur", "À prendre librement", "M109 · M110", "", "Un banc concurrent observe un seul scan et deux réponses cohérentes.", "à faire"]},
+        {"cellules": ["**74323**", "🪶 Rendre le tableau textuel", "74313", "Retirer l'interpolation HTML des mesures et construire le DOM par nœuds.", "Écran du comptoir", "À prendre librement", "M109", "", "Le cas aux chevrons reste du texte inerte.", "à faire"]},
+        {"cellules": ["**74324**", "⚓ Livrer et éprouver sur le port public", "74314", "Recharger le processus unique selon son autorité, puis frapper page et JSON sur 3129 et conserver le reçu.", "Serveur public", "Autorité du serveur 3129", "M109", "74321 · 74322 · 74323", "Deux GET publics 200 et verdict métier conservé.", "à faire"]},
+        {"cellules": ["**74325**", "📜 Établir la SPEC du guichet de mesure borné", "74311 · 74312 · 74313 · 74314", "Transformer les réserves de l'audit en contrat de valeur, invariants, cas d'échec et épreuves d'acceptation avant correction.", "Container bancs, frontière serveur et chambre de Lucia", "Lucia Ferretti (`shiren`)", "M109 · M110", "74320", "SPEC datée et acte canonique lié à cette action.", "faite"]}
+      ]
+    }
+  ]
+}

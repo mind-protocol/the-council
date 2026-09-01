@@ -1,0 +1,83 @@
+{
+  "id": "affaire-audit-entree-action-routee",
+  "maison_id": "maison-serenissima",
+  "boite": "boite-grand-plan",
+  "titre": "AUDIT: Scène - L’entrée d’une action joueur jusqu’au routage",
+  "sous_titre": "📨 Container scène · de POST /action à la frontière du routeur · plage 89000 à 89999",
+  "type": "plan",
+  "embleme": "📨",
+  "couleur": "#58788c",
+  "lieu_id": "braavos",
+  "salle_id": "archive",
+  "pages": [
+    "CETTE AFFAIRE AUDITE UNE CAPACITÉ, PAS LE ROUTEUR ENTIER. Le périmètre commence à `POST /action` dans le container scène et s’arrête lorsque l’action durable et sa `ref` sont remises à `scripts/router_message.py`. Présence, cast et retour du parloir restent hors périmètre.",
+    "LA REF EST LE FIL À SUIVRE. Une même adresse doit relier réponse HTTP, pièce d’inbox, ligne de flux éventuelle, argument du routeur et reçu `routage-presence/1`. La présence séparée de ces mécanismes ne prouve pas leur composition.",
+    "DEUX BANCS SONT VERTS. `python -m unittest scripts.tests.test_routeur_message` passe dix tests ; `node serveur/test_siege.js` valide le tri par audience. Ils ne couvrent ni un corps POST trop grand, ni deux actions dans la même milliseconde, ni une ref suivie depuis HTTP jusqu’au reçu.",
+    "LA FRONTIÈRE RESTE VISIBLE. `serveur/routes/action.js` appartient à `scene`. Le wrapper `scripts/router_message.py` figure encore parmi les orphelins de `docs/graphe-archi.md`, tandis que son implémentation appartient à agents. L’audit consigne cet écart sans le réparer."
+    ,"LA SPEC ISSUE DE CET AUDIT est `documents/spec-admission-action-joueur-v1.md`. Elle borne la feature à l’admission sûre : 65 536 octets, pièce d’inbox sans écrasement et même `ref` jusqu’aux arguments du routeur. La reprise aval demeure une feature séparée."
+  ],
+  "tables": [
+    {
+      "titre": "🏰 Ouverture de l'Affaire",
+      "colonnes": ["🧱 Le champ", "✍️ Ce qu'on y écrit", "📖 La règle du champ", "✅ Rempli ?"],
+      "lignes": [
+        {"cellules": ["🏷️ **LE NOM**", "AUDIT: Scène - L’entrée d’une action joueur jusqu’au routage", "La capacité auditée.", "**oui**"]},
+        {"cellules": ["🎯 **L'OBJET**", "Établir qu’une action admise devient une pièce durable, sous une ref unique, avec la bonne audience, puis atteint une seule fois la frontière de routage.", "Un état observable.", "**oui**"]},
+        {"cellules": ["📦 **LE CONTAINER**", "`scene` — porte `serveur/scene/index.js`, entrée `serveur/routes/action.js`.", "Un container principal.", "**oui**"]},
+        {"cellules": ["🧱 **DANS**", "Corps HTTP, validation JSON, siège, ref, inbox, flux, audience et lancement du wrapper.", "Ce que l’audit qualifie.", "**oui**"]},
+        {"cellules": ["🚫 **HORS**", "Présence, destinataires, cast LLM, retour du parloir et traitement métier du MJ.", "Ce que l’audit ne conclut pas.", "**oui**"]},
+        {"cellules": ["📌 **L'ÉTAT ACTUEL**", "Ref, audience et routage étroit présents ; corps POST non borné, chemin fondé seulement sur `Date.now()`, composition complète non éprouvée.", "Constat du 129.5.12.", "**oui**"]},
+        {"cellules": ["🔢 **LA PLAGE**", "**89000 à 89999**", "Adresses réservées.", "**oui**"]},
+        {"cellules": ["💡 **LA CONCLUSION**", "Le trajet nominal tient par morceaux ; admission bornée, unicité durable et preuve composée manquent.", "Conclusion bornée aux sources.", "**oui**"]},
+        {"cellules": ["🔚 **FERMÉE QUAND**", "Un banc suit une ref dans réponse, inbox, flux, spawn et reçu ; les corps trop grands sont refusés et deux entrées simultanées ne s’écrasent jamais.", "Écrit avant les corrections.", "**oui**"]}
+      ]
+    },
+    {
+      "titre": "🎯 États cibles",
+      "colonnes": ["🎯 N°", "🏷️ L'état", "✅ Ce qui devient possible", "📍 Où", "👁️ La preuve", "⬆️ Sert", "💯 Importance"],
+      "lignes": [
+        {"cellules": ["**89000**", "**Chaque action admise atteint sa frontière une seule fois sous une adresse reconstructible.**", "Aucun geste ne se perd, ne s’écrase ou ne change d’audience.", "Container scène", "Une ref unique traverse tout le trajet.", "racine", "**100**"]},
+        {"cellules": ["**89100**", "**L’entrée refuse les corps invalides ou démesurés avant accumulation.**", "La mémoire du serveur est bornée.", "`routes/action.js`", "Sous limite 200 ; dépassement 413 sans écriture.", "89000", "**90**"]},
+        {"cellules": ["**89200**", "**Chaque action possède une pièce d’inbox distincte.**", "Deux gestes au même instant subsistent.", "`etat/inbox/<siège>/`", "Même milliseconde, deux chemins et deux contenus.", "89000", "**100**"]},
+        {"cellules": ["**89300**", "**La parole conserve son audience physique ou privée.**", "Aucune fuite entre sièges.", "Flux et `/scene`", "Trois sièges reçoivent exactement leurs items.", "89000", "**100**"]},
+        {"cellules": ["**89400**", "**La même ref traverse scène puis routeur et laisse un reçu.**", "Une action se reconstruit sans rapprocher des heures.", "Spawn et `.agents-runtime/routages/`", "Même ref dans réponse, pièce, flux, arguments et reçu.", "89000", "**100**"]},
+        {"cellules": ["**89500**", "**Le manifeste nomme le propriétaire réel de la frontière.**", "Le wrapper n’est plus orphelin.", "Manifeste et graphe", "Le rapport généré rattache wrapper et implémentation sans fausse dépendance.", "89000", "**70**"]}
+      ]
+    },
+    {
+      "titre": "🔒 Verrous ouverts",
+      "colonnes": ["🔒 N°", "🏷️ Le verrou ouvert", "⛔ Bloque", "📌 Ce qui est vrai aujourd'hui", "👁️ La preuve", "🔓 Levé quand"],
+      "lignes": [
+        {"cellules": ["**89101**", "**Le corps POST est accumulé sans limite.**", "89100", "Chaque chunk est concaténé jusqu’à `end`.", "`action.js:9-11` et `serveur/AGENTS.md`.", "Un lecteur commun interrompt au plafond et est éprouvé."]},
+        {"cellules": ["**89201**", "**Deux actions d’une milliseconde visent le même chemin.**", "89200", "La ref est aléatoire, le nom reste `action-<Date.now()>.json`.", "`action.js:29-35` ; aucun banc de collision.", "Le chemin porte une identité unique ou l’écriture exclusive réessaie."]},
+        {"cellules": ["**89401**", "**La continuité complète de la ref n’est pas éprouvée.**", "89400", "Le banc serveur s’arrête au flux ; le banc Python commence avec une ref fabriquée.", "`test_siege.js` et `test_routeur_message.py`.", "Un banc pilote POST puis wrapper et compare toutes les occurrences."]},
+        {"cellules": ["**89402**", "**Un échec de spawn est silencieux et sans reprise adressée.**", "89400", "L’inbox demeure, mais aucun état de tentative ni échéance n’est écrit.", "`action.js:155-165` ; le guetteur réarmé ignore l’existant.", "Une reprise durable rejoue la même ref au plus une fois."]},
+        {"cellules": ["**89501**", "**Le wrapper du routeur est orphelin dans le graphe.**", "89500", "Le wrapper racine et l’implémentation agents ne sont pas raccordés par le manifeste.", "`docs/graphe-archi.md`.", "Le manifeste les rattache à leurs portes réelles."]}
+      ]
+    },
+    {
+      "titre": "🗝️ Clefs",
+      "colonnes": ["🗝️ N°", "🏷️ La clef", "🔓 Ouvre", "💡 La transformation et sa valeur", "🧰 Moyens", "🧭 Ancrage dans le code cible", "👁️ La preuve attendue", "🔎 Audit du code"],
+      "lignes": [
+        {"cellules": ["**89110**", "**C1 — Lire une action sous une borne explicite**", "89101", "Partager un lecteur limité entre les routes.", "M101 · M108", "`action.js:9-14`.", "Sous limite, dépassement et JSON invalide.", "**absente** — parsing présent, borne absente."]},
+        {"cellules": ["**89210**", "**C2 — Donner un chemin durable unique**", "89201", "Employer la ref ou une création exclusive.", "M102 · M108", "`action.js:29-35`.", "Deux actions sous le même temps subsistent.", "**partielle** — ref unique, chemin non unique."]},
+        {"cellules": ["**89310**", "**C3 — Fermer l’audience avant le flux**", "89300", "Nommer les oreilles présentes ou l’audience la plus étroite.", "M108", "`action.js:68-147`.", "Liste exacte par siège.", "**présente** — banc serveur vert."]},
+        {"cellules": ["**89410**", "**C4 — Porter la même ref au routeur étroit**", "89401", "Mettre la ref dans action et flux, puis la passer seule au wrapper.", "M105 · M108", "`action.js:29-35,155-162` ; `routeur_message.py:33-50`.", "Banc composé de frontière.", "**partielle** — mécanismes présents, composition non éprouvée."]},
+        {"cellules": ["**89411**", "**C5 — Écrire atomiquement le reçu**", "89400", "Remplacer atomiquement un document par ref.", "M105", "`routeur_message.py:90-106,163-192`.", "Reçu complet ou absent.", "**présente** — dix tests Python verts."]},
+        {"cellules": ["**89412**", "**C6 — Reprendre sans doubler l’effet**", "89402", "Persister la tentative et rejouer sur la même ref avec déduplication.", "M105 · M108", "`action.js:155-165`.", "Mort avant spawn, puis un reçu et au plus un billet.", "**absente**."]},
+        {"cellules": ["**89510**", "**C7 — Déclarer la frontière au manifeste**", "89501", "Rattacher le wrapper sans déplacer l’implémentation hors d’agents.", "M105 · M108 · M110", "`docs/containers.json` puis `graphe_archi.py --doc`.", "Le wrapper sort des orphelins.", "**absente**."]}
+      ]
+    },
+    {
+      "titre": "⚔️ Actions proposées pour les clefs absentes",
+      "colonnes": ["⚔️ N°", "🏷️ L'action", "🗝️ Réalise", "📝 Ce qu'on fait", "📍 Où", "🧰 Moyens", "⛓️ Dépend de", "👁️ La preuve", "⏳ État"],
+      "lignes": [
+        {"cellules": ["**89120**", "📏 Borner la lecture HTTP", "89110", "Introduire un lecteur commun avec plafond et réponse 413.", "Container scène", "M101 · M108 · M109", "", "Sous limite 200 ; dépassement 413 ; aucune écriture au refus.", "**proposée**"]},
+        {"cellules": ["**89220**", "🧷 Empêcher les collisions d’inbox", "89210", "Inclure la ref dans le nom et écrire sans écrasement.", "Container scène", "M102 · M108 · M109", "", "Même temps, deux fichiers exacts.", "**proposée**"]},
+        {"cellules": ["**89420**", "🧪 Éprouver une ref de bout en bout", "89410", "Piloter HTTP, capturer le spawn, exécuter le routeur sans cast et comparer les adresses.", "Bancs sur frontière scène-agents", "M105 · M108 · M109", "89220", "Même ref partout ; aucune autre action consommée.", "**proposée**"]},
+        {"cellules": ["**89421**", "🔁 Rendre le dispatch reprenable", "89412", "Écrire la tentative par ref et reprendre les actions sans reçu.", "Frontière scène-agents", "M105 · M108 · M109", "89420", "Interruption puis reprise : reçu unique, aucun doublon.", "**proposée**"]},
+        {"cellules": ["**89520**", "🧭 Rattacher le wrapper", "89510", "Corriger le manifeste et régénérer le graphe.", "Doctrine", "M105 · M108 · M110", "", "Le wrapper sort des orphelins sans nouvelle remontée.", "**proposée**"]}
+      ]
+    }
+  ]
+}

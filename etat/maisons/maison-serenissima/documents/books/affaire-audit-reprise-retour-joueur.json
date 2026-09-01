@@ -1,0 +1,76 @@
+{
+  "id": "affaire-audit-reprise-retour-joueur",
+  "maison_id": "maison-serenissima",
+  "boite": "boite-grand-plan",
+  "titre": "AUDIT: Agents - La reprise du retour de parloir vers le joueur",
+  "sous_titre": "🧨 Une coupure entre canal, web et copie MJ ne doit perdre aucune sortie. Plage 94000 à 94999.",
+  "type": "plan",
+  "embleme": "🧨",
+  "couleur": "#356b78",
+  "lieu_id": "braavos",
+  "salle_id": "archive",
+  "pages": [
+    "CETTE AFFAIRE AUDITE LA REPRISE, PAS LE CONTENU DES PAROLES. `rendre_au_joueur()` écrit d'abord le canal, puis le web privé, puis le spool du MJ, puis la marque de lecture. Chaque sortie a une autorité distincte.",
+    "LE TRAJET HEUREUX EST COUVERT. Les tests existants conservent `ref` et `contexte_id`, filtrent un doublon initial et laissent après le curseur MJ une arrivée intercalée. Ils n'injectent aucune faute entre deux sorties.",
+    "LE VERROU EST MÉCANIQUE. Si le web échoue après le canal, le retry identique rencontre le doublon du canal et retourne avant le web et le spool. Une idempotence locale peut donc fabriquer une perte globale.",
+    "L'AUDIT RESTE EN ÉTAT JETABLE. Il doit reproduire chaque coupure, compter les effets acquis et fixer le contrat de convergence. Toute réparation de la porte viendra dans une action distincte."
+  ],
+  "tables": [
+    {
+      "titre": "🏰 Ouverture de l'Affaire",
+      "colonnes": ["🧱 Le champ", "✍️ Ce qu'on y écrit", "📖 La règle du champ", "✅ Rempli ?"],
+      "lignes": [
+        {"cellules": ["🏷️ **LE NOM**", "AUDIT: Agents - La reprise du retour de parloir vers le joueur", "La capacité auditée, jamais son correctif supposé.", "**oui**"]},
+        {"cellules": ["🎯 **L'OBJET**", "Établir qu'un billet interrompu après n'importe quelle sortie peut reprendre avec la même enveloppe et converger vers une occurrence par sortie.", "Un état observable du transport.", "**oui**"]},
+        {"cellules": ["🧱 **LE PÉRIMÈTRE — DANS**", "Canal canonique, réponse web privée, spool MJ, marque de lecture, identité idempotente et retry de `rendre_au_joueur()`.", "La jointure entre M128 et M129 à M131.", "**oui**"]},
+        {"cellules": ["🚫 **LE PÉRIMÈTRE — HORS**", "Routage initial, contenu des paroles, billets entre PNJ, autorité du MJ, choix de répondre et refonte générale du parloir.", "Ce que l'audit ne possède pas.", "**oui**"]},
+        {"cellules": ["📌 **L'ORIGINE OBSERVÉE**", "Le code compose quatre effets en séquence. Le canal possède l'anti-doublon ; aucun reçu commun ne porte les étapes acquises. Le retour immédiat sur doublon empêche d'achever une sortie aval manquante.", "Constat statique daté du 129.5.12.", "**oui**"]},
+        {"cellules": ["🔢 **LA PLAGE**", "**94000 à 94999**", "Plage globale libre vérifiée après la collision simultanée des cahiers `87000`.", "**oui**"]},
+        {"cellules": ["🔚 **FERMÉE QUAND**", "Une faute est injectée après chaque étape ; le même billet est rejoué ; canal, web, spool et lecture existent chacun une fois avec la même ref et le même contexte.", "La preuve couvre les coupures, pas seulement le trajet heureux.", "**oui**"]}
+      ]
+    },
+    {
+      "titre": "🎯 États cibles",
+      "colonnes": ["🎯 N°", "🏷️ L'état", "✅ Ce qui devient possible", "📍 Où", "👁️ La preuve", "⬆️ Sert", "💯 Importance"],
+      "lignes": [
+        {"cellules": ["**94000**", "**Le retour joueur converge malgré une coupure intermédiaire.**", "Un retry n'abandonne ni ne double aucune sortie.", "Container agents · parloir", "Matrice de coupures et reprise sur la même enveloppe.", "racine", "**100**"]},
+        {"cellules": ["**94100**", "**Les quatre sorties partagent une identité de livraison.**", "Chaque effet peut être rapproché sans heuristique de texte ou d'heure.", "Parloir et runtime", "Canal, web, spool et reçu portent la même clef, ref et contexte.", "94000", "**100**"]},
+        {"cellules": ["**94200**", "**La progression survit à l'arrêt du processus.**", "Le retry sait quelles étapes sont acquises et lesquelles restent à exécuter.", ".agents-runtime", "Un reçu partiel est relu après réouverture puis complété.", "94000", "**100**"]},
+        {"cellules": ["**94300**", "**Chaque étape est idempotente dans la livraison composée.**", "Une reprise réexécute seulement les effets absents.", "Canal, flux et spool", "Deux reprises successives laissent une occurrence finale par sortie.", "94000", "**100**"]},
+        {"cellules": ["**94400**", "**La lecture n'est marquée qu'après affichage confirmé.**", "Un percept non affiché reste lisible ; un percept affiché ne revient pas au profil journée.", "Canal et chambre", "Coupures avant et après web produisent les marques attendues.", "94000", "**90**"]}
+      ]
+    },
+    {
+      "titre": "🔒 Verrous ouverts",
+      "colonnes": ["🔒 N°", "🏷️ Le verrou ouvert", "⛔ Bloque", "📌 Ce qui est vrai aujourd'hui", "⛓️ Dépend de", "👁️ La preuve", "🔓 Levé quand"],
+      "lignes": [
+        {"cellules": ["**94001**", "**La livraison doit survivre à l'échec de n'importe quelle sortie.**", "94000", "Les effets sont appelés en séquence sans état commun de progression.", "", "Lecture de `rendre_au_joueur()`.", "Chaque coupure converge après retry."]},
+        {"cellules": ["**94101**", "**Une clef commune doit relier les sorties.**", "94100", "L'empreinte existe au canal mais n'est pas propagée au web ni au spool.", "", "Comparer les payloads de M129 à M131.", "La même identité est relisible dans chaque effet."]},
+        {"cellules": ["**94201**", "**Les étapes acquises doivent être déposées durablement.**", "94200", "Aucun reçu ne distingue canal acquis, web acquis, spool acquis et lecture acquise.", "94101", "Arrêter le processus après chaque effet.", "Un reçu partiel survit et pilote la reprise."]},
+        {"cellules": ["**94301**", "**Un doublon du canal doit encore achever les sorties aval absentes.**", "94300", "Le code retourne immédiatement lorsque `billet.deposer()` annonce un doublon.", "94201", "Faire échouer le web après canal puis rejouer.", "Le retry saute le canal et reprend les sorties manquantes."]},
+        {"cellules": ["**94401**", "**La marque de lecture doit dépendre de l'affichage acquis.**", "94400", "L'ordre est correct sur trajet heureux mais aucune progression ne permet de rejouer la marque seule.", "94201", "Couper avant et après le web.", "La marque correspond exactement à l'étape web confirmée."]}
+      ]
+    },
+    {
+      "titre": "🗝️ Clefs retenues",
+      "colonnes": ["🗝️ N°", "🏷️ La clef", "🔓 Ouvre", "💡 Le principe et sa valence", "🧰 Moyens", "🧭 Ancrage", "👁️ La preuve", "⚖️ Décision"],
+      "lignes": [
+        {"cellules": ["**94110**", "**Propager l'identité du billet à chaque sortie**", "94101", "Une clef commune rend la livraison reconstructible.", "M128 · M129 · M130 · M131", "Empreinte de `billet.py` et payloads aval.", "Les quatre effets portent la même identité.", "**retenue**"]},
+        {"cellules": ["**94210**", "**Journaliser la progression de la livraison**", "94201", "Un reçu durable transforme la séquence fragile en machine reprenable.", "M128 · M129 · M130 · M131", "Autorité runtime autour de `rendre_au_joueur()`.", "Chaque étape confirmée survit à un arrêt.", "**retenue**"]},
+        {"cellules": ["**94310**", "**Reprendre uniquement les étapes manquantes**", "94001 · 94301", "La convergence globale remplace le retour prématuré sur doublon local.", "M128 · M129 · M130 · M131", "Orchestration de `rendre_au_joueur()`.", "Chaque faute suivie d'un retry laisse une occurrence par effet.", "**retenue**"]},
+        {"cellules": ["**94410**", "**Dériver la lecture de l'affichage confirmé**", "94401", "La marque devient une conséquence rejouable du web acquis.", "M128 · M130", "`marquer_lu()` et reçu d'étapes.", "Aucun message non affiché n'est masqué.", "**retenue**"]},
+        {"cellules": ["**94010**", "**Éprouver chaque joint par faute injectée**", "94001", "Un banc de composition révèle les pertes invisibles aux tests isolés.", "M109 · M132", "État temporaire autour de `rendre_au_joueur()`.", "Le rapport rend acquis, absent et répété par joint.", "**retenue**"]}
+      ]
+    },
+    {
+      "titre": "⚔️ Actions proposées",
+      "colonnes": ["⚔️ N°", "🏷️ L'action", "🗝️ Réalise", "📝 Ce qu'on fait", "📍 Où", "🪶 Office", "🧰 Moyens", "⛓️ Dépend de", "👁️ La preuve", "⏳ État"],
+      "lignes": [
+        {"cellules": ["**94020**", "🧨 Construire la matrice de coupures", "94010", "Injecter une faute après canal, web, spool et lecture, puis rejouer la même enveloppe dans un état temporaire.", "Container bancs", "Vittoria Barbaro (`living-stone-architect`)", "M109 · M128 · M129 · M130 · M131 · M132", "", "Le rapport reproduit la perte du code courant et fixe le verdict attendu après chaque retry.", "**FAITE — banc reproductible et matrice déposée**"]},
+        {"cellules": ["**94120**", "🧾 Déposer le reçu d'étapes", "94110 · 94210", "Créer une pièce runtime idempotente portant identité et étapes, sans recopier les autorités des sorties.", "Container agents", "à désigner", "M128 · M129 · M130 · M131", "94020", "Une livraison partielle est relue après arrêt.", "**proposée**"]},
+        {"cellules": ["**94320**", "🔁 Rendre la livraison convergente", "94310 · 94410", "Faire exécuter seulement les étapes absentes et confirmer chaque effet après succès.", "Container agents · parloir", "à désigner", "M128 · M129 · M130 · M131", "94120", "Toute coupure du banc converge vers une occurrence par sortie.", "**proposée**"]},
+        {"cellules": ["**94420**", "📜 Déposer le rapport d'audit", "94010", "Publier commandes, fixtures, verdicts et limites sans confondre le constat avec la réparation.", "Documents de maison Serenissima", "Vittoria Barbaro (`living-stone-architect`)", "M106 · M109 · M132", "94020", "Un lecteur reproduit chaque résultat sur état jetable.", "**FAITE — rapport canonique déposé**"]}
+      ]
+    }
+  ]
+}

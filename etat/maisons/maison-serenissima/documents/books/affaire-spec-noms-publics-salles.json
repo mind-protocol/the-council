@@ -1,0 +1,72 @@
+{
+  "id": "affaire-spec-noms-publics-salles",
+  "maison_id": "maison-serenissima",
+  "boite": "boite-grand-plan",
+  "titre": "SPEC: Monde - Le nom public unique des salles",
+  "sous_titre": "🪧 Une valeur courante de la sortie structurée jusqu'à l'étiquette visible · plage 93000 à 93999.",
+  "type": "plan",
+  "embleme": "🪧",
+  "couleur": "#356f77",
+  "lieu_id": "braavos",
+  "salle_id": "archive",
+  "pages": [
+    "CETTE SPEC VIENT APRÈS L'AUDIT 92020. Deux salles renommées portent leur nom courant dans `monde/braavos.interieurs.json` et dans `/monde/braavos/interieurs`, tandis que l'écran du quartier compose encore leur nom antérieur. La rupture observée se situe donc après le service et avant le texte visible.",
+    "LA VALEUR RECHERCHÉE EST UNE VILLE QUI SE NOMME AU PRÉSENT. Rebaptiser une salle n'aura servi à rien si l'habitant continue de lire l'ancien nom. La géométrie, les portes, la préséance des étiquettes et leurs contraintes de placement restent des responsabilités distinctes du texte courant.",
+    "LE CONTRAT NE CHOISIT PAS L'IMPLÉMENTATION. Tout mécanisme est recevable s'il donne une autorité unique au nom public courant, conserve le placement des étiquettes, rend une absence ou une divergence observable et passe une épreuve de bout en bout après rechargement.",
+    "LA PREUVE FINALE EST DIFFÉRENTIELLE. Deux salles renommées et une salle témoin non renommée doivent concorder entre sortie, service et DOM visible. Le test échoue si l'écran reprend un nom antérieur, si une salle perd son étiquette par erreur de résolution ou si la géométrie et les portes changent."
+  ],
+  "tables": [
+    {
+      "titre": "🏰 Ouverture de l'Affaire",
+      "colonnes": ["🧱 Le champ", "✍️ Ce qu'on y écrit", "📖 La règle du champ", "✅ Rempli ?"],
+      "lignes": [
+        {"cellules": ["🏷️ **LE NOM**", "Le nom public unique des salles", "Une SPEC de la feature d'affichage des noms dans le container monde.", "**oui**"]},
+        {"cellules": ["🎯 **L'OBJET**", "Garantir que chaque consommateur public affiche le nom courant servi pour une salle, sans confondre cette valeur avec la géométrie ou la typographie du plan.", "Une valeur offerte à l'habitant : la ville se présente sous les noms qu'elle porte réellement.", "**oui**"]},
+        {"cellules": ["🧱 **LE PÉRIMÈTRE — DANS**", "La sortie des intérieurs, la réponse `/monde/<lieu>/interieurs`, la résolution du texte des étiquettes et leur rendu dans l'échelle du quartier.", "La chaîne où l'audit a borné la divergence.", "**oui**"]},
+        {"cellules": ["🚫 **LE PÉRIMÈTRE — HORS**", "L'autorité politique des renommages, l'histoire des noms, la géométrie des salles, leurs portes, la caméra, le choix de préséance et l'algorithme général d'anticollision.", "La SPEC ne déplace pas les responsabilités qui n'ont pas échoué.", "**oui**"]},
+        {"cellules": ["📌 **L'ORIGINE OBSERVÉE**", "L'audit 92020 prouve que `braavos-quai` et `braavos-fosses` concordent entre fichier et service mais divergent dans `.ville3d-noms`, qui compose encore leurs noms antérieurs.", "Reçu `chambres/future_chronicler/ouvrages/audit-noms-salles-monde-vmti7dah5pnl8.md`.", "**oui**"]},
+        {"cellules": ["🔢 **LA PLAGE**", "**93000 à 93999**", "Plage libre vérifiée après déplacement de l'audit sur 92000–92999.", "**oui**"]},
+        {"cellules": ["🔚 **FERMÉE QUAND**", "Après rechargement, les deux salles renommées et une salle témoin non renommée rendent dans le DOM le même nom que `/monde/braavos/interieurs`; aucune ne perd son étiquette, et leurs adresses, portes et géométries restent inchangées.", "Une preuve de bout en bout, avec témoin recevable et garde différentielle.", "**oui**"]}
+      ]
+    },
+    {
+      "titre": "🎯 États cibles",
+      "colonnes": ["🎯 N°", "🏷️ L'état", "✅ Ce qui doit être vrai", "💡 Valence", "📍 Où", "👁️ La preuve", "⬆️ Sert", "💯 Importance"],
+      "lignes": [
+        {"cellules": ["**93000**", "**Chaque salle porte un même nom courant du service jusqu'à l'écran.**", "Un identifiant de salle résout une seule valeur publique dans tous les consommateurs du container monde.", "Les habitants peuvent employer et transmettre les noms réellement adoptés par la ville.", "Container monde", "Concordance sortie-service-DOM sur deux renommages et un témoin.", "racine", "**100**"]},
+        {"cellules": ["**93100**", "**Le texte public possède une autorité courante explicite.**", "Le consommateur ne choisit pas silencieusement entre le nom des intérieurs et celui d'une projection plus ancienne.", "Une divergence de sources ne devient plus une divergence d'affichage.", "Résolution des salles", "Pour chaque adresse, la provenance de la chaîne de caractères est déterminée et testable.", "93000", "**100**"]},
+        {"cellules": ["**93200**", "**La géométrie du plan reste indépendante du texte courant.**", "Centre, forme, préséance, placement et anticollision continuent de fonctionner lorsque seul le nom change.", "Corriger le langage de la ville ne déforme pas ses pierres.", "Plan et étiquettes", "Les témoins spatiaux restent identiques et les trois étiquettes se placent sans erreur.", "93000", "**100**"]},
+        {"cellules": ["**93300**", "**Toute divergence future devient une régression nommée.**", "Une garde compare automatiquement service et DOM pour les salles choisies.", "Le prochain renommage échoue bruyamment avant de devenir une vérité partielle.", "Container bancs", "Le banc devient rouge avec un nom de plan périmé et vert avec le nom courant résolu.", "93000", "**90**"]},
+        {"cellules": ["**93400**", "**Une valeur absente ou impossible à placer reste observable sans mensonge.**", "Le système distingue absence de nom, salle inconnue, étiquette volontairement tue par anticollision et divergence de source.", "Le silence de l'écran garde une cause attribuable.", "Diagnostic du monde", "Chaque fixture produit un motif distinct au lieu d'un repli silencieux sur une vieille chaîne.", "93000", "**80**"]}
+      ]
+    },
+    {
+      "titre": "🔒 Verrous ouverts",
+      "colonnes": ["🔒 N°", "🏷️ Le verrou ouvert", "⛔ Bloque", "📌 Ce qui est vrai aujourd'hui", "⛓️ Dépend de", "👁️ La preuve", "🔓 Levé quand"],
+      "lignes": [
+        {"cellules": ["**93101**", "**Chaque consommateur doit résoudre le texte depuis l'autorité courante déclarée.**", "93100", "Le service expose les noms courants, mais le DOM du quartier compose encore les deux noms antérieurs audités.", "", "Reçu 92020, couche service puis couche écran.", "Les trois témoins rendent exactement la valeur servie et aucune projection concurrente ne remplace silencieusement le texte."]},
+        {"cellules": ["**93201**", "**Le plan doit fournir le placement sans redevenir l'autorité du nom courant.**", "93200", "L'écran sait placer les salles, mais le texte observé diverge précisément là où le nom courant a changé.", "93101", "Comparer positions et texte avant et après résolution.", "Un changement de nom modifie le texte rendu sans modifier les témoins spatiaux ni supprimer l'étiquette."]},
+        {"cellules": ["**93301**", "**La chaîne service-écran doit posséder une garde différentielle.**", "93300", "L'écart actuel a traversé fichier et service sans être signalé avant l'observation visuelle.", "93101 · 93201", "Banc reproduisant les deux renommages audités.", "Une divergence intentionnelle rend le banc rouge avec l'adresse et les deux valeurs."]},
+        {"cellules": ["**93401**", "**Chaque repli ou silence doit conserver sa cause.**", "93400", "L'anticollision peut légitimement taire une étiquette ; ce cas ne doit pas être confondu avec un nom périmé ou introuvable.", "93201", "Fixtures absence, inconnue, collision et divergence.", "Le diagnostic sépare les quatre causes sans inventer de nom de secours."]}
+      ]
+    },
+    {
+      "titre": "🗝️ Clefs retenues",
+      "colonnes": ["🗝️ N°", "🏷️ La clef", "🔓 Ouvre", "💡 Le principe et sa valence", "🧰 Moyens", "🧭 Ancrage", "👁️ La preuve", "⚖️ Décision"],
+      "lignes": [
+        {"cellules": ["**93110**", "**Résoudre le texte par adresse depuis les intérieurs servis**", "93101", "L'identifiant stable relie la géométrie à la valeur courante sans demander au plan de dupliquer le nom.", "M104", "Réponse `/monde/<lieu>/interieurs` et composition des étiquettes.", "Deux renommages et un témoin produisent la même chaîne dans le service et le DOM.", "**retenue**"]},
+        {"cellules": ["**93210**", "**Conserver au plan seulement ses responsabilités de placement**", "93201", "Séparer texte et disposition permet de rebaptiser sans recuire ni réécrire une seconde vérité linguistique.", "M104", "Plan du quartier et module d'étiquettes.", "Le texte change seul ; centre, forme, préséance et verdict d'anticollision restent stables.", "**retenue**"]},
+        {"cellules": ["**93310**", "**Comparer automatiquement service et DOM**", "93301", "Une épreuve réelle du consommateur final interdit qu'un HTTP 200 ou un JSON correct tienne lieu de preuve visible.", "M104 · M109", "Banc navigateur du container monde.", "Le banc reproduit d'abord l'écart audité puis devient vert après correction.", "**retenue**"]},
+        {"cellules": ["**93410**", "**Rendre le motif des noms tus ou divergents**", "93401", "Un diagnostic structuré protège à la fois l'anticollision légitime et la fidélité du nom courant.", "M104 · M109", "Résolution et bancs des étiquettes.", "Quatre fixtures rendent quatre motifs explicites et aucun repli vers un nom ancien.", "**retenue**"]}
+      ]
+    },
+    {
+      "titre": "⚔️ Actions proposées",
+      "colonnes": ["⚔️ N°", "🏷️ L'action", "🗝️ Réalise", "📝 Ce qu'on fait", "📍 Où", "🪶 Office", "🧰 Moyens", "⛓️ Dépend de", "👁️ La preuve", "⏳ État"],
+      "lignes": [
+        {"cellules": ["**93120**", "🔗 Raccorder le texte des étiquettes au nom courant servi", "93110 · 93210", "Résoudre chaque chaîne par l'adresse de salle depuis les intérieurs courants, tout en conservant au plan les données nécessaires au placement et à la préséance.", "Container monde", "à désigner", "M104", "", "Après rechargement, quai, bassin et témoin concordent entre service et DOM sans changement spatial.", "**proposée**"]},
+        {"cellules": ["**93320**", "🧪 Déposer la garde différentielle service-écran", "93310 · 93410", "Automatiser l'épreuve headless avec deux renommages, un témoin, une absence et une collision; rendre adresse, valeur servie, valeur composée et motif de silence.", "Container bancs", "à désigner", "M104 · M109", "93120", "Le défaut actuel est reproduit en rouge, la correction passe, puis une divergence réintroduite échoue avec sa couche exacte.", "**proposée**"]}
+      ]
+    }
+  ]
+}

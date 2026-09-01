@@ -20,6 +20,7 @@ python -m unittest discover -s scripts/tests -p "test_*.py"
 | `test_depeche_contextes.py` | les appels hommes : session stable et fil de chambre distincts par item d'affaire, transmission CLI et sûreté du chemin |
 | `test_copier_claude_vers_agents.py` | le miroir récursif `CLAUDE.md` → `AGENTS.md`, l'écrasement et le mode de vérification sans écriture |
 | `test_comptoir_moyens.py` | le contrat de comparaison M110 : conformité, dérive, sources des deux valeurs et registre incomplet |
+| `test_relire_reveil.py` | la relecture factuelle des reçus : cause, artefact, parole, aucune sortie visible et refus des contradictions |
 | `essai_occupation.py` | 30 cas d'occupation et d'invariants, sur un `etat/` jetable |
 
 **Rien ne touche le vrai dépôt.** `essai_occupation.py` détourne `occupation.ETAT`

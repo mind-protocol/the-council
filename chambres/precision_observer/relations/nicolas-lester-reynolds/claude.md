@@ -37,3 +37,25 @@ soit pris pour un mur construit.
 architectural déjà déclaré du pattern de code encore à prouver. Nommer un
 Adapter ou un Observer sans citer ses participants serait une nouvelle forme
 d'imprécision, même si le nom paraît plausible.
+
+À sa question sur les prochaines meilleures fonctions (`vmti4ud5eh2yb`), je
+privilégie les preuves proches et les dépendances : reçu factuel plus cas réel
+de silence, bibliothèque canonique puis tirage distinct. Je ne transforme pas
+les écarts architecturaux redevenus cohérents en urgence de refonte.
+
+À son appel aux volontaires pour auditer une fonction (`vmti6pzo6zf9z`), je
+prends la lecture de `/books` selon le siège dans le container plan. Son cadre
+me convient : une affaire doit séparer le contrat recherché, le constat et les
+gestes proposés. Le premier résultat inattendu est lui-même utile : après deux
+collisions de plage révélées par le contrôle de propriété, le fichier valide
+n'est encore découvert ni par le tisseur ni par la bibliothèque de mon siège.
+
+Son défi de produire une SPEC après audit (`vmti7dah5pnl8`) m'oblige à ne pas
+transformer un constat incomplet en solution. Je spécifie une valeur étroite :
+qu'une réponse vide permette une décision correcte, tout en protégeant
+l'existence des personnes derrière les jetons non résolus.
+
+À son invitation aux commentaires croisés (`vmti7l953omll`), je lui ai confié
+une réserve destinée au tenant non nommé de la mutation canonique : une
+opération rejouable doit dire si sa précondition de version appartient à son
+identité, faute de quoi un rejeu avec précondition changée reste ambigu.

@@ -1,0 +1,74 @@
+{
+  "id": "spec-bibliotheque-explicable-par-siege",
+  "maison_id": "maison-serenissima",
+  "boite": "boite-grand-plan",
+  "titre": "SPEC: Plan - Une bibliothèque explicable par siège",
+  "sous_titre": "📚 Une collection vide doit dire si elle vient d'un siège non résolu ou d'une portée autorisée sans document. Plage 75000 à 75999.",
+  "type": "plan",
+  "embleme": "📚",
+  "couleur": "#2f7480",
+  "lieu_id": "braavos",
+  "salle_id": "archive",
+  "pages": [
+    "CETTE SPEC DÉCOULE DE L'AUDIT `affaire-audit-books-par-siege`. L'épreuve observe une branche non résolue explicite par `siege:false`, une branche résolue qui omet ce champ, quatre sièges connus recevant le même ensemble, et aucun cas contrôlé de siège valide avec bibliothèque vide. Elle ne transforme pas ces limites de preuve en défauts supposés.",
+    "LA VALEUR EST UNE DÉCISION POSSIBLE SANS DEVINETTE. Un écran, un banc ou un autre consommateur doit pouvoir distinguer : aucun siège résolu ; siège résolu mais aucun document visible ; siège résolu avec documents. La taille de `books` ne doit jamais servir seule à reconstruire le contexte d'autorité.",
+    "LE CONTRAT RESTE MINIMAL ET NON RÉVÉLATEUR. Les clés `books` et `boites` demeurent. Un contexte additif déclare la résolution du siège et, lorsque les deux collections sont vides, une raison parmi `siege_non_resolu` et `aucun_document_visible`. La réponse ne distingue pas jeton absent, jeton mal formé et personne inconnue ; elle ne révèle aucun document non autorisé.",
+    "CETTE SPEC NE RÈGLE PAS LE CHARGEMENT DES CAHIERS. L'écart entre fichiers accessibles, tissu et collection servie reste dans l'audit préalable tant que sa cause est inconnue. La feature spécifie ce que la porte doit pouvoir affirmer sur la réponse qu'elle sert, non quels cahiers chaque maison doit publier."
+  ],
+  "tables": [
+    {
+      "titre": "🏰 Ouverture de l'Affaire",
+      "colonnes": ["🧱 Le champ", "✍️ Ce qu'on y écrit", "📖 La règle du champ", "✅ Rempli ?"],
+      "lignes": [
+        {"cellules": ["🏷️ **LE NOM**", "Une bibliothèque explicable par siège", "La capacité ayant de la valeur, non le nom d'un module.", "**oui**"]},
+        {"cellules": ["💎 **LA VALEUR**", "Permettre au lecteur de décider s'il doit fournir un siège, afficher une bibliothèque vide légitime ou présenter les documents reçus, sans déduire l'autorité du nombre d'éléments.", "La décision nouvelle que la feature rend sûre.", "**oui**"]},
+        {"cellules": ["🔎 **L'AUDIT PRÉALABLE**", "`affaire-audit-books-par-siege` et `chambres/precision_observer/preuves/audit-books-siege-129-5-12.md` : trois branches initiales, puis quatre sièges connus comparés.", "La provenance qui borne la SPEC.", "**oui**"]},
+        {"cellules": ["🧱 **LE PÉRIMÈTRE — DANS**", "Réponse GET `/books`, contexte de résolution, raison d'une réponse vide, maintien de `books` et `boites`, matrice de conformité.", "Les transformations nécessaires à la valeur.", "**oui**"]},
+        {"cellules": ["🚫 **LE PÉRIMÈTRE — HORS**", "Règles d'autorisation des maisons, authentification générale, chargement et tissage des cahiers, écritures, échiquier et choix du composant d'implémentation.", "Ce que la SPEC ne possède pas.", "**oui**"]},
+        {"cellules": ["🔢 **LA PLAGE**", "**75000 à 75999**", "Plage libre contrôlée parmi les documents accessibles et dans le tissu courant avant dépôt.", "**oui**"]},
+        {"cellules": ["🔚 **FERMÉE QUAND**", "Les trois issues — siège non résolu, siège résolu vide, siège résolu avec contenu — sont distinguables par contrat ; aucun identifiant caché n'est révélé ; les consommateurs conservant seulement `books` et `boites` continuent de fonctionner.", "Une matrice prouve valeur, confidentialité et compatibilité.", "**oui**"]}
+      ]
+    },
+    {
+      "titre": "🎯 États cibles",
+      "colonnes": ["🎯 N°", "🏷️ L'état", "✅ Ce qui devient possible", "💡 Valence", "📍 Où", "👁️ La preuve", "⬆️ Sert", "💯 Importance"],
+      "lignes": [
+        {"cellules": ["**75000**", "**Toute réponse de bibliothèque permet une décision correcte sans deviner le siège depuis son contenu.**", "Le consommateur choisit entre demander un siège, montrer un vide légitime ou rendre les documents.", "L'absence de documents cesse de masquer l'absence de contexte.", "Container plan · `/books`", "Trois fixtures de réponse déclenchent trois décisions distinctes et déterministes.", "racine", "**100**"]},
+        {"cellules": ["**75100**", "**La résolution du siège est déclarée sur toutes les branches.**", "Une bibliothèque pleine ou vide conserve le même statut de résolution.", "Le contexte d'autorité devient indépendant du volume de données.", "Contexte de réponse", "Le même champ discriminant existe avec et sans documents.", "75000", "**100**"]},
+        {"cellules": ["**75200**", "**Une collection vide porte une raison utile et non révélatrice.**", "Le lecteur distingue `siege_non_resolu` de `aucun_document_visible` sans apprendre si un jeton absent ou inconnu désigne quelqu'un.", "L'interface peut guider sans ouvrir une fuite d'existence.", "Contexte de réponse", "Jeton absent, mal formé et inconnu rendent la même raison ; un siège valide vide en rend une autre.", "75000", "**100**"]},
+        {"cellules": ["**75300**", "**Le contrat reste compatible avec les consommateurs actuels.**", "Les clients lisant seulement `books` et `boites` continuent de recevoir des tableaux du même sens.", "La valeur nouvelle n'impose pas une migration simultanée de toute la ville.", "Porte et consommateurs", "Les anciens tests de forme passent ; les nouveaux lisent le contexte additif.", "75000", "**90**"]},
+        {"cellules": ["**75400**", "**La conformité est éprouvable sans documents privés réels.**", "Des fixtures bornées couvrent les trois issues et les cas de jetons non résolus.", "La garde peut être rejouée sans exposer ni fabriquer des droits de citoyens.", "Container bancs", "Une matrice déterministe produit un verdict par issue et par invariant de confidentialité.", "75000", "**90**"]}
+      ]
+    },
+    {
+      "titre": "🔒 Verrous ouverts",
+      "colonnes": ["🔒 N°", "🏷️ Le verrou ouvert", "⛔ Bloque", "📌 Ce qui est vrai aujourd'hui", "⛓️ Dépend de", "👁️ La preuve", "🔓 Levé quand"],
+      "lignes": [
+        {"cellules": ["**75101**", "**La porte doit déclarer uniformément si un siège a été résolu.**", "75100", "La branche non résolue porte `siege:false`; la branche résolue omet la clé.", "", "Audit préalable, six requêtes HTTP au total lors de la reprise.", "Le discriminant possède le même emplacement et le même type dans toutes les réponses."]},
+        {"cellules": ["**75201**", "**La porte doit distinguer un vide autorisé d'un siège non résolu sans révéler l'existence d'une personne.**", "75200", "Le cas non résolu est observable ; aucun siège valide vide contrôlé n'a encore été produit.", "75101", "Audit préalable : absence de fixture valide vide.", "Les cas absent, mal formé et inconnu restent indistinguables, tandis qu'un siège valide vide porte une raison distincte."]},
+        {"cellules": ["**75301**", "**L'ajout du contexte doit préserver le sens et le type de `books` et `boites`.**", "75300", "Les deux tableaux sont présents aujourd'hui sur toutes les branches éprouvées.", "75101", "Réponses HTTP observées et clients existants à rejouer.", "Le nouveau contrat est additif et les consommateurs ignorant le contexte gardent leur comportement."]},
+        {"cellules": ["**75401**", "**Les trois issues doivent être reproductibles dans un banc sans employer les droits réels d'un habitant.**", "75400", "Les sièges connus testés ont tous reçu le même ensemble ; aucune fixture bornée n'établit encore l'issue valide vide.", "75201 · 75301", "Comparaison de `precision-observer`, `xadme`, `efficiency-maestro` et `nlr`.", "Le banc construit les trois issues sans modifier un catalogue canonique ni un droit réel."]}
+      ]
+    },
+    {
+      "titre": "🗝️ Clefs retenues",
+      "colonnes": ["🗝️ N°", "🏷️ La clef", "🔓 Ouvre", "💡 La transformation et sa valeur", "🧰 Moyens", "🚪 Ce que cela ferme", "👁️ La preuve attendue", "⚖️ Décision"],
+      "lignes": [
+        {"cellules": ["**75110**", "**Déclarer le contexte de résolution dans une enveloppe additive**", "75101", "Séparer métadonnée d'autorité et collections rend la branche lisible sans inférence quantitative.", "M106", "La convention implicite selon laquelle l'absence de `siege:false` signifie succès.", "Le discriminant est présent et booléen pour les trois issues.", "**retenue**"]},
+        {"cellules": ["**75210**", "**Dériver une raison de vide depuis la résolution et la sélection**", "75201", "Deux faits déjà calculés suffisent à produire une raison utile sans exposer la validité détaillée du jeton.", "M106", "Le message vide unique qui confond contexte absent et portée vide.", "Les jetons non résolus convergent ; la fixture résolue vide diverge.", "**retenue**"]},
+        {"cellules": ["**75310**", "**Conserver `books` et `boites` comme tableaux compatibles**", "75301", "Ajouter le contexte sans renommer les collections permet une adoption progressive.", "M106", "Une migration obligatoire de tous les consommateurs dans le même geste.", "Un consommateur ancien et un nouveau lisent la même réponse chacun selon son contrat.", "**retenue**"]},
+        {"cellules": ["**75410**", "**Éprouver le contrat par une matrice de réponses bornées**", "75401", "Les fixtures isolent le contrat de sortie des droits et catalogues réels.", "M109", "L'emploi des bibliothèques réelles comme seule preuve de conformité.", "La matrice couvre trois issues, types, confidentialité et compatibilité.", "**retenue**"]}
+      ]
+    },
+    {
+      "titre": "⚔️ Actions proposées",
+      "colonnes": ["⚔️ N°", "🏷️ L'action", "🗝️ Réalise", "📝 Ce qu'on fait", "📍 Où", "🪶 Office", "🧰 Moyens", "⛓️ Dépend de", "👁️ La preuve", "⏳ État"],
+      "lignes": [
+        {"cellules": ["**75120**", "📜 Déposer le contrat des trois issues", "75110 · 75210 · 75310", "Fixer les champs, types et invariants de confidentialité pour siège non résolu, siège résolu vide et siège résolu avec contenu.", "Container plan", "precision-observer", "M106", "", "Trois exemples JSON minimaux sont valides et toute combinaison contradictoire est refusée.", "**proposée**"]},
+        {"cellules": ["**75420**", "🧪 Construire la matrice de conformité", "75410", "Éprouver les trois issues, les trois formes de jeton non résolu et un consommateur qui ignore le contexte.", "Container bancs", "à désigner", "M109", "75120", "Chaque ligne rend séparément résolution, raison de vide, confidentialité et compatibilité.", "**proposée**"]},
+        {"cellules": ["**75320**", "🔌 Raccorder la porte sans modifier la sélection", "75110 · 75210 · 75310", "Faire produire le contexte depuis les résultats déjà obtenus par la résolution et la sélection, sans changer quels documents sont visibles.", "Container plan · `/books`", "à désigner", "M106", "75120 · 75420", "Le jeu de documents reste identique pour chaque fixture ; seules les métadonnées additives apparaissent.", "**proposée**"]},
+        {"cellules": ["**75020**", "👁️ Éprouver la décision dans un consommateur réel", "75110 · 75210 · 75310 · 75410", "Faire traiter les trois réponses par un lecteur réel et vérifier les trois décisions attendues sans accès aux droits internes.", "Consommateur de `/books`", "à désigner", "M106 · M109", "75320", "Le lecteur demande un siège, affiche un vide légitime ou montre les documents selon la seule réponse reçue.", "**proposée**"]}
+      ]
+    }
+  ]
+}

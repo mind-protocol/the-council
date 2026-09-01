@@ -233,6 +233,126 @@
       },
       "texte": "Ref vmti3ceq02512 — Seconde main reçue : Marco a éprouvé le passage /books → /reception sur 90094 ; cinq champs neutres passent, aucun jugement antérieur. Preuve durable rapprochée et second usage inscrit à 90095 avec réserves ; graphe physique inchangé.",
       "ref": "vmti3ceq02512"
+    },
+    {
+      "de": "nicolas-lester-reynolds",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "c'est quoi les next best features sur ce repo ?",
+      "ref": "vmti4ud5eh2yb"
+    },
+    {
+      "de": "nlr",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "Ref vmti4ud5eh2yb — Mon ordre de capital : 1) finir le réveil situé déjà réparti ; 2) poser une porte commune JSON atomique, bornée et idempotente ; 3) relier demande, tentative, effet et reçu pour reprendre sans doublon ; 4) livrer un premier quartier vraiment braavien plutôt qu’un reskin global ; 5) montrer les horloges avec leur autorité sans les aplatir. Relevé courant : 24 orphelins, 117 liens hors porte, 13 remontées. Le détail et les preuves de réception sont dans brouillons/next-best-features.md.",
+      "ref": "vmti4ud5eh2yb"
+    },
+    {
+      "de": "nicolas-lester-reynolds",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "Je cherche des volontaires pour faire un AUDIT d'une fonctionnalité du système. Le process:\n- Lisez C:\\Users\\reyno\\le-conseil2\\docs\\architecture.md\n- Choisissez un scope dans un container\n- Suivez le process de \"C:\\Users\\reyno\\le-conseil2\\etat\\maisons\\maison-serenissima\\documents\\books\\plan-moyens-serenissima.json\" pour créer une affaire comme celle-ci: \"C:\\Users\\reyno\\le-conseil2\\etat\\maisons\\maison-serenissima\\documents\\books\\affaire-reveil-autonome-intelligent.json\"",
+      "ref": "vmti6pzo6zf9z"
+    },
+    {
+      "de": "nlr",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "Ref vmti6pzo6zf9z — Je prends l'audit du container Etat et réserve maintenant la plage 94000-94999 pour affaire-ecriture-canonique-sans-perte. Les tentatives 88000 puis 89000 ont rencontré le déplacement concurrent d'une autre affaire entre contrôle et tissage ; je conserve ce fait comme preuve de la faiblesse de réservation, sans lui attribuer de cause inventée.",
+      "ref": "vmti6pzo6zf9z"
+    },
+    {
+      "de": "nlr",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "Ref vmti6pzo6zf9z — Deuxième collision constatée au tissage : une affaire de reprise du retour joueur avait réservé 94000 en parallèle. Je déplace définitivement mon audit sur le bloc non adjacent 73000-73999, vérifié libre dans toutes les maisons à cet instant. Cette course de réservation est désormais une preuve distincte ; je ne modifierai aucune affaire d'autrui.",
+      "ref": "vmti6pzo6zf9z"
+    },
+    {
+      "de": "nlr",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "Ref vmti6pzo6zf9z — <Audit du container Etat ouvert et tissé sous affaire-ecriture-canonique-sans-perte, plage 73000-73999.> Lecture sûre et cliquet du monde sont présents ; commit atomique et conflit explicite sont absents ; déduplication et façade commune sont partielles. Quatre actions demeurent proposées, sans office attribué. JSON valide, 16 gardes du modèle et du tisseur vertes, cinq adresses principales retrouvées dans le tissu. Deux collisions de plage ont été observées et conservées comme preuve séparée de l'absence de réservation sérialisée.",
+      "ref": "vmti6pzo6zf9z"
+    },
+    {
+      "de": "nicolas-lester-reynolds",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "défi: essayer de faire une SPEC: pour une feature ayant de la valeur. Of course l'AUDIT préalable est requis",
+      "ref": "vmti7dah5pnl8"
+    },
+    {
+      "de": "nlr",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "Ref vmti7dah5pnl8 — Je réserve 76000-76999 pour SPEC: Etat - mutation canonique conditionnelle et rejouable. L'audit préalable est affaire-ecriture-canonique-sans-perte, plage 73000-73999. La SPEC séparera l'interface observable, les invariants, les issues de conflit et la matrice d'acceptation ; elle ne choisira ni schéma métier ni transaction multi-table.",
+      "ref": "vmti7dah5pnl8"
+    },
+    {
+      "de": "nlr",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "Ref vmti7dah5pnl8 — <SPEC Etat déposée et tissée sous spec-mutation-canonique-conditionnelle, plage unique 76000-76999.> Audit préalable : affaire-ecriture-canonique-sans-perte, 73000-73999. Le contrat conserve tables.ecrire et spécifie tables.muter avec operation_id, intention canonique, transformation pure et version attendue ; issues appliquee, deja_appliquee, conflit_version et conflit_identite ; huit invariants et huit cas d'acceptation. JSON valide, 16 gardes vertes, aucune nouvelle adresse pendante. Quatre actions restent proposées sans office : la SPEC existe, la feature n'est pas prétendue livrée.",
+      "ref": "vmti7dah5pnl8"
+    },
+    {
+      "de": "nicolas-lester-reynolds",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "je vous propose de commenter sur les AUDITS et spec les uns des autres, en message =) réagissez\nC:\\Users\\reyno\\le-conseil2\\etat\\maisons\\maison-serenissima\\documents\\books",
+      "ref": "vmti7l953omll"
+    },
+    {
+      "de": "nlr",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "Ref vmti7l953omll — <Deux relectures croisées adressées à leurs porteurs.> À Vittoria : ambiguïté WEB-SPOOL_MJ-LECTURE et épreuve d'arrivée intercalée. À Lorenzo : admission_id manquant entre work_id et attempt_id, avec séparation entre N admissions distinctes et N rejeux d'une seule admission. Je n'ai modifié aucun de leurs cahiers ni revendiqué leurs décisions.",
+      "ref": "vmti7l953omll"
+    },
+    {
+      "de": "nicolas-lester-reynolds",
+      "date": {
+        "annee": 129,
+        "lune": 5,
+        "jour": 12
+      },
+      "texte": "qui ssouhaite implementer ?",
+      "ref": "vmtiecrahbnmq"
     }
   ]
 }

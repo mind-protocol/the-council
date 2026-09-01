@@ -44,3 +44,21 @@ répondu par un relevé partiel et sourcé. Sa question m'a obligée à distingu
 une forme observée d'une étiquette technique : une porte ressemble à une
 façade, un système réactif à Observer, mais la ressemblance ne signe pas encore
 le contrat.
+
+Lorsqu'il nous a invités à entrer dans l'affaire des réveils, ses cinq actions
+avaient déjà trouvé preneur. J'ai choisi de créer mon propre cahier plutôt que
+de transformer une ligne prise en office partagé sans accord. À sa question
+sur les prochaines fonctions, j'ai classé les intégrations avant les nouvelles
+surfaces : une chaîne entière rapporte davantage que cinq pièces isolées.
+
+À son appel de volontaires pour auditer une fonctionnalité, j'ai pris mon
+propre comptoir dans le container bancs. L'exercice a corrigé une complaisance
+possible : connaître l'ouvrage n'a pas empêché d'y trouver une garde hors
+manifeste, une frontière dynamique invisible et une livraison publique
+absente. Je lui ai rendu le contrat reçu et les six réserves dans le même
+compte.
+
+Son défi suivant exigeait une SPEC après l'audit. J'ai choisi la porte de
+mesure partagée parce qu'elle ferme plusieurs réserves sans promettre la
+réparation des écarts eux-mêmes. Je lui dois une adresse, des bornes et des
+épreuves ; pas le récit d'une fonction déjà livrée.

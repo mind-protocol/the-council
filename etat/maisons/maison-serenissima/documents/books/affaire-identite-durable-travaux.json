@@ -1,0 +1,107 @@
+{
+  "id": "affaire-identite-durable-travaux",
+  "maison_id": "maison-serenissima",
+  "boite": "boite-grand-plan",
+  "titre": "AUDIT: Agents - L'identité durable des travaux",
+  "sous_titre": "🪪 Une demande continue garde son identité, distingue ses tentatives et libère toujours son registre. Plage 87000 à 87999.",
+  "type": "plan",
+  "embleme": "🪪",
+  "couleur": "#526d78",
+  "lieu_id": "braavos",
+  "salle_id": "archive",
+  "pages": [
+    "CETTE AFFAIRE AUDITE UNE CAPACITÉ DU CONTAINER AGENTS. Une même demande doit conserver son travail à travers les reprises, tandis que chaque admission reçoit une tentative distincte. L'identité stable ne doit ni fusionner deux effets différents, ni fabriquer un nouveau travail à chaque session.",
+    "SQLITE EST L'AUTORITÉ COURANTE, MAIS SA PRÉSENCE NE PROUVE PAS LA COMPOSITION. Le module expose admission, relecture, progression, terme et migration de l'ancien JSON. Le runtime synchrone, le worker et la dépêche consomment ces gestes par plusieurs chemins. L'audit doit suivre chaque chemin jusqu'au même état durable.",
+    "UN VERROU WINDOWS A ÉTÉ OBSERVÉ APRÈS LE BANC COMPLET. Ce fait ne désigne pas encore son auteur. Les connexions du module sont fermées par contexte ou `finally`; un fixture ouvre aussi directement SQLite. L'épreuve doit attribuer le handle avant de corriger, puis présenter un cas concurrent recevable après toute réparation.",
+    "UNE TENTATIVE N'EST PAS UN TRAVAIL ET UN SUCCÈS DE CALCUL N'EST PAS UN TERME. Le registre doit conserver séparément l'identité logique, les essais, leur résultat compute, la progression courante et la clôture durable explicitement demandée.",
+    "L'AUDIT DES SORTIES A TROUVÉ UNE RÉÉCRITURE TERMINALE. Sur échec fournisseur, le runtime inscrit l'événement compute puis la dépêche ou le worker réécrit la même tentative avec un événement nul. Une contre-épreuve montre aussi qu'un terme réussi peut être remplacé par un terme échoué. La feature spécifiée est donc une terminaison monotone : répétition identique idempotente, contradiction refusée, un seul propriétaire par branche."
+  ],
+  "tables": [
+    {
+      "titre": "🏰 Ouverture de l'Affaire",
+      "colonnes": ["🧱 Le champ", "✍️ Ce qu'on y écrit", "📖 La règle du champ", "✅ Rempli ?"],
+      "lignes": [
+        {"cellules": ["🏷️ **LE NOM**", "AUDIT: Agents - L'identité durable des travaux", "Un audit de la feature d'identité continue du container agents.", "**oui**"]},
+        {"cellules": ["🎯 **L'OBJET**", "Garantir qu'une demande continue conserve une identité stable, distingue toutes ses tentatives et termine sans ambiguïté ni ressource abandonnée.", "Une capacité observable du système, pas seulement une classe SQLite.", "**oui**"]},
+        {"cellules": ["🧱 **LE PÉRIMÈTRE — DANS**", "Construction de la clef de travail, admission séquentielle et concurrente, progression, terminaison, observation, migration JSON et durée de vie des connexions.", "Les transformations de M127 et leurs consommateurs directs.", "**oui**"]},
+        {"cellules": ["🚫 **LE PÉRIMÈTRE — HORS**", "Le choix du travail à lancer, le contenu d'une journée, l'ordonnancement général des agents et la qualité de leurs productions.", "L'identité transporte le travail; elle ne le choisit ni ne le juge.", "**oui**"]},
+        {"cellules": ["📌 **L'ORIGINE OBSERVÉE**", "M127 emploie SQLite comme autorité, importe un ancien JSON de façon répétable et est consommé par la dépêche, le runtime et son worker. Les épreuves isolées couvrent reprise, concurrence, progression, terme et migration. Le banc complet a rencontré sous Windows un fichier temporaire encore ouvert; son propriétaire exact reste à établir.", "Les capacités présentes et l'écart observé restent séparés.", "**oui**"]},
+        {"cellules": ["🔢 **LA PLAGE**", "**87000 à 87999**", "Plage libre vérifiée dans les cahiers de Serenissima; un bloc de cent par état cible.", "**oui**"]},
+        {"cellules": ["🔚 **FERMÉE QUAND**", "Deux demandes distinctes ne se confondent jamais; une même demande conserve son travail et numérote ses tentatives sans collision sous concurrence; progression et terme se relisent après réouverture; migration et erreurs ne perdent rien; tous les handles sont libérés sur succès comme sur échec.", "La preuve couvre API isolée, consommateurs réels, concurrence et nettoyage Windows.", "**oui**"]}
+      ]
+    },
+    {
+      "titre": "🎯 États cibles",
+      "colonnes": ["🎯 N°", "🏷️ L'état", "✅ Ce qui devient possible", "📍 Où", "👁️ La preuve", "⬆️ Sert", "💯 Importance"],
+      "lignes": [
+        {"cellules": ["**87000**", "**Chaque travail continu possède une identité durable et une histoire exacte.**", "Le système peut reprendre, observer et terminer un travail sans confondre demande, tentative, compute et terme.", "Container agents", "Un trajet réel traverse admission, reprise, progression et terme puis se relit après réouverture.", "racine", "**100**"]},
+        {"cellules": ["**87100**", "**Une demande stable produit un travail stable et des tentatives uniques.**", "Les retries coopèrent sur le même effet tandis que les demandes distinctes restent séparées, y compris sous concurrence.", "Admission M127", "Des admissions séquentielles et concurrentes rendent un seul `work_id`, des numéros monotones et aucun `attempt_id` dupliqué.", "87000", "**100**"]},
+        {"cellules": ["**87200**", "**Progression, résultat de tentative et terme durable restent trois états distincts.**", "Les consommateurs peuvent signaler attente, échec ou succès sans clore implicitement le travail ni écraser son histoire.", "Dépêche, runtime et worker", "Chaque branche terminale produit exactement la transition attendue et la relecture conserve toutes les tentatives.", "87000", "**100**"]},
+        {"cellules": ["**87300**", "**Le registre reste utilisable et libéré après toute opération.**", "Concurrence, exception, migration et observation ne laissent ni transaction suspendue ni handle empêchant sauvegarde, déplacement ou suppression.", "SQLite et bancs Windows", "Après chaque scénario, une seconde connexion écrit et le fichier temporaire peut être supprimé immédiatement.", "87000", "**100**"]},
+        {"cellules": ["**87400**", "**L'ancien registre rejoint l'autorité courante sans écrasement silencieux.**", "Les imports répétés sont idempotents et toute collision d'identité reste quarantainée et relisible.", "Migration JSON vers SQLite", "Deux imports identiques ne doublent rien; une divergence produit un conflit conservé sans remplacer le travail existant.", "87000", "**90**"]}
+      ]
+    },
+    {
+      "titre": "🔒 Verrous ouverts",
+      "colonnes": ["🔒 N°", "🏷️ Le verrou ouvert", "⛔ Bloque", "📌 Ce qui est vrai aujourd'hui", "⛓️ Dépend de", "👁️ La preuve", "🔓 Levé quand"],
+      "lignes": [
+        {"cellules": ["**87101**", "**Les admissions concurrentes doivent conserver un seul travail et des tentatives toutes distinctes.**", "87100", "**LEVÉ le 129.5.12** — l'initialisation WAL rejoue un verrou bref et ferme toute connexion dont l'initialisation échoue; le banc ciblé passe 20 fois sur 20 puis dans la garde générale.", "", "Épreuve concurrente et contenu ordonné de `attempts`.", "Le cas passe de manière répétée dans le banc complet et isolé, sans collision ni dépendance à l'ordre des tests."]},
+        {"cellules": ["**87201**", "**Tous les chemins de sortie doivent terminer la bonne tentative une seule fois.**", "87200", "**CONFIRMÉ le 129.5.12** — CALL et CAST réécrivent l'échec déjà inscrit par le runtime et perdent son `compute_event_id`; un échec de matérialisation après compute peut au contraire laisser la tentative ouverte. `terminer_attempt` accepte aussi le remplacement d'un terme réussi par un terme échoué.", "87101", "Matrice des branches et contre-épreuves sur registre jetable : `compute_event_lost=true`, `term_overwritten=true`.", "La transition atomique rend un replay identique idempotent, refuse tout conflit sans mutation et chaque branche possède un seul auteur terminal."]},
+        {"cellules": ["**87301**", "**Chaque propriétaire de connexion doit libérer son handle sur succès et sur erreur.**", "87300", "**LEVÉ le 129.5.12** — l'API seule libérait déjà le fichier; le fixture conservait sa connexion après son contexte transactionnel, et `_connexion` ne fermait pas son handle lors d'un échec concurrent de `journal_mode=WAL`. Les deux propriétaires ont été corrigés.", "", "Mesure du fichier supprimable après chaque sous-scénario et instrumentation des ouvertures.", "Le handle fautif est nommé, corrigé à son niveau et aucun scénario ne dépend du ramasse-miettes pour nettoyer."]},
+        {"cellules": ["**87401**", "**La migration doit rester répétable et conserver toute collision.**", "87400", "**LEVÉ le 129.5.12** — le scénario distingue maintenant fonction et nettoyage; snapshot initial, enrichissement et collision quarantainée passent 20 fois dans la suite ciblée puis dans la garde générale.", "87301", "Relire travaux, tentatives et conflits après trois snapshots successifs.", "La preuve fonctionnelle et la preuve de libération passent séparément puis ensemble."]}
+      ]
+    },
+    {
+      "titre": "🗝️ Clefs",
+      "colonnes": ["🗝️ N°", "🏷️ La clef", "🔓 Ouvre", "💡 La transformation et sa valeur", "🧰 Moyens", "🧭 Ancrage", "👁️ La preuve attendue", "🔎 Audit initial"],
+      "lignes": [
+        {"cellules": ["**87110**", "**Construire la clef logique depuis l'acteur, le contexte et la ref stable**", "87101", "Une ref présente domine l'identifiant de session afin qu'une reprise change de tentative sans changer de travail.", "M127", "`cle_depeche` puis `admettre`.", "Deux sessions portant la même ref partagent le travail; deux refs ou acteurs distincts ne le partagent pas.", "**présente, composition à éprouver**"]},
+        {"cellules": ["**87111**", "**Sérialiser l'admission et contraindre les identités**", "87101", "La transaction immédiate et les unicités SQLite rendent les numéros monotones sans verrou applicatif séparé.", "M127", "`_transaction` et tables `works` / `attempts`.", "Un lot concurrent répété conserve un seul travail et exactement N tentatives de 1 à N.", "**présente, stabilité du banc complet à éprouver**"]},
+        {"cellules": ["**87210**", "**Faire converger chaque sortie vers une transition terminale explicite**", "87201", "Les consommateurs transmettent l'identité complète et distinguent fin de tentative de terme durable.", "M105 · M127", "Dépêche, runtime, runtime worker et `terminer_attempt`.", "La matrice succès, échec, worker et exception ne perd ni ne double une transition.", "**partielle, composition non prouvée**"]},
+        {"cellules": ["**87310**", "**Borner chaque connexion à son véritable propriétaire**", "87301", "Toute ouverture possède une fermeture déterministe au même niveau; un contexte transactionnel ne doit pas être confondu avec la durée de vie de la connexion.", "M127 · M109", "`_connexion`, `_transaction`, lecteurs et fixtures SQLite.", "Le fichier est supprimable immédiatement après chaque opération, sans `gc.collect` ni attente.", "**partielle, verrou Windows observé**"]},
+        {"cellules": ["**87410**", "**Importer par empreinte et quarantainer les divergences**", "87401", "L'empreinte du snapshot rend l'import idempotent; une identité concurrente devient une pièce de conflit plutôt qu'un remplacement.", "M127", "`_snapshot_json`, `_migrer_json`, tables `migrations` et `migration_conflicts`.", "Répétition, enrichissement puis collision conservent toutes les données attendues.", "**présente, nettoyage à séparer de la fonction**"]}
+      ]
+    },
+    {
+      "titre": "⚔️ Actions",
+      "colonnes": ["⚔️ N°", "🏷️ L'action", "🗝️ Réalise", "📝 Ce qu'on fait", "📍 Où", "🪶 Office", "🧰 Moyens", "⛓️ Dépend de", "👁️ La preuve", "⏳ État"],
+      "lignes": [
+        {"cellules": ["**87120**", "🧵 Éprouver la stabilité logique et la concurrence", "87110 · 87111", "Rejouer mêmes refs, refs distinctes et lots concurrents; comparer identité, effet, numéros et tentatives persistées.", "Container bancs", "system-diagnostician", "M109 · M127", "", "Un rapport structuré rend les invariants et les écarts sans modifier le registre réel.", "**faite le 129.5.12 — 20/20 ciblés puis garde générale verte**"]},
+        {"cellules": ["**87220**", "🔀 Traverser toutes les sorties de dépêche et de worker", "87210", "Construire une matrice des chemins synchrones et asynchrones, succès, échec et exception; observer leur écriture terminale.", "Container agents et bancs", "system-diagnostician", "M105 · M109 · M127", "87120", "Chaque scénario relit tentative, compute, progression et terme attendus; toute double écriture est nommée.", "**faite le 129.5.12 — doubles CALL/CAST et sortie post-compute ouverte nommés**"]},
+        {"cellules": ["**87221**", "🧷 Rendre la transition terminale monotone", "87210", "Remplacer la mise à jour libre par une transition atomique : première conclusion inscrite, replay exact idempotent, contradiction refusée sans mutation; appliquer la même règle au terme durable.", "M127", "à prendre", "M109 · M127", "87220", "Les replays exacts ne changent ni horodatage ni preuve; état, compute, artefact ou tentative contradictoires rendent une erreur typée et la première écriture reste identique.", "**proposée**"]},
+        {"cellules": ["**87222**", "🧭 Nommer un seul propriétaire pour chaque sortie", "87210", "Attribuer l'échec fournisseur au runtime, les succès matérialisés à la dépêche ou au worker, et les échecs post-compute à la couche qui matérialise; retirer les écritures de rattrapage concurrentes.", "M105 et runtime worker", "à prendre", "M109 · M127", "87221", "Chaque case de la matrice appelle une seule transition terminale et transporte le dernier `compute_event_id` connu.", "**proposée**"]},
+        {"cellules": ["**87223**", "🧪 Sceller la matrice d'acceptation", "87210", "Éprouver CALL et CAST sur succès, échec fournisseur, échec avant compute, échec après compute, dépôt absent, replay exact et replay conflictuel.", "Container bancs", "à prendre", "M109 · M127", "87221 · 87222", "Neuf scénarios relisent tentative, état de travail et terme; aucun ne perd une preuve, ne double un effet ni clôt implicitement le travail.", "**proposée**"]},
+        {"cellules": ["**87320**", "🔬 Attribuer le handle Windows avant de corriger", "87310", "Instrumenter séparément API, migration et fixture; tester la suppression immédiate du fichier après chacun, puis corriger uniquement le propriétaire démontré.", "Container bancs et M127", "system-diagnostician", "M109 · M127", "", "Le premier sous-scénario qui retient le fichier nomme l'ouverture fautive; un témoin recevable continue de passer après correction.", "**faite le 129.5.12 — fixture et échec d'initialisation attribués séparément**"]},
+        {"cellules": ["**87420**", "📦 Séparer la preuve de migration de la preuve de nettoyage", "87410", "Rejouer snapshot identique, snapshot enrichi et collision, puis fermer explicitement chaque lecteur externe avant le verdict de nettoyage.", "Container bancs", "system-diagnostician", "M109 · M127", "87320", "Fonction, conflit et libération rendent trois verdicts distincts puis un scénario composé vert.", "**faite le 129.5.12 — migration, conflit et nettoyage passent ensemble**"]}
+      ]
+    },
+    {
+      "titre": "📐 SPEC v1 — Terminaison monotone des tentatives",
+      "colonnes": ["📐 Clause", "Règle normative", "Valeur observable", "Preuve d'acceptation"],
+      "lignes": [
+        {"cellules": ["**S1 — Identités**", "Toute terminaison porte le couple exact `work_id` / `attempt_id`; une tentative étrangère ou inconnue est refusée.", "Aucun résultat ne peut être attaché au mauvais travail.", "Une identité croisée échoue et les deux travaux restent octet pour octet inchangés."]},
+        {"cellules": ["**S2 — Première conclusion**", "Une tentative passe d'un état non terminal à `succeeded` ou `failed` par une seule transition atomique. Cette première conclusion fixe `state`, `compute_event_id` et `ended_at`.", "La preuve d'exécution ne peut plus être effacée par une couche tardive.", "Après la transition, une relecture rend exactement le triplet initial."]},
+        {"cellules": ["**S3 — Replay**", "Le replay du même `state` et du même `compute_event_id` est idempotent et ne change aucune donnée. Tout replay différent rend `TransitionTerminaleInvalide` et ne mute rien.", "Les retries réseau sont sûrs tandis que les contradictions deviennent visibles.", "Replay exact vert sans changement d'horodatage; replay avec état ou compute différent explicitement refusé."]},
+        {"cellules": ["**S4 — Terme durable**", "Le terme n'est écrit que sur demande `term=true`. Son premier tuple `attempt_id`, `state`, `compute_event_id`, `artifact` est immuable; un replay exact est idempotent, un conflit est refusé.", "Un ouvrage ou un abandon durable ne peut pas être remplacé silencieusement.", "Un terme A demeure identique après une tentative de remplacement B."]},
+        {"cellules": ["**S5 — Échec et reprise**", "Une tentative échouée sans terme reste une tentative close mais un travail reprenable. Seul un terme explicite clôt durablement le travail; `succeeded` sans artefact peut rester sans terme.", "Échec d'essai et abandon du travail ne sont plus confondus.", "Une nouvelle admission du même travail crée la tentative suivante après un échec non terminal."]},
+        {"cellules": ["**S6 — Propriétaires**", "Le runtime possède l'échec fournisseur et son événement compute; la dépêche possède le résultat synchrone matérialisé; le worker possède le résultat CAST matérialisé. La couche qui échoue après compute termine avec l'événement déjà rendu. Un échec avant compute peut seul porter `None`.", "Chaque branche a un auteur, donc ni trou ni double écriture de rattrapage.", "L'instrumentation compte exactement un appel terminal par scénario et vérifie son auteur."]},
+        {"cellules": ["**S7 — Compatibilité d'observation**", "`observer` expose sans ambiguïté toutes les tentatives, leur compute, le terme éventuel et l'état reprenable ou clos; aucune migration existante n'est réinterprétée silencieusement.", "Opérateurs et reprises décident depuis des faits stables.", "Réouverture SQLite et migration relisent les mêmes conclusions avant et après la feature."]}
+      ]
+    },
+    {
+      "titre": "🧪 Acceptation de la SPEC",
+      "colonnes": ["Cas", "Tentative attendue", "Terme attendu", "Invariant particulier"],
+      "lignes": [
+        {"cellules": ["CALL succès matérialisé", "`succeeded` avec compute", "présent", "un seul auteur : dépêche"]},
+        {"cellules": ["CALL échec fournisseur", "`failed` avec compute", "absent", "un seul auteur : runtime"]},
+        {"cellules": ["CALL échec après compute", "`failed` avec compute conservé", "absent", "aucune tentative ouverte"]},
+        {"cellules": ["CAST succès avec dépôt", "`succeeded` avec compute", "présent", "un seul auteur : worker"]},
+        {"cellules": ["CAST succès sans dépôt", "`succeeded` avec compute", "absent", "travail non déclaré durablement clos"]},
+        {"cellules": ["CAST échec fournisseur", "`failed` avec compute", "absent", "aucune réécriture par le worker"]},
+        {"cellules": ["Échec avant compute", "`failed` avec compute nul", "absent", "seul cas où `None` est recevable"]},
+        {"cellules": ["Replay terminal exact", "inchangée", "inchangé", "succès idempotent, mêmes horodatages"]},
+        {"cellules": ["Replay terminal conflictuel", "première conclusion intacte", "premier terme intact", "erreur typée et zéro mutation"]}
+      ]
+    }
+  ]
+}

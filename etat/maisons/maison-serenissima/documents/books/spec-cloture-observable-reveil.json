@@ -1,0 +1,85 @@
+{
+  "id": "spec-cloture-observable-reveil",
+  "maison_id": "maison-serenissima",
+  "boite": "boite-grand-plan",
+  "titre": "SPEC: Agents - La clôture observable d'un réveil",
+  "sous_titre": "🧾 Un réveil produit un reçu factuel, même lorsqu'il ne produit rien de visible.",
+  "type": "plan",
+  "embleme": "🧾",
+  "couleur": "#536878",
+  "lieu_id": "braavos",
+  "salle_id": "archive",
+  "pages": [
+    "VALEUR. Braavos doit pouvoir distinguer une journée achevée sans parole d'une exécution perdue, sans transformer cette distinction en mesure d'obéissance. Cette capacité rend l'autonomie exploitable : le réveil peut être opéré, repris et audité sans imposer une livraison à l'habitant.",
+    "AUDIT PRÉALABLE. Le constructeur ordinaire sert déjà le billet comme percept sans injonction ; la clôture d'un CALL accepte une phrase vide ; le reçu `recu-reveil/1` et sa relecture couvrent parole, artefact et aucune sortie visible. Huit tests ciblés passent. Mais aucun chemin d'exécution n'appelle aujourd'hui le dépôt du reçu : il reste manuel, et le CAST revient avant de connaître son issue.",
+    "CHOIX DE CONTRAT. La conclusion finale du modèle est un retour interne : elle peut devenir mémoire de reprise, mais n'est ni une parole publique ni un artefact civique. Seules les sorties corrélées par une porte canonique comptent comme visibles. Lorsque toutes les sources nécessaires n'ont pas été observées, la clôture dit `observation_incomplete` plutôt que d'inventer un silence.",
+    "LIMITES. La feature ne juge ni l'intention, ni la qualité, ni la justice, ni l'exécution d'un engagement. Elle ne déduit pas l'auteur d'une écriture concurrente par proximité horaire et ne copie pas le contenu protégé des sorties dans le reçu."
+  ],
+  "tables": [
+    {
+      "titre": "🔍 Audit préalable — inventaire 87120",
+      "colonnes": ["Chemin", "Entrée", "Clôture actuelle", "Dette publique ?", "Preuve", "Verdict"],
+      "lignes": [
+        {"cellules": ["CALL · journée", "`mission()` sert contexte, billets et élan", "`depecher()` accepte une phrase vide, écrit le brut et ne crée `demain.md` que si elle existe", "non au runtime ; une conclusion interne est demandée par le texte", "`mission.py` 206–247 et 563–586", "recevable, mais non reçu automatiquement"]},
+        {"cellules": ["CALL · réponse/discussion", "instructions propres au mode", "une phrase vide est acceptée et affichée comme `(muette)`", "le mode demande une réponse par définition ; hors réveil autonome", "`mission.py` 49–83 et 542–561", "hors périmètre de la feature"]},
+        {"cellules": ["Activation graphe", "`appeler_acteur()` compose une tâche ou un verrou", "repasse par `depecher(... mode=journee)`", "oui, mais la dette vient d'un office explicite, pas d'une amorce libre", "`activation/appels.py` 20–70", "hors périmètre des réveils ouverts"]},
+        {"cellules": ["CAST · journée", "même mission, processus détaché", "le lanceur revient avant tout résultat et ne parse aucun rapport", "aucune sortie publique n'est exigée", "`mission.py` 508–514 et `runtime.py` 844–874", "point d'intégration manquant"]},
+        {"cellules": ["Reçu de réveil", "pièce JSON fournie manuellement", "dépôt append-only idempotent", "aucune", "`agents/recu_reveil.py` et sa façade", "porte valide mais non raccordée"]},
+        {"cellules": ["Relecture", "reçu existant", "rapport read-only sans score", "aucune", "`analyse/relire_reveil.py`", "lecture disponible"]}
+      ]
+    },
+    {
+      "titre": "📐 Contrat fonctionnel",
+      "colonnes": ["ID", "Exigence", "Règle exécutable", "Pourquoi"],
+      "lignes": [
+        {"cellules": ["FR-01", "Tout réveil ouvert achevé dépose exactement un reçu", "Un CALL le dépose avant de retourner ; un CAST le dépose dans le worker après terminaison.", "Aucune issue ne disparaît parce qu'elle est silencieuse."]},
+        {"cellules": ["FR-02", "Le reçu distingue exécution et visibilité", "`execution.issue` vaut `terminee`, `echouee` ou `interrompue`; `suites.observation` vaut `sorties_constatees`, `aucune_sortie_visible` ou `observation_incomplete`.", "Une panne n'est pas un silence."]},
+        {"cellules": ["FR-03", "La conclusion finale reste interne", "Le texte rendu par le fournisseur n'entre jamais dans `suites.elements`; son existence est seulement portée par `retour_interne.present`.", "Parler à soi-même n'est pas parler à la cité."]},
+        {"cellules": ["FR-04", "Une sortie visible exige une corrélation forte", "Chaque parole ou artefact porte le même `session_id` ou une `effect_key` issue de cette session. L'heure seule ne suffit jamais.", "Les écritures concurrentes ne doivent pas être attribuées au mauvais habitant."]},
+        {"cellules": ["FR-05", "L'ignorance reste visible", "`aucune_sortie_visible` n'est permis que si tous les observateurs déclarés sont complets ; sinon la valeur est `observation_incomplete` avec les sources manquantes.", "L'absence de preuve n'est pas la preuve du silence."]},
+        {"cellules": ["FR-06", "Le dépôt est idempotent", "Même habitant, session, cause et tentative produisent le même identifiant et une seule ligne append-only.", "Les reprises ne fabriquent pas plusieurs journées."]},
+        {"cellules": ["FR-07", "Le reçu reste descriptif", "Le schéma refuse score, verdict, intention, qualité et conformité.", "L'observation ne devient pas gouvernement des conduites."]}
+      ]
+    },
+    {
+      "titre": "🧱 Interface et données",
+      "colonnes": ["Élément", "Forme proposée", "Autorité", "Contrainte"],
+      "lignes": [
+        {"cellules": ["Porte", "`clore_reveil(contexte, execution, observations) -> recu`", "`scripts/agents/cloture_reveil.py`", "Fonction pure jusqu'au dépôt final."]},
+        {"cellules": ["Contexte", "cause, rendu, habitant, session, tentative, date_jeu, ref, mode", "dépêcheur", "Seulement `mode=journee` avec une cause de réveil déclarée."]},
+        {"cellules": ["Exécution", "issue, fournisseur, commencé_le, terminé_le, retour_interne.present", "runtime", "Le contenu du retour interne n'est pas copié."]},
+        {"cellules": ["Observations", "source, complet, éléments corrélés, inconnus", "parloir, réconciliation et runtime", "Une source incomplète force `observation_incomplete`."]},
+        {"cellules": ["Élément visible", "type (`parole` ou `artefact`), adresse, effect_key", "porte productrice", "Pas de contenu ni d'interprétation dans le reçu."]},
+        {"cellules": ["Registre", "`.agents-runtime/reveils/recus.jsonl`", "runtime local", "Append-only, verrouillé, dépôt idempotent."]},
+        {"cellules": ["Schéma", "`recu-reveil/2`", "module de clôture", "Extension de v1 ; v1 reste lisible."]}
+      ]
+    },
+    {
+      "titre": "✅ Critères d'acceptation",
+      "colonnes": ["ID", "Scénario", "Alors", "Preuve automatisée"],
+      "lignes": [
+        {"cellules": ["AC-01", "CALL terminé, retour interne vide, observateurs complets, aucune sortie", "un reçu unique porte `terminee` + `aucune_sortie_visible`", "test d'intégration en état temporaire"]},
+        {"cellules": ["AC-02", "CALL terminé avec conclusion interne seulement", "le reçu porte `retour_interne.present=true` mais aucune parole", "assertion sur reçu et absence de sortie parloir"]},
+        {"cellules": ["AC-03", "Une parole corrélée est déposée par le parloir", "le reçu porte une adresse de parole et aucun contenu recopié", "fixture parloir avec session_id"]},
+        {"cellules": ["AC-04", "Un artefact corrélé est constaté", "le reçu porte son adresse et son effect_key", "fixture de réconciliation attribuée"]},
+        {"cellules": ["AC-05", "Un observateur échoue ou ne sait pas corréler", "le reçu porte `observation_incomplete`, jamais `aucune_sortie_visible`", "faute injectée sur chaque observateur"]},
+        {"cellules": ["AC-06", "Le fournisseur échoue avant la clôture normale", "le reçu porte `echouee`; aucune conclusion sur la visibilité n'est inventée", "exception runtime injectée"]},
+        {"cellules": ["AC-07", "Le même CALL ou CAST est repris", "une seule pièce finale existe pour la tentative", "double appel du dépôt"]},
+        {"cellules": ["AC-08", "Un CAST se termine après le retour du lanceur", "le worker dépose le même contrat qu'un CALL", "test worker avec attente bornée"]},
+        {"cellules": ["AC-09", "Un reçu contient score, verdict ou intention", "la validation le refuse", "tests négatifs du schéma"]},
+        {"cellules": ["AC-10", "Relecture d'un reçu v1 puis v2", "les deux restent lisibles et sont explicitement versionnés", "test de compatibilité"]}
+      ]
+    },
+    {
+      "titre": "🚢 Livraison bornée",
+      "colonnes": ["Étape", "Livrable", "Garde", "Sortie"],
+      "lignes": [
+        {"cellules": ["1", "Schéma `recu-reveil/2` et constructeur pur", "Aucun raccord runtime", "tests unitaires AC-02, AC-05, AC-06, AC-09, AC-10"]},
+        {"cellules": ["2", "Propagation de `session_id`/`effect_key` aux observateurs", "Aucune inférence par heure", "tests AC-03 et AC-04"]},
+        {"cellules": ["3", "Raccord CALL", "Seulement les réveils déclarés", "AC-01 et AC-07"]},
+        {"cellules": ["4", "Raccord CAST dans le worker", "Même constructeur, aucun second schéma", "AC-08"]},
+        {"cellules": ["5", "Banc des trois issues et relecture", "Empreintes des sources inchangées", "rapport final de l'audit 87000"]}
+      ]
+    }
+  ]
+}

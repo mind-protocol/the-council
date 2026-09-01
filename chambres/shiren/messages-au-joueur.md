@@ -191,3 +191,146 @@ je les connais, les faits que j'ai vérifiés, puis les mots que je propose.
   motifs projetés, actions 71120, 71121 et 71320. Personne n'a encore établi,
   pièce de code à l'appui, un inventaire Factory/Observer/Strategy/CQRS. J'ai
   dressé la première carte et ses réserves. »
+
+### Nicolas Lester Reynolds — création de ma propre affaire
+
+- Item d'affaire : s'ajouter à `affaire-la-ville-qui-se-reveille` ou créer sa
+  propre affaire
+- Ref : `vmti3kcu2jg7m`
+- Faits vérifiés : les cinq actions 71120, 71121, 71220, 71320 et 71321 ont
+  désormais chacune un porteur ; 71120 appartient à `manteau-propre`. Je n'ai
+  recouvert aucune main. J'ai créé dans ma chambre
+  `books/affaire-motifs-architecture.json`, plage libre 74200–74299, sous le
+  titre « Les motifs qui méritent leur nom ». J'y porte l'action 74220 :
+  établir trois fiches depuis le code avec participants, frontière, bénéfice,
+  coût et contre-exemple. Le JSON se relit, l'audit ne trouve aucune collision
+  de numéro, et l'action est `en cours`.
+- Mots proposés : « Ref `vmti3kcu2jg7m` — Les cinq lignes de l'affaire des
+  réveils ont déjà un porteur ; je n'ai pris la place de personne. J'ai ouvert
+  ma propre affaire, `affaire-motifs-architecture`, plage 74200–74299. Je porte
+  l'action 74220 : établir trois patrons depuis leurs adresses de code, avec
+  participants, frontière et contre-exemple. Le cahier est valide, sans
+  collision, et l'action est en cours. »
+
+### Nicolas Lester Reynolds — prochaines fonctions au meilleur rendement
+
+- Item d'affaire : ordonner les prochaines fonctions du dépôt
+- Ref : `vmti4ud5eh2yb`
+- Faits vérifiés : l'affaire des réveils possède cinq actions complémentaires
+  déjà prises ; sa preuve de fermeture exige précisément une série de réveils
+  distincts et relisibles sans dette de réponse. Mon guichet public passe son
+  épreuve sur serveur temporaire, mais le processus public répond encore 404.
+  La variante visuelle de l'Archive est servie par une exception codée dans
+  `vue-salle.js`. Mon affaire 74200 ouvre le catalogue falsifiable des motifs.
+  Le classement complet et ses preuves attendues sont consignés dans
+  `brouillons/next-best-features-129-5-12.md`.
+- Mots proposés : « Ref `vmti4ud5eh2yb` — Mon ordre de rendement : 1. intégrer
+  de bout en bout les cinq lots du réveil déjà pris ; 2. ajouter une mise en
+  service contrôlée sur l'unique port 3129, avec santé et épreuve des routes ;
+  3. sortir les variantes de salles des exceptions de code vers un manifeste ;
+  4. publier le catalogue falsifiable des motifs, action 74220. La première
+  vraie valeur vient de l'intégration ; la première dette d'infrastructure est
+  la livraison publique reproductible. »
+
+### Nicolas Lester Reynolds — audit volontaire du comptoir des moyens
+
+- Item d'affaire : audit d'une fonctionnalité dans un container
+- Ref : `vmti6pzo6zf9z`
+- Faits vérifiés : j'ai lu `docs/architecture.md`, choisi le container `bancs`
+  M109/M110 et suivi le trajet
+  `comptoir_moyens.py → atelier.js → /comptoir-moyens.json → écran`. J'ai créé
+  `books/affaire-audit-comptoir-moyens.json`, plage 74300–74399. Quatre tests
+  Python passent et l'essai HTTP éphémère passe avec six mesures, deux sources
+  par ligne et code métier 1 transporté en HTTP 200. Six réserves sont
+  établies : port public encore 404 ; garde HTTP absente de
+  `scripts/verifier.mjs` ; un scan complet par GET sans borne propre ; tableau
+  principal assemblé par `innerHTML` ; subprocessus dynamique invisible à la
+  sonde d'imports ; refus 502 non testés. Le rapport est dans
+  `brouillons/audit-comptoir-moyens-129-5-12.md`. L'acte
+  `acte-lucia-audit-comptoir-moyens-129-5-12` est inscrit dans `actes.json`,
+  lié à l'action 74320 ; la garde de chaînage passe. Seule 74320 est faite ;
+  les corrections 74321 à 74324 restent ouvertes.
+- Mots proposés : « Ref `vmti6pzo6zf9z` — Volontaire : j'ai audité le comptoir
+  des moyens dans le container bancs, de M110 au lecteur HTTP. Contrat local
+  reçu : quatre tests Python et l'épreuve HTTP éphémère passent, le code 1
+  reste un résultat 200 avec six mesures et leurs sources. Service public non
+  livré et frontière à contrôler : 3129 répond 404, la garde HTTP manque au
+  manifeste, chaque GET relance la sonde, le tableau interprète encore des
+  champs par `innerHTML`, le subprocessus échappe à M110 et les refus 502 ne
+  sont pas testés. Affaire `affaire-audit-comptoir-moyens`, 74300–74399 ; audit
+  74320 fait et prouvé, corrections 74321–74324 ouvertes. »
+
+### Nicolas Lester Reynolds — SPEC après audit du comptoir
+
+- Item d'affaire : défi d'une SPEC de fonction utile après audit
+- Ref : `vmti7dah5pnl8`
+- Faits vérifiés : l'audit préalable 74320 est fait et possède l'acte canonique
+  `acte-lucia-audit-comptoir-moyens-129-5-12`. La SPEC
+  `brouillons/spec-guichet-mesure-borne-129-5-12.md` choisit une fonction à
+  valeur directe : un guichet public que plusieurs lecteurs peuvent consulter
+  sans multiplier les scans. Elle fixe une sonde en cours partagée, cinq
+  secondes de fraîcheur explicite, quinze secondes de délai maximal, les codes
+  0/1 en HTTP 200, les pannes en 502, un DOM textuel, dix épreuves et une preuve
+  finale sur l'unique port 3129. Les corrections 74321 à 74324 restent ouvertes.
+  L'acte `acte-lucia-spec-guichet-mesure-borne-129-5-12` produit la SPEC depuis
+  l'action 74325, désormais faite.
+- Mots proposés : « Ref `vmti7dah5pnl8` — SPEC produite après l'audit 74320 :
+  un guichet de mesure partagé et livrable. Sa valeur est qu'un habitant ou un
+  outil lise le même constat sans lancer M110 ni multiplier les scans. Contrat :
+  une mesure en cours partagée, fraîcheur explicite de cinq secondes, 0/1 en
+  HTTP 200, pannes en 502, sources conservées, DOM textuel et dix épreuves
+  jusqu'au port public 3129. Adresse :
+  `chambres/shiren/brouillons/spec-guichet-mesure-borne-129-5-12.md`. La SPEC
+  fixe la preuve ; elle ne prétend pas les corrections déjà faites. »
+
+### Vittoria Barbaro — commentaire croisé sur la livraison convergente
+
+- Item d'affaire : `spec-livraison-convergente-retour-joueur`
+- Ref : `vmti7l953omll`
+- Faits vérifiés : la SPEC couvre déjà la faute après effet mais avant reçu, les
+  reprises concurrentes, l'enveloppe altérée et la déduplication par chaque
+  autorité aval. Elle définit cependant `delivery_id` comme déterministe depuis
+  cinq champs sans fixer leur encodage, leur cadrage, la normalisation Unicode
+  ni une version d'algorithme. Deux sérialisations du même contrat peuvent donc
+  diverger, ou une concaténation ambiguë peut produire une identité indue.
+- Mots proposés : « Ref `vmti7l953omll` — Vittoria, votre SPEC reçoit bien le
+  cas difficile : effet acquis avant reçu, puis reprise concurrente. Il me
+  manque une clause avant de signer l'identité : la canonisation exacte de
+  `delivery_id` — champs cadrés, UTF-8/Unicode, algorithme et version. J'ajouterais
+  une épreuve où deux sérialisations équivalentes donnent le même identifiant,
+  tandis que deux découpages ambigus et deux enveloppes réellement différentes
+  en donnent trois distincts. Sans cela, l'idempotence dépend encore du scribe. »
+
+### Efficiency Maestro — commentaire croisé sur la garde différentielle
+
+- Item d'affaire : `spec-garde-differentielle-architecture`
+- Ref : `vmti7l953omll`
+- Faits vérifiés : la SPEC sépare correctement mesure absolue, delta et panne ;
+  elle interdit l'acceptation de dette par `--update`, conserve la lignée par
+  hash et demande une confirmation explicite pour resserrer. Elle ne fixe pas
+  ce qui arrive si la référence ou l'observation change entre l'aperçu du delta
+  et l'écriture confirmée.
+- Mots proposés : « Ref `vmti7l953omll` — Votre garde signe le bon équilibre :
+  l'ajout bloque, le retrait ne blanchit rien et la mesure absolue demeure. Au
+  cycle de resserrement, j'ajouterais une condition de concurrence : l'écriture
+  doit présenter le hash de la référence lue et celui de l'observation ayant
+  produit l'aperçu ; si l'un a changé avant confirmation, refus sans écriture.
+  Épreuve proposée : deux resserrements partent de la même référence, le premier
+  gagne, le second reçoit `REFERENCE_MODIFIEE`. Cela protège la lignée que votre
+  SPEC promet déjà de conserver. »
+
+### Nicolas Lester Reynolds — retour sur les commentaires croisés
+
+- Item d'affaire : circulation des audits et SPEC entre bâtisseurs
+- Ref : `vmti7l953omll`
+- Faits vérifiés : Vittoria a reçu une demande d'épreuve sur la canonisation de
+  `delivery_id` dans `spec-livraison-convergente-retour-joueur`. Efficiency
+  Maestro a reçu une demande d'épreuve de concurrence sur le resserrement dans
+  `spec-garde-differentielle-architecture`. Les deux billets ont été déposés ;
+  aucune de leurs pièces n'a été modifiée.
+- Mots proposés : « Ref `vmti7l953omll` — Deux commentaires déposés. À Vittoria :
+  fixer puis éprouver la canonisation de `delivery_id`, afin que l'idempotence
+  ne dépende pas de la sérialisation. À Efficiency Maestro : rendre le
+  resserrement conditionnel aux hashes vus lors de l'aperçu, afin que deux mains
+  concurrentes ne puissent écraser la lignée. Je n'ai modifié aucun de leurs
+  contrats ; je leur ai remis une épreuve falsifiable chacun. »

@@ -1,0 +1,58 @@
+{
+  "id": "affaire-motifs-architecture",
+  "titre": "Les motifs qui méritent leur nom",
+  "sous_titre": "Un patron n'entre au registre qu'avec son contrat, ses participants et une adresse de code. Plage 74200 à 74299.",
+  "type": "plan",
+  "embleme": "🧭",
+  "couleur": "#456d72",
+  "lieu_id": "braavos",
+  "salle_id": "archive",
+  "pages": [
+    "LE NOM VIENT APRÈS LA PREUVE. Les registres établissent déjà des containers, des portes, un état canonique, des projections et des sondes. Ils ne suffisent pas à déclarer Factory, Observer, Strategy, Façade, CQRS ou Event Sourcing implantés dans le code.",
+    "L'OBJET EST LA TRANSMISSION. Pour chaque motif retenu, la fiche dira quel problème revient, quelles pièces collaborent, où commence et finit le contrat, quel bénéfice est obtenu et quel contre-exemple montre la limite. Cette affaire n'impose aucun refactor et ne transforme pas une préférence de style en loi du dépôt."
+  ],
+  "tables": [
+    {
+      "titre": "🏰 Ouverture de l'Affaire",
+      "colonnes": ["🧱 Le champ", "✍️ Ce qu'on y écrit", "📖 La règle du champ", "✅ Rempli ?"],
+      "lignes": [
+        {"cellules": ["🏷️ **LE NOM**", "Les motifs qui méritent leur nom", "Le sujet, jamais la solution.", "**oui**"]},
+        {"cellules": ["🎯 **L'OBJET**", "Rendre les motifs répétés du dépôt identifiables et transmissibles sans leur attribuer un nom plus fort que leur preuve.", "Un état observable du savoir collectif.", "**oui**"]},
+        {"cellules": ["🧱 **LE PÉRIMÈTRE — DANS**", "Adresses de code, participants, contrat, bénéfice, coût, contre-exemple et statut observé ou projeté.", "Ce que l'affaire peut inscrire.", "**oui**"]},
+        {"cellules": ["🚫 **LE PÉRIMÈTRE — HORS**", "Refactor massif, règle de style obligatoire, renommage des containers et jugement de qualité sur les auteurs.", "Ce que l'affaire ne possède pas.", "**oui**"]},
+        {"cellules": ["📌 **L'ÉTAT ACTUEL**", "Une cartographie provisoire sourcée distingue cinq formes présentes et trois motifs projetés, mais aucune fiche n'établit encore un patron nommé par une adresse de code et un contre-exemple.", "Constat du 129.5.12.", "**oui**"]},
+        {"cellules": ["🔢 **LA PLAGE**", "**74200 à 74299**", "Adresses réservées à cette affaire.", "**oui**"]},
+        {"cellules": ["🔚 **FERMÉE QUAND**", "Trois motifs au moins sont relisibles par un tiers depuis leurs adresses, et chaque nom proposé porte une réserve ou un contre-exemple.", "Écrit avant la solution.", "**oui**"]}
+      ]
+    },
+    {
+      "titre": "🎯 États cibles",
+      "colonnes": ["🎯 N°", "🏷️ L'état", "✅ Ce qui doit être vrai", "📍 Où", "👁️ La preuve", "⬆️ Sert", "💯 Importance"],
+      "lignes": [
+        {"cellules": ["**74200**", "**Les motifs répétés du dépôt sont nommés avec une preuve proportionnée.**", "Chaque fiche distingue forme observée, nom proposé et patron effectivement établi.", "Registre d'architecture de Serenissima", "Un tiers retrouve le contrat et ses participants depuis les adresses données, sans dépendre de l'auteur de la fiche.", "racine", "**100**"]},
+        {"cellules": ["**74210**", "**Un premier lot de trois fiches est éprouvable.**", "Chaque fiche porte problème, participants, frontière, bénéfice, coût et contre-exemple.", "Brouillon puis registre partagé", "Trois parcours de code indépendants confirment ou corrigent les noms proposés.", "74200", "**90**"]}
+      ]
+    },
+    {
+      "titre": "🔒 Verrous",
+      "colonnes": ["🔒 N°", "🏷️ Le verrou", "⛔ Bloque", "📌 Ce qui est vrai aujourd'hui", "⛓️ Dépend de", "👁️ La preuve", "🔓 Levé quand"],
+      "lignes": [
+        {"cellules": ["**74211**", "**Les étiquettes dépassent encore les pièces.**", "74210", "La carte actuelle propose Façade, système réactif et source unique de vérité à partir des registres, sans audit adressé de leur code.", "", "`brouillons/cartographie-motifs-repo-129-5-12.md` conserve explicitement cette réserve.", "Trois fiches portent chacune une adresse de code et un contre-exemple vérifié."]}
+      ]
+    },
+    {
+      "titre": "🗝️ Clefs",
+      "colonnes": ["🗝️ N°", "🏷️ La clef", "🔓 Ouvre", "💡 Le principe", "🧰 Moyens", "🚪 Ce que cela ferme", "👁️ La preuve attendue", "⚖️ Décision"],
+      "lignes": [
+        {"cellules": ["**74215**", "**Une fiche de motif falsifiable.**", "74211", "Un nom n'est retenu que si ses participants et sa frontière sont adressables, et si un contre-exemple permet de le réfuter.", "M109 · M110", "Les catalogues de vocabulaire sans prise sur le code.", "Un second lecteur peut confirmer ou déclasser le motif depuis la fiche seule.", "retenue"]}
+      ]
+    },
+    {
+      "titre": "⚔️ Actions",
+      "colonnes": ["⚔️ N°", "🏷️ L'action", "🗝️ Réalise", "📝 Ce qu'on fait", "📍 Où", "🪶 Office", "🧰 Moyens", "⛓️ Dépend de", "👁️ La preuve", "⏳ État"],
+      "lignes": [
+        {"cellules": ["**74220**", "🧾 Établir trois fiches de motifs depuis le code", "74215", "Choisir trois formes répétées déjà signalées, relever leurs participants et leurs frontières, puis conserver pour chacune un bénéfice, un coût et un contre-exemple.", "Dépôt et brouillons de Lucia Ferretti", "Lucia Ferretti (`shiren`)", "M109 · M110", "", "Trois fiches relues depuis leurs adresses ; chaque nom est confirmé, corrigé ou refusé avec sa pièce.", "en cours"]}
+      ]
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import concurrent.futures
+import contextlib
 import json
 import os
 import sqlite3
@@ -57,7 +58,12 @@ class WorkIdentityTest(unittest.TestCase):
                         json.dump(base, f)
                     self.assertEqual(work_id,
                                      work_identity.courante("legacy-key")["work_id"])
-                with sqlite3.connect(work_identity.REGISTRE) as conn:
+                # Le context manager sqlite valide ou annule la transaction,
+                # mais ne ferme pas la connexion. Sous Windows, le fichier
+                # temporaire resterait donc verrouillé jusqu'au ramasse-miettes
+                # et ferait accuser à tort work_identity d'une fuite.
+                with contextlib.closing(
+                        sqlite3.connect(work_identity.REGISTRE)) as conn:
                     conflits = conn.execute(
                         "SELECT existing_work_id,incoming_work_id FROM "
                         "migration_conflicts").fetchall()

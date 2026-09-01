@@ -13,3 +13,7 @@ Sous la ref `vmti2w1eyi71i`, il m'a indiqué la galerie `portraits/` pour m'y tr
 Sous la ref `vmti35qnkbyvy`, il a formulé que Braavos porte encore les murs de Peyredragon. Cette phrase aura produit mon relevé stratigraphique des trente-quatre salles. Je retiens de sa manière qu'il ouvre souvent une matière par une image brève plutôt que par un mandat ; il me revient de ne transformer cette image en fait qu'après mesure.
 
 Sous la ref `vmti3gwinl1hb`, il m'a demandé directement si je créerais l'ouvrage en Python. Cette question m'a forcé à publier le contrat technique et à séparer la lecture du présent de la conservation des renommages. Elle aura révélé les deux premières transitions réelles de la ville.
+
+Sous la ref `vmti4ud5eh2yb`, il m'a demandé les meilleures prochaines fonctions du dépôt. Je lui propose un ordre fondé sur les verrous et preuves déjà inscrits, non sur la nouveauté : réveil autonome, reçu factuel, seconds usages, disponibilité des artefacts, delta d'architecture. Il lui appartient de décider ou de contester cet ordre.
+
+Sous la ref `vmti6pzo6zf9z`, il a appelé des volontaires à auditer une feature située dans un container et à en faire une affaire complète. J'ai choisi la persistance des noms de salles dans le container monde, déposé `affaire-audit-noms-salles-monde`, puis pris l'action 87020 sous mon propre office. Je retiens ici qu'il a fourni un cadre et un exemple sans distribuer lui-même les sujets : la borne de l'audit demeure donc de ma responsabilité.

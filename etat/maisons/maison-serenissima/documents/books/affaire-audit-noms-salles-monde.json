@@ -1,0 +1,72 @@
+{
+  "id": "affaire-audit-noms-salles-monde",
+  "maison_id": "maison-serenissima",
+  "boite": "boite-grand-plan",
+  "titre": "AUDIT: Monde - La persistance des noms de salles",
+  "sous_titre": "🪧 Container monde · de la cuisson au rendu visible · plage 92000 à 92999.",
+  "type": "plan",
+  "embleme": "🪧",
+  "couleur": "#467a78",
+  "lieu_id": "braavos",
+  "salle_id": "archive",
+  "pages": [
+    "CETTE AFFAIRE AUDITE UNE FEATURE DU CONTAINER MONDE : la conservation du nom courant d'une salle à travers la production des sorties, leur service et leur rendu. Elle ne décide ni du nom juste, ni de l'autorité politique qui rebaptise une salle.",
+    "LE REÇU SÉPARE QUATRE NIVEAUX DE PREUVE. Une entrée ou une règle de cuisson peut être présente sans que la sortie soit correcte ; une sortie correcte peut ne pas être servie ; un service correct peut ne pas être rendu à l'écran. Aucun niveau ne vaut pour le suivant sans observation propre.",
+    "L'AUDIT EST EN LECTURE SEULE. Il emploie les noms déjà produits dans le monde courant et compare leurs adresses, portes et géométries. Toute épreuve qui exigerait une nouvelle cuisson ou un changement de nom devra être autorisée et réalisée séparément.",
+    "LA FEATURE TIENT LORSQUE LE MÊME NOM COURANT EST traçable dans la sortie du monde, dans la réponse servie et dans l'écran, tandis que l'adresse de salle, ses portes et sa géométrie restent inchangées. Les écarts sont rendus par couche, sans les fondre dans un verdict vert unique.",
+    "VERDICT DU 129.5.12 : sortie structurée, invariants et service conformes sur `braavos-quai` et `braavos-fosses`; rendu divergent. Le DOM du quartier compose encore `Le quai` et `Les fosses aux dragons`. Reçu : `chambres/future_chronicler/ouvrages/audit-noms-salles-monde-vmti7dah5pnl8.md`. La SPEC issue de cet écart est `affaire-spec-noms-publics-salles`."
+  ],
+  "tables": [
+    {
+      "titre": "🏰 Ouverture de l'Affaire",
+      "colonnes": ["🧱 Le champ", "✍️ Ce qu'on y écrit", "📖 La règle du champ", "✅ Rempli ?"],
+      "lignes": [
+        {"cellules": ["🏷️ **LE NOM**", "AUDIT: Monde - La persistance des noms de salles", "Un audit de la chaîne de disponibilité des noms dans le container monde.", "**oui**"]},
+        {"cellules": ["🎯 **L'OBJET**", "Vérifier qu'un nom courant de salle traverse les sorties du monde, le service et le rendu visible sans altérer l'identité spatiale de la salle.", "Une capacité observable, distincte de la seule présence d'un fichier.", "**oui**"]},
+        {"cellules": ["🧱 **LE PÉRIMÈTRE — DANS**", "Les salles de Braavos déjà produites ; leurs noms, adresses, portes et géométries ; les sorties sous `monde/`, leur exposition et leur rendu par le container monde.", "Une feature située dans M104.", "**oui**"]},
+        {"cellules": ["🚫 **LE PÉRIMÈTRE — HORS**", "Le choix politique des noms, la modification de la géométrie source, les autres champs des habitants et toute nouvelle cuisson déclenchée pour les besoins de l'audit.", "L'audit observe ; il ne rebaptise pas et ne répare pas.", "**oui**"]},
+        {"cellules": ["📌 **L'ORIGINE OBSERVÉE**", "L'architecture attribue à M104 la cuisson et le service de la ville, du plan, du bâti et des habitants ; ses sorties vivent sous `monde/` et sont rendues par `ecrans/modules/monde/`. Le registre avertit que ces sorties restent à vérifier dans le rendu.", "Constat tiré de l'architecture et du registre des moyens accessibles.", "**oui**"]},
+        {"cellules": ["🔢 **LA PLAGE**", "**92000 à 92999**", "Plage réservée après détection d'une collision concurrente sur 87000–87999 ; un bloc de cent par niveau de la chaîne.", "**oui**"]},
+        {"cellules": ["🔚 **FERMÉE QUAND**", "Deux salles réelles, dont une portant un nom courant distinct de son nom antérieur connu, obtiennent un reçu qui concorde entre sortie, service et écran, tout en conservant adresse, portes et géométrie ; chaque échec éventuel est attribué à sa couche exacte.", "Une preuve multi-couche et un témoin spatial, pas un simple HTTP 200.", "**oui**"]}
+      ]
+    },
+    {
+      "titre": "🎯 États cibles",
+      "colonnes": ["🎯 N°", "🏷️ L'état", "✅ Ce qui doit être vrai", "💡 Valence", "📍 Où", "👁️ La preuve", "⬆️ Sert", "💯 Importance"],
+      "lignes": [
+        {"cellules": ["**92000**", "**Le nom courant d'une salle reste disponible de sa production jusqu'à sa lecture par un habitant.**", "La même valeur est traçable dans chaque couche et les invariants spatiaux restent stables.", "Un renommage utile ne devient ni un fichier mort, ni une salle nouvelle par accident.", "Container monde", "Un reçu daté sépare sortie, service, écran et invariants pour deux salles réelles.", "racine", "**100**"]},
+        {"cellules": ["**92100**", "**La sortie cuite porte le nom courant à l'adresse stable de la salle.**", "Le nom et l'identifiant attendus coexistent dans la sortie structurée du monde.", "La production matérielle devient vérifiable avant toute conclusion sur le service.", "Sorties sous `monde/`", "Lecture structurée de deux salles par adresse avec valeur de nom.", "92000", "**100**"]},
+        {"cellules": ["**92200**", "**Le changement de nom ne modifie aucun invariant spatial.**", "Adresse, portes et géométrie concordent avec le témoin choisi.", "La continuité du lieu est distinguée de son étiquette.", "Sorties du monde", "Comparaison explicite des identifiants, portes et coordonnées ou dimensions pertinentes.", "92000", "**100**"]},
+        {"cellules": ["**92300**", "**Le service expose le même nom que la sortie cuite.**", "La réponse servie ne conserve ni cache ni projection portant une valeur divergente.", "Les consommateurs reçoivent le monde effectivement produit.", "Porte de M104", "Requête adressée et comparaison structurée avec la sortie locale.", "92000", "**90**"]},
+        {"cellules": ["**92400**", "**L'écran rend le même nom à la bonne salle.**", "L'habitant voit la valeur servie, associée au lieu attendu.", "La capacité quitte enfin le dépôt et devient publique dans la ville.", "Rendu de M104", "Observation visible ou capture citant la salle et son nom.", "92000", "**100**"]}
+      ]
+    },
+    {
+      "titre": "🔒 Verrous ouverts",
+      "colonnes": ["🔒 N°", "🏷️ Le verrou ouvert", "⛔ Bloque", "📌 Ce qui est vrai aujourd'hui", "⛓️ Dépend de", "👁️ La preuve", "🔓 Levé quand"],
+      "lignes": [
+        {"cellules": ["**92101**", "**Chaque nom courant doit être retrouvé dans une sortie structurée par l'adresse de sa salle.**", "92100", "M104 possède des sorties sous `monde/`, mais leur présence seule ne prouve pas la concordance des noms.", "", "Lecture du fichier produit, sans recours au rendu.", "Deux adresses réelles rendent le nom attendu et une provenance de fichier précise."]},
+        {"cellules": ["**92201**", "**L'identité spatiale doit pouvoir être comparée indépendamment du nom.**", "92200", "Le nom, les portes et la géométrie vivent dans les données du monde, mais aucun reçu commun ne borne encore leur stabilité.", "92101", "Comparaison champ par champ des témoins spatiaux.", "Le reçu distingue clairement changement d'étiquette et changement de lieu."]},
+        {"cellules": ["**92301**", "**La valeur servie doit être confrontée à la sortie qui fait autorité pour l'épreuve.**", "92300", "L'architecture nomme une porte de service ; aucun constat actuel ne relie une réponse servie aux deux salles témoins.", "92101", "Réponse de la porte et comparaison avec le fichier produit.", "Chaque salle obtient un verdict de concordance service-sortie, ou une indisponibilité explicitement bornée."]},
+        {"cellules": ["**92401**", "**Le rendu visible doit être vérifié sans être déduit d'un fichier ou d'un statut HTTP.**", "92400", "Le registre M104 porte précisément la réserve « sorties à vérifier dans le rendu ».", "92301", "Observation du navigateur associant nom et salle.", "Deux salles sont visibles sous le nom servi, ou l'écart exact du rendu est conservé."]}
+      ]
+    },
+    {
+      "titre": "🗝️ Clefs retenues",
+      "colonnes": ["🗝️ N°", "🏷️ La clef", "🔓 Ouvre", "💡 Le principe et sa valence", "🧰 Moyens", "🧭 Ancrage", "👁️ La preuve", "⚖️ Décision"],
+      "lignes": [
+        {"cellules": ["**92110**", "**Relever les noms par adresse dans la sortie structurée**", "92101", "L'adresse, et non la position dans une liste ni la ressemblance du nom, rattache l'observation à la salle.", "M104 · M109", "Sorties sous `monde/`", "Un relevé reproductible cite fichier, adresse et valeur.", "**retenue**"]},
+        {"cellules": ["**92210**", "**Comparer séparément les invariants spatiaux**", "92201", "Un vecteur de témoins sur identifiant, portes et géométrie empêche un renommage apparent de masquer une rupture du lieu.", "M104 · M109", "Données structurées du monde", "Chaque invariant obtient son propre avant/après ou son propre témoin de concordance.", "**retenue**"]},
+        {"cellules": ["**92310**", "**Confronter la réponse servie à la sortie produite**", "92301", "Comparer les valeurs par adresse situe un éventuel écart entre production et exposition.", "M104 · M109", "Porte de service du container monde", "Un verdict par salle cite les deux valeurs et l'état de disponibilité du service.", "**retenue**"]},
+        {"cellules": ["**92410**", "**Observer le nom dans son rendu public**", "92401", "Une observation visible constitue une preuve distincte du fichier et de la réponse réseau.", "M104 · M109", "Rendu par `ecrans/modules/monde/`", "Une capture ou un constat visible relie sans ambiguïté la salle au nom rendu.", "**retenue**"]}
+      ]
+    },
+    {
+      "titre": "⚔️ Actions prises",
+      "colonnes": ["⚔️ N°", "🏷️ L'action", "🗝️ Réalise", "📝 Ce qu'on fait", "📍 Où", "🪶 Office", "🧰 Moyens", "⛓️ Dépend de", "👁️ La preuve", "⏳ État"],
+      "lignes": [
+        {"cellules": ["**92020**", "🧾 Fabriquer le reçu multi-couche des noms de salles", "92110 · 92210 · 92310 · 92410", "Choisir deux salles réelles, relever sans mutation la sortie et les invariants, interroger la porte si elle est disponible, puis vérifier séparément le rendu visible. Rendre les indisponibilités comme telles.", "Container monde et bancs", "future-chronicler", "M104 · M109", "", "Reçu `chambres/future_chronicler/ouvrages/audit-noms-salles-monde-vmti7dah5pnl8.md` : fichier, invariants et service conformes ; rendu divergent sur les deux témoins.", "**faite le 129.5.12 — SPEC ouverte sur l'écart rendu**"]}
+      ]
+    }
+  ]
+}

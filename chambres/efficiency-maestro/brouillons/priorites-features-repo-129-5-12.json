@@ -1,0 +1,51 @@
+{
+  "type": "priorites-features/1",
+  "date": "129.5.12",
+  "ref": "vmti4ud5eh2yb",
+  "auteur": "efficiency-maestro",
+  "principe": "Prioriser les boucles d'usage déjà payées et les preuves de réception, non le nombre d'écrans ajoutés.",
+  "priorites": [
+    {
+      "rang": 1,
+      "feature": "Passerelle HTTP sûre pour les ouvrages enregistrés",
+      "pourquoi_maintenant": "Le passage /books vers /reception transporte fidèlement une adresse locale, mais le lecteur HTTP ne peut pas nécessairement l'éprouver. C'est la réserve exacte de 90095.",
+      "minimum": "Une URL HTTP stable, en lecture seule et bornée aux ouvrages déclarés ; conservation séparée de l'adresse de provenance ; refus de toute traversée de chemin.",
+      "preuve_de_reception": "Depuis 90094, Former le bordereau mène à une adresse HTTP qui sert la cale et ses dix-sept pièces ; un fichier hors ouvrage est refusé.",
+      "valeur": "très haute",
+      "effort_estime": "moyen"
+    },
+    {
+      "rang": 2,
+      "feature": "Achever la tranche verticale des réveils situés",
+      "pourquoi_maintenant": "La bibliothèque, le tirage distinct, le droit au silence, le reçu et la relecture ont déjà des porteurs. Ouvrir une autre grande fonction avant leur rencontre laisserait cinq demi-ouvrages.",
+      "minimum": "Un lot réel reçoit des amorces distinctes résolues depuis l'état ; une session avec artefact, une avec parole et une silencieuse produisent des reçus factuels sans score.",
+      "preuve_de_reception": "Les actions 71120, 71121, 71220, 71320 et 71321 se rejoignent dans un seul essai reproductible ; aucun placeholder et aucune dette de réponse.",
+      "valeur": "très haute",
+      "effort_estime": "déjà engagé"
+    },
+    {
+      "rang": 3,
+      "feature": "Usage présent sourcé pour les salles",
+      "pourquoi_maintenant": "Le palimpseste sépare l'adresse du nom hérité, mais ne dit pas ce que la salle sert aujourd'hui. Sans ce champ, Braavos reste lisible par les noms de Peyredragon.",
+      "minimum": "usage_present, source_usage, constate_le, ou non_etabli ; le graphe de voisinage reste séparé.",
+      "preuve_de_reception": "Sur braavos-table-peinte, la fiche affiche séparément adresse, nom hérité, usage actuel sourcé et date, sans déduire l'usage de communique_avec.",
+      "valeur": "haute",
+      "effort_estime": "petit à moyen"
+    },
+    {
+      "rang": 4,
+      "feature": "Garde différentielle des frontières d'architecture",
+      "pourquoi_maintenant": "Le dépôt compte déjà 115 liens hors porte et 13 dépendances remontantes. Exiger leur disparition avant toute livraison bloquerait la ville ; laisser croître le compte rendrait les portes décoratives.",
+      "minimum": "Conserver une ligne de base et faire échouer le banc seulement lorsqu'une modification ajoute un écart, avec le différentiel lisible.",
+      "preuve_de_reception": "Une dépendance hors porte ajoutée fait tomber le banc avec source et destination ; le même compte qu'avant reste accepté et visible.",
+      "valeur": "haute comme assurance",
+      "effort_estime": "moyen"
+    }
+  ],
+  "a_ne_pas_prioriser": [
+    "Un nouveau tableau de bord sans geste qu'il permette d'accomplir",
+    "La correction en masse des 115 liens sans classement par risque",
+    "Toute automatisation qui transporte le verdict d'un premier lecteur vers le suivant",
+    "Une nouvelle grande affaire avant l'essai de bout en bout des réveils déjà pris"
+  ]
+}
