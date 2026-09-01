@@ -642,6 +642,10 @@ body.sans-gestes .gestes{display:none;}
   padding:0 10px 4px 0;vertical-align:bottom;}
 .book-table td{padding:6px 10px 6px 0;vertical-align:top;color:var(--muted);
   border-bottom:1px dotted var(--bord);}
+.book-table td.book-passage-cellule{min-width:9.5em;}
+.book-passage-reception{display:inline-block;color:var(--braise,#b4763a);
+  text-decoration:none;border-bottom:1px solid currentColor;white-space:nowrap;}
+.book-passage-reception:hover,.book-passage-reception:focus-visible{color:var(--ink);}
 /* la première colonne est l'entrée du tableau : elle porte le nom, et peut
    tenir sur deux lignes (le nom, puis la qualité) sans qu'on la coupe */
 .book-table tr td:first-child{color:var(--ink);white-space:pre-line;
@@ -3623,8 +3627,8 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
    Une tuile à huit côtés par affaire, la courante allumée. Rien d'écrit : le
    nom se lit au survol, un clic change de plateau, un clic sur la tuile
    courante ouvre le volume dans les livres. */
-.ech-affaires{display:flex;align-items:center;gap:9px;flex-wrap:nowrap;
-  max-width:100%;min-width:0;overflow-x:auto;overflow-y:hidden;
+.ech-affaires{position:relative;z-index:50;display:flex;align-items:center;
+  gap:9px;flex-wrap:nowrap;max-width:100%;min-width:0;overflow:visible;
   margin-bottom:7px;padding-bottom:6px;border-bottom:1px dotted var(--bord);}
 /* le nom de l'affaire ouverte : le pendant écrit de l'emblème. Hors du damier,
    sur une seule ligne, et il cède la place plutôt que de pousser la bascule sur
@@ -3659,7 +3663,7 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 
 /* LA BASCULE : une tirette qui déroule signe + nom. Les emblèmes muets côte à
    côte obligeaient à survoler pour savoir de quoi chacun parlait. */
-.ech-bascule{flex:0 0 auto;position:relative;}
+.ech-bascule{flex:0 0 auto;position:relative;z-index:1;}
 .ech-tirette{display:flex;align-items:center;gap:5px;padding:3px 7px;
   border:none;background:color-mix(in srgb,var(--muted) 12%,transparent);
   box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--muted) 40%,transparent);
@@ -3668,8 +3672,8 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
 .ech-tirette:hover{color:var(--accent);
   box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 60%,transparent);}
 .ech-chevron{font-style:normal;font-size:.9em;opacity:.8;}
-.ech-liste{position:absolute;top:calc(100% + 4px);right:0;z-index:40;
-  min-width:230px;max-width:340px;max-height:min(62vh,640px);overflow-y:auto;
+.ech-liste{position:fixed;z-index:1000;
+  box-sizing:border-box;min-width:230px;max-width:340px;max-height:min(62vh,640px);overflow-y:auto;
   display:flex;flex-direction:column;padding:3px;
   background:var(--fond,#12100e);box-shadow:0 0 0 1px var(--bord),0 6px 18px rgba(0,0,0,.45);}
 /* `display:flex` ci-dessus l'emporte sur le `[hidden]{display:none}` du
@@ -3708,7 +3712,7 @@ body{grid-template-columns:auto auto minmax(0,1fr) minmax(560px,1.1fr);}
    même taille de case, sinon on lirait deux plateaux au lieu d'un plié. Le nom
    de classe ne bouge pas : tout ce qui fouille le plateau (la chaîne allumée,
    la bulle, les renvois par numéro) continue de le trouver. */
-.ech-damier{position:relative;display:flex;flex-direction:column;
+.ech-damier{position:relative;z-index:0;display:flex;flex-direction:column;
   align-items:center;gap:18px;width:max-content;
   --ech-etage:calc(var(--ech-case) * .46);
   /* le sceau se taille sur la SOUS-CASE ; hors damier (la canopée), la

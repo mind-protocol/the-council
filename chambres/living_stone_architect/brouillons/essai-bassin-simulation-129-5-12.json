@@ -1,0 +1,15 @@
+{
+  "type": "essai-bassin-fondations/1",
+  "id": "simulation-pieu-001",
+  "objet": "Pieu témoin — démonstration du mécanisme seulement",
+  "simulation": true,
+  "section_m2": 0.04,
+  "paliers": [
+    {"charge_kn": 10, "enfoncement_mm": 0.8},
+    {"charge_kn": 20, "enfoncement_mm": 1.9},
+    {"charge_kn": 30, "enfoncement_mm": 3.4}
+  ],
+  "seuils": {
+    "enfoncement_max_mm": 4.0
+  }
+}

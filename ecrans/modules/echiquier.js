@@ -4,7 +4,9 @@
 // affaires sont un outil de cette table-là. C'était vrai de l'objet et faux de
 // l'usage : on décide dans l'escalier, on se souvient au quai, et une ligne de
 // jeu qu'on ne peut pas relire là où l'on est n'est pas relue du tout. La
-// disponibilité ne tient donc plus qu'à une chose — qu'il y ait une affaire.
+// disponibilité ne dépend donc plus ni du lieu, ni du chargement, ni du fait
+// qu'une affaire soit déjà visible pour ce siège. L'entrée reste dans la barre
+// partout dans la ville ; le plateau sait déjà rendre son état vide.
 //
 // La table peinte dit OÙ porte la guerre. L'échiquier dit COMMENT ce qu'on a
 // devient ce qu'on veut — et il le dit avec le vocabulaire de la maison, celui
@@ -1275,10 +1277,14 @@ window.Echiquier = (() => {
     if (p.genre === "verrou" && p.leve_quand) {
       f.appendChild(ligne("ech-e-ligne ech-e-italique", "levé quand : " + p.leve_quand));
     }
+    if (p.depend_de) {
+      f.appendChild(ligne("ech-e-ligne", "dépend de : " + p.depend_de));
+    }
     if (p.genre === "clef") {
       f.appendChild(ligne("ech-e-ligne", p.tenue === "retenue" ? "retenue"
         : p.tenue === "ecartee" ? "écartée" : "à étudier"));
       if (p.cout) f.appendChild(ligne("ech-e-ligne", "coûte : " + p.cout));
+      if (p.moyens) f.appendChild(ligne("ech-e-ligne", "modules qualifiés : " + p.moyens));
     }
     if (p.genre === "action") {
       if (p.ou_ca_en_est) f.appendChild(ligne("ech-e-ligne", p.ou_ca_en_est));
@@ -1530,7 +1536,9 @@ window.Echiquier = (() => {
 
   function tracerBande(damier) {
     const a = affaire();
-    if (!damier || !a) return;
+    // Pendant le changement d'affaire, la liste sommaire peut être courante
+    // avant que son plateau détaillé (et donc `pieces`) soit arrivé.
+    if (!damier || !a || !Array.isArray(a.pieces)) return;
     const svg = damier.querySelector(".ech-liens");
     if (!svg) return;
     const cadre = damier.getBoundingClientRect();
@@ -2219,6 +2227,8 @@ window.Echiquier = (() => {
       tirette.setAttribute("aria-expanded", "false");
       document.removeEventListener("click", dehors, true);
       document.removeEventListener("keydown", echap, true);
+      window.removeEventListener("resize", replier);
+      window.removeEventListener("scroll", replier, true);
     }
     function dehors(ev) { if (!autres.contains(ev.target)) replier(); }
     function echap(ev) { if (ev.key === "Escape") replier(); }
@@ -2226,6 +2236,17 @@ window.Echiquier = (() => {
       ev.stopPropagation();
       if (!liste.hidden) { replier(); return; }
       liste.hidden = false;
+      // Le corps de l'échiquier défile et rogne nécessairement ce qui le
+      // dépasse. Le déroulé, lui, appartient à la fenêtre : on l'ancre sous
+      // la tirette en coordonnées d'écran afin qu'aucune case ni aucun
+      // conteneur intermédiaire ne puisse le cacher.
+      const r = tirette.getBoundingClientRect();
+      const largeur = Math.min(340, Math.max(230, window.innerWidth - 16));
+      liste.style.width = largeur + "px";
+      liste.style.left = Math.max(8, Math.min(r.right - largeur,
+        window.innerWidth - largeur - 8)) + "px";
+      liste.style.top = Math.min(r.bottom + 4,
+        window.innerHeight - Math.min(640, window.innerHeight * .62) - 8) + "px";
       tirette.setAttribute("aria-expanded", "true");
       // Quarante affaires ne tiennent pas dans le déroulé : on l'ouvre sur
       // celle où l'on est, sinon la courante est hors de vue.
@@ -2233,6 +2254,8 @@ window.Echiquier = (() => {
       if (ici) liste.scrollTop = Math.max(0, ici.offsetTop - liste.clientHeight / 2);
       document.addEventListener("click", dehors, true);
       document.addEventListener("keydown", echap, true);
+      window.addEventListener("resize", replier);
+      window.addEventListener("scroll", replier, true);
     });
 
     bandeau.appendChild(autres);
@@ -2344,11 +2367,11 @@ window.Echiquier = (() => {
     if (window.Plan && Plan.echelle) {
       Plan.echelle({
         id: "echiquier", nom: "L'échiquier", hote: "echiquier", ordre: 2.5,
-        // Partout où il y a une affaire à lire. La boîte reste sous la Table
-        // Peinte dans la fiction ; l'échelle, elle, s'ouvre d'où l'on est —
-        // sinon la ligne de jeu ne se relit qu'au seul endroit où l'on n'a plus
-        // besoin de se la rappeler.
-        dispo: () => !!affaires.length,
+        // Partout, y compris pendant le chargement et quand ce siège ne voit
+        // encore aucune affaire. La boîte reste sous la Table Peinte dans la
+        // fiction ; l'échelle est une vue de travail, et son état vide est une
+        // information plutôt qu'une raison de faire disparaître sa porte.
+        dispo: () => true,
         reparu: () => { dessiner(); replanter(); },
       });
     }

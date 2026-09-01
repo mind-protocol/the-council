@@ -25,6 +25,45 @@ const { RACINE } = require("../contexte");
 
 const CHAMBRES = path.join(RACINE, "chambres");
 
+// Les chambres natives portent directement l'id du personnage. Les chambres
+// importees de Serenissima gardent, elles, leur nom source (souvent avec des
+// underscores ou la casse du Username), tandis que personnages.json emploie
+// l'id normalise en kebab-case. Le marqueur `serenissima` autorise cette seule
+// indirection ; sans lui, le nom du dossier reste l'autorite.
+function idNormalise(texte) {
+  return String(texte || "").toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+function idSerenissima(dossier) {
+  const marqueur = path.join(dossier, "serenissima");
+  try {
+    if (!fs.statSync(marqueur).isFile() || fs.statSync(marqueur).size !== 0) return null;
+  } catch (e) { return null; }
+  const manuel = lireTexte(path.join(dossier, "CLAUDE.md"));
+  const ligne = /^CitizenId:\s*(.+)\s*$/m.exec(manuel);
+  if (!ligne) throw new Error("CitizenId absent de la chambre Serenissima : " + dossier);
+  let brut = ligne[1].trim();
+  try { brut = JSON.parse(brut); } catch (e) { brut = brut.replace(/^['\"]|['\"]$/g, ""); }
+  const ident = idNormalise(brut);
+  if (!ident) throw new Error("CitizenId vide dans la chambre Serenissima : " + dossier);
+  return ident;
+}
+function indexDesChambres() {
+  const parHabitant = new Map();
+  let noms = [];
+  try { noms = fs.readdirSync(CHAMBRES); } catch (e) { return parHabitant; }
+  noms.forEach((nom) => {
+    const dossier = path.join(CHAMBRES, nom);
+    try { if (!fs.statSync(dossier).isDirectory()) return; } catch (e) { return; }
+    const ident = idSerenissima(dossier) || nom;
+    if (parHabitant.has(ident) && parHabitant.get(ident) !== dossier) {
+      throw new Error("Deux chambres pour " + ident);
+    }
+    parHabitant.set(ident, dossier);
+  });
+  return parHabitant;
+}
+
 function lireTexte(p) {
   try { return fs.readFileSync(p, "utf-8"); } catch (e) { return ""; }
 }
@@ -120,8 +159,8 @@ function jourDuMonde(h) {
 // `regardeur` est le personnage du siège qui regarde : chaque volume et chaque
 // boîte le portent en `acteur_id` (voir l'en-tête). `prive` dit le fond des
 // choses — une chambre ne se montre pas — même si c'est le serveur qui trie.
-function coffretsDe(h, regardeur, noms) {
-  const dossier = path.join(CHAMBRES, h);
+function coffretsDe(h, regardeur, noms, dossier) {
+  dossier = dossier || path.join(CHAMBRES, h);
   const nom = nomDe(noms, h);
   const commun = { acteur_id: regardeur, prive: true, tenu_par: h };
 
@@ -300,17 +339,12 @@ function coffretsChambre(siege, moi) {
   const noms = carteDesNoms();
   // La régie voit un coffret par habitant dont la chambre a du contenu.
   if (siege && siege.regie) {
-    let habitants = [];
-    try {
-      habitants = fs.readdirSync(CHAMBRES).filter((n) => {
-        try { return fs.statSync(path.join(CHAMBRES, n)).isDirectory(); }
-        catch (e) { return false; }
-      });
-    } catch (e) { return vide; }
+    const chambres = indexDesChambres();
+    let habitants = Array.from(chambres.keys());
     habitants.sort((a, b) => nomDe(noms, a).localeCompare(nomDe(noms, b), "fr"));
     const tout = { books: [], boites: [] };
     habitants.forEach((h) => {
-      const c = coffretsDe(h, moi, noms);
+      const c = coffretsDe(h, moi, noms, chambres.get(h));
       tout.books.push.apply(tout.books, c.books);
       tout.boites.push.apply(tout.boites, c.boites);
     });
@@ -318,10 +352,12 @@ function coffretsChambre(siege, moi) {
   }
   // Tout autre siège — incarné hors roster, PJ du roster, mono-joueur — ne
   // voit que SA chambre, s'il en a une qui porte quelque chose.
+  const dossier = indexDesChambres().get(moi);
+  if (!dossier) return vide;
   try {
-    if (!fs.statSync(path.join(CHAMBRES, moi)).isDirectory()) return vide;
+    if (!fs.statSync(dossier).isDirectory()) return vide;
   } catch (e) { return vide; }
-  return coffretsDe(moi, moi, noms);
+  return coffretsDe(moi, moi, noms, dossier);
 }
 
 module.exports = { coffretsChambre };

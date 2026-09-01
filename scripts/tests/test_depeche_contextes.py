@@ -13,7 +13,7 @@ if SCRIPTS not in sys.path:
     sys.path.insert(0, SCRIPTS)
 
 from agents.expose import chambre, trace, depeche as brief
-from agents import runtime
+from agents import runtime, work_identity
 from agents.depeche import cli
 from agents.depeche import contexte_affaire
 
@@ -21,6 +21,102 @@ mission_module = importlib.import_module("agents.depeche.mission")
 
 
 class DepecheContextesTests(unittest.TestCase):
+    def setUp(self):
+        self._work_tmp = tempfile.TemporaryDirectory()
+        self._work_registry = work_identity.REGISTRE
+        work_identity.REGISTRE = os.path.join(
+            self._work_tmp.name, "work-registry.json")
+
+    def tearDown(self):
+        work_identity.REGISTRE = self._work_registry
+        self._work_tmp.cleanup()
+
+    def test_appeler_transmet_effort_au_runtime(self):
+        with tempfile.TemporaryDirectory() as dossier, \
+                mock.patch.object(mission_module, "RACINE", dossier), \
+                mock.patch.object(mission_module, "poser_la_memoire"), \
+                mock.patch.object(mission_module, "archiver_le_prompt"), \
+                mock.patch.object(chambre, "ouvrir", return_value=dossier), \
+                mock.patch.object(runtime, "configuration",
+                                  return_value={"fournisseur": "codex"}), \
+                mock.patch.object(runtime, "appeler",
+                                  return_value={}) as appeler_runtime:
+            mission_module.appeler(
+                "fra", "manuel", "mission", "session-fra", "opus", None,
+                effort="low")
+
+        self.assertEqual("low", appeler_runtime.call_args.kwargs["effort"])
+
+    def test_la_discussion_serenissima_ne_force_pas_de_rapport_au_joueur(self):
+        dossier = {"contexte_affaire": {"id": "52220", "volumes": []}}
+        with tempfile.TemporaryDirectory() as chambre_serenissima, \
+                mock.patch.object(chambre, "chemin",
+                                  return_value=chambre_serenissima), \
+                mock.patch.object(mission_module, "contexte_message",
+                                  return_value="# Ton dossier\nFocus"):
+            open(os.path.join(chambre_serenissima, "serenissima"),
+                 "w").close()
+            texte = mission_module.mission(
+                "shiren", "brief", "Bonjour.", contexte=dossier,
+                contexte_id="52220", mode="discussion")
+
+        self.assertIn("# Mode discussion", texte)
+        self.assertNotIn("## Ligne de progression directe", texte)
+        self.assertNotIn("--a nicolas-lester-reynolds", texte)
+
+    def test_un_billet_est_un_percept_sans_dette_de_reponse(self):
+        contexte = {"contexte_affaire": None}
+        billet = {
+            "de": "nicolas-lester-reynolds",
+            "date": {"annee": 129, "lune": 5, "jour": 12},
+            "texte": "Bienvenue à Braavos.",
+            "ref": "message-1",
+        }
+        with mock.patch.object(mission_module, "dossier_journee",
+                               return_value=contexte), \
+                mock.patch.object(mission_module, "contexte_message",
+                                  return_value="# Ton dossier\nFocus"), \
+                mock.patch.object(chambre, "non_lus", return_value=[billet]), \
+                mock.patch.object(chambre, "chemin",
+                                  return_value="C:/chambres/temoin"), \
+                mock.patch.object(mission_module, "rendre_chambre_locale",
+                                  return_value=""):
+            texte = mission_module.mission(
+                "temoin", "brief", "", contexte=contexte,
+                mode="journee", billet_de="nicolas-lester-reynolds")
+
+        self.assertIn("Bienvenue à Braavos.", texte)
+        self.assertIn("ref message-1", texte)
+        self.assertIn("dépend de tes propres raisons", texte)
+        self.assertNotIn("Réponds-y", texte)
+
+    def test_une_identite_sans_tete_peut_etre_depechee(self):
+        brief_sans_tete = (
+            "== SA JOURNEE — ce que l'etat en dit\n"
+            "  Aucune tete dans intentions.json : objectifs et croyances "
+            "non renseignes.")
+        with mock.patch.object(mission_module, "instructions_mode"), \
+                mock.patch.object(mission_module, "date_du_monde",
+                                  return_value=(129, 4, 4)), \
+                mock.patch.object(mission_module, "identifiant_de_session",
+                                  return_value="session-fra"), \
+                mock.patch.object(mission_module, "brief_de",
+                                  return_value=brief_sans_tete), \
+                mock.patch.object(mission_module.tables, "lire",
+                                  return_value=[]), \
+                mock.patch.object(mission_module, "dossier_journee",
+                                  return_value={}), \
+                mock.patch.object(mission_module, "manuel_de",
+                                  return_value="manuel"), \
+                mock.patch.object(mission_module, "mission",
+                                  return_value="mission"), \
+                mock.patch.object(runtime, "configuration",
+                                  return_value={"fournisseur": "codex"}):
+            parti = mission_module.depecher(
+                "fra", "Reponds a la reine.", None, None, sec=True)
+
+        self.assertTrue(parti)
+
     def test_archive_prompt_conserve_contexte_et_ref(self):
         with tempfile.TemporaryDirectory() as dossier, \
                 mock.patch.object(mission_module, "DEPECHES", dossier), \
@@ -147,24 +243,17 @@ class DepecheContextesTests(unittest.TestCase):
         self.assertEqual("r-parole", depecher.call_args.kwargs["ref"])
         self.assertEqual("reponse", depecher.call_args.kwargs["mode"])
 
-    def test_les_modes_courts_verifient_concoivent_et_envoient(self):
+    def test_les_modes_courts_donnent_les_ressources_pour_repondre(self):
         reponse = mission_module.instructions_mode("reponse")
         discussion = mission_module.instructions_mode("discussion")
 
         for texte in (reponse, discussion):
+            aplati = " ".join(texte.split())
             self.assertIn("messages-au-joueur.md", texte)
             self.assertIn("# Ta chambre", texte)
-            self.assertIn("brouillon, pas une source", texte)
-            self.assertIn("revérifie les faits", texte)
-            self.assertIn("nécessaires avant", texte)
-        self.assertIn("Vérifie seulement", reponse)
-        self.assertIn("Conçois une réponse", reponse)
-        self.assertIn("dernière réponse de ce call", reponse)
-        self.assertIn("Vérifie seulement", discussion)
-        self.assertIn("Conçois une réponse", discussion)
-        self.assertIn("commande de canal exacte", discussion)
+            self.assertIn("confronter aux faits utiles", aplati)
+            self.assertIn("ta propre compréhension", aplati)
         for texte in (reponse, discussion):
-            self.assertIn("Ne modifie aucun fichier", texte)
             self.assertNotIn("journée EST ton retour", texte)
 
     def test_le_systeme_prepare_les_messages_seulement_comme_brouillons(self):
@@ -176,7 +265,6 @@ class DepecheContextesTests(unittest.TestCase):
         self.assertIn("mode `journee`", texte)
         self.assertIn("messages-au-joueur.md", texte)
         self.assertIn("Préparer n'est pas envoyer", texte)
-        self.assertIn("modes `reponse` et `discussion`", texte)
 
         construit = mission_module.manuel_de("gerardys")
         attendu = os.path.abspath(os.path.join(
@@ -261,7 +349,7 @@ class DepecheContextesTests(unittest.TestCase):
 
         self.assertEqual(["23030", "23020", "23010", "23000"],
                          focalise["contexte_affaire"]["chaine"])
-        self.assertIn("Une liste de noms", focalise["affaires_du_jour"])
+        self.assertNotIn("Une liste de noms", focalise["affaires_du_jour"])
         self.assertIn("affaire-donjon", focalise["affaires_du_jour"])
         self.assertNotIn("99999", focalise["affaires_du_jour"])
         self.assertNotIn("Guerre gagnée", focalise["affaires_du_jour"])

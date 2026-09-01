@@ -1,0 +1,156 @@
+{
+  "id": "plan-moyens-serenissima",
+  "maison_id": "maison-serenissima",
+  "boite": "boite-grand-plan",
+  "titre": "Les moyens techniques de Serenissima",
+  "sous_titre": "🧰 Containers, modules et preuve de sortie : chaque moyen relie une autorité de départ à un résultat observable.",
+  "type": "registre",
+  "pages": [
+    "CECI EST UN REGISTRE, NON UNE LISTE DE TÂCHES. Il ne promet pas qu'un service fonctionne : il rend adressables les ressources techniques dont Serenissima part. Une clef structurelle ou une action peut citer M101 à M110 ; le tissu relie alors le sous-graphe logique ou le geste au moyen concerné.",
+    "LA PROVENANCE EST EXPLICITE. `docs/containers.json` déclare les containers, leurs intentions, leurs rangs, leurs portes et les motifs de modules. Le code réel est la matière observée. `scripts/analyse/graphe_archi.py` les confronte et produit `docs/graphe-archi.md`. Le manifeste dit de quoi l'on part ; le rapport généré dit ce qui a effectivement été trouvé et où se lit le résultat.",
+    "LES NOMBRES SONT UN CONSTAT DATÉ, PAS UNE SECONDE AUTORITÉ. Les comptes courants vivent dans `documents/mains.json`. Quand le code ou le manifeste bouge, on relance `python scripts/analyse/graphe_archi.py --doc`, puis on reporte les comptes vérifiés dans les mains. Présence d'un fichier, processus lancé et résultat visible restent trois états différents."
+  ],
+  "colonnes": [
+    "🧰 N°",
+    "🏷️ Le moyen",
+    "💪 Ce qu'il sait faire",
+    "📥 De quoi l'on part",
+    "🧩 Modules réels constatés",
+    "🚪 Porte",
+    "✋ Qui le tient",
+    "📤 Où est le résultat",
+    "🔎 État"
+  ],
+  "lignes": [
+    {
+      "cellules": [
+        "**M101**",
+        "🔩 Container socle",
+        "Transporter les requêtes, les chemins, le siège et les messages d'écran sans porter de métier.",
+        "`docs/containers.json` → `socle`",
+        "8 fichiers rattachés au constat du 129.5.12",
+        "`serveur/http.js`",
+        "maison-serenissima",
+        "`docs/graphe-archi.md` → section `socle`; comportement visible par les consommateurs de la porte",
+        "présent, câblage à contrôler par M110"
+      ]
+    },
+    {
+      "cellules": [
+        "**M102**",
+        "🗄️ Container état",
+        "Tenir la seule vérité canonique et offrir une porte commune aux lectures et écritures.",
+        "`docs/containers.json` → `etat` et les fichiers sous `etat/`",
+        "4 fichiers de code rattachés au constat du 129.5.12",
+        "`scripts/etat/expose.py`",
+        "maison-serenissima",
+        "`etat/` pour le canon; `docs/graphe-archi.md` → section `etat` pour le rattachement des modules",
+        "présent, fonctionnement à vérifier par usage"
+      ]
+    },
+    {
+      "cellules": [
+        "**M103**",
+        "⏱️ Container temps",
+        "Calculer horloges, échéances et diffusion sans décider ni écrire le résultat fictionnel.",
+        "`docs/containers.json` → `temps` et l'état canonique lu au moment du tick",
+        "31 fichiers rattachés au constat du 129.5.12",
+        "`scripts/temps/expose.py` · `serveur/temps/index.js`",
+        "maison-serenissima",
+        "sortie de `scripts/tick.py`; `docs/graphe-archi.md` → section `temps`",
+        "présent, service distinct de son simple lancement"
+      ]
+    },
+    {
+      "cellules": [
+        "**M104**",
+        "🌍 Container monde",
+        "Cuire et servir ville, masque, plan, bâti, relief et habitants.",
+        "`docs/containers.json` → `monde`, sources sous `scripts/monde/`, `scripts/ville/` et `scripts/materialisation/`",
+        "121 fichiers rattachés au constat du 129.5.12",
+        "`scripts/monde/expose.py` · `serveur/monde/index.js`",
+        "maison-serenissima",
+        "sorties sous `monde/` et rendu par `ecrans/modules/monde/`; `docs/graphe-archi.md` → section `monde`",
+        "présent, sorties à vérifier dans le rendu"
+      ]
+    },
+    {
+      "cellules": [
+        "**M105**",
+        "🧠 Container agents",
+        "Servir les sièges, leurs dépêches, fils, contextes et activations.",
+        "`docs/containers.json` → `agents`, chambres et état canonique",
+        "63 fichiers rattachés au constat du 129.5.12",
+        "`scripts/agents/expose.py` · `serveur/agents/index.js`",
+        "maison-serenissima",
+        "`etat/depeches/`, chambres et `.agents-runtime/`; `docs/graphe-archi.md` → section `agents`",
+        "présent, achèvement à prouver par artefact durable"
+      ]
+    },
+    {
+      "cellules": [
+        "**M106**",
+        "📋 Container plan",
+        "Tenir les cahiers, tisser leurs pièces, calculer couverture, criticité et mesures.",
+        "`docs/containers.json` → `plan` et `etat/maisons/*/documents/`",
+        "89 fichiers rattachés au constat du 129.5.12",
+        "`scripts/plan/expose.py` · `serveur/plan/index.js`",
+        "maison-serenissima",
+        "cahiers canoniques sous `etat/maisons/`; graphe dérivé sous `etat/tissu/`; `docs/graphe-archi.md` → section `plan`",
+        "présent, liens reconstruits par tissage"
+      ]
+    },
+    {
+      "cellules": [
+        "**M107**",
+        "🎨 Container peinture",
+        "Produire les médias qui appellent des outils ou API coûteux : portraits, salles, voix et chansons.",
+        "`docs/containers.json` → `peinture` et les sources explicitement données à chaque production",
+        "18 fichiers rattachés au constat du 129.5.12",
+        "`scripts/peinture/expose.py` · `serveur/peinture/index.js`",
+        "maison-serenissima",
+        "artefact média enregistré et rendu par les routes dédiées; `docs/graphe-archi.md` → section `peinture`",
+        "présent, aucune production déduite de la seule présence du module"
+      ]
+    },
+    {
+      "cellules": [
+        "**M108**",
+        "📜 Container scène",
+        "Recevoir l'acte du joueur et rendre le flux, la montre et la mise en scène visibles.",
+        "`docs/containers.json` → `scene`, inbox et état canonique",
+        "45 fichiers rattachés au constat du 129.5.12",
+        "`scripts/scene/expose.py` · `serveur/scene/index.js`",
+        "maison-serenissima",
+        "`etat/flux.jsonl`, réponse `/scene` et écran visible; `docs/graphe-archi.md` → section `scene`",
+        "présent, résultat final à vérifier dans le navigateur"
+      ]
+    },
+    {
+      "cellules": [
+        "**M109**",
+        "🔬 Container bancs",
+        "Lire le système sans le muter pour mesurer gardes, écarts et régressions.",
+        "`docs/containers.json` → `bancs` et le dépôt au moment de l'épreuve",
+        "54 fichiers rattachés au constat du 129.5.12",
+        "`scripts/verifier.mjs`",
+        "maison-serenissima",
+        "sortie des épreuves et rapports générés; `docs/graphe-archi.md` → section `bancs`",
+        "présent, une sortie verte ne remplace pas la vérification visible"
+      ]
+    },
+    {
+      "cellules": [
+        "**M110**",
+        "🕸️ Sonde du graphe d'architecture",
+        "Confronter la déclaration des containers aux imports Python, require Node et globales navigateur; compter les écarts.",
+        "`docs/containers.json` + 454 fichiers de code observés",
+        "`scripts/analyse/graphe_archi.py`",
+        "`python scripts/analyse/graphe_archi.py --doc`",
+        "maison-serenissima",
+        "`docs/graphe-archi.md` pour le rapport lisible; `--json` pour la sortie structurée",
+        "mesuré le 129.5.12 : 433 fichiers rattachés, 21 orphelins, 115 liens hors porte, 13 remontées, 0 commande-bibliothèque"
+      ]
+    }
+  ]
+}

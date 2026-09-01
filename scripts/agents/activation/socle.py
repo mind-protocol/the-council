@@ -45,7 +45,7 @@ DUREE_ACTIVATION_MIN_SECONDES = 60
 DEMI_VIE_ENERGIE = 300.0
 # La reserve du graphe dit combien une tete compte dans le monde. Ces trois
 # constantes disent seulement combien elle est disponible pour REPARTIR tout
-# de suite. Trente minutes de calcul recent divisent la disponibilite d'un
+# de suite. Soixante minutes de calcul recent divisent la disponibilite d'un
 # homme par deux; un MJ de zone, qui arbitre plusieurs hommes, dispose de quatre
 # fois cette enveloppe. La charge s'oublie de moitie en douze heures reelles.
 # Un acteur peut rester vingt-quatre heures de fiction derriere le front PJ
@@ -53,7 +53,7 @@ DEMI_VIE_ENERGIE = 300.0
 # par deux : pendant un saut, les tetes non avancees quittent progressivement
 # le classement sans aucun mode special.
 DEMI_VIE_CHARGE_COMPUTE_HEURES = 12.0
-MINUTES_COMPUTE_DEMI_ENERGIE = 30.0
+MINUTES_COMPUTE_DEMI_ENERGIE = 60.0
 MINUTES_COMPUTE_DEMI_MJ = 120.0
 # Une porte ouverte se ferme sous 30 %. Une porte fermee ne se rouvre qu'a
 # 50 % : l'hysteresis empeche la boucle de battre autour d'un seuil unique.
@@ -63,8 +63,12 @@ HEURES_RETARD_GRACE = 24.0
 HEURES_RETARD_DEMI_ENERGIE = 24.0
 VERSION_FATIGUE_ACTEURS = 3
 ECHECS_CONSECUTIFS_MAX = 5
-REPOS_ACTEUR_SECONDES = 15 * 60
-REPOS_PAIRE_SECONDES = 60 * 60
+# Braavos travaille désormais par verrous collectifs : une journée achevée ne
+# pose plus de délai artificiel avant qu'un autre porteur confronte le même
+# verrou, ni avant que l'acteur poursuive un autre verrou. Les portes de
+# compute, l'énergie et les bornes explicites du lancement restent actives.
+REPOS_ACTEUR_SECONDES = 0
+REPOS_PAIRE_SECONDES = 0
 TRANSFERT_HORLOGE_MAX = 0.5
 ETATS_TERMINES = (
     "fait", "faite", "fini", "termine", "abandonn", "annul", "sans objet",

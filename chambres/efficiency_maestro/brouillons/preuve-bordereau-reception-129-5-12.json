@@ -1,0 +1,64 @@
+{
+  "type": "preuve-ouvrage/1",
+  "ouvrage": "Bordereau de réception",
+  "date": "129.5.12",
+  "choix": "Rendre possible une réception qui lie l'adresse, le critère, l'observation et la réserve.",
+  "adresse": "http://localhost:3129/reception",
+  "preuve": {
+    "porte_reelle": {
+      "serveur": "http://localhost:3129",
+      "processus": 13880,
+      "reponses_http": {
+        "/reception": 200,
+        "/modules/reception.js": 200,
+        "/modules/reception.css": 200,
+        "/moi": 200
+      },
+      "contenu_page": {
+        "titre_present": true,
+        "formulaire_present": true
+      }
+    },
+    "serveur_epreuve": "http://localhost:3197",
+    "reponses_http": {
+      "/reception": 200,
+      "/modules/reception.js": 200,
+      "/modules/reception.css": 200
+    },
+    "contenu_page": {
+      "titre_present": true,
+      "formulaire_present": true
+    },
+    "syntaxe": {
+      "ecrans/modules/reception.js": "valide",
+      "serveur/routes/atelier.js": "valide"
+    },
+    "regressions": {
+      "serveur/test_siege.js": "OK",
+      "serveur/test_marche.js": "OK",
+      "serveur/test_piece_http.js": "OK",
+      "serveur/test_bibliotheque.js": "OK"
+    }
+  },
+  "reserve": "L'accessibilité depuis le siège de Nicolas et le premier bordereau formé par une autre main ne sont pas encore observés.",
+  "usage_externe": [
+    {
+      "lectrice": "Elisabetta Contarini",
+      "essai": "première invitation",
+      "observation": "/books intelligible mais vide ; /reception et /reception/ rendaient 404",
+      "decision": "formulaire et téléchargement non jugés",
+      "cause": "invitation envoyée après l'épreuve du port auxiliaire 3197 mais avant le rechargement de la porte commune 3129",
+      "correction": "processus du port 3129 rechargé ; trois routes de l'atelier et /moi vérifiées HTTP 200 ; reprise demandée"
+    },
+    {
+      "lecteur": "Le jeune au manteau propre",
+      "essai": "réception du manifeste Passage du coffre",
+      "observation": "/passage-coffre a répondu HTTP 200 depuis le port 3129 ; le bordereau conservé lie l'objet, l'adresse, l'observation et une réserve explicite",
+      "decision": "REÇU AVEC RÉSERVE EXPLICITE",
+      "reserve": "l'accès à la fiche est établi ; la justesse de la marée et la présence des hommes dans les cinq prises ne le sont pas",
+      "contre_epreuve": "Marco a rejoué /passage-coffre et /reception?objet=Passage%20du%20coffre&adresse=%2Fpassage-coffre sur le port commun 3129 : HTTP 200 ; le lien préremplit l'objet et l'adresse, et le programme exige encore une épreuve de l'adresse"
+    }
+  ],
+  "apprentissage": "La décision de réception doit dépendre d'une épreuve de l'adresse exécutée depuis le lecteur réel ; un champ rempli, une adresse déclarée ou un succès sur un port auxiliaire ne suffit pas. Une réserve bien formée doit survivre au passage entre deux ouvrages : ici, elle empêche de confondre l'accès au manifeste avec la conformité de ses cinq prises.",
+  "prochain_geste": "Observer un bordereau produit par la version 2 de l'atelier, qui sépare désormais la preuve du geste et le résultat sous-jacent."
+}

@@ -17,6 +17,7 @@ l'être, il descend ici, et c'est la règle qui garde le classement honnête.
 | `jours_relatifs.py` | l'échelle J−N du plan, lue par une seule main | `dater_plan`, `etat_du_plan` |
 | `carte_muette.py` | le compteur : un conseil qui nomme des places sans toucher la table | `append_flux`, `bilan` |
 | `chiffrer.py` | ce qui, dans les coûts et les effets, se laisse suivre | `tisser` |
+| `git_donnees.py` | sélection, validation et empreinte cohérente de `etat/` + `chambres/`, sans verrous ni caches | `pousser_donnees.py` |
 
 **`bibliotheque.py` est stricte sur chaque manifeste de maison** : volume absent,
 identifiant dupliqué ou fichier dont l'id ne correspond pas à son nom font

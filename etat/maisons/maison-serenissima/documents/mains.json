@@ -1,0 +1,115 @@
+{
+ "maison_id": "maison-serenissima",
+ "mains": [
+  {
+   "id": "inventaire-architecture-serenissima",
+   "quoi": "L'inventaire mesuré qui part de docs/containers.json et aboutit au rapport généré docs/graphe-archi.md",
+   "porteur": {
+    "type": "maison",
+    "id": "maison-serenissima"
+   },
+   "lieu_id": "braavos",
+   "mandat": "Tenir distincts la déclaration, les modules réellement rattachés et les fichiers encore orphelins ; constat initial du 129.5.12.",
+   "mesure": [
+    {
+     "id": "containers-declares",
+     "quoi": "containers déclarés dans docs/containers.json",
+     "valeur": 9,
+     "unite": "containers",
+     "rythme": {
+      "par": 0
+     },
+     "reliquat": 0,
+     "plancher": 0,
+     "plafond": null,
+     "depend_de": []
+    },
+    {
+     "id": "modules-rattaches",
+     "quoi": "fichiers de code rattachés à un container par la sonde d'architecture",
+     "valeur": 433,
+     "unite": "modules",
+     "rythme": {
+      "par": 0
+     },
+     "reliquat": 0,
+     "plancher": 0,
+     "plafond": null,
+     "depend_de": []
+    },
+    {
+     "id": "modules-orphelins",
+     "quoi": "fichiers de code qu'aucun container déclaré ne réclame",
+     "valeur": 21,
+     "unite": "modules",
+     "rythme": {
+      "par": 0
+     },
+     "reliquat": 0,
+     "plancher": 0,
+     "plafond": null,
+     "depend_de": []
+    }
+   ],
+   "seuils": [],
+   "dernier_rapport": null,
+   "date_maj": "129.5.12",
+   "maison_id": "maison-serenissima"
+  },
+  {
+   "id": "frontieres-architecture-serenissima",
+   "quoi": "Les écarts entre les portes déclarées dans docs/containers.json et les liens observés, publiés dans docs/graphe-archi.md",
+   "porteur": {
+    "type": "maison",
+    "id": "maison-serenissima"
+   },
+   "lieu_id": "braavos",
+   "mandat": "Compter les écarts sans les convertir en preuve de panne ; constat initial du 129.5.12.",
+   "mesure": [
+    {
+     "id": "liens-hors-porte",
+     "quoi": "liens qui entrent dans un container ailleurs que par sa porte déclarée",
+     "valeur": 115,
+     "unite": "liens",
+     "rythme": {
+      "par": 0
+     },
+     "reliquat": 0,
+     "plancher": 0,
+     "plafond": null,
+     "depend_de": []
+    },
+    {
+     "id": "dependances-remontantes",
+     "quoi": "couples de containers dont une dépendance remonte les rangs déclarés",
+     "valeur": 13,
+     "unite": "liens",
+     "rythme": {
+      "par": 0
+     },
+     "reliquat": 0,
+     "plancher": 0,
+     "plafond": null,
+     "depend_de": []
+    },
+    {
+     "id": "commandes-bibliotheques",
+     "quoi": "commandes racine importées comme modules",
+     "valeur": 0,
+     "unite": "modules",
+     "rythme": {
+      "par": 0
+     },
+     "reliquat": 0,
+     "plancher": 0,
+     "plafond": null,
+     "depend_de": []
+    }
+   ],
+   "seuils": [],
+   "dernier_rapport": "controle-liens-systeme-129-5-12",
+   "date_maj": "129.5.12",
+   "maison_id": "maison-serenissima"
+  }
+ ]
+}

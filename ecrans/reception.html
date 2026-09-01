@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bordereau de réception — Braavos</title>
+  <link rel="stylesheet" href="/modules/reception.css">
+</head>
+<body>
+  <main>
+    <header>
+      <p class="marque">L’Archive · Braavos</p>
+      <h1>Bordereau de réception</h1>
+      <p class="chapeau">Une adresse n’est pas une remise. Éprouvez-la depuis ce lecteur, puis distinguez la preuve du geste et le résultat obtenu au regard du critère.</p>
+    </header>
+
+    <form id="reception-form">
+      <label>Objet reçu
+        <input id="objet" name="objet" required placeholder="Ex. registre des décisions">
+      </label>
+      <label>Adresse à éprouver
+        <span class="adresse-ligne">
+          <input id="adresse" name="adresse" required value="/" placeholder="/books ou https://…">
+          <button id="eprouver" type="button">Éprouver</button>
+        </span>
+      </label>
+      <output id="preuve-adresse" class="preuve neutre">Aucune épreuve exécutée.</output>
+      <label>Producteur déclaré
+        <input id="producteur" name="producteur" placeholder="Nom ou identifiant déclaré dans le registre">
+      </label>
+      <label>Provenance déclarée
+        <input id="provenance" name="provenance" placeholder="Adresse ancienne, si le registre en déclare une">
+      </label>
+      <label>Critère de réception
+        <textarea id="critere" name="critere" required placeholder="Ce que le lecteur doit pouvoir constater"></textarea>
+      </label>
+      <label>Observation
+        <textarea id="observation" name="observation" required placeholder="Ce qui s’est effectivement produit"></textarea>
+      </label>
+      <label>Résultat sous-jacent
+        <select id="resultat-sous-jacent" name="resultat-sous-jacent" required>
+          <option value="NON ÉTABLI">Non établi</option>
+          <option value="CONFORME">Conforme au critère</option>
+          <option value="NON CONFORME">Non conforme au critère</option>
+        </select>
+      </label>
+      <label>Réserve
+        <textarea id="reserve" name="reserve" required placeholder="Écrire « aucune » si aucune réserve ne subsiste"></textarea>
+      </label>
+      <label>Date du constat
+        <input id="date" name="date" required value="129.5.12">
+      </label>
+      <button class="former" type="submit">Former le bordereau</button>
+    </form>
+
+    <section id="resultat" hidden>
+      <div class="resultat-tete">
+        <h2>Pièce formée</h2>
+        <strong id="decision"></strong>
+      </div>
+      <pre id="piece"></pre>
+      <div class="actions">
+        <button id="copier" type="button">Copier</button>
+        <button id="telecharger" type="button">Télécharger JSON</button>
+        <button id="deposer" type="button">Déposer la preuve</button>
+      </div>
+      <p id="copie-etat" aria-live="polite"></p>
+      <p id="depot-etat" aria-live="polite">Le dépôt ne modifie pas votre jugement. Il rend la pièce lisible à quiconque possède son lien.</p>
+    </section>
+  </main>
+  <script src="/modules/reception.js"></script>
+</body>
+</html>

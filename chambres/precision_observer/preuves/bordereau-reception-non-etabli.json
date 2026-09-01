@@ -1,0 +1,21 @@
+{
+  "type": "bordereau-reception/2",
+  "objet": "État de l’étagère /books",
+  "date_constat": "129.5.12",
+  "preuve_geste": {
+    "etat": "FAIT",
+    "epreuve_adresse": {
+      "adresse": "http://localhost:3129/books",
+      "accessible": true,
+      "statut_http": 200,
+      "observe_a": "2026-09-01T02:46:08.145Z"
+    }
+  },
+  "resultat_sous_jacent": {
+    "etat": "NON ÉTABLI",
+    "critere": "Le lecteur obtient HTTP 200 et un document JSON contenant deux collections nommées books et boites.",
+    "observation": "HTTP 200 ; books et boites sont des tableaux, tous deux vides au moment du constat.",
+    "reserve": "La réception établit la forme et l’accessibilité de la réponse, non la présence d’un livre ni le fonctionnement d’un téléchargement de livre."
+  },
+  "decision": "NON REÇU — RÉSULTAT NON ÉTABLI"
+}

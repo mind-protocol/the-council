@@ -56,9 +56,11 @@ window.Renvois = (() => {
         // Une pièce du plan dont aucun volume ne porte la ligne : le renvoi
         // mène au PLATEAU, et il le dit par le signe de l'affaire.
         return { sorte: "piece", plan: plan, icone: "\u{1F3F0}", nom: dujour,
+                 titre: dujour,
                  infobulle: (dujour ? dujour + " — " : "") + "n° " + cible + mot };
       }
       return { sorte: "livre", plan: plan, icone: f.icone || "📄", nom: dujour,
+               titre: f.titre || dujour,
                infobulle: (f.titre ? f.titre + " — n° " + cible : "n° " + cible) + mot };
     }
     if (ENTITE.test(cible)) {
@@ -139,9 +141,66 @@ window.Renvois = (() => {
     }
   }
 
+  // LES ADRESSES NUES DU FIL. Les habitants écrivent naturellement « je
+  // prends 54310 » plutôt que la syntaxe technique `[54310](54310)`. Leur
+  // parole canonique reste exactement celle qu'ils ont écrite ; au rendu, on
+  // entoure seulement les numéros que l'étagère ou l'échiquier sait réellement
+  // résoudre. Un nombre inconnu reste donc du texte nu, sans faux lien.
+  const NUMERO_DANS_TEXTE = /\d{4,6}/g;
+  const normaliserTitre = (s) => String(s || "").normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "").toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ").trim();
+  function numeroter(racine) {
+    const base = racine || document.body;
+    const phrases = [];
+    if (base.matches && base.matches(".chr .phrase")) phrases.push(base);
+    if (base.querySelectorAll) {
+      base.querySelectorAll(".chr .phrase").forEach((el) => phrases.push(el));
+    }
+    phrases.forEach((phrase) => {
+      const textes = [];
+      const marche = document.createTreeWalker(phrase, NodeFilter.SHOW_TEXT);
+      let noeud;
+      while ((noeud = marche.nextNode())) {
+        const parent = noeud.parentElement;
+        if (!parent || parent.closest(".renvoi,button,input,textarea,[contenteditable]")) continue;
+        if (NUMERO_DANS_TEXTE.test(noeud.nodeValue || "")) textes.push(noeud);
+        NUMERO_DANS_TEXTE.lastIndex = 0;
+      }
+      textes.forEach((texte) => {
+        const source = texte.nodeValue || "";
+        const morceaux = [];
+        let dernier = 0, trouve;
+        NUMERO_DANS_TEXTE.lastIndex = 0;
+        while ((trouve = NUMERO_DANS_TEXTE.exec(source))) {
+          const avant = trouve.index ? source[trouve.index - 1] : "";
+          const apres = source[trouve.index + trouve[0].length] || "";
+          // Une tranche d'un nombre plus long n'est jamais une adresse.
+          const resolution = resoudre(trouve[0]);
+          if (/\d/.test(avant) || /\d/.test(apres) || !resolution) continue;
+          if (trouve.index > dernier) morceaux.push(document.createTextNode(source.slice(dernier, trouve.index)));
+          const lien = document.createElement("b");
+          lien.className = "renvoi";
+          lien.dataset.cible = trouve[0];
+          const titre = String(resolution.titre || "").trim();
+          const titreDejaDit = titre && normaliserTitre(source).includes(normaliserTitre(titre));
+          lien.textContent = trouve[0] + (titre && !titreDejaDit ? " · " + titre : "");
+          morceaux.push(lien);
+          dernier = trouve.index + trouve[0].length;
+        }
+        if (!morceaux.length) return;
+        if (dernier < source.length) morceaux.push(document.createTextNode(source.slice(dernier)));
+        const fragment = document.createDocumentFragment();
+        morceaux.forEach((m) => fragment.appendChild(m));
+        texte.replaceWith(fragment);
+      });
+    });
+  }
+
   // Habiller ce qui mène quelque part, laisser le reste en paix. On repasse
   // sur ce qui n'a pas encore été jugé (`data-vu`), jamais deux fois.
   function traiter(racine) {
+    numeroter(racine);
     // Ce qui s'allume s'allume ENSEMBLE : deux renvois dans la même phrase
     // désignent deux pièces d'un même énoncé, et deux bascules qui se chassent
     // ne montreraient que la seconde.

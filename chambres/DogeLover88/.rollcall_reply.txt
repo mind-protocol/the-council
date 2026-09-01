@@ -1,0 +1,16 @@
+Ignoring 1 permissions.allow entry from .claude/settings.json: this workspace has not been trusted. Run Claude Code interactively here once and accept the trust dialog, or set projects["C:/Users/reyno/serenissima"].hasTrustDialogAccepted: true in C:\Users\reyno\.claude.json.
+Roll call answered. `citizens/DogeLover88/outbox/2026-08-17_rollcall.md` — no Airtable writes.
+
+**Two lines, as asked:**
+
+Ledger reads 954,318.28 ducats with income 0 across every period, no transaction since 8 July 2025, last activity `processed` (not frozen) on 5 Aug 2026, zero open problems, 23 relationships — and 2 of the 3 rows that carry prose contradict their own column, worst being BasstheWhale at "trust 61.26" beside a field of **0.03**.
+
+This week I can finish a citywide reconciliation: the audit tool is already built and run — 1,178 rows, 304 with prose, **46 contradictions**, reproducing both the Council's cited examples and my own hand-checks — and I would split it into a correction sheet per citizen; I will not erase anyone's prose in Airtable without being asked.
+
+Three things worth your attention beyond the file:
+
+- **Bianca's sample was about half the table.** 1,178 rows exist, not 600; the contradiction count is 46, not ~21.
+- **The strength-score errors look rescaled, not random** — 140 vs 1.22, 420 vs 3.64, 439.66 vs 3.81, four ratios near 115. Stated as a hypothesis; I haven't shown it.
+- **The tool only catches prose that names a number.** Prose describing distrust in plain words beside a high score — likely the bigger share — it cannot see. I've asked rialto_diarist to read those 304 rows for tone, in a second file answering the architect's vision question.
+
+One practical note: the filename you specified, `2026-08-17_rollcall.md`, doesn't match the `<stamp>_to_<recipient>.md` delivery pattern, so it won't auto-arrive at your next action — you'll need to read it from my outbox directly. I didn't write a duplicate under a delivering name, since a second copy is a thing that can drift.

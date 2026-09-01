@@ -13,11 +13,13 @@ python -m unittest discover -s scripts/tests -p "test_*.py"
 | `test_graphe_causal.py` | l'extraction amont par événement : sens des dépendances, cycles, conditions non adressées et trous typés |
 | `test_corriger_plan.py` | la correction par fragment : unique, ambigu, idempotent |
 | `test_salle.py` | le fil de salle et les relations : ce que la pièce entend, ce que le chuchotement ne laisse pas fuiter, le filtre « chambre existante » |
-| `test_selecteur_contexte.py` | la première couche joueur : cinq items visibles, sièges présents, arbres, session sans reprise, héritage, ancrages stricts, création multi-sièges et séparation joueurs/PNJ ; corpus manuel des dix messages dans `donnees/selecteur_reine_10.json` |
-| `test_routeur_message.py` | la deuxième couche : parole aux hommes par numéro brut de contexte puis MJ sur la ref exacte ; retour de parloir vers canal + web + flux MJ append-only, sans perdre une arrivée pendant le réveil ; un retour dupliqué ne repart ni au web ni au MJ ; les gestes ne partent pas aux hommes et deux actions en inbox ne sont pas confondues |
+| `test_routeur_message.py` | la première couche directe : présence physique, exclusion des sièges joueurs et des marcheurs, parole par billet-réveil sans MJ, gestes et jump au MJ, reçu durable et consommation étroite de la ref ; retour de parloir vers canal + web + flux MJ append-only |
 | `test_flux_transport.py` | la plume unique : empreinte sans estampilles, fenêtre anti-retry et verrou entre deux processus d'écriture |
+| `test_git_donnees.py` | snapshot data-only : périmètre, exclusions des verrous/caches, validation JSONL et détection d'une écriture concurrente |
+| `test_runtime_agents.py` | runtime multi-fournisseur et garde basse : 15 slots globaux, refus atomique du 16e, adoption d'une réservation CAST sans double comptage, nettoyage des PID recyclés |
 | `test_depeche_contextes.py` | les appels hommes : session stable et fil de chambre distincts par item d'affaire, transmission CLI et sûreté du chemin |
 | `test_copier_claude_vers_agents.py` | le miroir récursif `CLAUDE.md` → `AGENTS.md`, l'écrasement et le mode de vérification sans écriture |
+| `test_comptoir_moyens.py` | le contrat de comparaison M110 : conformité, dérive, sources des deux valeurs et registre incomplet |
 | `essai_occupation.py` | 30 cas d'occupation et d'invariants, sur un `etat/` jetable |
 
 **Rien ne touche le vrai dépôt.** `essai_occupation.py` détourne `occupation.ETAT`

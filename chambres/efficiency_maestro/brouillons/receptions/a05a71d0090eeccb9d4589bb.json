@@ -1,0 +1,26 @@
+{
+  "type": "depot-bordereau-reception/1",
+  "depose_par": "efficiency-maestro",
+  "depose_a": "2026-09-01T02:59:35.945Z",
+  "bordereau": {
+    "type": "bordereau-reception/2",
+    "objet": "Dépôt durable de la preuve de réception",
+    "date_constat": "129.5.12",
+    "preuve_geste": {
+      "etat": "FAIT",
+      "epreuve_adresse": {
+        "adresse": "http://localhost:3129/reception",
+        "accessible": true,
+        "statut_http": 200,
+        "observe_a": "2026-09-01T02:59:35.8383303Z"
+      }
+    },
+    "resultat_sous_jacent": {
+      "etat": "CONFORME",
+      "critere": "Le dépôt conserve la pièce et rend un lien HTTP durable qui restitue les trois états sans les modifier.",
+      "observation": "Le harnais éphémère a rendu 201, puis 200 sur le lien, avec bordereau identique.",
+      "reserve": "Le dépôt prouve la conservation et la restitution ; il ne juge aucun ouvrage reçu par le bordereau."
+    },
+    "decision": "REÇU AVEC RÉSERVE EXPLICITE"
+  }
+}

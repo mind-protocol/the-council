@@ -36,15 +36,33 @@ SUFFIXES_JSON = (
 )
 SUFFIXES_BINAIRES = ("masque",)
 
+# Les premiers noms propres de Braavos. La géométrie reste celle du modèle,
+# mais une salle réellement reprise par la ville peut cesser de porter son
+# intitulé générique. Les clefs sont celles de Peyredragon, avant adaptation
+# de l'espace de noms.
+NOMS_SALLES_BRAAVOS = {
+    "fosses": "Le Bassin des Fondations",
+    "quai": "Le Quai des Deux Rives",
+}
 
-def _adapter(valeur, cle=None):
+
+def _adapter(valeur, cle=None, salles=None):
     """Adapter l'identité sans falsifier les notices qui nomment la source."""
     if isinstance(valeur, dict):
-        return {k: _adapter(v, k) for k, v in valeur.items()}
+        sortie = {k: _adapter(v, k, salles) for k, v in valeur.items()}
+        identifiant = valeur.get("id")
+        if salles and identifiant in NOMS_SALLES_BRAAVOS and "nom" in valeur:
+            sortie["nom"] = NOMS_SALLES_BRAAVOS[identifiant]
+        return sortie
     if isinstance(valeur, list):
-        return [_adapter(v, cle) for v in valeur]
+        return [_adapter(v, cle, salles) for v in valeur]
     if not isinstance(valeur, str):
         return valeur
+    # Une copie de ville ne peut pas partager les adresses de salles de son
+    # modèle : `septuaire` seul ferait entrer les Braaviens à Peyredragon. Les
+    # références structurelles des intérieurs reçoivent donc un espace de noms.
+    if salles and cle in {"id", "salle", "vers"} and valeur in salles:
+        return DESTINATION + "-" + valeur
     if cle == "_lisez_moi":
         return ("COPIE PROVISOIRE POUR BRAAVOS — géométrie et contenu repris "
                 "de Peyredragon. Source originale : " + valeur)
@@ -96,6 +114,13 @@ def verifier():
         erreurs.append("gens.dossier ne pointe pas vers monde/gens/braavos")
     if not interieurs.get("salles"):
         erreurs.append("aucune salle copiée")
+    elif any(not s.get("id", "").startswith("braavos-") for s in interieurs["salles"]):
+        erreurs.append("les ids de salles ne sont pas propres à Braavos")
+    else:
+        noms = {s.get("id"): s.get("nom") for s in interieurs["salles"]}
+        for identifiant, nom in NOMS_SALLES_BRAAVOS.items():
+            if noms.get(DESTINATION + "-" + identifiant) != nom:
+                erreurs.append("le nom braavien de %s n'est pas appliqué" % identifiant)
     if erreurs:
         print("Le monde provisoire de Braavos est INVALIDE :")
         for erreur in erreurs:
@@ -113,8 +138,10 @@ def engendrer():
         destination = _chemin(DESTINATION, suffixe, "json")
         with open(source, encoding="utf-8") as f:
             donnees = json.load(f)
+        salles = ({s.get("id") for s in donnees.get("salles", [])}
+                  if suffixe == "interieurs" else None)
         with open(destination, "w", encoding="utf-8", newline="\n") as f:
-            json.dump(_adapter(donnees), f, ensure_ascii=False,
+            json.dump(_adapter(donnees, salles=salles), f, ensure_ascii=False,
                       separators=(",", ":"))
 
     for suffixe in SUFFIXES_BINAIRES:

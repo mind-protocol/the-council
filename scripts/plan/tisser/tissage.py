@@ -19,12 +19,16 @@ from plan.tisser.lecture import (RACINE, ETAT, SORTIE, CANON, INVERSES,
                                  resoudre_code, nommer, plat_nom,
                                  A_DESIGNER, col, nu, indexer)
 from plan.tisser.chambre_mj import charger_affaires_mj, aretes_affaires_mj
+from plan.tisser.personnelles import (charger_affaires_personnelles,
+                                      aretes_affaires_personnelles)
 
 def tisser(books, intentions, mains, plans, evenements, personnages=None,
            joueur=None, lieux_connus=(), plis=None, liens=None,
-           affaires_mj=None):
+           affaires_mj=None, affaires_personnelles=None):
     registres = registres_de(books)
     noms = nommer(personnages or [])
+    personnes_connues = {p.get("id") for p in (personnages or [])
+                         if isinstance(p, dict) and p.get("id")}
     """Une arete par lien reellement ecrit. `flou` = presente, non suivable."""
     A = []
 
@@ -58,9 +62,47 @@ def tisser(books, intentions, mains, plans, evenements, personnages=None,
         a.update({k: v for k, v in proprietes.items() if v is not None})
         A.append(a)
 
+    def personnes_dans(texte):
+        """Résout tous les habitants explicitement nommés dans une cellule.
+
+        Les groupes de verrou citent plusieurs ids canoniques. Dès qu'un id
+        exact est présent, il gagne sur les noms humains et leurs homonymes.
+        """
+        brut = str(texte or "")
+        exactes = {
+            "pers:" + pid for pid in personnes_connues
+            if re.search(r"(?<![a-z0-9-])" + re.escape(pid)
+                         + r"(?![a-z0-9-])", brut, re.I)
+        }
+        if exactes:
+            return exactes
+        pn = plat_nom(brut)
+        resultat = set()
+        for nom, pid in noms.items():
+            if re.search(r"(?:^| )" + re.escape(nom) + r"(?: |$)", pn):
+                resultat.add("pers:" + pid)
+        return resultat
+
     # --- les cinq mecanismes des cahiers
     for l in books:
         lid = l.get("id")
+        # LE PROPRIETAIRE D'UNE AFFAIRE ENTRE DANS SON GRAPHE, sans devenir
+        # pour autant l'executant de chacune de ses actions. `tient` est une
+        # assignation de tache et fermerait celles-ci aux collaborateurs ;
+        # `porte` relie seulement la personne aux buts strategiques du cahier.
+        # L'importance peut ainsi circuler depuis le proprietaire, tandis que
+        # chaque action conserve sa propre main (ou sa vacance explicite).
+        proprietaire = l.get("tenu_par")
+        if proprietaire in personnes_connues:
+            for titre, C, lignes in grilles(l):
+                if "cible" not in titre.casefold():
+                    continue
+                for r in lignes:
+                    cells = r.get("cellules") or []
+                    cible = nu(cells[0]) if cells else ""
+                    if PIECE.fullmatch(cible):
+                        arc("pers:" + str(proprietaire), cible, "porte",
+                            "books/tenu_par", texte=lid)
         for titre, C, lignes in grilles(l):
             est_act = "Action" in titre
             est_clef = "Clef" in titre
@@ -86,10 +128,16 @@ def tisser(books, intentions, mains, plans, evenements, personnages=None,
                             "books/actions")
                     if not codes and bureau.strip():
                         pn = plat_nom(bureau)
-                        trouve = None
-                        if A_DESIGNER.search(pn):
+                        # Un identifiant canonique exact gagne avant la
+                        # comparaison des noms. `plat_nom` retire les chiffres
+                        # et confondrait sinon anchor-builder et
+                        # anchor-builder1, ou greek-trader et greek-trader2.
+                        trouve = ("pers:" + bureau.strip()
+                                  if bureau.strip() in personnes_connues
+                                  else None)
+                        if trouve is None and A_DESIGNER.search(pn):
                             trouve = "a_designer"
-                        else:
+                        elif trouve is None:
                             for nom, pid in noms.items():
                                 if re.search(r"(?:^| )" + re.escape(nom)
                                              + r"(?: |$)", pn):
@@ -111,9 +159,32 @@ def tisser(books, intentions, mains, plans, evenements, personnages=None,
                 elif est_clef and PIECE.fullmatch(tete):
                     for n in PIECE.findall(col(d, "Ouvre")):
                         arc(tete, n, "ouvre", "books/clefs")
+                    # Une amélioration part de moyens existants qualifiés. La
+                    # clef peut donc citer directement les modules qu'elle
+                    # rend utilisables, sans inventer une action d'emploi à
+                    # seule fin de raccorder le graphe.
+                    for m in MOYEN.findall(col(d, "Moyens")):
+                        arc(tete, resoudre_code(m, lid, registres), "coute",
+                            "books/clefs")
                 elif est_ver and PIECE.fullmatch(tete):
                     for n in PIECE.findall(col(d, "Bloque")):
                         arc(tete, n, "bloque", "books/verrous")
+                    # Le préalable logique porte sur le verrou : il dit ce qui
+                    # doit déjà être vrai avant que cette serrure puisse être
+                    # levée. Une action reste libre de sa méthode et ne sert
+                    # pas de faux séquenceur au plan.
+                    for n in PIECE.findall(col(d, "Dépend")):
+                        arc(tete, n, "depend_de", "books/verrous")
+                    porteurs = col(d, "Porteurs")
+                    if porteurs.strip():
+                        cibles = personnes_dans(porteurs)
+                        if cibles:
+                            for cible in sorted(cibles):
+                                arc(tete, cible, "tient", "books/verrous",
+                                    texte=porteurs)
+                        else:
+                            arc(tete, "?", "tient", "books/verrous",
+                                flou=True, texte=porteurs)
                 elif MOYEN.fullmatch(tete) or OFFICE.fullmatch(tete):
                     # UN MOYEN A UN PORTEUR, et c'est ce qui en fait un point
                     # de rupture : « un seul mestre pour tout ». Les offices
@@ -127,6 +198,8 @@ def tisser(books, intentions, mains, plans, evenements, personnages=None,
                     cibles = set()
                     if pn.strip() in ("moi", "moi meme", "la reine"):
                         cibles.add("pers:" + (joueur or "rhaenyra"))
+                    if re.fullmatch(r"maison-[a-z0-9-]+", porteur.strip(), re.I):
+                        cibles.add("maison:" + porteur.strip().lower())
                     for nom, pid in noms.items():
                         if re.search(r"(?:^| )" + re.escape(nom)
                                      + r"(?: |$)", pn):
@@ -198,9 +271,14 @@ def tisser(books, intentions, mains, plans, evenements, personnages=None,
     # --- les mains
     for a in mains:
         aid = a.get("id")
-        por = (a.get("porteur") or {}).get("id")
+        porteur = a.get("porteur") or {}
+        por = porteur.get("id")
         if por:
-            prefixe = "lieu:" if por in lieux_connus else "pers:"
+            prefixe = {
+                "lieu": "lieu:",
+                "maison": "maison:",
+                "personnage": "pers:",
+            }.get(porteur.get("type"), "lieu:" if por in lieux_connus else "pers:")
             arc(prefixe + str(por), "main:" + str(aid), "tient", "mains/porteur")
         for mes in a.get("mesure") or []:
             adr = "{}.{}".format(aid, mes.get("id"))
@@ -288,6 +366,11 @@ def tisser(books, intentions, mains, plans, evenements, personnages=None,
                   if k not in ("de", "vers", "nature", "source", "flou", "texte")}
         arc(a["de"], a["vers"], a["nature"], a["source"],
             flou=a.get("flou", False), texte=a.get("texte", ""), **extras)
+    for a in aretes_affaires_personnelles(affaires_personnelles or []):
+        extras = {k: v for k, v in a.items()
+                  if k not in ("de", "vers", "nature", "source", "flou", "texte")}
+        arc(a["de"], a["vers"], a["nature"], a["source"],
+            flou=a.get("flou", False), texte=a.get("texte", ""), **extras)
     return A
 
 
@@ -311,16 +394,18 @@ def main():
     plans_brut = charger("plans", {})
     plans = plans_brut.get("plans", []) if isinstance(plans_brut, dict) else plans_brut
     affaires_mj = charger_affaires_mj(RACINE)
+    affaires_personnelles = charger_affaires_personnelles(RACINE, personnages)
 
     noeuds, doubles = indexer(books, intentions, mains, plans, evenements,
-                              personnages, plis, affaires_mj)
+                              personnages, plis, affaires_mj,
+                              affaires_personnelles)
     jr = charger("journal", {})
     joueur = (jr or {}).get("personnage_joueur_id") if isinstance(jr, dict) else None
     lieux_connus = {l.get("id") for l in charger("lieux", [])
                     if isinstance(l, dict) and l.get("id")}
     aretes = tisser(books, intentions, mains, plans, evenements,
                     personnages, joueur, lieux_connus, plis, liens,
-                    affaires_mj)
+                    affaires_mj, affaires_personnelles)
 
     genres = collections.Counter(n["genre"] for n in noeuds.values())
     print("LE TISSU")

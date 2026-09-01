@@ -53,6 +53,8 @@ def main():
                     help="id de l'événement cible, requis avec --beats-jump")
     ap.add_argument("--modele", default=None,
                     help="opus | sonnet | fable — defaut : celui de la session")
+    ap.add_argument("--effort", default=None,
+                    help="effort de raisonnement transmis au runtime")
     ap.add_argument("--minutes", type=int, default=None,
                     help="borner l'appel a N minutes ; par defaut la"
                          " session n'expire pas")
@@ -144,7 +146,7 @@ def main():
             if depecher(qui, a.mission, a.modele, a.minutes, a.sec,
                         attendre=attendre, contexte_id=a.contexte, ref=a.ref,
                         mode=a.mode, beats_jump=a.beats_jump,
-                        event_jump=a.event_jump):
+                        event_jump=a.event_jump, effort=a.effort):
                 ok += 1
     else:
         # ILS PARTENT ENSEMBLE. Une journee d'homme se paie en minutes ; sept
@@ -157,10 +159,10 @@ def main():
         import concurrent.futures as cf
         print(u"  (%d de front)" % min(a.front, len(gens)))
         with cf.ThreadPoolExecutor(max_workers=a.front) as pool:
-            envoyes = {pool.submit(depecher, q, a.mission, a.modele,
-                                   a.minutes, False, True, a.contexte,
-                                   a.ref, a.mode, a.beats_jump,
-                                   a.event_jump): q
+            envoyes = {pool.submit(
+                depecher, q, a.mission, a.modele, a.minutes, False, True,
+                a.contexte, a.ref, a.mode, a.beats_jump, a.event_jump,
+                effort=a.effort): q
                        for q in gens}
             for fini in cf.as_completed(envoyes):
                 try:

@@ -1,0 +1,23 @@
+{
+  "date": "129.5.12",
+  "adresse": "http://localhost:3129/passage-coffre",
+  "ref_origine": "vmti2gf186g2k",
+  "geste": {
+    "champ_coffre": "Billet vmti2gf186g2k",
+    "autres_champs": "laisses vides faute de faits etablis",
+    "prises": "laissees non cochees faute de verification"
+  },
+  "observation": {
+    "http": 200,
+    "verdict": "Passage retenu",
+    "compte": "9 verrous",
+    "persistance_locale": true,
+    "phrase_affichee": "Billet vmti2gf186g2k doit passer a la maree du matin.",
+    "premier_manque": "l'heure de maree n'est pas portee"
+  },
+  "jugement": {
+    "permet": "retenir le passage quand le billet ne suffit pas a etablir les conditions",
+    "gene": "la phrase principale suppose la maree du matin quand aucune heure n'est fournie",
+    "changement_demande": "remplacer cette supposition par une mention explicite d'heure non portee"
+  }
+}

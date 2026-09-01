@@ -42,6 +42,13 @@ window.Attention = (() => {
   // se remet à la ligne : le texte ne change pas, la lecture oui.
   const decouper = (s) => s.replace(/([.!?…»:])\s+(\d{1,2}\s*[).]\s)/g, "$1\n$2");
 
+  // Certains retours arrivent avec les deux caractères `\\n` conservés par
+  // le transport. Dès qu'une vraie séparation de paragraphe échappée est
+  // présente, on restitue tous les retours de ce message avant de le découper.
+  // La garde `\\n\\n` évite de casser un chemin Windows isolé contenant `\\n`.
+  const restituerRetours = (s) => /\\n\\n/.test(s)
+    ? s.replace(/\\r\\n/g, "\n").replace(/\\n/g, "\n") : s;
+
   // Les capitales d'insistance se rendent en petites capitales : l'appui reste,
   // le pavé qui crie disparaît. Deux mots au moins, dont un de trois lettres.
   const CAP = /[A-ZÀ-ÖØ-Þ]/, BAS = /[a-zà-öø-ÿ]/;
@@ -76,7 +83,7 @@ window.Attention = (() => {
     // crochets ne survivraient pas au découpage en petites capitales. Et c'est
     // le texte D'ORIGINE qui décide si l'item portait déjà du HTML — sinon un
     // simple lien ferait basculer toute la pièce en passe-plat.
-    const source = texte == null ? "" : String(texte);
+    const source = restituerRetours(texte == null ? "" : String(texte));
     const brut = liens(source);
     if (source.indexOf("<") !== -1) return wrap(appuis(brut), true);
     // Les blocs : une ligne écrite = une ligne lue. Les lignes vides ne rendent

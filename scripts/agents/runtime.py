@@ -10,6 +10,7 @@ Le choix global se fait avec ``python scripts/fournisseur.py`` ou, pour une
 commande seulement, ``LE_CONSEIL_FOURNISSEUR=claude|codex``.
 """
 import contextlib
+import ctypes
 import datetime as dt
 import hashlib
 import io
@@ -31,6 +32,8 @@ CONFIG = os.path.join(DOSSIER_RUNTIME, "config.json")
 SESSIONS = os.path.join(DOSSIER_RUNTIME, "sessions.json")
 REQUETES = os.path.join(DOSSIER_RUNTIME, "requests")
 ACTIVITES = os.path.join(DOSSIER_RUNTIME, "active")
+MAX_SESSIONS_ACTIVES = 15
+RESERVATION_ENV = "LE_CONSEIL_RESERVATION_SESSION"
 
 FOURNISSEURS = {"claude": "claude", "codex": "codex", "chatgpt": "codex", "gemini": "gemini"}
 MODELE_CODEX = "gpt-5.3-codex-spark"
@@ -135,28 +138,169 @@ def _service_tier(provider):
     return None
 
 
-@contextlib.contextmanager
-def _activite(role, session_id):
-    """Expose une session vraiment en calcul aux voyants de l'ecran.
+def _identite_processus(pid):
+    """Identité de naissance d'un PID, pour ne pas compter un PID réutilisé."""
+    try:
+        pid = int(pid)
+        if os.name == "nt":
+            kernel = ctypes.windll.kernel32
+            handle = kernel.OpenProcess(0x1000, False, pid)
+            if not handle:
+                return None
+            try:
+                creation = ctypes.c_ulonglong()
+                sortie = [ctypes.c_ulonglong() for _ in range(3)]
+                ok = kernel.GetProcessTimes(
+                    handle, ctypes.byref(creation), ctypes.byref(sortie[0]),
+                    ctypes.byref(sortie[1]), ctypes.byref(sortie[2]))
+                return "win:%d" % creation.value if ok else None
+            finally:
+                kernel.CloseHandle(handle)
+        stat = "/proc/%d/stat" % pid
+        if os.path.exists(stat):
+            with io.open(stat, encoding="utf-8") as f:
+                # Le nom entre parenthèses peut contenir des espaces ; les
+                # champs qui suivent commencent après la dernière parenthèse.
+                suite = f.read().rsplit(")", 1)[1].split()
+            return "proc:%s" % suite[19]  # champ 22 : starttime
+        os.kill(pid, 0)
+        return "pid:%d" % pid
+    except (OSError, ValueError, IndexError):
+        return None
 
-    Ce marqueur est un voyant, pas un mecanisme d'exclusion. Le pid permet au
-    serveur d'ignorer un reste laisse par un worker tue brutalement.
-    """
+
+@contextlib.contextmanager
+def _verrou_activites():
     os.makedirs(ACTIVITES, exist_ok=True)
-    chemin = os.path.join(ACTIVITES, "%s.json" % uuid.uuid4().hex)
-    _ecrire_json(chemin, {
-        "homme": str(role),
-        "session": str(session_id),
-        "pid": os.getpid(),
-        "t": time.time(),
-    })
+    chemin = os.path.join(ACTIVITES, ".admission.lock")
+    limite = time.time() + 10
+    while True:
+        try:
+            fd = os.open(chemin, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+            os.close(fd)
+            break
+        except FileExistsError:
+            try:
+                if time.time() - os.path.getmtime(chemin) > 30:
+                    os.remove(chemin)
+                    continue
+            except OSError:
+                continue
+            if time.time() >= limite:
+                raise RuntimeError("garde des wake-up calls occupée depuis 10 s")
+            time.sleep(.02)
     try:
         yield
     finally:
         try:
-            os.unlink(chemin)
+            os.remove(chemin)
         except OSError:
             pass
+
+
+def _marqueurs_vivants():
+    """Nettoie les morts et rend les slots actifs/réservés. Verrou requis."""
+    maintenant = time.time()
+    vivants = []
+    for nom in os.listdir(ACTIVITES):
+        if not nom.endswith(".json"):
+            continue
+        chemin = os.path.join(ACTIVITES, nom)
+        try:
+            d = _lire_json(chemin, {})
+        except (OSError, ValueError):
+            d = {}
+        pid = d.get("pid")
+        if pid is None and d.get("reserve"):
+            vivant = maintenant - float(d.get("t") or 0) <= 60
+        else:
+            identite = _identite_processus(pid)
+            attendue = d.get("processus")
+            # Compatibilité de déploiement : un ancien voyant sans identité ne
+            # survit que cinq minutes. Les nouveaux résistent aux sessions très
+            # longues et aux PID recyclés.
+            vivant = bool(identite and (
+                identite == attendue if attendue else
+                maintenant - float(d.get("t") or 0) <= 300))
+        if vivant:
+            vivants.append((chemin, d))
+        else:
+            try:
+                os.remove(chemin)
+            except OSError:
+                pass
+    return vivants
+
+
+def _essayer_reserver(role, session_id, pid=None):
+    """Prend atomiquement un des quinze slots, ou rend None."""
+    with _verrou_activites():
+        if len(_marqueurs_vivants()) >= MAX_SESSIONS_ACTIVES:
+            return None
+        nom = "%s.json" % uuid.uuid4().hex
+        chemin = os.path.join(ACTIVITES, nom)
+        marqueur = {
+            "homme": str(role), "session": str(session_id),
+            "pid": int(pid) if pid is not None else None,
+            "processus": (_identite_processus(pid)
+                            if pid is not None else None),
+            "reserve": pid is None, "t": time.time(),
+        }
+        _ecrire_json(chemin, marqueur)
+        return chemin
+
+
+def _attendre_slot(role, session_id, pid=None):
+    debut, annonce = time.monotonic(), False
+    while True:
+        chemin = _essayer_reserver(role, session_id, pid=pid)
+        if chemin:
+            return chemin
+        if not annonce and time.monotonic() - debut >= 1:
+            sys.stderr.write(
+                "GARDE WAKE-UP : 15 sessions actives ; %s attend un slot.\n"
+                % role)
+            sys.stderr.flush()
+            annonce = True
+        time.sleep(.25)
+
+
+def _adopter_reservation(nom, role, session_id):
+    if not re.match(r"^[a-f0-9]{32}\.json$", nom or ""):
+        return None
+    chemin = os.path.join(ACTIVITES, nom)
+    with _verrou_activites():
+        if not os.path.exists(chemin):
+            return None
+        d = _lire_json(chemin, {})
+        d.update({"homme": str(role), "session": str(session_id),
+                  "pid": os.getpid(),
+                  "processus": _identite_processus(os.getpid()),
+                  "reserve": False, "t": time.time()})
+        _ecrire_json(chemin, d)
+    return chemin
+
+
+def _liberer_slot(chemin):
+    try:
+        os.remove(chemin)
+    except OSError:
+        pass
+
+
+@contextlib.contextmanager
+def _activite(role, session_id):
+    """Prend un slot global puis expose la session réellement en calcul."""
+    os.makedirs(ACTIVITES, exist_ok=True)
+    reservation = os.environ.get(RESERVATION_ENV)
+    chemin = (_adopter_reservation(reservation, role, session_id)
+              if reservation else None)
+    if not chemin:
+        chemin = _attendre_slot(role, session_id, pid=os.getpid())
+    try:
+        yield
+    finally:
+        _liberer_slot(chemin)
 
 
 def _session_codex(logique):
@@ -237,8 +381,15 @@ def _preparer_prompt_codex(manuel, cwd, thread_id, entree):
 
 def _prompt_claude(manuel, cwd):
     chemin = os.path.join(cwd, "system-prompt.md")
-    with io.open(chemin, "w", encoding="utf-8", newline="\n") as f:
-        f.write(manuel)
+    for tentative in range(8):
+        try:
+            with io.open(chemin, "w", encoding="utf-8", newline="\n") as f:
+                f.write(manuel)
+            break
+        except OSError:
+            if tentative == 7:
+                raise
+            time.sleep(min(0.5, 0.05 * (2 ** tentative)))
     return chemin
 
 
@@ -615,7 +766,8 @@ def _appel_gemini(manuel, message, logique, modele, effort, timeout, cwd,
 def appeler(role, manuel, message, session_id, modele=None, effort=None,
             timeout=180, cwd=None, add_dirs=None, tools=None, reprendre=None,
             settings=None, env=None, on_event=None, on_stderr=None,
-            heartbeat=None, on_heartbeat=None, compte_pour=None):
+            heartbeat=None, on_heartbeat=None, compte_pour=None,
+            work_identity=None):
     """Appelle le fournisseur global et rend le contrat de reponse commun."""
     provider = fournisseur()
     modele = _modele(provider, modele)
@@ -659,9 +811,22 @@ def appeler(role, manuel, message, session_id, modele=None, effort=None,
             # expirations et les erreurs qui ne produiront jamais de rapport.
             try:
                 from agents import compute
-                compute.enregistrer(
+                evenement_compute = compute.enregistrer(
                     role, compte_pour, session_id, provider, debut_compute,
-                    time.time(), succes, erreur_compute)
+                    time.time(), succes, erreur_compute,
+                    work_identity=work_identity)
+                if work_identity and not succes:
+                    from agents import work_identity as registre_travail
+                    registre_travail.terminer_attempt(
+                        work_identity, evenement_compute["id"], "failed",
+                        term=False)
+                if work_identity and succes:
+                    resultat.setdefault("continuous_work_identity", {
+                        cle: evenement_compute[cle] for cle in (
+                            "work_id", "attempt_id", "attempt_number",
+                            "effect_key")})
+                    resultat.setdefault("compute_event_id",
+                                        evenement_compute["id"])
             except Exception:
                 pass  # la mesure ne doit jamais tuer le travail mesure
             # Un agent dispose du dépôt et peut écrire un livre directement,
@@ -678,17 +843,32 @@ def appeler(role, manuel, message, session_id, modele=None, effort=None,
 
 def lancer_cast(log, trace=None, **appel):
     """Lance la meme porte en detache ; le worker sait creer OU reprendre."""
+    # Le slot est pris AVANT le worker : au seizième wake-up, l'appelant attend
+    # au lieu de créer une grappe de processus détachés eux-mêmes en attente.
+    reservation = _attendre_slot(
+        appel.get("role"), appel.get("session_id"), pid=None)
     os.makedirs(REQUETES, exist_ok=True)
     requete = os.path.join(REQUETES, "%s.json" % uuid.uuid4().hex)
     provider = fournisseur()
-    _ecrire_json(requete, {"appel": appel, "trace": trace,
-                           "fournisseur": provider})
-    worker = os.path.join(RACINE, "scripts", "agents", "runtime_worker.py")
-    os.makedirs(os.path.dirname(log), exist_ok=True)
-    with open(log, "ab") as f:
-        subprocess.Popen([sys.executable, worker, requete], cwd=RACINE,
-                         stdin=subprocess.DEVNULL, stdout=f,
-                         stderr=subprocess.STDOUT,
-                         **_creation_sans_fenetre(detache=True))
+    try:
+        _ecrire_json(requete, {"appel": appel, "trace": trace,
+                               "fournisseur": provider})
+        worker = os.path.join(RACINE, "scripts", "agents", "runtime_worker.py")
+        os.makedirs(os.path.dirname(log), exist_ok=True)
+        environnement = dict(os.environ)
+        environnement[RESERVATION_ENV] = os.path.basename(reservation)
+        with open(log, "ab") as f:
+            subprocess.Popen(
+                [sys.executable, worker, requete], cwd=RACINE,
+                env=environnement, stdin=subprocess.DEVNULL, stdout=f,
+                stderr=subprocess.STDOUT,
+                **_creation_sans_fenetre(detache=True))
+    except BaseException:
+        _liberer_slot(reservation)
+        try:
+            os.remove(requete)
+        except OSError:
+            pass
+        raise
     return {"cast": True, "log": log, "session": appel["session_id"],
             "provider": provider}

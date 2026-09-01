@@ -11,93 +11,86 @@ SCRIPTS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if SCRIPTS not in sys.path:
     sys.path.insert(0, SCRIPTS)
 
-from agents import expose  # noqa: F401 — lie la porte avant les cycles de depeche
-from agents import mj, parloir, portage, routeur_message as routeur
+from agents import expose  # noqa: F401 — lie la porte avant les dépendances tardives
+from agents import billet, jump, mj, parloir, portage, routeur_message as routeur
 
 
 class RouteurMessageTests(unittest.TestCase):
-    def _document(self):
-        return {
-            "joueur_id": "rhaenyra", "ref": "r-parole",
-            "selection": {
-                "decision": "selection",
-                "pointeurs": ["affaire-port#23030"],
-                "joueurs_concernes": ["rhaenyra"],
-                "hommes": ["gerardys"],
-                "routes_hommes": [{"homme": "gerardys",
-                                    "pointeur": "affaire-port#23030",
-                                    "contexte_id": "23030"}],
-            },
+    def test_la_piece_route_directement_vers_les_habitants_presents(self):
+        positions = {
+            "nlr": {"salle": "archives", "etat": "arrete"},
+            "filippo": {"salle": "archives", "etat": "arrete"},
+            "autre-joueur": {"salle": "archives", "etat": "arrete"},
+            "marcheur": {"salle": "archives", "etat": "en-chemin"},
+            "ailleurs": {"salle": "quai", "etat": "arrete"},
         }
+        with mock.patch("agents.routeur_message.chambre.existe",
+                        return_value=True):
+            presents = routeur.gens_presents(
+                "nlr", positions=positions,
+                joueurs={"nlr", "autre-joueur"})
+        self.assertEqual(["filippo"], presents)
 
-    def test_parler_va_a_l_homme_par_id_puis_au_mj_sur_la_ref(self):
-        document = self._document()
+    def test_une_parole_reveille_tous_les_presents_sans_mj(self):
         action = {"ref": "r-parole", "type": "libre", "mode": "dire",
-                  "texte": "Gerardys, dites-moi le chiffre."}
-        retour_homme = {"homme": "gerardys", "pointeur": "affaire-port#23030",
-                        "contexte_id": "23030", "servi": True}
-        with mock.patch.object(routeur, "_servir_route",
-                               return_value=retour_homme) as servir, \
-                mock.patch.object(mj, "appeler_mj",
-                                  return_value="fait") as appeler_mj:
-            resultat = routeur.router_message(document, action)
+                  "texte": "Vous êtes là ?"}
+        with mock.patch.object(routeur, "gens_presents",
+                               return_value=["filippo", "lucia"]), \
+                mock.patch.object(billet, "ecrire",
+                                  return_value=("canal.json", {"cast": True})) as ecrire, \
+                mock.patch.object(mj, "appeler_mj") as appeler_mj:
+            resultat = routeur._router_parole("nlr", "r-parole", action)
+        self.assertEqual(2, ecrire.call_count)
+        ecrire.assert_any_call("nlr", "filippo", "Vous êtes là ?",
+                               modele=None, ref="r-parole")
+        ecrire.assert_any_call("nlr", "lucia", "Vous êtes là ?",
+                               modele=None, ref="r-parole")
+        appeler_mj.assert_not_called()
+        self.assertEqual(["filippo", "lucia"], resultat["presents"])
 
-        servir.assert_called_once()
-        args = appeler_mj.call_args
-        self.assertEqual(["r-parole"], args.kwargs["refs"])
-        self.assertTrue(args.kwargs["routage"]["routes_hommes"][0]["servi"])
-        self.assertTrue(resultat["parole"])
+    def test_une_parole_servie_sort_de_l_inbox_et_laisse_un_recu(self):
+        with tempfile.TemporaryDirectory() as dossier:
+            inbox = os.path.join(dossier, "action.json")
+            with open(inbox, "w", encoding="utf-8") as flux:
+                json.dump({"ref": "r1", "mode": "dire", "texte": "Bonjour"}, flux)
+            with mock.patch.object(routeur, "action_par_ref",
+                                   return_value=(inbox, {"ref": "r1", "mode": "dire",
+                                                        "texte": "Bonjour"})), \
+                    mock.patch.object(routeur, "SORTIES", dossier), \
+                    mock.patch.object(routeur, "_router_parole", return_value={
+                        "mode": "parole", "presents": ["filippo"],
+                        "hommes": [{"homme": "filippo", "servi": True}],
+                        "mj": {"appele": False}}):
+                document = routeur.router_ref("nlr", "r1")
+            self.assertFalse(os.path.exists(inbox))
+            self.assertTrue(os.path.exists(os.path.join(dossier, "nlr", "r1.json")))
+            self.assertEqual("routage-presence/1", document["version"])
 
-    def test_un_geste_ne_part_pas_directement_aux_hommes(self):
+    def test_un_geste_va_directement_au_mj(self):
         action = {"ref": "r-geste", "type": "libre", "mode": "agir",
-                  "texte": "Elle retourne la piece."}
-        with mock.patch.object(routeur, "_servir_route") as servir, \
-                mock.patch.object(mj, "appeler_mj", return_value="fait"):
-            resultat = routeur.router_message(self._document(), action)
-        servir.assert_not_called()
-        self.assertFalse(resultat["parole"])
-        self.assertEqual([], resultat["hommes"])
+                  "texte": "Je retourne la pièce."}
+        with mock.patch.object(mj, "appeler_mj", return_value="fait") as appeler:
+            resultat = routeur._router_mj("rhaenyra", "r-geste", action)
+        self.assertEqual(["r-geste"], appeler.call_args.kwargs["refs"])
+        self.assertEqual("direct", appeler.call_args.kwargs["routage"]["decision"])
+        self.assertTrue(resultat["mj"]["appele"])
 
-    def test_jump_ne_depeche_pas_avant_le_choix_du_mj(self):
-        document = {
-            "joueur_id": "rhaenyra", "ref": "r-jump",
-            "selection": {"decision": "jump", "routes_hommes": []},
-            "contexte_fourni": {"jump": {
-                "version": "jump/1", "event": {"id": "prochain"},
-                "contexte_id": "84502"}},
-        }
+    def test_jump_garde_sa_preparation_dediee(self):
         action = {"ref": "r-jump", "type": "libre", "mode": "jump",
                   "texte": ""}
-        with mock.patch.object(routeur, "_servir_route") as servir, \
+        preparation = {"version": "jump/1", "event": {"id": "prochain"},
+                       "contexte_id": "84502"}
+        with mock.patch.object(jump, "preparer",
+                               return_value=preparation), \
+                mock.patch.object(routeur, "_joueurs", return_value={"rhaenyra"}), \
                 mock.patch.object(mj, "appeler_mj",
                                   return_value="scène jouée") as appeler:
-            resultat = routeur.router_message(document, action)
-        servir.assert_not_called()
+            resultat = routeur._router_jump("rhaenyra", "r-jump", action)
         routage = appeler.call_args.kwargs["routage"]
         self.assertEqual("jump", routage["decision"])
         self.assertEqual("prochain", routage["jump"]["event"]["id"])
         self.assertIn("skill système jump-scene", routage["consigne"])
-        self.assertIn("meuble le flux", routage["consigne"])
-        self.assertIn("avance réellement la clock", routage["consigne"])
-        self.assertIn("ne rends pas la main", routage["consigne"])
-        self.assertTrue(resultat["jump"])
-
-    def test_la_depeche_recoit_le_numero_brut_et_les_mots_exacts(self):
-        route = self._document()["selection"]["routes_hommes"][0]
-        with mock.patch.object(routeur, "depecher", return_value=True) as depecher:
-            resultat = routeur._servir_route(
-                "rhaenyra", "Le chiffre, maintenant.", route,
-                ref="r-parole")
-        args = depecher.call_args
-        self.assertEqual("gerardys", args.args[0])
-        self.assertIn("Le chiffre, maintenant.", args.args[1])
-        self.assertIn(
-            "scripts/parloir.py --dire --de gerardys --a rhaenyra "
-            "--contexte 23030 --ref r-parole", args.args[1])
-        self.assertEqual("23030", args.kwargs["contexte_id"])
-        self.assertEqual("r-parole", args.kwargs["ref"])
-        self.assertEqual("discussion", args.kwargs["mode"])
-        self.assertTrue(resultat["servi"])
+        self.assertTrue(resultat["mj"]["appele"])
 
     def test_un_retour_au_joueur_va_au_web_et_au_flux_mj(self):
         faux_canal = os.path.join("chambres", "canal.json")

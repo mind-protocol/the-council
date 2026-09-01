@@ -1,0 +1,678 @@
+{
+ "id": "affaire-objectifs-construction-infrastructure",
+ "maison_id": "maison-serenissima",
+ "tenu_par": "nicolas-lester-reynolds",
+ "titre": "MODELE: Améliorer l'infrastructure à partir de l'existant validé",
+ "sous_titre": "Décrire les propriétés logiques qu'une amélioration doit respecter, sans prescrire le processus qui permettra de les atteindre. Plage 54000 à 54999.",
+ "type": "plan",
+ "embleme": "🪛",
+ "couleur": "#80643d",
+ "lieu_id": "braavos",
+ "salle_id": "braavos-table-peinte",
+ "pages": [
+  "CE CAHIER DÉCRIT DES ÉTATS, PAS UN PROCESSUS. Il ne décide ni des phases, ni des métiers, ni de l'ordre des gestes. Ses actions sont des contributions ouvertes : produire, contester ou corriger un sous-graphe. Leurs préalables logiques vivent sur les verrous.",
+  "UNE CLEF EST ICI UN SOUS-GRAPHE LOGIQUE. Elle relie les modules, containers, portes, autorités, observations et relations qui doivent tenir ensemble pour rendre un état vrai. Elle peut lever un verrou sans action : ajouter une action fictive ne rendrait pas le graphe plus vrai.",
+  "L'AMÉLIORATION EST UNE RELATION ENTRE DEUX ÉTATS. L'origine et la cible sont représentées dans le même langage ; leur différence est explicite ; la cible est strictement supérieure pour un usage déclaré sans régression cachée ; le passage préserve les invariants ; enfin l'état observé concorde réellement avec la cible.",
+  "LES MODULES M101 À M110 SONT DES ADRESSES, PAS UNE ARCHITECTURE IMPOSÉE. Chaque clef cite les moyens qu'elle qualifie. Le contenu du sous-graphe reste contestable, révisable et validé par ses preuves."
+ ],
+ "tables": [
+  {
+   "titre": "🏰 Ouverture de l'Affaire",
+   "colonnes": [
+    "🧱 Le champ",
+    "✍️ Ce qui est posé"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "🏷️ **LE NOM**",
+      "MODELE: Améliorer l'infrastructure à partir de l'existant validé"
+     ]
+    },
+    {
+     "cellules": [
+      "🎯 L'OBJET",
+      "Rendre décidable et vérifiable qu'un état d'infrastructure cible est supérieur à son état d'origine, puis que l'état réellement obtenu concorde avec cette cible."
+     ]
+    },
+    {
+     "cellules": [
+      "🧱 **LE PÉRIMÈTRE — DANS**",
+      "Les graphes d'origine, de cible, de comparaison, de transition et d'observation ; leurs modules, autorités, invariants et preuves."
+     ]
+    },
+    {
+     "cellules": [
+      "🚫 **LE PÉRIMÈTRE — HORS**",
+      "Toute phase de travail, attribution, architecture ou séquence d'actions qui n'a pas encore été proposée et instruite par ses futurs porteurs."
+     ]
+    },
+    {
+     "cellules": [
+      "📌 **L'ÉTAT ACTUEL**",
+      "Les moyens M101 à M110 sont adressables. Leur seule présence ne suffit pas encore à représenter un état d'origine, une cible ni une relation de supériorité."
+     ]
+    },
+    {
+     "cellules": [
+      "🔢 **LA PLAGE**",
+      "54000 à 54999"
+     ]
+    },
+    {
+     "cellules": [
+      "💡 **LA CONCLUSION**",
+      "Une amélioration n'est pas une liste de tâches : c'est une relation prouvée entre un graphe d'origine, un graphe cible supérieur et l'état finalement observé."
+     ]
+    },
+    {
+     "cellules": [
+      "🔚 **FERMÉE QUAND**",
+      "Les cinq états cibles sont vrais ensemble ; aucune action particulière n'est exigée par ce cahier."
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔗 Affaires liées — les liens écrits, puis les calculés",
+   "colonnes": [
+    "🪢 Le lien",
+    "🔗 L'affaire",
+    "🔢 Notre pièce",
+    "🔢 La leur",
+    "📝 Pourquoi"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "partage",
+      "MODELE: Stabiliser l'environnement de compute continu",
+      "M101 🔩 Container socle",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "partage",
+      "MODELE: Stabiliser l'environnement de compute continu",
+      "M102 🗄️ Container état",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "partage",
+      "MODELE: Stabiliser l'environnement de compute continu",
+      "M103 ⏱️ Container temps",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "partage",
+      "MODELE: Stabiliser l'environnement de compute continu",
+      "M104 🌍 Container monde",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "partage",
+      "MODELE: Stabiliser l'environnement de compute continu",
+      "M105 🧠 Container agents",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "partage",
+      "MODELE: Stabiliser l'environnement de compute continu",
+      "M106 📋 Container plan",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "partage",
+      "MODELE: Stabiliser l'environnement de compute continu",
+      "M107 🎨 Container peinture",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "partage",
+      "MODELE: Stabiliser l'environnement de compute continu",
+      "M108 📜 Container scène",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "partage",
+      "MODELE: Stabiliser l'environnement de compute continu",
+      "M109 🔬 Container bancs",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "partage",
+      "MODELE: Stabiliser l'environnement de compute continu",
+      "M110 🕸️ Sonde du graphe d'architecture",
+      "",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "⛓️ Ce qui pend, et sur qui — calculé, ne pas écrire à la main",
+   "colonnes": [
+    "🧭 Sens",
+    "🔢 Notre pièce",
+    "🔢 La leur",
+    "🔗 L'affaire"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "—",
+      "",
+      "",
+      "rien ne traverse"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔨🪶 Ce qu'on engage, et qui d'autre le veut — calculé, ne pas écrire à la main",
+   "colonnes": [
+    "🔢 La pièce",
+    "⚔️ Nos actions",
+    "🔗 Aussi engagée par"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "M101 🔩 Container socle",
+      "🗝️ 54250 · 🗝️ 54251 · 🗝️ 54260 · 🗝️ 54261 · 🗝️ 54270 · 🗝️ 54280 · 🗝️ 54290 · ⚔️ 54300 · ⚔️ 54301 · ⚔️ 54310 · ⚔️ 54311 · ⚔️ 54320 · ⚔️ 54330 · ⚔️ 54340",
+      "MODELE: Stabiliser l'environnement de compute continu"
+     ]
+    },
+    {
+     "cellules": [
+      "M102 🗄️ Container état",
+      "🗝️ 54250 · 🗝️ 54251 · 🗝️ 54260 · 🗝️ 54261 · 🗝️ 54270 · 🗝️ 54280 · 🗝️ 54290 · ⚔️ 54300 · ⚔️ 54301 · ⚔️ 54310 · ⚔️ 54311 · ⚔️ 54320 · ⚔️ 54330 · ⚔️ 54340",
+      "MODELE: Stabiliser l'environnement de compute continu"
+     ]
+    },
+    {
+     "cellules": [
+      "M103 ⏱️ Container temps",
+      "🗝️ 54250 · 🗝️ 54251 · 🗝️ 54260 · 🗝️ 54261 · 🗝️ 54270 · 🗝️ 54280 · 🗝️ 54290 · ⚔️ 54300 · ⚔️ 54301 · ⚔️ 54310 · ⚔️ 54311 · ⚔️ 54320 · ⚔️ 54330 · ⚔️ 54340",
+      "MODELE: Stabiliser l'environnement de compute continu"
+     ]
+    },
+    {
+     "cellules": [
+      "M104 🌍 Container monde",
+      "🗝️ 54250 · 🗝️ 54251 · 🗝️ 54260 · 🗝️ 54261 · 🗝️ 54270 · 🗝️ 54280 · 🗝️ 54290 · ⚔️ 54300 · ⚔️ 54301 · ⚔️ 54310 · ⚔️ 54311 · ⚔️ 54320 · ⚔️ 54330 · ⚔️ 54340",
+      "MODELE: Stabiliser l'environnement de compute continu"
+     ]
+    },
+    {
+     "cellules": [
+      "M105 🧠 Container agents",
+      "🗝️ 54250 · 🗝️ 54251 · 🗝️ 54260 · 🗝️ 54261 · 🗝️ 54270 · 🗝️ 54280 · 🗝️ 54290 · ⚔️ 54300 · ⚔️ 54301 · ⚔️ 54310 · ⚔️ 54311 · ⚔️ 54320 · ⚔️ 54330 · ⚔️ 54340",
+      "MODELE: Stabiliser l'environnement de compute continu"
+     ]
+    },
+    {
+     "cellules": [
+      "M106 📋 Container plan",
+      "🗝️ 54250 · 🗝️ 54251 · 🗝️ 54260 · 🗝️ 54261 · 🗝️ 54270 · 🗝️ 54280 · 🗝️ 54290 · ⚔️ 54300 · ⚔️ 54301 · ⚔️ 54310 · ⚔️ 54311 · ⚔️ 54320 · ⚔️ 54330 · ⚔️ 54340",
+      "MODELE: Stabiliser l'environnement de compute continu"
+     ]
+    },
+    {
+     "cellules": [
+      "M107 🎨 Container peinture",
+      "🗝️ 54250 · 🗝️ 54251 · 🗝️ 54260 · 🗝️ 54261 · 🗝️ 54270 · 🗝️ 54280 · 🗝️ 54290 · ⚔️ 54300 · ⚔️ 54301 · ⚔️ 54310 · ⚔️ 54311 · ⚔️ 54320 · ⚔️ 54330 · ⚔️ 54340",
+      "MODELE: Stabiliser l'environnement de compute continu"
+     ]
+    },
+    {
+     "cellules": [
+      "M108 📜 Container scène",
+      "🗝️ 54250 · 🗝️ 54251 · 🗝️ 54260 · 🗝️ 54261 · 🗝️ 54270 · 🗝️ 54280 · 🗝️ 54290 · ⚔️ 54300 · ⚔️ 54301 · ⚔️ 54310 · ⚔️ 54311 · ⚔️ 54320 · ⚔️ 54330 · ⚔️ 54340",
+      "MODELE: Stabiliser l'environnement de compute continu"
+     ]
+    },
+    {
+     "cellules": [
+      "M109 🔬 Container bancs",
+      "🗝️ 54250 · 🗝️ 54251 · 🗝️ 54260 · 🗝️ 54261 · 🗝️ 54270 · 🗝️ 54280 · 🗝️ 54290 · ⚔️ 54300 · ⚔️ 54301 · ⚔️ 54310 · ⚔️ 54311 · ⚔️ 54320 · ⚔️ 54330 · ⚔️ 54340",
+      "MODELE: Stabiliser l'environnement de compute continu"
+     ]
+    },
+    {
+     "cellules": [
+      "M110 🕸️ Sonde du graphe d'architecture",
+      "🗝️ 54250 · 🗝️ 54251 · 🗝️ 54260 · 🗝️ 54261 · 🗝️ 54270 · 🗝️ 54280 · 🗝️ 54290 · ⚔️ 54300 · ⚔️ 54301 · ⚔️ 54310 · ⚔️ 54311 · ⚔️ 54320 · ⚔️ 54330 · ⚔️ 54340",
+      "MODELE: Stabiliser l'environnement de compute continu"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🕳️ Les trous — calculé, ne pas écrire à la main",
+   "colonnes": [
+    "🕳️ Le défaut",
+    "🔢 Les pièces"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "⚔️ action que personne ne peut porter — aucun office, aucun nom",
+      "⚔️ 54300 · ⚔️ 54301 · ⚔️ 54310 · ⚔️ 54311 · ⚔️ 54320 · ⚔️ 54330 · ⚔️ 54340"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🎯 États cibles",
+   "colonnes": [
+    "🎯 N°",
+    "🎯 L'état cible",
+    "📏 La preuve",
+    "⏳ État"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**54100**",
+      "**L'état d'origine est correctement compris et représenté.**",
+      "Un sous-graphe sourcé part des modules concernés, traverse leurs containers, portes et relations d'autorité, et aboutit aux résultats réellement observables. Chaque nœud et arête distingue présent, absent, inconnu et contradictoire ; les design patterns effectivement employés sont reconnus et justifiés par leurs occurrences.",
+      "ouvert"
+     ]
+    },
+    {
+     "cellules": [
+      "**54110**",
+      "**L'état cible est correctement défini dans le même espace logique que l'origine.**",
+      "Le graphe cible emploie les mêmes types de nœuds, d'arêtes, d'autorités et d'observations que 54100. Chaque ajout, retrait ou modification est explicite ; les design patterns retenus, leurs raisons et leurs exceptions sont documentés ; aucun résultat attendu ne flotte sans module, porte ou consommateur.",
+      "ouvert"
+     ]
+    },
+    {
+     "cellules": [
+      "**54120**",
+      "**L'état cible est strictement supérieur à l'état d'origine pour l'usage déclaré.**",
+      "Une relation de comparaison explicite montre au moins une amélioration stricte, aucune dégradation des invariants déclarés, et rend visibles les coûts ou risques déplacés. Les dimensions incomparables restent nommées comme telles.",
+      "ouvert"
+     ]
+    },
+    {
+     "cellules": [
+      "**54130**",
+      "**La différence entre origine et cible forme une transformation cohérente et réversible.**",
+      "Le graphe delta ne contient que les nœuds et arêtes ajoutés, retirés ou modifiés ; ses préconditions, postconditions, frontières d'autorité et chemin de retour sont compatibles avec les invariants de 54120.",
+      "ouvert"
+     ]
+    },
+    {
+     "cellules": [
+      "**54140**",
+      "**L'état réellement observé concorde avec l'état cible supérieur.**",
+      "Le sous-graphe observé après changement est isomorphe à la cible sur le périmètre déclaré, les écarts sont explicités, et la relation de supériorité de 54120 reste vraie sur les résultats visibles aux consommateurs.",
+      "ouvert"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔒 Verrous",
+   "colonnes": [
+    "🔒 N°",
+    "🏷️ Le verrou",
+    "⛔ Bloque",
+    "📌 Ce qui est vrai aujourd'hui",
+    "🔓 Levé quand",
+    "👥 Porteurs",
+    "⛓️ Dépend de"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**54200**",
+      "**La présence des modules ne constitue pas encore un graphe fidèle de l'existant.**",
+      "54100",
+      "M101 à M110 sont adressables, mais leurs relations effectives, autorités, sorties, patterns et inconnus ne forment pas encore une représentation validée unique.",
+      "Les deux clefs complémentaires 54250 et 54251 tiennent : le sous-graphe est sourcé arête par arête, et les patterns réellement employés sont compris et justifiés par leurs occurrences.",
+      "",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "**54210**",
+      "**La cible n'est pas encore exprimée dans le même langage que l'origine.**",
+      "54110",
+      "Des améliorations peuvent être désirées sans que leurs modules, relations, autorités, patterns ou résultats cibles soient adressables.",
+      "Les deux clefs complémentaires 54260 et 54261 tiennent : chaque élément cible est comparable à 54250, et les patterns retenus sont compris, justifiés et documentés.",
+      "",
+      "54100"
+     ]
+    },
+    {
+     "cellules": [
+      "**54220**",
+      "**Le mot « supérieur » ne désigne encore aucune relation démontrable.**",
+      "54120",
+      "Une cible différente peut déplacer le coût, masquer une régression ou améliorer une dimension sans être globalement préférable pour l'usage déclaré.",
+      "Le sous-graphe 54270 porte les critères, invariants, ordres partiels et exceptions qui établissent formellement cible > origine.",
+      "",
+      "54100 · 54110"
+     ]
+    },
+    {
+     "cellules": [
+      "**54230**",
+      "**Une origine et une cible valides ne suffisent pas à rendre leur différence réalisable sans rupture.**",
+      "54130",
+      "Le delta peut encore franchir une frontière d'autorité, supposer un état intermédiaire impossible ou perdre le chemin de retour.",
+      "Le sous-graphe 54280 relie chaque différence à ses préconditions, postconditions, invariants et inverse admissible.",
+      "",
+      "54100 · 54110 · 54120"
+     ]
+    },
+    {
+     "cellules": [
+      "**54240**",
+      "**Une cible décrite ou un changement effectué ne prouvent pas l'état réellement obtenu.**",
+      "54140",
+      "L'état observé peut diverger de la cible ou ne paraître correct que dans une sortie intermédiaire invisible au consommateur.",
+      "Le sous-graphe 54290 relie l'observation réelle à la cible et réévalue la relation de supériorité au véritable point de consommation.",
+      "",
+      "54110 · 54120 · 54130"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🗝️ Clefs",
+   "colonnes": [
+    "🗝️ N°",
+    "🏷️ La clef",
+    "🔓 Ouvre",
+    "🧰 Moyens",
+    "💡 Le principe",
+    "👁️ La preuve attendue",
+    "⚖️ Décision"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**54250**",
+      "**Le sous-graphe validé de l'état d'origine.**",
+      "54200",
+      "M101 · M102 · M103 · M104 · M105 · M106 · M107 · M108 · M109 · M110",
+      "Représenter uniquement ce qui est établi : modules, containers, portes, autorités, relations et observations, avec provenance et statut de connaissance sur chaque élément.",
+      "Un tiers peut suivre une arête jusqu'à sa source ou son observation et retrouve explicitement toute absence, contradiction ou inconnue.",
+      "retenue"
+     ]
+    },
+    {
+     "cellules": [
+      "**54251**",
+      "**Les design patterns réellement employés dans l'origine sont compris et justifiés.**",
+      "54200",
+      "M101 · M102 · M103 · M104 · M105 · M106 · M107 · M108 · M109 · M110",
+      "Nommer un pattern seulement lorsqu'un ensemble concret de nœuds et d'arêtes en porte la structure ; relier son intention, ses occurrences, ses limites et les alternatives visibles sans plaquer rétrospectivement un vocabulaire sur le code.",
+      "Chaque pattern cite ses occurrences dans 54250, explique le problème auquel il répond, ses compromis et ses exceptions ; les structures sans justification restent décrites sans faux nom de pattern.",
+      "retenue"
+     ]
+    },
+    {
+     "cellules": [
+      "**54260**",
+      "**Le sous-graphe de l'état cible, typé comme l'origine.**",
+      "54210",
+      "M101 · M102 · M103 · M104 · M105 · M106 · M107 · M108 · M109 · M110",
+      "Décrire la cible avec le même vocabulaire et les mêmes frontières que 54250 ; chaque différence est une donnée du graphe, jamais une promesse de processus.",
+      "Chaque nœud et arête cible possède un correspondant d'origine ou porte explicitement son statut d'ajout, de retrait ou de modification.",
+      "retenue"
+     ]
+    },
+    {
+     "cellules": [
+      "**54261**",
+      "**Les design patterns de la cible sont compris, justifiés et documentés.**",
+      "54210",
+      "M101 · M102 · M103 · M104 · M105 · M106 · M107 · M108 · M109 · M110",
+      "Relier chaque pattern cible aux nœuds et arêtes de 54260, au problème qu'il résout, à la raison de son choix face aux alternatives, à ses contraintes et à ses exceptions ; la documentation appartient au graphe cible, pas à une prose détachée.",
+      "Un lecteur retrouve depuis chaque pattern sa décision, ses occurrences, ses interfaces, ses conséquences et ses écarts assumés par rapport aux patterns de 54251.",
+      "retenue"
+     ]
+    },
+    {
+     "cellules": [
+      "**54270**",
+      "**Le sous-graphe de comparaison qui établit cible > origine.**",
+      "54220",
+      "M101 · M102 · M103 · M104 · M105 · M106 · M107 · M108 · M109 · M110",
+      "Relier les mêmes usages et observations dans 54250 et 54260 par des critères ordonnés, des invariants durs et des dimensions éventuellement incomparables.",
+      "La relation est stricte sur le périmètre déclaré : la cible gagne sur au moins un critère, ne perd sur aucun invariant dur, et tout déplacement de coût reste visible.",
+      "retenue"
+     ]
+    },
+    {
+     "cellules": [
+      "**54280**",
+      "**Le sous-graphe delta cohérent entre origine et cible.**",
+      "54230",
+      "M101 · M102 · M103 · M104 · M105 · M106 · M107 · M108 · M109 · M110",
+      "Exprimer la transformation comme la différence logique entre 54250 et 54260, avec frontières, préconditions, postconditions, invariants et inverse ; ne prescrire aucun ordre de travail.",
+      "Appliquer abstraitement le delta à l'origine produit la cible ; appliquer son inverse admissible restaure l'origine sans violer les invariants déclarés.",
+      "retenue"
+     ]
+    },
+    {
+     "cellules": [
+      "**54290**",
+      "**Le sous-graphe de concordance entre cible et observation réelle.**",
+      "54240",
+      "M101 · M102 · M103 · M104 · M105 · M106 · M107 · M108 · M109 · M110",
+      "Comparer la cible au graphe réellement observable au point où les consommateurs rencontrent son résultat, sans confondre code présent, processus lancé, sortie produite et effet visible.",
+      "La concordance est démontrée sur le périmètre déclaré et la supériorité de 54270 demeure vraie ; chaque écart résiduel est localisé et qualifié.",
+      "retenue"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "⚔️ Actions",
+   "colonnes": [
+    "⚔️ N°",
+    "🏷️ L'action",
+    "🗝️ Réalise",
+    "📝 Ce qu'on fait",
+    "👤 Qui",
+    "🧰 Moyens",
+    "⛓️ Dépend de",
+    "👁️ La preuve",
+    "⏳ État",
+    "📅 Jour dû",
+    "📝 Note"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**54300**",
+      "**Établir, contester ou corriger le sous-graphe de l'origine.**",
+      "54250",
+      "Rendre adressables les faits qui composent 54250 et signaler précisément toute arête sans source, observation ou autorité. La forme du relevé et sa répartition restent à décider par les contributeurs.",
+      "à prendre librement",
+      "M101 · M102 · M103 · M104 · M105 · M106 · M107 · M108 · M109 · M110",
+      "",
+      "Une proposition sourcée peut être relue arête par arête et distingue explicitement présent, absent, inconnu et contradictoire.",
+      "à faire",
+      "à fixer par le porteur",
+      "Cette action produit ou critique la représentation ; elle n'impose ni protocole, ni outil, ni ordre de travail."
+     ]
+    },
+    {
+     "cellules": [
+      "**54301**",
+      "**Identifier, contester ou justifier les patterns de l'origine.**",
+      "54251",
+      "À partir des occurrences réelles de 54250, proposer les patterns qui expliquent effectivement la structure, leurs intentions, compromis, exceptions et alternatives ; retirer tout pattern que les relations observées ne soutiennent pas.",
+      "à prendre librement",
+      "M101 · M102 · M103 · M104 · M105 · M106 · M107 · M108 · M109 · M110",
+      "",
+      "Chaque pattern accepté est relié à des occurrences adressables et chaque refus conserve la raison pour laquelle le nom ne correspond pas à la structure.",
+      "à faire",
+      "à fixer par le porteur",
+      "Comprendre et justifier l'existant ; ne pas le réécrire pour le rendre conforme au pattern."
+     ]
+    },
+    {
+     "cellules": [
+      "**54310**",
+      "**Proposer, contester ou corriger un sous-graphe cible comparable.**",
+      "54260",
+      "Exprimer ce qui devrait être vrai dans le même vocabulaire que 54250 et rendre chaque différence explicite. Les auteurs choisissent eux-mêmes la forme, les consultations et les alternatives nécessaires.",
+      "à prendre librement",
+      "M101 · M102 · M103 · M104 · M105 · M106 · M107 · M108 · M109 · M110",
+      "",
+      "La cible proposée possède un correspondant d'origine ou un statut de différence explicite pour chaque nœud et arête.",
+      "bloquée par 54210",
+      "après 54100",
+      "Le verrou 54210 porte le préalable logique ; cette action ne prescrit pas comment l'obtenir."
+     ]
+    },
+    {
+     "cellules": [
+      "**54311**",
+      "**Comprendre, justifier et documenter les patterns de la cible.**",
+      "54261",
+      "Relier les patterns proposés aux occurrences de 54260, comparer leurs alternatives, écrire leurs raisons, contraintes, interfaces et exceptions, puis faire corriger toute documentation qui ne correspond pas au graphe.",
+      "à prendre librement",
+      "M101 · M102 · M103 · M104 · M105 · M106 · M107 · M108 · M109 · M110",
+      "",
+      "La documentation permet de partir d'un pattern vers ses occurrences et de chaque occurrence vers la décision qui la justifie, sans masquer les exceptions.",
+      "bloquée par 54210",
+      "après 54100",
+      "Documenter une décision structurelle ; ne pas transformer un nom de pattern en autorité suffisante."
+     ]
+    },
+    {
+     "cellules": [
+      "**54320**",
+      "**Établir ou réfuter la relation de supériorité.**",
+      "54270",
+      "Comparer origine et cible pour l'usage déclaré, expliciter les critères, invariants, coûts déplacés et dimensions incomparables, puis accepter, corriger ou rejeter l'assertion cible > origine.",
+      "à prendre librement",
+      "M101 · M102 · M103 · M104 · M105 · M106 · M107 · M108 · M109 · M110",
+      "",
+      "La conclusion permet à un tiers de retrouver au moins un gain strict, toute invariance exigée et chaque contre-exemple conservé.",
+      "bloquée par 54220",
+      "après 54100 et 54110",
+      "La comparaison peut conclure que la cible n'est pas supérieure."
+     ]
+    },
+    {
+     "cellules": [
+      "**54330**",
+      "**Établir ou réfuter la cohérence du delta origine–cible.**",
+      "54280",
+      "Décrire uniquement les différences pertinentes et éprouver leur compatibilité avec les frontières, préconditions, postconditions, invariants et inverse admissible.",
+      "à prendre librement",
+      "M101 · M102 · M103 · M104 · M105 · M106 · M107 · M108 · M109 · M110",
+      "",
+      "L'application abstraite du delta à 54250 produit 54260, ou les écarts qui l'empêchent sont localisés sans être corrigés silencieusement.",
+      "bloquée par 54230",
+      "après 54100, 54110 et 54120",
+      "Cette action qualifie une transformation ; elle ne fixe pas une architecture d'exécution."
+     ]
+    },
+    {
+     "cellules": [
+      "**54340**",
+      "**Confronter l'état réellement observé à la cible.**",
+      "54290",
+      "Relier les observations au point de consommation au sous-graphe cible et réévaluer la supériorité, en conservant chaque divergence et chaque résultat non observable.",
+      "à prendre librement",
+      "M101 · M102 · M103 · M104 · M105 · M106 · M107 · M108 · M109 · M110",
+      "",
+      "La concordance ou la divergence est localisée nœud par nœud et arête par arête ; aucun processus lancé ni artefact intermédiaire ne remplace le résultat visible.",
+      "bloquée par 54240",
+      "après 54110, 54120 et 54130",
+      "Cette action constate ; elle ne présume ni changement effectué ni réussite."
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔗 Relations logiques",
+   "colonnes": [
+    "🎯 État",
+    "🗝️ Sous-graphe requis",
+    "🔨 Modules liés",
+    "📐 Relation à respecter"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "54100 · origine comprise",
+      "54250 · graphe origine",
+      "M101 à M110",
+      "représentation fidèle"
+     ]
+    },
+    {
+     "cellules": [
+      "54110 · cible définie",
+      "54260 · graphe cible",
+      "M101 à M110",
+      "même espace logique"
+     ]
+    },
+    {
+     "cellules": [
+      "54120 · cible supérieure",
+      "54270 · graphe de comparaison",
+      "M101 à M110",
+      "cible > origine"
+     ]
+    },
+    {
+     "cellules": [
+      "54130 · différence cohérente",
+      "54280 · graphe delta",
+      "M101 à M110",
+      "origine + delta = cible ; delta inversable"
+     ]
+    },
+    {
+     "cellules": [
+      "54140 · cible réellement obtenue",
+      "54290 · graphe de concordance",
+      "M101 à M110",
+      "observation ≃ cible et cible > origine"
+     ]
+    }
+   ]
+  }
+ ]
+}

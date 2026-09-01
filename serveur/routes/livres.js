@@ -32,7 +32,15 @@ function traiter(req, res, url) {
           books: liste.concat(ch.books),
           boites: boites.filter((c) => gardees.has(c.id)).concat(ch.boites) }));
       } catch (e) {
-        return envoyer(res, 200, JSON.stringify({ books: [], boites: [] }));
+        // Une bibliothèque invalide n'est pas une bibliothèque vide. Le 12e
+        // jour de la 5e lune, un manifeste réclamait un volume absent : le
+        // 200 silencieux a fait prendre un échec de chargement pour une
+        // collection réellement vide. Le détail reste au journal du serveur ;
+        // le lecteur reçoit une erreur stable, sans chemin interne.
+        console.error("GET /books — bibliothèque indisponible :", e.message || e);
+        return envoyer(res, 503, JSON.stringify({
+          books: [], boites: [], erreur: "bibliotheque-indisponible",
+        }));
       }
     }
     // Les notes du joueur : le seul volume de l'étagère qui ne soit pas du

@@ -1,0 +1,47 @@
+{
+  "type": "releve-patterns-architecture/1",
+  "date": "129.5.12",
+  "ref": "vmti3ishcw7c9",
+  "auteur": "efficiency-maestro",
+  "portee": "Patrons d'architecture établis ou inférés depuis les documents de maison Serenissima ; ce relevé n'est pas un inventaire ligne à ligne du code.",
+  "constat": {
+    "containers_declares": 9,
+    "modules_rattaches": 433,
+    "modules_orphelins": 21,
+    "liens_hors_porte": 115,
+    "dependances_remontantes": 13
+  },
+  "patterns": [
+    {
+      "nom_usuel_infere": "Ports et adaptateurs / frontières explicites",
+      "mecanisme_etabli": "Neuf containers déclarent intentions, rangs, portes et motifs de modules ; M110 confronte ces déclarations aux imports observés.",
+      "etat": "présent mais traversé",
+      "preuve": "M101 à M110 ; 115 liens hors porte et 13 dépendances remontantes"
+    },
+    {
+      "nom_usuel_infere": "Source unique de vérité avec passerelle",
+      "mecanisme_etabli": "Le container état tient le canon et offre une porte commune aux lectures et écritures.",
+      "etat": "déclaré, fonctionnement à vérifier par usage",
+      "preuve": "M102 — porte scripts/etat/expose.py"
+    },
+    {
+      "nom_usuel_infere": "Vue matérialisée / projection dérivée",
+      "mecanisme_etabli": "Les cahiers canoniques vivent sous etat/maisons ; le tissu est un graphe dérivé reconstruit par tissage.",
+      "etat": "présent",
+      "preuve": "M106 — container plan"
+    },
+    {
+      "nom_usuel_infere": "Fonction de conformité architecturale",
+      "mecanisme_etabli": "Un container de bancs lit sans muter ; une sonde confronte manifeste et code et publie les écarts.",
+      "etat": "présent et mesuré",
+      "preuve": "M109 et M110"
+    },
+    {
+      "nom_usuel_infere": "Journal factuel append-only",
+      "mecanisme_etabli": "L'affaire du réveil propose un reçu reliant cause, rendu, habitant, session et suites sans score ni interprétation.",
+      "etat": "proposé, non établi",
+      "preuve": "clef 71310 et action 71320 à faire"
+    }
+  ],
+  "limite": "Les documents accessibles ne prouvent pas qu'un inventaire GoF ou un relevé exhaustif des patrons de code ait été réalisé. Les noms usuels ci-dessus sont des correspondances de lecture ; les mécanismes et leurs mesures font foi."
+}

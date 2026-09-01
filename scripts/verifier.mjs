@@ -78,7 +78,7 @@ const EPREUVES = [
   {
     id: "serveur-piece-http", rang: "garde", secondes: 0.2,
     commande: ["node", "serveur/test_piece_http.js"],
-    pourquoi: "La route /piece de bout en bout. Ouvre un port EPHEMERE (listen 0) "
+    pourquoi: "Les routes /piece et /reception/depot de bout en bout. Ouvre un port EPHEMERE (listen 0) "
       + "et non le 3129 : lancer la verification ne derange pas une partie en cours.",
   },
   {

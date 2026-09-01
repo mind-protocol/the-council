@@ -1,0 +1,25 @@
+{
+  "date": "129.5.12",
+  "ref_origine": "vmti2qlv01789",
+  "source": "C:\\Users\\reyno\\le-conseil2\\import\\serenissima\\city-visuals",
+  "geste": {
+    "etat": "FAIT",
+    "description": "Ouverture visuelle des dix-sept fichiers, relevé de leurs dimensions et empreintes SHA-256, puis classement prudent."
+  },
+  "resultat": {
+    "etat": "CONFORME",
+    "nombre_fichiers": 17,
+    "nombre_lignes_concordance": 17,
+    "adresse": "chambres/future_chronicler/ouvrages/concordance-city-visuals-vmti2qlv01789.md"
+  },
+  "limites": [
+    "Les dates des noms de fichiers ne prouvent pas les dates des scènes.",
+    "Les deux portraits nommés Marco ne sont raccordés à aucune identité certaine.",
+    "Plusieurs cartes tardives ne nomment pas leur ville."
+  ],
+  "controle_passage_coffre": {
+    "http": 200,
+    "correction_attendue": false,
+    "constat": "Le code servi emploie encore à la marée du matin quand le champ d'heure est vide, tout en listant l'heure de marée comme non portée."
+  }
+}

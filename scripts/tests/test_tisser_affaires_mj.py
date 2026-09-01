@@ -124,6 +124,62 @@ class TisserAffairesMjTest(unittest.TestCase):
         self.assertTrue(all(a["de"] in noeuds and a["vers"] in noeuds
                             for a in locales))
 
+    def test_cahier_canonique_precise_la_piece_du_registre_derive(self):
+        derive = livre("plan-actions", "Registre dérivé", [{
+            "titre": "Toutes les pièces",
+            "colonnes": ["N°", "Action", "Affaire"],
+            "lignes": [{"cellules": ["58300", "Cartographier", "Collaboration"]}],
+        }])
+        canonique = livre("affaire-collaboration", "Collaboration", [{
+            "titre": "⚔️ Actions",
+            "colonnes": ["⚔️ N°", "🏷️ L'action", "⛓️ Dépend de",
+                           "⏳ État", "📅 Jour dû"],
+            "lignes": [{"cellules": ["58300", "Cartographier les affaires",
+                                        "58290", "en cours", "129.5.13"]}],
+        }])
+        with mock.patch("plan.tisser.lecture.charger", return_value=[]):
+            noeuds, _ = indexer([derive, canonique], [], [], [], [], [])
+        action = noeuds["58300"]
+        self.assertEqual("action", action["genre"])
+        self.assertEqual("affaire-collaboration", action["ou"])
+        self.assertEqual(["58290"], action["depend_de"])
+        self.assertEqual("en cours", action["etat"])
+        self.assertEqual("129.5.13", action["jour_du"])
+
+    def test_proprietaire_affaire_porte_les_buts_sans_prendre_les_actions(self):
+        cahier = livre("affaire-ville", "Construire la ville", [
+            {"titre": "🎯 États cibles",
+             "colonnes": ["🎯 N°", "🎯 L'état cible"],
+             "lignes": [{"cellules": ["53100", "Une ville habitable"]}]},
+            {"titre": "⚔️ Actions",
+             "colonnes": ["⚔️ N°", "🏷️ L'action", "🗝️ Réalise"],
+             "lignes": [{"cellules": ["53300", "Tracer une rue", "53100"]}]},
+        ])
+        cahier["tenu_par"] = "nicolas-lester-reynolds"
+        aretes = tisser([cahier], [], [], [], [],
+                        personnages=[{"id": "nicolas-lester-reynolds",
+                                      "nom": "Nicolas Lester Reynolds"}])
+        triplets = {(a["de"], a["vers"], a["nature"]) for a in aretes}
+        self.assertIn(("pers:nicolas-lester-reynolds", "53100", "porte"),
+                      triplets)
+        self.assertNotIn(("53300", "pers:nicolas-lester-reynolds", "tient"),
+                         triplets)
+
+    def test_identifiant_exact_distingue_les_homonymes_suffixes(self):
+        cahier = livre("affaire-entree", "Entrée", [{
+            "titre": "⚔️ Actions",
+            "colonnes": ["⚔️ N°", "🏷️ L'action", "👤 Qui · 🪶 Office"],
+            "lignes": [{"cellules": ["58500", "Entrer", "anchor-builder1"]}],
+        }])
+        personnes = [
+            {"id": "anchor-builder", "nom": "Tommaso Morosini"},
+            {"id": "anchor-builder1", "nom": "Tommaso Morosini"},
+        ]
+        aretes = tisser([cahier], [], [], [], [], personnages=personnes)
+        triplets = {(a["de"], a["vers"], a["nature"]) for a in aretes}
+        self.assertIn(("58500", "pers:anchor-builder1", "tient"), triplets)
+        self.assertNotIn(("58500", "pers:anchor-builder", "tient"), triplets)
+
 
 if __name__ == "__main__":
     unittest.main()

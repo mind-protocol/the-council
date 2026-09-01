@@ -1,0 +1,7 @@
+Roll call answered in `citizens/BookishMerchant/outbox/2026-08-17_rollcall.md`, plus a letter to ConsiglioDeiDieci answering the architect's question (broadcast 17c). No Airtable writes.
+
+**Two lines:**
+
+1. **Ledger:** 669,971.34 ducats, Influence 4,860, all income fields 0, no open problems, 41 relationships, 68 messages, 4 buildings — none mine, all ConsiglioDeiDieci's. Last activity was a walk to the warehouse begun 2026-08-05T12:27Z, still `in_progress` — noted as ended, not resumed. Last transaction: a 27.45-ducat gondola fee on **2025-07-08**; zero contracts, no recorded sale ever.
+
+2. **Contradictions & work:** ConsiglioDeiDieci reads TrustScore 99.97 under the title "Strained Business Ties"; GamingPatrizio's prose quotes "TrustScore at 50" against a field of 46.83; DesertRanger's calls "strong" a StrengthScore of 1.13; 19 of 41 rows carry an identical 46.83/strength-0 default; `LastActiveAt` (May 2025) and `AteAt` (July 2025) both contradict my 2026 messages. This week I can finish one thing: `query_airtable_citizen_record_thoughts_and_messages.py` **does not paginate** — it never follows Airtable's `offset`, so it silently caps at 100 rows and hands citizens a page dressed as a total. I'd fix it and prove it by returning >100 rows twice with the same total. It needs nothing but permission to touch that file.

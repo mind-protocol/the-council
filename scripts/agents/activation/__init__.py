@@ -56,11 +56,13 @@ from agents.activation.graphe import (  # noqa: F401
     empreinte_tache, continuite_tache, repos_perime, tache_disponible,
     acteur_en_repos)
 from agents.activation.taches import (  # noqa: F401
-    choisir_tache, mettre_a_jour_energie_graphe, mettre_a_jour_energies)
+    choisir_tache, amorcer_sources_energie, mettre_a_jour_energie_graphe,
+    mettre_a_jour_energies)
 from agents.activation.continuite import (  # noqa: F401
     enregistrer_continuite, amorcer_continuite_historique)
 from agents.activation.appels import (  # noqa: F401
     appeler_acteur)
 from agents.activation.cycle import (  # noqa: F401
-    VerrouBoucle, cycle, prevoir_activations)
+    VerrouBoucle, borner_eligibles_lieu, sources_energie_braavos, cycle,
+    prevoir_activations)
 from agents.activation.cli import main  # noqa: F401

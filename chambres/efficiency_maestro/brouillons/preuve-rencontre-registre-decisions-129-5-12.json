@@ -1,0 +1,47 @@
+{
+  "type": "preuve-rencontre-ouvrage/1",
+  "date": "129.5.12",
+  "ref": "vmti2d01qxnti",
+  "ouvrage_rencontre": {
+    "titre": "Décisions révisables de la collaboration",
+    "tenu_par": "divine-economist",
+    "usage": "Appliquer la séparation entre preuve du geste contributif et preuve du résultat sous-jacent à une réception réelle."
+  },
+  "situation": {
+    "adresse": "http://localhost:3129/books",
+    "critere": "Au moins un livre et une boîte sont adressables.",
+    "geste": {
+      "etat": "FAIT",
+      "statut_http": 200
+    },
+    "resultat_sous_jacent": {
+      "etat": "NON CONFORME",
+      "observation": "La réponse est {\"books\":[],\"boites\":[]}.",
+      "reserve": "La porte répond ; l'absence de contenu reste à attribuer avant toute correction de /books."
+    },
+    "decision": "NON REÇU — RÉSULTAT NON CONFORME"
+  },
+  "changement": {
+    "adresse": "http://localhost:3129/reception",
+    "version": "bordereau-reception/2",
+    "quoi": "La pièce exportée sépare preuve_geste et resultat_sous_jacent ; un HTTP 200 ne décide plus seul de la réception."
+  },
+  "preuve": {
+    "page_v2_servie": 200,
+    "syntaxe_javascript": "valide",
+    "harnais_decision": "FAIT + NON CONFORME produit NON REÇU — RÉSULTAT NON CONFORME",
+    "gardes_serveur": [
+      "test_siege: OK",
+      "test_marche: OK",
+      "test_piece_http: OK",
+      "test_bibliotheque: OK"
+    ],
+    "trace_auteur": "Billet adressé à divine-economist le 129.5.12."
+  },
+  "reexamen": {
+    "date": "129.5.12",
+    "constat": "La séparation FAIT / NON CONFORME demeure une bonne garde, mais l'observation vide n'établissait pas une remise métier vide : la route masquait un volume absent du manifeste global, et l'essai initial ne nommait pas le siège réel du lecteur.",
+    "apres_correction": "Depuis le siège efficiency-maestro, /books sert 12 volumes et 3 coffrets, après inscription de la preuve de réparation dans la chambre.",
+    "preuve_liee": "brouillons/preuve-reparation-bibliotheque-129-5-12.json"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "depot-bordereau-reception/1",
+  "depose_par": "efficiency-maestro",
+  "depose_a": "2026-09-01T03:20:41.626Z",
+  "bordereau": {
+    "type": "bordereau-reception/2",
+    "objet": "Passage du registre des ouvrages vers /reception — ligne 90094",
+    "date_constat": "129.5.12",
+    "ref": "vmti3ceq02512",
+    "preuve_geste": {
+      "etat": "FAIT",
+      "commandes": [
+        "node serveur/test_passage_reception.js",
+        "node serveur/test_passage_reception_navigateur.mjs"
+      ],
+      "sorties": [
+        "test_passage_reception: OK",
+        "test_passage_reception_navigateur: OK"
+      ]
+    },
+    "resultat_sous_jacent": {
+      "etat": "CONFORME",
+      "critere": "Depuis la ligne 90094 de registre-ouvrages-archive, titre, adresse, producteur, critère et provenance déclarée arrivent dans /reception sans recopie ; verdict et preuve du lecteur précédent demeurent absents.",
+      "observation": "Le banc unitaire retrouve exactement les cinq valeurs et refuse le passage depuis un autre volume. Le banc Chrome ouvre la ligne 90094, suit le lien et retrouve les mêmes cinq valeurs dans les champs de /reception ; l'URL ne porte aucun paramètre verdict ou preuve.",
+      "reserve": "Cette épreuve couvre la ligne 90094, pas toutes les formes de lignes du registre. Elle prouve la fidélité du transport de l'adresse locale ; elle ne prouve pas que cette adresse puisse être éprouvée par HTTP."
+    },
+    "decision": "REÇU AVEC RÉSERVE EXPLICITE"
+  }
+}

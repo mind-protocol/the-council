@@ -292,6 +292,8 @@ function filMjActif() {
 // une fois par clic, c'est une page qui rame.
 const cacheCriticite = new Map();
 const cachePlanModele = new Map();
+const SCRIPT_PLAN_MODELE = path.join(
+  RACINE, "scripts", "noyau", "plan_modele.py");
 
 // LE PÉRIMÈTRE DU PLAN VIENT DE PYTHON. L'échiquier garde son rendu détaillé
 // en JavaScript, mais il ne redéfinit plus ce qu'est une affaire ni ce que ce
@@ -306,7 +308,7 @@ function planModele(vueDe) {
                    path.join(RACINE, "etat", "actes.json"),
                    path.join(RACINE, "etat", "evenements.json"),
                    path.join(RACINE, "scripts", "bibliotheque.py"),
-                   path.join(RACINE, "scripts", "plan_modele.py"),
+                   SCRIPT_PLAN_MODELE,
                    path.join(RACINE, "scripts", "livre.py"),
                    path.join(RACINE, "scripts", "couverture.py")]);
   let cle = "";
@@ -317,7 +319,7 @@ function planModele(vueDe) {
   const cache = cachePlanModele.get(siege);
   if (cache && cache.cle === cle) return cache.valeur;
   const valeur = JSON.parse(childProcess.execFileSync("python",
-    [path.join(RACINE, "scripts", "plan_modele.py"), "--json"].concat(
+    [SCRIPT_PLAN_MODELE, "--json"].concat(
       vueDe ? ["--vue-de", vueDe] : []),
     { cwd: RACINE, encoding: "utf-8", timeout: 30000,
       windowsHide: true, maxBuffer: 8 * 1024 * 1024,
@@ -342,7 +344,7 @@ function criticite(vueDe) {
                 path.join(RACINE, "scripts", "bibliotheque.py"),
                 path.join(RACINE, "scripts", "couverture.py"),
                 path.join(RACINE, "scripts", "etat_du_plan.py"),
-                path.join(RACINE, "scripts", "plan_modele.py"),
+                SCRIPT_PLAN_MODELE,
                 path.join(RACINE, "etat", "boites.json"),
                 path.join(RACINE, "etat", "personnages.json")]);
   let cle = "";

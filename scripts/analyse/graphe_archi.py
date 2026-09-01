@@ -324,7 +324,42 @@ def document(r):
           "| commandes-bibliothèques | %d | une commande racine importée comme module |"
           % len(r["commandes_bibliotheques"]), "",
           "Ces quatre chiffres ne doivent que **descendre**. Ils sont la distance entre",
-          "la cible déclarée et le câblage réel — le chantier, en nombres.", ""]
+          "la cible déclarée et le câblage réel — le chantier, en nombres.", "",
+          "### Les orphelins à rattacher", ""]
+    if r["orphelins"]:
+        L += ["- `%s`" % f for f in r["orphelins"]]
+    else:
+        L.append("Aucun.")
+
+    # Un total signale la distance ; ce regroupement indique à quelle frontière
+    # commencer. Il ne crée pas une nouvelle mesure et ne transforme pas un
+    # écart de structure en preuve de panne.
+    par_frontiere = {}
+    for source, cible, depart, arrivee in r["hors_porte"]:
+        entree = par_frontiere.setdefault((depart, arrivee), {"n": 0, "cibles": []})
+        entree["n"] += 1
+        if cible not in entree["cibles"]:
+            entree["cibles"].append(cible)
+    L += ["", "### Les franchissements hors porte, par frontière", "",
+          "| de | vers | liens | premières cibles observées |",
+          "|---|---|---:|---|"]
+    for (depart, arrivee), entree in sorted(
+            par_frontiere.items(), key=lambda x: (-x[1]["n"], x[0])):
+        apercu = " · ".join("`%s`" % f for f in sorted(entree["cibles"])[:3])
+        reste = len(entree["cibles"]) - 3
+        if reste > 0:
+            apercu += " · … %d autre%s" % (reste, "" if reste == 1 else "s")
+        L.append("| `%s` | `%s` | %d | %s |" %
+                 (depart, arrivee, entree["n"], apercu))
+
+    L += ["", "### Les dépendances qui remontent", "",
+          "| de (rang) | vers (rang) | références |",
+          "|---|---|---:|"]
+    for depart, arrivee, n in sorted(r["remontees"], key=lambda x: (-x[2], x[0], x[1])):
+        L.append("| `%s` (%d) | `%s` (%d) | %d |" %
+                 (depart, r["declaration"][depart]["rang"],
+                  arrivee, r["declaration"][arrivee]["rang"], n))
+    L.append("")
     if r["commandes_bibliotheques"]:
         L += ["### Les commandes qui sont aussi des bibliothèques", ""]
         L += ["- `%s`" % f for f in r["commandes_bibliotheques"]]

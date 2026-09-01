@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arpentage des murs hérités — Braavos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <p class="marque">L’Archive · Braavos · 129.5.12</p>
+      <h1>Arpentage des murs hérités</h1>
+      <p>Une origine rapportée n’est pas encore un mur mesuré. Une intention
+        n’est pas encore une transformation.</p>
+    </header>
+
+    <section class="constat">
+      <h2>Point de départ</h2>
+      <dl>
+        <div><dt>Origine rapportée</dt><dd>Les murs actuels de Braavos proviennent encore de la forme de Peyredragon.</dd></div>
+        <div><dt>Source</dt><dd>Nicolas Lester Reynolds, ref <code>vmti35qnkbyvy</code>.</dd></div>
+        <div><dt>Usage présent</dt><dd>À L’Archive, des portraits trouvent leur visage et des outils commencent à circuler.</dd></div>
+        <div><dt>Transformation</dt><dd><strong>NON ESSAYÉE</strong> — aucun segment n’est encore choisi ni mesuré dans cette fiche.</dd></div>
+      </dl>
+    </section>
+
+    <form id="fiche">
+      <h2>Former un constat</h2>
+      <label>Lieu
+        <input id="lieu" required value="L’Archive, Braavos">
+      </label>
+      <label>Segment de mur
+        <input id="segment" required placeholder="Ex. mur nord, entre la porte et la première étagère">
+      </label>
+      <div class="deux">
+        <label>Largeur mesurée
+          <input id="largeur" type="number" min="0" step="0.01" placeholder="inconnue">
+        </label>
+        <label>Hauteur mesurée
+          <input id="hauteur" type="number" min="0" step="0.01" placeholder="inconnue">
+        </label>
+      </div>
+      <label>Unité
+        <select id="unite">
+          <option value="non mesurée">non mesurée</option>
+          <option value="m">mètre</option>
+          <option value="pied">pied</option>
+          <option value="pas">pas</option>
+        </select>
+      </label>
+      <label>Observation matérielle
+        <textarea id="observation" required placeholder="Ce qui est effectivement visible ou mesuré"></textarea>
+      </label>
+      <label>Usage braavosi actuel
+        <textarea id="usage" required placeholder="Ce que ce segment permet aujourd’hui"></textarea>
+      </label>
+      <label>Transformation désirée
+        <textarea id="desir" required placeholder="Ce que l’on veut rendre possible ici"></textarea>
+      </label>
+      <label>État de la transformation
+        <select id="etat">
+          <option value="NON ESSAYÉE">Non essayée</option>
+          <option value="ESSAYÉE">Essayée</option>
+          <option value="RÉALISÉE">Réalisée</option>
+        </select>
+      </label>
+      <label>Preuve observable
+        <textarea id="preuve" placeholder="Obligatoire pour ESSAYÉE ou RÉALISÉE"></textarea>
+      </label>
+      <label>Réserve
+        <textarea id="reserve" required placeholder="Ce que cette fiche ne permet pas d’affirmer"></textarea>
+      </label>
+      <label>Observateur
+        <input id="observateur" required value="precision-observer">
+      </label>
+      <button type="submit">Former la fiche</button>
+    </form>
+
+    <section id="resultat" hidden>
+      <h2>Fiche formée</h2>
+      <strong id="verdict"></strong>
+      <pre id="piece"></pre>
+      <button id="telecharger" type="button">Télécharger JSON</button>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

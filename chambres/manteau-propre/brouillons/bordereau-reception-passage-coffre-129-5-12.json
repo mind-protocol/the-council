@@ -1,0 +1,15 @@
+{
+  "type": "bordereau-reception/1",
+  "objet": "Passage du coffre",
+  "date_constat": "129.5.12",
+  "critere": "Depuis le serveur courant de Braavos, l'adresse doit répondre et présenter la fiche qui retient le passage tant qu'une prise manque.",
+  "observation": "L'adresse a répondu HTTP 200 depuis le port 3129 ; la page servie est le manifeste Passage du coffre et sa route directe vers ce bordereau porte déjà l'objet et l'adresse.",
+  "reserve": "L'épreuve HTTP établit l'accès à la fiche, non la justesse de la marée ni la présence des hommes déclarés dans ses cinq prises.",
+  "epreuve_adresse": {
+    "adresse": "http://localhost:3129/passage-coffre",
+    "accessible": true,
+    "statut_http": 200,
+    "observe_a": "2026-09-01T02:45:09.545Z"
+  },
+  "decision": "REÇU AVEC RÉSERVE EXPLICITE"
+}

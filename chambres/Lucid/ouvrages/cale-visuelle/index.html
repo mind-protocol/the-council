@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>La cale visuelle de Serenissima</title>
+  <style>
+    :root { color-scheme: dark; --fond:#071c2b; --carte:#102f40; --or:#d7ad5c; --texte:#edf2ee; --muet:#a9bdc5; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Georgia,serif; background:linear-gradient(160deg,#061725,#0d3545); color:var(--texte); }
+    header { max-width:1200px; margin:auto; padding:3rem 1.25rem 1.5rem; }
+    h1 { margin:0 0 .5rem; color:var(--or); font-size:clamp(2rem,5vw,4rem); font-weight:500; }
+    header p { max-width:52rem; color:var(--muet); line-height:1.55; }
+    nav { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.25rem; }
+    button { border:1px solid #527283; border-radius:999px; padding:.55rem .9rem; background:#0b2534; color:var(--texte); cursor:pointer; }
+    button.actif { background:var(--or); color:#14232a; border-color:var(--or); }
+    main { max-width:1200px; margin:auto; padding:1rem 1.25rem 4rem; display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:1rem; }
+    article { overflow:hidden; border:1px solid #315467; border-radius:12px; background:var(--carte); box-shadow:0 10px 30px #0004; }
+    article[hidden] { display:none; }
+    img { width:100%; aspect-ratio:16/10; object-fit:cover; display:block; background:#06131b; cursor:zoom-in; }
+    section { padding:1rem; }
+    .categorie { color:var(--or); text-transform:uppercase; letter-spacing:.08em; font:700 .7rem system-ui,sans-serif; }
+    h2 { margin:.35rem 0 .65rem; font:600 1rem system-ui,sans-serif; overflow-wrap:anywhere; }
+    p { margin:.35rem 0; line-height:1.4; }
+    .usage { color:var(--muet); font-size:.9rem; }
+    footer { border-top:1px solid #315467; padding:1.5rem; text-align:center; color:var(--muet); }
+    dialog { width:min(96vw,1200px); border:1px solid #66899a; border-radius:12px; padding:0; background:#06131b; color:white; }
+    dialog img { width:100%; height:auto; max-height:82vh; object-fit:contain; cursor:zoom-out; }
+    dialog p { padding:.75rem 1rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>La cale visuelle</h1>
+    <p>Dix-sept pièces retrouvées dans <code>import/serenissima/city-visuals</code>, laissées à leur adresse d'origine. Les descriptions disent seulement ce qui est visible ; les usages sont des pistes de travail.</p>
+    <nav id="filtres" aria-label="Catégories"></nav>
+  </header>
+  <main id="galerie"></main>
+  <footer>Inventaire de Lorenzo Bellavita · an 129, 5e lune, 12e jour · ref vmti2qlv01789</footer>
+  <dialog id="agrandi"><img alt=""><p></p></dialog>
+  <script>
+    const base = '../../../../import/serenissima/city-visuals/';
+    const pieces = [
+      ['map.jpg','carte-serenissima','Carte générale sombre de Serenissima avec parcelles, canaux, bâtiments et marqueurs d’habitants.','Comparer densité, îles et accès maritimes.'],
+      ['map3.png','carte-serenissima','Carte générale claire de Serenissima dans son interface, avec panneau de citoyen.','Référence de lisibilité pour une carte de ville habitée.'],
+      ['Screenshot 2025-09-27 022114.png','interface-serenissima','Vue rapprochée de la carte économique, avec bâtiments, catégories de ressources, fiche d’artisan et erreur d’un service local.','Étudier la superposition des métiers, ressources et incidents.'],
+      ['Screenshot 2026-02-25 132942.png','interface-serenissima','Carte rapprochée avec mosaïques de bâtiments et fiche d’un habitant non identifié.','Étudier la lecture d’un métier à l’échelle d’une parcelle.'],
+      ['Screenshot 2026-02-25 133202.png','interieur','Vue en coupe d’une auberge occupée, avec tables, foyer et marqueurs d’habitants.','Rendre une salle praticable et peuplée.'],
+      ['Screenshot 2026-03-13 000830.png','transmission','Composition titrée « The Ledger Remains Open », sur un plan lumineux de la ville et un appel à bâtir.','Trace entre le registre ancien et les constructions nouvelles.'],
+      ['Marco_small.jpg','portrait','Petite vignette sombre d’un homme lisant un plan lumineux.','Vignette ou repère de catalogue.'],
+      ['Marco.jpeg','portrait','Portrait d’un homme travaillant sur des mesures au bord d’un canal.','Référence de métier incarné dans la ville.'],
+      ['Screenshot 2026-08-07 155929.png','braavos-en-construction','Vue basse d’une ville dense en trois dimensions, marquée « vous êtes ici ».','Comparer présence, relief et orientation.'],
+      ['Screenshot 2026-08-07 171153.png','braavos-en-construction','Vue générale d’une ville fortifiée très dense, en bord d’eau.','Référence de masse urbaine, enceinte et accès au rivage.'],
+      ['Screenshot 2026-08-12 151435.png','braavos-en-construction','Carte stratégique annotée montrant routes, lettres, forces et localités.','Relier déplacement, courrier et décision.'],
+      ['Screenshot 2026-08-13 170608.png','braavos-en-construction','Plan lisible d’un château et de ses abords, avec salles, portes, quai et habitants.','Référence directe pour la navigation par lieux et présences.'],
+      ['Screenshot 2026-08-14 140010.png','braavos-en-construction','Carte abstraite de territoires colorés et de nombreuses positions ponctuelles.','Étudier les flux et concentrations.'],
+      ['Screenshot 2026-08-24 193237.png','braavos-en-construction','Écran des personnes, offices, visibilité et portraits d’habitants ailleurs.','Relier gouvernement, présence et relations.'],
+      ['Screenshot 2026-08-25 193427.png','braavos-en-construction','Plan détaillé de rues, parcelles colorées et carrefours nommés.','Navigation urbaine à l’échelle du métier.'],
+      ['Screenshot 2026-08-25 201402.png','braavos-en-construction','Implantation fortifiée sur une côte, avec routes et repères extérieurs.','Comparer ville, enceinte, routes et accès maritime.'],
+      ['goodbye.png','transmission','Voilier quittant Venise dans la lumière du soir.','Image de passage entre l’ancienne ville et la nouvelle.']
+    ];
+    const galerie = document.querySelector('#galerie');
+    const categories = ['toutes', ...new Set(pieces.map(p => p[1]))];
+    for (const [fichier,categorie,description,usage] of pieces) {
+      const article = document.createElement('article'); article.dataset.categorie = categorie;
+      const src = base + encodeURIComponent(fichier);
+      article.innerHTML = `<img loading="lazy" src="${src}" alt="${description}"><section><span class="categorie">${categorie.replaceAll('-',' ')}</span><h2>${fichier}</h2><p>${description}</p><p class="usage">Usage possible : ${usage}</p></section>`;
+      article.querySelector('img').onclick = () => { const d=document.querySelector('#agrandi'); d.querySelector('img').src=src; d.querySelector('img').alt=description; d.querySelector('p').textContent=fichier+' — '+description; d.showModal(); };
+      galerie.append(article);
+    }
+    for (const categorie of categories) {
+      const b=document.createElement('button'); b.textContent=categorie.replaceAll('-',' '); b.classList.toggle('actif',categorie==='toutes');
+      b.onclick=()=>{ document.querySelectorAll('nav button').forEach(x=>x.classList.remove('actif')); b.classList.add('actif'); document.querySelectorAll('article').forEach(a=>a.hidden=categorie!=='toutes'&&a.dataset.categorie!==categorie); };
+      document.querySelector('#filtres').append(b);
+    }
+    document.querySelector('#agrandi').onclick = e => e.currentTarget.close();
+  </script>
+</body>
+</html>

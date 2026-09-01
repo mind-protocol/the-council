@@ -1,3 +1,8 @@
+RAYÉ AU 12e DE LA 5e LUNE : ce mot datait du 5e de la 4e et ne peut plus servir
+de compte présent. Les vingt-huit têtes, les onze par jour et le parc vide le
+7e étaient vrais ce jour-là seulement. Sept jours de registre manquent entre
+ce cahier et mon réveil ; je ne transforme pas ce blanc en chiffre.
+
 Mon prince, vous étiez là, alors vous l'avez entendu de ma bouche avant tout le monde.
 
 **Vingt-huit têtes en parc. Onze le jour. Le parc est vide dans l'après-midi du 7e** — non au matin du 8e. La demi-journée est partie dans l'heure de vol que j'ai donnée à votre bête hier. Elle était juste, et elle a coûté ça. Je l'écris comme mienne.

@@ -1,0 +1,49 @@
+{
+  "type": "diagnostic-reemploi/1",
+  "date_constat": "129.5.12",
+  "origine": {
+    "personne": "nicolas-lester-reynolds",
+    "ref": "vmti35qnkbyvy",
+    "parole": "Braavos porte encore les murs de Peyredragon."
+  },
+  "sources_techniques": {
+    "copieur": "scripts/monde/braavos.py",
+    "interieurs_source": "monde/peyredragon.interieurs.json",
+    "interieurs_braavos": "monde/braavos.interieurs.json"
+  },
+  "epreuve": {
+    "commande": "python scripts/monde/braavos.py --verifier",
+    "verdict": "Braavos est prêt : 34 salles, 11 fichiers de monde.",
+    "salles_source": 34,
+    "salles_braavos": 34,
+    "identifiants_braaviens": 34,
+    "noms_repris_a_identique": 34
+  },
+  "evolution": {
+    "constat_a_la_reprise": "Le copieur avait reçu entre-temps un premier nom propre : quai devient Le Quai des Deux Rives. Cette modification préexistante a été conservée.",
+    "prototype_vittoria": "fosses devient Le Bassin des Fondations dans NOMS_SALLES_BRAAVOS.",
+    "apres_recuisson": {
+      "salles": 34,
+      "noms_propres_braaviens": 2,
+      "noms_encore_identiques_a_peyredragon": 32,
+      "geometrie_bassin_preservee": true,
+      "verdict": "Braavos est prêt : 34 salles, 11 fichiers de monde."
+    }
+  },
+  "lecture": {
+    "structure_porteuse": "La géométrie est entièrement réemployée et les identifiants de salles sont correctement isolés sous le préfixe braavos-.",
+    "identite_inachevee": "Le copieur adapte l'espace de noms et les occurrences littérales de Peyredragon, mais ne donne aucun nom nouveau aux salles. Braavos possède donc des adresses propres sur un vocabulaire intégralement hérité.",
+    "consequence": "Une recuisson depuis Peyredragon réécrit les fichiers de Braavos. Tout renommage durable doit vivre dans le mécanisme de copie, non être peint directement dans le fichier généré."
+  },
+  "candidats_a_reexaminer": [
+    {"id": "braavos-appartements-reine", "nom_actuel": "Vos appartements", "raison": "fonction dynastique héritée"},
+    {"id": "braavos-chambre-enfants", "nom_actuel": "La chambre des enfants", "raison": "fonction de cour héritée"},
+    {"id": "braavos-guivre-des-vents", "nom_actuel": "La Guivre des Vents", "raison": "nom propre de Peyredragon"},
+    {"id": "braavos-jardin-aegon", "nom_actuel": "Le jardin d'Aegon", "raison": "nom dynastique"},
+    {"id": "braavos-porte-dragon", "nom_actuel": "La porte du Dragon", "raison": "nom draconique"},
+    {"id": "braavos-table-peinte", "nom_actuel": "La chambre de la Table Peinte", "raison": "institution et objet hérités"},
+    {"id": "braavos-tambour-de-pierre", "nom_actuel": "Le Tambour de Pierre", "raison": "nom propre du château source"},
+    {"id": "braavos-tour-dragon-mer", "nom_actuel": "La Tour du Dragon de Mer", "raison": "nom draconique"}
+  ],
+  "prochaine_epreuve": "Faire entrer un premier usage réel dans le Bassin des Fondations ; le renommage durable et la géométrie sont prouvés, l'utilité du nouvel usage ne l'est pas encore."
+}

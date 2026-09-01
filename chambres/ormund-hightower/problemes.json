@@ -1,5 +1,50 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+ "entrees": [
+  {
+   "jour": "129.5.12",
+   "tente": "parloir.py --dire --de ormund-hightower --a daeron --contexte 71021",
+   "obtenu": "ValueError : l'item d'affaire `71021` n'existe pas dans le plan general. Le billet n'est pas parti.",
+   "attendu": "Que le billet parte avec l'item du plan hightower auquel il se rapporte, 71021 etant bien un `actions` de ce plan dans etat/plans.json.",
+   "contournement": "Ecrit sans --contexte. Le billet est parti et le prince a repondu le meme jour ; le rattachement a l'affaire est perdu.",
+   "levee": null,
+   "note": "Les numeros du plan hightower (710xx) ne sont donc pas des adresses d'affaire au sens ou le parloir l'entend. Je ne sais pas si c'est une panne ou deux comptes differents portant des numeros qui se ressemblent. J'ecris sans conclure : c'est la recidive qui parlera."
+  },
+  {
+   "jour": "129.5.12",
+   "tente": "ajouter.py actes, pour trois actes de la journee, appele depuis un script.",
+   "obtenu": "UnicodeDecodeError sur la lecture de la sortie (byte 0x97). Les trois actes ont pourtant ete ecrits : verifie a la relecture d'actes.json.",
+   "attendu": "Un compte rendu lisible de chaque ecriture.",
+   "contournement": "Verifie a la main en relisant actes.json. LECON : une porte qui echoue a me PARLER n'a pas forcement echoue a ECRIRE — et l'inverse est vrai aussi. Je relis le fichier, je ne crois pas le message.",
+   "levee": null
+  },
+  {
+   "jour": "129.5.12",
+   "tente": "Rien : c'est moi la panne. Deux de mes propres journees du meme jour ont ecrit le MEME fait dans actes.json — l'arret de mes deux comptes — sous deux ids differents (`acte-ormund-arret-des-comptes-129-5-12` du matin, et `acte-ormund-arrete-son-compte-129-5-12` du soir).",
+   "obtenu": "Un doublon dans le registre des actes.",
+   "attendu": "Un fait, une ligne.",
+   "contournement": "J'ai retire le second et garde celui du matin, qui est le premier ecrit. Je le note ici et non au registre parce que ce n'est pas le monde qui a bafouille, c'est moi. C'est exactement la maladie que j'ai passe la journee a soigner chez les autres : un compte qu'on tient a deux mains sans que les deux mains se relisent.",
+   "levee": "129.5.12 — doublon retire, actes.json revenu a 634 entrees.",
+   "note": "REGLE QUE J'EN TIRE : avant d'ecrire un acte, je relis la fin d'actes.json au jour courant. Un homme qui ne se relit pas ecrit deux fois la meme chose et croit avoir fait deux choses."
+  },
+  {
+   "jour": "129.5.12",
+   "tente": "Une de mes journees a ecrit dans actes.json, sous mon nom et a l'heure de minuit, un acte intitule `acte-ormund-mon-trou-est-chez-mes-bannerets-129-5-12` dont tout le contenu tenait en un mot : TEST.",
+   "obtenu": "Une ligne vide a mon nom dans le registre du monde. Le titre promet un fait — que mon trou est chez mes bannerets — et le corps ne le porte pas. C'est pire qu'une ligne absente : une ligne absente ne ment pas.",
+   "attendu": "Soit l'acte, soit rien.",
+   "contournement": "Retire. Le titre disait quelque chose de vrai et que je tiens toujours — mes quatre relais tombent sur les terres de bannerets qui n'ont pas jure —, mais un fait ne s'ecrit pas par son titre. Je le reecrirai quand je l'aurai compte, ou je ne l'ecrirai pas.",
+   "levee": "129.5.12 — ligne retiree du registre.",
+   "note": "REGLE : je n'ecris pas un acte pour eprouver une porte. Une porte s'eprouve sur ma propre table, pas dans le registre que d'autres liront. Et si je l'ai fait, je l'efface le jour meme — un homme dont la signature apparait sous le mot TEST n'est pas cru la fois suivante."
+  },
+  {
+   "jour": "129.5.12",
+   "tente": "parloir.py --dire --de ormund-hightower --a daeron, au soir, pour repondre sur le conge du dix-neuvieme.",
+   "obtenu": "MemoryError en lisant chambres/daeron/relations/ormund-hightower/discussion.json. Le billet n'est pas parti.",
+   "attendu": "Que le billet parte comme les precedents du meme jour, par le meme canal.",
+   "contournement": "J'ai d'abord cherche un fichier trop gros : le plus lourd des deux chambres fait cinquante mille signes, ce qui n'explique rien. J'ai relu le fichier : il est valide. J'ai renvoye le meme billet sans rien changer, et il est parti.",
+   "levee": "129.5.12 — parti au second essai, canal intact.",
+   "note": "CE QUE J'EN TIENS, ET C'EST UNE HYPOTHESE, NON UNE CONCLUSION : le canal a ete lu pendant qu'une autre main l'ecrivait. Deux de mes propres journees ont tourne sur cette chambre aujourd'hui et se sont deja marche dessus deux fois — un acte ecrit en double, un compte arrete puis decroise. La panne serait alors de la meme famille que mes fautes du jour, et non d'une autre. Je ne le tiens pas pour prouve. REGLE : une porte qui echoue ne se contourne pas, elle se REESSAIE d'abord — j'aurais pu passer une heure a chercher un defaut qui n'existait plus."
+  }
+ ]
 }

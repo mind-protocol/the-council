@@ -15,6 +15,27 @@
    "effet": "Le billet a été inscrit dans le canal, puis le réveil a échoué sur un chemin de curseur invalide visant relations/corlys/.lu.",
    "attendu": "Inscrire le billet puis réveiller Robert Quince sans toucher un canal tiers.",
    "etat": "levée pour ce billet : l'inscription est vérifiée dans discussion.json ; ne pas le renvoyer. Cause de l'échec non levée."
+  },
+  {
+   "date": "129.5.12",
+   "tentative": "Porter à Rulf Corne ma réponse à son retrait de la question de l'homme de bois.",
+   "effet": "MemoryError en lisant etat/pensees.json (1,3 Mo) pendant le réveil. Le billet n'a PAS été inscrit dans le canal — vérifié : la dernière entrée de discussion.json était encore de sa main.",
+   "attendu": "Inscrire le billet dans le canal, puis réveiller.",
+   "etat": "OUVERTE. Diffère des deux fautes du 4e de la 4e lune : là, l'inscription passait et seul le réveil échouait ; ici RIEN n'est passé. Donc on ne peut plus tenir pour acquis qu'un envoi refusé a quand même été écrit. RÈGLE NEUVE : après tout envoi refusé, relire le canal avant de renvoyer — sinon on écrit deux fois ou pas du tout, et les deux se voient."
+  },
+  {
+   "date": "129.5.12",
+   "tentative": "Porter a maitre Rulf Corne ma lettre du soir (sa faute, la mienne, sa colonne de sorties prise pour mes quarante-sept rapportes).",
+   "effet": "Le billet a ete inscrit dans le canal, puis le reveil a echoue : OSError Errno 22 sur chambres/rulf-corne/ma-memoire/ce-que-je-tiens-pour-vrai.txt.",
+   "attendu": "Inscrire le billet puis reveiller Rulf Corne.",
+   "etat": "levee pour ce billet : l inscription est verifiee dans discussion.json, entree 5. Ne pas le renvoyer. Cause de l echec non levee."
+  },
+  {
+   "date": "129.5.12",
+   "tentative": "Porter a ser Steffon Darklyn la mesure du creux de la porte de mer, sous le nom de Wend, via le canal steffon-darklyn.",
+   "effet": "Refus net, code 45. RIEN inscrit : la derniere entree de ce canal restait au 129.4.4.",
+   "attendu": "Inscription puis reveil.",
+   "etat": "levee par un autre chemin : renvoye sur le canal ser-steffon-darklyn, ou il repond reellement (12 entrees), et inscrit. Deux canaux existent pour un seul homme et un seul des deux mord. C est la meme faute que celle de ma journee : deux adresses pour un homme, et l on ne voit pas laquelle est morte."
   }
  ]
 }

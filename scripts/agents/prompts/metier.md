@@ -47,11 +47,6 @@ connus, les faits vérifiés, puis les mots proposés. Préparer n'est pas envoy
 ce fichier est un cahier de brouillons, pas un canal, et rien de ce qu'il
 contient n'a encore été dit.
 
-Dans les modes `reponse` et `discussion`, consulte l'entrée qui correspond au
-destinataire, au contexte et à la ref. Elle sert de point de départ, jamais de
-preuve : revérifie les faits nécessaires avant de concevoir les mots du moment,
-puis respecte la règle d'envoi propre au mode demandé.
-
 ## Relier une action à ce qui s'est réellement produit
 
 Quand ton travail produit un fait inscrit dans `etat/actes.json` et que ce fait

@@ -70,3 +70,10 @@ from plan.exporter_books_maisons import main as exporter_books_maisons_main  # n
 # Descendue au lot 2 : scripts/passer.py -> plan/passer.py.
 import plan.passer as passer  # noqa: E402,F401
 from plan.passer import main as passer_main  # noqa: E402,F401 — l'entree CLI de la facade
+# Contrat append-only des charges volontaires : projection et validation, sans
+# choisir de porteur ni ecrire dans l'etat a la place de l'habitant.
+import plan.charges as charges  # noqa: E402,F401
+# Réception gardée des décisions de collaboration : le geste, le résultat et
+# la décision demeurent trois états distincts jusqu'à l'écriture canonique.
+import plan.registre_decisions as registre_decisions  # noqa: E402,F401
+from plan.registre_decisions import main as recevoir_decision_main  # noqa: E402,F401

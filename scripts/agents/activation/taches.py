@@ -9,8 +9,7 @@ import os
 import time
 
 from agents.activation.socle import (ENERGIE_MAX, ENERGIE_MIN,
-                                     DEMI_VIE_ENERGIE,
-                                     ENERGIE_ACTIVATION_MIN, ETAT,
+                                     DEMI_VIE_ENERGIE, ETAT,
                                      lire_json, journaliser)
 from agents.activation.horloges import appliquer_polarites_horloge
 from agents.activation.fatigue import (instant_fictionnel_secondes,
@@ -23,7 +22,7 @@ from agents.activation.graphe import (tache_active, tache_executable,
                                       normaliser_par_cluster, calendrier)
 
 def choisir_tache(acteur, noeuds, aretes, adj, energies, etat=None,
-                  present=0.0):
+                  present=0.0, amorcage_lieu=None, sur_verrous=False):
     """Tache active la plus proche de l'acteur.
 
     ``tient`` est l'assignation canonique d'une action. Une tache tenue par un
@@ -32,6 +31,17 @@ def choisir_tache(acteur, noeuds, aretes, adj, energies, etat=None,
     puis l'energie ne departage que deux taches a distance egale.
     """
     etat = etat or {}
+
+    def unite_active(n):
+        if sur_verrous and n.get("genre") != "verrou":
+            return False
+        return tache_active(n, inclure_verrous=sur_verrous)
+
+    def unite_executable(nid):
+        if not unite_active(noeuds.get(nid) or {}):
+            return False
+        return tache_executable(
+            nid, noeuds, inclure_verrous=sur_verrous)
     titulaires = collections.defaultdict(set)
     affectations_declarees = set()
 
@@ -68,9 +78,9 @@ def choisir_tache(acteur, noeuds, aretes, adj, energies, etat=None,
         de, vers = a.get("de"), a.get("vers")
         if de in noeuds and vers in noeuds:
             tache, porteur = None, None
-            if tache_active(noeuds[de]):
+            if unite_active(noeuds[de]):
                 tache, porteur = de, vers
-            elif tache_active(noeuds[vers]):
+            elif unite_active(noeuds[vers]):
                 tache, porteur = vers, de
             if tache:
                 genre_porteur = noeuds[porteur].get("genre")
@@ -126,7 +136,7 @@ def choisir_tache(acteur, noeuds, aretes, adj, energies, etat=None,
     for ou, compte in par_affaire.items():
         proprietaires[ou] = max(sorted(compte), key=lambda p: (compte[p], p))
     for nid, n in noeuds.items():
-        if titulaires.get(nid) or not tache_active(n):
+        if titulaires.get(nid) or not unite_active(n):
             continue
         if nid not in a_designer:
             continue
@@ -135,6 +145,11 @@ def choisir_tache(acteur, noeuds, aretes, adj, energies, etat=None,
             titulaires[nid] = {maitre}
 
     def appartient_ou_vacante(nid):
+        # A Braavos, un verrou est un chantier collectif explicite. Un verrou
+        # sans porteur n'est jamais une invitation implicite à toute la ville.
+        if sur_verrous:
+            return (nid in affectations_declarees
+                    and acteur in titulaires.get(nid, set()))
         # Sans aucune affectation, le repli historique par proximite reste
         # permis. Mais une affectation explicite dont le titulaire n'a pas pu
         # etre resolu est un trou a reparer, pas une invitation a tous.
@@ -151,19 +166,29 @@ def choisir_tache(acteur, noeuds, aretes, adj, energies, etat=None,
             autre = a.get("vers")
         elif a.get("vers") == acteur and a.get("nature") in ("poursuit", "tient"):
             autre = a.get("de")
-        if autre and tache_executable(autre, noeuds) \
+        affectation_directe = bool(autre and a.get("nature") == "tient")
+        if autre and unite_executable(autre) \
                 and appartient_ou_vacante(autre) \
                 and tache_disponible(etat, autre, noeuds, present) \
-                and float(energies.get(autre, 0.0)) >= ENERGIE_MIN:
+                and (float(energies.get(autre, 0.0)) >= ENERGIE_MIN
+                     or (amorcage_lieu and affectation_directe)):
+            # Lors de l'amorcage d'une ville, l'acteur recoit le seuil de
+            # depart avant que son sous-graphe ait accumule de l'energie. Une
+            # action qu'il tient explicitement doit heriter de cette prise ;
+            # sinon la boucle ignore l'assignation et fabrique une tache
+            # generique. `poursuit` ne beneficie pas de ce passage : seule
+            # l'arete canonique `tient` autorise ce raccord direct.
             # L'assignation explicite passe avant le simple fait que l'acteur
             # poursuit une etape de son intention.
-            directes.append((0 if a.get("nature") == "tient" else 1, autre))
+            directes.append((0 if affectation_directe else 1, autre,
+                              affectation_directe))
     if directes:
         directes.sort(key=lambda x: (x[0], -float(energies.get(x[1], 0.0)), x[1]))
-        _priorite_affectation, nid = directes[0]
+        _priorite_affectation, nid, affectation_directe = directes[0]
         return {"id": nid, "quoi": noeuds[nid].get("quoi") or nid,
                 "genre": noeuds[nid].get("genre"), "distance": 1,
-                "chemin": [acteur, nid], "creee": False}
+                "chemin": [acteur, nid], "creee": False,
+                "affectation_directe": affectation_directe}
 
     file = collections.deque([(acteur, [acteur])])
     vus = {acteur}
@@ -171,7 +196,7 @@ def choisir_tache(acteur, noeuds, aretes, adj, energies, etat=None,
     while file:
         ici, chemin = file.popleft()
         d = len(chemin) - 1
-        if (ici != acteur and tache_executable(ici, noeuds)
+        if (ici != acteur and unite_executable(ici)
                 and appartient_ou_vacante(ici)
                 and tache_disponible(etat, ici, noeuds, present)
                 and float(energies.get(ici, 0.0)) >= ENERGIE_MIN):
@@ -205,23 +230,37 @@ def choisir_tache(acteur, noeuds, aretes, adj, energies, etat=None,
                 "genre": noeuds[nid].get("genre"), "distance": len(chemin) - 1,
                 "chemin": chemin, "creee": False}
 
+    # Le front Braavos ne fabrique plus une tâche générique et ne retombe pas
+    # sur une action personnelle : sans verrou explicitement porté, personne
+    # n'est réveillé. Le verrou est le contexte de travail, pas une étiquette
+    # ajoutée après l'élection d'une action.
+    if sur_verrous:
+        return None
+
     pid = acteur.removeprefix("pers:")
     intentions = lire_json(os.path.join(ETAT, "intentions.json"), [])
     tete = next((t for t in intentions if t.get("personnage_id") == pid), {})
     quoi = (tete.get("intention") or
             next((o.get("but") for o in (noeuds[acteur].get("objectifs") or [])
                   if isinstance(o, dict) and o.get("but")), None))
+    source = "intentions.json:intention"
+    if not quoi and amorcage_lieu \
+            and noeuds[acteur].get("lieu_id") == amorcage_lieu:
+        quoi = ("Commencer par explorer sa situation à Braavos, relire sa "
+                "chambre et les documents de sa maison, puis écrire ses "
+                "premiers objectifs et la prochaine action vérifiable.")
+        source = "activation:amorcage-braavos"
     if not quoi:
         return None
     ident = hashlib.sha1((pid + "\0" + quoi).encode("utf-8")).hexdigest()[:12]
     return {"id": "activation:" + pid + ":" + ident, "quoi": quoi,
             "genre": "tache-proposee", "distance": 0,
             "chemin": [acteur], "creee": True,
-            "source": "intentions.json:intention"}
+            "source": source}
 
 
 def mettre_a_jour_energie_graphe(etat, horloge, scores, noeuds, adj,
-                                 polarites):
+                                 polarites, front=None):
     """Integre et persiste l'energie de chaque node du graphe.
 
     ``scores`` est la force instantanee produite par la topologie. L'energie,
@@ -229,7 +268,18 @@ def mettre_a_jour_energie_graphe(etat, horloge, scores, noeuds, adj,
     demi-vie de cinq minutes. Un score disparu fait decroitre la reserve ; aucun
     cycle ne la remet a zero.
     """
-    graphe = etat.setdefault("graphe", {"noeuds": {}, "liens": {}})
+    graphe_racine = etat.setdefault("graphe", {"noeuds": {}, "liens": {}})
+    # Deux fronts peuvent porter des horloges incompatibles. Partager leur
+    # reserve faisait notamment lire a Braavos le dernier instant de Westeros
+    # (600 s) alors que son propre present valait 0 s : dt tombait a zero et
+    # les nouvelles connexions ne recevaient jamais leur energie. Chaque front
+    # explicite possede donc son overlay ; l'absence de front conserve le
+    # stockage historique de Westeros.
+    if front:
+        graphe = graphe_racine.setdefault("fronts", {}).setdefault(
+            front, {"noeuds": {}, "liens": {}})
+    else:
+        graphe = graphe_racine
     reserves = graphe.setdefault("noeuds", {})
     present = float(horloge["present_secondes"])
     precedent = graphe.get("mis_a_jour_a")
@@ -250,7 +300,13 @@ def mettre_a_jour_energie_graphe(etat, horloge, scores, noeuds, adj,
         else:
             pid = nid.removeprefix("pers:") if nid.startswith("pers:") else None
             legacy = acteurs_legacy.get(pid, {}).get("energie") if pid else None
-            energie = float(legacy) if isinstance(legacy, (int, float)) else cible
+            # Un overlay neuf part de sa propre physique. Reprendre ici la
+            # jauge legacy d'un autre front donnait 0 a un ancien actif de
+            # Westeros et la cible courante aux nouveaux venus : l'historique
+            # inversait alors le classement de Braavos.
+            energie = (cible if front else
+                       float(legacy) if isinstance(legacy, (int, float))
+                       else cible)
         energie = max(0.0, min(ENERGIE_MAX, energie))
         reserves[nid] = energie
         resultat[nid] = energie
@@ -269,9 +325,42 @@ def mettre_a_jour_energie_graphe(etat, horloge, scores, noeuds, adj,
     return resultat
 
 
+def amorcer_sources_energie(etat, energies_graphe, source_ids, front,
+                            present):
+    """Donne une seule impulsion à chaque nouvelle source d'un front.
+
+    Le registre persistant empêche une boucle répétée de recréer de l'énergie.
+    Une personne déjà amorcée ne reçoit pas une seconde impulsion lorsqu'elle
+    prend un cahier supplémentaire : c'est le porteur qui est source, pas le
+    nombre d'affaires accumulées sur son nom.
+    """
+    registre = etat.setdefault("amorces_sources", {}).setdefault(front, {})
+    graphe = etat.setdefault("graphe", {})
+    if front:
+        overlay = graphe.setdefault("fronts", {}).setdefault(
+            front, {"noeuds": {}, "liens": {}})
+        reserves = overlay.setdefault("noeuds", {})
+    else:
+        reserves = graphe.setdefault("noeuds", {})
+    nouvelles = []
+    for pid in sorted(set(source_ids or [])):
+        if pid in registre:
+            continue
+        nid = "pers:" + pid
+        valeur = max(float(energies_graphe.get(nid, 0.0)), ENERGIE_MIN)
+        reserves[nid] = valeur
+        energies_graphe[nid] = valeur
+        registre[pid] = {"amorce_a": round(float(present), 3)}
+        nouvelles.append(pid)
+        journaliser("energie.source.amorcee", front=front, acteur=pid,
+                    valeur=round(valeur, 3))
+    return nouvelles
+
+
 def mettre_a_jour_energies(etat, horloge, scores, energies_graphe,
                            disponibilites, noeuds, occupes,
-                           maintenant_mur=None):
+                           maintenant_mur=None, lieu_force=None,
+                           sources_energie=None):
     acteurs = etat.setdefault("acteurs", {})
     fatigue_acteurs = etat.setdefault("fatigue_acteurs", {})
     present = horloge["present_secondes"]
@@ -290,7 +379,14 @@ def mettre_a_jour_energies(etat, horloge, scores, energies_graphe,
         pid = nid.removeprefix("pers:")
         if pid in occupes:
             continue
-        if n.get("etat") != "actif":
+        est_source = bool(sources_energie and pid in sources_energie)
+        source_du_lieu = bool(
+            est_source and lieu_force and n.get("lieu_id") == lieu_force)
+        brute = float(energies_graphe.get(nid, 0.0))
+        energise_du_lieu = bool(
+            lieu_force and n.get("lieu_id") == lieu_force and brute > 0.0)
+        if n.get("etat") != "actif" and not (
+                source_du_lieu or energise_du_lieu):
             ecartes["dormant"] += 1
             continue
         if n.get("condition") in ("prisonnier", "otage"):
@@ -300,11 +396,18 @@ def mettre_a_jour_energies(etat, horloge, scores, energies_graphe,
         a = acteurs.setdefault(pid, {"energie": 0.0, "activations": 0})
         # La reserve topologique reste intacte. La disponibilite effective
         # baisse seulement selon le calcul recent et le retard fictionnel.
-        brute = float(energies_graphe.get(nid, 0.0))
         instant_fiction = instant_fictionnel_secondes(pid, horloge)
         mesure = mesurer_fatigue(
             fatigue_acteurs.setdefault(pid, {}), instant_fiction,
             maintenant_mur)
+        # Le lieu ne crée aucune énergie. Il autorise seulement une source
+        # déclarée (siège joueur ou porteur d'affaire) à sortir de l'état
+        # dormant pour accomplir son premier réveil.
+        if source_du_lieu:
+            a["source_energie"] = lieu_force
+        else:
+            a.pop("source_energie", None)
+        a.pop("amorcage_lieu", None)
         a["energie_brute"] = brute
         a["energie"] = brute * mesure["facteur_total"]
         a["charge_compute_minutes"] = mesure["charge_compute_minutes"]

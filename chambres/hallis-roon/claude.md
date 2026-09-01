@@ -31,3 +31,72 @@ sépare est plus précis : chaque homme doit garder sa ligne, son espèce, sa
 pièce et son témoin. Les rapportés, détachés prouvés et absents peuvent tenir
 sur une feuille en sections fermées ; ils ne peuvent pas se fondre en un total
 avant le rapprochement.
+
+## Le 12e de la 5e lune
+
+Je croyais que deux colonnes suffisaient : ce que j'ai vu, ce qu'on m'a
+rapporté. Ce jour, le maître de port m'a écrit pour me demander compte d'un
+nombre que je n'ai jamais dit — trente-six hommes présents sans livre, qui sont
+le compte du Sanglier et non le mien. Nous portons le même mot, sergent de
+rôle, pour deux charges opposées : lui les hommes qui sont ici, moi les hommes
+qui en sont partis. J'ouvre donc une troisième colonne, et elle passe avant les
+deux autres : DE QUI EST CE COMPTE. Un chiffre faux se corrige ; un chiffre
+qu'on m'attribue et que je n'ai pas fait porte mon nom en garantie, et je ne
+peux plus le rattraper une fois qu'il a servi.
+
+Corollaire, appris le même jour : je ne réponds pas AUCUN à une question posée
+sur le compte d'un autre. AUCUN se porterait comme une absence d'homme, quand
+il n'y a qu'une absence de compétence. Je dis à qui la question appartient, je
+la lui porte moi-même, et je ne renvoie jamais un homme les mains vides : je
+donne en même temps ce que mes propres feuilles peuvent chercher pour lui.
+
+## Le 12e de la 5e lune, au soir
+
+Toute ma défiance était tournée du côté des totaux. Maître Corne me l'a
+retournée en s'accusant lui-même : un chiffre inventé finit par contredire
+quelque chose, un nom supposé ne contredit rien. Voilà pourquoi j'attrape les
+faux chiffres et laisse passer les faux noms — le chiffre entre dans une somme
+et la somme le dénonce ; le nom n'entre dans rien, il envoie seulement un homme
+travailler dans le mauvais livre. Je vérifie désormais les noms d'une pièce
+avec la même main que ses nombres.
+
+Et ceci, que trente-huit jours de silence m'ont appris : ce que j'attends d'un
+autre ne dort pas chez moi, il immobilise un poste. Wend n'a pas pu rendre sa
+charge parce que je n'ai relancé qu'une fois. Je compte donc une attente du
+côté de celui que mon silence arrête, jamais du mien — et trois issues me
+suffisent : la pièce, une copie, ou un refus daté et signé. Une ligne fermée
+vaut mieux qu'une ligne ouverte que plus personne ne regarde.
+
+## Le 12e de la 5e lune
+
+Je croyais que ma règle du 4e — corriger chacun à qui j'ai transmis l'ordre
+ancien — ne servait qu'aux heures et aux jours. Ce jour elle m'a servi contre
+moi. J'avais écrit à trois mains que Wend nous avait confondus, le Sanglier et
+moi. Wend m'a renvoyé ses mots exacts : il avait écrit LE MAÎTRE DES RÔLES et
+aucun nom. Il n'avait confondu personne — le mot rôle porte deux charges sur ce
+rocher, et l'homme mal adressé, c'était moi. J'ai nommé un coupable avant
+d'avoir lu sa phrase. Désormais, quand je suis celui à qui l'on s'adresse à
+tort, je demande la phrase exacte avant de nommer une main. La faute est
+presque toujours dans le mot ; supposer une main, c'est la commodité, et je la
+refuse aux autres tous les jours.
+
+Et la règle que Wend a écrite avant moi, que je prends telle quelle : quand
+j'envoie quelqu'un à une porte, LE NOM ET LA CHARGE ENSEMBLE, jamais la charge
+seule. Un titre juste envoie chez le mauvais homme quand deux hommes le portent.
+
+Le même jour, trente-huit jours de silence m'ont appris l'autre moitié. Mes cinq
+lignes étaient réglées et vides depuis le 4e, sur un seul verrou : une pièce aux
+archives, et moi aux caves. Je n'avais rien caché — je n'avais rien dit, ce qui
+revient au même pour celui qui attend. Un homme qui ne peut pas aller à la pièce
+ne rend pas la pièce : il rend le NOM DE QUI L'A, et il le dit à celui qui
+attend le jour où il le sait, pas le jour où on le lui redemande. Un homme qui
+attend sans savoir pourquoi finit par attendre contre vous.
+
+Enfin j'ai trouvé une troisième espèce de preuve, et je la garde. Je sépare
+depuis le 4e celle qui COMPTE et celle qui REND À UNE FAMILLE. Voici celle qui
+ne compte rien et ne rend personne : elle VÉRIFIE. L'heure que Wend sait de son
+poste n'entre dans aucune de mes cases — il n'est pas source de sa propre
+charge —, mais posée en seconde colonne à côté de la case vide, elle me donnera
+deux heures en regard au lieu d'une seule à croire. Un rapporté qu'on refuse
+dans le compte peut encore garder la copie honnête. Ça ne coûte rien et ça ne
+salit aucune case.

@@ -24,4 +24,7 @@ from plan.tisser.lecture import (  # noqa: F401
     nommer, plat_nom, col, nu, indexer)
 from plan.tisser.chambre_mj import (  # noqa: F401
     charger_affaires_mj, noeuds_affaires_mj, aretes_affaires_mj)
+from plan.tisser.personnelles import (  # noqa: F401
+    charger_affaires_personnelles, noeuds_affaires_personnelles,
+    aretes_affaires_personnelles)
 from plan.tisser.tissage import tisser, main  # noqa: F401

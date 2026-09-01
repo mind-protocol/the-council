@@ -47,6 +47,7 @@ from etat.expose import tables  # LA PORTE de etat/ — meme pour une lecture
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(
     os.path.abspath(__file__))))
 CHAMBRES = os.path.join(RACINE, "chambres")
+_CHAMBRES_SERENISSIMA = None
 
 DOSSIERS = ("fil", "books", "brouillons", "relations")
 
@@ -95,9 +96,55 @@ GABARIT_EN_SOUFFRANCE = {
 }
 
 
+def _chambres_serenissima():
+    """CitizenId normalise -> dossier source marque ``serenissima``.
+
+    Les archives ont conserve certains noms de dossiers avec des underscores
+    ou des majuscules, tandis que l'etat emploie des identifiants kebab-case.
+    Le marqueur vide borne strictement cette compatibilite aux seuls imports.
+    """
+    global _CHAMBRES_SERENISSIMA
+    if _CHAMBRES_SERENISSIMA is not None:
+        return _CHAMBRES_SERENISSIMA
+    resultat = {}
+    if not os.path.isdir(CHAMBRES):
+        _CHAMBRES_SERENISSIMA = resultat
+        return resultat
+    for nom in sorted(os.listdir(CHAMBRES)):
+        dossier = os.path.join(CHAMBRES, nom)
+        marqueur = os.path.join(dossier, "serenissima")
+        if not os.path.isdir(dossier) or not os.path.isfile(marqueur):
+            continue
+        if os.path.getsize(marqueur) != 0:
+            raise ValueError("marqueur serenissima non vide : %s" % marqueur)
+        fiche = os.path.join(dossier, "CLAUDE.md")
+        if not os.path.isfile(fiche):
+            raise ValueError("CLAUDE.md absent : %s" % dossier)
+        with io.open(fiche, encoding="utf-8-sig") as flux:
+            texte = flux.read()
+        trouve = re.search(r"(?m)^CitizenId:\s*(.+?)\s*$", texte)
+        if not trouve:
+            raise ValueError("CitizenId absent : %s" % fiche)
+        brut = trouve.group(1).strip()
+        try:
+            identifiant = str(json.loads(brut))
+        except (TypeError, ValueError):
+            identifiant = brut.strip('"\'')
+        identifiant = re.sub(r"[^a-z0-9]+", "-", identifiant.lower()).strip("-")
+        if identifiant in resultat and resultat[identifiant] != dossier:
+            raise ValueError("deux chambres Serenissima pour %s" % identifiant)
+        resultat[identifiant] = dossier
+    _CHAMBRES_SERENISSIMA = resultat
+    return resultat
+
+
 def chemin(qui):
-    """Le domicile de cet habitant : chambres/<qui>/, a la racine du depot."""
-    return os.path.join(CHAMBRES, qui)
+    """Le domicile, avec resolution des dossiers importes de Serenissima."""
+    direct = os.path.join(CHAMBRES, str(qui))
+    if os.path.isdir(direct):
+        return direct
+    normalise = re.sub(r"[^a-z0-9]+", "-", str(qui).lower()).strip("-")
+    return _chambres_serenissima().get(normalise, direct)
 
 
 def segment_contexte(contexte_id):
@@ -236,23 +283,6 @@ def ouvrir(qui):
                      newline="\n") as f:
             f.write(json.dumps(gabarit, ensure_ascii=False, indent=1)
                     + "\n")
-    # SON AFFAIRE A LUI, vide. Meme regle que le claude.md : semee une fois,
-    # jamais retouchee — si le fichier existe, c'est sa main.
-    from agents import chambre_affaire
-    fiche = _fiche(qui)
-    volume = os.path.join(dossier, "books", "affaire-%s.json" % qui)
-    if not os.path.exists(volume):
-        with io.open(volume, "w", encoding="utf-8", newline="\n") as f:
-            f.write(json.dumps(
-                chambre_affaire.gabarit(
-                    qui, fiche.get("nom") or qui,
-                    # C'EST `titre` QUE PORTENT LES FICHES : 119 sur 119,
-                    # et ni `office` ni `charge` n'existent. Sans ca, les
-                    # 144 volumes seraient sous-titres « ce dont je réponds »
-                    # — un gabarit qui ne nomme personne.
-                    fiche.get("titre") or fiche.get("office"),
-                    chambre=os.path.relpath(dossier, RACINE)),
-                ensure_ascii=False, indent=1) + "\n")
     return dossier
 
 

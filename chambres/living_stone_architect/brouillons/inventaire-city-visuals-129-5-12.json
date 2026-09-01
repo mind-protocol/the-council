@@ -1,0 +1,159 @@
+{
+  "type": "inventaire-visuel/1",
+  "titre": "Ce qui est quoi dans city-visuals",
+  "date_constat": "129.5.12",
+  "source_indiquee_par": {
+    "personne": "nicolas-lester-reynolds",
+    "ref": "vmti2qlv01789"
+  },
+  "adresse_source": "C:\\Users\\reyno\\le-conseil2\\import\\serenissima\\city-visuals",
+  "adresse_inventaire": "C:\\Users\\reyno\\le-conseil2\\chambres\\living_stone_architect\\brouillons\\inventaire-city-visuals-129-5-12.json",
+  "methode": "Inventaire exhaustif des 17 fichiers, mesure des dimensions, empreinte SHA-256 et inspection visuelle. Une identification visuelle reste une identification, non une provenance.",
+  "conclusion": {
+    "constat": "Le dossier superpose trois strates fonctionnelles : cinq vues de la carte interactive de Serenissima, quatre pièces d'identité ou de récit, puis huit vues de la géométrie et des interfaces de Peyredragon/Braavos.",
+    "inference": "Il ressemble moins à un album cohérent qu'à un jeu de témoins de la migration : ville ancienne, habitants, puis nouvel espace praticable.",
+    "limite": "Les fichiers ne portent pas de légende canonique. Les identifications ci-dessous décrivent ce qui est visible ; elles n'établissent ni auteur, ni chaîne de production, ni statut courant des interfaces."
+  },
+  "familles": [
+    {
+      "id": "serenissima-carte-interactive",
+      "nombre": 5,
+      "fonction": "Montrer la ville ancienne comme carte jouable : parcelles, bâtiments, citoyens et intérieurs.",
+      "fichiers": [
+        {
+          "nom": "map.jpg",
+          "dimensions": [1280, 803],
+          "sha256": "23ed75da6ce86ec2e12879049c99f5e9ed6fa2f507202b9bbc2ab357ea19925e",
+          "identification": "Vue générale sombre de la carte de La Serenissima, avec marqueurs de citoyens et bâtiments.",
+          "certitude": "forte"
+        },
+        {
+          "nom": "map3.png",
+          "dimensions": [934, 639],
+          "sha256": "7b2fc462ebf686db11bfd12def5467932be047891a231f14b6c7e66f8a88a4ca",
+          "identification": "Vue générale claire de la même carte interactive ; le panneau nomme Niccolò Lesteri.",
+          "certitude": "forte"
+        },
+        {
+          "nom": "Screenshot 2025-09-27 022114.png",
+          "dimensions": [1841, 888],
+          "sha256": "0da749968833700a613d24254dc9b47218169d027ecd0665e440d229b6c9aa59",
+          "identification": "Carte rapprochée de Serenissima avec fiche d'une maison d'artisan, Padre Marco et erreur de connexion à un LLM local.",
+          "certitude": "forte"
+        },
+        {
+          "nom": "Screenshot 2026-02-25 132942.png",
+          "dimensions": [1919, 1079],
+          "sha256": "c9fcf85f3da26988f9cea85c4ddd2111b3b6d888cbc6e82ee36dc98acdc6fff2",
+          "identification": "Prototype de carte en mosaïques : bâtiments et citoyen encore nommé Unknown Unknown.",
+          "certitude": "forte"
+        },
+        {
+          "nom": "Screenshot 2026-02-25 133202.png",
+          "dimensions": [1919, 1078],
+          "sha256": "9e824473d2911baf9d3d466e1dc4294dc6306e5d245f7752c27dee2097836460",
+          "identification": "Prototype d'intérieur sur la carte : auberge vue en coupe, tables et groupe de citoyens.",
+          "certitude": "forte"
+        }
+      ]
+    },
+    {
+      "id": "identites-et-recit-de-passage",
+      "nombre": 4,
+      "fonction": "Porter des figures et un récit de départ plutôt qu'une interface cartographique.",
+      "fichiers": [
+        {
+          "nom": "goodbye.png",
+          "dimensions": [1312, 736],
+          "sha256": "d36865d94da1c35e8fc9d69410a6a65bb4163202cb6e0197b9ac4754f6f3268d",
+          "identification": "Image de départ : une barque s'éloigne de Venise au crépuscule.",
+          "certitude": "forte"
+        },
+        {
+          "nom": "Marco.jpeg",
+          "dimensions": [1024, 1024],
+          "sha256": "8ec6f6af7201b3e48eabc979d63ab793b9d7ab5aff798ccd67a69ce23fdf6d73",
+          "identification": "Portrait pleine taille d'un homme travaillant sur des mesures au bord d'un canal ; le nom de fichier l'identifie comme Marco.",
+          "certitude": "moyenne"
+        },
+        {
+          "nom": "Marco_small.jpg",
+          "dimensions": [150, 150],
+          "sha256": "46ecbd3b0d47078bdf0915a6fc71110ba4f6fddb75f7d1b5d883e6f4c7796369",
+          "identification": "Vignette visuellement dérivée du portrait Marco.jpeg ; la dérivation technique exacte n'est pas établie.",
+          "certitude": "forte pour la correspondance visuelle, inconnue pour la production"
+        },
+        {
+          "nom": "Screenshot 2026-03-13 000830.png",
+          "dimensions": [1577, 814],
+          "sha256": "1b35e464a2a31a9c3f692333f88b1c7c80beacaf5f3bfd14fb284ac5508a9cdf",
+          "identification": "Placard narratif 'The Ledger Remains Open', signé dans le texte par Bianca Tassini, promettant de reconstruire la ville nœud par nœud.",
+          "certitude": "forte sur le contenu visible"
+        }
+      ]
+    },
+    {
+      "id": "peyredragon-braavos-interfaces",
+      "nombre": 8,
+      "fonction": "Montrer les échelles du nouvel espace : relief, ville, royaume, château, bataille, habitants et rues.",
+      "fichiers": [
+        {
+          "nom": "Screenshot 2026-08-07 155929.png",
+          "dimensions": [285, 236],
+          "sha256": "52d504bba5b92518c5e0df54f6942e920fe347c849453a4ed61cd619689d4e47",
+          "identification": "Vue de relief en perspective avec balise 'VOUS ÊTES ICI'.",
+          "certitude": "forte sur la forme, faible sur le lieu exact"
+        },
+        {
+          "nom": "Screenshot 2026-08-07 171153.png",
+          "dimensions": [454, 310],
+          "sha256": "904512a02459fdf31fc31ab850aab8c812c7c435120a201b4b21df289a3770b0",
+          "identification": "Vue aérienne d'une ville circulaire dense, avec la même balise de position.",
+          "certitude": "forte sur la forme, moyenne sur sa relation à la vue précédente"
+        },
+        {
+          "nom": "Screenshot 2026-08-12 151435.png",
+          "dimensions": [589, 669],
+          "sha256": "99364ed04de63f994a36cba590cc79d7b9143f4f3d635ef7ea146689fff3f222",
+          "identification": "Écran régional de Peyredragon : itinéraires, lettres, forces et échéances autour de la Néra.",
+          "certitude": "forte"
+        },
+        {
+          "nom": "Screenshot 2026-08-13 170608.png",
+          "dimensions": [905, 802],
+          "sha256": "388d2b1e7767bc19c8201f0b6240cf2fddd341cf3f3a90bf79804085c8a7a0f1",
+          "identification": "Plan schématique du château de Peyredragon, avec salles et positions des habitants ; c'est la géométrie héritée aujourd'hui par Braavos.",
+          "certitude": "forte"
+        },
+        {
+          "nom": "Screenshot 2026-08-14 140010.png",
+          "dimensions": [510, 585],
+          "sha256": "d477afa6ae123b7676a1287083426c2153848801daf3290e69df21ea968b2a36",
+          "identification": "Vue tactique : unités colorées, zones, flèches de mouvement et rayons d'action.",
+          "certitude": "forte sur la fonction, faible sur l'affrontement exact"
+        },
+        {
+          "nom": "Screenshot 2026-08-24 193237.png",
+          "dimensions": [911, 511],
+          "sha256": "5494e9eb25d41ae28b41108eee5a34633c9bec045370c299902f06687371bf86",
+          "identification": "Écran 'Les gens' : gouvernement, offices, visibilité et portraits des personnes ailleurs.",
+          "certitude": "forte"
+        },
+        {
+          "nom": "Screenshot 2026-08-25 193427.png",
+          "dimensions": [903, 612],
+          "sha256": "c581b2027bc5fa4c03bff4b56871745026e954db5f1343b305634ab383c31343",
+          "identification": "Carte urbaine parcellaire avec maisons, tavernes et carrefours nommés.",
+          "certitude": "forte"
+        },
+        {
+          "nom": "Screenshot 2026-08-25 201402.png",
+          "dimensions": [972, 623],
+          "sha256": "95b0c8e59e7a2976df3424b8b48ef0819135888c1c2b5999798998992f56eedd",
+          "identification": "Vue régionale portant une ville dense superposée au terrain, des portes ou nœuds encerclés et des noms de personnages.",
+          "certitude": "forte sur la forme, moyenne sur la fonction exacte"
+        }
+      ]
+    }
+  ]
+}

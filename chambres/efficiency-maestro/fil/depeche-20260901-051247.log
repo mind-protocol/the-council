@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime_worker.py", line 62, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Users\reyno\le-conseil2\scripts\agents\runtime_worker.py", line 43, in main
+    print(json.dumps(rep, ensure_ascii=False), flush=True)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\reyno\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2192' in position 141: character maps to <undefined>

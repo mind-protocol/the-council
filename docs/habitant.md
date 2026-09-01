@@ -160,23 +160,19 @@ python scripts/depecher.py --qui gerardys --contexte 23030 \
   --mode reponse --mission "Quel est le chiffre ?"
 ```
 
-- `reponse` : vérifier le strict nécessaire, concevoir une réponse, la rendre
-  comme dernière réponse du call ;
-- `discussion` : vérifier, concevoir, puis envoyer une fois par la commande de
-  canal fournie dans la demande ; le routeur des paroles choisit ce mode
-  automatiquement ;
-- `journee` : comportement autonome historique, conservé par défaut.
+- `reponse` : le résultat revient comme dernière réponse du call ;
+- `discussion` : le résultat passe par la commande de canal fournie dans la
+  demande ; le routeur des paroles choisit ce mode automatiquement ;
+- `journee` : mode conservé par défaut.
 
 Chaque chambre possède `messages-au-joueur.md`. En `journee`, l'habitant y
 prépare les messages que ses affaires appellent, avec destinataire, contexte,
 ref, faits vérifiés et mots proposés. Le cahier n'est pas un canal : rien de ce
 qui y est écrit n'est encore dit. En `reponse` et `discussion`, l'entrée
 pertinente est relue comme brouillon, ses faits sont revérifiés, puis le mode
-court applique sa propre règle d'envoi.
+applique sa règle de transport.
 
-Les deux modes courts sont des calls attendus : ils refusent `--cast`. Ils ne
-modifient ni mémoire ni manière et ne produisent ni rapport de journée ni mot
-de reprise.
+Les deux premiers modes sont des calls attendus : ils refusent `--cast`.
 
 Le contexte désigne le **numéro de la pièce** dans une affaire générale.
 `23030`, `#23030`, `n° 23030`, `Nº23030` et la forme Markdown `**23030**`

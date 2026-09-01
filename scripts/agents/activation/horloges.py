@@ -56,7 +56,8 @@ def date_civile_acteur(pid, horloge, horloges=None):
     }
 
 
-def horloge_directe(ancien, maintenant=None):
+def horloge_directe(ancien, maintenant=None, source_force=None,
+                    front_force=None):
     """Rend le present explicite de la vague depuis son origine PJ.
 
     Le mur mesure le compute, jamais la fiction. Seuls les lots reussis
@@ -102,18 +103,33 @@ def horloge_directe(ancien, maintenant=None):
     # On retombe donc sur le roster entier pour l'HORLOGE seulement : le temps
     # continue de partir du siege principal, et les sieges vacants restent
     # activables puisqu'ils ne sont pas dans le jeu rendu.
-    pour_horloge = occupes or [s for s in sieges if s.get("personnage_id")]
-    principal = next((s for s in pour_horloge
-                      if s.get("role") == "principal"),
-                     pour_horloge[0] if pour_horloge else None)
+    roster_horloge = [s for s in sieges if s.get("personnage_id")]
+    pour_horloge = occupes or roster_horloge
+    # Un front local explicite reste son ancre même lorsque son siège devient
+    # vacant : l'occupation décide qui peut être activé, pas quelle ville la
+    # vague est en train de faire vivre.
+    principal = next((s for s in roster_horloge
+                      if s.get("personnage_id") == source_force), None)
+    if principal is None:
+        principal = next((s for s in pour_horloge
+                          if s.get("role") == "principal"),
+                         pour_horloge[0] if pour_horloge else None)
     source_id = principal and principal.get("personnage_id")
     source_min = minute_absolue(horloges.get(source_id)) if source_id else None
+    candidats_front = list(pour_horloge)
+    if principal and principal not in candidats_front:
+        candidats_front.append(principal)
     fronts = [(minute_absolue(horloges.get(s.get("personnage_id"))), s)
-              for s in pour_horloge]
+              for s in candidats_front]
     fronts = [(m, s) for m, s in fronts if m is not None]
     if source_min is None or not fronts:
         raise RuntimeError("horloge du siege principal ou front occupe absent")
-    front_min, front = max(fronts, key=lambda x: x[0])
+    front = next((s for _m, s in fronts
+                  if s.get("personnage_id") == front_force), None)
+    if front is None:
+        front_min, front = max(fronts, key=lambda x: x[0])
+    else:
+        front_min = minute_absolue(horloges.get(front.get("personnage_id")))
     base = max(0.0, float(front_min - source_min) * 60.0)
     source_cle = "%s:%s" % (source_id, source_min)
     front_cle = "%s:%s" % (front.get("personnage_id"), front_min)

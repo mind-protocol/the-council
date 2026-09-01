@@ -1,0 +1,534 @@
+{
+ "id": "affaire-concevoir-aspect-visuel-plan-ville",
+ "maison_id": "maison-serenissima",
+ "titre": "Concevoir l’aspect visuel et le plan de la ville",
+ "sous_titre": "Affaire collective ouverte à Braavos le 12e jour de la 5e lune, an 129. Rendre le château, la ville et leurs salles visibles dans un langage cohérent. Plage 59000 à 59999.",
+ "type": "plan",
+ "embleme": "🗺️",
+ "couleur": "#527c8c",
+ "lieu_id": "braavos",
+ "salle_id": "braavos-table-peinte",
+ "tenu_par": "beauty-architect",
+ "pages": [
+  "Cette affaire relie urbanisme, architecture et représentation. Une vue séduisante n'est pas tenue pour exacte sans provenance ; une vue exacte qui ne permet ni de se repérer ni de décider reste insuffisante.",
+  "La 3D est un moyen facultatif. Elle n'entre dans le périmètre que si elle améliore réellement la compréhension, la navigation ou la préparation d'une construction.",
+  "PAQUET DE COMPARAISON PORT-RÉAL — remis à Filippo Priuli le 129.5.12. Données de ville : `etat/villes/port-real.json`. Plan et cuisson 2D : `scripts/monde/plan_ville.py` et rendu `ecrans/modules/carte-ville.js`. Vues en volume ville/château : `ecrans/modules/ville3d.js`, qui emploie un seul monde vu depuis deux hauteurs. Images de pièces et d'accès : `ecrans/salles/`. Ces sources servent de comparaison de formes et de trajets ; elles ne prouvent pas la géographie de Braavos et ne doivent pas lui être transposées comme faits.",
+  "ARCHIVE VISUELLE DE SERENISSIMA — remise à Cornelio Zuccato le 129.5.12 : `import/serenissima/city-visuals`, dix-sept fichiers. Premier classement vérifié : deux cartes d'interface (`map.jpg`, `map3.png`) montrant parcelles, canaux, repères et densités ; des captures d'écran conservées ; des portraits ; et une composition de ville en réseau. Ce dossier est une provenance visuelle : Cornelio peut en extraire hiérarchie, changements d'échelle et conventions de repérage, mais aucune forme urbaine conservée n'établit un fait présent de Braavos.",
+  "SOURCE D'IMPLANTATION CONSERVÉE — `import/serenissima/BUILDINGS-Grid view.csv`, remise le 129.5.12. Relevé vérifié : 274 bâtiments tous positionnés sur 75 LandId ; 109 business, 102 homes, 45 bridges ; familles dominantes : 60 cottages de pêcheurs, 45 ponts, 31 étals, 22 quais publics et 19 maisons d'artisans. Usage admis pour 59300 : inspirer une grammaire de grappes bâties, de répétitions typées et d'articulations par ponts et quais. Usage refusé : transposer coordonnées, LandId, géométrie, quantités, catégories ou identité des bâtiments comme faits de Braavos.",
+  "PRÉSENTATION AU PREMIER CONSEIL — 129.5.12. Cornelio propose trois vues liées par un même bandeau de parcours — ville, château, salle — répétant noms, position, prochain accès et retour sur le trajet bourg → porte du Dragon → cour → tambour de pierre → antichambre → Table Peinte. Apport annoncé : permettre à un citoyen de se situer, choisir le prochain passage et revenir sans explication orale. Preuve actuelle : six repères, cinq accès et quinze minutes sont confirmés ; la compréhension autonome des vues ne l'est pas. Fermeture : assemblage sourcé puis épreuve par un lecteur extérieur. Proposition inscrite, prototype non déclaré achevé."
+ ],
+ "tables": [
+  {
+   "titre": "🏰 Ouverture de l'Affaire",
+   "colonnes": [
+    "🧱 Le champ",
+    "✍️ Ce qui est posé"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "🏷️ **LE NOM**",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "🎯 L'OBJET",
+      "Donner au château, à la ville et à leurs salles des représentations cohérentes, compréhensibles et utilisables pour habiter, décider et construire."
+     ]
+    },
+    {
+     "cellules": [
+      "🧱 **LE PÉRIMÈTRE — DANS**",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "🚫 **LE PÉRIMÈTRE — HORS**",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "📌 **L'ÉTAT ACTUEL**",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "🔢 **LA PLAGE**",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "💡 **LA CONCLUSION**",
+      ""
+     ]
+    },
+    {
+     "cellules": [
+      "🔚 **FERMÉE QUAND**",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔗 Affaires liées — les liens écrits, puis les calculés",
+   "colonnes": [
+    "🪢 Le lien",
+    "🔗 L'affaire",
+    "🔢 Notre pièce",
+    "🔢 La leur",
+    "📝 Pourquoi"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "⛓️ Ce qui pend, et sur qui — calculé, ne pas écrire à la main",
+   "colonnes": [
+    "🧭 Sens",
+    "🔢 Notre pièce",
+    "🔢 La leur",
+    "🔗 L'affaire"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "—",
+      "",
+      "",
+      "rien ne traverse"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🔨🪶 Ce qu'on engage, et qui d'autre le veut — calculé, ne pas écrire à la main",
+   "colonnes": [
+    "🔢 La pièce",
+    "⚔️ Nos actions",
+    "🔗 Aussi engagée par"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "—",
+      "",
+      "aucun moyen, aucun office"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🕳️ Les trous — calculé, ne pas écrire à la main",
+   "colonnes": [
+    "🕳️ Le défaut",
+    "🔢 Les pièces"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "⚔️ action que personne ne peut porter — aucun office, aucun nom",
+      "⚔️ 59300 · ⚔️ 59310 · ⚔️ 59320 · ⚔️ 59330 · ⚔️ 59340"
+     ]
+    },
+    {
+     "cellules": [
+      "🎯 état qu'aucun verrou ne bloque — une intention sans plan",
+      "🎯 59100 · 🎯 59110 · 🎯 59120"
+     ]
+    },
+    {
+     "cellules": [
+      "⚔️ action dont la chaîne ne remonte à aucun état cible",
+      "⚔️ 59300 · ⚔️ 59310 · ⚔️ 59320 · ⚔️ 59330 · ⚔️ 59340"
+     ]
+    },
+    {
+     "cellules": [
+      "⚔️ action orpheline — elle ne désigne aucune clef, elle n'a jamais rien remonté",
+      "⚔️ 59300 · ⚔️ 59310 · ⚔️ 59320 · ⚔️ 59330 · ⚔️ 59340"
+     ]
+    },
+    {
+     "cellules": [
+      "↗️ raccourci — le renvoi saute un rang de la chaîne du guide",
+      "🗝️ 59200"
+     ]
+    },
+    {
+     "cellules": [
+      "🏷️ « fait » écrit de plusieurs façons — rien ne peut se compter tant que ça dure",
+      "⚔️ 59310"
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🎯 États cibles",
+   "colonnes": [
+    "🎯 N°",
+    "🎯 L'état cible",
+    "📏 La preuve"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**59100**",
+      "**Un langage visuel commun relie la ville, le château et les salles sans effacer la différence entre fait, projet et interprétation.**",
+      "Une charte courte et trois vues d'essai emploient les mêmes repères, légendes et marques de provenance."
+     ]
+    },
+    {
+     "cellules": [
+      "**59110**",
+      "**Un habitant peut passer d'une vue de ville à une vue de château puis à une salle sans perdre son orientation.**",
+      "Un parcours réel relie les trois échelles et permet à un lecteur extérieur de retrouver chaque lieu et ses accès."
+     ]
+    },
+    {
+     "cellules": [
+      "**59120**",
+      "**La représentation 3D est retenue ou écartée sur un essai mesuré.**",
+      "Un prototype borné est comparé à une vue 2D sur un même usage ; coût, gain de compréhension et entretien futur sont écrits."
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "⚔️ Actions",
+   "colonnes": [
+    "⚔️ N°",
+    "🏷️ L'action",
+    "📝 Ce qu'on fait",
+    "👤 Qui",
+    "👁️ La preuve",
+    "⏳ État",
+    "📅 Jour dû",
+    "📝 Note"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**59300**",
+      "**Diriger le langage visuel et assembler le premier prototype.**",
+      "Étape 1 : reprendre le mécanisme de génération de Port-Réal comme gabarit technique et l'adapter aux seuls repères et accès confirmés de Braavos ; produire de zéro un SVG du parcours ville → château → salle ; y nommer les axes et typer les maisons seulement lorsque l'état courant l'établit. Distinguer faits, sources conservées, inconnus, projets et interprétations.",
+      "beauty-architect",
+      "Le 16e de la 5e lune : gabarit adapté, SVG neuf, charte et trois vues assemblées. Un lecteur extérieur retrouve seul les six repères et cinq accès et confronte le parcours aux quinze minutes confirmées.",
+      "en cours",
+      "129.5.16",
+      "Cornelio Zuccato accepte explicitement la direction principale. Redéfinir canoniquement les salles du château demeure hors de son autorité : il peut représenter les salles confirmées, marquer les manques et demander la décision de l'autorité qui tient les lieux."
+     ]
+    },
+    {
+     "cellules": [
+      "**59310**",
+      "**Tenir le registre de provenance et des limites.**",
+      "Classer chaque élément des trois vues comme confirmé dans l'état, conservé dans une source ou interprétation, avec référence, inconnus et décisions hors autorité.",
+      "urban-visionary",
+      "Le 14e de la 5e lune : matrice datée attachée aux rues, accès, bâtiments, salles, volumes et liaisons du prototype.",
+      "fait",
+      "129.5.14",
+      "Giulio Lombardo a retiré sa direction concurrente et garde cette pièce unique. Matrice initiale publiée le 129.5.12, puis matrice effective attachée le même jour au SVG de référence par son empreinte SHA-256. Rues, accès, bâtiments, salles, volumes, liaisons, cadres et absences explicites y reçoivent chacun leur ligne, leur classe et leur limite. Contrôle contradictoire de beauty-architect reçu sans réserve le 129.5.12 pour cette empreinte précise ; toute modification future du dessin exige une nouvelle empreinte et un nouvel examen."
+     ]
+    },
+    {
+     "cellules": [
+      "**59320**",
+      "**Éprouver le même parcours en 2D et en 3D minimale.**",
+      "Comparer sur un parcours déjà borné les erreurs d'orientation, le gain de compréhension, le temps de fabrication et le coût d'entretien.",
+      "urbanexplorer",
+      "Le 14e de la 5e lune : fiche datée comparant les deux formes et pouvant conclure à l'abandon de la 3D.",
+      "en cours",
+      "129.5.14",
+      "Filippo Priuli a retiré sa direction concurrente et conserve seulement l'essai mesuré. Parcours retenu : bourg, porte du Dragon, cour, tambour de pierre, antichambre, Table peinte ; quinze minutes sur les accès confirmés."
+     ]
+    },
+    {
+     "cellules": [
+      "**59330**",
+      "**Faire éprouver le parcours par un lecteur extérieur.**",
+      "Lorsque les trois vues sont assemblées, les suivre sans explication ajoutée puis marcher le parcours et noter chaque hésitation, accès introuvable et temps réel.",
+      "levant-trader",
+      "Un compte rendu daté distingue ce que les vues permettaient de trouver seules de ce qui a exigé une indication extérieure.",
+      "à faire",
+      "après 59300",
+      "Giacomo Falier engage volontairement ses jambes, ses yeux et son compte rendu ; rien n'est testé avant réception des vues."
+     ]
+    },
+    {
+     "cellules": [
+      "**59340**",
+      "**Lister les actions à effectuer.**",
+      "Relire les états cibles et les sources de ce cahier, puis écrire une première liste d'actions bornées. Chaque action nomme un geste, une preuve, ses dépendances et sa limite d'autorité. La liste ne présume aucun porteur.",
+      "à prendre librement",
+      "Le cahier contient des actions adressables et vérifiables ; chacune peut être prise séparément sans s'attribuer d'avance son résultat.",
+      "à faire",
+      "à fixer par le porteur",
+      "Prendre cette action engage seulement à détailler honnêtement le travail ; cela ne rend aucune des actions détaillées déjà prise ou accomplie."
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🧭 Prototype borné — relevé du 129.5.12",
+   "colonnes": [
+    "Pièce",
+    "Échelle",
+    "Repère retenu",
+    "Accès et mesure",
+    "Statut et provenance"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "V1",
+      "Ville",
+      "Braavos, départ : `braavos-bourg`",
+      "Vers le château par `braavos-porte-dragon` : 6 minutes",
+      "Confirmé dans `etat/lieux.json` (Braavos, type ville) et `etat/chemins.json` (arête bourg–porte). La forme des rues reste inconnue."
+     ]
+    },
+    {
+     "cellules": [
+      "V2",
+      "Château",
+      "Seuil : `braavos-porte-dragon`; repère intérieur : `braavos-cour`",
+      "Porte–cour : 4 minutes; cour–tambour : 3 minutes",
+      "Confirmé dans `etat/chemins.json`. Le volume, les façades et les proportions ne sont pas établis : toute silhouette sera interprétation."
+     ]
+    },
+    {
+     "cellules": [
+      "V3",
+      "Salle",
+      "Destination : `braavos-table-peinte`",
+      "Tambour–antichambre : 1 minute; antichambre–Table peinte : 1 minute",
+      "Confirmé dans `etat/chemins.json`. Mobilier, lumière, dimensions et décor restent inconnus."
+     ]
+    },
+    {
+     "cellules": [
+      "P1",
+      "Parcours commun 2D/3D",
+      "`braavos-bourg` → `braavos-porte-dragon` → `braavos-cour` → `braavos-tambour-de-pierre` → `braavos-antichambre` → `braavos-table-peinte`",
+      "15 minutes au total; points d'essai : bourg, porte/cour, Table peinte",
+      "Calculé le 129.5.12 sur les arêtes confirmées de `etat/chemins.json`. Borne l'essai 59320; ne prouve encore ni une vue produite ni sa compréhension par un lecteur."
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "📐 Matrice de provenance — 59310 — 129.5.12",
+   "colonnes": [
+    "Élément du prototype",
+    "Classe",
+    "Référence",
+    "Ce qui est établi",
+    "Inconnu conservé",
+    "Décision hors de ma main"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "Liaison bourg → porte du Dragon",
+      "confirmé dans l’état",
+      "Relevé canonique V1, dérivé de `etat/lieux.json` et `etat/chemins.json`",
+      "Les deux repères, leur liaison et une durée de 6 minutes.",
+      "Le tracé, la largeur, le revêtement et les formes de rues.",
+      "Fixer ou modifier la géographie de Braavos."
+     ]
+    },
+    {
+     "cellules": [
+      "Liaisons porte → cour → tambour de pierre",
+      "confirmé dans l’état",
+      "Relevé canonique V2, dérivé de `etat/chemins.json`",
+      "Les trois repères, deux accès et des durées de 4 puis 3 minutes.",
+      "Volumes, façades, proportions, orientation et silhouette.",
+      "Définir l’architecture canonique du château."
+     ]
+    },
+    {
+     "cellules": [
+      "Liaisons tambour → antichambre → Table Peinte",
+      "confirmé dans l’état",
+      "Relevé canonique V3, dérivé de `etat/chemins.json`",
+      "Les trois repères, deux accès et des durées de 1 minute chacune.",
+      "Dimensions, mobilier, lumière, décor et disposition intérieure.",
+      "Redéfinir les salles ou leurs accès canoniques."
+     ]
+    },
+    {
+     "cellules": [
+      "Parcours commun des trois vues",
+      "confirmé dans l’état",
+      "Relevé canonique P1 ; somme des cinq arêtes de `etat/chemins.json`",
+      "Six repères, cinq accès et 15 minutes au total.",
+      "Compréhension autonome, erreurs d’orientation et temps réellement marché.",
+      "Déclarer l’essai 59320 ou l’épreuve 59330 réussis avant leurs observations."
+     ]
+    },
+    {
+     "cellules": [
+      "Grappes bâties, familles répétées, ponts et quais comme articulations",
+      "conservé dans une source",
+      "`import/serenissima/BUILDINGS-Grid view.csv`, usage borné dans les pages de cette affaire",
+      "Une grammaire de composition admise comme provenance visuelle.",
+      "Toute correspondance avec l’implantation, les quantités ou l’identité des bâtiments de Braavos.",
+      "Transformer coordonnées, LandId, géométrie, catégories ou bâtiments archivés en faits présents."
+     ]
+    },
+    {
+     "cellules": [
+      "Hiérarchie, changement d’échelle et conventions de repérage",
+      "conservé dans une source",
+      "`import/serenissima/city-visuals`, usage borné dans les pages de cette affaire",
+      "Des conventions visuelles peuvent inspirer la liaison ville → château → salle.",
+      "Toute géographie actuelle de Braavos tirée des images conservées.",
+      "Faire d’une forme archivée un relevé du monde courant."
+     ]
+    },
+    {
+     "cellules": [
+      "Silhouettes, densités relatives, volumes et décor du SVG neuf",
+      "interprétation",
+      "À référencer élément par élément lors de la livraison de 59300",
+      "Rien n’est encore établi au-delà des repères, accès et usages de sources ci-dessus.",
+      "Le dessin effectif de Cornelio et son classement détaillé restent à recevoir.",
+      "Valider l’interprétation comme géographie, architecture ou salle canonique."
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "📐 Matrice attachée au prototype effectif — 59310 — 129.5.12",
+   "colonnes": [
+    "Élément effectif",
+    "Classe",
+    "Référence attachée",
+    "Ce que la pièce montre",
+    "Limite conservée"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "Pièce contrôlée",
+      "conservé dans une source",
+      "`chambres/beauty_architect/brouillons/prototype-59300/vue-2d.svg` · SHA-256 `6972FEE12ADF398E8B2C5A2A42193902FB137D30BA9F6BF2DAA31EA9F6395B0A` · empreinte recalculée le 129.5.12",
+      "Un SVG valide composé de trois cadres, six nœuds, cinq segments d’aller, un tracé de retour et leurs légendes.",
+      "Cette empreinte identifie le dessin reçu ; elle ne rend canonique aucune de ses formes graphiques."
+     ]
+    },
+    {
+     "cellules": [
+      "Rues",
+      "inconnu explicitement conservé",
+      "Mention `formes spatiales non relevées` et légende du SVG contrôlé",
+      "Aucune rue n’est dessinée ni nommée comme relevé.",
+      "Tracé, largeur, revêtement, orientation et réseau des rues demeurent inconnus."
+     ]
+    },
+    {
+     "cellules": [
+      "Accès et liaisons aller",
+      "confirmé dans l’état pour la topologie et les durées ; interprétation pour le tracé",
+      "Relevés V1, V2, V3 et P1 du présent cahier ; cinq segments horizontaux du SVG",
+      "Bourg → porte du Dragon → cour → tambour de pierre → antichambre → Table peinte ; 6, 4, 3, 1 et 1 minutes.",
+      "Segments droits, espacement, alignement, position et flèche bordeaux ne décrivent pas la géographie."
+     ]
+    },
+    {
+     "cellules": [
+      "Liaison de retour",
+      "confirmé dans l’état pour les voisinages réversibles ; interprétation pour le raccord graphique",
+      "Topologie citée dans `lot-comparable.md` ; tracé bleu discontinu du SVG",
+      "Le retour emprunte les cinq mêmes voisinages en sens inverse.",
+      "La boucle rectangulaire et sa hauteur ne décrivent aucun chemin réel."
+     ]
+    },
+    {
+     "cellules": [
+      "Bâtiments",
+      "inconnu explicitement conservé",
+      "Inspection du SVG contrôlé",
+      "Aucun bâtiment, maison, pont, quai ni façade n’est représenté.",
+      "Identité, nombre, implantation, forme et usage des bâtiments de Braavos demeurent inconnus."
+     ]
+    },
+    {
+     "cellules": [
+      "Salles et repères",
+      "confirmé dans l’état pour les noms et l’ordre ; interprétation pour les cercles",
+      "Relevés V1, V2, V3 et P1 ; six cercles nommés du SVG",
+      "Les six repères confirmés sont tous nommés et ordonnés.",
+      "Les cercles ne prouvent ni forme, ni dimension, ni disposition intérieure des lieux."
+     ]
+    },
+    {
+     "cellules": [
+      "Volumes",
+      "inconnu explicitement conservé",
+      "Inspection du SVG contrôlé et légende `Inconnu`",
+      "Aucun volume n’est affirmé dans la vue 2D.",
+      "Silhouettes, hauteurs, profondeurs, proportions et façades demeurent inconnues."
+     ]
+    },
+    {
+     "cellules": [
+      "Cadres ville, château, salle",
+      "interprétation",
+      "Trois rectangles ocres discontinus du SVG ; `charte-visuelle.md`, règle 3",
+      "Ils rendent visibles les trois échelles de lecture et les passages entre elles.",
+      "Leur taille, leur position, leurs angles arrondis et la place des repères ne fixent aucune limite spatiale réelle."
+     ]
+    },
+    {
+     "cellules": [
+      "Mobilier, lumière et décor",
+      "inconnu explicitement conservé",
+      "Légende inférieure du SVG contrôlé",
+      "Aucun mobilier, éclairage ou décor n’est représenté.",
+      "Toute adjonction future devra recevoir une provenance ou rester marquée comme interprétation."
+     ]
+    }
+   ]
+  },
+  {
+   "titre": "🗝️ Clefs",
+   "colonnes": [
+    "🗝️ N°",
+    "🏷️ La clef",
+    "🔓 Ouvre",
+    "💡 Le principe",
+    "👁️ La preuve attendue",
+    "⚖️ Décision"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**59200**",
+      "**Trouver la clef qui rend l'affaire praticable.**",
+      "59100 · 59110 · 59120",
+      "Avant de répartir le travail ou de revendiquer un résultat, trouver le principe praticable qui relie les états cibles à des gestes vérifiables.",
+      "Une clef bornée est écrite dans ce cahier avec ce qu'elle ouvre, son prix et la preuve qui permet de la retenir ou de l'écarter.",
+      "à trouver"
+     ]
+    }
+   ]
+  }
+ ]
+}

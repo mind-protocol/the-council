@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Passage du coffre — Braavos</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --encre: #eee8d8;
+      --pale: #a9a494;
+      --fond: #11191b;
+      --papier: #1c2829;
+      --trait: #3b4d4b;
+      --or: #d7b86b;
+      --vert: #78b897;
+      --rouge: #dc8b7f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(135deg, rgba(37, 67, 68, .42), transparent 45%),
+        var(--fond);
+      color: var(--encre);
+      font: 16px/1.45 Georgia, "Times New Roman", serif;
+    }
+    main { width: min(980px, calc(100% - 32px)); margin: 42px auto 80px; }
+    header { border-bottom: 1px solid var(--trait); padding-bottom: 20px; }
+    .surtitre {
+      margin: 0 0 8px;
+      color: var(--or);
+      font: 700 12px/1.2 system-ui, sans-serif;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 0; font-size: clamp(32px, 6vw, 58px); font-weight: 400; }
+    .chapeau { max-width: 650px; margin: 10px 0 0; color: var(--pale); }
+    .grille { display: grid; grid-template-columns: 1.08fr .92fr; gap: 24px; margin-top: 26px; }
+    section {
+      background: color-mix(in srgb, var(--papier) 92%, transparent);
+      border: 1px solid var(--trait);
+      border-radius: 4px;
+      padding: 22px;
+    }
+    h2 { margin: 0 0 16px; font-size: 21px; font-weight: 400; }
+    .champs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    label { display: block; }
+    label span, legend {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--pale);
+      font: 650 12px/1.2 system-ui, sans-serif;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    input[type="text"], input[type="time"] {
+      width: 100%;
+      border: 1px solid var(--trait);
+      border-radius: 3px;
+      background: #101718;
+      color: var(--encre);
+      padding: 11px 12px;
+      font: inherit;
+    }
+    input:focus-visible, button:focus-visible {
+      outline: 2px solid var(--or);
+      outline-offset: 2px;
+    }
+    fieldset { margin: 22px 0 0; padding: 0; border: 0; }
+    .controle {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 9px;
+      align-items: start;
+      padding: 9px 0;
+      border-top: 1px solid rgba(59, 77, 75, .6);
+      cursor: pointer;
+    }
+    .controle span { margin: 1px 0 0; color: var(--encre); font: inherit; text-transform: none; letter-spacing: 0; }
+    input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--vert); }
+    .etat {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--trait);
+    }
+    .verdict { font-size: 27px; color: var(--rouge); }
+    .verdict.pret { color: var(--vert); }
+    .compte { color: var(--pale); font: 13px system-ui, sans-serif; }
+    .fiche { min-height: 185px; }
+    .fiche p { margin: 0 0 14px; }
+    .fiche ul { margin: 0; padding-left: 20px; color: var(--pale); }
+    .fiche .vide { color: var(--pale); font-style: italic; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    button, .bouton {
+      border: 1px solid var(--trait);
+      border-radius: 3px;
+      background: transparent;
+      color: var(--encre);
+      padding: 10px 14px;
+      font: 650 13px system-ui, sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    button:hover, .bouton:hover { border-color: var(--or); }
+    button.primaire { background: var(--or); border-color: var(--or); color: #172021; }
+    .note { margin: 18px 0 0; color: var(--pale); font-size: 13px; }
+    .lecture {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 16px;
+      padding: 12px;
+      border: 1px solid var(--trait);
+      background: #101718;
+    }
+    .lecture output { flex: 1 1 220px; color: var(--pale); font-size: 13px; }
+    @media (max-width: 760px) {
+      main { margin-top: 24px; }
+      .grille { grid-template-columns: 1fr; }
+      .champs { grid-template-columns: 1fr; }
+    }
+    @media print {
+      :root { color-scheme: light; }
+      body { background: white; color: black; }
+      main { width: 100%; margin: 0; }
+      header, .saisie, .actions, .note { display: none; }
+      .grille { display: block; margin: 0; }
+      section { border: 2px solid black; background: white; }
+      .verdict, .verdict.pret { color: black; }
+      .fiche ul, .compte { color: #333; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="surtitre">Braavos · manifeste de quai</p>
+      <h1>Passage du coffre</h1>
+      <p class="chapeau">Une seule fiche pour nommer le coffre, l’heure et les mains. Tant qu’un verrou reste sans nom, le passage n’est pas déclaré prêt.</p>
+    </header>
+
+    <div class="grille">
+      <section class="saisie" aria-labelledby="preparer">
+        <h2 id="preparer">Préparer le passage</h2>
+        <div class="champs">
+          <label><span>Coffre</span><input id="coffre" type="text" autocomplete="off" placeholder="Nom ou marque"></label>
+          <label><span>Heure de passage</span><input id="maree" type="time"></label>
+          <label><span>Quai</span><input id="quai" type="text" autocomplete="off" placeholder="Point de départ"></label>
+          <label><span>Embarcation</span><input id="navire" type="text" autocomplete="off" placeholder="Nom ou poste"></label>
+          <label><span>Maître du passage</span><input id="maitre" type="text" list="gens-ici" autocomplete="off" placeholder="Une personne nommée"></label>
+          <label><span>Porteurs</span><input id="porteursNoms" type="text" list="gens-ici" autocomplete="off" placeholder="Noms séparés par une virgule"></label>
+        </div>
+        <datalist id="gens-ici"></datalist>
+        <div class="lecture">
+          <button id="lire-presence" type="button">Lire les présents</button>
+          <output id="presence-etat" aria-live="polite">Aucune présence lue.</output>
+        </div>
+
+        <fieldset>
+          <legend>Les cinq prises</legend>
+          <label class="controle"><input id="ferme" type="checkbox"><span>Le coffre est fermé et sa prise est sûre.</span></label>
+          <label class="controle"><input id="coupee" type="checkbox"><span>La coupée est posée et tient sous la charge prévue.</span></label>
+          <label class="controle"><input id="voie" type="checkbox"><span>Le chemin du quai à la coupée est dégagé.</span></label>
+          <label class="controle"><input id="porteurs" type="checkbox"><span>Les porteurs sont nommés et présents.</span></label>
+          <label class="controle"><input id="bord" type="checkbox"><span>Quelqu’un à bord attend et reçoit le coffre.</span></label>
+        </fieldset>
+      </section>
+
+      <section aria-labelledby="passage">
+        <div class="etat">
+          <div>
+            <p class="surtitre">État du passage</p>
+            <div id="verdict" class="verdict" aria-live="polite">Non préparé</div>
+          </div>
+          <div id="compte" class="compte"></div>
+        </div>
+        <div id="fiche" class="fiche">
+          <p class="vide">Remplissez la fiche ; les verrous paraîtront ici.</p>
+        </div>
+        <div class="actions">
+          <button id="imprimer" class="primaire" type="button">Imprimer la fiche</button>
+          <a class="bouton" href="/reception?objet=Passage%20du%20coffre&amp;adresse=%2Fpassage-coffre">Former le bordereau de réception</a>
+          <button id="effacer" type="button">Reprendre à zéro</button>
+        </div>
+        <p class="note">La fiche reste dans ce navigateur. Elle ne confirme ni l’heure, ni la marée, ni la présence des hommes : elle rend seulement les manques visibles avant le départ.</p>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      "use strict";
+      const cle = "braavos.passage-coffre.v1";
+      const champs = ["coffre", "maree", "quai", "navire", "maitre", "porteursNoms"];
+      const prises = ["ferme", "coupee", "voie", "porteurs", "bord"];
+      const noms = {
+        coffre: "le coffre n’est pas nommé",
+        maree: "l’heure de marée n’est pas portée",
+        quai: "le quai n’est pas nommé",
+        navire: "l’embarcation n’est pas nommée",
+        maitre: "le maître du passage n’est pas nommé",
+        porteursNoms: "les porteurs ne sont pas nommés",
+        ferme: "la fermeture ou la prise du coffre n’est pas vérifiée",
+        coupee: "la coupée n’est pas vérifiée",
+        voie: "le chemin n’est pas déclaré dégagé",
+        porteurs: "les porteurs ne sont pas déclarés présents",
+        bord: "personne à bord n’est déclaré prêt à recevoir"
+      };
+      const el = (id) => document.getElementById(id);
+
+      function donnees() {
+        const d = {};
+        champs.forEach((id) => { d[id] = el(id).value.trim(); });
+        prises.forEach((id) => { d[id] = el(id).checked; });
+        return d;
+      }
+
+      function echapper(texte) {
+        return String(texte).replace(/[&<>"']/g, (s) => ({
+          "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;"
+        })[s]);
+      }
+
+      function rendre() {
+        const d = donnees();
+        const manques = champs.filter((id) => !d[id]).concat(prises.filter((id) => !d[id]));
+        const commence = champs.some((id) => d[id]) || prises.some((id) => d[id]);
+        const pret = manques.length === 0;
+        el("verdict").textContent = pret ? "Prêt à présenter" : (commence ? "Passage retenu" : "Non préparé");
+        el("verdict").classList.toggle("pret", pret);
+        el("compte").textContent = pret ? "aucun verrou" : `${manques.length} verrou${manques.length > 1 ? "s" : ""}`;
+
+        if (!commence) {
+          el("fiche").innerHTML = '<p class="vide">Remplissez la fiche ; les verrous paraîtront ici.</p>';
+        } else {
+          const identite = d.coffre || "Le coffre";
+          const mouvement = [d.quai && `depuis ${echapper(d.quai)}`, d.navire && `vers ${echapper(d.navire)}`].filter(Boolean).join(" ");
+          const heure = d.maree ? ` à ${echapper(d.maree)}` : " ; heure non portée";
+          const phrase = `<p><strong>${echapper(identite)}</strong>${mouvement ? ` doit passer ${mouvement}` : " doit passer"}${heure}${d.maitre ? ` ; maître du passage : ${echapper(d.maitre)}` : ""}${d.porteursNoms ? ` ; porteurs : ${echapper(d.porteursNoms)}` : ""}.</p>`;
+          const suite = pret
+            ? "<p>Les cinq prises sont déclarées. Présentez la fiche au maître du passage avant de lever le coffre.</p>"
+            : `<p>Avant de lever :</p><ul>${manques.map((id) => `<li>${noms[id]}</li>`).join("")}</ul>`;
+          el("fiche").innerHTML = phrase + suite;
+        }
+        localStorage.setItem(cle, JSON.stringify(d));
+      }
+
+      function charger() {
+        try {
+          const d = JSON.parse(localStorage.getItem(cle) || "{}");
+          champs.forEach((id) => { if (typeof d[id] === "string") el(id).value = d[id]; });
+          prises.forEach((id) => { el(id).checked = d[id] === true; });
+        } catch (_) { localStorage.removeItem(cle); }
+        rendre();
+      }
+
+      [...champs, ...prises].forEach((id) => el(id).addEventListener("input", rendre));
+      el("lire-presence").addEventListener("click", async () => {
+        const sortie = el("presence-etat");
+        sortie.textContent = "Lecture en cours…";
+        try {
+          const reponse = await fetch("/presence", { cache: "no-store" });
+          const presence = await reponse.json();
+          if (!presence.connue) {
+            el("gens-ici").replaceChildren();
+            sortie.textContent = "Ce lecteur n’a pas de présence reconnue ; gardez les noms manuels.";
+            return;
+          }
+          const gens = Array.isArray(presence.avec) ? presence.avec : [];
+          el("gens-ici").replaceChildren(...gens.map((personne) => {
+            const option = document.createElement("option");
+            option.value = personne.nom || personne.id;
+            return option;
+          }));
+          const auQuai = String(presence.salle || "").endsWith("quai");
+          const lieu = presence.lieu || presence.salle || "lieu sans nom";
+          sortie.textContent = `${gens.length} présent${gens.length > 1 ? "s" : ""} avec vous, à ${lieu}. ${auQuai ? "Lecture faite au quai." : "Cette lecture n’établit pas la présence au quai."}`;
+        } catch (_) {
+          sortie.textContent = "La présence ne répond pas ; gardez les noms manuels.";
+        }
+      });
+      el("imprimer").addEventListener("click", () => window.print());
+      el("effacer").addEventListener("click", () => {
+        champs.forEach((id) => { el(id).value = ""; });
+        prises.forEach((id) => { el(id).checked = false; });
+        localStorage.removeItem(cle);
+        rendre();
+        el("coffre").focus();
+      });
+      charger();
+    })();
+  </script>
+</body>
+</html>

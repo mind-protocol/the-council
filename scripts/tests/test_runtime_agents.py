@@ -32,6 +32,33 @@ class RuntimeAgentsTest(unittest.TestCase):
         self.assertEqual(resultat, rep)
         self.assertFalse(hasattr(runtime, "_verrou"))
 
+    def test_runtime_propage_une_identite_explicite_jusqu_au_compute(self):
+        resultat = {"result": "fait", "provider": "codex"}
+        identity = {
+            "work_id": "9ca2832a-bad4-5e71-af6b-326521708d9e",
+            "attempt_id": "9ca2832a-bad4-5e71-af6b-326521708d9e:attempt:1",
+            "attempt_number": 1,
+            "effect_key": "effect:9ca2832a-bad4-5e71-af6b-326521708d9e",
+        }
+        evenement = dict(identity, id="event-1")
+        with tempfile.TemporaryDirectory() as dossier, \
+                mock.patch.object(runtime, "fournisseur", return_value="codex"), \
+                mock.patch.object(runtime, "_modele", return_value="modele"), \
+                mock.patch.object(runtime, "_effort", return_value="low"), \
+                mock.patch.object(runtime, "_appel_codex", return_value=resultat), \
+                mock.patch.object(runtime, "_activite",
+                                  return_value=contextlib.nullcontext()), \
+                mock.patch("agents.compute.enregistrer",
+                           return_value=evenement) as enregistrer:
+            rep = runtime.appeler(
+                role="mj", manuel="manuel", message="mot",
+                session_id="conversation", cwd=dossier,
+                work_identity=identity)
+        self.assertEqual(identity, rep["continuous_work_identity"])
+        self.assertEqual("event-1", rep["compute_event_id"])
+        self.assertEqual(identity,
+                         enregistrer.call_args.kwargs["work_identity"])
+
     def test_voyant_actif_exactement_pendant_le_calcul(self):
         with tempfile.TemporaryDirectory() as d, \
                 mock.patch.object(runtime, "ACTIVITES", os.path.join(d, "active")):
@@ -44,7 +71,55 @@ class RuntimeAgentsTest(unittest.TestCase):
                 self.assertEqual("mestre-gerardys", marqueur["homme"])
                 self.assertEqual("jour-12", marqueur["session"])
                 self.assertEqual(os.getpid(), marqueur["pid"])
+                self.assertEqual(runtime._identite_processus(os.getpid()),
+                                 marqueur["processus"])
             self.assertEqual([], os.listdir(runtime.ACTIVITES))
+
+    def test_la_garde_refuse_atomiquement_le_seizieme_slot(self):
+        with tempfile.TemporaryDirectory() as d, \
+                mock.patch.object(runtime, "ACTIVITES", os.path.join(d, "active")):
+            self.assertEqual(15, runtime.MAX_SESSIONS_ACTIVES)
+            slots = [runtime._essayer_reserver(
+                "homme-%d" % i, "session-%d" % i, pid=os.getpid())
+                for i in range(15)]
+            self.assertTrue(all(slots))
+            self.assertIsNone(runtime._essayer_reserver(
+                "seizieme", "session-16", pid=os.getpid()))
+            for chemin in slots:
+                runtime._liberer_slot(chemin)
+
+    def test_un_worker_adopte_le_slot_reserve_sans_en_prendre_un_second(self):
+        with tempfile.TemporaryDirectory() as d, \
+                mock.patch.object(runtime, "ACTIVITES", os.path.join(d, "active")):
+            reserve = runtime._essayer_reserver(
+                "gerardys", "jour-12", pid=None)
+            with mock.patch.dict(os.environ, {
+                    runtime.RESERVATION_ENV: os.path.basename(reserve)}):
+                with runtime._activite("gerardys", "jour-12"):
+                    fichiers = [p for p in os.listdir(runtime.ACTIVITES)
+                                if p.endswith(".json")]
+                    self.assertEqual([os.path.basename(reserve)], fichiers)
+                    with open(reserve, encoding="utf-8") as f:
+                        marqueur = json.load(f)
+                    self.assertFalse(marqueur["reserve"])
+                    self.assertEqual(os.getpid(), marqueur["pid"])
+            self.assertEqual([], [p for p in os.listdir(runtime.ACTIVITES)
+                                  if p.endswith(".json")])
+
+    def test_un_pid_recycle_ne_garde_pas_un_faux_slot(self):
+        with tempfile.TemporaryDirectory() as d, \
+                mock.patch.object(runtime, "ACTIVITES", os.path.join(d, "active")), \
+                mock.patch.object(runtime, "MAX_SESSIONS_ACTIVES", 1):
+            os.makedirs(runtime.ACTIVITES)
+            faux = os.path.join(runtime.ACTIVITES, "mort.json")
+            with open(faux, "w", encoding="utf-8") as f:
+                json.dump({"homme": "mort", "session": "s", "pid": os.getpid(),
+                           "processus": "autre-naissance", "t": 1}, f)
+            slot = runtime._essayer_reserver(
+                "vivant", "nouveau", pid=os.getpid())
+            self.assertIsNotNone(slot)
+            self.assertFalse(os.path.exists(faux))
+            runtime._liberer_slot(slot)
 
     def test_switch_global_et_alias_chatgpt(self):
         with tempfile.TemporaryDirectory() as d, \

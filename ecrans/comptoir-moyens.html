@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Comptoir des moyens de Serenissima</title>
+  <style>
+    :root { color-scheme: dark; --encre:#e9e0cc; --muet:#adab9f;
+      --bois:#30251f; --bord:#76614b; --canal:#6ca7a2; --alerte:#d6a15d; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#121719; color:var(--encre); font:16px/1.45 Georgia,serif; }
+    main { width:min(1080px,94vw); margin:4rem auto; }
+    header { border-bottom:1px solid var(--bord); padding-bottom:1.3rem; }
+    h1 { margin:0 0 .35rem; font-size:clamp(2rem,5vw,3.6rem); font-weight:500; }
+    .chapeau,.source { color:var(--muet); }
+    #verdict { display:inline-block; margin-top:1rem; padding:.45rem .8rem;
+      border:1px solid var(--canal); color:var(--canal); letter-spacing:.08em; }
+    #verdict.alerte { border-color:var(--alerte); color:var(--alerte); }
+    table { width:100%; margin-top:2rem; border-collapse:collapse; background:var(--bois); }
+    th,td { padding:.8rem; text-align:right; border-bottom:1px solid #514337; vertical-align:top; }
+    th:first-child,td:first-child { text-align:left; }
+    td.ecart { color:var(--alerte); font-weight:bold; }
+    tr.conforme td.ecart { color:var(--canal); }
+    details { margin-top:.35rem; color:var(--muet); font-size:.82rem; }
+    code { overflow-wrap:anywhere; }
+    .erreur { margin-top:2rem; border:1px solid #a85e56; padding:1rem; color:#e0aaa4; }
+    @media (max-width:700px) { th:nth-child(2),td:nth-child(2) { display:none; }
+      th,td { padding:.55rem .35rem; font-size:.88rem; } }
+  </style>
+</head>
+<body><main>
+  <header>
+    <p class="chapeau">L’Archive · lecture seule · mesure courante</p>
+    <h1>Comptoir des moyens</h1>
+    <p>Le registre inscrit est confronté à la sonde M110. Un écart appelle instruction ; il ne vaut ni panne ni correction automatique.</p>
+    <strong id="verdict">MESURE EN COURS</strong>
+  </header>
+  <section id="contenu" aria-live="polite"></section>
+</main>
+<script>
+  "use strict";
+  const contenu = document.querySelector("#contenu");
+  const verdict = document.querySelector("#verdict");
+  const entier = (n) => new Intl.NumberFormat("fr-FR").format(n);
+  fetch("/comptoir-moyens.json")
+    .then(async (r) => { const d = await r.json(); if (!r.ok) throw d; return d; })
+    .then((d) => {
+      verdict.textContent = d.conforme ? "CONFORME · CODE 0" : "À INSTRUIRE · CODE 1";
+      verdict.classList.toggle("alerte", !d.conforme);
+      const lignes = d.comparaisons.map((l) => `<tr class="${l.conforme ? "conforme" : "divergence"}">
+        <td>${l.quoi}<details><summary>sources</summary>
+          <code>inscrit : ${l.source_inscrite}</code><br>
+          <code>observé : ${l.source_observee}</code></details></td>
+        <td><code>${l.id}</code></td><td>${entier(l.inscrit)}</td>
+        <td>${entier(l.observe)}</td><td class="ecart">${l.ecart > 0 ? "+" : ""}${entier(l.ecart)}</td>
+      </tr>`).join("");
+      contenu.innerHTML = `<table><thead><tr><th>Mesure</th><th>Identifiant</th>
+        <th>Inscrit</th><th>Observé</th><th>Écart</th></tr></thead><tbody>${lignes}</tbody></table>`;
+    })
+    .catch((e) => {
+      verdict.textContent = "NON ÉTABLI"; verdict.classList.add("alerte");
+      const reserve = document.createElement("p");
+      reserve.className = "erreur";
+      reserve.textContent = "Le comptoir ne peut établir la mesure. Réserve : " +
+        (e.reserve || e.erreur || "inconnue") + ".";
+      contenu.replaceChildren(reserve);
+    });
+</script>
+</body></html>

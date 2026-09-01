@@ -115,7 +115,8 @@ def blocs(nom_affaire, pieces, inventaire):
          [n for n, p in miennes.items() if p["genre"] == "verrou" and n not in ouvre_par]),
         (u"🗝️ clef retenue qu'aucune action ne réalise — une décision sans geste",
          [n for n, p in miennes.items() if p["genre"] == "clef"
-          and re.search(u"retenue", p["etat"] or u"", re.I) and n not in realise_par]),
+          and re.search(u"retenue", p["etat"] or u"", re.I)
+          and not p.get("moyens") and n not in realise_par]),
         (u"🎯 état qu'aucun verrou ne bloque — une intention sans plan",
          [n for n, p in miennes.items() if p["genre"] == "etat" and n not in bloque_par]),
         (u"🔤 office ou moyen nommé en clair — écrire son numéro, sans quoi le lien "

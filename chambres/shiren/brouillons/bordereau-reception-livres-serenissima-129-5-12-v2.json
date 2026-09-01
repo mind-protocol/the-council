@@ -1,0 +1,21 @@
+{
+  "type": "bordereau-reception/2",
+  "objet": "Registres de la maison Serenissima depuis le siège de Lucia Ferretti",
+  "date_constat": "129.5.12",
+  "preuve_geste": {
+    "etat": "FAIT",
+    "epreuve_adresse": {
+      "adresse": "http://localhost:3129/books?jeton=homme%3Ashiren",
+      "accessible": true,
+      "statut_http": 200,
+      "observe_a": "2026-09-01T02:55:22.495Z"
+    }
+  },
+  "resultat_sous_jacent": {
+    "etat": "CONFORME",
+    "critere": "La réponse contient seize livres, deux boîtes et le registre plan-moyens-serenissima consultable par ce lecteur.",
+    "observation": "HTTP 200 ; 16 livres et 2 boîtes ; plan-moyens-serenissima et registre-ouvrages-archive sont présents.",
+    "reserve": "L'adresse nue /books ne porte aucun siège ; la réception vaut depuis le siège homme:shiren donné dans l'adresse éprouvée."
+  },
+  "decision": "REÇU AVEC RÉSERVE EXPLICITE"
+}

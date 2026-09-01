@@ -10,6 +10,7 @@ import re
 import chiffrer  # la grammaire des couts
 import bibliotheque  # les books scindes ; source canonique du container plan
 from plan.tisser.chambre_mj import noeuds_affaires_mj
+from plan.tisser.personnelles import noeuds_affaires_personnelles
 
 from etat.expose import tables  # LA PORTE de etat/
 
@@ -36,7 +37,7 @@ CANON = {
     "découpe": "decoupe", "découpée_par": "decoupe$", "partage": "decoupe",
     "lie": "lie",
     "coute": "coute", "coûte_à": "coute", "coute_chiffre": "coute_chiffre",
-    "tient": "tient", "promeut": "promeut",
+    "tient": "tient", "porte": "porte", "promeut": "promeut",
     "revele": "revele", "prévient": "revele", "surveille": "revele",
     "repond": "repond", "devie": "devie",
     "contredit": "contredit", "resonance": "resonance",
@@ -182,7 +183,7 @@ def nu(t):
 # ------------------------------------------------------------ les noeuds
 
 def indexer(books, intentions, mains, plans, evenements, personnages, plis=None,
-            affaires_mj=None):
+            affaires_mj=None, affaires_personnelles=None):
     """Ce qui EXISTE, et sous quelle adresse. Une arete pointe ici ou pend."""
     noeuds = {}          # id -> {genre, ou, quoi}
     doubles = collections.Counter()
@@ -196,6 +197,17 @@ def indexer(books, intentions, mains, plans, evenements, personnages, plis=None,
             if genre not in genres:
                 genres.append(genre)
                 doubles[ident] += 1
+            # Les registres derives (`plan-actions`, `plan-clefs`...) sont
+            # charges avec les cahiers et peuvent nommer une piece avant sa
+            # source canonique. Leur table n'a pas de semantique dans son
+            # titre : elle pose donc un `piece` generique. Quand le vrai
+            # cahier arrive ensuite, sa nature precise doit gagner, avec sa
+            # provenance et son libelle. Sinon une action reste une simple
+            # piece dans le tissu et la boucle d'activation ne peut jamais la
+            # choisir, meme si son arete `tient` est parfaitement resolue.
+            if n["genre"] == "piece" and genre != "piece":
+                n["genre"] = genre
+                n["ou"], n["quoi"] = ou, nu(quoi)[:70]
             # Plusieurs sources peuvent décrire le même nœud (une personne
             # paraît dans intentions puis personnages). On enrichit la
             # projection sans écraser une valeur déjà connue par du vide.
@@ -233,11 +245,24 @@ def indexer(books, intentions, mains, plans, evenements, personnages, plis=None,
                     # Une case vide reste None : 17 lignes n'ont pas de note, et
                     # une note absente n'est pas une note nulle.
                     note = _note_sur_cent(col(d, "💯 Importance"))
-                    pose(tete, genre, lid, col(d, "🏷️") or col(d, "L'action"),
-                         lieu=col(d, "📍 Où") or col(d, "Où"),
-                         importance=note,
-                         etat=(col(d, "⏳ État") or col(d, "🔎 État")
-                               or col(d, "⏳ Où ça en est")))
+                    proprietes = {
+                        "lieu": col(d, "📍 Où") or col(d, "Où"),
+                        "importance": note,
+                        "etat": (col(d, "⏳ État") or col(d, "🔎 État")
+                                 or col(d, "⏳ Où ça en est")),
+                    }
+                    if genre == "action":
+                        # La boucle lit les dependances SUR le noeud pour
+                        # decider si la tache est executable. Les aretes les
+                        # rendent traversables, mais ne suffisent pas a ce
+                        # verdict local. Les deux projections viennent donc
+                        # de la meme cellule du cahier.
+                        proprietes["depend_de"] = PIECE.findall(
+                            col(d, "Dépend"))
+                        proprietes["jour_du"] = (col(d, "Jour dû")
+                                                  or col(d, "Jour du"))
+                    pose(tete, genre, lid,
+                         col(d, "🏷️") or col(d, "L'action"), **proprietes)
                 elif MOYEN.fullmatch(tete):
                     # Les moyens sont un espace de noms PAR LIVRE : M01 vaut
                     # les voiles du Gosier chez la reine et la porte de la
@@ -258,6 +283,10 @@ def indexer(books, intentions, mains, plans, evenements, personnages, plis=None,
 
     for a in mains:
         aid = a.get("id")
+        porteur = a.get("porteur") or {}
+        if porteur.get("type") == "maison" and porteur.get("id"):
+            pose("maison:" + str(porteur["id"]), "maison", "mains/porteur",
+                 porteur["id"])
         pose("main:" + str(aid), "compte", "mains", a.get("quoi"))
         for mes in a.get("mesure") or []:
             pose("{}.{}".format(aid, mes.get("id")), "mesure", aid,
@@ -275,7 +304,7 @@ def indexer(books, intentions, mains, plans, evenements, personnages, plis=None,
         if p.get("id"):
             pose("pers:" + p["id"], "personne", "personnages", p.get("nom"),
                  etat=p.get("etat"), condition=p.get("condition"),
-                 lieu_id=p.get("lieu_id"))
+                 lieu_id=p.get("lieu_id"), objectifs=p.get("objectifs"))
 
     for lx in charger("lieux", []):
         if isinstance(lx, dict) and lx.get("id"):
@@ -309,6 +338,11 @@ def indexer(books, intentions, mains, plans, evenements, personnages, plis=None,
     # adresses sont qualifiées par livre : aucune pièce de chambre ne peut
     # prendre la place d'une adresse canonique du monde.
     for n in noeuds_affaires_mj(affaires_mj or []):
+        proprietes = {k: v for k, v in n.items()
+                      if k not in ("id", "genre", "ou", "quoi")}
+        pose(n["id"], n["genre"], n["ou"], n["quoi"], **proprietes)
+
+    for n in noeuds_affaires_personnelles(affaires_personnelles or []):
         proprietes = {k: v for k, v in n.items()
                       if k not in ("id", "genre", "ou", "quoi")}
         pose(n["id"], n["genre"], n["ou"], n["quoi"], **proprietes)

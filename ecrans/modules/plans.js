@@ -883,3 +883,17 @@ window.Plans = {
     ],
   },
 };
+
+// Braavos a d'abord le meme dessin interieur que Peyredragon, mais jamais le
+// meme objet : la serialisation fabrique une copie profonde de chaque salle,
+// forme et etiquette. Les retouches futures de Braavos ne pourront donc pas
+// modifier Peyredragon par reference. Les identifiants de salles restent ceux
+// des interieurs copies (dont `septuaire`).
+window.Plans.braavos = JSON.parse(
+  JSON.stringify(window.Plans.peyredragon)
+    .replaceAll("Peyredragon", "Braavos")
+    .replaceAll("peyredragon", "braavos")
+);
+window.Plans.braavos.salles.forEach((salle) => {
+  salle.id = "braavos-" + salle.id;
+});

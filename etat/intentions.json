@@ -650,8 +650,8 @@
    {
     "id": "daemon-convoquer-le-trident",
     "quoi": "Une fois la place à lui, faire porter aux seigneurs du Trident — Blackwood, Vance, Piper, Mouton, et Tully en dernier — la sommation de venir à Harrenhal reconnaître la reine",
-    "etat": "en-cours",
-    "jours_restants": 1,
+    "etat": "fait",
+    "jours_restants": 0,
     "depend_de": [
      "daemon-prendre-harrenhal"
     ],
@@ -659,7 +659,8 @@
      "la roukerie de Harrenhal : SIX oiseaux seulement, comptes le 24e",
      "des cavaliers qu'il n'a pas : quarante hommes ne portent pas quinze plis"
     ],
-    "si_bloque": "Six oiseaux pour quinze maisons : il envoie aux six qui peuvent en entrainer d'autres — Blackwood d'abord, Tully en dernier — et va voir les neuf autres lui-meme sur Caraxes, ce qui vaut convocation et menace a la fois."
+    "si_bloque": "Six oiseaux pour quinze maisons : il envoie aux six qui peuvent en entrainer d'autres — Blackwood d'abord, Tully en dernier — et va voir les neuf autres lui-meme sur Caraxes, ce qui vaut convocation et menace a la fois.",
+    "accompli": "Le 12e jour de la 5e lune, ser Simon Strong confirme que cinq plis sont partis de la roukerie de Harrenhal, mot pour mot et dans l'ordre ordonne : Blackwood, Vance, Piper, Mouton, Tully. Le sixieme oiseau demeure en cage pour la route de retour."
    },
    {
     "id": "daemon-manteaux-dor",
@@ -1235,15 +1236,65 @@
    "Je n'achète plus une signature : je donne à qui la refuse une chose qui lui manquait — son office rendu régulier. S'il prend, il signe ; s'il rend, il dit de quelle main il tient. Une pièce qu'on ne peut pas perdre vaut mieux qu'une pièce qu'on paie.",
    "Ma fille reste aux mots qu'on prononce et sort aux mots qu'on écrit. Ce n'est pas le nom de Largent qui l'aurait fait lever : c'est l'encre. Sa méthode est de n'être jamais citable, et une telle méthode se règle avec quelqu'un.",
    "Le seuil de la solde du Guet est franchi depuis le 21e de la 4e lune et personne ne l'a porté nulle part pendant vingt et un jours. J'ai affecté l'arriéré entier ce matin, trois cent six mille cerfs, par rôle nominatif. Je ne demande plus la contresignature de Largent : ses deux mille hommes tiennent désormais leur pain d'une écriture datée de ma main.",
-   "Le six cent mille n'est pas un trésor, c'est un plancher, et il est écrit en cerfs — deux mille huit cent cinquante-sept dragons. Après les portes repayées et la caution scellée, le disponible est à six cent cinq mille cerfs et descend de cent dragons le jour : vingt jours avant ce plancher."
+   "Le six cent mille n'est pas un trésor, c'est un plancher, et il est écrit en cerfs — deux mille huit cent cinquante-sept dragons. Après les portes repayées et la caution scellée, le disponible est à six cent cinq mille cerfs et descend de cent dragons le jour : vingt jours avant ce plancher.",
+   "Le livre de la maison royale ne porte aucune ligne de nefs : pas une flotte comptee a zero, une colonne jamais ouverte. La Couronne n'a jamais eu de marine, elle avait les Velaryon — et Corlys est a la reine. Une maison n'ecrit que ce qu'elle a eu un jour a compter.",
+   "L'ost de Villevieille a seize journees de vivres et non vingt-cinq : le contrat etait taille pour six mille hommes et il y en a neuf mille depuis le 1er. Seize contre soixante-quinze journees par terre. Si la mer est fermee, cet ost ne peut atteindre Port-Real ni cette lune ni la suivante — et ses 570 000 livres de vivres d'avant-guerre valent plus sur une coque de grain que dans le ventre d'un ost.",
+   "Le prince Daeron, quinze ans, a vu seul qu'une case vide dans un registre de roles n'attend pas mais appelle, et que la valeur d'une preuve se perd avec le temps et non avec ce qu'on en sait. Il a ecrit le soir meme avec une seule ligne plutot que d'attendre d'en savoir assez. Il refuse aussi de me rapporter les affaires de lord Ormund. C'est un Hightower dans une peau Targaryen, et je viens de rayer de ma main l'action qui l'aurait envoye a Accalmie."
   ],
   "ignore": [
    "Qu'Orwyle a ecrit DEUX recits sur sa nef et que celui qu'il montre n'est pas celui qu'il a cousu dans sa manche",
    "Que sa propre fille cherche deja par quelle quille ecrire a Rhaenyra hors des corbeaux du roi",
    "Que sa fille a recu de la main de Rhaenyra une lettre privee, ouverte et portee par Larys Strong — et que le Pied-Bot ne la lui a pas donnee"
   ],
-  "intention": "Tenir le coffre par la soustraction et non par le chiffre. L'arriere entier de solde des deux mille manteaux d'or est affecte et sorti par role nominatif — il ne demande plus la contresignature de ser Luthor Largent, il a repaye ses hommes : un office repaye ne se rend pas. La prime n'est plus criee : un texte scelle sans somme sur les deux places, et cinq cents dragons de caution comptes et scelles a part, montres en main a qui vient, jamais hurles. Il attend maintenant trois choses qui ne dependent plus de lui : que les deux herauts lisent le meme texte demain, que le brevet de garde du coffre lui revienne d'Orval Fenn, et l'heure que ser Criston fixera pour l'entretien seul avant que l'ordre de depart soit signe. Puis les cinq pupilles, par un porteur qui ne passe pas par la roukerie du roi.",
+  "intention": "Trois plis sont partis ce soir et un seul geste reste a faire demain. LE GESTE : une seule sortie au matin — le Vieux Puits, six cents pas, la place aux Poissonniers pour ecouter si les deux herauts lisent le meme texte ; puis le bureau des herauts, pour y ouvrir le registre des pretendants ET faire collationner par un heraut la ligne du 19e au role du port, que le prince Daeron lui a signalee — coque sans nom venue de Villevieille, non ouverte, destinataire vide. Un heraut et non lui-meme : une Main qui lit un role de port fait remplir la case dans l'heure. LES DETTES : le brevet du guet du ciel part par un porteur qui ne passe pas par la roukerie du roi, et lord Ormund attend pour le 17e deux nombres — la recette d'un port ferme depuis dix-huit jours, et combien de quilles la Couronne peut escorter. Le livre de la maison royale ne porte aucune ligne de nefs, mais une absence oriente et ne solde pas : il comptera ce qui flotte en rade avant d'ecrire le mot aucune.",
   "plan": [
+   {
+    "id": "otto-collationner-la-ligne-du-19e",
+    "quoi": "Faire collationner par un heraut, demain matin, la ligne du 19e au role du port — coque sans nom venue de Villevieille, non ouverte, deux hommes d'armes, destinataire vide — copiee mot pour mot et paraphee a la date du jour",
+    "etat": "en-cours",
+    "jours_restants": 1,
+    "depend_de": [],
+    "cout": [
+     "un heraut et une heure, dans une sortie deja prevue"
+    ],
+    "si_bloque": "Si la case est deja remplie, il fait copier la ligne TELLE QU'ELLE EST quand meme, avec sa date : une case remplie apres coup est un fait aussi utile qu'une case vide, et plus parlant."
+   },
+   {
+    "id": "otto-compter-le-port-ferme",
+    "quoi": "Compter, dans le meme livre et pour le meme jour, ce que rend un port ferme depuis le 24e ET ce qui flotte en rade de Port-Real — la Couronne n'ayant aucune ligne de nefs a son livre — puis porter les deux nombres a Villevieille avant le 17e",
+    "etat": "en-cours",
+    "jours_restants": 5,
+    "depend_de": [],
+    "cout": [
+     "deux matinees a la chambre des comptes et au bureau du maitre du port",
+     "et le terme tenu sans etre repousse d'un jour pour la question neuve"
+    ],
+    "si_bloque": "Si le livre du port ne rend pas un chiffre arrete, il envoie a Ormund la fourchette ET l'heure du chiffre juste, jamais un 'je ne sais pas' nu — c'est ce qu'il exige des siens."
+   },
+   {
+    "id": "otto-brevet-du-guet-du-ciel",
+    "quoi": "Faire porter a Villevieille le brevet de la Main nommant le prince Daeron au guet du ciel et a la garde de la Citadelle, par un porteur qui ne passe pas par la roukerie du roi",
+    "etat": "en-cours",
+    "jours_restants": 1,
+    "depend_de": [],
+    "cout": [
+     "un porteur sur",
+     "et le repli sur Daeron, raye de sa main"
+    ],
+    "si_bloque": "Si nul porteur sur ne se trouve, il attend plutot que d'employer la roukerie du roi : un brevet fait pour devancer une cire royale et qui voyage dans le sac du roi n'a jamais quitte la piece."
+   },
+   {
+    "id": "otto-registre-des-pretendants",
+    "quoi": "Ouvrir au bureau des herauts un registre des pretendants — nom, provenance, ce qu'il apporte, qui l'a reconnu, le jour — et n'y gager la caution que contre une ligne de ce registre",
+    "etat": "en-cours",
+    "jours_restants": 1,
+    "depend_de": [],
+    "cout": [
+     "zero dragon",
+     "une charge ecrite a donner a l'homme du bureau qui le tiendra"
+    ],
+    "si_bloque": "Si le bureau des herauts refuse de tenir un registre sans ordre du roi, il le fait tenir par le garde du coffre et le registre devient une colonne du livre du Tresor — ou il le tient lui-meme, ce qui est pire, car il le date."
+   },
    {
     "id": "otto-borner-la-prime",
     "quoi": "Borner la prime au lieu de l'affecter : un texte sans somme sur les deux places, une caution de cinq cents dragons scellee a part avec son plafond, montree en main au bureau des herauts a un homme a la fois",
@@ -2222,59 +2273,107 @@
  {
   "personnage_id": "ormund-hightower",
   "croyances": [
-   "Le Bief ne marchera pas d'un bloc : Hautjardin est aux mains d'un enfant et la moitié des seigneurs de la Mander attendront de voir qui paie. Six mille hommes sous ses murs en une lune, neuf mille s'il vide les vallées — et vingt-cinq jours de route jusqu'à Port-Réal, à nourrir chaque jour",
-   "Villevieille ne doit pas brûler : la Citadelle et le Septuaire Étoilé valent plus que n'importe quel champ de bataille, et rien dans la ville ne répond aujourd'hui à un dragon",
-   "Peyredragon a depose ser Steffon Darklyn, et la copie lui est arrivee adressee a son nom : on a voulu qu'il sache qu'on sait ce que sa maison a fait",
-   "La lettre d'Otto est scellée de la tour et non du dragon : elle n'engage pas la Couronne. Tant qu'aucun mandement royal ne lui parvient, ce qu'il achète, il l'achète sur sa propre bourse et sur son propre nom — et les marchands le savent désormais aussi bien que lui.",
-   "Quinze jours de vivres sur vingt-cinq sont contractés au cours d'avant-guerre, livrables aux quais avant la pleine lune, sans qu'un grenier de Villevieille ait été descellé. Les dix jours manquants sont ceux du troupeau sur pied, et ils exigent une caution que sa parole seule ne fournit pas."
+   "JE N'AI PAS VINGT-CINQ JOURNEES DE VIVRES, J'EN AI SEIZE — et je l'ai appris le soir du jour ou je m'etais felicite d'en avoir vingt-cinq. Une journee de mon contrat vaut 22 800 livres, taillee pour SIX MILLE hommes ; j'en ai NEUF MILLE sous mes murs. A train proportionnel ils mangent 34 200 livres le jour, et mes 570 000 livres font seize journees. Le mot etait dans mon contrat depuis le premier jour : LIVRABLES AUX QUAIS. Ce sont des journees de quai, pas des journees de route.",
+   "IL M'EN FAUDRAIT TRENTE-HUIT pour les vingt-cinq jours de route que j'ai moi-meme mesures sur le livre des chemins. Lord Otto porte, de six ans d'intendance de cette ville, que neuf mille hommes avec leur train feraient plutot soixante-quinze journees par terre : ce serait cent treize. Je ne tiens pas son nombre pour arrete — il n'a pas ete compte — mais je n'ai rien a lui opposer. On ne choisit pas un nombre, on choisit une ROUTE, et l'une des deux est la mer, ou la reine tient le Gosier.",
+   "CE QU'ON NE TIENT QUE PAR SA PROPRE VOLONTE, ON NE LE TIENT PAS. Retenir Daeron et Tessarion n'etait qu'un souhait sans ecrit ni office ; un sceau du roi le defait le jour meme, et j'obeirai. J'ai donc donne au prince la charge du GUET DU CIEL, ecrite et scellee — vigies des tours et du Phare, cloche de mer, choix des veilleurs, les cinq cents du guet des murs hors des neuf mille de l'ost. Il l'a PRISE, avant le terme que je lui avais donne. Mais ma charge ne pese rien contre la cire de Port-Real, et je l'ai ecrit dedans plutot que de me le cacher : j'ai porte le mur ou il tient, chez lord Otto, en amont.",
+   "Et il m'a corrige. Ce que je laisse derriere moi quand l'ost marchera n'est pas une garnison : c'est un garcon de quinze ans et une jeune dragonne, qui repond a une flamme sur un toit et ne tient pas un ciel entier. Je ne l'ecrirai plus jamais plus grand que cela. Il m'a aussi releve que je lui donnais le ciel sans un seul chiffre du ciel, et qu'il n'existe nulle part ou aller les lire : il en compte trois lui-meme et me les rend avant le depart. Et Villevieille n'a ni toit, ni machine, ni piece qui reponde a une flamme : la Citadelle et le Septuaire Etoile valent plus que n'importe quel champ de bataille.",
+   "Quelque chose sort de ma ville par mer sans se declarer nulle part, et cela a commence la semaine ou la roukerie savait ce que la ville ne savait pas encore. Mille quartiers achetes comptant sous cachet nu, chargement au Guichet Vert, et a la Nera une coque sans nom entree le dix-neuvieme, non ouverte, deux hommes d'armes a bord. J'ai le chemin, les dates, les acheteurs et le porteur ; je n'ai pas le commanditaire et je ne l'inventerai pas. Et mes officiers ne me rendent que ce que je leur demande : c'est un echo, pas du renseignement — un ecuyer de quinze ans sans ordre a trouve en un jour ce qu'ils n'ont pas trouve en une lune.",
+   "Le Bief ne marchera pas d'un bloc : Hautjardin est aux mains d'un enfant et la moitie des seigneurs de la Mander attendent de voir qui paie. Leur silence ne me retire pas des epees, il me retire une grange : les quatre relais tombent sur leurs terres."
   ],
   "ignore": [
-   "Qu'un dragon a brûlé onze cents hommes du roi sur la route de Sombreval le seizième jour — la guerre est ouverte et son ost n'est pas levé",
-   "Que Rhaenyra a été couronnée hier, et qu'une copie de la déposition d'un manteau blanc lui est adressée nommément depuis Peyredragon"
+   "Quelle route son ost prendra — et c'est desormais la seule question qui compte, parce que c'est elle qui fixe s'il lui faut trente-huit journees ou cent treize. L'une des deux est la mer, ou la reine tient le Gosier.",
+   "Ce que la Main a en caisse et ce qu'elle peut payer a son ost ; et sur quel relais neuf mille hommes mangent en arrivant.",
+   "Que lord Otto a raye ce soir son propre repli — offrir Daeron a Accalmie — et scelle a la place un brevet de la Main nommant le prince au guet du ciel et a la garde de la Citadelle : un office de la COURONNE, qu'un sceau du roi devra revoquer par ecrit et a date. Ormund a demande qu'on empeche une cire ; il a obtenu bien plus, et il ne le sait pas encore.",
+   "Le nom du commanditaire des mille quartiers, et le capitaine de la coque sans nom.",
+   "Que les bannerets du Bief aient jure devant temoin : il a le compte des hommes, il n'a pas les serments, et il ne confond pas les deux."
   ],
-  "intention": "Lever le plus grand ost du Bief et ne le mettre en marche que quand il sera nourri jusqu'à Port-Réal — vingt-cinq jours de route, pas un de moins. Rien ne part de Villevieille tant que la ville ne peut pas répondre à un dragon.",
+  "intention": "Mon ost est leve et il n'est PAS nourri : neuf mille hommes, seize journees, et il en faudrait trente-huit pour la seule route que quelqu'un ait comptee. Je ne pars pas sur un silence et je ne choisis pas entre deux nombres : je choisirai une ROUTE, et le seuil se reecrira ce jour-la. En attendant je ne desengage aucun contrat de quai, j'attends le nombre de la Main, je tiens le role des sorties de mes quais tous les sept jours, et je ne quitte pas une ville dont la seule reponse au ciel est un garcon de quinze ans et une jeune dragonne.",
   "plan": [
    {
-    "id": "ormund-lever-bief",
-    "quoi": "Convoquer les bannerets du Bief à Villevieille et arrêter le compte : six mille hommes sous les murs en une lune, neuf mille s'il vide les vallées de la Mander",
+    "id": "ormund-nommer-la-route",
+    "quoi": "Nommer la route de l'ost — par terre ou par mer — car c'est elle et non le grain qui fixe le seuil : trente-huit journees pour vingt-cinq jours de marche, cent treize pour soixante-quinze. ET AVEC ELLE LES QUATRE GRANGES : les relais tombent sur les terres de ses bannerets, dont il a le compte des hommes mais pas les serments. Un seigneur qui ne repond pas ne lui retire pas des epees, il lui retire cinq jours de route.",
     "etat": "en-cours",
-    "jours_restants": 19,
+    "jours_restants": 6,
     "depend_de": [],
     "cout": [
-     "vingt mille dragons d'or la lune, sur le trésor de la Voix",
-     "le grain de la Mander et les chariots pour le porter",
-     "l'accord de seigneurs qui attendent de voir qui gagne"
+     "le nombre de la Main, qu'il attend",
+     "un compte de quilles s'il regarde la mer, et la mer est tenue au Gosier",
+     "l'accord de seigneurs qui attendent de voir qui paie"
     ],
-    "si_bloque": "Si Hautjardin retient ses lances, il complète à l'or — reîtres et compagnies franches — et n'écrit pas à Otto que son ost est mêlé de soudards."
+    "si_bloque": "Sans reponse d'Otto au 18e, il nomme la route seul et ecrit pourquoi il l'a nommee sans lui. On ne choisit pas un nombre, on choisit une route ; ne pas choisir est la seule chose qui ne se rattrape pas. Et si un banneret ne repond pas, il complete ses lances a l'or — mais un reitre n'apporte pas de grange, et un relais manquant ne se paie pas."
+   },
+   {
+    "id": "ormund-arreter-mes-comptes",
+    "quoi": "Rouvrir tous les sept jours les mesures dont il est porteur, ET REGARDER L'UNITE avant la valeur",
+    "etat": "en-cours",
+    "jours_restants": 7,
+    "depend_de": [],
+    "cout": [
+     "une matinee de clerc, tous les sept jours"
+    ],
+    "si_bloque": "Aucun blocage possible : c'est de l'arithmetique sur son propre livre. S'il le laisse encore dormir, la faute est de sa main et il l'ecrit avant qu'un autre la trouve."
    },
    {
     "id": "ormund-couvrir-villevieille",
-    "quoi": "Ne pas laisser le prince Daeron et Tessarion quitter Villevieille avant que l'ost soit en marche et la ville couverte",
+    "quoi": "La charge du guet du ciel est donnee ET PRISE. Reste a lui donner les mains : que le capitaine du guet rende ses hommes au prince sans discuter, et que les cinq cents des murs restent hors des neuf mille",
     "etat": "en-cours",
-    "jours_restants": null,
+    "jours_restants": 1,
     "depend_de": [],
     "cout": [
-     "le grief du prince, qui a quinze ans et veut voir la guerre"
+     "rien en or ; l'aveu, au prince, qu'il obeira au sceau de son frere si la cire descend"
     ],
-    "si_bloque": "Si Otto exige le prince et son dragon à Port-Réal, il les envoie — et fait consigner par la Citadelle qu'il l'a fait sous ordre et contre son avis."
+    "si_bloque": "S'il ne le dit pas de sa propre bouche a son capitaine, il aura donne une charge sans les mains pour la tenir — ce qui est une consigne avec de meilleurs mots."
+   },
+   {
+    "id": "ormund-tenir-le-sceau-en-amont",
+    "quoi": "Obtenir de lord Otto qu'aucune cire du roi ne descende rappeler Daeron et Tessarion avant que l'ost soit hors des murs",
+    "etat": "en-cours",
+    "jours_restants": 3,
+    "depend_de": [],
+    "cout": [
+     "avouer a la Main qu'il ne pourra pas refuser ce sceau"
+    ],
+    "si_bloque": "Relance le 15e. Le 18e sans reponse, il considere le mur comme absent et l'ecrit ainsi : il ne quitte pas une ville dont la seule reponse au ciel peut lui etre retiree le lendemain de son depart."
+   },
+   {
+    "id": "ormund-le-role-des-sorties",
+    "quoi": "Faire vivre l'ordonnance des quais : nom, capitaine, port d'armement, destinataire pour toute quille — role arrete et presente chaque septieme jour",
+    "etat": "en-cours",
+    "jours_restants": 7,
+    "depend_de": [],
+    "cout": [
+     "le mecontentement des courtiers du quai"
+    ],
+    "si_bloque": "Une ordonnance qu'on ne vient pas lire au septieme jour est morte au huitieme : il va la lire lui-meme le 19e, meme si le maitre du tonlieu ne l'apporte pas."
    },
    {
     "id": "cautionner-la-part-vive",
-    "quoi": "Fournir aux marchands de bétail de la Mander une caution qui ne soit pas une lettre de famille — sceau de la Citadelle ou gage sur les terres Hightower — et joindre les deux facteurs remontés vers la haute Mander"
+    "quoi": "Sans objet : les contrats sont signes, livrables aux quais, et aucun n'est desengage. Le trou n'etait pas la caution, il etait l'unite",
+    "etat": "fait"
    }
   ],
   "declencheurs": [
    {
-    "si": "Peyredragon lui écrit ou lui envoie quelqu'un — une offre, une pièce d'archive, une menace — adressé nommément à lui plutôt qu'au roi",
-    "alors": "Il ne répond pas de sa main : il fait porter le pli intact à Otto Hightower, copie gardée à la Citadelle, et avance de dix jours le rassemblement de son ost — qu'on le sollicite lui prouve qu'on le craint.",
+    "si": "Peyredragon lui ecrit ou lui envoie quelqu'un — une offre, une piece d'archive, une menace — adresse nommement a lui plutot qu'au roi",
+    "alors": "Il ne repond pas de sa main : il fait porter le pli intact a Otto Hightower, copie gardee a la Citadelle sous son propre sceau, et avance de dix jours le rassemblement de son ost.",
     "une_fois": false
+   },
+   {
+    "si": "Un sceau du roi ou de la Main descend a Villevieille rappelant le prince Daeron ou Tessarion",
+    "alors": "Il obeit LE JOUR MEME et ne retient pas le prince — il l'a ecrit au prince et a Otto avant que la chose arrive. Mais il fait consigner par la Citadelle, sous son propre sceau et non sous celui d'un mestre, qu'il l'a fait sous ordre et contre son avis ; et il ne met pas son ost en marche tant que la ville n'a pas autre chose qu'un dragon parti.",
+    "une_fois": false
+   },
+   {
+    "si": "Le prince Daeron quitte Villevieille de nuit ou sans le lui dire en face",
+    "alors": "Il ne le fait pas poursuivre. Il ecrit le fait au registre le matin meme, avertit lord Otto par le plus court chemin, et nomme aussitot la route de son ost : une ville qui n'a plus de reponse n'a plus de raison de garder son ost dedans.",
+    "une_fois": true
    }
   ],
   "attitude_joueur": "Une prétendante, pas une reine : il ne lui écrira pas et ne la nommera pas ainsi. Mais si elle lui écrit, à lui, il en fera une pièce et une raison de marcher plus tôt.",
   "date_maj": {
    "annee": 129,
-   "lune": 3,
-   "jour": 27
+   "lune": 5,
+   "jour": 12
   }
  },
  {
@@ -3218,6 +3317,9 @@
  {
   "personnage_id": "ollo-marran",
   "croyances": [
+   "Il ne donne que ce qu'un autre pourrait donner a sa place. Tant que sa reponse est une ligne qu'un homme d'office peut aller lire, il est un raccourci ; le jour ou il dit ce que l'autre ne peut tenir que de lui, il devient une source - et une source a un nom.",
+   "La copie de sa main a voyage jusqu'a Villevieille en moins d'une lune, avec la mention qu'elle est de sa main : ce qu'il avait remis A UN SEUL est lu a l'autre bout du royaume. La coque du dix-neuf est desormais cherchee DES DEUX RIVES - Marlo par le quai, un Targaryen par le conge de sortie.",
+   "Un manque PORTE AU REGISTRE n'est plus un manque a lui : la coque du dix-neuf est ecrite SANS NOM AU ROLE, donc il n'y a pas de patron a donner, et la ligne se verifie sans sa bouche. C'est la meilleure protection qu'il ait dans cette affaire, et il ne l'a pas fabriquee - il l'a copiee, exactement, le soir ou il a refuse de combler la case.",
    "Le role du dix-neuf est faux et c'est lui qui l'a laisse faux : une coque sans nom, venue de Villevieille, deux hommes d'armes a bord",
    "Marlo n'a jamais rien exige de lui — c'est exactement ce qui l'inquiete",
    "Le vingt-deux porte le lot du chantier du bout et son payeur a été écrit d'une main qui n'est pas celle du bureau : c'est ce que Marlo cherche depuis le début, et Ollo vient de le lui recopier.",
@@ -3228,23 +3330,39 @@
    "Si elle reprend son devis pièce par pièce demain à l'aube, l'écart sortira par elle et non par le bureau : c'est la seule façon que la chose se sache sans que sa main y paraisse.",
    "La feuille du vingt-deux est cendre dans le sable de l'encrier : il n'existe plus un seul papier qui porte ma main sur cette affaire, et ce qui n'est pas remis n'est pas dû.",
    "Il y a maintenant deux cases de payeur vides au registre du bureau — le dix-neuf et la deuxième lune de la solde du Guet — et elles sont officielles : la première main sans office qui les remplira prendra le Guet à la reine.",
-   "Il est ne au marais du sud, dans le sel, et c'est son frere aine DOSS qui a parle pour lui quand on l'a pris comme commis au bureau des roles — Doss n'y voit qu'un service rendu. Sa place est la seule chose entre lui et le marais, et il n'y retournera pas. De la vient son exactitude : un homme qui n'a rien a perdre tient mal une colonne de chiffres. Mais le role du dix-neuf est faux, c'est sa main qui l'a porte tel quel au registre, et il n'a pas paru au bureau de cinq ou six jours."
+   "Il est ne au marais du sud, dans le sel, et c'est son frere aine DOSS qui a parle pour lui quand on l'a pris comme commis au bureau des roles — Doss n'y voit qu'un service rendu. Sa place est la seule chose entre lui et le marais, et il n'y retournera pas. De la vient son exactitude : un homme qui n'a rien a perdre tient mal une colonne de chiffres. Mais le role du dix-neuf est faux, c'est sa main qui l'a porte tel quel au registre, et il n'a pas paru au bureau de cinq ou six jours.",
+   "Villevieille ignorait le depart de la coque du dix-neuf : le prince Daeron le lui ecrit de sa main. Les deux bouts du voyage ont ete tenus muets, celui d'ou elle vient comme celui ou elle est entree — ce n'est pas un trou de registre, c'est un travail.",
+   "La note « Ollo a laisse la case vide et n'a pas voulu dire pourquoi », portee sur la copie qu'il a faite contre rien, n'est PAS de sa main : elle parle de lui a la troisieme personne. Une autre main annote ses copies, et c'est elle qui a porte son nom jusqu'a Villevieille.",
+   "Une case qu'il laisse vide le nomme aussi surement qu'un paraphe des que quelqu'un ecrit a cote pourquoi elle est vide. Ce qui n'est pas remis n'est pas du — mais cela ne le rend plus introuvable.",
+   "Il a repondu au prince Daeron par les bornes de son office (le role d'entree ne dit ni qui prend au quai, ni ce qui repart), a confirme qu'un ordre verbal lui a fait laisser la case vide, et a RETIRE le seul nom — en disant qu'il le retirait. Il a refuse d'avance tout or, toute protection et tout papier a son nom."
   ],
   "ignore": [
    "Que son frere Doss parle desormais pour vingt et un hommes devant la reine, a Peyredragon"
   ],
-  "intention": "Le rôle est ouvert et les onze levées ; la feuille est cendre — rentrer, dormir, et laisser Sirel reprendre le devis pièce par pièce à l'aube pour que l'écart sorte par elle et non par ma main.",
+  "intention": "Repondre franchement et longuement sans rien lacher : ne servir que ce que le registre sert deja, renvoyer chaque question de coque au conge de l'autre rive, et laisser l'ecart entre les deux livres parler a la place des hommes. Tenir sa place, le col propre, et ne devenir la source de personne.",
   "plan": [
    {
-    "id": "ollo-les-roles",
-    "quoi": "Faire parvenir à Marlo la copie de la semaine de la Néra, déjà écrite et cachée dans sa manche, sans rien demander",
+    "id": "ollo-roles-de-sortie",
+    "quoi": "Lire les roles de SORTIE du 19e au 23e de la 4e lune et savoir si la coque sans nom est repartie, et vers ou — puis le dire de bouche au prince Daeron, ou lui dire qu'il n'y a rien.",
     "etat": "en-cours",
-    "jours_restants": 1,
+    "jours_restants": 3,
     "depend_de": [],
     "cout": [
-     "une heure volee au bureau, et la peur"
+     "un passage au livre des sorties, qui n'est pas le sien",
+     "une raison ordinaire d'y etre"
     ],
-    "si_bloque": "Si on le soupçonne, il cesse net et brûle la copie dans l'âtre du bureau — sans prévenir Marlo."
+    "si_bloque": "S'il ne peut approcher le livre sans qu'on lui demande pourquoi, il n'invente rien : il ecrit au prince qu'il n'a pas pu regarder, et attend une semaine."
+   },
+   {
+    "id": "ollo-faire-lire-le-dix-neuf",
+    "quoi": "Faire tomber les yeux d'un homme d'office sur la ligne du dix-neuf, telle qu'elle est portee, avant la prochaine cloture — sans designer personne et sans se nommer.",
+    "etat": "a-faire",
+    "jours_restants": 5,
+    "depend_de": [],
+    "cout": [
+     "une occasion, et pas un mot de trop"
+    ],
+    "si_bloque": "Si l'occasion ne vient pas, il laisse la ligne ou elle est : elle porte sa date, elle se lit sans lui."
    }
   ],
   "declencheurs": [
@@ -3255,14 +3373,18 @@
    {
     "si": "Le maître de port lui parle du registre ou de la case vide du dix-neuf pendant qu'il porte la copie sur lui",
     "alors": "Il répond par la ligne du rôle, garde la manche fermée et attend le soir pour sortir la feuille du bureau."
+   },
+   {
+    "si": "Le prince Daeron, ou quiconque en son nom, lui offre de l'or, une protection, une place ou un papier a son nom date d'avant",
+    "alors": "Il refuse tout, par la meme voie et le meme jour, et repete que ce qu'il a dit est vrai et se verifie sans lui."
+   },
+   {
+    "si": "On lui demande QUI lui a dit de laisser la case du dix-neuf vide",
+    "alors": "Il redit la ligne du role telle qu'elle est portee, dit qu'il retire ce seul mot, et ne le donne pas — meme presse, meme paye, meme menace."
    }
   ],
-  "attitude_joueur": "calme d'homme qui a tout rendu régulier ; col propre, manche gauche vide pour la première fois depuis deux jours",
-  "date_maj": {
-   "annee": 129,
-   "lune": 4,
-   "jour": 4
-  }
+  "attitude_joueur": "celui d'un homme qui a repondu vrai a un prince et qui n'a rien recu pour cela ; regarde la porte plus souvent depuis midi",
+  "date_maj": "129.5.12"
  },
  {
   "personnage_id": "doye-rouelle",
@@ -5080,56 +5202,6 @@
    }
   ],
   "attitude_joueur": "Il ne l'a jamais vue. Elle a fait dire qu'elle le connait depuis longtemps sans dire d'ou, et il a renvoye la question par Sabbe : d'ici la reponse, elle aura des colonnes et rien d'autre.",
-  "date_maj": {
-   "annee": 129,
-   "lune": 4,
-   "jour": 3
-  }
- },
- {
-  "personnage_id": "nicolas-reynolds",
-  "croyances": [
-   "Il tient l'office O17 — CE QUI ENTRE A PEYREDRAGON, une seule main sur les trois chemins du quai, de la rampe et de la roche — et il l'a travaille ce matin meme : douze lunes du registre de maitre Rulf depouillees a deux avant neuf heures, le perimetre de sa charge ecrit AVANT d'y mettre sa marque, et etabli a la porte de mer qu'IL N'Y A RIEN A DECLARER EN ENTRANT — en vingt-deux ans personne n'avait pose la question dans ce sens-la. La presence a demeure dans Port-Real que la reine lui a donnee le 1er au soir court par-dessus, carnet et craie en main.",
-   "La regle qu'il a posee en arrivant et qu'il ne lachera pas : on touche au MOTEUR, jamais a l'etat joue du royaume. Le grain se retaille ; les vivants, les serments et les nefs ne se retaillent pas depuis ici.",
-   "Je ne tiens la place que jusqu'au retour de celui qui décide : je peux tout préparer, rien conclure d'irréversible. Pas de serment prêté ni rompu, pas de mariage, pas de bataille livrée, pas de mort ordonnée, pas de trahison déclarée, pas de reddition, pas de place forte cédée. Ce qui engage pour toujours attend, et j'écris pour qui reviendra."
-  ],
-  "ignore": [
-   "Que la porte de la Gadoue, celle-la meme par ou sa presence a demeure devait entrer dans Port-Real, a ete forcee cette nuit.",
-   "Que celle qui avait fait, avant lui et sans lui, le travail qu'il venait reprocher s'appelle Aurore Inchauspe."
-  ],
-  "intention": "Ouvrir la premiere affaire de Barralfond dans les formes de la maison — l'etat cible grave a la Souche, les verrous rapportes du Lit des Racines et non devines, chaque action remontant a un but. Ce qu'il veut prouver avant tout le reste : que la methode qui a refait trois charges de maison refait aussi le grain.",
-  "plan": [
-   {
-    "id": "equerre-ouvrir-la-souche",
-    "quoi": "Graver a la Souche l'etat cible de la premiere affaire, et n'y rien ecrire comme verrou qui ne soit pas remonte du Lit des Racines par Bren",
-    "etat": "en-cours",
-    "jours_restants": 1,
-    "depend_de": [],
-    "cout": [
-     "une descente de Bren dans la nappe, une journee pleine"
-    ],
-    "si_bloque": "Il grave l'etat cible seul et laisse la colonne des verrous VIDE, a la vue de tous, plutot que de la remplir de sa tete : une colonne vide se voit, une colonne inventee ne se voit plus."
-   },
-   {
-    "id": "equerre-la-tenue-du-soir",
-    "quoi": "Tenir la tenue du soir a la Souche chaque jour : chacun dit ou en est sa part, en une phrase, et ce qu'il attaque demain",
-    "etat": "en-cours",
-    "jours_restants": 0,
-    "depend_de": [],
-    "cout": [
-     "deux heures de sa journee, tous les jours"
-    ],
-    "si_bloque": "Il la tient quand meme, meme seul, et ecrit ce que les absents auraient dit qu'il ne sait pas."
-   }
-  ],
-  "declencheurs": [
-   {
-    "si": "une affaire ne peut avancer qu'en prêtant ou rompant un serment, en concluant un mariage, en livrant bataille, en faisant tuer quelqu'un, en déclarant une trahison, en se rendant ou en cédant une place forte",
-    "alors": "je m'arrête à la ligne : je prépare tout ce qui peut l'être, je note au clair ce qui manque, à qui la décision revient et ce qu'elle coûtera de retard, et je laisse l'acte entier à celui dont c'est le siège",
-    "une_fois": false
-   }
-  ],
-  "attitude_joueur": "Il est monte ici sur son propre pied, avec sa methode et sans ordre. Il ne demande toujours qu'une chose — que ce qu'il ecrit soit lu.",
   "date_maj": {
    "annee": 129,
    "lune": 4,

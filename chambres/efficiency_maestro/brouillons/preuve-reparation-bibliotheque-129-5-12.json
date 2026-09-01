@@ -1,0 +1,39 @@
+{
+  "type": "preuve-reparation-bibliotheque/1",
+  "date": "129.5.12",
+  "ref": "vmti2d01qxnti",
+  "objet": "Rendre de nouveau les livres adressables sans confondre accès anonyme et siège incarné.",
+  "avant": {
+    "adresse": "http://localhost:3129/books",
+    "observation": "HTTP 200 avec books=[] et boites=[]",
+    "cause_etablie": "etat/books/_ordre.json nommait registre-ouvrages-archive, mais le fichier manquait ; serveur/routes/livres.js masquait l'exception globale en servant deux listes vides.",
+    "piece_de_provenance": ".agents-runtime/backups/reset-braavos-activity-20260901-041211/removed/etat/books/registre-ouvrages-archive.json"
+  },
+  "correction": {
+    "manifeste_historique": "etat/books/_ordre.json remis à [] conformément à docs/books.md",
+    "volume_retabli": "etat/maisons/maison-serenissima/documents/books/registre-ouvrages-archive.json",
+    "manifeste_maison": "registre-ouvrages-archive ajouté à etat/maisons/maison-serenissima/documents/books/_ordre.json",
+    "normalisation": "maison_id=maison-serenissima ; salle_id=braavos-table-peinte"
+  },
+  "preuve": {
+    "chargeur_global": {
+      "volumes": 145,
+      "registre_present": true,
+      "lignes_registre": 4
+    },
+    "porte_commune_depuis_siege_marco": {
+      "adresse": "http://localhost:3129/books?jeton=homme%3Aefficiency-maestro",
+      "books": 12,
+      "boites": 3,
+      "registre_visible": 1,
+      "volumes_de_chambre_visibles": 9
+    },
+    "gardes": [
+      "node serveur/test_bibliotheque.js : OK ; tick général : aucune anomalie visant registre-ouvrages-archive",
+      "node serveur/test_piece_http.js : un manifeste invalide rend HTTP 503 avec erreur bibliotheque-indisponible"
+    ],
+    "porte_apres_rechargement": "Le chemin assis reste HTTP 200 avec ses livres et ses boîtes ; la correction d'erreur ne change pas le chemin valide."
+  },
+  "reserve": "Le rattrapage restaure la lecture et la provenance. Il ne prouve pas que les quatre verdicts historiques du registre ont été rejoués aujourd'hui par leurs lecteurs d'origine.",
+  "apprentissage": "Une réponse de repli HTTP 200 peut masquer une faute globale. L'épreuve doit nommer le siège, contrôler le contenu attendu et rechercher l'exception avant d'attribuer une liste vide au métier servi."
+}

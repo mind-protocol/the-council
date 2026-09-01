@@ -120,17 +120,23 @@ def force_narrative(A, N, dire, joueur=None):
         rout, chem, _ = mod_presence.charger()
         chat = mod_presence.Chateau(chem)
         pj, fiches = mod_presence.joueurs(), (rout.get("gens") or {})
+        dedans = q.get("dedans") or {}
         dehors = q.get("dehors") or {}
-        au_loin = set(dehors)
-        for pid in list(q.get("dedans") or {}) + list(dehors):
+        # Une absence totale d'ancre ne doit pas abolir la journee du monde.
+        # Le quartier borne les questions spontanees du joueur ; une depeche
+        # explicite doit encore pouvoir atteindre toute tete qui a une routine
+        # et un creux. `dehors` est vide quand aucun siege n'est occupe, donc
+        # l'ancienne union dedans+dehors rendait alors tous les PNJ muets.
+        au_loin = set(tetes) - set(dedans)
+        for pid in tetes:
             c = mod_presence.creux(pid, rout, chat)
             if c:
                 creux_de[pid] = c
                 # Le motif du dehors reste dit — il explique pourquoi il ne
                 # posera pas de question de lui-meme —, mais il ne vaut plus
                 # empechement : il a ses heures, et on peut le depecher.
-                if pid in dehors:
-                    motif[pid] = dehors[pid]
+                if pid not in dedans:
+                    motif[pid] = dehors.get(pid) or "hors des quartiers occupes"
             # Un muet se dit POURQUOI il est muet, sinon on repare la mauvaise
             # chose : un siege occupe est normal, une journee fermee est un
             # choix, une fiche manquante est une faute.
@@ -139,7 +145,9 @@ def force_narrative(A, N, dire, joueur=None):
             elif pid not in fiches:
                 motif[pid] = "sans routine"
             else:
-                motif[pid] = dehors.get(pid) or "journee fermee"
+                motif[pid] = (dehors.get(pid) or
+                              ("hors des quartiers occupes"
+                               if pid not in dedans else "journee fermee"))
     except Exception as e:
         dire("  (quartier indisponible : {})".format(str(e)[:80]))
 

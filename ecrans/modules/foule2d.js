@@ -25,6 +25,9 @@ window.Foule2d = (() => {
   let toile = null, ctx = null;
   let hote = null, vueDe = null, source = "/monde";
   let manif = null, rangs = null, pleinAir = null, voirie = null;
+  // Les corps nommes, decides dans l'etat (et non cuits dans les cellules).
+  // Ils sont peu nombreux et restent une couche statique au-dessus de la foule.
+  let nommes = [], nommesPoints = [];
   let masque = null;                   // le filet : un bit par mètre carré
   let cellules = [], centre = null;
   let marche = false;                  // l'horloge tourne-t-elle
@@ -615,6 +618,15 @@ window.Foule2d = (() => {
       ctx.fillStyle = couleur;
       ronds(pts, r);
     }
+    // Un citoyen importe doit exister sur le plan 2D, y compris sous un toit.
+    // Une teinte d'encre et un rayon legerement plus grand le distinguent du
+    // semis anonyme sans transformer la ville en carte d'icones.
+    if (nommesPoints.length) {
+      ctx.fillStyle = "#4c365f";
+      ctx.globalAlpha = .92;
+      ronds(nommesPoints, Math.max(2.0 * dpr, r * 1.18));
+      ctx.globalAlpha = 1;
+    }
   }
 
   // ON NE RECALCULE PAS QUATRE CENT MILLE JOURNÉES SOIXANTE FOIS PAR SECONDE.
@@ -784,6 +796,21 @@ window.Foule2d = (() => {
       rangs = J.rangs(manif);
       const table = await J.table(source);
       pleinAir = new Set(table.plein_air || table.services || []);
+      // `corps.json` vaut pour tous les mondes. Ici la page connait le sien par
+      // son endpoint (`/monde/braavos`) et ecarte les autres avant de peindre.
+      try {
+        const donnees = await fetch(source + "/corps").then((r) =>
+          r.ok ? r.json() : { corps: [] });
+        const segments = source.split("/").filter(Boolean);
+        const monde = segments[segments.length - 1] || "portreal";
+        nommes = (donnees.corps || []).filter((c) =>
+          c.bat !== undefined && Number.isFinite(+c.x) && Number.isFinite(+c.y) &&
+          (!c.monde || c.monde === monde || (monde === "monde" && c.monde === "portreal")));
+        nommesPoints = [];
+        nommes.forEach((c) => nommesPoints.push(+c.x, +c.y, 0, 0));
+      } catch (e) {
+        nommes = []; nommesPoints = [];
+      }
       await reprendreHeure();
       voirie = await J.voirie(source);
       // Le masque est un confort, pas une dépendance : s'il manque, la foule
@@ -861,6 +888,7 @@ window.Foule2d = (() => {
       dehors: nuage.dh || 0, aEcran: nuage.total,
       points: nuage.dedans.length / 4 +
         [...nuage.tas.values()].reduce((n, t) => n + t.length / 4, 0),
+      nommes: nommes.length,
       toile: toile ? [toile.width, toile.height] : null,
       vue: vueDe && vueDe(),
       metresParPixel: rep ? +(1 / rep.k).toFixed(2) : null,

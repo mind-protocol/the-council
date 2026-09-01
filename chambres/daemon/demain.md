@@ -1,3 +1,3 @@
-Le message à Rhaenyra est préparé, pas envoyé : Bec-de-Fer rayé, NON provisoire reçu, porte forcée rouverte à J−20 faute de nom vérifié.
+J’ai quatre souvenirs, pas deux hommes. Mysaria doit vérifier lesquels vivent encore, leur poste, leur relève et leur jeton — sans mon nom, sans roukerie, retour par barque.
 
-Prochaine étape : porter ces mots à la reine avant J−20, afin qu’un éventuel interdit arrive avant que la voie bruyante devienne le plan.
+Quand deux faits reviendront, l’or suivra. S’ils valent zéro, elle écrira zéro ; je n’achète pas ses inventions.

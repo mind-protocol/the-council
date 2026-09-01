@@ -9,7 +9,7 @@ SCRIPTS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if SCRIPTS not in sys.path:
     sys.path.insert(0, SCRIPTS)
 
-from agents import runtime  # noqa: E402
+from agents import runtime, work_identity  # noqa: E402
 
 
 def main():
@@ -21,20 +21,36 @@ def main():
         # fournisseur annonce a son depart, sans course avec l'operateur.
         os.environ["LE_CONSEIL_FOURNISSEUR"] = charge["fournisseur"]
         rep = runtime.appeler(**charge["appel"])
+        artifact = None
         trace = charge.get("trace") or {}
         if trace:
             try:
                 from agents import trace as vecu
-                vecu.deposer(trace["qui"], charge["appel"]["session_id"],
-                              etiquette=trace.get("etiquette"),
-                              transcript=rep.get("transcript_path"),
-                              provider=rep.get("provider"),
-                              contexte_id=trace.get("contexte_id"),
-                              ref=trace.get("ref"))
+                artifact = vecu.deposer(
+                    trace["qui"], charge["appel"]["session_id"],
+                    etiquette=trace.get("etiquette"),
+                    transcript=rep.get("transcript_path"),
+                    provider=rep.get("provider"),
+                    contexte_id=trace.get("contexte_id"),
+                    ref=trace.get("ref"))
             except Exception:
                 pass
+        identity = rep.get("continuous_work_identity")
+        if identity:
+            work_identity.terminer_attempt(
+                identity, rep.get("compute_event_id"), "succeeded",
+                term=bool(artifact), artifact=artifact)
         print(json.dumps(rep, ensure_ascii=False), flush=True)
         return 0
+    except BaseException:
+        identity = (charge.get("appel") or {}).get("work_identity")
+        if identity:
+            try:
+                work_identity.terminer_attempt(
+                    identity, None, "failed", term=False)
+            except Exception:
+                pass
+        raise
     finally:
         try:
             os.unlink(requete)

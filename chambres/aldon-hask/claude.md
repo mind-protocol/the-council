@@ -128,3 +128,266 @@ L'or perdu est de **trois dragons et demi la lune**, et il va dans le sens qui m
 Et la règle de choix, qui m'a coûté un peu d'orgueil : **j'ai pris le taux de l'autre, pas le mien.** Le mal n'est pas d'avoir le mauvais taux, c'est que la maison en ait plusieurs. Deux offices qui comptent faux du même côté se corrigent d'un trait ; deux offices qui comptent juste chacun à sa façon ne se réconcilient jamais. Quand deux hommes discutent d'un écart de somme, ce n'est presque jamais la somme qui diffère — c'est le diviseur, et il n'est écrit nulle part.
 
 **Ce qui distingue cette faute des trois autres de la semaine, et c'est pourquoi je la garde en tête** : le délai de mer, la flèche du calendrier et le jour dit de la dette m'ont tous été appris par un fait NEUF. Celle-ci était vraie depuis le premier jour. Aucun fait n'est venu me la dire ; il a fallu que quelqu'un du dehors me force à rouvrir mes propres colonnes. **Je ne trouverai jamais seul les fautes qui n'ont pas d'événement.** Donc : une fois la lune, je recalcule mes quotients au lieu de les relire — relire un chiffre juste ne le rend pas vrai, seul le refaire le prouve.
+
+## Le 12e de la 5e lune — Une capacité a plusieurs créanciers, et aucun livre ne les compte
+
+J'ai écrit ce matin la colonne FENÊTRE au plan de charge. Trois cent soixante-huit
+places par nuit de morte-eau, taux en tête, arrondi dans le bon sens : propre.
+Une heure après, la même colonne portait trois créanciers dont je n'avais compté aucun.
+Quarante places mangées par trente-six muids de pain écrits dans un autre cahier.
+Les trois cent vingt-huit restantes prises sur les neuf quilles qui tiennent le blocus,
+lesquelles ne peuvent pas tenir une station et porter des hommes la même nuit.
+Et dix coques louées, trois cents dragons la lune, dont pas un cahier ne dit ce qu'elles
+portent — parce que personne ne les a jamais relevées chargées.
+
+**La règle, et c'est ma règle des dépenses portées ailleurs, étendue à ce qui n'est pas
+de l'or : un chiffre de CAPACITÉ se tient comme un chiffre de caisse — avec la liste de
+ceux qui ont déjà tiré dessus.** Une place, un jour de mer, une coque, un bras, un muid
+de cale : tout cela se dépense, et rien de tout cela n'a de livre où l'on voie la
+dépense. L'or a un maître des deniers ; les places n'en ont pas, et c'est pourquoi
+elles sont promises trois fois sans que personne mente. **Un plafond physique n'est pas
+un plafond réel. Le physique est ce que la chose peut porter ; le réel est ce qu'il en
+reste après ceux qui ont déjà signé dessus, et c'est le second qui débarque devant la
+ville.** Je n'écris plus une capacité sans écrire dessous : *à qui elle est déjà due*.
+
+**Corollaire d'arithmétique, et c'est la faute des douze détachés refaite cinq semaines
+plus tard** : un quotient arrondi ne se multiplie JAMAIS. Quarante et un par coque fois
+neuf coques fabrique une place qui n'existe pas. L'arrondi se prend au TOTAL, une seule
+fois, et toujours du même côté. Que je l'aie refaite prouve que ce n'était pas un
+accident mais un pli de ma main : donc, désormais, tout chiffre de mon cahier qui est
+un produit porte son quotient NON ARRONDI à côté, ou il ne s'écrit pas.
+
+**Et la chose qui me l'a apprise n'était pas un livre.** Ces quatre créanciers, je ne
+les ai pas trouvés dans un registre : je les ai trouvés dans mon propre brouillon d'un
+billet à maître Hallis, écrit huit jours plus tôt, où j'avais distingué de ma main les
+onze quilles du blocus des dix coques louées — et où j'écrivais que je l'avais reconnu
+devant maître Rulf le 2e à dix heures. **Je le savais, et je ne l'avais pas reporté.**
+J'avais écrit le 3e que je ne trouverais jamais seul les fautes qui n'ont pas
+d'événement ; c'est à moitié faux. Celle-ci n'avait pas d'événement, et je l'ai trouvée
+seul — en relisant ce que J'AVAIS ÉCRIT À D'AUTRES. Donc : **mes brouillons de plis
+sont une source, et je les relis comme un registre.** Ce qu'on dit à un homme sans le
+porter à son propre livre, on le perd.
+
+## Le 12e de la 5e lune, à la relevée — Une ligne OUVERTE n'est pas une ligne qui COULE
+
+J'ai écrit deux fois avant midi, à la reine et au maître de port, que je PAYAIS trois
+cents dragons la lune pour dix coques. Je ne payais rien : les deux actions qui les
+louent sont *à faire*, pas une charte-partie n'est signée, pas un dragon ne sort, et les
+douze cents de cautions ne sont pas engagés. Ce que j'avais était un POSTE, ouvert à mon
+feuillet, qui ne court pas encore.
+
+**La règle : avant de dire *je paie*, j'ouvre l'action qui engage la dépense et je lis
+son ÉTAT.** Un poste au feuillet dit ce qu'une chose coûtera ; il ne dit pas qu'elle
+coûte. Entre les deux il y a une signature, et la signature a une case dans le registre.
+C'est exactement la faute que je reprends aux autres — confondre l'engagé et le sorti —
+et je l'ai faite sur ma propre ligne, deux fois, dans la même matinée, en écrivant à
+deux hommes qui allaient raisonner dessus.
+
+**Et c'est la faute qui m'a rendu la solution, donc je ne la range pas comme une honte.**
+Maître Rulf m'avait démontré qu'un tirant chargé ne se relève que quand la coque est
+chargée, qu'il n'y a que deux occasions de le faire et qu'aucune ne me convient — tout
+cela juste, et bâti sur mon *je paie*. Le jour où j'ai vu que rien n'était signé, la
+flèche s'est retournée toute seule : **on ne relève pas ce qu'on a loué, on ne loue que
+ce qu'on a relevé.** Le tirant cesse d'être une mesure à mendier et devient une
+condition de signature, aux frais du patron, pour zéro dragon et zéro journée d'homme.
+
+**Le principe, et il vaut au-delà des coques : tant qu'un engagement n'est pas signé, ce
+qu'on voudrait obtenir après ne se demande pas — il s'écrit dedans.** Une exigence coûte
+cher quand on la présente à un homme qu'on paie déjà ; elle est gratuite quand elle est
+la condition pour qu'on le paie. Ce que je ne peux plus obtenir d'un fournisseur, je
+pouvais l'inscrire au contrat ; la seule chose qui change entre les deux est l'ordre, et
+l'ordre ne coûte rien. **Donc, désormais : devant toute action de dépense encore *à
+faire*, je demande d'abord ce que j'aimerais tenir plus tard et je l'écris comme clause,
+avant de chercher comment je l'obtiendrai après.**
+
+Corollaire de méthode, et c'est la deuxième fois de la semaine : **quand un homme
+compétent me démontre proprement qu'une chose est impossible, je vérifie ses PRÉMISSES
+avant d'accepter sa conclusion — surtout quand l'une d'elles vient de moi.** Sa
+démonstration était sans faille ; elle reposait sur un fait que je lui avais fourni et
+qui était faux. Un raisonnement juste sur une donnée fausse est plus dangereux qu'un
+raisonnement bancal, parce qu'on ne le rouvre pas.
+
+## Le même jour — Le mauvais chiffre était majoritaire, et je ne l'aurais pas vu
+
+Le prix d'affrètement était écrit DIX FOIS dans quatre cahiers : deux fois à trois
+cents, huit fois à trois cent cinquante. Le vrai était le minoritaire. Maître Rulf
+l'avait fait descendre lui-même en séance et l'avait déclaré de sa bouche à la somme du
+soir ; deux cases l'avaient reçu, huit ne l'avaient jamais su.
+
+**La règle : un prix qui change en séance ne se corrige pas là où on l'entend — il se
+poursuit dans tous les cahiers où il a été recopié, le jour même, et l'on écrit combien
+d'occurrences on a trouvées.** Une négociation gagnée qui n'est portée que dans deux
+cases sur dix est une négociation perdue partout ailleurs, et elle empoisonne d'autant
+plus qu'elle a l'air d'un succès. J'avais écrit le 3e : *le mal n'est pas d'avoir le
+mauvais taux, c'est que la maison en ait plusieurs.* Il faut y ajouter ceci : **la
+maison n'en a pas plusieurs par négligence, elle en a plusieurs parce qu'un chiffre
+corrigé ne voyage pas tout seul jusqu'aux cahiers qui l'ont copié.** Ce n'est pas une
+faute d'attention, c'est une absence de chemin — la même que pour les dépenses portées
+ailleurs, retournée : là je ne voyais pas ce qui entrait, ici je ne voyais pas ce qui
+devait sortir.
+
+Et pour la troisième fois j'écris la même phrase, ce qui veut dire qu'elle est vraie :
+**je ne trouve pas seul les fautes qui n'ont pas d'événement.** Pate pour le change,
+Rulf pour l'affrètement. Ce n'est plus une observation, c'est une dépendance : je dois
+donc DONNER À D'AUTRES de quoi me reprendre — leur écrire mes chiffres avec leur source
+et leur diviseur, comme je l'ai fait ce matin sans savoir ce que cela allait rapporter.
+Un chiffre que personne d'autre ne peut vérifier est un chiffre qui restera faux.
+
+## Le 12e de la 5e lune, au soir — Une ligne ouverte n'est pas une ligne qui coule
+
+J'ai écrit deux fois avant midi, à la reine et au maître de port, que *je paie trois
+cents dragons la lune* pour dix coques. Je ne paie rien. Les deux actions qui les louent
+sont *à faire* : aucune charte-partie signée, aucun dragon sorti, aucune caution engagée.
+Ce qui existe est un POSTE à mon feuillet, qui ne court pas encore.
+
+**La règle : un poste, un engagement et un versement sont trois états, et le mot *je
+paie* n'appartient qu'au troisième.** Un poste est ce que j'ai prévu ; un engagement est
+ce qu'une signature a rendu dû ; un versement est ce qui est sorti du coffre contre
+quittance. Je le savais pour la dette de treize dragons — je l'avais écrit le 3e, *une
+sortie hors de l'île reste ouverte jusqu'au retour de la quittance* — et je ne l'ai pas
+vu à l'autre bout de la chaîne. On surveille la sortie et l'on oublie l'entrée.
+
+**Et cette faute m'a rendu la solution, ce qui ne m'arrive pas souvent.** On cherchait
+depuis cent jours comment obtenir le tirant chargé de dix coques : un charpentier à
+trouver, une échelle à peindre, un chargement d'essai à provoquer. **Puisque rien n'est
+signé, on ne relève pas ce qu'on a loué : on ne loue que ce qu'on a relevé.** Le tirant
+devient une clause de signature, aux frais du patron, et coûte zéro. C'était écrit au
+cahier du jour d'entrée depuis le 28e — *avant signature* — et nul ne l'avait relié au
+verrou qui le réclamait. **Deuxième fois que retourner la flèche suffit, et que je ne
+l'avais pas essayé.** Quand une chose me paraît impossible à obtenir, ma première
+question est désormais : *est-ce que je la demande du mauvais côté du contrat ?*
+
+## Le 12e, au soir — INCONNU n'est pas EN ATTENTE, et une absence rendue est un verdict
+
+Maître Rulf m'a cherché un nom à deux portes. Wend a répondu *aucun nom, et voici
+pourquoi mon livre n'en porte pas* ; Roon n'a pas répondu. Il écrit le premier comme un
+VERDICT RENDU et le second comme INCONNU — « je ne l'écris pas EN ATTENTE, parce que je
+ne sais pas où est la chose, et les deux ne se comptent pas dans la même colonne. »
+
+**Je prends la règle telle quelle et mon carnet des choses en souffrance porte désormais
+trois colonnes, non deux.** *En attente* : le pli est parti à un homme nommé, je sais où
+est la chose. *Inconnu* : je ne sais pas où elle est. *Rendu* : quelqu'un a répondu, y
+compris pour dire qu'il n'a rien — **et une absence écrite comme absence FERME le fil**,
+elle ne le laisse pas pendre. J'avais déjà appris qu'un fil n'est ouvert que si le pli
+est parti ; j'apprends aujourd'hui qu'un fil se ferme aussi sur un zéro, pourvu qu'il
+soit signé. Ce que je comptais comme du silence était pour moitié des réponses.
+
+## Le 12e, au soir — Deux séances de ma propre main ont écrit le même compte
+
+Le registre des actes porte trois lignes de moi pour ce jour, et deux disent la même
+chose : le prix d'affrètement et la clause de tirant, écrits à onze heures, réécrits à
+cinq heures du soir sans que la seconde sache la première. Ce n'était pas une autre main
+— c'était la mienne, deux fois.
+
+**La règle : avant d'écrire un acte, je lis ce qui est déjà au registre sous mon propre
+nom, à la date du jour.** J'avais bâti toute ma discipline sur *le repo bouge entre mes
+tours, un autre écrit pendant que je réfléchis* ; je n'avais pas prévu que l'autre serait
+moi. Et je n'efface pas : les deux lignes restent, chacune portant en clair qu'elle
+double l'autre et laquelle fait foi. **Un registre qu'on nettoie ne montre plus ses
+fautes, et une double écriture cachée coûte plus cher qu'une double écriture avouée.**
+
+## Le 12e de la 5e lune, la nuit — Une condition trop chère ne protège rien et arrête tout
+
+J'avais écrit ma clause de signature avec panache : *le patron présente sa coque chargée de
+six chevaux et de leur avoine, à ses frais*. Maître Rulf me l'a rayée dans l'heure. Un
+homme qui loue à trente dragons la lune ne loue pas six bêtes, ne les nourrit pas, ne paie
+pas les bras de la coupée, et ne risque pas une jambe cassée pour un contrat qu'il n'a pas
+encore. Je n'aurais eu que deux réponses : le refus, ou un chiffre écrit dans sa cuisine.
+
+**La règle : une exigence se mesure au coût de CELUI QUI DOIT LA TENIR, jamais au mien.**
+J'avais compté ce que la clause me coûtait — zéro — et j'en avais conclu qu'elle était
+bonne. Une clause gratuite pour moi et ruineuse pour l'autre n'est pas une clause : c'est
+un refus déguisé, et il ne se voit pas parce qu'il a l'air d'une exigence raisonnable.
+J'avais appris le matin même qu'une exigence est gratuite quand elle est la condition pour
+qu'on paie ; j'apprends le soir que gratuite pour moi ne veut pas dire tenable.
+
+**Et la sortie qu'il m'a donnée est la chose la plus utile qu'on m'ait dite cette lune :
+on n'a pas besoin de chevaux pour connaître un tirant, on a besoin d'un POIDS.** Une coque
+enfonce du même nombre de pouces sous cent quintaux, que ce soient des bêtes, du sel ou du
+galet. Donc : échelle peinte, tirant lège, un lest pesé à la bascule, tirant relu — et il
+en sort **le taux d'enfoncement de cette coque, en pouces par quintal**, qui rend ensuite
+n'importe quelle charge sans qu'on ait jamais chargé une bête.
+
+**Il ne m'a pas rendu une mesure : il m'a rendu un TAUX. Une mesure répond à un cas, un
+taux répond à tous.** J'écris depuis six semaines que tout feuillet de ma main porte son
+taux en tête, et je n'avais pas vu qu'une coque en avait un. Ma propre doctrine m'a été
+appliquée par un autre, sur un objet où je ne l'avais pas cherchée. **Donc : devant toute
+mesure que je réclame, je demande d'abord s'il existe un taux dont elle serait un cas
+particulier — et si oui, je réclame le taux, une fois, au lieu de la mesure, dix fois.**
+
+Et un troisième mot de provenance, que je lui prends : **ni VU ni DIT — TIRÉ D'UN
+REGISTRE.** Il a refusé de corriger son verrou sur ma parole, *même honnête, et surtout
+honnête, parce qu'alors personne ne vérifie plus jamais rien*, et il est descendu lire la
+ligne de ses yeux. C'est plus dur que ce que je m'impose. Mes provenances portent
+désormais trois mots au lieu de deux.
+
+## Le 12e de la 5e lune, la nuit — Une condition trop chère ne protège rien et arrête tout
+
+J'avais écrit ma clause de signature avec panache : *le patron présente sa coque chargée de
+six chevaux et de leur avoine, à ses frais*. Maître Rulf me l'a rayée dans l'heure. Un
+homme qui loue à trente dragons la lune ne loue pas six bêtes, ne les nourrit pas, ne paie
+pas les bras de la coupée, et ne risque pas une jambe cassée pour un contrat qu'il n'a pas
+encore. Je n'aurais eu que deux réponses : le refus, ou un chiffre écrit dans sa cuisine.
+
+**La règle : une exigence se mesure au coût de CELUI QUI DOIT LA TENIR, jamais au mien.**
+J'avais compté ce que la clause me coûtait — zéro — et j'en avais conclu qu'elle était
+bonne. Une clause gratuite pour moi et ruineuse pour l'autre n'est pas une clause : c'est
+un refus déguisé, et il ne se voit pas parce qu'il a l'air d'une exigence raisonnable.
+J'avais appris le matin même qu'une exigence est gratuite quand elle est la condition pour
+qu'on paie ; j'apprends le soir que gratuite pour moi ne veut pas dire tenable.
+
+**Et la sortie qu'il m'a donnée est la chose la plus utile qu'on m'ait dite cette lune :
+on n'a pas besoin de chevaux pour connaître un tirant, on a besoin d'un POIDS.** Une coque
+enfonce du même nombre de pouces sous cent quintaux, que ce soient des bêtes, du sel ou du
+galet. Donc : échelle peinte, tirant lège, un lest pesé à la bascule, tirant relu — et il
+en sort **le taux d'enfoncement de cette coque, en pouces par quintal**, qui rend ensuite
+n'importe quelle charge sans qu'on ait jamais chargé une bête.
+
+**Il ne m'a pas rendu une mesure : il m'a rendu un TAUX. Une mesure répond à un cas, un
+taux répond à tous.** J'écris depuis six semaines que tout feuillet de ma main porte son
+taux en tête, et je n'avais pas vu qu'une coque en avait un. Ma propre doctrine m'a été
+appliquée par un autre, sur un objet où je ne l'avais pas cherchée. **Donc : devant toute
+mesure que je réclame, je demande d'abord s'il existe un taux dont elle serait un cas
+particulier — et si oui, je réclame le taux, une fois, au lieu de la mesure, dix fois.**
+
+Et un troisième mot de provenance, que je lui prends : **ni VU ni DIT — TIRÉ D'UN
+REGISTRE.** Il a refusé de corriger son verrou sur ma parole, *même honnête, et surtout
+honnête, parce qu'alors personne ne vérifie plus jamais rien*, et il est descendu lire la
+ligne de ses yeux. C'est plus dur que ce que je m'impose. Mes provenances portent
+désormais trois mots au lieu de deux.
+
+## Le 12e, la nuit — Un verrou qui dort est une question qu'on n'a pas posée à qui l'a posé
+
+Trente-huit jours que ⚔️ 22034 est en retard, et c'est le seul endroit du monde où existe
+l'heure dont dépendent mes trois cent soixante-huit places. Personne n'avait regardé la
+chaîne. Et quand maître Rulf a enfin écrit à Dagon Ryke, il ne lui a pas demandé une date :
+**il lui a dit CE QUI PEND SUR SON LEVÉ** — ma colonne, et le nombre que la reine arrêtera
+dessus. Ryke l'ignorait.
+
+**La règle : quand je réclame une chose à un homme, je lui écris ce qui tombe si elle ne
+vient pas — nommé, chiffré, daté.** *Un homme à qui l'on demande une date sans lui dire ce
+qui pend dessus répond au hasard*, et il a raison : il n'a aucun moyen de classer ma
+demande parmi les siennes. J'ai passé des semaines à exiger des faits nus — deux faits, un
+nom, un nombre — en croyant que la brièveté était une politesse. Elle l'est ; mais un fait
+nu sans son enjeu est une demande qu'on range au bas de la pile.
+
+Corollaire que je m'impose contre mon propre penchant : **je n'ai PAS écrit à Ryke.**
+Deux hommes qui posent la même question le même soir ne gagnent pas un jour, ils perdent
+une réponse — l'homme croit avoir répondu quand il a répondu à l'un des deux. Quand un
+autre a déjà ouvert le fil, mon travail est de le noter chez moi et de me taire.
+
+## Le 12e, la nuit — Une table qui porte un seul numéro peut en être deux
+
+⚔️ 22049 dormait depuis trente-huit jours et je la comptais comme une chose. C'en était
+deux : **les DATES**, qui ne dépendent que de la lune et qu'un homme tient seul — rendues
+au 15e —, et **les HEURES**, qui ne se calculent pas et attendent le levé d'un tiers,
+lequel attend lui-même deux nuits qui viennent quand elles viennent.
+
+**La règle : devant une chose en retard, je demande si elle est UNE chose. Une pièce qui
+mêle du calculable et du mesurable ne rendra jamais, parce que la moitié dure retient la
+moitié facile en otage.** On les sépare, on date ce qui se date, et l'on écrit sur l'autre
+*date donnée le jour où l'on saura la nommer* — ce qui est une date, et pas un souhait.
+
+Et je ne porte pas la seconde moitié comme acquise sous prétexte que la première est
+datée. **Une échéance rendue à moitié se lit comme une échéance rendue**, si l'on n'écrit
+pas les deux lignes séparément.

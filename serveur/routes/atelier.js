@@ -2,6 +2,8 @@
 // modules et le style servis au navigateur. Rien de tout cela n'est du jeu.
 const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
+const childProcess = require("child_process");
 const { RACINE } = require("../http");
 const { criticite, detailActivation, filMjActif, resumeActivations, sante } = require("../agents").activations; // LA PORTE serveur des agents
 const { chercherDansFlux, extraitDuFlux, filPersonnage, regie } = require("../agents").regie; // LA PORTE serveur des agents
@@ -10,12 +12,137 @@ const { portraitDefaut, portraitFrais } = require("../peinture").portraits; // l
 const { envoyer, fichierStatique } = require("../http");
 const { monPersonnage, qui } = require("../http");
 
+function chambreDe(personnageId) {
+  const noms = Array.from(new Set([
+    personnageId,
+    personnageId.replace(/-/g, "_"),
+    personnageId.replace(/_/g, "-"),
+  ]));
+  const chambres = path.join(RACINE, "chambres");
+  // AGENTS.md désigne la chambre active ; un ancien alias peut encore porter
+  // un claude.md et ne doit pas gagner seulement parce que son nom correspond
+  // exactement à l'id technique du personnage.
+  const canonique = noms.find((nom) =>
+    fs.existsSync(path.join(chambres, nom, "AGENTS.md"))) ||
+    noms.find((nom) => fs.existsSync(path.join(chambres, nom, "CLAUDE.md")));
+  return canonique || personnageId;
+}
+
+function deposerBordereau(req, res) {
+  const siege = qui(req, req.url);
+  if (!siege || !siege.personnage_id)
+    return envoyer(res, 403, JSON.stringify({ erreur: "siege-requis" }));
+  let corps = "";
+  let tropGrand = false;
+  req.on("data", (c) => {
+    if (tropGrand) return;
+    corps += c;
+    if (Buffer.byteLength(corps) > 65536) tropGrand = true;
+  });
+  req.on("end", () => {
+    if (tropGrand) return envoyer(res, 413, JSON.stringify({ erreur: "piece-trop-grande" }));
+    try {
+      const recu = JSON.parse(corps);
+      if (!recu || Array.isArray(recu) || recu.type !== "bordereau-reception/2" ||
+          !recu.preuve_geste || !recu.preuve_geste.etat ||
+          !recu.resultat_sous_jacent || !recu.resultat_sous_jacent.etat ||
+          !recu.decision) {
+        return envoyer(res, 400, JSON.stringify({ erreur: "bordereau-incomplet" }));
+      }
+      // Le lien d'un dépôt précédent n'entre ni dans la preuve ni dans son
+      // empreinte : redéposer la même pièce doit rendre la même adresse.
+      const bordereau = JSON.parse(JSON.stringify(recu));
+      delete bordereau.preuve_durable;
+      const id = crypto.createHash("sha256")
+        .update(siege.personnage_id + "\0" + JSON.stringify(bordereau))
+        .digest("hex").slice(0, 24);
+      const chambre = chambreDe(siege.personnage_id);
+      const dossier = path.join(RACINE, "chambres", chambre,
+        "brouillons", "receptions");
+      const fichier = path.join(dossier, id + ".json");
+      fs.mkdirSync(dossier, { recursive: true });
+      const depot = {
+        type: "depot-bordereau-reception/1",
+        depose_par: siege.personnage_id,
+        depose_a: new Date().toISOString(),
+        bordereau,
+      };
+      try {
+        fs.writeFileSync(fichier, JSON.stringify(depot, null, 2) + "\n",
+          { encoding: "utf-8", flag: "wx" });
+      } catch (e) {
+        if (e.code !== "EEXIST") throw e;
+      }
+      const lien = "/reception/preuves/" + siege.personnage_id + "/" + id;
+      return envoyer(res, 201, JSON.stringify({ id, lien }));
+    } catch (e) {
+      return envoyer(res, 400, JSON.stringify({ erreur: "json-invalide" }));
+    }
+  });
+}
+
+function etatComptoirMoyens(res) {
+  const script = path.join(RACINE, "scripts", "analyse", "comptoir_moyens.py");
+  childProcess.execFile(process.env.PYTHON || "python", [script, "--json"], {
+    cwd: RACINE,
+    encoding: "utf-8",
+    maxBuffer: 4 * 1024 * 1024,
+  }, (erreur, stdout, stderr) => {
+    // Le code 1 est le verdict normal « à instruire », pas une panne de la
+    // porte. Le code 2, une sortie illisible ou l'absence de Python ferment le
+    // guichet avec une réserve explicite.
+    const code = erreur && Number.isInteger(erreur.code) ? erreur.code : 0;
+    if (erreur && code !== 1) {
+      return envoyer(res, 502, JSON.stringify({
+        erreur: "comptoir-indisponible",
+        code_sortie: code,
+        reserve: String(stderr || erreur.message || "").trim(),
+      }));
+    }
+    try {
+      const resultat = JSON.parse(stdout);
+      resultat.code_sortie = code;
+      return envoyer(res, 200, JSON.stringify(resultat));
+    } catch (e) {
+      return envoyer(res, 502, JSON.stringify({
+        erreur: "sortie-comptoir-illisible",
+        code_sortie: code,
+      }));
+    }
+  });
+}
+
 function traiter(req, res, url) {
   if (req.method === "GET") {
     if (url === "/jeu.css") return fichierStatique(res, "jeu.css", "text/css; charset=utf-8");
     // banc d'essai des voix : ne consomme pas le flux, donc ne double personne
     if (url === "/essai-voix") return fichierStatique(res, "essai-voix.html", "text/html; charset=utf-8");
     if (url === "/essai-son") return fichierStatique(res, "essai-son.html", "text/html; charset=utf-8");
+    // Le bordereau de réception : un atelier public, sans lecture de l'état
+    // privé et sans écriture serveur. Il éprouve une adresse depuis le
+    // navigateur qui devra réellement l'employer, puis rend une pièce
+    // exportable avec le critère, l'observation et la réserve ensemble.
+    if (url === "/reception") return fichierStatique(res, "reception.html", "text/html; charset=utf-8");
+    // Le comptoir rejoue la sonde en lecture seule. Sa page et sa sortie JSON
+    // sont deux lectures du même contrat ; le navigateur ne recopie aucun
+    // compte et ne transforme jamais une divergence en panne HTTP.
+    if (url === "/comptoir-moyens")
+      return fichierStatique(res, "comptoir-moyens.html", "text/html; charset=utf-8");
+    if (url === "/comptoir-moyens.json") {
+      etatComptoirMoyens(res);
+      return;
+    }
+    const preuveReception = url.match(
+      /^\/reception\/preuves\/([a-z0-9-]+)\/([a-f0-9]{24})$/);
+    if (preuveReception) {
+      const fichier = path.join(RACINE, "chambres", chambreDe(preuveReception[1]),
+        "brouillons", "receptions", preuveReception[2] + ".json");
+      try {
+        return envoyer(res, 200, fs.readFileSync(fichier, "utf-8"));
+      } catch (e) {
+        return envoyer(res, 404, JSON.stringify({ erreur: "preuve-absente" }));
+      }
+    }
     // Un module, ou un module d'une famille : `/modules/monde/relief.js`,
     // `/modules/books/lecture.js`. Rien qui ressemble à un
     // chemin remontant : chaque cran est du minuscule, des chiffres, un tiret
@@ -100,6 +227,9 @@ function traiter(req, res, url) {
     // livres ne montrent déjà, elle répond seulement à l'autre question,
     // celle qu'aucun registre ne pose — « par quoi commencer ce matin ».
     if (url === "/pas") return fichierStatique(res, "pas.html", "text/html; charset=utf-8");
+    // Le manifeste du quai : une fiche locale, imprimable, qui rend visibles
+    // les verrous d'un coffre avant son passage sur la coupée.
+    if (url === "/passage-coffre") return fichierStatique(res, "passage-coffre.html", "text/html; charset=utf-8");
     // Pas sous `/admin` : ce n'est pas l'envers du decor, c'est une lecture du
     // plan que les livres eux-memes affichent.
     if (url === "/criticite") {
@@ -163,6 +293,10 @@ function traiter(req, res, url) {
     // LE CHEMIN À PIED. Deux points en mètres, un itinéraire par les rues.
     // On rend la POLYLIGNE (pour la dessiner) et les MINUTES (pour la
     // montre) : la vitesse n'est pas un réglage, elle sort du chemin.
+  }
+  if (req.method === "POST" && url === "/reception/depot") {
+    deposerBordereau(req, res);
+    return;
   }
   return false;
 }

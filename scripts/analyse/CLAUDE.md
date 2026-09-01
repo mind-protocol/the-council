@@ -12,6 +12,7 @@ dispositif, pas au tour de jeu.
 | `croisement.py` | où et quand deux camps se frôlent, et de quelle taille |
 | `verif_plan.js` | les plans de château, mesurés : deux noms qui se marchent dessus |
 | `exporter_aurore.py` | tout ce qui touche un personnage, en `.txt` dans `export/` |
+| `comptoir_moyens.py` | comparer les six mesures M110 inscrites par une maison à l'observation courante |
 **Un compteur d'occurrences n'est pas une mesure.** `mesurer.py` a été taillé de
 six chiffres à un seul : les cinq autres comptaient des lignes sans savoir ce
 qu'elles valaient. Avant d'ajouter un chiffre ici, dire ce qu'il ferait changer.

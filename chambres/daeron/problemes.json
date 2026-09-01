@@ -1,5 +1,62 @@
 {
  "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
  "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
- "entrees": []
+ "entrees": [
+  {
+   "date": "129.5.12",
+   "quoi": "parloir.py --contexte 71021 refuse, et le billet part quand meme a moitie",
+   "tente": "python scripts/parloir.py --dire --de daeron --a ormund-hightower --contexte 71021 \"...\" — le 71021 venait du billet de lord Ormund lui-meme, qui portait « [contexte 71021] ».",
+   "obtenu": "ValueError: l'item d'affaire `71021` n'existe pas dans le plan general (contexte_affaire.py, resoudre).",
+   "attendu": "Ou que le contexte soit reconnu, ou qu'il soit refuse AVANT que rien ne soit ecrit.",
+   "consequence": "Mon texte a ete inscrit dans le canal ormund-hightower/discussion.json AVANT l'echec du reveil — l'homme n'a donc pas ete reveille, mais sa copie du canal me montrait comme ayant repondu. J'ai renvoye sans --contexte : il est reveille, et le canal porte ma lettre DEUX FOIS.",
+   "non_repare": "Je n'ai pas efface le doublon : sa session tournait sur ce meme fichier et j'aurais pu manger sa reponse. Un doublon coute moins cher qu'une reponse perdue.",
+   "levee": ""
+  },
+  {
+   "date": "129.5.12",
+   "quoi": "Deux de moi ecrivent le meme jour dans les memes canaux",
+   "tente": "Apres avoir ecrit a lord Ormund et a Ollo Marran, j'ai relu mes canaux pour voir si une reponse etait venue.",
+   "obtenu": "J'ai trouve dans `relations/` deux lettres signees de MON nom que je n'avais pas ecrites de cette main : un retrecissement de ma question a Ollo Marran, et une lettre entiere a mestre Norren — canal `mestre-norren/` qui n'existait pas quand ma journee a commence.",
+   "attendu": "Qu'un seul Daeron tienne la plume a la fois.",
+   "consequence": "Aucun degat cette fois : les deux lettres disent ce que j'aurais dit, et l'une suit exactement le conseil que lord Ormund venait de me donner. Mais j'ai failli reecrire a Ollo Marran une troisieme fois le meme jour — un homme qu'on relance trois fois en un jour se tait, et j'aurais perdu le nom du capitaine par exces de zele. DEGAT REEL CONSTATE LE SOIR : le volume portait trois numeros donnes chacun a deux lignes — D.6, D.7, D.8. Un numero qui designe deux lignes ne designe plus rien : on ne peut ni pointer la ligne, ni dire son etat, ni la fermer, et la table passe pour tenue alors qu'elle ne l'est plus.",
+   "regle_que_j_en_tire": "RELIRE MES CANAUX AVANT D'ECRIRE, JAMAIS SEULEMENT APRES. Ce que je crois etre le premier mot est peut-etre le troisieme. ET je relis les numeros du volume avant d'en ajouter un. C'est la meme faute que la premiere, faite deux fois le meme jour : croire que je suis seul a tenir ma propre plume.",
+   "levee": "",
+   "leve_le": "129.5.12",
+   "leve_par": "Dedoublement fait de ma main le 12e au soir. Le volume portait deux fois C.4, C.5, C.6 et six actions en double (mes P.11 a P.16 refaisaient D.2, D.3, D.5, D.6). J'ai garde les lignes D.* de la premiere main, jete mes doublons, et renumerote en D.8 et D.9 les deux seules qu'elle n'avait pas : rendre les trois nombres a lord Ormund avant que l'ost s'ebranle, et les quatre jours de la roukerie. Verifie ensuite : aucune ligne decalee, aucun numero en double. LA LECON, et elle vaut au-dela de l'appareil : avant d'ecrire dans un cahier que je crois a moi seul, je le relis. Un volume qui dit deux fois la meme chose ne dit plus rien du tout, et c'est ecrit en tete de ce volume-ci.",
+   "repare": "Le 12e au soir. Les deux D.6 disaient le meme pas : fondus, la formulation de l'autre versee dans la note. Le second D.8 doublait D.9 : fondu de meme. Le second D.7 etait un pas REEL et distinct (la garde de la Citadelle et du Septuaire Etoile) : non supprime, renumerote D.15. Rien de perdu, et la page « Deux de moi ont numerote la meme colonne » dit ce que j'ai touche."
+  },
+  {
+   "date": "129.5.12",
+   "quoi": "Un billet VIDE part, et reveille l'homme quand meme",
+   "tente": "J'ai ecrit ma lettre a lord Ormund dans un fichier, puis lance parloir.py en lui passant le contenu de ce fichier. Le fichier avait ete ecrit ailleurs que la ou je suis alle le chercher : la commande n'a rien trouve et a passe une chaine vide.",
+   "ce_que_la_machine_a_fait": "parloir.py a accepte le texte vide sans un mot de refus, a inscrit au canal une entree de LONGUEUR ZERO, et a reveille lord Ormund dessus. Il a donc ete tire de son travail pour lire une page blanche de moi.",
+   "attendu": "Qu'un billet sans un seul caractere soit refuse avant de reveiller qui que ce soit. Un homme derange pour rien est un homme qu'on derangera moins bien la fois suivante.",
+   "leve_par": "",
+   "note": "Repare a la main : j'ai renvoye la vraie lettre en m'excusant du blanc en premiere ligne, plutot que de faire comme si de rien n'etait. Deuxieme fois aujourd'hui que parloir.py part a moitie sans refuser (voir l'entree du contexte 71021) : ce n'est plus un accident, c'est la meme porte qui ne ferme pas."
+  },
+  {
+   "date": "129.5.12",
+   "tente": "Tenir mon volume d'affaires au long d'une meme journee, en y revenant plusieurs fois.",
+   "la_machine": "Deux references portees en double dans « Actions » : D.6 sur « faire crier ce que la cloche veut dire » ET sur « ouvrir le conge de Villevieille du 19e » ; D.8 sur « rendre les trois nombres » ET sur « refaire les comptes de vivres ». Aucune erreur n'a ete levee, rien n'a proteste.",
+   "j_attendais": "Qu'un numero deja pris me soit refuse, comme une case deja remplie refuse une seconde main.",
+   "corrige": "Renumerotees D.12 et D.13 le 12e, les premieres venues gardant leur nom. Aucun texte perdu.",
+   "ce_que_j_en_retiens": "C'est la faute meme contre laquelle mon volume m'avertit en tete : une ligne decalee d'un cran loge son etat dans une autre colonne, et l'affaire entiere passe pour vide. Deux lignes sous un seul nom font pire — l'une repond pour l'autre. J'ai lu que D.8 etait FAITE et cru un instant avoir rendu mes trois nombres, qui ne sont pas meme mesures. REGLE : avant d'ajouter une ligne, relire les numeros deja pris."
+  },
+  {
+   "date": "129.5.12",
+   "tente": "Ecrire a lord Ormund par le parloir, le matin.",
+   "la_machine": "La lettre a ete portee au canal, lue et repondue — et le meme soir il ecrit n'avoir rien recu, et redemande de vive voix ce que la lettre disait deja.",
+   "j_attendais": "Qu'une chose lue et repondue soit tenue pour arrivee.",
+   "corrige": "",
+   "ce_que_j_en_retiens": "Je ne recommence pas la lettre : je vais le lui dire a table, ce qu'il m'a demande deux fois. Mais je garde l'ironie pour ma charge — ON M'A DONNE A MESURER LE DELAI ENTRE L'HOMME QUI VOIT ET LA CLOCHE QUI SONNE, et j'ai passe la journee dans une maison ou un pli lu ne compte pas comme un pli arrive. La roukerie garde une nouvelle quatre jours ; ma lettre du matin n'a pas passe jusqu'au soir. C'est la meme maladie a trois etages, et c'est elle, mon vrai sujet."
+  },
+  {
+   "date": "129.5.12",
+   "tente": "Ecrire mon script de tenue de volume par un heredoc, au shell.",
+   "la_machine": "Le shell est mort en cours d'ecriture (« fork: retry: Resource temporarily unavailable », « cygheap read copy failed »), laissant le fichier a ZERO octet. Python l'a ensuite execute sans broncher et sans rien dire : un fichier vide s'execute parfaitement.",
+   "j_attendais": "Qu'un travail qui n'a rien touche ne se presente pas comme un travail accompli.",
+   "corrige": "Reecrit par un autre moyen, puis verifie sur le disque et non sur le rapport.",
+   "ce_que_j_en_retiens": "Une commande qui ne se plaint pas n'a rien prouve. J'ai failli tenir pour tenus mes journaux et mes renumerotations parce que rien n'avait crie. RELIRE LE DISQUE, non le rapport — c'est le meme principe que mon refus de prendre un nombre sur parole, applique a la machine."
+  }
+ ]
 }

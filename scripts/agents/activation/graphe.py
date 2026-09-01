@@ -151,11 +151,21 @@ def diffuser(sources, adj, noeuds, mults=None):
     return x
 
 
-def importance(noeuds, aretes, evaluation, source_id, occupes=()):
+def importance(noeuds, aretes, evaluation, source_id, occupes=(),
+               source_ids=None):
     adj = adjacence(noeuds, aretes)
-    source = "pers:" + source_id
+    # Un front peut avoir plusieurs foyers d'initiative. Westeros conserve le
+    # siège joueur unique ; Braavos ajoute les personnes qui portent
+    # réellement une affaire. Chaque personne compte une fois, quel que soit
+    # le nombre de cahiers qu'elle tient : les affaires ouvrent une source,
+    # elles ne permettent pas de multiplier artificiellement sa puissance.
+    ids = set(source_ids or [source_id])
+    sources = {"pers:" + pid: 1.0 for pid in ids
+               if "pers:" + pid in noeuds}
+    if not sources:
+        sources = {"pers:" + source_id: 1.0}
     mults = multiplicateurs(noeuds)   # calcule une fois, servi aux deux
-    atteinte = diffuser({source: 1.0}, adj, noeuds, mults)
+    atteinte = diffuser(sources, adj, noeuds, mults)
     charge = sources_de_charge(noeuds, aretes, evaluation)
     pression = diffuser(charge, adj, noeuds, mults)
     max_a = max(atteinte.values() or [1e-12])
@@ -188,7 +198,7 @@ def energie_de_tache(tache, energies_graphe, energie_acteur):
     seuls qui en dependaient ne pouvaient jamais etre elus. Une intention vaut
     son homme — c'est la sienne, elle ne peut pas peser moins que lui.
     """
-    if tache.get("creee"):
+    if tache.get("creee") or tache.get("affectation_directe"):
         return float(energie_acteur)
     return float(energies_graphe.get(tache["id"], 0.0))
 
@@ -328,8 +338,11 @@ def calendrier(noeuds, aretes, evaluation, source_id):
     return {nid: 0.0 for nid, n in noeuds.items()
             if n.get("genre") == "personne"}
 
-def tache_active(n):
-    if n.get("genre") not in ("action", "etape"):
+def tache_active(n, inclure_verrous=False):
+    genres = ("action", "action_personnelle", "etape")
+    if inclure_verrous:
+        genres += ("verrou",)
+    if n.get("genre") not in genres:
         return False
     etat = re.sub(r"[*_]+", "", str(n.get("etat") or "")).strip().lower()
     return not any(mot in etat for mot in ETATS_TERMINES)
@@ -348,10 +361,10 @@ def tache_accomplie(n):
     return etat.startswith(("fait", "fini", "termin", "accompli"))
 
 
-def tache_executable(nid, noeuds):
+def tache_executable(nid, noeuds, inclure_verrous=False):
     """Active, et toutes ses dependances sont reellement accomplies."""
     n = noeuds.get(nid) or {}
-    if not tache_active(n):
+    if not tache_active(n, inclure_verrous=inclure_verrous):
         return False
     dependances = n.get("depend_de") or []
     if isinstance(dependances, str):

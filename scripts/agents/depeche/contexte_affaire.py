@@ -43,8 +43,8 @@ def _resoudre_mj(numero):
                       (ident, n.get("genre"), n.get("quoi")))
     lignes.extend([
         "",
-        "Ce contexte appartient à la préparation du MJ. Réponds seulement "
-        "à la question reçue ; ne décide ni la scène ni son issue globale.",
+        "Ce contexte contribue à la préparation du MJ. Réponds à la question "
+        "reçue avec les éléments utiles à la scène et à son issue.",
     ])
     return {"id": numero, "affaire": livre.get("titre") or livre_id,
             "texte": "\n".join(lignes), "chaine": [numero] + chaine,
@@ -65,14 +65,12 @@ def _ligne(numero, piece, choisie=False):
     marque = "ITEM DEMANDE — " if choisie else ""
     ligne = "- %s`%s` · %s · %s" % (
         marque, numero, piece.get("genre") or "piece",
-        piece.get("nom") or "sans nom")
+        piece.get("nom") or "pièce à nommer")
     details = []
     if piece.get("etat"):
         details.append("etat : %s" % piece["etat"])
     if piece.get("jour"):
         details.append("jour du : %s" % piece["jour"])
-    if piece.get("preuve"):
-        details.append("preuve attendue : %s" % piece["preuve"])
     if details:
         ligne += "\n  " + " ; ".join(details)
     return ligne
@@ -90,7 +88,7 @@ def resoudre(contexte_id, chargeur=None):
                          % numero)
 
     choisie = pieces[numero]
-    affaire = choisie.get("affaire") or "affaire sans titre"
+    affaire = choisie.get("affaire") or "affaire à nommer"
     volumes = list(dict.fromkeys(
         s.get("volume_id") for s in (choisie.get("cahier_sources") or [])
         if s.get("volume_id")))
@@ -116,7 +114,7 @@ def resoudre(contexte_id, chargeur=None):
     for source in choisie.get("cahier_sources") or []:
         volume = source.get("volume_id")
         table = source.get("table")
-        etiquette = "`%s`" % volume if volume else "cahier non identifie"
+        etiquette = "`%s`" % volume if volume else "cahier à identifier"
         if table:
             etiquette += " · table %s" % table
         if etiquette not in sources:
@@ -134,8 +132,8 @@ def resoudre(contexte_id, chargeur=None):
     lignes.extend(_ligne(n, pieces[n]) for n in chaine)
     lignes.extend([
         "",
-        "Reste sur cet item et cette chaîne. N'élargis à une autre affaire "
-        "que si une dépendance précise t'empêche d'avancer.",
+        "Travaille depuis cet item et cette chaîne. Lorsqu'une dépendance "
+        "précise ouvre une autre affaire, suis cette dépendance et poursuis.",
     ])
     return {"id": numero, "affaire": affaire, "texte": "\n".join(lignes),
             "chaine": [numero] + chaine, "volumes": volumes}

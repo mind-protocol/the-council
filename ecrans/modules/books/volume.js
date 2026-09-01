@@ -228,10 +228,12 @@
         const buts = (!scores && adresse && S.crit && S.crit.etats
           && lignes.some((l) => S.crit.etats[numeroDe(l)])) ? S.crit.etats : null;
         const ajout = scores ? A.COLS_CRIT : (buts ? A.COLS_BUT : []);
+        const passagePossible = typeof BooksPassageReception !== "undefined"
+          && lignes.some((l) => BooksPassageReception.preparer(b, sec.colonnes, l));
         if (sec.colonnes.length) {
           const thead = document.createElement("thead");
           const tr = document.createElement("tr");
-          sec.colonnes.concat(ajout).forEach((c) => {
+          sec.colonnes.concat(passagePossible ? ["Second essai"] : []).concat(ajout).forEach((c) => {
             const th = document.createElement("th");
             th.textContent = c;
             if (ajout.indexOf(c) >= 0) {
@@ -262,6 +264,20 @@
             if (window.Entites) Entites.traiter(td);
             tr.appendChild(td);
           });
+          if (passagePossible) {
+            const td = document.createElement("td");
+            td.className = "book-passage-cellule";
+            const passage = BooksPassageReception.preparer(b, sec.colonnes, l);
+            if (passage) {
+              const lien = document.createElement("a");
+              lien.className = "book-passage-reception";
+              lien.href = BooksPassageReception.href(passage);
+              lien.textContent = "Former le bordereau";
+              lien.title = "Préremplir un second essai sans transmettre le verdict ni la preuve antérieurs";
+              td.appendChild(lien);
+            }
+            tr.appendChild(td);
+          }
           if (scores) {
             const s = scores[num] || {};
             // UN CERCLE SE DIT AVANT UN CHIFFRE. Une pièce prise dans une chaîne

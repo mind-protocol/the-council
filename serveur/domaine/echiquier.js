@@ -79,10 +79,10 @@ function composer(req, url) {
       etat: [["l etat"], ["ce qui doit etre vrai"], ["ou"], ["la preuve"],
              ["sert"], ["affaire"]],
       verrou: [["le verrou"], ["bloque"], ["ce qui est vrai"], ["la preuve"],
-               ["leve quand"]],
+                ["leve quand"], ["depend de"]],
       clef: [["la clef"], ["ouvre"], ["le principe"],
              ["le prix", "ce qu elle coute"], ["la preuve"],
-             ["decision", "retenue"]],
+             ["decision", "retenue"], ["moyens", "modules"]],
       // `depend de` est la HUITIÈME, et elle n'était lue par personne.
       // C'est pourtant la seule colonne du plan qui porte le lien
       // `attend` — 397 actions sur 611 y écrivent un numéro, dont 71
@@ -602,9 +602,11 @@ function composer(req, url) {
     });
 
     // 6. UNE CLEF RETENUE SANS ACTION — décidée, et personne ne la fait.
-    //    Aucune aujourd'hui ; le cas se garde, un plan bouge.
+    // Une clef qui cite des moyens est différente : elle peut être un
+    // sous-graphe structurel qui établit une propriété logique du système.
+    // Elle n'a pas besoin d'un faux geste pour exister dans le plan.
     clefs.forEach((k) => {
-      if (tenueDe(k) !== "retenue" || actionsDeLaClef(k).length) return;
+      if (tenueDe(k) !== "retenue" || actionsDeLaClef(k).length || !rien(k.c[7])) return;
       const v = verrousDeLaClef(k)[0] || null;
       attacher("clef", k.num, poserM(Object.assign(
         v ? butDuVerrou(v) : { but: null, buts_autres: 0 }, {
@@ -935,6 +937,33 @@ function composer(req, url) {
         const mesActions = actions.filter((a) => adresses(a.c[2])
           .some((x) => mesClefs.some((k) => k.num === x)));
 
+        // Un moyen peut nourrir une ACTION (ce qu'elle emploie) ou une CLEF
+        // (les modules existants dont elle qualifie l'usage). Le damier doit
+        // montrer les deux sans fabriquer un geste intermédiaire. Une même
+        // ressource n'est dessinée qu'une fois par colonne et peut remonter
+        // vers plusieurs pièces.
+        const citerRessource = (texte, genre, index, noms, cible) => {
+          const t = retrouver(texte, index, noms);
+          const k = cle(genre + "-" + (t ? t.num : sansAccent(texte).slice(0, 14)));
+          let q = pieces.find((x) => x.cle === k);
+          if (!q) {
+            q = pousse({
+              cle: k, genre: genre, rang: "moyen", colonne: col,
+              numero: t ? t.num : null,
+              nom: t ? sansSigne(t.nom) : sansSigne(texte),
+              dit: t ? cel(t, genre, "dit") : "",
+              tient: t ? cel(t, genre, "tient") : "",
+              ou: t ? cel(t, genre, "ou") : "",
+              tenue_du_moyen: t ? cel(t, genre, "etat") : "",
+              vers: [], paie: t ? "au registre, " + t.num : null,
+              fautes: t ? null : ["cité ici et absent de son registre — un moyen "
+                + "et un office ne se créent jamais dans une affaire"],
+              rupture: false,
+            });
+          }
+          if (q.vers.indexOf(cible) < 0) q.vers.push(cible);
+        };
+
         // l'état cible : ce qui doit devenir vrai dans le monde
         const p = pere(e);
         pousse({
@@ -963,7 +992,8 @@ function composer(req, url) {
             conclusion: conclure(v, "verrou"), missions: missionsDe(v, "verrou"),
             lampe: lampeDe("verrou", v.num),
             nom: sansSigne(v.c[1]), dit: propre(v.c[3]), preuve: propre(v.c[4]),
-            leve_quand: propre(v.c[5]), breche: perce(v), vers: [cle(e.num)],
+            leve_quand: propre(v.c[5]), depend_de: propre(v.c[6]),
+            breche: perce(v), vers: [cle(e.num)],
             paie: rien(v.c[5]) ? null : "levé quand : " + sansSigne(v.c[5]),
             fautes: f.length ? f : null,
           });
@@ -991,9 +1021,13 @@ function composer(req, url) {
             conclusion: conclure(k, "clef"), missions: missionsDe(k, "clef"),
             lampe: lampeDe("clef", k.num),
             nom: sansSigne(k.c[1]), dit: propre(k.c[3]), cout: propre(k.c[4]),
-            preuve: propre(k.c[5]), tenue: tenue, vers: amont.map(cle),
+            preuve: propre(k.c[5]), tenue: tenue, moyens: propre(k.c[7]),
+            vers: amont.map(cle),
             paie: tenue === "retenue" ? "clef retenue — " + sansSigne(k.c[5]) : null,
             fautes: f.length ? f : null, rupture: rupture,
+          });
+          String(k.c[7] == null ? "" : k.c[7]).split(/·|;/).forEach((m) => {
+            if (!rien(m)) citerRessource(m, "moyen", iM, nM, cle(k.num));
           });
         });
 
@@ -1028,6 +1062,7 @@ function composer(req, url) {
             lampe: lampeDe("action", a.num),
             nom: sansSigne(a.c[1]), dit: propre(a.c[3]), preuve: propre(a.c[6]),
             ou_ca_en_est: propre(a.c[7]), office: propre(a.c[4]), moyens: propre(a.c[5]),
+            depend_de: propre(a.c[8]),
             // Le visage de qui la porte : on ne sert que son identifiant,
             // le dessin est au dictionnaire commun.
             teneur_id: quiId, teneur: qui_tient ? qui_tient.nom : null,
@@ -1037,48 +1072,20 @@ function composer(req, url) {
           });
 
           // les moyens et les offices : cités par leur numéro, jamais créés
-          const cite = (texte, genre, index, noms) => {
-            const t = retrouver(texte, index, noms);
-            const k = cle(genre + "-" + (t ? t.num : sansAccent(texte).slice(0, 14)));
-            let q = pieces.find((x) => x.cle === k);
-            if (!q) {
-              q = pousse({
-                cle: k, genre: genre, rang: "moyen", colonne: col,
-                numero: t ? t.num : null,
-                nom: t ? sansSigne(t.nom) : sansSigne(texte),
-                // La description d'une pièce est la colonne qui DIT la
-                // chose, et elle n'est pas au même rang dans les deux
-                // registres : « ce qu'il sait faire » pour un moyen, « ce
-                // dont il répond » pour un office — jamais le titulaire.
-                dit: t ? cel(t, genre, "dit") : "",
-                tient: t ? cel(t, genre, "tient") : "",
-                ou: t ? cel(t, genre, "ou") : "",
-                tenue_du_moyen: t ? cel(t, genre, "etat") : "",
-                vers: [], paie: t ? "au registre, " + t.num : null,
-                fautes: t ? null : ["cité ici et absent de son registre — un moyen "
-                  + "et un office ne se créent jamais dans une affaire"],
-                // ET CE N'EST PAS UNE RUPTURE. « Le crédit de l'époux de
-                // la reine », « ce que la reine sait du Donjon » : la
-                // chose existe, elle est employée, elle est simplement
-                // citée par son nom au lieu de son numéro. C'est vrai de
-                // 477 pièces du plan — un fait vrai de presque tout le
-                // monde va au chapeau et se dit une fois, jamais sur un
-                // jeton (voir docs/echiquier.md).
-                rupture: false,
-              });
-            }
-            if (q.vers.indexOf(cle(a.num)) < 0) q.vers.push(cle(a.num));
-          };
-          if (!rien(a.c[4])) cite(a.c[4], "office", iO, nO);
+          if (!rien(a.c[4])) citerRessource(a.c[4], "office", iO, nO, cle(a.num));
           String(a.c[5] == null ? "" : a.c[5]).split(/·|;/).forEach((m) => {
-            if (!rien(m)) cite(m, "moyen", iM, nM);
+            if (!rien(m)) citerRessource(m, "moyen", iM, nM, cle(a.num));
           });
         });
 
-        // L'ÉPREUVE DU GUIDE, colonne par colonne : un état cible sous
-        // lequel aucune action ne descend est une intention sans plan.
+        // Une chaîne opératoire descend jusqu'aux actions. Une chaîne logique
+        // peut au contraire s'arrêter à une clef structurelle reliée à ses
+        // moyens : elle décrit alors le sous-graphe qui doit être vrai, sans
+        // inventer un processus pour remplir la rangée des actions.
         const c = colonnes.find((x) => x.id === col);
-        c.rompue = !mesActions.length;
+        const clefStructurelle = mesClefs.some((k) =>
+          tenueDe(k) === "retenue" && !rien(k.c[7]));
+        c.rompue = !mesActions.length && !clefStructurelle;
         c.sans_verrou = !mesVerrous.length;
         // ET LE VERDICT INVERSE, qui manquait : la colonne est-elle
         // PORTÉE ? Une colonne dont la chaîne descend jusqu'à une action
@@ -1130,8 +1137,8 @@ function composer(req, url) {
         const f = p.sans_preuve ? ["sans preuve — rien ne dirait que c'est vrai"] : [];
         if (rompu) {
           f.push(p.portee && p.portee.length > 1
-            ? "aucune action ne descend d'aucun état qu'il coiffe"
-            : "aucune action ne descend jusqu'ici — une intention sans plan");
+            ? "aucune action ni clef structurelle ne descend d'aucun état qu'il coiffe"
+            : "aucune action ni clef structurelle ne descend jusqu'ici — une intention sans plan");
         }
         p.rompu = rompu;
         if (f.length) p.fautes = f;

@@ -125,4 +125,10 @@ neuve entre par ce fichier, sinon les listes divergent comme elles l'ont déjà
 fait pour l'ordre de chargement. Les bancs eux-mêmes vivent dans `analyse/` et
 `tests/`.
 
+**La sauvegarde Git des données** — `pousser_donnees.py` : aperçu sans effet par
+défaut ; `--vraiment` valide les JSON/JSONL modifiés, refuse un index déjà
+préparé, vérifie que `etat/` et `chambres/` n'ont pas bougé pendant la capture,
+commit uniquement ces deux racines puis pousse la branche courante. Les verrous,
+temporaires, caches d'empreintes et `.agents-runtime/` ne partent jamais.
+
 **Le reste** — `composer.py`.

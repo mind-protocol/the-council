@@ -45,6 +45,14 @@ window.Plan = (() => {
     const bandeau = document.getElementById("lieu");
     if (!plan || !bandeau) return null;
     const connue = (id) => (id && plan.salles.some((s) => s.id === id)) ? id : null;
+    // `/presence` donne la position actuelle du regardeur. Le bandeau, lui,
+    // vient du dernier item visible du flux et peut appartenir à une ancienne
+    // scène : à l'arrivée de Nicolas à Braavos, il disait encore « Chambre de
+    // la Table Peinte, Peyredragon » alors que sa présence, son corps et son
+    // siège le plaçaient tous dans `braavos-archives`. Dès que la présence a
+    // répondu, elle prime donc sur ce vestige narratif.
+    const presente = connue(salleDite);
+    if (presente) return presente;
     const dit = bandeau.dataset.salle;
     if (connue(dit)) return dit;
     const t = nu(bandeau.textContent);
@@ -495,6 +503,19 @@ window.Plan = (() => {
       places = d.places;
       if (moi && places[moi]) places[moi].joueur = true;
       salleDite = d.salle || null;
+      // Le bandeau nomme le présent, pas la dernière salle rencontrée dans un
+      // historique plus ancien. Le remettre d'aplomb ici corrige aussi le
+      // libellé visible ; les gardes évitent une boucle du MutationObserver.
+      const bandeau = document.getElementById("lieu");
+      if (bandeau && d.salle && bandeau.dataset.salle !== d.salle) {
+        bandeau.dataset.salle = d.salle;
+      }
+      if (bandeau && d.lieu && bandeau.textContent.trim() !== d.lieu) {
+        bandeau.textContent = d.lieu;
+      }
+      if (bandeau && d.lieu && bandeau.title !== d.lieu) {
+        bandeau.title = d.lieu;
+      }
       const avant = salleId;
       salleId = deviner();
       if (salleId !== avant) bascule();

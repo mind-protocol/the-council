@@ -29,10 +29,10 @@ from agents import chambre  # noqa: E402,F401 — lu par depeche/mission (le mon
 # Une seule porte vers les fournisseurs de CLI. Liee avant les lanceurs : ni
 # la fiction ni les containers ne doivent savoir si Claude ou Codex repond.
 from agents import runtime  # noqa: E402,F401
-# Premiere couche des POST joueur : une session jetable choisit les pointeurs
-# de contexte et les hommes avant tout metier de jeu.
-from agents import selecteur_contexte  # noqa: E402,F401
-from agents.selecteur_contexte import main as selectionner_contexte_main  # noqa: E402,F401
+# Première couche des POST joueur : la présence physique route directement
+# les paroles ; les gestes et la régie vont au MJ.
+from agents import routeur_message  # noqa: E402,F401
+from agents.routeur_message import main as routeur_message_main  # noqa: E402,F401
 # Jump prépare un événement pour le MJ sans passer par le sélecteur ordinaire.
 from agents import jump  # noqa: E402,F401
 # Miroir des instructions Claude vers Codex. La matiere reste sous prompts/ ;

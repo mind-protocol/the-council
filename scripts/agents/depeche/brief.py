@@ -161,7 +161,10 @@ def brief_de(qui):
 
     out = ["== SA JOURNEE — ce que l'etat en dit"]
     if not l:
-        out.append("  Aucune tete dans intentions.json : il n'a pas de journee.")
+        out.append("  Aucune tete dans intentions.json : objectifs et croyances"
+                   " non renseignes. Ce manque ne bloque pas une depeche ;"
+                   " l'identite, les sources et la mission font foi, et ce"
+                   " qui n'y figure pas reste inconnu.")
         return "\n".join(out)
     if not l.get("creux"):
         out.append("  AUCUN CREUX aujourd'hui (%s). Il ne pense pas : il"

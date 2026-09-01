@@ -5,6 +5,7 @@ appel, energies), et la prevision des prochaines activations.
 import collections
 import concurrent.futures
 import datetime as dt
+import glob
 import io
 import json
 import math
@@ -39,6 +40,7 @@ from agents.activation.graphe import (adjacence, sources_de_charge, diffuser,
                                       acteur_en_repos, calendrier,
                                       energie_de_tache)
 from agents.activation.taches import (choisir_tache,
+                                      amorcer_sources_energie,
                                       mettre_a_jour_energie_graphe,
                                       mettre_a_jour_energies)
 from agents.activation.continuite import (amorcer_continuite_historique,
@@ -47,6 +49,33 @@ from agents.activation.appels import appeler_acteur
 
 
 VERSION_RUNTIME_ACTIVATION = 2
+SOURCE_BRAAVOS = "nicolas-lester-reynolds"
+BOOKS_SERENISSIMA = os.path.join(
+    ETAT, "maisons", "maison-serenissima", "documents", "books")
+
+
+def sources_energie_braavos(noeuds, books_dir=None):
+    """Le siège de Nicolas, plus chaque porteur canonique d'une affaire."""
+    sources = {SOURCE_BRAAVOS}
+    dossier = books_dir or BOOKS_SERENISSIMA
+    for chemin in sorted(glob.glob(os.path.join(dossier, "affaire-*.json"))):
+        livre = lire_json(chemin, {})
+        pid = str(livre.get("tenu_par") or "").strip()
+        nid = "pers:" + pid
+        if pid and nid in noeuds \
+                and (noeuds.get(nid) or {}).get("lieu_id") == "braavos":
+            sources.add(pid)
+    return sorted(sources)
+
+
+def borner_eligibles_lieu(eligibles, noeuds, lieu_id):
+    """Ne garde que les acteurs physiquement rattachés au lieu demandé."""
+    if not lieu_id:
+        return eligibles
+    return [
+        ligne for ligne in eligibles
+        if (noeuds.get("pers:" + ligne[2]) or {}).get("lieu_id") == lieu_id
+    ]
 
 
 def migrer_runtime_actuel(etat):
@@ -111,10 +140,15 @@ def cycle(args, etat=None):
     except Exception as bruit:  # jamais bloquant : c'est un cache
         journaliser("sieges.occupation.echec", erreur=str(bruit))
     capacite = int(getattr(args, "capacite_cycle", args.parallele))
+    braavos = bool(getattr(args, "braavos", False))
+    seuil_activation = 0.0 if braavos else ENERGIE_ACTIVATION_MIN
     etat = etat or lire_json(ETAT_BOUCLE, {"version": 1, "historique": []})
     migrer_runtime_actuel(etat)
     journaliser("horloge.lecture")
-    horloge, occupes = horloge_directe(etat)
+    source_force = (SOURCE_BRAAVOS
+                    if getattr(args, "braavos", False) else None)
+    horloge, occupes = horloge_directe(
+        etat, source_force=source_force, front_force=source_force)
     journaliser("horloge.direct", origine=horloge["source_id"],
                 front=horloge["front_id"],
                 present_s=round(horloge["present_secondes"], 1))
@@ -124,11 +158,20 @@ def cycle(args, etat=None):
     amorcer_continuite_historique(etat, noeuds)
     amorcer_fatigue_historique(etat)
     journaliser("diffusion.importance")
+    sources_energie = (sources_energie_braavos(noeuds)
+                       if getattr(args, "braavos", False) else None)
     scores, adj = importance(noeuds, aretes, evaluation, horloge["source_id"],
-                             occupes)
+                             occupes, source_ids=sources_energie)
     polarites, _horloge_moyenne = polarites_horloge_acteurs(noeuds, adj)
     energies_graphe = mettre_a_jour_energie_graphe(
-        etat, horloge, scores, noeuds, adj, polarites)
+        etat, horloge, scores, noeuds, adj, polarites,
+        front="braavos" if braavos else None)
+    if sources_energie:
+        amorcer_sources_energie(
+            etat, energies_graphe, sources_energie, "braavos",
+            horloge["present_secondes"])
+        journaliser("energie.sources", front="braavos",
+                    acteurs=sources_energie)
     journaliser("diffusion.calendrier")
     disponibilites = calendrier(noeuds, aretes, evaluation,
                                  horloge["source_id"])
@@ -136,7 +179,11 @@ def cycle(args, etat=None):
         noeuds[nid]["importance_activation"] = score
     eligibles = mettre_a_jour_energies(
         etat, horloge, scores, energies_graphe,
-        disponibilites, noeuds, occupes)
+        disponibilites, noeuds, occupes,
+        lieu_force="braavos" if getattr(args, "braavos", False) else None,
+        sources_energie=set(sources_energie or []))
+    if getattr(args, "braavos", False):
+        eligibles = borner_eligibles_lieu(eligibles, noeuds, "braavos")
     journaliser("energie.calculee", acteurs=len(eligibles),
                 maximum=round(eligibles[0][0], 3) if eligibles else 0)
     if args.acteur:
@@ -189,10 +236,10 @@ def cycle(args, etat=None):
                     porte_acteur=jauge["porte_compute"],
                     capacite_acteur=round(capacite_homme, 3), mj="mj")
                 continue
-            if energie < ENERGIE_ACTIVATION_MIN:
+            if (energie <= 0.0 if braavos else energie < seuil_activation):
                 journaliser("selection.borne", acteur=pid,
                             energie=round(energie, 3),
-                            seuil=ENERGIE_ACTIVATION_MIN)
+                            seuil=seuil_activation)
                 break
             if pid in exclus_rotation:
                 journaliser("selection.rejetee", acteur=pid,
@@ -208,13 +255,17 @@ def cycle(args, etat=None):
                 continue
             tache = choisir_tache(
                 "pers:" + pid, noeuds, aretes, adj, energies_graphe,
-                etat=etat, present=horloge["present_secondes"])
+                etat=etat, present=horloge["present_secondes"],
+                amorcage_lieu=("braavos" if braavos else None),
+                sur_verrous=braavos)
             if tache is None:
                 journaliser("selection.rejetee", acteur=pid,
                             energie=round(energie, 3), raison="aucune_tache")
                 continue
             energie_tache = energie_de_tache(tache, energies_graphe, energie)
-            if energie_tache >= ENERGIE_MIN:
+            tache_energisee = (energie_tache > 0.0 if braavos
+                               else energie_tache >= ENERGIE_MIN)
+            if tache_energisee:
                 if tache["id"] in taches_selectionnees:
                     journaliser("selection.rejetee", acteur=pid,
                                 tache=tache["id"],
@@ -249,7 +300,11 @@ def cycle(args, etat=None):
     lots = []
     for energie, score, pid, jauge, tache, energie_tache in selections:
         # La tâche attire et oriente ; l'énergie vient de la personne élue.
-        budget = min(100, int(math.floor(energie)))
+        # Une journée sur verrou doit laisser le temps d'inspecter puis de
+        # produire un geste. Le plancher historique d'un point ne donnait que
+        # trente secondes, sous le minimum physique déclaré par le moteur.
+        budget = min(100, max(2 if braavos else 0,
+                              int(math.floor(energie))))
         budget_secondes = secondes_monde_pour_energie(budget)
         polarite = polarites.get("pers:" + pid) or {}
         lot = {
@@ -442,7 +497,7 @@ def cycle(args, etat=None):
     return etat, reussies, len(lots)
 
 
-def prevoir_activations(limite):
+def prevoir_activations(limite, braavos=False):
     """Classement instantane de la physique, sans appel ni ecriture.
 
     L'ordre au-dela du premier reste conditionnel : une activation peut
@@ -450,23 +505,36 @@ def prevoir_activations(limite):
     pour recharger un acteur deja passe.
     """
     etat = lire_json(ETAT_BOUCLE, {"version": 1, "historique": []})
+    seuil_activation = 0.0 if braavos else ENERGIE_ACTIVATION_MIN
     migrer_runtime_actuel(etat)
-    horloge, occupes = horloge_directe(etat)
+    source_force = SOURCE_BRAAVOS if braavos else None
+    horloge, occupes = horloge_directe(
+        etat, source_force=source_force, front_force=source_force)
     noeuds, aretes, evaluation = charger_tissu()
     amorcer_continuite_historique(etat, noeuds)
     amorcer_fatigue_historique(etat)
+    sources_energie = sources_energie_braavos(noeuds) if braavos else None
     scores, adj = importance(noeuds, aretes, evaluation, horloge["source_id"],
-                             occupes)
+                             occupes, source_ids=sources_energie)
     polarites, _horloge_moyenne = polarites_horloge_acteurs(noeuds, adj)
     energies_graphe = mettre_a_jour_energie_graphe(
-        etat, horloge, scores, noeuds, adj, polarites)
+        etat, horloge, scores, noeuds, adj, polarites,
+        front="braavos" if braavos else None)
+    if sources_energie:
+        amorcer_sources_energie(
+            etat, energies_graphe, sources_energie, "braavos",
+            horloge["present_secondes"])
     disponibilites = calendrier(noeuds, aretes, evaluation,
                                  horloge["source_id"])
     for nid, score in scores.items():
         noeuds[nid]["importance_activation"] = score
     eligibles = mettre_a_jour_energies(
         etat, horloge, scores, energies_graphe,
-        disponibilites, noeuds, occupes)
+        disponibilites, noeuds, occupes,
+        lieu_force="braavos" if braavos else None,
+        sources_energie=set(sources_energie or []))
+    if braavos:
+        eligibles = borner_eligibles_lieu(eligibles, noeuds, "braavos")
     resultat = []
     attentes = collections.Counter()
     # TOUT ACTEUR ACTIF PARAIT. On n'ecarte plus personne de la liste : un
@@ -482,7 +550,7 @@ def prevoir_activations(limite):
         if not ouverte_homme:
             attentes["porte_acteur_fermee"] += 1
             motifs.append("capacité acteur fermée")
-        if energie < ENERGIE_ACTIVATION_MIN:
+        if (energie <= 0.0 if braavos else energie < seuil_activation):
             attentes["energie_sous_seuil"] += 1
             motifs.append("énergie sous le seuil")
         if acteur_en_repos(etat, pid, horloge["present_secondes"]):
@@ -490,7 +558,9 @@ def prevoir_activations(limite):
             motifs.append("au repos")
         tache = choisir_tache(
             "pers:" + pid, noeuds, aretes, adj, energies_graphe,
-            etat=etat, present=horloge["present_secondes"])
+            etat=etat, present=horloge["present_secondes"],
+            amorcage_lieu=("braavos" if braavos else None),
+            sur_verrous=braavos)
         if tache is None:
             attentes["aucune_tache_disponible"] += 1
             motifs.append("aucune tâche")
@@ -498,10 +568,13 @@ def prevoir_activations(limite):
                      "distance": 0, "creee": False}
         else:
             energie_tache = energie_de_tache(tache, energies_graphe, energie)
-            if energie_tache < ENERGIE_MIN:
+            tache_sous_seuil = (energie_tache <= 0.0 if braavos
+                                else energie_tache < ENERGIE_MIN)
+            if tache_sous_seuil:
                 attentes["tache_sous_seuil"] += 1
                 motifs.append("tâche peu énergisée")
-        budget_energie = min(100, int(math.floor(energie)))
+        budget_energie = min(100, max(2 if braavos and energie > 0 else 0,
+                                      int(math.floor(energie))))
         resultat.append({
             "rang": len(resultat) + 1,
             "qui": pid,
@@ -540,6 +613,8 @@ def prevoir_activations(limite):
         "origine": horloge["source_id"],
         "front": horloge["front_id"],
         "present_secondes": round(horloge["present_secondes"], 3),
+        "lieu": "braavos" if braavos else None,
+        "seuil_activation": seuil_activation,
         "hypothese": ("classement instantane si aucun resultat ne modifie "
                        "le graphe, les disponibilites ou les energies"),
         "attente": dict(attentes),

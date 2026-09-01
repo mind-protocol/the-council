@@ -18,6 +18,27 @@ from agents.activation.socle import (DEPOT, RACINE, ecrire_atomique,
 
 
 def _mission(tache, budget_energie):
+    if tache.get("genre") == "verrou":
+        return (
+            u"BOUCLE D'ACTIVATION — le graphe t'a élu sur un VERROU, pas "
+            u"sur une action prescrite.\n"
+            u"VERROU : `%s`\n"
+            u"PROBLÈME OUVERT : %s\n"
+            u"BUDGET DE TRAVAIL : %d unités.\n\n"
+            u"Commence par établir ce qui est vrai. Lis l'affaire et les "
+            u"preuves accessibles, recherche des précédents et des motifs, "
+            u"puis communique avec les personnes pertinentes quand une "
+            u"confrontation est utile. Les clefs et actions déjà écrites "
+            u"sont des hypothèses et des pistes : tu peux les confirmer, les "
+            u"critiquer, les modifier ou en proposer d'autres. Choisis toi-même "
+            u"le prochain geste borné, vérifie ce qu'il produit et itère.\n\n"
+            u"Agis depuis ta tête, tes documents de maison et l'état réel du "
+            u"dépôt. Tu as accès au dépôt : écris directement, par les portes "
+            u"canoniques, les contributions et preuves que ton travail produit. "
+            u"Ne demande rien au MJ et ne déclare pas le verrou levé sans sa "
+            u"preuve de fermeture."
+            % (tache.get("id") or "sans-id", tache.get("quoi") or "",
+               int(budget_energie)))
     return (
         u"BOUCLE D'ACTIVATION — le graphe t'a élu pour poursuivre cette "
         u"tâche maintenant.\n"
@@ -41,9 +62,12 @@ def appeler_acteur(pid, tache, budget_energie, horloge, noeuds, modele, effort,
     journaliser("appel.depeche", acteur=pid, tache=tache.get("id"),
                 fournisseur="runtime-global", sec=bool(sec))
     debut = time.time()
+    contexte = (str(tache.get("id"))
+                if tache.get("genre") == "verrou" else None)
     ok = depecher.depecher(
         pid, mission, modele, minutes or None, bool(sec), attendre=True,
-        contexte_id=None, ref=None, mode="journee", forcer_creux=True)
+        contexte_id=contexte, ref=None, mode="journee", forcer_creux=True,
+        effort=effort)
     if sec:
         return None, 0, {}
     if not ok:

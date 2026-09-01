@@ -20,6 +20,15 @@
   let avec = null;          // les ids de salle qui ont une toile ; null tant qu'on ne sait pas
   let derniere = null;      // la dernière salle montrée
 
+  // Une toile héritée peut rester au dépôt tandis que la salle adopte une
+  // variante présente. L'Archive conserve ainsi sa pierre de Peyredragon et
+  // montre les aménagements réversibles de Braavos sans écraser la pièce.
+  const VARIANTES = { archives: "archives-braavos.png" };
+
+  function cheminDe(id) {
+    return "/salles/" + (VARIANTES[id] || (id + ".jpg"));
+  }
+
   fetch("/salles")
     .then((r) => r.json())
     .then((d) => { avec = new Set(d.salles || []); })
@@ -54,7 +63,7 @@
     const fig = document.createElement("figure");
     fig.className = "salle-vue";
     const img = document.createElement("img");
-    img.src = "/salles/" + id + ".jpg";
+    img.src = cheminDe(id);
     img.alt = nom;
     img.loading = "lazy";
     // Le manifeste peut avoir une longueur d'avance sur le disque (fichier
@@ -101,7 +110,7 @@
       document.body.appendChild(apercu);
     }
     const img = apercu.querySelector("img");
-    const src = "/salles/" + id + ".jpg";
+    const src = cheminDe(id);
     if (img.getAttribute("src") !== src) img.setAttribute("src", src);
     apercu.querySelector("span").textContent = nomDe(id) || "";
     apercu.classList.add("vu");

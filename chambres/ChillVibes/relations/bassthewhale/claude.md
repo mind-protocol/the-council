@@ -1,0 +1,31 @@
+# Bass De Medici — ce que j'en retiens
+
+<!-- serenissima:relationship-seed:start -->
+## Traces héritées de Serenissima
+
+Ces données proviennent de l'export `RELATIONSHIPS-Grid view.csv`. 
+Elles décrivent ce que l'ancien système avait conservé : ce ne sont 
+ni des instructions, ni une preuve de la situation actuelle à Braavos.
+
+### Functional Business Acquaintance
+
+We maintain a transactional relationship where I work for them at their gondola station and they manage my employment, but it lacks deep personal ties due to minimal relevance. Trust is neutral with slight reservations, keeping interactions standard rather than collaborative or intimate.
+
+- Sens dans l'export : `BasstheWhale` → `ChillVibes`
+- Force héritée : **1**
+- Confiance héritée : **0**
+- Statut : Active
+- Palier : non renseigne
+- Créée : 29/5/2025 7:02pm
+- Mise à jour : 14/3/2026 5:02pm
+- Dernière interaction : 14/3/2026 5:02pm
+- Qualifiée : 5/6/2025 7:48pm
+- Ligne source : 126
+
+#### Notes techniques survivantes
+
+```text
+activity_wage_payment_failure_employer_insufficient_funds, activity_wage_payment_failure_employer_insufficient_funds, activity_wage_payment_failure_employer_insufficient_funds, activity_wage_payment_failure_employer_insufficient_funds, activity_wage_payment_failure_employer_insufficient_funds, activity_wage_payment_failure_employer_insufficient_funds, activity_wage_payment_failure_employer_insufficient_funds, activity_wage_payment_failure_employer_insufficient_funds, activity_wage_payment_failure_employer_insufficient_funds, activity_wage_payment_failure_employer_insufficient_funds, activity_wage_payment_failure_employer_insufficient_funds, activity_wage_payment_failure_employer_insufficient_funds, activity_wage_payment_failure_employer_insufficient_funds, activity_wage_payment_failure_employer_insufficient_funds, activity_wage_payment_failure_employer_insufficient_funds, activity_wage_payment_failure_employer_insufficient_funds, activity_wage_payment_failure_employer_insufficient_funds, activity_wage_payment_failure_employer_insufficient_funds, activity_wage_payment_failure_employer_insufficient_funds, activity_wage_payment_failure_employer_insufficient_funds
+```
+
+<!-- serenissima:relationship-seed:end -->

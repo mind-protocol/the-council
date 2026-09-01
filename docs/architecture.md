@@ -17,7 +17,7 @@ monde est **le disque** — jamais la conversation.
 | 🗣️ **Parloir** | `parloir.py`, canaux des chambres | Les billets entre habitants ; retour vers un joueur au web et au flux d'entrée MJ, sans canal de requête PNJ→MJ |
 | 🎭 **MJ** | `scripts/agents/mj.py` + session continue + `CLAUDE.md` | Une seule autorité de jeu : met en scène et arbitre ; n'invente jamais une parole |
 | 📜 **Flux & Rendu** | `append_flux.py`, `etat/flux.jsonl`, `serveur/`, `ecrans/modules/` | Ce que le joueur voit : append-only, curseur client, une page persistante |
-| 📥 **Inbox & sélection** | `etat/inbox/`, `selectionner_contexte.py`, `.agents-runtime/contextes/` | Chaque acte du joueur ouvre une sélection jetable avant toute autorité de jeu |
+| 📥 **Inbox & routage** | `etat/inbox/`, `router_message.py`, `.agents-runtime/routages/` | La présence physique adresse directement les paroles ; les autres modes rejoignent le MJ |
 | 📐 **Doctrine** | `docs/` | Les contrats : `schema.md` (format, intouchable), `agents/prompts/metier.md`, `carte.md`, les fiches de conception |
 
 ## Les modules par container
@@ -38,8 +38,7 @@ monde est **le disque** — jamais la conversation.
 ### 🧠 Agents
 - `depecher.py` — le chemin manuel : brief (`dossier_journee`), manuel système (`manuel_de`), session `claude -p`, retour (`verser_sur_le_champ`).
 - Il n'existe plus de chemin automatique : une personne travaille uniquement après une dépêche ou un message explicite.
-- `selectionner_contexte.py` — première couche d'un POST joueur : session neuve sans reprise, sérialisée par siège ; reçoit cinq items visibles, le contexte précédent, les joueurs dans la salle, les personnes nommées, les candidats classés et les arbres `action → clef → verrou → état` de toutes les pièces détectées. Son système décrit le modèle d'affaire et porte tous les états cibles et verrous. Les messages faibles héritent du contexte précédent, sauf si le message courant nomme une personne : le nom devient alors une contrainte de routage et interdit `continuer`. Les noms présents seulement dans le fil restent du contexte. Une sélection non vide doit ancrer chaque pointeur par une citation du fil ; un incident multi-sièges impose une proposition de création. `joueurs_concernes` et `hommes` (PNJ seulement) restent séparés. Chaque homme est associé à un pointeur dans `routes_hommes`. L'artefact `selection-contexte/4` est écrit sous `.agents-runtime/contextes/`.
-- `agents/routeur_message.py` — deuxième couche : toute action va au MJ sur sa seule `ref`. Pour `dire|parler`, les hommes sélectionnés reçoivent auparavant les mots exacts par une dépêche contextuelle ; le numéro après `#` devient le `contexte_id` stable de leur session et de leur fil. `contexte_id` et la `ref` d'origine sont propagés ensemble dans le prompt, son archive, l'environnement du runtime, la trace de session, le canal du parloir, la réponse web et le spool MJ. Le bilan est joint au réveil MJ pour interdire une seconde dépêche du même homme.
+- `agents/routeur_message.py` — première couche d'un POST joueur. Il résout les positions à la minute du siège. Une parole va, mots exacts et `ref` intacte, dans le canal de chaque habitant non joueur de la même pièce ; le billet réveille son destinataire. Les autres joueurs présents ont déjà reçu la parole par le flux. Les gestes et les modes de régie vont directement au MJ. Chaque passage laisse un reçu `routage-presence/1` sous `.agents-runtime/routages/`.
 - **La mémoire d'un agent est la greffe documentaire** : son brief porte ses travaux ouverts, ses quatre dernières pensées par travail et sa dernière conclusion écrite de sa main (`travaux_ouverts_de`, lecteur canonique unique pour les deux chemins). `intentions.json` ne porte pas sa mémoire — voir Propositions.
 
 ### 🗣️ Parloir
@@ -57,10 +56,10 @@ monde est **le disque** — jamais la conversation.
 - `serveur/serveur.js` (port 3129, unique) — sert `/scene` cumulé, `/entites`, la régie.
 - `ecrans/modules/` — un type d'item = un module (galerie, paroles, gestes, carte, jetons, books, echiquier, terrain, ville…).
 
-### 📥 Inbox & sélection
-- La page POSTe → `etat/inbox/<siège>/action-*.json` ; le serveur spawn `scripts/selectionner_contexte.py --de <siège> --ref <ref>` en détaché.
-- Le sélecteur ouvre toujours une session neuve (`reprendre=False`), mais hérite explicitement du dernier contexte résolu pour les messages faibles. Il choisit ou propose le contexte, sépare joueurs et PNJ concernés, puis écrit `.agents-runtime/contextes/<siège>/<ref>.json`.
-- Le routeur sert ensuite les hommes d'une parole dans leurs sessions d'item, appelle le MJ sur la `ref` exacte et lui joint les routes déjà servies. Les autres actions vont seulement au MJ. L'action reste dans l'inbox jusqu'à ce que le MJ ait réellement écrit au flux.
+### 📥 Inbox & routage
+- La page POSTe → `etat/inbox/<siège>/action-*.json` ; le serveur spawn `scripts/router_message.py --de <siège> --ref <ref>` en détaché.
+- Pour `dire|parler`, la pièce calculée est l'adresse : chaque habitant non joueur présent reçoit un billet-réveil. Aucun appel LLM intermédiaire ne choisit un homme ou une affaire.
+- Les gestes, questions et modes de régie vont directement au MJ sur la `ref` exacte. Jump conserve sa préparation. Le reçu vit sous `.agents-runtime/routages/<siège>/<ref>.json`.
 
 ### 📐 Doctrine
 - `schema.md` — le format, jamais modifié par personne.
@@ -74,11 +73,10 @@ monde est **le disque** — jamais la conversation.
 ```mermaid
 flowchart LR
     subgraph BOUCLE["LA boucle des sièges — deux profils"]
-        SJ["💺 siège · profil SCÈNE<br/>(le joueur)"] -->|"actes : POST 📥 inbox"| SC["🔎 sélecteur de contexte<br/>session neuve"]
-        SC --> RT["📨 routeur · ref exacte"]
-        RT -->|"toute action"| MJ["🎭 autorité de jeu"]
-        RT -->|"parler · contexte_id"| H["🧠 hommes sélectionnés"]
-        H -->|"retours déjà servis"| MJ
+        SJ["💺 siège · profil SCÈNE<br/>(le joueur)"] -->|"actes : POST 📥 inbox"| RT["📨 routeur · présence + ref"]
+        RT -->|"gestes et régie"| MJ["🎭 autorité de jeu"]
+        RT -->|"parler · même pièce"| H["🧠 habitants présents"]
+        H -->|"réponses par billet"| SJ
         MJ -->|"point de vue : 📜 flux (append_flux)"| SJ
         MJ -->|"point de vue : brief (dépêche explicite)"| SP["💺 siège · profil JOURNÉE<br/>(le PNJ en session)"]
         SP -->|"actes et écrits rendus"| E[(🗄️ État)]

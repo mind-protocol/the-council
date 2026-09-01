@@ -11,6 +11,23 @@ une affaire » : 🏰 l'affaire · 🎯 l'état cible · 🔒 le verrou · 🗝�
 ⚔️ l'action · 🔨 le moyen · 🪶 l'office. Sept objets, pas un de plus, et leurs
 signes viennent du guide.
 
+Un moyen peut être cité à deux étages sans changer de nature : par une **clef**,
+quand elle qualifie les modules existants dont dépend son principe, et par une
+**action**, quand le geste les emploie effectivement. L'échiquier dessine le
+même moyen une seule fois et le relie aux deux pièces ; il n'invente pas une
+action intermédiaire pour faire tenir une chaîne de référence.
+
+Une clef retenue reliée à des moyens peut donc terminer une **chaîne logique** :
+elle décrit le sous-graphe qui doit être vrai pour lever le verrou. L'absence
+d'action n'est alors pas une rupture. Une action n'apparaît que lorsqu'un geste
+effectif a réellement été conçu ; on ne fige jamais un processus pour satisfaire
+la forme du damier.
+
+Les préalables logiques s'écrivent sur le **verrou** dans `⛓️ Dépend de` : ils
+disent quels états doivent déjà être vrais avant que la serrure puisse être
+levée. La dépendance d'une action reste réservée à un véritable préalable de ce
+geste ; elle ne sert pas à reconstruire artificiellement des phases de projet.
+
 **Il ne contient rien.** Tout est dérivé des `tables` des cahiers d'affaire, à
 la lecture. Aucun fichier d'état, aucune écriture, jamais — une vue qui
 recopierait le plan serait un mensonge en attente.

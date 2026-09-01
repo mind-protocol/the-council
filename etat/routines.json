@@ -1,2152 +1,2557 @@
 {
-  "_": "Les journees du chateau. Voir scripts/presence.py. Une bande = {de, a, salle, lieu} en minutes 0-1439 ; les bandes d'un modele pavent la journee entiere. Le jeton @dortoir se remplace par le `dortoir` de la personne (ou celui du modele), @poste par son `poste`. Ce fichier est technique, hors docs/schema.md, comme presence.json et horloges.json.",
-  "__destination": "UNE BANDE N'EST PAS UNE POSITION, C'EST UNE DESTINATION. A l'heure dite, l'homme PART vers cette salle ; il y arrive au bout du chemin (etat/chemins.json), et entre les deux il est dans l'escalier, ou on peut le croiser. Une routine qui poserait les gens d'autorite a l'heure ronde ne serait qu'un teleport de plus, a trois heures d'intervalle.",
-  "peremption_minutes": 240,
-  "modeles": {
-    "reine": {
-      "nom": "Le jour d'une reine",
-      "dortoir": {
-        "salle": "appartements-reine",
-        "lieu": "Vos appartements, Peyredragon"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 330,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 330,
-          "a": 480,
-          "salle": "table-peinte",
-          "lieu": "Chambre de la Table Peinte, Peyredragon"
-        },
-        {
-          "de": 480,
-          "a": 660,
-          "salle": "grande-salle",
-          "lieu": "Grande salle, Peyredragon"
-        },
-        {
-          "de": 660,
-          "a": 780,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 780,
-          "a": 1020,
-          "salle": "table-peinte",
-          "lieu": "Chambre de la Table Peinte, Peyredragon"
-        },
-        {
-          "de": 1020,
-          "a": 1140,
-          "salle": "grande-salle",
-          "lieu": "Grande salle, Peyredragon"
-        },
-        {
-          "de": 1140,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
+ "_": "Les journees du chateau. Voir scripts/presence.py. Une bande = {de, a, salle, lieu} en minutes 0-1439 ; les bandes d'un modele pavent la journee entiere. Le jeton @dortoir se remplace par le `dortoir` de la personne (ou celui du modele), @poste par son `poste`. Ce fichier est technique, hors docs/schema.md, comme presence.json et horloges.json.",
+ "__destination": "UNE BANDE N'EST PAS UNE POSITION, C'EST UNE DESTINATION. A l'heure dite, l'homme PART vers cette salle ; il y arrive au bout du chemin (etat/chemins.json), et entre les deux il est dans l'escalier, ou on peut le croiser. Une routine qui poserait les gens d'autorite a l'heure ronde ne serait qu'un teleport de plus, a trois heures d'intervalle.",
+ "peremption_minutes": 240,
+ "modeles": {
+  "reine": {
+   "nom": "Le jour d'une reine",
+   "dortoir": {
+    "salle": "appartements-reine",
+    "lieu": "Vos appartements, Peyredragon"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 330,
+     "salle": "@dortoir"
     },
-    "noble-jeune": {
-      "nom": "Le jour d'un prince",
-      "dortoir": {
-        "salle": "appartements-reine",
-        "lieu": "Vos appartements, Peyredragon"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 390,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 390,
-          "a": 600,
-          "salle": "fosses",
-          "lieu": "Fosses aux dragons, Peyredragon",
-          "ferme": true,
-          "pourquoi": "aux fosses, avec son dragon"
-        },
-        {
-          "de": 600,
-          "a": 720,
-          "salle": "cour",
-          "lieu": "La cour, Peyredragon"
-        },
-        {
-          "de": 720,
-          "a": 840,
-          "salle": "grande-salle",
-          "lieu": "Grande salle, Peyredragon"
-        },
-        {
-          "de": 840,
-          "a": 1080,
-          "salle": "cour",
-          "lieu": "La cour, Peyredragon"
-        },
-        {
-          "de": 1080,
-          "a": 1200,
-          "salle": "grande-salle",
-          "lieu": "Grande salle, Peyredragon"
-        },
-        {
-          "de": 1200,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
+    {
+     "de": 330,
+     "a": 480,
+     "salle": "table-peinte",
+     "lieu": "Chambre de la Table Peinte, Peyredragon"
     },
-    "dame-de-compagnie": {
-      "nom": "Le jour d'une dame de la maison",
-      "dortoir": {
-        "salle": "appartements-reine",
-        "lieu": "Appartements de la reine, Peyredragon"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 300,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 300,
-          "a": 660,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 660,
-          "a": 780,
-          "salle": "grande-salle",
-          "lieu": "Grande salle, Peyredragon"
-        },
-        {
-          "de": 780,
-          "a": 1140,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 1140,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
+    {
+     "de": 480,
+     "a": 660,
+     "salle": "grande-salle",
+     "lieu": "Grande salle, Peyredragon"
     },
-    "septa": {
-      "nom": "Le jour d'une septa",
-      "dortoir": {
-        "salle": "appartements-reine",
-        "lieu": "Appartements de la reine, Peyredragon"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 300,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 300,
-          "a": 420,
-          "salle": "septuaire",
-          "lieu": "Le septuaire, Peyredragon",
-          "ferme": true,
-          "pourquoi": "l'office du matin"
-        },
-        {
-          "de": 420,
-          "a": 660,
-          "salle": "@dortoir",
-          "ferme": false,
-          "pourquoi": "en cellule, entre deux offices"
-        },
-        {
-          "de": 660,
-          "a": 780,
-          "salle": "septuaire",
-          "lieu": "Le septuaire, Peyredragon",
-          "ferme": true,
-          "pourquoi": "l'office de midi"
-        },
-        {
-          "de": 780,
-          "a": 1140,
-          "salle": "@dortoir",
-          "ferme": false,
-          "pourquoi": "en cellule, entre deux offices"
-        },
-        {
-          "de": 1140,
-          "a": 1260,
-          "salle": "septuaire",
-          "lieu": "Le septuaire, Peyredragon",
-          "ferme": true,
-          "pourquoi": "l'office du soir"
-        },
-        {
-          "de": 1260,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
+    {
+     "de": 660,
+     "a": 780,
+     "salle": "@dortoir"
     },
-    "castellan": {
-      "nom": "Le jour d'un castellan",
-      "dortoir": {
-        "salle": "tambour-de-pierre",
-        "lieu": "Tambour de Pierre, Peyredragon"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 270,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 270,
-          "a": 420,
-          "salle": "cour",
-          "lieu": "La cour, Peyredragon",
-          "ferme": true,
-          "pourquoi": "les ordres du jour a la garde"
-        },
-        {
-          "de": 420,
-          "a": 720,
-          "salle": "porte-dragon",
-          "lieu": "Chemin de ronde, Peyredragon",
-          "ferme": true,
-          "pourquoi": "la ronde des murs"
-        },
-        {
-          "de": 720,
-          "a": 840,
-          "salle": "grande-salle",
-          "lieu": "Grande salle, Peyredragon"
-        },
-        {
-          "de": 840,
-          "a": 1140,
-          "salle": "cour",
-          "lieu": "La cour, Peyredragon"
-        },
-        {
-          "de": 1140,
-          "a": 1290,
-          "salle": "porte-de-mer",
-          "lieu": "Porte de mer, Peyredragon",
-          "ferme": true,
-          "pourquoi": "la fermeture de la porte de mer"
-        },
-        {
-          "de": 1290,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
+    {
+     "de": 780,
+     "a": 1020,
+     "salle": "table-peinte",
+     "lieu": "Chambre de la Table Peinte, Peyredragon"
     },
-    "port": {
-      "nom": "Le jour d'un homme du port",
-      "dortoir": {
-        "salle": "porte-de-mer",
-        "lieu": "Porte de mer, Peyredragon"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 300,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 300,
-          "a": 420,
-          "salle": "quai",
-          "lieu": "Le quai, Peyredragon"
-        },
-        {
-          "de": 420,
-          "a": 720,
-          "salle": "porte-de-mer",
-          "lieu": "Porte de mer, Peyredragon",
-          "ferme": true,
-          "pourquoi": "le guet de la porte de mer"
-        },
-        {
-          "de": 720,
-          "a": 1020,
-          "salle": "quai",
-          "lieu": "Le quai, Peyredragon"
-        },
-        {
-          "de": 1020,
-          "a": 1260,
-          "salle": "porte-de-mer",
-          "lieu": "Porte de mer, Peyredragon",
-          "ferme": true,
-          "pourquoi": "le guet du soir"
-        },
-        {
-          "de": 1260,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
+    {
+     "de": 1020,
+     "a": 1140,
+     "salle": "grande-salle",
+     "lieu": "Grande salle, Peyredragon"
     },
-    "dragonnier": {
-      "nom": "Le jour d'un homme des fosses",
-      "dortoir": {
-        "salle": "fosses",
-        "lieu": "Fosses aux dragons, Peyredragon"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 270,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 270,
-          "a": 720,
-          "salle": "fosses",
-          "lieu": "Fosses aux dragons, Peyredragon",
-          "ferme": true,
-          "pourquoi": "aux fosses — on ne quitte pas un dragon"
-        },
-        {
-          "de": 720,
-          "a": 810,
-          "salle": "cour",
-          "lieu": "La cour, Peyredragon"
-        },
-        {
-          "de": 810,
-          "a": 1200,
-          "salle": "fosses",
-          "lieu": "Fosses aux dragons, Peyredragon",
-          "ferme": true,
-          "pourquoi": "aux fosses"
-        },
-        {
-          "de": 1200,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "galeries": {
-      "nom": "Le jour d'un tailleur de verredragon",
-      "dortoir": {
-        "salle": "bourg",
-        "lieu": "Le bourg sous les murs, Peyredragon"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 330,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 330,
-          "a": 720,
-          "salle": "galeries",
-          "lieu": "Onzieme galerie, quatre-vingts pas sous la mer",
-          "ferme": true,
-          "pourquoi": "la taille du verredragon"
-        },
-        {
-          "de": 720,
-          "a": 810,
-          "salle": "cour",
-          "lieu": "La cour, Peyredragon"
-        },
-        {
-          "de": 810,
-          "a": 1170,
-          "salle": "galeries",
-          "lieu": "Onzieme galerie, quatre-vingts pas sous la mer",
-          "ferme": true,
-          "pourquoi": "la taille du verredragon"
-        },
-        {
-          "de": 1170,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "bourg": {
-      "nom": "Le jour du bourg",
-      "dortoir": {
-        "salle": "bourg",
-        "lieu": "Le bourg sous les murs, Peyredragon"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 270,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 270,
-          "a": 480,
-          "salle": "quai",
-          "lieu": "Le quai, Peyredragon",
-          "ferme": true,
-          "pourquoi": "la peche du matin au quai"
-        },
-        {
-          "de": 480,
-          "a": 1140,
-          "salle": "bourg",
-          "lieu": "Le bourg sous les murs, Peyredragon"
-        },
-        {
-          "de": 1140,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "hote": {
-      "nom": "Le jour d'un hote de la maison",
-      "dortoir": {
-        "salle": "tambour-de-pierre",
-        "lieu": "Chambre d'hote, Tambour de Pierre, Peyredragon"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 360,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 360,
-          "a": 660,
-          "salle": "roukerie",
-          "lieu": "La roukerie, Peyredragon"
-        },
-        {
-          "de": 660,
-          "a": 780,
-          "salle": "grande-salle",
-          "lieu": "Grande salle, Peyredragon"
-        },
-        {
-          "de": 780,
-          "a": 1080,
-          "salle": "archives",
-          "lieu": "L'archive, Peyredragon"
-        },
-        {
-          "de": 1080,
-          "a": 1200,
-          "salle": "grande-salle",
-          "lieu": "Grande salle, Peyredragon"
-        },
-        {
-          "de": 1200,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "poste": {
-      "nom": "Un homme a son poste",
-      "dortoir": {
-        "salle": "tambour-de-pierre",
-        "lieu": "Corps de garde, Peyredragon"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 300,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 300,
-          "a": 1260,
-          "salle": "@poste",
-          "ferme": false,
-          "pourquoi": "a son poste — les mains prises, les oreilles libres"
-        },
-        {
-          "de": 1260,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "captif": {
-      "nom": "Un homme aux fers",
-      "dortoir": {
-        "salle": "cachots",
-        "lieu": "Cellier bas du Tambour de Pierre, Peyredragon"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 360,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 360,
-          "a": 1260,
-          "salle": "@dortoir",
-          "ferme": false,
-          "pourquoi": "aux fers, et rien d'autre a faire que penser"
-        },
-        {
-          "de": 1260,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "conseil": {
-      "nom": "Le jour d'un homme du conseil",
-      "_": "Ceux qui siegent : la table peinte est leur poste, on les y trouve toute la journee sauf au repas.",
-      "dortoir": {
-        "salle": "tambour-de-pierre",
-        "lieu": "Chambre haute, Tambour de Pierre"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 330,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 330,
-          "a": 720,
-          "salle": "table-peinte",
-          "lieu": "Chambre de la Table Peinte, Peyredragon"
-        },
-        {
-          "de": 720,
-          "a": 810,
-          "salle": "grande-salle",
-          "lieu": "Grande salle, Peyredragon"
-        },
-        {
-          "de": 810,
-          "a": 1140,
-          "salle": "table-peinte",
-          "lieu": "Chambre de la Table Peinte, Peyredragon"
-        },
-        {
-          "de": 1140,
-          "a": 1260,
-          "salle": "grande-salle",
-          "lieu": "Grande salle, Peyredragon"
-        },
-        {
-          "de": 1260,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "mestre": {
-      "nom": "Le jour d'un mestre",
-      "_": "Un mestre n'est pas un conseiller assis : les corbeaux partent au jour et rentrent au soir, et c'est lui qui les leve et les recoit. Entre les deux il siege, et l'apres-midi il ecrit.",
-      "dortoir": {
-        "salle": "roukerie",
-        "lieu": "La roukerie, Peyredragon"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 300,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 300,
-          "a": 420,
-          "salle": "roukerie",
-          "lieu": "La roukerie, Peyredragon",
-          "ferme": true,
-          "pourquoi": "les corbeaux du matin"
-        },
-        {
-          "de": 420,
-          "a": 720,
-          "salle": "table-peinte",
-          "lieu": "Chambre de la Table Peinte, Peyredragon"
-        },
-        {
-          "de": 720,
-          "a": 810,
-          "salle": "grande-salle",
-          "lieu": "Grande salle, Peyredragon"
-        },
-        {
-          "de": 810,
-          "a": 1020,
-          "salle": "archives",
-          "lieu": "L'archive, Peyredragon"
-        },
-        {
-          "de": 1020,
-          "a": 1140,
-          "salle": "table-peinte",
-          "lieu": "Chambre de la Table Peinte, Peyredragon"
-        },
-        {
-          "de": 1140,
-          "a": 1260,
-          "salle": "roukerie",
-          "lieu": "La roukerie, Peyredragon",
-          "ferme": true,
-          "pourquoi": "les corbeaux du soir"
-        },
-        {
-          "de": 1260,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "ombre": {
-      "nom": "Une ombre, du lever au coucher",
-      "dortoir": {
-        "salle": "bourg",
-        "lieu": "Le bourg sous les murs, Peyredragon"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 330,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 330,
-          "a": 1140,
-          "salle": "@suit"
-        },
-        {
-          "de": 1140,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "roi": {
-      "nom": "Le jour d'un roi qui ne l'a pas voulu",
-      "_": "Il tient audience parce qu'il le faut, monte a la fosse parce qu'il aime ca, et redescend en ville des que le conseil le lache.",
-      "dortoir": {
-        "salle": "appartements-royaux",
-        "lieu": "Les appartements royaux, donjon de Maegor"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 600,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 600,
-          "a": 720,
-          "salle": "salle-du-trone",
-          "lieu": "La salle du Trone, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "la cour en audience"
-        },
-        {
-          "de": 720,
-          "a": 840,
-          "salle": "cour-donjon-rouge",
-          "lieu": "La cour du Donjon Rouge"
-        },
-        {
-          "de": 840,
-          "a": 1020,
-          "salle": "fosse-aux-dragons",
-          "lieu": "La fosse aux dragons, colline de Rhaenys",
-          "ferme": true,
-          "pourquoi": "a la fosse aux dragons"
-        },
-        {
-          "de": 1020,
-          "a": 1170,
-          "salle": "salle-du-trone",
-          "lieu": "La salle du Trone, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "la cour en audience"
-        },
-        {
-          "de": 1170,
-          "a": 1350,
-          "salle": "rue-de-la-soie",
-          "lieu": "La rue de la Soie, Port-Real"
-        },
-        {
-          "de": 1350,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "main-du-roi": {
-      "nom": "Le jour d'une Main",
-      "_": "Il est leve avant le roi et couche apres lui : c'est lui qui gouverne, et la tour ne desemplit pas.",
-      "dortoir": {
-        "salle": "tour-de-la-main",
-        "lieu": "La tour de la Main, Donjon Rouge"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 330,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 330,
-          "a": 420,
-          "salle": "tour-de-la-main",
-          "lieu": "La tour de la Main, Donjon Rouge"
-        },
-        {
-          "de": 420,
-          "a": 660,
-          "salle": "petit-conseil",
-          "lieu": "La chambre du petit conseil, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "le petit conseil en seance"
-        },
-        {
-          "de": 660,
-          "a": 780,
-          "salle": "salle-du-trone",
-          "lieu": "La salle du Trone, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "la cour en audience"
-        },
-        {
-          "de": 780,
-          "a": 960,
-          "salle": "tour-de-la-main",
-          "lieu": "La tour de la Main, Donjon Rouge"
-        },
-        {
-          "de": 960,
-          "a": 1140,
-          "salle": "petit-conseil",
-          "lieu": "La chambre du petit conseil, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "le petit conseil en seance"
-        },
-        {
-          "de": 1140,
-          "a": 1260,
-          "salle": "salle-du-trone",
-          "lieu": "La salle du Trone, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "la cour en audience"
-        },
-        {
-          "de": 1260,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "reine-douairiere": {
-      "nom": "Le jour d'une reine douairiere",
-      "dortoir": {
-        "salle": "appartements-douairiere",
-        "lieu": "Les appartements de la reine douairiere, Maegor"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 330,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 330,
-          "a": 450,
-          "salle": "septuaire-royal",
-          "lieu": "Le septuaire royal, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "l'office du matin"
-        },
-        {
-          "de": 450,
-          "a": 660,
-          "salle": "petit-conseil",
-          "lieu": "La chambre du petit conseil, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "le petit conseil en seance"
-        },
-        {
-          "de": 660,
-          "a": 780,
-          "salle": "appartements-royaux",
-          "lieu": "Les appartements royaux, donjon de Maegor"
-        },
-        {
-          "de": 780,
-          "a": 960,
-          "salle": "bois-des-dieux-port-real",
-          "lieu": "Le bois des dieux, Donjon Rouge"
-        },
-        {
-          "de": 960,
-          "a": 1140,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 1140,
-          "a": 1260,
-          "salle": "septuaire-royal",
-          "lieu": "Le septuaire royal, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "l'office du soir"
-        },
-        {
-          "de": 1260,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "garde-royale": {
-      "nom": "Le jour d'un manteau blanc",
-      "_": "Sa journee est un poste : la ou est le roi. Le matin il fait travailler les princes au sable.",
-      "dortoir": {
-        "salle": "tour-blanche",
-        "lieu": "La Tour Blanche, Donjon Rouge"
-      },
-      "poste": {
-        "salle": "salle-du-trone",
-        "lieu": "La salle du Trone, Donjon Rouge"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 300,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 300,
-          "a": 480,
-          "salle": "salle-d-armes",
-          "lieu": "La salle d'armes, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "l'exercice d'armes"
-        },
-        {
-          "de": 480,
-          "a": 780,
-          "salle": "@poste",
-          "ferme": true,
-          "pourquoi": "a son poste"
-        },
-        {
-          "de": 780,
-          "a": 900,
-          "salle": "cour-donjon-rouge",
-          "lieu": "La cour du Donjon Rouge"
-        },
-        {
-          "de": 900,
-          "a": 1200,
-          "salle": "@poste",
-          "ferme": true,
-          "pourquoi": "a son poste"
-        },
-        {
-          "de": 1200,
-          "a": 1320,
-          "salle": "tour-blanche",
-          "lieu": "La Tour Blanche, Donjon Rouge"
-        },
-        {
-          "de": 1320,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "prince-vert": {
-      "nom": "Le jour d'un prince en armes",
-      "dortoir": {
-        "salle": "donjon-de-maegor",
-        "lieu": "Le donjon de Maegor, Donjon Rouge"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 360,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 360,
-          "a": 540,
-          "salle": "salle-d-armes",
-          "lieu": "La salle d'armes, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "l'exercice d'armes"
-        },
-        {
-          "de": 540,
-          "a": 720,
-          "salle": "fosse-aux-dragons",
-          "lieu": "La fosse aux dragons, colline de Rhaenys",
-          "ferme": true,
-          "pourquoi": "a la fosse aux dragons"
-        },
-        {
-          "de": 720,
-          "a": 840,
-          "salle": "cour-donjon-rouge",
-          "lieu": "La cour du Donjon Rouge"
-        },
-        {
-          "de": 840,
-          "a": 1020,
-          "salle": "salle-d-armes",
-          "lieu": "La salle d'armes, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "l'exercice d'armes"
-        },
-        {
-          "de": 1020,
-          "a": 1200,
-          "salle": "salle-du-trone",
-          "lieu": "La salle du Trone, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "la cour en audience"
-        },
-        {
-          "de": 1200,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "reine-helaena": {
-      "nom": "Le jour d'une reine qu'on ne consulte pas",
-      "dortoir": {
-        "salle": "chambre-helaena",
-        "lieu": "La chambre de la reine Helaena, Maegor"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 600,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 600,
-          "a": 780,
-          "salle": "bois-des-dieux-port-real",
-          "lieu": "Le bois des dieux, Donjon Rouge"
-        },
-        {
-          "de": 780,
-          "a": 960,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 960,
-          "a": 1080,
-          "salle": "septuaire-royal",
-          "lieu": "Le septuaire royal, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "l'office"
-        },
-        {
-          "de": 1080,
-          "a": 1200,
-          "salle": "salle-du-trone",
-          "lieu": "La salle du Trone, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "la cour en audience"
-        },
-        {
-          "de": 1200,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "grand-mestre": {
-      "nom": "Le jour d'un Grand Mestre",
-      "dortoir": {
-        "salle": "roukerie-port-real",
-        "lieu": "La roukerie de Port-Real"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 300,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 300,
-          "a": 420,
-          "salle": "roukerie-port-real",
-          "lieu": "La roukerie de Port-Real",
-          "ferme": true,
-          "pourquoi": "les corbeaux du matin"
-        },
-        {
-          "de": 420,
-          "a": 720,
-          "salle": "petit-conseil",
-          "lieu": "La chambre du petit conseil, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "le petit conseil en seance"
-        },
-        {
-          "de": 720,
-          "a": 840,
-          "salle": "salle-du-trone",
-          "lieu": "La salle du Trone, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "la cour en audience"
-        },
-        {
-          "de": 840,
-          "a": 1080,
-          "salle": "roukerie-port-real",
-          "lieu": "La roukerie de Port-Real",
-          "ferme": true,
-          "pourquoi": "les corbeaux"
-        },
-        {
-          "de": 1080,
-          "a": 1200,
-          "salle": "petit-conseil",
-          "lieu": "La chambre du petit conseil, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "le petit conseil en seance"
-        },
-        {
-          "de": 1200,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "chuchoteur": {
-      "nom": "Le jour d'un homme qui ecoute",
-      "_": "Les passages de Maegor sont son poste autant que la table du conseil : il n'y a que la qu'on ne le voit pas venir.",
-      "dortoir": {
-        "salle": "donjon-de-maegor",
-        "lieu": "Le donjon de Maegor, Donjon Rouge"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 360,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 360,
-          "a": 540,
-          "salle": "passages-maegor",
-          "lieu": "Les passages, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "dans les passages"
-        },
-        {
-          "de": 540,
-          "a": 720,
-          "salle": "tour-de-la-main",
-          "lieu": "La tour de la Main, Donjon Rouge"
-        },
-        {
-          "de": 720,
-          "a": 900,
-          "salle": "petit-conseil",
-          "lieu": "La chambre du petit conseil, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "le petit conseil en seance"
-        },
-        {
-          "de": 900,
-          "a": 1080,
-          "salle": "passages-maegor",
-          "lieu": "Les passages, Donjon Rouge",
-          "ferme": true,
-          "pourquoi": "dans les passages"
-        },
-        {
-          "de": 1080,
-          "a": 1260,
-          "salle": "geoles-noires",
-          "lieu": "Les geoles noires, sous la colline"
-        },
-        {
-          "de": 1260,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "briseur-de-coques": {
-      "nom": "Le jour d'un homme du chantier",
-      "_": "La maree fixe tout : on hale a l'eau haute, on casse a l'eau basse, et l'on mange au feu entre les deux.",
-      "dortoir": {
-        "salle": "les-paillasses",
-        "lieu": "Les paillasses, chantier de la vase"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 330,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 330,
-          "a": 420,
-          "salle": "le-feu-de-l-aire",
-          "lieu": "Le feu de l'aire, chantier de la vase"
-        },
-        {
-          "de": 420,
-          "a": 720,
-          "salle": "la-cale",
-          "lieu": "La cale, chantier de la vase",
-          "ferme": true,
-          "pourquoi": "dans la cale"
-        },
-        {
-          "de": 720,
-          "a": 780,
-          "salle": "le-feu-de-l-aire",
-          "lieu": "Le feu de l'aire, chantier de la vase"
-        },
-        {
-          "de": 780,
-          "a": 1080,
-          "salle": "la-carcasse",
-          "lieu": "La carcasse, chantier de la vase",
-          "ferme": true,
-          "pourquoi": "sur la carcasse"
-        },
-        {
-          "de": 1080,
-          "a": 1200,
-          "salle": "le-tas-de-planches",
-          "lieu": "Le tas de planches, chantier de la vase",
-          "ferme": true,
-          "pourquoi": "au tas de planches"
-        },
-        {
-          "de": 1200,
-          "a": 1320,
-          "salle": "le-feu-de-l-aire",
-          "lieu": "Le feu de l'aire, chantier de la vase"
-        },
-        {
-          "de": 1320,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "greve": {
-      "nom": "Le jour d'un peigneur de greve",
-      "dortoir": {
-        "salle": "le-boyau",
-        "lieu": "Le Boyau, sous le mur"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 330,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 330,
-          "a": 720,
-          "salle": "greve-basse",
-          "lieu": "La greve basse, Port-Real"
-        },
-        {
-          "de": 720,
-          "a": 840,
-          "salle": "porte-de-la-gadoue",
-          "lieu": "La porte de la Gadoue, Port-Real"
-        },
-        {
-          "de": 840,
-          "a": 1140,
-          "salle": "greve-basse",
-          "lieu": "La greve basse, Port-Real"
-        },
-        {
-          "de": 1140,
-          "a": 1260,
-          "salle": "le-boyau",
-          "lieu": "Le Boyau, sous le mur"
-        },
-        {
-          "de": 1260,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "guet": {
-      "nom": "Le jour d'un homme de guet",
-      "bandes": [
-        {
-          "de": 0,
-          "a": 300,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 300,
-          "a": 780,
-          "salle": "@poste",
-          "ferme": true,
-          "pourquoi": "de faction — on ne le tire pas de son poste"
-        },
-        {
-          "de": 780,
-          "a": 840,
-          "salle": "baraques"
-        },
-        {
-          "de": 840,
-          "a": 1260,
-          "salle": "@poste",
-          "ferme": true,
-          "pourquoi": "de faction"
-        },
-        {
-          "de": 1260,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "clerc-des-caves": {
-      "nom": "Le jour d'un homme qui depouille des roles",
-      "bandes": [
-        {
-          "de": 0,
-          "a": 330,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 330,
-          "a": 720,
-          "salle": "@poste",
-          "ferme": true,
-          "pourquoi": "sur les files, ligne a ligne"
-        },
-        {
-          "de": 720,
-          "a": 810,
-          "salle": "grande-salle"
-        },
-        {
-          "de": 810,
-          "a": 1140,
-          "salle": "@poste"
-        },
-        {
-          "de": 1140,
-          "a": 1260,
-          "salle": "archives"
-        },
-        {
-          "de": 1260,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "facteur-etranger": {
-      "nom": "Le jour d'un facteur étranger, logé à bord",
-      "dortoir": {
-        "salle": "quai",
-        "lieu": "À bord de la quatrième coque, en rade de Peyredragon"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 390,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 390,
-          "a": 600,
-          "salle": "quai",
-          "lieu": "Le quai, Peyredragon"
-        },
-        {
-          "de": 600,
-          "a": 720,
-          "salle": "bourg",
-          "lieu": "Le bourg de Peyredragon"
-        },
-        {
-          "de": 720,
-          "a": 840,
-          "salle": "@dortoir",
-          "ferme": true,
-          "pourquoi": "il écrit son rapport à bord, seul"
-        },
-        {
-          "de": 840,
-          "a": 1140,
-          "salle": "quai",
-          "lieu": "Le quai, Peyredragon"
-        },
-        {
-          "de": 1140,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "equerre": {
-      "nom": "La journee de l'Equerre",
-      "dortoir": {
-        "salle": "tambour-de-pierre",
-        "lieu": "Tambour de Pierre, Peyredragon"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 300,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 300,
-          "a": 390,
-          "salle": "cour",
-          "lieu": "La cour, Peyredragon",
-          "ferme": true,
-          "pourquoi": "la mesure de l office O17, dite tout haut avec les roles, plancher zero"
-        },
-        {
-          "de": 390,
-          "a": 720,
-          "salle": "quai",
-          "lieu": "Le quai, Peyredragon"
-        },
-        {
-          "de": 720,
-          "a": 780,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 780,
-          "a": 1020,
-          "salle": "table-peinte",
-          "lieu": "Chambre de la Table Peinte, Peyredragon"
-        },
-        {
-          "de": 1020,
-          "a": 1140,
-          "salle": "cour",
-          "lieu": "La cour, Peyredragon"
-        },
-        {
-          "de": 1140,
-          "a": 1320,
-          "salle": "porte-dragon",
-          "lieu": "Chemin de ronde du levant, Peyredragon",
-          "ferme": true,
-          "pourquoi": "le guet du levant — il ne descend pas et ne hele personne"
-        },
-        {
-          "de": 1320,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "maitre-du-peigne": {
-      "nom": "Le jour du maitre du Peigne",
-      "_": "La maree fixe l'aire, la porte fixe le reste : il est sous l'arche a l'ouverture, une regle a la main, et l'aire lui prend le jour.",
-      "dortoir": {
-        "salle": "chantier-de-la-vase",
-        "lieu": "La cabane du Peigne, chantier de la vase"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 300,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 300,
-          "a": 450,
-          "salle": "porte-de-la-gadoue",
-          "lieu": "Sous l'arche de la Gadoue, Port-Real",
-          "ferme": true,
-          "pourquoi": "l'arche a l'ouverture — le gond, le seuil, une regle a la main"
-        },
-        {
-          "de": 450,
-          "a": 720,
-          "salle": "chantier-de-la-vase",
-          "lieu": "Le chantier de la vase, Port-Real"
-        },
-        {
-          "de": 720,
-          "a": 780,
-          "salle": "le-feu-de-l-aire",
-          "lieu": "Le feu de l'aire, chantier de la vase"
-        },
-        {
-          "de": 780,
-          "a": 1020,
-          "salle": "chantier-de-la-vase",
-          "lieu": "Le chantier de la vase, Port-Real"
-        },
-        {
-          "de": 1020,
-          "a": 1140,
-          "salle": "porte-de-la-gadoue",
-          "lieu": "Sous l'arche de la Gadoue, Port-Real",
-          "ferme": true,
-          "pourquoi": "la fermeture de la porte"
-        },
-        {
-          "de": 1140,
-          "a": 1290,
-          "salle": "le-feu-de-l-aire",
-          "lieu": "Le feu de l'aire, chantier de la vase"
-        },
-        {
-          "de": 1290,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "architecte-sarn": {
-      "nom": "La journée de Sarn",
-      "dortoir": {
-        "salle": "clairiere",
-        "lieu": "Les huttes de la clairière, Barralfond"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 300,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 300,
-          "a": 420,
-          "salle": "clairiere",
-          "lieu": "La clairière, Barralfond"
-        },
-        {
-          "de": 420,
-          "a": 720,
-          "salle": "arbre-des-ages",
-          "lieu": "L'Arbre des Âges, Barralfond"
-        },
-        {
-          "de": 720,
-          "a": 780,
-          "salle": "la-souche",
-          "lieu": "La Souche, Barralfond"
-        },
-        {
-          "de": 780,
-          "a": 1080,
-          "salle": "arbre-des-ages",
-          "lieu": "L'Arbre des Âges, Barralfond"
-        },
-        {
-          "de": 1080,
-          "a": 1200,
-          "salle": "la-souche",
-          "lieu": "La Souche, Barralfond",
-          "ferme": true,
-          "pourquoi": "la tenue du soir a la Souche — on y dit ou en est chaque affaire"
-        },
-        {
-          "de": 1200,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "architecte-bren": {
-      "nom": "La journée de Bren",
-      "dortoir": {
-        "salle": "clairiere",
-        "lieu": "Les huttes de la clairière, Barralfond"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 300,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 300,
-          "a": 420,
-          "salle": "clairiere",
-          "lieu": "La clairière, Barralfond"
-        },
-        {
-          "de": 420,
-          "a": 720,
-          "salle": "lit-des-racines",
-          "lieu": "Le Lit des Racines, Barralfond"
-        },
-        {
-          "de": 720,
-          "a": 780,
-          "salle": "la-souche",
-          "lieu": "La Souche, Barralfond"
-        },
-        {
-          "de": 780,
-          "a": 1080,
-          "salle": "lit-des-racines",
-          "lieu": "Le Lit des Racines, Barralfond"
-        },
-        {
-          "de": 1080,
-          "a": 1200,
-          "salle": "la-souche",
-          "lieu": "La Souche, Barralfond",
-          "ferme": true,
-          "pourquoi": "la tenue du soir a la Souche — on y dit ou en est chaque affaire"
-        },
-        {
-          "de": 1200,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "architecte-ygga": {
-      "nom": "La journée de Ygga",
-      "dortoir": {
-        "salle": "clairiere",
-        "lieu": "Les huttes de la clairière, Barralfond"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 300,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 300,
-          "a": 420,
-          "salle": "clairiere",
-          "lieu": "La clairière, Barralfond"
-        },
-        {
-          "de": 420,
-          "a": 720,
-          "salle": "etabli",
-          "lieu": "L'Établi, Barralfond"
-        },
-        {
-          "de": 720,
-          "a": 780,
-          "salle": "la-souche",
-          "lieu": "La Souche, Barralfond"
-        },
-        {
-          "de": 780,
-          "a": 1080,
-          "salle": "etabli",
-          "lieu": "L'Établi, Barralfond"
-        },
-        {
-          "de": 1080,
-          "a": 1200,
-          "salle": "la-souche",
-          "lieu": "La Souche, Barralfond",
-          "ferme": true,
-          "pourquoi": "la tenue du soir a la Souche — on y dit ou en est chaque affaire"
-        },
-        {
-          "de": 1200,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "architecte-toll": {
-      "nom": "La journée de Toll",
-      "dortoir": {
-        "salle": "clairiere",
-        "lieu": "Les huttes de la clairière, Barralfond"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 300,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 300,
-          "a": 420,
-          "salle": "clairiere",
-          "lieu": "La clairière, Barralfond"
-        },
-        {
-          "de": 420,
-          "a": 720,
-          "salle": "bassin-noir",
-          "lieu": "Le Bassin noir, Barralfond"
-        },
-        {
-          "de": 720,
-          "a": 780,
-          "salle": "la-souche",
-          "lieu": "La Souche, Barralfond"
-        },
-        {
-          "de": 780,
-          "a": 1080,
-          "salle": "bassin-noir",
-          "lieu": "Le Bassin noir, Barralfond"
-        },
-        {
-          "de": 1080,
-          "a": 1200,
-          "salle": "la-souche",
-          "lieu": "La Souche, Barralfond",
-          "ferme": true,
-          "pourquoi": "la tenue du soir a la Souche — on y dit ou en est chaque affaire"
-        },
-        {
-          "de": 1200,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "architecte-wenna": {
-      "nom": "La journée de Wenna",
-      "dortoir": {
-        "salle": "clairiere",
-        "lieu": "Les huttes de la clairière, Barralfond"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 300,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 300,
-          "a": 420,
-          "salle": "clairiere",
-          "lieu": "La clairière, Barralfond"
-        },
-        {
-          "de": 420,
-          "a": 720,
-          "salle": "la-souche",
-          "lieu": "La Souche, Barralfond"
-        },
-        {
-          "de": 720,
-          "a": 780,
-          "salle": "la-souche",
-          "lieu": "La Souche, Barralfond"
-        },
-        {
-          "de": 780,
-          "a": 1080,
-          "salle": "la-souche",
-          "lieu": "La Souche, Barralfond"
-        },
-        {
-          "de": 1080,
-          "a": 1200,
-          "salle": "la-souche",
-          "lieu": "La Souche, Barralfond",
-          "ferme": true,
-          "pourquoi": "la tenue du soir a la Souche — on y dit ou en est chaque affaire"
-        },
-        {
-          "de": 1200,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
-    },
-    "equerre-barralfond": {
-      "nom": "La journée de l'Équerre, à Barralfond",
-      "dortoir": {
-        "salle": "la-souche",
-        "lieu": "La Souche, Barralfond"
-      },
-      "bandes": [
-        {
-          "de": 0,
-          "a": 300,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 300,
-          "a": 420,
-          "salle": "la-souche",
-          "lieu": "La Souche, Barralfond",
-          "ferme": true,
-          "pourquoi": "il ouvre les affaires du jour et dit ou chacune en est"
-        },
-        {
-          "de": 420,
-          "a": 720,
-          "salle": "clairiere",
-          "lieu": "La clairière, Barralfond"
-        },
-        {
-          "de": 720,
-          "a": 780,
-          "salle": "@dortoir"
-        },
-        {
-          "de": 780,
-          "a": 1020,
-          "salle": "etabli",
-          "lieu": "L'Établi, Barralfond"
-        },
-        {
-          "de": 1020,
-          "a": 1200,
-          "salle": "la-souche",
-          "lieu": "La Souche, Barralfond"
-        },
-        {
-          "de": 1200,
-          "a": 1440,
-          "salle": "@dortoir"
-        }
-      ]
+    {
+     "de": 1140,
+     "a": 1440,
+     "salle": "@dortoir"
     }
+   ]
   },
-  "gens": {
-    "rhaenyra": {
-      "modele": "reine"
-    },
-    "jacaerys": {
-      "modele": "noble-jeune"
-    },
-    "elyn-sarnes": {
-      "modele": "dame-de-compagnie"
-    },
-    "septa-marlow": {
-      "modele": "septa"
-    },
-    "robert-quince": {
-      "modele": "castellan"
-    },
-    "rulf-corne": {
-      "modele": "port",
-      "dortoir": {
-        "salle": "bourg",
-        "lieu": "Le bourg sous les murs, Peyredragon"
-      }
-    },
-    "wend": {
-      "modele": "port"
-    },
-    "sarro-vaeth": {
-      "modele": "dragonnier"
-    },
-    "merra-sath": {
-      "modele": "galeries"
-    },
-    "dorsa-sath": {
-      "modele": "galeries"
-    },
-    "willa-sechoirs": {
-      "modele": "bourg"
-    },
-    "ordo-sarnes": {
-      "modele": "bourg"
-    },
-    "meliss-la-claie": {
-      "modele": "bourg"
-    },
-    "vieux-pecheur": {
-      "modele": "bourg"
-    },
-    "aurore-inchauspe": {
-      "modele": "hote"
-    },
-    "garde-levant": {
-      "modele": "guet",
-      "poste": {
-        "salle": "grand-escalier",
-        "lieu": "Le grand escalier, Peyredragon"
-      }
-    },
-    "hobb-treize-pas": {
-      "modele": "captif"
-    },
-    "prisonnier-wat": {
-      "modele": "captif"
-    },
-    "le-sanglier": {
-      "modele": "poste",
-      "poste": {
-        "salle": "porte-dragon",
-        "lieu": "Sous la voute de la porte du Dragon, Peyredragon"
-      },
-      "dortoir": {
-        "salle": "baraques",
-        "lieu": "Les baraques, hors les murs, Peyredragon"
-      }
-    },
-    "gerardys": {
-      "modele": "mestre"
-    },
-    "rhaenys": {
-      "modele": "conseil"
-    },
-    "lucerys": {
-      "modele": "conseil",
-      "dortoir": {
-        "salle": "appartements-reine",
-        "lieu": "Les appartements de la reine, Peyredragon"
-      }
-    },
-    "tobb": {
-      "modele": "bourg",
-      "dortoir": {
-        "salle": "bourg",
-        "lieu": "Le bourg sous les murs, Peyredragon"
-      }
-    },
-    "nesse": {
-      "modele": "ombre",
-      "suit": "rhaenyra",
-      "dortoir": {
-        "salle": "bourg",
-        "lieu": "Le bourg sous les murs, Peyredragon"
-      }
-    },
-    "steffon-darklyn": {
-      "modele": "conseil"
-    },
-    "aldon-hask": {
-      "modele": "conseil"
-    },
-    "sara": {
-      "modele": "conseil"
-    },
-    "daemon": {
-      "modele": "conseil"
-    },
-    "corlys": {
-      "modele": "hote"
-    },
-    "denys-bar-emmon": {
-      "modele": "hote"
-    },
-    "alarra-rosby": {
-      "modele": "hote"
-    },
-    "marna": {
-      "modele": "dame-de-compagnie"
-    },
-    "alys-grive": {
-      "modele": "bourg",
-      "dortoir": {
-        "salle": "galeries",
-        "lieu": "Les galeries, Peyredragon"
-      }
-    },
-    "doss-marran": {
-      "modele": "bourg",
-      "dortoir": {
-        "salle": "bourg",
-        "lieu": "Le bourg sous les murs, Peyredragon"
-      }
-    },
-    "aegon-ii": {
-      "modele": "roi"
-    },
-    "otto": {
-      "modele": "main-du-roi"
-    },
-    "alicent": {
-      "modele": "reine-douairiere"
-    },
-    "criston": {
-      "modele": "garde-royale"
-    },
-    "aemond": {
-      "modele": "prince-vert"
-    },
-    "helaena": {
-      "modele": "reine-helaena"
-    },
-    "orwyle": {
-      "modele": "grand-mestre"
-    },
-    "larys": {
-      "modele": "chuchoteur"
-    },
-    "hann-bourbe": {
-      "modele": "briseur-de-coques"
-    },
-    "sabbe": {
-      "modele": "briseur-de-coques"
-    },
-    "ren": {
-      "modele": "briseur-de-coques"
-    },
-    "nel-bec": {
-      "modele": "greve"
-    },
-    "waltyr-poix": {
-      "modele": "poste",
-      "poste": {
-        "salle": "arche-de-waltyr",
-        "lieu": "L'ombre de l'arche, porte de la Gadoue"
-      },
-      "dortoir": {
-        "salle": "culpucier",
-        "lieu": "Le Culpucier, Port-Real"
-      }
-    },
-    "ollo-marran": {
-      "modele": "poste",
-      "poste": {
-        "salle": "bureau-du-port",
-        "lieu": "Le bureau du maitre de port, Port-Real"
-      },
-      "dortoir": {
-        "salle": "culpucier",
-        "lieu": "Le Culpucier, Port-Real"
-      }
-    },
-    "sirel-quintaine": {
-      "modele": "poste",
-      "poste": {
-        "salle": "etal-de-sirel",
-        "lieu": "L'etal de Sirel, Port-Real"
-      },
-      "dortoir": {
-        "salle": "culpucier",
-        "lieu": "Le Culpucier, Port-Real"
-      }
-    },
-    "mag-la-gaffe": {
-      "modele": "poste",
-      "poste": {
-        "salle": "la-gaffe",
-        "lieu": "La Gaffe, sous la porte de la Gadoue"
-      },
-      "dortoir": {
-        "salle": "la-gaffe",
-        "lieu": "La Gaffe, sous la porte de la Gadoue"
-      }
-    },
-    "pate-changeur": {
-      "modele": "poste",
-      "poste": {
-        "salle": "le-change",
-        "lieu": "Le change, rue haute"
-      },
-      "dortoir": {
-        "salle": "culpucier",
-        "lieu": "Le Culpucier, Port-Real"
-      }
-    },
-    "doye-rouelle": {
-      "modele": "poste",
-      "poste": {
-        "salle": "culpucier",
-        "lieu": "Sa cour, bas de la rue du Culpucier"
-      },
-      "dortoir": {
-        "salle": "culpucier",
-        "lieu": "Le Culpucier, Port-Real"
-      }
-    },
-    "ruff-le-cordier": {
-      "modele": "poste",
-      "poste": {
-        "salle": "quais-de-la-nera",
-        "lieu": "La venelle des Filins, pres des quais de la Nera"
-      },
-      "dortoir": {
-        "salle": "culpucier",
-        "lieu": "Le Culpucier, Port-Real"
-      }
-    },
-    "guet-du-mur": {
-      "modele": "guet",
-      "poste": {
-        "salle": "porte-de-fer",
-        "lieu": "Au pied du mur du levant"
-      },
-      "dortoir": {
-        "salle": "culpucier",
-        "lieu": "Le Culpucier, Port-Real"
-      }
-    },
-    "l-homme-de-la-merette": {
-      "modele": "poste",
-      "poste": {
-        "salle": "la-merette",
-        "lieu": "La Merette, a la greve basse"
-      },
-      "dortoir": {
-        "salle": "la-merette",
-        "lieu": "La Merette, a la greve basse"
-      }
-    },
-    "hallis-roon": {
-      "modele": "clerc-des-caves",
-      "poste": {
-        "salle": "cachots",
-        "lieu": "Les caves basses, Peyredragon"
-      },
-      "dortoir": {
-        "salle": "baraques",
-        "lieu": "Les baraques, Peyredragon"
-      }
-    },
-    "gib-le-geolier": {
-      "modele": "poste",
-      "poste": {
-        "salle": "cachots",
-        "lieu": "Les geoles, Peyredragon"
-      },
-      "dortoir": {
-        "salle": "baraques",
-        "lieu": "Les baraques, Peyredragon"
-      }
-    },
-    "garde-tour": {
-      "modele": "guet",
-      "poste": {
-        "salle": "table-peinte",
-        "lieu": "Chambre de la Table Peinte, Peyredragon"
-      },
-      "dortoir": {
-        "salle": "baraques",
-        "lieu": "Les baraques, Peyredragon"
-      }
-    },
-    "page-couloir": {
-      "modele": "poste",
-      "poste": {
-        "salle": "appartements-reine",
-        "lieu": "Le couloir des appartements, Peyredragon"
-      },
-      "dortoir": {
-        "salle": "baraques",
-        "lieu": "Les baraques, Peyredragon"
-      }
-    },
-    "ossy": {
-      "modele": "poste",
-      "poste": {
-        "salle": "roukerie",
-        "lieu": "La roukerie, Peyredragon"
-      },
-      "dortoir": {
-        "salle": "baraques",
-        "lieu": "Les baraques, Peyredragon"
-      }
-    },
-    "meg-du-fumoir": {
-      "modele": "bourg",
-      "dortoir": {
-        "salle": "sechoirs",
-        "lieu": "Les sechoirs, sous les murs"
-      }
-    },
-    "le-garcon-aux-manches-longues": {
-      "modele": "bourg",
-      "dortoir": {
-        "salle": "sechoirs",
-        "lieu": "Les sechoirs, sous les murs"
-      }
-    },
-    "prisonnier-jeune": {
-      "modele": "captif",
-      "dortoir": {
-        "salle": "cachots",
-        "lieu": "Les caves basses, Peyredragon"
-      }
-    },
-    "prisonnier-vieux": {
-      "modele": "captif",
-      "dortoir": {
-        "salle": "cachots",
-        "lieu": "Les caves basses, Peyredragon"
-      }
-    },
-    "le-facteur-braavien": {
-      "modele": "facteur-etranger"
-    },
-    "torgo": {
-      "modele": "bourg",
-      "dortoir": {
-        "salle": "bourg",
-        "lieu": "Le bourg sous les murs, Peyredragon"
-      }
-    },
-    "hallis-beaupre": {
-      "modele": "bourg",
-      "dortoir": {
-        "salle": "bourg",
-        "lieu": "Le bourg sous les murs, Peyredragon"
-      }
-    },
-    "maron-sec": {
-      "modele": "bourg",
-      "dortoir": {
-        "salle": "bourg",
-        "lieu": "Le bourg sous les murs, Peyredragon"
-      }
-    },
-    "nicolas-reynolds": {
-      "modele": "equerre-barralfond"
-    },
-    "marlo-vasse": {
-      "modele": "maitre-du-peigne"
-    },
-    "kerra-des-claies": {
-      "modele": "guet",
-      "poste": {
-        "salle": "appartements-reine",
-        "lieu": "La porte des appartements de la reine, Peyredragon"
-      },
-      "dortoir": {
-        "salle": "bourg",
-        "lieu": "La troisieme claie, au bourg"
-      }
-    },
-    "sarn-vieux-sang": {
-      "modele": "architecte-sarn"
-    },
-    "bren-racine-grise": {
-      "modele": "architecte-bren"
-    },
-    "ygga-main-de-pierre": {
-      "modele": "architecte-ygga"
-    },
-    "toll-oeil-noir": {
-      "modele": "architecte-toll"
-    },
-    "wenna-la-nommeuse": {
-      "modele": "architecte-wenna"
+  "noble-jeune": {
+   "nom": "Le jour d'un prince",
+   "dortoir": {
+    "salle": "appartements-reine",
+    "lieu": "Vos appartements, Peyredragon"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 390,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 390,
+     "a": 600,
+     "salle": "fosses",
+     "lieu": "Fosses aux dragons, Peyredragon",
+     "ferme": true,
+     "pourquoi": "aux fosses, avec son dragon"
+    },
+    {
+     "de": 600,
+     "a": 720,
+     "salle": "cour",
+     "lieu": "La cour, Peyredragon"
+    },
+    {
+     "de": 720,
+     "a": 840,
+     "salle": "grande-salle",
+     "lieu": "Grande salle, Peyredragon"
+    },
+    {
+     "de": 840,
+     "a": 1080,
+     "salle": "cour",
+     "lieu": "La cour, Peyredragon"
+    },
+    {
+     "de": 1080,
+     "a": 1200,
+     "salle": "grande-salle",
+     "lieu": "Grande salle, Peyredragon"
+    },
+    {
+     "de": 1200,
+     "a": 1440,
+     "salle": "@dortoir"
     }
+   ]
+  },
+  "dame-de-compagnie": {
+   "nom": "Le jour d'une dame de la maison",
+   "dortoir": {
+    "salle": "appartements-reine",
+    "lieu": "Appartements de la reine, Peyredragon"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 300,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 300,
+     "a": 660,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 660,
+     "a": 780,
+     "salle": "grande-salle",
+     "lieu": "Grande salle, Peyredragon"
+    },
+    {
+     "de": 780,
+     "a": 1140,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 1140,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "septa": {
+   "nom": "Le jour d'une septa",
+   "dortoir": {
+    "salle": "appartements-reine",
+    "lieu": "Appartements de la reine, Peyredragon"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 300,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 300,
+     "a": 420,
+     "salle": "septuaire",
+     "lieu": "Le septuaire, Peyredragon",
+     "ferme": true,
+     "pourquoi": "l'office du matin"
+    },
+    {
+     "de": 420,
+     "a": 660,
+     "salle": "@dortoir",
+     "ferme": false,
+     "pourquoi": "en cellule, entre deux offices"
+    },
+    {
+     "de": 660,
+     "a": 780,
+     "salle": "septuaire",
+     "lieu": "Le septuaire, Peyredragon",
+     "ferme": true,
+     "pourquoi": "l'office de midi"
+    },
+    {
+     "de": 780,
+     "a": 1140,
+     "salle": "@dortoir",
+     "ferme": false,
+     "pourquoi": "en cellule, entre deux offices"
+    },
+    {
+     "de": 1140,
+     "a": 1260,
+     "salle": "septuaire",
+     "lieu": "Le septuaire, Peyredragon",
+     "ferme": true,
+     "pourquoi": "l'office du soir"
+    },
+    {
+     "de": 1260,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "castellan": {
+   "nom": "Le jour d'un castellan",
+   "dortoir": {
+    "salle": "tambour-de-pierre",
+    "lieu": "Tambour de Pierre, Peyredragon"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 270,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 270,
+     "a": 420,
+     "salle": "cour",
+     "lieu": "La cour, Peyredragon",
+     "ferme": true,
+     "pourquoi": "les ordres du jour a la garde"
+    },
+    {
+     "de": 420,
+     "a": 720,
+     "salle": "porte-dragon",
+     "lieu": "Chemin de ronde, Peyredragon",
+     "ferme": true,
+     "pourquoi": "la ronde des murs"
+    },
+    {
+     "de": 720,
+     "a": 840,
+     "salle": "grande-salle",
+     "lieu": "Grande salle, Peyredragon"
+    },
+    {
+     "de": 840,
+     "a": 1140,
+     "salle": "cour",
+     "lieu": "La cour, Peyredragon"
+    },
+    {
+     "de": 1140,
+     "a": 1290,
+     "salle": "porte-de-mer",
+     "lieu": "Porte de mer, Peyredragon",
+     "ferme": true,
+     "pourquoi": "la fermeture de la porte de mer"
+    },
+    {
+     "de": 1290,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "port": {
+   "nom": "Le jour d'un homme du port",
+   "dortoir": {
+    "salle": "porte-de-mer",
+    "lieu": "Porte de mer, Peyredragon"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 300,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 300,
+     "a": 420,
+     "salle": "quai",
+     "lieu": "Le quai, Peyredragon"
+    },
+    {
+     "de": 420,
+     "a": 720,
+     "salle": "porte-de-mer",
+     "lieu": "Porte de mer, Peyredragon",
+     "ferme": true,
+     "pourquoi": "le guet de la porte de mer"
+    },
+    {
+     "de": 720,
+     "a": 1020,
+     "salle": "quai",
+     "lieu": "Le quai, Peyredragon"
+    },
+    {
+     "de": 1020,
+     "a": 1260,
+     "salle": "porte-de-mer",
+     "lieu": "Porte de mer, Peyredragon",
+     "ferme": true,
+     "pourquoi": "le guet du soir"
+    },
+    {
+     "de": 1260,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "dragonnier": {
+   "nom": "Le jour d'un homme des fosses",
+   "dortoir": {
+    "salle": "fosses",
+    "lieu": "Fosses aux dragons, Peyredragon"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 270,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 270,
+     "a": 720,
+     "salle": "fosses",
+     "lieu": "Fosses aux dragons, Peyredragon",
+     "ferme": true,
+     "pourquoi": "aux fosses — on ne quitte pas un dragon"
+    },
+    {
+     "de": 720,
+     "a": 810,
+     "salle": "cour",
+     "lieu": "La cour, Peyredragon"
+    },
+    {
+     "de": 810,
+     "a": 1200,
+     "salle": "fosses",
+     "lieu": "Fosses aux dragons, Peyredragon",
+     "ferme": true,
+     "pourquoi": "aux fosses"
+    },
+    {
+     "de": 1200,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "galeries": {
+   "nom": "Le jour d'un tailleur de verredragon",
+   "dortoir": {
+    "salle": "bourg",
+    "lieu": "Le bourg sous les murs, Peyredragon"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 330,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 330,
+     "a": 720,
+     "salle": "galeries",
+     "lieu": "Onzieme galerie, quatre-vingts pas sous la mer",
+     "ferme": true,
+     "pourquoi": "la taille du verredragon"
+    },
+    {
+     "de": 720,
+     "a": 810,
+     "salle": "cour",
+     "lieu": "La cour, Peyredragon"
+    },
+    {
+     "de": 810,
+     "a": 1170,
+     "salle": "galeries",
+     "lieu": "Onzieme galerie, quatre-vingts pas sous la mer",
+     "ferme": true,
+     "pourquoi": "la taille du verredragon"
+    },
+    {
+     "de": 1170,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "bourg": {
+   "nom": "Le jour du bourg",
+   "dortoir": {
+    "salle": "bourg",
+    "lieu": "Le bourg sous les murs, Peyredragon"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 270,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 270,
+     "a": 480,
+     "salle": "quai",
+     "lieu": "Le quai, Peyredragon",
+     "ferme": true,
+     "pourquoi": "la peche du matin au quai"
+    },
+    {
+     "de": 480,
+     "a": 1140,
+     "salle": "bourg",
+     "lieu": "Le bourg sous les murs, Peyredragon"
+    },
+    {
+     "de": 1140,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "hote": {
+   "nom": "Le jour d'un hote de la maison",
+   "dortoir": {
+    "salle": "tambour-de-pierre",
+    "lieu": "Chambre d'hote, Tambour de Pierre, Peyredragon"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 360,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 360,
+     "a": 660,
+     "salle": "roukerie",
+     "lieu": "La roukerie, Peyredragon"
+    },
+    {
+     "de": 660,
+     "a": 780,
+     "salle": "grande-salle",
+     "lieu": "Grande salle, Peyredragon"
+    },
+    {
+     "de": 780,
+     "a": 1080,
+     "salle": "archives",
+     "lieu": "L'archive, Peyredragon"
+    },
+    {
+     "de": 1080,
+     "a": 1200,
+     "salle": "grande-salle",
+     "lieu": "Grande salle, Peyredragon"
+    },
+    {
+     "de": 1200,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "poste": {
+   "nom": "Un homme a son poste",
+   "dortoir": {
+    "salle": "tambour-de-pierre",
+    "lieu": "Corps de garde, Peyredragon"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 300,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 300,
+     "a": 1260,
+     "salle": "@poste",
+     "ferme": false,
+     "pourquoi": "a son poste — les mains prises, les oreilles libres"
+    },
+    {
+     "de": 1260,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "captif": {
+   "nom": "Un homme aux fers",
+   "dortoir": {
+    "salle": "cachots",
+    "lieu": "Cellier bas du Tambour de Pierre, Peyredragon"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 360,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 360,
+     "a": 1260,
+     "salle": "@dortoir",
+     "ferme": false,
+     "pourquoi": "aux fers, et rien d'autre a faire que penser"
+    },
+    {
+     "de": 1260,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "conseil": {
+   "nom": "Le jour d'un homme du conseil",
+   "_": "Ceux qui siegent : la table peinte est leur poste, on les y trouve toute la journee sauf au repas.",
+   "dortoir": {
+    "salle": "tambour-de-pierre",
+    "lieu": "Chambre haute, Tambour de Pierre"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 330,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 330,
+     "a": 720,
+     "salle": "table-peinte",
+     "lieu": "Chambre de la Table Peinte, Peyredragon"
+    },
+    {
+     "de": 720,
+     "a": 810,
+     "salle": "grande-salle",
+     "lieu": "Grande salle, Peyredragon"
+    },
+    {
+     "de": 810,
+     "a": 1140,
+     "salle": "table-peinte",
+     "lieu": "Chambre de la Table Peinte, Peyredragon"
+    },
+    {
+     "de": 1140,
+     "a": 1260,
+     "salle": "grande-salle",
+     "lieu": "Grande salle, Peyredragon"
+    },
+    {
+     "de": 1260,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "mestre": {
+   "nom": "Le jour d'un mestre",
+   "_": "Un mestre n'est pas un conseiller assis : les corbeaux partent au jour et rentrent au soir, et c'est lui qui les leve et les recoit. Entre les deux il siege, et l'apres-midi il ecrit.",
+   "dortoir": {
+    "salle": "roukerie",
+    "lieu": "La roukerie, Peyredragon"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 300,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 300,
+     "a": 420,
+     "salle": "roukerie",
+     "lieu": "La roukerie, Peyredragon",
+     "ferme": true,
+     "pourquoi": "les corbeaux du matin"
+    },
+    {
+     "de": 420,
+     "a": 720,
+     "salle": "table-peinte",
+     "lieu": "Chambre de la Table Peinte, Peyredragon"
+    },
+    {
+     "de": 720,
+     "a": 810,
+     "salle": "grande-salle",
+     "lieu": "Grande salle, Peyredragon"
+    },
+    {
+     "de": 810,
+     "a": 1020,
+     "salle": "archives",
+     "lieu": "L'archive, Peyredragon"
+    },
+    {
+     "de": 1020,
+     "a": 1140,
+     "salle": "table-peinte",
+     "lieu": "Chambre de la Table Peinte, Peyredragon"
+    },
+    {
+     "de": 1140,
+     "a": 1260,
+     "salle": "roukerie",
+     "lieu": "La roukerie, Peyredragon",
+     "ferme": true,
+     "pourquoi": "les corbeaux du soir"
+    },
+    {
+     "de": 1260,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "ombre": {
+   "nom": "Une ombre, du lever au coucher",
+   "dortoir": {
+    "salle": "bourg",
+    "lieu": "Le bourg sous les murs, Peyredragon"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 330,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 330,
+     "a": 1140,
+     "salle": "@suit"
+    },
+    {
+     "de": 1140,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "roi": {
+   "nom": "Le jour d'un roi qui ne l'a pas voulu",
+   "_": "Il tient audience parce qu'il le faut, monte a la fosse parce qu'il aime ca, et redescend en ville des que le conseil le lache.",
+   "dortoir": {
+    "salle": "appartements-royaux",
+    "lieu": "Les appartements royaux, donjon de Maegor"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 600,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 600,
+     "a": 720,
+     "salle": "salle-du-trone",
+     "lieu": "La salle du Trone, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "la cour en audience"
+    },
+    {
+     "de": 720,
+     "a": 840,
+     "salle": "cour-donjon-rouge",
+     "lieu": "La cour du Donjon Rouge"
+    },
+    {
+     "de": 840,
+     "a": 1020,
+     "salle": "fosse-aux-dragons",
+     "lieu": "La fosse aux dragons, colline de Rhaenys",
+     "ferme": true,
+     "pourquoi": "a la fosse aux dragons"
+    },
+    {
+     "de": 1020,
+     "a": 1170,
+     "salle": "salle-du-trone",
+     "lieu": "La salle du Trone, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "la cour en audience"
+    },
+    {
+     "de": 1170,
+     "a": 1350,
+     "salle": "rue-de-la-soie",
+     "lieu": "La rue de la Soie, Port-Real"
+    },
+    {
+     "de": 1350,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "main-du-roi": {
+   "nom": "Le jour d'une Main",
+   "_": "Il est leve avant le roi et couche apres lui : c'est lui qui gouverne, et la tour ne desemplit pas.",
+   "dortoir": {
+    "salle": "tour-de-la-main",
+    "lieu": "La tour de la Main, Donjon Rouge"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 330,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 330,
+     "a": 420,
+     "salle": "tour-de-la-main",
+     "lieu": "La tour de la Main, Donjon Rouge"
+    },
+    {
+     "de": 420,
+     "a": 660,
+     "salle": "petit-conseil",
+     "lieu": "La chambre du petit conseil, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "le petit conseil en seance"
+    },
+    {
+     "de": 660,
+     "a": 780,
+     "salle": "salle-du-trone",
+     "lieu": "La salle du Trone, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "la cour en audience"
+    },
+    {
+     "de": 780,
+     "a": 960,
+     "salle": "tour-de-la-main",
+     "lieu": "La tour de la Main, Donjon Rouge"
+    },
+    {
+     "de": 960,
+     "a": 1140,
+     "salle": "petit-conseil",
+     "lieu": "La chambre du petit conseil, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "le petit conseil en seance"
+    },
+    {
+     "de": 1140,
+     "a": 1260,
+     "salle": "salle-du-trone",
+     "lieu": "La salle du Trone, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "la cour en audience"
+    },
+    {
+     "de": 1260,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "reine-douairiere": {
+   "nom": "Le jour d'une reine douairiere",
+   "dortoir": {
+    "salle": "appartements-douairiere",
+    "lieu": "Les appartements de la reine douairiere, Maegor"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 330,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 330,
+     "a": 450,
+     "salle": "septuaire-royal",
+     "lieu": "Le septuaire royal, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "l'office du matin"
+    },
+    {
+     "de": 450,
+     "a": 660,
+     "salle": "petit-conseil",
+     "lieu": "La chambre du petit conseil, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "le petit conseil en seance"
+    },
+    {
+     "de": 660,
+     "a": 780,
+     "salle": "appartements-royaux",
+     "lieu": "Les appartements royaux, donjon de Maegor"
+    },
+    {
+     "de": 780,
+     "a": 960,
+     "salle": "bois-des-dieux-port-real",
+     "lieu": "Le bois des dieux, Donjon Rouge"
+    },
+    {
+     "de": 960,
+     "a": 1140,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 1140,
+     "a": 1260,
+     "salle": "septuaire-royal",
+     "lieu": "Le septuaire royal, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "l'office du soir"
+    },
+    {
+     "de": 1260,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "garde-royale": {
+   "nom": "Le jour d'un manteau blanc",
+   "_": "Sa journee est un poste : la ou est le roi. Le matin il fait travailler les princes au sable.",
+   "dortoir": {
+    "salle": "tour-blanche",
+    "lieu": "La Tour Blanche, Donjon Rouge"
+   },
+   "poste": {
+    "salle": "salle-du-trone",
+    "lieu": "La salle du Trone, Donjon Rouge"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 300,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 300,
+     "a": 480,
+     "salle": "salle-d-armes",
+     "lieu": "La salle d'armes, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "l'exercice d'armes"
+    },
+    {
+     "de": 480,
+     "a": 780,
+     "salle": "@poste",
+     "ferme": true,
+     "pourquoi": "a son poste"
+    },
+    {
+     "de": 780,
+     "a": 900,
+     "salle": "cour-donjon-rouge",
+     "lieu": "La cour du Donjon Rouge"
+    },
+    {
+     "de": 900,
+     "a": 1200,
+     "salle": "@poste",
+     "ferme": true,
+     "pourquoi": "a son poste"
+    },
+    {
+     "de": 1200,
+     "a": 1320,
+     "salle": "tour-blanche",
+     "lieu": "La Tour Blanche, Donjon Rouge"
+    },
+    {
+     "de": 1320,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "prince-vert": {
+   "nom": "Le jour d'un prince en armes",
+   "dortoir": {
+    "salle": "donjon-de-maegor",
+    "lieu": "Le donjon de Maegor, Donjon Rouge"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 360,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 360,
+     "a": 540,
+     "salle": "salle-d-armes",
+     "lieu": "La salle d'armes, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "l'exercice d'armes"
+    },
+    {
+     "de": 540,
+     "a": 720,
+     "salle": "fosse-aux-dragons",
+     "lieu": "La fosse aux dragons, colline de Rhaenys",
+     "ferme": true,
+     "pourquoi": "a la fosse aux dragons"
+    },
+    {
+     "de": 720,
+     "a": 840,
+     "salle": "cour-donjon-rouge",
+     "lieu": "La cour du Donjon Rouge"
+    },
+    {
+     "de": 840,
+     "a": 1020,
+     "salle": "salle-d-armes",
+     "lieu": "La salle d'armes, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "l'exercice d'armes"
+    },
+    {
+     "de": 1020,
+     "a": 1200,
+     "salle": "salle-du-trone",
+     "lieu": "La salle du Trone, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "la cour en audience"
+    },
+    {
+     "de": 1200,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "reine-helaena": {
+   "nom": "Le jour d'une reine qu'on ne consulte pas",
+   "dortoir": {
+    "salle": "chambre-helaena",
+    "lieu": "La chambre de la reine Helaena, Maegor"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 600,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 600,
+     "a": 780,
+     "salle": "bois-des-dieux-port-real",
+     "lieu": "Le bois des dieux, Donjon Rouge"
+    },
+    {
+     "de": 780,
+     "a": 960,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 960,
+     "a": 1080,
+     "salle": "septuaire-royal",
+     "lieu": "Le septuaire royal, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "l'office"
+    },
+    {
+     "de": 1080,
+     "a": 1200,
+     "salle": "salle-du-trone",
+     "lieu": "La salle du Trone, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "la cour en audience"
+    },
+    {
+     "de": 1200,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "grand-mestre": {
+   "nom": "Le jour d'un Grand Mestre",
+   "dortoir": {
+    "salle": "roukerie-port-real",
+    "lieu": "La roukerie de Port-Real"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 300,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 300,
+     "a": 420,
+     "salle": "roukerie-port-real",
+     "lieu": "La roukerie de Port-Real",
+     "ferme": true,
+     "pourquoi": "les corbeaux du matin"
+    },
+    {
+     "de": 420,
+     "a": 720,
+     "salle": "petit-conseil",
+     "lieu": "La chambre du petit conseil, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "le petit conseil en seance"
+    },
+    {
+     "de": 720,
+     "a": 840,
+     "salle": "salle-du-trone",
+     "lieu": "La salle du Trone, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "la cour en audience"
+    },
+    {
+     "de": 840,
+     "a": 1080,
+     "salle": "roukerie-port-real",
+     "lieu": "La roukerie de Port-Real",
+     "ferme": true,
+     "pourquoi": "les corbeaux"
+    },
+    {
+     "de": 1080,
+     "a": 1200,
+     "salle": "petit-conseil",
+     "lieu": "La chambre du petit conseil, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "le petit conseil en seance"
+    },
+    {
+     "de": 1200,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "chuchoteur": {
+   "nom": "Le jour d'un homme qui ecoute",
+   "_": "Les passages de Maegor sont son poste autant que la table du conseil : il n'y a que la qu'on ne le voit pas venir.",
+   "dortoir": {
+    "salle": "donjon-de-maegor",
+    "lieu": "Le donjon de Maegor, Donjon Rouge"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 360,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 360,
+     "a": 540,
+     "salle": "passages-maegor",
+     "lieu": "Les passages, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "dans les passages"
+    },
+    {
+     "de": 540,
+     "a": 720,
+     "salle": "tour-de-la-main",
+     "lieu": "La tour de la Main, Donjon Rouge"
+    },
+    {
+     "de": 720,
+     "a": 900,
+     "salle": "petit-conseil",
+     "lieu": "La chambre du petit conseil, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "le petit conseil en seance"
+    },
+    {
+     "de": 900,
+     "a": 1080,
+     "salle": "passages-maegor",
+     "lieu": "Les passages, Donjon Rouge",
+     "ferme": true,
+     "pourquoi": "dans les passages"
+    },
+    {
+     "de": 1080,
+     "a": 1260,
+     "salle": "geoles-noires",
+     "lieu": "Les geoles noires, sous la colline"
+    },
+    {
+     "de": 1260,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "briseur-de-coques": {
+   "nom": "Le jour d'un homme du chantier",
+   "_": "La maree fixe tout : on hale a l'eau haute, on casse a l'eau basse, et l'on mange au feu entre les deux.",
+   "dortoir": {
+    "salle": "les-paillasses",
+    "lieu": "Les paillasses, chantier de la vase"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 330,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 330,
+     "a": 420,
+     "salle": "le-feu-de-l-aire",
+     "lieu": "Le feu de l'aire, chantier de la vase"
+    },
+    {
+     "de": 420,
+     "a": 720,
+     "salle": "la-cale",
+     "lieu": "La cale, chantier de la vase",
+     "ferme": true,
+     "pourquoi": "dans la cale"
+    },
+    {
+     "de": 720,
+     "a": 780,
+     "salle": "le-feu-de-l-aire",
+     "lieu": "Le feu de l'aire, chantier de la vase"
+    },
+    {
+     "de": 780,
+     "a": 1080,
+     "salle": "la-carcasse",
+     "lieu": "La carcasse, chantier de la vase",
+     "ferme": true,
+     "pourquoi": "sur la carcasse"
+    },
+    {
+     "de": 1080,
+     "a": 1200,
+     "salle": "le-tas-de-planches",
+     "lieu": "Le tas de planches, chantier de la vase",
+     "ferme": true,
+     "pourquoi": "au tas de planches"
+    },
+    {
+     "de": 1200,
+     "a": 1320,
+     "salle": "le-feu-de-l-aire",
+     "lieu": "Le feu de l'aire, chantier de la vase"
+    },
+    {
+     "de": 1320,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "greve": {
+   "nom": "Le jour d'un peigneur de greve",
+   "dortoir": {
+    "salle": "le-boyau",
+    "lieu": "Le Boyau, sous le mur"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 330,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 330,
+     "a": 720,
+     "salle": "greve-basse",
+     "lieu": "La greve basse, Port-Real"
+    },
+    {
+     "de": 720,
+     "a": 840,
+     "salle": "porte-de-la-gadoue",
+     "lieu": "La porte de la Gadoue, Port-Real"
+    },
+    {
+     "de": 840,
+     "a": 1140,
+     "salle": "greve-basse",
+     "lieu": "La greve basse, Port-Real"
+    },
+    {
+     "de": 1140,
+     "a": 1260,
+     "salle": "le-boyau",
+     "lieu": "Le Boyau, sous le mur"
+    },
+    {
+     "de": 1260,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "guet": {
+   "nom": "Le jour d'un homme de guet",
+   "bandes": [
+    {
+     "de": 0,
+     "a": 300,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 300,
+     "a": 780,
+     "salle": "@poste",
+     "ferme": true,
+     "pourquoi": "de faction — on ne le tire pas de son poste"
+    },
+    {
+     "de": 780,
+     "a": 840,
+     "salle": "baraques"
+    },
+    {
+     "de": 840,
+     "a": 1260,
+     "salle": "@poste",
+     "ferme": true,
+     "pourquoi": "de faction"
+    },
+    {
+     "de": 1260,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "clerc-des-caves": {
+   "nom": "Le jour d'un homme qui depouille des roles",
+   "bandes": [
+    {
+     "de": 0,
+     "a": 330,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 330,
+     "a": 720,
+     "salle": "@poste",
+     "ferme": true,
+     "pourquoi": "sur les files, ligne a ligne"
+    },
+    {
+     "de": 720,
+     "a": 810,
+     "salle": "grande-salle"
+    },
+    {
+     "de": 810,
+     "a": 1140,
+     "salle": "@poste"
+    },
+    {
+     "de": 1140,
+     "a": 1260,
+     "salle": "archives"
+    },
+    {
+     "de": 1260,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "facteur-etranger": {
+   "nom": "Le jour d'un facteur étranger, logé à bord",
+   "dortoir": {
+    "salle": "quai",
+    "lieu": "À bord de la quatrième coque, en rade de Peyredragon"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 390,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 390,
+     "a": 600,
+     "salle": "quai",
+     "lieu": "Le quai, Peyredragon"
+    },
+    {
+     "de": 600,
+     "a": 720,
+     "salle": "bourg",
+     "lieu": "Le bourg de Peyredragon"
+    },
+    {
+     "de": 720,
+     "a": 840,
+     "salle": "@dortoir",
+     "ferme": true,
+     "pourquoi": "il écrit son rapport à bord, seul"
+    },
+    {
+     "de": 840,
+     "a": 1140,
+     "salle": "quai",
+     "lieu": "Le quai, Peyredragon"
+    },
+    {
+     "de": 1140,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "equerre": {
+   "nom": "La journee de l'Equerre",
+   "dortoir": {
+    "salle": "tambour-de-pierre",
+    "lieu": "Tambour de Pierre, Peyredragon"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 300,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 300,
+     "a": 390,
+     "salle": "cour",
+     "lieu": "La cour, Peyredragon",
+     "ferme": true,
+     "pourquoi": "la mesure de l office O17, dite tout haut avec les roles, plancher zero"
+    },
+    {
+     "de": 390,
+     "a": 720,
+     "salle": "quai",
+     "lieu": "Le quai, Peyredragon"
+    },
+    {
+     "de": 720,
+     "a": 780,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 780,
+     "a": 1020,
+     "salle": "table-peinte",
+     "lieu": "Chambre de la Table Peinte, Peyredragon"
+    },
+    {
+     "de": 1020,
+     "a": 1140,
+     "salle": "cour",
+     "lieu": "La cour, Peyredragon"
+    },
+    {
+     "de": 1140,
+     "a": 1320,
+     "salle": "porte-dragon",
+     "lieu": "Chemin de ronde du levant, Peyredragon",
+     "ferme": true,
+     "pourquoi": "le guet du levant — il ne descend pas et ne hele personne"
+    },
+    {
+     "de": 1320,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "maitre-du-peigne": {
+   "nom": "Le jour du maitre du Peigne",
+   "_": "La maree fixe l'aire, la porte fixe le reste : il est sous l'arche a l'ouverture, une regle a la main, et l'aire lui prend le jour.",
+   "dortoir": {
+    "salle": "chantier-de-la-vase",
+    "lieu": "La cabane du Peigne, chantier de la vase"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 300,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 300,
+     "a": 450,
+     "salle": "porte-de-la-gadoue",
+     "lieu": "Sous l'arche de la Gadoue, Port-Real",
+     "ferme": true,
+     "pourquoi": "l'arche a l'ouverture — le gond, le seuil, une regle a la main"
+    },
+    {
+     "de": 450,
+     "a": 720,
+     "salle": "chantier-de-la-vase",
+     "lieu": "Le chantier de la vase, Port-Real"
+    },
+    {
+     "de": 720,
+     "a": 780,
+     "salle": "le-feu-de-l-aire",
+     "lieu": "Le feu de l'aire, chantier de la vase"
+    },
+    {
+     "de": 780,
+     "a": 1020,
+     "salle": "chantier-de-la-vase",
+     "lieu": "Le chantier de la vase, Port-Real"
+    },
+    {
+     "de": 1020,
+     "a": 1140,
+     "salle": "porte-de-la-gadoue",
+     "lieu": "Sous l'arche de la Gadoue, Port-Real",
+     "ferme": true,
+     "pourquoi": "la fermeture de la porte"
+    },
+    {
+     "de": 1140,
+     "a": 1290,
+     "salle": "le-feu-de-l-aire",
+     "lieu": "Le feu de l'aire, chantier de la vase"
+    },
+    {
+     "de": 1290,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "architecte-sarn": {
+   "nom": "La journée de Sarn",
+   "dortoir": {
+    "salle": "clairiere",
+    "lieu": "Les huttes de la clairière, Barralfond"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 300,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 300,
+     "a": 420,
+     "salle": "clairiere",
+     "lieu": "La clairière, Barralfond"
+    },
+    {
+     "de": 420,
+     "a": 720,
+     "salle": "arbre-des-ages",
+     "lieu": "L'Arbre des Âges, Barralfond"
+    },
+    {
+     "de": 720,
+     "a": 780,
+     "salle": "la-souche",
+     "lieu": "La Souche, Barralfond"
+    },
+    {
+     "de": 780,
+     "a": 1080,
+     "salle": "arbre-des-ages",
+     "lieu": "L'Arbre des Âges, Barralfond"
+    },
+    {
+     "de": 1080,
+     "a": 1200,
+     "salle": "la-souche",
+     "lieu": "La Souche, Barralfond",
+     "ferme": true,
+     "pourquoi": "la tenue du soir a la Souche — on y dit ou en est chaque affaire"
+    },
+    {
+     "de": 1200,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "architecte-bren": {
+   "nom": "La journée de Bren",
+   "dortoir": {
+    "salle": "clairiere",
+    "lieu": "Les huttes de la clairière, Barralfond"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 300,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 300,
+     "a": 420,
+     "salle": "clairiere",
+     "lieu": "La clairière, Barralfond"
+    },
+    {
+     "de": 420,
+     "a": 720,
+     "salle": "lit-des-racines",
+     "lieu": "Le Lit des Racines, Barralfond"
+    },
+    {
+     "de": 720,
+     "a": 780,
+     "salle": "la-souche",
+     "lieu": "La Souche, Barralfond"
+    },
+    {
+     "de": 780,
+     "a": 1080,
+     "salle": "lit-des-racines",
+     "lieu": "Le Lit des Racines, Barralfond"
+    },
+    {
+     "de": 1080,
+     "a": 1200,
+     "salle": "la-souche",
+     "lieu": "La Souche, Barralfond",
+     "ferme": true,
+     "pourquoi": "la tenue du soir a la Souche — on y dit ou en est chaque affaire"
+    },
+    {
+     "de": 1200,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "architecte-ygga": {
+   "nom": "La journée de Ygga",
+   "dortoir": {
+    "salle": "clairiere",
+    "lieu": "Les huttes de la clairière, Barralfond"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 300,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 300,
+     "a": 420,
+     "salle": "clairiere",
+     "lieu": "La clairière, Barralfond"
+    },
+    {
+     "de": 420,
+     "a": 720,
+     "salle": "etabli",
+     "lieu": "L'Établi, Barralfond"
+    },
+    {
+     "de": 720,
+     "a": 780,
+     "salle": "la-souche",
+     "lieu": "La Souche, Barralfond"
+    },
+    {
+     "de": 780,
+     "a": 1080,
+     "salle": "etabli",
+     "lieu": "L'Établi, Barralfond"
+    },
+    {
+     "de": 1080,
+     "a": 1200,
+     "salle": "la-souche",
+     "lieu": "La Souche, Barralfond",
+     "ferme": true,
+     "pourquoi": "la tenue du soir a la Souche — on y dit ou en est chaque affaire"
+    },
+    {
+     "de": 1200,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "architecte-toll": {
+   "nom": "La journée de Toll",
+   "dortoir": {
+    "salle": "clairiere",
+    "lieu": "Les huttes de la clairière, Barralfond"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 300,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 300,
+     "a": 420,
+     "salle": "clairiere",
+     "lieu": "La clairière, Barralfond"
+    },
+    {
+     "de": 420,
+     "a": 720,
+     "salle": "bassin-noir",
+     "lieu": "Le Bassin noir, Barralfond"
+    },
+    {
+     "de": 720,
+     "a": 780,
+     "salle": "la-souche",
+     "lieu": "La Souche, Barralfond"
+    },
+    {
+     "de": 780,
+     "a": 1080,
+     "salle": "bassin-noir",
+     "lieu": "Le Bassin noir, Barralfond"
+    },
+    {
+     "de": 1080,
+     "a": 1200,
+     "salle": "la-souche",
+     "lieu": "La Souche, Barralfond",
+     "ferme": true,
+     "pourquoi": "la tenue du soir a la Souche — on y dit ou en est chaque affaire"
+    },
+    {
+     "de": 1200,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "architecte-wenna": {
+   "nom": "La journée de Wenna",
+   "dortoir": {
+    "salle": "clairiere",
+    "lieu": "Les huttes de la clairière, Barralfond"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 300,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 300,
+     "a": 420,
+     "salle": "clairiere",
+     "lieu": "La clairière, Barralfond"
+    },
+    {
+     "de": 420,
+     "a": 720,
+     "salle": "la-souche",
+     "lieu": "La Souche, Barralfond"
+    },
+    {
+     "de": 720,
+     "a": 780,
+     "salle": "la-souche",
+     "lieu": "La Souche, Barralfond"
+    },
+    {
+     "de": 780,
+     "a": 1080,
+     "salle": "la-souche",
+     "lieu": "La Souche, Barralfond"
+    },
+    {
+     "de": 1080,
+     "a": 1200,
+     "salle": "la-souche",
+     "lieu": "La Souche, Barralfond",
+     "ferme": true,
+     "pourquoi": "la tenue du soir a la Souche — on y dit ou en est chaque affaire"
+    },
+    {
+     "de": 1200,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "equerre-barralfond": {
+   "nom": "La journée de l'Équerre, à Barralfond",
+   "dortoir": {
+    "salle": "la-souche",
+    "lieu": "La Souche, Barralfond"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 300,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 300,
+     "a": 420,
+     "salle": "la-souche",
+     "lieu": "La Souche, Barralfond",
+     "ferme": true,
+     "pourquoi": "il ouvre les affaires du jour et dit ou chacune en est"
+    },
+    {
+     "de": 420,
+     "a": 720,
+     "salle": "clairiere",
+     "lieu": "La clairière, Barralfond"
+    },
+    {
+     "de": 720,
+     "a": 780,
+     "salle": "@dortoir"
+    },
+    {
+     "de": 780,
+     "a": 1020,
+     "salle": "etabli",
+     "lieu": "L'Établi, Barralfond"
+    },
+    {
+     "de": 1020,
+     "a": 1200,
+     "salle": "la-souche",
+     "lieu": "La Souche, Barralfond"
+    },
+    {
+     "de": 1200,
+     "a": 1440,
+     "salle": "@dortoir"
+    }
+   ]
+  },
+  "madre-struttura-braavos": {
+   "nom": "Le jour de Madre Struttura a Braavos",
+   "dortoir": {
+    "salle": "braavos-septuaire",
+    "lieu": "Le septuaire, Braavos"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 1440,
+     "salle": "braavos-septuaire",
+     "lieu": "Le septuaire, Braavos"
+    }
+   ]
+  },
+  "citoyens-braavos-archives": {
+   "nom": "Le jour des citoyens de Braavos — L'archive",
+   "dortoir": {
+    "salle": "braavos-archives",
+    "lieu": "L'archive, Braavos"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 1440,
+     "salle": "braavos-archives",
+     "lieu": "L'archive, Braavos"
+    }
+   ]
+  },
+  "citoyens-braavos-baraques": {
+   "nom": "Le jour des citoyens de Braavos — Les baraques",
+   "dortoir": {
+    "salle": "braavos-baraques",
+    "lieu": "Les baraques, Braavos"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 1440,
+     "salle": "braavos-baraques",
+     "lieu": "Les baraques, Braavos"
+    }
+   ]
+  },
+  "citoyens-braavos-bourg": {
+   "nom": "Le jour des citoyens de Braavos — Le bourg",
+   "dortoir": {
+    "salle": "braavos-bourg",
+    "lieu": "Le bourg, Braavos"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 1440,
+     "salle": "braavos-bourg",
+     "lieu": "Le bourg, Braavos"
+    }
+   ]
+  },
+  "citoyens-braavos-cuisines": {
+   "nom": "Le jour des citoyens de Braavos — Les cuisines",
+   "dortoir": {
+    "salle": "braavos-cuisines",
+    "lieu": "Les cuisines, Braavos"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 1440,
+     "salle": "braavos-cuisines",
+     "lieu": "Les cuisines, Braavos"
+    }
+   ]
+  },
+  "citoyens-braavos-forge": {
+   "nom": "Le jour des citoyens de Braavos — La forge",
+   "dortoir": {
+    "salle": "braavos-forge",
+    "lieu": "La forge, Braavos"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 1440,
+     "salle": "braavos-forge",
+     "lieu": "La forge, Braavos"
+    }
+   ]
+  },
+  "citoyens-braavos-grande-salle": {
+   "nom": "Le jour des citoyens de Braavos — La grande salle",
+   "dortoir": {
+    "salle": "braavos-grande-salle",
+    "lieu": "La grande salle, Braavos"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 1440,
+     "salle": "braavos-grande-salle",
+     "lieu": "La grande salle, Braavos"
+    }
+   ]
+  },
+  "citoyens-braavos-jardin-aegon": {
+   "nom": "Le jour des citoyens de Braavos — Le jardin d'Aegon",
+   "dortoir": {
+    "salle": "braavos-jardin-aegon",
+    "lieu": "Le jardin d'Aegon, Braavos"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 1440,
+     "salle": "braavos-jardin-aegon",
+     "lieu": "Le jardin d'Aegon, Braavos"
+    }
+   ]
+  },
+  "citoyens-braavos-officine": {
+   "nom": "Le jour des citoyens de Braavos — L'officine",
+   "dortoir": {
+    "salle": "braavos-officine",
+    "lieu": "L'officine, Braavos"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 1440,
+     "salle": "braavos-officine",
+     "lieu": "L'officine, Braavos"
+    }
+   ]
+  },
+  "citoyens-braavos-quai": {
+   "nom": "Le jour des citoyens de Braavos — Le quai",
+   "dortoir": {
+    "salle": "braavos-quai",
+    "lieu": "Le quai, Braavos"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 1440,
+     "salle": "braavos-quai",
+     "lieu": "Le quai, Braavos"
+    }
+   ]
+  },
+  "citoyens-braavos-septuaire": {
+   "nom": "Le jour des citoyens de Braavos — Le septuaire",
+   "dortoir": {
+    "salle": "braavos-septuaire",
+    "lieu": "Le septuaire, Braavos"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 1440,
+     "salle": "braavos-septuaire",
+     "lieu": "Le septuaire, Braavos"
+    }
+   ]
+  },
+  "citoyens-braavos-table-peinte": {
+   "nom": "Le jour des citoyens de Braavos — La chambre de la Table Peinte",
+   "dortoir": {
+    "salle": "braavos-table-peinte",
+    "lieu": "La chambre de la Table Peinte, Braavos"
+   },
+   "bandes": [
+    {
+     "de": 0,
+     "a": 1440,
+     "salle": "braavos-table-peinte",
+     "lieu": "La chambre de la Table Peinte, Braavos"
+    }
+   ]
   }
+ },
+ "gens": {
+  "rhaenyra": {
+   "modele": "reine"
+  },
+  "jacaerys": {
+   "modele": "noble-jeune"
+  },
+  "elyn-sarnes": {
+   "modele": "dame-de-compagnie"
+  },
+  "septa-marlow": {
+   "modele": "septa"
+  },
+  "robert-quince": {
+   "modele": "castellan"
+  },
+  "rulf-corne": {
+   "modele": "port",
+   "dortoir": {
+    "salle": "bourg",
+    "lieu": "Le bourg sous les murs, Peyredragon"
+   }
+  },
+  "wend": {
+   "modele": "port"
+  },
+  "sarro-vaeth": {
+   "modele": "dragonnier"
+  },
+  "merra-sath": {
+   "modele": "galeries"
+  },
+  "dorsa-sath": {
+   "modele": "galeries"
+  },
+  "willa-sechoirs": {
+   "modele": "bourg"
+  },
+  "ordo-sarnes": {
+   "modele": "bourg"
+  },
+  "meliss-la-claie": {
+   "modele": "bourg"
+  },
+  "vieux-pecheur": {
+   "modele": "bourg"
+  },
+  "aurore-inchauspe": {
+   "modele": "hote"
+  },
+  "garde-levant": {
+   "modele": "guet",
+   "poste": {
+    "salle": "grand-escalier",
+    "lieu": "Le grand escalier, Peyredragon"
+   }
+  },
+  "hobb-treize-pas": {
+   "modele": "captif"
+  },
+  "prisonnier-wat": {
+   "modele": "captif"
+  },
+  "le-sanglier": {
+   "modele": "poste",
+   "poste": {
+    "salle": "porte-dragon",
+    "lieu": "Sous la voute de la porte du Dragon, Peyredragon"
+   },
+   "dortoir": {
+    "salle": "baraques",
+    "lieu": "Les baraques, hors les murs, Peyredragon"
+   }
+  },
+  "gerardys": {
+   "modele": "mestre"
+  },
+  "rhaenys": {
+   "modele": "conseil"
+  },
+  "lucerys": {
+   "modele": "conseil",
+   "dortoir": {
+    "salle": "appartements-reine",
+    "lieu": "Les appartements de la reine, Peyredragon"
+   }
+  },
+  "tobb": {
+   "modele": "bourg",
+   "dortoir": {
+    "salle": "bourg",
+    "lieu": "Le bourg sous les murs, Peyredragon"
+   }
+  },
+  "nesse": {
+   "modele": "ombre",
+   "suit": "rhaenyra",
+   "dortoir": {
+    "salle": "bourg",
+    "lieu": "Le bourg sous les murs, Peyredragon"
+   }
+  },
+  "steffon-darklyn": {
+   "modele": "conseil"
+  },
+  "aldon-hask": {
+   "modele": "conseil"
+  },
+  "sara": {
+   "modele": "conseil"
+  },
+  "daemon": {
+   "modele": "conseil"
+  },
+  "corlys": {
+   "modele": "hote"
+  },
+  "denys-bar-emmon": {
+   "modele": "hote"
+  },
+  "alarra-rosby": {
+   "modele": "hote"
+  },
+  "marna": {
+   "modele": "dame-de-compagnie"
+  },
+  "alys-grive": {
+   "modele": "bourg",
+   "dortoir": {
+    "salle": "galeries",
+    "lieu": "Les galeries, Peyredragon"
+   }
+  },
+  "doss-marran": {
+   "modele": "bourg",
+   "dortoir": {
+    "salle": "bourg",
+    "lieu": "Le bourg sous les murs, Peyredragon"
+   }
+  },
+  "aegon-ii": {
+   "modele": "roi"
+  },
+  "otto": {
+   "modele": "main-du-roi"
+  },
+  "alicent": {
+   "modele": "reine-douairiere"
+  },
+  "criston": {
+   "modele": "garde-royale"
+  },
+  "aemond": {
+   "modele": "prince-vert"
+  },
+  "helaena": {
+   "modele": "reine-helaena"
+  },
+  "orwyle": {
+   "modele": "grand-mestre"
+  },
+  "larys": {
+   "modele": "chuchoteur"
+  },
+  "hann-bourbe": {
+   "modele": "briseur-de-coques"
+  },
+  "sabbe": {
+   "modele": "briseur-de-coques"
+  },
+  "ren": {
+   "modele": "briseur-de-coques"
+  },
+  "nel-bec": {
+   "modele": "greve"
+  },
+  "waltyr-poix": {
+   "modele": "poste",
+   "poste": {
+    "salle": "arche-de-waltyr",
+    "lieu": "L'ombre de l'arche, porte de la Gadoue"
+   },
+   "dortoir": {
+    "salle": "culpucier",
+    "lieu": "Le Culpucier, Port-Real"
+   }
+  },
+  "ollo-marran": {
+   "modele": "poste",
+   "poste": {
+    "salle": "bureau-du-port",
+    "lieu": "Le bureau du maitre de port, Port-Real"
+   },
+   "dortoir": {
+    "salle": "culpucier",
+    "lieu": "Le Culpucier, Port-Real"
+   }
+  },
+  "sirel-quintaine": {
+   "modele": "poste",
+   "poste": {
+    "salle": "etal-de-sirel",
+    "lieu": "L'etal de Sirel, Port-Real"
+   },
+   "dortoir": {
+    "salle": "culpucier",
+    "lieu": "Le Culpucier, Port-Real"
+   }
+  },
+  "mag-la-gaffe": {
+   "modele": "poste",
+   "poste": {
+    "salle": "la-gaffe",
+    "lieu": "La Gaffe, sous la porte de la Gadoue"
+   },
+   "dortoir": {
+    "salle": "la-gaffe",
+    "lieu": "La Gaffe, sous la porte de la Gadoue"
+   }
+  },
+  "pate-changeur": {
+   "modele": "poste",
+   "poste": {
+    "salle": "le-change",
+    "lieu": "Le change, rue haute"
+   },
+   "dortoir": {
+    "salle": "culpucier",
+    "lieu": "Le Culpucier, Port-Real"
+   }
+  },
+  "doye-rouelle": {
+   "modele": "poste",
+   "poste": {
+    "salle": "culpucier",
+    "lieu": "Sa cour, bas de la rue du Culpucier"
+   },
+   "dortoir": {
+    "salle": "culpucier",
+    "lieu": "Le Culpucier, Port-Real"
+   }
+  },
+  "ruff-le-cordier": {
+   "modele": "poste",
+   "poste": {
+    "salle": "quais-de-la-nera",
+    "lieu": "La venelle des Filins, pres des quais de la Nera"
+   },
+   "dortoir": {
+    "salle": "culpucier",
+    "lieu": "Le Culpucier, Port-Real"
+   }
+  },
+  "guet-du-mur": {
+   "modele": "guet",
+   "poste": {
+    "salle": "porte-de-fer",
+    "lieu": "Au pied du mur du levant"
+   },
+   "dortoir": {
+    "salle": "culpucier",
+    "lieu": "Le Culpucier, Port-Real"
+   }
+  },
+  "l-homme-de-la-merette": {
+   "modele": "poste",
+   "poste": {
+    "salle": "la-merette",
+    "lieu": "La Merette, a la greve basse"
+   },
+   "dortoir": {
+    "salle": "la-merette",
+    "lieu": "La Merette, a la greve basse"
+   }
+  },
+  "hallis-roon": {
+   "modele": "clerc-des-caves",
+   "poste": {
+    "salle": "cachots",
+    "lieu": "Les caves basses, Peyredragon"
+   },
+   "dortoir": {
+    "salle": "baraques",
+    "lieu": "Les baraques, Peyredragon"
+   }
+  },
+  "gib-le-geolier": {
+   "modele": "poste",
+   "poste": {
+    "salle": "cachots",
+    "lieu": "Les geoles, Peyredragon"
+   },
+   "dortoir": {
+    "salle": "baraques",
+    "lieu": "Les baraques, Peyredragon"
+   }
+  },
+  "garde-tour": {
+   "modele": "guet",
+   "poste": {
+    "salle": "table-peinte",
+    "lieu": "Chambre de la Table Peinte, Peyredragon"
+   },
+   "dortoir": {
+    "salle": "baraques",
+    "lieu": "Les baraques, Peyredragon"
+   }
+  },
+  "page-couloir": {
+   "modele": "poste",
+   "poste": {
+    "salle": "appartements-reine",
+    "lieu": "Le couloir des appartements, Peyredragon"
+   },
+   "dortoir": {
+    "salle": "baraques",
+    "lieu": "Les baraques, Peyredragon"
+   }
+  },
+  "ossy": {
+   "modele": "poste",
+   "poste": {
+    "salle": "roukerie",
+    "lieu": "La roukerie, Peyredragon"
+   },
+   "dortoir": {
+    "salle": "baraques",
+    "lieu": "Les baraques, Peyredragon"
+   }
+  },
+  "meg-du-fumoir": {
+   "modele": "bourg",
+   "dortoir": {
+    "salle": "sechoirs",
+    "lieu": "Les sechoirs, sous les murs"
+   }
+  },
+  "le-garcon-aux-manches-longues": {
+   "modele": "bourg",
+   "dortoir": {
+    "salle": "sechoirs",
+    "lieu": "Les sechoirs, sous les murs"
+   }
+  },
+  "prisonnier-jeune": {
+   "modele": "captif",
+   "dortoir": {
+    "salle": "cachots",
+    "lieu": "Les caves basses, Peyredragon"
+   }
+  },
+  "prisonnier-vieux": {
+   "modele": "captif",
+   "dortoir": {
+    "salle": "cachots",
+    "lieu": "Les caves basses, Peyredragon"
+   }
+  },
+  "le-facteur-braavien": {
+   "modele": "facteur-etranger"
+  },
+  "torgo": {
+   "modele": "bourg",
+   "dortoir": {
+    "salle": "bourg",
+    "lieu": "Le bourg sous les murs, Peyredragon"
+   }
+  },
+  "hallis-beaupre": {
+   "modele": "bourg",
+   "dortoir": {
+    "salle": "bourg",
+    "lieu": "Le bourg sous les murs, Peyredragon"
+   }
+  },
+  "maron-sec": {
+   "modele": "bourg",
+   "dortoir": {
+    "salle": "bourg",
+    "lieu": "Le bourg sous les murs, Peyredragon"
+   }
+  },
+  "marlo-vasse": {
+   "modele": "maitre-du-peigne"
+  },
+  "kerra-des-claies": {
+   "modele": "guet",
+   "poste": {
+    "salle": "appartements-reine",
+    "lieu": "La porte des appartements de la reine, Peyredragon"
+   },
+   "dortoir": {
+    "salle": "bourg",
+    "lieu": "La troisieme claie, au bourg"
+   }
+  },
+  "sarn-vieux-sang": {
+   "modele": "architecte-sarn"
+  },
+  "bren-racine-grise": {
+   "modele": "architecte-bren"
+  },
+  "ygga-main-de-pierre": {
+   "modele": "architecte-ygga"
+  },
+  "toll-oeil-noir": {
+   "modele": "architecte-toll"
+  },
+  "wenna-la-nommeuse": {
+   "modele": "architecte-wenna"
+  },
+  "divine-economist": {
+   "modele": "madre-struttura-braavos"
+  },
+  "bassthewhale": {
+   "modele": "citoyens-braavos-archives"
+  },
+  "bullitpro0f": {
+   "modele": "citoyens-braavos-archives"
+  },
+  "dkaya": {
+   "modele": "citoyens-braavos-archives"
+  },
+  "efficiency-maestro": {
+   "modele": "citoyens-braavos-archives"
+  },
+  "feola007": {
+   "modele": "citoyens-braavos-archives"
+  },
+  "future-chronicler": {
+   "modele": "citoyens-braavos-archives"
+  },
+  "gamingpatrizio": {
+   "modele": "citoyens-braavos-archives"
+  },
+  "john-jeffries": {
+   "modele": "citoyens-braavos-archives"
+  },
+  "lucid": {
+   "modele": "citoyens-braavos-archives"
+  },
+  "meyti-tgz": {
+   "modele": "citoyens-braavos-archives"
+  },
+  "nlr": {
+   "modele": "citoyens-braavos-archives"
+  },
+  "precision-observer": {
+   "modele": "citoyens-braavos-archives"
+  },
+  "rialto-diarist": {
+   "modele": "citoyens-braavos-archives"
+  },
+  "shiren": {
+   "modele": "citoyens-braavos-archives"
+  },
+  "silkroadrunner": {
+   "modele": "citoyens-braavos-archives"
+  },
+  "steven": {
+   "modele": "citoyens-braavos-archives"
+  },
+  "technomedici": {
+   "modele": "citoyens-braavos-archives"
+  },
+  "xadme": {
+   "modele": "citoyens-braavos-archives"
+  },
+  "ducalepalace": {
+   "modele": "citoyens-braavos-baraques"
+  },
+  "giovanni": {
+   "modele": "citoyens-braavos-baraques"
+  },
+  "tiara-raa99": {
+   "modele": "citoyens-braavos-baraques"
+  },
+  "alexandria-trader": {
+   "modele": "citoyens-braavos-bourg"
+  },
+  "bankingwizard99": {
+   "modele": "citoyens-braavos-bourg"
+  },
+  "bigbosefx": {
+   "modele": "citoyens-braavos-bourg"
+  },
+  "dalmatian-trader": {
+   "modele": "citoyens-braavos-bourg"
+  },
+  "ducaletechie": {
+   "modele": "citoyens-braavos-bourg"
+  },
+  "ducatsrunner": {
+   "modele": "citoyens-braavos-bourg"
+  },
+  "greek-trader1": {
+   "modele": "citoyens-braavos-bourg"
+  },
+  "greek-trader2": {
+   "modele": "citoyens-braavos-bourg"
+  },
+  "italymerchant": {
+   "modele": "citoyens-braavos-bourg"
+  },
+  "philosopher-banker": {
+   "modele": "citoyens-braavos-bourg"
+  },
+  "shadowhunter": {
+   "modele": "citoyens-braavos-bourg"
+  },
+  "foodieforlife": {
+   "modele": "citoyens-braavos-cuisines"
+  },
+  "tavern-tales": {
+   "modele": "citoyens-braavos-cuisines"
+  },
+  "anchor-builder": {
+   "modele": "citoyens-braavos-forge"
+  },
+  "anchor-builder1": {
+   "modele": "citoyens-braavos-forge"
+  },
+  "beauty-architect": {
+   "modele": "citoyens-braavos-forge"
+  },
+  "class-harmonizer": {
+   "modele": "citoyens-braavos-forge"
+  },
+  "living-stone-architect": {
+   "modele": "citoyens-braavos-forge"
+  },
+  "mechanical-visionary": {
+   "modele": "citoyens-braavos-forge"
+  },
+  "stone-hauler": {
+   "modele": "citoyens-braavos-forge"
+  },
+  "italia": {
+   "modele": "citoyens-braavos-grande-salle"
+  },
+  "grounded-visionary": {
+   "modele": "citoyens-braavos-jardin-aegon"
+  },
+  "painter-of-light": {
+   "modele": "citoyens-braavos-jardin-aegon"
+  },
+  "poet-of-the-rialto": {
+   "modele": "citoyens-braavos-jardin-aegon"
+  },
+  "rhythm-keeper": {
+   "modele": "citoyens-braavos-jardin-aegon"
+  },
+  "the-social-canvas": {
+   "modele": "citoyens-braavos-jardin-aegon"
+  },
+  "urban-visionary": {
+   "modele": "citoyens-braavos-jardin-aegon"
+  },
+  "element-transmuter": {
+   "modele": "citoyens-braavos-officine"
+  },
+  "empirical-anatomist": {
+   "modele": "citoyens-braavos-officine"
+  },
+  "market-prophet": {
+   "modele": "citoyens-braavos-officine"
+  },
+  "pattern-prophet": {
+   "modele": "citoyens-braavos-officine"
+  },
+  "social-geometrist": {
+   "modele": "citoyens-braavos-officine"
+  },
+  "system-diagnostician": {
+   "modele": "citoyens-braavos-officine"
+  },
+  "the-grand-experiment": {
+   "modele": "citoyens-braavos-officine"
+  },
+  "adriatic-captain": {
+   "modele": "citoyens-braavos-quai"
+  },
+  "aegean-mariner": {
+   "modele": "citoyens-braavos-quai"
+  },
+  "albanian-mariner": {
+   "modele": "citoyens-braavos-quai"
+  },
+  "apulian-mariner": {
+   "modele": "citoyens-braavos-quai"
+  },
+  "bosphorus-navigator": {
+   "modele": "citoyens-braavos-quai"
+  },
+  "gondola-assistant": {
+   "modele": "citoyens-braavos-quai"
+  },
+  "ionian-sailor": {
+   "modele": "citoyens-braavos-quai"
+  },
+  "rialto-sailor1": {
+   "modele": "citoyens-braavos-quai"
+  },
+  "sea-trader": {
+   "modele": "citoyens-braavos-quai"
+  },
+  "sicily-mariner": {
+   "modele": "citoyens-braavos-quai"
+  },
+  "canon-philosopher": {
+   "modele": "citoyens-braavos-septuaire"
+  },
+  "cleroshepherd1": {
+   "modele": "citoyens-braavos-septuaire"
+  },
+  "cleroshepherd2": {
+   "modele": "citoyens-braavos-septuaire"
+  },
+  "cleroshepherd3": {
+   "modele": "citoyens-braavos-septuaire"
+  },
+  "cleroshepherd4": {
+   "modele": "citoyens-braavos-septuaire"
+  },
+  "cleroshepherd5": {
+   "modele": "citoyens-braavos-septuaire"
+  },
+  "sacred-kneader": {
+   "modele": "citoyens-braavos-septuaire"
+  },
+  "scholar-priest": {
+   "modele": "citoyens-braavos-septuaire"
+  },
+  "consigliodeidieci": {
+   "modele": "citoyens-braavos-table-peinte"
+  },
+  "diplomatic-virtuoso": {
+   "modele": "citoyens-braavos-table-peinte"
+  }
+ }
 }

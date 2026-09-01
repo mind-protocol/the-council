@@ -24,6 +24,7 @@ sont des FAÇADES aux chemins gelés : elles passent elles aussi par la porte.
 | `verser_cahier.py` | `verser_cahier.py` | verser les `cahier2` des rapports dans les registres — refuse, ne devine jamais |
 | `exporter_plan.py` | `exporter_plan.py` | l'export texte brut des cahiers (n'exporte plus à l'import) |
 | `passer.py` | `passer.py` | un livre change de main, ou se pose sur une table |
+| `charges.py` | — | projeter et valider les gestes volontaires proposer, prendre, partager et transmettre sans choisir de porteur |
 
 Les paquets (`couverture/`, `criticite/`, `etat_du_plan/`, `mesures/`,
 `tisser/`) existent parce qu'un module naît sous 500 lignes (le cliquet de

@@ -1,0 +1,3 @@
+Le comptoir imprime désormais chaque divergence avec ses deux valeurs et leurs sources exactes, en lecture humaine comme en JSON. Quatre tests passent et la compilation tient.
+
+L’état courant reste honnêtement au code `1` : `433 → 435` rattachés et `21 → 22` orphelins. Nicolas a reçu la correction et sa preuve.

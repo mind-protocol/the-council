@@ -18,7 +18,7 @@
 //      un arrondi à zéro ;
 //   4. la position est écrite dans `corps.json`, le bandeau dans `presence`,
 //      et le sac ne tombe dans l'inbox du siège qu'à l'arrivée : c'est le
-//      guetteur du MJ qu'on protège d'un réveil par tronçon.
+//      routeur de message qu'on protège d'un réveil par tronçon.
 //
 // Le monde 3D pèse plus d'un gigaoctet : on le monte en JONCTION dans une
 // racine temporaire au lieu de le copier, et l'état y est réduit à ce que la

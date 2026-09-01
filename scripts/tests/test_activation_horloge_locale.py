@@ -47,6 +47,39 @@ class HorlogeLocaleActivationTests(unittest.TestCase):
         self.assertEqual(matin["present_secondes"], 900.0)
         self.assertEqual(soir["present_secondes"], 900.0)
 
+    def test_un_front_force_prend_sa_propre_source_et_sa_propre_horloge(self):
+        horloges = {
+            "rhaenyra": {"annee": 129, "lune": 5, "jour": 12,
+                           "minute": 641},
+            "nicolas-lester-reynolds": {
+                "annee": 129, "lune": 5, "jour": 12, "minute": 467},
+        }
+        joueurs = [
+            {"personnage_id": "rhaenyra", "role": "principal"},
+            {"personnage_id": "nicolas-lester-reynolds", "role": "second"},
+        ]
+
+        def lire(chemin, _defaut):
+            return joueurs if chemin.endswith("joueurs.json") else horloges
+
+        mesures = [
+            {"personnage_id": "rhaenyra", "occupe": True,
+             "a_tete": True},
+            {"personnage_id": "nicolas-lester-reynolds", "occupe": False,
+             "a_tete": True},
+        ]
+        with mock.patch("agents.activation.horloges.lire_json",
+                        side_effect=lire), mock.patch(
+                            "agents.activation.horloges.occupation.mesures",
+                            return_value=mesures):
+            vague, _ = horloge_directe(
+                {}, source_force="nicolas-lester-reynolds",
+                front_force="nicolas-lester-reynolds")
+
+        self.assertEqual(vague["source_id"], "nicolas-lester-reynolds")
+        self.assertEqual(vague["front_id"], "nicolas-lester-reynolds")
+        self.assertEqual(vague["base_secondes"], 0.0)
+
     def test_un_lot_parallele_avance_du_maximum_pas_de_la_somme(self):
         horloge = {"base_secondes": 600.0, "commis_secondes": 120.0,
                    "present_secondes": 720.0}
@@ -103,6 +136,14 @@ class HorlogeLocaleActivationTests(unittest.TestCase):
         self.assertIn("Tenir le registre", mission)
         self.assertIn("accès au dépôt", mission)
         self.assertIn("Ne demande rien au MJ", mission)
+
+    def test_la_mission_verrou_laisse_les_actions_contestables(self):
+        mission = _mission({"id": "52101", "genre": "verrou",
+                            "quoi": "Le terme est ambigu"}, 10)
+        self.assertIn("VERROU : `52101`", mission)
+        self.assertIn("pas sur une action prescrite", mission)
+        self.assertIn("confirmer, les critiquer, les modifier", mission)
+        self.assertIn("communique", mission)
 
 
 if __name__ == "__main__":

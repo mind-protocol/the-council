@@ -20,17 +20,17 @@ mettre_a_jour_porte = expose.boucle_activation.mettre_a_jour_porte
 
 
 class FatigueActivationTests(unittest.TestCase):
-    def test_trente_minutes_de_compute_divisent_energie_par_deux(self):
-        fiche = {"compute_minutes": 30.0, "compute_maj_mur_s": 1000.0}
+    def test_soixante_minutes_de_compute_divisent_energie_par_deux(self):
+        fiche = {"compute_minutes": 60.0, "compute_maj_mur_s": 1000.0}
         mesure = mesurer_fatigue(fiche, maintenant=1000.0)
         self.assertAlmostEqual(mesure["facteur_compute"], 0.5)
         self.assertAlmostEqual(mesure["facteur_total"], 0.5)
 
     def test_charge_compute_se_divise_par_deux_en_douze_heures(self):
-        fiche = {"compute_minutes": 30.0, "compute_maj_mur_s": 1000.0}
+        fiche = {"compute_minutes": 60.0, "compute_maj_mur_s": 1000.0}
         charge = charge_compute_decroissante(
             fiche, maintenant=1000.0 + 12 * 3600)
-        self.assertAlmostEqual(charge, 15.0)
+        self.assertAlmostEqual(charge, 30.0)
         self.assertAlmostEqual(
             mesurer_fatigue(fiche, maintenant=1000.0 + 12 * 3600)
             ["facteur_compute"], math.sqrt(0.5))
@@ -52,9 +52,9 @@ class FatigueActivationTests(unittest.TestCase):
     def test_activation_empile_compute_et_temps_fictionnel(self):
         fiche = {}
         mesure = ajouter_activation(
-            fiche, compute_minutes=30.0, instant_fiction_s=8 * 3600.0,
+            fiche, compute_minutes=60.0, instant_fiction_s=8 * 3600.0,
             duree_monde_s=2 * 3600.0, maintenant=1000.0)
-        self.assertAlmostEqual(fiche["compute_minutes"], 30.0)
+        self.assertAlmostEqual(fiche["compute_minutes"], 60.0)
         self.assertAlmostEqual(fiche["fin_fiction_s"], 10 * 3600.0)
         self.assertAlmostEqual(mesure["facteur_compute"], 0.5)
         self.assertAlmostEqual(mesure["facteur_heures"], 1.0)
@@ -63,7 +63,7 @@ class FatigueActivationTests(unittest.TestCase):
     def test_classe_sur_effective_sans_detruire_la_reserve_brute(self):
         etat = {
             "fatigue_acteurs": {
-                "a": {"compute_minutes": 30.0,
+                "a": {"compute_minutes": 60.0,
                       "compute_maj_mur_s": 1000.0},
                 "b": {"compute_minutes": 0.0,
                       "compute_maj_mur_s": 1000.0},

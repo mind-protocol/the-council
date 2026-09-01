@@ -1,0 +1,21 @@
+{
+  "type": "bordereau-reception/2",
+  "objet": "Atelier /reception de Marco Mazzoni",
+  "date_constat": "129.5.12",
+  "preuve_geste": {
+    "etat": "FAIT",
+    "epreuve_adresse": {
+      "adresse": "http://localhost:3129/reception",
+      "accessible": true,
+      "statut_http": 200,
+      "observe_a": "2026-09-01T02:50:45.664Z"
+    }
+  },
+  "resultat_sous_jacent": {
+    "etat": "CONFORME",
+    "critere": "Le lecteur doit pouvoir éprouver une adresse depuis son propre navigateur, puis former une pièce séparant preuve du geste, résultat sous-jacent et décision de réception.",
+    "observation": "Depuis l’Archive, /reception affiche le formulaire attendu et son bouton Éprouver atteint cette même adresse en HTTP 200. Les champs distinguent le critère, l’observation, le résultat et la réserve.",
+    "reserve": "La pièce n’est pas déposée automatiquement : elle doit être copiée ou téléchargée. L’accès HTTP prouve l’ouverture, pas à lui seul la justesse de l’observation."
+  },
+  "decision": "REÇU AVEC RÉSERVE EXPLICITE"
+}

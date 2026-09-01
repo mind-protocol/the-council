@@ -1,0 +1,21 @@
+﻿{
+    "hooks":  {
+                  "PostToolUse":  [
+                                      {
+                                          "matcher":  "Write|Edit",
+                                          "hooks":  [
+                                                        {
+                                                            "type":  "command",
+                                                            "command":  "python \"C:/Users/reyno/serenissima/citizens/_hooks/log_outbox_drop.py\" || true",
+                                                            "statusMessage":  "Checking for a citizen outbox drop..."
+                                                        }
+                                                    ]
+                                      }
+                                  ]
+              },
+    "permissions":  {
+                        "allow":  [
+                                      "Bash(bash ../arm_watcher.sh:*)"
+                                  ]
+                    }
+}

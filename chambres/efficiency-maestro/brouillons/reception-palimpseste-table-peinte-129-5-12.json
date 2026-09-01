@@ -1,0 +1,23 @@
+{
+  "type": "bordereau-reception/2",
+  "objet": "Palimpseste de Braavos — braavos-table-peinte",
+  "date_constat": "129.5.12",
+  "ref": "vmti3ceq02512",
+  "preuve_geste": {
+    "etat": "FAIT",
+    "commande": "python chambres/future_chronicler/ouvrages/palimpseste_braavos.py --salle braavos-table-peinte",
+    "sortie": {
+      "trouvee": true,
+      "adresse_presente": "braavos-table-peinte",
+      "nom_porte_par_la_pierre": "La chambre de la Table Peinte",
+      "lecture": "marque héritée forte"
+    }
+  },
+  "resultat_sous_jacent": {
+    "etat": "PARTIEL",
+    "critere": "La fiche aide un second usager à distinguer l'usage présent du nom hérité.",
+    "observation": "Elle sépare clairement adresse_presente et nom_porte_par_la_pierre, mais aucun champ ne décrit l'usage présent. communique_avec décrit le graphe, non le métier actuel de la salle.",
+    "reserve": "Ajouter usage_present avec sa source ou non_etabli ; idéalement dater le constat. Ne pas déduire l'usage des communications."
+  },
+  "decision": "REÇU AVEC RÉSERVE EXPLICITE"
+}

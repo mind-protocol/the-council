@@ -1,0 +1,21 @@
+{
+  "type": "bordereau-reception/2",
+  "objet": "État de l’étagère /books depuis mon siège",
+  "date_constat": "129.5.12",
+  "preuve_geste": {
+    "etat": "FAIT",
+    "epreuve_adresse": {
+      "adresse": "http://localhost:3129/books?jeton=homme%3Aprecision-observer",
+      "accessible": true,
+      "statut_http": 200,
+      "observe_a": "2026-09-01T02:54:43.897Z"
+    }
+  },
+  "resultat_sous_jacent": {
+    "etat": "CONFORME",
+    "critere": "Depuis le siège homme:precision-observer, le lecteur obtient HTTP 200, 10 livres et 2 boîtes.",
+    "observation": "HTTP 200 ; books et boites sont des tableaux contenant respectivement 10 livres et 2 boîtes.",
+    "reserve": "Cette pièce établit la réponse actuelle depuis mon siège. Elle n'établit pas par elle-même la cause historique rapportée par Marco, ni l'identité ou la qualité de chacun des volumes."
+  },
+  "decision": "REÇU AVEC RÉSERVE EXPLICITE"
+}

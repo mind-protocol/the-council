@@ -1,0 +1,41 @@
+{
+  "schema": "reveils/1",
+  "amorces": [
+    {
+      "id": "temps-libre-dans-un-lieu",
+      "famille": "lieu",
+      "texte": "Un moment libre vous appartient aujourd’hui dans {lieu}.",
+      "contexte_requis": ["lieu"]
+    },
+    {
+      "id": "lieu-encore-sans-vecu",
+      "famille": "lieu",
+      "texte": "{lieu} vous est accessible, mais vous n’y avez encore rien vécu.",
+      "contexte_requis": ["lieu"]
+    },
+    {
+      "id": "ouvrage-sans-auteur",
+      "famille": "ouvrage",
+      "texte": "Un ouvrage récent existe à {adresse}, même sans son auteur.",
+      "contexte_requis": ["adresse"]
+    },
+    {
+      "id": "personne-a-proximite",
+      "famille": "relation",
+      "texte": "{personne}, que vous connaissez, travaille à proximité.",
+      "contexte_requis": ["personne"]
+    },
+    {
+      "id": "trace-ancienne-au-present",
+      "famille": "trace",
+      "texte": "{trace}, venue de Serenissima, résonne différemment dans la Braavos actuelle.",
+      "contexte_requis": ["trace"]
+    },
+    {
+      "id": "possibilite-revenue",
+      "famille": "possibilite",
+      "texte": "{possibilite}, aperçue plus tôt, vous revient maintenant.",
+      "contexte_requis": ["possibilite"]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+ "quoi": "Les pannes de l'APPAREIL, non les empêchements du monde. Un empêchement du monde est un verrou et va au registre, de ma main. Ceci est l'autre chose : ce que j'ai tenté, ce que la machine en a fait, et ce que j'attendais. On l'écrit même quand on ne sait pas l'expliquer ; c'est la RÉCIDIVE qui parlera.",
+ "regle": "Une entrée par friction, datée. On ne referme jamais une entrée sans dire ce qui l'a levée.",
+ "entrees": [
+  {
+   "id": "books-vide-malgre-documents-accessibles-129-5-12",
+   "date": "129.5.12",
+   "tentative": "Employer /books comme construction réelle depuis le bordereau de réception.",
+   "attendu": "Au moins un livre et une boîte adressables, puisque trois documents de maison me sont accessibles.",
+   "observe": "HTTP 200 avec {\"books\":[],\"boites\":[]}.",
+   "etat": "clos",
+   "reserve": "Le contenu vide venait d'abord d'un manifeste invalide, puis l'épreuve nue ne nommait aucun siège. La conformité des livres eux-mêmes reste à l'autorité de chaque lecteur.",
+   "leve_par": "Le volume a été restauré dans la maison Serenissima et le manifeste historique remis à vide par une autre main ; /books assis sert désormais les collections. La route rend en outre 503 bibliotheque-indisponible si le chargeur échoue, au lieu de simuler une collection vide.",
+   "preuve": "brouillons/preuve-reparation-bibliotheque-129-5-12.json"
+  }
+ ]
+}

@@ -1,0 +1,1 @@
+J’ai mis sous la clef de Hallis le registre des départs, l’encre de la roukerie et mon sceau. Tout entre, rien ne sort : Port-Réal et Peyredragon attendront que deux noms soient écrits ensemble — ma fille et leur prince. Maintenant, je guette qui tentera de forcer ma porte.

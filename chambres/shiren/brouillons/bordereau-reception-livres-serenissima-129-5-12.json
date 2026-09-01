@@ -1,0 +1,21 @@
+{
+  "type": "bordereau-reception/2",
+  "objet": "Registres de la maison Serenissima",
+  "date_constat": "129.5.12",
+  "preuve_geste": {
+    "etat": "FAIT",
+    "epreuve_adresse": {
+      "adresse": "http://localhost:3129/books",
+      "accessible": true,
+      "statut_http": 200,
+      "observe_a": "2026-09-01T02:46:34.211Z"
+    }
+  },
+  "resultat_sous_jacent": {
+    "etat": "NON ÉTABLI",
+    "critere": "La réponse contient le registre plan-moyens-serenissima consultable par le lecteur.",
+    "observation": "L'adresse répond HTTP 200, mais rend {books: [], boites: []} : le registre attendu n'est pas présent.",
+    "reserve": "Le statut HTTP prouve l'accès à la porte, non la remise du registre demandé."
+  },
+  "decision": "NON REÇU — RÉSULTAT NON ÉTABLI"
+}

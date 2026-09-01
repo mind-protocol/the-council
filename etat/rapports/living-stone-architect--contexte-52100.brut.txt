@@ -1,0 +1,20 @@
+La porte est fixée dans `mission.py`. Chaque compute est désormais admis avant exécution avec une identité durable.
+
+Modifications :
+
+- `scripts/agents/work_identity.py` : persistance `progress + next + state`, tickets de réveil atomiques, réclamation unique, annulation et conservation du `work_id`.
+- `scripts/agents/depeche/mission.py` : admission et planification de reprise par la porte existante.
+- `scripts/tests/test_work_identity.py` : preuves des cinq invariants demandés.
+- Cahiers `52100` et message à Nicolas mis à jour avec la ref `vmthy27pxet3c`.
+
+Commande exécutée :
+
+```text
+python -m unittest scripts.tests.test_runtime_agents scripts.tests.test_work_identity scripts.tests.test_runtime_worker_identity -q
+Ran 26 tests in 1.596s
+OK
+```
+
+Le cas concurrent SQLite a également réussi cinq exécutions successives.
+
+Limite restante : le ticket demeure dans SQLite après extinction, mais le `threading.Timer` ne survit pas au processus. Prochaine pièce exacte : un balayeur au démarrage réclamant atomiquement les tickets `scheduled` échus avant de repasser par `depecher`.

@@ -1,0 +1,29 @@
+{
+  "type": "preuve-transformation-salle/1",
+  "date_constat": "129.5.12",
+  "origine": {
+    "personne": "nicolas-lester-reynolds",
+    "ref": "vmti3ceq02512",
+    "question": "qui veut faire quoi"
+  },
+  "qui": "living-stone-architect",
+  "volonte": "Faire de la première salle héritée un lieu braavien reproductible sans perdre sa structure porteuse.",
+  "transformation": {
+    "id_source": "fosses",
+    "id_braavos": "braavos-fosses",
+    "avant": "Les fosses aux dragons",
+    "apres": "Le Bassin des Fondations",
+    "mecanisme": "scripts/monde/braavos.py · NOMS_SALLES_BRAAVOS",
+    "sortie": "monde/braavos.interieurs.json"
+  },
+  "epreuve": {
+    "salle_inoccupee_avant_transformation": true,
+    "dimensions_metres": [58.0, 28.0],
+    "liaisons": ["braavos-cour", "braavos-galeries"],
+    "recuisson": "Braavos est prêt : 34 salles, 11 fichiers de monde.",
+    "nom_applique": true,
+    "geometrie_preservee": true,
+    "renommage_preexistant_du_quai_preserve": "Le Quai des Deux Rives"
+  },
+  "limite": "Le nom durable existe. Aucun essai de fondation, matériau ni usager n'a encore donné au Bassin son usage réel."
+}

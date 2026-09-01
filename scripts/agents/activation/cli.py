@@ -5,6 +5,8 @@ l'appelle par la porte agents/expose.py).
 import argparse
 import io
 import json
+import os
+import subprocess
 import sys
 import time
 
@@ -12,6 +14,22 @@ from agents.activation import socle  # LES DRAPEAUX SE POSENT SUR LE MODULE
 from agents.activation.socle import (ECHECS_CONSECUTIFS_MAX, journaliser,
                                      _court)
 from agents.activation.cycle import VerrouBoucle, cycle, prevoir_activations
+
+
+def retisser_tissu():
+    """Regénère le miroir après qu'un lot a changé ses sources canoniques."""
+    debut = time.monotonic()
+    commande = [sys.executable,
+                os.path.join(socle.RACINE, "scripts", "tisser.py"),
+                "--ecrire"]
+    resultat = subprocess.run(
+        commande, cwd=socle.RACINE, capture_output=True, text=True,
+        encoding="utf-8", errors="replace", timeout=120)
+    if resultat.returncode:
+        detail = resultat.stderr or resultat.stdout or "aucune sortie"
+        raise RuntimeError("retissage du tissu échoué : " + _court(detail, 400))
+    journaliser("graphe.retisse",
+                duree_s=round(time.monotonic() - debut, 3))
 
 def main():
     # `global PERSISTER_LOGS` NE FAISAIT RIEN, ET C'EST LE PIEGE CLASSIQUE DU
@@ -31,6 +49,8 @@ def main():
     ap.add_argument("--sec", action="store_true",
                     help="selection et mission seulement, aucun appel ni ecriture")
     ap.add_argument("--acteur", help="borner la selection a cet acteur")
+    ap.add_argument("--braavos", action="store_true",
+                    help="borner la sélection aux acteurs situés à Braavos")
     ap.add_argument("--intervalle", type=float, default=5.0,
                     help="secondes entre deux examens sans activation")
     ap.add_argument("--modele", default="opus",
@@ -62,43 +82,31 @@ def main():
     if args.prevoir:
         socle.PERSISTER_LOGS = False
         socle.AFFICHER_LOGS = False
-        json.dump(prevoir_activations(args.prevoir), sys.stdout,
+        json.dump(prevoir_activations(args.prevoir, braavos=args.braavos), sys.stdout,
                   ensure_ascii=False, indent=2)
         sys.stdout.write("\n")
         return
     socle.PERSISTER_LOGS = not args.sec
     journaliser("boucle.demarrage", sec=args.sec, une_fois=args.une_fois,
-                heartbeat_s=args.heartbeat, parallele=args.parallele)
+                heartbeat_s=args.heartbeat, parallele=args.parallele,
+                braavos=args.braavos)
 
     if args.sec:
         cycle(args)
         return 0
     faites = 0
     echecs_consecutifs = 0
-    annulations = 0
     with VerrouBoucle():
         etat = None
+        # Le premier lot doit lui aussi partir du canon courant. Ensuite, un
+        # lot réussi salit nécessairement le miroir : les hommes peuvent avoir
+        # clos, créé ou réaffecté une pièce pendant leur journée.
+        tissu_sale = True
         while True:
-            # LA TABLE DU MJ FAIT PARTIE DU FRONT (habitant.md : le MJ est
-            # un travailleur — la boucle l'elit comme tout le monde). A
-            # chaque battement : si sa table porte quelque chose (memes
-            # comptes que son mot d'etabli) et qu'aucun etabli n'est recent
-            # (cooldown reel, marqueur dans sa chambre), son etabli part
-            # DETACHE. Gradue, jamais bloquant : un echec de calcul se
-            # journalise et la boucle continue. Import local : la porte lie
-            # `zone` avant `activation`, mais on ne paie l'import qu'ici.
             try:
-                from agents.expose import zone as _zone
-                # TOUS les MJ de joueurs (decide le 31.8) : comptes OU un
-                # etabli par jour de fiction meme a table vide — la piece 3
-                # du narrateur (developper les plans, pas juste reagir).
-                lances = _zone.veiller_etablis()
-                for _mj, comptes in (lances or {}).items():
-                    journaliser("etabli.lance", mj=_mj, **comptes)
-            except Exception as e:
-                journaliser("etabli.echoue", raison=type(e).__name__,
-                            erreur=_court(str(e), 200))
-            try:
+                if tissu_sale:
+                    retisser_tissu()
+                    tissu_sale = False
                 if args.max_activations:
                     args.capacite_cycle = min(
                         args.parallele, args.max_activations - faites)
@@ -126,6 +134,8 @@ def main():
                 time.sleep(args.intervalle)
                 continue
             echecs_consecutifs = 0
+            if actives:
+                tissu_sale = True
             # ON COMPTE LES TENTATIVES, PAS LES REUSSITES. `--max-activations`
             # ne bornait que le succes : une panne qui annule tout laissait le
             # compteur a zero, et la course ne pouvait plus se terminer. Onze
@@ -133,19 +143,6 @@ def main():
             # Le plafond borne desormais ce qu'on DEPENSE, ce qui est le seul
             # sens utile d'un plafond.
             faites += tentees
-            # ET L'ON S'ARRETE SI RIEN N'ABOUTIT. Le plafond borne la depense,
-            # mais il ne dit pas qu'une panne est une panne : onze tentatives
-            # d'affilee sur le meme homme, toutes annulees, sont un systeme
-            # casse — pas une journee difficile. Trois annulations de suite
-            # sans une seule reussite arretent la course et le disent.
-            if actives:
-                annulations = 0
-            else:
-                annulations += 1
-                if annulations >= 3:
-                    journaliser("boucle.arretee", raison="rien n'aboutit",
-                                tentatives=faites, annulations=annulations)
-                    return 1
             if args.une_fois or (args.max_activations and
                                  faites >= args.max_activations):
                 return 0

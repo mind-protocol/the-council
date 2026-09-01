@@ -1,0 +1,28 @@
+{
+  "type": "bordereau-bassin-fondations/1",
+  "lieu": {
+    "id": "braavos-fosses",
+    "nom": "Le Bassin des Fondations"
+  },
+  "essai": {
+    "id": "simulation-pieu-001",
+    "objet": "Pieu témoin — démonstration du mécanisme seulement",
+    "simulation": true
+  },
+  "preuve_geste": {
+    "etat": "SIMULÉ",
+    "paliers_valides": 3,
+    "serie_charge_strictement_croissante": true
+  },
+  "resultat_sous_jacent": {
+    "etat": "SIMULATION — CONFORME",
+    "charge_max_kn": 30.0,
+    "pression_max_kpa": 750.0,
+    "enfoncement_a_charge_max_mm": 3.4,
+    "raideur_secante_kn_par_mm": 8.824,
+    "seuil_enfoncement_max_mm": 4.0,
+    "conforme_au_seuil": true
+  },
+  "decision": "À EXAMINER — aucune réception automatique",
+  "limite": "Les données sont une simulation de fonctionnement ; elles ne prouvent aucun comportement matériel."
+}

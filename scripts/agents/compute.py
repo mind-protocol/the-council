@@ -17,11 +17,50 @@ import uuid
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(
     os.path.abspath(__file__))))
 DEPOT = os.path.join(RACINE, ".agents-runtime", "compute")
+WORK_MAP = os.path.join(RACINE, ".agents-runtime", "compute-work-map")
+
+
+def _normaliser_identite_travail(identity):
+    if identity is None:
+        return None
+    if not isinstance(identity, dict):
+        raise ValueError("work_identity doit etre un objet explicite")
+    requis = ("work_id", "attempt_id", "attempt_number", "effect_key")
+    manquants = [champ for champ in requis if identity.get(champ) in (None, "")]
+    if manquants:
+        raise ValueError("work_identity incomplet: %s" % ", ".join(manquants))
+    try:
+        uuid.UUID(str(identity["work_id"]))
+    except (ValueError, TypeError, AttributeError):
+        raise ValueError("work_id doit etre un UUID")
+    attempt_number = identity["attempt_number"]
+    if not isinstance(attempt_number, int) or isinstance(attempt_number, bool) \
+            or attempt_number < 1:
+        raise ValueError("attempt_number doit etre un entier positif")
+    return {
+        "work_id": str(identity["work_id"]),
+        "attempt_id": str(identity["attempt_id"]),
+        "attempt_number": attempt_number,
+        "effect_key": str(identity["effect_key"]),
+    }
+
+
+def _ecrire_bordereau(event_id, identity):
+    os.makedirs(WORK_MAP, exist_ok=True)
+    cible = os.path.join(WORK_MAP, str(event_id) + ".json")
+    temporaire = cible + ".tmp-%d-%s" % (os.getpid(), uuid.uuid4().hex)
+    contenu = {str(event_id): dict(identity)}
+    with io.open(temporaire, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(contenu, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+    os.replace(temporaire, cible)
+    return cible
 
 
 def enregistrer(role, compte_pour, session_id, provider, debut_s, fin_s,
-                succes, erreur=None):
+                succes, erreur=None, work_identity=None):
     os.makedirs(DEPOT, exist_ok=True)
+    identity = _normaliser_identite_travail(work_identity)
     entree = {
         "id": str(uuid.uuid4()),
         "role": str(role or "inconnu"),
@@ -34,12 +73,16 @@ def enregistrer(role, compte_pour, session_id, provider, debut_s, fin_s,
         "succes": bool(succes),
         "erreur": None if succes else str(erreur or "echec")[:240],
     }
+    if identity:
+        entree.update(identity)
     cible = os.path.join(DEPOT, entree["id"] + ".json")
     temporaire = cible + ".tmp-%d" % os.getpid()
     with io.open(temporaire, "w", encoding="utf-8", newline="\n") as f:
         json.dump(entree, f, ensure_ascii=False, indent=2)
         f.write("\n")
     os.replace(temporaire, cible)
+    if identity:
+        entree["work_bordereau"] = _ecrire_bordereau(entree["id"], identity)
     return entree
 
 

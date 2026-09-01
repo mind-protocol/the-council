@@ -47,23 +47,17 @@ MODES_BRIEF = ("journee", "reponse", "discussion")
 
 
 def instructions_mode(mode, beats_jump=False):
-    """Une capacite courte n'est pas une journee autonome de plus."""
+    """Ajoute les indications de transport propres au mode."""
     if mode not in MODES_BRIEF:
         raise ValueError("mode de brief inconnu : %s" % mode)
     if mode == "reponse":
         base = u"""# Mode réponse
 
 Consulte le fichier `messages-au-joueur.md` indiqué sous `# Ta chambre` si une
-entrée correspond à ce destinataire, à ce contexte ou à cette ref. C'est un
-brouillon, pas une source ni un message déjà envoyé : revérifie les faits
-nécessaires avant de t'en servir.
-
-Vérifie seulement les informations nécessaires dans les sources pointées par
-le dossier. Conçois une réponse exacte et adaptée à la personne incarnée, puis
-envoie-la comme dernière réponse de ce call.
-
-N'élargis pas le travail. Ne modifie aucun fichier, n'amende ni mémoire ni
-manière, et n'écris à personne sauf si la demande l'exige explicitement."""
+entrée correspond à ce destinataire, à ce contexte ou à cette ref. Tu peux
+partir de ce texte, le confronter aux faits utiles, puis répondre avec ta propre
+compréhension.
+"""
         if not beats_jump:
             return base
         return base + u"""
@@ -75,24 +69,17 @@ Rends un objet JSON nu : `reponse` contient ta réponse normale et
 pousser pendant qu'il attend les autres hommes. Chaque beat a `type`
 (`replique`, `geste` ou `recit`), `texte`, `duree` et `noeuds` (au moins un
 identifiant exact du sous-graphe fourni dans la demande). Tu es l'auteur de
-chaque parole ou geste. N'annonce pas le verdict, n'invente aucun fait et ne
-lance aucune autre affaire."""
+chaque parole ou geste. Appuie chaque détail sur les faits disponibles,
+consacre ces beats à l'attente dans ce sous-graphe et porte le verdict dans la
+réponse finale."""
     if mode == "discussion":
         return u"""# Mode discussion
 
 Consulte le fichier `messages-au-joueur.md` indiqué sous `# Ta chambre` si une
-entrée correspond à ce destinataire, à ce contexte ou à cette ref. C'est un
-brouillon, pas une source ni un message déjà envoyé : revérifie les faits
-nécessaires avant de t'en servir.
-
-Vérifie seulement les informations nécessaires dans les sources pointées par
-le dossier. Conçois une réponse exacte et adaptée à la personne incarnée, puis
-envoie-la une seule fois avec la commande de canal exacte donnée dans la
-demande.
-
-N'élargis pas le travail. Ne modifie aucun fichier, n'amende ni mémoire ni
-manière, et ne lance aucune autre discussion. Ta dernière réponse confirme
-seulement l'envoi."""
+entrée correspond à ce destinataire, à ce contexte ou à cette ref. Tu peux
+partir de ce texte, le confronter aux faits utiles, puis répondre avec ta propre
+compréhension.
+"""
     return None
 
 
@@ -121,9 +108,8 @@ def mission(qui, brief, consigne, contexte=None, contexte_id=None, ref=None,
              if consigne and consigne.strip() else u"")
     if contexte_id is not None:
         ajout = (u"\n## Le fil de cette affaire\n\n"
-                 u"Cet appel appartient à l'item d'affaire `%s`. Ta session, "
-                 u"ton vécu et ton mot de reprise sont ceux de cet item ; ne "
-                 u"les confonds pas avec une autre affaire.\n" % contexte_id
+                 u"L'item d'affaire `%s` donne son identité à cet appel, à ta "
+                 u"session, à ton vécu et à ton mot de reprise.\n" % contexte_id
                  + ajout)
     if ref:
         ajout = (u"\n## Origine de cet appel\n\n"
@@ -149,12 +135,10 @@ def mission(qui, brief, consigne, contexte=None, contexte_id=None, ref=None,
             _maison, autorises = documents_maison.documents_pour(ETAT, qui)
             if canonique and canonique in autorises:
                 source = u" Le cahier source est `%s`." % canonique.replace("\\", "/")
-            else:
-                source = (u" Le cahier `%s` n'appartient pas aux documents "
-                          u"de ta maison : ne l'ouvre pas." % volume)
         chambre_locale = (u"## Le dossier local de cet item\n\n"
-                           u"Ton fil propre est `%s`.%s N'inventorie pas le "
-                           u"reste de ta chambre pour cet appel.\n" % (
+                           u"Ton fil propre est `%s`.%s Consacre cet appel à "
+                           u"ce fil, à son cahier source et à la chaîne de "
+                           u"l'état qu'il sert.\n" % (
                                _ch.fil(qui, contexte_id).replace("\\", "/"),
                                source))
     # LES BILLETS ENTRENT EN PERCEPT (habitant.md §3) : « Untel t'a écrit :
@@ -190,8 +174,8 @@ def mission(qui, brief, consigne, contexte=None, contexte_id=None, ref=None,
     if billets:
         billets = (u"\n## On t'a écrit\n" + billets +
                    u"\nCes mots te sont arrivés : ils font partie de ta journée."
-                   u" Réponds-y à ta façon — dans tes gestes, tes cahiers, ou en"
-                   u" notant ta réponse dans ta chambre pour la lui porter.\n")
+                   u" Ce qu'ils changent dans tes gestes, tes pensées ou tes"
+                   u" relations dépend de tes propres raisons.\n")
     ajout = billets + ajout
     if court:
         return u"""%(contexte)s
@@ -218,7 +202,7 @@ def mission(qui, brief, consigne, contexte=None, contexte_id=None, ref=None,
         if mot_dhier:
             hier = (u"\n## Là où tu t'étais laissé\n\n" + mot_dhier +
                     u"\n\nC'est le mot que tu t'es laissé hier. Reprends de"
-                    u" là, ou contredis-le — c'est le tien.\n")
+                    u" là, ou transforme-le — c'est le tien.\n")
     return u"""%(contexte)s
 
 ---
@@ -229,17 +213,6 @@ Ton contexte vivant est déjà auprès de toi. Les documents de ta maison sont
 énumérés dans ton prompt système. `Read`, `Grep` et `Glob` servent à les
 consulter directement à leur adresse canonique.
 
-## Tu agis sans demander au MJ
-
-Tu ne demandes au MJ ni permission, ni information, ni verdict. Tu lis les
-sources auxquelles tu as accès, tu décides selon ta tête et tu accomplis les
-gestes qui sont à ta portée. Écris directement ce que tu as réellement fait.
-
-Si une conséquence dépend d'un autre, du hasard ou d'un fait absent de tes
-sources, n'invente pas son issue : écris ton geste ou ton intention, laisse la
-conséquence en attente, puis poursuis ce que tu peux faire. Un inconnu reste
-inconnu jusqu'à ce qu'une personne ou une source du monde te l'apporte.
-
 Écrire à quelqu'un, c'est le billet : il le lira à son réveil, et ton mot le
 réveille s'il dort.
 
@@ -249,23 +222,23 @@ réveille s'il dort.
 
 Ta chambre est le dossier `%(chambre)s` — elle est à toi, et à toi seul.
 
-- `claude.md` : ta manière, de ta main. Amende-le quand ta journée te contredit.
-- `brouillons/` : ce qui mûrit. Rature, reprends, ne rends que le propre.
-- `fil/` : les traces de tes journées passées — relis-les si un souvenir te manque.
+- `claude.md` : ta manière, de ta main. Amende-le à mesure que ta journée transforme ta manière.
+- `brouillons/` : ce qui mûrit. Rature, reprends et rends le propre.
+- `fil/` : les traces de tes journées passées — relis-les pour raviver un souvenir.
 - `relations/<untel>/claude.md` : ce que TU retiens de chacun.
 
 %(chambre_locale)s
 
-Rien dans ta chambre ne fait foi sur le monde : elle est ta mémoire et ton
-caractère. Ce qui doit devenir vrai passe par tes gestes dans la journée.
+Ta chambre porte ta mémoire et ton caractère. Tes gestes dans la journée
+inscrivent leurs résultats dans le monde par les portes adaptées.
 
 ## Ton retour
 
-Plus de formulaire : ta journée EST ton retour. Ce que tu apprends, écris-le
+Ta journée EST ton retour. Ce que tu apprends, écris-le
 dans tes cahiers et ta chambre à mesure ; ce que tu conclus, note-le où tu
 sauras le retrouver. Ta dernière réponse est ta conclusion à toi — ce que ta
 journée a changé, et ce que tu comptes faire ensuite, dit à ta façon, en
-quelques lignes au plus. Tu te la laisses comme on se laisse un mot sur sa
+quelques lignes claires. Tu te la laisses comme on se laisse un mot sur sa
 table : c'est elle que tu retrouveras à ton prochain réveil.
 
 Tes affaires ouvertes, pour mémoire :
@@ -279,7 +252,7 @@ Tes affaires ouvertes, pour mémoire :
         "qui": qui,
         "aujourdhui": json.dumps(aujourdhui, ensure_ascii=False),
         "travaux_ids": (travaux_ids(qui) if contexte_id is None else
-                         "- `%s` — seul item de cet appel." % contexte_id),
+                         "- `%s` — item de cet appel." % contexte_id),
         "ajout": ajout,
         "contexte": contexte_message(qui, contexte).strip(),
     }
@@ -315,7 +288,7 @@ def archiver_le_prompt(qui, sid, manuel, texte, contexte_id=None, ref=None,
 
 
 def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True,
-            contexte_id=None, ref=None, mode="journee"):
+            contexte_id=None, ref=None, mode="journee", effort=None):
     """Appelle la porte globale ; cree ou reprend la session logique.
 
     LE MANUEL PASSE PAR UN FICHIER. Windows plafonne une ligne a 32 767
@@ -372,15 +345,22 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True,
     archiver_le_prompt(qui, sid, manuel, texte, contexte_id=contexte_id,
                        ref=ref, mode=mode)
     from agents.expose import runtime as agent_runtime
+    from agents import work_identity
+    work_key = work_identity.cle_depeche(
+        qui, contexte_id, ref, sid)
+    identity = work_identity.admettre(work_key)
+    work_identity.noter(identity, progress="admis", next_step="compute",
+                        state="running")
     parametres = {
         "role": qui, "manuel": manuel, "message": texte,
         # PAS D'EXPIRATION (31.8) : `minutes=None` -> `timeout=None`, et le
         # processus rend la main quand il a fini. Le plafond ne protegeait
         # de rien et coupait des journees entieres au milieu.
-        "session_id": sid, "modele": modele,
+        "session_id": sid, "modele": modele, "effort": effort,
         "timeout": (minutes * 60) if minutes else None,
         "cwd": neutre, "add_dirs": [RACINE, sa_chambre],
         "tools": OUTILS, "reprendre": None,
+        "work_identity": identity,
         "env": {"LE_CONSEIL_QUI": str(qui),
                 "LE_CONSEIL_CONTEXTE": str(contexte_id or ""),
                 "LE_CONSEIL_REF": str(ref or ""),
@@ -400,7 +380,11 @@ def appeler(qui, manuel, texte, sid, modele, minutes, attendre=True,
             log, trace={"qui": qui, "etiquette": etiquette,
                         "contexte_id": contexte_id, "ref": ref}, **parametres)
 
-    return agent_runtime.appeler(**parametres)
+    try:
+        return agent_runtime.appeler(**parametres)
+    except BaseException:
+        work_identity.terminer_attempt(identity, None, "failed", term=False)
+        raise
 
 
 def extraire_json(texte):
@@ -424,7 +408,7 @@ def extraire_json(texte):
 
 def depecher(qui, consigne, modele, minutes, sec, attendre=True,
              contexte_id=None, ref=None, mode="journee", beats_jump=False,
-             event_jump=None, forcer_creux=False):
+             event_jump=None, forcer_creux=False, effort=None):
     instructions_mode(mode, beats_jump=beats_jump)
     if contexte_id is not None:
         contexte_id = id_item_affaire(contexte_id)
@@ -435,7 +419,9 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True,
     # Elle cherchait « CONVOCATION », que l'ancien brief tenait de
     # `convoquer.py` ; le brief neuf calcule les creux lui-meme et ne l'ecrit
     # plus — la garde etait donc toujours vraie et PLUS PERSONNE NE PARTAIT.
-    # Les deux vrais motifs sont les deux sorties precoces de `brief_de`.
+    # Une tete absente n'est plus un motif de refus : l'identite historique,
+    # les sources et la mission suffisent a reveiller quelqu'un. Objectifs et
+    # croyances absents restent inconnus ; le depecheur ne les invente pas.
     empeche = None
     # UN SIEGE OCCUPE N'EST PAS DEPECHE : quand un joueur incarne cet homme,
     # sa journee est vecue par le siege — une depeche parallele donnerait
@@ -451,8 +437,6 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True,
             break
     if not brief:
         empeche = u"aucun dossier"
-    elif u"Aucune tete dans intentions.json" in brief:
-        empeche = u"pas de tete dans intentions.json"
     elif u"AUCUN CREUX" in brief and not forcer_creux:
         empeche = u"aucun creux aujourd'hui — il travaille, il ne pense pas"
     if empeche:
@@ -508,7 +492,7 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True,
     try:
         rep = appeler(qui, manuel, texte, sid, modele, minutes,
                       attendre=attendre, contexte_id=contexte_id, ref=ref,
-                      mode=mode)
+                      mode=mode, effort=effort)
     except Exception as e:
         print(u"  %-18s ECHEC — %s" % (qui, e))
         return False
@@ -528,6 +512,16 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True,
         print(u"  %-18s parti detache → %s"
               % (qui, os.path.relpath(rep["log"], RACINE)))
         return True
+
+    from agents import work_identity as _work_identity
+    _identity = rep.get("continuous_work_identity")
+    _compute_event_id = rep.get("compute_event_id")
+
+    def _terme(artifact=None):
+        if _identity:
+            _work_identity.terminer_attempt(
+                _identity, _compute_event_id, "succeeded", term=True,
+                artifact=artifact)
 
     # LE VECU AU FIL, TOUJOURS : le lanceur le depose explicitement, sans
     # faire dependre la memoire de l'homme d'un hook de fournisseur.
@@ -563,6 +557,7 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True,
         print(u"  %-18s %5d j. · %3ds — %s : %s"
               % (qui, jetons, round(time.time() - debut), mode,
                  re.sub(r"\s+", u" ", phrase)[:220] or u"(muette)"))
+        _terme()
         return True
 
     if rapport is None:
@@ -587,6 +582,7 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True,
         print(u"  %-18s %5d j. · %3ds — sa phrase : %s"
               % (qui, jetons, round(time.time() - debut),
                  re.sub(r"\s+", u" ", phrase)[:160] or u"(muette)"))
+        _terme(brut)
         return True
 
     rapport.setdefault("qui", qui)
@@ -606,4 +602,5 @@ def depecher(qui, consigne, modele, minutes, sec, attendre=True,
              u"conclusion" if rapport.get("conclusion") else u"—",
              jetons, rapport["_depeche"]["secondes"],
              os.path.relpath(cible, RACINE), u"  [%s]" % note if note else u""))
+    _terme(cible)
     return True

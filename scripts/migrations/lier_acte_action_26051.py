@@ -9,7 +9,7 @@ for p in (SCRIPTS, NOYAU):
     if p not in sys.path:
         sys.path.insert(0, p)
 
-import ajouter  # noqa: E402 — façade append-only d'etat/
+from etat.expose import ajouter  # noqa: E402
 
 
 ACTE = {
@@ -32,5 +32,5 @@ ACTE = {
 
 
 if __name__ == "__main__":
-    poses = ajouter.ajouter("actes", [ACTE])
+    poses = ajouter("actes", [ACTE])
     print("actes : %s" % (", ".join(poses) if poses else "déjà lié"))

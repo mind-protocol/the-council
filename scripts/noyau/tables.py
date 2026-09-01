@@ -221,15 +221,21 @@ def _ecrire_direct(p, rendre):
     d = os.path.dirname(p)
     if d:
         os.makedirs(d, exist_ok=True)
-    for tentative in range(3):
+    # Sous Windows, l'antivirus et les indexeurs peuvent garder brièvement un
+    # handle sans partage sur un JSON qui vient d'être remplacé/inspecté. La
+    # porte observait alors EINVAL/EBUSY pendant plus que ses 150 ms de reprise
+    # et faisait tomber toute une boucle d'agents. On attend au plus 2,75 s :
+    # assez pour franchir cette contention transitoire, jamais assez pour
+    # masquer durablement un disque ou un chemin réellement cassé.
+    for tentative in range(8):
         try:
             with io.open(p, "w", encoding="utf-8", newline="\n") as f:
                 rendre(f)
             break
         except OSError:
-            if tentative == 2:
+            if tentative == 7:
                 raise
-            time.sleep(0.05 * (tentative + 1))
+            time.sleep(min(0.5, 0.05 * (2 ** tentative)))
     return p
 
 

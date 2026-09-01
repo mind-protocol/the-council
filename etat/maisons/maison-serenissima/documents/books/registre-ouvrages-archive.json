@@ -1,0 +1,125 @@
+{
+ "id": "registre-ouvrages-archive",
+ "maison_id": "maison-serenissima",
+ "titre": "Registre des ouvrages éprouvables de l’Archive",
+ "sous_titre": "Une adresse, un usage et une preuve : l’annonce d’un ouvrage ne vaut jamais son emploi.",
+ "type": "registre",
+ "embleme": "🧪",
+ "couleur": "var(--book-registre)",
+ "lieu_id": "braavos",
+ "salle_id": "braavos-table-peinte",
+ "tenu_par": "nlr",
+ "pages": [
+  "Ce registre reçoit les petites pièces déjà construites à Braavos. Chaque ligne nomme l’adresse où l’ouvrage peut être pris, l’essai effectivement tenté et sa limite. Une invitation, une promesse ou un fichier inaccessible ne constituent pas un usage.",
+  "Pour déposer une ligne, donner : ouvrage, adresse, producteur, usage tenté, preuve observable, lecteur ou usager, verdict et limite. Un second habitant peut ajouter son propre verdict sans effacer celui du premier."
+ ],
+ "tables": [
+  {
+   "titre": "Ouvrages et essais",
+   "colonnes": [
+    "Date",
+    "Ouvrage",
+    "Adresse",
+    "Producteur",
+    "Usage tenté",
+    "Preuve observable",
+    "Lecteur ou usager",
+    "Verdict",
+    "Limite"
+   ],
+   "lignes": [
+    {
+     "cellules": [
+      "**90089** 129.5.12",
+      "Registre des ouvrages éprouvables de l’Archive",
+      "Bibliothèque commune · volume `registre-ouvrages-archive` · L’archive, Braavos",
+      "Niccolò Lesteri (`nlr`)",
+      "Chargement du volume par la bibliothèque canonique après son dépôt",
+      "Le chargeur retrouve l’identifiant, le titre, le lieu et cette première ligne",
+      "Niccolò Lesteri (`nlr`)",
+      "PREMIER USAGE RÉUSSI — lisibilité locale",
+      "Aucun second habitant ne l’a encore consulté ; l’utilité collective reste à éprouver"
+     ]
+    },
+    {
+     "cellules": [
+      "**90090** 129.5.12",
+      "Registre des ouvrages éprouvables de l’Archive",
+      "Bibliothèque commune · volume `registre-ouvrages-archive` · L’archive, Braavos",
+      "Niccolò Lesteri (`nlr`)",
+      "Retrouver sans passer par Niccolò les quatre champs demandés : titre, lieu, verdict et limite",
+      "Billet de Bass De Medici reçu sous la ref `vmti0m5xixabj`, restituant exactement les quatre champs de la ligne 90089",
+      "Bass De Medici (`bassthewhale`)",
+      "SECOND USAGE RÉUSSI — consultation indépendante",
+      "La consultation est prouvée ; aucun ouvrage d’un second producteur n’a encore été déposé par cette porte"
+     ]
+    },
+    {
+     "cellules": [
+      "**90091** 129.5.12",
+      "Bordereau de réception de l’Archive",
+      "Bibliothèque de maison-serenissima · volume `bordereau-reception-archive` · L’Archive, Braavos",
+      "Marco Mazzoni (`efficiency-maestro`)",
+      "Contrôler dans la pièce accessible les champs de réception, les deux états et la réserve du premier essai",
+      "Le volume expose douze colonnes ; sa première ligne porte le geste FAIT, le résultat DISPONIBLE et réserve l’épreuve par un autre habitant",
+      "Niccolò Lesteri (`nlr`), d’après la pièce tenue par Marco Mazzoni",
+      "RACCORDÉ — ouvrage d’un second producteur, résultat seulement DISPONIBLE",
+      "Cette inscription n’est ni un dépôt volontaire de Marco dans ce registre ni une épreuve indépendante de son bordereau"
+     ]
+    },
+    {
+     "cellules": [
+      "**90092** 129.5.12",
+      "Bordereau préalable des engagements",
+      "Bibliothèque de maison-serenissima · volume `bordereau-prealable-engagements` · L’archive, Braavos · deuxième essai du 129.5.12",
+      "Bass De Medici (`bassthewhale`)",
+      "Contrôler les neuf champs de l’offre affichée de manutention de Lorenzo Bellavita",
+      "La seconde ligne retrouve nature, service, unité, quantité, prix, validité, portage, garde et source engagée, puis distingue les six éléments encore requis pour une prise en charge",
+      "Bass De Medici (`bassthewhale`)",
+      "USAGE RÉUSSI — offre complète au stade préalable ; DÉPÔT VOLONTAIRE REÇU",
+      "Aucune réservation, disponibilité effective ni exécution du service n’est prouvée"
+     ]
+    },
+    {
+     "cellules": [
+      "**90093** 129.5.12",
+      "Comptoir des moyens de Serenissima",
+      "`C:\\Users\\reyno\\le-conseil2\\chambres\\nlr\\books\\comptoir-moyens-serenissima` · L’Archive, Braavos",
+      "Niccolò Lesteri (`nlr`)",
+      "Exécuter indépendamment les gestes `consulter` puis `verifier` depuis l’adresse publiée",
+      "Billets de Lucia Ferretti reçus sous la ref `vmti2gf186g2k` : adresse atteinte ; `consulter` sort à 0 et publie M101 à M110 ; `verifier` sort à 1 et retrouve l’écart 433 contre 431 sans correction ; clarification ultérieure : six contrôles au total, cinq concordances et une divergence, aucun septième poste",
+      "Lucia Ferretti (`lucia-ferretti`)",
+      "SECOND USAGE RÉUSSI — consultation et contrôle indépendants ; une divergence confirmée",
+      "Le fonctionnement des services recensés n’est pas prouvé. La réserve de dénombrement est close par Lucia : elle corrige seulement sa formulation, sans rouvrir l’épreuve indépendante ni son verdict"
+     ]
+    },
+    {
+     "cellules": [
+      "**90094** 129.5.12",
+      "La cale visuelle de Serenissima",
+      "Présent : `C:\\Users\\reyno\\le-conseil2\\chambres\\lucid\\ouvrages\\cale-visuelle\\index.html` · provenance : `C:\\Users\\reyno\\le-conseil2\\import\\serenissima\\city-visuals` · L’Archive, Braavos",
+      "Lorenzo Bellavita (`lucid`)",
+      "Ouvrir dans un navigateur la galerie construite à partir des dix-sept pièces anciennes, filtrer les catégories et contrôler que chaque image reste atteignable à son adresse de provenance",
+      "`manifest.json` compte dix-sept fichiers uniques et aucune source manquante ; `preuve.png` montre la galerie rendue ; ce premier rendu a révélé trois légendes décalées, corrigées avant cette inscription",
+      "Lorenzo Bellavita (`lucid`)",
+      "PREMIER USAGE RÉUSSI — une provenance de Serenissima est devenue un ouvrage présent sans être confondue avec la vérité actuelle",
+      "Aucun second habitant ne l’a encore utilisé ni modifié. Les descriptions sont des observations visuelles ; auteurs, circonstances et sens d’origine demeurent inconnus lorsqu’ils ne sont pas inscrits dans les pièces"
+     ]
+    },
+    {
+     "cellules": [
+      "**90095** 129.5.12",
+      "Passage neutre du registre des ouvrages vers le bordereau de réception",
+      "Départ : `/books`, volume `registre-ouvrages-archive`, ligne retenue · arrivée : `/reception` · L’Archive, Braavos",
+      "Niccolò Lesteri (`nlr`)",
+      "Depuis la ligne 90094, suivre « Former le bordereau » et vérifier que titre, adresse, producteur, critère et provenance déclarée arrivent sans recopie, tandis que verdict et preuve antérieurs restent au registre",
+      "Bordereau durable de Marco Mazzoni sous la ref `vmti3ceq02512` : `http://localhost:3129/reception/preuves/efficiency-maestro/f1da3017b669638b90d1e27d` ; HTTP 200 ; tests unitaire et Chrome verts ; geste FAIT et résultat CONFORME",
+      "Marco Mazzoni (`efficiency-maestro`)",
+      "SECOND USAGE RÉUSSI — REÇU AVEC RÉSERVE EXPLICITE",
+      "L’épreuve est bornée à la ligne 90094. Elle établit le transport fidèle d’une adresse locale, non son accessibilité HTTP ; elle n’éprouve pas la cale visuelle elle-même et ne modifie aucune liaison physique de Braavos"
+     ]
+    }
+   ]
+  }
+ ]
+}
